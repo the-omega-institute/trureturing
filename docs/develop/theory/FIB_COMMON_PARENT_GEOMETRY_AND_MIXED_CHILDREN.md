@@ -2699,3 +2699,1613 @@ $p\ne24$, retaining each child's one acquired $v_E$; its feasibility
 and the resulting same-parent $L_3$ remain open.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Four actual worlds at the inherited exact fifth response
+
+**Definition 18.1 (The exact parameter and the new M-child system).**
+The domain, cardinalities and action convention in Sections 18–25 are
+exactly Definitions 1.1–1.3. In particular the literal parent is
+$H_4=(0,J,24,M,147/5,J,24,M,18)$, the initial read counts, and the
+clocks are $0,\ldots,7$. Each world has one fixed source, one entire
+nonzero real polynomial gain of degree at most three, and one fixed
+real drift. Write
+
+$$
+\mathcal P=\left[\frac{2744214237}{10^8},
+                       \frac{2744214238}{10^8}\right].
+\tag{18.1}
+$$
+
+Here $p_J$ always means $p(W_0(z_J))$, where $z_J$ is the unique
+six-coordinate zero of the unchanged system (8.1) in its original
+box $\mathcal B_J$. Theorem 8.1, including this exact algebraic
+parameter and its strict enclosure inside $\mathcal P$, is an inherited
+premise. A midpoint of $\mathcal P$ is not a definition of $p_J$.
+
+For the construction only, use $0<r<1$, $b>0$, $\Lambda\ne0$ and
+
+$$
+\begin{gathered}
+c=r(1-r)/b,\quad j=b+c,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\quad V=U+n,\\
+B_{\rm coef}=6/T-2/U,\quad
+\Lambda=1+6/T+1/U-4/j-4/n,\\
+\epsilon=-\frac{24}{5}(b-1/8)\frac{B_{\rm coef}}\Lambda,
+\qquad d=24+\epsilon.
+\end{gathered}
+\tag{18.2}
+$$
+
+Let $g=\sum_{i=0}^3\gamma_i\ell_i$, with the fixed Lagrange
+polynomials of (7.1) and the ordered samples
+
+$$
+(\gamma_0,\gamma_1,\gamma_2,\gamma_3)
+ =\left(-24-\epsilon,-\frac\epsilon j,
+               \frac{27/5-\epsilon}{T},-\frac\epsilon n\right).
+\tag{18.3}
+$$
+
+This is the same entire gain $h+w$ as in Theorem 2.1, not a
+separately fitted gain at a later clock. In particular
+
+$$
+\begin{pmatrix}g(5)\\g(6)\\g(7)\end{pmatrix}
+=\begin{pmatrix}-4&15&-20&10\\-10&36&-45&20\\-20&70&-84&35\end{pmatrix}
+\begin{pmatrix}\gamma_0\\\gamma_1\\\gamma_2\\\gamma_3\end{pmatrix}.
+\tag{18.4}
+$$
+
+For $W=W(r,b)=(P(r,b),g,d)$ abbreviate the actual responses by
+
+$$
+\begin{aligned}
+p(r,b)&=d+Vg(5),&u(r,b)&=d+(2U+n)g(6),\\
+f_J(r,b)&=d+(T+2j+4r)g(7),&
+f_M(r,b)&=d+(3U+2n)g(7).
+\end{aligned}
+\tag{18.5}
+$$
+
+Thus $u=u_M$, $f_J=f_{MJ}$ and $f_M=f_{MM}$ in (1.7). The seventh
+responses follow the acquired sixth M. They are not the seventh
+responses following sixth J.
+
+Order the eight coordinates as
+$z=(r_A,b_A,r_B,b_B,r_C,b_C,r_D,b_D)$. For a real parameter $p$ put
+
+$$
+F_p(z)=\begin{pmatrix}
+p(r_A,b_A)-p\\p(r_B,b_B)-p\\p(r_C,b_C)-p\\p(r_D,b_D)-p\\
+u(r_A,b_A)-u(r_B,b_B)\\
+u(r_A,b_A)-u(r_C,b_C)\\
+u(r_A,b_A)-u(r_D,b_D)\\
+f_J(r_A,b_A)-f_J(r_B,b_B)
+\end{pmatrix}.
+\tag{18.6}
+$$
+
+There is no tolerance in this system. Its rational box is
+
+$$
+\begin{gathered}
+\rho=10^{-9},\qquad \mathcal B=\{z:\|z-m\|_\infty\le\rho\},\\
+m=10^{-18}\begin{pmatrix}
+798291691626185419\\319422724668808667\\
+352720293321024633\\159165804512783260\\
+280826656614482548\\254495174825897077\\
+819801620259070153\\150424754128846912
+\end{pmatrix}.
+\end{gathered}
+\tag{18.7}
+$$
+
+The labels $A,B,C,D$ in this construction denote worlds and do not
+identify them with the worlds denoted by those letters in Section 9.
+
+**Theorem 18.2 (Four complete common-history worlds).** For every real
+$p\in\mathcal P$, (18.6) has exactly one zero $z(p)$ in $\mathcal B$;
+it is interior. Its four sources reconstruct four different complete
+worlds at $H_4$, all with $b>1/8$ and $d\ne24$. At $p=p_J$ write these
+worlds as $A,B,C,D$ and define exactly
+
+$$
+v_\star=u(A)\quad\text{at }z(p_J).
+\tag{18.8}
+$$
+
+Then
+
+$$
+\begin{gathered}
+p(A)=p(B)=p(C)=p(D)=p_J,\\
+u(A)=u(B)=u(C)=u(D)=v_\star,\qquad f_J(A)=f_J(B).
+\end{gathered}
+\tag{18.9}
+$$
+
+These assertions concern four actual worlds. Exhaustion of their
+acquired child is a separate assertion in Theorem 23.1.
+
+Proof. Use exact rational interval arithmetic (14.12) and reciprocal
+only after exclusion of zero, with the derivative rules (7.5). In this
+proof the expression order is (18.2)–(18.6): compute $c,j,n,T,U,V$,
+then $\Lambda$ and $B_{\rm coef}=6/T-2/U$, then
+$\epsilon=(-(24/5)(b-1/8)B_{\rm coef})/\Lambda$, then (18.3),
+(18.4), (18.5). Sums and matrix products are in increasing index order.
+This fixes the rational inclusion calculation, without rounding or
+algebraic refitting of the expressions.
+
+The following enclosures hold throughout the full coordinate boxes.
+Each numerator interval in the table is divided by $10^6$.
+
+| World | $\Lambda$ | $d$ | $j$ | $n$ |
+| --- | --- | --- | --- | --- |
+| $A$ | $[-1165902,-1165901]$ | $[26663105,26663107]$ | $[823526,823527]$ | $[1621817,1621818]$ |
+| $B$ | $[2369401,2369402]$ | $[23746741,23746742]$ | $[1593573,1593574]$ | $[1946293,1946295]$ |
+| $C$ | $[-381012,-381011]$ | $[29640372,29640375]$ | $[1048078,1048079]$ | $[1328904,1328905]$ |
+| $D$ | $[1403279,1403280]$ | $[23680135,23680136]$ | $[1132489,1132491]$ | $[1952291,1952292]$ |
+
+The coordinate bounds in (18.7) give $0<r<1$, $b>1/8$, $T>1$ and
+$U>1$ before division. Thus $b,j,n,T,U$ are positive and every
+$\Lambda$ interval excludes zero. Also
+$B_{\rm coef}=2(2+5b)/(TU)>0$. All four entries of each $P$ are
+positive, its trace is one and its determinant is zero, so it has
+rank exactly one. The four $r$ boxes are pairwise disjoint. This
+establishes all six complete-world distinctness guards.
+
+Use the exact preconditioner
+
+$$
+\mathsf C=10^{-8}\begin{pmatrix}
+4921360&-3810382&0&0&-1407759&0&0&152411\\
+-2423216&2748351&0&0&1015388&0&0&-109931\\
+2063758&289613&0&0&-230496&0&0&-132042\\
+-54555&1067305&0&0&6093&0&0&3491\\
+1268991&2029850&-2607294&0&749935&-891665&0&-81192\\
+852351&1363401&-1387346&0&503713&-598910&0&-54534\\
+-2253154&-3604094&0&4951388&-1331545&0&1583194&144160\\
+229692&367410&0&142330&135741&0&-161394&-14696
+\end{pmatrix}.
+\tag{18.10}
+$$
+
+Let $E=I-\mathsf CDF_p(\mathcal B)$ be the interval matrix obtained
+by (7.5). For every $p\in\mathcal P$ the following exact bounds hold:
+
+$$
+\sum_{j=1}^8|E_{ij}|_{\max}<q_i,\qquad
+ |(\mathsf CF_p(m))_i|<\eta_i.
+\tag{18.11}
+$$
+
+The table specifies $q_i$ and $\eta_i$ in the coordinate order (18.7).
+Both bounds concern the unscaled ordered equations (18.6).
+
+| $i$ | $10^8q_i$ | $10^{24}\eta_i$ |
+| --- | --- | --- |
+| $1$ | $11111$ | $436587100487845$ |
+| $2$ | $7118$ | $258578350306137$ |
+| $3$ | $4419$ | $117668550203950$ |
+| $4$ | $1347$ | $56093000299099$ |
+| $5$ | $111278$ | $295306750456129$ |
+| $6$ | $68422$ | $180154900172247$ |
+| $7$ | $17725$ | $540431800271175$ |
+| $8$ | $2207$ | $36971600370067$ |
+
+The following rational upper bounds make the margins in (18.11)
+explicit. The middle column divides by $10^{12}$ and bounds the row
+sum in (18.11); the last divides by $10^{27}$ and bounds the center
+component there. Each is strictly smaller than its declared bound.
+
+| $i$ | Row-sum numerator | Center-component numerator |
+| --- | --- | --- |
+| $1$ | $111100599$ | $436587100487844497$ |
+| $2$ | $71177580$ | $258578350306136259$ |
+| $3$ | $44183543$ | $117668550203949499$ |
+| $4$ | $13460403$ | $56093000299098885$ |
+| $5$ | $1112777824$ | $295306750456128034$ |
+| $6$ | $684212441$ | $180154900172246818$ |
+| $7$ | $177245619$ | $540431800271174350$ |
+| $8$ | $22062065$ | $36971600370066102$ |
+
+To reproduce these inequalities, put the eight intervals
+$[m_i-\rho,m_i+\rho]$ into (18.2)–(18.6), give the $i$th coordinate
+its unit derivative vector, and propagate (7.5). Multiply the resulting
+Jacobian by (18.10), subtract from $I$, and sum the absolute endpoint
+bounds in each row. At the singleton $m$, put the full interval
+$\mathcal P$ in each of the first four equations, form
+$\mathsf CF_p(m)$ and bound each component. No premise about the
+unknown root is used in either calculation.
+
+Set $q=\max_iq_i=111278/10^8$ and
+$\eta=\max_i\eta_i=540431800271175/10^{24}$. They satisfy
+
+$$
+q<1,\qquad
+\rho-\eta-q\rho
+ =\frac{18338216789153}{40000000000000000000000}>0.
+\tag{18.12}
+$$
+
+The Banach contraction argument (7.6) therefore gives a unique
+interior fixed point of $z\mapsto z-\mathsf CF_p(z)$ in the complete
+closed box. The same norm inequality makes $\mathsf C$ invertible,
+so this fixed point is exactly a zero of $F_p$, and every zero in
+the box is this point. This proves the assertion uniformly over
+$\mathcal P$, in particular for the inherited exact $p_J$.
+
+For each source at the zero, (18.3) enforces the first four original
+parent rows. The residual of the clock-four row is exactly
+
+$$
+d+Ug(4)-18
+ =U\{\epsilon\Lambda+(24/5)(b-1/8)B_{\rm coef}\}=0.
+\tag{18.13}
+$$
+
+Thus Theorem 2.1 gives a complete parent world, with the same entire
+gain as (18.3). The original responses $0$ and $24$ exclude an
+identically zero gain. The drift enclosures above give $d\ne24$.
+Equations (18.6) now give (18.9) as exact equalities. Overlap of
+response intervals is not used to establish any equality. The
+products in Definition 1.3 make every response in (18.9) an actual
+response at its original clock. ∎
+
+## 19. The sharp acquired response and the terminal responses
+
+**Theorem 19.1 (Response enclosure retaining the exact parameter).**
+The actual $v_\star$ of (18.8) lies strictly inside
+
+$$
+\mathcal V=\left[\frac{144397245334493}{10^{12}},
+                       \frac{144397245371500}{10^{12}}\right].
+\tag{19.1}
+$$
+
+At the four worlds, the final responses have the enclosures below.
+Among these worlds the only unordered distinct final-J collision
+pair is $\{A,B\}$, and the final-M response is injective.
+
+Proof. First, natural interval evaluation in the full box gives these
+response and gain bounds. Every numerator interval in both tables
+is divided by $10^6$; they are enclosures before imposing $F_p=0$.
+
+| World | $p$ | $u$ | $f_J=f_{MJ}$ | $f_M=f_{MM}$ |
+| --- | --- | --- | --- | --- |
+| $A$ | $[27442122,27442163]$ | $[144397177,144397314]$ | $[489764880,489765207]$ | $[640171212,640171644]$ |
+| $B$ | $[27442140,27442145]$ | $[144397238,144397253]$ | $[489765025,489765062]$ | $[658972311,658972359]$ |
+| $C$ | $[27442037,27442248]$ | $[144396879,144397612]$ | $[403819508,403820934]$ | $[630538939,630541225]$ |
+| $D$ | $[27442138,27442147]$ | $[144397231,144397260]$ | $[569047436,569047516]$ | $[659677392,659677485]$ |
+
+| World | $g(5)$ | $g(6)$ | $g(7)$ |
+| --- | --- | --- | --- |
+| $A$ | $[238913,238926]$ | $[24029771,24029799]$ | $[75183233,75183286]$ |
+| $B$ | $[1131951,1131954]$ | $[26325905,26325909]$ | $[80945379,80945386]$ |
+| $C$ | $[-774637,-774562]$ | $[26399707,26399876]$ | $[83634921,83635239]$ |
+| $D$ | $[1156421,1156425]$ | $[26507980,26507987]$ | $[81463625,81463637]$ |
+
+These bounds follow from exactly the expressions and reciprocal guards
+in the proof of Theorem 18.2. The sharper enclosure (19.1) uses their
+common root, rather than treating the root coordinates independently.
+Let $p_0$ be the exact rational midpoint of $\mathcal P$, let
+$U_B(z)=u(r_B,b_B)$, and put
+
+$$
+\alpha=DU_B(m),\qquad K=\alpha\mathsf C,\qquad
+F_0=F_{p_0}(m),\qquad E=I-\mathsf CDF_p(\mathcal B).
+\tag{19.2}
+$$
+
+Here $\alpha$ is an eight-entry row with zeros outside coordinates
+$r_B,b_B$; $E$ is independent of $p$ because the parameter enters
+(18.6) only as four constant subtractions. For $z=z(p)$ and
+$\delta=z-m$, integrate the derivative along $m+t\delta$ to obtain
+
+$$
+\delta=-\mathsf CF_p(m)+\overline E\delta,\qquad
+ U_B(z)=U_B(m)+\alpha\delta+R_U,
+\tag{19.3}
+$$
+
+where every entry of $\overline E$ lies in its entry of $E$, and
+
+$$
+|R_U|\le\rho\sum_{j=1}^8
+ |DU_B(\mathcal B)_j-\alpha_j|_{\max}.
+\tag{19.4}
+$$
+
+Consequently $U_B(z)$ is enclosed by $\mathcal I+[-e,e]$, where
+
+$$
+\begin{aligned}
+\mathcal I&=U_B(m)-KF_0+
+           (K_1+K_2+K_3+K_4)(\mathcal P-p_0),\\
+e&=\rho\sum_{j=1}^8\left(
+ \left|\sum_{i=1}^8\alpha_iE_{ij}\right|_{\max}
+ +|DU_B(\mathcal B)_j-\alpha_j|_{\max}\right).
+\end{aligned}
+\tag{19.5}
+$$
+
+This retains the shared $p$ dependence before taking an interval.
+The first term uses $F_p(m)=F_0-(p-p_0)(1,1,1,1,0,0,0,0)^{\mathsf T}$.
+In the second term take the interval sum before its absolute bound.
+The exact rational inclusions specified by (18.2)–(18.6), (18.10)
+and (19.2)–(19.5) are
+
+$$
+\begin{gathered}
+\mathcal I\subset
+\frac{[144397245334498362758,144397245371494765773]}{10^{18}},\\
+e<\frac{5134731}{10^{18}}<\frac{5135}{10^{15}},\\
+\mathcal I+[-e,e]\subset
+\frac{[144397245334493228,144397245371499901]}{10^{15}}
+ \subset\operatorname{int}\mathcal V.
+\end{gathered}
+\tag{19.6}
+$$
+
+By (18.9), $v_\star=U_B(z(p_J))$, proving (19.1). The midpoint
+$p_0$ in this estimate is only an expansion point; $p_J$ and the
+entire interval $\mathcal P-p_0$ remain in the estimate.
+
+The final-M intervals are ordered $C,A,B,D$. The successive lower
+endpoint minus preceding upper endpoint differences have positive
+numerators
+
+$$
+9629987,\qquad18800667,\qquad705033
+\quad\text{with denominator }10^6.
+\tag{19.7}
+$$
+
+Thus every two of these worlds have different actual final-M
+responses. For final J, $C$ is strictly below both $A,B$, and $D$
+is strictly above both; $C,D$ are also separated. This excludes all
+five distinct pairs other than $A,B$. Their exact equality is the
+last equation of (18.6). ∎
+
+## 20. Exact elimination for the full strict source domain
+
+**Definition 20.1 (The two source polynomials and their normalization).**
+For arbitrary real responses $p,v$, retain the integer polynomials
+$X,N,H,\mathsf S_p$ of (12.1)–(12.3) and put
+
+$$
+\begin{gathered}
+D_\Lambda=(b^2+8b+4)XN-2bTU(X+N)=N_4/2,\\
+K_\Lambda=(8b-1)(2+5b),\quad Z_6=N+2bU,\\
+G_{6,\Lambda}=(10T+45)XN-bT(36N+20X),\\
+\mathsf A(r,b,p)=\mathsf S_p(r,b)/2
+ =5b(p-24)D_\Lambda+3(8b-1)H(r,b),\\
+\mathsf N_u(r,b)=
+\frac{120bTD_\Lambda+15Z_6D_\Lambda(80b-1)
+       -3K_\Lambda(bTXN+Z_6G_{6,\Lambda})}{T},\\
+\mathsf B(r,b,v)=5bD_\Lambda v-\mathsf N_u(r,b).
+\end{gathered}
+\tag{20.1}
+$$
+
+The numerator defining $\mathsf N_u$ divides exactly by $T=1+b$ in
+$\mathbb Z[r,b]$. Thus $\mathsf A,\mathsf B$ are polynomials, not
+rational equations with an unmentioned denominator. The symbol
+$D_\Lambda$ here is $N_4/2$; it is different from the polynomial $D$
+used only on the $p=24$ graph in (14.1).
+
+For the ordinary Sylvester resultant use exactly the row and column
+order in Lemma 14.2, now with ordered inputs $(\mathsf A,\mathsf B)$
+and variable $b$. Both generic $b$ degrees are seven. Define
+
+$$
+\Psi_2=4r^2-2r-1,\qquad
+\Psi_4=625r^4-1000r^3+50r^2+260r+36,
+\tag{20.2}
+$$
+
+and retain $\Phi$ exactly as in (4.5). The polynomial $R_{18}$ is
+specified by the identity
+
+$$
+\operatorname{Res}_b(\mathsf A,\mathsf B)
+ =52488000\,r^{11}(r-1)^9\Psi_2\Psi_4\Phi\,R_{18}(r,p,v).
+\tag{20.3}
+$$
+
+This fixes its scale and sign. Its integer coefficient table is given
+in Section 24, with monomial order $(r,p,v)$. Its coordinate degrees
+are $(18,7,7)$ and it has $668$ nonzero terms.
+
+To specify the linear subresultant without a normalization ambiguity,
+form the $12$ by $13$ matrix whose ordered rows are the coefficients of
+
+$$
+b^5\mathsf A,b^4\mathsf A,\ldots,\mathsf A,
+\quad b^5\mathsf B,b^4\mathsf B,\ldots,\mathsf B
+\tag{20.4}
+$$
+
+in the columns $b^{12},b^{11},\ldots,1$. Denote these columns by
+$c_{12},c_{11},\ldots,c_0$ and define
+
+$$
+\begin{aligned}
+\Delta_1&=\det(c_{12},c_{11},\ldots,c_2,c_1),\\
+\Delta_0&=\det(c_{12},c_{11},\ldots,c_2,c_0),\\
+\mathcal L_i&=\frac{\Delta_i}{72900r^6(r-1)^4},\qquad i=0,1.
+\end{aligned}
+\tag{20.5}
+$$
+
+Both quotients are exact integer polynomials. The ordered subresultant
+sequence has generic $b$ degrees $7,7,6,5,4,3,2,1,0$, and its
+penultimate member is exactly
+
+$$
+72900r^6(r-1)^4\{\mathcal L_1(r,p,v)b+\mathcal L_0(r,p,v)\}.
+\tag{20.6}
+$$
+
+The polynomials $\mathcal L_0,\mathcal L_1$ have respectively $728$
+and $756$ terms, coordinate degrees $(26,6,6)$ and polynomial gcd
+one. Equations (20.4)–(20.5), including the divisor, are finite exact
+coefficient definitions of both, so no externally chosen primitive
+part or sign convention is required. The calligraphic
+$\mathcal L_1$ is a polynomial coefficient, not the recursive guard
+$L_1$.
+
+**Theorem 20.2 (Necessary projection and unique nonsingular lift).**
+Every complete world in $\mathcal F(H_4,M,p,M,v)$ with
+$\Lambda\ne0$ has a strict source satisfying
+
+$$
+\mathsf A(r,b,p)=\mathsf B(r,b,v)=0.
+\tag{20.7}
+$$
+
+It consequently has a zero of the right side of (20.3) and satisfies
+$\mathcal L_1b+\mathcal L_0=0$. Wherever
+$\mathcal L_1\ne0$, a given projected coordinate $r$ permits at most
+one $b$, namely $-\mathcal L_0/\mathcal L_1$, and at most one complete
+world.
+
+Proof. On every strict source, $b,T,U,X,N$ are positive. Multiplying
+out the original parent coefficient gives
+
+$$
+\Lambda=\frac{2D_\Lambda}{TU XN}.
+\tag{20.8}
+$$
+
+Therefore $D_\Lambda\ne0$ in this branch. The zero-safe parent
+relation (2.2) and the same single interpolant (18.3) give
+
+$$
+\epsilon=-\frac{3K_\Lambda XN}{5D_\Lambda},\qquad
+u(r,b)=\frac{\mathsf N_u(r,b)}{5bD_\Lambda},\qquad
+\mathsf A=5bD_\Lambda\{p-p(r,b)\}.
+\tag{20.9}
+$$
+
+For the middle identity, (18.4) first gives
+$g(6)=3(80b-1)/T+\epsilon G_{6,\Lambda}/(TXN)$; multiply
+$d+(Z_6/b)g(6)$ by $5bD_\Lambda$ and substitute the first identity.
+The result is exactly the divisible numerator in (20.1). The
+numerator and denominator of this rational response are relatively
+prime as integer polynomials, with denominator precisely
+$5bD_\Lambda$. This fixes the coefficient of $v$ in $\mathsf B$.
+The last identity follows either from the fifth extrapolation row
+in (18.4) or directly from (12.8). Thus the actual responses $p,v$
+force (20.7), without dividing by a gain sample or by the drift.
+
+Expand the two degree-seven polynomials and take their ordered
+$14$ by $14$ Sylvester determinant. Polynomial expansion gives
+(20.3) with exactly the coefficient table in Section 24. This
+identity involves the original source polynomials, not an
+interpolated approximation to them. In the parameter box used below
+the leading $b$ coefficients are $5p+216>0$ and $5v+1125>0$.
+There is no loss of degree in this specialization. More generally,
+the fixed Sylvester determinant's necessary common-finite-root
+implication does not require such an assumption.
+
+For clarity, the implication from the linear subresultant can also
+be seen directly from its minors. At a common finite root $b=t$,
+evaluation of every row in (20.4) is zero, so
+$\sum_{k=0}^{12}c_kt^k=0$. Multilinearity of determinant gives
+
+$$
+\Delta_1t+\Delta_0
+=\det(c_{12},\ldots,c_2,c_1t+c_0)=0,
+\tag{20.10}
+$$
+
+because its last column is a linear combination of the first eleven.
+For $0<r<1$, the divisor in (20.5) is nonzero. Hence
+$\mathcal L_1t+\mathcal L_0=0$, even at specializations where other
+subresultant coefficients vanish. The identities (20.5)–(20.6) follow
+by the same exact minors; no generic nonvanishing premise is being
+applied to a particular root.
+
+If $\mathcal L_1\ne0$, (20.10) fixes $b$ uniquely. The parent
+relation then fixes $\epsilon$ by (20.9), and the first four original
+samples fix every coefficient of the entire gain. Alternatively,
+Theorem 12.3 gives fixed-source uniqueness without choosing this
+chart. Thus each such strict source has at most one complete lift.
+Neither a resultant zero nor a positive proposed $b$ is used to
+assert existence of a complete lift. ∎
+
+## 21. Uniform root and lift certificates on the response rectangle
+
+**Theorem 21.1 (Exactly six remaining projected roots).** For every
+$(p,v)\in\mathcal P\times\mathcal V$, $R_{18}(r,p,v)$ has exactly
+six distinct roots in $0<r<1$, one in each interval $I_1,\ldots,I_6$
+below and no others. Each is simple as a root in $r$.
+
+Proof. The certificate uses a centered parameter expansion; it keeps
+all mixed terms. Let
+
+$$
+\begin{gathered}
+p_c=(p_L+p_U)/2,\quad v_c=(v_L+v_U)/2,\quad
+h_p=\frac1{200000000},\quad h_v=\frac{37007}{2000000000000},\\
+R_{18}(r,p_c+x,v_c+y)=\sum_{i,j}A_{ij}(r)x^iy^j.
+\end{gathered}
+\tag{21.1}
+$$
+
+The endpoints here are those of (18.1), (19.1). On a closed interval
+$[a,b]$, first write
+$A_{ij}(a+(b-a)t)=\sum_{\ell=0}^{18}a_{ij\ell}t^\ell$,
+padding with zeros, and define its common-degree Bernstein coefficients
+
+$$
+\beta_{ijk}=\sum_{\ell=0}^k
+ a_{ij\ell}\frac{\binom{k}{\ell}}{\binom{18}{\ell}},\qquad
+ e_k=\sum_{i+j>0}|\beta_{ijk}|h_p^ih_v^j.
+\tag{21.2}
+$$
+
+Thus the $k$th Bernstein coefficient of $R_{18}$ for every parameter
+pair is enclosed by $[\beta_{00k}-e_k,\beta_{00k}+e_k]$.
+Using the integer coefficient table in Section 24 gives the following
+sign words, in order $k=0,\ldots,18$. Every one of the $171$
+coefficient intervals excludes zero.
+
+| Closed $r$ interval | Bernstein coefficient signs | Variation |
+| --- | --- | --- |
+| $[0,1/4]$ | `-------------------` | $0$ |
+| $[1/4,5/16]$ | `---------++++++++++` | $1$ |
+| $[5/16,3/8]$ | `++++++++++++-------` | $1$ |
+| $[3/8,1/2]$ | `-------------------` | $0$ |
+| $[1/2,3/4]$ | `-------------------` | $0$ |
+| $[3/4,13/16]$ | `--------------+++++` | $1$ |
+| $[13/16,27/32]$ | `+++++--------------` | $1$ |
+| $[27/32,7/8]$ | `---------------++++` | $1$ |
+| $[7/8,1]$ | `++++---------------` | $1$ |
+
+These are explicit finite rational inequalities: for a `+` entry,
+$\beta_{00k}>e_k$; for a `-` entry, $\beta_{00k}<-e_k$.
+Equations (21.1)–(21.2) specify every term, degree and radius needed
+to reproduce them from the integer table. There is no evaluation
+only at the parameter midpoint.
+
+The standard Descartes transformation $r=(a+bt)/(1+t)$ converts the
+Bernstein coefficients on $[a,b]$ into coefficients of
+$(1+t)^{18}R_{18}((a+bt)/(1+t),p,v)$, multiplied by positive binomial
+factors. Hence their sign variation bounds the roots in $(a,b)$,
+counting multiplicity. On each variation-one interval the first
+and last coefficients have opposite signs, so the intermediate
+value theorem gives a root. It is the only root there and is simple.
+Variation-zero intervals have no roots, and no shared endpoint is a
+root because the endpoint coefficients exclude zero. This covers
+$[0,1]$ and proves the six-root count.
+
+The six narrower rational isolations and their uniform endpoint
+signs are
+
+| Interval | Lower endpoint | Upper endpoint | Lower, upper signs |
+| --- | --- | --- | --- |
+| $I_1$ | $37691915/134217728$ | $9422979/33554432$ | $-,+$ |
+| $I_2$ | $11835329/33554432$ | $47341317/134217728$ | $+,-$ |
+| $I_3$ | $107144897/134217728$ | $53572449/67108864$ | $-,+$ |
+| $I_4$ | $55015955/67108864$ | $110031911/134217728$ | $+,-$ |
+| $I_5$ | $116688531/134217728$ | $29172133/33554432$ | $-,+$ |
+| $I_6$ | $59915273/67108864$ | $119830547/134217728$ | $+,-$ |
+
+For an endpoint $s$, its sign follows by enclosing
+$A_{00}(s)$ with error
+$\sum_{i+j>0}|A_{ij}(s)|h_p^ih_v^j$, again with exact rational
+arithmetic. Every such error is strictly smaller than
+$|A_{00}(s)|$. These endpoint checks, rather than signs of all
+interior Bernstein coefficients on a narrow interval, supply the
+narrow isolations. Each $I_i$ lies strictly inside its respective
+variation-one interval. Consequently it contains exactly that
+interval's one root, uniformly on the full parameter rectangle.
+The Bernstein basis identity and Descartes rule used here are standard
+univariate tools; the certificate concerns
+the particular $R_{18}$ in (20.3). ∎
+
+**Theorem 21.2 (All base factors and the six possible b lifts).** On
+$\mathcal P\times\mathcal V$, the following table bounds
+$-\mathcal L_0/\mathcal L_1$ throughout each entire indicated box.
+The $b$ numerator intervals have common denominator $10^6$.
+
+| Projected interval | Sign of $\mathcal L_1$ | $b$ numerator interval | Possible constructed world |
+| --- | --- | --- | --- |
+| $I_1$ | $+$ | $[254495,254496]$ | $C$ |
+| $I_2$ | $-$ | $[159165,159166]$ | $B$ |
+| $I_3$ | $-$ | $[319421,319426]$ | $A$ |
+| $I_4$ | $-$ | $[150424,150425]$ | $D$ |
+| $I_5$ | $-$ | $[-393738,-393737]$ | none with $b>0$ |
+| $I_6$ | $+$ | $[-598255,-596853]$ | none with $b>0$ |
+
+There is one strict root of $\Psi_2$, one of $\Psi_4$ and two of
+$\Phi$. Their boxes and forced lifts are
+
+| Factor | Lower $r$ endpoint | Upper $r$ endpoint | Sign of $\mathcal L_1$ | Forced $b$ |
+| --- | --- | --- | --- | --- |
+| $\Psi_2$ | $416020/514229$ | $1762289/2178309$ | $+$ | $-1/2$ |
+| $\Psi_4$ | $985995/1135192$ | $802168/923549$ | $-$ | $-2/5$ |
+| $\Phi$ | $149383/1108052$ | $182914/1356769$ | $+$ | $1/8$ |
+| $\Phi$ | $1412683/1565387$ | $1774115/1965888$ | $+$ | $1/8$ |
+
+Thus no $\Psi_2$ or $\Psi_4$ source is strict, and a $\Phi$ source
+would have $b=1/8$, $\Lambda=0$. Among the six $R_{18}$ projections,
+only the first four can have positive $b$, each with at most one
+complete nonsingular lift.
+
+Proof. For reproduction of all sign and quotient bounds, use the
+polynomials defined by the exact minors (20.5). For each listed
+$r,p,v$ box, let $(r_c,p_c,v_c)$ be its rational midpoint and
+$(h_r,h_p,h_v)$ its radii. For $Q=\mathcal L_0,\mathcal L_1$, expand
+exactly
+
+$$
+Q(r_c+x,p_c+y,v_c+z)=\sum_{i,j,k}q_{ijk}x^iy^jz^k,
+\quad
+Q\in q_{000}+[-e_Q,e_Q],\quad
+ e_Q=\sum_{i+j+k>0}|q_{ijk}|h_r^ih_p^jh_v^k.
+\tag{21.3}
+$$
+
+The binomial expansion of the determinant polynomials fixes each
+$q_{ijk}$. These finite Taylor enclosures give precisely the
+nonzero signs in both tables; taking the interval quotient only
+after this exclusion of zero gives the six displayed $b$ bounds.
+Thus nonvanishing of $\mathcal L_1$ is checked on every possible
+projected root, rather than assumed generically. The last two
+intervals exclude positive $b$ outright.
+
+The exact polynomial remainder identities for the base factors are
+
+$$
+\begin{aligned}
+\mathcal L_0-\tfrac12\mathcal L_1&\equiv0\pmod{\Psi_2},\\
+\mathcal L_0-\tfrac25\mathcal L_1&\equiv0\pmod{\Psi_4},\\
+\mathcal L_0+\tfrac18\mathcal L_1&\equiv0\pmod\Phi.
+\end{aligned}
+\tag{21.4}
+$$
+
+They follow by polynomial division in $r$ over $\mathbb Q[p,v]$
+using (20.5). In particular their quotients do not require $p$ or
+$v$ to be a midpoint. Together with the nonzero $\mathcal L_1$ in
+the base boxes, (20.10) gives the exact forced $b$ values in the
+second table.
+
+For explicit root coverage of these base boxes, apply the signed
+Sturm convention (14.11) to the three displayed univariate factors.
+The degrees and endpoint sign words are
+
+| Polynomial | Chain degrees | Signs at $0$ | Signs at $1$ | Variation drop |
+| --- | --- | --- | --- | --- |
+| $\Psi_2$ | $2,1,0$ | `--+` | `+++` | $1$ |
+| $\Psi_4$ | $4,3,2,1,0$ | `++--+` | `--+++` | $1$ |
+| $\Phi$ | $4,3,2,1,0$ | `--+-+` | `--+++` | $2$ |
+
+Each displayed isolating interval has opposite polynomial endpoint
+signs. Their counts exhaust the global variation drops. The two
+$\Phi$ roots are the same roots as in Theorem 4.2, now in sharper
+rational intervals. By (4.9) a strict point with $b=1/8$ at either
+root has $\Lambda=0$. These base roots therefore contribute no
+additional nonsingular source. Fixed-source uniqueness in Theorem
+20.2 finishes the possible-lift assertion. A label in the first
+table specifies the later matching, not an existence assertion from
+this projection argument. ∎
+
+## 22. Explicit singular-source exclusion and the uniform upper bound
+
+**Theorem 22.1 (At most four complete worlds on the whole rectangle).**
+For every real $(p,v)\in\mathcal P\times\mathcal V$,
+
+$$
+|\mathcal F(H_4,M,p,M,v)|\le4.
+\tag{22.1}
+$$
+
+This is an upper bound over all strict sources, with no upper bound
+on $b$ or $c$. It does not assume the existence of the zero in
+Theorem 18.2. In particular the branch $\Lambda=0$ contributes no
+world in this response rectangle.
+
+Proof. Take any complete world in this full child. The zero-safe
+parent equation (2.2) is necessary, including when $\Lambda=0$.
+If $\Lambda=0$, positivity of $B_{\rm coef}$ forces $b=1/8$.
+Equations (4.9) then give
+
+$$
+j=1/8+8r(1-r),\quad n=j+r,\quad T=9/8,\quad U=5/4,
+\qquad \Lambda=\frac{\Phi(r)}{960jn}.
+\tag{22.2}
+$$
+
+Consequently $r$ is one of exactly the two $\Phi$ roots in the
+second table of Theorem 21.2. Theorem 4.1, or equivalently the
+zero-safe equations (12.7), reconstructs the entire world with
+
+$$
+\begin{aligned}
+A_5(r)&=1+(n+5/4)(4-15/j+20/T-10/n),\\
+\epsilon&=(p-24)/A_5(r),\\
+u&=24+\epsilon+(5/2+n)
+       \{24+\epsilon(10-36/j+45/T-20/n)\}.
+\end{aligned}
+\tag{22.3}
+$$
+
+Here $A_5\ne0$ is the inherited full-source assertion in Lemma 12.2,
+not a regularity assumption on the parent. Formula (22.3) follows
+from the single gain $h+\epsilon v_r$ of Theorem 4.1; in particular
+$g(6)$ is the bracket in its last line.
+
+Exact interval evaluation over the full $p$ interval $\mathcal P$
+and the two rational root boxes gives
+
+| $r$ box | $A_5$ enclosure | Actual $u$ enclosure |
+| --- | --- | --- |
+| $[149383/1108052,182914/1356769]$ | $[-908,-907]/10^3$ | $[119870498,119870500]/10^6$ |
+| $[1412683/1565387,1774115/1965888]$ | $[-5217,-5216]/10^3$ | $[138752856,138752858]/10^6$ |
+
+For these calculations evaluate the exact expressions (22.2)–(22.3)
+with the interval rule (14.12). Before division, $j,n,T$ are positive
+and the $A_5$ intervals exclude zero. The unrounded expression for
+$A_5$ supplies the subsequent quotient; the displayed coarser
+$A_5$ enclosures are guards, not replacements of that expression.
+Both actual $u$ enclosures are disjoint from $\mathcal V$. This
+excludes each singular source line after its unique fifth-response
+lift, and hence every $\Lambda=0$ world in the full child.
+
+For $\Lambda\ne0$, Theorem 20.2 gives the necessary equations
+$\mathsf A=\mathsf B=0$. The exact resultant (20.3) applies to
+every finite real source, regardless of how large $b$ or $c$ is.
+Strictness removes $r=0,1$. Theorem 21.2 excludes all $\Psi_2$
+and $\Psi_4$ roots by negative forced $b$, and all $\Phi$ roots
+by the forced singular source. Theorem 21.1 leaves exactly six
+possible $R_{18}$ projections. The first table of Theorem 21.2
+excludes the last two by $b<0$. On each of the first four,
+$\mathcal L_1\ne0$ forces the sole possible $b$, and Theorem 20.2
+permits at most one complete lift. There are therefore at most
+four nonsingular complete worlds and no singular ones.
+
+The two branches exhaust the parent, so (22.1) follows. No step
+supposes that an arbitrary projected root actually has a legal lift.
+The bound uses neither compactness of the source domain nor a
+generic-rank deletion. Lower degrees, repeated gain roots, sampled
+zeros and zero drift were never divided out. An identically zero
+gain alone is excluded by the original model and by the original
+unequal $0,24$ rows. ∎
+
+## 23. The entire exact acquired child and its obstruction
+
+**Theorem 23.1 (Exact four-world child with one final-J pair).** At the
+inherited exact algebraic $p_J$ of (8.4), let $v_\star$ be the actual
+response (18.8) at the unique eight-equation zero of Theorem 18.2.
+Then the entire complete-world child is
+
+$$
+\mathcal F(H_4,M,p_J,M,v_\star)=\{A,B,C,D\}.
+\tag{23.1}
+$$
+
+The four worlds are different, their $r$ projections occur in the
+order $C,B,A,D$ in $I_1,I_2,I_3,I_4$, and each is the unique
+complete lift of its corresponding source. The only unordered pair
+of different worlds with equal actual final-J response is $\{A,B\}$.
+There is no distinct final-M collision pair. Consequently, for every
+finite or infinite support $S$ inside this entire child,
+
+$$
+\neg L_1(S,(H_4,M,p_J,M,v_\star)).
+\tag{23.2}
+$$
+
+Proof. Theorem 18.2 supplies four actual, distinct complete worlds
+with the same acquired fifth and sixth responses. Theorem 19.1 puts
+this actual $v_\star$ in $\mathcal V$, while the inherited definition
+puts $p_J\in\mathcal P$. Thus the independent upper bound (22.1)
+applies to their full child and permits at most four worlds. These
+four already exist, proving (23.1). The upper-bound proof uses no
+local existence premise; existence comes from the original eight
+equations, and it discharges the premise needed for exact cardinality.
+
+The precise coordinate association has the following sharper
+certificate. From the component version of (19.3) at the fixed point,
+
+$$
+|z_i(p_J)-m_i|\le\eta_i+q_i\rho.
+\tag{23.3}
+$$
+
+For the four $r$ coordinates the bounds are
+
+| World | Coordinate index | $10^{24}(\eta_i+q_i\rho)$ | Assigned interval |
+| --- | --- | --- | --- |
+| $C$ | $5$ | $296419530456129$ | $I_1$ |
+| $B$ | $3$ | $117712740203950$ | $I_2$ |
+| $A$ | $1$ | $436698210487845$ | $I_3$ |
+| $D$ | $7$ | $540609050271175$ | $I_4$ |
+
+Exact rational endpoint comparisons give
+$[m_i-\eta_i-q_i\rho,m_i+\eta_i+q_i\rho]
+\subset\operatorname{int}I_k$ for every indicated row. The
+coarse interval $[m_i-\rho,m_i+\rho]$ alone does not fit inside
+$I_3$ for $A$ or $I_4$ for $D$; the component displacement is
+required for this matching. Each $r$ is consequently the unique
+$R_{18}$ root in its assigned interval at $(p_J,v_\star)$, and the
+nonzero linear coefficient in Theorem 21.2 fixes the corresponding
+$b$. The full-parent reconstruction fixes the complete lift. This
+identifies the four possible lifts with the four actual worlds,
+without inferring existence from elimination.
+
+Theorem 19.1 gives both the exact $A,B$ final-J equality and all
+five other final-J inequalities. Its four final-M intervals are
+pairwise disjoint, so $f_{MM}$ is injective on the whole child
+(23.1). Every final-M response fiber inside any $S$ therefore has
+at most one complete world. Such a fiber fails $L_0$ in (1.5), so
+the final-M conjunct required by $L_1$ fails for every $S$. Empty
+and singleton supports also fail the original guard. This proves
+(23.2), allowing overlapping pairs, replacement pairs, all label
+reuse and any nominally infinite support. In fact (23.1) makes
+every such support finite. Adding worlds from the same acquired
+child cannot repair the missing final-M pair. ∎
+
+## 24. Integer coefficients of the model-specific eliminant
+
+**Definition 24.1 (Sparse coefficient certificate).** The following
+rows specify $R_{18}=\sum c_{ijk}r^ip^jv^k$ in (20.3).
+Each first entry is the ordered exponent triple $(i,j,k)$ and the
+second is its integer coefficient $c_{ijk}$. Omitted coefficients
+are zero. In particular the table is an exact polynomial definition,
+not a list of approximate roots. It can be compared directly with
+the $14$ by $14$ determinant of Definition 20.1 by multiplication
+by the displayed base factors and the constant $52488000$.
+
+| $(i,j,k)$ | $c_{ijk}$ |
+| --- | --- |
+| $(18,6,0)$ | $281961000000000$ |
+| $(18,5,1)$ | $-313502400000000$ |
+| $(18,5,0)$ | $216480097800000000$ |
+| $(18,4,2)$ | $140197905000000$ |
+| $(18,4,1)$ | $-183598036020000000$ |
+| $(18,4,0)$ | $38770237644187500000$ |
+| $(18,3,3)$ | $-32248497000000$ |
+| $(18,3,2)$ | $59761081300500000$ |
+| $(18,3,1)$ | $-21819533512808250000$ |
+| $(18,3,0)$ | $-1305826437291597000000$ |
+| $(18,2,4)$ | $4024671131250$ |
+| $(18,2,3)$ | $-9350448896700000$ |
+| $(18,2,2)$ | $4380240711656418750$ |
+| $(18,2,1)$ | $808637782421944350000$ |
+| $(18,2,0)$ | $-89049805697410355700000$ |
+| $(18,1,5)$ | $-258215040000$ |
+| $(18,1,4)$ | $701869919940000$ |
+| $(18,1,3)$ | $-361624906848690000$ |
+| $(18,1,2)$ | $-160223943658193820000$ |
+| $(18,1,1)$ | $30169287387382657680000$ |
+| $(18,1,0)$ | $239808455600285335680000$ |
+| $(18,0,6)$ | $6635520000$ |
+| $(18,0,5)$ | $-20081488896000$ |
+| $(18,0,4)$ | $9701812813392000$ |
+| $(18,0,3)$ | $10277902753362720000$ |
+| $(18,0,2)$ | $-2540544442593776640000$ |
+| $(18,0,1)$ | $-51793254288629718912000$ |
+| $(18,0,0)$ | $1181282576058930689280000$ |
+| $(17,6,0)$ | $11697160050000000$ |
+| $(17,5,1)$ | $-13104101812500000$ |
+| $(17,5,0)$ | $8463961281150000000$ |
+| $(17,4,2)$ | $5912858463375000$ |
+| $(17,4,1)$ | $-7348960727982000000$ |
+| $(17,4,0)$ | $1483519110445186875000$ |
+| $(17,3,3)$ | $-1373848967343750$ |
+| $(17,3,2)$ | $2464101676362600000$ |
+| $(17,3,1)$ | $-901480152387231056250$ |
+| $(17,3,0)$ | $1852630614758298600000$ |
+| $(17,2,4)$ | $173272946017500$ |
+| $(17,2,3)$ | $-399858027945086250$ |
+| $(17,2,2)$ | $200853447339149718750$ |
+| $(17,2,1)$ | $1178764558700332916250$ |
+| $(17,2,0)$ | $163581203033345828925000$ |
+| $(17,1,5)$ | $-11230428600000$ |
+| $(17,1,4)$ | $31398891817081500$ |
+| $(17,1,3)$ | $-19320715680509565000$ |
+| $(17,1,2)$ | $-565910651464761354750$ |
+| $(17,1,1)$ | $-59412951723758184855000$ |
+| $(17,1,0)$ | $-1002068877488319994248000$ |
+| $(17,0,6)$ | $291133440000$ |
+| $(17,0,5)$ | $-951691992768000$ |
+| $(17,0,4)$ | $669833646565500000$ |
+| $(17,0,3)$ | $52991656386354320400$ |
+| $(17,0,2)$ | $5580283402943085196800$ |
+| $(17,0,1)$ | $167175722773542968222400$ |
+| $(17,0,0)$ | $-6465459314607758575488000$ |
+| $(16,7,0)$ | $2632500000000$ |
+| $(16,6,1)$ | $-2412000000000$ |
+| $(16,6,0)$ | $-25778987032500000$ |
+| $(16,5,2)$ | $468412500000$ |
+| $(16,5,1)$ | $24551803095750000$ |
+| $(16,5,0)$ | $58277850498875250000$ |
+| $(16,4,3)$ | $177667500000$ |
+| $(16,4,2)$ | $-10642238273456250$ |
+| $(16,4,1)$ | $-49981742993062575000$ |
+| $(16,4,0)$ | $1381789224939490031250$ |
+| $(16,3,4)$ | $-92011609375$ |
+| $(16,3,3)$ | $2743545339423750$ |
+| $(16,3,2)$ | $16751914988508646875$ |
+| $(16,3,1)$ | $-794180536379427397500$ |
+| $(16,3,0)$ | $-358800186378400652722500$ |
+| $(16,2,5)$ | $15729300000$ |
+| $(16,2,4)$ | $-433954102623750$ |
+| $(16,2,3)$ | $-2738662987915579500$ |
+| $(16,2,2)$ | $166925606597690512500$ |
+| $(16,2,1)$ | $161601580331149063275000$ |
+| $(16,2,0)$ | $3973723002509355032096250$ |
+| $(16,1,6)$ | $-1203120000$ |
+| $(16,1,5)$ | $38271776460000$ |
+| $(16,1,4)$ | $217682926930129500$ |
+| $(16,1,3)$ | $-14658587741956167900$ |
+| $(16,1,2)$ | $-23812074204232783632750$ |
+| $(16,1,1)$ | $-1340397357819435481929750$ |
+| $(16,1,0)$ | $-1479530902765750369259400$ |
+| $(16,0,7)$ | $34560000$ |
+| $(16,0,6)$ | $-1419395328000$ |
+| $(16,0,5)$ | $-6691576819320000$ |
+| $(16,0,4)$ | $414780030289321650$ |
+| $(16,0,3)$ | $1140971295045214973520$ |
+| $(16,0,2)$ | $110823773166903325036590$ |
+| $(16,0,1)$ | $934342106402867173085520$ |
+| $(16,0,0)$ | $-31216780548911643539112000$ |
+| $(15,7,0)$ | $111574125000000$ |
+| $(15,6,1)$ | $-103320356250000$ |
+| $(15,6,0)$ | $-4456655095351500000$ |
+| $(15,5,2)$ | $20684554687500$ |
+| $(15,5,1)$ | $4898237975623050000$ |
+| $(15,5,0)$ | $113237387029630687500$ |
+| $(15,4,3)$ | $7464690953125$ |
+| $(15,4,2)$ | $-2223610766705471250$ |
+| $(15,4,1)$ | $-47312379333346303125$ |
+| $(15,4,0)$ | $-64983014889925613400000$ |
+| $(15,3,4)$ | $-3983787921875$ |
+| $(15,3,3)$ | $533085775652855625$ |
+| $(15,3,2)$ | $2750486153551683750$ |
+| $(15,3,1)$ | $42016415828859017033625$ |
+| $(15,3,0)$ | $2232134160162941119288500$ |
+| $(15,2,5)$ | $691841940000$ |
+| $(15,2,4)$ | $-71142806039973750$ |
+| $(15,2,3)$ | $1255037152501550250$ |
+| $(15,2,2)$ | $-10097512016622968190825$ |
+| $(15,2,1)$ | $-1086858251282043827131950$ |
+| $(15,2,0)$ | $-20238357387815524798996050$ |
+| $(15,1,6)$ | $-53598960000$ |
+| $(15,1,5)$ | $5009789862507000$ |
+| $(15,1,4)$ | $-209312063799718500$ |
+| $(15,1,3)$ | $1066222921549146072750$ |
+| $(15,1,2)$ | $176092609292407586212110$ |
+| $(15,1,1)$ | $6885610579010880780020280$ |
+| $(15,1,0)$ | $5191476292651153238934570$ |
+| $(15,0,7)$ | $1555200000$ |
+| $(15,0,6)$ | $-145410233328000$ |
+| $(15,0,5)$ | $9238451720292000$ |
+| $(15,0,4)$ | $-41590600779643803000$ |
+| $(15,0,3)$ | $-9489715182034635855510$ |
+| $(15,0,2)$ | $-580992779299191555419640$ |
+| $(15,0,1)$ | $-3878381517820338677568570$ |
+| $(15,0,0)$ | $313443481402177642899545040$ |
+| $(14,7,0)$ | $-158815181250000$ |
+| $(14,6,1)$ | $89930548125000$ |
+| $(14,6,0)$ | $-17111443304292750000$ |
+| $(14,5,2)$ | $-2249134265625$ |
+| $(14,5,1)$ | $19174277394129900000$ |
+| $(14,5,0)$ | $2067841429274540458125$ |
+| $(14,4,3)$ | $-5618524681250$ |
+| $(14,4,2)$ | $-8914248768510993750$ |
+| $(14,4,1)$ | $-1734765612990253921125$ |
+| $(14,4,0)$ | $99631651760059410846000$ |
+| $(14,3,4)$ | $2219172608750$ |
+| $(14,3,3)$ | $2189784719877819375$ |
+| $(14,3,2)$ | $584545048890477603750$ |
+| $(14,3,1)$ | $-70844182348382774011575$ |
+| $(14,3,0)$ | $-3537943032769888225842675$ |
+| $(14,2,5)$ | $-636116370000$ |
+| $(14,2,4)$ | $-298722769028683500$ |
+| $(14,2,3)$ | $-98944313096640915000$ |
+| $(14,2,2)$ | $18597322087780479191550$ |
+| $(14,2,1)$ | $1809265060751636782496385$ |
+| $(14,2,0)$ | $31139899829637714678369240$ |
+| $(14,1,6)$ | $94333520000$ |
+| $(14,1,5)$ | $21399797709027000$ |
+| $(14,1,4)$ | $8421011668157321925$ |
+| $(14,1,3)$ | $-2138214153515488435350$ |
+| $(14,1,2)$ | $-309427252881111651139875$ |
+| $(14,1,1)$ | $-10415267930705140671031260$ |
+| $(14,1,0)$ | $13945519257347033181517050$ |
+| $(14,0,7)$ | $-5064960000$ |
+| $(14,0,6)$ | $-627474739440000$ |
+| $(14,0,5)$ | $-288663422025592800$ |
+| $(14,0,4)$ | $90881999485177155210$ |
+| $(14,0,3)$ | $17679885195945061871100$ |
+| $(14,0,2)$ | $876037112747708601138156$ |
+| $(14,0,1)$ | $1264499593315944502957812$ |
+| $(14,0,0)$ | $-815559397149448532961540054$ |
+| $(13,7,0)$ | $-42484924980000000$ |
+| $(13,6,1)$ | $38014303947000000$ |
+| $(13,6,0)$ | $158535647683951500000$ |
+| $(13,5,2)$ | $-7407199891225000$ |
+| $(13,5,1)$ | $-177292659015041662500$ |
+| $(13,5,0)$ | $-15317465770807306768125$ |
+| $(13,4,3)$ | $-2641456247073125$ |
+| $(13,4,2)$ | $81801717817536159375$ |
+| $(13,4,1)$ | $12515207955734144561625$ |
+| $(13,4,0)$ | $305537360152190946933600$ |
+| $(13,3,4)$ | $1446015108561875$ |
+| $(13,3,3)$ | $-19940102529479572500$ |
+| $(13,3,2)$ | $-4097528305824404655000$ |
+| $(13,3,1)$ | $-182779505661415891403700$ |
+| $(13,3,0)$ | $-2297555524336452728876280$ |
+| $(13,2,5)$ | $-265061597085000$ |
+| $(13,2,4)$ | $2709556674053454000$ |
+| $(13,2,3)$ | $672226570157468858775$ |
+| $(13,2,2)$ | $40665797973846698733675$ |
+| $(13,2,1)$ | $992701482397551646096185$ |
+| $(13,2,0)$ | $-2205855679363871541128595$ |
+| $(13,1,6)$ | $22386826520000$ |
+| $(13,1,5)$ | $-194689779147948000$ |
+| $(13,1,4)$ | $-55290262766534455725$ |
+| $(13,1,3)$ | $-3979316129682813842745$ |
+| $(13,1,2)$ | $-137104515802931526089325$ |
+| $(13,1,1)$ | $-159135550895104043819643$ |
+| $(13,1,0)$ | $11168609547462613033143762$ |
+| $(13,0,7)$ | $-735108480000$ |
+| $(13,0,6)$ | $5781542513184000$ |
+| $(13,0,5)$ | $1825196130278820000$ |
+| $(13,0,4)$ | $144032767072475373000$ |
+| $(13,0,3)$ | $5936090316411381303150$ |
+| $(13,0,2)$ | $64334528787432067368012$ |
+| $(13,0,1)$ | $1109474755106615816336946$ |
+| $(13,0,0)$ | $627167213373704369108209740$ |
+| $(12,7,0)$ | $-203686471496250000$ |
+| $(12,6,1)$ | $187481619466312500$ |
+| $(12,6,0)$ | $-281638534264379212500$ |
+| $(12,5,2)$ | $-39091754242268750$ |
+| $(12,5,1)$ | $330550299047335695000$ |
+| $(12,5,0)$ | $29515658193907553812500$ |
+| $(12,4,3)$ | $-12522969253597500$ |
+| $(12,4,2)$ | $-158898243419312851500$ |
+| $(12,4,1)$ | $-24687887460015462393375$ |
+| $(12,4,0)$ | $-863227138411552677802650$ |
+| $(12,3,4)$ | $7298433327005000$ |
+| $(12,3,3)$ | $40184205970352475000$ |
+| $(12,3,2)$ | $8255822900193218805525$ |
+| $(12,3,1)$ | $555103322511848832493575$ |
+| $(12,3,0)$ | $10054267044731947033790850$ |
+| $(12,2,5)$ | $-1371408843090000$ |
+| $(12,2,4)$ | $-5652379336591047000$ |
+| $(12,2,3)$ | $-1380037559518677551400$ |
+| $(12,2,2)$ | $-133807743124863585459795$ |
+| $(12,2,1)$ | $-4867016331336909058338975$ |
+| $(12,2,0)$ | $-25169612741555713984634724$ |
+| $(12,1,6)$ | $117549533360000$ |
+| $(12,1,5)$ | $420041365144437000$ |
+| $(12,1,4)$ | $115341011751264779700$ |
+| $(12,1,3)$ | $14321932034249106690165$ |
+| $(12,1,2)$ | $786164623529110362691515$ |
+| $(12,1,1)$ | $9743820101860564475633223$ |
+| $(12,1,0)$ | $-196219768329315226167672159$ |
+| $(12,0,7)$ | $-3886667520000$ |
+| $(12,0,6)$ | $-12900183210840000$ |
+| $(12,0,5)$ | $-3856950292797590400$ |
+| $(12,0,4)$ | $-573892814541698016300$ |
+| $(12,0,3)$ | $-42422819951148291463482$ |
+| $(12,0,2)$ | $-902054937937966726446756$ |
+| $(12,0,1)$ | $24848108220318945754317786$ |
+| $(12,0,0)$ | $410678133015909160191933648$ |
+| $(11,7,0)$ | $1275014587871250000$ |
+| $(11,6,1)$ | $-1169566193721187500$ |
+| $(11,6,0)$ | $66213158072845612500$ |
+| $(11,5,2)$ | $243503085666187500$ |
+| $(11,5,1)$ | $-131965915824425726250$ |
+| $(11,5,0)$ | $-17511017941074666525750$ |
+| $(11,4,3)$ | $77643370571580625$ |
+| $(11,4,2)$ | $86554214702529806625$ |
+| $(11,4,1)$ | $15755180891548097250675$ |
+| $(11,4,0)$ | $617592408091626171797775$ |
+| $(11,3,4)$ | $-45455458095606875$ |
+| $(11,3,3)$ | $-27187529812780240500$ |
+| $(11,3,2)$ | $-5653514744149528672650$ |
+| $(11,3,1)$ | $-411994671243949089514665$ |
+| $(11,3,0)$ | $-6898376552311638266286015$ |
+| $(11,2,5)$ | $8605753902580000$ |
+| $(11,2,4)$ | $4510649094278331750$ |
+| $(11,2,3)$ | $1012170888093868851825$ |
+| $(11,2,2)$ | $103399759491348600025920$ |
+| $(11,2,1)$ | $3285608846570861684794965$ |
+| $(11,2,0)$ | $3583754689099746219406875$ |
+| $(11,1,6)$ | $-746755379400000$ |
+| $(11,1,5)$ | $-382725687219405000$ |
+| $(11,1,4)$ | $-90466063367006969325$ |
+| $(11,1,3)$ | $-11569404569001813031410$ |
+| $(11,1,2)$ | $-526644587195830431575694$ |
+| $(11,1,1)$ | $-815381346902577574134456$ |
+| $(11,1,0)$ | $263627414461458806275048239$ |
+| $(11,0,7)$ | $25140922240000$ |
+| $(11,0,6)$ | $13126021801344000$ |
+| $(11,0,5)$ | $3230581392686285100$ |
+| $(11,0,4)$ | $486841944516293680830$ |
+| $(11,0,3)$ | $28547709274587137676930$ |
+| $(11,0,2)$ | $1426888166607259348356$ |
+| $(11,0,1)$ | $-39222220702731903124042878$ |
+| $(11,0,0)$ | $-485813541162222623284397442$ |
+| $(10,7,0)$ | $-1714516555063500000$ |
+| $(10,6,1)$ | $1576508402247225000$ |
+| $(10,6,0)$ | $161908863906828037500$ |
+| $(10,5,2)$ | $-329491752983392500$ |
+| $(10,5,1)$ | $-112317591624511646250$ |
+| $(10,5,0)$ | $279364557918124552500$ |
+| $(10,4,3)$ | $-104212742107221250$ |
+| $(10,4,2)$ | $19839816780822771750$ |
+| $(10,4,1)$ | $-1352363530451157648675$ |
+| $(10,4,0)$ | $-188567611771534923817125$ |
+| $(10,3,4)$ | $61307832107473125$ |
+| $(10,3,3)$ | $2967881022166143000$ |
+| $(10,3,2)$ | $878365289363522813775$ |
+| $(10,3,1)$ | $122409868014051126289605$ |
+| $(10,3,0)$ | $3372669509338098667909755$ |
+| $(10,2,5)$ | $-11647759309035000$ |
+| $(10,2,4)$ | $-1464915332961227250$ |
+| $(10,2,3)$ | $-226912280084029541700$ |
+| $(10,2,2)$ | $-30288076886839312248615$ |
+| $(10,2,1)$ | $-1328023534974787791864072$ |
+| $(10,2,0)$ | $-21669492718294957297200294$ |
+| $(10,1,6)$ | $1015454575410000$ |
+| $(10,1,5)$ | $181979633419143000$ |
+| $(10,1,4)$ | $26403799622820081750$ |
+| $(10,1,3)$ | $3394769079076055492670$ |
+| $(10,1,2)$ | $164236092455713931156547$ |
+| $(10,1,1)$ | $5562813773912458705923870$ |
+| $(10,1,0)$ | $14206482862245729257883453$ |
+| $(10,0,7)$ | $-34407526240000$ |
+| $(10,0,6)$ | $-7712696895696000$ |
+| $(10,0,5)$ | $-1156504481773237800$ |
+| $(10,0,4)$ | $-145783957586278141890$ |
+| $(10,0,3)$ | $-6172178824442844868608$ |
+| $(10,0,2)$ | $-243258682119518419917624$ |
+| $(10,0,1)$ | $-16001878706098330066828776$ |
+| $(10,0,0)$ | $281806618587987766855312026$ |
+| $(9,7,0)$ | $439773888767062500$ |
+| $(9,6,1)$ | $-404970488081362500$ |
+| $(9,6,0)$ | $-20040067970958352500$ |
+| $(9,5,2)$ | $79839394437790000$ |
+| $(9,5,1)$ | $-3264395014362611250$ |
+| $(9,5,0)$ | $-6772165704754097805000$ |
+| $(9,4,3)$ | $28262795760856875$ |
+| $(9,4,2)$ | $13351452197678248125$ |
+| $(9,4,1)$ | $6120645189819369249375$ |
+| $(9,4,0)$ | $449258099615096758046325$ |
+| $(9,3,4)$ | $-15402145543139375$ |
+| $(9,3,3)$ | $-6065475725660315250$ |
+| $(9,3,2)$ | $-2222818121438184483225$ |
+| $(9,3,1)$ | $-284023702817920180789065$ |
+| $(9,3,0)$ | $-9826496962705335770868105$ |
+| $(9,2,5)$ | $2795196516685000$ |
+| $(9,2,4)$ | $1189578439168224750$ |
+| $(9,2,3)$ | $404641430047794059775$ |
+| $(9,2,2)$ | $67166989911522642659715$ |
+| $(9,2,1)$ | $4517424290372040816896529$ |
+| $(9,2,0)$ | $91131273134348773801076775$ |
+| $(9,1,6)$ | $-233141389890000$ |
+| $(9,1,5)$ | $-110266080740919000$ |
+| $(9,1,4)$ | $-36850496723349782175$ |
+| $(9,1,3)$ | $-7048075199430492390600$ |
+| $(9,1,2)$ | $-684148026537323475364656$ |
+| $(9,1,1)$ | $-30188653869783569596472808$ |
+| $(9,1,0)$ | $-97455349369195619958271629$ |
+| $(9,0,7)$ | $7552636000000$ |
+| $(9,0,6)$ | $3962118909336000$ |
+| $(9,0,5)$ | $1340804589012648000$ |
+| $(9,0,4)$ | $277292742002717022540$ |
+| $(9,0,3)$ | $33915108138126809086296$ |
+| $(9,0,2)$ | $2458062613126332054044874$ |
+| $(9,0,1)$ | $42188739135352039427272776$ |
+| $(9,0,0)$ | $-2096104949743402813554519894$ |
+| $(8,7,0)$ | $-13360664766937500$ |
+| $(8,6,1)$ | $3777523919812500$ |
+| $(8,6,0)$ | $-2795277112117852500$ |
+| $(8,5,2)$ | $9928832919558750$ |
+| $(8,5,1)$ | $23057492776626239250$ |
+| $(8,5,0)$ | $4937668726970539282050$ |
+| $(8,4,3)$ | $-3276207067287500$ |
+| $(8,4,2)$ | $-19569754987766280000$ |
+| $(8,4,1)$ | $-5268163869124430665725$ |
+| $(8,4,0)$ | $-347775255599540041848915$ |
+| $(8,3,4)$ | $-563253712701250$ |
+| $(8,3,3)$ | $6816166799904675750$ |
+| $(8,3,2)$ | $2140850372691019057650$ |
+| $(8,3,1)$ | $244373002841550804008175$ |
+| $(8,3,0)$ | $8251645282455651283998315$ |
+| $(8,2,5)$ | $359823080130000$ |
+| $(8,2,4)$ | $-1179592722784617000$ |
+| $(8,2,3)$ | $-421574894774971732350$ |
+| $(8,2,2)$ | $-63566991451863840167730$ |
+| $(8,2,1)$ | $-4174153813667904971713056$ |
+| $(8,2,0)$ | $-65175253985866168138858704$ |
+| $(8,1,6)$ | $-51536214170000$ |
+| $(8,1,5)$ | $100771388372226000$ |
+| $(8,1,4)$ | $40619811783926602575$ |
+| $(8,1,3)$ | $7274151634338083088180$ |
+| $(8,1,2)$ | $702018648670562503479684$ |
+| $(8,1,1)$ | $22413753776353677297281154$ |
+| $(8,1,0)$ | $-144973160884344868194260601$ |
+| $(8,0,7)$ | $2419717600000$ |
+| $(8,0,6)$ | $-3390350605272000$ |
+| $(8,0,5)$ | $-1540850184190817100$ |
+| $(8,0,4)$ | $-309529644278285694420$ |
+| $(8,0,3)$ | $-39117702101361025355676$ |
+| $(8,0,2)$ | $-1998478351864103770814562$ |
+| $(8,0,1)$ | $18711925461125207184271176$ |
+| $(8,0,0)$ | $2710623282850926585549145782$ |
+| $(7,7,0)$ | $472707251910225000$ |
+| $(7,6,1)$ | $-427211422806345000$ |
+| $(7,6,0)$ | $-144017129004397582500$ |
+| $(7,5,2)$ | $82894019485622500$ |
+| $(7,5,1)$ | $125624979354233291250$ |
+| $(7,5,0)$ | $9797679342070846846650$ |
+| $(7,4,3)$ | $29940109191258750$ |
+| $(7,4,2)$ | $-39560275601410915125$ |
+| $(7,4,1)$ | $-6798514960834181562600$ |
+| $(7,4,0)$ | $-270614314392618665416005$ |
+| $(7,3,4)$ | $-16201305975883750$ |
+| $(7,3,3)$ | $4858493458469358375$ |
+| $(7,3,2)$ | $1760639132105808813675$ |
+| $(7,3,1)$ | $144264048237616528907550$ |
+| $(7,3,0)$ | $3432859212825070618268223$ |
+| $(7,2,5)$ | $2940573989865000$ |
+| $(7,2,4)$ | $14677842513880500$ |
+| $(7,2,3)$ | $-200679460713785171025$ |
+| $(7,2,2)$ | $-27383938871198301342180$ |
+| $(7,2,1)$ | $-1342685044947053325630591$ |
+| $(7,2,0)$ | $-27309651593730861366063639$ |
+| $(7,1,6)$ | $-245611745300000$ |
+| $(7,1,5)$ | $-50698718870679000$ |
+| $(7,1,4)$ | $8260264543843998675$ |
+| $(7,1,3)$ | $2112111771088033808640$ |
+| $(7,1,2)$ | $161844400487351260689966$ |
+| $(7,1,1)$ | $9504418980290065695082062$ |
+| $(7,1,0)$ | $102586555852249608949383927$ |
+| $(7,0,7)$ | $7964484800000$ |
+| $(7,0,6)$ | $3005087996784000$ |
+| $(7,0,5)$ | $32286755756135700$ |
+| $(7,0,4)$ | $-50520390281051278050$ |
+| $(7,0,3)$ | $-5497503220728627346746$ |
+| $(7,0,2)$ | $-765206747028002884606596$ |
+| $(7,0,1)$ | $-36670994812379084185788426$ |
+| $(7,0,0)$ | $93724753446222794732655846$ |
+| $(6,7,0)$ | $153951032323350000$ |
+| $(6,6,1)$ | $-111365610128782500$ |
+| $(6,6,0)$ | $48048560956918215000$ |
+| $(6,5,2)$ | $10145082636700625$ |
+| $(6,5,1)$ | $-55679873895962451750$ |
+| $(6,5,0)$ | $-6576265632598611335325$ |
+| $(6,4,3)$ | $10355637895032500$ |
+| $(6,4,2)$ | $24417933539756373000$ |
+| $(6,4,1)$ | $5643883533226636706400$ |
+| $(6,4,0)$ | $290259820353763043811765$ |
+| $(6,3,4)$ | $-3565124381844375$ |
+| $(6,3,3)$ | $-5224568821072347375$ |
+| $(6,3,2)$ | $-1887032131070420536425$ |
+| $(6,3,1)$ | $-186780879076099134370770$ |
+| $(6,3,0)$ | $-5508490802257692619216164$ |
+| $(6,2,5)$ | $461331431080000$ |
+| $(6,2,4)$ | $563490048786474750$ |
+| $(6,2,3)$ | $308015654455230891750$ |
+| $(6,2,2)$ | $44597532912150385961280$ |
+| $(6,2,1)$ | $2650130173690237875086775$ |
+| $(6,2,0)$ | $37933358938627818230681130$ |
+| $(6,1,6)$ | $-24786640910000$ |
+| $(6,1,5)$ | $-26883779056962000$ |
+| $(6,1,4)$ | $-24549787033936532100$ |
+| $(6,1,3)$ | $-4682317097670471181440$ |
+| $(6,1,2)$ | $-425628376700939191532961$ |
+| $(6,1,1)$ | $-13192637494499893775042262$ |
+| $(6,1,0)$ | $97205137942269157155633321$ |
+| $(6,0,7)$ | $363526560000$ |
+| $(6,0,6)$ | $305700120504000$ |
+| $(6,0,5)$ | $762652697673855600$ |
+| $(6,0,4)$ | $182278676990667492360$ |
+| $(6,0,3)$ | $22721696373785552063784$ |
+| $(6,0,2)$ | $1179831362120344307864772$ |
+| $(6,0,1)$ | $-7269428231520127803332712$ |
+| $(6,0,0)$ | $-1543497978224919601492965612$ |
+| $(5,7,0)$ | $-455916709018912500$ |
+| $(5,6,1)$ | $381449679086520000$ |
+| $(5,6,0)$ | $54439165551188250000$ |
+| $(5,5,2)$ | $-62127482294222500$ |
+| $(5,5,1)$ | $-35341571454349505250$ |
+| $(5,5,0)$ | $-2174362799632851995775$ |
+| $(5,4,3)$ | $-29356845960326250$ |
+| $(5,4,2)$ | $4112052339925972500$ |
+| $(5,4,1)$ | $865878530022457515900$ |
+| $(5,4,0)$ | $29711670190267269008475$ |
+| $(5,3,4)$ | $13801718648952500$ |
+| $(5,3,3)$ | $1954803651384981000$ |
+| $(5,3,2)$ | $40923130832764631325$ |
+| $(5,3,1)$ | $-681366253188490057665$ |
+| $(5,3,0)$ | $9965706469830807346701$ |
+| $(5,2,5)$ | $-2315363705530000$ |
+| $(5,2,4)$ | $-656291733436167750$ |
+| $(5,2,3)$ | $-64108611239856051600$ |
+| $(5,2,2)$ | $-4277978532530243351730$ |
+| $(5,2,1)$ | $-158947126710149901960504$ |
+| $(5,2,0)$ | $1286514870271314641831592$ |
+| $(5,1,6)$ | $179044080730000$ |
+| $(5,1,5)$ | $74042120428092000$ |
+| $(5,1,4)$ | $10318685045870938950$ |
+| $(5,1,3)$ | $939772263816544415085$ |
+| $(5,1,2)$ | $52129115619889732315767$ |
+| $(5,1,1)$ | $-682861320536525317261413$ |
+| $(5,1,0)$ | $-49620082784655854140897401$ |
+| $(5,0,7)$ | $-5327416800000$ |
+| $(5,0,6)$ | $-2954594307216000$ |
+| $(5,0,5)$ | $-516868550696506500$ |
+| $(5,0,4)$ | $-57532034539668933990$ |
+| $(5,0,3)$ | $-4341916022420430717066$ |
+| $(5,0,2)$ | $44743272171570520706700$ |
+| $(5,0,1)$ | $15125902141507872048862254$ |
+| $(5,0,0)$ | $249201558597546702210696858$ |
+| $(4,7,0)$ | $52503881150587500$ |
+| $(4,6,1)$ | $-62195152783792500$ |
+| $(4,6,0)$ | $-13931189734286722500$ |
+| $(4,5,2)$ | $20027730543647500$ |
+| $(4,5,1)$ | $10415719019387529750$ |
+| $(4,5,0)$ | $1409394333257886129750$ |
+| $(4,4,3)$ | $2462221534775000$ |
+| $(4,4,2)$ | $-1158001349963331750$ |
+| $(4,4,1)$ | $-952309344856818886200$ |
+| $(4,4,0)$ | $-60902497105369156504485$ |
+| $(4,3,4)$ | $-2845652931579375$ |
+| $(4,3,3)$ | $-852551257556229000$ |
+| $(4,3,2)$ | $214160475710249637750$ |
+| $(4,3,1)$ | $34054262544299420022390$ |
+| $(4,3,0)$ | $1173218706093120056970363$ |
+| $(4,2,5)$ | $662632356880000$ |
+| $(4,2,4)$ | $298752599120499750$ |
+| $(4,2,3)$ | $-13875965702738317350$ |
+| $(4,2,2)$ | $-6773549010379776945855$ |
+| $(4,2,1)$ | $-532395184569773278431753$ |
+| $(4,2,0)$ | $-7737497489188015862580270$ |
+| $(4,1,6)$ | $-66479515860000$ |
+| $(4,1,5)$ | $-36534246422070000$ |
+| $(4,1,4)$ | $-1036179587138425875$ |
+| $(4,1,3)$ | $549375400238791691655$ |
+| $(4,1,2)$ | $80816951120505777015327$ |
+| $(4,1,1)$ | $2821013417419691554479357$ |
+| $(4,1,0)$ | $-27542497060316628910734228$ |
+| $(4,0,7)$ | $2517796800000$ |
+| $(4,0,6)$ | $1589952290112000$ |
+| $(4,0,5)$ | $120300383353419000$ |
+| $(4,0,4)$ | $-14056699179152445210$ |
+| $(4,0,3)$ | $-4077660688602846431958$ |
+| $(4,0,2)$ | $-264197762883083648014632$ |
+| $(4,0,1)$ | $1246117969430580169827198$ |
+| $(4,0,0)$ | $358882373294915132418146370$ |
+| $(3,7,0)$ | $17818142730075000$ |
+| $(3,6,1)$ | $7500636903135000$ |
+| $(3,6,0)$ | $-3846715977745957500$ |
+| $(3,5,2)$ | $-13772887985780000$ |
+| $(3,5,1)$ | $-85374761633508000$ |
+| $(3,5,0)$ | $219615250711181886900$ |
+| $(3,4,3)$ | $2419302640450000$ |
+| $(3,4,2)$ | $1709240775033528750$ |
+| $(3,4,1)$ | $7082698957050140550$ |
+| $(3,4,0)$ | $-4583399481351912654450$ |
+| $(3,3,4)$ | $1026597031097500$ |
+| $(3,3,3)$ | $-702365483037543000$ |
+| $(3,3,2)$ | $-61310861406270417375$ |
+| $(3,3,1)$ | $-885475255959471344310$ |
+| $(3,3,0)$ | $35769916238526414409824$ |
+| $(3,2,5)$ | $-413637701505000$ |
+| $(3,2,4)$ | $114841760592361500$ |
+| $(3,2,3)$ | $19248977255649813450$ |
+| $(3,2,2)$ | $1097900579464904373705$ |
+| $(3,2,1)$ | $12971043617839508409300$ |
+| $(3,2,0)$ | $-469117696518566190781470$ |
+| $(3,1,6)$ | $52207861800000$ |
+| $(3,1,5)$ | $-8100815528223000$ |
+| $(3,1,4)$ | $-2286506676728847150$ |
+| $(3,1,3)$ | $-210440650894541776620$ |
+| $(3,1,2)$ | $-7400111465175954562998$ |
+| $(3,1,1)$ | $221643086977481068590930$ |
+| $(3,1,0)$ | $5343490800444740750515476$ |
+| $(3,0,7)$ | $-2284114560000$ |
+| $(3,0,6)$ | $186262799616000$ |
+| $(3,0,5)$ | $96519654141613200$ |
+| $(3,0,4)$ | $12210778918209439620$ |
+| $(3,0,3)$ | $713688633370920496446$ |
+| $(3,0,2)$ | $-16173520504574591382696$ |
+| $(3,0,1)$ | $-2255256990214861795690014$ |
+| $(3,0,0)$ | $-18340547612442511868925948$ |
+| $(2,7,0)$ | $4802345460900000$ |
+| $(2,6,1)$ | $-2886428712930000$ |
+| $(2,6,0)$ | $-213180354470745000$ |
+| $(2,5,2)$ | $-107510147800000$ |
+| $(2,5,1)$ | $723186342879480000$ |
+| $(2,5,0)$ | $-68181649587964663200$ |
+| $(2,4,3)$ | $351692250760000$ |
+| $(2,4,2)$ | $-720676995939751500$ |
+| $(2,4,1)$ | $24566869056152682900$ |
+| $(2,4,0)$ | $4898332051598506487040$ |
+| $(2,3,4)$ | $-69753748782500$ |
+| $(2,3,3)$ | $301945437717751500$ |
+| $(2,3,2)$ | $6672520716213887100$ |
+| $(2,3,1)$ | $-2438439733766302193340$ |
+| $(2,3,0)$ | $-111238594232317103084184$ |
+| $(2,2,5)$ | $1621832045000$ |
+| $(2,2,4)$ | $-62027856325253250$ |
+| $(2,2,3)$ | $-4240729541933509050$ |
+| $(2,2,2)$ | $389084516826338764755$ |
+| $(2,2,1)$ | $49837710767809048000560$ |
+| $(2,2,0)$ | $683052385628236708469484$ |
+| $(2,1,6)$ | $680523520000$ |
+| $(2,1,5)$ | $6236674107744000$ |
+| $(2,1,4)$ | $668957885928690525$ |
+| $(2,1,3)$ | $-17387531165773919880$ |
+| $(2,1,2)$ | $-7556589780271291601847$ |
+| $(2,1,1)$ | $-260368141871781765546156$ |
+| $(2,1,0)$ | $4121866581189977961306612$ |
+| $(2,0,7)$ | $-48364800000$ |
+| $(2,0,6)$ | $-246704152920000$ |
+| $(2,0,5)$ | $-34798708357713000$ |
+| $(2,0,4)$ | $-404628380555355000$ |
+| $(2,0,3)$ | $385304551800655978620$ |
+| $(2,0,2)$ | $25941996301169048323896$ |
+| $(2,0,1)$ | $-319060217488336140311748$ |
+| $(2,0,0)$ | $-41516715015756270067633632$ |
+| $(1,7,0)$ | $10651852684800000$ |
+| $(1,6,1)$ | $-13199233946160000$ |
+| $(1,6,0)$ | $-797551901097120000$ |
+| $(1,5,2)$ | $4550154651540000$ |
+| $(1,5,1)$ | $1177950097832292000$ |
+| $(1,5,0)$ | $5035141734856545600$ |
+| $(1,4,3)$ | $449014866500000$ |
+| $(1,4,2)$ | $-615658603481244000$ |
+| $(1,4,1)$ | $-24694990206969092400$ |
+| $(1,4,0)$ | $841238662162692019680$ |
+| $(1,3,4)$ | $-622908190410000$ |
+| $(1,3,3)$ | $147889102587120000$ |
+| $(1,3,2)$ | $14354789092081267500$ |
+| $(1,3,1)$ | $-109049559818216137920$ |
+| $(1,3,0)$ | $-22770486351146067734448$ |
+| $(1,2,5)$ | $149921160250000$ |
+| $(1,2,4)$ | $-16745159028268500$ |
+| $(1,2,3)$ | $-3282094160800945200$ |
+| $(1,2,2)$ | $-72348398324831599830$ |
+| $(1,2,1)$ | $8153571068758682706456$ |
+| $(1,2,0)$ | $156426252760199748124872$ |
+| $(1,1,6)$ | $-15348605900000$ |
+| $(1,1,5)$ | $730253397015000$ |
+| $(1,1,4)$ | $336386485355937750$ |
+| $(1,1,3)$ | $18099210219339861900$ |
+| $(1,1,2)$ | $-842957008205002901460$ |
+| $(1,1,1)$ | $-64243386275577969860352$ |
+| $(1,1,0)$ | $650590483833086263918416$ |
+| $(1,0,7)$ | $590696000000$ |
+| $(1,0,6)$ | $-574165800000$ |
+| $(1,0,5)$ | $-12951188034007500$ |
+| $(1,0,4)$ | $-1152761507445381750$ |
+| $(1,0,3)$ | $18218365393741244100$ |
+| $(1,0,2)$ | $5801670583753643604990$ |
+| $(1,0,1)$ | $57248321444495574116472$ |
+| $(1,0,0)$ | $-7750841669805112825149000$ |
+| $(0,7,0)$ | $1882751385600000$ |
+| $(0,6,1)$ | $-2263677342720000$ |
+| $(0,6,0)$ | $-151016590264320000$ |
+| $(0,5,2)$ | $748023099920000$ |
+| $(0,5,1)$ | $185688356712384000$ |
+| $(0,5,0)$ | $3213119827373529600$ |
+| $(0,4,3)$ | $86499824520000$ |
+| $(0,4,2)$ | $-79489752877140000$ |
+| $(0,4,1)$ | $-4582429898420995200$ |
+| $(0,4,0)$ | $20139300986778011520$ |
+| $(0,3,4)$ | $-104994784920000$ |
+| $(0,3,3)$ | $13974915331788000$ |
+| $(0,3,2)$ | $1930774481745552000$ |
+| $(0,3,1)$ | $27732303000570925440$ |
+| $(0,3,0)$ | $-1328950410111727441920$ |
+| $(0,2,5)$ | $24568115060000$ |
+| $(0,2,4)$ | $-606455904474000$ |
+| $(0,2,3)$ | $-350157940064861400$ |
+| $(0,2,2)$ | $-14881434899784436440$ |
+| $(0,2,1)$ | $373016175423409668096$ |
+| $(0,2,0)$ | $10595277593992649825568$ |
+| $(0,1,6)$ | $-2463508550000$ |
+| $(0,1,5)$ | $-90146197365000$ |
+| $(0,1,4)$ | $28271364990156000$ |
+| $(0,1,3)$ | $2354855881859675100$ |
+| $(0,1,2)$ | $-11783192383653335640$ |
+| $(0,1,1)$ | $-4549726426833142306416$ |
+| $(0,1,0)$ | $31564683645673100745312$ |
+| $(0,0,7)$ | $93076000000$ |
+| $(0,0,6)$ | $7864914000000$ |
+| $(0,0,5)$ | $-801730808347500$ |
+| $(0,0,4)$ | $-123235854816726000$ |
+| $(0,0,3)$ | $-2261785083620012100$ |
+| $(0,0,2)$ | $354101571359596806480$ |
+| $(0,0,1)$ | $8889210017909233702704$ |
+| $(0,0,0)$ | $-442341971780697441347328$ |
+
+## 25. Mathematical suppliers and the remaining response quantifiers
+
+**Definition 25.1 (Correspondence and scope).** The consequence
+(23.1)–(23.2) is ordinary model-specific repository-derived
+mathematics (`repo-derived`). Its objects are complete worlds in
+Definitions 1.1–1.3, and the exact algebraic fifth response is
+inherited from Theorem 8.1. The new content is the off-twenty-four
+acquired sixth-M child, its complete four-world classification and
+its whole-child final-M injectivity. The uniform upper bound (22.1)
+and the local construction (18.9) have different quantifiers and
+are joined only at the actual response (18.8).
+
+| Mathematical supplier | Exact use and hypothesis correspondence |
+| --- | --- |
+| This volume, Theorems 2.1, 4.1–4.2 and 12.3 | The zero-safe full parent, the complete singular fixed-width lines and the unique six-row whole-world lift. Here $\beta=1/8$, $\epsilon=d-24$, with the same $j,n,T,U,V$. These supply the reconstruction and singular branch, rather than a regular-chart restriction of the full child. |
+| This volume, Theorem 8.1 and (8.1), (8.4) | The already defined unique six-coordinate root, its exact $p_J$ and its actual sixth-J $L_1$ child. No midpoint of its response enclosure replaces this premise, and no new sixth-J construction is inferred. |
+| This volume, Definitions 1.1–1.3 and Sections 7, 12, 14 | Original clocks, complete-triple guards, actual left products, fixed-node response formulas and the specified exact interval and Sylvester conventions. The polynomial $D_\Lambda=N_4/2$ in (20.1) is distinguished from the $p=24$ graph denominator in (14.1). |
+| [Terminal-zero-plane volume](FIB_TERMINAL_ZERO_PLANE_INVERSE_AND_J_PAIR_CHAMBER.md), Theorems 9.2–9.3 | At $(A,C,z,Y)=(24,147/5,24,18)$, $F=M$, its drift coefficients are $a_4=U\Lambda$ and $a_{5,M}=A_5$. Its full-source no-common-zero and fixed-source uniqueness apply also to $\Lambda=0$, arbitrary drift and unbounded positive offdiagonals. |
+| Berrut–Trefethen, *[Barycentric Lagrange Interpolation](https://doi.org/10.1137/S0036144502417715)*, §2, (2.1)–(2.2) | `literature-attested` fixed distinct-node interpolation, with nodes $0,1,2,3$ and samples (18.3). The later values (18.4) are evaluations of that one polynomial. This standard result supplies no model-specific common-history pair or fiber count. |
+| Banach contraction principle and the Neumann-series criterion, as used in Section 7 | Standard existence and zero equivalence, applied with the exact box, matrix and inequalities (18.7), (18.10)–(18.12). Their use supplies four actual lifts independently of the upper-bound proof. |
+| Cox–Little–O'Shea, *[Ideals, Varieties, and Algorithms](https://doi.org/10.1007/978-3-319-16721-3)*, Chapter 3 | Standard resultant elimination. Equations (20.1)–(20.6) fix the actual polynomials and ordered determinant minors. Equation (20.10) supplies the necessary linear relation at common roots, with nonvanishing checked on every candidate box. |
+| Basu–Pollack–Roy, *[Algorithms in Real Algebraic Geometry](https://doi.org/10.1007/3-540-33099-2)*, univariate real-root and subresultant methods | Standard real-root tools within the concrete certificates: the centered-parameter Bernstein/Descartes transformation (21.1)–(21.2), rational endpoint signs, and the signed Sturm rule (14.11) for all base factors. These tools are not separate new principles or classifications. |
+
+All enclosures in Sections 18–23 are rational inclusions over their
+stated full boxes. The equalities (18.9) and the final-J collision
+come from exact original equations. The common value $v_\star$ is
+never selected by rounding its interval. In the upper bound the
+resultant is only necessary, negative $b$ lifts are illegal, and
+singular sources are explicitly evaluated. The proof includes every
+original legal sampled-zero, lower-degree, repeated-root and
+zero-drift stratum at this acquired child; no uniform conditioning
+or source bound is assumed. No physical realization or exhaustive
+literature-priority claim accompanies this model-specific result.
+
+The remaining exact-$p_J$ question is whether some acquired sixth-M
+response $v\ne v_\star$ has, inside its one entire child
+$\mathcal F(H_4,M,p_J,M,v)$, both a distinct final-J collision pair
+and a distinct final-M collision pair. Theorem 23.1 excludes this
+one $v_\star$ and every proposed support within it. It leaves other
+terminal pairs, components, replacement worlds, discontinuous choices
+and all legal strata at other $v$ available. The uniform bound
+(22.1) is only an at-most-four statement on
+$\mathcal P\times\mathcal V$; it does not assert final-M injectivity
+at every other point of that rectangle, or classify all acquired
+responses at $p_J$.
+
+Thus the full fifth-$p_J$ fiber and the p-free common-parent M
+$L_2$ system (17.1)–(17.2) retain their unresolved response
+quantifiers. The same-parent $H_4$ $L_3$, all earlier ancestors,
+the guarded root $L_7$, unrestricted deterministic adaptive
+eight-read recovery or impossibility, comparison with nine total
+readings and full-original-domain nine-read sufficiency remain
+unresolved. Strategies still have no continuity, measurability,
+computability or finite-description premise. The exact sixth-J
+child at $p_J$, the $p=24$ exclusion and the mirror-component
+statements keep their own previously stated scopes.
+
+## 追加锚（本行以下为增补区）
