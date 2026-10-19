@@ -230,6 +230,10 @@ $$\forall d \in Nat,\; (Odd\left(d\right)) \Rightarrow (\forall rho \in DensityS
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GHZ/OddGhzTenSettingWitness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cobucci-tavakoli-2024-odd-ghz-ten-setting-witness` (proved) by `D5/S3/Quantum/Entanglement/GHZ/OddGhzTenSettingWitness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cobucci-tavakoli-2024-odd-ghz-ten-setting-witness","declaration_gid":"D5/S3/Quantum/Entanglement/GHZ/OddGhzTenSettingWitness.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* G. Cobucci, A. Tavakoli (2024). *Detecting the dimensionality of genuine multi-particle entanglement*. DOI: [10.1126/sciadv.adq4467](https://doi.org/10.1126/sciadv.adq4467). URL: <https://arxiv.org/abs/2402.06234>.
