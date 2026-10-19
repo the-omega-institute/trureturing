@@ -5155,3 +5155,339 @@ $\mathcal M(\mu)^2$ to a nearly null compact form is supplied.
 At fixed $B$ the allowed degree is finite. Fixed-window all-order
 positivity, the original signed prime/Robin estimate, strict Robin
 for every integer above5040 and RH remain unproved.
+
+
+## Geometric windows admit exponential local sign complexity
+
+The local margin (W91) can be combined across a geometric collection of
+windows, after replacing (W63)'s exponential degree cost in the actual
+cross blocks. The new input is a two-high-window endpoint expansion
+uniform in its truncation order, together with polynomial coefficient
+costs on the same two moment sequences. The full lower theta correction
+is paid separately in the lower variable; it is not amplified by the
+higher window's moment radius. This is a repository-derived paper
+estimate using the already cited classical tools, without a priority
+or Lean-verification claim.
+
+Keep the fixed small support $[-h,h]$, physical half-width
+$w=\operatorname{arctanh}h$, and Gaussian-leading transport of
+(W87)--(W95). For each physical profile $\lambda_j$ on
+$[A_j-w,A_j+w]$, let $\nu_j$ be its transport by $d_{A_j}^{\rm g}$
+and set $Q_j=Q_H(\nu_j)$. Require an explicit polynomial-sign
+condition of degree $m_j$ on a real $\nu_j$, or separately on its
+real and imaginary parts for a complex profile. All roots lie in
+$[-h,h]$; repeated roots and root atoms remain allowed.
+
+Fix $q_{\rm geo}>1$ and put
+$\tau=(q_{\rm geo}-1)/(q_{\rm geo}+1)$. There are fixed
+$\kappa>0$, $A_*,C>0$ such that, whenever
+$B\ge q_{\rm geo}A$, $A\ge A_*$, and the two local degrees obey
+$m_A\le\lfloor e^{\kappa A}\rfloor$,
+$m_B\le\lfloor e^{\kappa B}\rfloor$, the complete cross form satisfies
+
+$$
+\boxed{|B_{L_0}(\lambda_A,\lambda_B)|
+ \le C(1+B-A)e^{-(B-A)/2}\sqrt{Q_AQ_B}.}
+\tag{W96}
+$$
+
+The constants do not depend on the degrees, roots, local density or
+sample count. This is an actual full-kernel bound in the same Hardy
+metric as the local positive credit, including the reflected exterior.
+
+### A two-high expansion keeps the truncation cost explicit
+
+Put $a=A+u$, $b=B+v$, $\Delta=B-A$, with complex offsets in the
+fixed small bidisc. Reuse the exact forward identity of (W62), set
+$s=e^{2t}-1$, $t(s)=\tfrac12\log(1+s)$, and define
+
+$$
+\begin{aligned}
+V_\pm(a,s)&=\frac{\Phi(a\pm t(s))}{\Phi_{\rm g}(a)},\\
+\mathcal A(a,b;s)&=(1+s)^{5/4}\big[
+ (a+b+\log(1+s))V_+(a,s)\\
+ &\hspace{38mm}-(b-a+\log(1+s))V_-(a,s)\big].
+\end{aligned}
+$$
+
+Only the higher source factor is replaced in the model integral:
+
+$$
+\frac{L_1(a,b)}{\Phi_{\rm g}(a)\Phi_{\rm g}(b)}
+ =\frac18\int_0^\infty e^{-\pi e^{2b}s}
+ \mathcal A(a,b;s)
+ \left[1-\frac{c_*e^{-2b}}{1+s}\right]ds.
+$$
+
+The lower factors are the complete $\Phi$, including the part where
+$\Re(a-t)<0$. With
+$\mathcal K_{A,B}(z,\zeta)
+ =d_A^{\rm g}(z)d_B^{\rm g}(\zeta)L_0(A+u,B+v)$,
+where $u=\operatorname{arctanh}z$ and
+$v=\operatorname{arctanh}\zeta$, there are compatible coefficient
+kernels $C_{k;A,B}$, independent of $N$, such that for every
+$N\ge3$, $A\ge A_0$ and $\Delta\ge D_0$,
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal K_{A,B}
+ &=\frac{e^{-\Delta}}{\sqrt{AB}}
+   \sum_{0\le k<N}e^{-2k\Delta}C_{k;A,B}
+   +\mathcal R_{N;A,B},\\
+\sup|\mathcal R_{N;A,B}|
+ &\le C\frac{A+B+1}{\sqrt{AB}}e^{-\Delta}
+       [C^NN!e^{-2N\Delta}+e^{-c e^{2B}}].
+\end{aligned}}
+\tag{W97}
+$$
+
+The supremum is on the fixed Hardy bidisc. The constants are independent
+of both centers and of $N$, and $D_0$ is one fixed sufficiently large
+number. The leading coefficient is exactly
+
+$$
+C_{0;A,B}(z,\zeta)
+ =2(A+u)\frac{\Phi(A+u)}{\Phi_{\rm g}(A+u)}
+       \frac1{1-z}\frac1{1+\zeta}.
+$$
+
+To pay the uniform remainder, use the complete logarithm from (W47).
+Its right-tail expansion, odd derivative and a compact bound give
+$|g'(x+iy)|\le Ce^{2|x|}$ on a smaller global strip. The horizontal
+bounds already used in (W62) imply, for all $t\ge0$,
+
+$$
+\left|\frac{\Phi(a+t)}{\Phi(a)}\right|\le C,\qquad
+\left|\frac{\Phi(a-t)}{\Phi(a)}\right|\le e^{Ce^{2A}t}.
+$$
+
+Also $\Phi(a)/\Phi_{\rm g}(a)$ is uniformly bounded on the offset
+disc. For real $S\ge0$, take the complex circle
+$|s-S|\le\rho e^{-2A}$, with fixed sufficiently small $\rho$.
+The displacement of $t$ is at most
+$C\rho e^{-2A}/(1+S)$. At either endpoint $a\pm t(S)$,
+$|g'|\le Ce^{2A}(1+S)$, with the same bound along this small
+displacement. Its extra exponent is therefore bounded by $C\rho$.
+The source arguments remain in the original strip, including negative
+real arguments. On this circle,
+
+$$
+|V_+|+|V_-|\le Ce^{Ce^{2A}S},\qquad
+|\mathcal A|+|\mathcal A/(1+s)|
+ \le C(A+B+1)(1+S)^4e^{Ce^{2A}S}.
+$$
+
+Cauchy followed by Taylor's integral remainder gives, for every real
+$s\ge0$ and every $N$,
+
+$$
+|\mathcal A(s)-\operatorname{Taylor}_{N-1}\mathcal A(s)|
+ \le C(A+B+1)(Ce^{2A})^Ns^N(1+s)^4e^{Ce^{2A}s},
+$$
+
+and the same bound for the divided amplitude. For $\Delta\ge D_0$,
+$\Re(\pi e^{2b})-Ce^{2A}\ge c e^{2B}$. Laplace integration
+therefore pays $C^NN!e^{-2(B-A)N}$ after normalization. The fixed
+extra factorial factors from $(1+s)^4$ are absorbed in $C^NN!$.
+The exact high theta residual from (W94) is bounded by
+$Ce^{-c e^{2B}(1+s)}$. Integrating it against the same complete
+lower amplitude gives the other term in (W97), without removing any
+reflected region. The existing identity-theorem interface identifies
+the continuations.
+
+Collecting Taylor terms in powers of $e^{-2b}$, including the high
+prefactor's shift by at most one, and factoring out $e^{2kA}$ gives
+the same $C_{k;A,B}$ for every $N$. At order zero the lower bracket
+is $2a\Phi(a)/\Phi_{\rm g}(a)$; this verifies the displayed leading
+coefficient and normalization.
+
+### Pay the lower theta correction on its own moment sequence
+
+For all sufficiently large $A$, all $k\ge0$ and local sign degrees
+with $m_A\le e^A$, the coefficient forms satisfy, for some fixed
+sufficiently large $P$,
+
+$$
+\boxed{|B_{C_{k;A,B}}(\nu_A,\nu_B)|
+ \le (A+B+1)[C(m_A+m_B+k+1)]^{P(k+1)}\sqrt{Q_AQ_B}.}
+\tag{W98}
+$$
+
+No numerical value of $P$ is asserted. To obtain this bound, split the
+lower Taylor coefficients into their one-mode part and their paid full
+source correction. Put $T=\pi e^{2a}$, $r_a=c_*e^{-2a}$. The
+one-mode ratios, used only for coefficients near $s=0$, are
+
+$$
+\begin{aligned}
+V_{+,1}&=(1+s)^{9/4}e^{-Ts}[1-r_a/(1+s)],\\
+V_{-,1}&=(1+s)^{-9/4}e^{Ts/(1+s)}[1-r_a(1+s)].
+\end{aligned}
+$$
+
+Their order-$k$ coefficients are polynomials in $T$ of degree at most
+$k$. Expanding the exponentials and the binomial/logarithm factors
+bounds their scalar coefficients by $C^{k+1}(k!)^r$ for a fixed
+$r$. There are at most $k+1$ powers of $T$ in each prefactor case.
+After the factor $e^{2kA}$ in (W97), the lower coordinate multipliers
+are bounded scalar factors times
+$\cosh u\,e^{(2\ell+1)u}$, $-1\le\ell\le k$, with an optional
+$u$ or $v$. For $\ell\ge0$ these are
+$g_\ell(-z)=(1+z)^\ell/(1-z)^{\ell+1}$; for $\ell=-1$ the
+factor is $g_0(z)=1/(1+z)$. The upper multiplier is
+$g_k(\zeta)=(1-\zeta)^k/(1+\zeta)^{k+1}$.
+
+The shift-tail norm estimate paid in (W92)--(W94) gives
+$[C(m+k+1)]^{k+1}$ for each $g_k$, and the same estimate holds for
+its reflected version. These multipliers are positive on the actual
+support and retain the same separator. Thus (W57) pays the optional
+$\operatorname{arctanh}$ multiplier at its logarithmic cost.
+Factorials, the number of monomials and the two measure costs are all
+absorbed in the fixed exponent $P(k+1)$ in (W98).
+
+For the full lower correction, use the small circle
+$|s|\le\rho e^{-2A}$. Both lower arguments remain in the high tail,
+so their exact theta series give, uniformly on the fixed lower offset
+disc,
+
+$$
+\left|\frac{(\Phi-\Phi_1)(a\pm t(s))}{\Phi_{\rm g}(a)}\right|
+ \le Ce^{-c e^{2A}}.
+$$
+
+The ratios $\Phi_{\rm g}(a\pm t(s))/\Phi_{\rm g}(a)$ are bounded
+there. Its order-$k$ Taylor coefficient costs at most
+$C^{k+1}e^{2Ak}e^{-c e^{2A}}$.
+After the normalization in (W97), this yields a fixed finite sum of
+lower holomorphic factors bounded by
+$C^{k+1}k!(A+B+1)e^{-c e^{2A}}$, times upper $g_k$ or $vg_k$.
+The lower integral uses (W63)'s linear Cauchy allowance and costs
+
+$$
+C\Lambda^{m_A/2}e^{-c e^{2A}}\sqrt{Q_A}.
+$$
+
+The upper integral keeps its polynomial cost. Since $m_A\le e^A$,
+this lower source error absorbs $\Lambda^{m_A/2}$ at one common
+large start. This proves (W98) for the actual coefficients as well.
+In particular no $\Lambda^{m_B/2}$ is charged to a source error
+controlled only by the lower center. The lower one-mode expression
+was not substituted on the reflected exterior of the actual integral.
+
+### Spend the growing order before adding the windows
+
+Choose
+
+$$
+0<\kappa<\min\left\{\kappa_{\rm W91},\frac14,
+                         \frac{\tau}{16P},\frac{\tau}{16}\right\},
+\qquad
+N=\left\lceil D\left(1+
+          \frac{m_A+m_B+1}{\Delta}\right)\right\rceil\ge3,
+$$
+
+with fixed sufficiently large $D$. For $B\ge q_{\rm geo}A$,
+$\Delta\ge\tau(A+B)\ge\tau B$. Let $M=m_A+m_B$.
+Then $\log N\le\kappa B+O(1)$ and
+$M+k+1\le C_D(M+1)$ for $k<N$. At one common large start,
+$P\log[C(M+k+1)]\le\Delta/8$. The retained coefficient forms in
+(W97) are therefore bounded by
+
+$$
+C\frac{A+B+1}{\sqrt{AB}}e^{-\Delta}
+ \sum_{k<N}e^{-2k\Delta}[C(M+k+1)]^{P(k+1)}\sqrt{Q_AQ_B},
+$$
+
+where the sum is at most $Ce^{\Delta/8}$.
+The ratio $(A+B+1)/\sqrt{AB}\le3+\Delta$ is harmless at the
+scale in (W96).
+
+Apply the two-variable Cauchy/moment allowance only to the actual
+remainder in (W97). It costs $\Lambda^{M/2}$.
+Since $\log(C^NN!)\le N(\kappa B+O(1))\le N\Delta/4$,
+increase $D$ until
+
+$$
+\Lambda^{M/2}C^NN!e^{-2N\Delta}
+ \le e^{-c\Delta-cM}.
+$$
+
+The high theta error times $\Lambda^{M/2}$ is still smaller, because
+$\kappa<2$. All estimates concern the same two profiles. This proves
+(W96), including every complete-source contribution, for one common
+high start independent of the allowed degrees.
+
+Now take any finite family with $A_{j+1}\ge q_{\rm geo}A_j$,
+$A_1\ge A_*$ and $m_j\le\lfloor e^{\kappa A_j}\rfloor$.
+The local credits from (W91) are $Q_{L_0}(\lambda_j)\ge Q_j/2$.
+Every successive center gap is at least
+$D_{\rm gap}=(q_{\rm geo}-1)A_*$. The common start includes that
+of (W91). Increase it also until
+$D_{\rm gap}\ge\max(D_0,1,2w+1)$ and, with
+$q_D=e^{-D_{\rm gap}/2}$, the same row allowance used in (W64) obeys
+
+$$
+2C\left[\frac{q_D}{1-q_D}
+       +\frac{D_{\rm gap}q_D}{(1-q_D)^2}\right]\le\frac14.
+$$
+
+Estimate (W96) then pays the entire finite cross form, leaving
+
+$$
+\boxed{Q_{L_0}\!\left(\sum_{j=1}^N\lambda_j\right)
+ \ge\frac14\sum_{j=1}^NQ_j>0}
+\tag{W99}
+$$
+
+unless all profiles vanish. Complex profiles use the two explicit real
+separator classes; reality and symmetry add their forms. There is no
+internal node-gap restriction, upper sample density or bound on the
+finite number of windows. This extends (W64)'s linear local degree
+range to exponential degrees; it uses the new actual inputs
+(W97)--(W98), rather than inserting (W91) into the old cross bound.
+
+### Attach a fixed compact core after paying every remote interaction
+
+Fix $U>0$ and, if needed, reduce $\kappa$ further to the rate of
+(W92) for that $U$. This preserves (W96)--(W99). Let $\mu$ be any
+finite complex measure on $[0,U]$ and use the same $\mathcal M(\mu)$
+and $\mathcal C(\mu)$ as in (W92). For a remote family as above with
+$A_1\ge T$ sufficiently large, that estimate and Cauchy--Schwarz give
+ the compact cross allowance with
+
+$$
+\Gamma=\sum_j\frac{(m_j+1)e^{-2A_j}}{A_j}
+ \le C\frac{e^{-(2-\kappa)T}}T.
+$$
+
+The geometric-series denominator is bounded after fixing
+$q_{\rm geo}$ and the start. Spend half of the same total remote
+credit (W99) by Young's inequality, as in (W67), to obtain
+
+$$
+\boxed{
+\begin{aligned}
+Q_{L_0}\!\left(\mu+\sum_j\lambda_j\right)
+ &\ge Q_{L_0}(\mu)+\frac18\sum_jQ_j
+       -C_{U,q_{\rm geo}}\frac{e^{-(2-\kappa)T}}T
+            \mathcal M(\mu)^2,\\
+\mathcal C(\mu)=0\quad\Longrightarrow\quad
+Q_{L_0}\!\left(\mu+\sum_j\lambda_j\right)
+ &\ge Q_{L_0}(\mu)+\frac18\sum_jQ_j
+       -C_{U,q_{\rm geo}}\frac{e^{-4T}}T\mathcal M(\mu)^2.
+\end{aligned}}
+\tag{W100}
+$$
+
+The second line uses (W92)'s exact rank-one remainder on each window,
+so its sum uses $\sum_j A_j^{-1}e^{-4A_j}$ instead. Every remote
+interaction was already paid in (W99); no local credit is spent twice.
+
+These estimates retain fixed small widths, geometric center spacing,
+finite degree at each fixed center, and the explicit real separator
+conditions. The compact size is fixed and its own form remains
+unsigned; no comparison of $\mathcal M(\mu)^2$ with a nearly null
+compact form is supplied. No all-order positivity on one fixed window,
+original signed prime/Robin estimate, strict Robin for every integer
+above5040, numerical start or RH proof follows.
