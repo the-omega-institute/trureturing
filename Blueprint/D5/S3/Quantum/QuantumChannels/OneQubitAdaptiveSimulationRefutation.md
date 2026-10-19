@@ -236,6 +236,7 @@ Given any proposed Rzero and qzero>0, choose an integer n at least 2 and strictl
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/OneQubitAdaptiveSimulationRefutation.result`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/OneQubitAdaptiveSimulationRefutation.succeeds`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/OneQubitAdaptiveSimulationRefutation.successfulMap`
+- Dependency: [D5/S3/Quantum/Decoherence/FiniteShiftedRecordChannel](../Decoherence/FiniteShiftedRecordChannel.md)
 - Dependency: [D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction](../Information/SeparableStateLocalUnitaryStabilizerObstruction.md)
 - Dependency: [D5/S3/Quantum/Matrix/RecordCapacity](../Matrix/RecordCapacity.md)
 - Dependency: [D5/S3/QuantumBounds/MerminMeasurementDependence/Model](../../QuantumBounds/MerminMeasurementDependence/Model.md)

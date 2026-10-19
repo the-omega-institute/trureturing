@@ -52,7 +52,7 @@ A final unitary after the last measurement costs one trivial measurement stage, 
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/QuantumChannels/OneQubitAdaptiveSimulationRefutation.lean` (708 lines).
+The canonical source is `D5/S3/Quantum/QuantumChannels/OneQubitAdaptiveSimulationRefutation.lean` (707 lines).
 - **Proof.** It proves `result : ¬ claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Registration.** The refutation `result` is exempt from §3.9 registration, and the module has no other public theorem.
