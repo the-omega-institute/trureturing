@@ -548,3 +548,216 @@ In particular, if the actual polar missing directions satisfy $`\sum_fq_fq_f^*=\
 The bound $`\tau<2-\sqrt2`$ alone does not imply either exclusion criterion in Theorem 122.4. Theorems 122.2 and 122.4 give conditional exclusions inside the actual-quotient class; they do not prove that every remaining full-support nonisotropic rank-$`(7,4)`$ local minimum belongs to those sectors. No full quotient is inferred for arbitrary leaking local minima, and the unrestricted global quarter optimum remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 123. A strict rank-two quotient gap and a lower spectral-tail bound
+
+### 123.1. The actual calibrated quotient class
+
+Retain the original channels, encodings, target, forward Grams and unhalved arbitrary-reference error $`\delta`$ of (120.1)–(120.4). The physical output is the full sixteen-dimensional $`\mathbb C^4\otimes\mathbb C^4`$. Assume the full actual calibrated quotient
+
+$$
+G,H\succeq0,\qquad G_{ff}=H_{ff}=I_2,\qquad
+G=H\odot\bar R,\qquad R\succeq0,\quad R_{ii}=1.
+\tag{123.1}
+$$
+
+All eight original coordinates are retained. No complementary stress or local-minimum hypothesis is imposed yet. On the full calibrated domain, [RT IV (118.1)](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1181-original-domain-and-common-stress-hypotheses) gives the exact norm
+
+$$
+\begin{aligned}
+F(G,H)&=\mathscr F(G\odot H),\qquad
+\mathscr F(K)=\max_{(\rho,W)\in\mathcal C}
+                      2\operatorname{Tr}[(T-K)W],\\
+\mathcal C&=\{(\rho,W):\rho\succeq0,\ \rho\text{ is fibre-block diagonal},\quad
+              \operatorname{Tr}\rho=1,\ 0\preceq W\preceq\rho\}.
+\end{aligned}
+\tag{123.2}
+$$
+
+The formula itself does not require the local-minimum or rank assumptions subsequently imposed in that section. Define
+
+$$
+\mathcal Q_2=\{(H,R):H\succeq0,\ H_{ff}=I_2,\ \operatorname{rank}H\le2,
+                         \ R\succeq0,\ R_{ii}=1\}.
+\tag{123.3}
+$$
+
+Calibration forces $`\operatorname{rank}H=2`$ in this set. For each member, $`G=H\odot\bar R`$ is positive semidefinite with $`G_{ff}=I_2`$. Gram realizations $`g_i,h_i`$ give original calibrated Stinespring isometries with columns $`|f(i)\rangle\otimes g_i`$ and $`|f(i)\rangle\otimes h_i`$. The second channel has minimal environment dimension, and hence Kraus rank, two. Thus $`\mathcal Q_2`$ parametrizes physical quotient pairs rather than independent relaxations of their coefficients.
+
+### 123.2. Equality rigidity excludes the rank-two quotient boundary
+
+**Theorem 123.1 (strict rank-two quotient gap).** The minimum
+
+$$
+d_Q:=\min_{(H,R)\in\mathcal Q_2}F(H\odot\bar R,H)
+       =\frac14+\varepsilon_Q
+\qquad\text{has }\varepsilon_Q>0.
+\tag{123.4}
+$$
+
+No numerical value of $`\varepsilon_Q`$ is specified.
+
+**Proof.** First relate the Bloch axes of four qubit bases to their missing symmetric-square directions in (122.5). For a unit vector $`u=(a,b)^{\mathsf T}`$, every orthogonal unit vector is $`v=\zeta(-\bar b,\bar a)^{\mathsf T}`$ with $`|\zeta|=1`$. In the orthonormal symmetric-square basis $`(e_0^{\otimes2},(e_0\otimes e_1+e_1\otimes e_0)/\sqrt2,e_1^{\otimes2})`$, put
+
+$$
+\begin{aligned}
+n&=(2\operatorname{Re}(\bar a b),\,
+       2\operatorname{Im}(\bar a b),\,|a|^2-|b|^2)^{\mathsf T},\\
+q&=\frac{u\otimes v+v\otimes u}{\sqrt2}
+   =\zeta Jn,\qquad
+J=\begin{pmatrix}-1/\sqrt2&i/\sqrt2&0\\0&0&1\\
+                  1/\sqrt2&i/\sqrt2&0\end{pmatrix},
+\qquad J^*J=I_3.
+\end{aligned}
+\tag{123.5}
+$$
+
+Indeed the coordinates of $`q/\zeta`$ are $`(-\sqrt2a\bar b,|a|^2-|b|^2,\sqrt2b\bar a)`$. Therefore
+
+$$
+\sum_fq_fq_f^*=J\left(\sum_fn_fn_f^{\mathsf T}\right)J^*,\qquad
+\lambda_{\min}\!\left(\sum_fq_fq_f^*\right)
+ =\lambda_{\min}\!\left(\sum_fn_fn_f^{\mathsf T}\right).
+\tag{123.6}
+$$
+
+Independent column phases change each $`q_f`$ by a phase. A within-fibre bit swap fixes $`q_f`$ and negates $`n_f`$. An environment unitary induces a unitary on the symmetric square. The axes of $`\bar U_f\operatorname{diag}(1,-1)U_f^{\mathsf T}`$ used in [RT II §82](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family) reflect the second coordinate of the axes in (123.5). This common orthogonal reflection also preserves (123.6). Hence the frame eigenvalues are compatible with exactly the equivalences allowed in that equality classification.
+
+Every member of $`\mathcal Q_2`$ has $`\delta\ge1/4`$ by the original rank-two-party lower bound in RT II §82.2 (5). Suppose equality holds. By RT II §§82.9–82.12, after environment isometries and simultaneous within-fibre bit swaps in the two parties, its four balanced Bloch axes have a disphenoid Gram with nonzero eigenvalues
+
+$$
+4x^2,\quad4y^2,\quad4z^2,\qquad
+x^2+y^2+z^2=1,\qquad x^2,y^2,z^2\ge\frac27.
+\tag{123.7}
+$$
+
+These swaps simultaneously permute $`H,R`$ and preserve (123.1); the environment isometries preserve the Grams. Equations (123.6)–(123.7) give $`m_0\ge8/7`$. Apply Theorem 122.2 with the seed $`H^{(0)}=H`$ itself and the all-ones correlation matrix $`\Xi=J_8`$. It gives
+
+$$
+\delta\ge\frac{m_0}{2}\ge\frac47>\frac14,
+\tag{123.8}
+$$
+
+contradicting the assumed equality. The number $`4/7`$ is used only in this hypothetical-equality contradiction; it is not asserted as a bound for every member of $`\mathcal Q_2`$.
+
+Finally $`\mathcal Q_2`$ is nonempty, by taking four identical qubit bases and $`R=I_8`$. Its positive-semidefinite, calibration, correlation and rank-at-most-two conditions are closed; all entries have modulus at most one. Thus it is compact. The fixed feasible set $`\mathcal C`$ in (123.2) is compact, so the maximum of its continuously parameterized linear objectives is continuous in $`H,R`$. The norm attains its minimum on $`\mathcal Q_2`$. Since every member has error strictly greater than $`1/4`$, that minimum is also strictly greater than $`1/4`$. ∎
+
+### 123.3. A full-norm comparison retaining the same actual correlation
+
+**Theorem 123.2 (same-correlation polar comparison).** Suppose (123.1) holds and, with eigenvalues in decreasing order,
+
+$$
+\tau=8-\lambda_1(H)-\lambda_2(H)<1.
+\tag{123.9}
+$$
+
+Then
+
+$$
+\delta\ge d_Q-\eta(\tau),\qquad
+\eta(\tau)=2\tau+8(1-\sqrt{1-\tau})\le10\tau.
+\tag{123.10}
+$$
+
+No rank-four assumption is needed for this comparison.
+
+**Proof.** For two Hermitian coefficients $`K,K'`$ with the same original fibre blocks, set $`E=K-K'`$. For every feasible $`(\rho,W)`$ in (123.2),
+
+$$
+\operatorname{Tr}(E\rho)=0,\qquad
+2\operatorname{Tr}(EW)=\operatorname{Tr}[E(2W-\rho)],\qquad
+-\rho\preceq2W-\rho\preceq\rho.
+\tag{123.11}
+$$
+
+If $`\Pi_+,\Pi_-`$ are the positive and negative spectral projections of $`X=2W-\rho`$, the last inequalities give $`\operatorname{Tr}|X|\le\operatorname{Tr}[(\Pi_++\Pi_-)\rho]\le1`$. This includes singular densities. Trace-norm duality and the common feasible set yield
+
+$$
+|\mathscr F(K)-\mathscr F(K')|\le\|K-K'\|_{\mathrm{op}}.
+\tag{123.12}
+$$
+
+The factor two in (123.2) has been retained throughout.
+
+Because the four calibrated record blocks are isometries, their frame is bounded by $`4I`$, so $`H\preceq4I`$. Equation (123.9) gives $`\lambda_2(H)>3`$ and $`\lambda_3(H)<1`$. In the unique top-two environment subspace and its orthogonal complement, use the unchanged-record polar chart of [RT IV Proposition 117.3](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1173-dominant-two-dimensional-record-spaces):
+
+$$
+V_f=\begin{bmatrix}C_f\\D_f\end{bmatrix},\qquad
+C_f=U_f\sqrt{I_2-D_f^*D_f},\qquad U_f\in U(2),\qquad
+\sum_f\|D_f\|_F^2=\tau.
+\tag{123.13}
+$$
+
+Each $`D_f^*D_f\preceq\tau I_2<I_2`$, so the polar factors are well-defined. Concatenate $`U=[U_1\ \cdots\ U_4]`$, and similarly $`C,D`$, and define the comparison pair
+
+$$
+H^{(0)}=U^*U,\qquad G^{(0)}=H^{(0)}\odot\bar R,\qquad
+K^{(0)}=(H^{(0)}\odot H^{(0)})\odot\bar R.
+\tag{123.14}
+$$
+
+Here $`R`$ is the same actual matrix as in (123.1). The pair is a physical member of $`\mathcal Q_2`$. It need not share the original pair's null vector, complementary stress or local-minimum property.
+
+Let $`d_k`$ be the eight eigenvalues of the four $`D_f^*D_f`$, so $`d_k\ge0`$ and $`\sum_kd_k=\tau`$. Rationalizing the square roots gives
+
+$$
+\begin{aligned}
+\|C-U\|_{\mathrm{op}}^2
+&\le\|C-U\|_F^2
+ =\sum_k\left(\frac{d_k}{1+\sqrt{1-d_k}}\right)^2\\
+&\le\frac{\sum_kd_k^2}{(1+\sqrt{1-\tau})^2}
+ \le(1-\sqrt{1-\tau})^2.
+\end{aligned}
+\tag{123.15}
+$$
+
+Since $`\|C\|_{\mathrm{op}}\le2`$, $`UU^*=4I_2`$ and $`\|D^*D\|_{\mathrm{op}}\le\tau`$, the exact decomposition $`H=C^*C+D^*D`$ gives
+
+$$
+\|H-H^{(0)}\|_{\mathrm{op}}
+\le\tau+4(1-\sqrt{1-\tau}).
+\tag{123.16}
+$$
+
+Schur multiplication by any positive semidefinite correlation matrix is positive and unital, as in (122.9); see Levick and Martin, [*Matrix N-dilations of quantum channels*, Example 6](https://doi.org/10.7153/oam-2018-12-59). Applying it to $`-\|X\|_{\mathrm{op}}I\preceq X\preceq\|X\|_{\mathrm{op}}I`$ shows that it contracts the operator norm of Hermitian $`X`$. Apply this first to the two summands in
+
+$$
+H\odot H-H^{(0)}\odot H^{(0)}
+=(H-H^{(0)})\odot H+(H-H^{(0)})\odot H^{(0)},
+\tag{123.17}
+$$
+
+and then to $`\bar R`$. These are complex squares, not entrywise modulus squares. Since $`K=(H\odot H)\odot\bar R`$, (123.12) and (123.16) imply
+
+$$
+|F(G,H)-F(G^{(0)},H^{(0)})|
+\le\|K-K^{(0)}\|_{\mathrm{op}}
+\le2\tau+8(1-\sqrt{1-\tau})\le10\tau.
+\tag{123.18}
+$$
+
+The final inequality uses $`\sqrt{1-\tau}\ge1-\tau`$. Theorem 123.1 applies to the comparison pair and proves (123.10). All comparisons use the complete original norm; no monotonicity under polar replacement is asserted. ∎
+
+### 123.4. Excluding a near-rank-two sector of the remaining rank-four class
+
+**Corollary 123.3 (positive lower spectral tail).** Under (123.1) and (123.9), if $`\delta<1/4`$, then
+
+$$
+\eta(\tau)>\varepsilon_Q,\qquad
+\tau>\frac{\varepsilon_Q}{10}.
+\tag{123.19}
+$$
+
+In particular, if $`\operatorname{rank}H=4`$, then the actual quotient satisfies
+
+$$
+\frac{\varepsilon_Q}{10}
+ <\lambda_3(H)+\lambda_4(H)<2-\sqrt2.
+\tag{123.20}
+$$
+
+**Proof.** Equation (123.10) and $`\delta<1/4`$ give $`\varepsilon_Q<\eta(\tau)\le10\tau`$. In the rank-four case, Theorem 121.1 supplies $`\tau=\lambda_3(H)+\lambda_4(H)<2-\sqrt2<1`$, so its hypotheses supply (123.9) and its upper bound completes (123.20). ∎
+
+Consequently the actual-quotient sector $`0\le\tau\le\varepsilon_Q/10`$, and more sharply the sector $`\eta(\tau)\le\varepsilon_Q`$, cannot have error below one quarter. This applies in particular to the full-domain calibrated local minima with $`\operatorname{rank}G=7`$, $`\ker G=\mathbb C a`$ with every $`a_i\ne0`$, $`\operatorname{rank}H=4`$ and $`0<\delta<1/4`$. Their actual quotient, full complementary stress and identity $`\operatorname{ran}R=\ker(H\operatorname{diag}(a))`$ follow from [RT IV §118](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#118-feasible-chord-polarization-and-full-rank-opposite-stresses). Those properties remain attached to the original pair and are not transported to (123.14).
+
+The gap and comparison above combine the rank-two equality classification with the symmetric-square obstruction. The nonnumerical separation in [RT IV Theorem 117.4](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1174-a-uniform-but-nonnumerical-separation) bounds the spectral tail from above; no numerical comparison of its unknown constant with $`\varepsilon_Q`$ is asserted. The original-channel neighborhoods in [RT III §89](ARITHMETIC_HOLOGRAPHIC_RT_III.md#89-an-unrestricted-local-quarter-minimum-from-analytic-descent-at-the-scalar-cone) also obstruct approaching rank-two quarter centers from the physical subquarter set. Here the stronger endpoint statement is that the entire rank-two quotient class has a minimum strictly above one quarter, and (123.18) supplies an explicit same-correlation comparison modulus. The value of that positive gap remains uncomputed. The inequalities do not exclude the whole remaining rank-four class, supply a feasible member of it, or extend the quotient hypothesis to arbitrary leaking local minima. The unrestricted quarter-optimum problem remains open.
