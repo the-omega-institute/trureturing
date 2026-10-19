@@ -6,6 +6,13 @@
    utility: none
    digest: Two-point corners give slab support and strictly positive zero-shape offsets. -/
 
+/- D5.S3.ArithSums.TwoPointSlabSupport.log_widths_bounds
+   declaration statement_id: sha256:bcaece7b400e20f09087f962ec91d0d57e3e86b3d2221141bc1ae5c69ae5e642.
+   The logarithmic-width bound supplies positivity of log two in
+   D5.S3.Divergence.AudenaertBinaryHolevoBound.uniformPositiveHolevoBound.
+   Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17312.
+-/
+
 import Mathlib.Topology.MetricSpace.HausdorffDistance
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.Real.Sqrt
@@ -104,7 +111,7 @@ private theorem centered_square_bound {ι : Type*} [Fintype ι]
   rw [centered_square_identity x m T hm]
   nlinarith
 
-private theorem log_widths_bounds :
+theorem log_widths_bounds :
     0 < Real.log 2 ∧ ∀ i, Real.log 2 ≤ logWidths i := by
   refine ⟨Real.log_pos (by norm_num), ?_⟩
   intro i
@@ -373,7 +380,5 @@ theorem wide_slab_support_237 (T M₀ M₁ : ℝ) (ξ : Fin 3 → ℝ)
         (fun i => T + logWidths i) M₀ M₁ := by simpa [hzero] using hW
     simpa only [hzero, Pi.zero_apply, add_zero] using zero_shape_support T M₀ M₁ hWzero
 
-#print axioms pair_distance_spec
-#print axioms wide_slab_support_237
 
 end D5.S3.ArithSums.TwoPointSlabSupport

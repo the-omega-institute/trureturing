@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:04531eca2d5e6f1753df054ea2c3b82d6e523f8e7a9a88bc0175492115cf9aef
+  normalized_sha256: sha256:04531eca2d5e6f1753df054ea2c3b82d6e523f8e7a9a88bc0175492115cf9aef
+cas_ref: sha256:04531eca2d5e6f1753df054ea2c3b82d6e523f8e7a9a88bc0175492115cf9aef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯上游闭合，无可用仓内冻结 GID。固定 mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679：Function.iterate_add、Function.iterate_succ_apply、Function.IsPeriodicPt.iterate_mod_apply、Finset.card_image_of_injective。Bool×Bool×Bool 的八态穷举经内核 decide 验证 F³=F、六行代表/三读数/六特征及两个重复类；任意深度路径由首三位决定，六行完整路径由首位及二周期尾精确给出。表中行为串和实际坐标的类型说明不另断言新性质。
+    previous_atom_id: 8d1429deec27625b5f1e26d34fadad9eea2d277544df001bda291a9a17c731a1
+    next_atom_id: 86ea66b66806a22718d5ef3aa736707d1f96f3faf3360339c8401e3379967c4a

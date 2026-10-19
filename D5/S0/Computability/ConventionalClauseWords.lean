@@ -51,11 +51,11 @@ def readName (w : List Bool) : Option (Name × List Bool) := do
   if name.head? = some true then some (name, tail) else none
 
 def readClause : Nat → List Bool → Option (Std.Sat.CNF.Clause Name × List Bool)
-  | _, true :: false :: tail => some ([], tail)
+  | _, true :: false :: tail => some (.empty, tail)
   | budget + 1, true :: true :: polarity :: tail => do
       let (name, rest) ← readName tail
       let (clause, rest) ← readClause budget rest
-      some ((name, polarity) :: clause, rest)
+      some (.ofLiterals ((name, polarity) :: clause.literals), rest)
   | _, _ => none
 
 def readBody : Nat → List Bool → Option Formula
@@ -75,16 +75,17 @@ def literalWord (literal : Name × Bool) : List Bool :=
   [true, true, literal.2] ++ nameWord literal.1
 
 def clauseWord (clause : Std.Sat.CNF.Clause Name) : List Bool :=
-  [false, true] ++ clause.flatMap literalWord ++ [true, false]
+  [false, true] ++ clause.literals.flatMap literalWord ++ [true, false]
 
 def formulaWord (formula : Formula) : List Bool := formula.flatMap clauseWord ++ [false, false]
 
 /-- The original repeated-name and tautology case: a clause containing the two
 opposite literals of canonical binary variable 1. This is source data. -/
-def comparisonSource : List Bool := formulaWord [[([true], true), ([true], false)]]
+def comparisonSource : List Bool :=
+  formulaWord [.ofLiterals [([true], true), ([true], false)]]
 
 def occurrences (formula : Formula) : List Name :=
-  formula.flatMap (fun clause => clause.map Prod.fst)
+  formula.flatMap (fun clause => clause.literals.map Prod.fst)
 
 def dictionary (formula : Formula) : List Name := (occurrences formula).dedup
 
@@ -437,7 +438,7 @@ theorem conventional_word_run (w frame : List Bool) :
         match readClause budget word with
         | none => (false, [])
         | some (clause, tail) => scanResult .bodyFirst 0 tail
-            (occurrenceStream (clause.map Prod.fst).reverse ++ occurrence) := by
+            (occurrenceStream (clause.literals.map Prod.fst).reverse ++ occurrence) := by
     intro budget
     induction budget with
     | zero =>
@@ -609,7 +610,7 @@ theorem conventional_word_run (w frame : List Bool) :
                 have fuelBound : rest.length < fuel := by
                   simp only [List.length_cons] at hf
                   omega
-                have ht := ih rest (occurrenceStream (clause.map Prod.fst).reverse ++ occurrence) fuelBound
+                have ht := ih rest (occurrenceStream (clause.literals.map Prod.fst).reverse ++ occurrence) fuelBound
                 cases hb : readBody fuel rest with
                 | none =>
                   simp only [hr] at hc

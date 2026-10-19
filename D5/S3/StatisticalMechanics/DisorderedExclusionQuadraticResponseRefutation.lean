@@ -166,7 +166,7 @@ private theorem balance_block (ε : ℝ) (μ : Finset (Fin 4) → ℝ)
   fin_cases j <;> simp only [F.eq_1, states.eq_1, Fin.sum_univ_succ] <;>
     dsimp! only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go, Fin.ofNat] <;>
     norm_num +decide [Matrix.cons_val, rate.eq_1, p.eq_1, q.eq_1, a.eq_1,
-      Fin.add_def, Fin.sub_def, Fin.neg_def] <;> simp only [Matrix.cons_val] <;> ring
+      Fin.add_def, Fin.sub_def, Fin.neg_def] <;> ring
 
 private theorem polynomial_balance (ε : ℝ) (j : Fin 6) : F ε (B ε) j = 0 := by
   fin_cases j <;>

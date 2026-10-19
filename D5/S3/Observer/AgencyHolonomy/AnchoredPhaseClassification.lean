@@ -281,7 +281,7 @@ theorem anchored_phase_classification [Fintype V] [Fintype E]
         exact ⟨⟨e,rfl⟩, by simpa [Sym2.mk_isDiag_iff] using ht.nonloop e e.property⟩
     have he : Fintype.card T = Fintype.card (treeSupport s t T).edgeSet := by
       exact Fintype.card_congr
-        ((Equiv.ofInjective _ ht.distinct).trans (Equiv.setCongr hset).symm)
+        ((Equiv.ofInjective _ ht.distinct).trans (Set.equivOfEq hset).symm)
     rw [he, ← SimpleGraph.edgeFinset_card]
     exact ht.isTree.card_edgeFinset
   have edge_count : Fintype.card {e : E // e ∉ T} + Fintype.card T = Fintype.card E := by

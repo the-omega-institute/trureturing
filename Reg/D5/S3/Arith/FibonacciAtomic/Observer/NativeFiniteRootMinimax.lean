@@ -79,6 +79,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   change FreeMagma.of (Sum.inl false) = _ at ho
   change (rootRun (fun _ => none) (minimaxTree zero (.of (.inl false)) [row])).1 = row.target at hc
   rw [hc] at ho
+  unfold row computedTarget at ho
   change FreeMagma.of (Sum.inl false) = FreeMagma.of (Sum.inl true) at ho
   cases ho
 

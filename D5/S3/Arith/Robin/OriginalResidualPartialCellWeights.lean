@@ -769,4 +769,21 @@ theorem or6_partialCell_energy_bound {N : ℕ} {a b : ℝ} (hN : 3 ≤ N)
       <;> ring
     _ = _ := rfl
 
+/-- Exact original projection facts consumed by the response adjoint. -/
+theorem response_projection_interface {N : ℕ} (hN : 3 ≤ N) :
+    (gram N 0 0 = ∑ m ∈ Finset.Ico N (2 * N), w m ∧
+      gram N 0 1 = ∑ m ∈ Finset.Ico N (2 * N), w m * ((m : ℝ) / N) ∧
+      gram N 1 0 = gram N 0 1 ∧
+      gram N 1 1 = ∑ m ∈ Finset.Ico N (2 * N), w m * ((m : ℝ) / N) ^ 2) ∧
+    0 < delta N ∧
+    (∀ a b : ℝ,
+      (∑ m ∈ Finset.Ico N (2 * N), coeff N a b m) = 0 ∧
+      (∑ m ∈ Finset.Ico N (2 * N), (m : ℝ) * coeff N a b m) = 0) ∧
+    (∀ (a b : ℝ) (m : ℕ), m ∈ Finset.Ico N (2 * N) →
+      coeff N a b m = Real.log (N : ℝ) * omega a b m - c N a b 0 * w m -
+        c N a b 1 * (w m * ((m : ℝ) / N))) := by
+  exact ⟨gram_entries N, delta_pos hN, exact_moments hN,
+    fun a b m hm => coeff_on (a := a) (b := b) hN hm⟩
+
+
 end D5.S3.Arith.Robin.OriginalResidualPartialCellWeights

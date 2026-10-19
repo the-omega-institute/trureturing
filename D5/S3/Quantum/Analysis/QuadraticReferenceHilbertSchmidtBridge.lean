@@ -64,7 +64,7 @@ private theorem sqrt_apply_eigenvector (σ : H →L[ℂ] H) (hσ : 0 ≤ σ)
     module
   have hy : S y = -(c : ℂ) • y := by
     simpa only [neg_smul] using eq_neg_of_add_eq_zero_left hcancel
-  have hpos := (ContinuousLinearMap.nonneg_iff_isPositive S).mp (CFC.sqrt_nonneg σ)
+  have hpos := (ContinuousLinearMap.nonneg_iff_isPositive (f := S)).mp (CFC.sqrt_nonneg σ)
   have hval : ⟪y, S y⟫_ℂ = (-(c * ‖y‖ ^ 2) : ℝ) := by
     rw [hy, inner_smul_right, inner_self_eq_norm_sq_to_K]
     push_cast
@@ -115,8 +115,8 @@ private theorem inverse_sqrt_domain_and_extension {w : Set H}
     have hne : (Real.sqrt (s i) : ℂ) ≠ 0 := by
       exact_mod_cast (Real.sqrt_pos.mpr (hs i)).ne'
     simpa using (mul_eq_zero.mp hi).resolve_left (by simpa using hne)
-  have hker : f.toFun.ker = ⊥ := by
-    rw [LinearMap.ker_eq_bot']
+  have hker : f.ker = ⊥ := by
+    rw [LinearPMap.ker_eq_bot']
     intro x hx
     apply Subtype.ext
     change S (x : H) = 0 at hx

@@ -19,6 +19,21 @@ open Diagonal.EscapeCount Diagonal.EquivariantEscape
 
 variable {G : Type u} {A : Type v} {Y : Type w}
 
+noncomputable def uniformPmf (α : Type*) [Fintype α] [Nonempty α] : PMF α :=
+  PMF.ofFintype (fun _ => (Fintype.card α : ℝ≥0∞)⁻¹) (by
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    exact ENNReal.mul_inv_cancel (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
+      (ENNReal.natCast_ne_top _))
+
+theorem uniformPmf_toOuterMeasure_apply (α : Type*) [Fintype α] [Nonempty α]
+    (s : Set α) [Fintype s] :
+    (uniformPmf α).toOuterMeasure s = Fintype.card s / Fintype.card α := by
+  classical
+  rw [PMF.toOuterMeasure_apply_fintype]
+  simp only [uniformPmf, PMF.ofFintype_apply, Set.indicator_apply]
+  rw [← Finset.sum_filter]
+  simp [Fintype.card_subtype, div_eq_mul_inv]
+
 private noncomputable def orbitRepresentativeTransport [Group G] [MulAction G A]
     (a : A) : G :=
   let i : OrbitIndex G A := Quotient.mk'' a
@@ -293,13 +308,13 @@ the fixed-point count divided by the number of stabilizer-orbit parameter choice
 theorem transitive_equivariant_escape_probability [Group G] [MulAction G A]
     [Fintype A] [Fintype Y] [Nonempty A] [Nonempty Y]
     [MulAction.IsPretransitive G A] (f : Y → Y) (i₀ : OrbitIndex G A) :
-    (PMF.uniformOfFintype (EquivariantListing G A Y)).toOuterMeasure
+    (uniformPmf (EquivariantListing G A Y)).toOuterMeasure
         {g | IsEscaped f g.1} =
       1 -
         (↑(Nat.card {y : Y // f y = y}) : ℝ≥0∞) /
           (↑(Fintype.card Y ^ Fintype.card (StabilizerOrbit G A i₀)) : ℝ≥0∞) := by
   classical
-  rw [PMF.toOuterMeasure_uniformOfFintype_apply]
+  rw [uniformPmf_toOuterMeasure_apply]
   have hEscapedCard :
       Fintype.card ↥({g | IsEscaped f g.1} : Set (EquivariantListing G A Y)) =
         Nat.card ↥({g | IsEscaped f g.1} : Set (EquivariantListing G A Y)) :=
@@ -330,7 +345,7 @@ example : EquivariantListing (Equiv.Perm (Fin 1)) (Fin 1) Unit :=
 example : (1 : ℝ≥0∞) - 1 ≠ 1 := by simp
 
 example :
-    (PMF.uniformOfFintype
+    (uniformPmf
       (EquivariantListing (Equiv.Perm (Fin 1)) (Fin 1) Unit)).toOuterMeasure
         {g | IsEscaped (fun y : Unit => y) g.1} = 0 := by
   simpa using transitive_equivariant_escape_probability

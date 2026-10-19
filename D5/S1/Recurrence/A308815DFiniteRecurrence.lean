@@ -45,7 +45,7 @@ def claim : Prop := ∀ n : ℕ, 3 ≤ n →
 
 
 private theorem cat_ode :
-    X*(1-4*X)*derivative ℚ (PowerSeries.catalanSeries.map (Nat.castRingHom ℚ)) +
+    X*(1-4*X)*derivative (R := ℚ) (PowerSeries.catalanSeries.map (Nat.castRingHom ℚ)) +
       (1-2*X)*(PowerSeries.catalanSeries.map (Nat.castRingHom ℚ)) = 1 := by
   have cat_quad : X*(PowerSeries.catalanSeries.map (Nat.castRingHom ℚ))^2 -
       PowerSeries.catalanSeries.map (Nat.castRingHom ℚ) + 1 = 0 := by
@@ -53,13 +53,13 @@ private theorem cat_ode :
       PowerSeries.catalanSeries_sq_mul_X_add_one
     simp only [map_add, map_pow, map_mul, map_X, map_one] at h
     linear_combination h
-  have h := congrArg (derivative ℚ) cat_quad
+  have h := congrArg (derivative (R := ℚ)) cat_quad
   simp only [map_add, map_sub, Derivation.leibniz, derivative_pow, derivative_one,
     derivative_X, map_zero, smul_eq_mul] at h
   norm_num at h
   linear_combination X*(2*X*(PowerSeries.catalanSeries.map (Nat.castRingHom ℚ))-1)*h -
     (2*(PowerSeries.catalanSeries.map (Nat.castRingHom ℚ))*X +
-      4*derivative ℚ (PowerSeries.catalanSeries.map (Nat.castRingHom ℚ))*X^2 + 1)*cat_quad
+      4*derivative (R := ℚ) (PowerSeries.catalanSeries.map (Nat.castRingHom ℚ))*X^2 + 1)*cat_quad
 
 private theorem p_coeff (n k : ℕ) : coeff k ((1 - 2 * X)^n) = (-2 : ℚ)^k * (n.choose k : ℚ) := by
   have h : (1 - 2 * X)^n =
@@ -98,14 +98,14 @@ private noncomputable def U (m : ℕ) : PowerSeries ℚ :=
   (1 - 2 * X)^(m+1)*(1-4*X)*r (m+3)*
     (PowerSeries.catalanSeries.map (Nat.castRingHom ℚ))
 
-private theorem r_deriv (n : ℚ) : derivative ℚ (r n) =
+private theorem r_deriv (n : ℚ) : derivative (R := ℚ) (r n) =
   C (n+1) + C (2*(6*n-6))*X + C (3*(-2*n-6))*X^2 + C (4*(8-4*n))*X^3 := by
   simp [r, Derivation.leibniz, smul_eq_mul]
   simp only [map_ofNat C 2, map_ofNat C 3, map_ofNat C 4, map_ofNat C 6, map_ofNat C 8]
   ring
 
 private theorem certificate (m : ℕ) :
-    X*derivative ℚ (U m) - C (2*((m : ℚ)+3))*U m =
+    X*derivative (R := ℚ) (U m) - C (2*((m : ℚ)+3))*U m =
       H ((m : ℚ)+3)*(1 - 2 * X)^m*
         (PowerSeries.catalanSeries.map (Nat.castRingHom ℚ)) +
       (1 - 2 * X)^(m+1)*r ((m : ℚ)+3) := by
@@ -147,7 +147,7 @@ private theorem forcing_zero (m : ℕ) :
     mul_zero, add_zero]
 
 private theorem euler_coeff (f : (PowerSeries ℚ)) (d : ℕ) :
-    coeff d (X*derivative ℚ f) = (d : ℚ)*coeff d f := by
+    coeff d (X*derivative (R := ℚ) f) = (d : ℚ)*coeff d f := by
   cases d with
   | zero => simp
   | succ d => simp [coeff_succ_X_mul, coeff_derivative, mul_comm]

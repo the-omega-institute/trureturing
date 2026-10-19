@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
 using Tomlyn;
@@ -194,7 +195,13 @@ internal static partial class DigestionQuerySelection
                 throw new FormatException($"input changed during digestion query: {entry.Path}");
             entries[entry.Path] = entry;
         }
-        return RawRepositorySnapshot.Create(entries.Values);
+        var inventory = (current.PathInventory.IsDefault ? [] : current.PathInventory)
+            .Concat(extra.PathInventory.IsDefault ? [] : extra.PathInventory)
+            .GroupBy(static entry => entry.Path, StringComparer.Ordinal)
+            .Select(group => group.Distinct().Count() == 1 ? group.First()
+                : throw new FormatException($"input identity changed during digestion query: {group.Key}"))
+            .ToImmutableArray();
+        return RawRepositorySnapshot.Create(entries.Values, inventory);
     }
 
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) Load(RawRepositorySnapshot raw)

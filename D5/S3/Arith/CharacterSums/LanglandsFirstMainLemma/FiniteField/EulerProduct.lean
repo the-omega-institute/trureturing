@@ -570,7 +570,7 @@ theorem sum_degreeSplit_succ (a b : ℕ → ℂ) (hb0 : b 0 = 0) (n : ℕ) :
 /-- Integral logarithmic-derivative identity for arbitrary positive-degree graded atoms. -/
 theorem global_weighted_derivative (d : alpha → ℕ) (hd : ∀ p, 0 < d p)
     (finite : ∀ n, Fintype (GradedExact d n)) (weight : alpha → ℂ) :
-    PowerSeries.derivative ℂ (PowerSeries.mk (gradedSumFamily d finite weight)) =
+    PowerSeries.derivative (PowerSeries.mk (gradedSumFamily d finite weight)) =
       PowerSeries.mk (gradedSumFamily d finite weight) *
         PowerSeries.mk (fun n ↦ powerSumFamily d finite weight (n + 1)) := by
   ext n
@@ -591,7 +591,7 @@ theorem power_identity_of_derivative {A : Type*} [CommRing A] (a b : ℕ → A)
     (ha0 : a 0 = 1)
     (ha : ∀ n, 2 ≤ n → a n = 0)
     (hderiv :
-      PowerSeries.derivative A (PowerSeries.mk a) =
+      PowerSeries.derivative (PowerSeries.mk a) =
         PowerSeries.mk a * PowerSeries.mk (fun n ↦ b (n + 1))) :
     ∀ r, 0 < r → -b r = (-a 1) ^ r := by
   intro r hr
@@ -812,9 +812,6 @@ theorem powerSumFamily_eq_closedPointPowerSum (w : MonicWeight k ℂ)
           apply Finset.sum_congr rfl
           intro e _
           rw [Finset.mul_sum]
-          apply Fintype.sum_congr
-          rintro ⟨⟨p, hpmonic, _⟩, _⟩
-          rfl
 
 theorem gradedSumFamily_eq_degreeSum (w : MonicWeight k ℂ) (n : ℕ) :
     GradedEulerProduct.gradedSumFamily (primeDegree k) (monicGradedFinite k)
@@ -826,7 +823,7 @@ theorem gradedSumFamily_eq_degreeSum (w : MonicWeight k ℂ) (n : ℕ) :
 
 /-- The logarithmic derivative of the monic-weight series is the shifted closed-point series. -/
 theorem closedPointSeries_derivative (w : MonicWeight k ℂ) :
-    PowerSeries.derivative ℂ (series w) = series w * closedPointSeries w := by
+    PowerSeries.derivative (series w) = series w * closedPointSeries w := by
   have h := GradedEulerProduct.global_weighted_derivative
     (primeDegree k) (primeDegree_pos k) (monicGradedFinite k) (primeWeight k w)
   have hA :
@@ -855,7 +852,7 @@ theorem closedPoint_power_identity {k : Type u} [Field k] [Fintype k]
     (hvanish : ∀ n, 2 ≤ n → MonicWeight.degreeSum w n = 0) :
     ∀ r, 0 < r →
       -MonicWeight.closedPointPowerSum w r = (-MonicWeight.degreeSum w 1) ^ r := by
-  apply power_identity_of_derivative
+  apply LanglandsFirstMainLemma.power_identity_of_derivative
   · exact MonicWeight.degreeSum_zero w
   · exact hvanish
   · simpa [MonicWeight.series, MonicWeight.closedPointSeries] using

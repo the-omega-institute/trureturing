@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:dbbc470fc3a3bca55424cea82f34128808b4f2d328765f73832eb2239526f00a
-  normalized_sha256: sha256:dbbc470fc3a3bca55424cea82f34128808b4f2d328765f73832eb2239526f00a
-cas_ref: sha256:dbbc470fc3a3bca55424cea82f34128808b4f2d328765f73832eb2239526f00a
-coverage_gids:
-  - gid: D5/S3/Constants/Moments/HankelJacobiDeterminant.hankel_jacobi_coefficient_sq_eq_det_ratio
-    target_statement_id: sha256:129957935c65d79c06c12a4fb12298349de20d78ccd266a45eeb1f878b4d93e1
-receipts:
-  unresolved_subitems: []

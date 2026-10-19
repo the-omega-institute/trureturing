@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5799caf962759eaa97de5e645f3fdb08aa67078aea4e71caf03c13b67a97efb5
-  normalized_sha256: sha256:5799caf962759eaa97de5e645f3fdb08aa67078aea4e71caf03c13b67a97efb5
-cas_ref: sha256:5799caf962759eaa97de5e645f3fdb08aa67078aea4e71caf03c13b67a97efb5
-coverage_gids:
-  - gid: D5/S1/FixedPoints/TransientTrees/DepthTruncatedClassification.depth_truncated_tree_classification_and_naturality
-    target_statement_id: sha256:2d7125c31fb4572452689a96b92b854808267ed4caface4666dc037d1bdde9b9
-receipts:
-  unresolved_subitems: []

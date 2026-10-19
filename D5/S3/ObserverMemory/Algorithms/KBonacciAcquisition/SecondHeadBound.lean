@@ -6,6 +6,7 @@
    utility: none
    digest: A weighted common-table certificate bounds the second-head prefix at every length. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PreselectedResidualBound
 import Mathlib
 
@@ -506,8 +507,7 @@ theorem second_head_bound (m : ℕ) (hm : 4 ≤ m) (a : ℕ → ℝ)
   have row_lower (q : Rows m) : rowTarget m a q - eps ≤ eventMass w q := by
     let E : Set (Fin (m+1)) := {r | rowEvent m q r.val}
     let law := w.toMeasure.map (fun f => f.val (rowWord m q))
-    have hlaw : IsProbabilityMeasure law :=
-      Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+    have hlaw : IsProbabilityMeasure law := inferInstance
     have h := (le_iSup (fun E : {E : Set (Fin (m+1)) // MeasurableSet E} =>
       max (law E.1 - finiteTarget m a (rowWord m q) E.1)
         (finiteTarget m a (rowWord m q) E.1 - law E.1))

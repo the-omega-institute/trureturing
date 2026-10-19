@@ -35,6 +35,7 @@ released under Apache 2.0.
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
+set_option synthInstance.maxHeartbeats 100000
 open CategoryTheory Limits
 
 namespace LightCondensed.Solid

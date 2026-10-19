@@ -158,7 +158,6 @@ theorem golden_new_periodic_orbit_codes_close_and_are_nodup :
     goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine, goldenStepTarget,
     goldenOrbitStates, goldenTraceCode, goldenCodeAdd, goldenCodeMul,
     goldenCodePhi, goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 /-- Each selected low code occurs on its new period-eight cycle. -/
 theorem golden_new_periodic_orbit_low_states_mem :
@@ -270,7 +269,6 @@ theorem golden_new_periodic_orbit_state_codes_nodup_eight :
     goldenTraceCode, goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
     goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
     goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_old_new_periodic_orbit_state_codes_disjoint_eight :
     List.Disjoint

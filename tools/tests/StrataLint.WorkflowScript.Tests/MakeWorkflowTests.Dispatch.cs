@@ -249,7 +249,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make -C tools xi-quantization-test ", helpRecipe, StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
         Assert.Contains("TEST_PROJECT ?= $(HERE)/StrataLint.sln", makefile, StringComparison.Ordinal);
-        Assert.Contains("scripts/dotnet-test.sh \"$(SELECTED_TEST_PROJECT)\"", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("scripts/dotnet-test.sh\" \"$(SELECTED_TEST_PROJECT)\"", testRecipe, StringComparison.Ordinal);
         Assert.Contains("$(if $(TEST_FILTER),--filter \"$(TEST_FILTER)\",)", testRecipe, StringComparison.Ordinal);
         foreach (var selected in OperatingSystem.IsWindows() ? Array.Empty<bool>() : new[] { false, true })
         {
@@ -262,7 +262,7 @@ public sealed partial class MakeWorkflowTests
                     : new[] { "TEST_FILTER=" }],
                 root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
             Assert.True(dispatch.ExitCode == 0, Encoding.UTF8.GetString(dispatch.StandardError));
-            var expected = $"/bin/bash {root}/tools/scripts/dotnet-test.sh \"{(selected ? project : root + "/tools/StrataLint.sln")}\""
+            var expected = $"/bin/bash \"{root}/tools/scripts/dotnet-test.sh\" \"{(selected ? project : root + "/tools/StrataLint.sln")}\""
                 + (selected ? $" --filter \"{filter}\"" : "");
             Assert.Equal(expected, Encoding.UTF8.GetString(dispatch.StandardOutput).Trim());
         }

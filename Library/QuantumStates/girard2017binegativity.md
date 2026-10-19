@@ -5,9 +5,10 @@ year: 2017
 title: "The binegativity of two qubits"
 doi: 10.48550/arXiv.1701.02724
 url: https://arxiv.org/abs/1701.02724v3
-claim: "For a two-qubit state sigma with partial transpose sigma^Gamma, the negativity is N(sigma) = 2 Tr[(sigma^Gamma)_-] and the binegativity is N_2(sigma) = Tr[(sigma^Gamma)_-] + 2 Tr[(((sigma^Gamma)_-)^Gamma)_-], where X_+ and X_- are the positive and negative components of a self-adjoint X. Based on randomly generated states, the paper conjectures that nu (c + nu)(nu + 1)/((c + nu)^2 + 2c(1 - c)) <= N_2(sigma) <= (nu/2)(c + nu)^2/(c^2 + nu^2) for all states with negativity nu and concurrence c."
+claim: "For a two-qubit state sigma with partial transpose sigma^Gamma, the negativity is N(sigma) = 2 Tr[(sigma^Gamma)_-] and the binegativity is N_2(sigma) = Tr[(sigma^Gamma)_-] + 2 Tr[(((sigma^Gamma)_-)^Gamma)_-], where X_+ and X_- are the positive and negative components of a self-adjoint X. Based on randomly generated states, the paper conjectures that nu (c + nu)(nu + 1)/((c + nu)^2 + 2c(1 - c)) <= N_2(sigma) <= (nu/2)(c + nu)^2/(c^2 + nu^2) for all states with negativity nu and concurrence c (Eq. (9)), and, with nu alone fixed and c_nu = sqrt(2 nu (nu + 1)) - nu, that (nu/2)(1 + c_nu/sqrt((1 - c_nu)^2 + c_nu^2)) <= N_2(sigma) (Eq. (8))."
 strata_touched:
   - D5/S3/Quantum/Entanglement/TwoQubitBinegativityUpperBoundRefutation
+  - D5/S3/Quantum/Entanglement/TwoQubitBinegativityLowerBound
 license: citation-only
 triage: anchor
 ---
@@ -30,6 +31,14 @@ The conjecture (Eq. (9)):
 
 > In general, based on numerical evidence from randomly generated states, we conjecture that the the binegativity of two-qubit states is bounded by $\nu\frac{(c+\nu)(\nu+1)}{(c+\nu)^2+2c(1-c)}\leq N_2(\sigma)\leq \frac{\nu}{2}\frac{(c+\nu)^2}{c^2+\nu^2}$ for all states $\sigma$ with fixed negativity $N(\sigma)=\nu$ and concurrence $C(\sigma)=c$.
 
+The conjecture at fixed negativity (Eq. (8)):
+
+> Based on numerical evidence, we conjecture that the binegativity is bounded below by $\frac{\nu}{2} \left(1+\frac{c_\nu}{\sqrt{(1-c_\nu)^2+c_\nu^2}}\right) \leq N_2(\sigma)$ where we define $c_\nu=\sqrt{2\nu(\nu+1)}-\nu$. Note that $c_\nu$ is the concurrence of the state of the form in \eqref{eq:sigMEMS} that has negativity given by $N(\sigma_{c_\nu})=\nu$.
+
+Here \eqref{eq:sigMEMS} is Eq. (6), $\sigma_c := c\ketbra{\phi^+}{\phi^+} + (1-c)\ketbra{10}{10}$, whose binegativity is
+$N_2(\sigma_c) = \frac{\nu_c}{2}\left(1+\frac{c}{\sqrt{(1-c)^2+c^2}}\right)$ (Eq. (7)), where
+$\nu_c = \sqrt{(1-c)^2 + c^2}-(1-c)$ is the lower bound of the negativity at concurrence $c$ that the paper cites from Verstraete–Audenaert–Dehaene–De Moor.
+
 The concurrence is the standard two-qubit concurrence (the paper cites
 Hill–Wootters and Wootters): the infimum of $\sum_ip_iC(\psi_i)$ over the
 decompositions $\sigma=\sum_ip_i|\psi_i\rangle\langle\psi_i|$, with
@@ -49,5 +58,6 @@ $N(\sigma)=2\Tr[\sigma^{\Gamma}_-]$.
   version; arXiv comment "v3: previous versions contained an erroneous proof
   claiming that the binegativity is a monotone"; source
   `binegativity_v9.tex`, md5 `377c42f23d1a50af36324a4ea5bfd221`): the
-  negativity (l. 178–186), the binegativity (l. 188–192) and the conjecture
-  (l. 277–281).
+  negativity (l. 178–186), the binegativity (l. 188–192), the conjecture Eq. (9)
+  (l. 277–281), Eqs. (6)–(7) (l. 242–252) and the conjecture Eq. (8)
+  (l. 262–269).

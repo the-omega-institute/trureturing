@@ -9,6 +9,7 @@
 import D5.S3.Geometry.MostowPrasadCovering
 import Mathlib.Topology.MetricSpace.HausdorffDistance
 import Mathlib.Topology.Algebra.ProperAction.CompactlyGenerated
+import Mathlib.Topology.Sequences
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

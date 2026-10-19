@@ -186,16 +186,18 @@ theorem result61 : ¬ claim61 := by
   have hA : IsAbelianSet (A : Set KleinBottleGroup) := by
     let hcomm : IsMulCommutative (Subgroup.closure (A : Set KleinBottleGroup)) :=
       Subgroup.isMulCommutative_closure (by
-        intro a ha b hb
+        intro a ha b hb _
         simp only [A, Finset.coe_insert, Finset.coe_singleton, Set.mem_insert_iff,
           Set.mem_singleton_iff] at ha hb
-        rcases ha with rfl | rfl <;> rcases hb with rfl | rfl <;> decide)
+        rcases ha with rfl | rfl <;> rcases hb with rfl | rfl <;>
+          first | exact Commute.one_left _ | exact Commute.one_right _
+                | exact Commute.refl _)
     intro a ha b hb
     exact congrArg Subtype.val (hcomm.is_comm.comm ⟨a, ha⟩ ⟨b, hb⟩)
   have hB : IsAbelianSet (B : Set KleinBottleGroup) := by
     let hcomm : IsMulCommutative (Subgroup.closure (B : Set KleinBottleGroup)) :=
       Subgroup.isMulCommutative_closure (by
-        intro a ha b hb
+        intro a ha b hb _
         simp only [B, Finset.coe_singleton, Set.mem_singleton_iff] at ha hb
         subst a
         subst b
@@ -227,7 +229,7 @@ theorem result62 : ¬ claim62 := by
     let hcomm : IsMulCommutative
         (Subgroup.closure (({w} : Finset KleinBottleGroup) : Set KleinBottleGroup)) :=
       Subgroup.isMulCommutative_closure (by
-        intro a ha b hb
+        intro a ha b hb _
         simp only [Finset.coe_singleton, Set.mem_singleton_iff] at ha hb
         subst a
         subst b

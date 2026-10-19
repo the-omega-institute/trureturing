@@ -6,6 +6,7 @@
    utility: none
    digest: Entire weighted series give Hermite scaling at every exact order. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Zeros.Jensen.JensenAnalyticCoefficientRemainder
 import Mathlib.Analysis.Calculus.Taylor
 import Mathlib.Analysis.Complex.RealDeriv

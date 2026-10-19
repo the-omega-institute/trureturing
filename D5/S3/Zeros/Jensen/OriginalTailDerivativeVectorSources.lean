@@ -6,6 +6,7 @@
    utility: none
    digest: Parameter, Green, source and reflection identities for the original tail derivative vector. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Zeros.Jensen.OriginalTailDerivativeVectorResiduals
 
 set_option autoImplicit false

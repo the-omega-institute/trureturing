@@ -36,14 +36,14 @@ inductive Cursor
 def next : Cursor → Bool → Cursor
   | .body d, false => .bodyTag d
   | .bodyTag d, false => .ending d
-  | .bodyTag d, true => .clause d []
+  | .bodyTag d, true => .clause d .empty
   | .clause d c, true => .clauseTag d c
   | .clauseTag d c, false => .body (d ++ [c])
   | .clauseTag d c, true => .polarity d c
   | .polarity d c, b => .firstTag d c b
   | .firstTag d c p, true => .firstBit d c p
   | .firstBit d c p, true => .nameTag d c p [true]
-  | .nameTag d c p n, false => .clause d (c ++ [(n,p)])
+  | .nameTag d c p n, false => .clause d (c ++ .ofLiterals [(n,p)])
   | .nameTag d c p n, true => .nameBit d c p n
   | .nameBit d c p n, b => .nameTag d c p (n ++ [b])
   | _, _ => .dead
@@ -62,16 +62,16 @@ def readWord (w : List Bool) : Option Formula := finish (scan (.body []) w)
 private def consumed : Cursor → List Bool
   | .body d => d.flatMap clauseWord
   | .bodyTag d => d.flatMap clauseWord ++ [false]
-  | .clause d c => d.flatMap clauseWord ++ [false,true] ++ c.flatMap literalWord
-  | .clauseTag d c => d.flatMap clauseWord ++ [false,true] ++ c.flatMap literalWord ++ [true]
-  | .polarity d c => d.flatMap clauseWord ++ [false,true] ++ c.flatMap literalWord ++ [true,true]
+  | .clause d c => d.flatMap clauseWord ++ [false,true] ++ c.literals.flatMap literalWord
+  | .clauseTag d c => d.flatMap clauseWord ++ [false,true] ++ c.literals.flatMap literalWord ++ [true]
+  | .polarity d c => d.flatMap clauseWord ++ [false,true] ++ c.literals.flatMap literalWord ++ [true,true]
   | .firstTag d c p => d.flatMap clauseWord ++ [false,true] ++
-      c.flatMap literalWord ++ [true,true,p]
+      c.literals.flatMap literalWord ++ [true,true,p]
   | .firstBit d c p => d.flatMap clauseWord ++ [false,true] ++
-      c.flatMap literalWord ++ [true,true,p,true]
-  | .nameTag d c p n => d.flatMap clauseWord ++ [false,true] ++ c.flatMap literalWord ++
+      c.literals.flatMap literalWord ++ [true,true,p,true]
+  | .nameTag d c p n => d.flatMap clauseWord ++ [false,true] ++ c.literals.flatMap literalWord ++
       [true,true,p] ++ n.flatMap (fun b => [true,b])
-  | .nameBit d c p n => d.flatMap clauseWord ++ [false,true] ++ c.flatMap literalWord ++
+  | .nameBit d c p n => d.flatMap clauseWord ++ [false,true] ++ c.literals.flatMap literalWord ++
       [true,true,p] ++ n.flatMap (fun b => [true,b]) ++ [true]
   | .ending d => formulaWord d
   | .dead => []
@@ -119,6 +119,9 @@ private theorem next_legal (q : Cursor) (b : Bool) (h : legal q) : legal (next q
       | false =>
           refine ⟨h.1.1, ?_⟩
           intro l hl
+          change l ∈ (c ++ .ofLiterals [(n,p)]).literals at hl
+          simp only [Std.Sat.CNF.Clause.literals_append,
+            Std.Sat.CNF.Clause.literals_ofLiterals] at hl
           rcases List.mem_append.mp hl with hl | hl
           · exact h.1.2 l hl
           · have hl' : l = (n,p) := by simpa using hl
@@ -157,7 +160,7 @@ private theorem scan_sound (w : List Bool) (q : Cursor) (F : Formula)
 private theorem scan_name_bits (d : Formula) (c : Std.Sat.CNF.Clause Name)
     (p : Bool) (n bits tail : List Bool) :
     scan (.nameTag d c p n) (bits.flatMap (fun b => [true,b]) ++ false :: tail) =
-      scan (.clause d (c ++ [(n ++ bits,p)])) tail := by
+      scan (.clause d (c ++ .ofLiterals [(n ++ bits,p)])) tail := by
   induction bits generalizing n with
   | nil => simp [scan, next]
   | cons b bits ih =>
@@ -166,7 +169,7 @@ private theorem scan_name_bits (d : Formula) (c : Std.Sat.CNF.Clause Name)
 private theorem scan_name (d : Formula) (c : Std.Sat.CNF.Clause Name)
     (p : Bool) (n tail : List Bool) (h : n.head? = some true) :
     scan (.firstTag d c p) (nameWord n ++ tail) =
-      scan (.clause d (c ++ [(n,p)])) tail := by
+      scan (.clause d (c ++ .ofLiterals [(n,p)])) tail := by
   cases n with
   | nil => cases h
   | cons b bits =>
@@ -178,18 +181,24 @@ private theorem scan_name (d : Formula) (c : Std.Sat.CNF.Clause Name)
 
 private theorem scan_clause (d : Formula) (c lits : Std.Sat.CNF.Clause Name)
     (tail : List Bool) (h : ∀ l ∈ lits, l.1.head? = some true) :
-    scan (.clause d c) (lits.flatMap literalWord ++ [true,false] ++ tail) =
+    scan (.clause d c) (lits.literals.flatMap literalWord ++ [true,false] ++ tail) =
       scan (.body (d ++ [c ++ lits])) tail := by
-  induction lits generalizing c with
-  | nil => simp [scan, next]
-  | cons l lits ih =>
-      obtain ⟨n,p⟩ := l
-      have hn : n.head? = some true := h (n,p) (by simp)
-      have ht : ∀ l ∈ lits, l.1.head? = some true := fun l hl => h l (by simp [hl])
-      simp only [List.flatMap_cons, literalWord, List.append_assoc, List.cons_append,
-        List.nil_append, scan, next]
-      rw [scan_name d c p n _ hn]
-      simpa [List.append_assoc] using ih (c ++ [(n,p)]) ht
+  have auxiliary (literals : List (Name × Bool)) (c : Std.Sat.CNF.Clause Name)
+      (h : ∀ l ∈ literals, l.1.head? = some true) :
+      scan (.clause d c) (literals.flatMap literalWord ++ [true,false] ++ tail) =
+        scan (.body (d ++ [c ++ .ofLiterals literals])) tail := by
+    induction literals generalizing c with
+    | nil => simp [scan, next, Std.Sat.CNF.Clause.ofLiterals]
+    | cons l literals ih =>
+        obtain ⟨n,p⟩ := l
+        have hn : n.head? = some true := h (n,p) (by simp)
+        have ht : ∀ l ∈ literals, l.1.head? = some true := fun l hl => h l (by simp [hl])
+        simp only [List.flatMap_cons, literalWord, List.append_assoc, List.cons_append,
+          List.nil_append, scan, next]
+        rw [scan_name d c p n _ hn]
+        simpa [Std.Sat.CNF.Clause.append_assoc, ← Std.Sat.CNF.Clause.ofLiterals_append] using
+          ih (c ++ .ofLiterals [(n,p)]) ht
+  simpa using auxiliary lits.literals c h
 
 private theorem scan_formula (d F : Formula) (h : Canonical F) :
     scan (.body d) (formulaWord F) = .ending (d ++ F) := by
@@ -200,7 +209,8 @@ private theorem scan_formula (d F : Formula) (h : Canonical F) :
       have ht : Canonical F := fun c hc => h c (by simp [hc])
       simp only [formulaWord, List.flatMap_cons, clauseWord, List.append_assoc,
         List.cons_append, List.nil_append, scan, next]
-      have hs := scan_clause d [] c (formulaWord F) hc
+      have hs := scan_clause d .empty c (formulaWord F) hc
+      simp only [Std.Sat.CNF.Clause.empty_append] at hs
       simpa [formulaWord, List.append_assoc] using hs.trans (ih (d ++ [c]) ht)
 
 /-- Decoding succeeds exactly on original encodings with canonical positive
@@ -322,7 +332,7 @@ private def scan_run (w saved output frame : List Bool) (p : ParsePhase) :
           some (cfg (some .scan) (nextPhase p b) w (b :: saved) output frame) := by
         apply congrArg some
         dsimp [parser, TM2.stepAux, cfg, parserStacks]
-        simp only [Function.update_apply]
+        simp only [Function.update_apply, Bool.cond_false]
         congr 1
         funext k
         cases k <;> simp [parserStacks, Function.update_apply]
@@ -354,7 +364,7 @@ private def copy_run (saved output frame : List Bool) (p : ParsePhase) :
           some (cfg (some .copy) p [] saved (b :: output) frame true) := by
         apply congrArg some
         dsimp [parser, TM2.stepAux, cfg, parserStacks]
-        simp only [Function.update_apply]
+        simp only [Function.update_apply, Bool.cond_false]
         congr 1
         funext k
         cases k <;> simp [parserStacks]
@@ -385,6 +395,7 @@ private def clear_run (saved frame : List Bool) (p : ParsePhase) :
           some (cfg (some .clear) p [] saved [] frame) := by
         apply congrArg some
         dsimp [parser, TM2.stepAux, cfg, parserStacks]
+        simp only [Bool.cond_false]
         congr 1
         funext k
         cases k <;> rfl

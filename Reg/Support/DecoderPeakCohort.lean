@@ -1,12 +1,15 @@
 import D5.S3.ConceptDynamics.Coding.DecoderPeak
 import Reg.Support.DecoderOperationTraceCohort
+import Batteries.Tactic.OpenPrivate
 
 open _root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-namespace Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort
+namespace Reg.D5.S3.ConceptDynamics.Coding.DecoderPeak.Cohort
 
 open private frame stop stream from Reg.Support.DecoderOperationTraceCohort
+
+open _root_.Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort
 
 universe u v w
 noncomputable section
@@ -127,6 +130,39 @@ def peakTraceBoundEvidence : Registration peakTraceBoundArena.{u,v,w}
       exact nomatch e
   dependence := peak_dependence
 
+def peakDescending : Realization peakSignature.{u,v,w} :=
+  realize peakSignature (fun _ _ _ H => Nat.casesOn H 1 (fun _ => 0)) peakAnchor
+
+abbrev peakMonotoneArena : Arena where
+  signature := peakSignature.{u,v,w}
+  Law R := ∀ {C : Type u} {I : Type v} {O : Type w}
+    (action : C → Op C I O) (initial : C)
+      (Record : (ℕ → O) → (ℕ → I) → Prop) (enc : C → List Bool),
+    Monotone (R.readout () ⟨C,I,O,action,initial,Record⟩ enc)
+
+theorem peak_monotone_rejected : ¬ peakMonotoneArena.{u,v,w}.Law peakDescending := by
+  intro h
+  have impossible := h stop.{u,v,w} PUnit.unit (fun _ _ => True)
+    (fun _ => []) (show 0 ≤ 1 by omega)
+  change (1 : WithTop ℕ) ≤ 0 at impossible
+  simpa using impossible
+
+def peakMonotoneEvidence : Registration peakMonotoneArena.{u,v,w}
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_monotone.{u,v,w})) where
+  actual := realize.{max (u + 1) (max (v + 1) (w + 1)), u, 0, 0, 0}
+    peakSignature.{u,v,w} peakReadout.{u,v,w} peakAnchor.{u,v,w}
+  bridge := Iff.rfl
+  variation := ⟨@peak_monotone.{u,v,w}, peakDescending, peak_monotone_rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨peakDescending, ?_, rfl, peak_monotone_rejected⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := peak_dependence
+
 end
 
-end Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort
+end Reg.D5.S3.ConceptDynamics.Coding.DecoderPeak.Cohort

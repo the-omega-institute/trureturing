@@ -231,8 +231,8 @@ private theorem tensorSector_isOrtho_of_left
   rintro _ ⟨x, rfl⟩
   rw [Submodule.mem_orthogonal]
   rintro _ ⟨y, rfl⟩
-  refine x.induction_on (by simp) (fun p q ↦ ?_) (fun u v hu hv ↦ ?_)
-  · refine y.induction_on (by simp) (fun p' q' ↦ ?_) (fun u v hu hv ↦ ?_)
+  refine x.inductionOn (fun p q ↦ ?_) (fun u v hu hv ↦ ?_)
+  · refine y.inductionOn (fun p' q' ↦ ?_) (fun u v hu hv ↦ ?_)
     · simp only [TensorProduct.map_tmul, TensorProduct.inner_tmul, Submodule.coe_subtype]
       rw [Submodule.inner_right_of_mem_orthogonal p'.2 (h p.2), zero_mul]
     · simp only [map_add, inner_add_left, hu, hv, add_zero]
@@ -245,8 +245,8 @@ private theorem tensorSector_isOrtho_of_right
   rintro _ ⟨x, rfl⟩
   rw [Submodule.mem_orthogonal]
   rintro _ ⟨y, rfl⟩
-  refine x.induction_on (by simp) (fun p q ↦ ?_) (fun u v hu hv ↦ ?_)
-  · refine y.induction_on (by simp) (fun p' q' ↦ ?_) (fun u v hu hv ↦ ?_)
+  refine x.inductionOn (fun p q ↦ ?_) (fun u v hu hv ↦ ?_)
+  · refine y.inductionOn (fun p' q' ↦ ?_) (fun u v hu hv ↦ ?_)
     · simp only [TensorProduct.map_tmul, TensorProduct.inner_tmul, Submodule.coe_subtype]
       rw [Submodule.inner_right_of_mem_orthogonal q'.2 (h q.2), mul_zero]
     · simp only [map_add, inner_add_left, hu, hv, add_zero]

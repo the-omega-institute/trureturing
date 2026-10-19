@@ -26,7 +26,7 @@ public sealed partial class BackfillInventoryLoaderTests
             (sourcePath,
                 "source_id = \"delta-v0.1\"\n"
                 + "path = \"docs/delta.md\"\n"
-                + "atomizer = \"pzg-v1\"\n"
+                + "atomizer = \"generic-v1\"\n"
                 + "genre_registry_check = \"unknown\"\n"
                 + "unregistered_genres = []\n"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));

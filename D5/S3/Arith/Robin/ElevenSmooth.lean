@@ -29,15 +29,15 @@ private theorem sigma_smooth (a b c d e : Nat) :
   have cop (p q i j : Nat) (h : Nat.Coprime p q) : Nat.Coprime (p ^ i) (q ^ j) :=
     (h.pow_left i).pow_right j
   unfold smooth divisorSum geometric
-  rw [ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
+  rw [(ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime
       ((((cop 2 11 a e (by decide)).mul_left (cop 3 11 b e (by decide))).mul_left
         (cop 5 11 c e (by decide))).mul_left (cop 7 11 d e (by decide))),
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
+    (ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime
       (((cop 2 7 a d (by decide)).mul_left (cop 3 7 b d (by decide))).mul_left
         (cop 5 7 c d (by decide))),
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
+    (ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime
       ((cop 2 5 a c (by decide)).mul_left (cop 3 5 b c (by decide))),
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime (cop 2 3 a b (by decide)),
+    (ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime (cop 2 3 a b (by decide)),
     ArithmeticFunction.sigma_one_apply_prime_pow (by decide : Nat.Prime 2),
     ArithmeticFunction.sigma_one_apply_prime_pow (by decide : Nat.Prime 3),
     ArithmeticFunction.sigma_one_apply_prime_pow (by decide : Nat.Prime 5),

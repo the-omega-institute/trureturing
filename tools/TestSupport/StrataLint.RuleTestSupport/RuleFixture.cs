@@ -28,7 +28,7 @@ internal sealed partial class RuleFixture
         sources:
           - source_id: fixture-source
             path: docs/GOVERNANCE.md
-            atomizer: none
+            atomizer: generic-v1
             entries:
               - atom_id: 2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                 fingerprints:
@@ -49,7 +49,7 @@ internal sealed partial class RuleFixture
     internal const string FixtureBackfillSource = """
         source_id = "fixture-source"
         path = "docs/GOVERNANCE.md"
-        atomizer = "none"
+        atomizer = "generic-v1"
         genre_registry_check = "no-registry"
         unregistered_genres = []
         """ + "\n";
@@ -103,11 +103,6 @@ internal sealed partial class RuleFixture
             ["Meta/domains.yaml"] = TestFileMap.Domains,
             [FixtureBackfillSourcePath] = FixtureBackfillSource,
             [FixtureBackfillAtomPath] = FixtureBackfillAtom,
-            [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
-                Path.Combine(
-                    TestRepositoryLayout.FindRoot(),
-                    "Meta/Digestion/atomizers.toml"),
-                Encoding.UTF8),
             ["Meta/FILEMAP.toml"] = TestFileMap.Canonical,
             ["Meta/ci-checks.json"] = """
                 {"schema":"ci-check-input-registration-v2","checks":[

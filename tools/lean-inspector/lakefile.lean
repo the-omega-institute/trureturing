@@ -27,6 +27,9 @@ lean_exe reportInspector where
 lean_exe inputDiscovery where
   root := `LeanInformationAudit.Contract.InputDiscovery
 
+lean_exe dependencyReadout where
+  root := `DependencyReadoutMain
+
 -- Resolve Lake's current package at runtime; copied config oleans contain no host root.
 private partial def repositoryDir (pkg : Package) : IO FilePath := do
   let rec ascend (dir : FilePath) : IO FilePath := do
@@ -438,16 +441,9 @@ private def collectModuleJobs {α : Type} (jobs : Array (Job α)) : Job (Array �
     level := next
   return level[0]?.getD (Job.collectArray #[])
 
-package_facet report (owner : Package) : FilePath := withCurrPackage owner do
-  let pkg := (← getWorkspace).root
-  observePhase "lake-inputs" "start"
+private def collectNativeReports (pkg : Package) (names : Array String) :
+    FetchM (Job (Array ReportArtifact)) := do
   let reportState ← (← fetch <| pkg.facet `reportBatch).await
-  let config ← (← fetch <| pkg.facet `reportInputData).await
-  let root ← repositoryDir pkg
-  proc (← nativeCommand pkg #["aggregate-inputs", root.toString])
-  let inputs := root / ".lake/build/lean-inspector" / "inputs.json"
-  let names ← strings config "modules"
-  observePhase "lake-inputs" "finish"
   -- The report owns registered modules. The caller supplies program targets
   -- from its resource selection in the same Lake invocation.
   -- Shared native dependency jobs compose continuations; no per-miss promise
@@ -481,8 +477,27 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
     rows := rows.push (← nativeModuleReport mod)
+  return collectModuleJobs rows
+
+-- The scoped caller supplies complete membership through reportInputData and
+-- owns its own aggregation/publication. Never write the whole-report bundle.
+package_facet moduleReports (owner : Package) : Array FilePath := withCurrPackage owner do
+  let pkg := (← getWorkspace).root
+  let config ← (← fetch <| pkg.facet `reportInputData).await
+  return (← collectNativeReports pkg (← strings config "modules")).map (·.map (·.path))
+
+package_facet report (owner : Package) : FilePath := withCurrPackage owner do
+  let pkg := (← getWorkspace).root
+  observePhase "lake-inputs" "start"
+  let config ← (← fetch <| pkg.facet `reportInputData).await
+  let root ← repositoryDir pkg
+  proc (← nativeCommand pkg #["aggregate-inputs", root.toString])
+  let inputs := root / ".lake/build/lean-inspector" / "inputs.json"
+  let names ← strings config "modules"
+  observePhase "lake-inputs" "finish"
+  let rows ← collectNativeReports pkg names
   let membership ← inputBinFile inputs
-  ((collectModuleJobs rows).zipWith (fun artifacts _ => artifacts) membership).mapM fun artifacts => do
+  (rows.zipWith (fun artifacts _ => artifacts) membership).mapM fun artifacts => do
     let root ← repositoryDir pkg
     let file := root / ".lake/build/lean-inspector" / "report.zip"
     let mut trace := BuildTrace.nil "<collection>"

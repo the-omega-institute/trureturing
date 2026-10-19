@@ -20,7 +20,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     [InlineData("CONTEXT_MISMATCH", "next")]
     [InlineData("CONTEXT_MISMATCH", "previous-boundary")]
     [InlineData("CONTEXT_MISMATCH", "next-boundary")]
-    [InlineData("ATOMIZER_NONE")]
+    [InlineData("ATOMIZER_UNSUPPORTED")]
     [InlineData("SOURCE_MISSING")]
     [InlineData("OCCURRENCE_MISSING")]
     [InlineData("OCCURRENCE_INDEX_REQUIRED")]
@@ -42,12 +42,12 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
             "QUARANTINE_PRESENT" => target with { Receipts = target.Receipts with { Quarantine = new("blocked", "supply witness", "missing-prerequisite") } },
             "COVER_DISPOSITION_PRESENT" => target with { Receipts = target.Receipts with { CoverDisposition = new(new(DigestionMigrationState.Partial, DigestionTruthState.Closed), ["D5/S0/Carrier/Probe"], []) } },
             "UNRESOLVED_SUBITEMS_PRESENT" => target with { Receipts = target.Receipts with { UnresolvedSubitems = ["live obligation"] } },
-            "ATOMIZER_NONE" => target with { Atomizer = AtomizerRegistry.NoAtomizerId },
+            "ATOMIZER_UNSUPPORTED" => target with { Atomizer = "none" },
             _ => target,
         };
         fixture = fixture.WithEntries(fixture.Ledger.RequireDigestionEntries().Select(entry => entry == target ? updated : entry));
-        if (code == "ATOMIZER_NONE") fixture = fixture with { Ledger = fixture.Ledger.WithDigestionSources([
-            fixture.Ledger.RequireDigestionSources().Single() with { Atomizer = AtomizerRegistry.NoAtomizerId }]) };
+        if (code == "ATOMIZER_UNSUPPORTED") fixture = fixture with { Ledger = fixture.Ledger.WithDigestionSources([
+            fixture.Ledger.RequireDigestionSources().Single() with { Atomizer = "none" }]) };
         if (code == "ATOM_AMBIGUOUS")
         {
             var source = fixture.Ledger.RequireDigestionSources().Single();
@@ -255,7 +255,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
             TemporaryFileSystem.File.ReadAllBytes(Path.Combine(temporary.Path, path))));
         if (clear)
             Assert.DoesNotContain(gateway.ScopedCurrentReads.SelectMany(paths => paths),
-                path => path == TheoryAtomizerDataLoader.DataPath || path.EndsWith(AtomContextFixture.SourcePath, StringComparison.Ordinal));
+                path => path == FileMapLoader.RelativePath || path.EndsWith(AtomContextFixture.SourcePath, StringComparison.Ordinal));
     }
 
     [Fact]

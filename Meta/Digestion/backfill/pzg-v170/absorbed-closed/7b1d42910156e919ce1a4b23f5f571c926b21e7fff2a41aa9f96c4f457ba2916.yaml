@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7b1d42910156e919ce1a4b23f5f571c926b21e7fff2a41aa9f96c4f457ba2916
-  normalized_sha256: sha256:7b1d42910156e919ce1a4b23f5f571c926b21e7fff2a41aa9f96c4f457ba2916
-cas_ref: sha256:7b1d42910156e919ce1a4b23f5f571c926b21e7fff2a41aa9f96c4f457ba2916
-coverage_gids:
-  - gid: D5/S3/QuantumChannels/ContractionGeometry/SubmultiplicativeLogRate.submultiplicative_profile_has_unique_log_rate
-    target_statement_id: sha256:6f2520a085e8075be5a2eb6c4efcb920df6ca66f879967896c0b533a60e282fb
-receipts:
-  unresolved_subitems: []

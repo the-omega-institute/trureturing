@@ -39,7 +39,7 @@ private lemma pillai_range (n : ℕ) : pillai n = ∑ k ∈ range n, Nat.gcd k n
   rw [pillai, sum_Icc_shift]
   omega
 
-private lemma pillai_divisors (n : ℕ) (hn : n ≠ 0) :
+lemma pillai_divisors (n : ℕ) (hn : n ≠ 0) :
     pillai n = ∑ d ∈ n.divisors, Nat.totient d * (n / d) := by
   have hm : ∀ k ∈ range n, Nat.gcd n k ∈ n.divisors := by
     intro k hk

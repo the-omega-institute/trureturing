@@ -1,0 +1,24 @@
+fingerprints:
+  raw_sha256: sha256:95f73566c0aa0f9376cc92f0c7d9108f37aad6e63997324b969faf998a47bc76
+  normalized_sha256: sha256:95f73566c0aa0f9376cc92f0c7d9108f37aad6e63997324b969faf998a47bc76
+cas_ref: sha256:95f73566c0aa0f9376cc92f0c7d9108f37aad6e63997324b969faf998a47bc76
+coverage_gids:
+  - gid: D5/S3/TotalVariation/ParryBilateralLaw.bilateral_parry_law
+    target_statement_id: sha256:92a203e6dd37708864bcc7c2189deb22d4cfe36134f01813f740f0810eeb40a7
+  - gid: D5/S3/TotalVariation/ParryBilateralLaw.bilateral_reset_coding
+    target_statement_id: sha256:96ed7f4c69cba5febd8a4a848a7c04388fe3d8fb472f6233830f33524ae2debe
+  - gid: D5/S3/TotalVariation/ParryBilateralMixing.bilateral_parry_mixing
+    target_statement_id: sha256:d1b78688161abfec703e38bc22a53c1f5021de3941b9e39e532c50ba5abd49aa
+  - gid: D5/S3/TotalVariation/ParryResetLaw.parry_stationary_law
+    target_statement_id: sha256:90b4d4e6ecbb3d5b38c2c901b47af7fcf0c9583e85c188df7c2a609ae93dc6bf
+  - gid: D5/S3/TotalVariation/ParryTwistedComparison.parry_mixing_and_complete_prefix
+    target_statement_id: sha256:6ea44eb73f19c0f95b31016e924c66f909f7c55bb5420e48e984c934dccddeef
+  - gid: D5/S3/TotalVariation/ParryWindowUpperBound.parry_window_upper_bound
+    target_statement_id: sha256:89e18bd989dcc1fe4b0eff524fd7b67324ad9e6362a221c01790fc91c39bbebc
+  - gid: D5/S3/TotalVariation/TwistedRotationDefect.parry_window_lower_bound
+    target_statement_id: sha256:6190ad3a0cba0da827b0c2fc62d62368b62e9ab3060fe2edc0645f1fe3b91597
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 7dadb088b11c408feaa3bf2605c6cc745c9fa93cb2403dbbe49920ecca9a4e50
+    - 2d456d36c66dec558b7e5bbaad6e50d48d15b41492beb040592da6ffdd7c9013

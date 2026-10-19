@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:eb7163f84967713172d50739daa6d62a9ec63a760a736f869281de886bc9a83b
-  normalized_sha256: sha256:eb7163f84967713172d50739daa6d62a9ec63a760a736f869281de886bc9a83b
-cas_ref: sha256:eb7163f84967713172d50739daa6d62a9ec63a760a736f869281de886bc9a83b
-coverage_gids:
-  - gid: D5/S3/Quantum/Completion/OneStepQuotientSplit.one_step_quotient_split_exact
-    target_statement_id: sha256:20b5473f18cf21ef02309756c905893762b48d34459099d6b355c8e8923ad7f9
-receipts:
-  unresolved_subitems: []

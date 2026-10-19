@@ -64,6 +64,7 @@ open UniqueFactorizationMonoid NumberField.InfinitePlace
 namespace D5.S3.Factorization.Galois.GoldenCubicBlockCommonDiscriminants
 
 set_option maxHeartbeats 800000
+set_option synthInstance.maxHeartbeats 100000
 
 /-- The actual common golden cubic fields have the prescribed Galois structure,
 signature, discriminants and root discriminant. -/
@@ -222,7 +223,7 @@ theorem golden_cubic_block_common_field_discriminants (J : ℕ) (hJ : 1 ≤ J) :
         rw [hcardI] at hle
         have hdiv := actual_common_cubic_ramification_three_divides J j p hj hjJ hp hmod w hw
         exact Or.inr (Nat.le_antisymm hle
-          (Nat.le_of_dvd (Ideal.ramificationIdx_pos w.asIdeal ℤ) hdiv))
+          (Nat.le_of_dvd (w.asIdeal.ramificationIdx_pos ℤ) hdiv))
     have hcoprime : Nat.Coprime (Nat.card (w.asIdeal.inertia G)) (Nat.card H) := by
       rw [hcardI, hHcard]
       rcases hecases with h | h <;> rw [h] <;> norm_num
@@ -521,7 +522,8 @@ theorem golden_cubic_block_common_field_discriminants (J : ℕ) (hJ : 1 ≤ J) :
     have hreal (x : F) : star (x : ℂ) = (x : ℂ) := by
       rcases x with ⟨x, hx⟩
       exact IntermediateField.adjoin_induction ℚ
-        (p := fun z _ => star z = z)
+        (s := D5.S3.Factorization.Galois.GoldenCubicBlockPositiveRootTower.rootSet J)
+        (motive := fun z _ => star z = z)
         (by rintro z ⟨j, hj, hjJ, rfl⟩; simp [positiveRoot])
         (by intro r; simp)
         (by intro x y hx hy hxr hyr; simp [map_add, hxr, hyr])
@@ -649,7 +651,8 @@ theorem golden_cubic_block_common_field_discriminants (J : ℕ) (hJ : 1 ≤ J) :
   have hreal (x : F) : star (x : ℂ) = (x : ℂ) := by
     rcases x with ⟨x, hx⟩
     exact IntermediateField.adjoin_induction ℚ
-      (p := fun z _ => star z = z)
+      (s := D5.S3.Factorization.Galois.GoldenCubicBlockPositiveRootTower.rootSet J)
+      (motive := fun z _ => star z = z)
       (by rintro z ⟨j, hj, hjJ, rfl⟩; simp [positiveRoot])
       (by intro r; simp)
       (by intro x y hx hy hxr hyr; simp [map_add, hxr, hyr])

@@ -26,7 +26,7 @@ theorem skew_iterate (f : X → X) (c : X → A) (n : ℕ) (x : X) (a : A) :
   induction n with
   | zero => simp [birkhoffSum_zero]
   | succ n ih =>
-    rw [iterate_succ_apply', ih, birkhoffSum_succ, iterate_succ_apply']
+    rw [iterate_succ_apply', ih, birkhoffSum_succ_apply, iterate_succ_apply']
     simp [skewStep, add_assoc]
 
 /-- Any returning base block repeats its same holonomy; the block need not be minimal. -/

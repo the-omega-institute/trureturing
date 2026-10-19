@@ -81,7 +81,7 @@ private theorem unit_prefix (a b t : ℕ) (ha : a < d) (hb : b < d) (ht : t ≤ 
     have hk' := Finset.mem_range.mp hk
     rw [hm a b k k ha hb (by omega) (by omega), if_neg (by omega)]
 
-private theorem shift_power (t j : ℕ) (ht : t ≤ d) (hj : 0 < j) :
+theorem shift_power (t j : ℕ) (ht : t ≤ d) (hj : 0 < j) :
     shift e t ^ j = ∑ a ∈ Finset.range (t - j), e a (a + j) := by
   classical
   induction j with
@@ -108,7 +108,7 @@ private theorem shift_power (t j : ℕ) (ht : t ≤ d) (hj : 0 < j) :
           simp only [Finset.mem_filter, Finset.mem_range]
           omega
 
-private theorem prefix_shift (t : ℕ) (ht : t ≤ d) :
+theorem prefix_shift (t : ℕ) (ht : t ≤ d) :
     prefixUnits e t * shift e t = shift e t := by
   classical
   rw [prefixUnits, Finset.sum_mul]
@@ -117,7 +117,7 @@ private theorem prefix_shift (t : ℕ) (ht : t ≤ d) :
   have ha' := Finset.mem_range.mp ha
   rw [unit_shift e hm a a t (by omega) (by omega) ht, if_pos ha']
 
-private theorem shift_prefix (t : ℕ) (ht : t ≤ d) :
+theorem shift_prefix (t : ℕ) (ht : t ≤ d) :
     shift e t * prefixUnits e t = shift e (t - 1) := by
   classical
   rw [shift, Finset.sum_mul]
@@ -137,7 +137,7 @@ private theorem shift_prefix (t : ℕ) (ht : t ≤ d) :
       simp only [Finset.mem_filter, Finset.mem_range]
       omega
 
-private theorem shift_exact_depth (t : ℕ) (ht0 : 0 < t) (ht : t ≤ d)
+theorem shift_exact_depth (t : ℕ) (ht0 : 0 < t) (ht : t ≤ d)
     (he : e 0 0 ≠ 0) :
     0 < t ∧ shift e t ^ t = 0 ∧
       ∀ j : ℕ, 0 < j → j < t → shift e t ^ j ≠ 0 := by
@@ -194,14 +194,23 @@ structure PositiveFamily {n d : ℕ}
     ∀ L, ExchangeChain (MonoidAlgebra ℕ H) (B t) (B r) L → Nat.dist t r ≤ L
 
 set_option maxHeartbeats 2400000 in
-/-- Arbitrary given rational augmentation-ideal matrix units produce the full
-strictly positive family, actual adjacent factors, exact positive tau and the
-shortest distance against every rectangular chain. -/
-theorem theorem26_2 [Nontrivial H] {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
+/-- The original positive-family construction with supplied clearing and positivity
+constants. The constants remain equal to the supplied values in the resulting family. -/
+theorem positiveFamily_with_constants [Nontrivial H] {n d : ℕ}
+    (hn : 1 ≤ n) (hd : 1 ≤ d)
     (e : Fin d → Fin d → Mat (MonoidAlgebra ℚ H) n n)
     (hm : ∀ a b c f, e a b * e c f = if b = c then e a f else 0)
     (ha : ∀ a b i j, rationalAugmentation (e a b i j) = 0)
-    (he : e ⟨0, hd⟩ ⟨0, hd⟩ ≠ 0) : Nonempty (PositiveFamily e) := by
+    (he : e ⟨0, hd⟩ ⟨0, hd⟩ ≠ 0)
+    (c K : ℕ) (hc : 0 < c) (hK : 0 < K)
+    (Z : Fin d → Fin d → Mat (MonoidAlgebra ℤ H) n n)
+    (hZ : ∀ a b,
+      (MonoidAlgebra.mapRingHom H (Int.castRingHom ℚ)).mapMatrix (Z a b) =
+        (c : ℚ) • e a b)
+    (hbnd : ∀ t, t ≤ d → ∀ i j g,
+      |((shift (extend Z) t) i j).coeff g| < (K : ℤ) ∧
+      |((prefixUnits (extend Z) t) i j).coeff g| < (K : ℤ)) :
+    ∃ F : PositiveFamily e, F.c = c ∧ F.K = K := by
   classical
   let E := extend e
   have hE (a b c f : ℕ) (ha' : a < d) (hb' : b < d) (hc' : c < d) (hf' : f < d) :
@@ -210,37 +219,14 @@ theorem theorem26_2 [Nontrivial H] {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
       hm ⟨a, ha'⟩ ⟨b, hb'⟩ ⟨c, hc'⟩ ⟨f, hf'⟩
   have he0 : E 0 0 ≠ 0 := by
     simpa only [E, extend, dif_pos (show 0 < d from hd)] using he
-  let C : Matrix (Fin d × Fin d × Fin n × Fin n) H ℚ :=
-    fun p g => (e p.1 p.2.1 p.2.2.1 p.2.2.2).coeff g
-  let c := C.den
-  have hc : 0 < c := Nat.pos_of_ne_zero C.den_ne_zero
   have hcq : (c : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.ne_of_gt hc)
-  let Z : Fin d → Fin d → Mat (MonoidAlgebra ℤ H) n n :=
-    fun a b i j => ∑ g : H, MonoidAlgebra.single g (C.num (a, b, i, j) g)
   let castZ : MonoidAlgebra ℤ H →+* MonoidAlgebra ℚ H :=
     MonoidAlgebra.mapRingHom H (Int.castRingHom ℚ)
   let castM : Mat (MonoidAlgebra ℤ H) n n →+* Mat (MonoidAlgebra ℚ H) n n :=
     castZ.mapMatrix
-  have hZ (a b : Fin d) : castM (Z a b) = (c : ℚ) • e a b := by
-    ext i j g
-    change (castZ (Z a b i j)).coeff g = ((c : ℚ) • e a b i j).coeff g
-    rw [MonoidAlgebra.coeff_mapRingHom]
-    change ((Z a b i j).coeff g : ℚ) = ((c : ℚ) • e a b i j).coeff g
-    have hz : (Z a b i j).coeff g = C.num (a, b, i, j) g := by
-      change (∑ h : H, MonoidAlgebra.single h (C.num (a, b, i, j) h)).coeff g = _
-      rw [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, Finset.sum_eq_single g]
-      · exact Finsupp.single_eq_same
-      · intro h _ hh
-        exact Finsupp.single_eq_of_ne' hh
-      · intro hg
-        exact (hg (Finset.mem_univ g)).elim
-    rw [hz]
-    have h := (div_eq_iff hcq).mp (C.num_div_den (a, b, i, j) g)
-    simpa only [C, MonoidAlgebra.coeff_smul, Finsupp.smul_apply, smul_eq_mul,
-      mul_comm] using h
   have hZE (a b : ℕ) : castM (extend Z a b) = (c : ℚ) • E a b := by
     by_cases hab : a < d ∧ b < d
-    · simp only [extend, dif_pos hab.1, dif_pos hab.2, E, hZ]
+    · simpa only [extend, dif_pos hab.1, dif_pos hab.2, E, castM, castZ] using hZ ⟨a, hab.1⟩ ⟨b, hab.2⟩
     · by_cases hab' : a < d
       · simp [extend, E, hab', show ¬ b < d by omega]
       · simp [extend, E, hab']
@@ -250,25 +236,9 @@ theorem theorem26_2 [Nontrivial H] {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
     simp only [PZ, prefixUnits, map_sum, hZE, Finset.smul_sum]
   have hNZ (t : ℕ) : castM (NZ t) = (c : ℚ) • shift E t := by
     simp only [NZ, shift, map_sum, hZE, Finset.smul_sum]
-  let idx := Fin (d + 1) × Fin n × Fin n × H
-  let bnd : idx → ℕ := fun p => max
-    ((NZ p.1.val p.2.1 p.2.2.1).coeff p.2.2.2).natAbs
-    ((PZ p.1.val p.2.1 p.2.2.1).coeff p.2.2.2).natAbs
-  let K := (Finset.univ.sup bnd) + 1
-  have hK : 0 < K := by dsimp [K]; omega
   have hbound (t : ℕ) (ht : t ≤ d) (i j : Fin n) (g : H) :
-      |(NZ t i j).coeff g| < (K : ℤ) ∧ |(PZ t i j).coeff g| < (K : ℤ) := by
-    have hb : bnd (⟨t, by omega⟩, i, j, g) < K :=
-      Nat.lt_succ_of_le (Finset.le_sup (f := bnd) (Finset.mem_univ _))
-    have hb1 : ((NZ t i j).coeff g).natAbs < K :=
-      lt_of_le_of_lt (le_max_left _ _) hb
-    have hb2 : ((PZ t i j).coeff g).natAbs < K :=
-      lt_of_le_of_lt (le_max_right _ _) hb
-    constructor
-    · have hbi : (((NZ t i j).coeff g).natAbs : ℤ) < (K : ℤ) := by exact_mod_cast hb1
-      simpa only [Int.natCast_natAbs] using hbi
-    · have hbi : (((PZ t i j).coeff g).natAbs : ℤ) < (K : ℤ) := by exact_mod_cast hb2
-      simpa only [Int.natCast_natAbs] using hbi
+      |(NZ t i j).coeff g| < (K : ℤ) ∧ |(PZ t i j).coeff g| < (K : ℤ) :=
+    hbnd t ht i j g
   let WZ : Mat (MonoidAlgebra ℤ H) n n := fun _ _ => (K : ℤ) • uniform H
   let W : Mat (MonoidAlgebra ℚ H) n n := fun _ _ =>
     (K : ℚ) • ∑ g : H, MonoidAlgebra.single g 1
@@ -470,7 +440,7 @@ theorem theorem26_2 [Nontrivial H] {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
     clears := ?_, bound := ?_, B := B, R := R, S := S,
     factors := ?_, positive := ?_, adjacent := hadj,
     augmentation := ?_, depth := fun t ht0 ht => htau t ht0 ht,
-    distance := ?_ }⟩
+    distance := ?_ }, by exact ⟨rfl, rfl⟩⟩
   · intro a b i j g
     refine ⟨(Z a b i j).coeff g, ?_⟩
     exact (congrArg (fun X : Mat (MonoidAlgebra ℚ H) n n => (X i j).coeff g) (hZ a b)).symm
@@ -545,6 +515,69 @@ theorem theorem26_2 [Nontrivial H] {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
     simp only [Nat.dist]
     omega
 
+set_option maxHeartbeats 2400000 in
+/-- Arbitrary given rational augmentation-ideal matrix units produce the full
+strictly positive family, actual adjacent factors, exact positive tau and the
+shortest distance against every rectangular chain. -/
+theorem theorem26_2 [Nontrivial H] {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
+    (e : Fin d → Fin d → Mat (MonoidAlgebra ℚ H) n n)
+    (hm : ∀ a b c f, e a b * e c f = if b = c then e a f else 0)
+    (ha : ∀ a b i j, rationalAugmentation (e a b i j) = 0)
+    (he : e ⟨0, hd⟩ ⟨0, hd⟩ ≠ 0) : Nonempty (PositiveFamily e) := by
+  classical
+  let C : Matrix (Fin d × Fin d × Fin n × Fin n) H ℚ :=
+    fun p g => (e p.1 p.2.1 p.2.2.1 p.2.2.2).coeff g
+  let c := C.den
+  have hc : 0 < c := Nat.pos_of_ne_zero C.den_ne_zero
+  have hcq : (c : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.ne_of_gt hc)
+  let Z : Fin d → Fin d → Mat (MonoidAlgebra ℤ H) n n :=
+    fun a b i j => ∑ g : H, MonoidAlgebra.single g (C.num (a, b, i, j) g)
+  let castZ : MonoidAlgebra ℤ H →+* MonoidAlgebra ℚ H :=
+    MonoidAlgebra.mapRingHom H (Int.castRingHom ℚ)
+  let castM : Mat (MonoidAlgebra ℤ H) n n →+* Mat (MonoidAlgebra ℚ H) n n :=
+    castZ.mapMatrix
+  have hZ (a b : Fin d) : castM (Z a b) = (c : ℚ) • e a b := by
+    ext i j g
+    change (castZ (Z a b i j)).coeff g = ((c : ℚ) • e a b i j).coeff g
+    rw [MonoidAlgebra.coeff_mapRingHom]
+    change ((Z a b i j).coeff g : ℚ) = ((c : ℚ) • e a b i j).coeff g
+    have hz : (Z a b i j).coeff g = C.num (a, b, i, j) g := by
+      change (∑ h : H, MonoidAlgebra.single h (C.num (a, b, i, j) h)).coeff g = _
+      rw [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, Finset.sum_eq_single g]
+      · exact Finsupp.single_eq_same
+      · intro h _ hh
+        exact Finsupp.single_eq_of_ne' hh
+      · intro hg
+        exact (hg (Finset.mem_univ g)).elim
+    rw [hz]
+    have h := (div_eq_iff hcq).mp (C.num_div_den (a, b, i, j) g)
+    simpa only [C, MonoidAlgebra.coeff_smul, Finsupp.smul_apply, smul_eq_mul,
+      mul_comm] using h
+  let PZ (t : ℕ) := prefixUnits (extend Z) t
+  let NZ (t : ℕ) := shift (extend Z) t
+  let idx := Fin (d + 1) × Fin n × Fin n × H
+  let bnd : idx → ℕ := fun p => max
+    ((NZ p.1.val p.2.1 p.2.2.1).coeff p.2.2.2).natAbs
+    ((PZ p.1.val p.2.1 p.2.2.1).coeff p.2.2.2).natAbs
+  let K := (Finset.univ.sup bnd) + 1
+  have hK : 0 < K := by dsimp [K]; omega
+  have hbound (t : ℕ) (ht : t ≤ d) (i j : Fin n) (g : H) :
+      |(NZ t i j).coeff g| < (K : ℤ) ∧ |(PZ t i j).coeff g| < (K : ℤ) := by
+    have hb : bnd (⟨t, by omega⟩, i, j, g) < K :=
+      Nat.lt_succ_of_le (Finset.le_sup (f := bnd) (Finset.mem_univ _))
+    have hb1 : ((NZ t i j).coeff g).natAbs < K :=
+      lt_of_le_of_lt (le_max_left _ _) hb
+    have hb2 : ((PZ t i j).coeff g).natAbs < K :=
+      lt_of_le_of_lt (le_max_right _ _) hb
+    constructor
+    · have hbi : (((NZ t i j).coeff g).natAbs : ℤ) < (K : ℤ) := by exact_mod_cast hb1
+      simpa only [Int.natCast_natAbs] using hbi
+    · have hbi : (((PZ t i j).coeff g).natAbs : ℤ) < (K : ℤ) := by exact_mod_cast hb2
+      simpa only [Int.natCast_natAbs] using hbi
+  obtain ⟨F, _, _⟩ := positiveFamily_with_constants hn hd e hm ha he c K hc hK Z hZ hbound
+  exact ⟨F⟩
+
+#print axioms positiveFamily_with_constants
 #print axioms theorem26_2
 
 end

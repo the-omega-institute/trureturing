@@ -314,7 +314,9 @@ theorem golden_cubic_complete_degree_and_unit_obstruction (j : ℕ) :
         QuadraticAlgebra.re_one, QuadraticAlgebra.im_one]
     have hPrime : Prime lam := by
       apply Ideal.prime_of_irreducible_absNorm_span hlam0
-      rw [Ideal.absNorm_span_singleton, hnorm]
+      rw [Ideal.absNorm_span_singleton]
+      change Irreducible (Algebra.norm ℤ lam).natAbs
+      rw [hnorm]
       change Irreducible (3 : ℕ)
       exact Nat.irreducible_iff_prime.mpr (Nat.prime_iff.mp Nat.prime_three)
     refine ⟨(Ideal.span_singleton_prime hlam0).mpr hPrime, ?_⟩

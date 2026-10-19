@@ -374,8 +374,6 @@ theorem finite_spectral_family_geometry
         have hconv := (convex_stdSimplex ℝ Sector) hp he
           (sub_nonneg.mpr hε1) hε0 (by ring : (1 - ε) + ε = 1)
         convert hconv using 1
-        funext b
-        simp [r, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
       have hd (ε : ℝ) : (fun b => r ε b - p b) =
           fun b => ε * (e b - p b) := by
         funext b

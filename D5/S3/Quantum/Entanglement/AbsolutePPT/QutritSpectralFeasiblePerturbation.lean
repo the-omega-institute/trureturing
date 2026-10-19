@@ -350,7 +350,7 @@ private theorem zero_leading_minor (a b c d e f : ℝ) (h : (symm a b c d e f).P
     calc
       b * (a*b + -(b*a)) + -(a*(b*b + -(d*a))) = a*(a*d-b^2) := by ring
       _ = 0 := by rw [hz,mul_zero]
-  have hk := (h.dotProduct_mulVec_zero_iff ![b,-a,0]).mp hv
+  have hk := (h.dotProduct_mulVec_zero_iff).mp hv
   have ht := congrFun hk 2
   simp [symm,Matrix.mulVec,dotProduct,Fin.sum_univ_three] at ht
   nlinarith [ht]
@@ -374,7 +374,7 @@ private theorem psd_zero_diagonal_row {n : Type} [Fintype n] [DecidableEq n]
     ∀ j, A j i = 0 := by
   let v : n → ℝ := Pi.single i 1
   have hv : v ⬝ᵥ (A *ᵥ v) = 0 := by simpa [v,Matrix.mulVec_single] using hi
-  have hz := (h.dotProduct_mulVec_zero_iff v).mp (by simpa using hv)
+  have hz := (h.dotProduct_mulVec_zero_iff).mp (by simpa using hv)
   intro j
   simpa [v,Matrix.mulVec_single] using congrFun hz j
 private theorem zero_minimum_levels (l : Fin 9 → ℝ) (ho : Antitone l)

@@ -406,5 +406,4 @@ theorem physical_product_totality (d : ℕ) (hbar : ℝ) (mass frequency : Fin d
     have hback := (PiLp.volume_preserving_ofLp (Fin d)).quasiMeasurePreserving.tendsto_ae.eventually hcomp
     change ∀ᵐ x : EuclideanSpace ℝ (Fin d) ∂volume, g x = (0 : ℂ)
     convert hback using 1
-    rfl
 end D5.S3.Quantum.Analysis.Hermite.PhysicalProductTotality

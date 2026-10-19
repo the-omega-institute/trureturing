@@ -4963,4 +4963,7 @@ Finally write $\delta=1+4(m+n\phi)=u+v\sqrt5$, with $u=1+4m+2n$ and $v=2n$. If $
 
 For an actual block, the existing rank input TBN3 supplies $\rho(q)=6N$, so Theorems 81.2--81.3 give a residue test using a constructible primary prime generator in the fixed golden field and the second prime. They do not require the auxiliary norm certificate of §80 or use weak approximation to choose its sign. The relation with every earlier Cassels and support condition has not been classified; no independence from all prior tests, previously surviving numerical pair, prime-family infinitude, or universal WSS exclusion is asserted. The residue type $(7,13)$ remains outside these statements.
 
+
+The companion residue type $(7,13)$ is treated in [Theorem 82.1 of the continuation](GOLDEN_CUBIC_BLOCK_PRIME_PERIODS_CONTINUATION.md#82-the-second-mutual-residue-type), with its distinct dyadic minimality condition and negative Rédei value.
+
 ## 追加锚（本行以下为增补区）

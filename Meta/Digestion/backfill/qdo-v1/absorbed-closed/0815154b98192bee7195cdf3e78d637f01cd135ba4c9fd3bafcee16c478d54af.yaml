@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0815154b98192bee7195cdf3e78d637f01cd135ba4c9fd3bafcee16c478d54af
-  normalized_sha256: sha256:0815154b98192bee7195cdf3e78d637f01cd135ba4c9fd3bafcee16c478d54af
-cas_ref: sha256:0815154b98192bee7195cdf3e78d637f01cd135ba4c9fd3bafcee16c478d54af
-coverage_gids:
-  - gid: D5/S3/Quantum/Algebra/FiniteLayerProjectionEscape.finite_layer_projection_escape
-    target_statement_id: sha256:5324c8f898e4e3d2b29b298333f0f3936f3fafc9781b8d6fbcba0910b9596758
-receipts:
-  unresolved_subitems: []

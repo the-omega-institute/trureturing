@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Preserve the chosen old states and parent opening inventories. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualInductionState
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSelectedCInvariant

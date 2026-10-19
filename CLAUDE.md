@@ -38,7 +38,7 @@
 | 提取定理前的节级假设 | `bash tools/scripts/agent/section-context.sh <源文件.md> <定理号>` |
 | Nyx 提问(oracle broker 单次流式调用) | `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>` |
 | 查看 Nyx 可用池 | `python3 tools/scripts/agent/nyx/nyx.py pools` |
-| 抓取访问受限的网页或 PDF(NyxID Firecrawl) | `nyxid proxy request api-firecrawl v1/scrape -m POST -H "Content-Type:application/json" -d '{"url":"<地址>","formats":["markdown"]}' --output json` |
+| 抓取网页或 PDF(可选 NyxID Firecrawl；文献读取路线见第 5.11 条) | `nyxid proxy request api-firecrawl v1/scrape -m POST -H "Content-Type:application/json" -d '{"url":"<地址>","formats":["markdown"]}' --output json` |
 
 **Nyx 调用禁令**：禁止执行旧 `nyxid oracle` CLI 及其子命令，包括脚本封装、sshx 席位和失败回退中的间接调用。独立提问统一用上述 `nyx.py ask`，sshx 的 oracle 席统一用其 broker runner；具体契约见第 5.11 条。
 
@@ -485,17 +485,18 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 ### 5.11 sshx 载体、公开证据与运行契约
 
-**多模型对抗共识**:`/sshx`(`consensus-rnd:sshx`)派 codex-cli/nyxid-oracle 隔离席设计、实施、评审;nyxid-oracle 只承担推理,不承担验证。
+**多模型对抗共识**:`/sshx`(`consensus-rnd:sshx`)派 heca/codex-cli/nyxid-oracle 隔离席设计、实施、评审;载体按下列阶段约束分派,nyxid-oracle 只承担推理,不承担验证。
 
 - **oracle 默认只用于推理,不用于验证**:nyxid-oracle(ChatGPT Pro)默认只接推理任务——思考面板、设计、研究、文献地图、搜题与证明路线推演;sshx 的 oracle 席同样只排在推理阶段。验证任务——评审与复审各席(含 architecture/quality/tests)、适用的独立终止或完成审计、判形与忠实性核对——不派 oracle,全部由 codex-cli 承担。oracle 的推理结论不算验证结果,进入验证前须由能执行的载体或 orchestrator 亲验。验证席因此同属一个模型族时,按第 5.2、5.8 条如实披露,不冒充多样性。
 - **目标迭代无总轮数上限**:覆盖 skill 的有限 `pass_budget`/耗尽停机规则,设计/修复/复审/适用独立终止审计不得因轮数停止仍可推进的目标。按证据修真实缺口,无进展须查根因换法,不原样空转。独立实施/评审、无未解 reject、适用完成审计及 PR MERGED 要求仍在;真实能力/授权/资源缺口按第 5.9 条。单次调用、有限重试、失败回退仍按各自契约,不等于目标轮数上限。
-- **默认不用 `isolated-token-subagent`**:覆盖 skill 的每多席阶段一 subagent+一 nyxid+其余 codex 布局,subagent 名额给 codex-cli;推理阶段为一 nyxid+其余 codex,验证阶段全部 codex-cli。`WorkerMode` 失败回退优先序不变,但验证阶段不回退 nyxid-oracle;推理阶段 codex-cli 与 nyxid-oracle 皆不可用、验证阶段 codex-cli 不可用,则该阶段 abstain,不得回退 subagent 顶替。
+- **默认不用 `isolated-token-subagent`**:覆盖 skill 的默认席位布局;推理多席阶段保留一 nyxid-oracle,其余席(含原 subagent 名额)及预测席在检出 heca 时派 heca,否则派 codex-cli。实施、探针与验证阶段全部 codex-cli,不得回退 nyxid-oracle 或 heca;codex-cli 不可用则该阶段 abstain。推理阶段只在 codex-cli/heca/nyxid-oracle 中按 `WorkerMode` 优先序作合规失败回退,无可用载体则 abstain;各阶段均不得回退 subagent 顶替。
+- **heca 推理席的 provider 按席机械抽签**:heca 检出、工作树放置、派发、通知、终态收集、隔离与归档沿 skill 契约。只读推理/预测席的 mode 规则优先于 skill 的 bypass-equivalent 要求:在父会话权限内选择可无人值守完成任务的兼容模式(如 codex `read-only`、claude `auto`),不得提升父会话权限;兼容模式不可用时按既有失败回退。用户/宿主显式指定的 provider/model 原样传递;未指定时,在已启用的 `codex`/`claude` provider 间按席机械抽签,可行布局须含至少一席 `claude`,使用各 provider 默认模型。派发前记录抽签结果且不得重抽;实际模型族、缺席与失败回退按第 5.2、5.8 条及 skill 披露,未取得不同模型族的完成证据不得宣称模型多样性。
 - **tests 席只能 codex-cli**:须在 `work_target` 真跑验证;nyxid-oracle 无工作树执行能力,其“跑过什么”一律 `ASSUMED-UNVERIFIED`。
 - **推理提示词要求**:每个 nyx oracle/GPT Pro 推理提示词(含 nyxid-oracle/ChatGPT Pro brief)必须包含原文「深入思考与推理, 如数学推理按照正式定义定理证明推理」。
 - **每个 nyxid/ChatGPT Pro brief 必含 `https://github.com/the-omega-institute/trureturing`**,搜题/设计/研究等推理任务均适用;按需给 `/blob/<head-sha>/<path>`、PR/issue/checks 具体 URL,缺仓库地址即不合格。让席位独立取公开状态,不只转述状态;前提是实测仓库 `visibility=public`,私有时另测可达性,不假定。
 - **公开证据边界**:nyxid 可读已发布状态,不能核本地未推送分支/工作树。要交它推理的内容能推就先推(可用 draft PR/临时分支);不能公开须在 brief 明写,相关结论标假设,由能执行的载体或 orchestrator 亲验。
 - **禁止旧 oracle CLI，统一走 broker**：禁止执行 `nyxid oracle` 及其任何子命令，不得通过脚本封装、sshx 席位或失败回退间接调用。独立提问统一执行 `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>`；sshx 的 `nyxid-oracle` 席统一使用其 broker runner。两者均通过 `nyxid proxy request oracle …` 访问 NyxID oracle broker——先读池列表，再发一次流式 `chat/completions` 并据流的终态判完成。池按列表现选在线 worker 最多的 active 池，用 `python3 tools/scripts/agent/nyx/nyx.py pools` 查看，`NYX_POOL` 可显式指定；不凭记忆写死 slug。broker 不可用或调用失败时显式报告失败，不得回退旧 CLI。
-- **访问受限的网页用 NyxID Firecrawl**：文献、学位论文、机构库或出版方页面因反爬挑战、机构拦截或直接请求失败而读不到时，通过 `nyxid proxy request api-firecrawl v1/scrape` 取正文(请求体 `{"url":"<地址>","formats":["markdown"]}`；PDF 同样返回 markdown)。把文献缺口标为 `ASSUMED-UNVERIFIED`、或因来源读不到而搁置候选之前，须先试这一路径；读数记录所取地址与正文字符数。Firecrawl 只解决访问限制，不绕过付费订阅；仍读不到的照实标注。它属于 `nyxid proxy request` 代理路径，不是被禁止的 `nyxid oracle` 命令。
+- **文献与受限网页读取路线**：文献、学位论文、机构库或出版方页面因反爬挑战、机构拦截或直接请求失败而读不到时，改用 codex worker 的联网检索、Claude Code 的 `WebSearch`/`WebFetch`，或按本条 broker 路径调用 GPT Pro(`nyxid-oracle`)，检索可合法阅读的版本(作者主页、机构库、arXiv、会议版等)。NyxID Firecrawl 是可选的正文抓取路径：`nyxid proxy request api-firecrawl v1/scrape`(请求体 `{"url":"<地址>","formats":["markdown"]}`；PDF 同样返回 markdown)；余额不足或不可用不构成须上报的资源缺口，将文献缺口标为 `ASSUMED-UNVERIFIED` 或因来源读不到而搁置候选前不要求先试 Firecrawl。读数记录所取地址与正文字符数，不绕过付费订阅。oracle 只用于推理与检索线索，不用于验证；其转述或摘录须由能执行的载体或 orchestrator 取原文亲验；仍读不到的照实标注。
 - **codex prompt 以文件 stdin 喂入**:`codex exec [flags] < promptfile`,不作位置参数,避免 shell 破坏美元号/反引号/尖括号/引号/换行后造成空 prompt 与无输入挂起。
 - **flight 在飞时 caller 对该 work_target 的读数不作数**:测试可能置树于瞬时变异态。要读须取 sha256 并交回后复读比对,或只读派发前 diff 快照;读数冲突先核自己的采集条件,再判对方。临时快照不按过程档案留存(第 2.10 条)。
 

@@ -18,7 +18,20 @@ $$\forall C \in Type, I \in Type, O \in Type, action \in \operatorname{Function}
 
 ReachThrough(H,c) means some Record has a finite primitive run from physical initialization ending at c with acquired count at most H. Peak is the WithTop Nat supremum of the lengths of the supplied original encodings over all such states. Every trace vertex has its actual prefix run, whose acquired count is no greater than the final count. Initialization, transient workspaces, acquisition states and completed endpoints are included. Infinite peaks are retained. The encoding and its original cost are supplied rather than replaced; no equality with a maximum over chosen cut states is asserted.
 
+**Theorem 1.2 (The complete horizon peak is monotone).**
+
+$$\forall C \in Type, I \in Type, O \in Type, action \in \operatorname{Function}\left(C, \operatorname{Op}\left(C, I, O\right)\right), initial \in C, Record \in \operatorname{Function}\left(\operatorname{Function}\left(Nat, O\right), \operatorname{Function}\left(\operatorname{Function}\left(Nat, I\right), Prop\right)\right), encoding \in \operatorname{Function}\left(C, \operatorname{List}\left(Bool\right)\right),\; \operatorname{Monotone}\left(\operatorname{Peak}\left(action, initial, Record, encoding\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/DecoderPeak.peak_monotone` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every state reachable with at most H acquisitions is reachable with at most K whenever H <= K. Inclusion of these actual reachable states preserves the supremum bound, including infinite peaks and all original encodings.
+
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/DecoderPeak.peak_monotone`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/DecoderPeak.peak_trace_bound`
-- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](DecoderOperationTrace.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace/Basic](DecoderOperationTrace/Basic.md)

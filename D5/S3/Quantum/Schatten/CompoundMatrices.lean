@@ -346,7 +346,7 @@ lemma prod_le_prod_sorted {n : ℕ} {f : Fin n → ℝ}
         ← Finset.prod_image (f := f) (fun a _ b _ h => hg'_inj (by simpa using h))]
     exact Finset.prod_congr hg'_eq (fun _ _ => rfl)
   rw [h_prod_eq]
-  apply Finset.prod_le_prod (fun i _ => hf_nn _) (fun i _ => ?_)
+  apply Finset.prod_le_prod₀ (fun i _ => hf_nn _) (fun i _ => ?_)
   apply hf
   -- Need: i.val ≤ (g' i).val for strictly monotone g'
   -- By induction: g'(0) ≥ 0, and g'(j+1) > g'(j) ≥ j implies g'(j+1) ≥ j+1

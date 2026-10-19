@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=consumer=D5/S3/Quantum/Magic/QuquintFiniteMaximum.finite_sign_maximum
    digest: Identify the numerical certificate matrices with the ququint tangent forms. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Magic.QuquintWignerCriticalGeometry
 import D5.S3.Quantum.Magic.QuquintCertificateData
 
@@ -20,7 +21,7 @@ set_option maxHeartbeats 8000000
 namespace D5.S3.Quantum.Magic.QuquintCertificateBridge
 
 -- Reuse the checked phase-point computations from the geometry module.
-open private zeta_value zeta_powers powerTable sign_table from
+open private zeta_value sign_table from
   D5.S3.Quantum.Magic.QuquintWignerCriticalGeometry
 
 private theorem zeta_two : zeta ^ 2 =

@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
 import Reg.Support.DependentFamily
 
+/-! # Phase-design sums and fourth moments -/
+
 open LeanInformationAudit Matrix
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
@@ -234,3 +236,92 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 end QuadraticProduct
 
 end Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
+
+namespace Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.FourthMoment
+open scoped ComplexConjugate
+
+/-- Sum a fourth-root character over all independent phase choices. -/
+abbrev signature : Signature where
+  Params := ℕ
+  State d := (Fin d → Fin 4) → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ f => ∑ z, f z) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {d : ℕ} (i j k l : Fin d),
+    R.readout () d (fun z =>
+      conj (phase (z i)) * phase (z j) * conj (phase (z k)) * phase (z l)) =
+      (4 : ℂ) ^ d * ((if i = j ∧ k = l then 1 else 0) +
+        (if i = l ∧ j = k then 1 else 0) -
+        (if i = j ∧ j = k ∧ k = l then 1 else 0))
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h (d := 1) 0 0 0 0
+  norm_num [rejected, realize] at he
+
+def source_registration : Registration arena (type_of% @moment_four) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨moment_four, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨0, (fun _ => 0), (fun _ => 1), ?_⟩
+    simp [actual, realize]
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@moment_four) (Realization signature) Unit Unit := {
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.FourthMoment.unit
+  realizationName := .str
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.FourthMoment
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ f => ∑ z, f z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.FourthMoment

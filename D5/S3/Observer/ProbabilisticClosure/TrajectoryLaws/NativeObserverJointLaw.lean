@@ -242,7 +242,7 @@ def fullTarget (M : Observer Z) (μ : PMF Depth) (h : List Operation)
 
 private theorem fullTranscript_measurable (c : AcquiredNativeState) :
     Measurable (fullTranscript c) := by
-  apply measurable_pi_lambda
+  apply Measurable.of_eval
   intro n
   exact (measurable_of_countable (fun r : Option (List Operation × AcquiredNativeState × ℕ) =>
     r.map fun p => (p.1, p.2.1.source.finiteFields,
@@ -299,8 +299,8 @@ private theorem rawTarget_probability (μ : PMF Depth) (h : List Operation)
     apply ProbabilityTheory.cond_isProbabilityMeasure
     rw [history_mass μ h c hc]
     exact ne_of_gt (normalizer_bounds μ h c hc).1
-  exact Measure.isProbabilityMeasure_map
-    ((validStopped_measurable s).comp (by unfold rawTail; fun_prop)).aemeasurable
+  unfold rawTarget
+  exact inferInstance
 
 /-- All legal phase histories, with no bound on paid rejections or fourth returns. -/
 abbrev PhaseHistory (s : ActivePhase) :=
@@ -366,7 +366,7 @@ theorem native_history_risk_transport (M : Observer Z) (μ : PMF Depth)
       (fun ω d op => full_delete_block H.val.2 d ω op),
       ordered_history_factorization M μ _ _ H.property.1, ?_⟩
     · rw [fullTarget_eq M μ _ _ H.property.1 s H.property.2]
-      exact Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+      exact inferInstance
     · rw [conditional_history_product M μ _ _ H.property.1, Measure.map_snd_prod]
       have hp := normalizer_bounds μ H.val.1 H.val.2 H.property.1
       haveI : IsProbabilityMeasure

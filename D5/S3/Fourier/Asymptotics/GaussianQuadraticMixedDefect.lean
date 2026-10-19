@@ -121,7 +121,6 @@ theorem result {Ω ι : Type*} [MeasurableSpace Ω] [Fintype ι]
         _ = _ := (Finset.mul_sum ..).symm
     have hA : ‖charFun (P.map (fun ω => ∑ j, F j ω)) 1‖ ≤ 1 := by
       have hm : AEMeasurable (fun ω => ∑ j, F j ω) P := by dsimp [F]; fun_prop
-      have := Measure.isProbabilityMeasure_map hm
       exact norm_charFun_le_one _
     have hB : ‖Complex.exp (-(∑ j, (b j : ℂ)^2)/2)‖ ≤ 1 := by
       rw [Complex.norm_exp, Real.exp_le_one_iff]
@@ -239,7 +238,6 @@ theorem result {Ω ι : Type*} [MeasurableSpace Ω] [Fintype ι]
   have hid (x y z w : ℂ) : x*y - (x*z)*w = x*(y-w*z) := by ring
   rw [hid, norm_mul]
   have hnR : ‖charFun (P.map R) 1‖ ≤ 1 := by
-    have := Measure.isProbabilityMeasure_map hRL.aemeasurable
     exact norm_charFun_le_one _
   calc
     _ ≤ 1 * ‖charFun (P.map (fun ω => S ω + Q ω)) 1 -

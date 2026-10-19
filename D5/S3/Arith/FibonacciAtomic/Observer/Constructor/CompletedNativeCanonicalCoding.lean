@@ -147,12 +147,14 @@ theorem canonical_coding :
     apply PFunctor.M.bisim' (fun _ : CompletionTree => True)
       (fun X => PFunctor.M.corec expansionStep (.inr X)) id _ X0 trivial
     intro X _
-    rcases hd : PFunctor.M.dest X with ⟨a, f⟩
-    refine ⟨a, (fun i => PFunctor.M.corec expansionStep (.inr (f i))), f, ?_, hd, ?_⟩
+    let d := PFunctor.M.dest X
+    refine ⟨PFunctor.Obj.fst d,
+      (fun i => PFunctor.M.corec expansionStep (.inr (PFunctor.Obj.snd d i))),
+      PFunctor.Obj.snd d, ?_, (PFunctor.Obj.eta d).symm, ?_⟩
     · rw [PFunctor.M.dest_corec]
-      simp only [expansionStep, hd, PFunctor.map]
+      simp only [expansionStep, PFunctor.map, PFunctor.Obj.fst_mk, PFunctor.Obj.snd_mk]
       rfl
-    · intro i; exact ⟨f i, trivial, rfl, rfl⟩
+    · intro i; exact ⟨PFunctor.Obj.snd d i, trivial, rfl, rfl⟩
   have exp_prim : ∀ n, expansion (primitive n) = atomic n := by
     intro n
     change PFunctor.M.corec expansionStep (.inl (primitive n)) = _
@@ -308,16 +310,16 @@ theorem canonical_coding :
     apply PFunctor.M.bisim' Reduced (fun C => collapse (expansion C)) id
     intro C hc
     obtain (⟨n, rfl⟩ | ⟨l, r, rfl⟩) := code_cases C
-    · refine ⟨.inl n, Empty.elim, Empty.elim, ?_, by simp [primitive], fun e => e.elim⟩
-      rw [exp_prim, col_atom]; simp [primitive]
+    · refine ⟨.inl n, Empty.elim, Empty.elim, ?_, by simp [primitive, PFunctor.Obj.mk], fun e => e.elim⟩
+      rw [exp_prim, col_atom]; simp [primitive, PFunctor.Obj.mk]
     · have ha : ¬ ∃ n, node (expansion l) (expansion r) = atomic n := by
         rintro ⟨n, hn⟩
         have h := exp_atomic n (fork l r) hc (by rw [exp_fork]; exact hn)
         exact prim_ne_fork n l r h.symm
       obtain ⟨hl, hr⟩ := red_children l r hc
       refine ⟨.inr (), (fun b : Bool => if b then collapse (expansion r) else collapse (expansion l)),
-        (fun b : Bool => if b then r else l), ?_, by simp [fork], ?_⟩
-      · rw [exp_fork, col_node _ _ ha]; simp [fork]
+        (fun b : Bool => if b then r else l), ?_, by simp [fork, PFunctor.Obj.mk], ?_⟩
+      · rw [exp_fork, col_node _ _ ha]; simp [fork, PFunctor.Obj.mk]
       · intro b; cases b
         · exact ⟨l, hl, rfl, rfl⟩
         · exact ⟨r, hr, rfl, rfl⟩
@@ -378,8 +380,8 @@ theorem canonical_coding :
     by_cases ha : ∃ n, X = atomic n
     · obtain ⟨n, rfl⟩ := ha
       refine ⟨.inl (n+k), Empty.elim, Empty.elim, ?_, ?_, fun e => e.elim⟩
-      · rw [atom_shift, col_atom]; simp [primitive]
-      · rw [col_atom, shift_prim]; simp [primitive]
+      · rw [atom_shift, col_atom]; simp [primitive, PFunctor.Obj.mk]
+      · rw [col_atom, shift_prim]; simp [primitive, PFunctor.Obj.mk]
     · induction X using tree_cases with
       | leaf_case b =>
         cases b
@@ -393,8 +395,8 @@ theorem canonical_coding :
           simpa only [iterate_node] using hh
         refine ⟨.inr (), (fun b : Bool => if b then collapse (rho^[k] r) else collapse (rho^[k] l)),
           (fun b : Bool => if b then shift k (collapse r) else shift k (collapse l)), ?_, ?_, ?_⟩
-        · rw [iterate_node, col_node _ _ hn]; simp [fork]
-        · rw [col_node _ _ ha, shift_fork]; simp [fork]
+        · rw [iterate_node, col_node _ _ hn]; simp [fork, PFunctor.Obj.mk]
+        · rw [col_node _ _ ha, shift_fork]; simp [fork, PFunctor.Obj.mk]
         · intro b; cases b
           · exact ⟨⟨k, l⟩, trivial, rfl, rfl⟩
           · exact ⟨⟨k, r⟩, trivial, rfl, rfl⟩

@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: The same actual J2 parent initializes the full native third-order induction state. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentRetention
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2JointPromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeThirdOrderBoundaryBase

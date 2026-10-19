@@ -200,7 +200,7 @@ theorem ball_subset_lemniscate {n : ℕ} (c : Fin n → ℂ) (k : Fin n) {r : �
   rw [eval_norm, ← Finset.mul_prod_erase Finset.univ (fun i => ‖z - c i‖) (Finset.mem_univ k)]
   have hp : (∏ j ∈ Finset.univ.erase k, ‖z - c j‖) ≤
       ∏ j ∈ Finset.univ.erase k, (‖c k - c j‖ + r) := by
-    apply Finset.prod_le_prod (fun _ _ => norm_nonneg _)
+    apply Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _)
     intro j hj
     calc
       ‖z - c j‖ ≤ ‖z - c k‖ + ‖c k - c j‖ := norm_sub_le_norm_sub_add_norm_sub _ _ _
@@ -235,7 +235,7 @@ theorem lemniscate_subset_balls {n : ℕ} (hn : 0 < n) (c : Fin n → ℂ) (r : 
         1 ≤ r k * ∏ j ∈ Finset.univ.erase k, (‖c k - c j‖ - e) := near k
         _ ≤ ‖z - c k‖ * ∏ j ∈ Finset.univ.erase k, ‖z - c j‖ := by
           apply mul_le_mul (hr k)
-          · apply Finset.prod_le_prod
+          · apply Finset.prod_le_prod₀
             · intro j hj
               exact sub_nonneg.mpr (near_pos k j (Ne.symm (Finset.mem_erase.mp hj).1))
             · intro j hj
@@ -253,13 +253,13 @@ theorem lemniscate_subset_balls {n : ℕ} (hn : 0 < n) (c : Fin n → ℂ) (r : 
           _ = e * ∏ j ∈ Finset.univ.erase k, t := by simp
           _ ≤ ‖z - c k‖ * ∏ j ∈ Finset.univ.erase k, ‖z - c j‖ :=
             mul_le_mul (le_of_not_gt hd)
-              (Finset.prod_le_prod (fun _ _ => le_of_lt ht) hj)
+              (Finset.prod_le_prod₀ (fun _ _ => le_of_lt ht) hj)
               (by positivity) (norm_nonneg _)
           _ = ∏ i, ‖z - c i‖ := Finset.mul_prod_erase Finset.univ (fun i => ‖z - c i‖) (Finset.mem_univ k)
       · calc
           1 ≤ t ^ n := far
           _ = ∏ i : Fin n, t := by simp
-          _ ≤ ∏ i, ‖z - c i‖ := Finset.prod_le_prod (fun _ _ => le_of_lt ht)
+          _ ≤ ∏ i, ‖z - c i‖ := Finset.prod_le_prod₀ (fun _ _ => le_of_lt ht)
               (fun j _ => (le_of_not_gt hdt).trans (hk' j))
   exact (not_le_of_gt (by simpa [eval_norm] using hz)) hprod
 
@@ -311,7 +311,7 @@ private theorem a_dist_upper (i j : Fin 4) :
 private theorem inner_cert (k : Fin 4) :
     innerRadius k * ∏ j ∈ Finset.univ.erase k, (‖a k - a j‖ + innerRadius k) < 1 := by
   have hr : 0 ≤ innerRadius k := by fin_cases k <;> norm_num [innerRadius]
-  have hp := Finset.prod_le_prod (s := Finset.univ.erase k)
+  have hp := Finset.prod_le_prod₀ (s := Finset.univ.erase k)
     (f := fun j => ‖a k - a j‖ + innerRadius k)
     (g := fun j => |(![-20, -8944/1000, 8944/1000, 20] : Fin 4 → ℝ) k -
       (![-20, -8944/1000, 8944/1000, 20] : Fin 4 → ℝ) j| + 1/500 + innerRadius k)

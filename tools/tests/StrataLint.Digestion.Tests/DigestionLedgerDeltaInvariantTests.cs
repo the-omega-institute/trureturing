@@ -34,34 +34,34 @@ public sealed partial class DigestionLedgerTests
             definitionHash,
             emissionHash);
         var baseline = DigestionTestSupport.Document(
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             [
                 DigestionTestSupport.Entry(
                     parentAtom,
                     parentId,
-                    AtomizerRegistry.NoAtomizerId,
+                    AtomizerRegistry.GenericId,
                     DigestionMigrationState.Partial,
                     DigestionTruthState.Closed,
                     [gid],
                     parentReceipts,
-                    sourceId: AtomizerRegistry.GictId) with
+                    sourceId: AtomizerRegistry.GenericId) with
                 {
                     Coverage = [new DigestionCoverageEdge(gid, TestModuleStatementId)],
                 },
                 DigestionTestSupport.Entry(
                     childAtom,
                     childId,
-                    AtomizerRegistry.NoAtomizerId,
+                    AtomizerRegistry.GenericId,
                     DigestionMigrationState.Partial,
                     DigestionTruthState.Closed,
                     [gid],
                     childReceipts,
-                    sourceId: AtomizerRegistry.GictId) with
+                    sourceId: AtomizerRegistry.GenericId) with
                 {
                     Coverage = [new DigestionCoverageEdge(gid, TestModuleStatementId)],
                 },
             ],
-            sourceId: AtomizerRegistry.GictId);
+            sourceId: AtomizerRegistry.GenericId);
         var candidateSource = Assert.Single(baseline.RequireDigestionSources());
         var candidate = baseline.WithDigestionSources(
         [
@@ -113,7 +113,7 @@ public sealed partial class DigestionLedgerTests
             atom,
             DigestionMigrationState.Partial,
             DigestionTruthState.Closed,
-            atomizer: AtomizerRegistry.NoAtomizerId).RequireDigestionEntries());
+            atomizer: AtomizerRegistry.GenericId).RequireDigestionEntries());
         var movedEntry = baselineEntry with
         {
             ProjectedStatus = new DigestionStatus(
@@ -198,7 +198,7 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageEdge(
                 gid,
                 coverageStatementId ?? TestModuleStatementId),
-            atomizer: AtomizerRegistry.NoAtomizerId);
+            atomizer: AtomizerRegistry.GenericId);
         var candidate = Ledger(
             atom,
             candidateMigration,
@@ -207,7 +207,7 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageEdge(
                 gid,
                 coverageStatementId ?? TestModuleStatementId),
-            atomizer: AtomizerRegistry.NoAtomizerId);
+            atomizer: AtomizerRegistry.GenericId);
         var snapshot = Snapshot([
             ("docs/source.md", currentSource),
             CasFile(atom),
@@ -255,7 +255,7 @@ public sealed partial class DigestionLedgerTests
         DigestionMigrationState migration,
         string? atomId = null) =>
         BackfillInventoryLoader.RootPath
-        + AtomizerRegistry.GictId
+        + AtomizerRegistry.GenericId
         + "/"
         + DigestionStatusNames.Migration(migration)
         + "-closed/"

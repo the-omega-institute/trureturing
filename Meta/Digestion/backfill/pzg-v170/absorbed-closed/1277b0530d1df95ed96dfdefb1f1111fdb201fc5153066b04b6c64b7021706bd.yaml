@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1277b0530d1df95ed96dfdefb1f1111fdb201fc5153066b04b6c64b7021706bd
-  normalized_sha256: sha256:1277b0530d1df95ed96dfdefb1f1111fdb201fc5153066b04b6c64b7021706bd
-cas_ref: sha256:1277b0530d1df95ed96dfdefb1f1111fdb201fc5153066b04b6c64b7021706bd
-coverage_gids:
-  - gid: D5/S1/Recurrence/CarryCancellation.recurrence_carry_preserves_weight
-    target_statement_id: sha256:a54bad07ea708879cafff842d5de514598b00354fb080bdfe82958f568c5a7c2
-receipts:
-  unresolved_subitems: []

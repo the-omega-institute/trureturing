@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b5efe96736ad9e7a46e5ac3c6ed4355d53c8fea8baff99b5354783fcc13816b7
-  normalized_sha256: sha256:b5efe96736ad9e7a46e5ac3c6ed4355d53c8fea8baff99b5354783fcc13816b7
-cas_ref: sha256:b5efe96736ad9e7a46e5ac3c6ed4355d53c8fea8baff99b5354783fcc13816b7
-coverage_gids:
-  - gid: D5/S0/History/SpliceEquations.splice_recursion_equations
-    target_statement_id: sha256:a7fd5d77bfb1a148d8b8c640193797d621b14fb29d2b2a8763bfd4133a1184e7
-receipts:
-  unresolved_subitems: []
