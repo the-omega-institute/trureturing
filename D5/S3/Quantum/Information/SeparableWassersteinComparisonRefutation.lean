@@ -430,4 +430,8 @@ theorem result : ¬ claim := by
   unfold modifiedSeparableSquared modifiedQuantumSquared at hc
   linarith
 
+#check claim
+#check result
+#print axioms result
+
 end D5.S3.Quantum.Information.SeparableWassersteinComparisonRefutation
