@@ -1027,3 +1027,157 @@ unverified off-line zeros; finite verification does not verify
 this unbounded head. CS29's original weak signed probes, full
 Li/Schur positivity, the same-source Robin strict upper,
 strict Robin for every $n>5040$, and RH remain unresolved.
+
+## The complete descended tail has the classical Li main term
+
+Keep DHR1--DHR7's actual zeros, multiplicities, inclusive head and
+$h_c=\lceil\sqrt{c/(2\log c)}\rceil$. The radial allowance remains
+$\mathscr E_c\ll ce^{-\nu\Omega_c}=o(c)$ with the same external
+premises and no effective starting $c$. Let $H_n$ be the already-used
+archimedean term from [CS4](coffey2009stieltjes.md#cs4-consumer-the-original-adjacent-fibonacci-joint-matrix):
+$$
+ H_n=\tfrac n2(\log n+q)+O(1),\qquad
+ q=\gamma_{\!E}-1-\log(2\pi).
+$$
+Here $\gamma_{\!E}$ is Euler's constant, not a zero ordinate.
+
+The complete tail satisfies the two-sided uniform application
+$$
+ \boxed{\quad
+ \max_{1\le n\le c}
+ |\lambda_n^{\rm tail}(h_c)-H_n|=o(c).
+ \quad} \tag{DLM1}
+$$
+This uses an existing phase-only asymptotic and the owned actual
+radial estimate. It does not use the sign-sensitive contour formula
+discussed above or identify the auxiliary phase-only sequence with
+the original Li coefficients.
+
+### Reuse the ordinate-sequence theorem
+
+Use Juan Arias de Reyna, *Asymptotics of Keiper-Li coefficients*,
+[DOI 10.7169/facm/1317045228](https://doi.org/10.7169/facm/1317045228),
+Theorem 1, Section 3, pp.4--5 of the
+[author version](https://personal.us.es/arias/56-2RHB.pdf)
+dated 31 January 2011. The theorem accepts any nondecreasing positive
+sequence, including repetitions, with counting law
+$$
+ N(t)=\frac{t}{2\pi}\log\frac{t}{2\pi}-\frac{t}{2\pi}+O(\log t).
+$$
+List the ordinates of ALL actual upper zeros, repeating each according
+to its analytic multiplicity. PTL5's existing unconditional count
+supplies this hypothesis. Put
+$$
+ \vartheta_\gamma=2\arctan\frac1{2\gamma},\qquad
+ C_n^\circ=2\sum_{\gamma>0}m_\rho
+                 [1-\cos(n\vartheta_\gamma)].
+$$
+The source's $J_n=(4/n)\sum_j\sin^2(n\arctan(1/(2\gamma_j)))$
+is exactly $C_n^\circ/n$. Thus its general theorem supplies one fixed
+sequence $(y_n)\in\ell^2$ with
+$$
+ C_n^\circ=\tfrac n2(\log n+q)+ny_n.
+ \tag{DLM2}
+$$
+We use this general ordinate-sequence theorem, not the paper's
+RH-conditional identification with actual Keiper coefficients in
+Corollary 2. The theorem and its proof are reused as an external
+paper-level premise; neither its counting-integral proof nor its
+Mellin calculation is repeated here.
+
+### Connect the actual phase and the smaller cutoff
+
+For the SAME actual upper zero put $\delta_\rho=|\beta-1/2|$ and
+$w_\rho=e^{i\theta_\rho}$ as in RT2. For $\gamma>h_c\ge5$,
+$$
+ \theta_\rho=\arctan\frac{\gamma}{\gamma^2-\beta(1-\beta)},\qquad
+ 0\le\vartheta_\gamma-\theta_\rho
+ \le\frac{\delta_\rho^2}{\gamma^3}.
+ \tag{DLM3}
+$$
+Indeed $\vartheta_\gamma$ is the same arctangent at $v=1/4$,
+whereas $\theta_\rho$ uses $v=\beta(1-\beta)=1/4-\delta_\rho^2$.
+On $0\le v\le1/4$,
+$$
+ \frac{d}{dv}\arctan\frac{\gamma}{\gamma^2-v}
+ =\frac{\gamma}{(\gamma^2-v)^2+\gamma^2}
+ \le\gamma^{-3}.
+$$
+The actual count also gives
+$\sum_{\gamma>h}m_\rho\gamma^{-3}=O(\log h/h^2)$.
+Comparing the two tail phases therefore costs
+$O(c\log h_c/h_c^2)$ uniformly for $n\le c$.
+The deleted part of $C_n^\circ$ is at most $4N_+(h_c)$.
+DHR3 bounds the actual radial error by $\mathscr E_c/4$ per coefficient.
+Together with the owned $H_n$ asymptotic, these give
+$$
+ \max_{1\le n\le c}
+ |\lambda_n^{\rm tail}(h_c)-H_n-ny_n|
+ \ll\mathscr E_c+h_c\log h_c+
+              c\log h_c/h_c^2+1=o(c).
+ \tag{DLM4}
+$$
+All phase comparisons retain the actual ordinates and multiplicities;
+only the auxiliary sequence has its phases projected to the circle.
+Every zero at the cutoff stays in the actual head.
+
+Since $y_n\to0$, splitting at any fixed index and then sending that
+index to infinity gives
+$$
+ \frac1c\max_{1\le n\le c}n|y_n|\longrightarrow0.
+ \tag{DLM5}
+$$
+This proves DLM1. No explicit pointwise decay rate for $y_n$, effective
+starting clock or new zero verification is asserted.
+
+### Recover the whole matrix shape and isolate the signed low radius
+
+For the original adjacent Fibonacci $a,b,c=a+b$, put $r_c=b/c$ and
+$$
+ A(r)=\begin{pmatrix}r&r\\r&1\end{pmatrix},\qquad
+ B(r)=\begin{pmatrix}
+ r(\log r+q)&rq+\tfrac12[r\log r-(1-r)\log(1-r)]\\
+ rq+\tfrac12[r\log r-(1-r)\log(1-r)]&q
+ \end{pmatrix}.
+$$
+The original linear map $\mathcal M$ and DLM1 yield, in operator norm,
+$$
+ \boxed{\quad
+ K^{\rm tail}_{a,b}(h_c)
+ =c\log c\,A(r_c)+cB(r_c)+o(c).
+ \quad} \tag{DLM6}
+$$
+This is an equality with a norm-small remainder for the ENTIRE
+actual tail, rather than an equality asserted for its annulus floor.
+Since $r_c\to\varphi^{-1}$, its least eigenvalue satisfies
+$$
+ \frac{\lambda_{\min}(K^{\rm tail}_{a,b}(h_c))}{c\log c}
+ \longrightarrow
+ \frac{\varphi-\sqrt{13-7\varphi}}2>0.
+ \tag{DLM7}
+$$
+
+A finite reflection average also isolates what remains unknown.
+Define the actual low-radius defect
+$$
+ D_n^{\rm low}(h_c)=
+ -2\sum_{0<\gamma\le h_c}m_\rho
+ [\cosh(nd_\rho)-1]\cos(n\theta_\rho).
+$$
+Then $\lambda_n^{\rm head}=C_n^{\rm head}+D_n^{\rm low}$ exactly,
+where $0\le C_n^{\rm head}\le4N_+(h_c)=o(c)$ uniformly for $n\le c$.
+In particular the defect is zero for critical-line zeros; every
+actual off-line partner in the low head is still present.
+Combining the same exact head with DLM6 and CS28 gives
+$$
+ \boxed{\quad
+ K_j^{\rm mid}=
+ \mathcal M(D_a^{\rm low},D_b^{\rm low},D_c^{\rm low})
+ +c\log c\,A(r_c)+cB(r_c)+o(c).
+ \quad} \tag{DLM8}
+$$
+No sign or polynomial bound for this finite but growing signed
+low-radius defect has been obtained. The original CS29 probes,
+complete Li/Schur positivity, strict Robin for every $n>5040$ and RH
+remain unproved. No Lean certification, numerical starting value,
+new verified height or literature-priority claim is made.
