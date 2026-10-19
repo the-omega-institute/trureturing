@@ -130,7 +130,7 @@ Appendix F, PDF p. 8, preceding equation (F1), verbatim: “A separable state is
 
 **Definition 1.11 (Qian–Wang's separable-state conjecture).**
 
-$$(\operatorname{claim}) \Leftrightarrow (\exists rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{IsDensity}\left(rho\right)) \land ((\operatorname{Separable}\left(rho\right)) \land (\forall UA \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall UB \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \neg (\operatorname{localAction}\left(UA, UB, rho\right) \in \operatorname{STAB}))))$$
+$$(\operatorname{claim}) \Leftrightarrow (\exists (rho:\operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), ((\operatorname{IsDensity}\left(rho\right)) \land ((\operatorname{Separable}\left(rho\right)) \land (\forall (UA:\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\forall (UB:\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\neg (\operatorname{localAction}\left(UA, UB, rho\right) \in \operatorname{STAB})))))))$$
 
 *Formalization.* `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.claim` (`✓ std3`).
 
@@ -182,9 +182,23 @@ $$\forall n \in \operatorname{Type},\; \forall iota \in \operatorname{Type},\; [
 
 Let psi be a finite family of complex vectors with nonnegative real weights w. If the quadratic form of their weighted rank-one projector sum vanishes at z, then every positive-weight vector is orthogonal to z. Positivity of the weighted squared overlaps prevents cancellation.
 
-**Theorem 1.15 (An infinite family proves the conjecture).**
+**Theorem 1.15 (A rank-one quadratic form is a squared overlap).**
 
-$$\operatorname{claim}$$
+$$\forall (n:\operatorname{Type}), ([\operatorname{Fintype}\left(n\right)] \forall (z:n \to \mathbb{C}), (\forall (psi:n \to \mathbb{C}), (\operatorname{dotProduct}\left(\operatorname{star}\left(z\right), \operatorname{Matrix.mulVec}\left(\operatorname{rankOneDensity}\left(psi\right), z\right)\right) = (\operatorname{Complex.normSq}\left(\operatorname{dotProduct}\left(\operatorname{star}\left(z\right), psi\right)\right):\mathbb{C}))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.quadratic_projector` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Dongheng Qian; Jing Wang (2025). *Quantum non-local nonstabilizerness*. DOI: [10.1103/PhysRevA.111.052443](https://doi.org/10.1103/PhysRevA.111.052443). URL: <https://arxiv.org/abs/2502.06393v4>.
+
+*Commentary.*
+
+For any two complex vectors on a finite index type, the quadratic form of rankOneDensity psi at z equals the complex coercion of the squared norm of their overlap.
+
+**Theorem 1.16 (An infinite family proves the conjecture).**
+
+$$\exists (rho:\operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), ((\operatorname{IsDensity}\left(rho\right)) \land ((\operatorname{Separable}\left(rho\right)) \land (\forall (UA:\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\forall (UB:\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\neg (\operatorname{localAction}\left(UA, UB, rho\right) \in \operatorname{STAB}))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.result` (`✓ std3`). ∎
 
@@ -214,6 +228,7 @@ For every real p,c,s with 0 < p < 1, c > 0, s > 0, c² + s² = 1 and c² ≠ 1/2
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.marginal_amplitude`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.pauli_projector_trace`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.pauli_square`
+- Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.quadratic_projector`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.result`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.trace_projector_overlap`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.unitVector`
