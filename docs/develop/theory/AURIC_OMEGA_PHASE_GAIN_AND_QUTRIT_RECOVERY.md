@@ -721,3 +721,145 @@ The source-specific compositions here are the weighted full-fiber metric (P.24),
 A known-channel decoder may depend on its known complex direction but acts on all unknown inputs and references. A common decoder in (P.36) or (P.38) is chosen once for the whole specified set. Neither construction supplies the channel parameter by calibration or observation: all native candidate states in (P.46) coincide across the fiber. Identifying an external source with this fiber, acquiring its inputs, transporting histories, and providing native encoder or decoder apparatus require additional hypotheses. The phase-call bounds remain exactly those of Assumption 1.2; passive coordinate changes, arbitrary recoveries and reference systems add no free native operation.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. A phase circle inside the fixed extension fiber
+
+**Definition 11.1 (a feasible phase orbit).** Retain Definition 7.1, its fixed passive frames and the unhalved diamond norm. Put $p_0=a=1-\beta$, $p_1=\beta$, where $0<\beta\leq1/2$. For a fixed unit vector $d=(d_0,d_1)\in\mathbb C^2$ choose
+
+$$
+0\leq r\leq R_\beta(d):=
+\left(\frac{|d_0|^2}{a}+\frac{|d_1|^2}{\beta}\right)^{-1/2}.
+\tag{P.47}
+$$
+
+Define $c_j(\varphi)=r e^{i\varphi}d_j/\sqrt{p_j}$ and $N_\varphi=N_{c(\varphi)}$. Thus $w(\varphi)=r e^{i\varphi}d$ in (P.23). The radius is a cross-block coherence-transfer strength; it is not an input population. All recoveries below may access the whole five-dimensional output, and must act on every unknown qutrit input and untouched finite reference.
+
+**Theorem 11.2 (chord distance and the known-phase recovery).** For this orbit,
+
+$$
+\|N_\varphi-N_\psi\|_\diamond
+=2r\left|\sin\frac{\varphi-\psi}{2}\right|,
+\qquad \delta(N_\varphi)=1-r.
+\tag{P.48}
+$$
+
+For $r>0$ the circle modulo $2\pi$ is injectively parametrized by its channels. A target output unitary generating it is
+
+$$
+S_\varphi=I_5+(e^{-i\varphi}-1)|e_4\rangle\langle e_4|,
+\qquad N_\varphi=\operatorname{Ad}_{S_\varphi}\circ N_0.
+\tag{P.49}
+$$
+
+Proof. The squared norm of $c(\varphi)$ is $r^2\sum_j|d_j|^2/p_j$, so (P.47) puts every member in the same fiber. Theorems 7.2 and 8.2 give (P.48), using $|e^{i\varphi}-e^{i\psi}|=2|\sin((\varphi-\psi)/2)|$. The zero set of that distance proves injectivity for $r>0$; for $r=0$ every channel is the same. Conjugation by $S_\varphi$ fixes the diagonal blocks of (P.25) and multiplies each $V_jXH^\dagger$ term by $e^{i\varphi}$, proving (P.49). Here $H$ is the embedding in Definition 7.1, not a Hamiltonian.
+
+The same passive-frame correspondence as Theorem 10.2 transports these statements to physical channels. Equation (P.49) specifies a target unitary, without adding a continuously tunable native phase to Assumption 1.2. Under the separate addressable-block assumptions of [Static Compatibility–Fiber Theory, Assumption 30.2 and Theorem 31.1](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#31-固定非实相位下的有限多块射影通用性), it admits arbitrary projective finite-word approximation. That result gives no exact synthesis for an arbitrary angle and no uniform call or physical-time cost. The same restrictions apply to uses of this orbit as a clock. $\square$
+
+## 12. Exact common recovery on an uncertain phase arc
+
+**Definition 12.1 (one decoder for the whole arc).** For $0\leq\alpha\leq\pi$, set
+
+$$
+\Delta_{\rm arc}(r,\alpha)
+=\inf_{R\ {\rm CPTP}}\sup_{|\varphi|\leq\alpha}
+\|RN_\varphi-\mathrm{id}_3\|_\diamond.
+\tag{P.50}
+$$
+
+The decoder is chosen before the unknown phase, input and reference. There is no accessible phase label in this experiment.
+
+**Theorem 12.2 (the exact arc formula).** For every radius in (P.47),
+
+$$
+\Delta_{\rm arc}(r,\alpha)=
+\begin{cases}
+1,&r=0\text{ or }\cos\alpha\leq0,\\
+\sqrt{1+r^2-2r\cos\alpha},&0<r\leq\cos\alpha,\\
+\sin\alpha,&0<\cos\alpha<r.
+\end{cases}
+\tag{P.51}
+$$
+
+The optimum is attained by the one decoder $R_t$ of Theorem 8.1 with
+
+$$
+t=q_*\overline d,\qquad
+q_*=
+\begin{cases}
+0,&r=0\text{ or }\cos\alpha\leq0,\\
+\min\{1,\cos\alpha/r\},&r>0,\ \cos\alpha>0.
+\end{cases}
+\tag{P.52}
+$$
+
+Proof. Apply Theorem 9.2 to precisely this set of channel parameters. The complex bilinear pairing $z=d\cdot t$ traverses the entire closed unit disk: Cauchy–Schwarz gives $|z|\leq1$, and $t=z\overline d$ realizes every such $z$. The objective becomes
+
+$$
+F(z)=\max_{|\varphi|\leq\alpha}|1-rze^{i\varphi}|,
+\qquad \min_{|z|\leq1}F(z).
+\tag{P.53}
+$$
+
+This is a convex function and $F(\overline z)=F(z)$, by the symmetry of the phase interval. Therefore $F(\operatorname{Re}z)\leq F(z)$. If $r>0$ and a real $z=q$ is negative, its value at $\varphi=0$ exceeds one, whereas $F(0)=1$. A minimizer may thus be chosen in $q\in[0,1]$. On that interval the least cosine on the arc is $\cos\alpha$, and
+
+$$
+F(q)^2=1+r^2q^2-2rq\cos\alpha.
+\tag{P.54}
+$$
+
+Minimizing this quadratic gives (P.52) and (P.51), including the shared boundary $r=\cos\alpha$. At $r=0$ the objective is identically one. Theorem 8.1 supplies the stated common decoder on the whole physical output. $\square$
+
+**Definition 12.3 (phase uncertainty and clock calibration).** At $\alpha=0$, (P.51) is the known-channel value $1-r$. An arc of angular length at least $\pi$ has value one. These are recovery errors, not occupation-loss probabilities. If a separately specified clock law is $\varphi=\omega t$ and $|\Delta t|\leq\varepsilon$, its error interval gives $\alpha=|\omega|\varepsilon$ when this is at most $\pi$; a larger interval covers the full circle. This substitution requires the frequency, time scale and bounded-error guarantee as premises. It cannot calibrate them from native phase-candidate outputs, which are identical along the orbit by Theorem 10.2.
+
+## 13. Recorded and discarded phase on the same orbit
+
+**Definition 13.1 (an input-independent phase record).** Let $\{p_\ell\}_{\ell=1}^s$ be a finite probability distribution, independent of the unknown input. Its mechanism chooses a phase $\varphi_\ell$ and supplies an accessible orthonormal classical label $|\ell\rangle$. Define
+
+$$
+\mathcal N_{\rm flag}(X)=\sum_{\ell=1}^s
+p_\ell|\ell\rangle\langle\ell|\otimes N_{\varphi_\ell}(X),
+\qquad \overline N=\sum_{\ell=1}^s p_\ell N_{\varphi_\ell}.
+\tag{P.55}
+$$
+
+The first channel supplies the record; the second discards it. Neither definition supposes that an unknown phase can be learned for free from $N_\varphi$.
+
+**Theorem 13.2 (the exact recovery cost of discarding the record).** With the same whole-output recovery convention,
+
+$$
+\begin{aligned}
+\delta(\mathcal N_{\rm flag})&=1-r,\\
+\delta(\overline N)&=1-r|\mu|,\qquad
+\mu=\sum_\ell p_\ell e^{i\varphi_\ell}.
+\end{aligned}
+\tag{P.56}
+$$
+
+Thus the increase is $r(1-|\mu|)$, even though every individual phase channel has the same recovery error and the same native candidate outputs.
+
+Proof. For the upper bound with records, measure the supplied label and use $R_{t_\ell}$ with $t_\ell=e^{-i\varphi_\ell}\overline d$. Each resulting channel is the same $\Psi_r$ of Theorem 8.1, so the error is $1-r$.
+
+For a lower bound let $\mathcal R$ be an arbitrary recovery of the flagged channel. Its restriction $R_\ell(X)=\mathcal R(|\ell\rangle\langle\ell|\otimes X)$ is a CPTP map for each label. Theorem 8.1 assigns it one vector $t_\ell$ of norm at most one. Testing the same unit-trace-norm matrix $E_{02}$ and its $(0,2)$ output entry gives
+
+$$
+\|\mathcal R\mathcal N_{\rm flag}-\mathrm{id}_3\|_\diamond
+\geq|1-h|,\qquad
+h=\sum_\ell p_\ell r e^{i\varphi_\ell}d\cdot t_\ell,
+\qquad |h|\leq r.
+\tag{P.57}
+$$
+
+Hence the error is at least $1-r$. No cancellation between branch errors is assumed. For the channel without records, linearity of (P.25) identifies its parameter as $\overline w=r\mu d$, still in the fiber because $|\mu|\leq1$. Theorem 8.2 gives its error in (P.56). $\square$
+
+**Definition 13.3 (a specified diffusion model and its distinct population law).** For an unrecorded real Gaussian phase $\varphi_t$ of mean $\omega t$ and variance $2Dt$, with $D\geq0$ and $t\geq0$, the same finite-dimensional channel integral has $\mu_t=e^{i\omega t-Dt}$. Consequently its error is $1-re^{-Dt}$ by (P.56). The Gaussian characteristic-function identity is a standard probability input; the resulting error is an application to this fiber, not a derivation of $D$ from native gates. For number-phase evolution on a number basis, the corresponding average obeys
+
+$$
+\rho_{mn}(t)=e^{-i\omega(m-n)t-D(m-n)^2t}\rho_{mn}(0).
+\tag{P.58}
+$$
+
+In particular every $\rho_{nn}$ is unchanged. This phase averaging is dephasing. A transfer of joint occupation into recorded output events requires an additional instrument, such as the one in [Collective Oscillators and Record Capacity, §4](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md#4-联合占据转移与记录时间的资源差异).
+
+The source-specific results (P.48), (P.51) and (P.56) are repo-derived applications of the existing exact fiber metric and recovery theorems. General gluing and coherent-control antecedents retain the attribution of Definition 10.3. The circle does not reconstruct an unknown channel, supply a native decoder, or identify phase uncertainty with a loss of population.
+
+## 追加锚（本行以下为增补区）
