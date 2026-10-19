@@ -12609,3 +12609,192 @@ G4's separate allowance is asymptotic to $6\sqrt c$; no $o(\sqrt c)$ complete-co
 This last boundary concerns a norm-only method, not the attainable positivity threshold of the full form with its frequency-dependent diagonal.
 No finite retained Schur sign, cofinal Weil positivity, original same-source strict Robin upper, determinant limit or RH is established.
 The original source/form premises and paper-only status remain.
+
+### The complete odd endpoint has a smaller error at the Schur minimum
+
+Keep GHC18--GHC23's SAME complete physical operator, exterior models and coupling, with integer $c\to\infty$, $d=\log c$ and
+$N=\lceil e^c\rceil$.
+This subsection uses that original cutoff; it does not transport the inverse asymptotic to JPP5's smaller section.
+All vectors and Schur matrices use the inherited physical orthonormal coordinates.
+The added source input is the WHOLE action on $\ell_N$, including its exterior component, rather than only the already owned retained vector
+$r=\mathscr B^*\ell_N$.
+
+#### Pay every zero-extended prime translate of the boundary vector
+
+In the normalized odd sine basis, GHC12's vector has coefficients
+$\sqrt d(-1)^n/(\pi n)$ for $n>N$.
+Writing $z=x+d/2\in(0,d)$, its actual physical function is
+$$
+ g_N(z)=\frac{\sqrt2}{\pi}
+       \sum_{n>N}\frac{\sin(2\pi nz/d)}n,\qquad
+ \|\ell_N\|^2=\frac d{\pi^2}\sum_{n>N}\frac1{n^2}
+       \sim\frac d{\pi^2N}.
+$$
+Let $\delta=d/N$.
+The classical sawtooth Fourier series and Dirichlet summation give, almost everywhere,
+$$
+ |g_N(z)|\le C\min\!\left(1,
+       \frac{\delta}{\operatorname{dist}(z,\{0,d\})}\right).
+ \tag{JLS1}
+$$
+Indeed, away from the endpoints summation by parts bounds the tail by
+$C/[N|\sin(\pi z/d)|]$.
+Within distance $\delta$, the full sawtooth is bounded and
+$\sum_{n\le N}|\sin(2\pi nz/d)|/n\le2\pi$ after reflection to the nearer endpoint.
+This is an estimate for the actual Fourier tail, not a replacement profile.
+
+Reuse JPP1's complete prime operator $\mathsf P_L$ and weights
+$w_n=\Lambda(n)/\sqrt n$.
+Each of its two zero-extended translates has one internal peak, centered at
+$\log n$ or $d-\log n$.
+Its other endpoint lies outside $(0,d)$ by at least $\log2$, and contributes a pointwise envelope at most $C\delta$.
+Coincident internal centers are grouped before estimating.
+Each group has multiplicity at most two; the coincidences include every actual ordered resonance $nm=c$.
+Distinct grouped centers are separated by at least $1/(2c)$, since either their distance is a nonzero $\log(n/m)$ or a nonzero $\log(nm/c)$ with integer numerator data.
+
+For $a_\xi(z)=\min(1,\delta/|z-\xi|)$, the elementary overlap bounds on $(0,d)$ are
+$$
+ \int a_\xi^2\le C\delta,\qquad
+ \int a_\xi a_\eta
+   \le\frac{C\delta^2}{|\xi-\eta|}(1+\log N)
+       \quad(\xi\ne\eta).
+$$
+For the second, partition according to the nearer center; the other factor is at most
+$2\delta/|\xi-\eta|$, and $\int a_\xi\le C\delta(1+\log N)$.
+The sum of squared grouped weights is at most
+$4\sum_{n<c}w_n^2$, and their total weight is at most $2W_c$.
+The outside-endpoint envelopes have squared integral at most
+$Cd\delta^2W_c^2$.
+Thus, retaining all groups, cross terms and outside endpoints, the WHOLE prime action satisfies
+$$
+ \|\mathsf P_L\ell_N\|^2
+ \le C\left[
+   \delta\sum_{n<c}\frac{\Lambda(n)^2}{n}
+       +\delta^2c(1+\log N)W_c^2\right].
+$$
+Here $d\le c(1+\log N)$ absorbs the outside-endpoint term.
+The original cutoff has $\delta\ll1/c$.
+GHC18's existing full prime-power sums give
+$W_c^2=O(c)$ and $\sum_{n<c}\Lambda(n)^2/n=O(d^2)$.
+Consequently
+$\|\mathsf P_L\ell_N\|=O(d)\|\ell_N\|$.
+No independence or favorable cancellation of distinct prime translates has been assumed.
+
+The other actual source terms are also paid.
+For JPP2's normalized odd pole direction $e_-$, direct integration against the physical sine basis gives
+$|\langle\phi_n^{\rm o},e_-\rangle|\le C\sqrt d/n$ for large $c$ and $n>N$.
+Since $\mathsf R_Le_-=(d-b)e_-$ and $\ell_N$ is odd,
+$$
+ \|\mathsf R_L\ell_N\|\le C\sqrt c\,d/N .
+$$
+The SAME Gamma boundary term has norm $O(1)$ by G2.
+It follows that
+$$
+ \boxed{\|V_L\ell_N\|=O(d)\|\ell_N\|.}
+ \tag{JLS2}
+$$
+This improves the global $\sqrt c$ source budget on this particular actual vector and includes the exterior-to-exterior response.
+The recurrence vectors of JPP4 do not give a contrary bound on this fixed vector.
+
+#### Transport the vector and its frequency weight together
+
+Let $\widetilde H,\widetilde S$ be GHC21's original uncorrected signed-Hilbert model and let
+$q=\mathscr B^*\widetilde H^{-1}\ell_N$.
+The diagonal-domain estimate
+$\|(D-c)\ell_N\|=O(1+\log d)\|\ell_N\|$
+and the exterior floor $\widetilde H\succeq(c/2)I$ are already owned.
+The difference between the original and uncorrected exterior has operator norm $O(d/N)$:
+its endpoint is rank one of norm $O(\|\ell_N\|^2)$ and its remaining Gamma error is cubic.
+Thus JLS2 and the SAME vector resolvent identity give
+$$
+ \boxed{\begin{aligned}
+ \|\widetilde H^{-1}\ell_N-\ell_N/c\|
+     &=O(d/c^2)\|\ell_N\|,\\
+ \|q-r/c\|&=O(d/c^{3/2})\|\ell_N\|,\\
+ \|q\|&\sim\frac d{\sqrt6\,c}\|\ell_N\|.
+ \end{aligned}}
+ \tag{JLS3}
+$$
+The second line uses the complete coupling norm $O(\sqrt c)$.
+The last norm is reused from GHC20--GHC21, not recalculated from a generic bound.
+
+The retained diagonal must also be paid on the actual $r$.
+Reuse GHC20's complete bulk formula with $\delta_0=c^{-8}$ and its actual profiles
+$\mathcal A(t)=\operatorname{arctanh}(t)/t$ and
+$G(t)=\log(1+t)/t$.
+The additional weights are controlled because
+$$
+ \int_0^1[\mathcal A(t)^2+G(t)^2]\log^2t\,dt<\infty.
+$$
+On $\delta_0\le t\le1-\delta_0$ their weighted variations have polynomial bounds in $c$, so the SAME full prime discrepancies give polynomial-in-$c$ errors divided by $N$.
+The actual bulk approximation error remains negligible after multiplication by $O(c)$.
+Every excluded row is still included: GHC20's bound for its unweighted squared norm is
+$O(dc(1+\log N)^2(\delta_0/N+N^{-2}))$.
+Multiplying it by $O(c^2)$ gives $o(d^3/N)$.
+Thus with $D_N=P_ND_LP_N$ on the full retained space,
+$$
+ \|(D_N-c)r\|\le C(1+\log d)\|r\|.
+$$
+This is a new weighted consumption of the existing actual profile, not a fixed-head limit or a deletion of the cutoff rows.
+
+On the retained space $\|D_N-c\|=O(c)$.
+Also
+$\|\widetilde S-D_N\|\le\|V_L\|+
+\|\mathscr B\|^2\|\widetilde H^{-1}\|=O(\sqrt c)$.
+Combining these bounds with JLS3, the normalized actual endpoint
+$\nu_c=q/\|q\|$ satisfies
+$$
+ \boxed{\|(\widetilde S-cI)\nu_c\|=O(\sqrt c).}
+ \tag{JLS4}
+$$
+It is concentrated near the high Schur energy $c$; no assertion about a full-form eigenfunction or a simple minimum is used.
+
+#### Pay the negative endpoint at the lowest Schur value
+
+Reuse GHC22's exact signed formula. For sufficiently large $c$, put
+$$
+ \varepsilon_c=
+ -\frac{\tau_d}{1+\tau_d a_{c,N}}\|q\|^2
+ \sim\frac{d^3}{24\pi^2c^2N}>0 .
+$$
+Then
+$\widehat S=\widetilde S-\varepsilon_c|\nu_c\rangle\langle\nu_c|$.
+JLS4 applies to $\widehat S$ as well, since $\varepsilon_c=o(1)$.
+The classical spectral theorem therefore gives the whole low-energy projection bound
+$$
+ \left\|
+ \mathbf1_{(-\infty,c/2]}(\widehat S)\nu_c
+ \right\|^2=O(1/c).
+$$
+The uncorrected Schur minimum is at most
+$A_0+\|V_L\|=O(\sqrt c)$ by the retained constant vector and the negative Schur charge.
+Thus a unit minimizing vector $w$ for $\widehat S$ lies in this low-energy space.
+For any such vector, with no simplicity assumption,
+$|\langle\nu_c,w\rangle|^2=O(1/c)$.
+The variational principle yields
+$$
+ \boxed{0\le
+ \lambda_{\min}(\widetilde S)-\lambda_{\min}(\widehat S)
+       \le C\varepsilon_c/c
+       =O\!\left(\frac{d^3}{c^3N}\right).}
+ \tag{JLS5}
+$$
+This uses the evaluated complete source vector and its frequency weight.
+The total trace charge from GHC23 alone would give only the larger scale $\varepsilon_c$.
+
+Finally let
+$\rho_c=\|S-\widehat S\|\le\|S-\widehat S\|_1
+=O(d^3/(cN^3))$, the already paid complete cubic Gamma remainder.
+For the ORIGINAL physical Schur matrix,
+$$
+ \boxed{
+ -C\varepsilon_c/c-\rho_c
+ \le\lambda_{\min}(S)-\lambda_{\min}(\widetilde S)
+ \le\rho_c.}
+ \tag{JLS6}
+$$
+All minima are those of the same finite physical Schur space at the original cutoff; they are not identified with the full operator's ground-state value.
+This reduces the asymptotic endpoint allowance needed at the Schur minimum by a factor $c$, while retaining its negative sign and all source terms.
+It does not evaluate the remaining model minimum or give its positive margin.
+No new sign certificate at $c=27,N=1280$, retained/cofinal Weil positivity, original same-source strict Robin upper, determinant limit or RH follows.
+All statements remain paper applications under the inherited source/form premises, without Lean/kernel certification or a literature-priority claim.
