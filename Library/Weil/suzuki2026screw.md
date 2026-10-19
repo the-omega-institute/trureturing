@@ -9269,7 +9269,7 @@ $$
 \qquad
 \mathcal V=\{F\in H_6:\mathcal P(F)<\infty\}.
 $$
-This is an explicit finite-moment Gamma domain; it is not asserted to be the form closure of the finite Gaussian sources. The compact smooth features in $C_c^\infty((\pi,\infty))$ belong to $\mathcal V$, which is consequently dense in $H$. Their theta image has only finitely many nonzero dilations, and its logarithmic zero extension is piecewise smooth with at most a single jump and Fourier decay $O((1+|\xi|)^{-1})$. The original finite Gaussian features belong by the owned W247/W255 interfaces and exponential decay.
+This is an explicit finite-moment Gamma domain. W324--W326 below identify its finite-Gaussian form core, including cofinal narrow-source-window approximations. The compact smooth features in $C_c^\infty((\pi,\infty))$ belong to $\mathcal V$, which is consequently dense in $H$. Their theta image has only finitely many nonzero dilations, and its logarithmic zero extension is piecewise smooth with at most a single jump and Fourier decay $O((1+|\xi|)^{-1})$. The original finite Gaussian features belong by the owned W247/W255 interfaces and exponential decay.
 
 ### Keep the original Gamma, cutoff and complete debit together
 
@@ -9347,7 +9347,7 @@ $$
 M(\psi_j)=Q_{6,A_j}/Q_H\le K,\quad
 \mathfrak E(\psi_j)=4\pi^3A_jQ_{\mathcal K_{A_j}^g}\le-4\pi^3\delta.
 $$
-W320 supplies a subsequence converging in $\mathcal N$ to $\psi\in\mathcal V$ with $\|\psi\|_2=1$, $M(\psi)\le K$ and $\mathfrak E(\psi)\le-4\pi^3\delta$. All components come from the SAME actual features; an independently chosen theta or reflected profile has not been substituted. The limit need not be a finite Gaussian source. No equality of the completed minimum with the infimum over finite Gaussian sources is asserted.
+W320 supplies a subsequence converging in $\mathcal N$ to $\psi\in\mathcal V$ with $\|\psi\|_2=1$, $M(\psi)\le K$ and $\mathfrak E(\psi)\le-4\pi^3\delta$. All components come from the SAME actual features; an independently chosen theta or reflected profile has not been substituted. The limit need not be a finite Gaussian source. W327--W328 below identify the completed minimum with the cofinal original-source infimum at each exact fixed moment budget, with real and complex fields matched.
 
 ### Reuse closed-form theory with an arbitrarily small moment penalty
 
@@ -9370,3 +9370,96 @@ $$
 \tag{W323}
 $$
 This is a consumer of the actual normalization, not a positivity conclusion: a hypothetical fixed negative source margin survives every sufficiently weak moment penalty. Conversely no sign of $e_K$ or $\lambda_0(\lambda)$ has been established here. A completed minimizer is not identified with an admissible finite source. Compactness rules out escape of bounded-energy fixed-budget negative sequences; it does not remove their permitted negative sign. Every-budget W258, unrestricted complete positivity, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. The argument is paper mathematics without Lean/kernel certification, numerical constants, an experiment, exhaustive literature coverage or a priority claim.
+## Recover actual Gaussian sources from the completed physical extrema
+
+The compactness result W320 and completed minima W321--W322 leave a realization obligation: a completed vector need not itself be a finite Gaussian feature. The missing interface is approximation in BOTH its sixth moment and FULL Gamma form norm, followed by a return to the SAME original Gaussian budget. This interface can be supplied without assuming a sign, weakening the exact budget, or imposing a lower source gap.
+
+Use $\mathcal V$, $M$, $\mathcal P$ and the complete $\mathfrak E$ of W317--W323, and write
+$$
+\|F\|_{\mathcal V}^2=M(F)+\mathcal P(F).
+$$
+All scalar fields below are matched: for $\mathbb F\in\{\mathbb R,\mathbb C\}$ let $\mathcal V_{\mathbb F}$ be the corresponding real- or complex-valued features, and require the source coefficients to be in that SAME field. No equality of the real and complex constrained minima is assumed. Constants and approximation starts may depend on the target and tolerance; no uniform rate over the whole unit sphere is asserted.
+
+### Approximate the theta image before reconstructing the source
+
+The sixth-moment theta bound W238 allows the classical Möbius inverse on $H_6$:
+$$
+\begin{aligned}
+(\mathscr SU)(x)&=\sum_{n\ge1}\mu(n)n^4U(n^2x),\\
+\|\mathscr T\|_{H_6\to H_6},\ \|\mathscr S\|_{H_6\to H_6}&\le\zeta(3),
+\qquad \mathscr S\mathscr T=\mathscr T\mathscr S=I.
+\end{aligned}
+\tag{W324}
+$$
+Indeed the single-dilation norm in W238 is at most $n^{-3}$. Both operator series converge absolutely in this norm, and the finite divisor inversion already used in W319 extends by that absolute convergence. This reuses classical Möbius inversion in the stronger sixth-moment space. It asserts no bounded full inverse on the weaker $W$ or $\mathcal N$ spaces.
+
+For $F\in\mathcal V_{\mathbb F}$ put $U=\mathscr TF$ and retain the Gamma profile WITHOUT $B$,
+$u(t)=(\pi e^t)^{9/4}U(\pi e^t)$ for $t\ge0$, extended by zero for $t<0$. Its two finite norms are
+$\|p^{1/2}\widehat u\|_2$ and $\|e^{5t/4}u\|_2$; the square of the latter equals $\pi^{7/2}M(U)$.
+
+Use ordinary approximate identities on this profile. First translate it to the right by $2\varepsilon$, then convolve with $\rho_\varepsilon(t)=\varepsilon^{-1}\rho(t/\varepsilon)$, where $\rho$ is real, nonnegative, smooth, supported in $[-1,1]$ and has integral one. The result is smooth, supported in $[\varepsilon,\infty)$, and converges to $u$ in BOTH norms. Put $b(\eta)=\int\rho(s)e^{i\eta s}ds$, so $|b|\le1$ and $b(0)=1$. For the Gamma norm, with W231's unitary Fourier convention, the multiplier is $e^{2i\varepsilon\xi}b(\varepsilon\xi)$; dominated convergence applies. For the exponential norm it is the usual strong continuity of translations and approximate identities in that weighted $L^2$ space, with bounded costs on a fixed small translation range. This step moves the whole zero-extended profile; it does not discard a boundary jump.
+
+At a fixed smoothing scale the profile is in ordinary $H^1(\mathbb R)$. Multiply it by a smooth cutoff equal to one on $[-R,R]$ and zero outside $[-2R,2R]$, and let $R\to\infty$. The cutoff converges in $H^1$, hence in the Gamma norm since $p(\xi)\le C(1+|\xi|^2)$; dominated convergence gives the exponential norm as well. A diagonal choice gives compact smooth $u_j$ supported strictly inside $(0,\infty)$ in both norms. Reality is preserved when $\mathbb F=\mathbb R$. This consumes the classical smoothing operations inside the actual theta-image domain, not a new standalone density theorem.
+
+Convert $u_j$ back to $U_j\in C_c^\infty((\pi,\infty))$ and apply $\mathscr S$. Each inverse is finite on $x\ge\pi$, because $U_j$ has compact upper support. That finite formula also defines a smooth compact feature $f_j\in C_c^\infty((0,\infty))$ whose restriction is $\mathscr SU_j$. W324 gives $M(f_j-F)\to0$, and $\mathscr Tf_j=U_j$ gives $\mathcal P(f_j-F)\to0$. Consequently
+$$
+f_j\longrightarrow F\quad\text{in }\mathcal V_{\mathbb F},
+\qquad
+M(H)+\mathcal P(H)\le C\|H\|_X^2
+\quad\text{on the owned compact/Gaussian difference class.}
+\tag{W325}
+$$
+For the last inequality use the SAME $X$ as W255. It bounds $M(H)$ and $\mathcal N(H)^2$; W255 with the zero feature bounds $|\mathfrak E(H)|$ by $C\|H\|_X^2$. W317 then bounds $\mathcal P(H)=\mathfrak E(H)+\mathfrak J(H,H)$. The Gamma form and every debit therefore stay on the same difference feature. All norm and energy passages below use this graph norm, not just $L^2$ convergence.
+
+### Reuse the finite-source approximation in every sufficiently late narrow window
+
+For EVERY $F\in\mathcal V_{\mathbb F}$ and $\eta>0$ there are $A_*,C>0$ such that EVERY $A\ge A_*$ and EVERY $w>0$ admit an actual finite physical source of field $\mathbb F$, whose physical feature $G$ satisfies
+$$
+\operatorname{supp}\mu\subset[A,A+w),\qquad
+\#\operatorname{supp}\mu\le\lceil Ce^{2A}\rceil,
+\qquad \|G-F\|_{\mathcal V}<\eta.
+\tag{W326}
+$$
+First fix one compact smooth $f_j$ from W325. Apply the ALREADY transported Poisson/deconflation approximation W235--W236 to this fixed feature, with $P=e^{2A}$. Its $X$ error tends to zero for every sufficiently large real $P$; W325 transfers that error to $\mathcal V$. If $f_j$ is supported below $M_j$, the degree is at most $PM_j$, hence the displayed site count. At each such $P$, the deconflation gap may be made arbitrarily small to put all poles $P+kh$ inside $[P,Pe^{2w})$ without changing the degree. The common start and count constant therefore do not depend on $w$; the gap and coefficients may. This is the existing approximation's parameter transport, not a repeated proof of its polynomial estimate. Complex targets use its linear extension, and real targets keep real coefficients.
+
+For any fixed admitted $A_0$, the linear space of finite Gaussian features with physical sources on $[A_0,\infty)$ is thus dense in $\mathcal V$. Since W322's shifted form norm for each fixed $\lambda>0$ is equivalent to this graph norm, it is a form core for $q_\lambda$. W326 is stronger in source placement: each approximant can be put in any sufficiently late window of any positive width. It does NOT assert density within a single fixed window $[A,A+w)$, or a uniform start for all target vectors.
+
+### Preserve the exact budget even at a saturated minimum
+
+For $K>1$ define
+$$
+e_K^{\mathbb F}=\min\{\mathfrak E(F):F\in\mathcal V_{\mathbb F},\ \|F\|_2=1,\ M(F)\le K\}.
+$$
+For $\mathbb F=\mathbb C$ this is W321's $e_K$; the same compactness argument applies to the closed real subspace. To approximate a saturated vector with $M(F)=K$, choose a normalized $g\in C_c^\infty((\pi,\pi K^{1/6}))$ in the same field, orthogonal to $F$ in BOTH pairings
+$\langle F,g\rangle_H$ and $\int(x/\pi)^6\overline Fg\,dx$.
+Such a nonzero $g$ exists: three linearly independent smooth functions in this interval satisfy two homogeneous linear constraints. Its support gives $M(g)<K$. Thus
+$$
+F_t=\frac{F+tg}{\sqrt{1+t^2}},\qquad
+\|F_t\|_2=1,\qquad
+M(F_t)=\frac{K+t^2M(g)}{1+t^2}<K\quad(t\ne0),
+\qquad F_t\to F\text{ in }\mathcal V.
+\tag{W327}
+$$
+If $M(F)<K$, no perturbation is needed. Apply W326 only after fixing this strict slack, then normalize $G$ in $H$. Both the normalized moment and complete energy converge, so the actual sources eventually obey the ORIGINAL bound $M\le K$, not merely $K+\varepsilon$. The same construction works separately in the real and complex fields; it does not convexify one field into the other.
+
+### Identify the completed minimum with the actual cofinal optimum
+
+Let $n(A)$ be any positive integer schedule with $n(A)e^{-2A}\to\infty$. Define $m_{A,w,n(A)}^{\mathbb F}(K)$ as the infimum of $A Q_{\mathcal K_A^g}(\sigma)$ over ORIGINAL finite Gaussian sources of field $\mathbb F$ with support in $[A,A+w)$, at most $n(A)$ active sites, $Q_H=1$ and $Q_{6,A}\le K$. For EVERY $K>1$,
+$$
+\lim_{A\to\infty}\ \sup_{w>0}
+\left|4\pi^3m_{A,w,n(A)}^{\mathbb F}(K)-e_K^{\mathbb F}\right|=0.
+\tag{W328}
+$$
+The source classes are nonempty for all sufficiently large $A$, uniformly over $w>0$. For the lower bound use each source's ACTUAL normalized feature and W257: $M(\psi)=Q_{6,A}/Q_H$ and $4\pi^3 A Q_{\mathcal K_A^g}=\mathfrak E(\psi)\ge e_K^{\mathbb F}$. For the upper bound choose a completed minimizer, use W327 if its budget is saturated, and apply W326 at a fixed sufficiently small tolerance. Normalize the resulting original source by W257. For every large enough $A$, its count is at most $Ce^{2A}\le n(A)$, for EVERY $w>0$, its original moment is at most $K$, and its complete normalized energy is at most $e_K^{\mathbb F}+\eta$. The start and $C$ depend on $K$, the chosen accuracy and target, but not on $w$. Let the accuracy tend to zero. This proves the displayed uniform cofinal equality without interchanging independent extrema or claiming that any finite source attains the minimum. At $K=1$ the normalized feasible set is empty, as before.
+
+The same core also realizes W322's confined lowest level. Let $\lambda_0^{\mathbb F}(\lambda)$ be the normalized minimum of $q_\lambda$ in the indicated field, and let $r_{A,w,n(A)}^{\mathbb F}(\lambda)$ be the original-source infimum of
+$A Q_{\mathcal K_A^g}+\lambda Q_{6,A}/(4\pi^3)$ with $Q_H=1$ and the same support/count constraints, without a moment cap. Then for EACH fixed $\lambda>0$,
+$$
+\lim_{A\to\infty}\ \sup_{w>0}
+\left|4\pi^3r_{A,w,n(A)}^{\mathbb F}(\lambda)
+-\lambda_0^{\mathbb F}(\lambda)\right|=0.
+\tag{W329}
+$$
+Use W326 on a confined lowest vector and the SAME exact W257 normalization; the lower bound holds for every source. The real minimum exists by restriction of the same real-coefficient closed form and compact embedding. For $\mathbb F=\mathbb C$ this is precisely W322's lowest level. There is no uniformity claim as $\lambda\downarrow0$. In particular, a negative completed confined level would give genuinely negative original finite sources in every sufficiently late narrow window; it cannot be dismissed solely as an added-completion direction. No such negative level is exhibited here.
+
+W324--W329 close the source-realization gap for the specified completed forms and their EXACT moment-budget minima. The completed minimizer still need not itself be finite, and no sign for $e_K^{\mathbb F}$ or $\lambda_0^{\mathbb F}(\lambda)$ has been established. These source correspondences supply neither W258's vanishing negative allowance nor unrestricted complete positivity. Full RH and strict Robin for EVERY integer $n>5040$ remain unproved. Classical Möbius inversion, approximate identities, the published polynomial approximation and closed-form facts are reused; the additional content is their joint full-Gamma/moment transport back to the original sources, with exact budgets, fields and cofinal counts. This is paper mathematics without Lean/kernel certification, numerical experiments, exhaustive literature coverage or a priority claim.
