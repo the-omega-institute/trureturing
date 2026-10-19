@@ -9,6 +9,7 @@
 /-
 admission_basis: escape-witness
 escape_witness: separable_exchange_zero
+Escape audit unfinished for density_psd: https://github.com/the-omega-institute/trureturing/issues/19102.
 Escape audit unfinished under issue #15589: the dependent-family registration still lacks full source reconstruction, equivalence, variation, sensitivity, and observational-dependence evidence; the delivered-head DTR reading is `DTR-Unregistered` (Observe) for `separable_exchange_zero`, and no `declared_validated` claim is made.
 Direct frozen dependencies:
   D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.partialTraceFirst
@@ -74,7 +75,7 @@ def IsFullySeparableLocal {V L : Type} [Fintype V] [DecidableEq V]
 
 variable {V L : Type} [Fintype V] [DecidableEq V] [Fintype L] [DecidableEq L]
 
-private theorem density_psd (σ : DensityState L) :
+theorem density_psd (σ : DensityState L) :
     (CStarMatrix.ofMatrix.symm σ.val).PosSemidef :=
   Matrix.nonneg_iff_posSemidef.mp
     (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm σ.2.1)

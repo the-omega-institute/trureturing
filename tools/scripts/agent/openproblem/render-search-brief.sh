@@ -7,7 +7,8 @@
 #   WINDOW   quick track only: the arXiv listing window to scan, as YYMM or YYMM-YYMM
 #            (default: the previous and the current month)
 # Substitutes __SEAT_ID__, __SHA__ (current origin/dev), __OPEN_PREREGISTRATIONS__
-# (open GitHub issues whose title contains "Preregister") and, for the quick track, __WINDOW__.
+# (open GitHub issues whose title contains "Preregister" or "preregistration", deduplicated by number;
+# for nyxid-oracle seats each issue is named by the source identifiers in its title) and, for the quick track, __WINDOW__.
 # Requires git, gh and python3.
 set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -50,8 +51,10 @@ git -C "$repo_root" fetch -q origin dev
 sha="$(git -C "$repo_root" rev-parse origin/dev)"
 prereg="$(mktemp)"
 trap 'rm -f "$prereg"' EXIT
-(cd "$repo_root" && gh issue list --state open --search "Preregister in:title" --limit 500 \
-  --json number,title --jq '.[] | "#\(.number) \(.title)"') > "$prereg"
+# GitHub title search matches whole words, so "Preregister" misses "Open problem (preregistration): …"; query both.
+(cd "$repo_root" && for query in "Preregister in:title" "preregistration in:title"; do
+  gh issue list --state open --search "$query" --limit 500 --json number,title --jq '.[] | "#\(.number) \(.title)"'
+done) | awk '!seen[$1]++' > "$prereg"
 [[ -s "$prereg" ]] || echo "(none)" > "$prereg"
 python3 - "$template" "$out" "$seat_id" "$sha" "$prereg" "$track" "$window" <<'PY'
 import datetime, pathlib, sys
@@ -79,9 +82,30 @@ if track == "quick":
     phrase = (f"{month_name(start)} (arXiv identifiers {start}.*)" if start == end else
               f"{month_name(start)} to {month_name(end)} (arXiv identifiers {start}.* to {end}.*)")
     text = text.replace("__WINDOW__", phrase)
+listing = pathlib.Path(prereg).read_text().rstrip("\n")
+if seat_id.startswith("nyxid-oracle:"):
+    # The oracle broker drops briefs above about 40 KB, so name each issue by the source identifiers in its title
+    # (modern and legacy arXiv numbers, OEIS A-numbers, MathOverflow numbers, DOIs).
+    import re
+    rows = []
+    for line in listing.splitlines():
+        match = re.match(r"#(\d+) (.*)", line)
+        if not match:
+            rows.append(line)
+            continue
+        number, title = match.groups()
+        ids = sorted(set(re.findall(r"(?<![\d.])(\d{4}\.\d{4,5})(?!\d)", title))
+                     | set(re.findall(r"(?<![\w.-])([a-z]+(?:-[a-z]+)*(?:\.[A-Z]{2})?/\d{7})(?!\d)", title))
+                     | set(re.findall(r"\bA\d{6}\b", title))
+                     | set(re.findall(r"\bMO ?\d{5,6}\b", title))
+                     | set(match.rstrip("):.,;") for match in re.findall(r"\b10\.\d{4,9}/[^\s,;]+", title)))
+        rows.append(f"#{number} " + (", ".join(ids) if ids else title[:70]))
+    listing = "\n".join(rows)
+    text = text.replace("Open preregistration issues (number and title, one per line):",
+                        "Open preregistration issues (number, then the source identifiers its title names, or its title cut to 70 characters):")
 text = (text.replace("__SEAT_ID__", seat_id)
             .replace("__SHA__", sha)
-            .replace("__OPEN_PREREGISTRATIONS__", pathlib.Path(prereg).read_text().rstrip("\n")))
+            .replace("__OPEN_PREREGISTRATIONS__", listing))
 pathlib.Path(out).write_text(text)
 print(f"RENDERED track={track} out={out} sha={sha} bytes={len(text.encode())}")
 PY

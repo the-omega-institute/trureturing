@@ -92,6 +92,8 @@ This theorem requires actual source-side witnesses and preserves their fixed-ste
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations.original_operation_decoder_storage`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations.supplied_codebook_storage_liminf`
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](../DecoderOperationTrace.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderPeak](../DecoderPeak.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderReplay](../DecoderReplay.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderStartup](../DecoderStartup.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral](Bilateral.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ClosedSupply](ClosedSupply.md)

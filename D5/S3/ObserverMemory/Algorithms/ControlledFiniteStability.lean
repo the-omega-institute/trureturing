@@ -126,7 +126,7 @@ private theorem controlledForget_surjective
   obtain ⟨y, rfl⟩ := Quotient.exists_rep state
   exact ⟨Quotient.mk _ y, rfl⟩
 
-private theorem controlledClassCount_mono
+theorem controlledClassCount_mono
     {Y : Type*} {U O : Type u} [Fintype Y] [Finite U] [Finite O]
     [Nonempty Y] [Nonempty U] [Nonempty O]
     (update : U -> Y -> Y) (readout : Y -> O)
@@ -137,7 +137,7 @@ private theorem controlledClassCount_mono
     (controlledForget update readout hreadout depth)
     (controlledForget_surjective update readout hreadout depth)
 
-private theorem controlled_setoid_eq_of_class_count_eq
+theorem controlled_setoid_eq_of_class_count_eq
     {Y : Type*} {U O : Type u} [Fintype Y] [Finite U] [Finite O]
     [Nonempty Y] [Nonempty U] [Nonempty O]
     (update : U -> Y -> Y) (readout : Y -> O)
@@ -293,7 +293,7 @@ private theorem controlled_limit_eq_gfp
         exact hp
       exact Set.mem_iInter.mp hp'.2 input
 
-private theorem controlled_stable_relation_eq_limit
+theorem controlled_stable_relation_eq_limit
     {Y : Type*} {U O : Type u}
     (update : U -> Y -> Y) (readout : Y -> O) (depth : Nat)
     (stable : controlledDepthRelation update readout depth =

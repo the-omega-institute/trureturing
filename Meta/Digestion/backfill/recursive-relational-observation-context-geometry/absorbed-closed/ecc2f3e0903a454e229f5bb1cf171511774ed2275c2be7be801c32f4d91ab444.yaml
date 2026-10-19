@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ecc2f3e0903a454e229f5bb1cf171511774ed2275c2be7be801c32f4d91ab444
+  normalized_sha256: sha256:ecc2f3e0903a454e229f5bb1cf171511774ed2275c2be7be801c32f4d91ab444
+cas_ref: sha256:ecc2f3e0903a454e229f5bb1cf171511774ed2275c2be7be801c32f4d91ab444
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Prediction/FiveModePredictiveLawGeometry/Core.cutoff_first_nonstrict
+    target_statement_id: sha256:f9c42fa808b224d51cd83a6a8623a9da1cb938a5b064cb4b09a8ac29da9645c7
+receipts:
+  unresolved_subitems: []

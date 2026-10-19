@@ -1897,3 +1897,975 @@ and startup-checkpoint theorems.
 [CAT8]: https://algo.inria.fr/flajolet/Publications/book.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 12. An incoming-field runtime for the same logical services
+
+**Definition 12.1 (the distinct runtime $\iota$).** Retain the finite
+tree algebra, $\rho,E,a_0,j,F_w$, unknown-input occurrence installation,
+source fields, fixed owner $o$ and root port $\pi$ of Definitions
+1.1–1.2. Retain their exclusive, static read/write/allocation rights,
+no sharing, no competing writer, no revocation and canonical typed
+allocation. References have no inspectable indices or arithmetic.
+There is one actual installed finite seed $u$, not a description of
+it. Every $u\in\mathcal T$ and every finite word over $\Lambda$ is
+admitted. The instruction description, cell types, owner, orientation
+and slot layout are fixed independently of both inputs.
+
+The runtime $\iota$ uses the bounded field-operation basis of
+Assumption 1.2. It retains the sender/receiver token handshake and
+constructor parser of Definition 2.1, the fresh receiver words and
+table construction of Definition 2.2, and the literal old/target
+templates (OA.3). It changes the retained source work and the
+attachment acquisition/use rules to Definitions 12.2–12.5. In
+particular, it performs neither snoc reversal nor a root-to-leaf
+actuation walk. Its Boot, Scan and Update have exactly the logical
+entrance/source-successor/new-table contracts of Definition 1.1;
+these are conclusions of Theorem 13.2, not added whole-tree
+operations. The row events and complete successors belong to this
+new runtime.
+
+**Definition 12.2 (material incoming fields).** A source-work cell has
+four fields in the displayed order
+
+$$
+f=(\mathsf{node},\mathsf{holder},\mathsf{side},\mathsf{next}).
+\tag{OA.19}
+$$
+
+Its node, holder and side are initialized from actually held values
+at its birth and are never assigned again. Side is one of
+$\mathsf{root},L,R$. For side root the holder is the actual fixed
+port $\pi$; otherwise it is an actually held source node. Write
+$\operatorname{at}(v,s)$ for reading the one field $\pi$ when
+$(v,s)=(\pi,\mathsf{root})$, and the indicated child field $v.s$
+for $s=L,R$. This notation abbreviates a finite three-case field
+instruction, not a search for an incoming edge or a first-class
+unbounded address. It has no executing edge outside these typed cases.
+
+Receiver frames, snoc cells, packets, table rows, completions and
+descriptors keep Definition 1.3's payloads. A fresh editing operand
+instead has $(\mathsf{word},\mathsf{label},\mathsf{site},\mathsf{next})$;
+its site is a source-work-cell reference. An invocation has
+$(\mathsf{operand},\mathsf{packet},\mathsf{site},\mathsf{focus},
+\mathsf{old},\mathsf{new})$. All their fields are individually
+initialized and charged. An operand's first three fields are never
+assigned after birth. There is no new source-node parent field.
+The complete source-work-cell backing is retained after its pop.
+Consequently a site remains readable without being a live stack head.
+Retention is not reclamation or bounded memory.
+
+In addition to the holder and sixty-four slots of Definition 1.3,
+install a second holder and sixteen one-value slots, in this order:
+current site, holder, side, expected node, attachment value, operand
+site, left word, right word, descriptor owner, descriptor port, and
+six scratch slots. These seventeen cells are created and attached
+in their fixed order with null values, before known-source
+preparation. The new slots are accessed by fixed literal positions.
+The old reversal/walk routines and their live cursor roles are
+absent. All sixteen new slots are cleared, one at a time in index
+order, after each old NodeDone clear mask, before its NodeDone
+edge; they are likewise cleared
+before Return. At service entry they are null. Stack heads, output
+roots and the current descriptor keep their old retention rules.
+The finite mode/parser/template latches contain no source-dependent
+integer, reference list or address.
+
+**Definition 12.3 (row expansion, initialization and action domains).**
+Use Definition 1.3's ordered expansion of each named field read,
+follow, test, birth, assignment, input, output and control edge.
+Pop reads the four fields of (OA.19) in order before changing the
+head; push initializes all four and changes the head. List append
+uses the old null test, field initializations, tail link and endpoint
+assignments. Slot/latch coeffects retain the bounded returned values.
+The sixteen-slot additions in Definition 12.2 are included in every
+specified clear sequence. Finite template loops can equivalently be
+unrolled in literal preorder; the selected fixed template determines
+that finite instruction sequence. Iteration over work, packet cells
+and output rows always executes the indicated head test. No linked
+list traversal is one row.
+
+Each executed row appends one bounded-arity event with predecessor,
+opcode, actual operand references, read/emitted value and bounded
+slot coeffects, including its actual birth/initialization and tail
+assignments. Event recording is the instrumentation of that row;
+it does not initiate a second instrumented row. Finite cell arities
+and the fixed slot/coeffect lists give a fixed event arity bound.
+An ordinary conditional test selects its specified true or false
+branch. A failed requirement has no executing successor. Prescribed
+Advance is the only action during installation, preparation, graft,
+service, output and cleanup. The input controls and disabled response
+are precisely Definition 4.1's Ready/Tail codes $0,10,11$; neither
+admits Advance. Any other action executes nothing and emits nothing.
+Stopping an action prefix adds no event.
+
+Observer chronology begins after the unknown input installation,
+as in Assumption 1.2. Install both local holders/banks, then prepare
+the actual three-node $a_0$ and its wrapper with the captured old
+root, publish $j(u)$ at $\pi$, and enter Boot. No unknown tag is
+read in this preparation. Grafts after command input prepare the
+actual $A$ and wrapper and publish exactly as in Definition 4.1,
+then enter Scan. All these births, initializations, captures, links,
+events and clears are part of this execution. They are not an
+unobserved attachment constructor.
+
+**Definition 12.4 (acquiring sites during actual descent).** At service
+entry read the actual chronological tail into saved scratch, mark
+any current descriptor held and retain it as previous, capture
+the actual reference $r$ in $\pi$, and create the new descriptor
+with that saved entry, previous, fixed owner/port, mode, state
+building and null table endpoints. Clear the new-table/operand
+endpoints and output cursor as in Definition 1.3. Push the source-work
+cell $(r,\pi,\mathsf{root},\mathsf{null})$, and push the receiver
+frame for the empty word. On a nonempty work head, retain its actual
+cell reference in current site, pop its payload, retain node as
+focus and holder/side in the new bank, and pop the receiver word
+$q$. Read $\operatorname{at}(\mathsf{holder},\mathsf{side})$
+and require its value equal to focus. This is a new paid read and
+reference test at every visit, including the root.
+
+Classify this focus by precisely Definition 2.1's actual probes,
+Offer, Take, Arrival, Acknowledge, receiver parser and PackDone.
+Packets still contain only the literal constructor tokens of Boot
+or the three/five-token encoded statuses (OA.2). They contain no
+source reference, supplied word or right. In the branch case,
+append the receiver branch row, construct the backed snoc words
+$qL,qR$, retain their actual references in left word/right word,
+and push the receiver frames right then left. Obtain the actual
+source children by the Boot follows or the already performed encoded
+classification follows, exactly as in Definition 2.2. Push the source
+cells
+
+$$
+(r_R,\mathsf{focus},R,\mathsf{oldHead}),\qquad
+(r_L,\mathsf{focus},L,\mathsf{newHead})
+\tag{OA.20}
+$$
+
+in that order, using the actual returned head after the first push.
+Execute the expanded NodeDone and resume work. Thus the stored
+holder is the source parent *from which the child was actually
+followed*. It is not recovered from the child's name, receiver word
+or a supplied parent map. At empty source work, require empty
+receiver work and mailbox, then enter End.
+
+For a Scan leaf, append $(q,\ell)$ and execute NodeDone, as before.
+For a Boot/Update leaf, after PackDone read the current-site slot
+and append the fresh operand $(q,\ell,f,\mathsf{null})$, with $f$
+that actually read reference. Read its word, label and site fields
+in order. The first two determine exactly the table rows of
+Definition 2.2, including the Update beta expansion; no new source
+work is scheduled for that expansion. Retain the operand's read site
+in operand site and enter Definition 12.5. This is a paid local
+connection of a receiver-built operand to the current sender work,
+under their common owner. It does not transmit a reference in the
+constructor packet or assume that its constructor describes a
+location. Earlier tables, events and completed operands remain
+unread as operand suppliers.
+
+**Definition 12.5 (actual local use).** Create an invocation with this
+fresh operand, this packet, its read site and held focus, with old/new
+null. Read the site's node, holder and side fields in that order.
+Require its node equal to focus and its side belong to $\{L,R\}$.
+Read the current descriptor's owner and port fields and require the
+fixed values $o,\pi$. These checks identify the current binding;
+the static right in Definition 12.1, not the check or a tree shape,
+authorizes operations. Read the indicated holder child field,
+require equality to the site's node, and assign that actual value
+to invocation.old. The operand word is retained as the receiver's
+actual addressed content but is neither expanded nor walked.
+
+Select the old/target template by mode and the operand's received
+label. Execute Definition 2.3's bounded fieldwise literal old-tile
+guard from invocation.old, its preorder target births, null tests
+and individual staging-link writes. Save the first target birth in
+invocation.new. At the final attachment check reread just the site's
+indicated holder child field and require equality to invocation.old.
+Publish writes invocation.new to that same field. Append the one
+completion and execute the expanded NodeDone. Apart from this
+Publish, no active-source field is assigned during the visit.
+Source-work-site fields and operand fields are not retargeted to
+the replacement. They record the acquired old occurrence and its
+one actual invocation.
+
+The use of an incoming arc/location is the known method of Huet,
+[*The Zipper*, §§1.1–1.3 and binary specialization §2.2][HUET].
+Here an immutable four-field work cell stores an actual acquired
+parent field, rather than Huet's reconstructed applicative context.
+It supplies no free focus or parent acquisition. The source-specific
+joint relation needed to justify these operations is defined next.
+
+## 13. Joint acquisition, protected fields and every finite prefix
+
+**Definition 13.1 (the joint live-site relation).** Fix a service's
+finite compound logical entrance $x$, and its mode. At a NodeDone
+checkpoint use exactly the partial old logical tree $H$, hole order,
+processed-leaf set and mixed source in Definition 3.1. For each
+pending hole $q$, let $r_q$ be its actual source root. The matching
+source/receiver stack pair consists of (OA.19) and a receiver frame
+whose backed word has value $q$, with
+
+$$
+\begin{aligned}
+ f_q.\mathsf{node}&=r_q, &
+ \operatorname{at}(f_q.\mathsf{holder},f_q.\mathsf{side})&=r_q,\\
+ \text{actual subtree at }r_q&=
+ \begin{cases}x|_q&\mathrm{Boot},\\ E(x|_q)&\mathrm{Scan,Update}.
+ \end{cases}
+\end{aligned}
+\tag{OA.21}
+$$
+
+At the initial singleton frontier, $q=\varepsilon$ and the site is
+the actual port capture. Every later nonroot site has the actual
+parent occurrence at $q^-$ and side the last letter of $q$, acquired
+by the two follows and pushes in (OA.20). At strict prefixes of
+each pending $q$, source-node identities and branch tags are those
+of the original logical branch occurrences. The child fields on
+those particular paths are unchanged.
+The receiver table has precisely Definition 3.1's row-prefix value.
+The static right remains the same actual owner's right over the
+source component, local backing and fresh staging.
+
+During a visit, remove its head pair from the pending set and retain
+it as the current pair. The remaining sites' designated incoming
+fields, path fields and descendant subtrees are protected. The
+current site's incoming field and old subtree are protected until
+Publish; after Publish that field contains exactly the new target.
+During a branch's partial pushes there is a finite intermediate
+pairing: newly born receiver words/frames and source cells occupy
+their specified slots/stack positions, with each already initialized
+payload equal to its originating actual read or constructor. Paired
+stacks are required again at NodeDone, not between the two pushes.
+During packet/operand/guard/staging/cleanup phases, acquired values
+are precisely those already obtained in the specified rows; no
+future read is included in a latch or payload. This phase assertion
+includes partial lists and partly linked fresh target trees.
+
+Protection is fieldwise. If two pending/current sites have the same
+holder but different sides, the side not being published stays
+unchanged, while the other child field may change. Neither (OA.21)
+nor this relation asserts immutability of the whole holder node or
+of every descendant of an original branch.
+
+**Theorem 13.2 (acquired content, acquired location and current lawful
+use).** For every finite compound $x$, a service entered with its
+Definition 1.1 entrance source and the empty work of $\iota$ has
+one finite successful execution. Its NodeDone checkpoints satisfy
+Definition 13.1 and (OA.4); every finite row prefix satisfies that
+definition's phase assertion. In every editing invocation, all of
+the following refer to this *same actual execution*:
+
+1. The operand word is the receiver-built word of the visited old
+   logical occurrence, and its label is decoded from that visit's
+   actually arrived tokens.
+2. The operand's site is the actual acquired work cell for this
+   occurrence; its indicated holder child field still contains the
+   invocation's old root until this invocation publishes.
+3. That old root has exactly the guarded literal old template, the
+   new root consists of this invocation's actual fresh births and
+   links, and the owner's unchanged right authorizes their reads,
+   staging and publication.
+4. Publish changes only that designated incoming field. All
+   remaining-observation subtrees and their necessary fields stay
+   available for subsequent receipt and use.
+
+At End the source and new table are respectively $E(x),\mathsf A(x)$
+in Boot, $E(x),\mathsf A(x)$ in Scan, and
+$E(\rho x),\mathsf A(\rho x)$ in Update. Root and partial-operation
+phases are included; no root-leaf edit is used on this domain.
+
+Proof. Service entry captures the actual port and creates the root
+site from that capture. The first read of the port therefore verifies
+the singleton instance of (OA.21). The receiver's empty word and
+empty table give precisely (OA.4). The root is a logical branch
+because $x$ is compound, also in encoded modes by (OA.1). Its
+classification can thus enter the branch construction but never
+the nonroot-only editing block. The root port is not written during
+a service; graft publication lies strictly before its entry.
+
+Suppose the checkpoint relation holds before a visit. Pop obtains
+the actual immutable payload and its matching backed receiver word.
+The new incoming-field read succeeds by (OA.21). The ordinary
+preorder frontier step is the one already used in Theorem 3.2 and
+in [NativeBoundedPreorderRows, `cursor_frontier` and
+`actual_cursor_residual`][ROWS]. It identifies this pair as the next
+old logical node, with no old table or descendant description in
+the controller. Previously processed leaves and pending holes are
+prefix-incomparable. In particular no earlier publication has
+detached this node or changed its indicated incoming field.
+
+During classification there is no source assignment. Boot reads
+the actual constructor; in encoded modes (OA.1) and the supplied
+erased-$E$ grammar give exactly (OA.2). After each probe, Offer,
+Take, Arrival and Acknowledge preserve the following prefix fact:
+each packet cell already born has the actual token taken from this
+visit's offer, in order, and no later probe precedes the preceding
+acknowledgement. This remains true before Arrival and during parser
+reads, because it asserts only values already received. The accepted
+constructor is therefore the actual old logical constructor at $q$.
+This reuses the handshake proof of Theorem 3.2 on unchanged source
+reads and packets; the added field checks do not generate tokens.
+
+At a branch, the fresh receiver word constructors give exactly
+$qL,qR$. Their row/frame writes expose no unknown contents. The
+source children in (OA.20) are the references returned by actual
+follows of this focus. They are distinct nonnull children, and the
+focus is the actual original branch at $q$. Hence both newly
+created sites satisfy (OA.21) for their respective sides, and their
+matching receiver words have the required values. The finite
+partial-push assertion records each of these facts as soon as its
+payload is initialized; it does not assume both stacks have already
+been updated. At NodeDone both pushes have occurred, so the full
+paired frontier is restored. No active field has changed.
+
+At a Scan leaf, the authentic packet and word append exactly the
+required row and consume this hole. At an editing leaf, the
+current-site slot still contains the popped source-cell reference:
+no intervening row assigns that slot. The operand's word and label
+are initialized from the current receiver word and parser result,
+and its site from the actual slot read. Reading those fields back
+thus joins the acquired constructor, backed address and acquired
+incoming field of the same visit. The site was not selected by a
+leaf-label lookup, equality of two views, or a separate existence
+witness. The invocation and its packet have these actual origins.
+
+All logical leaf addresses of a compound $x$ are nonempty. This
+proves the side check $L$ or $R$, while equality of site.node to
+focus follows from its unchanged payload. Its holder is the
+original branch immediately above this leaf and remains reachable.
+Indeed every active-source write in this service is at an old
+logical leaf's incoming field. No such leaf can be a strict prefix
+of the current leaf, and none can replace one of its branch
+ancestors. At a shared parent an earlier sibling publication may
+have changed the *other* child field. It has not changed the
+current side. Thus the initial attachment read in Definition 12.5
+returns this actual focus, even in that shared-parent case.
+
+The current old tile is the unchanged raw leaf in Boot, or its
+unchanged $E$ tile in Update. Its literal guard therefore succeeds
+at every read, follow and null/non-null test. All staging references
+come from this invocation's fresh allocations; no source or pending
+node is reused. Literal parent-before-child order and one link per
+nonroot position prove each vacancy test and each target field
+value, even at a partial staging cut. Descriptor owner and port
+remain the current fixed binding, and the premise grants that owner
+the read/write/allocation rights used here. No row transfers or
+revokes them. Authentication of the operand and equality of a
+template consequently do not stand in for authorization.
+
+Between the two attachment reads there are only reads and writes
+to fresh staging or local/record material. The indicated source
+field still contains invocation.old at the final check. Publish
+changes that one field to invocation.new. Every other pending
+hole is incomparable with this old leaf. Its entire actual
+descendant subtree is disjoint from the detached old tile, new
+target and edited field. Its proper-prefix path does not use that
+field. Even if its incoming holder is the same node, its selected
+side is different. This proves the protected-field assertion
+through the one assignment and at its immediate successor.
+This is the concrete field-level framing needed for Reynolds's
+[Frame Rule, §4][REYNOLDS]: the framed storage is disjoint from
+the write footprint, and its reference parameters are immutable
+payloads or fixed proof parameters. A mutable scratch cursor is
+not used as a supposedly stable free variable in that assertion.
+
+The source change is the old-leaf replacement (OA.3), so
+distributivity of $E$ gives the new mixed-source equation (OA.4).
+The receiver's rows give the same logical leaf contribution, with
+the beta Update expansion included before NodeDone. The completion
+is born once on this control path. Cleanup changes only its named
+slots/latches, not the pending work payloads, source fields or new
+row contents. This proves the next checkpoint and all intermediate
+phase cases by induction. In particular no whole shared-parent
+immutability was needed.
+
+There are exactly $N(x)$ visits by structural induction on the old
+logical tree: one branch visit followed by its two old subtrees,
+or one leaf visit without scheduling its replacement. Each packet
+has at most five tokens. All other per-visit loops are bounded
+literal templates or finite stack/list operations; there is no
+address-length loop in actuation. Thus each visit finishes and the
+stacks empty together after precisely those visits. Exhaustion
+processes every old leaf. The mixed-source equations and row-prefix
+equalities give the three asserted complete contracts. This proof
+both establishes successful requirements and fixes the actual
+operations; it does not assume a response sequence at pending holes.
+$\square$
+
+**Theorem 13.3 (initialization, all finite commands and partial actions).**
+For every finite $u$ and every finite $w\in\Lambda^{<\omega}$,
+the prescribed initialization and commands of $\iota$ attain a unique
+returned state $J_\iota(u,w)$, with source
+$E(F_w(j(u)))$ and current table $\mathsf A(F_w(j(u)))$.
+Every legal finite action prefix from observer entrance, including
+partial installation/preparation, a single first command bit,
+partial graft, root entry, any service row, output or cleanup,
+has its actual complete deterministic successor and retained events.
+Every such prefix can be extended to a return after completing any
+partly supplied command. No claim concerns an infinite command word.
+
+Proof. The bank installations are fixed finite births/attachments.
+At every partial cut their already created fields have their stated
+values; uncreated cells are not read. Known-source preparation
+initializes fresh nodes and links from held values. Until its final
+port assignment the active source is the installed $u$; afterwards
+it is the actual $j(u)$. Partial staging is detached throughout.
+All its accesses have the fixed owner's right. These statements
+give every preparation prefix without assuming the service
+invariant before a service exists. Theorem 13.2 applies to the
+compound $j(u)$ for every seed, including either single terminal.
+
+End uses Definition 4.1's table publication, retirement, constructor
+output and Return, with the additional sixteen clears. Its finite
+row traversal prints exactly the table's $N(j(u))+2$ framed tokens
+and attains Ready only on the final Return. This gives the first
+returned state. Suppose a return has logical value $x=F_w(j(u))$.
+Code $0$ starts Update, whose contract gives $E(\rho x)$ and
+$\mathsf A(\rho x)$. Codes $10,11$ prepare a detached $A$ and
+new branch using the held old root. Until the port write, the old
+active source remains $E x$; after it the source is
+$\langle A,E x\rangle=E(Lx)$ or
+$\langle E x,A\rangle=E(Rx)$. This gives every graft cut and
+the compound entrance needed by Scan. Its contract and the same
+finite output/cleanup tail give the next return.
+
+Ready and Tail have exactly the stated two bit choices. All other
+next executing rows are fixed by finite control and actual reads;
+Theorem 13.2 proves every service requirement on these inputs.
+Only Return enters Ready. Another such occurrence requires a new
+command and its complete finite service. Canonical typed births,
+the prescribed field order, event append and clear order determine
+every allocated object and complete state at each prefix. Induct
+on the finite action sequence for uniqueness and the disabled cases.
+For extendibility, complete a pending two-bit code if necessary;
+every remaining initialization/graft block is finite, and Theorem
+13.2 plus the output tail finishes the current service. This proves
+the full finite-prefix domain, rather than only a checkpoint domain.
+$\square$
+
+## 14. Logical refinement and the separate complete-response task
+
+**Definition 14.1 (the common logical service interface).** A logical
+service state exposes its mode, entrance $x$, current extensional
+active source tree, new addressed row prefix, and constructor-output
+prefix. At entry, within visits, and at End, interpret the first
+three by Definition 3.1: one old constructor is acquired in preorder,
+a branch exposes its children as pending work, an editing old leaf
+is replaced by (OA.3), and its new table contribution is precisely
+Definition 2.2's contribution. Finite local work may stutter without
+an active-source change. Table publication and each actual output
+token have their stated effects. A completed service must have the
+entire Definition 1.1 contract and the framed $n'+2$ constructor
+tokens. At returned commands the logical task exposes the current
+table and every finite subsequent completed coded command with
+its new table/source and constructor stream. Input is still actual
+$0,10,11$, and no next command is admitted while a service is busy.
+
+Neither allocation identities, per-row opcodes, retained local
+backing nor the number of Advances is identified in this common
+interface. In particular it is not the complete-response task
+$Q_\omega$. Its input/source/table/output obligations precede the
+choice between $\omega$ and $\iota$; its logical $x$ is a proof
+parameter, not a service argument delivered to either controller.
+
+**Theorem 14.2 (paid online refinement on the common contract).**
+On every allowed seed and finite command word, both $\omega$ and
+$\iota$ implement Definition 14.1 with the same logical source
+and table at matched node completions, the same ordered old-leaf
+publication effects, and the same constructor-output tokens.
+For $\iota$ the implementing locations, received labels and continued
+rights are actually acquired/retained as in Theorem 13.2. There is
+no complete-table acquisition or refresh before its first leaf
+publication or between Update's publications and its new table.
+
+Proof. Relate the two executions at entry and their $i$-th completed
+old-node visit by the same $x$, the same partial $H$, the mixed-source
+tree (OA.4) and the same extensional receiver row prefix. Theorems
+3.2 and 13.2 establish these statements independently for both
+executions. The next old constructor is the same and its packet
+values are the same, since each actual pending subtree has the
+stated raw or encoded value. Receiver branch/leaf constructions
+therefore make the same words and row contents. At an editing leaf
+the old root reached by $\omega$'s word walk is at $q$; the actual
+field in $\iota$'s site is at the same $q$ by (OA.21).
+Their selected templates and one-field publication effects agree.
+Extra attachment reads, word-walk work, local births and staging
+can be matched by finite stuttering in this interface; they do not
+alter the active source before Publish. Both append the table
+contribution in the same order. This extends the relation to the
+next node completion and through each ordered source publication.
+
+At End the full contracts give the same table. Output traverses
+its actual rows and emits the identical constructor word, including
+Begin and End. At returned cuts, induction using the same command
+codes and the actual graft equalities proves every finite logical
+continuation. Theorem 13.2 supplies the additional actual location/
+content/right correspondence, not equality of extensional tables
+alone. Inspection of its operand rules gives the final no-refresh
+claim. This is a refinement of the declared logical interface, not
+a matching of old and new full row responses. $\square$
+
+**Definition 14.3 (the new complete task $Q_\iota$).** Complete
+$J_\iota$ includes the active and detached source, port and fixed
+rights, both holders/banks, every old/new descriptor and table,
+all sender sites, receiver frames, words, packets, operands,
+invocations, completions, events, allocators, latches/control,
+input and output. At returned starting cuts, the empty experiment
+exposes the extensional current table and Ready. A finite action
+word has all actual legal domains, disabled responses and, at each
+executing row, the response
+
+$$
+(a,\mathsf{legal},\mathsf{ok},\mathsf{opcode},
+  \mathsf{actual\ value},\Delta\Gamma_\iota,
+  \Delta\mathsf{Out},J'_{\iota}).
+\tag{OA.22}
+$$
+
+The event chain begins after the actual input installation and
+includes both bank installations, known-source preparation, every
+classification handshake, site/operand access, guard, staging,
+publication, command bit, graft, output, clear and Return. The
+complete successor is a mathematical response coordinate, not a
+transmitted snapshot. It includes prefixes ending before a receiver
+Arrival or inside a field guard. It has the new cell payloads and
+new chronology, so there is no asserted equality with $Q_\omega$
+or with an original fixed-$G_{gc}$ task.
+
+## 15. Complete service costs and actual continuing sums
+
+**Theorem 15.1 (uniform linear complete-service account).** On one
+actual $\iota$ service let $n=N(x)$, and let $b,a,c,d,n'$ have
+exactly Theorem 7.1's meanings for that entrance. Let $s$ be the
+number of source nodes actually reachable at service entry:
+$s=n$ in Boot and $s=N(E x)$ in Scan/Update. Then
+$n\le s\le5n$ and $n'\le3n$. The following counts are exact:
+
+| Coordinate | Boot | Scan | Update |
+| --- | --- | --- | --- |
+| Classification probes, offers, arrivals and packet births, each | $n$ | $3n+2c$ | $3n+2c$ |
+| Classification/child-discovery source follows | $2b$ | $2n+2c$ | $2n+2c$ |
+| Source-site births, receiver-frame births, each | $n$ | $n$ | $n$ |
+| Visit incoming-field reads and their equality requirements, each | $n$ | $n$ | $n$ |
+| New table rows | $n$ | $n$ | $n+2c$ |
+| New snoc-word cells | $n-1$ | $n-1$ | $n-1+2c$ |
+| Fresh operands, invocations, completions, each | $a+c$ | $0$ | $a+c$ |
+| Actuation word-reversal cells and root-to-leaf walk follows, each | $0$ | $0$ | $0$ |
+| Fresh target source nodes | $3a+5c$ | $0$ | $5a+9c$ |
+| Active leaf-attachment publications | $a+c$ | $0$ | $a+c$ |
+| Constructor-output tokens including framing | $n+2$ | $n+2$ | $n+2c+2$ |
+
+There is one descriptor birth per service. There are absolute finite
+constants $C_R,C_F,C_V$, independent of $u,w,x$ and all depths,
+such that the *complete* service from entry through Return satisfies
+
+$$
+\begin{aligned}
+\mathsf{rows}_\iota=\mathsf{events}_\iota&\le C_R(s+1),\\
+\mathsf{fieldops}_\iota&\le C_F(s+1),\\
+\mathsf{newcells}_\iota&\le C_V(s+1).
+\end{aligned}
+\tag{OA.23}
+$$
+
+Field operations include reads, follows, assignments and every field
+initialization/coeffect of cells and events. New cells include
+source, local and event cells, all retained. Each finite prefix of
+this service has the corresponding upper bounds, with the same
+actual entrance $s$. These are bounded-reference/field-operation
+coordinates; they are not bit, physical-time or bounded-memory
+bounds.
+
+Proof. Theorem 13.2 gives precisely the same old logical visits,
+classification packets, receiver word/table contributions and
+templates as Theorem 7.1. Its first, second, fifth, sixth, seventh,
+ninth, tenth and eleventh counts therefore follow from those
+specific unchanged operations. Site births are one initial root
+and two per old branch, hence $1+2b=n$; each is wider than its
+old two-field sender frame, and those extra initializations and
+reads must still be charged. There is one new incoming-field read
+and comparison at each pop, including the root. No row reverses
+the snoc word or walks it from the root. This proves the two zero
+coordinates without omitting the bounded literal-guard follows.
+
+For each editing leaf, there is also the actual current-site-slot
+read and initialization of operand.site, its subsequent site read,
+three site payload reads, node/side checks, two descriptor-binding
+reads/checks, two attachment reads/checks and one Publish. Invocation
+site and all other fields are initialized and retained. The old
+literal guard reads tag and both children at each old tile position
+and performs its fixed path follows and finite-tag/reference tests.
+Its old tile has at most five nodes and fixed path lengths. The
+target has at most nine nodes, each with all three source fields
+initialized; its at most eight links each have a vacancy test and
+one field assignment. Its invocation.new assignment, completion
+birth, list endpoint operations and all scratch clears also occur.
+These are bounded leaf work, not a unit-cost hidden edit.
+
+For a fully specified constant bound, take the finite collection
+$\mathcal B$ of the following bounded row lists in Definitions
+12.2–12.5 and the retained rules: entry/exit setup; one work test;
+one source pop, receiver pop or push; one visit attachment check;
+one classification case's source reads/follows; one token
+Offer/Take/Arrival/Acknowledge; one parser-cell iteration or finite
+acceptance edge; one snoc birth; one row/operand/completion append
+or invocation birth; one of the four *unrolled* literal guard/stage/publication
+cases; one expanded NodeDone clear/edge; descriptor publication/
+retirement; one output-row iteration; framing and Return cleanup.
+Split a list at its calls to another member, so no called operation
+is counted twice. Include each loop's head, exit and branch tests
+in its member list. For $B\in\mathcal B$, let $r_B,f_B,v_B$ be
+its row, full field-operation and cell-birth counts, including
+its events and their tail/slot coeffects. They are finite syntactic
+counts of fixed lists; event recording introduces no recursion.
+
+The number of calls to each member is at most $20(n+1)$: visits
+are $n$, token/parser iterations at most $5n$, each stack has $n$
+pushes and pops, row/snocs at most $3n$, editing blocks at most
+$a+c\le n$, NodeDone blocks $n$, output iterations $n'\le3n$,
+and entry/exit/framing blocks a constant number. Template work is
+already unrolled, so its size is in $r_B,f_B,v_B$ and not hidden
+in a call frequency. Set, for example,
+
+$$
+C_R=20\left(1+\sum_{B\in\mathcal B}r_B\right),\quad
+C_F=20\left(1+\sum_{B\in\mathcal B}f_B\right),\quad
+C_V=20\left(1+\sum_{B\in\mathcal B}v_B\right).
+\tag{OA.24}
+$$
+
+This includes sender and receiver storage, the wider site/operand/
+invocation fields, both bank clear sequences, all guard and target
+work, event births and appends, retirement, every output token and
+the final Return. It gives (OA.23) first with $n+1$; $n\le s$
+gives the stated actual-entrance bound. Directly, the non-event
+birth counts in the table plus its descriptor are at most $25n+1$,
+and adding one event birth per executed row gives another such
+bound for all new cells. Since costs are nonnegative, a prefix
+cannot exceed its proved finite completion. Finally, $E$ replaces
+each leaf by a three- or five-node tile and keeps logical branches,
+so $n\le N(E x)\le5n$. Update adds exactly $2c$ logical nodes,
+giving $n'\le3n$. $\square$
+
+**Theorem 15.2 (installation, input, grafts and the actual finite run).**
+For a finite run through returns for $\epsilon,w_1,\ldots,w_k$,
+let $s_0,\ldots,s_k$ be its *actual* Boot and subsequent service
+entrance sizes, $g$ its number of L/R commands, and
+$\ell=\#\mathsf U+2\#\{\mathsf L,\mathsf R\}$ its number of
+command-bit rows. All retained backing and field operations are
+the disjoint sums of the service counts just proved, together with:
+
+1. The actual $N(u)$ installed source nodes, their initialized
+   fields, $N(u)-1$ child attachments and root attachment, including
+   their initialization/installation account even though installation
+   precedes observer chronology.
+2. The original sixty-five local cells, the additional seventeen
+   holder/slot cells, their fixed attachments/initializations, fixed
+   control/rights installation and its finite account.
+3. Four source births and five source link/port assignments in
+   known-source preparation, and the same counts for each of the
+   $g$ later grafts, with their actual captures/tests/control and
+   event coeffects.
+4. The $\ell$ actual input rows and their events/coeffects.
+
+In particular, for the three coordinates of (OA.23) there are
+absolute constants $D_0,D_1$ with the vector bound, interpreted
+coordinatewise,
+
+$$
+\mathsf{cost}_{\iota}(u,w)
+ \le D_0(N(u)+1)+D_1(\ell+g)
+       +(C_R,C_F,C_V)\sum_{i=0}^{k}(s_i+1).
+\tag{OA.25}
+$$
+
+Here the scalar fixed terms abbreviate a common upper bound in
+each coordinate, not a scalar optimization objective. For a run
+stopping inside a service include that service's actual entrance
+size once; for an incomplete input/graft/preparation retain just
+its executed rows and births, or bound them by its fixed complete
+block. No service or later graft is charged against initial size
+alone, and no cleared backing is subtracted.
+
+Proof. Installation and preparation use precisely the fixed
+constructors of Definition 12.3. The original bank has one holder
+and sixty-four slots and the new bank one holder and sixteen slots.
+Known $a_0$ and $A$ each have three nodes and two internal links;
+each wrapper adds one birth, two links and the one port assignment.
+All other captures, permission-preserving accesses, tests and
+control operations in these blocks have bounded fixed row lists.
+The command codes give exactly the displayed $\ell$. Theorem
+13.3 gives one Boot and one service per completed command. Every
+birth has one type, one chronological occurrence and a unique
+canonical name; every field operation belongs to its actual row.
+This partitions the complete finite run into the indicated sums.
+Theorem 15.1 bounds the service summands, and a fixed constant
+times $N(u)+1$ bounds the actual input installation fields/links.
+Fixed installation and per-graft/input blocks supply $D_0,D_1$.
+Nonnegativity gives the partial-run version, using Theorem 13.3
+for its finite completion. Records, sites, packets, old tables,
+detached tiles and both banks remain in the account. $\square$
+
+**Definition 15.3 (additional resource coordinates).** A reference in
+these bounds is an opaque actual reference, not a fixed-width bit
+word. A bit account must additionally sum the actual widths of
+each initialized, read, written, retained or emitted reference
+occurrence, including event copies and allocator state, together
+with finite tags/control/rights and code. These widths grow with
+the actual finite allocation history. Likewise the specified
+constructor output is $n'+2$ tokens, not an output of every address
+spelling or of $J'_\iota$. If full addresses, a decoded state or
+another view are separately serialized/delivered, their actual
+input, working and output operations are additional coordinates.
+In particular separately spelling every receiver word can involve
+$\sum_p|p|$ letters although building the shared snoc backing and
+emitting the constructor stream obey (OA.23). Nothing here prices
+such an additional service as free or proves a linear bit cost.
+
+## 16. A strict comparison with the published word-walk execution
+
+**Theorem 16.1 (complete-service depth separation on common inputs).**
+Define the finite all-alpha right combs
+$c_0=\alpha$, $c_{m+1}=\langle\alpha,c_m\rangle$ and take the
+actual seed $u=c_m$, with no restriction on $m\ge0$. Compare the
+complete Boot services of $\omega$ and $\iota$ on their actual
+common logical entrance $x_m=j(c_m)$. They implement exactly
+Definition 14.1's Boot contract. Its actual entrance size and
+old-leaf depth sum are
+
+$$
+n_m=2m+5,\qquad
+d_m=\frac{m^2+5m+10}{2}.
+\tag{OA.26}
+$$
+
+For each of rows/events, bounded field operations and total newly
+allocated bounded-arity cells, the published $\omega$ execution
+has order $\Theta(n_m+d_m)=\Theta(m^2+1)$, whereas the entire
+$\iota$ service has order $\Theta(n_m)=\Theta(m+1)$.
+Consequently the old/new ratio in each of these three coordinates
+tends to infinity. In particular the new complete service has
+strictly smaller cost in each of these coordinates for all
+sufficiently deep members of this same input family.
+
+The same separation holds for their immediate first Update after
+these Boot returns, measured per Update service: the logical
+entrance is again $x_m$, the actual source is $E(x_m)$ and its
+actual entrance size is $N(E(x_m))=4m+11$. Every finite $m$ and
+both services remain within the admitted domain. The finite run
+from input installation through that Update still has the same
+linear versus quadratic orders in the stated coordinates.
+
+Proof. The comb has $m$ branches and $m+1$ leaves. The familiar
+comb-depth identity, also used in [SLHC §13][SLHC12], is a counting
+ingredient, not the lower-bound interface here. Its depth sum
+$e_m$ satisfies $e_0=0$ and
+$e_{m+1}=e_m+(m+1)+1$, since all old leaves move down once and
+the new left leaf has depth one. Thus $e_m=m(m+3)/2$.
+In $j(c_m)$ the two $a_0$ leaves have depth two, and all $m+1$
+seed leaves gain one edge. Therefore
+$d_m=e_m+4+(m+1)$, and the node count gives (OA.26), including
+the terminal case $m=0$.
+
+For this exact published $\omega$ execution, Theorem 7.1 counts
+exactly $d_m$ actuator forward-word births and exactly $d_m$
+root-walk source follows in Boot, besides every other service
+operation. Each follow is a row with its event and a field read.
+Hence rows, events, field operations and total cells each have
+the lower bound $d_m$. The complete upper bounds in Theorem 7.1,
+including guard/output/cleanup and event coeffects, give
+$O(n_m+d_m)$ in all three coordinates. For cells, add the
+displayed linear births, the $d_m$ forward cells and one event
+cell per row. These facts prove the asserted quadratic orders;
+no lower bound from a different literal-query interface is used.
+
+Theorem 15.1 bounds all three new coordinates by an absolute
+constant times $n_m+1$, since Boot's $s=n_m$. The $n_m$
+classification probes/packet births already give their linear
+lower bounds. In particular for any one of the three coordinate
+constants $K$, its old/new ratio is at least
+$d_m/(K(n_m+1))$, which tends to infinity by (OA.26).
+Taking the maximum of the three finite thresholds proves the
+simultaneous eventual strict inequality. This includes the wider
+new sites, fresh operand associations and all their added work;
+it does not compare only the removed walk.
+
+Immediately after Boot both logical tables are $\mathsf A(x_m)$
+and both actual source values are $E(x_m)$. Here $x_m$ has
+$m+3$ alpha leaves and $m+2$ branches, so its encoded source
+size is $3(m+3)+(m+2)=4m+11$.
+Thus the actual Update entrance size is $4m+11$.
+The leaf addresses processed by Update are still those of the
+old logical $x_m$, hence their sum is the same $d_m$. Theorem
+7.1 again gives the exact $d_m$ walk/birth coordinates for
+$\omega$ and its complete quadratic upper bound. Theorem 15.1
+gives linear bounds for $\iota$ in this actual entrance size,
+with the linear probe/birth lower bounds as before. Installation,
+known preparation, the one command bit and both services add
+only the terms in Theorems 7.2 and 15.2, establishing the final
+finite-run assertion. $\square$
+
+**Definition 16.2 (comparison boundary).** The comparison concerns
+the specified $\omega$ word-walk implementation and $\iota$'s
+specified same logical service, with their common primitive field
+basis and separately retained complete records. Scan was already
+linear and has no asserted asymptotic strict gain here. The new
+site cells are wider, there are new field checks and more bank
+material, so no every-coordinate dominance is asserted. There is
+no lower bound for every implementation of Definition 14.1:
+the incoming-location method is known, and Definition 7.4 expressly
+identified held-parent use as a different operand-use problem.
+Nor is there a bit/physical-cost separation, a total-cost optimum,
+an initial-size-only continuing bound or a bounded-memory claim.
+
+## 17. Returned expressions, correspondence and the remaining scope
+
+**Definition 17.1 (independent meanings in $\iota$).** On the actual
+returned domain $h=(u,w)\in\mathcal T\times\Lambda^{<\omega}$,
+select the following projections of $J_\iota(h)$ independently:
+
+| Expression | Actual selected content |
+| --- | --- |
+| $S_\iota$ | Ordered unlabelled support of the active source reachable from $\pi$, with no service backing. |
+| $B_\iota$ | Uncoloured terminal-address antichain of that source, with no records. |
+| $M_\iota$ | Extensional addressed contents of the current receiver table and fixed live binding/right $(o,\pi)$, excluding sites, names, archives and entry/event references. |
+| $T_\iota$ | Ordered actual bounded events from observer entrance through this Return, including actual operands, acquired values and references, both installations and all subsequent operations. |
+
+Thus space describes occurrence geometry, boundary its exposed
+terminals, memory the presently acquired logical table with its
+actual current binding, and time the order of actual operations.
+They are not defined as inverse encodings or as four copies of
+history. The full retained backing is larger than selected memory.
+
+**Theorem 17.2 (credited returned recovery for the new execution).**
+For each separate $V\in\{S_\iota,B_\iota,M_\iota,T_\iota\}$,
+and all attained returned histories $h,h'$, one has
+
+$$
+V(h)=V(h')\quad\Longleftrightarrow\quad h=h'
+ \quad\Longleftrightarrow\quad h\sim_{Q_\iota}h'.
+\tag{OA.27}
+$$
+
+Each has a finite descriptive decoder to the same complete
+$J_\iota(h)$ and every finite response (OA.22). The twelve induced
+view maps on attained images have inverse opposite routes, agree
+under composition and commute with every completed command action.
+Every route gives the same legality, records, output and full new
+successors for all finite continuations from those returned cuts.
+These recovery/route facts reuse the ancestry, parsing and replay
+methods of §5 and ER §§9, 22; their required new-runtime source,
+receipt, return and deterministic-execution premises are Theorems
+13.2–13.3, rather than an identification of the two row runtimes.
+
+Proof. Write $x=F_w(j(u))$. Theorem 13.3 proves that the actual
+source is $E x$ and the actual table is $\mathsf A(x)$ in this
+execution. For space, the existing erased-$E$ support decoder
+and ER Theorems 9.3/9.5/9.8 recover $x$ and then the unique
+$(u,w)$ on their stated ancestry-antichain domain. For boundary,
+finite prefix closure is precisely the ordered support, since
+the active source is a full finite binary occurrence tree.
+Applying that same decoder gives $(u,w)$ from this separate
+observation. Neither projection has received a site or record.
+
+For memory, its actual addressed rows reconstruct their labelled
+logical $x$. The same ancestry supplier gives $(u,w)$; the binding
+and current right are the fixed actual $(o,\pi)$. Theorem 13.2's
+fresh online correspondence is needed to equate this table with
+the present source, including Update's no-refresh successor.
+For time, filter actual Boot Arrival events through its first
+Return. Their one-token constructors are exactly the preorder of
+$j(u)$ by Theorem 13.2; parse and strip the known wrapper to
+obtain $u$. Parse subsequent actual Supply events by $0,10,11$.
+At an attained Return they specify precisely $w$, since Theorem
+13.3 proves that only one completed service per command returns.
+Extra site/binding reads, installations and clears are genuine
+events, but supply neither an extra input nor an ambiguity in
+these two filters. Thus every individual observation determines
+the same history.
+
+Given that finite history, construct the canonical installed
+source and execute the new row scheme descriptively to its
+$|w|+1$-st Return. Theorem 13.3 proves finiteness and equality
+with the actual *new* complete state, including both banks,
+site payloads and all actual event/coeffect references. Conversely
+equal histories give equal canonical executions and views. Equal
+$Q_\iota$ profiles give equal empty-experiment current tables;
+ancestry then gives equal histories. Equal histories give equal
+complete states and all finite profiles by deterministic action
+induction. This proves both kernel inclusions for each view in
+(OA.27), not just one implication from a common latent parameter.
+
+For clarity let $d_V(V(h))=h$ be the separate decoder just proved
+and $R_{VW}=W\circ d_V$ on attained images. Each identity
+$d_V\circ V=\mathrm{id}$ gives the two route identities in
+(OA.6). Theorem 13.3 gives the actual completed command
+$h=(u,w)\mapsto(u,wa)$, so those identities also give the
+dynamics equation in (OA.6), now entirely within $\iota$.
+For a finer finite continuation, all routes reconstruct the same
+complete $J_\iota$; induct on its actions, using the precise row
+legality and complete successor of Definition 14.3. Unsupported
+actions execute nothing and supported actions produce the same
+new response on every route. This is the credited deterministic
+replay argument with its matching-start premise established here.
+The algorithms consume finite descriptions and do not install a
+converter port or revive a historical capability. $\square$
+
+**Definition 17.3 (suppliers, new conjunction and exact boundary).**
+The new mathematical content is Theorems 13.2, 14.2, 15.1–15.2
+and 16.1's source-specific conjunction: actual online acquisition
+of the incoming-field/receiver-content association, continued
+authorized use under fieldwise protection, all-finite service and
+prefix correctness, complete paid bounds, and a strict comparison
+to the published OA execution on a common logical task. It is a
+repo-derived synthesis with ordinary proofs. The following
+components retain their existing ownership and conditions:
+
+| Supplier | Reused component and correspondence boundary |
+| --- | --- |
+| Huet, [*The Zipper*, §§1.1–1.3, 2.2][HUET] | A location as an incoming arc, local modification and binary focus/context operations are literature-attested. The variadic upward operation need not be constant-time; the binary specialization is local. Neither form acquires this unknown mutable source or establishes the new operand/site/right relation. |
+| Reynolds, [*Separation Logic*, §4, Frame Rule][REYNOLDS] | Field-level local reasoning requires disjoint storage and no modification of variables free in the frame. Here different child fields of one shared parent are distinct locations, and immutable site payloads fix the frame parameters; the whole parent need not be stable. |
+| ER Definitions 20.2–20.5 and Theorem 21.1 | Actual received-shape pending parent/side slots and actual body-derived operands are positive supply. They fill receiver shape fields after stationary delivery/materialization and use their separately priced Bind/Edit schedule. They are not this online source incoming-field acquisition or its complete bill. |
+| OA §§1–5, 7.1–7.4 | Unknown installation, one actual owner, fresh token/operand/table contracts, framed literal edits and the held-parent lead are prior supply. The new site-use theorem discharges the different operand-use proof required by OA7.4; it does not count the lead or online actuation itself as new. |
+| [NativeFullSourceProducer][PROD], private `traverse`, `production_reads`, `stationary`, and [owning Scribe][PRODB] | Source-blind actual preorder acquisition and receipt-built constructions are reused traversal methods. Its source stays stationary; Theorem 13.2 instead supplies protection through online writes. |
+| [NativeBoundedPreorderRows][ROWS], private `pending_next`, `pending_left`, `cursor_frontier`, `actual_cursor_residual`, and [owning Scribe][ROWSB] | Exact path/frontier and attained-prefix laws supply the ordinary traversal organization under their own certified epoch/trial premises. They do not replace the new correspondence of actual parent fields, receiver words and edited source. |
+| [NativeSerialMachine][SER8], `replay_deterministic`, `reached_prefix_replay`, `actual_register_execution`, and [owning Scribe][SER8B] | Matching-start finite execution/replay is reused mathematics. Its literal-query/global-update operations differ; no lowering of $\iota$ to that machine is asserted. |
+| ER Theorems 9.3/9.5/9.8 and OA §5 | Ancestry antichains, erased-source decoding, full-preorder parsing and returned route/dynamics algebra remain credited reuse. Theorem 17.2 checks their new execution premises, without promoting them to new ancestry or kernel results. |
+| [TMC §24][TMC12] and [Structural Storage Atlas §5][SSA12] | Semantic fixed-epoch navigation and actual parent-endpoint storage give other scoped positive location results. TMC's semantic cursor does not issue references/rights; the Atlas explicitly has actual reciprocal parent slots and atomic patch premises. Neither is treated as absent supply or as the present downward-only occurrence/online service. |
+| [SLHC §13][SLHC12] | Comb depth sums and its literal-query theorems remain supplied. The lower counts in Theorem 16.1 come from OA7.1's exact executed walks, not from transferring SLHC's different interface lower bound. |
+| [Paid View Conversion §§5–7][PVC8] | Acquired serialized view inputs and actual paid callable conversion already exist in its enlarged runtime with its own installation/authority/return premises. The descriptive returned decoders here do not subsume or invalidate that positive service. |
+
+The two source leaves and pairing, finite observation/control and
+local owned replacement remain the content generators of this
+model. A word describes where the receiver's row belongs; its
+site retains the actual incoming field obtained during descent;
+the received label selects what local template to construct; the
+owner's static authority determines whether it may act. These
+are different roles. Equal constructor contents cannot select
+between different actual occurrences, and an incoming field alone
+does not supply an unread label or an ownership grant. The
+retained association joins the roles without a second root walk.
+This explains its task-relative use, not universal minimality of
+these cell types or of alpha/beta generation.
+
+Every finite seed, every finite U/L/R word and all their finite
+installation/service/return prefixes are in the proved operational
+domain. The independent four-view inverse domain is only attained
+returns. No arbitrary-interior inverse, arbitrary-view callable
+conversion, old-full-$Q$ equivalence or transfer of OA §§8–11's
+exact raw-time/joint microcut fibres is claimed. Different row
+opcodes, bank installation and site/reference records require new
+fibre analysis for those latter questions. Broader interference,
+revocation, sharing, arbitrary allocation/layout and ownership
+domains require separate hypotheses and proofs. All earlier
+fixed-$G_{gc}$, original-$Q$, parked-consumer and initialization
+obligations keep their exact statements. The sustained common-
+relation/four-expression objective and its remaining operational
+and interior-recovery obligations are not completed by this
+finite-service resource refinement.
+
+[TMC12]: RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[SSA12]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md
+[SLHC12]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT_CONTINUATION.md
+
+## 追加锚（本行以下为增补区）
