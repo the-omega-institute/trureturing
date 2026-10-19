@@ -70,6 +70,10 @@ $$\forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix}\left(\operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rana-parashar-lewenstein-2016-l1-relative-entropy-coherence` (proved) by `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rana-parashar-lewenstein-2016-l1-relative-entropy-coherence","declaration_gid":"D5/S3/Divergence/CoherenceL1RelativeEntropyBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Swapan Rana, Preeti Parashar, Maciej Lewenstein (2016). *Trace-distance measure of coherence*. DOI: [10.1103/PhysRevA.93.012110](https://doi.org/10.1103/PhysRevA.93.012110). URL: <https://arxiv.org/abs/1511.01854v2>.

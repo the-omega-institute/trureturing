@@ -28,7 +28,10 @@ internal sealed class CoherenceL1RelativeEntropyBoundDocument : IScribeDocumentD
         DescribeId.Create("rpl-" + name.ToLowerInvariant()), DeclarationHandle.Create(name == "l1Coherence"
             ? "D5/S3/Quantum/Information/CorrelatedCoherenceMonogamyRefutation.l1Coherence" : Prefix + name), H(title),
         StatementSource.FromAuthor(formula), literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), name == "result" ? DescribeRole.Theorem : DescribeRole.Definition);
+        Blocks(Paragraph(Text(prose))), name == "result" ? DescribeRole.Theorem : DescribeRole.Definition,
+        name == "result" ? new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("rana-parashar-lewenstein-2016-l1-relative-entropy-coherence"),
+            ResolutionKind.Proved) : null);
     private static Formula V(string n) => F.Id(n);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string n, params Formula[] a) => new Formula.FunctionCall(FormulaIdentifier.Create(n), [.. a]);
