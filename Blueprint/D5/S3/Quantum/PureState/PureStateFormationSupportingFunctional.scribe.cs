@@ -136,7 +136,10 @@ internal sealed class PureStateFormationSupportingFunctionalDocument : IScribeDo
                             + "E_F(sigma). At P, the one-element ensemble gives the reverse "
                             + "inequality, hence E_F(P) = ofReal(Re Tr(WP)). Together with "
                             + "the real equality at P, these are precisely the clauses of claim."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("holevo-shirokov-2026-pure-state-formation-supporting-functional"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Display(Formula value) => new DocumentBlock.DisplayFormula(Disp(value));
