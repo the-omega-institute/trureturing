@@ -133,16 +133,18 @@ end PositiveTrace
 
 namespace PositiveAugmentation
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun n => Mat n) (fun _ => Prop)
-def actual : Realization signature := realize signature (fun _ _ X => X.PosDef) (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun n => Mat n) (fun _ => Bool)
+def actual : Realization signature := realize signature (fun _ (n : ℕ) (X : Mat n) =>
+    @decide X.PosDef (Classical.propDecidable _)) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => false) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ} {A : Mat n}, A.PosSemidef → A ≠ 0 →
-    ∀ {c : ℝ}, 1 ≤ c → R.readout () n (phi c A)
+    ∀ {c : ℝ}, 1 ≤ c → R.readout () n (phi c A) = true
 private theorem rejectedLaw : ¬ arena.Law rejected := by
   intro h
-  exact h (n := 1) (A := 1) Matrix.PosSemidef.one one_ne_zero (c := 1) le_rfl
+  exact Bool.false_ne_true
+    (h (n := 1) (A := 1) Matrix.PosSemidef.one one_ne_zero (c := 1) le_rfl)
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 0, 1, ?_⟩
@@ -152,8 +154,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   simp [actual, realize, hzero, Matrix.PosDef.one]
 def family : Registration arena (type_of% (@phi_posDef)) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@phi_posDef, rejected, rejectedLaw⟩
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using @phi_posDef, rejected, rejectedLaw⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejectedLaw
   dependence := dependence
@@ -170,7 +172,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ X => X.PosDef) (fun e => nomatch e))
+  readout := some (realize signature (fun _ (n : ℕ) (X : Mat n) =>
+    @decide X.PosDef (Classical.propDecidable _)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -180,11 +183,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn"]
+      path := #["body", "body", "body", "body", "body", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -250,32 +253,36 @@ end AugmentationScale
 
 namespace BlockScale
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun n => Block n) (fun _ => Prop)
-def actual : Realization signature := realize signature (fun _ _ W => W.PosSemidef) (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun n => Block n) (fun _ => Bool)
+def actual : Realization signature := realize signature (fun _ (n : ℕ) (W : Block n) =>
+    @decide W.PosSemidef (Classical.propDecidable _)) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => false) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ} {A X B : Mat n}, (fromBlocks A X Xᴴ B).PosSemidef →
     ∀ r s : ℝ, R.readout () n (fromBlocks ((r*r) • A) ((r*s) • X)
-      ((r*s) • X)ᴴ ((s*s) • B))
+      ((r*s) • X)ᴴ ((s*s) • B)) = true
 private theorem rejectedLaw : ¬ arena.Law rejected := by
   intro h
+  apply Bool.false_ne_true
   apply h (n := 1) (A := 0) (X := 0) (B := 0) _ 0 0
   simpa using (Matrix.PosSemidef.zero : (0 : Block 1).PosSemidef)
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 0, -1, ?_⟩
   intro he
-  change (0 : Block 1).PosSemidef = (-1 : Block 1).PosSemidef at he
-  have hn : (-1 : Block 1).PosSemidef := by
+  change @decide ((0 : Block 1).PosSemidef) (Classical.propDecidable _) =
+    @decide ((-1 : Block 1).PosSemidef) (Classical.propDecidable _) at he
+  have htrue : @decide ((-1 : Block 1).PosSemidef) (Classical.propDecidable _) = true := by
     rw [← he]
-    exact Matrix.PosSemidef.zero
+    simp
+  have hn : (-1 : Block 1).PosSemidef := of_decide_eq_true htrue
   have hd := hn.diag_nonneg (i := Sum.inl 0)
   norm_num at hd
 def family : Registration arena (type_of% (@block_scale_posSemidef)) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@block_scale_posSemidef, rejected, rejectedLaw⟩
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using @block_scale_posSemidef, rejected, rejectedLaw⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejectedLaw
   dependence := dependence
@@ -292,7 +299,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ W => W.PosSemidef) (fun e => nomatch e))
+  readout := some (realize signature (fun _ (n : ℕ) (W : Block n) =>
+    @decide W.PosSemidef (Classical.propDecidable _)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -302,11 +310,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
