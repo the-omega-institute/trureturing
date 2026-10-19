@@ -42,9 +42,19 @@ def run(tool):
             assert invoke().returncode == 0 and 'do not fast-forward, merge or rebase' in out.read_text()
             del conclusion['blocking_findings'][0]['fix']
         else:
-            for command in ["make lean LEAN_TARGETS='D5.S1.Sample Reg.D5.S1.Sample'", 'make lean LEAN_TARGETS=D5.S1.Sample']:
+            for command in ["make lean LEAN_TARGETS='D5.S1.Sample Reg.D5.S1.Sample'",
+                            'make lean LEAN_TARGETS=D5.S1.Sample',
+                            'make lean LEAN_TARGETS=D5.S1.Sample Reg.D5.S1.Sample']:
                 conclusion['not_run'] = [command]
                 result = invoke(); assert result.returncode == 0, result.stderr
+            before = out.read_text()
+            rejections = []
+            for command in ['make lean LEAN_TARGETS=D5.Sample/bad',
+                            'make lean LEAN_TARGETS=D5.Sample Reg.Bad-name']:
+                conclusion['not_run'] = [command]
+                result = invoke()
+                rejections.append((command, result.returncode, out.read_text() == before))
+            assert all(code == 13 and unchanged for _, code, unchanged in rejections), rejections
             conclusion['not_run'] = ['make lean LEAN_TARGETS="bad/module"']
         before = out.read_text()
         result = invoke()
