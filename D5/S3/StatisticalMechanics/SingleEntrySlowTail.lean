@@ -4,17 +4,18 @@
    mirror-E: none(waiver:conditional-single-entry-slow-tail)
    anchors: []
    utility: none
-   digest: A slower input mode transfers its exact coefficient to the association residual. -/
+   digest: Equilibrium moments and stable forcing determine the exact association coefficient. -/
 
 import D5.S3.StatisticalMechanics.SingleEntryFiveState
 import D5.S3.StatisticalMechanics.SingleEntrySecularRoot
+import D5.S3.StatisticalMechanics.SingleEntrySpectralGap
 
-/-! # Exact association tails from an independently supplied input tail
+/-! # Actual equilibrium moments and exact association tail transfer
 
 The differential equation, input asymptotic and joint-occupancy equilibrium
-are separate premises. This module does not identify a generator eigenvalue
-or supply its residue. It proves the analytic transfer needed after those
-spectral and equilibrium bridges have been established for the same chain.
+are separate premises of the analytic transfer theorem. A second theorem
+establishes the equilibrium moments of the actual finite network. The input
+spectral residue remains an independent premise of the tail transfer.
 -/
 
 set_option autoImplicit false
@@ -154,5 +155,93 @@ theorem association_tail_from_input_tail (D f K : ℝ → ℝ)
       (mul_neg_of_pos_of_neg (sub_pos.mpr hslow) hslope)
 
 #print axioms association_tail_from_input_tail
+
+open scoped BigOperators
+open Matrix SingleEntryFiniteNetwork SingleEntrySpectralGap
+open SingleEntrySecularRoot (modeWeight subsetRate siteRate)
+
+private theorem stationary_active_mass {I : Type*} [Fintype I] [DecidableEq I]
+    (k : Rates I) (L : Option (Finset I) → ℝ)
+    (hstat : generator k *ᵥ L = 0)
+    (hmass : L none + activeMass (fun _ => L) 0 = 1) :
+    activeMass (fun _ => L) 0 =
+      k.theta / (k.theta + k.eta * modeWeight k.a k.b ∅) := by
+  let m := coordinateTransform k.a k.b *ᵥ L
+  have hm : modeNegativeGenerator k.a k.b k.eta k.theta *ᵥ m = 0 := by
+    have h := transform_generator k L
+    rw [hstat, mulVec_zero] at h
+    exact neg_eq_zero.mp h.symm
+  have hR : k.theta * m none - k.eta * (∑ S, m (some S)) = 0 := by
+    simpa only [action_none, Pi.zero_apply] using congrFun hm none
+  have hvanish (S : Finset I) (hS : S ≠ ∅) : m (some S) = 0 := by
+    have hs : 0 < subsetRate k.a k.b S := by
+      exact Finset.sum_pos (fun i _ => add_pos (k.a_pos i) (k.b_pos i))
+        (Finset.nonempty_iff_ne_empty.mpr hS)
+    have h := congrFun hm (some S)
+    rw [action_some] at h
+    have hf : k.eta * (∑ T, m (some T)) - k.theta * m none = 0 := by linarith
+    rw [hf, mul_zero, add_zero] at h
+    exact (mul_eq_zero.mp h).resolve_left (ne_of_gt hs)
+  have hsum : (∑ S, m (some S)) = m (some ∅) := by
+    apply Finset.sum_eq_single ∅
+    · intro S _ hS
+      exact hvanish S hS
+    · simp
+  have hnone : m none = L none := by
+    simp [m, mulVec, dotProduct, coordinateTransform, Fintype.sum_option]
+  have hcoeff (S : Finset I) :
+      productInverse k.a k.b ∅ S = modeWeight k.a k.b ∅ := by
+    unfold productInverse modeWeight
+    apply Finset.prod_congr rfl
+    intro i _
+    have hs : k.a i + k.b i ≠ 0 := ne_of_gt (add_pos (k.a_pos i) (k.b_pos i))
+    simp [localInverse, SingleEntrySecularRoot.occupancy, siteRate]
+    field_simp [hs]
+    ring
+  have hempty : m (some ∅) =
+      modeWeight k.a k.b ∅ * activeMass (fun _ => L) 0 := by
+    dsimp [m]
+    simp only [mulVec, dotProduct, Fintype.sum_option, coordinateTransform,
+      zero_mul, zero_add]
+    simp_rw [hcoeff]
+    rw [← Finset.mul_sum]
+    rfl
+  rw [hsum, hnone, hempty] at hR
+  have hden : 0 < k.theta + k.eta * modeWeight k.a k.b ∅ :=
+    add_pos k.theta_pos (mul_pos k.eta_pos
+      (SingleEntrySecularRoot.weight_pos k.a k.b k.a_pos k.b_pos ∅))
+  apply (eq_div_iff (ne_of_gt hden)).mpr
+  linear_combination k.theta * hmass - hR
+
+/-- The full generator and its common trajectory determine both equilibrium
+moments. No equilibrium vector or asymptotic moment is assumed. -/
+theorem finite_network_equilibrium_moments {I : Type*} [Fintype I] [DecidableEq I]
+    (k : Rates I) (p : ℝ → Option (Finset I) → ℝ)
+    (hp : ForwardSolution k p) (i j : I) (hij : i ≠ j) :
+    Tendsto (activeMass p) atTop
+      (nhds (k.theta / (k.theta + k.eta * modeWeight k.a k.b ∅))) ∧
+    Tendsto (joint p i j) atTop
+      (nhds ((k.theta / (k.theta + k.eta * modeWeight k.a k.b ∅)) *
+        (k.a i / (k.a i + k.b i)) * (k.a j / (k.a j + k.b j)))) := by
+  obtain ⟨_, _, _, _, _, _, L, hlim, hstat, hpair⟩ :=
+    (finite_network_strict_pair k).2 p hp i j hij 1 (by norm_num)
+  have hr : Tendsto (activeMass p) atTop (nhds (activeMass (fun _ => L) 0)) := by
+    exact tendsto_finsetSum Finset.univ (fun S _ => hlim (some S))
+  have hmass : L none + activeMass (fun _ => L) 0 = 1 := by
+    have hl := (hlim none).add hr
+    have he : (fun t => p t none + activeMass p t) =ᶠ[atTop] (fun _ => (1 : ℝ)) := by
+      filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
+      have h := ((finite_network_strict_pair k).2 p hp i j hij t ht).1
+      linarith
+    exact tendsto_nhds_unique hl (tendsto_const_nhds.congr' he.symm)
+  have hactive := stationary_active_mass k L hstat hmass
+  have hK : Tendsto (joint p i j) atTop (nhds (joint (fun _ => L) i j 0)) := by
+    exact tendsto_finsetSum Finset.univ
+      (fun x _ => (hlim x).const_mul (occupancy i x * occupancy j x))
+  rw [hactive] at hr
+  rw [hpair, hactive] at hK
+  exact ⟨hr, hK⟩
+
+#print axioms finite_network_equilibrium_moments
 
 end D5.S3.StatisticalMechanics.SingleEntrySlowTail
