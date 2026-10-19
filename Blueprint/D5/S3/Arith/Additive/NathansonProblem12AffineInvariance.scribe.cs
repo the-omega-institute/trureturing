@@ -32,14 +32,17 @@ internal sealed class NathansonProblem12AffineInvarianceDocument : IScribeDocume
                 "Multiplication by s ≠ 0 followed by translation is injective. Injective images commute with intersections over the nonempty index type ℕ+. "
                     + "Distributing the h-fold sumset over the affine image changes its translation to h times t. Rewriting both sides through that image and reflecting equality by injectivity proves H A = H A′. "
                     + "The argument uses s ∉ {0, 1, −1} only to obtain s ≠ 0 and does not use either decrease premise.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nathanson-2026-problem-12-affine-invariance"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("nathanson12-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => Apply(Named(name), args);

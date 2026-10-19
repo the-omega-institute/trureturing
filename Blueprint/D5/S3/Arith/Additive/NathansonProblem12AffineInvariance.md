@@ -48,6 +48,10 @@ $$\forall (A : \mathbb{N}^{+} \to \operatorname{Set}\left(\mathbb{Z}\right)), \f
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Additive/NathansonProblem12AffineInvariance.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nathanson-2026-problem-12-affine-invariance` (proved) by `D5/S3/Arith/Additive/NathansonProblem12AffineInvariance.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nathanson-2026-problem-12-affine-invariance","declaration_gid":"D5/S3/Arith/Additive/NathansonProblem12AffineInvariance.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Melvyn B. Nathanson (2026). *Problems and results on intersections of product sets and sumsets in semigroups*. DOI: [10.48550/arXiv.2604.04781](https://doi.org/10.48550/arXiv.2604.04781). URL: <https://arxiv.org/abs/2604.04781v2>.
