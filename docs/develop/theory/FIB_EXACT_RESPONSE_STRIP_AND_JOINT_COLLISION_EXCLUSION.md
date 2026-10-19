@@ -835,3 +835,639 @@ the previous one-child result and any separate global cardinality
 bound are not claimed as new contributions of this volume.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Exact polynomial data on the second response strip
+
+**Definition 11.1 (Parameter rectangle and unchanged suppliers).**
+Retain the complete worlds, actual response functions, exact $p_J$,
+$K$, and polynomial normalizations of Definitions 1.1–4.1 and 8.1.
+Write $O$ for the owning volume, $F$ for
+[FIB all-response finite-fibre geometry](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md),
+and $S$ for
+[FIB entire singular-response children and terminal-M injectivity](FIB_SINGULAR_RESPONSE_CHILDREN_EXCLUSION.md).
+The auxiliary parameter interval is exactly $F$, Section 1:
+
+$$
+\begin{gathered}
+p_0=\frac{219537139}{8000000},\qquad
+h=\frac1{200000000},\qquad
+\mathcal P=[p_0-h,p_0+h]
+ =\left[\frac{2744214237}{10^8},\frac{2744214238}{10^8}\right],\\
+v_c=\frac{251}{2},\qquad I=[125,126],\qquad
+\rho_* =\frac1{10000}.
+\end{gathered}
+\tag{11.1}
+$$
+
+All these numbers are rational. Direct comparison with (1.6) gives
+
+$$
+p_0-h<p_c-h_p<p_c+h_p<p_0+h,
+\qquad p_J\in K\subset\mathcal P.
+\tag{11.2}
+$$
+
+The membership of the original root-defined $p_J$ uses Proposition
+2.2. The interval $\mathcal P$ supplies polynomial bounds; the
+entire-child conclusions below have $p\in K$.
+
+For $z=(r,b)$ set
+
+$$
+F_s(z;p,v)=
+\begin{pmatrix}\mathsf A(r,b,p)\\\mathsf B(r,b,v)\end{pmatrix}
+=\begin{pmatrix}D_m(r,b)p-N_p(r,b)\\D_m(r,b)v-N_u(r,b)\end{pmatrix}.
+\tag{11.3}
+$$
+
+Here $\mathsf A=\mathsf S_p/2$, $D=D_\Lambda=N_4/2$,
+$D_m=5bD$, and $N_u,N_m$ include the exact divisions by $1+b$
+in (3.6). Thus (11.3) is the polynomial source system, distinct
+from the rational map used in (5.1). The eliminant remains the
+668-integer polynomial of $O$, Definition 24.1, with the order
+$(r,p,v)$ and the scale and sign fixed by (4.2).
+
+**Definition 11.2 (Bernstein coefficients for $I$).** Write
+$R=\sum_{k=0}^{18}a_k(p,v)r^k$ with zero padding, and put
+
+$$
+\begin{aligned}
+\beta_i(p,v)&=\sum_{k=0}^i
+ \frac{\binom{i}{k}}{\binom{18}{k}}a_k(p,v),\\
+\beta_i(p_0+hx,v_c+\theta/2)
+ &=\sum_{a,d\ge0}\gamma_{iad}x^a\theta^d,\qquad
+ B_i=\sum_{(a,d)\ne(0,0)}|\gamma_{iad}|.
+\end{aligned}
+\tag{11.4}
+$$
+
+In particular $|x|,|\theta|\le1$. If $c_{kj\ell}$ is the
+literal coefficient of $r^kp^jv^\ell$ in the owning table, every
+coefficient in (11.4) is the following finite rational sum:
+
+$$
+\gamma_{iad}=
+\sum_{\substack{k\le i,\ j\ge a,\ \ell\ge d}}
+c_{kj\ell}\frac{\binom{i}{k}}{\binom{18}{k}}
+\binom ja p_0^{j-a}h^a
+\binom\ell d v_c^{\ell-d}2^{-d}.
+\tag{11.5}
+$$
+
+Absent coefficients are zero. The normalized Bernstein parameter
+$\theta=2(v-v_c)$ is distinct from the displacement $t=v-v_c$
+used in the source tubes.
+
+**Definition 11.3 (Four affine polynomial-source tubes).** The
+centres $m_i$ have the following integer numerators, each with
+denominator $10^{12}$:
+
+| $i$ | $(m_i)_r$ numerator | $(m_i)_b$ numerator |
+| --- | --- | --- |
+| $0$ | $137255688262$ | $186017503303$ |
+| $1$ | $166072995880$ | $146057648221$ |
+| $2$ | $872912893446$ | $-368334211937$ |
+| $3$ | $888398398627$ | $-595719530583$ |
+
+Define exact rational matrices and vectors by
+
+$$
+\begin{aligned}
+J_i&=D_zF_s(m_i;p_0,v_c),& C_i&=J_i^{-1},\\
+L_i&=-C_i\begin{pmatrix}0\\D_m(m_i)\end{pmatrix},&
+\mathcal P_i(y,e,t)&=C_iF_s(m_i+L_it+y;p_0+e,v_c+t).
+\end{aligned}
+\tag{11.6}
+$$
+
+Invertibility is included in Lemma 11.4. Equivalently,
+$C_i=(\det J_i)^{-1}
+\left(\begin{smallmatrix}(J_i)_{11}&-(J_i)_{01}\\
+-(J_i)_{10}&(J_i)_{00}\end{smallmatrix}\right)$ with indices
+$0,1$. No rounded inverse enters these definitions.
+The closed tube has
+
+$$
+z=m_i+L_it+y,\qquad
+\|y\|_\infty\le\rho_*,\quad |e|\le h,\quad |t|\le\tfrac12.
+\tag{11.7}
+$$
+
+For a polynomial
+$H(y_0,y_1,e,t)=\sum H_{abcd}y_0^ay_1^be^ct^d$ define
+
+$$
+\begin{aligned}
+\mathcal N(H)&=\sum_{a,b,c,d}|H_{abcd}|
+ \rho_*^{a+b}h^c2^{-d},\\
+\eta_i&=\max_{k=0,1}\mathcal N(\mathcal P_{ik}(0,0,e,t)),\\
+q_i&=\max_{k=0,1}\sum_{j=0}^1
+ \mathcal N(\delta_{kj}-\partial_{y_j}\mathcal P_{ik}).
+\end{aligned}
+\tag{11.8}
+$$
+
+The entries $\delta_{kj}$ in (11.8) are constant polynomials.
+For a polynomial $H(r,b)$ write
+$\widehat H_i(y,t)=H(m_i+L_it+y)$, and define its uncoarsened
+coefficient interval
+
+$$
+\mathcal I_i(H)=[H(m_i)-s_i(H),H(m_i)+s_i(H)],\qquad
+s_i(H)=\mathcal N(\widehat H_i-H(m_i)).
+\tag{11.9}
+$$
+
+These intervals contain $H$ on the entire tube. For intervals
+$X,Y$ with $0\notin Y$, $X/Y$ denotes the interval whose endpoints
+are the minimum and maximum of the four endpoint quotients.
+
+**Lemma 11.4 (Finite rational inequalities for the second strip).**
+For $i\notin\{2,5,13\}$, the constant coefficient in (11.4)
+has the sign below and $B_i/|\gamma_{i00}|<u_i/1000$:
+
+| $i$ | Sign of $\gamma_{i00}$ | $u_i$ |
+| --- | --- | --- |
+| $0$ | $-$ | $100$ |
+| $1$ | $-$ | $123$ |
+| $2$ | unrestricted | — |
+| $3$ | $+$ | $34$ |
+| $4$ | $+$ | $79$ |
+| $5$ | unrestricted | — |
+| $6$ | $-$ | $29$ |
+| $7$ | $-$ | $3$ |
+| $8$ | $-$ | $6$ |
+| $9$ | $-$ | $7$ |
+| $10$ | $-$ | $6$ |
+| $11$ | $-$ | $1$ |
+| $12$ | $-$ | $17$ |
+| $13$ | unrestricted | — |
+| $14$ | $+$ | $18$ |
+| $15$ | $+$ | $50$ |
+| $16$ | $-$ | $287$ |
+| $17$ | $-$ | $39$ |
+| $18$ | $-$ | $141$ |
+
+In particular all sixteen ratios are less than $3/10$.
+For the four tubes the following bounds are strict:
+
+| $i$ | Interval containing $\det J_i$ | Upper bound $\bar\eta_i$ for $\eta_i$ | Upper bound $\bar q_i$ for $q_i$ | Interval containing $\mathcal I_i(D_m)$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $(-15,-14)$ | $42/10^6$ | $74/1000$ | $(-49/1000,-44/1000)$ |
+| $1$ | $(-1,-1/2)$ | $37/10^6$ | $282/1000$ | $(21/10000,36/10000)$ |
+| $2$ | $(22,24)$ | $19/10^6$ | $7/10$ | $(15/10000,19/10000)$ |
+| $3$ | $(5217,5218)$ | $4/10^7$ | $24/1000$ | $(61/1000,63/1000)$ |
+
+Each row satisfies $\bar\eta_i+\bar q_i\rho_*<\rho_*$.
+The coordinate projections of the whole tubes lie strictly inside
+the following intervals; entries in the last two columns have
+denominator $1000$:
+
+| $i$ | $r$ interval numerator pair | $b$ interval numerator pair |
+| --- | --- | --- |
+| $0$ | $(132,142)$ | $(185,187)$ |
+| $1$ | $(162,170)$ | $(144,148)$ |
+| $2$ | $(872,874)$ | $(-370,-367)$ |
+| $3$ | $(888,889)$ | $(-596,-595)$ |
+
+Finally, using the exact intervals (11.9) before any coarsening,
+
+$$
+\begin{aligned}
+\frac{\mathcal I_0(N_m-526D_m)}{\mathcal I_0(D_m)}
+ &\subset\left(-\frac{387}{100},\frac{379}{100}\right),\\
+\frac{\mathcal I_1(N_m-540D_m)}{\mathcal I_1(D_m)}
+ &\subset\left(-\frac{491}{100},\frac{999}{200}\right).
+\end{aligned}
+\tag{11.10}
+$$
+
+Proof. Formula (11.5) expresses every entry of the first table as
+a rational sum of the original integers. For each fixed-sign row,
+sum the absolute values of all terms except $(a,d)=(0,0)$ after
+collecting equal powers. Comparison with
+$u_i|\gamma_{i00}|/1000$ gives the strict bounds in that table.
+The three unrestricted rows require no comparison.
+
+Here is an explicit coefficient formula for the remaining tables.
+For $H(r,b)=\sum h_{k\ell}r^kb^\ell$, the coefficient of
+$y_0^ay_1^bt^d$ in $\widehat H_i$ is
+
+$$
+\sum_{\substack{k\ge a,\ \ell\ge b,\ u+w=d\\
+ 0\le u\le k-a,\ 0\le w\le\ell-b}}
+h_{k\ell}\binom ka\binom{k-a}{u}
+(m_i)_r^{k-a-u}(L_i)_r^u
+\binom\ell b\binom{\ell-b}{w}
+(m_i)_b^{\ell-b-w}(L_i)_b^w.
+\tag{11.11}
+$$
+
+Use the integer polynomials (3.6), taking both exact divisions by
+$T$ before this expansion. Their correspondence to the original
+responses can also be seen directly: substitute (3.3), (3.5) and
+$\epsilon=-3K_\Lambda XN/(5D)$ into (1.5). Multiplying the fifth,
+sixth-M and terminal-M expressions by $5bD$ gives respectively
+$N_p,N_u,N_m$. Subtracting each stated numerator leaves the zero
+polynomial after clearing $b,T,D,X,N$. For strict regular sources
+these are nonzero denominators. Also (3.6) gives
+$\mathsf A=5b(p-24)D+3(8b-1)H=\mathsf S_p/2$.
+This fixes the source correspondence of the finite coefficients.
+
+Evaluate the first derivatives of (11.3) at the listed $m_i,p_0,v_c$
+and form the two-by-two determinants and inverses (11.6).
+Equation (11.11) then gives $\widehat D_{m,i}$,
+$\widehat N_{p,i}$, $\widehat N_{u,i}$ and $\widehat N_{m,i}$.
+The preconditioned polynomials are explicitly
+
+$$
+\mathcal P_i=C_i
+\begin{pmatrix}
+(p_0+e)\widehat D_{m,i}-\widehat N_{p,i}\\
+(v_c+t)\widehat D_{m,i}-\widehat N_{u,i}
+\end{pmatrix}.
+\tag{11.12}
+$$
+
+Collect equal monomials in (11.12), differentiate for (11.8),
+and sum their absolute coefficients with the weights shown there.
+The results are strictly below the displayed $\bar\eta_i,\bar q_i$.
+The determinant comparisons give the four stated open intervals.
+The coordinate comparisons use exactly
+$[(m_i)_j-|(L_i)_j|/2-\rho_*,
+  (m_i)_j+|(L_i)_j|/2+\rho_*]$.
+The same coefficient sums (11.9) for $D_m$ give its guards.
+Thus (3.6), (11.1), the four centre rows and (11.6), (11.11)
+specify every rational number in these comparisons.
+
+For (11.10) apply (11.11) to $N_m-526D_m$ or $N_m-540D_m$
+and to $D_m$. Form their two endpoint pairs by (11.9), then take
+the four endpoint quotients. All four quotients are strictly between
+the indicated bounds in each row. The denominator intervals in
+this operation are the uncoarsened (11.9), not their displayed
+nonvanishing guards. This proves the finite inequalities. ∎
+
+## 12. Entire two-world children on $K\times[125,126]$
+
+**Theorem 12.1 (Two complete worlds with separated terminal-M values).**
+For every real $p\in K$ and $v\in[125,126]$, the entire
+$\mathcal C(p,v)$ has exactly two complete legal worlds.
+In increasing order of $r$, call them $W_0,W_1$. Then
+
+$$
+522<f_{MM}(W_0)<530,\qquad
+535<f_{MM}(W_1)<545,\qquad
+f_{MM}(W_1)-f_{MM}(W_0)>5.
+\tag{12.1}
+$$
+
+Consequently $\mathcal J(v)$ of (9.1) is false for every
+$v\in[125,126]$ at the original $p_J$.
+
+Proof. First fix any $p\in\mathcal P$, $v\in I$ for the
+polynomial argument. Lemma 11.4 makes the Bernstein signs
+
+$$
+(-,-,?,+,+,?,-,-,-,-,-,-,-,?,+,+,-,-,-).
+\tag{12.2}
+$$
+
+Each question mark stands alone between opposite fixed signs.
+Replacing it by either sign, or by zero and omitting it, gives
+one variation across those two fixed signs. There are three such
+transitions and one further transition from index $15$ to $16$.
+Thus the number of variations is always four. The identity
+
+$$
+(1+x)^{18}R\!\left(\frac{x}{1+x},p,v\right)
+ =\sum_{i=0}^{18}\binom{18}{i}\beta_i(p,v)x^i
+\tag{12.3}
+$$
+
+and Descartes' rule give at most four roots in $0<r<1$, counted
+with multiplicity. This is the standard Bernstein/Descartes method
+cited in Section 10, applied to this different coefficient table.
+The first and last Bernstein coefficients are nonzero, so $R$ is
+not the zero polynomial. The change $r=x/(1+x)$ preserves the
+multiplicity of every root with $0<r<1$; no specialized degree
+assumption has been made.
+
+For each $i$, fix $e=p-p_0$ and $t=v-v_c$. The map
+
+$$
+y\longmapsto y-\mathcal P_i(y,e,t)
+\tag{12.4}
+$$
+
+has Lipschitz constant at most $q_i<\bar q_i<1$ on the closed
+radius-$\rho_*$ ball in $\mathbb R^2$. Its norm there is at most
+$\eta_i+q_i\rho_*<\rho_*$. This is a self-map of a nonempty
+complete metric space, so Banach contraction gives one fixed point
+in its interior. The invertible $C_i$ makes that point exactly a
+zero of the original $F_s$. Also
+$\|I-\partial_y\mathcal P_i\|_\infty\le q_i<1$, so the source
+Jacobian is invertible. The coordinate and denominator guards of
+Lemma 11.4 give four distinct real projections in $(0,1)$,
+with $D_m\ne0$, two positive and two negative $b$ values.
+Banach's theorem here is the standard intermediate result of
+Lebl, [Basic Analysis, Theorem 7.6.2](https://www.jirka.org/ra/html/sec_metpicard.html).
+
+We apply the local multiplicity comparison from the proof of $F$,
+Theorem 10.2, not just its bound eighteen. At a real projection
+$\alpha\in(0,1)$, let $n_\alpha$ be the number of distinct
+finite complex $b$ roots with $\mathsf A=\mathsf B=0$ and
+$D_m\ne0$. The coefficient $[b^7]\mathsf A=5p+216$ is nonzero
+on $\mathcal P$, so this number is finite, at most seven.
+Their evaluation vectors in the fixed $14$ by $14$ matrix $S$
+are independent. The determinant has order at least $n_\alpha$.
+If $E(\alpha)=0$, Lemma 4.2 supplies one further common $b$
+root with $D=0$, distinct from those counted by $n_\alpha$.
+The corank is then at least $n_\alpha+1$. Since $E$ has a
+simple zero there, (4.2) gives in both cases
+
+$$
+n_\alpha\le\operatorname{ord}_{r=\alpha}R(r,p,v).
+\tag{12.5}
+$$
+
+This is precisely the base-factor compensation in $F$ (10.5)–(10.6).
+It holds for the fixed matrices under degree drops and requires
+neither a simple projected root nor $\mathcal L_1\ne0$.
+
+Summing (12.5) over real $\alpha\in(0,1)$ gives a budget of at
+most four regular complex lifts over these real projections.
+The four tube points attain the budget. Therefore they are every
+such point; each projection is simple and has exactly one regular
+lift. In particular a negative-$b$ point consumes its projected
+multiplicity and admits no hidden positive-$b$ companion, including
+at a base projection. This exhausts every strict regular source
+without imposing an upper bound on positive $b$ or on $r(1-r)/b$.
+
+Now take $p\in K$. By $O$, Theorem 29.2, every legal singular
+world at this fifth response has actual sixth-M response
+$s_-(p)$ or $s_+(p)$. By $S$, Lemma 2.4, on the whole of $K$
+these lie respectively in the rational boxes $V_-$ and $V_+$ of
+$S$ (2.1), contained in $(119,120)$ and $(138,139)$.
+Both are disjoint from $I$. Thus there is no singular world in
+the child being classified.
+
+Every remaining world has one regular source, and Lemma 3.3
+identifies it with a zero of $F_s$. Conversely the two positive
+tube points have unique complete legal lifts by that lemma.
+The two negative points are auxiliary polynomial solutions only.
+This proves exactly two worlds in the entire actual child.
+The lift uses the unique entire interpolant (3.3) and its fixed
+drift; its gain is nonzero since the first two readings are $0,24$.
+No gain sample, gain leading coefficient, root difference or drift
+has been divided out. Lower degrees, sampled zeros, repeated gain
+roots and zero drift remain included, and the gains and drifts of
+the two worlds need not agree.
+
+On these worlds $f_{MM}=N_m/D_m$ by Lemma 3.3. The exact identity
+$N_m/D_m=c+(N_m-cD_m)/D_m$ and (11.10) give, respectively,
+
+$$
+f_{MM}(W_0)\in(52213/100,52979/100),\qquad
+f_{MM}(W_1)\in(53509/100,108999/200).
+\tag{12.6}
+$$
+
+These imply (12.1). There is no distinct terminal-M pair in this
+entire child. That excludes (9.1) irrespective of overlap between
+its terminal-J and terminal-M labels, and uses no terminal-J
+injectivity assertion. Proposition 2.2 permits the specialization
+to the original exact $p_J$. ∎
+
+## 13. A distinguished original-$Q$ crossing at the lower $\Phi$ root
+
+**Definition 13.1 (The designated source and exact root bracket).**
+Let $z_i(p,v)=(r_i(p,v),b_i(p,v))$ be the unique point in tube
+$i$ from the proof of Theorem 12.1, for $p\in K$, $v\in I$.
+The two legal lifts are the worlds with indices $0,1$ there.
+Retain the original lower strict root $r_-$ of $\Phi$.
+By $S$, Definition 2.3 and Lemma 2.4, with
+
+$$
+\nu_-=134815875067638653367017716061081265110899687,
+\qquad
+\frac{\nu_-}{10^{45}}<r_-<\frac{\nu_-+1}{10^{45}}.
+\tag{13.1}
+$$
+
+This designates the original algebraic source, not a bracket centre.
+
+**Lemma 13.2 (Derivative and endpoint inequalities for tube zero).**
+The rational data (11.6) satisfy
+
+$$
+\frac8{1000}<(L_0)_r<\frac9{1000},\qquad
+\max_{k=0,1}\mathcal N(\partial_t\mathcal P_{0k})
+ <\frac1{5000}.
+\tag{13.2}
+$$
+
+For $a\ge0$ let $\mathcal N_a$ be (11.8) with $a^d$ in
+place of $2^{-d}$, and define
+
+$$
+E(t)=\max_{k=0,1}\mathcal N_{|t|}
+ (\mathcal P_{0k}(0,0,e,t)).
+\tag{13.3}
+$$
+
+Here the polynomial in (13.3) is expanded in $e,t$ before the
+weight $|t|^d$ is assigned. Then the following comparisons hold:
+
+$$
+\begin{aligned}
+\frac{E(-29/100)}{1-74/1000}&<\frac{15}{10^6},&
+(m_0)_r-\frac{29}{100}(L_0)_r+\frac{15}{10^6}
+ &<\frac{\nu_-}{10^{45}},\\
+\frac{E(-28/100)}{1-74/1000}&<\frac{14}{10^6},&
+\frac{\nu_-+1}{10^{45}}
+ &<(m_0)_r-\frac{28}{100}(L_0)_r-\frac{14}{10^6}.
+\end{aligned}
+\tag{13.4}
+$$
+
+Proof. Use the same finite coefficient formula (11.11) and exact
+$C_0,L_0$ as in Lemma 11.4. For the second comparison in (13.2),
+multiply each coefficient of $\mathcal P_{0k}$ by its $t$
+exponent, lower that exponent by one, then use the weights (11.8).
+Both resulting sums are less than $1/5000$.
+For (13.4), retain only the terms with $y_0,y_1$ exponents zero,
+and replace the $t$ weight by $(29/100)^d$ or $(28/100)^d$.
+After division by $1-74/1000$, the sums are strictly below the
+stated $15/10^6$ and $14/10^6$. Substitution of the exact
+$(m_0)_r,(L_0)_r$ and the integer $\nu_-$ gives the other two
+strict rational comparisons. These are finite sums from the same
+source polynomials and centre, without a new response normalization. ∎
+
+**Theorem 13.3 (Unique designated crossing and original candidate).**
+For every real $p\in K$ there is exactly one $v_\diamond(p)\in I$
+such that $r_0(p,v_\diamond(p))=r_-$. It satisfies
+
+$$
+\frac{12521}{100}<v_\diamond(p)<\frac{6261}{50},\qquad
+Q(p,v_\diamond(p))=0.
+\tag{13.5}
+$$
+
+At the unchanged exact $p_J$, $v_\diamond=v_\diamond(p_J)$ is
+real algebraic. Its entire child consists of the two separated
+worlds of Theorem 12.1, so it has no distinct terminal-M pair.
+It differs from both singular responses and lies outside
+$[142,150]$. Uniqueness in this statement concerns the designated
+branch crossing, not all roots of $Q$ in the bracket (13.5).
+
+Proof. At every tube fixed point the source Jacobian is invertible
+by (11.8). The polynomial equations are continuously differentiable
+on an open ambient space. The implicit function theorem therefore
+gives local continuously differentiable branches. Their fixed
+points lie strictly inside the $y$ ball, so the local branches
+remain in that tube for nearby parameters. Contraction uniqueness
+makes these branches agree wherever they overlap. This gives a
+continuously differentiable $z_0(p,v)$ on the strip, with local
+extensions at its closed boundaries. These are the hypotheses of
+the standard implicit function theorem cited in Section 10;
+see also Lebl, [Theorem 8.5.6](https://www.jirka.org/ra/html/sec_svinvfuncthm.html).
+
+Fix $p$ and write $z_0=m_0+L_0t+y(p,t)$, with $t=v-v_c$.
+Differentiating $\mathcal P_0(y(p,t),p-p_0,t)=0$ gives
+
+$$
+\partial_t y=-(\partial_y\mathcal P_0)^{-1}
+ \partial_t\mathcal P_0,\qquad
+\|\partial_t y\|_\infty
+ <\frac{1/5000}{1-74/1000}<\frac1{1000}.
+\tag{13.6}
+$$
+
+The inverse bound is the Neumann series for
+$\|I-\partial_y\mathcal P_0\|_\infty<74/1000$.
+Here $dt/dv=1$, so (13.2) implies
+$\partial_v r_0>7/1000$ throughout $I$.
+
+At a fixed $t$, the fixed-point equation also gives
+$\|y(p,t)\|_\infty\le E(t)+q_0\|y(p,t)\|_\infty$.
+Thus (13.4) bounds this displacement by $15/10^6$ at
+$t=-29/100$ and by $14/10^6$ at $t=-28/100$.
+Together with (13.1), the other two comparisons in (13.4) give
+
+$$
+r_0(p,12521/100)<r_-<r_0(p,6261/50).
+\tag{13.7}
+$$
+
+Continuity gives a crossing strictly between these endpoints.
+Strict increase gives exactly one on the entire $I$.
+Its source has $b\in(185/1000,187/1000)$ and $D_m\ne0$,
+so it is regular and its $b$ differs from $1/8$.
+
+Put $\alpha=r_-$ and $v=v_\diamond(p)$. The actual positive
+$b=b_0(p,v)$ is a common root of the original $\mathsf A,\mathsf B$.
+At the same $\alpha,p,v$, Lemma 4.2 supplies the distinct
+common root $b=1/8$ with $D=0$, since $\Phi(\alpha)=0$.
+Equation (12.5), or Lemma 4.3, gives $R(\alpha,p,v)=0$.
+The base point is used as an algebraic root; its legal singular
+lift has actual response $s_-(p)$, outside $I$, and is not an
+additional world in this child.
+
+In the original $12$ by $13$ matrix $S_1$ of (4.3), both vectors
+$(b^{12},b^{11},\ldots,1)^{\mathsf T}$ for these two distinct
+$b$ roots lie in the kernel. They are independent: their last
+coordinates are $1$ and their penultimate coordinates differ.
+Hence the rank is at most eleven. All $12$ by $12$ minors vanish,
+in particular the original ordered $\Delta_1,\Delta_0$.
+Since $\alpha\notin\{0,1\}$, the exact divisor
+$72900\alpha^6(\alpha-1)^4$ is nonzero. The same quotient
+polynomial of (4.3) therefore satisfies
+$\mathcal L_1(\alpha,p,v)=0$.
+
+The original $R$ and $\mathcal L_1$ have a finite common $r$ root.
+Its evaluation vector annihilates the fixed padded Sylvester
+matrix for $E_1=\operatorname{Res}^{18,26}_r(R,\mathcal L_1)$
+in (8.2), so $E_1(p,v)=0$ and the unchanged
+$Q=aE_1E_2E_3E_4$ vanishes. The fixed padding includes every
+specialized degree drop. No quotient by $\mathcal L_1$, different
+minor normalization, or expanded replacement for $Q$ is used.
+
+Finally specialize to $p=p_J$. Proposition 2.2 and (13.1) make
+$p_J,\alpha$ algebraic. The polynomial
+$\mathsf A(\alpha,b,p_J)$ has leading coefficient $5p_J+216>0$
+in degree seven, so its crossing $b$ is algebraic. Since $D_m$
+is nonzero there, its actual acquired response $N_u/D_m$ is
+algebraic. This proves algebraicity at the exact $p_J$, without
+asserting it for arbitrary real $p$. The bracket (13.5) is inside
+$I$ and disjoint from both singular-response boxes and from
+$[142,150]$. Theorem 12.1 supplies the claimed entire-child
+exclusion. ∎
+
+## 14. The residual domain for the original joint predicate
+
+**Corollary 14.1 (Equivalent remaining original obligation).**
+For the unchanged predicate $\mathcal J$ of (9.1), set
+
+$$
+\begin{aligned}
+\mathcal V_{\rm old}
+ &=\{v\in\mathbb R:Q(p_J,v)=0\}
+   \setminus\bigl([142,150]\cup\{s_-(p_J),s_+(p_J)\}\bigr),\\
+\mathcal V_{\rm rem}
+ &=\{v\in\mathbb R:Q(p_J,v)=0\}
+   \setminus\bigl([125,126]\cup[142,150]
+                  \cup\{s_-(p_J),s_+(p_J)\}\bigr).
+\end{aligned}
+\tag{14.1}
+$$
+
+Then
+
+$$
+\exists v\in\mathbb R\;\mathcal J(v)
+\quad\Longleftrightarrow\quad
+\exists v\in\mathcal V_{\rm rem}\;\mathcal J(v),\qquad
+v_\diamond\in\mathcal V_{\rm old}\setminus\mathcal V_{\rm rem}.
+\tag{14.2}
+$$
+
+Every world in any hypothetical witness child on the right is
+regular. The assertion still requires a distinct terminal-J pair
+and a distinct terminal-M pair in the same entire acquired child;
+labels may coincide across the pairs.
+
+Proof. By $S$, Corollary 9.1, a witness to (9.1) has $Q(p_J,v)=0$,
+misses the two singular responses, and has no singular world in
+its entire child. Theorem 1.3 excludes $[142,150]$ and Theorem
+12.1 excludes $[125,126]$. This proves the forward implication;
+the reverse merely restricts the quantified set of real responses.
+Theorem 13.3 puts the exact $v_\diamond$ in the old necessary set
+and in the newly excluded strip. Thus (14.2) deletes at least this
+specified member of that necessary set, even though a root of $Q$
+alone need not supply a collision. ∎
+
+**Definition 14.2 (Unresolved quantifiers and mathematical attribution).**
+The remaining question in (14.2) is unresolved: no remaining
+candidate, actual distinct terminal-M pair, or compatible same-child
+terminal-J pair is classified here. The original positive source
+coordinates remain unbounded, with one entire nonzero real gain of
+degree at most three and one fixed real drift per world, all the
+specializations of Definition 1.1, and one actual history without
+additional observations, resets or copies.
+
+The source-specific content of Sections 11–14 is repository-derived:
+the finite coefficient inequalities on this second strip, their
+exhaustion into two complete worlds, and the designated lower-$\Phi$
+crossing with its residual-domain consequence. Bernstein/Descartes,
+Banach contraction, Neumann inversion, implicit differentiation and
+Sylvester elimination are the known intermediate methods cited in
+Section 10 and in the corresponding proofs. The local multiplicity
+comparison is reused from $F$, Theorem 10.2. The singular-response
+enclosures and entire singular-child exclusions are supplied by
+$S$, Lemma 2.4 and Corollary 9.1; the original model, parameter,
+polynomials and determinant identities are supplied by $O$ at the
+interfaces fixed above. These are ordinary conditional mathematical
+suppliers. The conclusions do not assert global joint exclusion,
+an enumeration or improved bound on actual collision pairs,
+terminal-J injectivity, a universal optimal protocol, kernel
+verification, physical realization or worldwide priority.
