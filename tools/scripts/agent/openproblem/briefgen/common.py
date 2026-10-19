@@ -12,6 +12,7 @@ import traceback
 HERE = Path(__file__).resolve().parent
 TOOLS = HERE.parent
 REPO = TOOLS.parents[3]
+MAIN_WARM_STAMP = '.lake/build/.main-built-at'
 
 BUILD_SCOPE = '**Build scope (binding; supersedes every other build instruction in this brief).** Every `make lean` below means `make lean LEAN_TARGETS="<the dotted names of the delivered modules and of every frozen module you re-pin>"`, and every `make lean-report` means `make lean-report-scoped LEAN_TARGETS="<the same list>"`. Never run `make lean`, `make lean-report`, `make test` or `make gate` without a target list. The Lean build lock is shared by every worktree on this machine: an untargeted build after a merge of `origin/dev` recompiles hundreds of unrelated modules for hours and blocks every other lane. The doors (`make deposit-uncovered`, `make deposit`, `make cover`, `make emit`) choose their own scope (CLAUDE.md §8.2). If a step cannot be done with a target list, skip it and name it under `not_run`.'
 
@@ -23,6 +24,31 @@ class BriefError(Exception):
 
 def fail(code, message):
     raise BriefError(code, message)
+
+
+def uint(value, label='value'):
+    if not re.fullmatch(r'[1-9][0-9]*', str(value)):
+        fail(13, label + ' must be a positive integer')
+    return int(value)
+
+
+def sha(value):
+    if not isinstance(value, str) or not re.fullmatch(r'[0-9a-f]{40}', value):
+        fail(13, 'full commit SHA required')
+    return value
+
+
+def state_dir():
+    base = Path(os.environ.get('XDG_STATE_HOME') or Path.home() / '.local/state')
+    return Path(os.environ.get('OP_STATE') or base / 'trureturing-op').resolve()
+
+
+def main_lean_lock():
+    return Path(os.environ.get('OP_REFRESH_LOCK') or state_dir() / 'main-lean.lock').resolve()
+
+
+def main_warm_stamp(main):
+    return Path(main) / MAIN_WARM_STAMP
 
 
 def name(value):
@@ -68,7 +94,7 @@ class Context:
         self.scratch = Path(value).resolve()
         if not self.scratch.is_dir():
             fail(11, 'scratch directory missing: ' + str(self.scratch))
-        self.state = Path(os.environ.get('OP_STATE', Path.home() / '.local/state/trureturing-op')).resolve()
+        self.state = state_dir()
         self.sshx = Path(os.environ.get('SSHX_HOME', Path.home() / '.sshx')).resolve()
         self.prefix = os.environ.get('OP_NAME_PREFIX', '')
         if self.prefix:
@@ -131,5 +157,12 @@ def entry(main, argv=None, minimum=0, maximum=None, tool=None):
         return 16
 
 
+def settings(argv):
+    readers = {'state-dir': state_dir, 'main-lean-lock': main_lean_lock}
+    if len(argv) != 2 or argv[1] not in readers:
+        fail(10, 'common.py state-dir|main-lean-lock')
+    print(readers[argv[1]]())
+
+
 if __name__ == '__main__':
-    sys.exit(entry(lambda args: fail(10, 'source-only module')))
+    sys.exit(entry(settings))
