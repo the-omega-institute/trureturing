@@ -6,11 +6,11 @@
    utility: none
    digest: Cubic lifting and a mod-two series identity prove Hanna's A392525 parity conjecture. -/
 
-/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19133 -/
-/- Helper proof_shape and consumers (in HannaSquareCompositionModFour):
-   prime_power_subst: bind-only; consumer: second_digit_equation.
-   power_two_zero: bind-only; consumer: residue_zero.
-   escape_witness: none. -/
+-- Escape audit unfinished for published theorems: https://github.com/the-omega-institute/trureturing/issues/19129.
+
+/- Escape audit unfinished for these published suppliers: https://github.com/the-omega-institute/trureturing/issues/19133
+proof_shape: power_two_zero: bind-only; consumer: D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result (via its live helper chain).
+-/
 
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.NoZeroDivisors

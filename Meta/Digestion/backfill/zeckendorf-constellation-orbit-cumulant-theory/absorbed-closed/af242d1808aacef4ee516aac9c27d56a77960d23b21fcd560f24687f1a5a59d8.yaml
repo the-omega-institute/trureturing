@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af242d1808aacef4ee516aac9c27d56a77960d23b21fcd560f24687f1a5a59d8
+  normalized_sha256: sha256:af242d1808aacef4ee516aac9c27d56a77960d23b21fcd560f24687f1a5a59d8
+cas_ref: sha256:af242d1808aacef4ee516aac9c27d56a77960d23b21fcd560f24687f1a5a59d8
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/ZeckendorfRealThread.goldenQuantization
+    target_statement_id: sha256:83347863f8d77287ebae3401564013004ac73fa4305d1a401328a12589a4f7e9
+  - gid: D5/S3/ObserverMemory/Prediction/FiveModePredictiveLawGeometry/Core.cutoff_first_nonstrict
+    target_statement_id: sha256:f9c42fa808b224d51cd83a6a8623a9da1cb938a5b064cb4b09a8ac29da9645c7
+receipts:
+  unresolved_subitems: []

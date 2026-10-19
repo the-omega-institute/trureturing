@@ -30,14 +30,20 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
                 "The difference of powers is divisible by the difference of the original series."),
             Node("agree_mul", "Products preserve agreement", PublishedProductFormula(),
                 "The difference of products is a sum of two multiples of the original differences."),
-            Node("agree_iff", "Agreement and divisibility", PublishedDivisibilityFormula(),
-                "Equality of all coefficients below d is equivalent to divisibility of the difference by X to the power d."),
-            Node("agree_X", "Multiplication by the indeterminate", PublishedShiftFormula(),
-                "Multiplication by X shifts each coefficient one place and increases the agreement range by one."),
+            Node("agree_iff", "Agree iff",
+                Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("d"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("g"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Parenthesized(Call("Agree", F.Id("d"), F.Id("f"), F.Id("g"))), Sp, Iff, Sp, Parenthesized(Seq(new Formula.Power(Parenthesized(F.Id("X")), F.Id("d")), Sp, Mid, Sp, new Formula.Binary(Parenthesized(F.Id("f")), FormulaBinaryOperator.Subtract, Parenthesized(F.Id("g")))))))))))),
+                "Coefficient agreement is divisibility of the difference by X to the power d.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("agree_mono", "Agree mono",
+                Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("d"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Forall, Sp, F.Id("e"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("g"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Parenthesized(Call("Agree", F.Id("d"), F.Id("f"), F.Id("g"))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(F.Id("e"), Sp, Le, Sp, F.Id("d"))), Sp, Implies, Sp, Parenthesized(Call("Agree", F.Id("e"), F.Id("f"), F.Id("g"))))))))))))),
+                "Agreement persists on a smaller range of degrees.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("agree_X", "Agree x",
+                Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("d"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("g"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Parenthesized(Call("Agree", F.Id("d"), F.Id("f"), F.Id("g"))), Sp, Implies, Sp, Parenthesized(Call("Agree", new Formula.Binary(Parenthesized(F.Id("d")), FormulaBinaryOperator.Add, Parenthesized(D(1))), new Formula.Binary(Parenthesized(F.Id("X")), FormulaBinaryOperator.Multiply, Parenthesized(F.Id("f"))), new Formula.Binary(Parenthesized(F.Id("X")), FormulaBinaryOperator.Multiply, Parenthesized(F.Id("g")))))))))))),
+                "Multiplication by X increases the degree of agreement by one.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("subst_outer_agree", "Subst outer agree",
+                Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("d"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("g"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("u"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Parenthesized(Call("Agree", F.Id("d"), F.Id("f"), F.Id("g"))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(new Formula.Power(Parenthesized(F.Id("X")), D(2)), Sp, Mid, Sp, F.Id("u"))), Sp, Implies, Sp, Parenthesized(Call("Agree", new Formula.Binary(Parenthesized(D(2)), FormulaBinaryOperator.Multiply, Parenthesized(F.Id("d"))), Call("subst", F.Id("f"), F.Id("u")), Call("subst", F.Id("g"), F.Id("u")))))))))))))),
+                "Substitution by a series divisible by X squared doubles outer coefficient agreement.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("subst_inner_agree", "Agreement of inner substitutions", PublishedInnerAgreementFormula(),
                 "In this formula subst(u,f) means f(u). Substitution into the same outer series preserves agreement of zero-constant inner series."),
-            Node("subst_outer_agree", "Agreement of outer substitutions", PublishedOuterAgreementFormula(),
-                "In this formula subst(u,f) means f(u). An inner series divisible by X squared doubles the agreement range of the outer series."),
             Node("subst_constant", "Constant coefficient of a composition", PublishedConstantFormula(),
                 "In this formula subst(u,f) means f(u). Composing with a zero-constant series preserves the outer series' constant coefficient."),
             Node("generatingSeries", "Construction of the integer series", GeneratingFormula(),
@@ -197,21 +203,6 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
                 Call("Agree", d, Mul(f, u), Mul(g, v))))));
     }
 
-    private static Formula PublishedDivisibilityFormula()
-    {
-        Formula d = F.Id("d"), f = F.Id("f"), g = F.Id("g");
-        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
-            Bound("f", PublishedSeries()), Bound("g", PublishedSeries()),
-            Parenthesized(Seq(Call("Agree", d, f, g), Sp, Iff, Sp,
-                Parenthesized(Seq(Power(X(), d), Sp, Mid, Sp, Parenthesized(Subtract(f, g))))))));
-    }
-    private static Formula PublishedShiftFormula()
-    {
-        Formula d = F.Id("d"), f = F.Id("f"), g = F.Id("g");
-        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
-            Bound("f", PublishedSeries()), Bound("g", PublishedSeries()),
-            Implication(Call("Agree", d, f, g), Call("Agree", Add(d, D(1)), Mul(X(), f), Mul(X(), g)))));
-    }
     private static Formula PublishedInnerAgreementFormula()
     {
         Formula d = F.Id("d"), u = F.Id("u"), v = F.Id("v"), f = F.Id("f");
@@ -222,15 +213,7 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
                     Implication(Equal(Call("constantCoeff", v), D(0)),
                         Call("Agree", d, Call("subst", u, f), Call("subst", v, f)))))))));
     }
-    private static Formula PublishedOuterAgreementFormula()
-    {
-        Formula d = F.Id("d"), f = F.Id("f"), g = F.Id("g"), u = F.Id("u");
-        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
-            Bound("f", PublishedSeries()), Bound("g", PublishedSeries()), Bound("u", PublishedSeries()),
-            Implication(Call("Agree", d, f, g),
-                Implication(Seq(Power(X(), D(2)), Sp, Mid, Sp, u),
-                    Call("Agree", Mul(D(2), d), Call("subst", u, f), Call("subst", u, g))))));
-    }
+
     private static Formula PublishedConstantFormula()
     {
         Formula f = F.Id("f"), u = F.Id("u");

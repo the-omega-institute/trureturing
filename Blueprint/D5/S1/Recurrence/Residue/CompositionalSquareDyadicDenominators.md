@@ -8,7 +8,81 @@ Thomas Scheuerle's entry of March 3, 2025, cited in scheuerle2025a381670, define
 
 A denotes generatingSeries, f(n) its rational coefficient, and X the formal variable. The notation coeff(n,P) means the coefficient of X^n in P, C embeds a scalar as a constant series, subst(P,Q) means P(Q(X)), and rescale(c,P) means P(cX). The integral series I is built from compatible approximations P_n. The map iota sends integers to rationals. All indices are natural numbers; subtraction in an exponent is natural subtraction. The operation div below is integer division.
 
-**Definition 1.1 (Construction by compatible integral approximations).**
+PowerSeries.subst(Q,P) denotes P(Q(X)); its first argument is the inner series.
+
+**Definition 1.1 (Agreement below a degree).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall d: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), \operatorname{Agree}\left(d, f, g\right) = (\forall n: \mathbb{N}, (n < d) \implies (\operatorname{coeff}\left(n, f\right) = \operatorname{coeff}\left(n, g\right)))$$
+
+*Formalization.* `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.Agree` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two series agree below d when their coefficients coincide at every natural index less than d.
+
+**Theorem 1.2 (Substitution preserves coefficient agreement).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall d: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), \forall u: \operatorname{PowerSeries}\left(R\right), \forall v: \operatorname{PowerSeries}\left(R\right), (\operatorname{constantCoeff}\left(u\right) = 0) \implies ((\operatorname{constantCoeff}\left(v\right) = 0) \implies ((\operatorname{Agree}\left(d, f, g\right)) \implies ((\operatorname{Agree}\left(d, u, v\right)) \implies (\operatorname{Agree}\left(d, \operatorname{PowerSeries}.\operatorname{subst}\left(u, f\right), \operatorname{PowerSeries}.\operatorname{subst}\left(v, g\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.agree_subst` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If both inner series have zero constant coefficient and both pairs agree below d, their substitutions agree below d.
+
+**Theorem 1.3 (The first differing coefficient of a compositional square).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall d: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), (\operatorname{constantCoeff}\left(f\right) = 0) \implies ((\operatorname{constantCoeff}\left(g\right) = 0) \implies ((\operatorname{coeff}\left(1, f\right) = 1) \implies ((\operatorname{coeff}\left(1, g\right) = 1) \implies ((\operatorname{Agree}\left(d, f, g\right)) \implies (\operatorname{coeff}\left(d, \operatorname{PowerSeries}.\operatorname{subst}\left(f, f\right)\right) - \operatorname{coeff}\left(d, \operatorname{PowerSeries}.\operatorname{subst}\left(g, g\right)\right) = 2 \cdot (\operatorname{coeff}\left(d, f\right) - \operatorname{coeff}\left(d, g\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.composition_top` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For series tangent to X and agreeing below d, the difference of the degree-d coefficients of their compositional squares is twice their degree-d difference.
+
+**Definition 1.4 (The compositional-square residual).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall p: \operatorname{PowerSeries}\left(R\right), \operatorname{residual}\left(p\right) = \operatorname{PowerSeries}.\operatorname{subst}\left(p, p\right) - X - 4 \cdot X \cdot p$$
+
+*Formalization.* `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.residual` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Subtract X and four times X times p from the compositional square of p.
+
+**Theorem 1.5 (Constant divisibility coefficient by coefficient).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall a: R, \forall p: \operatorname{PowerSeries}\left(R\right), (\operatorname{C}\left(a\right) \mid p) \iff (\forall n: \mathbb{N}, a \mid \operatorname{coeff}\left(n, p\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.C_dvd_iff_coeff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A constant series divides p exactly when its scalar divides every coefficient of p.
+
+**Theorem 1.6 (An even displacement gives a residual divisible by four).**
+
+$$\forall p: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{constantCoeff}\left(p\right) = 0) \implies ((\operatorname{C}\left((2: \mathbb{Z})\right) \mid p - X) \implies (\operatorname{C}\left((4: \mathbb{Z})\right) \mid \operatorname{residual}\left(p\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.residual_four` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Over the integers, a zero-constant series differing from X by a multiple of C(2) has residual divisible by C(4).
+
+**Definition 1.7 (Construction by compatible integral approximations).**
 
 $$\begin{aligned}A = \operatorname{C}\left(4\right) \cdot \operatorname{rescale}\left(\frac{1}{4}, \operatorname{map}\left(\operatorname{iota}, I\right)\right)\\I = \operatorname{mk}\left(n \mapsto \operatorname{coeff}\left(n, \operatorname{P}\left(n\right)\right)\right)\\\operatorname{P}\left(0\right) = X\\\forall n \in \mathbb{N}, \operatorname{P}\left(n + 1\right) = \operatorname{P}\left(n\right) + \operatorname{C}\left(-\operatorname{div}\left(\operatorname{coeff}\left(n + 2, \operatorname{E}\left(\operatorname{P}\left(n\right)\right)\right), 2\right)\right) \cdot X^{n + 2}\\\forall P \in \mathbb{Z}[[X]], \operatorname{E}\left(P\right) = \operatorname{subst}\left(P, P\right) - X - 4 \cdot X \cdot P\end{aligned}$$
 
@@ -20,7 +94,7 @@ $$\begin{aligned}A = \operatorname{C}\left(4\right) \cdot \operatorname{rescale}
 
 Set E(P)=P(P(X))-X-4XP. Starting with P_0=X, correct degree n+2 by subtracting half its residual. The triangular composition identity gives multiplier two in that degree and preserves every lower degree. If P-X=2Q, then Q(P)-Q(X) is divisible by two, because P^j-X^j is divisible by P-X. Therefore E(P) is divisible by four and each correction is even. The stable coefficients define I. Scaling back gives A=4I(X/4), with the integer coefficients embedded in the rationals.
 
-**Definition 1.2 (The rational coefficient sequence).**
+**Definition 1.8 (The rational coefficient sequence).**
 
 $$\forall n \in \mathbb{N}, \operatorname{f}\left(n\right) = \operatorname{coeff}\left(n, A\right)$$
 
@@ -32,7 +106,7 @@ $$\forall n \in \mathbb{N}, \operatorname{f}\left(n\right) = \operatorname{coeff
 
 The sequence f is extracted from the constructed formal series. Its reduced denominators are the terms of A381670, with denominator one for any zero coefficient.
 
-**Theorem 1.3 (The defining functional equation).**
+**Theorem 1.9 (The defining functional equation).**
 
 $$(\operatorname{constantCoeff}\left(A\right) = 0) \land ((\operatorname{coeff}\left(1, A\right) = 1) \land (X \cdot (A + 1) = \operatorname{subst}\left(A, A\right)))$$
 
@@ -44,7 +118,7 @@ $$(\operatorname{constantCoeff}\left(A\right) = 0) \land ((\operatorname{coeff}\
 
 The limit of the corrected approximations satisfies I(I(X))=X+4XI(X). Mapping to rational coefficients and conjugating by the linear scaling gives exactly X(A+1)=A(A(X)), with the stated constant and linear terms.
 
-**Theorem 1.4 (Uniqueness with the specified normalization).**
+**Theorem 1.10 (Uniqueness with the specified normalization).**
 
 $$\forall B \in \mathbb{Q}[[X]], (\operatorname{constantCoeff}\left(B\right) = 0) \implies ((\operatorname{coeff}\left(1, B\right) = 1) \implies ((X \cdot (B + 1) = \operatorname{subst}\left(B, B\right)) \implies (B = A)))$$
 
@@ -56,7 +130,7 @@ $$\forall B \in \mathbb{Q}[[X]], (\operatorname{constantCoeff}\left(B\right) = 0
 
 If two normalized series agree below degree n, their compositional squares differ there by twice their coefficient difference. The right side X+XB depends only on the preceding coefficient. Induction therefore forces equality at every degree over the rationals.
 
-**Theorem 1.5 (The rescaled coefficients are even integers).**
+**Theorem 1.11 (The rescaled coefficients are even integers).**
 
 $$\forall n \in \mathbb{N}, (2 \le n) \implies (\exists z \in \mathbb{Z}, 4^{n - 1} \cdot \operatorname{f}\left(n\right) = \operatorname{iota}\left(2 \cdot z\right))$$
 
@@ -68,7 +142,7 @@ $$\forall n \in \mathbb{N}, (2 \le n) \implies (\exists z \in \mathbb{Z}, 4^{n -
 
 Every integral approximation differs from X by twice an integer series. This persists in the compatible limit I. Undoing the scaling identifies its degree-n coefficient with 4^(n-1)f(n) for n at least two.
 
-**Theorem 1.6 (Every denominator is a power of two).**
+**Theorem 1.12 (Every denominator is a power of two).**
 
 $$\forall k \in \mathbb{N}, \exists e \in \mathbb{N}, \operatorname{den}\left(\operatorname{f}\left(k\right)\right) = 2^{e}$$
 
@@ -86,9 +160,15 @@ For n at least two the even-integer invariant writes f(n) as an integer divided 
 
 ## References
 
+- Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.Agree`
+- Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.C_dvd_iff_coeff`
+- Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.agree_subst`
+- Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.composition_top`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.f`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.functional_equation`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.generatingSeries`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.rescaled_even`
+- Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.residual`
+- Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.residual_four`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.scheuerle_conjecture`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.uniqueness`

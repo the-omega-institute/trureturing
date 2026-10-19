@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf529f569e9ec45ad0f80e4f76cb39499d710f2e5d6f5832c70ed45ce0358712
+  normalized_sha256: sha256:bf529f569e9ec45ad0f80e4f76cb39499d710f2e5d6f5832c70ed45ce0358712
+cas_ref: sha256:bf529f569e9ec45ad0f80e4f76cb39499d710f2e5d6f5832c70ed45ce0358712
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/ZeckendorfRealThread.zeckendorf_real_thread_injective
+    target_statement_id: sha256:497793397b863e1d016f7b58627745ad0deabb31497435290ddb79db7a5a40ba
+  - gid: D5/S3/Zeros/ActualZeroGeometry.rh_iff_nontrivial_zeros_on_line
+    target_statement_id: sha256:4de5f23947c1d5e4f77f08c073db86922ed4bf72d784bf2c0d0d7a1b2b78cdd5
+receipts:
+  unresolved_subitems: []

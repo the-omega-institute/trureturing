@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:69a828df3c2fc2b9338907868b80f1d25a3d52b6fc6453d6bc47dc1ac08f90b3
+  normalized_sha256: sha256:69a828df3c2fc2b9338907868b80f1d25a3d52b6fc6453d6bc47dc1ac08f90b3
+cas_ref: sha256:69a828df3c2fc2b9338907868b80f1d25a3d52b6fc6453d6bc47dc1ac08f90b3
+coverage_gids:
+  - gid: D5/S3/Analytic/Displacement/GoldenDisplacementComplexEulerProduct.o5_beta_eq_substitution_start_sub_conjugate
+    target_statement_id: sha256:c3daba2d466fe5784f5261d09ca74231a17a3ddbaab7f5a9c649c3ba4ac2b46c
+receipts:
+  unresolved_subitems: []

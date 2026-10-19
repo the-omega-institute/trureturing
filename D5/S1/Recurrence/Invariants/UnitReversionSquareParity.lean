@@ -6,15 +6,14 @@
    utility: none
    digest: A contracting integer series and a lacunary mod-two fixed point prove A373312. -/
 
-/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19022 -/
-/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19133 -/
-/- Helper proof_shape and consumers (in HannaSquareCompositionModFour):
-   agree_iff: bind-only; consumer: step_agree.
-   agree_X: bind-only; consumer: argument_agree.
-   subst_inner_agree: bind-only; consumer: denominator_agree.
-   subst_outer_agree: bind-only; consumer: denominator_agree.
-   subst_constant: bind-only; consumer: denominator_zero.
-   escape_witness: none. -/
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19022
+Published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
+
+/- Escape audit unfinished for these published suppliers: https://github.com/the-omega-institute/trureturing/issues/19133
+proof_shape: agree_iff: bind-only; consumer: D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result (via its live helper chain).
+proof_shape: subst_inner_agree: bind-only; consumer: D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result (via its live helper chain).
+proof_shape: subst_constant: bind-only; consumer: D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result (via its live helper chain).
+-/
 
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
@@ -33,7 +32,7 @@ theorem agree_iff (d : ℕ) (f g : PowerSeries R) :
     Agree d f g ↔ (X : PowerSeries R) ^ d ∣ f - g := by
   simp [Agree, X_pow_dvd_iff, map_sub, sub_eq_zero]
 
-private theorem agree_mono {d e : ℕ} {f g : PowerSeries R}
+theorem agree_mono {d e : ℕ} {f g : PowerSeries R}
     (h : Agree d f g) (he : e ≤ d) : Agree e f g :=
   fun n hn => h n (lt_of_lt_of_le hn he)
 

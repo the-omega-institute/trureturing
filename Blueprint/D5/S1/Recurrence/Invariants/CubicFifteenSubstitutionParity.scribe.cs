@@ -9,6 +9,8 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
     private const string Prefix = "D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Arith/hanna2026a392525");
+    private static readonly LibraryNoteRef FrobeniusSource =
+        LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathlib2026powerseriesfrobenius");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The coefficients of OEIS A392525 are odd exactly at powers of two.",
@@ -28,10 +30,9 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
                 + "function, and choose selects a witness of the displayed proved "
                 + "existential proposition. The auxiliary series has coefficients in "
                 + "ZMod(2); generatingSeries and a have integer coefficients.")),
-            Node("prime_power_subst", "Frobenius as substitution", PrimePowerFormula(),
-                "Here subst(X to the power p,f) means f(X to the power p). For a prime p, raising a series over ZMod(p) to the power p equals that substitution."),
-            Node("power_two_zero", "The power-of-two series has zero constant coefficient", PowerTwoZeroFormula(),
-                "Zero is not a power of two, so the constant coefficient of powerTwoSeries vanishes."),
+            Node("prime_power_subst", "Frobenius as monomial substitution", PrimePowerFormula(),
+                "For any prime p, raising a series over ZMod(p) to p equals substitution of X to the power p. PowerSeries.subst takes the inner series as its first argument.",
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(FrobeniusSource)),
             Node("powerTwoSeries", "The power-of-two series", PowerTwoFormula(),
                 "Coefficient n is one in ZMod(2) precisely when n is a power of two, "
                 + "and is zero otherwise. In particular the constant coefficient is "
@@ -44,6 +45,8 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
                 + "u and v with zero constant coefficients satisfy "
                 + "(u-v)(1+u+v)=0. The second factor has constant coefficient one, "
                 + "so absence of zero divisors forces u=v. Here C denotes powerTwoSeries."),
+            Node("power_two_zero", "The power-of-two series has zero constant coefficient", PowerTwoZeroFormula(),
+                "Zero is not a power of two, so the constant coefficient of powerTwoSeries vanishes."),
             Node("generatingSeries", "The normalized integer solution", GeneratingFormula(),
                 "Starting from X, correct coefficient n by the negative of the "
                 + "degree-(n+2) residual coefficient divided by three using integer "
@@ -85,6 +88,12 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
         Describe.Lean(DescribeId.Create("a392525-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, claim);
+
+    private static Formula PrimePowerFormula() => Disp(Seq(Bound("p", Naturals()),
+        OpenBracket, Call("Fact", new Formula.Apply(Seq(Named("Nat"), Dot, Named("Prime")), [F.Id("p")])), CloseBracket, Comma, Sp,
+        Bound("f", Series(Call("ZMod", F.Id("p")))),
+        Equal(Power(F.Id("f"), F.Id("p")), new Formula.Apply(
+            Seq(Named("PowerSeries"), Dot, Named("subst")), [Power(X(), F.Id("p")), F.Id("f")]))));
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
@@ -147,15 +156,6 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
         Implication(Seq(D(1), Sp, Le, Sp, F.Id("n")),
             Parenthesized(Seq(Call("Odd", Call("a", F.Id("n"))), Sp, Iff, Sp,
                 Parenthesized(IsPowerTwo(F.Id("n"))))))));
-    private static Formula PrimePowerFormula()
-    {
-        Formula p = F.Id("p"), f = F.Id("f");
-        Formula prime = Seq(Operatorname, Grp(Seq(F.Id("Nat"), Dot, F.Id("Prime"))));
-        return Disp(Seq(Bound("p", Naturals()), OpenBracket,
-            Call("Fact", new Formula.Apply(prime, [p])), CloseBracket, Sp,
-            Bound("f", Series(Call("ZMod", p))),
-            Equal(Power(f, p), Call("subst", Power(X(), p), f))));
-    }
     private static Formula PowerTwoZeroFormula() =>
         Disp(Equal(Call("constantCoeff", PowerTwo()), D(0)));
 
