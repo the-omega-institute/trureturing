@@ -39,6 +39,8 @@ run_elab do
     (← `(∀ n : Nat, ramp n = n+n+n)) true
   probe "neutral packing" (← `(∀ n : Nat, ramp n = 3*n ∧ 0≤n))
     (← `(∀ n : Nat, ramp n = n+n+n)) true
+  probe "neutral True packing" (← `(∀ n : Nat, 0 < n+1 ∧ True))
+    (← `(∀ n : Nat, 0 ≤ n)) true
   probe "opaque projection inclusion" (← `(∀ n : Nat, ramp n = 3*n))
     (← `(∀ n : Nat, ramp n = 3*n ∧ n % 2 = 0)) true
   probe "projection inclusion" (← `(∀ P Q : Prop, P))

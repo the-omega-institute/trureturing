@@ -385,7 +385,7 @@ private def onePremise (target : Expr) (source? : Option Expr) : MetaM (Option E
     let goal ← mkFreshExprMVar type
     let goals ← (Term.withoutErrToSorry <| Tactic.run goal.mvarId! do
       if source?.isSome then evalTactic (← `(tactic| intro _presentationPremise))
-      evalTactic (← `(tactic| first | assumption | rfl | omega))).run'
+      evalTactic (← `(tactic| first | assumption | rfl | exact True.intro | omega))).run'
     if goals.isEmpty then return some (← instantiateMVars goal)
   catch ex =>
     if ex.isRuntime || ex.isInterrupt || ex.isMaxHeartbeat then throw ex
