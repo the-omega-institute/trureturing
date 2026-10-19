@@ -36,7 +36,7 @@ variable {n : ℕ}
 def resolvent (s : ℝ) (X : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   (s • 1 - X)⁻¹
 
-private theorem inverse_antitone {P Q : Matrix (Fin n) (Fin n) ℂ}
+theorem inverse_antitone {P Q : Matrix (Fin n) (Fin n) ℂ}
     (hP : P.PosDef) (hQ : Q.PosDef) (h : P ≤ Q) : Q⁻¹ ≤ P⁻¹ := by
   simpa only [Matrix.nonsing_inv_eq_ringInverse] using
     CStarAlgebra.antitoneOn_ringInverse hP.isStrictlyPositive hQ.isStrictlyPositive h

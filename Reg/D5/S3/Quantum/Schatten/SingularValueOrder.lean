@@ -297,5 +297,106 @@ def registration :
   familyRecord := none
   options := #[] }
 end Adjoint
+namespace EigenvalueOrder
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} {H K : Matrix (Fin n) (Fin n) ℂ}
+    (hH : H.IsHermitian) (hK : K.IsHermitian), (K-H).PosSemidef →
+    ∀ i : Fin (Fintype.card (Fin n)), R.readout () () (hH.eigenvalues₀ i) (hK.eigenvalues₀ i)
+private theorem rejectedLaw : ¬ arena.Law rejected := by
+  intro h
+  exact h (n := 1) (H := 0) (K := 0) Matrix.isHermitian_zero Matrix.isHermitian_zero
+    (by simpa using (PosSemidef.zero : (0 : Matrix (Fin 1) (Fin 1) ℂ).PosSemidef))
+    ⟨0, by simp⟩
+def family : Registration arena (type_of% (@eigenvalues_zero_mono)) where
+  actual := orderActual
+  bridge := Iff.rfl
+  variation := ⟨@eigenvalues_zero_mono, rejected, rejectedLaw⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law orderActual rejected rejectedLaw
+  dependence := order_dependence
+def audit :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@eigenvalues_zero_mono) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Schatten.eigenvalues_zero_mono.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Schatten.SingularValueOrder.EigenvalueOrder.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Schatten.SingularValueOrder
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end EigenvalueOrder
+
+namespace EigenvalueScale
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) (hH : H.IsHermitian)
+    (q : ℝ), 0 ≤ q → ∀ (hQ : ((q : ℂ) • H).IsHermitian)
+    (i : Fin (Fintype.card (Fin n))), R.readout () () (hQ.eigenvalues₀ i) (q*hH.eigenvalues₀ i)
+private theorem rejectedLaw : ¬ arena.Law rejected := by
+  intro h
+  exact h (n := 1) 0 Matrix.isHermitian_zero 0 le_rfl (by simp) ⟨0, by simp⟩
+def family : Registration arena (type_of% (@eigenvalues_zero_smul)) where
+  actual := equalityActual
+  bridge := Iff.rfl
+  variation := ⟨@eigenvalues_zero_smul, rejected, rejectedLaw⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law equalityActual rejected rejectedLaw
+  dependence := equality_dependence
+def audit :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@eigenvalues_zero_smul) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Schatten.eigenvalues_zero_smul.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Schatten.SingularValueOrder.EigenvalueScale.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Schatten.SingularValueOrder
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end EigenvalueScale
 end
 end Reg.D5.S3.Quantum.Schatten.SingularValueOrder
