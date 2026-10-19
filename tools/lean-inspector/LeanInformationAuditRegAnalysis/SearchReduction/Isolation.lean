@@ -1,4 +1,5 @@
-import LeanInformationAuditRegAnalysis.SearchReduction.Presentation
+import LeanInformationAuditRegAnalysis.SearchReduction.Vocabulary
+import LeanInformationAuditRegAnalysis.SearchReduction.Catalog
 
 /-! Compiled-environment isolation and immutable baseline provenance. -/
 
@@ -26,26 +27,6 @@ private def checkedSource (source : Environment) (n : Name) : MetaM ConstantInfo
   unless standardAxioms xs do throwError "search.axioms_outside_standard: {n}: {xs}"
   return info
 
-/-- Only vocabulary definitions can be copied to the baseline. A proof-valued
-constant, even private or an instance hidden under data, rejects isolation. -/
-partial def copyVocabulary (source : Environment) (n : Name)
-    (visiting : NameSet := {}) : MetaM Unit := do
-  if (← getEnv).contains n then return
-  if visiting.contains n then throwError "search.unsupported_mutual_vocabulary: {n}"
-  let info ← checkedSource source n
-  if ← withEnv source (isProp info.type) then
-    throwError "search.hidden_proof_dependency: {n}"
-  let .defnInfo value := info
-    | throwError "search.unsupported_vocabulary_kind: {n}"
-  unless value.safety == .safe do throwError "search.unsafe_vocabulary: {n}"
-  discard <| withEnv source <| Meta.transform value.value (pre := fun e => do
-    if ← isProof e then throwError "search.proof_embedded_in_vocabulary: {n}"
-    return .continue)
-  for dep in info.getUsedConstantsAsSet do
-    copyVocabulary source dep (visiting.insert n)
-  addDecl (.defnDecl value)
-  setReducibilityStatus n .reducible
-
 /-- S may not contain T, its supported full-statement aliases, or a dependency
 on either. Conjunction packaging is inspected before the structure is copied. -/
 partial def copyStructure (source : Environment) (target : Name) (targetType : Expr)
@@ -67,7 +48,7 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
     if ← withEnv source (isProp depInfo.type) then
       copyStructure source target targetType dep index (visiting.insert n)
     else
-      copyVocabulary source dep
+      throwError "search.structure_vocabulary_not_reconstructed: {dep}"
   match info with
   | .thmInfo value => addDecl (.thmDecl value)
   | .defnInfo value => addDecl (.defnDecl value)
@@ -118,6 +99,29 @@ private partial def structureTypes (source : Environment) (n : Name)
       result := result ++ (← structureTypes source dep (seen.insert n))
   return result
 
+/-- Rebuild proof dependencies' computational vocabulary before installing any
+S certificate. Thus obligation searches never see an earlier author theorem. -/
+private partial def structureVocabulary (ctx : TransportContext) (n : Name)
+    (seen : NameSet := {}) : MetaM Unit := do
+  if seen.contains n || (← getEnv).contains n then return
+  if ctx.forbidden.contains n && n == ctx.target then
+    throwError "search.target_leak: {n}"
+  let info ← checkedSource ctx.source n
+  if ← withEnv ctx.source (isProp info.type) then
+    for dep in info.getUsedConstantsAsSet do
+      structureVocabulary ctx dep (seen.insert n)
+  else
+    transportVocabulary ctx n
+
+private def checkVocabularyClean (source base : Environment) : MetaM Unit := do
+  for (n, _) in (← getEnv).constants.toList do
+    if base.contains n then continue
+    if let some info := (source.setExporting false).find? n then
+      -- A regenerated projection is a logical accessor, not an author body.
+      if (projectionShape info).isSome then continue
+      if ← withEnv source (isProp info.type) then
+        throwError "search.author_proof_in_common_vocabulary: {n}"
+
 /-- Presentation units account for and report their own work. Only that work
 is excluded from the enclosing isolation allocation; all other isolation work
 retains the original cumulative command limit. -/
@@ -140,28 +144,58 @@ private def prepareAdditions (source base : Environment) (index : FactIndex) :
       return (types, used + remainingUsed)
 
 private def prepare (source base : Environment) (request : Request)
-    (paired : Bool) : IO (Except (Failure × String) (Environment × ConstantInfo)) := do
-  let work : CoreM (Environment × ConstantInfo) := MetaM.run' do
+    (paired : Bool) : IO (Except (Failure × String) (Environment × ConstantInfo × Option Attempt)) := do
+  let work : CoreM (Environment × ConstantInfo × Option Attempt) := MetaM.run' do
     let target ← checkedSource source request.target
     unless ← withEnv source (isProp target.type) do
       throwError "search.target_not_proposition: {request.target}"
-    for dep in target.type.getUsedConstants do copyVocabulary source dep
-    if paired then
-      let index ← factIndex
-      let (types, used) ← prepareAdditions source base index request.additions.toList #[]
-      -- Continue with the same allocation consumed by nonpresentation work.
-      -- prepareAdditions adjusts only its recursive continuation's reader.
-      withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
-        for type in types do
-          for dep in type.getUsedConstants do copyVocabulary source dep
-        if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
-        for n in request.additions do
-          copyStructure source request.target target.type n index
-    return (← getEnv, target)
+    let forbidden := request.additions.foldl (fun ns n => ns.insert n) (({} : NameSet).insert request.target)
+    let certificates ← IO.mkRef #[]
+    let searchHeartbeats ← IO.mkRef 0
+    let budgetStart ← IO.getNumHeartbeats
+    let transport : TransportContext := {
+      source, target := request.target, targetType := target.type, forbidden,
+      certificates? := some certificates, budgetStart, searchHeartbeats? := some searchHeartbeats}
+    for dep in target.type.getUsedConstants do transportVocabulary transport dep
+    -- Both arms receive exactly the vocabulary of T and all registered S types.
+    for n in request.additions do
+      if let some info := (source.setExporting false).find? n then
+        for dep in info.type.getUsedConstants do transportVocabulary transport dep
+    checkVocabularyClean source base
+    let excluded ← searchHeartbeats.get
+    withTheReader Core.Context (fun reader =>
+        {reader with initHeartbeats := reader.initHeartbeats + excluded}) do
+      if paired then
+        let index ← factIndex
+        let (types, used) ← prepareAdditions source base index request.additions.toList #[]
+        -- Continue with the same allocation consumed by nonpresentation work.
+        -- prepareAdditions adjusts only its recursive continuation's reader.
+        withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
+          for type in types do
+            for dep in type.getUsedConstants do transportVocabulary transport dep
+          for n in request.additions do structureVocabulary transport n
+          checkVocabularyClean source base
+          let extraSearch := (← searchHeartbeats.get) - excluded
+          withTheReader Core.Context (fun ctx =>
+              {ctx with initHeartbeats := ctx.initHeartbeats + extraSearch}) do
+            if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
+            for n in request.additions do
+              copyStructure source request.target target.type n index
+      let mut targetCertificate := none
+      for certificate in ← certificates.get do
+        if let some conversion ← singleSourceConversion target.type certificate.type then
+          let proof := mkApp conversion certificate.proof
+          let beforeCheck ← getEnv
+          let axioms ← checkProof (← mkFreshUserName `_vocabularyTarget) target.levelParams target.type proof
+          setEnv beforeCheck
+          targetCertificate := some {
+            strategy := "vocabulary/target-certificate",
+            outcome := .found, proof? := some proof, axioms}
+      return (← getEnv, target, targetCertificate)
   try
     let context : Core.Context := {
       fileName := "<R_v1 isolation>", fileMap := default, options := options,
-      initHeartbeats := ← IO.getNumHeartbeats }
+      initHeartbeats := ← IO.getNumHeartbeats, maxHeartbeats := reconstructionBudget * 1000 }
     match ← (work.run context {env := base}).toIO' with
     | .ok (value, state) =>
       if state.messages.hasErrors then return .error (.execution, "search.isolation_errors")
@@ -219,7 +253,7 @@ def checkBaseline (request : Request) (base : Environment) : IO (Except String U
         return .error s!"search.baseline_source_mismatch: {module}"
   return .ok ()
 
-unsafe def run (source : Environment) (request : Request) : IO Observation := do
+private unsafe def runCore (source : Environment) (request : Request) : IO Observation := do
   let unknown (reason : String) (failure := LeanInformationAudit.Tests.SearchReduction.Failure.isolation) : Observation := {
     target := request.target, base := .incomplete failure,
     paired := .incomplete failure, verdict := .insufficient, reason }
@@ -229,9 +263,7 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
     -- Attributes, instances, macros, simp sets and theorem indexes all come
     -- from B. No extension state from source is merged into these imports.
     enableInitializersExecution
-    let mathlib ← importModules #[{module := `Mathlib}] options 0
-      (leakEnv := true) (loadExts := true)
-    let hints ← strategies mathlib
+    let hints ← referenceHints
     enableInitializersExecution
     let base ← importModules (#[{module := `Mathlib}] ++
       request.baseline.map (fun n => {module := n})) options 0
@@ -239,12 +271,14 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
     if let .error reason ← checkBaseline request base then return unknown reason
     if hints.isEmpty then return unknown "search.missing_registered_strategies"
     let prepared ← prepare source base request false
-    let .ok (clean, target) := prepared
+    let .ok (clean, target, vocabularyTarget) := prepared
       | let (failure, reason) := match prepared with
           | .error failure => failure | _ => (.isolation, "search.isolation_failed")
         return unknown reason failure
     if clean.contains request.target then return unknown "search.target_already_in_baseline"
-    let (baseRun, attempts, index?) ← searchIndexed clean target.levelParams target.type #[] hints
+    let (searched, searchedAttempts, index?) ← searchIndexed clean target.levelParams target.type #[] hints
+    let baseRun := if vocabularyTarget.isSome then .found else searched
+    let attempts := searchedAttempts ++ vocabularyTarget.toArray
     let (presentation, presentationEvidence?, presentationDetail) ←
       baselinePresentation clean target.levelParams target.type index?
     let observed : Observation := {
@@ -264,8 +298,8 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
         return { (unknown s!"search.missing_structure: {n}" .missing) with
           base := baseRun, attempts, targetChecked := true,
           presentation, presentationEvidence?, presentationDetail }
-    let preparedS ← prepare source base request true
-    let .ok (pairedEnv, _) := preparedS
+    let preparedS ← prepare source clean request true
+    let .ok (pairedEnv, _, _) := preparedS
       | let (failure, reason) := match preparedS with
           | .error failure => failure | _ => (.isolation, "search.structure_isolation_failed")
         return { (unknown reason failure) with
@@ -279,5 +313,39 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
       presentation, presentationEvidence?, presentationDetail,
       reason := if pairRun == .exhausted then "search.structure_insufficient_to_close" else ""}
   catch ex => return unknown s!"search.execution: {ex}" .execution
+
+/-- Every actual reading carries a mechanically checked load/catalog scope.
+A certificate from a sub-base is valid over B0; finite misses remain local. -/
+unsafe def run (source : Environment) (request : Request) : IO Observation := do
+  try
+    enableInitializersExecution
+    let base ← importModules (#[{module := `Mathlib}] ++
+      request.baseline.map (fun n => {module := n})) options 0
+      (leakEnv := true) (loadExts := true)
+    let mut delivery := #[]
+    for n in #[request.target] ++ request.additions do
+      if let some index := source.getModuleIdxFor? n then
+        delivery := delivery.push source.header.moduleNames[index.toNat]!
+    let catalog ← baselineCatalog request.baselineCommit delivery base
+    let result ← runCore source request
+    let mut used := #[]
+    for row in result.pairAttempts do
+      if let some proof := row.proof? then
+        used := request.additions.filter (proof.getUsedConstants.contains ·)
+    if result.verdict == .nonBindOnly && used.isEmpty then
+      return {result with
+        verdict := .insufficient, paired := .incomplete .isolation,
+        reason := "search.paired_proof_does_not_use_structure", catalogCount := catalog.eligible.size,
+        loadedModules := catalog.loaded, catalogExcluded := catalog.excluded,
+        scope := catalog.scope, catalogVerified := true}
+    return {result with
+      catalogCount := catalog.eligible.size, loadedModules := catalog.loaded,
+      catalogExcluded := catalog.excluded, scope := catalog.scope, catalogVerified := true,
+      pairedStructureUse := used}
+  catch ex =>
+    return {
+      target := request.target, verdict := .insufficient, base := .incomplete .isolation,
+      paired := .incomplete .isolation, presentation := .incomplete .isolation,
+      presentationEvidence? := none, reason := s!"search.catalog_incomplete: {ex}"}
 
 end LeanInformationAudit.SearchReduction

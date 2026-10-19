@@ -42,6 +42,13 @@ structure Observation where
   presentationEvidence? : Option PresentationEvidence := none
   presentationDetail : String := ""
   reason : String := ""
+  configuration : String := "R_v1/prefix-reconstruction-v1/200000"
+  catalogCount : Nat := 0
+  loadedModules : Array Name := #[]
+  catalogExcluded : Array Name := #[]
+  scope : String := "unverified"
+  catalogVerified : Bool := false
+  pairedStructureUse : Array Name := #[]
   targetChecked : Bool := false
   structureChecked : Bool := false
   structureClean : Bool := false

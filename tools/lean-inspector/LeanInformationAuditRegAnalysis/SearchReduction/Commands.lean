@@ -27,9 +27,14 @@ private def attemptJson (a : Attempt) : Json := Json.mkObj [
 
 /-- A human-readable projection. No code reads it back for classification. -/
 def observationJson (r : Observation) (baselineCommit : String := "") : Json := Json.mkObj [
-  ("reference", toJson "R_v1"), ("baseline_commit", toJson baselineCommit),
+  ("reference", toJson "R_v1"), ("configuration", toJson r.configuration),
+  ("scope", toJson r.scope), ("B_load_count", toJson r.loadedModules.size),
+  ("B0_count", toJson r.catalogCount), ("B_load_subset_B0", toJson r.catalogVerified),
+  ("B_load", toJson (r.loadedModules.map Name.toString)),
+  ("B0_excluded", toJson (r.catalogExcluded.map Name.toString)),
+  ("paired_structure_use", toJson (r.pairedStructureUse.map Name.toString)), ("baseline_commit", toJson baselineCommit),
   ("mathlib", toJson mathlibRevision), ("maxHeartbeats", toJson budget),
-  ("target", toJson r.target.toString), ("verdict", toJson (verdictName r.verdict)),
+  ("target", toJson r.target.toString), ("verdict", toJson (if r.verdict == .nonBindOnly then s!"non-bind-only[R_v1; {r.scope}]" else verdictName r.verdict)),
   ("baseline", runJson r.base), ("paired", runJson r.paired),
   ("presentation", runJson r.presentation),
   ("presentation_source", toJson (r.presentationEvidence?.map (·.source.toString))),
@@ -63,13 +68,14 @@ private partial def exportConstant (source : Environment) (target n : Name) : Me
   if (← getEnv).contains n then return
   let some info := (source.setExporting false).find? n
     | throwError "search.missing_export_dependency: {n}"
-  for dep in info.getUsedConstantsAsSet do exportConstant source target dep
+  if (projectionShape info).isSome then
+    transportVocabulary {source, target} n
+    return
   match info with
-  | .thmInfo value => discard <| checkProof n value.levelParams value.type value.value
-  | .defnInfo value =>
-    unless value.safety == .safe do throwError "search.unsafe_export_dependency: {n}"
-    addAndCompile (.defnDecl value)
-  | _ => throwError "search.unsupported_export_dependency: {n}"
+  | .thmInfo value =>
+    for dep in info.getUsedConstantsAsSet do exportConstant source target dep
+    discard <| checkProof n value.levelParams value.type value.value
+  | _ => transportVocabulary {source, target} n
 
 /-- The typed result is computed by the same compiled classifier as A1. -/
 def publish (name : Name) (r : Observation) (source? : Option Environment := none) : MetaM Unit := do
@@ -85,6 +91,20 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
   addAndCompile (.defnDecl {
     name := name ++ `reason, levelParams := [], type := mkConst ``String,
     value := toExpr r.reason, hints := .abbrev, safety := .safe })
+  for (label, value) in #[(`scope, toExpr r.scope), (`configuration, toExpr r.configuration)] do
+    addAndCompile (.defnDecl {
+      name := name ++ label, levelParams := [],
+      type := mkConst ``String, value, hints := .abbrev, safety := .safe})
+  for (label, value) in #[(`loadedCount, r.loadedModules.size), (`catalogCount, r.catalogCount)] do
+    addAndCompile (.defnDecl {
+      name := name ++ label, levelParams := [],
+      type := mkConst ``Nat, value := toExpr value, hints := .abbrev, safety := .safe})
+  for (label, value) in #[(`loadedModules, toExpr r.loadedModules),
+      (`catalogExcluded, toExpr r.catalogExcluded), (`pairedStructureUse, toExpr r.pairedStructureUse),
+      (`catalogVerified, toExpr r.catalogVerified)] do
+    addAndCompile (.defnDecl {
+      name := name ++ label, levelParams := [], type := ← inferType value,
+      value, hints := .abbrev, safety := .safe})
   if let some evidence := r.presentationEvidence? then
     addAndCompile (.defnDecl {
       name := name ++ `presentationSource, levelParams := [], type := mkConst ``Name,
@@ -148,25 +168,71 @@ syntax (name := searchReductionProbeCmd) "#search_reduction_probe " ident " at "
   " baseline " "[" ident,* "]" " using " "[" ident,* "]"
   " from " "[" ident,* "]" " as " ident : command
 
+/-- Name ASTs cross the process boundary in a Lean module's binary expression
+payload. Numeric segments never pass through identifier syntax or text parsing. -/
+private def writeRequest (path : System.FilePath) (request : Request)
+    (owners : Array Name) (result : Name) : CommandElabM Unit := do
+  let env ← importModules #[{module := `Lean}] options 0
+    (leakEnv := true) (loadExts := false)
+  let env ← liftTermElabM <| withEnv (env.setMainModule `SearchReductionRequest) do
+    for (name, value) in #[(`target, toExpr request.target),
+        (`baseline, toExpr request.baseline), (`additions, toExpr request.additions),
+        (`owners, toExpr owners), (`result, toExpr result), (`commit, toExpr request.baselineCommit)] do
+      let type ← inferType value
+      addDecl (.defnDecl {
+        name, levelParams := [], type, value, hints := .abbrev, safety := .safe})
+    getEnv
+  writeModule env path (writeIR := false)
+
+unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) : CommandElabM Unit := do
+  let source ← importModules (owners.map fun n => {module := n})
+    options 0 (leakEnv := true) (loadExts := false)
+  let result ← run source request
+  liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
+    if result.verdict == .nonBindOnly then
+      -- Construct syntax identifiers directly from the exact Name AST.
+      let target := mkIdent request.target
+      let sha := Syntax.mkStrLit request.baselineCommit
+      let bs := request.baseline.map mkIdent
+      let os := owners.map mkIdent
+      let guardType := mkConst ``True
+      let guardProof ← synthesizeUsingTactic' (u := .zero) guardType (← `(tactic|
+          (fail_if_success (reference_baseline $target at $sha baseline [$bs,*] from [$os,*]))
+          <;> exact True.intro))
+      discard <| checkProof (name ++ `baselineFailureGuard) [] guardType guardProof
+    publish name result (some source)
+  logInfo (observationJson result request.baselineCommit).compress
+
+/-- Only closed, kernel-checked Name/array/string expression values are read.
+No result JSON or source proof is used to construct the request. -/
+unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
+  let (data, region) ← readModuleData path
+  probeRegions.modify (·.push region)
+  let requestData ← liftTermElabM do
+    let getValue := fun name => do
+      let some (.defnInfo info) := data.constants.find? (·.name == name)
+        | throwError "search.request_data_missing: {name}"
+      pure info.value
+    let target ← evalExpr Name (mkConst ``Name) (← getValue `target)
+    let bs ← evalExpr (Array Name) (mkApp (mkConst ``Array [.zero]) (mkConst ``Name))
+      (← getValue `baseline)
+    let additions ← evalExpr (Array Name) (mkApp (mkConst ``Array [.zero]) (mkConst ``Name))
+      (← getValue `additions)
+    let owners ← evalExpr (Array Name) (mkApp (mkConst ``Array [.zero]) (mkConst ``Name))
+      (← getValue `owners)
+    let name ← evalExpr Name (mkConst ``Name) (← getValue `result)
+    let commit ← evalExpr String (mkConst ``String) (← getValue `commit)
+    pure ({target, «baseline» := bs, additions, baselineCommit := commit : Request}, owners, name)
+  executeProbe requestData.1 requestData.2.1 requestData.2.2
+
 @[command_elab searchReductionProbeCmd] unsafe def elabSearchReductionProbe : CommandElab := fun stx => do
   match stx with
   | `(#search_reduction_probe $target:ident at $sha:str baseline [$bs:ident,*]
       using [$ss:ident,*] from [$owners:ident,*] as $name:ident) =>
-    let source ← importModules (owners.getElems.map fun n => {module := n.getId})
-      options 0 (leakEnv := true) (loadExts := false)
-    let result ← run source {
-      target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
-      additions := ss.getElems.map (fun x => x.getId), baselineCommit := sha.getString}
-    liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
-      if result.verdict == .nonBindOnly then
-        let guardType := mkConst ``True
-        let guardProof ← synthesizeUsingTactic' (u := .zero) guardType (← `(tactic|
-            (fail_if_success (reference_baseline $target at $sha baseline [$bs,*]
-              from [$owners,*]))
-            <;> exact True.intro))
-        discard <| checkProof (name.getId ++ `baselineFailureGuard) [] guardType guardProof
-      publish name.getId result (some source)
-    logInfo (observationJson result sha.getString).compress
+    executeProbe {
+      target := target.getId, «baseline» := bs.getElems.map (·.getId),
+      additions := ss.getElems.map (·.getId), baselineCommit := sha.getString}
+      (owners.getElems.map (·.getId)) name.getId
   | _ => throwUnsupportedSyntax
 
 syntax (name := searchReductionCmd) "#search_reduction " ident " at " str
@@ -180,20 +246,22 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let source ← getEnv
     for module in bs.getElems do
       unless source.header.moduleNames.contains module.getId do
-        liftTermElabM <| publish name.getId {
+        let failed : Observation := {
           target := target.getId, base := .incomplete .missing, paired := .incomplete .missing,
           verdict := .insufficient, reason := s!"search.baseline_owner_not_imported: {module.getId}" }
-        logInfo s!"search.baseline_owner_not_imported: {module.getId}"
+        liftTermElabM <| publish name.getId failed
+        logInfo (observationJson failed sha.getString).compress
         return
     let mut modules := #[`LeanInformationAuditRegAnalysis.SearchReduction.Commands] ++
       bs.getElems.map (fun x => x.getId)
     for n in #[target.getId] ++ ss.getElems.map (fun x => x.getId) do
       if n != target.getId && (source.getModuleIdxFor? n).isNone then continue
       let some idx := source.getModuleIdxFor? n
-        | liftTermElabM <| publish name.getId {
+        | let failed : Observation := {
             target := target.getId, base := .incomplete .missing, paired := .incomplete .missing,
             verdict := .insufficient, reason := s!"search.missing_compiled_owner: {n}" }
-          logInfo s!"search.missing_compiled_owner: {n}"
+          liftTermElabM <| publish name.getId failed
+          logInfo (observationJson failed sha.getString).compress
           return
       let owner := source.header.moduleNames[idx.toNat]!
       unless modules.contains owner do modules := modules.push owner
@@ -209,11 +277,11 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let output := directory / (moduleName ++ ".olean")
     let imports := String.join ((#[`LeanInformationAuditRegAnalysis.SearchReduction.Commands] ++
       bs.getElems.map (fun n => n.getId)).toList.map fun n => s!"import {n}\n")
-    let baselineModulesText := String.intercalate ", " (bs.getElems.toList.map fun n => n.getId.toString)
-    let additions := String.intercalate ", " (ss.getElems.toList.map fun n => n.getId.toString)
-    let owners := String.intercalate ", " (modules.toList.map Name.toString)
-    let command := s!"#search_reduction_probe {target.getId} at {repr sha.getString} \
-      baseline [{baselineModulesText}] using [{additions}] from [{owners}] as {name.getId}\n"
+    let payload := directory / "request.olean"
+    writeRequest payload {
+      target := target.getId, «baseline» := bs.getElems.map (·.getId),
+      additions := ss.getElems.map (·.getId), baselineCommit := sha.getString} modules name.getId
+    let command := s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr payload.toString}\n"
     IO.FS.writeFile input (imports ++ command)
     let child ← IO.Process.output {
       cmd := "lean", args := #["-j1", "--root=" ++ directory.toString,
@@ -232,7 +300,10 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     probeRegions.modify (·.push region)
     liftTermElabM do
       for n in #[name.getId ++ `baseline, name.getId ++ `paired, name.getId ++ `reason,
-          name.getId ++ `presentation, name.getId ++ `presentationSource,
+          name.getId ++ `presentation, name.getId ++ `scope, name.getId ++ `configuration,
+          name.getId ++ `loadedCount, name.getId ++ `catalogCount, name.getId ++ `loadedModules,
+          name.getId ++ `catalogExcluded, name.getId ++ `pairedStructureUse,
+          name.getId ++ `catalogVerified, name.getId ++ `presentationSource,
           name.getId ++ `presentationConversion, name.getId ++ `presentationProof, name.getId,
           name.getId ++ `baselineProof, name.getId ++ `pairedProof,
           name.getId ++ `baselineFailureGuard] do
@@ -242,6 +313,18 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
         | _ => pure ()
   | _ => throwUnsupportedSyntax
 
+syntax (name := searchReductionCatalogCmd) "#search_reduction_catalog " str : command
+@[command_elab searchReductionCatalogCmd] unsafe def elabSearchReductionCatalog : CommandElab := fun stx => do
+  let `(#search_reduction_catalog $sha:str) := stx | throwUnsupportedSyntax
+  enableInitializersExecution
+  let base ← importModules #[{module := `Mathlib}] options 0
+    (leakEnv := true) (loadExts := true)
+  let catalog ← baselineCatalog sha.getString #[] base
+  logInfo (Json.mkObj [
+    ("baseline_commit", toJson sha.getString), ("unit", toJson "frozen-D5-module"),
+    ("frozen_modules", toJson (catalog.frozen.map Name.toString)),
+    ("B0_count", toJson catalog.eligible.size)]).compress
+
 syntax (name := searchReductionConfigCmd) "#search_reduction_config" : command
 @[command_elab searchReductionConfigCmd] unsafe def elabSearchReductionConfig : CommandElab := fun _ => do
   enableInitializersExecution
@@ -249,6 +332,8 @@ syntax (name := searchReductionConfigCmd) "#search_reduction_config" : command
     (leakEnv := true) (loadExts := true)
   let hints ← strategies env
   logInfo (Json.mkObj [("version", toJson "R_v1"), ("maxHeartbeats", toJson budget),
+    ("transport", toJson transportVersion), ("reconstructionMaxHeartbeats", toJson reconstructionBudget),
+    ("configuration", toJson "R_v1/prefix-reconstruction-v1/200000"),
     ("lean", toJson Lean.versionString), ("mathlib", toJson mathlibRevision),
     ("options", Json.mkObj [("maxRecDepth", toJson (1000 : Nat)),
       ("Elab.async", toJson false)]),
