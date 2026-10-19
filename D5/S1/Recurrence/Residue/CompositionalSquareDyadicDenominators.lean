@@ -6,6 +6,8 @@
    utility: none
    digest: Even integral rescaling and triangular composition prove Scheuerle A381670. -/
 
+-- Escape audit unfinished for published theorems: https://github.com/the-omega-institute/trureturing/issues/19129.
+
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Tactic.LinearCombination
@@ -35,7 +37,7 @@ open PowerSeries
 namespace D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators
 variable {R : Type*} [CommRing R]
 
-private def Agree (d : ℕ) (f g : PowerSeries R) : Prop :=
+def Agree (d : ℕ) (f g : PowerSeries R) : Prop :=
   ∀ n < d, coeff n f = coeff n g
 
 private theorem agree_iff (d : ℕ) (f g : PowerSeries R) :
@@ -51,7 +53,7 @@ private theorem pow_low {f : PowerSeries R} (hf : constantCoeff f = 0)
     {n k : ℕ} (hn : n < k) : coeff n (f ^ k) = 0 :=
   X_pow_dvd_iff.mp (pow_dvd_pow_of_dvd (X_dvd_iff.mpr hf) k) n hn
 
-private theorem agree_subst {d : ℕ} {f g u v : PowerSeries R}
+theorem agree_subst {d : ℕ} {f g u v : PowerSeries R}
     (hu : constantCoeff u = 0) (hv : constantCoeff v = 0)
     (ho : Agree d f g) (hi : Agree d u v) : Agree d (f.subst u) (g.subst v) := by
   intro n hn
@@ -121,7 +123,7 @@ private theorem subst_outer_top {d : ℕ} {f g v : PowerSeries R}
     · rw [pow_low hv (by omega : d < k)]; simp
 
 /-- The responsive coefficient has multiplier two, independently of its degree. -/
-private theorem composition_top {d : ℕ} {f g : PowerSeries R}
+theorem composition_top {d : ℕ} {f g : PowerSeries R}
     (hf : constantCoeff f = 0) (hg : constantCoeff g = 0)
     (hf1 : coeff 1 f = 1) (hg1 : coeff 1 g = 1) (h : Agree d f g) :
     coeff d (f.subst f) - coeff d (g.subst g) = 2 * (coeff d f - coeff d g) := by
@@ -129,7 +131,7 @@ private theorem composition_top {d : ℕ} {f g : PowerSeries R}
   have ho := subst_outer_top hg hg1 h
   linear_combination hi + ho
 
-private noncomputable def residual (p : PowerSeries R) : PowerSeries R :=
+noncomputable def residual (p : PowerSeries R) : PowerSeries R :=
   p.subst p - X - 4 * X * p
 
 private theorem residual_agree {d : ℕ} {p q : PowerSeries R}
@@ -161,7 +163,7 @@ private theorem residual_top {d : ℕ} {p q : PowerSeries R} (hd : 1 ≤ d)
   simp only [residual, map_sub]
   linear_combination ht - hm
 
-private theorem C_dvd_iff_coeff (a : R) (p : PowerSeries R) :
+theorem C_dvd_iff_coeff (a : R) (p : PowerSeries R) :
     C a ∣ p ↔ ∀ n, a ∣ coeff n p := by
   constructor
   · rintro ⟨q, rfl⟩ n
@@ -200,7 +202,7 @@ private theorem C_dvd_subst_sub {p q : PowerSeries R} (a : R)
   simpa only [map_sub] using (C_dvd_iff_coeff _ _).mp hd n
 
 /-- Divisibility by four makes the forced half-residual an even integer. -/
-private theorem residual_four {p : PowerSeries ℤ}
+theorem residual_four {p : PowerSeries ℤ}
     (hp : constantCoeff p = 0) (h : C (2 : ℤ) ∣ p - X) :
     C (4 : ℤ) ∣ residual p := by
   obtain ⟨q, hq⟩ := h
@@ -521,11 +523,5 @@ theorem scheuerle_conjecture (k : ℕ) : ∃ e : ℕ, (f k).den = 2 ^ e := by
   obtain ⟨e, _, he⟩ := (Nat.dvd_prime_pow Nat.prime_two).mp hd
   exact ⟨e, he⟩
 
-#print axioms generatingSeries
-#print axioms f
-#print axioms functional_equation
-#print axioms uniqueness
-#print axioms rescaled_even
-#print axioms scheuerle_conjecture
 
 end D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators
