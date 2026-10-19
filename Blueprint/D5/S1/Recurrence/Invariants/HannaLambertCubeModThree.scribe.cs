@@ -55,13 +55,16 @@ internal sealed class HannaLambertCubeModThreeDocument : IScribeDocumentDefiniti
                 + "B=lambertSum(A) and A=X+B^3 for every pair of solutions. Reducing this "
                 + "identity modulo three and applying cubic Frobenius gives A=X+B(X^3). "
                 + "Extracting coefficients proves all three residue assertions.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a382318-a382319-lambert-cube-mod-three"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hanna318-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));

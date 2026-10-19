@@ -24,6 +24,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \exists B: \ope
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaLambertCubeModThreeConverse.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a382319-a382318-lambert-cube-mod-three` (proved) by `D5/S1/Recurrence/Invariants/HannaLambertCubeModThreeConverse.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a382319-a382318-lambert-cube-mod-three","declaration_gid":"D5/S1/Recurrence/Invariants/HannaLambertCubeModThreeConverse.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A382319, g.f. A(x) satisfies A(x) = x/(1-x) + Sum_{n>=1} A(x^n)^3*. URL: <https://oeis.org/A382319>.

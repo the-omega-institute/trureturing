@@ -60,6 +60,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \exists B: \ope
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaLambertCubeModThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a382318-a382319-lambert-cube-mod-three` (proved) by `D5/S1/Recurrence/Invariants/HannaLambertCubeModThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a382318-a382319-lambert-cube-mod-three","declaration_gid":"D5/S1/Recurrence/Invariants/HannaLambertCubeModThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A382318, g.f. A(x) satisfies A(x) = x + ( Sum_{n>=1} A(x^n) )^3*. URL: <https://oeis.org/A382318>.
