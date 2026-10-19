@@ -11722,3 +11722,169 @@ $$
 Indeed the discarded term in the first comparison is $(127/139)\mathcal E_{\mathcal F}\succeq0$. All original far charges therefore remain paid. The second comparison uses HCN4 exactly as published. It is strict as a quadratic inequality on every vector with nonzero residual, since $Q-L_*=R^*\mathcal VR+\mathcal E_{\mathcal F}$. In particular the previously established nonzero residual directions in $\ker\beta$ receive a strictly larger gain than HCN4; their rank argument is reused without repetition.
 
 This pays a strictly stronger complete inverse allowance and a globally stronger sufficient retained target than HCN4. It does not add a second copy of the same surplus to the nineteen-channel projection, and asserts no global ordering with $\mathcal L_g^{(19)}$. The complete matrix $Q$ is still not supplied by a cached scalar. The full retained/border sign, cofinal Weil positivity, the original all-integer strict Robin inequality and RH remain open. These are conditional paper applications under the inherited source, form/domain and sound-cache premises; no new scientific execution, Lean build or kernel certification is supplied.
+
+### A trace-class Hilbert model for the complete Gamma boundary
+
+Reuse G1--G3's actual physical Fourier realization and the complete positive even Gamma series used by the original nineteen channels. Let $c\ge2$, $d=\log c$, and let the integer $N\ge\max(1,d)$. On the actual even exterior with normalized cosine indices $n>N$, write
+
+$$
+h(b)_n=\frac{2b(-1)^n}{\sqrt d\,[b^2+(2\pi n/d)^2]},
+\qquad b_j=2j+1/2,
+\qquad
+B_{\Gamma,N}=\sum_{j\ge0}(1-e^{-b_jd})|h(b_j)\rangle\langle h(b_j)|.
+$$
+
+The complete series has the inherited bounded positive form interpretation. Define the explicit positive Hilbert matrix
+
+$$
+\mathcal C_N(n,m)=\frac{(-1)^{n+m}}{2(n+m)},\qquad n,m>N.
+$$
+
+The classical Hilbert inequality gives $0\preceq\mathcal C_N\preceq(\pi/2)I\prec2I$. Its Gram representation and this norm estimate are reused classical facts; the [existing Schur criterion](../Fourier/teschl2009mathematical.md#schur-criterion-for-the-local-frequency-kernel) with weight $n^{-1/2}$ also supplies the bound. The following is an application to the SAME complete Gamma columns, with no numerical execution or priority claim.
+
+#### Pay the complete sum-to-integral error in trace norm
+
+Set $F(b)=|h(b)\rangle\langle h(b)|$. The same column integrals used in FCM2 give
+
+$$
+\|h(b)\|^2\le\min\left\{
+\frac{d^3b^2}{12\pi^4N^3},\frac1{2b}\right\},
+\qquad \|h'(b)\|\le\frac{\|h(b)\|}{b}.
+$$
+
+Consequently $F'(b)$ is trace class and
+
+$$
+\|F'(b)\|_1\le2\|h(b)\|\|h'(b)\|
+\le\min\left\{\frac{d^3b}{6\pi^4N^3},\frac1{b^2}\right\},
+\quad
+\int_0^\infty\|F'(b)\|_1db
+\le\frac dN\left(\frac1{3\pi^2}+\frac1{2\pi}\right).
+\tag{GHC1}
+$$
+
+For the integral bound split at $b=2\pi N/d$. On each interval $[2j,2j+2]$, compare its sample $F(2j+1/2)$ with half the integral. The trace norm of that difference is at most $\int_{2j}^{2j+2}\|F'(b)\|_1db$. Thus the sum of the cell errors converges in trace norm. Separately,
+
+$$
+\frac12\int_0^\infty F(b)\,db=\mathcal C_N,
+\qquad
+\sum_{j\ge0}b_j^2e^{-b_jd}\le\frac{113}{27}<5.
+$$
+
+The first identity follows entrywise from $\int_0^\infty b^2/[(b^2+a^2)(b^2+q^2)]\,db=\pi/[2(a+q)]$. Both positive operator integrals and the unweighted column sums are taken in their strong limits. Their individual trace integrals need not converge; only their difference is summed in trace norm. The exponentially weighted column sum is trace class, with trace at most $5d^3/(12\pi^4N^3)$. Therefore
+
+$$
+\boxed{\begin{aligned}
+\|B_{\Gamma,N}-\mathcal C_N\|_1
+&\le\frac dN\left(\frac1{3\pi^2}+\frac1{2\pi}\right)
+       +\frac{5d^3}{12\pi^4N^3}\\
+&<\frac d{4N}.
+\end{aligned}}
+\tag{GHC2}
+$$
+
+Indeed $\pi>3$ and $d/N\le1$ bound the coefficient by $11/54+5/972=203/972<1/4$. Every Gamma rate, the selected support and the infinite exterior tail remain. In particular the operator norm has the SAME bound. On the existing cofinal FIB schedule $c_r=3^{F_{r+1}}$, $N_r=\lceil e^{c_r}\rceil$, this actual Gamma replacement has trace-norm error less than $(\log c_r)e^{-c_r}/4$. It is uniform over the complete exterior, without a finite retained dimension or sign-complexity restriction.
+
+#### Retain all arithmetic terms in a full inverse comparison
+
+At the SAME actual $c=27$, $N=1280$, reuse the paid full-source order
+
+$$
+H_{\rm ext}\succeq\Lambda+B_{\Gamma,N}+P_{\rm even}+g_0I,
+\qquad g_0=9/25,
+\qquad 0<\Lambda\preceq(331/100)I.
+$$
+
+FCM's elementary $d<10/3$ and GHC2 give $\|B_{\Gamma,N}-\mathcal C_N\|_1<\varepsilon_0:=1/1536$. Replace only that Gamma boundary in the actual full operator:
+
+$$
+\widetilde H_{\rm ext}
+=H_{\rm ext}-B_{\Gamma,N}+\mathcal C_N.
+$$
+
+All prime powers, the full even pole and the physical form domain remain in this model. Both operators are at least $g_0I$. The existing bounded-perturbation and resolvent identities therefore give
+
+$$
+\boxed{
+\|H_{\rm ext}^{-1}-\widetilde H_{\rm ext}^{-1}\|_1
+\le\frac{\varepsilon_0}{g_0^2}
+=\frac{625}{124416}.}
+\tag{GHC3}
+$$
+
+For the original exact residual map $R$, congruence gives trace-norm error at most $(625/124416)\|R\|^2$ in the corresponding retained inverse quadratic. This does not supply an unsaved numerical value of $\|R\|$ or the full initial-trial matrix $Q$.
+
+There is also an explicit full-space inverse upper requiring no inversion of the Hilbert model. Put
+
+$$
+\alpha=g_0-\varepsilon_0=\frac{13799}{38400}>0,
+\qquad D_0=\Lambda+\alpha I,
+\qquad\theta=\frac{\alpha}{\alpha+2}=\frac{13799}{90599}.
+$$
+
+GHC2 pays $H_{\rm ext}\succeq D_0+\mathcal C_N$. Since $\|D_0^{-1/2}\mathcal C_ND_0^{-1/2}\|\le2/\alpha$, apply the existing scalar secant inequality for $(1+x)^{-1}$ by functional calculus to obtain
+
+$$
+\boxed{
+H_{\rm ext}^{-1}\preceq
+\mathsf W_{\rm H}:=
+D_0^{-1}-\theta D_0^{-1}\mathcal C_ND_0^{-1}.}
+\tag{GHC4}
+$$
+
+The positive Hilbert correction retains an infinite collection of coupled modes. It is not added to a separate copy of the nineteen-channel or FCM surplus. The original Schur identity consequently gives $S_N\succeq Q-R^*\mathsf W_{\rm H}R$. This quadratic retains all near/far Hilbert cross terms. Contracting it with the actual residual and supplying any numerical tail payments is a separate unpaid task; the old diagonal far allowance must not be substituted for those cross terms.
+
+#### A quantitative consumer on actual exterior states
+
+Reuse the constant far reciprocal $\Lambda_{\mathcal F}=\lambda_{\mathcal F}I$, $0<\lambda_{\mathcal F}\le331/100$, beyond $32768$. For any integer $L\ge32769$ take the normalized actual exterior Fourier polynomial with coefficient vector
+
+$$
+u_L(n)=\frac{(-1)^n}{\sqrt L}\mathbf1_{\{L\le n<2L\}}.
+$$
+
+These are valid even physical states, not asserted to belong to the saved finite-dimensional residual range. Directly $\langle u_L,\mathcal C_Nu_L\rangle>1/8$. Write $a=\lambda_{\mathcal F}+\alpha<4$ and reuse the raw shifted-diagonal upper $\mathsf W_0=(\Lambda+g_0I)^{-1}$. Then
+
+$$
+\boxed{\begin{aligned}
+\langle u_L,(\mathsf W_0-\mathsf W_{\rm H})u_L\rangle
+&>\frac{\theta/8-\varepsilon_0}{a^2}\\
+&>\frac1{16}\left(\frac1{56}-\frac1{1536}\right)
+>\frac1{1000}.
+\end{aligned}}
+\tag{GHC5}
+$$
+
+Here $\theta>1/7$. On these same far-supported vectors, $\mathsf W_0\prec(127/139)\mathcal V$ follows from the accepted far block $\mathcal V_{\mathcal F}=(33/32)\lambda_{\mathcal F}^{-1}I$ and $\lambda_{\mathcal F}\le331/100$. The nineteen observations have no far component. GHC5 thus supplies a strict quantitative upper-budget gain on arbitrarily remote, actual Fourier bands. It does not assert global ordering of $\mathsf W_{\rm H}$ with FCM4 or the nineteen-channel inverse, or a gain on an unmeasured saved residual direction.
+
+#### A cofinal full-arithmetic inverse trace bound
+
+The same model comparison also consumes the existing even exterior floor at growing supports. Keep the actual complete operator $H_{\rm ext}(c,N)$ and replace only $B_{\Gamma,N}$ by $\mathcal C_N$ as above. With G1--G4's original diagonal symbol $A(t)$, put
+
+$$
+\mathfrak a(c,N)=
+A\!\left(\frac{2\pi(N+1)}{\log c}\right)
+-2\sum_{2\le n<c}\frac{\Lambda(n)}{\sqrt n}.
+$$
+
+The original complex even Gamma boundary and pole are positive. Their Hilbert replacements are positive as well. The existing diagonal monotonicity and full prime-translation norm bound therefore give BOTH $H_{\rm ext}(c,N)\succeq\mathfrak a(c,N)I$ and $\widetilde H_{\rm ext}(c,N)\succeq\mathfrak a(c,N)I$. The sum retains every proper prime power; the shift at $n=c$, when present, is zero almost everywhere. Whenever $\mathfrak a(c,N)>0$, GHC2 and the SAME resolvent identity imply
+
+$$
+\|H_{\rm ext}(c,N)^{-1}
+ -\widetilde H_{\rm ext}(c,N)^{-1}\|_1
+<\frac{\log c}{4N\mathfrak a(c,N)^2}.
+$$
+
+Reuse the cited classical $A(t)=\log t+O(1)$ and the elementary complete bound $\sum_{n<c}\Lambda(n)/\sqrt n=O(\sqrt c\log c)$. At $N(c)=\lceil e^c\rceil$, these give $\mathfrak a(c,N(c))/c\to1$, hence $\mathfrak a(c,N(c))\ge c/2$ for all sufficiently large $c$. Thus
+
+$$
+\boxed{
+\|H_{\rm ext}(c,N(c))^{-1}
+ -\widetilde H_{\rm ext}(c,N(c))^{-1}\|_1
+<\frac{\log c}{c^2N(c)}
+\le\frac{\log c}{c^2}e^{-c}.}
+\tag{GHC6}
+$$
+
+In particular GHC6 holds at every sufficiently large level of the original cofinal FIB support schedule. It is a complete actual exterior inverse comparison, including all prime powers and the full pole; it imposes no retained dimension bound. Applying it to a retained residual still multiplies the bound by that residual map's squared operator norm. No unmeasured residual bound, finite retained sign or convergence of a complete regularized determinant follows from GHC6 alone.
+
+GHC2 pays a complete source-specific trace-class replacement, GHC3 consumes it with the actual full arithmetic operator, and GHC4--GHC5 supply an explicit infinite-rank inverse-budget consumer. GHC6 pays the complete exterior inverse trace error along the cofinal support schedule. No scientific producer, matrix, solve, determinant or direction screen is executed. These are conditional paper applications under the inherited form/source premises, without Lean/kernel certification. The complete retained/border sign, cofinal Weil positivity, original same-source Robin upper and RH remain unresolved.
