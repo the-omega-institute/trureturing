@@ -1837,3 +1837,873 @@ its general acquisition, recovery and parsimony obligations beyond this
 bounded birth-typed source.
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Exact access to a selected chronology through old full tapes
+
+**Definition 24.1 (fixed selection and the two access representations).**
+Retain exactly the LAB source, event identities and all finite lawful
+schedules of §§17–19. Fix a total predicate
+$\chi:\{P,S\}\times\{L,R\}^*\to\{0,1\}$ before the history varies.
+For $t\in\mathcal D$, put $E_\chi(t)=\{e\in E(t):\chi(e)=1\}$.
+For $w\in\mathcal H(t)$ let $\nu_\chi(w)$ be its subword of selected
+event identities, retaining their actual order. Selection here reads only
+kind and logical address. It reads neither an occurrence number nor an
+answer, elapsed work, controller history, future choice or tape value.
+A total predicate is enough for the mathematical statements; finite
+execution of it requires the additional program premise in §26.
+
+At a branch $p$, let $x_p,y_p$ be the full child-event counts of (AA.73),
+and define
+
+$$
+\begin{aligned}
+a_p&=|\{e\in E_\chi(t):\operatorname{addr}(e)\text{ extends }pL\}|,\\
+b_p&=|\{e\in E_\chi(t):\operatorname{addr}(e)\text{ extends }pR\}|,\\
+o_p&=|\{e\in E_\chi(t):\operatorname{addr}(e)
+                   \text{ is prefix-incomparable with }p\}|.
+\end{aligned}
+\tag{AA.81}
+$$
+
+Thus $o_p$ excludes events at $p$ and at its ancestors. All five counts
+are fixed by $(t,\chi)$, independently of the serial extension. Define
+
+$$
+\begin{aligned}
+H_\chi(t)&=\{p\in I(t):a_pb_p>0\},\\
+R_\chi(t)&=\{p\in I(t):a_pb_p>0
+                  \ \text{or}\ o_p(a_py_p+b_px_p)>0\}.
+\end{aligned}
+\tag{AA.82}
+$$
+
+An old full-tape observation with access set $A\subseteq I(t)$ is
+$(t,(W_p(w))_{p\in A})$. It supplies those complete §19 coordinates,
+including their lengths, at fixed binding, authority and settled phase.
+The quantifier is over the entire $\mathcal H(t)$ with this same $A$;
+there is no extra request archive, visible allocation order, runtime
+length or order-bearing input. Recovery means a single-valued map on
+that actual observation image returning $\nu_\chi(w)$ for every $w$.
+It does not mean that missing tapes can be read.
+
+For comparison, an already acquired selected tape $V_p(w)$ lists just
+the first sides below $p$ of selected strict-descendant events, in their
+actual order. Its multiplicities are $a_p,b_p$. Access to $V_p$ and
+access to $W_p$ are different interfaces: the latter has no selection
+marks identifying which of its equal side symbols came from selected
+events. Write $\mathcal V_\chi(w)=(V_p(w))_{p\in I(t)}$.
+
+**Theorem 24.2 (exact source-relative access support).** For every total
+fixed $\chi$, every reachable finite $t$, and every fixed $A\subseteq I(t)$,
+selected chronology is recoverable from the old full-tape observation
+if and only if
+
+$$
+R_\chi(t)\subseteq A.
+\tag{AA.83}
+$$
+
+For direct already acquired selected tapes, replacing $W$ by $V$ and
+$A$ by $B\subseteq I(t)$ gives instead the exact condition
+$H_\chi(t)\subseteq B$. In particular the selected words have conditional
+alphabet size
+
+$$
+F_\chi(t)=\prod_{p\in I(t)}\binom{a_p+b_p}{a_p}.
+\tag{AA.84}
+$$
+
+Every indispensable full coordinate has two lawful histories that agree
+on all other full coordinates and disagree on selected chronology. The
+criterion concerns this representation and fixed-coordinate access; it
+is not a bound on arbitrary encoded advice, adaptive bit probes or
+all representations of the selected word.
+
+Proof. Use Theorem 19.2's bijection between $\mathcal H(t)$ and the
+Cartesian product of full binary shuffles. First consider two product
+points differing only by one adjacent $LR\leftrightarrow RL$ exchange
+in coordinate $p$. With all child coordinates fixed, this exchanges two
+consecutive events $e,f$ in the strict-descendant word at $p$, one in
+each child cone. Their local identities are fixed. At every proper
+ancestor the shuffle is fixed, so the slots occupied by the whole
+$p$-subtree word are fixed. In the global word the change therefore has
+exactly the form
+
+$$
+u\,e\,z\,f\,v\quad\longleftrightarrow\quad
+u\,f\,z\,e\,v,
+\tag{AA.85}
+$$
+
+where $u,v,z$ are otherwise unchanged. Every event of $z$ has address
+prefix-incomparable with $p$. Indeed $e,f$ are consecutive in the
+$p$-subtree list, while events at $p$ or its ancestors precede that
+list. This slot statement also follows inductively by substituting
+the fixed child list into each fixed ancestor shuffle. Both global
+words are lawful by the full product bijection.
+
+Deleting unselected events in (AA.85) changes the selected word only if
+both $e,f$ are selected, or exactly one is selected and $z$ contains a
+selected event. The first alternative requires $a_pb_p>0$. In the
+second, a selected left event with a right event requires $a_py_p>0$,
+or a selected right event with a left event requires $b_px_p>0$;
+a selected event in $z$ requires $o_p>0$. Consequently every such exchange
+at $p\notin R_\chi(t)$ preserves $\nu_\chi$.
+
+Binary words with fixed multiplicities are connected by adjacent exchanges:
+move their left symbols one at a time to the prescribed positions, leaving
+the earlier matched prefix fixed. Hence two product points agreeing on
+$A\supseteq R_\chi(t)$ can be joined by exchanges only at coordinates
+outside $R_\chi(t)$. The preceding argument proves that their selected
+words agree. An explicit mathematical recovery is to keep the supplied $W_p$
+for $p\in A$, fill each missing coordinate with $L^{x_p}R^{y_p}$, decode
+that full product by Theorem 19.2 and then select by $\chi$. The decoded
+full word is a representative, not an assertion of the actual full
+history. Its selected subword is the actual one by this invariance.
+This construction is relative to the values of $\chi$ on the finite
+$E(t)$; it does not give a uniform effective evaluator for an arbitrary
+total predicate. Section 26 supplies such an installed evaluator when
+claiming operational recovery.
+
+For necessity, LAB events in opposite child cones of $p$ are causally
+incomparable. An event at an address prefix-incomparable with $p$ is
+incomparable with both cones. For any pair or triple of such events,
+take the union of their strict causal predecessor sets. This is a lower
+set containing none of the chosen events. Execute that lower set first;
+then all chosen events are enabled. After either ordering of them the
+occurred set is identical, and a common finite extension of the remaining
+order completes to $t$. The source correspondence is Theorem 17.2;
+finite enabled extension and its legal-swap method are credited to
+`EnabledPathSwapConnectivity.result`.
+
+If $a_pb_p>0$, choose selected events $e$ and $f$ in opposite child
+cones and execute them adjacently in opposite orders after that prefix.
+Only $W_p$ changes: above $p$ both events have the same side, below it
+no coordinate contains both, and all other coordinates omit them.
+Their selected relative order reverses.
+
+Otherwise a nonzero second term of (AA.82) supplies a selected event $e$
+in one cone, an unselected event $f$ in the other, and a selected event
+$g$ prefix-incomparable with $p$. The opposite-cone event is unselected
+because $a_pb_p=0$. Execute the enabled triple as $egf$ and $fge$, with
+the common prefix and suffix just constructed. At $p$ the two events
+have exchanged opposite sides. At any proper ancestor of $p$ they
+have equal sides, even if that ancestor also contains $g$; exchanging
+their identities preserves the side word. At a descendant of $p$ or
+a branch outside its subtree, at most one of $e,f$ occurs, and its
+relative order within that coordinate is unchanged. Thus all full
+coordinates except $p$ agree. The selected subwords contain $eg$ and
+$ge$, respectively, in the same surrounding selected context. Omitting
+$p$ therefore prevents recovery even if every other full tape is given.
+This proves (AA.83), including empty or singleton selected sets.
+
+For the selected-tape comparison, at each root retain its forced local
+selected prefix, then shuffle the two selected child lists using $V_p$.
+This is the same credited binary routing method, now applied to the
+selected subword. Every choice of the binary words with counts $a_p,b_p$
+is realizable: inductively choose full child lists realizing the chosen
+selected child lists; for each next requested selected event emit its
+child's unselected pending prefix and then that event. After all selected
+events emit the unselected tails. Prepend the forced full local prefix.
+This makes a lawful full child shuffle with exactly the prescribed
+selected projection. Induction proves a bijection between selected words
+and the selected-tape product. The singleton coordinates outside $H_\chi$
+are forced unary or empty words, whereas changing a nonsingleton coordinate
+in $H_\chi$ while fixing the others changes the selected word. This gives
+the direct-access condition and (AA.84). The product representation,
+rank/select navigation and finite-word counting are intermediate suppliers;
+the full-coordinate dependence in (AA.82) is the additional conclusion.
+$\square$
+
+## 25. One fixed selector with unbounded old-coordinate dependence
+
+**Definition 25.1 (a regular selector and reachable endpoints).** Fix once
+and for all
+
+$$
+\chi(P,p)=0,\qquad
+\chi(S,p)=\mathbf1\{p\in L^*R\}.
+\tag{AA.86}
+$$
+
+A finite automaton checks zero or more $L$ symbols followed by exactly
+one terminal $R$, and checks the kind. Neither a depth parameter nor a
+history is an argument to this program. For each integer $n\ge1$ put
+$p_i=L^i$ for $1\le i\le n+1$ and $q=L^{n+1}R$. Define $t_n$ by the
+following complete event membership:
+
+$$
+\begin{aligned}
+\text{splits: }&S_\varepsilon,
+   \quad S_{p_i}\ (1\le i\le n+1),\quad S_q,S_R,\\
+\text{promotions: }&P_\varepsilon,
+   \quad P_{p_iR}\ (1\le i\le n),\quad P_q,P_R.
+\end{aligned}
+\tag{AA.87}
+$$
+
+These events determine a unique endpoint by Theorem 17.2. They are
+reachable: execute $P_\varepsilon S_\varepsilon$, the spine splits in
+increasing $i$, the indicated right-leaf promotions, then $S_q,S_R$
+after their promotions. The last two splits can occur in either order.
+All omitted leaves remain at their birth type. The only selected events
+are $e=S_q$ and $g=S_R$.
+
+**Theorem 25.2 (unbounded separation at a two-valued target, with actual
+next-use separation).** For this one fixed $\chi$ and every $n\ge1$,
+
+$$
+\begin{aligned}
+\{\nu_\chi(w):w\in\mathcal H(t_n)\}&=\{eg,ge\},\\
+H_\chi(t_n)&=\{\varepsilon\},\\
+R_\chi(t_n)&=\{\varepsilon,p_1,\ldots,p_n\}.
+\end{aligned}
+\tag{AA.88}
+$$
+
+Thus the selected-order alphabet has two values and one nontrivial
+selected-tape coordinate. Nevertheless any fixed old-full-coordinate
+observation recovering it over the whole endpoint fibre must include
+$n+1$ coordinates. For each of these coordinates, omitting it can also
+change the output and source successor of a lawful same-source operation
+that consumes the first selected event.
+
+Proof. The two selected addresses are incomparable and lie on opposite
+sides of the root. Therefore exactly the root has selected events in both
+child cones. Every ordering of $e,g$ is lawful after their required
+predecessors, proving the first two equalities.
+
+At $p_i$ for $1\le i\le n$, the left cone contains the single selected
+$e$, the right cone contains just the unselected promotion $P_{p_iR}$,
+and $g$ lies outside the $p_i$ subtree. More explicitly,
+
+$$
+(x_{p_i},y_{p_i},a_{p_i},b_{p_i},o_{p_i})
+=(2n+3-2i,1,1,0,1).
+\tag{AA.89}
+$$
+
+Each $p_i$ therefore belongs to $R_\chi$. At $p_{n+1}$ the left cone
+has no events, and the right cone has $P_qS_q$, so its counts are
+$(0,2,0,1,1)$ and it is outside $R_\chi$. The remaining branches $q,R$
+have no strict-descendant events. At the root both selected child counts
+are one. These exhaust $I(t_n)$ and prove the third equality.
+
+For a spine coordinate $p_i$, let $f=P_{p_iR}$. The lower-set construction
+in Theorem 24.2 produces lawful histories with common surrounding words
+and triples $egf$ and $fge$. They agree on every old full tape other
+than $p_i$, yet their selected words are $eg$ and $ge$. For the root,
+use adjacent $eg$ and $ge$. These witnesses are in the same full fibre,
+not a succession of different selectors or endpoints chosen after a
+measurement.
+
+Define the consumer $\operatorname{Next}_\chi(1)$ by fetching the first
+selected event's actual address and applying Definition 20.4's current
+left-descent rule there. The current subtrees at both $q$ and $R$ are
+$\langle\beta,\alpha\rangle$. Thus the two selected orders choose,
+respectively, the genuinely enabled operations
+
+$$
+S_{qL}\quad\text{and}\quad S_{RL}.
+\tag{AA.90}
+$$
+
+These are different current leaves of the same bound source. The replies
+include different acquired old events and new addresses, and the source
+successors differ. Both new addresses end in $L$, so these new events
+are unselected by the same fixed (AA.86). Section 26 supplies their
+actual callable acquisition/use premises; the present separation does
+not issue a source right from an event name. Theorem 24.2 now proves the
+fixed-access lower bound and its sufficiency with precisely $R_\chi$.
+$\square$
+
+The family uses one finite selector and one source-independent finite
+service program. An addressed-input driver admits all its histories.
+The displayed construction can also be generated by finite loops using
+an actually acquired unary $n$, with backed address/counter work. To
+produce either spine witness, such loops postpone just the chosen
+$P_{p_iR}$ until the displayed triple. These are reachability procedures,
+not restrictions on the theorem's whole $\mathcal H(t_n)$. Restricting
+to a deterministic preselected schedule would change the fibre and
+would not retain this lower bound. The parameter, its input, the growing
+addresses and the chosen order all cost material or work; finite code
+size does not bound them.
+
+## 26. Acquired handoff and continued selected use on the same source
+
+**Assumption 26.1 (installed selected service and actual access).** Work
+in a distinct owned LAB installation with the source primitives,
+known-$\alpha$ allocation, parent/left/right source fields, retention,
+finite-material and local-acknowledgement premises of Assumption 20.1.
+Install a fixed terminating program evaluating the chosen $\chi$ on any
+finite kind/address input. Install finite conversion, selected maintenance,
+request and output control before the schedule. This is an additional
+operational premise, satisfied by (AA.86), not a consequence of the
+abstract totality in Theorem 24.2. All work tapes, counters and returned
+references have actual backing and charges. Source acquisition in this
+model is its actual known-seed growth; it is not import of an unknown
+historical source.
+
+Before handoff, the driver acquires all-event tapes exactly as in §20.
+At a handoff cut fix one actually retained list enumerating
+$A\subseteq I(t)$ without repetition in source preorder, its binding
+to the current source's corresponding headers, and grants allowing the
+converter to read those complete tapes and the source fields. The list
+is installed or actually received and retained, not supplied by an oracle
+for selected order. A received list of $m$ addresses has the complete
+frame $U(m)A(p_1)\cdots A(p_m)$ on an actually connected auxiliary
+ingress. Its separate preparation phase locks the source, receives the
+count with unary marks and then the $m$ self-delimiting address fields.
+Every bit leaves its occupied latch only after its backed copy exists;
+the retained parser/count/cursor fields identify the remaining input.
+A proper prefix waits and disables handoff. On a complete valid list,
+finite guarded source navigation binds its present branch headers and
+the current owner supplies the declared grants before FullReady resumes.
+This preparation has no source change or order-bearing reply; its input
+domain is the stated valid lists, not an unspecified invalid-list service.
+A source-only preparation may instead construct that list locally.
+The list and the grants are fixed on the endpoint fibre;
+a source-dependent policy may compute it from $t$ alone. No other full
+tape, old input archive, allocator ordinal or work-time readout is a
+permitted conversion input. The owner also supplies actual destination
+read/write grants, current exclusive rights to the same live source,
+and the right to bind its installed service entry to the new records.
+Every such allocation, grant and binding operation is a separate charged
+operation. These rights are assumptions about the installation, not
+serialized rights reconstructed from mathematical data.
+
+Selected records use a retained auxiliary descriptor list, in canonical
+source preorder, with one descriptor per current logical branch. Each
+holds the actual source-vertex reference, a tape head and tail, and the
+next descriptor reference; its cells hold a side bit and next reference.
+Lookup scans this actual list and compares real references. New branch
+insertion uses a finite source-preorder traversal; it has no numerical
+reference cast. No permanent explicit address key is needed. This list
+and its source bindings are auxiliary, distinct from source edges and
+from old full-tape headers. Its list order is source preorder, not
+creation order. All its fields and links are constructed and paid.
+
+The driver has modes FullReady and SelectedReady. During a handoff,
+all external source changes and queries are disabled. The old full service
+is disabled when selected mode becomes available. Its original objects
+remain a retained archive of the handoff version, with a version binding;
+they are not represented as maintained full tapes after later growth.
+Retain an acquired finite description of the handoff term with this
+archive, so its version binding does not refer to a silently changing
+current source value. This retained source description is separately
+charged and is not an additional order-bearing conversion input.
+Neither the selected selector nor its future task can read this archive
+or reactivate the old service. Source auxiliary old-header fields are
+excluded from its inputs. Unrelated aliases, revocation, concurrent
+writers, observable capacity/exhaustion, crashes and interrupts are
+outside this installation. Adding any of these requires its legality,
+output and successor state to be included anew.
+
+**Definition 26.2 (legal handoff and selected requests).** This installation
+uses distinct four-bit request tags for Tag, $P$, $S$, HasPromotion,
+HasSplit, FetchSelected, NextSelected and Handoff; other four-bit tags
+return BadFrame. Address and index payloads are respectively $A(p)$ and
+$U(k)$ of Definition 20.2, with the same null/arity guards and refusal
+reasons. Handoff has no payload and is admitted only in FullReady with
+the installed access list/grants. The other seven services have their
+§20 meanings, using full recall/Next in FullReady and selected recall/Next
+in SelectedReady. Use distinct four-bit reply tags for the eight §20
+reply types and HandoffOK and InsufficientAccess; their ordinary payloads
+are those of Definition 20.2, and the last two have empty payloads.
+End, the supplied local acknowledgement, root return and scratch cleanup
+are required for every completed reply. These interfaces concern this
+installation and do not change Definition 20.2's original three-bit grammar.
+
+Handoff first traverses the locked actual source with a backed finite
+stack, reading arities and tags, to construct its finite term and the
+correspondence between logical addresses and real source references.
+The traversal follows a logical child only at a branch; a unary marker
+is parsed as part of a $\beta$ leaf. Compute $E(t)$, the five counts in
+(AA.81), and $R_\chi(t)$ using the installed program and finite list
+operations. If $R_\chi(t)\nsubseteq A$, return InsufficientAccess without
+changing mode, source or full tapes. This test depends only on the
+source, $\chi$ and the acquired list, so is not an order-bearing answer.
+
+Otherwise read and retain the complete authorized $W_p$ words. Fill
+missing coordinates as in Theorem 24.2, decode the finite representative
+full word, and filter it using the installed $\chi$. Construct fresh empty
+selected descriptors at the actual branch references; for each filtered
+event append its actual side to each proper branch ancestor's new tape.
+Finite source navigation obtains these references. These constructed
+records encode the actual selected word, although the intermediate full
+representative need not be the actual full word. Keep an explicit pending
+conversion phase, source/version binding, input/copy cursors, counters,
+unfinished cells and their attachment subphases. Incomplete backing is
+never served as a completed tape.
+
+After all appends, seal the new version and retain its actual descriptor
+head and callable source binding in the installed entry. Build and really
+print HandoffOK; only after End, local acknowledgement, root return and
+scratch cleanup enter SelectedReady. A reply contains no authority-bearing
+numeral or externally guessed object name. The same owner invokes the
+same actually connected entry. This is a within-installation handoff;
+a cross-owner endpoint connection would require additional actual grants
+and transport.
+
+In selected mode, FetchSelected$(k)$ decodes using the actual source and
+selected tapes: at a subtree handle its selected local prefix, determined
+by birth type, current constructor and $\chi$; at a later index scan the
+actual $V_p$, count that symbol through the requested occurrence, and
+descend to that child. The zero or missing index returns OutOfRange.
+NextSelected$(k)$ makes this internal fetch, keeps its acquired result
+and continuation phase, and then uses the actual left-descent rule of
+Definition 20.4 on the current source. It returns both that old selected
+event and the new actual event, or OutOfRange with no growth.
+
+Every successful source event, whether directly requested or chosen by
+NextSelected, retains its actual kind/address in pending backing. If
+$\chi(e)=1$, append its side at every proper logical ancestor using the
+selected descriptor list. If $\chi(e)=0$, do no selected tape append.
+Every split creates its own empty selected descriptor, whether or not
+the splitting event is selected. Construct/attach its source vertices as
+in §20, initializing any unused old-header slot to null. A new descriptor
+is inserted in source preorder with actual reference links. Reserve,
+source edit, descriptor insertion, selected maintenance, BuildAnswer,
+Print, acknowledgement and Return have separate pending subphases.
+Only a settled completed update reenables requests. A partially received
+frame retains precisely its acquired prefix and waits for missing bits.
+
+**Theorem 26.3 (completion-conditional acquired application).** Under
+Assumption 26.1, Handoff with $A\supseteq R_\chi(t)$ constructs callable
+selected records of the same actual history on the same source, completes
+its real output and returns to SelectedReady in finitely many operations.
+Thereafter every finite sequence of actually supplied complete selected
+requests has the specified full replies and selected semantic successors.
+In particular an in-range NextSelected performs one lawful current-source
+growth, preserves all earlier selected recalls, and appends its new event
+to those recalls exactly when $\chi$ selects it. This includes the two
+different source successors in (AA.90). No assertion of successful
+handoff is made when the source-only access test fails.
+
+Proof. For a received access list, the latch/copy induction of §20
+retains exactly each supplied bit. The acquired finite count and framed
+addresses bound its parsing and guarded binding traversals; a complete
+valid list therefore finishes its preparation on the locked same source.
+The source traversal is a finite depth-first traversal of an actually
+finite rooted tree. Its stack contains acquired references and
+pending child roles, not unknown subtree arguments. This uses the ordinary
+acquired-stack method also present in `NativeFullSourceProducer` and its
+private `traverse`; its Native read primitive is not assumed to implement
+our link reads. In this installation the link reads and grants are supplied
+explicitly. The traversal and total installed $\chi$ program terminate,
+so the finite counts and access test terminate. Authorized tape scans
+terminate on their actual finite null-ended backing. Theorem 24.2 proves
+that the representative's filtered word equals $\nu_\chi(w)$ of this very
+source history. Finite ancestor appends therefore construct exactly
+$\mathcal V_\chi(w)$ with actual source-reference bindings. They do not
+infer or acquire an unauthorized old coordinate.
+
+Induction over copy and append subphases shows that every written prefix
+has real backing before its cursor advances. The seal/Print/End/ACK/Return
+order withholds availability while any cell, output or cleanup remains
+pending. All loops have a finite list, subtree, word or supplied index as
+their bound; no external eventual acknowledgement is needed. The result
+is retained and callable because its actual head, live rights, source
+binding and installed entry persist, not because an inverse function exists.
+
+The selected shuffle interpretation in Theorem 24.2 proves the indexed
+handler. Its counters and accumulated address are backed, as in §20.
+For a successful new event $e$, selection by the fixed identity predicate
+gives
+
+$$
+\nu_\chi(we)=
+\begin{cases}\nu_\chi(w)e,&\chi(e)=1,\\
+\nu_\chi(w),&\chi(e)=0.
+\end{cases}
+\tag{AA.91}
+$$
+
+Projection to each strict ancestor is exactly the selected maintenance
+rule. A newly split branch has no earlier strict-descendant event, so
+its empty tape is correct even if earlier selected events occurred at
+that address itself. This proves the selected invariant by induction.
+A query or refused growth leaves it unchanged.
+
+A fetched historical address persists in LAB. Current finite left descent
+there reaches a leaf with an enabled $P$ or $S$. The installed source
+binding and current source-write grant execute it on the live object;
+no simulation is substituted for that action. The maintained invariant,
+real printing and finite return proof then apply. Induction on the finite
+request sequence proves the full continuation statement. A proper frame
+prefix has only its written prefix and pending state; it cannot complete
+without its remaining input. All material and rights premises are used
+on this same finite execution. $\square$
+
+A selected service may instead acquire its selected tapes online from
+the known $\alpha$ by these same updates, or retain the selected successful
+addresses in the literal framing of Proposition 22.2 and pay finite scans
+for recall. These are credited retention alternatives inside this
+application. Neither alternative retrospectively constructs a selected
+archive from an inaccessible full archive; Theorem 24.2 specifies exactly
+when the stated old-coordinate handoff can do that.
+
+## 27. Four independent meanings at selected Ready cuts
+
+**Definition 27.1 (the selected continuation task and its views).** Fix
+$\chi$, the installation, current bindings/rights and SelectedReady of
+§26. The task $Q_\chi$ permits exactly the seven selected-mode request
+kinds, comparing each request's legality, complete literal reply and
+settled successor relevant to further such requests. Its selectors may
+read the acquired selected result, current source, current request and
+pending fields as specified, but not the sealed old archive. At Ready
+these pending fields are empty. The semantic state is
+
+$$
+K_\chi=(t,\nu_\chi(w)),
+\quad\text{equivalently }(t,\mathcal V_\chi(w)).
+\tag{AA.92}
+$$
+
+The joint process still includes actual allocation, conversion, busy
+phases, old archived material and printing. The task exposes no raw
+allocation names, obsolete workspace identities, primitive runtime,
+current capacity, archive version or complete controller chronology.
+The old archive has no future $Q_\chi$ use. Thus its omission cannot
+hide an admitted selector input or relevant successor effect. Content
+and binding equalities use the rooted oriented reference relations in
+this installation, modulo spelling of fresh names.
+
+Space $S_\chi$ is the actual source-edge support $S_0$ with attached
+source-indexed selected side words. Boundary $B_\chi$ is the actual
+terminal source antichain $B_0$ with those same local annotations.
+Neither contains all input/controller history; they expose source
+incidence and a restricted ordering supplement. Time $T_\chi$ is the
+labelled causal generation order $T_c$ together with the actual selected
+serial word $\nu_\chi(w)$. It exposes causal creation/lifecycle precedence
+and chosen-event precedence, not duration or the entire serial extension.
+Memory $M_\chi$ selects the actually retained source fields, selected
+preorder descriptors/cells with their source bindings, readable backing
+and callable selected entry under current rights. It excludes old full
+archive fields and obsolete scratch. This is a selection of constructed
+material with an independently specified entry, not an invented answer
+table or a view defined by a desired inverse.
+
+**Theorem 27.2 (exact selected-task recovery, route agreement and
+dynamics compatibility).** Separately for each
+$Z\in\{S_\chi,B_\chi,T_\chi,M_\chi\}$ on this Ready domain,
+
+$$
+Z(h)=Z(h')\quad\Longleftrightarrow\quad h\sim_{Q_\chi}h'.
+\tag{AA.93}
+$$
+
+All twelve mathematical recovery maps between their actual images are
+finite on finite inputs, agree along every route, and commute with the
+specified lawful settled requests and their complete replies/successors.
+The actually callable maps supplied by §26 use current grants; the
+mathematical maps do not issue grants. If $A\supseteq R_\chi(t)$, an
+actual old-full-tape handoff supplies these views; its exact access
+requirement is stronger than direct selected access whenever
+$R_\chi(t)\ne H_\chi(t)$. Bare $S_0,B_0,T_c$ alone do not acquire the
+missing selected order on the family (AA.88).
+
+Proof. Source support and terminals recover one another by Definition
+17.3, and each parses the actual $t$. Their selected annotations then
+decode exactly $\nu_\chi$ by Theorem 24.2. Conversely, from $(t,\nu)$
+project the strict-descendant selected sides at each branch and attach
+them to its source support or terminals. No unselected serial extension
+is chosen for this operation. Theorem 17.2 reconstructs $t$ from $T_c$
+and constructs $T_c$ from $t$; the selected serial component is unchanged.
+Reading the selected fields of $M_\chi$ gives the same source and words;
+from $(t,\nu)$ construct the corresponding canonical source-indexed
+retained-object description with its fixed entry and binding roles.
+This describes the retained expression in the fixed installation; it
+does not create a live object or permission from a printed description.
+Section 26 independently constructs and retains the callable object.
+
+These operations recover exactly (AA.92) from each view and reconstruct
+its view on the actual image. Composing them therefore returns that
+same view, with no separately chosen marginal representative. Inverse
+and triangle identities, and agreement of arbitrary routes, follow.
+
+Equal $(t,\nu)$ gives the same guards, source replies and historical
+selected event at every index. NextSelected consequently navigates to
+the same current leaf and performs the same current source event. A
+successful event changes the source by (AA.65) and the selected component
+by (AA.91), including empty new branch tapes. Queries and refusals
+preserve both. Thus legality, complete replies and settled successors
+factor through (AA.92), and the explicit view maps commute with these
+updates. Induction handles every finite request sequence. This is the
+concrete legality/readout/successor correspondence required by the
+existing typed-view and predictive-memory suppliers, not a new generic
+quotient theorem.
+
+Conversely distinct $t$ values differ at a finite Tag address. At equal
+$t$, distinct selected words differ at a finite FetchSelected index;
+a proper-prefix difference is separated by in-range versus OutOfRange.
+Thus task equivalence implies equal (AA.92), proving each kernel in
+(AA.93). Handoff sufficiency and actual use follow from Theorems 24.2
+and 26.3, and its necessity from the same-source witnesses in Theorem
+24.2. Equation (AA.88) gives equal bare geometry/causal membership and
+different selected words and lawful NextSelected successors. Hence the
+annotations cannot be removed from these four recovery assertions.
+$\square$
+
+## 28. One-run access, payload and continued-use resources
+
+**Proposition 28.1 (the family bill and its conditioning).** On any lawful
+growth history to $t_n$, with one complete successful growth request per
+event and no additional requests, the actual quantities are
+
+$$
+\begin{aligned}
+P&=n+3,& S&=n+4,& N&=2n+7,& V&=3n+12,\\
+D&=n^2+5n+7,&
+D_\chi:=\sum_{e\in E_\chi(t_n)}|\operatorname{addr}(e)|&=n+3.
+\end{aligned}
+\tag{AA.94}
+$$
+
+The old literal archive has $S$ headers and $D$ side cells. Direct
+selected literal tapes with a descriptor at every branch have $S$
+descriptors and $D_\chi$ side cells, despite only the root having a
+nontrivial selected-word choice. The fixed-access counts are respectively
+$n+1$ and one, and the selected conditional alphabet is two, or one
+fixed-width content bit. These are four different resource quantities.
+
+With $A=R_\chi(t_n)$ the handoff's first authorized complete-tape scans
+read exactly
+
+$$
+\sum_{p\in A}|W_p|=n^2+5n+5=D-2
+\tag{AA.95}
+$$
+
+side cells, and its construction makes exactly $D_\chi$ selected side
+appends. An optional literal selected-address journal has
+$2D_\chi+2=2n+8$ address-framing bits. A materialized representative
+full-address journal in the converter has $2D+N=2n^2+12n+21$ such bits.
+The source, pointers, headers, lengths, control, rights and temporary
+work are additional to all these payloads. If the access list is received
+in the framing of Assumption 26.1, $A=R_\chi(t_n)$ has an additional
+$n^2+3n+3$ ingress bits: $n+2$ count bits and $(n+1)^2$ address bits.
+A locally constructed source-only list instead pays its actual traversal,
+backing and binding work, with no such incoming list assumed. For example
+one fixed preparation program can compute (AA.82) from the acquired
+source and (AA.86), build this list and bind only these authorized reads.
+The current owner supplies the required live grants in either case.
+
+For the four-bit installation, the entire growth request stream contains
+$5N+2D=2n^2+20n+49$ input bits, and its growth replies contain
+$6N+2D=2n^2+22n+56$ bits, before their separately charged End/acknowledgement
+edges. Handoff adds its four request bits and four HandoffOK reply bits.
+With the received-list alternative, growth, list, Handoff and the one
+following NextSelected request together receive $3n^2+23n+62$ bits.
+The subsequent NextSelected$(1)$ adds six request bits. Its reply has
+$4n+18$ bits if the first selected event is $S_q$, and fourteen if it is
+$S_R$, followed in either case by End/acknowledgement/Return. This actual
+next action creates two source vertices and one empty selected descriptor;
+it appends no selected side cell. The two paths therefore need not have
+equal service runtime, output length or total price.
+
+Proof. Count events in (AA.87) and use (AA.78). The depth sum of spine
+splits is $(n+1)(n+2)/2$; of the $n$ side promotions it is $n(n+3)/2$;
+the two events at $q$ contribute $2(n+2)$ and the two at $R$ contribute
+two. Root events contribute zero. Their sum is $D$ in (AA.94).
+Only $S_q,S_R$ are selected, giving $D_\chi=n+2+1$. Projection appends
+one cell at each proper ancestor, so these sums are exact cell/append
+counts. Theorem 25.2 gives the support and alphabet claims.
+
+The root full tape has length $2n+5$. Equation (AA.89) gives lengths
+$2n+4-2i$ at $p_i$, $1\le i\le n$, whose sum is $n^2+3n$.
+These give (AA.95). The omitted $p_{n+1}$ tape has the forced two right
+symbols; the other omitted tapes are empty. Address framing is the
+credited $2|p|+1$ convention of Proposition 22.2, giving both journal
+counts without kind bits on the lawful domain. A request contributes
+four tag bits and $2|p|+1$ address bits; a growth reply contributes four
+tag bits, one kind bit and those same address bits. Summing proves
+the stream formulas. The access list has addresses
+$\varepsilon,L,\ldots,L^n$, giving $1+\sum_{i=1}^n(2i+1)=(n+1)^2$
+address bits and $|U(n+1)|=n+2$ count bits. Adding these, Handoff
+and the next six-bit request to the growth stream gives the displayed
+combined ingress length. The subsequent request has four tag bits and
+$U(1)=10$. A Next reply has four tag bits and two kind/address pairs,
+with lengths $(n+2,n+3)$ or $(1,2)$ by (AA.90). Both new events are
+unselected splits. This proves the final counts. $\square$
+
+**Definition 28.2 (whole charging domain).** For the specified full-archive
+then handoff execution, retain and charge the original full archive; no
+reversible erasure, deallocation or release of its grants is performed.
+During conversion the source, full archive, acquired access list, copied
+authorized words, source/branch correspondence, representative word,
+selected destination backing and pending output/workspace coexist.
+Copies and representative buffers may be cleared/reused only with their
+actual charged work after construction and service return. Source-reference
+widths, descriptor fields and table links are separate material, even
+when their contents have a singleton conditional alphabet.
+
+Source construction has the located source-field count $3+4P+8S$ of
+Proposition 22.1. Full-mode tape acquisition has its $V+3S+4D$ auxiliary
+data-field assignments there, in addition to grant/allocation operations.
+Selected conversion creates $S$ actual four-field descriptors and exactly
+$D_\chi$ linked side cells; an append to an already located header uses
+the same four data-field assignments per cell as §22. Locating descriptors,
+canonical-list insertion/linking, root/head bindings, initialization,
+reference copies and grant operations are additional. After conversion a
+selected event at depth $d$ makes $d$ selected ancestor appends; an
+unselected event makes none. Both still pay source navigation, event-kind
+and predicate evaluation, pending maintenance and any new descriptor.
+
+For one actual run let $c_j$ count each actual operation in the primitive
+categories of Assumption 20.1, together with installation/grants, request
+bit retention/parsing, source traversal, copy/scan, backed-counter work,
+canonical table lookup/insertion, predicate steps, ancestor comparisons,
+allocation/initialization, answer construction, bit output, End/ACK,
+return and scratch clearing/reuse. With any specified per-occurrence
+tariffs the total price is their sum over this same run, retaining
+reference-width dependence where the tariff has it. Equations
+(AA.94)–(AA.95) give exact contributions to this vector; they do not
+replace the remaining $c_j$ by zero or by separately optimal runs.
+Simultaneous scratch includes full acquired frames, unary index/length
+marks, traversal stacks, pending appends, finite-word/occurrence counters,
+copy and output buffers and their links. The literal converter may
+materialize the whole representative, so it has no claimed linear-work
+or bounded-scratch advantage. Even before handoff, $D$ and the complete
+input length grow quadratically in $n$. An online selected-only service
+would omit initial full retention, but is a different run and supplies
+no deletion claim about this handoff run.
+
+The indispensable-coordinate theorem is about whole-coordinate access
+on the complete fixed endpoint fibre. It does not assert that every
+adaptive algorithm must read every such coordinate on every run. Giving
+an acquired order bit directly changes the interface and can suffice
+here; giving an observable work meter changes the conditioning. No
+whole-price optimum, universal generator minimum, physical bound or
+bounded-memory consequence of finite program size follows.
+
+## 29. Exact supplier overlap and remaining domains
+
+**Definition 29.1 (attribution of the access result).** The exact support
+(AA.82)–(AA.83), its witnesses within every relevant LAB endpoint fibre,
+and the one-fixed-predicate unbounded family (AA.88) are `repo-derived`
+ordinary mathematical synthesis. Their source-relative handoff and
+selected-task recovery are credited applications with the additional
+installation hypotheses in §26. The following ingredients have narrower
+supplier claims.
+
+[Grossi, Gupta and Vitter, *High-Order Entropy-Compressed Text Indexes*,
+SODA 2003, pp. 841–850, §4.2, Lemma 4.2 and Figure 2](https://www.ittc.ku.edu/~jsv/Papers/GGV03.entropy.pdf)
+is `literature-attested` for binary subtree dictionaries representing left
+and right subsequences, parent navigation by select of the $d$th zero or
+one, and the compression accounting. The lemma begins on PDF page eight
+and finishes on page nine. Section 1.3 and the dictionaries in §4.2
+attribute the succinct rank/select dictionaries to reference [17],
+R. Raman, V. Raman and S. S. Rao, *Succinct indexable dictionaries with
+applications to encoding k-ary trees and multisets*, SODA 2002, pp. 233–242.
+Their role is explicitly credited through that primary paper's attribution;
+no independent implementation or tariff of those dictionaries is assumed
+here. Theorem 19.2's local routing and the selected routing in Theorem
+24.2 have this established representation/navigation correspondence.
+Our literal scans do not inherit constant-time rank/select or its storage
+bounds. Lemma 4.2 analyzes navigation and compression when the requisite
+dictionaries are supplied; it does not state which omitted full dictionaries
+leave an identity-selected subword invariant over the LAB extension
+product, or the outside-event term in (AA.82). Those are the conclusions
+proved here rather than a new wavelet-tree method.
+
+[Cover, *Enumerative Source Encoding*, Propositions 1–2, inverse algorithm
+and constant-weight Example 2](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf)
+supplies finite word ranking from prefix-block sizes and its inverse.
+It also credits earlier constant-weight indexing. Binary shuffle counting
+and a possible one-bit encoding of a two-valued selected result are
+intermediate coding facts, not new coding theorems or installed packed
+records. [de Visme and Winskel, *Causal Unfoldings and Disjunctive Causes*,
+§7](https://lmcs.episciences.org/11223/pdf) supplies event-structure hiding
+and its model conditions. Restricting a chronology to fixed visible
+identities is not proposed as a new hiding operation. Its general hiding
+results do not identify the retained old routing coordinates required by
+(AA.83). [Bennett, *Logical Reversibility of Computation*, introduction](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html)
+supplies history retention and output copying; it does not make our
+conversion erase its retained archive or establish a physical price.
+
+Theorem 17.2 supplies the exact equality between lawful LAB schedules and
+all extensions, and Theorem 19.2 supplies the independent full product.
+The new proof uses both equalities, not merely a generic abstract event
+structure. The directly corresponding repository declarations and owning
+Scribes are `EnabledPathSwapConnectivity.result` and
+`SwapClosureExtensionInvariance.extension_invariance_from_swap_connectivity`:
+the former supplies enabled lower-set executions and legal exchanges;
+the latter composes invariance under its parent-local swap hypotheses.
+Neither supplies this dynamically growing source's selected-coordinate
+support. The current proof gives its actual event pairs/triples and the
+coordinate-by-coordinate comparison. Pinned mathlib
+`56a005855ea17e0b0958f73ec801ae140b0a1679`,
+`Mathlib.Order.Extension.Linear.extend_partialOrder`, supplies the standard
+order-extension ingredient, not source execution or an access lower bound.
+
+[NCR §8](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md)
+already supplies acquired command-order complements and conditional
+alphabet counting on its different source/menu. [SC §§1–5,18–23](RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md)
+supplies overlapping selected local records, an actually acquired missing
+precedence edge and ranked raw-history recovery under its acquisition
+contract. [PG §40](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)
+supplies actual selector-visible history, legality and complete relevant
+successor factorization. Theorem 25.2 gives a concrete current LAB action
+rather than assuming the distinguishing continuation of that supplier.
+These results do not compare the fixed coordinates of full LAB tapes
+with coordinates of already selected tapes; (AA.82) distinguishes those
+interfaces on all finite endpoints.
+
+[SSA §7](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md),
+[PVC §§4,10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md),
+[owner-control §§8–9](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_CONTROL_HISTORICAL_ACQUISITION.md)
+and [PR57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#57-a-complete-paid-ideal-realization-of-the-original-ordered-tree-interface)
+supply actual retained backing, source binding, current authority, paid
+publication/call/return and subsequent live-source use in their declared
+installations. Theorem 26.3 uses those disciplines in the separately
+specified LAB installation; it is not a new general conversion theorem
+or an implementation on their original ports. `NativeFullSourceProducer`
+and its private `traverse`, `production_reads`, `stationary`, together
+with `NativeUniformTree` and its private `treeView`, `child`, `walkStep`,
+`walk_exact`, `rootReply`, `readout_walk` and their owning Scribes, supply
+acquired stacks and finite ordered-tree navigation with their stated
+Native semantics. Their existing unknown-source producer is not a gap
+claimed here. Its stationary unknown input and global substitution are
+not the local-growth/permission bridge in §26.
+
+`TypedFiniteViewKernel.typed_finite_view_kernel`,
+`PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient` and
+their owning Scribes supply typed path behavior and descended
+readout/update requirements. Section 27 establishes the exact source,
+selected selector, lawful output and successor correspondence before
+using that interpretation. Generic view quotients, record/replay,
+projection and coding are not the asserted new mathematical centre.
+The remaining delta after those credited methods is (AA.82), its exact
+necessity/sufficiency proof and its unbounded separation at one fixed
+selector with an actual order-sensitive source continuation. This is
+no exhaustive worldwide originality claim and no new Lean/kernel
+certification.
+
+**Definition 29.2 (unchanged original domains and outstanding bridges).**
+These statements concern local LAB growth, identity-fixed selection,
+complete old-coordinate access and the finite material/authority/phase
+contract of §26. They do not cover general adaptive selectors, selection
+from hidden history without an installed evaluator, unknown-source
+historical acquisition, access after revocation, cross-owner grants,
+observable finite-capacity behavior or omitted archive/meter inputs.
+Theorem 27.2 concerns annotated geometry and causal-plus-selected time
+at SelectedReady, not bare geometry, arbitrary busy cuts or complete
+controller chronology. The resources in §28 establish conditional access
+and explicit contributions, not minimal total price, physical realization
+or one coherent infinite execution from finite-prefix existence.
+
+Every fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization,
+terminal and final-no-Ready obligation in the earlier volumes and §§1–23
+retains its exact original domain and settlement. Their missing bridges
+are not solved by the different owned LAB service. Alpha/beta local
+generation here is an assessed candidate with an exact source-relative
+access theorem; it is not a proved universal reduction. Independently
+meaningful general space, time, boundary and memory, their broader
+common-process recovery/acquisition and their parsimony beyond this
+model remain the full programme's open mathematical obligations.
+For (AA.86), $Q_\chi$ has a smaller recall domain than $Q_g$; success
+for this selected task is not success for the complete old generation
+recall task or for the original fixed-apparatus $Q$.
+
+## 追加锚（本行以下为增补区）
