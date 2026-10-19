@@ -13,7 +13,7 @@ def presentationLookup (target : List Name) (entries : List (Name × List Name))
     List (Name × List Name) := entries.filter (supportIncluded target ·.2)
 
 private def primitive (n : Name) : Bool :=
-  #[``And, ``Iff, ``True, ``False, ``Eq, ``Not, ``Nat, ``Int,
+  #[``And, ``Iff, ``True, ``False, ``Eq, ``Nat, ``Int,
     ``HAdd.hAdd, ``HMul.hMul, ``HSub.hSub, ``Neg.neg, ``OfNat.ofNat,
     ``LE.le, ``LT.lt, ``Nat.add, ``Nat.mul, ``Nat.sub, ``Int.add,
     ``Int.mul, ``Int.sub, ``Int.neg].contains n
@@ -259,6 +259,12 @@ def normalizeCertified (e : Expr) : MetaM Expr := do
 /-- Match the complete common telescope before constructing the source-arrow
 certificate. The actual source theorem is restored only by the caller. -/
 def singleSourceConversion (target source : Expr) : MetaM (Option Expr) := do
+  let env ← getEnv
+  let targetAtoms ← match normalizedAtoms env target with
+    | .ok atoms => pure atoms | .error err => throwError err
+  let sourceAtoms ← match normalizedAtoms env source with
+    | .ok atoms => pure atoms | .error err => throwError err
+  unless supportIncluded targetAtoms sourceAtoms do return none
   let target ← normalizeCertified target
   let source ← normalizeCertified source
   singleTelescope target source #[]

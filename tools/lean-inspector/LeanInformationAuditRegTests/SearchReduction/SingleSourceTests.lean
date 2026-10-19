@@ -55,13 +55,13 @@ run_elab do
   let env ← getEnv
   let target ← statement (← `(∀ n : Nat, ramp n = 3*n))
   let .ok ta := normalizedAtoms env target | throwError "normalization failed"
-  let mut candidates := 0
+  let mut checked := 0
   for (name, info) in env.constants.toList do
     if name.toString.endsWith "card_derangements_fin_add_two" then
       let .ok sa := normalizedAtoms env info.type | throwError "normalization failed"
       unless (presentationLookup ta [(name, sa)]).isEmpty do
         throwError "unrelated derangements candidate reached conversion"
-    if let .ok sa := normalizedAtoms env info.type then
-      if supportIncluded ta sa then candidates := candidates + 1
-  logInfo m!"actual syntax ramp candidates={candidates}"
+      checked := checked + 1
+  unless checked > 0 do throwError "derangements fixture was not loaded"
+  logInfo m!"actual syntax unrelated derangements declarations checked={checked}, conversion candidates=0"
 end LeanInformationAudit.Tests.SearchReduction.SingleSourceTests
