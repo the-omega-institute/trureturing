@@ -1,0 +1,811 @@
+# FIB all-response finite-fibre geometry
+
+This volume records a uniform finite-fibre consequence of the literal
+common-parent model.  It is a continuation of
+FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md; that volume is the
+source for the complete-world definitions, the clock functions, the
+zero-safe lift, and the exact coefficient table cited below.  The new
+statement concerns every real response in the acquired sixth-$M$ slot.
+
+## 1. Model and quantifiers
+
+The parent is the literal $H_4$ of Definitions 1.1--1.3 of the
+owning volume, with the original clocks $0,\ldots,7$.  A complete
+world has the strict source coordinates
+
+$$
+0<r<1,\qquad b>0,
+$$
+
+the nonnegative rank-one idempotent $P(r,b)$, one entire nonzero real
+gain polynomial $g$ of degree at most three, and one fixed real drift
+$d$.  Thus a lower-degree gain, a sampled zero, a repeated gain root,
+or $d=0$ is still a complete world.  No bound is imposed on positive
+off-diagonal coordinates.  The notation
+
+$$
+\mathcal F(H_4,M,p,M,v)
+$$
+
+means the complete worlds whose fifth response is $p$, whose acquired
+sixth response is $v$, and whose two actions are $M$.  The same
+entire $g$ and the same $d$ are used in every clock response of one
+world.  In particular, $v$ is an arbitrary real number; it is not a
+query count, a memory value, or a response already known to be realized.
+
+Put
+
+$$
+\mathcal P=\left[\frac{2744214237}{10^8},\frac{2744214238}{10^8}\right],
+\qquad
+p_0=\frac{219537139}{8000000},\qquad
+\rho=\frac1{200000000}.
+$$
+
+Thus $\mathcal P=[p_0-\rho,p_0+\rho]$.  The exact parameter $p_J$
+supplied by the unique original $F_J$ box root remains the parameter
+of the earlier joint-collision question.  The interval $\mathcal P$ is
+used here only to prove a uniform algebraic certificate; it does not
+replace $p_J$ by its containing interval or by its Taylor centre.
+
+## 2. The zero-safe source interface
+
+Retain $j,n,T,U,V,X,N,H$ and the scalar source equation of
+Definitions 12.1--12.3 of the owning volume:
+
+$$
+\begin{gathered}
+X=b^2+r-r^2,\quad N=X+br,\quad T=1+b,\quad U=1+2b,\quad V=U+n,\\
+H(r,b)={}
+14b^6+(95-73r)b^5+(47r^2-39r+30)b^4\\
+\qquad+r(147r^2-232r+105)b^3
+ +2r(1-r)(44r^2-55r+15)b^2\\
+\qquad-64r^3(1-r)^2b-32r^3(1-r)^3,\\
+N_4=2(b^2+8b+4)XN-4bTU(X+N),\\
+\mathsf S_p(r,b)=5b(p-24)N_4+6(8b-1)H(r,b).
+\end{gathered}
+$$
+
+The symbols $j,n,U,V$ above have exactly the rational expressions in
+(1.6) and (12.1) of the owning volume; they are recalled only to fix
+the interface.  Theorem 12.3 there is zero-safe: a strict source lifts
+to a complete world in $\mathcal F(H_4,M,p)$ if and only if
+$\mathsf S_p(r,b)=0$, and the lift is unique.  Its drift and its whole
+gain are reconstructed from (12.5)--(12.6), with
+$\Lambda^2+A_5^2>0$.  No division by $\Lambda$, by a gain sample, or
+by the drift is made in that theorem.  This is why the present source
+count includes the singular stratum $\Lambda=0$, degree drops, sampled
+zeros, repeated roots, and zero drift.
+
+For arbitrary real $p,v$, use the integer polynomials of Definition
+20.1:
+
+$$
+\begin{gathered}
+D_\Lambda=(b^2+8b+4)XN-2bTU(X+N),\\
+K_\Lambda=(8b-1)(2+5b),\qquad Z_6=N+2bU,\\
+G_{6,\Lambda}=(10T+45)XN-bT(36N+20X),\\
+\mathsf A(r,b,p)=5b(p-24)D_\Lambda+3(8b-1)H(r,b),\\
+\mathsf N_u(r,b)=
+\frac{120bTD_\Lambda+15Z_6D_\Lambda(80b-1)
+       -3K_\Lambda(bTXN+Z_6G_{6,\Lambda})}{T},\\
+\mathsf B(r,b,v)=5bD_\Lambda v-\mathsf N_u(r,b).
+\end{gathered}
+$$
+
+The displayed numerator for $\mathsf N_u$ is divisible by $T=1+b$
+in $\mathbb Z[r,b]$, so $\mathsf A,\mathsf B$ are polynomials.  The
+published Theorem 20.2 gives, for every nonsingular complete world,
+
+$$
+\Lambda\ne0\quad\Longrightarrow\quad
+\mathsf A(r,b,p)=\mathsf B(r,b,v)=0.
+$$
+
+At the singular branch, the zero-safe parent equation gives $b=1/8$,
+and the published identity
+$\Lambda=\Phi(r)/(960jn)$ gives a root of
+
+$$
+\Phi(r)=438272r^4-931328r^3+540800r^2-50728r-853.
+$$
+
+Exact substitution of $b=1/8$ into the two source polynomials gives
+$\mathsf A(r,1/8,p)\equiv0$ and
+$\mathsf B(r,1/8,v)\equiv0$ modulo $\Phi(r)$.  Consequently every
+singular complete world also lies in the affine common zero set of
+$\mathsf A,\mathsf B$.  This substitution is an identity modulo
+$\Phi$, not a numerical check at either of its roots.
+
+## 3. The fixed resultant and its leading coefficient
+
+Use the ordinary Sylvester determinant in the $b$-variable, with rows
+$b^6\mathsf A,\ldots,\mathsf A,b^6\mathsf B,\ldots,\mathsf B$, and
+columns $b^{13},\ldots,1$.  With that row order and descending column
+order the owning volume defines $R_{18}\in\mathbb Z[r,p,v]$ by
+
+$$
+\operatorname{Res}_b(\mathsf A,\mathsf B)=
+52488000\,r^{11}(r-1)^9\Psi_2(r)\Psi_4(r)\Phi(r)R_{18}(r,p,v),
+$$
+
+where
+
+$$
+\Psi_2=4r^2-2r-1,\qquad
+\Psi_4=625r^4-1000r^3+50r^2+260r+36.
+$$
+
+The full 668-row coefficient table in Definition 24.1 of the owning
+volume fixes every coefficient, its sign, and its scale.  It has
+coordinate degrees $(18,7,7)$.  We use that table as a supplier and do
+not reassert a new determinant expansion.  The only coefficient needed
+for the noncollapse certificate is
+
+$$
+a(p,v)=[r^{18}]R_{18}(r,p,v)/750.
+$$
+
+The exact polynomial $a$ is listed here so that the three finite
+certificates below are independently reproducible:
+
+$$
+\begin{aligned}
+a(p,v)={}&375948000000p^6-418003200000p^5v
+ +288640130400000p^5\\
+&+186930540000p^4v^2-244797381360000p^4v
+ +51693650192250000p^4\\
+&-42997996000p^3v^3+79681441734000p^3v^2
+ -29092711350411000p^3v\\
+&-1741101916388796000p^3+5366228175p^2v^4
+ -12467265195600p^2v^3\\
+&+5840320948875225p^2v^2+1078183709895925800p^2v
+ -118733074263213807600p^2\\
+&-344286720pv^5+935826559920pv^4-482166542464920pv^3\\
+&-213631924877591760pv^2+40225716516510210240pv
+ +319744607467047114240p\\
+&+8847360v^6-26775318528v^5+12935750417856v^4\\
+&+13703870337816960v^3-3387392590125035520v^2\\
+&-69057672384839625216v+1575043434745240919040.
+\end{aligned}
+$$
+
+The leading $b$-coefficients supplied by the same exact expansion are
+
+$$
+[b^7]\mathsf A=5p+216,\qquad [b^7]\mathsf B=5(v+225).
+$$
+
+The second coefficient may vanish at $v=-225$; the proof below never
+divides by it and therefore retains that degree-drop response.
+
+## 4. Three endpoint resultants
+
+Define the three source factors
+
+$$
+\begin{aligned}
+\ell(p,v)&=32p-5v-366,\\
+q_2(p,v)&=9000p^2-1300pv-175350p-1600v^2+225120v-6050961,\\
+q_3(p,v)&=51072900p^3-38068700p^2v-1933224270p^2
+ +8423500pv^2\\
+&\qquad+601454235pv+10167680250p-581725v^3
+ -45839880v^2\\
+&\qquad-1393526691v+136430551152.
+\end{aligned}
+$$
+
+These are the exact factors of the constant $r$-coefficient of the
+published eliminant:
+
+$$
+[r^0]R_{18}=4\,\ell(p,v)^2q_2(p,v)q_3(p,v).
+$$
+
+For $q\in\{\ell,q_2,q_3\}$, define
+
+$$
+h_q(p)=\operatorname{Res}_v(a(p,v),q(p,v)),
+$$
+
+using the Sylvester convention “rows $v^{\deg q-1}a,\ldots,a,
+v^{\deg_v a-1}q,\ldots,q$, descending powers of $v$”.  Direct exact
+determinant arithmetic gives
+
+$$
+\deg h_\ell=6,\qquad \deg h_{q_2}=12,\qquad \deg h_{q_3}=18.
+$$
+
+Write the exact Taylor expansion at $p_0$ as
+
+$$
+h_q(p_0+x)=\sum_{k=0}^{d_q}c_{q,k}x^k,\qquad
+c_{q,k}=\frac{h_q^{(k)}(p_0)}{k!}.
+$$
+
+All $c_{q,k}$ are rational numbers obtained from the displayed
+integer $a,\ell,q_2,q_3$.  The following exact centre values fix the
+sign convention and make the certificate checkable without decimal
+rounding:
+
+$$
+c_{\ell,0}=
+-\frac{22840206648135224684886839221025303806888962919613986118771951297}
+{204800000000000000000000000000000000000}.
+$$
+
+$$
+c_{q_2,0}=
+\frac{443153376328343297403565417619374492622356576324586886804391963989452371419561183592818218165812936928539051759444687913047209}
+{42949672960000000000000000000000000000000000000000000000000000}.
+$$
+
+$$
+c_{q_3,0}=
+-\frac{249292213177920260587921798396202459094574674761398997314883645219831972907966464804515795331161057601078458718621360983131758601621876870283082616244067818491635995621397422750833612971017368938124664686156799941}
+{2305843009213693952000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000}.
+$$
+
+For the full interval, use the triangle inequality with the exact
+rational tail
+
+$$
+T_q=\sum_{k=1}^{d_q}|c_{q,k}|\rho^k.
+$$
+
+The determinant expansions give the following strict rational
+comparisons (each numerator and denominator is an integer, so these are
+finite checks by cross multiplication):
+
+$$
+\frac{T_\ell}{|c_{\ell,0}|}
+=\frac{978496224399822570290500553163904466734775767616344379260517823}
+{5576222326204888839083700981695630812228750712796383329778308422119140625}
+<\frac1{10^7},
+$$
+
+$$
+\frac{T_{q_2}}{|c_{q_2,0}|}
+=\frac{1256215045437611300727955943158594487623648052039334862433103870054512752255533404065861333248836831488443429861488642380102843311827}
+{978296280632070473837776134675022612285518152458992019415767025041254298376951358037564971194913954488743348826842590422646224498748779296875}
+<\frac1{10^7},
+$$
+
+$$
+\frac{T_{q_3}}{|c_{q_3,0}|}
+=\frac{4801674575923910293032911669758394096310133953585441890260494008812575371314294165386061144684088024820914941266688415690349160120798053268625580066122953600124403670719638962746808419373562909085451057877465147905487754550707}
+{134358487157668644896476567479356275642108906651911199266886302599748064546086170488849810084858961852365722447856528248549395142548815040199747166934856374504245142679535084662123383287483425799143186243361345012090168893337249755859375}
+<\frac1{10^7}.
+$$
+
+Therefore, for $|x|\leq\rho$,
+
+$$
+|h_q(p_0+x)-c_{q,0}|\leq T_q<|c_{q,0}|/10^7<|c_{q,0}|.
+$$
+
+In particular each $h_q$ is nonzero on all of $\mathcal P$, with
+signs $\operatorname{sgn}(h_\ell)=-1$,
+$\operatorname{sgn}(h_{q_2})=+1$, and
+$\operatorname{sgn}(h_{q_3})=-1$.  This is a Taylor enclosure of the
+full interval, not three point evaluations.
+
+## 5. Uniform noncollapse of the eliminant
+
+**Lemma 5.1 (No common leading/constant coefficient).** For every real
+$p\in\mathcal P$, the polynomial $a(p,v)$ has no common complex root
+with any of $\ell(p,v),q_2(p,v),q_3(p,v)$.
+
+**Proof.** The Sylvester criterion says that a common complex root would
+make the corresponding $h_q(p)$ vanish.  Section 4 proves that all
+three resultants are nonzero on $\mathcal P$. ∎
+
+**Theorem 5.2 (Uniform noncollapse).** For every real
+$p\in\mathcal P$ and every real $v$, $R_{18}(r,p,v)$ is not the
+zero polynomial in $r$.
+
+**Proof.** If $R_{18}$ were identically zero in $r$, its leading
+coefficient $750a(p,v)$ and its constant coefficient
+$4\ell(p,v)^2q_2(p,v)q_3(p,v)$ would both vanish.  The latter forces
+one of $\ell,q_2,q_3$ to vanish at the same complex pair $(p,v)$,
+contradicting Lemma 5.1.  Thus $R_{18}$ is nonzero for every real
+$(p,v)$ in the stated domain. ∎
+
+The argument does not require $v$ to lie in the previously published
+finite necessary response set.  It also does not assert that a root of
+$R_{18}$ is real, strict, or liftable.
+
+## 6. Zero-dimensional source intersection
+
+**Lemma 6.1 (Finite source intersection).** Fix real $p\in\mathcal P$
+and real $v$.  The affine complex common zero set of
+$\mathsf A(r,b,p)$ and $\mathsf B(r,b,v)$ has no positive-dimensional
+component.
+
+**Proof.** By Theorem 5.2 and the exact factorization of the resultant,
+$\operatorname{Res}_b(\mathsf A,\mathsf B)$ is not the zero polynomial
+in $r$.  Hence $\mathsf A,\mathsf B$ have no common factor of
+positive $b$-degree in $\mathbb C[r,b]$.  A common factor depending
+only on $r$ would divide every coefficient of $\mathsf A$, in
+particular its $b^7$-coefficient $5p+216$.  Since
+$p>24$, this coefficient is a nonzero scalar, so no nonconstant
+$r$-factor is possible.  Thus the two polynomials have no common
+curve component. ∎
+
+The proof remains valid at $v=-225$: the $b^7$-coefficient of
+$\mathsf B$ may drop there, but no leading coefficient is divided out.
+The fixed Sylvester determinant and its common-finite-root implication
+are valid under this specialization.
+
+## 7. The all-response 49-world bound
+
+**Theorem 7.1 (Uniform all-real-response finite fibre).** For every
+real $p\in\mathcal P$ and every real $v$,
+
+$$
+\left|\mathcal F(H_4,M,p,M,v)\right|\leq49.
+$$
+
+This includes lower-degree gains, sampled zeros, repeated gain roots,
+zero drift, unbounded positive offdiagonals, the singular branch
+$\Lambda=0$, and the source-degree drop $v=-225$.
+
+**Proof.** By Section 2, every complete world gives a unique strict
+source $(r,b)$ in the published source parametrization.  A nonsingular
+world satisfies $\mathsf A=\mathsf B=0$ by Theorem 20.2, and a singular
+world satisfies the same equations by the exact $\Phi$-remainder
+identity in Section 2.  Thus all complete worlds inject into the strict
+part of the common affine zero set of $\mathsf A,\mathsf B$.
+
+Both polynomials have total degree at most seven.  Lemma 6.1 removes
+common components.  Affine Bézout, applied after homogenizing in
+$(r,b)$, bounds the sum of intersection multiplicities in the
+projective plane by $7\cdot7=49$; affine distinct points are a
+subset of those points.  Theorem 12.3 gives at most one complete world
+over each strict source, including every zero-safe singular or degree
+drop case.  Therefore the complete-world fibre has at most $49$
+distinct worlds. ∎
+
+The Bézout step is the standard affine/projective intersection theorem;
+the source-specific work is the noncollapse certificate and the
+zero-safe injection.  No projected root is counted as a world unless it
+is real, strict, and liftable, so the bound is conservative.
+
+## 8. Interface with the remaining collision problem
+
+The prior finite-response theorem supplies a necessary restriction at
+the exact inherited $p_J$: any child containing a distinct terminal-$M$ pair has $v$ among the real roots of its determinant-defined
+$Q(p_J,v)$, together with the two explicit singular responses
+$s_-(p_J),s_+(p_J)$.  The present theorem supplies a complete-world
+upper bound for each such candidate, and in fact for every real $v$.
+It does not replace the inherited $p_J$ by $\mathcal P$, and it does
+not claim that any candidate response is realized.
+
+For a fixed candidate $v$, the remaining exact task is finite but
+unsettled.  Form the radical source algebra over the ordered algebraic
+field generated by $p_J,v$, retain only real strict points satisfying
+$\mathsf S_{p_J}=0$, and use the zero-safe reconstruction of Theorem
+12.3.  In the tensor square of that algebra impose the terminal-$J$
+or terminal-$M$ equality, the strict guards for both sources, and
+
+$$
+(r-r')^2+(b-b')^2>0.
+$$
+
+Exact Hermite/Tarski signatures can then count the two kinds of ordered
+distinct pairs.  The same labels may occur in both pairs.  A positive
+count for each pair at one common $v$ would settle the local
+same-child witness; a zero count for either pair at every candidate
+would exclude it.  Neither alternative is asserted here.  The
+original exact $p_J$, all-response simultaneous pairs, common-parent
+and all-fifth-response obligations, global eight-versus-nine question,
+full-domain nine-sufficiency question, and any physical interpretation
+remain unchanged.
+
+## 9. Sources and boundaries
+
+The model, clocks, source coordinates, zero-safe lift, and the exact
+$R_{18}$ coefficient table are supplied by
+FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md, Definitions 1.1,
+12.1, 20.1, 24.1 and Theorems 12.3 and 20.2.  The affine resultant and
+Bézout facts are standard; see Cox--Little--O'Shea, *Ideals, Varieties,
+and Algorithms*, Chapter 3.  Univariate resultants and the root-counting
+interface have the standard real-algebraic background in Basu--Pollack--
+Roy, *Algorithms in Real Algebraic Geometry*.  These references supply
+general algebraic methods, not the FIB-specific certificate.
+
+The exact three Taylor enclosures above are the new source-specific
+finite rational certificate.  They prove noncollapse on the whole
+$\mathcal P\times\mathbb R$; they do not rerun or reprove the published
+668-term determinant identity.  No exhaustive novelty claim, Lean
+formalization, ingestion status, feasibility decision, candidate count,
+or publication status is part of this volume.
+
+## 追加锚（本行以下为增补区）
+
+## 10. Multiplicity allocation and the eighteen regular-world bound
+
+**Definition 10.1 (Complex regular source fibres).** Write $O$ for
+[the owning common-parent volume](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+$E$ for [the exact response-strip volume](FIB_EXACT_RESPONSE_STRIP_AND_JOINT_COLLISION_EXCLUSION.md),
+and $S$ for [the singular-response exclusion volume](FIB_SINGULAR_RESPONSE_CHILDREN_EXCLUSION.md).
+Retain the exact polynomials of Sections 2–3 and set
+$D=D_\Lambda$, $R=R_{18}$ and
+$E_0=\Psi_2\Psi_4\Phi$. For real $p\in\mathcal P$ and complex $v$,
+define
+
+$$
+\mathcal Z(p,v)=\{(r,b)\in\mathbb C^2:
+ r(r-1)bD(r,b)\ne0,\quad
+ \mathsf A(r,b,p)=\mathsf B(r,b,v)=0\}.
+\tag{10.1}
+$$
+
+This is an algebraic counting domain; its complex points are not
+asserted to be legal worlds. Its strict real points correspond to
+regular complete worlds by $O$, Theorem 12.3 and (20.8)–(20.9), or
+$E$, Lemma 3.3. In particular every regular world of the original
+child has one distinct point in (10.1).
+
+**Theorem 10.2 (Uniform regular-source and regular-world bound).**
+For every real $p\in\mathcal P$ and every complex $v$,
+
+$$
+|\mathcal Z(p,v)|\le18.
+\tag{10.2}
+$$
+
+Consequently, for every real $p\in\mathcal P$ and real $v$,
+
+$$
+\bigl|\{W\in\mathcal F(H_4,M,p,M,v):\Lambda(W)\ne0\}\bigr|
+\le18.
+\tag{10.3}
+$$
+
+The count includes multiple sources above the same projected root,
+fixed base projections, repeated projected roots and specialized
+source-degree drops.
+
+Proof. First $R(r,p,v)$ is a nonzero polynomial in $r$ even when
+$v$ is complex. Indeed, if it were zero, its leading and constant
+coefficients from Sections 3–4 would give
+
+$$
+a(p,v)=0,\qquad \ell(p,v)^2q_2(p,v)q_3(p,v)=0.
+\tag{10.4}
+$$
+
+Lemma 5.1 excludes a common complex root of $a(p,\cdot)$ and any
+of $\ell(p,\cdot),q_2(p,\cdot),q_3(p,\cdot)$ for every such real
+$p$. This proves the required extension of the noncollapse argument.
+
+Let $\mathsf S(r)$ be the fixed $14$ by $14$ Sylvester matrix of
+Section 3, at the present $p,v$. Its determinant is
+
+$$
+\det\mathsf S(r)=52488000r^{11}(r-1)^9E_0(r)R(r,p,v).
+\tag{10.5}
+$$
+
+The coefficient $[b^7]\mathsf A=5p+216$ is a nonzero scalar.
+Thus at each fixed complex $r=\alpha$ there are at most seven
+finite common $b$ roots. Each distinct common root $t$ supplies
+the null vector $(t^{13},t^{12},\ldots,1)^{\mathsf T}$ of
+$\mathsf S(\alpha)$. The vectors for distinct roots are linearly
+independent by the Vandermonde determinant. Hence the corank of
+$\mathsf S(\alpha)$ is at least their number.
+
+If a polynomial matrix has corank $k$ at $\alpha$, its determinant
+vanishes to order at least $k$. To see this, apply constant
+invertible row and column operations putting its value at
+$\alpha$ in rank normal form. The last $k$ columns then have all
+entries divisible by $r-\alpha$. Multilinearity of the determinant
+gives the assertion. This is the corank argument of $E$,
+Lemma 4.3, with the number of roots unrestricted up to seven.
+
+For $\alpha\notin\{0,1\}$ let $n_\alpha$ count the points of
+$\mathcal Z(p,v)$ above $\alpha$, and let
+$m_\alpha=\operatorname{ord}_{r=\alpha}R(r,p,v)$, with value zero
+when $R(\alpha,p,v)\ne0$. If $E_0(\alpha)\ne0$, (10.5) and the
+corank inequality give $n_\alpha\le m_\alpha$.
+
+If $E_0(\alpha)=0$, $E$, Lemma 4.2, supplies an additional finite
+common root with $D=0$ for every $p,v$:
+
+| Vanishing factor | Additional common root $b$ |
+| --- | --- |
+| $\Psi_2$ | $-1/2$ |
+| $\Psi_4$ | $-2/5$ |
+| $\Phi$ | $1/8$ |
+
+These identities are polynomial substitutions over $\mathbb Q$,
+so hold at complex roots and complex responses. The same lemma
+proves that the three factors are squarefree and pairwise coprime.
+Thus $E_0$ has order exactly one at $\alpha$. The additional
+$D=0$ root is distinct from every point counted by $n_\alpha$.
+The corank is at least $n_\alpha+1$, whereas (10.5) has order
+$1+m_\alpha$. Again $n_\alpha\le m_\alpha$.
+This includes every intersection of a fixed base projection with
+an $R$ root, without a nonzero linear-subresultant premise.
+
+Every nonempty fibre therefore projects to a root of the nonzero
+$R$, and
+
+$$
+|\mathcal Z(p,v)|
+ =\sum_{\alpha\ne0,1}n_\alpha
+ \le\sum_{\alpha\ne0,1}m_\alpha
+ \le\deg_r R(r,p,v)\le18.
+\tag{10.6}
+$$
+
+The fixed matrix and its evaluation vectors remain valid when the
+$b$ degree of $\mathsf B$ drops, in particular at $v=-225$.
+No simplicity of an $R$ root or uniqueness of its $b$ lift was
+used. Finally, $O$, Theorem 12.3, makes the complete-world lift
+unique at each strict source, and (20.8) identifies $D\ne0$ with
+$\Lambda\ne0$ there. This proves (10.3), including all gain and
+drift strata in Section 1. ∎
+
+## 11. Finiteness of the complex distinct-pair locus
+
+**Definition 11.1 (Complex response map at the original parameter).**
+Throughout Sections 11–13, $p_J$ is precisely $O$ (8.4), evaluated
+at the unique zero of $O$ (8.1) in its original box
+$\mathcal B_J$. In particular $p_J\in\mathcal P$ by $O$,
+Theorem 8.1. Set
+
+$$
+D_m=5bD,\qquad N_u=\mathsf N_u,
+\tag{11.1}
+$$
+
+and use exactly $N_m$ of $O$ (27.1). The polynomials
+$D_m,N_u,N_m$ have total degree at most seven, as in $E$ (3.6).
+Define
+
+$$
+\begin{aligned}
+\mathcal X&=\{x=(r,b)\in\mathbb C^2:
+ \mathsf A(r,b,p_J)=0,\ r(r-1)D_m(r,b)\ne0\},\\
+u(x)&=N_u(x)/D_m(x),\qquad m(x)=N_m(x)/D_m(x),\\
+\mathcal K&=\{(x,y)\in\mathcal X^2:
+ x\ne y,\ u(x)=u(y),\ m(x)=m(y)\}.
+\end{aligned}
+\tag{11.2}
+$$
+
+On legal regular worlds, $u=u_M$ and $m=f_{MM}$ by $O$ (20.9)
+and Theorem 27.2. Outside those real sources these are the stated
+rational maps, with no world interpretation required.
+
+**Theorem 11.2 (Every complex distinct pair has an exceptional response).**
+For every $(x,y)\in\mathcal K$,
+
+$$
+Q(p_J,u(x))=0,
+\tag{11.3}
+$$
+
+where $Q$ is exactly $O$, Definition 28.1. Moreover
+$\mathcal K$ is finite.
+
+Proof. Fix a complex $v$ with $Q(p_J,v)\ne0$. We prove that
+$u=v$ and a fixed value of $m$ determine at most one point of
+$\mathcal X$. A point with $u=v$ lies in
+$\mathcal Z(p_J,v)$, so the projection argument of Theorem 10.2
+gives $R(r,p_J,v)=0$, including all fixed base projections.
+
+Use the exact minors $\mathcal L_0,\mathcal L_1$ of $O$
+(20.4)–(20.5). The evaluation-vector identity $O$ (20.10) is a
+polynomial common-root identity, so it gives
+
+$$
+\mathcal L_1(r,p_J,v)b+\mathcal L_0(r,p_J,v)=0
+\tag{11.4}
+$$
+
+also over $\mathbb C$: its only divisor is
+$72900r^6(r-1)^4\ne0$ on $\mathcal X$.
+Nonzero $Q$ makes its factor
+$E_1=\operatorname{Res}^{18,26}_r(R,\mathcal L_1)$ nonzero.
+The common-finite-root implication for the padded determinant
+therefore makes $\mathcal L_1$ nonzero at every complex $R$ root.
+Equation (11.4) fixes $b=-\mathcal L_0/\mathcal L_1$.
+Consequently two distinct points in this fibre have distinct
+$r$ coordinates.
+
+Let $F_*,G_*$ denote exactly the polynomials called $F,G$ in
+$O$ (27.2). Fixed-degree substitution gives, at any of these
+complex source points,
+
+$$
+F_* =\mathcal L_1^7N_m(r,b),\qquad
+G_* =\mathcal L_1^7D_m(r,b),\qquad m=F_*/G_*.
+\tag{11.5}
+$$
+
+These are polynomial homogenization identities; their use does
+not extend a positivity premise to complex sources.
+Write $c_{18}=[r^{18}]R(r,p_J,v)$, which is $750a(p_J,v)$ in
+the normalization of Section 3. Nonzero $Q$ makes $c_{18}\ne0$
+and $E_3=\operatorname{Res}^{18,186}_r(R,G_*)\ne0$.
+Thus $R$ has degree eighteen and $G_*$ is nonzero at all its
+complex roots. The padded resultant product formula gives
+
+$$
+T_*(p_J,v,w)=c_{18}^{188}
+ \prod_{R(\alpha,p_J,v)=0}
+ \{F_*(\alpha,p_J,v)-wG_*(\alpha,p_J,v)\},
+\tag{11.6}
+$$
+
+with the eighteen roots counted with multiplicity. In particular
+$T_*$ has degree eighteen in $w$. If distinct source points had
+one common $m$, their distinct $r$ roots would give two vanishing
+factors at $w=m$ in (11.6). This would be a multiple root of
+$T_*$, forcing
+
+$$
+E_4=\operatorname{Res}^{18,17}_w(T_*,\partial_wT_*)=0,
+\tag{11.7}
+$$
+
+contrary to $Q\ne0$. This proves (11.3) for all complex points
+of the stated open locus. The resultant and product identities
+are those of $O$, Definitions 27.1 and 28.1 and (30.6); their
+common-root implications hold under every coefficient
+specialization. Denominator and full-degree conditions here
+follow from the stated open locus or from nonzero factors of $Q$.
+
+Finally $O$, Theorems 26.2 and 30.2, give $Q(p_J,0)\ne0$ for
+this same exact $p_J$. Hence $Q(p_J,v)$ has finitely many
+complex roots. For each root $v$, the whole complex fibre
+$\mathcal X\cap\{u=v\}=\mathcal Z(p_J,v)$ has at most eighteen
+points by Theorem 10.2. Thus $\mathcal K$ lies in a finite union
+of finite Cartesian squares and is finite. This argument retains
+all sources at roots of $Q$, including $\mathcal L_1=0$ cases,
+multiple projections and degree drops. ∎
+
+## 12. A global bound on actual terminal-M pairs
+
+**Definition 12.1 (Pairs across all acquired responses).** Define
+
+$$
+\begin{aligned}
+\mathcal T_M^{\rm ord}=\{(W,W')\in
+ \mathcal F(H_4,M,p_J)^2:\;&W\ne W',\\
+ &u_M(W)=u_M(W'),\quad f_{MM}(W)=f_{MM}(W')\}.
+\end{aligned}
+\tag{12.1}
+$$
+
+Let $\mathcal T_M^{\rm un}$ be the quotient by interchange of the
+two worlds. Their common acquired response is determined by the
+pair, so these sets count pairs across all real acquired responses.
+
+**Theorem 12.2 (Global ordered and unordered pair bounds).** At the
+original exact $p_J$,
+
+$$
+|\mathcal K|\le4802,\qquad
+|\mathcal T_M^{\rm ord}|\le4802,\qquad
+|\mathcal T_M^{\rm un}|\le2401.
+\tag{12.2}
+$$
+
+Proof. In four complex affine coordinates $x=(r,b)$ and
+$y=(r',b')$, consider the four polynomial equations
+
+$$
+\begin{gathered}
+\mathsf A(x,p_J)=0,\qquad \mathsf A(y,p_J)=0,\\
+N_u(x)D_m(y)-N_u(y)D_m(x)=0,\\
+N_m(x)D_m(y)-N_m(y)D_m(x)=0.
+\end{gathered}
+\tag{12.3}
+$$
+
+Let $\mathcal V\subseteq\mathbb C^4$ be their full common zero
+set. Inside it, $\mathcal K$ is precisely the open subset on which
+
+$$
+r(r-1)r'(r'-1)D_m(x)D_m(y)\ne0,\qquad x\ne y.
+\tag{12.4}
+$$
+
+The diagonal complement is the union of the two opens
+$r-r'\ne0$ and $b-b'\ne0$, so this description also retains
+pairs with equal $r$ and different $b$. Theorem 11.2 proves
+finiteness on this entire complex open subset. Every point of
+$\mathcal K$ is therefore isolated in $\mathcal V$: a
+positive-dimensional component through such a point would meet
+(12.4) in a positive-dimensional open subset, contradicting that
+finiteness. The full $\mathcal V$ can still contain the diagonal
+curve and components on the deleted divisors.
+
+For the two variable groups $(r,b)$ and $(r',b')$, the equations
+(12.3) have the following upper bounds on their multidegrees:
+
+$$
+\begin{pmatrix}
+7&0\\0&7\\7&7\\7&7
+\end{pmatrix}.
+\tag{12.5}
+$$
+
+The multihomogeneous Bézout inequality for isolated complex
+solutions bounds their number by
+
+$$
+[s^2t^2]\,(7s)(7t)(7s+7t)^2=2\cdot7^4=4802.
+\tag{12.6}
+$$
+
+Here the exponents $2,2$ are the sizes of the two variable groups,
+or the dimensions of the two projective-plane factors. The
+isolated-solution form is Jan Verschelde,
+*[Multihomogeneous Homotopies](https://homepages.math.uic.edu/~jan/mcs563s14/lec07.pdf)*,
+Lecture 7, Theorem 4.1 and Section 3: it applies to a square
+polynomial system in $\mathbb C^n$ and bounds its isolated
+solutions, without requiring its full zero set to be finite.
+Using upper multidegrees is valid because the coefficient bound
+is monotone in these nonnegative degrees. Thus the surviving
+diagonal and base components do not enter a proper-intersection
+assumption. Since every point of $\mathcal K$ is isolated in
+(12.3), this proves its bound.
+
+Now take any actual pair in $\mathcal T_M^{\rm ord}$, and write
+$v$ for its common $u_M$. If either member were singular,
+$O$, Theorem 29.2, would give
+$v=s_-(p_J)$ or $v=s_+(p_J)$. But $S$, Theorem 8.1, proves
+terminal-M injectivity on each of those entire actual children,
+including all regular companions. This contradicts the distinct
+pair. Thus both members are regular.
+
+Their strict sources belong to $\mathcal X$, and the actual
+response identities in Definition 11.1 put their source pair in
+$\mathcal K$. Fixed-source uniqueness of the entire gain and
+drift, $O$, Theorem 12.3, makes this map injective and preserves
+distinctness of the two complete worlds. Hence
+$|\mathcal T_M^{\rm ord}|\le|\mathcal K|\le4802$.
+Interchange has no fixed point on distinct ordered pairs, and
+preserves all equalities in (12.1). Each unordered pair therefore
+has exactly two ordered representatives, proving the final bound.
+All actual singular cases have been excluded by their complete
+response children, while every regular actual pair is retained in
+the complex open subset (12.4). ∎
+
+## 13. The remaining same-child existence question
+
+**Definition 13.1 (Original simultaneous-pair obligation).** Set
+$\mathcal C_v=\mathcal F(H_4,M,p_J,M,v)$, with the complete-world
+domain of Section 1 and the unchanged exact $p_J$ of Definition
+11.1. The remaining question is whether there exist a real $v$ and
+four labels $W_{J0},W_{J1},W_{M0},W_{M1}\in\mathcal C_v$ with
+
+$$
+\begin{gathered}
+W_{J0}\ne W_{J1},\qquad W_{M0}\ne W_{M1},\\
+f_{MJ}(W_{J0})=f_{MJ}(W_{J1}),\qquad
+f_{MM}(W_{M0})=f_{MM}(W_{M1}).
+\end{gathered}
+\tag{13.1}
+$$
+
+Labels can coincide across the two pairs. The original terminal
+functions are $O$ (1.7), after the acquired sixth action M.
+By $S$, Corollary 9.1, every hypothetical witness child in (13.1)
+is wholly regular and has $Q(p_J,v)=0$; $E$, Theorem 1.3,
+excludes the strip $[142,150]$. Theorem 10.2 bounds each such
+entire child by eighteen worlds, and Theorem 12.2 bounds actual
+terminal-M pairs across all acquired responses at $p_J$ by 2401
+unordered pairs in total. These cardinality statements supply
+neither a pair enumeration nor an existence or exclusion result
+for (13.1). The same-child joint question remains unresolved,
+with all strict sources, one entire nonzero gain of degree at most
+three and one fixed drift per world retained, and with no common
+gain or drift condition between different worlds.
+
+## 追加锚（本行以下为增补区）

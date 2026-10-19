@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9ba4e5d769c5d762e4174129cbb6a79386fbd41f07cf0e1a29b1923613216b96
+  normalized_sha256: sha256:9ba4e5d769c5d762e4174129cbb6a79386fbd41f07cf0e1a29b1923613216b96
+cas_ref: sha256:9ba4e5d769c5d762e4174129cbb6a79386fbd41f07cf0e1a29b1923613216b96
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/ModFiveCharacterWordQuotient.mod_five_character_word_scalar_quotient
+    target_statement_id: sha256:83635d1d03a8bd83f0a87f73d9d1762c16b298b18aa640aed6c523defea01f77
+receipts:
+  unresolved_subitems: []

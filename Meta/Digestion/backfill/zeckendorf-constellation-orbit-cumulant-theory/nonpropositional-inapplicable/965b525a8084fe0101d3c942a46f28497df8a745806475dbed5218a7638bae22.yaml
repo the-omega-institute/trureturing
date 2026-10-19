@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:965b525a8084fe0101d3c942a46f28497df8a745806475dbed5218a7638bae22
+  normalized_sha256: sha256:965b525a8084fe0101d3c942a46f28497df8a745806475dbed5218a7638bae22
+cas_ref: sha256:965b525a8084fe0101d3c942a46f28497df8a745806475dbed5218a7638bae22
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional fragment: Taxonomy heading, with no mathematical predicate asserted.'
+    previous_atom_id: 8d4c9b074bb2247cff3cb0b6e951d5a7b602ea84a9466c2a6748f49197ce6b3a
+    next_atom_id: 7359be182785ab38779879fcbe0b8076a57763ebbc13d933950a59f504670dbd

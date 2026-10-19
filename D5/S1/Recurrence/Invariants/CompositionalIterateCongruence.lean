@@ -6,6 +6,8 @@
    utility: none
    digest: Degree contraction and a mod-ten geometric fixed point prove Hanna A396807. -/
 
+/- Escape audit unfinished for published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
+
 /-
 agree_subst: proof_shape: bind-only; consumer: HannaBilateralReversionParity.regular_subst
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19114
@@ -176,11 +178,11 @@ private theorem geometric_inverse (parameter : R) :
     rescale parameter (mk 1) * denominator parameter = 1 := by
   simpa [denominator] using congrArg (rescale parameter) (mk_one_mul_one_sub_eq_one R)
 
-private theorem mobius_denominator (parameter : R) :
+theorem mobius_denominator (parameter : R) :
     mobius parameter * denominator parameter = X := by
   rw [mobius, mul_assoc, geometric_inverse, mul_one]
 
-private theorem mobius_zero (parameter : R) : constantCoeff (mobius parameter) = 0 := by
+theorem mobius_zero (parameter : R) : constantCoeff (mobius parameter) = 0 := by
   simp [mobius]
 
 private theorem mobius_composition (left right : R) :

@@ -22,8 +22,17 @@ internal sealed class ContinuedFractionOddSquareDocument : IScribeDocumentDefini
                 + "number m viewed in R. The expression invOfUnit(A,1) is the formal inverse "
                 + "with constant coefficient one; the denominator identities below justify "
                 + "its use as division. Types may lie in any universe.")),
-            Node("inverse_one", "The inverse of the unit series", InverseOneFormula(),
-                "The formal inverse of the constant unit series is the unit series over every commutative ring."),
+            Node("Agree", "Agreement through a finite coefficient range", AgreeFormula(),
+                "Agree(n,f,g) means that the coefficients of f and g agree at every index below n.",
+                DescribeRole.Definition),
+            Node("agree_inv", "Agreement is preserved by unit inversion", AgreeInvFormula(),
+                "Unit series with constant coefficient one have inverses that agree through the same finite coefficient range."),
+            Node("agree_shift", "Multiplication by X gains one degree of agreement", AgreeShiftFormula(),
+                "Multiplying two agreeing series by the same scalar and by X extends their agreement by one coefficient."),
+            Node("map_inverse", "Ring maps commute with unit inversion", MapInverseFormula(),
+                "A ring homomorphism maps the inverse of a normalized power series to the inverse of its image."),
+            Node("inverse_one", "The normalized inverse of one", InverseOneFormula(),
+                "The unit inverse of the constant series one is one."),
             Node("finiteTail", "Finite tails with a specified terminal denominator", TailFormula(),
                 "There are d levels beginning at numerator (2j+1)^2*X. The terminal "
                 + "denominator is A at index j+d. The outermost numerator in the defining "
@@ -104,12 +113,46 @@ internal sealed class ContinuedFractionOddSquareDocument : IScribeDocumentDefini
     private static Formula OverRing(Formula body) => Seq(Bound("R", Named("Type")),
         Implication(Call("CommRing", F.Id("R")), body));
 
+    private static Formula WithRing(Formula body) => Seq(Bound("R", Named("Type")),
+        OpenBracket, Named("CommRing"), Sp, F.Id("R"), CloseBracket, Comma, Sp, body);
+
+    private static Formula Agreement(Formula n, Formula f, Formula g) =>
+        Call("Agree", n, f, g);
+
+    private static Formula AgreeFormula() => Disp(WithRing(Seq(Bound("n", Naturals()),
+        Bound("f", Series(F.Id("R"))), Bound("g", Series(F.Id("R"))),
+        new Formula.Logic(Agreement(F.Id("n"), F.Id("f"), F.Id("g")),
+            FormulaLogicOperator.Iff, Parenthesized(Seq(Bound("k", Naturals()), Implication(
+            new Formula.Relation(F.Id("k"), FormulaRelationOperator.LessThan, F.Id("n")),
+            Equal(Coeff(F.Id("k"), F.Id("f")), Coeff(F.Id("k"), F.Id("g"))))))))));
+
+    private static Formula AgreeInvFormula() => Disp(WithRing(Seq(Bound("n", Naturals()),
+        Bound("f", Series(F.Id("R"))), Bound("g", Series(F.Id("R"))),
+        Implication(And(Equal(Constant(F.Id("f")), D(1)),
+            And(Equal(Constant(F.Id("g")), D(1)), Agreement(F.Id("n"), F.Id("f"), F.Id("g")))),
+            Agreement(F.Id("n"), Call("invOfUnit", F.Id("f"), D(1)),
+                Call("invOfUnit", F.Id("g"), D(1)))))));
+
+    private static Formula AgreeShiftFormula() => Disp(WithRing(Seq(Bound("n", Naturals()),
+        Bound("f", Series(F.Id("R"))), Bound("g", Series(F.Id("R"))),
+        Implication(Agreement(F.Id("n"), F.Id("f"), F.Id("g")),
+            Seq(Bound("c", F.Id("R")), Agreement(Add(F.Id("n"), D(1)),
+                Mul(Mul(Call("C", F.Id("c")), X()), F.Id("f")),
+                Mul(Mul(Call("C", F.Id("c")), X()), F.Id("g"))))))));
+
+    private static Formula MapInverseFormula() => Disp(Seq(Bound("R", Named("Type")),
+        OpenBracket, Named("CommRing"), Sp, F.Id("R"), CloseBracket, Comma, Sp,
+        Bound("S", Named("Type")), OpenBracket, Named("CommRing"), Sp, F.Id("S"), CloseBracket, Comma, Sp,
+        Bound("hom", Call("RingHom", F.Id("R"), F.Id("S"))),
+        Bound("A", Series(F.Id("R"))),
+        Implication(Equal(Constant(F.Id("A")), D(1)),
+            Equal(Call("map", Call("invOfUnit", F.Id("A"), D(1)), F.Id("hom")),
+                Call("invOfUnit", Call("map", F.Id("A"), F.Id("hom")), D(1))))));
+
     private static Formula InverseOneFormula()
     {
-        var ring = F.Id("R");
-        return Disp(Seq(Forall, Sp, Parenthesized(Seq(ring, Colon, Sp, Named("Type"))),
-            Comma, Sp, OpenBracket, Call("CommRing", ring), CloseBracket, Comma, Sp,
-            Equal(Call("invOfUnit", Parenthesized(Seq(D(1), Colon, Sp, Series(ring))), D(1)), D(1))));
+        var one = Parenthesized(Seq(D(1), Colon, Sp, Series(F.Id("R"))));
+        return Disp(WithRing(Equal(Call("invOfUnit", one, D(1)), one)));
     }
 
     private static Formula TailFormula()

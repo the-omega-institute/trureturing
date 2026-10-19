@@ -8,31 +8,7 @@ Paul D. Hanna's OEIS entry of June 16, 2026 uses superscripts for compositional 
 
 Ring parameters are displayed explicitly, including those implicit in Lean. PowerSeries(R) is the formal power-series ring, X its indeterminate, and subst(f,g) denotes f composed with g. The operator mk constructs a series from its coefficient function; mk(1) uses the constant function one. Rescaling multiplies coefficient n by the nth power of its parameter. The final remainder is integer remainder, and all indices are natural numbers.
 
-**Definition 1.1 (Agreement below a degree).**
-
-$$\forall R: Type, [\operatorname{CommRing}\left(R\right)] \forall d: \mathbb{N}, \forall left: \operatorname{PowerSeries}\left(R\right), \forall right: \operatorname{PowerSeries}\left(R\right), (\operatorname{Agree}\left(d, left, right\right)) \iff (\forall i: \mathbb{N}, (i < d) \implies \operatorname{coeff}\left(i, left\right) = \operatorname{coeff}\left(i, right\right))$$
-
-*Formalization.* `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.Agree` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Two series agree below degree d when their coefficients coincide at every smaller natural index.
-
-**Theorem 1.2 (Substitution preserves finite agreement).**
-
-$$\forall R: Type, [\operatorname{CommRing}\left(R\right)] \forall d: \mathbb{N}, \forall left: \operatorname{PowerSeries}\left(R\right), \forall right: \operatorname{PowerSeries}\left(R\right), \forall inner: \operatorname{PowerSeries}\left(R\right), \forall other: \operatorname{PowerSeries}\left(R\right), (\operatorname{constantCoeff}\left(inner\right) = 0) \implies (\operatorname{constantCoeff}\left(other\right) = 0) \implies (\operatorname{Agree}\left(d, left, right\right)) \implies (\operatorname{Agree}\left(d, inner, other\right)) \implies \operatorname{Agree}\left(d, \operatorname{subst}\left(left, inner\right), \operatorname{subst}\left(right, other\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.agree_subst` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-If the outer series agree below degree d and the inner zero-constant series do too, their substitutions agree below degree d.
-
-**Definition 1.3 (Compositional iteration).**
+**Definition 1.1 (Compositional iteration).**
 
 $$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall series: \operatorname{PowerSeries}\left(R\right), \forall count: \mathbb{N}, \\\operatorname{iterate}\left(R, series, 0\right) = X\\\operatorname{iterate}\left(R, series, count + 1\right) = \operatorname{subst}\left(\operatorname{iterate}\left(R, series, count\right), series\right)\end{aligned}$$
 
@@ -44,7 +20,7 @@ $$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \fora
 
 The zeroth iterate is the identity series X. Each successor substitutes the original series into the previous iterate. On zero-constant series this is the usual compositional iteration.
 
-**Definition 1.4 (The defining transformation).**
+**Definition 1.2 (The defining transformation).**
 
 $$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall series: \operatorname{PowerSeries}\left(R\right), \operatorname{step}\left(R, series\right) = X + \operatorname{iterate}\left(R, series, 5\right) \cdot \operatorname{iterate}\left(R, series, 6\right)$$
 
@@ -56,7 +32,7 @@ $$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall series: \ope
 
 The fifth and sixth compositional iterates are multiplied as power series. Adding X gives the transformation whose fixed point defines the sequence.
 
-**Theorem 1.5 (Uniqueness by degree).**
+**Theorem 1.3 (Uniqueness by degree).**
 
 $$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall left: \operatorname{PowerSeries}\left(R\right), \forall right: \operatorname{PowerSeries}\left(R\right), \\(\operatorname{constantCoeff}\left(left\right) = 0) \implies (\operatorname{constantCoeff}\left(right\right) = 0) \implies (left = \operatorname{step}\left(R, left\right)) \implies (right = \operatorname{step}\left(R, right\right)) \implies left = right\end{aligned}$$
 
@@ -68,7 +44,7 @@ $$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \fora
 
 Agreement below degree d is preserved by powers and by substitution of zero-constant series. The difference of the two products is split into two terms, each gaining an additional factor X. Thus step improves agreement to degree d+1. Induction and coefficient extensionality prove uniqueness over every commutative ring, including rings with zero divisors.
 
-**Definition 1.6 (Successive approximations).**
+**Definition 1.4 (Successive approximations).**
 
 $$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall depth: \mathbb{N}, \\\operatorname{approximation}\left(R, 0\right) = 0\\\operatorname{approximation}\left(R, depth + 1\right) = \operatorname{step}\left(R, \operatorname{approximation}\left(R, depth\right)\right)\end{aligned}$$
 
@@ -80,7 +56,7 @@ $$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \fora
 
 Start from zero and apply step repeatedly. The degree-contraction argument proves that approximation d and every later approximation agree below d.
 
-**Definition 1.7 (The integer coefficient sequence).**
+**Definition 1.5 (The integer coefficient sequence).**
 
 $$\forall index: \mathbb{N}, \operatorname{a}\left(index\right) = \operatorname{coeff}\left(index, \operatorname{approximation}\left(\mathbb{Z}, index + 1\right)\right)$$
 
@@ -92,7 +68,7 @@ $$\forall index: \mathbb{N}, \operatorname{a}\left(index\right) = \operatorname{
 
 Coefficient n is read from approximation n+1, where it has stabilized. This construction does not choose an assumed fixed point.
 
-**Definition 1.8 (The generating series).**
+**Definition 1.6 (The generating series).**
 
 $$\operatorname{generatingSeries} = \operatorname{mk}\left(\operatorname{a}\right)$$
 
@@ -104,7 +80,7 @@ $$\operatorname{generatingSeries} = \operatorname{mk}\left(\operatorname{a}\righ
 
 The generating series has coefficient function a.
 
-**Theorem 1.9 (Existence with the OEIS equation).**
+**Theorem 1.7 (Existence with the OEIS equation).**
 
 $$(\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\right) = 0) \land (\operatorname{generatingSeries} = X + \operatorname{iterate}\left(\mathbb{Z}, \operatorname{generatingSeries}, 5\right) \cdot \operatorname{iterate}\left(\mathbb{Z}, \operatorname{generatingSeries}, 6\right))$$
 
@@ -116,7 +92,7 @@ $$(\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\right) = 0)
 
 The stabilized coefficients agree to every finite degree with sufficiently late approximations. Applying degree contraction once more gives the generating equation. Together with fixed_unique, this characterizes a as the unique integer coefficient sequence with zero constant term and the stated compositional equation.
 
-**Definition 1.10 (The geometric family).**
+**Definition 1.8 (The geometric family).**
 
 $$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R, \operatorname{mobius}\left(R, parameter\right) = X \cdot \operatorname{rescale}\left(parameter, \operatorname{mk}\left(1\right)\right)$$
 
@@ -127,6 +103,30 @@ $$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R
 *Commentary.*
 
 This series is X times the geometric series with parameter c, equivalently X/(1-cX). The denominator has constant term one and is a unit over every commutative ring; no field division is assumed.
+
+**Theorem 1.9 (The geometric denominator identity).**
+
+$$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R, \operatorname{mobius}\left(R, parameter\right) \cdot \left(1 - \operatorname{C}\left(parameter\right) \cdot X\right) = X$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.mobius_denominator` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Multiplying the geometric family by its linear denominator gives X.
+
+**Theorem 1.10 (The geometric family has zero constant coefficient).**
+
+$$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R, \operatorname{constantCoeff}\left(\operatorname{mobius}\left(R, parameter\right)\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.mobius_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every member of the geometric family has zero constant coefficient.
 
 **Theorem 1.11 (Iterating the geometric family).**
 
@@ -170,9 +170,7 @@ Map the constructed integer generating equation to ZMod(10). Substitution commut
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.Agree`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.a`
-- Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.agree_subst`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.approximation`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.coefficient_congruence`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.fixed_unique`
@@ -180,6 +178,8 @@ Map the constructed integer generating equation to ZMod(10). Substitution commut
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.generating_equation`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.iterate`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.mobius`
+- Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.mobius_denominator`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.mobius_iterate`
+- Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.mobius_zero`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.mod_ten_fixed`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.step`

@@ -64,6 +64,10 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
                 "This series is X times the geometric series with parameter c, equivalently "
                 + "X/(1-cX). The denominator has constant term one and is a unit over every "
                 + "commutative ring; no field division is assumed.", DescribeRole.Definition),
+            Node("mobius_denominator", "The geometric denominator identity", MobiusDenominatorFormula(),
+                "Multiplying the geometric family by its linear denominator gives X."),
+            Node("mobius_zero", "The geometric family has zero constant coefficient", MobiusZeroFormula(),
+                "Every member of the geometric family has zero constant coefficient."),
             Node("mobius_iterate", "Iterating the geometric family", MobiusIterateFormula(),
                 "Rescaling Mathlib's geometric-series identity gives the denominator identity. "
                 + "Apply substitution to it and multiply by the inner denominator to prove "
@@ -202,6 +206,16 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
     private static Formula MobiusFormula() => Disp(Seq(Context(), Bound("parameter", Ring()),
         Equal(Mobius(Ring(), F.Id("parameter")),
             Mul(X(), Call("rescale", F.Id("parameter"), Call("mk", D(1)))))));
+
+    private static Formula MobiusDenominatorFormula() => Disp(Seq(
+        Context(), Bound("parameter", Ring()),
+        Equal(Mul(Mobius(Ring(), F.Id("parameter")),
+            new Formula.Binary(D(1), FormulaBinaryOperator.Subtract,
+                Mul(Call("C", F.Id("parameter")), X()))), X())));
+
+    private static Formula MobiusZeroFormula() => Disp(Seq(
+        Context(), Bound("parameter", Ring()),
+        Equal(Call("constantCoeff", Mobius(Ring(), F.Id("parameter"))), D(0))));
 
     private static Formula MobiusIterateFormula() => Disp(new Formula.Aligned([
         Seq(Context(), Bound("parameter", Ring()), Bound("count", Naturals())),
