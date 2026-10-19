@@ -62,6 +62,10 @@ $$(\exists (A: \operatorname{PowerSeries}\left(\mathbb{Q}\right)), \operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaBilateralReversionParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-bilateral-reversion-parity` (proved) by `D5/S1/Recurrence/Invariants/HannaBilateralReversionParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-bilateral-reversion-parity","declaration_gid":"D5/S1/Recurrence/Invariants/HannaBilateralReversionParity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. D. Hanna (2024). *OEIS A379202, a bilateral Laurent generating equation*. URL: <https://oeis.org/A379202>.
