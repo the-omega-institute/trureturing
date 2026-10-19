@@ -25,13 +25,17 @@ internal sealed class PetrTurekWreathEigenvaluesRefutationDocument : IScribeDocu
             Node("result", "Refutation by two coincident formula values", "result",
                 new Formula.Not(Parenthesized(ClaimBody())),
                 "At n = 14 and k = 5, the indices 3 and 5 are distinct and both lie in Finset.Icc 1 5. The parameters satisfy 0 < 5, 2·5 < 14 and Nat.Coprime 14 5. Normalizing the two rational expressions gives lam 14 5 3 = 17107200 and lam 14 5 5 = 17107200, contradicting the displayed distinctness proposition. Theorem 1.5 expressly permits repeated values and adds their multiplicities, so its statement remains intact.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("petr-turek-2025-wreath-eigenvalue-coincidence"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, AssessedProvenance? provenance = null, DescribeRole role = DescribeRole.Definition) =>
+        string prose, AssessedProvenance? provenance = null, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("ptw-" + id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => StrataLint.Scribe.FormulaDsl.Id(name);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));

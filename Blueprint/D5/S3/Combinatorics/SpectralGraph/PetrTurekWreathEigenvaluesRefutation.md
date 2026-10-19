@@ -50,6 +50,10 @@ $$\neg (\forall n \in \mathrm{Nat},\; \forall k \in \mathrm{Nat},\; 0 < k \Right
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/PetrTurekWreathEigenvaluesRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/petr-turek-2025-wreath-eigenvalue-coincidence` (refuted) by `D5/S3/Combinatorics/SpectralGraph/PetrTurekWreathEigenvaluesRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"petr-turek-2025-wreath-eigenvalue-coincidence","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/PetrTurekWreathEigenvaluesRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jan Petr; Pavel Turek (2025). *The wreath matrix*. DOI: [10.48550/arXiv.2501.07269](https://doi.org/10.48550/arXiv.2501.07269). URL: <https://arxiv.org/abs/2501.07269v2>.
