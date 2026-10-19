@@ -6,7 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.FibonacciFact
 
 internal sealed class FibonacciLiteralSourceDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciLiteralSource.";
     private static Formula.BoundVariable B(string name, Formula type) =>
         new(FormulaIdentifier.Create(name), type);
     private static Formula All(Formula body, params Formula.BoundVariable[] variables) =>
@@ -117,20 +116,30 @@ internal sealed class FibonacciLiteralSourceDocument : IScribeDocumentDefinition
         "The five-label affine source uses its original legal guards, endpoint flags, literal blocks and eventually-empty tails. Each departure coordinate belongs to one complete suffix of that source.",
         H("Literal Fibonacci sources and occurrence coordinates"),
         Blocks(
-            Describe.Lean(DescribeId.Create("fib-literal-source-geometry"),
-                DeclarationHandle.Create(Prefix + "literal_source_geometry"), H("One coordinate per occurrence"),
-                StatementSource.FromAuthor(Geometry()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Induction over the literal word proves support preservation and its affine suffix law. Extending the finite cutoff by empty labels leaves every coordinate unchanged. The displacement in an occurrence formula is the coordinate of the actual complete right suffix minus the fixed center."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("fib-paired-source-reconstruction"),
-                DeclarationHandle.Create(Prefix + "paired_source_reconstruction"), H("Reconstruct both prescribed sources"),
-                StatementSource.FromAuthor(Reconstruction()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The finite block calculation uses every original cycle label. Induction reconstructs the reversed execution list without reversing block letters. Both templates have legal seams, the exact original tail at the unobserved terminal, the actual scalar return action, and observation lengths 26 plus the variable weight or 52 plus that weight."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("fib-actual-complete-boundary-geometry"),
-                DeclarationHandle.Create(Prefix + "actual_complete_boundary_geometry"), H("Actual complete boundaries and internal inputs"),
-                StatementSource.FromAuthor(BoundaryGeometry()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every prefix of the common execution list, both actual initial states retain A_j < D_j < h_j and the high displacement is smaller than the low displacement. Internal inputs obtained by any number of C contractions and six-letter affine iterates remain positive and below h_j, keep the same side ordering, and their signed coordinates belong to [0,T2]. Each complete boundary is identified with the coordinate at stem length plus the weight of the unexecuted suffix in the same fixed source. The lower bound A_j is asserted only at complete boundaries, not at arbitrary internal cuts."))),
-                DescribeRole.Theorem),
-            Paragraph(Text("The complete boundary and internal-input statements use the same execution list in both models, including empty executions, zero-length prefixes and zero internal exponents.")))));
+            Paragraph(Text("This import entry point supplies the literal-source interface from "),
+                Ref("D5/S3/ConceptDynamics/Coding/DecoderOperationTrace"),
+                Text(" and complete boundary geometry from "),
+                Ref("D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply"), Text(".")),
+            new DocumentBlock.Section(H("One coordinate per occurrence"), Blocks(
+                Paragraph(Text("Repository-derived statement: "),
+                    Ref("D5/S3/ConceptDynamics/Coding/DecoderOperationTrace.literal_source_geometry"), Text(".")),
+                new DocumentBlock.DisplayFormula(Geometry()),
+                Paragraph(Text("Induction over the literal word proves support preservation and its affine suffix law. Extending the finite cutoff by empty labels leaves every coordinate unchanged. The displacement in an occurrence formula is the coordinate of the actual complete right suffix minus the fixed center.")))),
+            new DocumentBlock.Section(H("Reconstruct both prescribed sources"), Blocks(
+                Paragraph(Text("Repository-derived statement: "),
+                    Ref("D5/S3/ConceptDynamics/Coding/DecoderOperationTrace.paired_source_reconstruction"), Text(".")),
+                new DocumentBlock.DisplayFormula(Reconstruction()),
+                Paragraph(Text("The finite block calculation uses every original cycle label. Induction reconstructs the reversed execution list without reversing block letters. Both templates have legal seams, the exact original tail at the unobserved terminal, the actual scalar return action, and observation lengths 26 plus the variable weight or 52 plus that weight.")))),
+            new DocumentBlock.Section(H("Actual complete boundaries and internal inputs"), Blocks(
+                Paragraph(Text("Repository-derived statement: "),
+                    Ref("D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply.actual_complete_boundary_geometry"), Text(".")),
+                new DocumentBlock.DisplayFormula(BoundaryGeometry()),
+                Paragraph(Text("For every prefix of the common execution list, both actual initial states retain A_j < D_j < h_j and the high displacement is smaller than the low displacement. Internal inputs obtained by any number of C contractions and six-letter affine iterates remain positive and below h_j, keep the same side ordering, and their signed coordinates belong to [0,T2]. Each complete boundary is identified with the coordinate at stem length plus the weight of the unexecuted suffix in the same fixed source. The lower bound A_j is asserted only at complete boundaries, not at arbitrary internal cuts.")))),
+            Paragraph(Text("The complete boundary and internal-input statements use the same execution list in both models, including empty executions, zero-length prefixes and zero internal exponents."))),
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ConceptDynamics/Coding/DecoderOperationTrace")),
+         DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply")),
+         DocumentEdge.NarrativeReference.ToDocument(
+             GidRef.Create("D5/S3/ConceptDynamics/Coding/DecoderOperationTrace")),
+         DocumentEdge.NarrativeReference.ToDocument(
+             GidRef.Create("D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply"))]));
 }
