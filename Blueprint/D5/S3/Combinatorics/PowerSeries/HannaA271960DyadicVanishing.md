@@ -10,7 +10,7 @@ All series have rational coefficients. The operation subst(u,f) is PowerSeries.s
 
 $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{IsGF}\left(A\right) \iff ((\operatorname{constantCoeff}\left(A\right) = 0) \land ((\operatorname{coeff}\left(1, A\right) = 1) \land ((A)^{2} = \operatorname{subst}\left((X + 2 \cdot (A)^{2})^{2}, A\right)))))$$
 
-*Formalization.* `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.IsGF` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.IsGF` (`✓ std3`).
 
 *Citation.* Paul D. Hanna (2016). *OEIS A271960: a squared compositional generating function and dyadic vanishing*. URL: <https://oeis.org/A271960>.
 
@@ -22,7 +22,7 @@ OEIS A271960, NAME (unpaginated): "G.f. A(x) satisfies: A(x)^2 = A( (x + 2*A(x)^
 
 $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{xOverA}\left(A\right) = (\operatorname{mk}\left((n: \mathbb{N} \mapsto \operatorname{coeff}\left(n + 1, A\right))\right))^{-1})$$
 
-*Formalization.* `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.xOverA` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.xOverA` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -36,7 +36,7 @@ Deleting the zero constant coefficient from A gives A(x)/x. Its multiplicative i
 
 $$claim = ((\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{IsGF}\left(A\right)) \land (\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), ((\operatorname{IsGF}\left(A\right)) \implies (\forall n: \mathbb{N}, (\forall k: \mathbb{N}, ((2 \leq n) \implies ((k \leq n - 2) \implies (\operatorname{coeff}\left((2)^{n} - (2)^{k}, (\operatorname{xOverA}\left(A\right))^{(2)^{n}}\right) = 0))))))))$$
 
-*Formalization.* `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.claim` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.claim` (`✓ std3`).
 
 *Citation.* Paul D. Hanna (2016). *OEIS A271960: a squared compositional generating function and dyadic vanishing*. URL: <https://oeis.org/A271960>.
 
@@ -48,11 +48,11 @@ OEIS A271960, COMMENTS (unpaginated): "Conjecture: [x^(2^n-2^k)] (x/A(x))^(2^n) 
 
 $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{IsGF}\left(A\right)) \land (\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), ((\operatorname{IsGF}\left(A\right)) \implies (\forall n: \mathbb{N}, (\forall k: \mathbb{N}, ((2 \leq n) \implies ((k \leq n - 2) \implies (\operatorname{coeff}\left((2)^{n} - (2)^{k}, (\operatorname{xOverA}\left(A\right))^{(2)^{n}}\right) = 0)))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/hanna-a271960-dyadic-vanishing` (proved) by `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.result`.
+*Resolves.* `Problems/hanna-a271960-dyadic-vanishing` (proved) by `D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a271960-dyadic-vanishing","declaration_gid":"D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.result","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a271960-dyadic-vanishing","declaration_gid":"D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -64,9 +64,9 @@ Let B be the compositional inverse of A and H=B+2X^2. The defining equation impl
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.IsGF`
-- Truth anchor: `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.claim`
-- Truth anchor: `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.result`
-- Truth anchor: `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.xOverA`
-- Dependency: [D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree](SignedCatalanCubicSubstitutionModThree.md)
-- Dependency: [D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo](../../../S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo.md)
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.IsGF`
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.claim`
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.result`
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.xOverA`
+- Dependency: [D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree](../../../S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.md)
+- Dependency: [D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo](../Nonnesting/NonnestingOneThreeTwoTwo.md)

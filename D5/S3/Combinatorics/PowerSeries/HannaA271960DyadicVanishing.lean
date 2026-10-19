@@ -1,6 +1,6 @@
-/- GID: D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing
+/- GID: D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing
    generality: G
-   mirror-B: D5/B/S1/Recurrence/Invariants/HannaA271960DyadicVanishing
+   mirror-B: D5/B/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
@@ -55,9 +55,9 @@ import D5.S3.Combinatorics.Nonnesting.NonnestingOneThreeTwoTwo
 
 set_option autoImplicit false
 
-namespace D5.S1.Recurrence.Invariants.HannaA271960DyadicVanishing
+namespace D5.S3.Combinatorics.PowerSeries.HannaA271960DyadicVanishing
 
-open PowerSeries
+open _root_.PowerSeries
 
 /-- OEIS A271960: "G.f. A(x) satisfies: A(x)^2 = A( (x + 2*A(x)^2)^2 )", with A(x) = x + 2*x^2 + ... (offset 1). -/
 def IsGF (A : PowerSeries ℚ) : Prop :=
@@ -74,10 +74,10 @@ def claim : Prop :=
     ∀ A, IsGF A → ∀ n k : ℕ, 2 ≤ n → k ≤ n - 2 →
       coeff (2 ^ n - 2 ^ k) (xOverA A ^ (2 ^ n)) = 0
 
-end D5.S1.Recurrence.Invariants.HannaA271960DyadicVanishing
+end D5.S3.Combinatorics.PowerSeries.HannaA271960DyadicVanishing
 
-namespace D5.S1.Recurrence.Invariants.HannaA271960DyadicVanishing
-open PowerSeries
+namespace D5.S3.Combinatorics.PowerSeries.HannaA271960DyadicVanishing
+open _root_.PowerSeries
 open D5.S1.Recurrence.Invariants.SignedCatalanCubicSubstitutionModThree
 
 private theorem inverse_squared {A B : PowerSeries ℚ} (hA : IsGF A)
@@ -333,7 +333,7 @@ private theorem generating_exists : ∃ A, IsGF A := by
   obtain ⟨A, hA0, hA1, hBA, hAB⟩ := inverse_exists B hB0 hB1
   exact ⟨A, is_gf_of_squared_inverse hA0 hA1 hB0 hBA hAB hBsq⟩
 
-theorem result : D5.S1.Recurrence.Invariants.HannaA271960DyadicVanishing.claim := by
+theorem result : D5.S3.Combinatorics.PowerSeries.HannaA271960DyadicVanishing.claim := by
   refine ⟨generating_exists, ?_⟩
   intro A hA n k hn hk
   obtain ⟨B, hB0, hB1, hAB, hBA⟩ := inverse_exists A hA.1 hA.2.1
@@ -358,4 +358,4 @@ theorem result : D5.S1.Recurrence.Invariants.HannaA271960DyadicVanishing.claim :
   exact (mul_eq_zero.mp hlag).resolve_right (by positivity)
 
 
-end D5.S1.Recurrence.Invariants.HannaA271960DyadicVanishing
+end D5.S3.Combinatorics.PowerSeries.HannaA271960DyadicVanishing

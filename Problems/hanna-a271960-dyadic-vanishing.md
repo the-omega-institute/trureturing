@@ -5,7 +5,7 @@ doi: null
 url: https://oeis.org/A271960
 triage: theorem
 motivation_gids:
-  - D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.result
+  - D5/S3/Combinatorics/PowerSeries/HannaA271960DyadicVanishing.result
 ---
 
 # Hanna’s OEIS A271960 dyadic vanishing conjecture
@@ -58,7 +58,7 @@ A normalized rational solution with a nonzero coefficient in the specified range
 
 ## Evidence
 
-`D5.S1.Recurrence.Invariants.HannaA271960DyadicVanishing.result` proves the complete `claim`, including existence. Its admission basis is `open-problem-resolution (#19138; Proved)`; generality is G and utility is none. The three original owner declarations are published with their statements and proofs preserved.
+`D5.S3.Combinatorics.PowerSeries.HannaA271960DyadicVanishing.result` proves the complete `claim`, including existence. Its admission basis is `open-problem-resolution (#19138; Proved)`; generality is G and utility is none. The three original owner declarations are published with their statements and proofs preserved.
 
 The four-slot escape audit is unfinished for `result` and the published `square_linear`, `subst_two_agree` and `inverse_exists`: [#19172](https://github.com/the-omega-institute/trureturing/issues/19172). The infinite power-series and arbitrary-ring telescopes need faithful source-family reconstruction, equivalence, observational dependence, variation and sensitivity evidence. No compiled registration or `declared_validated` finding is claimed.
 
