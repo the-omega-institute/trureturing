@@ -41,13 +41,17 @@ internal sealed class HannaBilateralThetaModFourDocument : IScribeDocumentDefini
                 + "Modulo two the solution is one, so each unit quotient is one and its summand reduces to X^(m^2). "
                 + "Thus half of each positive coefficient has the parity of the positive-square theta series. "
                 + "Doubling gives residue two modulo four exactly at squares and divisibility by four at the other positive indices.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hanna-a380060-bilateral-theta-mod-four"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a380060-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] arguments) =>

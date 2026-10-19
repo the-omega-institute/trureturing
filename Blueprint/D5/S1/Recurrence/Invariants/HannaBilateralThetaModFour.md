@@ -38,6 +38,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaBilateralThetaModFour.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a380060-bilateral-theta-mod-four` (proved) by `D5/S1/Recurrence/Invariants/HannaBilateralThetaModFour.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a380060-bilateral-theta-mod-four","declaration_gid":"D5/S1/Recurrence/Invariants/HannaBilateralThetaModFour.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A380060, bilateral unit-quotient square series*. URL: <https://oeis.org/A380060>.
