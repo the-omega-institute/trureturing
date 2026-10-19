@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Geometry/Hyperideal/AngleExtensionSlice
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [D5/S3/Geometry/Hyperideal/FourCycleEnvelopes]
+   anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Geometry/Hyperideal/AngleExtensionSlice.claim; result=D5/S3/Geometry/Hyperideal/AngleExtensionSlice.result; claim=D5/S3/Geometry/Hyperideal/AngleExtensionSlice.claim
    digest: The first-slot cosine on the Section 68 scalar slice is not constant at its endpoint. -/
 
