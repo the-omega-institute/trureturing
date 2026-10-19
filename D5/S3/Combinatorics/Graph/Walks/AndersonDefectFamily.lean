@@ -16,6 +16,7 @@ Direct frozen dependencies: CycleDiagonalUnitPropagation.cycle_diagonal_units_fu
   AndersonSymmetryConverseRefutation.bad; MatrixTracePowerSum.pow_add_two.
 -/
 
+import D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
@@ -129,13 +130,6 @@ private lemma sl2_power {K : Type*} [CommRing K]
     rw [h0, h1, h2, h3, chebStep, show s (n : ℤ) = B.trace * s ((n : ℤ) - 1) - s ((n : ℤ) - 2) from by
       simpa [sub_sub] using chebStep ((n : ℤ) - 1)]
     module
-
-private lemma chebS_degree {K : Type*} [Field K] [CharZero K] (n : ℕ) :
-    (Polynomial.Chebyshev.S K (n : ℤ)).natDegree = n := by
-  letI : Invertible (2 : K) := invertibleOfNonzero (by norm_num)
-  rw [Polynomial.Chebyshev.S_eq_U_comp_half_mul_X, Polynomial.natDegree_comp]
-  simp [Polynomial.Chebyshev.natDegree_U_natCast,
-    invOf_eq_inv, show (2 : K) ≠ 0 by norm_num]
 
 private lemma block_trace {K : Type*} [CommRing K] (r : ℕ) (hr : 3 ≤ r) (a b : K) :
     (block r a b).trace =
@@ -638,8 +632,8 @@ private lemma discriminant_attains (r : ℕ) (hr : 3 ≤ r) (t c : ℂ) :
   let s₁ := Polynomial.Chebyshev.S ℂ ((r - 1 : ℕ) : ℤ)
   let s₂ := Polynomial.Chebyshev.S ℂ ((r - 2 : ℕ) : ℤ)
   let P := s₁ * (Polynomial.X - Polynomial.C (2 * t)) - Polynomial.C 2 * s₂ - Polynomial.C c
-  have h1 : s₁.natDegree = r - 1 := chebS_degree _
-  have h2 : s₂.natDegree = r - 2 := chebS_degree _
+  have h1 : s₁.natDegree = r - 1 := D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.chebS_degree _
+  have h2 : s₂.natDegree = r - 2 := D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.chebS_degree _
   have h₁ : s₁ ≠ 0 := Polynomial.ne_zero_of_natDegree_gt (show 0 < s₁.natDegree by omega)
   have hbig : (s₁ * (Polynomial.X - Polynomial.C (2 * t))).natDegree = r := by
     rw [Polynomial.natDegree_mul h₁ (Polynomial.X_sub_C_ne_zero _),
@@ -762,13 +756,13 @@ private lemma rational_discriminant_degree (r : ℕ) (hr : 3 ≤ r) (t : RatFunc
     have he : (r : ℤ) - 1 = ((r - 1 : ℕ) : ℤ) := by omega
     dsimp [s₁]
     rw [he]
-    exact chebS_degree _
+    exact D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.chebS_degree _
   have hs2 : (s₂.comp a).natDegree = r - 2 := by
     rw [Polynomial.natDegree_comp,ha,mul_one]
     have he : (r : ℤ) - 2 = ((r - 2 : ℕ) : ℤ) := by omega
     dsimp [s₂]
     rw [he]
-    exact chebS_degree _
+    exact D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.chebS_degree _
   have heq : discriminant r t = s₁.comp a * b - Polynomial.C 2 * s₂.comp a := by
     apply Polynomial.funext
     intro x
