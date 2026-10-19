@@ -3660,3 +3660,86 @@ physical. The explicit separately closed finite set remains the
 26 signed points of §111, with all earlier interval and neighborhood
 results retaining their own scope. No whole-branch conclusion follows
 without resolving the remaining physical zeros or an independent argument.
+
+
+## 115. The mixed derivative gcd preserves all regular real zeros
+
+**Proposition 115.1.** For the original mixed norm hm and its specified
+real normalization Dm in §112, every real zero b0 with 0<|b0|<1 and
+b0 outside Z24 has order at least two. Consequently the reduced numerator
+am of Dm and rm=gcd(am,am′) have the same real zero set on that domain.
+After removing all J26-supported primary factors from each polynomial,
+their real zero sets in the puncture are again equal.
+
+**Proof.** Put O=C[b]_(b−b0). By §105.2 the actual algebra
+T=A⊗Ba is finite free of rank 200 over O, with all required original
+units. In particular a=1+b²K² and X are units by the monic radial
+equation aX²−tX−R=0, where R=3−b². Since
+G=X(1+ibK) and (1+ibK)(1−ibK)=a, both G and bar(G) are units.
+The aligned identity H bar(H)=R makes H and bar(H) units as well.
+These assertions concern the entire algebra, not only physical points.
+
+Write c0 for coefficient conjugation, fixing b,K,X,d,s and conjugating
+complex scalars. It preserves O because b0 is real. The two original
+involutions
+\[
+ \iota(K)=K,\quad\iota(X)=-R/(aX),\qquad
+ j_a(d)=d,\quad j_a(s)=-s
+\]
+have real tower-coordinate formulas, so they commute with c0. Thus
+τ=(ι⊗ja)c0 is a conjugate-linear involution of T. Let T0=T/(b−b0)T.
+For a complex character χ:T0→C define another complex character by
+\[
+ (\sigma\chi)(f)=\overline{\chi(\tau f)}.
+\tag{115.1}
+\]
+The overline in (115.1) conjugates the evaluated number; it is distinct
+from c0 acting on algebra coefficients. The two conjugations make σχ
+C-linear, and σ²χ=χ.
+
+If χ(K)=k and χ(X)=x, then
+\[
+ (\sigma\chi)(K)=\bar k,\qquad
+ (\sigma\chi)(X)=
+ -\frac{R_0}{(1+b_0^2\bar k^2)\bar x},\qquad R_0=3-b_0^2>0.
+\]
+A fixed character would have k real and
+\[
+ (1+b_0^2k^2)|x|^2=-R_0,
+\tag{115.2}
+\]
+which is impossible: x is nonzero, and the left side is positive while
+the right side is negative. Hence σ has no fixed character. This
+argument does not assume that the character satisfies physical tests.
+
+Coefficient conjugation of the full-algebra identity (112.11) gives
+\[
+ \tau(N_m)=\left(\frac{\bar H}{\bar G}\right)^3N_m.
+\tag{115.3}
+\]
+Its multiplier is a unit. Therefore χ(Nm)=0 implies (σχ)(Nm)=0,
+and these are distinct zero characters. If hm(b0)=0, multiplication by
+Nm on T0 is singular, so Nm is a nonunit and lies in a maximal ideal.
+The residue field is C, giving such a character χ. The two distinct
+maximal ideals are comaximal, and evaluation induces a surjection
+T0/(Nm)→C². The multiplication cokernel therefore has dimension at
+least two, including when T0 is nonreduced. The local corank argument
+of §112.4 yields ord_b0(hm)≥2.
+
+The factor η in Dm=hm/η¹⁵ is a regular unit, so Dm has the same order.
+Its reduced denominator is nonzero at b0. Thus every real zero of am
+on this domain is also a zero of am′, proving the asserted equality
+with rm. Saturation removes precisely the J26-supported factors;
+neither saturated polynomial retains a zero in Z26, and their remaining
+real zero sets agree by the preceding argument. ∎
+
+This proposition strengthens the mixed necessity in §114 without changing
+its implication. The mixed derivative operation itself discards no
+regular real norm zero, including one supported only on nonphysical
+complex characters. A further factor or real-root analysis could still
+prove that the common remaining real zero set is empty; multiplicity
+alone does not distinguish physical from nonphysical points over it.
+No parity assertion, corresponding statement for Do, or additional
+closed parameter fibre is asserted. The explicit finite union of closed fibres
+remains the 26 signed points of §111; all earlier interval and
+neighborhood results retain their own scope.
