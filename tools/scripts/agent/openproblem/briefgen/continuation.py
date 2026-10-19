@@ -40,11 +40,11 @@ def strings(value):
 
 
 def envelope_targets(conclusion):
-    # Preserve each candidate's suffix so targets() validates the whole token.
-    token = MODULE + r'[^\s"\x27]*'
+    # Capture whole tokens within command and Markdown boundaries, then validate.
+    token = r'[^\s";&|)`]+'
     for text in strings(conclusion):
         match = re.search(r'\bLEAN_TARGETS=(?:"([^"]*)"|\x27([^\x27]*)\x27|(' + token +
-                          r'(?:\s+' + token + r')*))', text)
+                          r'(?:[^\S\r\n]+' + token + r')*))', text)
         if match:
             return targets([next(x for x in match.groups() if x is not None)])
     fail(13, 'NO_TARGETS_IN_ENVELOPE')
