@@ -610,3 +610,304 @@ $$
 式 (3.3) 只排除式 (1.3) 的精确 $p_\star$。同一个 $H_4^\star$ 的其他第五 $M$ 响应、第五 $J$ 臂、其他固定或自由 $C,z,Y$ 父，仍分别属于式 (1.7) 的共同实现问题；该问题要求两个第五臂与四个第六块保持各自已经取得的相同响应。更早祖先、其他动作和全部非单点守卫仍属于定义 1.3 的原根合同。本推论不推出原根 $L_7$、原八读恢复或不可能性、八与九的极小极大比较或九读上界。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 4. 自由第五响应上的同历史八读碰撞
+
+**定义 4.1（原源坐标中的碰撞多项式）。** 保持定义 1.1 的全部原域以及定义 1.2 的 $A,C,z,Y,H_4^\star$，第五 $M$ 响应在本节不预定为 $p_\star$。在源坐标 $(r,b)$ 中定义下列有理系数多项式，花体符号区别于第 2 节图坐标中的同名量：
+
+$$
+\begin{aligned}
+X&=b^2+r-r^2,&N&=X+br,&T&=1+b,&U&=1+2b,\\
+\mathscr D&=TXN+U(TXN-4bTN+6XN-4bXT),\\
+\mathscr B&=YTXN-U(4AbTN-6CXN+4zbXT),\\
+\mathscr V_0&=-\mathscr B,\\
+\mathscr V_1&=(A-Y)bTN+
+ U\bigl(AbTN+6(A-C)bN+4(z-A)b^2T\bigr),\\
+\mathscr V_2&=(C-Y)XN+
+ U\bigl(CXN+4(A-C)bN+4(z-C)bX\bigr),\\
+\mathscr V_3&=(z-Y)bXT+
+ U\bigl(zbXT+4(A-z)b^2T+6(z-C)bX\bigr).
+\end{aligned}
+\tag{4.1}
+$$
+
+再定义
+
+$$
+\begin{aligned}
+R_5&=b(1+r+3b)+r(1-r),\\
+R_6&=b(1+2r+2b)+r(1-r),\\
+R_7&=b(2+5b)+r(1-r),\\
+\mathscr G_5&=-4\mathscr V_0+15\mathscr V_1-20\mathscr V_2+10\mathscr V_3,\\
+\mathscr G_6&=-10\mathscr V_0+36\mathscr V_1-45\mathscr V_2+20\mathscr V_3,\\
+\mathscr G_7&=-20\mathscr V_0+70\mathscr V_1-84\mathscr V_2+35\mathscr V_3,\\
+\mathscr Q_i&=875\bigl(b\mathscr B+R_i\mathscr G_i\bigr),\qquad i=5,6,7.
+\end{aligned}
+\tag{4.2}
+$$
+
+这里 $875\ne0$，且各 $\mathscr Q_i\in\mathbb Z[r,b]$。原实际左乘积仍记为 $Q_i$，不与分子 $\mathscr Q_i$ 混用。取 $a=1/5$，以 $(x,y,t)$ 为有序变量，定义三个字面的有理多项式
+
+$$
+\mathscr F_i(x,y,t)=
+ t\mathscr D(y,t)\mathscr Q_i(x,a)
+ -a\mathscr D(x,a)\mathscr Q_i(y,t),\qquad i=5,6,7,
+\qquad
+\mathscr F=(\mathscr F_5,\mathscr F_6,\mathscr F_7)^{\mathsf T}.
+\tag{4.3}
+$$
+
+三个方程均不取本原部、不另乘逐行因子。定义有理中心、半径及闭盒
+
+$$
+m=\frac1{10^{20}}
+\begin{pmatrix}
+89850698363088918156\\
+7833997018546596202\\
+91970589378655924931
+\end{pmatrix},\qquad
+\rho=\frac1{10^{12}},\qquad
+\mathcal K=\{u\in\mathbb R^3:\|u-m\|_\infty\le\rho\}.
+\tag{4.4}
+$$
+
+向量范数为最大绝对坐标，矩阵范数为最大绝对行和。所用有理矩阵为
+
+$$
+C_{\rm pre}=\frac1{10^{14}}
+\begin{pmatrix}
+484000580&-391719536&44432068\\
+39998670301&-8950431445&-1109212522\\
+-29631340564&7452413434&416274491
+\end{pmatrix}.
+\tag{4.5}
+$$
+
+**定理 4.2（整个第四历史纤维中的精确双世界碰撞）。** 式 (4.3) 在式 (4.4) 的 $\mathcal K$ 中恰有一个实零点，记为 $(\xi,\eta,\theta)$。其坐标为实代数数。由这一零点，下文式 (4.15) 的单个整个增益和固定漂移分别给出两个合法完整世界
+
+$$
+W_1=(P(\xi,1/5),g_1,d_1),\qquad
+W_2=(P(\eta,\theta),g_2,d_2),
+\qquad W_1\ne W_2,
+\tag{4.6}
+$$
+
+且沿同一实际时间词 $J,M,J,M,M,J,M$ 的原时钟零至七，具有完全相同的八行记录
+
+$$
+\left(0,24,35,\frac{26372}{875},\frac{528}{35},p_0,h_0,f_0\right),
+\qquad
+-7<p_0<-6,\quad 11<h_0<12,\quad107<f_0<108.
+\tag{4.7}
+$$
+
+其中三个末响应由式 (4.18) 精确定义，区间端点不代替响应本身。此唯一性只指 $\mathcal K$ 内的式 (4.3) 零点。
+
+证明。先给局部零点存在性，再把它与完整原方程相接。
+
+### 4.1. 有理系数界与隔离盒内的零点
+
+对 $P\in\mathbb Q[x,y,t]$，令 $\|P\|_{\rm coeff}$ 为合并同类项后所有系数的绝对值之和，并令
+
+$$
+H_i=\sum_{j=1}^3\sum_{k=1}^3
+\|\partial_j\partial_k\mathscr F_i\|_{\rm coeff},
+\qquad (\partial_1,\partial_2,\partial_3)=(\partial_x,\partial_y,\partial_t).
+\tag{4.8}
+$$
+
+式 (4.1)–(4.5) 的有理运算给下列界；$J_{\mathscr F}$ 的行次序为 $5,6,7$，列次序为 $x,y,t$：
+
+$$
+\begin{aligned}
+\|C_{\rm pre}\|_\infty
+ &=\frac{12514578567}{25000000000000}<\frac1{1000},\\
+\|I-C_{\rm pre}J_{\mathscr F}(m)\|_\infty
+ &\le\frac{1166992}{10^{14}}<\frac1{10^6},\\
+\|\mathscr F(m)\|_\infty
+ &\le\frac{47251031}{10^{22}}<\frac1{10^{13}},\\
+\|C_{\rm pre}\mathscr F(m)\|_\infty
+ &\le\frac{4715}{10^{24}}<\frac1{10^{16}},\\
+(H_5,H_6,H_7)
+ &=\left(\frac{2596965156059808}{78125},
+ \frac{2727311991107856}{78125},
+ \frac{699741400200432}{3125}\right),\\
+\max_i H_i&<3\cdot10^{11}.
+\end{aligned}
+\tag{4.9}
+$$
+
+这些是有限有理表达式的不等式：第一项直接取式 (4.5) 的最大绝对行和；第二项把式 (4.3) 微分后在有理点 $m$ 代入，计算 $I-C_{\rm pre}J_{\mathscr F}(m)$ 的最大绝对行和；第三、四项分别对 $\mathscr F(m)$、$C_{\rm pre}\mathscr F(m)$ 取最大绝对坐标。式 (4.8) 对九个有序二阶偏导分别合并系数后求和。所有数据均由式 (4.1)–(4.5) 指定，不涉及任何零点近似。
+
+由式 (4.4) 直接有 $\mathcal K\subset(0,1)^3$，而且在整个盒上 $x>89/100$、$y<2/25$。每个单项式在盒上的绝对值至多为一。因此沿 $m$ 到 $u\in\mathcal K$ 的线段，对每个 Jacobian 行先求各列绝对值之和，再用式 (4.8)，得到
+
+$$
+\begin{aligned}
+\|J_{\mathscr F}(u)-J_{\mathscr F}(m)\|_\infty
+ &\le\rho\max_iH_i
+ =\frac{43733837512527}{195312500000000}<\frac3{10}.
+\end{aligned}
+\tag{4.10}
+$$
+
+令 $\mathcal T(u)=u-C_{\rm pre}\mathscr F(u)$。式 (4.9)–(4.10) 给整个盒上的
+
+$$
+\begin{aligned}
+\|D\mathcal T(u)\|_\infty
+ &<\frac1{10^6}+\frac1{1000}\frac3{10}
+ =\frac{301}{10^6}<\frac1{1000},\\
+\|\mathcal T(m)-m\|_\infty&<\frac1{10^{16}},\\
+\|\mathcal T(u)-m\|_\infty
+ &<\frac1{10^{16}}+\frac{\rho}{1000}
+ =\frac{11}{10^{16}}<\rho.
+\end{aligned}
+\tag{4.11}
+$$
+
+$\mathcal K$ 是完备的闭凸盒，故 Banach 压缩映像定理给其中唯一的 $\mathcal T$ 不动点。为从不动点回到原方程，式 (4.9) 的第二行使 $C_{\rm pre}J_{\mathscr F}(m)$ 由 Neumann 级数可逆；两个因子均为方阵，故 $C_{\rm pre}$ 可逆。这个平方近似逆论证参见 Rump，《[Verified bounds for singular values, in particular for the spectral norm of a matrix and its inverse](https://www.tuhh.de/ti3/paper/rump/Ru10a.pdf)》，§2；这里所需的是式 (4.9) 的诱导无穷范数有理界。因此 $\mathcal T(u)=u$ 当且仅当 $\mathscr F(u)=0$。式 (4.11) 还使该零点的 $C_{\rm pre}J_{\mathscr F}$ 可逆，故零点非奇异且孤立。
+
+闭盒由有理不等式定义，其中的零集恰为一个点。由实闭域的投影定理，这个单点的每个坐标投影都是在 $\mathbb Q$ 上半代数的单点，因而是实代数数。这只用标准的实代数消元性质；它不分类盒外的零点。
+
+### 4.2. 非零分母与整个原世界的充要重建
+
+下面的区间计算均为有理区间运算。对源多项式 $P(r,b)=\sum_{j,k}p_{jk}r^jb^k$，以
+
+$$
+\mathcal I(P)=\sum_{j,k}[p_{jk},p_{jk}]\,I_r^jI_b^k
+\tag{4.12}
+$$
+
+定义展开后的自然区间值。加法按端点相加，乘法取四个端点乘积的最小、最大值；非负整数幂为重复区间乘法。第一源取 $I_r=[m_1-\rho,m_1+\rho]$、$I_b=[a,a]$，第二源取 $I_r=[m_2-\rho,m_2+\rho]$、$I_b=[m_3-\rho,m_3+\rho]$。首先用式 (4.12) 得到
+
+$$
+\mathcal I(\mathscr D(x,a))\subset
+\left(-\frac{134089}{10^6},-\frac{134088}{10^6}\right)
+\subset\left(-\frac15,-\frac1{10}\right),\qquad
+\mathcal I(\mathscr D(y,t))\subset
+\left(-\frac{16078383}{10^6},-\frac{16078382}{10^6}\right)
+\subset(-17,-16).
+\tag{4.13}
+$$
+
+所以两个分母在整个盒上均严格负。$a>0$、$t>0$ 也已由盒界给出。此后才对不含零的区间 $[l,u]$ 用倒数 $[1/u,1/l]$；分子分别按式 (4.12) 展开求值，再乘倒数，给下表。每格 $(L,U)$ 表示严格包含在 $(L/10^6,U/10^6)$ 中；表内表达式分别代入 $(x,a)$ 与 $(y,t)$。
+
+| 表达式 | 第一源 | 第二源 |
+| --- | --- | --- |
+| $r(1-r)/b$ | $(455960,455961)$ | $(78506,78507)$ |
+| $\mathscr B/\mathscr D$ | $(19485381,19485382)$ | $(28798260,28798261)$ |
+| $\mathscr Q_5/(875b\mathscr D)$ | $(-6692588,-6692586)$ | $(-6692588,-6692587)$ |
+| $\mathscr Q_6/(875b\mathscr D)$ | $(11815176,11815178)$ | $(11815177,11815178)$ |
+| $\mathscr Q_7/(875b\mathscr D)$ | $(107058221,107058224)$ | $(107058222,107058223)$ |
+
+在任一严格源上，先由 $b>0$ 定义 $c=r(1-r)/b>0$，于是 $j=b+c=X/b>0$、$n=r+j=N/b>0$、$T>0$，故下列分式的分母均非零。式 (4.1) 与式 (2.4) 的第四行方程之间有精确恒等式
+
+$$
+\begin{aligned}
+\mathscr D&=b^2jTn\,a_4,&
+\mathscr B&=b^2jTn(Y-k_4),\\
+j\mathscr V_1&=A\mathscr D-\mathscr B,&
+T\mathscr V_2&=C\mathscr D-\mathscr B,&
+n\mathscr V_3&=z\mathscr D-\mathscr B,\\
+\mathscr B+U(-\mathscr V_0+4\mathscr V_1-6\mathscr V_2+4\mathscr V_3)
+ &=Y\mathscr D.
+\end{aligned}
+\tag{4.14}
+$$
+
+后三个乘法恒等式可乘 $b$ 清分母后逐项合并，最后一式本身是多项式恒等式。在满足 $\mathscr D\ne0$ 的严格源上，定义
+
+$$
+\begin{aligned}
+\ell_0(s)&=-\frac{(s-1)(s-2)(s-3)}6,&
+\ell_1(s)&=\frac{s(s-2)(s-3)}2,\\
+\ell_2(s)&=-\frac{s(s-1)(s-3)}2,&
+\ell_3(s)&=\frac{s(s-1)(s-2)}6,\\
+d_{r,b}&=\frac{\mathscr B(r,b)}{\mathscr D(r,b)},&
+g_{r,b}(s)&=\frac{\sum_{i=0}^3\mathscr V_i(r,b)\ell_i(s)}{\mathscr D(r,b)}.
+\end{aligned}
+\tag{4.15}
+$$
+
+插值常数 $2,6$ 均非零。式 (4.13) 已保证这两个具体源能使用式 (4.15)。更一般地，在 $\mathscr D(r,b)\ne0$ 的任一严格源上，对于定义 1.1 的整个三元组，有原行的充要关系
+
+$$
+(P(r,b),g,d)\in\mathcal F(H_4^\star)
+\quad\Longleftrightarrow\quad
+(d,g)=(d_{r,b},g_{r,b}).
+\tag{4.16}
+$$
+
+确实，$\ell_i(k)=\delta_{ik}$ 于 $0\le i,k\le3$，故式 (4.14) 依次给实际读数 $0,A,C,z$；式 (2.3) 的时钟四权重 $(-1,4,-6,4)$ 及式 (4.14) 最后一行给实际第五行 $Y$。反向，任一实现这五行的整个次数至多三多项式，必有式 (2.2) 的四个样本，再由四节点 Lagrange 插值唯一确定。把它代入时钟四给 $a_4d=Y-k_4$。由式 (4.14)、$b^2jTn>0$ 和 $\mathscr D\ne0$，先知 $a_4\ne0$，才除出式 (4.15) 的 $d$，随后得到同一个整个 $g$。插值方法直接使用第 2.1 小节引用的 Berrut–Trefethen §2，不作为另一个新增结论。
+
+式 (4.15) 给一个在全部原时钟不变的实多项式，次数至多三。若它恒零，原时钟零、一的读数均等于固定 $d$，与 $0\ne24$ 矛盾。因此它是整个非零增益。式 (4.16) 仅在已证非零的局部源分母上使用，不断言 $a_4$ 在整个 $\mathcal F(H_4^\star)$ 上非零；其余源层无需为此存在性结论分类或删去。整个定义域仍含增益样本零、任意符号、非采样根、重根与次数下降；这里不除以样本值、最高次系数、根差或判别式。
+
+在零点处置 $(r_1,b_1)=(\xi,a)$、$(r_2,b_2)=(\eta,\theta)$，并取 $g_i=g_{r_i,b_i}$、$d_i=d_{r_i,b_i}$。两个源明确为
+
+$$
+P_1=\begin{pmatrix}\xi&1/5\\5\xi(1-\xi)&1-\xi\end{pmatrix},\qquad
+P_2=\begin{pmatrix}\eta&\theta\\\eta(1-\eta)/\theta&1-\eta\end{pmatrix}.
+\tag{4.17}
+$$
+
+两源各项严格正、迹为一、行列式为零，故秩恰为一。$\xi>89/100$ 而 $\eta<2/25$ 使它们不同。表中的漂移界还给 $19<d_1<20$、$28<d_2<29$。这证明式 (4.6) 的完整合法性与不同性。
+
+### 4.3. 三个方程与原始八行的精确对应
+
+沿定义 1.2 表中的实际左乘积，原时钟五、六、七的正迹分别为
+$1+r+3b+c$、$1+2r+2b+c$、$2+5b+c$，恰为 $R_5/b,R_6/b,R_7/b$。这些乘积依次是
+$Q_5=M Q_4$、$Q_6=JQ_5$、$Q_7=M Q_6$，故没有交换动作或重编号。把同一个式 (4.15) 代入式 (1.2)，式 (2.3) 的三行插值权重给实际响应
+
+$$
+q_i(r,b)=\frac{\mathscr Q_i(r,b)}{875b\mathscr D(r,b)},\qquad i=5,6,7,
+\qquad
+(p_0,h_0,f_0)=\bigl(q_5(\xi,a),q_6(\xi,a),q_7(\xi,a)\bigr).
+\tag{4.18}
+$$
+
+在盒上 $875ab_2\mathscr D(x,a)\mathscr D(y,t)\ne0$，其中 $b_2=t$。因此式 (4.3) 不仅是共同响应的必要条件，而有逐行恒等式及充要关系
+
+$$
+\begin{aligned}
+q_i(x,a)-q_i(y,t)
+ &=\frac{\mathscr F_i(x,y,t)}
+ {875at\mathscr D(x,a)\mathscr D(y,t)},\qquad i=5,6,7,\\
+\mathscr F(x,y,t)=0
+ &\quad\Longleftrightarrow\quad
+(q_5,q_6,q_7)(x,a)=(q_5,q_6,q_7)(y,t).
+\end{aligned}
+\tag{4.19}
+$$
+
+在 $(\xi,\eta,\theta)$ 处三个多项式为零，所以三个末响应完全相等；相等性来自式 (4.19)，并非区间交叠。式 (4.16) 已给共同的前五行，故得到式 (4.7) 的全部八行。式 (4.18) 连同有理方程和隔离盒就是三个代数响应的精确定义。表中的整个盒界给所需的三个开区间，完成证明。∎
+
+**推论 4.3（自由第五响应的固定续行障碍与共享历史边界）。** 对 $W\in\mathcal F(H_4^\star)$，令 $p(W)$ 是第五 $M$ 的实际响应，$h(W)$、$m(W)$ 是随后第六 $J$、最终 $M$ 的实际响应。映射
+
+$$
+\Psi:\mathcal F(H_4^\star)\longrightarrow\mathbb R^3,
+\qquad W\longmapsto\bigl(p(W),h(W),m(W)\bigr)
+\tag{4.20}
+$$
+
+不是单射。令
+
+$$
+\begin{aligned}
+H_5^0&=(H_4^\star,M,p_0),&H_6^0&=(H_5^0,J,h_0),\\
+S_0&=\mathcal F(H_6^0),&
+\Lambda_0&=\mathcal F(H_6^0,M,f_0).
+\end{aligned}
+\tag{4.21}
+$$
+
+则最终 $M$ 在整个已获切片 $S_0$ 上不是单射，且 $\Lambda_0$ 至少含两个不同完整世界，满足定义 1.3 的 $L_0$。定理 2.1 与推论 3.1 在 $H_5^\star$ 上的结论仍成立。
+
+证明。定理 4.2 的两个世界属于 $\Lambda_0\subseteq S_0\subseteq\mathcal F(H_5^0)$，其式 (4.20) 响应相等，而完整目标不同。这同时证明三项非单射、非单点叶及其停止守卫。又 $p_\star=-9596/525<-7$，而 $p_0\in(-7,-6)$，所以 $H_5^0\ne H_5^\star$；定理 2.1 的量词域是固定的 $\mathcal F(H_5^\star)$。其两图包含、分支符号与单射结论没有被用于式 (4.20) 的自由 $p$ 域。
+
+这正好排除在整个 $\mathcal F(H_4^\star)$ 上统一采用第五 $M$、第六 $J$、最终 $M$ 的完整识别续行。要在同一已获响应 $p_0,h_0$ 上取得 $L_1(S_0,H_6^0)$，式 (1.6) 还要求最终 $J$ 有一个非单点叶；那个叶可用另一对世界，但它们也必须属于同一个 $S_0$，不能把另一第六响应下的对接入。要进一步在 $H_5^0$ 取得 $L_2$，还须在同一个 $p_0$ 下，为第六 $M$ 找一个共同响应 $v_M$，使其已获切片同时有最终 $J$ 和最终 $M$ 的非单点叶。它们各自的父节点也必须满足非单点停止守卫。定理 4.2 只给式 (4.21) 这一最终 $M$ 叶，不给这些其余存在量词的见证。
+
+因此仍待决定：同一第四父的第五 $M$ 臂是否有一个实际响应支持完整的 $L_2$，以及是否反而该臂的每个第五响应都有某个第六动作，使每个已获切片可由一个适当的最终动作单射识别；该最终动作允许依赖已经取得的响应。第五 $J$ 臂、其他父、全部祖先与原根 $L_7$ 仍保留定义 1.3 的量词和共同实现条件。单个固定续行的失败不结算原八读策略的存在或不可能性、八与九的极小极大比较或九读上界。
+
+本节的具体相容世界与同历史碰撞是由上述原方程得出的仓内数学内容；Lagrange 插值、Banach 压缩映像、Neumann 级数与实半代数投影仅为证明中的既有工具，不另立同名新定理，也不据此作任何文献原创性主张。∎
+
+## 追加锚（本行以下为增补区）
