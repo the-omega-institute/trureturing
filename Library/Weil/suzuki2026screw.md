@@ -4260,3 +4260,147 @@ profiles on arbitrary-width high supports. It does not give all orders
 at any fixed start, positivity for unrestricted complex measures,
 compact-core positivity or the original strict Robin joint upper.
 The full RH and strict Robin for every integer above 5040 remain open.
+
+## A shrinking gap pays arbitrary complex theta samples on the full high half-line
+
+Keep the complete actual odd kernel $L_0$, its diagonal $J(a)=L_0(a,a)$ and $R(a,b)=L_0(a,b)/\sqrt{J(a)J(b)}$. Reuse the exact complete forward integral from (W52), the real restriction of the already proved theta expansion (W23)/(W47), and the classical Cauchy inverse formula for the reference in (W34)/(W61). No theta-series proof, generic interpolation theorem or numerical certificate is repeated. This is a source-specific paper application, without a literature-priority or Lean/kernel claim.
+
+For every fixed $\kappa>\pi^2/2$, one start $A_\kappa$ works for all finite sets of distinct physical nodes $a_i\ge A\ge A_\kappa$ with minimum gap
+
+$$
+|a_i-a_j|\ge\delta_A:=\frac{\kappa}{\log A}\quad(i\ne j).
+$$
+
+There is no bound on the number of nodes or on their upper endpoint. The quantitative estimate below concerns the same actual complete kernel and arbitrary complex coefficients.
+
+### Compare the full actual kernel uniformly over both escaping positions
+
+There are constants $C,A_0>0$ independent of both positions such that
+
+$$
+\boxed{\left|R(a,b)-\operatorname{sech}(a-b)\right|
+\le \frac CA(1+|a-b|)e^{-|a-b|}\qquad(a,b\ge A\ge A_0).}
+\tag{W80}
+$$
+
+Unlike (W33), the containing interval has no fixed width. To verify it, write $b=a+d$, $d\ge0$, and $Q=e^{2a}+e^{2b}$. The owned real expansion is
+
+$$
+g(s)=\log\Phi(s)=\log(4\pi^2)+\tfrac92s-\pi e^{2s}+v(s),\qquad v(s)=O(e^{-2s})\quad(s\ge1).
+$$
+
+The same formula defines a continuous $v$ on the whole real axis. Evenness of $g$ gives $v(s)\to-\infty$ as $s\to-\infty$, so $\sup_{\mathbb R}v<\infty$. This upper bound does not assert that the right-tail expansion is a two-sided asymptotic.
+
+In the exact forward formula put
+
+$$
+U_+=\frac14\int_0^\infty(a+b+2t)e^{g(a+t)-g(a)+g(b+t)-g(b)}\,dt,
+$$
+
+$$
+U_-=\frac14\int_0^\infty(d+2t)e^{g(a-t)-g(a)+g(b+t)-g(b)}\,dt,\qquad
+\frac{L_0(a,b)}{\Phi(a)\Phi(b)}=U_+-U_-.
+$$
+
+For $U_+$, the substitution $z=e^{2t}-1$ yields
+
+$$
+U_+=\frac18\int_0^\infty
+[a+b+\log(1+z)](1+z)^{7/2}e^{-\pi Qz}e^{\Delta v_+(z)}\,dz.
+$$
+
+Here $|\Delta v_+(z)|\le C e^{-2a}$ uniformly for every $z\ge0$, because both shifted arguments stay on the right tail. Elementary Laplace integrals of these fixed polynomial weights give
+
+$$
+U_+=\frac{a+b}{8\pi Q}\bigl(1+O(e^{-2a})\bigr),
+$$
+
+uniformly for all $b\ge a\ge A_0$. For example,
+$|(1+z)^{7/2}-1|\le C z(1+z)^3$ and $\log(1+z)\le z$ bound the relative integral error by $C/Q\le C e^{-2a}$; the constants do not depend on $a+b$ since $a+b\ge2$.
+
+For $U_-$ the global upper bound on $v$, not a deleted reflected tail, gives
+
+$$
+e^{g(a-t)-g(a)+g(b+t)-g(b)}
+\le C\exp\{-2\pi e^{a+b}[\cosh(d+2t)-\cosh d]\}\qquad(t\ge0).
+$$
+
+This remains true when $a-t<0$. The function $u/\sinh u$ decreases on $[0,\infty)$, with value $1$ at zero. Substituting $u=d+2t$, then $x=\cosh u-\cosh d$, therefore gives
+
+$$
+0\le U_-\le C e^{-(a+b)}\frac d{\sinh d},
+$$
+
+with the quotient read continuously at $d=0$. This retains the whole reflected exterior.
+
+At $a=b$, these two bounds give the actual diagonal expansion
+
+$$
+J(a)=\frac{a\Phi(a)^2}{8\pi e^{2a}}\bigl(1+O(a^{-1})\bigr).
+$$
+
+Choose the common start so its factor is positive. Dividing the two complete terms by $\sqrt{J(a)J(b)}$ shows that the direct term is
+
+$$
+\frac{a+b}{2\sqrt{ab}}\,\operatorname{sech}d\bigl(1+O(A^{-1})\bigr),
+$$
+
+and the reflected term has modulus at most $C A^{-1}d/\sinh d$. Since
+$0\le(a+b)/(2\sqrt{ab})-1\le d/(2a)$,
+$\operatorname{sech}d\le2e^{-d}$ and $d/\sinh d\le C(1+d)e^{-d}$, this proves (W80). Symmetry handles $a>b$. All constants are uniform on the unbounded set of both positions.
+
+### Reuse the exact inverse of the separated Cauchy reference
+
+Order an arbitrary finite node set of minimum gap $0<\delta\le1$, and put $S_{ij}=\operatorname{sech}(a_i-a_j)$. With $x_i=e^{2a_i}$ this is the normalized Cauchy Gram $2\sqrt{x_ix_j}/(x_i+x_j)$. The classical inverse formula gives
+
+$$
+(S^{-1})_{ij}=S_{ij}p_i p_j,\qquad
+p_i=\prod_{k\ne i}\frac{x_i+x_k}{x_i-x_k}.
+$$
+
+The $n$th node on either side is at distance at least $n\delta$, so
+
+$$
+|p_i|^2\le\prod_{n\ge1}\coth(n\delta)^4
+\le\exp\!\left(\frac{\pi^2}{2\delta}\right).
+$$
+
+The last bound uses the decreasing integrable function $\log\coth t$ and its classical integral $\int_0^\infty\log\coth t\,dt=\pi^2/8$. The same ordered row sum satisfies
+$\sum_j S_{ij}\le1+4/(e^\delta-1)\le5/\delta$. Applying the standard Hermitian row-sum bound directly to this inverse yields the reference estimate
+
+$$
+S\succeq \frac{\delta}{5}\exp\!\left(-\frac{\pi^2}{2\delta}\right)I.
+$$
+
+This is a reused Cauchy-matrix estimate inside the actual source comparison, not a new generic positivity criterion. No upper bound on the number or diameter of the sampled nodes enters it.
+
+### Pay the actual error before letting the gap shrink
+
+The function $(1+t)e^{-t}$ decreases on $[0,\infty)$ and has integral $2$. Thus (W80) on the same separated nodes gives
+
+$$
+\|[R(a_i,a_j)-S_{ij}]\|_{\rm op}
+\le\frac{C}{A}\left[1+2\sum_{n\ge1}(1+n\delta)e^{-n\delta}\right]
+\le\frac{5C}{A\delta}.
+$$
+
+Consequently $[R(a_i,a_j)]\succeq\tfrac12[S_{ij}]$, and hence has half the displayed reference scalar lower bound, whenever
+
+$$
+\boxed{A\delta^2\exp\!\left(-\frac{\pi^2}{2\delta}\right)\ge50C,\quad
+0<\delta\le1,\quad A\ge A_0.}
+\tag{W81}
+$$
+
+Take $\delta=\delta_A=\kappa/\log A$ with fixed $\kappa>\pi^2/2$, and write $\rho_\kappa=\pi^2/(2\kappa)<1$. The left side of (W81) is
+$\kappa^2 A^{1-\rho_\kappa}/(\log A)^2$, which tends to infinity. One $A_\kappa$ therefore works for every $A\ge A_\kappa$ and every finite such family. For the original arbitrary complex physical coefficients $c_i$, apply the normalized estimate to $z_i=\sqrt{J(a_i)}c_i$ to get
+
+$$
+\boxed{\sum_{i,j}\overline{c_i}L_0(a_i,a_j)c_j
+\ge\frac{\kappa}{10\log A}\,A^{-\rho_\kappa}\sum_i J(a_i)|c_i|^2>0\qquad(c\ne0).}
+\tag{W82}
+$$
+
+All interactions and the complete actual direct/reflected theta integrals are included. The start and constants are independent of total node count, arbitrary upper endpoint and coefficient magnitudes. The new paid parameter is a minimum physical gap tending to zero like $1/\log A$, in contrast with (W61)'s prescribed fixed gap and unspecified dependence of the start on that gap.
+
+At each fixed $A$, (W82) still imposes a positive minimum gap. It does not cover arbitrary dense sampling or arbitrary complex measures on one fixed interval, identify these samples with the actual prime/Robin source, or supply a signed strict Robin upper. The $J(a_i)$ weights are the actual diagonals, not an unweighted physical norm. Full fixed-window all-order positivity, strict Robin for every integer above5040 and RH remain unproved. The statement is paper mathematics under the owned actual-source identities; no numerical execution, Lean build, new agent or priority claim is involved.
