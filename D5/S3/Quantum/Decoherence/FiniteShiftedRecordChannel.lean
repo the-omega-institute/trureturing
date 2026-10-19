@@ -198,7 +198,7 @@ private theorem marginal_entry
   simpa [ep, Matrix.submatrix_apply,
     D5.S3.Quantum.FixedAlgebra.SingletonRecordClassicality.recordGram, mul_comm] using h
 
-private theorem diagonal_kraus_complete
+theorem diagonal_kraus_complete
     {ι ε : Type*} [Fintype ι] [DecidableEq ι] [Fintype ε]
     (record : ι → ε → ℂ) (hnorm : ∀ i, ∑ a, ‖record i a‖ ^ 2 = (1 : ℝ)) :
     ∑ a, (Matrix.diagonal (fun i => record i a)).conjTranspose *
