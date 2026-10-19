@@ -27,5 +27,5 @@ The open question (Section 1.4(b)):
 
 ## Verified locator
 
-- DOI: https://doi.org/10.4230/LIPIcs.STACS.2026.66 (STACS 2026; the published §1.4 keeps the question, citing Theorem 20 for the comparison with order 2).
+- DOI: https://doi.org/10.4230/LIPIcs.STACS.2026.66 (STACS 2026, LIPIcs 364, article 66; the DOI resolves to the Dagstuhl landing page with this title; the published text was not read).
 - URL: https://arxiv.org/abs/2601.03734v2 (v2, 2026-04-07; v1, 2026-01-07; source `entropyHardness.tex`, md5 `707b5497956656274c317b37f9f9f590`): the open question (l. 470) and the binary entropies (l. 494–497).
