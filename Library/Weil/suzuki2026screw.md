@@ -8470,3 +8470,165 @@ Thus beyond a start depending on $f$, independent of $w$, these actual sources h
 For a nonnegative real nonzero $f$, the Poisson polynomial's nonzero coefficients are positive. If its degree is $n_P$, expanding W236 gives coefficients of sign $(-1)^j$, strictly nonzero for every $0\le j\le n_P$. At all large $P$, $PR<n_P\le P(R+d_*)$. The positive physical/Gaussian weights preserve these alternating signs. Hence these sources have more than $PR$ successive sign changes in the fixed local window. Any separator for that alternating atomic source needs at least $n_P$ roots there, counting multiplicity, including the possibility of roots at atoms. W215 therefore gives $\Xi_A\ge n_Pe^{-2w}>Re^{-2w}P$. For $R$ sufficiently large at fixed $w$, they lie outside W228's fixed reciprocal-mass cap as well as outside W266's small-moment sector. No stable coefficient or gap bound is asserted.
 
 The full original kernels, source normalization and Hardy metric are unchanged. The packet estimate is uniform in its location, but the approximation start may depend on the chosen packet. It neither proves all sources of any large fixed moment budget positive nor pays joint interference between arbitrary packets. Sufficient cofinal arbitrary-source positivity, W258 for every fixed budget, full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved. No numerical threshold/start, computational certificate, Lean/kernel or CI/merge certification, exhaustive bibliography or priority is supplied.
+
+
+## Integer-square interval configurations admit a joint complete-source estimate
+
+Fix any nonempty finite set $D\subset\mathbb Z_{\ge1}$. There are $R_D,C_D,c_D>0$ such that, for every $R\ge R_D$, $0<\delta\le1$ and arbitrary independent complex profiles $g_d\in C_c^\infty((R,R+\delta))$, the physical feature
+$$
+f(x)=\sum_{d\in D}d^4g_d(d^2x),\qquad
+S=\|\mathscr Tf\|_{L^2([\pi,\infty),x^{7/2}dx)}^2
+$$
+satisfies
+$$
+\mathfrak E(f)\ge
+\left[\frac2{\sqrt\pi}\log\frac1\delta-C_D\right]S,
+\qquad
+c_DR^{7/2}\log(2+R)\sum_d\|g_d\|_2^2
+\le S\le
+C_DR^{7/2}\log(2+R)\sum_d\|g_d\|_2^2.
+\tag{W275}
+$$
+Here $\mathfrak E$ is W255's complete actual form. A sufficiently small fixed $\delta_D>0$ therefore gives a positive joint margin for all these independent profiles. Constants may depend on the fixed finite set $D$; no uniformity as $D$ grows is asserted. The physical intervals are $(R/d^2,(R+\delta)/d^2)$, whose exact integer-square relation is part of the hypothesis. This pays cross terms for this configuration, not arbitrary interval locations or all sources of a given moment budget.
+
+Reuse W267--W274's physical support/Gamma/cutoff mechanism, the original complete modal order W249, paired reflection W240, and W255/W257's physical/source correspondence. The additional step is a matrix estimate for the actual overlapping modal profiles, rather than positivity inferred from separate intervals. Classical harmonic sums and common-divisor Gram factorizations are consumed within that estimate; no standalone GCD-matrix theorem is added. This is paper mathematics without Lean certification or a literature-priority claim.
+
+### Keep the overlapping profiles in one exact arithmetic matrix
+
+Increase $R_D$ so that $R_D\ge\pi(\max D)^2$. Put $L=\lfloor\sqrt{(R+\delta)/\pi}\rfloor$ and $\ell(y)=\lfloor\sqrt{y/\pi}\rfloor$. On $[\pi,\infty)$ the complete direct features are
+$$
+\begin{aligned}
+U=\mathscr Tf&=\sum_{n\le L}n^4h_n(n^2x),&
+h_n(y)&=\sum_{\substack{d\in D\\d\mid n}}g_d(y),\\
+V=\mathscr Vf&=\sum_{n\le L}n^4k_n(n^2x),&
+k_n(y)&=\sum_{\substack{d\in D\\d\mid n}}\log(n/d)g_d(y).
+\end{aligned}
+\tag{W276}
+$$
+Thus the original source order is retained; $V$ is not obtained by multiplying $h_n$ by $\log n$. The $n$-th intervals are disjoint by the same geometry as W268. Different $d$ within one such interval need not be orthogonal and are never separated in the estimate.
+
+Set $H_0=J_0=0$, $H_m=\sum_{j\le m}1/j$ and $J_m=\sum_{j\le m}(\log j)/j$. For $q=\operatorname{lcm}(d,e)$ define real symmetric matrices
+$$
+\begin{aligned}
+\mathsf M_N(d,e)&=\frac1q H_{\lfloor N/q\rfloor},\\
+\mathsf A_N(d,e)&=\frac1q\left[
+2J_{\lfloor N/q\rfloor}
++(2\log q-\log d-\log e)H_{\lfloor N/q\rfloor}\right].
+\end{aligned}
+$$
+With $\mathbf g(y)=(g_d(y))_{d\in D}$, changing variables in each actual modal interval gives exactly
+$$
+\begin{aligned}
+S&=\int_R^{R+\delta}y^{7/2}\mathbf g(y)^*\mathsf M_{\ell(y)}\mathbf g(y)dy,\\
+2\Re\langle U,V\rangle_W
+&=\int_R^{R+\delta}y^{7/2}\mathbf g(y)^*\mathsf A_{\ell(y)}\mathbf g(y)dy,
+\qquad W=x^{7/2}.
+\end{aligned}
+\tag{W277}
+$$
+Using $\ell(y)$ handles the partial last mode without changing the profiles or their common realization.
+
+### Common prime-power features pay the matrix logarithmic loss
+
+Use the classical matrices
+$G(d,e)=1/\operatorname{lcm}(d,e)$ and
+$K(d,e)=\log\gcd(d,e)/\operatorname{lcm}(d,e)$.
+The common-divisor factorization
+$G(d,e)=\sum_{r\mid d,e}\varphi(r)/(de)$ gives positive definiteness on every finite set of distinct positive integers. This is the usual GCD Gram after positive diagonal scaling. In particular its smallest eigenvalue is positive for this fixed $D$. Also
+$K=\sum_{p^a\mid\operatorname{lcm}(D)}(\log p)P_{p^a}GP_{p^a}\succeq0$,
+where $P_{p^a}$ is the diagonal indicator of $p^a\mid d$. This consumes $\log\gcd(d,e)=\sum_{p^a\mid d,e}\log p$ on the same finite indices; it is valid for arbitrary complex vectors.
+
+The classical harmonic expansions, with errors uniform in this fixed finite matrix, give in operator norm
+$$
+\begin{aligned}
+\mathsf M_N&=(\log N)G+O_D(1),\\
+\mathsf A_N-(\log N)\mathsf M_N
+&=-(\log N)(\gamma G+K)+O_D(1).
+\end{aligned}
+$$
+For the second line use $H_m=\log m+\gamma+O(1/m)$ and
+$J_m=\tfrac12\log^2m+c_1+O(\log(2m)/m)$. At entry $(d,e)$, $\log d+\log e-\log q=\log\gcd(d,e)$. The floor errors are $O_D((\log N)/N)$ and are bounded; $c_1$ is the common constant in that classical sum. Since $G\succ0$ and $K\succeq0$, at one $D$-dependent start,
+$$
+\begin{aligned}
+c_D\log(2+N)I&\preceq\mathsf M_N\preceq C_D\log(2+N)I,\\
+\mathsf A_N&\preceq(\log N+C_D)\mathsf M_N.
+\end{aligned}
+\tag{W278}
+$$
+No bound on the individual $g_d$ relative to their sum is assumed. Increase $R_D$ to put every $\ell(y)$ beyond this common start. W277--W278 prove W275's comparison for $S$ and give
+$2\Re\langle U,V\rangle_W\le(\log L+C_D)S$.
+This is the paid matrix cross term. A bound for each pure profile alone would not imply it.
+
+### Retain the physical logarithm, cutoff and both B factors
+
+The Mellin support of $U_0=\mathbf1_{[\pi,\infty)}U$ is contained in at most $L$ intervals of logarithmic length $\log(1+\delta/R)$. Its total measure is at most $L\delta/R$, even though all the original profiles may be independent. Apply W269's Fourier-mass inequality and W231's owned Gamma multiplier to this same $U_0$. The possible jump at $\pi$ is in the logarithmic form domain as in W247. That cutoff's two functionals are bounded in $W$ norm by the square-integrability of $y^{-7/4}$ and $k_\pi(y)y^{-7/4}$. Thus
+$\mathcal D_\pi(U)\ge(2/\sqrt\pi)[\log(R/(L\delta))-C]S$.
+
+Write $M=\sum_d\|g_d\|_2^2$. The W270 right-integral estimates now give
+$\|(B-I)U\|_W\le C_D\sqrt\delta R^{3/2}\sqrt M$ and
+$\|(B-I)V\|_W\le C_D\sqrt\delta R^{3/2}\log(2+R)\sqrt M$.
+Indeed $|\int_z^\infty h_n|\le C_D\sqrt{\delta M}$, while the same integral for $k_n$ costs at most an extra $\log(2+n)$; sum $n^2$ up to $\sqrt{(R+\delta)/x}$ exactly as in W270. Cauchy--Schwarz and W278 also give $\|V\|_W\le C_D\log(2+R)\sqrt S$. Consequently
+$|\Re\langle BU,BV\rangle_W-\Re\langle U,V\rangle_W|\le C_DS$.
+The relative errors are bounded by the same $R^{-1/4}\sqrt{\log(2+R)}$ and $R^{-1/2}$ factors as in W270, with constants depending only on $D$.
+
+The exact complete direct formula W249 therefore yields
+$$
+\mathfrak D_\Phi(f)
+\ge\frac2{\sqrt\pi}\left[\log\frac{R}{L^2\delta}-C_D\right]S
+\ge\left[\frac2{\sqrt\pi}\log\frac1\delta-C_D\right]S.
+\tag{W279}
+$$
+Here $L^2\le(R+\delta)/\pi$. All mixed components of $V$ and the coefficient $-2$ have been retained; the leading $\log R$ is paid by the joint arithmetic matrix rather than a separate coefficient bound.
+
+### Pay every reflected cross interval on the same source
+
+The folded model on $U$ has absolute value at most $CS$ by W232 and the right Hardy inequality. For the exact pair sum W240 write $f_d(x)=d^4g_d(d^2x)$ and $Hf=(3/2)If/x$. There is the common bound
+$|Hf(x)|\le C_D\sqrt{\delta M}/x$ for $\pi\le x<R+\delta$, and $Hf=0$ above that range. Both pair arguments are at least $\pi$; only $q=\ell k\le(R+\delta)/\pi$ can contribute. As in W272, indices $k>L$ remain in this reflected sum.
+
+For the $f_d$--$f_e$ part, $xy=\pi^2q^2$ forces
+$q\in[R/(\pi de),(R+\delta)/(\pi de)]$, an interval of length less than one. At most one integer $q$ occurs for that ordered profile pair. Its invariant-measure Cauchy bound is
+$C d^4e^4\|g_d\|_2\|g_e\|_2/R$.
+The factor $q^4$ in W240 cancels $d^4e^4$ at this scale. Summing divisor pairs with
+$\sum_{\ell k=q,\ell<k}\tfrac12\log(k/\ell)\le C\sqrt q\log(2+q)$
+and then the finitely many $d,e$ gives at most
+$C_DR^{7/2}\log(2+R)M\le C_DS$.
+
+For either $f$--$Hf$ part, $\|f\|_1\le C_D\sqrt{\delta M}$ gives after the pair coefficient a bound $C_D\delta M q^2H_{\ell k}$. The two-tail part costs $C_D\delta M q^2H_{\ell k}^2$. W272's elementary hyperbola sum bounds their totals by
+$C_D\delta MR^3\log^3(2+R)\le C_DS$.
+Hence, including all actual exterior corrections,
+$$
+|\mathfrak R_\Phi(f)|\le C_DS.
+\tag{W280}
+$$
+Every term uses the original sum $f$ and its actual paired arguments; no independent phase, coefficient law or physical source is substituted. W279--W280 prove W275.
+
+### The joint positive space has an actual finite-source consumer
+
+Choose $0<\delta_D\le1$ so that W275's bracket is at least one. Then the entire direct sum of independent profile spaces above satisfies
+$$
+\mathfrak E(f)\ge S\ge
+c_DR^{7/2}\log(2+R)\sum_d\|g_d\|_2^2>0
+\quad\text{unless every }g_d=0.
+\tag{W281}
+$$
+The physical intervals are disjoint at the chosen start, so
+$\|f\|_2^2=\sum_d d^6\|g_d\|_2^2$ and
+$\|x^3f\|_2^2=\sum_d d^{-6}\int_R^{R+\delta_D}y^6|g_d(y)|^2dy$.
+Apply the existing W235--W236 approximation to this single $f$, with $X$ error $O_f(e^{-2A})$ chosen independently of $w$. W255 and W257 give actual original Gaussian sources on $[A,A+w)$, at most $\lceil(R+\delta_D+1)e^{2A}\rceil$ sites, normalized by $Q_H=1$, such that
+$$
+\begin{aligned}
+Q_{6,A}(\sigma_{A,w})&\longrightarrow
+\frac{\sum_d d^{-6}\int_R^{R+\delta_D}y^6|g_d(y)|^2dy}
+{\pi^6\sum_d d^6\|g_d\|_2^2},\\
+A Q_{\mathcal K_A^g}(\sigma_{A,w})&\longrightarrow
+\frac{\mathfrak E(f)}{4\pi^3\sum_d d^6\|g_d\|_2^2}>0.
+\end{aligned}
+\tag{W282}
+$$
+For each fixed nonzero profile tuple, both limits and a positive lower margin hold beyond one start independent of $w>0$, for these selected approximants. The limiting sixth-moment ratio is at least $(R/(\pi(\max D)^2))^6$ and is unbounded as $R$ grows with $D$ fixed. The complete original kernel, Gaussian normalization and Hardy metric are unchanged. No stable coefficient or gap bound is asserted.
+
+There is a literal prime-channel example inside this joint space. If $D$ is the divisor set of a fixed squarefree $Q$ and $g_d=\mu(d)g$, then W276 has $h_n=\mathbf1_{(n,Q)=1}g$. The corresponding cancellations are caused by the chosen source; the original kernel, logarithmic charge and reflected exterior are still complete. W281 also covers arbitrary independent complex $g_d$, not only this sieve choice. Already for $D=\{1,2\}$ and $g_1=g$, $g_2=-g$ with nonnegative $g$, it pays the genuine interaction in $f=g-16g(4\cdot)$.
+
+For that example, the Poisson polynomial has nonnegative coefficients in its outer packet and nonpositive coefficients in its inner packet. Above the inner degree $n_{\rm in}\le P(R+\delta_D)/4$, every deconflated coefficient up to the positive outer degree $n_{\rm out}>PR$ has strict sign $(-1)^j$, with $P=e^{2A}$. There are at least $n_{\rm out}-n_{\rm in}-1>PR/2$ successive alternations at all large $P$. Roots at atoms do not evade the same local root-count argument used at W274. At fixed $w$ and large $R$ these actual sources exceed W228's reciprocal-mass cap, while their limiting moment ratio lies in $[(R/(2\pi))^6,((R+\delta_D)/(2\pi))^6]$, beyond W266. This illustrates actual cancellation, rather than positivity obtained by appending negligible atoms.
+
+The finite set $D$, common base interval and integer-square relations are essential hypotheses of this estimate. Its constants do not justify a passage to arbitrary interval sets or an unbounded-index limit. General multi-interval coupling, W258 for EVERY fixed moment budget, full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved. No numerical constants/start, computational certificate, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied.
