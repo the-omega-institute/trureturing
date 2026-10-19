@@ -3912,3 +3912,803 @@ derivations, with no exhaustive novelty determination.
 [FVG27]: https://arxiv.org/abs/quant-ph/9712042v2
 
 ## 追加锚（本行以下为增补区）
+
+## 32. Full-complex interfaces and stationary-support reductions
+
+**Convention 32.1 (Class and scope of the all-parameter extension).** Write
+$\mathcal L_\eta$ for the entire allowed-lift class of Definition 2.2,
+with $0<\eta<1$ and $r=1-\eta$. Retain Conventions 1.1–1.2 and the
+unhalved norms of (17.1). A channel is mixing, or relaxing, if it has a
+stationary density $\sigma_\Phi$ and
+$\Phi^n(X)\to\sigma_\Phi\operatorname{Tr}X$ for every complex $X$.
+The channel and parameter are fixed throughout each iteration. References
+are arbitrary finite external systems, and each environment is fresh and
+discarded. Sections 33–36 prove the full interior-parameter classification;
+§37 proves a common complete-norm bound on compact parameter sets avoiding
+$1/2$. These conclusions supply the all-lift classification left unresolved
+in Convention 31.2, including the threshold of Proposition 30.3. The
+explicit sufficient rates in Theorem 30.1 retain their stated scope.
+
+The complete class is exactly Theorem 4.1: all eight unit environment
+vectors in (4.4) live in one common complex space, obey (4.5), and have an
+actual PSD Gram matrix. Every Gram rank from two through eight is allowed
+when compatible with those constraints. If $G_{ab}=\langle f_a,f_b\rangle$
+in the edge order (4.3), and $D_{\mathcal E}$ contains the positive edge
+weights, the active Choi block is $D_{\mathcal E}\overline G D_{\mathcal E}$.
+Equivalently its entries are (4.6), with the reversed inner-product order.
+The output-first Choi conditions are $J\ge0$ and
+$J_{jj}=\operatorname{diag}_iQ_{ij}$; they imply
+$\operatorname{Tr}_{\mathrm{out}}J=I_5$. Thus the proofs concern the actual
+common-environment PSD8 class, including every complex matrix-unit input.
+In particular no constraint is imposed on $\langle\gamma_0,\gamma_1\rangle$
+beyond that Gram positivity. The dual identities used below are precisely
+(4.8):
+
+$$
+\begin{aligned}
+\Phi^\dagger(P_0)&=r(P_0+P_1),&
+\Phi^\dagger(P_3)&=\eta(P_0+P_1),\\
+\Phi^\dagger(P_1)&=rP_2,&
+\Phi^\dagger(P_4)&=\eta P_2,&
+\Phi^\dagger(P_2)&=P_3+P_4.
+\end{aligned}
+\tag{32.1}
+$$
+
+Theorem 29.1 gives $Q^n\to\mathbf1p$, where throughout this extension
+$p=(r^2,\eta r,\eta,\eta r,\eta^2)/(1+\eta)$ is a row.
+Consequently every $Q^m$, $m\ge1$, has the same unique stationary
+probability row: apply its powers $Q^{mk}$ and take $k\to\infty$.
+By (30.7), every $\Phi^m$-fixed density therefore has diagonal
+$p^{\mathsf T}$. Each of its five populations is strictly positive.
+This fact does not assert that the density is faithful on all of $H$.
+
+Here are the standard support reductions used in the proof of Theorem
+36.1, with their nonfaithful cases included. A density stationary under a
+CPTP map has an invariant support $S$. Indeed, for $y\perp S$ and any
+Kraus representation,
+
+$$
+0=\langle y,\Phi(\rho)y\rangle
+ =\sum_\ell\|\rho^{1/2}K_\ell^\dagger y\|^2
+\quad\Longrightarrow\quad K_\ell S\subseteq S.
+\tag{32.2}
+$$
+
+Such a subspace is called an enclosure. Restriction to it is CPTP and
+has a stationary density: Cesàro averages of the iterates of any density
+on it have a convergent subsequence, with discrepancy tending to zero.
+These facts apply on the actual support and require no reducing-subspace
+property on its full-space orthogonal complement.
+
+If two stationary densities differ, their nonzero Hermitian difference
+$D=D_+-D_-$ is fixed and $\operatorname{Tr}D_+=\operatorname{Tr}D_-$.
+Trace preservation and trace-norm contraction give equality in
+
+$$
+\|D\|_1=\|\Phi(D_+)-\Phi(D_-)\|_1
+\le\operatorname{Tr}\Phi(D_+)+\operatorname{Tr}\Phi(D_-)=\|D\|_1.
+\tag{32.3}
+$$
+
+For positive matrices equality here means orthogonal supports. One way
+to see this is to use the positive spectral projection of their difference
+in the variational characterization of trace norm: equality forces that
+projection to contain the first support and annihilate the second.
+Uniqueness of Jordan parts then gives $\Phi(D_\pm)=D_\pm$.
+Normalizing yields two orthogonally supported stationary densities.
+The same argument for a fixed Hermitian operator, followed by real and
+imaginary parts, shows that a unique stationary density $\sigma$ implies
+$\operatorname{Fix}(\Phi)=\mathbb C\sigma$. These are the Jordan-support
+facts of Burgarth et al., Lemma 1 and Corollaries 1–2 [MIX32].
+
+For a peripheral eigenoperator $\Phi(A)=\lambda A$, $|\lambda|=1$, write
+$A=UB$, $B=|A|$, extending the polar partial isometry to a unitary on
+$H$. For the Hilbert–Schmidt vectors
+$X_\ell=K_\ell U\sqrt B$ and $Y_\ell=UK_\ell\sqrt B$,
+trace preservation gives
+
+$$
+\sum_\ell\|X_\ell\|_2^2=\sum_\ell\|Y_\ell\|_2^2=\operatorname{Tr}B,
+\qquad
+\sum_\ell\langle Y_\ell,X_\ell\rangle
+=\operatorname{Tr}(U^\dagger\Phi(A))=\lambda\operatorname{Tr}B.
+\tag{32.4}
+$$
+
+Equality in Cauchy–Schwarz implies $X_\ell=\lambda Y_\ell$ for every
+$\ell$. Multiply on the right by $\sqrt B$ and sum the resulting
+$K_\ell UB=\lambda UK_\ell B$ against $K_\ell^\dagger$ to obtain
+$\Phi(A)=\lambda U\Phi(B)$. Comparing with $\lambda UB$ shows
+$\Phi(B)=B$. Applying this also to $A^\dagger$ proves that both
+$|A|$ and $|A^\dagger|$ are stationary. This reconstructs the
+nonfaithful polar step in Burgarth et al., Theorem 5 [MIX32].
+
+If $\sigma$ is unique, both moduli are the same positive scalar times
+$\sigma$, their traces being equal. Thus every peripheral operator obeys
+$A=P_RAP_R$, where $R=\operatorname{supp}\sigma$. The restriction to $R$
+is faithful and irreducible: a proper nonzero enclosure would have its
+own stationary density on a smaller support. On $R$ the polar unitary
+commutes with $\sigma$ and the invertibility of $B$ permits cancellation:
+
+$$
+K_\ell U=\lambda UK_\ell\quad\hbox{on }R.
+\tag{32.5}
+$$
+
+For $\lambda\ne1$, this gives the cyclic reduction explicitly. If $\mu$
+is an eigenvalue of $U$, a nonzero vector in its eigenspace has at least
+one nonzero Kraus image, by TP, and that image has eigenvalue
+$\lambda^{-1}\mu$. The finite spectrum is closed under this rotation;
+therefore $\lambda$ is a root of unity. A union of one rotation orbit is
+an enclosure, so irreducibility forces exactly one orbit. Its orthogonal
+spectral spaces $R_0,\ldots,R_{m-1}$, $m\ge2$, form a cycle under every
+Kraus operator. Their projections commute with $\sigma$, and stationarity
+gives
+
+$$
+\Phi(P_{R_a}\sigma P_{R_a})=P_{R_{a+1}}\sigma P_{R_{a+1}}.
+\tag{32.6}
+$$
+
+The block traces are equal and positive. Their normalized blocks are
+faithful densities $\rho_a$ on $R_a$, with
+$\Phi(\rho_a)=\rho_{a+1}$, cyclic indices, and all have diagonal
+$p^{\mathsf T}$ because $\Phi^m(\rho_a)=\rho_a$. This is the cyclic
+structure of Carbone–Jenčová, §3.1 [CYCLE32], applied only after the
+faithful irreducible restriction has been established.
+
+## 33. A pure stationary line and its orthogonal stationary support
+
+**Lemma 33.1 (The common-environment line obstruction).** If an allowed
+lift has a pure stationary state and an orthogonally supported stationary
+density, then $\eta=1/2$.
+
+Proof. Write the pure state as $|\psi\rangle\langle\psi|$ and the other
+support as $S\subseteq\psi^\perp$. A diagonal unitary conjugation of the
+channel preserves (2.2). Since the five populations of $\psi$ are $p$,
+choose that gauge so that
+
+$$
+\psi=\frac{(r,\sqrt{\eta r},\sqrt\eta,\sqrt{\eta r},\eta)^{\mathsf T}}
+              {\sqrt{1+\eta}}.
+\tag{33.1}
+$$
+
+Purity of the stationary output gives $V\psi=\psi\otimes c$ for a unit
+common-environment vector $c$. Compare the five system coordinates in
+(4.4). Coordinates 1 and 4 give $\gamma_0=\gamma_1=c$, and the others give
+
+$$
+\sqrt r\,\alpha_0+\sqrt\eta\,\alpha_1
+=\sqrt r\,\beta_0+\sqrt\eta\,\beta_1
+=\sqrt r\,\delta_0+\sqrt\eta\,\delta_1=c.
+\tag{33.2}
+$$
+
+Each displayed pair is orthonormal. Hence there are unit vectors
+$a,b,d\perp c$ in that same environment with
+
+$$
+\begin{aligned}
+\alpha_0&=\sqrt r\,c+\sqrt\eta\,a,&
+\alpha_1&=\sqrt\eta\,c-\sqrt r\,a,\\
+\beta_0&=\sqrt r\,c+\sqrt\eta\,b,&
+\beta_1&=\sqrt\eta\,c-\sqrt r\,b,\\
+\delta_0&=\sqrt r\,c+\sqrt\eta\,d,&
+\delta_1&=\sqrt\eta\,c-\sqrt r\,d.
+\end{aligned}
+\tag{33.3}
+$$
+
+Their mutual inner products remain arbitrary consistent complex Gram
+entries. Put
+
+$$
+\begin{aligned}
+u&=\sqrt r\,|0\rangle+\sqrt\eta\,|3\rangle,&
+v&=\sqrt r\,|1\rangle+\sqrt\eta\,|4\rangle,& z&=|2\rangle,\\
+h_A&=\sqrt r\,|0\rangle+\sqrt\eta\,|1\rangle,&
+h_D&=\sqrt r\,|3\rangle+\sqrt\eta\,|4\rangle,\\
+l_A&=\sqrt\eta\,|0\rangle-\sqrt r\,|1\rangle,&
+l_D&=\sqrt\eta\,|3\rangle-\sqrt r\,|4\rangle,\\
+K&=|u\rangle\langle h_A|+|v\rangle\langle z|
+                                  +|z\rangle\langle h_D|.
+\end{aligned}
+\tag{33.4}
+$$
+
+For $x_A=\langle l_A,x\rangle$, $x_D=\langle l_D,x\rangle$, substitution
+in the actual isometry, with no change of environment, gives
+
+$$
+\begin{aligned}
+Vx&=Kx\otimes c+Wx,\\
+Wx&=x_A(\sqrt r\,|0\rangle\otimes a
+             +\sqrt\eta\,|3\rangle\otimes b)+x_Dz\otimes d,\\
+K\psi&=K^\dagger\psi=\psi,\qquad
+K^\dagger K=P_{\operatorname{span}\{h_A,z,h_D\}}.
+\end{aligned}
+\tag{33.5}
+$$
+
+By (32.2), $VS\subseteq S\otimes E$. The environment component along
+$c$ and the component perpendicular to it separately give $KS\subseteq S$
+and $WS\subseteq S\otimes E$. Projecting $Wx$ onto $\psi$ yields
+
+$$
+\sqrt r\,(ra+\eta b)x_A+\sqrt\eta\,d x_D=0\qquad(x\in S).
+\tag{33.6}
+$$
+
+First suppose $x_A$ vanished on all of $S$. Then $x_D$ would also vanish,
+since $d$ is unit and $\eta>0$. Thus $W$ vanishes there and the isometry
+$V$ makes $K|_S$ an isometry into $S$, hence a unitary. But any
+unit-modulus eigenvector of $K$ lies in
+$\operatorname{span}\{h_A,z,h_D\}$ by (33.5). Write it
+$x h_A+y z+q h_D$. If $x=0$, the coordinate-3 and coordinate-2 equations
+force $q=y=0$. Otherwise the coordinate-0 equation forces its eigenvalue
+to be one, and the remaining equations give
+$y=q=\sqrt{\eta/r}\,x$. This is precisely the line $\mathbb C\psi$,
+inconsistent with the nonzero space $S\perp\psi$.
+The full characteristic polynomial is also
+$\det(\lambda I-K)=\lambda^3(\lambda+\eta)(\lambda-1)$;
+its only unit-circle root in the interior is one.
+
+There is consequently an $x\in S$ with $x_A\ne0$. Equation (33.6)
+then fixes one complex $t$, independent of $x$, such that
+
+$$
+ra+\eta b=td,\qquad x_D=-\sqrt{r/\eta}\,t x_A\quad(x\in S).
+\tag{33.7}
+$$
+
+The linear functional
+$L_t=\sqrt r\,t\langle l_A|+\sqrt\eta\,\langle l_D|$
+annihilates $S$. Substitution in (33.5), and the chosen nonzero $x_A$,
+show that
+
+$$
+F=\sqrt r\,|0\rangle\otimes a+\sqrt\eta\,|3\rangle\otimes b
+                -\sqrt{r/\eta}\,t z\otimes d\ \in S\otimes E.
+\tag{33.8}
+$$
+
+Applying $L_t\otimes I$ gives
+$\sqrt\eta(rt a+\eta b)=0$. In particular $t=0$ is impossible.
+Thus $b=\beta a$, $|\beta|=1$, and
+
+$$
+t=-\frac{\eta\beta}{r},\qquad
+ d=\frac{r+\eta\beta}{t}\,a.
+\tag{33.9}
+$$
+
+Only the positive $r$ and the now nonzero $t$ have been divided out.
+If $r+\eta\beta=0$, (33.9) would give $d=0$, already a contradiction;
+no division by that possibly zero expression is used. Substituting gives
+$F=w\otimes a$, where
+
+$$
+w=\sqrt r\,|0\rangle+\sqrt\eta\,\beta|3\rangle
+                   -\sqrt{r/\eta}(r+\eta\beta)z\ \in S.
+\tag{33.10}
+$$
+
+Since $Kw\in S$, multiplication using (33.4), (33.9) gives the decisive
+factorization
+
+$$
+0=L_tKw=r\sqrt\eta(1-\beta)(1+\eta\beta).
+\tag{33.11}
+$$
+
+Here $r\sqrt\eta>0$ and $|\eta\beta|<1$, so $\beta=1$. Now
+$t=-\eta/r$, $d=-(r/\eta)a$, and the unit norms force $r=\eta=1/2$.
+This includes the zero-coordinate-functional case, $t=0$, every complex
+phase (including $\beta=-1$), and $r+\eta\beta=0$. Invariance was used
+only on $S$, without asserting reduction of the full $\psi^\perp$.
+$\square$
+
+## 34. Rank-four stationary support and full-input compression
+
+**Lemma 34.1 (Exactly one output compression).** If a stationary density
+has rank-four support $R$, then the environment-valued projection of $V$
+onto $R^\perp$ vanishes on all of $H$. After diagonal phase changes,
+exactly one of the following descriptions holds:
+
+$$
+\begin{aligned}
+\mathrm U:\quad&R=\operatorname{span}\{u,|1\rangle,z,|4\rangle\},
+ &u&=\sqrt r\,|0\rangle+\sqrt\eta\,|3\rangle,\\
+\mathrm V:\quad&R=\operatorname{span}\{|0\rangle,|3\rangle,v,z\},
+ &v&=\sqrt r\,|1\rangle+\sqrt\eta\,|4\rangle.
+\end{aligned}
+\tag{34.1}
+$$
+
+In case U, $\beta_i=\alpha_i$ in that gauge; in case V,
+$\gamma_1=\gamma_0$. A simultaneous second compression is impossible.
+
+Proof. Write $R^\perp=\mathbb C\tau$, $\|\tau\|=1$.
+Since $VR\subseteq R\otimes E$, there is an environment vector $\xi$ with
+
+$$
+(\langle\tau|\otimes I)Vx=\langle\tau,x\rangle\xi\quad(x\in H).
+\tag{34.2}
+$$
+
+The columns 3 and 4 of (4.4) say
+
+$$
+\overline{\tau_2}\delta_0=\overline{\tau_3}\xi,
+\qquad
+\overline{\tau_2}\delta_1=\overline{\tau_4}\xi.
+\tag{34.3}
+$$
+
+If $\tau_2\ne0$, two nonzero orthogonal vectors would be collinear.
+Hence $\tau_2=0$. If $\xi\ne0$, (34.3) forces $\tau_3=\tau_4=0$;
+the column-2 equation then gives $\tau_1=0$, and the column-1 equation
+becomes $\sqrt r\,\overline{\tau_0}\alpha_1=0$. This contradicts
+$\|\tau\|=1$. Thus $\xi=0$, proving vanishing on the entire input space.
+The remaining equations are
+
+$$
+\begin{aligned}
+\sqrt r\,\overline{\tau_0}\alpha_i
+       +\sqrt\eta\,\overline{\tau_3}\beta_i&=0\quad(i=0,1),\\
+\sqrt r\,\overline{\tau_1}\gamma_0
+       +\sqrt\eta\,\overline{\tau_4}\gamma_1&=0.
+\end{aligned}
+\tag{34.4}
+$$
+
+In either coordinate pair $(\tau_0,\tau_3)$ or $(\tau_1,\tau_4)$,
+one nonzero coordinate forces the other to be nonzero, since the edge
+weights are positive and the environment vectors are unit. The first
+nonzero pair forces $\beta_i=\omega\alpha_i$ with one unit phase
+$\omega$ for both $i$, compressing the coordinate plane $(0,3)$ to one
+line. The second forces $\gamma_1$ to be a phase multiple of $\gamma_0$,
+compressing $(1,4)$ to one line. At least one pair is nonzero.
+
+If both were nonzero, every output of $V$ would have system support in
+the sum of those two lines and $\mathbb Cz$, of dimension at most three.
+A rank-four stationary output could not be supported there. The same
+rank argument rules out an accidental second compression when just one
+coordinate pair is nonzero. Absorb the remaining unit phase by a diagonal
+unitary; the positive weights fix the displayed vectors $u$ or $v$.
+Because $R$ itself has dimension four, the resulting four-dimensional
+output space equals $R$. This proves exactly the alternatives in (34.1),
+including coordinate-zero and phase degeneracies. It makes no general
+classification assertion about rank-three stationary supports. $\square$
+
+## 35. Complex mixed-rank stationary and swapped sectors
+
+**Lemma 35.1 (The two mixed-sector exclusions).** Let $R_0\perp R_1$
+have dimensions at least two and carry faithful densities $\rho_a$ with
+diagonal $p^{\mathsf T}$. Suppose
+$\Phi(\rho_a)=\rho_{\tau(a)}$, where $\tau$ is either the identity or
+the swap. Dimensions $2+3$ are impossible for every interior $\eta$.
+Dimensions $2+2$ force $\eta=1/2$, and their case V in Lemma 34.1 is
+impossible even there. All subspaces and densities may be complex.
+
+Proof. Put $b=\tau(a)$, $P_a=P_{R_a}$. Positivity, as in (32.2), gives
+$VR_a\subseteq R_b\otimes E$. For every $j$, $P_ae_j\ne0$:
+otherwise the positive population $p_j=\langle e_j,\rho_a e_j\rangle$
+would vanish.
+
+For dimensions summing to five, choose the rank-two source sector $R_a$.
+The two sectors exhaust the actual five-dimensional $H$, so their
+transition laws give the full intertwining
+$VP_a=(P_b\otimes I)V$. In particular
+
+$$
+VP_ae_3=(P_bz)\otimes\delta_0,\qquad
+VP_ae_4=(P_bz)\otimes\delta_1.
+\tag{35.1}
+$$
+
+These are nonzero orthogonal equal-norm vectors. By isometry,
+$P_ae_3,P_ae_4$ are a basis of $R_a$. Their whole output is supported
+on the single system line $\mathbb CP_bz$, contradicting faithfulness of
+$\rho_b$ in dimension at least two. This applies to both transitions.
+
+For total dimension four, each sector has dimension two. Their mean
+is a stationary density with rank-four support $R=R_0\oplus R_1$.
+Lemma 34.1 applies. The restricted channel
+$T_a:\mathcal B(R_a)\to\mathcal B(R_b)$ is CPTP; its adjoint is positive
+and unital between the two sector identities. Write
+$F_j^a=P_aP_jP_a$. Compressing (32.1) gives
+
+$$
+T_a^\dagger(F_1^b)=rF_2^a,\qquad
+T_a^\dagger(F_4^b)=\eta F_2^a.
+\tag{35.2}
+$$
+
+If $P_be_1,P_be_4$ were independent, $F_1^b+F_4^b$ would dominate
+$\epsilon I_b$ for some $\epsilon>0$. Positivity and unitality would
+make its image dominate $\epsilon I_a$, whereas (35.2) makes the image
+$F_2^a$, of rank one. Thus the nonzero rank-one effects are proportional.
+Applying (35.2), and using $F_2^a\ne0$, fixes the proportionality:
+
+$$
+F_1^b=(r/\eta)F_4^b.
+\tag{35.3}
+$$
+
+In case U, $e_1,e_4\in R$. Sum traces of (35.3) over the two sectors:
+$1=(r/\eta)1$. Hence $\eta=1/2$.
+
+In case V, use the phase gauge $\gamma_0=\gamma_1=\gamma$, and put
+$b_a=P_ae_3$, $z_a=P_az$, $v_a=P_av$. All are nonzero since the
+corresponding coordinate populations are positive, and $e_3,z,v\in R$.
+The intertwining on $R$, together with $Ve_3=z\otimes\delta_0$ and
+$Vz=v\otimes\gamma$, gives
+
+$$
+Vb_a=z_b\otimes\delta_0,\qquad Vz_a=v_b\otimes\gamma,
+\qquad
+\|b_a\|^2=\|z_b\|^2,\quad \|z_a\|^2=\|v_b\|^2.
+\tag{35.4}
+$$
+
+The full transition into the line $v$ gives
+$\Phi^\dagger(|v\rangle\langle v|)=P_2$, so compression yields
+
+$$
+T_a^\dagger(|v_b\rangle\langle v_b|)=|z_a\rangle\langle z_a|.
+\tag{35.5}
+$$
+
+The two vectors here have the same strictly positive squared norm by
+(35.4). Dividing by this common value gives
+$T_a^\dagger(P)=Q$ for rank-one projections on two-dimensional spaces.
+This precise projection premise implies $T_a(I_a)=I_b$: the state $Q$
+has output expectation one against $P$, hence output $P$; the orthogonal
+state $I_a-Q$ has output expectation zero and hence output $I_b-P$.
+Their sum proves unitality of $T_a$. Equal norms are essential here;
+unrelated nonzero rank-one effects alone would not give that premise.
+
+Consequently $T_a^\dagger$ is trace preserving. The identity for $P_2$
+in (32.1), with $P_RP_4P_R=\eta|v\rangle\langle v|$, now gives
+
+$$
+T_a^\dagger(|z_b\rangle\langle z_b|)
+=|b_a\rangle\langle b_a|+\eta|v_a\rangle\langle v_a|.
+\tag{35.6}
+$$
+
+Taking traces and using (35.4) forces
+$\|z_b\|^2=\|z_b\|^2+\eta\|v_a\|^2$, impossible. Thus V is
+excluded. The proof uses the complete five-dimensional exhaustion for
+$2+3$, and the actual four-dimensional support for $2+2$, in both the
+stationary and swapped cases. $\square$
+
+## 36. The full interior-parameter classification and transient inputs
+
+**Theorem 36.1 (Exactly half admits a nonrelaxing lift).** In the complete
+class of Definition 2.2,
+
+$$
+\forall\eta\in(0,1),\qquad
+\bigl[\exists\Phi\in\mathcal L_\eta\text{ that is nonrelaxing}\bigr]
+\quad\Longleftrightarrow\quad\eta=\tfrac12.
+\tag{36.1}
+$$
+
+For $\eta\ne1/2$, every allowed lift has a unique stationary density
+$\sigma_\Phi$, with diagonal $p^{\mathsf T}$, and has no peripheral
+eigenvalue other than the simple eigenvalue one. On the whole complex
+input algebra, including inputs and cross terms outside its stationary
+support,
+
+$$
+\Phi^n(X)\longrightarrow\sigma_\Phi\operatorname{Tr}X.
+\tag{36.2}
+$$
+
+Proof. Fix $\eta\ne1/2$. A stationary density exists by Cesàro
+compactness. If there were two, (32.3) would give orthogonal stationary
+densities. If one support were a line, Lemma 33.1 would force half.
+Otherwise their dimensions are at least two, and, since they are
+orthogonal in dimension five, the only possibilities are $2+2$ and
+$2+3$. Lemma 35.1 excludes both. Thus $\sigma_\Phi$ is unique.
+
+By the polar argument (32.4), every peripheral eigenoperator is supported
+on $R=\operatorname{supp}\sigma_\Phi$. The restriction there is faithful
+and irreducible. If it had an eigenvalue $\lambda\ne1$ on the unit
+circle, (32.5)–(32.6) would give an orthogonal cycle of $m\ge2$ sectors
+with faithful cyclic densities of diagonal $p^{\mathsf T}$.
+
+Suppose a target sector $R_b$ is a line with unit vector $\psi_b$ and
+predecessor $R_a$. On that predecessor, invariance and isometry give
+$Vx=\psi_b\otimes Wx$ for an isometry $W:R_a\to E$.
+The coordinate-1 equation in the actual (4.4) is
+
+$$
+\sqrt r\,x_2\gamma_0=(\psi_b)_1Wx\qquad(x\in R_a).
+\tag{36.3}
+$$
+
+Its left side has rank at most one as a linear map on $R_a$, while the
+right side has rank $\dim R_a$, since $|(\psi_b)_1|^2=p_1>0$.
+Thus the predecessor is a line. Repeating backwards around the finite
+cycle shows every sector is a line, including any initially mixed-rank
+cycle containing one line.
+
+Choose unit cyclic vectors $\psi_a$. Equation (36.3) then makes each
+environment factor in $V\psi_a=\psi_{a+1}\otimes c_a$ a scalar multiple
+of the same $\gamma_0$. That scalar has modulus one, since
+$r p_2=p_1$. Consequently on the span of the entire cycle,
+$V=U_{\mathrm{cyc}}\otimes\gamma_0$ for a unitary cyclic operator with
+phases. The channel acts there by unitary conjugation. The cycle has at
+least two dimensions, so an orthonormal eigenbasis of that unitary gives
+at least two orthogonal stationary pure states, contradicting uniqueness.
+This treats all phases using the actual common environment.
+
+If no cyclic sector is a line, all have dimension at least two. In
+$\dim R\le5$, a nontrivial cycle must therefore have exactly two
+sectors, with dimensions $2+2$ or $2+3$. These are precisely the swapped
+cases excluded by Lemma 35.1. Thus no nontrivial peripheral eigenvalue
+exists; uniqueness and (32.3) make the eigenvalue-one space
+$\mathbb C\sigma_\Phi$.
+
+To pass to all inputs, use the full superoperator on $M_5(\mathbb C)$.
+Its powers are uniformly bounded in trace norm even on complex inputs:
+complete contraction of CPTP maps was proved in Lemma 22.1, (22.3), by
+the amplified unital adjoint and trace-norm duality. Hence its spectral
+radius is at most one and every unit-circle Jordan block is semisimple;
+a larger block would give polynomially growing powers. All peripheral
+eigenoperators have already been placed in $R$, and all remaining
+full-algebra Jordan blocks have eigenvalues strictly inside the unit
+disk. Their polynomial-times-exponential terms tend to zero. The limit
+has the form $X\mapsto\sigma_\Phi f(X)$; trace preservation and
+$\operatorname{Tr}\sigma_\Phi=1$ force $f(X)=\operatorname{Tr}X$.
+This proves (36.2) with every transient feeding term included. It does
+not require a pure stationary line to reduce the full input space.
+
+Conversely, at half use exactly the channel $\Phi_\circ$ in Definition
+17.2, with Kraus operators (17.3) and the common-environment realization
+(17.6). Theorem 17.3 proves its full-complex-input legality and TP.
+Theorem 18.1 supplies the orthogonal stationary densities
+$P=|s\rangle\langle s|$ and $M=(P_R-P)/2$. Their two distinct fixed
+outputs preclude convergence to one reset. This proves the existential
+half implication in (36.1), completing the equivalence. $\square$
+
+**Proposition 36.2 (No common vanishing bound near half).** For any
+parameter set $S\subset(0,1)\setminus\{1/2\}$ having $1/2$ in its
+closure, no function $b(n)\to0$ can bound
+$\|\Phi^n-\mathcal R_{\sigma_\Phi}\|_\diamond$ for every
+$\eta\in S$ and every $\Phi\in\mathcal L_\eta$.
+
+Proof. Keep the exact environment vectors (17.6) and put
+$u_\eta=\sqrt r\,|0\rangle+\sqrt\eta\,|3\rangle$,
+$v_\eta=\sqrt r\,|1\rangle+\sqrt\eta\,|4\rangle$ in (17.3):
+
+$$
+\begin{aligned}
+K_0(\eta)&=|u_\eta\rangle\langle0|
+                 +|v_\eta\rangle\langle2|/\sqrt2+|z\rangle\langle4|,\\
+K_1(\eta)&=|u_\eta\rangle\langle1|
+                 +|v_\eta\rangle\langle2|/\sqrt2+|z\rangle\langle3|.
+\end{aligned}
+\tag{36.4}
+$$
+
+Theorem 4.1 makes this an actual legal continuous family at every interior
+parameter; at half it is $\Phi_\circ$. For each fixed $n$, continuity
+of finite powers and Theorem 18.1 give
+
+$$
+\|\Phi_\eta^n(P)-\Phi_\eta^n(M)\|_1\longrightarrow\|P-M\|_1=2
+\qquad(\eta\to1/2).
+\tag{36.5}
+$$
+
+Against any common reset density $\tau$, at least one of the errors on
+$P,M$ is at least half this distance, by the triangle inequality.
+For $\eta\in S$, take $\tau=\sigma_{\Phi_\eta}$ from Theorem 36.1.
+Thus at every fixed $n$ the supremum of the complete-norm errors over
+$S$ and its allowed lifts is at least one. A bound tending to zero is
+impossible, even though every individual lift in that set mixes.
+$\square$
+
+## 37. A finite contraction horizon and compact uniformity
+
+**Theorem 37.1 (Uniform complete forgetting away from half).** Let
+$K\subset(0,1)\setminus\{1/2\}$ be nonempty and compact. On traceless
+Hermitian inputs define
+
+$$
+\delta(T)=\sup_{A=A^\dagger,\,\operatorname{Tr}A=0,\,A\ne0}
+                  \frac{\|T(A)\|_1}{\|A\|_1}.
+\tag{37.1}
+$$
+
+Then the full-class extremum
+
+$$
+q_K=\max_{\eta\in K,\,\Phi\in\mathcal L_\eta}\delta(\Phi^{24})
+\quad\hbox{satisfies}\quad 0\le q_K<1.
+\tag{37.2}
+$$
+
+For every such $\eta,\Phi$, every $n\ge0$, every finite reference
+$\mathbb C^m$, and every complex $Z\in M_5\otimes M_m$,
+
+$$
+\begin{aligned}
+\|\Phi^n-\mathcal R_{\sigma_\Phi}\|_\diamond
+ &\le\min\{2,10q_K^{\lfloor n/24\rfloor}\},\\
+\|(\Phi^n\otimes\operatorname{id}_m)(Z)
+ -\sigma_\Phi\otimes\operatorname{Tr}_{\mathrm{sys}}Z\|_1
+ &\le\min\{2,10q_K^{\lfloor n/24\rfloor}\}\,\|Z\|_1.
+\end{aligned}
+\tag{37.3}
+$$
+
+For a fixed $\eta\ne1/2$ take $K=\{\eta\}$. The density
+$\sigma_\Phi$ belongs to the chosen lift; only its diagonal is common.
+Use $q^0=1$, also at $q=0$, in which case resetting is exact for
+$n\ge24$. The extremum in (37.2) is implicit, with no optimal-rate
+or optimal-prefactor assertion.
+
+Proof. First establish the horizon for a mixing CPTP map on $M_d$,
+without a faithful-state assumption. Gaubert–Qu [GQ32], §7, equations
+(24)–(25), use a unital CP Heisenberg map
+$X\mapsto\sum_iK_i^\dagger XK_i$, $\sum_iK_i^\dagger K_i=I$,
+and its CPTP Schrödinger dual. Their trace-norm contraction ratio on
+density differences equals (37.1): every nonzero traceless Hermitian
+matrix is a positive scalar times the difference of its normalized
+Jordan parts. Their Corollary 7.3 characterizes coefficient one by
+orthogonal output Kraus spans. Lemma 7.6 and Theorem 7.8 give the
+$d^2-1$ horizon; condition (2) of Theorem 7.8 is convergence to a unique
+invariant density regardless of the initial density. Those hypotheses
+are met by Theorem 36.1, with the full input dimension $d=5$. No faithful
+stationary density is required by that result.
+
+Here is an independent operator-space proof of precisely the step needed.
+For Kraus operators of a CPTP map define complex subspaces
+
+$$
+\mathcal H_0=\mathbb CI,\qquad
+\mathcal H_{n+1}=\operatorname{span}_{\mathbb C}
+ \{K_i^\dagger XK_j:X\in\mathcal H_n,\ i,j\}.
+\tag{37.4}
+$$
+
+TP gives $I=\sum_iK_i^\dagger K_i\in\mathcal H_1$; monotonicity
+of the recursion then gives $\mathcal H_n\subseteq\mathcal H_{n+1}$.
+If equality occurs once, it persists. Starting at dimension one in a
+space of dimension $d^2$, the chain has stabilized by $d^2-1$:
+if all preceding inclusions are strict it has already reached dimension
+$d^2$. Explicitly, with words of length $n$,
+
+$$
+\mathcal H_n=\operatorname{span}_{\mathbb C}
+               \{K_w^\dagger K_v:|w|=|v|=n\}.
+\tag{37.5}
+$$
+
+For any CPTP $T$, $\delta(T)=1$ exactly when two pure inputs have
+orthogonal output supports. The forward implication follows by attaining
+the norm maximum on the compact unit sphere of traceless Hermitian inputs.
+Its normalized Jordan parts have output distance two, hence orthogonal
+supports. In spectral decompositions of those two input densities, every
+positive output term lies in the corresponding output support. Select
+one pure term from each; their outputs remain orthogonal. Conversely,
+orthogonal output states have distance two. Trace-norm contraction forces
+the corresponding pure input distance to be two as well, and their
+difference attains contraction coefficient one.
+
+For $T=\Phi^n$ this says that $\delta(\Phi^n)=1$ exactly when there
+are unit vectors $x,y$ such that
+
+$$
+\langle K_wx,K_{w'}y\rangle=0
+\quad\hbox{for every pair of length-}n\hbox{ words }w,w'.
+\tag{37.6}
+$$
+
+Equivalently $\langle x,Xy\rangle=0$ for every $X\in\mathcal H_n$.
+If this held at $n=d^2-1$, stabilization would make the very same pair
+have orthogonal outputs at every later time. That contradicts convergence
+of both states to one density. Thus every mixing channel on $M_d$ obeys
+$\delta(\Phi^{d^2-1})<1$. For the actual full $M_5$ this is horizon 24,
+including nonfaithful stationary supports and transient inputs.
+
+Now use the Choi class in Theorem 4.1. For fixed $\eta$ it is closed
+in the bounded PSD set of trace five, hence compact. More generally
+
+$$
+\{(\eta,J):\eta\in K,\ J\ge0,
+                   J_{jj}=\operatorname{diag}_i(Q_\eta)_{ij}\}
+\tag{37.7}
+$$
+
+is compact: all constraints are closed, $Q_\eta$ is continuous, and
+$\operatorname{Tr}J=5$ bounds the positive matrices. The coefficient
+$\delta$ is an operator norm on the fixed real traceless Hermitian
+space, so it is continuous; $\Phi\mapsto\Phi^{24}$ is polynomial in
+matrix coefficients. The continuous function in (37.2) attains its
+maximum on (37.7). Every point is mixing by Theorem 36.1, so every value
+is strictly below one, and the attained maximum is strictly below one.
+No continuity or global faithfulness of $\sigma_\Phi$ is needed here.
+
+For any traceless Hermitian $A$, submultiplicativity of (37.1) and
+trace-norm nonexpansion of the remaining fewer than 24 steps give
+
+$$
+\|\Phi^n(A)\|_1\le q_K^{\lfloor n/24\rfloor}\|A\|_1.
+\tag{37.8}
+$$
+
+Apply exactly the arbitrary-complex-input amplification in the proof of
+Theorem 28.2, (28.7)–(28.10), with $d=5$ and
+$c_n=q_K^{\lfloor n/24\rfloor}$ replacing $\kappa^{\lfloor n/N\rfloor}$.
+Its required premise is the traceless Hermitian bound, now (37.8),
+together with stationarity of $\sigma_\Phi$. Indeed diagonal matrix
+units use $\Phi^n(E_{ii}-\sigma_\Phi)$, and off-diagonal units use the
+two Hermitian summands in (28.7); each resulting norm is at most $2c_n$.
+The already proved SVD block inequality (28.8) and tensor trace-norm
+multiplicativity then give $2dc_n=10c_n$ for every complex referenced
+operator. Both channels also have diamond norm one by Lemma 22.1, so
+their difference is bounded by two. Formula (28.10) identifies the reset
+output with precisely $\sigma_\Phi\otimes\operatorname{Tr}_{\mathrm{sys}}Z$.
+This proves (37.3) by reuse of that complete amplification, without a
+state-only extrapolation. For a referenced density the unchanged reference
+marginal therefore factors from the limiting stationary density.
+$\square$
+
+## 38. Primary interfaces and exact boundaries of the classification
+
+**Convention 38.1 (Standard inputs and model-specific synthesis).** The
+standard support, polar, cyclic, contraction, and complete-norm tools have
+the following primary versions and hypotheses. Their use is intermediate
+to the full-class five-window derivations in §§33–37; the model-specific
+classification and compact bound are ordinary `repo-derived` synthesis.
+The standard components are `literature-attested` within the listed
+conditions. No exhaustive novelty or priority conclusion is made.
+
+| Primary source and version | Exact passage, hypotheses, and use |
+| --- | --- |
+| D. Burgarth, G. Chiribella, V. Giovannetti, P. Perinotti, and K. Yuasa, *Ergodic and Mixing Quantum Channels in Finite Dimensions*, [arXiv:1210.5625v3][MIX32] | Lemma 1 and Corollaries 1–2, printed pp.7–8: stationary Jordan parts and orthogonal stationary supports for CPTP maps. Lemma 2, p.9: invariant supports and stationary states on enclosures. Theorem 5 and Remark 4, p.17: stationary polar modulus of a unit-modulus eigenoperator, without global faithfulness; apply also to the adjoint operator. Theorem 9, pp.20–22, requires ergodicity and a faithful fixed state. Section 32 establishes those properties only on the actual stationary support before the cyclic argument; it does not assign them from $Q^4>0$. |
+| R. Carbone and A. Jenčová, *On period, cycles and fixed points of a quantum channel*, [arXiv:1905.00857v1][CYCLE32] | §3 and §3.1, printed pp.9–11, Proposition 5, Corollary 2, Proposition 6: irreducible unital Heisenberg CP maps with a faithful normal invariant state. The applicable map is the adjoint of the faithful irreducible restriction to $R$. Equations (32.5)–(32.6) construct the actual cyclic spaces and their faithful densities. |
+| S. Gaubert and Z. Qu, *Dobrushin's Ergodicity Coefficient for Markov Operators on Cones*, [arXiv:1307.4649v3][GQ32] | §7, equations (24)–(25), pp.12–13: unital CP map, CPTP dual, and the trace-norm ratio used in (37.1). Corollary 7.3, pp.13–14: coefficient one and orthogonal Kraus output spans. Lemma 7.6 and Theorems 7.7–7.8, pp.14–16: operator-space stabilization and horizon $d^2-1$. Theorem 7.8(2) uses convergence to one invariant density for every initial density, with no faithful-density premise. Theorem 6.1, p.11, supplies contraction-to-convergence. Equations (37.4)–(37.6) independently prove the needed horizon. |
+| T. Theurer, D. Egloff, L. Zhang, and M. B. Plenio, *Quantifying Operations with an Application to Coherence*, [arXiv:1806.07332v2][THE] | Definition 3, equation (7), p.3, and supplemental Proposition 15, equation (35), p.8: $\Delta\Phi=\Delta\Phi\Delta$ and the fixed-output coefficient condition. Set $p(j\mid i)=Q_{ij}$. This identifies the all-input population interface and permits coherence creation; it supplies no mixing theorem by itself. |
+| R. Blume-Kohout, H. K. Ng, D. Poulin, and L. Viola, *Information-preserving structures: A general framework for quantum zero-error information*, [arXiv:1006.1358v1][IPS32] | Theorem 5, p.9, concerns arbitrary CPTP maps, restricts to fixed-point support, and describes fixed states as a distortion of an algebra and fixed observables as its extension. This is structural context; the full-input asymptotic reset, including transient feeding, is proved in Theorem 36.1. |
+| J. Watrous, *The Theory of Quantum Information*, author-hosted 2018 draft [TQI27] | Theorem 3.46, printed p.173: reference stabilization for arbitrary linear maps on finite complex spaces. Theorem 3.51, pp.176–177: its pure-state characterization requires Hermitian preservation, satisfied by a difference of channels. The arbitrary-complex/reference estimate used here is specifically the full SVD proof (28.7)–(28.10), applied with (37.8). |
+
+**Convention 38.2 (Rates, half, and operational boundaries).** Theorem
+30.1 remains the explicit-rate supplier on
+$0<\eta<(5-\sqrt{17})/4$: its odd-step minimum is (29.6), its strict
+heavy population is $a=p_0(1-\eta^{2k})>1/2$, and its coefficient is
+$\kappa=2\sqrt{a(1-a)}$. Those existing cap and reference results are
+reused. The general heavy-population implication at equality is false
+by Proposition 28.3; Theorem 36.1 resolves the five-window threshold and
+other interior parameters by its different model-specific support proof.
+No closed-form worst-case $q_K$ outside that explicit interval, or
+optimality of a rate or prefactor, is asserted. Proposition 36.2 rules
+out a common vanishing rate on parameter sets approaching half.
+
+At $\eta=1/2$, (36.1) asserts existence of nonmixing lifts. It does not
+classify every individual Gram matrix there: the classical
+measure-and-prepare lift of §14 mixes, whereas $\Phi_\circ$ does not.
+The individual-half-Gram classification remains a separate open question.
+The endpoints are excluded and retain their separate results in §§15 and
+25. The theorems concern one homogeneous channel with fresh discarded
+environments and terminal access to the retained system, not varying
+channels or access to retained environments. Complete convergence to a
+reset does not establish eventual entanglement breaking or a quantum
+capacity claim. The stationary density need not be globally faithful.
+These ordinary mathematical results supply no Lean/kernel certification,
+physical or native realization, Hamiltonian, or QFT identification.
+
+[MIX32]: https://arxiv.org/pdf/1210.5625v3
+[CYCLE32]: https://arxiv.org/pdf/1905.00857v1
+[GQ32]: https://arxiv.org/pdf/1307.4649v3
+[IPS32]: https://arxiv.org/pdf/1006.1358v1
+
+## 追加锚（本行以下为增补区）
