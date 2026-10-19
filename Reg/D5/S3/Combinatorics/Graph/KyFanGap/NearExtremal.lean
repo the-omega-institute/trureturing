@@ -13,15 +13,15 @@ open LeanInformationAudit
 namespace Reg.D5.S3.Combinatorics.Graph.KyFanGap.NearExtremal
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => 0 < x) (fun e => nomatch e)
+  realize signature (fun _ _ x y => x > y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law T := ∀ {k : ℕ}, ¬ IsSquare k → ∀ (M : ℝ),
-    ∃ ε, T.readout () () ε ∧ ∀ (n : ℕ), 0 < n →
+    ∃ ε, T.readout () () ε 0 ∧ ∀ (n : ℕ), 0 < n →
       ∀ (q : Fin k → ℝ) (x : Fin n → Fin k → ℝ)
         (B : Matrix (Fin n) (Fin n) ℝ),
         (∀ r s, B r s = -1 ∨ B r s = 1) →
@@ -36,8 +36,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
   intro he
-  have hpos : (0 : ℝ) < 0 := he.mpr (by norm_num [actual, realize])
-  exact lt_irrefl _ hpos
+  have h := congrFun he (0 : ℝ)
+  norm_num [actual, realize] at h
 def family : Registration arena (type_of% (@bilinear_approximation_gap)) where
   actual := actual
   bridge := Iff.rfl
@@ -58,7 +58,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => 0 < x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x y => x > y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -68,9 +68,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "body", "fn", "arg"]
-      stateBinder := 3
-      functionOperand := false
+      path := #["body", "body", "body", "arg", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
@@ -80,16 +80,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 namespace UniformConclusion
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => 0 < x) (fun e => nomatch e)
+  realize signature (fun _ _ x y => x > y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law T :=
     ∀ {k : ℕ}, 1 ≤ k → ¬ IsSquare k →
-    ∃ δ, T.readout () () δ ∧ ∀ n : ℕ, k ≤ n → ∀ A : Matrix (Fin n) (Fin n) ℝ,
+    ∃ δ, T.readout () () δ 0 ∧ ∀ n : ℕ, k ≤ n → ∀ A : Matrix (Fin n) (Fin n) ℝ,
       A.IsSymm → (∀ i j, A i j = 0 ∨ A i j = 1) →
         kyFan k A / n ≤ (1 + Real.sqrt k) / 2 - δ
 private theorem rejectedLaw : ¬ arena.Law rejected := by
@@ -100,8 +100,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
   intro he
-  have hpos : (0 : ℝ) < 0 := he.mpr (by norm_num [actual, realize])
-  exact lt_irrefl _ hpos
+  have h := congrFun he (0 : ℝ)
+  norm_num [actual, realize] at h
 def family : Registration arena (type_of% (@uniform_gap)) where
   actual := actual
   bridge := Iff.rfl
@@ -122,7 +122,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => 0 < x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x y => x > y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -132,9 +132,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "body", "fn", "arg"]
-      stateBinder := 3
-      functionOperand := false
+      path := #["body", "body", "body", "arg", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown

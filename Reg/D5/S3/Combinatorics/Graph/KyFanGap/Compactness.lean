@@ -13,15 +13,15 @@ open LeanInformationAudit
 namespace Reg.D5.S3.Combinatorics.Graph.KyFanGap.Compactness
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => 0 < x) (fun e => nomatch e)
+  realize signature (fun _ _ x y => x > y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law T := ∀ (R : ℕ) (M : ℝ) {k : ℕ}, ¬ IsSquare k →
-    ∃ η, T.readout () () η ∧ ∀ (p : Fin R → ℝ) (S : Matrix (Fin R) (Fin R) ℝ),
+    ∃ η, T.readout () () η 0 ∧ ∀ (p : Fin R → ℝ) (S : Matrix (Fin R) (Fin R) ℝ),
       (∀ a, 0 ≤ p a) → (∑ a, p a) = 1 → S.IsSymm →
       (∀ a b, |S a b| ≤ M) → η ≤ modelDefect p S (1 / Real.sqrt k)
 private theorem rejectedLaw : ¬ arena.Law rejected := by
@@ -32,8 +32,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
   intro he
-  have hpos : (0 : ℝ) < 0 := he.mpr (by norm_num [actual, realize])
-  exact lt_irrefl _ hpos
+  have h := congrFun he (0 : ℝ)
+  norm_num [actual, realize] at h
 def family : Registration arena (type_of% (@exists_model_defect_gap)) where
   actual := actual
   bridge := Iff.rfl
@@ -54,7 +54,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => 0 < x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x y => x > y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -64,9 +64,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "fn", "arg"]
-      stateBinder := 4
-      functionOperand := false
+      path := #["body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
