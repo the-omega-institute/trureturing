@@ -35,7 +35,10 @@ internal sealed class KiemKyeLocalDistinguishabilityDocument : IScribeDocumentDe
                     Paragraph(Text("A positive semidefinite matrix on the boundary has a unit kernel vector of Schmidt rank at most k. Compactness of the unit low-rank vectors makes the projection of the nonpositive quadratic-form tests closed, which supplies this kernel vector at a boundary limit.")),
                     Paragraph(Text("A rank-one perturbation raises a rectangular coefficient matrix's rank by one: a dual vector nonzero on its kernel is paired with a vector outside its range. Rank–nullity identifies the new kernel as the intersection of two kernels. Repetition and normalization place the old unit vector in the closure of the unit vectors of rank l+1.")),
                     Paragraph(Text("Compression by I−uu† moves the kernel to u while preserving positivity. Its trace tends to one near the original kernel vector, so normalized compression is continuous there. For each unit u of rank l+1, compactness gives an overlap bound α<1 on unit vectors of rank at most l. The matrix Q=αI−uu† is nonnegative on all those vectors and negative at u. Adding a small positive multiple of Q to the compressed state and normalizing the trace produces a matrix in BP_l outside BP_(l+1). Two closure arguments return to the original state. The same sufficient condition applies to any positive semidefinite trace-one matrix with a unit kernel vector of Schmidt rank at most l+1. No convergence rate or converse characterization is asserted."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kiem-kye-2026-local-distinguishability"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("kiem-kye-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),

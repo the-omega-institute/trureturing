@@ -84,6 +84,10 @@ $$\forall (m: Nat), (\forall (n: Nat), (\forall (E: \operatorname{Submodule}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/LocalDistinguishability/KiemKyeLocalDistinguishability.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kiem-kye-2026-local-distinguishability` (proved) by `D5/S3/Quantum/Entanglement/LocalDistinguishability/KiemKyeLocalDistinguishability.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kiem-kye-2026-local-distinguishability","declaration_gid":"D5/S3/Quantum/Entanglement/LocalDistinguishability/KiemKyeLocalDistinguishability.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Young-Hoon Kiem; Seung-Hyeok Kye (2026). *Local geometry for Schmidt number witnesses*. DOI: [10.48550/arXiv.2608.14199](https://doi.org/10.48550/arXiv.2608.14199). URL: <https://arxiv.org/abs/2608.14199v1>.
