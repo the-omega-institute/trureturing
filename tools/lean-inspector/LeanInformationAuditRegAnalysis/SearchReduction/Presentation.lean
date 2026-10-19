@@ -224,7 +224,7 @@ private def presentationResult (state : PresentationScan) :
   | none, some (failure, text) => (failure, none, s!"{detail}, {text}")
   | none, none => (.exhausted, none, detail)
 
-/-- Enumerate actual B statements in stable order. Four independent conversion
+/-- Enumerate actual B statements in stable order. Sixteen independent conversion
 attempts may run together; all started tasks are joined in declaration order.
 Preferred B statements are tried first without speculative parallel work. -/
 def baselinePresentation (env : Environment) (levels : List Name) (target : Expr)
@@ -251,7 +251,7 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
       state := recordPresentations state #[← baselineSource env levels target index name]
     else
       pending := pending.push (← IO.asTask (baselineSource env levels target index name) .dedicated)
-      if pending.size < 4 then continue
+      if pending.size < 16 then continue
       state := recordPresentations state (← pending.mapM (fun task => IO.ofExcept task.get))
       pending := #[]
     if state.evidence?.isSome then return presentationResult state
