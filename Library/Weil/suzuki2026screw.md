@@ -4404,3 +4404,84 @@ $$
 All interactions and the complete actual direct/reflected theta integrals are included. The start and constants are independent of total node count, arbitrary upper endpoint and coefficient magnitudes. The new paid parameter is a minimum physical gap tending to zero like $1/\log A$, in contrast with (W61)'s prescribed fixed gap and unspecified dependence of the start on that gap.
 
 At each fixed $A$, (W82) still imposes a positive minimum gap. It does not cover arbitrary dense sampling or arbitrary complex measures on one fixed interval, identify these samples with the actual prime/Robin source, or supply a signed strict Robin upper. The $J(a_i)$ weights are the actual diagonals, not an unweighted physical norm. Full fixed-window all-order positivity, strict Robin for every integer above5040 and RH remain unproved. The statement is paper mathematics under the owned actual-source identities; no numerical execution, Lean build, new agent or priority claim is involved.
+
+
+## The complete kernel has no finite upper comparison with the stationary reference
+
+The complete actual kernel also excludes an unrestricted two-sided
+$S$-relative error estimate. This application reuses (W27), (W37)--(W38)
+and the cited Danciger--Rubinstein-Salzedo Theorem 4; it does not infer
+the result from the first correction in (W29).
+
+For positive real positions define
+
+$$
+T(a,b)=\frac{\Phi(a)\Phi(b)e^{-a-b}}{8\pi}
+ \operatorname{sech}(a-b),\qquad
+\mathcal J(a)=\frac{8\pi e^{2a}L_0(a,a)}{\Phi(a)^2}.
+$$
+
+The diagonal consequence of (W27) is
+$\mathcal J(a)=a-\tfrac12+o(1)\to+\infty$.
+For $0<\eta<\pi/4$, the reference has the Hermitian extension
+
+$$
+T(z,w)=\frac{\Phi(z)\overline{\Phi(w)}e^{-z-\overline w}}{8\pi}
+ \operatorname{sech}(z-\overline w)
+ \qquad(z,w\in D_\eta).
+$$
+
+It is sesquiholomorphic: $|\Im(z-\overline w)|<2\eta<\pi/2$
+avoids every pole of $\operatorname{sech}$. No division by complex
+$\Phi$ is used. On distinct positive real nodes, $T$ is strictly
+positive definite by the existing Cauchy representation of $S$ and
+positive diagonal congruence.
+
+For every nonempty open interval $I\subset(0,\infty)$ and every
+finite $B>0$, there are finitely many distinct $a_i\in I$ and a
+nonzero real vector $c$ such that
+
+$$
+\boxed{\sum_{i,j}c_iL_0(a_i,a_j)c_j
+ >B\sum_{i,j}c_iT(a_i,a_j)c_j.}
+\tag{W83}
+$$
+
+Indeed, otherwise $BT-L_0$ would be positive semidefinite on every
+finite sample in $I$. Its common-strip Hermitian extension is supplied
+above and by (W38). Apply the cited Theorem 4, using a real subinterval
+as a uniqueness set in a relatively compact disk in $D_\eta$, exactly
+as in the local transport argument. Positivity would extend to the
+whole connected strip. Its large positive real diagonal is instead
+$T(a,a)[B-\mathcal J(a)]<0$, a contradiction. The failed real
+symmetric finite matrix admits real coefficients, and repeated nodes
+can be merged. This uses the complete $L_0$, including its reflected
+exterior.
+
+In the existing coordinates $a=A+u$, $M_A=\mathcal P_A/A$, positive
+diagonal congruence sends $T$ to $S(u,v)=\operatorname{sech}(u-v)$
+and $L_0$ to $\mathcal P_A$. Thus, for every fixed $A>0$ and every
+nonempty open offset interval $U$ with $A+U\subset(0,\infty)$,
+
+$$
+\boxed{\sup_{\substack{u_1,\ldots,u_n\in U\ \mathrm{distinct},\ n\ge1\\
+ c\in\mathbb R^n\setminus\{0\}}}
+ \frac{\sum_{i,j}c_iM_A(u_i,u_j)c_j}
+ {\sum_{i,j}c_iS(u_i,u_j)c_j}=+\infty.}
+\tag{W84}
+$$
+
+The denominator is strictly positive. Consequently no finite
+$\varepsilon_A$ can bound
+$|Q_{M_A-S}(c)|\le\varepsilon_A Q_S(c)$ on all such finite samples,
+even when the allowance depends on $A$ and $U$.
+
+This excludes the complete kernel's unrestricted two-sided comparison
+with this stationary reference. It supplies no node-count or witness
+size bound, no negative direction of $L_0$, and no failure of a
+one-sided lower comparison. Other reference metrics, the separately
+normalized diagonal-one correlation kernel, and the existing restricted
+sign-complexity or minimum-gap estimates are outside this exclusion.
+The all-order positive lower bound, full strict Robin inequality and RH
+remain unproved. This is a paper application of existing results,
+without a priority claim or Lean certification.
