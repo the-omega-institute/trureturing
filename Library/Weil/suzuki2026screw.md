@@ -6027,3 +6027,173 @@ negative seed or sample, numerical start, effective finite RH test,
 identity with the original prime/Robin operator or RH proof is
 provided. Full RH and strict Robin for every integer $n>5040$
 remain unproved.
+
+
+## Fewer sites suffice for remote negative theta witnesses
+
+The complete actual source in (W101)--(W108) admits a smaller
+conditional negative-witness count. The improvement applies the
+classical logarithmic norm of analytic Taylor sections before
+evaluating the same negative seed. The complete strip bound,
+conformal coordinates and physical stencil are reused. This is a
+repository-derived paper application, without a priority or
+Lean-verification claim.
+
+Keep exactly the notation of (W101)--(W103): for $A\ge2$,
+
+$$
+\begin{gathered}
+q_A=(A+1)/A,\qquad
+\chi_A(t)=A+q_A^{-1}\operatorname{arctanh}t,\\
+F_A(t,s)=\widetilde L_0(\chi_A(t),\chi_A(s)),\qquad
+\|F_A\|_{\infty,\mathbb D^2}\le M_A=D(A+1)^5.
+\end{gathered}
+$$
+
+The fixed real negative seed remains in $(1,2)$, has total
+variation one and actual margin $-\varepsilon<0$. Its disc points,
+moments $\beta_p$, radius $r_A\le1-e^{-2A}$ and principal form
+$Q_{A,n}$ are unchanged. No model replaces the complete source.
+
+### Bound Taylor sections before evaluating near the disc boundary
+
+Let $P_n$ retain the first $n$ Taylor terms in one variable. Use the
+classical analytic projection bound
+
+$$
+\begin{gathered}
+\|P_nf\|_\infty\le\mathsf L_n\|f\|_\infty,\qquad
+\mathsf L_n=\int_{-\pi}^{\pi}
+ \left|\sum_{j=0}^{n-1}e^{ij\theta}\right|\frac{d\theta}{2\pi}
+ \le C\log(n+1),\\
+\left\|\frac{f-P_nf}{z^n}\right\|_\infty
+ \le(1+\mathsf L_n)\|f\|_\infty.
+\end{gathered}
+\tag{W122}
+$$
+
+The quotient is removable at zero. The finite geometric sum is
+bounded by $\min(n,C/|\theta|)$; its integral gives the logarithmic
+allowance. For bounded analytic functions on the open disc, use
+$f(\rho z)$ with $\rho<1$ and then let $\rho\uparrow1$ to obtain
+the projection estimate. On $|z|=\rho$, the quotient is bounded by
+$(1+\mathsf L_n)\|f\|_\infty\rho^{-n}$; the maximum principle
+followed by $\rho\uparrow1$ proves its full-disc bound. There is
+no hidden dependence on an evaluation radius tending to one.
+These are classical scalar facts used inside the actual application,
+not new generic mathematical declarations.
+
+Apply them sectionwise to $F_A$, and write
+$T_n=P_n^{(t)}P_n^{(s)}$. The exact decomposition is
+
+$$
+F_A-T_nF_A
+ =(I-P_n^{(t)})F_A+P_n^{(t)}(I-P_n^{(s)})F_A.
+$$
+
+In the second term, factor out $s^n$ first; it commutes with the
+projection in $t$. The two resulting bounds are respectively
+$(1+\mathsf L_n)M_Ar^n$ and
+$\mathsf L_n(1+\mathsf L_n)M_Ar^n$ on $|t|,|s|\le r<1$.
+Consequently
+
+$$
+\begin{aligned}
+\sup_{|t|,|s|\le r}|F_A-T_nF_A|
+ &\le(1+\mathsf L_n)^2M_Ar^n,\\
+|Q_{A,n}+\varepsilon|
+ &\le C M_A\log^2(n+1)r_A^n.
+\end{aligned}
+\tag{W123}
+$$
+
+The second line uses only the same seed's total variation one.
+The unweighted section $T_nF_A$ is exactly the original principal
+Taylor block. No filtered block, nonlinear predictor or positivity
+assumption is introduced. Unlike the coefficientwise bound in
+(W103), this estimate spends no factor $(1-r_A)^{-1}$.
+
+### Reuse the actual physical reconstruction at the smaller count
+
+Set
+
+$$
+\widetilde n_A=\left\lceil12e^{2A}\log(A+1)\right\rceil.
+\tag{W124}
+$$
+
+For $A\ge2$ one has $\log(\widetilde n_A+1)\le C(A+1)$ and
+$r_A^{\widetilde n_A}\le(A+1)^{-12}$. Thus
+
+$$
+|Q_{A,\widetilde n_A}+\varepsilon|
+ \le CD(A+1)^7(A+1)^{-12}
+ =CD(A+1)^{-5}\longrightarrow0.
+\tag{W125}
+$$
+
+After one seed-dependent start this is at most $\varepsilon/4$,
+so the same principal block has form at most $-3\varepsilon/4$.
+The constant twelve is a sufficient choice, without an optimality
+claim or a numerical start.
+
+The reconstruction in (W105)--(W106) uses this actual block margin,
+the unchanged coefficient bound $M_A$ and polynomial moment
+matching. It does not require the older coefficientwise sufficient
+upper bound itself to be small. Insert $n=\widetilde n_A$ in its
+same positive stencil scale, real Lagrange weights and complete
+high-coefficient allowance. The resulting actual physical form is
+at most $-\varepsilon/2$ on at most $\widetilde n_A$ sites in
+$(A-w,A+w)$, for any fixed $w>0$. Every mixed high coefficient is
+paid as in (W106). The site count is independent of $w$; the
+stencil spacing and precision are not. This is the existing
+construction, not an executed solver or a stable finite-precision
+certificate.
+
+By (W40), RH failure supplies the required fixed real negative seed
+in $(1,2)$. Therefore
+
+$$
+\begin{gathered}
+\mathrm{RH\ false}\quad\Longrightarrow\quad
+\exists A_\varepsilon\ \forall A\ge A_\varepsilon:\\
+\text{a real negative actual }L_0\text{ sample exists in }(A-w,A+w)
+\text{ on at most }\left\lceil12e^{2A}\log(A+1)\right\rceil
+\text{ sites}.
+\end{gathered}
+\tag{W126}
+$$
+
+No actual negative seed or sample is provided. This reduces the
+conditional count from $O(Ae^{2A})$ to $O(e^{2A}\log A)$ and
+preserves the same source and quantifiers.
+
+If for some fixed $w>0$ and an unbounded set of centers $A$, the
+complete actual kernel is PSD on every real sample of at most
+$\widetilde n_A$ sites in $(A-w,A+w)$, then RH follows. This is
+the existing cofinal consumer of (W108) with the smaller actual
+count; its positivity hypothesis is not established. The
+quantifiers still include every location and coefficient at each
+admitted count. It is not a finite RH test.
+
+For the same fixed small window as (W118), the already established
+positive count is
+
+$$
+\mathsf L_A=
+ \left\lfloor c_{\rm deg}e^{2A}\frac{\log A}{A}\right\rfloor+1.
+$$
+
+Conditionally on RH failing, beyond the maximum of the relevant
+starts the minimum local negative-witness site count is greater
+than $\mathsf L_A$ and at most $\widetilde n_A$. The upper
+bracket bound divided by the lower is now $O(A)$. This compares
+bounds, without determining the actual minimum, an optimum or a
+contradiction. The existing positive range (W118) has not been
+extended or reproved.
+
+The smaller sufficient all-sample positivity range remains unpaid,
+as do fixed-window all-order positivity and the original signed
+Robin upper. No original prime/Robin operator identity, actual
+negative zero, numerical start or RH proof is supplied. Full RH
+and strict Robin for every integer $n>5040$ remain unproved.
