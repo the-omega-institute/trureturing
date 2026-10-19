@@ -9463,3 +9463,138 @@ $$
 Use W326 on a confined lowest vector and the SAME exact W257 normalization; the lower bound holds for every source. The real minimum exists by restriction of the same real-coefficient closed form and compact embedding. For $\mathbb F=\mathbb C$ this is precisely W322's lowest level. There is no uniformity claim as $\lambda\downarrow0$. In particular, a negative completed confined level would give genuinely negative original finite sources in every sufficiently late narrow window; it cannot be dismissed solely as an added-completion direction. No such negative level is exhibited here.
 
 W324--W329 close the source-realization gap for the specified completed forms and their EXACT moment-budget minima. The completed minimizer still need not itself be finite, and no sign for $e_K^{\mathbb F}$ or $\lambda_0^{\mathbb F}(\lambda)$ has been established. These source correspondences supply neither W258's vanishing negative allowance nor unrestricted complete positivity. Full RH and strict Robin for EVERY integer $n>5040$ remain unproved. Classical Möbius inversion, approximate identities, the published polynomial approximation and closed-form facts are reused; the additional content is their joint full-Gamma/moment transport back to the original sources, with exact budgets, fields and cofinal counts. This is paper mathematics without Lean/kernel certification, numerical experiments, exhaustive literature coverage or a priority claim.
+
+## Quantitative recovery of an entire fixed-budget energy sublevel
+
+W326 gives a start and count constant for each target separately. Here the complete-energy upper recovery can be made quantitative and uniform over the ENTIRE normalized fixed-budget bounded-energy class. This is one-sided energy recovery, not uniform approximation in the full Gamma graph norm. The quantitative ingredients are an actual half-line Möbius commutator and a slow logarithmic cutoff; the qualitative compactness, form core and polynomial approximation are reused.
+
+Keep the SAME $\mathcal V_{\mathbb F}$, $\mathcal P$, complete $\mathfrak J$, $\mathfrak E=\mathcal P-\mathfrak J$ and original W257 normalization, separately for $\mathbb F=\mathbb R,\mathbb C$. Constants below are universal after fixing these owned norms and smooth scalar cutoffs. They are not numerical constants or an efficient certificate bound. For $K>1$, $B\in\mathbb R$ and $0<\eta\le1$ put
+$$
+L=2+K+B_++\eta^{-1}+(K-1)^{-1}.
+$$
+There is a universal $C>0$ such that EVERY $F\in\mathcal V_{\mathbb F}$ with $\|F\|_2=1$, $M(F)\le K$, $\mathfrak E(F)\le B$, EVERY $A\ge CL^{100}$ and EVERY $w>0$ admit an ORIGINAL finite Gaussian source $\sigma$ of the SAME field, whose actual normalized feature $\psi$ satisfies
+$$
+\begin{gathered}
+\operatorname{supp}\sigma\subset[A,A+w),\qquad
+\#\operatorname{supp}\sigma\le
+\left\lceil e^{CL^{100}}e^{2A}\right\rceil,\\
+Q_H(\sigma)=1,\qquad Q_{6,A}(\sigma)=M(\psi)\le K,\\
+\mathcal N(\psi-F)\le\eta,\qquad
+4\pi^3A Q_{\mathcal K_A^g}(\sigma)
+=\mathfrak E(\psi)\le\mathfrak E(F)+\eta.
+\end{gathered}
+\tag{W330}
+$$
+Neither the common start nor the count bound depends on the vector or on $w$. Gaps and coefficients may depend on all these data and are uncontrolled. The exponent $100$ is a deliberately nonsharp universal choice. This does not establish any sign of the completed or original optimum.
+
+### A Gamma-decreasing filter with a controlled moment cost
+
+First work on $M(F)+\mathcal P(F)\le D$, $D\ge1$. Put $U=\mathscr TF$ and use W324's zero-extended profile $u(t)=(\pi e^t)^{9/4}U(\pi e^t)$. Let $\rho$ be real, nonnegative, smooth, supported in $[-1,1]$ and of integral one. For $0<h<e^{-2}$ set $r=\log(1/h)$ and
+$$
+u_h(t)=\int_{-1}^1\rho(s)u(t-2h-hs)\,ds.
+$$
+Let $U_h$ be its physical feature and $F_h=\mathscr SU_h$, using the ACTUAL inverse W324. With $b(\xi)=\int\rho(s)e^{i\xi s}ds$, the profile multiplier is $e^{2ih\xi}b(h\xi)$, whose modulus is at most one. Thus
+$$
+\begin{aligned}
+\mathcal P(F_h)&\le\mathcal P(F),\\
+\mathcal N(F_h-F)&\le C\sqrt D\,r^{-1/5},\\
+\mathfrak E(F_h)&\le\mathfrak E(F)+CD r^{-1/5},\\
+\sqrt{M(F_h)}&\le e^{Ch}\sqrt{M(F)}
+   +C\sqrt D\,r^{-2/5}.
+\end{aligned}
+\tag{W331}
+$$
+In particular the filter pays the FULL Gamma form, with every debit still evaluated on the same reconstructed feature. It need not preserve the original high-frequency Gamma mass.
+
+Here are the rate-producing estimates. A frequency split at $R=h^{-1/2}$, using $|e^{2ih\xi}b(h\xi)-1|\le Ch|\xi|$ at low frequency and $p(\xi)\ge c\log(2+|\xi|)$ at high frequency, gives
+$\|U_h-U\|_W^2\le CD/r$. Both inputs are bounded in $H_6$. Define $\|G\|_{H_5}^2=\int_\pi^\infty(x/\pi)^5|G|^2dx$. Interpolating physical exponents $7/2$ and $6$ to $5$ gives
+$\|U_h-U\|_{H_5}\le C\sqrt D\,r^{-1/5}$. A single term $n^4G(n^2x)$ has $H_5$ norm at most $n^{-2}\|G\|_{H_5}$, so $\mathscr S$ is bounded there by $\zeta(2)$. Also $\mathcal N(G)\le C\|G\|_{H_5}$. This proves the second line, without claiming a bounded inverse in $W$. W317's complete debit bound proves the third line from the first two.
+
+For the last line set $v=e^{5t/4}u$, so $\|v\|_2=\pi^{7/4}\sqrt{M(U)}$. In these moment-normalized coordinates the inverse is
+$S_6v(t)=\sum_{n\ge1}\mu(n)n^{-3}v(t+2\log n)$ on $t\ge0$. Let $R_a$ be right translation with zero extension. For $0<a<\log4$ the commutator $[S_6,R_a]v$ is supported on $[0,a)$; only $n\ge2$ occur. The full Gamma bound gives the uniform small-interval estimate
+$$
+\int_I|u(t)|^2dt\le
+\frac{C\mathcal P(F)}{\log(1/a)}\quad (|I|=a,\ 0<a<e^{-1}).
+$$
+Indeed split at $a^{-1/2}$: the low-frequency contribution is at most $Ca^{1/2}\|u\|_2^2$, and the high-frequency contribution is at most $C\mathcal P(F)/\log(1/a)$. For $h\le a\le3h$ and $n\le N$, undoing the exponential weight in the boundary strip changes $n^{-3}$ to at most $Cn^{-1/2}$. Triangle inequality therefore bounds this partial commutator by $C\sqrt{DN/r}$. The remaining terms have norm at most $C\sqrt D N^{-2}$, by their $n^{-3}$ operator tail. Taking $N$ comparable to $r^{1/5}$ yields
+$$
+\|[S_6,R_a]v\|_2\le C\sqrt D\,r^{-2/5}
+\quad(h\le a\le3h).
+\tag{W332}
+$$
+The weighted filter is the average of $e^{5a/4}R_a$ over these $a$. Commuting $S_6$ through this average and using W332 proves W331's moment bound. For the fixed bounded initial range of $r$, enlarge $C$; the displayed small-interval argument is needed only for large $r$. A mere use of $\|\mathscr S\|\|\mathscr T\|$ would leave a fixed budget inflation and would not prove this bound.
+
+### Cut off slowly in logarithmic position
+
+Choose $0\le\chi\le1$ smooth, equal to one on $(-\infty,1]$ and zero on $[2,\infty)$; put $\chi_T(t)=\chi(t/T)$, $T\ge1$. Let $U_{h,T}$ have profile $\chi_Tu_h$ and put $F_{h,T}=\mathscr SU_{h,T}$. Then
+$$
+\begin{aligned}
+\sqrt{M(F_{h,T})}&\le\sqrt{M(F_h)}+C\sqrt D/T,\\
+\mathcal N(F_{h,T}-F_h)&\le C\sqrt D e^{-T/2},\\
+\mathfrak E(F_{h,T})&\le\mathfrak E(F_h)
+   +CDh^{-2}e^{-T/2}.
+\end{aligned}
+\tag{W333}
+$$
+For the moment, the Lipschitz cutoff gives
+$\|[S_6,\chi_T]v_h\|_2\le CT^{-1}\sum_{n\ge1}|\mu(n)|n^{-3}\log n\,\|v_h\|_2\le C\sqrt D/T$.
+The multiplier $\chi_T$ is a contraction; no uniform moment tail tightness is assumed. For the second line use the $H_5$ inverse and compare its exponential weight $e^{3t/2}$ with the moment weight $e^{5t/2}$ on $t\ge T$.
+
+For the FULL Gamma estimate use the smoothing derivative bound
+$\|e^{5t/4}u_h'\|_2\le Ch^{-1}\sqrt D$. With $d=(\chi_T-1)u_h$, its $H^1$ norm is at most $C\sqrt D h^{-1}e^{-5T/4}$, so $\mathcal P(d)\le CDh^{-2}e^{-5T/2}$, where $\mathcal P(d)$ denotes the same Fourier profile norm. Cauchy--Schwarz in that norm bounds its cross term against $u_h$ by $CDh^{-1}e^{-5T/4}$. W317 and the second line bound the COMPLETE debit change by $CD e^{-T/2}$. These three terms are bounded by the last line of W333. Thus the cutoff controls the whole energy; it does not localize only a favorable Gamma channel.
+
+The compact theta image is smooth and supported between $\pi e^h$ and $R=\pi e^{2T}$. Its W324 inverse on $x\ge\pi$ is the finite sum over $n\le\lceil e^T\rceil$. Use that SAME finite sum on $x>0$ to obtain a compact smooth extension $f_{h,T}$. It vanishes below a positive multiple of $e^{-2T}$ and above $R$. Since $\|u_h^{(j)}\|_\infty\le C_j\sqrt D h^{-j-1/2}$, differentiation of the finite inverse gives
+$$
+\|f_{h,T}^{(k)}\|_\infty
+\le C_k\sqrt D\,h^{-k-1/2}e^{(5+2k)T},\qquad
+C_{f_{h,T}}\le C\sqrt D\,h^{-7/2}e^{33T}.
+\tag{W334}
+$$
+The last constant is precisely the owned Poisson constant from W235, bounded through $(1+x)^{10}(xf''_{h,T})'$ on $x\le R$. It is not a new polynomial approximation claim.
+
+### Create budget slack uniformly before filtering
+
+For the normalized class in W330, W317 gives $\mathcal P(F)\le B_++CK$. Set
+$D_0=1+K+B_++(K-1)^{-2}\le CL^2$.
+Choose three fixed disjoint smooth bump shapes rescaled into an interval just above $\pi$ of length $c\min(1,K-1)$, with $c$ a sufficiently small universal constant. Every point in this interval satisfies $(x/\pi)^6\le(K+1)/2$. Normalize the shapes in $H$. In their three-dimensional span choose a unit $g_F$ orthogonal to $F$ in BOTH the $H$ and moment pairings, over the SAME field. Two homogeneous linear constraints leave a nonzero choice. The uniform derivative bounds of this span and W325 give
+$M(g_F)\le(K+1)/2$ and $\mathcal P(g_F)\le C[1+(K-1)^{-2}]$.
+
+For $t=c_1\eta/D_0$ with fixed sufficiently small $c_1>0$, put $F^\circ=(F+tg_F)/\sqrt{1+t^2}$. The same two orthogonalities used in W327 now give quantitative, uniform slack:
+$$
+\begin{gathered}
+\|F^\circ\|_2=1,\qquad
+M(F^\circ)\le K-s,\qquad
+s\ge c\eta^2(K-1)/D_0^2\ge cL^{-7},\\
+M(F^\circ)+\mathcal P(F^\circ)\le CD_0,\qquad
+\mathcal N(F^\circ-F)\le\eta/10,\qquad
+\mathfrak E(F^\circ)\le\mathfrak E(F)+\eta/10.
+\end{gathered}
+\tag{W335}
+$$
+The energy bound uses polarization: both the Gamma cross term and W317's full debit cross term are at most $CD_0$. This construction applies whether or not $M(F)=K$ and keeps real and complex constraints separate.
+
+Apply W331--W334 to $F^\circ$, with $D=CD_0$, and choose
+$r=C_1L^{100}$, $h=e^{-r}$, $T=8r+1$. The $\mathcal N$ filter error is at most $CL^{-19}$, its squared-moment increase at most $CL^{-38}$, and the cutoff moment increase at most $CL^{-98}$, after adjusting universal constants. Its energy increase is at most $CL^{-18}+Ce^{-r}$. In particular the physical feature $f=f_{h,T}$ has moment at most $K-3s/4$; its norm differs from one by at most $CL^{-19}$. These bounds, including the norm error multiplied by $K$, are smaller than the slack $s\ge cL^{-7}$ at a sufficiently large universal $C_1$. Also $|\mathfrak E(f)|\le CD_0$, so the energy change from final normalization is controlled.
+
+Now consume W235--W236 and W325 without repeating their approximation proofs. At $P=e^{2A}$, W334 gives
+$$
+\|G-f\|_{\mathcal V}\le C\|G-f\|_X
+\le e^{C_2L^{100}}e^{-2A},\qquad
+\#\operatorname{supp}\sigma\le
+\left\lceil e^{C_2L^{100}}e^{2A}\right\rceil.
+\tag{W336}
+$$
+Here $G$ is an actual finite Gaussian physical feature: choose the deconflation gap small enough to make its additional $X$ error no larger than the Poisson bound and put every source in $[A,A+w)$. The support upper bound $R$ pays the degree, uniformly over $F$. For $A\ge C_3L^{100}$, with $C_3$ sufficiently large, the graph error in W336 and the preceding $\mathcal N$ error have total effect on the squared normalization norm less than $s/(4K)$; the additional squared-moment error is less than $s/4$. Consequently normalizing $G$ to $\psi=G/\|G\|_2$ leaves $M(\psi)\le K$. The complete-energy changes in W335--W336, including normalization, total at most $\eta$, and the $\mathcal N$ errors total at most $\eta$. W257's exact return proves W330. Only the one-sided inequality for energy was used; there is no asserted uniform graph-norm approximation to the original $F$.
+
+### A quantitative comparison for the original optimum
+
+This uniform recovery has a consumer in W328's ACTUAL constrained optimum. A unit smooth bump supported in the interval used above has $M<K$ and energy at most $B_*(K)=C_0[1+(K-1)^{-2}]$, for a fixed sufficiently large $C_0$. Hence the completed minimum $e_K^{\mathbb F}\le B_*(K)$. Set
+$L_*=2+K+B_*(K)+\eta^{-1}+(K-1)^{-1}$.
+For EVERY $0<\eta\le1$, $A\ge CL_*^{100}$, $w>0$ and integer site allowance $n\ge\lceil e^{CL_*^{100}}e^{2A}\rceil$, the original infimum defined in W328 obeys
+$$
+0\le4\pi^3m_{A,w,n}^{\mathbb F}(K)-e_K^{\mathbb F}\le\eta.
+\tag{W337}
+$$
+The lower bound is the existing original-source normalization, and the upper bound applies W330 to a completed minimizer with $B=B_*(K)$. The additional content is the common quantitative start/count, not another existence or spectral criterion. More generally if a member of the ENTIRE class has $\mathfrak E(F)\le-\Delta$, taking $\eta\le\min(1,\Delta/2)$ gives an original source with $A Q_{\mathcal K_A^g}\le-\Delta/(8\pi^3)$ at these same uniform bounds. No negative member is exhibited.
+
+The estimate does not show that $e_K^{\mathbb F}$ is nonnegative, identify the real and complex minima, or reduce the count constant to W228's positive fixed fraction of $e^{2A}$. It therefore does not prove W258, unrestricted complete positivity, full RH or strict Robin for EVERY integer $n>5040$. Classical smoothing and the already cited polynomial approximation are reused; the joint quantitative inverse-boundary/cutoff estimates and their exact-budget source transport are repository-derived, without a priority claim. Bounded bibliography retrieval is not exhaustive literature coverage. This is paper mathematics without Lean/kernel certification or scientific execution.
