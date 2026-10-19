@@ -12421,3 +12421,191 @@ asymptotic to $d^3/(24\pi^2c^2N)$.
 These norms compare matrices in the same physical retained space at each $c$; no fixed limiting vector or identification of different finite spaces is assumed.
 
 GHC23 pays a nonzero signed contribution to the ACTUAL model discrepancy, including its complete source strength and direction. It does not assert that the original Schur block is negative or positive. A positivity certificate for the uncorrected Hilbert model must still pay this negative endpoint, and a certificate for the corrected model must still pay its cubic remainder and establish its own sign. No retained/cofinal Weil positivity, dense fixed-window theta positivity, original same-source Robin strict upper, determinant limit or RH follows. The inherited source/form premises and paper-only status remain.
+
+### The complete prime--pole perturbation has sharp square-root spectral edges
+
+Keep the full complex physical form and G1--G4's exact decomposition
+$Q_L=q_{D_L}+\langle\cdot,V_L\cdot\rangle$ on its original form domain.
+Let $c\to\infty$ through integers, $d=\log c$, $L=d/2$ and $a=e^L=\sqrt c$.
+Write $I=(-L,L)$ and extend functions by zero. Put
+$$
+ u(x)=e^{x/2},\qquad v(x)=e^{-x/2},\qquad
+ b=2\sinh L=a-a^{-1}.
+$$
+The paired prime and true two-pole operators are
+$$
+ \begin{aligned}
+ (\mathsf P_Lf)(x)
+ &=\sum_{2\le n<c}\frac{\Lambda(n)}{\sqrt n}
+       [f(x+\log n)+f(x-\log n)],\\
+ \mathsf R_L&=|u\rangle\langle v|+|v\rangle\langle u|,\\
+ V_L&=\mathsf R_L-\mathsf P_L+B_L .
+ \end{aligned}
+ \tag{JPP1}
+$$
+These are G4's actual terms, with every prime power, both orientations and both poles retained.
+The prime operator preserves nonnegative functions; it is not asserted to be positive semidefinite.
+The periodic Gamma boundary correction is the SAME $B_L$ from G1, with
+$\|B_L\|\le C_\Gamma(d)=O(1)$ from G2.
+
+This application reuses the classical unconditional PNT already consumed in GHC18, the weighted Schur test, finite-rank block estimates, Riemann--Lebesgue and finite-torus recurrence.
+The recurrence is already owned by
+[PrimeOnlyNoGap.exists_pos_nsmul_mem](../../D5/S3/Weil/PrimeOnly/PrimeOnlyNoGap.lean)
+and the [Kronecker source](../Fourier/onishchik2020kronecker.md); no new general recurrence theorem is proposed.
+The added calculation concerns the sharp complete source norm and its finite-complement spectral edges, not a new PNT or abstract perturbation theorem.
+No literature-priority or Lean/kernel claim is made.
+
+#### Pay the prime norm and its two actual pole directions together
+
+For $t\ge1$, use the strict-endpoint sums
+$$
+ \Psi(t)=\sum_{2\le n<t}\Lambda(n),\qquad
+ M(t)=\sum_{2\le n<t}\frac{\Lambda(n)}n .
+$$
+PNT gives $\Psi(t)=t+o(t)$ and the reused Chebyshev/partial-summation bound gives
+$M(t)=O(1+\log t)$.
+The actual zero-extended translations have the following almost-everywhere actions:
+$$
+ \begin{aligned}
+ \mathsf P_Lu(x)&=u(x)[\Psi(e^{L-x})+M(e^{L+x})],\\
+ \mathsf P_Lv(x)&=v(x)[M(e^{L-x})+\Psi(e^{L+x})].
+ \end{aligned}
+$$
+Let $h=u+v>0$. For every fixed $\varepsilon>0$,
+$\Psi(t)\le(1+\varepsilon)t+C_\varepsilon$ for all $t\ge1$.
+Consequently
+$$
+ \mathsf P_Lh
+ \le[(1+\varepsilon)a+O_\varepsilon(1+d)]h.
+$$
+Apply the classical weighted Schur inequality to this SAME positive-kernel finite translation sum.
+Equivalently, use $2|f(x)f(y)|\le
+|f(x)|^2h(y)/h(x)+|f(y)|^2h(x)/h(y)$ separately on each actual shift and then change variables.
+Selfadjointness yields
+$\|\mathsf P_L\|\le a(1+o(1))$.
+No continuum approximation of the prime operator in operator norm has been made.
+
+There is also an actual two-direction approximation, which must be paid before subtracting the pole.
+Put $E(t)=\Psi(t)-t$. A change of variables gives
+$$
+ \|u(x)E(e^{L-x})\|_2^2
+   =a\int_1^c\frac{|E(t)|^2}{t^2}\,dt
+   =o(a^3).
+$$
+Here the last equality follows directly from $E(t)/t\to0$ by splitting at a fixed threshold; it is uniform in the growing upper endpoint.
+The $M$ term is $O(d)\|u\|_2$, and $\|u\|_2^2=\|v\|_2^2=b\sim a$.
+The reflected estimate holds for $v$.
+On the SAME vectors
+$$
+ \mathsf R_Lu=d\,u+b\,v,\qquad
+ \mathsf R_Lv=b\,u+d\,v .
+$$
+Thus, for the orthonormal vectors
+$$
+ e_+=\frac{u+v}{\sqrt{2(b+d)}},\qquad
+ e_-=\frac{u-v}{\sqrt{2(b-d)}},
+$$
+one obtains
+$$
+ \boxed{\begin{aligned}
+ \mathsf P_Le_+&=a e_++o(a),&
+ \mathsf P_Le_-&=-a e_-+o(a),\\
+ \|\mathsf P_L\|&\sim a,&
+ \|(\mathsf P_L-\mathsf R_L)\mathsf E_L\|&=o(a),
+ \end{aligned}}
+ \qquad
+ \mathsf E_L=|e_+\rangle\langle e_+|+|e_-\rangle\langle e_-|.
+ \tag{JPP2}
+$$
+All vector errors are in $L^2(I)$; the last is an operator-norm estimate on this actual rank-two space.
+
+The pole vanishes on $\mathsf E_L^\perp$.
+The $\mathsf E_L$ block and its cross blocks of
+$\mathsf R_L-\mathsf P_L$ are $o(a)$ by JPP2 and selfadjointness.
+Its remaining block is
+$-(I-\mathsf E_L)\mathsf P_L(I-\mathsf E_L)$, of norm at most $a(1+o(1))$.
+Therefore
+$$
+ \boxed{\|\mathsf R_L-\mathsf P_L\|\le a(1+o(1)),
+ \qquad \|V_L\|\le a(1+o(1)).}
+ \tag{JPP3}
+$$
+This uses the common pole/prime alignment.
+Adding separately optimized norms would give no such estimate.
+
+#### The sharp signed edges survive every finite-dimensional removal
+
+Fix $c$ temporarily.
+Finite-torus recurrence supplies an unbounded sequence $t_j$ such that
+$e^{it_j\log n}\to1$ for every contributing $n<c$.
+It needs no rational independence.
+For $U_tf=e^{itx}f$ the finite actual sum then satisfies
+$$
+ \|U_{t_j}^*\mathsf P_LU_{t_j}-\mathsf P_L\|\longrightarrow0 .
+$$
+Riemann--Lebesgue gives $U_{t_j}e_\pm\rightharpoonup0$.
+The true pole is finite rank, so
+$\|\mathsf R_LU_{t_j}e_\pm\|\to0$, while the SAME Gamma contribution remains bounded by $C_\Gamma(d)$.
+It follows that the negative Rayleigh edge of $V_L$ is at most
+$-\langle e_+,\mathsf P_Le_+\rangle+C_\Gamma(d)$,
+and its positive edge is at least
+$-\langle e_-,\mathsf P_Le_-\rangle-C_\Gamma(d)$.
+
+More strongly, let $\mathsf F_c$ be ANY finite-rank orthogonal projection at each $c$.
+Its rank, choice of vectors and dependence on $c$ are unrestricted.
+For fixed $c$,
+$\|\mathsf F_cU_{t_j}e_\pm\|\to0$.
+Project these vectors into $\mathsf F_c^\perp$ and normalize; their bounded-operator Rayleigh values change by $o_j(1)$.
+Writing $\lambda_-(c,\mathsf F_c)$ and $\lambda_+(c,\mathsf F_c)$ for the infimum and supremum of the compression's Rayleigh quotients on that complement, JPP2--JPP3 give
+$$
+ \boxed{\begin{aligned}
+ \lambda_-(c,\mathsf F_c)/\sqrt c&\longrightarrow-1,\\
+ \lambda_+(c,\mathsf F_c)/\sqrt c&\longrightarrow 1,\\
+ \|V_L\|/\sqrt c&\longrightarrow1 .
+ \end{aligned}}
+ \tag{JPP4}
+$$
+The errors in the first two limits can be chosen independently of the finite projection.
+The order of choices is essential: for each $c$ and its given finite projection, arbitrarily high recurrence times are allowed; no effective uniform recurrence time or bounded-frequency trial is asserted.
+This is a statement about the bounded perturbation $V_L$.
+Its modulated vectors pay an unbounded diagonal Gamma energy in the FULL form, so the negative edge proves no negativity of $Q_L$.
+
+#### Consume the joint norm in a smaller complete exterior section
+
+Let $\alpha>1$ be fixed and use the same physical Fourier projections at
+$$
+ N_\alpha(c)=\left\lceil e^{\alpha\sqrt c}\right\rceil .
+$$
+This changes only the finite section, with the original support and full operator unchanged.
+Since $A(2\pi n/d)=\log(n/d)+O(d^2/n^2)$ on the exterior, JPP3--JPP4 give the actual full-complex exterior floor
+$$
+ A(2\pi(N_\alpha+1)/d)-\|V_L\|
+     =(\alpha-1+o(1))\sqrt c.
+$$
+In particular the true exterior $H$ is eventually positive.
+Let $\widehat H$ be GHC12--GHC17's corrected signed-Hilbert Gamma model on this SAME exterior.
+Reuse their complete estimate
+$\|H-\widehat H\|_1<d^3/(20N_\alpha^3)$.
+Both floors are eventually at least $(\alpha-1)\sqrt c/2$, so the inherited inverse and trace-ideal estimates, with the SAME complete coupling
+$\mathscr B=P_{N_\alpha}^\perp V_LP_{N_\alpha}$, give
+$$
+ \boxed{\begin{aligned}
+ H,\widehat H&\succeq
+       \frac{\alpha-1}{2}\sqrt c\,I,\\
+ \|H^{-1}-\widehat H^{-1}\|_1
+   &\le\frac{d^3}{5(\alpha-1)^2cN_\alpha^3},\\
+ \|S-\widehat S\|_1
+   &=O_\alpha\!\left(\frac{d^3}{N_\alpha^3}\right).
+ \end{aligned}}
+ \tag{JPP5}
+$$
+These estimates cover all $2N_\alpha+1$ retained coordinates and every actual source term, with no retained-rank factor.
+They apply along any of the original unbounded integer FIB support schedules as well.
+The finite section is defined anew at this cutoff; no old finite matrix, trial or cache is identified with it.
+GHC20--GHC23's inverse asymptotic at $N=\lceil e^c\rceil$ is not asserted at the new cutoff.
+
+JPP3--JPP5 give a sharp leading complete perturbation budget, its two signed finite-complement edges, and an actual exterior/model comparison at the smaller cutoff.
+G4's separate allowance is asymptotic to $6\sqrt c$; no $o(\sqrt c)$ complete-complement norm allowance is possible, despite the pole cancellation on its own two directions.
+This last boundary concerns a norm-only method, not the attainable positivity threshold of the full form with its frequency-dependent diagonal.
+No finite retained Schur sign, cofinal Weil positivity, original same-source strict Robin upper, determinant limit or RH is established.
+The original source/form premises and paper-only status remain.
