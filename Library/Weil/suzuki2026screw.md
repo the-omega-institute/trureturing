@@ -9243,3 +9243,130 @@ $\int(x/\pi)^6|\psi|^2dx=Q_{6,A}(\sigma)/Q_H(\sigma)\le K$.
 Apply W316 inside the exact complete form, leaving $\mathcal D_\pi(\mathscr T\psi)$ unchanged. This proves W311 uniformly over all coefficients, counts and supports in the original budget. Apply the preceding signed Gamma floor and the first bound of W315 instead to obtain W312. No selected-approximant family, density passage, source-dependent starting scale or additional sign assumption is used in these all-source conclusions.
 
 The debit's physical tail is now uniformly small on EVERY fixed moment budget, including all core-tail interactions, while the full Gamma component remains in place. Controlling the remaining compact debit against that same Gamma component, or otherwise removing W258's fixed scaled negative deficit, is still required. The improved large-$K$ floor does not tend to zero as $A\to\infty$ at fixed $K$. Unrestricted complete positivity, every-budget W258, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without numerical constants, computational/Lean/kernel certification, exhaustive bibliography or literature-priority claims.
+## Prevent bounded-energy sources from escaping a fixed physical moment budget
+
+The complete debit has the continuous critical-moment extension W310, while the Gamma component remains unbounded. Together they give compactness for ALL bounded-above-energy sources in each fixed sixth-moment budget. The source-specific step is a finite Möbius reconstruction of the original physical feature from its COMPLETE theta image. Classical compactness and closed-form theorems are reused as suppliers, not added as new results.
+
+Work in $H=L^2(\pi,\infty)$, with the W310 norm $\mathcal N$, and put
+$$
+M(F)=\int_\pi^\infty (x/\pi)^6|F(x)|^2dx,
+\qquad H_6=\{F\in H:M(F)<\infty\}.
+$$
+All theta transforms below are the same $\mathscr TF=\sum_{n\ge1}n^4F(n^2x)$, extended by W310. Use the Gamma profile WITHOUT $B$:
+$$
+u_F(t)=(\pi e^t)^{9/4}\mathscr TF(\pi e^t)\quad(t\ge0),
+\qquad u_F(t)=0\quad(t<0).
+$$
+Thus $\|u_F\|_2=\|\mathscr TF\|_W$. By W231 its real Fourier multiplier is
+$$
+m_\Gamma(\xi)=\frac2{\sqrt\pi}|h(9/4+i\xi)|^2
+\left[\Re\operatorname{digamma}(1/4+i\xi)-\log\pi\right],
+\qquad h(z)=\frac{z-5/2}{z-1}.
+$$
+Choose a fixed $c_\Gamma$ so that $p=m_\Gamma+c_\Gamma\ge1$. The owned multiplier is continuous, bounded below and asymptotic to $(2/\sqrt\pi)\log|\xi|$, so $p$ is comparable to $1+\log(2+|\xi|)$. Define the positive form and its specified domain
+$$
+\mathcal P(F)=\int_{\mathbb R}p(\xi)|\widehat u_F(\xi)|^2d\xi,
+\qquad
+\mathcal V=\{F\in H_6:\mathcal P(F)<\infty\}.
+$$
+This is an explicit finite-moment Gamma domain; it is not asserted to be the form closure of the finite Gaussian sources. The compact smooth features in $C_c^\infty((\pi,\infty))$ belong to $\mathcal V$, which is consequently dense in $H$. Their theta image has only finitely many nonzero dilations, and its logarithmic zero extension is piecewise smooth with at most a single jump and Fourier decay $O((1+|\xi|)^{-1})$. The original finite Gaussian features belong by the owned W247/W255 interfaces and exponential decay.
+
+### Keep the original Gamma, cutoff and complete debit together
+
+Let $\mathcal C_\pi(U,V)$ be the Hermitian polarization of W247's rank-two cutoff. Define on $\mathcal V$
+$$
+\begin{aligned}
+\mathfrak J(F,G)&=\mathfrak A(F,G)+\mathcal C_\pi(\mathscr TF,\mathscr TG)
++c_\Gamma\langle\mathscr TF,\mathscr TG\rangle_W,\\
+\mathfrak E(F)&=\mathcal P(F)-\mathfrak J(F,F),\\
+|\mathfrak J(F,G)|&\le C\mathcal N(F)\mathcal N(G),\\
+|\mathfrak J(F,F)|&\le\varepsilon M(F)+C_\varepsilon\|F\|_2^2
+\qquad(\varepsilon>0).
+\end{aligned}
+\tag{W317}
+$$
+This agrees exactly with $\mathcal D_\pi(\mathscr TF)-\mathfrak A(F,F)$ on the owned physical features. Both folded channels and the entire prime-power Hankel/exterior correction remain in $\mathfrak A$. The cutoff is bounded in $W$ by the two square-integrable functions already checked after W314. W310 therefore proves the third line. The last line follows from $z^4\ell(z)=o(z^6)$ by splitting at a fixed physical radius depending on $\varepsilon$. It is an infinitesimal moment bound, not an upper bound on Gamma or an assertion that the unconfined form is closed in $H$.
+
+### Transfer compactness back through the actual theta transform
+
+For $L,R\ge2$, W310 and W315 applied to the actual tail give
+$$
+\begin{aligned}
+\|\mathbf1_{x\ge\pi L}\mathscr TF\|_W^2
+&\le C M(F)\frac{\ell(L)}{L^2},\\
+\int_{|\xi|>R}|\widehat u_F(\xi)|^2d\xi
+&\le \frac{C\mathcal P(F)}{\log(2+R)}.
+\end{aligned}
+\tag{W318}
+$$
+For the first line, set $F_t=\mathbf1_{x>\pi L}F$. Above $\pi L$ the complete theta images of $F$ and $F_t$ agree almost everywhere: every dilation samples a point at least as far out. Bound the latter image in $W$ by $C\mathcal N(F_t)$ and use the moment tail. In logarithmic coordinates this is precisely the physical tail of $u_F$ outside $t\le\log L$. The second line follows from the positive multiplier $p$.
+
+If $M(F)$ and $\mathcal P(F)$ are uniformly bounded, $u_F$ is bounded in $L^2(\mathbb R)$ and both its position and Fourier tails vanish uniformly. Apply the classical Fourier-tail compactness criterion [Hanche-Olsen--Holden, Corollary 7, arXiv:0906.4883v2, printed p.5](https://arxiv.org/abs/0906.4883v2). It gives precompactness of $\mathscr TF$ in $W$. It does not by itself give precompactness of $F$; the inverse interface must be paid.
+
+Let $\mu(n)$ be the classical Möbius function and define the finite actual reconstruction
+$$
+(R_LG)(x)=\sum_{n\le\lfloor\sqrt L\rfloor}\mu(n)n^4G(n^2x).
+$$
+For $F_c=\mathbf1_{x\le\pi L}F$, the finite divisor identity $\sum_{d\mid k}\mu(d)=\mathbf1_{k=1}$ gives $R_L\mathscr TF_c=F_c$ almost everywhere on $[\pi,\infty)$. Moreover
+$$
+\begin{aligned}
+\|R_L\|_{W\to H}&\le C L^{1/4},\\
+\|F-R_L\mathscr TF\|_2
+&\le C\sqrt{M(F)}
+\left[L^{-3}+L^{-3/4}\sqrt{\ell(L)}\right]\longrightarrow0.
+\end{aligned}
+\tag{W319}
+$$
+Indeed a single term has norm
+$\|n^4G(n^2\cdot)\|_2\le\pi^{-7/4}n^{-1/2}\|G\|_W$; summing to $\sqrt L$ proves the first bound. The reconstruction error is $F_t-R_L\mathscr TF_t$. Its first term is at most $L^{-3}\sqrt{M(F)}$, while W310 bounds the theta tail by $C\sqrt{M(F)\ell(L)}/L$. Multiplication by the finite inverse loss gives the second term in W319. The sharp cut is used solely for this finite reconstruction; no Gamma localization is inferred from it.
+
+Thus bounded $M$ and $\mathcal P$ imply precompactness of $F$ in $H$: for each large fixed $L$, the bounded map $R_L$ takes the precompact theta images to a precompact family, and W319 approximates the original features uniformly. They are also precompact in $\mathcal N$. On a bounded physical interval its weight is bounded, so convergence follows from convergence in $H$; on the complement W315 makes the $\mathcal N$ tails uniformly small. This establishes the source-specific compact embedding needed below, rather than assuming a uniformly bounded full theta inverse.
+
+### Every original negative budget sequence has a nonescaping limit
+
+For EVERY $K>1$ and $B\in\mathbb R$, the set
+$$
+\mathcal S_{K,B}
+=\{F\in\mathcal V:\|F\|_2=1,\ M(F)\le K,\ \mathfrak E(F)\le B\}
+\quad\text{is compact in }\mathcal N.
+\tag{W320}
+$$
+W317 and $\mathcal N(F)^2\le CM(F)$ give $\mathcal P(F)\le B+CK$, so the preceding argument gives precompactness. To check closure, let $F_j\to F$ in $\mathcal N$. The moment is lower semicontinuous by its weighted $L^2$ norm. W310 gives $u_{F_j}\to u_F$ in $L^2$, and multiplication by $p^{1/2}$ is closed and has a lower semicontinuous norm. Hence $\mathcal P(F)\le\liminf\mathcal P(F_j)$. The debit $\mathfrak J$ is continuous in $\mathcal N$, so $\mathfrak E(F)\le\liminf\mathfrak E(F_j)$. The norm, moment and energy constraints are preserved, proving W320. This argument uses lower semicontinuity of the FULL Gamma form, not its continuity or a discarded high-frequency tail.
+
+In particular, for EVERY $K>1$,
+$$
+e_K=\min_{\substack{F\in\mathcal V,\ \|F\|_2=1\\M(F)\le K}}\mathfrak E(F)
+\quad\text{is finite and attained in }\mathcal V.
+\tag{W321}
+$$
+The feasible set is nonempty: normalize a smooth feature supported sufficiently close to $\pi$ so its moment is less than $K$. W317 gives a finite lower bound; a minimizing sequence lies eventually in one W320 sublevel. At $K=1$ the normalized feasible set is empty, since $(x/\pi)^6>1$ almost everywhere on $(\pi,\infty)$. No minimum or original Gaussian minimizer is claimed at that endpoint.
+
+Now take ANY sequence of admitted ORIGINAL finite Gaussian sources, with arbitrary counts, complex coefficients, widths and gaps, satisfying $Q_H=1$, $Q_{6,A}\le K$ and $AQ_{\mathcal K_A^g}\le-\delta$ for one fixed $K>1$, $\delta>0$. Their ACTUAL normalized physical features obey, by W257,
+$$
+\psi_j=F_j/\|F_j\|_2,\quad
+M(\psi_j)=Q_{6,A_j}/Q_H\le K,\quad
+\mathfrak E(\psi_j)=4\pi^3A_jQ_{\mathcal K_{A_j}^g}\le-4\pi^3\delta.
+$$
+W320 supplies a subsequence converging in $\mathcal N$ to $\psi\in\mathcal V$ with $\|\psi\|_2=1$, $M(\psi)\le K$ and $\mathfrak E(\psi)\le-4\pi^3\delta$. All components come from the SAME actual features; an independently chosen theta or reflected profile has not been substituted. The limit need not be a finite Gaussian source. No equality of the completed minimum with the infimum over finite Gaussian sources is asserted.
+
+### Reuse closed-form theory with an arbitrarily small moment penalty
+
+For EACH $\lambda>0$ put
+$$
+q_\lambda(F)=\mathfrak E(F)+\lambda M(F),\qquad
+\operatorname{Dom}q_\lambda=\mathcal V,\qquad
+q_\lambda(F)\ge\mathcal P(F)+\tfrac\lambda2M(F)-C_\lambda\|F\|_2^2.
+\tag{W322}
+$$
+The positive reference form $\mathcal P+\lambda M$ is densely defined and closed in $H$. In fact a Cauchy sequence in its form norm converges in $H_6$; W310 gives convergence of the theta image in $W$, and the closed Fourier multiplier supplies convergence in $\mathcal P$. Apply the classical KLMN theorem to $-\mathfrak J$, using W317 with $\varepsilon=\lambda/2$. This gives a closed semibounded $q_\lambda$, with the displayed coercive bound. The supplier is [Teschl, *Mathematical Methods in Quantum Mechanics*, GSM 99 online edition, Theorem 6.24, printed p.150](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf); its closed-form representation is Theorem 2.13, printed pp.71--72. No new KLMN theorem is being proved.
+
+The compact embedding just established applies to its bounded form-norm sets by W322. The standard closed-form compact-embedding consequence therefore gives compact resolvent for the self-adjoint operator represented by $q_\lambda$, and its normalized lowest level $\lambda_0(\lambda)$ is attained. This is on the WHOLE physical half-line with the displayed moment penalty. The already recorded [Connes--Consani--Moscovici, arXiv:2511.22755v1, Proposition 3.4 and Theorem 3.6](connesconsanimoscovici2026spectral.md) concern a fixed multiplicative support window; their form-core and discrete-spectrum results are not reproved. Here the additional interface is compactness in the ORIGINAL physical feature norm through W318--W319. No simplicity, positivity, evenness or finite-source realization of a lowest vector is asserted.
+
+For an ACTUAL original normalized source with $Q_{6,A}\le K$ and $AQ_{\mathcal K_A^g}\le-\delta$, the same feature gives the concrete bound
+$$
+0<\lambda\le\frac{2\pi^3\delta}{K}
+\quad\Longrightarrow\quad
+\lambda_0(\lambda)\le q_\lambda(\psi)\le-2\pi^3\delta.
+\tag{W323}
+$$
+This is a consumer of the actual normalization, not a positivity conclusion: a hypothetical fixed negative source margin survives every sufficiently weak moment penalty. Conversely no sign of $e_K$ or $\lambda_0(\lambda)$ has been established here. A completed minimizer is not identified with an admissible finite source. Compactness rules out escape of bounded-energy fixed-budget negative sequences; it does not remove their permitted negative sign. Every-budget W258, unrestricted complete positivity, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. The argument is paper mathematics without Lean/kernel certification, numerical constants, an experiment, exhaustive literature coverage or a priority claim.
