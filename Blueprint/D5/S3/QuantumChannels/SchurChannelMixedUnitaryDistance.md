@@ -64,7 +64,21 @@ $$\operatorname{claim} \Leftrightarrow (\forall (d: \mathbb{N}), \forall (Phi: \
 
 Section V, page 9, after the proof of Theorem 3: "It seems quite likely that in Eq. (8) the first inequality should be strict and the second one should be an equality. However, this is still an unsettled issue." This proposition states the equality in the second inequality. d ranges over all natural dimensions, Phi over canonical channels on Fin d, and IsSchurChannel is the sole hypothesis. MixedUnitary represents Conv(U_d), and SchurMixedUnitary represents Λ_d. The empty dimension is included; both sets still contain the identity channel.
 
-**Theorem 1.6 (The two diamond-distance infima are equal).**
+**Theorem 1.6 (Trace norm is invariant under finite reindexing).**
+
+$$\forall (a: \operatorname{Type}), \forall (b: \operatorname{Type}), [\operatorname{Fintype}\left(a\right)] [\operatorname{DecidableEq}\left(a\right)] [\operatorname{Fintype}\left(b\right)] [\operatorname{DecidableEq}\left(b\right)] \forall (e: \operatorname{Equiv}\left(a, b\right)), \forall (X: \operatorname{Matrix}\left(a, a, \mathbb{C}\right)), \operatorname{traceNorm}\left(\operatorname{Matrix}.\operatorname{reindexAlgEquiv}\left(\mathbb{C}, \mathbb{C}, e\right)\left(X\right)\right) = \operatorname{traceNorm}\left(X\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.reindex_traceNorm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nengkun Yu, Runyao Duan and Quanhua Xu (2017). *Bounds on the distance between a unital quantum channel and the convex hull of unitary channels*. DOI: [10.1109/TIT.2016.2641447](https://doi.org/10.1109/TIT.2016.2641447). URL: <https://arxiv.org/abs/1201.1172>.
+
+*Commentary.*
+
+For finite decidable index types a and b, an equivalence e preserves the trace norm under Matrix.reindexAlgEquiv. This identity also gives the submatrix form for the inverse equivalence, and it identifies ancillary coordinates in the capacity bounds.
+
+**Theorem 1.7 (The two diamond-distance infima are equal).**
 
 $$\operatorname{claim}$$
 
@@ -89,6 +103,7 @@ Copy a basis vector i to (i,i), apply the channel on the first factor while reta
 - Truth anchor: `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.SchurMixedUnitary`
 - Truth anchor: `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.claim`
 - Truth anchor: `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.distToSet`
+- Truth anchor: `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.reindex_traceNorm`
 - Truth anchor: `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.result`
 - Dependency: [D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability](../Quantum/Entanglement/ConicalDesignConcurrenceComparability.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteDiamondDistance](../Quantum/Foundation/FiniteDiamondDistance.md)
