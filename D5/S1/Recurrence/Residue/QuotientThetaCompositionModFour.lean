@@ -6,6 +6,8 @@
    utility: none
    digest: Inverse agreement and quotient triangularity prove Hanna A378580 modulo four. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19022 -/
+
 import D5.S1.Recurrence.Parity.ThetaSelfCompositionModFour
 import Mathlib.RingTheory.PowerSeries.Inverse
 
@@ -229,7 +231,7 @@ private theorem reduced_solution :
     D5.S1.Recurrence.Parity.ThetaSelfCompositionModFour.mod_four_identity] at he
   exact he
 
-private theorem map_inverse {S : Type*} [CommRing S] (hom : R →+* S)
+theorem map_inverse {S : Type*} [CommRing S] (hom : R →+* S)
     (f : PowerSeries R) (hf : constantCoeff f = 1) :
     (invOfUnit f 1).map hom = invOfUnit (f.map hom) 1 := by
   have hz : constantCoeff (f.map hom) = 1 := by
@@ -268,13 +270,5 @@ theorem hanna_conjecture (n : ℕ) (hn : 0 < n) :
     have ha : a n % 4 = 0 := (ZMod.intCast_eq_intCast_iff' (a n) 0 4).mp hc
     simp [hs, ha]
 
-#print axioms inverse_agreement
-#print axioms quotient_triangular
-#print axioms a
-#print axioms generatingSeries
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms mod_four_identity
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Residue.QuotientThetaCompositionModFour

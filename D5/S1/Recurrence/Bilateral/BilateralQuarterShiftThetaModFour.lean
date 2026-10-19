@@ -6,6 +6,8 @@
    utility: none
    digest: Paired bilateral terms give an integral degree-contracting theta equation. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19022 -/
+
 import D5.S1.Recurrence.Parity.ThetaSelfCompositionModFour
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.Data.Int.Interval
@@ -346,10 +348,10 @@ private theorem paired_linear (A : PowerSeries R) (h16 : (16 : PowerSeries R) = 
   rw [pairedTerm, hp, hn, show m + 2 = (m + 1) + 1 by omega, pow_succ (-1)]
   ring
 
-private noncomputable def squareSupport : PowerSeries R :=
+noncomputable def squareSupport : PowerSeries R :=
   mk fun n => if n = 0 then 0 else if IsSquare n then 1 else 0
 
-private theorem square_approximation (N : ℕ) :
+theorem square_approximation (N : ℕ) :
     Agree (N + 1) (squareSupport : PowerSeries R)
       (∑ m ∈ Finset.range (N + 1), X ^ ((m + 1) ^ 2)) := by
   classical
@@ -543,12 +545,5 @@ theorem hanna_conjecture (n : ℕ) (hn : 1 ≤ n) :
     have ha : a n % 4 = 0 := (ZMod.intCast_eq_intCast_iff' (a n) 0 4).mp hc
     simp [hs, ha]
 
-#print axioms bilateralTerm_coeff_eq_zero
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms a_zero
-#print axioms cancellation_identity
-#print axioms mod_four_identity
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Bilateral.BilateralQuarterShiftThetaModFour
