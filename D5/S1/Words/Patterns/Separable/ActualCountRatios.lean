@@ -227,25 +227,25 @@ private theorem schroder_recurrence (n : ℕ) :
   have eq : (1 - x) * f - x * f ^ 2 - 1 = 0 := by
     dsimp [x, f]
     linear_combination series_equation
-  have deq : (1 - x - 2 * x * f) * PowerSeries.derivative ℝ f - f - f ^ 2 = 0 := by
-    have h := congrArg (PowerSeries.derivative ℝ) eq
+  have deq : (1 - x - 2 * x * f) * PowerSeries.derivative (R := ℝ) f - f - f ^ 2 = 0 := by
+    have h := congrArg (PowerSeries.derivative (R := ℝ)) eq
     dsimp [x] at h ⊢
     simp only [map_sub, Derivation.leibniz, PowerSeries.derivative_one,
       PowerSeries.derivative_X, PowerSeries.derivative_pow, map_zero,
       smul_eq_mul, Nat.cast_ofNat, sub_zero] at h
     linear_combination h
-  have differential : x * ((1 - 6 * x + x ^ 2) * PowerSeries.derivative ℝ f) +
+  have differential : x * ((1 - 6 * x + x ^ 2) * PowerSeries.derivative (R := ℝ) f) +
       f - 3 * (x * f) = 1 + x := by
     linear_combination
       x * (1 - x - 2 * x * f) * deq +
-        (1 + x + 2 * x * f + 4 * x ^ 2 * PowerSeries.derivative ℝ f) * eq
-  have expanded : x * PowerSeries.derivative ℝ f -
-      PowerSeries.C 6 * (x * (x * PowerSeries.derivative ℝ f)) +
-      x * (x * (x * PowerSeries.derivative ℝ f)) + f -
+        (1 + x + 2 * x * f + 4 * x ^ 2 * PowerSeries.derivative (R := ℝ) f) * eq
+  have expanded : x * PowerSeries.derivative (R := ℝ) f -
+      PowerSeries.C 6 * (x * (x * PowerSeries.derivative (R := ℝ) f)) +
+      x * (x * (x * PowerSeries.derivative (R := ℝ) f)) + f -
         PowerSeries.C 3 * (x * f) = 1 + x := by
     change _ - (6 : PowerSeries ℝ) * _ + _ + _ - (3 : PowerSeries ℝ) * _ = _
     linear_combination differential
-  have xd (k : ℕ) : PowerSeries.coeff k (PowerSeries.X * PowerSeries.derivative ℝ f) =
+  have xd (k : ℕ) : PowerSeries.coeff k (PowerSeries.X * PowerSeries.derivative (R := ℝ) f) =
       (k : ℝ) * PowerSeries.coeff k f := by
     cases k with
     | zero => simp

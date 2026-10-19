@@ -492,9 +492,9 @@ private theorem event_mass {K H k n} (tuple : Tuple K H k)
     actualMass n (tuple.Event n large) =
       (Nat.card (Avoider (n - tuple.size)) : ℝ) / Nat.card (Avoider n) := by
   let : Nonempty (Avoider n) := ⟨identityAvoider n⟩
-  change ((PMF.uniformOfFintype (Avoider n)).toOuterMeasure
+  change ((uniformPmf (Avoider n)).toOuterMeasure
     {π | tuple.Event n large π}).toReal = _
-  rw [PMF.toOuterMeasure_uniformOfFintype_apply]
+  rw [uniformPmf_toOuterMeasure_apply]
   simp only [ENNReal.toReal_div, ENNReal.toReal_natCast,
     ← Nat.card_eq_fintype_card]
   change (Nat.card {π : Avoider n // tuple.Event n large π} : ℝ) /
@@ -595,8 +595,8 @@ private theorem mass_count (n : ℕ) (event : Avoider n → Prop) :
     actualMass n event =
       (Nat.card {π : Avoider n // event π} : ℝ) / Nat.card (Avoider n) := by
   let : Nonempty (Avoider n) := ⟨identityAvoider n⟩
-  change ((PMF.uniformOfFintype (Avoider n)).toOuterMeasure {π | event π}).toReal = _
-  rw [PMF.toOuterMeasure_uniformOfFintype_apply]
+  change ((uniformPmf (Avoider n)).toOuterMeasure {π | event π}).toReal = _
+  rw [uniformPmf_toOuterMeasure_apply]
   simp only [ENNReal.toReal_div, ENNReal.toReal_natCast, Nat.card_eq_fintype_card]
   rfl
 
