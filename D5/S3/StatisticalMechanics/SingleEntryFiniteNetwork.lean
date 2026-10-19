@@ -423,7 +423,11 @@ private theorem joint_deriv (k : Rates I) (p : ℝ → Option (Finset I) → ℝ
 private theorem stationary_pair_moments (k : Rates I) (L : Option (Finset I) → ℝ)
     (hL : generator k *ᵥ L = 0) (i j : I) (hij : i ≠ j) :
     joint (fun _ => L) i j 0 = activeMass (fun _ => L) 0 *
-      (k.a i / (k.a i + k.b i)) * (k.a j / (k.a j + k.b j)) := by
+      (k.a i / (k.a i + k.b i)) * (k.a j / (k.a j + k.b j)) ∧
+    margin (fun _ => L) i 0 = activeMass (fun _ => L) 0 *
+      (k.a i / (k.a i + k.b i)) ∧
+    margin (fun _ => L) j 0 = activeMass (fun _ => L) 0 *
+      (k.a j / (k.a j + k.b j)) := by
   let r := activeMass (fun _ => L) 0
   let X := margin (fun _ => L) i 0
   let Y := margin (fun _ => L) j 0
@@ -467,9 +471,16 @@ private theorem stationary_pair_moments (k : Rates I) (L : Option (Finset I) →
     linear_combination (u*v)*hK + (k.a j*v)*hX + (k.a i*u)*hY
   have heq : K * u * v = r * k.a i * k.a j :=
     sub_eq_zero.mp ((mul_eq_zero.mp he).resolve_left (ne_of_gt (add_pos hu hv)))
-  change K = r * (k.a i / u) * (k.a j / v)
-  field_simp [ne_of_gt hu, ne_of_gt hv]
-  nlinarith [heq]
+  refine ⟨?_, ?_, ?_⟩
+  · change K = r * (k.a i / u) * (k.a j / v)
+    field_simp [ne_of_gt hu, ne_of_gt hv]
+    nlinarith [heq]
+  · change X = r * (k.a i / u)
+    field_simp [ne_of_gt hu]
+    nlinarith [hX]
+  · change Y = r * (k.a j / v)
+    field_simp [ne_of_gt hv]
+    nlinarith [hY]
 
 private theorem total_mass (k : Rates I) (p : ℝ → Option (Finset I) → ℝ)
     (hp : ForwardSolution k p) (t : ℝ) (ht : 0 ≤ t) :
@@ -653,7 +664,11 @@ theorem finite_network_strict_pair (k : Rates I) :
       ∃ L : Option (Finset I) → ℝ,
         (∀ x, Tendsto (fun u => p u x) atTop (nhds (L x))) ∧ generator k *ᵥ L = 0 ∧
         joint (fun _ => L) i j 0 = activeMass (fun _ => L) 0 *
-          (k.a i / (k.a i + k.b i)) * (k.a j / (k.a j + k.b j)) := by
+          (k.a i / (k.a i + k.b i)) * (k.a j / (k.a j + k.b j)) ∧
+        margin (fun _ => L) i 0 = activeMass (fun _ => L) 0 *
+          (k.a i / (k.a i + k.b i)) ∧
+        margin (fun _ => L) j 0 = activeMass (fun _ => L) 0 *
+          (k.a j / (k.a j + k.b j)) := by
   constructor
   · refine ⟨canonicalTrajectory k, canonical_forward k, ?_⟩
     intro u hu

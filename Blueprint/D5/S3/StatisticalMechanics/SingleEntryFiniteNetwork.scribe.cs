@@ -41,7 +41,7 @@ internal sealed class SingleEntryFiniteNetworkDocument : IScribeDocumentDefiniti
                 H("Every distinct site pair has strictly positive association"),
                 StatementSource.FromAuthor(Statement()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every finite site type, every positive rate tuple, every forward solution starting at R, every pair of distinct sites and every t>0, the active mass equals 1-p_R and the active mass, fiber width, association residual and net return theta p_R-eta p_empty are strictly positive. A probability-valued forward solution exists for the same rate tuple. The conclusion supplies coordinatewise convergence of that same trajectory to a stationary vector L of the full generator, the stationary pair identity K_ij(L)=r(L)(a_i/(a_i+b_i))(a_j/(a_j+b_j)), and the exact differential equation Delta_ij'=-(a_i+b_i+a_j+b_j)Delta_ij+(theta p_R-eta p_empty)K_ij on the nonnegative half-line. To obtain the strict input, conjugate the actual edge generator by the product of the independent square-root balance weights. Its negative becomes the Gram matrix of the actual edge incidences. The spectral decomposition of this same trajectory gives a decreasing return probability; its R diagonal is theta>0. Summing the true generator against the one-site and two-site indicators gives the moment equations. Scalar integrating factors then establish the occupied and vacant margins, joint occupancy and association signs. Arbitrary other sites are marginalized without adding a label. Distinct sites imply that the finite set has at least two elements. This statement establishes all pair residuals in arbitrary finite dimension; it does not identify the common slow eigenvalue or its coefficient, and it does not assert all incomparable-configuration minors."))), DescribeRole.Theorem))));
+                    "For every finite site type, every positive rate tuple, every forward solution starting at R, every pair of distinct sites and every t>0, the active mass equals 1-p_R and the active mass, fiber width, association residual and net return theta p_R-eta p_empty are strictly positive. A probability-valued forward solution exists for the same rate tuple. The conclusion supplies coordinatewise convergence of that same trajectory to a stationary vector L of the full generator, the stationary pair identity K_ij(L)=r(L)(a_i/(a_i+b_i))(a_j/(a_j+b_j)), both one-site identities X_i(L)=r(L)a_i/(a_i+b_i) and X_j(L)=r(L)a_j/(a_j+b_j), and the exact differential equation Delta_ij'=-(a_i+b_i+a_j+b_j)Delta_ij+(theta p_R-eta p_empty)K_ij on the nonnegative half-line. To obtain the strict input, conjugate the actual edge generator by the product of the independent square-root balance weights. Its negative becomes the Gram matrix of the actual edge incidences. The spectral decomposition of this same trajectory gives a decreasing return probability; its R diagonal is theta>0. Summing the true generator against the one-site and two-site indicators gives the moment equations. Scalar integrating factors then establish the occupied and vacant margins, joint occupancy and association signs. Arbitrary other sites are marginalized without adding a label. Distinct sites imply that the finite set has at least two elements. This statement establishes all pair residuals in arbitrary finite dimension; it does not identify the common slow eigenvalue or its coefficient, and it does not assert all incomparable-configuration minors."))), DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string declaration, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("single-entry-finite-" + declaration.ToLowerInvariant()),
@@ -84,11 +84,15 @@ internal sealed class SingleEntryFiniteNetworkDocument : IScribeDocumentDefiniti
         Formula exists=Ex("q",curve,And(Call("ForwardSolution",k,q),All("u",real,Imp(Nonneg(u),And(
             All("x",states,Nonneg(Call("q",u,x))),Rel(Add(Call("q",u,F.Id("none")),Call("activeMass",q,u)),FormulaRelationOperator.Equal,D(1)))))));
         Formula L=F.Id("L");
-        Formula limit=Ex("L",Seq(states,To,real),And(All("x",states,Call("Tendsto",Call("coordinateCurve",p,x),F.Id("atTop"),Call("nhds",Call("L",x)))),
-            And(Rel(Call("mulVec",Call("generator",k),L),FormulaRelationOperator.Equal,D(0)),
-                Rel(Call("joint",Call("constant",L),i,j,D(0)),FormulaRelationOperator.Equal,
-                    Mul(Mul(Call("activeMass",Call("constant",L),D(0)),new Formula.Fraction(Call("a",k,i),Add(Call("a",k,i),Call("b",k,i)))),
-                        new Formula.Fraction(Call("a",k,j),Add(Call("a",k,j),Call("b",k,j))))))));
+        Formula activeL=Call("activeMass",Call("constant",L),D(0));
+        Formula qi=new Formula.Fraction(Call("a",k,i),Add(Call("a",k,i),Call("b",k,i)));
+        Formula qj=new Formula.Fraction(Call("a",k,j),Add(Call("a",k,j),Call("b",k,j)));
+        Formula limit=Ex("L",Seq(states,To,real),Conj(
+            All("x",states,Call("Tendsto",Call("coordinateCurve",p,x),F.Id("atTop"),Call("nhds",Call("L",x)))),
+            Rel(Call("mulVec",Call("generator",k),L),FormulaRelationOperator.Equal,D(0)),
+            Rel(Call("joint",Call("constant",L),i,j,D(0)),FormulaRelationOperator.Equal,Mul(Mul(activeL,qi),qj)),
+            Rel(Call("margin",Call("constant",L),i,D(0)),FormulaRelationOperator.Equal,Mul(activeL,qi)),
+            Rel(Call("margin",Call("constant",L),j,D(0)),FormulaRelationOperator.Equal,Mul(activeL,qj))));
         Formula result=Conj(Rel(Call("activeMass",p,t),FormulaRelationOperator.Equal,Sub(D(1),Call("p",t,F.Id("none")))),
             Pos(Call("activeMass",p,t)),Pos(Call("fiberWidth",p,i,j,t)),Pos(Call("association",p,i,j,t)),Pos(flux),ode,limit);
         return Disp(All("I",F.Id("FiniteTypes"),All("k",Call("Rates",I),And(exists,All("p",curve,Imp(Call("ForwardSolution",k,p),

@@ -239,7 +239,7 @@ theorem finite_network_equilibrium_moments {I : Type*} [Fintype I] [DecidableEq 
     exact tendsto_finsetSum Finset.univ
       (fun x _ => (hlim x).const_mul (occupancy i x * occupancy j x))
   rw [hactive] at hr
-  rw [hpair, hactive] at hK
+  rw [hpair.1, hactive] at hK
   exact ⟨hr, hK⟩
 
 #print axioms finite_network_equilibrium_moments

@@ -54,7 +54,11 @@ abbrev arena : Arena where
       ∃ L : Option (Finset I) → ℝ,
         (∀ x, Tendsto (fun u => p u x) atTop (nhds (L x))) ∧ generator k *ᵥ L = 0 ∧
         joint (fun _ => L) i j 0 = activeMass (fun _ => L) 0 *
-          (k.a i / (k.a i + k.b i)) * (k.a j / (k.a j + k.b j))
+          (k.a i / (k.a i + k.b i)) * (k.a j / (k.a j + k.b j)) ∧
+        margin (fun _ => L) i 0 = activeMass (fun _ => L) 0 *
+          (k.a i / (k.a i + k.b i)) ∧
+        margin (fun _ => L) j 0 = activeMass (fun _ => L) 0 *
+          (k.a j / (k.a j + k.b j))
 
 private def unitRates : Rates (ULift.{u} (Fin 2)) where
   a := fun _ => 1
