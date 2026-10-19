@@ -6197,3 +6197,213 @@ as do fixed-window all-order positivity and the original signed
 Robin upper. No original prime/Robin operator identity, actual
 negative zero, numerical start or RH proof is supplied. Full RH
 and strict Robin for every integer $n>5040$ remain unproved.
+
+
+## A larger positive range from the exact first prefactor
+
+On the same fixed small physical window and real polynomial-sign
+class as (W118), one fixed $c_{\rm pref}>0$ and one common high
+start admit degrees up to
+$c_{\rm pref}e^{2A}\sqrt{\log A/A}$, with lower margin
+$\log A/(128A)$ in the original Gaussian Hardy metric. The proof
+keeps the actual first correction's sign after an exact positive
+normalization of the complete kernel.
+
+Full RH and strict Robin for every integer $n>5040$ remain unproved. Reuse actual W88, W110--W116, W118 and W126. This is not an all-order positivity claim for a first-mode reference. The actual full theta kernel and full reflected exterior remain; only an exact positive diagonal normalization changes inside the proof.
+
+### Exact positive normalization of the COMPLETE source
+
+Keep $E=e^{-2A}$, $u=\operatorname{arctanh}z$, $v=\operatorname{arctanh}w$, the same fixed support $[-h,h]$, $c_*=3/(2\pi)$, original $\mathcal K_A^{\rm g}$ and original Gaussian Hardy metric $Q_H$. Write
+$$
+r_E(z)=c_*E e^{-2u},\quad h_E(z)=(1-r_E(z))^{-1},\qquad
+\mathcal K_A^1(z,w)=h_E(z)\mathcal K_A^g(z,w)h_E(w).
+$$
+On the fixed complex Hardy bidisc, h_E is holomorphic and uniformly bounded at one sufficiently high start. On the real support it is positive. This is a congruence of the COMPLETE actual kernel; Phi1 is not substituted for its source. In physical coordinates it corresponds to D_A^1(u)=D_A^g(u)/(1-c_*e^{-2(A+u)}).
+
+The real degree-m sign contract epsilon p nu>=0 is unchanged for every positive weight used below, including root atoms. If nu_g is the original physical transport and nu_1=(1-r_E)nu_g, then
+$$
+Q_{\mathcal K_A^g}(\nu_g)=Q_{\mathcal K_A^1}(\nu_1).
+\tag{W127}
+$$
+
+### An actual weighted logarithmic payment
+
+For $\sigma=(1-z)\nu$, put $b_n=\int z^n\,d\sigma(z)$, and
+$$
+\mathcal R(\nu)=\sum_{n\ge0}(n+1)b_n^2,
+\quad F(w)=\sum_{n\ge0}(n+1)b_n w^n.
+$$
+The positive factor1-z preserves the same separator degree. The owned moment-radius allowance gives
+$$
+\sum q^{2n}b_n^2\le9\Lambda^m Q_H(\sigma)\le9\Lambda^m\mathcal R(\nu).
+$$
+Choose an integer $J$ proportional to $m+1$ with sufficiently large fixed proportionality constant. Split $\sum(n+1)|b_n|$ at $J$. Cauchy--Schwarz against weights $n+1$ bounds the first part by $CJ\sqrt{\mathcal R(\nu)}$. Applying it with weights $q^n$ bounds the tail by $C\Lambda^{m/2}(J+1)q^{-J}\sqrt{\mathcal R(\nu)}$, which has the same allowance. Thus
+$$
+\sup_{\mathbb D}|F|\le C(m+1)\sqrt{\mathcal R(\nu)},
+\qquad \int_{\mathbb D}|F|^2\frac{d\mathcal A}{\pi}=\mathcal R(\nu).
+\tag{W128}
+$$
+The area normalization is explicit. For nonzero $\sigma$, the density $|F|^2/\mathcal R(\nu)$ is a probability density bounded by $C(m+1)^2$. The area of $|1+w|<e^{-s}$ in the disc is at most $\pi e^{-2s}$. The logarithmic layer-cake allowance is therefore
+$$
+\int_{\mathbb D}\log|1+w|\frac{|F|^2}{\mathcal R}\frac{d\mathcal A}{\pi}
+\ge-\log(m+1)-C.
+$$
+Since $\log|1-w|\le\log2$,
+$$
+\int_{\mathbb D}\Re\operatorname{arctanh}(w)|F(w)|^2\frac{d\mathcal A}{\pi}
+\ge-[\tfrac12\log(m+1)+C]\mathcal R(\nu).
+\tag{W129}
+$$
+This uses the standard Bergman moment identity and elementary area bound inside the actual coefficient payment; it is not delivered as a separate generic theorem.
+
+The identity needed for the source coefficient is exact:
+$$
+\int_{\mathbb D}\Re\operatorname{arctanh}(w)|F(w)|^2\frac{d\mathcal A}{\pi}
+=\sum_{n\ge0}(n+1)b_n\int z^n\operatorname{arctanh}(z)\,d\sigma(z).
+\tag{W130}
+$$
+Integrating $w^j$ against $|F|^2\,d\mathcal A/\pi$ gives $\sum(n+1)b_nb_{n+j}$. Sum over positive odd $j$ with coefficient $1/j$. Actual compact support strictly inside $(-1,1)$ gives absolute moment convergence and justifies the identity and logarithmic integral. With $x=A+(u+v)/2$ and
+$$
+R(z,w)=\frac{(1-z)(1-w)}{(1-zw)^2},
+$$
+W129--W130 imply the ACTUAL joint lower bound
+$$
+Q_{xR/A}(\nu)\ge
+[1-\tfrac{\log(m+1)}{2A}-C/A]\mathcal R(\nu).
+\tag{W131}
+$$
+No independently selected profile is used. Degenerate zero measures contribute zero; strictness is only claimed for nonzero final measures.
+
+### Identify the whole first coefficient after congruence
+
+Let
+$$
+S(u,v)=\operatorname{sech}(u-v),\qquad
+h_1(c)=\int_0^\infty(c+\cosh t)^{-2}dt.
+$$
+From the SAME W88 formulas, the normalized expansion has first correction
+$$
+\mathcal K_A^1=H+\widetilde C_{\rm core}/A+E\mathcal D_{1,A}
+ +\sum_{2\le k<N}E^k\mathcal D_{k,A}+\widetilde R_{N,A},
+$$
+where the EXACT order-one coefficient is
+$$
+\mathcal D_{1,A}(z,w)=
+\frac{\cosh u\cosh v\,e^{-(u+v)}}{4\pi A}
+\left[(7x+1)\operatorname{sech}^2(u-v)+h_1(\cosh(u-v))\right].
+\tag{W132}
+$$
+Detailed order check: the direct tau-amplitude has derivative (7x+1)/2 at tau=1; Q/Y²=(Q cosh²(u-v))^-1 supplies E exp[-(u+v)]/(2pi). Its order-one prefactor term is -(r_a+r_b)xS/A. Expanding h_E(z)h_E(w) cancels exactly this piece. The reflected leading prefactor is (1-r_a)(1-r_b), so its order-one prefactor cancels as well, INCLUDING the first-core T/A part. Its next Stieltjes term is -h_1/(2A Q); subtracting the reflected integral gives the positive sign in W132. The special -2c_*exp[-(a+b)]s prefactor starts only at order E². This is exact coefficient algebra from the full paid expansion, not reference PSD.
+
+The direct part of W132 is
+$$
+\frac7{4\pi}Q_{xR/A}(\nu)+\frac1{4\pi A}\mathcal R(\nu).
+$$
+Thus it is nonnegative whenever A>=0.5log(m+1)+C, by W131. Do not assume any sign for the h_1 stationary form. The owned W89 stationary comparison and W112 with r=1 give
+$$
+\left|Q_{\cosh u\cosh v e^{-(u+v)}h_1(\cosh(u-v))}(\nu)\right|
+\le C Q_H(e^{-u}\nu)\le C(m+1)Q_H(\nu).
+$$
+Therefore the WHOLE first correction satisfies
+$$
+E Q_{\mathcal D_{1,A}}(\nu)\ge-\frac{CE(m+1)}A Q_H(\nu)
+\quad\text{if }A\ge\tfrac12\log(m+1)+C.
+\tag{W133}
+$$
+The O(Em) loss has become O(Em/A) by keeping its actual direct sign and the exact prefactor cancellation; no sign of the full reflected source is postulated.
+
+### Higher coefficients and complete all-order remainder survive
+
+Put barB_0=H+tildeC_core/A and barB_j=cosh u cosh v B_{j,A} for j>=1, as owned in W115--W116. On the fixed complex bidisc their direct W88 coefficients have scalar sup bound C^(j+1)j!, uniform A>=A0. Also
+$$
+h_E(z)h_E(w)=\sum_{p,q\ge0}(c_*E)^{p+q}f_{2p}(z)f_{2q}(w),
+\qquad f_r=e^{-r\operatorname{arctanh}z}.
+$$
+Collect equal E orders; coefficients D_k are independent of N. Their forms obey
+$$
+|Q_{\mathcal D_{k,A}}(\nu)|\le[C(m+k+2)]^k
+ [1+\log(m+k+2)/A]Q_H(\nu)\quad(k\ge2).
+\tag{W134}
+$$
+Here are the joint/bilinear and remainder payments, so multiplication of an asymptotic series is not silently assumed.
+
+- For each original barB_j, use W116, or the owned absolute logarithmic first-core allowance for j=0. A real symmetric form bounded by D Q_H on the same separator cone has bilinear bound3D sqrt(Q_H(sigma)Q_H(tau)) on any sigma=f nu,tau=g nu with f,g>0: sigma+t tau stays in that cone for t>0, and polarization of Q(sigma+t tau), choosing t=||sigma||_H/||tau||_H, yields the constant3. Zero norm cases are trivial by compact moment uniqueness. This does not apply a full-space operator bound or combine independently attainable sequences.
+- W112 pays ||f_{2p}nu||_H<=[C(m+p+1)]^p||nu||_H for p>=1; p=0 is identity. Each convolution term has p+q+j=k, so the total polynomial degree is k. The O((k+1)²) cases and c_* powers are absorbed in C^k. Optional logarithms still carry1/A and preserve the same final bound.
+- On the fixed complex bidisc, geometric tails of h_E(z)h_E(w) have bound C^(i+1)E^i. Multiplying the N-term original expansion and truncating the product at order N leaves at most E^N C^N sum_{j<N}j! <=C'^N N!E^N. Multiplying the owned R_N by the uniformly bounded h_E factors preserves its complete source bound.
+
+Consequently for EVERY N>=3 at the SAME high start,
+$$
+\sup|\widetilde R_{N,A}|\le C^NN!e^{-2AN}+Ce^{-c e^{2A}}.
+\tag{W135}
+$$
+Both coefficient kernels and remainder concern the actual full source. The reflected exterior is paid by unchanged W114, not dropped or evenized. The existing Cauchy/moment allowance on this remainder is C Lambda^m times the displayed sup, in the SAME Hardy metric as W133--W134.
+
+### Spend one common start at the square-root scale
+
+Let $L=\log A$ and let $C\ge1$ dominate all fixed bounds. Choose fixed $c_{\rm pref}>0$ sufficiently small, for example $c_{\rm pref}\le1/(64C)$ after increasing $C$ as necessary. Put
+$$
+M_A=c_{\rm pref}e^{2A}\sqrt{L/A},\qquad
+N=\left\lceil D\frac{A+m+1}L\right\rceil,
+\quad D\ge6+3\log\Lambda.
+$$
+For all $0\le m\le\lfloor M_A\rfloor$, one common high $A_*$ ensures
+$$
+N\ge3,\quad m+N+2\le2M_A,\quad
+\log(CN)\le2A-L/3.
+\tag{W136}
+$$
+Indeed the largest N is O(DM_A/L+DA/L), and log(CN)<=2A-L/2-(log L)/2+O(1). Also (m+N+2)/M_A<=1+D/L+o(1). These statements are uniform over the admitted degrees.
+
+Since m+1<=2M_A, the owned sharp first core gives
+$$
+1-\frac{\log(m+1)}{2A}-\frac CA
+\ge\frac{L-\log L-2\log(2c_{\rm pref})-4C}{4A}
+\ge\frac{L}{8A}.
+\tag{W137}
+$$
+At the same start, $A-\tfrac12\log(m+1)-C\ge0$, so the direct first coefficient is nonnegative by W131. W133's remaining reflected allowance is at most L/(32A), uniformly in m, because E(m+1)<=2c_pref sqrt(L/A).
+
+For k>=2 set theta=C E(m+N+2)<=2C c_pref sqrt(L/A). The logarithmic factor in W134 is at most4. At one common high start theta<=1/2; hence
+$$
+\sum_{2\le k<N}E^k |Q_{\mathcal D_{k,A}}(\nu)|/Q_H(\nu)
+\le\frac{4\theta^2}{1-\theta}
+\le32C^2c_{\rm pref}^2 L/A\le L/(32A).
+\tag{W138}
+$$
+The fixed c_pref choice above is sufficient, with slack.
+
+For the factorial remainder, W136 and log(N!)<=N log N give
+$$
+\log(\Lambda^m C^NN!e^{-2AN})
+\le m\log\Lambda-\tfrac L3 N
+\le-2(A+m).
+$$
+Since m/e^{2A}<=c_pref sqrt(L/A) tends to0, the complete-source error obeys Lambda^m exp(-c exp2A)<=exp(-c exp2A/2). With all fixed factors restored, the sum of the two remainders is at most L/(32A) at the same start.
+
+Combining W137, W133, W138 and W135 yields
+$$
+Q_{\mathcal K_A^1}(\nu)\ge\frac{\log A}{32A}Q_H(\nu)>0
+\quad(A\ge A_*,\ 0\le m\le\lfloor M_A\rfloor,\ \nu\ne0).
+\tag{W139}
+$$
+There is one fixed c_pref and start, not a varying-delta substitution.
+
+### Return to the ORIGINAL Gaussian Hardy metric and actual sample class
+
+For original nu_g, nu_1=(1-r_E)nu_g preserves the same separator. The norm identity and W112 with r=2 give
+$$
+\|\nu_1-\nu_g\|_H\le CE(m+1)\|\nu_g\|_H=o(1)\|\nu_g\|_H
+$$
+uniformly in the admitted range. Increase the SAME fixed start until ||nu_1||_H>=||nu_g||_H/2. By exact W127 and W139,
+$$
+Q_{\mathcal K_A^g}(\nu_g)\ge\frac{\log A}{128A}Q_H(\nu_g)>0
+\quad\left(m\le\left\lfloor c_{\rm pref}e^{2A}\sqrt{\log A/A}\right\rfloor,\ \nu_g\ne0\right).
+\tag{W140}
+$$
+Thus both the source and final metric are unchanged. Repeated roots and atoms at roots, arbitrary density and confluence remain in scope. For arbitrary complex coefficients on at most floor M_A+1 distinct sites in the SAME fixed small physical window, apply W140 separately to the real/imaginary transported measures, each with a separator of degree at most one fewer than its site count. Positive diagonal factors and monotone coordinate changes preserve signs and sites. Nonzero moment norm uses the owned compact moment uniqueness.
+
+This is a genuine range enlargement over W118: M_A/[c_deg e2A logA/A] tends to infinity like a fixed constant sqrt(A/logA). The margin's constant is smaller, explicitly stated. It uses exact first-coefficient signs plus the new weighted logarithmic payment, not an improvement of numerical constants in an old absolute allowance.
+
+Conditionally on RH failing, on this SAME fixed small window, beyond all relevant starts combine W140's admitted positive count with W126's upper ceil12 exp2A log(A+1). The minimum local negative-witness site count lies above the new positive count and below that conditional upper; the upper bracket bound divided by the lower is O(sqrt(A logA)). This compares bounds only, gives no actual minimum/optimum or contradiction, and does not establish the smaller sufficient count's positivity.
+
+No larger-rate multiwindow coupling, full sample schedule positivity, all-order fixed-window PSD, original signed prime/Robin upper or operator identification follows. No actual negative seed/sample/zero, numerical start, finite RH test or Lean/CI/merge certification. Full RH and strict Robin for every integer $n>5040$ remain unproved. Classical Bergman/area/moment tools are reused; this is a repository-derived paper application with no literature-priority claim.
