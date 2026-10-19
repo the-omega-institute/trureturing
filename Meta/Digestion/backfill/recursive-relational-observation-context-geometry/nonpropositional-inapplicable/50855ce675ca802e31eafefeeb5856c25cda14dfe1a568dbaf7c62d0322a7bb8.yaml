@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:50855ce675ca802e31eafefeeb5856c25cda14dfe1a568dbaf7c62d0322a7bb8
+  normalized_sha256: sha256:50855ce675ca802e31eafefeeb5856c25cda14dfe1a568dbaf7c62d0322a7bb8
+cas_ref: sha256:50855ce675ca802e31eafefeeb5856c25cda14dfe1a568dbaf7c62d0322a7bb8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md §3.2 上游闭合结算。对所有 z : Circle、q : ℕ，假设 3≤q、Odd q、orderOf z=q，完整编译验证：range(z^n)={w|w^q=1}；弦长序列以 q 为周期；某幂达到 2*cos(pi/(2*q))；所有幂弦长不超过该值；atTop limsup 等于该值；sqrt(3)≤该值。直接供应声明：IsPrimitiveRoot.orderOf、orderOf_injective、Complex.isPrimitiveRoot_exp、IsPrimitiveRoot.eq_pow_of_pow_eq_one、Complex.exp_nat_mul、Complex.norm_exp_I_mul_ofReal_sub_one、Real.monotoneOn_sin、Real.sin_pi_sub、Real.sin_pi_div_two_sub、mapClusterPt_self_zpow_atTop_pow、MapClusterPt.continuousAt_comp、MapClusterPt.le_limsup、Filter.limsup_le_of_le、Real.cos_le_cos_of_nonneg_of_le_pi、Real.cos_pi_div_six，加定义展开、幂及域/整数规范化；不新增归纳或独立关系。Mathlib 修订 56a005855ea17e0b0958f73ec801ae140b0a1679。已全量扫描 D5（含 private）：limsup、IsPrimitiveRoot、chord、finite_period、phaseF；并核对 CriticalDampedPhaseLimit、PeritoUnitCircleSum、TorusOrbitEquidistribution、RepresentativeOrbitCoordinates，无可用冻结 GID 承担本完整断言。编译探针 ZKOddChordProbe.odd_limsup 的公理仅 propext、Classical.choice、Quot.sound；零新增 D5 交付。'
+    previous_atom_id: 7152fa09af998618ab81c0862891a095f3f77b90d364efcb3d69a0abf8b71777
+    next_atom_id: 81f764eaf999f55b0d6c4ff32a9f4131466a7fd18226d5887287d3f1cf04d4fd

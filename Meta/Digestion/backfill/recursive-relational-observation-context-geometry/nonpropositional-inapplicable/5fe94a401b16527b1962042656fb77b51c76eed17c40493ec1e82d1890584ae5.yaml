@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5fe94a401b16527b1962042656fb77b51c76eed17c40493ec1e82d1890584ae5
+  normalized_sha256: sha256:5fe94a401b16527b1962042656fb77b51c76eed17c40493ec1e82d1890584ae5
+cas_ref: sha256:5fe94a401b16527b1962042656fb77b51c76eed17c40493ec1e82d1890584ae5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: rho=1/2、q=11、j=3或4或5、m=1 时，角度 pi*j/11 >= 3*pi/11 > pi/4 且 <= pi/2，因此实际相位项 > 3/sqrt(2) > 2。Complex.exp_nat_mul、Complex.norm_exp_I_mul_ofReal_sub_one、Real.strictMonoOn_sin、Real.sin_pi_div_four、Real.sq_sqrt、Real.sqrt_pos 直接供应弦长与严格单调性。上述命题由钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 经实例化、投影和规范化闭合。仓内 D5 全量含 private 声明检索无承担此完整断言的可用冻结 GID；按 CLAUDE.md §3.2 的上游闭合结算规则记账，不新增 Lean 包装。
+    previous_atom_id: d789582c1a35ba0c39395cbdf6c92eaf36abec0e6a5fb3923fc980a57e7cb96d
+    next_atom_id: 1e56a08a6c914bc489baa5e7bc309f7443dd7317274ff470053f4cf66e18b346
