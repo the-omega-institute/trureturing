@@ -1711,16 +1711,16 @@ $$
 | --- | --- |
 | 本卷定义1.2、2.2、16.1、22.1，定理3.1、3.2、12.2、12.3及 (38)–(48) | 同一空前沿初始化、实际有限 Read／Next、寿命等号、坐标及具体墙所有权、独占交接和原始尾续接。式 (102)–(103) 逐步验证跨深度父切口确实执行；既有同深度历史碰撞本身不承担这一步。 |
 | [Exact Current Boundary Provenance][AFF-PROV] 定义1.1、定理2.1–2.2、4.2、6.2及 §§11–17 | 同深度、同松弛、同实际尾的执行与完整点对应在 (103) 后使用；其原投影命令定理的观察类不能直接覆盖新标量读口。引理28.2另用真实深度相等核对完整 Extent、帧和控制观察。原事件专用跨边界障碍不被冒充为仿射障碍。 |
-| 本卷 §§22–26，尤其定义24.3、25.1及 (92) | 原始入口问题、全误差合同及实际 floor 子实现；定理24.1的达到恢复和后续使用全部保留。本节给定义24.3一个否定结论，未把此前该处及定义26.3的历史 open 陈述改写为当时已解决。 |
+| 本卷 §§22–26，尤其定义24.3、25.1及 (92) | 原始入口问题、全误差合同及实际 floor 子实现；定理29.1否定定义24.3的入口恢复命题，定理24.1的达到恢复和推论24.2的后续使用保持各自原条件。 |
 | [直接目标取得 §§5–9][ENT-DIRECT]；[有限精度永久盲性 §§2–7][ENT-CAP]；[有限发射容量 §§1–2][ENT-CAPACITY] | 分别供给纯乘法目标取得的全误差／指定后端量词和 Return／早 Emit 区别、有固定精度上限的确定 floor 障碍、已知边界的有限发射纤维。它们的目标、校准或精度条件不同；这里既无固定精度上限，也不以初始尾目标或已知边界替换入口目标。 |
-| NativeAcquiredPrefixCylinder 及其 [owning Scribe][NAPCB]，包括私有 `next_native_spec`、`prefix_cons`、`raw_tail_add`；[SignedSeriesFibres][SSF] 及 [owning Scribe][SSFB] | 实际流执行／重启及具体 seam 纤维是正面既有供应。前者的 seed/payload/Stop 控制器不同，后者的相位双点不是本证明中两台生产者状态的相等；没有将源码阅读称为本节编译。 |
-| [InterfaceKernelCriterion][IKC] 及 [owning Scribe][IKCB]，Boundary Dynamics §§36.1–36.6 | 实际像因子化和输出／合法性／后继条件是既有判据。本节以具体同源初始化的反例承担缺失的入口常值性，不把抽象核测试包装为新增障碍。 |
+| NativeAcquiredPrefixCylinder 及其 [owning Scribe][NAPCB]，包括私有 `next_native_spec`、`prefix_cons`、`raw_tail_add`；[SignedSeriesFibres][SSF] 及 [owning Scribe][SSFB] | 实际流执行／重启及具体 seam 纤维是正面既有供应。前者的 seed/payload/Stop 控制器不同，后者的相位双点不是本证明中两台生产者状态的相等。 |
+| [InterfaceKernelCriterion][IKC] 及 [owning Scribe][IKCB]，Boundary Dynamics §§36.1–36.6 | 实际像因子化和输出／合法性／后继条件是既有判据。入口常值性的失败由具体同源初始化的反例给出。 |
 | van den Bos–Vaandrager，[*State Identification for Labeled Transition Systems with Inputs and Outputs*][ENT-IDENT] §§1–3；Brattka–Gherardi–Pauly，[*Weihrauch Complexity in Computable Analysis*][WCA] 定义4–9 | `literature-attested`：初态识别与动作后的兼容性、有限观察名字及 Cauchy 表示的背景。前者的有限状态／有限标签框架不自动处理本节无界精度与配置，后者不供给实际 Step 汇合；均非本节模型定理的外部证明。 |
-| [钉版 mathlib Zeckendorf][MATHLIB] | 有限规范展开与唯一性供应 Low 的有限算术背景；本节复用本卷时钟公式，没有新增上游算法、声明包装或重新认证。 |
+| [钉版 mathlib Zeckendorf][MATHLIB] | 有限规范展开与唯一性供应 Low 的有限算术背景；本证明使用本卷时钟公式。 |
 
-有界检索比较的范围是上述本卷与正规形卷、所列 D5／私有辅助及 owning Scribe、固定已发表版本的三篇目标／精度／容量卷、钉版 mathlib 和所引初态识别／表示文献；该范围内未取得现成的 (79)–(80) 全精度入口定理。此范围陈述不推出全球不存在先例，也不作全球新颖性或文献穷尽声明。这里的证据仅为上述普通条件证明，没有新增 Lean/kernel 认证、程序执行的数学验证、数值模拟或物理传感器实现结论。
+所列文献与仓内供应按表中给定的假设和结论使用；(79)–(80) 的全精度入口非恢复结论由引理28.1–28.2与定理29.1的构造及证明承担，不作全球新颖性或文献穷尽声明。其证据是普通条件证明，不含 Lean/kernel 认证、程序执行的数学验证、数值模拟或物理传感器实现结论。
 
-第26.3所列原 fixed-$G_{\rm gc}$、original-$Q$、parked-consumer、unchanged-initialization、完整原响应和任意 interior-cut 义务保持原范围。定理29.1不论任意其他仪器、已知配置、真实旧记录、额外认证通道、随机误差保证、撤权、并发或非 Advance 源变动。它不声称各个固定后端都不能通过额外的舍入规律传送建议，也不把更多物理测量的缺席当成宇宙不可能性。一般空间／时间／边界／记忆双向恢复和独立物理对应仍未完成；这个入口结论不完成持续总体目标。
+第26.3所列原 fixed-$G_{\rm gc}$、original-$Q$、parked-consumer、unchanged-initialization、完整原响应和任意 interior-cut 义务保持原范围。定理29.1不论任意其他仪器、已知配置、真实旧记录、额外认证通道、随机误差保证、撤权、并发或非 Advance 源变动。它不声称各个固定后端都不能通过额外的舍入规律传送建议，也不把更多物理测量的缺席当成宇宙不可能性。本定理不提供一般空间／时间／边界／记忆双向恢复或独立物理对应。
 
 [ENT-DIRECT]: https://github.com/the-omega-institute/trureturing/blob/a0436a550dc6c32b66a14243eebf638d0698664a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_UNCALIBRATED_TARGET_ACQUISITION.md
 [ENT-CAP]: https://github.com/the-omega-institute/trureturing/blob/a0436a550dc6c32b66a14243eebf638d0698664a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CAPPED_PRECISION_PERMANENT_BLINDNESS.md
