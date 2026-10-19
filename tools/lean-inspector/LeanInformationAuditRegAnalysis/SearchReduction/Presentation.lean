@@ -217,9 +217,9 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
   let built ← IO.getNumHeartbeats
   let .ok _atoms := normalizedAtoms env target
     | return (.incomplete .execution, none, "search.presentation_target_normalization")
-  let .ok matches := normalizedLookup env target entries.reverse
+  let .ok candidates := normalizedLookup env target entries.reverse
     | return (.incomplete .execution, none, "search.presentation_query_normalization")
-  let hits := matches
+  let hits := candidates
   let queried ← IO.getNumHeartbeats
   let mut checked := 0
   let mut conversionCost := 0

@@ -5,9 +5,10 @@ The kernel verifies conversion terms separately from these retrieval laws. -/
 namespace LeanInformationAudit.Tests.SearchReduction.SingleSourceModel
 open Lean LeanInformationAudit.SearchReduction
 
-theorem lookup_complete (target : List Name) (entries : List (Name × List Name)) (b : Name × List Name) :
+theorem lookup_complete (target : List Name) (entries : List (Name × List Name))
+    (b : Name × List Name) :
     b ∈ presentationLookup target entries ↔ b ∈ entries ∧ ∀ a ∈ target, a ∈ b.2 := by
-  simp [presentationLookup, supportIncluded, List.all_eq_true, List.contains_iff]
+  simp [presentationLookup, supportIncluded, List.all_eq_true]
 
 theorem index_extension (target atoms : List Name) (name : Name)
     (entries : List (Name × List Name)) (h : supportIncluded target atoms = false) :
@@ -55,7 +56,14 @@ theorem holds_iff_atoms (v : Name → Prop) (s : Statement) :
   induction s with
   | neutral => simp [holds, atoms]
   | atom n => simp [holds, atoms]
-  | pack p q hp hq => simp [holds, atoms, hp, hq, forall_and]
+  | pack p q hp hq =>
+    simp only [holds, atoms, hp, hq, Finset.mem_union]
+    constructor
+    · rintro ⟨left, right⟩ a (ha | ha)
+      · exact left a ha
+      · exact right a ha
+    · intro h
+      exact ⟨fun a ha => h a (Or.inl ha), fun a ha => h a (Or.inr ha)⟩
 
 theorem subset_sound (v : Name → Prop) (source target : Statement)
     (included : atoms target ⊆ atoms source) : holds v source → holds v target := by
@@ -67,7 +75,8 @@ theorem presentation_sound (v : Name → Prop) (source target : Statement)
     holds v source → holds v target := by
   intro h
   exact (normalize_sound v target).mp
-    (subset_sound v (normalize source) (normalize target) included ((normalize_sound v source).mpr h))
+    (subset_sound v (normalize source) (normalize target) included
+      ((normalize_sound v source).mpr h))
 
 /-- Two distinct baseline statements are never silently joined into one source. -/
 theorem projection_and_pack :
@@ -108,12 +117,23 @@ theorem guard_pack_split {o p c b : Prop} : c → Excluded o p c b :=
 theorem guard_arithmetic_alias {o p c b : Prop} : b → Excluded o p c b :=
   fun h => Or.inr (Or.inr (Or.inr h))
 
-theorem single_premise_arithmetic_certificate (x n : Nat) (h : x = n+n+n) :
-    x = 3*n ∧ 0≤n := by omega
+theorem single_premise_arithmetic_certificate (x n : Nat) (h : x = n + n + n) :
+    x = 3 * n ∧ 0 ≤ n := by omega
 
 theorem syntax_nondegenerate :
     presentationLookup [`p] [(`source, [`p, `q])] ≠ [] ∧
     presentationLookup [`r] [(`source, [`p, `q])] = [] := by decide
+
+run_meta do
+  for name in #[``lookup_complete, ``normalized_lookup_complete, ``index_extension,
+      ``normalize_sound, ``view_sound, ``holds_iff_atoms, ``subset_sound,
+      ``presentation_sound, ``projection_and_pack, ``key_meet_hom,
+      ``filter_not_constant, ``projection_requires_inclusion,
+      ``E_old_subset_E_new, ``P_subset_E, ``guard_pack_split, ``guard_arithmetic_alias,
+      ``single_premise_arithmetic_certificate, ``syntax_nondegenerate] do
+    let axioms ← Lean.collectAxioms name
+    unless standardAxioms axioms do
+      throwError "single-source model has nonstandard axioms: {name}: {axioms}"
 
 #print axioms normalize_sound
 #print axioms view_sound

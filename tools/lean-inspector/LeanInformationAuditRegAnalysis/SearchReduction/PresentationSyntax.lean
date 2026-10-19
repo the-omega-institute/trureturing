@@ -34,6 +34,10 @@ private partial def aliasBody (e : Expr) : Bool :=
   | .mdata _ b => aliasBody b
   | _ => false
 
+private partial def instanceParameters : Expr → Bool
+  | .forallE _ _ body kind => kind == .instImplicit || instanceParameters body
+  | _ => false
+
 private partial def normalizeAux (env : Environment) (e : Expr)
     (seen : NameSet) : StateT Nat (Except String) Expr := do
   let remaining ← get
@@ -43,12 +47,26 @@ private partial def normalizeAux (env : Environment) (e : Expr)
   match e with
   | .app .. | .const .. =>
     let fn := e.getAppFn
-    let args ← e.getAppArgs.mapM (fun a => normalizeAux env a seen)
+    -- Instance dictionaries implement general computation. Keep their entire
+    -- subtrees opaque, including when they are arguments of arithmetic syntax.
+    let mut parameterType : Option Expr := match fn with
+      | .const n _ => ((env.setExporting false).find? n).map (·.type)
+      | _ => none
+    let mut args : Array Expr := #[]
+    for arg in e.getAppArgs do
+      let instanceArg : Bool := match parameterType with
+        | some (.forallE _ _ _ kind) => kind == .instImplicit
+        | _ => false
+      let normalized ← if instanceArg then pure arg else normalizeAux env arg seen
+      args := args.push normalized
+      parameterType := match parameterType with
+        | some (.forallE _ _ body _) => some body
+        | _ => none
     if let .const n us := fn then
       if seen.contains n then throw "search.presentation_alias_cycle"
       if !primitive n then
         if let some (.defnInfo d) := (env.setExporting false).find? n then
-          if aliasBody d.value then
+          if !instanceParameters d.type && aliasBody d.value then
             let body := d.value.instantiateLevelParams d.levelParams us
             return ← normalizeAux env (body.beta args) (seen.insert n)
     return mkAppN fn args

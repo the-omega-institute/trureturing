@@ -56,10 +56,12 @@ run_elab do
   let env ← getEnv
   let target ← statement (← `(∀ n : Nat, ramp n = 3*n))
   let .ok ta := normalizedAtoms env target | throwError "normalization failed"
-  let mut checked := 0
+  let mut checked : Nat := 0
   for (name, info) in env.constants.toList do
     if name.toString.endsWith "card_derangements_fin_add_two" then
-      let .ok sa := normalizedAtoms env info.type | throwError "normalization failed"
+      let sa ← match normalizedAtoms env info.type with
+        | .ok atoms => pure atoms
+        | .error err => throwError "unrelated declaration normalization: {name}: {err}"
       unless (presentationLookup ta [(name, sa)]).isEmpty do
         throwError "unrelated derangements candidate reached conversion"
       checked := checked + 1
