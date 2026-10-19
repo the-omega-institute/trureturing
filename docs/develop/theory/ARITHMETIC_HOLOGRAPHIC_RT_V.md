@@ -761,3 +761,246 @@ $$
 Consequently the actual-quotient sector $`0\le\tau\le\varepsilon_Q/10`$, and more sharply the sector $`\eta(\tau)\le\varepsilon_Q`$, cannot have error below one quarter. This applies in particular to the full-domain calibrated local minima with $`\operatorname{rank}G=7`$, $`\ker G=\mathbb C a`$ with every $`a_i\ne0`$, $`\operatorname{rank}H=4`$ and $`0<\delta<1/4`$. Their actual quotient, full complementary stress and identity $`\operatorname{ran}R=\ker(H\operatorname{diag}(a))`$ follow from [RT IV §118](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#118-feasible-chord-polarization-and-full-rank-opposite-stresses). Those properties remain attached to the original pair and are not transported to (123.14).
 
 The gap and comparison above combine the rank-two equality classification with the symmetric-square obstruction. The nonnumerical separation in [RT IV Theorem 117.4](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1174-a-uniform-but-nonnumerical-separation) bounds the spectral tail from above; no numerical comparison of its unknown constant with $`\varepsilon_Q`$ is asserted. The original-channel neighborhoods in [RT III §89](ARITHMETIC_HOLOGRAPHIC_RT_III.md#89-an-unrestricted-local-quarter-minimum-from-analytic-descent-at-the-scalar-cone) also obstruct approaching rank-two quarter centers from the physical subquarter set. Here the stronger endpoint statement is that the entire rank-two quotient class has a minimum strictly above one quarter, and (123.18) supplies an explicit same-correlation comparison modulus. The value of that positive gap remains uncomputed. The inequalities do not exclude the whole remaining rank-four class, supply a feasible member of it, or extend the quotient hypothesis to arbitrary leaking local minima. The unrestricted quarter-optimum problem remains open.
+
+## 追加锚（本行以下为增补区）
+
+## 124. An explicit rank-two quotient gap and a computable lower spectral tail
+
+### 124.1. Quantitative stability of the calibrated support witness
+
+Retain the original channels, encodings, target, forward-Gram convention and unhalved arbitrary-reference error $`\delta`$ of (120.1)–(120.4). First assume only that both original channels are calibrated and the second has environment dimension two. Its four record blocks are unitaries $`U_f\in U(2)`$; write the first party's record blocks as isometries $`A_f:\mathbb C^2\to E_A`$. The full physical output is still $`\mathbb C^4\otimes\mathbb C^4`$. No quotient condition is needed in this subsection.
+
+Following [RT II §82.2](ARITHMETIC_HOLOGRAPHIC_RT_II.md#822-correct-output-contractions-and-an-equality-sensitive-support-witness), equip coefficient matrices with the Hilbert–Schmidt inner product and define
+
+$$
+\begin{aligned}
+C_f&=\frac{A_fU_f^{\mathsf T}}{\sqrt2},&
+N_f&=\bar U_f ZU_f^{\mathsf T},& Z&=\operatorname{diag}(1,-1),\\
+D_f&=C_fN_f,&S&=\frac14\sum_fC_f,&
+p&=\|S\|_F^2,\qquad a=4-4p.
+\end{aligned}
+\tag{124.1}
+$$
+
+Every $`N_f`$ is a traceless Hermitian unitary, and every $`C_f,D_f`$ has Frobenius norm one. Write $`N_f=n_f\cdot\sigma`$ in a fixed Pauli basis, where $`n_f\in\mathbb R^3`$ is a unit vector, and put
+
+$$
+N=[n_1\ n_2\ n_3\ n_4],\qquad
+m=\lambda_{\min}(NN^{\mathsf T}).
+\tag{124.2}
+$$
+
+**Proposition 124.1 (quantitative support stability).** Under these original calibrated rank-two-party hypotheses, $`\delta\ge1/4`$. If $`\delta<3/8`$, then
+
+$$
+m\ge
+\frac{\bigl(\sqrt{2-4\delta}-\sqrt{4\delta-1}\bigr)^2}
+     {3/4+\delta/2}.
+\tag{124.3}
+$$
+
+**Proof.** Let $`Q`$ be the orthogonal projection in the coefficient-matrix Hilbert space onto $`\mathcal L_S=\{SX:\operatorname{Tr}X=0\}`$. Let $`B,L`$ be the maps with four columns $`D_f,SN_f`$, respectively, and set $`B_Q=QB`$, $`B_\perp=(I-Q)B`$. The centroid identity and invariance of Frobenius norm under right multiplication by $`N_f`$ give
+
+$$
+\begin{aligned}
+a&=\sum_f\|C_f-S\|_F^2
+  =\sum_f\|D_f-SN_f\|_F^2\\
+ &=\|B_Q-L\|_F^2+\|B_\perp\|_F^2.
+\end{aligned}
+\tag{124.4}
+$$
+
+Here the final decomposition is orthogonal because $`SN_f\in\mathcal L_S`$.
+
+Let $`C_{\mathrm{gram}}`$ be the Gram of the four $`C_f`$, let $`M=B^*B`$, and let $`X_{fg}=\langle C_f,D_g\rangle`$. In the plus/minus bit basis, with all plus coordinates first, the actual product Gram and target coefficient are
+
+$$
+\widehat K=\begin{pmatrix}C_{\mathrm{gram}}&X\\X^*&M\end{pmatrix},
+\qquad \widehat T=\operatorname{diag}(J_4,I_4).
+\tag{124.5}
+$$
+
+The cross block $`X`$ is retained. The normalized no-reference inputs
+
+$$
+|\psi_\pm\rangle=\frac12\sum_{f=1}^4|f,\pm\rangle,
+\qquad |f,\pm\rangle=\frac{|f,0\rangle\pm|f,1\rangle}{\sqrt2}
+\tag{124.6}
+$$
+
+have physical product outputs $`C_{\mathrm{gram}}^{\mathsf T}/4`$ and $`M^{\mathsf T}/4`$ on the output MC support, with respective target outputs $`J_4/4`$ and $`I_4/4`$. These are exact supported outputs inside the full sixteen-dimensional physical output. Both differences have trace zero. For $`s=\boldsymbol1/2`$, the centroid definition gives
+
+$$
+s^*(C_{\mathrm{gram}}-J_4)s=-a,
+\qquad \delta\ge\frac a2,
+\qquad \operatorname{Tr}(I_4-M)_+\le2\delta.
+\tag{124.7}
+$$
+
+The first error bound uses a Rayleigh value, not an assumed eigenvector relation.
+
+Next let $`r=\dim\ker B_Q\ge1`$, and let $`\Pi`$ project onto that kernel. Use the normalized full-reference input
+
+$$
+|\Omega_8\rangle=\frac1{\sqrt8}\sum_{f,i}
+              |f,i\rangle_R\otimes|f,i\rangle_{\mathrm{logical}}.
+\tag{124.8}
+$$
+
+On the exact support spanned by $`|f,i\rangle_R\otimes|f,f\rangle_{\mathrm{out}}`$, the physical difference is $`(K^{\mathsf T}-T)/8`$. This is a subspace of reference dimension eight times physical output dimension sixteen. Change to the plus/minus coordinates and transpose the test projection along with the forward-Gram matrix. The negative-part test $`\operatorname{diag}(ss^*,\Pi)`$ then gives
+
+$$
+\delta\ge\frac{a+r-\operatorname{Tr}(B\Pi B^*)}{4}
+       \ge\frac r4\ge\frac14.
+\tag{124.9}
+$$
+
+Indeed $`B\Pi=B_\perp\Pi`$ and (124.4) imply $`\operatorname{Tr}(B\Pi B^*)\le a`$. The denominator four in (124.9) is the trace-zero positive-part factor two applied to the normalized eighth in (124.8); the error remains unhalved.
+
+Assume now $`\delta<3/8`$. Equation (124.9) forces $`r=1`$. Choose a unit vector $`v`$ spanning $`\ker B_Q`$ and set $`b=\|Bv\|^2=\|B_\perp v\|^2`$. Equations (124.4) and (124.9) give the exact slack decomposition and bound
+
+$$
+\begin{aligned}
+0\le a-b
+ &=\|B_Q-L\|_F^2
+   +\|B_\perp(I-vv^*)\|_F^2\le4\delta-1,\\
+\|B_Q-L\|_{\mathrm{op}}&\le\sqrt{4\delta-1}.
+\end{aligned}
+\tag{124.10}
+$$
+
+Testing the last inequality of (124.7) with $`vv^*`$ gives $`1-b\le2\delta`$. Since $`b\le a`$,
+
+$$
+a\ge1-2\delta,\qquad
+p=1-\frac a4\le\frac34+\frac\delta2.
+\tag{124.11}
+$$
+
+Let $`\mu`$ be the least positive eigenvalue of the rank-three matrix $`B_Q^*B_Q`$, and choose a unit eigenvector $`w\perp v`$ for it. Testing (124.7) with $`vv^*+ww^*`$ yields
+
+$$
+\begin{aligned}
+2\delta
+&\ge2-\|Bv\|^2-\|Bw\|^2\\
+&=2-b-\mu-\|B_\perp w\|^2\\
+&\ge2-\mu-\|B_\perp\|_F^2
+ \ge2-\mu-a.
+\end{aligned}
+\tag{124.12}
+$$
+
+Only orthonormality of $`v,w`$ is used to bound their combined $`B_\perp`$ energy. Neither vector is assumed real or an eigenvector of $`M`$. Since $`a\le2\delta`$ by (124.7),
+
+$$
+\mu\ge2-4\delta,
+\qquad
+s_3(L)\ge\sqrt{2-4\delta}-\sqrt{4\delta-1}>0.
+\tag{124.13}
+$$
+
+For the singular-value inequality, $`B_Q`$ has lower norm bound $`\sqrt\mu`$ on the three-dimensional space $`v^\perp`$. Subtract the operator-norm error in (124.10), and apply the singular-value max–min principle on that space.
+
+The map $`L`$ factors through $`N`$ followed by $`y\mapsto S(y\cdot\sigma)`$, so $`\operatorname{rank}L\le\operatorname{rank}N\le3`$. The strict positivity in (124.13) forces both ranks to be three, and their complex kernels coincide. Choose a real unit eigenvector $`y`$ of $`NN^{\mathsf T}`$ with eigenvalue $`m>0`$, and define $`x=N^{\mathsf T}y/\sqrt m`$. Then $`x`$ is real, unit, orthogonal to $`\ker N=\ker L`$, and
+
+$$
+Nx=\sqrt m\,y,\qquad
+N(x):=\sum_fx_fN_f=N(x)^*,\qquad N(x)^2=mI_2.
+\tag{124.14}
+$$
+
+Consequently, without assuming that $`S^*S`$ is scalar or commutes with $`N(x)`$,
+
+$$
+\begin{aligned}
+s_3(L)^2&\le\|Lx\|_F^2
+ =\operatorname{Tr}[N(x)S^*SN(x)]\\
+ &=\operatorname{Tr}[S^*SN(x)^2]=pm.
+\end{aligned}
+\tag{124.15}
+$$
+
+Equations (124.11), (124.13) and (124.15) prove (124.3). The real-vector test uses the actual Bloch-axis matrix, not a lower frame bound inferred from pairwise dot products. ∎
+
+### 124.2. An explicit gap for every rank-two actual quotient
+
+**Theorem 124.2 (computable rank-two quotient gap).** For every member of the full actual calibrated quotient class $`\mathcal Q_2`$ in (123.3),
+
+$$
+\delta>\frac{29}{108}=\frac14+\frac1{54}.
+\tag{124.16}
+$$
+
+In particular, the attained minimum and gap in (123.4) satisfy
+
+$$
+d_Q>\frac{29}{108},\qquad \varepsilon_Q>\frac1{54}.
+\tag{124.17}
+$$
+
+These are lower bounds; they do not specify the exact values of $`d_Q`$ or $`\varepsilon_Q`$.
+
+**Proof.** Such a quotient has original calibrated Gram realizations with the second environment two-dimensional, as established in §123.1. Suppose $`\delta\le29/108`$. Proposition 124.1 gives $`\delta\ge1/4`$, and its proof supplies
+
+$$
+2-4\delta\ge\frac{25}{27},\qquad
+4\delta-1\le\frac2{27},\qquad
+p\le\frac{191}{216}.
+\tag{124.18}
+$$
+
+Thus (124.13)–(124.15) imply
+
+$$
+s_3(L)\ge\frac{5-\sqrt2}{\sqrt{27}},\qquad
+m\ge\frac{216-80\sqrt2}{191}.
+\tag{124.19}
+$$
+
+The Bloch axes in (124.2) use $`\bar U_fZU_f^{\mathsf T}`$. Equations (123.5)–(123.6), including their common-reflection observation, identify their frame spectrum with that of the four missing symmetric-square directions for the same original qubit bases. Apply Theorem 122.2 with seed $`H^{(0)}=H`$ and $`\Xi=J_8`$. This is where the full actual quotient $`G=H\odot\bar R`$ is used. It gives
+
+$$
+\delta\ge\frac m2
+ \ge\frac{108-40\sqrt2}{191}
+ >\frac{154}{573}>\frac{29}{108}.
+\tag{124.20}
+$$
+
+The strict comparisons are exact: $`\sqrt2<17/12`$ because $`2<289/144`$, and $`154\cdot108-29\cdot573=15>0`$. This contradicts the assumed upper bound and proves (124.16). The minimum over $`\mathcal Q_2`$ is attained by the compactness and continuity argument in Theorem 123.1, so (124.17) follows. No exact-quarter classification is needed for this quantitative proof. ∎
+
+### 124.3. An explicit excluded near-rank-two sector
+
+**Corollary 124.3 (computable lower spectral tail).** Suppose the full actual calibrated quotient (123.1) holds, and let $`\tau=8-\lambda_1(H)-\lambda_2(H)<1`$. If $`\delta<1/4`$, then
+
+$$
+\eta(\tau)>\frac1{54},\qquad \tau>\frac1{325}.
+\tag{124.21}
+$$
+
+In particular, for $`\operatorname{rank}H=4`$ the remaining subquarter actual quotient must satisfy
+
+$$
+\frac1{325}<\lambda_3(H)+\lambda_4(H)<2-\sqrt2.
+\tag{124.22}
+$$
+
+**Proof.** The same-actual-$`R`$ comparison in Theorem 123.2 gives $`\delta\ge d_Q-\eta(\tau)`$. Since $`\delta<1/4`$, (124.17) implies $`\eta(\tau)>\varepsilon_Q>1/54`$. For $`0\le\tau<1`$, rationalization and $`\sqrt{1-\tau}\ge1-\tau`$ give
+
+$$
+\eta(\tau)=2\tau+\frac{8\tau}{1+\sqrt{1-\tau}}
+ \le2\tau+\frac{8\tau}{2-\tau}.
+\tag{124.23}
+$$
+
+If $`\tau\le1/325`$, both terms on the right are bounded by their values at $`1/325`$, so
+
+$$
+\eta(\tau)\le\frac2{325}+\frac8{649}
+ =\frac{3898}{210925}<\frac1{54},
+\qquad 3898\cdot54=210492<210925.
+\tag{124.24}
+$$
+
+This is a contradiction. In the rank-four case Theorem 121.1 already gives $`\tau=\lambda_3(H)+\lambda_4(H)<2-\sqrt2<1`$, which supplies the comparison hypothesis and the upper endpoint in (124.22). ∎
+
+The new content is the quantitative calibrated support-slack estimate (124.3) and its combination with the actual quotient's symmetric-square obstruction. It makes the lower spectral-tail exclusion in §123 computable. The linear-algebra and channel-norm background is standard; see Watrous, [*The Theory of Quantum Information*, Chapters 1 and 3](https://cs.uwaterloo.ca/~watrous/TQI/). The argument uses the full original unhalved norm, and the polar comparison retains the same actual correlation matrix. No complementary stress or local-minimum property is transferred to a comparison pair. The intermediate-tail rank-four class is still open, and neither (124.16) nor (124.22) supplies a feasible member or settles the unrestricted quarter-optimum problem.
