@@ -5,6 +5,8 @@ cas_ref: sha256:a4b2e9fcbe6a868d3c0ee7d3850615004fd153690e9e381f966f4377bd16fb9c
 coverage_gids:
   - gid: D5/S0/Computability/ClosureUndecidable.closure_reading_unreachable
     target_statement_id: sha256:6e3ad9d42f74bd675293868cfdee37b4b0392188e4e70ad2d91f4da245bbe7ed
+  - gid: D5/S0/Computability/ClosureUndecidable.empty_ledger_reading_unreachable
+    target_statement_id: sha256:b49c9216ea5a6f66e1a9278e62138ead3648f0b5f2c0d9193f99c29388df6be2
   - gid: D5/S0/Computability/FiniteCounterexampleCertificate.finite_readout_counterexample_certificate
     target_statement_id: sha256:77a994d71365d345fe49ac4d4e6db7db07633e00729e27a0ccd36bf58454b913
   - gid: D5/S0/Computability/Searchability/SearchableWindowDecision.searchable_window_forall_decidable
