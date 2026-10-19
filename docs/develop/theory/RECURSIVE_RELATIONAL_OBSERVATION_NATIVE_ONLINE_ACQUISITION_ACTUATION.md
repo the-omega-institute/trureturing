@@ -3047,78 +3047,129 @@ RCA's 32–40 port layout or its Ready-only installation permission.
 
 ## 19. The source-specific shared chronology
 
-**Definition 19.1 (the correspondence, including entry-reference phases).**
-Compare the original continuation of $C_n$ with the one live source after
-Attach. Match rows by their **original** action order, ignoring intervening
-auxiliary rows for this matching only. Keep equality of original control,
-finite mode/parser/command latches, source/port fields, all original
-non-event cells, their identities and allocator positions, banks and
-input/output, with the following explicitly tracked chronology components.
+**Definition 19.1 (physical entry-reference correspondence).** Compare
+an original continuation of $C_n$ with the one live source after Attach.
+Match rows by their **original** action order, ignoring intervening
+auxiliary rows for this matching only. At matched original index $k$,
+compare with the complete original $C_k$; after $r_w$ use its continuation
+under the same subsequently supplied command bits. Original control,
+finite mode/parser/command latches, input/output, source/port fields,
+original non-event allocated identities and initialized-field domains,
+non-event allocator positions and static rights agree. The following
+clauses specify every permitted difference in their physical fields,
+including all bank slots.
 
 The actual global event chain is the old prefix followed by *all* new
 original and auxiliary events in their executed order. Each new event
 has its actual predecessor and actual fields, including the coeffects
 of Definition 18.2. Its allocator is the length of that global chain.
 The original comparison chain has only original rows. Neither chain
-is asserted equal to the other after Attach.
+is asserted equal to the other after Attach. Each event's specified
+operand/read/emission and bounded coeffect fields have exactly the
+values prescribed by its actual row; no equality of the two payloads
+is imposed and no extra original payload field is introduced.
 
-A source entry capture reads the then current global tail. During the
-lexical lifetime from that read until the descriptor's entry initialization,
-the actual saved-entry scratch contains precisely this captured reference,
-even when more events have since been appended. The new descriptor.entry
-is initialized to that saved value and never retargeted to the later tail.
-After its lexical last use the ordinary clear/reuse rule applies to the
-scratch. This is a role/lifetime assertion, not a fixed numbered scratch
-slot. If the capture occurred before Attach, its original saved value
-survives Attach and the installation unchanged. If the descriptor was
-already born, its original entry stays unchanged. If neither occurred,
-the later capture may name an auxiliary event. Every shared event remains allocated and immutable, including an
-auxiliary event subsequently captured by source entry. Thus these
-saved copies have live retained targets for their whole lexical or
-descriptor lifetime. Old descriptors keep their
-own actual entry values; descriptor.previous, table endpoints and sites
-keep their ordinary non-event references. Every source event stores the
-actual values of these fields when its row reads or writes them.
+Index service-entry captures by their order in the original row scheme,
+including Boot and captures before Attach. For capture $h$ let
+$\tau_h^0$ and $\tau_h^\chi$ be the respective pre-read chronological
+tails. The read retains its own tail, not the tail after its read event.
+Use a mathematical occurrence annotation $\Gamma$ on physical original
+bank value fields and descriptor.entry fields. It is determined by
+actual assignments, as follows.
 
-The comparison allows these specified saved-entry and descriptor.entry
-values to differ between runs, and allows the specified event/tail/
-event-allocator components to differ. No other original field is erased.
-In particular partial operand/invocation fields, staging null links,
-actual sites, completion references, descriptor states and all original
-bank contents outside a live saved-entry role must agree. A global
-tail, a list/table tail and the command-control state Tail are three
-different objects.
+* At a capture, annotate each bank location to which the returned tail
+  is actually assigned by $h$. Its values are respectively
+  $\tau_h^0$ and $\tau_h^\chi$.
+* An actual copy of an annotated value gives its destination that same
+  annotation. This includes the descriptor.entry initialization and
+  any bounded returned-value retention in the row expansion. The copy
+  itself does not remove its source annotation. Copies use the actual source
+  or returned value at that assignment, in the fixed row/coeffect
+  order of Definitions 1.3/12.3.
+* Every other actual overwrite, including an explicit null clear or
+  reuse with a newly obtained non-entry value, removes the destination
+  annotation. A location not assigned keeps its annotation and value.
+  Semantic last use, loss of a root and change of lexical role do not
+  perform any assignment and do not remove an annotation.
+* A born descriptor's entry keeps its annotation when its state changes
+  to live, returned, held or retired. That field is never retargeted.
+  Event copies are governed by the actual-event clause above, rather
+  than by equality of non-event fields.
+
+Initialize these annotations by following the common original prefix
+from initialization to $n$. Thus already born descriptors and any
+physically resident saved-entry value at Attach are included, with
+equal capture values in both runs. Annotation follows assignment
+provenance, not numerical coincidence of reference names. In particular
+an unrelated field whose bits happen to equal a tail is not annotated.
+This is proof notation; no source instruction stores or inspects it.
+
+For every physical location $\ell$ annotated by $h$, require exactly
+
+$$
+ (C_k[\ell],C_k^\chi[\ell])=(\tau_h^0,\tau_h^\chi).
+\tag{OA.28a}
+$$
+
+Here $C_k^\chi$ denotes the actual original fields at the matched cut,
+with all intervening auxiliary effects on chronology retained. Every
+other original non-event field must be equal, including inactive bank
+contents, partially initialized/linking material, sites, operand and
+invocation fields, completion references and all descriptor fields other
+than entry. No non-event cell or field is deleted from the comparison.
+The original rules will imply that the only annotated bank occurrences
+are saved-entry retention and copies belonging to its entry block.
+
+For a physical saved-entry slot, its **residence** lasts from its actual
+assignment until its next actual overwrite/clear, even if its last
+semantic use has passed. If a row copies it into descriptor.entry,
+both locations remain represented at the next cut. When the lexical
+slot is later reused, its introducing assignment replaces that residue;
+an earlier clear of another slot does not. Every captured target remains
+an allocated immutable event, including an auxiliary event captured by
+source entry. Descriptor.previous and table/list tails keep their
+ordinary non-event references. A global tail, a list/table tail and
+the command-control state Tail are three different objects.
 
 **Lemma 19.2 (exhaustive operational noninterference).** In $\mathcal D$,
-after installation and after every finite interleaving prescribed below,
-the correspondence of Definition 19.1 holds. Every next original
-requirement has the same result, the same original row executes, and
-the same original token is emitted as in the original continuation.
-The original non-event source and backing agree at every matched
-partial cut. All chronology components have the actual values of
-Definition 19.1. This remains true through Return and any later finite
-commands supplied through the installed controller.
+the correspondence of Definition 19.1 holds after Attach, at every
+installation prefix and after every finite interleaving prescribed below.
+At each original invocation admitted by the auxiliary phases, original
+enabledness and requirement results agree; it executes the same original
+row and emits the same original token as the original continuation.
+At every matched partial cut all original non-event physical fields agree
+except for the exactly specified capture occurrences (OA.28a); every such occurrence, including dead scratch
+residue, has its stated value. All chronology components have their actual
+values. This remains true through Return and any later finite commands
+supplied through the installed controller.
 
 Proof. Before Attach the original components are exactly $C_n$.
-Attach/installation/local rows write only auxiliary fields and the
-shared event system. Their record appends determine a new real tail,
-not a source write. They leave any existing saved-entry reference
-untouched. This proves the local-row case, including partial installation.
+Following the original prefix assigns an annotation precisely to each
+still resident capture copy. Equal runs give equal $\tau_h^0,\tau_h^\chi$
+there. Attach/installation/local rows write only auxiliary fields and the
+shared event system. Their appends determine a new real tail, not a source
+write. No such row changes an original slot, descriptor or annotation.
+This proves the auxiliary-row case, including partial installation.
 
-For the original-row case it is necessary to inspect the operands in
-the owning rules, rather than infer the conclusion from disjoint heaps.
-Here is their complete partition.
+For the original-row case inspect both operands and destinations in the
+owning rules; disjoint auxiliary heaps alone would not suffice. Their
+complete partition is as follows.
 
 * The command rules test Ready/Tail and supplied bits. Known preparation
   and grafts read the held port/root and their fresh staging fields,
   initialize literal source nodes, test null links and write the specified
-  port. None tests an event reference or an entry field.
-* Entry reads the chronological tail once, into the saved-entry role.
-  The subsequent holding/linking of the previous descriptor, port capture,
-  endpoint clears, new descriptor birth and root-stack pushes use the
-  operands of Definition 12.4. Only descriptor.entry receives that saved
-  reference. Descriptor.previous receives a descriptor reference, not the
-  tail. The old descriptor's table contents are not read.
+  port. None tests an event reference or descriptor.entry. Each new
+  temporary is assigned its actually obtained value before use.
+* Entry reads the chronological tail once into its saved temporary.
+  Holding/linking the previous descriptor and capturing the port use
+  descriptor and source references. Descriptor.entry alone receives
+  the captured event reference; any intermediate bank retention is
+  the copy case of $\Gamma$. The saved value's last semantic use is
+  this entry initialization. The subsequent new-table/operand/output
+  endpoint clears assign their own named slots. They do not assign
+  null to the saved temporary merely because it has become dead.
+  Descriptor.previous receives the previous descriptor reference,
+  and no old table or old entry field is read.
 * Work-head tests, four-field site pops, receiver pops, incoming-field
   reads/equalities and source follows use exactly the sites, source nodes,
   words and frames of Definitions 12.2/12.4. Packet Offer/Take/Arrival/
@@ -3132,40 +3183,80 @@ Here is their complete partition.
   Its guard follows the fixed literal tile paths and tests their actual
   tags/children. Target births, vacancy checks, links, invocation.old/new,
   the one attachment Publish and completion append use those same
-  non-event operands. No field of an event or descriptor.entry is an
-  operand of a guard, a site, a label selection or a publication.
+  non-event operands. No event or descriptor.entry is an operand of
+  a guard, site, label selection or publication.
 * NodeDone and service/Return cleanup assign the listed slots/latches
-  and clear masks. A scratch role ceases to carry an entry reference
-  precisely at its stated last use/clear; later scratch users get their
-  ordinary newly assigned values. End assigns actual table endpoints,
-  descriptor states and the old descriptor's retirement state.
-  Output reads only current row word/label/next fields, prints the
-  prescribed tokens and finishes its fixed cleanup/Return. The source
-  never rereads an old output archive or event payload.
+  and clear masks in their original order. A clear removes a capture
+  annotation only when that particular physical slot is assigned null.
+  End assigns table endpoints, descriptor states and retirement state,
+  leaving descriptor.entry intact. Output reads only current row
+  word/label/next fields, prints the prescribed tokens and finishes
+  its fixed cleanup/Return. Old output archives and event payloads
+  are never reread as operands.
 
-This covers installation/preparation, every service instruction and
-its finite tests, every output/cleanup row, and both Supply controls
-in Definitions 1.3, 2.1–2.3, 4.1 and 12.2–12.5. In particular a saved
-entry is not used as a source pointer, and fixed owner/port checks do
-not inspect it. Equality of the other operands proves equal branch
-results, read values, allocations and non-event updates row by row.
-At an entry-tail read, instead apply the explicit live-tail rule:
-both reads succeed, and each saves its own actual tail. At descriptor
-birth each copies its own still-live saved value. This proves the
-entry-reference phases even if Attach occurred between the two rows.
+It remains to justify that a dead capture does not enter another operand
+through physical slot reuse. Definition 1.3 assigns fresh temporary roles
+in lexical order and permits reuse only after the former role's last use.
+Introduction of a new role retains its own returned/read/constructed
+value by an actual assignment; it does not read the previous occupant.
+Before the saved role's last use its only value flow is entry retention
+and descriptor.entry initialization. After that use there is no operand
+occurrence of that role. Until replacement, no other role reads its old
+contents: a reuse first assigns the new value; an explicit clear first
+assigns null. A read and destination overwrite in the same row uses
+its prescribed old operands, not an uninitialized new role. Inspecting
+the above blocks gives no other store of a captured reference into an
+original non-event field and no later read of descriptor.entry. This
+proves the operand exclusion from the original scheme, rather than
+adding a non-use premise to the domain.
 
-Finally append the actual event, with the actual pre-append predecessor,
-actual values, initialization and bounded coeffects, and assign the
-actual global tail. The next global name is the next event allocation;
-source non-event allocations are unaffected by auxiliary types. This
-establishes the complete event clause without identifying the two
-event chains. Instrumentation cannot recurse. The extra tick/token
-coeffect reads only the newly emitted finite token, and no original
-guard reads its auxiliary destination. Induction over the interleaving
-proves the assertion at every partial cut. The same operand partition
-applies to later commands, so the proof does not stop at the first Return.
-This is source-specific operational correspondence, not full-state
-equality obtained by deleting a disjoint heap. $\square$
+Consequently all guards and ordinary read operands outside entry copies
+are equal. They select equal branches, preserve equal original control,
+allocate the same next non-event identity and perform equal ordinary
+field/coeffect assignments. An entry-tail read instead succeeds with
+each run's own actual tail and introduces its capture annotation.
+A copy into entry or its temporary retention preserves (OA.28a) at both
+source and destination. An unrelated assignment or explicit clear kills
+only its destination annotation and writes the same ordinary value.
+An untouched annotated field retains its respective capture value.
+These cases also preserve equality of initialized-field domains and
+all fields outside $\Gamma$, at each named operation's successor.
+
+In particular, take $u=\alpha$, $w=\mathsf U$, $n=a_w$, with Attach
+before the pending entry-tail read. At the cut after descriptor.entry
+initialization and before the saved slot's actual overwrite/clear,
+write $s$ for that physical slot and $d$ for the new descriptor. Both
+are annotated by this capture $h$, and the complete physical pair is
+
+$$
+ (C_k[s],C_k[d.\mathsf{entry}])=(\tau_h^0,\tau_h^0),\qquad
+ (C_k^\chi[s],C_k^\chi[d.\mathsf{entry}])
+       =(\tau_h^\chi,\tau_h^\chi).
+\tag{OA.28b}
+$$
+
+Here the positive number of auxiliary events makes the two captured
+tails different. The following new-table-head clear leaves both copies
+in (OA.28b) intact; a later actual assignment to $s$ removes only that
+residence. If Attach is after capture, both saved values already agree
+and stay fixed through installation and copying; if it is after entry
+initialization, both extant copies are handled by the initial annotation.
+Thus these cuts and the prospective-Scan graft cuts require no erasure
+and no restriction of (OA.28).
+
+Finally append the actual event with its actual pre-append predecessor,
+operand values, initialization and bounded coeffects, including an
+actually overwritten old capture value wherever that format records it.
+The next global name and tail follow the actual shared allocator.
+Auxiliary types leave original non-event allocators unchanged; event
+instrumentation cannot recurse. The tick/token coeffect reads only the
+newly emitted token and is not an original operand. This establishes
+the event clause without equating the two chains or their payloads.
+Induction over individual rows proves every physical partial-cut clause.
+The same operand partition applies to later commands. At Return every
+scratch residence is removed by its explicit clears; retained descriptor
+entries and event payloads still have their respective capture values.
+No assertion of complete live-state equality is needed. $\square$
 
 **Corollary 19.3 (the first frame belongs to the same source).** From
 $(u,w,n)\in\mathcal D$, pause for finite installation, then repeatedly
@@ -3177,15 +3268,21 @@ reaches the matched Return $r_w$ and actual Ready. There is no Supply
 between Attach and that Return.
 
 Proof. Theorem 13.3 supplies this original finite continuation, including
-graft preparation when selected. Lemma 19.2 preserves each of its row
-choices and outputs. By (OA.28) no earlier Begin remains between $n$
-and $b_w$. Definition 4.1 prints exactly that service's current table.
+graft preparation when selected. Lemma 19.2 preserves each row choice
+and the actual fields used by table output. Its permitted capture
+residues and descriptor.entry differences are not table/output operands.
+By (OA.28) no earlier Begin remains between $n$ and $b_w$. Definition
+4.1 prints exactly that service's current table.
 After End, its ordinary row-list tail is exhausted; the remaining
 bank-order clears, descriptor-state assignment and Return constitute
 one fixed finite non-Boot row list. Its length $c=r_w-e_w$ is the
 syntactic length of that expanded cleanup, not a received old ordinal.
 Following those $c$ Advances is lawful and ends at Ready.
-The sixteen additional clears are included. $\square$
+The sixteen additional clears are included. These are actual individual
+assignments: before a saved slot is reached in that sequence its residue
+remains in the relation, and afterwards its null contents agree. Retained
+descriptor.entry and event fields keep their actual chronology values
+even at Ready. $\square$
 
 ## 20. Actual first-frame acquisition and exact old-state construction
 
@@ -3268,9 +3365,12 @@ The original simulator represents a complete original state by:
 finite control/latch fields; one list per original cell type in canonical
 allocation order; every cell's full field tuple and initialized status;
 root/bank/input/output roots; next-allocation counters; event list and
-tail; and the original static binding/rights. A null reference, an
-uninitialized field, a finite value and a typed ordinal reference have
-different tags. An ordinal is DATA encoded by $U(j)$, not an actual
+tail; and the original static binding/rights. Inactive bank values are
+physical fields too: a represented saved-entry value survives its last
+semantic use until the original scheme actually overwrites/clears that
+slot. Copying it into a descriptor does not erase its bank occurrence.
+A null reference, an uninitialized field, a finite value and a typed
+ordinal reference have different tags. An ordinal is DATA encoded by $U(j)$, not an actual
 reference. Initial construction uses the recovered tree $u$: allocate
 its represented nodes in preorder with the actual canonical initial
 tag/child/root fields, empty original chronology and the original initial
@@ -3295,8 +3395,10 @@ and tail coeffects. Advance represented PC. Event self-references use
 the next represented event ordinal; they do not embed the event value
 recursively. The finite rule cases are the field/read/follow, birth,
 assignment, finite test, input/output and control rules of Definition
-12.3, including the lexical temporary allocation/clear convention.
-This specifies a finite Step program using Nth/Replace/AppendItem,
+12.3, including lexical temporary reuse and the explicit clear rows.
+No simulated write is generated solely by a last-use boundary, and
+$\Gamma$ is not part of a represented original state. This specifies
+a finite Step program using Nth/Replace/AppendItem,
 not an atomic virtual instruction or a full-state response from the
 live source.
 
@@ -3340,8 +3442,11 @@ By Corollary 19.3 the first Begin has matched index $b_w$, and the
 executing original actions from $n$ through its successor number
 $b_w-n$. The Begin invocation's tick is discharged before $D$ is saved.
 Hence $|D|=b_w-n$, including the cases immediately before Begin,
-inside a guard, between site/operand operations, and during graft
-preparation. Installation and receiver rows add no marks to $D$.
+inside a guard, between site/operand operations, during graft
+preparation, and after entry initialization while a dead saved value
+remains physically resident. Lemma 19.2 covers all these source cuts
+with their actual bank values. Installation and receiver rows add no
+marks to $D$.
 The first closed frame is precisely the full preorder of
 $t=F_w(j(u))$. The parser's stack is its usual ordered unfilled-socket
 frontier; a branch replaces its socket by left/right sockets and a
@@ -3364,8 +3469,13 @@ only that field. Supply consumes exactly the next recovered command bit;
 the deterministic busy rows consume none. Output and clear masks are
 the original ones. Finally the event uses the same pre-row predecessor
 and actual represented coeffects, so its new tail and allocator agree.
-This includes entry-tail capture *in the original chronology*, its
-saved scratch lifetime, descriptor.entry and descriptor.previous.
+This includes entry-tail capture *in the original chronology*, every
+physical saved-scratch residence before and after semantic last use,
+descriptor.entry and descriptor.previous. At a copy both original
+occurrences retain that original capture; at an unrelated endpoint clear
+the saved slot is unchanged; only its own overwrite/clear replaces it.
+Thus the simulated state is the exact original physical state, not a
+quotient by dead values and not the live state with annotations erased.
 It also covers a stopped partial packet, incomplete target template,
 invocation.old/new and detached old tiles; no equality of extensional
 source trees replaces these fields. This row induction is the specific
@@ -3428,9 +3538,13 @@ input is sealed before its first output bit, so the same copy invariant
 proves its partial-prefix assertion. None of these routines frees a
 cell. This proves the stated clauses by induction on individual local
 rows, including cuts before input retention, in a tuple replacement
-and in an unsealed result. Together with Lemma 19.2 they describe
-the simultaneous source and observer partial state, not just completed
-abstract macro values. $\square$
+and in an unsealed result. Local rows leave every original non-event
+field, including dead saved-entry residue, untouched, while their
+actual events extend the shared chronology. Together with Lemma 19.2
+this gives the simultaneous physical source relation and observer
+partial state. A committed simulated word equals $C_j$ literally;
+the concurrent live source is related by (OA.28a), not identified with
+that historical word. $\square$
 
 ## 21. Completed DATA, genuine requests and actual current use
 
@@ -3533,9 +3647,12 @@ for the unchanged historical $C_n$.
 
 Proof. Corollary 19.3 and the cleanup part of Definition 20.1 reach the
 actual original Return control, not merely a table-equivalent state.
-Every cleanup source invocation, including Return itself, has its tick
-discharged and optional token acknowledged before source-ready dispatch
-is enabled. The original service's own packet mailbox and work stacks
+The explicit Return clears have replaced all saved-entry scratch
+residues; the retained descriptors still carry their actual entries.
+Lemma 19.2 permits those entries to differ from the historical replay
+and proves that no later source action consumes them. Every cleanup
+source invocation, including Return itself, has its tick discharged
+and optional token acknowledged before source-ready dispatch is enabled. The original service's own packet mailbox and work stacks
 are empty by Theorem 13.2. Thus neither an original receipt nor an
 auxiliary tick/arrival remains pending.
 
@@ -3559,7 +3676,9 @@ bits and does not assume their future arrival. This proves exactly the
 stated completion-conditional prefix assertion.
 
 All these local rows satisfy Lemma 19.2 and leave source control at
-Ready and source authority with $o$. Hence Supply$(0)$ really executes
+Ready and source authority with $o$. Historical serialization and requests
+read only auxiliary DATA and never reinterpret either a capture annotation
+or an old ordinal as a current pointer. Hence Supply$(0)$ really executes
 its original Update selection. Discharge its tick before the first
 busy Advance. The same lemma and Theorem 13.2 give the actual Update
 from $E t$ to $E(\rho t)$ and its authentic new output. Drain reads
@@ -3637,7 +3756,11 @@ The last term is all shared events. Original bank births, packets,
 sites, operands, staging, detached tiles and all old cleared cells are
 in the sum. Auxiliary popped/cancelled marks, intermediate word versions,
 code, simulated event encodings and printed answers are retained too.
-No erasure subtracts allocated backing. Unknown-input installation
+No erasure subtracts allocated backing. The occurrence annotation
+$\Gamma$ is proof notation, not installed cells, code or instructions.
+Tracking a dead saved-entry residence adds no row or field operation,
+and does not shorten its actual retention. No eager clear is inserted
+into $s$, $L$ or $f(r)$. Unknown-input installation
 precedes chronology and is included once, not as fictitious event rows.
 
 **Proposition 22.2 (effective instancewise finite recurrence).** The
@@ -3760,7 +3883,12 @@ read/write traffic coordinate is the sum of these widths over the
 field occurrences in (OA.32); the retained coordinate is the width
 sum over every initialized retained field in (OA.33), not the traffic
 sum counted as storage. Use the actual *shared* event names after Attach,
-whose widths can exceed the comparison run's event widths.
+whose widths can exceed the comparison run's event widths. In particular
+a dead saved-entry slot is still an initialized retained occurrence and
+is charged its actual captured-reference width until its own physical
+overwrite/clear. The descriptor.entry copy and every event copy are
+separate retained occurrences for as long as their actual backing holds
+them. A lexical last use does not reduce this storage sum.
 
 Historical reference ordinals in $R$ use their declared unary DATA
 codec; those payload bits and the actual references linking the payload
@@ -3803,20 +3931,24 @@ credited by OA12.5; no new zipper algorithm is claimed. Lamport's
 [*Refinement in State-Based Formalisms*][LAM18] distinguishes refinement
 and stuttering under a stated observation relation. Here auxiliary
 rows stutter only on the non-chronological source workload, while the
-full event/tail state changes; Lemma 19.2 gives the actual relation
-and initial-state argument. Reynolds's [*Separation Logic*][REYNOLDS],
+full event/tail state changes. Original bank and descriptor metadata
+obey (OA.28a); stuttering does not assert equality of their complete
+physical states. Lemma 19.2 supplies that relation and its initial-state
+argument. Reynolds's [*Separation Logic*][REYNOLDS],
 §4, requires a framed assertion's free variables to avoid the command's
-modified variables. A global tail or live saved-entry variable cannot
-be framed as unchanged. The explicit saved-reference phases and
-operand enumeration above carry that extra obligation. These primary
+modified variables. A global tail or a physical saved-entry residence,
+including dead scratch, cannot be framed as equal across the two runs.
+The assignment provenance relation, its persistence through semantic
+last use and the operand exclusion in Lemma 19.2 carry that extra
+obligation. These primary
 methods are used within those hypotheses, not as a proof of unknown
 source acquisition.
 
 The substantive increment is the conjunction of actual late acquisition
 of the independently marked original pre-Begin $C_n$, a source-specific
-shared-chronology proof with actual entry-reference lifetimes, completed
-owner-local DATA publication/query, and a next actual Update. Ancestry,
-generic replay, word compilers, completed publication and callable
+shared-chronology proof with complete physical capture residences,
+completed owner-local DATA publication/query, and a next actual Update.
+Ancestry, generic replay, word compilers, completed publication and callable
 archives remain supplied methods. This is a repository-derived
 construction, with no world-novelty or exhaustive literature-absence
 claim.
