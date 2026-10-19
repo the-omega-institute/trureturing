@@ -45,7 +45,7 @@ run_elab do
   let target ← instantiateMVars target
   let .ok keys := normalizedAtoms env target | throwError "scoped target normalization"
   let source := (← getConstInfo ``Circle.path_injective_of_ne).type
-  if scopeNecessary (rawScopeBound env source) keys then
+  if sourceScopeNecessary env source keys then
     throwError "aliased rigid domain mismatch reached source normalization"
   logInfo "aliased rigid domain mismatch: rejected before source normalization"
 

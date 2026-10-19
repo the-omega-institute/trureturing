@@ -102,14 +102,17 @@ structure RawOriginBound where
   extensibleScope : Bool := true
 
 /-- Only a rigid nonlogical terminal forbids additional projected binders. -/
-def rawScopeBound (env : Environment) (e : Expr) : RawOriginBound :=
+private def rawExtensibleScope (env : Environment) (e : Expr) : Bool :=
   let body := e.getForallBody.consumeMData
   let extensible := match body.getAppFn.constName? with
     | some n => match (env.setExporting false).find? n with
       | some (.inductInfo _) => n == ``And || n == ``Iff
       | _ => true
     | none => true
-  {scope := rawScope env e, extensibleScope := extensible}
+  extensible
+
+def rawScopeBound (env : Environment) (e : Expr) : RawOriginBound :=
+  {scope := rawScope env e, extensibleScope := rawExtensibleScope env e}
 
 private abbrev OriginMemo := Std.HashMap Name RawOriginBound
 
@@ -197,6 +200,45 @@ def scopeKeyCompatible (bound : RawOriginBound) (key : PresentationKey) : Bool :
 
 def scopeNecessary (bound : RawOriginBound) (keys : List PresentationKey) : Bool :=
   keys.all (scopeKeyCompatible bound)
+
+/-- Short-circuit the same prefix predicate before analyzing later domains. -/
+def sourceScopePrefix (env : Environment) : Expr → List (Nat × ScopeHead) → Bool
+  | .forallE _ domain body kind, (tag, head) :: rest =>
+    binderTag kind == tag && (rigidScopeHead env domain).all (· == head) &&
+      sourceScopePrefix env body rest
+  | .forallE .., [] => false
+  | .mdata _ body, scope => sourceScopePrefix env body scope
+  | _, _ => true
+
+def sourceBinderCount : Expr → Nat
+  | .forallE _ _ body _ => 1 + sourceBinderCount body
+  | .mdata _ body => sourceBinderCount body
+  | _ => 0
+
+def sourceScopeNecessary (env : Environment) (source : Expr)
+    (keys : List PresentationKey) : Bool :=
+  keys.all fun key => sourceScopePrefix env source key.scope &&
+    (rawExtensibleScope env source || sourceBinderCount source == key.scope.length)
+
+theorem source_scope_prefix_eq (env : Environment) (source : Expr)
+    (scope : List (Nat × ScopeHead)) :
+    sourceScopePrefix env source scope = scopePrefixCompatible (rawScope env source) scope := by
+  induction source generalizing scope <;> cases scope <;>
+    simp_all [sourceScopePrefix, rawScope, scopePrefixCompatible]
+
+theorem source_binder_count_eq (env : Environment) (source : Expr) :
+    sourceBinderCount source = (rawScope env source).length := by
+  induction source <;> simp_all [sourceBinderCount, rawScope, Nat.add_comm]
+
+/-- Production's cheaper prefilter is exactly the certified scope predicate. -/
+theorem source_scope_necessary_eq (env : Environment) (source : Expr)
+    (keys : List PresentationKey) :
+    sourceScopeNecessary env source keys = scopeNecessary (rawScopeBound env source) keys := by
+  unfold sourceScopeNecessary scopeNecessary
+  congr 1
+  funext key
+  simp only [scopeKeyCompatible, rawScopeBound, source_scope_prefix_eq,
+    source_binder_count_eq env source]
 
 def keyOriginCompatible (env : Environment) (bound : RawOriginBound)
     (key : PresentationKey) : Bool :=
@@ -458,10 +500,11 @@ theorem production_lookup_complete (env : Environment)
     (bound : RawOriginBound) (sourceAtoms targetAtoms : List PresentationKey)
     (normalized : normalizedAtomsWithOrigins env entry.2.type bound = .ok sourceAtoms) :
     (entry ∈ productionDomain entries ∧
-      (scopeNecessary (rawScopeBound env entry.2.type) targetAtoms &&
+      (sourceScopeNecessary env entry.2.type targetAtoms &&
         rawNecessary env targetAtoms bound && supportIncluded targetAtoms sourceAtoms) = true) ↔
     (entry ∈ entries ∧ productionAllowed entry.1 entry.2 = true ∧
       supportIncluded targetAtoms sourceAtoms = true) := by
+  simp only [source_scope_necessary_eq]
   have scope := scope_necessary_of_normalized_match env entry.2.type bound sourceAtoms targetAtoms
   have raw := raw_necessary_of_normalized_match env entry.2.type bound sourceAtoms targetAtoms
   constructor

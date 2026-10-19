@@ -99,7 +99,7 @@ run_elab do
   if supportIncluded nt ns then throwError "neutral telescope was erased from production keys"
   unless supportIncluded (nt.filter (! ·.isScope)) (ns.filter (! ·.isScope)) do
     throwError "neutral telescope-erasure mutant is not distinguished"
-  unless !scopeNecessary (rawScopeBound env unrelated) targetKeys do
+  unless !sourceScopeNecessary env unrelated targetKeys do
     throwError "production telescope prefilter weakening was not detected"
   let commuted := (← getConstInfo
     ``LeanInformationAudit.Tests.SearchReduction.Baseline.commuted)
@@ -111,7 +111,7 @@ run_elab do
   let bound := (rawOrigins env commuted.type).run' {}
   let .ok sk := normalizedAtomsWithOrigins env commuted.type bound
     | throwError "actual source normalization"
-  unless scopeNecessary (rawScopeBound env commuted.type) dk &&
+  unless sourceScopeNecessary env commuted.type dk &&
       rawNecessary env dk bound && supportIncluded dk sk do
     throwError "production coverage bridge lost actual Iff direction"
   if supportIncluded dk ns then throwError "unscoped source passed the production query"

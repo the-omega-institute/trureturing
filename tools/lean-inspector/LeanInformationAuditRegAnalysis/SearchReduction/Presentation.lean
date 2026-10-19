@@ -191,7 +191,7 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
   let rawStart ← IO.getNumHeartbeats
   for (name, info) in domain do
     let scopeStart ← IO.getNumHeartbeats
-    let scopeMatches := scopeNecessary (rawScopeBound env info.type) targetAtoms
+    let scopeMatches := sourceScopeNecessary env info.type targetAtoms
     if (← IO.getNumHeartbeats) - scopeStart > unitLimit then
       return (.incomplete .heartbeat, none, s!"search.presentation_scope_budget: {name}")
     unless scopeMatches do continue

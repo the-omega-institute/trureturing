@@ -132,7 +132,8 @@ theorem syntax_nondegenerate :
     presentationLookup [`r] [(`source, [`p, `q])] = [] := by decide
 
 run_meta do
-  for name in #[``production_lookup_complete, ``scope_necessary_of_normalized_match,
+  for name in #[``source_scope_prefix_eq, ``source_binder_count_eq, ``source_scope_necessary_eq,
+      ``production_lookup_complete, ``scope_necessary_of_normalized_match,
       ``certified_raw_bound_closed, ``unknown_raw_retained, ``raw_necessary_of_normalized_match,
       ``raw_prefilter_preserves_match, ``lookup_complete, ``normalized_lookup_complete,
       ``index_extension,
