@@ -56,7 +56,10 @@ internal sealed class BinaryRenyiPowerMonotonicityRefutationDocument : IScribeDo
                 + "and using (3/4)^8 = (9/16)^4 yields "
                 + "powered(1/2,1/17) < powered(1/4,1/17). "
                 + "Both orders are positive and distinct from one, and 1/17 lies in [0,1]."))),
-        DescribeRole.Theorem);
+        DescribeRole.Theorem,
+        new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("liu-2026-powered-binary-renyi-monotonicity-refutation"),
+            ResolutionKind.Refuted));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) =>
