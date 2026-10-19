@@ -72,7 +72,8 @@ internal sealed class RossettiW3PPTMeasurementDocument : IScribeDocumentDefiniti
                     + "The same relation holds for their sum. For R the masses are 5/2 and 2, so the relation fails. "
                     + "Thus the complementary effect is not fully separable. This conclusion concerns the specified "
                     + "measurement; the optimal SEP entropy and the possible attainment of trace 9/4 by another "
-                    + "SEP measurement remain separate questions."))), DescribeRole.Theorem)
+                    + "SEP measurement remain separate questions."))), DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(ProblemSlugRef.Create("rossetti-mancini-winter-schindler-2025-w3-ppt-measurement-not-separable"), ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>

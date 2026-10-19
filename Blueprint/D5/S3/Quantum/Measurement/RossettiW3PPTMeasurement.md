@@ -170,6 +170,10 @@ $$\neg ((\operatorname{IsSEPEffect}\left(\operatorname{Mprime}\right)) \land (\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/RossettiW3PPTMeasurement.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rossetti-mancini-winter-schindler-2025-w3-ppt-measurement-not-separable` (refuted) by `D5/S3/Quantum/Measurement/RossettiW3PPTMeasurement.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rossetti-mancini-winter-schindler-2025-w3-ppt-measurement-not-separable","declaration_gid":"D5/S3/Quantum/Measurement/RossettiW3PPTMeasurement.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* L. Rossetti; S. Mancini; A. Winter; J. Schindler (2025). *Observational entropy of quantum correlations and entanglement*. DOI: [10.1109/TIT.2026.3700031](https://doi.org/10.1109/TIT.2026.3700031). URL: <https://arxiv.org/abs/2510.10058v1>.
