@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/KyFanGap/Defs.xi`
 
 *Formalization.* `D5/S3/Combinatorics/Graph/KyFanGap/Defs.xi` (`✓ std3`).
 
-*Citation.* Jon Crall, Claude Fable 5, Claude Opus 4.8, GPT-5.6 Thinking, and GPT-5.6 High (2026). *Formal rectangular singular-value variational bounds*. URL: <https://github.com/AIQ-Kitware/aiq-dkps-formalization/tree/64e234954217f3ca907ac980c8cbde2900109a66/ForTauCeti/Analysis/InnerProductSpace>.
+*Citation.* Vladimir Nikiforov (2015). *Extrema of graph eigenvalues*. URL: <https://arxiv.org/abs/1502.00359v1>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/KyFanGap/Defs.conjecture`
 
 *Formalization.* `D5/S3/Combinatorics/Graph/KyFanGap/Defs.conjecture` (`✓ std3`).
 
-*Citation.* Jon Crall, Claude Fable 5, Claude Opus 4.8, GPT-5.6 Thinking, and GPT-5.6 High (2026). *Formal rectangular singular-value variational bounds*. URL: <https://github.com/AIQ-Kitware/aiq-dkps-formalization/tree/64e234954217f3ca907ac980c8cbde2900109a66/ForTauCeti/Analysis/InnerProductSpace>.
+*Citation.* Vladimir Nikiforov (2015). *Extrema of graph eigenvalues*. URL: <https://arxiv.org/abs/1502.00359v1>.
 
 *Commentary.*
 
