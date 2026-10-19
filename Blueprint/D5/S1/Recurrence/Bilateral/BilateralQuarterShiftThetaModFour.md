@@ -12,7 +12,31 @@ All series are over the integers unless mapped to ZMod(4). The indices m, n in a
 
 The imported thetaSeries and its coefficient formula are from `D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour.thetaSeries` and `D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour.coeff_thetaSeries`. Its constant coefficient is one, and each positive square coefficient is two; all other coefficients are zero.
 
-**Definition 1.1 (The reindexed bilateral terms).**
+**Definition 1.1 (The positive-square support series).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)] (\operatorname{squareSupport}: \operatorname{PowerSeries}\left(R\right)) = \operatorname{mk}\left((n: \mathbb{N} \mapsto \operatorname{if} n = 0 \operatorname{then} 0 \operatorname{else} \operatorname{if} \operatorname{IsSquare}\left(n\right) \operatorname{then} 1 \operatorname{else} 0)\right)$$
+
+*Formalization.* `D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.squareSupport` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The constant coefficient is zero, each positive square has coefficient one, and all other coefficients are zero.
+
+**Theorem 1.2 (Finite square approximation).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)] \forall N: \mathbb{N}, \forall n: \mathbb{N}, (n < N + 1) \implies (\operatorname{coeff}\left(n, (\operatorname{squareSupport}: \operatorname{PowerSeries}\left(R\right))\right) = \operatorname{coeff}\left(n, (\sum_{m \in \operatorname{Finset}.\operatorname{range}\left(N + 1\right)} X^{(m + 1)^{2}})\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.square_approximation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Below degree N+1 the support series equals the sum of the first N+1 positive-square monomials.
+
+**Definition 1.3 (The reindexed bilateral terms).**
 
 $$\begin{aligned}\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \forall n: \mathbb{Z}, \operatorname{bilateralTerm}\left(A, n\right) = (\operatorname{if} (n = 0) \operatorname{then} (4) \cdot (A) \operatorname{else} (\operatorname{if} (n = -(1)) \operatorname{then} 0 \operatorname{else} (\operatorname{if} (0 < n) \operatorname{then} \operatorname{positiveTerm}\left(A, \operatorname{toNat}\left(n\right) - (1)\right) \operatorname{else} \operatorname{negativeTerm}\left(A, \operatorname{toNat}\left(-(n) - (2)\right)\right))))\\\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \forall m: \mathbb{N}, \operatorname{positiveTerm}\left(A, m\right) = (((-(1))^{m + 1}) \cdot ((X)^{m + 1})) \cdot (((4) \cdot (A) + (X)^{m})^{m + 2})\\\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \forall m: \mathbb{N}, \operatorname{negativeTerm}\left(A, m\right) = (((-(1))^{m + 2}) \cdot ((X)^{(m)^{2} + (3) \cdot (m) + 1})) \cdot ((\operatorname{invOfUnit}\left(1 + ((4) \cdot (A)) \cdot ((X)^{m + 3}), 1\right))^{m + 1})\end{aligned}$$
 
@@ -24,7 +48,7 @@ $$\begin{aligned}\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \
 
 Positive index m+1 and negative index -m-2 use nonnegative exponents and an inverse whose constant coefficient is one.
 
-**Theorem 1.2 (Exact finite windows).**
+**Theorem 1.4 (Exact finite windows).**
 
 $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \forall N: \mathbb{N}, \forall n: \mathbb{Z}, ((n < -(N) - (2)) \lor (N < n)) \implies (\operatorname{coeff}\left(N, \operatorname{bilateralTerm}\left(A, n\right)\right) = 0)$$
 
@@ -36,7 +60,7 @@ $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \forall N: \math
 
 Both terms indexed by m contain at least X^(m+1). Every integer index outside [-N-2,N] therefore has zero coefficient at degree N.
 
-**Definition 1.3 (The stabilized integer coefficients).**
+**Definition 1.5 (The stabilized integer coefficients).**
 
 $$\begin{aligned}\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\left(n, \operatorname{P}\left(n + 1\right)\right)\\\operatorname{P}\left(0\right) = 1\\\forall d: \mathbb{N}, \operatorname{P}\left(d + 1\right) = 1 - (\operatorname{mk}\left((N: \mathbb{N} \mapsto \operatorname{div}\left(\operatorname{coeff}\left(N, \operatorname{R}\left(\operatorname{P}\left(d\right)\right)\right), 4\right))\right))\\\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \forall N: \mathbb{N}, \operatorname{coeff}\left(N, \operatorname{R}\left(B\right)\right) = \sum_{m \in \operatorname{range}\left(N + 1\right)} (\operatorname{coeff}\left(N, \operatorname{positiveTerm}\left(B, m\right) + \operatorname{negativeTerm}\left(B, m\right)\right))\end{aligned}$$
 
@@ -48,7 +72,7 @@ $$\begin{aligned}\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operat
 
 Each positive-negative pair vanishes at A=0. Differences of powers and the unit-inverse difference identity show that every pair is divisible by four. Thus the displayed division is exact over the integers. Agreement below degree d improves to agreement below degree d+1 under the iteration, so the selected coefficients stabilize.
 
-**Definition 1.4 (The integer generating series).**
+**Definition 1.6 (The integer generating series).**
 
 $$\operatorname{generatingSeries} = \operatorname{mk}\left(\operatorname{a}\right)$$
 
@@ -60,7 +84,7 @@ $$\operatorname{generatingSeries} = \operatorname{mk}\left(\operatorname{a}\righ
 
 The coefficient function of generatingSeries is a.
 
-**Theorem 1.5 (The defining bilateral equation).**
+**Theorem 1.7 (The defining bilateral equation).**
 
 $$(\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\right) = 1) \land (\forall N: \mathbb{N}, \operatorname{coeff}\left(N, 4\right) = \operatorname{coeff}\left(N, \sum_{n \in \operatorname{Icc}\left(-(N) - (2), N\right)} (\operatorname{bilateralTerm}\left(\operatorname{generatingSeries}, n\right))\right))$$
 
@@ -72,7 +96,7 @@ $$(\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\right) = 1)
 
 The stabilized series is fixed by the integral iteration. Rejoining the pairs restores the finite integer window. Its extra positive endpoint has zero coefficient, and the index-zero term gives 4*A.
 
-**Theorem 1.6 (Uniqueness of the solution).**
+**Theorem 1.8 (Uniqueness of the solution).**
 
 $$\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{constantCoeff}\left(B\right) = 1) \implies ((\forall N: \mathbb{N}, \operatorname{coeff}\left(N, 4\right) = \operatorname{coeff}\left(N, \sum_{n \in \operatorname{Icc}\left(-(N) - (2), N\right)} (\operatorname{bilateralTerm}\left(B, n\right))\right)) \implies (B = \operatorname{generatingSeries}))$$
 
@@ -84,7 +108,7 @@ $$\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{c
 
 Every series satisfying the same finite-window equation is fixed by the iteration. Degree contraction proves equality at every coefficient.
 
-**Theorem 1.7 (The constant coefficient).**
+**Theorem 1.9 (The constant coefficient).**
 
 $$\operatorname{a}\left(0\right) = 1$$
 
@@ -96,7 +120,7 @@ $$\operatorname{a}\left(0\right) = 1$$
 
 Every paired term has positive order, so the iteration has constant coefficient one.
 
-**Theorem 1.8 (Cancellation over the integers).**
+**Theorem 1.10 (Cancellation over the integers).**
 
 $$\exists Q: \operatorname{PowerSeries}\left(\mathbb{Z}\right), 1 = (\operatorname{generatingSeries}) \cdot (\operatorname{thetaSeries}) + (4) \cdot (Q)$$
 
@@ -108,7 +132,7 @@ $$\exists Q: \operatorname{PowerSeries}\left(\mathbb{Z}\right), 1 = (\operatorna
 
 Modulo sixteen, (4*A)^2 vanishes. Expanding each pair leaves its linear terms, whose weighted finite sum telescopes to eight times A times the positive-square support series. Multiplication by eight removes the alternating signs modulo sixteen. Hence the difference between the remainder and 4*A*(thetaSeries-1) is 16*Q with integral Q. The generating equation gives 4=4*(A*thetaSeries+4*Q); cancelling the nonzero factor four in the integer series ring gives the statement.
 
-**Theorem 1.9 (The series congruence).**
+**Theorem 1.11 (The series congruence).**
 
 $$\operatorname{map}\left(\operatorname{intCastRingHom}\left(\operatorname{ZMod}\left(4\right)\right), \operatorname{generatingSeries}\right) = \operatorname{map}\left(\operatorname{intCastRingHom}\left(\operatorname{ZMod}\left(4\right)\right), \operatorname{thetaSeries}\right)$$
 
@@ -120,7 +144,7 @@ $$\operatorname{map}\left(\operatorname{intCastRingHom}\left(\operatorname{ZMod}
 
 The reduction of thetaSeries is 1+2*S, where S indicates the positive squares. Its square is one over ZMod(4). Reducing the integer cancellation identity and multiplying by this self-inverse series identifies the reduction of generatingSeries.
 
-**Theorem 1.10 (Hanna's A363104 conjecture).**
+**Theorem 1.12 (Hanna's A363104 conjecture).**
 
 $$\forall n: \mathbb{N}, (1 \le n) \implies ((((\operatorname{a}\left(n\right) \bmod 4 = 2) \iff (\operatorname{IsSquare}\left(n\right))) \land ((\operatorname{a}\left(n\right) \bmod 4 = 0) \iff (\neg (\operatorname{IsSquare}\left(n\right))))))$$
 
@@ -148,6 +172,8 @@ At a positive index, the imported theta coefficient is two exactly at squares an
 - Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.generating_unique`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.hanna_conjecture`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.mod_four_identity`
+- Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.squareSupport`
+- Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.square_approximation`
 - Truth anchor: `D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour.coeff_thetaSeries`
 - Truth anchor: `D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour.thetaSeries`
 - Dependency: [D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour](../Parity/ThetaSelfCompositionModFour.md)
