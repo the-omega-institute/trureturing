@@ -7,7 +7,7 @@ doi: null
 url: https://arxiv.org/abs/2609.12667v3
 claim: "With E_F the convex roof of the marginal entropy over finite pure ensembles, the paper states that neither a proof nor a counterexample is known for the existence of a supporting affine functional for the entanglement of formation at every pure state of a finite-dimensional bipartite system."
 strata_touched:
-  - D5/S3/Quantum/Entanglement/PureStateFormationSupportingFunctional
+  - D5/S3/Quantum/PureState/PureStateFormationSupportingFunctional
 license: citation-only
 triage: anchor
 ---
