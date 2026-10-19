@@ -32,7 +32,9 @@ internal sealed class HanWangYuGluingSpectrumRefutationDocument : IScribeDocumen
     private static DocumentBlock Node(string id, string name, string title, Formula formula,
         string prose, AssessedProvenance provenance, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("hwy-" + id), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("han-wang-yu-gluing-spectrum"), ResolutionKind.Refuted) : null);
 
     private static Formula RootedFormula()
     {
