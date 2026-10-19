@@ -49,14 +49,17 @@ internal sealed class GaussianAtemporalityEntanglementDocument : IScribeDocument
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Gaussian atemporality implies entanglement", Disp(ClaimBody()),
                 "A physical local uncertainty matrix has strictly positive real covariance: a null quadratic form would annihilate its vector, whose imaginary part then forces Ωx = 0. Thus both local blocks are invertible. Conjugating the PPT inequality by the momentum flip gives H = V_AB + i((−Ω) ⊕ Ω) positive semidefinite. With T = Cᵀ VA⁻¹ and K = [−T,1], matrix multiplication gives K V_AB Kᵀ = N and K((−Ω) ⊕ Ω)Kᵀ = Ω − TΩTᵀ. Congruence yields forwardX positive semidefinite. Complex conjugation and exchange of Alice and Bob give the reverse direction. Either directional incompatibility therefore contradicts PPT. Diagonality of the local blocks is unnecessary for this argument.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gaussian-atemporality-entanglement"),
+                    ResolutionKind.Proved))
         ), []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("gaussian-atemporality-" + declaration.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula A => X("VA");
