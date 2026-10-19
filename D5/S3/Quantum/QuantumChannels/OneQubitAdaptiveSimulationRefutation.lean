@@ -7,8 +7,11 @@
    digest: A sign-frame channel obstructs bounded-round simulation with one ancilla qubit. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Trace
+
+/-!
+Finite adaptive protocols on a system and a qubit, with a diagonal-Kraus obstruction
+to uniform positive success at bounded measurement depth.
+-/
 
 noncomputable section
 
@@ -88,7 +91,7 @@ def claim : Prop :=
   ∃ R₀ : ℕ, ∃ q₀ : ℝ, 0 < q₀ ∧
     ∀ d : ℕ, ∀ Φ : QuantumChannel (Fin d) (Fin d),
       ∃ p : RandomizedProtocol (Fin d) R₀, ∃ q : ℝ,
-        q₀ ≤ q ∧ q ≤ 1 ∧
+        q₀ ≤ q ∧
         ∀ X : Matrix (Fin d) (Fin d) ℂ,
           p.successfulMap X = (q : ℂ) •
             CStarMatrix.ofMatrix.symm
@@ -107,8 +110,9 @@ def frameNat (n : ℕ) :
     Matrix (Fin (Fintype.card (FrameIndex n))) (Fin (n * n)) ℂ :=
   (frame n).submatrix (Fintype.equivFin (FrameIndex n)).symm id
 
-private theorem projection_rank_trace {ι : Type} [Fintype ι] [DecidableEq ι]
+private theorem projection_rank_trace {ι : Type} [Fintype ι]
     (P : Matrix ι ι ℂ) (hP : P * P = P) : (P.rank : ℂ) = P.trace := by
+  classical
   have hf : IsIdempotentElem P.toLin' := by
     change P.toLin'.comp P.toLin' = P.toLin'
     rw [← Matrix.toLin'_mul, hP]
@@ -158,7 +162,8 @@ private theorem branch_norm {ι : Type} [Fintype ι] [DecidableEq ι] [Nonempty 
       change ‖((child h.1).branch h.2 * P.projector h.1) * (U : Workspace ι)‖ ≤ 1
       rw [CStarRing.norm_mul_coe_unitary]
       exact (norm_mul_le _ _).trans
-        (mul_le_one₀ (ih h.1 h.2) (norm_nonneg _) ((P.projection h.1).norm_le _))
+        ((mul_le_of_le_one_left (norm_nonneg _) (ih h.1 h.2)).trans
+          ((P.projection h.1).norm_le _))
 
 private theorem kraus_entry_le_one {ι : Type} [Fintype ι] [DecidableEq ι] [Nonempty ι]
     {R : ℕ} (t : Protocol ι R) (h : t.History) (a : Fin 2) (i j : ι) :
@@ -239,7 +244,7 @@ private theorem usefulCount_bound {ι : Type} [Fintype ι] [DecidableEq ι]
           rw [krausFrom_node] at hk
           exact hk.trans ((krausFrom_rank _ _ _ _).trans
             ((Matrix.rank_mul_le_left _ _).trans (Matrix.rank_mul_le_left _ _)))
-        · simp only [if_neg hh, lt_self_iff_false] at hhpos
+        · simp only [ite_eq_right hh, lt_self_iff_false] at hhpos
       calc
         _ = ∑ o ∈ S, usefulCount (child o) (P.projector o * U * B) := by
           symm
@@ -288,7 +293,7 @@ private theorem frame_complete (n : ℕ) (hn : 0 < n) :
       Matrix.diagonal_mul_diagonal, Matrix.diagonal_apply_eq, Matrix.one_apply_eq]
     exact frame_row_complete n hn ((Fintype.equivFin (FrameIndex n)).symm i)
   · simp [Matrix.sum_apply, Matrix.diagonal_conjTranspose,
-      Matrix.diagonal_mul_diagonal, Matrix.diagonal_apply, Matrix.one_apply, hil]
+      Matrix.diagonal_mul_diagonal, hil]
 
 private def frameChannel (n : ℕ) (hn : 0 < n) :
     QuantumChannel (Fin (Fintype.card (FrameIndex n))) (Fin (Fintype.card (FrameIndex n))) :=
@@ -339,7 +344,365 @@ private theorem coefficient_budget (n : ℕ) (hn : 0 < n) (v : Fin (n * n) → �
       Finset.sum_le_sum fun j _ => Complex.norm_le_abs_re_add_abs_im _
     _ ≤ 2 * n := by rw [Finset.sum_add_distrib]; linarith
 
+private theorem frame_rank (n : ℕ) (hn : 0 < n) (v : Fin (n * n) → ℂ) (hv : v ≠ 0) :
+    2 ^ (n * n - 1) + 1 ≤ (Matrix.diagonal (frame n *ᵥ v)).rank := by
+  classical
+  obtain ⟨j, hj⟩ : ∃ j, v j ≠ 0 := Function.ne_iff.mp hv
+  let e := Equiv.funSplitAt j Bool
+  have hat (b : Bool) (s : {k : Fin (n * n) // k ≠ j} → Bool) :
+      e.symm (b, s) j = b := congrArg Prod.fst (e.apply_symm_apply (b, s))
+  have hoff (b : Bool) (s : {k : Fin (n * n) // k ≠ j} → Bool)
+      (k : {k : Fin (n * n) // k ≠ j}) : e.symm (b, s) k = s k :=
+    congrFun (congrArg Prod.snd (e.apply_symm_apply (b, s))) k
+  have hpair (s : {k : Fin (n * n) // k ≠ j} → Bool) :
+      ∃ b : Bool, (frame n *ᵥ v) (.inr (e.symm (b, s))) ≠ 0 := by
+    have hd : (frame n *ᵥ v) (.inr (e.symm (true, s))) -
+        (frame n *ᵥ v) (.inr (e.symm (false, s))) = 2 * v j / n := by
+      rw [frame_sign, frame_sign, ← sub_div, ← Finset.sum_sub_distrib]
+      congr 1
+      calc
+        _ = ∑ k, if k = j then 2 * v j else 0 := by
+          apply Finset.sum_congr rfl
+          intro k _
+          by_cases hk : k = j
+          · subst k
+            rw [hat, hat]
+            norm_num [sign]
+            ring
+          · have h₁ := hoff true s ⟨k, hk⟩
+            have h₂ := hoff false s ⟨k, hk⟩
+            rw [h₁, h₂, sub_self, ite_eq_right hk]
+        _ = _ := by simp
+    by_contra h
+    push Not at h
+    rw [h true, h false, sub_self] at hd
+    exact (div_ne_zero (mul_ne_zero (by norm_num) hj)
+      (by exact_mod_cast hn.ne')) hd.symm
+  choose b hb using hpair
+  let f : Unit ⊕ ({k : Fin (n * n) // k ≠ j} → Bool) →
+      {i : FrameIndex n // (frame n *ᵥ v) i ≠ 0}
+    | .inl _ => ⟨.inl j, by rw [frame_basis]; exact hj⟩
+    | .inr s => ⟨.inr (e.symm (b s, s)), hb s⟩
+  have hf : Function.Injective f := by
+    intro x y h
+    have h' := congrArg Subtype.val h
+    cases x with
+    | inl x =>
+        cases y with
+        | inl y => rfl
+        | inr t => cases h'
+    | inr s =>
+        cases y with
+        | inl y => cases h'
+        | inr t =>
+            have he := congrArg e (Sum.inr.inj h')
+            rw [e.apply_symm_apply, e.apply_symm_apply] at he
+            exact congrArg Sum.inr (congrArg Prod.snd he)
+  have hc : Fintype.card {k : Fin (n * n) // k ≠ j} = n * n - 1 := by simp
+  have hh := Fintype.card_le_of_injective f hf
+  rw [Matrix.rank_diagonal]
+  simpa [Fintype.card_sum, Fintype.card_fun, hc, Nat.add_comm] using hh
+
+private theorem frame_rank_gap (n : ℕ) (hn : 2 ≤ n) :
+    2 * Fintype.card (FrameIndex n) < 5 * (2 ^ (n * n - 1) + 1) := by
+  have he : ∀ m : ℕ, 4 ≤ m → 2 * m ≤ 2 ^ (m - 1) := by
+    intro m hm
+    induction m, hm using Nat.le_induction with
+    | base => norm_num
+    | succ m hm ih =>
+        have hp : 2 ^ m = 2 * 2 ^ (m - 1) := by
+          conv_lhs => rw [← Nat.sub_add_cancel (by omega : 1 ≤ m)]
+          rw [pow_succ, Nat.mul_comm]
+        simpa only [Nat.add_sub_cancel] using
+          (show 2 * (m + 1) ≤ 2 ^ m by nlinarith)
+  have hm : 4 ≤ n * n := by nlinarith
+  have hh := he (n * n) hm
+  have hp : 2 ^ (n * n) = 2 * 2 ^ (n * n - 1) := by
+    conv_lhs => rw [← Nat.sub_add_cancel (by omega : 1 ≤ n * n)]
+    rw [pow_succ, Nat.mul_comm]
+  simp only [FrameIndex, Fintype.card_sum, Fintype.card_fin, Fintype.card_fun,
+    Fintype.card_bool]
+  nlinarith
+
+private theorem sandwich_single {ι : Type} [Fintype ι] [DecidableEq ι]
+    (K : Matrix ι ι ℂ) (i j : ι) :
+    (K * (Matrix.single j j (1 : ℂ) : Matrix ι ι ℂ) * Kᴴ) i i =
+      (Complex.normSq (K i j) : ℂ) := by
+  simp [Matrix.mul_apply, Matrix.single_apply, ite_and, Matrix.conjTranspose_apply,
+    Complex.mul_conj]
+
+private theorem zero_weighted_normSq {κ : Type} [Fintype κ]
+    (p : κ → ℝ) (hp : ∀ k, 0 ≤ p k) (w : κ → ℂ)
+    (hz : ∑ k, p k * Complex.normSq (w k) = 0) (k : κ) (hk : 0 < p k) : w k = 0 := by
+  have hh := (Finset.sum_eq_zero_iff_of_nonneg
+    (fun k _ => mul_nonneg (hp k) (Complex.normSq_nonneg _))).mp hz k (Finset.mem_univ k)
+  exact Complex.normSq_eq_zero.mp ((mul_eq_zero.mp hh).resolve_left hk.ne')
+
+private theorem exact_diagonal {ι κ μ : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype κ] [Fintype μ] (p : κ → ℝ) (hp : ∀ k, 0 ≤ p k)
+    (K : κ → Matrix ι ι ℂ) (A : Matrix ι μ ℂ) (q : ℝ)
+    (heq : ∀ X, (∑ k, (p k : ℂ) • (K k * X * (K k)ᴴ)) =
+      (q : ℂ) • ∑ j, Matrix.diagonal (A · j) * X * (Matrix.diagonal (A · j))ᴴ)
+    (k : κ) (hk : 0 < p k) : K k = Matrix.diagonal (Matrix.diag (K k)) := by
+  ext i j
+  by_cases hij : i = j
+  · subst j; simp only [Matrix.diagonal_apply_eq, Matrix.diag_apply]
+  · rw [Matrix.diagonal_apply_ne _ hij]
+    apply zero_weighted_normSq p hp (fun k => K k i j) _ k hk
+    have h := congrArg (fun M : Matrix ι ι ℂ => (M i i).re)
+      (heq (Matrix.single j j 1))
+    simpa only [Matrix.sum_apply, Matrix.smul_apply, sandwich_single,
+      Matrix.diagonal_apply_ne _ hij, Complex.normSq_zero, Complex.ofReal_zero,
+      mul_zero, Finset.sum_const_zero, smul_zero, Complex.zero_re, Complex.re_sum,
+      smul_eq_mul, ← Complex.ofReal_mul, Complex.ofReal_re] using h
+
+private theorem exact_gram {ι κ μ : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype κ] [Fintype μ] (p : κ → ℝ) (hp : ∀ k, 0 ≤ p k)
+    (K : κ → Matrix ι ι ℂ) (A : Matrix ι μ ℂ) (q : ℝ)
+    (heq : ∀ X, (∑ k, (p k : ℂ) • (K k * X * (K k)ᴴ)) =
+      (q : ℂ) • ∑ j, Matrix.diagonal (A · j) * X * (Matrix.diagonal (A · j))ᴴ) :
+    (∑ k, (p k : ℂ) • Matrix.vecMulVec (Matrix.diag (K k)) (star (Matrix.diag (K k)))) =
+      (q : ℂ) • (A * Aᴴ) := by
+  have hdiag (k) (hk : 0 < p k) := exact_diagonal p hp K A q heq k hk
+  let J : Matrix ι ι ℂ := Matrix.of fun _ _ => 1
+  have hsand (w : ι → ℂ) :
+      Matrix.diagonal w * J * (Matrix.diagonal w)ᴴ =
+        Matrix.vecMulVec w (star w) := by
+    ext i j
+    simp [J, Matrix.diagonal_mul, Matrix.mul_diagonal,
+      Matrix.diagonal_conjTranspose, Matrix.vecMulVec]
+  calc
+    _ = ∑ k, (p k : ℂ) • (K k * J * (K k)ᴴ) := by
+      apply Finset.sum_congr rfl
+      intro k _
+      by_cases hk : p k = 0
+      · rw [hk]; simp
+      · rw [hdiag k (lt_of_le_of_ne (hp k) (Ne.symm hk)), hsand]
+        simp only [Matrix.diag_diagonal]
+    _ = _ := by
+      rw [heq]
+      congr 1
+      simp only [hsand]
+      ext i j
+      simp [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.vecMulVec,
+        Pi.star_apply]
+
+private theorem gram_kernel {ι κ μ : Type} [Fintype ι] [Fintype κ] [Fintype μ]
+    (p : κ → ℝ) (hp : ∀ k, 0 ≤ p k) (w : κ → ι → ℂ)
+    (A : Matrix ι μ ℂ) (q : ℝ)
+    (heq : (∑ k, (p k : ℂ) • Matrix.vecMulVec (w k) (star (w k))) =
+      (q : ℂ) • (A * Aᴴ))
+    (z : ι → ℂ) (hz : z ᵥ* A = 0) (k : κ) (hk : 0 < p k) : z ⬝ᵥ w k = 0 := by
+  have hout (v : ι → ℂ) : z ⬝ᵥ (Matrix.vecMulVec v (star v) *ᵥ star z) =
+      (Complex.normSq (z ⬝ᵥ v) : ℂ) := by
+    rw [dotProduct_mulVec, Matrix.vecMul_vecMulVec, smul_dotProduct,
+      star_dotProduct_star, smul_eq_mul, Complex.star_def, Complex.mul_conj]
+  have hzero : z ⬝ᵥ ((A * Aᴴ) *ᵥ star z) = 0 := by
+    rw [dotProduct_mulVec, ← Matrix.vecMul_vecMul, hz, Matrix.zero_vecMul, zero_dotProduct]
+  have h := congrArg (fun M : Matrix ι ι ℂ => z ⬝ᵥ (M *ᵥ star z)) heq
+  simp only [Matrix.sum_mulVec, Matrix.smul_mulVec, dotProduct_sum, dotProduct_smul,
+    hout, hzero, smul_eq_mul, ← Complex.ofReal_mul] at h
+  apply zero_weighted_normSq p hp (fun k => z ⬝ᵥ w k) _ k hk
+  simpa only [Complex.re_sum, Complex.ofReal_re, mul_zero, Complex.zero_re]
+    using congrArg Complex.re h
+
+private def coefficients (n : ℕ)
+    (K : Matrix (Fin (Fintype.card (FrameIndex n))) (Fin (Fintype.card (FrameIndex n))) ℂ)
+    (j : Fin (n * n)) : ℂ :=
+  K ((Fintype.equivFin (FrameIndex n)) (.inl j)) ((Fintype.equivFin (FrameIndex n)) (.inl j))
+
+private theorem frameNat_basis (n : ℕ) (i j : Fin (n * n)) :
+    frameNat n ((Fintype.equivFin (FrameIndex n)) (.inl i)) j = if i = j then 1 else 0 := by
+  simp only [frameNat, Matrix.submatrix_apply, Equiv.symm_apply_apply, id_eq, frame]
+
+private theorem frameNat_sign (n : ℕ) (s : Fin (n * n) → Bool) (j : Fin (n * n)) :
+    frameNat n ((Fintype.equivFin (FrameIndex n)) (.inr s)) j = sign (s j) / n := by
+  simp only [frameNat, Matrix.submatrix_apply, Equiv.symm_apply_apply, id_eq, frame]
+
+private theorem exact_frame_span (n : ℕ) {κ : Type} [Fintype κ]
+    (p : κ → ℝ) (hp : ∀ k, 0 ≤ p k)
+    (K : κ → Matrix (Fin (Fintype.card (FrameIndex n))) (Fin (Fintype.card (FrameIndex n))) ℂ)
+    (q : ℝ)
+    (heq : ∀ X, (∑ k, (p k : ℂ) • (K k * X * (K k)ᴴ)) =
+      (q : ℂ) • ∑ j, Matrix.diagonal (frameNat n · j) * X *
+        (Matrix.diagonal (frameNat n · j))ᴴ)
+    (k : κ) (hk : 0 < p k) :
+    K k = Matrix.diagonal (frameNat n *ᵥ coefficients n (K k)) := by
+  classical
+  let e := Fintype.equivFin (FrameIndex n)
+  have hg := exact_gram p hp K (frameNat n) q heq
+  apply (exact_diagonal p hp K (frameNat n) q heq k hk).trans
+  congr 1
+  funext i
+  obtain ⟨i, rfl⟩ := e.surjective i
+  cases i with
+  | inl j =>
+      simp [e, Matrix.diag_apply, Matrix.mulVec, dotProduct, frameNat_basis, coefficients]
+  | inr s =>
+      let z := Pi.single (e (.inr s)) (1 : ℂ) -
+        ∑ j, (sign (s j) / n) • Pi.single (e (.inl j)) (1 : ℂ)
+      have hz : z ᵥ* frameNat n = 0 := by
+        simp only [z, Matrix.sub_vecMul, Matrix.sum_vecMul, Matrix.smul_vecMul,
+          Matrix.single_vecMul, one_smul]
+        ext j
+        simp [Matrix.row, Pi.sub_apply, frameNat_basis, frameNat_sign, e]
+      have h := gram_kernel p hp (fun k => Matrix.diag (K k)) (frameNat n) q hg z hz k hk
+      simp only [z, sub_dotProduct, sum_dotProduct, smul_dotProduct,
+        single_dotProduct, one_mul] at h
+      have hh := sub_eq_zero.mp h
+      change (K k).diag (e (.inr s)) = _
+      apply hh.trans
+      simp only [Matrix.mulVec, dotProduct, e, frameNat_sign, coefficients,
+        Matrix.diag_apply, smul_eq_mul]
+
+private theorem frameNat_rank (n : ℕ) (hn : 0 < n) (v : Fin (n * n) → ℂ) (hv : v ≠ 0) :
+    2 ^ (n * n - 1) + 1 ≤ (Matrix.diagonal (frameNat n *ᵥ v)).rank := by
+  let e := Fintype.equivFin (FrameIndex n)
+  have h : (Matrix.diagonal (frameNat n *ᵥ v)).submatrix e e =
+      Matrix.diagonal (frame n *ᵥ v) := by
+    rw [Matrix.submatrix_diagonal_equiv]
+    congr 1
+    funext i
+    simp only [Function.comp_apply, Matrix.mulVec, dotProduct, frameNat,
+      Matrix.submatrix_apply, Equiv.symm_apply_apply, id_eq, e]
+  exact (frame_rank n hn v hv).trans_eq
+    (by rw [← h, Matrix.rank_submatrix])
+
+private def coefficientEnergy (n : ℕ)
+    (K : Matrix (Fin (Fintype.card (FrameIndex n))) (Fin (Fintype.card (FrameIndex n))) ℂ) : ℝ :=
+  ∑ j, Complex.normSq (coefficients n K j)
+
+private theorem frameNat_budget (n : ℕ) (hn : 0 < n)
+    (K : Matrix (Fin (Fintype.card (FrameIndex n))) (Fin (Fintype.card (FrameIndex n))) ℂ)
+    (hK : K = Matrix.diagonal (frameNat n *ᵥ coefficients n K))
+    (hentry : ∀ i, ‖K i i‖ ≤ 1) : coefficientEnergy n K ≤ 2 * n := by
+  apply coefficient_budget n hn
+  intro i
+  have h := hentry ((Fintype.equivFin (FrameIndex n)) i)
+  rw [hK, Matrix.diagonal_apply_eq] at h
+  simpa only [Matrix.mulVec, dotProduct, frameNat, Matrix.submatrix_apply,
+    Equiv.symm_apply_apply, id_eq] using h
+
+private theorem tree_energy_bound (n : ℕ) (hn : 2 ≤ n) {R : ℕ}
+    (t : Protocol (Fin (Fintype.card (FrameIndex n))) R)
+    (hspan : ∀ h a, t.krausFrom 1 h a =
+      Matrix.diagonal (frameNat n *ᵥ coefficients n (t.krausFrom 1 h a))) :
+    (∑ h, ∑ a, coefficientEnergy n (t.krausFrom 1 h a)) ≤ 4 * n * (4 : ℝ) ^ R := by
+  classical
+  have : Nonempty (Fin (Fintype.card (FrameIndex n))) := ⟨⟨0, Fintype.card_pos⟩⟩
+  have hbudget (h) (a) : coefficientEnergy n (t.krausFrom 1 h a) ≤ 2 * n :=
+    frameNat_budget n (by omega) _ (hspan h a) (fun i => kraus_entry_le_one t h a i i)
+  have hc := usefulCount_bound t 1
+    (by simpa only [Fintype.card_fin] using frame_rank_gap n hn) (fun h a hne => by
+    have hv : coefficients n (t.krausFrom 1 h a) ≠ 0 := by
+      intro hz
+      apply hne
+      rw [hspan h a, hz, Matrix.mulVec_zero]
+      exact Matrix.diagonal_zero
+    rw [hspan h a]
+    exact frameNat_rank n (by omega) _ hv)
+  have hzero : coefficientEnergy n (0 : Matrix (Fin (Fintype.card (FrameIndex n)))
+      (Fin (Fintype.card (FrameIndex n))) ℂ) = 0 := by
+    simp [coefficientEnergy, coefficients]
+  have hsum : (∑ h, ∑ a, coefficientEnergy n (t.krausFrom 1 h a)) ≤
+      (4 * n : ℝ) * usefulCount t 1 := by
+    calc
+      _ ≤ ∑ h, if ∃ a, t.krausFrom 1 h a ≠ 0 then (4 * n : ℝ) else 0 := by
+        apply Finset.sum_le_sum
+        intro h _
+        split_ifs with hh
+        · rw [Fin.sum_univ_two]
+          linarith [hbudget h 0, hbudget h 1]
+        · have hz (a : Fin 2) : t.krausFrom 1 h a = 0 :=
+            not_not.mp (not_exists.mp hh a)
+          simp only [hz, hzero, Finset.sum_const_zero, le_refl]
+      _ = _ := by
+        unfold usefulCount
+        push_cast
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro h _
+        split_ifs <;> simp
+  exact hsum.trans (mul_le_mul_of_nonneg_left (by exact_mod_cast hc) (by positivity))
+
+private theorem frame_energy_identity (n : ℕ) {κ : Type} [Fintype κ]
+    (p : κ → ℝ)
+    (K : κ → Matrix (Fin (Fintype.card (FrameIndex n))) (Fin (Fintype.card (FrameIndex n))) ℂ)
+    (q : ℝ)
+    (heq : ∀ X, (∑ k, (p k : ℂ) • (K k * X * (K k)ᴴ)) =
+      (q : ℂ) • ∑ j, Matrix.diagonal (frameNat n · j) * X *
+        (Matrix.diagonal (frameNat n · j))ᴴ) :
+    (∑ k, p k * coefficientEnergy n (K k)) = q * (n : ℝ) ^ 2 := by
+  have hb (j : Fin (n * n)) :
+      (∑ k, p k * Complex.normSq (coefficients n (K k) j)) = q := by
+    let i := (Fintype.equivFin (FrameIndex n)) (.inl j)
+    have h := congrArg (fun M => (M i i).re) (heq (Matrix.single i i 1))
+    simpa only [Matrix.sum_apply, Matrix.smul_apply, sandwich_single,
+      Matrix.diagonal_apply_eq, frameNat_basis, i, coefficients, Complex.re_sum,
+      smul_eq_mul, ← Complex.ofReal_mul, Complex.ofReal_re, apply_ite,
+      Complex.normSq_one, Complex.normSq_zero, Finset.sum_ite_eq, Finset.mem_univ,
+      ite_true, Complex.ofReal_zero, Complex.ofReal_one, mul_one] using h
+  calc
+    _ = ∑ j, ∑ k, p k * Complex.normSq (coefficients n (K k) j) := by
+      simp only [coefficientEnergy, Finset.mul_sum]
+      exact Finset.sum_comm
+    _ = ∑ _j : Fin (n * n), q := by simp only [hb]
+    _ = _ := by simp [pow_two]; ring
+
+private theorem simulation_bound (n : ℕ) (hn : 2 ≤ n) {R : ℕ}
+    (p : RandomizedProtocol (Fin (Fintype.card (FrameIndex n))) R) (q : ℝ)
+    (heq : ∀ X, p.successfulMap X = (q : ℂ) •
+      CStarMatrix.ofMatrix.symm
+        ((frameChannel n (by omega)).toCompletelyPositiveMap (CStarMatrix.ofMatrix X))) :
+    q * n ≤ 4 * (4 : ℝ) ^ R := by
+  classical
+  let κ := (s : Fin p.seeds) × (p.tree s).History × Fin 2
+  let K : κ → Matrix (Fin (Fintype.card (FrameIndex n)))
+      (Fin (Fintype.card (FrameIndex n))) ℂ := fun k =>
+    (p.tree k.1).krausFrom 1 k.2.1 k.2.2
+  let w : κ → ℝ := fun k => p.probability k.1
+  have hw (k) : 0 ≤ w k := p.nonnegative k.1
+  have hmap : ∀ X, (∑ k, (w k : ℂ) • (K k * X * (K k)ᴴ)) =
+      (q : ℂ) • ∑ j, Matrix.diagonal (frameNat n · j) * X *
+        (Matrix.diagonal (frameNat n · j))ᴴ := by
+    intro X
+    have h := heq X
+    rw [frameChannel_action] at h
+    simpa only [κ, K, w, Fintype.sum_sigma, Fintype.sum_prod_type,
+      RandomizedProtocol.successfulMap, Protocol.successfulMap, Finset.smul_sum] using h
+  have hidentity := frame_energy_identity n w K q hmap
+  have htotal : (∑ k, w k * coefficientEnergy n (K k)) ≤
+      4 * n * (4 : ℝ) ^ R := by
+    calc
+      _ = ∑ s, p.probability s *
+          (∑ h, ∑ a, coefficientEnergy n ((p.tree s).krausFrom 1 h a)) := by
+        simp only [κ, K, w, Fintype.sum_sigma, Fintype.sum_prod_type, Finset.mul_sum]
+      _ ≤ ∑ s, p.probability s * (4 * n * (4 : ℝ) ^ R) := by
+        apply Finset.sum_le_sum
+        intro s _
+        by_cases hs : p.probability s = 0
+        · simp only [hs, zero_mul, le_refl]
+        · apply mul_le_mul_of_nonneg_left _ (p.nonnegative s)
+          apply tree_energy_bound n hn
+          intro h a
+          exact exact_frame_span n w hw K q hmap ⟨s, h, a⟩
+            (lt_of_le_of_ne (p.nonnegative s) (Ne.symm hs))
+      _ = _ := by rw [← Finset.sum_mul, p.total, one_mul]
+  rw [hidentity] at htotal
+  have hpos : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
+  nlinarith
+
 theorem result : ¬ claim := by
-  sorry
+  rintro ⟨R, q₀, hq₀, h⟩
+  obtain ⟨n, hn⟩ := exists_nat_gt (max (2 : ℝ) (4 * (4 : ℝ) ^ R / q₀))
+  have hn₂ : 2 ≤ n := by exact_mod_cast (le_max_left _ _).trans hn.le
+  obtain ⟨p, q, hq, heq⟩ := h (Fintype.card (FrameIndex n))
+    (frameChannel n (by omega))
+  have hb := simulation_bound n hn₂ p q heq
+  have hlarge := (div_lt_iff₀ hq₀).mp ((le_max_right _ _).trans_lt hn)
+  have hmul := mul_le_mul_of_nonneg_right hq (by positivity : (0 : ℝ) ≤ n)
+  nlinarith
+
+#print axioms result
 
 end D5.S3.Quantum.QuantumChannels.OneQubitAdaptiveSimulationRefutation
