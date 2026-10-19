@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The trace norm as a unitarily invariant norm and its two-dimensional
-   determinant formula. -/
+   digest: Trace norm as a unitarily invariant norm; two-by-two determinant formula. -/
 
 import D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
 import D5.S3.Weil.ZetaLinear.PosIndex

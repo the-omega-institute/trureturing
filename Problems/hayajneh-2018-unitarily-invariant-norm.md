@@ -20,7 +20,7 @@ The formal statement retains every quantifier: every natural dimension $n$, all 
 
 ## Motivation
 
-The source proves this monotonicity for the Hilbert–Schmidt norm and proves the endpoint $s=1/2,t=1$ for every unitarily invariant norm. Conjecture 1 asks whether these special cases extend to every allowed parameter pair and every such norm. The target and counterexample are preregistered in [issue #19103](https://github.com/the-omega-institute/trureturing/issues/19103).
+The source proves this monotonicity for the Hilbert–Schmidt norm and proves the endpoint $s=1/2,t=1$ for every unitarily invariant norm. Conjecture 1 asks whether these special cases extend to every allowed parameter pair and every such norm.
 
 ## Gap
 
