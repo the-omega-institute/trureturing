@@ -18,7 +18,9 @@ Marcin Kotowski and Michał Kotowski, arXiv:2606.08784v1 (quant-ph), 2026-06-07.
 
 Simulation with postselection (Section 2.2, Definition 2.3):
 
-> We say that a channel $\Phi \in \channels(\C^d)$ can be {\normalfont simulated with classical randomization and postselection} with ancilla dimension $k$ and success probability $q \in [0,1]$ if there exists a channel $\Phi' \in \channels(\C^d, \C^d\otimes
+> We say that a channel $\Phi \in \channels(\C^d)$ can be {\normalfont simulated with classical randomization and postselection} with ancilla dimension $k$ and success probability $q \in [0,1]$ if there exists a channel $\Phi' \in \channels(\C^d, \C^d\otimes \C^2)$ such that for any input state $\rho$
+> \begin{equation}\label{eq:postselection}
+> \Phi'(\rho) = q \cdot \Phi(\rho) \otimes \ketbra{0}{0} + (1-q)\Phi^{\junk}(\rho)\otimes \ketbra{1}  {1},
 
 The open question (Section 6):
 
