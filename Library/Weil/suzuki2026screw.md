@@ -8790,7 +8790,7 @@ $$
 \left[\frac2{\sqrt\pi}\log\frac1\delta-C\right]S.
 \tag{W291}
 $$
-Thus one universal sufficiently small $\delta_*>0$ gives $\mathfrak E(f)\ge S>0$ for every nonzero tuple with $\delta\le\delta_*$, including ALL resonances and growing $D$. No exclusion of $\pi\mathbb Z$ and no logarithmic shrinking of the width are needed in this class. The integer-square positions, common base interval and short absolute width remain hypotheses. This does not establish arbitrary-support positivity, every-budget W258 or RH.
+Thus one universal sufficiently small $\delta_*>0$ gives $\mathfrak E(f)\ge S>0$ for every nonzero tuple with $\delta\le\delta_*$, including ALL resonances and growing $D$. No exclusion of $\pi\mathbb Z$ and no logarithmic shrinking of the width are needed in this class. W291 uses integer-square positions and a short common base interval; W297 below permits disconnected base sets of small total measure in a containing span $W\le R^\nu$ for each $0<\nu<1/4$. This does not establish arbitrary-support positivity, every-budget W258 or RH.
 
 Reuse W284--W287's exact complete reflection and dimension-uniform $B$ tails, W285's SAME-source normalized modes, W249's original charge order, W269's Gamma multiplier and cutoff control, and W290's actual Gaussian return. The additional input is the classical logarithmic endpoint of the sharp fractional Sobolev inequality, consumed as an entropy lower bound on this physical feature. It is not a new logarithmic Sobolev theorem. The elementary classical divisor bound and prime-power geometric sum below are also inputs, not standalone contributions. No Lean certification or literature-priority claim is made.
 
@@ -8872,3 +8872,122 @@ $AQ_{\mathcal K_A^g}\to\mathfrak E(f)/(4\pi^3\|f\|_2^2)>0$.
 The count is at most $\lceil(M_f+1)e^{2A}\rceil$, $M_f=(R+\delta)/(\min D)^2$. The start remains tuple-dependent and independent of every $w>0$ for the selected approximants. On W290's upper-half index sets, interval count can tend to infinity while the limiting sixth-moment ratio is at most $5^6$ and the lower limit for $AQ_{\mathcal K_A^g}$ is uniformly positive. This now holds at a single fixed sufficiently small width through every resonance.
 
 The result removes the resonance-dependent width loss for these actual sources. It does not exhaust all features in that moment budget, and supplies neither a common approximation start over all tuples nor stable coefficient/gap bounds. No density passage from integer-square interval configurations to arbitrary compact features is established. Every-budget W258, unrestricted complete positivity, RH and strict Robin for EVERY integer $n>5040$ remain unproved. No numerical constants/start, computational certificate or exhaustive literature/priority claim is supplied.
+
+
+## Separate shared low indices from distinct resonance blocks
+
+There are universal $C>0$ and $\mu_*>0$ with the following property. For EACH $0<\nu<1/4$ there is $R_0(\nu)$ such that for EVERY $R\ge R_0(\nu)$, $0<W\le R^\nu$, open $E\subset(R,R+W)$ with $0<\mu=|E|\le1$, nonempty
+$D\subset\{1,\ldots,\lfloor\sqrt{R/\pi}\rfloor\}$ and arbitrary independent complex $g_d\in C_c^\infty(E)$, put
+$f(x)=\sum_{d\in D}d^4g_d(d^2x)$, $U=\mathscr Tf$ and $S=\|U\|_{L^2([\pi,\infty),x^{7/2}dx)}^2$. The COMPLETE actual form satisfies
+$$
+\mathfrak E(f)\ge
+\left[\frac2{\sqrt\pi}\log\frac1\mu-C\right]S.
+\tag{W297}
+$$
+For $0<\mu\le\mu_*$, $\mathfrak E(f)\ge S>0$ for every nonzero tuple. The constant and positive measure threshold are independent of $\nu$, component count, $D$, amplitudes and phases; the starting scale $R_0(\nu)$ may depend on $\nu$. The containing span and number of resonance cuts may grow as a power of $R$. All interactions between components are included. Integer-square positions, the restricted containing span and small TOTAL base measure remain hypotheses. This does not establish arbitrary-support positivity, every-budget W258 or RH.
+
+Consume W284's COMPLETE prime-Hankel regrouping, W285--W286's actual modal and right-integral method, W249's original source order, the classical Beckner endpoint already supplied at W292, W293's entropy interface, W295's classical divisor inputs and W290's actual Gaussian return. The source-specific addition is a block estimate for the full collection of interacting resonance cuts. Classical divisor and prime-power identities are reused, without adding a standalone classical theorem, Lean certification or literature-priority claim.
+
+### Use total base measure in the owned entropy and tail bounds
+
+Set $I=(R,R+W)$, $L=\lfloor\sqrt{(R+W)/\pi}\rfloor$ and $N(y)=\lfloor\sqrt{y/\pi}\rfloor$. Keep W285's actual $h_n$, $k_n$ and $a_n=y^{9/4}h_n/\sqrt n$, zero-extended off $E$ and off $n\le N(y)$. Since $W\le R^{1/4}\ll\sqrt R$, the containing shells $I/n^2$ are disjoint for the admitted starting scale. Consequently
+$S=\int_E\sum_{n\le N(y)}|a_n(y)|^2dy/y$ is exact, including the partial last mode.
+For $S>0$ put $p_n=S^{-1}\int_E|a_n|^2dy/y$. Each modal Mellin support has measure at most $\mu/R$, regardless of its number of components. Jensen and the already supplied W292, applied to the SAME normalized feature with the same complex/cutoff interface, give
+$$
+\mathcal D_\pi(U)\ge\frac2{\sqrt\pi}
+\left[\log\frac R\mu-H(p)-C\right]S.
+\tag{W298}
+$$
+The profiles are smooth and compact even when their containing set is disconnected. Only the original cutoff can introduce a jump, and its logarithmic form domain and rank-two correction are those checked at W292--W293.
+
+The right-integral proof W286 depends on measure rather than connectedness. In that proof use
+$\int_{E\cap[n^2x,\infty)}y^{-7/2}dy\le\mu R^{-7/2}$ and
+$\sum_{n\le\sqrt{(R+W)/x}}n^5\le C(R/x)^3$.
+It gives
+$|H_U(x)|\le C\sqrt\mu R^{-1/4}x^{-5/2}\sqrt S$ and
+$\|H_U\|_W\le C\sqrt\mu R^{-1/4}\sqrt S$,
+with universal constants since $R+W\le2R$. The same estimate for $V$ has the owned $\log L+C$ factor, so the direct $B$ replacement costs $CS$.
+Also
+$\int_{\operatorname{supp}U}x^{-1/2}dx\le C\mu R^{-1/2}\log(2+R)$.
+The mixed and two-tail terms in W284 are bounded by
+$C\mu R^{-1/2}\log^{3/2}(2+R)S$ and
+$C\mu R^{-1/2}\log^2(2+R)S$. They cost $CS$ uniformly for $\mu\le1$. All exterior indices and the folded-model allowance remain included.
+
+### Express every cross-component resonance on one profile space
+
+Let $\mathcal M=\{m\ge1:\pi m\in I\}$ and $M=|\mathcal M|\le W/\pi+1$. These integers are consecutive. W284 and the actual modal supports give the COMPLETE compact-profile correction
+$$
+\mathcal P(U)=\frac2{\sqrt\pi}\langle a,\mathcal H a\rangle,
+\qquad
+(\mathcal H a)_n(y)=
+\sum_{m\in\mathcal M}\sum_{\substack{k\le N(y_m^*)\\nk\mid m}}
+\frac{\Lambda(m/(nk))}{\sqrt{m/(nk)}}a_k(y_m^*),
+\quad y_m^*=\frac{\pi^2m^2}{y}.
+\tag{W299}
+$$
+The space has counting measure in $n$ and $dy/y$ on each actual modal domain. Zero extension keeps precisely the pairs with $y,y_m^*\in E$. Thus components at different base positions, arbitrary complex phases and the partial last mode are retained.
+For each $(m,q)$, its coordinate map $(n,y)\mapsto(m/(qn),\pi^2m^2/y)$ is a partial measure-preserving involution of norm at most one, as at W294. Put
+$J=\{n\le L:n\mid m\text{ for some }m\in\mathcal M\}$,
+$b=\max(1,|J|)$ and $r=\sum_{n\in J}p_n$. Both ends of every summand lie in $J$, so
+$(\sqrt\pi/2)|\mathcal P(U)|\le\|\mathcal H\|\,rS$.
+The reflected loss and entropy gain will therefore use the SAME actual mass $r$.
+
+### Bound high, low and mixed index blocks
+
+Put $B=\max(1,M)$ and split indices into $n\le B$ and $n>B$. A high index divides at most one $m\in\mathcal M$, because two such multiples would differ by at least $n>M-1$. Hence the high--high block is an orthogonal direct sum over $m$, and
+$\|\mathcal H_{hh}\|\le\max_{m\in\mathcal M}T(m)$, with $T$ from W294 and empty maximum zero.
+
+For low indices $n,k\le B$, each entry has operator norm bounded by
+$C\log(3R)\sqrt{nk/R}\,[M/(nk)+1]$: there are at most $M/(nk)+1$ multiples $m$ of $nk$, and $m\asymp R$. Summing this finite symmetric numerical matrix by rows gives
+$\|\mathcal H_{ll}\|\le C B^2R^{-1/2}\log(3R)$.
+
+For $n\le B<k$, $nk>M-1$, so there is at most ONE relevant $m$ for each pair $(n,k)$. Apply the finite numerical matrix bound to the entry operator norms, followed by its Frobenius bound. The $L^2(E)$ maps themselves remain partial isometries. For any fixed $\epsilon>0$ this gives
+$$
+\begin{aligned}
+\|\mathcal H_{lh}\|^2
+&\le\sum_{m\in\mathcal M}\sum_{\substack{n\le B<k\le L\\nk\mid m}}
+\frac{\Lambda(m/(nk))^2}{m/(nk)}\\
+&\le C_\epsilon B^2 R^{-1/2+\epsilon}\log^2(3R).
+\end{aligned}
+\tag{W300}
+$$
+Indeed $q=m/(nk)\ge c\sqrt R/B$. For each $m,q$ there are at most $\tau(m)$ pairs. The classical bound $\tau(m)\le C_\epsilon R^\epsilon$ and the exact identity $\sum_{q\mid m}\Lambda(q)=\log m$ give
+$\sum_{q\mid m,\ q\ge c\sqrt R/B}\Lambda(q)^2/q\le C B R^{-1/2}\log^2(3R)$.
+Finally $M\le B$. This uses a finite matrix of operator-entry norms and retains the common profile space throughout.
+
+Choose $\epsilon=1/4-\nu>0$. Since $B\le C R^\nu$, the low--low norm is at most $C R^{-2\epsilon}\log(3R)$ and the mixed norm at most $C_\epsilon R^{-\epsilon/2}\log(3R)$. Both are at most one after increasing $R_0(\nu)$. W295's already owned bound $T(m)\le\eta\log m+C_\eta$, with one fixed sufficiently small $\eta>0$, now gives $\|\mathcal H\|\le(1/8)\log R$ at that scale, using self-adjointness for the other mixed block.
+
+The SAME divisor bound gives
+$b\le1+C_\epsilon M R^\epsilon\le C_\nu R^{1/4}$.
+As $L\ge c\sqrt R$, a further increase of $R_0(\nu)$ yields
+$$
+\log\frac Lb-\|\mathcal H\|\ge\frac1{16}\log R\ge0.
+\tag{W301}
+$$
+If $M=0$, $J$ is empty, $r=0$, $\mathcal H=0$ and the same inequality holds. Constants from the divisor bound enter the starting scale; no dependence on $\nu$ is added to the final constant in W297.
+
+### Consume the joint gain in the full form and original sources
+
+Entropy grouping gives
+$H(p)\le\log L-r\log(L/b)+\log2$, including $r=0,1$.
+The original local divisor Schur bound remains
+$2\Re\langle U,V\rangle_W\le(\log L+C)S$.
+Combine W298--W301 with W249's ORIGINAL negative charge coefficient and ALL paid $B$, cutoff, exterior and folded-model terms. It follows that
+$$
+\mathfrak E(f)\ge\frac2{\sqrt\pi}
+\left[\log\frac R{L^2\mu}-C
++r\left(\log\frac Lb-\|\mathcal H\|\right)\right]S.
+\tag{W302}
+$$
+W301 pays the entire reflection on its own actual modal mass. Since $L^2\le(R+W)/\pi\le2R/\pi$, this proves W297 with universal $C$. The zero case is exact; W289's triangularity gives $S>0$ for every nonzero tuple. Choose one universal $\mu_*$ so W297 is at least $S$.
+
+For EACH fixed nonzero tuple with $\mu\le\mu_*$, consume W290 ONCE on its COMPLETE $f$. The original Gaussian finite-source families have $Q_H=1$,
+$Q_{6,A}\to\|x^3f\|_2^2/(\pi^6\|f\|_2^2)$ and
+$AQ_{\mathcal K_A^g}\to\mathfrak E(f)/(4\pi^3\|f\|_2^2)>0$.
+The count is at most $\lceil(M_f+1)e^{2A}\rceil$, $M_f=(R+W)/(\min D)^2$. Starts may depend on $\nu,R,W,E,D$ and the tuple, but remain independent of EVERY $w>0$ for the selected approximants. No common start or stable coefficient/gap bound is asserted.
+
+For upper-half index sets as at W290, $\operatorname{supp}f\subset(\pi,5\pi)$ at the admitted starting scale. The existing $f=U-D_2U$ estimate gives
+$\|f\|_2^2\le\pi^{-7/2}(1+2^{-1/2})^2S$.
+Thus selected original-source families have limiting sixth-moment ratio at most $5^6$, a universal positive lower limit for $AQ_{\mathcal K_A^g}$ and at most $\lceil(5\pi+1)e^{2A}\rceil$ sites. The containing span, resonance count, number of base components and integer-square index count may all grow; every cross term is estimated together in this same fixed moment budget.
+
+Small total measure and the containing span $W\le R^\nu$, $\nu<1/4$, still restrict the features. This class does not exhaust the moment budget and supplies no density passage or estimate for arbitrary interacting windows. The endpoint $\nu=1/4$, every-budget W258, unrestricted complete positivity, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without Lean/kernel or computational certification and without exhaustive bibliography or literature-priority claims.
