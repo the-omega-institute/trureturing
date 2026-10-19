@@ -6,6 +6,11 @@
    utility: none
    digest: Finite-tail stabilization and triangular uniqueness prove Hanna A338636 modulo eight. -/
 
+/-
+inverse_one: proof_shape: bind-only; consumer: HannaBilateralReversionParity.pair_mod_two, B_mod_two
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19114
+-/
+
 import Mathlib.RingTheory.PowerSeries.Inverse
 
 /-!
@@ -265,7 +270,7 @@ private theorem odd_square (j : ℕ) : (((2*j+1 : ℕ) : ZMod 8)^2) = 1 := by
   have hz : (8 : ZMod 8) = 0 := ZMod.natCast_self 8
   linear_combination 4 * hcast + (q : ZMod 8) * hz
 
-private theorem inverse_one : invOfUnit (1 : PowerSeries R) 1 = 1 := by
+theorem inverse_one : invOfUnit (1 : PowerSeries R) 1 = 1 := by
   simpa only [one_mul] using mul_invOfUnit (1 : PowerSeries R) 1 (by simp)
 
 private theorem reduced_tail (j d : ℕ) :
@@ -320,12 +325,5 @@ theorem hanna_conjecture (n : ℕ) (hn : 1 < n) : (8 : ℤ) ∣ a n := by
   have ha : (a n : ZMod 8) = 0 := by simpa [coeff_map, generatingSeries, hom] using hc
   exact (ZMod.intCast_zmod_eq_zero_iff_dvd (a n) 8).mp ha
 
-#print axioms finiteTail
-#print axioms stabilization
-#print axioms a
-#print axioms generatingSeries
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Residue.ContinuedFractionOddSquare

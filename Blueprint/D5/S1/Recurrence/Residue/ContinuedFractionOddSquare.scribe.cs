@@ -22,6 +22,8 @@ internal sealed class ContinuedFractionOddSquareDocument : IScribeDocumentDefini
                 + "number m viewed in R. The expression invOfUnit(A,1) is the formal inverse "
                 + "with constant coefficient one; the denominator identities below justify "
                 + "its use as division. Types may lie in any universe.")),
+            Node("inverse_one", "The inverse of the unit series", InverseOneFormula(),
+                "The formal inverse of the constant unit series is the unit series over every commutative ring."),
             Node("finiteTail", "Finite tails with a specified terminal denominator", TailFormula(),
                 "There are d levels beginning at numerator (2j+1)^2*X. The terminal "
                 + "denominator is A at index j+d. The outermost numerator in the defining "
@@ -101,6 +103,14 @@ internal sealed class ContinuedFractionOddSquareDocument : IScribeDocumentDefini
         Call("finiteTail", ring, a, j, d);
     private static Formula OverRing(Formula body) => Seq(Bound("R", Named("Type")),
         Implication(Call("CommRing", F.Id("R")), body));
+
+    private static Formula InverseOneFormula()
+    {
+        var ring = F.Id("R");
+        return Disp(Seq(Forall, Sp, Parenthesized(Seq(ring, Colon, Sp, Named("Type"))),
+            Comma, Sp, OpenBracket, Call("CommRing", ring), CloseBracket, Comma, Sp,
+            Equal(Call("invOfUnit", Parenthesized(Seq(D(1), Colon, Sp, Series(ring))), D(1)), D(1))));
+    }
 
     private static Formula TailFormula()
     {
