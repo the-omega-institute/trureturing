@@ -81,7 +81,7 @@ The bind-only form is admitted under the open-problem-resolution basis of CLAUDE
 
 **Argued, not formalized.**
 - *Mechanism.* A channel whose Kraus operators are forced to have very large rank cannot be split across few measurement outcomes. With one qubit of ancilla, each measurement has at most four high-rank outcomes, which caps the number of successful Kraus operators at 2·4^R. The contraction budget then caps the success probability.
-- *Scope.* The bound does not contradict the paper's Ω(1/log d) theorem for unital channels, which uses more rounds: here d grows like 2^{n²}, so 1/log d is of order 1/n². Whether Ω(1) success is possible with O(log d) rounds, or for other classes of channels, is not addressed.
+- *Scope.* The bound is compatible with the paper's theorem that one qubit suffices for success probability Ω(1/log d) on unital channels: that protocol samples a seed, applies one unitary dilation and measures a flag once, and for Φ_n it gives Ω(1/n²), below the bound O(4^R/n). The paper also recalls that exact simulation with one qubit is possible in O(log d) rounds; the refutation concerns O(1) rounds only. Whether Ω(1) success needs Θ(log d) rounds, or holds for other classes of channels, is not addressed.
 
 **Effect on the paper.** The answer to Question 6.1 is negative.
 
