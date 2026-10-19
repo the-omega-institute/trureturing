@@ -4,7 +4,8 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The trace norm as a unitarily invariant norm and its two-dimensional determinant formula. -/
+   digest: The trace norm as a unitarily invariant norm and its two-dimensional
+   determinant formula. -/
 
 import D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
 import D5.S3.Weil.ZetaLinear.PosIndex
@@ -35,9 +36,10 @@ def traceNormUINorm (n : ℕ) : UINorm n where
     intro c A
     have h := CFC.abs_smul c A
     change CFC.sqrt ((c • A)ᴴ * (c • A)) = ‖c‖ • CFC.sqrt (Aᴴ * A) at h
-    change (CFC.sqrt ((c • A)ᴴ * (c • A))).trace.re = _
+    change (CFC.sqrt ((c • A)ᴴ * (c • A))).trace.re =
+      ‖c‖ * (CFC.sqrt (Aᴴ * A)).trace.re
     rw [h, Matrix.trace_smul]
-    simp
+    simp [Complex.smul_re]
   unitary_invariant := by
     intro U V A hU hV
     have hle (u v : Matrix.unitaryGroup (Fin n) ℂ)
@@ -59,7 +61,13 @@ def traceNormUINorm (n : ℕ) : UINorm n where
       calc
         _ = (Uᴴ * U) * A * (V * Vᴴ) := by simp only [Matrix.mul_assoc]
         _ = A := by
-          rw [Matrix.mem_unitaryGroup_iff'.mp hU, Matrix.mem_unitaryGroup_iff.mp hV]
+          have hU' : Uᴴ * U = 1 := by
+            simpa only [Matrix.star_eq_conjTranspose] using
+              Matrix.mem_unitaryGroup_iff'.mp hU
+          have hV' : V * Vᴴ = 1 := by
+            simpa only [Matrix.star_eq_conjTranspose] using
+              Matrix.mem_unitaryGroup_iff.mp hV
+          rw [hU', hV']
           simp
     rwa [hc] at h
 

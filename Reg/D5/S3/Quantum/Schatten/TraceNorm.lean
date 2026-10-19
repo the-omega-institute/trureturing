@@ -8,6 +8,7 @@ namespace Reg.D5.S3.Quantum.Schatten.TraceNorm
 open _root_.D5.S3.Quantum.Schatten.TraceNorm
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Matrix
+open scoped ComplexOrder MatrixOrder
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
