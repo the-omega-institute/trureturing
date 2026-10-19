@@ -49,4 +49,5 @@ Weak log-majorization at its full prefix would require det F_t(1/2)≤det F_t(1)
 - Truth anchor: `D5/S3/Quantum/Matrix/GanKimConjectureRefutation.conjecture`
 - Truth anchor: `D5/S3/Quantum/Matrix/GanKimConjectureRefutation.result`
 - Dependency: [D5/S3/Quantum/Matrix/AlternativeMeanLinearization](AlternativeMeanLinearization.md)
+- Dependency: [D5/S3/Quantum/Matrix/SpectralPower](SpectralPower.md)
 - Dependency: [D5/S3/Quantum/Matrix/WassersteinMean](WassersteinMean.md)
