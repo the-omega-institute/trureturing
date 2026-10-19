@@ -1422,3 +1422,934 @@ finite precision implementation premise to the mathematical model.
 [RS-DOI]: https://doi.org/10.1006/jabr.1997.7320
 
 ## 追加锚（本行以下为增补区）
+
+## 11. The actual angle family and its exact equality relation
+
+**Definition 11.1 (Angle-dependent measured words).** For every real
+$\theta$, use the isometry, ready state and outgoing basis $g_0,g_1$
+of Definition 2.1, with precisely the permissions of Assumption 1.4
+and the complete view of Definition 1.5. Write
+
+$$
+a=V_0(\theta)=U_0e^{i\theta W},\qquad
+b=V_1(\theta)=aW,\qquad
+Q_h(\theta)=V_{h_n}(\theta)\cdots V_{h_1}(\theta),
+\qquad m_n(\theta)=|\{[Q_h(\theta)]:|h|=n\}|.
+\tag{11.1}
+$$
+
+Here $U_0,U_1,W$ are the actual qutrit matrices of Theorem 2.2;
+$\xi,T$ and the orthonormal basis $(t_1,t_2)$ are those of
+Theorem 6.1. Theorem 2.2 applies at every real $\theta$: these are
+measured instruments of the same full complex-linear channel
+$\Phi_\circ$ on $M_5$, also after adjoining any untouched finite
+reference. Every length-$n$ history has probability $2^{-n}$ on
+all permitted inputs. In particular, the family changes the measured
+instrument, while keeping that averaged channel fixed.
+
+On $\mathbb C\xi$ both letters act by $e^{i\theta}$. Therefore, for
+histories of the same length $n$,
+
+$$
+Q_h=\lambda Q_g\quad\Longleftrightarrow\quad
+Q_h=Q_g\quad\Longleftrightarrow\quad Q_h|_T=Q_g|_T.
+\tag{11.2}
+$$
+
+Indeed the first equality on $\xi$ forces $\lambda=1$, and the
+common reducing line has the same action for both words. Thus $m_n$
+counts exact products of $a_T,b_T$ in $U(2)$. Their images in $PU(2)$
+will be used to study a generated group; equality in $PU(2)$ alone
+is not the equivalence relation in (11.2). Theorem 8.2 already gives
+the stronger, cross-length injectivity assertion at $\pi/6$; that
+special assertion is not assumed at other angles.
+
+**Theorem 11.2 (Full-qutrit symmetries and pair equivalence).** The
+actual letters satisfy
+
+$$
+V_j(\theta+\pi/2)=iV_{1-j}(\theta),\qquad
+V_j(-\theta)=\overline{V_j(\theta)}.
+\tag{11.3}
+$$
+
+Consequently $m_n$ is even and $\pi/2$-periodic for every $n$.
+Moreover the following specified equivalences of pairs have no other
+parameter identifications. Simultaneous qutrit unitary conjugation,
+individual scalar phases on the two letters, and optional interchange
+of their labels relate parameters $\theta,\varphi$ if and only if
+$\varphi-\theta\in(\pi/2)\mathbb Z$. Allowing complex conjugation
+as well gives exactly $\varphi\equiv\pm\theta\pmod{\pi/2}$.
+This classifies those operations on pairs, rather than arbitrary
+abstract group isomorphisms or coincidences of count sequences.
+
+Proof. Substitution of $\cos(\theta+\pi/2)=-\sin\theta$ and
+$\sin(\theta+\pi/2)=\cos\theta$ proves the first identity on the
+full qutrit. The matrices $U_j$ are real, proving the second.
+At a fixed horizon the first identity contributes the common scalar
+$i^n$ and complements every label; conjugation preserves equality.
+Both operations therefore give bijections of the counted classes.
+
+The unique common eigenline of $a,b$ is $\mathbb C\xi$.
+To see uniqueness, a common eigenvector is also an eigenvector of
+$W=a^{-1}b$, and hence of $U_0=ae^{-i\theta W}$. On $T$, in the
+basis of Theorem 6.1, $W_T=\operatorname{diag}(-1,1)$ and
+$U_{0,T}$ has both off-diagonal entries $\sqrt3/2$. Neither
+$W_T$ eigenline is invariant under $U_{0,T}$. A vector in the
+$+1$ eigenspace of $W$ has the form $\alpha\xi+\beta t_2$;
+the $t_1$ component of its $U_0$ image forces $\beta=0$ if
+it is a common eigenvector. The $-1$ eigenspace is $\mathbb Ct_1$,
+already excluded. This proves uniqueness, including mixed vectors.
+
+Suppose a unitary $C$ satisfies
+$CV_j(\theta)C^\dagger=\lambda_jV_{\sigma(j)}(\varphi)$,
+where $\sigma$ is identity or label interchange. Uniqueness makes
+$C$ preserve $\mathbb C\xi$ and $T$. Evaluation on $\xi$ gives
+$\lambda_0=\lambda_1=e^{i(\theta-\varphi)}=\lambda$.
+The actual restrictions have determinants
+$\det V_{0,T}=-1$, $\det V_{1,T}=1$. Thus $\lambda^2=1$
+without interchange and $\lambda^2=-1$ with interchange. These
+are exactly the required multiples of $\pi/2$, with the matching
+interchange parity. Iterating (11.3) proves sufficiency. Complex
+conjugation first replaces $\theta$ by $-\theta$ and gives the
+last assertion. $\square$
+
+## 12. Bounded angles, homogeneous accumulation and rotation closure
+
+**Theorem 12.1 (Complete boundedness classification).** For the
+actual family (11.1),
+
+$$
+\sup_{n\ge0}m_n(\theta)<\infty
+\quad\Longleftrightarrow\quad \theta\in(\pi/2)\mathbb Z.
+\tag{12.1}
+$$
+
+At every such angle the exact counts are
+
+$$
+m_0=1,\qquad m_1=2,\qquad m_2=4,\qquad m_n=6\quad(n\ge3).
+\tag{12.2}
+$$
+
+A homogeneous six-valued online accumulator suffices for all horizons.
+At every other angle $m_{n+1}>m_n$ for all $n\ge0$, in particular
+$m_n\ge n+1$.
+
+Proof. Work first with the actual full qutrit group
+$G=\langle a,W\rangle=\langle a,b\rangle$ and put
+
+$$
+S=\{a,aW\},\quad F_n=S^n,\quad
+H_\theta=\langle a^kWa^{-k}:k\in\mathbb Z\rangle.
+\tag{12.3}
+$$
+
+By (11.2), $|F_n|=m_n$. Left multiplication by $a$ injects $F_n$
+into $F_{n+1}$, so the counts are nondecreasing. Suppose there is a
+plateau $m_{N+1}=m_N$, and set $F=F_N$. Each of
+$aF,aWF,Fa,FaW$ has cardinality $|F|$ and lies in $F_{N+1}$.
+All four sets are therefore equal. From $aF=aWF$ follows $WF=F$;
+from $aF=Fa$ follows $a^kF=Fa^k$ for every integer $k$.
+Consequently $(a^kWa^{-k})F=F$ for every $k$.
+The left stabilizer of the finite nonempty set $F$ is finite:
+for a fixed $f\in F$, the map $g\mapsto gf$ injects it into $F$.
+It contains $H_\theta$, so $H_\theta$ is finite.
+
+Conversely $H_\theta$ is normalized by $a$, contains $W$, and is
+normal in $G$. Moving the $a$ factors to the left gives
+$F_n\subseteq a^nH_\theta$. Thus finite $H_\theta$ bounds every
+$m_n$ by $|H_\theta|$. A bounded nondecreasing integer sequence
+has a plateau. At any plateau the stabilizer argument gives
+$|H_\theta|\le|F|\le|H_\theta|$, and $WF=F$ gives
+$F_{N+j}=a^jF$ by induction. A plateau therefore forces permanent
+stabilization. An unbounded sequence has no plateau, proving the
+strict-increment and $n+1$ assertions once (12.1) is established.
+This argument concerns the exact positive sets $S^n$.
+
+The actual permutation identities give
+
+$$
+aWa^{-1}=U_0WU_0,\qquad
+W(U_0WU_0)W=U_0.
+\tag{12.4}
+$$
+
+Hence $W,U_0\in H_\theta$. On $T$ their simultaneous commutant
+consists of scalars: commuting with diagonal $W_T$ forces a matrix
+to be diagonal, and commuting with $U_{0,T}$ then equates its
+diagonal entries. If $H_\theta$ is finite, conjugation defines
+$G\to\operatorname{Aut}(H_\theta)$ with finite image. Its kernel
+commutes with $W,U_0$, so acts by scalars on $T$. It follows that
+the projective restriction of $G$ to $PU(2)$ is finite.
+
+In fact finiteness of this projective restriction alone forces the
+listed angles. In the restricted group it contains
+
+$$
+t=(U_0a)_T=e^{i\theta W_T},\qquad r=(U_0W)_T=U_{1,T}.
+\tag{12.5}
+$$
+
+Both have determinant one. In a finite projective group an $SU(2)$
+element has a scalar power, which is $I_2$ or $-I_2$ by its
+determinant; a further square is identity. In particular the
+eigenvalues $e^{i\theta},e^{-i\theta}$ of $t$ are roots of unity.
+Also $rt$ has finite order, so its trace is an algebraic integer.
+The actual restrictions give
+
+$$
+\operatorname{tr}(rt)=\cos\theta\operatorname{tr}U_{1,T}
++i\sin\theta\operatorname{tr}(U_1W)_T=-\cos\theta,
+\tag{12.6}
+$$
+
+since $\operatorname{tr}U_{1,T}=-1$ and $U_1W=U_0$ has trace
+zero on $T$. Therefore $\cos\theta$ is an algebraic integer.
+Every embedding of $\mathbb Q(\cos\theta)$ extends to a cyclotomic
+field containing $e^{i\theta}$, and sends $\cos\theta$ to
+$(\eta+\eta^{-1})/2$ for a root of unity $\eta$. All its conjugates
+are real and in $[-1,1]$. If $0<|\cos\theta|<1$, its nonzero
+integer norm has absolute value strictly below one: every conjugate
+factor has absolute value at most one and the identity-embedding
+factor is strictly smaller. This is impossible. Thus
+$\cos\theta\in\{0,1,-1\}$, exactly $\theta\in(\pi/2)\mathbb Z$.
+In particular the projective group is infinite at every other angle.
+
+For sufficiency write $\theta=k\pi/2$, $k\in\mathbb Z$, and
+$\epsilon=k\bmod2$. The full qutrit identity is
+
+$$
+V_j(k\pi/2)=i^kU_{j\mathbin\oplus\epsilon},\qquad
+Q_h=i^{kn}p_h,\quad p_h\in S_3.
+\tag{12.7}
+$$
+
+These are common fourth-root phases times actual permutation
+matrices, including the signs when $k$ is even. The label-complement
+map and the common phase preserve all same-horizon classes.
+Theorem 5.1 therefore proves (12.2) at every $k\pi/2$.
+Initialize $p=e\in S_3$ and, on the actual acquired label $j$,
+update $p\leftarrow U_{j\mathbin\oplus\epsilon}p$. This uses the
+same six values and twelve fixed transition entries at every prefix
+and every horizon. At termination the full-$H$ unitary
+
+$$
+D_p=Bp^\dagger B^\dagger+(I_5-P_R)
+\tag{12.8}
+$$
+
+satisfies $D_pBQ_h=i^{kn}B$. Its conjugation therefore recovers
+every embedded qutrit with every untouched reference. Six values
+are necessary uniformly, since Theorems 3.3–4.1 and $m_3=6$
+exclude fewer. This proves all the assertions. $\square$
+
+**Theorem 12.2 (Actual restricted projective closure).** Set
+$\Gamma_\theta=\langle a_T,b_T\rangle\le U(2)$, and identify
+$PU(2)$ with $SO(3)$ by the adjoint action on the Pauli matrices
+in the order of Theorem 10.1. If $\theta\notin(\pi/2)\mathbb Z$,
+the closure of its projective image is all of $SO(3)$ and
+$\Gamma_\theta$ is not virtually solvable. If
+$\theta/\pi=p/q$ is reduced with $q>2$, its projective image is
+precisely $G(L,3)$ of Radin–Sadun, with $L=\operatorname{lcm}(q,2)$,
+and thus isomorphic to $C_L*_{C_2}D_3$.
+
+Proof. The actual generators are recoverable in both directions.
+On the full qutrit,
+
+$$
+W=a^{-1}b,\quad U_0=W(aWa^{-1})W,\quad
+U_1=U_0W,\quad e^{i\theta W}=U_0a,\qquad
+a=U_1We^{i\theta W},\quad b=aW.
+\tag{12.9}
+$$
+
+Thus the restricted projective group is generated by $w,r,t$,
+the images of $W_T,U_{1,T},e^{i\theta W_T}$, respectively.
+In the fixed orthonormal basis $(t_1,t_2)$ of Theorem 6.1,
+
+$$
+W_T=-\sigma_z,\quad
+U_{0,T}=\frac{\sqrt3}{2}\sigma_x+\frac12\sigma_z,\quad
+U_{1,T}=e^{2\pi i\sigma_y/3},\quad
+ e^{i\theta W_T}=\operatorname{diag}(e^{-i\theta},e^{i\theta}).
+\tag{12.10}
+$$
+
+Their adjoint rotations are $w=R_z(\pi)$,
+$r=R_y(2\pi/3)$ and $t=R_z(2\theta)$. In particular $r$ has
+order three and its axis is perpendicular to those of $w,t$.
+Equation (12.9) proves equality of the generated groups, beyond a
+one-directional expression of the measured letters.
+
+Let $K$ be the projective closure. Theorem 12.1's finite-projective
+argument makes $K$ infinite outside the listed angles. Here is the
+closed-subgroup implication needed for these actual rotations.
+An infinite closed subgroup of compact $SO(3)$ has nonidentity
+elements tending to identity: take a convergent subsequence of
+distinct elements and their successive quotients. Write such elements
+as rotations through positive angles $\delta_j\to0$ about oriented
+unit axes $v_j$, and pass to $v_j\to v$. For each real $u$ choose
+integers $k_j$ with $k_j\delta_j\to u$. Their powers tend to the
+rotation $R_v(u)$, so $K$ contains the whole circle about $v$.
+If some $g\in K$ sends the line $\mathbb Rv$ to a different line,
+it also contains the circle about $w'=gv$. For nonparallel $v,w'$
+choose $\alpha$ with $v,w',R_v(\alpha)w'$ linearly independent;
+for example an angle with nonzero sine has this property after
+resolving $w'$ into its parallel and perpendicular parts. Conjugating
+its circle gives the third circle about $R_v(\alpha)w'$.
+The product map of these three circle parameters has invertible
+derivative at zero, under $\mathfrak{so}(3)\cong\mathbb R^3$.
+The inverse function theorem gives a neighborhood of identity in
+$K$. A subgroup containing that neighborhood is open; connectedness
+of $SO(3)$ forces $K=SO(3)$. Thus an infinite proper closed subgroup
+must preserve an axis line.
+
+For the present $r$, its only invariant real line is the $y$ axis,
+since its rotation angle is neither zero nor $\pi$. The rotation
+$t=R_z(2\theta)$ preserves this line exactly when
+$\sin(2\theta)=0$. No such line exists at the angles now under
+consideration, proving $K=SO(3)$.
+
+If $\Gamma_\theta$ had a finite-index solvable subgroup $J$, its
+projective image would be solvable and its closure $L$ solvable:
+the iterated commutator identities expressing its derived length
+are continuous and persist on taking closure. Finitely many cosets
+of $J$ give finitely many cosets of $L$ covering $SO(3)$. A closed
+subgroup of finite index is open (its complement is a finite union
+of closed cosets), hence equals connected $SO(3)$. This contradicts
+non-solvability of $SO(3)$: its Lie algebra has bracket the cross
+product and equals its own derived algebra. Thus
+$\Gamma_\theta\le GL_2(\mathbb C)$ is not virtually solvable.
+
+For the rational-angle identification the axial rotations $w,t$
+have fractions $1/2,p/q$ of a full turn. The subgroup of
+$\mathbb Q/\mathbb Z$ they generate consists exactly of multiples
+of $1/L$, $L=\operatorname{lcm}(q,2)$. Indeed after denominator
+$L$ their integer numerators have gcd one: for odd $q$ they are
+$q,2p$, and for even $q$ they are $q/2,p$. Bézout's identity
+therefore supplies $d=R_z(2\pi/L)$ in $\langle w,t\rangle$,
+and conversely $w,t$ are powers of $d$. Hence the actual image is
+$\langle d,R_y(2\pi/3)\rangle$. Radin–Sadun, *Subgroups of
+SO(3) Associated with Tilings*, [journal article][RS], Journal of
+Algebra **202** (1998), 611–633, Theorem 1(ii) and Corollary 2,
+p. 613, give the faithful presentation for even $L\ge4$ and odd
+second order three. Their original ordered axes are $x,z$; one
+spatial rotation takes those axes to the present $z,y$ axes.
+The abstract generators map to precisely $d,r$, so their theorem
+identifies this actual group with $G(L,3)\cong C_L*_{C_2}D_3$.
+This is the same primary interface used at $L=6$ in Theorem 10.1.
+It identifies a restricted rotation group; no positive-word count
+or full-qutrit group isomorphism is imported from it. $\square$
+
+## 13. Uniform positive growth at every unbounded angle
+
+**Theorem 13.1 (An absolute exact-horizon growth bound).** There is
+one constant $\beta>1$, independent of the real angle, such that
+for every $\theta\notin(\pi/2)\mathbb Z$ and every $n\ge1$,
+
+$$
+\max\{n+1,\beta^n\}\le m_n(\theta)\le2^n.
+\tag{13.1}
+$$
+
+One permissible existential choice is
+$\beta=1+1/(2N(2))$, where $N(2)\ge1$ is the integer supplied
+by Theorem 1.1 of Breuillard's *A Strong Tits Alternative*,
+[arXiv:0804.1395v1][STA], PDF p. 1. No numerical value of this
+integer or of $\beta$ is specified.
+
+Proof. Let $\alpha=a_T$, $\gamma=b_T$ be the actual restrictions,
+and $\Gamma=\Gamma_\theta$. The cited theorem states that for each
+$d$ there is $N(d)$ such that for every field $K$ and finite
+symmetric subset $F\subseteq GL_d(K)$ containing identity,
+either $F^{N(d)}$ contains two elements freely generating a
+nonabelian free group, or $\langle F\rangle$ is virtually solvable.
+Apply exactly this statement with $d=2$, $K=\mathbb C$ and
+
+$$
+F_{\rm sym}=\{I_2,\alpha,\gamma,\alpha^{-1},\gamma^{-1}\}.
+\tag{13.2}
+$$
+
+Finiteness, symmetry, invertibility and inclusion of identity are
+explicit. Theorem 12.2 excludes the virtually solvable alternative
+for the generated actual group. Thus there are free subgroup
+generators $x,y$, each a word of length at most $N=N(2)$ in
+(13.2). Their inverses have the same length bound. These inverse
+and identity letters are auxiliary to the proof; they add no
+permitted label, operation or idle step to Definition 11.1.
+
+For a finite nonempty $D\subseteq\Gamma$, the left action of
+$\langle x,y\rangle$ divides $\Gamma$ into free orbits. On each
+orbit its graph for $x,x^{-1},y,y^{-1}$ is a four-regular tree.
+A finite induced forest with $v$ vertices and $e$ edges has
+$e\le v-1$ on each nonempty component. Its directed outward edge
+count is $4v-2e\ge2v$. Summing over the finitely many intersected
+orbits yields
+
+$$
+\sum_{s\in\{x,x^{-1},y,y^{-1}\}}|sD\setminus D|\ge2|D|.
+\tag{13.3}
+$$
+
+For a bijective translate $sD$, its cardinality equals $|D|$, so
+$|sD\triangle D|=2|sD\setminus D|$. Some $s$ in (13.3)
+therefore satisfies $|sD\triangle D|\ge|D|$.
+For any word $g_1\cdots g_k$, repeated use of the triangle
+inequality for symmetric difference and invariance under left
+translation gives
+
+$$
+|(g_1\cdots g_k)D\triangle D|
+\le\sum_{j=1}^k|g_jD\triangle D|.
+\tag{13.4}
+$$
+
+Also $|g^{-1}D\triangle D|=|gD\triangle D|$, by translating
+the first symmetric difference by $g$. Expand the selected $s$
+in at most $N$ letters of (13.2). Identity contributes zero.
+Equations (13.3)–(13.4) imply that some forward letter
+$g\in\{\alpha,\gamma\}$ has
+$|gD\triangle D|\ge |D|/N$. With
+$F_+=\{I_2,\alpha,\gamma\}$ this gives
+
+$$
+|F_+D|\ge|D\cup gD|
+=|D|+\tfrac12|gD\triangle D|
+\ge\left(1+\frac1{2N}\right)|D|=\beta|D|.
+\tag{13.5}
+$$
+
+Starting at $D=\{I_2\}$ proves $|F_+^k|\ge\beta^k$ for
+every $k$. To remove the auxiliary identity and obtain each exact
+forward horizon, put $S_T=\{\alpha,\gamma\}$. Equation (11.2)
+identifies $|S_T^j|=m_j$. Since identity commutes with everything,
+
+$$
+F_+^k=\bigcup_{j=0}^k S_T^j,\qquad
+\beta^k\le|F_+^k|\le\sum_{j=0}^k m_j\le(k+1)m_k.
+\tag{13.6}
+$$
+
+The last inequality uses monotonicity from Theorem 12.1, valid
+also before deciding boundedness. Every length-$(u+v)$ product
+factors into a length-$u$ and a length-$v$ product, hence
+
+$$
+m_{u+v}\le m_um_v.
+\tag{13.7}
+$$
+
+Fix $n\ge1$ and apply (13.6) with $k=\ell n$, then (13.7):
+$\beta^{\ell n}\le(\ell n+1)m_n^\ell$ for every $\ell\ge1$.
+Taking $\ell$-th roots and letting $\ell\to\infty$ proves
+$m_n\ge\beta^n$. Theorem 12.1 supplies the additional $n+1$
+bound, and the number $2^n$ of actual histories supplies the upper
+bound. The argument has transferred the dimension-uniform theorem
+to positive products of exactly the measured horizon; neither
+density alone nor growth of a symmetric group ball supplies that
+transfer. $\square$
+
+## 14. Maximal binary growth from actual integral coordinates
+
+**Theorem 14.1 (A sufficient algebraic and transcendental criterion).**
+Suppose $\cos\theta\ne0$ and set $z=i\tan\theta$.
+If $z$ is transcendental, or if its primitive irreducible polynomial
+$f\in\mathbb Z[X]$ has even $f(1)$, then
+
+$$
+m_n(\theta)=2^n\qquad(n\ge0).
+\tag{14.1}
+$$
+
+The sign choice for $f$ does not affect the condition. For algebraic
+$z$, even $f(1)$ is exactly the criterion for the particular residue
+map $\mathbb Z[z]\to\mathbb F_2$, $z\mapsto1$ used below;
+it is a sufficient condition for (14.1), with no asserted converse.
+
+Proof. Use the actual basis $(b_1,b_2)$ of $T$ in Definition 8.1,
+with its fixed coordinate change $C$. In that basis
+
+$$
+\widehat U_0=\begin{pmatrix}1&0\\-1&-1\end{pmatrix},\quad
+\widehat U_1=\begin{pmatrix}0&1\\-1&-1\end{pmatrix},\quad
+\widehat W=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{14.2}
+$$
+
+Dividing both actual restricted letters by the same nonzero
+$c=\cos\theta$ gives matrices over $\mathbb Z[z]$,
+
+$$
+P_0=\widehat U_0+z\widehat U_1
+ =\begin{pmatrix}1&z\\-1-z&-1-z\end{pmatrix},\qquad
+P_1=z\widehat U_0+\widehat U_1
+ =\begin{pmatrix}z&1\\-1-z&-1-z\end{pmatrix}=P_0\widehat W.
+\tag{14.3}
+$$
+
+Their determinants are $z^2-1$ and $1-z^2$.
+For real $\theta$ the number $z$ is purely imaginary, so both
+are nonzero. At a fixed length $n$, equality of the $P$ products
+is exactly equality of the actual restrictions, since their common
+factor is $c^n$ and their coordinate change is invertible.
+Equation (11.2) then identifies it with qutrit projective equality.
+
+Suppose a ring map $\phi:\mathbb Z[z]\to\mathbb F_2$ sends
+$z$ to one. Entrywise reduction gives
+
+$$
+\phi(P_0)=\phi(P_1)=E=\begin{pmatrix}1&1\\0&0\end{pmatrix},
+\quad E^2=E\ne0,\quad
+\phi(\widehat W)E=\begin{pmatrix}0&0\\1&1\end{pmatrix}\ne E.
+\tag{14.4}
+$$
+
+Every nonempty positive product thus has residue $E$. Assume two
+distinct words of the same length have equal $P$ products. Cancel
+their common factors from the left over $\mathbb C$, until the
+first unequal factor. Interchange the two sides if necessary to
+write $P_0X=P_1Y=P_0\widehat W Y$. The remaining tails have the
+same length $k$. Invertibility over $\mathbb C$ gives
+$X=\widehat W Y$. If $k=0$, this says $I_2=\widehat W$,
+which is false. If $k\ge1$, reduction gives
+$E=\phi(\widehat W)E$, contradicting (14.4). All cancellations
+precede reduction; no singular matrix is inverted in $\mathbb F_2$.
+Chronological reversal merely reorders which end is read first and
+is a bijection of the binary histories. This proves injectivity
+at every length once the residue map exists.
+
+For transcendental $z$, evaluation identifies $\mathbb Z[z]$
+with the polynomial ring $\mathbb Z[X]$, and evaluation at
+$X=1$ modulo two is the required map. For algebraic $z$, the
+kernel of evaluation $\mathbb Z[X]\to\mathbb Z[z]$ is $(f)$.
+Here $f$ need not be monic: over $\mathbb Q[X]$ every vanishing
+polynomial is divisible by its minimal polynomial and therefore
+by $f$, and Gauss's lemma for primitive integral polynomials makes
+the quotient integral. More explicitly, write a rational quotient
+as $(a/b)q_0$ with $q_0$ primitive integral and $a,b$ coprime;
+primitivity of $fq_0$ forces $b=1$ when the product is integral.
+The homomorphism $X\mapsto1\pmod2$ therefore descends to the
+quotient exactly when $f(1)$ is even. Conversely every map with
+$z\mapsto1$ must annihilate $f(z)$ and so has that same condition.
+This proves precisely the stated sufficient region. $\square$
+
+**Theorem 14.2 (All nonbounded rational angles are maximal).** If
+$\theta/\pi\in\mathbb Q\setminus\tfrac12\mathbb Z$, then
+$m_n(\theta)=2^n$ for every $n\ge0$.
+
+Proof. Write $\theta/\pi=p/q$ in lowest terms, $q>0$.
+The hypothesis is exactly $q>2$; in particular $\cos\theta\ne0$.
+Set $\zeta=e^{2i\theta}$, a primitive $q$-th root of unity, and
+$d=\varphi(q)$. For the cyclotomic polynomial $\Phi_q$ put
+
+$$
+F_q(X)=(1-X)^d\Phi_q\!\left(\frac{1+X}{1-X}\right).
+\tag{14.5}
+$$
+
+Expansion shows $F_q\in\mathbb Z[X]$.
+The actual parameter satisfies
+$z=i\tan\theta=(\zeta-1)/(\zeta+1)$, so $F_q(z)=0$.
+Its leading coefficient is $(-1)^d\Phi_q(-1)\ne0$, since $q>2$,
+and its degree is $d$. The inverse fractional transformation is
+$\zeta=(1+z)/(1-z)$, with nonzero denominators in both directions.
+Thus $\mathbb Q(z)=\mathbb Q(\zeta)$ has degree $d$.
+The primitive part of $F_q$ consequently is the primitive
+irreducible polynomial of $z$, up to sign. This justifies
+irreducibility rather than inferring it from one root alone.
+Evaluation of (14.5) by its polynomial expansion gives
+
+$$
+F_q(1)=2^d,\qquad F_q(0)=\Phi_q(1).
+\tag{14.6}
+$$
+
+To determine the content, first suppose $q$ is not a power of two.
+Write $q=2^a m$ with odd $m>1$. In $\mathbb F_2[X]$,
+$X^q-1=(X^m-1)^{2^a}$, and the multiplicity of $X=1$ is exactly
+$2^a$ because $(X^m-1)'(1)=1$. In the integral cyclotomic
+factorization, the divisors $1,2,\ldots,2^a$ already contribute
+all this multiplicity after reduction: $\Phi_1=X-1$ contributes
+one, and $\Phi_{2^j}=X^{2^{j-1}}+1$ contributes $2^{j-1}$
+for $1\le j\le a$. Their sum is $2^a$. No other cyclotomic
+divisor of $X^q-1$, in particular $\Phi_q$, can vanish at one
+modulo two. Hence $\Phi_q(1)$ is odd. The positive integral
+content of $F_q$ divides both values in (14.6), and therefore
+is one. Its primitive part has even value $2^d$ at one.
+
+If $q=2^a\ge4$, then $d=2^{a-1}\ge2$ and
+$\Phi_q(U)=U^d+1$. Thus
+
+$$
+F_q(X)=(1+X)^d+(1-X)^d.
+\tag{14.7}
+$$
+
+All coefficients are even and the constant coefficient is exactly
+two. Its content is exactly two; its primitive part has value
+$2^{d-1}$ at one, again even. Theorem 14.1 proves the conclusion
+in both cases, for all denominators, rather than for a finite
+selection of cyclotomic polynomials.
+
+For example $\theta=\pi/4$ has $z=i$ and primitive polynomial
+$X^2+1$. The angle $\pi/6$ has $z=i/\sqrt3$ and primitive
+polynomial $3X^2+1$; its all-length, including cross-length,
+qutrit injectivity is already Theorem 8.2. The cases
+$\cos\theta=0$, excluded from (14.3), are exactly odd multiples
+of $\pi/2$ and have the bounded counts of Theorem 12.1. The other
+excluded rational angles are integral multiples of $\pi$, also
+covered there. $\square$
+
+## 15. An irrational collision and the support exponent
+
+**Theorem 15.1 (A positive collision on the full qutrit).** Let
+
+$$
+s_*=(\sqrt5-1)/2,\qquad
+\theta_*=\arcsin(s_*)\in(0,\pi/2).
+\tag{15.1}
+$$
+
+Then $\theta_*/\pi$ is irrational. The actual letters at this
+angle obey the exact full-qutrit relation
+
+$$
+a^5b=ba^5,\qquad m_6(\theta_*)\le63.
+\tag{15.2}
+$$
+
+Its parameter $z_*=i\tan\theta_*$ has primitive irreducible
+polynomial $X^4-X^2-1$, whose value at one is odd.
+
+Proof. The actual formula (6.2) gives
+$\det a_T=-1$ and $\operatorname{tr}a_T=-i\sin\theta$.
+Consequently $M=ia_T\in SU(2)$ has trace
+$s_*=2\cos(2\pi/5)$ at (15.1). The last elementary identity
+follows by putting $u=e^{2\pi i/5}$ in
+$1+u+u^2+u^3+u^4=0$: the number $u+u^{-1}>0$ satisfies
+$X^2+X-1=0$. The two eigenvalues of $M$ are therefore
+$e^{2\pi i/5},e^{-2\pi i/5}$. Unitarity diagonalizes it, so
+$M^5=I_2$ and $a_T^5=(-i)^5I_2=-iI_2$.
+On $\mathbb C\xi$ the full $a^5$ acts by $e^{5i\theta_*}$.
+Both summands reduce $b$, so these scalar blocks imply
+$[a^5,b]=0$ on the entire qutrit. The two block scalars need
+not be equal; the conclusion is commutation, without discarding
+the relative phase. The distinct chronological histories
+$(1,0,0,0,0,0)$ and $(0,0,0,0,0,1)$ have precisely the products
+in (15.2). Each has probability $1/64$ and the equality is exact.
+Among the 64 histories at least this pair coincides, proving
+$m_6\le63$.
+
+If $\theta_*/\pi$ were rational, take a cyclotomic field containing
+both $e^{i\theta_*}$ and $i$. Every embedding sends
+$(e^{i\theta_*}-e^{-i\theta_*})/(2i)$ to a real sine or its
+negative, hence to $[-1,1]$. Every embedding of
+$\mathbb Q(s_*)$ extends to that field. But the irreducible
+polynomial $X^2+X-1$ of $s_*$ has conjugate
+$-(\sqrt5+1)/2<-1$. This contradiction proves irrationality.
+
+Finally $s_*^2=1-s_*$ gives $\cos^2\theta_*=s_*$ and
+$\tan^2\theta_*=s_*$. Thus $z_*^2=-s_*$, which implies
+$z_*^4-z_*^2-1=0$. This monic quartic has no rational linear
+root, since neither $1$ nor $-1$ is a root. If it factored into
+monic rational quadratics, they would have the form
+$(X^2+aX+b)(X^2-aX+d)$, with
+$a(d-b)=0$, $bd=-1$ and $b+d-a^2=-1$.
+If $a=0$, the rational numbers $b,d$ would be the irrational
+roots of $U^2+U-1=0$. Otherwise $b=d$, giving $b^2=-1$ in
+$\mathbb Q$. Both are impossible. These exhaust proper factors
+of a quartic without a linear factor, proving irreducibility.
+Its value at one is $-1$. This exhibits one actual collision
+outside Theorem 14.1's sufficient region; it does not make odd
+$f(1)$ a converse collision criterion. $\square$
+
+**Definition 15.2 (Support exponent and class probabilities).** At
+fixed angle write
+
+$$
+A_n=\log_2m_n,\qquad
+h_0(\theta)=\lim_{n\to\infty}\frac{A_n}{n},\qquad
+k_{n,C}=|\{h:|h|=n,\ [Q_h]=C\}|,
+\quad p_{n,C}=2^{-n}k_{n,C}.
+\tag{15.3}
+$$
+
+The following theorem proves existence of the limit. The class
+variable $\mathsf C_n=[Q_{\mathsf H_n}]$ has this probability law,
+where $\mathsf H_n$ is the actually measured uniform history.
+The support exponent uses $\log_2m_n$; its definition does not
+replace the class probabilities by a uniform distribution.
+
+**Theorem 15.3 (All-angle support-rate classification and its boundary).**
+For every real angle,
+
+$$
+h_0(\theta)=\inf_{n\ge1}\frac{\log_2m_n(\theta)}n.
+\tag{15.4}
+$$
+
+It is zero at every bounded angle, and at every other angle obeys
+
+$$
+\log_2\beta\le h_0(\theta)\le1.
+\tag{15.5}
+$$
+
+Moreover $h_0=1$ if and only if there is no same-horizon collision
+at any finite length, equivalently $m_n=2^n$ for every $n$.
+In particular the regions in Theorems 14.1–14.2 have $h_0=1$,
+whereas
+
+$$
+\log_2\beta\le h_0(\theta_*)\le\frac{\log_2 63}{6}<1.
+\tag{15.6}
+$$
+
+The Shannon entropy of the actual class law satisfies
+
+$$
+H_{\rm Sh}(\mathsf C_n)
+=n-2^{-n}\sum_C k_{n,C}\log_2k_{n,C}\le\log_2m_n.
+\tag{15.7}
+$$
+
+In the collision-free case it is exactly $n$ and the $2^n$ classes
+are uniform. A collision gives strict inequality
+$H_{\rm Sh}(\mathsf C_n)<n$ at its horizon, but (15.4) is a
+support-rate statement and does not identify a general Shannon
+entropy rate with $h_0$.
+
+Proof. Equation (13.7) makes $A_n$ subadditive and $0\le A_n\le n$.
+For any fixed $N\ge1$ write $n=qN+r$ with $0\le r<N$.
+Then $A_n\le qA_N+A_r\le qA_N+N$, giving
+$\limsup A_n/n\le A_N/N$. Taking the infimum over $N$ and
+using $A_n/n\ge\inf_N A_N/N$ proves existence and (15.4).
+Bounded counts give zero; (13.1) gives (15.5).
+If there is a collision at length $N$, then $m_N<2^N$,
+so (15.4) gives $h_0\le(\log_2m_N)/N<1$. If there are none,
+$A_n=n$ at every length and $h_0=1$. Theorem 15.1 and
+irrationality give (15.6).
+
+The fair-history law gives $p_{n,C}=k_{n,C}/2^n$ with
+$\sum_C k_{n,C}=2^n$. Substitution into
+$-\sum_Cp_{n,C}\log_2p_{n,C}$ gives (15.7)'s identity.
+For its upper bound, concavity of logarithm yields
+$\sum_Cp_{n,C}\log_2(1/p_{n,C})
+\le\log_2\sum_Cp_{n,C}/p_{n,C}=\log_2m_n$.
+When every $k_{n,C}=1$ the law is uniform and its entropy is $n$;
+when some $k_{n,C}\ge2$ the subtracted sum is positive.
+Support counts alone do not determine that sum at colliding angles.
+
+There is also no general symmetric-walk premise hidden here.
+For example at $\theta=0$ the actual binary law is
+$(\delta_{U_0}+\delta_{U_1})/2$, whereas $U_1^{-1}=U_1^2$
+is neither $U_0$ nor $U_1$. Its mass at $U_1$ is $1/2$ and
+at $U_1^{-1}$ is zero. Thus this law is not symmetric under
+inversion. No assertion about a different symmetric walk's
+spectrum or entropy is needed for any step above. $\square$
+
+## 16. Retained terminal memory for the classified family
+
+**Theorem 16.1 (Exact terminal resources with all declared permissions).**
+Fix any real $\theta$ and known horizon $n\ge0$ in Definition 11.1.
+Under Assumption 1.4 and the complete-view convention of
+Definition 1.5, the minimum finite terminal alphabet and minimum
+fixed-length binary register are, respectively,
+
+$$
+\min|\mathcal Y_n|=m_n(\theta),\qquad
+\min b_n=\lceil\log_2m_n(\theta)\rceil.
+\tag{16.1}
+$$
+
+These minima allow arbitrary randomized classical summaries and
+arbitrary terminal CPTP maps on all of $H$, with success required
+only after averaging. They recover every input on the embedded
+qutrit $R=B\mathbb C^3$, jointly with any untouched finite
+reference. A successful standard Borel complete view determines
+$\mathsf C_n$ measurably almost surely. An explicitly free
+independent shared seed, finite or standard Borel, preserves the
+same finite-alphabet and bit lower bounds for almost every seed.
+
+Proof. Apply the existing Theorem 3.3 to precisely the actual
+$Q_h(\theta)$, not to a replacement family with the same channel.
+At every positive summary value, all positively weighted histories
+must have one projective class. All $2^n$ histories have positive
+probability, so different classes require disjoint nonempty sets
+of summary values. Choosing one history per class proves the
+$m_n$ lower bound, including randomized kernels. The theorem's
+necessity already covers ensemble-only success and arbitrary
+full-$H$ CPTP decoders; neither possibility permits merging two
+classes. This uses its rank-one Choi argument with output $M_5$
+and input $M_3$ and the scalar cross terms (3.2).
+The primary correspondence is [KL, Theorem 3.2, (19)–(20)]
+with full qutrit code and conditional errors
+$F_h=\sqrt{w_{a,h}}Q_h$; the cross terms concern all pairs with
+positive conditional weight. The one-step measured-flag supplier
+[GW1, Proposition 2, §II.C.1] instead concerns the actual fine
+operators $t_j=V_j/\sqrt2$, for which
+$t_j^\dagger t_j=I_3/2$. The deferred-correction specialization
+of [GW2, Proposition 2, (10)–(12)] sets all its earlier corrections
+to identity. Its system here is the qutrit, not the entire $H$.
+These known correction interfaces supply intermediate principles;
+they supply no count of this family's coarsened terminal classes.
+
+Conversely store the class and choose any actual representative
+$Q_C$. The full-$H$ decoder is
+
+$$
+D_C=BQ_C^\dagger B^\dagger+(I_5-P_R),\qquad
+\mathcal D_C=\operatorname{Ad}_{D_C}.
+\tag{16.2}
+$$
+
+Its two orthogonal blocks make it unitary. For every history in
+class $C$, $D_CBQ_h$ is a scalar multiple of $B$; thus for every
+qutrit-reference density $\rho$,
+
+$$
+(\mathcal D_C\otimes\operatorname{id}_Z)
+\big((BQ_h\otimes I_Z)\rho(BQ_h\otimes I_Z)^\dagger\big)
+=(B\otimes I_Z)\rho(B\otimes I_Z)^\dagger.
+\tag{16.3}
+$$
+
+Averaging preserves this equality. There is no success
+postselection, and no full-$H$ input inversion is asserted.
+
+Theorem 4.1's online construction applies unchanged at this angle.
+Left multiplication by either $V_j$ respects projective prefix
+classes, and $[Q]\mapsto[V_0^{n-t}Q]$ injects the length-$t$
+classes into the length-$n$ classes. Label these prefix classes
+by injections into one alphabet of size $m_n$ and use the known
+prefix $t$ to select fixed transition tables. This retains at
+most $m_n$ values at every prefix without another history archive.
+A $b_n$-bit register has at most $2^{b_n}$ values, so its lower
+bound follows; an injection of these $m_n$ values into
+$\{0,1\}^{\lceil\log_2m_n\rceil}$ attains it.
+At $n=0$ both minima mean one value and zero bits.
+
+For a standard Borel view let $\nu_h$ be its conditional laws and
+$\lambda=\sum_h\nu_h$. The densities $f_h=d\nu_h/d\lambda$
+are measurable and sum to one almost everywhere. Convention 3.4,
+which integrates the nonnegative Choi quadratic forms of
+Theorem 3.3, states that the positive $f_h$ at a view all have the
+same class outside one common null set. Group their densities by
+class: $f_C=\sum_{h:[Q_h]=C}f_h$. Almost everywhere exactly one
+$f_C$ is positive. Its measurable support sets define the required
+class-valued function of the view. This argument uses measures,
+so no assumption about positive probabilities of individual
+continuous outcomes enters.
+
+Let $S$ now be an explicitly independent free shared seed in a
+finite or standard Borel space. Regular conditional laws exist in
+the latter case. Average exact recovery has rank-one Choi matrix
+$J(\iota)$; positivity first forces the conditional recovery
+channel to equal $\iota$ for almost every $S$. Its trace is three,
+fixing the scalar on that line, just as in Theorem 3.3.
+Independence leaves every one of the finitely many histories at
+conditional probability $2^{-n}$ on a common full-measure seed
+set. At each such seed the preceding disjoint-class argument
+requires at least $m_n$ values in any finite conditional register,
+hence at least $\lceil\log_2m_n\rceil$ fixed bits. The deterministic
+construction attains these bounds while ignoring the seed.
+Discarded private randomness is already integrated into the
+summary kernel; a history-correlated visible seed is part of the
+counted joint view, and is not covered by the free-seed exemption.
+$\square$
+
+**Theorem 16.2 (All-angle retained-memory consequences).** Under
+Theorem 16.1's permissions, a uniformly finite exact terminal
+alphabet exists if and only if $\theta\in(\pi/2)\mathbb Z$.
+At those angles the exact optimal counts and bits are
+
+$$
+\begin{array}{c|cccc}
+ n&0&1&2&n\ge3\\\hline
+ \min|\mathcal Y_n|&1&2&4&6\\
+ \min b_n&0&1&2&3
+\end{array}
+\tag{16.4}
+$$
+
+The single homogeneous accumulator of Theorem 12.1 realizes the
+uniform six-value bound. At every other angle, for all $n\ge1$,
+
+$$
+\left\lceil\log_2\max\{n+1,\beta^n\}\right\rceil
+\le\min b_n\le n,\qquad
+\lim_{n\to\infty}\frac{\min b_n}{n}=h_0(\theta).
+\tag{16.5}
+$$
+
+In the maximal regions of Theorems 14.1–14.2 the exact minimum is
+$n$ bits and $2^n$ values. The explicit colliding angle satisfies
+$\min|\mathcal Y_6|\le63$ and has asymptotic fixed-bit rate at
+most $\log_2(63)/6<1$, while retaining the positive lower rate
+$\log_2\beta$. The complete terminal view, and its conditional
+version with an independent shared seed, determine the measured
+history itself at collision-free angles. Its discrete Shannon
+entropy is then at least $n$ (conditionally at least $n$ given
+the seed), attained by retaining the uniform history.
+
+Proof. Equations (16.1), (12.1)–(12.2), (13.1) and (14.1)
+give the stated alphabets, fixed bits and their uniform or linear
+growth. Rounding changes $\log_2m_n$ by less than one, so
+(15.4) proves the limit in (16.5). At $\theta_*$,
+submultiplicativity gives $m_{6k}\le63^k$ for every $k$;
+(15.6) gives the full limiting rate. This is a bound on alphabets
+and fixed bits, without any assertion that class probabilities
+are uniform at that angle.
+
+If there are no collisions, the finite class variable is bijective
+with the history. The measurable determination in Theorem 16.1
+therefore determines that history as well. For a discrete complete
+view $Y$, the entropy chain rule gives
+$H_{\rm Sh}(Y)\ge H_{\rm Sh}(\mathsf H_n)=n$, also when
+$Y$ is countable with infinite entropy. Conditioning on a free
+independent seed gives the same statement almost everywhere and
+then $H_{\rm Sh}(Y\mid S)\ge n$. Storing the history by the
+online shift register (9.6) attains equality and (16.2) corrects it.
+A non-discrete complete view gives measurable determination of the
+finite history, not a differential-entropy lower bound. At
+colliding angles, (15.7) describes the actual class entropy;
+no entropy optimum or Shannon rate is inferred from $m_n$ alone.
+
+All angles still have exactly the same averaged full $M_5$ channel
+by Theorem 2.2. The differing retained-record optima depend on the
+actual measured instruments and the complete terminal view.
+Every construction processes every supplied label in the fixed
+known-horizon, fresh-environment task. Between acquisitions only
+classical updates occur. Reference access, intermediate quantum
+feedback, adaptive instruments, retained quantum environments,
+quantum summaries and postselection are outside these hypotheses.
+The $n$ acquisitions and preparations, their communication,
+calibration, precision, exact inverse controls, static descriptions
+and the deterministic clock are the separate resources of
+Definition 1.5. The generic prefix construction can have $2nm_n$
+transition entries and $m_n$ inverse controls, as in Definition 4.2;
+the register minimum is not a bound on those other costs.
+A history-dependent clock, control program, archive or table choice
+is counted jointly in the view. The unitary extension (16.2) acts
+on all of $H$, while its recovery target remains only $R$ and
+untouched references. $\square$
+
+**Definition 16.3 (Residual collision and rate problems).** The
+residual algebraic collision problem is to classify same-horizon
+positive equalities in (11.1) for algebraic $z=i\tan\theta$ with
+odd primitive $f(1)$, outside the bounded angles and beyond
+particular relations such as (15.2). Failure of the residue map
+in Theorem 14.1 is not a proof of a collision. The exact sequences
+and support exponents at exceptional irrational angles, including
+$\theta_*$, and the general Shannon entropy rates of their actual
+class laws remain undetermined here. The existential uniform bound
+does not specify the best numerical $N(2)$ or the optimal uniform
+$\beta$. These are finer questions about the already classified
+unbounded regime; the boundedness criterion (12.1) has no remaining
+angle exception.
+
+[STA]: https://arxiv.org/pdf/0804.1395v1
+
+## 追加锚（本行以下为增补区）
