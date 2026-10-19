@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 import sys
 from common import Context, entry, fail, read
-from continuation import inputs, targets
+from continuation import inputs, precondition, targets
 
 
 def main(argv):
@@ -27,9 +27,7 @@ def main(argv):
             value = finding.get(key, '')
             return (value if isinstance(value, str) else json.dumps(value, ensure_ascii=False)).replace('\n', ' ')
         items.append(f'   - `{text("file_line")}`: {text("claim")}. Owner: `{text("owner")}`. Fix: {text("fix")}')
-    pre = (f'Work on the current head of `{tree}`; do not fast-forward, merge or rebase `origin/dev` in this step. Commit fixes on top of that head.'
-           if Path(previous).name.startswith('rework-') else
-           f'Preserve the uncommitted Stage A delivery in `{tree}`. Run `git fetch origin dev && git merge --ff-only origin/dev`; stash and pop around the merge if needed.')
+    pre = precondition(tree, previous)
     head = f'''# Stage A continuation {suffix} — lane `op-{lane}` (binding; overrides earlier heads)
 
 Read the rejected pre-freeze mirror `{env}` and apply all {len(findings)} blocking findings. Preserve the fixes already in the tree.

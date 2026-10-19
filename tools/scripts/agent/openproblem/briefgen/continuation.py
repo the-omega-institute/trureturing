@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Validated Stage A continuation inputs shared by the two generators."""
 import re
+from pathlib import Path
 from common import entry, fail, load, name, read
 
 MODULE = r"[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)+"
@@ -14,13 +15,20 @@ def targets(values):
 
 
 def inputs(lane, suffix, envelope, tree, previous):
-    from pathlib import Path
     name(lane); name(suffix)
     if not Path(tree).is_dir(): fail(11, 'worktree missing: ' + tree)
     data = load(envelope)
     if not isinstance(data, dict) or not isinstance(data.get('conclusion'), dict):
         fail(13, 'envelope conclusion must be an object')
     return data['conclusion'], read(previous)
+
+
+def precondition(tree, previous):
+    if Path(previous).name.startswith('rework-'):
+        return (f'Work on the current head of `{tree}`; do not fast-forward, merge or rebase '
+                f'`origin/dev` in this step. Commit fixes on top of that head.')
+    return (f'Preserve the uncommitted Stage A delivery in `{tree}`. Run `git fetch origin dev && '
+            f'git merge --ff-only origin/dev`; stash and pop around the merge if needed.')
 
 
 def strings(value):

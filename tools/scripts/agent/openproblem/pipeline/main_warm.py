@@ -71,7 +71,7 @@ def main(argv):
                                 result = subprocess.run(command, cwd=op.ctx.main, stdout=out, stderr=subprocess.STDOUT)
                             print('MAIN_WARM_' + label + '_EXIT=' + str(result.returncode), flush=True)
                             if result.returncode: fail(16, 'MAIN_WARM_' + label + '_FAILED')
-                        built = op.ctx.main / '.lake/.main-built-at'
+                        built = op.ctx.main / '.lake/build/.main-built-at'
                         built.parent.mkdir(parents=True, exist_ok=True)
                         built.write_text(producer + ' ' + datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z') + '\n')
                     else:

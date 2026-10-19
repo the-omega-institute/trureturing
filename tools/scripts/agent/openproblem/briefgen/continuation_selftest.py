@@ -50,6 +50,15 @@ def run(tool):
         result = invoke()
         assert result.returncode == 13 and out.read_text() == before, result.stderr
         if tool == 'lockretry_head':
+            conclusion['not_run'] = ['make lean LEAN_TARGETS="D5.S1.Sample Reg.D5.S1.Sample"']
+            previous = root/'rework-sample.md'; previous.write_text('Rework Stage A rules.\n')
+            result = invoke(); assert result.returncode == 0, result.stderr
+            rework_text = out.read_text()
+            assert 'do not fast-forward, merge or rebase `origin/dev`' in rework_text
+            assert '--ff-only' not in rework_text
+            previous = root/'previous.md'; previous.write_text('Previous Stage A rules.\n')
+            result = invoke(); assert result.returncode == 0, result.stderr
+            assert 'git merge --ff-only origin/dev' in out.read_text()
             conclusion['not_run'] = ['make lean']
             assert invoke().returncode == 13
         previous.unlink()

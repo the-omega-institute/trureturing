@@ -173,13 +173,25 @@ def run(mode):
                 removed = [c for c in commands if c[:2] == ['make', 'worktree-remove']]
                 assert bool(removed) == (case in ('own-green', 'red-later')), (case, commands)
                 if case == 'red-later': assert 'own_run=10 later_run=20' in result.stdout
+                if case == 'red-ancestry-error':
+                    output = result.stdout + result.stderr
+                    assert 'DEVPUSH_RED ' + MERGE + ' run=10' in output
+                    assert 'reason=cannot check later run ancestry' in output
+                    assert not removed
             else:
                 builds = [c for c in commands if c[:2] == ['make', 'lean']]
                 assert bool(builds) == (case in ('advance', 'lean-fail')), (case, commands)
                 assert (root/'state/main-lean.lock').exists() == (case == 'lock-busy')
                 if case == 'advance':
                     assert len(builds) == 1
-                    assert (root/'main/.lake/.main-built-at').read_text().split()[0] == LATER
+                    stamp = root/'main/.lake/build/.main-built-at'
+                    assert stamp.read_text().split()[0] == LATER
+                    reader = subprocess.run(
+                        ['/bin/bash', '-c', '. "$1"; op_data stale "$2" "$3" "10800"',
+                         'stamp-reader', str(target/'pipeline/common.sh'), str(root/'main'), str(root/'tree')],
+                        cwd=root, env=env, capture_output=True, text=True, timeout=15)
+                    assert reader.returncode == 0 and reader.stdout.startswith('refresh ' + LATER + ' '), \
+                        (reader.returncode, reader.stdout, reader.stderr)
             print('PIPELINE_CASE', mode, case, 'EXIT=' + str(result.returncode))
     with tempfile.TemporaryDirectory(prefix='landing __inputs__ with space ') as tmp:
         root = Path(tmp).resolve(); target, env = fixture(root, 'land-green')

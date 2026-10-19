@@ -206,7 +206,10 @@ class Landing:
                 if self.run('git', 'cat-file', '-e', later['headSha'], check=False).returncode:
                     self.run('git', 'fetch', '-q', 'origin', 'dev')
                 ancestry = self.run('git', 'merge-base', '--is-ancestor', merge, later['headSha'], check=False)
-                if ancestry.returncode not in (0, 1): fail(16, 'cannot check later run ancestry')
+                if ancestry.returncode not in (0, 1):
+                    reason = 'cannot check later run ancestry'
+                    print('DEVPUSH_RED', merge, 'run=' + run_id, 'reason=' + reason, flush=True)
+                    fail(16, reason)
                 if ancestry.returncode == 0:
                     print('DEVPUSH_OK_LATER', merge, 'own_run=' + run_id,
                           'later_run=' + str(later['databaseId']), 'later_head=' + later['headSha'], flush=True)
