@@ -5,9 +5,11 @@ import Batteries.Tactic.OpenPrivate
 open _root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-namespace Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort
+namespace Reg.D5.S3.ConceptDynamics.Coding.DecoderPeak.Cohort
 
 open private frame stop stream from Reg.Support.DecoderOperationTraceCohort
+
+open _root_.Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort
 
 universe u v w
 noncomputable section
@@ -130,4 +132,4 @@ def peakTraceBoundEvidence : Registration peakTraceBoundArena.{u,v,w}
 
 end
 
-end Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort
+end Reg.D5.S3.ConceptDynamics.Coding.DecoderPeak.Cohort
