@@ -9106,4 +9106,140 @@ Their count is at most $\lceil(M_f+1)e^{2A}\rceil$, $M_f=(R+W)/(\min D)^2$. The 
 On W290's upper-half index sets, $\operatorname{supp}f\subset(\pi,5\pi)$ and the existing bound
 $\|f\|_2^2\le\pi^{-7/2}(1+2^{-1/2})^2S$ applies. Thus W304 supplies selected actual source families with limiting sixth-moment ratio at most $5^6$, a positive lower limit for $A Q_{\mathcal K_A^g}$ bounded below by a fixed positive multiple of $(\kappa_0-\nu)\log R$, and at most $\lceil(5\pi+1)e^{2A}\rceil$ sites. Both the number of physical intervals and the FULL occupied base width may grow. Positivity is proved for arbitrary joint shapes on that entire base window, without a small-total-measure or separate-component positivity premise.
 
-Arbitrary physical supports and interactions between unrestricted base windows are not covered. These full-width spaces still do not exhaust the fixed moment budget, and no density passage or common approximation start over all tuples is supplied. The endpoint $\nu=\kappa_0$ is not proved and is not asserted to be optimal. Every-budget W258, unrestricted complete positivity, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. No numerical constants/start, computational certificate, Lean/kernel or CI/merge certification, exhaustive bibliography or literature-priority claim is supplied.
+W303--W309 do not prove positivity on arbitrary physical supports or unrestricted interacting base windows. W310--W316 below control the complete debit and its tail uniformly over every moment-budget source, while retaining the full Gamma term. The positive full-width spaces still do not exhaust the fixed moment budget, and no density passage or common approximation start over all tuples is supplied. The endpoint $\nu=\kappa_0$ is not proved and is not asserted to be optimal. Every-budget W258, unrestricted complete positivity, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. No numerical constants/start, computational certificate, Lean/kernel or CI/merge certification, exhaustive bibliography or literature-priority claim is supplied.
+
+
+## Localize the complete debit uniformly over every moment-budget source
+
+Define, for $z\ge1$,
+$$
+\ell(z)=(1+\log z)^3[\log(e+\log z)]^2,
+\qquad
+\mathcal N(F)^2=\int_\pi^\infty (x/\pi)^4\ell(x/\pi)|F(x)|^2dx.
+$$
+On the owned compact smooth physical features and original Gaussian physical features put $U=\mathscr TF$, $V=\mathscr VF$. Let $\mathfrak A$ denote the Hermitian sesquilinear extension of the COMPLETE debit
+$$
+\mathfrak A(F,F)=\frac4{\sqrt\pi}\Re\langle BU,BV\rangle_W
++\mathfrak R_\Phi(F),
+\qquad
+\mathfrak E(F)=\mathcal D_\pi(\mathscr TF)-\mathfrak A(F,F).
+$$
+Here $\langle\cdot,\cdot\rangle_W$ uses $x^{7/2}dx$, and $\mathfrak R_\Phi$ includes both folded model channels and W284's full prime-power Hankel correction. There is a universal $C>0$ such that
+$$
+|\mathfrak A(F,G)|\le C\mathcal N(F)\mathcal N(G),
+\qquad
+\|\mathscr TF\|_W\le C\mathcal N(F).
+\tag{W310}
+$$
+In particular the debit, but not necessarily the unbounded Gamma form, extends continuously to this fourth-moment space with its displayed logarithmic weights. No integer-square packet support, sign, atom-count, width or gap condition is used.
+
+Fix a smooth $0\le\chi\le1$ on $[0,\infty)$, equal to one on $[0,1]$ and zero on $[2,\infty)$, and put $\chi_T(x)=\chi(x/(\pi T))$. For EVERY $K\ge1$, $T\ge2$, every $A$ beyond W246's fixed admitted start and every compact finite complex ORIGINAL Gaussian source on $[A,\infty)$ with $Q_H(\sigma)=1$ and $Q_{6,A}(\sigma)\le K$, let $F$ be its actual physical feature and $\psi=F/\|F\|_{L^2(\pi,\infty)}$. Then
+$$
+\left|A Q_{\mathcal K_A^g}(\sigma)
+-\frac{\mathcal D_\pi(\mathscr T\psi)
+-\mathfrak A(\chi_T\psi,\chi_T\psi)}{4\pi^3}\right|
+\le C K\,\frac{\sqrt{\ell(T)}}T.
+\tag{W311}
+$$
+This controls ALL cross terms between the retained physical core and its complement, uniformly over the ENTIRE original fixed-budget source class. The original full Gamma term $\mathcal D_\pi(\mathscr T\psi)$ is left intact; it is not replaced by the Gamma form of the truncated core. The right side tends to zero as $T\to\infty$ for each fixed $K$, independently of $A$, source coefficients and source count.
+
+The same source class also has the unconditional lower floor
+$$
+A Q_{\mathcal K_A^g}(\sigma)
+\ge-C K^{2/3}\ell(K).
+\tag{W312}
+$$
+Its growth for large $K$ is smaller than W259's linear allowance. It is still a fixed negative allowance at fixed $K$, not W258's vanishing negative margin. W311 supplies a uniform localization of the complete debit; it supplies neither a sign for the remaining core nor a truncation of the unbounded Gamma term. Full RH and strict Robin for EVERY integer $n>5040$ remain unproved.
+
+Reuse W231/W247's actual Gamma/cutoff interface, W232's two bounded folded channels, W249's ORIGINAL charge, W284's COMPLETE prime-power reflection and W242/W257's exact original Gaussian return. The classical Chebyshev, harmonic-sum and positive-kernel Schur/Hardy estimates below are consumed inside the physical-source transport. No standalone classical theorem, positive subclass, replacement kernel, Lean certification or literature-priority claim is added.
+
+### Keep the entire prime Toeplitz and Hankel pairing
+
+For a compact physical feature set $u(t)=(\pi e^t)^{9/4}B\mathscr TF(\pi e^t)$, $t\ge0$. By W249 and W284 the charge plus complete nonmodel reflection is
+$(2/\sqrt\pi)\langle u,(C+C^*+H)u\rangle$, where
+$$
+(Cu)(t)=\sum_{q\ge2}\frac{\Lambda(q)}{\sqrt q}\,u(t+2\log q),
+\qquad
+(Hu)(t)=\sum_{\substack{q\ge2\\2\log q\ge t}}
+\frac{\Lambda(q)}{\sqrt q}\,u(2\log q-t).
+$$
+These are the SAME actual $B$ image and prime-power coefficients at both arguments. The paired variable in $H$ is retained before taking absolute values. Initially all relevant sums are finite on compact physical supports.
+
+Write $a(t)=(1+t)[\log(e+t)]^2$ and choose the positive Schur weight
+$w(t)=e^{-t/4}/a(t)$. The three weighted row sums are
+$$
+\begin{aligned}
+\frac{(Cw)(t)}{w(t)}
+&=a(t)\sum_{q\ge2}\frac{\Lambda(q)}{q\,a(t+2\log q)},\\
+\frac{(C^*w)(t)}{w(t)}
+&=a(t)\sum_{2\log q\le t}\frac{\Lambda(q)}{a(t-2\log q)},\\
+\frac{(Hw)(t)}{w(t)}
+&=e^{t/2}a(t)\sum_{2\log q\ge t}
+\frac{\Lambda(q)}{q\,a(2\log q-t)}.
+\end{aligned}
+$$
+Chebyshev gives a uniformly bounded $\Lambda(q)/q$ mass on each interval of unit length in $2\log q$. Since $\sum_{j\ge0}a(j)^{-1}<\infty$, the first sum is uniformly bounded after its factor $a(t)$ is removed, and the same holds for the last sum after its displayed factor is removed. The middle row is at most $C e^{t/2}a(t)$ by $a\ge1$ and $\sum_{q\le X}\Lambda(q)\le CX$. Thus the classical symmetric weighted-Schur form bound gives
+$$
+|\langle u,(C+C^*+H)u\rangle|
+\le C\int_0^\infty e^{t/2}a(t)|u(t)|^2dt
+= C\pi^{-1/2}\int_\pi^\infty x^4a(\log(x/\pi))
+|B\mathscr TF(x)|^2dx,
+\tag{W313}
+$$
+where the constant absorbs the fixed coordinate conversion. Equivalently this Hermitian pairing is bounded bilinearly in the indicated weighted norm. This is a positive-kernel row estimate, not a Hilbert--Schmidt assertion about translation or reflection maps on $L^2$.
+
+### Pay the critical theta sum before returning to the source
+
+Let $g(t)=(\pi e^t)^{5/2}F(\pi e^t)$. Then exactly
+$(\pi e^t)^{5/2}\mathscr TF(\pi e^t)=\sum_{n\ge1}n^{-1}g(t+2\log n)$.
+Consume the classical weighted tail-Hardy estimate through Schur on this actual harmonic translation measure. After normalizing input weight $(1+t)^2a(t)$ and output weight $a(t)$, use the auxiliary Schur weight $(1+t)^{-1/2}$. The logarithmic factor's ratio is at most one along every forward shift. The row and column sums are respectively bounded by
+$$
+(1+t)\sum_{n\ge1}\frac1{n(1+t+2\log n)^2}\le C,
+\qquad
+\frac1{1+s}\sum_{n\le e^{s/2}}\frac1n\le C.
+$$
+These are the ordinary harmonic-sum bounds; they apply to the positive translation measure, hence to arbitrary complex profiles. Since $(1+t)^2a(t)=\ell(e^t)$, they give
+$$
+\int_\pi^\infty x^4a(\log(x/\pi))|\mathscr TF(x)|^2dx
+\le C\int_\pi^\infty x^4\ell(x/\pi)|F(x)|^2dx.
+\tag{W314}
+$$
+No upper support endpoint enters. Right integration in these coordinates is
+$x^{5/2}(IU/x)(x)=\int_0^\infty e^{-3s/2}g_U(t+s)ds$.
+The weight $a$ is increasing, so Minkowski bounds $B=1-3I/(2x)$ in the output norm of W314, with an absolute constant. That output norm also bounds $\|\mathscr TF\|_W$, since $x^{7/2}\le Cx^4a(\log(x/\pi))$.
+
+Use W313--W314 for the complete charge and prime-power reflection, and W232/right Hardy for BOTH folded-model channels, bounded by $C\|\mathscr TF\|_W^2$. Polarization yields W310 including every cross term. Compact approximation in the displayed weighted source norm extends the debit continuously. For original Gaussian features, the already owned compact-feature convergence in W255 identifies that extension with the actual original form. Absolute positive-kernel domination also justifies the full prime-power limit; no strong $V$-domain claim on an arbitrary weighted-$L^2$ completion is needed.
+
+The cutoff functionals in W247 are bounded in $\|\cdot\|_W$: both $y^{-7/4}$ and $k_\pi(y)y^{-7/4}$ are square integrable. The already supplied bounded-below Gamma multiplier therefore gives
+$\mathcal D_\pi(\mathscr TF)\ge-C\|\mathscr TF\|_W^2$ on the owned form domain. W310 proves $\mathfrak E(F)\ge-C\mathcal N(F)^2$. This is a signed lower form bound, not an upper bound or continuity assertion for the unbounded Gamma form.
+
+### Control every actual core-tail pair in the original budget
+
+For $\|\psi\|_2=1$ with $\int (x/\pi)^6|\psi(x)|^2dx\le K$, elementary moment interpolation and the displayed increasing logarithmic factors give
+$$
+\mathcal N(\psi)^2\le C\min\{K,K^{2/3}\ell(K)\},
+\qquad
+\mathcal N((1-\chi_T)\psi)^2
+\le CK\frac{\ell(T)}{T^2}.
+\tag{W315}
+$$
+For the first bound, put $Y=(x/\pi)^6\ge1$, split at $Y=K$, and use
+$Y^{2/3}\ell(Y^{1/6})\le C K^{2/3}\ell(K)(1+Y/K)$.
+For the simpler $CK$ comparison, use directly $z^4\ell(z)\le Cz^6$. For the tail use
+$\sup_{z\ge T}\ell(z)/z^2\le C\ell(T)/T^2$, for $T\ge2$. All constants are universal for this fixed weight.
+
+Set $\psi_c=\chi_T\psi$ and $\psi_t=\psi-\psi_c$. W310 pays their complete mutual debit and the tail's own debit on the SAME realization:
+$$
+|\mathfrak A(\psi,\psi)-\mathfrak A(\psi_c,\psi_c)|
+\le C[\mathcal N(\psi)+\mathcal N(\psi_c)]\mathcal N(\psi_t)
+\le CK\frac{\sqrt{\ell(T)}}T.
+\tag{W316}
+$$
+The cutoff core is an actual truncation of the original feature; it need not be a Gaussian finite source. Its debit is defined by the owned physical form and W310's continuous extension, rather than by assigning independent source coefficients.
+
+For every ORIGINAL Gaussian source in the statement, W257 gives exactly
+$A Q_{\mathcal K_A^g}(\sigma)=\mathfrak E(\psi)/(4\pi^3)$ and
+$\int(x/\pi)^6|\psi|^2dx=Q_{6,A}(\sigma)/Q_H(\sigma)\le K$.
+Apply W316 inside the exact complete form, leaving $\mathcal D_\pi(\mathscr T\psi)$ unchanged. This proves W311 uniformly over all coefficients, counts and supports in the original budget. Apply the preceding signed Gamma floor and the first bound of W315 instead to obtain W312. No selected-approximant family, density passage, source-dependent starting scale or additional sign assumption is used in these all-source conclusions.
+
+The debit's physical tail is now uniformly small on EVERY fixed moment budget, including all core-tail interactions, while the full Gamma component remains in place. Controlling the remaining compact debit against that same Gamma component, or otherwise removing W258's fixed scaled negative deficit, is still required. The improved large-$K$ floor does not tend to zero as $A\to\infty$ at fixed $K$. Unrestricted complete positivity, every-budget W258, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without numerical constants, computational/Lean/kernel certification, exhaustive bibliography or literature-priority claims.

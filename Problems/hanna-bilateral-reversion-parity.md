@@ -79,6 +79,8 @@ The proof uses `CompositionalIterateCongruence.agree_subst`,
 `QuotientThetaCompositionModFour.map_inverse`,
 `BilateralProductModFour.ofSeries_inverse`, and
 `ContinuedFractionOddSquare.inverse_one` on its elaborated dependency path.
+The latter is an existing public owner on dev, with its publication audit in
+[issue #19167](https://github.com/the-omega-institute/trureturing/issues/19167).
 
 ## Falsifier
 
@@ -102,9 +104,8 @@ in $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$.
 The four-slot escape audit is unfinished under
 [issue #19114](https://github.com/the-omega-institute/trureturing/issues/19114).
 Its targets are this `result`,
-`CompositionalIterateCongruence.agree_subst`,
-`BilateralProductModFour.ofSeries_inverse`, and
-`ContinuedFractionOddSquare.inverse_one`. The published predicate
+`CompositionalIterateCongruence.agree_subst`, and
+`BilateralProductModFour.ofSeries_inverse`. The published predicate
 `CompositionalIterateCongruence.Agree` is also included in the requested
 publication audit; as a definition it is outside the machine theorem-registration
 selection. Its complete defining formula is mirrored in its owner Scribe.

@@ -60,7 +60,8 @@ Direct frozen dependencies:
   D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.agree_subst;
   D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.map_inverse;
   D5/S1/Recurrence/Bilateral/BilateralProductModFour.ofSeries_inverse;
-  D5/S1/Recurrence/Residue/ContinuedFractionOddSquare.inverse_one.
+  D5/S1/Recurrence/Residue/ContinuedFractionOddSquare.inverse_one
+    (existing dev owner; escape audit: https://github.com/the-omega-institute/trureturing/issues/19167).
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19114
 The public definitions state the OEIS equation with Laurent integer powers and
 its coefficientwise bilateral sum. The proof pairs k with -k-2 and constructs
