@@ -17,6 +17,8 @@ internal sealed class WassersteinMeanDocument : IScribeDocumentDefinition
             Paragraph(Text("Luyining Gan and Sejong Kim, Weak log-majorization between the geometric "
                 + "and Wasserstein means. " + Locator + ".")),
             Paragraph(Text("A ⋄t B := (1 − t)² A + t² B + t(1 − t)[A(A^{−1} #B) + (A^{−1} #B)A]")),
+            Paragraph(Text("Conjecture 5.7. Let A, B ∈ Pm and t ∈ (0, 1). Then "
+                + "(A^p ⋄t B^p)^{1/p} ց≺w log exp((1 − t) log A + t log B) as p ց 0.")),
             Describe.Lean(
                 DescribeId.Create("wasserstein-geometric-mean"),
                 DeclarationHandle.Create(Module + ".geometricMean"),
