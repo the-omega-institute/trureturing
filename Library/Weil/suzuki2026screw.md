@@ -6720,3 +6720,148 @@ The sample may depend on $A,w$ and the seed. The constant depends on the seed ma
 For any fixed $w>0$, suppose $A_j\to\infty$ and the actual kernel is PSD for every real sample of at most $n_j$ sites in $(A_j-w,A_j+w)$, with $n_je^{-2A_j}\to\infty$. Then RH follows: if it failed, the one fixed seed would give a fixed $C_\varepsilon$, eventually below $n_je^{-2A_j}$. Thus any predetermined divergent factor $g(A)$ in $n_A=\lceil e^{2A}g(A)\rceil$ gives a sufficient cofinal all-sample positivity schedule. Its positivity is unproved. A fixed universal constant times $e^{2A}$ is not shown sufficient by this argument.
 
 On the same fixed small window as W148, conditional on RH failure and beyond that theorem's common start, the minimum negative-witness count is greater than $\lfloor c_{\rm cub}e^{2A}(\log A/A)^{1/3}\rfloor+1$ and at most $\lceil C_\varepsilon e^{2A}\rceil$. The ratio of these bounds is $O_\varepsilon((A/\log A)^{1/3})$. This improves the preceding bracket comparison by a factor $\log A$, and compares bounds only. It determines neither an actual minimum nor an optimum or contradiction. W148's positive range is unchanged; the sufficient full count, all-order and larger-rate multiwindow positivity, original signed prime/Robin upper and full RH remain unproved. No actual negative seed/sample, numerical negative margin, numerical $C_\varepsilon$ or W148 positive start, effective finite RH test, Lean certification or literature-priority claim is supplied. Classical Jackson localization, the complete-source strip bound and the physical reconstruction are reused; W149--W155 supply their actual-source interface.
+
+
+## Logarithmic centering pays the actual third theta correction
+
+On the same fixed small physical window and real polynomial-sign class as W148, there are a fixed $c_4>0$ and one common sufficiently high start such that degrees up to $c_4e^{2A}(\log A/A)^{1/4}$ have positive margin $\log A/(256A)$ in the original Gaussian Hardy metric. The additional payment controls an indefinite rank-one term in the actual third coefficient; that term is not assumed nonnegative. The complete actual theta source and its reflected exterior remain. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse W88, W89, W110--W112, W127, W131, W134--W135 and W141--W144. Keep $E=e^{-2A}$, $u=\operatorname{arctanh}z$, $v=\operatorname{arctanh}w$, $x=A+(u+v)/2$, $c_0=\cosh(u-v)$ and $f_r=e^{-r\operatorname{arctanh}z}$. Put
+$$
+R(z,w)=\frac{(1-z)(1-w)}{(1-zw)^2},\quad
+R_2(z,w)=f_2(z)f_2(w)R(z,w),\quad
+J_3(z,w)=\frac{(1-z)^3(1-w)^3}{(1-zw)^4},
+$$
+$$
+g(z)=\cosh u\,e^{-3u}=\frac{1-z}{(1+z)^2},\qquad
+h_j(c)=\int_0^\infty(c+\cosh t)^{-j-1}\,dt.
+$$
+
+### Identify the whole normalized third coefficient
+
+In the same compatible complete-source expansion of $\mathcal K_A^1$, the whole third coefficient is
+$$
+\begin{aligned}
+\mathcal D_{3,A}(z,w)={}&
+\frac{105x+71}{64\pi^3A}J_3(z,w)
++\frac{3(2x+1)}{4\pi^3A}R_2(z,w)
++\frac{9x}{2\pi^3A}g(z)g(w)\\
+&+\frac{g(z)g(w)}{8\pi^3A}
+\left[3h_3(c_0)-6h_1(c_0)+18c_0h_0(c_0)\right].
+\end{aligned}
+\tag{W157}
+$$
+Use the normalized W141 amplitude with $\tau=1+t$ and $s_a=r_a/(1-r_a)$. The main cubic coefficient of $(x+\tfrac12\log\tau)\tau^{7/2}$ is $35x/16+71/48$; its factor $3!/(2\pi)^3$ gives the first term of W157. The first $s_a+s_b$ term at Taylor order two contributes $c_*(5x+1)R_2/(2\pi^2A)$. Its second geometric term $r_a^2+r_b^2$, at Taylor order one, contributes
+$$
+\frac{c_*^2x}{\pi A}[2g(z)g(w)-R_2(z,w)],\qquad c_*=\frac3{2\pi},
+$$
+using $\cosh(2(u-v))=2c_0^2-1$. Combining these two contributions gives the displayed $R_2$ and rank-one terms. The product $s_as_bt^2$ starts at order $E^4$.
+
+For the reflected part, the unmodified Stieltjes term with $j=3$ contributes $3h_3g(z)g(w)/(8\pi^3A)$ after subtraction. The special $s$ prefactor contributes $-c_*h_1g(z)g(w)/(2\pi^2A)$ through $j=1$, and $c_*^2c_0h_0g(z)g(w)/(\pi A)$ through its first denominator correction $r_a+r_b$. These are all the reflected contributions of order three. The complete-source error is still paid by W135.
+
+### Center the actual scalar rank observable
+
+Write $T=m+1$, $\eta_m=A-\tfrac12\log T$, $a_n=\int z^n\,d\nu$ and $Q=Q_H(\nu)$. The existing actual moment-radius bound gives $\sum q^{2n}a_n^2\le9\Lambda^mQ$. Exact coefficients are
+$$
+[z^n]g=(-1)^n(2n+1),\qquad
+[z^n](ug)=(-1)^n[-(2n+1)S_n+2\lceil n/2\rceil],
+\qquad S_n=\sum_{\substack{1\le j\le n\\j\text{ odd}}}\frac1j.
+$$
+Here $S_0=0$ and $S_n=\tfrac12\log(n+1)+O(1)$. For classical logarithmic coefficient background, see [P. Flajolet and R. Sedgewick, *Analytic Combinatorics* (2009), p. 385, Theorem VI.2, equation (21)](https://algo.inria.fr/flajolet/Publications/book.pdf). The uniform estimate below uses the exact harmonic coefficients, without importing asymptotic uniformity in a moving parameter. Thus the coefficient $v_{T,n}$ of $(u+\tfrac12\log T)g$ obeys
+$$
+|v_{T,n}|\le C(n+1)[1+|\log((n+1)/T)|].
+$$
+For $J=\lceil C_0T\rceil$ with fixed sufficiently large $C_0$, the squared coefficient sum for $n<J$ is at most $CT^3$. This uses the integrability of $y^2(1+|\log y|)^2$ near zero. Weighted Cauchy--Schwarz and the same moment tail bound the remaining scalar pairing by
+$$
+C\Lambda^{m/2}q^{-J}(J+1)
+[1+|\log((J+1)/T)|]\sqrt Q\le CT^{3/2}\sqrt Q.
+$$
+The fixed choice of $C_0$ absorbs the exponential factor uniformly in $m\ge0$. All series pairings converge absolutely on the actual compact support. Consequently the same measure satisfies
+$$
+V_T=\int(u+\tfrac12\log T)g\,d\nu,
+\qquad |V_T|\le CT^{3/2}\sqrt{Q_H(\nu)}.
+\tag{W158}
+$$
+For $G=\int g\,d\nu$ and $\eta_m>0$, the actual troublesome form is exactly
+$$
+Q_{xgg/A}(\nu)=\frac{\eta_mG^2+GV_T}{A}
+\ge-\frac{V_T^2}{4A\eta_m}
+\ge-\frac{CT^3}{A\eta_m}Q_H(\nu).
+\tag{W159}
+$$
+This completes a square on jointly realized observables. Bounding $ug$ and $g$ separately would retain an unnecessary logarithmic loss. The rank term itself is not declared positive, and no independently optimized profile is substituted.
+
+### Pay the other direct terms and the full reflected coefficient
+
+Apply W131 directly to $f_2\nu$ to obtain the bracket $1-\log T/(2A)-C/A$ for $xR_2/A$. For $J_3$, the concrete weighted-log input is
+$$
+\sigma=(1-z)^3\nu,\quad b_n=\int z^n\,d\sigma,\quad
+d_n=\binom{n+3}{3},\quad
+G_3(w)=\sum_{n\ge0}d_nb_nw^n,\quad
+d\mu_3=3(1-|w|^2)^2\frac{d\mathcal A}{\pi}.
+$$
+The radial moments are $1/d_n$. The same split as W142 gives $\int|G_3|^2d\mu_3=Q_{J_3}(\nu)$ and $\sup|G_3|^2\le CT^4Q_{J_3}(\nu)$, since $\sum_{n<J}d_n=O(J^4)$. Its tail before absorption is $C\Lambda^{m/2}(J+1)^3q^{-J}\sqrt{Q_{J_3}(\nu)}$, absorbed into $CT^2\sqrt{Q_{J_3}(\nu)}$ at $J=\lceil C_0T\rceil$. Endpoint balls $|1+w|<\varepsilon$ have $\mu_3$-mass at most $12\varepsilon^4$. The existing layer-cake argument therefore uses $\min(1,CT^4e^{-4s})$ and retains exactly the coefficient $1/2$ before $\log T$. The same weighted moment identity gives
+$$
+Q_{xJ_3/A}(\nu)\ge
+\left[1-\frac{\log T}{2A}-\frac CA\right]Q_{J_3}(\nu).
+\tag{W160}
+$$
+When $\eta_m\ge C$, both these direct pieces, including their positive constant parts in W157, are nonnegative. The classical weighted-moment mechanism is used inside the actual coefficient payment. No unused generic statement is introduced, and positive multipliers preserve the same separator, including repeated roots and root atoms.
+
+For the reflected terms, W89 bounds the $h_3$ and $h_1$ forms by $CQ_H(f_3\nu)$. Express the $c_0h_0$ term as the average of the $h_0$ stationary bilinear forms on the two actual weighted measures $f_2\nu$ and $f_4\nu$, with the same cosh transports. W89 bounds it by $C\sqrt{Q_H(f_2\nu)Q_H(f_4\nu)}$. W112 with $r=2,3,4$ pays all of these by $CT^3Q$. The whole reflected third loss is therefore at most $CT^3Q/A$; no stationary sign is assumed.
+
+Combining W157--W160 with W144 and the unchanged coefficient and remainder suppliers gives, for every nonzero measure in the stated sign class, every $N\ge4$, $\eta_m\ge C$ and the same high source start,
+$$
+\begin{aligned}
+\frac{Q_{\mathcal K_A^1}(\nu)}Q\ge{}&
+1-\frac{\log T}{2A}-\frac CA
+-\frac CA[\xi+\xi^2+\xi^3]-\frac{C\xi^3}{A\eta_m}\\
+&-\sum_{4\le k<N}E^k[C(m+k+2)]^k
+\left[1+\frac{\log(m+k+2)}A\right]\\
+&-C\Lambda^m[C^NN!E^N+e^{-c e^{2A}}],\qquad\xi=ET.
+\end{aligned}
+\tag{W161}
+$$
+Every term concerns the same actual measure and complete kernel. The uniform suppliers hold before any degree cap is selected.
+
+### One common start at the fourth-root scale
+
+Let $L=\log A$, fix $C\ge1$ dominating the bounds, choose a fixed sufficiently small $c_4>0$, for example $c_4\le1/(64C)$ after increasing $C$, and take $D\ge10+5\log\Lambda$. Set
+$$
+M_A=c_4e^{2A}(L/A)^{1/4},\qquad
+N=\left\lceil D\frac{A+m+1}L\right\rceil.
+$$
+Uniformly for $0\le m\le\lfloor M_A\rfloor$, one common high start ensures
+$$
+N\ge4,\quad m+N+2\le2M_A,\quad\log(CN)\le2A-L/5,
+\qquad 1-\frac{\log T}{2A}-\frac CA\ge\frac{L}{16A}.
+\tag{W162}
+$$
+The largest $\log(CN)$ is at most $2A-L/4-(3/4)\log L+O(1)$. The core is at least $[L-\log L-4\log(2c_4)-8C]/(8A)$. Thus $\eta_m\ge L/16$ and all direct-sign thresholds hold at the same start.
+
+The reflected and centered-rank allowances in W161 together are at most $L/(64A)$: $\xi\le2c_4(L/A)^{1/4}\to0$ and $\eta_m\ge L/16$. Put $\vartheta=CE(m+N+2)\le2Cc_4(L/A)^{1/4}$. Its logarithmic coefficient factor is at most $4$ and $\vartheta\le1/2$. The remaining coefficient sum is at most
+$$
+\frac{4\vartheta^4}{1-\vartheta}
+\le128C^4c_4^4\frac LA\le\frac{L}{64A}.
+$$
+For the factorial remainder,
+$$
+\log(\Lambda^m C^NN!e^{-2AN})
+\le m\log\Lambda-(L/5)N\le-2(A+m).
+$$
+The complete-source remainder obeys $\Lambda^me^{-c e^{2A}}\le e^{-c e^{2A}/2}$ at the same start because $m/e^{2A}\to0$. Both remainders together cost at most $L/(64A)$. Hence
+$$
+Q_{\mathcal K_A^1}(\nu)\ge\frac{\log A}{64A}Q_H(\nu)>0
+\quad(A\ge A_*,\ 0\le m\le\lfloor M_A\rfloor,\ \nu\ne0).
+\tag{W163}
+$$
+Use the exact W127 transport $\nu_1=(1-r_E)\nu_g$ and the existing W140 norm return. Since $CE(m+1)\to0$ uniformly in this new range, the same common start gives $Q_H(\nu_1)\ge Q_H(\nu_g)/4$. Therefore
+$$
+Q_{\mathcal K_A^g}(\nu_g)\ge\frac{\log A}{256A}Q_H(\nu_g)>0,
+\quad 0\le m\le\left\lfloor c_4e^{2A}(\log A/A)^{1/4}\right\rfloor,
+\quad A\ge A_*,\quad\nu_g\ne0.
+\tag{W164}
+$$
+The source and final original Gaussian Hardy metric are unchanged. Repeated roots, root atoms, arbitrary density and confluence remain included. Existing real/imaginary splitting admits arbitrary complex coefficients on at most $\lfloor M_A\rfloor+1$ distinct sites in the same fixed small physical window, without an internal gap assumption.
+
+The degree cap increases over W148 by a factor of order $(A/\log A)^{1/12}$, with the stated smaller margin constant. This uses the actual indefinite rank observable and its logarithmic centering; it does not assert that higher direct coefficients are all nonnegative. Under RH failure, on this same fixed small window beyond all positive starts, W156 and W164 give an upper/lower bracket ratio $O_\varepsilon((A/\log A)^{1/4})$ for the minimum negative-witness site count. This compares bounds only and determines neither an actual minimum nor an optimum or contradiction. The sufficient full count, all-order or larger-rate multiwindow positivity, original signed prime/Robin upper and full RH remain unproved. No actual negative seed/sample, numerical negative margin, numerical $C_\varepsilon$ or positive start, effective finite RH test, Lean certification or literature-priority claim is supplied. Classical logarithmic and weighted-moment tools, complete remainders and exact norm transport are reused in this source-specific paper application.
