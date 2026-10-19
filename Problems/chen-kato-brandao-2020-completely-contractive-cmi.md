@@ -67,7 +67,7 @@ The literal four-term CMI is $\log 2>0$ on both matrices.
 The asserted inequality would give $\log 2\le\eta\log 2$, which contradicts
 $\eta<1$.
 
-The public surface is `correctable`, `entropy`, `cmi`, `claim`, and `result`.
+The public definitions are `correctable`, `entropy`, `cmi` and `claim`. The public theorems are `entropy_diagonal`, `partialTraceRight_diagonal`, `partialTraceLeft_diagonal` and `result`.
 The theorem's conservative `proof_shape` is `bind-only`; its
 `escape_witness` is none and its admission basis is `open-problem-resolution`.
 Every bind-only private helper is consumed on the settling proof's live
@@ -91,7 +91,7 @@ restriction in `claim`.
 `OpenProblemResolutionClaim` on that declaration. `spectralEntropy` is
 reused at its original frozen owner with its mathematical expression intact.
 
-Information-escape registration is paused under CLAUDE.md §3.9.
+The escape audit for the published `entropy_diagonal` theorem is unfinished under [#19212](https://github.com/the-omega-institute/trureturing/issues/19212). The designated refutation `result` is exempt under the typed utility edge. The existing partial-trace registrations are preserved; their registration status is separate from the kernel-checked mathematical statements.
 
 ## Triage
 

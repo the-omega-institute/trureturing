@@ -46,6 +46,10 @@ $$\forall d \in \mathbb{N},\; \forall rho \in \operatorname{Fin}\left(3\right) \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/FannesRootFidelityHolevo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fannes-demelo-roga-zyczkowski-2012-root-fidelity-holevo-bound` (proved) by `D5/S3/Quantum/Divergence/FannesRootFidelityHolevo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fannes-demelo-roga-zyczkowski-2012-root-fidelity-holevo-bound","declaration_gid":"D5/S3/Quantum/Divergence/FannesRootFidelityHolevo.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Fannes, F. de Melo, W. Roga, K. Życzkowski (2011). *Matrices of fidelities for ensembles of quantum states and the Holevo quantity*. URL: <https://arxiv.org/abs/1104.2271v1>.

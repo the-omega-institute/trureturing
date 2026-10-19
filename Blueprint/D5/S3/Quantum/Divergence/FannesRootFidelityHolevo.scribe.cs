@@ -21,11 +21,11 @@ internal sealed class FannesRootFidelityHolevoDocument : IScribeDocumentDefiniti
             Node("claim", "Conjecture 1", Disp(new Formula.Logic(X("claim"), FormulaLogicOperator.Iff, Parenthesized(ClaimBody()))),
                 Quotation + " A state is a positive semidefinite Matrix (Fin d) (Fin d) ℂ of trace one. The weights are nonnegative and sum to one. Every natural dimension is quantified; dimension zero has no such density matrix.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The Holevo bound for three arbitrary states", Disp(ClaimBody()),
-                "Two polar gauges make two cross products positive. An eigenbasis of the remaining polar unitary preserves all three root fidelities in one rank-one decomposition. Channel data processing bounds the Holevo quantity by its labelled rank-one refinement. The three-by-three entrywise-modulus entropy inequality and diagonal entropy accounting then bound that refinement by the entropy of the root-fidelity matrix. Singular states and zero weights require no limiting restriction.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "Two polar gauges make two cross products positive. An eigenbasis of the remaining polar unitary preserves all three root fidelities in one rank-one decomposition. Channel data processing bounds the Holevo quantity by its labelled rank-one refinement. The three-by-three entrywise-modulus entropy inequality and diagonal entropy accounting then bound that refinement by the entropy of the root-fidelity matrix. Singular states and zero weights require no limiting restriction.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(ProblemSlugRef.Create("fannes-demelo-roga-zyczkowski-2012-root-fidelity-holevo-bound"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("fmrz-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula X(string name) => F.Id(name);
     private static Formula Q(params string[] names)
     {
