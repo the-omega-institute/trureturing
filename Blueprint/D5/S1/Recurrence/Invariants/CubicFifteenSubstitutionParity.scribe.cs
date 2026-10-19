@@ -28,6 +28,10 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
                 + "function, and choose selects a witness of the displayed proved "
                 + "existential proposition. The auxiliary series has coefficients in "
                 + "ZMod(2); generatingSeries and a have integer coefficients.")),
+            Node("prime_power_subst", "Frobenius as substitution", PrimePowerFormula(),
+                "Here subst(X to the power p,f) means f(X to the power p). For a prime p, raising a series over ZMod(p) to the power p equals that substitution."),
+            Node("power_two_zero", "The power-of-two series has zero constant coefficient", PowerTwoZeroFormula(),
+                "Zero is not a power of two, so the constant coefficient of powerTwoSeries vanishes."),
             Node("powerTwoSeries", "The power-of-two series", PowerTwoFormula(),
                 "Coefficient n is one in ZMod(2) precisely when n is a power of two, "
                 + "and is zero otherwise. In particular the constant coefficient is "
@@ -143,4 +147,16 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
         Implication(Seq(D(1), Sp, Le, Sp, F.Id("n")),
             Parenthesized(Seq(Call("Odd", Call("a", F.Id("n"))), Sp, Iff, Sp,
                 Parenthesized(IsPowerTwo(F.Id("n"))))))));
+    private static Formula PrimePowerFormula()
+    {
+        Formula p = F.Id("p"), f = F.Id("f");
+        Formula prime = Seq(Operatorname, Grp(Seq(F.Id("Nat"), Dot, F.Id("Prime"))));
+        return Disp(Seq(Bound("p", Naturals()), OpenBracket,
+            Call("Fact", new Formula.Apply(prime, [p])), CloseBracket, Sp,
+            Bound("f", Series(Call("ZMod", p))),
+            Equal(Power(f, p), Call("subst", Power(X(), p), f))));
+    }
+    private static Formula PowerTwoZeroFormula() =>
+        Disp(Equal(Call("constantCoeff", PowerTwo()), D(0)));
+
 }

@@ -30,6 +30,16 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
                 "The difference of powers is divisible by the difference of the original series."),
             Node("agree_mul", "Products preserve agreement", PublishedProductFormula(),
                 "The difference of products is a sum of two multiples of the original differences."),
+            Node("agree_iff", "Agreement and divisibility", PublishedDivisibilityFormula(),
+                "Equality of all coefficients below d is equivalent to divisibility of the difference by X to the power d."),
+            Node("agree_X", "Multiplication by the indeterminate", PublishedShiftFormula(),
+                "Multiplication by X shifts each coefficient one place and increases the agreement range by one."),
+            Node("subst_inner_agree", "Agreement of inner substitutions", PublishedInnerAgreementFormula(),
+                "In this formula subst(u,f) means f(u). Substitution into the same outer series preserves agreement of zero-constant inner series."),
+            Node("subst_outer_agree", "Agreement of outer substitutions", PublishedOuterAgreementFormula(),
+                "In this formula subst(u,f) means f(u). An inner series divisible by X squared doubles the agreement range of the outer series."),
+            Node("subst_constant", "Constant coefficient of a composition", PublishedConstantFormula(),
+                "In this formula subst(u,f) means f(u). Composing with a zero-constant series preserves the outer series' constant coefficient."),
             Node("generatingSeries", "Construction of the integer series", GeneratingFormula(),
                 "Write A=X*B. The equation B=r(B)^2*subst(B,q(B)) contracts agreement "
                 + "by one degree for series of constant coefficient 1. The inverse r(B) "
@@ -185,6 +195,48 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
             Bound("u", PublishedSeries()), Bound("v", PublishedSeries()),
             Implication(Call("Agree", d, f, g), Implication(Call("Agree", d, u, v),
                 Call("Agree", d, Mul(f, u), Mul(g, v))))));
+    }
+
+    private static Formula PublishedDivisibilityFormula()
+    {
+        Formula d = F.Id("d"), f = F.Id("f"), g = F.Id("g");
+        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
+            Bound("f", PublishedSeries()), Bound("g", PublishedSeries()),
+            Parenthesized(Seq(Call("Agree", d, f, g), Sp, Iff, Sp,
+                Parenthesized(Seq(Power(X(), d), Sp, Mid, Sp, Parenthesized(Subtract(f, g))))))));
+    }
+    private static Formula PublishedShiftFormula()
+    {
+        Formula d = F.Id("d"), f = F.Id("f"), g = F.Id("g");
+        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
+            Bound("f", PublishedSeries()), Bound("g", PublishedSeries()),
+            Implication(Call("Agree", d, f, g), Call("Agree", Add(d, D(1)), Mul(X(), f), Mul(X(), g)))));
+    }
+    private static Formula PublishedInnerAgreementFormula()
+    {
+        Formula d = F.Id("d"), u = F.Id("u"), v = F.Id("v"), f = F.Id("f");
+        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
+            Bound("u", PublishedSeries()), Bound("v", PublishedSeries()),
+            Implication(Call("Agree", d, u, v), Parenthesized(Seq(Bound("f", PublishedSeries()),
+                Implication(Equal(Call("constantCoeff", u), D(0)),
+                    Implication(Equal(Call("constantCoeff", v), D(0)),
+                        Call("Agree", d, Call("subst", u, f), Call("subst", v, f)))))))));
+    }
+    private static Formula PublishedOuterAgreementFormula()
+    {
+        Formula d = F.Id("d"), f = F.Id("f"), g = F.Id("g"), u = F.Id("u");
+        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
+            Bound("f", PublishedSeries()), Bound("g", PublishedSeries()), Bound("u", PublishedSeries()),
+            Implication(Call("Agree", d, f, g),
+                Implication(Seq(Power(X(), D(2)), Sp, Mid, Sp, u),
+                    Call("Agree", Mul(D(2), d), Call("subst", u, f), Call("subst", u, g))))));
+    }
+    private static Formula PublishedConstantFormula()
+    {
+        Formula f = F.Id("f"), u = F.Id("u");
+        return Disp(Seq(PublishedBinders(), Bound("f", PublishedSeries()), Bound("u", PublishedSeries()),
+            Implication(Equal(Call("constantCoeff", u), D(0)),
+                Equal(Call("constantCoeff", Call("subst", u, f)), Call("constantCoeff", f)))));
     }
 
 }
