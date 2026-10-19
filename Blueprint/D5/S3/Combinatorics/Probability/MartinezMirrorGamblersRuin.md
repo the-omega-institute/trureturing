@@ -46,6 +46,10 @@ $$\forall p \in \mathbb{R},\; (0 < p) \Rightarrow ((p < 1) \Rightarrow (\forall 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Probability/MartinezMirrorGamblersRuin.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/martinez-mirror-gamblers-ruin` (proved) by `D5/S3/Combinatorics/Probability/MartinezMirrorGamblersRuin.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"martinez-mirror-gamblers-ruin","declaration_gid":"D5/S3/Combinatorics/Probability/MartinezMirrorGamblersRuin.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* L. Martinez (2024). *A symbolic computational approach to the generalized gambler's ruin problem in one and two dimensions*. DOI: [10.48550/arXiv.2412.07667](https://doi.org/10.48550/arXiv.2412.07667). URL: <https://arxiv.org/abs/2412.07667v1>.

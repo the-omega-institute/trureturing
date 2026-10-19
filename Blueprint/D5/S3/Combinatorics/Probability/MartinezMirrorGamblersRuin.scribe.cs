@@ -52,7 +52,9 @@ internal sealed class MartinezMirrorGamblersRuinDocument : IScribeDocumentDefini
                 + "The two coefficient equations are 1=a/r+br+cR and R=aRr+bR/r+c. "
                 + "They verify the finite formula (1−rˣ)(1−Rr^{N − x})/((1−R)(1−rᴺ)). "
                 + "The numerator is a constant plus a linear combination of rˣ and r^{N − x}, "
-                + "so the coefficient equations give the recurrence, and the two endpoint values are zero and one."),
+                + "so the coefficient equations give the recurrence, and the two endpoint values are zero and one.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("martinez-mirror-gamblers-ruin"), ResolutionKind.Proved)),
             Paragraph(Text(
                 "Uniqueness requires only a>0 and b,c≥0. The difference of two solutions has zero boundary values. "
                 + "Choose a maximum on the finite interval. At an interior maximizer the averaging equation and "
@@ -67,10 +69,10 @@ internal sealed class MartinezMirrorGamblersRuinDocument : IScribeDocumentDefini
                 + "The expected duration of the walk is a separate question.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        DescribeRole role, AssessedProvenance provenance, string prose) =>
+        DescribeRole role, AssessedProvenance provenance, string prose, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("martinez-mirror-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Nat => Seq(Mathbb, Grp(X("N")));
