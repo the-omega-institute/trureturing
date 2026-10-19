@@ -4712,3 +4712,19 @@ physical or native realization, Hamiltonian, or QFT identification.
 [IPS32]: https://arxiv.org/pdf/1006.1358v1
 
 ## 追加锚（本行以下为增补区）
+
+## 39. The exceptional-half individual-Gram classification
+
+**Convention 39.1 (The half-Gram continuation).** At $\eta=1/2$, the
+necessary-and-sufficient classification of individual actual complex Grams
+is [Exceptional-Half Gram Classification, Theorem 5.1][HALF39]. Its
+Lemma 3.1 excludes the remaining U-type stationary and swapped $2+2$
+sectors, and its Lemma 4.1 determines all eight environment vectors from
+a pure stationary line and an orthogonal stationary support. It uses the
+all-input class of Theorem 4.1 and the reductions of §§32–35. The resulting
+four-phase diagonal orbit transfers precisely the canonical limits and
+memory properties of §§18–21, with full transient inputs included.
+
+[HALF39]: AURIC_FIB_FIVE_WINDOW_HALF_GRAM_CLASSIFICATION.md
+
+## 追加锚（本行以下为增补区）
