@@ -164,23 +164,9 @@ private partial def rigidlyCompatible (env : Environment) (target source : Expr)
   | target, .forallE .. => (inductiveHead env target).isNone && !target.isSort
   | _, _ => true
 
-/-- Enumerate actual B statements in stable order. Retrieval successes are only
-priorities; the remaining statements are still checked with the same rules. -/
-def baselinePresentation (env : Environment) (levels : List Name) (target : Expr)
-    (preferred : Array Name) (index? : Option FactIndex) :
-    IO (Run × Option PresentationEvidence × String) := do
-  let some index := index?
-    | return (.incomplete .execution, none, "search.presentation_index_unavailable")
-  let names := preferred ++ index.matcherConstants.map (·.1)
-  let mut seen : NameSet := {}
-  let mut checked := 0
-  let mut failure? : Option (Run × String) := none
-  for name in names do
-    if seen.contains name then continue
-    seen := seen.insert name
-    let some info := (env.setExporting false).find? name | continue
-    if info.isUnsafe || (name.isInternalDetail && !isPrivateName name) then continue
-    if !proofCandidate env info.type || !rigidlyCompatible env target info.type then continue
+private def baselineSource (env : Environment) (levels : List Name) (target : Expr)
+    (index : FactIndex) (name : Name) : IO (Attempt × Option PresentationEvidence) := do
+  try
     let evidence ← IO.mkRef (none : Option PresentationEvidence)
     let row ← attempt env levels target s!"presentation/{name}" fun goal => do
       let value ← mkConstWithFreshMVarLevels name
@@ -196,16 +182,76 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
         goal.assign proof
         return true
       return false
-    checked := checked + 1
+    return (row, ← evidence.get)
+  catch ex =>
+    let row : Attempt := {
+      strategy := s!"presentation/{name}"
+      outcome := .incomplete .execution
+      detail := ex.toString }
+    return (row, none)
+
+private structure PresentationScan where
+  checked : Nat := 0
+  failure? : Option (Run × String) := none
+  evidence? : Option PresentationEvidence := none
+
+private def recordPresentations (state : PresentationScan)
+    (rows : Array (Attempt × Option PresentationEvidence)) : PresentationScan := Id.run do
+  let mut state := state
+  for (row, evidence) in rows do
+    state := {state with checked := state.checked + 1}
     if row.outcome == .found then
-      if let some result ← evidence.get then
-        return (.found, some {result with proof := row.proof?.get!, axioms := row.axioms},
-          s!"checked_presentations={checked}")
-      return (.incomplete .execution, none, "search.presentation_witness_missing")
-    if let .incomplete _ := row.outcome then
-      if failure?.isNone then failure? := some (row.outcome, s!"source={name}: {row.detail}")
-  if let some (failure, detail) := failure? then
-    return (failure, none, s!"checked_presentations={checked}, {detail}")
-  return (.exhausted, none, s!"checked_presentations={checked}")
+      match evidence, row.proof? with
+      | some evidence, some proof =>
+        if state.evidence?.isNone then
+          state := {state with evidence? := some {evidence with proof, axioms := row.axioms}}
+      | _, _ =>
+        if state.failure?.isNone then
+          state := {state with failure? := some (.incomplete .execution,
+            "search.presentation_witness_missing")}
+    else if let .incomplete _ := row.outcome then
+      if state.failure?.isNone then
+        state := {state with failure? := some (row.outcome, s!"{row.strategy}: {row.detail}")}
+  return state
+
+private def presentationResult (state : PresentationScan) :
+    Run × Option PresentationEvidence × String :=
+  let detail := s!"checked_presentations={state.checked}"
+  match state.evidence?, state.failure? with
+  | some evidence, failure =>
+    (.found, some evidence, detail ++
+      (failure.map (fun (_, text) => s!", earlier_incomplete={text}")).getD "")
+  | none, some (failure, text) => (failure, none, s!"{detail}, {text}")
+  | none, none => (.exhausted, none, detail)
+
+/-- Enumerate actual B statements in stable order. Four independent conversion
+attempts may run together; all started tasks are joined in declaration order.
+Preferred B statements are tried first without speculative parallel work. -/
+def baselinePresentation (env : Environment) (levels : List Name) (target : Expr)
+    (preferred : Array Name) (index? : Option FactIndex) :
+    IO (Run × Option PresentationEvidence × String) := do
+  let some index := index?
+    | return (.incomplete .execution, none, "search.presentation_index_unavailable")
+  let names := preferred ++ index.matcherConstants.map (·.1)
+  let mut seen : NameSet := {}
+  let mut state : PresentationScan := {}
+  let mut pending : Array (Task (Except IO.Error (Attempt × Option PresentationEvidence))) := #[]
+  for i in [:names.size] do
+    let name := names[i]!
+    if seen.contains name then continue
+    seen := seen.insert name
+    let some info := (env.setExporting false).find? name | continue
+    if info.isUnsafe || (name.isInternalDetail && !isPrivateName name) then continue
+    if !proofCandidate env info.type || !rigidlyCompatible env target info.type then continue
+    if i < preferred.size then
+      state := recordPresentations state #[← baselineSource env levels target index name]
+    else
+      pending := pending.push (← IO.asTask (baselineSource env levels target index name) .dedicated)
+      if pending.size < 4 then continue
+      state := recordPresentations state (← pending.mapM (fun task => IO.ofExcept task.get))
+      pending := #[]
+    if state.evidence?.isSome then return presentationResult state
+  state := recordPresentations state (← pending.mapM (fun task => IO.ofExcept task.get))
+  return presentationResult state
 
 end LeanInformationAudit.SearchReduction
