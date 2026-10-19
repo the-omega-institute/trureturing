@@ -124,5 +124,103 @@ def analysis : AuricFib.Contract.Application borel_iid_lower_surface where
     plan := {task := (),initial := [],additions := [[()],[]]}
     acquisition := .unavailable "The Borel source has no acquired encoded law fiber or native continuation map"}
 
+/-- The selected parameter is the uniform probability law on [0,1]. The state
+is a mode label, and the observed value is that label's probability mass. -/
+abbrev atomlessDomain : Analysis.Domain analysisSource where
+  parameter := volume.restrict (Icc (0 : ℝ) 1)
+  State := Fin 5
+  readout _ s := modeMass (volume.restrict (Icc (0 : ℝ) 1)) s
+  scope := .whole (Equiv.refl _) (fun _ _ => rfl)
+
+private theorem interval_mass (s : Fin 5) :
+    modeMass (volume.restrict (Icc (0 : ℝ) 1)) s =
+      ((![2,3,3,2,5] s : ℕ) : ℝ)/15 := by
+  let μ := volume.restrict (Icc (0 : ℝ) 1)
+  letI : IsProbabilityMeasure μ := ⟨by simp [μ]⟩
+  haveI : NullSingletonClass μ := by dsimp [μ]; infer_instance
+  rcases borel_iid_lower_surface μ with
+    ⟨_,_,hm,hy,hz,_,_,_,_,_,_,_,_,_,hkhi,hklo,_,hnull,_⟩
+  have hx := hnull.mpr (inferInstance : NullSingletonClass μ)
+  rw [Fin.sum_univ_five] at hm
+  fin_cases s <;> norm_num <;> change _ = _ <;> linarith
+
+private def massValues : Fin 5 → Analysis.Value :=
+  ![.nat 2,.nat 3,.nat 3,.nat 2,.nat 5]
+
+private def decodeMass : Analysis.Value → Option ℝ
+  | .nat n => some ((n : ℝ)/15)
+  | _ => none
+
+private def massKernel : Fin 5 → Fin 5 → Bool :=
+  ![![true,false,false,true,false],
+    ![false,true,true,false,false],
+    ![false,true,true,false,false],
+    ![true,false,false,true,false],
+    ![false,false,false,false,true]]
+
+def atomlessPlan : Analysis.Plan analysisSource where
+  task := ()
+  initial := []
+  additions := [[()],[]]
+
+/-- Complete five-label presentation for the probability-mass observation.
+The two nontrivial fibers are {null,both ends} and {left,right}. -/
+def atomlessPresentation : Analysis.FinitePresentation atomlessPlan atomlessDomain where
+  stateFintype := inferInstanceAs (Fintype (Fin 5))
+  stateDecidableEq := inferInstanceAs (DecidableEq (Fin 5))
+  enumeration := {
+    states := ([0,1,2,3,4] : List (Fin 5))
+    nodup := by decide
+    complete := by decide }
+  values _ := massValues
+  decode _ := decodeMass
+  values_correct := by
+    intro role row
+    change Unit at role
+    cases role
+    change Fin 5 at row
+    change decodeMass (massValues row) = some
+      (modeMass (volume.restrict (Icc (0 : ℝ) 1)) (([0,1,2,3,4] : List (Fin 5)).get row))
+    fin_cases row <;> norm_num [massValues,decodeMass,interval_mass]
+  kernel _ := massKernel
+  kernel_correct := by
+    intro role left right
+    change Unit at role
+    cases role
+    change Fin 5 at left right
+    change massKernel left right = true ↔
+      modeMass (volume.restrict (Icc (0 : ℝ) 1)) (([0,1,2,3,4] : List (Fin 5)).get left) =
+      modeMass (volume.restrict (Icc (0 : ℝ) 1)) (([0,1,2,3,4] : List (Fin 5)).get right)
+    fin_cases left <;> fin_cases right <;> norm_num [massKernel,interval_mass]
+  taskValues := massValues
+  task_correct := by
+    intro row
+    change Fin 5 at row
+    change decodeMass (massValues row) = some
+      (modeMass (volume.restrict (Icc (0 : ℝ) 1)) (([0,1,2,3,4] : List (Fin 5)).get row))
+    fin_cases row <;> norm_num [massValues,decodeMass,interval_mass]
+  layers := ![fun _ _ => true,massKernel,massKernel]
+  layers_correct := by
+    intro position left right
+    change Fin 3 at position
+    change Fin 5 at left right
+    change (![fun _ _ => true,massKernel,massKernel] position left right = true ↔
+      ∀ (_role : Unit) (_h : _role ∈ (([] : List Unit) ++
+        ([[()],[]].take position.val).flatten)),
+        modeMass (volume.restrict (Icc (0 : ℝ) 1)) (([0,1,2,3,4] : List (Fin 5)).get left) =
+        modeMass (volume.restrict (Icc (0 : ℝ) 1)) (([0,1,2,3,4] : List (Fin 5)).get right))
+    fin_cases position <;> fin_cases left <;> fin_cases right <;>
+      norm_num [massKernel,interval_mass,List.take,List.flatten]
+
+/-- This finite analysis concerns mode-label mass observations in the selected
+uniform-law fiber. It supplies no native reader, seam, guard or continuation. -/
+def atomlessMassAnalysis : AuricFib.Contract.Application borel_iid_lower_surface where
+  evidence := .typed {
+    source := analysisSource
+    plan := atomlessPlan
+    acquisition := .finite atomlessDomain atomlessPresentation }
+
+#print axioms atomlessPresentation
+
 #print axioms family
 end Reg.D5.S3.Estimation.DataProcessing.BorelIidStrictPeakLower
