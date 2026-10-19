@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite rational-cut sources converge to the actual Borel iid strict-peak law. -/
+   digest: Sharp Borel iid peak bounds have Dirac and atomless equality cases. -/
 
 import D5.S3.Estimation.DataProcessing.FiniteIidStrictPeakLower
 import Mathlib.Topology.Sequences
@@ -12,6 +12,7 @@ import Mathlib.Data.Rat.Encodable
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
+import Mathlib.MeasureTheory.Integral.Prod
 
 set_option autoImplicit false
 namespace D5.S3.Estimation.DataProcessing.BorelIidStrictPeakLower
@@ -523,15 +524,6 @@ private theorem atomless_cdf_square (μ : Measure ℝ) [IsProbabilityMeasure μ]
   have hswap12 : (∫ a, ∫ b, ∫ c, f a b c ∂μ ∂μ ∂μ) =
       ∫ b, ∫ a, ∫ c, f a b c ∂μ ∂μ ∂μ :=
     integral_integral_swap hint.integral_prod_left
-  have hswap23 (a : ℝ) : (∫ b, ∫ c, f a b c ∂μ ∂μ) =
-      ∫ c, ∫ b, f a b c ∂μ ∂μ := by
-    apply integral_integral_swap
-    apply (integrable_const 1).mono'
-    · exact (Measurable.ite
-        ((measurableSet_lt measurable_fst measurable_const).inter
-          (measurableSet_lt measurable_snd measurable_const))
-        measurable_const measurable_const).aestronglyMeasurable
-    · exact Eventually.of_forall fun p => hbound a p.1 p.2
   have hinner (a : ℝ) : (∫ b, ∫ c, f a b c ∂μ ∂μ) = (μ.real (Iio a))^2 := by
     have hc (b : ℝ) : (∫ c, f a b c ∂μ) =
         if b<a then μ.real (Iio a) else 0 := by
@@ -572,7 +564,10 @@ private theorem atomless_cdf_square (μ : Measure ℝ) [IsProbabilityMeasure μ]
     filter_upwards [μ.ae_ne a] with b hba
     filter_upwards [μ.ae_ne a,μ.ae_ne b] with c hca hcb
     dsimp [f]
-    split_ifs <;> push_neg at * <;> linarith
+    rcases lt_or_gt_of_ne hba with hba | hab <;>
+      rcases lt_or_gt_of_ne hca with hca | hac <;>
+      rcases lt_or_gt_of_ne hcb with hcb | hbc <;>
+      split_ifs <;> simp_all <;> linarith
   have htotal : (∫ a, ∫ b, ∫ c, f a b c+f b a c+f c a b ∂μ ∂μ ∂μ) = 1 := by
     calc
       _ = ∫ a, ∫ b, ∫ c, (1 : ℝ) ∂μ ∂μ ∂μ := by
@@ -584,10 +579,13 @@ private theorem atomless_cdf_square (μ : Measure ℝ) [IsProbabilityMeasure μ]
       _ = 1 := by simp
   have hi (a b : ℝ) : Integrable (fun c => f a b c) μ := by
     apply (integrable_const 1).mono'
-    · exact (Measurable.ite
-        ((measurableSet_lt measurable_const measurable_const).inter
-          (measurableSet_lt measurable_id measurable_const))
-        measurable_const measurable_const).aestronglyMeasurable
+    · have hm : Measurable (fun c : ℝ => f a b c) := by
+        by_cases h : b<a
+        · simpa only [f,h,true_and] using
+            (Measurable.ite (measurableSet_lt measurable_id measurable_const)
+              measurable_const measurable_const : Measurable (fun c : ℝ => if c<a then (1 : ℝ) else 0))
+        · simpa [f,h] using (measurable_const : Measurable (fun _ : ℝ => (0 : ℝ)))
+      exact hm.aestronglyMeasurable
     · exact Eventually.of_forall fun c => hbound a b c
   have hi2 (a b : ℝ) : Integrable (fun c => f c a b) μ := by
     apply (integrable_const 1).mono'
@@ -604,7 +602,7 @@ private theorem atomless_cdf_square (μ : Measure ℝ) [IsProbabilityMeasure μ]
             (measurableSet_lt measurable_snd measurable_const))
           measurable_const measurable_const).stronglyMeasurable.integral_prod_right.aestronglyMeasurable
     · filter_upwards [] with b
-      exact norm_integral_le_of_norm_le_const (hbound a b)
+      simpa using norm_integral_le_of_norm_le_const (μ := μ) (Eventually.of_forall (hbound a b))
   have hba (a : ℝ) : Integrable (fun b => ∫ c, f b a c ∂μ) μ := by
     apply (integrable_const 1).mono'
     · exact (show Measurable (fun p : ℝ × ℝ => f p.1 a p.2) from
@@ -613,7 +611,7 @@ private theorem atomless_cdf_square (μ : Measure ℝ) [IsProbabilityMeasure μ]
             (measurableSet_lt measurable_snd measurable_fst))
           measurable_const measurable_const).stronglyMeasurable.integral_prod_right.aestronglyMeasurable
     · filter_upwards [] with b
-      exact norm_integral_le_of_norm_le_const (hbound b a)
+      simpa using norm_integral_le_of_norm_le_const (μ := μ) (Eventually.of_forall (hbound b a))
   have hca (a : ℝ) : Integrable (fun b => ∫ c, f c a b ∂μ) μ := by
     apply (integrable_const 1).mono'
     · exact (show Measurable (fun p : ℝ × ℝ => f p.2 a p.1) from
@@ -622,17 +620,9 @@ private theorem atomless_cdf_square (μ : Measure ℝ) [IsProbabilityMeasure μ]
             (measurableSet_lt measurable_fst measurable_snd))
           measurable_const measurable_const).stronglyMeasurable.integral_prod_right.aestronglyMeasurable
     · filter_upwards [] with b
-      exact norm_integral_le_of_norm_le_const (hbound · a b)
-  have hout1 : Integrable (fun a => ∫ b, ∫ c, f a b c ∂μ ∂μ) μ := by
-    simpa only [hinner] using (show Integrable (fun a => (μ.real (Iio a))^2) μ from ?_)
-    apply Integrable.of_mem_Icc 0 1
-    · exact ((show Monotone (fun a : ℝ => μ.real (Iio a)) from
-        fun _ _ h => measureReal_mono (Iio_subset_Iio.mpr h)).measurable.pow_const 2).aemeasurable
-    · filter_upwards [] with a
-      have hlo : 0 ≤ μ.real (Iio a) := measureReal_nonneg
-      have hhi : μ.real (Iio a) ≤ 1 := by
-        simpa using measureReal_mono (μ := μ) (subset_univ (Iio a))
-      exact ⟨sq_nonneg _,by nlinarith [sq_nonneg (1-μ.real (Iio a))]⟩
+      simpa using norm_integral_le_of_norm_le_const (μ := μ) (Eventually.of_forall (hbound · a b))
+  have hout1 : Integrable (fun a => ∫ b, ∫ c, f a b c ∂μ ∂μ) μ :=
+    hint.integral_prod_left.integral_prod_left
   have hout2 : Integrable (fun a => ∫ b, ∫ c, f b a c ∂μ ∂μ) μ :=
     hint.integral_prod_left.integral_prod_right
   have hout3 : Integrable (fun a => ∫ b, ∫ c, f c a b ∂μ ∂μ) μ := by
@@ -645,12 +635,23 @@ private theorem atomless_cdf_square (μ : Measure ℝ) [IsProbabilityMeasure μ]
           measurable_const measurable_const).aestronglyMeasurable
       · exact Eventually.of_forall fun p => hbound p.2 p.1.1 p.1.2
     exact hf3.integral_prod_left.integral_prod_left
-  simp_rw [integral_add ((hi _ _).add (hi _ _)) (hi2 _ _),
-    integral_add (hi _ _) (hi _ _),
-    integral_add ((hab _).add (hba _)) (hca _),
-    integral_add (hab _) (hba _)] at htotal
-  rw [integral_add (hout1.add hout2) hout3,integral_add hout1 hout2,
-    hmass,hperm2,hperm3] at htotal
+  have hsplit (a b : ℝ) :
+      (∫ c, f a b c+f b a c+f c a b ∂μ) =
+        (∫ c, f a b c ∂μ)+(∫ c, f b a c ∂μ)+(∫ c, f c a b ∂μ) := by
+    have hadd : Integrable (fun c => f a b c+f b a c) μ := (hi a b).add (hi b a)
+    rw [integral_add hadd (hi2 a b),integral_add (hi a b) (hi b a)]
+  simp_rw [hsplit] at htotal
+  have hsplit2 (a : ℝ) :
+      (∫ b, (∫ c, f a b c ∂μ)+(∫ c, f b a c ∂μ)+(∫ c, f c a b ∂μ) ∂μ) =
+        (∫ b, ∫ c, f a b c ∂μ ∂μ)+(∫ b, ∫ c, f b a c ∂μ ∂μ)+
+          (∫ b, ∫ c, f c a b ∂μ ∂μ) := by
+    have hadd : Integrable (fun b => (∫ c, f a b c ∂μ)+(∫ c, f b a c ∂μ)) μ :=
+      (hab a).add (hba a)
+    rw [integral_add hadd (hca a),integral_add (hab a) (hba a)]
+  simp_rw [hsplit2] at htotal
+  have hadd : Integrable (fun a => (∫ b, ∫ c, f a b c ∂μ ∂μ)+
+      (∫ b, ∫ c, f b a c ∂μ ∂μ)) μ := hout1.add hout2
+  rw [integral_add hadd hout3,integral_add hout1 hout2,hmass,hperm2,hperm3] at htotal
   linarith
 
 /-- Actual Borel product laws are limits of finite iid sources, so the universal
@@ -672,7 +673,10 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
     X = ∫ v, (μ.real (Iio v))^2 ∂μ ∧
     (X = 0 ↔ ∃ c : ℝ, μ = Measure.dirac c) ∧
     modeMass μ 3 ≤ 2/15 ∧ X-1/5 ≤ modeMass μ 3 ∧
-    (X = 1/3 ↔ D = -1/45) ∧ (X = 1/3 → NullSingletonClass μ) := by
+    (X = 1/3 ↔ D = -1/45) ∧ (X = 1/3 ↔ NullSingletonClass μ) ∧
+    (D = -X/15 ↔ (∃ c : ℝ, μ = Measure.dirac c) ∨ NullSingletonClass μ) ∧
+    (D = -1/45 ↔ NullSingletonClass μ) ∧
+    ((∃ c : ℝ, μ = Measure.dirac c) → D = 0) := by
   dsimp only
   have ht := quantized_tendsto μ
   have hx := (ht 1).add (ht 3)
@@ -715,9 +719,11 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
       linarith
     rw [hp0,hp2]
     ring
-  refine ⟨ht,hn,hm,hy,hz,hx0,hx1,hl,by linarith,hcor,?_,?_,borel_cdf_moment μ,
-    borel_zero_iff_dirac μ,hsat.1,hsat.2,?_,?_⟩
-  · intro hXpos hXlt
+  have hstrict : 0 < modeMass μ 1+modeMass μ 3 →
+      modeMass μ 1+modeMass μ 3 < 1/3 →
+      -(modeMass μ 1+modeMass μ 3)/15 <
+        modeMass μ 0*modeMass μ 3-modeMass μ 1*modeMass μ 2 := by
+    intro hXpos hXlt
     obtain ⟨s,hs,hs3,hcorr,_⟩ := hcor
     have hs0 : 0 < s := by
       by_contra h
@@ -738,29 +744,67 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
     have hpos := mul_pos (mul_pos (div_pos (pow_pos hs0 3) (by norm_num : (0 : ℝ) < 45))
       (sub_pos.mpr hs1)) hpoly
     linarith
-  · intro c
-    have hdef := borel_atom_deficit μ c
-    refine ⟨hdef,by linarith,?_⟩
-    intro hc
-    have hp3 : 0 < (μ.real {c})^3 := pow_pos hc 3
-    linarith
-
-  · constructor
+  have hsatEq : modeMass μ 1+modeMass μ 3 = 1/3 ↔
+      modeMass μ 0*modeMass μ 3-modeMass μ 1*modeMass μ 2 = -1/45 := by
+    constructor
     · intro hX
       have hk : modeMass μ 3 = 2/15 := by linarith [hsat.1,hsat.2]
       rw [hdet,hX,hk]
       norm_num
     · intro hD
       linarith
-  · intro hX
+  have hnullEq : modeMass μ 1+modeMass μ 3 = 1/3 ↔ NullSingletonClass μ := by
     constructor
-    intro c
-    have hd := borel_atom_deficit μ c
-    rw [hX] at hd
-    have hz3 : (μ.real {c})^3 = 0 := by
-      have hnonneg := pow_nonneg (measureReal_nonneg (μ := μ) (s := {c})) 3
-      linarith
-    exact (measureReal_eq_zero_iff).mp (eq_zero_of_pow_eq_zero hz3)
+    · intro hX
+      constructor
+      intro c
+      have hd := borel_atom_deficit μ c
+      rw [hX] at hd
+      have hz3 : (μ.real {c})^3 = 0 := by
+        have hnonneg := pow_nonneg (measureReal_nonneg (μ := μ) (s := {c})) 3
+        linarith
+      exact (measureReal_eq_zero_iff).mp (eq_zero_of_pow_eq_zero hz3)
+    · intro hμ
+      letI : NullSingletonClass μ := hμ
+      rw [borel_cdf_moment μ,atomless_cdf_square μ]
+  have hdiracZero : (∃ c : ℝ, μ = Measure.dirac c) →
+      modeMass μ 0*modeMass μ 3-modeMass μ 1*modeMass μ 2 = 0 := by
+    intro hμ
+    have hX := (borel_zero_iff_dirac μ).mpr hμ
+    have h1 : modeMass μ 1 = 0 := by linarith [hn 1,hn 3]
+    have h3 : modeMass μ 3 = 0 := by linarith [hn 1,hn 3]
+    rw [h1,h3]
+    ring
+  have hlowerEq :
+      modeMass μ 0*modeMass μ 3-modeMass μ 1*modeMass μ 2 =
+        -(modeMass μ 1+modeMass μ 3)/15 ↔
+      (∃ c : ℝ, μ = Measure.dirac c) ∨ NullSingletonClass μ := by
+    constructor
+    · intro hD
+      by_cases hzero : modeMass μ 1+modeMass μ 3 = 0
+      · exact Or.inl ((borel_zero_iff_dirac μ).mp hzero)
+      · have hpos : 0 < modeMass μ 1+modeMass μ 3 := lt_of_le_of_ne hx0 (Ne.symm hzero)
+        have htop : modeMass μ 1+modeMass μ 3 = 1/3 := by
+          by_contra hne
+          have hlt : modeMass μ 1+modeMass μ 3 < 1/3 := lt_of_le_of_ne hx1 hne
+          have hs := hstrict hpos hlt
+          linarith
+        exact Or.inr (hnullEq.mp htop)
+    · rintro (hμ | hμ)
+      · rw [hdiracZero hμ,(borel_zero_iff_dirac μ).mpr hμ]
+        norm_num
+      · have hX := hnullEq.mpr hμ
+        rw [hsatEq.mp hX,hX]
+        norm_num
+  refine ⟨ht,hn,hm,hy,hz,hx0,hx1,hl,by linarith,hcor,hstrict,?_,borel_cdf_moment μ,
+    borel_zero_iff_dirac μ,hsat.1,hsat.2,hsatEq,hnullEq,hlowerEq,
+    hsatEq.symm.trans hnullEq,hdiracZero⟩
+  intro c
+  have hdef := borel_atom_deficit μ c
+  refine ⟨hdef,by linarith,?_⟩
+  intro hc
+  have hp3 : 0 < (μ.real {c})^3 := pow_pos hc 3
+  linarith
 
 #print axioms borel_iid_lower_surface
 

@@ -42,7 +42,10 @@ def fullLaw (r : Realization signature) : Prop :=
     X = ∫ v, (μ.real (Iio v))^2 ∂μ ∧
     (X = 0 ↔ ∃ c : ℝ, μ = Measure.dirac c) ∧
     r.readout () μ 3 ≤ 2/15 ∧ X-1/5 ≤ r.readout () μ 3 ∧
-    (X = 1/3 ↔ D = -1/45) ∧ (X = 1/3 → NullSingletonClass μ)
+    (X = 1/3 ↔ D = -1/45) ∧ (X = 1/3 ↔ NullSingletonClass μ) ∧
+    (D = -X/15 ↔ (∃ c : ℝ, μ = Measure.dirac c) ∨ NullSingletonClass μ) ∧
+    (D = -1/45 ↔ NullSingletonClass μ) ∧
+    ((∃ c : ℝ, μ = Measure.dirac c) → D = 0)
 
 abbrev arena : Arena where
   signature := signature
