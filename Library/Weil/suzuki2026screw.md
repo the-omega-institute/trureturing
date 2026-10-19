@@ -7019,3 +7019,123 @@ $$
 The complete source, fixed window, original sign contract and original Gaussian Hardy metric are unchanged. Repeated roots and root atoms, arbitrary density and confluence remain included. The existing real/imaginary split admits arbitrary complex coefficients on at most $\lfloor c_{\rm frac}e^{2A}\rfloor+1$ distinct sites, without an internal gap. Nonzero moment norm uses the owned compact moment uniqueness; the zero measure contributes zero.
 
 The cap exceeds W164 by a factor of order $(A/\log A)^{1/4}$, with the stated smaller margin. Under RH failure, on this same small window beyond all positive starts, W156 and W173 put the minimum negative-witness count strictly above $\lfloor c_{\rm frac}e^{2A}\rfloor+1$ and at most $\lceil C_\varepsilon e^{2A}\rceil$. The ratio of these bracket bounds is $O_\varepsilon(1)$. This compares bounds only; no actual seed, negative margin, numerical count constant, exact minimum or contradiction is supplied. Positivity for the sufficient cofinal count $e^{2A}g(A)$ with $g(A)\to\infty$, all-order PSD, larger-rate multiwindow positivity, the original signed prime/Robin upper and full RH remain unproved. No numerical $c_{\rm frac}$ or start, effective finite RH test, Lean/CI/merge certification or literature-priority claim is supplied. Classical logarithm, shift, moment and complete-source estimates are reused in this source-specific paper application.
+
+
+## Exact Carleman channels for the whole reflected model
+
+The whole W88 reflected model, with the exact W127 normalization, admits a two-channel identity before any expansion or sign-degree cap. Its first channel is nonnegative; the second is controlled in an explicit inverse-$p$ weighted norm. The model statement allows arbitrary compact finite complex profiles and arbitrary support width. Its consumer for the complete actual theta kernel retains the original local sign class and the full source-comparison error. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse W88, W114, W127 and W165--W173. The classical transform input is [NIST DLMF 10.22.51](https://dlmf.nist.gov/10.22.E51), specialized to Bessel order zero, with its stated conditions $\Re\nu>-1$ and $\Re(p^2)>0$. Its substitutions below have positive real Gaussian parameter and real nonnegative Bessel argument. The bound $|J_0(x)|\le1$ for real $x$ is [DLMF 10.14.1](https://dlmf.nist.gov/10.14.E1). The classical Carleman bound is reused through the [existing weighted Schur criterion](../Fourier/teschl2009mathematical.md#schur-criterion-for-the-local-frequency-kernel), as in the complete adjacent-row estimate T40. These are scalar transform and operator-norm suppliers; the reflected-source interface below is their paper application, without a priority or Lean-certification claim.
+
+### Retain the exact reflected prefactor
+
+Put $E=e^{-2A}$, $\varepsilon=E/\pi$, $c_*=3/(2\pi)$, and
+$$
+p=e^{2u}=\frac{1+z}{1-z},\qquad
+B_E(p)=\left(1-\frac{c_*E}p\right)^{-1},\qquad
+M_E(p)=\frac{B_E(p)}p=\frac1{p-c_*E},\qquad
+\omega_E=\frac{c_*E^2}\pi.
+$$
+For the model identity, let $\nu$ be any finite complex measure with compact real $p$-support inside $(c_*E,\infty)$. This keeps the normalization positive and away from its pole. Define, on this same pushed-forward source,
+$$
+a(p)=\frac{p+1}{\sqrt2},\qquad
+F_\sigma(t)=\int a(p)e^{-pt}\,d\sigma(p),\qquad
+F_0=F_\nu,\quad F_1=F_{M_E\nu}.
+$$
+As in W165, $\|F_\sigma\|_2^2=Q_H(\sigma)$. There is no model sign-degree, density, gap or width condition.
+
+In W88 set $\sigma=\mathcal Qs$, where $\mathcal Q=2\pi E^{-1}\sqrt{pq}$ and $c_0=(p+q)/(2\sqrt{pq})$. The entire normalized reflected kernel is exactly
+$$
+R_A^1(z,w)=\frac{\cosh u\cosh v}{2A}
+\int_0^\infty e^{-\sigma}
+\Psi\left(c_0+\frac{\varepsilon\sigma}{2\sqrt{pq}}\right)
+[1-\omega_E\sigma M_E(p)M_E(q)]\,d\sigma.
+\tag{W174}
+$$
+Indeed the normalized special prefactor is $1-2c_*e^{-(a+b)}s/[(1-r_a)(1-r_b)]$, and $e^{-(a+b)}s=E^2\sigma/(2\pi pq)$. Thus every denominator correction is retained. This is the folded symmetric W88 model obtained after using evenness of the complete source; it is not a literal substitution of the noneven $\Phi_1$ in negative source arguments.
+
+### Transform the complete Stieltjes integral
+
+A variable change $r=\sqrt{pq}e^t$ in the owned integral for $\Psi$ gives, for $p,q>0$ and $d\ge0$,
+$$
+\Psi\left(\frac{p+q+d}{2\sqrt{pq}}\right)
+=\sqrt{pq}\int_0^\infty\frac{\,dr}{(p+r)(q+r)+d\,r}.
+$$
+DLMF 10.22.51, with $\nu=0$ and the squared Gaussian variable replaced by $\sigma$, gives
+$$
+\int_0^\infty e^{-\lambda\sigma}J_0(2\sqrt{b\sigma})\,d\sigma
+=\lambda^{-1}e^{-b/\lambda},\qquad \lambda>0,\ b\ge0.
+$$
+It implies the double-Laplace identity
+$$
+\frac1{ab+k}=\int_0^\infty\int_0^\infty
+ e^{-as-bt}J_0(2\sqrt{kst})\,ds\,dt
+\quad(a,b>0,\ k\ge0).
+$$
+Apply this with $a=p+r$, $b=q+r$, $k=\varepsilon\sigma r$. Integrating $\sigma$ with weight $e^{-\sigma}$ gives $e^{-\varepsilon rst}$; the remaining $r$ integral gives the first kernel below. Differentiating the scalar transform once in $\lambda$ at $1$ gives $(1-b)e^{-b}$ for the $\sigma e^{-\sigma}$ weight, and hence the second kernel:
+$$
+C_\varepsilon(s,t)=\frac1{s+t+\varepsilon st},\qquad
+D_\varepsilon(s,t)=\frac{s+t}{(s+t+\varepsilon st)^2}.
+\tag{W175}
+$$
+The latter calculation is $\int_0^\infty e^{-r(s+t+\varepsilon st)}(1-\varepsilon rst)dr=D_\varepsilon(s,t)$.
+
+For $f\in L^2(0,\infty)$ write $\mathscr C_\varepsilon(f)=\iint\overline{f(s)}f(t)C_\varepsilon(s,t)\,dsdt$, and similarly $\mathscr D_\varepsilon$. Since $\cosh u\cosh v\sqrt{pq}/2=a(p)a(q)/4$, the untruncated reflected model form is exactly
+$$
+Q_{R_A^1}(\nu)=\frac1{4A}
+\left[\mathscr C_\varepsilon(F_0)-\omega_E\mathscr D_\varepsilon(F_1)\right].
+\tag{W176}
+$$
+Both features come from the same measure. For finite compact sources the transforms decay exponentially. Using $|J_0|\le1$ before integrating $\sigma$, its two weights have finite integrals, and integration in $r$ gives $1/(s+t)$. This kernel is locally integrable at the corner and integrable against these exponentially decaying features. Thus all exchanges, including the complex sesquilinear pairing, are absolute; no asymptotic series is exchanged with an integral.
+
+### Keep one channel positive and bound the other
+
+The unitary inversion $(\mathcal If)(x)=f(1/x)/x$ on $L^2(0,\infty)$ gives
+$$
+\mathscr C_\varepsilon(f)=
+\int_0^\infty\int_0^\infty
+\frac{\overline{\mathcal If(x)}\mathcal If(y)}{x+y+\varepsilon}\,dxdy.
+$$
+The shifted Carleman kernel on the right is nonnegative as a form, by its positive Laplace representation. Both kernels in W175 are pointwise nonnegative and at most $1/(s+t)$. Direct application of the classical Carleman bound gives
+$$
+0\le\mathscr C_\varepsilon(f)\le\pi\|f\|_2^2,
+\qquad
+|\mathscr D_\varepsilon(f)|\le\pi\|f\|_2^2.
+\tag{W177}
+$$
+No nonnegative-form assertion is made for $D_\varepsilon$; its absolute norm is the input. In particular,
+$$
+-\frac{c_*E^2}{4A}Q_H(M_E\nu)
+\le Q_{R_A^1}(\nu)
+\le\frac\pi{4A}Q_H(\nu)+\frac{c_*E^2}{4A}Q_H(M_E\nu).
+\tag{W178}
+$$
+These model bounds have no sign-degree or support-width restriction. The positive first channel remains available exactly, rather than being replaced throughout by its maximum norm allowance.
+
+### A two-sided budget for the complete actual local kernel
+
+Return to the fixed small W87/W173 window, the real degree-$m$ sign class and the same high source start. W114 and the bounded W127 normalization give
+$$
+\left|Q_{\mathcal K_A^1}(\nu)-Q_{{\rm dir},1}(\nu)+Q_{R_A^1}(\nu)\right|
+\le C\Lambda^me^{-\kappa/E}Q_H(\nu).
+$$
+Here $Q_{{\rm dir},1}$ is the exact unexpanded direct model form W165; $\mathcal K_A^1$ retains the complete actual theta source and its reflected exterior. Combining this with W176--W177 yields
+$$
+\left|Q_{\mathcal K_A^1}(\nu)-Q_{{\rm dir},1}(\nu)
+ +\frac1{4A}\mathscr C_\varepsilon(F_\nu)\right|
+\le\frac{c_*E^2}{4A}Q_H(M_E\nu)
+ +C\Lambda^me^{-\kappa/E}Q_H(\nu).
+\tag{W179}
+$$
+In particular the signed lower budget is
+$$
+Q_{\mathcal K_A^1}(\nu)\ge Q_{{\rm dir},1}(\nu)
+-\frac\pi{4A}Q_H(\nu)-\frac{c_*E^2}{4A}Q_H(M_E\nu)
+-C\Lambda^me^{-\kappa/E}Q_H(\nu).
+\tag{W180}
+$$
+This budget holds before selecting a degree cap or a truncation order. It keeps the actual positive channel, the inverse-$p$ response and the complete-source error on one jointly realized measure. The reflected factorial expansion and its truncation are absent from this estimate.
+
+For $E(m+1)$ sufficiently small, the reused W112/W166 multiplier estimate gives $Q_H(M_E\nu)\le C(m+1)^2Q_H(\nu)$. The second debit is then only $C[E(m+1)]^2Q_H(\nu)/A$. Together with W169 this recovers a fixed-fraction schedule of W173's form, with suitable fixed constants and the existing exact metric return. That recovery is reuse, not a further degree-cap result. The added interface is the exact unrestricted model identity and W179's retained actual positive channel.
+
+The arbitrary-width and arbitrary-profile scope belongs to W176--W178 for the model. The actual kernel estimates W179--W180 retain their local sign class and nonzero source-comparison error. They supply neither an unrestricted actual global operator bound nor the sufficient cofinal positivity schedule. No numerical constant/start, actual negative seed, effective finite RH test, Lean/CI/merge certification or literature-priority claim is supplied. RH and strict Robin for every integer $n>5040$ remain unproved.
