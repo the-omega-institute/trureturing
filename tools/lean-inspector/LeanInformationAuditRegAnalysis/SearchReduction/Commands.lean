@@ -31,6 +31,10 @@ def observationJson (r : Observation) (baselineCommit : String := "") : Json := 
   ("mathlib", toJson mathlibRevision), ("maxHeartbeats", toJson budget),
   ("target", toJson r.target.toString), ("verdict", toJson (verdictName r.verdict)),
   ("baseline", runJson r.base), ("paired", runJson r.paired),
+  ("presentation", runJson r.presentation),
+  ("presentation_source", toJson (r.presentationEvidence?.map (·.source.toString))),
+  ("presentation_axioms", toJson (r.presentationEvidence?.map (·.axioms.map Name.toString))),
+  ("presentation_detail", toJson r.presentationDetail),
   ("attempt_count", toJson r.attempts.size),
   ("paired_attempt_count", toJson r.pairAttempts.size),
   ("attempts", Json.arr (r.attempts.map attemptJson)),
@@ -66,17 +70,33 @@ private partial def exportConstant (source : Environment) (target n : Name) : Me
 
 /-- The typed result is computed by the same compiled classifier as A1. -/
 def publish (name : Name) (r : Observation) (source? : Option Environment := none) : MetaM Unit := do
+  unless (r.presentation == .found) == r.presentationEvidence?.isSome do
+    throwError "search.presentation_witness_mismatch"
   let baseName := name ++ `baseline
   let pairName := name ++ `paired
-  for (n, value) in #[(baseName, runExpr r.base), (pairName, runExpr r.paired)] do
+  for (n, value) in #[(baseName, runExpr r.base), (pairName, runExpr r.paired),
+      (name ++ `presentation, runExpr r.presentation)] do
     addAndCompile (.defnDecl {
       name := n, levelParams := [], type := mkConst ``Run,
       value, hints := .abbrev, safety := .safe })
   addAndCompile (.defnDecl {
     name := name ++ `reason, levelParams := [], type := mkConst ``String,
     value := toExpr r.reason, hints := .abbrev, safety := .safe })
-  let value ← mkAppM ``LeanInformationAudit.Tests.SearchReduction.classify #[
-    toExpr r.targetChecked, mkConst ``Bool.false, mkConst baseName,
+  if let some evidence := r.presentationEvidence? then
+    addAndCompile (.defnDecl {
+      name := name ++ `presentationSource, levelParams := [], type := mkConst ``Name,
+      value := toExpr evidence.source, hints := .abbrev, safety := .safe })
+    let source := source?.getD (← getEnv)
+    let some info := (source.setExporting false).find? r.target
+      | throwError "search.missing_presentation_target"
+    for dep in info.type.getUsedConstants ++ evidence.conversionType.getUsedConstants ++
+        evidence.conversion.getUsedConstants ++ evidence.proof.getUsedConstants do
+      exportConstant source r.target dep
+    discard <| checkProof (name ++ `presentationConversion) info.levelParams
+      evidence.conversionType evidence.conversion
+    discard <| checkProof (name ++ `presentationProof) info.levelParams info.type evidence.proof
+  let value ← mkAppM ``LeanInformationAudit.Tests.SearchReduction.classifyCertified #[
+    toExpr r.targetChecked, mkConst (name ++ `presentation), mkConst baseName,
     toExpr r.structureChecked, toExpr r.structureClean, mkConst pairName]
   addAndCompile (.defnDecl {
     name, levelParams := [], type := mkConst ``Verdict,
@@ -106,9 +126,16 @@ without rolling the diagnostic back as an ordinary tactic exception. -/
     let result ← run source {
       target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
       baselineCommit := sha.getString }
+    if result.presentation == .found then
+      evalTactic (← `(tactic| exact True.intro))
+      return
     match result.base with
     | .found => evalTactic (← `(tactic| exact True.intro))
-    | .exhausted => throwError "search.normal_exhaustion"
+    | .exhausted =>
+      if let .incomplete failure := result.presentation then
+        logError m!"search.presentation_replay_incomplete: {reprStr failure}"
+        return
+      throwError "search.normal_exhaustion"
     | .incomplete failure =>
       logError m!"search.replay_incomplete: {reprStr failure}: {result.reason}"
       return
@@ -201,7 +228,9 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let (projected, region) ← readModuleData output
     probeRegions.modify (·.push region)
     liftTermElabM do
-      for n in #[name.getId ++ `baseline, name.getId ++ `paired, name.getId ++ `reason, name.getId,
+      for n in #[name.getId ++ `baseline, name.getId ++ `paired, name.getId ++ `reason,
+          name.getId ++ `presentation, name.getId ++ `presentationSource,
+          name.getId ++ `presentationConversion, name.getId ++ `presentationProof, name.getId,
           name.getId ++ `baselineProof, name.getId ++ `pairedProof,
           name.getId ++ `baselineFailureGuard] do
         match projected.constants.find? (·.name == n) with

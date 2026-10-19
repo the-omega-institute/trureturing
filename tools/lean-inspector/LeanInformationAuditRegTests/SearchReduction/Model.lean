@@ -45,6 +45,38 @@ def classify (targetChecked presentation : Bool) (base : Run)
   | true, false, .exhausted, true, true, .found => .nonBindOnly
   | _, _, _, _, _, _ => .insufficient
 
+/-- A production presentation scan must complete before its absence can be
+used for content. An independent successful search still establishes bind-only. -/
+def classifyCertified (targetChecked : Bool) (presentation base : Run)
+    (structureChecked structureClean : Bool) (paired : Run) : Verdict :=
+  match presentation with
+  | .found => classify targetChecked true base structureChecked structureClean paired
+  | .exhausted => classify targetChecked false base structureChecked structureClean paired
+  | .incomplete _ => classify targetChecked false
+      (if base == .found then .found else .incomplete .undecided)
+      structureChecked structureClean paired
+
+theorem certified_restatement_bind_only (base paired : Run) (checkedS cleanS : Bool) :
+    classifyCertified true .found base checkedS cleanS paired = .bindOnly := rfl
+
+theorem incomplete_presentation_not_content (failure : Failure) (checked checkedS cleanS : Bool)
+    (base paired : Run) :
+    classifyCertified checked (.incomplete failure) base checkedS cleanS paired ≠ .nonBindOnly := by
+  cases checked <;> cases base <;> cases checkedS <;> cases cleanS <;>
+    cases paired <;> simp [classifyCertified, classify]
+
+theorem complete_presentation_uses_model (checked checkedS cleanS : Bool) (base paired : Run) :
+    classifyCertified checked .exhausted base checkedS cleanS paired =
+      classify checked false base checkedS cleanS paired := rfl
+
+theorem certified_non_bind_only_iff (checked checkedS cleanS : Bool)
+    (presentation base paired : Run) :
+    classifyCertified checked presentation base checkedS cleanS paired = .nonBindOnly ↔
+      presentation = .exhausted ∧
+        classify checked false base checkedS cleanS paired = .nonBindOnly := by
+  cases presentation <;> cases checked <;> cases base <;> cases checkedS <;>
+    cases cleanS <;> cases paired <;> simp [classifyCertified, classify]
+
 /-- The four paired conditions, with the common target compilation check. -/
 theorem non_bind_only_iff (checked restated checkedS cleanS : Bool) (base paired : Run) :
     classify checked restated base checkedS cleanS paired = .nonBindOnly ↔
@@ -156,6 +188,10 @@ theorem verdicts_exhaustive (checked restated checkedS cleanS : Bool) (base pair
   dsimp
   cases classify checked restated base checkedS cleanS paired <;> simp
 
+#print axioms certified_restatement_bind_only
+#print axioms incomplete_presentation_not_content
+#print axioms complete_presentation_uses_model
+#print axioms certified_non_bind_only_iff
 #print axioms non_bind_only_iff
 #print axioms union_found_iff
 #print axioms union_exhausted_iff

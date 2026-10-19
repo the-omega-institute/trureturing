@@ -22,6 +22,15 @@ structure Attempt where
   axioms : Array Name := #[]
   detail : String := ""
 
+/-- A baseline presentation witness contains its actual source and the checked
+full-statement conversion, independently of reference-search success. -/
+structure PresentationEvidence where
+  source : Name
+  conversionType : Expr
+  conversion : Expr
+  proof : Expr
+  axioms : Array Name
+
 structure Observation where
   target : Name
   base : Run
@@ -29,6 +38,9 @@ structure Observation where
   verdict : Verdict
   attempts : Array Attempt := #[]
   pairAttempts : Array Attempt := #[]
+  presentation : Run := .incomplete .undecided
+  presentationEvidence? : Option PresentationEvidence := none
+  presentationDetail : String := ""
   reason : String := ""
   targetChecked : Bool := false
   structureChecked : Bool := false
@@ -55,7 +67,7 @@ partial def presentation (goal : MVarId) (facts : Array Expr) : MetaM Bool := go
       let gs ← goal.apply fact
       if ← gs.allM (fun g => g.assumptionCore) then return true
     catch ex =>
-      if ex.isRuntime || ex.isInterrupt || ex.isMaxHeartbeat then throw ex
+      if ex.isRuntime || ex.isInterrupt then throw ex
     before.restore
   let type ← withTransparency .reducible <| whnf (← goal.getType)
   if type.isForall then
@@ -267,6 +279,17 @@ private def exceptionOutcome (ex : Exception) : Run :=
 
 /-- Each call has fresh Core, Meta, Term and tactic state and its own heartbeat
 origin. Exceptions are caught outside that state, including resource failures. -/
+def inlineGenerated (env : Environment) (proof : Expr) : MetaM Expr :=
+  Core.transform proof (pre := fun expression => do
+    if let .const name levels := expression then
+      unless env.contains name do
+        let info ← getConstInfo name
+        if info.isUnsafe then throwError "search.unsafe_generated_dependency: {name}"
+        let some value := info.value? (allowOpaque := true)
+          | throwError "search.generated_dependency_without_value: {name}"
+        return .visit (value.instantiateLevelParams info.levelParams levels)
+    return .continue)
+
 def attempt (env : Environment) (levels : List Name) (type : Expr)
     (strategy : String) (action : MVarId → MetaM Bool) : IO Attempt := do
   let work : CoreM Attempt := MetaM.run' do
@@ -276,15 +299,7 @@ def attempt (env : Environment) (levels : List Name) (type : Expr)
     let proof ← instantiateMVars goal
     -- Tactics can add auxiliary lemmas to their private environment. Expand
     -- those values before transporting the proof to another attempt state.
-    let proof ← Core.transform proof (pre := fun expression => do
-      if let .const name levels := expression then
-        unless env.contains name do
-          let info ← getConstInfo name
-          if info.isUnsafe then throwError "search.unsafe_generated_dependency: {name}"
-          let some value := info.value? (allowOpaque := true)
-            | throwError "search.generated_dependency_without_value: {name}"
-          return .visit (value.instantiateLevelParams info.levelParams levels)
-      return .continue)
+    let proof ← inlineGenerated env proof
     let axioms ← checkProof `_searchReduction.proof levels type proof
     return { strategy, outcome := .found, proof? := some proof, axioms }
   let start ← IO.getNumHeartbeats
@@ -375,7 +390,7 @@ def search (env : Environment) (levels : List Name) (type : Expr)
         let gs ← try
           (Term.withoutErrToSorry <| Tactic.run goal (evalTactic tacticSyntax)).run'
         catch ex =>
-          if ex.isRuntime || ex.isInterrupt || ex.isMaxHeartbeat then throw ex
+          if ex.isRuntime || ex.isInterrupt then throw ex
           return false
         return gs.isEmpty
       leafRows := leafRows.push row

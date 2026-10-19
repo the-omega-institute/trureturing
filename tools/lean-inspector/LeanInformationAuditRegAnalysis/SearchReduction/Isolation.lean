@@ -4,7 +4,7 @@ import LeanInformationAuditRegAnalysis.SearchReduction.Presentation
 
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
-open LeanInformationAudit.Tests.SearchReduction (classify Failure)
+open LeanInformationAudit.Tests.SearchReduction (classifyCertified Failure)
 
 /-- The source environment is used only to recover types and check compiled
 values. Probe environments start from independent baseline imports. -/
@@ -172,30 +172,46 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
         return unknown reason failure
     if clean.contains request.target then return unknown "search.target_already_in_baseline"
     let (baseRun, attempts) ← search clean target.levelParams target.type #[] hints
-    if baseRun == .found then
-      return {
-        target := request.target, base := baseRun, paired := .incomplete .undecided,
-        verdict := .bindOnly, attempts, targetChecked := true }
+    let moduleNames := clean.header.moduleNames
+    let preferred := (clean.constants.toList.toArray.qsort
+      (fun a b => Name.quickLt a.1 b.1)).filterMap fun (name, _) =>
+      match clean.getModuleIdxFor? name with
+      | some idx => if request.baseline.contains moduleNames[idx.toNat]! then some name else none
+      | none => none
+    let preferred := (attempts.filterMap (·.proof?)).foldl
+      (fun names proof => names ++ proof.getUsedConstants) preferred
+    let (presentation, presentationEvidence?, presentationDetail) ←
+      baselinePresentation clean target.levelParams target.type preferred
+    let observed : Observation := {
+      target := request.target, base := baseRun, paired := .incomplete .undecided,
+      verdict := classifyCertified true presentation baseRun false false (.incomplete .undecided),
+      attempts, targetChecked := true, presentation, presentationEvidence?, presentationDetail }
+    if observed.verdict == .bindOnly then return observed
+    if let .incomplete _ := presentation then
+      return {observed with reason := "search.presentation_incomplete"}
     if request.additions.isEmpty then
       return {
         target := request.target, base := baseRun, paired := .incomplete .missing,
         verdict := .insufficient, attempts, targetChecked := true,
-        reason := "search.empty_structure" }
+        presentation, presentationEvidence?, presentationDetail, reason := "search.empty_structure" }
     for n in request.additions do
       unless source.contains n do
         return { (unknown s!"search.missing_structure: {n}" .missing) with
-          base := baseRun, attempts, targetChecked := true }
+          base := baseRun, attempts, targetChecked := true,
+          presentation, presentationEvidence?, presentationDetail }
     let preparedS ← prepare source base request true
     let .ok (pairedEnv, _) := preparedS
       | let (failure, reason) := match preparedS with
           | .error failure => failure | _ => (.isolation, "search.structure_isolation_failed")
         return { (unknown reason failure) with
-          base := baseRun, attempts, targetChecked := true }
+          base := baseRun, attempts, targetChecked := true,
+          presentation, presentationEvidence?, presentationDetail }
     let (pairRun, pairAttempts) ← search pairedEnv target.levelParams target.type request.additions hints
     return {
       target := request.target, base := baseRun, paired := pairRun,
-      verdict := classify true false baseRun true true pairRun, attempts, pairAttempts,
+      verdict := classifyCertified true presentation baseRun true true pairRun, attempts, pairAttempts,
       targetChecked := true, structureChecked := true, structureClean := true,
+      presentation, presentationEvidence?, presentationDetail,
       reason := if pairRun == .exhausted then "search.structure_insufficient_to_close" else ""}
   catch ex => return unknown s!"search.execution: {ex}" .execution
 
