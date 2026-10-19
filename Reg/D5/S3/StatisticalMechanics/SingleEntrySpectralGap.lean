@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Contract.AuricFib
 import D5.S3.StatisticalMechanics.SingleEntrySpectralGap
+import Reg.D5.S3.StatisticalMechanics.SingleEntrySpectralGapAuxiliary
 import Reg.Support.DependentFamily
 
 /-! # Source-bound audit of the free-mode spectral extension -/
