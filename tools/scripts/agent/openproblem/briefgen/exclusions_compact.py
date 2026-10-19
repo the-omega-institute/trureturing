@@ -9,8 +9,11 @@ def main(argv):
     t = open(S + '/briefs/search-exclusions.md').read()
     if argv[1:2] == ['--preregistrations']:
         import json, subprocess
-        issues = json.loads(subprocess.check_output(['gh', 'issue', 'list', '-R', ctx.slug, '--state', 'open', '--search', 'Preregister in:title', '--limit', '500', '--json', 'number,title'], text=True))
-        t += '\n' + '\n'.join(issue['title'] for issue in issues)
+        issues = {}
+        for query in ('Preregister in:title', 'preregistration in:title'):
+            for issue in json.loads(subprocess.check_output(['gh', 'issue', 'list', '-R', ctx.slug, '--state', 'open', '--search', query, '--limit', '500', '--json', 'number,title'], text=True)):
+                issues.setdefault(issue['number'], issue['title'])
+        t += '\n' + '\n'.join(issues.values())
         argv = [argv[0], *argv[2:]]
     ids = sorted(set(re.findall('(?<![\\d.])(\\d{4}\\.\\d{4,5})(?!\\d)', t)) | set(re.findall('\\b((?:quant-ph|math|hep-th|cond-mat|math-ph|gr-qc|nlin|cs)(?:\\.[A-Z]{2})?/\\d{7})\\b', t)))
     import subprocess, sys

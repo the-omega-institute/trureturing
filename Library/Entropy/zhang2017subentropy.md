@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/1510.08859
 claim: "Section 7.1 asks whether subentropy satisfies strong subadditivity, Q(ρ_ABC) + Q(ρ_B) ≤ Q(ρ_AB) + Q(ρ_BC)."
 strata_touched:
   - D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation
+  - D5/S3/Quantum/Subentropy/Subadditivity
 license: citation-only
 triage: anchor
 ---
@@ -43,3 +44,19 @@ software.
 Literature-check result: searches of the arXiv identifiers, “subentropy
 subadditive”, “strong subadditivity” with subentropy, and the titles found
 no answer; citation indexes were not exhaustively checked.
+
+## Bipartite subadditivity restatement
+
+The supplied quotation from arXiv:1510.08859v2, §7.1 is:
+
+> At present, we do not know wether the subadditivity inequality of subentropy is true or not
+
+The spelling and locator are supplied source information,
+**ASSUMED-UNVERIFIED** against the original paper under the offline constraint.
+This historical statement is separate from the strong-subadditivity question
+and establishes no present-day literature-wide status.
+
+The finite bipartite inequality is proved by the repository theorem
+[Subadditivity.subentropy_subadditive](../../D5/S3/Quantum/Subentropy/Subadditivity.lean).
+Its Gaussian and pinching argument is a repository derivation, distinct from
+the cited historical statement and from the strong-subadditivity refutation.
