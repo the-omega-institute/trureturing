@@ -10,7 +10,7 @@ import Mathlib.RingTheory.PowerSeries.Inverse
 
 /-!
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19167
-(agree_inv, agree_shift, map_inverse, inverse_one).
+(Agree, agree_inv, agree_shift, map_inverse, inverse_one).
 
 The finite tail with `d` levels begins at numerator `(2*j+1)^2` and
 ends in `A`; thus the terminal index is `j+d`. The outer numerator is `X`.
