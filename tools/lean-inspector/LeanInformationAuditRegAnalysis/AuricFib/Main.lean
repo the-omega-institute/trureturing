@@ -1,10 +1,11 @@
-import LeanInformationAuditRegAnalysis.AuricFib.Report
+import LeanInformationAuditRegAnalysis.AuricFib.Qualification
 
 open Lean LeanInformationAudit.AuricFib
 
 /-- Each independent request retains its complete SPEC 9 output and rejection. -/
 def main (args : List String) : IO UInt32 := do
-  let batch := args == ["--batch"]
+  let compiled := args == ["--compiled-batch"]
+  let batch := args == ["--batch"] || compiled
   if !args.isEmpty && !batch then
     IO.println (unavailableReport "refuted"
       "expected no arguments or --batch, with JSON on stdin" "invalid-input").compress
@@ -25,7 +26,9 @@ def main (args : List String) : IO UInt32 := do
       let mut reports := #[]
       let mut exitCode : UInt32 := 0
       for request in requests do
-        match analyze request with
+        let result := analyze request >>= fun reading =>
+          if compiled then qualifyCompiled request reading else pure reading
+        match result with
         | .ok report => reports := reports.push report
         | .error reason =>
           reports := reports.push (unavailableReport "refuted" reason "invalid-input")

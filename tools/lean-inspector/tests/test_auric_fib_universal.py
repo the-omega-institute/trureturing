@@ -264,6 +264,26 @@ end AuricFibUniversalProduction
         self.assertIsNone(missing['pyramid_coordinates'])
         self.assertEqual(missing['association_coordinate']['family_capture']['status'], 'unknown')
 
+    def test_compiled_verdicts_are_lean_projections(self):
+        laws = [row for row in self.first.values()
+                if row['request'] is not None and row['request'].get('arena') == 'law-family']
+        for row in laws:
+            compiled = row['request']['compiled_capture']
+            reading = row['reading']
+            self.assertEqual(reading['association_coordinate']['family_capture'], compiled['family'])
+            self.assertEqual(reading['layered_spectrum']['family_capture'], compiled['family'])
+            if row['request']['task'] is not None:
+                self.assertEqual(reading['continuation_target']['family_capture'], compiled['task'])
+                self.assertEqual(reading['continuation_target']['uses_delta'], compiled['uses_delta'])
+        # Replaying JSON at the public arithmetic entry acquires no theorem.
+        strict = self.first['Law.Separation.strict']['request']
+        result = subprocess.run([str(ROOT / '.lake/build/lean-inspector/reg/bin/auricFibAnalysis')],
+                                input=json.dumps(strict), text=True, capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        public = json.loads(result.stdout)
+        self.assertEqual(public['association_coordinate']['family_capture']['status'], 'unknown')
+        self.assertEqual(public['disposition']['readings']['source_contract']['kind'], 'unavailable')
+
     def test_data_free_ingress(self):
         current = self.first
         for name, target, telescope, levels in (
@@ -311,7 +331,7 @@ end AuricFibUniversalProduction
         leaf['input_identity'] = 'f' * 64
         with self.assertRaisesRegex(ValueError, 'fib.analysis_program_missing'):
             fib_analysis.produce(copy.deepcopy(row), previous, '')
-        stats = fib_analysis.produce(row, previous, ROOT / 'tools/scripts/auric-fib-analysis.sh')
+        stats = fib_analysis.produce(row, previous, ROOT / '.lake/build/lean-inspector/reg/bin/auricFibAnalysis')
         self.assertEqual(stats['generated'], 1)
         self.assertEqual(stats['analysis-invocations'], 1)
         self.assertGreater(stats['analysis-ns'], 0)

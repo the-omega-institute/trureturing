@@ -1,6 +1,7 @@
 import LeanInformationAudit.CompiledSourceScope
 import LeanInformationAudit.Contract.Literal
 import LeanInformationAudit.Sha256
+import LeanInformationAudit.AuricFibCapture
 
 namespace LeanInformationAudit.FibSource
 open Lean CompiledSourceScope
@@ -349,23 +350,29 @@ private def usesTarget (target : Name) (proof : Expr) : FibSource.M Bool := do
         pending := (← bodyNames body).toList ++ pending
   return false
 
-private def facts (target : Name) (value : Expr) : FibSource.M Json := do
-  let values ← (← list value).mapM fun term => do
+private def facts (target : Name) (value : Expr) : FibSource.M (Json × AuricFib.Capture) := do
+  let mut separated := false
+  let mut identifiable := false
+  let mut results := #[]
+  for term in ← list value do
     let term ← constructorHead term
     let head := term.getAppFn.constName?.getD .anonymous
     let mut kind := ""
     for name in ["deltaSign", "positiveWidth", "identifiable", "separated"] do
       if head == (base ++ `LawFact).str name then kind := name
     if kind.isEmpty then fail "fib.law_fact_outside_allowlist"
+    if kind == "separated" then separated := true
+    if kind == "identifiable" then identifiable := true
     let values ← fields head term
     let proof := values.back!
     let sign ← if kind == "deltaSign" then do
         let sign ← constructorHead values[0]!
         pure (toJson sign.getAppFn.constName!.getString!)
       else pure Json.null
-    return Json.mkObj [("kind", toJson kind), ("sign", sign),
+    results := results.push <| Json.mkObj [("kind", toJson kind), ("sign", sign),
       ("proof", describe proof), ("uses_target_results", toJson (← usesTarget target proof))]
-  return Json.arr values
+  if separated && identifiable then fail "fib.law_inconsistent_capture_evidence"
+  return (Json.arr results, AuricFib.classifyCapture separated identifiable)
 
 /-- Only a fixed mode type and mass-valued selected observation are supported.
 Source occurrence, complete telescope and actual readout binding are acquired
@@ -397,9 +404,20 @@ def request (bound : Bound) (target : Name) (family point claims task : Expr) : 
       pointJson := Json.mkObj [("parameter", describe parameter),
         ("law", ← rationalCells masses), ("certificate", describe point)]
   catch error => pointError := error.toString
-  let taskJson ← match ← option task with
+  let taskValue ← option task
+  let taskJson ← match taskValue with
     | none => pure Json.null
     | some task => rationalCells task true
+  let (factsJson, capture) ← facts target claims
+  let usesDelta ← match taskValue with
+    | none => pure false
+    | some task => do
+      let cells ← fields (base ++ `LawTask.mk) task
+      let find := (← read).provenance.view.find?
+      let values ← (cells.extract 0 4).mapM fun cell => do
+        IO.ofExcept (Contract.Literal.int "fib.law_task"
+          (← IO.ofExcept (Contract.Literal.referencedValue find cell)))
+      pure (values[3]! - values[1]! - values[2]! + values[0]! != 0)
   let infinite := (← option (← field family "infinite")).isSome
   let simplex := (← option (← field family "simplex")).map describe
   return Json.mkObj [
@@ -417,6 +435,18 @@ def request (bound : Bound) (target : Name) (family point claims task : Expr) : 
       ("mode_pairing", toJson (graph.map fun (atom, mode) =>
         Json.mkObj [("atom", toJson atom), ("mode", mode)]))]),
     ("point", pointJson), ("point_unavailable_reason", toJson pointError),
-    ("facts", ← facts target claims), ("task", taskJson)]
+    ("facts", factsJson), ("task", taskJson),
+    ("compiled_capture", Json.mkObj [
+      ("family", Json.mkObj [("status", toJson capture.label),
+        ("simplex_width_implies_strict", toJson false),
+        ("inheritance", toJson (if capture == .strict && simplex.isSome then
+          "simplex-inherited" else "unassessed")),
+        ("reason", toJson (if capture == .unknown then
+          "no family separation or identifiability witness supplied" else "compiled family witness"))]),
+      ("reading", Json.mkObj [("kind", toJson (if capture == .unknown then "unknown" else "available")),
+        ("reason", toJson (if capture == .unknown then
+          "no family separation or identifiability witness supplied" else "compiled family witness"))]),
+      ("task", toJson (AuricFib.taskCapture capture usesDelta).label),
+      ("uses_delta", toJson usesDelta)])]
 
 end LeanInformationAudit.FibLaw

@@ -1,4 +1,5 @@
 import LeanInformationAuditFibTests.AuricFib.LawFixture
+import LeanInformationAudit.AuricFibCapture
 
 /-! Search-reduction AURIC obligations over the actual Interface LawFact.
 Unknown describes missing evidence, not a third mathematical possibility. -/
@@ -52,32 +53,32 @@ theorem fact_list_consistent (facts : List (LawFact family)) :
   obtain ⟨collapsed, _, hc⟩ := List.any_eq_true.mp hc
   exact strict_collapsed_exclusive strict collapsed hs hc
 
-inductive Capture where
-  | strict | collapsed | unknown
-  deriving DecidableEq, Repr
+open LeanInformationAudit.AuricFib (Capture classifyCapture taskCapture)
 
 def capture (facts : List (LawFact family)) : Capture :=
-  if facts.any isStrict then .strict
-  else if facts.any isCollapsed then .collapsed
-  else .unknown
+  classifyCapture (facts.any isStrict) (facts.any isCollapsed)
 
 theorem capture_strict_iff (facts : List (LawFact family)) :
     capture facts = .strict ↔ facts.any isStrict = true := by
   cases hs : facts.any isStrict <;> cases hc : facts.any isCollapsed <;>
-    simp [capture, hs, hc]
+    simp [capture, classifyCapture, hs, hc]
 
 theorem capture_collapsed_iff (facts : List (LawFact family)) :
     capture facts = .collapsed ↔ facts.any isCollapsed = true := by
   have consistent := fact_list_consistent facts
   cases hs : facts.any isStrict <;> cases hc : facts.any isCollapsed <;>
-    simp [capture, hs, hc]
+    simp [capture, classifyCapture, hs, hc]
   exact False.elim (consistent ⟨hs, hc⟩)
 
 theorem capture_unknown_iff (facts : List (LawFact family)) :
     capture facts = .unknown ↔
       facts.any isStrict = false ∧ facts.any isCollapsed = false := by
   cases hs : facts.any isStrict <;> cases hc : facts.any isCollapsed <;>
-    simp [capture, hs, hc]
+    simp [capture, classifyCapture, hs, hc]
+
+theorem task_zero_collapsed (family : Capture) : taskCapture family false = .collapsed := rfl
+
+theorem task_uses_delta (family : Capture) : taskCapture family true = family := rfl
 
 /-- A1: exactly one evidence verdict is selected, including missing evidence. -/
 theorem capture_exhaustive_exclusive (facts : List (LawFact family)) :
@@ -161,6 +162,8 @@ example : capture (family := LawFixture.family)
 #print axioms capture_strict_iff
 #print axioms capture_collapsed_iff
 #print axioms capture_unknown_iff
+#print axioms task_zero_collapsed
+#print axioms task_uses_delta
 #print axioms capture_exhaustive_exclusive
 #print axioms family_separated_or_identifiable
 #print axioms postprocessing_no_new_separation
