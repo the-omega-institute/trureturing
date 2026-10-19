@@ -541,3 +541,249 @@ An acquired current finite DATA response is not a whole unknown infinite source 
 [DRIFT]: RECURSIVE_RELATIONAL_OBSERVATION_BOUNDED_UNIT_DRIFT_IDENTIFIABILITY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Same-offset Reference at a fixed public unit
+
+The interface in Sections 1–12 has only Step and Extent as source observations. Here we explicitly add the Reference port of [PAID Definitions 36.1–36.3][PAID], while restricting its unit to the already public $q_0$ of (8) and its one hidden offset to $B$ in (9). This enlarged interface permits original-entrance recovery. The new question is how many primitive Reference replies must complete before any source motion. The target remains the original owned boundary $\partial_0$ of (6)–(7), including the oriented walls and their particular owned lifts; motion never replaces it by a reached boundary.
+
+**Definition 13.1 (Fixed public data and the two ports).** Fix arbitrary $q_0\in\mathbb Q_{>0}$ and $u,v\in\mathbb Q$ with $0\le u<v$, and publish $B=\mathbb Q\cap[u,v]$. Fix the parameterized service programs, endpoint/permission conventions and full serial framing before choosing the receiver. The receiver may depend on all these public data. One rational $b\in B$, with a finite but unbounded-length encoding, is installed before the original source initialization, independently of raw-source access. This same $b$ feeds both ports forever, through the old driver, handoff and all future interactions.
+
+At an actual returned acquired depth $d\ge0$, a finite precision $n\ge1$ permits replies $a,c\in\mathbb N$ satisfying
+
+$$
+\left|a2^{-n}-(b+q_0\alpha^d)\right|\le2^{-n},\qquad
+\left|c2^{-n}-b\right|\le2^{-n}.
+\tag{35}
+$$
+
+The first is Extent$(n)$; the second is Reference$(n)$. The length at empty entry is $\alpha^0=1$. Both refer to this actual source and the same fixed calibration; Reference measures $b$ without Read or Advance. Joint errors may be correlated, adaptive and at their closed endpoints. The specified deterministic subclass used for the lower bound fixes, before the receiver, the programs
+
+$$
+\operatorname{Extent}(n)=F_b(d,n)
+ =\left\lfloor2^n(b+q_0\alpha^d)\right\rfloor,
+\qquad
+\operatorname{Reference}(n)=R_b(n)=\left\lfloor2^nb\right\rfloor.
+\tag{36}
+$$
+
+Extent is precisely (10): $d$ is its own actual acquired-depth cache, not a receiver-supplied argument or an exported field. For $b=C/F$, Reference uses finite integer division $\lfloor2^nC/F\rfloor$; it has no raw-source input. Both services are finite on every reached invocation and satisfy (35). The complete nonnegative integers, including all integer-part bits, requested precisions, request identifications, framing, acknowledgements and service completions are retained and paid. There is no saturation, modulo reduction, configuration-dependent padding advice, infinite-name reply or unit-cost real oracle. No denominator, initial depth or driver-length bound is supplied.
+
+The source premises remain Sections 1–2 and PAID Definitions 1.2, 2.2, 16.1 and 22.1. One fixed no11 source is initialized with empty acquired prefix, cursor and absolute time zero, its original caches, a fixed acknowledgement, and no Read or Advance. Each old driver call and each new Step is a genuine Next on that original endpoint. All physically passed bits, including a forced zero after one, are Read. Emit carries its actual bit, followed by the actual Advance and Return. Only Advance moves the source. The receiver receives the already installed exclusive persistent turn at a genuine initialized Return, with source-independent local initial state and local Step count zero. The driver ceases concurrent activity. All original clocks, raw cursor, bindings and exact unread-tail continuation are preserved. A proper death handoff has nonempty acquired $p$ and actual time $n=k_p$.
+
+The complete observations and excluded channels are those of Section 2 and PAID Definition 27.1, enlarged only by the stated Reference replies. In particular old absolute counters, private prefix/depth/Read counts, raw responses, source identity, private configuration encodings or their sizes, work/storage and physical delays are not observations. Public checks, pauses, releases and descriptors have their original source-independent rules; release supplies no fresh informative handoff or hidden Advance. No Wall, raw getter, old-record exporter, rewind or authenticated absolute-time service is installed.
+
+**Definition 13.2 (Serial frames, early answers and the counted resource).** Use PAID Definition 36.3 literally. Queries occur only at returned cuts. Each request has one finite whole reply transaction, with fixed source-independent encoding. A next request or Step cannot start inside an unfinished query transaction. There is no cancellation, overlapping call or restart creating a second outstanding request. Early termination or a final answer at an allowed proper prefix of a reply is permitted; equality of whole frames entails equality of all those observable prefixes. Local output fragments and local computation during receipt are part of the causal history. Likewise every intermediate Emit, Advance and Return prefix of a real Step is observed; a query cannot be inserted inside that Step.
+
+Unfold any derived program into its primitive operations and local work. The acquired-record procedures of PAID Definition 18.1 and Corollary 24.2 remain programs on a legitimately earned current record, with their original DATA guards, budget conditions and actual calling rights. They supply no initial private-state query. Every Step or Reference hidden inside a wrapper remains an actual counted primitive.
+
+For the floor backend (36), write
+
+$$
+B_D(W)=\#\{\text{completed primitive Reference replies strictly before
+ the first actual Step of }D\text{ on }W\}.
+\tag{37}
+$$
+
+If no Step occurs, count completions before termination. A request initiation, receipt of a header or a proper payload prefix is not a completion. Discarding a reply does not erase its completion. All References after the first Step are unrestricted. Seriality makes Step initiation, its Advance and its Return equivalent cutoffs for this Reference count. No bound is imposed on finite adaptive precision, Extent use, local work, later Steps or later References. All those operations and all old setup/driver work retain their separate paid costs.
+
+## 14. Credited all-closed-error recovery on this public domain
+
+[PAID Theorem 37.1][PAID] already gives one deterministic causal original-entrance receiver on the larger domain of all fixed rational $q>0,b\ge0$, for every joint closed-error trace at both ports. Restrict its parameter assignment to
+
+$$
+q=q_0,\qquad b\in\mathbb Q\cap[u,v],
+\tag{38}
+$$
+
+with the same source, depth, error resolution, framing, serial rights and target. Each world and joint trace of (35) is then a world and trace of that theorem. Its receiver can ignore the additional public information $q_0,u,v$; no premise requires these numbers to be hidden. Thus its existing conclusion applies to every initialized entry here, including empty return zero, with the original owned lifts, a genuine reached record and retained same-source calling rights. This is a restriction of the existing positive theorem, not a new positive proof or receiver.
+
+For clarity about its resource, PAID (134)–(143) use $z_0=q_0\alpha^{d_0}>0$ and a per-instance finite search index $n_*$, bounded by
+
+$$
+n_*\le\min\{n\ge1:2^nz_0>2050\}.
+\tag{39}
+$$
+
+That receiver completes exactly $n_*$ primitive References, all before its first Step, and uses no later Reference. Its total Extent count is $n_*+m$, where $m$ is its actual Step count through the second correctly classified block update. Empty entry is included by that theorem's separate $(d_0,s_0)=(0,0)$ case. There is no uniform bound on (39) as actual initial depth varies. The theorem below proves that the absence of a uniform pre-Step Reference bound holds for every successful receiver, already on the fixed floors, rather than just for this particular search.
+
+## 15. Finite prefixes realized by whole initialized worlds
+
+Use the standard open dyadic cell
+
+$$
+C(n,a)=\bigl(a2^{-n},(a+1)2^{-n}\bigr).
+\tag{40}
+$$
+
+A finite causal history $T$ before any Step retains all ordered requests, finite precisions, chosen integer replies and whole frames, controls, local actions and output fragments. If $T$ ends inside a reply transaction, select a whole frame extending that observed prefix and retain its integer and precision as well. A sufficient interval certificate for $T$ is a nonempty rational open interval $I=(L,U)$ such that
+
+$$
+I\subseteq(u,v),\qquad
+I\subseteq C(n,a)
+\quad\text{for every selected frame at either port in }T.
+\tag{41}
+$$
+
+Here the initial interval $(u,v)$ itself is allowed; containment does not require its endpoints to be strictly inside $(u,v)$. All endpoint maxima/minima below are finite rational operations. Condition (41) is sufficient for the construction, not a characterization of every world compatible with $T$. The history is required to obey the fixed receiver's local transition rules for the selected observations and the legal public control rules. No arbitrary local computation is inserted as an observation.
+
+**Lemma 15.1 (Whole-prefix realization with an interior carrier).** For every certificate (41), there is a genuine initialized proper-death floor world, with one fixed rational offset in $B$, that reproduces the whole history $T$ from the receiver's original local initial state. Both its Reference true value and its stationary Extent true value lie in $I$, and the latter is irrational.
+
+**Proof.** Set $\beta=(L+U)/2$. Choose a finite integer $t\ge1$ with
+
+$$
+q_0\,2^{-t}<(U-L)/4,\qquad h=2t.
+\tag{42}
+$$
+
+As in Lemma 5.1, $\alpha>1/2$ and $\alpha^2=1-\alpha<1/2$, so
+
+$$
+L<\beta<y:=\beta+q_0\alpha^h
+ <\beta+(U-L)/4<U.
+\tag{43}
+$$
+
+The Archimedean property supplies this finite $t$ for every positive width and every prescribed $q_0$. Install $b=\beta$ before initializing $x=0^\infty$. Execute exactly $G_{h+1}-2$ actual old Next calls. Lemma 4.1 gives the genuine handoff $p=0^h$, actual depth/cursor $h$, $N_p=0$, and time/death clock $G_{h+1}-2$. This is a finite initialized history, not just a cache satisfying a lifetime equation. Its two stationary true values are precisely $\beta$ and $y$.
+
+The quadratic conjugation used in Lemma 5.1 sends $\alpha$ to $-\phi$. For $h\ge1$, $|\alpha^h|<1<|(-\phi)^h|$, so $\alpha^h$ is irrational. Since $\beta$ is rational and $q_0$ is a nonzero rational, $y$ is irrational. In particular it lies strictly inside its floor cell at every finite precision.
+
+For each selected Extent frame, $y\in I\subseteq C(n,a)$ gives exactly its floor integer $a$. For each selected Reference frame, $\beta\in I\subseteq C(n,a)$ gives the same conclusion. The fixed whole encodings, not just the numerical decoded values, therefore agree. Induction on the ordered causal actions reproduces $T$: identical earlier observations give identical next precision, request identification, local computation, output fragment and decision; the actual port supplies the selected whole frame and all its permitted prefixes. Source-independent controls and valid rights agree as well. There is no Step in this history, so its actual depth remains $h$. An unfinished last frame is matched by its selected whole extension, without counting a completion. All this happens in the one world with $b=\beta$ installed before its initialization. $\square$
+
+**Lemma 15.2 (Finite first decision from totality and a completion cap).** Fix a receiver $D$ and $K\in\mathbb N$. Suppose $D$ is lawful and terminates after finite actual operations and local work on every genuine initialized proper-death world with (36), and $B_D(W)\le K$ on every such world. Then there exists a finite causal no-Step history through either termination/final answer or the initiation of its first Step, with a certificate (41). This includes a decision made inside an unfinished query frame. Correctness is not needed for this lemma.
+
+**Proof.** Begin with the empty history, no completed References, and $I=(u,v)$. Maintain a certified history ending between transactions after $j$ completed References and before any Step or terminating decision. Lemma 15.1 supplies one actual world $W$ realizing that entire history, with stationary irrational Extent value $y\in I$. Run $D$ further on this fixed $W$ until its first Step initiation, terminating decision, or next Reference request initiation.
+
+One of these events occurs after finitely many actions. Otherwise $D$ has an infinite continuation on this one legitimate world consisting only of Extents, local work, output fragments and source-independent controls, or a permanent stall during one such transaction. It has neither terminated nor made a Step or another Reference request. This contradicts its own assumed totality on $W$. Release cannot supply a new informative handoff or unobserved source motion. No common timeout or uniform bound on these finite phases is being assumed.
+
+Retain the resulting finite history. For every new Extent in this phase, include its whole frame even if the decision occurred during receipt. Its actual integer is $a=\lfloor2^ny\rfloor$. Replace $I$ by its intersection with all these finitely many $C(n,a)$, obtaining a rational open interval $J$. Irrationality gives $y\in J$, so $J$ is nonempty. It still certifies every earlier frame, including all earlier References. If the event is Step initiation or termination, this proves the lemma.
+
+Otherwise the next request is Reference$(n)$. Define
+
+$$
+c=\lfloor2^ny\rfloor,\qquad J'=J\cap C(n,c).
+\tag{44}
+$$
+
+Again $y\in J'$, so the new rational open interval is nonempty. This $c$ need not equal the Reference reply of the supporting world $W$. Apply Lemma 15.1 anew to the preceding history with certificate $J'$, retaining the chosen next whole Reference frame as well. It supplies a different whole initialized world $W'$ whose fixed rational offset and stationary Extent value lie in $J'$. This selects the service's full frame without requiring the receiver to finish reading it. On $W'$, the entire preceding history is reproduced from the original receiver initial state, and its actual next Reference frame has integer $c$. The request was chosen before receipt, so changing this selected reply creates no causal inconsistency.
+
+Follow $D$ on $W'$ during that one finite transaction. If it makes an early terminating decision, the finite history and $J'$ prove the lemma. Otherwise that frame completes in finitely many actions: a permanent local stall or unfinished receipt would violate totality on this particular legitimate $W'$. Seriality permits no cancellation, Step or further request during it. The completion gives a certified between-transaction history with $j+1$ completed References. Each prior completion remains counted even if discarded.
+
+If $j=K$, that completed prefix already has $K+1$ References on the actual world $W'$, contradicting the cap. Otherwise repeat with this new certified prefix. Thus at most $K+1$ such finite phases yield a first Step or a prior terminating decision. Every appeal to totality was on a fixed, genuinely initialized world; each replacement re-realizes the whole finite history. No infinite diagonal interaction, depth-infinity cut, irrational private offset, zero signal or limiting world was used. No actual run resets or changes its configuration. $\square$
+
+For $K=0$, the same proof either reaches its decision before a Reference, or selects the first whole Reference frame by (44). Termination at any proper prefix still has zero completed References and retains its certificate. If receipt completes instead, that actual world has one completion and violates the zero cap. For general $K$ the identical distinction applies to the possible $(K+1)$-st frame. Initiation and partial information never replace completion as the resource.
+
+## 16. Unbounded pre-Step Reference completions at every public unit
+
+**Theorem 16.1 (Fixed-public-unit, prescribed-interval Reference lower bound).** For every $q_0\in\mathbb Q_{>0}$ and rational $0\le u<v$, fix $B$, the programs (36) and the full source-independent serial protocol of Section 13 before $D$. If a lawful deterministic causal finite-program receiver $D$ is total and exactly correct for the original owned entrance on every genuine initialized proper-death world with these floors, then
+
+$$
+\forall K\in\mathbb N\quad
+\exists W\text{ in that same proper-death floor domain}:
+\quad B_D(W)>K.
+\tag{45}
+$$
+
+The receiver may use the public data and any proposed $K$. All finite adaptive precisions, Extent/local work and all References after its first actual Step remain unrestricted. The count is exactly (37), including the no-Step termination convention and the incomplete-frame rules. The statement concerns a common receiver over all hidden rational $b\in B$ and genuine handoffs; it does not assert failure for each separately fixed private $b$.
+
+**Proof.** Fix the public data. If (45) fails for such a receiver, some finite $K$ bounds its completed pre-Step References on every stated floor world. Lemma 15.2 gives its finite first-decision history $T$ and a certificate $I=(L,U)$, including a selected whole frame for any query still unfinished at the decision. Choose
+
+$$
+b_*=(L+U)/2\in\mathbb Q\cap(u,v),\qquad
+ d\ge1\text{ finite with }q_0\alpha^d<U-b_*.
+\tag{46}
+$$
+
+The same even-power estimate (42) supplies this finite $d$, even for arbitrarily narrow $I$ or large $q_0$. Consequently
+
+$$
+L<b_*<b_*+q_0\alpha^{d+1}<b_*+q_0\alpha^d<U.
+\tag{47}
+$$
+
+Install this single $b_*$ in both ports before either of the following two original initializations. Use exactly the initialized deep family (13), whose chronology and ownership were proved in Lemmas 4.1–4.4:
+
+$$
+\begin{array}{c|c|c|c|c|c|c}
+ &x&p&\text{actual depth/cursor}&N_p&n=k_p=s&\text{unread tail}\\\hline
+ A&0^d10\,0^\infty&0^d&d&0&r_A=G_{d+1}-2&10\,0^\infty\\
+ B&0^\infty&0^{d+1}&d+1&0&r_B=G_{d+2}-2&0^\infty
+\end{array}
+\tag{48}
+$$
+
+These are genuine finite old runs from empty initialization with precisely $r_A,r_B$ old Next calls. They retain their original endpoints, cursors, caches and absolute clocks. In particular $r_B-r_A=G_d$. Their full current points are already the same $Z(r_B)$ by (17). Their original targets, however, are
+
+$$
+\partial_{A,0}=\partial(d,r_A),\qquad
+\partial_{B,0}=\partial(d+1,r_B).
+\tag{49}
+$$
+
+Their ordered wall labels and respective $\chi_+,\chi_-$ owners are those of (18) at depths $d,d+1$, with all interior fibres as in (7). Their positive lengths $\alpha^d\ne\alpha^{d+1}$ prove that these are different full owned boundaries. This distinction does not depend on selecting a different historical representative of one boundary.
+
+By (47), each initial Extent true value in (48) lies in every selected Extent cell of $T$. The same $b_*$ lies in every selected Reference cell. Thus each requested full floor integer, its complete frame and service completion agree with $T$ in both worlds. Causal induction from the same source-independent receiver state reproduces every earlier action, adaptive precision, output fragment and public control outcome. Whole-frame equality also covers a decision before a pending frame completes. This is equality on the selected finite initial history; no equality at unqueried initial precisions is asserted.
+
+If $T$ terminates without Step, the final answer is identical for the two different targets (49), so one answer is wrong. A termination without a complete valid answer already fails the specification.
+
+Otherwise both initiate the same first actual Step. Lemma 4.3 supplies its genuine transition, which is essential here. A physically Reads $1$ and its forced $0$ at original positions $d,d+1$ and appends $10$; B physically Reads one $0$ at original position $d+1$ and appends $0$. They both reach acquired depth $d+2$, with $N_A=G_d,N_B=0$. Their pre-Advance Low arguments are
+
+$$
+G_d+r_A=r_B=0+r_B.
+\tag{50}
+$$
+
+They therefore actually Emit the same bit $\operatorname{Low}(r_B)$, Advance once and Return, in this order. At that Return their original times are still $r_A+1,r_B+1$, their common sum coordinate is $s=r_B+1=G_{d+2}-1$, their common slack is $G_{d+1}-1$, their full point is $Z(r_B+1)$ and their exact unread tails are both $0^\infty$. Their actual current owned boundary is $\partial(d+2,r_B+1)$ with the owners of (6). These facts describe a real first-Step merger, with no rewritten old counter or source reset.
+
+For completeness, the whole-future invariant of Lemma 4.4 is as follows. After $h\ge1$ completed new Steps there is $e_h\ge0$, $e_1=0$, with
+
+$$
+\begin{aligned}
+p_{A,h}&=0^d10\,0^{e_h},&p_{B,h}&=0^{d+2+e_h},&D_h&=d+2+e_h,\\
+N_{A,h}&=G_d,&N_{B,h}&=0,&s_h&=r_B+h,\\
+n_{A,h}&=r_A+h,&n_{B,h}&=r_B+h,\\
+k_{A,h}&=G_{D_h+1}-G_d-2,&k_{B,h}&=G_{D_h+1}-2,\\
+\sigma_h&=k_{A,h}-n_{A,h}=k_{B,h}-n_{B,h}
+ =G_{D_h+1}-2-r_B-h\ge0.
+\end{aligned}
+\tag{51}
+$$
+
+Both actual cursors are $D_h$, both unread tails are zero, their full points are $Z(r_B+h)$, and their full current boundary is $\partial(D_h,r_B+h)$. Positive slack makes both Next calls read nothing and Emit $\operatorname{Low}(r_B+h)$ before their respective Advances and Returns. Zero slack makes both Read the next actual zero at cursor $D_h$, increase depth by one, keep their respective $N$ values, and Emit with that same Low argument; their new common slack is $G_{D_h}-1$. These are all cases, and they inductively preserve (51), every historical offset and the original bindings. Each reached call is finite by the supplied productivity and exact-tail continuation. This recalls the existing deep-family execution proof rather than proposing a new controller.
+
+At every future matched returned cut, the two complete replies at every finite precision $n$ are respectively
+
+$$
+\left\lfloor2^n(b_*+q_0\alpha^{D_h})\right\rfloor,
+\qquad\left\lfloor2^nb_*\right\rfloor.
+\tag{52}
+$$
+
+Thus the new Reference port is coupled separately as well as Extent. The single $b_*$ never changes. Queries and local work do not move the source, so (51) survives arbitrary finite repetitions and arbitrarily fine future precisions. Equality at all future precisions follows from actual equal depth and fixed calibration after the merger, not from extending the initial finite cell margin indefinitely.
+
+Induct now over all future commands, local actions, output fragments and public events. Equal accumulated observations give the same next action; (51) couples each real Step and its intermediate events, and (52) couples every whole two-port reply and every permitted prefix. Source-independent controls, valid permissions and local completed-operation counts agree. If a current record is legitimately earned, its current $(d,s)$, local count, DATA guards, finite representatives and budget state agree, while its calling right remains actually valid in each world. The guarded programs expand into the same primitives and add no initial getter or private-history export. Private Read counts and old absolute fields remain distinct and hidden. This proves complete future coupling even with unrestricted later References.
+
+Totality on A supplies a finite answer; B follows its identical finite observed path and gives the same answer. If the answer is made within the first Step, including before its Advance or Return, the delivered intermediate event prefixes already match. The same argument covers later intermediate decisions. No query can be inserted inside a Step. Hence one answer fails the different original targets (49). The shared reached boundary, current point and later zero tail do not replace either original target. This contradicts correctness and proves (45). $\square$
+
+**Corollary 16.2 (All-closed-error classification on the same public domain).** On the extended interface (35), finite per-instance exact original-entrance recovery is possible, including empty entry, with no References after the first Step; nevertheless every deterministic causal receiver total and correct on all initialized worlds and every allowed joint error trace has unbounded completed pre-Step Reference use already on the proper-death floor worlds (36).
+
+**Proof.** The positive is exactly the restriction of PAID Theorem 37.1 explained in Section 14. Both fixed floors (36) obey (35), so any receiver satisfying the full all-error requirement is total and correct on that proper-death subclass. A uniform finite bound there would contradict Theorem 16.1. Each particular world's count is finite by totality. The subclass argument does not assert that each individually chosen lawful error selector is itself obstructed, nor that an individual private $b$ has an unbounded requirement. $\square$
+
+## 17. Suppliers, mathematical increment and unchanged obligations
+
+The additional mathematical implication is Lemma 15.2 at an already fixed public $q_0$ and prescribed positive-width interval: a cap on completed primitive References forces a finite first-decision prefix admitting one common open-interval certificate. Lemma 15.1 provides the necessary whole-initialized-world realizations. Their composition with the existing deep actual merger gives Theorem 16.1. The rational midpoint, Archimedean estimate, quadratic irrationality, ordinary floor-cell geometry and deterministic causality are standard tools; none is claimed as a new general principle.
+
+| Supplier | Exact correspondence and retained boundary |
+| --- | --- |
+| This volume Sections 1–2, Lemmas 4.1–4.4 and Lemma 5.1 | The same $\alpha,G_j,q_0,B$, original initialized no11 producer, finite actual driver histories, full owned $\partial(d,s)$, deep death pair, strict irrational cell interiors and actual all-future invariant. Equations (48)–(51) retain the original source/time/cursor offsets. |
+| [PAID Definitions 36.1–36.3 and Theorem 37.1][PAID] | The added same-$b$ Reference, full serial frames, primitive-completion count, original owned-entrance target, early-answer convention and all-error positive. The exact parameter restriction is (38); the positive is credited unchanged. |
+| [PAID Definitions 25.1, 27.1–27.2 and 38.1][PAID] | Finite unsaturated deterministic floors, full observations and the implication from a floor-subclass counterexample to failure of a uniform all-closed-error resource bound. The rational Reference floor is added to the exact existing Extent floor; error inequalities alone do not force every selector to emit those literals. |
+| [PAID Definition 18.1, Corollary 24.2 and Lemma 28.2][PAID] | Source-independent public controls, actually held serial rights, and guarded programs on genuinely earned current records. Their acquisition, DATA and budget premises are retained. A printed record or descriptor creates no service or authority. |
+| [PAID Sections 38–41][PAID] | The earlier unknown-unit resource result uses $q_d=1/F_d$ in its static family and selects a small $q_*$ after the receiver's finite prefix. Neither operation fixes a prescribed public $q_0$ before the receiver. That theorem cannot be specialized to prove (45); finite interval renewal here replaces the varying-unit argument. |
+
+Sections 3–9 remain theorems about the original Extent-only interface, with no Reference available. In particular their “reference” world is a hypothetical legal instance in a proof, not a Reference service installed in that interface. The larger interface of Section 13 is explicit, so its positive does not contradict those earlier negatives. Nor does the $K=0$ case of Theorem 16.1 follow just from deleting Reference: a receiver may initiate a Reference and terminate inside its unfinished frame with zero completions. Lemma 15.2 handles precisely those actions. The initial pair in (48) is chosen after the finite history; its initially unequal Extent values can be distinguished by sufficiently fine unqueried precision. It is neither an initial all-precision oracle collision nor one pair defeating every receiver.
+
+The result is an ordinary conditional mathematical synthesis relative to the stated source and observation premises. Those premises include finite reached services, an actual source with productive initialized clock-driven histories, correct actual-depth/same-region measurement, one fixed calibration before initialization, complete finite frames, seriality, persistent exclusive rights and the excluded-channel rules. The universal progress argument is the proof in Lemma 15.2, not an inference from sampled programs. Exact finite arithmetic or producer executions can corroborate the corresponding finite equalities and event sequences; they cannot establish arbitrary-receiver progress, all parameter/precision quantifiers or the universal theorem, and no finite execution is a premise of the proof. This exposition supplies no Lean/kernel verification or physical implementation. Supplier statements and this ordinary proof are distinct from those unprovided certifications. No exhaustive literature search or global novelty claim is made for the synthesis.
+
+The original exact-$p_J$/all-$v$ FIB collision task, actual-joint/common-parent obligations, global 8-versus-9 and 9-sufficiency tasks retain their full original scopes. So do the fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization, full-original-response and arbitrary interior-cut obligations identified in Section 12 and PAID Definition 41.3. No bridge from (45) to their completion is supplied. The present result concerns the stated original owned entrance and a primitive Reference-completion resource; it supplies no general inverse of private history, exact calibration, source provisioning, infinite raw data, physical space/time/boundary/memory, or a universal work/storage/latency optimum.
+
+## 追加锚（本行以下为增补区）
