@@ -18,43 +18,50 @@ abbrev signature : Signature.{u+1,u,0,0,0} where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 def actual : Realization signature.{u} :=
-  realize signature.{u} (fun _ _ M => M.PosSemidef) (fun e => nomatch e)
+  realize signature.{u} (fun _ (n : Type u) (M : Matrix n n ℂ) =>
+    @decide M.PosSemidef (Classical.propDecidable _)) (fun e => nomatch e)
 def rejected : Realization signature.{u} :=
-  realize signature.{u} (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature.{u} (fun _ _ _ => false) (fun e => nomatch e)
 abbrev arena : Arena.{u+1,u,0,0,0} where
   signature := signature.{u}
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
     {A X B : Matrix n n ℂ}, (fromBlocks A X Xᴴ B).PosSemidef →
     A.trace = 1 → B.trace = 1 →
     R.readout () n
-      ((((1-‖X.trace‖^2 : ℝ) : ℂ) • (1 : Matrix n n ℂ)) - (A-B)*(A-B))
+      ((((1-‖X.trace‖^2 : ℝ) : ℂ) • (1 : Matrix n n ℂ)) - (A-B)*(A-B)) = true
 private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
   have hw : (fromBlocks (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) 0 0
       (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)).PosSemidef := by
     rw [Matrix.fromBlocks_one]
     exact Matrix.PosSemidef.one
-  exact @h (ULift.{u} Unit) inferInstance inferInstance 1 0 1
-    (by simpa using hw) (by simp [Matrix.trace]) (by simp [Matrix.trace])
+  exact Bool.false_ne_true (@h (ULift.{u} Unit) inferInstance inferInstance 1 0 1
+    (by simpa using hw) (by simp [Matrix.trace]) (by simp [Matrix.trace]))
 private theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
   intro i
   refine ⟨ULift.{u} Unit, 0, -1, ?_⟩
   intro he
-  have hn : (- (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)).PosSemidef := by
-    have hz : (0 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ).PosSemidef := Matrix.PosSemidef.zero
-    change ((0 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ).PosSemidef) =
-      ((-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ).PosSemidef) at he
-    exact he.mp hz
+  change @decide ((0 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ).PosSemidef)
+      (Classical.propDecidable _) =
+    @decide ((-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ).PosSemidef)
+      (Classical.propDecidable _) at he
+  have htrue : @decide ((-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ).PosSemidef)
+      (Classical.propDecidable _) = true := by
+    rw [← he]
+    simp
+  have hn : (- (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)).PosSemidef :=
+    of_decide_eq_true htrue
   have hh := hn.diag_nonneg (i := (⟨()⟩ : ULift.{u} Unit))
   norm_num at hh
 def family : Registration arena.{u} (type_of% @normalized_difference_square_le.{u}) where
   actual := actual.{u}
-  bridge := Iff.rfl
-  variation := ⟨@normalized_difference_square_le.{u}, rejected.{u}, rejected_law.{u}⟩
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using @normalized_difference_square_le.{u},
+    rejected.{u}, rejected_law.{u}⟩
   sensitivity := by
     constructor
     · intro i
@@ -79,7 +86,8 @@ def audit.{u} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ _ M => M.PosSemidef) (fun e => nomatch e))
+  readout := some (realize signature.{u} (fun _ (n : Type u) (M : Matrix n n ℂ) =>
+    @decide M.PosSemidef (Classical.propDecidable _)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -89,11 +97,11 @@ def audit.{u} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
