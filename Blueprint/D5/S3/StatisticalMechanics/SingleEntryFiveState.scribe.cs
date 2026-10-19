@@ -11,6 +11,21 @@ internal sealed class SingleEntryFiveStateDocument : IScribeDocumentDefinition
         "Strict transient association from the five-state single-entry forward equations.",
         H("A repressed initial state creates strict two-site association"),
         Blocks(
+            Describe.Lean(DescribeId.Create("single-entry-constant-nonnegative-time"),
+                DeclarationHandle.Create(Prefix + "constant_on_nonneg"),
+                H("A zero derivative fixes the trajectory"),
+                StatementSource.FromAuthor(ConstantFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If a real function has derivative zero at every nonnegative time, its value at every nonnegative time equals its initial value. This helper is consumed by the scalar decay equations."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("single-entry-positive-forcing"),
+                DeclarationHandle.Create(Prefix + "positive_forcing"),
+                H("Positive input gives a positive response"),
+                StatementSource.FromAuthor(ForcingFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For an arbitrary real decay coefficient, a zero-initial scalar response satisfying f'=-cf+g is strictly positive at every positive time when g is strictly positive there. Multiplying by exp(ct) gives a strictly increasing response. The helper is consumed by the actual occupied and vacant margins and association residual."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("single-entry-symmetric-return-data"),
+                DeclarationHandle.Create(Prefix + "symmetric_return_data"),
+                H("The same symmetric evolution supplies return weights and its limit"),
+                StatementSource.FromAuthor(SymmetricFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let A be a finite real positive semidefinite matrix with positive diagonal at o. The curve starts at the unit vector o and solves y'=-Ay. The returned rates are the Hermitian eigenvalues of A, and its nonnegative return weights are the squared entries U(o,j) of the orthogonal eigenvector matrix U. They sum to one and some positive rate has positive weight. The return probability is their exponential sum and has strictly negative derivative at every nonnegative time. Every coordinate converges to a vector L in the kernel of A. The full coordinate expansion is y(t,i)=sum_j U(i,j)U(o,j)exp(-ell(j)t). In the formula curveAt(y,t) means the vector i mapped to y(t,i), coordinateCurve(y,i) means t mapped to y(t,i), and U is eigenvectorUnitary(A)."))), DescribeRole.Theorem),
             Node("Rates", "Positive rates",
                 "The rate tuple k contains six arbitrary strictly positive real rates. The first site's binding and unbinding rates are a,b; the second site's are c,d. Entry from 00 to R has rate eta, and return from R to 00 has rate theta.", DescribeRole.Definition),
             Node("generator", "The actual five-state generator",
@@ -72,6 +87,69 @@ internal sealed class SingleEntryFiveStateDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(v), domain, body);
     private static Formula R() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Pos(Formula x) => Rel(D(0), FormulaRelationOperator.LessThan, x);
+    private static Formula ConstantFormula()
+    {
+        Formula f = F.Id("f"), u = F.Id("u"), t = F.Id("t");
+        Formula nonneg = Rel(D(0), FormulaRelationOperator.LessThanOrEqual, u);
+        return Disp(All("f", Seq(R(), Sp, To, Sp, R()),
+            Imp(All("u", R(), Imp(nonneg, Call("HasDerivAt", f, D(0), u))),
+            All("t", R(), Imp(Rel(D(0), FormulaRelationOperator.LessThanOrEqual, t),
+                Rel(Call("f", t), FormulaRelationOperator.Equal, Call("f", D(0))))))));
+    }
+    private static Formula ForcingFormula()
+    {
+        Formula f = F.Id("f"), g = F.Id("g"), c = F.Id("c"), u = F.Id("u"), t = F.Id("t");
+        Formula rhs = new Formula.Binary(Seq(Minus, c, Sp, Call("f", u)),
+            FormulaBinaryOperator.Add, Call("g", u));
+        Formula premises = Conj(Rel(Call("f", D(0)), FormulaRelationOperator.Equal, D(0)),
+            All("u", R(), Imp(Rel(D(0), FormulaRelationOperator.LessThanOrEqual, u),
+                Call("HasDerivAt", f, rhs, u))),
+            All("u", R(), Imp(Pos(u), Pos(Call("g", u)))));
+        return Disp(All("f", Seq(R(), Sp, To, Sp, R()),
+            All("g", Seq(R(), Sp, To, Sp, R()), All("c", R(), Imp(premises,
+            All("t", R(), Imp(Pos(t), Pos(Call("f", t)))))))));
+    }
+    private static Formula SymmetricFormula()
+    {
+        Formula v = F.Id("V"), a = F.Id("A"), o = F.Id("o"), y = F.Id("y");
+        Formula ell = F.Id("ell"), weights = F.Id("weights"), l = F.Id("L");
+        Formula t = F.Id("t"), i = F.Id("i"), j = F.Id("j");
+        Formula vector = Seq(v, Sp, To, Sp, R());
+        Formula nonneg = Rel(D(0), FormulaRelationOperator.LessThanOrEqual, t);
+        Formula uj = Call("eigenvectorUnitary", a, o, j);
+        Formula exponential = Call("exp", Sub(D(0), Mul(Call("ell", j), t)));
+        Formula sumWeights = Seq(new Formula.Subscript(Sum, Seq(j, Colon, v)), Sp, Call("weights", j));
+        Formula sumReturn = Seq(new Formula.Subscript(Sum, Seq(j, Colon, v)), Sp,
+            Mul(Call("weights", j), exponential));
+        Formula sumCoordinate = Seq(new Formula.Subscript(Sum, Seq(j, Colon, v)), Sp,
+            Mul(Mul(Call("eigenvectorUnitary", a, i, j), uj), exponential));
+        Formula limits = Exists("L", vector, Conj(
+            All("i", v, Call("Tendsto", Call("coordinateCurve", y, i), Call("atTop"), Call("nhds", Call("L", i)))),
+            Rel(Call("mulVec", a, l), FormulaRelationOperator.Equal, D(0)),
+            Rel(ell, FormulaRelationOperator.Equal, Call("eigenvalues", a)),
+            All("j", v, Rel(Call("weights", j), FormulaRelationOperator.Equal,
+                new Formula.Power(uj, D(2)))),
+            All("t", R(), Imp(nonneg, All("i", v,
+                Rel(Call("y", t, i), FormulaRelationOperator.Equal, sumCoordinate))))));
+        Formula result = Exists("ell", vector, Exists("weights", vector, Conj(
+            All("j", v, And(Rel(D(0), FormulaRelationOperator.LessThanOrEqual, Call("ell", j)),
+                Rel(D(0), FormulaRelationOperator.LessThanOrEqual, Call("weights", j)))),
+            Rel(sumWeights, FormulaRelationOperator.Equal, D(1)),
+            Exists("j", v, Pos(Mul(Call("ell", j), Call("weights", j)))),
+            All("t", R(), Imp(nonneg, Rel(Call("y", t, o), FormulaRelationOperator.Equal, sumReturn))),
+            All("t", R(), Imp(nonneg, Rel(Call("deriv", Call("coordinateCurve", y, o), t),
+                FormulaRelationOperator.LessThan, D(0)))), limits)));
+        Formula ode = All("t", R(), Imp(nonneg, All("i", v,
+            Call("HasDerivAt", Call("coordinateCurve", y, i),
+                Sub(D(0), Call("mulVec", a, Call("curveAt", y, t), i)), t))));
+        Formula premises = Conj(Call("PosSemidef", a), Pos(Call("A", o, o)),
+            Rel(Call("curveAt", y, D(0)), FormulaRelationOperator.Equal, Call("single", o, D(1))), ode);
+        return Disp(All("V", F.Id("Type"), Seq(
+            OpenBracket, Call("Fintype", v), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", v), CloseBracket, Sp,
+            All("A", Call("Matrix", v, v, R()), All("o", v,
+            All("y", Seq(R(), Sp, To, Sp, vector), Imp(premises, result)))))));
+    }
     private static Formula StationaryFormula(Formula k)
     {
         Formula eq = Call("equilibriumLaw", k), i = F.Id("i");

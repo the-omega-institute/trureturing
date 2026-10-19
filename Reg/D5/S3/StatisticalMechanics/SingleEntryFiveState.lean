@@ -160,3 +160,310 @@ def analysis : AuricFib.Contract.Application (@five_state_strict_association) wh
 #print axioms analysis
 
 end Reg.D5.S3.StatisticalMechanics.SingleEntryFiveState
+
+namespace Reg.D5.S3.StatisticalMechanics.SingleEntryFiveState.Helpers
+open _root_.D5.S3.StatisticalMechanics.SingleEntryFiveState
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  (ℝ → ℝ) (fun _ => ℝ) (fun _ => ℝ)
+
+def actualReadout : ∀ role f, signature.State f → signature.Output role f := fun _ f t => f t
+
+def actualAnchor : ∀ (_ : signature.Anchor) f, signature.State f := fun e => nomatch e
+
+def actual : Realization signature := realize signature actualReadout actualAnchor
+
+def rejected : Realization signature := realize signature (fun _ _ _ => 0) actualAnchor
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  exact ⟨id, 0, 1, by norm_num [actual, realize, actualReadout]⟩
+
+namespace Constant
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (f : ℝ → ℝ) (_hf : ∀ t, 0 ≤ t → HasDerivAt f 0 t)
+    (t : ℝ) (_ht : 0 ≤ t), R.readout () f t = f 0
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (fun _ => 1) (fun t _ => hasDerivAt_const t (1 : ℝ)) 0 le_rfl
+  norm_num [rejected, realize] at hb
+
+def family : Registration arena (type_of% @constant_on_nonneg) where
+  actual := realize signature actualReadout actualAnchor
+  bridge := Iff.rfl
+  variation := ⟨constant_on_nonneg, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def selection : Contract.SourceSelection where
+  owner := `D5.S3.StatisticalMechanics.SingleEntryFiveState
+  definition := none
+  coordinates := #[0]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "fn", "arg"]
+    stateBinder := 2
+    functionOperand := false
+    stateOperand := none
+    booleanPredicate := false }]
+
+run_cmd do
+  let mut e := (← Lean.getConstInfo ``constant_on_nonneg).type
+  let mut binders := 0
+  let some selected := selection.readouts[0]? | throwError "A readout selection is required"
+  for step in selected.path do
+    e ← match e, step with
+      | .forallE _ _ b _, "body" | .lam _ _ b _, "body" =>
+        binders := binders + 1
+        pure b
+      | .app f _, "fn" => pure f
+      | .app _ a, "arg" => pure a
+      | _, _ => throwError "The selected original readout occurrence is absent"
+  unless binders == 4 && e.getAppFn == .bvar 3 &&
+      e.getAppArgs[0]? == some (.bvar 1) do
+    throwError "The selected readout is not the original function at its state binder"
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@constant_on_nonneg) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.SingleEntryFiveState.Helpers.Constant.unit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.SingleEntryFiveState.Helpers.Constant.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actualReadout actualAnchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some selection
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms registration
+end Constant
+
+namespace Positive
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (f g : ℝ → ℝ) (c : ℝ) (_hf0 : f 0 = 0)
+    (_hf : ∀ t, 0 ≤ t → HasDerivAt f (-c * f t + g t) t)
+    (_hg : ∀ t, 0 < t → 0 < g t) (t : ℝ) (_ht : 0 < t),
+    0 < R.readout () f t
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hd (t : ℝ) (_ht : 0 ≤ t) :
+      HasDerivAt (fun u : ℝ => u) (-0 * t + (1 : ℝ)) t := by
+    simpa only [neg_zero, zero_mul, zero_add] using hasDerivAt_id' t
+  have hb := h id (fun _ => 1) 0 rfl hd (fun _ _ => by norm_num) 1 (by norm_num)
+  norm_num [rejected, realize] at hb
+
+def family : Registration arena (type_of% @positive_forcing) where
+  actual := realize signature actualReadout actualAnchor
+  bridge := Iff.rfl
+  variation := ⟨positive_forcing, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def selection : Contract.SourceSelection where
+  owner := `D5.S3.StatisticalMechanics.SingleEntryFiveState
+  definition := none
+  coordinates := #[0]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+    stateBinder := 6
+    functionOperand := false
+    stateOperand := none
+    booleanPredicate := false }]
+
+run_cmd do
+  let mut e := (← Lean.getConstInfo ``positive_forcing).type
+  let mut binders := 0
+  let some selected := selection.readouts[0]? | throwError "A readout selection is required"
+  for step in selected.path do
+    e ← match e, step with
+      | .forallE _ _ b _, "body" | .lam _ _ b _, "body" =>
+        binders := binders + 1
+        pure b
+      | .app f _, "fn" => pure f
+      | .app _ a, "arg" => pure a
+      | _, _ => throwError "The selected original readout occurrence is absent"
+  unless binders == 8 && e.getAppFn == .bvar 7 &&
+      e.getAppArgs[0]? == some (.bvar 1) do
+    throwError "The selected readout is not the original function at its state binder"
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@positive_forcing) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.SingleEntryFiveState.Helpers.Positive.unit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.SingleEntryFiveState.Helpers.Positive.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actualReadout actualAnchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some selection
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms registration
+end Positive
+namespace Symmetric
+open scoped BigOperators ComplexOrder
+open Matrix Filter
+universe u
+
+abbrev signature : Signature where
+  Params := Σ V : Type u, (ℝ → V → ℝ) × V
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actualReadout : ∀ role p, (signature.{u}).State p → (signature.{u}).Output role p :=
+  fun _ p t => p.2.1 t p.2.2
+
+def actualAnchor : ∀ (_ : (signature.{u}).Anchor) p, (signature.{u}).State p := fun e => nomatch e
+
+def actual : Realization signature.{u} := realize signature actualReadout actualAnchor
+
+def rejected : Realization signature.{u} := realize signature (fun _ _ _ => 0) actualAnchor
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {V : Type u} [Fintype V] [DecidableEq V]
+    (A : Matrix V V ℝ) (hA : A.PosSemidef) (o : V) (_ho : 0 < A o o)
+    (y : ℝ → V → ℝ) (_y0 : y 0 = Pi.single o 1)
+    (_hy : ∀ t, 0 ≤ t → ∀ i,
+      HasDerivAt (fun u => y u i) (-(A *ᵥ y t) i) t),
+    ∃ lam c : V → ℝ,
+      (∀ j, 0 ≤ lam j ∧ 0 ≤ c j) ∧ (∑ j, c j) = 1 ∧
+      (∃ j, 0 < lam j * c j) ∧
+      (∀ t, 0 ≤ t → R.readout () ⟨V, y, o⟩ t = ∑ j, c j * Real.exp (-lam j * t)) ∧
+      (∀ t, 0 ≤ t → deriv (fun u => y u o) t < 0) ∧
+      ∃ l : V → ℝ, (∀ i, Tendsto (fun t => y t i) atTop (nhds (l i))) ∧
+        A *ᵥ l = 0 ∧
+        (lam = hA.1.eigenvalues ∧
+          c = fun j => (hA.1.eigenvectorUnitary : Matrix V V ℝ) o j ^ 2) ∧
+        ∀ t, 0 ≤ t → ∀ i, y t i =
+          ∑ j, (hA.1.eigenvectorUnitary : Matrix V V ℝ) i j *
+            (hA.1.eigenvectorUnitary : Matrix V V ℝ) o j * Real.exp (-lam j * t)
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let V := ULift.{u} Unit
+  let y : ℝ → V → ℝ := fun t _ => Real.exp (-t)
+  have y0 : y 0 = Pi.single (ULift.up ()) 1 := by
+    funext i
+    cases i with
+    | up i => cases i; simp [y]
+  have hy (t : ℝ) (_ht : 0 ≤ t) (i : V) :
+      HasDerivAt (fun u => y u i) (-((1 : Matrix V V ℝ) *ᵥ y t) i) t := by
+    simpa [y] using (hasDerivAt_id' t).neg.exp
+  obtain ⟨lam, c, _, hc, _, hrep, _⟩ :=
+    h (1 : Matrix V V ℝ) Matrix.PosSemidef.one (ULift.up ())
+      (by simp) y y0 hy
+  have hb := hrep 0 le_rfl
+  change (0 : ℝ) = _ at hb
+  simp only [mul_zero, neg_zero, Real.exp_zero, mul_one] at hb
+  rw [hc] at hb
+  norm_num at hb
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro role
+  refine ⟨⟨ULift.{u} Unit, (fun t _ => t), ULift.up ()⟩, 0, 1, ?_⟩
+  norm_num [actual, realize, actualReadout]
+
+def family : Registration arena.{u} (type_of% @symmetric_return_data.{u}) where
+  actual := realize signature actualReadout actualAnchor
+  bridge := Iff.rfl
+  variation := ⟨@symmetric_return_data.{u}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def selection : Contract.SourceSelection where
+  owner := `D5.S3.StatisticalMechanics.SingleEntryFiveState
+  definition := none
+  coordinates := #[0, 5, 7]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+      "arg", "body", "arg", "body", "arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+    stateBinder := 12
+    functionOperand := false
+    stateOperand := none
+    booleanPredicate := false }]
+
+run_cmd do
+  let mut e := (← Lean.getConstInfo ``symmetric_return_data).type
+  let mut binders := 0
+  let some selected := selection.readouts[0]? | throwError "A readout selection is required"
+  for step in selected.path do
+    e ← match e, step with
+      | .forallE _ _ b _, "body" | .lam _ _ b _, "body" =>
+        binders := binders + 1
+        pure b
+      | .app f _, "fn" => pure f
+      | .app _ a, "arg" => pure a
+      | _, _ => throwError "The selected symmetric-return occurrence is absent"
+  unless binders == 14 && e.getAppFn == .bvar 6 &&
+      e.getAppArgs[0]? == some (.bvar 1) && e.getAppArgs[1]? == some (.bvar 8) do
+    throwError "The selected return coordinate is not the original trajectory at its state binder"
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@symmetric_return_data.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.SingleEntryFiveState.Helpers.Symmetric.unit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.SingleEntryFiveState.Helpers.Symmetric.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actualReadout actualAnchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some selection
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms registration
+end Symmetric
+end Reg.D5.S3.StatisticalMechanics.SingleEntryFiveState.Helpers

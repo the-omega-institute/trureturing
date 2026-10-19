@@ -29,7 +29,7 @@ open scoped BigOperators ComplexOrder
 open Set Matrix Filter
 namespace D5.S3.StatisticalMechanics.SingleEntryFiveState
 
-private theorem constant_on_nonneg (f : ℝ → ℝ)
+theorem constant_on_nonneg (f : ℝ → ℝ)
     (hf : ∀ t, 0 ≤ t → HasDerivAt f 0 t) (t : ℝ) (ht : 0 ≤ t) : f t = f 0 := by
   have hn := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le
     (f := f) (f' := fun _ => 0) (C := 0)
@@ -52,7 +52,7 @@ private theorem scalar_decay (f : ℝ → ℝ) (c : ℝ)
   field_simp
   nlinarith
 
-private theorem positive_forcing (f g : ℝ → ℝ) (c : ℝ)
+theorem positive_forcing (f g : ℝ → ℝ) (c : ℝ)
     (hf0 : f 0 = 0)
     (hf : ∀ t, 0 ≤ t → HasDerivAt f (-c * f t + g t) t)
     (hg : ∀ t, 0 < t → 0 < g t) (t : ℝ) (ht : 0 < t) : 0 < f t := by
@@ -74,7 +74,7 @@ private theorem positive_forcing (f g : ℝ → ℝ) (c : ℝ)
   rw [hf0, mul_zero] at h
   exact (mul_pos_iff_of_pos_left (Real.exp_pos _)).mp h
 
-private theorem symmetric_return_data {V : Type*} [Fintype V] [DecidableEq V]
+theorem symmetric_return_data {V : Type*} [Fintype V] [DecidableEq V]
     (A : Matrix V V ℝ) (hA : A.PosSemidef) (o : V) (ho : 0 < A o o)
     (y : ℝ → V → ℝ) (y0 : y 0 = Pi.single o 1)
     (hy : ∀ t, 0 ≤ t → ∀ i,
@@ -85,7 +85,12 @@ private theorem symmetric_return_data {V : Type*} [Fintype V] [DecidableEq V]
       (∀ t, 0 ≤ t → y t o = ∑ j, c j * Real.exp (-lam j * t)) ∧
       (∀ t, 0 ≤ t → deriv (fun u => y u o) t < 0) ∧
       ∃ l : V → ℝ, (∀ i, Tendsto (fun t => y t i) atTop (nhds (l i))) ∧
-        A *ᵥ l = 0 := by
+        A *ᵥ l = 0 ∧
+        (lam = hA.1.eigenvalues ∧
+          c = fun j => (hA.1.eigenvectorUnitary : Matrix V V ℝ) o j ^ 2) ∧
+        ∀ t, 0 ≤ t → ∀ i, y t i =
+          ∑ j, (hA.1.eigenvectorUnitary : Matrix V V ℝ) i j *
+            (hA.1.eigenvectorUnitary : Matrix V V ℝ) o j * Real.exp (-lam j * t) := by
   let U : Matrix V V ℝ := hA.1.eigenvectorUnitary
   let lam := hA.1.eigenvalues
   let c := fun t j => ∑ i, U i j * y t i
@@ -209,8 +214,14 @@ private theorem symmetric_return_data {V : Type*} [Fintype V] [DecidableEq V]
     split_ifs with hz <;> simp [hz]
   refine ⟨lam, (fun j => U o j ^ 2),
     (fun j => ⟨hA.eigenvalues_nonneg j, sq_nonneg _⟩), ?_, hex, hreturn, hdecr,
-    l, hlim, hstat⟩
-  simpa [y0] using (hreturn 0 le_rfl).symm
+    l, hlim, hstat, ⟨rfl, rfl⟩, ?_⟩
+  · simpa [y0] using (hreturn 0 le_rfl).symm
+  · intro t ht i
+    rw [reconstruct]
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [hct t ht j]
+    ring
 
 /-- Six independent positive transition rates. The letters `a,b` refer to site 1
 and `c,d` to site 2; `eta,theta` refer to 00 to R and R to 00. -/
@@ -331,7 +342,7 @@ private theorem return_spectral_data (k : Rates) (p : ℝ → Fin 5 → ℝ)
     field_simp [hscale]
     nlinarith [congrArg (fun z : ℝ => z * p u j) hs]
   have hdiag : 0 < gram k 0 0 := by simpa [gram_entries] using k.theta_pos
-  obtain ⟨lam, c, hn, hsum, hmode, hrep, hdecr, l, hlim, hstat⟩ :=
+  obtain ⟨lam, c, hn, hsum, hmode, hrep, hdecr, l, hlim, hstat, _, _⟩ :=
     symmetric_return_data (gram k) hA 0 hdiag y hy0 hy
   have hreturn : (fun u => y u 0) = (fun u => p u 0) := by
     funext u
