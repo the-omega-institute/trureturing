@@ -45,13 +45,17 @@ internal sealed class CapitelliSommaAllOddNonconvergenceDocument : IScribeDocume
                 + "and is at least two. Convergence of winProb would force d, and hence this finite sum, to tend to zero. "
                 + "This contradiction proves the proposition. The argument also applies without the gcd hypothesis. "
                 + "It does not determine the even and odd subsequence limits or the multiplicities of the characteristic roots.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("capitelli-somma-2024-all-odd-nonconvergence"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("capitelli-somma-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));

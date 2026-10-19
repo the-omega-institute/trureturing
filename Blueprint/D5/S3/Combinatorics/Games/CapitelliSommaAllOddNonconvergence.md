@@ -46,6 +46,10 @@ $$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\operatorname{F
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/capitelli-somma-2024-all-odd-nonconvergence` (proved) by `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"capitelli-somma-2024-all-odd-nonconvergence","declaration_gid":"D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
