@@ -1066,7 +1066,7 @@ If $\varphi=f(s)$, the chain rule gives $F_s=(f'(s))^2F_\varphi$, so $F_s ds^2/4
 
 $$
 \Pi=V_0V_0^\dagger+V_1V_1^\dagger,\qquad
-\Omega=TT^\dagger,\qquad \Pi+\Omega=I_5.
+\Omega=HH^\dagger=|e_4\rangle\langle e_4|,\qquad \Pi+\Omega=I_5.
 $$
 
 At position $j$ supply a fresh record carrier with unit vectors $|e_{P,j}\rangle,|e_{Q,j}\rangle$. They are independent tensor factors, initially independent of the input. Record the fixed block distinction using the isometry
