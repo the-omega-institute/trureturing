@@ -6,13 +6,11 @@
    utility: none
    digest: Lotka–Volterra integrals and the last coordinate generate the rational function field. -/
 
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.Algebra.MvPolynomial.Eval
+import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
 import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
 import Mathlib.Tactic.LinearCombination
 
 /-! The rational integrals of Marquette–van der Kamp–Quispel, Section 3,
@@ -55,7 +53,7 @@ def Fk (F : Type*) [Field F] (n k : ℕ) : FunctionField F n :=
   else
     S F n (2 * k) * ∏ s ∈ Ico k (half n), x F n (2 * s + 1) / x F n (2 * s)
 
-/-- The reversed source integral `G_k`. Reindexing the reversed product by
+/-- The reversed source integral `G_k`, for `1 ≤ k ≤ m`. Reindexing its product by
 `t = m-1-s` gives the displayed prefix product in both parities. Its initial
 sum becomes `H - S_{2(m-k)}`. Integral indices are one-based. -/
 def Gk (F : Type*) [Field F] (n k : ℕ) : FunctionField F n :=
@@ -94,28 +92,35 @@ private theorem S_interval {a b : ℕ} (h : a ≤ b) :
   dsimp [S] at *
   linear_combination -this
 
-private theorem interval_ne_zero [CharZero F] {a b : ℕ} (hab : a < b) (hbn : b ≤ n) :
+private theorem interval_ne_zero {a b : ℕ} (hab : a < b) (hbn : b ≤ n) :
     S F n b - S F n a ≠ 0 := by
+  classical
   rw [S_interval (Nat.le_of_lt hab)]
-  have heval (i : ℕ) (hi : i < n) :
-      MvPolynomial.eval (fun _ : Fin n => (1 : F)) (coordPoly F n i) = 1 := by
-    rw [coordPoly, dite_eq_left hi, MvPolynomial.eval_X]
   intro hz
   have hp : (∑ i ∈ Ico a b, coordPoly F n i) = 0 := by
     apply IsFractionRing.injective (MvPolynomial (Fin n) F) (FunctionField F n)
     simpa only [map_sum, map_zero, x] using hz
-  have he := congrArg (MvPolynomial.eval (fun _ : Fin n => (1 : F))) hp
-  simp only [map_sum, map_zero] at he
-  have hs : (∑ i ∈ Ico a b, MvPolynomial.eval (fun _ : Fin n => (1 : F))
-      (coordPoly F n i)) = ((b - a : ℕ) : F) := by
-    calc
-      _ = ∑ _i ∈ Ico a b, (1 : F) := sum_congr rfl (fun i hi =>
-        heval i (by have := mem_Ico.mp hi; omega))
-      _ = _ := by simp
-  rw [hs] at he
-  exact (Nat.cast_ne_zero.mpr (by omega : b - a ≠ 0)) he
+  let t : Finset (Fin n) := univ.filter (fun i => a ≤ i.val ∧ i.val < b)
+  have hs : (∑ i ∈ t, MvPolynomial.X i : MvPolynomial (Fin n) F) =
+      ∑ i ∈ Ico a b, coordPoly F n i := by
+    apply sum_bij (fun i _hi => i.val)
+    · intro i hi
+      exact mem_Ico.mpr (mem_filter.mp hi).2
+    · intro i _ j _ he
+      exact Fin.ext he
+    · intro i hi
+      have hin : i < n := by have := mem_Ico.mp hi; omega
+      exact ⟨⟨i, hin⟩, mem_filter.mpr ⟨mem_univ _, mem_Ico.mp hi⟩, rfl⟩
+    · intro i _hi
+      simp only [coordPoly, dite_eq_left i.isLt, Fin.eta]
+  have hzero : ∑ i ∈ t, (1 : F) • (MvPolynomial.X i : MvPolynomial (Fin n) F) = 0 := by
+    simpa only [one_smul] using hs.trans hp
+  have hi : (⟨a, by omega⟩ : Fin n) ∈ t :=
+    mem_filter.mpr ⟨mem_univ _, le_rfl, hab⟩
+  exact one_ne_zero ((linearIndependent_iff'.mp (MvPolynomial.linearIndependent_X (Fin n) F))
+    t (fun _ => 1) hzero _ hi)
 
-private theorem S_ne_zero [CharZero F] {i : ℕ} (hi : 0 < i) (hin : i ≤ n) :
+private theorem S_ne_zero {i : ℕ} (hi : 0 < i) (hin : i ≤ n) :
     S F n i ≠ 0 := by
   have := interval_ne_zero (F := F) (n := n) hi hin
   simpa [S] using this
@@ -278,7 +283,7 @@ private theorem odd_G_mem {m k : ℕ} (hn : n = 2 * m + 1) (hn2 : 2 ≤ n)
     exact F_mem hn2 le_rfl (by omega)
   exact G_mem hn2 (by rw [ite_eq_left (by omega : n % 2 = 1)]; omega) (by omega)
 
-private theorem recover_previous [CharZero F] (L : IntermediateField F (FunctionField F n))
+private theorem recover_previous (L : IntermediateField F (FunctionField F n))
     {i : ℕ} (hi : 1 ≤ i) (hin : i < n) {d : FunctionField F n}
     (hd : d * x F n (i - 1) = S F n (i - 1) * (S F n n - S F n i))
     (hmH : S F n n ∈ L) (hmd : d ∈ L) (hmi : S F n i ∈ L) :
@@ -307,8 +312,6 @@ private theorem odd_d_odd {m k : ℕ} (hn : n = 2 * m + 1) (hk : k ≤ m) :
   have hm : half n = m + 1 := by dsimp [half]; omega
   rw [G_eq hm (by omega : k ≤ m + 1)]
   have hf := odd_F (F := F) hn hk
-  have hc : A F n m * x F n (2 * m) ≠ 0 :=
-    mul_ne_zero (A_ne_zero (by omega)) (x_ne_zero (by omega))
   rw [S_succ] at hf ⊢
   have ham := A_ne_zero (F := F) (n := n) (k := m) (by omega)
   have hxm := x_ne_zero (F := F) (n := n) (i := 2 * m) (by omega)
@@ -323,8 +326,6 @@ private theorem odd_d_even {m k : ℕ} (hn : n = 2 * m + 1) (hk : k < m) :
   have hj : m - k = m + 1 - (k + 1) := by omega
   rw [hj, G_eq hm (by omega : k + 1 ≤ m + 1), A_succ]
   have hf := odd_F (F := F) hn (by omega : k ≤ m)
-  have hc : A F n m * x F n (2 * m) ≠ 0 :=
-    mul_ne_zero (A_ne_zero (by omega)) (x_ne_zero (by omega))
   have hx := x_ne_zero (F := F) (n := n) (i := 2 * k + 1) (by omega)
   have he : 2 * (k + 1) = 2 * k + 2 := by omega
   rw [he]
@@ -333,7 +334,7 @@ private theorem odd_d_even {m k : ℕ} (hn : n = 2 * m + 1) (hk : k < m) :
   field_simp [ham, hxm]
   linear_combination (S F n n - S F n (2 * k + 2)) * hf
 
-private theorem odd_coordinates [CharZero F] {m : ℕ} (hn : n = 2 * m + 1) (hn2 : 2 ≤ n) :
+private theorem odd_coordinates {m : ℕ} (hn : n = 2 * m + 1) (hn2 : 2 ≤ n) :
     ∀ i < n, x F n i ∈ generated F n := by
   let L := generated F n
   have hm : half n = m + 1 := by dsimp [half]; omega
@@ -388,7 +389,7 @@ private theorem odd_coordinates [CharZero F] {m : ℕ} (hn : n = 2 * m + 1) (hn2
   rw [he]
   exact L.sub_mem hq hp
 
-private theorem even_P_mem [CharZero F] {m : ℕ} (hn : n = 2 * m) (hm2 : 2 ≤ m) :
+private theorem even_P_mem {m : ℕ} (hn : n = 2 * m) (hm2 : 2 ≤ m) :
     (A F n m)⁻¹ ∈ generated F n := by
   let L := generated F n
   have hn2 : 2 ≤ n := by omega
@@ -456,7 +457,7 @@ private theorem even_P_mem [CharZero F] {m : ℕ} (hn : n = 2 * m) (hm2 : 2 ≤ 
   exact L.div_mem (L.mul_mem hmu (L.add_mem hmH hmf))
     (L.mul_mem hmG (L.sub_mem hmH hmu))
 
-private theorem even_sums_mem [CharZero F] {m : ℕ} (hn : n = 2 * m) (hm2 : 2 ≤ m)
+private theorem even_sums_mem {m : ℕ} (hn : n = 2 * m) (hm2 : 2 ≤ m)
     {k : ℕ} (hk : k ≤ m) : S F n (2 * k) ∈ generated F n := by
   let L := generated F n
   have hn2 : 2 ≤ n := by omega
@@ -496,7 +497,7 @@ private theorem even_sums_mem [CharZero F] {m : ℕ} (hn : n = 2 * m) (hm2 : 2 �
   exact L.div_mem (L.mul_mem (H_mem hn2) hmf)
     (L.add_mem hmf (L.mul_mem (even_P_mem hn hm2) hmg))
 
-private theorem even_A_mem [CharZero F] {m : ℕ} (hn : n = 2 * m) (hm2 : 2 ≤ m)
+private theorem even_A_mem {m : ℕ} (hn : n = 2 * m) (hm2 : 2 ≤ m)
     {k : ℕ} (hk : k ≤ m) : A F n k ∈ generated F n := by
   let L := generated F n
   have hm : half n = m := by dsimp [half]; omega
@@ -514,7 +515,7 @@ private theorem even_A_mem [CharZero F] {m : ℕ} (hn : n = 2 * m) (hm2 : 2 ≤ 
     (by rw [ite_eq_right (by omega : ¬n % 2 = 1)]; omega) (by omega))
     (L.sub_mem (H_mem (by omega)) (even_sums_mem hn hm2 hk))
 
-private theorem even_coordinates [CharZero F] {m : ℕ} (hn : n = 2 * m) (hn2 : 2 ≤ n) :
+private theorem even_coordinates {m : ℕ} (hn : n = 2 * m) (hn2 : 2 ≤ n) :
     ∀ i < n, x F n i ∈ generated F n := by
   let L := generated F n
   by_cases hm1 : m = 1
