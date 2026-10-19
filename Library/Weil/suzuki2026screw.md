@@ -9598,3 +9598,123 @@ $$
 The lower bound is the existing original-source normalization, and the upper bound applies W330 to a completed minimizer with $B=B_*(K)$. The additional content is the common quantitative start/count, not another existence or spectral criterion. More generally if a member of the ENTIRE class has $\mathfrak E(F)\le-\Delta$, taking $\eta\le\min(1,\Delta/2)$ gives an original source with $A Q_{\mathcal K_A^g}\le-\Delta/(8\pi^3)$ at these same uniform bounds. No negative member is exhibited.
 
 The estimate does not show that $e_K^{\mathbb F}$ is nonnegative, identify the real and complex minima, or reduce the count constant to W228's positive fixed fraction of $e^{2A}$. It therefore does not prove W258, unrestricted complete positivity, full RH or strict Robin for EVERY integer $n>5040$. Classical smoothing and the already cited polynomial approximation are reused; the joint quantitative inverse-boundary/cutoff estimates and their exact-budget source transport are repository-derived, without a priority claim. Bounded bibliography retrieval is not exhaustive literature coverage. This is paper mathematics without Lean/kernel certification or scientific execution.
+
+## Retain a Gamma fraction in the actual complete prime-power debit
+
+The [existing higher-prime-power budget](broadbent2026mertens.md#retaining-a-gamma-fraction-by-the-classical-stechkin-comparison), equation (15), supplies the classical Stechkin comparison on arbitrary compact smooth tests. It is reused. Its application to W317 needs a further interface: the actual arithmetic test is an even extension of the half-line $B$ image, whereas the original positive Gamma form uses the zero-extended theta image WITHOUT $B$. A factor-two bound would spend the available reserve. The following comparison pays this interface with a support-independent bounded error and consumes it in a lower bound for the SAME complete physical form.
+
+Keep W317's $\mathcal V$, $\mathcal P$ and complete $\mathfrak E$. For $F\in\mathcal V$ put $U=\mathscr TF$, retain its zero-extended profile $u=u_F$, and set
+$$
+S(F)=\|u\|_2^2=\|U\|_W^2,\qquad
+b(t)=u(t)-\frac32\int_0^\infty e^{-5s/4}u(t+s)ds\quad(t\ge0),
+\qquad g_F(r)=b(2|r|).
+$$
+Here $b(t)=(\pi e^t)^{9/4}BU(\pi e^t)$ is the ACTUAL $B$ image, not an independently chosen arithmetic profile. Write
+$$
+R_g(s)=\Re\int_{\mathbb R}g(r)\overline{g(r-s)}dr,\qquad
+T_1(g)=2\sum_p\frac{\log p}{\sqrt p}R_g(\log p),
+\qquad \alpha=\frac2{\sqrt\pi},\quad\kappa_S=\frac1{\sqrt5}.
+$$
+Let $T_{\ge2}(g)$ denote the corresponding sum over $p^j$, $j\ge2$, with coefficients $(\log p)p^{-j/2}$. Reuse the shifted energy $E_*(g)$ and the nonnegative $\mathcal D_{\rm odd}(g)$ and $\mathcal J(g)$ of equations (8), (15) in the cited application. Its bounded rational-frequency energy $\mathcal J$ is distinct from W317's complete debit $\mathfrak J$.
+
+For a universal $C$, depending only on the fixed Gamma shift of W317, EVERY $F\in\mathcal V$ satisfies
+$$
+\|g_F\|_2^2\le S(F),\qquad
+\left|E_*(g_F)-\frac{\mathcal P(F)}\alpha\right|\le CS(F).
+\tag{W338}
+$$
+Its SAME complete physical energy has the lower bound
+$$
+\mathfrak E(F)\ge
+\kappa_S\mathcal P(F)-\alpha T_1(g_F)
+-\frac\alpha2\left|\int_{\mathbb R}g_F\right|^2-CS(F)
++\alpha\bigl[\mathcal D_{\rm odd}(g_F)+\mathcal J(g_F)\bigr].
+\tag{W339}
+$$
+There is no support, sign, mean, coefficient, source-count or moment-budget-size restriction within $\mathcal V$. The primary-prime correlation and mean terms remain explicit and uncontrolled against the retained reserve. Thus W339 is an all-source estimate, not positivity of $\mathfrak E$, a positive source subclass or another RH criterion.
+
+### Pair the actual Toeplitz and Hankel channels before applying the supplier
+
+Initially take $F\in C_c^\infty((\pi,\infty))$. Its $u$ and $b$ are smooth on the closed half-line and compact there. The even $g_F$ belongs to $H^1$, though it need not be smooth at zero. Splitting its correlation integral at $0$ and $s$ gives, for $s\ge0$,
+$$
+2R_{g_F}(s)=
+2\Re\int_0^\infty\overline{b(t)}b(t+2s)dt
++\int_0^{2s}\overline{b(t)}b(2s-t)dt.
+$$
+The second integral is real by reflection. W249/W284's ENTIRE prime Toeplitz-plus-Hankel pairing is consequently
+$\langle b,(C+C^*+H)b\rangle=T_1(g_F)+T_{\ge2}(g_F)$. The actual energy therefore has the identity
+$$
+\mathfrak E(F)=\mathcal P(F)
+-\alpha[T_1(g_F)+T_{\ge2}(g_F)]-\mathcal B_0(F),
+\qquad |\mathcal B_0(F)|\le CS(F).
+\tag{W340}
+$$
+The remainder $\mathcal B_0$ retains BOTH folded-model channels, W247's rank-two cutoff and the fixed Gamma shift. Their $W$ bounds are W232/W247 and the right Hardy interface used in W317. None is discarded or counted as a separately positive reserve. Every prime power, including the first prime $2$, has its original coefficient.
+
+### Compare the full logarithmic forms with a bounded boundary cost
+
+Put $k=5/4$, $c=3/2$, $r_0=1/4$. On the full line let
+$$
+(B_{\rm full}u)(t)=u(t)-c\int_0^\infty e^{-ks}u(t+s)ds.
+$$
+Its Fourier multiplier has squared modulus
+$|h(\xi)|^2=(\xi^2+r_0^2)/(\xi^2+k^2)\le1$.
+Let $v=\mathbf1_{t\ge0}b$ and $w=B_{\rm full}u-v$. Then
+$$
+w(t)=-cA_ue^{kt}\mathbf1_{t<0},\qquad
+A_u=\int_0^\infty e^{-ks}u(s)ds,\qquad
+|A_u|^2\le\frac{S(F)}{2k}.
+$$
+Thus $\|b\|_2\le\|u\|_2$; the scaling and even extension defining $g_F$ preserve this norm exactly.
+
+Use the nonnegative digamma-difference form $\mathcal A$ with multiplier
+$a(\xi)=\Re\operatorname{digamma}(k+i\xi)-\operatorname{digamma}(k)$.
+The classical [digamma integral, DLMF 5.9.16](https://dlmf.nist.gov/5.9.E16), gives
+$$
+a(\xi)=\int_0^\infty K(s)(1-\cos(\xi s))ds,
+\qquad K(s)=\frac{e^{-ks}}{1-e^{-s}}\le\frac1s.
+$$
+For profiles supported on opposite half-lines, the off-diagonal pairing of $\mathcal A$ is minus one half of the Hankel kernel $K(s+t)$. The classical Carleman inequality used in W176--W177 bounds its modulus by $\pi/2$ times the product of the $L^2$ norms. Also $\mathcal A(w)\le C|A_u|^2$: the Fourier density of $e^{kt}\mathbf1_{t<0}$ is a constant times $(k^2+\xi^2)^{-1}$, and $a(\xi)=O(\log(2+|\xi|))$. Polarization with the ACTUAL $w$ gives
+$$
+|\mathcal A(v)-\mathcal A(B_{\rm full}u)|\le CS(F).
+$$
+To pay even extension without a factor two, put $z=(v+v(-\cdot))/\sqrt2$. Reflection invariance and the SAME off-diagonal kernel give
+$$
+\mathcal A(z)=\mathcal A(v)-\frac12
+\int_0^\infty\int_0^\infty K(s+t)\overline{b(s)}b(t)dsdt,
+\qquad |\mathcal A(z)-\mathcal A(v)|\le CS(F).
+$$
+The unitary scaling $g_F(r)=\sqrt2z(2r)$ yields $E_*(g_F)=\mathcal A(z)$, with the supplier's exact multiplier
+$\Re\operatorname{digamma}(5/4+i\tau/2)-\operatorname{digamma}(5/4)$.
+Finally digamma recurrence gives
+$$
+\begin{aligned}
+|h(\xi)|^2a(\xi)
+={}&|h(\xi)|^2
+ [\Re\operatorname{digamma}(1/4+i\xi)-\log\pi]\\
+&+[\log\pi-\operatorname{digamma}(5/4)]|h(\xi)|^2
++\frac{1/4}{\xi^2+25/16}.
+\end{aligned}
+$$
+The first term is W317's unshifted $m_\Gamma/\alpha$; the two remaining multipliers and W317's fixed Gamma shift are bounded. Hence
+$|\mathcal A(B_{\rm full}u)-\mathcal P(F)/\alpha|\le CS(F)$.
+This proves W338 with the entire logarithmic form intact. No Fourier truncation, derivative replacement for Gamma, independently optimized profiles or loss proportional to $\mathcal P$ is used.
+
+### Consume the signed higher-power estimate on this exact test
+
+Let $\kappa_0=-\gamma+C_{\rm odd}$ and $d_\xi$ have their existing supplier meanings, distinct from $\kappa_S$. Its equation (15) states
+$$
+\begin{aligned}
+T_{\ge2}(g)\le{}&\frac12\left|\int g\right|^2
++(2\kappa_0+d_\xi+2)\|g\|_2^2
++(1-\kappa_S)E_*(g)\\
+&-\mathcal D_{\rm odd}(g)-\mathcal J(g).
+\end{aligned}
+$$
+On the compact core, smooth the even $H^1$ function $g_F$ in $H^1$ with a common bounded support. The finite prime correlations, mean, shifted energy and both bounded nonnegative energies converge. The compact-smooth supplier therefore applies to this actual $g_F$. Insert it into W340, use the UPPER side of W338 with its exact leading coefficient, and absorb only bounded multiples of $S(F)$. This proves W339. Both retained nonnegative energies belong to the SAME $g_F$ as the primary-prime and mean terms.
+
+For general $F\in\mathcal V$, use W324's existing joint full-Gamma/moment core. The theta transform is bounded in $H_6$, since its $n$th dilation has norm $n^{-3}$ and $\sum n^{-3}<\infty$. Thus $u$ has an exponentially weighted $L^2$ bound from $M(F)$; $b$ and $g_F$ have finite $L^1$ norms, and their means pass under the same core approximation. W338 applied to differences gives convergence of $g_F$ in the shifted logarithmic form. W313--W314 apply also to the primary-prime and higher-power SUBSUMS, so each arithmetic pairing passes continuously in $\mathcal N$. The two retained nonnegative energies are $L^2$-bounded. W340's bounded remainder and W317's full form pass under the same graph approximation. This proves W338--W340 on the entire specified $\mathcal V$.
+
+For an original finite Gaussian source normalized by $Q_H(\sigma)=1$, use W257 once: with $\psi=F/\|F\|_H$, the right side of W339 evaluated at $\psi$, divided by $4\pi^3$, bounds its original $A Q_{\mathcal K_A^g}$ from below. EVERY fixed $K>1$ and every such source with $Q_{6,A}\le K$ are included at W257's admitted start; no condition on the remaining primary-prime/mean term is added.
+
+The Gamma fraction is the existing Stechkin supplier's fraction. The additional content is the actual half-line $B$/even-extension comparison with a bounded error independent of support, and its complete-source consumer W339. W317's complete-debit bound remains independently available. The primary-prime and mean terms have not been controlled against the retained reserve, and neither constrained optimum is shown nonnegative. Full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without numerical/scientific execution, Lean/kernel certification, exhaustive bibliography or a worldwide-priority claim.
