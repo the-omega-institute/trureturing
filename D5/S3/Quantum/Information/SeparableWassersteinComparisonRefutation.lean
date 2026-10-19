@@ -9,7 +9,8 @@
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import D5.S3.Quantum.Matrix.PartialTransposeTrace
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity
+import D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence
+import D5.S3.QuantumContext.RankOfContextualityNonPowerTwo
 
 /-! Modified transport costs for a four-dimensional pair of density matrices. -/
 
@@ -26,11 +27,13 @@ open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence (IsSeparable)
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
+open D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings (couplings)
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Conditional
+  (separable_ppt)
+open D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices (obs XITable obs_herm_sq)
 
 namespace D5.S3.Quantum.Information.SeparableWassersteinComparisonRefutation
-
-def quantumCouplings {d : ℕ} (ρ σ : Matrix (Fin d) (Fin d) ℂ) :=
-  D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.couplings ρ σ
 
 def separableCouplings {d : ℕ} (ρ σ : Matrix (Fin d) (Fin d) ℂ) :
     Set (Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :=
@@ -55,7 +58,7 @@ def separableCost {d N : ℕ} (H : Fin N → Matrix (Fin d) (Fin d) ℂ)
 
 def quantumSquared {d N : ℕ} (H : Fin N → Matrix (Fin d) (Fin d) ℂ)
     (ρ σ : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
-  sInf (quantumCost H '' quantumCouplings ρ σ)
+  sInf (quantumCost H '' couplings ρ σ)
 
 def separableSquared {d N : ℕ} (H : Fin N → Matrix (Fin d) (Fin d) ℂ)
     (ρ σ : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
@@ -74,25 +77,24 @@ def claim : Prop :=
     (∀ n, (H n).IsHermitian) → ∀ ρ σ, IsDensity ρ → IsDensity σ →
       modifiedSeparableSquared H ρ σ ≤ modifiedQuantumSquared H ρ σ
 
-private abbrev L := Fin 4
-private abbrev J := L × L
-private abbrev M := Matrix L L ℂ
-private abbrev K := Matrix J J ℂ
-
-private def hOne : M := !![0,2,0,0; 2,0,0,0; 0,0,0,1; 0,0,1,0]
-private def hTwo : M := diagonal ![1,-1,2,-2]
-private def swapBlocks : M := !![0,0,1,0; 0,0,0,1; 1,0,0,0; 0,1,0,0]
-private def observables : Fin 3 → M := ![hOne, hTwo, (1/4 : ℂ) • swapBlocks]
-private def rho : M := diagonal ![3/8,3/8,1/8,1/8]
-private def sigma : M := diagonal ![1/8,1/8,3/8,3/8]
+private def hOne : Matrix (Fin 4) (Fin 4) ℂ := !![0,2,0,0; 2,0,0,0; 0,0,0,1; 0,0,1,0]
+private def hTwo : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![1,-1,2,-2]
+private def observables : Fin 3 → Matrix (Fin 4) (Fin 4) ℂ := ![hOne, hTwo, (1/4 : ℂ) • (obs 4)]
+private def rho : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![3/8,3/8,1/8,1/8]
+private def sigma : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![1/8,1/8,3/8,3/8]
 
 private theorem observables_hermitian : ∀ n, (observables n).IsHermitian := by
   intro n
-  apply Matrix.IsHermitian.ext
-  intro i j
-  fin_cases n <;> fin_cases i <;> fin_cases j <;>
-    norm_num [observables, hOne, hTwo, swapBlocks, Matrix.conjTranspose_apply,
-      Matrix.diagonal, Matrix.smul_apply]
+  fin_cases n
+  · apply Matrix.IsHermitian.ext
+    intro i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [observables, hOne, Matrix.conjTranspose_apply]
+  · apply Matrix.IsHermitian.ext
+    intro i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [observables, hTwo, Matrix.conjTranspose_apply, Matrix.diagonal]
+  · exact (obs_herm_sq 4).1.smul (by norm_num : star (1/4 : ℂ) = 1/4)
 
 private theorem rho_density : IsDensity rho := by
   constructor
@@ -108,32 +110,21 @@ private theorem sigma_density : IsDensity sigma := by
     fin_cases i <;> norm_num [Complex.le_def]
   · norm_num [sigma, Matrix.trace, Fin.sum_univ_succ]
 
-private def gram (v : J → ℂ) : K := vecMulVec v (star v)
-private def ket (i j : L) : J → ℂ := Pi.single (i,j) 1
-private def aVec : J → ℂ := ket 0 0 - ket 1 1
-private def bVec : Fin 4 → J → ℂ :=
-  ![ket 0 1 - ket 1 0, ket 0 3 - ket 1 2,
-    ket 2 1 - ket 3 0, ket 2 3 - ket 3 2]
-private def aWitness : K :=
-  (3 : ℂ) • gram aVec + (4 : ℂ) • gram (bVec 0) +
-  (2 : ℂ) • gram (bVec 1) + (2 : ℂ) • gram (bVec 2) +
-  (6 : ℂ) • gram (ket 2 3) + (6 : ℂ) • gram (ket 3 2) + gram (bVec 3)
+private def aVec : (Fin 4 × Fin 4) → ℂ := Pi.single (0, 0) 1 - Pi.single (1, 1) 1
+private def bVec : Fin 4 → (Fin 4 × Fin 4) → ℂ :=
+  ![Pi.single (0, 1) 1 - Pi.single (1, 0) 1, Pi.single (0, 3) 1 - Pi.single (1, 2) 1,
+    Pi.single (2, 1) 1 - Pi.single (3, 0) 1, Pi.single (2, 3) 1 - Pi.single (3, 2) 1]
+private def aWitness : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ :=
+  (3 : ℂ) • rankOneDensity aVec + (4 : ℂ) • rankOneDensity (bVec 0) +
+  (2 : ℂ) • rankOneDensity (bVec 1) + (2 : ℂ) • rankOneDensity (bVec 2) +
+  (6 : ℂ) • rankOneDensity (Pi.single (2, 3) 1) + (6 : ℂ) • rankOneDensity (Pi.single (3, 2) 1) + rankOneDensity (bVec 3)
 private def bWeights : Fin 4 → ℝ := ![1,2,2,1]
-private def bWitness : K := ∑ i, (bWeights i : ℂ) • gram (bVec i)
-private def crossProjection : K := diagonal (fun p => if p.1.val / 2 = p.2.val / 2
+private def bWitness : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ := ∑ i, (bWeights i : ℂ) • rankOneDensity (bVec i)
+private def crossProjection : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ := diagonal (fun p => if p.1.val / 2 = p.2.val / 2
   then 0 else 1)
-private def baseCost : K := (5 : ℂ) • 1 - hOne ⊗ₖ hOne - hTwo ⊗ₖ hTwo
-private def thirdCost : K :=
-  (1/16 : ℂ) • (1 - swapBlocks ⊗ₖ swapBlocks)
-
-private theorem separable_ppt {γ : K} (hγ : IsSeparable γ) :
-    (partialTranspose γ).PosSemidef := by
-  apply D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity.separableCone_partialTranspose_posSemidef
-  rcases hγ with ⟨n,p,σ,τ,hp,_,hd,hγ⟩
-  refine ⟨n, fun i => (p i : ℂ) • σ i, τ, ?_, ?_⟩
-  · intro i
-    exact ⟨(hd i).1.1.smul (Complex.zero_le_real.mpr (hp i)), (hd i).2.1⟩
-  · simpa only [Matrix.smul_kronecker] using hγ
+private def baseCost : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ := (5 : ℂ) • 1 - hOne ⊗ₖ hOne - hTwo ⊗ₖ hTwo
+private def thirdCost : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ :=
+  (1/16 : ℂ) • (1 - (obs 4) ⊗ₖ (obs 4))
 
 private theorem aWitness_psd : aWitness.PosSemidef := by
   unfold aWitness
@@ -148,20 +139,20 @@ private theorem decomposable_identity :
   ext ⟨i,j⟩ ⟨k,l⟩
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     norm_num [baseCost, aWitness, bWitness, bWeights, crossProjection,
-      partialTranspose, gram, aVec, bVec, ket, hOne, hTwo,
+      partialTranspose, rankOneDensity, aVec, bVec, hOne, hTwo,
       Matrix.vecMulVec_apply, Pi.single_apply, Fin.sum_univ_succ, Matrix.one_apply]
 
-private theorem bWitness_pair_nonneg {γ : K}
+private theorem bWitness_pair_nonneg {γ : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ}
     (hγ : (partialTranspose γ).PosSemidef) :
     0 ≤ (partialTranspose bWitness * γ).trace.re := by
-  have hterm (i : Fin 4) : 0 ≤ (partialTranspose (gram (bVec i)) * γ).trace.re := by
+  have hterm (i : Fin 4) : 0 ≤ (partialTranspose (rankOneDensity (bVec i)) * γ).trace.re := by
     rw [Matrix.trace_mul_comm]
     change 0 ≤ (γ * partialTranspose (vecMulVec (bVec i) (star (bVec i)))).trace.re
     rw [← D5.S3.Quantum.Matrix.PartialTransposeTrace.partial_transpose_trace_duality
       γ (bVec i)]
     exact (hγ.dotProduct_mulVec_nonneg _).1
   have he : partialTranspose bWitness =
-      ∑ i, (bWeights i : ℂ) • partialTranspose (gram (bVec i)) := by
+      ∑ i, (bWeights i : ℂ) • partialTranspose (rankOneDensity (bVec i)) := by
     ext p q
     simp [bWitness, partialTranspose, Matrix.sum_apply]
   rw [he, Matrix.sum_mul, Matrix.trace_sum, Complex.re_sum]
@@ -179,25 +170,25 @@ private theorem cost_matrices :
     intro n
     ext i j
     fin_cases n <;> fin_cases i <;> fin_cases j <;>
-      norm_num [observables, hOne, hTwo, swapBlocks, Matrix.transpose_apply]
+      norm_num [observables, hOne, hTwo, XITable, Matrix.transpose_apply]
   have hq : quantumCostOperator observables = separableCostOperator observables := by
     simp only [quantumCostOperator, separableCostOperator, ht]
   have hs : separableCostOperator observables = baseCost + thirdCost := by
     ext ⟨i,j⟩ ⟨k,l⟩
     fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
       norm_num [separableCostOperator, observables, baseCost, thirdCost,
-        hOne, hTwo, swapBlocks, pow_two, Matrix.mul_apply, Matrix.smul_apply,
+        hOne, hTwo, XITable, pow_two, Matrix.mul_apply, Matrix.smul_apply,
         smul_eq_mul, Matrix.one_apply, Fintype.sum_prod_type, Fin.sum_univ_succ,
         Finset.filter_singleton]
   exact ⟨hs, hq.trans hs⟩
 
 private theorem thirdCost_psd : thirdCost.PosSemidef := by
   have he : thirdCost = (1/32 : ℂ) •
-      ((1 - swapBlocks ⊗ₖ swapBlocks) *
-        (1 - swapBlocks ⊗ₖ swapBlocks).conjTranspose) := by
+      ((1 - (obs 4) ⊗ₖ (obs 4)) *
+        (1 - (obs 4) ⊗ₖ (obs 4)).conjTranspose) := by
     ext ⟨i,j⟩ ⟨k,l⟩
     fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-      norm_num [thirdCost, swapBlocks, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      norm_num [thirdCost, XITable, Matrix.mul_apply, Matrix.conjTranspose_apply,
         Matrix.one_apply, Fintype.sum_prod_type, Fin.sum_univ_succ, Finset.filter_singleton]
   rw [he]
   exact (Matrix.posSemidef_self_mul_conjTranspose _).smul (by norm_num [Complex.le_def])
@@ -206,14 +197,14 @@ private theorem totalCost_psd : (separableCostOperator observables).PosSemidef :
   apply Matrix.PosSemidef.smul _ (by norm_num [Complex.le_def] : (0 : ℂ) ≤ 1/2)
   apply Matrix.posSemidef_sum
   intro n _
-  let B : K := observables n ⊗ₖ 1 - 1 ⊗ₖ observables n
+  let B : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ := observables n ⊗ₖ 1 - 1 ⊗ₖ observables n
   have hB : B.IsHermitian :=
     (isHermitian_kronecker (observables_hermitian n) Matrix.isHermitian_one).sub
       (isHermitian_kronecker Matrix.isHermitian_one (observables_hermitian n))
   change (B ^ 2).PosSemidef
   simpa only [pow_two, hB.eq] using Matrix.posSemidef_conjTranspose_mul_self B
 
-private theorem cross_mass {γ : K} (hγ : γ ∈ separableCouplings rho sigma) :
+private theorem cross_mass {γ : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ} (hγ : γ ∈ separableCouplings rho sigma) :
     1/2 ≤ (crossProjection * γ).trace.re := by
   have he : (crossProjection * γ).trace.re =
       ((partialTraceLeft γ) 0 0 + (partialTraceLeft γ) 1 1).re -
@@ -233,15 +224,15 @@ private theorem cross_mass {γ : K} (hγ : γ ∈ separableCouplings rho sigma) 
   simp only [Complex.zero_re] at h02 h03 h12 h13
   linarith
 
-private theorem separable_cross_lower {γ : K}
+private theorem separable_cross_lower {γ : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ}
     (hγ : γ ∈ separableCouplings rho sigma) : 2 ≤ separableCost observables γ := by
   have ha := RHLinalg.trace_mul_nonneg_of_posSemidef aWitness_psd hγ.1.1
-  have hb := bWitness_pair_nonneg (separable_ppt hγ.2.1)
+  have hb := bWitness_pair_nonneg (separable_ppt γ hγ.2.1)
   have ht := RHLinalg.trace_mul_nonneg_of_posSemidef thirdCost_psd hγ.1.1
   change 0 ≤ (aWitness * γ).trace.re at ha
   change 0 ≤ (thirdCost * γ).trace.re at ht
   have hm := cross_mass hγ
-  have he := congrArg (fun X : K => (X * γ).trace.re) decomposable_identity
+  have he := congrArg (fun X : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ => (X * γ).trace.re) decomposable_identity
   simp only [sub_mul, add_mul, Matrix.smul_mul, Matrix.one_mul, Matrix.trace_sub,
     Matrix.trace_add, Matrix.trace_smul, smul_eq_mul, Complex.sub_re, Complex.add_re,
     Complex.mul_re] at he
@@ -251,39 +242,31 @@ private theorem separable_cross_lower {γ : K}
   norm_num at he
   linarith
 
-private theorem fixed_quantum_nonneg {γ : K} (hγ : γ.PosSemidef) :
-    0 ≤ quantumCost observables γ := by
-  unfold quantumCost
-  rw [cost_matrices.2, ← cost_matrices.1]
-  exact RHLinalg.trace_mul_nonneg_of_posSemidef totalCost_psd hγ
-
-private theorem fixed_separable_nonneg {γ : K} (hγ : γ.PosSemidef) :
-    0 ≤ separableCost observables γ :=
-  RHLinalg.trace_mul_nonneg_of_posSemidef totalCost_psd hγ
-
-private theorem quantum_self_nonneg {ρ : M} (hρ : IsDensity ρ) :
+private theorem quantum_self_nonneg {ρ : Matrix (Fin 4) (Fin 4) ℂ} (hρ : IsDensity ρ) :
     0 ≤ quantumSquared observables ρ ρ := by
   apply le_csInf ((D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.couplings_nonempty
     hρ hρ).image _)
   rintro _ ⟨γ,hγ,rfl⟩
-  exact fixed_quantum_nonneg hγ.1.1
+  unfold quantumCost
+  rw [cost_matrices.2, ← cost_matrices.1]
+  exact RHLinalg.trace_mul_nonneg_of_posSemidef totalCost_psd hγ.1.1
 
-private def localVectors : Fin 4 → L → ℂ :=
+private def localVectors : Fin 4 → Fin 4 → ℂ :=
   ![![1,1,0,0], ![1,-1,0,0], ![0,0,1,0], ![0,0,0,1]]
 private def localScales : Fin 4 → ℝ := ![1/2,1/2,1,1]
-private def localStates (i : Fin 4) : M :=
-  (localScales i : ℂ) • vecMulVec (localVectors i) (star (localVectors i))
+private def localStates (i : Fin 4) : Matrix (Fin 4) (Fin 4) ℂ :=
+  (localScales i : ℂ) • rankOneDensity (localVectors i)
 private def selfWeights (t : Bool) : Fin 4 → ℝ :=
   if t then ![1/8,1/8,3/8,3/8] else ![3/8,3/8,1/8,1/8]
-private def selfCoupling (t : Bool) : K :=
+private def selfCoupling (t : Bool) : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ :=
   ∑ i, (selfWeights t i : ℂ) • (localStates i ⊗ₖ localStates i)
-private def selfState (t : Bool) : M := if t then sigma else rho
+private def selfState (t : Bool) : Matrix (Fin 4) (Fin 4) ℂ := if t then sigma else rho
 
 private theorem localStates_density (i : Fin 4) : IsDensity (localStates i) := by
   constructor
   · exact (Matrix.posSemidef_vecMulVec_self_star _).smul
       (Complex.zero_le_real.mpr (by fin_cases i <;> norm_num [localScales]))
-  · rw [localStates, Matrix.trace_smul, Matrix.trace_vecMulVec]
+  · rw [localStates, Matrix.trace_smul, rankOneDensity, Matrix.trace_vecMulVec]
     fin_cases i <;> norm_num [localScales, localVectors, dotProduct,
       Pi.star_apply, Fin.sum_univ_succ]
 
@@ -306,7 +289,7 @@ private theorem selfCoupling_marginals (t : Bool) :
       partialTraceRight (selfCoupling t) = selfState t := by
   constructor <;> ext i j <;> cases t <;> fin_cases i <;> fin_cases j <;>
     norm_num [selfCoupling, selfWeights, selfState, localStates, localScales,
-      localVectors, rho, sigma, partialTraceLeft, partialTraceRight, Matrix.vecMulVec_apply,
+      localVectors, rho, sigma, partialTraceLeft, partialTraceRight, rankOneDensity, Matrix.vecMulVec_apply,
       Pi.star_apply, Matrix.sum_apply, Fin.sum_univ_succ]
 
 private theorem selfCoupling_mem (t : Bool) :
@@ -318,12 +301,12 @@ private theorem selfCoupling_mem (t : Bool) :
   · exact rho_density.2
   · exact sigma_density.2
 
-private def bellMatrices : Fin 3 → M :=
+private def bellMatrices : Fin 3 → Matrix (Fin 4) (Fin 4) ℂ :=
   ![!![1,0,0,0; 0,1,0,0; 0,0,0,0; 0,0,0,0],
     !![0,0,0,0; 0,0,0,0; 1,0,0,0; 0,1,0,0],
     !![0,0,0,0; 0,0,0,0; 0,0,1,0; 0,0,0,1]]
 private def bellWeights : Fin 3 → ℝ := ![1/8,1/4,1/8]
-private def bellCoupling : K := ∑ i, (bellWeights i : ℂ) •
+private def bellCoupling : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ := ∑ i, (bellWeights i : ℂ) •
   D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.pureCoupling (bellMatrices i)
 
 private theorem bellCoupling_psd : bellCoupling.PosSemidef := by
@@ -357,7 +340,7 @@ private theorem bellCoupling_marginals :
     norm_num [bellMatrices, bellWeights, rho, sigma, Matrix.conjTranspose_apply,
       Matrix.mul_apply, Matrix.sum_apply, Fin.sum_univ_succ]
 
-private theorem bellCoupling_mem : bellCoupling ∈ quantumCouplings rho sigma := by
+private theorem bellCoupling_mem : bellCoupling ∈ couplings rho sigma := by
   refine ⟨⟨bellCoupling_psd, ?_⟩, bellCoupling_marginals.2, bellCoupling_marginals.1⟩
   rw [← trace_partialTraceLeft, bellCoupling_marginals.1, Matrix.trace_transpose]
   exact rho_density.2
@@ -368,10 +351,10 @@ private theorem selfCoupling_cost (t : Bool) :
   rw [cost_matrices.1]
   simp only [baseCost, thirdCost, selfCoupling, Matrix.trace, Matrix.diag_apply,
     Matrix.mul_apply, Matrix.sum_apply, Matrix.add_apply, Matrix.sub_apply,
-    Matrix.smul_apply, Matrix.kroneckerMap_apply, localStates, Matrix.vecMulVec_apply,
+    Matrix.smul_apply, Matrix.kroneckerMap_apply, localStates, rankOneDensity, Matrix.vecMulVec_apply,
     Pi.star_apply, smul_eq_mul]
   cases t <;>
-    norm_num [selfWeights, localScales, localVectors, hOne, hTwo, swapBlocks, Matrix.one_apply,
+    norm_num [selfWeights, localScales, localVectors, hOne, hTwo, XITable, Matrix.one_apply,
       Fintype.sum_prod_type, Fin.sum_univ_succ]
 
 private theorem bellCoupling_cost : quantumCost observables bellCoupling = 9/16 := by
@@ -380,7 +363,7 @@ private theorem bellCoupling_cost : quantumCost observables bellCoupling = 9/16 
   norm_num [baseCost, thirdCost, bellCoupling, bellMatrices, bellWeights,
     D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.pureCoupling,
     D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity,
-    hOne, hTwo, swapBlocks, Matrix.trace, Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.vecMulVec_apply,
+    hOne, hTwo, XITable, Matrix.trace, Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.vecMulVec_apply,
     Pi.star_apply, Matrix.one_apply, Matrix.sum_apply, Function.uncurry,
     Fintype.sum_prod_type, Fin.sum_univ_succ]
 
@@ -390,7 +373,7 @@ private theorem self_inf_upper (t : Bool) :
   apply csInf_le
   · refine ⟨0, ?_⟩
     rintro _ ⟨γ,hγ,rfl⟩
-    exact fixed_separable_nonneg hγ.1.1
+    exact RHLinalg.trace_mul_nonneg_of_posSemidef totalCost_psd hγ.1.1
   · exact ⟨_, selfCoupling_mem t, rfl⟩
 
 private theorem quantum_inf_upper : quantumSquared observables rho sigma ≤ 9/16 := by
@@ -398,7 +381,9 @@ private theorem quantum_inf_upper : quantumSquared observables rho sigma ≤ 9/1
   apply csInf_le
   · refine ⟨0, ?_⟩
     rintro _ ⟨γ,hγ,rfl⟩
-    exact fixed_quantum_nonneg hγ.1.1
+    unfold quantumCost
+    rw [cost_matrices.2, ← cost_matrices.1]
+    exact RHLinalg.trace_mul_nonneg_of_posSemidef totalCost_psd hγ.1.1
   · exact ⟨_, bellCoupling_mem, rfl⟩
 
 private theorem separable_inf_lower : 2 ≤ separableSquared observables rho sigma := by
