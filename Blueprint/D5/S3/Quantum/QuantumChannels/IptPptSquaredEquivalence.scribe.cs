@@ -56,6 +56,15 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             Describe.Remark(DescribeId.Create("flag-lift"), H("A composition-compatible flag"), FlagConstruction(),
                 AssessedProvenance.FromLiterature(Flags), Blocks(Paragraph(Text(
                     "On the auxiliary two-dimensional factor take P+ = (1,i)(1,i)*/2 and P- = (1,-i)(1,-i)*/2. Their transpose exchanges them. Compress to these flag sectors with B+ and B-, and put E(X) = B+(X) + B-(X)^T and D(A) = A tensor P+ + A^T tensor P-. The lift D Phi E/2 has four completely positive branches for every complex PPT Phi. It is invariant under transpose on input and output, so its real restriction is IPT and complexifies back to the lift. The identity E D = 2 id makes the lift preserve composition. Completely positive insertion A tensor P+ and compression B+ recover Phi squared divided by two. This transfers entanglement breaking from the lifted square. The lift adapts the conjugate-flag construction rho tensor P+ + rho partially transposed tensor P- of Huber, Lami, Lancien and Müller-Hermes, arXiv v1, Section III.C, PDF p. 8, the second lemma labelled III.1. The map normalization, composition law and recovery are the consequences used here.")))),
+            Node("IsSeparable", "Normalized finite separable mixtures", NormalizedMixture(),
+                "A separable bipartite matrix is a finite convex mixture of tensor products of positive semidefinite trace-one matrices. The two index types are arbitrary finite types.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("weighted", "The conditional ancillary matrix", WeightedFormula(false),
+                "The effect M is paired by trace with each system slice of P; the remaining two coordinates index the ancillary matrix.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            OwnerNode("weighted-psd", Prefix + "weighted_psd", "Positive conditional ancillary matrices", WeightedFormula(true),
+                "A positive effect and a positive joint input give a positive conditional ancillary matrix, by rank-one decomposition and positive congruence.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("HasPrepare", "Finite positive measure-and-prepare form", PrepareFormula(),
                 "A finite family of positive measurement matrices M and positive preparation matrices N represents Phi by the sum of trace(M(j) A) times N(j), for every input matrix A. The natural number k counts all terms; n and m are arbitrary input and output dimensions over an RCLike scalar field K. Scalar multiplication is displayed by a centered dot.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
@@ -145,6 +154,38 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
         Seq(Named("fun"), Sp, Parenthesized(Seq(V(name), Colon, Sp, type)), Sp, Mapsto, Sp, body);
     private static Formula Psd(Formula matrix) => App(Qualified("Matrix", "PosSemidef"), matrix);
     private static Formula Square(Formula phi) => Seq(phi, Sp, new Formula.Subscript(Circ, V("l")), Sp, phi);
+
+    private static Formula WeightedFormula(bool positivity)
+    {
+        Formula m = V("M"), p = V("P");
+        Formula slice = Fun("i", FinOf(V("n")), Fun("j", FinOf(V("n")),
+            App(p, Pair(V("i"), V("u")), Pair(V("j"), V("v")))));
+        Formula trace = App(Qualified("Matrix", "trace"), Parenthesized(Seq(m, Star, Parenthesized(slice))));
+        Formula body = positivity ? Imp(Psd(m), Imp(Psd(p), Psd(Call("weighted", m, p))))
+            : EqTo(Call("weighted", m, p), Fun("u", FinOf(V("r")), Fun("v", FinOf(V("r")), trace)));
+        return Disp(All("K", Named("Type"), Instance(All("n", N, All("r", N,
+            All("M", Mat(FinOf(V("n")), V("K")), All("P", TensorMatrix("n", "r"), body)))))));
+    }
+    private static Formula NormalizedMixture()
+    {
+        Formula n = V("n"), i = V("i"), p = V("p"), x = V("X"), y = V("Y");
+        Formula S(Formula t) => Mat(t, C);
+        Formula Density(Formula t) => And(Psd(t), EqTo(App(Qualified("Matrix", "trace"), t), D(1)));
+        Formula SumOf(Formula t) => Seq(Sum, Underscore, Grp(i, Colon, FinOf(n)), Sp, Parenthesized(t));
+        Formula si = App(V("sigma"), i), ti = App(V("tau"), i);
+        Formula weight = Parenthesized(Seq(App(p, i), Colon, Sp, C));
+        Formula tensor = App(Qualified("Matrix", "kronecker"), si, ti);
+        Formula rhs = Ex("n", N, Ex("p", new Formula.TypeArrow(FinOf(n), R),
+            Ex("sigma", new Formula.TypeArrow(FinOf(n), S(x)),
+            Ex("tau", new Formula.TypeArrow(FinOf(n), S(y)),
+            And(All("i", FinOf(n), new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual, App(p, i))),
+            And(EqTo(SumOf(App(p, i)), D(1)),
+            And(All("i", FinOf(n), And(Density(si), Density(ti))),
+                EqTo(V("rho"), SumOf(App(Qualified("HSMul", "hSMul"), weight, tensor))))))))));
+        Formula Class(Formula t, Formula b) => Seq(OpenBracket, Call("Fintype", t), CloseBracket, Sp, b);
+        return Disp(All("X", Named("Type"), Class(x, All("Y", Named("Type"), Class(y,
+            All("rho", S(ProdOf(x, y)), IffOf(Call("IsSeparable", V("rho")), rhs)))))));
+    }
 
     private static Formula Amplification()
     {
