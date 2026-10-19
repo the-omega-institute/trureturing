@@ -505,6 +505,154 @@ private theorem borel_correction (μ : Measure ℝ) [IsProbabilityMeasure μ] :
       (Eventually.of_forall fun n => (hsn (φ n)).2.2.1)
   · exact ge_of_tendsto hct (Eventually.of_forall fun n => (hsn (φ n)).2.2.2)
 
+private theorem atomless_cdf_square (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    [NullSingletonClass μ] : (∫ v, (μ.real (Iio v))^2 ∂μ) = 1/3 := by
+  let f : ℝ → ℝ → ℝ → ℝ := fun a b c => if b<a ∧ c<a then 1 else 0
+  have hf : Measurable (fun p : (ℝ × ℝ) × ℝ => f p.1.1 p.1.2 p.2) := by
+    exact Measurable.ite
+      ((measurableSet_lt measurable_fst.snd measurable_fst.fst).inter
+        (measurableSet_lt measurable_snd measurable_fst.fst))
+      measurable_const measurable_const
+  have hbound (a b c : ℝ) : ‖f a b c‖ ≤ 1 := by
+    dsimp [f]
+    split_ifs <;> norm_num
+  have hint : Integrable (fun p : (ℝ × ℝ) × ℝ => f p.1.1 p.1.2 p.2)
+      ((μ.prod μ).prod μ) :=
+    (integrable_const 1).mono' hf.aestronglyMeasurable
+      (Eventually.of_forall fun p => hbound p.1.1 p.1.2 p.2)
+  have hswap12 : (∫ a, ∫ b, ∫ c, f a b c ∂μ ∂μ ∂μ) =
+      ∫ b, ∫ a, ∫ c, f a b c ∂μ ∂μ ∂μ :=
+    integral_integral_swap hint.integral_prod_left
+  have hswap23 (a : ℝ) : (∫ b, ∫ c, f a b c ∂μ ∂μ) =
+      ∫ c, ∫ b, f a b c ∂μ ∂μ := by
+    apply integral_integral_swap
+    apply (integrable_const 1).mono'
+    · exact (Measurable.ite
+        ((measurableSet_lt measurable_fst measurable_const).inter
+          (measurableSet_lt measurable_snd measurable_const))
+        measurable_const measurable_const).aestronglyMeasurable
+    · exact Eventually.of_forall fun p => hbound a p.1 p.2
+  have hinner (a : ℝ) : (∫ b, ∫ c, f a b c ∂μ ∂μ) = (μ.real (Iio a))^2 := by
+    have hc (b : ℝ) : (∫ c, f a b c ∂μ) =
+        if b<a then μ.real (Iio a) else 0 := by
+      by_cases h : b<a
+      · simp only [f,h,true_and]
+        exact integral_indicator_one measurableSet_Iio
+      · simp [f,h]
+    simp_rw [hc]
+    have he : (fun b : ℝ => if b<a then μ.real (Iio a) else 0) =
+        fun b => (if b<a then (1 : ℝ) else 0)*μ.real (Iio a) := by
+      funext b
+      split_ifs <;> simp
+    rw [he,integral_mul_const]
+    rw [show (∫ b, if b<a then (1 : ℝ) else 0 ∂μ) = μ.real (Iio a) from
+      integral_indicator_one measurableSet_Iio]
+    ring
+  have hmass : (∫ a, ∫ b, ∫ c, f a b c ∂μ ∂μ ∂μ) =
+      ∫ v, (μ.real (Iio v))^2 ∂μ := by simp_rw [hinner]
+  have hperm2 : (∫ a, ∫ b, ∫ c, f b a c ∂μ ∂μ ∂μ) =
+      ∫ v, (μ.real (Iio v))^2 ∂μ := hswap12.symm.trans hmass
+  have hperm3 : (∫ a, ∫ b, ∫ c, f c a b ∂μ ∂μ ∂μ) =
+      ∫ v, (μ.real (Iio v))^2 ∂μ := by
+    have hs (a : ℝ) : (∫ b, ∫ c, f c a b ∂μ ∂μ) =
+        ∫ c, ∫ b, f c a b ∂μ ∂μ := by
+      apply integral_integral_swap
+      apply (integrable_const 1).mono'
+      · exact (Measurable.ite
+          ((measurableSet_lt measurable_const measurable_snd).inter
+            (measurableSet_lt measurable_fst measurable_snd))
+          measurable_const measurable_const).aestronglyMeasurable
+      · filter_upwards [] with p
+        exact hbound p.2 a p.1
+    simp_rw [hs]
+    exact hperm2
+  have hpartition : ∀ᵐ a ∂μ, ∀ᵐ b ∂μ, ∀ᵐ c ∂μ,
+      f a b c+f b a c+f c a b = 1 := by
+    filter_upwards [] with a
+    filter_upwards [μ.ae_ne a] with b hba
+    filter_upwards [μ.ae_ne a,μ.ae_ne b] with c hca hcb
+    dsimp [f]
+    split_ifs <;> push_neg at * <;> linarith
+  have htotal : (∫ a, ∫ b, ∫ c, f a b c+f b a c+f c a b ∂μ ∂μ ∂μ) = 1 := by
+    calc
+      _ = ∫ a, ∫ b, ∫ c, (1 : ℝ) ∂μ ∂μ ∂μ := by
+        apply integral_congr_ae
+        filter_upwards [hpartition] with a ha
+        apply integral_congr_ae
+        filter_upwards [ha] with b hb
+        exact integral_congr_ae hb
+      _ = 1 := by simp
+  have hi (a b : ℝ) : Integrable (fun c => f a b c) μ := by
+    apply (integrable_const 1).mono'
+    · exact (Measurable.ite
+        ((measurableSet_lt measurable_const measurable_const).inter
+          (measurableSet_lt measurable_id measurable_const))
+        measurable_const measurable_const).aestronglyMeasurable
+    · exact Eventually.of_forall fun c => hbound a b c
+  have hi2 (a b : ℝ) : Integrable (fun c => f c a b) μ := by
+    apply (integrable_const 1).mono'
+    · exact (Measurable.ite
+        ((measurableSet_lt measurable_const measurable_id).inter
+          (measurableSet_lt measurable_const measurable_id))
+        measurable_const measurable_const).aestronglyMeasurable
+    · exact Eventually.of_forall fun c => hbound c a b
+  have hab (a : ℝ) : Integrable (fun b => ∫ c, f a b c ∂μ) μ := by
+    apply (integrable_const 1).mono'
+    · exact (show Measurable (fun p : ℝ × ℝ => f a p.1 p.2) from
+        Measurable.ite
+          ((measurableSet_lt measurable_fst measurable_const).inter
+            (measurableSet_lt measurable_snd measurable_const))
+          measurable_const measurable_const).stronglyMeasurable.integral_prod_right.aestronglyMeasurable
+    · filter_upwards [] with b
+      exact norm_integral_le_of_norm_le_const (hbound a b)
+  have hba (a : ℝ) : Integrable (fun b => ∫ c, f b a c ∂μ) μ := by
+    apply (integrable_const 1).mono'
+    · exact (show Measurable (fun p : ℝ × ℝ => f p.1 a p.2) from
+        Measurable.ite
+          ((measurableSet_lt measurable_const measurable_fst).inter
+            (measurableSet_lt measurable_snd measurable_fst))
+          measurable_const measurable_const).stronglyMeasurable.integral_prod_right.aestronglyMeasurable
+    · filter_upwards [] with b
+      exact norm_integral_le_of_norm_le_const (hbound b a)
+  have hca (a : ℝ) : Integrable (fun b => ∫ c, f c a b ∂μ) μ := by
+    apply (integrable_const 1).mono'
+    · exact (show Measurable (fun p : ℝ × ℝ => f p.2 a p.1) from
+        Measurable.ite
+          ((measurableSet_lt measurable_const measurable_snd).inter
+            (measurableSet_lt measurable_fst measurable_snd))
+          measurable_const measurable_const).stronglyMeasurable.integral_prod_right.aestronglyMeasurable
+    · filter_upwards [] with b
+      exact norm_integral_le_of_norm_le_const (hbound · a b)
+  have hout1 : Integrable (fun a => ∫ b, ∫ c, f a b c ∂μ ∂μ) μ := by
+    simpa only [hinner] using (show Integrable (fun a => (μ.real (Iio a))^2) μ from ?_)
+    apply Integrable.of_mem_Icc 0 1
+    · exact ((show Monotone (fun a : ℝ => μ.real (Iio a)) from
+        fun _ _ h => measureReal_mono (Iio_subset_Iio.mpr h)).measurable.pow_const 2).aemeasurable
+    · filter_upwards [] with a
+      have hlo : 0 ≤ μ.real (Iio a) := measureReal_nonneg
+      have hhi : μ.real (Iio a) ≤ 1 := by
+        simpa using measureReal_mono (μ := μ) (subset_univ (Iio a))
+      exact ⟨sq_nonneg _,by nlinarith [sq_nonneg (1-μ.real (Iio a))]⟩
+  have hout2 : Integrable (fun a => ∫ b, ∫ c, f b a c ∂μ ∂μ) μ :=
+    hint.integral_prod_left.integral_prod_right
+  have hout3 : Integrable (fun a => ∫ b, ∫ c, f c a b ∂μ ∂μ) μ := by
+    have hf3 : Integrable (fun p : (ℝ × ℝ) × ℝ => f p.2 p.1.1 p.1.2)
+        ((μ.prod μ).prod μ) := by
+      apply (integrable_const 1).mono'
+      · exact (Measurable.ite
+          ((measurableSet_lt measurable_fst.fst measurable_snd).inter
+            (measurableSet_lt measurable_fst.snd measurable_snd))
+          measurable_const measurable_const).aestronglyMeasurable
+      · exact Eventually.of_forall fun p => hbound p.2 p.1.1 p.1.2
+    exact hf3.integral_prod_left.integral_prod_left
+  simp_rw [integral_add ((hi _ _).add (hi _ _)) (hi2 _ _),
+    integral_add (hi _ _) (hi _ _),
+    integral_add ((hab _).add (hba _)) (hca _),
+    integral_add (hab _) (hba _)] at htotal
+  rw [integral_add (hout1.add hout2) hout3,integral_add hout1 hout2,
+    hmass,hperm2,hperm3] at htotal
+  linarith
+
 /-- Actual Borel product laws are limits of finite iid sources, so the universal
 linear determinant lower surface persists without assumptions on atoms. -/
 theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
