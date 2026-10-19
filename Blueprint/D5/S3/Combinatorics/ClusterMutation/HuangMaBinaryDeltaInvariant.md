@@ -46,6 +46,10 @@ $$\forall n \in \mathrm{Nat},\; \forall d \in \operatorname{Fin}\left(n\right) \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/ClusterMutation/HuangMaBinaryDeltaInvariant.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/huang-ma-2026-binary-delta-invariant` (proved) by `D5/S3/Combinatorics/ClusterMutation/HuangMaBinaryDeltaInvariant.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"huang-ma-2026-binary-delta-invariant","declaration_gid":"D5/S3/Combinatorics/ClusterMutation/HuangMaBinaryDeltaInvariant.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Min Huang and Qiling Ma (2026). *A mutation invariant for skew-symmetrizable matrices*. DOI: [10.1016/j.jalgebra.2026.07.040](https://doi.org/10.1016/j.jalgebra.2026.07.040). URL: <https://arxiv.org/abs/2602.03194v1>.

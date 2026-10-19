@@ -28,13 +28,15 @@ internal sealed class HuangMaBinaryDeltaInvariantDocument : IScribeDocumentDefin
             Node("result", "The delta invariant has at most two values", "result",
                 Disp(ClaimBody()), AssessedProvenance.FromRepo(Source),
                 "The real symmetrization is diagonally similar to the integer matrix with diagonal 2, upper entries B(i,j), and lower entries −B(i,j). In odd size its determinant is even. In size 2m, pairing each determinant term with the inverse permutation gives the congruence det(A) = (−1)^m det(B) in ZMod 4. A symplectic basis gives a Gram matrix of determinant one, and change of basis shows that the rational determinant of an alternating matrix is a square, so the product of the weights times det(B) is an integer square. Cancelling a common nonzero weight in two square products shows that any two nonzero attainable determinant residues agree in ZMod 4. The sign twist therefore leaves at most one nonzero residue, in addition to zero. This proves the conjecture without a coprimality assumption on the weights; it does not assert that both residues are attained or identify the even-size nonzero residue explicitly.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("huang-ma-2026-binary-delta-invariant"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) =>
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("huang-ma-binary-delta-" + id),
             DeclarationHandle.Create(Module + "." + declaration), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
