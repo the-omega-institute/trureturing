@@ -84,6 +84,13 @@ public sealed partial class MakeWorkflowTests
         "ci-unit",
         "compiled-judge-test",
         "compiled-fib-test",
+        "search-reduction",
+        "search-reduction-run",
+        "search-reduction-test",
+        "search-reduction-replay-test",
+        "search-reduction-replay-calibration",
+        "search-reduction-replay-faults",
+        "search-reduction-replay-real-negative",
     ];
 
     private static readonly string[] ToolsTargets =
