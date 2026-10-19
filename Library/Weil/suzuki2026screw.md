@@ -7449,3 +7449,142 @@ $$
 Distinct finite exponentials are independent, so the merged nonzero measure has positive Hardy norm. The zero measure contributes zero. Every direct/reflected contribution and theta mode is retained on this same source.
 
 W204 supplies the width-free full actual finite-site consumer absent from W173 and W193. It does not enlarge the exponential count rate, extend to arbitrary infinite measures or derivative distributions, or give a common start for all orders. The sufficient cofinal $e^{2A}g(A)$ schedule with $g(A)\to\infty$, full-real-line $K_0$ positivity, RH and strict all-integer Robin remain unproved. No numerical constant/start, actual negative witness, Lean/CI/merge certification or literature priority is supplied. The classical tools and previously accepted estimates are reused; the added content is their complete reflected-source comparison and full-kernel half-line application.
+
+## The half-line estimate counts sign changes rather than support points
+
+The complete actual odd-kernel estimate extends to compact finite signed measures with no bound on their number of atoms or density. There are fixed $c>0,A_*>0$ such that, for every $A\ge A_*$ and separator degree $0\le m\le\lfloor ce^{2A}\rfloor$, the same original Gaussian Hardy margin $1/(8A)$ holds on the half-line $[A,\infty)$. The real measure must have the stated degree-$m$ separator; for a complex measure the condition is imposed separately on its real and imaginary parts. No upper support width or minimum gap is required. The support of each measure is compact, and derivative distributions are excluded. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse W174--W204 and the classical model-space decomposition in [Câmara--Partington, pp. 456--458, equations (0.1), (1.1), (1.8)](https://jot.theta.ro/jot/archive/2017-077-002/2017-077-002-008.pdf), together with the reproducing kernels, Hardy norm and Paley--Wiener normalization from the Galé et al. primary cited at W181. The orthogonal decomposition is classical. The additional interface is its use on the same signed Stieltjes source to replace atom count by separator degree in both the time and sector estimates; its consumer is the complete actual theta form below. W75--W77 and the fixed-window W173 are reused, without a repeated proof or a literature-priority or Lean-certification claim.
+
+### Construct the positive remainder from the same source
+
+Let $\sigma$ be a compactly supported finite real signed measure on $p\ge1$, with
+$$
+a(p)=\frac{p+1}{\sqrt2},\qquad
+F_\sigma(t)=\int a(p)e^{-pt}d\sigma(p),\qquad
+f_\sigma(s)=\int\frac{a(p)}{s+p}d\sigma(p).
+$$
+Keep $Q_H(\sigma)=\|F_\sigma\|_2^2=\|f_\sigma\|_{H^2}^2$ in the owned normalization. Suppose $\epsilon_0\prod_{k=1}^m(p-r_k)\,d\sigma\ge0$ for $r_k\ge1$ and $\epsilon_0\in\{-1,1\}$. Multiplicities and unrestricted signs of atoms at roots are allowed. Define
+$$
+b(s)=\prod_{k=1}^m\frac{s-r_k}{s+r_k},\qquad
+\tau=\epsilon_0b(p)\sigma\ge0.
+\tag{W205}
+$$
+Flipping the global sign leaves every quadratic norm unchanged, so take $\epsilon_0=1$ in the proof. The empty product is one when $m=0$.
+
+For the reproducing kernel $k_p(s)=1/(s+p)$, multiplication by the real inner function $b$ obeys $M_b^*k_p=b(p)k_p$. Passing this bounded operator through the compact Bochner integral gives $f_\tau=M_b^*f_\sigma$. Thus the classical orthogonal decomposition $H^2=K_b\oplus bH^2$ gives
+$$
+f_\sigma=h+bf_\tau,\qquad h\in K_b,\qquad
+\|h\|_{H^2}^2+\|f_\tau\|_{H^2}^2=Q_H(\sigma).
+\tag{W206}
+$$
+The positive measure and the finite-dimensional part are both constructed from $\sigma$.
+
+The function $h$ has poles only at the $-r_k$, with total order at most $m$, even for a continuum source. Indeed
+$$
+h(s)=\int a(p)\frac{1-b(s)b(p)}{s+p}\,d\sigma(p).
+$$
+For a nonanchor $p$, $b(-p)b(p)=1$ cancels the possible pole at $-p$; at an anchor the remaining pole is an allowed anchor pole. The common denominator is $\prod_k(s+r_k)$, with numerator degree less than $m$. This retains all root-atom mass. When $m=0$, $h=0$. Multiple poles occur only in this auxiliary model-space function, and do not introduce physical derivative distributions.
+
+### The shifted-line allowance depends only on the separator
+
+Apply the owned model-space conjugation to $h$ with its $m$ anchors counted with multiplicity. The W181 argument gives $\|e^{t/2}H\|_2\le3^m\|H\|_2$ for $H=\operatorname{Lap}^{-1}h$. On $\Re s=-1/2$, $|b(s)|\le3^m$. Positivity of $\tau$ gives the separate bound
+$$
+\|e^{t/2}F_\tau\|_2^2
+=\iint\frac{a(p)a(q)}{p+q-1}\,d\tau(p)d\tau(q)
+\le2Q_H(\tau),
+$$
+since $p,q\ge1$. The identity W206 continues to that line, with all Stieltjes singularities and anchor poles at real part at most $-1$. Triangle inequality followed by the orthogonal norm identity yields
+$$
+\|e^{t/2}F_\sigma\|_2\le\sqrt3\,3^m\|F_\sigma\|_2,\qquad
+\|F_\sigma(\cdot+s)\|_2
+\le\min(1,\sqrt3\,3^me^{-s/2})\|F_\sigma\|_2.
+\tag{W207}
+$$
+There is no atom-count, maximum-pole or separation constant.
+
+Put $T=m+1$. Reusing W182's tail integration and right fractional integral gives, for every integer $j\ge1$,
+$$
+\|t^jF_\sigma\|_2\le[C(T+j)]^j\|\sigma\|_H,\qquad
+\|p^{-j}\sigma\|_H
+\le\left[\frac{C(T+j)}j\right]^j\|\sigma\|_H
+\le(CT)^j\|\sigma\|_H.
+\tag{W208}
+$$
+Every nonnegative multiplier preserves the same separator, so W207 also applies to each weighted measure before its norm is estimated. With $E=e^{-2A}$, $B_E=(1-c_*E/p)^{-1}$ and $M_E=B_E/p$, the geometric series at sufficiently small $ET$ therefore gives
+$$
+\|B_E\sigma\|_H\le C\|\sigma\|_H,\qquad
+\|M_E\sigma\|_H\le CT\|\sigma\|_H.
+\tag{W209}
+$$
+These are the time and multiplier inputs for the unchanged complete source feature.
+
+### Control the sector Cauchy transform without counting its support
+
+Use the same fixed $\Omega,\Gamma,\vartheta,r_0=1/2$ as W194--W201, and define
+$$
+\mathscr R_\sigma(\zeta)=\int\frac{a(p)}{\zeta-p}d\sigma(p)
+=-f_\sigma(-\zeta),\qquad
+b_0=\min(\tan(\vartheta/2),1/3)>0.
+$$
+The model-space part of W206 obeys $\|h(-\cdot)\|_{L^2(\Gamma)}\le Cb_0^{-m}\|h\|_{H^2}$ by W200's conjugation and ray calculation, now with the anchor product. Also $|b(-\zeta)|=|b(\zeta)|^{-1}\le b_0^{-m}$ on $\Gamma$.
+
+For the positive remainder, on either ray $|re^{\pm i\vartheta}-p|\ge\sin(\vartheta/2)(r+p)$, whence $|\mathscr R_\tau(re^{\pm i\vartheta})|\le C_\vartheta f_\tau(r)$. The owned Carleman bound gives $\int_0^\infty|f_\tau(r)|^2dr\le\pi Q_H(\tau)$. On the inner arc,
+$$
+|\mathscr R_\tau(\zeta)|\le2\int\frac{a(p)}p d\tau(p),\qquad
+\left(\int\frac{a(p)}p d\tau(p)\right)^2\le2Q_H(\tau),
+$$
+using $(p+q)/(pq)\le2$ and positivity. Combining these estimates with the orthogonal identity W206 gives
+$$
+\|\mathscr R_\sigma\|_{L^2(\Gamma)}
+\le Cb_0^{-m}\sqrt{Q_H(\sigma)}.
+\tag{W210}
+$$
+The continuation of W206 to $-\Gamma$ stays outside the negative real Stieltjes cut and the anchor poles. Compact finite sources justify Cauchy and Fubini on finite contours; their total variation is not used in the final norm bound. Finite sign changes are not identified with a finite Nevanlinna negative index.
+
+### Consume the complete direct and reflected estimates on this source
+
+The exact W184--W185 feature and W190 Frullani identity extend to a compact finite measure by normal absolute convergence and finite-measure integration. In W186--W192 replace the finite-site inputs by W207--W209. Their time tails and modal errors now cost $C3^me^{-\kappa/E}$. The amplitude correction and arithmetic log-mode charge remain paid on the same measure. For $T\le c_0/E$ with a sufficiently small fixed $c_0$, this yields
+$$
+\mathscr S=\|F^\Theta\|_W^2\ge Q/4,\qquad
+Q_{\mathcal D_A^1}(\sigma)
+\ge\left[1-\frac{\log T}{2A}-\frac{C_{\rm dir}}A\right]\mathscr S,
+\qquad Q=Q_H(\sigma).
+\tag{W211}
+$$
+The tail split is $J=\lceil C_0T\rceil$; the change in logarithmic notation only changes the fixed constant. No theta cutoff or uncharged logarithmic observable is introduced.
+
+W199's complete reflected-sector pointwise error had no point-count assumption. Pair it through W210 instead of finite-node W200. The same Carleman-square kernel bounds the double boundary integral absolutely. Outer arcs vanish since a fixed compact Stieltjes source has $\mathscr R_\sigma(\zeta)=O(1/\zeta)$ outside its support and the pointwise error kernel is $O(\log|\zeta|/|\zeta|)$. Thus
+$$
+|Q_{\Delta_A}(\sigma)|
+\le\frac CA b_0^{-2m}e^{-\kappa/E}Q,
+\qquad\Delta_A=R_A^{\rm act}-R_A^1.
+\tag{W212}
+$$
+W178 and W209 also give $Q_{R_A^1}(\sigma)\le[\pi/4+C(ET)^2]Q/A$. Consequently the full actual odd kernel satisfies
+$$
+Q_{\mathcal K_A^1}(\sigma)\ge
+\left[1-\frac{\log T}{2A}-\frac{C_{\rm dir}}A\right]\mathscr S
+-\frac1A\left[\frac\pi4+C(ET)^2+Cb_0^{-2m}e^{-\kappa/E}\right]Q.
+\tag{W213}
+$$
+Every theta mode, reflected exterior and direct contribution remains on the same source.
+
+### One common start for exponential sign degree on arbitrary compact supports
+
+Choose fixed $c>0$ with $2c\le c_0$, small enough for the preceding moment/modal conditions, for the costs $c\log3$ and $c\log(b_0^{-2})$ to fit within the paid source exponents, and for $-\tfrac12\log(2c)-C_{\rm dir}$ to exceed four times the fixed reflected budget plus eight. At one common high start, $0\le m\le\lfloor ce^{2A}\rfloor$ implies $T=m+1\le2c/E$ and W213 gives $Q_{\mathcal K_A^1}(\sigma)\ge Q_H(\sigma)/A$.
+
+For the exact Gaussian return $\sigma_1=(1-c_*E/p)\sigma_g$, the multiplier is positive and preserves the same separator. W208 gives $\|\sigma_1-\sigma_g\|_H\le CET\|\sigma_g\|_H$. Shrink $c$ once more so this is at most half the original norm. With slack,
+$$
+Q_{\mathcal K_A^g}(\sigma_g)\ge\frac1{8A}Q_H(\sigma_g)>0,
+\qquad A\ge A_*,\quad
+0\le m\le\lfloor ce^{2A}\rfloor,\quad\sigma_g\ne0.
+\tag{W214}
+$$
+Strictness uses the owned compact moment uniqueness; the zero measure contributes zero.
+
+In physical coordinates this applies to a real compact finite measure $\mu$ on $[A,\infty)$ satisfying $\epsilon_0\prod_{k=1}^m(a-t_k)\,d\mu\ge0$ with $t_k\ge A$. Use exactly $d\sigma_g=d\mu/(\cosh uD_A^g(u))$ and $p=e^{2u}$. The anchor factor is $b(p)=\prod_k\tanh(a-t_k)$, so the positive transport preserves the separator signs and the exact equality $Q_{L_0}(\mu)=Q_{\mathcal K_A^g}(\sigma_g)$.
+
+For a complex measure, impose this real separator condition separately on its real and imaginary parts, allowing different anchors and global signs and degrees at most the cap. Both actual and Hardy kernels are real symmetric, so their Hermitian quadratic forms are the sums of the two real forms. W214 applies to each; a nonzero complex measure has at least one strictly positive component. This does not define an order on complex coefficients or assert unrestricted complex continuum positivity.
+
+W204 bounded the number of support points. W214 instead permits arbitrarily many atoms and continuum measures at the stated sign degree, on compact supports of arbitrary width and density. W77's width-free start $\exp(Cm^4\log(m+1))$ is not repeated; the new growing-degree schedule is $\lfloor ce^{2A}\rfloor$ at one common start in the same physical separator class and original Gaussian metric. The sufficient cofinal arbitrary-sign complexity $e^{2A}g(A)$ with $g(A)\to\infty$, common-start all-order positivity, RH and the original strict all-integer Robin bound remain unproved. No numerical constant/start, experiment, Lean/CI/merge certification or literature priority is supplied.
