@@ -6,6 +6,8 @@ import LeanInformationAuditRegTests.SearchReduction.PresentationBaseline
 namespace LeanInformationAudit.Tests.SearchReduction.RawOriginsTests
 open Lean Meta Elab LeanInformationAudit.SearchReduction
 
+opaque modulusInput : Nat := 7
+
 run_elab do
   let env ← getEnv
   let type := (← getConstInfo
@@ -13,6 +15,11 @@ run_elab do
   let atoms ← match normalizedAtoms env type with
     | .ok atoms => pure atoms
     | .error err => throwError "target normalization: {err}"
+  let closedArithmetic := mkApp2 (mkConst ``Nat.lt)
+    (mkApp2 (mkConst ``Nat.mod) (mkConst ``modulusInput) (mkNatLit 2)) (mkNatLit 2)
+  match normalizedAtoms env closedArithmetic with
+  | .error err => throwError "generated numeral/domain constants became source anchors: {err}"
+  | .ok _ => logInfo "closed arithmetic source: generated domain constants are not anchors"
   for suffix in #["Circle.path_self", "Circle.range_path_ssubset_univ",
       "blastDivSubtractShift._proof_8", "card_derangements_fin_add_two"] do
     let mut count : Nat := 0

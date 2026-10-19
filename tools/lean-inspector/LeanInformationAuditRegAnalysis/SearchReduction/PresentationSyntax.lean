@@ -95,7 +95,7 @@ def rawOrigins (env : Environment) (e : Expr) : StateM OriginMemo RawOriginBound
 theorem certified_raw_bound_closed (env : Environment) (e : Expr) (bound : RawOriginBound)
     (known : (certifyRawBound env e bound).unknown = false) :
     rawBoundClosed env e (certifyRawBound env e bound) = true := by
-  by_cases h : bound.unknown || rawBoundClosed env e bound = true
+  by_cases h : (bound.unknown || rawBoundClosed env e bound) = true
   · simp only [certifyRawBound, h, ite_true] at known ⊢
     simpa [known] using h
   · simp [certifyRawBound, h] at known
@@ -114,7 +114,7 @@ private def expressionKey (e : Expr) : PresentationKey :=
 /-- Key constructors and numeral constructors are generated syntax, not source
 anchors. All other compiled constants must have an origin in the source. -/
 def originAnchor (env : Environment) (name : Name) : Bool :=
-  !#[`Int, `Neg.neg, `OfNat.ofNat, `Int.instNegInt, `instOfNat].contains name &&
+  !#[`Nat, `Int, `Neg.neg, `OfNat.ofNat, `Int.instNegInt, `instOfNat].contains name &&
   match (env.setExporting false).find? name with
     | none | some (.ctorInfo _) => false
     | _ => true
