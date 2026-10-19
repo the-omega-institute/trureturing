@@ -133,19 +133,15 @@ def witness (d : ℕ) : Matrix (Fin d × Fin d × Fin d) (Fin d × Fin d × Fin 
           (fun l => ((l.1 : ℕ) + (l.2.1 : ℕ) + (l.2.2 : ℕ)) % d = 0),
         proj (basisVec d j.1 l.1) ⊗ₖ
           (proj (basisVec d j.2.1 l.2.1) ⊗ₖ proj (basisVec d j.2.2 l.2.2))).sum
-
 /-- The GHZ vector `ghz_{3,d} = d^{-1/2} Σ_i |i⟩^{⊗3}`, Eq. (5). -/
 def ghz (d : ℕ) : Fin d × Fin d × Fin d → ℂ :=
   (1 / Real.sqrt d : ℂ) • ∑ i : Fin d, (Pi.single (i, i, i) 1 : Fin d × Fin d × Fin d → ℂ)
-
 /-- `W_d(ρ) = tr(𝒲_d ρ)`. -/
 def witnessValue (d : ℕ) (ρ : DensityState (Fin d × Fin d × Fin d)) : ℝ :=
   (Matrix.trace (witness d * CStarMatrix.ofMatrix.symm ρ.1)).re
-
 /-- `F_ghz(ρ) = ⟨ghz|ρ|ghz⟩`. -/
 def ghzFidelity (d : ℕ) (ρ : DensityState (Fin d × Fin d × Fin d)) : ℝ :=
   (star (ghz d) ⬝ᵥ (CStarMatrix.ofMatrix.symm ρ.1 *ᵥ ghz d)).re
-
 /-- Schmidt rank across the bipartition that separates party `k` from the other two. -/
 def cutRank {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d → ℂ) : ℕ :=
   schmidtRank (fun p : Fin d × Fin (d * d) =>
@@ -154,7 +150,6 @@ def cutRank {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d → ℂ) : ℕ :
     | ⟨0, _⟩ => ψ (p.1, q.1, q.2)
     | ⟨1, _⟩ => ψ (q.1, p.1, q.2)
     | ⟨_, _⟩ => ψ (q.1, q.2, p.1))
-
 private theorem cutRank_eq {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d → ℂ) :
     cutRank k ψ = (Matrix.of fun i (j : Fin d × Fin d) =>
       match k with
@@ -171,7 +166,6 @@ private theorem cutRank_eq {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d �
   · exact Matrix.rank_submatrix
       (fun (i : Fin d) (j : Fin d × Fin d) => ψ (j.1, j.2, i))
       (Equiv.refl (Fin d)) finProdFinEquiv.symm
-
 /-- `σ` has Schmidt number at most `r` across bipartition `k`. -/
 def SchmidtNumberLE {d : ℕ} (k : Fin 3) (r : ℕ)
     (σ : DensityState (Fin d × Fin d × Fin d)) : Prop :=
@@ -179,25 +173,20 @@ def SchmidtNumberLE {d : ℕ} (k : Fin 3) (r : ℕ)
     (∀ i, 0 ≤ p i) ∧ ∑ i, p i = 1 ∧ (∀ i, star (ψ i) ⬝ᵥ ψ i = 1) ∧
     (∀ i, cutRank k (ψ i) ≤ r) ∧
     CStarMatrix.ofMatrix.symm σ.1 = ∑ i, ((p i : ℝ) : ℂ) • Matrix.vecMulVec (ψ i) (star (ψ i))
-
 /-- A decomposition `ρ = Σ_{S|S̄} q_{S|S̄} σ_{S|S̄}` with every `r_{S|S̄} ≤ r`, Eq. (2). -/
 def GMEDecomposable {d : ℕ} (r : ℕ) (ρ : DensityState (Fin d × Fin d × Fin d)) : Prop :=
   ∃ (q : Fin 3 → ℝ) (σ : Fin 3 → DensityState (Fin d × Fin d × Fin d)),
     (∀ k, 0 ≤ q k) ∧ ∑ k, q k = 1 ∧ (∀ k, SchmidtNumberLE k r (σ k)) ∧
     CStarMatrix.ofMatrix.symm ρ.1 = ∑ k, ((q k : ℝ) : ℂ) • CStarMatrix.ofMatrix.symm (σ k).1
-
 /-- The GME-dimension `D_GME(ρ)`, Eq. (2). -/
 def gmeDim {d : ℕ} (ρ : DensityState (Fin d × Fin d × Fin d)) : ℕ :=
   sInf {r | GMEDecomposable r ρ}
-
 /-- (V3) and (V4) for every odd local dimension. -/
 def claim : Prop :=
   ∀ d : ℕ, Odd d → ∀ ρ : DensityState (Fin d × Fin d × Fin d),
     witnessValue d ρ ≤ 3 + 9 * (gmeDim ρ : ℝ) / d ∧
       ghzFidelity d ρ ≥ (witnessValue d ρ - 3) / 9
-
 set_option linter.unusedTactic false
-
 private theorem omega_pow_character {d : ℕ} [NeZero d] (n : ℕ) :
     (Complex.exp (2 * Real.pi * Complex.I / d)) ^ n = ZMod.stdAddChar (n : ZMod d) := by
   have hc : ZMod.stdAddChar (n : ZMod d) =
@@ -206,11 +195,9 @@ private theorem omega_pow_character {d : ℕ} [NeZero d] (n : ℕ) :
   rw [hc, ← Complex.exp_nat_mul]
   congr 1
   ring
-
 private theorem character_orthogonality {d : ℕ} [NeZero d] (a : ZMod d) :
     ∑ t : ZMod d, ZMod.stdAddChar (t * a) = if a = 0 then (d : ℂ) else 0 := by
   simpa only [ZMod.card, Nat.cast_ite, Nat.cast_zero] using AddChar.sum_mulShift a (ZMod.isPrimitive_stdAddChar d)
-
 private theorem tuples_sum_zero {d : ℕ} (hd : Odd d) (j : ℕ × ℕ × ℕ) (hj : j ∈ tuples d) :
     (j.1 + j.2.1 + j.2.2) % d = 0 := by
   have hdpos : 0 < d := hd.pos
@@ -225,13 +212,11 @@ private theorem tuples_sum_zero {d : ℕ} (hd : Odd d) (j : ℕ × ℕ × ℕ) (
       | (convert Nat.zero_mod d using 2 <;> omega)
       | (convert Nat.mod_self d using 2 <;> omega)
       | (rw [show d - 1 + (d - 1) + 2 = d + d by omega, Nat.add_mod]; simp)
-
 private theorem basisVec_character {d : ℕ} [NeZero d] (j l : ℕ) (m : Fin d) :
     basisVec d j l m = (1 / Real.sqrt d : ℂ) *
       ZMod.stdAddChar ((m.val : ZMod d) * ((l : ZMod d) + (j : ZMod d) * (m.val : ZMod d))) := by
   rw [basisVec, omega, omega_pow_character]
   simp [ Nat.cast_mul, Nat.cast_add]
-
 private theorem projector_character {d : ℕ} [NeZero d] (j l : ℕ) (m n : Fin d) :
     Matrix.vecMulVec (basisVec d j l) (star (basisVec d j l)) m n = (1 / d : ℂ) *
       ZMod.stdAddChar (((m.val : ZMod d) - (n.val : ZMod d)) * (l : ZMod d) + (j : ZMod d) * ((m.val : ZMod d) ^ 2 - (n.val : ZMod d) ^ 2)) := by
@@ -250,7 +235,6 @@ private theorem projector_character {d : ℕ} [NeZero d] (j l : ℕ) (m n : Fin 
       rw [hc, ← AddChar.map_add_eq_mul]
       congr 2
       ring
-
 private theorem constrained_character_sum {d : ℕ} [NeZero d] (u v w : ZMod d) :
     (∑ l : ZMod d × ZMod d × ZMod d,
       if l.1 + l.2.1 + l.2.2 = 0 then
@@ -269,14 +253,12 @@ private theorem constrained_character_sum {d : ℕ} [NeZero d] (u v w : ZMod d) 
   simp only [hp, ← Finset.mul_sum, ← Finset.sum_mul]
   rw [character_orthogonality, character_orthogonality]
   by_cases hu : u = w <;> by_cases hv : v = w <;> simp [hu,hv,sub_eq_zero,pow_two]
-
 private theorem finEquiv_eq_z {d : ℕ} [NeZero d] (m : Fin d) : ZMod.finEquiv d m = (m.val : ZMod d) := by
   cases d with
   | zero => exact (NeZero.ne 0 rfl).elim
   | succ d =>
     change m = Fin.ofNat (d+1) m.val
     exact (Fin.cast_val_eq_self m).symm
-
 private theorem constrained_fin_sum {d : ℕ} [NeZero d] (u v w : ZMod d) :
     (∑ l : Fin d × Fin d × Fin d,
       if ((l.1 : ℕ) + (l.2.1 : ℕ) + (l.2.2 : ℕ)) % d = 0 then
@@ -296,15 +278,12 @@ private theorem constrained_fin_sum {d : ℕ} [NeZero d] (u v w : ZMod d) :
       ZMod.stdAddChar (l.1*u + l.2.1*v + l.2.2*w) else 0)
     (by intro l; simp [e3,e,finEquiv_eq_z])]
   exact constrained_character_sum u v w
-
 private def settingOp (d : ℕ) (j : ℕ × ℕ × ℕ) :
     Matrix (Fin d × Fin d × Fin d) (Fin d × Fin d × Fin d) ℂ :=
   ∑ l ∈ (Finset.univ : Finset (Fin d × Fin d × Fin d)).filter
       (fun l => ((l.1 : ℕ) + (l.2.1 : ℕ) + (l.2.2 : ℕ)) % d = 0),
     Matrix.vecMulVec (basisVec d j.1 l.1) (star (basisVec d j.1 l.1)) ⊗ₖ
       (Matrix.vecMulVec (basisVec d j.2.1 l.2.1) (star (basisVec d j.2.1 l.2.1)) ⊗ₖ Matrix.vecMulVec (basisVec d j.2.2 l.2.2) (star (basisVec d j.2.2 l.2.2)))
-
-
 private theorem settingOp_entry {d : ℕ} [NeZero d] (j : ℕ × ℕ × ℕ)
     (m n : Fin d × Fin d × Fin d) :
     settingOp d j m n =
@@ -350,12 +329,10 @@ private theorem settingOp_entry {d : ℕ} [NeZero d] (j : ℕ × ℕ × ℕ)
   change _ = if u = w ∧ v = w then (1/d : ℂ)*ZMod.stdAddChar Q else 0
   split_ifs <;> simp
   field_simp
-
 private theorem tuples_cast_sum_zero {d : ℕ} (hd : Odd d) (j : ℕ × ℕ × ℕ)
     (hj : j ∈ tuples d) : (j.1 : ZMod d)+j.2.1+j.2.2 = 0 := by
   have h := (Nat.dvd_iff_mod_eq_zero).mpr (tuples_sum_zero hd j hj)
   simpa only [Nat.cast_add] using (ZMod.natCast_eq_zero_iff _ d).mpr h
-
 private theorem shifted_quadPhase {d : ℕ} (j : ℕ × ℕ × ℕ)
     (hj : (j.1 : ZMod d)+j.2.1+j.2.2 = 0)
     (m n : Fin d × Fin d × Fin d)
@@ -369,7 +346,6 @@ private theorem shifted_quadPhase {d : ℕ} (j : ℕ × ℕ × ℕ)
   dsimp
   rw [h1,h2]
   linear_combination (((m.2.2.val : ZMod d))^2-((n.2.2.val : ZMod d))^2)*hj
-
 private theorem settingOp_shift_entry {d : ℕ} [NeZero d] (j : ℕ × ℕ × ℕ)
     (hj : (j.1 : ZMod d)+j.2.1+j.2.2 = 0)
     (m n : Fin d × Fin d × Fin d) :
@@ -381,12 +357,10 @@ private theorem settingOp_shift_entry {d : ℕ} [NeZero d] (j : ℕ × ℕ × �
   split_ifs with h
   · rw [shifted_quadPhase j hj m n h]
   · rfl
-
 private def diagonalOp (d : ℕ) :
     Matrix (Fin d × Fin d × Fin d) (Fin d × Fin d × Fin d) ℂ :=
   ∑ l : Fin d, Matrix.vecMulVec (Pi.single l (1 : ℂ)) (star (Pi.single l (1 : ℂ))) ⊗ₖ
     (Matrix.vecMulVec (Pi.single l (1 : ℂ)) (star (Pi.single l (1 : ℂ))) ⊗ₖ Matrix.vecMulVec (Pi.single l (1 : ℂ)) (star (Pi.single l (1 : ℂ))))
-
 private theorem diagonalOp_entry {d : ℕ} (m n : Fin d × Fin d × Fin d) :
     diagonalOp d m n = if m = n ∧ m.1 = m.2.1 ∧ m.2.1 = m.2.2 then 1 else 0 := by
   classical
@@ -408,9 +382,7 @@ private theorem diagonalOp_entry {d : ℕ} (m n : Fin d × Fin d × Fin d) :
     intro hh
     apply h
     simp_all
-
 private def signed {d : ℕ} (x : ZMod d) : Fin 3 → ZMod d := ![-x, 0, x]
-
 private theorem tuples_grid_sum {d : ℕ} (hd : Odd d) (f : ZMod d → ZMod d → ℂ) :
     ((tuples d).map (fun j => f (j.1 : ZMod d) (j.2.1 : ZMod d))).sum =
       ∑ a : Fin 3, ∑ b : Fin 3, f ((signed (1 : ZMod d)) a) ((signed (1 : ZMod d)) b) := by
@@ -421,7 +393,6 @@ private theorem tuples_grid_sum {d : ℕ} (hd : Odd d) (f : ZMod d → ZMod d �
     Nat.cast_zero, Nat.cast_one, hc, signed, Fin.sum_univ_three,
     Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two]
   norm_num <;> ring
-
 private theorem witness_entry {d : ℕ} [NeZero d] (hd : Odd d) (m n : Fin d × Fin d × Fin d) :
     witness d m n =
       (if m = n ∧ m.1 = m.2.1 ∧ m.2.1 = m.2.2 then 3 else 0) +
@@ -454,20 +425,16 @@ private theorem witness_entry {d : ℕ} [NeZero d] (hd : Odd d) (m n : Fin d × 
       exact tuples_grid_sum hd (fun a b => ZMod.stdAddChar (2*((m.2.2.val : ZMod d)-(n.2.2.val : ZMod d))*
         (a*((n.1.val : ZMod d)-(n.2.2.val : ZMod d))+b*((n.2.1.val : ZMod d)-(n.2.2.val : ZMod d)))))
     · simp
-
 end D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
-
 namespace D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
 open scoped MatrixOrder ComplexOrder
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 set_option linter.unusedTactic false
-
 private theorem cutRank_le_d {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d → ℂ) :
     cutRank k ψ ≤ d := by
   rw [cutRank_eq]
   exact (Matrix.rank_le_card_height _).trans (by simp)
-
 structure Ensemble {p q : ℕ} (ρ : (Matrix (Fin p × Fin q) (Fin p × Fin q) ℂ)) where
   N : ℕ
   weight : Fin N → ℝ
@@ -477,13 +444,11 @@ structure Ensemble {p q : ℕ} (ρ : (Matrix (Fin p × Fin q) (Fin p × Fin q) �
   psi : Fin N → ((Fin p × Fin q) → ℂ)
   unit : ∀ i, ∑ x, ‖psi i x‖ ^ 2 = 1
   average : ∑ i, (weight i : ℂ) • rankOneDensity (psi i) = ρ
-
 theorem weight_le_one_of_total {ι : Type*} [Fintype ι] [DecidableEq ι]
     (weight : ι → ℝ) (nonneg : ∀ i, 0 ≤ weight i) (total : ∑ i, weight i = 1)
     (i : ι) : weight i ≤ 1 := by
   rw [← total]
   exact Finset.single_le_sum (fun j _ => nonneg j) (Finset.mem_univ i)
-
 theorem spectral_ensemble_nonempty {p q : ℕ} (ρ : (Matrix (Fin p × Fin q) (Fin p × Fin q) ℂ))
     (hρ : ρ.PosSemidef) (ht : ρ.trace=1) : Nonempty (Ensemble ρ) := by
   classical
@@ -518,7 +483,6 @@ theorem spectral_ensemble_nonempty {p q : ℕ} (ρ : (Matrix (Fin p × Fin q) (F
   · rw [Equiv.sum_comp e.symm]; exact total
   · exact (Equiv.sum_comp e.symm
       (fun v => (hρ.1.eigenvalues v : ℂ) • rankOneDensity (fun x => U x v))).trans average
-
 private theorem density_ensemble {ι : Type*} [Fintype ι] [DecidableEq ι]
     (ρ : DensityState ι) :
     ∃ (m : ℕ) (p : Fin m → ℝ) (ψ : Fin m → ι → ℂ),
@@ -549,13 +513,10 @@ private theorem density_ensemble {ι : Type*} [Fintype ι] [DecidableEq ι]
     simpa only [B, rankOneDensity, Matrix.submatrix_apply, Equiv.apply_symm_apply,
       Matrix.sum_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
       Pi.star_apply] using h.symm
-
-
 private theorem schmidtNumberLE_d {d : ℕ} (k : Fin 3)
     (ρ : DensityState (Fin d × Fin d × Fin d)) : SchmidtNumberLE k d ρ := by
   obtain ⟨m,p,ψ,hp,hs,hu,hav⟩ := density_ensemble ρ
   exact ⟨m,p,ψ,hp,hs,hu,fun i => cutRank_le_d k (ψ i),hav⟩
-
 private theorem gmeDecomposable_d {d : ℕ}
     (ρ : DensityState (Fin d × Fin d × Fin d)) : GMEDecomposable d ρ := by
   refine ⟨fun k => if k = 0 then 1 else 0, fun _ => ρ, ?_, ?_,
@@ -565,11 +526,9 @@ private theorem gmeDecomposable_d {d : ℕ}
     split_ifs <;> norm_num
   · simp
   · simp
-
 private theorem gmeDim_mem {d : ℕ} (ρ : DensityState (Fin d × Fin d × Fin d)) :
     GMEDecomposable (gmeDim ρ) ρ := by
   exact Nat.sInf_mem (s := {r | GMEDecomposable r ρ}) ⟨d, gmeDecomposable_d ρ⟩
-
 private theorem diagonal_trace_rank_bound {d : ℕ} (A : Matrix (Fin d) (Fin d × Fin d) ℂ) :
     Complex.normSq (∑ i, A i (i,i)) ≤
       (A.rank : ℝ) * ∑ i, ∑ j, Complex.normSq (A i j) := by
@@ -601,19 +560,16 @@ private theorem diagonal_trace_rank_bound {d : ℕ} (A : Matrix (Fin d) (Fin d �
   rw [Fintype.sum_prod_type]
   exact Finset.sum_le_sum fun j _ => Finset.single_le_sum (f := fun k => Complex.normSq (A i (j,k)))
     (fun k _ => Complex.normSq_nonneg _) (Finset.mem_univ j)
-
 private theorem ghz_overlap {d : ℕ} (ψ : Fin d × Fin d × Fin d → ℂ) :
     star (ghz d) ⬝ᵥ ψ = (1 / Real.sqrt d : ℂ) * ∑ i, ψ (i,i,i) := by
   classical
   simp [ghz, star_smul, star_sum, smul_dotProduct, sum_dotProduct,
     Pi.star_single, single_dotProduct]
-
 private theorem quadratic_energy {ι : Type*} [Fintype ι] (g : ι → ℂ) :
     (star g ⬝ᵥ g).re = ∑ i, Complex.normSq (g i) := by
   classical
   simpa only [RHLinalg.hermForm, Matrix.one_mulVec, RCLike.re_to_complex,
     Complex.normSq_eq_norm_sq] using RHLinalg.hermForm_one g
-
 private theorem ghz_overlap_normSq {d : ℕ} (v : Fin d × Fin d × Fin d → ℂ) :
     Complex.normSq (star (ghz d) ⬝ᵥ v) = (1/(d : ℝ))*Complex.normSq (∑ i, v (i,i,i)) := by
   rw [ghz_overlap, Complex.normSq_mul]
@@ -621,11 +577,9 @@ private theorem ghz_overlap_normSq {d : ℕ} (v : Fin d × Fin d × Fin d → �
     simp only [one_div, Complex.normSq_inv, Complex.normSq_ofReal]
     rw [Real.mul_self_sqrt (Nat.cast_nonneg _)]
   rw [hn]
-
 private theorem unit_energy {ι : Type*} [Fintype ι] (ψ : ι → ℂ)
     (hu : star ψ ⬝ᵥ ψ = 1) : ∑ i, Complex.normSq (ψ i) = 1 := by
   simpa only [hu, Complex.one_re] using (quadratic_energy ψ).symm
-
 private theorem cut_diagonal_bound {d : ℕ} (k : Fin 3)
     (ψ : Fin d × Fin d × Fin d → ℂ) (hu : star ψ ⬝ᵥ ψ = 1) :
     Complex.normSq (∑ i, ψ (i,i,i)) ≤ cutRank k ψ := by
@@ -649,7 +603,6 @@ private theorem cut_diagonal_bound {d : ℕ} (k : Fin 3)
       exact he
     simp only [Fintype.sum_prod_type, he', mul_one] at h
     convert h using 1 <;> rfl
-
 private theorem pure_ghz_fidelity_bound {d r : ℕ} (k : Fin 3)
     (ψ : Fin d × Fin d × Fin d → ℂ) (hu : star ψ ⬝ᵥ ψ = 1)
     (hr : cutRank k ψ ≤ r) : Complex.normSq (star (ghz d) ⬝ᵥ ψ) ≤ (r : ℝ) / d := by
@@ -659,13 +612,11 @@ private theorem pure_ghz_fidelity_bound {d r : ℕ} (k : Fin 3)
   calc
     _ ≤ (1/(d : ℝ)) * r := mul_le_mul_of_nonneg_left hdiag (by positivity)
     _ = _ := by ring
-
 private theorem quadratic_rankone {ι : Type*} [Fintype ι] (g ψ : ι → ℂ) :
     (star g ⬝ᵥ (Matrix.vecMulVec ψ (star ψ) *ᵥ g)).re =
       Complex.normSq (star g ⬝ᵥ ψ) := by
   simpa only [rankOneDensity, Complex.ofReal_re] using
     congrArg Complex.re (D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.quadratic_projector g ψ)
-
 private theorem quadratic_sum {ι κ : Type*} [Fintype ι] [Fintype κ]
     (g : ι → ℂ) (p : κ → ℝ) (A : κ → Matrix ι ι ℂ) :
     (star g ⬝ᵥ ((∑ i, (p i : ℂ) • A i) *ᵥ g)).re =
@@ -673,7 +624,6 @@ private theorem quadratic_sum {ι κ : Type*} [Fintype ι] [Fintype κ]
   simp only [Matrix.sum_mulVec, Matrix.smul_mulVec, dotProduct_sum,
     dotProduct_smul, smul_eq_mul, Complex.re_sum, Complex.mul_re,
     Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
-
 private theorem schmidt_ghz_fidelity_bound {d r : ℕ} (k : Fin 3)
     (ρ : DensityState (Fin d × Fin d × Fin d)) (hr : SchmidtNumberLE k r ρ) :
     ghzFidelity d ρ ≤ (r : ℝ) / d := by
@@ -684,7 +634,6 @@ private theorem schmidt_ghz_fidelity_bound {d r : ℕ} (k : Fin 3)
     _ ≤ ∑ i, p i * ((r : ℝ) / d) := Finset.sum_le_sum fun i _ =>
       mul_le_mul_of_nonneg_left (pure_ghz_fidelity_bound k (ψ i) (hu i) (hc i)) (hp i)
     _ = _ := by rw [← Finset.sum_mul, hs, one_mul]
-
 private theorem gme_ghz_fidelity_bound {d r : ℕ}
     (ρ : DensityState (Fin d × Fin d × Fin d)) (hr : GMEDecomposable r ρ) :
     ghzFidelity d ρ ≤ (r : ℝ) / d := by
@@ -694,28 +643,22 @@ private theorem gme_ghz_fidelity_bound {d r : ℕ}
     _ ≤ ∑ k, q k * ((r : ℝ) / d) := Finset.sum_le_sum fun k _ =>
       mul_le_mul_of_nonneg_left (schmidt_ghz_fidelity_bound k (σ k) (hc k)) (hq k)
     _ = _ := by rw [← Finset.sum_mul, hs, one_mul]
-
 private theorem gmeDim_ghz_fidelity_bound {d : ℕ}
     (ρ : DensityState (Fin d × Fin d × Fin d)) :
     ghzFidelity d ρ ≤ (gmeDim ρ : ℝ) / d :=
   gme_ghz_fidelity_bound ρ (gmeDim_mem ρ)
-
 end D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
-
 open Finset
 set_option linter.unusedTactic false
 namespace D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
 noncomputable section
-
 private theorem signed_injective {d : ℕ} (hd : Odd d) {x : ZMod d} (hx : x ≠ 0) :
     Function.Injective (signed x) := by
   have hn := ZMod.ne_neg_self hd hx
   intro a b h
   fin_cases a <;> fin_cases b <;> simp_all [signed, eq_comm]
-
 private theorem two_cancel {d : ℕ} (hd : Odd d) {x y : ZMod d} (h : 2*x = 2*y) : x = y := by
   exact ((ZMod.isUnit_iff_coprime 2 d).mpr hd.coprime_two_left).mul_left_cancel h
-
 private theorem count_le_three {d : ℕ} (hd : Odd d) (x y s : ZMod d)
     (hxy : x ≠ 0 ∨ y ≠ 0) : (Multiset.countP (fun a : Fin 3 × Fin 3 => 2 * (signed x a.1 + signed y a.2) = s) (Finset.univ : Finset (Fin 3 × Fin 3)).val) ≤ 3 := by
   classical
@@ -738,20 +681,15 @@ private theorem count_le_three {d : ℕ} (hd : Odd d) (x y s : ZMod d)
       have h := two_cancel hd ((mem_filter.mp ha).2.trans (mem_filter.mp hb).2.symm)
       simpa only [hab, add_right_inj] using h
     simpa using (card_le_card_of_injOn (t := (univ : Finset (Fin 3))) Prod.fst (by simp [Set.MapsTo]) hi)
-
 end
-
 noncomputable section
-
 private def freq {d : ℕ} (x y : ZMod d) (p : Fin 3 × Fin 3) : ZMod d :=
   2*(signed x p.1 + signed y p.2)
-
 private theorem fourier_fibre_sum {d : ℕ} [NeZero d] (x y : ZMod d) (f : ZMod d → ℝ) :
     (∑ p : Fin 3 × Fin 3, f (freq x y p)) = ∑ s : ZMod d, ((Multiset.countP (fun a : Fin 3 × Fin 3 => 2 * (signed x a.1 + signed y a.2) = s) (Finset.univ : Finset (Fin 3 × Fin 3)).val) : ℝ) * f s := by
   classical
   simpa only [Multiset.countP_eq_card_filter, freq, Finset.sum_const, nsmul_eq_mul, Finset.card_def, Finset.filter_val] using
     (Finset.sum_fiberwise' Finset.univ (freq x y) f).symm
-
 private theorem dft_energy {d : ℕ} [NeZero d] (f : ZMod d → ℂ) :
     ∑ s, Complex.normSq (ZMod.dft f s) = (d : ℝ) * ∑ t, Complex.normSq (f t) := by
   have h := D5.S3.Fourier.FullBispectrumStability.cyclic_parseval f
@@ -759,7 +697,6 @@ private theorem dft_energy {d : ℕ} [NeZero d] (f : ZMod d → ℂ) :
   simp only [← Complex.normSq_eq_norm_sq] at h
   have hd : (d : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (NeZero.ne d)
   exact (eq_div_iff hd).mp h |>.symm.trans (mul_comm _ _)
-
 private theorem grid_dft_bound {d : ℕ} [NeZero d] (hd : Odd d) (x y : ZMod d)
     (hxy : x ≠ 0 ∨ y ≠ 0) (f : ZMod d → ℂ) :
     (∑ p : Fin 3 × Fin 3, Complex.normSq (ZMod.dft f (freq x y p))) ≤
@@ -770,11 +707,9 @@ private theorem grid_dft_bound {d : ℕ} [NeZero d] (hd : Odd d) (x y : ZMod d)
       Finset.sum_le_sum fun s _ => mul_le_mul_of_nonneg_right
         (by exact_mod_cast count_le_three hd x y s hxy) (Complex.normSq_nonneg _)
     _ = _ := by rw [← Finset.mul_sum, dft_energy]; ring
-
 private def blockValue {d : ℕ} [NeZero d] (x y : ZMod d) (f : ZMod d → ℂ) : ℝ :=
   (if x = 0 ∧ y = 0 then 3 else 0) * ∑ t, Complex.normSq (f t) +
     (1 / (d : ℝ)) * ∑ p : Fin 3 × Fin 3, Complex.normSq (ZMod.dft f (freq x y p))
-
 private theorem block_value_bound {d : ℕ} [NeZero d] (hd : Odd d) (x y : ZMod d) (f : ZMod d → ℂ) :
     blockValue x y f ≤ 3 * ∑ t, Complex.normSq (f t) +
       (if x = 0 ∧ y = 0 then 9/(d : ℝ)*Complex.normSq (∑ t, f t) else 0) := by
@@ -794,17 +729,13 @@ private theorem block_value_bound {d : ℕ} [NeZero d] (hd : Odd d) (x y : ZMod 
     have he (a : ℝ) : 1/(d : ℝ)*(3*(d : ℝ)*a) = 3*a := by
       field_simp
     simpa only [he] using h
-
 end
 end D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
-
 namespace D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
 noncomputable section
-
 private theorem z_ofResidue {d : ℕ} [NeZero d] (x : ZMod d) : ((((ZMod.finEquiv d).symm x) : ℕ) : ZMod d) = x := by
   rw [← finEquiv_eq_z]
   exact (ZMod.finEquiv d).apply_symm_apply x
-
 private def blockEquiv (d : ℕ) [NeZero d] :
     (ZMod d × ZMod d × ZMod d) ≃ (Fin d × Fin d × Fin d) :=
   (Equiv.prodAssoc (ZMod d) (ZMod d) (ZMod d)).symm |>.trans
@@ -813,7 +744,6 @@ private def blockEquiv (d : ℕ) [NeZero d] :
     (Equiv.prodAssoc (ZMod d) (ZMod d) (ZMod d)) |>.trans
     (Equiv.prodCongr (ZMod.finEquiv d).symm.toEquiv
       (Equiv.prodCongr (ZMod.finEquiv d).symm.toEquiv (ZMod.finEquiv d).symm.toEquiv))
-
 private theorem block_diagonal_iff {d : ℕ} [NeZero d] (p : ZMod d × ZMod d × ZMod d) :
     ((blockEquiv d p).1 = (blockEquiv d p).2.1 ∧
       (blockEquiv d p).2.1 = (blockEquiv d p).2.2) ↔ p.1 = 0 ∧ p.2.1 = 0 := by
@@ -829,19 +759,16 @@ private theorem block_diagonal_iff {d : ℕ} [NeZero d] (p : ZMod d × ZMod d ×
     · linear_combination h.2
   · rintro ⟨h1,h2⟩
     simp [h1,h2]
-
 private theorem fourier_product {d : ℕ} [NeZero d] (s t u : ZMod d) :
     (fun s t => ZMod.stdAddChar (t*s)) s t * star ((fun s t => ZMod.stdAddChar (t*s)) s u) = ZMod.stdAddChar ((t-u)*s) := by
   rw [ RCLike.star_def, ← AddChar.map_neg_eq_conj,
     ← AddChar.map_add_eq_mul]
   congr 1
   ring
-
 private def blockOp {d : ℕ} [NeZero d] (x y : ZMod d) : Matrix (ZMod d) (ZMod d) ℂ :=
   ((if x=0 ∧ y=0 then 3 else 0 : ℝ) : ℂ) • 1 +
     ((1/(d : ℝ) : ℝ) : ℂ) • ∑ p : Fin 3 × Fin 3,
       Matrix.vecMulVec ((fun s t => ZMod.stdAddChar (t*s)) (freq x y p)) (star ((fun s t => ZMod.stdAddChar (t*s)) (freq x y p)))
-
 private theorem blockOp_entry {d : ℕ} [NeZero d] (x y t u : ZMod d) :
     blockOp x y t u =
       ((if x=0 ∧ y=0 then 3 else 0 : ℝ) : ℂ) * (if t=u then 1 else 0) +
@@ -850,12 +777,10 @@ private theorem blockOp_entry {d : ℕ} [NeZero d] (x y t u : ZMod d) :
   simp only [blockOp, Matrix.add_apply, Matrix.smul_apply, Matrix.sum_apply,
     Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul, Matrix.one_apply, fourier_product]
   simp
-
 private theorem quadratic_smul {ι : Type*} [Fintype ι] (g : ι → ℂ) (r : ℝ) (A : Matrix ι ι ℂ) :
     (star g ⬝ᵥ (((r : ℂ) • A) *ᵥ g)).re = r * (star g ⬝ᵥ (A *ᵥ g)).re := by
   simpa only [Fintype.sum_unique] using
     quadratic_sum (κ := Unit) g (fun _ => r) (fun _ => A)
-
 private theorem fourierVec_overlap {d : ℕ} [NeZero d] (f : ZMod d → ℂ) (s : ZMod d) :
     star ((fun s t => ZMod.stdAddChar (t*s)) s) ⬝ᵥ f = ZMod.dft f s := by
   simpa only [dotProduct, Pi.star_apply, RCLike.star_def,
