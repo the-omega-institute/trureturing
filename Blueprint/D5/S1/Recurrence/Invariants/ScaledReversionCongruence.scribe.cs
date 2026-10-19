@@ -25,6 +25,9 @@ internal sealed class ScaledReversionCongruenceDocument : IScribeDocumentDefinit
                 + "Sequence values and the final remainders are integers. In the formulas "
                 + "G(q) denotes generatingSeries(q), and P denotes the auxiliary iteration "
                 + "specified with the definition of a.")),
+            Node("geometric", "Geometric",
+                Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Parenthesized(Seq(F.Id("geometric"), Colon, Sp, Call("PowerSeries", F.Id("R")))), Sp, Eq, Sp, new Formula.Binary(Parenthesized(F.Id("X")), FormulaBinaryOperator.Multiply, Parenthesized(Call("mk", D(1)))))))),
+                "The geometric series is X multiplied by the series with every coefficient one.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("a", "Stabilized integer coefficients", CoefficientFormula(),
                 "Starting with the zero series, the correction P+X-subst(P,inner(q,P)) "
                 + "gains one degree of agreement at each iteration. Coefficient n is read "

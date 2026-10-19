@@ -6,6 +6,8 @@
    utility: none
    digest: Degree contraction and a mod-ten geometric fixed point prove Hanna A396807. -/
 
+/- Escape audit unfinished for published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
+
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.PowerSeries.WellKnown
@@ -171,11 +173,11 @@ private theorem geometric_inverse (parameter : R) :
     rescale parameter (mk 1) * denominator parameter = 1 := by
   simpa [denominator] using congrArg (rescale parameter) (mk_one_mul_one_sub_eq_one R)
 
-private theorem mobius_denominator (parameter : R) :
+theorem mobius_denominator (parameter : R) :
     mobius parameter * denominator parameter = X := by
   rw [mobius, mul_assoc, geometric_inverse, mul_one]
 
-private theorem mobius_zero (parameter : R) : constantCoeff (mobius parameter) = 0 := by
+theorem mobius_zero (parameter : R) : constantCoeff (mobius parameter) = 0 := by
   simp [mobius]
 
 private theorem mobius_composition (left right : R) :
@@ -257,10 +259,5 @@ theorem coefficient_congruence (index : ℕ) (hi : 1 ≤ index) : a index % 10 =
     simpa [coeff_map, generatingSeries, hb, hom] using hcoeff
   exact (ZMod.intCast_eq_intCast_iff' (a index) 1 10).mp hc
 
-#print axioms fixed_unique
-#print axioms generating_equation
-#print axioms mobius_iterate
-#print axioms mod_ten_fixed
-#print axioms coefficient_congruence
 
 end D5.S1.Recurrence.Invariants.CompositionalIterateCongruence
