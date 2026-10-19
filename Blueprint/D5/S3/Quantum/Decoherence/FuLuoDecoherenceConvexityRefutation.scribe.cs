@@ -41,16 +41,19 @@ internal sealed class FuLuoDecoherenceConvexityRefutationDocument : IScribeDocum
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("refutation", "An explicit violation in dimension four", ResultFormula(),
                 "For four system coordinates, four qubit environments in the state |0><0|, and detector unitaries (X, X, Z, Z), the two explicit density states have D equal to 5/16 while their midpoint has D equal to 3/8. Thus the Jensen inequality in the expanded claim is false.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("fu-luo-decoherence-convexity"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock SourceQuotation() => Paragraph(Text(
         "S. Fu and S. Luo, Quantifying Decoherence via Increases in Classicality, Entropy 23(12) (2021), 1594, Section 3. The source states verbatim: \"We conjecture that D(ρ_S|Π, U) is convex in ρ. It seems that a proof may require some deep mathematics.\" Equation (17) states \"J(ρ,Π) = 1 + tr(√ρ Π†(√ρ)) = 1 + Σ_i 〈i|√ρ|i〉².\" Equations (21)–(22) state \"ρ′_S = tr_E ρ′_SE = Σ_{i,j=1}^d tr(U_{Ei} ρ_E U_{Ej}†) · Π_i ρ_S Π_j\", with \"ρ_S ∘ Ω\", and Equation (27) states \"D(ρ_S|Π, U) = J(ρ′_S, Π) − J(ρ_S, Π)\"."));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("fuluo-" + id), DeclarationHandle.Create(Prefix + declaration), H(title),
         StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula JFormula() => Disp(All("d", Nat(), All("rho", MatrixType(FinOf(F.Id("d"))),
         Equal(Call("J", F.Id("rho")), Add(D(1), SumOver("i", FinOf(F.Id("d")),

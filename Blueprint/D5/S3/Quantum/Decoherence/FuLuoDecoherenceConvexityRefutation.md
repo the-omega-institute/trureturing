@@ -108,6 +108,10 @@ $$\neg (\forall d \in \mathbb{N},\; \forall k \in \operatorname{Fin}\left(d\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Decoherence/FuLuoDecoherenceConvexityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fu-luo-decoherence-convexity` (refuted) by `D5/S3/Quantum/Decoherence/FuLuoDecoherenceConvexityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fu-luo-decoherence-convexity","declaration_gid":"D5/S3/Quantum/Decoherence/FuLuoDecoherenceConvexityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* S. Fu and S. Luo (2021). *Quantifying Decoherence via Increases in Classicality*. DOI: [10.3390/e23121594](https://doi.org/10.3390/e23121594). URL: <https://www.mdpi.com/1099-4300/23/12/1594>.
