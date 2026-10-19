@@ -180,7 +180,7 @@ strict 与 collapsed 在同族同域互斥。逻辑上“不存在分离对”�
 | A2 | 后处理及身份元数据不增加原观察的分离 | `postprocessing_no_new_separation`、`full_state_identity_can_separate` |
 | A3 | 合法常值律族的正宽度与正 Δ 不推出 strict | `positive_width_and_sign_not_strict` |
 
-校准集在首跑前由实施方提名、独立评审后冻结声明全名、首次引入前的基线与预期。真实负例包含 `SubstitutionTowerClause` 别名及合成防刷实例。正例只是待核候选，不能直接当已校准名单：`archimedean_jump_decomposition`、`finite_acyclic_judging_graph_has_root`、`two_state_locality_yields_incremental_preservation`、TimeBoundedTwoPointPrice 与 MarkerHistorySearch 方向。缺经核验的正例，校准未完成。
+校准集在首跑前由实施方提名、独立评审后冻结声明全名、首次引入前的基线与预期。正负先例及其预期须经独立核验，具体名单属于冻结校准输入，不由本规范列举。缺经核验的正例，校准未完成。受益单元不得进入校准集。
 
 受益单元 #18865、#18866、#18867、#18868、#18898、#18899 不得进入校准集。冻结 R 后才对其关键声明报告字面版、新契约版、旧 evaluator 三栏，保留失败及不确定原因。
 
