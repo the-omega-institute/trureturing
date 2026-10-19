@@ -6,6 +6,7 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ObserverMemory/Algorithms/PairwiseSignatureRefinement.pairwise_signature_termination; instance=D5/S3/ObserverMemory/Algorithms/PairwiseSignatureRefinement.utilityInput
    digest: Ordered pairwise signature refinement terminates with a uniform primitive-operation bound. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.ObserverMemory.Algorithms.ControlledFiniteStability
 import Mathlib.Data.Finset.Max
 import Mathlib.SetTheory.Cardinal.Finite
@@ -21,8 +22,6 @@ namespace D5.S3.ObserverMemory.Algorithms.PairwiseSignatureRefinement
 open D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
 open D5.S3.ObserverMemory.Algorithms.ControlledRelationRecursion
 open D5.S3.ObserverMemory.Algorithms.ControlledFiniteStability
-open private controlled_stable_relation_eq_limit from
-  D5.S3.ObserverMemory.Algorithms.ControlledFiniteStability
 open D5.S3.ObserverMemory.Algorithms.ControlledSignatureStabilization
 
 universe u

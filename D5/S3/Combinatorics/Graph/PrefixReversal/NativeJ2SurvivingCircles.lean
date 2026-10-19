@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Actual native-circle survival and exact lower and contact ownership. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SurvivingSeams
 set_option autoImplicit false
 

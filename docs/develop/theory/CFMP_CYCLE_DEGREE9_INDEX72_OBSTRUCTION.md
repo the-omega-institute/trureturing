@@ -106,3 +106,10 @@ The ordinary finite-group argument in the preceding proof supplies the provenanc
 For the Coxeter application, one must separately construct the finite image of $\langle bc,cd\rangle$, establish generation by the two specified images, show its cardinality divides seventy-two, and justify their exact orders nine, three and two for the product. The lemma assumes these group-theoretic hypotheses; it does not establish finite-parabolic faithfulness or the passage from a Coxeter quotient to them. Its conclusion therefore retains the preceding normal-cover restriction and supplies no obstruction to arbitrary pairings of twenty-four tetrahedra.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 实验材料入口
+
+正文中的程序名与结果文件路径对应以下固定版本；有限核验数据不代替普遍证明或 Lean 证书。
+
+- [verify_cycle9_coxeter_local.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/verify_cycle9_coxeter_local.py)

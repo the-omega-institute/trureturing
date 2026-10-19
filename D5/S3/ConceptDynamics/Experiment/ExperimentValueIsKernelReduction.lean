@@ -74,7 +74,7 @@ theorem targetIdentifiable_iff_factorization
         forall x y,
           (forall experiment : allowed, run experiment.1 x = run experiment.1 y) ->
             target x = target y :=
-    (identifiable_tfae (fun experiment : allowed => run experiment.1) target).out 0 2
+    (identifiable_tfae (fun experiment : allowed => run experiment.1) target).out 1 3
   constructor
   · intro noResidual
     apply criterion.mpr

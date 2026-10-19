@@ -94,6 +94,7 @@ STDERR_RELAY_PID=""
 SLOT_DIR=""
 FD_PEAK=0
 RSS_PEAK_KB=0
+RESOURCE_SAMPLING_INCOMPLETE=0
 STARTED_MS=0
 
 early_cleanup() {
@@ -395,7 +396,7 @@ collect_process_tree() {
   while [[ "$index" -lt "${#queue[@]}" ]]; do
     pid="${queue[$index]}"
     index=$((index + 1))
-    printf '%s\n' "$pid"
+    printf '%s\n' "$pid" || return "$?"
     while IFS= read -r child; do
       [[ -n "$child" ]] && queue+=("$child")
     done < <(pgrep -P "$pid" 2>/dev/null || true)
@@ -422,7 +423,7 @@ marker_processes() {
     done
   else
     elapsed_window=$(( ($(now_ms) - STARTED_MS) / 1000 + 5 ))
-    candidates="$(ps -axo pid=,ppid=,etime= 2>/dev/null \
+    if candidates="$(ps -axo pid=,ppid=,etime= 2>/dev/null \
       | awk -v window="$elapsed_window" '
           function elapsed(value, fields, count, hour) {
             count = split(value, fields, ":")
@@ -440,7 +441,11 @@ marker_processes() {
             return seconds
           }
           $2 == 1 && elapsed($3) <= window {print $1}
-        ' | paste -sd, -)"
+        ' | paste -sd, -)"; then
+      :
+    else
+      return "$?"
+    fi
     [[ -n "$candidates" ]] || return 0
     # lsof exits non-zero when a candidate pid vanished between ps and lsof (a
     # routine race under short-lived build children); with set -euo pipefail
@@ -480,7 +485,7 @@ remember_process_candidate() {
 record_process_candidates() {
   local pid
   while IFS= read -r pid; do
-    remember_process_candidate "$pid"
+    remember_process_candidate "$pid" || return "$?"
   done
 }
 
@@ -491,30 +496,71 @@ record_supervised_processes() {
   } | sort -un | record_process_candidates
 }
 
+resource_sampling_unavailable() {
+  # Observation is not the worker verdict. Never publish a partial sample as
+  # a known peak, but do not terminate healthy work because an observer died.
+  if [[ "${RESOURCE_SAMPLING_INCOMPLETE:-0}" == 0 ]]; then
+    printf 'RESOURCE_OBSERVATION_UNAVAILABLE stage=report-supervisor-%s operation=%s exit=%s\n' \
+      "$ROLE" "$1" "$2" >&2 || true
+  fi
+  RESOURCE_SAMPLING_INCOMPLETE=1
+}
+
 sample_supervised_resources() {
   local pid rss fd members
   local rss_total=0
   local fd_total=0
-  members="$({
+  if members="$({
     if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
     marker_processes
-  } | sort -un)"
-  printf '%s\n' "$members" | record_process_candidates
+  } | sort -un)"; then
+    :
+  else
+    resource_sampling_unavailable members "$?"
+    return 0
+  fi
+  # This is cleanup identity state, not optional resource telemetry: retain
+  # its hard failure if it cannot be recorded.
+  printf '%s\n' "$members" | record_process_candidates || return "$?"
   while IFS= read -r pid; do
     [[ -n "$pid" \
       && "$pid" != "$STDOUT_RELAY_PID" \
       && "$pid" != "$STDERR_RELAY_PID" ]] || continue
-    rss="$( { ps -o rss= -p "$pid" 2>/dev/null || true; } \
-      | awk '{sum += $1} END {print sum + 0}')"
+    if rss="$( { ps -o rss= -p "$pid" 2>/dev/null || true; } \
+      | awk '{sum += $1} END {print sum + 0}')"; then
+      :
+    else
+      resource_sampling_unavailable rss "$?"
+      return 0
+    fi
+    if [[ ! "$rss" =~ ^[0-9]+$ ]]; then
+      resource_sampling_unavailable rss-value 2
+      return 0
+    fi
     rss_total=$((rss_total + rss))
     if [[ -d "/proc/$pid/fd" ]]; then
-      fd="$( { find "/proc/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } \
-        | awk 'END {print NR + 0}')"
+      if fd="$( { find "/proc/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } \
+        | awk 'END {print NR + 0}')"; then
+        :
+      else
+        resource_sampling_unavailable fd "$?"
+        return 0
+      fi
     elif command -v lsof >/dev/null 2>&1; then
-      fd="$( { lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } \
-        | awk 'NR > 1 {count++} END {print count + 0}')"
+      if fd="$( { lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } \
+        | awk 'NR > 1 {count++} END {print count + 0}')"; then
+        :
+      else
+        resource_sampling_unavailable fd "$?"
+        return 0
+      fi
     else
-      fd=0
+      resource_sampling_unavailable fd-tool 127
+      return 0
+    fi
+    if [[ ! "$fd" =~ ^[0-9]+$ ]]; then
+      resource_sampling_unavailable fd-value 2
+      return 0
     fi
     fd_total=$((fd_total + fd))
   done < <(printf '%s\n' "$members")
@@ -540,14 +586,14 @@ signal_recorded_processes() {
 
 terminate_process_group() {
   local group_id="$1"
-  record_supervised_processes
+  record_supervised_processes || resource_sampling_unavailable cleanup-members "$?"
   signal_recorded_processes TERM
-  signal_marker_processes TERM
+  signal_marker_processes TERM || resource_sampling_unavailable cleanup-markers "$?"
   kill -TERM -- "-$group_id" >/dev/null 2>&1 || true
   sleep 0.2
-  record_supervised_processes
+  record_supervised_processes || resource_sampling_unavailable cleanup-members "$?"
   signal_recorded_processes KILL
-  signal_marker_processes KILL
+  signal_marker_processes KILL || resource_sampling_unavailable cleanup-markers "$?"
   kill -KILL -- "-$group_id" >/dev/null 2>&1 || true
 }
 
@@ -582,7 +628,11 @@ finish() {
   fi
   if [[ -n "$STDOUT_RELAY_PID" ]]; then wait_for_relay "$STDOUT_RELAY_PID"; fi
   if [[ -n "$STDERR_RELAY_PID" ]]; then wait_for_relay "$STDERR_RELAY_PID"; fi
-  resource_observe "report-supervisor-$ROLE" "$REPOSITORY_ROOT" "$FD_PEAK" "$RSS_PEAK_KB" || true
+  if [[ "$RESOURCE_SAMPLING_INCOMPLETE" == 1 ]]; then
+    resource_observe "report-supervisor-$ROLE" "$REPOSITORY_ROOT" unknown unknown || true
+  else
+    resource_observe "report-supervisor-$ROLE" "$REPOSITORY_ROOT" "$FD_PEAK" "$RSS_PEAK_KB" || true
+  fi
   if [[ -n "$SLOT_DIR" ]]; then rm -rf -- "$SLOT_DIR"; fi
   rm -rf -- "$TMP_ROOT"
   exit "$rc"

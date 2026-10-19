@@ -34,6 +34,8 @@ internal sealed class NativeSelectedRADocument : IScribeDocumentDefinition
             Def("World", "Proof-side execution world", "World pairs the observer configuration with the independently updated authentic source register and the external Return flag. Neither the source nor this flag is an argument of step or privateStep."),
             Def("worldEvent", "One actual event", "A writer event applies substitution only to the authentic source. An observer event executes exactly step: a local successor, the authentic reply at its materialized address, or the separate Return. The returned execution world is absorbing."),
             Def("trajectory", "An active execution schedule", "The natural index enumerates actual writer or observer events. Each event acts on the preceding complete world; idle waiting is excluded."),
+            Theorem("trajectory_add", "The actual continuation of an event prefix", TrajectoryAdd(),
+                "For every event schedule, whole initial world and natural m and k, the prefix of length m plus k is the shifted schedule's prefix of length k from the actual world at m. In the formula shift s m maps i to s applied to m plus i."),
             Def("Progressing", "Every pending observer step executes", "At every active index n where Return has not occurred, some observer event occurs at an index m at least n. No progress is required after Return."),
             Theorem("cleanup_progressing", "Cleanup returns on every progressing schedule", ProgressCleanup(),
                 "A progressing pending call has a first observer event after each of its finite prefixes. Before that event only writer updates occur and the private configuration is unchanged. Each local cleanup step therefore executes after a finite writer prefix. Induction on the counted cleanup sequence reaches Ready and its separate Return on every such schedule. No bound on interference, final source or schedule is supplied to the producer; this cleanup conclusion needs no finite-interference premise."),
@@ -44,6 +46,18 @@ internal sealed class NativeSelectedRADocument : IScribeDocumentDefinition
                     Paragraph(Text("The first Read is alpha at invocation alpha. Exactly j independent updates then occur before the quiescent acquisition prefix a. The final guard Read has its authentic leaf reply at the jth iterate of alpha. The displayed cleanup has zero bursts and ends in a separate Return. No guard or prefix is retained in the ready configuration. In the displayed formula zeroSchedule is the constant function with value zero."))), DescribeRole.Definition),
             Theorem("selected_root_support", "Exact root support and the blocked beta witness", Support(),
                 "The cut choice persists through every local step, Read and independent update. A root-selected return therefore requires an alpha first reply. No substitution image is alpha, so no update preceded that Read and the invocation source was alpha. The raw history starts with that alpha Read itself, with no preceding update. Conversely, a left-spine induction constructs the guard search on every finite source. Appending the constant root candidate, its validation and cleanup gives a witness after any supplied number j of post-selection updates. A quiescent beta invocation takes the two-address branch and returns the literal beta exterior with no holes. Its root beta leaf blocks both L and R. The same code cannot return any root-selected state from beta, although the semantic root row agrees for every finite source at every epoch."),
+            Def("Continues", "A finite stationary prefix", "Continues U c d means that every returning execution from d on U can be preceded by a finite update-free word to give an execution from c on that same source. The prefix is proof-side data and is not retained by the machine."),
+            Theorem("guard_search", "A stationary guard reaches an actual leaf", GuardSearch(),
+                "The actual read map at p is the complete finite tree T. In the formula guardEntry p is emptyWork with guardPath p, and guardExit g ell is emptyWork with control three, guardPath g and guardReply ell. Left-spine induction produces an alpha or beta reply at its actual materialized address g. A finite update-free prefix reaches control three with this guard address and reply, empty row and operand, and absent comparison latches."),
+            Def("pairStart", "Relative comparison entry", "Control is twenty and the operand is L followed by the relative cursor z. All other Work fields are preserved."),
+            Def("pairDone", "Relative comparison exit", "Control is twenty seven and the operand is R followed by z. Both comparison latches contain the supplied leaf reply; all other regions are preserved."),
+            Def("rightLeafReply", "Rightmost leaf label", "Follow right children in a finite subtree until a leaf, and return its alpha or beta label."),
+            Theorem("pair_equal_scan", "An equal stationary subtree scan", EqualScan(),
+                "At every relative offset the two materialized base positions read the same supplied finite subtree T. The actual comparison from pairStart finishes at pairDone with the rightmost leaf label of T. Its finite stationary prefix composes with every later legal execution."),
+            Theorem("pair_unequal_scan", "An unequal stationary subtree scan", UnequalScan(),
+                "The two actual read maps supply different finite subtrees. The comparison reaches control twenty nine while preserving the candidate row, guard address and guard reply. The equality test follows ordered children and reaches the first mismatch after any equal preceding subtree."),
+            Theorem("pair_complete", "Completion of a root comparison", CompleteScan(),
+                "Starting with the relative cursor empty, the comparison reaches control eight and appends ten exactly when the two supplied actual subtrees are equal, and nine otherwise. The guard address and saved guard reply are preserved."),
             Def("forkRecord", "Complete two-hole row meaning", "The exterior has holes L and R with their full native addresses. The partition contains both diagonal pairs; its bit specifies both off-diagonal memberships, so false retains both disequalities."),
             Theorem("quiescent_two_hole", "Quiescent acquisition of both partition signs", TwoHole(),
                 "A structural induction follows the actual relative preorder comparison. Equal branches descend into their left children, advance to the right children and retract completed paths. Equal leaves finish their subtrees. Unequal constructors reach the mismatch phase immediately; equal left subtrees followed by unequal right subtrees do so after the left traversal. The candidate contains exactly the two marked holes and the resulting equality or disequality bit. The same invocation searches its root guard, writes every exterior cell, performs the comparison, validates the saved guard, clears the private regions and Returns from Ready."),
@@ -57,6 +71,9 @@ internal sealed class NativeSelectedRADocument : IScribeDocumentDefinition
         DescribeId.Create("selected-ra-"+n.Replace('_','-')),DeclarationHandle.Create(Prefix+n),
         H(title),StatementSource.FromAuthor(Disp(f)),AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))),DescribeRole.Theorem);
+    private static Formula TrajectoryAdd() => All("s",Arr(V("Nat"),V("Bool")),All("w",V("World"),
+        All("m",V("Nat"),All("k",V("Nat"),EqOf(Call("trajectory",V("s"),V("w"),Add(V("m"),V("k"))),
+            Call("trajectory",Call("shift",V("s"),V("m")),Call("trajectory",V("s"),V("w"),V("m")),V("k")))))));
     private static Formula Cleanup()
     {
         Formula count=Add(Add(Length(Call("operand",V("w"))),Length(Call("guardPath",V("w")))),D(6));
@@ -118,6 +135,48 @@ internal sealed class NativeSelectedRADocument : IScribeDocumentDefinition
             EqOf(Call("literalRecord",Call("cut",Call("false")),Call("mul",V("A"),V("B"))),
                 Call("forkRecord",Call("decide",EqOf(V("A"),V("B")))))));
         return All("A",V("Source"),All("B",V("Source"),body));
+    }
+    private static Formula ScanRead(bool right, Formula tree) => All("a",V("Address"),EqOf(
+        Call("readout",Cons(Call(right?"true":"false"),Append(V("z"),V("a"))),V("U")),
+        Call("readout",V("a"),tree)));
+    private static Formula Active(Formula w) => Call("active",Call("false"),w);
+    private static Formula EqualScan()
+    {
+        Formula end=Active(Call("pairDone",V("w"),V("z"),Call("rightLeafReply",V("T"))));
+        Formula body=Imp(ScanRead(false,V("T")),Imp(ScanRead(true,V("T")),
+            Call("Continues",V("U"),Active(Call("pairStart",V("w"),V("z"))),end)));
+        return All("U",V("Source"),All("T",V("Source"),All("w",V("Work"),All("z",V("Address"),body))));
+    }
+    private static Formula GuardSearch()
+    {
+        Formula observed=All("z",V("Address"),EqOf(Call("readout",Append(V("p"),V("z")),V("U")),Call("readout",V("z"),V("T"))));
+        Formula start=Call("active",V("q"),Call("guardEntry",V("p")));
+        Formula end=Call("active",V("q"),Call("guardExit",V("g"),V("ell")));
+        Formula leaf=OrOf(EqOf(V("ell"),Call("alpha")),EqOf(V("ell"),Call("beta")));
+        Formula body=Imp(observed,Some("g",V("Address"),Some("ell",V("Reply"),AndOf(leaf,
+            EqOf(Call("readout",V("g"),V("U")),V("ell")),Call("Continues",V("U"),start,end)))));
+        return All("U",V("Source"),All("T",V("Source"),All("q",V("Bool"),All("p",V("Address"),body))));
+    }
+    private static Formula ScanOutput(Formula control, Formula row, Formula start) => Some("v",V("Work"),AndOf(
+        EqOf(Call("pc",V("v")),control),EqOf(Call("row",V("v")),row),
+        EqOf(Call("guardPath",V("v")),Call("guardPath",V("w"))),
+        EqOf(Call("guardReply",V("v")),Call("guardReply",V("w"))),
+        Call("Continues",V("U"),Active(start),Active(V("v")))));
+    private static Formula UnequalScan()
+    {
+        Formula body=Imp(ScanRead(false,V("A")),Imp(ScanRead(true,V("B")),Imp(NeOf(V("A"),V("B")),
+            ScanOutput(D(2,9),Call("row",V("w")),Call("pairStart",V("w"),V("z"))))));
+        return All("U",V("Source"),All("A",V("Source"),All("B",V("Source"),
+            All("w",V("Work"),All("z",V("Address"),body)))));
+    }
+    private static Formula CompleteScan()
+    {
+        Formula left=All("a",V("Address"),EqOf(Call("readout",Cons(Call("false"),V("a")),V("U")),Call("readout",V("a"),V("A"))));
+        Formula right=All("a",V("Address"),EqOf(Call("readout",Cons(Call("true"),V("a")),V("U")),Call("readout",V("a"),V("B"))));
+        Formula bit=Call("ite",EqOf(V("A"),V("B")),D(1,0),D(9));
+        Formula body=Imp(left,Imp(right,ScanOutput(D(8),Append(Call("row",V("w")),Cons(bit,Call("nil"))),
+            Call("pairStart",V("w"),Call("nil")))));
+        return All("U",V("Source"),All("A",V("Source"),All("B",V("Source"),All("w",V("Work"),body))));
     }
     private static Formula V(string n)=>F.Id(n);
     private static Formula Call(string n,params Formula[] a)=>new Formula.Apply(Seq(Operatorname,Grp(V(n))),[.. a]);

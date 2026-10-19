@@ -1,0 +1,32 @@
+**Theorem 81.1 (the original Fibonacci coordinate supplies the extension).** Let $q,r$ be distinct primes with
+
+$$q\equiv1\pmod{24},\qquad r\equiv19\pmod{24},\qquad (5/q)=(5/r)=(q/r)=1,$$
+
+and put $D=qr$. If $B_N=L_N^2+3=D C^2$ for $N=3^j$, where $j,C$ are positive integers, then
+
+$$\boxed{\mathcal R(5,-D,q)=\mathcal R(5,q,-D)=1.}$$
+
+**Proof.** For $(5,-D,q)$ the discriminants are $5,-D,q$, whose three-way gcd is one. The Hilbert symbols $(5,q)_p$ are trivial by $5$-splitting and $q\equiv1\pmod8$. For $(5,-D)_p$, the places $q,r,5$ give $(5/q),(5/r),(-D/5)=1$; at $2$ both arguments are $1\pmod4$. For $(-D,q)_p$, the places $q,r$ give $(r/q),(q/r)=1$, using $(-q,q)_q=1$, while $q$ is a square at $2$. All other finite places are unit pairs; the infinite symbols are trivial. Thus the primary theorem applies, including the shared ramified argument $q$.
+
+The original identities and the Fibonacci recurrence modulo four give
+
+$$5F_N^2-1=D C^2,\qquad F_N\equiv2\pmod4.$$
+
+Indeed, $N\equiv3\pmod6$ and the Fibonacci recurrence modulo four has period six. In $K_0=\mathbb Q(\sqrt5)$, with $\mathcal O_0=\mathbb Z[\phi]$ and $\phi=(1+\sqrt5)/2$, set
+
+$$\beta=-1-F_N\sqrt5=(F_N-1)-2F_N\phi\equiv1\pmod{4\mathcal O_0},\qquad N_{K_0/\mathbb Q}(\beta)=-D C^2.$$
+
+Put $E=\mathbb Q(\sqrt5,\sqrt{-D})$, $K=\mathbb Q(\sqrt{-5D})$, and $F=E(\sqrt\beta)$. The norm-field construction in Corollary 5.2 makes $F/K$ cyclic quartic and $F/E$ quadratic. We check that $F/K$ is unramified at every finite place, which suffices for Definition 7.6 here.
+
+At an odd $p\nmid5D$, the elements $\beta,\bar\beta$ cannot have a common prime divisor above $p$, since their sum is $-2$. At a split prime dividing $C$, exactly one has positive valuation, and that valuation is even; an inert prime cannot divide either. Hence adjoining $\sqrt\beta$ is unramified, as are the quadratic factors defining $E$ and $K$ at such $p$. This includes every additional prime and repeated power in $C$.
+
+At $p=q$ or $r$, choose the split place of $K_0$ where $F_N\sqrt5\equiv1\pmod p$. There $\beta\equiv-2$ is a unit; at the conjugate place its valuation is $1+2v_p(C)$. Since $\beta\bar\beta=-D C^2$ is a square in $E$, either conjugate defines the same quadratic extension of $E$. Locally $E/K$ is trivial because $5$ is a square in $\mathbb Q_p$, and the unit description makes $F/K$ unramified. At $5$, $-D$ is a square in $\mathbb Q_5$, so again locally $E=K$; $\beta$ is a unit with residue $-1$, and its quadratic extension is unramified.
+
+At $2$, the ring $\mathcal O_0\otimes\mathbb Z_2$ is unramified quadratic. Write $\beta=1+4t$. The element $(1+\sqrt\beta)/2$ satisfies $T^2-T-t$, whose derivative is a unit modulo two, so adjoining $\sqrt\beta$ is unramified. Also $5\equiv-D\equiv5\pmod8$ and $-5D\equiv1\pmod8$: $K$ is split at two and $E$ is unramified quadratic. Thus $F/K$ is unramified there as well. This uses the full golden integer ring.
+
+The resulting extension is minimally ramified in the primary definition. Equations (45)--(48) evaluate the third argument $q$ at the conjugate-unit place, giving
+
+$$\mathcal R(5,-D,q)=(-2/q)=1.$$
+
+This remains valid when $q\mid C$, since the unit residue is still $-2$. Rédei reciprocity proves the other equality. ∎
+

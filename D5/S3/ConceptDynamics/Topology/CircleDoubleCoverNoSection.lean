@@ -60,7 +60,6 @@ theorem no_continuous_global_section :
     have hsquare : Circle.exp Real.pi ^ 2 = 1 := by
       rw [← Circle.exp_natCast_mul]
       convert Circle.exp_two_pi using 1
-      norm_num
     have hcoerce : ((Circle.exp Real.pi : Circle) : ℂ) ^ 2 = 1 := by
       exact congrArg (fun z : Circle => (z : ℂ)) hsquare
     rcases (sq_eq_one_iff.mp hcoerce) with h | h

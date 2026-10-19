@@ -174,7 +174,19 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 Each density matrix has trace norm one; the triangle inequality bounds their difference by two.
 
-**Theorem 1.15 (Hermitian Jordan mass).**
+**Theorem 1.15 (Orthogonal positive difference).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right), B \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{PosSemidef}\left(A\right) \Rightarrow \left(\operatorname{PosSemidef}\left(B\right) \Rightarrow \left(A \cdot B = 0 \Rightarrow \operatorname{traceNorm}\left(A - B\right) = \operatorname{re}\left(\operatorname{trace}\left(A\right)\right) + \operatorname{re}\left(\operatorname{trace}\left(B\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_sub_orthogonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive semidefinite complex matrices A and B with A B zero, A plus B is the positive square root of the Gram matrix of A minus B. The trace norm is therefore the sum of their real traces.
+
+**Theorem 1.16 (Hermitian Jordan mass).**
 
 $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{Matrix.IsHermitian}(A) \Rightarrow \operatorname{traceNorm}\left(A\right) = \operatorname{re}\left(\operatorname{trace}\left(\operatorname{posPart}\left(A\right)\right)\right) + \operatorname{re}\left(\operatorname{trace}\left(\operatorname{negPart}\left(A\right)\right)\right)$$
 
@@ -186,7 +198,7 @@ $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\ri
 
 For a Hermitian matrix A, its trace norm equals the sum of the real traces of its positive and negative Jordan parts.
 
-**Theorem 1.16 (Every CPTP channel contracts trace distance).**
+**Theorem 1.17 (Every CPTP channel contracts trace distance).**
 
 $$\forall n \in FiniteType, C \in \operatorname{QuantumChannel}\left(n, n\right), rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(\operatorname{mapState}\left(C, rho\right), \operatorname{mapState}\left(C, sigma\right)\right) \le \operatorname{traceDistance}\left(rho, sigma\right)$$
 
@@ -201,6 +213,14 @@ Split the Hermitian state difference into positive and negative parts. Positivit
 The trace-norm proofs and their necessary SVD, orthonormal extension, and unitary row-sum dependencies retain Alex Meiburg's Physlib source at revision 6a09b2d1761a0d4430083045a247eb121d8da260. The Lean owner retains its copyright and full Apache 2.0 license. Retention ends when equivalent declarations are available in this repository's own pinned Mathlib.
 
 Contraction follows from the actual Hermitian Jordan positive and negative parts, their trace-norm mass identity, complete positivity, and trace preservation. It assumes neither a contractivity field nor a Kraus representation of the recovery. The finite-record recovery-error theorem consumes these laws; no computational recovery algorithm is asserted.
+
+For the signed-time prediction application in original Theorem 3.3, let d,e be at least two, H any Hermitian matrix on the joint space, and rho any positive semidefinite trace-one joint state. The partial trace is unnormalized and the trace norm here is unhalved. Set h0=Re Tr(H)/(de), HA=Tr_B(H)/e-h0 I, HB=Tr_A(H)/d, H0=HA tensor I+I tensor HB, and V=H-H0. The same-H residual is R_ab=(id-E_A)[H,W_ab tensor I], where E_A(X)=Tr_B(X) tensor I/e; delta(H) is the maximum of the Euclidean operator norms of these residuals.
+
+A positive matrix R satisfies Re Tr(A R A*) <= ||A||^2 Re Tr(R). Indeed, with S=sqrt(R), the C-star conjugation bound gives S A* A S <= ||A||^2 R. Apply the positive trace map and trace cyclicity. For unitary U,W put D=U-W, M=(U+W)/2, and r=||D||. If r=0 the endpoints agree. Otherwise the positive matrices P_plus=(D+r M)R(D+r M)*/(2r) and P_minus=(D-r M)R(D-r M)*/(2r) have difference U R U*-W R W* and sum D R D*/r+r M R M*. Since ||M||<=1, their total trace is at most 2r Tr(R). Partial trace preserves positivity and the unnormalized trace. The positive trace-norm formula and triangle inequality therefore bound the reduced endpoint difference by 2||U-W|| Tr(R), including singular and correlated R.
+
+Fix any real t and define Z(s)=exp(i t s H0) exp(-i t s H) for 0<=s<=1. The two exponential derivative formulas give Z'(s)=-i t exp(i t s H0) V exp(-i t s H). Both factors are actual unitaries, so ||Z'(s)||<=|t| ||V||. The vector-valued mean-value bound on [0,1], followed by multiplication by exp(-i t H0), yields ||exp(-i t H)-exp(-i t H0)||<=|t| ||V||. The argument includes t<0 and t=0 and uses no commutation assumption on H and H0.
+
+The two Kronecker algebra embeddings preserve the exponential and their images commute, hence exp(-i t H0)=exp(-i t HA) tensor exp(-i t HB). The existing local partial-trace covariance identity applies to every joint matrix, giving Tr_B(exp(-i t H0)rho exp(-i t H0)*)=exp(-i t HA)Tr_B(rho)exp(-i t HA)*. The endpoint estimate and the same-H Weyl reconstruction inequality ||V||<=delta(H) give the bound 2|t|delta(H). Both reduced endpoints are positive trace-one matrices, so their unhalved trace-norm difference is also at most two. Thus the actual reduced-state prediction error is <=min(2,2|t|delta(H)) for every real t and arbitrary joint rho, including noncommuting, singular and correlated states.
 
 ## References
 
@@ -219,5 +239,6 @@ Contraction follows from the actual Hermitian Jordan positive and negative parts
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_neg`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_nonneg`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_of_posSemidef`
+- Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_sub_orthogonal`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.trace_norm_jordan_mass`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](FiniteStateChannel.md)

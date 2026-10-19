@@ -256,7 +256,19 @@ $$\forall (n : \mathbb{N}), \forall (edges : \operatorname{List}\left(\mathbb{N}
 
 At depth zero evaluate the accumulated word. At positive depth append each edge once and sum the recursive values. Repeated edges and all edge orders are included.
 
-**Theorem 1.22 (Soundness of the evaluator).**
+**Theorem 1.22 (Sum over a function by its first value).**
+
+$$\forall (m : \mathbb{N}), \forall (alpha : Type), \forall (beta : Type), [\operatorname{Fintype}\left(alpha\right)], [\operatorname{AddCommMonoid}\left(beta\right)], \forall (f : (\operatorname{Fin}\left(m + 1\right) \to alpha) \to beta), (\sum_{w : \operatorname{Fin}\left(m + 1\right) \to alpha} (f\left(w\right))) = (\sum_{a : alpha} ((\sum_{w : \operatorname{Fin}\left(m\right) \to alpha} (f\left(\operatorname{Fin.cons}\left(a, w\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SupportForestMoments/SupportAndEdgeWordReflection.sum_fin_cons` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The equivalence Fin.consEquiv decomposes a function on Fin(m + 1) into its first value and its restriction to the remaining m coordinates. Summation over this product gives the two nested sums.
+
+**Theorem 1.23 (Soundness of the evaluator).**
 
 $$\forall (n : \mathbb{N}), \forall (m : \mathbb{N}), \forall (e : \operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(n\right)), \forall (r : \mathbb{N}), \forall (w : \operatorname{List}\left(\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(n\right)\right)), evalMoment\left(n, \operatorname{List.map}\left(fun (i : \operatorname{Fin}\left(m\right)) \mapsto (\operatorname{val}\left(\operatorname{Prod.fst}\left(e\left(i\right)\right)\right), \operatorname{val}\left(\operatorname{Prod.snd}\left(e\left(i\right)\right)\right)), \operatorname{List.finRange}\left(m\right)\right), r, \operatorname{List.map}\left(fun (a : \operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{val}\left(\operatorname{Prod.fst}\left(a\right)\right), \operatorname{val}\left(\operatorname{Prod.snd}\left(a\right)\right)), w\right)\right) = (\sum_{v : \operatorname{Fin}\left(r\right) \to \operatorname{Fin}\left(m\right)} (chi\left(\operatorname{List.prod}\left(\operatorname{List.map}\left(fun (a : \operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(n\right)) \mapsto \operatorname{Equiv.swap}\left(\operatorname{Prod.fst}\left(a\right), \operatorname{Prod.snd}\left(a\right)\right), w\right)\right) \cdot \operatorname{List.prod}\left(\operatorname{List.ofFn}\left(fun (i : \operatorname{Fin}\left(r\right)) \mapsto \operatorname{Equiv.swap}\left(\operatorname{Prod.fst}\left(e\left(v\left(i\right)\right)\right), \operatorname{Prod.snd}\left(e\left(v\left(i\right)\right)\right)\right)\right)\right)\right)))$$
 
@@ -268,7 +280,7 @@ $$\forall (n : \mathbb{N}), \forall (m : \mathbb{N}), \forall (e : \operatorname
 
 Induction on the remaining word length identifies the recursive sum with the sum over functions Fin r → Fin m. Natural-number actions agree with the corresponding permutations on Fin n, including repeated or equal endpoints.
 
-**Theorem 1.23 (Two-prefix decomposition).**
+**Theorem 1.24 (Two-prefix decomposition).**
 
 $$\forall (n : \mathbb{N}), \forall (m : \mathbb{N}), \forall (e : \operatorname{Fin}\left(m\right) \to \mathbb{N} \times \mathbb{N}), \forall (r : \mathbb{N}), \forall (w : \operatorname{List}\left(\mathbb{N} \times \mathbb{N}\right)), evalMoment\left(n, \operatorname{List.map}\left(e, \operatorname{List.finRange}\left(m\right)\right), r + 2, w\right) = (\sum_{i : \operatorname{Fin}\left(m\right)} ((\sum_{j : \operatorname{Fin}\left(m\right)} (evalMoment\left(n, \operatorname{List.map}\left(e, \operatorname{List.finRange}\left(m\right)\right), r, \operatorname{List.append}\left(w, [e\left(i\right), e\left(j\right)]\right)\right)))))$$
 
@@ -280,7 +292,7 @@ $$\forall (n : \mathbb{N}), \forall (m : \mathbb{N}), \forall (e : \operatorname
 
 Two applications of the evaluator recursion expose the first two edge choices as finite sums, leaving the remaining r choices recursive.
 
-**Definition 1.24 (Moment indexed by an edge enumeration).**
+**Definition 1.25 (Moment indexed by an edge enumeration).**
 
 $$\forall (n : \mathbb{N}), \forall (m : \mathbb{N}), \forall (e : \operatorname{Fin}\left(m\right) \to \operatorname{Sym2}\left(\operatorname{Fin}\left(n\right)\right)), \forall (r : \mathbb{N}), wordMoment\left(e, r\right) = (\sum_{w : \operatorname{Fin}\left(r\right) \to \operatorname{Fin}\left(m\right)} (chi\left(\operatorname{List.prod}\left(\operatorname{List.ofFn}\left(fun (i : \operatorname{Fin}\left(r\right)) \mapsto edgeSwap\left(e\left(w\left(i\right)\right)\right)\right)\right)\right)))$$
 
@@ -292,7 +304,7 @@ $$\forall (n : \mathbb{N}), \forall (m : \mathbb{N}), \forall (e : \operatorname
 
 The index function chooses unordered edges; the list of their transpositions has length r and is multiplied in increasing index order.
 
-**Theorem 1.25 (Reindexing graph edge words).**
+**Theorem 1.26 (Reindexing graph edge words).**
 
 $$\forall (n : \mathbb{N}), \forall (m : \mathbb{N}), \forall (G : \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right)), \forall (e : \operatorname{Fin}\left(m\right) \to \operatorname{Sym2}\left(\operatorname{Fin}\left(n\right)\right)), (\operatorname{Finset.image}\left(e, (\operatorname{Finset.univ} : \operatorname{Finset}\left(\operatorname{Fin}\left(m\right)\right))\right) = \operatorname{SimpleGraph.edgeFinset}\left(G\right)) \Rightarrow ((\operatorname{Function.Injective}\left(e\right)) \Rightarrow (\forall (r : \mathbb{N}), M_{r2}\left(G, r\right) = wordMoment\left(e, r\right)))$$
 
@@ -328,6 +340,7 @@ An injective exhaustive edge enumeration supplies an equivalence with the graph'
 - Truth anchor: `D5/S3/Combinatorics/Graph/SupportForestMoments/SupportAndEdgeWordReflection.natProd`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SupportForestMoments/SupportAndEdgeWordReflection.noIsolated`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SupportForestMoments/SupportAndEdgeWordReflection.pack`
+- Truth anchor: `D5/S3/Combinatorics/Graph/SupportForestMoments/SupportAndEdgeWordReflection.sum_fin_cons`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SupportForestMoments/SupportAndEdgeWordReflection.twoPoints`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SupportForestMoments/SupportAndEdgeWordReflection.twoPoints_card`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SupportForestMoments/SupportAndEdgeWordReflection.wordMoment`

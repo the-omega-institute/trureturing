@@ -118,7 +118,8 @@ private theorem collision_values {Y : Type*} (f : Y → Y) (g : Y → Nat)
       Function.iterate_add_apply, ← hy.iterate_mod_apply, hmod]
     rw [show mu + r = r + mu by omega, Function.iterate_add_apply]
   · rw [show mu + m * p + r = mu + (m * p + r) by omega,
-      birkhoffSum_add, periodic_sum f g hp hy, hmod, hdiv, birkhoffSum_add]
+      birkhoffSum_add_right_apply, periodic_sum f g hp hy, hmod, hdiv,
+      birkhoffSum_add_right_apply]
     omega
 
 /-- Each record keeps its actual endpoint and the natural progression coefficients. -/

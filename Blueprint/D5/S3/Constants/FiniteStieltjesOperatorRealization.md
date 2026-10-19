@@ -20,6 +20,12 @@ On the real Euclidean space indexed by I, multiplication by x is an explicit dia
 
 The proof identifies each Hankel truncation with the Gram matrix of the vectors sqrt(w(i)) x(i)^p and applies Mathlib's Gram positivity theorem. It formalizes the unconditional finite positive-atomic core only; no Riemann-hypothesis or square-folded-xi representation is assumed or claimed.
 
+The public declarations diagonal_operator_nonnegative and moment_eq_operator_pairing retain the specified diagonal operator and rootWeightVector. For the scalar input map J(u)=u v, the adjoint identity gives J* U^k J=mu(k) id for every k. Coordinatewise multiplication by real nodes is symmetric, so nonnegative quadratic pairings give a positive operator. The finite-prefix error is the maximum of the absolute moment differences over k from zero through the chosen prefix length.
+
+These finite atomic realizations also exhibit discontinuity of exact prefix criteria. For epsilon>0, the prefix (1,1,1,1+epsilon) has positive Hankel blocks and ordinary ranks both equal to one. A symmetric realization would force C J(1)=J(1) from its first three moments, contradicting its fourth moment. It approaches the unit atom at node one. For weights (1-delta,delta) at nodes (1,2), with 0<delta<1, the moments are 1+delta(2^k-1). Every fixed prefix approaches the unit atom, while the order-one Hankel determinant is delta(1-delta)>0. The explicit two-dimensional realization and the Gram rank lower bound give minimum dimension two, compared with one at the limit; both spectra lie in [1,2].
+
+Without a common spectral upper bound, fix any natural r and set t=n+2. Use nodes (1,t^2) and weights (1-w,w), where w=1/t^(4r+3). Both weights are positive. Uniformly for k<=2r+1, the absolute difference of the k-th moment from one is at most 1/t. The next moment equals 1-w+t and tends to positive infinity. For r>=2, the two distinct nodes and positive weights make the ordinary Hankel ranks at orders r and r-1 both equal to two. These are consequences of the finite atomic suppliers, adjoint and Gram rank identities, and scalar estimates; they introduce no further representation assumption.
+
 ## References
 
 - Truth anchor: `D5/S3/Constants/FiniteStieltjesOperatorRealization.finite_stieltjes_operator_realization`

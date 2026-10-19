@@ -15,7 +15,7 @@ import Mathlib.LinearAlgebra.Eigenspace.ContinuousLinearMap
 import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Restrict
 import Mathlib.Topology.Algebra.InfiniteSum.Group
 import Mathlib.Data.Set.Countable
-import Mathlib.Logic.Denumerable
+import Mathlib.Basic.Denumerable
 import Mathlib.Logic.Equiv.Set
 import Mathlib.Tactic
 
@@ -130,7 +130,7 @@ private theorem exists_setIndex_nonneg_eigenbasis_of_compact
     {T : H →L[ℂ] H} (hTc : IsCompactOperator T) (hTpos : 0 ≤ T) :
     ∃ (w : Set H) (b : HilbertBasis w ℂ H) (s : w → ℝ),
       (∀ i, 0 ≤ s i) ∧ (∀ i, T (b i) = (s i : ℂ) • b i) := by
-  have hTp : T.IsPositive := (ContinuousLinearMap.nonneg_iff_isPositive T).mp hTpos
+  have hTp : T.IsPositive := (ContinuousLinearMap.nonneg_iff_isPositive).mp hTpos
   obtain ⟨w, b, s, heigen⟩ :=
     exists_setIndex_real_eigenbasis_of_compact_isSymmetric hTc hTp.isSymmetric
   refine ⟨w, b, s, ?_, heigen⟩

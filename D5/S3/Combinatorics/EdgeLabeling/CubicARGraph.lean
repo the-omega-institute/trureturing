@@ -63,7 +63,7 @@ private theorem ar_graph_of_finite_label_certificate {V : Type} [Fintype V]
   · intro v
     apply ar_vertex_of_no_additive_relation G f v (hdeg v)
     · intro a ha
-      have he := G.incidenceSet_subset v ((G.mem_incidenceFinset v a).mp ha)
+      have he := G.incidenceSet_subset v (SimpleGraph.mem_incidenceFinset.mp ha)
       exact Nat.lt_of_lt_of_le Nat.zero_lt_one (hmaps he).1
     · exact hinj.mono (by simpa using G.incidenceSet_subset v)
     · exact hno v

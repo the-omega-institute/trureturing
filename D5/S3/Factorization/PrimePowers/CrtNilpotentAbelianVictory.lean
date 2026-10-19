@@ -52,7 +52,7 @@ theorem zmod_additive_group_is_prime_power_decomposable (n : Nat) [NeZero n] :
     SylowPrimePowerDecomposable (Multiplicative (ZMod n)) := by
   exact
     ((finite_prime_power_quotient_completeness_tfae
-      (G := Multiplicative (ZMod n))).out 3 4 rfl rfl).mp
+      (G := Multiplicative (ZMod n))).out 4 5 rfl rfl).mp
       (inferInstance : Group.IsNilpotent (Multiplicative (ZMod n)))
 
 #print axioms zmod_additive_group_is_prime_power_decomposable

@@ -143,7 +143,8 @@ runs:
         esac
         export PREFLIGHT_DEADLINE_AT="$STRATALINT_CACHE_PRODUCER_DEADLINE_AT"
         status=0
-        bash tools/scripts/report/report-supervisor.sh --role lean-cache-slice -- \
+        python3 tools/scripts/report/runner-diagnostics.py -- \
+          bash tools/scripts/report/report-supervisor.sh --role lean-cache-slice -- \
           env -u PREFLIGHT_DEADLINE_AT make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build REGENERATE_REPORT_ARTIFACTS="$regenerate" || status=$?
         if [[ "$status" == 0 ]]; then
           python3 tools/lean-inspector/publication.py validate .lake/build/stratalint/raw-lean-report.json --repository "$GITHUB_WORKSPACE" || status=$?

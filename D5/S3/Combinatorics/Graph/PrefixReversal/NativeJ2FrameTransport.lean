@@ -9,6 +9,7 @@
    base case from actual independent label tuples. It assumes no target domain
    equivalence, endpoint certificate, prior-cycle inventory, or changed barred
    numbering. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2Coverage
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts

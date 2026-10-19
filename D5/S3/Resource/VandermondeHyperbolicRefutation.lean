@@ -13,6 +13,9 @@ import Mathlib.Data.Nat.Choose.Cast
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.Analysis.SpecificLimits.Normed
 
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf_toOuterMeasure_apply)
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -226,7 +229,8 @@ theorem result : ¬ claim := by
         rw [hcylinder]
         dsimp only [μ, uniformSamples]
         rw [Measure.infinitePi_pi _ (fun _ _ => (Set.to_countable _).measurableSet)]
-        simp only [PMF.toMeasure_uniformOfFintype_apply _ (Set.to_countable _).measurableSet,
+        simp only [PMF.toMeasure_apply_eq_toOuterMeasure_apply _ (Set.to_countable _).measurableSet,
+          uniformPmf_toOuterMeasure_apply,
           Finset.prod_const, Finset.card_range, Fintype.card_subtype,
           ENNReal.toReal_pow, ENNReal.toReal_div,
           ENNReal.toReal_natCast]

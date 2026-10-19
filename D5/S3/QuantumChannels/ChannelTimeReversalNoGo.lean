@@ -618,7 +618,7 @@ private lemma replacement_cptp (rho : QubitMatrix) (hρ : rho.PosSemidef) (htr :
 private lemma psd_zero_corner (M : QubitMatrix) (hM : M.PosSemidef) (hz : M 0 0 = 0) : M = Matrix.trace M • Matrix.single 1 1 1 := by
   have hq : dotProduct (star (Pi.single (0 : Fin 2) (1 : ℂ))) (Matrix.mulVec M (Pi.single 0 1)) = 0 := by
     simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, hz]
-  have hc := (hM.dotProduct_mulVec_zero_iff (Pi.single 0 1)).mp hq
+  have hc := hM.dotProduct_mulVec_zero_iff.mp hq
   have h10 : M 1 0 = 0 := by
     simpa [Matrix.mulVec, dotProduct, Fin.sum_univ_two] using congrFun hc 1
   have h01 : M 0 1 = 0 := by

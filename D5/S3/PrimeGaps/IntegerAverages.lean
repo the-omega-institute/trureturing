@@ -352,14 +352,14 @@ lemma abs_productBasis_le_one {α : Type*} [Fintype α] {Ω J : α → Type*}
     (f : (p : α) → J p → Ω p → ℝ) (hf : ∀ p i t, |f p i t| ≤ 1)
     (σ : (p : α) → J p) (t : (p : α) → Ω p) : |productBasis f σ t| ≤ 1 := by
   rw [productBasis, Finset.abs_prod]
-  exact Finset.prod_le_one (fun _ _ => abs_nonneg _) (fun p _ => hf p _ _)
+  exact Finset.prod_le_one₀ (fun _ _ => abs_nonneg _) (fun p _ => hf p _ _)
 
 /-- Coefficients bounded by one give tuple amplitudes bounded by one. -/
 lemma tupleAmplitude_abs_le {P k : ℕ}
     (h : ∀ d ∈ P.divisors, |coefficient P d| ≤ 1) (r : DivisorTuple P k) :
     |tupleAmplitude r| ≤ 1 := by
   rw [tupleAmplitude, Finset.abs_prod]
-  exact Finset.prod_le_one (fun _ _ => abs_nonneg _)
+  exact Finset.prod_le_one₀ (fun _ _ => abs_nonneg _)
     (fun i _ => h _ (r i).property)
 
 /-- Every assigned prime divides the assignment product. -/

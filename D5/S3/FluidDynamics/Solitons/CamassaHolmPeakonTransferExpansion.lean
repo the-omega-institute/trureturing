@@ -418,8 +418,8 @@ private lemma coeff_H {N : ℕ} (w : Fin N → ℂ) (q : Fin N → ℝ) (ν γ :
 
 private lemma derivative_prod {ι : Type*} [DecidableEq ι]
     (s : Finset ι) (f : ι → PS) :
-    PowerSeries.derivative ℂ (∏ i ∈ s, f i) =
-      ∑ i ∈ s, PowerSeries.derivative ℂ (f i) * ∏ k ∈ s.erase i, f k := by
+    PowerSeries.derivative (∏ i ∈ s, f i) =
+      ∑ i ∈ s, PowerSeries.derivative (f i) * ∏ k ∈ s.erase i, f k := by
   induction s using Finset.induction_on with
   | empty => simp
   | @insert a s ha ih =>
@@ -437,8 +437,8 @@ private lemma derivative_prod {ι : Type*} [DecidableEq ι]
     · exact fun h => ha (Finset.mem_of_mem_erase h)
 
 private lemma derivative_det_rows {N : ℕ} (M : Matrix (Fin N) (Fin N) PS) :
-    PowerSeries.derivative ℂ (Matrix.det M) =
-      ∑ i, Matrix.det (M.updateRow i (fun j => PowerSeries.derivative ℂ (M i j))) := by
+    PowerSeries.derivative (Matrix.det M) =
+      ∑ i, Matrix.det (M.updateRow i (fun j => PowerSeries.derivative (M i j))) := by
   classical
   have hd (K : Matrix (Fin N) (Fin N) PS) :
       Matrix.det K = ∑ σ : Equiv.Perm (Fin N),
@@ -455,9 +455,9 @@ private lemma derivative_det_rows {N : ℕ} (M : Matrix (Fin N) (Fin N) PS) :
   apply Finset.sum_congr rfl
   intro σ _
   congr 1
-  have he : (fun k => (M.updateRow i (fun j => PowerSeries.derivative ℂ (M i j)))
+  have he : (fun k => (M.updateRow i (fun j => PowerSeries.derivative (M i j)))
       k (σ k)) = Function.update (fun k => M k (σ k)) i
-        (PowerSeries.derivative ℂ (M i (σ i))) := by
+        (PowerSeries.derivative (M i (σ i))) := by
     funext k
     by_cases hk : k = i
     · subst k; rw [Matrix.updateRow_self, Function.update_self]
@@ -466,15 +466,15 @@ private lemma derivative_det_rows {N : ℕ} (M : Matrix (Fin N) (Fin N) PS) :
 
 private lemma derivative_det_of_inverse {N : ℕ}
     (M R : Matrix (Fin N) (Fin N) PS) (hRM : R * M = 1) :
-    PowerSeries.derivative ℂ (Matrix.det M) =
-      Matrix.det M * Matrix.trace ((M.map (PowerSeries.derivative ℂ)) * R) := by
+    PowerSeries.derivative (Matrix.det M) =
+      Matrix.det M * Matrix.trace ((M.map (PowerSeries.derivative)) * R) := by
   classical
-  let D := M.map (PowerSeries.derivative ℂ)
+  let D := M.map (PowerSeries.derivative)
   have he : D * R * M = D := by rw [Matrix.mul_assoc, hRM, Matrix.mul_one]
   rw [derivative_det_rows, Matrix.trace, Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro i _
-  have hr : (fun j => PowerSeries.derivative ℂ (M i j)) =
+  have hr : (fun j => PowerSeries.derivative (M i j)) =
       ∑ k, ((D * R) i k) • M k := by
     funext j
     have hh := congrArg (fun K : Matrix (Fin N) (Fin N) PS => K i j) he
@@ -489,8 +489,8 @@ private def traceSeries {N : ℕ} (M : Mat N) : PS :=
   PowerSeries.mk fun n => Matrix.trace (M ^ (n + 1))
 
 private lemma detSeries_mul_traceSeries {N : ℕ} (M : Mat N) :
-    detSeries M * traceSeries M = -PowerSeries.derivative ℂ (detSeries M) := by
-  have hd : (pencil M).map (PowerSeries.derivative ℂ) = -liftMat M := by
+    detSeries M * traceSeries M = -PowerSeries.derivative (detSeries M) := by
+  have hd : (pencil M).map (PowerSeries.derivative) = -liftMat M := by
     apply Matrix.ext
     intro i j
     unfold pencil liftMat
@@ -508,7 +508,7 @@ private lemma detSeries_mul_traceSeries {N : ℕ} (M : Mat N) :
 
 private lemma coeff_logderiv_of_one_sub (F G : PS)
     (hF : PowerSeries.coeff 0 F = 0)
-    (hFG : (1 - F) * G = PowerSeries.derivative ℂ F)
+    (hFG : (1 - F) * G = PowerSeries.derivative F)
     (m : ℕ) (hm : 0 < m) :
     PowerSeries.coeff (m - 1) G = (m : ℂ) *
       ∑ j ∈ Finset.Icc 1 m, PowerSeries.coeff m (F ^ j) / (j : ℂ) := by
@@ -517,18 +517,18 @@ private lemma coeff_logderiv_of_one_sub (F G : PS)
   have hz : PowerSeries.coeff (m - 1) (F ^ m * G) = 0 :=
     PowerSeries.X_pow_dvd_iff.mp (dvd_mul_of_dvd_left (pow_dvd_pow_of_dvd hx m) G)
       _ (by omega)
-  have he : G = (∑ r ∈ Finset.range m, F ^ r) * PowerSeries.derivative ℂ F + F ^ m * G := by
+  have he : G = (∑ r ∈ Finset.range m, F ^ r) * PowerSeries.derivative F + F ^ m * G := by
     rw [← hFG, ← mul_assoc, geom_sum_mul_neg]
     ring
   have hc : PowerSeries.coeff (m - 1) G =
       ∑ r ∈ Finset.range m, PowerSeries.coeff (m - 1)
-        (F ^ r * PowerSeries.derivative ℂ F) := by
+        (F ^ r * PowerSeries.derivative F) := by
     rw [he, map_add, hz, add_zero, Finset.sum_mul, map_sum]
   rw [hc, Finset.mul_sum]
   have hs : (Finset.range m).sum (fun r => PowerSeries.coeff (m - 1)
-      (F ^ r * PowerSeries.derivative ℂ F)) =
+      (F ^ r * PowerSeries.derivative F)) =
       (Finset.Icc 1 m).sum (fun j => PowerSeries.coeff (m - 1)
-        (F ^ (j - 1) * PowerSeries.derivative ℂ F)) := by
+        (F ^ (j - 1) * PowerSeries.derivative F)) := by
     apply Finset.sum_bij (fun r _ => r + 1)
     · intro r hr; simp only [Finset.mem_range] at hr; exact Finset.mem_Icc.mpr (by omega)
     · intro a _ b _ hab; omega
@@ -665,7 +665,7 @@ private lemma trace_power_log_sum {N : ℕ} (w : Fin N → ℂ) (q : Fin N → �
   unfold detSeries at hd
   rw [det_pencil_L w q ν γ z hz] at hd
   change (1 - PowerSeries.C (Lambda γ z) * H w q ν γ) * traceSeries (L w q ν γ z) =
-    -PowerSeries.derivative ℂ (1 - PowerSeries.C (Lambda γ z) * H w q ν γ) at hd
+    -PowerSeries.derivative (1 - PowerSeries.C (Lambda γ z) * H w q ν γ) at hd
   have hf : PowerSeries.coeff 0 (PowerSeries.C (Lambda γ z) * H w q ν γ) = 0 := by
     rw [PowerSeries.coeff_C_mul, coeff_H_zero, mul_zero]
   have he := coeff_logderiv_of_one_sub _ _ hf

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:731bc4debb20307a5d626c3d8d42d74b9a1bfad439863a30d014d2c2245dee71
-  normalized_sha256: sha256:731bc4debb20307a5d626c3d8d42d74b9a1bfad439863a30d014d2c2245dee71
-cas_ref: sha256:731bc4debb20307a5d626c3d8d42d74b9a1bfad439863a30d014d2c2245dee71
-coverage_gids:
-  - gid: D5/S3/Entropy/Forgetting/DeterministicOutputEntropyRate.deterministic_output_entropy_budget_and_rate
-    target_statement_id: sha256:1040c8663a93b441f41121bc53d179128142ad0a9547d83d10e54be065408d4a
-receipts:
-  unresolved_subitems: []

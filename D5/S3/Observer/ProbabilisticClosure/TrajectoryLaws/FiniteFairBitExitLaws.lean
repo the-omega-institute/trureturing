@@ -378,7 +378,7 @@ private theorem path_law (d : S → Instruction (S ⊕ O)) (a : S ⊕ O) :
   letI : IsProbabilityMeasure (instructionLaw (stopped d) a) := by
     dsimp [instructionLaw]; infer_instance
   have hm : Measurable (path d a) :=
-    measurable_pi_lambda _ (fun n => measurable_run (stopped d) a n)
+    Measurable.of_eval (fun n => measurable_run (stopped d) a n)
   have hp (n : ℕ) :
       (tapeLaw.map (fun ω i => path d a ω (i : Fin (n+1)))) =
         (instructionLaw (stopped d) a).map (fun x i => x (i : Fin (n+1))) :=
@@ -387,7 +387,7 @@ private theorem path_law (d : S → Instruction (S ⊕ O)) (a : S ⊕ O) :
   haveI (I : Finset ℕ) : IsFiniteMeasure (P I) := by
     dsimp [P]
     letI : IsProbabilityMeasure ((instructionLaw (stopped d) a).map I.restrict) :=
-      Measure.isProbabilityMeasure_map (by fun_prop)
+      inferInstance
     infer_instance
   apply IsProjectiveLimit.unique (P := P) ?_ (fun _ => rfl)
   intro I
@@ -400,7 +400,7 @@ private theorem path_law (d : S → Instruction (S ⊕ O)) (a : S ⊕ O) :
   change (tapeLaw.map (path d a)).map I.restrict =
     (instructionLaw (stopped d) a).map I.restrict
   rw [Measure.map_map (by fun_prop) hm,← hproj,← Measure.map_map hf (by fun_prop),
-    ← hp,Measure.map_map hf (by exact measurable_pi_lambda _ (fun i =>
+    ← hp,Measure.map_map hf (by exact Measurable.of_eval (fun i =>
       measurable_run (stopped d) a i.val)),htape]
   rfl
 
@@ -475,7 +475,7 @@ theorem finite_exit_laws (d : S → Instruction (S ⊕ O)) (a : S ⊕ O) :
   intro n o
   refine ⟨trajectory_hit_measurable n o,?_⟩
   have hm : Measurable (path d a) :=
-    measurable_pi_lambda _ (fun n => measurable_run (stopped d) a n)
+    Measurable.of_eval (fun n => measurable_run (stopped d) a n)
   rw [← path_law d a,Measure.map_apply hm (trajectory_hit_measurable n o)]
   rfl
 

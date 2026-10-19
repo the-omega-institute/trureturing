@@ -111,7 +111,8 @@ theorem local_hausdorff_comparison (p : UpperHalfSpace ℂ) (r : ℝ)
     Measure.hausdorffMeasure 3 (HyperbolicSpace.mk '' s) ≤
       (ENNReal.ofReal ((height p-r)⁻¹)) ^ (3 : ℝ) *
         Measure.hausdorffMeasure 3 s := by
-  let K : ℝ≥0 := ⟨height p + 2*r, by have := p.property; positivity⟩
+  let K : ℝ≥0 := ⟨height p + 2*r,
+    (add_pos p.property (mul_pos (by norm_num) hr)).le⟩
   let J : ℝ≥0 := ⟨(height p-r)⁻¹, inv_nonneg.mpr (sub_pos.mpr hrh).le⟩
   have forward : LipschitzOnWith J (HyperbolicSpace.mk (E := ℂ)) s := by
     apply LipschitzOnWith.of_dist_le_mul

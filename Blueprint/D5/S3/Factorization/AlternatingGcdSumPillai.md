@@ -32,7 +32,19 @@ $$\forall n \in \mathbb{N}, \operatorname{pillai}\left(n\right) = \sum_{k \in \o
 
 Each positive integer k at most n contributes gcd(k,n).
 
-**Definition 1.3 (The alternating half-sum).**
+**Theorem 1.3 (The classical totient divisor formula).**
+
+$$\forall n \in \mathbb{N}, 1 \le n \implies \operatorname{pillai}\left(n\right) = \sum_{k \in \operatorname{Icc}\left(1, n\right)} (\operatorname{divisorContribution}\left(k, n\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/AlternatingGcdSumPillai.pillai_divisors` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For n nonzero, pillai(n) is the sum over positive divisors d of n of totient(d)*div(n,d). In this display divisorContribution(k,n) is totient(k)*div(n,k) if k divides n, and zero otherwise. Grouping indices by their gcd and exchanging complementary divisors gives the formula. This is the classical divisor representation used by both the alternating identity and summatory analysis.
+
+**Definition 1.4 (The alternating half-sum).**
 
 $$\forall n \in \mathbb{N}, \operatorname{altGcdSum}\left(n\right) = \sum_{k \in \operatorname{Icc}\left(1, 2 \cdot n\right)} ((-1)^{k} \cdot \operatorname{toInt}\left(\operatorname{gcd}\left(k, 4 \cdot n\right)\right))$$
 
@@ -44,7 +56,7 @@ $$\forall n \in \mathbb{N}, \operatorname{altGcdSum}\left(n\right) = \sum_{k \in
 
 The alternating signs and the gcd values are multiplied and summed in the integers over k from one through 2n.
 
-**Theorem 1.4 (The totient sum in terms of Pillai's function).**
+**Theorem 1.5 (The totient sum in terms of Pillai's function).**
 
 $$\forall n \in \mathbb{N}, 1 \le n \implies \operatorname{toInt}\left(\operatorname{a}\left(n\right)\right) = 2 \cdot \operatorname{toInt}\left(\operatorname{pillai}\left(n\right)\right) - \operatorname{toInt}\left(n\right)$$
 
@@ -56,7 +68,7 @@ $$\forall n \in \mathbb{N}, 1 \le n \implies \operatorname{toInt}\left(\operator
 
 The quotient square changes only when k divides n; its increment is 2 div(n,k)-1. Grouping the gcd sum by its gcd fibres uses Mathlib's totient_div_of_dvd. Reindexing complementary divisors gives the totient-weighted quotient sum, and sum_totient supplies the subtracted n.
 
-**Theorem 1.5 (The doubling identity).**
+**Theorem 1.6 (The doubling identity).**
 
 $$\forall n \in \mathbb{N}, \operatorname{pillai}\left(4 \cdot n\right) + 4 \cdot \operatorname{pillai}\left(n\right) = 4 \cdot \operatorname{pillai}\left(2 \cdot n\right)$$
 
@@ -68,7 +80,7 @@ $$\forall n \in \mathbb{N}, \operatorname{pillai}\left(4 \cdot n\right) + 4 \cdo
 
 This equality is in the natural numbers and includes n=0. Even indices contribute twice the smaller gcd sum. For odd indices, coprimality with two removes the extra factor two from the modulus. Splitting the odd-index sum into two blocks of length n gives two equal sums, which yields the displayed identity.
 
-**Theorem 1.6 (Reflection and endpoint terms).**
+**Theorem 1.7 (Reflection and endpoint terms).**
 
 $$\forall n \in \mathbb{N}, 1 \le n \implies 2 \cdot \operatorname{altGcdSum}\left(n\right) + 2 \cdot \operatorname{toInt}\left(n\right) = 4 \cdot \operatorname{toInt}\left(\operatorname{pillai}\left(2 \cdot n\right)\right) - \operatorname{toInt}\left(\operatorname{pillai}\left(4 \cdot n\right)\right)$$
 
@@ -80,7 +92,7 @@ $$\forall n \in \mathbb{N}, 1 \le n \implies 2 \cdot \operatorname{altGcdSum}\le
 
 Reflection k to 4n-k preserves the sign and gcd. In the half-open range from zero to 2n, replacing zero by 2n changes the sum by 2n, since the endpoint values are 4n and 2n. The reflected upper half equals altGcdSum(n). Splitting the full sum by parity gives 4 pillai(2n)-pillai(4n), including exactly the displayed endpoint term.
 
-**Theorem 1.7 (Bala's conjectured formula).**
+**Theorem 1.8 (Bala's conjectured formula).**
 
 $$\forall n \in \mathbb{N}, 1 \le n \implies \operatorname{toInt}\left(\operatorname{a}\left(n\right)\right) = \operatorname{altGcdSum}\left(n\right)$$
 
@@ -104,4 +116,5 @@ The doubling identity and reflection identity imply altGcdSum(n)=2 pillai(n)-n. 
 - Truth anchor: `D5/S3/Factorization/AlternatingGcdSumPillai.altGcdSum_eq`
 - Truth anchor: `D5/S3/Factorization/AlternatingGcdSumPillai.bala_conjecture`
 - Truth anchor: `D5/S3/Factorization/AlternatingGcdSumPillai.pillai`
+- Truth anchor: `D5/S3/Factorization/AlternatingGcdSumPillai.pillai_divisors`
 - Truth anchor: `D5/S3/Factorization/AlternatingGcdSumPillai.pillai_four_mul`

@@ -149,4 +149,21 @@ def dyadicGyration {n m : ℕ} (d : ℕ) [NeZero d]
     (padicValInt 3 (((2 * d).factorial : ℕ) : ℤ)) (gyrationDyadicReduction d) R S
 
 
+/-- Localization agrees with the actual forward orbit-offset sum at every
+nonnegative rectangular matrix pair and period divisible by three. -/
+theorem dyadicGyration_nonnegative {n m d : ℕ} [NeZero d] (hd : 3 ∣ d)
+    (R : CountMat n m) (S : CountMat m n) :
+    dyadicGyration d
+      ((R.map (Nat.castRingHom ℤ)).map (algebraMap ℤ GyrationDyadic))
+      ((S.map (Nat.castRingHom ℤ)).map (algebraMap ℤ GyrationDyadic)) =
+      ZMod.castHom hd (ZMod 3) (relativeForwardGyration (d := d) R S) := by
+  calc
+    _ = (integerGyrationValue d (R.map (Nat.castRingHom ℤ))
+        (S.map (Nat.castRingHom ℤ)) : ZMod 3) :=
+      canonicalLocalizedGyration_signed_agreement
+        (padicValInt 3 (((2 * d).factorial : ℕ) : ℤ)) le_rfl
+        (gyrationDyadicReduction d) _ _ _ _ (by ext i j; simp) (by ext i j; simp)
+    _ = _ := integerGyrationValue_nat_mod_three hd R S
+
+
 end D5.S3.ConceptDynamics.Coding.CountedOrderTypeGyration

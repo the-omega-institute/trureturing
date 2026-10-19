@@ -8,6 +8,8 @@ internal sealed class CountedSignedGyrationEvaluatorDocument : IScribeDocumentDe
         "CountedSignedGyrationEvaluator",
         H("The same ranked-edge weight in natural coordinates"),
         Blocks(
+
+
             Describe.Lean(
                 DescribeId.Create("countedsignedgyrationevaluator-1"),
                 DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CountedSignedGyrationEvaluator.wordWeight_keys"),

@@ -94,7 +94,6 @@ theorem golden_new_periodic_orbit_codes_close_and_are_nodup_ten :
     goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine, goldenStepTarget,
     goldenOrbitStates, goldenTraceCode, goldenCodeAdd, goldenCodeMul,
     goldenCodePhi, goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_new_periodic_orbit_low_states_mem_ten :
     goldenPeriodicOrbitRepresentativesExactlyTen.Forall fun orbit =>
@@ -217,7 +216,6 @@ theorem golden_new_periodic_orbit_state_codes_nodup_ten :
     goldenTraceCode, goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
     goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
     goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_disjoint_from_periods_through_nine
     {states : List GoldenCodedState}

@@ -743,6 +743,19 @@ theorem address_frame_index (s : TransferSnapshot) (slot : Fin 6) (i : Fin frame
   rw [Nat.mul_comm]
   omega
 
+private theorem address_program_frame (s installed : TransferSnapshot)
+    (ht : installed.installation.tape = programTape) (slot : Fin 6) (i : Fin frameWidth) :
+    ∃ ticks, ∃ q : AddressState,
+      addressRun (addressEntry installed (frameKey s slot) i) ticks = q ∧
+      q.control.pc = .returned ∧
+      q.control.latch = frameTape
+        (eventROM s.base.retained.pre.fields s.base.retained.operation slot) i := by
+  obtain ⟨ticks, q, hq, hp, _, _, hl, _⟩ := address_execution installed (frameKey s slot) i
+  refine ⟨ticks, q, hq, hp, ?_⟩
+  change q.control.latch = installed.installation.tape (addressIndex (frameKey s slot) i) at hl
+  rw [ht, address_frame_index] at hl
+  exact hl.trans (congrFun (program_frame s.base slot) i)
+
 /-- A charged address subroutine, with explicit raw key/offset inputs. Its
 instructions perform rail tests, single-bit reads, unary carries and return
 branches before reading the installed bit. The endpoint multiplication occurs
@@ -775,16 +788,8 @@ theorem charged_address_execution (s : TransferSnapshot) :
   · intro a i
     exact address_execution s a i
   · intro slot i
-    dsimp only
-    let installed := literalInstallStep^[motorTime programWidth] (literalInstallStart s)
-    let a := frameKey s slot
-    obtain ⟨ticks,q,hq,hp,_,_,hl,_⟩ := address_execution installed a i
-    refine ⟨ticks,q,hq,hp,?_⟩
-    have ht : installed.installation.tape = programTape :=
-      (charged_literal_transfers s).2.2.2.2.1
-    have ha := address_frame_index s slot i
-    rw [ht,show (⟨frameBase+a.val*frameWidth+i.val,frame_address_bound a i⟩ : Fin programWidth) = addressIndex a i from rfl,ha] at hl
-    exact hl.trans (congrFun (program_frame s.base slot) i)
+    exact address_program_frame s _ ((charged_literal_transfers s).2.2.2.2.1) slot i
+
 
 
 namespace LiveProducer

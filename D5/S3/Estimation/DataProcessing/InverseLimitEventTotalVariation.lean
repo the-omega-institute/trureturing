@@ -46,7 +46,7 @@ theorem total_variation_eq_iSup_level
   let π := levelProjection q n
   let C : Set (Set X) := {s | ∃ (l : ℕ) (A : Set (Fin n → B l)), π l ⁻¹' A = s}
   have hπ (l : ℕ) : Measurable (π l) := by
-    exact measurable_pi_lambda _ fun j =>
+    exact Measurable.of_eval fun j =>
       (measurable_pi_apply l).comp (measurable_subtype_coe.comp (measurable_pi_apply j))
   have descend : ∀ {l m : ℕ}, l ≤ m →
       ∃ f : B m → B l, ∀ x : Thread B q, x.val l = f (x.val m) := by

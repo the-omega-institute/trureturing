@@ -195,10 +195,10 @@ theorem kernel_single_convolution (D : LatticeData) (α β : Charge D) (u v : �
     Finsupp.sum, LinearMap.mulRight_apply]
   apply Finset.sum_congr rfl
   intro e he
-  change MvPolynomial.coeff e (translatedPairPolynomial D α β p) *
+  change (translatedPairPolynomial D α β p).coeff e *
     creationCoeff D α (u-bilinear D α δ+e 0) *
     creationCoeff D β (v-bilinear D β δ+e 1) =
-    MvPolynomial.coeff e (translatedPairPolynomial D α β p) *
+    (translatedPairPolynomial D α β p).coeff e *
       (creationCoeff D α (u-bilinear D α δ+e 0) *
         creationCoeff D β (v-bilinear D β δ+e 1))
   ring

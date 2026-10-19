@@ -31,19 +31,19 @@ private lemma prod_range_pow_le {k : ℕ} (G : ℕ → ℝ) (h1 : ∀ i, 1 ≤ G
   set P₁ := ∏ i ∈ Finset.range k', G i with hP1def
   set P₂ := ∏ i ∈ Finset.Ico k' k, G i with hP2def
   have hP : P₁ * P₂ = ∏ i ∈ Finset.range k, G i := Finset.prod_range_mul_prod_Ico G hk'
-  have hP1 : 1 ≤ P₁ := Finset.one_le_prod fun i _ ↦ h1 i
-  have hP2 : 1 ≤ P₂ := Finset.one_le_prod fun i _ ↦ h1 i
+  have hP1 : 1 ≤ P₁ := Finset.one_le_prod₀ fun i _ ↦ h1 i
+  have hP2 : 1 ≤ P₂ := Finset.one_le_prod₀ fun i _ ↦ h1 i
   set c := G k' with hcdef
   have hc1 : 1 ≤ c := h1 k'
   have hub : P₁ ≤ c ^ k' := by
     calc P₁ ≤ ∏ _i ∈ Finset.range k', c :=
-          Finset.prod_le_prod (fun i _ ↦ by linarith [h1 i])
+          Finset.prod_le_prod₀ (fun i _ ↦ by linarith [h1 i])
             (fun i hi ↦ hm i k' (le_of_lt (Finset.mem_range.1 hi)) hlt)
       _ = c ^ k' := by rw [Finset.prod_const, Finset.card_range]
   have hlb : c ^ (k - k') ≤ P₂ := by
     calc c ^ (k - k') = ∏ _i ∈ Finset.Ico k' k, c := by
           rw [Finset.prod_const, Nat.card_Ico]
-      _ ≤ P₂ := Finset.prod_le_prod (fun i _ ↦ by linarith)
+      _ ≤ P₂ := Finset.prod_le_prod₀ (fun i _ ↦ by linarith)
             (fun i hi ↦ hm k' i (Finset.mem_Ico.1 hi).1 (Finset.mem_Ico.1 hi).2)
   have key : P₁ ^ (k - k') ≤ P₂ ^ k' := by
     calc P₁ ^ (k - k') ≤ (c ^ k') ^ (k - k') := pow_le_pow_left₀ (by linarith) hub _

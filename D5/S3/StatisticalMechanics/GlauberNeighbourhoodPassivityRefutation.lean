@@ -267,57 +267,41 @@ private theorem run_one_2 : run 1 2 = oneState 2 := by
   rw [run_one_formula, gibbs_initial]
   norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp (config := { congrConsts := false }) only [Matrix.cons_val]
-  norm_num
 
 private theorem run_one_3 : run 1 3 = oneState 3 := by
   rw [run_one_formula, gibbs_initial]
   norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp (config := { congrConsts := false }) only [Matrix.cons_val]
-  norm_num
 
 private theorem run_one_4 : run 1 4 = oneState 4 := by
   rw [run_one_formula, gibbs_initial]
   norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp (config := { congrConsts := false }) only [Matrix.cons_val]
-  norm_num
 
 private theorem run_one_5 : run 1 5 = oneState 5 := by
   rw [run_one_formula, gibbs_initial]
   norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp (config := { congrConsts := false }) only [Matrix.cons_val]
-  norm_num
 
 private theorem run_one_6 : run 1 6 = oneState 6 := by
   rw [run_one_formula, gibbs_initial]
   norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp (config := { congrConsts := false }) only [Matrix.cons_val]
-  norm_num
 
 private theorem run_one_7 : run 1 7 = oneState 7 := by
   rw [run_one_formula, gibbs_initial]
   norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp (config := { congrConsts := false }) only [Matrix.cons_val]
-  norm_num
 
 private theorem run_one_8 : run 1 8 = oneState 8 := by
   rw [run_one_formula, gibbs_initial]
   norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp (config := { congrConsts := false }) only [Matrix.cons_val]
-  norm_num
 
 private theorem run_one_9 : run 1 9 = oneState 9 := by
   rw [run_one_formula, gibbs_initial]
   norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp (config := { congrConsts := false }) only [Matrix.cons_val]
-  norm_num
 
 private theorem run_one : run 1 = oneState := by
   funext i

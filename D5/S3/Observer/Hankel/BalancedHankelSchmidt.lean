@@ -9,6 +9,7 @@
 import D5.S3.Observer.Hankel.InfiniteHankelGramian
 import D5.S3.Observer.Hankel.BalancedRealizationTransport
 import D5.S3.Observer.LinearMemory.HankelGramianSingularValues
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 noncomputable section
 set_option autoImplicit false
@@ -170,7 +171,7 @@ theorem modes_orthonormal (A : Matrix ι ι ℝ) (B : Matrix ι κ ℝ) (C : Mat
 private theorem diagonal_basis (w : ι → ℝ) (i : ι) :
     Matrix.toEuclideanCLM (𝕜 := ℝ) (n := ι) (diagonal w) (EuclideanSpace.basisFun ι ℝ i) =
       w i • EuclideanSpace.basisFun ι ℝ i := by
-  simp only [EuclideanSpace.basisFun_apply, ← EuclideanSpace.toLp_single,
+  simp only [EuclideanSpace.basisFun_apply, ← PiLp.toLp_single,
     Matrix.toEuclideanCLM_toLp, Matrix.diagonal_mulVec_single,
     ← WithLp.toLp_smul, ← Pi.single_smul, smul_eq_mul]
 

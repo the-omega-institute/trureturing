@@ -75,7 +75,7 @@ private theorem five_mode_tangent_fibre_finrank :
     intro y _
     obtain ⟨x, hx⟩ := modeReadout_surjective y
     exact ⟨x, hx⟩
-  have hsum := LinearMap.finrank_range_add_finrank_ker modeReadout
+  have hsum := modeReadout.finrank_range_add_finrank_ker
   rw [hrange, finrank_top, trace_zero_hermitian_finrank] at hsum
   norm_num [Module.finrank_fin_fun] at hsum ⊢
   omega
@@ -141,7 +141,7 @@ theorem full_rank_local_fibre (ρ : Matrix (Fin 5) (Fin 5) ℂ)
   refine ⟨five_mode_tangent_fibre_finrank,
     affine_fibre_coordinates ρ hρ.isHermitian ht, ?_⟩
   have hs := hρ.isStrictlyPositive
-  obtain ⟨ε, hε, hbound⟩ := (CFC.exists_pos_algebraMap_le_iff hs.isSelfAdjoint).mpr
+  obtain ⟨ε, hε, hbound⟩ := (CFC.exists_pos_algebraMap_le_iff ρ hs.isSelfAdjoint).mpr
     (fun x hx => hs.spectrum_pos hx)
   refine ⟨ε, hε, fun h hh => ?_⟩
   have hherm : IsSelfAdjoint (CStarMatrix.ofMatrix h.1.1.1) := h.1.1.2

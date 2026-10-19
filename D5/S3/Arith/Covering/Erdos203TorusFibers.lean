@@ -11,6 +11,7 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.Algebra.Group.Subgroup.ZPowers.Lemmas
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+import Mathlib.GroupTheory.SpecificGroups.Cyclic
 
 set_option autoImplicit false
 

@@ -57,9 +57,9 @@ private theorem series_constant (D : LatticeData) (charge : Charge D) :
   simp [halfCreationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
 
 theorem exponential_derivative (D : LatticeData) (charge : Charge D) :
-    PowerSeries.derivative (Oscillator D) (halfCreationExponential D charge) =
+    PowerSeries.derivative (R := Oscillator D) (halfCreationExponential D charge) =
       halfCreationExponential D charge *
-        PowerSeries.derivative (Oscillator D) (halfCreationSeries D charge) := by
+        PowerSeries.derivative (R := Oscillator D) (halfCreationSeries D charge) := by
   rw [halfCreationExponential, PowerSeries.derivative_subst
     (PowerSeries.HasSubst.of_constantCoeff_zero' (series_constant D charge)),
     PowerSeries.derivative_exp]
@@ -75,7 +75,7 @@ theorem exponential_constant (D : LatticeData) (charge : Charge D) :
     simp [hdegree]
 
 theorem series_derivative_coeff (D : LatticeData) (charge : Charge D) (degree : ℕ) :
-    PowerSeries.coeff degree (PowerSeries.derivative (Oscillator D)
+    PowerSeries.coeff degree (PowerSeries.derivative (R := Oscillator D)
       (halfCreationSeries D charge)) =
       if degree % 2 = 0 then
         (2 : ℂ) • ∑ colour : Fin D.rank,
@@ -98,8 +98,8 @@ theorem series_derivative_coeff (D : LatticeData) (charge : Charge D) (degree : 
 
 private theorem derivative_map {Ring : Type*} [CommRing Ring]
     {Target : Type*} [CommRing Target] (hom : Ring →+* Target) (series : PowerSeries Ring) :
-    PowerSeries.derivative Target (series.map hom) =
-      (PowerSeries.derivative Ring series).map hom := by
+    PowerSeries.derivative (R := Target) (series.map hom) =
+      (PowerSeries.derivative (R := Ring) series).map hom := by
   apply PowerSeries.ext
   intro degree
   rw [PowerSeries.coeff_derivative, PowerSeries.coeff_map, PowerSeries.coeff_map,
@@ -121,7 +121,7 @@ private theorem choose_recurrence (gram : ℤ) (degree : ℕ) :
 
 private theorem scaled_binomial_derivative {Ring : Type*} [CommRing Ring]
     (gram : ℤ) (scale : Ring) :
-    PowerSeries.derivative Ring
+    PowerSeries.derivative (R := Ring)
         (PowerSeries.rescale scale (PowerSeries.binomialSeries (R := ℤ) Ring gram)) *
         (1 + PowerSeries.C scale * PowerSeries.X) =
       PowerSeries.C ((gram : Ring) * scale) *
@@ -158,8 +158,8 @@ private theorem scaled_binomial_derivative {Ring : Type*} [CommRing Ring]
 
 private theorem solution_unique {Ring : Type*} [CommRing Ring] [IsAddTorsionFree Ring]
     (first second driver : PowerSeries Ring)
-    (hfirst : PowerSeries.derivative Ring first = first * driver)
-    (hsecond : PowerSeries.derivative Ring second = second * driver)
+    (hfirst : PowerSeries.derivative (R := Ring) first = first * driver)
+    (hsecond : PowerSeries.derivative (R := Ring) second = second * driver)
     (hconstant : PowerSeries.coeff 0 first = PowerSeries.coeff 0 second) : first = second := by
   apply PowerSeries.ext
   intro degree
@@ -184,7 +184,8 @@ private theorem solution_unique {Ring : Type*} [CommRing Ring] [IsAddTorsionFree
           PowerSeries.coeff (degree + 1) second * (degree + 1) := by
         rw [first_eq, sums, second_eq]
       rw [← Nat.cast_succ, mul_comm, ← nsmul_eq_mul, mul_comm, ← nsmul_eq_mul] at equal
-      exact (smul_right_inj (Nat.succ_ne_zero degree)).mp equal
+      exact eq_of_nsmul_eq_nsmul_of_addCommute (Nat.succ_ne_zero degree)
+        (show AddCommute _ _ from add_comm _ _) equal
 
 private theorem binomial_map {Ring Target : Type*} [CommRing Ring] [CommRing Target]
     (hom : Ring →+* Target) (gram : ℤ) :
@@ -198,7 +199,7 @@ private theorem two_factor_derivative {Ring : Type*} [CommRing Ring]
     (gram : ℤ) (scale : Ring) :
     let minus := PowerSeries.rescale (-scale) (PowerSeries.binomialSeries (R := ℤ) Ring gram)
     let plus := PowerSeries.rescale scale (PowerSeries.binomialSeries (R := ℤ) Ring (-gram))
-    PowerSeries.derivative Ring (minus * plus) *
+    PowerSeries.derivative (R := Ring) (minus * plus) *
         (1 - PowerSeries.C (scale ^ 2) * PowerSeries.X ^ 2) =
       -PowerSeries.C (2 * (gram : Ring) * scale) * (minus * plus) := by
   dsimp only
@@ -212,13 +213,13 @@ private theorem two_factor_derivative {Ring : Type*} [CommRing Ring]
     rw [map_neg, map_pow]
     ring
   calc
-    _ = (PowerSeries.derivative Ring minus *
+    _ = (PowerSeries.derivative (R := Ring) minus *
           (1 + PowerSeries.C (-scale) * PowerSeries.X)) *
           plus * (1 + PowerSeries.C scale * PowerSeries.X) +
-        (PowerSeries.derivative Ring plus *
+        (PowerSeries.derivative (R := Ring) plus *
           (1 + PowerSeries.C scale * PowerSeries.X)) *
           minus * (1 + PowerSeries.C (-scale) * PowerSeries.X) := by
-      rw [← factors, (PowerSeries.derivative Ring).leibniz]
+      rw [← factors, (PowerSeries.derivative (R := Ring)).leibniz]
       ring
     _ = _ := by
       rw [hminus, hplus]
@@ -257,7 +258,7 @@ theorem half_creation_coefficient_grading (D : LatticeData) (charge : Charge D) 
             (∑ pair ∈ Finset.HasAntidiagonal.antidiagonal degree,
               PowerSeries.coeff pair.1 (halfCreationExponential D charge) *
                 PowerSeries.coeff pair.2
-                  (PowerSeries.derivative (Oscillator D) (halfCreationSeries D charge)))
+                  (PowerSeries.derivative (R := Oscillator D) (halfCreationSeries D charge)))
             (degree + 1) := by
           apply MvPolynomial.IsWeightedHomogeneous.sum
           intro pair hpair
@@ -265,7 +266,7 @@ theorem half_creation_coefficient_grading (D : LatticeData) (charge : Charge D) 
           have hfirst := previous pair.1 (by omega)
           have hsecond : MvPolynomial.IsWeightedHomogeneous (omega D)
               (PowerSeries.coeff pair.2
-                (PowerSeries.derivative (Oscillator D) (halfCreationSeries D charge)))
+                (PowerSeries.derivative (R := Oscillator D) (halfCreationSeries D charge)))
               (pair.2 + 1) := by
             rw [series_derivative_coeff]
             split_ifs with heven
@@ -312,8 +313,8 @@ private theorem translated_degree_le (D : LatticeData) (charge : Charge D)
   intro exponent hexponent
   have hweight := homogeneous (MvPolynomial.mem_support_iff.mp hexponent)
   apply Polynomial.natDegree_mul_le.trans
-  rw [show (algebraMap ℂ (Polynomial (Oscillator D))) (MvPolynomial.coeff exponent polynomial) =
-    Polynomial.C ((algebraMap ℂ (Oscillator D)) (MvPolynomial.coeff exponent polynomial)) by rfl,
+  rw [show (algebraMap ℂ (Polynomial (Oscillator D))) (polynomial.coeff exponent) =
+    Polynomial.C ((algebraMap ℂ (Oscillator D)) (polynomial.coeff exponent)) by rfl,
     Polynomial.natDegree_C, zero_add]
   apply (Polynomial.natDegree_prod_le _ _).trans
   rw [← hweight, Finsupp.weight_apply]
@@ -374,8 +375,8 @@ theorem half_creation_coefficient_transport (D : LatticeData) (left right : Char
     map_smul (Polynomial.CAlgHom : Oscillator D →ₐ[ℂ] Polynomial (Oscillator D))
       scalar polynomial
   have difference_coeff (index : ℕ) :
-      PowerSeries.coeff index (PowerSeries.derivative (Polynomial (Oscillator D)) logarithm -
-        PowerSeries.derivative (Polynomial (Oscillator D)) originalLogarithm) =
+      PowerSeries.coeff index (PowerSeries.derivative (R := Polynomial (Oscillator D)) logarithm -
+        PowerSeries.derivative (R := Polynomial (Oscillator D)) originalLogarithm) =
       if index % 2 = 0 then
         -Polynomial.C ((2 * (gram : ℂ)) • (1 : Oscillator D)) * coverVariable ^ (index + 1)
       else 0 := by
@@ -401,8 +402,8 @@ theorem half_creation_coefficient_transport (D : LatticeData) (left right : Char
       simp [smul_smul, smul_mul_assoc, ← constant_smul, coverVariable]
     · simp [heven]
   have difference_equation :
-      (PowerSeries.derivative (Polynomial (Oscillator D)) logarithm -
-        PowerSeries.derivative (Polynomial (Oscillator D)) originalLogarithm) * denominator =
+      (PowerSeries.derivative (R := Polynomial (Oscillator D)) logarithm -
+        PowerSeries.derivative (R := Polynomial (Oscillator D)) originalLogarithm) * denominator =
       -PowerSeries.C (Polynomial.C ((2 * (gram : ℂ)) • (1 : Oscillator D)) * coverVariable) := by
     apply PowerSeries.ext
     intro index
@@ -420,7 +421,7 @@ theorem half_creation_coefficient_transport (D : LatticeData) (left right : Char
           map_neg, PowerSeries.coeff_C, Nat.succ_ne_zero, if_false]
         split_ifs <;> simp only [zero_mul, sub_self, pow_succ] <;> ring
   have contraction_equation :
-      PowerSeries.derivative (Polynomial (Oscillator D)) contraction * denominator =
+      PowerSeries.derivative (R := Polynomial (Oscillator D)) contraction * denominator =
       -PowerSeries.C (Polynomial.C ((2 * (gram : ℂ)) • (1 : Oscillator D)) * coverVariable) *
         contraction := by
     have equation := two_factor_derivative gram coverVariable
@@ -437,24 +438,24 @@ theorem half_creation_coefficient_transport (D : LatticeData) (left right : Char
   have unit_denominator : IsUnit denominator :=
     PowerSeries.isUnit_iff_constantCoeff.mpr (by simp [denominator])
   have contraction_derivative :
-      PowerSeries.derivative (Polynomial (Oscillator D)) contraction =
-        contraction * (PowerSeries.derivative (Polynomial (Oscillator D)) logarithm -
-          PowerSeries.derivative (Polynomial (Oscillator D)) originalLogarithm) := by
+      PowerSeries.derivative (R := Polynomial (Oscillator D)) contraction =
+        contraction * (PowerSeries.derivative (R := Polynomial (Oscillator D)) logarithm -
+          PowerSeries.derivative (R := Polynomial (Oscillator D)) originalLogarithm) := by
     apply unit_denominator.mul_right_cancel
     rw [contraction_equation, mul_assoc, difference_equation]
     ring
-  have translated_derivative : PowerSeries.derivative (Polynomial (Oscillator D)) translated =
-      translated * PowerSeries.derivative (Polynomial (Oscillator D)) logarithm := by
+  have translated_derivative : PowerSeries.derivative (R := Polynomial (Oscillator D)) translated =
+      translated * PowerSeries.derivative (R := Polynomial (Oscillator D)) logarithm := by
     dsimp only [translated, logarithm]
     rw [derivative_map, exponential_derivative, map_mul, derivative_map]
-  have original_derivative : PowerSeries.derivative (Polynomial (Oscillator D)) original =
-      original * PowerSeries.derivative (Polynomial (Oscillator D)) originalLogarithm := by
+  have original_derivative : PowerSeries.derivative (R := Polynomial (Oscillator D)) original =
+      original * PowerSeries.derivative (R := Polynomial (Oscillator D)) originalLogarithm := by
     dsimp only [original, originalLogarithm]
     rw [derivative_map, exponential_derivative, map_mul, derivative_map]
   have product_derivative :
-      PowerSeries.derivative (Polynomial (Oscillator D)) (original * contraction) =
-        (original * contraction) * PowerSeries.derivative (Polynomial (Oscillator D)) logarithm := by
-    rw [(PowerSeries.derivative (Polynomial (Oscillator D))).leibniz,
+      PowerSeries.derivative (R := Polynomial (Oscillator D)) (original * contraction) =
+        (original * contraction) * PowerSeries.derivative (R := Polynomial (Oscillator D)) logarithm := by
+    rw [(PowerSeries.derivative (R := Polynomial (Oscillator D))).leibniz,
       contraction_derivative, original_derivative]
     ring
   have same_constant : PowerSeries.coeff 0 translated =
@@ -465,7 +466,7 @@ theorem half_creation_coefficient_transport (D : LatticeData) (left right : Char
       PowerSeries.coeff_rescale, pow_zero, one_mul, PowerSeries.binomialSeries_coeff,
       Ring.choose_zero_right, one_smul, mul_one]
   have series_eq := solution_unique translated (original * contraction)
-    (PowerSeries.derivative (Polynomial (Oscillator D)) logarithm)
+    (PowerSeries.derivative (R := Polynomial (Oscillator D)) logarithm)
     translated_derivative product_derivative same_constant
   let embedding : ℂ →+* Polynomial (Oscillator D) := algebraMap ℂ (Polynomial (Oscillator D))
   have mapped_contraction : (halfContraction D left right).map embedding =
@@ -582,17 +583,17 @@ theorem half_annihilation_creation (D : LatticeData) (colour : Fin D.rank)
     let derivation := LatticeActualAnnihilation.annihilationDerivation D colour mode
     let exponential := halfCreationExponential D charge
     let logarithm := halfCreationSeries D charge
-    let driver := PowerSeries.derivative (Oscillator D) logarithm
+    let driver := PowerSeries.derivative (R := Oscillator D) logarithm
     let residual := ActualSeriesDerivation.seriesDerivation D derivation exponential -
       exponential * ActualSeriesDerivation.seriesDerivation D derivation logarithm
-    have differential : PowerSeries.derivative (Oscillator D) exponential =
+    have differential : PowerSeries.derivative (R := Oscillator D) exponential =
         exponential * driver := exponential_derivative D charge
-    have residual_differential : PowerSeries.derivative (Oscillator D) residual =
+    have residual_differential : PowerSeries.derivative (R := Oscillator D) residual =
         residual * driver := by
       dsimp only [residual]
       rw [map_sub, ← ActualSeriesDerivation.derivative_commute, differential,
         (ActualSeriesDerivation.seriesDerivation D derivation).leibniz,
-        (PowerSeries.derivative (Oscillator D)).leibniz, differential,
+        (PowerSeries.derivative (R := Oscillator D)).leibniz, differential,
         ← ActualSeriesDerivation.derivative_commute]
       simp only [smul_eq_mul]
       ring

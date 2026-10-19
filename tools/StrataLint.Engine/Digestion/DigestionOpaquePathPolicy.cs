@@ -16,6 +16,5 @@ internal static class DigestionOpaquePathPolicy
 
     internal static bool IsOpaque(RepoPath path) =>
         path.Value.StartsWith(TheoryRootPath, StringComparison.Ordinal)
-        || path.Value == TheoryAtomizerDataLoader.DataPath
         || DigestionCasStore.IsCanonicalPath(path.Value);
 }

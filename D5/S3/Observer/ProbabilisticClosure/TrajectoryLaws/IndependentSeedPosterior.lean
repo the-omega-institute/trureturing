@@ -102,7 +102,7 @@ private theorem target_measurable : Measurable target :=
   (measurable_of_countable label).comp ((measurable_pi_apply 0).comp measurable_fst)
 
 private theorem past_measurable (r : ℕ) : Measurable (pastWord r) :=
-  measurable_pi_lambda _ fun k => (measurable_pi_apply _).comp measurable_snd
+  Measurable.of_eval fun k => (measurable_pi_apply _).comp measurable_snd
 
 private theorem visible_measurable (t : ℤ) (r : ℕ) (w : Fin r → Bool) :
     MeasurableSet (OriginalMarkedLaw.visibleCylinder t r w) := by
@@ -148,7 +148,7 @@ private theorem conditional_ratio (r : ℕ) (w : Fin r → Bool)
       simp [measureReal_def,hz]
     rw [hz'] at he
     exact (ne_of_gt hw) he.symm
-  rw [ProbabilityTheory.condDistrib_apply_of_ne_zero target_measurable w hp,
+  rw [ProbabilityTheory.condDistrib_apply_of_ne_zero (past_measurable r) target_measurable w hp,
     ENNReal.toReal_mul, ENNReal.toReal_inv]
   change (((joint : Measure Process).map (pastWord r)).real {w})⁻¹ *
     (((joint : Measure Process).map (fun z => (pastWord r z,target z))).real ({w} ×ˢ {a})) = _

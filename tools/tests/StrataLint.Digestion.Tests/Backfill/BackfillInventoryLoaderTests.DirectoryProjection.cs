@@ -63,7 +63,7 @@ public sealed partial class BackfillInventoryLoaderTests
     [Fact]
     public void DirectorySourceProjectsIdentityAndStaleAcknowledgments()
     {
-        var source = Source("delta-v0.1", "docs/delta.md", "pzg-v1");
+        var source = Source("delta-v0.1", "docs/delta.md", "generic-v1");
         var atomId = FixtureAtomId("theorem/delta");
         var withStale = source.Text + $"acknowledged_stale = [\"{atomId}\"]\n";
         var inventory = BackfillInventoryLoader.Load(Snapshot(
@@ -74,7 +74,7 @@ public sealed partial class BackfillInventoryLoaderTests
 
         Assert.Equal("delta-v0.1", loadedSource.SourceId);
         Assert.Equal("docs/delta.md", loadedSource.SourcePath);
-        Assert.Equal("pzg-v1", loadedSource.Atomizer);
+        Assert.Equal("generic-v1", loadedSource.Atomizer);
         Assert.Equal([atomId], loadedSource.AcknowledgedStale.ToArray());
         Assert.Equal("sha256:" + atomId, entry.Fingerprints.RawSha256);
     }

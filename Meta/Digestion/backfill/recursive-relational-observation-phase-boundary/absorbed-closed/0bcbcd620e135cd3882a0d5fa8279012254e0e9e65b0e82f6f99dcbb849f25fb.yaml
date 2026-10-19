@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0bcbcd620e135cd3882a0d5fa8279012254e0e9e65b0e82f6f99dcbb849f25fb
+  normalized_sha256: sha256:0bcbcd620e135cd3882a0d5fa8279012254e0e9e65b0e82f6f99dcbb849f25fb
+cas_ref: sha256:0bcbcd620e135cd3882a0d5fa8279012254e0e9e65b0e82f6f99dcbb849f25fb
+coverage_gids:
+  - gid: D5/S0/Certificates/RationalFarkas.infeasible_of_certificate
+    target_statement_id: sha256:250c12328ec7ff5bca7223505f6721091211a2ab7f45589a4fc3de506ca344b1
+  - gid: D5/S3/Analytic/Convexity/FarkasAlternative.inequality_farkas
+    target_statement_id: sha256:e2f8b4574d3a9b468470212a4880a02868c9aeef62a0a5637a114654d819722b
+receipts:
+  unresolved_subitems: []

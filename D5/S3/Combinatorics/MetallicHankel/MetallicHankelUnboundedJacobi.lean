@@ -9,8 +9,11 @@
 import Mathlib.LinearAlgebra.SymplecticGroup
 import D5.S3.Combinatorics.MetallicHankel.MetallicHankelDefs
 
+import Mathlib.Algebra.Polynomial.Roots
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
 
 namespace D5.S3.Combinatorics.MetallicHankel.MetallicHankelUnboundedJacobi
 

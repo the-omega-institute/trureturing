@@ -10,6 +10,7 @@
    Full special support and reordering are conclusions, never inputs.
    Install the Domains / ActualCyclePieceReordering candidates under the
    imported canonical names before compilation. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansionDomains
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 import D5.S3.Combinatorics.Graph.PrefixReversal.RecursivePortBoundary

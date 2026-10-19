@@ -5,7 +5,7 @@
    anchors: []
    digest: First-match settlement bounds the permitted claim; an audited render never exceeds it. -/
 
-import Mathlib.Logic.Basic
+import Mathlib.Basic.Logic.Basic
 
 /- Library-search audit trail (2026-09-02):
    * `rg -l 'permittedClaim|ceiling|Ceiling' D5 --include='*.lean'` hit only

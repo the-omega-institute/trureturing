@@ -1,5 +1,6 @@
 import D5.S3.ConceptDynamics.Coding.DecoderStartup
 import Reg.Support.DecoderOperationTraceCohort
+import Batteries.Tactic.OpenPrivate
 
 open _root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

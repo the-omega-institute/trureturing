@@ -294,7 +294,7 @@ theorem pairing_data (m : ℕ) :
     clear singlet_ne_zero_iff term_ne_zero_iff_crossing crossing_balanced psi_zero_of_unbalanced
       card_down_eq balanced_block card_up_eq crossing_count_constant
     rw [term, Finset.abs_prod]
-    apply Finset.prod_le_one
+    apply Finset.prod_le_one₀
     · intro i hi; exact abs_nonneg _
     · intro i hi
       cases h₁ : σ i <;> cases h₂ : σ (f.val i) <;> norm_num [s]

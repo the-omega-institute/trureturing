@@ -42,7 +42,11 @@ private theorem det_bound {S : Type*} [Fintype S] [DecidableEq S]
   have hp : (∏ x, B.row x ⬝ᵥ B.row x) ≤ (b ^ Fintype.card S)^2 := by
     calc
       _ ≤ ∏ _x : Fin (Fintype.card S), b^2 :=
-        prod_le_prod (fun x _ => sum_nonneg (fun y _ => mul_self_nonneg _)) (fun x _ => hs x)
+        Finset.prod_le_prod₀
+          (fun x _ => by
+            simp only [dotProduct, Matrix.row]
+            exact Finset.sum_nonneg (fun _ _ => mul_self_nonneg _))
+          (fun x _ => hs x)
       _ = _ := by simp [← pow_mul, Nat.mul_comm]
   have hh' : |A.det|^2 ≤ (b ^ Fintype.card S)^2 := by
     simpa [sq_abs, pow_two] using hh.trans hp

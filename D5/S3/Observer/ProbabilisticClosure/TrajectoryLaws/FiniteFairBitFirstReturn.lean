@@ -230,7 +230,7 @@ theorem execution_prefix_law {S : Type} [Countable S] [MeasurableSpace S]
     (tapeLaw.map (fun ω i => run decode s ω (i : Fin (n+1)))) {w} =
       ((instructionLaw decode s).map (fun x i => x (i : Fin (n+1)))) {w} := by
   rw [Measure.map_apply (by
-    exact measurable_pi_lambda _ (fun i => measurable_run decode s i.val))
+    exact Measurable.of_eval (fun i => measurable_run decode s i.val))
     (measurableSet_singleton _)]
   have he : (fun ω i => run decode s ω (i : Fin (n+1))) ⁻¹' {w} =
       cylinder decode s n w := by

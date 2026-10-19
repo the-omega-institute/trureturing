@@ -111,6 +111,7 @@ Declaration: result; proof_shape: content; escape_witness: D5.S1.Words.Palindrom
 import D5.S1.Words.Palindromes.PseudopalindromicNormalization
 import Mathlib.Data.Nat.Periodic
 import Mathlib.GroupTheory.Archimedean
+import Mathlib.GroupTheory.SpecificGroups.Cyclic
 
 open D5.S1.Words.Palindromes.PseudopalindromicNormalization
 
@@ -528,9 +529,10 @@ private theorem reflection_center_coset (x : ℤ → α) (c : ℤ) (hc : Reflect
 private theorem periodic_center_coset (x : ℤ → α) (c : ℤ)
     (hc : ReflectionCenter x c) :
     ∃ g : ℕ, ∀ d, ReflectionCenter x d ↔ (g : ℤ) ∣ d - c := by
-  obtain ⟨a, ha⟩ := Int.subgroup_cyclic (twistedTranslations x)
+  obtain ⟨a, ha⟩ :=
+    (AddSubgroup.isAddCyclic_iff_exists_zmultiples_eq_top (twistedTranslations x)).mp inferInstance
   have he : twistedTranslations x = AddSubgroup.zmultiples a := by
-    rwa [AddSubgroup.zmultiples_eq_closure]
+    exact ha.symm
   refine ⟨a.natAbs, ?_⟩
   intro d
   rw [reflection_center_coset x c hc d, he, Int.mem_zmultiples_iff,

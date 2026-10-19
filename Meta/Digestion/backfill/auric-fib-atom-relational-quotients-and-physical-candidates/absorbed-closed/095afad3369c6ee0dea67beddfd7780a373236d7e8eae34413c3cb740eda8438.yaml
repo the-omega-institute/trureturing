@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:095afad3369c6ee0dea67beddfd7780a373236d7e8eae34413c3cb740eda8438
+  normalized_sha256: sha256:095afad3369c6ee0dea67beddfd7780a373236d7e8eae34413c3cb740eda8438
+cas_ref: sha256:095afad3369c6ee0dea67beddfd7780a373236d7e8eae34413c3cb740eda8438
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/FiveModeMixedCoordinates.visible
+    target_statement_id: sha256:1cbccff2f02d0241e2cb0b2f25ea9c3b5781a92bf47307b1d533681fe9d52cf0
+receipts:
+  unresolved_subitems: []

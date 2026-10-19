@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8d6aa9d78df21f25b45a924deb225febd6e63d71088fc7a5d01276ef817bf23c
-  normalized_sha256: sha256:8d6aa9d78df21f25b45a924deb225febd6e63d71088fc7a5d01276ef817bf23c
-cas_ref: sha256:8d6aa9d78df21f25b45a924deb225febd6e63d71088fc7a5d01276ef817bf23c
-coverage_gids:
-  - gid: D5/S3/Analytic/DiagonalCollapse.diagonal_partition_collapse
-    target_statement_id: sha256:408a743bc22f74c400a87658cae181d33b30a7eab0a528f6a056252a9513e676
-receipts:
-  unresolved_subitems: []

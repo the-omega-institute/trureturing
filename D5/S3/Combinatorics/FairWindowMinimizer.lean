@@ -6,6 +6,7 @@
    utility: none
    digest: Fixed word orderings and binary labels give exact fair-window defect averages. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.FairWindowDefect
 import Mathlib
 

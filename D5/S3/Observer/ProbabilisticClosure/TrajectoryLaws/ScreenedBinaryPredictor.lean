@@ -77,7 +77,8 @@ theorem screened_binary_predictor
     rfl
   have hbase : μ.map (fun ω => (q ω,(u ω,v ω))) = μ.map q ⊗ₘ (η ×ₖ κ.fst) := by
     have hh := congrArg Measure.fst he
-    rw [Measure.fst_map_prodMk hx, Measure.fst_compProd] at hh
+    rw [Measure.fst_map_prodMk (hq.prodMk (hu.prodMk hv)) hx,
+      Measure.fst_compProd] at hh
     exact hh
   have hcond := condDistrib_ae_eq_of_measure_eq_compProd_of_measurable
     (hq.prodMk (hu.prodMk hv)) hx (he.trans (by rw [hbase]))

@@ -31,19 +31,19 @@ private theorem geom_eq (e : ℕ) : (1 - C (e : R) * X) * geom (R := R) e = 1 :=
     rw [sub_mul, one_mul, mul_assoc, map_sub, coeff_C_mul, coeff_succ_X_mul]
     simp [geom, pow_succ, mul_comm]
 
-private theorem geom_derivative (e : ℕ) : derivative R (geom e) = C (e : R) * (geom e)^2 := by
-  have h := congrArg (fun f => derivative R f) (geom_eq (R := R) e)
+private theorem geom_derivative (e : ℕ) : PowerSeries.derivative (R := R) (geom e) = C (e : R) * (geom e)^2 := by
+  have h := congrArg (fun f => PowerSeries.derivative (R := R) f) (geom_eq (R := R) e)
   simp only [Derivation.map_sub, Derivation.leibniz, derivative_one, derivative_C,
     derivative_X, smul_eq_mul, mul_zero, mul_one, zero_sub] at h
   have h' := congrArg (fun f => f * geom (R := R) e) h
   have hg := geom_eq (R := R) e
-  linear_combination h' - derivative R (geom e) * hg
+  linear_combination h' - PowerSeries.derivative (R := R) (geom e) * hg
 
 private def row (F : PowerSeries R) (n : ℕ) : R :=
   coeff n (F^((n+1)^2) * geom ((n+1)^2))
 
 private def derivRow (F : PowerSeries R) (n : ℕ) : R :=
-  coeff (n-1) (F^((n+1)^2-1) * derivative R F * geom ((n+1)^2) +
+  coeff (n-1) (F^((n+1)^2-1) * PowerSeries.derivative (R := R) F * geom ((n+1)^2) +
     F^((n+1)^2) * geom ((n+1)^2)^2)
 
 private def normalized (F : PowerSeries R) (n : ℕ) : R := row F n - (n+2) * derivRow F n
@@ -51,15 +51,15 @@ private def normalized (F : PowerSeries R) (n : ℕ) : R := row F n - (n+2) * de
 
 private theorem derivative_row (F : PowerSeries R) (n : ℕ) (hn : 0 < n) :
     (n : R) * row F n = ((n+1)^2 : ℕ) * derivRow F n := by
-  have h := congrArg (coeff (n-1)) ((derivative R).leibniz
+  have h := congrArg (coeff (n-1)) ((PowerSeries.derivative (R := R)).leibniz
     (F^((n+1)^2)) (geom ((n+1)^2)))
   rw [coeff_derivative, Nat.sub_add_cancel hn, derivative_pow, geom_derivative] at h
   have hc : (((n+1)^2 : ℕ) : PowerSeries R) = C (((n+1)^2 : ℕ) : R) := by simp
   simp only [smul_eq_mul, hc] at h
   have hfact : F ^ ((n+1)^2) * (C (((n+1)^2 : ℕ) : R) * geom ((n+1)^2)^2) +
-      geom ((n+1)^2) * (C (((n+1)^2 : ℕ) : R) * F^((n+1)^2-1) * derivative R F) =
+      geom ((n+1)^2) * (C (((n+1)^2 : ℕ) : R) * F^((n+1)^2-1) * PowerSeries.derivative (R := R) F) =
       C (((n+1)^2 : ℕ) : R) *
-        (F^((n+1)^2-1) * derivative R F * geom ((n+1)^2) +
+        (F^((n+1)^2-1) * PowerSeries.derivative (R := R) F * geom ((n+1)^2) +
         F^((n+1)^2) * geom ((n+1)^2)^2) := by ring
   rw [hfact, coeff_C_mul] at h
   have hncast : ((n-1 : ℕ) : R) + 1 = n := by
@@ -154,18 +154,18 @@ private theorem derivRow_change {n : ℕ} {F G : PowerSeries R} (hn : 0 < n)
   let g : PowerSeries R := geom e
   have hp := agree_mul (agree_pow h e) (g^2)
   have hl := agree_mul (agree_pow h (e-1)) g
-  have hd : X^(n-1) ∣ derivative R F - derivative R G := by
+  have hd : X^(n-1) ∣ PowerSeries.derivative (R := R) F - PowerSeries.derivative (R := R) G := by
     apply X_pow_dvd_iff.mpr
     intro k hk
     rw [map_sub, coeff_derivative, coeff_derivative, h (k+1) (by omega), sub_self]
-  have hz : coeff (n-1) ((F^(e-1)*g-G^(e-1)*g)*derivative R F) = 0 := by
-    have hdiv := dvd_mul_of_dvd_left ((agree_iff _ _ _).mp hl) (derivative R F)
+  have hz : coeff (n-1) ((F^(e-1)*g-G^(e-1)*g)*PowerSeries.derivative (R := R) F) = 0 := by
+    have hdiv := dvd_mul_of_dvd_left ((agree_iff _ _ _).mp hl) (PowerSeries.derivative (R := R) F)
     exact X_pow_dvd_iff.mp hdiv _ (by omega)
-  have he : F^(e-1)*derivative R F*g - G^(e-1)*derivative R G*g =
-      (F^(e-1)*g-G^(e-1)*g)*derivative R F +
-      (derivative R F-derivative R G)*(G^(e-1)*g) := by ring
-  change coeff (n-1) (F^(e-1)*derivative R F*g+F^e*g^2) -
-    coeff (n-1) (G^(e-1)*derivative R G*g+G^e*g^2) = _
+  have he : F^(e-1)*PowerSeries.derivative (R := R) F*g - G^(e-1)*PowerSeries.derivative (R := R) G*g =
+      (F^(e-1)*g-G^(e-1)*g)*PowerSeries.derivative (R := R) F +
+      (PowerSeries.derivative (R := R) F-PowerSeries.derivative (R := R) G)*(G^(e-1)*g) := by ring
+  change coeff (n-1) (F^(e-1)*PowerSeries.derivative (R := R) F*g+F^e*g^2) -
+    coeff (n-1) (G^(e-1)*PowerSeries.derivative (R := R) G*g+G^e*g^2) = _
   rw [map_add, map_add, hp (n-1) (by omega)]
   rw [add_sub_add_right_eq_sub, ← map_sub, he, map_add, hz, zero_add, leading_mul hd]
   have hncast : ((n-1 : ℕ) : R)+1 = n := by
@@ -315,12 +315,12 @@ private theorem candidate_odd (F E O : PowerSeries F2)
   have he : (2*m+1+1)^2 = (2*(m+1)^2)*2 := by ring
   have hrow : row F (2*m+1) = 0 := by
     rw [row, hg, mul_one, he, pow_mul, square_odd]
-  have ht : derivative F2 F = O^2 := by
+  have ht : PowerSeries.derivative (R := F2) F = O^2 := by
     rw [hF, Derivation.map_add, Derivation.leibniz, derivative_pow, derivative_pow]
     simp [smul_eq_mul, CharTwo.two_eq_zero]
-  have hprod : F*derivative F2 F+F^2=X*(O^2)^2 := by
+  have hprod : F*PowerSeries.derivative (R := F2) F+F^2=X*(O^2)^2 := by
     calc
-      F*derivative F2 F+F^2 = (E^2+X*O^2)*O^2+(E*O)^2 := by rw [ht, ← hF, hEO]
+      F*PowerSeries.derivative (R := F2) F+F^2 = (E^2+X*O^2)*O^2+(E*O)^2 := by rw [ht, ← hF, hEO]
       _ = (E*O)^2+(E*O)^2+X*(O^2)^2 := by ring
       _ = X*(O^2)^2 := by rw [CharTwo.add_self_eq_zero, zero_add]
   have htrow : derivRow F (2*m+1) = 0 := by
@@ -328,12 +328,12 @@ private theorem candidate_odd (F E O : PowerSeries F2)
     have hp1 : (2*m+1+1)^2-1 = (2*(m+1)^2-1)*2+1 := by omega
     have hp2 : (2*m+1+1)^2 = (2*(m+1)^2-1)*2+2 := by omega
     rw [derivRow, show 2*m+1-1=2*m by omega, hg, one_pow, mul_one, mul_one]
-    have hp : F^((2*m+1+1)^2-1)*derivative F2 F+F^((2*m+1+1)^2) =
+    have hp : F^((2*m+1+1)^2-1)*PowerSeries.derivative (R := F2) F+F^((2*m+1+1)^2) =
         X*(F^(2*(m+1)^2-1)*O^2)^2 := by
       rw [hp1, hp2, pow_succ, pow_add, pow_mul]
       calc
-        (F^(2*(m+1)^2-1))^2*F*derivative F2 F+(F^(2*(m+1)^2-1))^2*F^2 =
-          (F^(2*(m+1)^2-1))^2*(F*derivative F2 F+F^2) := by ring
+        (F^(2*(m+1)^2-1))^2*F*PowerSeries.derivative (R := F2) F+(F^(2*(m+1)^2-1))^2*F^2 =
+          (F^(2*(m+1)^2-1))^2*(F*PowerSeries.derivative (R := F2) F+F^2) := by ring
         _ = X*(F^(2*(m+1)^2-1)*O^2)^2 := by rw [hprod]; ring
     rw [hp, even_X_square]
   simp only [normalized, hrow, htrow, mul_zero, sub_self]
@@ -342,7 +342,7 @@ private theorem geom_map {S : Type*} [CommRing S] (f : R →+* S) (n : ℕ) :
     (geom (R := R) n).map f = geom n := by ext k; simp [geom]
 
 private theorem derivative_map {S : Type*} [CommRing S] (f : R →+* S) (F : PowerSeries R) :
-    (derivative R F).map f = derivative S (F.map f) := by ext k; simp [coeff_derivative]
+    (PowerSeries.derivative (R := R) F).map f = PowerSeries.derivative (R := S) (F.map f) := by ext k; simp [coeff_derivative]
 
 private theorem normalized_map {S : Type*} [CommRing S] (f : R →+* S)
     (F : PowerSeries R) (n : ℕ) : normalized (F.map f) n = f (normalized F n) := by

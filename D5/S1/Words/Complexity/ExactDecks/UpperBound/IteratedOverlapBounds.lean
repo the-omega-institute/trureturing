@@ -6,6 +6,7 @@
    utility: none
    digest: Iterated infiltrations isolate their maximal-length ordinary shuffles. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.ExactDecks.UpperBound.ShuffleScheduleComposition
 
 set_option autoImplicit false

@@ -678,7 +678,6 @@ private def standardizedRow {m : ℕ} (p : Fin m → unitInterval) (V : ℝ) : P
   ProbabilityMeasure.map
     (⟨bernoulliSpace p, inferInstance⟩ : ProbabilityMeasure (Fin m → Bool))
     (f := fun x => ((∑ i, (Bool.toNat (x i):ℝ)) - rowMean p)/Real.sqrt V)
-    (measurable_of_finite _).aemeasurable
 
 private lemma standardizedRow_charFun {m : ℕ} (p : Fin m → unitInterval) (V u : ℝ) :
     charFun (standardizedRow p V : Measure ℝ) u =

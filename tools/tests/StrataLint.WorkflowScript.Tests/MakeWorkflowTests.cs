@@ -95,6 +95,8 @@ public sealed partial class MakeWorkflowTests
         "auric-fib-universal-test",
         "research-readouts",
         "research-readouts-test",
+        "compiled-dependencies",
+        "compiled-dependencies-test",
         "help",
         "settle-batch",
         "dotnet",
