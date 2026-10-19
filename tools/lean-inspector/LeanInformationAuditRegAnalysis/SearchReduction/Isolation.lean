@@ -118,6 +118,27 @@ private partial def structureTypes (source : Environment) (n : Name)
       result := result ++ (← structureTypes source dep (seen.insert n))
   return result
 
+/-- Presentation units account for and report their own work. Only that work
+is excluded from the enclosing isolation allocation; all other isolation work
+retains the original cumulative command limit. -/
+private def prepareAdditions (source base : Environment) (index : FactIndex) :
+    List Name → Array Expr → MetaM (Array Expr × Nat)
+  | [], types => pure (types, 0)
+  | n :: rest, types => do
+    if base.contains n then throwError "search.structure_already_in_baseline: {n}"
+    let info ← checkedSource source n
+    for dep in info.type.getUsedConstants do copyVocabulary source dep
+    let started ← IO.getNumHeartbeats
+    let (present, _, detail) ← baselinePresentation (← getEnv) info.levelParams info.type (some index)
+    let used := (← IO.getNumHeartbeats) - started
+    IO.eprintln s!"structure presentation: source={n}, independent_heartbeats={used}, {detail}"
+    withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
+      if present == .found then throwError "search.structure_baseline_presentation: {n}"
+      if let .incomplete _ := present then throwError "search.structure_presentation_incomplete: {n}"
+      let types := types ++ (← structureTypes source n)
+      let (types, remainingUsed) ← prepareAdditions source base index rest types
+      return (types, used + remainingUsed)
+
 private def prepare (source base : Environment) (request : Request)
     (paired : Bool) : IO (Except (Failure × String) (Environment × ConstantInfo)) := do
   let work : CoreM (Environment × ConstantInfo) := MetaM.run' do
@@ -127,20 +148,15 @@ private def prepare (source base : Environment) (request : Request)
     for dep in target.type.getUsedConstants do copyVocabulary source dep
     if paired then
       let index ← factIndex
-      let mut types := #[]
-      for n in request.additions do
-        if base.contains n then throwError "search.structure_already_in_baseline: {n}"
-        let info ← checkedSource source n
-        for dep in info.type.getUsedConstants do copyVocabulary source dep
-        let (present, _, _) ← baselinePresentation (← getEnv) info.levelParams info.type (some index)
-        if present == .found then throwError "search.structure_baseline_presentation: {n}"
-        if let .incomplete _ := present then throwError "search.structure_presentation_incomplete: {n}"
-        types := types ++ (← structureTypes source n)
-      for type in types do
-        for dep in type.getUsedConstants do copyVocabulary source dep
-      if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
-      for n in request.additions do
-        copyStructure source request.target target.type n index
+      let (types, used) ← prepareAdditions source base index request.additions.toList #[]
+      -- Continue with the same allocation consumed by nonpresentation work.
+      -- prepareAdditions adjusts only its recursive continuation's reader.
+      withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
+        for type in types do
+          for dep in type.getUsedConstants do copyVocabulary source dep
+        if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
+        for n in request.additions do
+          copyStructure source request.target target.type n index
     return (← getEnv, target)
   try
     let context : Core.Context := {
