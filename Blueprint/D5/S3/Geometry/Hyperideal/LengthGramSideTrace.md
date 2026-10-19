@@ -1,8 +1,8 @@
-# Original side traces and the twenty-cell cover
+# Original side traces, twenty-cell cover and null overlaps
 
 ## Abstract
 
-The original twenty closed coefficient cells cover the common six-length cut body, and each cyclic supporting trace is its original edge segment.
+The original twenty closed coefficient cells cover the common six-length cut body and have pairwise null overlaps in its explicit three-coordinate chart.
 
 Fix six strictly positive lengths in the original order 01, 02, 03, 23, 13, 12. For a side label k, the side support is the coordinate support x_k=0. The six cyclic supports are the alternating coordinate and Gram-row supports of the three remaining labels.
 
@@ -28,7 +28,17 @@ For a side k, take the original root o=sideCycle(l,k,0) and apply the same certi
 
 The original barycenter b=(1/4,1/4,1/4,1/4) belongs to K by LengthGramBody.shared_radial_body. Apply the certificate with o=b. Every exit point lies either on a cap triangle or on one of the four specified triangles of a side. The original tuple identity gives cell(l,n)=convexJoin R {b} (boundaryTriangle(l,n)), using convexHull_insert. Hence every x in K belongs to one of the literal twenty cells. Conversely the barycenter and every endpoint belong to K, and K is convex by the existing twelve-endpoint hull equality, so each cell is contained in K. Thus cutBody(l) is exactly the union over n in Fin(20) of cell(l,n), for every six strictly positive original lengths.
 
-The conclusion is an exact cover by the original closed convex hulls. Pairwise face intersections, nondegeneracy, orientation and measure-zero overlap still require their own certificates before this cover can be used as an integral decomposition. The covering application establishes no volume-variation formula or Schlaefli identity. It applies the existing endpoint, zero-trace and cyclic-edge results together with finite maximum and convex-join facts; no new standalone mathematical declaration or literature priority is asserted.
+For the overlap application retain these same original twenty tuples and all six strictly positive lengths. No determinant assumption or simplex nondegeneracy is added. Write each point of a cell as a normalized sum of its four vertices with nonnegative coefficients. Two representations with every coefficient strictly positive cannot agree when the cell indices differ. The coefficient argument uses the original eight supports and endpoint incidences, so it does not infer disjointness from a sketch of the fan.
+
+First suppose the two boundary triangles have different facet supports. Each facet vanishes on its own three endpoints and is strictly negative at the common barycenter. It is nonpositive on every endpoint of the other triangle, and the original endpoint-incidence table gives a strictly negative value on at least one of them. Applying that facet to equal positive combinations forces the first barycenter coefficient to be strictly larger than the second. Applying the other facet forces the reverse strict inequality, a contradiction.
+
+If the facet supports agree, evaluating that support first makes the barycenter coefficients equal. Remove the common barycenter contribution. Distinct cells on this facet are two of the four specified side triangles, with the same original root. For each triangle its original ridge support vanishes on its two opposite-edge endpoints and is strictly negative at the root. On the other triangle that support is nonpositive, with at least one strictly negative opposite-edge endpoint. Applying the two ridge supports now forces opposite strict inequalities between the root coefficients. The original facet, ridge and endpoint tables include all twenty indices; a cap facet has only its one triangle.
+
+It follows that every point in the intersection of two distinct closed cells has a zero coefficient in at least one of its two nonnegative normalized representations. Deleting that zero coefficient leaves the convex hull of the other three original vertices. Thus the intersection is contained in the union of the four triangular face hulls of each of the two cells. The argument needs neither affine independence nor an orientation of either four-tuple.
+
+Use the coordinate chart on the common sum-one affine space given by dropping the fourth coordinate: pi(x)=(x_0,x_1,x_2). Its inverse is chi(y)=(y_0,y_1,y_2,1-y_0-y_1-y_2). The original vertices belong to cutBody(l), and convexity of the sum-one affine space puts every cell in that space. Hence pi is injective on all these cells, and pi(cell_n) intersect pi(cell_m) equals pi(cell_n intersect cell_m). This equality is required: an image of an intersection cannot by itself stand for an intersection of images.
+
+A linear map sends each three-vertex face hull to the convex hull of three points in R^3. Its affine span is proper, since its affine dimension is at most two; the existing Haar-measure theorem for a proper affine subspace makes that hull Lebesgue-null. The preceding finite union therefore proves that pi(cell_n) intersect pi(cell_m) has three-dimensional Lebesgue measure zero for every n different from m. This is a null-overlap statement in the explicit coefficient chart. Exact pairwise face descriptions, nondegeneracy, orientation, the geometric measure and density identification, integrability, volume variation and the Schlaefli identity require their separate arguments. These are applications of the existing support, convex-hull, affine-span and Haar-measure results; no new standalone mathematical declaration or literature priority is asserted.
 
 ## References
 
