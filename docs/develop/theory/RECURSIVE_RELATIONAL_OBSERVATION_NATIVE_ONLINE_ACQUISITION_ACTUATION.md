@@ -2869,3 +2869,983 @@ finite-service resource refinement.
 [SLHC12]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT_CONTINUATION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 18. A bounded late-attachment model and an independently named old cut
+
+**Definition 18.1 (original target and entry interval).** Fix the
+original runtime $\iota$ of §§12–17, including its precise row expansion,
+lexical scratch convention, canonical typed allocators, orientation,
+exclusive static owner $o$ and source port $\pi$. Quantify over every
+finite $u\in\mathcal T$, every nonempty completed command word
+$w\in\Lambda^{<\omega}$, and every row cut in the following interval.
+Start immediately after the canonical unknown-source installation of
+Assumption 1.2. The source-node names are its preorder names starting
+at zero, all its tag/child fields and the root attachment are initialized,
+the original event/input/output words are empty, the chronological tail
+is null. All other original typed allocators, including events, start
+at zero; the not-yet-constructed bank/work roots are null, and control
+is at the first original local-installation instruction with its
+prescribed empty finite latches. The source-node allocator starts at
+$N(u)$. Execute the two original banks, known-source
+preparation, Boot, and then precisely the commands $w$, under
+Definitions 12.2–12.5 and 4.1. Write $C_k=C_k(u,w)$ for the complete
+original state after $k$ executing original rows of this finite run.
+An original Supply row counts as a row. Disabled attempts are omitted.
+
+Let $a_w$ be the index immediately after the last bit of the last command
+code, $b_w$ immediately after that command's Begin, $e_w$ immediately
+after its End, and $r_w$ immediately after its Return. The entry domain is
+
+$$
+\mathcal D=\{(u,w,n):u\in\mathcal T,\quad
+ w\ne\epsilon,\quad a_w\le n<b_w\}.
+\tag{OA.28}
+$$
+
+The target is the already specified $C_n$, including the original source
+and detached material, all allocations and partially linked backing,
+all banks/latches, saved references, inputs, outputs, events, allocators
+and original rights. It is defined by this original execution, before
+introducing a recovery program. $J_\iota(u,v)$ keeps its returned-only
+meaning; $C_n$ is not a new use of that notation.
+
+The interval includes every attained Update/Scan row cut after its
+complete code and before Begin. For $10$ and $11$ it also includes the
+prescribed detached-$A$/wrapper preparation, partial links and port
+publication preceding Scan entry. At such a cut the command has selected
+the prospective Scan, even if no new service descriptor exists yet.
+The incomplete two-bit command at Tail, Boot, an already emitted Begin,
+and cuts inside an indivisible row are outside $\mathcal D$.
+Membership in $\mathcal D$ is a mathematical premise. No membership,
+mode, old-command, old-ordinal or old-state recognition port is supplied.
+
+**Definition 18.2 (the distinct model $\chi\iota$).** Before choosing
+$u,w,n$, fix the same owner and source port, one auxiliary request port,
+one auxiliary output port, auxiliary cell types and a finite program
+specified below. Auxiliary types have separate canonical allocators,
+initially empty. Original non-event allocators keep their original
+namespaces. There is **one shared chronological event type and tail**.
+Its fixed finite tagged union contains the original event format
+literally, an original-row format with the bounded observer coeffects,
+and an auxiliary-row format. Pre-Attach events keep their original
+payload and initialized fields; no field is retroactively added or
+backfilled. Every executing original or auxiliary row appends one
+event, using the next name of that shared type. Its bounded record includes its opcode,
+predecessor, actual operands/values and bounded field/slot coeffects;
+recording does not initiate another instrumented row.
+
+The following are declared interface additions, not old $\iota$ actions.
+
+1. At an original row boundary, the fixed owner may execute Attach once.
+   It changes a dormant finite attachment flag to bootstrap, initializes
+   a bounded tick latch to empty, a bounded optional-token latch to empty,
+   a finite receiver phase to AwaitBegin and a finite bootstrap PC.
+   No source field, original bank, saved scratch, descriptor, original
+   non-event allocator or original control is assigned. The Attach event
+   has the actual old global tail as predecessor. Attach returns only
+   its fixed acknowledgement. It neither reads old events nor supplies
+   their number, and performs no unbounded installation.
+2. After installation, an executing original action, whether Advance or
+   Supply, has the additional synchronous coeffect setting the tick latch
+   to pending and copying its **one newly emitted token**, if any, into
+   the optional-token latch. The original row emits at most one token.
+   Old outputs are not copied. These latches must both be empty before
+   another original action. Auxiliary rows do not trigger this coeffect.
+   Its event includes these bounded assignments. A disabled original
+   action has no row, tick, token, event or successor.
+3. Auxiliary operations are individual owned field reads, null/finite-tag/
+   reference tests, assignments, one bounded-cell birth, one-bit input,
+   one-token output and finite control edges. Their expansion is the
+   one-row-per-operation convention of Definition 12.3. A returned value
+   and the bounded successor PC may be retained as coeffects. There is
+   no subtree, string, numeric, copy, historical-read or Call operation.
+   Fixed owner authority covers these fresh arenas and ports. Original
+   source authority remains with this same owner throughout.
+
+The successful-original-row latch can equivalently be implemented by the
+finite continuation of the owner's invoking instruction: it records one
+completed invocation, not a source-state answer. The new output coeffect
+is a bounded future receiver, not (OA.22)'s mathematical complete-successor
+coordinate. The observer never receives that coordinate. The source's
+ordinary constructor stream and the auxiliary DATA stream have distinct
+finite channel tags; publishing DATA does not feed it back as source
+output. Only the single serial controller invokes source actions.
+Arbitrary external interference, revocation and concurrent invocations
+are excluded, as in Definition 12.1.
+
+**Definition 18.3 (actual finite installation and local word routines).**
+The irreducible addition is the finite Attach/bootstrap mechanism just
+declared. It installs the one fixed controller $P$ of §§18–21. Expand
+sequence, finite alternatives and while tests into individual rows;
+replace recursive tree traversals by allocated stacks. Assign instruction
+labels in textual routine order and then textual row order. Inline
+fixed subroutines with fresh temporary register roles; calls form the
+finite acyclic macro hierarchy below. Let $m$ be the number of distinct
+register roles in this expansion. Install one auxiliary holder and its
+$m$ one-reference slots in that order, all null. Finite tags and latch
+bits are installed separately, one bit per row. Encode the expanded
+finite instruction table as a list of tuples of unary instruction
+labels, finite opcode/field identifiers and successor labels, with
+$U(j)=1^j0$. Its bit length $K$ is the length of this specified expansion,
+not a source-dependent input.
+
+The bootstrap walks the fixed literal table in its finite control:
+for each bit, birth a code cell $(\mathsf{bit},\mathsf{next}=\mathsf{null})$,
+test the former code tail for null, assign either code head or its next
+field, and assign code tail. A final seal edge enables the installed
+table. Every field initialization, slot link, branch test and seal is
+charged. The finite dispatcher selects its installed rule; this is the
+finite control mechanism, not dynamic unbounded code fetch. During this
+installation the original control is paused. At every prefix the code
+list and slot list consist exactly of the items already constructed,
+with their actual null or linked fields; the uninstalled suffix is not
+read. The fixed table contains no unknown seed or target data.
+
+In addition to code, holder and slot cells, auxiliary storage uses
+bit cells $(\mathsf{bit},\mathsf{next})$, mark cells
+$(1,\mathsf{next})$, and work cells
+$(\mathsf{tag},\mathsf{first},\mathsf{second},\mathsf{next})$.
+These are different typed namespaces, starting at zero at Attach.
+All are retained after popping or clearing. A word is a linked finite
+bit list with null terminator; a natural in computation is a mark list.
+A tuple/list is encoded by the finite grammar
+$0$ for nil and $1\,U(|x|)\,x\,s$ for an item $x$ followed by list $s$.
+Finite tags have fixed-width binary codes. Data copying never aliases a
+mutable construction frontier with a sealed input.
+
+The local macros have the following literal bounded-operation expansions.
+Cons births a bit cell and assigns the destination slot. Pop tests null,
+reads bit and next separately, and assigns its cursor. Copy consumes a
+cursor, conses each read bit to a reverse word, then reverses that word
+by the same pop/cons loop. Cat reverses a copied first word and conses
+its bits onto a copy of the second. Length consumes a copied word and
+conses one mark per bit. CopyMarks follows a mark cursor by individual
+next reads and conses fresh mark cells, obtaining a distinct list of the
+same length; cancelling marks uses separate next reads and cursor
+assignments. Encoding such a natural emits one 1 per followed mark
+and then one 0. Equal consumes two copied cursors, comparing
+each pair of read bits, and tests simultaneous exhaustion. ReadUnary
+consumes leading ones into marks and requires the terminating zero.
+Take consumes one input bit and one mark per iteration, then reverses
+its accumulated bits. ReadFrame is ReadUnary followed by Take. A list
+scan reads its tag and ReadFrame, consumes that item, and continues at
+its retained suffix until the nil tag. Nth counts down acquired marks
+while scanning; Replace and AppendItem rebuild a new list, copying
+unselected items. EmitWord tests its cursor, reads bit and next, emits
+that bit, assigns the cursor and repeats, with explicit outer Begin/End
+and acknowledgement edges. Each mentioned read/test/assignment/edge is
+a row; no macro name is a primitive.
+
+Tuples, lookup tables, stacks, predecessor references and simulated
+heaps are consequently finite words operated on by these macros.
+All counters and variable addresses are backed lists, not latches.
+The number $m$ and the table length $K$ are fixed finite syntactic
+quantities; workspace, retained versions and runtime are not bounded
+by them. This uses RCA §12.1's already supplied word-program methods,
+with linked cells in place of RCA's tape banks. It does not import
+RCA's 32–40 port layout or its Ready-only installation permission.
+
+## 19. The source-specific shared chronology
+
+**Definition 19.1 (the correspondence, including entry-reference phases).**
+Compare the original continuation of $C_n$ with the one live source after
+Attach. Match rows by their **original** action order, ignoring intervening
+auxiliary rows for this matching only. Keep equality of original control,
+finite mode/parser/command latches, source/port fields, all original
+non-event cells, their identities and allocator positions, banks and
+input/output, with the following explicitly tracked chronology components.
+
+The actual global event chain is the old prefix followed by *all* new
+original and auxiliary events in their executed order. Each new event
+has its actual predecessor and actual fields, including the coeffects
+of Definition 18.2. Its allocator is the length of that global chain.
+The original comparison chain has only original rows. Neither chain
+is asserted equal to the other after Attach.
+
+A source entry capture reads the then current global tail. During the
+lexical lifetime from that read until the descriptor's entry initialization,
+the actual saved-entry scratch contains precisely this captured reference,
+even when more events have since been appended. The new descriptor.entry
+is initialized to that saved value and never retargeted to the later tail.
+After its lexical last use the ordinary clear/reuse rule applies to the
+scratch. This is a role/lifetime assertion, not a fixed numbered scratch
+slot. If the capture occurred before Attach, its original saved value
+survives Attach and the installation unchanged. If the descriptor was
+already born, its original entry stays unchanged. If neither occurred,
+the later capture may name an auxiliary event. Every shared event remains allocated and immutable, including an
+auxiliary event subsequently captured by source entry. Thus these
+saved copies have live retained targets for their whole lexical or
+descriptor lifetime. Old descriptors keep their
+own actual entry values; descriptor.previous, table endpoints and sites
+keep their ordinary non-event references. Every source event stores the
+actual values of these fields when its row reads or writes them.
+
+The comparison allows these specified saved-entry and descriptor.entry
+values to differ between runs, and allows the specified event/tail/
+event-allocator components to differ. No other original field is erased.
+In particular partial operand/invocation fields, staging null links,
+actual sites, completion references, descriptor states and all original
+bank contents outside a live saved-entry role must agree. A global
+tail, a list/table tail and the command-control state Tail are three
+different objects.
+
+**Lemma 19.2 (exhaustive operational noninterference).** In $\mathcal D$,
+after installation and after every finite interleaving prescribed below,
+the correspondence of Definition 19.1 holds. Every next original
+requirement has the same result, the same original row executes, and
+the same original token is emitted as in the original continuation.
+The original non-event source and backing agree at every matched
+partial cut. All chronology components have the actual values of
+Definition 19.1. This remains true through Return and any later finite
+commands supplied through the installed controller.
+
+Proof. Before Attach the original components are exactly $C_n$.
+Attach/installation/local rows write only auxiliary fields and the
+shared event system. Their record appends determine a new real tail,
+not a source write. They leave any existing saved-entry reference
+untouched. This proves the local-row case, including partial installation.
+
+For the original-row case it is necessary to inspect the operands in
+the owning rules, rather than infer the conclusion from disjoint heaps.
+Here is their complete partition.
+
+* The command rules test Ready/Tail and supplied bits. Known preparation
+  and grafts read the held port/root and their fresh staging fields,
+  initialize literal source nodes, test null links and write the specified
+  port. None tests an event reference or an entry field.
+* Entry reads the chronological tail once, into the saved-entry role.
+  The subsequent holding/linking of the previous descriptor, port capture,
+  endpoint clears, new descriptor birth and root-stack pushes use the
+  operands of Definition 12.4. Only descriptor.entry receives that saved
+  reference. Descriptor.previous receives a descriptor reference, not the
+  tail. The old descriptor's table contents are not read.
+* Work-head tests, four-field site pops, receiver pops, incoming-field
+  reads/equalities and source follows use exactly the sites, source nodes,
+  words and frames of Definitions 12.2/12.4. Packet Offer/Take/Arrival/
+  Acknowledge and the finite parser use only their mailbox, packet cells
+  and finite tags. Receiver row/word construction and paired pushes use
+  their actual newly obtained payloads. Table/list tails here are
+  non-event endpoints. None is the global chronological tail.
+* At an editing leaf, Definition 12.5 reads the operand, immutable site,
+  actual focus, descriptor.owner/port and the indicated holder field.
+  It tests the static binding, node/side and attachment equalities.
+  Its guard follows the fixed literal tile paths and tests their actual
+  tags/children. Target births, vacancy checks, links, invocation.old/new,
+  the one attachment Publish and completion append use those same
+  non-event operands. No field of an event or descriptor.entry is an
+  operand of a guard, a site, a label selection or a publication.
+* NodeDone and service/Return cleanup assign the listed slots/latches
+  and clear masks. A scratch role ceases to carry an entry reference
+  precisely at its stated last use/clear; later scratch users get their
+  ordinary newly assigned values. End assigns actual table endpoints,
+  descriptor states and the old descriptor's retirement state.
+  Output reads only current row word/label/next fields, prints the
+  prescribed tokens and finishes its fixed cleanup/Return. The source
+  never rereads an old output archive or event payload.
+
+This covers installation/preparation, every service instruction and
+its finite tests, every output/cleanup row, and both Supply controls
+in Definitions 1.3, 2.1–2.3, 4.1 and 12.2–12.5. In particular a saved
+entry is not used as a source pointer, and fixed owner/port checks do
+not inspect it. Equality of the other operands proves equal branch
+results, read values, allocations and non-event updates row by row.
+At an entry-tail read, instead apply the explicit live-tail rule:
+both reads succeed, and each saves its own actual tail. At descriptor
+birth each copies its own still-live saved value. This proves the
+entry-reference phases even if Attach occurred between the two rows.
+
+Finally append the actual event, with the actual pre-append predecessor,
+actual values, initialization and bounded coeffects, and assign the
+actual global tail. The next global name is the next event allocation;
+source non-event allocations are unaffected by auxiliary types. This
+establishes the complete event clause without identifying the two
+event chains. Instrumentation cannot recurse. The extra tick/token
+coeffect reads only the newly emitted finite token, and no original
+guard reads its auxiliary destination. Induction over the interleaving
+proves the assertion at every partial cut. The same operand partition
+applies to later commands, so the proof does not stop at the first Return.
+This is source-specific operational correspondence, not full-state
+equality obtained by deleting a disjoint heap. $\square$
+
+**Corollary 19.3 (the first frame belongs to the same source).** From
+$(u,w,n)\in\mathcal D$, pause for finite installation, then repeatedly
+invoke the next original Advance with finite receiver work between
+invocations. The first source Begin after Attach is the Begin at matched
+original index $b_w$, its constructor body is precisely the preorder
+of $t=F_w(j(u))$, its End is at $e_w$, and the fixed subsequent cleanup
+reaches the matched Return $r_w$ and actual Ready. There is no Supply
+between Attach and that Return.
+
+Proof. Theorem 13.3 supplies this original finite continuation, including
+graft preparation when selected. Lemma 19.2 preserves each of its row
+choices and outputs. By (OA.28) no earlier Begin remains between $n$
+and $b_w$. Definition 4.1 prints exactly that service's current table.
+After End, its ordinary row-list tail is exhausted; the remaining
+bank-order clears, descriptor-state assignment and Return constitute
+one fixed finite non-Boot row list. Its length $c=r_w-e_w$ is the
+syntactic length of that expanded cleanup, not a received old ordinal.
+Following those $c$ Advances is lawful and ends at Ready.
+The sixteen additional clears are included. $\square$
+
+## 20. Actual first-frame acquisition and exact old-state construction
+
+**Definition 20.1 (driver, received partial states and the stopping
+distance).** When no tick/token is pending, installation is complete,
+and the source is in the initial running phase, invoke its next Advance.
+Its synchronous coeffect precedes any further invocation. To discharge
+one pending tick, test pending, birth a mark pointing to tally head,
+assign tally head to that mark, then clear pending. The three-row
+birth/assign/clear body has its separate head test and control edges.
+This immutable tally counts *all executing original actions since
+Attach*, not auxiliary rows. A partly completed increment has its old
+head, fresh initialized mark and finite subphase; it is never used as
+a completed tally. No next original action is admitted in that subphase.
+
+Next test optional-token availability. If present, read its finite
+value and run the following finite dispatch, then clear availability.
+A token being appended has an initialized new cell, its old list
+endpoints and its explicit link/head/tail subphase. Advance is barred
+until that append and acknowledgement finish.
+
+In AwaitBegin, the first received Begin saves the completed tally head
+as $D$, initializes the constructor list empty and changes to Body.
+In Body each received $\alpha,\beta,\mathsf b$ is actually appended
+to that list; End changes to Closed. No other token is accepted on
+these phases. After Closed the first-frame list and $D$ are immutable.
+All later source tokens are read and acknowledged in Drain and do not
+reset either object. Absent tokens require no fabricated Arrival.
+The source's own Offer/Take/Arrival/Acknowledge mailbox of Definition 2.1
+is a different internal channel; auxiliary reception observes only the
+source's public Begin/body/End emissions.
+
+For clarity the entire partial-receipt invariant is: (i) a pending
+tick names exactly the last unmatched executing source invocation;
+(ii) outside increment, the completed tally has one mark per discharged
+invocation, and inside increment its fresh mark has exactly that old
+head as next; (iii) the optional-token latch is the one still unacknowledged
+emission of that invocation or empty; (iv) the committed first-frame
+list is exactly the already appended constructor prefix following the
+first Begin, with at most its one read-but-not-yet-linked token; (v) $D$
+is absent before that Begin and afterwards is the immutable completed
+tally of its invocation; (vi) no parsing, historical record availability
+or source-ready claim is made from an unfinished list.
+
+At Closed, discharge/acknowledge completely, set Drain, and execute
+the $c$ cleanup Advances of Corollary 19.3, with these same per-invocation
+discharges. The resulting source is actually Ready; the global event
+tail has continued to change during receiver work. Keep it paused
+while constructing and publishing the record.
+
+**Definition 20.2 (finite parsing, ancestry and original-row simulation).**
+Parse the *received* closed constructor list by a work stack of destination
+sockets in fresh word/tree data, initially its root socket. For each
+token, pop a socket, create the indicated tag with null children, fill
+that socket, and for a branch push its right then left child sockets.
+Require a nonempty stack before each token and an empty stack at
+exhaustion. Each push/pop/read/birth/link is expanded separately.
+This is the usual full binary preorder parser, now on received cells.
+
+On the resulting finite $t$, use ER's actual ancestry algorithm, with
+this explicit syntax implementation. The image grammar for $\rho$ is:
+$\beta$ decodes to $\alpha$; $\langle\beta,\alpha\rangle$ decodes to
+$\beta$; a pair whose children both decode decodes to the pair of their
+decodings; $\alpha$ fails. The exceptional pair is disjoint from the
+pair-of-images case since $\alpha$ is not an image. Evaluate this
+bottom-up with a traversal stack. To take a compound $U$ predecessor
+require both children in that grammar. To take $L$ require left child
+$\alpha$ and compound right child, and symmetrically for $R$.
+Before each predecessor test, test membership in $j[\mathcal T]$ by
+its fixed left child $a_0$; if true, retain the right child as $u$.
+Otherwise take the unique available predecessor and prepend its label
+to a word register. No predecessor yields Invalid. These are finite
+tree traversals, Equal, list construction and finite dispatch. ER
+Theorems 9.3/9.5 prove uniqueness, the attained stopping point and
+termination by the strictly decreasing positive measure
+$\nu(x)=2A(x)+3B(x)$. Thus this is credited ancestry, not a new inverse
+or an ancestry oracle.
+
+The original simulator represents a complete original state by:
+finite control/latch fields; one list per original cell type in canonical
+allocation order; every cell's full field tuple and initialized status;
+root/bank/input/output roots; next-allocation counters; event list and
+tail; and the original static binding/rights. A null reference, an
+uninitialized field, a finite value and a typed ordinal reference have
+different tags. An ordinal is DATA encoded by $U(j)$, not an actual
+reference. Initial construction uses the recovered tree $u$: allocate
+its represented nodes in preorder with the actual canonical initial
+tag/child/root fields, empty original chronology and the original initial
+typed counters. Do not insert any auxiliary cell, Attach event or
+observer code into this represented original state.
+
+For one simulated original row, keep its sealed pre-row word in a
+separate slot and build a fresh working version. Fetch old operands
+from that saved word before assigning their replacements; retain new
+values in separate finite register roles. The completed state/input
+cursor and row tally are committed only after the working word and
+its event are complete. Select the finite original PC rule.
+Read its indicated represented field by typed-list Nth and tuple Nth.
+Perform its finite null/tag/reference test. Replace the indicated field
+or initialize the next canonical bounded cell and increment that type's
+mark counter. Keep every other item. For input use the next bit of the
+recovered $0,10,11$ encoding of $w$, only at its represented Ready/Tail.
+For output append only the finite emitted token to represented Out.
+Apply exactly the stated bounded bank/latch coeffects and then append
+the original event with its pre-row tail, operands, values, initialization
+and tail coeffects. Advance represented PC. Event self-references use
+the next represented event ordinal; they do not embed the event value
+recursively. The finite rule cases are the field/read/follow, birth,
+assignment, finite test, input/output and control rules of Definition
+12.3, including the lexical temporary allocation/clear convention.
+This specifies a finite Step program using Nth/Replace/AppendItem,
+not an atomic virtual instruction or a full-state response from the
+live source.
+
+Run that simulator from initialization with a mark tally until it executes
+the last command's Begin: all bits of $w$ have then been consumed, and the
+next Begin following their exhaustion is the selected one. Earlier Boot
+or command Begins do not pass this test. Let its computed tally be $B$.
+Cancel copied marks of $D$ against copied marks of $B$; the remaining
+marks are $N$. Restart the original simulator and execute exactly $N$
+Step iterations, consuming one copied mark per iteration. Serialize
+this complete resulting state with the tuple/list codec, retaining also
+the computed binding $(o,\pi,u,w,N)$. Loops never scan their own growing
+destination; loop stacks and countdowns are ordinary retained cells.
+
+**Theorem 20.3 (acquisition of the independently specified $C_n$).**
+For every $(u,w,n)\in\mathcal D$, the installed program has a finite
+actual execution constructing a sealed finite record $R$ such that
+
+$$
+\operatorname{decode}(R).\mathsf{state}=C_n(u,w),
+\qquad |D|=b_w-n,\quad |B|=b_w,\quad |N|=n.
+\tag{OA.29}
+$$
+
+It starts with no source-dependent observer data and reads neither
+old archives, old event payloads, old references as ordinals, nor an
+old complete-state response. All received data are the actual first
+future public frame and actual successful invocations.
+
+Proof. Installation is finite and source-independent. At each source
+invocation the tick is set once, the mark block executes once, and
+original dispatch is barred until it finishes. Local events do not
+set that tick. Induction proves the tally and all partial-state clauses
+of Definition 20.1, including a cut between birth and head assignment.
+For token receipt the synchronous copy is exactly the newly emitted
+token. Acknowledgement precedes the next source action. Induction on
+append subphases proves that the committed list is the received prefix;
+it supplies no not-yet-arrived constructor.
+
+By Corollary 19.3 the first Begin has matched index $b_w$, and the
+executing original actions from $n$ through its successor number
+$b_w-n$. The Begin invocation's tick is discharged before $D$ is saved.
+Hence $|D|=b_w-n$, including the cases immediately before Begin,
+inside a guard, between site/operand operations, and during graft
+preparation. Installation and receiver rows add no marks to $D$.
+The first closed frame is precisely the full preorder of
+$t=F_w(j(u))$. The parser's stack is its usual ordered unfilled-socket
+frontier; a branch replaces its socket by left/right sockets and a
+leaf closes it. Induction on the received prefix gives every partial
+parser state and the actual final $t$. This is an actual finite
+acquisition, not inversion conditional on an arbitrary transcript.
+
+Apply the supplied ancestry theorem with entry antichain
+$j[\mathcal T]$, constants $\alpha$ in the two grafts, and forward
+left-to-right word convention $F_w$. It returns precisely this $u,w$.
+No hypothesis identifies an unknown historical entry by fiat.
+
+For simulation, prove by original-row induction that each represented
+field, allocated identity, initialized/null distinction, control,
+input/output and event equals the corresponding original one. A read
+uses the same typed ordinal and field. A test therefore has the same
+branch. A birth uses the same type's next name; its actual initialized
+fields and later links are separately represented. An assignment changes
+only that field. Supply consumes exactly the next recovered command bit;
+the deterministic busy rows consume none. Output and clear masks are
+the original ones. Finally the event uses the same pre-row predecessor
+and actual represented coeffects, so its new tail and allocator agree.
+This includes entry-tail capture *in the original chronology*, its
+saved scratch lifetime, descriptor.entry and descriptor.previous.
+It also covers a stopped partial packet, incomplete target template,
+invocation.old/new and detached old tiles; no equality of extensional
+source trees replaces these fields. This row induction is the specific
+finite heap analogue of the credited replay method.
+
+The original run is finite by Theorem 13.3, so the first simulation
+stops exactly at $b_w$. Its own original-row tally is $B$ of length
+$b_w$, regardless of the later real time spent simulating. Cancellation
+therefore succeeds and gives $n$. The second finite countdown replay
+stops at precisely the independently defined $C_n$. Serialization
+copies that represented complete state; it neither uses the altered
+live chronology as an old one nor restores its old pointers. All
+macro loops consume finite words/lists or a decreasing structural
+work measure. Ancestry decreases $\nu$, and both simulator outer
+loops have the finite witnessed bounds just proved. Thus construction
+and sealing finish in finite actual local rows. $\square$
+
+**Lemma 20.4 (all reconstruction prefixes).** At every local row cut
+of the acquisition/reconstruction, the installation and receipt clauses
+of Definitions 18.3/20.1 hold. During tree parsing, completed tokens
+fill exactly the corresponding left-first sockets, with the current
+token's birth/link/push subphase separate from the committed frontier.
+During an ancestry traversal, its work stack contains exactly the
+unprocessed structural tasks and its already constructed results;
+the outer command list is the reverse-removal list already prepended
+into forward order. During either original simulation, if $j$ Steps
+have committed, its sealed current word is exactly original $C_j$;
+a pending Step has that unchanged pre-word and precisely the work
+prefix prescribed by its current macro/row. A pending tally increment
+is not a completed $j+1$. If $i$ pairs of marks have been cancelled,
+the copied cursors have lengths $b_w-i$ and $b_w-n-i$. The second
+simulation's completed-step countdown is $n-j$. During serialization
+the committed record prefix is exactly the encoded prefix of its
+sealed completed input, with one possible pending field/bit append;
+availability remains false. All allocated intermediate cells retain
+their initialized payload and actual canonical identity.
+
+Proof. A pop consumes its recorded head and a cons points to the
+pre-cons destination; the Copy/Reverse invariant is that the accumulator
+is the reverse of the consumed source prefix. Cat and the framed-list
+macros inherit this statement, with unconsumed suffixes saved before
+new appends. Every partial list append has only its initialized new
+cell, old endpoints, and named pending link/head/tail assignments.
+The explicit finite subphase determines which have occurred.
+
+The socket parser invariant follows by consuming one task per leaf
+and replacing a branch task by its two ordered child tasks. Bottom-up
+image parsing similarly replaces only a finished task by its computed
+result. The ancestry outer step prepends precisely the last removed
+label, so the removed suffix is in its original forward order.
+Theorem 20.3's row induction identifies a committed Step. Before
+commit, immutability of its saved pre-word and the finite macro cursor
+give exactly its unfinished transformation, including an event whose
+fields have not all been appended. No later Step can use that work.
+The two tally/countdown loops advance only after their pending mark
+operation has completed. Paired cancellation consumes one mark from
+each copied cursor, giving the displayed lengths; since
+$b_w-n\le b_w$, it never requires a missing $B$ mark. The serialized
+input is sealed before its first output bit, so the same copy invariant
+proves its partial-prefix assertion. None of these routines frees a
+cell. This proves the stated clauses by induction on individual local
+rows, including cuts before input retention, in a tuple replacement
+and in an unsealed result. Together with Lemma 19.2 they describe
+the simultaneous source and observer partial state, not just completed
+abstract macro values. $\square$
+
+## 21. Completed DATA, genuine requests and actual current use
+
+**Definition 21.1 (retained-record and request phases).** Historical fields
+have the disjoint wire type HistoricalData. In particular a historical
+reference is its original type and canonical ordinal *as bits*; an old
+owner/right field is a finite description. No decoding instruction
+casts those bits to a live reference, changes a live allocator or executes
+a permission transfer. The current source right is the original fixed
+right of $o$ on $\pi$.
+
+After Theorem 20.3's serialization, retain its actual bit-list head and
+a Complete seal in a finite latch. There is exactly one target record
+per Attach, so its installed request port names this completed object;
+no unknown package number is required. Execute the following initial
+publication: emit DATA-Begin, traverse the sealed record by actual
+null tests, bit/next reads, one bit emission and cursor assignments,
+emit DATA-End, execute a local acknowledgement edge, then set
+RecordAvailable and RequestIdle. This publication reads the whole
+completed retained record. It is not a declaration that a symbolic
+value has been delivered. Owner-local read authority on that sealed
+list was installed in the model. No cross-owner channel or restored
+historical token is invoked.
+
+Record-construction phases are Empty, Building, CompleteUnprinted,
+Printing, AwaitAcknowledgement and Available. A partial serialization
+has only its initialized prefix and its explicit link/endpoint subphase;
+it is neither sealed nor available. During Printing the cursor is a
+suffix of the sealed list, and emitted DATA bits are exactly its read
+prefix. Before acknowledgement no request is admitted. These flags
+concern the new record, not the source's descriptor state.
+
+The driver sets its own finite SourceReady flag only after the fixed
+cleanup and complete tick/token discharge. It does not read or recognize
+an unknown source PC. With that flag and RequestIdle, the genuine
+bounded auxiliary input is In$(b)$ for one bit $b$. Its row sets a one-bit latch and enters
+InputPending; separate local read/birth/link/clear rows retain that
+supplied bit before another In is possible. After processing a first
+one it enters RequestUnary; each subsequent one returns to RequestUnary
+after its paid mark update, and only the terminating zero enters the
+answer handler. In is enabled at RequestIdle or RequestUnary, never
+during InputPending or an answer. The request grammar is
+
+$$
+0\quad(\mathsf{GetRecord}),\qquad
+1\,1^k0\quad(\mathsf{GetBit}(k)),\qquad k\ge0.
+\tag{OA.30}
+$$
+
+The first one selects the second grammar arm; subsequent ones cons marks
+onto its backed index; its terminating zero completes it. The request
+bit list, possibly pending input bit, tag, unary prefix and parser phase
+are all retained. No reply is produced for a proper unfinished prefix.
+A user may stop there; supplying its finite remaining bits completes the
+request. An original source input is disabled throughout RequestUnary
+as well as the pending-input and answer phases.
+
+For GetRecord, Copy the sealed record into a fresh answer word. For
+GetBit, read the retained record head into a cursor and copy the received
+index; while its mark head is nonnull, test the record cursor. A null
+cursor immediately selects OutOfRange without a field read; otherwise
+read its next, assign the cursor and consume one mark. At index
+exhaustion test the cursor and read the indexed bit if present,
+otherwise select OutOfRange. The finite tagged answer is respectively
+Record with its copied word, Bit with its read bit, or OutOfRange.
+Construct and seal that answer by the same tuple/word routines. Read and
+print it with DATA framing, then acknowledge and restore RequestIdle.
+Only then is the request counted completed. Partial answer construction,
+printing and acknowledgement keep their own actual backing and cursors;
+RecordAvailable and the immutable old target never change.
+
+At RequestIdle the owner may instead supply an original source bit.
+A successful Supply is a genuine original source row with the tick
+coeffect and subsequent discharge of Definition 20.1. The known
+Ready/Tail code state is maintained from these *actually supplied* bits:
+after a first 1 it clears SourceReady, enters its known SourceTail
+phase and waits for its second bit. After a complete $0,10,11$ it clears
+SourceReady and drives genuine Advances. Drain has the finite subphases
+WaitingBegin, InBody and Cleanup, selected by the actually received
+Begin and End; constructor tokens are read/acknowledged in InBody.
+Cleanup has the fixed $c$-row sequence in finite control, not an unknown
+numeric argument. After its last tick/token discharge it sets SourceReady
+again. No original PC read or Return-notification primitive is used.
+During that source service requests are disabled. The receiver is permanently in
+Drain after the original acquisition; future Begin/body/End tokens
+never replace $R$ or $D$. There is no second Attach or reacquisition.
+
+**Theorem 21.2 (installed historical use and a next real Update).**
+For every member of $\mathcal D$, the procedure reaches actual source
+Ready, reads and publishes a completed retained record equal to $C_n$,
+and enables the request service of Definition 21.1. Every actually
+supplied finite complete request has a finite completed answer and
+return on that retained object. Every request prefix has the partial
+state just specified and, on supplying a finite completion, terminates.
+After initial publication, or after any finite number of completed
+requests, the owner can actually Supply$(0)$ and complete a next Update
+on the **same live source**, with current logical value $\rho t$ and
+actual source $E(\rho t)$, and can then make another completed request
+for the unchanged historical $C_n$.
+
+Proof. Corollary 19.3 and the cleanup part of Definition 20.1 reach the
+actual original Return control, not merely a table-equivalent state.
+Every cleanup source invocation, including Return itself, has its tick
+discharged and optional token acknowledged before source-ready dispatch
+is enabled. The original service's own packet mailbox and work stacks
+are empty by Theorem 13.2. Thus neither an original receipt nor an
+auxiliary tick/arrival remains pending.
+
+Theorem 20.3 gives the complete serialized old state. Word construction
+does not write it after sealing. Induct over the actual read/output loop:
+at each cursor the public bits are precisely the consumed prefix and the
+unread suffix is still sealed and reachable. At exhaustion the output
+is exactly $R$; the acknowledgement and availability assignment occur
+after DATA-End. This proves completed publication and retained readability.
+
+For a request prefix, induction on In, pending-latch and append subphases
+gives exactly the supplied bits and marks. The grammar is prefix-free,
+so completion selects exactly one handler with a genuinely acquired
+finite $k$, rather than an unbounded argument supplied in one action.
+Copy terminates on the finite sealed word. In the bit handler, after
+$i$ successful iterations the cursor is its $i$-th suffix and the index
+is $k-i$; exhaustion returns precisely the specified bit or OutOfRange.
+The answer-copy/seal/print/ack induction is the publication induction
+again, with actual fresh backing. A partial request waits for supplied
+bits and does not assume their future arrival. This proves exactly the
+stated completion-conditional prefix assertion.
+
+All these local rows satisfy Lemma 19.2 and leave source control at
+Ready and source authority with $o$. Hence Supply$(0)$ really executes
+its original Update selection. Discharge its tick before the first
+busy Advance. The same lemma and Theorem 13.2 give the actual Update
+from $E t$ to $E(\rho t)$ and its authentic new output. Drain reads
+and acknowledges every token, without changing the closed first-frame
+data. The finite prescribed cleanup again returns the actual source
+to Ready with no pending tick/token. The installed request port is
+available again and still reads the original $R$. Induction gives
+the same result for any later finite supplied command/request sequence
+obeying these admission phases. Historical data equality has never been
+used as a current capability. $\square$
+
+## 22. One-run rows, fields, backing and finite bounds
+
+**Definition 22.1 (distinct horizons and exact additive account).** Fix
+one actual run in Theorem 21.2. Its first-source-return horizon $H_0$
+is the cut after the first matched Return and discharge, before the
+historical computation. Its first-record-return horizon $H_1$ is the
+initial DATA publication acknowledgement/availability cut. A later-use
+horizon $H$ follows only the source commands and requests actually
+supplied, and may stop inside any of their partial phases.
+
+Let $s(H)$ be executing original rows after Attach and $L(H)$ all
+auxiliary rows, including Attach. Since no earlier auxiliary row
+exists, the shared chronology length and row count are exactly
+
+$$
+\mathsf{Rows}(H)=\mathsf{Events}(H)=n+s(H)+L(H).
+\tag{OA.31}
+$$
+
+At $H_0$, $s=r_w-n$; at $H_1$ it is still $r_w-n$.
+For a later completed original continuation $v$ it increases by the
+actual complete services and graft rows **and** the actual supplied-bit
+rows $\#\mathsf U(v)+2\#\{\mathsf L,\mathsf R\}(v)$.
+A partially supplied code contributes only its executed Supply rows.
+Virtual original rows in either replay are auxiliary computation,
+not additional real source actions.
+
+Partition $L$ into installation, invocation accounting, source-token
+receipt, parsing/ancestry, the two simulated runs, mark cancellation,
+historical encoding/seal, publication, request ingress/handling/output,
+and auxiliary dispatch/return work. These are disjoint actual row
+occurrences, with tests and phase edges assigned to their invoking
+routine. In particular, for each executing original invocation there
+are the pending test, the three-row mark body, token-availability test,
+any read/append/link/ack work, and dispatch/phase edges. The three-row
+body alone is **not** the bookkeeping tariff. A synchronous tick/token
+assignment is counted as a bounded coeffect of the source row and in
+its full field-operation account, not as an unexecuted local row.
+No marks are created by a disabled attempt.
+
+Let $\mathcal R_H$ be the actual rows through $H$, and $f(r)$ their
+complete field-operation counts: core reads/tests/writes, all birth
+initializations, event fields and links/tail assignments, bounded bank/
+latch/tick/token coeffects and all actual outputs. With $I_F(u)$ the
+canonical input-installation field/link account of Assumption 1.2,
+
+$$
+\mathsf{FieldOps}(H)=I_F(u)+\sum_{r\in\mathcal R_H}f(r).
+\tag{OA.32}
+$$
+
+Let $v_{\rm core}(r)$ count its actual non-event births, including code,
+words, marks, record/answer backing and simulated-state **data** cells.
+Then retained cell backing is exactly
+
+$$
+\mathsf{Cells}(H)=N(u)+
+ \sum_{r\in\mathcal R_H}v_{\rm core}(r)+|\mathcal R_H|,
+\tag{OA.33}
+$$
+
+with the fixed primitive control/right representation charged separately.
+The last term is all shared events. Original bank births, packets,
+sites, operands, staging, detached tiles and all old cleared cells are
+in the sum. Auxiliary popped/cancelled marks, intermediate word versions,
+code, simulated event encodings and printed answers are retained too.
+No erasure subtracts allocated backing. Unknown-input installation
+precedes chronology and is included once, not as fictitious event rows.
+
+**Proposition 22.2 (effective instancewise finite recurrence).** The
+above routine specifications give a finite cost vector at every admitted
+finite prefix and a finite instancewise completion bound whenever the
+remaining requested bits are supplied. They give neither uniform memory
+nor a cost-optimal primitive basis.
+
+Proof. For a bounded expanded primitive use its actual vector of one row,
+one event, field operations, core births and output tokens. For sequence,
+add at the actual successive states. For a test, add its own vector and
+the chosen branch's vector. For a loop consuming a finite word/list or
+countdown $x$, use
+
+$$
+\mathcal C_{\rm loop}(z,x)=
+ \mathcal C_{\rm test}(z,x)+
+ \begin{cases}
+ 0,&\text{exit},\\
+ \mathcal C_{\rm body}(z,x)+
+ \mathcal C_{\rm loop}(z',x'),&\text{continue}.
+ \end{cases}
+\tag{OA.34}
+$$
+
+Here $z'$ includes the actually allocated retained versions and the
+actual current event tail; $x'$ is the unconsumed suffix, tail countdown,
+or next structural work configuration. Pop/link subphases use their
+individual bounded rules, so the recurrence applies inside an append
+or partially built tuple as well. For ancestry the outer well-founded
+index is decreasing $\nu$; for the socket/tree traversals it is the
+finite unvisited input with its stack, not the growing output. An
+original simulated Step has only the finite scans of Definition 20.2.
+For its $j$-row Prefix loop the recurrence is, more explicitly,
+
+$$
+\mathcal C_{\rm prefix}(j+1,X)=
+ \mathcal C_{\rm test}(j+1,X)+\mathcal C_{\rm Step}(X)
+ +\mathcal C_{\rm consume}(j)+
+ \mathcal C_{\rm prefix}(j,\operatorname{Step}(X)),
+\tag{OA.35}
+$$
+
+with a separately tested zero exit. Every value in these formulae is an
+acquired word, a constructed virtual tuple, or a mathematical parameter
+for the bill. No recurrence value is a new runtime oracle.
+
+For an explicit finiteness envelope, put $h=N(u)$ and $b=b_w$.
+The fixed original row scheme creates at most a fixed number of bounded
+cells per row, uses fixed cell arities, and has at most $h+O(b+1)$
+allocated objects through original row $b$. With unary typed-reference
+DATA and list framing, there is a fixed $A$ such that every complete
+original state word through $b$ has length at most
+
+$$
+q=A(h+b+1)^2.
+\tag{OA.36}
+$$
+
+The initial nodes contribute $h$ bounded tuples. Every original
+non-event/event birth adds boundedly many fields whose reference
+ordinals are at most $h+O(b+1)$; allocator words have the same bound.
+Fixed roots/latches and the input/output words contribute no more.
+Length framing increases this by a fixed factor. This proves (OA.36)
+for the complete represented state, not just its current tree.
+
+Define $M(q)$ as one plus the maximum expanded row cost of the finite
+non-outer routines in §§18–21, on all finite bit-word arguments of
+total length at most $q$, using typed failure on invalid encodings.
+The routines are Copy/Cat, list/tuple operations, one bottom-up grammar
+or parser traversal, one original Step, one state encoding, cancellation
+and one closed-word output/copy. All terminate on finite arguments:
+invalid syntax returns failure rather than following a fabricated
+reference, and scans have their finite end/countdown. There are finitely
+many words of bounded length, so $M$ is a finite computable bound.
+This maximum defines a mathematical envelope; the installed controller
+does not evaluate it. Enlarge its argument by a fixed polynomial when
+a routine constructs framing/countdown operands.
+
+Let $p=N(t)$ and $d=b-n$. Parsing costs one bounded local append per
+actually received constructor plus its structural parse; ancestry has
+at most $\nu(t)$ predecessor iterations, each a finite grammar traversal;
+the two simulations have $b+n$ Steps and their real tests/countdowns.
+Thus, with a fixed polynomial $Q$ large enough for their tuple/word
+operands, one sufficient local envelope through $H_1$ is
+
+$$
+L(H_1)\le I(K,m)+A_1(r_w-n+p+1)
+ +\bigl(b+n+\nu(t)+A_1\bigr)
+       M\!\left(Q(h+b+p+d+1)\right).
+\tag{OA.37}
+$$
+
+Here $I(K,m)$ is the actual finite bootstrap/slot/latch/seal recurrence,
+and $A_1$ bounds the fixed per-invocation/token/dispatch blocks.
+This envelope includes the full record encoding, reads, bit emissions
+and acknowledgement: their input lengths are bounded by (OA.36) and
+the binding length, so they are among the stated $M$ terms. The value
+$r_w-n$ is finite by Theorem 13.3; its same-run source bill is the actual
+suffix of Theorems 15.1–15.2, not an assumed elapsed-time input.
+For $H_0$ only installation, invocations/receipts, the first-frame
+appends and cleanup are needed. For each later actually supplied
+request, add its actual bit-ingress recurrence and the finite
+copy/index/answer/output recurrence at that state. For each later
+source command, add its actual input/graft/service/cleanup rows and
+their invocation/token work. Do not charge requests that were not
+supplied. This gives the requested bound on the same execution,
+including partially received requests and source-busy cuts. $\square$
+
+**Definition 22.3 (reference occurrences, bits and continuation resources).**
+Row/event counts do not fix detailed bit costs. For each actual reference
+type $\tau$ and allocated name $j$, let $w_\tau(j)$ be its actual
+representation width in this model; an opaque canonical binary encoding
+is permitted, but its ordinal is not inspectable by the source program.
+Charge each initialized/read/written/retained/emitted reference occurrence
+its actual $w_\tau(j)$, including copies in events, slots, code/record
+descriptors and allocators. Add the actual finite-tag/latch/control/right
+bits and the actual bit-list payload and links. Equivalently, the
+read/write traffic coordinate is the sum of these widths over the
+field occurrences in (OA.32); the retained coordinate is the width
+sum over every initialized retained field in (OA.33), not the traffic
+sum counted as storage. Use the actual *shared* event names after Attach,
+whose widths can exceed the comparison run's event widths.
+
+Historical reference ordinals in $R$ use their declared unary DATA
+codec; those payload bits and the actual references linking the payload
+cells are separate charges. Initial source installation includes all
+original tag/child fields, $N(u)-1$ child links and the root attachment.
+Initial and query DATA publication charges all read/next/cursor/output
+operations and the full actual number of bits emitted. Source constructor
+output still has its original finite-token count; it is not a free
+full-state or full-address output.
+
+At $H_0$ source Return is complete but the historical record is not yet
+available. At $H_1$ the record and request service are complete, while
+the current source retains $E t$. Later-use costs include the next real
+Supply and Update and any subsequent output draining. The finite bounds
+grow with actual source history, target record, supplied indices, queries
+and shared references. No uniform workspace, minimal generator claim,
+physical runtime price or optimality follows.
+
+## 23. Supplier correspondence and the exact increment
+
+**Definition 23.1 (credited methods and source-specific synthesis).**
+The statements above are ordinary conditional mathematics. Their
+supplier correspondence is as follows.
+
+| Supplier | Parameters, exact reuse and boundary |
+| --- | --- |
+| OA §§12–15, especially Definitions 12.3–12.5/4.1 and Theorems 13.2–13.3 | The original source, owner/port, initialization, sites, literal templates, actual constructor output, cleanup and canonical row scheme. New auxiliary types are disjoint from original non-event types; the chronological event type is deliberately shared. Lemma 19.2 proves its metadata correspondence instead of assuming it. |
+| ER Theorems 9.3/9.5/9.8 and OA17.2 | Set the entry antichain to $j[\mathcal T]$, graft constants to $\alpha$, and endpoint to the actually received $t=F_w(j(u))$. Reuse attained ancestry and canonical original replay. This does not extend OA17.2's separate four-view theorem to arbitrary interiors. The new acquired distance $D$ locates the old row cut. |
+| [AA12.5–12.6][AA18] and [Joint Moment Fibers §§36,42,65][JM18] | AA already supplies prepared full-address simulation and conditional same-source installation on its $Q_v$ family. JM separates generator signatures, genuine origins and acquired records. Here no AA prepared tree, INITIAL field, unknown entry choice or JM origin-acquisition premise is treated as an old $\iota$ operand. |
+| [Paid Current Return §§31–35][PAID18] | Finite future-event acquisition and current use already exist with its acquired depth, residual label and continuing right. Its event/depth interface is not $\iota$'s. Here the future frame supplies the ancestry endpoint, the completed-invocation marks supply distance, and the original static right supplies current use. |
+| [Paid View Conversion §§5–7][PVC8] | Finite conversion algorithms, actual acquired bodies, registry, publication/ACK and returned invocation rights are supplied methods. The present owner-local one-record/bit-query service uses actual bounded ingress and read/output/seal phases; it asserts none of PVC's twelve installed view converters for busy $\iota$. |
+| [RCA §§11–16][RCA18], [NCR Definition 2.3][NCR18], [Callable Storage Atlas §§5–7][CSA8] | Reuse finite word expansion, complete-row replay, paid ordinal construction and the separation of an immutable historical image from its later service. RCA's original activation is Ready-only and has its own copy authorities; NCR's fence route requires an authorized fence and its atomic-source premises; CSA's all-cut replay has acquired seed/activation/input/ordinal fields. Attach and the first-frame/distance acquisition here supply a different entry, without importing those premises into an old busy PC. |
+| [PR57.D1–D3,D7,L4][TMC12] | Bounded primitive effects, explicit unary/scanning costs, immutable completed publication and authentic-copy methods are credited. This Annex uses linked owned fields, one shared event chain and owner-local reads, not PR57's tape ports, private Clifford source or eight-bit receipt tariff. No PR57 numerical fee is silently transferred. |
+| NativeFullSourceProducer.lean, including private traverse, production_reads, stationary, and its owning Scribe | Actual acquired preorder and source-blind finite traversal are already supplied in the stationary native model. Its whole-register/control types and epoch-zero proof do not implement Attach or give a busy $\iota$ state. The socket parser and source correspondence here have their own received-source premises. |
+| NativeBoundedPreorderRows.lean, including private pending_next, cursor_frontier, actual_cursor_residual, trial_geometry, guard_value_progress, virtual_next, and its owning Scribe | Existing preorder frontier, actual-prefix and virtual-continuation arguments are credited. Their parameters $P,h,\tau,N$ and licensed virtual-source/guard replies are not unknown inputs supplied to this observer. OA13 already checks their preorder use in the owning source. |
+| NativeSerialMachine.lean, Replay, replay_deterministic, operational_replay, reached_prefix_replay, and its owning Scribe; pinned mathlib Computability.StateTransition | Finite reached-path replay and generic transition/refinement language. Actual source acquisition is an additional obligation, discharged by (OA.29); it is not a consequence of generic refinement or a free transcript. |
+
+Huet's [*The Zipper*][HUET] supplies the focus/context method already
+credited by OA12.5; no new zipper algorithm is claimed. Lamport's
+[*Refinement in State-Based Formalisms*][LAM18] distinguishes refinement
+and stuttering under a stated observation relation. Here auxiliary
+rows stutter only on the non-chronological source workload, while the
+full event/tail state changes; Lemma 19.2 gives the actual relation
+and initial-state argument. Reynolds's [*Separation Logic*][REYNOLDS],
+§4, requires a framed assertion's free variables to avoid the command's
+modified variables. A global tail or live saved-entry variable cannot
+be framed as unchanged. The explicit saved-reference phases and
+operand enumeration above carry that extra obligation. These primary
+methods are used within those hypotheses, not as a proof of unknown
+source acquisition.
+
+The substantive increment is the conjunction of actual late acquisition
+of the independently marked original pre-Begin $C_n$, a source-specific
+shared-chronology proof with actual entry-reference lifetimes, completed
+owner-local DATA publication/query, and a next actual Update. Ancestry,
+generic replay, word compilers, completed publication and callable
+archives remain supplied methods. This is a repository-derived
+construction, with no world-novelty or exhaustive literature-absence
+claim.
+
+**Definition 23.2 (preserved domains and remaining objectives).**
+The model explicitly adds bounded late Attach, fixed paid installation,
+a bounded future-token coeffect and genuine owner request ingress.
+It assumes the original canonical initialization, occurrence/no-sharing
+source, static exclusive authority and no unrecorded autonomous source
+actions. It does not solve an unchanged-initialization entrance problem
+in a machine whose old menu lacks Attach. It proves neither recognition
+of $\mathcal D$, acquisition after a missed Begin, arbitrary-interior
+four-view equality, twelve installed converters, arbitrary allocation
+or ownership, nor a physical implementation of the new permission.
+Its source chronology is the actual enlarged chronology; only the
+retained old DATA is the exact original $C_n$.
+
+All previous fixed-$G_{\rm gc}$, original-$Q$, parked-consumer and
+unchanged-initialization statements keep their published scope.
+The broader independent space/time/boundary/memory recovery programme
+and any universal alpha/beta reduction remain separate obligations.
+No new Lean, Blueprint, kernel or machine-admission certification is
+asserted for §§18–23.
+
+[AA18]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md
+[JM18]: RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md
+[PAID18]: RECURSIVE_RELATIONAL_OBSERVATION_PAID_ZECKENDORF_CURRENT_RETURN.md
+[RCA18]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md
+[NCR18]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md
+[LAM18]: https://lamport.azurewebsites.net/pubs/refinement.pdf
+
+## 追加锚（本行以下为增补区）
