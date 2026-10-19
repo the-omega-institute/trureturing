@@ -41,7 +41,7 @@ internal sealed class ComplexHoppingCoherenceDampingRefutationDocument : IScribe
             Node("twistedTrace", "Partial trace with the B-parity insertion", TraceFormula(true),
                 "Section 3 defines the parity-twisted trace as tr_B[(-1)ᴺᴮ ρ_ABD]. The factor is determined by the B occupation in the row; tracing identifies the row and column B labels. The scalar domain is any ring with a star operation. On D-parity-changing entries this is the fermionic trace in the source's factorization.", AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The proposed extension to complex hopping", ClaimFormula(),
-                "Theorem 1 gives coherence damping for ground states with real non-positive hopping. Section 7 asks whether it extends to complex hopping or frustrated lattices. The displayed proposition is the modulus version for all Hermitian complex single-particle matrices: every ground state, every adjacent partition, and every pair whose D occupations have different parity. It does not impose the nonnegative-amplitude hypothesis behind the source's equality between an ordinary entry and its modulus.", AssessedProvenance.FromLiterature(Source)),
+                "Theorem 1 gives coherence damping for ground states with real non-positive hopping. Section 7 asks whether it extends to complex hopping or frustrated lattices. The displayed proposition is the modulus version for all Hermitian complex single-particle matrices: every ground state, every adjacent partition, and every pair whose D occupations have different parity. Here mod denotes natural-number remainder (the Lean % operation). It does not impose the nonnegative-amplitude hypothesis behind the source's equality between an ordinary entry and its modulus.", AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("sokolovs-coherence-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("A four-mode ground-state counterexample"),
@@ -90,20 +90,20 @@ internal sealed class ComplexHoppingCoherenceDampingRefutationDocument : IScribe
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula At(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
     private static Formula Call(string name, params Formula[] arguments) => At(Named(name), arguments);
-    private static Formula Par(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Eqn(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula Le(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula Ne(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
-    private static Formula And(Formula left, Formula right) => new Formula.Logic(Par(left), FormulaLogicOperator.And, Par(right));
-    private static Formula Imp(Formula left, Formula right) => new Formula.Logic(Par(left), FormulaLogicOperator.Implies, Par(right));
-    private static Formula IffOf(Formula left, Formula right) => new Formula.Logic(left, FormulaLogicOperator.Iff, Par(right));
+    private static Formula And(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
+    private static Formula Imp(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
+    private static Formula IffOf(Formula left, Formula right) => new Formula.Logic(left, FormulaLogicOperator.Iff, Parenthesized(right));
     private static Formula Add(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Add, right);
     private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
     private static Formula Arrow(Formula domain, Formula codomain) => new Formula.TypeArrow(domain, codomain);
-    private static Formula Product(Formula left, Formula right) => Seq(Par(left), Sp, F.Times, Sp, Par(right));
-    private static Formula Tuple(params Formula[] values) => Seq(Open, Join(values), Close);
+    private static Formula Product(Formula left, Formula right) => Seq(Parenthesized(left), Sp, F.Times, Sp, Parenthesized(right));
+    private static Formula Tuple(params Formula[] values) => Parenthesized(Join(values));
     private static Formula Join(Formula[] values)
     {
         var items = new System.Collections.Generic.List<Formula>();
@@ -115,9 +115,9 @@ internal sealed class ComplexHoppingCoherenceDampingRefutationDocument : IScribe
         return Seq([.. items]);
     }
     private static Formula SumOn(string name, Formula type, Formula body) =>
-        Seq(new Formula.Subscript(Sum, Seq(V(name), Sp, Colon, Sp, type)), Sp, Par(body));
+        Seq(new Formula.Subscript(Sum, Seq(V(name), Sp, Colon, Sp, type)), Sp, Parenthesized(body));
     private static Formula Conj(Formula value) => Seq(Overline, Grp(value));
-    private static Formula Adjoint(Formula value) => new Formula.Power(Par(value), Named("dagger"));
+    private static Formula Adjoint(Formula value) => new Formula.Power(Parenthesized(value), Named("dagger"));
     private static Formula Nats => Seq(Mathbb, Grp(V("N")));
     private static Formula Complexes => Seq(Mathbb, Grp(V("C")));
     private static Formula Fin(Formula n) => Call("Fin", n);
@@ -145,8 +145,8 @@ internal sealed class ComplexHoppingCoherenceDampingRefutationDocument : IScribe
         var exponent = Seq(new Formula.Subscript(Sum,
             Seq(V("i"), Sp, Colon, Sp, Fin(V("N")), Comma, Sp, V("i"), Sp, Lt, Sp, V("j"))),
             Sp, Call("val", At(V("t"), V("i"))));
-        var entry = Seq(Named("if"), Sp, Par(condition), Sp, Named("then"), Sp,
-            new Formula.Power(Par(new Formula.Negate(D(1))), exponent), Sp, Named("else"), Sp, D(0));
+        var entry = Seq(Named("if"), Sp, Parenthesized(condition), Sp, Named("then"), Sp,
+            new Formula.Power(Parenthesized(new Formula.Negate(D(1))), exponent), Sp, Named("else"), Sp, D(0));
         return All("N", Nats, All("j", Fin(V("N")), All("s", Config(V("N")),
             All("t", Config(V("N")), Eqn(Call("annihilator", V("j"), V("s"), V("t")), entry)))));
     }
@@ -154,7 +154,7 @@ internal sealed class ComplexHoppingCoherenceDampingRefutationDocument : IScribe
     private static Formula HamiltonianFormula()
     {
         var product = Mul(Adjoint(Call("annihilator", V("j"))), Call("annihilator", V("k")));
-        var summand = Mul(At(V("h"), V("j"), V("k")), Par(product));
+        var summand = Mul(At(V("h"), V("j"), V("k")), Parenthesized(product));
         var sum = SumOn("j", Fin(V("N")), SumOn("k", Fin(V("N")), summand));
         return All("N", Nats, All("h", Mat(Fin(V("N")), Complexes),
             Eqn(Call("hamiltonian", V("h")), sum)));
@@ -184,7 +184,7 @@ internal sealed class ComplexHoppingCoherenceDampingRefutationDocument : IScribe
         Eqn(Call("AdjacentPartition", V("N")), Seq(OpenBrace,
             Tuple(V("l"), V("a"), V("b"), V("d"), V("r")), Sp, Colon, Sp,
             new Formula.Power(Nats, D(5)), Sp, Mid, Sp,
-            Eqn(V("N"), Add(V("l"), Par(Add(V("a"), Par(Add(V("b"), Par(Add(V("d"), V("r"))))))))), CloseBrace)));
+            Eqn(V("N"), Add(V("l"), Parenthesized(Add(V("a"), Parenthesized(Add(V("b"), Parenthesized(Add(V("d"), V("r"))))))))), CloseBrace)));
 
     private static Formula ConcatenateFormula()
     {
@@ -223,7 +223,7 @@ internal sealed class ComplexHoppingCoherenceDampingRefutationDocument : IScribe
         var entry = Call("reducedState", V("p"), V("v"),
             Tuple(First(V("x")), V("b"), Second(V("x"))),
             Tuple(First(V("y")), V("b"), Second(V("y"))));
-        var summand = twisted ? Mul(new Formula.Power(Par(new Formula.Negate(D(1))), Number(V("b"))), entry) : entry;
+        var summand = twisted ? Mul(new Formula.Power(Parenthesized(new Formula.Negate(D(1))), Number(V("b"))), entry) : entry;
         return ScalarParameters(twisted, PartitionParameters(All("v", Vector(V("R")), All("x", AD, All("y", AD,
             Eqn(Call(twisted ? "twistedTrace" : "spinTrace", V("p"), V("v"), V("x"), V("y")),
                 SumOn("b", Block("b"), summand)))))));
