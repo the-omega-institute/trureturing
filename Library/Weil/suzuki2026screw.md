@@ -8357,3 +8357,116 @@ $$
 This intrinsic condition imposes no finite bound on the number of active sites or local sign changes. For example, by W182's one-site moments a Gaussian atom at $a=A$ has $Q_{6,A}/Q_H-1=O(e^{-2A})$. Fix a sufficiently high $A$ and a compact window of positive width. For each arbitrarily large finite site count, append distinct atoms with alternating nonzero real coefficients sufficiently small that the strict moment condition persists by continuity of the two quadratic norms. The active count and local sign degree are unbounded at this fixed window and start. This illustrates that the intrinsic hypothesis is not the old point-count or separator cap; the theorem itself covers every source satisfying that hypothesis, including its cancellations.
 
 Conversely, any negative actual source at the common start must have $Q_{6,A}/Q_H>1+\delta_*$. In particular W254's conditional witnesses, if RH fails, cannot lie in this small-excess sector. W258 still requires an estimate for EVERY fixed moment budget, including larger ratios; W260--W266 do not control those ratios or eliminate the conditional witnesses. Full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved. No explicit numerical threshold/start, stable finite-precision decision procedure, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied.
+
+
+## Short physical intervals admit complete theta positivity at arbitrarily large moment ratios
+
+Let $\mathfrak E$ be the complete physical form defined at W255, including the full theta source, arithmetic logarithmic charge and actual reflected exterior. There is a fixed $C>0$ such that, for every $R\ge\pi$, $0<d\le1$ and complex $f\in C_c^\infty((R,R+d))$,
+$$
+\mathfrak E(f)\ge
+\left[\frac2{\sqrt\pi}\log\frac1d-C\right]S(f),
+\qquad S(f):=\|\mathscr Tf\|_{L^2([\pi,\infty),x^{7/2}dx)}^2.
+\tag{W267}
+$$
+All constants are independent of $R,d$ and $f$. In particular one fixed sufficiently small width gives positivity at every physical location, not just near $\pi$. The original Gaussian source consumer below has moment ratios tending to values of order $(R/\pi)^6$, unbounded as $R$ grows. This does not prove positivity for every source with a given large moment budget, or pay coupling between arbitrary separate physical intervals. W258, RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse the exact physical extension W255, homogeneous Gamma multiplier W231, cutoff W247, full source order W249, complete paired reflection W240--W241, original Gaussian map W257 and approximation W235--W236. The ordinary compact-logarithmic-test small-window floor in [the localization note](frankliebseiringer2006hardy.md#reuse-the-stronger-small-window-spectral-floor) is a different support condition; it is not reproved here. The estimate concerns the physical Laplace feature before all theta dilations. Classical Fourier mass, harmonic-sum and right-integral estimates are consumed in this application, with no separate generic theorem or literature-priority claim. The argument is paper mathematics without Lean certification.
+
+### Retain all disjoint dilation intervals and their exact harmonic weights
+
+Put $M=\|f\|_2^2$, $W=x^{7/2}$, $L=\lfloor\sqrt{(R+d)/\pi}\rfloor$ and $L_0=\lfloor\sqrt{R/\pi}\rfloor\ge1$. On $[\pi,\infty)$ write
+$u_\ell(x)=\ell^4 f(\ell^2x)$, $U=\mathscr Tf=\sum_{\ell\le L}u_\ell$ and $V=\mathscr Vf=\sum_{\ell\le L}(\log\ell)u_\ell$.
+The intervals $(R/\ell^2,(R+d)/\ell^2)$ are pairwise disjoint for these indices. Indeed $d\ell^2<R(2\ell+1)$ follows from $d\le1$, $R\ge\pi$ and $\ell^2\le(R+d)/\pi$. Truncation at $\pi$ preserves disjointness. Changing variables gives
+$$
+\begin{aligned}
+S_\ell&:=\|u_\ell\|_W^2
+=\frac1\ell\int_{\max(R,\pi\ell^2)}^{R+d}y^{7/2}|f(y)|^2dy,\qquad S=\sum_{\ell\le L}S_\ell,\\
+cR^{7/2}\log(2+R)M&\le S\le CR^{7/2}\log(2+R)M,\\
+2\Re\langle U,V\rangle_W
+&=2\sum_{\ell\le L}(\log\ell)S_\ell\le(\log L+C)S.
+\end{aligned}
+\tag{W268}
+$$
+For $\ell\le L_0$, the integral is the whole common quantity $S_f=\int_R^{R+d}y^{7/2}|f|^2$. Since $d<\pi$, at most the last mode is partial: $L-L_0\le1$. Thus $S\ge H_{L_0}S_f$ and $S\le H_LS_f$. The harmonic estimates $H_n=\log n+O(1)$ and $\sum_{\ell\le n}(\log\ell)/\ell=\tfrac12\log^2n+O(1)$ prove all displayed comparisons, including the partial last mode. These weights belong to the same $f$; no separate maximizing sequence is substituted.
+
+### The Mellin localization gain pays the whole arithmetic logarithmic loss
+
+Extend $U$ by zero below $\pi$, writing $U_0$. Put $g(u)=e^{9u/4}U_0(e^u)$, so $\|g\|_2^2=S$. Its support has logarithmic measure $m\le L\log(1+d/R)\le Ld/R$. With the unitary Fourier convention of W231, Cauchy--Schwarz gives $|\widehat g(\xi)|^2\le mS/(2\pi)$. Consequently
+$$
+\int_{\mathbb R}|\widehat g(\xi)|^2\log|\xi|\,d\xi
+\ge[\log(\pi/m)-1]S
+\ge\left[\log\frac{R}{Ld}-C\right]S.
+\tag{W269}
+$$
+For the first inequality, use the probability measure $|\widehat g|^2d\xi/S$ and the bound
+$\Pr\{|\xi|< (\pi/m)e^{-t}\}\le e^{-t}$; integrate its negative logarithmic part. No shape, connected-support or sign assumption on $g$ is made. If $f=0$ every estimate is trivial; otherwise $m,S>0$.
+
+The multiplier in W231 is at least $\log|\xi|-C$: it has the owned digamma asymptotic at infinity, and its difference from $\log|\xi|$ is bounded below on the remaining real line. W231 therefore bounds $\mathcal D_0(U_0)$ below by $(2/\sqrt\pi)[\log(R/(Ld))-C]S$. The zero extension has a possible single jump at $\pi$, is smooth elsewhere in its finite compact support, and has Fourier decay $O((1+|\xi|)^{-1})$ after the Mellin change. It lies in the logarithmic form domain by the same argument used at W247; no derivative-norm estimate is claimed.
+
+W247's cutoff correction is bounded by $CS$ in this weaker weight too: $y^{-7/4}$ and $k_\pi(y)y^{-7/4}$ are square integrable. The kernel has only a logarithmic singularity at $\pi$ and at most logarithmic growth at infinity. Hence
+$\mathcal D_\pi(U)\ge(2/\sqrt\pi)[\log(R/(Ld))-C]S$.
+
+The $B$ factors in W249's arithmetic charge must still be retained. Since $|If(y)|\le\sqrt{dM}\,\mathbf1_{y<R+d}$,
+$$
+\begin{aligned}
+\|(B-I)U\|_W&\le C\sqrt d\,R^{3/2}\sqrt M,\\
+\|(B-I)V\|_W&\le C\sqrt d\,R^{3/2}\log(2+R)\sqrt M,\\
+|\Re\langle BU,BV\rangle_W-\Re\langle U,V\rangle_W|&\le CS.
+\end{aligned}
+\tag{W270}
+$$
+For the first two bounds, $Iu_\ell(x)=\ell^2If(\ell^2x)$ and $\sum_{\ell\le\sqrt{(R+d)/x}}\ell^2\le C(R/x)^{3/2}$. Divide by $x$ and integrate against $x^{7/2}$ for $\pi\le x\le R+d$; $\int_\pi^{R+d}x^{-3/2}dx$ is uniformly bounded. Add the factor $\log(2+R)$ for $V$. For the third use Cauchy--Schwarz, $\|V\|_W\le(\log L)\sqrt S$, and W268. The resulting relative factors are bounded by constants times $\sqrt d R^{-1/4}\sqrt{\log(2+R)}+dR^{-1/2}$, uniformly on the stated range.
+
+Substitute W268--W270 in the exact full direct identity W249. It yields
+$$
+\mathfrak D_\Phi(f)\ge
+\frac2{\sqrt\pi}\left[\log\frac{R}{L^2d}-C\right]S
+\ge\left[\frac2{\sqrt\pi}\log\frac1d-C\right]S.
+\tag{W271}
+$$
+Here $L^2\le(R+d)/\pi$ and $R\ge\pi$, $d\le1$. The exact coefficient of both the Fourier gain and the harmonic logarithmic loss matters: estimating the log-mode charge by its largest mode separately would lose an uncancelled $\log R$. No theta mode in the direct source is dropped.
+
+### The complete reflected exterior is uniformly bounded in this same packet metric
+
+For the folded model on $U$, W232 and the owned right Hardy inequality give
+$|\mathscr R_\phi(U,U)|\le C(\|U\|_2^2+\|IU\|_2^2)\le CS$.
+For the exact remaining pair sum W240 put $Q=(R+d)/\pi$, $q=\ell k$, $H_{\ell k}=\tfrac12\log(k/\ell)$ and $Hf=(3/2)If/x$, so $Bf=f-Hf$. The bound
+$|Hf(x)|\le C\sqrt{dM}/x$ holds for $\pi\le x<R+d$, and $Hf=0$ above this range. Both pair arguments must be at most $R+d$, so only $q\le Q$ contribute. This includes indices $k>L$; the direct-mode cutoff cannot be used to discard that exterior contribution.
+
+Expand each pair into its $f$--$f$, $f$--$Hf$ and $Hf$--$Hf$ parts, keeping their actual paired arguments $x=\pi s^2$, $y=\pi(q/s)^2$ and $xy=\pi^2q^2$.
+
+For the first part, both arguments in $(R,R+d)$ force $q\in[R/\pi,(R+d)/\pi]$, an interval of length less than one. Thus at most one integer $q$ occurs. Cauchy--Schwarz in the invariant measure $dx/x=2ds/s$ bounds its integral by $CM/R$. There are at most $\sqrt q$ divisor pairs and $\sum_{\ell k=q,\ell<k}H_{\ell k}\le C\sqrt q\log(2+q)$. The total contribution is therefore at most $CR^{7/2}\log(2+R)M\le CS$.
+
+For either mixed part, $xy=\pi^2q^2$ and $\int|f|\le\sqrt{dM}$ give a bound $CdM q^2H_{\ell k}$ after the coefficient in W240 is included. For the two-tail part, integration over $\ell<s<k$ gives at most $CdM q^2H_{\ell k}^2$. The elementary hyperbola estimate
+$\sum_{\ell<k,\ell k\le Q}(\ell k)^2[1+\log(k/\ell)]^2\le CQ^3\log^3(2+Q)$
+follows by summing $k^2$ first and then $\sum_{\ell\le\sqrt Q}1/\ell$. Both remaining totals are at most $CdMR^3\log^3(2+R)\le CS$, since $d\le1$ and $R^{-1/2}\log^2(2+R)$ is bounded for $R\ge\pi$. Consequently
+$$
+|\mathfrak R_\Phi(f)|\le CS.
+\tag{W272}
+$$
+This estimates the complete actual reflection defined at W255, including every paired correction and the small-argument exterior. Compact support makes the effective pair sum finite; no unnormalized infinite physical measure or first-mode substitution is used. W271--W272 prove W267.
+
+### Transport this positive family to actual local Gaussian sources
+
+Choose once a sufficiently small $d_*>0$, $d_*\le1$, so that W267's bracket is at least one. By W268 there is a fixed $c>0$ such that
+$$
+\mathfrak E(f)\ge S(f)\ge cR^{7/2}\log(2+R)\|f\|_2^2>0
+\quad\text{for every }R\ge\pi,\quad0\ne f\in C_c^\infty((R,R+d_*)).
+\tag{W273}
+$$
+This physical feature need not be a finite exponential source itself. To obtain actual sources, apply the already established W235--W236 to each such $f$, componentwise for complex $f$. With $P=e^{2A}$, choose the deconflation step to make the $X$ error at most $P^{-1}$ and all physical sites lie in $[A,A+w)$, for every $w>0$. The same selected error works uniformly in $w$; required coefficients and gaps may depend on $w$. There are at most $\lceil(R+d_*+1)P\rceil$ sites. W255 and the exact W257 Gaussian return give normalized actual sources with $Q_H=1$ such that, as $A\to\infty$, uniformly for these choices of $w$,
+$$
+\begin{aligned}
+Q_{6,A}(\sigma_{A,w})&\longrightarrow
+\frac{\int x^6|f(x)|^2dx}{\pi^6\|f\|_2^2}
+\in\left[(R/\pi)^6,((R+d_*)/\pi)^6\right],\\
+A Q_{\mathcal K_A^g}(\sigma_{A,w})&\longrightarrow
+\frac{\mathfrak E(f)}{4\pi^3\|f\|_2^2}>0.
+\end{aligned}
+\tag{W274}
+$$
+Thus beyond a start depending on $f$, independent of $w$, these actual sources have $Q_{\mathcal K_A^g}\ge c_0R^{7/2}\log(2+R)/A$ with a fixed $c_0>0$. This is a whole positive approximation family with arbitrary packet shape, not merely a nonzero diagonal sample. W255 also supplies a genuine $X$ neighborhood of each packet on which the actual form stays positive.
+
+For a nonnegative real nonzero $f$, the Poisson polynomial's nonzero coefficients are positive. If its degree is $n_P$, expanding W236 gives coefficients of sign $(-1)^j$, strictly nonzero for every $0\le j\le n_P$. At all large $P$, $PR<n_P\le P(R+d_*)$. The positive physical/Gaussian weights preserve these alternating signs. Hence these sources have more than $PR$ successive sign changes in the fixed local window. Any separator for that alternating atomic source needs at least $n_P$ roots there, counting multiplicity, including the possibility of roots at atoms. W215 therefore gives $\Xi_A\ge n_Pe^{-2w}>Re^{-2w}P$. For $R$ sufficiently large at fixed $w$, they lie outside W228's fixed reciprocal-mass cap as well as outside W266's small-moment sector. No stable coefficient or gap bound is asserted.
+
+The full original kernels, source normalization and Hardy metric are unchanged. The packet estimate is uniform in its location, but the approximation start may depend on the chosen packet. It neither proves all sources of any large fixed moment budget positive nor pays joint interference between arbitrary packets. Sufficient cofinal arbitrary-source positivity, W258 for every fixed budget, full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved. No numerical threshold/start, computational certificate, Lean/kernel or CI/merge certification, exhaustive bibliography or priority is supplied.
