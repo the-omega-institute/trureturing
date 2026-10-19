@@ -3628,3 +3628,419 @@ For the original physical interpretation, Proposition 85.2 retains the full matr
 The weighted quadratic comparison, eigenvalue correction, rational exclusions and overlap identity in Sections 92–94 are repo-derived consequences within this family. The norm duality, support-compatible contraction factorization and fidelity test-matrix inequality are literature-attested intermediate tools, with the exact Watrous citations attached to their uses above. The existing full-family reductions of Sections 85–90 retain their original domains and proofs; the estimates here do not assert a uniform fixed-input certificate or the broader full-reference target.
 
 ## 追加锚（本行以下为增补区）
+
+## 96. Common-matrix coordinates for the boundary budgets
+
+**Definition 96.1 (the common contraction and its active rows).** Use the boundary space and the quadratic of Definitions 87.2 and 91.1, in the reordered output frame $(b_1,b_2,g_1,g_2,h)$. Write $J_0=[b_1,b_2]$, $J_1=[g_1,g_2]$, so $\widehat E_i=J_i/\sqrt2$ and $J_i^TJ_j=\delta_{ij}I_2$. In these coordinates,
+
+$$
+\begin{gathered}
+\mathcal L_2=\{S\in\mathbb R^{5\times2}:\operatorname{Tr}(J_0^TS)=\operatorname{Tr}(J_1^TS)=0\},\\
+\Pi_2(Z)=Z-\frac12\sum_{i=0}^1J_i\operatorname{Tr}(J_i^TZ),\\
+Q=[Q_0\mid Q_1\mid B]\in\mathbb R^{5\times6},\qquad QQ^T\preceq I_5,\qquad
+C=\frac{J_0^TQ_0+J_1^TQ_1}{4\sqrt2},\qquad A=\|C\|_F^2,\\
+d=\Pi_2(BC^T),\qquad H(S)=\frac14\Pi_2(BB^TS),\qquad
+g_Q(S)=\|C+S^TB/2\|_F^2.
+\end{gathered}
+\tag{S.273}
+$$
+
+Thus $C$ is $2\times2$, $d\in\mathcal L_2$, and $H$ acts on the eight-dimensional space $\mathcal L_2$. The factor $1/2$ in the projection follows from $\|J_i\|_F^2=2$. Decompose the same $B$ as
+
+$$
+\begin{gathered}
+B=J_0V_0+J_1V_1+hw,\qquad
+V_i=J_i^TB\in\mathbb R^{2\times2},\quad w=h^TB\in\mathbb R^{1\times2},\\
+V=\begin{pmatrix}V_0\\V_1\end{pmatrix}\in\mathbb R^{4\times2},\qquad
+B^TB=V^TV+w^Tw\preceq I_2,\qquad K=I_2-V^TV\succeq0,\\
+\alpha=\frac1{2\sqrt2},\qquad
+\lambda_0=\frac c2=\frac{2+\sqrt2}{8}.
+\end{gathered}
+\tag{S.274}
+$$
+
+The physical output direction $h$ contributes exactly one row $w$. It is distinct from the third environment coordinate $e_2$ used in (S.215).
+
+**Definition 96.2 (notation for the existing ordered boundary formula).** Apply the joint symmetry of Proposition 91.3 and write
+
+$$
+\begin{gathered}
+P=\operatorname{diag}(p,q),\qquad \frac12\leq p\leq1,\quad q=1-p,\qquad
+D_p=\operatorname{diag}(\sqrt p,\sqrt q,\sqrt p,\sqrt q),\\
+F_{P,V}=D_p(I_4-VV^T)D_p\succeq0,\qquad
+\tau(P,V)=\frac12\sum_{i=0}^1\bigl(\operatorname{Tr}(V_i\sqrt P)\bigr)^2,\\
+N(P,V)=\frac1{4\sqrt2}\operatorname{Tr}\sqrt{F_{P,V}},\\
+R(P,V)=\operatorname{Tr}(PV^TV)
++\lambda_{\max}(\sqrt K P\sqrt K)-\tau(P,V)
+=1-\lambda_{\min}(\sqrt P K\sqrt P)-\tau(P,V).
+\end{gathered}
+\tag{S.275}
+$$
+
+Here $p$ is an eigenvalue of $P$; it is not the trace-penalty variable called $p$ in (S.242). The parameter correspondence to that formula is exactly
+
+$$
+X_{\rm( S.242)}=P,\qquad M=V^T=[V_0^T\ V_1^T],\qquad
+p_{\rm( S.242)}=\tau,\qquad
+\ell=4N,\qquad q_{\rm( S.242)}=R,\qquad
+\Theta=N+\frac{\sqrt R}{2}.
+\tag{S.276}
+$$
+
+Indeed $\sqrt{A_{\rm( S.242)}}=D_p/\sqrt2$, and $M^TM=VV^T$. Transposition preserves each trace against the symmetric matrix $\sqrt P$, so both penalties are retained. The two products $\sqrt K P\sqrt K$ and $\sqrt P K\sqrt P$ have the same spectrum, including zero eigenvalues. Together with $\operatorname{Tr}(P(V^TV+K))=1$, this gives the last equality of (S.275). These identities identify (S.275) with the common-variable boundary formula (S.242)–(S.245); they do not constitute a second boundary reduction. In particular Proposition 91.2 already supplies $R\geq0$ and equality of the optimized maxima, with both trace constraints and the full $4\times4$ code square root.
+
+All support and attainment conventions are inherited from that proposition. When $K$ is singular, $w^Tw\preceq K$ means $w^T=\sqrt K z$ for some $\|z\|\leq1$ on its support. The largest eigenvalue in (S.275) is the attainable maximum of $wPw^T$ over this single row, including a zero maximum; replacing it by $\operatorname{Tr}(PK)$ changes the allowed residual rank. The code-row residual $I_5-BB^T$ is also allowed to be singular. Its factorization uses its range, as in the proof of (S.244), and not an inverse on its kernel. If the projected norm is zero, the maximizing unit boundary vector can be any unit vector in $\mathcal L_2$. The spectral ordering of $P$ is a symmetry of the joint optimization, and does not permit diagonalizing an auxiliary density at a fixed channel.
+
+## 97. An operator bound and a necessary common matrix budget
+
+**Proposition 97.1 (sharp operator bound for the common code matrix).** Every common feasible $Q$ of (S.273) satisfies
+
+$$
+\|C\|_{\rm op}\leq\alpha=\frac1{2\sqrt2}.
+\tag{S.277}
+$$
+
+Proof. For arbitrary unit vectors $u,v\in\mathbb R^2$ form the $5\times6$ test matrix
+
+$$
+T_{u,v}=\frac1{4\sqrt2}[J_0uv^T\mid J_1uv^T\mid0],\qquad
+\langle Q,T_{u,v}\rangle_F=u^TCv,\qquad
+\|T_{u,v}\|_*=\frac2{4\sqrt2}=\alpha.
+\tag{S.278}
+$$
+
+Its two left vectors $J_0u,J_1u$ are orthonormal. Its two unit right vectors have disjoint block supports. Consequently its two nonzero singular values are both $1/(4\sqrt2)$. Rectangular trace/spectral duality, in the convention of [Watrous, Section 1](../../../Library/QuantumChannels/watrous2012simpler.md), gives $|u^TCv|\leq\|Q\|_{\rm op}\|T_{u,v}\|_*\leq\alpha$. Taking the supremum over $u,v$ proves (S.277). The same feasible choice $Q_0=J_0$, $Q_1=J_1$, $B=he_1^T$, where $e_1$ is the first coordinate vector of $\mathbb R^2$, has $QQ^T=I_5$ and $C=\alpha I_2$, so the constant is attained. $\square$
+
+**Proposition 97.2 (necessary matrix budget and its trace).** For the same common $Q$, with $V_i$ taken from its actual block $B$ in (S.274),
+
+$$
+16CC^T+V_0V_0^T+V_1V_1^T\preceq2I_2,
+\qquad 16A+\|V\|_F^2\leq4,
+\qquad A\leq\frac14-\frac{\|V\|_F^2}{16}.
+\tag{S.279}
+$$
+
+Proof. For every $u\in\mathbb R^2$, the two code terms and the same row-contraction constraint give
+
+$$
+\begin{aligned}
+16\|C^Tu\|^2
+&=\frac12\|Q_0^TJ_0u+Q_1^TJ_1u\|^2\\
+&\leq\sum_{i=0}^1\|Q_i^TJ_iu\|^2\\
+&\leq\sum_{i=0}^1u^TJ_i^T(I_5-BB^T)J_iu\\
+&=2\|u\|^2-u^T(V_0V_0^T+V_1V_1^T)u.
+\end{aligned}
+\tag{S.280}
+$$
+
+The first inequality is $\|x+y\|^2\leq2\|x\|^2+2\|y\|^2$. The second uses $Q_iQ_i^T\preceq I_5-BB^T$, which follows by dropping only the other positive code block from $QQ^T\preceq I_5$. Finally $J_i^TB=V_i$ and $J_i^TJ_i=I_2$ give the last line. This proves the matrix inequality by its quadratic forms. Taking its two-dimensional trace gives $16\|C\|_F^2+\sum_i\|V_i\|_F^2\leq4$, proving the remaining assertions. $\square$
+
+The budgets (S.277) and (S.279) are necessary conditions on data extracted from one feasible common $Q$. They assert no converse realizing arbitrary matrices $C,V$ that satisfy them. Neither budget alone supplies the target bound for $g_Q$ or replaces the directional certificate (S.220)–(S.221).
+
+## 98. A restricted high-spectrum estimate with aligned residual direction
+
+**Theorem 98.1 (weighted estimate in the aligned high-$p$ sector).** Let $P,V$ have the common feasible domain of (S.275). In addition assume both
+
+$$
+p\geq p_0:=\frac4{4+\sqrt2},\qquad
+e_1\text{ is a top eigenvector of }\sqrt P(I_2-V^TV)\sqrt P,
+\tag{S.281}
+$$
+
+where $Pe_1=pe_1$. A repeated top eigenvalue is allowed. Then
+
+$$
+N(P,V)^2+\frac{R(P,V)}4\leq\lambda_0,
+\qquad
+\left(N(P,V)+\frac{\sqrt{R(P,V)}}2\right)^2\leq c.
+\tag{S.282}
+$$
+
+Proof. Write $V_i=\left(\begin{smallmatrix}a_i&b_i\\c_i&d_i\end{smallmatrix}\right)$ and set $s_j=\|Ve_j\|^2$, $\gamma=(Ve_1)^T(Ve_2)$. The residual matrix is
+
+$$
+\sqrt P K\sqrt P=
+\begin{pmatrix}
+p(1-s_1)&-\sqrt{pq}\,\gamma\\
+-\sqrt{pq}\,\gamma&q(1-s_2)
+\end{pmatrix}.
+\tag{S.283}
+$$
+
+For $p,q>0$, the eigenvector condition in (S.281) is equivalent to $\gamma=0$ and $p(1-s_1)\geq q(1-s_2)$. For $q=0$ the matrix condition itself applies; it imposes no division by $q$ and no orthogonality condition on the two columns of $V$. Under (S.281) the largest eigenvalue is $p(1-s_1)$, even when the two eigenvalues coincide. Thus the exact residual in (S.275) is
+
+$$
+R=p+q\sum_{i=0}^1(b_i^2+d_i^2)
+-\frac12\sum_{i=0}^1(\sqrt p\,a_i+\sqrt q\,d_i)^2.
+\tag{S.284}
+$$
+
+Use $t=1+\sqrt2$ and the positive definite weight $W=\operatorname{diag}(t,1,t,1)$. For $F=F_{P,V}\succeq0$, Hilbert–Schmidt Cauchy–Schwarz gives
+
+$$
+\begin{aligned}
+(\operatorname{Tr}\sqrt F)^2
+&=\langle W^{1/2},W^{-1/2}\sqrt F\rangle_F^2\\
+&\leq\operatorname{Tr}(W)\,
+\operatorname{Tr}(\sqrt F W^{-1}\sqrt F)
+=\operatorname{Tr}(W)\operatorname{Tr}(W^{-1}F).
+\end{aligned}
+\tag{S.285}
+$$
+
+Only $W$ is inverted. The last equality is cyclicity of the trace, requiring no commutation of $W$ with $F$ and no invertibility of $F$, $P$, or $I_4-VV^T$. Expanding the diagonal trace and using $N^2=(\operatorname{Tr}\sqrt F)^2/32$ yields
+
+$$
+\begin{aligned}
+\operatorname{Tr}(W^{-1}F)
+&=2(p/t+q)-\sum_{i=0}^1
+\left[\frac pt(a_i^2+b_i^2)+q(c_i^2+d_i^2)\right],\\
+N^2&\leq\frac{t+1}{8}(p/t+q)
+-\frac{t+1}{16}\sum_{i=0}^1
+\left[\frac pt(a_i^2+b_i^2)+q(c_i^2+d_i^2)\right].
+\end{aligned}
+\tag{S.286}
+$$
+
+Since $(t+1)/t=\sqrt2$, the constant part after adding $R/4$ from (S.284) is exactly
+
+$$
+\frac{t+1}{8}(p/t+q)+\frac p4
+=\frac{(2+\sqrt2)(p+q)}8=\lambda_0.
+\tag{S.287}
+$$
+
+The complete remaining quadratic, with both trace penalties expanded, is
+
+$$
+\begin{aligned}
+16\left(N^2+\frac R4-\lambda_0\right)
+\leq\sum_{i=0}^1\bigl[
+&-(2+\sqrt2)p a_i^2+(4q-\sqrt2 p)b_i^2\\
+&-(2+\sqrt2)q c_i^2-\sqrt2 q d_i^2
+-4\sqrt{pq}\,a_id_i\bigr].
+\end{aligned}
+\tag{S.288}
+$$
+
+The $b_i^2$ coefficient is nonpositive exactly when $p\geq p_0$. The $c_i^2$ coefficient is nonpositive. The opposite of the $(a_i,d_i)$ quadratic has matrix
+
+$$
+G_{p,q}=\begin{pmatrix}
+(2+\sqrt2)p&2\sqrt{pq}\\
+2\sqrt{pq}&\sqrt2 q
+\end{pmatrix},\qquad
+\det G_{p,q}=2pq(\sqrt2-1)\geq0.
+\tag{S.289}
+$$
+
+Its diagonal entries are nonnegative, so it is PSD, including when $q=0$. Every summand on the right of (S.288) is therefore nonpositive. This proves the first inequality of (S.282). Both $N$ and $R$ are nonnegative, and $(a+b)^2\leq2(a^2+b^2)$ with $a=N$, $b=\sqrt R/2$ proves the second because $2\lambda_0=c$.
+
+At $p=p_0$ the $b_i^2$ coefficient vanishes without affecting the conclusion. At $q=0$ the residual matrix, the weight, and all displayed quadratics remain defined, and the same proof applies. Repeated residual eigenvalues are included by the non-strict eigenvalue comparison preceding (S.284). No positive-definiteness assumption on the feasible residuals has entered the argument. $\square$
+
+The two conditions in (S.281) are additional hypotheses. Feasibility of $V$ does not imply them, and no reduction of a global optimizer to their sector is established. The conclusion concerns the joint variables $P,V$; it does not certify all auxiliary directions of an arbitrary fixed common $Q$.
+
+## 99. The stronger squared inequality and the fixed-multiplier route
+
+**Proposition 99.1 (equivalence of a universal squared lemma and a uniform multiplier).** The following proposed stronger inequality over the whole boundary domain,
+
+$$
+N(P,V)^2+R(P,V)/4\leq\lambda_0
+\quad\text{for all }p\in[1/2,1],\quad V^TV\preceq I_2,
+\tag{S.290}
+$$
+
+is equivalent to validity of (S.220) with the single choice $\lambda=\lambda_0$ for every common feasible $Q$. This equivalence does not assert either universal inequality.
+
+Proof. For fixed $Q$, define $K_B:\mathcal L_2\to\mathbb R^{2\times2}$ and $L_Q:\mathbb R\oplus\mathcal L_2\to\mathbb R^{2\times2}$ by
+
+$$
+\begin{gathered}
+K_B(S)=S^TB/2,\qquad L_Q(t,S)=tC+K_B(S),\\
+K_B^*(Y)=\Pi_2(BY^T)/2,\qquad
+K_B^*K_B=H,\qquad K_B^*(C)=d/2,\\
+L_Q^*L_Q=
+\begin{pmatrix}A&d^T/2\\d/2&H\end{pmatrix}
+\quad\text{on }\mathbb R\oplus\mathcal L_2.
+\end{gathered}
+\tag{S.291}
+$$
+
+The adjoint follows by the Frobenius pairing, with $\Pi_2$ because the domain is $\mathcal L_2$; the two remaining identities follow by substitution into (S.273). Equality of the operator norms of $L_Q$ and $L_Q^*$ gives
+
+$$
+\begin{aligned}
+\|L_Q\|_{\rm op}^2\leq\lambda_0
+&\ \Longleftrightarrow\quad
+\langle C,Y\rangle_F^2+\tfrac14\|\Pi_2(BY^T)\|_F^2
+\leq\lambda_0\|Y\|_F^2\quad(\forall Y),\\
+&\ \Longleftrightarrow\quad
+\begin{pmatrix}
+\lambda_0 I_{\mathcal L_2}-H&-d/2\\
+-d^T/2&c-A-\lambda_0
+\end{pmatrix}\succeq0.
+\end{aligned}
+\tag{S.292}
+$$
+
+For the last equivalence reorder the scalar coordinate in $\lambda_0 I-L_Q^*L_Q$ and use $c=2\lambda_0$.
+
+It remains to match the universal auxiliary-direction inequality in (S.292) to (S.290). Homogeneity permits $\|Y\|_F=1$. At fixed $B,Y$, put
+
+$$
+\begin{gathered}
+\mathcal A_Y=\frac1{4\sqrt2}[J_0Y\mid J_1Y],\qquad
+\mathcal D=I_5-BB^T,\qquad
+n_B(Y)=\|\mathcal D^{1/2}\mathcal A_Y\|_*,\\
+\max_{[Q_0\mid Q_1][Q_0\mid Q_1]^T\preceq\mathcal D}
+\langle C,Y\rangle_F^2=n_B(Y)^2.
+\end{gathered}
+\tag{S.293}
+$$
+
+This is the exact code-row elimination already used in (S.244), with its factor $1/4$ included in $\mathcal A_Y$. The feasible code-row set is symmetric, so its maximal squared pairing is the square of its maximal pairing. If $\mathcal D$ is singular, the row constraint forces the code block into its range, and the support factorization $[Q_0\mid Q_1]=\mathcal D^{1/2}Z$ uses a contraction $Z$; the polar pairing still attains $n_B(Y)$. No row outside that range is allowed.
+
+Write $P_Y=YY^T$ and extend the polar factor in $Y=\sqrt{P_Y}U$ to an orthogonal $U$ even at deficient rank. The simultaneous transformation $(Y,B)\mapsto(YU^T,BU^T)$ makes $Y=\sqrt{P_Y}$ and leaves $BY^T$ unchanged. It also preserves $BB^T$ and right-rotates the two blocks of $\mathcal A_Y$, preserving $n_B(Y)$. The joint orthogonal symmetry of Proposition 91.3 then gives the ordered density $P$ of (S.275). Both transformations act on the common variables and preserve both trace penalties. For this $Y=\sqrt P$ and $B$ as in (S.274), the code Gram is $F_{P,V}/32$, hence $n_B(\sqrt P)=N(P,V)$, independently of $w$. Moreover (S.245), with the parameter map (S.276), gives
+
+$$
+\begin{aligned}
+\|\Pi_2(B\sqrt P)\|_F^2
+&=\operatorname{Tr}(PV^TV)+wPw^T-\tau(P,V),\\
+\max_{w^Tw\preceq K}
+\left[n_B(\sqrt P)^2+\tfrac14\|\Pi_2(B\sqrt P)\|_F^2\right]
+&=N(P,V)^2+R(P,V)/4.
+\end{aligned}
+\tag{S.294}
+$$
+
+The maximizing row is obtained from a top eigenvector of $\sqrt K P\sqrt K$ on the support, as in (S.245). The same $B$ permits an attaining code polar factor in (S.293). If either maximum is zero, a zero code block or a zero outside row is admissible; a zero projected norm needs no normalization. Thus the conditional maxima are attained with common variables, including singular $K$ and $\mathcal D$. Maximizing over compact unit $Y$ and feasible $Q$ can be done in either order. Equations (S.293)–(S.294) therefore identify the universal left side of (S.292) with the maximum in (S.290), proving the equivalence. $\square$
+
+The exact residual target of Definition 95.2 and the stronger route (S.290) have different logical force. The latter would imply the former by
+
+$$
+\left(N+\frac{\sqrt R}{2}\right)^2
+\leq2\left(N^2+\frac R4\right)\leq2\lambda_0=c.
+\tag{S.295}
+$$
+
+The exact certificate (S.220) allows $\lambda$ to depend on $Q$. Consequently a failure of (S.290) would rule out the uniform choice $\lambda_0$ without itself refuting (S.272) or (S.239). Theorem 98.1 proves (S.290) only under both extra conditions (S.281).
+
+**Definition 99.2 (the coarse scalar sufficient helper).** For each common feasible $Q$, Proposition 87.3 gives $0\preceq H\preceq I/4$. Thus $L_0=\lambda_0 I-H\succeq(\sqrt2/8)I\succ0$ and
+
+$$
+\frac14\langle d,L_0^{-1}d\rangle_F\leq\sqrt2\|d\|_F^2.
+\qquad
+\|d\|_F^2\leq\frac{\lambda_0-A}{\sqrt2}
+\ \Longrightarrow\quad
+\frac14\langle d,L_0^{-1}d\rangle_F\leq c-A-\lambda_0.
+\tag{S.296}
+$$
+
+The implication is a sufficient scalar replacement for the directional Schur condition, since $c-A-\lambda_0=\lambda_0-A$. Its scalar premise is not a universal inequality: the next proposition disproves it using actual common blocks. This coarse premise, the universal squared lemma (S.290), and the exact residual target (S.272) are three distinct assertions.
+
+## 100. An exact coarse-helper counterexample with a positive full certificate
+
+**Proposition 100.1 (failure of the scalar premise on a common feasible contraction).** In the frame of Definition 96.1 take
+
+$$
+\begin{gathered}
+Q_0=[b_1/2,b_2],\qquad Q_1=[g_1,g_2],\qquad
+B=[h,(\sqrt3/2)b_1],\\
+Q_0Q_0^T+Q_1Q_1^T+BB^T
+=\left(\tfrac14+\tfrac34\right)b_1b_1^T
++b_2b_2^T+g_1g_1^T+g_2g_2^T+hh^T=I_5.
+\end{gathered}
+\tag{S.297}
+$$
+
+The scalar premise in (S.296) fails strictly for this same $Q$.
+
+Proof. Equation (S.297) proves feasibility of all three blocks jointly. Direct substitution gives
+
+$$
+\begin{gathered}
+C=\operatorname{diag}\left(\frac3{8\sqrt2},\frac1{2\sqrt2}\right),\qquad
+A=\frac9{128}+\frac18=\frac{25}{128},\\
+BC^T=\frac3{8\sqrt2}he_1^T+\frac{\sqrt3}{4\sqrt2}b_1e_2^T,\qquad
+d=BC^T,\qquad \|d\|_F^2=\frac9{128}+\frac3{32}=\frac{21}{128}.
+\end{gathered}
+\tag{S.298}
+$$
+
+Here $e_1,e_2$ are the coordinate vectors of the two-dimensional boundary space. Each of $he_1^T$ and $b_1e_2^T$ has both traces against $J_0,J_1$ zero, so the projection defining $d$ removes neither term. The two matrices are Frobenius orthonormal, giving the displayed squared norm. Since $\lambda_0-A=(7+16\sqrt2)/128$,
+
+$$
+\|d\|_F^2-\frac{\lambda_0-A}{\sqrt2}
+=\frac{5-7/\sqrt2}{128}>0.
+\tag{S.299}
+$$
+
+The strict sign follows from $5\sqrt2>7$, whose positive sides have squares $50>49$. Thus the coarse sufficient scalar premise fails on the actual common-contraction domain, without using a tuple satisfying only the necessary budgets. $\square$
+
+**Proposition 100.2 (the full directional certificate for the same contraction).** The $Q$ in (S.297) satisfies the full $9\times9$ certificate (S.220) strictly at $\lambda=\lambda_0$. In particular $g_Q(S)<c$ for every unit $S\in\mathcal L_2$.
+
+Proof. For exactly the same $B$ as in (S.297), $BB^T=hh^T+(3/4)b_1b_1^T$. The two directions occupied by $d$ are therefore eigenvectors of $H$:
+
+$$
+u_1=he_1^T,\quad u_2=b_1e_2^T,\qquad
+H(u_1)=\frac14u_1,\quad H(u_2)=\frac3{16}u_2,\qquad
+d=\frac3{8\sqrt2}u_1+\frac{\sqrt3}{4\sqrt2}u_2.
+\tag{S.300}
+$$
+
+Both eigenvector identities hold after projection because $u_1,u_2\in\mathcal L_2$. On the rest of that space the general bound $H\preceq I/4$ still holds. Hence $L_0\succeq(\sqrt2/8)I\succ0$, and the resolvent on $d$ is exactly
+
+$$
+\begin{aligned}
+\langle d,L_0^{-1}d\rangle_F
+&=\frac{9/128}{\lambda_0-1/4}
++\frac{3/32}{\lambda_0-3/16}\\
+&=\frac{9\sqrt2}{32}+\frac3{2(1+2\sqrt2)}.
+\end{aligned}
+\tag{S.301}
+$$
+
+The available scalar term has four times its value equal to
+
+$$
+\begin{aligned}
+4(c-A-\lambda_0)&=\frac7{32}+\frac1{\sqrt2},\\
+4(c-A-\lambda_0)-\langle d,L_0^{-1}d\rangle_F
+&=\frac{21\sqrt2-13}{32(1+2\sqrt2)}>0.
+\end{aligned}
+\tag{S.302}
+$$
+
+Thus the actual scalar Schur margin is
+
+$$
+c-A-\lambda_0-\frac14\langle d,L_0^{-1}d\rangle_F
+=\frac{21\sqrt2-13}{128(1+2\sqrt2)}>0.
+\tag{S.303}
+$$
+
+Both denominator and numerator are positive. Positive definiteness of $L_0$ and the strict Schur margin prove positive definiteness of the entire matrix in (S.220). Pairing it with $(S,1)$ for $\|S\|_F=1$ gives $c-g_Q(S)>0$. This proves the asserted certificate and strict bound. $\square$
+
+This contraction refutes only the scalar premise of (S.296). Its valid full certificate shows why that failure is compatible with the proposed original bound. The resolvent charges the two nonzero components of $d$ at different eigenvalues, $1/4$ and $3/16$; the coarse estimate charges both at the first value and loses precisely that directional information. For a general multiplier in (S.220), possible singularity still requires all three conditions (S.221): nonnegativity of $\lambda I-H$, membership of $d$ in its range, and the pseudoinverse Schur inequality. The ordinary inverse in (S.301) is justified by $\lambda_0>1/4$, and supplies no permission to drop those conditions elsewhere.
+
+## 101. Uniform obligations and applicability of the common-budget estimates
+
+**Definition 101.1 (the remaining sectors and original-family boundaries).** The exact common-variable assertion still required is (S.272), or, by the notation map (S.276),
+
+$$
+\left(N(P,V)+\frac{\sqrt{R(P,V)}}2\right)^2\leq c
+\quad\text{for every }p\in[1/2,1],\quad V\in\mathbb R^{4\times2},\quad V^TV\preceq I_2.
+\tag{S.304}
+$$
+
+Theorem 98.1 controls only $p\geq p_0$ with the larger-$P$ direction a top residual eigendirection. It leaves the sector $p<p_0$ and the sectors in which that alignment fails. For $p,q>0$, a nonzero column inner product $(Ve_1)^T(Ve_2)$ rotates the residual eigendirections; even when it is zero, the larger residual eigenvalue can occur on the other axis. Repeated residual eigenvalues meet the alignment condition, while a singular endpoint must be interpreted through (S.283). The small-contraction results of Theorems 93.1 and 93.3 apply independently under their own hypotheses and exclude the neighborhoods in (S.271). There is no established argument placing a global optimizer in the union of those neighborhoods and the sector (S.281).
+
+The unproved joint tradeoff is between the full code square-root trace $\operatorname{Tr}\sqrt{D_p(I_4-VV^T)D_p}$, the attainable gain of one outside row, and the two squared traces in $\tau$. The necessary common matrix budget (S.279) does not realize arbitrary data or control this tradeoff by itself. A universal proof of the stronger (S.290) would suffice by Proposition 99.1 and (S.295), but its validity outside the stated restricted sector is not established. The per-$Q$ multiplier alternative of Proposition 87.3 remains the exact certificate route and permits a multiplier depending on the common contraction.
+
+Propositions 85.2–85.3, 86.1–86.2 and 90.2 retain the original-family interpretation of (S.304): the half-beta, $\lambda=1$ mixed-Gram bound (S.239), with fixed physical $\rho_\star$, every complex $3\times3$ auxiliary density, and actual minimal Kraus rank three characterized by $Te_2\ne0$. The matrix rank of $T$ is not substituted for Kraus rank. A strict failure of (S.304) would require the common attaining blocks and one auxiliary density supplied by (S.243)–(S.245), followed by (S.215) and its all-complex-density continuity bound (S.214) to enter the actual rank-three class. Proposition 100.1 supplies no such strict failure, because Proposition 100.2 bounds its entire boundary sphere.
+
+The universal half-beta rank-three mixed-Gram estimate remains unproved here, as does the associated uniform fixed-input witness programme (S.154), with the support and positive-definite-dual qualifications of Sections 83–84 retained. The separate broader target of [volume I, Definition 47.2](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#47-applicability-and-the-remaining-recovery-problem) ranges over arbitrary $0<\beta\leq1/2$, actual ranks up to nine, and whole-output complex CPTP recoveries with a full complex reference and the unhalved diamond norm. It also remains open. A counterexample to a sufficient scalar helper is not a counterexample to either of these targets; even a fixed-input witness failure would not itself provide an improving full-reference recovery certificate.
+
+The operator and matrix budgets, the restricted coefficient comparison, and the common-contraction counterexample with its full directional certificate are repo-derived mathematics for this family. The boundary normal form is reused from Sections 85–95, with the exact correspondence (S.276), rather than claimed as an additional reduction. Rectangular trace/spectral duality and the support-compatible contraction factorization are attributed to the interfaces in [Watrous, Section 1 and Section 2.1, Lemma 2](../../../Library/QuantumChannels/watrous2012simpler.md); Hilbert–Schmidt Cauchy–Schwarz is used inside (S.285). The exact one-constraint alternative is the [Boyd–Vandenberghe Appendix B.2 interface](../../../Library/QuadraticForms/boydvandenberghe2004convex.md) applied in Proposition 87.3. The physical normalization continues to use [Bény–Oreshkov, Section IV, (133), with Corollary 5](../../../Library/QuantumChannels/beny2011simulation.md), as in Proposition 85.3. These attributed general tools do not state the family-specific constant or settle the remaining universal tradeoff. No literature-priority claim is attached to the new family-specific consequences.
+
+## 追加锚（本行以下为增补区）
