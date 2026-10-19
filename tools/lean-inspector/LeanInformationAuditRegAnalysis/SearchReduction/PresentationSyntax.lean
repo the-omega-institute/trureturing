@@ -1,0 +1,265 @@
+import LeanInformationAuditRegAnalysis.SearchReduction.Runner
+
+/-! Frozen, syntax-directed presentation retrieval. Hashes only locate entries;
+actual support membership is compared before any certificate is attempted. -/
+namespace LeanInformationAudit.SearchReduction
+open Lean Meta Elab Tactic
+
+/-- The shared executable directional lookup; the model proves its coverage. -/
+def supportIncluded (target source : List Name) : Bool :=
+  target.all source.contains
+
+def presentationLookup (target : List Name) (entries : List (Name × List Name)) :
+    List (Name × List Name) := entries.filter (supportIncluded target ·.2)
+
+private def primitive (n : Name) : Bool :=
+  #[``And, ``Iff, ``True, ``False, ``Eq, ``Not, ``Nat, ``Int,
+    ``HAdd.hAdd, ``HMul.hMul, ``HSub.hSub, ``Neg.neg, ``OfNat.ofNat,
+    ``LE.le, ``LT.lt, ``Nat.add, ``Nat.mul, ``Nat.sub, ``Int.add,
+    ``Int.mul, ``Int.sub, ``Int.neg].contains n
+
+/-- Only noncomputational aliases are unfolded. Recursive definitions,
+matchers, recursors and general computations are opaque. The visited graph
+rejects cycles; fuel exhaustion is an error, never an opaque miss. -/
+private partial def aliasBody (e : Expr) : Bool :=
+  match e with
+  | .lam _ _ b _ => aliasBody b
+  | .forallE _ d b _ => aliasBody d && aliasBody b
+  | .app f a => aliasBody f && aliasBody a
+  | .const n _ => !((n.toString.splitOn "match_").length > 1 || n.toString.endsWith ".rec" ||
+      n.toString.endsWith ".recOn" || n.toString.endsWith ".brecOn" ||
+      n.toString.endsWith ".below" || n.toString.endsWith ".ibelow" ||
+      n.toString.endsWith ".casesOn")
+  | .bvar _ | .sort _ | .lit _ => true
+  | .mdata _ b => aliasBody b
+  | _ => false
+
+private partial def normalizeAux (env : Environment) (e : Expr)
+    (seen : NameSet) : StateT Nat (Except String) Expr := do
+  let remaining ← get
+  if remaining == 0 then throw "search.presentation_normalization_fuel"
+  set (remaining - 1)
+  let e := e.consumeMData
+  match e with
+  | .app .. | .const .. =>
+    let fn := e.getAppFn
+    let args ← e.getAppArgs.mapM (fun a => normalizeAux env a seen)
+    if let .const n us := fn then
+      if seen.contains n then throw "search.presentation_alias_cycle"
+      if !primitive n then
+        if let some (.defnInfo d) := (env.setExporting false).find? n then
+          if aliasBody d.value then
+            let body := d.value.instantiateLevelParams d.levelParams us
+            return ← normalizeAux env (body.beta args) (seen.insert n)
+    return mkAppN fn args
+  | .forallE n d b bi =>
+    return .forallE n (← normalizeAux env d seen)
+      (← normalizeAux env b seen) bi
+  | .lam n d b bi =>
+    return .lam n (← normalizeAux env d seen)
+      (← normalizeAux env b seen) bi
+  | _ => return e
+
+def normalizeSyntax (env : Environment) (e : Expr) (fuel : Nat := 200000) : Except String Expr :=
+  (normalizeAux env e {}).run' fuel
+
+private structure Affine where
+  constant : Int := 0
+  terms : List (Expr × Int) := []
+
+private def affineAdd (a b : Affine) : Affine := Id.run do
+  let mut terms := a.terms
+  for (atom, coefficient) in b.terms do
+    match terms.find? (fun t => t.1 == atom) with
+    | some old => terms := (atom, old.2 + coefficient) :: terms.filter (fun t => t.1 != atom)
+    | none => terms := (atom, coefficient) :: terms
+  return {constant := a.constant + b.constant, terms := terms.filter (fun t => t.2 != 0)}
+
+private def affineScale (n : Int) (a : Affine) : Affine :=
+  {constant := n * a.constant, terms := a.terms.map (fun (e, c) => (e, n*c))}
+
+private def numeral (e : Expr) : Option Nat := do
+  if let .lit (.natVal n) := e then return n
+  if e.isAppOf ``OfNat.ofNat then
+    if let .lit (.natVal n) := e.getArg! 1 then return n
+  none
+
+private partial def affine (e : Expr) : Affine :=
+  if let some n := numeral e then {constant := n}
+  else if e.isAppOf ``HAdd.hAdd || e.isAppOf ``Nat.add || e.isAppOf ``Int.add then
+    affineAdd (affine (e.getAppArgs[e.getAppNumArgs-2]!)) (affine e.getAppArgs.back!)
+  else if e.isAppOf ``HMul.hMul || e.isAppOf ``Nat.mul || e.isAppOf ``Int.mul then
+    let left := e.getAppArgs[e.getAppNumArgs-2]!
+    let right := e.getAppArgs.back!
+    if let some n := numeral left then affineScale n (affine right)
+    else if let some n := numeral right then affineScale n (affine left)
+    else {terms := [(e, 1)]}
+  else if e.isAppOf ``Int.sub ||
+      (e.isAppOf ``HSub.hSub && e.getAppArgs.any (·.isConstOf ``Int)) then
+    affineAdd (affine (e.getAppArgs[e.getAppNumArgs-2]!))
+      (affineScale (-1) (affine e.getAppArgs.back!))
+  else if e.isAppOf ``Neg.neg || e.isAppOf ``Int.neg then
+    affineScale (-1) (affine e.getAppArgs.back!)
+  else if e.isAppOf ``Nat.succ then affineAdd (affine e.getAppArgs.back!) {constant := 1}
+  else {terms := [(e, 1)]}
+
+private def arithmeticNeutral (e : Expr) : Bool := Id.run do
+  let eq := e.isAppOfArity ``Eq 3
+  let le := e.isAppOf ``LE.le || e.isAppOf ``Nat.le || e.isAppOf ``Int.le
+  let lt := e.isAppOf ``LT.lt || e.isAppOf ``Nat.lt || e.isAppOf ``Int.lt
+  unless eq || le || lt do return false
+  let args := e.getAppArgs
+  if args.size < 2 then return false
+  let difference := affineAdd (affine args.back!)
+    (affineScale (-1) (affine args[args.size-2]!))
+  if eq then return difference.constant == 0 && difference.terms.isEmpty
+  let natural := args.any (·.isConstOf ``Nat)
+  return (if lt then difference.constant > 0 else difference.constant ≥ 0) &&
+    difference.terms.all (fun (_, c) => natural && c ≥ 0)
+
+private def syntacticNeutral (e : Expr) : Bool :=
+  e.isConstOf ``True || arithmeticNeutral e
+
+private partial def nameless : Expr → Expr
+  | .forallE _ d b bi => .forallE .anonymous (nameless d) (nameless b) bi
+  | .lam _ d b bi => .lam .anonymous (nameless d) (nameless b) bi
+  | .app f a => .app (nameless f) (nameless a)
+  | .mdata _ b => nameless b
+  | e => e
+
+/-- The whole canonical affine vector is retained. Full strings, rather than
+hashes, identify components; the opaque atom dictionary is shared by both sides. -/
+private def componentKey (telescope : List (Expr × BinderInfo)) (e : Expr) : Name := Id.run do
+  let eq := e.isAppOfArity ``Eq 3
+  let arithmetic := eq || e.isAppOf ``LE.le || e.isAppOf ``LT.lt ||
+    e.isAppOf ``Nat.le || e.isAppOf ``Nat.lt || e.isAppOf ``Int.le || e.isAppOf ``Int.lt
+  let scope := reprStr (telescope.map fun (d, bi) => (nameless d, bi))
+  if arithmetic && e.getAppNumArgs ≥ 2 then
+    let args := e.getAppArgs
+    let mut vector := affineAdd (affine args.back!)
+      (affineScale (-1) (affine args[args.size-2]!))
+    let sorted := vector.terms.toArray.qsort (fun a b => reprStr (nameless a.1) < reprStr (nameless b.1))
+    vector := {vector with terms := sorted.toList.filter (fun t => t.2 != 0)}
+    if eq && (vector.terms.head?.map (fun t => t.2 < 0)).getD (vector.constant < 0) then
+      vector := affineScale (-1) vector
+    let relation := if eq then "eq" else if e.isAppOf ``LT.lt || e.isAppOf ``Nat.lt ||
+      e.isAppOf ``Int.lt then "lt" else "le"
+    let domain := if e.isAppOf ``Nat.le || e.isAppOf ``Nat.lt then reprStr (mkConst ``Nat)
+      else if e.isAppOf ``Int.le || e.isAppOf ``Int.lt then reprStr (mkConst ``Int)
+      else if args.size > 2 then reprStr (nameless args[0]!) else ""
+    return Name.mkSimple (scope ++ relation ++ domain ++ reprStr vector.constant ++
+      reprStr (vector.terms.map fun (a, c) => (nameless a, c)))
+  return Name.mkSimple (scope ++ reprStr (nameless e))
+
+/-- Nonneutral component sets form the directional index. The complete
+outer telescope is part of every component. Iff contributes its two views. -/
+partial def syntaxAtoms (e : Expr) (telescope : List (Expr × BinderInfo) := []) : List Name :=
+  if let .forallE _ d b bi := e then syntaxAtoms b (telescope ++ [(d, bi)])
+  else if syntacticNeutral e then []
+  else if e.isAppOfArity ``And 2 then
+    (syntaxAtoms e.appFn!.appArg! telescope ++ syntaxAtoms e.appArg! telescope).eraseDups
+  else if e.isAppOfArity ``Iff 2 then
+    let p := e.appFn!.appArg!
+    let q := e.appArg!
+    let forward := mkForall .anonymous .default p (q.liftLooseBVars 0 1)
+    let backward := mkForall .anonymous .default q (p.liftLooseBVars 0 1)
+    (syntaxAtoms forward telescope ++ syntaxAtoms backward telescope).eraseDups
+  else [componentKey telescope e]
+
+def normalizedAtoms (env : Environment) (e : Expr) : Except String (List Name) := do
+  return syntaxAtoms (← normalizeSyntax env e)
+
+def normalizedLookup (env : Environment) (target : Expr)
+    (entries : List (Name × List Name)) : Except String (List (Name × List Name)) := do
+  return presentationLookup (← normalizedAtoms env target) entries
+
+/-- A leaf certificate sees the common telescope and at most one source view.
+No baseline fact index, source proof or other source component is available. -/
+private def onePremise (target : Expr) (source? : Option Expr) : MetaM (Option Expr) := do
+  let saved ← saveState
+  try
+    let type ← match source? with | some s => mkArrow s target | none => pure target
+    let goal ← mkFreshExprMVar type
+    let goals ← (Term.withoutErrToSorry <| Tactic.run goal.mvarId! do
+      if source?.isSome then evalTactic (← `(tactic| intro _presentationPremise))
+      evalTactic (← `(tactic| first | assumption | rfl | omega))).run'
+    if goals.isEmpty then return some (← instantiateMVars goal)
+  catch ex =>
+    if ex.isRuntime || ex.isInterrupt || ex.isMaxHeartbeat then throw ex
+  saved.restore
+  return none
+
+private partial def viewTypes (type : Expr) : MetaM (Array (Expr × List Name)) := do
+  let type ← withReducible <| whnf type
+  let mut result := if type.isAppOfArity ``And 2 || type.isAppOfArity ``Iff 2 then #[]
+    else #[(type, [])]
+  if type.isAppOfArity ``And 2 then
+    for (part, projection) in #[(type.appFn!.appArg!, ``And.left), (type.appArg!, ``And.right)] do
+      result := result ++ (← viewTypes part).map (fun (t, p) => (t, projection :: p))
+  if type.isAppOfArity ``Iff 2 then
+    result := result ++ #[(← mkArrow type.appFn!.appArg! type.appArg!, [``Iff.mp]),
+      (← mkArrow type.appArg! type.appFn!.appArg!, [``Iff.mpr])]
+  return result
+
+private def projectView (h : Expr) (path : List Name) : MetaM Expr :=
+  path.foldlM (fun e n => mkAppM n #[e]) h
+
+private partial def assemble (target source : Expr) : MetaM (Option Expr) := do
+  let target ← withReducible <| whnf target
+  if target == source then
+    return ← withLocalDeclD `_singleSource source fun h => do
+      return some (← mkLambdaFVars #[h] h)
+  if target.isAppOfArity ``And 2 || target.isAppOfArity ``Iff 2 then
+    let iff := target.isAppOfArity ``Iff 2
+    let leftType ← if iff then mkArrow target.appFn!.appArg! target.appArg!
+      else pure target.appFn!.appArg!
+    let rightType ← if iff then mkArrow target.appArg! target.appFn!.appArg!
+      else pure target.appArg!
+    let some left ← assemble leftType source | return none
+    let some right ← assemble rightType source | return none
+    return ← withLocalDeclD `_singleSource source fun h => do
+      let proof ← mkAppM (if iff then ``Iff.intro else ``And.intro) #[mkApp left h, mkApp right h]
+      return some (← mkLambdaFVars #[h] proof)
+  if let some proof ← onePremise target none then
+    return ← withLocalDeclD `_singleSource source fun h => do
+      return some (← mkLambdaFVars #[h] proof)
+  for (view, path) in ← viewTypes source do
+    if let some proof ← onePremise target (some view) then
+      return ← withLocalDeclD `_singleSource source fun h => do
+        return some (← mkLambdaFVars #[h] (mkApp proof (← projectView h path)))
+  return none
+
+private partial def singleTelescope (target source : Expr) (xs : Array Expr) : MetaM (Option Expr) := do
+  match target, source with
+  | .forallE n d b bi, .forallE _ d' b' bi' =>
+    if bi != bi' then return none
+    unless ← withReducible <| isDefEq d d' do return none
+    withLocalDecl n bi d fun x => singleTelescope (b.instantiate1 x) (b'.instantiate1 x) (xs.push x)
+  | _, .forallE .. => return none
+  | _, _ =>
+    let some body ← assemble target source | return none
+    return ← withLocalDeclD `_wholeSource (← mkForallFVars xs source) fun h => do
+      let proof ← mkLambdaFVars xs (mkApp body (mkAppN h xs))
+      return some (← mkLambdaFVars #[h] proof)
+
+/-- N's definitional certificate is a reflexivity term checked against the
+normalized expression. It is closed over the common telescope for kernel use. -/
+def normalizeCertified (e : Expr) : MetaM Expr := do
+  let normalized ← match normalizeSyntax (← getEnv) e with
+    | .ok e => pure e | .error err => throwError err
+  let type ← mkEq e normalized
+  let proof ← mkEqRefl e
+  let xs := (← getLCtx).getFVarIds.map mkFVar
+  let proof ← mkLambdaFVars xs proof
+  let type ← mkForallFVars xs type
+  let levels := (collectLevelParams {} type).params.toList
+  discard <| checkProof (← mkFreshUserName `_normalizationCertificate) levels type proof
+  return normalized
+
+/-- Match the complete common telescope before constructing the source-arrow
+certificate. The actual source theorem is restored only by the caller. -/
+def singleSourceConversion (target source : Expr) : MetaM (Option Expr) := do
+  let target ← normalizeCertified target
+  let source ← normalizeCertified source
+  singleTelescope target source #[]
+end LeanInformationAudit.SearchReduction

@@ -1,8 +1,9 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Presentation
+import LeanInformationAuditRegTests.SearchReduction.SingleSourceModel
 import LeanInformationAuditRegTests.SearchReduction.PresentationBaseline
 
-/-! Counterexamples for presentation prefilters. These tests exercise the same
-conversion procedure as baseline certification and structure exclusion. -/
+/-! Counterexamples for presentation prefilters. These tests exercise the wide structure-exclusion converter; baseline
+certification uses the separate single-source relation. -/
 namespace LeanInformationAudit.Tests.SearchReduction.PresentationCoverage
 open Lean Meta Elab
 open LeanInformationAudit.SearchReduction

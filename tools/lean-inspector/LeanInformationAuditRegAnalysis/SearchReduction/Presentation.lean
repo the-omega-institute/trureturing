@@ -1,4 +1,4 @@
-import LeanInformationAuditRegAnalysis.SearchReduction.Runner
+import LeanInformationAuditRegAnalysis.SearchReduction.PresentationSyntax
 
 /-! Bounded presentation certificates. No candidate proof, simp extension,
 induction, unbounded theorem search or submitted equivalence certificate is consulted. -/
@@ -169,97 +169,78 @@ private partial def rigidlyCompatible (env : Environment) (target source : Expr)
   | _, _ => true
 
 private def baselineSource (env : Environment) (levels : List Name) (target : Expr)
-    (index : FactIndex) (name : Name) : IO (Attempt × Option PresentationEvidence) := do
-  try
-    let evidence ← IO.mkRef (none : Option PresentationEvidence)
-    let row ← attempt env levels target s!"presentation/{name}" fun goal => do
-      let value ← mkConstWithFreshMVarLevels name
-      let source ← inferType value
-      unless (← compatibleBinders target source) && (← isProp source) do return false
-      if let some conversion ← restatementConversion target source index #[value] then
-        let conversion ← inlineGenerated env (← instantiateMVars conversion)
-        let proof ← instantiateMVars (mkApp conversion value)
-        let conversionType ← instantiateMVars (← inferType conversion)
-        let axioms ← checkProof (← mkFreshUserName `_searchReduction.baselineConversion)
-          levels conversionType conversion
-        evidence.set (some {source := name, conversionType, conversion, proof, axioms})
-        goal.assign proof
-        return true
-      return false
-    return (row, ← evidence.get)
-  catch ex =>
-    let row : Attempt := {
-      strategy := s!"presentation/{name}"
-      outcome := .incomplete .execution
-      detail := ex.toString }
-    return (row, none)
+    (name : Name) : IO (Attempt × Option PresentationEvidence × Nat × Nat) := do
+  let evidence ← IO.mkRef (none : Option PresentationEvidence)
+  let converted ← IO.mkRef (0 : Nat)
+  let verified ← IO.mkRef (0 : Nat)
+  let started ← IO.getNumHeartbeats
+  let row ← attempt env levels target s!"presentation/{name}" fun goal => do
+    let value ← mkConstWithFreshMVarLevels name
+    let source ← inferType value
+    unless ← isProp source do return false
+    let start ← IO.getNumHeartbeats
+    let result ← singleSourceConversion target source
+    converted.set ((← IO.getNumHeartbeats) - start)
+    if let some conversion := result then
+      let conversion ← inlineGenerated env (← instantiateMVars conversion)
+      let proof ← instantiateMVars (mkApp conversion value)
+      let conversionType ← instantiateMVars (← inferType conversion)
+      let start ← IO.getNumHeartbeats
+      let axioms ← checkProof (← mkFreshUserName `_searchReduction.baselineConversion)
+        levels conversionType conversion
+      verified.set ((← IO.getNumHeartbeats) - start)
+      evidence.set (some {source := name, conversionType, conversion, proof, axioms})
+      goal.assign proof
+      return true
+    return false
+  let total := (← IO.getNumHeartbeats) - started
+  return (row, ← evidence.get, ← converted.get, max (← verified.get) (total - (← converted.get)))
 
-private structure PresentationScan where
-  checked : Nat := 0
-  failure? : Option (Run × String) := none
-  evidence? : Option PresentationEvidence := none
-
-private def recordPresentations (state : PresentationScan)
-    (rows : Array (Attempt × Option PresentationEvidence)) : PresentationScan := Id.run do
-  let mut state := state
-  for (row, evidence) in rows do
-    state := {state with checked := state.checked + 1}
-    if row.outcome == .found then
-      match evidence, row.proof? with
-      | some evidence, some proof =>
-        if state.evidence?.isNone then
-          state := {state with evidence? := some {evidence with proof, axioms := row.axioms}}
-      | _, _ =>
-        if state.failure?.isNone then
-          state := {state with failure? := some (.incomplete .execution,
-            "search.presentation_witness_missing")}
-    else if let .incomplete _ := row.outcome then
-      if state.failure?.isNone then
-        state := {state with failure? := some (row.outcome, s!"{row.strategy}: {row.detail}")}
-  return state
-
-private def presentationResult (state : PresentationScan) :
-    Run × Option PresentationEvidence × String :=
-  let detail := s!"checked_presentations={state.checked}"
-  match state.evidence?, state.failure? with
-  | some evidence, failure =>
-    (.found, some evidence, detail ++
-      (failure.map (fun (_, text) => s!", earlier_incomplete={text}")).getD "")
-  | none, some (failure, text) => (failure, none, s!"{detail}, {text}")
-  | none, none => (.exhausted, none, detail)
-
-/-- Enumerate actual B statements in stable order. Sixteen independent conversion
-attempts may run together; all started tasks are joined in declaration order.
-Preferred B statements are tried first without speculative parallel work. -/
+/-- Single-source certification. Syntax normalization and the directional
+query precede all Meta operations on candidate statements. No whnf is run for
+an unmatched source. Every failure remains incomplete unless a proof is found. -/
 def baselinePresentation (env : Environment) (levels : List Name) (target : Expr)
-    (preferred : Array Name) (index? : Option FactIndex) (exhaustive : Bool := true) :
+    (preferred : Array Name) (index? : Option FactIndex) (_exhaustive : Bool := true) :
     IO (Run × Option PresentationEvidence × String) := do
   let some index := index?
     | return (.incomplete .execution, none, "search.presentation_index_unavailable")
-  let names := preferred ++ index.matcherConstants.map (·.1)
-  let mut seen : NameSet := {}
-  let mut state : PresentationScan := {}
-  let mut pending : Array (Task (Except IO.Error (Attempt × Option PresentationEvidence))) := #[]
-  for i in [:names.size] do
-    if !exhaustive && i ≥ preferred.size then
-      let (outcome, evidence, detail) := presentationResult state
-      return (if outcome == .exhausted then .incomplete .undecided else outcome,
-        evidence, detail ++ ", baseline_proof_already_found")
-    let name := names[i]!
-    let some info := (env.setExporting false).find? name | continue
+  let start ← IO.getNumHeartbeats
+  let mut entries := []
+  for (name, info) in index.matcherConstants do
     if info.isUnsafe || (name.isInternalDetail && !isPrivateName name) then continue
     if !proofCandidate env info.type || !rigidlyCompatible env target info.type then continue
-    if seen.contains name then continue
-    seen := seen.insert name
-    if i < preferred.size then
-      state := recordPresentations state #[← baselineSource env levels target index name]
-    else
-      pending := pending.push (← IO.asTask (baselineSource env levels target index name) .dedicated)
-      if pending.size < 16 then continue
-      state := recordPresentations state (← pending.mapM (fun task => IO.ofExcept task.get))
-      pending := #[]
-    if state.evidence?.isSome then return presentationResult state
-  state := recordPresentations state (← pending.mapM (fun task => IO.ofExcept task.get))
-  return presentationResult state
+    match normalizedAtoms env info.type with
+    | .error err => return (.incomplete .execution, none, s!"{err}: {name}")
+    | .ok atoms => entries := (name, atoms) :: entries
+    if (← IO.getNumHeartbeats) - start > budget * 1000 then
+      return (.incomplete .heartbeat, none, "search.presentation_index_budget")
+  let built ← IO.getNumHeartbeats
+  let .ok _atoms := normalizedAtoms env target
+    | return (.incomplete .execution, none, "search.presentation_target_normalization")
+  let .ok matches := normalizedLookup env target entries.reverse
+    | return (.incomplete .execution, none, "search.presentation_query_normalization")
+  let hits := matches.filter (fun e => preferred.contains e.1) ++
+    matches.filter (fun e => !preferred.contains e.1)
+  let queried ← IO.getNumHeartbeats
+  let mut checked := 0
+  let mut conversionCost := 0
+  let mut verificationCost := 0
+  let mut failure := none
+  let detail := fun checked conversionCost verificationCost =>
+    s!"indexed_sources={entries.length}, candidates={hits.length}, checked_presentations={checked}, " ++
+    s!"index_heartbeats={built-start}, query_heartbeats={queried-built}, " ++
+    s!"conversion_heartbeats={conversionCost}, verification_heartbeats={verificationCost}"
+  for (name, _) in hits do
+    let (row, evidence, converted, verified) ← baselineSource env levels target name
+    checked := checked + 1
+    conversionCost := conversionCost + converted
+    verificationCost := verificationCost + verified
+    if let some evidence := evidence then
+      return (.found, some evidence, detail checked conversionCost verificationCost)
+    if let .incomplete reason := row.outcome then failure := some (reason, row.detail)
+  match failure with
+  | some (reason, text) => return (.incomplete reason, none,
+      detail checked conversionCost verificationCost ++ s!", {text}")
+  | none => return (.exhausted, none, detail checked conversionCost verificationCost)
 
 end LeanInformationAudit.SearchReduction

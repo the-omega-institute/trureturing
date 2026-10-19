@@ -57,7 +57,8 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
   -- stays in B's environment, including its registered tactic implementations.
   -- The detached source environment supplies no extension state or proofs.
   for dep in info.type.getUsedConstants do copyVocabulary source dep
-  if ← certifiedRestatement targetType info.type index then
+  if (← singleSourceConversion targetType info.type).isSome ||
+      (← certifiedRestatement targetType info.type index) then
     throwError "search.target_restatement: {n}"
   if (← getEnv).contains n then return
   for dep in info.getUsedConstantsAsSet do
@@ -72,6 +73,51 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
   | .defnInfo value => addDecl (.defnDecl value)
   | _ => throwError "search.unsupported_structure_kind: {n}"
 
+/-- The finite union guard uses abstract S assumptions and their projections.
+It does not invoke R or arbitrary derivability. The old per-member conversion
+remains an independent disjunct in copyStructure. -/
+def collectionLeak (target : Expr) (types : Array Expr) : MetaM Bool := do
+  let saved ← saveState
+  let result ← forallTelescope target fun xs body => do
+    let mut aligned := #[]
+    for type in types do
+      let mut current := type
+      let mut compatible := true
+      for x in xs do
+        let .forallE _ domain rest kind := current | compatible := false; break
+        if kind != (← getFVarLocalDecl x).binderInfo then
+          compatible := false
+          break
+        unless ← withReducible <| isDefEq domain (← inferType x) do
+          compatible := false
+          break
+        current := rest.instantiate1 x
+      if compatible && !current.isForall then aligned := aligned.push current
+    if aligned.isEmpty then return false
+    let mut combined := aligned[0]!
+    for type in aligned[1:] do combined ← mkAppM ``And #[combined, type]
+    if let some conversion ← singleSourceConversion body combined then
+      let conversion ← mkLambdaFVars xs conversion
+      let type ← inferType conversion
+      let levels := (collectLevelParams {} type).params.toList
+      discard <| checkProof (← mkFreshUserName `_collectionLeak) levels type conversion
+      return true
+    return false
+  saved.restore
+  return result
+
+private partial def structureTypes (source : Environment) (n : Name)
+    (seen : NameSet := {}) : MetaM (Array Expr) := do
+  if seen.contains n || (← getEnv).contains n then return #[]
+  let info ← checkedSource source n
+  let mut result := #[info.type]
+  for dep in info.getUsedConstantsAsSet do
+    if (← getEnv).contains dep then continue
+    let depInfo ← sourceInfo source dep
+    if ← withEnv source (isProp depInfo.type) then
+      result := result ++ (← structureTypes source dep (seen.insert n))
+  return result
+
 private def prepare (source base : Environment) (request : Request)
     (paired : Bool) : IO (Except (Failure × String) (Environment × ConstantInfo)) := do
   let work : CoreM (Environment × ConstantInfo) := MetaM.run' do
@@ -81,8 +127,19 @@ private def prepare (source base : Environment) (request : Request)
     for dep in target.type.getUsedConstants do copyVocabulary source dep
     if paired then
       let index ← factIndex
+      let mut types := #[]
       for n in request.additions do
         if base.contains n then throwError "search.structure_already_in_baseline: {n}"
+        let info ← checkedSource source n
+        for dep in info.type.getUsedConstants do copyVocabulary source dep
+        let (present, _, _) ← baselinePresentation (← getEnv) info.levelParams info.type #[] (some index)
+        if present == .found then throwError "search.structure_baseline_presentation: {n}"
+        if let .incomplete _ := present then throwError "search.structure_presentation_incomplete: {n}"
+        types := types ++ (← structureTypes source n)
+      for type in types do
+        for dep in type.getUsedConstants do copyVocabulary source dep
+      if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
+      for n in request.additions do
         copyStructure source request.target target.type n index
     return (← getEnv, target)
   try

@@ -89,6 +89,7 @@ open LeanInformationAudit.Tests.SearchReduction
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.Candidates.addition] as contentResult
+#guard contentResult.presentation = Run.exhausted
 #guard contentResult.baseline = Run.exhausted
 #guard contentResult.paired = Run.found
 #guard contentResult = Verdict.nonBindOnly
@@ -97,6 +98,9 @@ open LeanInformationAudit.Tests.SearchReduction
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.Candidates.addition] as mixedResult
+#guard mixedResult.presentation = Run.exhausted
+#guard mixedResult.baseline = Run.exhausted
+#guard mixedResult.paired = Run.found
 #guard mixedResult = Verdict.nonBindOnly
 
 -- These expectations distinguish presentation certification from R(B): the
