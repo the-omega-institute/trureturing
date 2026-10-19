@@ -17,7 +17,11 @@ internal sealed class FiveModeTwoCopyPhaseDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The normalized real Bell effect is positive, trace one, and idempotent. Its two-copy probability on the phase mixture is exactly (1 + (1 - 2q)^2) / 4. The readout distinguishes the balanced mixture from the endpoints but is invariant under q ↦ 1-q.")),
-                    Paragraph(Text("This is a finite-dimensional operational result. It supplies no Source, kappa, p4, rho44, or rho24 bridge, no physical preparation, and no QFT realization."))),
+                    Paragraph(Text("This is a finite-dimensional operational result. It supplies no Source, kappa, p4, rho44, or rho24 bridge, no physical preparation, and no QFT realization.")),
+                    Paragraph(Text("For the same-family comparison, the input at q is two independent copies mixture(q) ⊗ mixture(q), and the input at r is mixture(r) ⊗ mixture(r). Write B(q) for the single specified Bell effect's value twoCopyProbability(q). For q and r in the real closed unit interval, the complete observational fiber of this readout is:")),
+                    new DocumentBlock.DisplayFormula(FiberFormula()),
+                    Paragraph(Text("To derive it, assume B(q) = B(r) and substitute the existing two_copy_bell_readout equality at q and r. Cancelling the common affine map x ↦ (1 + x) / 4 gives equality of the squares (1 - 2q)^2 and (1 - 2r)^2. The pinned Mathlib lemma sq_eq_sq_iff_eq_or_eq_neg then gives either 1 - 2q = 1 - 2r or 1 - 2q = -(1 - 2r); normalizing these affine equalities yields q = r or q + r = 1. Conversely, either normalized equality makes the two squares, and hence B, equal. At q = 1/2 the two alternatives coincide, so its fiber is a singleton; elsewhere the fiber is the pair {q, 1 - q}.")),
+                    Paragraph(Text("This fiber describes this one fixed real Bell readout and the same-family preparation parameter. It does not classify all two-copy protocols, adaptive measurements, other joint effects, or arbitrary post-processing. The native Source, kappa, density/QFT, and preparation bridges remain absent, so the result does not assert a physical realization of the modeled mixtures."))),
                 DescribeRole.Theorem))));
 
     private static Formula C(string name, params Formula[] arguments)
@@ -36,6 +40,23 @@ internal sealed class FiveModeTwoCopyPhaseDocument : IScribeDocumentDefinition
         new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
 
     private static Formula Square(Formula value) => new Formula.Power(value, D(2));
+
+    private static Formula FiberFormula()
+    {
+        var q = F.Id("q");
+        var r = F.Id("r");
+        var domain = C("IccReal", D(0), D(1));
+        var left = Equal(
+            C("twoCopyProbability", q),
+            C("twoCopyProbability", r));
+        var right = Seq(
+            Open, q, Eq, r, Close, Sp, Lor, Sp,
+            Open, q, Plus, r, Eq, D(1), Close);
+        return Seq(
+            Forall, Sp, q, InMacro, Sp, domain, Comma, Sp,
+            Forall, Sp, r, InMacro, Sp, domain, Comma, Sp,
+            Open, left, Close, Sp, Iff, Sp, right);
+    }
 
     private static Formula TwoCopyStatement() => Seq(
         Forall, Sp, F.Id("q"), InMacro, Sp, C("IccReal", D(0), D(1)), Comma,

@@ -4309,3 +4309,558 @@ child at $p_J$, the $p=24$ exclusion and the mirror-component
 statements keep their own previously stated scopes.
 
 ## 追加锚（本行以下为增补区）
+
+## 26. The inherited exact parameter in a narrow rational interval
+
+**Definition 26.1 (Entire sixth-M children and the parameter interval).**
+Retain exactly the model (1.1)–(1.2), the literal history (1.4), and
+all response functions (1.7). Thus each complete world has the strict
+nonnegative rank-one idempotent $P(r,b)$, $0<r<1$, $b>0$, one entire
+nonzero real gain polynomial of degree at most three, and one fixed
+real drift, at the original clocks $0,\ldots,7$. Lower degrees,
+sampled zeros, repeated gain roots, zero drift, singular sources and
+unbounded positive offdiagonals remain included. Set
+
+$$
+\mathcal C_v=\mathcal F(H_4,M,p_J,M,v),\qquad
+p_c=2744214237392974691433531179656369993836520133001835\cdot10^{-50},
+\quad h_p=10^{-40},\quad \mathcal K=[p_c-h_p,p_c+h_p].
+\tag{26.1}
+$$
+
+Here $p_J$ is exactly (8.4), at the unique zero $z_J$ of (8.1) in
+$\mathcal B_J$; neither $p_c$ nor another rational response replaces
+it. In $\mathcal C_v$, the acquired response is $u_M=v$, and the two
+terminal functions are $f_{MJ},f_{MM}$, each using its world's same
+entire gain and drift. Define the rational vector
+
+$$
+\bar z=10^{-65}\begin{pmatrix}
+37167628601645357039239931692567316942507744298499183101863573058\\
+15867820374551216484478543909642311448334240424841487608028511343\\
+53084263233500780640864798687162772058023806790719140489523657620\\
+37446348952497214793773020692649629953376632953783280004187273388\\
+65747256231737793733797288888315727537832424764159334831141487501\\
+38022816676633669495425130849116059753179797644548761383361452793
+\end{pmatrix}.
+\tag{26.2}
+$$
+
+**Theorem 26.2 (Transport of the original exact fifth response).**
+The parameter defined by Theorem 8.1 satisfies $p_J\in\mathcal K$.
+
+Proof. Use the original $F_J,m_J,C_J$ in (8.1)–(8.2), without
+rescaling or changing the root system. Exact substitution gives
+
+$$
+\|\bar z-m_J\|_\infty<10^{-18},\qquad
+\|C_JF_J(\bar z)\|_\infty<2\cdot10^{-51}.
+\tag{26.3}
+$$
+
+Theorem 8.1 supplies, on the entire original box,
+$q=115486/10^8<1$ for the contraction $z\mapsto z-C_JF_J(z)$.
+Both $\bar z$ and its inherited fixed point $z_J$ lie in that box.
+The contraction inequality therefore gives
+
+$$
+\|\bar z-z_J\|_\infty\le\frac{2\cdot10^{-51}}{1-q}
+ <3\cdot10^{-51}<2\cdot10^{-48}.
+\tag{26.4}
+$$
+
+The original expressions (1.6), (2.1), (2.3), (7.1)–(7.2), (1.7)
+on $\|z-\bar z\|_\infty\le2\cdot10^{-48}$ give the exact inclusion
+
+$$
+|p(W_0(z))-p_c|<10^{-44}.
+\tag{26.5}
+$$
+
+For (26.3) substitute the rational vector (26.2); for (26.5) the
+rational ball inclusions (30.2) below applied to those same expressions
+supply the bound. Every denominator excludes zero, already on the
+larger box by Theorem 8.1. Equations (26.4)–(26.5) imply (26.1)
+for the original exact $p_J$. ∎
+
+## 27. A polynomial representation of the terminal-M image
+
+**Definition 27.1 (Inherited elimination polynomials and the image).**
+Use $X,N,H,T,U$ of (12.1)–(12.2), and exactly
+$D_\Lambda,K_\Lambda,Z_6,G_{6,\Lambda},\mathsf N_u,\mathsf A,\mathsf B$
+of (20.1). In particular $D_\Lambda=N_4/2$,
+$\mathsf A=5b(p-24)D_\Lambda+3(8b-1)H$ and
+$\mathsf B=5bD_\Lambda v-\mathsf N_u$.
+Write $R=R_{18}$ with its exact integer coefficients in Definition
+24.1 and its scale and sign fixed by (20.3). Set
+$E=\Psi_2\Psi_4\Phi$, using (20.2) and (4.5).
+Retain the exact minors $\mathcal L_0,\mathcal L_1$ of (20.4)–(20.5),
+including their divisor $72900r^6(r-1)^4$; these are polynomial
+coefficients, distinct from the recursive guards $L_k$.
+All these definitions apply to arbitrary $p,v$, without the response
+rectangle hypotheses of Section 21. Now define
+
+$$
+\begin{gathered}
+Z_7=2N+3bU,\qquad
+G_{7,\Lambda}=(20T+84)XN-bT(70N+35X),\\
+N_m=\frac{120bTD_\Lambda+12Z_7D_\Lambda(200b+11)
+ -3K_\Lambda(bTXN+Z_7G_{7,\Lambda})}{T},\qquad
+D_m=5bD_\Lambda.
+\end{gathered}
+\tag{27.1}
+$$
+
+For $C(r,b)=\sum_{k=0}^7C_k(r)b^k$, always padded to degree seven,
+put
+
+$$
+\mathcal H(C)=\sum_{k=0}^7 C_k(r)(-\mathcal L_0)^k\mathcal L_1^{7-k},
+\qquad F=\mathcal H(N_m),\quad G=\mathcal H(D_m).
+\tag{27.2}
+$$
+
+**Theorem 27.2 (The actual terminal-M rational image).**
+The quotient in (27.1) is exact in $\mathbb Z[r,b]$.
+The coordinate degree pairs $(\deg_r,\deg_b)$ of $N_m,D_m$ are
+$(6,7),(4,7)$ respectively; $N_m$ has $28$ nonzero terms. Moreover
+
+$$
+\deg_r F\le188,\quad\deg_r G\le186,\qquad
+\deg_p F,\deg_v F,\deg_p G,\deg_v G\le42.
+\tag{27.3}
+$$
+
+At every nonsingular parent world, $f_{MM}=N_m/D_m$.
+At a nonsingular child source with $\mathcal L_1\ne0$, this is $F/G$.
+
+Proof. The single four-node interpolant (12.6), at the original
+clock seven, gives
+
+$$
+g(7)=\frac{12(200b+11)}{5T}
+       +\epsilon\frac{G_{7,\Lambda}}{TXN}.
+\tag{27.4}
+$$
+
+For $\Lambda\ne0$, (20.8)–(20.9) give
+$\epsilon=-3K_\Lambda XN/(5D_\Lambda)$ and $D_m\ne0$.
+The actual trace in (1.7) is $3U+2n=Z_7/b$.
+Multiplying $24+\epsilon+(Z_7/b)g(7)$ by $5bD_\Lambda T$
+yields the numerator in (27.1). Its value at $b=-1$ vanishes
+identically in $r$, so division by the monic $T=b+1$ is exact over
+$\mathbb Z[r,b]$. Expansion gives the stated degree pairs and term
+count. Since each $\mathcal L_i$ has coordinate degrees $(26,6,6)$,
+(27.2) gives (27.3). Theorem 20.2 fixes
+$b=-\mathcal L_0/\mathcal L_1$ at every common finite root where
+$\mathcal L_1\ne0$. Homogenization to the fixed degree seven gives
+
+$$
+F=\mathcal L_1^7N_m(r,b),\qquad
+G=\mathcal L_1^7D_m(r,b),\qquad f_{MM}=F/G.
+\tag{27.5}
+$$
+
+No gain sample, drift, gain leading coefficient or gain root difference
+was divided out. These identities concern the entire original world. ∎
+
+## 28. The determinant-defined response polynomial
+
+**Definition 28.1 (Fixed padding and the polynomial Q).**
+For degree bounds $m,n$, let $\operatorname{Res}^{m,n}_x(A,B)$ be
+the fixed $(m+n)$ by $(m+n)$ Sylvester determinant. Its ordered rows
+are $x^{n-1}A,\ldots,A,x^{m-1}B,\ldots,B$, with columns in descending
+powers $x^{m+n-1},\ldots,1$; all absent coefficients are zero.
+The degree bounds stay fixed under every specialization. Using exactly
+the polynomials of Definition 27.1, define
+
+$$
+\begin{aligned}
+a(p,v)&=[r^{18}]R,\\
+E_1(p,v)&=\operatorname{Res}^{18,26}_r(R,\mathcal L_1),\\
+E_2(p,v)&=\operatorname{Res}^{10,26}_r(E,\mathcal L_1),\\
+E_3(p,v)&=\operatorname{Res}^{18,186}_r(R,G),\\
+T_*(p,v,w)&=\operatorname{Res}^{18,188}_r(R,F-wG),\\
+E_4(p,v)&=\operatorname{Res}^{18,17}_w(T_*,\partial_wT_*),\\
+Q(p,v)&=a(p,v)E_1(p,v)E_2(p,v)E_3(p,v)E_4(p,v).
+\end{aligned}
+\tag{28.1}
+$$
+
+The input $F-wG$ is padded to degree $188$ in $r$, and $T_*$ and
+its derivative are padded to degrees $18,17$ in $w$. Equations
+(12.1)–(12.2), (20.1)–(20.5), (27.1)–(27.2), (28.1) are finite
+polynomial and determinant definitions of $Q$, with no choice of a
+primitive part, unspecified elimination operation or existential
+projection. Definition 24.1 supplies the existing coefficient table
+of $R$; no expansion of $Q$ is implicit in this notation.
+
+**Theorem 28.2 (Integer coefficients and a response-degree bound).**
+The expression (28.1) is an integer polynomial $Q\in\mathbb Z[p,v]$
+with $\deg_v Q\le74935$.
+
+Proof. Theorem 20.2 and Definition 20.1 give the exact integer
+polynomials $R,\mathcal L_i$ and the source polynomials, including
+all stated exact divisions. Theorem 27.2 supplies the remaining
+integer inputs. Every fixed determinant and derivative in (28.1)
+therefore remains polynomial over $\mathbb Z$.
+A Sylvester determinant of bounds $m,n$ is homogeneous of degrees
+$n,m$ in the two inputs' coefficient sets. The respective upper
+bounds in $v$ for $a,E_1,E_2,E_3,T_*,E_4$ are
+
+$$
+\begin{gathered}
+7,\qquad18\cdot6+26\cdot7=290,\qquad10\cdot6=60,\\
+18\cdot42+186\cdot7=2058,\qquad
+18\cdot42+188\cdot7=2072,\\
+(18+17)\cdot2072=72520.
+\end{gathered}
+\tag{28.2}
+$$
+
+The $w$ degree of $T_*$ is at most eighteen because only the eighteen
+rows arising from $F-wG$ depend on $w$. Differentiation in $w$ does
+not increase its $v$ degree. Summing the five factor bounds gives
+$7+290+60+2058+72520=74935$. Specialization may lower these degrees;
+it cannot increase them. ∎
+
+## 29. The two exhaustive singular-source responses
+
+**Definition 29.1 (Explicit algebraic exceptional responses).**
+Let $r_-,r_+$ be exactly the two strict roots of $\Phi$ specified
+by Theorem 4.2 and its rational intervals (4.6). At $b=1/8$ use
+$j=1/8+8r(1-r)$, $n=j+r$, $T=9/8$, and put
+
+$$
+\begin{aligned}
+A_5(r)&=1+(n+5/4)(4-15/j+20/T-10/n),\\
+a_6(r)&=10-36/j+45/T-20/n,\\
+s_\pm(p)&=\left.
+\left[24+24(5/2+n)+\frac{p-24}{A_5(r)}
+              \{1+(5/2+n)a_6(r)\}\right]\right|_{r=r_\pm}.
+\end{aligned}
+\tag{29.1}
+$$
+
+**Theorem 29.2 (Coverage of every legal singular world).**
+For every real fifth response $p$, the complete worlds in
+$\mathcal F(H_4,M,p)$ with $\Lambda=0$ are exactly the unique
+fifth-response lifts at $(r_-,1/8)$ and $(r_+,1/8)$.
+Their acquired sixth-M responses are respectively $s_-(p),s_+(p)$.
+
+Proof. The zero-safe parent equation (2.2) and $B_{\rm coef}>0$
+force $b=1/8$ when $\Lambda=0$. Then (4.9), equivalently (22.2),
+gives $\Lambda=\Phi(r)/(960jn)$. Theorem 4.2 supplies exactly the
+two strict roots. At either, Lemma 12.2 gives $A_5\ne0$, since its
+full strict-source assertion is $\Lambda^2+A_5^2>0$.
+Theorem 12.3, or the entire singular lines of Theorem 4.1, gives
+$\epsilon=(p-24)/A_5$ and the unique whole-world reconstruction.
+It is legal for every $p$, including $p=24$, and its gain is nonzero
+by the original unequal $0,24$ rows. Substitution into (22.3) gives
+(29.1). No singular line or zero-drift value is removed. ∎
+
+## 30. Exact root and image separation at response zero
+
+**Definition 30.1 (Rational disks for the polynomial certificate).**
+For a complex rational number $z$, put
+$\mathrm u(z)=|\Re z|+|\Im z|$ and
+$\mathrm l(z)=\max(|\Re z|,|\Im z|)$, so that
+$\mathrm l(z)\le|z|\le\mathrm u(z)$.
+Write $B(a,e)=\{z:|z-a|\le e\}$, and set $\rho=10^{-30}$.
+At any center $c$ below, the notation $q_{ij}$ for a polynomial $P$
+means its exact finite expansion
+
+$$
+P(c+x,p_c+y)=\sum_{i,j}q_{ij}x^iy^j.
+\tag{30.1}
+$$
+
+Addition of disk centers and radii is exact; the following rational
+inclusions specify multiplication and division:
+
+$$
+\begin{aligned}
+B(a,e)B(b,f)&\subseteq B(ab,\mathrm u(a)f+\mathrm u(b)e+ef),\\
+\frac{B(a,e)}{B(b,f)}&\subseteq
+ B\left(\frac ab,\frac e{\mathrm l(b)-f}
+ +\frac{\mathrm u(a)f}{\mathrm l(b)(\mathrm l(b)-f)}\right),
+ \qquad \mathrm l(b)>f.
+\end{aligned}
+\tag{30.2}
+$$
+
+Centers may be replaced in each component by a nearest multiple of
+$10^{-80}$ if the sum of the absolute component displacements is
+added to the radius and that radius is rounded upward to a multiple
+of $10^{-80}$. This is a rational outer inclusion. Every displayed
+decimal power or center specifies an exact rational number.
+
+**Theorem 30.2 (A uniform nonzero certificate for Q).**
+For every real $p\in\mathcal K$, $Q(p,0)\ne0$.
+
+Proof. For $P=R(r,p,0)$, its exact expansion (30.1) at each center
+in the following table satisfies
+
+$$
+\frac{\sum_{(i,j)\ne(1,0)}\mathrm u(q_{ij})\rho^ih_p^j}
+ {\mathrm l(q_{10})\rho}\le10^{-8}<1.
+\tag{30.3}
+$$
+
+In particular $q_{10}\ne0$. Comparing with $q_{10}x$ on
+$|x|=\rho$, Rouché's theorem gives exactly one root, counted with
+multiplicity, in each open disk, uniformly for $p\in\mathcal K$.
+The center columns are integers divided by $10^{40}$. Each final-M
+column specifies a closed interval whose integer endpoints are
+divided by $10^8$; together the two columns enclose $F/G$ at the
+corresponding root, uniformly in $p$.
+
+| Root | Real center integer | Imaginary center integer | Final-M real interval integers | Final-M imaginary interval integers |
+| --- | --- | --- | --- | --- |
+| 1 | -31286150750762348802582409638467942713210 | 0 | [-21887636653,-21887636652] | [-1,1] |
+| 2 | -2510014337059397316607414505088077690918 | 0 | [-13457154407,-13457154406] | [-1,1] |
+| 3 | -2201928132261813013156348402737147496681 | 0 | [-22257063649,-22257063648] | [-1,1] |
+| 4 | -295339115593097622628545335531497584380 | 0 | [-429098031,-429098030] | [-1,1] |
+| 5 | 6495400363492816083307776565981278600092 | 0 | [-429248955,-429248954] | [-1,1] |
+| 6 | 7597956179996037506048366830960946112912 | 0 | [-316565929,-316565928] | [-1,1] |
+| 7 | 8332844315115451824657774735864810594552 | 0 | [-19123156260,-19123156259] | [-1,1] |
+| 8 | 8579543799807686620077353697156115092966 | 0 | [-12378084067,-12378084066] | [-1,1] |
+| 9 | 13032005827875331206999793808430624224058 | 0 | [-22263129775,-22263129774] | [-1,1] |
+| 10 | 15696137244599728988715826184137251622975 | 0 | [-54416627322,-54416627321] | [-1,1] |
+| 11 | 21955821216897387232488869335883708357553 | 0 | [-1020006161,-1020006160] | [-1,1] |
+| 12 | 147645156763814419992946682846077866533935 | 0 | [-28063165458,-28063165457] | [-1,1] |
+| 13 | -3545882418108118881545305728183083288159 | -2816741025257046459800497011396257596596 | [-11160217993,-11160217992] | [-4018571031,-4018571030] |
+| 14 | -3545882418108118881545305728183083288159 | 2816741025257046459800497011396257596596 | [-11160217993,-11160217992] | [4018571030,4018571031] |
+| 15 | -2195809642070093369709174604000871308723 | -986606892418947139933972967341018785613 | [-365192715,-365192714] | [116970003,116970004] |
+| 16 | -2195809642070093369709174604000871308723 | 986606892418947139933972967341018785613 | [-365192715,-365192714] | [-116970004,-116970003] |
+| 17 | 126454269704896557137078182823930776094 | -8647072583113490383075719955918362469337 | [4103234087,4103234088] | [2409885444,2409885445] |
+| 18 | 126454269704896557137078182823930776094 | 8647072583113490383075719955918362469337 | [4103234087,4103234088] | [-2409885445,-2409885444] |
+
+The minimum distance between these centers in the maximum norm exceeds
+$24/1000$, so the eighteen disks are disjoint. If
+$a(p_c+y,0)=\sum_j a_jy^j$, its exact coefficients satisfy
+
+$$
+a_0\ne0,\qquad
+\sum_{j\ge1}|a_j|h_p^j\le10^{-8}|a_0|.
+\tag{30.4}
+$$
+
+Thus $R$ has degree eighteen throughout $\mathcal K$, and the eighteen
+disks exhaust its complex roots, all simple. For
+$P=\mathcal L_0(r,p,0),\mathcal L_1(r,p,0)$, (30.1) gives
+
+$$
+P\in B\left(q_{00},\sum_{i+j>0}\mathrm u(q_{ij})\rho^ih_p^j\right).
+\tag{30.5}
+$$
+
+For $\mathcal L_1$ the radius in (30.5), divided by
+$\mathrm l(q_{00})$, is at most $10^{-8}$ at every one of the
+eighteen disks. Thus $\mathcal L_1\ne0$ there. Form the disk for
+$b=-\mathcal L_0/\mathcal L_1$ by (30.2). Substitution into
+$D_m,N_m$ in Horner order descending first in $b$ and then in $r$,
+padded to their degree pairs in Theorem 27.2, gives the displayed
+image rectangles through $N_m/D_m=F/G$. For $D_m$, the resulting radius
+divided by the maximum norm of its center is at most $10^{-8}$ on
+every disk. Hence $D_m\ne0$ and $G=\mathcal L_1^7D_m\ne0$.
+All these are finite exact rational inequalities from the inherited
+integer polynomials and (27.1); (30.1)–(30.2) specify their outer
+inclusions on the full disks and parameter interval, not only at
+center values.
+
+The following ten real centers, also integers divided by $10^{40}$
+and with radius $\rho$, give all roots of $E=\Psi_2\Psi_4\Phi$.
+
+| Real center integer |
+| --- |
+| -3351069069459178730563748013341910269139 |
+| -3090169943749474241022934171828190588602 |
+| -1611881117277527956213452635364774515677 |
+| -145131642254964415874148343533081827154 |
+| 1348158750676386533670177160610812651109 |
+| 8090169943749474241022934171828190588602 |
+| 8685711315796832210935933386297551290576 |
+| 9024496817720562653778726512965428561863 |
+| 11022476073858015228425244669956840614183 |
+| 12277238870939874475841267262409133494240 |
+
+For this parameter-independent $E$, (30.3) is at most $10^{-8}$ at
+each center. The disks are disjoint, and their ten simple roots
+exhaust degree ten. The relative radius in (30.5) for
+$\mathcal L_1(r,p,0)$ is also at most $10^{-8}$ at each disk.
+Thus $\mathcal L_1$ vanishes at no $E$ root for any $p\in\mathcal K$.
+
+The image rectangles in the first table are pairwise disjoint.
+Even rows 4 and 5, the closest pair, have real intervals separated
+by more than $10^{-3}$. Hence the eighteen complex $F/G$ values
+are distinct, including projections outside the legal real source
+domain. The fixed padded resultant has the product expression
+
+$$
+T_*(p,0,w)=a(p,0)^{188}
+ \prod_{R(\alpha,p,0)=0}\{F(\alpha,p,0)-wG(\alpha,p,0)\},
+\tag{30.6}
+$$
+
+with roots counted with multiplicity. It has degree eighteen in $w$
+and no multiple root. Thus $a,E_1,E_2,E_3,E_4$ are all nonzero:
+(30.4) supplies $a$, the two root covers and the nonzero
+$\mathcal L_1$ supply $E_1,E_2$, the nonzero $G$ supplies $E_3$,
+and the separated images supply $E_4$.
+Their product proves the assertion. This certificate uses all complex
+projected roots; it assumes no projected root has an actual legal lift. ∎
+
+## 31. The finite necessary restriction for every sixth-M response
+
+**Theorem 31.1 (At most 74937 possible collision responses at exact p_J).**
+For the exact inherited parameter $p_J$,
+$Q(p_J,0)\ne0$ and $\deg_v Q(p_J,v)\le74935$. For every real $v$,
+
+$$
+\begin{aligned}
+&\bigl[\exists W\ne W'\in\mathcal C_v:
+                   f_{MM}(W)=f_{MM}(W')\bigr]\\
+&\qquad\Longrightarrow
+ \bigl[Q(p_J,v)=0\ \lor\ v=s_-(p_J)\ \lor\ v=s_+(p_J)\bigr].
+\end{aligned}
+\tag{31.1}
+$$
+
+Consequently the responses for which one entire $\mathcal C_v$ can
+contain both a distinct terminal-J pair and a distinct terminal-M
+pair, with any overlap permitted, lie in the real roots of
+$Q(p_J,v)$ together with the two explicit responses (29.1).
+There are at most $74937$ such scalar responses. The same necessary
+restriction applies to every support contained in $\mathcal C_v$.
+
+Proof. Theorems 26.2 and 30.2 give $Q(p_J,0)\ne0$, and Theorem
+28.2 gives the degree bound, so this is a nonzero univariate
+polynomial at the original parameter.
+Fix distinct worlds in (31.1). If either has $\Lambda=0$, Theorem
+29.2 gives one of the two explicit singular responses. Suppose both
+are nonsingular, and assume for contradiction that $Q(p_J,v)\ne0$.
+
+Theorem 20.2 gives $\mathsf A=\mathsf B=0$ for each actual source.
+The necessary common-finite-root implication of the fixed Sylvester
+determinant gives $E(r)R(r,p_J,v)=0$ by (20.3), since $r\ne0,1$.
+This implication holds even if a leading coefficient drops: at a
+finite common root $t$ the nonzero vector of descending powers of
+$t$ annihilates every row of the padded matrix, so its determinant
+is zero. Similarly, (20.10) gives
+$\mathcal L_1b+\mathcal L_0=0$ under every degree specialization.
+Its proof only divides by $72900r^6(r-1)^4\ne0$.
+
+If $E(r)=0$, nonzero $E_2$ forces $\mathcal L_1(r,p_J,v)\ne0$.
+The exact identities (21.4), valid for arbitrary $p,v$, then force
+$b=-1/2$ on $\Psi_2=0$, $b=-2/5$ on $\Psi_4=0$, or $b=1/8$
+on $\Phi=0$. The first two violate $b>0$; the last gives
+$\Lambda=0$ by (4.9), contrary to the branch. This reasoning still
+applies at any intersection of base factors. Therefore both sources
+are roots of $R$.
+
+Nonzero $E_1$ forces $\mathcal L_1\ne0$ at every $R$ root. The
+linear relation fixes $b=-\mathcal L_0/\mathcal L_1$ from $r$.
+If the two worlds had the same $r$, they would have the same $b$,
+and Theorem 12.3 would make their complete lifts identical. Their
+$r$ coordinates are therefore distinct.
+
+Nonzero $a$ makes $R$ have degree eighteen, and nonzero $E_3$ makes
+$G$ nonzero at every complex $R$ root. For a polynomial of full
+first degree $m$ and leading coefficient $a$, the fixed padded
+resultant is $a^n\prod_i B(\alpha_i)$ even if the second input has
+degree less than $n$. Thus the product formula (30.6), now at the
+arbitrary response $v$, makes $T_*$ have degree eighteen in $w$.
+By (27.5), the two distinct source roots have the same image
+$f_{MM}$, which is consequently a multiple root of $T_*$.
+Then $\operatorname{Res}^{18,17}_w(T_*,\partial_wT_*)=E_4=0$,
+contradicting $Q\ne0$. This proves (31.1).
+
+Every nonvanishing condition used to divide or fix a degree follows
+from one of the five nonzero factors of $Q$, or from the strict-source
+hypotheses. If a required factor vanishes, that response remains a
+root of $Q$. Degree drops in the source inputs remain covered by the
+padded common-finite-root implications; no genericity assumption
+deletes those specializations. The only use of
+the nonsingular formula (20.9) is on $\Lambda\ne0$, and Theorem
+29.2 exhausts its complementary branch. The full-domain lift of
+Theorem 12.3 uses $Z=\Lambda^2+A_5^2>0$ only under Lemma 12.2's
+strict-source hypotheses. Lower-degree gains, sampled zeros,
+repeated gain roots and zero drift have not been cancelled.
+No compactness or upper bound on $b,c$ is used.
+
+A nonzero real polynomial of degree at most $74935$ has at most
+that many distinct real roots. Adding at most two singular responses
+gives $74937$. A terminal-J pair is an additional requirement
+inside that same acquired child, so any child containing both pairs
+already satisfies the terminal-M necessary restriction. ∎
+
+## 32. Mathematical correspondence and the remaining joint obligation
+
+**Definition 32.1 (Suppliers and the unresolved witness system).**
+The finite restriction (31.1) is ordinary model-specific
+repository-derived synthesis (`repo-derived`). Definitions 1.1–1.3
+and Theorem 2.1 supply the full original model and parent; Theorem
+8.1 supplies the exact algebraic $p_J$, its root box and contraction
+bounds; Theorem 12.3 supplies the zero-safe unique whole-world
+lifts. Theorem 17.1 supplies the same-child terminal-pair equivalence
+with all pair reuse permitted. Equations (20.1)–(20.6), (21.4),
+Theorems 4.2 and 22.1, and the coefficient table in Definition 24.1
+supply the source elimination, forced base-factor lifts and complete
+singular sources. Their response-rectangle conclusions are not
+extended to other responses; (31.1) uses their polynomial identities
+and singular formulas with the new certificate of Section 30.
+
+Sylvester resultants and subresultants are the standard tools cited
+in Sections 17 and 25, especially Cox–Little–O'Shea,
+*[Ideals, Varieties, and Algorithms](https://doi.org/10.1007/978-3-319-16721-3)*,
+Chapter 3. Rouché's theorem is used only within the concrete disk
+certificate (30.3). Rational univariate representation and separating
+rational images have the literature background of Fabrice Rouillier,
+*[Solving Zero-Dimensional Systems Through the Rational Univariate Representation](https://doi.org/10.1007/s002000050114)*,
+and the parameter-dependent treatment by Wang, Wei, Xiao and Zheng,
+[DOI 10.1145/3476446.3535496](https://doi.org/10.1145/3476446.3535496).
+These supply general methods, not a FIB-specific collision conclusion.
+The abstract real-closed-field decidability and algebraic-witness
+transfer of [the fourth relation volume](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md),
+Corollary 9.4, also do not imply (31.1) by themselves. No global
+priority or exhaustive literature claim is attached to this synthesis.
+
+For a candidate $v$, the remaining joint obligation is the existence
+of four labeled strict sources $W_{J0},W_{J1},W_{M0},W_{M1}$, with
+labels allowed to coincide across the two pairs, all reconstructed
+by (12.5)–(12.6), satisfying simultaneously
+
+$$
+\begin{gathered}
+0<r_{Fa}<1,\quad b_{Fa}>0,\quad
+\mathsf S_{p_J}(r_{Fa},b_{Fa})=0,\quad
+p(W_{Fa})=p_J,\quad u_M(W_{Fa})=v
+\quad(F\in\{J,M\},\ a\in\{0,1\}),\\
+f_{MJ}(W_{J0})=f_{MJ}(W_{J1}),\quad W_{J0}\ne W_{J1},\\
+f_{MM}(W_{M0})=f_{MM}(W_{M1}),\quad W_{M0}\ne W_{M1}.
+\end{gathered}
+\tag{32.1}
+$$
+
+These are equalities and legalities of complete worlds in one entire
+child, not marginal feasibility of projections. Determinant roots
+may be extraneous; no root enumeration, feasible common child,
+existence or absence of either pair is asserted for any candidate.
+Finding such a joint witness at some candidate, together with the
+inherited sixth-J child of Theorem 8.1, would give the local fifth-M
+$L_2$ at $p_J$ by Theorem 17.1. Exclusion of (32.1) at every candidate
+would exclude every sixth-M $L_1$ at that $p_J$. Both alternatives
+remain unresolved. The exact four-world child of Theorem 23.1
+retains its own response and does not classify other responses.
+
+Other fifth responses, earlier ancestors, same-parent $L_3$, root
+$L_7$, unrestricted cubic eight-versus-nine recovery or impossibility,
+and full-original-domain nine-read sufficiency remain unresolved.
+The finite necessary list implies neither minimax depth, a uniform
+decision strategy nor a global lower or upper bound. No continuity,
+measurability, computability or finite-description condition on
+witnesses or strategies is imposed, and no physical realization is
+inferred from these algebraic conditions.
+
+## 追加锚（本行以下为增补区）

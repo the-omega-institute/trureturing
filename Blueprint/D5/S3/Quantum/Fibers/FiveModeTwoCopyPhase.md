@@ -20,6 +20,16 @@ The normalized real Bell effect is positive, trace one, and idempotent. Its two-
 
 This is a finite-dimensional operational result. It supplies no Source, kappa, p4, rho44, or rho24 bridge, no physical preparation, and no QFT realization.
 
+For the same-family comparison, the input at q is two independent copies mixture(q) ⊗ mixture(q), and the input at r is mixture(r) ⊗ mixture(r). Write B(q) for the single specified Bell effect's value twoCopyProbability(q). For q and r in the real closed unit interval, the complete observational fiber of this readout is:
+
+$$
+\forall q\in \operatorname{IccReal}(0,1), \forall r\in \operatorname{IccReal}(0,1), (\operatorname{twoCopyProbability}(q) = \operatorname{twoCopyProbability}(r)) \iff (q=r) \lor (q+r=1)
+$$
+
+To derive it, assume B(q) = B(r) and substitute the existing two_copy_bell_readout equality at q and r. Cancelling the common affine map x ↦ (1 + x) / 4 gives equality of the squares (1 - 2q)^2 and (1 - 2r)^2. The pinned Mathlib lemma sq_eq_sq_iff_eq_or_eq_neg then gives either 1 - 2q = 1 - 2r or 1 - 2q = -(1 - 2r); normalizing these affine equalities yields q = r or q + r = 1. Conversely, either normalized equality makes the two squares, and hence B, equal. At q = 1/2 the two alternatives coincide, so its fiber is a singleton; elsewhere the fiber is the pair {q, 1 - q}.
+
+This fiber describes this one fixed real Bell readout and the same-family preparation parameter. It does not classify all two-copy protocols, adaptive measurements, other joint effects, or arbitrary post-processing. The native Source, kappa, density/QFT, and preparation bridges remain absent, so the result does not assert a physical realization of the modeled mixtures.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Fibers/FiveModeTwoCopyPhase.two_copy_bell_readout`
