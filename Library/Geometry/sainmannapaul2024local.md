@@ -53,6 +53,6 @@ For real $\ell_\infty^n$ with $n\ge2$, the companion Lean theorem characterizes 
 
 ## ASSUMED-UNVERIFIED
 
-Coverage is limited to the cited arXiv versions; journal-version equivalence and later unindexed resolutions are unverified. The general polyhedral-space question remains open as stated in arXiv:2511.20345.
+Coverage is limited to the cited arXiv versions; journal-version equivalence and later unindexed resolutions are unverified. The general polyhedral-space assertion is refuted by the real Banach plane in [the separate primary-source note](mannamandalpaulsain2025improvement.md); the positive sup-norm theorem has its original scope.
 
 PDF page numbers for Definitions 1 and 3 and the end-of-§2 Open Question are unverified; the locators above identify the numbered definitions and section.
