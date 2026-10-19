@@ -262,7 +262,7 @@ private theorem damping_phase_sup_limit
 
 /-- Multiplying the boundary in degree `i+1` transports every recursive coordinate
 in its total degree `n+k+1`. -/
-private theorem extension_graded (a : ℕ → ℂ) (z : ℂ) (n k : ℕ) :
+theorem extension_graded (a : ℕ → ℂ) (z : ℂ) (n k : ℕ) :
     extension (fun i => z ^ (i + 1) * a i) n k =
       z ^ (n + k + 1) * extension a n k := by
   classical
@@ -286,7 +286,7 @@ private theorem extension_graded (a : ℕ → ℂ) (z : ℂ) (n k : ℕ) :
       have hi : n + 1 + k + 1 = n + (k + 1) + 1 := by omega
       rw [hi, mul_sub]
 
-private theorem amplitude_mono (A : ℝ) (hA : 0 ≤ A)
+theorem amplitude_mono (A : ℝ) (hA : 0 ≤ A)
     (hpos : ∀ k, 0 ≤ amplitude A k) : Monotone (amplitude A) := by
   apply monotone_nat_of_le_succ
   intro k
@@ -322,7 +322,7 @@ private theorem phase_coordinate_norm
     Real.norm_of_nonneg (henv.1 k).1]
   ring
 
-private theorem phase_array_norm
+theorem phase_array_norm
     (A ρ : ℝ) (hA : 0 < A) (hρ : 0 < ρ) (hρ1 : ρ < 1)
     (hcrit : A * ρ = (1 - ρ) ^ 2) (ζ w : ℂ) (hζ : ‖ζ‖ = 1)
     (U V : WeightedArray ℂ)

@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:80602b790e766a92b6015a332d6a7a146b9da262745c128826c7678b00d7f132
   normalized_sha256: sha256:80602b790e766a92b6015a332d6a7a146b9da262745c128826c7678b00d7f132
 cas_ref: sha256:80602b790e766a92b6015a332d6a7a146b9da262745c128826c7678b00d7f132
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Recurrence/Algebraic/RecursiveBoundaryRowSeries.result
+    target_statement_id: sha256:2a829447667cb4e327acd7229a3bbdf3c2d167b9f054154ac424512a703c8bf9
 receipts:
   unresolved_subitems: []

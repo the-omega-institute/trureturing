@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7152fa09af998618ab81c0862891a095f3f77b90d364efcb3d69a0abf8b71777
   normalized_sha256: sha256:7152fa09af998618ab81c0862891a095f3f77b90d364efcb3d69a0abf8b71777
 cas_ref: sha256:7152fa09af998618ab81c0862891a095f3f77b90d364efcb3d69a0abf8b71777
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/SeriesInequalities/CriticalDampedPhaseLimit.phase_array_norm
+    target_statement_id: sha256:6b444001738a85e744d3e2f4f80ced06aa6005bf44ff1fbb4e7e21bf6beeb463
 receipts:
   unresolved_subitems: []

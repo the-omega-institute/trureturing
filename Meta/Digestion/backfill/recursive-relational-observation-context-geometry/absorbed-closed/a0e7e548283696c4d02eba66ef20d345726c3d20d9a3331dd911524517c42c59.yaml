@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:a0e7e548283696c4d02eba66ef20d345726c3d20d9a3331dd911524517c42c59
+  normalized_sha256: sha256:a0e7e548283696c4d02eba66ef20d345726c3d20d9a3331dd911524517c42c59
+cas_ref: sha256:a0e7e548283696c4d02eba66ef20d345726c3d20d9a3331dd911524517c42c59
+coverage_gids:
+  - gid: D5/S1/Recurrence/Algebraic/RecursiveBoundaryRowSeries.result
+    target_statement_id: sha256:2a829447667cb4e327acd7229a3bbdf3c2d167b9f054154ac424512a703c8bf9
+  - gid: D5/S3/Analytic/SeriesInequalities/CriticalDampedPhaseLimit.amplitude_mono
+    target_statement_id: sha256:ef0133e06ac79b44a988c333137b41b530997410217744fcb8400b5a515aa5f4
+  - gid: D5/S3/Analytic/SeriesInequalities/CriticalDampedPhaseLimit.extension_graded
+    target_statement_id: sha256:93c2e0a672e8d5f9ef7562298b2c2cf6975b72ecdb85cf19ffcca7eb1165c39d
+  - gid: D5/S3/Analytic/SeriesInequalities/FiniteSourceClosure.critical_recursive_image_closure
+    target_statement_id: sha256:10bab29eccf61ea48468f247ca6669f6ae38fd691ec60ef48d594676c4dee952
+  - gid: D5/S3/Analytic/SeriesInequalities/NegativeBoundaryEnvelope.negative_boundary_envelope
+    target_statement_id: sha256:501e51f65cf3facf93563e64c84a8e66539ed908a902babb276670f0d89a19cf
+receipts:
+  unresolved_subitems: []
