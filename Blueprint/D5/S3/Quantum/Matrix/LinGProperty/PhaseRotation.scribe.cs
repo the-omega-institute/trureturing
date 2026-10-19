@@ -23,7 +23,7 @@ internal sealed class PhaseRotationDocument : IScribeDocumentDefinition
             + "Together the three statements let the arithmetic singular-value argument use a real nonnegative trace without changing positivity or singular values."))));
 
     private static DocumentBlock Item(string name, string title, string explanation) =>
-        Describe.Lean(DescribeId.Create(name.Replace('_', '-')), DeclarationHandle.Create(Module + "." + name),
+        Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Module + "." + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(explanation))), DescribeRole.Theorem);
 }

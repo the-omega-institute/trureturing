@@ -29,7 +29,6 @@ private theorem orderDependence : ObservationalDependence signature orderActual 
   change (fun y : Mat 1 => (0 : Mat 1) ≤ y) = (fun y : Mat 1 => (1 : Mat 1) ≤ y) at he
   have h10 : (1 : Mat 1) ≤ 0 := by
     rw [← congrFun he 0]
-    exact le_rfl
   have hd := (Matrix.le_iff.mp h10).diag_nonneg (i := 0)
   norm_num at hd
 private theorem equalityDependence : ObservationalDependence signature equalityActual := by
@@ -39,7 +38,6 @@ private theorem equalityDependence : ObservationalDependence signature equalityA
   change (fun y : Mat 1 => (0 : Mat 1) = y) = (fun y : Mat 1 => (1 : Mat 1) = y) at he
   have h10 : (1 : Mat 1) = 0 := by
     rw [← congrFun he 0]
-    rfl
   exact one_ne_zero h10
 
 namespace Riccati

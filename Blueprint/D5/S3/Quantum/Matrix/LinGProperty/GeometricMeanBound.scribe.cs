@@ -42,7 +42,7 @@ internal sealed class GeometricMeanBoundDocument : IScribeDocumentDefinition
             "For every complex square matrix Q, geometricMean(0,Q)=0. This includes every dimension and supplies the other zero-block branch."))));
 
     private static DocumentBlock Item(string name, string title, string explanation, bool definition = false) =>
-        Describe.Lean(DescribeId.Create(name.Replace('_', '-')), DeclarationHandle.Create(Module + "." + name),
+        Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Module + "." + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(explanation))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
 }

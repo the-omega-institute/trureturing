@@ -26,7 +26,7 @@ abbrev arena : Arena where
 private theorem rejectedLaw : ¬ arena.Law rejected := by
   intro h
   apply h (n := 1) (A := 1) (X := 0) (B := 1) _ 1 (by norm_num)
-  simpa only [fromBlocks_one] using (Matrix.PosSemidef.one : (1 : Block 1).PosSemidef)
+  simpa only [conjTranspose_zero, fromBlocks_one] using (Matrix.PosSemidef.one : (1 : Block 1).PosSemidef)
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 0, -1, ?_⟩
@@ -148,7 +148,8 @@ abbrev arena : Arena where
 private theorem rejectedLaw : ¬ arena.Law rejected := by
   intro h
   obtain ⟨z, hz, ht⟩ := h (n := 1) 0
-  norm_num [rejected, realize] at ht
+  have ht' := congrArg Complex.re ht
+  norm_num [rejected, realize] at ht'
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 0, 1, ?_⟩

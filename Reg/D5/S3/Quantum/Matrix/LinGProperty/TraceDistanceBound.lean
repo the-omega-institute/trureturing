@@ -13,8 +13,15 @@ open LeanInformationAudit
 namespace Reg.D5.S3.Quantum.Matrix.LinGProperty.TraceDistanceBound
 universe u
 abbrev State := Σ n : Type u, Matrix n n ℂ
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => State.{u}) (fun _ => Prop)
+abbrev signature : Signature.{0,u+1,0,0,0} where
+  Params := Unit
+  State _ := State.{u}
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
 def actual : Realization signature :=
   realize signature (fun _ _ M => M.2.PosSemidef) (fun e => nomatch e)
 def rejected : Realization signature :=
@@ -28,7 +35,8 @@ abbrev arena : Arena where
       (((1-‖X.trace‖^2 : ℝ) : ℂ) • (1 : Matrix n n ℂ)) - (A-B)*(A-B)⟩
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have hw : (fromBlocks (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) 0 0 1).PosSemidef := by
+  have hw : (fromBlocks (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) 0 0
+      (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)).PosSemidef := by
     rw [Matrix.fromBlocks_one]
     exact Matrix.PosSemidef.one
   exact @h (ULift.{u} Unit) inferInstance inferInstance 1 0 1
@@ -48,8 +56,16 @@ def family : Registration arena.{u} (type_of% @normalized_difference_square_le.{
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@normalized_difference_square_le, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j hj
+        exact (hj (Subsingleton.elim _ _)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@normalized_difference_square_le.{u}) (Realization signature) Unit Unit where
@@ -96,7 +112,8 @@ abbrev arena : Arena where
     A.trace = 1 → B.trace = 1 → R.readout () () ‖X.trace‖ 1
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have hw : (fromBlocks (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) 0 0 1).PosSemidef := by
+  have hw : (fromBlocks (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) 0 0
+      (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)).PosSemidef := by
     rw [Matrix.fromBlocks_one]
     exact Matrix.PosSemidef.one
   exact @h (ULift.{u} Unit) inferInstance inferInstance 1 0 1

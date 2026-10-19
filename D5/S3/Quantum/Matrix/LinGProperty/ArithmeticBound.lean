@@ -128,7 +128,7 @@ private theorem eigenvalues_zero_padding {n : ℕ} (A : Matrix (Fin n) (Fin n) �
     simp only [Fintype.card_fin, Multiset.map_replicate, Multiset.map_nsmul, Multiset.map_singleton, Multiset.nsmul_singleton, Multiset.map_coe, List.map_replicate, RCLike.zero_re,
       ← Multiset.coe_replicate, ← Multiset.coe_add, Multiset.coe_sort]
     apply List.mergeSort_of_pairwise
-    simpa only [decide_eq_true_eq, ← List.sortedGE_iff_pairwise] using hp
+    simpa only [Fintype.card_fin, decide_eq_true_eq, ← List.sortedGE_iff_pairwise] using hp
   have hj := congrArg (fun l : List ℝ => l[j.val]?) hs
   have hsmall : j.val < n := by simpa using j.isLt
   have hbig : j.val < n + n := by omega
@@ -182,10 +182,12 @@ private theorem eigenvalues_zero_mono_finite {ι : Type*} [Fintype ι] [Decidabl
     hA.eigenvalues₀ j ≤ hB.eigenvalues₀ j := by
   let e := Fintype.equivFin ι
   have hp : (B.reindex e e - A.reindex e e).PosSemidef := by
-    simpa only [Matrix.reindex_apply, Matrix.submatrix_sub] using h.submatrix e.symm
+    convert h.submatrix e.symm using 1 <;> rfl
   have hh := Schatten.eigenvalues_zero_mono (hA.reindex e) (hB.reindex e) hp
     ⟨j.val, by simpa using j.isLt⟩
-  simpa only [eigenvalues_zero_reindex] using hh
+  have hiA := eigenvalues_zero_reindex A hA e j
+  have hiB := eigenvalues_zero_reindex B hB e j
+  exact hiA.symm.le.trans (hh.trans hiB.le)
 
 private theorem eigenvalues_zero_smul_finite {ι : Type*} [Fintype ι] [DecidableEq ι]
     (A : Matrix ι ι ℂ) (hA : A.IsHermitian) (r : ℝ) (hr : 0 ≤ r)
@@ -196,8 +198,12 @@ private theorem eigenvalues_zero_smul_finite {ι : Type*} [Fintype ι] [Decidabl
   have hh := Schatten.eigenvalues_zero_smul (A.reindex e e) (hA.reindex e) r hr
     (hs ▸ hB.reindex e) ⟨j.val, by simpa using j.isLt⟩
   have hi := eigenvalues_zero_reindex ((r : ℂ) • A) hB e j
-  rw [hs] at hi
-  rw [← hi, hh, eigenvalues_zero_reindex]
+  have hi' : (hs ▸ hB.reindex e).eigenvalues₀
+      ⟨j.val, by simpa using j.isLt⟩ = hB.eigenvalues₀ j := by
+    exact (eigenvalues_zero_eq_of_charpoly (hs ▸ hB.reindex e) (hB.reindex e)
+      (congrArg Matrix.charpoly hs).symm _).trans hi
+  have hiA := eigenvalues_zero_reindex A hA e j
+  exact hi'.symm.trans (hh.trans (congrArg (fun x => r * x) hiA))
 
 private theorem eigenvalues_zero_add_scalar_finite {ι : Type*} [Fintype ι]
     [DecidableEq ι] (A : Matrix ι ι ℂ) (hA : A.IsHermitian) (r : ℝ)
@@ -210,8 +216,12 @@ private theorem eigenvalues_zero_add_scalar_finite {ι : Type*} [Fintype ι]
   have hh := eigenvalues_zero_add_scalar (A.reindex e e) (hA.reindex e) r
     (hs ▸ hB.reindex e) ⟨j.val, by simpa using j.isLt⟩
   have hi := eigenvalues_zero_reindex (A + (r : ℂ) • 1) hB e j
-  rw [hs] at hi
-  rw [← hi, hh, eigenvalues_zero_reindex]
+  have hi' : (hs ▸ hB.reindex e).eigenvalues₀
+      ⟨j.val, by simpa using j.isLt⟩ = hB.eigenvalues₀ j := by
+    exact (eigenvalues_zero_eq_of_charpoly (hs ▸ hB.reindex e) (hB.reindex e)
+      (congrArg Matrix.charpoly hs).symm _).trans hi
+  have hiA := eigenvalues_zero_reindex A hA e j
+  exact hi'.symm.trans (hh.trans (congrArg (fun x => x + r) hiA))
 
 private theorem dilation_charpoly {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ) :
     (fromBlocks 0 X Xᴴ (0 : Matrix (Fin n) (Fin n) ℂ)).charpoly =
@@ -236,7 +246,7 @@ private theorem dilation_charpoly {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ) :
   let B := fromBlocks D 0 0 (-D)
   have hD : Dᴴ = D := by
     ext i j
-    by_cases hij : i = j <;> simp [D, hij, Matrix.diagonal_apply]
+    by_cases hij : i = j <;> simp [D, hij, Ne.symm hij, Matrix.diagonal_apply]
   have hxadj : Xᴴ = V.val * D * U.valᴴ := by
     rw [hX', conjTranspose_mul, conjTranspose_mul, conjTranspose_conjTranspose, hD,
       Matrix.mul_assoc]
@@ -244,7 +254,7 @@ private theorem dilation_charpoly {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ) :
     dsimp [M, N, B]
     simp only [Matrix.smul_mul, fromBlocks_multiply, fromBlocks_conjTranspose,
       conjTranspose_neg, Matrix.mul_neg, Matrix.neg_mul, neg_neg, Matrix.mul_zero,
-      Matrix.zero_mul, Matrix.add_zero, Matrix.zero_add, Matrix.mul_assoc]
+      Matrix.zero_mul, add_zero, zero_add, Matrix.mul_assoc]
     ext i j
     rcases i with i | i <;> rcases j with j | j <;>
       simp [Matrix.fromBlocks, Matrix.smul_apply, ← hX', ← hxadj] <;> ring
@@ -264,7 +274,7 @@ private theorem dilation_eigenvalues {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ)
     ext i k
     rcases i with i | i <;> rcases k with k | k <;>
       simp [B, Matrix.diagonal_apply, Matrix.fromBlocks]
-  have hB : B.IsHermitian := by rw [hBdiag]; exact isHermitian_diagonal_of_self_adjoint _ (by simp [IsSelfAdjoint])
+  have hB : B.IsHermitian := by rw [hBdiag]; exact isHermitian_diagonal_of_self_adjoint _ (by ext i; simp [IsSelfAdjoint])
   obtain ⟨σ, hσ⟩ := hB.eigenvalues_eq_of_unitary_similarity_diagonal
     (U := (1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℂ)) (by simp)
     (f := Sum.elim s (-s)) (by simpa using hBdiag)
@@ -286,8 +296,8 @@ private theorem dilation_eigenvalues {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ)
         rw [Multiset.map_map]; rfl
       _ = (List.ofFn (singularValuesSorted X) : Multiset ℝ).map Neg.neg := by rw [hs]
       _ = Finset.univ.val.map (fun i => -singularValuesSorted X i) := by
-        simp only [Fin.univ_val_map, Multiset.map_coe, List.map_ofFn]
-      _ = Finset.univ.val.map (fun i => -singularValuesSorted X i.rev) := by
+        simp only [Fin.univ_val_map, Multiset.map_coe, List.map_ofFn, Function.comp_def]
+      _ = Finset.univ.val.map (fun i : Fin (Fintype.card (Fin n)) => -singularValuesSorted X i.rev) := by
         rw [← Multiset.map_univ_val_equiv Fin.revPerm, Multiset.map_map]; rfl
       _ = _ := by rw [Fin.univ_val_map]
   have hr' : (fromBlocks 0 X Xᴴ (0 : Matrix (Fin n) (Fin n) ℂ)).charpoly.roots.map
@@ -335,7 +345,8 @@ private theorem arithmetic_bound_real_trace {n : ℕ}
   classical
   let W := fromBlocks A X Xᴴ B
   let D := fromBlocks (0 : Matrix (Fin n) (Fin n) ℂ) X Xᴴ 0
-  let J := fromBlocks (1 : Matrix (Fin n) (Fin n) ℂ) 0 0 (-1)
+  let J := fromBlocks (1 : Matrix (Fin n) (Fin n) ℂ) 0 0
+    (-1 : Matrix (Fin n) (Fin n) ℂ)
   let k : Fin (Fintype.card (Fin n ⊕ Fin n)) :=
     ⟨j.val, by simp only [Fintype.card_sum, Fintype.card_fin]; have hj := j.isLt; simp only [Fintype.card_fin] at hj; omega⟩
   have hD : D.IsHermitian := isHermitian_zero.fromBlocks rfl isHermitian_zero

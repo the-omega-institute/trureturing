@@ -60,11 +60,14 @@ theorem normalized_conclusion {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
     have hsq : (A-B)*(A-B) ≤ (1-t^2) • (1 : Matrix (Fin n) (Fin n) ℂ) :=
       Matrix.le_iff.mpr (normalized_difference_square_le hW hA hB)
     have hh := smul_le_smul_of_nonneg_left hsq (by norm_num : (0 : ℝ) ≤ 1/4)
-    convert hh using 1 <;> simp [smul_mul_smul, smul_smul, div_eq_mul_inv, mul_assoc]
+    convert hh using 1 <;>
+      simp [smul_mul_smul, smul_smul, div_eq_mul_inv, mul_comm] <;> norm_num
   have hmean := arithmetic_sub_le_geometricMean hP hQ hc0 hfloor hsquare
   let r := c - (1-t^2)/(4*c)
   let L := H + (r : ℂ) • 1
-  have hL : L.IsHermitian := hH.add (Matrix.isHermitian_one.smul (by simp))
+  have hL : L.IsHermitian := hH.add
+    ((Matrix.isHermitian_one : (1 : Matrix (Fin n) (Fin n) ℂ).IsHermitian).smul
+      (show star (r : ℂ) = (r : ℂ) by simp))
   have he : (1 / 2 : ℝ) • (phi c A + phi c B) -
       (((1-t^2)/4)/c) • (1 : Matrix (Fin n) (Fin n) ℂ) = L := by
     rw [hPa, hQb]
