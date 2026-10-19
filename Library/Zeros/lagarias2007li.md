@@ -1351,3 +1351,211 @@ finite common starting value, so that transfer cannot be substituted
 into FV1–FV2 over the displayed interval. The finite block bound supplies
 neither a Robin interval for all integers nor a cofinal signed head bound.
 The full RH and strict Robin for every integer $n>5040$ remain unresolved.
+
+## An effective Fibonacci observation window and its original signed consumer
+
+This paper application uses FG2--FG8, CS29 and the explicit whole-matrix
+transfer EB1--EB5. The chain and membership input is Grzegorz Pastuszak, *On ascending chains of ideals in the
+polynomial ring*, arXiv:1605.06263v1, Theorem 3.5, Theorem 4.2 and Corollary 4.5,
+PDF pp.9--13, https://arxiv.org/html/1605.06263v1 .
+The generic chain and membership proofs are not repeated. The journal article
+is *Ascending chains of ideals in the polynomial ring*, Turkish J. Math. 44
+(2020), 2402--2414, DOI 10.3906/mat-1904-61; formula locations here use v1.
+
+Write $\mathcal B(n,f)$ for the explicit integer recursion in that source's
+Theorem 3.5 (Proposition 3.1 and Corollary 3.4). It bounds the number of ideals
+in a strict chain whose $r$-th ideal has generators of total degree at most
+the nondecreasing integer function $f(r)$. No unspecified constant is
+included in this notation. The source's Corollary 4.5 also bounds the degrees
+in an ordinary ideal-membership certificate over any field; it is not
+radical membership.
+
+### EO1. A fixed polynomial carrier bounds the window
+
+Use FG2's $d\ge1$, positive integers $m_i$, $M=\sum_i m_i$, Laurent
+automorphism $\sigma X_i=Y_i,\ \sigma Y_i=X_iY_i$, and
+$p=\sum_i m_iX_i$. Set
+$$
+ n=4d,\quad f(r)=2^{r+1}\ (r\ge1),\quad K=\mathcal B(n,f),\quad D=2^{K+1}.
+ \tag{EO1}
+$$
+In $\mathbb Q[X,Y,U,V]$, impose
+$$
+ \mathfrak a=(X_iU_i-1,Y_iV_i-1:1\le i\le d).
+$$
+The quotient is exactly the original Laurent ring, by $U_i=X_i^{-1}$,
+$V_i=Y_i^{-1}$. For $r\ge1$ the forward polynomial lift is
+$$
+ p_r=\sum_i m_iX_i^{F_{r-1}}Y_i^{F_r}.
+$$
+Its degree is $F_{r+1}\le2^r$. Put
+$J_r=\mathfrak a+(p_1,\ldots,p_r)$. Its displayed generators have degree
+at most $f(r)$. Pastuszak's chain bound forces $J_s=J_{s+1}$ for some
+$1\le s\le K$: otherwise $J_1,\ldots,J_{K+1}$ would be a longer strict
+chain. In the Laurent quotient, $\sigma\overline J_s\subseteq\overline J_s$.
+The same automorphism/Noetherian invariance argument already used in FG2
+gives equality, so $p=\sigma^{-1}p_1\in\overline J_s$.
+Since every $J_s$ contains the quotient kernel, this gives the ORDINARY
+polynomial membership
+$$
+ p\in J_s\subseteq J_K.
+ \tag{EO2}
+$$
+There is no localization saturation left to assume and no power of $p$
+is substituted for $p$.
+
+### EO2. A finite coefficient system bounds the certificate norm
+
+Let $g_D(r)=3^rD$ for $r\ge1$, and define the integers
+$$
+ T=D\,3^{\mathcal B(n,g_D)}+1,\qquad
+ N=\binom{n+T+D}{n},\qquad
+ C=N\,N!\,M^N.
+ \tag{EO3}
+$$
+Pastuszak's Corollary 4.5 bounds the membership coefficients by
+$(3^{\mathcal B(n,g_D)-1}-1)D+1\le T$.
+Apply it to EO2 and the $K+2d$ displayed generators, all of degree at most
+$D$. Equating coefficients up to degree $T+D$ is a consistent finite
+linear system over $\mathbb Q$, with at most $N$ rows. All entries,
+including the right-hand side, are integers of absolute value at most $M$.
+
+For clarity, the needed norm bound is the finite parameter calculation:
+choose independent columns spanning the target and independent rows of
+their rank $r$, $1\le r\le N$. Set the other unknown coefficients to zero.
+Cramer's rule on the resulting nonsingular integer minor gives at most
+$r$ nonzero rational coefficients, each bounded by $r!M^r$, since the
+nonzero integer denominator has absolute value at least one. Thus the total
+coefficient 1-norm is at most $N\,N!\,M^N=C$. Substitution of the inverse
+variables cannot increase that norm; the $\mathfrak a$-terms vanish.
+Consequently the original Laurent ring has the certificate
+$$
+ p=\sum_{r=1}^K a_r\sigma^rp,\qquad
+ \sum_{r=1}^K\|a_r\|_1\le C.
+ \tag{EO4}
+$$
+Both $K$ and $C$ are specified integer functions of $d,m_i$.
+No phase algebraicity, phase separation, generic position or new
+Groebner computation is required.
+
+FG3 therefore applies directly with these $K,C$:
+$$
+ \max_{0\le r<K}\left|\sum_i m_i u_i^{F_{j+r}}\right|
+ \ge M C^{-j}\qquad(j\ge0,\ |u_i|=1).
+ \tag{EO5}
+$$
+This is the existing observation inequality with a paid quantitative
+interface, not a reproof of its dynamics or a new growth criterion.
+
+### EO3. Retain the actual Li poles and their whole analytic remainder
+
+Suppose the actual Li generating function has nearest poles as in FG6--FG8.
+Use ALL nearest poles and their multiplicities, put $R=|z_i|>1$, and
+choose the same $r_0<r_1<1$ isolating that complete packet. Set
+$$
+ B=1/r_1,\quad 1<B<R,\quad
+ A=\max\left(1,\sup_{|w|=r_1}|H(w)|\right).
+$$
+Here $H$ is exactly FG8's pole-subtracted actual generating function.
+The existing Cauchy estimate at this radius reads
+$$
+ \lambda_n=-\sum_i m_i z_i^n+E_n,\qquad |E_n|\le AB^n
+ \quad\hbox{for every }n\ge1.
+ \tag{EO6}
+$$
+These are actual, potentially unknown spectral/envelope parameters; a
+certified numerical horizon would require bounds for them. They are not
+supplied by finite RH verification or postulated from a substitute model.
+
+EO5 and EO6 give, for every integer $j\ge1$, in the block
+$j,\ldots,j+K-1$, some $\ell$ with
+$$
+ |\lambda_{F_\ell}|
+ \ge R^{F_\ell}MC^{-j}-AB^{F_\ell}.
+ \tag{EO7}
+$$
+This directly consumes the effective constants on the same original
+coefficients.
+
+### EO4. A finite violation of the unchanged arithmetic-middle probes
+
+For every triple $a=F_{k-2},b=F_{k-1},c=F_k$, keep exactly CS28/EB's
+$X_c=\lceil\exp(c^4)\rceil$, full $h^*$, powers and endpoints. Write
+$$
+ P_k=\lambda_c^{\rm mid}(c),\qquad
+ Q_k=2\lambda_a^{\rm mid}(c)+2\lambda_b^{\rm mid}(c)
+          -\lambda_c^{\rm mid}(c).
+$$
+Fix any probe allowance $C_0\ge0$. Define
+$$
+ W=\max\{1,3(C_0+1),(M+A)R^{F_{199}}\},
+$$
+$$
+ \delta=\min\{\log(R/B),\log R,1\}>0,\quad
+ L_*=\log C+3\log2+1,
+$$
+$$
+ H_*=1+\log^+(2A/M)+\log^+(2W/M)+3K\log2,
+$$
+$$
+ q=200+\left\lceil8(L_*+H_*+1)/\delta\right\rceil,\qquad j_*=2q+2.
+ \tag{EO8}
+$$
+Here $\log^+x=\max(0,\log x)$. Then there is an index
+$$
+ 200\le k\le j_*+K-1
+ \quad\hbox{such that}\quad
+ P_k<-C_0F_k^2\ \ \hbox{or}\ \ Q_k<-C_0F_k^2.
+ \tag{EO9}
+$$
+
+To verify the finite consumer, suppose both inequalities fail to be strict
+violations for all those $k$. Put
+$\epsilon(c)=1000c^{3/4}(\log c)^{-3/4}+5$.
+The owned EB whole-matrix bound gives an error at most $\epsilon/2$
+in $P_k$. The linear functional for $Q_k$ on the matrix is
+$2K_{11}-2K_{12}+K_{22}/2$; its coefficient matrix is positive rank one
+with trace $5/2$, so its error is at most $5\epsilon/2$.
+For all $k\ge200$, $F_{k-2}\ge F_{198}\ge2^{98}>10^{24}$;
+EB's bound $\epsilon<c/16000+5$ in particular pays both errors by $c^2$.
+
+The SAME actual coefficients consequently satisfy, on this finite range,
+$$
+ \lambda_c\ge-(C_0+1)c^2,\qquad
+ |\lambda_c|\le2|\lambda_a|+2|\lambda_b|+(C_0+1)c^2.
+$$
+The actual seeds at indices 198 and 199 are bounded by $W F_i^3$, by
+EO6 and $1<B<R$. CS29's existing finite induction therefore gives
+$$
+ |\lambda_{F_i}|\le WF_i^3\qquad(198\le i\le j_*+K-1).
+ \tag{EO10}
+$$
+Its exact cubic contraction $2a^3+2b^3\le2c^3/3$ is reused.
+
+On the other hand, $F_{j_*}\ge2^q$, $2^q\ge q^2$ for $q\ge4$, and
+the choice in EO8 gives
+$$
+ \delta F_{j_*}>j_*L_*+H_*.
+$$
+Using $F_{j_*+K-1}\le2^{j_*+K-2}$, this implies both
+$$
+ F_{j_*}\log(R/B)>j_*\log C+\log(2A/M),
+$$
+$$
+ F_{j_*}\log R>
+ j_*\log C+\log(2W/M)+3\log F_{j_*+K-1}.
+$$
+EO7 supplies an $\ell\in[j_*,j_*+K-1]$ with
+$$
+ |\lambda_{F_\ell}|
+ \ge \tfrac M2 C^{-j_*}R^{F_\ell}
+ >W F_{j_*+K-1}^{\,3}\ge W F_\ell^3,
+$$
+contradicting EO10. This proves EO9 with the complete actual arithmetic
+middle and no discarded zero or endpoint.
+
+The result is a data-dependent finite signed-witness estimate under the
+actual off-line-pole hypothesis. It supplies neither those hypothetical
+pole data nor an unconditional lower bound on the original probes. There
+is no universal finite RH test, new RH equivalent, full Robin interval,
+numerical execution, Lean certification or literature-priority claim.
