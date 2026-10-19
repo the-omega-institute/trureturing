@@ -6,6 +6,12 @@
    utility: none
    digest: Actual cyclic prime-power actions on prime cyclic groups and their split extensions. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19077 (cyclic_card, kernel_power_card).
+   cyclic_card: proof_shape: bind-only; escape_witness: none; consumers: over_card,
+   complement_card, quotient_sum_bound in TarnauceanuReciprocalSubgroupOrders.
+   kernel_power_card: proof_shape: bind-only; escape_witness: none; consumer:
+   TarnauceanuReciprocalSubgroupOrders.quotient_sum_bound. -/
+
 import D5.S3.FiniteGroups.SubgroupConjugacyRatio
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.GroupTheory.SemidirectProduct
@@ -103,7 +109,7 @@ private theorem subgroup_exponent {q s : ℕ} (hq : q.Prime)
   obtain ⟨j, hj, he⟩ := (Nat.dvd_prime_pow hq).mp (hc ▸ card_subgroup_dvd_card H)
   exact ⟨⟨j, Nat.lt_succ_of_le hj⟩, he⟩
 
-private theorem kernel_power_card {q s : ℕ}
+theorem kernel_power_card {q s : ℕ}
     (hc : Nat.card P = q ^ s) (j : Fin (s + 1)) :
     Nat.card (powMonoidHom (q ^ j.val) : P →* P).ker = q ^ j.val := by
   rw [IsCyclic.card_powMonoidHom_ker, hc, Nat.gcd_eq_right]
@@ -130,7 +136,7 @@ section SplitSubgroups
 
 variable {p q s : ℕ} [Fact p.Prime] [Fact q.Prime] [NeZero (q ^ s)]
 
-private theorem cyclic_card (m : ℕ) [NeZero m] : Nat.card (Cyclic m) = m := by
+theorem cyclic_card (m : ℕ) [NeZero m] : Nat.card (Cyclic m) = m := by
   simp only [Nat.card_eq_fintype_card, Fintype.card_multiplicative, ZMod.card]
 
 private theorem prime_automorphism_fixedPointFree {N : Type*} [Group N]

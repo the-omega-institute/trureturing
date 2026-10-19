@@ -7,19 +7,7 @@ import sys
 
 TOOLS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS / 'briefgen'))
-from common import Context, entry, fail, lane_spec, load, name, read
-
-
-def positive(value):
-    if not re.fullmatch(r'[1-9][0-9]*', value):
-        fail(13, 'positive integer required: ' + value)
-    return value
-
-
-def sha(value):
-    if not re.fullmatch(r'[0-9a-f]{40}', value):
-        fail(13, 'full head SHA required')
-    return value
+from common import Context, entry, fail, lane_spec, load, name, read, sha, uint
 
 
 class Chain:
@@ -127,14 +115,17 @@ class Chain:
         pr = conclusion.get('pr_number') or conclusion.get('pr')
         if isinstance(pr, dict):
             pr = pr.get('number')
-        pr = positive(str(pr))
+        pr = str(uint(str(pr), 'PR'))
+        self.postb(pr)
+        self.reviews(1)
+
+    def postb(self, pr):
         log = 'postb3-' + self.lane + '.log'
         self.shell('briefgen/postb3.sh', self.lane, pr, log=log)
         if not re.search(r'^READY(?:\s|$)', read(self.logs / log), re.M):
             fail(13, 'postb3 supplied no READY sentinel')
         head = sha(self.output('gh', 'pr', 'view', pr, '-R', self.ctx.slug, '--json', 'headRefOid', '-q', '.headRefOid'))
         self.python('briefgen/ci_body_final.py', pr, head)
-        self.reviews(1)
 
     def output(self, *command):
         result = subprocess.run(command, cwd=self.ctx.main, text=True, capture_output=True)
@@ -145,9 +136,22 @@ class Chain:
 
 def main(argv):
     mode, args = argv[1], argv[2:]
-    bounds = {'stagea': (4, 4), 'from-mirror': (3, 3), 'rework': (7, 8), 'prep-and-chain': (4, 5)}
+    bounds = {'stagea': (4, 4), 'from-mirror': (3, 3), 'rework': (7, 8), 'prep-and-chain': (4, 5),
+              'postb-prepare': (3, 3), 'review-one': (3, 3)}
     if mode not in bounds or not bounds[mode][0] <= len(args) <= bounds[mode][1]:
         fail(10, 'invalid chain arguments; see README')
+    if mode in ('postb-prepare', 'review-one'):
+        lane, middle, tree = args
+        if mode == 'postb-prepare': uint(middle, 'PR')
+        elif middle not in ('architecture', 'quality', 'tests'): fail(13, 'invalid review role')
+        chain = Chain(lane, tree)
+        if mode == 'postb-prepare':
+            chain.postb(middle)
+            for role in ('architecture', 'quality', 'tests'):
+                read(chain.brief('review-' + lane + '-' + role + '-r1'))
+        else:
+            chain.dispatch('review-' + lane + '-' + middle + '-r1', 'review')
+        return
     if mode == 'prep-and-chain':
         kind, lane, tree, first = args[:4]
         if kind not in ('stagea', 'mirror') or len(args) != (5 if kind == 'stagea' else 4):
@@ -160,17 +164,17 @@ def main(argv):
     if mode in ('stagea', 'from-mirror'):
         lane, tree, first = args[:3]
         chain = Chain(lane, tree)
-        read(chain.brief(first))
+        if first != '-': read(chain.brief(first))
         mirror = args[3] if mode == 'stagea' else first
         read(chain.brief(mirror))
-        if mode == 'stagea':
+        if mode == 'stagea' and first != '-':
             _, _, verdict = chain.dispatch(first, 'implementation')
             if not chain.accepts(verdict, 'mirror-ready'):
                 return
         chain.from_mirror(mirror)
         return
     lane, pr, round_number, tree, oldhead, rw, mw = args[:7]
-    positive(pr); positive(round_number); sha(oldhead); name(rw); name(mw)
+    uint(pr, 'PR'); uint(round_number, 'round'); sha(oldhead); name(rw); name(mw)
     chain = Chain(lane, tree)
     seat = 'rework-' + lane + '-' + rw
     mirror = 'mirror-' + lane + '-' + mw
