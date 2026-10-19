@@ -213,7 +213,9 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
     | .error err => return (.incomplete .execution, none, s!"{err}: {name}")
     | .ok atoms => entries := (name, atoms) :: entries
     if (← IO.getNumHeartbeats) - start > budget * 1000 then
-      return (.incomplete .heartbeat, none, "search.presentation_index_budget")
+      return (.incomplete .heartbeat, none,
+        s!"search.presentation_index_budget: indexed_sources={entries.length}, last={name}, " ++
+          s!"index_heartbeats={(← IO.getNumHeartbeats)-start}")
   let built ← IO.getNumHeartbeats
   let .ok _atoms := normalizedAtoms env target
     | return (.incomplete .execution, none, "search.presentation_target_normalization")

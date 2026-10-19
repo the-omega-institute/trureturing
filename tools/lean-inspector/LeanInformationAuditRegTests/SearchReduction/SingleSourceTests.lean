@@ -67,4 +67,9 @@ run_elab do
       checked := checked + 1
   unless checked > 0 do throwError "derangements fixture was not loaded"
   logInfo m!"actual syntax unrelated derangements declarations checked={checked}, conversion candidates=0"
+  let index ← factIndex
+  let (outcome, evidence, detail) ← baselinePresentation env [] target (some index)
+  unless outcome == .found && evidence.isSome do
+    throwError "full-environment single-source lookup: {reprStr outcome}: {detail}"
+  logInfo m!"full-environment single-source lookup: found; {detail}"
 end LeanInformationAudit.Tests.SearchReduction.SingleSourceTests

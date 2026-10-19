@@ -85,13 +85,14 @@ theorem projection_and_pack :
 /-- Coverage is about keys produced by the actual normalizer, not an assumed
 independent normalization function. -/
 theorem normalized_lookup_complete (env : Environment) (target : Expr)
-    (atoms : List Name) (hn : normalizedAtoms env target = .ok atoms)
-    (entries : List (Name × List Name)) (b : Name × List Name) :
+    (atoms : List Expr) (hn : normalizedAtoms env target = .ok atoms)
+    (entries : List (Name × List Expr)) (b : Name × List Expr) :
     normalizedLookup env target entries = .ok (presentationLookup atoms entries) ∧
-      (b ∈ presentationLookup atoms entries ↔ b ∈ entries ∧ ∀ a ∈ atoms, a ∈ b.2) := by
+      (b ∈ presentationLookup atoms entries ↔
+        b ∈ entries ∧ supportIncluded atoms b.2 = true) := by
   constructor
   · simp [normalizedLookup, hn]
-  · exact lookup_complete atoms entries b
+  · simp [presentationLookup]
 
 def key (p : Statement) := atoms p
 

@@ -6,11 +6,11 @@ namespace LeanInformationAudit.SearchReduction
 open Lean Meta Elab Tactic
 
 /-- The shared executable directional lookup; the model proves its coverage. -/
-def supportIncluded (target source : List Name) : Bool :=
+def supportIncluded {α : Type} [BEq α] (target source : List α) : Bool :=
   target.all source.contains
 
-def presentationLookup (target : List Name) (entries : List (Name × List Name)) :
-    List (Name × List Name) := entries.filter (supportIncluded target ·.2)
+def presentationLookup {α : Type} [BEq α] (target : List α) (entries : List (Name × List α)) :
+    List (Name × List α) := entries.filter (supportIncluded target ·.2)
 
 private def primitive (n : Name) : Bool :=
   #[``And, ``Iff, ``True, ``False, ``Eq, ``Nat, ``Int,
@@ -21,17 +21,19 @@ private def primitive (n : Name) : Bool :=
 /-- Only noncomputational aliases are unfolded. Recursive definitions,
 matchers, recursors and general computations are opaque. The visited graph
 rejects cycles; fuel exhaustion is an error, never an opaque miss. -/
-private partial def aliasBody (e : Expr) : Bool :=
+private partial def aliasBody (env : Environment) (e : Expr) : Bool :=
   match e with
-  | .lam _ _ b _ => aliasBody b
-  | .forallE _ d b _ => aliasBody d && aliasBody b
-  | .app f a => aliasBody f && aliasBody a
-  | .const n _ => !((n.toString.splitOn "match_").length > 1 || n.toString.endsWith ".rec" ||
+  | .lam _ _ b _ => aliasBody env b
+  | .forallE _ d b _ => aliasBody env d && aliasBody env b
+  | .app f a => aliasBody env f && aliasBody env a
+  | .const n _ => !(match (env.setExporting false).find? n with
+      | some (.ctorInfo _) => !primitive n | _ => false) &&
+    !((n.toString.splitOn "match_").length > 1 || n.toString.endsWith ".rec" ||
       n.toString.endsWith ".recOn" || n.toString.endsWith ".brecOn" ||
       n.toString.endsWith ".below" || n.toString.endsWith ".ibelow" ||
       n.toString.endsWith ".casesOn")
   | .bvar _ | .sort _ | .lit _ => true
-  | .mdata _ b => aliasBody b
+  | .mdata _ b => aliasBody env b
   | _ => false
 
 private partial def instanceParameters : Expr → Bool
@@ -66,7 +68,7 @@ private partial def normalizeAux (env : Environment) (e : Expr)
       if seen.contains n then throw "search.presentation_alias_cycle"
       if !primitive n then
         if let some (.defnInfo d) := (env.setExporting false).find? n then
-          if !instanceParameters d.type && aliasBody d.value then
+          if !instanceParameters d.type && aliasBody env d.value then
             let body := d.value.instantiateLevelParams d.levelParams us
             return ← normalizeAux env (body.beta args) (seen.insert n)
     return mkAppN fn args
@@ -146,34 +148,41 @@ private partial def nameless : Expr → Expr
   | .mdata _ b => nameless b
   | e => e
 
-/-- The whole canonical affine vector is retained. Full strings, rather than
-hashes, identify components; the opaque atom dictionary is shared by both sides. -/
-private def componentKey (telescope : List (Expr × BinderInfo)) (e : Expr) : Name := Id.run do
+/-- Complete structural expression keys retain the canonical affine vector.
+Expression hashes accelerate comparison without replacing structural equality. -/
+private def componentKey (telescope : List (Expr × BinderInfo)) (e : Expr) : Expr := Id.run do
   let eq := e.isAppOfArity ``Eq 3
   let arithmetic := eq || e.isAppOf ``LE.le || e.isAppOf ``LT.lt ||
     e.isAppOf ``Nat.le || e.isAppOf ``Nat.lt || e.isAppOf ``Int.le || e.isAppOf ``Int.lt
-  let scope := reprStr (telescope.map fun (d, bi) => (nameless d, bi))
+  let withScope := fun key => telescope.foldr
+    (fun (domain, kind) body => Expr.forallE .anonymous (nameless domain) body kind) key
   if arithmetic && e.getAppNumArgs ≥ 2 then
     let args := e.getAppArgs
     let mut vector := affineAdd (affine args.back!)
       (affineScale (-1) (affine args[args.size-2]!))
-    let sorted := vector.terms.toArray.qsort (fun a b => reprStr (nameless a.1) < reprStr (nameless b.1))
+    vector := {vector with terms := vector.terms.map fun (a, c) => (nameless a, c)}
+    let sorted := vector.terms.toArray.qsort (fun a b =>
+      if a.1.hash != b.1.hash then a.1.hash < b.1.hash
+      else if a.1 == b.1 then false
+      else reprStr (nameless a.1) < reprStr (nameless b.1))
     vector := {vector with terms := sorted.toList.filter (fun t => t.2 != 0)}
     if eq && (vector.terms.head?.map (fun t => decide (t.2 < 0))).getD
         (decide (vector.constant < 0)) then
       vector := affineScale (-1) vector
     let relation := if eq then "eq" else if e.isAppOf ``LT.lt || e.isAppOf ``Nat.lt ||
       e.isAppOf ``Int.lt then "lt" else "le"
-    let domain := if e.isAppOf ``Nat.le || e.isAppOf ``Nat.lt then reprStr (mkConst ``Nat)
-      else if e.isAppOf ``Int.le || e.isAppOf ``Int.lt then reprStr (mkConst ``Int)
-      else if args.size > 2 then reprStr (nameless args[0]!) else ""
-    return Name.mkSimple (scope ++ relation ++ domain ++ reprStr vector.constant ++
-      reprStr (vector.terms.map fun (a, c) => (nameless a, c)))
-  return Name.mkSimple (scope ++ reprStr (nameless e))
+    let domain := if e.isAppOf ``Nat.le || e.isAppOf ``Nat.lt then mkConst ``Nat
+      else if e.isAppOf ``Int.le || e.isAppOf ``Int.lt then mkConst ``Int
+      else if args.size > 2 then nameless args[0]! else mkConst `_presentationDomain
+    let terms := vector.terms.toArray.map fun (a, c) =>
+      mkAppN (mkConst `_presentationTerm) #[nameless a, toExpr c]
+    return withScope <| mkAppN (mkConst (Name.mkSimple ("_presentation_" ++ relation)))
+      #[domain, toExpr vector.constant, mkAppN (mkConst `_presentationVector) terms]
+  return withScope (nameless e)
 
 /-- Nonneutral component sets form the directional index. The complete
 outer telescope is part of every component. Iff contributes its two views. -/
-partial def syntaxAtoms (e : Expr) (telescope : List (Expr × BinderInfo) := []) : List Name :=
+partial def syntaxAtoms (e : Expr) (telescope : List (Expr × BinderInfo) := []) : List Expr :=
   if let .forallE _ d b bi := e then syntaxAtoms b (telescope ++ [(d, bi)])
   else if syntacticNeutral e then []
   else if e.isAppOfArity ``And 2 then
@@ -186,11 +195,11 @@ partial def syntaxAtoms (e : Expr) (telescope : List (Expr × BinderInfo) := [])
     (syntaxAtoms forward telescope ++ syntaxAtoms backward telescope).eraseDups
   else [componentKey telescope e]
 
-def normalizedAtoms (env : Environment) (e : Expr) : Except String (List Name) := do
+def normalizedAtoms (env : Environment) (e : Expr) : Except String (List Expr) := do
   return syntaxAtoms (← normalizeSyntax env e)
 
 def normalizedLookup (env : Environment) (target : Expr)
-    (entries : List (Name × List Name)) : Except String (List (Name × List Name)) := do
+    (entries : List (Name × List Expr)) : Except String (List (Name × List Expr)) := do
   return presentationLookup (← normalizedAtoms env target) entries
 
 /-- A leaf certificate sees the common telescope and at most one source view.
