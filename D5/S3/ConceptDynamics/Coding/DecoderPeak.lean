@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: Every primitive trace vertex is bounded by the complete horizon peak. -/
-import D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
+import D5.S3.ConceptDynamics.Coding.Decoder.Trace
 
 set_option autoImplicit false
 namespace D5.S3.ConceptDynamics.Coding.DecoderOperationTrace

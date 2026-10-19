@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
+import D5.S3.ConceptDynamics.Coding.Decoder.Trace
 import Reg.Support.DependentFamily
 
 open _root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
