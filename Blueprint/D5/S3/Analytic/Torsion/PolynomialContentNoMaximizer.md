@@ -22,6 +22,10 @@ $$\forall N: \mathbb{N}, \exists n: \mathbb{N}, \neg (\exists P: Set\left(\mathb
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Torsion/PolynomialContentNoMaximizer.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kraus-simanek-2024-polynomial-content-no-maximizer` (proved) by `D5/S3/Analytic/Torsion/PolynomialContentNoMaximizer.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kraus-simanek-2024-polynomial-content-no-maximizer","declaration_gid":"D5/S3/Analytic/Torsion/PolynomialContentNoMaximizer.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Kraus and B. Simanek (2024). *New Perspectives on Torsional Rigidity and Polynomial Approximations of z-bar*. DOI: [10.1007/s10659-024-10087-4](https://doi.org/10.1007/s10659-024-10087-4). URL: <https://arxiv.org/abs/2309.16450>.

@@ -21,7 +21,10 @@ internal sealed class PolynomialContentNoMaximizerDocument : IScribeDocumentDefi
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("kraus-simanek-2024-polynomial-content-no-maximizer"),
+                ResolutionKind.Proved) : null);
 
     private static Formula V(string value) => F.Id(value);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
