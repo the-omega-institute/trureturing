@@ -1373,7 +1373,7 @@ G(p,q)\cong
 \tag{10.7}
 $$
 
-A common spatial rotation sends the paper's ordered $x,y$ axes to
+A common spatial rotation sends the paper's ordered $x,z$ axes to
 the present $z,y$ axes. Thus $p=6,q=3$, $a\mapsto d$, $b\mapsto r$
 satisfy its precise hypotheses. The theorem supplies injectivity of
 this presentation, beyond the elementary verification that the
