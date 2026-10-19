@@ -15,6 +15,8 @@ private partial def literalCopy (source : Environment) (n : Name) : MetaM Unit :
   | .thmInfo value => addDecl (.thmDecl value)
   | _ => throwError "unsupported mutant input"
 
+-- Aggregate independent probes; each transport and R call enforces its own bound.
+set_option maxHeartbeats 0 in
 run_meta do
   let source ← getEnv
   enableInitializersExecution
