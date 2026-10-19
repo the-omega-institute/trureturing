@@ -1688,3 +1688,804 @@ The trace-removal comparison is independent of [Kuramochi, arXiv:2406.03775v1, T
 The physical fixed-state interface is specifically [Bény–Oreshkov, arXiv:1103.0649v3, Section IV, (133), with Corollary 5/(64)–(66)](https://arxiv.org/pdf/1103.0649v3). Its root fidelity is the square root of entanglement fidelity at the identity target. Equation (132) retains a Kraus-number restriction; unrestricted CPTP completion and (133) are required for (U.6). Neither equation supplies $c$ or resolves the omitted common-variable region. The primary-access limitations for the additional Grigorieff, Carlsson and Ky Fan bibliographic locators remain those explicitly stated in Definition 120.1: metadata or abstract authentication does not authenticate unread full theorem text or equality conditions. No such unread statement, no global trace-removal theorem and no pointwise physical converse is a premise here.
 
 ## 追加锚（本行以下为增补区）
+
+## 130. The two-column root-trace problem and its zero-weight endpoint
+
+**Definition 130.1 (one actual pair throughout).** Retain (U.1), (U.62) and the notation of Sections 121–129. Thus
+
+$$
+\begin{gathered}
+P=\operatorname{diag}(p,q),\quad p+q=1,\quad p\geq q\geq0,\quad
+V=[V_0;V_1]\in\mathbb R^{4\times2},\quad V^TV\preceq I_2,\\
+\alpha=\sqrt p,\quad\beta=\sqrt q,\quad h=\alpha+\beta,\quad g=\alpha\beta,
+\quad D=\operatorname{diag}(\alpha,\beta,\alpha,\beta),\\
+A=D(I_4-VV^T)D,\quad B=\sqrt P(I_2-V^TV)\sqrt P,
+\quad\lambda=\lambda_{\min}(B),\\
+\tau=\frac12\sum_{i=0}^1\bigl(\operatorname{Tr}(V_i\sqrt P)\bigr)^2,
+\quad H=\operatorname{Tr}(DVV^T),\quad
+N=\frac{\operatorname{Tr}\sqrt A}{4\sqrt2},\\
+R=1-\lambda-\tau,\quad\Theta=N+\frac{\sqrt R}{2},\quad
+S=N^2+\frac R4,\quad c=\frac{2+\sqrt2}{4},\quad r=\sqrt c.
+\end{gathered}
+\tag{U.110}
+$$
+
+All quantities in each comparison belong to this same $P,V$. In particular, the actual traces are squared after their complete singular-component sums are formed. Proposition 109.3 gives $R\geq0$, and $0\preceq B\preceq P$ gives $0\leq\lambda\leq q$. The letter $A$ here is the matrix called $F$ in (U.1); $S$ is $\mathcal S$. Auxiliary $P$ is an environmental density and is distinct from the fixed physical input $\rho_\star$ in (U.2). The rank of $V$ is at most two and is distinct from actual minimal Kraus rank.
+
+**Proposition 130.2 (the precise zero-energy condition).** On the whole domain (U.110),
+
+$$
+0\leq H\leq2\alpha,\qquad
+H=0\ \Longleftrightarrow\ D^{1/2}V=0
+\ \Longleftrightarrow\ DV=0.
+\tag{U.111}
+$$
+
+When $q>0$, these conditions are equivalent to $V=0$. When $q=0$, they need not imply $V=0$; they imply $A=D^2$ and $\tau=0$.
+
+Proof. In row notation $v_j$ for $V$, with $d_j$ the corresponding diagonal entry of $D$,
+$H=\sum_jd_j\|v_j\|^2=\|D^{1/2}V\|_F^2$. The two diagonal matrices $D^{1/2},D$ have the same kernel. Also $D\preceq\alpha I_4$ and $\operatorname{Tr}(V^TV)\leq2$, proving the upper bound. Positive $q$ makes $D$ invertible. If $DV=0$, then $DVV^TD=0$; every diagonal entry of $V_i\sqrt P$ is zero, proving the remaining assertions.
+
+For an explicit nonzero feasible example at the singular endpoint take
+
+$$
+p=1,\quad q=0,\qquad
+V_{\mathrm z}=\begin{pmatrix}0&0\\1&0\\0&0\\0&1\end{pmatrix}.
+\quad
+V_{\mathrm z}^TV_{\mathrm z}=I_2,\quad DV_{\mathrm z}=0,\quad
+H=\tau=\lambda=0,\quad R=1,\quad\Theta=c<r.
+\tag{U.112}
+$$
+
+The Gram and zero product follow by multiplication, $A=D^2$ has trace square root two, and $0<c<1$ gives $c<\sqrt c$. This example disproves only the unqualified implication $H=0\Rightarrow V=0$. $\square$
+
+## 131. A sharp root-trace bound from the actual two-column resolvent
+
+**Theorem 131.1 (root-trace improvement at fixed weighted energy).** Every pair (U.110), including $q=0$ and singular $A$, satisfies
+
+$$
+\operatorname{Tr}\sqrt A
+\leq2\beta+2\alpha\sqrt{1-\frac{H}{2\alpha}}.
+\tag{U.113}
+$$
+
+Consequently
+
+$$
+N^2\leq\frac{h^2}{8}-\frac{hH}{16}
+-\frac g8\left(1-\sqrt{1-\frac{H}{2\alpha}}\right)^2.
+\tag{U.114}
+$$
+
+The last subtracted term is strictly positive when $q>0,H>0$. It is an improvement of the weighted Hilbert–Schmidt upper bound in Proposition 123.1, rather than an assertion that (U.113) is always strict relative to the actual trace.
+
+Proof. Write $\Delta=\operatorname{Tr}D-\operatorname{Tr}\sqrt A$. The elementary scalar identity
+
+$$
+\sqrt x=\frac1\pi\int_0^\infty
+\frac{x}{x+s}s^{-1/2}\,ds\quad(x\geq0)
+\tag{U.115}
+$$
+
+follows for $x>0$ by $s=xt^2$ and $\int_0^\infty(1+t^2)^{-1}\,dt=\pi/2$, and is immediate for $x=0$. Spectral decomposition applies it to every PSD matrix here. Since $A\preceq D^2$, the resolvent difference below is PSD. Subtracting the two finite trace integrals, or first subtracting on compact positive intervals and passing to their limits, gives
+
+$$
+\begin{gathered}
+C_s=V^TD^2(D^2+sI_4)^{-1}V,\qquad
+J_s=V^TD^2(D^2+sI_4)^{-2}V=-C_s',\\
+0\preceq C_s\preceq\frac{p}{p+s}I_2\prec I_2,\qquad J_s\succeq0,
+\quad s>0,\\
+\Delta=\frac1\pi\int_0^\infty s^{1/2}
+\operatorname{Tr}\bigl((A+sI_4)^{-1}-(D^2+sI_4)^{-1}\bigr)\,ds.
+\end{gathered}
+\tag{U.116}
+$$
+
+Indeed $d_j^2/(d_j^2+s)\leq p/(p+s)$, and $V^TV\preceq I_2$. Put $E_s=D^2+sI_4$ and $U=DV$. Then $A+sI_4=E_s-UU^T$. Multiplication verifies the downdate inverse identity
+
+$$
+(A+sI_4)^{-1}-E_s^{-1}
+=E_s^{-1}U(I_2-U^TE_s^{-1}U)^{-1}U^TE_s^{-1}.
+\tag{U.117}
+$$
+
+Here $U^TE_s^{-1}U=C_s\prec I_2$, so every inverse exists for $s>0$, including when $P$ or $A$ is singular. Cycling the trace, $U^TE_s^{-2}U=J_s$, gives
+
+$$
+\Delta=\frac1\pi\int_0^\infty s^{1/2}
+\operatorname{Tr}\bigl((I_2-C_s)^{-1}J_s\bigr)\,ds
+=\frac1\pi\sum_{n=1}^\infty\int_0^\infty
+s^{1/2}\operatorname{Tr}(C_s^{n-1}J_s)\,ds.
+\tag{U.118}
+$$
+
+For fixed $s>0$ the inverse has its convergent geometric series. Each summand is nonnegative because
+$\operatorname{Tr}(C_s^{n-1}J_s)=\operatorname{Tr}(J_s^{1/2}C_s^{n-1}J_s^{1/2})\geq0$.
+Thus positive Tonelli, without an absolute-convergence assumption on a signed expansion, justifies the interchange.
+
+The matrices $C_s$ and $J_s$ need not commute. The product rule and cyclic trace nevertheless give, for every integer $n\geq1$,
+
+$$
+\frac{d}{ds}\operatorname{Tr}(C_s^n)
+=\sum_{j=0}^{n-1}\operatorname{Tr}(C_s^jC_s'C_s^{n-1-j})
+=-n\operatorname{Tr}(C_s^{n-1}J_s).
+\tag{U.119}
+$$
+
+Integrate by parts first on $[\epsilon,M]$. At zero $C_s$ is bounded; at infinity $C_s=O(s^{-1})$. Hence $s^{1/2}\operatorname{Tr}(C_s^n)$ tends to zero at both ends, and the resulting integral is finite, with integrand $O(s^{-1/2})$ near zero and $O(s^{-n-1/2})$ near infinity. It follows that
+
+$$
+\Delta=\sum_{n=1}^\infty\frac1{2\pi n}
+\int_0^\infty s^{-1/2}\operatorname{Tr}(C_s^n)\,ds.
+\tag{U.120}
+$$
+
+The dimension used next is exactly two: the two nonnegative eigenvalues of $C_s$ give
+
+$$
+\operatorname{Tr}(C_s^n)\geq2^{1-n}(\operatorname{Tr}C_s)^n,
+\qquad
+\operatorname{Tr}C_s=\sum_jw_j\frac{d_j}{d_j^2+s},\quad
+w_j=d_j\|v_j\|^2,\quad\sum_jw_j=H.
+\tag{U.121}
+$$
+
+The power inequality is convexity of $x\mapsto x^n$, including equality for $n=1$. Zero $d_j$ have zero weight and can be discarded from the sum. For positive $d_1,\ldots,d_n\leq\alpha$ the needed integrated scalar comparison is
+
+$$
+\int_0^\infty s^{-1/2}\prod_{\ell=1}^n
+\frac{d_\ell}{d_\ell^2+s}\,ds
+\geq\int_0^\infty s^{-1/2}
+\left(\frac\alpha{\alpha^2+s}\right)^n ds.
+\tag{U.122}
+$$
+
+To prove it, substitute $s=x^2$ and use evenness. Holding all parameters but $d_1$ fixed, the left side becomes
+
+$$
+\int_{\mathbb R}\frac{d_1}{d_1^2+x^2}F(x)\,dx
+=\int_{\mathbb R}\frac{F(d_1z)}{1+z^2}\,dz,
+\qquad
+F(x)=\prod_{\ell=2}^n\frac{d_\ell}{d_\ell^2+x^2}.
+\tag{U.123}
+$$
+
+The function $F$ is even and nonincreasing in $|x|$. Increasing $d_1$ decreases this integral. Repeat for each parameter, making every one equal to $\alpha$. When $n=1$, the empty product is one and the integral is $\pi$, independently of $d_1$. This is an integrated product monotonicity statement, not a pointwise ordering of the individual kernels in $s$.
+
+Expanding the finite sum $(\operatorname{Tr}C_s)^n$ in (U.121) has only nonnegative coefficients. Apply (U.122) term by term, and then (U.120), to obtain
+
+$$
+\Delta\geq\sum_{n=1}^\infty\frac{H^n2^{1-n}}{2\pi n}
+\int_0^\infty s^{-1/2}\left(\frac\alpha{\alpha^2+s}\right)^n ds.
+\tag{U.124}
+$$
+
+For clarity the entire coefficient calculation is
+
+$$
+\begin{gathered}
+\int_0^\infty s^{-1/2}\left(\frac\alpha{\alpha^2+s}\right)^n ds
+=\alpha^{1-n}\frac{\sqrt\pi\,\Gamma(n-1/2)}{\Gamma(n)},\\
+c_n=\frac{\Gamma(n-1/2)}{2\sqrt\pi\,n!}
+=\frac{\binom{2n-2}{n-1}}{n\,2^{2n-1}}>0,
+\quad c_1=\frac12,\quad\frac{c_{n+1}}{c_n}=\frac{2n-1}{2n+2},\\
+\Delta\geq2\alpha\sum_{n=1}^\infty c_n
+\left(\frac H{2\alpha}\right)^n
+=2\alpha\left(1-\sqrt{1-\frac H{2\alpha}}\right).
+\end{gathered}
+\tag{U.125}
+$$
+
+The first integral follows by $s=\alpha^2t$ and then $t=y/(1-y)$, giving the beta integral with arguments $1/2,n-1/2$. It can also be evaluated elementarily: put $J_n=\int_{\mathbb R}(1+x^2)^{-n}\,dx$. Then $J_1=\pi$, and integration of the derivative of $x(1+x^2)^{-n}$ over $\mathbb R$ gives $J_{n+1}=(2n-1)J_n/(2n)$, since the boundary term vanishes for every $n\geq1$. The integral in (U.125) equals $\alpha^{1-n}J_n$, so $c_n=J_n/(2\pi n)$ has exactly the displayed initial value and recurrence. These are precisely the positive binomial coefficients of $1-\sqrt{1-x}$ on $0\leq x<1$. At $x=1$, monotone convergence of their positive sums gives the same identity. Proposition 130.2 ensures $0\leq H/(2\alpha)\leq1$. If $H=0$, it gives directly $A=D^2$ and both sides agree; no inference $V=0$ at $q=0$ is needed. Since $\operatorname{Tr}D=2h$, (U.125) proves (U.113), including the endpoint $H=2\alpha$.
+
+Both sides of (U.113) are nonnegative. With $z=\sqrt{1-H/(2\alpha)}$, direct expansion gives
+
+$$
+2h(2h-H)-(2\beta+2\alpha z)^2=4g(1-z)^2.
+\tag{U.126}
+$$
+
+Square (U.113), use (U.126), and divide by $32$ to obtain (U.114). Only resolvents at positive $s$ were inverted in this proof; no constant-rank smoothness, inverse of $A$, or inverse of singular $P$ was used. $\square$
+
+## 132. Sharpness and a full-rank square-root difference
+
+**Proposition 132.1 (attainment at every allowed weighted energy).** For fixed $p,q$ and every $H\in[0,2\alpha]$, equality in (U.113) is attained by an actual common contraction.
+
+Proof. For $0\leq t\leq1$ take
+
+$$
+\begin{gathered}
+V_t=\sqrt t\begin{pmatrix}1&0\\0&0\\0&1\\0&0\end{pmatrix},\quad
+V_t^TV_t=tI_2,\quad H=2\alpha t,\quad
+\tau=\frac{pt}{2},\quad\lambda=q(1-t),\\
+A(V_t)=\operatorname{diag}(p(1-t),q,p(1-t),q),\qquad
+\operatorname{Tr}\sqrt{A(V_t)}=2\beta+2\alpha\sqrt{1-t}.
+\end{gathered}
+\tag{U.127}
+$$
+
+Every equality follows by direct multiplication. Varying $t=H/(2\alpha)$ covers the whole energy interval. Hence a strict improvement over (U.113) at these same $p,q,H$ must use additional information, such as actual traces or directions. This sharpness statement imposes no independently prescribed $\tau$ or $\lambda$. $\square$
+
+**Proposition 132.2 (two columns do not bound the square-root difference rank).** There are feasible two-column $V$ for which $\operatorname{rank}(D-\sqrt A)=4$.
+
+Proof. For $1/2<p<1$ set
+
+$$
+V_* =\frac1{\sqrt2}\begin{pmatrix}1&0\\1&0\\0&1\\0&1\end{pmatrix}.
+\quad V_*^TV_*=I_2,\quad\lambda=0,\quad\tau=\frac14,\quad R=\frac34.
+\tag{U.128}
+$$
+
+Both diagonal blocks of $A$ are $\frac12\begin{pmatrix}p&-g\\-g&q\end{pmatrix}$. The matrix $C=\begin{pmatrix}p&-g\\-g&q\end{pmatrix}$ is PSD of trace one and determinant zero, so $C^2=C$. Thus each block of $\sqrt A$ is $C/\sqrt2$. The corresponding block of $D-\sqrt A$ has determinant
+
+$$
+\det\left[\operatorname{diag}(\alpha,\beta)
+-\frac1{\sqrt2}\begin{pmatrix}p&-g\\-g&q\end{pmatrix}\right]
+=g\left(1-\frac h{\sqrt2}\right)>0.
+\tag{U.129}
+$$
+
+Here $g>0$ and $h^2=1+2g<2$ because $p\ne q$. Both blocks are invertible, proving rank four. The traces in (U.128) are $\alpha/\sqrt2$ and $\beta/\sqrt2$, giving $\tau=(p+q)/4$. This is a counterexample to a rank shortcut, not to the recovery inequality. The proof of Theorem 131.1 used the actual $2\times2$ size of $C_s$, not the rank of $D-\sqrt A$. $\square$
+
+## 133. Finite trace penalties and an actual-minimizer bound
+
+**Theorem 133.1 (general weighted Rayleigh comparison).** Suppose $q>0$ and let $k\geq0$ be finite. For any real unit $u$ define
+
+$$
+Z_k=H+k\tau,\quad a=\sqrt P u,\quad m=u^TPu,\quad
+\nu=\frac{kh}{2+kh},\qquad
+M_{k,u}=mP^{-1/2}-\frac{k}{2+kh}aa^T.
+\tag{U.130}
+$$
+
+Then $M_{k,u}\succ0$, and
+$\sum_i\|V_i\sqrt P u\|^2\leq\lambda_{\max}(M_{k,u})Z_k$.
+At any unit minimum eigenvector of the actual $B$ this becomes
+$m-\lambda\leq\lambda_{\max}(M_{k,u})Z_k$.
+The choice $k=4/h$ is exactly Theorem 122.1, reused here as one member of the finite-$k$ family.
+
+Proof. In row coordinates $x_i=(v_{i,11},v_{i,12},v_{i,21},v_{i,22})^T$ put
+
+$$
+\begin{gathered}
+\mathsf F=\operatorname{diag}(\alpha,\alpha,\beta,\beta),\quad
+t=(\alpha,0,0,\beta)^T,\quad z=(1,0,0,1)^T,\\
+\mathsf K_k=\mathsf F+\frac k2tt^T
+=\begin{pmatrix}
+\alpha+kp/2&0&0&kg/2\\0&\alpha&0&0\\0&0&\beta&0\\kg/2&0&0&\beta+kq/2
+\end{pmatrix}\succ0,\qquad
+Z_k=\sum_i x_i^T\mathsf K_kx_i.
+\end{gathered}
+\tag{U.131}
+$$
+
+The last identity includes $2\tau=\sum_i(t^Tx_i)^2$. Since $\mathsf F^{-1}t=z$ and $t^T\mathsf F^{-1}t=h$, multiplication gives
+
+$$
+\mathsf K_k^{-1}=\mathsf F^{-1}-\frac{k}{2+kh}zz^T.
+\tag{U.132}
+$$
+
+In fact the coefficient of $tz^T$ in the product is
+$k/2-k/(2+kh)-k^2h/[2(2+kh)]=0$.
+Define
+
+$$
+L_u=\begin{pmatrix}\alpha u_1&\beta u_2&0&0\\0&0&\alpha u_1&\beta u_2\end{pmatrix}.
+\qquad L_ux_i=V_i\sqrt P u,\qquad
+L_u\mathsf K_k^{-1}L_u^T=M_{k,u}.
+\tag{U.133}
+$$
+
+For the last equality, $L_u\mathsf F^{-1}L_u^T=mP^{-1/2}$ and $L_uz=a$. The rows of $L_u$ are nonzero and have disjoint supports for any unit $u$, since $\alpha,\beta>0$. Hence $M_{k,u}$ is positive definite. Substituting $y=\mathsf K_k^{1/2}x$ proves the exact operator/Rayleigh identity
+
+$$
+\sup_{x\ne0}\frac{\|L_ux\|^2}{x^T\mathsf K_kx}
+=\|L_u\mathsf K_k^{-1/2}\|_{\mathrm{op}}^2
+=\lambda_{\max}(M_{k,u})=:\mu_k>0.
+\tag{U.134}
+$$
+
+Apply it to each actual $x_i$ and add. For an actual minimum eigenvector $Bu=\lambda u$,
+
+$$
+\sum_i\|V_i\sqrt P u\|^2=u^T(P-B)u=m-\lambda\geq0,
+\qquad m-\lambda\leq\mu_k(H+k\tau).
+\tag{U.135}
+$$
+
+The proof does not require the actual $x_i$ to attain a directional Rayleigh maximum. At a repeated minimum eigenvalue, any real unit vector in that eigenspace is admissible.
+
+For completeness, an actual SVD $V=\sum_{j=1}^2s_j\ell_jv_j^T$ gives
+
+$$
+H=\sum_{j=1}^2s_j^2\ell_j^TD\ell_j,\qquad
+\tau=\frac12\sum_i\left(
+\sum_{j=1}^2s_j\ell_{j,i}^T\sqrt P v_j\right)^2.
+\tag{U.136}
+$$
+
+Orthogonality of the right singular vectors eliminates the cross terms in $H$. It does not eliminate cross terms in the squared traces. For example
+
+$$
+V_0=\operatorname{diag}(\beta,-\alpha),\qquad V_1=0,
+\qquad V^TV=\operatorname{diag}(q,p)\preceq I_2,\qquad
+\operatorname{Tr}(V_0\sqrt P)=g-g=0.
+\tag{U.137}
+$$
+
+In the diagonal SVD of (U.137), for $q>0$ the two singular contributions have nonzero opposite traces; the actual $\tau$ is zero. The form (U.131) retains this cancellation and the second singular component. No unscaled trace projection or independent realization of component optima is used. $\square$
+
+**Corollary 133.2 (clipped pointwise comparison).** At the actual minimum eigenvector used in (U.135), set
+
+$$
+L_k=\left[\frac{m-\lambda}{\mu_k}-k\tau\right]_+,
+\qquad [x]_+=\max\{x,0\}.
+\qquad 0\leq L_k\leq H\leq2\alpha.
+\tag{U.138}
+$$
+
+Then
+
+$$
+\Theta\leq
+\frac{\beta+\alpha\sqrt{1-L_k/(2\alpha)}}{2\sqrt2}
++\frac12\sqrt{1-\lambda-\tau}.
+\tag{U.139}
+$$
+
+Proof. Rearranging (U.135) gives the unclipped lower bound on $H$; clipping preserves it since $H\geq0$. The function on the right of (U.113) is decreasing in $H$, so substitution gives (U.139). All roots are defined by (U.138) and the actual $R\geq0$. At $k=0$ one has $M_{0,u}=mP^{-1/2}\succ0$ and the same argument applies. No division by $m-\lambda$, $H$, $\tau$, $R$, a singular value, or an eigengap occurs. These inverse-$P$ formulas are stated only for $q>0$. $\square$
+
+## 134. A sufficient threshold for the direct root objective
+
+**Proposition 134.1 (a direct $\Theta$ certificate).** Suppose $q>0$ and $k>0$. Define
+
+$$
+L_p=2r-\frac\beta{\sqrt2},\qquad\gamma=\frac{\alpha k}{4}>0,
+\qquad
+a_k(\lambda)=2\alpha+k(1-\lambda)-\frac{kL_p^2}{1+\gamma}.
+\tag{U.140}
+$$
+
+Then each of the following is sufficient for $\Theta\leq r$: the scalar condition $Z_k\geq a_k(\lambda)$; or, for a unit minimum eigenvector of the actual $B$, the matrix condition
+
+$$
+C_{k,u}(\lambda):=(m-\lambda)I_2-a_k(\lambda)M_{k,u}\succeq0.
+\tag{U.141}
+$$
+
+Proof. Put $x=\alpha\sqrt{1-H/(2\alpha)}/\sqrt2$ and $y=\sqrt R$. These are nonnegative. Theorem 131.1 gives
+
+$$
+2\Theta\leq\frac\beta{\sqrt2}+x+y,\qquad
+x^2+\gamma y^2=\frac p2+\gamma(1-\lambda)-\frac\alpha4 Z_k.
+\tag{U.142}
+$$
+
+Substituting $Z_k\geq a_k(\lambda)$ in the last expression makes it at most $\gamma L_p^2/(1+\gamma)$. Weighted Cauchy–Schwarz therefore gives
+
+$$
+(x+y)^2\leq(1+\gamma^{-1})(x^2+\gamma y^2)\leq L_p^2.
+\tag{U.143}
+$$
+
+Since $\beta\leq1/\sqrt2$ and $r>1/2$, $L_p>0$. Taking the nonnegative root proves the scalar implication.
+
+If $a_k(\lambda)\leq0$, then $Z_k\geq0$ already proves that condition. If $a_k(\lambda)>0$, (U.141) and $M_{k,u}\succ0$ force $m-\lambda>0$ and
+
+$$
+\mu_k\leq\frac{m-\lambda}{a_k(\lambda)},\qquad
+m-\lambda\leq\mu_k Z_k
+\leq\frac{m-\lambda}{a_k(\lambda)}Z_k.
+\tag{U.144}
+$$
+
+Division only by positive quantities yields $Z_k\geq a_k(\lambda)$. This proves the matrix implication. These are sufficient conditions; no converse is asserted. The objective here is directly $\Theta$, and the proof does not require $S\leq c/2$. $\square$
+
+## 135. Exact coefficients for every real direction
+
+**Proposition 135.1 (trace, determinant and affine tests).** For $q>0$, finite $k\geq0$, and the quantities of (U.130), put
+
+$$
+\widetilde M_{k,u}=hM_{k,u},\qquad
+T_\nu=\frac1g+2-\nu,\quad
+E_\nu=\frac{1-\nu}{g}+2-\nu,\quad F_\nu=\nu g.
+\tag{U.145}
+$$
+
+For any real scalar threshold $a$ let $b=a/h$ and $C=(m-\lambda)I_2-aM_{k,u}$. Then
+
+$$
+\begin{gathered}
+\operatorname{Tr}\widetilde M_{k,u}=T_\nu m,\qquad
+\det\widetilde M_{k,u}=E_\nu m^2+F_\nu m,\\
+\operatorname{Tr}C=(2-bT_\nu)m-2\lambda,\qquad
+\det C=A_0m^2+B_0m+\lambda^2,\\
+A_0=1-bT_\nu+b^2E_\nu,\qquad
+B_0=\lambda(bT_\nu-2)+b^2F_\nu,\\
+B_0^2-4A_0\lambda^2
+=b^2\left[(bF_\nu+\lambda T_\nu)^2
+-4\lambda(\lambda E_\nu+F_\nu)\right].
+\end{gathered}
+\tag{U.146}
+$$
+
+Proof. The actual matrix entries are
+
+$$
+\widetilde M_{k,u}=
+\begin{pmatrix}
+hm/\alpha-\nu pu_1^2&-\nu gu_1u_2\\
+-\nu gu_1u_2&hm/\beta-\nu qu_2^2
+\end{pmatrix}.
+\tag{U.147}
+$$
+
+Its trace is $[h(1/\alpha+1/\beta)-\nu]m=(h^2/g-\nu)m=T_\nu m$. For the determinant, the square of the rank-one subtraction cancels, leaving
+
+$$
+\det\widetilde M_{k,u}
+=\frac{h^2m^2}{g}
+-\frac{\nu hm}{g}(\alpha^3u_1^2+\beta^3u_2^2).
+\tag{U.148}
+$$
+
+To simplify, use
+$h(\alpha u_1^2+\beta u_2^2)=m+g$ and
+$h(\alpha^3u_1^2+\beta^3u_2^2)=(1+g)m-g^2$.
+The latter follows by writing $\alpha^3=\alpha-\alpha\beta^2$, $\beta^3=\beta-\beta\alpha^2$, multiplying out, and using $\alpha^2+\beta^2=1$. Substitution proves $E_\nu,F_\nu$. Finally, for a $2\times2$ matrix $W$,
+$\det(tI-bW)=t^2-bt\operatorname{Tr}W+b^2\det W$.
+Use $t=m-\lambda$ and the first two identities to obtain $A_0,B_0$. Expanding their discriminant gives the last identity in (U.146). These computations include either sign of $u_1u_2$.
+
+For a real symmetric $2\times2$ matrix, nonnegative trace and determinant are equivalent to PSD, as seen from its two real eigenvalues. For every direction $m\in[q,p]$, the trace in (U.146) is affine and its minimum occurs at an endpoint. The determinant quadratic is nonnegative throughout $[q,p]$ exactly when its endpoints are nonnegative and, if $A_0>0$ with vertex $m_*=-B_0/(2A_0)$ inside that interval, also
+
+$$
+A_0m_*^2+B_0m_*+\lambda^2
+=\lambda^2-\frac{B_0^2}{4A_0}\geq0.
+\tag{U.149}
+$$
+
+If $A_0\leq0$, endpoints suffice, including the linear and constant cases. For $p>q$, each $m\in[q,p]$ is attained by a unit vector with $u_1^2=(m-q)/(p-q)$. At $p=q$, the interval is a singleton and no division by $p-q$ is needed.
+
+For fixed $p,k,u$, an affine threshold $a(\lambda)$ makes $C(\lambda)$ affine. Hence
+
+$$
+C((1-t)\lambda_1+t\lambda_2)
+=(1-t)C(\lambda_1)+tC(\lambda_2),\qquad0\leq t\leq1.
+\tag{U.150}
+$$
+
+PSD at two endpoints gives PSD on the segment for each fixed direction. If the endpoint tests hold for every real unit $u$, select an actual minimum eigenvector only after this interpolation. This does not interpolate independently chosen optimizing directions. For fixed $\lambda$, replacing $b$ by a larger upper bound subtracts an extra PSD multiple of $\widetilde M_{k,u}$, so proving PSD with that larger value proves it for the actual $b$, even when the latter is negative. $\square$
+
+## 136. A uniform low-residual branch
+
+**Theorem 136.1 (direct strict bound).** Every actual pair (U.110) satisfies the implication
+
+$$
+\left[\frac23\leq p\leq1,\quad0\leq\lambda\leq\frac{2q}{7}\right]
+\quad\Longrightarrow\quad\Theta<r.
+\tag{U.151}
+$$
+
+There is no restriction on the actual trace penalty or on the rank of $V$ beyond (U.110).
+
+Proof. Reuse the singular-value pairing and congruence in Theorem 110.1: for the actual singular values $s_1\geq s_2$ and $\eta_j=\sqrt{1-s_j^2}$,
+$4\sqrt2N\leq2\alpha+\beta(\eta_1+\eta_2)$ and $\beta\eta_1\leq\sqrt\lambda$.
+Together with $\eta_2\leq1$, $\tau\geq0$ and $R\leq1-\lambda$, this is exactly the common-pair bound (U.76),
+
+$$
+4\sqrt2\Theta\leq2\alpha+\beta+\sqrt\lambda
++2\sqrt2\sqrt{1-\lambda}.
+\tag{U.152}
+$$
+
+The derivative of $\sqrt x+2\sqrt2\sqrt{1-x}$ is nonnegative on $(0,1/9]$, since $1-x\geq8x$ there; continuity includes zero. Since $2q/7\leq2/21<1/9$, substitute this upper endpoint into (U.152). The resulting scalar bound is
+
+$$
+4\sqrt2\Theta\leq\mathcal F(p):=
+2\sqrt p+\left(1+\sqrt{2/7}\right)\sqrt{1-p}
++2\sqrt{\frac{10+4p}{7}}.
+\tag{U.153}
+$$
+
+On $2/3\leq p<1$, direct differentiation gives
+
+$$
+\mathcal F''(p)=
+-\frac1{2p^{3/2}}
+-\frac{1+\sqrt{2/7}}{4(1-p)^{3/2}}
+-\frac8{49((10+4p)/7)^{3/2}}<-2.
+\tag{U.154}
+$$
+
+Indeed the first magnitude is at least $1/2$. Since $q\leq1/3$ and $1+\sqrt{2/7}>3/2$, the second is greater than $9\sqrt3/8>3/2$, the last comparison following from $\sqrt3>4/3$. The third term is negative. At $p_0=3/4$ the exact value and slope are
+
+$$
+\begin{aligned}
+\mathcal F(p_0)&=\sqrt3+\frac12+\frac1{\sqrt{14}}
++2\sqrt{13/7}<\frac{522493}{100000},\\
+0<\mathcal F'(p_0)&=\frac2{\sqrt3}-1-\sqrt{2/7}
++\frac4{\sqrt{91}}<\frac1{25}.
+\end{aligned}
+\tag{U.155}
+$$
+
+Here are rational enclosures sufficient to reconstruct every sign:
+
+$$
+\begin{gathered}
+\sqrt3<\frac{17321}{10000},\quad
+\frac1{\sqrt{14}}<\frac{26727}{100000},\quad
+\sqrt{13/7}<\frac{136278}{100000},\\
+\frac{11547}{10000}<\frac2{\sqrt3}<\frac{11548}{10000},\quad
+\frac{5345}{10000}<\sqrt{2/7}<\frac{5346}{10000},\quad
+\frac{4193}{10000}<\frac4{\sqrt{91}}<\frac{4194}{10000}.
+\end{gathered}
+\tag{U.156}
+$$
+
+All are comparisons of positive numbers and follow by squaring rational endpoints. The first row sums to the upper bound in (U.155). The lower slope bound follows already from $(11547-10000-5346+4193)/10000=394/10000>0$; the upper follows from $(11548-10000-5345+4194)/10000=397/10000<1/25$.
+
+Integrating $\mathcal F''<-2$ about $p_0$, or applying concavity to $\mathcal F(p)+(p-p_0)^2$, yields
+
+$$
+\begin{aligned}
+\mathcal F(p)
+&\leq\mathcal F(p_0)+\mathcal F'(p_0)(p-p_0)-(p-p_0)^2\\
+&\leq\mathcal F(p_0)+\frac{\mathcal F'(p_0)^2}{4}
+<\frac{522533}{100000}<\frac{2613}{500}<4\sqrt2r.
+\end{aligned}
+\tag{U.157}
+$$
+
+The penultimate gap is $67/100000$. For the last comparison, $\sqrt2>707/500$ by squaring, and
+
+$$
+(4\sqrt2r)^2=16+8\sqrt2,\qquad
+16+8\frac{707}{500}-\left(\frac{2613}{500}\right)^2
+=\frac{231}{250000}>0.
+\tag{U.158}
+$$
+
+Thus (U.153) proves the claim for $p<1$. The explicit scalar function $\mathcal F$ is continuous at $p=1$, so the same uniform strict upper bound includes that endpoint. Alternatively the direct singular-$P$ proof in Proposition 138.1 below gives it without any inverse. This theorem proves the direct root objective; it does not assert the stronger square budget $S\leq c/2$ on this whole low branch. $\square$
+
+## 137. A complete all-rank slice at auxiliary spectrum three quarters
+
+**Theorem 137.1 (all actual penalties at $p=3/4$).** For $p=3/4,q=1/4$ and every actual real common contraction (U.110),
+
+$$
+\Theta\leq r.
+\tag{U.159}
+$$
+
+Proof. The actual eigenvalue lies in $[0,q]=[0,1/4]$. Use the three closed intervals
+
+$$
+[0,1/14],\qquad[1/14,1/8],\qquad[1/8,1/4].
+\tag{U.160}
+$$
+
+The first interval is Theorem 136.1 and even gives strict inequality. For the middle interval fix
+$h=(\sqrt3+1)/2$, $k=7/(2h)$, so $\nu=7/11$. Proposition 135.1 has exact coefficients
+
+$$
+T=\frac4{\sqrt3}+\frac{15}{11}<\frac{147}{40},\qquad
+E=\frac{16}{11\sqrt3}+\frac{15}{11}>\frac{11}{5},\qquad
+\frac{11}{40}<F=\frac{7\sqrt3}{44}<\frac{69}{250}.
+\tag{U.161}
+$$
+
+For these comparisons use $1732/1000<\sqrt3<1733/1000$, verified by squaring, and substitute the appropriate endpoint into each monotone reciprocal or linear expression. Write $L=2r-1/(2\sqrt2)$. Its square satisfies
+
+$$
+L^2=\frac{17}{8}+\sqrt2(1-r)>\frac{5581}{2500}.
+\tag{U.162}
+$$
+
+Indeed $\sqrt2>707/500$, $r<231/250$, and
+$17/8+(707/500)(1-231/250)-5581/2500=1/15625>0$.
+The bound on $r$ follows by squaring from $\sqrt2<14143/10000$ and
+$(2+14143/10000)/4<(231/250)^2$; the rational bound on $\sqrt2$ itself follows by squaring.
+
+At the first middle endpoint, (U.140) simplifies exactly to
+
+$$
+a_0:=a_k(1/14)=\sqrt3+\frac{13}{2(\sqrt3+1)}
+-\frac{56L^2}{15\sqrt3+8}
+<\frac{1733}{1000}+\frac{1625}{683}
+-\frac{625072}{169975}<\frac{109}{250}.
+\tag{U.163}
+$$
+
+For the negative term use the lower bound on $L^2$ and the upper bound on its positive denominator. The other terms use the upper bound on $\sqrt3$ and the lower bound on $\sqrt3+1$, respectively. Thus, with $b(\lambda)=a_k(\lambda)/h$,
+
+$$
+\begin{gathered}
+h>\frac{683}{500},\qquad b(1/14)<\frac{218}{683}<\frac8{25},\\
+b(1/8)=b(1/14)-\frac{3}{16h^2}<\frac{11}{50},\qquad
+h^2=1+\frac{\sqrt3}{2}<\frac{15}{8}.
+\end{gathered}
+\tag{U.164}
+$$
+
+For the second line, the subtracted term exceeds $1/10$, so $b(1/8)<8/25-1/10=11/50$. These upper bounds require no assumption that the actual $b$ is positive.
+
+Use the larger $b_{\rm cap}$ in the following table. All entries are exact rational numbers. The numerator column bounds $b_{\rm cap}F+\lambda T$ strictly from above; the next column bounds $4\lambda(\lambda E+F)$ strictly from below. The trace column is a strict lower bound for $\operatorname{Tr}[(m-\lambda)I-b_{\rm cap}\widetilde M]$ on $m\in[1/4,3/4]$.
+
+| $\lambda$ | $b_{\rm cap}$ | numerator upper bound | right-side lower bound | trace lower bound |
+| --- | --- | --- | --- | --- |
+| $1/14$ | $8/25$ | $17541/50000$ | $121/980$ | $221/3500$ |
+| $1/8$ | $11/50$ | $104019/200000$ | $11/40$ | $383/8000$ |
+
+To reconstruct the entries, substitute $T<147/40$, $E>11/5$, $11/40<F<69/250$ from (U.161). For example the numerator is bounded by $b_{\rm cap}(69/250)+\lambda(147/40)$, and the right side exceeds $4\lambda[\lambda(11/5)+11/40]$. The coefficient $2-b_{\rm cap}(147/40)$ is positive in both rows; hence the trace is bounded from below at $m=1/4$ by $(2-b_{\rm cap}(147/40))/4-2\lambda$. These substitutions give exactly the table. The strict squared gaps are
+
+$$
+\frac{121}{980}-\left(\frac{17541}{50000}\right)^2
+=\frac{48352631}{122500000000}>0,\qquad
+\frac{11}{40}-\left(\frac{104019}{200000}\right)^2
+=\frac{180047639}{40000000000}>0.
+\tag{U.165}
+$$
+
+Thus the discriminant in (U.146) is negative in each row. Since its constant term $\lambda^2$ is positive, the determinant polynomial has $A_0>0$ and is positive for every real $m$. Indeed $A_0\leq0$ would force the discriminant $B_0^2-4A_0\lambda^2\geq0$. The positive traces then prove positive definiteness for every direction at both endpoints. Decreasing $b_{\rm cap}$ to the actual $b$ preserves positive definiteness by Proposition 135.1. For each fixed $u$, the actual $C_{k,u}(\lambda)$ is affine, so it is PSD on the whole middle interval. Proposition 134.1 proves $\Theta\leq r$ there directly. No $S\leq c/2$ bound is needed for this interval.
+
+For the high interval reuse precisely the old weighted budget (U.74) and threshold (U.75) from Proposition 123.1. To distinguish it from the direct threshold, denote it here by
+
+$$
+a_S(\lambda)=\frac{2+4g-4\lambda-2\sqrt2}{h},\qquad
+Z_{4/h}\geq a_S(\lambda)\ \Longrightarrow\ S\leq c/2.
+\tag{U.166}
+$$
+
+This is the existing Hilbert–Schmidt estimate, not an additional root-trace theorem. At $k=4/h$ the directional comparison is the existing Theorem 122.1, or equivalently Theorem 133.1. Now $\nu=2/3$ and
+
+$$
+T=\frac4{\sqrt3}+\frac43<\frac{73}{20},\qquad
+E=\frac4{3\sqrt3}+\frac43>\frac{21}{10},\qquad
+\frac{36}{125}<F=\frac{\sqrt3}{6}<\frac{289}{1000}.
+\tag{U.167}
+$$
+
+Again $1732/1000<\sqrt3<1733/1000$ supplies every sign. The first high endpoint has
+
+$$
+\frac{a_S(1/8)}h
+=\frac{3/2+\sqrt3-2\sqrt2}{h^2}<\frac{11}{50}.
+\tag{U.168}
+$$
+
+For an entirely rational comparison, the numerator is less than
+$3/2+1733/1000-2(707/500)=81/200$,
+while $h^2>933/500$ and $(11/50)(933/500)>81/200$. If the numerator were nonpositive the desired inequality would hold automatically; otherwise these positive denominator comparisons apply.
+
+At $\lambda=1/8$ and $b_{\rm cap}=11/50$, the same all-direction calculation gives
+
+$$
+\begin{gathered}
+b_{\rm cap}F+\lambda T<\frac{51983}{100000},\qquad
+4\lambda(\lambda E+F)>\frac{1101}{4000},\\
+\frac{1101}{4000}-\left(\frac{51983}{100000}\right)^2
+=\frac{50267711}{10000000000}>0,\\
+\operatorname{Tr}[(m-\lambda)I-b_{\rm cap}\widetilde M]
+>\frac{197}{4000}>0\quad(1/4\leq m\leq3/4).
+\end{gathered}
+\tag{U.169}
+$$
+
+These follow by substituting the rational bounds of (U.167): the numerator upper is $(11/50)(289/1000)+(1/8)(73/20)$; the right-side lower is $4(1/8)[(1/8)(21/10)+36/125]$; the trace lower is $[2-(11/50)(73/20)]/4-1/4$. As in the middle interval, negative discriminant and positive trace prove every endpoint matrix positive definite, and (U.168) transfers this to the actual threshold.
+
+At the other high endpoint
+
+$$
+a_S(q)=\frac{1+\sqrt3-2\sqrt2}{h}<0,
+\qquad (m-q)I_2-a_S(q)M_{4/h,u}\succeq0.
+\tag{U.170}
+$$
+
+The scalar sign follows from $(1+\sqrt3)^2=4+2\sqrt3<8$; also $m\geq q$ and $M_{4/h,u}\succ0$. Affinity with fixed $k,u$ proves the matrix condition on $[1/8,1/4]$. The argument in (U.144), with $a_S$ in place of $a_k$, proves $Z_{4/h}\geq a_S$ when $a_S>0$; when $a_S\leq0$ this is automatic. Equation (U.166) gives $S\leq c/2$, and (U.27) gives $\Theta^2\leq2S\leq c$.
+
+The three closed intervals (U.160) cover the actual whole range of $\lambda$, with their common endpoints included in both neighboring arguments. The proof uses the middle direct-$\Theta$ threshold and the high square-budget threshold in their stated distinct roles. Every rank of the actual $V$ and every actual $\tau$ is retained. $\square$
+
+## 138. Singular endpoints, ties and calibrations
+
+**Proposition 138.1 (endpoint scope of the two-column and directional bounds).** Theorem 131.1 holds without excluding $s_1=1$, $s_2=1$, singular $A$, or singular $P$. Theorem 133.1 and Proposition 134.1 require $q>0$ for their inverse-$P$ formulas. At $q=0$ the direct bound is $\Theta\leq c<r$ for every feasible $V$.
+
+Proof. The positive-$s$ resolvents and $C_s\prec I_2$ in (U.116) hold throughout the domain. Their positive-series proof requires no rank to stay fixed. In particular $H=2\alpha$ is included by the positive binomial-series endpoint. For $q=0$, $p=1$ and $\lambda=0$. Let $Y$ comprise the first rows of $V_0,V_1$. The support of $A$ is contained in the two positive-weight rows of $D$, and its supported matrix is $I_2-YY^T$, with eigenvalues between zero and one. Therefore $\operatorname{Tr}\sqrt A\leq2$, $N\leq1/(2\sqrt2)$, and $R=1-\tau\leq1$, giving $\Theta\leq1/(2\sqrt2)+1/2=c<r$. This direct proof takes no inverse of $P$. Proposition 130.2 and (U.112) cover its nonzero zero-energy possibility.
+
+At $V=0$ one has the exact calibration
+
+$$
+H=\tau=0,\quad\lambda=q,\quad R=p,\quad
+\Theta=\frac h{2\sqrt2}+\frac\alpha2
+=c\sqrt p+\frac{\sqrt2}{4}\sqrt q\leq r.
+\tag{U.171}
+$$
+
+Since $c^2+1/8=c$, Cauchy–Schwarz gives the bound and its equality condition gives exactly $p=c$. This is the equality statement on the zero-contraction slice only.
+
+The actual residual can vanish, for example at
+
+$$
+p=q=1/2,\qquad V_0=I_2,\quad V_1=0,
+\qquad\tau=1,\quad\lambda=0,\quad R=0.
+\tag{U.172}
+$$
+
+This example does not assert that $R=0$ occurs at $p=3/4$. All bounds above allow zero residuals and zero penalties without dividing by them. Zero or equal singular values, $s_1=1$, repeated residual eigenvalues and direction endpoints cause no difficulty: choose any actual minimum eigenvector when needed. No continuous eigenbasis, eigengap inverse, or independent selection of a residual spectrum is used. In particular Theorem 137.1 includes noncommuting rank-two contractions, ties, and singular Gram complements. $\square$
+
+## 139. The remaining sufficient matrices and necessary common-variable region
+
+**Proposition 139.1 (a sufficient three-matrix route at a fixed spectrum).** Fix $q>0$. Use the direct threshold $a_k$ in (U.140) at $k=7/(2h)$, and $a_S$ in (U.166) at $k=4/h$. If all three conditions
+
+$$
+\begin{aligned}
+&(m-2q/7)I_2-a_{7/(2h)}(2q/7)M_{7/(2h),u}\succeq0,\\
+&(m-q/2)I_2-a_{7/(2h)}(q/2)M_{7/(2h),u}\succeq0,\\
+&(m-q/2)I_2-a_S(q/2)M_{4/h,u}\succeq0
+\end{aligned}
+\quad\text{for every real unit }u
+\tag{U.173}
+$$
+
+hold, then every actual common pair at this $p$ with $\lambda\geq2q/7$ satisfies $\Theta\leq r$. If in addition $p\geq2/3$, the conclusion holds for all actual $\lambda$.
+
+Proof. The first two conditions interpolate, with fixed $k,u$, to every $\lambda\in[2q/7,q/2]$. Proposition 134.1 then proves the direct target at an actual minimizing direction. For the high interval the other endpoint is automatic for every $p$:
+
+$$
+a_S(q)=\frac{4[p+g-(1+\sqrt2)/2]}h\leq0.
+\tag{U.174}
+$$
+
+Indeed $d=2p-1$, $y=2g$ satisfy $d^2+y^2=1$, so $d+y\leq\sqrt2$ and $p+g\leq(1+\sqrt2)/2$. Thus $(m-q)I-a_S(q)M_{4/h,u}\succeq0$ for all directions. Interpolating with the third condition in (U.173) proves the high matrix condition, and the positive-threshold argument (U.144), or its automatic nonpositive-threshold case, yields $Z_{4/h}\geq a_S$. Proposition 123.1 and (U.27) prove the target on $[q/2,q]$. If $p\geq2/3$, Theorem 136.1 supplies the remaining interval.
+
+For each fixed $p$, the exact coefficients and the endpoint/vertex rule in Proposition 135.1 give explicit scalar sufficient tests for all of (U.173). Their validity uniformly over $p\in(p_-,17/20)$ is unresolved. Theorem 137.1 supplies their complete certificates at $p=3/4$. Failure of one of these all-direction conditions would disprove that sufficient certificate at the tested spectrum; it would not disprove the actual target. In particular the realized minimizing direction must also obey
+
+$$
+\sqrt P V^TV\sqrt P u=(P-\lambda I_2)u,
+\tag{U.175}
+$$
+
+and remains tied to the actual traces and the same two-column matrix. The clipped bound (U.139) and the strict root-trace improvement (U.114) remain available independently of the sufficient matrix route. $\square$
+
+**Corollary 139.2 (necessary conditions after both new exclusions).** With the exact constants of (U.107), every feasible strict violation $\Theta>r$ must satisfy, all at one actual $P,V$,
+
+$$
+\begin{gathered}
+p_-<p<17/20,\quad p\ne3/4,\qquad\lambda>2q/7,\\
+[P,V^TV]\ne0,\qquad0<s_1<1,\qquad
+s_2^2<\delta_*,\qquad\tau+\zeta<\varepsilon_*,\\
+\zeta=\lambda-q(1-s_1^2)\geq0,\qquad
+\|V\|_F>1/100,\\
+21/25\leq p<17/20\ \Longrightarrow\ \|V\|_F>1/10.
+\end{gathered}
+\tag{U.176}
+$$
+
+Proof. Corollary 128.1 supplies its entire earlier region, using Theorem 125.1 on $[17/20,7/8]$ and the strict prior upper localization $p_+<7/8$. To apply Theorem 136.1 throughout that remaining region, one also needs $p_->2/3$. An exact comparison can be made without decimal approximations. The function $2\sqrt p+\sqrt{1-p}$ is strictly increasing before $4/5$, and its lower crossing of $k_*=4\sqrt2r-3$ is $p_-$. At $p=2/3$,
+
+$$
+2\sqrt{2/3}+\sqrt{1/3}=\frac{2\sqrt2+1}{\sqrt3}
+<\frac{2211}{1000}<\frac{1113}{500}<k_*.
+\tag{U.177}
+$$
+
+The first strict bound follows from $\sqrt2<14143/10000$, $\sqrt3>1732/1000$ and
+$(2(14143/10000)+1)/(1732/1000)=19143/8660<2211/1000$. The last bound is (U.80). Thus $p_->2/3$, and a strict violation must have $\lambda>2q/7$ by Theorem 136.1. Theorem 137.1 excludes $p=3/4$.
+
+All remaining restrictions in (U.176) are inherited from Corollary 128.1 with their same actual variables. In particular $s_2$, $\tau+\zeta$, noncommutation and the radius bounds have not been independently optimized or replaced. This is a necessary region, not a sufficient region and not a realization theorem. $\square$
+
+## 140. Mathematical source conditions and the unresolved uniform assertion
+
+**Definition 140.1 (attribution and interfaces).** Theorem 131.1, its sharpness and rank limitation, the finite-$k$ and direct-$\Theta$ comparisons, and the branch certificates in Sections 133–139 are repo-derived ordinary mathematics in the fixed real domain (U.110). No literature-priority or kernel-certification claim is part of these statements. The $k=4/h$ comparison is the owned result of Theorem 122.1; the weighted Hilbert–Schmidt and $S$ threshold are Proposition 123.1. The singular-value pairing is the owned inequality of Theorem 110.1 with its primary reference and fidelity conversion. Reusing them inside the new proofs introduces no separate novelty assertion for those tools.
+
+The primary norm/fidelity conventions are [Watrous, *Simpler semidefinite programs for completely bounded norms*, arXiv:1207.5726v2, Section 1 and Section 2.1, Lemma 2, (6), Theorem 3](https://arxiv.org/pdf/1207.5726v2). There $F(P,Q)=\|\sqrt P\sqrt Q\|_*$ is unsquared fidelity for PSD operands. The variational formula uses an infimum over positive definite test matrices; singular operands do not guarantee an attaining positive definite minimizer or an inverse on their kernel. These norm and support tools do not supply (U.113), the actual $\tau,\lambda$ relation, or the recovery constant.
+
+The related low-rank perturbation reference is [Shmueli–Drineas–Avron, *Low-Rank Updates of Matrix Square Roots*, arXiv:2201.13156v3, Sections 2.3 and 3.1, Theorem 3](https://arxiv.org/pdf/2201.13156v3). Its Theorem 3 assumes both matrices before and after the perturbation are symmetric positive definite and bounds singular-value decay of their square-root difference. A rank-$k$ perturbation does not give a rank-$k$ square-root difference. Proposition 132.2 exhibits the latter failure within the present feasible family. Theorem 131.1 instead proves its positive-resolvent argument directly, including singular endpoints; no algorithm, inverse-root hypothesis, or singular extension of that reference is a premise.
+
+The physical interface remains exactly Proposition 109.3, Definition 128.2 and [Bény–Oreshkov, *Approximate simulation of quantum channels*, arXiv:1103.0649v3, Section IV, (133), with Corollary 5/(64)–(66)](https://arxiv.org/pdf/1103.0649v3). The root quantity at the identity target is the square root of fixed-input entanglement fidelity. Equation (133) uses unrestricted CPTP completion and an independently optimized auxiliary environmental density; (132) alone retains a Kraus-number bound. In the present normalization the physical input is fixed at $\rho_\star=\operatorname{diag}(1/4,1/4,1/2)$, while auxiliary $X$ ranges over all complex $3\times3$ densities. The exact jointly optimized map uses $M=V^T$, code term $\ell=4N$, trace penalty $\tau$ and residual $R$ as in (U.3). It does not assert a pointwise converse for a preassigned physical encoder, identify rank of $V$ with physical Kraus rank, or independently realize arbitrary scalar relaxations. No additional unread theorem is used in these proofs.
+
+**Definition 140.2 (the remaining targets).** The common-boundary assertion (U.4) for every actual $P,V$ and all $p\in[1/2,1]$ remains unresolved. Theorem 136.1 proves its low-$\lambda$ sector and Theorem 137.1 its complete $p=3/4$ slice. Proposition 139.1 gives three sufficient all-direction matrix conditions for a remaining route, without asserting their uniform validity or necessity. Corollary 139.2 combines the actual-pair exclusions with the earlier localization and weighted interval; it does not supply a violating pair.
+
+Consequently the equivalent original half-beta, $\lambda=1$, actual-minimal-Kraus-rank-three assertion (U.5), with every complex auxiliary density and the fixed physical $\rho_\star$, remains unresolved. The separate broader (R.243), with arbitrary $0<\beta_{\rm phys}\leq1/2$, arbitrary admissible third columns, actual ranks up to nine, all whole-output complex CPTP recoveries, all finite complex references and the unhalved diamond norm, also remains unresolved in exactly the scope of Definition 120.3. Neither shortcut counterexample in Sections 130 and 132 is a target counterexample. No improving physical recovery, physical realization, quantum-field-theoretic consequence or gravitational consequence is implied by these ordinary matrix results.
+
+## 追加锚（本行以下为增补区）
