@@ -5,7 +5,7 @@ year: 2026
 title: Actual Robin price gaps, forced-core tail records and the selected-sign boundary
 doi: null
 url: https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md
-claim: Under the original source-window hypotheses, the complete selected response retains actual price-gap costs; every inactive-forced-prime core is a strict all-integer right-tail record with original-exponent own-size excess. A synthetic positive-reference model excludes height-and-envelope plus numerical full-Q reasoning alone. Actual favorable slack and RH remain unproved.
+claim: Under the original source-window hypotheses, the complete selected response retains actual price-gap costs; every inactive-forced-prime core is a strict all-integer right-tail record with original-exponent own-size excess. A synthetic positive-reference model excludes height-and-envelope plus numerical full-Q reasoning alone. A cited unrefereed density theorem extends the original high-frequency range. Actual favorable slack and RH remain unproved.
 strata_touched: []
 license: Apache-2.0
 triage: anchor
@@ -11784,3 +11784,92 @@ that any prime-selected source attains it. No real-parameter capacity
 extension, global clock bound, second compensation credit or pointwise
 future-error sign is introduced. The independent same-source strict
 upper, strict Robin for every integer above 5040 and RH remain open.
+
+
+## A cited density theorem extends the original high-frequency range
+
+Reuse Mark Lewko, *Zero-density estimates from an improved large-values
+bound*, at pinned source
+[`ee2a8a32be49a4f73c7386e9dffdea24d7e3d8c0`](https://github.com/mrklwk/zeta-density-39-over-17-lean/tree/ee2a8a32be49a4f73c7386e9dffdea24d7e3d8c0).
+The production theorem
+[`GuthMaynard.Improvement.global_density_uniform`](https://github.com/mrklwk/zeta-density-39-over-17-lean/blob/ee2a8a32be49a4f73c7386e9dffdea24d7e3d8c0/lean/GuthMaynard/Improvement/GlobalDensity.lean)
+and its literal actual-zero formulation
+[`GuthMaynardStatement.global_uniform`](https://github.com/mrklwk/zeta-density-39-over-17-lean/blob/ee2a8a32be49a4f73c7386e9dffdea24d7e3d8c0/lean/Solution.lean)
+supply the following external input:
+
+$$
+\forall\epsilon>0\ \exists C_\epsilon>0\
+\forall\sigma\in[1/2,1]\ \forall T\ge2,\qquad
+N(\sigma,T)\le C_\epsilon
+ T^{(39/17)(1-\sigma)+\epsilon}.
+\tag{LDS1}
+$$
+
+Here the finite set consists of actual `riemannZeta` zeros in
+$0<\operatorname{Re}\rho<1$, with
+$\operatorname{Re}\rho\ge\sigma$ and $|\operatorname{Im}\rho|\le T$,
+counted with `analyticOrderNatAt` multiplicities. This bounds the existing
+positive-ordinate count as well. The endpoint's proof has no additional
+analytic hypothesis. It is cited from an unrefereed proof repository:
+the pinned compatibility migration's closure checks are source-reported,
+not kernel replay by this project. Earlier-version receipts do not certify
+that migration. This application takes LDS1 as a literature input; it is
+neither a new density theorem nor a local Lean certification of that input.
+
+With this cited supplier, keep FHA1--FHA5's original conditional source,
+all full windows, maximizing ties, actual coefficients and multiplicities,
+positive outgoing weights and legal upper heights. Replace only FHA1's
+additional restriction by
+
+$$
+\boxed{1-\Theta<\eta<
+ \min\!\left\{\frac12,
+ \frac{2-\min\{\Theta,9/13\}}3\right\}.}
+\tag{LDS2}
+$$
+
+To apply the existing proof directly, let $D_0$ denote FHA2's continuous
+Ingham--Guth--Maynard exponent and set
+$D_*(\sigma)=\min\{D_0(\sigma),(39/17)(1-\sigma)\}$.
+Its normalized coefficient, for $1/2\le\sigma<1$, is
+
+$$
+\frac{D_*(\sigma)}{1-\sigma}=
+\begin{cases}
+3/(2-\sigma),&\sigma\le9/13,\\
+39/17,&9/13\le\sigma\le46/65,\\
+15/(3+5\sigma),&\sigma\ge46/65.
+\end{cases}
+\tag{LDS3}
+$$
+
+The joins agree. Its maximum over $1/2\le\sigma\le\Theta$, with
+$\sigma<1$, is $3/(2-\min\{\Theta,9/13\})$. On the same compact
+middle range $[u,v]$, where $u=1-\eta>1/2$ and
+$v=\min\{\Theta,\sigma_\circ\}<1$, one has $0<D_*<1$ and, with
+$E_*=\sigma-1+D_*/2$,
+
+$$
+\mu D_*(\sigma)-E_*(\sigma)
+=1-\sigma-\eta D_*(\sigma)>0,\qquad \mu=1/2-\eta>0.
+$$
+
+Thus the strict compact gap in FHA2 holds with $D_*,E_*$. At each fixed
+bin endpoint use whichever cited estimate supplies the minimum; include
+$9/13$ and $46/65$ as endpoints when present. The existing finite-bin
+choice absorbs the positive density loss. Apply FHA3--FHA5 without
+changing their proof, including both $B\le X$ and $B>X$ branches and the
+latter's actual source-height account. They give the same
+$\mathcal R_X^{\rm high}/\mathcal G_X\to0$ and remaining-head margin
+on LDS2. The common polynomial-height raw-head consumer following FHA5
+uses that same gap and its existing near-one estimate, so it transfers
+to LDS2 as well. No supplied exponent or height assignment is reselected.
+
+For $\Theta\ge7/10$, including $\Theta=1$, the additional original
+parameter class is $13/30\le\eta<17/39$. Its upper endpoint increases
+by $1/390$. This is a consumed application of the cited density theorem.
+WRC still requires its separate short-interval input and retains its
+$\eta<13/30$ restriction. FCT's full-range uncompensated future account
+is already available. No uniformity as $\eta$ approaches the new endpoint,
+signed remaining-head upper, full original-range compensation estimate,
+strict Robin for every integer above 5040, or RH follows.
