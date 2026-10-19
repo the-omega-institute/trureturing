@@ -1004,3 +1004,480 @@ $$
 This is a contradiction. In the rank-four case Theorem 121.1 already gives $`\tau=\lambda_3(H)+\lambda_4(H)<2-\sqrt2<1`$, which supplies the comparison hypothesis and the upper endpoint in (124.22). ∎
 
 The new content is the quantitative calibrated support-slack estimate (124.3) and its combination with the actual quotient's symmetric-square obstruction. It makes the lower spectral-tail exclusion in §123 computable. The linear-algebra and channel-norm background is standard; see Watrous, [*The Theory of Quantum Information*, Chapters 1 and 3](https://cs.uwaterloo.ca/~watrous/TQI/). The argument uses the full original unhalved norm, and the polar comparison retains the same actual correlation matrix. No complementary stress or local-minimum property is transferred to a comparison pair. The intermediate-tail rank-four class is still open, and neither (124.16) nor (124.22) supplies a feasible member or settles the unrestricted quarter-optimum problem.
+
+## 125. First-record concentration forces common-stress concentration
+
+### 125.1. The actual quotient and an effective-rank bound
+
+Retain the original channels, correlated encoding, forward-Gram convention, full sixteen-dimensional product output and unhalved arbitrary-reference error $`\delta=F(G,H)`$ of (120.1)–(120.4). Suppose the actual channels are calibrated and satisfy
+
+$$
+\begin{aligned}
+&G,H\succeq0,\qquad G_{ff}=H_{ff}=I_2,\qquad
+G=H\odot\bar R,\qquad R\succeq0,\quad R_{ii}=1,\\
+&P=\alpha D_aRD_a^*\succeq0,\qquad PH=0,\qquad
+\alpha>0,\quad a_i\ne0,\quad D_a=\operatorname{diag}(a).
+\end{aligned}
+\tag{125.1}
+$$
+
+These are the full actual-quotient and complementary-stress hypotheses of [RT IV (119.2)](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1191-actual-channels-and-the-full-quotient-hypothesis). Define
+
+$$
+\lambda=\|P\|_{\mathrm{op}},\qquad
+x_i=P_{ii}/\lambda,\qquad X=\operatorname{diag}(x),\qquad
+r=\operatorname{Tr}P/\lambda=\sum_i x_i,\qquad m=\max_i x_i.
+\tag{125.2}
+$$
+
+All $`x_i`$ are positive. Write $`\kappa_k(G)=\sum_{j=1}^k\lambda_j(G)`$ for the decreasing spectral sums, with $`\kappa_0(G)=0`$, and set $`\tau_G=8-\kappa_2(G)`$. This is the first-Gram tail; it is distinct from the opposite rank-four tail $`\tau_H=\lambda_3(H)+\lambda_4(H)`$ in §§121–124.
+
+**Theorem 125.1 (actual-stress concentration).** Under (125.1),
+
+$$
+\boxed{\quad
+0<m\le\frac34,\qquad
+r\le2+m\tau_G\le2+4m\delta\le2+3\delta.
+\quad}
+\tag{125.3}
+$$
+
+Consequently
+
+$$
+\boxed{\quad
+\delta\ge\max\left\{0,\frac{r-2}{4m}\right\}
+\ge\max\left\{0,\frac{r-2}{3}\right\},\qquad
+\delta<\frac14\ \Longrightarrow\ r<2+m\le\frac{11}{4}.
+\quad}
+\tag{125.4}
+$$
+
+The theorem does not require local minimality or specified ranks. When (125.1) is supplied by a canonical common normer at a full-domain calibrated minimum, it applies to that same actual stress.
+
+### 125.2. The phase-correct weighted-frame contraction
+
+**Proof.** Let $`E=\operatorname{diag}(a_i/|a_i|)`$. Since $`P_{ii}=\alpha|a_i|^2`$, the actual quotient gives the entrywise identity
+
+$$
+\frac{H\odot\bar P}{\lambda}
+ =E^*X^{1/2}GX^{1/2}E.
+\tag{125.5}
+$$
+
+Both sides have entry $`\alpha\bar a_i a_jH_{ij}\bar R_{ij}/\lambda`$. Thus no real gauge or change of physical records is needed. Schur positivity, $`0\preceq\bar P\preceq\lambda I_8`$ and $`H_{ii}=1`$ imply
+
+$$
+0\preceq H\odot\bar P\preceq\lambda I_8,
+\qquad 0\preceq X^{1/2}GX^{1/2}\preceq I_8.
+\tag{125.6}
+$$
+
+Positivity of the correlation Schur multiplier is standard; see Levick and Martin, [*Matrix N-dilations of quantum channels*, Example 6](https://doi.org/10.7153/oam-2018-12-59).
+
+Set $`A=G^{1/2}X^{1/2}`$ and $`C=AA^*=G^{1/2}XG^{1/2}`$. Equation (125.6) says $`A^*A\preceq I_8`$, hence $`\|A\|_{\mathrm{op}}\le1`$ and $`C\preceq I_8`$. Also $`X\preceq mI_8`$. Therefore
+
+$$
+0\preceq C\preceq I_8,\qquad C\preceq mG,
+\qquad \operatorname{Tr}C=\operatorname{Tr}(XG)=r.
+\tag{125.7}
+$$
+
+The last identity uses $`G_{ii}=1`$. No commutation of $`C,G,X`$ is asserted. Let $`\Pi`$ be a rank-two projection onto a top-two eigenspace of $`G`$. Since $`\operatorname{Tr}G=8`$, the two compressed traces satisfy
+
+$$
+\begin{aligned}
+r&=\operatorname{Tr}(\Pi C)+\operatorname{Tr}[(I_8-\Pi)C]\\
+&\le2+m\operatorname{Tr}[(I_8-\Pi)G]
+=2+m\tau_G.
+\end{aligned}
+\tag{125.8}
+$$
+
+Positivity of the compressed differences suffices even when $`\Pi`$ and $`C`$ do not commute. The first two eigenvalues exist because calibration forces $`\operatorname{rank}G\ge2`$.
+
+### 125.3. Original full-output normalization and complementary support
+
+For completeness, the first-Gram estimate in [RT IV Theorem 117.1](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1171-original-channels-and-a-tagged-pure-target) uses the normalized input and target vectors
+
+$$
+|\Psi\rangle=\frac12\sum_f|f\rangle_R\otimes
+               \frac{|f,0\rangle+|f,1\rangle}{\sqrt2},
+\qquad
+|\Omega\rangle=\frac12\sum_f|f\rangle_R\otimes|f,f\rangle.
+\tag{125.9}
+$$
+
+The reference has dimension four and the physical product output has dimension sixteen. The target output is $`|\Omega\rangle\langle\Omega|`$. For the full trace-one product output $`\sigma`$ and $`K=G\odot H`$, the reference tags give
+
+$$
+\langle\Omega|\sigma|\Omega\rangle
+ =\frac{\boldsymbol1^*K\boldsymbol1}{32},\qquad
+\delta\ge2-\frac{\boldsymbol1^*K\boldsymbol1}{16}.
+\tag{125.10}
+$$
+
+The second inequality tests the full difference against $`2|\Omega\rangle\langle\Omega|-I`$. The forward-Gram transpose conjugates the compressed entries; the complete sum is real by Hermiticity. Thus the original unhalved factor and all output/reference coordinates are retained.
+
+The calibrated record frames are sums of four rank-two projections, so $`0\preceq G,H\preceq4I_8`$ and $`\operatorname{Tr}G=\operatorname{Tr}H=8`$. In an eigenbasis of $`G`$, the diagonal entries $`h_j`$ of $`\bar H`$ obey $`0\le h_j\le4`$, $`\sum_jh_j=8`$. Hence
+
+$$
+\begin{aligned}
+\boldsymbol1^*K\boldsymbol1
+ &=\operatorname{Tr}(G\bar H)=\sum_j\lambda_j(G)h_j\\
+ &\le\lambda_1(G)h_1+\lambda_2(G)(8-h_1)
+ \le4\kappa_2(G),\\
+\delta&\ge2-\frac{\kappa_2(G)}4,\qquad \tau_G\le4\delta.
+\end{aligned}
+\tag{125.11}
+$$
+
+Finally let $`N`$ project onto $`\ker H`$. The actual complementarity and calibrated frame cap imply
+
+$$
+P\preceq\lambda N,\qquad H\preceq4(I_8-N),\qquad
+x_i\le N_{ii}\le\frac34.
+\tag{125.12}
+$$
+
+Indeed $`PH=0`$ places the range of $`P`$ in $`\ker H`$, and the diagonal of the second inequality is $`1\le4(1-N_{ii})`$. Thus $`m\le3/4`$. Equations (125.8), (125.11) and (125.12) prove (125.3); rearrangement proves (125.4). ∎
+
+### 125.4. The spectral envelope and the residual common-stress sector
+
+The same contraction has the stronger finite spectral form
+
+$$
+r\le\sum_{j=1}^{8}\min\{1,m\lambda_j(G)\}
+ =\min_{0\le k\le8}\{k+m(8-\kappa_k(G))\}.
+\tag{125.13}
+$$
+
+To prove it, evaluate both bounds in (125.7) on an eigenbasis of $`G`$ and sum. The minimizing split occurs where $`m\lambda_j(G)`$ crosses one. This is a trace bound from the two operator inequalities, not a claim that its spectral extremizer is physically realizable.
+
+**Corollary 125.2 (remaining rank-four common-stress region).** Let $`(G,H)`$ be a local minimum on the full calibrated domain of [RT IV (118.1)](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1181-original-domain-and-common-stress-hypotheses), with ranks $`(7,4)`$, a full-support first kernel and $`0<\delta<1/4`$. For its actual common stress and its actual quotient, every earlier support identity remains in force, and
+
+$$
+\begin{gathered}
+\operatorname{rank}P=\operatorname{rank}R=4,\qquad
+\operatorname{ran}P=\ker H,\qquad
+\operatorname{ran}R=\ker(HD_a),\\
+\frac1{325}<\tau_H<2-\sqrt2,\qquad
+r<2+m\le\frac{11}{4}.
+\end{gathered}
+\tag{125.14}
+$$
+
+If $`x_{(1)}\le\cdots\le x_{(8)}=m`$ is the ordered normalized stress diagonal, then also
+
+$$
+\sum_{i=1}^{7}x_{(i)}=r-m<2,\qquad
+x_{(1)}<\frac27,\qquad x_{(2)}<\frac13.
+\tag{125.15}
+$$
+
+**Proof.** The same common quotient and rank-four support are [RT IV Corollary 118.3](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1184-subquarter-strict-complementarity). Corollary 124.3 supplies the opposite-tail interval. Apply Theorem 125.1 to that original stress to obtain the remaining bound in (125.14). Subtract $`m`$ to obtain the first inequality in (125.15). Its sum contains seven terms at least $`x_{(1)}`$ and six terms at least $`x_{(2)}`$, giving both strict coordinate bounds. ∎
+
+The measured-diagonal lower bound in (125.4) dominates [RT IV (119.11)](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1193-calibrated-spectral-bounds-and-diagonal-concentration). For $`r>2`$, their pre-truncation difference is
+
+$$
+\frac{r-2}{4m}-\left(\frac{r}{4m}-\frac4r\right)
+ =\frac{8m-r}{2mr}\ge0,
+\tag{125.16}
+$$
+
+because $`r=\sum_i x_i\le8m`$. For $`r\le2`$, the older term is at most $`2-4/r\le0`$, so the domination persists after taking the maximum with zero. In particular (125.14) removes the entire effective-rank sector $`11/4\le r<1129/300`$ left by the previous uniform cutoff; the refined formula (119.12) has stated domain $`15/4\le r\le4`$, entirely above that new cutoff. This conclusion uses the actual same stress, rather than optimizing a free positive matrix on its support.
+
+
+### 125.5. Coupled record tails and an intermediate-tail stress exclusion
+
+**Proposition 125.3 (coupled-tail stress bound).** Assume (125.1) and $`\delta<1/4`$. Put $`u=8-\kappa_2(G)`$ and $`v=8-\kappa_2(H)`$, so $`0\le u,v<1`$. Then
+
+$$
+\boxed{\quad
+8\delta\ge2u+2v-uv,\qquad
+r\le2+m\frac{8\delta-2v}{2-v}
+ <2+2m\frac{1-v}{2-v}
+ \le2+\frac32\frac{1-v}{2-v}.
+\quad}
+\tag{125.17}
+$$
+
+In particular, in the rank-four setting of Corollary 125.2,
+
+$$
+\boxed{\qquad \tau_H\ge\frac12\quad\Longrightarrow\quad r<\frac52.\qquad}
+\tag{125.18}
+$$
+
+**Proof.** Let $`\lambda_1\ge\cdots\ge\lambda_8`$ be the eigenvalues of the actual first Gram and $`h_j`$ the diagonal entries of $`\bar H`$ in that eigenbasis. Retain $`K=G\odot H`$ and set
+
+$$
+D=4\kappa_2(G)-\operatorname{Tr}(G\bar H),\qquad
+ t=\sum_{j\ge3}h_j.
+\tag{125.19}
+$$
+
+The spectral sum variational principle gives $`t\ge8-\kappa_2(H)=v`$. Explicitly, the trace of $`\bar H`$ on the first two eigenvectors of $`G`$ is at most the sum of its two largest eigenvalues, and conjugation preserves the spectrum of $`H`$.
+
+The exact deficit identity in [RT IV (117.12)](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1172-exact-rigidity-at-the-spectral-quarter-boundary), using $`\sum_jh_j=8`$, is
+
+$$
+D=(\lambda_1-\lambda_2)(4-h_1)
+   +\sum_{j\ge3}(\lambda_2-\lambda_j)h_j.
+\tag{125.20}
+$$
+
+Every term is nonnegative. Since $`\lambda_1\le4`$ and the eigenvalues after the first two sum to $`u`$,
+
+$$
+\lambda_2\ge4-u,\qquad \lambda_3\le u,\qquad
+D\ge(\lambda_2-\lambda_3)t\ge(4-2u)v.
+\tag{125.21}
+$$
+
+Here $`u<1`$ ensures the factor is positive. The same original tagged-input estimate (125.10) gives $`\operatorname{Tr}(G\bar H)\ge16(2-\delta)`$, and hence
+
+$$
+D\le4(8-u)-16(2-\delta)=4(4\delta-u).
+\tag{125.22}
+$$
+
+Combining (125.21)–(125.22) proves $`2u+2v-uv\le8\delta`$. Because $`2-v>0`$, solve for $`u`$ and use $`r\le2+mu`$ from Theorem 125.1. The strict inequality follows from $`\delta<1/4`$, and the last bound uses $`m\le3/4`$. Finally $`(1-v)/(2-v)`$ decreases on $`[0,1)`$ and is $`1/3`$ at $`v=1/2`$. In the rank-four case $`v=\tau_H`$, proving (125.18). ∎
+
+Thus the actual intermediate-tail sector $`1/2\le\tau_H<2-\sqrt2`$ is incompatible with a common stress having $`r\ge5/2`$ at a subquarter full-domain calibrated minimum. The bound couples the two actual Grams and the same actual stress; it does not substitute the opposite tail for the first tail in (125.8). The separated remaining region is still open.
+
+Calibration is used in both the weighted-frame trace identity and the complementary-support cap. The class satisfying the combined stress and tail restrictions remains open, and no feasible minimum in it is asserted. No rank or local-minimum transfer is claimed for arbitrary leaking optimizers, and the unrestricted quarter-optimum problem remains open.
+
+## 追加锚（本行以下为增补区）
+
+## 126. Reciprocal cuts constrain the actual error inertia near the rank-two boundary
+
+### 126.1. The original common normer and the excluded sector
+
+Retain the original four two-coordinate fibres, calibrated channels, fixed correlated encodings, and unhalved arbitrary-reference error $`\delta`$ of (120.1)–(120.4). The physical product output is the full sixteen-dimensional space. Suppose $`(G,H)`$ is a local minimum on the full calibrated domain, including rank-changing competitors, with $`\operatorname{rank}G=7`$, $`\ker G=\mathbb C a`$ and every $`a_i\ne0`$, $`\operatorname{rank}H=4`$, and $`0<\delta<1/4`$. Put $`L=T-G\odot H`$. The exact original norm is
+
+$$
+\delta=\max\{2\operatorname{Tr}(LW):
+ \rho=\bigoplus_f\rho_f\succeq0,\quad
+ \operatorname{Tr}\rho=1,\quad0\preceq W\preceq\rho\},
+\qquad T_{ff}=I_2,\quad T_{fg}=J_2/2\ (f\ne g).
+\tag{126.1}
+$$
+
+This is the calibrated full-norm formula of [RT III Theorem 91.1](ARITHMETIC_HOLOGRAPHIC_RT_III.md#911-original-channels-forward-grams-and-the-adaptive-theorem). Choose any canonical common norming pair from [RT III §95.2](ARITHMETIC_HOLOGRAPHIC_RT_III.md#952-one-rank-seven-side-gives-a-supported-psd-quotient), namely one satisfying the simultaneous first-order conditions for both actual Grams. Its same positive scale and opposite stress obey
+
+$$
+\begin{aligned}
+G&=H\odot\bar R,\qquad R\succeq0,\quad R_{ii}=1,\\
+P&=\alpha\operatorname{diag}(a)R\operatorname{diag}(a)^*,
+       \quad PH=0,\quad\alpha>0,\\
+W_{ij}&=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}}
+                 \qquad(f(i)\ne f(j)).
+\end{aligned}
+\tag{126.2}
+$$
+
+All denominators are nonzero. For a union $`A`$ of two complete original fibres, define the four-by-four reciprocal cut and the opposite spectral tail by
+
+$$
+Q_A=\bigl(1/\overline{H_{ij}}\bigr)_{i\in A,j\in A^c},
+\qquad v=8-\kappa_2(H)=\lambda_3(H)+\lambda_4(H).
+\tag{126.3}
+$$
+
+Write $`n_+(L),n_-(L),n_0(L)`$ for the strictly positive, strictly negative and zero eigenvalue counts.
+
+**Theorem 126.1 (actual reciprocal cuts and inertia).** Under these hypotheses, if $`v\le1/64`$, then every two-plus-two fibre cut satisfies
+
+$$
+\begin{aligned}
+\sigma_{\min}(Q_A)&>\frac{93337}{1998848}>0,\\
+\operatorname{rank}W&\ge4,\qquad
+\operatorname{rank}(\rho-W)\ge4,\\
+n_+(L)&\le4,\qquad n_-(L)\le4.
+\end{aligned}
+\tag{126.4}
+$$
+
+The normer conclusions hold for every canonical common pair. If $`L`$ is nonsingular, its inertia is therefore exactly $`(4,4)`$. Thus the nonsingular $`(2,6)`$, $`(3,5)`$ and $`(5,3)`$ branches, and every singular branch with either strict index at least five, are excluded in the actual tail sector $`1/325<v\le1/64`$. The lower endpoint comes from §124; the scalar interval does not assert existence of a physical pair or minimum.
+
+### 126.2. Local polar comparison in the original coordinates
+
+**Proof.** For cross-fibre coordinates, the logical matrix unit $`|i\rangle\langle j|`$ has trace norm one. The corresponding correct entry of the full physical product output is $`\overline{G_{ij}H_{ij}}`$, against target entry $`1/2`$. Bounding that entry by the output trace norm gives the original unhalved test of [RT IV (116.6)–(116.8)](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1161-the-original-channel-principal-quotient):
+
+$$
+\delta\ge\left|\tfrac12-G_{ij}H_{ij}\right|,
+\qquad
+|H_{ij}|^2\ge|G_{ij}H_{ij}|\ge\tfrac12-\delta>\tfrac14.
+\tag{126.5}
+$$
+
+Here $`|R_{ij}|\le1`$ in the actual quotient was used; no output compression replaces the norm.
+
+Use the unchanged-record top-two environment chart of (121.11)–(121.12) and (123.13):
+
+$$
+V_f=\begin{bmatrix}C_f\\D_f\end{bmatrix},\qquad
+C_f=U_fA_f,\quad A_f=(I_2-D_f^*D_f)^{1/2},\quad U_f\in U(2),
+\qquad t_f=\|D_f\|_F^2,\quad\sum_ft_f=v.
+\tag{126.6}
+$$
+
+Since $`v<1`$, the polar factors exist. Define only an auxiliary qubit Gram $`H^{(0)}_{fg}=U_f^*U_g`$. No original stress, null vector or normer is transported to it. The actual cross block is $`H_{fg}=A_fU_f^*U_gA_g+D_f^*D_g`$. Rationalizing the square root and using $`\|A_g\|\le1`$ gives
+
+$$
+\begin{aligned}
+\|H_{fg}-H^{(0)}_{fg}\|_{\mathrm{op}}
+&\le\frac{t_f+t_g}{1+\sqrt{1-v}}+\sqrt{t_ft_g}\\
+&\le\frac{v}{1+\sqrt{1-v}}+\frac v2
+ \le\frac{v}{2-v}+\frac v2\\
+&\le\frac1{127}+\frac1{128}
+ =\frac{255}{16256}<\frac1{63}.
+\end{aligned}
+\tag{126.7}
+$$
+
+The last line uses the inclusive endpoint $`v\le1/64`$; the preceding inequality uses $`\sqrt{1-v}\ge1-v`$. Every cross-fibre entry therefore satisfies
+
+$$
+|H^{(0)}_{ij}|>\frac12-\frac1{63}
+ =\frac{61}{126}>\frac{15}{32}.
+\tag{126.8}
+$$
+
+### 126.3. Uniform Cauchy conditioning and the actual cuts
+
+Consider the four columns $`u_1,\ldots,u_4`$ of two orthonormal qubit bases and the four columns $`z_1,\ldots,z_4`$ of another two. Suppose every overlap between distinct bases in this collection has magnitude at least $`\ell`$, with $`0<\ell\le1/2`$. Write $`B_{ij}=\langle u_i,z_j\rangle`$, $`Q_{ij}=1/B_{ij}`$, and $`[p,q]=\det[p\ q]`$. The Cauchy determinant and its cofactor formula give
+
+$$
+\left|(Q^{-1})_{ji}\right|
+ =\frac{\displaystyle\prod_{k=1}^4|B_{kj}|
+                     \prod_{l=1}^4|B_{il}|}
+ {|B_{ij}|\displaystyle\prod_{k\ne i}|[u_i,u_k]|
+                      \prod_{l\ne j}|[z_j,z_l]|}.
+\tag{126.9}
+$$
+
+For completeness, the standard Cauchy double-alternant identity is recorded in Krattenthaler, [*Advanced Determinant Calculus*, §2.1, equation (2.7), page 6](https://www.mat.univie.ac.at/~slc/wpapers/s42kratt.pdf). Choose a common qubit coordinate chart avoiding the finitely many zero components. Row and column scalings turn the overlaps into $`x_i+y_j`$, so that identity yields the homogeneous formula
+
+$$
+|\det Q|
+ =\frac{\displaystyle\prod_{i<k}|[u_i,u_k]|
+                         \prod_{j<l}|[z_j,z_l]|}
+        {\displaystyle\prod_{i,j}|B_{ij}|}.
+\tag{126.10}
+$$
+
+There are no repeated rays on either side: coincidence across two bases would make the overlap with an orthogonal partner zero. All separation factors in (126.10) are therefore nonzero. Applying the same determinant identity to a three-by-three minor and dividing by (126.10) proves (126.9). Continuity gives the homogeneous identity when an initially chosen chart has zero components. Thus no real gauge or nonzero-coordinate restriction is imposed.
+
+For a fixed unit vector, its two overlaps with an orthonormal basis have squared magnitudes summing to one, and their product is at most $`1/2`$. Each four-overlap product in the numerator of (126.9) is therefore at most $`1/4`$. On either side, the separation from the same-basis partner is one; the other two separations have squared magnitudes summing to one and are each at least $`\ell`$. Their product is at least $`\ell\sqrt{1-\ell^2}`$. Consequently
+
+$$
+\max_{i,j}|(Q^{-1})_{ji}|
+ \le\frac1{16\ell^3(1-\ell^2)},\qquad
+\|Q^{-1}\|_{\mathrm{op}}
+ \le\frac1{4\ell^3(1-\ell^2)},\qquad
+\sigma_{\min}(Q)\ge4\ell^3(1-\ell^2).
+\tag{126.11}
+$$
+
+Entrywise conjugation preserves singular values, so this also applies to reciprocal conjugates. Fix any original two-plus-two fibre cut and form its reciprocal-conjugate seed matrix $`Q_A^{(0)}`$ from $`H^{(0)}`$. Equations (126.8) and (126.11), with $`\ell=15/32`$, imply
+
+$$
+\sigma_{\min}(Q_A^{(0)})
+ \ge4(15/32)^3\bigl(1-(15/32)^2\bigr)
+ >3(15/32)^3=\frac{10125}{32768}.
+\tag{126.12}
+$$
+
+Meanwhile each actual reciprocal entry obeys
+
+$$
+\left|\frac1{\overline{H_{ij}}}
+       -\frac1{\overline{H^{(0)}_{ij}}}\right|
+ =\frac{|H_{ij}-H^{(0)}_{ij}|}{|H_{ij}|\,|H^{(0)}_{ij}|}
+ <\frac{1/63}{(1/2)(61/126)}=\frac4{61},
+\qquad \|Q_A-Q_A^{(0)}\|_{\mathrm{op}}<\frac{16}{61}.
+\tag{126.13}
+$$
+
+The last inequality bounds the operator norm by the Frobenius norm of the four-by-four matrix. Testing every unit vector now gives
+
+$$
+\sigma_{\min}(Q_A)
+ \ge\sigma_{\min}(Q_A^{(0)})-\|Q_A-Q_A^{(0)}\|_{\mathrm{op}}
+ >\frac{10125}{32768}-\frac{16}{61}
+ =\frac{93337}{1998848}>0.
+\tag{126.14}
+$$
+
+This proves invertibility for all three unordered fibre cuts. The rational tail endpoint is a conservative choice; no optimal conditioning threshold is asserted.
+
+### 126.4. The same full common normer, including singular error matrices
+
+Because $`\rho`$ is block diagonal in the original fibres, (126.2) gives
+
+$$
+W_{A,A^c}
+ =-\frac\alpha2\operatorname{diag}(a_A)
+                    Q_A\operatorname{diag}(\overline{a_{A^c}}),
+\qquad (\rho-W)_{A,A^c}=-W_{A,A^c}.
+\tag{126.15}
+$$
+
+The diagonal factors are invertible. Each displayed cross block therefore has rank four, so both full normer halves have rank at least four. This also forces the same density to be positive definite. Indeed if $`x\in\ker W_{A,A}`$, positivity of $`W`$ makes it annihilate the extension of $`x`$ by zero. Its $`A^c`$ component is $`W_{A^c,A}x`$, whose invertibility gives $`x=0`$. Thus $`W_{A,A}\succ0`$, and similarly on $`A^c`$. Since $`\rho_A\succeq W_{A,A}`$, $`\rho_{A^c}\succeq W_{A^c,A^c}`$, and $`\rho_{A,A^c}=0`$, one has $`\rho\succ0`$.
+
+The original common pair maximizes (126.1) at its own density. Put $`M=\rho^{1/2}L\rho^{1/2}`$. The fixed-density spectral maximization in [RT III §91.4](ARITHMETIC_HOLOGRAPHIC_RT_III.md#914-primal-dual-and-exact-certificates) gives
+
+$$
+W=\rho^{1/2}\bigl(\Pi_+(M)+E_0\bigr)\rho^{1/2},
+\qquad 0\preceq E_0\preceq\Pi_0(M).
+\tag{126.16}
+$$
+
+To retain the singular case explicitly, maximizing $`\operatorname{Tr}(ME)`$ over $`0\preceq E\preceq I`$ forces $`E`$ to be one on positive eigenvectors and zero on negative eigenvectors. Positivity of $`E`$ and $`I-E`$ kills the corresponding off-diagonal entries. Only the contraction on the zero eigenspace remains. Hence
+
+$$
+\begin{aligned}
+4&\le\operatorname{rank}W
+ =n_+(M)+\operatorname{rank}E_0\le8-n_-(M),\\
+4&\le\operatorname{rank}(\rho-W)
+ =n_-(M)+\operatorname{rank}(\Pi_0(M)-E_0)\le8-n_+(M).
+\end{aligned}
+\tag{126.17}
+$$
+
+Congruence by the positive-definite $`\rho^{1/2}`$ preserves inertia, proving (126.4). If $`L`$ is nonsingular its two strict indices sum to eight, forcing $`(4,4)`$. If it is singular, the same actual zero-space completion must additionally satisfy
+
+$$
+\operatorname{rank}E_0\ge\max\{0,4-n_+(L)\},\qquad
+\operatorname{rank}(\Pi_0(M)-E_0)\ge\max\{0,4-n_-(L)\}.
+\tag{126.18}
+$$
+
+No new completion or independently chosen density has been substituted. This proves the theorem. ∎
+
+### 126.5. A high-effective-rank consumer for the same actual stress
+
+**Corollary 126.2.** Under the hypotheses of Theorem 126.1, put $`r=\operatorname{Tr}P/\|P\|_{\mathrm{op}}`$ for the actual stress in (126.2). If $`r\ge697/254`$, then $`v<1/64`$ and all conclusions of that theorem hold.
+
+**Proof.** The coupled actual-tail estimate (125.17) gives
+
+$$
+r<2+\frac32\frac{1-v}{2-v},\qquad r<\frac{11}{4},\qquad
+v<\frac{11-4r}{7-2r}.
+\tag{126.19}
+$$
+
+The last expression follows by rearranging the first inequality; $`7-2r>0`$. It decreases with $`r`$ in this interval, and therefore
+
+$$
+r\ge\frac{697}{254}
+\quad\Longrightarrow\quad
+v<\frac{11-4(697/254)}{7-2(697/254)}=\frac1{64}.
+\tag{126.20}
+$$
+
+The stress, its scale, and its associated common normer have remained the same throughout. ∎
+
+The new restriction consumes the uniform reciprocal conditioning in the actual full norming problem. It leaves the balanced nonsingular branch, singular branches compatible with (126.17)–(126.18), and the larger-tail region unresolved. The auxiliary rank-two seed is not asserted to inherit any original stress, normer or local-minimum property. No feasibility of the residual class, sufficiency for local minimality, rank-preserving transfer from arbitrary leaking optimizers, or unrestricted quarter-optimum conclusion follows.
