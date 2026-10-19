@@ -48,13 +48,16 @@ internal sealed class HannaSquareCompositionModFourDocument : IScribeDocumentDef
                 + "Uniqueness identifies it with the reduction of the integer solution. "
                 + "Its coefficient at every degree above one is two exactly at a shifted power of two, "
                 + "and zero elsewhere. Rational uniqueness then gives the assertion for every normalized solution.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a372527-square-composition-mod-four"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("hanna-square-mod-four-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] arguments) =>
