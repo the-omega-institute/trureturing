@@ -2489,3 +2489,665 @@ The physical interface remains exactly Proposition 109.3, Definition 128.2 and [
 Consequently the equivalent original half-beta, $\lambda=1$, actual-minimal-Kraus-rank-three assertion (U.5), with every complex auxiliary density and the fixed physical $\rho_\star$, remains unresolved. The separate broader (R.243), with arbitrary $0<\beta_{\rm phys}\leq1/2$, arbitrary admissible third columns, actual ranks up to nine, all whole-output complex CPTP recoveries, all finite complex references and the unhalved diamond norm, also remains unresolved in exactly the scope of Definition 120.3. Neither shortcut counterexample in Sections 130 and 132 is a target counterexample. No improving physical recovery, physical realization, quantum-field-theoretic consequence or gravitational consequence is implied by these ordinary matrix results.
 
 ## 追加锚（本行以下为增补区）
+
+## 141. Parameters for the three continuum endpoint certificates
+
+**Definition 141.1 (actual variables and endpoint notation).** Retain the entire real common-boundary domain (U.110), with one actual $P=\operatorname{diag}(p,q)$, $q=1-p$, and one actual $V=[V_0;V_1]\in\mathbb R^{4\times2}$ satisfying $V^TV\preceq I_2$. In particular $A,B,\lambda,H,\tau,N,R,\Theta,S$ always have the same source. Set
+
+$$
+\begin{gathered}
+d=\sqrt2,\qquad c=\frac{2+d}{4},\qquad r=\sqrt c,\qquad
+L=4\sqrt2r,\qquad L^2=16+8d,\\
+\alpha=\sqrt p,\quad\beta=\sqrt q,\quad h=\alpha+\beta,\quad g=\alpha\beta,\\
+k_D=\frac7{2h},\qquad k_S=\frac4h,\qquad
+\nu_D=\frac7{11},\qquad\nu_S=\frac23,\\
+a_k(\lambda)=2\alpha+k(1-\lambda)
+-\frac{k(2r-\beta/\sqrt2)^2}{1+\alpha k/4},\qquad
+a_S(\lambda)=\frac{2+4g-4\lambda-2d}{h}.
+\end{gathered}
+\tag{U.178}
+$$
+
+The thresholds are precisely (U.140), (U.166). The subscript $S$ denotes the squared-budget threshold. For $q>0$ and every real unit $u\in\mathbb R^2$ use the existing directional matrix (U.130):
+
+$$
+\begin{gathered}
+a=\sqrt P u,\qquad m=u^TPu\in[q,p],\qquad
+\nu=\frac{kh}{2+kh},\\
+M_{k,u}=mP^{-1/2}-\frac{k}{2+kh}aa^T,\qquad
+W_\nu=hM_{k,u}=hmP^{-1/2}-\nu aa^T\succ0,\\
+C_{\nu,b}(\lambda)=(m-\lambda)I_2-bW_\nu,\qquad
+C_{k,u}(\lambda)=C_{\nu,a_k(\lambda)/h}(\lambda),\qquad
+C_{S,u}(\lambda)=C_{\nu_S,a_S(\lambda)/h}(\lambda).
+\end{gathered}
+\tag{U.179}
+$$
+
+Here $k\geq0$ is finite. Positive definiteness of $M_{k,u}$, with no direction excluded, is Theorem 133.1. Equivalently, weighted Cauchy gives
+$(x^Ta)^2\leq(x^TP^{-1/2}x)(a^T\sqrt P a)\leq\alpha m(x^TP^{-1/2}x)$, so $x^TW_\nu x\geq m(h-\nu\alpha)x^TP^{-1/2}x>0$ for $x\ne0$. Consequently $b\leq\widehat b$ implies $C_{\nu,b}(\lambda)\succeq C_{\nu,\widehat b}(\lambda)$, including negative $b$.
+
+On the endpoint interval use
+
+$$
+\begin{gathered}
+\frac{18}{25}\leq p\leq\frac{17}{20},\qquad
+t=\frac\beta\alpha,\quad w=1+t^2,\quad
+p=\frac1w,\quad q=\frac{t^2}w,\quad h=\frac{1+t}{\sqrt w},\quad g=\frac tw,\\
+\frac3{17}\leq t^2\leq\frac7{18},\qquad
+t\in J_1:=\left[\frac{21}{50},\frac58\right]
+\subset J_0:=\left[\frac25,\frac58\right],\\
+Q(t)=-\frac{107}{1000}+\frac65t-\frac45t^2,\qquad
+\kappa_D=\frac{123}{200},\qquad\kappa_S=\frac{31}{50}.
+\end{gathered}
+\tag{U.180}
+$$
+
+The inclusions follow from $3/17-(21/50)^2=3/42500>0$ and $(5/8)^2-7/18=1/576>0$. The coefficients in Proposition 135.1 become
+
+$$
+\begin{gathered}
+T_\nu=t+t^{-1}+2-\nu,\quad
+E_\nu=(1-\nu)(t+t^{-1})+2-\nu,\quad F_\nu=\frac{\nu t}{w},\\
+\operatorname{Tr}C_{\nu,b}=(2-bT_\nu)m-2\lambda,\qquad
+\det C_{\nu,b}=A_0m^2+B_0m+\lambda^2,\\
+A_0=1-bT_\nu+b^2E_\nu,\qquad B_0=\lambda(bT_\nu-2)+b^2F_\nu,\\
+\operatorname{Disc}_m(\det C_{\nu,b})
+=b^2\bigl[(bF_\nu+\lambda T_\nu)^2-4\lambda(\lambda E_\nu+F_\nu)\bigr].
+\end{gathered}
+\tag{U.181}
+$$
+
+These are the exact coefficients (U.145)–(U.148), with both signs of $u_1u_2$ retained. No actual minimizing direction is selected in the endpoint proofs.
+
+## 142. Exact threshold formulas and rational polynomial caps
+
+**Theorem 142.1 (three scalar caps).** On $J_0$ the first two endpoint thresholds satisfy $b_1<Q(t)$ and $b_2<\kappa_Dt/(1+t)$; on $J_1$ the third satisfies $b_3<\kappa_St/(1+t)$, where
+
+$$
+\begin{aligned}
+b_1:=\frac{a_{k_D}(2q/7)}h
+&=\frac{5t^2+4t+11}{2(1+t)^2}
+-\frac{14\bigl[(4+2d)+(5+2d)t^2-Lt\sqrt w\bigr]}{(1+t)(15+8t)},\\
+b_2:=\frac{a_{k_D}(q/2)}h
+&=b_1-\frac{3t^2}{4(1+t)^2},\\
+b_3:=\frac{a_S(q/2)}h
+&=\frac{2[1+2t-d(1+t^2)]}{(1+t)^2}.
+\end{aligned}
+\tag{U.182}
+$$
+
+Proof. These formulas follow from the actual thresholds. Indeed
+
+$$
+\begin{gathered}
+1+\frac{\alpha k_D}{4}=\frac{15+8t}{8(1+t)},\qquad
+\left(2r-\frac\beta{\sqrt2}\right)^2
+=\frac{(4+2d)+(5+2d)t^2-Lt\sqrt w}{2w},\\
+\frac{2\alpha+k_D(1-2q/7)}h
+=\frac{5t^2+4t+11}{2(1+t)^2},\qquad
+\frac{k_D}{h}\left(\frac q2-\frac{2q}{7}\right)
+=\frac{3t^2}{4(1+t)^2}.
+\end{gathered}
+\tag{U.183}
+$$
+
+The $S$ formula follows by substituting $g=t/w$, $q=t^2/w$, $h^2=(1+t)^2/w$ in (U.178).
+
+All radical estimates used for the first two caps are
+
+$$
+\begin{gathered}
+\frac{707}{500}<d<\frac{99}{70},\qquad
+(t^2+9/4)^2-5(1+t^2)=(t^2-1/4)^2,\\
+\sqrt w\leq\frac{t^2+9/4}{\sqrt5},\qquad
+\left(\frac L{\sqrt5}\right)^2<\frac{956}{175}
+<\left(\frac{187}{80}\right)^2,\qquad
+L\sqrt w<\frac{187}{80}(t^2+9/4).
+\end{gathered}
+\tag{U.184}
+$$
+
+The first bounds follow by squaring positive rationals: their squared margins are $151/250000$ and $1/4900$. The last rational square comparison has integer margin $34969\cdot175-956\cdot6400=1175>0$. Define
+
+$$
+\begin{gathered}
+J(t)=\frac{1707}{250}+\frac{1957}{250}t^2
+-\frac{187}{80}t(t^2+9/4),\\
+U_1=\frac{5t^2+4t+11}{2(1+t)^2}
+-\frac{14J(t)}{(1+t)(15+8t)},\qquad
+U_2=U_1-\frac{3t^2}{4(1+t)^2}.
+\end{gathered}
+\tag{U.185}
+$$
+
+Because $t>0$, the bracket subtracted in $b_1$ is strictly greater than $J(t)$ by (U.184). Thus $b_1<U_1$, $b_2<U_2$. Clearing positive denominators gives the exact identities
+
+$$
+\begin{aligned}
+4000(1+t)^2(15+8t)(Q-U_1)&=f_1(t),\\
+f_1(t)&=45948-152421t+50975t^2+251244t^3-191700t^4-25600t^5,\\
+4000(1+t)^2(15+8t)\left(\frac{\kappa_Dt}{1+t}-U_2\right)&=f_2(t),\\
+f_2(t)&=52368-171257t+31423t^2+271148t^3-130900t^4.
+\end{aligned}
+\tag{U.186}
+$$
+
+Here is a continuum sign proof for both polynomials. On $J_0$,
+$f_1'''=1507464-4600800t-1536000t^2$ is decreasing and $f_1'''(2/5)=-578616<0$. Therefore $f_1''$ decreases to $f_1''(5/8)=82085/4>0$; $f_1'$ increases to $f_1'(5/8)=-32447/32<0$; and $f_1$ decreases to $f_1(5/8)=249187/1024>0$. This proves $f_1>0$ throughout $J_0$.
+
+For the other polynomial,
+
+$$
+\begin{gathered}
+f_2''(t)=62846+t(1626888-1570800t)
+\geq62846+\frac25\,645138>300000,\\
+f_2(1/2)=\frac{615}{2},\qquad f_2'(1/2)=-1923,\\
+f_2(t)\geq\frac{615}{2}-1923(t-1/2)+150000(t-1/2)^2
+\geq\frac{615}{2}-\frac{1923^2}{600000}>300.
+\end{gathered}
+\tag{U.187}
+$$
+
+The curvature bound uses $t\geq2/5$ and $1626888-1570800t\geq645138>0$. Integrating this bound about $1/2$ proves the quadratic lower bound on either side of $1/2$. The completed-square margin above $300$ is $267357/200000>0$. Thus both direct caps hold throughout the continuum.
+
+Finally, put $\kappa=\kappa_S$. Direct subtraction gives
+
+$$
+\begin{gathered}
+\frac{\kappa t}{1+t}-b_3
+=\frac{(\kappa+2d)t^2+(\kappa-4)t+2d-2}{(1+t)^2},\\
+\operatorname{Disc}_t\bigl((\kappa+2d)t^2+(\kappa-4)t+2d-2\bigr)
+=\kappa^2-16+(16-8\kappa)d\\
+=-\frac{39039}{2500}+\frac{276}{25}d
+<-\frac{39039}{2500}+\frac{276}{25}\frac{99}{70}
+=-\frac{33}{17500}<0.
+\end{gathered}
+\tag{U.188}
+$$
+
+The leading coefficient is positive, so the numerator is positive for every real $t$. In particular the third cap holds on $J_1$. All comparisons use the original $k_D,k_S$ and impose no sign assumption on the actual thresholds. $\square$
+
+## 143. The first endpoint in every real direction
+
+**Theorem 143.1 (the $2q/7$ endpoint).** For every $18/25\leq p\leq17/20$ and every real unit $u$,
+
+$$
+C_{k_D,u}(2q/7)\succ0.
+\tag{U.189}
+$$
+
+Proof. First use the upper threshold $b=Q(t)$ at fixed $\nu=7/11$ and $\lambda=2q/7$. On $J_0$, $Q$ is increasing, $49/200\leq Q\leq661/2000$, and $T_\nu\leq469/110$. The last bound follows since $t+t^{-1}$ decreases on $J_0\subset(0,1)$. Hence
+
+$$
+QT_\nu\leq\frac{310009}{220000}<\frac{10}{7}<2,\qquad
+\operatorname{Tr}C_{\nu,Q}(2q/7)
+\geq q\left(\frac{10}{7}-QT_\nu\right)>0.
+\tag{U.190}
+$$
+
+For the determinant in (U.181), substitution gives the exact discriminant
+
+$$
+\begin{gathered}
+\operatorname{Disc}_m(\det C_{\nu,Q}(2q/7))
+=-\frac{4Q^2t^2}{77^2w^2}\,W(t),\\
+W(t)=22t(57+30t+8t^2)
+-\left(\frac{16757+88800t-17200t^2}{2000}\right)^2.
+\end{gathered}
+\tag{U.191}
+$$
+
+Write $t=2/5+x$, $0\leq x\leq9/40$. The full expansion and a lower polynomial are
+
+$$
+\begin{aligned}
+W(2/5+x)&=\frac{169043}{32000}+\frac{4151}{500}x
+-\frac{553177}{5000}x^2+\frac{102668}{125}x^3-\frac{1849}{25}x^4,\\
+G(x)&=5+8x-111x^2-74x^4,\\
+W(2/5+x)-G(x)&=\frac{9043}{32000}+\frac{151}{500}x
++\frac{1823}{5000}x^2+\frac{102668}{125}x^3+\frac1{25}x^4>0.
+\end{aligned}
+\tag{U.192}
+$$
+
+Since $G''(x)=-222-888x^2<0$, concavity bounds $G$ below by the chord joining its endpoint values $G(0)=5$ and $G(9/40)=1268443/1280000>0$. Thus $W>0$ throughout $J_0$. The determinant discriminant is strictly negative. Its constant term is $\lambda^2>0$, and the negative discriminant forces $A_0>0$, so the determinant is positive for every real $m$. With (U.190), this proves $C_{\nu,Q}(2q/7)\succ0$ for every direction. The cap $b_1<Q$ and $W_\nu\succ0$ in (U.179) then prove (U.189) for the actual threshold. $\square$
+
+## 144. Both half-endpoint coefficient tables and continuum positivity
+
+**Theorem 144.1 (a common half-endpoint lemma).** For $t\in J_1$ and either
+$(\nu,\kappa)=(7/11,123/200)$ or $(2/3,31/50)$, every real unit direction satisfies
+
+$$
+C_{\nu,\kappa t/(1+t)}(q/2)\succ0.
+\tag{U.193}
+$$
+
+Proof. Set $b=\kappa t/(1+t)$ and $z=m/q\geq1$. The bounds $t\leq5/8$, $\nu\geq7/11$, $\kappa\leq31/50$ and $t/(1+t)\geq2/7$ give
+
+$$
+\begin{gathered}
+bT_\nu=\kappa\left[(1+t)-\frac{\nu t}{1+t}\right]
+\leq\frac{31}{50}\left(\frac{13}{8}-\frac2{11}\right)
+=\frac{3937}{4400}<1,\\
+A_0=1-bT_\nu+b^2E_\nu>0,\qquad
+\frac{\operatorname{Tr}C_{\nu,b}(q/2)}q
+=(2-bT_\nu)z-1\geq1-bT_\nu>0.
+\end{gathered}
+\tag{U.194}
+$$
+
+At $m=q$ use $u=\pm e_2$. The two eigenvalues divided by $q$ are
+$1/2-\kappa t$ and $1/2-\kappa[1+(1-\nu)t]/(1+t)$. The first is at least $9/80$. The second has the following exact forms:
+
+| Parameters | Second normalized eigenvalue | Numerator at $t=21/50$ |
+| --- | --- | --- |
+| $\nu=7/11,\ \kappa=123/200$ | $(608t-253)/(2200(1+t))$ | $59/25$ |
+| $\nu=2/3,\ \kappa=31/50$ | $(22t-9)/(75(1+t))$ | $6/25$ |
+
+Both numerators increase with $t$, proving strict positivity at $z=1$. Now normalize the determinant:
+
+$$
+\begin{gathered}
+\mathcal D(z)=\frac{\det C_{\nu,b}(q/2)}{q^2}
+=A_0z^2+\left[\frac{bT_\nu-2}{2}+\frac{b^2\nu}{t}\right]z+\frac14,\\
+\mathcal D'(1)=1-\frac32bT_\nu+b^2(2E_\nu+\nu/t),\qquad
+(1+t)^2\mathcal D'(1)=c_0+c_1t+c_2t^2+c_3t^3,\\
+c_0=1-\frac{3\kappa}{2},\quad
+c_1=2-\frac{3\kappa}{2}(3-\nu)+\kappa^2(2-\nu),\\
+c_2=1-\frac{3\kappa}{2}(3-\nu)+2\kappa^2(2-\nu),\quad
+c_3=-\frac{3\kappa}{2}+2\kappa^2(1-\nu).
+\end{gathered}
+\tag{U.195}
+$$
+
+The complete rational coefficient tables are
+
+| Parameters | $c_0$ | $c_1$ | $c_2$ | $c_3$ |
+| --- | --- | --- | --- | --- |
+| $\nu=7/11,\ \kappa=123/200$ | $31/400$ | $29507/88000$ | $-6553/44000$ | $-71217/110000$ |
+| $\nu=2/3,\ \kappa=31/50$ | $7/100$ | $2569/7500$ | $-1087/7500$ | $-5053/7500$ |
+| Common lower coefficients | $7/100$ | $1/3$ | $-3/20$ | $-27/40$ |
+
+Since $t\geq0$, coefficientwise comparison therefore gives
+
+$$
+\begin{gathered}
+(1+t)^2\mathcal D'(1)\geq H_0(t):=
+\frac7{100}+\frac t3-\frac{3t^2}{20}-\frac{27t^3}{40},\\
+H_0''(t)=-\frac3{10}-\frac{81t}{20}\leq0,\qquad
+H_0(0)=\frac7{100},\qquad H_0(5/8)=\frac{16879}{307200}>0.
+\end{gathered}
+\tag{U.196}
+$$
+
+Concavity on $[0,5/8]$ proves $H_0>0$ everywhere in that interval, hence $\mathcal D'(1)>0$. Since $A_0>0$, the derivative $\mathcal D'(z)$ increases for $z\geq1$. The determinant is therefore strictly increasing from its positive value at $z=1$. Its positivity and (U.194) prove (U.193) for all $m\in[q,p]$ and all signs of the direction coordinates. $\square$
+
+## 145. Completion of the three original endpoint matrices
+
+**Theorem 145.1 (the complete endpoint interval).** For every $18/25\leq p\leq17/20$ and every real unit $u$, the three original matrices satisfy
+
+$$
+C_{k_D,u}(2q/7)\succ0,\qquad
+C_{k_D,u}(q/2)\succ0,\qquad C_{S,u}(q/2)\succ0.
+\tag{U.197}
+$$
+
+Proof. The first assertion is Theorem 143.1. For the second use $b_2<\kappa_Dt/(1+t)$ from Theorem 142.1, and Theorem 144.1 at $(7/11,123/200)$. Loewner comparison (U.179) proves the original matrix is positive definite. For the third, (U.188) gives $b_3<\kappa_St/(1+t)$, and the other case $(2/3,31/50)$ of Theorem 144.1 applies. These comparisons use only positive denominators and the full continuum $J_1$. The endpoint theorem is independent of $V$ and imposes no condition on rank, commutation, trace cancellation or a minimizing eigenvector. $\square$
+
+## 146. Fixed multipliers and consumption at the actual minimizing direction
+
+**Theorem 146.1 (the whole new spectrum interval).** Every actual real pair (U.110) with $18/25\leq p\leq17/20$ satisfies $\Theta\leq r$. This includes every $\lambda\in[0,q]$ and every actual trace penalty.
+
+Proof. First fix $p$ and an arbitrary real unit $u$. By (U.150), the first two original matrices in (U.197) interpolate at the same $k_D$ to
+$C_{k_D,u}(\lambda)\succ0$ for $2q/7\leq\lambda\leq q/2$. The two scalar caps used in proving their endpoints are not the interpolated objects. For the high branch, (U.174) gives
+
+$$
+\begin{gathered}
+a_S(q)=\frac{4[p+g-(1+d)/2]}h\leq0,\qquad
+C_{S,u}(q)=(m-q)I_2-a_S(q)M_{k_S,u}\succeq0,\\
+C_{S,u}(\lambda)\succeq0\quad(q/2\leq\lambda\leq q).
+\end{gathered}
+\tag{U.198}
+$$
+
+Indeed $(2p-1)^2+(2g)^2=1$ implies $(2p-1)+2g\leq d$. Interpolation in (U.198) holds at the same $k_S=4/h$ and the same $u$, including both closed endpoints.
+
+Only after these full-direction matrix conclusions select a real unit minimum eigenvector of the actual $B$. Theorem 133.1 then gives, for either multiplier,
+
+$$
+m-\lambda=\|V\sqrt P u\|^2\leq\mu_k Z_k,\qquad
+\mu_k=\lambda_{\max}(M_{k,u})>0,\qquad Z_k=H+k\tau.
+\tag{U.199}
+$$
+
+The cost in this formula is exactly the sum of the two actual quadratic forms (U.131), whose trace components are $(k/2)(\operatorname{Tr}(V_i\sqrt P))^2$. In the SVD (U.136) each trace is a sum of both singular contributions before it is squared. No separate trace-component replacement is made.
+
+For a relevant threshold $a>0$, the proved matrix $(m-\lambda)I-aM_{k,u}\succeq0$ forces $m-\lambda>0$ and $\mu_k\leq(m-\lambda)/a$. Combining with (U.199), dividing only by positive quantities, yields $Z_k\geq a$. For $a\leq0$ the same conclusion follows from $Z_k\geq0$. Thus both threshold signs, including zero, are covered. At a tie, any actual real minimum eigenvector gives (U.199).
+
+For the middle branch consume $Z_{k_D}\geq a_{k_D}(\lambda)$ through Proposition 134.1. In its exact notation,
+
+$$
+\begin{gathered}
+x=\frac\alpha{\sqrt2}\sqrt{1-H/(2\alpha)},\quad
+y=\sqrt R,\quad\gamma=\frac{\alpha k_D}{4}>0,\quad
+L_p=2r-\beta/\sqrt2>0,\\
+2\Theta\leq\beta/\sqrt2+x+y,\qquad
+x^2+\gamma y^2=\frac\alpha4[2\alpha+k_D(1-\lambda)-Z_{k_D}]
+\leq\frac{\gamma L_p^2}{1+\gamma},\\
+(x+y)^2\leq(1+\gamma^{-1})(x^2+\gamma y^2)\leq L_p^2.
+\end{gathered}
+\tag{U.200}
+$$
+
+The root-trace input is precisely Theorem 131.1, whose positive-integral proof (U.115)–(U.126) already includes singular $A$ and $H=2\alpha$. For the high branch consume $Z_{k_S}\geq a_S(\lambda)$ through Proposition 123.1, or (U.114) with its nonnegative last loss omitted:
+
+$$
+N^2\leq\frac{h^2}{8}-\frac{hH}{16},\qquad
+S\leq\frac{h^2}{8}+\frac{1-\lambda}{4}
+-\frac h{16}Z_{k_S}\leq\frac c2,\qquad
+\Theta^2\leq2S\leq c.
+\tag{U.201}
+$$
+
+This proves the middle and high branches using the same actual $\tau$ as in (U.199). Theorem 136.1 supplies $0\leq\lambda\leq2q/7$, since $p\geq18/25>2/3$. Its proof (U.152)–(U.158) is the direct low-branch estimate and does not require a global squared-budget theorem. The three closed intervals cover $[0,q]$. No division by $H,\tau,R$, a singular value or an eigengap occurs, so zero residuals, zero penalties, all ranks of $V$ and singular Gram complements are included. $\square$
+
+## 147. Exact localization between the new and inherited intervals
+
+**Proposition 147.1 (rational bounds for the two localization roots).** The constants $p_\pm$ of (U.13), (U.107) satisfy
+
+$$
+p_->\frac{18}{25},\qquad p_+<\frac78.
+\tag{U.202}
+$$
+
+Every actual strict violation $\Theta>r$ with $q>0$ has $p_-<p<p_+$.
+
+Proof. Theorem 110.1 already proves the singular-value pairing for the same actual $V$. In its notation, $\beta\eta_1\leq\sqrt\lambda$ and $\eta_2\leq1$ give (U.152). Thus
+
+$$
+4\sqrt2\Theta\leq2\sqrt p+\sqrt q+\sqrt\lambda
++2\sqrt2\sqrt{1-\lambda}\leq2\sqrt p+\sqrt q+3.
+\tag{U.203}
+$$
+
+The last step is Cauchy–Schwarz with squared coefficient norm $1+8=9$. Let $K=L-3$ and $\delta=5-K^2$, the constants $k_*,\delta_*$ of (U.13). Since $d<3/2$, $(1+4d)^2=33+8d<45$; hence $1+4d<3\sqrt5$, and comparison of squares gives $L<3+\sqrt5$. For the lower bound, $1393^2=2\cdot985^2-1$ gives $d>1393/985$, whence
+
+$$
+L^2>\frac{26904}{985}>\left(\frac{4181}{800}\right)^2,
+\qquad
+26904\cdot640000-17480761\cdot985=10415>0.
+\tag{U.204}
+$$
+
+Therefore $K>1781/800>2$ and $\delta>0$. Any strict violation in (U.203) requires $2\sqrt p+\sqrt q>K$. Because $K-2\sqrt p>0$ for all $p\leq1$, squaring this condition is reversible and yields
+$5p-4K\sqrt p+K^2-1<0$. Its two roots in $\sqrt p$ are $(2K\pm\sqrt\delta)/5$, proving precisely the stated open interval with no extraneous branch.
+
+For their rational localization,
+
+$$
+\begin{gathered}
+\delta<\frac{28039}{640000}<\left(\frac{335}{1600}\right)^2,
+\qquad112225-112156=69>0,\\
+2K-\sqrt\delta>\frac{6789}{1600}>\sqrt{18},\qquad
+6789^2-18\cdot1600^2=10521>0.
+\end{gathered}
+\tag{U.205}
+$$
+
+It follows that $p_->18/25$. Also $d<99/70$ implies $L<523/100$, since $(523/100)^2-(16+8(99/70))=2703/70000>0$. Hence
+
+$$
+2K+\sqrt\delta<\frac{7471}{1600},\qquad
+p_+<\frac{55815841}{64000000}<\frac78,
+\qquad56000000-55815841=184159>0.
+\tag{U.206}
+$$
+
+Every square comparison above has positive operands. This proves (U.202) and the actual-pair localization. $\square$
+
+## 148. The analytic theorem on the entire real common-boundary domain
+
+**Theorem 148.1 (all parameters, ranks and actual trace penalties).** For every $p\in[1/2,1]$, $q=1-p$, and every real $V=[V_0;V_1]\in\mathbb R^{4\times2}$ with $V^TV\preceq I_2$, form the complete actual quantities (U.110). Then
+
+$$
+\boxed{\quad
+\frac{\operatorname{Tr}\sqrt{D(I_4-VV^T)D}}{4\sqrt2}
++\frac12\sqrt{1-\lambda_{\min}(\sqrt P(I_2-V^TV)\sqrt P)
+-\frac12\sum_{i=0}^1(\operatorname{Tr}(V_i\sqrt P))^2}
+\leq\sqrt{\frac{2+\sqrt2}{4}}\quad}.
+\tag{U.207}
+$$
+
+The residual under this root is nonnegative. The bound is sharp: its maximum over the complete real common domain is $r$, attained at $V=0,p=c$.
+
+Proof. Nonnegativity is Proposition 109.3, with exactly one actual outside row and its support-safe attainment. At $q=0$, Proposition 138.1 gives directly $\Theta\leq c<r$, using only the positive support of $D$ and no inverse of $P$. For $q>0$, suppose $\Theta>r$. Proposition 147.1 forces $p\in(p_-,p_+)\subset(18/25,7/8)$. If $p\geq17/20$, the inherited Theorem 125.1 excludes the violation. Its complete proof uses Theorem 123.2 on $\lambda\leq q/2$ and the full-direction endpoint Theorem 124.2 with fixed-$k_S$ interpolation on $[q/2,q]$; it applies to every real contraction with the full actual penalty. If $p<17/20$, Theorem 146.1 excludes the violation. This covers the whole original domain, including both transition values $p=18/25,17/20$ and both closed $\lambda$ branch endpoints.
+
+All inverses of $P$ in the endpoint and directional arguments occur where $q>0$. The root-trace source Theorem 131.1 itself includes $q=0$ and arbitrary singular $A$, by positive resolvents and a nonnegative series. The exact zero-energy statement remains Proposition 130.2: $H=0$ iff $DV=0$, and this implies $V=0$ only when $q>0$. None of the arguments removes internal trace cross terms, assumes commutation, constant rank, simple eigenvalues, or a smooth choice of eigenvectors. Ranks $0,1,2$ of $V$, repeated minimum eigenvalues, $R=0$, $\tau=0$, $H=2\alpha$ and singular PSD matrices are all included.
+
+For sharpness use (U.171): $V=0$ gives $\Theta=c\sqrt p+(\sqrt2/4)\sqrt q$. Since $c^2+1/8=c$, equality holds at $p=c$. This does not classify equality for every nonzero $V$. The global conclusion is the direct bound on $\Theta$; (U.201) is a squared-budget bound on its stated high branch and is not asserted globally. In particular (U.207) supplies the uniform assertion left undecided in Definitions 128.2 and 140.2 and the all-direction sufficiency left undecided in Proposition 139.1 on its remaining localized interval. The separate broader target (R.243) retains its original scope. $\square$
+
+## 149. Optimized source correspondence and the fixed physical input
+
+**Definition 149.1 (the precise application of the owning source interfaces).** Use the complete physical family $\mathcal T$, its boundary $\mathcal T_\partial$, and its actual-rank-three subset $\mathcal T_3$ from (U.2), equivalently volume II (S.202)–(S.204). In reordered output coordinates $(b_1,b_2,g_1,g_2,h)$,
+
+$$
+E_0=\frac1{\sqrt2}[b_1,b_2,0],\quad
+E_1=\frac1{\sqrt2}[g_1,g_2,0],\quad
+T=[t_0,t_1,t_2],\quad\|T\|_F=1,\quad
+\langle E_0,T\rangle_F=\langle E_1,T\rangle_F=0.
+\tag{U.208}
+$$
+
+These are exactly the TP constraints for $K_\alpha=[(E_0)_\alpha,(E_1)_\alpha,t_\alpha]$, $\alpha=0,1,2$. Volume II, Proposition 85.2 proves both the phase-difference spectrum $(1/2,1/2,0,-1/2,-1/2)$ and the equivalence of actual minimal Kraus rank three with $t_2=Te_2\ne0$. All active-output components of every $t_\alpha$ are retained. This is precisely the physical $\beta_{\rm phys}=1/2$, physical $\lambda_{\rm phys}=f(\tau_{\rm phase},\bar\tau_{\rm phase})=1$ rank-three specialization of (S.147). Its real orthogonal environment and output normal-form changes preserve the same actual channel. They do not provide a normal form in other physical-$\lambda$ branches. The auxiliary $p,q$, $\beta=\sqrt q$, $\lambda=\lambda_{\min}(B)$ and the trace penalty $\tau$ in (U.110) are separate variables.
+
+For each such $T$, retain every complex auxiliary density $X\in\mathsf D(\mathbb C^3)$ and put $v_T=\max_X f_T(X)$, as in volume II (S.203). The exact optimized interfaces of volume II, Propositions 85.3, 86.1–86.2, 90.2 and 91.2–91.3, already established in Proposition 109.3, now give
+
+$$
+\begin{aligned}
+\max_{P,V}\Theta(P,V)
+&=\max_{T\in\mathcal T_\partial,\ X\in\mathsf D(\mathbb C^3)}f_T(X)\\
+&=\max_{T\in\mathcal T,\ X\in\mathsf D(\mathbb C^3)}f_T(X)
+=\sup_{T\in\mathcal T_3,\ X\in\mathsf D(\mathbb C^3)}f_T(X)=r.
+\end{aligned}
+\tag{U.209}
+$$
+
+The last equality is the application of Theorem 148.1 and its calibration. The equality between the full sphere and its boundary is the optimized comparison (S.208), not a pointwise deletion assertion. Its lower comparison uses the same feasible $Q$ in (S.213) at $T_0=he_0^T$, giving the value $c>3/4$ in the squared objective.
+
+Here are the support and quantifier conditions of these reused interfaces. At fixed real $T$, $\Phi_T(\bar X)=\overline{\Phi_T(X)}$ and concavity of $\operatorname{Tr}\sqrt{\cdot}$ permit the real symmetric auxiliary $(X+\bar X)/2$ with no loss in its maximum. This retains real offdiagonals and restricts no physical recovery. On $\mathcal T_\partial$, support compression uses $P_E=\operatorname{diag}(1,1,0)$: only $P_EXP_E$ enters $\Phi_T(X)$. If its trace is $s_X>0$, normalization increases the root objective by $1/\sqrt{s_X}$; if $s_X=0$, the objective is zero. The full two-dimensional auxiliary block is retained. Ordered diagonal $P$ is then allowed only by the simultaneous transformation $(X,Z)\mapsto(OXO^T,\operatorname{diag}(O,O,1)ZO^T)$ and the corresponding transformation of both common blocks in (S.246). It is not diagonalization at a preassigned encoder.
+
+In (S.242) the precise parameter map is $X=P$, $M=V^T$, trace penalty $p_{\rm source}=\tau$, code term $\ell=4N$, residual $q_{\rm source}=R$. For one fixed common pair choose $\mathscr B=[V_0;V_1;w]$, $K=I_2-V^TV$, with $w^Tw\preceq K$. The code polar maximum in (S.244) is $N$, independently of $w$. The other term is the complete projected norm
+
+$$
+\begin{gathered}
+\|\Pi_2(\mathscr B\sqrt P)\|_F^2
+=\operatorname{Tr}(PV^TV)+wPw^T-\tau,\\
+\max_{w^Tw\preceq K}wPw^T
+=\lambda_{\max}(\sqrt K P\sqrt K),\qquad
+\max_w\|\Pi_2(\mathscr B\sqrt P)\|_F^2=R.
+\end{gathered}
+\tag{U.210}
+$$
+
+For singular $K$, $w^Tw\preceq K$ forces $w^T\in\operatorname{ran}K$ and is equivalent to $w^T=\sqrt K z$, $\|z\|\leq1$. A top eigenvector attains this maximum, including a zero top eigenvalue. The two Grams of $\sqrt K\sqrt P$ have the same full spectrum, giving the last equality exactly as in (U.7). A trace in place of the largest eigenvalue would allow two outside rows and would change the domain. The common code factorization $Q_c=(I_5-\mathscr B\mathscr B^T)^{1/2}J_c$, $\|J_c\|_{\rm op}\leq1$, and its polar maximum are attained on the positive support, also with a kernel. They use this same attaining $w$. Then use the projected unit boundary vector if $R>0$, or any unit vector in $\mathcal L_2$ if $R=0$. These choices attain a common dual pairing equal to $\Theta$. For a supplied nonmaximizing $P,V$ they establish $f_{[Z,0]}(JPJ^T)\geq\Theta$, with $J$ the environment inclusion, rather than an unproved equality at that fixed encoder. Equality is the jointly optimized statement (U.209).
+
+The strict lifting is (U.9), or volume II (S.214)–(S.217):
+
+$$
+T_\varepsilon=\frac{T_0+\varepsilon he_2^T}{\sqrt{1+\varepsilon^2}}\in\mathcal T_3,
+\qquad
+\|T_\varepsilon-T_0\|_F^2=2-\frac2{\sqrt{1+\varepsilon^2}},
+\qquad |f_T(X)-f_{T'}(X)|\leq\frac12\|T-T'\|_F.
+\tag{U.211}
+$$
+
+Here $T_0\in\mathcal T_\partial$ and $\varepsilon>0$. The last bound holds uniformly for all complex trace-one PSD $X$ by Schatten Hölder. Thus a strict boundary root gap would persist at the same $X$ under legal lifting; the nonclosed rank-three subset has a supremum in (U.209).
+
+Finally the physical input is fixed before every recovery:
+
+$$
+\begin{gathered}
+\rho_\star=\operatorname{diag}(1/4,1/4,1/2),\qquad
+|\psi_\star\rangle=\tfrac12|00\rangle+\tfrac12|11\rangle
++\tfrac1{\sqrt2}|22\rangle,\\
+L_T=[E_0/2\mid E_1/2\mid T/\sqrt2],\qquad
+\sigma_{RE}=L_T^TL_T,\qquad
+\operatorname{Tr}\sigma_{RE}=1,\quad\operatorname{Tr}_E\sigma_{RE}=\rho_\star,\\
+L_T(\sqrt{\rho_\star}\otimes\sqrt X)
+=[E_0\sqrt X/4\mid E_1\sqrt X/4\mid T\sqrt X/2],\\
+f(\sigma_{RE},\rho_\star\otimes X)=f_T(X),\qquad
+\max_{\mathcal R:M_5(\mathbb C)\to M_3(\mathbb C)\ {\rm CPTP}}
+F_e(\rho_\star,\mathcal R N_T)=v_T^2.
+\end{gathered}
+\tag{U.212}
+$$
+
+These are (S.206), (U.6), not a substitution $X=\rho_\star$. The second physical square-root factor is necessary for the coefficients $1/4,1/4,1/2$. The right Gram retains every mixed code/third block; passing to its left Gram retains its full nonzero spectrum and does not set the weighted mixed terms to zero. The unrestricted fixed-input identity is [Bény–Oreshkov, arXiv:1103.0649v3, Section IV, (133), with Corollary 5/(64)–(66)](https://arxiv.org/pdf/1103.0649v3): their $F_\rho$ is root entanglement fidelity, the identity target has scalar trace complement, and a CPTP map from that scalar output prepares any independent complex density $X$. CPTP completion is allowed, without a recovery Kraus-number bound. Their (132) alone retains such a bound and is not the interface used. The identity and the Gram formula include singular auxiliaries and every purification of the fixed input up to a reference isometry.
+
+## 150. A strict rank-three gap and a full-output positive-definite dual
+
+**Theorem 150.1 (quantitative strictness and the exact Schur certificate).** For every actual $T\in\mathcal T_3$ of (U.208), define
+
+$$
+s=\|[t_0,t_1]\|_F<1,\qquad
+\Delta_T=(1-s)\left(c-\frac12-\frac s4\right)>0.
+\tag{U.213}
+$$
+
+Then
+
+$$
+v_T^2\leq c-\Delta_T<c.
+\tag{U.214}
+$$
+
+There exists a real symmetric $Y\succ0$ on the entire five-dimensional physical output such that
+
+$$
+\operatorname{Tr}Y\leq c-\frac{\Delta_T}{2}<c,\qquad
+\frac{E_0^TY^{-1}E_0+E_1^TY^{-1}E_1}{16}
++\frac{T^TY^{-1}T}{4}\preceq I_3.
+\tag{U.215}
+$$
+
+Proof. Use the exact real common-$Q$ formula (S.205) at this fixed real $T$, already justified for the full complex auxiliary maximum in Proposition 85.3. Fix any one feasible triple $Q=[Q_0\mid Q_1\mid Q_2]$, with $\sum_iQ_iQ_i^T\preceq I_5$, and put
+$C=(E_0^TQ_0+E_1^TQ_1)/4$, $B=Q_2$, $A_Q=\|C\|_F^2$. Its last row is zero, $A_Q\leq1/4$ by the four unit-vector tests (S.210), and $\|B\|_{\rm op}\leq1$.
+
+When $0<s<1$, write $T=[sS_0,\sqrt{1-s^2}\,w_0]$, where $\|S_0\|_F=\|w_0\|=1$ and $[S_0,0]\in\mathcal T_\partial$. For this same $Q$ set
+
+$$
+\begin{gathered}
+b_Q=\frac14\|S_0^TB\|_F^2,\qquad
+e_Q=\frac14\|w_0^TB\|^2,\qquad
+d_Q=\langle C_{\rm top},S_0^TB\rangle_F,\qquad
+0\leq b_Q,e_Q\leq\frac14,\\
+\|C+T^TB/2\|_F^2
+=A_Q+b_Qs^2+d_Qs+e_Q(1-s^2)\leq g(s),\\
+g(s)=A_Q+b_Qs^2+|d_Q|s+e_Q(1-s^2),\qquad
+ g_0=A_Q+e_Q\leq\frac12,\qquad
+ g_1=A_Q+b_Q+|d_Q|\leq c.
+\end{gathered}
+\tag{U.216}
+$$
+
+The bound $g_1\leq c$ uses (U.209): one of the two boundary choices $\pm[S_0,0]$ attains this endpoint value for the same feasible $Q$. In this exact polynomial the first two rows and last row of $T^TB$ are separate, so there is no omitted $S_0,w_0$ cross term; all output components of $w_0$ remain in $e_Q$. The endpoint decomposition is
+
+$$
+\begin{aligned}
+g(s)&=(1-s)g_0+sg_1+(e_Q-b_Q)s(1-s)\\
+&\leq\frac{1-s}{2}+sc+\frac{s(1-s)}4
+=c-(1-s)\left(c-\frac12-\frac s4\right).
+\end{aligned}
+\tag{U.217}
+$$
+
+This is an inequality for every common $Q$ at the same actual $s$, since $e_Q-b_Q\leq1/4$. If $s=0$, no normalization of a zero first block is needed: $T=[0,0,w_0]$ already has objective $A_Q+e_Q\leq1/2$, exactly the bound $c-\Delta_T$ at $s=0$. Since $T\in\mathcal T_3$ implies $s<1$ and $c>3/4$,
+$\Delta_T\geq(1-s)(c-3/4)>0$. Maximizing (U.217) over $Q$ gives (U.214).
+
+Now use the attained recovery SDP of volume I, Theorem 7.1, transported as volume II, Proposition 74.4/(S.153). Its fixed-input dual has an optimum $Y_0\succeq0$ with
+
+$$
+I_3\otimes Y_0\succeq C_{\rho_\star,N_T},\qquad
+\operatorname{Tr}Y_0=v_T^2\leq c-\Delta_T.
+\tag{U.218}
+$$
+
+This is the full dual inequality, including singular optima. Its cost matrix is real, so replacing $Y_0$ by $(Y_0+\bar Y_0)/2$ preserves feasibility and trace and makes it real symmetric. Define on the full output
+
+$$
+Y=Y_0+\frac{\Delta_T}{10}I_5\succ0,\qquad
+I_3\otimes Y\succeq C_{\rho_\star,N_T},\qquad
+\operatorname{Tr}Y=\operatorname{Tr}Y_0+\frac{\Delta_T}{2}
+\leq c-\frac{\Delta_T}{2}<c.
+\tag{U.219}
+$$
+
+Feasibility is monotone under this positive addition. The exact positive-definite Schur equivalence in volume II, Proposition 74.3/(S.152), now gives (U.215) with three environment columns. All Kraus-index offdiagonal entries and the same $Y$ in every physical-input block are present. Thus (U.215) supplies the literal real SPD form of (S.152)–(S.154) for this restricted family.
+
+No equality or full-output-support hypothesis is needed: (U.214) places every actual rank-three $T$ in the strict branch of (S.334). In general, the Gram/output rank is
+$\operatorname{rank}\sigma_{RE}=\dim(\operatorname{span}\{b_1,b_2,g_1,g_2\}+\operatorname{ran}T)$, which is four or five, independently of the actual minimal Kraus rank. For instance $T=b_1e_2^T$ has matrix rank one, actual Kraus rank three and Gram/output rank four. At a general equality boundary point the support qualification of volume II, Proposition 108.2 remains necessary; it is not inferred from Kraus rank. The construction above is an existence certificate through an attained SDP optimum, not a closed formula for $Y_0$. $\square$
+
+## 151. Restricted full-output fidelity, referenced diamond bound and sharp supremum
+
+**Corollary 151.1 (fixed-input and full-reference consequences).** For every actual encoder in the physical $\beta_{\rm phys}=1/2$, $\lambda_{\rm phys}=1$, minimal-Kraus-rank-three S.147 family (U.208), all complex CPTP recoveries on the entire output satisfy
+
+$$
+\max_{\mathcal R:M_5(\mathbb C)\to M_3(\mathbb C)\ {\rm CPTP}}
+F_e(\rho_\star,\mathcal R N_T)=v_T^2
+\leq c-\Delta_T<c.
+\tag{U.220}
+$$
+
+With the unhalved diamond norm and every finite complex reference allowed,
+
+$$
+\begin{gathered}
+\delta_{N_T}:=\inf_{\mathcal R\ {\rm CPTP}}
+\|\mathcal R N_T-\operatorname{id}_{M_3}\|_\diamond
+\geq2(1-c+\Delta_T)
+=1-\frac1{\sqrt2}+2\Delta_T
+>1-\frac1{\sqrt2},\\
+\sup_{T\in\mathcal T_3}\max_{\mathcal R\ {\rm CPTP}}
+F_e(\rho_\star,\mathcal R N_T)=c,
+\quad\text{with no attaining }T\in\mathcal T_3.
+\end{gathered}
+\tag{U.221}
+$$
+
+Proof. Equation (U.220) is (U.212) and Theorem 150.1; it keeps the physical input fixed before the unrestricted recovery. Let
+$\omega_{\mathcal R}=(\operatorname{id}_R\otimes\mathcal R N_T)(|\psi_\star\rangle\langle\psi_\star|)$ for the single normalized purification in (U.212). Measuring the projection onto that pure target gives
+
+$$
+\begin{aligned}
+\|\mathcal R N_T-\operatorname{id}\|_\diamond
+&\geq\|\omega_{\mathcal R}-|\psi_\star\rangle\langle\psi_\star|\|_1\\
+&\geq2\left(1-\langle\psi_\star|\omega_{\mathcal R}|\psi_\star\rangle\right)
+=2(1-F_e(\rho_\star,\mathcal R N_T))\\
+&\geq2(1-c+\Delta_T).
+\end{aligned}
+\tag{U.222}
+$$
+
+A reference of dimension three provides this witness to the unrestricted supremum; it does not restrict the supremum over all finite references. Taking the recovery infimum proves the first line of (U.221), and in particular the non-strict bound $1-1/\sqrt2$. The argument is one-sided and uses no equality between fidelity and diamond distance. It asserts neither a poor-fidelity bound at every physical input nor a recovery achieving a diamond upper bound.
+
+For sharpness, the boundary calibration $T_0=he_0^T$ in (S.213) has $v_{T_0}^2\geq c$ and hence, by (U.209), equality. It is also witnessed by the environmental state $X_0=\operatorname{diag}(c,1-c,0)$, since
+
+$$
+f_{T_0}(X_0)=c\sqrt c+\frac{\sqrt2}{4}\sqrt{1-c}=r,
+\qquad c^2+\frac18=c.
+\tag{U.223}
+$$
+
+The legal rank-three lifts $T_\varepsilon=(he_0^T+\varepsilon he_2^T)/\sqrt{1+\varepsilon^2}$ satisfy (U.211), so $f_{T_\varepsilon}(X_0)\to r$ at this same auxiliary density. Their optimized squared fidelity therefore tends to $c$. The strict gap (U.214) excludes equality for every fixed $T\in\mathcal T_3$. Hence $c$ is a sharp supremum and is not a maximum on that subset. This does not identify the infimum diamond error with its lower bound. $\square$
+
+## 152. Mathematical attribution and the remaining branches
+
+**Definition 152.1 (sources, conclusions and limits).** The new rational continuum estimates (U.182)–(U.197), their all-parameter application (U.207), and the quantitative rank-three gap (U.213)–(U.219) are repo-derived ordinary mathematical proofs. They carry no literature-priority or Lean/kernel-certification assertion. Their inherited mathematical inputs are used at the exact owning interfaces: Theorem 131.1 and its positive-integral proof for the root trace, Theorem 133.1 for the complete finite-$k$ trace penalty, Proposition 134.1 for the direct root threshold, Proposition 135.1 for directional trace/determinant algebra and fixed-$k$ interpolation, Theorem 136.1 for the direct low branch, and Theorems 123.2, 124.2, 125.1 for the high-$p$ interval. Theorem 110.1 supplies the singular-value budget and Proposition 130.2 its exact zero-weight correction. The source correspondence, support-safe common attainment, full-sphere comparison and strict lifting are the established results of volume II, Sections 85–91, and Section 109 above; no duplicate operator-algebra theorem or pointwise fixed-encoder converse is required.
+
+The norm and support intermediates are [Watrous, *Simpler semidefinite programs for completely bounded norms*, arXiv:1207.5726v2, Section 1 and Section 2.1, Lemma 2, (6), Theorem 3](https://arxiv.org/pdf/1207.5726v2). Its fidelity is unsquared on PSD operands, and an infimum over positive definite test matrices need not attain an inverse when an operand is singular. The singular-value pairing and its squared-to-root normalization are precisely Theorem 110.1's application of [Miszczak et al., arXiv:0805.2037v2, (9)](https://arxiv.org/pdf/0805.2037v2), not a dimension-two equality theorem for the present $4\times4$ matrix. Neither source supplies the family-specific endpoint polynomials or the constant by itself.
+
+The fixed-input complementary recovery identity is specifically [Bény–Oreshkov, *Approximate simulation of quantum channels*, arXiv:1103.0649v3, Section IV, (133), Corollary 5/(64)–(66)](https://arxiv.org/pdf/1103.0649v3), with the normalization and unrestricted CPTP conditions in (U.212). The fixed-input attained SDP and Schur interface are volume I, Theorem 7.1, and volume II (S.152)–(S.153), with the fixed-input SDP source [Fletcher–Shor–Win, arXiv:quant-ph/0606035, (20)–(22)](https://arxiv.org/pdf/quant-ph/0606035). The strict trace gap is what permits positive-definite completion here; Kraus rank is not a support argument. These are applications of established interfaces, not a new general recovery duality or a literature novelty claim.
+
+Theorems 148.1 and 150.1 and Corollary 151.1 establish the previously missing uniform real assertion (U.4), its full-complex-auxiliary restricted consequence (U.5), and the SPD fixed-input certificate in this exact three-environment branch. They do not provide arbitrary-physical-$\beta$ or arbitrary-physical-$\lambda$ analogues, a weighted/general-environment reduction, or a theorem for every admissible actual rank. In particular [volume I, Definition 47.2, (R.243)](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#47-applicability-and-the-remaining-recovery-problem) still asks for $\delta_N\geq1-\sqrt{1-\beta_{\rm phys}}$ over all stipulated original-real encoders, arbitrary $0<\beta_{\rm phys}\leq1/2$, every admissible third-column list, actual ranks up to nine, all whole-output complex CPTP recoveries, and all finite complex references with the unhalved norm. That whole assertion remains unresolved here, including its other physical-$\lambda$ branches. No physical realization, empirical claim, quantum-field or gravitational derivation follows from these finite-dimensional channel results. The mathematical conclusions do not require a global equality classification, a fixed-encoder diagonal auxiliary, deletion of a third column at fixed data, or a full-output-support assumption for actual rank three.
+
+## 追加锚（本行以下为增补区）
