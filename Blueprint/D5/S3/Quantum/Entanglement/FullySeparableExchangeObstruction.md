@@ -40,7 +40,19 @@ $$\forall V \in Type,\; \forall L \in Type,\; [\operatorname{Fintype}\left(V\rig
 
 Full separability is a convex combination of product states. Each DensityState L is a positive trace-one local matrix, val forgets its proof, and Complex.ofReal embeds each nonnegative real mixture weight into the complex scalars. The product and sum are over all sites and all mixture indices.
 
-**Theorem 1.4 (A zero exchanged diagonal annihilates coherence).**
+**Theorem 1.4 (Density states are positive semidefinite).**
+
+$$\forall L \in Type,\; [\operatorname{Fintype}\left(L\right)] [\operatorname{DecidableEq}\left(L\right)], \forall sigma \in \operatorname{DensityState}\left(L\right),\; \operatorname{Matrix.PosSemidef}\left(\operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(sigma\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/FullySeparableExchangeObstruction.density_psd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite local carrier L, forgetting the CStarMatrix wrapper of a DensityState L gives a positive semidefinite complex matrix. Positivity is transported through CStarMatrix.ofMatrixStarAlgEquiv.symm.
+
+**Theorem 1.5 (A zero exchanged diagonal annihilates coherence).**
 
 $$\forall V \in Type,\; \forall L \in Type,\; [\operatorname{Fintype}\left(V\right)] [\operatorname{DecidableEq}\left(V\right)], [\operatorname{Fintype}\left(L\right)] [\operatorname{DecidableEq}\left(L\right)], \forall rho \in \operatorname{Matrix}\left((V)\to L, (V)\to L, \mathbb{C}\right),\; \forall x \in (V)\to L,\; \forall y \in (V)\to L,\; \forall i \in V,\; (\operatorname{IsFullySeparableLocal}\left(rho\right)) \Rightarrow ((rho\left(\operatorname{Function.update}\left(x, i, y\left(i\right)\right), \operatorname{Function.update}\left(x, i, y\left(i\right)\right)\right) = 0) \Rightarrow (rho\left(x, y\right) = 0))$$
 
@@ -55,6 +67,7 @@ Write rho as a convex sum of products of local density matrices. All terms on th
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/FullySeparableExchangeObstruction.IsFullySeparableLocal`
+- Truth anchor: `D5/S3/Quantum/Entanglement/FullySeparableExchangeObstruction.density_psd`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FullySeparableExchangeObstruction.joinLocal`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FullySeparableExchangeObstruction.partialTraceLocal`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FullySeparableExchangeObstruction.separable_exchange_zero`
