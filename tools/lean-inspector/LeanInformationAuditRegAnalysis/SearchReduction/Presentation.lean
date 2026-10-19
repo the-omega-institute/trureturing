@@ -8,21 +8,21 @@ open LeanInformationAudit.Tests.SearchReduction (Run Failure)
 
 /-- Logical introduction/projection and the pinned `omega` procedure are the
 finite presentation rules. Opaque arithmetic subterms remain atoms. -/
-private partial def closePresentation (index : FactIndex) (extra : Array Expr)
+private partial def closePresentation (index : FactIndex)
     (goal : MVarId) : MetaM Bool := goal.withContext do
   let saved ← saveState
-  let mut facts := extra
+  let mut facts := #[]
   for decl in ← getLCtx do
     unless decl.isImplementationDetail do
       if ← isProp decl.type then facts := facts ++ (← components decl.toExpr)
   let type ← withTransparency .reducible <| whnf (← goal.getType)
   if type.isForall then
     let (_, next) ← goal.intro1
-    if ← closePresentation index extra next then return true
+    if ← closePresentation index next then return true
   else if type.isAppOfArity ``And 2 || type.isAppOfArity ``Iff 2 then
     let ctor := if type.isAppOfArity ``And 2 then ``And.intro else ``Iff.intro
     let goals ← goal.apply (← mkConstWithFreshMVarLevels ctor)
-    if ← goals.allM (closePresentation index extra) then return true
+    if ← goals.allM (closePresentation index) then return true
   else
     if ← presentation goal facts then return true
     try
@@ -38,7 +38,7 @@ private partial def closePresentation (index : FactIndex) (extra : Array Expr)
 
 /-- Match every binder, its kind and its dependent domain before certifying the
 terminal equivalence. No premise, parameter or universe is silently erased. -/
-private partial def equivalent (index : FactIndex) (extra : Array Expr)
+private partial def equivalent (index : FactIndex)
     (left right : Expr) (xs : Array Expr := #[]) : MetaM (Option Expr) := do
   let left ← withTransparency .reducible <| whnf left
   let right ← withTransparency .reducible <| whnf right
@@ -47,25 +47,18 @@ private partial def equivalent (index : FactIndex) (extra : Array Expr)
     if kind != kind' then return none
     unless ← withTransparency .reducible <| isDefEq domain domain' do return none
     withLocalDecl name kind domain fun x =>
-      equivalent index extra (body.instantiate1 x) (body'.instantiate1 x) (xs.push x)
+      equivalent index (body.instantiate1 x) (body'.instantiate1 x) (xs.push x)
   | .forallE .., _ | _, .forallE .. => return none
   | _, _ =>
     -- Delta-reduce explicit subterms as well as the proposition's head.
     -- This uses definitional equality without any simp extension or theorem.
     let left ← withReducible <| reduce left (skipTypes := false)
     let right ← withReducible <| reduce right (skipTypes := false)
-    let mut facts := #[]
-    for fact in extra do
-      let mut value := fact
-      for x in xs do
-        unless (← withTransparency .reducible <| whnf (← inferType value)).isForall do break
-        value := mkApp value x
-      facts := facts ++ (← components value)
     let type ← mkAppM ``Iff #[left, right]
     let goal ← mkFreshExprMVar type
     let withTruth ← goal.mvarId!.assert `_presentationTruth (mkConst ``True) (mkConst ``True.intro)
     let (_, next) ← withTruth.intro1
-    unless ← closePresentation index facts next do return none
+    unless ← closePresentation index next do return none
     let proof ← mkLambdaFVars xs (← instantiateMVars goal)
     let type ← mkForallFVars xs type
     let levels := (collectLevelParams {} type).params.toList
@@ -89,11 +82,10 @@ private partial def compatibleBinders (target source : Expr) : MetaM Bool := do
   return !(← withTransparency .reducible <| whnf target).isForall
 
 partial def restatementConversion (target source : Expr) (index : FactIndex := {})
-    (extra : Array Expr := #[]) :
-    MetaM (Option Expr) := do
+    : MetaM (Option Expr) := do
   unless ← compatibleBinders target source do return none
   let saved ← saveState
-  if let some equivalence ← equivalent index extra target source then
+  if let some equivalence ← equivalent index target source then
     return ← withLocalDeclD `_source source fun h =>
       forallTelescopeReducing target fun xs _ => do
         let proof ← mkAppM ``Iff.mpr #[mkAppN equivalence xs, mkAppN h xs]
@@ -110,7 +102,7 @@ partial def restatementConversion (target source : Expr) (index : FactIndex := {
         let value ← mkAppM projection #[mkAppN h xs]
         let type ← mkForallFVars xs (← inferType value)
         pure type
-      if let some conversion ← restatementConversion target projected index extra then
+      if let some conversion ← restatementConversion target projected index then
         return ← withLocalDeclD `_source source fun h => do
           let value ← mkAppM projection #[mkAppN h xs]
           let value ← mkLambdaFVars xs value
@@ -121,52 +113,6 @@ partial def restatementConversion (target source : Expr) (index : FactIndex := {
 /-- The wide structure exclusion retains the legacy conversion relation. -/
 def certifiedRestatement (target source : Expr) (index : FactIndex := {}) : MetaM Bool := do
   return (← restatementConversion target source index).isSome
-
-/-- A syntactic rejection of data-valued constants avoids elaborating their
-telescopes. Unknown and dependent result sorts remain candidates. -/
-private def proofCandidate (env : Environment) (type : Expr) : Bool := Id.run do
-  let body := type.getForallBody.consumeMData
-  if body.isSort then return false
-  let .const name levels := body.getAppFn | return true
-  let some info := (env.setExporting false).find? name | return true
-  let result := (info.type.instantiateLevelParams info.levelParams levels).getForallBody
-  if let .sort (.succ _) := result then return false
-  return true
-
-private def inductiveHead (env : Environment) (e : Expr) : Option Name := do
-  let name ← e.consumeMData.getAppFn.consumeMData.constName?
-  match (env.setExporting false).find? name with
-  | some (.inductInfo _) => some name
-  | _ => none
-
-private def propositionSort (env : Environment) (e : Expr) : Option Bool := do
-  if e.consumeMData.isSort then return false
-  let .const name levels := e.consumeMData.getAppFn.consumeMData | none
-  let info ← (env.setExporting false).find? name
-  match (info.type.instantiateLevelParams info.levelParams levels).getForallBody.consumeMData with
-  | .sort .zero => some true
-  | .sort (.succ _) => some false
-  | _ => none
-
-/-- Reject only rigid telescope mismatches before allocating metavariables.
-Reducible or dependent heads stay in the full definitional-equality check. -/
-private partial def rigidlyCompatible (env : Environment) (target source : Expr) : Bool :=
-  match target.consumeMData, source.consumeMData with
-  | .forallE _ domain body kind, .forallE _ domain' body' kind' =>
-    kind == kind' &&
-      (match propositionSort env domain, propositionSort env domain' with
-        | some left, some right => left == right | _, _ => true) &&
-      !(domain.isSort && (inductiveHead env domain').isSome) &&
-      !(domain'.isSort && (inductiveHead env domain).isSome) &&
-      (match inductiveHead env domain, inductiveHead env domain' with
-        | some left, some right => left == right | _, _ => true) &&
-      rigidlyCompatible env body body'
-  | .forallE .., source =>
-    match inductiveHead env source with
-    | some name => name == ``And || name == ``Iff
-    | none => true
-  | target, .forallE .. => (inductiveHead env target).isNone && !target.isSort
-  | _, _ => true
 
 private def rawBinderCount : Expr → Nat
   | .forallE _ _ body _ => 1 + rawBinderCount body
@@ -223,32 +169,52 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
   let some index := index?
     | return (.incomplete .execution, none, "search.presentation_index_unavailable")
   let start ← IO.getNumHeartbeats
+  let unitLimit := budget * 1000
   let targetAtoms ← match normalizedAtoms env target with
     | .ok atoms => pure atoms
     | .error err => return (.incomplete .execution, none,
         s!"search.presentation_target_normalization: {err}")
   let targetNormalized ← IO.getNumHeartbeats
+  if targetNormalized - start > unitLimit then
+    return (.incomplete .heartbeat, none, "search.presentation_target_normalization_budget")
   let needsOrigins := targetAtoms.any (fun key =>
     !key.scope.isEmpty || key.constants.any (originAnchor env))
   let mut memo := {}
   let mut eligible := #[]
   let mut enumerated := 0
-  for (name, info) in index.matcherConstants do
-    if info.isUnsafe || (name.isInternalDetail && !isPrivateName name) then continue
-    if !proofCandidate env info.type || !rigidlyCompatible env target info.type then continue
+  let domainStart ← IO.getNumHeartbeats
+  let domain := productionDomain index.matcherConstants
+  if (← IO.getNumHeartbeats) - domainStart > unitLimit then
+    return (.incomplete .heartbeat, none, "search.presentation_domain_budget")
+  let priorBound := (4 + 5 * domain.size) * unitLimit
+  IO.eprintln s!"presentation budget: independent_units, domain={domain.size}, unit_limit={unitLimit}, prior_heartbeats_bound={priorBound}"
+  let rawStart ← IO.getNumHeartbeats
+  for (name, info) in domain do
+    let scopeStart ← IO.getNumHeartbeats
+    let scopeMatches := scopeNecessary (rawScopeBound env info.type) targetAtoms
+    if (← IO.getNumHeartbeats) - scopeStart > unitLimit then
+      return (.incomplete .heartbeat, none, s!"search.presentation_scope_budget: {name}")
+    unless scopeMatches do continue
     enumerated := enumerated + 1
+    let unitStart ← IO.getNumHeartbeats
     let (bound, nextMemo) := if needsOrigins then (rawOrigins env info.type).run memo
       else ({unknown := true}, memo)
     memo := nextMemo
     if rawNecessary env targetAtoms bound then
       eligible := eligible.push (name, info.type, bound)
-    if (← IO.getNumHeartbeats) - start > budget * 1000 then
+    if (← IO.getNumHeartbeats) - unitStart > unitLimit then
       return (.incomplete .heartbeat, none,
         s!"search.presentation_raw_index_budget: raw_sources={enumerated}, " ++
           s!"necessary_hits={eligible.size}, " ++
           s!"raw_index_heartbeats={(← IO.getNumHeartbeats)-start}")
-  if targetAtoms.isEmpty then eligible := neutralFirst target eligible
+  if (← IO.getNumHeartbeats) - rawStart > (1 + 2 * domain.size) * unitLimit then
+    return (.incomplete .heartbeat, none, "search.presentation_enumeration_budget")
+  let orderingStart ← IO.getNumHeartbeats
+  if targetAtoms.all (·.isScope) then eligible := neutralFirst target eligible
+  if (← IO.getNumHeartbeats) - orderingStart > unitLimit then
+    return (.incomplete .heartbeat, none, "search.presentation_ordering_budget")
   let built ← IO.getNumHeartbeats
+  let certificateKind := if targetAtoms.all (·.isScope) then "neutral" else "single-source"
   let mut normalized := 0
   let mut hits := 0
   let mut checked := 0
@@ -259,7 +225,8 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
   let mut failure := none
   let detail := fun normalized hits checked normalizationCost queryCost
       conversionCost verificationCost =>
-    s!"heartbeat_unit=internal, raw_sources={enumerated}, necessary_hits={eligible.size}, " ++
+    s!"heartbeat_unit=internal, certificate_kind={certificateKind}, budget_semantics=independent_units, domain_sources={domain.size}, " ++
+    s!"unit_limit={unitLimit}, prior_heartbeats_bound={priorBound}, raw_sources={enumerated}, necessary_hits={eligible.size}, " ++
     s!"normalized_sources={normalized}, " ++
     s!"candidates={hits}, checked_presentations={checked}, " ++
     s!"target_normalization_heartbeats={targetNormalized-start}, " ++
@@ -268,14 +235,12 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
     s!"conversion_heartbeats={conversionCost}, verification_heartbeats={verificationCost}"
   for (name, source, bound) in eligible do
     let before ← IO.getNumHeartbeats
-    let sourceAtoms := if targetAtoms.isEmpty then .ok []
-      else normalizedAtomsWithOrigins env source bound
-    if !targetAtoms.isEmpty then normalized := normalized + 1
+    let sourceAtoms := normalizedAtomsWithOrigins env source bound
+    normalized := normalized + 1
     normalizationCost := normalizationCost + ((← IO.getNumHeartbeats) - before)
-    if (← IO.getNumHeartbeats) - start > budget * 1000 then
-      return (.incomplete .heartbeat, none,
-        detail normalized hits checked normalizationCost queryCost conversionCost verificationCost ++
-          ", search.presentation_index_budget")
+    if (← IO.getNumHeartbeats) - before > unitLimit then
+      failure := some (.heartbeat, s!"search.presentation_normalization_budget: {name}")
+      continue
     match sourceAtoms with
     | .error err =>
       failure := some (.execution, s!"{err}: {name}")
@@ -283,7 +248,11 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
     | .ok atoms =>
       let before ← IO.getNumHeartbeats
       let matched := supportIncluded targetAtoms atoms
-      queryCost := queryCost + ((← IO.getNumHeartbeats) - before)
+      let queryUsed := (← IO.getNumHeartbeats) - before
+      queryCost := queryCost + queryUsed
+      if queryUsed > unitLimit then
+        failure := some (.heartbeat, s!"search.presentation_query_budget: {name}")
+        continue
       unless matched do continue
     hits := hits + 1
     let (row, evidence, converted, verified) ← baselineSource env levels target name

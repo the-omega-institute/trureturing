@@ -132,7 +132,8 @@ theorem syntax_nondegenerate :
     presentationLookup [`r] [(`source, [`p, `q])] = [] := by decide
 
 run_meta do
-  for name in #[``certified_raw_bound_closed, ``unknown_raw_retained, ``raw_necessary_of_normalized_match,
+  for name in #[``production_lookup_complete, ``scope_necessary_of_normalized_match,
+      ``certified_raw_bound_closed, ``unknown_raw_retained, ``raw_necessary_of_normalized_match,
       ``raw_prefilter_preserves_match, ``lookup_complete, ``normalized_lookup_complete,
       ``index_extension,
       ``normalize_sound, ``view_sound, ``holds_iff_atoms, ``subset_sound,
@@ -144,6 +145,8 @@ run_meta do
     unless standardAxioms axioms do
       throwError "single-source model has nonstandard axioms: {name}: {axioms}"
 
+#print axioms production_lookup_complete
+#print axioms scope_necessary_of_normalized_match
 #print axioms raw_necessary_of_normalized_match
 #print axioms raw_prefilter_preserves_match
 #print axioms normalize_sound

@@ -85,6 +85,17 @@ structure RawOriginBound where
   names : NameSet := {}
   unknown : Bool := false
   scope : List (Nat × Option ScopeHead) := []
+  extensibleScope : Bool := true
+
+/-- Only a rigid nonlogical terminal forbids additional projected binders. -/
+def rawScopeBound (env : Environment) (e : Expr) : RawOriginBound :=
+  let body := e.getForallBody.consumeMData
+  let extensible := match body.getAppFn.constName? with
+    | some n => match (env.setExporting false).find? n with
+      | some (.inductInfo _) => n == ``And || n == ``Iff
+      | _ => true
+    | none => true
+  {scope := rawScope env e, extensibleScope := extensible}
 
 private abbrev OriginMemo := Std.HashMap Name RawOriginBound
 
@@ -114,7 +125,9 @@ private def originName (env : Environment) (fuel : Nat) (seen : NameSet)
 /-- A closed raw bound contains the input constants and every constant in
 any expandable alias value it admits. This checker reads compiled data only. -/
 def rawBoundClosed (env : Environment) (e : Expr) (bound : RawOriginBound) : Bool :=
-  bound.scope == rawScope env e && e.getUsedConstants.all bound.names.contains &&
+  bound.scope == (rawScopeBound env e).scope &&
+    bound.extensibleScope == (rawScopeBound env e).extensibleScope &&
+    e.getUsedConstants.all bound.names.contains &&
     bound.names.toList.all (fun name => match expandableAlias env name with
       | none => true
       | some d => d.value.getUsedConstants.all bound.names.contains)
@@ -128,7 +141,9 @@ def rawOrigins (env : Environment) (e : Expr) : StateM OriginMemo RawOriginBound
   let mut result : RawOriginBound := {}
   for name in e.getUsedConstants do
     result := mergeOrigins result (← originName env 1024 {} name)
-  return certifyRawBound env e {result with scope := rawScope env e}
+  return certifyRawBound env e {result with
+    scope := (rawScopeBound env e).scope,
+    extensibleScope := (rawScopeBound env e).extensibleScope}
 
 /-- Every bound used to reject a source has a checked raw alias closure. -/
 theorem certified_raw_bound_closed (env : Environment) (e : Expr) (bound : RawOriginBound)
@@ -146,6 +161,7 @@ structure PresentationKey where
   rendering : String
   constants : List Name
   scope : List (Nat × ScopeHead)
+  isScope : Bool := false
   deriving BEq, ReflBEq, LawfulBEq, DecidableEq, Repr
 
 private def expressionKey (telescope : List (Expr × BinderInfo)) (e : Expr) : PresentationKey :=
@@ -160,9 +176,17 @@ def originAnchor (env : Environment) (name : Name) : Bool :=
     | none | some (.ctorInfo _) => false
     | _ => true
 
+/-- Every key, including a neutral scope marker, retains its telescope. -/
+def scopeKeyCompatible (bound : RawOriginBound) (key : PresentationKey) : Bool :=
+  scopePrefixCompatible bound.scope key.scope &&
+    (bound.extensibleScope || bound.scope.length == key.scope.length)
+
+def scopeNecessary (bound : RawOriginBound) (keys : List PresentationKey) : Bool :=
+  keys.all (scopeKeyCompatible bound)
+
 def keyOriginCompatible (env : Environment) (bound : RawOriginBound)
     (key : PresentationKey) : Bool :=
-  bound.unknown || (scopePrefixCompatible bound.scope key.scope &&
+  bound.unknown || (scopeKeyCompatible bound key &&
     key.constants.all (fun n => !originAnchor env n || bound.names.contains n))
 
 /-- The raw necessary condition reads the raw alias dependency bound only. -/
@@ -315,23 +339,29 @@ outer telescope is part of every component. Iff contributes its two views. -/
 partial def syntaxAtoms (e : Expr) (telescope : List (Expr × BinderInfo) := []) :
     List PresentationKey :=
   if let .forallE _ d b bi := e then syntaxAtoms b (telescope ++ [(d, bi)])
-  else if syntacticNeutral e then []
-  else if e.isAppOfArity ``And 2 then
-    (syntaxAtoms e.appFn!.appArg! telescope ++ syntaxAtoms e.appArg! telescope).eraseDups
-  else if e.isAppOfArity ``Iff 2 then
-    let p := e.appFn!.appArg!
-    let q := e.appArg!
-    let forward := mkForall .anonymous .default p (q.liftLooseBVars 0 1)
-    let backward := mkForall .anonymous .default q (p.liftLooseBVars 0 1)
-    (syntaxAtoms forward telescope ++ syntaxAtoms backward telescope).eraseDups
-  else [expressionKey telescope (componentKey telescope e)]
+  else Id.run do
+    let marker := telescope.foldr
+      (fun (domain, kind) body => Expr.forallE .anonymous (nameless domain) body kind)
+      (mkConst `_presentationScope)
+    let scope := {(expressionKey telescope marker) with isScope := true}
+    if syntacticNeutral e then return [scope]
+    if e.isAppOfArity ``And 2 then
+      return (scope :: syntaxAtoms e.appFn!.appArg! telescope ++
+        syntaxAtoms e.appArg! telescope).eraseDups
+    if e.isAppOfArity ``Iff 2 then
+      let p := e.appFn!.appArg!
+      let q := e.appArg!
+      let forward := mkForall .anonymous .default p (q.liftLooseBVars 0 1)
+      let backward := mkForall .anonymous .default q (p.liftLooseBVars 0 1)
+      return (scope :: syntaxAtoms forward telescope ++ syntaxAtoms backward telescope).eraseDups
+    return [scope, expressionKey telescope (componentKey telescope e)]
 
 /-- The target-independent origin check certifies the actual keys returned by
 N. A violated origin invariant is an execution error, never an opaque miss. -/
 def normalizedAtomsWithOrigins (env : Environment) (e : Expr)
     (bound : RawOriginBound) : Except String (List PresentationKey) := do
   let atoms := syntaxAtoms (← normalizeSyntax env e)
-  if rawNecessary env atoms bound then return atoms
+  if scopeNecessary (rawScopeBound env e) atoms && rawNecessary env atoms bound then return atoms
   else throw ("search.presentation_origin_invariant: " ++
     reprStr (atoms.flatMap (·.constants) |>.filter fun n =>
       originAnchor env n && !bound.names.contains n))
@@ -355,7 +385,10 @@ theorem raw_necessary_of_normalized_match (env : Environment) (source : Expr)
       simp only [hn, bind, Except.bind] at normalized
       split at normalized
       · have eq : syntaxAtoms value = sourceAtoms := Except.ok.inj normalized
-        simpa only [eq] using ‹rawNecessary env (syntaxAtoms value) bound = true›
+        have h := ‹(scopeNecessary (rawScopeBound env source) (syntaxAtoms value) &&
+            rawNecessary env (syntaxAtoms value) bound) = true›
+        simp only [Bool.and_eq_true] at h
+        simpa only [eq] using h.2
       · contradiction
   simp only [rawNecessary, List.all_eq_true] at valid ⊢
   simp only [supportIncluded, List.all_eq_true, List.contains_iff_mem] at matched
@@ -370,6 +403,61 @@ theorem raw_prefilter_preserves_match (env : Environment) (source : Expr)
   cases h : supportIncluded targetAtoms sourceAtoms
   · simp
   · simp [raw_necessary_of_normalized_match env source bound sourceAtoms targetAtoms normalized h]
+
+/-- The production domain is exactly the safe, visible compiled enumeration.
+There is no unaccounted proposition or rigid-telescope prefilter. -/
+def productionAllowed (name : Name) (info : ConstantInfo) : Bool :=
+  !info.isUnsafe && !(name.isInternalDetail && !isPrivateName name)
+
+def productionDomain (entries : Array (Name × ConstantInfo)) : Array (Name × ConstantInfo) :=
+  entries.filter (fun (name, info) => productionAllowed name info)
+
+/-- The early telescope predicate is certified by N itself, including neutral
+scope markers. It is not an independent heuristic rejection. -/
+theorem scope_necessary_of_normalized_match (env : Environment) (source : Expr)
+    (bound : RawOriginBound) (sourceAtoms targetAtoms : List PresentationKey)
+    (normalized : normalizedAtomsWithOrigins env source bound = .ok sourceAtoms)
+    (matched : supportIncluded targetAtoms sourceAtoms = true) :
+    scopeNecessary (rawScopeBound env source) targetAtoms = true := by
+  have valid : scopeNecessary (rawScopeBound env source) sourceAtoms = true := by
+    unfold normalizedAtomsWithOrigins at normalized
+    cases hn : normalizeSyntax env source with
+    | error err => simp [hn, bind, Except.bind] at normalized
+    | ok value =>
+      simp only [hn, bind, Except.bind] at normalized
+      split at normalized
+      · have eq : syntaxAtoms value = sourceAtoms := Except.ok.inj normalized
+        have h := ‹(scopeNecessary (rawScopeBound env source) (syntaxAtoms value) &&
+            rawNecessary env (syntaxAtoms value) bound) = true›
+        simp only [Bool.and_eq_true] at h
+        simpa only [eq] using h.1
+      · contradiction
+  simp only [scopeNecessary, List.all_eq_true] at valid ⊢
+  simp only [supportIncluded, List.all_eq_true, List.contains_iff_mem] at matched
+  exact fun a ha => valid a (matched a ha)
+
+/-- Instantiated by the actual production loop for every compiled declaration,
+its complete source type and its memoized raw bound. All preceding filters are
+included; exact membership is still directional inclusion of N's scoped keys. -/
+theorem production_lookup_complete (env : Environment)
+    (entries : Array (Name × ConstantInfo)) (entry : Name × ConstantInfo)
+    (bound : RawOriginBound) (sourceAtoms targetAtoms : List PresentationKey)
+    (normalized : normalizedAtomsWithOrigins env entry.2.type bound = .ok sourceAtoms) :
+    (entry ∈ productionDomain entries ∧
+      (scopeNecessary (rawScopeBound env entry.2.type) targetAtoms &&
+        rawNecessary env targetAtoms bound && supportIncluded targetAtoms sourceAtoms) = true) ↔
+    (entry ∈ entries ∧ productionAllowed entry.1 entry.2 = true ∧
+      supportIncluded targetAtoms sourceAtoms = true) := by
+  have scope := scope_necessary_of_normalized_match env entry.2.type bound sourceAtoms targetAtoms
+  have raw := raw_necessary_of_normalized_match env entry.2.type bound sourceAtoms targetAtoms
+  constructor
+  · rintro ⟨member, checks⟩
+    have member := Array.mem_filter.mp member
+    simp only [Bool.and_eq_true] at checks
+    exact ⟨member.1, member.2, checks.2⟩
+  · rintro ⟨member, allowed, matched⟩
+    exact ⟨Array.mem_filter.mpr ⟨member, allowed⟩, by simp [scope normalized matched,
+      raw normalized matched, matched]⟩
 
 def normalizedLookup (env : Environment) (target : Expr)
     (entries : List (Name × List PresentationKey)) :
@@ -467,7 +555,7 @@ def singleSourceConversion (target source : Expr) : MetaM (Option Expr) := do
   let env ← getEnv
   let targetAtoms ← match normalizedAtoms env target with
     | .ok atoms => pure atoms | .error err => throwError err
-  if targetAtoms.isEmpty then
+  if targetAtoms.all (·.isScope) then
     let target ← normalizeCertified target
     if let some conversion ← singleTelescope target source #[] then return some conversion
   let sourceAtoms ← match normalizedAtoms env source with

@@ -2,6 +2,7 @@ import Mathlib.Combinatorics.Derangements.Finite
 import LeanInformationAuditRegAnalysis.SearchReduction.Isolation
 import LeanInformationAuditRegTests.SearchReduction.SingleSourceModel
 import LeanInformationAuditRegTests.SearchReduction.PresentationBaseline
+import LeanInformationAuditRegTests.SearchReduction.Baseline
 
 /-! Actual metaprogram probes connect the syntax, query and certificates. -/
 namespace LeanInformationAudit.Tests.SearchReduction.SingleSourceTests
@@ -90,6 +91,32 @@ run_elab do
   if rawNecessary env targetKeys ((rawOrigins env unrelated).run' {}) then
     throwError "rigid telescope mismatch passed the raw necessary condition"
   logInfo "rigid telescope mismatch rejected without normalization"
+  -- Mutation: erasing neutral scope markers makes True.intro a false hit.
+  let neutralTarget ← statement (← `(∀ n : Nat, n = n))
+  let neutralSource := (← getConstInfo ``True.intro).type
+  let .ok nt := normalizedAtoms env neutralTarget | throwError "neutral target normalization"
+  let .ok ns := normalizedAtoms env neutralSource | throwError "neutral source normalization"
+  if supportIncluded nt ns then throwError "neutral telescope was erased from production keys"
+  unless supportIncluded (nt.filter (! ·.isScope)) (ns.filter (! ·.isScope)) do
+    throwError "neutral telescope-erasure mutant is not distinguished"
+  unless !scopeNecessary (rawScopeBound env unrelated) targetKeys do
+    throwError "production telescope prefilter weakening was not detected"
+  let commuted := (← getConstInfo
+    ``LeanInformationAudit.Tests.SearchReduction.Baseline.commuted)
+  let entry := (`LeanInformationAudit.Tests.SearchReduction.Baseline.commuted, commuted)
+  unless (productionDomain #[entry]).any (fun e => e.1 == entry.1) do
+    throwError "production domain lost actual source"
+  let direction ← statement (← `(∀ P Q : Prop, P ∧ Q → Q ∧ P))
+  let .ok dk := normalizedAtoms env direction | throwError "direction normalization"
+  let bound := (rawOrigins env commuted.type).run' {}
+  let .ok sk := normalizedAtomsWithOrigins env commuted.type bound
+    | throwError "actual source normalization"
+  unless scopeNecessary (rawScopeBound env commuted.type) dk &&
+      rawNecessary env dk bound && supportIncluded dk sk do
+    throwError "production coverage bridge lost actual Iff direction"
+  if supportIncluded dk ns then throwError "unscoped source passed the production query"
+  logInfo "production coverage: actual domain, early scope, origins, N, directional query checked"
+  logInfo "scope-erasure and weakened-telescope-filter mutants rejected"
   let index ← factIndex
   let (outcome, evidence, detail) ← baselinePresentation env [] target (some index)
   unless outcome == .found && evidence.isSome do
