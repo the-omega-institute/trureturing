@@ -2,13 +2,16 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/KyFanGap/NearExtremal
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Matrix.Normed]
+   anchors: [mathlib/module/Mathlib.Algebra.Order.Chebyshev, mathlib/module/Mathlib.Analysis.Matrix.Normed, mathlib/module/Mathlib.LinearAlgebra.Matrix.Vec]
    utility: none
    digest: Mean-square kernel approximation and row concentration control the compressed polynomial defects. -/
 
 import D5.S3.Combinatorics.Graph.KyFanGap.UniformGap
 import D5.S3.Combinatorics.Graph.KyFanGap.SignedVariational
+import D5.S3.Arith.Lattices.Klartag.Completion.Discharge
+import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.Analysis.Matrix.Normed
+import Mathlib.LinearAlgebra.Matrix.Vec
 
 /-! Pointwise sign stability and the finite Cauchy--Schwarz inequality connect
 matrix approximation errors with the two polynomial defects. -/
@@ -23,16 +26,6 @@ open scoped BigOperators
 open scoped InnerProductSpace Matrix.Norms.Frobenius
 
 namespace D5.S3.Combinatorics.Graph.KyFanGap
-
-private theorem mean_square_le {n : ℕ} (hn : 0 < n) (z : Fin n → ℝ) :
-    ((∑ s, z s) / n) ^ 2 ≤ (∑ s, z s ^ 2) / n := by
-  have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
-  have hcs := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ z (fun _ => (1 : ℝ))
-  simp only [mul_one, one_pow, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
-    nsmul_eq_mul, mul_one] at hcs
-  rw [div_pow]
-  apply (div_le_div_iff₀ (sq_pos_of_pos hnpos) hnpos).mpr
-  nlinarith [mul_le_mul_of_nonneg_right hcs hnpos.le]
 
 private theorem sign_error_le (u b M : ℝ) (hb : b = -1 ∨ b = 1)
     (hu : |u| ≤ M) : (u ^ 2 - 1) ^ 2 ≤ (M + 1) ^ 2 * (u - b) ^ 2 := by
@@ -49,12 +42,15 @@ private theorem sign_error_le (u b M : ℝ) (hb : b = -1 ∨ b = 1)
   rw [he]
   exact hh
 
-private theorem row_error_le {n : ℕ} (hn : 0 < n)
+private theorem row_error_le {n : ℕ}
     (H B : Matrix (Fin n) (Fin n) ℝ) (c : ℝ) (r : Fin n) :
     ((∑ s, H r s) / n - c) ^ 2 ≤
       2 * ((∑ s, (H r s - B r s) ^ 2) / n) +
         2 * ((∑ s, B r s) / n - c) ^ 2 := by
-  have hcs := mean_square_le hn (fun s => H r s - B r s)
+  have hcs : ((∑ s, (H r s - B r s)) / n) ^ 2 ≤
+      (∑ s, (H r s - B r s) ^ 2) / n := by
+    simpa using (sum_div_card_sq_le_sum_sq_div_card
+      (s := Finset.univ) (f := fun s => H r s - B r s))
   have he : (∑ s, H r s) / n - c =
       (∑ s, (H r s - B r s)) / n + ((∑ s, B r s) / n - c) := by
     rw [Finset.sum_sub_distrib, sub_div]
@@ -94,7 +90,7 @@ private theorem empiricalDefect_le {k n : ℕ} (hn : 0 < n)
           2 * ((∑ s, B r s) / n - c) ^ 2)) / (n : ℝ) := by
         apply div_le_div_of_nonneg_right _ hnpos.le
         exact Finset.sum_le_sum fun r _ =>
-          row_error_le hn (fun r s => bilinearKernel q (x r) (x s)) B c r
+          row_error_le (fun r s => bilinearKernel q (x r) (x s)) B c r
       _ = _ := by
         simp only [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.sum_div]
         ring
@@ -167,25 +163,20 @@ private theorem witnessMatrix_cube {k n : ℕ} (W : SignedWitness k n) :
 
 private theorem real_frobenius_sq {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) :
     ‖A‖ ^ 2 = ∑ r, ∑ s, A r s ^ 2 := by
-  rw [Matrix.frobenius_norm_def, ← Real.sqrt_eq_rpow, Real.sq_sqrt (by positivity)]
-  simp [Real.rpow_two, Real.norm_eq_abs, sq_abs]
-
-private theorem real_frobenius_trace {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) :
-    ‖A‖ ^ 2 = Matrix.trace (A.transpose * A) := by
-  rw [real_frobenius_sq]
-  simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.transpose_apply]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro r _
-  apply Finset.sum_congr rfl
-  intro s _
-  ring
+  change ‖WithLp.toLp 2 (fun r => WithLp.toLp 2 (A r))‖ ^ 2 = _
+  simp [PiLp.norm_sq_eq_of_L2, Real.norm_eq_abs, sq_abs]
 
 private theorem witnessMatrix_norm_sq {k n : ℕ} (W : SignedWitness k n) :
     ‖witnessMatrix W‖ ^ 2 = k := by
-  rw [real_frobenius_trace, (witnessMatrix_symm W).eq, witnessMatrix_sq,
-    Matrix.trace_mul_comm, witnessColumns_gram]
-  simp
+  calc
+    _ = (witnessMatrix W).vec ⬝ᵥ (witnessMatrix W).vec := by
+      rw [real_frobenius_sq]
+      simp only [dotProduct, Matrix.vec, Fintype.sum_prod_type, pow_two]
+      exact Finset.sum_comm
+    _ = k := by
+      rw [Matrix.vec_dotProduct_vec, (witnessMatrix_symm W).eq, witnessMatrix_sq,
+        Matrix.trace_mul_comm, witnessColumns_gram]
+      simp
 
 private theorem witnessMatrix_apply {k n : ℕ} (W : SignedWitness k n)
     (x : EuclideanSpace ℝ (Fin n)) :
@@ -241,14 +232,8 @@ private theorem frobenius_sub_smul_sq {n : ℕ}
     ‖M - c • Q‖ ^ 2 = ‖M‖ ^ 2 + c ^ 2 * ‖Q‖ ^ 2 -
       (2 * c) * Matrix.trace (Q * M) := by
   have hcross : Matrix.trace (Q * M) = ∑ r, ∑ s, M r s * Q r s := by
-    simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply]
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro r _
-    apply Finset.sum_congr rfl
-    intro s _
-    rw [hQ.apply]
-    ring
+    rw [Matrix.trace_mul_comm]
+    exact D5.S3.Arith.Lattices.Klartag.Completion.Discharge.trace_mul_eq_frobenius hQ
   have hid (a b : ℝ) : (a - c * b) ^ 2 = a ^ 2 + c ^ 2 * b ^ 2 -
       (2 * c) * (a * b) := by ring
   simp only [real_frobenius_sq, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul, hcross]

@@ -34,5 +34,6 @@ Every nonsquare positive integer k admits a positive gap below (1+sqrt(k))/2 for
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/NearExtremal.bilinear_approximation_gap`
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/NearExtremal.uniform_gap`
+- Dependency: [D5/S3/Arith/Lattices/Klartag/Completion/Discharge](../../../Arith/Lattices/Klartag/Completion/Discharge.md)
 - Dependency: [D5/S3/Combinatorics/Graph/KyFanGap/SignedVariational](SignedVariational.md)
 - Dependency: [D5/S3/Combinatorics/Graph/KyFanGap/UniformGap](UniformGap.md)
