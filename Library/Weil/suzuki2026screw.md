@@ -8632,3 +8632,149 @@ There is a literal prime-channel example inside this joint space. If $D$ is the 
 For that example, the Poisson polynomial has nonnegative coefficients in its outer packet and nonpositive coefficients in its inner packet. Above the inner degree $n_{\rm in}\le P(R+\delta_D)/4$, every deconflated coefficient up to the positive outer degree $n_{\rm out}>PR$ has strict sign $(-1)^j$, with $P=e^{2A}$. There are at least $n_{\rm out}-n_{\rm in}-1>PR/2$ successive alternations at all large $P$. Roots at atoms do not evade the same local root-count argument used at W274. At fixed $w$ and large $R$ these actual sources exceed W228's reciprocal-mass cap, while their limiting moment ratio lies in $[(R/(2\pi))^6,((R+\delta_D)/(2\pi))^6]$, beyond W266. This illustrates actual cancellation, rather than positivity obtained by appending negligible atoms.
 
 The finite set $D$, common base interval and integer-square relations are essential hypotheses of this estimate. Its constants do not justify a passage to arbitrary interval sets or an unbounded-index limit. General multi-interval coupling, W258 for EVERY fixed moment budget, full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved. No numerical constants/start, computational certificate, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied.
+
+
+## A joint prime-power estimate allows the interval index set to grow
+
+There are universal $R_0,C,K,c>0$ with the following property. For every $R\ge R_0$, $0<\delta\le1$, every nonempty
+$D\subset\{1,\ldots,\lfloor\sqrt{R/\pi}\rfloor\}$ and arbitrary independent complex $g_d\in C_c^\infty((R,R+\delta))$, put
+$$
+f(x)=\sum_{d\in D}d^4g_d(d^2x),\qquad
+U=\mathscr Tf,\quad V=\mathscr Vf,\quad
+S=\|U\|_{L^2([\pi,\infty),x^{7/2}dx)}^2.
+$$
+Then the COMPLETE actual form satisfies
+$$
+\mathfrak E(f)\ge
+\left[\frac2{\sqrt\pi}\log\frac1\delta-C\log\log(3R)\right]S.
+\tag{W283}
+$$
+Consequently $0<\delta\le c(\log(3R))^{-K}$ gives $\mathfrak E(f)\ge S>0$ unless all profiles vanish. If $(R,R+\delta)\cap\pi\mathbb Z=\varnothing$, the loss in W283 can instead be replaced by a universal constant, so one fixed sufficiently small width gives that same joint positive margin. All constants are independent of $D$; the index set can grow up to order $\sqrt R$. The integer-square geometry and common base interval remain hypotheses. This does not prove positivity for arbitrary supports, every fixed moment budget or RH.
+
+Consume W249's complete direct source order, W240's full paired reflection, W269's support/Gamma estimate and W255/W257's actual-source transport. Classical Dirichlet hyperbola summation, von Mangoldt convolution, Mertens, Chebyshev and weighted Schur estimates are used inside the same-source argument. No standalone classical arithmetic or operator theorem is added. The fixed-width, dimension-independent bound across ALL resonances remains unproved; W283 pays an explicit $\log\log R$ loss there. This is paper mathematics without Lean certification or a literature-priority claim.
+
+### Regroup the entire paired correction, including the integral tails
+
+First let $f$ be any smooth compact physical feature supported below $M$. Put $b=Bf$. In W240 change variables $y=\pi s^2$ and group $m=\ell k$. Its paired correction is
+$4\pi^4\sum_m m^4\int\overline{b(y)}b(\pi^2m^2/y)A_m(y)dy/y$,
+where
+$A_m(y)=\tfrac12\sum_{\ell k=m,\,\ell<\sqrt{y/\pi}<k}\log(k/\ell)$.
+The classical rectangular hyperbola identity with cutoffs
+$a=\sqrt{y/\pi}$ and $b_0=m/a$ gives
+$A_m(y)=\tfrac12\sum_{r<a,\,s<b_0,\,rs\mid m}\Lambda(m/(rs))$.
+Indeed summing $1*\Lambda=\log$ over the full rectangle and subtracting its complement leaves $\sum_{r<a,r\mid m}\log(m/r^2)$; the reciprocal divisors between the two cutoffs cancel. Endpoint equalities have measure zero in these integrals.
+
+Reindex $m=qrs$, $y=r^2x$. Both cutoffs become $x>\pi$ and $\pi^2q^2/x>\pi$, while $m^4=q^4r^4s^4$. The sums at both arguments restore the SAME $\mathscr Tb=BU$. Hence the exact complete correction is
+$$
+\mathcal P(BU)=2\pi^4\sum_{q\ge2}\Lambda(q)q^4
+\int_\pi^{\pi q^2}\overline{BU(x)}
+ BU(\pi^2q^2/x)\frac{dx}{x}.
+\tag{W284}
+$$
+Only $q\le M/\pi$ contribute. The reordering is finite on this compact class. Every $Bf$ tail, mixed pair, index beyond the direct cutoff and actual exterior correction from W240 remains; $B$ commutes with all scalar dilations. The remaining folded model on $U$ has absolute value at most $CS$ by W232 and right Hardy. Thus the actual reflection equals that model plus W284. No inverse theta or Gram comparison is used.
+
+In logarithmic coordinates $u(t)=(\pi e^t)^{9/4}BU(\pi e^t)$, W284 is
+$(2/\sqrt\pi)\sum\Lambda(q)q^{-1/2}\int_0^{2\log q}\overline{u(t)}u(2\log q-t)dt$.
+It is a prime-power Hankel pairing. W249's charge is the corresponding Toeplitz pairing, since $V=\sum_q\Lambda(q)D_qU$, $D_qF(x)=q^4F(q^2x)$. This representation supplies no sign on its own. In particular the $B$ image, model and cutoff terms cannot be dropped: for compact $U$, $\int_\pi^\infty x^{3/2}BU(x)dx=\pi^{3/2}IU(\pi)$.
+
+### Use the actual modal profiles without an inverse Gram loss
+
+Return to the common interval $I=(R,R+\delta)$ and let $L=\lfloor\sqrt{(R+\delta)/\pi}\rfloor$, $N(y)=\lfloor\sqrt{y/\pi}\rfloor$. Keep W276's
+$h_n(y)=\sum_{d\mid n}g_d(y)$ and
+$k_n(y)=\sum_{d\mid n}\log(n/d)g_d(y)$, with $g_d=0$ off $D$.
+Classical convolution gives $k_n=\sum_{q\mid n}\Lambda(q)h_{n/q}$. Define
+$$
+a_n(y)=\frac{y^{9/4}}{\sqrt n}h_n(y),\qquad n\le N(y),
+\qquad
+S=\int_I\sum_{n\le N(y)}|a_n(y)|^2\frac{dy}{y}.
+\tag{W285}
+$$
+The last identity includes the partial last mode. The normalized divisor matrix $\mathcal C_y(n,j)=\Lambda(n/j)/\sqrt{n/j}$ for $j\mid n$ gives the exact local charge. Its classical weighted-Schur rows and columns, with weights $n^{-1/2}$, are $\log n$ and $\sum_{q\le N(y)/n}\Lambda(q)/q$. Mertens therefore gives $\|V\|_W\le(\log L+C)\sqrt S$.
+
+Set $H_U=(3/2)IU/x$. Cauchy in the actual profiles, using $\sum_{n\le J}n^5\le CJ^6$, gives
+$$
+|H_U(x)|\le C\sqrt\delta R^{-1/4}x^{-5/2}\sqrt S,
+\qquad \pi\le x<R+\delta.
+\tag{W286}
+$$
+Use the truncated profiles $h_n\mathbf1_{y\ge\pi n^2}$ in this estimate, so no full-last-mode norm is substituted. It also gives $\|H_U\|_W\le C\sqrt\delta R^{-1/4}\sqrt S$. The same argument for $V$ costs only $\log L+C$. Therefore replacing $\Re\langle BU,BV\rangle_W$ by $\Re\langle U,V\rangle_W$ costs $CS$, uniformly in $D$.
+
+The reflection replacement $\mathcal P(BU)=\mathcal P(U)+O(S)$ is also uniform. For a mixed term in W284, $xz=\pi^2q^2$ and W286 leave
+$C\sqrt\delta R^{-1/4}\sqrt S\sum_{q\le(R+\delta)/\pi}\Lambda(q)/q\int|U(x)|x^{3/2}dx$.
+The actual modal support has
+$\int_{\operatorname{supp}U}x^{-1/2}dx\le C\delta R^{-1/2}\log(2+R)$.
+Cauchy and Mertens bound this mixed term by
+$C\delta R^{-1/2}\log^{3/2}(2+R)S$.
+The two-tail term is at most
+$C\delta R^{-1/2}S\sum_{q\le(R+\delta)/\pi}\Lambda(q)\log(2q)/q
+\le C\delta R^{-1/2}\log^2(2+R)S$.
+Both are $CS$. No source $g$ norm or number of intervals enters.
+
+### Estimate the internal and reflected prime directions jointly
+
+In $\mathcal P(U)$, two actual modal arguments force a single integer
+$m=qnk$ with $\pi m\in I$. There is at most one such integer because $\delta\le1<\pi$. If none exists, $\mathcal P(U)=0$. Otherwise put
+$y^*=\pi^2m^2/y$ and extend each $a_n$ by zero off its actual domain. Formula W284 becomes
+$$
+\mathcal P(U)=\frac2{\sqrt\pi}\int_I
+\sum_{\substack{n\le N(y),\ k\le N(y^*)\\nk\mid m}}
+\frac{\Lambda(m/(nk))}{\sqrt{m/(nk)}}
+\overline{a_n(y)}a_k(y^*)\frac{dy}{y}.
+\tag{W287}
+$$
+The involution preserves $dy/y$; this is a self-adjoint pairing on the SAME profile space. Variable $N(y)$ retains square resonances and the partial last interval. No closeness of the independent profile values at $y$ and $y^*$ is assumed.
+
+For the joint nonnegative-entry operator $\mathcal C+\mathcal C^*+\mathcal H$, where $\mathcal H$ is W287's involution kernel, choose Schur weights
+$w_n(y)=n^{-1/2}(1+n/a)$, $a=\sqrt{y/\pi}$, $t=n/a\le1$.
+Write $\mathcal L(v)=\sum_{q\mid v}\Lambda(q)/q$ for positive integer $v$.
+The classical divisor estimate $\mathcal L(v)\le C\log\log(3v)$ is used here; it follows from the usual prime Mertens bound by separating primes at $\log(3v)$.
+
+The lower and upper local divisor rows are bounded respectively by
+$[\log n+t\mathcal L(n)]/(1+t)$ and
+$[\log(a/n)+C]/(1+t)$.
+For the latter use $\sum_{q\le a/n}\Lambda(q)/q\le\log(a/n)+C$ and $t\psi(a/n)\le C$.
+When $n\mid m$, the reflected row is at most
+$[a/\sqrt m][t\log(m/n)+\mathcal L(m/n)]/(1+t)$; otherwise it vanishes.
+This follows by substituting $k=m/(nq)$ and $q>a/n$ into the paired weight $w_k(y^*)$. Since both $y$ and $\pi m$ lie in $I$,
+$a/\sqrt m=1+O(\delta/R)$ and $\log(m/a^2)=O(\delta/R)$.
+The leading terms sum to $\log a+O(1)$: use
+$\log n+\log(a/n)=\log a$ and $-t\log t\le1/e$.
+The remaining divisor sums cost only $C\log\log(3R)$.
+
+Weighted Schur, on the direct-integral space in W285 with its measure-preserving involution, therefore gives for arbitrary complex profiles
+$$
+2\Re\langle U,V\rangle_W+
+\frac{\sqrt\pi}{2}\mathcal P(U)
+\le[\log L+C\log\log(3R)]S.
+\tag{W288}
+$$
+This is a joint estimate, not a sum of independently optimized sources. If no resonance integer exists, ordinary divisor Schur instead gives the sharper $[\log L+C]S$.
+
+### Keep the full direct gain and return to actual sources
+
+W269 and W247 applied to the SAME $U_0=\mathbf1_{[\pi,\infty)}U$ give
+$\mathcal D_\pi(U)\ge(2/\sqrt\pi)[\log(R/(L\delta))-C]S$.
+Its Mellin support measure is at most $L\delta/R$; the possible cutoff jump is in the owned logarithmic form domain. Use W249, W286's two $B$ errors, W284's full reflection and W288 together. The model and tail allowances cost $CS$, so
+$$
+\mathfrak E(f)\ge\frac2{\sqrt\pi}
+\left[\log\frac{R}{L^2\delta}-C\log\log(3R)\right]S.
+\tag{W289}
+$$
+Since $L^2\le(R+\delta)/\pi$, this proves W283. In the nonresonant case the logarithmic loss is $C$. A universal sufficiently large $K$ and small $c$ make the bracket at least one when $\delta\le c(\log(3R))^{-K}$. A fixed sufficiently small width works for every nonresonant $I$. The source is zero iff $S=0$, since the divisor transform is triangular and $D\subset\{1,\ldots,N(y)\}$ throughout $I$.
+
+For EACH fixed nonzero tuple in either positive-width class established above, consume W235--W236 ONCE on its complete $f$, with the error chosen independently of $w>0$. W255/W257 give actual original Gaussian sources in $[A,A+w)$ with $Q_H=1$, at most $\lceil(M_f+1)e^{2A}\rceil$ sites, $M_f=(R+\delta)/(\min D)^2$, and
+$$
+Q_{6,A}\longrightarrow\frac{\|x^3f\|_2^2}{\pi^6\|f\|_2^2},
+\qquad
+A Q_{\mathcal K_A^g}\longrightarrow
+\frac{\mathfrak E(f)}{4\pi^3\|f\|_2^2}>0.
+\tag{W290}
+$$
+The start may depend on $R,D$ and the complete tuple, but is independent of $w$ for those selected approximants. The full original kernel, Hardy norm and Gaussian map are unchanged; no stable coefficient or gap bound is asserted.
+
+There is a growing-interval consumer inside one FIXED moment budget. Take
+$D\subset[\lceil\sqrt{R/\pi}/2\rceil,\lfloor\sqrt{R/\pi}\rfloor]$ and $R$ large. Then $\operatorname{supp}f\subset(\pi,5\pi)$, while $|D|$ may tend to infinity. On this band $U=f+D_2f$ and $D_2^2f=0$, so $f=U-D_2U$ and
+$\|f\|_2^2\le\pi^{-7/2}(1+2^{-1/2})^2S$.
+For either admitted positive-width class, W290 consequently supplies selected actual sources with limiting sixth-moment ratio at most $5^6$ and a universal positive lower limit for $A Q_{\mathcal K_A^g}$. Their count is at most $\lceil(5\pi+1)e^{2A}\rceil$. This pays arbitrary joint coefficients and independent shapes on unboundedly many intervals. It does not cover every source in that budget; the approximation starts are not uniform over all tuples or $R$.
+
+The integer-square locations, common base interval and width/resonance contracts are essential. No density passage from these sparse configurations to arbitrary compact features is established. W258 for EVERY fixed moment budget, unrestricted complete positivity, full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved. No numerical constants/start, computational certificate, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied.
