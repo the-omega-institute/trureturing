@@ -40,12 +40,51 @@ private partial def instanceParameters : Expr → Bool
   | .forallE _ _ body kind => kind == .instImplicit || instanceParameters body
   | _ => false
 
+/-- Rigid domain heads cannot be erased by alias expansion. Unknown heads
+remain unconstrained; no reducible definition is treated as rigid. -/
+inductive ScopeHead where
+  | sortHead | forallHead | constant (name : Name) | variable (index : Nat) | other
+  deriving BEq, ReflBEq, LawfulBEq, DecidableEq, Repr
+
+private def binderTag : BinderInfo → Nat
+  | .default => 0 | .implicit => 1 | .strictImplicit => 2 | .instImplicit => 3
+
+private def scopeHead (e : Expr) : ScopeHead :=
+  match e.consumeMData with
+  | .sort _ => .sortHead
+  | .forallE .. => .forallHead
+  | e => match e.getAppFn.consumeMData with
+    | .const n _ => .constant n
+    | .bvar i => .variable i
+    | _ => .other
+
+private def rigidScopeHead (env : Environment) (e : Expr) : Option ScopeHead :=
+  match scopeHead e with
+  | .constant n => match (env.setExporting false).find? n with
+    | some (.inductInfo _) => some (.constant n)
+    | _ => none
+  | .other => none
+  | head => some head
+
+private def rawScope (env : Environment) (e : Expr) : List (Nat × Option ScopeHead) :=
+  match e with
+  | .forallE _ d b bi => (binderTag bi, rigidScopeHead env d) :: rawScope env b
+  | .mdata _ b => rawScope env b
+  | _ => []
+
+def scopePrefixCompatible : List (Nat × Option ScopeHead) → List (Nat × ScopeHead) → Bool
+  | [], _ => true
+  | _ :: _, [] => false
+  | (kind, head) :: rest, (kind', head') :: rest' =>
+    kind == kind' && head.all (· == head') && scopePrefixCompatible rest rest'
+
 /-- A target-independent overapproximation of the names that N can expose.
 Only compiled expression constants and definition values are read. A cycle or
 analysis depth limit widens to top; it never discards a possible source. -/
 structure RawOriginBound where
   names : NameSet := {}
   unknown : Bool := false
+  scope : List (Nat × Option ScopeHead) := []
 
 private abbrev OriginMemo := Std.HashMap Name RawOriginBound
 
@@ -75,7 +114,7 @@ private def originName (env : Environment) (fuel : Nat) (seen : NameSet)
 /-- A closed raw bound contains the input constants and every constant in
 any expandable alias value it admits. This checker reads compiled data only. -/
 def rawBoundClosed (env : Environment) (e : Expr) (bound : RawOriginBound) : Bool :=
-  e.getUsedConstants.all bound.names.contains &&
+  bound.scope == rawScope env e && e.getUsedConstants.all bound.names.contains &&
     bound.names.toList.all (fun name => match expandableAlias env name with
       | none => true
       | some d => d.value.getUsedConstants.all bound.names.contains)
@@ -89,7 +128,7 @@ def rawOrigins (env : Environment) (e : Expr) : StateM OriginMemo RawOriginBound
   let mut result : RawOriginBound := {}
   for name in e.getUsedConstants do
     result := mergeOrigins result (← originName env 1024 {} name)
-  return certifyRawBound env e result
+  return certifyRawBound env e {result with scope := rawScope env e}
 
 /-- Every bound used to reject a source has a checked raw alias closure. -/
 theorem certified_raw_bound_closed (env : Environment) (e : Expr) (bound : RawOriginBound)
@@ -106,10 +145,12 @@ an unproved property of the compiler's pointer-optimized Expr equality. -/
 structure PresentationKey where
   rendering : String
   constants : List Name
+  scope : List (Nat × ScopeHead)
   deriving BEq, ReflBEq, LawfulBEq, DecidableEq, Repr
 
-private def expressionKey (e : Expr) : PresentationKey :=
-  { rendering := reprStr e, constants := e.getUsedConstants.toList }
+private def expressionKey (telescope : List (Expr × BinderInfo)) (e : Expr) : PresentationKey :=
+  { rendering := reprStr e, constants := e.getUsedConstants.toList,
+    scope := telescope.map fun (domain, kind) => (binderTag kind, scopeHead domain) }
 
 /-- Key constructors and numeral constructors are generated syntax, not source
 anchors. All other compiled constants must have an origin in the source. -/
@@ -121,8 +162,8 @@ def originAnchor (env : Environment) (name : Name) : Bool :=
 
 def keyOriginCompatible (env : Environment) (bound : RawOriginBound)
     (key : PresentationKey) : Bool :=
-  bound.unknown || key.constants.all (fun n =>
-    !originAnchor env n || bound.names.contains n)
+  bound.unknown || (scopePrefixCompatible bound.scope key.scope &&
+    key.constants.all (fun n => !originAnchor env n || bound.names.contains n))
 
 /-- The raw necessary condition reads the raw alias dependency bound only. -/
 def rawNecessary (env : Environment) (targetAtoms : List PresentationKey)
@@ -283,7 +324,7 @@ partial def syntaxAtoms (e : Expr) (telescope : List (Expr × BinderInfo) := [])
     let forward := mkForall .anonymous .default p (q.liftLooseBVars 0 1)
     let backward := mkForall .anonymous .default q (p.liftLooseBVars 0 1)
     (syntaxAtoms forward telescope ++ syntaxAtoms backward telescope).eraseDups
-  else [expressionKey (componentKey telescope e)]
+  else [expressionKey telescope (componentKey telescope e)]
 
 /-- The target-independent origin check certifies the actual keys returned by
 N. A violated origin invariant is an execution error, never an opaque miss. -/

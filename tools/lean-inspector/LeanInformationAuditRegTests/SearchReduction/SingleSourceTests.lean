@@ -81,6 +81,13 @@ run_elab do
       bound.names.toList.any (fun n => !rawEquality.contains n) do
     throwError "full-constant equality mutation is not distinguished"
   logInfo "raw equality mutant rejected; directional raw filter retained packaged source"
+  let scopedTarget ← statement (← `(∀ (X : Type) (P : X → Prop) (x : X), P x → P x))
+  let unrelated ← statement (← `(∀ (X : Type) (n : Nat), n = n + 0))
+  let targetKeys ← match normalizedAtoms env scopedTarget with
+    | .ok keys => pure keys | .error err => throwError "scope target: {err}"
+  if rawNecessary env targetKeys ((rawOrigins env unrelated).run' {}) then
+    throwError "rigid telescope mismatch passed the raw necessary condition"
+  logInfo "rigid telescope mismatch rejected without normalization"
   let index ← factIndex
   let (outcome, evidence, detail) ← baselinePresentation env [] target (some index)
   unless outcome == .found && evidence.isSome do

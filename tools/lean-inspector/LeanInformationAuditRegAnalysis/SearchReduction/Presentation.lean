@@ -210,7 +210,8 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
     | .error err => return (.incomplete .execution, none,
         s!"search.presentation_target_normalization: {err}")
   let targetNormalized ← IO.getNumHeartbeats
-  let needsOrigins := targetAtoms.any (fun key => key.constants.any (originAnchor env))
+  let needsOrigins := targetAtoms.any (fun key =>
+    !key.scope.isEmpty || key.constants.any (originAnchor env))
   let mut memo := {}
   let mut eligible := #[]
   let mut enumerated := 0
