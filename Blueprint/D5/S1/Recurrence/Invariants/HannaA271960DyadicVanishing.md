@@ -50,6 +50,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a271960-dyadic-vanishing` (proved) by `D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a271960-dyadic-vanishing","declaration_gid":"D5/S1/Recurrence/Invariants/HannaA271960DyadicVanishing.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2016). *OEIS A271960: a squared compositional generating function and dyadic vanishing*. URL: <https://oeis.org/A271960>.
