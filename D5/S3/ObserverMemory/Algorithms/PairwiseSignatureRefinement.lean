@@ -22,8 +22,6 @@ namespace D5.S3.ObserverMemory.Algorithms.PairwiseSignatureRefinement
 open D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
 open D5.S3.ObserverMemory.Algorithms.ControlledRelationRecursion
 open D5.S3.ObserverMemory.Algorithms.ControlledFiniteStability
-open private controlled_stable_relation_eq_limit from
-  D5.S3.ObserverMemory.Algorithms.ControlledFiniteStability
 open D5.S3.ObserverMemory.Algorithms.ControlledSignatureStabilization
 
 universe u
