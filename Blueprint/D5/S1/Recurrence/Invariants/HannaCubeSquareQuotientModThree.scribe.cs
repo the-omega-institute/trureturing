@@ -18,13 +18,14 @@ internal sealed class HannaCubeSquareQuotientModThreeDocument : IScribeDocumentD
                 "OEIS A377100, Comments (unpaginated): \"Conjecture: a(n) == 1 (mod 3) for n >= 1, which has been verified for the initial 2305 terms.\" Here a(n) is coeff n A, n starts at one, and the integer m is coerced into Q in the coefficient equality. The proposition also asserts existence.", DescribeRole.Definition, AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2024a377100"))),
             Node("result", "Every positive coefficient is one modulo three",
                 Disp(Seq(Parenthesized(Seq(Exists, Sp, F.Id("A"), Colon, Sp, Call("PowerSeries", Seq(Mathbb, Grp(F.Id("Q")))), Comma, Sp, Call("IsGF", F.Id("A")))), Sp, Land, Sp, Parenthesized(Seq(Forall, Sp, F.Id("A"), Colon, Sp, Call("PowerSeries", Seq(Mathbb, Grp(F.Id("Q")))), Comma, Sp, Seq(Parenthesized(Call("IsGF", F.Id("A"))), Sp, Implies, Sp, Parenthesized(Seq(Forall, Sp, F.Id("n"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Parenthesized(Seq(D(1), Sp, Le, Sp, F.Id("n"))), Sp, Implies, Sp, Parenthesized(Seq(Exists, Sp, F.Id("m"), Colon, Sp, Seq(Mathbb, Grp(F.Id("Z"))), Comma, Sp, Seq(Parenthesized(Seq(Call("coeff", F.Id("n"), F.Id("A")), Sp, Eq, Sp, Parenthesized(Seq(F.Id("m"), Colon, Sp, Seq(Mathbb, Grp(F.Id("Q"))))))), Sp, Land, Sp, Parenthesized(ModEq( D(3), F.Id("m"), D(1)))))))))))))),
-                "Writing the solution as X times a normalized series gives a coefficient contraction over every commutative ring. The integral fixed point reduces to the geometric series over ZMod 3. Injectivity into Laurent series identifies the polynomial equation with the displayed quotient.", DescribeRole.Theorem, AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2024a377100"))))));
+                "Writing the solution as X times a normalized series gives a coefficient contraction over every commutative ring. The integral fixed point reduces to the geometric series over ZMod 3. Injectivity into Laurent series identifies the polynomial equation with the displayed quotient.", DescribeRole.Theorem, AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2024a377100")), new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a377100-mod-three"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hannacubesquarequotientmodthree-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] arguments) =>
         arguments.Length == 0 ? Named(name) : new Formula.Apply(Named(name), [.. arguments]);

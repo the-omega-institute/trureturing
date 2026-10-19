@@ -34,6 +34,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaCubeSquareQuotientModThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a377100-mod-three` (proved) by `D5/S1/Recurrence/Invariants/HannaCubeSquareQuotientModThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a377100-mod-three","declaration_gid":"D5/S1/Recurrence/Invariants/HannaCubeSquareQuotientModThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2024). *OEIS A377100, a generating-function coefficient conjecture*. URL: <https://oeis.org/A377100>.
