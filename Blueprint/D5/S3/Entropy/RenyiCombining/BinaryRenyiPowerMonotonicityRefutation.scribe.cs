@@ -59,6 +59,9 @@ internal sealed class BinaryRenyiPowerMonotonicityRefutationDocument : IScribeDo
         DescribeRole.Theorem);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner), Dot, F.Id(name)));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Named(name), [.. arguments]);
     private static Formula RealType() => Seq(Mathbb, Grp(F.Id("R")));
@@ -67,10 +70,10 @@ internal sealed class BinaryRenyiPowerMonotonicityRefutationDocument : IScribeDo
     private static Formula Rel(Formula left, FormulaRelationOperator relation, Formula right) =>
         new Formula.Relation(left, relation, right);
     private static Formula Imp(Formula premise, Formula body) =>
-        new Formula.Logic(premise, FormulaLogicOperator.Implies, body);
+        new Formula.Logic(Parenthesized(premise), FormulaLogicOperator.Implies, Parenthesized(body));
     private static Formula Fraction(Formula numerator, Formula denominator) =>
         new Formula.Fraction(numerator, denominator);
-    private static Formula LogOf(Formula value) => Call("log", value);
+    private static Formula LogOf(Formula value) => new Formula.Apply(Qualified("Real", "log"), [value]);
 
     private static Formula EntropyFormula()
     {
@@ -78,7 +81,7 @@ internal sealed class BinaryRenyiPowerMonotonicityRefutationDocument : IScribeDo
         return All("alpha", All("x", Rel(Call("hRenyi", alpha, x), FormulaRelationOperator.Equal,
             Multiply(Fraction(D(1), Subtract(D(1), alpha)),
                 LogOf(Add(new Formula.Power(x, alpha),
-                    new Formula.Power(Subtract(D(1), x), alpha)))))));
+                    new Formula.Power(Parenthesized(Subtract(D(1), x)), alpha)))))));
     }
 
     private static Formula PoweredFormula()
@@ -86,7 +89,8 @@ internal sealed class BinaryRenyiPowerMonotonicityRefutationDocument : IScribeDo
         Formula alpha = F.Id("alpha"), x = F.Id("x");
         return All("alpha", All("x", Rel(Call("powered", alpha, x), FormulaRelationOperator.Equal,
             new Formula.Power(
-                Fraction(Call("hRenyi", alpha, x), LogOf(D(2))), Fraction(D(2), alpha)))));
+                Parenthesized(Fraction(Call("hRenyi", alpha, x), LogOf(D(2)))),
+                Fraction(D(2), alpha)))));
     }
 
     private static Formula ClaimFormula()
@@ -100,15 +104,16 @@ internal sealed class BinaryRenyiPowerMonotonicityRefutationDocument : IScribeDo
             Imp(new Formula.Not(Rel(a, FormulaRelationOperator.Equal, D(1))),
             Imp(new Formula.Not(Rel(b, FormulaRelationOperator.Equal, D(1))), comparison))))));
         Formula proposition = All("x",
-            Imp(Rel(D(0), FormulaRelationOperator.LessThanOrEqual, x),
-            Imp(Rel(x, FormulaRelationOperator.LessThanOrEqual, D(1)), orders)));
-        return new Formula.Logic(Named("claim"), FormulaLogicOperator.Iff, proposition);
+            Imp(Rel(x, FormulaRelationOperator.MemberOf,
+                Seq(OpenBracket, D(0), Comma, Sp, D(1), CloseBracket)), orders));
+        return new Formula.Logic(Named("claim"), FormulaLogicOperator.Iff, Parenthesized(proposition));
     }
 
     private static Formula QuarterEntropyFormula() => Rel(
         Call("hRenyi", Fraction(D(1), D(4)), Fraction(D(1), D(1, 7))),
         FormulaRelationOperator.Equal,
-        Multiply(Fraction(D(4), D(3)), Subtract(LogOf(D(3)), Fraction(LogOf(D(1, 7)), D(4)))));
+        Multiply(Fraction(D(4), D(3)),
+            Parenthesized(Subtract(LogOf(D(3)), Fraction(LogOf(D(1, 7)), D(4))))));
 
     private static Formula HalfEntropyFormula() => Rel(
         Call("hRenyi", Fraction(D(1), D(2)), Fraction(D(1), D(1, 7))),
