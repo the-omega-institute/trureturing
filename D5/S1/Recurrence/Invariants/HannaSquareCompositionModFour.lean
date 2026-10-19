@@ -20,7 +20,7 @@ Private theorem proof_shape and consumers:
   argument_agree: bind-only; consumer: denominator_agree.
   denominator_agree: bind-only; consumer: step_agree.
   step_agree: bind-only; consumer: normalized_unique.
-  normalized_unique: content; consumer: integral_unique.
+  normalized_unique: bind-only; consumer: integral_unique.
   approximation_zero: bind-only; consumer: approximation_stable.
   approximation_stable: content; consumer: normalized_agree.
   normalized_agree: content; consumer: normalized_fixed.
@@ -49,6 +49,7 @@ Direct frozen dependencies:
   power_two_zero, thue_series_equation.
   AlternatingDyadicReversionModFour: four_zero.
   NegativePowerDiagonalModPrime: inverse_difference.
+  PowerSeriesNormalizedContraction: exists_unique_fixed.
 The rational equation and claim retain the expressions in #18859. The
 coefficient-prefix and power-of-two constructions use their existing owners.
 The additive coefficient transport uses PowerSeries.mk and AddMonoidHom.compLeft;
@@ -60,6 +61,7 @@ import D5.S1.Recurrence.Residue.NegativePowerDiagonalModPrime
 import D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 import D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity
 import D5.S1.Recurrence.Invariants.AlternatingDyadicReversionModFour
+import D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
 
 set_option autoImplicit false
 
@@ -150,17 +152,12 @@ private theorem normalized_unique {b c : PowerSeries R}
     exact left_inv_eq_right_inv he (by simpa only [mul_comm] using step_mul hb)
   have hfc : c = step c := by
     exact left_inv_eq_right_inv hf (by simpa only [mul_comm] using step_mul hc)
-  have hall : ∀ d, Agree (d + 1) b c := by
-    intro d
-    induction d with
-    | zero =>
-      intro n hn
-      have hn0 : n = 0 := Nat.lt_one_iff.mp hn
-      subst n
-      simp only [coeff_zero_eq_constantCoeff, hb, hc]
-    | succ d ih => simpa only [← hfb, ← hfc] using step_agree hb hc (by omega : 1 ≤ d + 1) ih
-  ext n
-  exact hall n n (by omega)
+  obtain ⟨f, f0, ff, unique⟩ :=
+    D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction.exists_unique_fixed
+      (fun g : PowerSeries R => step g)
+      (fun g _ => step_zero g)
+      (fun hd hg hi h => step_agree hg hi hd h)
+  exact (unique b hb hfb).trans (unique c hc hfc).symm
 
 private theorem approximation_zero (j : ℕ) : constantCoeff (((step (R := R))^[j]) 1) = 1 := by
   cases j <;> simp [Function.iterate_succ_apply', step_zero]

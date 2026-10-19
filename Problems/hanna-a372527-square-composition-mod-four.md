@@ -60,8 +60,8 @@ A rational normalized solution with a nonintegral coefficient at an index above 
 
 - Lean module: `D5/S1/Recurrence/Invariants/HannaSquareCompositionModFour.lean`; public theorem `D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result`.
 - Scribe: `Blueprint/D5/S1/Recurrence/Invariants/HannaSquareCompositionModFour.scribe.cs`; the result node renders the full claim and carries one `OpenProblemResolutionClaim` of kind `Proved`.
-- The nine published owner theorems retain their statements and proofs and have complete Scribe theorem nodes at their owners.
-- Escape audit unfinished: [#19133](https://github.com/the-omega-institute/trureturing/issues/19133). Its targets are `result`, `NegativePowerDiagonalModPrime.inverse_difference`, `UnitReversionSquareParity.agree_iff`, `agree_X`, `subst_inner_agree`, `subst_outer_agree`, `subst_constant`, `CubicFifteenSubstitutionParity.prime_power_subst`, `power_two_zero`, and `AlternatingDyadicReversionModFour.four_zero`. No four-slot registration is claimed `declared_validated`.
+- The six newly public owner theorems retain their statements and proofs and have complete Scribe theorem nodes at their owners.
+- Escape audit unfinished: [#19133](https://github.com/the-omega-institute/trureturing/issues/19133). Its targets are `result`, `NegativePowerDiagonalModPrime.inverse_difference`, `UnitReversionSquareParity.agree_iff`, `subst_inner_agree`, `subst_constant`, `CubicFifteenSubstitutionParity.power_two_zero`, and `AlternatingDyadicReversionModFour.four_zero`. No four-slot registration is claimed `declared_validated`.
 
 ### Experiment
 

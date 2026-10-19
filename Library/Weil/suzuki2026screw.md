@@ -8990,4 +8990,120 @@ For upper-half index sets as at W290, $\operatorname{supp}f\subset(\pi,5\pi)$ at
 $\|f\|_2^2\le\pi^{-7/2}(1+2^{-1/2})^2S$.
 Thus selected original-source families have limiting sixth-moment ratio at most $5^6$, a universal positive lower limit for $AQ_{\mathcal K_A^g}$ and at most $\lceil(5\pi+1)e^{2A}\rceil$ sites. The containing span, resonance count, number of base components and integer-square index count may all grow; every cross term is estimated together in this same fixed moment budget.
 
-Small total measure and the containing span $W\le R^\nu$, $\nu<1/4$, still restrict the features. This class does not exhaust the moment budget and supplies no density passage or estimate for arbitrary interacting windows. The endpoint $\nu=1/4$, every-budget W258, unrestricted complete positivity, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without Lean/kernel or computational certification and without exhaustive bibliography or literature-priority claims.
+W297 retains small total measure and the containing span $W\le R^\nu$, $\nu<1/4$. W303--W309 below remove the total-measure restriction on full windows for each $\nu<(3-\sqrt5)/4$. These classes do not exhaust the moment budget and supply no density passage or estimate for unrestricted interacting windows. The endpoint $\nu=1/4$, every-budget W258, unrestricted complete positivity, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without Lean/kernel or computational certification and without exhaustive bibliography or literature-priority claims.
+
+
+## Pay modal entropy and arithmetic charge before separating them
+
+Put $\varphi=(1+\sqrt5)/2$ and $\kappa_0=1-\varphi/2=(3-\sqrt5)/4$. There is a universal $C>0$ with the following property. For EACH $0<\nu<1/4$ and $\eta>0$ there is $R_0(\nu,\eta)$ such that, for EVERY $R\ge R_0(\nu,\eta)$, $0<W\le R^\nu$, open $E\subset(R,R+W)$ with $0<\mu=|E|\le W$, nonempty
+$D\subset\{1,\ldots,\lfloor\sqrt{R/\pi}\rfloor\}$ and arbitrary independent complex $g_d\in C_c^\infty(E)$, the SAME complete actual form satisfies
+$$
+\mathfrak E(f)\ge\frac2{\sqrt\pi}
+\left[(\kappa_0-\eta)\log R-\log\mu-\log\log(3R)-C\right]S,
+\quad
+f(x)=\sum_{d\in D}d^4g_d(d^2x),\quad
+S=\|\mathscr Tf\|_{L^2([\pi,\infty),x^{7/2}dx)}^2.
+\tag{W303}
+$$
+In particular, for EACH $0<\nu<\kappa_0$ there is $R_1(\nu)$ such that EVERY $R\ge R_1(\nu)$, $0<W\le R^\nu$, admissible $D$ and arbitrary independent complex $g_d\in C_c^\infty((R,R+W))$ obey
+$$
+\mathfrak E(f)\ge
+\frac{\kappa_0-\nu}{\sqrt\pi}\,\log R\,S>0
+\quad\text{unless all }g_d=0.
+\tag{W304}
+$$
+The small TOTAL base measure assumption is absent in W304: the profiles can fill the entire containing interval, whose length may tend to infinity. All interactions, independent phases, partial last mode and actual exterior terms remain. The integer-square geometry and containing span still restrict the source class. This does not exhaust a fixed moment budget or establish arbitrary-support positivity, every-budget W258, RH or strict Robin for every integer $n>5040$.
+
+Reuse W249's ORIGINAL charge order, W284--W286's complete reflection and actual modes, W292/W298's already supplied Beckner entropy interface, W299--W300's full reflection blocks and W290's original Gaussian return. The classical generalized divisor coefficients, their logarithmic-derivative identity, weighted Schur, prime Mertens and Gibbs entropy bound are inputs, not new standalone results. The additional application couples entropy and the arithmetic charge through the SAME actual modal distribution, before paying the complete reflected loss. This is paper mathematics without Lean certification or a literature-priority claim.
+
+### Use one classical weight for the actual charge and entropy
+
+Keep $L=\lfloor\sqrt{(R+W)/\pi}\rfloor$, $N(y)=\lfloor\sqrt{y/\pi}\rfloor$ and W285's zero-extended actual profiles $a_n(y)=y^{9/4}h_n(y)/\sqrt n$. The containing shells remain disjoint because $W\ll\sqrt R$. For $S>0$ put
+$p_n=S^{-1}\int_E|a_n(y)|^2dy/y$ and $m_p=\sum_{n\le L}p_n\log n$.
+
+Use the classical generalized divisor function $d_k$ defined by $\zeta(s)^k=\sum_n d_k(n)n^{-s}$ for real $k\ge1$ and $\Re s>1$. Its positive prime-power coefficients are $d_k(p^j)=(k)_j/j!$. Consume its standard identities
+$$
+\sum_{q\mid n}\Lambda(q)d_k(n/q)
+=\frac{\log n}{k}d_k(n),
+\qquad
+d_k(nq)\le d_k(n)d_k(q).
+$$
+Here the second inequality holds for $k\ge1$, including shared prime factors. The prime-power coefficients and the already owned prime Mertens estimate also give
+$\sum_{q\le X}\Lambda(q)d_k(q)/q\le k\log X+C_k$ for $X\ge1$; prime powers of exponent at least two contribute a bounded sum for fixed $k$.
+
+The divisor suppliers are [Bondarenko, Brevig, Saksman, Seip and Zhao, *Pseudomoments of the Riemann zeta function*, arXiv:1701.06842v3, Section 2, printed page 5, equations (8), (10)--(11)](https://arxiv.org/pdf/1701.06842v3) for the real-parameter coefficients and submultiplicativity, and [Granville, Harper and Soundararajan, *A new proof of Halász’s theorem, and its consequences*, arXiv:1706.03749v1, Section 2.2, proof of Lemma 2.5, printed page 11](https://arxiv.org/pdf/1706.03749v1) for the displayed convolution identity. These are classical inputs to the actual-source application below.
+
+In the actual local charge matrix $\mathcal C_y$ of W285 choose the positive weights $w_n=d_\varphi(n)/\sqrt n$. Its lower and upper weighted row sums satisfy, on every actual domain,
+$$
+\frac{(\mathcal C_yw)_n}{w_n}=\frac{\log n}{\varphi},
+\qquad
+\frac{(\mathcal C_y^*w)_n}{w_n}
+\le\varphi\log\frac Ln+C.
+$$
+The first equality retains every divisor of $n\le N(y)$; the second is an upper bound after enlarging $q\le N(y)/n$ to $q\le L/n$. The symmetric weighted-Schur quadratic bound applies pointwise to arbitrary complex $a(y)$. Since $\varphi-\varphi^{-1}=1$, integration on the SAME actual profile space gives
+$$
+\frac{2\Re\langle U,V\rangle_W}{S}
+\le\varphi\log L-m_p+C,
+\quad U=\mathscr Tf,\quad V=\mathscr Vf.
+\tag{W305}
+$$
+This is a form bound with a retained diagonal observable; it is not an operator-norm estimate obtained by discarding that observable.
+
+Let $\mathcal H_L=\sum_{n\le L}1/n$. The classical finite Gibbs bound relative to probabilities $1/(n\mathcal H_L)$ is
+$H(p)\le m_p+\log\mathcal H_L$, including zero modal masses. Combine it with W305 before estimating either term separately:
+$$
+H(p)+\frac{2\Re\langle U,V\rangle_W}{S}
+\le\varphi\log L+\log\mathcal H_L+C.
+\tag{W306}
+$$
+Both occurrences of $m_p$ refer to the original independent profiles AFTER their actual divisor transform. There is no independently optimized entropy, replacement probability law or equality assumption on the amplitudes. The golden ratio enters because it solves $k-k^{-1}=1$ for this cancellation. This scalar balance does not identify these weights with a Zeckendorf address, establish an optimal exponent, or supply an unproved FIB-to-zeta implication.
+
+### Pay every remaining term when the base measure grows
+
+W298's Jensen/Beckner argument still gives
+$\mathcal D_\pi(U)\ge(2/\sqrt\pi)[\log(R/\mu)-H(p)-C]S$ for $0<\mu\le W$; it never required $\mu\le1$. Its complex-profile, cutoff and logarithmic-form-domain interfaces are unchanged. Only the subsequent tail bounds used that upper restriction.
+
+In W286/W298 replace the unit measure bound by the ACTUAL $\mu\le R^\nu$. The same proof gives
+$|H_U(x)|\le C\sqrt\mu R^{-1/4}x^{-5/2}\sqrt S$ and
+$\|H_U\|_W\le C\sqrt\mu R^{-1/4}\sqrt S$.
+The analogous estimate for $V$ retains the old $\log L+C$ factor. Thus the direct $B$ replacement costs at most
+$C[\sqrt\mu R^{-1/4}\log(3R)+\mu R^{-1/2}\log(3R)]S$.
+The mixed and two-tail reflection bounds remain
+$C\mu R^{-1/2}\log^{3/2}(3R)S$ and
+$C\mu R^{-1/2}\log^2(3R)S$.
+All four are at most $CS$ at an admitted $\nu$-dependent start, since $\nu<1/4<1/2$. The partial last mode is still zero-extended, and the cutoff and folded-model allowances are still bounded by $CS$.
+
+Keep W299's COMPLETE self-adjoint reflection operator $\mathcal H$ on the same actual modal domains, including every cross-component involution. Its high, low and mixed estimates W300 give, for EACH fixed $\nu<1/4$,
+$$
+\|\mathcal H\|=o_\nu(\log R).
+\tag{W307}
+$$
+Indeed the low--low and mixed norms tend to zero with the same choice $\epsilon=1/4-\nu$, while the high--high norm is at most $\max_{m\in\mathcal M}T(m)$. The already owned W295 bound $T(m)\le\rho\log m+C_\rho$ holds for EVERY fixed $\rho>0$, uniformly over $m\asymp R$. This gives W307 with no restriction on $\mu$, component count or phases. For any prescribed $\eta>0$, increasing $R_0(\nu,\eta)$ therefore makes the entire normalized reflected loss at most $\eta\log R$. No Hilbert--Schmidt claim about the infinite-dimensional partial involutions is used.
+
+Now use W249's full negative charge coefficient, W306, the entropy lower bound and ALL the preceding actual allowances. They give
+$$
+\mathfrak E(f)\ge\frac2{\sqrt\pi}
+\left[\log\frac R\mu-\varphi\log L-\log\mathcal H_L
+-\|\mathcal H\|-C\right]S.
+\tag{W308}
+$$
+Since $\log L\le\tfrac12\log R+C$ and $\log\mathcal H_L\le\log\log(3R)+C$, this proves W303. For $\nu<\kappa_0$, choose $\eta=(\kappa_0-\nu)/4$, use $\mu\le W\le R^\nu$, and increase the start so
+$\log\log(3R)+C\le(\kappa_0-\nu)\log R/4$.
+The resulting bracket is at least $(\kappa_0-\nu)\log R/2$, proving W304. The zero case is exact. W289's triangularity, with $D\subset\{1,\ldots,N(y)\}$ throughout the base interval, gives $S>0$ for every nonzero tuple.
+
+### Return the full-width positive space to original finite sources
+
+For EACH fixed nonzero tuple admitted by W304, consume W290 ONCE on its COMPLETE $f$. The original Gaussian finite-source families have $Q_H=1$ and
+$$
+Q_{6,A}\longrightarrow\frac{\|x^3f\|_2^2}{\pi^6\|f\|_2^2},
+\qquad
+A Q_{\mathcal K_A^g}\longrightarrow
+\frac{\mathfrak E(f)}{4\pi^3\|f\|_2^2}>0.
+\tag{W309}
+$$
+Their count is at most $\lceil(M_f+1)e^{2A}\rceil$, $M_f=(R+W)/(\min D)^2$. The approximation starts can depend on $\nu,R,W,D$ and the complete tuple; they remain independent of EVERY $w>0$ for the selected approximants. The original kernel, Gaussian normalization and Hardy metric are unchanged. No stable coefficient or gap bound is asserted.
+
+On W290's upper-half index sets, $\operatorname{supp}f\subset(\pi,5\pi)$ and the existing bound
+$\|f\|_2^2\le\pi^{-7/2}(1+2^{-1/2})^2S$ applies. Thus W304 supplies selected actual source families with limiting sixth-moment ratio at most $5^6$, a positive lower limit for $A Q_{\mathcal K_A^g}$ bounded below by a fixed positive multiple of $(\kappa_0-\nu)\log R$, and at most $\lceil(5\pi+1)e^{2A}\rceil$ sites. Both the number of physical intervals and the FULL occupied base width may grow. Positivity is proved for arbitrary joint shapes on that entire base window, without a small-total-measure or separate-component positivity premise.
+
+Arbitrary physical supports and interactions between unrestricted base windows are not covered. These full-width spaces still do not exhaust the fixed moment budget, and no density passage or common approximation start over all tuples is supplied. The endpoint $\nu=\kappa_0$ is not proved and is not asserted to be optimal. Every-budget W258, unrestricted complete positivity, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. No numerical constants/start, computational certificate, Lean/kernel or CI/merge certification, exhaustive bibliography or literature-priority claim is supplied.
