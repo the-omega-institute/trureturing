@@ -11512,3 +11512,109 @@ prove those identities. No particular rational eta below one, matching
 positive downstream budget, new Lean theorem or official kernel acceptance
 is supplied here. Neither cofinal Weil positivity, the strict Robin
 inequality for every integer above5040, nor RH follows from this count.
+
+### A high-complement norm improves the complete inverse allowance
+
+Keep the SAME actual $c=27$ exterior, $N=1280$, complete $T=\Lambda+B_{\rm GP}$, original support trial $Y$, residual $R$, all nineteen channels, far allowance and source/error premises of the whole-inverse comparison. Reuse its actual surplus $H_{\rm ext}\succeq T+(9/25)I$. The following is a paper application of the existing actual high-mode Gamma estimates and discrete Hilbert bound, not a new Hilbert-transform theorem, numerical execution or retained-sign certificate.
+
+The old $M_T$ uses uncompressed Gamma and pole bounds. The actual exterior contains only Fourier modes $|n|\ge n_0=N+1$. Put $d=\log27<4$, $\omega_n=2\pi n/d$, and $b_j=2j+1/2$. Reuse `arithmetic_archimedean_high_mode_bounds` from [the actual high-mode source](../../D5/S3/Weil/ZetaBridge/WeilArchimedeanHighModeBounds.lean), the [existing full-form high-mode application](../../docs/develop/theory/RH_RESEARCH_LANE_THEORY.md#5-整个高补空间的统一下界), and G1--G3's same physical Fourier realization. In particular
+
+$$
+|s_\Gamma(n)|\le1+|\omega_n|^{-1}.
+$$
+
+For the Gamma boundary $B_\Gamma=Q_\Gamma-q_{D_L}$, its off-diagonal entry is the already identified divided difference
+$(s_\Gamma(n)-s_\Gamma(m))/(\pi(m-n))$, up to the common phase unitary. Its diagonal correction is
+
+$$
+\delta_n=\frac2d\sum_{j\ge0}
+\frac{(1-e^{-b_jd})(b_j^2-\omega_n^2)}{(b_j^2+\omega_n^2)^2},
+\qquad
+|\delta_n|\le\frac1{\pi|n|}+\frac d{2\pi^2n^2}.
+$$
+
+The displayed sum is the existing absolutely convergent correction series; its bound uses the same $1+|\omega|^{-1}$ majorant. The two-sided discrete Hilbert matrix $1/(\pi(m-n))$, with zero diagonal, has norm one. Compress it to $|n|\ge n_0$ before taking its commutator with the bounded diagonal $s_\Gamma$. Adding the diagonal correction gives on the actual high Fourier space
+
+$$
+\|P_{>N}B_\Gamma P_{>N}\|
+\le2+\frac{d+1}{\pi n_0}+\frac d{2\pi^2n_0^2}
+<\frac{1001}{500}.
+\tag{HCN1}
+$$
+
+Here $n_0=1281$, $d<4$ and $\pi>3$ give the final rational bound. This norm estimate restricts to the complex even exterior. It is an operator bound, not a diagonal-only comparison, and includes every Gamma rate. The common closed-form extension is exactly G1--G3's existing bounded-correction extension.
+
+The full even pole is $2|\langle\cosh(x/2),f\rangle|^2$. In the same normalized exterior cosine basis its compressed norm is
+
+$$
+\|P_{>N}P_{\rm even}P_{>N}\|
+=\frac{4\sinh^2(d/4)}d
+ \sum_{n>N}\frac1{(\omega_n^2+1/4)^2}
+\le\frac{d^3\sinh^2(d/4)}{12\pi^4N^3}
+<\frac1{1000}.
+\tag{HCN2}
+$$
+
+This follows directly from the already retained pole moments, or from the singleton channel in the pole update. Use $\sum_{n>N}n^{-4}\le1/(3N^3)$, $d<4$, $\sinh(d/4)<3/2$ and $\pi>3$. Both pole evaluations are retained; positivity here uses the even sector.
+
+The accepted whole-exterior reciprocal bound gives $\Lambda\preceq(331/100)I$, including the far constant. HCN1--HCN2 therefore give the SAME complete operator a smaller norm bound
+
+$$
+0<T\preceq\left(\frac{331}{100}+\frac{1001}{500}
+                       +\frac1{1000}\right)I
+\prec\frac{16}{3}I.
+\tag{HCN3}
+$$
+
+No old weight, retained direction or arithmetic input is changed. In particular no prime term has been dropped from $H_{\rm ext}\succeq T+(9/25)I$; its prime debt was paid by the already accepted propagated-row surplus.
+
+Reuse the same whole-inverse functional calculus and the SAME residual-range majorant $\overline W$. With $M_T^\sharp=16/3$ and $g_0=9/25$, the exact contraction coefficient is
+
+$$
+c_\sharp=\frac{M_T^\sharp}{M_T^\sharp+g_0}=\frac{400}{427},
+\qquad
+H_{\rm ext}^{-1}\preceq c_\sharp T^{-1}
+\preceq c_\sharp\overline W
+\quad\text{on the original residual range}.
+$$
+
+Consequently the complete retained Schur form has the coefficient-uniform lower comparison
+
+$$
+\boxed{S_N\succeq\mathcal L_\sharp
+:=\frac{400}{427}L_*+\frac{27}{427}Q.}
+\tag{HCN4}
+$$
+
+All original far payments remain in $L_*$. Since $Q-L_*\succeq R^*\overline W R\succeq0$, this target dominates the old whole-norm target, whose supplied contraction coefficient exceeded $400/427$. The earlier negative check for that old target remains valid for that old target; it is not a negative check for HCN4.
+
+On the SAME saved exact256-bit full1281-coordinate direction $v$, reuse only the already accepted coarse rational consequences
+
+$$
+q=Q(v)>\frac{297}{100}10^{-30},\qquad
+\ell=v^*L_*v>-\frac{118}{100}10^{-31}.
+$$
+
+Ordinary rational arithmetic in the proof, without a new scientific execution, gives
+
+$$
+v^*\mathcal L_\sharp v
+=\frac{27q+400\ell}{427}
+>\frac{3299}{4270}10^{-31}
+>7\cdot10^{-32}>0.
+\tag{HCN5}
+$$
+
+Thus the old whole-norm route's necessary direction screen is now paid by an actual compressed-operator estimate. HCN5 is not a positivity test for the complete1281-dimensional target. The missing full initial-trial matrix is not reconstructed from $q$.
+
+This gain acts on residual directions beyond the nineteen observed channels. To distinguish it from the already paid nineteen-channel projection, reuse the [existing finite-head faithfulness and positive full-tail metric](../Fourier/montgomery1978largesieve.md#a-cancellation-uniform-metric-for-the-complete-finite-head-tail). At $c=27$, the actual far coupling $C_{\mathcal F}$ is injective on the1281-dimensional retained even space. The same finite support trial has range dimension at most768. Hence
+
+$$
+\operatorname{rank}R_{\mathcal F}
+=\operatorname{rank}(C_{\mathcal F}-(H_{\rm ext}Y)_{\mathcal F})
+\ge1281-768=513.
+$$
+
+Since $\beta$ has only19 rows, $R_{\mathcal F}$ restricted to $\ker\beta$ has rank at least494. On this kernel the old nineteen-channel update equals $L_*$, whereas HCN4 adds $(27/427)(Q-L_*)$, strictly positive on every vector with nonzero residual. This is a source-specific nonredundancy statement, not global domination of the nineteen-channel target. The two gains both consume the same inverse surplus and must not be added without a common paid comparison.
+
+The complete target sign, good-block/border payment and cofinal positivity remain unresolved. This does not revive the separately excluded rank-one endpoint family or alter any old certificate. No new source action, matrix, inverse, solve, determinant, Gram, numerical sign run, parameter scan, Lean proof or literature-priority claim is supplied.
