@@ -79,12 +79,10 @@ theorem parameter_family {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
   have hs : 0 < s := by dsimp [s]; positivity
   have hra : r*r*a = 1 := by
     dsimp [r]
-    rw [← mul_assoc, ← mul_pow, ← pow_two, inv_pow, Real.sq_sqrt ha.le,
-      inv_mul_cancel₀ ha.ne']
+    rw [← mul_inv, Real.mul_self_sqrt ha.le, inv_mul_cancel₀ ha.ne']
   have hsb : s*s*b = 1 := by
     dsimp [s]
-    rw [← mul_assoc, ← mul_pow, ← pow_two, inv_pow, Real.sq_sqrt hb.le,
-      inv_mul_cancel₀ hb.ne']
+    rw [← mul_inv, Real.mul_self_sqrt hb.le, inv_mul_cancel₀ hb.ne']
   let A' := (r*r) • A
   let B' := (s*s) • B
   let X' := (r*s) • X

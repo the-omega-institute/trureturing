@@ -22,16 +22,6 @@ set_option backward.isDefEq.respectTransparency.types false
 def phi {n : ℕ} (c : ℝ) (T : Matrix (Fin n) (Fin n) ℂ) :
     Matrix (Fin n) (Fin n) ℂ := T + ((c : ℂ) * T.trace) • 1
 
-private theorem diagonal_blocks_posSemidef {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
-    (h : (fromBlocks A X Xᴴ B).PosSemidef) : A.PosSemidef ∧ B.PosSemidef := by
-  constructor
-  · have he : (fromBlocks A X Xᴴ B).submatrix Sum.inl Sum.inl = A := by ext i j; rfl
-    rw [← he]
-    exact h.submatrix Sum.inl
-  · have he : (fromBlocks A X Xᴴ B).submatrix Sum.inr Sum.inr = B := by ext i j; rfl
-    rw [← he]
-    exact h.submatrix Sum.inr
-
 /-- A zero diagonal block in a positive block matrix forces its off-diagonal block to vanish. -/
 theorem offDiagonal_eq_zero {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
     (h : (fromBlocks A X Xᴴ B).PosSemidef) (hz : A = 0 ∨ B = 0) : X = 0 := by

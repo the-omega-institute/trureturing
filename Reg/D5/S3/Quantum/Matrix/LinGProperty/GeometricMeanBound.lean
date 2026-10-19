@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Matrix.LinGProperty.GeometricMeanBound
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registrations for quantitative matrix geometric mean estimates. -/
+
 noncomputable section
 set_option autoImplicit false
 open Matrix
@@ -24,6 +26,7 @@ private theorem orderDependence : ObservationalDependence signature orderActual 
   intro i
   refine ⟨1, 0, 1, ?_⟩
   intro he
+  change (fun y : Mat 1 => (0 : Mat 1) ≤ y) = (fun y : Mat 1 => (1 : Mat 1) ≤ y) at he
   have h10 : (1 : Mat 1) ≤ 0 := by
     rw [← congrFun he 0]
     exact le_rfl
@@ -33,6 +36,7 @@ private theorem equalityDependence : ObservationalDependence signature equalityA
   intro i
   refine ⟨1, 0, 1, ?_⟩
   intro he
+  change (fun y : Mat 1 => (0 : Mat 1) = y) = (fun y : Mat 1 => (1 : Mat 1) = y) at he
   have h10 : (1 : Mat 1) = 0 := by
     rw [← congrFun he 0]
     rfl
@@ -195,7 +199,8 @@ private theorem rejectedLaw : ¬ arena.Law rejected := by
   intro h
   apply h (n := 1) (P := 1) (Q := 1) Matrix.PosDef.one Matrix.PosDef.one
     (c := 1) (d := 0) (by norm_num)
-  · simp
+  · have he : (1 / 2 : ℝ) • ((1 : Mat 1) + 1) = 1 := by module
+    simpa only [he, one_smul] using (le_rfl : (1 : Mat 1) ≤ 1)
   · simp
 def family : Registration arena (type_of% (@arithmetic_sub_le_geometricMean)) where
   actual := orderActual

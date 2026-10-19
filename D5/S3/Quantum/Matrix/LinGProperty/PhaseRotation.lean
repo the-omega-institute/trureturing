@@ -25,9 +25,11 @@ theorem block_posSemidef_phase {A X B : Matrix (Fin n) (Fin n) ℂ}
   have hzstar : z * star z = 1 := by
     rw [Complex.star_def, Complex.mul_conj', hz]
     norm_num
+  have hzstar' : (starRingEnd ℂ) z * z = 1 := by
+    simpa only [starRingEnd_apply, mul_comm] using hzstar
   have he : D * fromBlocks A X Xᴴ B * Dᴴ = fromBlocks A (z • X) (z • X)ᴴ B := by
     simp [D, fromBlocks_multiply, fromBlocks_conjTranspose, conjTranspose_smul,
-      smul_mul_assoc, mul_smul_comm, smul_smul, hzstar]
+      smul_mul_assoc, mul_smul_comm, smul_smul, hzstar']
   rw [← he]
   exact hW.mul_mul_conjTranspose_same D
 
@@ -38,9 +40,11 @@ theorem singularValuesSorted_phase (X : Matrix (Fin n) (Fin n) ℂ)
   have hzstar : z * star z = 1 := by
     rw [Complex.star_def, Complex.mul_conj', hz]
     norm_num
+  have hzstar' : (starRingEnd ℂ) z * z = 1 := by
+    simpa only [starRingEnd_apply, mul_comm] using hzstar
   have hU : (z • (1 : Matrix (Fin n) (Fin n) ℂ)) ∈ Matrix.unitaryGroup (Fin n) ℂ := by
     rw [Matrix.mem_unitaryGroup_iff]
-    simp [star_eq_conjTranspose, conjTranspose_smul, smul_mul_smul, hzstar]
+    simp [star_eq_conjTranspose, conjTranspose_smul, smul_mul_smul, smul_smul, hzstar']
   simpa using Schatten.singularValuesSorted_unitary_mul (z • 1) X hU j
 
 /-- There is a unit phase making the trace real and nonnegative. -/

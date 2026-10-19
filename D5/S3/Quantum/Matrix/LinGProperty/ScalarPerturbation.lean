@@ -79,7 +79,11 @@ theorem eigenvalues_zero_add_scalar {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
     have happly : S x = T x + (r : ℂ) • x := by
       change (A + (r : ℂ) • 1).toEuclideanLin x = _
       rw [map_add, LinearMap.add_apply, map_smul, LinearMap.smul_apply]
-      rfl
+      have hone : (1 : Matrix (Fin n) (Fin n) ℂ).toEuclideanLin x = x := by
+        change Matrix.toLpLin 2 2 (1 : Matrix (Fin n) (Fin n) ℂ) x = x
+        rw [Matrix.toLpLin_one]
+        rfl
+      rw [hone]
     rw [happly, inner_add_left, map_add, inner_smul_left]
     simp [inner_self_eq_norm_sq_to_K, hx]
   apply le_antisymm

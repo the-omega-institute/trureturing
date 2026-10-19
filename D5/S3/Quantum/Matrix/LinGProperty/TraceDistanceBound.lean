@@ -147,7 +147,7 @@ theorem normalized_difference_square_le {n : Type*} [Fintype n] [DecidableEq n]
   let C := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) (star U)
   have htrace (M : Matrix n n ℂ) : (C M).trace = M.trace := by
     dsimp [C]
-    rw [star_star, Matrix.trace_mul_cycle,
+    rw [star_star, Matrix.trace_mul_cycle, ← Unitary.coe_star,
       Unitary.coe_mul_star_self, Matrix.one_mul]
   have hW' : (fromBlocks (C A) (C X) (C X)ᴴ (C B)).PosSemidef := by
     have hc := hW.conjTranspose_mul_mul_same
@@ -181,7 +181,7 @@ theorem normalized_difference_square_le {n : Type*} [Fintype n] [DecidableEq n]
     · simp [Matrix.mul_apply, Matrix.diagonal_apply, Matrix.one_apply, hij]
   rw [← he] at hd
   simp only [C, Unitary.conjStarAlgAut_star_apply] at hd
-  exact (Unitary.isUnit_coe (star U)).posSemidef_star_right_conjugate_iff.mp
+  exact (Unitary.isUnit_coe (U := star U)).posSemidef_star_right_conjugate_iff.mp
     (by simpa using hd)
 
 end D5.S3.Quantum.Matrix.LinGProperty

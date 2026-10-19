@@ -2,26 +2,27 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/LinGProperty/ArithmeticBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Quantum/Schatten/SingularValueOrder, D5/S3/Quantum/Foundation/FiniteTraceDistance, D5/S3/Quantum/Matrix/LinGProperty/ScalarPerturbation]
+   anchors: [D5/S3/Quantum/Schatten/SingularValueOrder, D5/S3/Quantum/Foundation/FiniteTraceDistance, D5/S3/Quantum/Matrix/LinGProperty/ScalarPerturbation, D5/S3/Quantum/Matrix/LinGProperty/PhaseRotation]
    utility: none
    digest: Trace-corrected Gram comparison for positive block matrices. -/
 
 import D5.S3.Quantum.Schatten.SingularValueOrder
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.Matrix.LinGProperty.ScalarPerturbation
+import D5.S3.Quantum.Matrix.LinGProperty.PhaseRotation
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Tactic
 
 noncomputable section
 open Matrix
-open scoped ComplexOrder
+open scoped ComplexOrder MatrixOrder
 namespace D5.S3.Quantum.Matrix.LinGProperty
 
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
 /-- A positive matrix is bounded above by its trace times the identity. -/
-theorem trace_identity_sub_posSemidef {ι : Type*} [Fintype ι] [DecidableEq ι]
+private theorem trace_identity_sub_posSemidef {ι : Type*} [Fintype ι] [DecidableEq ι]
     (A : Matrix ι ι ℂ) (hA : A.PosSemidef) :
     (((A.trace.re : ℂ) • (1 : Matrix ι ι ℂ)) - A).PosSemidef := by
   classical
@@ -49,7 +50,7 @@ theorem trace_identity_sub_posSemidef {ι : Type*} [Fintype ι] [DecidableEq ι]
   simpa only [hspec] using hh
 
 /-- The discrepancy Gram matrix supplies the precise scalar error in the sum Gram bound. -/
-theorem gram_trace_correction {ι κ : Type*} [Fintype ι] [Fintype κ]
+private theorem gram_trace_correction {ι κ : Type*} [Fintype ι] [Fintype κ]
     [DecidableEq ι] [DecidableEq κ] (U V : Matrix ι κ ℂ) :
     (((1 / 2 : ℂ) • ((U + V)ᴴ * (U + V)) +
       ((((U - V)ᴴ * (U - V)).trace.re / 2 : ℝ) : ℂ) • (1 : Matrix κ κ ℂ)) -
@@ -66,7 +67,7 @@ theorem gram_trace_correction {ι κ : Type*} [Fintype ι] [Fintype κ]
   ring
 
 /-- The row Gram counterpart of the discrepancy is positive. -/
-theorem row_gram_sum_comparison {ι κ : Type*} [Fintype ι] [Fintype κ]
+private theorem row_gram_sum_comparison {ι κ : Type*} [Fintype ι] [Fintype κ]
     [DecidableEq ι] [DecidableEq κ] (U V : Matrix ι κ ℂ) :
     (((2 : ℂ) • (U * Uᴴ + V * Vᴴ)) - (U + V) * (U + V)ᴴ).PosSemidef := by
   convert posSemidef_self_mul_conjTranspose (U - V) using 1
@@ -77,7 +78,7 @@ theorem row_gram_sum_comparison {ι κ : Type*} [Fintype ι] [Fintype κ]
   ring
 
 /-- Unit trace row Grams turn the discrepancy trace into a trace-overlap deficit. -/
-theorem normalized_gram_trace_correction {ι κ : Type*} [Fintype ι] [Fintype κ]
+private theorem normalized_gram_trace_correction {ι κ : Type*} [Fintype ι] [Fintype κ]
     [DecidableEq ι] [DecidableEq κ] (U V : Matrix ι κ ℂ)
     (hU : (U * Uᴴ).trace = 1) (hV : (V * Vᴴ).trace = 1) :
     (((1 / 2 : ℂ) • ((U + V)ᴴ * (U + V)) +
@@ -97,7 +98,7 @@ theorem normalized_gram_trace_correction {ι κ : Type*} [Fintype ι] [Fintype �
   simpa only [ht] using gram_trace_correction U V
 
 /-- Appending a zero block preserves the leading ordered eigenvalues of a positive matrix. -/
-theorem eigenvalues_zero_padding {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
+private theorem eigenvalues_zero_padding {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
     (hA : A.PosSemidef)
     (hB : (fromBlocks A 0 0 (0 : Matrix (Fin n) (Fin n) ℂ)).IsHermitian)
     (j : Fin (Fintype.card (Fin n))) :
@@ -142,7 +143,7 @@ private theorem eigenvalues_zero_eq_of_charpoly {ι : Type*} [Fintype ι] [Decid
   simpa only [IsHermitian.eigenvalues, Equiv.symm_apply_apply] using hj
 
 /-- The leading ordered eigenvalues of the two rectangular Grams agree, including zeros. -/
-theorem rectangular_gram_eigenvalues {n : ℕ}
+private theorem rectangular_gram_eigenvalues {n : ℕ}
     (T : Matrix (Fin n) (Fin n ⊕ Fin n) ℂ)
     (j : Fin (Fintype.card (Fin n))) :
     (isHermitian_conjTranspose_mul_self T).eigenvalues₀
@@ -321,5 +322,102 @@ private theorem dilation_eigenvalues {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ)
   have hsmall : j.val < n := by simpa using j.isLt
   have hbig : j.val < n + n := by omega
   simpa [hsmall, hbig, List.getElem?_append, List.length_ofFn] using hj
+
+private theorem arithmetic_bound_real_trace {n : ℕ}
+    (A X B : Matrix (Fin n) (Fin n) ℂ)
+    (hW : (fromBlocks A X Xᴴ B).PosSemidef)
+    (hA : A.trace = 1) (hB : B.trace = 1)
+    (hAp : A.PosSemidef) (hBp : B.PosSemidef)
+    (j : Fin (Fintype.card (Fin n))) :
+    2 * singularValuesSorted X j ≤
+      (hAp.1.add hBp.1).eigenvalues₀ j +
+        1 - X.trace.re := by
+  classical
+  let W := fromBlocks A X Xᴴ B
+  let D := fromBlocks (0 : Matrix (Fin n) (Fin n) ℂ) X Xᴴ 0
+  let J := fromBlocks (1 : Matrix (Fin n) (Fin n) ℂ) 0 0 (-1)
+  let k : Fin (Fintype.card (Fin n ⊕ Fin n)) :=
+    ⟨j.val, by simp only [Fintype.card_sum, Fintype.card_fin]; have hj := j.isLt; simp only [Fintype.card_fin] at hj; omega⟩
+  have hD : D.IsHermitian := isHermitian_zero.fromBlocks rfl isHermitian_zero
+  have h2D : ((2 : ℂ) • D).IsHermitian := hD.smul (by simp [IsSelfAdjoint])
+  have hflip : (W - (2 : ℂ) • D).PosSemidef := by
+    have h := hW.mul_mul_conjTranspose_same J
+    convert h using 1
+    dsimp [W, D, J]
+    rw [fromBlocks_conjTranspose, fromBlocks_multiply, fromBlocks_multiply]
+    ext i l
+    rcases i with i | i <;> rcases l with l | l <;>
+      simp [Matrix.fromBlocks, Matrix.sub_apply, Matrix.smul_apply] <;> ring
+  have hfirst := eigenvalues_zero_mono_finite h2D hW.1 hflip k
+  rw [eigenvalues_zero_smul_finite D hD 2 (by norm_num) h2D k,
+    dilation_eigenvalues X hD j] at hfirst
+  let Z := CFC.sqrt W
+  have hZ : Zᴴ = Z := by
+    simpa only [Matrix.star_eq_conjTranspose] using (CFC.sqrt_nonneg W).isSelfAdjoint.star_eq
+  have hZZ : Z * Zᴴ = W := by
+    rw [hZ]
+    exact CFC.sqrt_mul_sqrt_self W hW.nonneg
+  let U : Matrix (Fin n) (Fin n ⊕ Fin n) ℂ := Z.submatrix Sum.inl id
+  let V : Matrix (Fin n) (Fin n ⊕ Fin n) ℂ := Z.submatrix Sum.inr id
+  have hrows : fromRows U V = Z := by ext (i | i) l <;> rfl
+  have hrows' : fromCols Uᴴ Vᴴ = Zᴴ := by
+    rw [← conjTranspose_fromRows_eq_fromCols_conjTranspose, hrows]
+  have hblocks : fromBlocks (U * Uᴴ) (U * Vᴴ) (V * Uᴴ) (V * Vᴴ) = W := by
+    rw [← fromRows_mul_fromCols, hrows, hrows', hZZ]
+  have hUU : U * Uᴴ = A := by
+    ext i l
+    exact congrArg (fun M => M (Sum.inl i) (Sum.inl l)) hblocks
+  have hVV : V * Vᴴ = B := by
+    ext i l
+    exact congrArg (fun M => M (Sum.inr i) (Sum.inr l)) hblocks
+  have hUV : U * Vᴴ = X := by
+    ext i l
+    exact congrArg (fun M => M (Sum.inl i) (Sum.inr l)) hblocks
+  let L := Uᴴ * U + Vᴴ * V
+  have hL : L.IsHermitian := (isHermitian_conjTranspose_mul_self U).add
+    (isHermitian_conjTranspose_mul_self V)
+  have hLL : Zᴴ * Z = L := by
+    rw [← hrows, conjTranspose_fromRows_eq_fromCols_conjTranspose, fromCols_mul_fromRows]
+  have hWL : W.charpoly = L.charpoly := by
+    rw [← hZZ, ← hLL]
+    exact charpoly_mul_comm Z Zᴴ
+  have hspec := eigenvalues_zero_eq_of_charpoly hW.1 hL hWL k
+  let T := U + V
+  let F := (1 / 2 : ℂ) • (Tᴴ * T)
+  have hF : F.IsHermitian := (isHermitian_conjTranspose_mul_self T).smul (by simp [IsSelfAdjoint])
+  let C := F + ((1 - X.trace.re : ℝ) : ℂ) • 1
+  have hC : C.IsHermitian := hF.add (isHermitian_one.smul (by simp [IsSelfAdjoint]))
+  have hcorr : (C - L).PosSemidef := by
+    simpa only [T, C, F, L, hUV] using normalized_gram_trace_correction U V
+      (by simpa only [hUU] using hA) (by simpa only [hVV] using hB)
+  have hsecond := eigenvalues_zero_mono_finite hL hC hcorr k
+  rw [eigenvalues_zero_add_scalar_finite F hF (1 - X.trace.re) hC k,
+    eigenvalues_zero_smul_finite (Tᴴ * T) (isHermitian_conjTranspose_mul_self T)
+      (1 / 2) (by norm_num) hF k,
+    rectangular_gram_eigenvalues T j] at hsecond
+  have hrow : (((2 : ℂ) • (A + B)) - T * Tᴴ).PosSemidef := by
+    simpa only [T, hUU, hVV] using row_gram_sum_comparison U V
+  have hsum := hAp.1.add hBp.1
+  have htwosum : ((2 : ℂ) • (A + B)).IsHermitian := hsum.smul (by simp [IsSelfAdjoint])
+  have hthird := eigenvalues_zero_mono_finite (isHermitian_mul_conjTranspose_self T)
+    htwosum hrow j
+  rw [eigenvalues_zero_smul_finite (A + B) hsum 2 (by norm_num) htwosum j] at hthird
+  rw [hspec] at hfirst
+  change 2 * singularValuesSorted X j ≤ hsum.eigenvalues₀ j + 1 - X.trace.re
+  linarith
+
+
+/-- The normalized arithmetic singular-value bound includes the trace-overlap deficit. -/
+theorem normalized_arithmetic_bound {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
+    (hW : (fromBlocks A X Xᴴ B).PosSemidef) (hA : A.trace = 1) (hB : B.trace = 1)
+    (hAp : A.PosSemidef) (hBp : B.PosSemidef)
+    (j : Fin (Fintype.card (Fin n))) :
+    2 * singularValuesSorted X j ≤
+      (hAp.1.add hBp.1).eigenvalues₀ j + 1 - ‖X.trace‖ := by
+  obtain ⟨z, hz, ht⟩ := exists_trace_phase X
+  have h := arithmetic_bound_real_trace A (z • X) B
+    (block_posSemidef_phase hW z hz) hA hB hAp hBp j
+  rw [singularValuesSorted_phase X z hz j, ht, Complex.ofReal_re] at h
+  exact h
 
 end D5.S3.Quantum.Matrix.LinGProperty
