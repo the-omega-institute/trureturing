@@ -7,10 +7,10 @@
     "state/ci-body-12345.md": "0f6ead52e5a142022c18ad19ba620110e7d5732b7049a0accab4e9d125720a05"
   },
   "codex_search.py:deep": {
-    "scratch/briefs/codex-search-a-r1.md": "95b86488735c17b1c501bdb7ad62c7dab80bcb7325fac7cdd0447207b4df5a69"
+    "scratch/briefs/codex-search-a-r1.md": "70c601466c9fdceda6292b3c19e45dfa9b9eb9c4c8f535a711f2ef58af7560aa"
   },
   "codex_search.py:quick": {
-    "scratch/briefs/codex-search-a-r1.md": "7206a3b3ec92ab0c52ab0c50a96078c3c3525913f03750a2cef5f5ace3df1bbd"
+    "scratch/briefs/codex-search-a-r1.md": "59b72b70245e235d150a13813fc93764e7ed85166157e01651a9d72cb3a37e35"
   },
   "continuation_head.py": {
     "out.md": "617d544f0679680fec2edb19b4f00633f6107de4c7f01978bca574b6174e818f"
@@ -64,7 +64,8 @@
     "out.md": "cf7fad04fcbcff7eaabf117062b1cd3909bdb792123235ad99e537cf0339bd47"
   },
   "render-search-brief.sh": {
-    "out.md": "899a13b578e688a26efb472fa18690da9ec85d134d3f7ef7648965832441d014"
+    "oracle.md": "73b56a540047e8154e6e5c5726e63b5df2c3c9abbb897b13fd6f6b5f66393c5d",
+    "out.md": "f8f3750599fb70c5f0a455fdd9757bd8f1316610ee42b07a70537bfcf75d2518"
   },
   "review.sh": {
     "scratch/briefs/review-sample-quality.md": "27e734129688220a8277c4b33b6361dc8556caeb3161be459b211196529bb547",
