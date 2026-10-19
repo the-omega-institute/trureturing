@@ -154,7 +154,21 @@ $$\forall psi \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\le
 
 For a two-qubit vector, curry arranges its amplitudes into a two-by-two matrix. Tracing the right subsystem of its rank-one projector gives that matrix times its adjoint.
 
-**Theorem 1.13 (Zero quadratic form constrains every positive-weight vector).**
+**Theorem 1.13 (Trace overlap of rank-one projectors).**
+
+$$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] \forall a \in n \to \mathbb{C},\; \forall b \in n \to \mathbb{C},\; \operatorname{Matrix.trace}\left(\operatorname{D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity}\left(a\right) \cdot \operatorname{D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity}\left(b\right)\right) = (\operatorname{Complex.normSq}\left(\operatorname{dotProduct}\left(\operatorname{star}\left(a\right), b\right)\right): \mathbb{C})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.trace_projector_overlap` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Dongheng Qian; Jing Wang (2025). *Quantum non-local nonstabilizerness*. DOI: [10.1103/PhysRevA.111.052443](https://doi.org/10.1103/PhysRevA.111.052443). URL: <https://arxiv.org/abs/2502.06393v4>.
+
+*Commentary.*
+
+For any two complex vectors on a finite type n, the trace of the product of their rank-one projectors is the complex coercion of their squared overlap. Taking the real part gives the squared norm used in the Tiles product-overlap estimate.
+
+**Theorem 1.14 (Zero quadratic form constrains every positive-weight vector).**
 
 $$\forall n \in \operatorname{Type},\; \forall iota \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{Fintype}\left(iota\right)] \forall psi \in iota \to \left(n \to \mathbb{C}\right),\; \forall w \in iota \to \mathbb{R},\; \forall z \in n \to \mathbb{C},\; (\forall i \in iota,\; 0\le \operatorname{w}\left(i\right)) \land (\operatorname{dotProduct}\left(\operatorname{star}\left(z\right), \operatorname{Matrix.mulVec}\left(\sum_{i\in iota} (\operatorname{w}\left(i\right)\cdot \operatorname{rankOneDensity}\left(\operatorname{psi}\left(i\right)\right)), z\right)\right) = 0)\longrightarrow \forall i \in iota,\; 0<\operatorname{w}\left(i\right)\longrightarrow \operatorname{dotProduct}\left(\operatorname{star}\left(z\right), \operatorname{psi}\left(i\right)\right) = 0$$
 
@@ -168,7 +182,7 @@ $$\forall n \in \operatorname{Type},\; \forall iota \in \operatorname{Type},\; [
 
 Let psi be a finite family of complex vectors with nonnegative real weights w. If the quadratic form of their weighted rank-one projector sum vanishes at z, then every positive-weight vector is orthogonal to z. Positivity of the weighted squared overlaps prevents cancellation.
 
-**Theorem 1.14 (An infinite family proves the conjecture).**
+**Theorem 1.15 (An infinite family proves the conjecture).**
 
 $$\operatorname{claim}$$
 
@@ -201,11 +215,13 @@ For every real p,c,s with 0 < p < 1, c > 0, s > 0, c² + s² = 1 and c² ≠ 1/2
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.pauli_projector_trace`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.pauli_square`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.result`
+- Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.trace_projector_overlap`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.unitVector`
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../Entanglement/StructuredNegativityCoincidenceRefutation.md)
 - Dependency: [D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteEAM](../Entanglement/TavakoliMorelliIncompleteEAM.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/Information/SignedPauliSumNormRefutation](SignedPauliSumNormRefutation.md)
 - Dependency: [D5/S3/Quantum/Magic/WignerDistanceMinimum](../Magic/WignerDistanceMinimum.md)
+- Dependency: [D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral](../Measurement/OccupationPartialTransposeSpectral.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
 - Dependency: [D5/S3/Quantum/Recovery/FiniteLocalLatitudeGeometry](../Recovery/FiniteLocalLatitudeGeometry.md)

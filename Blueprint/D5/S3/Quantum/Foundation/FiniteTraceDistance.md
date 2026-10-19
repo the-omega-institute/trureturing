@@ -174,7 +174,19 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 Each density matrix has trace norm one; the triangle inequality bounds their difference by two.
 
-**Theorem 1.15 (Hermitian Jordan mass).**
+**Theorem 1.15 (Orthogonal positive difference).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right), B \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{PosSemidef}\left(A\right) \Rightarrow \left(\operatorname{PosSemidef}\left(B\right) \Rightarrow \left(A \cdot B = 0 \Rightarrow \operatorname{traceNorm}\left(A - B\right) = \operatorname{re}\left(\operatorname{trace}\left(A\right)\right) + \operatorname{re}\left(\operatorname{trace}\left(B\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_sub_orthogonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive semidefinite complex matrices A and B with A B zero, A plus B is the positive square root of the Gram matrix of A minus B. The trace norm is therefore the sum of their real traces.
+
+**Theorem 1.16 (Hermitian Jordan mass).**
 
 $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{Matrix.IsHermitian}(A) \Rightarrow \operatorname{traceNorm}\left(A\right) = \operatorname{re}\left(\operatorname{trace}\left(\operatorname{posPart}\left(A\right)\right)\right) + \operatorname{re}\left(\operatorname{trace}\left(\operatorname{negPart}\left(A\right)\right)\right)$$
 
@@ -186,7 +198,7 @@ $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\ri
 
 For a Hermitian matrix A, its trace norm equals the sum of the real traces of its positive and negative Jordan parts.
 
-**Theorem 1.16 (Every CPTP channel contracts trace distance).**
+**Theorem 1.17 (Every CPTP channel contracts trace distance).**
 
 $$\forall n \in FiniteType, C \in \operatorname{QuantumChannel}\left(n, n\right), rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(\operatorname{mapState}\left(C, rho\right), \operatorname{mapState}\left(C, sigma\right)\right) \le \operatorname{traceDistance}\left(rho, sigma\right)$$
 
@@ -227,5 +239,6 @@ The two Kronecker algebra embeddings preserve the exponential and their images c
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_neg`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_nonneg`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_of_posSemidef`
+- Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_sub_orthogonal`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.trace_norm_jordan_mass`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](FiniteStateChannel.md)

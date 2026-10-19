@@ -103,6 +103,15 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                 Item("traceDistance_triangle", "Density distance triangle inequality", States(
                     Le(D(rho, tau), Add(D(rho, sigma), D(sigma, tau))), true)),
                 Item("traceDistance_le_one", "All density distances are at most one", States(Le(D(rho, sigma), Num(1)))),
+                Item("traceNorm_sub_orthogonal", "Orthogonal positive difference", All(
+                    [Bound("n", F.Id("Type"))], Seq(
+                        OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+                        OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
+                        All([Bound("A", csquare), Bound("B", csquare)],
+                            Implies(Call("PosSemidef", a), Implies(Call("PosSemidef", b),
+                                Implies(Eqn(Mul(a, b), Num(0)),
+                                    Eqn(TN(Sub(a, b)), Add(Call("re", Call("trace", a)),
+                                        Call("re", Call("trace", b))))))))))),
                 Item("trace_norm_jordan_mass", "Hermitian Jordan mass", All(
                     [Bound("n", F.Id("FiniteType")), Bound("A", csquare)],
                     Implies(QCall("Matrix", "IsHermitian", a), Eqn(TN(a),
@@ -180,6 +189,7 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
     };
     private static string Explanation(string name) => name switch
     {
+        "traceNorm_sub_orthogonal" => "For positive semidefinite complex matrices A and B with A B zero, A plus B is the positive square root of the Gram matrix of A minus B. The trace norm is therefore the sum of their real traces.",
         "exists_svd_sqrt_eigenvalues" => "For every finite complex square matrix, two unitary factors give a diagonal singular-value decomposition. The diagonal entries are the real square roots of the eigenvalues of its Gram matrix. The let-bound hH is the canonical Hermitian proof for that Gram matrix; ofReal denotes the real-to-complex embedding. The retained proof is Alex Meiburg's Physlib SVD.",
         "traceNorm" => "This is the real part of the trace of the positive square root of the Gram matrix.",
         "traceNorm_neg" => "Negation leaves the Gram matrix unchanged.",

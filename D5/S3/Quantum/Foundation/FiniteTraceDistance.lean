@@ -225,6 +225,14 @@ Full Apache-2.0 license follows. The immutable upstream tree contains no NOTICE 
    limitations under the License.
 -/
 
+/-
+traceNorm_sub_orthogonal: proof_shape: bind-only; escape_witness: none.
+Consumer: D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.flagged_norm_exact.
+Direct frozen dependencies (declaration statement_id at the base):
+D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm; sha256:12ad034b5758446e6d628c75121b3ad5f0c80bb305937e8c9ff87e82076bc059
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17573
+-/
+
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -542,4 +550,23 @@ theorem traceDistance_contract (channel : QuantumChannel ι ι) (rho sigma : Den
   exact div_le_div_of_nonneg_right hbound (by norm_num)
 
 end Canonical
+end D5.S3.Quantum.Foundation.FiniteTraceDistance
+
+namespace D5.S3.Quantum.Foundation.FiniteTraceDistance
+open Matrix
+open scoped MatrixOrder ComplexOrder
+theorem traceNorm_sub_orthogonal {n : Type*} [Fintype n] [DecidableEq n] (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) (hAB : A * B = 0) :
+    traceNorm (A - B) = A.trace.re + B.trace.re := by
+  have hBA : B * A = 0 := by
+    have h := congrArg Matrix.conjTranspose hAB
+    simpa only [Matrix.conjTranspose_mul, hA.1.eq, hB.1.eq,
+      Matrix.conjTranspose_zero] using h
+  have hs : (A + B) * (A + B) = (A - B)ᴴ * (A - B) := by
+    rw [Matrix.conjTranspose_sub, hA.1.eq, hB.1.eq]
+    noncomm_ring [hAB, hBA]
+  have hroot := CFC.sqrt_unique hs (hA.add hB).nonneg
+  change (CFC.sqrt ((A - B)ᴴ * (A - B))).trace.re = _
+  rw [hroot, Matrix.trace_add, Complex.add_re]
+
 end D5.S3.Quantum.Foundation.FiniteTraceDistance
