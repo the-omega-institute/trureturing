@@ -33,13 +33,17 @@ internal sealed class RatherRealRootedCompleteDocument : IScribeDocumentDefiniti
                 "Section 8, item 1, PDF page 29: “For no nontrivial family is it currently known whether ψ(G) is always real-rooted. Even partial real-rootedness results for chordal graphs, bipartite graphs, or claw-free graphs (in analogy with [8, 13]) would be significant.” Section 1, PDF page 1: “All graphs considered are finite, simple and undirected.” The statement classifies all finite nonempty connected simple graphs: real-rootedness is equivalent to equality with the complete graph, SimpleGraph top."),
             Node("result", "Real-rootedness is equivalent to completeness", "result", DescribeRole.Theorem,
                 ClaimBody(), AssessedProvenance.FromRepo(Source),
-                "Every subset with at most two vertices is in general position, so the first three coefficients are 1, n and choose(n,2), where n is the vertex count. Reflecting the polynomial at n gives a monic real-split polynomial. If zero were a root, removing it would preserve the first two elementary symmetric functions on only n−1 roots, contradicting Newton's inequality. Thus the full vertex set is in general position. In a connected noncomplete graph a shortest path contains a distance-two triple, which contradicts that property. Conversely, all subsets of a complete graph are in general position, giving psi top = (1 + Polynomial.X)^n and only the zero −1.")),
+                "Every subset with at most two vertices is in general position, so the first three coefficients are 1, n and choose(n,2), where n is the vertex count. Reflecting the polynomial at n gives a monic real-split polynomial. If zero were a root, removing it would preserve the first two elementary symmetric functions on only n−1 roots, contradicting Newton's inequality. Thus the full vertex set is in general position. In a connected noncomplete graph a shortest path contains a distance-two triple, which contradicts that property. Conversely, all subsets of a complete graph are in general position, giving psi top = (1 + Polynomial.X)^n and only the zero −1.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rather-2026-general-position-real-rooted-complete"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        DescribeRole role, Formula formula, AssessedProvenance provenance, string prose) =>
+        DescribeRole role, Formula formula, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));

@@ -62,6 +62,10 @@ $$\forall (V : Type), [\operatorname{Fintype}\left(V\right)], [\operatorname{Dec
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/GeneralPosition/RatherRealRootedComplete.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rather-2026-general-position-real-rooted-complete` (proved) by `D5/S3/Combinatorics/Graph/GeneralPosition/RatherRealRootedComplete.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rather-2026-general-position-real-rooted-complete","declaration_gid":"D5/S3/Combinatorics/Graph/GeneralPosition/RatherRealRootedComplete.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* B. A. Rather (2026). *Explicit Formulas and Unimodality Phenomena for General Position Polynomials*. DOI: [10.48550/arXiv.2603.06930](https://doi.org/10.48550/arXiv.2603.06930). URL: <https://arxiv.org/abs/2603.06930v3>.
