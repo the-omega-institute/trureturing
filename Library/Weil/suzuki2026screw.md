@@ -6582,3 +6582,141 @@ Both the complete actual source and the final original Gaussian Hardy metric are
 Compared with W140, the admitted degree increases by a factor of order $(A/\log A)^{1/6}$, which tends to infinity; the margin constant is smaller. The additional input is the whole actual second coefficient and its weighted logarithmic payment. The first correction, higher coefficient bounds, complete remainders and norm return are reused.
 
 If RH fails, on this same fixed small window beyond all relevant starts, W126 and W148 put the minimum local negative-witness site count between the new positive count and the conditional upper count $\lceil12e^{2A}\log(A+1)\rceil$. The ratio of these bracket bounds is $O(A^{1/3}(\log A)^{2/3})$. This compares bounds only; it supplies no actual minimum, optimum, contradiction or negative seed/sample. Positivity for the sufficient full count, a larger-rate multiwindow estimate, all-order positivity and the original signed Robin upper remain unproved. No numerical start, effective finite RH test or Lean certification is supplied. Classical weighted moment and logarithmic tools are reused in this repository-derived paper application, with no literature-priority claim. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+
+## Localized filtering gives a smaller actual negative-witness horizon
+
+For each fixed real negative seed of the complete actual theta kernel in $(1,2)$, with total variation one and margin $-\varepsilon<0$, there is a fixed $C_\varepsilon>0$ such that every center $A\ge2$ admits a real negative sample in any fixed window $(A-w,A+w)$ on at most $\lceil C_\varepsilon e^{2A}\rceil$ sites. The count improves W126 by a factor of order $\log A$ for the same fixed seed. Its constant depends on the unknown seed margin; no universal fixed constant is asserted. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse W40, the complete strip bound W101, the exact moving pullback and seed W102, and the real physical reconstruction W105--W106. The additional estimate uses local angular growth and classical localized Jackson filtering. The actual kernel, both direct and reflected terms, and its original quadratic form remain unchanged.
+
+### Local angular control from the complete source
+
+Keep $q_A=(A+1)/A$, $\chi_A(t)=A+q_A^{-1}\operatorname{arctanh}t$ and $F_A(t,s)=\widetilde L_0(\chi_A(t),\chi_A(s))$. For real $a,b\in[1,2]$, write $t_a=\tanh(q_A(a-A))$ and define $t_b$ similarly. Their radii are at most $\tanh A$. Put $K=e^{2A}$ and $\Delta=K(|\theta|+|\phi|)$ for $\theta,\phi\in[-\pi,\pi]$.
+
+For $z=t_ae^{i\theta}$ and $r=|t_a|$, the exact Cayley identity gives
+$$
+\cos(2\Im\operatorname{arctanh}z)
+=\frac{1-r^2}{|1-z^2|}
+\ge\frac1{1+2r^2|\sin\theta|/(1-r^2)}
+\ge\frac1{1+K|\theta|}.
+$$
+Here $2r^2/(1-r^2)\le2\sinh^2 A\le K$. Dividing the imaginary part by $q_A\ge1$ increases the cosine. Apply W101 with $\eta$ the larger absolute imaginary part of the two physical arguments, using continuity when $\eta=0$. It follows that
+$$
+|F_A(t_ae^{i\theta},t_be^{i\phi})|\le D(1+\Delta)^5.
+\tag{W149}
+$$
+This is a local angular bound for the complete kernel, uniform in $A,a,b$ and both angles. It does not spend the larger global bidisc bound $D(A+1)^5$.
+
+Along the same angular curve,
+$$
+\left|\frac{d}{d\theta}\chi_A(t_ae^{i\theta})\right|
+\le\frac{r}{q_A(1-r^2)}\le K.
+$$
+For $\Delta\le1/8$, the physical arguments stay in a fixed compact neighborhood of $[1,2]$ strictly inside the original holomorphic strip. Its fixed derivative bound gives a Lipschitz allowance $C\Delta$. For $\Delta\ge1/8$, use W149 and $|L_0(a,b)|\le D$. Thus one fixed source constant gives
+$$
+|F_A(t_ae^{i\theta},t_be^{i\phi})-L_0(a,b)|
+\le C(\Delta+\Delta^5).
+\tag{W150}
+$$
+The constants have no dependence on $A$, seed size or margin.
+
+### A classical localized filter and its actual-source consumer
+
+For an integer $N\ge2$, use the normalized eighth-power Jackson kernel
+$$
+J_N(\theta)=c_N\left|\sum_{j=0}^{N-1}e^{ij\theta}\right|^8,
+\qquad \int_{-\pi}^{\pi}J_N(\theta)\frac{d\theta}{2\pi}=1.
+$$
+It is real, even and nonnegative, of trigonometric degree $d=4(N-1)$. Its standard localization and moment bounds are
+$$
+J_N(\theta)\le CN(1+N|\theta|)^{-8},\qquad
+\int_{-\pi}^{\pi}|\theta|^jJ_N(\theta)\frac{d\theta}{2\pi}
+\le C_jN^{-j}\quad(j=1,5).
+\tag{W151}
+$$
+Reuse [D. Leviatan, O. V. Motorna and I. A. Shevchuk, *Fast Decreasing Trigonometric Polynomials and Applications*, J. Fourier Anal. Appl. 30, article 28 (2024), p. 2, equations (1.1)--(1.5)](https://doi.org/10.1007/s00041-024-10080-4), with $n=N$, $\beta=4$ and derivative order $\nu=0$. Their normalization is $\pi^{-1}\int J_{N,4}=1$; the present kernel is $2J_{N,4}$ so that its mass relative to $d\theta/(2\pi)$ is one. The first and fifth moment bounds follow by integrating their pointwise bounds. These classical scalar inputs are reused without a priority claim.
+
+Let $\lambda_p=\int J_N(\theta)e^{ip\theta}\,d\theta/(2\pi)$. Then $\lambda_p$ is real, $|\lambda_p|\le1$, and $\lambda_p=0$ for $|p|>d$. Convolving the actual series $F_A(t,s)=\sum c_{pq}^{(A)}t^ps^q$ in both angular variables gives the finite polynomial
+$$
+F_{A,N}^{J}(t,s)=\sum_{0\le p,q\le d}
+c_{pq}^{(A)}\lambda_p\lambda_qt^ps^q.
+$$
+Absolute convergence on each seed radius justifies termwise integration. This is a diagonal congruence of the original principal coefficient block. It is not a replacement kernel assumed positive. Integrate W150 against the two probability kernels, using W151 and $(x+y)^5\le16(x^5+y^5)$:
+$$
+\sup_{a,b\in[1,2]}
+|F_{A,N}^{J}(t_a,t_b)-L_0(a,b)|
+\le C\left[\frac{e^{2A}}N+\left(\frac{e^{2A}}N\right)^5\right].
+\tag{W152}
+$$
+The local source bound is essential here. A bounded projection norm applied only to $D(A+1)^5$ would not give this estimate.
+
+### A finite filtered block retains an actual negative margin
+
+Fix the real seed W102, with $a_\ell\in(1,2)$, $\sum_\ell|b_\ell|=1$ and actual form $-\varepsilon<0$. Set
+$$
+\beta_p=\sum_\ell b_\ell t_\ell^p,\qquad
+\widehat\beta_p=\lambda_p\beta_p,\qquad n=d+1=4N-3.
+$$
+Equation W152 gives
+$$
+Q_{A,N}^{J}=\sum_{p,q<n}c_{pq}^{(A)}\widehat\beta_p\widehat\beta_q,
+\qquad |Q_{A,N}^{J}+\varepsilon|
+\le C\left[\frac{e^{2A}}N+\left(\frac{e^{2A}}N\right)^5\right].
+\tag{W153}
+$$
+Choose a fixed $B_\varepsilon\ge\max(2,8C/\varepsilon)$ and $N=\lceil B_\varepsilon e^{2A}\rceil$. Then $Q_{A,N}^{J}\le-3\varepsilon/4$ for every $A\ge2$, and
+$$
+n=4N-3\le(4B_\varepsilon+1)e^{2A}.
+\tag{W154}
+$$
+Only the witness vector has been filtered; the principal matrix is the original actual one. No actual seed or numerical margin has been supplied.
+
+### Real physical reconstruction of the filtered vector
+
+Adapt only the moment input of W105--W106. On real polynomials define
+$$
+\mathcal T_N(P)=\sum_\ell b_\ell\int_{-\pi}^{\pi}
+J_N(\theta)P(t_\ell e^{i\theta})\frac{d\theta}{2\pi}.
+$$
+Evenness makes this functional real. It satisfies $\mathcal T_N(z^p)=\widehat\beta_p$ and
+$$
+|\mathcal T_N(P)|\le\sup_{|z|\le r_A}|P(z)|.
+$$
+The interpolation estimate needs this bound; it does not need positive real support for the functional.
+
+Keep $M_A=D(A+1)^5$, $E_A=(1-r_A)^{-1}$, and any fixed $w>0$. Use exactly W105's positive stencil scale $h$ with this $n$ and $\varepsilon$, real nodes $x_j=jh/(n-1)$, and real Lagrange polynomials $\ell_j$. Set
+$$
+\alpha_j=\mathcal T_N(\ell_j)
+=\sum_{p<n}\lambda_p\beta_p[z^p]\ell_j(z).
+$$
+These weights are real and match $\widehat\beta_p$ for $p<n$. The same W105 mass bound holds on the complex disc: each numerator factor is at most $1+h\le3/2$, while the real denominators and factorial estimate are unchanged. Thus $\sum_j|\alpha_j|\le(10/h)^{n-1}$. Since $|\widehat\beta_p|\le r_A^p$, the low absolute moment sum is at most $E_A$. The existing high-tail estimate gives
+$$
+H\le2\,10^{n-1}h\le
+\min\left(1,\frac{\varepsilon}{8M_A(E_A+1)}\right).
+$$
+For the actual physical measure $\nu_A=\sum_j\alpha_j\delta_{\chi_A(x_j)}$, W106's complete coefficient allowance therefore yields
+$$
+|Q_{L_0}(\nu_A)-Q_{A,N}^{J}|
+\le M_A(2E_AH+H^2)\le\varepsilon/4,
+\qquad Q_{L_0}(\nu_A)\le-\varepsilon/2<0.
+\tag{W155}
+$$
+Every node lies in $[A,A+w)\subset(A-w,A+w)$ and the site count is at most $n$. Every mixed high coefficient remains paid. Tiny gaps and enormous weights are allowed as in the existing reconstruction; no solver execution or stable finite-precision certificate is asserted.
+
+### The conditional horizon and the remaining positive-range gap
+
+Under RH failure, W40 supplies the fixed seed in $(1,2)$. With $C_\varepsilon=4B_\varepsilon+1$, W154--W155 imply
+$$
+\begin{gathered}
+\mathrm{RH\ false}\ \Longrightarrow\ \exists C_\varepsilon>0\ \forall A\ge2\ \forall w>0:\\
+\text{a real negative actual }L_0\text{ sample exists in }(A-w,A+w)
+\text{ on at most }\lceil C_\varepsilon e^{2A}\rceil\text{ sites}.
+\end{gathered}
+\tag{W156}
+$$
+The sample may depend on $A,w$ and the seed. The constant depends on the seed margin but not on $A$ or $w$; spacing and weights depend on $w$. This reduces the fixed-seed horizon from W126's $O(e^{2A}\log A)$ to $O_\varepsilon(e^{2A})$ without asserting a universal margin or count constant.
+
+For any fixed $w>0$, suppose $A_j\to\infty$ and the actual kernel is PSD for every real sample of at most $n_j$ sites in $(A_j-w,A_j+w)$, with $n_je^{-2A_j}\to\infty$. Then RH follows: if it failed, the one fixed seed would give a fixed $C_\varepsilon$, eventually below $n_je^{-2A_j}$. Thus any predetermined divergent factor $g(A)$ in $n_A=\lceil e^{2A}g(A)\rceil$ gives a sufficient cofinal all-sample positivity schedule. Its positivity is unproved. A fixed universal constant times $e^{2A}$ is not shown sufficient by this argument.
+
+On the same fixed small window as W148, conditional on RH failure and beyond that theorem's common start, the minimum negative-witness count is greater than $\lfloor c_{\rm cub}e^{2A}(\log A/A)^{1/3}\rfloor+1$ and at most $\lceil C_\varepsilon e^{2A}\rceil$. The ratio of these bounds is $O_\varepsilon((A/\log A)^{1/3})$. This improves the preceding bracket comparison by a factor $\log A$, and compares bounds only. It determines neither an actual minimum nor an optimum or contradiction. W148's positive range is unchanged; the sufficient full count, all-order and larger-rate multiwindow positivity, original signed prime/Robin upper and full RH remain unproved. No actual negative seed/sample, numerical negative margin, numerical $C_\varepsilon$ or W148 positive start, effective finite RH test, Lean certification or literature-priority claim is supplied. Classical Jackson localization, the complete-source strip bound and the physical reconstruction are reused; W149--W155 supply their actual-source interface.
