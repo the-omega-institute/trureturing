@@ -191,3 +191,31 @@ compiled-judge-test:
 
 compiled-fib-test:
 	@/bin/bash tools/scripts/compiled-fib-test.sh
+
+.PHONY: search-reduction search-reduction-run search-reduction-test search-reduction-replay-test
+# Requests are Lean commands; the shell only transports compiler invocations.
+search-reduction:
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands $(SEARCH_MODULES)"
+	@$(MAKE) search-reduction-run
+
+# Replay only after the runner and request imports have been built.
+search-reduction-run:
+	@test -f "$$SEARCH_REDUCTION_REQUESTS" || { echo 'REQUESTS must name a Lean declaration list' >&2; exit 2; }
+	@lake -d tools/lean-inspector-reg env lean -j1 "$$SEARCH_REDUCTION_REQUESTS"
+search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
+
+search-reduction-test:
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.Calibration LeanInformationAuditRegTests.SearchReduction.Faults LeanInformationAuditRegTests.SearchReduction.RealNegative"
+
+# Reexecute every probe and guard even when the compiled fixtures are current.
+search-reduction-replay-test:
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands LeanInformationAuditRegTests.SearchReduction.Candidates D5.S0.Tower.NonPisotVerdict.SubstitutionTowerClause D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeFactivity"
+	@$(MAKE) -j3 search-reduction-replay-calibration search-reduction-replay-faults search-reduction-replay-real-negative
+
+.PHONY: search-reduction-replay-calibration search-reduction-replay-faults search-reduction-replay-real-negative
+search-reduction-replay-calibration:
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/Calibration.lean
+search-reduction-replay-faults:
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/Faults.lean
+search-reduction-replay-real-negative:
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/RealNegative.lean
