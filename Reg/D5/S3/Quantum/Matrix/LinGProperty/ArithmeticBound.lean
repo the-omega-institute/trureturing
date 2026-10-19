@@ -27,7 +27,8 @@ abbrev arena : Arena where
       ((hAp.1.add hBp.1).eigenvalues₀ j + 1 - ‖X.trace‖)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hw : (fromBlocks (1 : Matrix (Fin 1) (Fin 1) ℂ) 0 0 1).PosSemidef := by
+  have hw : (fromBlocks (1 : Matrix (Fin 1) (Fin 1) ℂ) 0 0
+      (1 : Matrix (Fin 1) (Fin 1) ℂ)).PosSemidef := by
     rw [Matrix.fromBlocks_one]
     exact Matrix.PosSemidef.one
   exact @h 1 1 0 1 (by simpa using hw) (by simp [Matrix.trace])

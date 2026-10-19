@@ -140,6 +140,4 @@ theorem result : conjecture := by
   intro n A X B hW j
   exact parameter_family hW (c := 1) (by norm_num) ⟨j.val, by simpa using j.isLt⟩
 
-#print axioms result
-
 end D5.S3.Quantum.Matrix.LinGProperty
