@@ -60,6 +60,10 @@ $$\exists d \in \mathbb{N},\; \exists r \in \mathbb{N},\; \exists rho \in \opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/NMLWMeasuredFidelitySeparation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nuradha-mishra-leditzky-wilde-measured-fidelity-gap` (proved) by `D5/S3/Quantum/Information/NMLWMeasuredFidelitySeparation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nuradha-mishra-leditzky-wilde-measured-fidelity-gap","declaration_gid":"D5/S3/Quantum/Information/NMLWMeasuredFidelitySeparation.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Theshani Nuradha; Hemant K. Mishra; Felix Leditzky; Mark M. Wilde (2025). *Multivariate Fidelities*. DOI: [10.1088/1751-8121/adc645](https://doi.org/10.1088/1751-8121/adc645). URL: <https://arxiv.org/abs/2404.16101v3>.

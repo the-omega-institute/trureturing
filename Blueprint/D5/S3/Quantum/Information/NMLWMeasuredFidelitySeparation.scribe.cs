@@ -26,7 +26,10 @@ internal sealed class NMLWMeasuredFidelitySeparationDocument : IScribeDocumentDe
                 DeclarationHandle.Create(Prefix + "result"), H("Three qubit states give a strict gap"),
                 StatementSource.FromAuthor(Disp(ClaimBody())), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take d = 2 and r = 3 with the matrices I/2, diag(3/4,1/4), and the matrix with diagonal entries 1/2 and off-diagonal entries 1/4. For an effect E, its trace half a and its Z and X Bloch half-coordinates b,c satisfy a ≥ 0 and b²+c² ≤ a². An affine lower bound on the real unit disc gives a sum of the three classical pair costs at least (72/25)a + (53/100)(b+c). Summing over any finite POVM cancels the Bloch coordinates and yields FM ≥ 24/25. The two by two trace-norm identity gives FU < 24/25, proving strict separation. The estimate allows arbitrary finite POVMs and does not assert the exact value of FM."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nuradha-mishra-leditzky-wilde-measured-fidelity-gap"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>
