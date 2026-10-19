@@ -423,7 +423,7 @@ $$
 \tag{CS21}
 $$
 
-The [classical Cramér square-mean estimate](../Arith/cramer1922mittelwert.md),
+The [classical Cramér square-mean estimate](../Analytic/PrimeError/cramer1922mittelwert.md),
 printed p.147, supplies **under RH**
 $M(X):=\int_2^X|\psi(t)-t|^2/t\,dt=O(X)$.
 For $k\ge1$, its contribution to $J_\psi$ on $[2^k,2^{k+1}]$ is at most

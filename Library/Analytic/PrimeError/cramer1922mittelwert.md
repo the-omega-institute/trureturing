@@ -38,7 +38,7 @@ independent rerun of the source proof.
 
 Writing $M(X)=\int_2^X(\psi(t)-t)^2/t\,dt$, the exact input is
 $M(X)=O(X)$ under RH. The
-[centered primary-prime application](../Zeros/coffey2009stieltjes.md#cs7-the-critical-primary-prime-energy-is-an-rh-level-premise)
+[centered primary-prime application](../../Zeros/coffey2009stieltjes.md#cs7-the-critical-primary-prime-energy-is-an-rh-level-premise)
 uses it on dyadic intervals to identify the strength of a proposed
 Laguerre energy assumption. It is not an unconditional budget for that
 energy or a new estimate for the original signed joint matrix.
