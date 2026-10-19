@@ -42,9 +42,35 @@ def run(tool):
             assert invoke().returncode == 0 and 'do not fast-forward, merge or rebase' in out.read_text()
             del conclusion['blocking_findings'][0]['fix']
         else:
-            for command in ["make lean LEAN_TARGETS='D5.S1.Sample Reg.D5.S1.Sample'", 'make lean LEAN_TARGETS=D5.S1.Sample']:
+            accepted = []
+            commands = [("make lean LEAN_TARGETS='D5.S1.Sample Reg.D5.S1.Sample'",
+                         'D5.S1.Sample Reg.D5.S1.Sample'),
+                        ('make lean LEAN_TARGETS=D5.S1.Sample', 'D5.S1.Sample'),
+                        ('make lean LEAN_TARGETS=D5.S1.Sample Reg.D5.S1.Sample',
+                         'D5.S1.Sample Reg.D5.S1.Sample')]
+            for quote in ('', '"', "'"):
+                value = quote + 'D5.Sample' + quote
+                commands += [(f'make lean LEAN_TARGETS={value}{delimiter} make emit', 'D5.Sample')
+                             for delimiter in (';', '&', '|', ')')]
+                commands.append((f'Run `make lean LEAN_TARGETS={value}`.', 'D5.Sample'))
+            for command, expected in commands:
                 conclusion['not_run'] = [command]
-                result = invoke(); assert result.returncode == 0, result.stderr
+                result = invoke()
+                accepted.append((command, result.returncode,
+                                 result.stdout == f'HEAD_OK sample r2 {expected}\n'))
+            rejections = []
+            commands = ['make lean LEAN_TARGETS=D5.Sample/bad',
+                        'make lean LEAN_TARGETS=D5.Sample Reg.Bad-name']
+            for quote in ('', '"', "'"):
+                commands += [f'make lean LEAN_TARGETS={quote}D5.Sample {bad}{quote}'
+                             for bad in ('Reg..Bad', 'Reg.')]
+            for command in commands:
+                before = out.read_text()
+                conclusion['not_run'] = [command]
+                result = invoke()
+                rejections.append((command, result.returncode, out.read_text() == before))
+            assert (all(code == 0 and exact for _, code, exact in accepted) and
+                    all(code == 13 and unchanged for _, code, unchanged in rejections)), (accepted, rejections)
             conclusion['not_run'] = ['make lean LEAN_TARGETS="bad/module"']
         before = out.read_text()
         result = invoke()

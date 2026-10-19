@@ -1258,3 +1258,1199 @@ Seek 的阈值准备通过相邻权重迭代；停止时 $D+1\le G_{d'-1}$，故
 [FIB-FIELD-ACTIVE]: https://github.com/the-omega-institute/trureturing/blob/4c1cd22ecfc184551487ff80c0baaed324f1274d/docs/develop/theory/FIB_QUADRATIC_RECORD_FIELD_RATIONAL_RECONSTRUCTION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 22. 未知加性零点的仿射尺度合同与两个恢复任务
+
+**定义 22.1（同源固定仿射读口）。** 保留定义1.2、2.2、16.1的全部实际接口：任意固定 $x\in K$，从原空前沿初始化的时钟生产者，在任意有限实际返回 $r$ 交接独占持续调用轮；每个到达的原始 Read 有限完成，经过的一后的强制零也实际读取。只有实际 Next 中的 Advance 推进来源，每次 Step 仍完整交付实际 Emit、Advance、Return，暂停、Extent 及内部计算均不推进。交接确认、程序、绑定和权利安排与源无关，不发送深度、历史、绝对计数、原始读取数或延迟。接收者只计交接后的 Step，不能倒带、重读初始切口或请求私有状态。
+
+将 (61) 的读口替换为以下仿射合同。私有配置为固定有理数
+
+$$
+q=A/B>0,\qquad b=C/F\ge0,
+\qquad A,B,F\in\mathbb N_{>0},\quad C\in\mathbb N.
+\tag{79}
+$$
+
+四个整数在初始化时实际安装，与原始源无关；同一运行中不随调用、来源推进或误差选择改变。接收者不知道它们，也没有它们的上下界或编码长度。沿用定义16.2的整数编码约定：Extent$(n)$，$n\ge1$，返回完整有限非负整数 $a$，其解码读数为 $u=a2^{-n}$，满足
+
+$$
+|u-(b+q\alpha^d)|\le\varepsilon_n,
+\qquad\varepsilon_n=2^{-n},\qquad \alpha=(\sqrt5-1)/2.
+\tag{80}
+$$
+
+误差约束施于这个 dyadic 解码值，不施于未缩放的整数码 $a$。整数部分不取模、不溢出、不饱和；全部有效位均发送并收费。每次 Extent 在同一个生产者的当前真实返回有限结束，不读原始位，也不发 Advance。各次误差可以依赖全部过去，允许闭误差端点，不要求独立、嵌套、无偏或指定舍入。共同承诺是同一 $q,b$、同一当前付费区域的 $\alpha^d$ 和已知绝对误差 $2^{-n}$。未知仿射零点 $b$ 是读口的加性零点，不是另给一个可观察的相位原点。
+
+**定义 22.2（入口目标、达到目标与活记录）。** 接入时的真实但未提供坐标记为 $(d_0,s_0)$，空前沿取 $(0,0)$；入口目标是定义16.1的 $\partial_0$。本地第 $i$ 次 Step 返回后的当前来源为 $T^{r+i}x$，真实付费前沿的边界记为 $\partial_i$。达到恢复要求接收者在某个有限实际返回 $m$ 输出当时的 $\partial_m$，包括区域、墙角色及两墙所含的具体 lift，并仍实际持有同一来源的持续调用权 $\kappa$。这不要求 $\partial_m=\partial_0$，也不把来源移回入口。
+
+达到后的接收者记录取
+
+$$
+\mathfrak a_{\rm aff}=(d,s,i;\kappa).
+\tag{81}
+$$
+
+它是 (69) 的当前部分；静态字段 $\partial_0$ 未取得，不用一个任选历史或边界填充。生产者仍保留自己的原有限寄存器、实际原始前缀和未读端点，(81) 不宣称把这些私有历史字段全部复制给接收者。第18节的 LiveStep、Peek、Seek 及可选 Arm/Tick 只消费当前部分和显式预算，故可对 (81) 使用相同定义；其权限来自实际交接，不能由输出记录创造。
+
+## 23. 相邻差分、逐级首次检测与一次局部校准
+
+**引理 23.1（闭误差差分与下一次下降的统一下界）。** 在一个实际 Step 前后各以同一精度 $n$ 读一次 (80)，记读数为 $u,v$，观测下降为 $h=u-v$。若步前真实深度为 $d$，该步新增原始长度为 $g\in\{0,1,2\}$，则真实下降和误差满足
+
+$$
+\Delta=q\alpha^d(1-\alpha^g),\qquad
+|h-\Delta|\le2\varepsilon_n.
+\tag{82}
+$$
+
+故严格测试 $h>2\varepsilon_n$ 从不把不续块的 Step 判为续块；$\Delta>4\varepsilon_n$ 时一定检测到真实续块，包括任意允许的误差端点。如果一次检测给出
+
+$$
+\lambda=h-2\varepsilon_n>0,
+\tag{83}
+$$
+
+则 $\Delta\ge\lambda$。设该续块长度为 $g_1\in\{1,2\}$，到紧接着的下一次真实续块为止配置不变，下一块长为 $g_2\in\{1,2\}$。下一次真实下降满足
+
+$$
+\frac{\Delta_{\rm next}}{\Delta}
+=\alpha^{g_1}\frac{1-\alpha^{g_2}}{1-\alpha^{g_1}}
+\in\{\alpha,1,\alpha^3,\alpha^2\},
+\qquad
+\Delta_{\rm next}\ge\alpha^3\lambda>\lambda/5.
+\tag{84}
+$$
+
+证明。固定 $b$ 在相减中精确抵消，两个绝对误差的差至多 $2\varepsilon_n$；固定 $q$ 和定义2.2的块长给 (82)。$g=0$ 时 $\Delta=0$，所以 $h\le2\varepsilon_n$；正下降大于 $4\varepsilon_n$ 时，$h\ge\Delta-2\varepsilon_n>2\varepsilon_n$。所有严格号均来自判据本身，没有去掉误差球边界。由 $h-\Delta\le2\varepsilon_n$ 得 (83) 的下界。第二个续块前深度恰为 $d+g_1$，将两个下降相除得到 (84)。用 $\alpha^2=1-\alpha$ 逐一代入四种 $(g_1,g_2)$ 即得所列集合；$\alpha>3/5$ 给 $\alpha^3>1/5$。本引理不由一次下降识别 $g_1$，也不把不同来源各自可达的比值拼在一起。证毕。
+
+**定义 23.2（只使用实际相邻返回的取得规则）。** 接收者从交接后的本地计数零开始，执行以下两段有限帧交互，所有 Step 都是同一独占生产者的真实 Next。
+
+第一段的阶段编号为 $j=1,2,\ldots$。在阶段 $j$，置 $n_j=j^2$，于当前暂停返回请求 Extent$(n_j)$ 得 $u_j$；执行恰一个 Step，完整交付其实际三元组，本地计数成为 $j$；再暂停并请求 Extent$(n_j)$ 得 $v_j$。当且仅当
+
+$$
+h_j=u_j-v_j>2\,2^{-j^2}
+\tag{85}
+$$
+
+时结束第一段，记首次命中的本地调用号为 $\tau$，并计算 $\lambda=h_\tau-2\,2^{-\tau^2}>0$。未命中的读数与已处理事件可以丢弃。未命中只表示没有证实本步续块，不被记录为“本步没有续块”。
+
+在第 $\tau$ 次 Step 的当前 Return 保持暂停，以有限整数比较选择
+
+$$
+n_* =\min\{n\ge \tau^2:32\,2^{-n}<\lambda\},
+\qquad \varepsilon_*=2^{-n_*}.
+\tag{86}
+$$
+
+请求一次 Extent$(n_*)$ 作为新的步前基线 $u$，令 $w=0$。第二段重复：执行一个真实 Step，保留这一调用的 Emit 位 $e$ 直至测试结束，完整交付 Advance、Return；令 $w$ 加一；在其当前返回请求 Extent$(n_*)$ 得 $v$。若 $u-v\le2\varepsilon_*$，以 $v$ 替换 $u$ 后继续；否则在这一真实 Return 保持暂停，记 $t_2=\tau+w$、$e_*=e$，不再请求仿射读数。选择精度不做 Step，不给来源推进时间；两个相邻固定精度测试可以共用中间返回的同一个读数。
+
+**定理 23.3（任意源、任意允许误差的有限首次检测与紧邻下一次检测）。** 对所有定义22.1的 $x$、实际接入返回、固定 $q,b$ 和满足 (80) 的全部自适应回复序列，第一段在有限 $\tau\ge1$ 结束，且其第 $\tau$ 次 Step 确为真实续块。(86) 以有限算术完成，且
+
+$$
+\tau^2\le n_*\le \tau^2+6.
+\tag{87}
+$$
+
+第二段不产生虚假续块，并恰在第 $\tau$ 次 Step 之后的下一次真实续块返回结束，中间没有漏检续块。
+
+证明。无误报由引理23.1直接得到。为证明第一段有限，沿尚未停止时的真实运行记阶段 $j$ 步前深度为 $d_{j-1}$。每步最多增加二，故
+
+$$
+d_{j-1}\le d_0+2(j-1).
+$$
+
+在真实续块阶段 $j$，由 $1-\alpha^g\ge\alpha^2$ 及 $\alpha>1/2$，
+
+$$
+\Delta_j\ge q\alpha^{d_0+2j}>q\,2^{-d_0-2j}.
+\tag{88}
+$$
+
+取某个有限整数 $h_0\ge0$ 使 $q>2^{-h_0}$；它只用于证明，不提供给接收者。对一切充分大的 $j$，整数不等式 $j^2>d_0+h_0+2j+2$ 成立，故 (88) 给 $\Delta_j>4\,2^{-j^2}$。例如从 $j_0=d_0+h_0+4$ 起均成立。在任何有限返回，当前前缀的死亡时钟有限；顺次 Next 在有限步后必到死亡再真正读下一块，空前沿则下一步即读。因此若第一段尚未结束，阶段 $j_0$ 以后必在有限步遇到一次真实续块。该阶段由引理23.1必命中，矛盾于永不结束。每个此前 Read、Next、Extent 和整数计算都有限，故这是一个实际有限搜索，不是已知深度或单位界下才存在的停止点。平方精度保证 (88) 中可能的指数下降仍被误差压过；仅说“逐渐加精度”不足以替代此估计。
+
+同精度整数码之差使 $h_\tau-2\,2^{-\tau^2}$ 是 $2^{-\tau^2}$ 的正整数倍，故 $\lambda\ge2^{-\tau^2}$。取 $n=\tau^2+6$ 即有 $32\,2^{-n}=2^{-\tau^2}/2<\lambda$，证明 (87)，也给 (86) 的有限搜索界。
+
+第一命中是真实续块，其后的前沿处于出生返回。在下一次真实续块之前，深度和仿射真值不变，任意两个所用读数的差均至多 $2\varepsilon_*$，即使误差相互依赖也不可能误报。下一次真实续块的下降由 (84)、(86) 满足
+
+$$
+\Delta_{\rm next}>\lambda/5>(32/5)\varepsilon_*>4\varepsilon_*.
+\tag{89}
+$$
+
+所以该调用必被检测。其出现由同一有限死亡时钟和生产性保证。此归纳只保证本次相邻下一续块的完整识别；没有把同一个固定精度无条件推广到无限多次以后越来越小的下降。证毕。
+
+## 24. 完整寿命、真实发射与达到边界的持续使用
+
+**定理 24.1（未知仿射零点下的达到恢复）。** 定义23.2对定义22.1的所有实际源、所有接入点、所有固定配置及所有允许回复有限停止。令 $D$ 是第一命中续块后的真实深度，$g\in\{1,2\}$ 是第二段结束调用的真实块长，则接收者仅用已经取得的数据恢复
+
+$$
+w=G_{D-1},\qquad
+d_*=D+g,\qquad s_*=G_{d_*}-1,\qquad
+m=\tau+w.
+\tag{90}
+$$
+
+它输出准确的当前 $\partial_m=\partial(d_*,s_*)$、(38)、(40) 的墙角色及实际拥有的 lift，保留同源活记录 $(d_*,s_*,m;\kappa)$。生产者的真实当前来源是 $T^{r+m}x$，实际未读端点是 $\operatorname{tail}_{d_*}x$，其原字段与绑定未被替换。该结果不输出入口边界。
+
+证明。由定理23.3，两次命中确为相邻的两个真实续块，且第一次返回后深度 $D\ge1$，坐标恰为 $(D,G_D-1)$。定理12.3及 (68) 给出生余量 $G_{D-1}-1$。先完成这些不读取的 Step，再完成下一次真正续块的 Step，恰用
+
+$$
+(G_{D-1}-1)+1=G_{D-1}
+$$
+
+次调用；定义23.2的 $w$ 正好计全这段寿命，包括末次 Emit、Advance、Return。严格递增且无界的 $G_j$ 可用相邻两个权重顺次生成，有限且唯一地找到满足 $w=G_{D-1}$ 的 $D$。$D=1$ 时 $w=G_0=1$，没有中间不读取调用，末步仍计入。
+
+尚须识别末次续块的长度，差分测试本身没有给这个标签。其调用前的真实坐标为 $s^-=G_{D+1}-2$。定理18.2的两个不同常值为
+
+$$
+c_0=\operatorname{Low}(G_{D+1}-2),\qquad
+c_1=\operatorname{Low}(G_{D+1}-2+G_D)
+=\operatorname{Low}(G_{D+2}-2),\qquad c_0\ne c_1.
+\tag{91}
+$$
+
+与已经保留的实际 $e_*$ 比较，$e_*=c_0$ 给 $g=1$，$e_*=c_1$ 给 $g=2$。这里使用的是结束该完整寿命的“下一次续块调用”中的那个真实 Emit：它已在第二次检测前实际发生，保留至 $D$ 算出后才解释。不是请求未来位、另做免费调用，或把任意中间不续块的 Emit 当成分支标签。由出生转移 (48) 得 (90) 的新坐标。
+
+定理12.2据当前坐标唯一给完整边界，故恢复的是实际拥有墙点的区域，不是任取同长度的弧，也不假设相位映射在分裂墙上单射。定理3.1、3.2保证每次 Step 是对原来源的真实执行，新增原始字来自它自己的真实尾；暂停计算没有换成 (42) 中的另一历史。生产者最终字段仍为原运行在 $(p_m,r+m)$ 的字段，$|p_m|=d_*$，接收者不需知道 $p_m,N_{p_m}$ 或 $r$。这些事实给原始游标、当前来源及持续绑定的结论。证毕。
+
+**推论 24.2（不再查询仿射读口的有限活使用）。** 从定理24.1的记录出发，任意有限、可自适应的第18节 LiveStep、Peek、Seek 及合法可选预算命令序列均有限完成，不需要新的 Extent，也不需要恢复 $q,b$ 或 $\partial_0$。每个当前边界及其端点归属按真实事件更新，每个写出的空间答案属于所注明的真正达到切面。
+
+证明。定理18.2只用当前 $(d,s,i)$、实际下一 Emit 和持续权利；正余量时不读原始位，零余量时用 (70) 识别同一个生产者实际新读的块。因此 (81) 逐步保持真实对应。定理18.3的 Seek 有限进展、原 DATA 守卫 $D(L,H)\le\delta(d,s)$、代表 $Z(s)$、拒绝与预算论证均只消费这一当前记录，不消费 (69) 的静态 $\partial_0$ 字段。逐命令归纳即得有限序列结论，包括零余量、纯交替来源和墙点塌缩。Seek 仍可能付费移动来源，它不在原暂停切面无条件回答；释放也不复位源或复制权利。证毕。
+
+**定义 24.3（精确剩余的入口义务）。** 在同一个 (79)–(80) 合同下，入口问题是：是否存在一个源无关的因果接收者，对所有 $x\in K$、所有实际有限返回接入点、所有固定有理 $q>0,b\ge0$ 及全部允许回复序列，经过有限实际操作停止，并精确输出原 $\partial_0$，包括墙角色和拥有的 lift？允许它选择有限精度、暂停、内部计算及真实 Step，观察全部约定的交接后事件；不额外提供初始重读、rewind、深度、绝对计数、私有字段或计时。此存在命题及其否定在这里均保持 open。
+
+定义23.2的 $\tau$ 只是首次被证实的续块，并非首次真实续块。此前 (85) 不命中与某次真实下降 $\Delta\le4\,2^{-j^2}$ 相容；初始尺度可任意小，有限粗精度没有排除这种情形。故 $\tau$ 之前的未知续块数及长度没有被该证明恢复，不能把 $D$ 减去一个已知首块长就当成 $d_0$，也不能把 $\tau$ 当成 $\delta_0+1$ 来使用 (66)。两次命中间的完整寿命只标定第一命中之后的 $D$。达到处没有初始读口副本，原端点也没有倒带。以上解释限定这个构造的结论；它不是对所有其他因果接收者的不可能性证明。若要否定上述入口存在命题，仍须给出满足同一有限误差合同、各自固定有理配置、全部实际事件和合法有限自适应交互的完整不可区分见证，不能用一个精确实数碰撞或尚未核清的有限误差候选替代。
+
+## 25. 同次实际运行的读取、数字服务与继续费用
+
+**定义 25.1（有限仿射服务及计费参数）。** 保留定义8.1、19.1的固定数目顺序二进制工作带、有限帧、描述符与调用检查。令 $b_q$ 为 $A,B$ 的实际二进制负载长度之和，$b_b$ 为 $C,F$ 的相应长度之和，零的负载长度取一。私有配置共 $b_q+b_b$ 位，不能因接收者不知道它们而省略。$P$ 包含固定程序、帧约定、仿射服务及接入／释放协议的安装位；$c$ 控制同时实际存在的端点、模式与权利描述符长度。
+
+一种满足 (80) 的实际数字服务读取自身当前深度缓存，以定义13.2、19.1的精确二次整数算术计算
+
+$$
+a=\left\lfloor 2^n\left(C/F+(A/B)\alpha^d\right)\right\rfloor.
+\tag{92}
+$$
+
+它不查询另一个来源、不输出 $d,q,b$，也不取得原始位。该实现的误差严格小于 $2^{-n}$；定理23.3、24.1仍对 (80) 的全部闭误差回复成立。若后端采用其他允许回复选择机制，须另计它实际增加的计算、存储与传输，不把这个机制假定为免费。初始化仅增加源无关的有限服务配置和程序，原始 cursor-zero、空前沿、return-zero、不做初始 Read／Advance 的规则保持定义1.2；这个显式扩展不等于在一个不许扩展初始化的旧接口中已经拥有 Extent。
+
+**定理 25.2（完整取得的同次精确逻辑数与数字上界）。** 在定理24.1的同一次实际运行中，接入前有 $r$ 次 Next 和 $d_0$ 个原始已读位。记第一命中号 $\tau$、第一命中后深度 $D$、第二块长 $g$、固定精度 $n_*$、$w=G_{D-1}$ 及 $m=\tau+w$。则
+
+$$
+\begin{aligned}
+Q_{\rm Extent}&=2\tau+1+w,\qquad N=\max n=n_*\le \tau^2+6,\\
+\#\operatorname{Step}_{\rm after\ handoff}
+&=\#\operatorname{Emit}_{\rm after\ handoff}
+=\#\operatorname{Advance}_{\rm after\ handoff}
+=\#\operatorname{Return}_{\rm producer,after\ handoff}=m,\\
+\#\operatorname{Read}_{\rm after\ handoff}
+&=d_*-d_0=D+g-d_0,\qquad d_*\le d_0+2\tau+2.
+\end{aligned}
+\tag{93}
+$$
+
+截至取得返回，原生产者总三元组数为 $r+m$，原始 Read 与交付位数均恰为 $d_*$。每个被经过的强制零包括在内；第一段漏检的真实续块也包括在内，不能沿用 (67) 的“最多四个新位”。Extent 的 $Q_{\rm Extent}$ 个实际返回与交接确认、初始化确认另外分帧，不算作源 Advance 或生产者三元组。
+
+置
+
+$$
+\Omega=d_*+b_q+b_b+N+c+32.
+\tag{94}
+$$
+
+对于 (92) 的数字实现，流式输出并丢弃已处理事件时，一组保守上界为
+
+$$
+\begin{aligned}
+C_{\rm digital}
+&=O\left(P+b_q+b_b+I+
+(r+m+d_*+Q_{\rm Extent}+1)\Omega^3+B_{\rm out}\right),\\
+S_{\rm digital,peak}&=O(P+\Omega),\\
+B_{\rm affine+control}
+&=O\left((Q_{\rm Extent}+m+1)(c+N+b_q+b_b+1)\right).
+\end{aligned}
+\tag{95}
+$$
+
+$I$ 是实际数字请求输入，$B_{\rm out}$ 是实际选择写出的全部结果、事件、确认及其帧。第三行专计交接后的仿射请求／回复、Step 控制与交接帧；原始回复的 $d_*$ 位及生产者三元组负载 $6(r+m)$ 位另列，并实际支付各自通道 framing。最终边界标签与本地计数有 $O(d_*+c+1)$ 位。若要求保留全部轨迹、仿射回复、原始字副本、历史成员列表或完整 DATA 表，其实际生成、输出与同时存储另加。
+
+完整系统还须加实际安装／绑定的非数字费用、驱动者自身命令取得与计算、源后端的 $\iota_x+\gamma_x(d_*)$；同时峰值存储另加驱动者实际工作区、$\sigma_x(d_*)$、额外误差机制及外部保留输出。逻辑 Read 原语的计价和实际位负载保持独立坐标；没有把无限源的配置、材料或生成器视为零成本。
+
+证明。第一段每阶段恰两次 Extent 与一次 Step，共 $2\tau$ 和 $\tau$ 次；固定精度基线一次，随后 $w$ 次 Step 各读一次，得第一行及 $m$。所有原始位恰在真实续块中顺次读一次，深度单调，故新增 Read 是游标差。第一段最多 $2\tau$ 位，第二段恰下一块 $g$ 位，给深度界。未知早期续块不需要另猜计数，已被该游标差完整记账。
+
+有 $2^{-b_q}<q<2^{b_q}$、$0\le b<2^{b_b}$。任意允许回复的整数码满足
+
+$$
+0\le a\le2^n(2^{b_b}+2^{b_q})+1,
+\tag{96}
+$$
+
+故宽度为 $O(N+b_q+b_b+1)$；大的加性零点虽然在 (82) 中消掉，仍扩大实际回复和配置，不能在费用中消掉。$\alpha^d$ 的二次整数系数有 $O(d+1)$ 位；清除 (92) 的分母后，所有整数有 $O(\Omega)$ 位。相邻幂系数生成、grade-school 乘除与二次符号比较使用 $O(\Omega)$ 可复用空间，每次符号比较至多 $O(\Omega^2)$ 位动作，有限整数区间的二分取整至多 $O(\Omega)$ 次比较。因而每次 Extent 的保守界为 $O(\Omega^3)$ 工作和 $O(\Omega)$ 空间。
+
+第一段阶段号和本地计数不大于 $m$；达到时 $r+m\le k_{p_m}<G_{d_*+1}$，所以这些计数及全部生产者缓存只有 $O(d_*+1)$ 位。生成 $j^2$、比较 (85)、计算 dyadic $\lambda$ 及选择 (86) 均是有限宽度整数操作，不要求保存前面 $j$ 个读数。第二段只保留一个基线、当前回复、$w$ 和最新 Emit；解出 $D$ 的权重搜索至多 $O(d_*^2)$ 位动作，(91) 用既有有限 Low 算术。原 Next、原始前缀扩展、scratch 清空、请求定位与完整 I/O 由第8、19节的相同有限算术界计入 (95)。生产者前缀、四个私有配置整数、接收者两份读数、计数、缓存、所有描述符及工作区同时存在，其和仍为 $O(P+\Omega)$；这不是分别取各组件峰值后遗漏并存项。每个帧宽由 (96) 控制，给第三行。最后加上真实源、驱动者和保留输出才是完整系统费用。证明中的停止界依赖实际 $q$ 与初始深度，(93)–(95) 是实际同次运行的界，不给独立于 $q,d_0$ 的统一最坏取得成本或物理时限。证毕。
+
+**推论 25.3（后续使用仍付真实新增费用）。** 对推论24.2的一段有限使用，令 $J$ 为所有新增真实 Next 数，$Q_u$ 为有限请求数，$d_{\max}$ 为实际最大深度，$L_{\max},H_{\max}$ 为该段所用最大参数，无相应参数取零。以定义8.1的 $\ell$ 置
+
+$$
+W=d_{\max}+b_q+b_b+\ell(L_{\max})+\ell(H_{\max})+c+32.
+\tag{97}
+$$
+
+该段 Extent 数为零，生产者新增三元组数恰为 $J$，新增原始 Read 及交付位数恰为 $d_{\max}-d_*$。保留仿射服务配置时，新增本地工作及同时数字存储可取
+
+$$
+C_{\rm use}=O\left(I_u+(J+Q_u+1)(W^2+c)+B_{{\rm out},u}\right),
+\qquad S_{{\rm use},\rm peak}=O(P+W).
+\tag{98}
+$$
+
+证明。逐步使用定理18.2、18.3及19.3的相同实现；(81) 没有引入额外历史计算。全部 Seek 内部 Step 与预算内 Tick 计入 $J$，正余量的无读步骤不抵消零余量的新读；强制零仍计入深度差。静态服务配置中的 $b_q+b_b$ 即使不再使用也计入同时存储，取得阶段的旧读数与精度搜索字段可丢弃。请求、拒绝、结果与输出仍完整付费。全运行直到 $d_{\max}$ 的后端成本是其实际 $\iota_x+\gamma_x(d_{\max})$ 与 $\sigma_x(d_{\max})$，而非只计取得时的前 $d_*$ 位；驱动者、绑定、物理安装与外部档案同样保留原收费范围。这里不对无限命令序列给一次有限总费用。证毕。
+
+## 26. 四种意义、精确箭头与供应边界
+
+**定义 26.1（本仿射合同中的四种意义）。** 空间是实际当前无限位置配置 $T^{r+i}x$，有限空间任务是其真正当前 $q_L$ 与 (1) 的有限 DATA。时间是实际 Emit、Advance、Return 的先后；接收者只取得交接后的后缀及本地计数，不取得原初始化以来的完整事件史。边界是生产者实际已付费原始前沿的当前兼容区与两墙拥有的具体 lift，初始空前沿为整圈；它不是任意物质边界。记忆是实际保留的有限控制、缓存、(81)、显式预算以及持续绑定／权利；未读尾、丢弃事件和数学上存在的过去不算接收者已保留的记忆。这四种意义没有各自复制全历史。
+
+本合同供应的取得箭头与继续箭头准确为
+
+$$
+\begin{aligned}
+&\bigl(\text{同源仿射有限回复，实际本地事件，独占 Step 权}\bigr)
+\longrightarrow
+\bigl(\partial_m,\mathfrak a_{\rm aff}\bigr),\\
+&\bigl(\mathfrak a_{\rm aff},\text{同源下一实际事件}\bigr)
+\longrightarrow
+\bigl(\text{更新后的真实当前边界及活记录}\bigr),\\
+&\bigl(\mathfrak a_{\rm aff},D(L,H)\le\delta(d,s)\bigr)
+\longrightarrow \text{该当前切面的有限 DATA 及合法预算内使用},\\
+&\bigl(\mathfrak a_{\rm aff},L,H,\text{持续权}\bigr)
+\xrightarrow{\text{付费 Seek}}
+\text{真正达到的充分切面及其有限空间答案}.
+\end{aligned}
+\tag{99}
+$$
+
+第一箭头通过定理23.3、24.1取得达到边界；它没有入口边界输出。后续箭头由推论24.2承担，均消费真实事件、guard 或实际推进。边界本身不产生权利、不选定未知尾或下一续块，也不输出完整无限空间；记录的当前坐标可以重建相同边界，却不是完整原生产者字段或原历史的逆。单一静止仿射值不是有序双墙输入。这里未声称空间、时间、边界和记忆四个完整 view 的核相等或相互可逆。
+
+**定义 26.2（精确供应与综合推导的归属）。** 第22–26节是这个指定来源与控制器上的 `repo-derived` 理论综合；承重增量是未知加性零点下的全回复首次可靠下降、由该下降校准紧邻完整寿命、再结合实际 Emit 的达到恢复及同源继续使用。差分抵消、有限误差三角不等式、整数算术和 Fibonacci 时钟各为中间工具，不宣称它们是新的一般原理。本节不是物理定理、普适最小性结果或 Lean 认证，也不作全球原创性或文献穷尽声明。
+
+| 精确供应 | 本节实际消费与界限 |
+| --- | --- |
+| 本卷 §§1–8，尤其定义1.2、2.2及定理3.1、3.2、4.1、8.2 | 原固定初始化、真实顺序输入、强制零、每次有限 Next、实际 $T$、准确未读尾续接、DATA guard 与顺序带位费用；不供应免费的无限来源或调用权生成器。 |
+| 本卷 §12，定理12.2、12.3及 (38)–(48) | 达到坐标唯一性、闭端点与侧点所有权、出生／死亡转移及历史纤维。恢复当前坐标不选择纤维中的实际历史。 |
+| 本卷 §§16–17，尤其定义16.1及 (68) | 独占持续交接、暂停语义、两次相邻真实续块间 $G_{D-1}$ 的完整寿命。未知零点使旧三比分类不再直接适用；不转移定理17.3的入口结论或四个新位界。 |
+| 本卷 §§18–21，尤其定理18.2、18.3、19.2、19.3 | 当前记录的实际 Emit 分支识别、零余量继续、有限 Seek／Peek、数字服务与完整资源边界；(81) 只省略其不被活使用消费的静态入口字段。 |
+| [Exact Current Boundary Provenance §§1–9][AFF-PROV] | §§1–3 的同一实际尾续行与具体墙点，§§4–5 的合法命令投影及精确 DATA 域，§6 的全点尾双射与每点历史纤维，§§7–9 的真实分支 Emit、付费有限尾逆及其事件专用比较范围。这里用其区分当前点、边界、历史与实际尾的结论，不将其已知边界前提下的有限尾解码当成未知入口边界取得。 |
+| [Boundary Dynamics §§36.1–36.6][BD-ACTIVE] | 实际像、共同核、输出／合法性／后继相容及反向恢复的额外条件。具体 (99) 不等于满足全部共同核条件，更没有由正向达到恢复推出反向入口恢复。 |
+| 本卷定义13.2、19.1；RRO20.2、20.6、24.2、35.1；[固定版有限 Zeckendorf 算术][MATHLIB] | 二次整数符号计算、有限 Low、原分割与时钟、标准有限规范展开及唯一性，均在原范围内复用。没有把位置删除换成本卷 successor，或把上游声明的引用算成本次编译。 |
+
+**定义 26.3（保留的原任务与实现义务）。** 原 fixed-$G_{\rm gc}$、original-$Q$、parked-consumer、unchanged-initialization、完整原响应、任意 interior-cut 及完整独立四-view 恢复义务全部保持各自原假设和未决范围。特别是新增仿射读口和持续 Step 权是明确接口前提，不是原事件专用端口、旧停放消费者或不许修改初始化的服务自动具有的能力。入口问题严格保持定义24.3的量词与 open 状态，达到恢复不结算它。
+
+固定 $q,b$、已知误差界、同一当前区域、有限未饱和回复、无未观察推进及持续独占权共同承担证明。若 $b$ 改变，(82) 多出零点差；若 $q$ 改变，(84) 不成立；未观察的 Advance 或并发调用使 $w$ 不再是这一个前沿的完整寿命。本节不从这些证明失效推出一切其他合同均不可能。任意物理传感器的安装、仿射读数确实对应这个付费区域、参考单位／误差保证与实际持续权限仍需独立实现桥。任意实数传感器、撤权、并发、源外变动、无限任务的一次有限完成、任意源的统一有限 provisioning、统一常数存储和与 $q,d_0$ 无关的最坏取得费用均未由本合同供应。
+
+[AFF-PROV]: RECURSIVE_RELATIONAL_OBSERVATION_EXACT_CURRENT_BOUNDARY_PROVENANCE.md
+
+## 追加锚（本行以下为增补区）
+
+## 27. 入口恢复的完整观察与精确量词
+
+**定义 27.1（入口接收者及其完整观察）。** 本节至第30节使用定义22.1、24.3的同一原初始化、原始源、交接与独占持续调用轮。接收者的源操作是已返回切面上的 Extent$(n)$，其中任意有限整数 $n\ge1$ 均可自适应选择，以及真正执行原 Next 的 Step。允许重复查询、有限暂停、任意有限本地计算、实际持有权利的检查、合法释放和停止。释放只有既定的轮次控制效果，不赠送新读口、重新接入或不可见的驱动者推进；释放本身也不是正确入口答案。
+
+完整观察保留每个请求及其精度、完整非负回复整数及既定自定界帧、服务完成、固定交接确认、每次真正 Emit 的位值及 Emit／Advance／Return 次序、本地已完成请求数和 Step 数，以及声明的模式、持有权利与轮次控制结果。接收者只有该合同给出的共同公共约定和初态；私有配置不增加初态建议或确认字段。接收者可保存这些观察的任意有限记录并据此决策，不要求使用定义23.2的算法。仅把事件数目相同而位值不同的两条轨迹判同，不满足本定义。
+
+原始 Read 响应与次数、原始游标和未读端点、私有 $p,r,d,N,M,k$、交接前的绝对历史与计数、来源身份建议、计算／存储费用和物理延迟不是观察。通道和权利描述符采用相同源无关安装与字面值，权利的实际有效性仍须各自在本世界成立。Wall、初始切面重读、rewind、私有状态导出、认证绝对计数与额外空间查询均不由这个交接安装；不把一个未安装命令解释成新的信息性拒绝。第18节的取得后接口若作为接收者已经合法取得的记录上的后续程序使用，仍须满足其原取得与 guard 前提，而不是免费初始查询。
+
+目标始终是交接时的 $\partial_0$，含区域、墙角色和实际拥有的 lift；可用定理12.2的唯一坐标描述。它不会在 Step 后重置为当前边界。逐实例有限指在每个允许世界上经过有限次实际操作与本地计算给出这个精确答案，不是给某个预设精度或 Step 上界。所有操作、回复和输出仍按第8、25节付费。
+
+**定义 27.2（全误差要求与固定 floor 子合同）。** 对世界 $W=(x,r;q,b)$，令 $\mathcal E_{\mathcal D}(W)$ 为沿因果接收者 $\mathcal D$ 的实际请求、实际当前深度逐次满足 (80) 的完整允许回复迹。定义24.3所问的确定性存在命题是
+
+$$
+\exists\mathcal D\ \forall x\in K\ \forall r\in\mathbb N
+\quad\forall(q,b)\in\mathbb Q_{>0}\times\mathbb Q_{\ge0}
+\forall\eta\in\mathcal E_{\mathcal D}(x,r;q,b):
+\quad\mathcal D\text{ 有限停止且输出 }\partial_0.
+\tag{100}
+$$
+
+这里 $r$ 是原初始化后的实际返回；定理3.1保证每个这样的有限运行真实存在。各世界在初始化时私有地固定自己的有理配置，不能随误差或动作改变。
+
+另定义一个指定实现的较弱正确性要求：只要求对定义25.1的同一个确定数字服务
+
+$$
+F_{q,b}(d,n)=\left\lfloor2^n(b+q\alpha^d)\right\rfloor
+\tag{101}
+$$
+
+有限且正确，而非要求对全部 $\eta$ 正确。其完整帧和服务完成方式固定、没有建议性附加字段；其有限二次算术、无原始 Read、无 Advance 性质仍按定义25.1。式 (101) 对所有有限 $n\ge1$ 可调用，不设精度上限。以下将直接否定这个较弱的全配置要求，从而否定 (100)。不会由数值误差界推断任意指定选择器都给相同回复；误差允许集合内的舍入选择本身可能携带额外信息。
+
+## 28. 两个实际 proper 入口的一步汇合
+
+**引理 28.1（不同付费入口的共同孩子与共同尾）。** 对任意 $t\in K$，分别从原空前沿初始化以下两个实际原始源，并在表中返回交接：
+
+$$
+\begin{array}{c|c|c|c|c|c|c|c}
+ &x&p&r&d&N_p&s&\text{实际未读尾}\\\hline
+W_A&010t&0&1&1&0&1&10t\\
+W_B&000t&00&3&2&0&3&0t
+\end{array}
+\tag{102}
+$$
+
+两者均为真正达到的 proper 死亡返回，入口边界不同，分别为 $\partial(1,1)$、$\partial(2,3)$。在两者上执行第一个交接后 Step，其真实 Emit 都为零，随后都 Advance、Return；返回字段为
+
+$$
+\begin{array}{c|c|c|c|c|c|c|c}
+ &p'&n&d'&N_{p'}&k_{p'}&s'&\text{实际未读尾}\\\hline
+W_A&010&2&3&2&4&4&t\\
+W_B&000&4&3&0&6&4&t.
+\end{array}
+\tag{103}
+$$
+
+它们在这个真实返回有相同的完整当前点和边界 $\partial(3,4)$。从此所有有限真实续行的深度、松弛、未读尾、实际 Emit 位及 Advance／Return 顺序相同；原私有历史字段仍可不同。
+
+证明。所列源均由完整块 $0,10$ 接成，故对每个 $t\in K$ 合法。$W_A$ 的初始化后第一调用真正读取首零，发出 $\operatorname{Low}(0)=0$ 并返回。此时 $p=0$，$b_0=k_0=1$，恰在死亡返回；它未预读后面的 $10$。$W_B$ 的首调用同样取得 $0$。第二调用从这个死亡返回真正再读一个零，取得 $00$，发出 $\operatorname{Low}(1)=1$ 并返回于二。此时 $k_{00}=G_3-2=3$，第三调用不读，发出 $\operatorname{Low}(2)=0$，返回于三。实际已读字仍为 $00$，恰在其死亡返回。故 (102) 是原初始化的有限执行，不是只满足缓存等式的符号状态。
+
+由 (38)–(40)，$\partial(1,1)$ 的初始墙是 $e_1$ 上的 $x_1^+$，终止墙是 $e_0$ 上的 $Z(0)$；$\partial(2,3)$ 的初始墙是 $e_{-1}$ 上的 $Z(1)$，终止墙也是 $e_0$ 上的 $Z(0)$。区域的正向长度分别为 $\alpha$、$\alpha^2$，所以它们确为不同带所有权边界。所有死亡等号均保留。
+
+交接后第一调用中，$W_A$ 真正读一，再真正读其强制零，追加 $10$；$W_B$ 真正读一个零，追加 $0$。两者发射前的有限整数均为三：前者为 $G_1+1=3$，后者为 $0+3=3$。所以实际 Emit 都是 $\operatorname{Low}(3)=0$，不是只比较事件标签。各自 Advance 一次并清空 scratch 后得到 (103)。它们的新增 Read 数分别为二、一，不被混作公开观察；到这个返回的总已读长度却都为三。式 (48) 的两条不同父分支在此得到同一个出生坐标 $(3,G_3-1)=(3,4)$，出生松弛为 $G_2-1=2$。其初始墙为 $e_1$ 上的 $x_1^+$，终止墙为 $e_{-1}$ 上的 $Z(1)$，两世界均拥有这些具体点。
+
+在 (103) 应用 [Exact Current Boundary Provenance][AFF-PROV] 定义1.1、定理2.1–2.2，取共同深度三、松弛二、前缀 $010,000$ 及共同实际尾 $t$。它们的 $N$ 差为二，返回时间反向相差二，满足该定理的实际切口条件。因此完整当前点确实相等，包含所有具体侧点。下面也把实际后继不变量写出，以明确其对标量服务的用途。
+
+在任意匹配的后继返回，存在共同实际取得的完整字 $w$，使
+
+$$
+\begin{aligned}
+p_A&=010w,&p_B&=000w,&d_A&=d_B=3+|w|,\\
+N_A&=N_B+2,&n_B&=n_A+2,&k_B&=k_A+2,\\
+N_A+n_A&=N_B+n_B,&k_A-n_A&=k_B-n_B,\\
+\text{未读尾}_A&=\text{未读尾}_B=\operatorname{tail}_{|w|}(t).
+\end{aligned}
+\tag{104}
+$$
+
+正松弛时两者都不 Read，以同一个 $N+n$ 发射，再各 Advance 一次；零松弛时两者从同一实际尾、同一绝对原始位置读相同的 $0$ 或 $10$，包括强制零，两份 $N$ 增量相同，发射前整数仍相同。子时钟递推保存所有偏移，返回清空待发字段。归纳证明 (104) 和全部实际事件相同。每个有限调用均由定理3.1、3.2生产性完成，不能以无限尾的可计算性代替这些真实读取。证毕。
+
+**引理 28.2（汇合后的完整仿射观察）。** 给引理28.1的两个世界安装同一个固定有理配置 $q>0,b\ge0$、同一个 floor 程序 (101)、相同源无关通道／权限安排。在第一个交接后 Step 返回以后，若接收者控制状态和已有观察相同，则对任意后续自适应精度、任意有限交互及整个无限允许续行，其完整允许观察都相同。这里没有限制未来精度，也没有要求未来尺度继续落在某个粗网格格子内。
+
+证明。(104) 给每个匹配返回的真实深度相等，所以每个共同请求 $n$ 的整个整数 $F_{q,b}(d,n)$ 相等，进而完整帧、服务完成及本地请求计数相等。它们在同一固定 $q,b$ 下计算，不是每次重新选择一个允许误差。Step 的位值和逐事件次序由引理28.1给出，本地 Step 数同时增加。固定确认、持有权利的检查、描述符字面值、合法模式和轮次控制具有相同已安装规则及相同结果；两者都实际持有原来的持续权利。暂停不推进，本地计算只有相同输入，释放只作相同控制变动。原始端点与私有绝对时间没有被判同，也没有导出它们。
+
+因此对完整命令／事件前缀归纳，下一命令、精度、保留记录、停止决定及输出相同，全部原字段的允许观察都保留。归纳也覆盖 Step 内已交付的 Emit、Advance、Return 前缀。若调用第23–24节的接收程序，其查询和每个内部 Step 就是这些实际操作；它们在相同观察上得到相同的可靠检测及达到记录。其后第18节真正取得记录上的 LiveStep、Peek、Seek、Arm／Tick 也相同：当前 $(d,s)$ 相同，DATA guard、有限代表、预算、拒绝和本地计数相同，每个内部 Step 由 (104) 配对。没有初始安装这些服务之外的新 getter，也不把一个任选见证历史当成原历史。
+
+每个无限观察序列的坐标均属于一个有限前缀，故坐标逐项相同。此句不声称无限交互可在有限时间完成。公开帧没有时延、后台工作或 padding 建议字段；若加入这些额外通道，须另证相等。证毕。
+
+## 29. 任意自适应精度下的入口非恢复定理
+
+**定理 29.1（同一配置的实际反例与全域确定性非恢复）。** 对每个定义27.1的确定性因果接收者，如果它在所有 proper 死亡返回、所有原始源和所有固定有理 $q>0,b\ge0$ 的 floor 子合同 (101) 上都有限停止，则存在一个固定有理配置 $(q_*,b_*)$，以及引理28.1的两个真正达到的 proper 入口，使它在两世界上获得相同完整观察、在相同的本地观察位置有限停止并给出相同输出，而入口边界分别为 $\partial(1,1)$、$\partial(2,3)$。若只在 Return 决策，该位置就是同一本地返回。两世界使用一个相同的固定仪器程序与配置，源无关地安装在各自原初始化中。
+
+因此即使只承诺 proper 死亡入口、即使指定后端就是 (92) 的确定 floor 服务、即使允许任意无界自适应精度，也不存在逐实例有限且全域正确的入口恢复器。定义24.3的全允许误差存在命题 (100) 尤其为假。
+
+证明。固定这样一个接收者 $\mathcal D$。先取一个真实参考实例：原始源 $0^\infty$，从原空初始化完成一次 Next，在实际返回 $(0,1)$ 交接；仪器私有配置为 $q=1,b=0$，使用同一个 floor 程序。在尚未执行交接后 Step 时，它的真实标量始终为 $\alpha$，所以每次请求的实际整数为 $\lfloor2^n\alpha\rfloor$。这是 proper 死亡返回的一个全域有限性实例，不是标量零、深度无穷或 $q=0$ 的极限环境。
+
+沿这个实际实例，只看到第一次 Step 发起以前，或者此前已完成的有限停止，以先出现者为准。这个前缀必有限：若二者都不在有限操作后出现，则只有静止查询、暂停或本地计算持续进行，接收者不会在该实际实例有限停止，违反假设。只在此真实前缀内取 Extent 精度的最大值，并为零次查询定义
+
+$$
+N=\max\bigl(\{1\}\cup\{n:\text{该前缀实际请求过 Extent}(n)\}\bigr),
+\quad h=2^{-N},\quad L=h\lfloor2^N\alpha\rfloor.
+\tag{105}
+$$
+
+置
+
+$$
+b_*=L+\tfrac12h,\qquad q_*=\tfrac14h.
+\tag{106}
+$$
+
+它们是固定有限有理配置，$q_*>0,b_*>0$。对 $j=1,2$，由 $0<\alpha^j<1$ 有
+
+$$
+L<b_*+q_*\alpha^j<L+h.
+\tag{107}
+$$
+
+真实参考值 $\alpha$ 也在半开网格格 $[L,L+h)$。一个精度 $N$ 的 dyadic 格子包含在每个较粗精度 $1\le n\le N$ 的某个格子内，故
+
+$$
+\left\lfloor2^n(b_*+q_*\alpha)\right\rfloor
+=\left\lfloor2^n\alpha\right\rfloor
+=\left\lfloor2^n(b_*+q_*\alpha^2)\right\rfloor
+\quad(1\le n\le N).
+\tag{108}
+$$
+
+这证明指定 floor 服务的实际字面相等，而不只是 (80) 允许选择相同近似值；(107) 还严格避开最终两值的格子边界。
+
+现在先安装同一组 (106) 与同一个服务／控制协议，再取任意共同 $t\in K$，运行引理28.1的两个源至其指定交接。参数只依 $\mathcal D$ 的有限参考前缀，不依这个 $t$ 或其任何位；两个最终世界不沿运行改换参数。可特别取 $t=0^\infty$，得到两个最终为零的实际源。参考世界的参数只用来确定有限前缀，不被当作最终比较对中的另一台仪器。
+
+在最终两世界的第一次 Step 以前，深度分别固定为一、二，真实标量正是 (107) 的两值。初始接收状态、固定确认、已装权利、全部控制字段与参考前缀相同；(108) 配对其中每次完整请求和回复。逐操作因果归纳迫使它请求相同的下一个精度，并作同样的暂停、计算、检查或决定。这同时保证有限前缀的自适应最大精度就是所取 $N$ 所覆盖的精度，不是预先把无限运行截在某个任意上界。
+
+若参考前缀以无 Step 的有限停止结束，最终两世界也在相同前缀输出同一个答案。它不可能同时等于两个不同入口边界。这包括立即决定、没有初始查询和任意有限静止精化后决定。
+
+否则它们都发起第一个真实 Step。引理28.1给相同的实际 Emit$(0)$、Advance、Return，并在其真实返回得到 (103)。因此接收者状态仍相同；若允许在已交付的事务事件上提前作决定，其观察前缀也相同，已不能在两个入口上同时正确。对继续到返回的情形，引理28.2保证此后无论请求多高精度、推进多少步、运行何种合法后续程序，完整允许观察永远相同。两个最终世界本身都是原假设的实际有限性实例，所以接收者在它们上有限停止，且停止位置与输出相同；同一个输出仍不能等于两个不同的 $\partial_0$。
+
+最后，(101) 的回复对每次实际请求均满足 (80)，每个服务与实际 Read 均有限。若 (100) 的接收者存在，它特别会在这些确定 floor 实例上全域有限且正确，刚证矛盾。故全误差结论不需要假设误差独立、嵌套、无偏或有利舍入，也没有将某个任意固定误差机制替换成 floor。证毕。
+
+这里的配置量词是“每个拟议全配置接收者，都有一个配置及同配置实际反例对”。不是声称每个事先指定的配置都产生这个反例，更不是在同一运行中选取不同仪器。参考前缀所需的总性只在实际 proper 实例上使用；不从一个不可达到的恒定极限回复推导有限首次移动。
+
+## 30. 达到恢复、反向箭头与来源界限
+
+**推论 30.1（可取得当前边界不提供通用入口逆）。** 在定义22.1的准确合同下，全允许误差的达到恢复及同源继续使用成立，而全允许误差的逐实例有限确定性入口恢复不成立。具体地，定理24.1和推论24.2的正向箭头保持 (99) 的全部条件；不能增加如下通用反向箭头：
+
+$$
+\bigl(\text{实际取得的当前边界、保留的全部有限允许观察、持续权利}\bigr)
+\longrightarrow\partial_0.
+\tag{109}
+$$
+
+证明。正向结论直接复用定理24.1及推论24.2。若 (109) 是对全部实际接入及全部允许回复有限可用的逆，将它接在该有限达到程序之后，就得到 (100) 的接收者，与定理29.1矛盾。更具体地，在定理29.1的移动情形，最终反例对从第一次 Step 后就共享 (104) 的当前边界、完整当前点和后续观察；合法运行达到程序得到的记录与持续使用也相同，原入口仍不同。反例不是撤销调用权，也没有阻止合法有限 DATA、跨更新 LiveStep 或真正移动的 Seek。
+
+因此此合同中的“边界”表达实际付费前沿，“时间”表达交接后的实际事件，“记忆”表达已保留的有限数据与真实权利，“空间”表达实际当前点；这些独立意义仍按定义26.1。付费向前动作可以消去一个未保留的入口区别，同时使新的当前边界可取得。它没有把四个完整 view 的核变成相同，也没有恢复交接前的绝对史、完整私有字段、整个无限源或初始当前点的回滚服务。证毕。
+
+**约定 30.2（精确供应、承重增量与证据范围）。** 定理29.1是本指定原生产者与仿射合同中的 `repo-derived` 普通数学综合。承重增量是两个真正达到的不同深度入口的一步同孩子／同尾汇合，结合实际总性实例的有限 floor 前缀，得到无精度上限的入口障碍。既有 Fibonacci 时钟、二次算术、floor 取整、一般同回复归纳与差分消去均不是新的数学原则。
+
+| 来源 | 准确消费与迁移界限 |
+| --- | --- |
+| 本卷定义1.2、2.2、16.1、22.1，定理3.1、3.2、12.2、12.3及 (38)–(48) | 同一空前沿初始化、实际有限 Read／Next、寿命等号、坐标及具体墙所有权、独占交接和原始尾续接。式 (102)–(103) 逐步验证跨深度父切口确实执行；既有同深度历史碰撞本身不承担这一步。 |
+| [Exact Current Boundary Provenance][AFF-PROV] 定义1.1、定理2.1–2.2、4.2、6.2及 §§11–17 | 同深度、同松弛、同实际尾的执行与完整点对应在 (103) 后使用；其原投影命令定理的观察类不能直接覆盖新标量读口。引理28.2另用真实深度相等核对完整 Extent、帧和控制观察。原事件专用跨边界障碍不被冒充为仿射障碍。 |
+| 本卷 §§22–26，尤其定义24.3、25.1及 (92) | 原始入口问题、全误差合同及实际 floor 子实现；定理29.1否定定义24.3的入口恢复命题，定理24.1的达到恢复和推论24.2的后续使用保持各自原条件。 |
+| [直接目标取得 §§5–9][ENT-DIRECT]；[有限精度永久盲性 §§2–7][ENT-CAP]；[有限发射容量 §§1–2][ENT-CAPACITY] | 分别供给纯乘法目标取得的全误差／指定后端量词和 Return／早 Emit 区别、有固定精度上限的确定 floor 障碍、已知边界的有限发射纤维。它们的目标、校准或精度条件不同；这里既无固定精度上限，也不以初始尾目标或已知边界替换入口目标。 |
+| NativeAcquiredPrefixCylinder 及其 [owning Scribe][NAPCB]，包括私有 `next_native_spec`、`prefix_cons`、`raw_tail_add`；[SignedSeriesFibres][SSF] 及 [owning Scribe][SSFB] | 实际流执行／重启及具体 seam 纤维是正面既有供应。前者的 seed/payload/Stop 控制器不同，后者的相位双点不是本证明中两台生产者状态的相等。 |
+| [InterfaceKernelCriterion][IKC] 及 [owning Scribe][IKCB]，Boundary Dynamics §§36.1–36.6 | 实际像因子化和输出／合法性／后继条件是既有判据。入口常值性的失败由具体同源初始化的反例给出。 |
+| van den Bos–Vaandrager，[*State Identification for Labeled Transition Systems with Inputs and Outputs*][ENT-IDENT] §§1–3；Brattka–Gherardi–Pauly，[*Weihrauch Complexity in Computable Analysis*][WCA] 定义4–9 | `literature-attested`：初态识别与动作后的兼容性、有限观察名字及 Cauchy 表示的背景。前者的有限状态／有限标签框架不自动处理本节无界精度与配置，后者不供给实际 Step 汇合；均非本节模型定理的外部证明。 |
+| [钉版 mathlib Zeckendorf][MATHLIB] | 有限规范展开与唯一性供应 Low 的有限算术背景；本证明使用本卷时钟公式。 |
+
+所列文献与仓内供应按表中给定的假设和结论使用；(79)–(80) 的全精度入口非恢复结论由引理28.1–28.2与定理29.1的构造及证明承担，不作全球新颖性或文献穷尽声明。其证据是普通条件证明，不含 Lean/kernel 认证、程序执行的数学验证、数值模拟或物理传感器实现结论。
+
+第26.3所列原 fixed-$G_{\rm gc}$、original-$Q$、parked-consumer、unchanged-initialization、完整原响应和任意 interior-cut 义务保持原范围。定理29.1不论任意其他仪器、已知配置、真实旧记录、额外认证通道、随机误差保证、撤权、并发或非 Advance 源变动。它不声称各个固定后端都不能通过额外的舍入规律传送建议，也不把更多物理测量的缺席当成宇宙不可能性。本定理不提供一般空间／时间／边界／记忆双向恢复或独立物理对应。
+
+[ENT-DIRECT]: https://github.com/the-omega-institute/trureturing/blob/a0436a550dc6c32b66a14243eebf638d0698664a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_UNCALIBRATED_TARGET_ACQUISITION.md
+[ENT-CAP]: https://github.com/the-omega-institute/trureturing/blob/a0436a550dc6c32b66a14243eebf638d0698664a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CAPPED_PRECISION_PERMANENT_BLINDNESS.md
+[ENT-CAPACITY]: https://github.com/the-omega-institute/trureturing/blob/a0436a550dc6c32b66a14243eebf638d0698664a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_EMISSION_CAPACITY.md
+[ENT-IDENT]: https://arxiv.org/html/1907.11034v2
+
+## 追加锚（本行以下为增补区）
+
+## 31. Owned intersections at one acquired entrance depth
+
+Keep the exact source, arithmetic successor, initialization and original three-event interface of Sections 1–3. An entrance is an actual returned history $a=(x,r)$ of that producer, not a state assembled from compatible registers. Write $d(a)=|p(a)|$ and $y(a)=T^rx$. For $d\ge1$ put
+
+$$
+a_d=G_d-1,\qquad b_d=G_{d+1}-2,\qquad
+U_{d,s}=T^{s-N_p}C_p\quad(p\in P_d, N_p\in[0,G_{d-1}-1]),
+\qquad s\in J_d=[a_d,b_d]\cap\mathbb Z.
+\tag{110}
+$$
+
+Here $P_d$ denotes the complete block words of digit length $d$. The full-image statement of Theorem 7.2 and the coordinates of Theorem 12.2 make $U_{d,s}$ independent of $p$: it is the complete current-point set of $\partial(d,s)$, including both lifts at every internal split phase and precisely its owned lift at each wall. Equivalently, [Exact Current Boundary Provenance][AFF-PROV], Theorem 6.2, gives $U_{d,s}=Q_{d,b_d-s}[K]$. These are equalities of subsets of $K$, not definitions using only projected arcs. At depth zero set $U_{\rm init}=K$ and let $\partial_{\rm init}$ have no proper walls. The only depth-zero return is initialization; at depth one $J_1=\{1\}$.
+
+**Theorem 31.1 (The complete owned intersection matching).** For every $d\ge2$ set $k_d=G_{d-2}$. If $s<t$ belong to $J_d$, then
+
+$$
+U_{d,s}\cap U_{d,t}=
+\begin{cases}
+\{Z(s-G_{d-1})\},&t=s+k_d,\\
+\varnothing,&t\ne s+k_d.
+\end{cases}
+\tag{111}
+$$
+
+Thus the distinct-boundary intersection graph consists exactly of the disjoint pairs
+
+$$
+\{s,s+k_d\},\qquad a_d\le s\le b_d-k_d,
+\tag{112}
+$$
+
+and its remaining vertices are isolated. Every displayed pair and singleton intersection is attained by actual initialized histories. If $d$ is even, the common wall is the initial wall of $s$ and terminal wall of $s+k_d$; if $d$ is odd, these roles reverse. In both cases its integer label is $m=G_{d-1}-s\le0$, and both sides own the same point $Z(-m)$. No positive-label double fibre or excluded endpoint supplies an additional intersection.
+
+Proof. Use one common absolute return $r=a_d$. For every $0\le N<G_{d-1}$, Theorem 12.2 gives an attained state $(p_d(N),a_d)$ with $s=a_d+N$. Consequently
+
+$$
+H[U_{d,a_d+N}]=R^{a_d}H[C_{p_d(N)}].
+\tag{113}
+$$
+
+The full depth-$d$ positional partition has disjoint arc interiors by RRO Theorem 20.2, including its cylinder and side-limit proof. The selected cylinders here are exactly those ending in zero. Their rotated arc interiors remain disjoint. Hence any intersection of two of their projected closed arcs must occur at common walls. Theorem 12.2 lists those walls as $e_{A_d-s},e_{B_d-s}$, with $A_d,B_d$ as in (39). Irrationality of $\phi$ makes different integer labels different phases. Equal initial walls or equal terminal walls force $s=t$; the cross equalities for $s<t$ give exactly
+
+$$
+t-s=|A_d-B_d|=G_d-G_{d-1}=k_d.
+$$
+
+For even $d$, $A_d-s=B_d-(s+k_d)=G_{d-1}-s$; for odd $d$, $B_d-s=A_d-(s+k_d)$ has that same value. Since $s\ge G_d-1$,
+
+$$
+m=G_{d-1}-s\le1-k_d\le0.
+$$
+
+By (38)–(40), its full phase fibre is the single point $Z(-m)$ and that point belongs to both complete sets. Their disjoint interiors and unequal other walls exclude every other point. This proves (111) with ownership, rather than just a contact of phases. It also handles $m=0$: the common point is $Z(0)$, not an invented split point at label zero.
+
+The width of $J_d$ is $G_{d-1}-1<2k_d$. For $d=2$ this reads $1<2$; for $d\ge3$ it follows from $G_{d-1}=G_{d-2}+G_{d-3}\le2G_{d-2}$. No vertex can therefore be both a lower and an upper member of (112), proving the matching assertion. The pair range is nonempty: $G_{d-1}-1\ge k_d$ for $d\ge2$ (equality at $d=2,3$).
+
+Finally (113) comes from the actual cylinder image $T^{a_d}C_{p_d(N)}=U_{d,a_d+N}$. Every point of each displayed intersection has a preimage in each corresponding cylinder; Theorem 3.1 actually reaches that prefix at return $a_d$. These are two genuine histories with the same complete current point. Explicitly, one may take $p_d(s-a_d)(10)^\infty$ and $p_d(s+k_d-a_d)(01)^\infty$ at that common return. The alternating-tail wall calculation in Provenance Proposition 3.1 assigns the first to the $G_{d-1}-s$ wall and the second to the same wall of $s+k_d$; both have collapsed to the stated $Z(s-G_{d-1})$. The cylinder-image argument already proves attainment without recognizing an infinite alternating source during execution. Birth and death equalities are retained throughout. $\square$
+
+## 32. Genuine-origin preparation and the conditional binary residue
+
+For $d\ge2$ fix the explicit boundary label
+
+$$
+\varepsilon_d(s)=\mathbf1_{\{s\ge a_d+k_d\}},\qquad s\in J_d.
+\tag{114}
+$$
+
+Give depths zero and one the single value $\varepsilon=0$. In every pair (112), the lower member is below $a_d+k_d$, because $b_d-a_d<2k_d$, and the upper member is at least this threshold. Thus (114) separates the two members of every owned intersection. In particular at depth two its values distinguish $s=2$ and $s=3$ without any future event.
+
+**Assumption 32.1 (Installed preparation, completed record and complete cut).** A fixed source-independent monitor is installed at the genuine initialization acknowledgement of this actual producer. It receives every subsequent actual Emit/Advance/Return, once and in order, through a faithfully associated paid channel. There are no omitted or autonomous Advances. The chosen finite handoff is marked at a genuine Return. The monitor has supplied finite computation, a protected authentic record writer, and authority to complete and retain its write. The receiver has a supplied completed read of that record and an authentic association to the same source, initialization epoch and handoff. These are installed capabilities, not conclusions inferred from a coordinate or bit string.
+
+At handoff the source stays quiescent until the receiver's next original Next. The receiver retains the exclusive continuing right on this same producer; no fresh producer, raw endpoint or right is synthesized. Its new source observations are precisely the original Emit/Advance/Return events of its actual Next calls. It receives neither Wall nor Extent, private raw responses or read counts, old absolute time, old trace, $p,N_p$, internal clocks, nor a spatial query. Programs and public context are common. Physical latency, preparation duration, workspace size and source-dependent service timing are not observation ports.
+
+The completed preparation cut leaves the authentic data $(d,\lambda)$, where $d$ is actually computed, encoded, supplied and charged, and $\lambda$ is the supplemental record being compared. Every other receiver-accessible source- or history-dependent preparation distinction factors through $(d,\lambda)$ and common public inputs, or has actually been erased or made inaccessible by a supplied isolation operation. This includes caches, old outputs, archives, references, identities, epoch numerals, counters, lengths, PC, flags, table indices and termination-time information. The old producer fields continue privately to implement Next; the cut does not erase the running producer or expose its state. The monitor's other state is isolated or destroyed and provides no subsequent advice.
+
+Authentication and possession may assure that the record and endpoint belong together without disclosing a further distinguishing identity. If readable association fields, descriptors or their checks distinguish candidate histories beyond $(d,\lambda)$, those distinctions belong in the retained data and the stated conditional alphabet comparison no longer applies. Descriptor installation, use, protection, retention lifetime, completed write/read, acknowledgement and isolation are separately supplied and paid. Equal accessible data give equal receiver initial states, apart from any independent source-independent randomness. This is a complete receiver-accessible cut, not a claim that the entire producer has only two states.
+
+**Proposition 32.2 (The label is acquired on its own run).** Under Assumption 32.1 one common finite preparation program writes exactly $(d(a),\varepsilon_{d(a)}(s(a)))$ at every finite actual handoff $a$ with $d(a)\ge1$, and $(0,0)$ at initialization. It needs no raw read in addition to those of the original producer and no full event archive. It does need the genuine-origin channel and the completed protected write/read of the assumption.
+
+Proof. Run the already supplied temporal observer of Definition 2.3 from its empty prefix and zero counter at the genuine acknowledgement. Theorem 3.1 proves by induction on these actual events that its retained $\widehat p,n$ equal the actual acquired $p,r$ at each Return. Therefore it computes $d=|\widehat p|$ and $s=N_{\widehat p}+n$, and Theorem 12.2 identifies these with the actual boundary coordinates, including both lifetime endpoints. Compute (114), write the framed depth and supplemental value, and finish the authenticated write before the complete cut. The supplied completed read then delivers those same data on the associated run. At initialization the observer is still empty and writes $(0,0)$. Events can be discarded after the finite observer update; no copied chronology is needed. The induction has no initial value if this monitor is first installed at an already blind midstream receiver. Authentication, reliable retention and isolation remain explicit premises of the construction. $\square$
+
+**Theorem 32.3 (Sharp supplemental alphabet conditional on acquired depth).** In Assumption 32.1, require one common decoder to recover the entrance boundary of every actual history, using the acquired depth, a prepared supplemental value and subsequent original events only. For each fixed depth the smallest possible supplemental alphabet has size
+
+$$
+M_d=\begin{cases}1,&d=0,1,\\2,&d\ge2.\end{cases}
+\tag{115}
+$$
+
+The upper bound is attained by the same-run preparation (114) and the finite common decoder of Section 33. The lower bound at every $d\ge2$ still holds if the complete infinite future event sequence is supplied mathematically, with no finite stopping or computational restriction. Supplemental records in this lower-bound class may depend on the entire actual preparation history, rather than only on its boundary. This is an alphabet minimum under the complete cut and original-event menu; it is not a least sufficient partition or a minimum over enlarged measurement menus.
+
+Proof. At depths zero and one the boundary is respectively $\partial_{\rm init}$ and $\partial(1,1)$, so one value and zero recovery calls suffice; a nonempty actual domain cannot use an empty alphabet. At $d\ge2$, choose any pair (112) and the two actual histories of Theorem 31.1. Their current points coincide. Producer correctness gives the same entire future Emit word $\Phi(y)$; Advance and Return have the same fixed order, so the entire permitted future agrees. A one-value supplemental record, equal acquired depths and the complete cut leave identical mathematical inputs to any decoder, yet the two entrance boundaries differ. This excludes one value even with an infinite future. Computation, storage or waiting on that future cannot separate those two inputs.
+
+Conversely (114) makes the sets $U_{d,s}$ with any one label pairwise disjoint by (111). The full future identifies $y$ by RRO20.6–20.7, so within that label it identifies at most one $s$, and the actual entrance supplies one. This first proves semantic sufficiency. Lemma 33.1 and Theorem 33.3 give its effective finite version and same-run realization, completing the upper bound in the asserted finite-decoder class. No assertion that all sufficient labels refine (114) is used: different matching components can be labelled independently, and a general history-dependent label need not factor through the boundary. $\square$
+
+## 33. A finite inverse using actual future events
+
+**Lemma 33.1 (Finite positional separation within either label).** For every $d\ge2$, every $s,t\in J_d$ and every $y\in U_{d,s}$, $z\in U_{d,t}$,
+
+$$
+\varepsilon_d(s)=\varepsilon_d(t),\qquad
+q_{d+2}(y)=q_{d+2}(z)
+\quad\Longrightarrow\quad s=t.
+\tag{116}
+$$
+
+Proof. Suppose $s\ne t$. Theorem 31.1 and (114) make their projected closed arcs disjoint: all projected contacts in (113) were exactly the matching pairs and have different labels. Both arcs are cells in the same rotated depth-$d$ phase partition (113). Every cell of the full partition has length either $\alpha^d$ or $\alpha^{d+1}$ by RRO20.2. Since the two selected closed cells do not even touch, each circular gap between them contains at least one whole intervening cell. Thus each gap has length at least $\alpha^{d+1}$. This includes a gap crossing the chosen phase seam; it is a statement about oriented circle arcs, not about the order of representatives in $[0,1)$.
+
+A depth-$(d+2)$ positional cylinder has a connected phase arc of length at most $\alpha^{d+2}<\alpha^{d+1}$. It cannot meet both selected arcs: a connecting subarc would have to cross one of those two gaps. Equal prefixes would place $y,z$ in exactly such a cylinder. This contradiction proves (116). Endpoint membership can only reduce a projected intersection and cannot invalidate the strict length inequality. $\square$
+
+**Definition 33.2 (The common event decoder).** Read the completed record of Proposition 32.2 while the source is paused. At $d=0,1$, output the unique entrance and current boundary without calling Next. At $d=2$, (114) directly gives $s=2+\varepsilon$; again output the entrance and current boundary without a recovery call. For $d\ge3$ set
+
+$$
+L=d+2,\qquad H_d=G_{d+2}-1.
+\tag{117}
+$$
+
+Make exactly $H_d$ actual Next calls on the retained original producer, checking Emit/Advance/Return order and counting completed calls locally. In parallel, apply Definition 2.3 as a local event calculation with an initially empty auxiliary prefix and auxiliary time zero. Its input is the received suffix of actual Emit bits. It observes no producer private field. At call $H_d$ take the first $L$ digits of the auxiliary prefix, denoted $u$.
+
+Enumerate $s\in J_d$ with the received label. Test whether
+
+$$
+C_u\cap U_{d,s}\ne\varnothing.
+\tag{118}
+$$
+
+This is a finite exact test. Use the depth-$L$ cylinder formula of RRO20.2 and the ordered arc and ownership formulas (38)–(40). All phase endpoints have representatives in $\mathbb Q(\sqrt5)$. Reduce modulo one, splitting an arc at zero when necessary, and compare endpoints exactly. A positive-length common arc has a point in the interiors of both arcs, whose fibre belongs to both complete sets. If the common projection is only an endpoint, test its included lifts: a positional-cylinder wall is a positive-label $e_j$ with its specified side, and a current wall is given by $\chi_+$ or $\chi_-$ in (38). Coincident positive labels in this case can only be $j=1$; opposite sides there are distinct points. A nonpositive current wall is a singleton and cannot coincide with a positive positional-wall label. A wall lying inside the other arc has its full required fibre there. These rules decide every contact, including the seam. Equality and order in the fixed quadratic field are decidable by integer arithmetic and sign comparisons, with zero tested before squaring; no approximate phase oracle or test on an arbitrary real is required.
+
+Return the unique successful $s$ and its entrance boundary with the ordered owned walls (40). To obtain the genuine attained boundary without retaining the whole recovery word, compute
+
+$$
+N_u=\sum_{j<L}G_ju_j,\qquad
+\widetilde b_j=\operatorname{Low}(N_u+j)\quad(0\le j<H_d).
+\tag{119}
+$$
+
+Starting with the decoded entrance $(d,s)$, apply the live coordinate update of Theorem 18.2 to these bits in order, using only local computation. Retain its final coordinates $(D,S)$, local count $H_d$ and the actual continuing right. The bits in (119) regenerate previously received values; they are not additional source events, advances or read receipts.
+
+**Theorem 33.3 (Finite acquired inverse, owned output and live resumption).** Under Assumption 32.1, Definition 33.2 terminates on every actual history and returns exactly its entrance boundary, including its owned lifts, and exactly the boundary at its genuine stopping return. At $d\le2$ it makes no recovery call. For every $d\ge2$ a sufficient uniform observation bound is $G_{d+2}-1$ completed original triples, with the just-stated zero-call shortcut at depth two. On every such recovery segment there are at most four additional actual raw reads, including every forced zero. The source ends at $T^{r+m}x$, where $m$ is the number of recovery calls, not at the entrance point unless $m=0$.
+
+The returned attained coordinates and the retained right support every subsequent finite lawful LiveStep, guarded Peek/Arm/Tick and moving Seek of Section 18, on the same producer and its exact unread tail. This statement supplies the missing acquired boundary precondition for those routines; it does not newly prove their already supplied live-use theorems or authenticate a historical member.
+
+Proof. The small depths follow from (115), $J_1=\{1\}$ and $J_2=\{2,3\}$. At $d\ge3$ let $y=T^rx$ be the actual entrance point. The actual received word is $v_{H_d}(y)$ by Theorem 3.1. The event calculation of Definition 2.3, started at time zero, is correct on this word because the same word is the output of the original initialized producer on mathematical input $y\in K$. Only its observer calculation is used; no second producer is executed and no raw getter for $y$ is installed.
+
+Let $\widetilde p$ be its auxiliary prefix at $H_d$ and $e=|\widetilde p|$. Theorem 3.1 for that mathematical input says its event fibre is $C_{\widetilde p}$. RRO20.6 says the same fibre fixes $q_L(y)$, since $H_d=G_L-1$. A complete block prefix of length $e<L$ permits two tails differing before $L$, so cannot fix that positional prefix. Hence $e\ge L$, and the extracted $u$ is exactly $q_L(y)$. To bound auxiliary storage, for every $e\ge2$ the birth identity gives
+
+$$
+b_{\widetilde p}=G_e-1-N_{\widetilde p}\ge G_e-G_{e-1}=G_{e-2}.
+\tag{120}
+$$
+
+The auxiliary clock actually has $b_{\widetilde p}\le H_d=G_L-1$, so $e\ge L+2$ is impossible. Thus $L\le e\le L+1$. This also shows why a potentially long event word need not be archived.
+
+The actual entrance lies in $U_{d,s(a)}$, so it passes (118). If two candidates passed, their witnessing points in $C_u$ would have the same depth-$L$ prefix and label, contradicting Lemma 33.1. The finite enumeration and exact test therefore return precisely $s(a)$. Formula (40) gives the actual owned lifts. In particular the proof uses the complete sets in (118); replacing them by unrestricted projected wall contact would not prove the statement.
+
+The finite representative $Z(N_u)$ has the same $q_L$ as $y$. RRO20.6 therefore gives $v_{H_d}(Z(N_u))=v_{H_d}(y)$, and finite-core succession identifies these bits with (119). Starting from the now correct entrance coordinates, Theorem 18.2 updates on each actual observed bit to the genuine next coordinates. Local regeneration uses those same bit values in the same order, so induction gives exactly the actual stopping $(D,S)$, despite the absence of a stored event archive. It does not replace the producer's actual prefix or tail by those of $Z(N_u)$. Computation while paused adds no Advance.
+
+For the raw-read bound put $\delta=b_d-s(a)$. The first actual renewal is call $t_1=\delta+1$. If the successive actually read block lengths are $g_1,g_2\in\{1,2\}$, the next two renewal calls, when continued, are
+
+$$
+t_2=t_1+G_{d+g_1-1},\qquad
+t_3=t_2+G_{d+g_1+g_2-1}.
+\tag{121}
+$$
+
+These are the birth-to-renewal lifetimes (68), including the final renewing call. In particular
+
+$$
+t_3\ge1+G_d+G_{d+1}=G_{d+2}+1>H_d.
+\tag{122}
+$$
+
+At most two blocks are physically acquired during the recovery horizon; their total length is at most four. All other calls are read-free. Each reached read and each finite arithmetic operation terminates by the source contract and Section 2, so all $H_d$ calls and the subsequent finite calculations finish. The zero-call cases have zero new raw reads.
+
+Finally the actual producer has remained at its own raw cursor, advanced exactly $m$ times, and retained its original binding and right. Theorem 3.2 gives exact continuation there. At positive depth the just-proved attained coordinates satisfy precisely the data-and-right precondition of Theorem 18.2, so its LiveStep updates and Theorem 18.3's finite Seek, with the stated guards for stationary use, apply to this same run. At depth zero the first later Next must instead use the actual initialized rule: its first Emit is zero for the physically read block $0$ and one for $10$, giving births $(1,1)$ and $(2,2)$ respectively. This follows directly from Definition 2.2 with $p=\varnothing,n=0$; no proper-wall formula with a negative Fibonacci index is used. Thereafter the positive-depth live rule applies. $\square$
+
+## 34. Payload, working storage and the same-run resource comparison
+
+**Proposition 34.1 (Separate actual resource coordinates).** Consider the preparation, completed cut, recovery and any subsequent finite use on the one run of Theorem 33.3. Let $r,d$ describe the actual handoff, $m$ its recovery calls, and $e$ its new raw bits during recovery. In the order
+
+$$
+(\operatorname{Read},\text{raw delivered bits},\operatorname{Next},
+\operatorname{Emit},\operatorname{Advance},\text{postinitial Return}),
+$$
+
+the preparation and recovery coordinates are exactly
+
+$$
+(d,d,r,r,r,r),\qquad(e,e,m,m,m,m).
+\tag{123}
+$$
+
+For $d\le2$, $m=e=0$. For $d\ge3$, $m=H_d$, and there are exactly two actual renewal blocks during recovery, with
+
+$$
+e=g_1+g_2\in\{2,3,4\},\qquad D=d+e.
+\tag{124}
+$$
+
+The retained and transferred record can have data payload
+
+$$
+b_{\rm rec}\le2\ell(d)+1+\mathbf1_{\{d\ge2\}}=O(\log(d+2)),
+\tag{125}
+$$
+
+before fixed framing and association/rights descriptors. Its supplemental field has no variable bit at $d=0,1$ and one bit at $d\ge2$. The preparation monitor, producer and decoder have implementations using $O(d+1)$ working or decoded-coordinate bits during this finite segment. A streaming implementation uses $O(P+c+d+1)$ simultaneous local digital storage for all of them, where $P,c$ have the installed-program and descriptor meanings of Definition 8.1. It stores no $H_d$-bit event archive or candidate table. Retained external outputs, source backend storage and the preparation/isolation/association services have their own actual storage and costs.
+
+Proof. Original Next performs exactly one Emit/Advance/Return and acquires each raw bit once, including a forced zero. This proves (123). Theorem 33.3 gives $m=e=0$ in the small cases and excludes a third renewal at $H_d$ otherwise. The second renewal does occur by that horizon: $t_1\le G_{d-1}$ and $g_1\le2$ imply
+
+$$
+t_2\le G_{d-1}+G_{d+1}
+=G_{d+2}-G_{d-2}\le G_{d+2}-1=H_d.
+\tag{126}
+$$
+
+Hence exactly the two physical blocks are read, proving (124). The producer's stopping raw cursor is precisely $D$ and its unread tail is $\operatorname{tail}_D x$; no local regeneration changes either.
+
+Use Definition 8.1's self-delimited binary depth and then one label bit only when $d\ge2$. This proves (125). There is one completed framed record write and one completed framed record read; their actual bit traffic, copies, protection and access are paid separately. Any simultaneously retained sender copy and receiver copy both count. The depth field is part of this payload, not free context acquired by a decoder from the future. The alphabet minimum (115) is conditional on it.
+
+During preparation the maximum actual depth is $d$, $r\le G_{d+1}-2$ for $d>0$, and the monitor of Proposition 32.2 holds its $d$-digit prefix, count and constant-number caches. All these integers have $O(d+1)$ bits. Its digital preparation work may be bounded, using Section 8's arithmetic, by $O(P+c+(r+1)((d+1)^2+c))$, in addition to actual input/output and the supplied record/cut services. The monitor processes $r$ real triples (six bits each in that code); any separate channel copies are actual additional traffic. Its source-correlated workspace is then cleared or isolated as stipulated, rather than secretly left readable.
+
+During recovery the actual depth is at most $d+4$, and the auxiliary prefix length is at most $d+3$ by (120). The call counter, $H_d$, $N_u$, each candidate $s$, the decoded entrance and attained coordinates, signed wall labels and finite Zeckendorf descriptions all use $O(d+1)$ bits. An included natural wall may be printed as the finite description $Z(B)$ with its $O(d+1)$-bit integer, or as its literal finite digit word; the exceptional $x_1^\pm$ have fixed finite symbolic descriptions. This does not print an infinite spatial point. Powers and weights are generated from consecutive values, candidates are tested one at a time, and arithmetic scratch is reused. This proves the simultaneous storage bound, including coexisting producer and receiver fields; it is not the smaller payload bound (125).
+
+For explicit finite decoding work, the auxiliary event calculation uses $m$ observer updates, the scan (118) examines at most $G_{d-1}$ candidates, and regeneration (119) uses $m$ finite Low evaluations and live-coordinate updates. The actual producer separately performs its $m$ emission computations. Every quadratic endpoint coefficient has $O(d+1)$ bits. As in Definition 13.2, exact integer parts can be found by $O(d+1)$ sign comparisons on integers of that width, each using grade-school multiplication and reusable linear scratch. Thus a conservative bound for the decoding calculation alone is
+
+$$
+O\bigl((m+G_{d-1}+1)(d+1)^4+B_{\rm decoded}\bigr)
+\qquad(d\ge3),
+\tag{127}
+$$
+
+where $B_{\rm decoded}$ is the literal result-output length. The power four allows all coefficient generation, scans, copying, clearing and return positioning; it is an upper bound, not an asserted fastest algorithm. Producer arithmetic, descriptor checks, actual event reception/output, framing, and completed record services remain separate paid coordinates. In particular the recovery emits exactly $6m$ producer-event bits in the fixed code, before extra frames and copies. The decoder need not retain those $6m$ bits. $\square$
+
+Record retention is a lifetime obligation in addition to payload size: keeping $b_{\rm rec}$ bits for the actual waiting period, protecting them, invoking the reader and transferring the continuing turn all need their supplied services. The complete cut may physically erase a workspace or isolate it; an isolated but still present workspace remains part of actual storage. Backend provisioning $\iota_x$, generation/delivery $\gamma_x(d+e)$ and retained source storage $\sigma_x(d+e)$ of Definition 8.1 are not zero. Preparation driver input, program and origin synchronization, real endpoint binding, record authentication, acknowledgements, output destinations and any external archive are also counted at their actual costs. No finite generator or finite physical installation for every unknown $x\in K$ follows from the sequential-source promise.
+
+For later finite use let $J$ be all further actual Next calls, including calls inside Seek or bounded Tick, and let $d_{\max}$ be the final and hence largest actual raw depth in that segment. Its additional vector is exactly
+
+$$
+(d_{\max}-D,d_{\max}-D,J,J,J,J).
+\tag{128}
+$$
+
+Indeed each later raw bit extends the same actual prefix once, and the source resumes exactly as in Theorem 3.2. Requests, refusals, parameter parsing, local arithmetic, outputs, budgets, descriptor uses and retained archives are separately charged as in Sections 8 and 19.3. The four-read recovery bound does not recur for free and does not bound arbitrarily long later use. Both the literal producer prefix and its counters can grow without bound under continuing Next. A fixed finite program does not imply bounded memory.
+
+There is a simpler comparison using exactly the same genuine-origin preparation. The monitor already computes $s=N_p+r$. It may complete an authentic record containing the exact $(d,s)$ instead of (114), and the same kind of complete cut may retain only those coordinates and the actual right. At depth zero use the initialized tag. At proper depths the larger payload is $O(d+1)$ bits, with a $\Theta(d+1)$-bit ordinary binary $s$ field since $G_d-1\le s\le G_{d+1}-2$. That direct export gives the boundary immediately with no recovery Advance or new raw read. It is not a newly acquired geometric measurement or a new mathematical achievement: it exports already acquired coordinates. The small record saves transferred/retained preparation payload under its declared cut, while introducing later event acquisition, arithmetic and source movement. Preparation working storage, final decoded storage and output still have linear depth scale; $H_d$ can be exponential in $d$. Neither construction dominates the other in all resource coordinates. No optimal horizon, total-resource dominance, global bit-cost optimum or physical provisioning theorem is claimed.
+
+## 35. The recovery arrow and its precise suppliers
+
+Keep the independent meanings of Definition 7.1. Space is the complete current positional point; time is the actual chronological producer events; boundary is the oriented compatible paid-frontier region with its included current lifts; memory is actually acquired retained information together with its live binding/right. The installed monitor and complete cut add a specific memory channel to that same process. The proved finite arrow is
+
+$$
+\bigl(\text{actually prepared }d,\varepsilon;
+\ \text{actual future triples through }m;
+\ \text{retained same-run right}\bigr)
+\longmapsto
+\bigl(\partial_{\rm entrance},\partial_{\rm attained};
+\ \text{lawful continuing use}\bigr).
+\tag{129}
+$$
+
+The finite positional prefix used internally by the decoder belongs to the genuine entrance point; RRO20.6 is the exact correspondence between that positional information and the observed temporal word. Lemma 33.1 then identifies the boundary, and Theorem 18.2 transports the decoded record along the very events that actually occurred. Thus the two routes to the attained boundary agree on the common run. Lawful action uses the original right and the attained guard; it is not created by printing coordinates. Source movement during recovery is real, and the entrance output is a retrospective boundary answer, not a restored entrance configuration.
+
+The substantive mathematical addition is the concrete owned intersection formula (111), its sharp depth-conditioned binary residue (115), and the effective finite event inverse (116)–(122). General zero-error colouring and factorization are reused. [DefectGraphMinimumColoring][EB-COLOR], including its private `repair_label_feasible_exists` and [owning Scribe][EB-COLOR-B], treats a finite state carrier and fixed record/target maps; here the finite graph is instead computed explicitly on the boundary set $J_d$, while actual source histories remain infinite in number. Its generic theorem supplies neither (111) nor this event horizon. [InterfaceKernelCriterion][IKC] and its [owning Scribe][IKCB] supply actual-image factorization criteria, not finite acquisition; Theorem 33.3 gives the latter in this source-specific contract. No application of these Lean declarations was compiled for these ordinary proofs.
+
+The geometric and execution hypotheses are exactly RRO20.1–20.7 (no11 carrier, arithmetic $T$, complete cylinder fibres, endpoint sides and the temporal/positional partition identity), RRO35's block lifetimes, and this volume's Theorems 3.1–3.2, 7.2 and 12.2–12.3. Their precise use in (113) is one common attainable absolute return, not a comparison of independently optimized arcs. [SignedSeriesFibres][SSF] and its [owning Scribe][SSFB], including private `prependBlock` and the internal seam classification proof, are existing positive supply for full phase fibres. [Pinned mathlib's Zeckendorf source][MATHLIB] supplies `Nat.zeckendorfEquiv`, `Nat.sum_zeckendorf_fib`, `Nat.zeckendorf_sum_fib` and the terminating finite construction, including private `zeckendorf_aux`; its Fibonacci indices are $j+2$ for our digit weight $G_j$. It supplies finite Low arithmetic, not the operational recovery theorem. [NativeAcquiredPrefixCylinder and its owning Scribe][NAPCB], including private `next_native_spec`, `prefix_cons`, `raw_tail_add` and the imported reconstruction proofs, concern the different seed/payload/Stop controller on arbitrary binary raw streams. Its acquired-state and exact-tail restart results remain credited prior supply, not an identification of that controller with this one.
+
+[Exact Current Boundary Provenance][AFF-PROV] Theorems 2.1–2.2, 6.1–6.4 and Sections 8–9 already give same-tail execution, the complete owned-set tail bijection, finite historical fibres and an event inverse once the full $(d,\delta)$ is supplied. Its Section 15 gives a necessary record-range criterion without finite acquisition. [Finite Emission Capacity][EB-CAPACITY] Sections 2 and 7 likewise fix the complete known initial boundary before identifying finite observation fibres. Here only $d$ and (114) survive preparation; deriving $s$, including actual point ownership, is precisely the missing input bridge. Once that bridge is proved, the continuing live routines of Sections 18–19 are direct reuse, not additional novel results.
+
+The installed-origin and complete-cut disciplines are also reuse. [Atomic Generation Acquisition][EB-ATOMIC] Section 9 supplies faithful origin monitoring and protected same-source field preparation, while Proposition 12.6 distinguishes that field from an installed complete read service. [Joint Moment Fibers][EB-JOINT] Section 39 requires an actually acquired authentic entry and a complete receiver-accessible residue, counting identity, PC, cache, timing and access distinctions. [Acquired Intrinsic Depth Calibration][EB-INTRINSIC] Sections 4–6 supplies actual preparation, complete retention, authentic later entry and a finite consumer on its original right-spine interface. [Atomic Boundary Trichotomy][EB-TRICHOTOMY] Section 9 already has concrete paired historical fibres and binary source/parity supplements. Their objects are finite ordered trees, substitutions and their specified readouts; none provides this paid Zeckendorf matching or its finite unknown-$s$ decoder. Proposition 32.2 explicitly instantiates the already supplied monitoring method with this producer's temporal observer. It does not install that instrument at an already blind affine receiver. The unchanged no-record affine entrance obstruction of Sections 27–30 therefore remains in its original scope.
+
+[Bounded Unit Drift Identifiability][EB-DRIFT] treats a different contract: moving multiplicative units, supplied drift bounds, scale replies and initial raw-tail targets. Neither a unit-drift promise nor a scale reply is a premise of (129). Its subcritical acquisition and critical hidden-configuration obstruction are not retargeted to this event-only problem. Likewise the [FibonacciFactorCompletion coordinate bridge][EB-FACTOR] and its [owning Scribe][EB-FACTOR-B] use grouped three-digit labels, guards and bounded affine coordinates; its private endpoint helpers in the [endpoint-budget source][EB-FACTOR-END] concern closed expanded colour constraints on fixed actual tails. Those do not identify the paid frontier or supply its preparation record. These positive suppliers retain their original hypotheses.
+
+The cited repository texts and pinned upstream source are the primary mathematical sources for the exact correspondences just stated. The additional claims are repository-derived ordinary conditional proofs; no inaccessible literature text is used as a verified theorem supplier, no global priority or exhaustive-literature claim is made, and no new Lean certification or executed mathematical validation is asserted.
+
+Even with the new record, the result does not identify the whole infinite spatial point, the old event chronology, or the actual member of (42). For a recovered entrance of depth $d\ge1$, even a complete entrance point leaves its $G_{d-1}$ possible original histories; (114) agrees on all of them, and the decoder chooses none as actual. The whole-event future has the current-point kernel, whereas the prepared label plus a finite future recovers the boundary on the stated depth fibre; these are different observation maps. The four full kernels are not asserted equal. Original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization, arbitrary interior-cut, full original-response and alpha/beta cross-model acquisition/action obligations remain at their original domains. General mutual recovery of independently meaningful space, time, boundary and memory, and their independent physical interpretation, remains unresolved. This conditional finite arrow does not complete that sustained objective.
+
+[EB-COLOR]: ../../../D5/S3/ConceptDynamics/Coding/DefectGraphMinimumColoring.lean
+[EB-COLOR-B]: ../../../Blueprint/D5/S3/ConceptDynamics/Coding/DefectGraphMinimumColoring.scribe.cs
+[EB-CAPACITY]: RECURSIVE_RELATIONAL_OBSERVATION_FINITE_EMISSION_CAPACITY.md
+[EB-ATOMIC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md
+[EB-JOINT]: RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md
+[EB-INTRINSIC]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_INTRINSIC_DEPTH_CALIBRATION.md
+[EB-TRICHOTOMY]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md
+[EB-DRIFT]: RECURSIVE_RELATIONAL_OBSERVATION_BOUNDED_UNIT_DRIFT_IDENTIFIABILITY.md
+[EB-FACTOR]: ../../../D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/OnlineDecoderCoordinates.lean
+[EB-FACTOR-B]: ../../../Blueprint/D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/OnlineDecoderCoordinates.scribe.cs
+[EB-FACTOR-END]: ../../../D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/EndpointNecessity.lean
+
+## 追加锚（本行以下为增补区）
+
+## 36. Same-offset Reference extension and the original entrance
+
+**Definition 36.1 (The additional same-offset port).** Set
+
+$$
+\alpha=(\sqrt5-1)/2,\qquad G_0=1,\quad G_1=2,\quad
+G_{j+2}=G_{j+1}+G_j.
+$$
+
+The source, initialization, handoff, exclusive persistent calling rights, and actual operations are those of Definitions 1.2, 2.2, 16.1, 22.1, and 27.1 of this volume. A source is one fixed
+$x\in\{0,1\}^{\mathbb N}$ with no adjacent ones. It is initialized at the empty acquired prefix and driven through a finite number of actual Next calls before handoff. Step invokes this same producer's Next; it delivers the actual Emit bit, Advance, and Return in their actual order. Passing the zero after a one requires an actual raw Read. No operation other than an actual Advance changes source time. The handoff and public installation carry no private-history information.
+
+A world has one fixed rational configuration
+
+$$
+q>0,\qquad b\ge0.
+$$
+
+This configuration is fixed before the initialized source run, independently of its raw bits, and remains the same across handoff and every later operation. Its value, bounds and description length are not given to the receiver as advice.
+
+At a returned cut of actual acquired depth $d$, Extent$(n)$, for any finite integer $n\ge1$, returns a nonnegative integer $a$ with
+
+$$
+\left|a2^{-n}-(b+q\alpha^d)\right|\le2^{-n}.
+\tag{130}
+$$
+
+The extension considered here additionally supplies Reference$(n)$, returning a nonnegative integer $c$ with
+
+$$
+\left|c2^{-n}-b\right|\le2^{-n}.
+\tag{131}
+$$
+
+Reference reads this same fixed $b$. It performs no raw Read or Advance and supplies no other private information. Both ports return complete unsaturated finite integer frames with fixed source-independent framing and acknowledgement. Calls and their finite precisions are paid; there is no unit-cost real-number or infinite-name reply. All errors across both ports may be correlated and adaptive, subject only to (130), (131), and the common fixed configuration. This is an explicit additional observation interface. Its relation to the interface of Theorem 29.1 is specified in Definition 41.3.
+
+**Definition 36.2 (Original entrance and inherited coordinate rules).** The exact target is the original handoff boundary $\partial_0$, including its oriented wall roles and owned lifts. At return zero it is the empty boundary, with whole-circle compatible region, represented by $(d_0,s_0)=(0,0)$. Every proper attained boundary has unique coordinates
+
+$$
+d\ge1,\qquad s\in J_d=\{G_d-1,\ldots,G_{d+1}-2\}.
+$$
+
+Its positively oriented arc has length $\alpha^d$, initial wall $e_{A_d-s}$, terminal wall $e_{B_d-s}$, and respective owned lifts
+
+$$
+\chi_+(A_d-s),\qquad\chi_-(B_d-s),
+\tag{132}
+$$
+
+where
+
+$$
+(A_d,B_d)=
+\begin{cases}(G_{d-1},G_d),&d\text{ even},\\
+(G_d,G_{d-1}),&d\text{ odd},\end{cases}
+$$
+
+$e_m=[-m\phi]$, $\phi=(1+\sqrt5)/2$,
+$\chi_\pm(1)=x_1^\pm$, and $\chi_\pm(m)=Z(-m)$ for $m\le0$. Attainment ensures that the indices used in (132) are at most one. Thus recovering $(d_0,s_0)$ recovers precisely the requested boundary and ownership, without selecting a private historical representative.
+
+The following results of this volume are used with their original endpoint conventions; the displayed coordinate and clock rules are citations of those results.
+
+1. Theorems 3.1–3.2 give actual initialized execution, finite completion of each reached Read and Next, and exact continuation on the actual unread tail.
+2. Theorems 12.2–12.3 give (132), uniqueness of the coordinates, and the actual clock transitions. Put
+   $$
+   \delta(d,s)=G_{d+1}-2-s.
+   $$
+   A positive-slack Step reads no raw bit and moves $(d,s)$ to $(d,s+1)$. A zero-slack Step reads the next complete actual block, of length $g\in\{1,2\}$, and returns at the birth coordinates $(d+g,G_{d+g}-1)$. Return zero reads its first block on its first Step. From a birth at depth $D\ge1$, the next actual block-reading Step occurs exactly $G_{D-1}$ Steps later, including that final Step.
+3. Lemma 17.1 supplies the closed-error three-ratio test for $\{1,\alpha,\alpha^2\}$. The clock inversion and resource computation in Theorem 17.3 identify the original boundary from the first two correctly classified block updates.
+4. Lemma 28.1 supplies two actual differently deep proper death entries with identical first Step events and a common complete current point, depth, and unread tail afterward. Its whole-future execution invariant is used below. Lemma 28.2 supplies the matching original controls and frames after that merger; the new Reference observation is checked separately below.
+
+**Definition 36.3 (Sequential receivers and the primitive Reference resource).** Receiver operations are the causal operations of the source contract. A source query is made at a returned cut and has a finite reply transaction. Early termination while receiving an allowed transaction prefix is permitted in the lower bound. This does not install cancellation, overlapping calls, or a new interleaving source operation. In particular no new Reference can be started inside an unfinished source reply transaction. Equal whole frames imply equal observable prefixes for any such early decision. A next request is initiated only after the current transaction completes; there is no cancellation operation or restart that creates a second outstanding request. Public checks, pauses, releases, endpoint descriptors and acknowledgements have the source-independent rules of Definition 27.1. No release supplies an unobserved advance or a fresh handoff.
+
+The acquired-current-record programs of Definition 18.1 and Corollary 24.2 are available only after the receiver has legitimately acquired their required current record, and each spatial request retains its original DATA guard and budget conditions. These are programs on an earned record, not an initial private-state query. In particular no getter of $p,r,N_p$, raw-Read count, source identity or authenticated absolute time is added.
+
+For a receiver $\mathcal D$, world $W$, and allowed error trace $\eta$, define
+
+$$
+B_{\mathcal D}(W,\eta)
+=\#\{\text{completed primitive Reference replies before the first actual Step}\}.
+\tag{133}
+$$
+
+If it stops without a Step, count the completed replies before stopping. Every primitive completion counts even if its value is discarded, or if a program packages several calls in a macro. All Reference calls after the first Step are unrestricted. Since source queries are made only at returned cuts, using Step initiation, its Advance, or its completion as the first-Step cutoff does not insert another Reference completion inside that Step. Early stopping within that Step is treated explicitly below.
+
+## 37. Finite entrance recovery with no later Reference calls
+
+**Theorem 37.1 (Universally finite original-entrance recovery).** Under (130)–(131), a single causal deterministic receiver recovers the original $\partial_0$, with the ownership in (132), after finitely many operations on every allowed initialized world and every allowed joint error trace. It also obtains a genuine reached boundary and retains its original calling rights. All of its Reference replies complete before its first Step, and it uses no later Reference calls. The exact primitive counts and per-instance bounds are (142)–(143) below. No upper bound on the initial depth or on the configuration description is required.
+
+**Proof.** At the original paused cut, for $n=1,2,\ldots$, request one Extent$(n)$ and one Reference$(n)$. Write their decoded values as $U_n,V_n$, and set $W_n=U_n-V_n$. Stop this search at the first index $n_*$ satisfying
+
+$$
+W_n>2048\,2^{-n}.
+\tag{134}
+$$
+
+For integer replies this is simply $a-c>2048$. Put
+
+$$
+\varepsilon=2^{-n_*},\qquad e=2\varepsilon,\qquad V_*=V_{n_*},
+$$
+
+and retain $W_0:=W_{n_*}$. The subscript zero here denotes the cut before any receiver Step. Discarding earlier data does not remove its calls from (133).
+
+Let $z_0=q\alpha^{d_0}>0$. On every search round,
+
+$$
+|W_n-z_0|\le2\,2^{-n}.
+$$
+
+Consequently every round with $z_0>2050\,2^{-n}$ satisfies (134), independently of the errors. The search is finite, and
+
+$$
+n_*\le\min\{n\ge1:2^nz_0>2050\}.
+\tag{135}
+$$
+
+At the selected round, (134) implies $z_0>2046\varepsilon=1023e$.
+
+Now perform actual Steps one at a time. After each returned Step, request only Extent$(n_*)$, with decoded value $U_i$, and set
+
+$$
+W_i=U_i-V_*.
+$$
+
+At every reached cut, with true multiplicative component $z_i=q\alpha^{d_i}$,
+
+$$
+|W_i-z_i|
+\le|U_i-(b+z_i)|+|V_*-b|
+\le2\varepsilon=e.
+\tag{136}
+$$
+
+The same fixed $b$ in both ports is exactly what licenses (136). Correlation, adaptation, and reusing one reference error do not affect this pointwise inequality.
+
+For each Step, retain precisely the candidates $c\in\{1,\alpha,\alpha^2\}$ satisfying
+
+$$
+|W_i-cW_{i-1}|\le(1+c)e.
+\tag{137}
+$$
+
+The actual candidate always satisfies (137). By the actual source transitions, depth increases by at most four before and through the second actual block update. The elementary bounds used in Lemma 17.1 give $\alpha^4>1/8$. Thus, throughout that interval,
+
+$$
+z_i>1023e/8,\qquad
+W_i>(1023/8-1)e>64e.
+\tag{138}
+$$
+
+Lemma 17.1, with error parameter $e$, therefore makes (137) unique and correct at each of these Steps. This is an induction on actual Steps up to the second actual block update: no earlier Step can be falsely classified as an update, and neither actual update can be missed. Inequality (138) refers to the real source run independently of the algorithm's tentative labels. It is not an assumption about the correctness of those labels.
+
+All comparisons in (137) are exact comparisons of finite elements of $\mathbb Q(\sqrt5)$, as in Definition 17.2. The finite arithmetic does not require $q$ or $b$. The initial difference may have either sign during the search; after (134), all differences used for (137) are positive by (138).
+
+Record the local Step numbers $t_1,t_2$ of the first two nonunit classifications and their true length increments $g_1,g_2\in\{1,2\}$. Each actual Step is finite. The clock transitions ensure that both updates occur after finitely many Steps. More precisely,
+
+$$
+t_1=\delta_0+1,\qquad
+t_2-t_1=G_{D-1},\qquad D=d_0+g_1\ge1,
+\tag{139}
+$$
+
+where $\delta_0=0$ at return zero and otherwise $\delta_0=G_{d_0+1}-2-s_0$.
+
+Generate the strictly increasing Fibonacci weights until the unique $D$ satisfying (139) is found. Output
+
+$$
+d_0=D-g_1,\qquad
+s_0=G_{d_0+1}-1-t_1.
+\tag{140}
+$$
+
+For $d_0\ge1$, (139) proves that these are the real original coordinates. For $d_0=0$, the first Step reads a block, so $t_1=1$, and (140) gives $s_0=G_1-2=0$; output the empty boundary in this case. For a proper entry, use (132) for its exact oriented boundary and owned lifts. This is the original-entry inversion of Theorem 17.3, applied after the error transport (136), rather than substituting an attained boundary for the entry.
+
+Stop at the actual Return of the second update. Its real reached coordinates are
+
+$$
+d_*=d_0+g_1+g_2,\qquad s_*=G_{d_*}-1.
+\tag{141}
+$$
+
+All Steps used the handed-off endpoint and its real unread tail. No history was replaced or source rewound. Keep the genuine original calling right together with (141) and the local Step count. For the operation counts, put $m=t_2$. The protocol completes exactly
+
+$$
+\begin{array}{c|c}
+\text{primitive resource}&\text{number}\\\hline
+\text{Reference before first Step}&n_*\\
+\text{Reference in the entire recovery}&n_*\\
+\text{Extent}&n_*+m\\
+\text{actual Step / producer event triples}&m\\
+\text{new actual raw Reads}&g_1+g_2\in\{2,3,4\}.
+\end{array}
+\tag{142}
+$$
+
+Moreover
+
+$$
+m=\delta_0+1+G_{d_0+g_1-1}\le2G_{d_0+1},\qquad d_*\le d_0+4.
+\tag{143}
+$$
+
+These are Theorem 17.3's actual clock counts: all forced zeros in the two new blocks are read and charged. Every request precision, complete reply bit, integer computation, stored field, and output remains paid. Equations (135), (142), and (143) are per-instance bounds and exact call counts. The pre-handoff driver still pays its actual $r$ Next calls, $d_0$ raw Reads and finite configuration; those costs do not disappear from the same run. Reference adds its own paid requests and complete replies, and its finite service arithmetic is paid as well. No uniform bit-cost or latency bound is asserted. $\square$
+
+## 38. Proper death entries with constant affine signal
+
+**Definition 38.1 (Two deterministic floor ports).** The specified subclass of allowed errors at both ports is
+
+$$
+F_{q,b}(d,n)=\lfloor2^n(b+q\alpha^d)\rfloor,
+\qquad R_b(n)=\lfloor2^nb\rfloor.
+\tag{144}
+$$
+
+Both replies satisfy their closed error contracts. They are deterministic finite integer services. The Extent floor is the one in Definition 25.1 and (101); the Reference floor of the rational $b=C/F$ is the integer quotient $\lfloor 2^nC/F\rfloor$. Framing, service completion, and acknowledgement contain no side information.
+
+**Lemma 38.2 (An odd-depth constant-alpha family).** There is a sequence of actual proper death-handoff worlds, each with fixed positive rational $q$ and nonnegative rational $b$, whose initial Extent true value is exactly $\alpha$. For every finite set of precisions, the Reference floor replies in sufficiently late members equal $\lfloor2^n\alpha\rfloor$ at all those precisions.
+
+**Proof.** Let $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$ be ordinary Fibonacci numbers, so $G_j=F_{j+2}$. The identity
+
+$$
+\alpha^d=(-1)^{d-1}(F_d\alpha-F_{d-1}),\qquad d\ge1,
+\tag{145}
+$$
+
+follows by induction from $\alpha^2=1-\alpha$: multiplication of the right-hand side by $\alpha$ changes it to
+$(-1)^d(F_{d+1}\alpha-F_d)$.
+
+For each odd $d\ge1$, install
+
+$$
+q_d=1/F_d,\qquad b_d=F_{d-1}/F_d.
+\tag{146}
+$$
+
+Choose the actual source $x=0^\infty$ and hand off after
+
+$$
+r_d=G_{d+1}-2
+\tag{147}
+$$
+
+actual initialized Next calls. This is the actual history $p=0^d$, $N_p=0$, $s=r_d$ in Theorem 12.2, with $s\in J_d$. Theorem 3.1 realizes it on the source $0^\infty$ from the prescribed empty initialization. It is proper and has $\delta(d,s)=0$, including $d=1,r_1=1$. No extra read or symbolic-state initialization is used.
+
+For odd $d$, (145) gives
+
+$$
+b_d+q_d\alpha^d=\alpha,\qquad
+\alpha-b_d=\alpha^d/F_d>0.
+\tag{148}
+$$
+
+Thus every static Extent request has exactly the first reply in (144) with true signal $\alpha$, at arbitrary precision. Also $b_d\to\alpha$ from below through rational values. For each fixed finite $n$, irrationality of $\alpha$ gives
+
+$$
+\ell_n=2^{-n}\lfloor2^n\alpha\rfloor<\alpha<\ell_n+2^{-n}.
+$$
+
+For a finite precision set $P$, choose odd $d$ so large that
+$\alpha-b_d<\min_{n\in P}(\alpha-\ell_n)$, with no restriction needed if $P$ is empty. Then
+
+$$
+\lfloor2^nb_d\rfloor=\lfloor2^n\alpha\rfloor\quad(n\in P).
+\tag{149}
+$$
+
+Each choice (146) is fixed before that world's initialized run; it never changes during that run. The source is the same $0^\infty$ throughout this family, so this construction needs no configuration inferred from private source bits. $\square$
+
+## 39. Bounded primitive Reference use forces a finite static prefix
+
+**Lemma 39.1 (One-world realization of the whole static path).** Fix a finite integer $K\ge0$. Suppose a causal deterministic receiver $\mathcal D$ stops in finitely many operations on every proper death-handoff world with the two floor services (144), and satisfies $B_{\mathcal D}\le K$ on all those worlds. Correctness is not needed for this lemma. Consider its formal static interaction in which every Extent$(n)$ and Reference$(n)$ is answered with
+
+$$
+A(n)=\lfloor2^n\alpha\rfloor,
+\tag{150}
+$$
+
+with the stipulated full framing and source-independent public controls. Then a first Step initiation or a prior stopping decision occurs after a finite prefix.
+
+**Proof.** We first use only finite-prefix realizability. Before any Step, a finite prefix of this formal interaction mentions finitely many Reference precisions. Lemma 38.2 supplies one actual proper death world matching all those Reference replies. Its Extent true signal is exactly $\alpha$, so it matches all the Extent replies in that prefix as well. Identical controls and deterministic finite-prefix causality realize the entire prefix on that world, including each requested precision, literal reply frame, and local computation. If the prefix ends inside a reply frame, choose the same precision and match the entire frame; this also matches the observed partial frame.
+
+If the formal static interaction completed $K+1$ primitive Reference calls before Step or stop, its finite prefix through the last such completion would therefore occur on an actual proper death world. This would violate the assumed budget there. Consequently the formal static interaction has at most $K$ such completed Reference calls.
+
+Suppose nevertheless it never initiated a Step or stopped. In this entire hypothetical static interaction, the set $P$ of Reference request precisions is finite. Indeed at most $K$ Reference transactions complete, and the sequential interface can have at most one further in-progress Reference transaction. A finite service frame does not create infinitely many new requests; a receiver that diverges during local work or an unfinished receipt has no new completed request to use. Include the finite precision of that pending transaction in $P$ if present.
+
+Now choose **one** odd $d$ in Lemma 38.2 satisfying (149) for this entire finite set $P$. Keep its fixed rational $(q_d,b_d)$ and its one actual proper death entry for the rest of the argument. Every Reference frame occurring anywhere on the hypothetical infinite static path matches in this same world. Every Extent frame, even at an unbounded sequence of future precisions, matches because the true static Extent signal in this world is exactly $\alpha$. All public controls match as well. Determinism therefore gives the same complete infinite static interaction, or the same local-computation divergence, on this one actual world. This contradicts finite stopping on that world.
+
+The argument's two realizations have different roles: finite-prefix realizability excludes a $(K+1)$-st Reference completion, whereas the resulting finiteness of $P$ permits one-world realization of the alleged whole infinite static path. No totality assumption was applied to (150) as if it were a world with $q=0$ or irrational private $b$. The conclusion follows. $\square$
+
+## 40. Same-configuration two-port entrance obstruction at every fixed budget
+
+**Theorem 40.1 (Proper-death two-floor lower bound).** For every finite integer $K\ge0$, no causal deterministic receiver can simultaneously have the following three properties, even when its promised inputs are restricted to proper death entries and both ports use the fixed floor services (144):
+
+1. it stops after finitely many operations on every such initialized world;
+2. it outputs that world's exact original entry boundary, with its oriented wall roles and owned lifts;
+3. on every such world its completed primitive Reference replies before the first actual Step, or before stopping without a Step, number at most $K$.
+
+There is no restriction here on finite adaptive precision, total Extent calls, local computation, Steps, or Reference calls after the first Step. The final configuration (152) may depend on the receiver and its finite prefix. It is the same fixed configuration in the two final worlds, chosen independently of the common tail and installed before either initialized run. The theorem does not assert failure at every configuration specified in advance.
+
+**Proof.** Assume a receiver has all three properties. Apply Lemma 39.1 and let $P_0$ be its finite formal static prefix through first Step initiation or prior stopping. If a decision is made within a query transaction, include that request precision. Define
+
+$$
+N=\max\bigl(\{1\}\cup
+\{n:\text{either port was requested at precision }n\text{ in }P_0\}\bigr),
+\quad h=2^{-N},\quad L=h\lfloor2^N\alpha\rfloor.
+\tag{151}
+$$
+
+Choose the single rational configuration
+
+$$
+b_*=L+h/2,\qquad q_*=h/4.
+\tag{152}
+$$
+
+It is fixed, with $b_*>0$ and $q_*>0$. The three quantities
+
+$$
+b_*,\qquad b_*+q_*\alpha,\qquad b_*+q_*\alpha^2
+\tag{153}
+$$
+
+all lie strictly between $L$ and $L+h$. The irrational number $\alpha$ is also strictly in that dyadic cell. A precision-$N$ dyadic cell is contained in a single cell at every precision $1\le n\le N$. It follows that
+
+$$
+\begin{aligned}
+\lfloor2^nb_*\rfloor
+&=A(n),\\
+\lfloor2^n(b_*+q_*\alpha)\rfloor
+&=A(n)
+=\lfloor2^n(b_*+q_*\alpha^2)\rfloor,
+\qquad 1\le n\le N.
+\end{aligned}
+\tag{154}
+$$
+
+Install (152), the same two floor programs, and the same public endpoint and control conventions in each of the following two worlds supplied by Lemma 28.1. One may take the common tail $t=0^\infty$.
+
+$$
+\begin{array}{c|c|c|c|c|c|c|c}
+&x&p&r&d&N_p&s&\text{actual unread tail}\\\hline
+W_A&010t&0&1&1&0&1&10t\\
+W_B&000t&00&3&2&0&3&0t
+\end{array}
+\tag{155}
+$$
+
+These are actual initialized runs, with different proper death entries $\partial(1,1)$ and $\partial(2,3)$. In particular, the first has initial owned wall point $x_1^+$ at $e_1$ and terminal owned point $Z(0)$ at $e_0$; the second has initial owned point $Z(1)$ at $e_{-1}$ and terminal owned point $Z(0)$ at $e_0$. Their arc lengths are $\alpha$ and $\alpha^2$.
+
+The actual-history content of the supplier is important: $W_A$ has performed one genuine Next, reading its initial zero; $W_B$ has performed three, reading zero on each of its first two calls and no raw bit on the third. Their initialized emitted words are respectively $0$ and $010$. Only the fixed handoff acknowledgement, not those driver histories, is available after handoff. No forced zero in the next $10$ block has been pre-read in $W_A$.
+
+Before the first receiver Step the two true affine signals are the last two values of (153), and the Reference true signal is $b_*$ in both worlds. Equation (154) matches their whole port frames to $P_0$. Induction on causal observations, including partial-frame decisions when allowed, therefore makes both worlds follow precisely this same finite prefix with the same next requests and precisions. There is no a priori cap on what precision the receiver might request: $N$ was taken from the already finite prefix furnished by Lemma 39.1.
+
+If it stops there without a Step, it gives one identical answer to the two different original boundaries, contradicting correctness.
+
+Otherwise it initiates the first actual Step in both worlds. The supplied actual transition is
+
+$$
+\begin{array}{c|c|c|c|c|c|c|c}
+&p'&n&d'&N_{p'}&k_{p'}&s'&\text{actual unread tail}\\\hline
+W_A&010&2&3&2&4&4&t\\
+W_B&000&4&3&0&6&4&t.
+\end{array}
+\tag{156}
+$$
+
+The first call actually reads one and its forced zero, and the second actually reads one zero. Both emit the actual bit $\operatorname{Low}(3)=0$, then Advance and Return. In particular the entire publicly visible event sequence, with bit values, is identical. If the receiver terminates on an intermediate transaction event, its observations and answer are already identical, giving the same contradiction. Hidden Read counts are not public advice.
+
+If it continues through Return, both worlds have the same complete current point and boundary $\partial(3,4)$, the same depth three, the same slack two, and the same actual unread tail. We use the actual whole-future invariant of Lemma 28.1, not merely equality of current lengths. After any further matched finite source continuation there is a common acquired block word $w$ with
+
+$$
+\begin{gathered}
+p_A=010w,\quad p_B=000w,\quad d_A=d_B=3+|w|,\\
+N_A=N_B+2,\quad n_B=n_A+2,\quad k_B=k_A+2,\\
+N_A+n_A=N_B+n_B,\quad k_A-n_A=k_B-n_B,\\
+\text{unread tail}_A=\text{unread tail}_B
+=\operatorname{tail}_{|w|}(t).
+\end{gathered}
+\tag{157}
+$$
+
+Thus nonreading Steps have equal emissions and clock progress; reading Steps consume the same actual next block, including a forced zero, and have equal actual emitted bit values. These are productive executions of the original endpoints.
+
+At every matched returned cut after (156), Extent replies coincide at **every** finite precision by equal depths and the common fixed $(q_*,b_*)$. Reference replies coincide at **every** finite precision because
+
+$$
+R_{b_*}(n)=\lfloor2^nb_*\rfloor
+$$
+
+is the same in both worlds independently of depth. No use of $n\le N$ is made after the first Step. Whole integer frames, service completions, fixed acknowledgements, valid rights, endpoint descriptor literals, local counts, and legal control outcomes coincide. Checks, pauses, and releases have the same source-independent rules. Source time does not advance during any of them.
+
+Induction on complete command/event prefixes now couples every adaptive future query and Step and every allowed transaction-prefix decision. An arbitrary infinite continuation is coupled coordinate by coordinate because each coordinate lies in a finite prefix. This does not claim an infinite continuation is finitely completed. In particular, no number of later Reference calls or larger precisions can distinguish the original entries. If the receiver has legitimately completed an acquisition that earns a current record, the current $(d,s,i;\kappa)$ parts agree. The programs of Definition 18.1 then have identical DATA guards, budgets, finite representatives, refusals and rights, and every internal Step is covered by (157). This statement retains that acquisition premise; neither an initial current-record oracle nor an export of the unequal private producer histories is supplied.
+
+Both final worlds satisfy the receiver's proper-death finite-stopping hypothesis. Hence it eventually stops at the same observable position and returns the same answer in both. Their original boundaries in (155) remain different, so at least one answer is wrong. The contradiction proves the theorem. $\square$
+
+
+## 41. Exact Reference-resource relation and its scope
+
+**Corollary 41.1 (Finite per-instance use and unbounded pre-Step Reference resource).** In the extended same-$b$ all-error model, there exists an original-entry receiver that is finite on every world and error trace, while for every such successful receiver
+
+$$
+\forall K\in\mathbb N\quad
+\exists W,\eta:\quad B_{\mathcal D}(W,\eta)>K.
+\tag{158}
+$$
+
+The witnesses in (158) can already be chosen among actual proper death entries with both ports using (144).
+
+**Proof.** Existence is Theorem 37.1, including return zero and all allowed errors. If some successful receiver had a fixed finite bound in (158), it would in particular have that bound and finite correctness on the proper-death two-floor subclass. This contradicts Theorem 40.1. The same argument shows that its budget cannot be bounded even on that subclass. Each budget on that subclass is individually finite by totality. $\square$
+
+**Definition 41.2 (Supplier correspondence and the source-specific synthesis).** The mathematical increment of §§36–41 is the resource relation of Corollary 41.1 for primitive same-offset Reference completions before the first actual Step. Its lower-bound ingredients are the proper odd-depth family, one-world realization of an alleged infinite static path under a finite completion budget, and simultaneous coupling of both floor ports to one common configuration. This is a `repo-derived` synthesis for the source and observation interface of Definition 36.1.
+
+The positive proof uses subtraction only as an intermediate error transport, then applies the existing ratio and clock results. The lower bound reuses the actual initialized merger instead of declaring equality of symbolic states or scalar values sufficient. The precise inherited correspondence is:
+
+| Supplier | Use under its original conditions |
+| --- | --- |
+| Definitions 1.2, 2.2, 16.1, 22.1 and Theorems 3.1–3.2 | Empty-frontier initialization, actual no11 source, finite sequential Read/Next, physically read forced zeros, retained exclusive rights, genuine events and exact actual-tail continuation. The additional Reference operation does not advance or read this source. |
+| Theorems 12.2–12.3, (38)–(48) | Unique entrance coordinates, positively oriented walls and their particular owned lifts, proper lifetime endpoints and birth/death clock rules. Definition 36.2 recalls these results rather than supplying new coordinate theorems. |
+| Lemma 17.1, Definition 17.2 and Theorem 17.3 | Three-ratio classification with closed absolute error, finite quadratic comparisons, inversion from the first two actual updates and the complete intervening lifetime, and the genuine operation/Read counts. Theorem 37.1 first establishes its transported error bound (136); the old multiplicative hypothesis is not applied directly to affine Extent replies. |
+| Definitions 25.1, 27.1–27.2 and Lemmas 28.1–28.2 | Finite unsaturated floor replies, the full public observation class, source-independent controls and the initialized pair (102)–(104). Theorem 40.1 separately checks the new Reference frames, both before the merger and at every later precision. |
+| Definition 18.1 and Corollary 24.2 | Legitimately acquired current records and their guarded finite use. These results supply no initial getter, absolute counter or private-history export. |
+| [Exact Current Boundary Provenance][AFF-PROV], Definition 1.1 and Theorems 2.1–2.2 | The full current-point and actual-tail correspondence already used in Lemma 28.1. Its different original projection interface alone does not establish equality of the two new port observations. |
+| van den Bos–Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*][ENT-IDENT], §§1–3; Brattka–Gherardi–Pauly, [*Weihrauch Complexity in Computable Analysis*][WCA], Definitions 4–9 | The `literature-attested` background correspondence of Convention 30.2: initial-state identification, compatibility after actions and finite approximate names. Those general frameworks do not supply the proper odd-depth family or this two-port primitive-call bound. |
+| [Pinned finite Zeckendorf arithmetic][MATHLIB] and Definitions 13.2, 19.1 | Finite canonical arithmetic and exact quadratic sign comparisons within the foregoing proofs. Fibonacci identities, triangle inequalities, floor cells and equal-observation induction are intermediate ingredients, not additional general principles. |
+
+The cited literature is used only for this bounded correspondence. No global novelty or exhaustive literature classification is assigned to the synthesis.
+
+**Definition 41.3 (Interface and recovery scope).** Theorem 29.1 and Corollary 30.1 concern the original interface without Reference. Definition 36.1 explicitly enlarges that interface; Theorem 37.1 neither changes nor refutes the earlier no-Reference entrance obstruction. Theorem 40.1 concerns the enlarged class with a fixed finite primitive Reference bound, and its receiver-dependent configuration quantifier remains the one stated there. It is not a theorem of failure for every individually predesignated configuration. The all-error positive theorem covers jointly adaptive closed errors; the negative witnesses use the two particular deterministic floors of Definition 38.1.
+
+The recovered original boundary is its oriented region with its actual owned lifts, including the empty entrance. It is not the actual private producer history $(p,r)$, the individual $N_p$, exact instrument parameters $q,b$, an authenticated initialization-time counter, the unread infinite source or a rollback of the reached source. The attained record and any subsequent finite use retain the acquisition, persistent-right, DATA-guard and budget premises of §§18 and 24. A locally computed witness of a boundary is not asserted to be the actual producer prefix.
+
+The original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization, full-original-response and arbitrary interior-cut obligations of Definitions 9.2 and 26.3 keep their original scopes. The exact FIB $p_J$/all-response problem and original global 8-versus-9 problem are different targets; no bridge to them is asserted by Corollary 41.1. Neither an unrestricted space/time/boundary/memory inverse nor an equivalence with a physical realization follows from this additional observation contract.
+
+## 追加锚（本行以下为增补区）

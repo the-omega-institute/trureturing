@@ -19,7 +19,7 @@ namespace D5.S3.Quantum.Schatten
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
-private theorem eigenvalues_zero_mono {n : ℕ} {H K : Matrix (Fin n) (Fin n) ℂ}
+theorem eigenvalues_zero_mono {n : ℕ} {H K : Matrix (Fin n) (Fin n) ℂ}
     (hH : H.IsHermitian) (hK : K.IsHermitian) (hHK : (K - H).PosSemidef)
     (i : Fin (Fintype.card (Fin n))) : hH.eigenvalues₀ i ≤ hK.eigenvalues₀ i := by
   let T := H.toEuclideanLin
@@ -101,7 +101,7 @@ theorem singularValuesSorted_conjTranspose {n : ℕ} (A : Matrix (Fin n) (Fin n)
   simpa only [IsHermitian.eigenvalues, Equiv.symm_apply_apply,
     conjTranspose_conjTranspose] using congrArg Real.sqrt hj
 
-private theorem eigenvalues_zero_smul {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ)
+theorem eigenvalues_zero_smul {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ)
     (hH : H.IsHermitian) (q : ℝ) (hq : 0 ≤ q)
     (hQ : ((q : ℂ) • H).IsHermitian) (i : Fin (Fintype.card (Fin n))) :
     hQ.eigenvalues₀ i = q * hH.eigenvalues₀ i := by
