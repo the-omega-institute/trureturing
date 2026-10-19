@@ -4878,3 +4878,280 @@ arbitrary-width exponential range, numerical start, identification
 with the original prime/Robin source, uniform strict Robin bound or
 RH proof is supplied. Full RH and strict Robin for every integer
 $n>5040$ remain unproved.
+
+
+## A compact core couples to an exponentially complex remote profile
+
+The exponential sign range in (W91) needs a stronger compact coupling
+than (W66), whose factor $\Lambda^{m/2}$ grows too fast in that range.
+The following actual mixed-source estimate replaces that factor by
+$\sqrt{m+1}$. It retains a rank-one leading pairing and a remainder
+uniform in the permitted cancellations. This is a repository-derived
+paper application of the existing theta identities, Taylor/Laplace
+remainder method and moment bounds, without a literature-priority or
+Lean-verification claim.
+
+Fix $U>0$ and the small window and Gaussian-leading transport of
+(W87)--(W91). For a remote measure $\lambda$ supported in
+$[B-w,B+w]$, where $w=\operatorname{arctanh}h$, put
+
+$$
+\begin{gathered}
+v=\operatorname{arctanh}z,\qquad
+ d_B^{\rm g}(z)=\cosh v\,D_B^{\rm g}(v),\qquad
+ d\nu(z)=\frac{d\lambda(B+v)}{d_B^{\rm g}(z)},\\
+ a_n=\int z^n\,d\nu(z),\qquad
+ Q=Q_H(\nu)=\sum_{n\ge0}|a_n|^2,\qquad
+ \ell(\nu)=\int\frac{d\nu(z)}{1+z}.
+\end{gathered}
+$$
+
+For real $\nu$, require $\epsilon p\nu\ge0$ with $p$ monic of
+ degree $m$, all roots in $[-h,h]$, and $\epsilon\in\{-1,1\}$.
+Repeated roots and root atoms are allowed. A complex $\nu$ may instead
+satisfy this condition separately on its real and imaginary parts,
+each with degree at most $m$. In that case $Q$ is the sum of their
+ two Hardy forms.
+
+For any finite complex measure $\mu$ on $[0,U]$, retain
+$\mathcal M(\mu)=\int\sqrt{J(a)}\,d|\mu|(a)$ from (W51), and set
+
+$$
+\mathcal C(\mu)=\int a\Phi(a)\,d\overline\mu(a),\qquad
+B_{L_0}(\mu,\lambda)
+ =\iint L_0(a,b)\,d\overline\mu(a)d\lambda(b).
+$$
+
+There are fixed $\kappa>0$, $B_U,C_U>0$, with $\kappa$ no larger
+than the local rate in (W91), such that for every $B\ge B_U$ and
+$0\le m\le\lfloor e^{\kappa B}\rfloor$,
+
+$$
+\boxed{
+\begin{aligned}
+\left|B_{L_0}(\mu,\lambda)
+ -\frac{e^{-B}}{\sqrt{2\pi B}}
+    \mathcal C(\mu)\ell(\nu)\right|
+ &\le C_U\frac{e^{-2B}}{\sqrt B}\mathcal M(\mu)\sqrt Q,\\
+|B_{L_0}(\mu,\lambda)|
+ &\le C_Ue^{-B}\sqrt{\frac{m+1}{B}}
+              \mathcal M(\mu)\sqrt Q.
+\end{aligned}}
+\tag{W92}
+$$
+
+The constants do not depend on the measures, roots, density, sample
+count or allowed degree. The compact core has no sign restriction.
+Its atom at zero contributes nothing. The compact size is fixed; no
+uniformity as $U\to\infty$ is asserted.
+
+### Keep the compact source complete in the actual Laplace integral
+
+Reuse the whole forward identity of (W50), (W62), (W65), with
+$b=B+v$ and $B>U+1$:
+
+$$
+L_0(a,b)=\frac14\int_0^\infty
+ [(a+b+2t)\Phi(a+t)-(b-a+2t)\Phi(a-t)]\Phi(b+t)\,dt.
+$$
+
+Its complex continuation and domination were already paid there.
+In particular the part with $t-a<0$ remains present.
+Put $s=e^{2t}-1$ and $t(s)=\tfrac12\log(1+s)$. Define
+
+$$
+\begin{aligned}
+F_a(s)&=(1+s)^{5/4}
+ \frac{\Phi(a+t(s))-\Phi(a-t(s))}{a},\\
+G_a(s)&=(1+s)^{5/4}\left[
+ \Phi(a+t(s))+\Phi(a-t(s))
+ +\log(1+s)\frac{\Phi(a+t(s))-\Phi(a-t(s))}{a}\right].
+\end{aligned}
+$$
+
+Evenness of the complete $\Phi$ removes the quotients at $a=0$.
+For real $a\in[0,U]$, these functions and their quotients by $1+s$
+are analytic on one fixed complex $s$-disc, uniformly in $a$, and
+$F_a(0)=0$, $G_a(0)=2\Phi(a)$.
+Indeed choose the disc small enough that $t(s)$ stays strictly inside
+ the source strip. On a fixed complex neighborhood of the compact
+$a$ interval the source is bounded, and the odd difference divided by
+$a$ is removable. Cauchy therefore bounds each Taylor coefficient of
+ the four amplitudes by $C_U^{k+1}$.
+
+For real $s\ge0$, the full source and its first derivative are bounded
+on the real axis. Evenness also gives
+$|[\Phi(a+t)-\Phi(a-t)]/a|\le2\|\Phi'\|_\infty$.
+Consequently the four amplitudes have absolute value at most
+$C_U(1+s)^4$. Their remainder after $N$ Taylor terms is at most
+$C_U^{N+1}s^N(1+s)^4$, for every $N\ge1$ and every $s\ge0$.
+On a smaller disc this is the Cauchy remainder. Outside its positive
+radius, the polynomial growth and the coefficient bound pay the raw
+amplitude and the Taylor polynomial separately, absorbing the finite
+geometric sum in $C_U^{N+1}$. This is uniform in $N$.
+
+Only the high source is approximated. Its actual theta series gives
+
+$$
+\frac{\Phi(b+t)}{\Phi_{\rm g}(b)}
+ =(1+s)^{9/4}e^{-\pi e^{2b}s}
+ \left[1-\frac{c_*e^{-2b}}{1+s}+\Delta_b(s)\right],\qquad
+|\Delta_b(s)|\le C e^{-c e^{2B}(1+s)}.
+$$
+
+These bounds hold on the same fixed small complex offset disc, where
+$\Re(\pi e^{2b})\ge c e^{2B}$. The compact factors remain the
+complete $\Phi$. Thus the model with only the high theta factor
+replaced has the exact formula
+
+$$
+\boxed{\frac{L_1(a,b)}{\Phi_{\rm g}(b)}
+ =\frac a8\int_0^\infty e^{-\pi e^{2b}s}
+ [bF_a(s)+G_a(s)]
+ \left[1-\frac{c_*e^{-2b}}{1+s}\right]ds.}
+\tag{W93}
+$$
+
+Integration of the displayed $\Delta_b$ bounds the complete-to-model
+error, after the exact transport, by
+$C_Ua e^{-B}(B+1)e^{-c e^{2B}}/\sqrt B$ on the fixed Hardy disc.
+This pays the whole half-line and its reflected part; no positivity of
+$L_1$ is assumed.
+
+Integrate the Taylor terms using
+$\int_0^\infty s^k e^{-Qs}ds=k!Q^{-k-1}$ for $\Re Q>0$.
+For every $N\ge3$, the resulting actual expansion is
+
+$$
+\boxed{
+\begin{aligned}
+\frac{d_B^{\rm g}(z)L_0(a,B+v)}a
+ =\frac{e^{-B}}{\sqrt B}\bigg[
+ &\frac{\Phi(a)}{\sqrt{2\pi}}g_0(z)\\
+ &+\sum_{1\le k<N}e^{-2kB}
+     [\alpha_k(a)(B+v)+\beta_k(a)]g_k(z)
+     +R_N(a,z)\bigg],\\
+g_k(z)&=\cosh v\,e^{-(2k+1)v}
+       =\frac{(1-z)^k}{(1+z)^{k+1}},\\
+|\alpha_k(a)|+|\beta_k(a)|&\le C_U^{k+1}k!,\\
+\sup_{\substack{a\in[0,U]\\|z|\le R}}|R_N(a,z)|
+ &\le C_U(B+1)
+       [C_U^NN!e^{-2BN}+e^{-c e^{2B}}].
+\end{aligned}}
+\tag{W94}
+$$
+
+At $a=0$ the quotient is interpreted removably only in this estimate;
+ the original kernel still vanishes. The coefficients are independent
+of $N$. The high prefactor shifts an index by at most one, giving the
+same $g_k$ and an absorbed $(k-1)!$. In the remainder the fixed
+polynomial growth introduces $(N+j)!$, $j\le4$, absorbed by
+$C_U^NN!$. The leading term follows from $G_a(0)=2\Phi(a)$:
+$L_1/\Phi_{\rm g}(b)$ starts at
+$a\Phi(a)e^{-2b}/(4\pi)$, yielding exactly the constant in (W92).
+
+### Pay polynomial degree costs before choosing the growing order
+
+Reuse (W55)'s moment-radius comparison and its shift-tail consequence
+
+$$
+\sum_{n\ge0}q^{2n}|a_n|^2\le9\Lambda^mQ,\qquad
+\|\mathsf T^\ell a\|_2
+ \le\min(1,3\Lambda^{m/2}q^{-\ell})\|a\|_2.
+$$
+
+Here $\mathsf T(a)_n=a_{n+1}$ is the moment shift. Splitting $\sum(-1)^na_n$ at an index proportional to
+$m+1$, Cauchy--Schwarz pays its first part and the exponential tail
+pays the rest. Therefore
+
+$$
+|\ell(\nu)|\le C\sqrt{m+1}\sqrt Q.
+$$
+
+For $k\ge1$, the $n$th Taylor coefficient of $g_k$ has magnitude at
+most $2^k\binom{n+k}{k}$. Sum against the same shift-tail bound,
+splitting at $L=\lceil C(m+k+1)\rceil$. The first $L$ terms cost
+at most $[C(m+k+1)]^{k+1}$. For $n=L+t$ the bound
+$(L+t+k)^k\le(L+k)^ke^t$ and $q>4$ pay the remaining sum.
+It follows that
+
+$$
+\|g_k(\mathsf T)a\|_2\le[C(m+k+1)]^{k+1}\|a\|_2.
+$$
+
+Since $g_k>0$ on the real support, the measure $g_k\nu$ retains
+ the same separator. Apply the already paid logarithmic
+$\operatorname{arctanh}$ multiplier bound from (W57) to that
+measure. Together with the coefficient factorials in (W94), this gives,
+for some fixed sufficiently large $P$,
+
+$$
+\left|\int[\alpha_k(a)(B+v)+\beta_k(a)]g_k(z)\,d\nu(z)\right|
+ \le C_U(B+1)[C_U(m+k+1)]^{P(k+1)}\sqrt Q.
+$$
+
+The same measure supplies all these bounds. For the remainder use the
+linear Cauchy allowance already paid in (W63), obtaining
+
+$$
+\left|\int R_N(a,z)\,d\nu(z)\right|
+ \le C_U(B+1)\Lambda^{m/2}
+       [C_U^NN!e^{-2BN}+e^{-c e^{2B}}]\sqrt Q.
+$$
+
+Choose fixed $0<\kappa<\min(\kappa_{\rm W91},1/4,1/(8P))$ and
+$N=\lceil D(1+(m+1)/B)\rceil\ge3$, with fixed sufficiently large
+$D$. For $m\le e^{\kappa B}$ one has
+$\log N\le\kappa B+O(1)$ and $m+k+1\le C_D(m+1)$ for $k<N$.
+The retained $k\ge1$ terms have total integral at most
+$C_Ue^{-B}\sqrt Q$, absorbing $B+1$ in the unused exponential
+rate. The factorial remainder has the same bound, after increasing
+$D$ and then the common start, since
+$\log(C_U^NN!)\le N(\kappa B+O_U(1))$ absorbs
+$\Lambda^{m/2}$. The full-theta error is smaller because
+$\kappa<2$. These choices are uniform over every allowed measure
+and every $a\in[0,U]$.
+
+Thus (W94), after integration in $\nu$, has remainder at most
+$C_Ua e^{-2B}\sqrt{Q/B}$ in the original transported kernel.
+From (W49), both $a/\sqrt{J(a)}$ and
+$a\Phi(a)/\sqrt{J(a)}$ are bounded for $0<a\le U$.
+Integrating against $d\overline\mu(a)$ proves (W92), including
+ the compact origin. For complex remote measures, split into the two
+real separator classes and absorb the fixed constant; the leading
+pairing remains exactly the displayed complex one.
+
+### Spend the same remote credit on one full attachment
+
+For the same $\lambda$, (W91) gives $Q_{L_0}(\lambda)\ge Q/2$.
+Apply Young's inequality to the full cross term in (W92), keeping one
+quarter of that $Q$ as credit. The actual total form satisfies
+
+$$
+\boxed{
+\begin{aligned}
+Q_{L_0}(\mu+\lambda)
+ &\ge Q_{L_0}(\mu)+\tfrac14Q
+       -C_U\frac{(m+1)e^{-2B}}B\mathcal M(\mu)^2,\\
+\mathcal C(\mu)=0\quad\Longrightarrow\quad
+Q_{L_0}(\mu+\lambda)
+ &\ge Q_{L_0}(\mu)+\tfrac14Q
+       -C_U\frac{e^{-4B}}B\mathcal M(\mu)^2.
+\end{aligned}}
+\tag{W95}
+$$
+
+The first defect is at most $C_Ue^{-(2-\kappa)B}/B$ times the
+compact size. The second uses cancellation of the actual compact
+moment $a\Phi(a)$ and remains uniform over the permitted exponential
+sign range.
+
+This pays one compact-to-remote attachment of an arbitrarily dense
+profile with exponentially growing sign degree. Joint credit for
+several such remote profiles would require their mutual interactions
+to be paid separately; it is not inferred from the local credits.
+Neither a sign for $Q_{L_0}(\mu)$ nor a comparison of
+$\mathcal M(\mu)^2$ to a nearly null compact form is supplied.
+At fixed $B$ the allowed degree is finite. Fixed-window all-order
+positivity, the original signed prime/Robin estimate, strict Robin
+for every integer above5040 and RH remain unproved.
