@@ -7,6 +7,10 @@
    digest: Complex hopping can increase parity-twisted ground-state coherences. -/
 
 import D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression
+import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+import D5.S3.Quantum.QuantumChannels.ButterflyLambdaTwoRelativeDesignRefutation
+import D5.S3.Weil.ZetaLinear.Sylvester
 
 /-! Complex hopping and parity insertion in occupation-basis partial traces. -/
 
@@ -26,9 +30,11 @@ namespace D5.S3.Quantum.SpinChains.ComplexHoppingCoherenceDampingRefutation
 noncomputable section
 
 /-- Occupation configurations of ordered fermionic modes. -/
-abbrev Fock (N : ℕ) := Fin N → Fin 2
+abbrev Fock (N : ℕ) :=
+  D5.S3.Quantum.QuantumChannels.ButterflyLambdaTwoRelativeDesignRefutation.Mode N
 
-abbrev Operator (N : ℕ) := Matrix (Fock N) (Fock N) ℂ
+abbrev Operator (N : ℕ) :=
+  D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.Operator N
 
 /-- Jordan–Wigner annihilation, in the occupation basis. -/
 def annihilator {N : ℕ} (j : Fin N) : Operator N :=
@@ -38,10 +44,10 @@ def annihilator {N : ℕ} (j : Fin N) : Operator N :=
 def hamiltonian {N : ℕ} (h : Matrix (Fin N) (Fin N) ℂ) : Operator N :=
   ∑ j, ∑ k, h j k • ((annihilator j)ᴴ * annihilator k)
 
-def Normalized {N : ℕ} (ψ : Fock N → ℂ) : Prop := star ψ ⬝ᵥ ψ = 1
+abbrev Normalized {N : ℕ} (ψ : Fock N → ℂ) : Prop :=
+  D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.unitVector ψ
 
-def energy {N : ℕ} (H : Operator N) (ψ : Fock N → ℂ) : ℝ :=
-  (star ψ ⬝ᵥ (H *ᵥ ψ)).re
+abbrev energy {N : ℕ} (H : Operator N) (ψ : Fock N → ℂ) : ℝ := RHLinalg.hermForm H ψ
 
 /-- Variational minimality over all normalized Fock vectors, without a filling restriction. -/
 def IsGroundState {N : ℕ} (H : Operator N) (ψ : Fock N → ℂ) : Prop :=
@@ -66,11 +72,11 @@ def concatenate {N : ℕ} (p : AdjacentPartition N)
 def reducedState {R : Type*} [Semiring R] [Star R]
     {N : ℕ} (p : AdjacentPartition N) (ψ : Fock N → R) :
     Matrix (Fock p.a × Fock p.b × Fock p.d) (Fock p.a × Fock p.b × Fock p.d) R :=
-  fun x y => ∑ l, ∑ r,
-    ψ (concatenate p l x.1 x.2.1 x.2.2 r) *
-      star (ψ (concatenate p l y.1 y.2.1 y.2.2 r))
+  let v : ((Fock p.a × Fock p.b × Fock p.d) × Fock p.left) × Fock p.right → R :=
+    fun x => ψ (concatenate p x.1.2 x.1.1.1 x.1.1.2.1 x.1.1.2.2 x.2)
+  Matrix.traceRight (Matrix.traceRight (Matrix.vecMulVec v (star v)))
 
-def occupation {N : ℕ} (s : Fock N) : ℕ :=
+abbrev occupation {N : ℕ} (s : Fock N) : ℕ :=
   D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.occupationCount
     (fun i => finTwoEquiv (s i))
 
@@ -78,14 +84,17 @@ def occupation {N : ℕ} (s : Fock N) : ℕ :=
 def spinTrace {R : Type*} [Semiring R] [Star R]
     {N : ℕ} (p : AdjacentPartition N) (ψ : Fock N → R) :
     Matrix (Fock p.a × Fock p.d) (Fock p.a × Fock p.d) R :=
-  fun x y => ∑ b, reducedState p ψ (x.1, b, x.2) (y.1, b, y.2)
+  Matrix.traceRight ((reducedState p ψ).submatrix
+    (fun x : (Fock p.a × Fock p.d) × Fock p.b => (x.1.1, x.2, x.1.2))
+    (fun y : (Fock p.a × Fock p.d) × Fock p.b => (y.1.1, y.2, y.1.2)))
 
 /-- The occupation-basis matrix of tr_B[(-1)^N_B ρ_ABD]. -/
 def twistedTrace {R : Type*} [Ring R] [Star R]
     {N : ℕ} (p : AdjacentPartition N) (ψ : Fock N → R) :
     Matrix (Fock p.a × Fock p.d) (Fock p.a × Fock p.d) R :=
-  fun x y => ∑ b, (-1 : R) ^ occupation b *
-    reducedState p ψ (x.1, b, x.2) (y.1, b, y.2)
+  Matrix.traceRight (fun x y : (Fock p.a × Fock p.d) × Fock p.b =>
+    (-1 : R) ^ occupation x.2 *
+      reducedState p ψ (x.1.1, x.2, x.1.2) (y.1.1, y.2, y.1.2))
 
 def claim : Prop :=
   ∀ (N : ℕ) (h : Matrix (Fin N) (Fin N) ℂ), h.IsHermitian →
@@ -256,7 +265,7 @@ private theorem psi_ground : IsGroundState (hamiltonian hopping) psi := by
   rw [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
     dotProduct_add, dotProduct_smul, hφ] at hl
   have hψ : energy (hamiltonian hopping) psi = -2 := by
-    unfold energy
+    unfold energy RHLinalg.hermForm
     rw [he, dotProduct_smul, normalized_psi]
     norm_num
   rw [hψ]
@@ -282,7 +291,12 @@ private theorem trace_values :
   have hs : spinTrace partition psi witnessX witnessY =
       (1/625 : ℂ) * GaussianInt.toComplex
         (spinTrace partition psiG witnessX witnessY) := by
-    unfold spinTrace reducedState
+    change (∑ b, ∑ l, ∑ r,
+      psi (concatenate partition l witnessX.1 b witnessX.2 r) *
+        star (psi (concatenate partition l witnessY.1 b witnessY.2 r))) =
+      (1/625 : ℂ) * GaussianInt.toComplex (∑ b, ∑ l, ∑ r,
+        psiG (concatenate partition l witnessX.1 b witnessX.2 r) *
+          star (psiG (concatenate partition l witnessY.1 b witnessY.2 r)))
     simp only [psi, map_sum, map_mul, GaussianInt.toComplex_star, star_mul,
       star_div₀, star_one, star_ofNat, Complex.star_def]
     simp_rw [Finset.mul_sum]
@@ -296,7 +310,12 @@ private theorem trace_values :
   have ht : twistedTrace partition psi witnessX witnessY =
       (1/625 : ℂ) * GaussianInt.toComplex
         (twistedTrace partition psiG witnessX witnessY) := by
-    unfold twistedTrace reducedState
+    change (∑ b, (-1 : ℂ) ^ occupation b * (∑ l, ∑ r,
+      psi (concatenate partition l witnessX.1 b witnessX.2 r) *
+        star (psi (concatenate partition l witnessY.1 b witnessY.2 r)))) =
+      (1/625 : ℂ) * GaussianInt.toComplex (∑ b, (-1 : GaussianInt) ^ occupation b *
+        (∑ l, ∑ r, psiG (concatenate partition l witnessX.1 b witnessX.2 r) *
+          star (psiG (concatenate partition l witnessY.1 b witnessY.2 r))))
     simp only [psi, map_sum, map_mul, map_pow, map_neg, map_one,
       GaussianInt.toComplex_star, star_mul, star_div₀, star_one, star_ofNat,
       Complex.star_def]
