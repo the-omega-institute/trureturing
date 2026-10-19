@@ -12234,3 +12234,190 @@ $$
 The last step reuses GHC8's $K_{(\log c)/2}^2=O(c(\log c)^2)$. This controls all $2N(c)+1$ actual retained coordinates without a dimension factor, also on the original cofinal FIB supports. The legal-trial transport of GHC7--GHC8 applies with this same exterior change; its initial quadratic and residual must still be transported together.
 
 The gain is the actual cubic complete-source error and its explicit signed odd endpoint, rather than a new determinant or positivity criterion. Absolute accuracy still gives no sign for a vanishing Schur minimum, no relative control at that minimum, no complete determinant limit and no favorable joint prime discrepancy. The original same-source Robin strict upper, all-integer Robin above 5040 and RH remain unresolved. These deductions retain the inherited paper source/form premises and are not Lean/kernel-certified.
+
+### The signed odd endpoint has a nonzero complete physical Schur contribution
+
+Keep GHC10--GHC17's SAME full complex physical operator, retained block and complete coupling $\mathscr B=P_N^\perp V_{d/2}P_N$, now along integer $c\to\infty$, $d=\log c$ and $N=\lceil e^c\rceil$. Let $\widetilde H,\widetilde S$ denote the original uncorrected signed-Hilbert exterior and its Schur block, and $\widehat H,\widehat S$ the endpoint-corrected versions from GHC12--GHC17. The original exterior and Schur block are $H,S$. All these symbols retain the original support, domain, prime powers, both poles and physical orthonormal Fourier coordinates.
+
+The added estimate evaluates the strength of the actual coupled endpoint. Classical partial summation, bounded-discrepancy summation and the rank-one resolvent formula are reused inside this source calculation. No general perturbation criterion, literature-priority claim, numerical execution or Lean/kernel verification is asserted.
+
+#### The existing full prime counts fix the source scales
+
+Reuse the classical unconditional PNT input already used in the [Robin source](../ArithSums/nicolas2025comparison.md), and the exact folded prime variance and consecutive-block discrepancies in [the complete-tail source, (2), (39), (48)](../Fourier/montgomery1978largesieve.md). Partial summation gives
+$$
+ W_c:=\sum_{2\le j<c}\frac{\Lambda(j)}{\sqrt j}=O(\sqrt c),
+ \qquad
+ \sum_{2\le j<c}\frac{\Lambda(j)^2}{j}
+       \sim\frac12(\log c)^2.
+$$
+For the second application the proper-power part is $O(1)$, since
+$\sum_p(\log p)^2/[p^2(1-1/p)]<\infty$; partial summation with
+$\vartheta(x)\sim x$ supplies the prime part. The ordered resonance numerator
+$\sum_{ab=c}\Lambda(a)\Lambda(b)$ is $O(d^2)$: it is zero for three or more distinct prime factors, has only the two ordered factors for two distinct prime bases, and equals $(k-1)(\log p)^2$ for $c=p^k$. Thus the SAME exact variance, including all resonances, satisfies
+$$
+ \boxed{K_{d/2}=O(\sqrt c),\qquad
+ \mu_c=\frac12\left[
+   \sum_{j<c}\frac{\Lambda(j)^2}{j}
+   -\frac1{\sqrt c}\sum_{ab=c}\Lambda(a)\Lambda(b)\right]
+       \sim\frac{d^2}{4}.}
+ \tag{GHC18}
+$$
+The $K$ bound applies directly to G4's complete budget, with its full pole and bounded Gamma part. It does not replace that budget by the prime variance.
+
+The existing actual symbol is
+$s_c(n)=-\kappa-P_c(n)+h_c(n)$ for $n>0$, with
+$\kappa=\pi/4$, $|h_c(n)|\le G_c/n$ and $G_c=O(\sqrt c\,d)$.
+Its proved full-symbol budget gives $\sup_n|s_c(n)|=O(\sqrt c)$.
+The already owned discrepancies are
+$$
+ \left|\sum_{n\in J}P_c(n)\right|\le D_cW_c,\qquad
+ \left|\sum_{n\in J}(P_c(n)^2-\mu_c)\right|\le D_cW_c^2,
+ \qquad D_c=(c+1)d,
+$$
+on every consecutive integer block $J$. These are polynomial in $c$; every alias remains in $\mu_c$.
+
+#### Evaluate the same complete boundary-to-retained vector
+
+Embed $\ell_N$ from GHC12 in the odd exterior and put
+$r_{c,N}=\mathscr B^*\ell_N$. Reflection makes its even retained coordinates zero. Reuse the actual phase-adjusted physical entry
+$(s_c(n)-s_c(m))/[\pi(m-n)]$ from the [existing Fourier identification](../../D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.lean). In the normalized physical sine basis its odd folding is
+$$
+ Q^{\rm o}_{mn}=\frac2\pi(-1)^{m+n}
+       \frac{m s_c(n)-n s_c(m)}{m^2-n^2}\qquad(m\ne n).
+$$
+Consequently every retained odd coordinate, including those next to $N$, has the exact absolutely convergent formula
+$$
+ \boxed{\begin{aligned}
+ (r_{c,N})_m&=\frac{2\sqrt d}{\pi^2}(-1)^m
+       [s_c(m)T_1(m)-mT_2(m)],\qquad 1\le m\le N,\\
+ T_1(m)&=\sum_{n>N}\frac1{n^2-m^2},\\
+ T_2(m)&=\sum_{n>N}\frac{s_c(n)}{n(n^2-m^2)}.
+ \end{aligned}}
+ \tag{GHC19}
+$$
+This is a calculation in the already identified physical coupling, not an asserted new Lean identification.
+
+Set
+$$
+ \mathcal A(t)=\frac{\operatorname{arctanh}t}{t},\qquad
+ G(t)=\frac{\log(1+t)}t,\qquad 0<t<1,
+$$
+with their continuous values at zero. Let $\delta=c^{-8}$ and first take $\delta N\le m\le(1-\delta)N$, $t=m/N$.
+Decreasing-sum integration gives
+$T_1(m)=\mathcal A(t)/N+O(N^{-2}\delta^{-1})$ and
+$$
+ m\sum_{n>N}\frac1{n(n^2-m^2)}
+ =-\frac{\log(1-t^2)}{2Nt}+O(N^{-2}\delta^{-1}).
+$$
+Partial summation with the SAME $P_c$ discrepancy bounds its tail contribution to $mT_2$ by $O(D_cW_c/(N^2\delta))$. The full $h_c$ contribution is bounded using $G_c/n$, also at all exterior indices. Inserting $s_c(m)$ in GHC19 and using
+$\mathcal A(t)+\log(1-t^2)/(2t)=G(t)$ therefore gives uniformly on this bulk
+$$
+ (r_{c,N})_m
+ =-\frac{2\sqrt d\,(-1)^m}{\pi^2N}
+       [\mathcal A(t)P_c(m)+\kappa G(t)]+O(c^{12}/N^2).
+$$
+For clarity, before the harmless polynomial majorization the error is bounded by
+$$
+ \frac{C\sqrt d}{N^2\delta}
+ \left[\sup_n|s_c(n)|+1+D_cW_c
+             +G_c(1+\log(2/\delta))\right].
+$$
+No cancellation of separately chosen extremizers is used.
+
+All remaining rows are paid. For every $1\le m\le N$,
+$T_1(m)\le C(1+\log N)/N$, and $m/n\le1$ in $T_2$.
+Thus their complete contribution to $\|r_{c,N}\|^2$ is at most
+$$
+ C\,dc(1+\log N)^2
+       \left(\frac{\delta}{N}+\frac1{N^2}\right)
+       =o(d/N).
+$$
+This includes the last rows where $\mathcal A(m/N)$ would be singular; they are not omitted from the actual vector.
+
+On the bulk, the supremum plus total variation of each weight
+$\mathcal A^2,\mathcal A G,G^2$ is $O(d^2)$: $\mathcal A$ is increasing and $G$ decreasing.
+The existing consecutive-block discrepancies and ordinary bounded-variation quadrature therefore replace $P_c^2$ by its SAME $\mu_c$ and $P_c$ by zero, with errors polynomial in $c$ divided by $N$. The squared bulk approximation error and its cross with the main profile contribute $o(d/N)$ as well. Finally
+$\int_{[0,\delta]\cup[1-\delta,1]} \mathcal A(t)^2dt
+=O(\delta\log^2(2/\delta))$.
+These bounds establish the complete norm asymptotic
+$$
+ \boxed{\begin{aligned}
+ \frac{\pi^4N}{4d}\|r_{c,N}\|^2
+ &=\frac{\pi^2}{6}\mu_c+
+      \kappa^2\left(\frac{\pi^2}{6}-2\log^22\right)+o(1),\\
+ \|r_{c,N}\|^2&\sim\frac{d^3}{6\pi^2N}.
+ \end{aligned}}
+ \tag{GHC20}
+$$
+The integrals used here are
+$\int_0^1 \mathcal A^2=\pi^2/6$ and
+$\int_0^1 G^2=\pi^2/6-2\log^22$.
+For the first, $t=\tanh u$ gives
+$\int_0^\infty u^2/\sinh^2u\,du=\sum_{j\ge1}j^{-2}$.
+The second follows by integration by parts and
+$\int_0^1\log(1+t)/t\,dt=\pi^2/12$.
+All source parameters grow together as specified; this is not a fixed-$c$ asymptotic with an unspecified $c$-dependent cutoff.
+
+#### Transport the actual endpoint through the complete exterior inverse
+
+Let
+$$
+ a_{c,N}=\langle\ell_N,\widetilde H^{-1}\ell_N\rangle,\qquad
+ q_{c,N}=\mathscr B^*\widetilde H^{-1}\ell_N.
+$$
+These use the original uncorrected full-arithmetic model. Its floor is at least $c/2$ eventually. On the exterior the original Fourier diagonal has
+$D_n=A(2\pi n/d)=\log(n/d)+O(d^2/n^2)$.
+The vector $\ell_N$ belongs to this diagonal's operator domain, and
+$$
+ \|(D-c)\ell_N\|\le C(1+\log d)\|\ell_N\|,
+ \qquad
+ \|\ell_N\|^2\sim\frac d{\pi^2N}.
+$$
+The first inequality follows by summing
+$n^{-2}(1+\log^2(n/N)+\log^2d)$; no uniform approximation of the unbounded diagonal by $cI$ is asserted.
+GHC18 and the existing resolvent identity now yield
+$\|\widetilde H^{-1}\ell_N-\ell_N/c\|
+=O(c^{-3/2})\|\ell_N\|$. Multiplication by the SAME
+$\|\mathscr B\|\le K_{d/2}=O(\sqrt c)$ gives
+$$
+ \boxed{\begin{aligned}
+ a_{c,N}&\sim\frac d{\pi^2cN},\\
+ \|q_{c,N}-r_{c,N}/c\|&=O(\|\ell_N\|/c),\\
+ \|q_{c,N}\|^2&\sim\frac{d^3}{6\pi^2c^2N}.
+ \end{aligned}}
+ \tag{GHC21}
+$$
+The last relative conclusion uses the paid norm GHC20:
+$\|r_{c,N}\|\sim(d/\sqrt6)\|\ell_N\|$. The coupling's global norm alone would not supply this conclusion.
+
+Since $\widehat H=\widetilde H+\tau_d|\ell_N\rangle\langle\ell_N|$, the classical rank-one inverse formula gives the exact signed comparison
+$$
+ \boxed{\widehat S-\widetilde S=
+    \frac{\tau_d}{1+\tau_da_{c,N}}
+       |q_{c,N}\rangle\langle q_{c,N}|,\qquad
+ \|S-\widehat S\|_1=O\!\left(\frac{d^3}{cN^3}\right).}
+ \tag{GHC22}
+$$
+The denominator is positive eventually and tends to one; $\tau_d\to-1/4$. The second line is GHC17 with GHC18's sharper bound for the SAME $K$. Thus every complete arithmetic and pole contribution remains in $a,q,r$ and in the paid remainder.
+
+In particular, with $e_c=r_{c,N}/\|r_{c,N}\|$ (nonzero eventually), the full retained matrices satisfy
+$$
+ \boxed{\begin{aligned}
+ \left\|\frac{c^2N}{d^3}(S-\widetilde S)
+       +\frac1{24\pi^2}|e_c\rangle\langle e_c|\right\|_1
+       &\longrightarrow0,\\
+ \operatorname{Tr}(S-\widetilde S)
+       &\sim-\frac{d^3}{24\pi^2c^2N}.
+ \end{aligned}}
+ \tag{GHC23}
+$$
+Indeed
+$\|\,|q\rangle\langle q|-|r/c\rangle\langle r/c|\,\|_1
+\le(\|q\|+\|r/c\|)\|q-r/c\|=O(d^2/(c^2N))$,
+and the cubic remainder is smaller than $d^3/(c^2N)$.
+The positive-part trace of $S-\widetilde S$ is
+$o(d^3/(c^2N))$, whereas its negative-part trace is
+asymptotic to $d^3/(24\pi^2c^2N)$.
+These norms compare matrices in the same physical retained space at each $c$; no fixed limiting vector or identification of different finite spaces is assumed.
+
+GHC23 pays a nonzero signed contribution to the ACTUAL model discrepancy, including its complete source strength and direction. It does not assert that the original Schur block is negative or positive. A positivity certificate for the uncorrected Hilbert model must still pay this negative endpoint, and a certificate for the corrected model must still pay its cubic remainder and establish its own sign. No retained/cofinal Weil positivity, dense fixed-window theta positivity, original same-source Robin strict upper, determinant limit or RH follows. The inherited source/form premises and paper-only status remain.
