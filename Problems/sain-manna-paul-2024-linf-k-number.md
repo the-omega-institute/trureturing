@@ -59,7 +59,7 @@ For $n\ge2$, the formal claim would fail if an extreme-point set had full span b
 
 ## Evidence
 
-The public declarations in `D5/S3/Analytic/BanachGeometry/LinfKNumber.lean` are `BJOrth`, `PreservesBJAt`, `IsScalarMulIsometry`, `IsKSet`, `claim`, and `result`. The supporting lemmas are private. The theorem `D5.S3.Analytic.BanachGeometry.LinfKNumber.result` has type `claim`.
+The public declarations in `D5/S3/Analytic/BanachGeometry/LinfKNumber.lean` are `BJOrth`, `PreservesBJAt`, `IsScalarMulIsometry`, `IsKSet`, `claim`, `active_not_BJ`, and `result`. The remaining supporting lemmas are private. The exposed `active_not_BJ` strict-descent criterion is used by `image_vertex`, `inverse_sign`, and `PolyhedralBJRefutation.product_of_bj`; its statement and proof remain in the original Linf owner. The theorem `D5.S3.Analytic.BanachGeometry.LinfKNumber.result` has type `claim`.
 
 For every $n\ge2$, `claim` is the conjunction of: the equivalence between `IsKSet A` and full span for any set $A$ contained in the extreme points of the closed unit ball; the existence of an $n$-element finite K-set; and the lower bound $n\le|A|$ for every finite K-set, without an extreme-point restriction on that lower bound.
 

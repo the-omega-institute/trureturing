@@ -12,7 +12,9 @@ license: citation-only
 triage: anchor
 ---
 
-## Primary statement and conventions
+## Verified locator
+
+Canonical versioned source: <https://arxiv.org/abs/2511.20345v1>.
 
 Jayanta Manna, Kalidas Mandal, Kallol Paul and Debmalya Sain,
 *An improvement of the Blanco-Koldobsky-Turnšek characterization of isometries*,
