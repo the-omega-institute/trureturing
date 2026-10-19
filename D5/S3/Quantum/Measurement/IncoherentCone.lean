@@ -66,6 +66,7 @@ DTR reading: DTR-Unregistered for the public theorem targets in this module.
 Registration gap: exact dependent source-family reconstruction, lawful template readout,
 selection coordinates, whole-family variation, slot sensitivity and observational dependence
 are not all established by the retained registration evidence.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/18980
 -/
 
 import D5.S3.Quantum.Measurement.AntidistinguishabilityGram
@@ -115,7 +116,7 @@ end
 section
 variable {n : ℕ}
 
-private theorem psd_closed : IsClosed {A : Matrix (Fin n) (Fin n) ℂ | A.PosSemidef} := by
+theorem psd_closed : IsClosed {A : Matrix (Fin n) (Fin n) ℂ | A.PosSemidef} := by
   simp only [Matrix.posSemidef_iff_dotProduct_mulVec, Set.setOf_and]
   apply IsClosed.inter
   · exact isClosed_eq continuous_id.matrix_conjTranspose continuous_id
@@ -141,7 +142,7 @@ end
 section
 variable {n : ℕ}
 
-private theorem flatten_inner (A Z : Matrix (Fin n) (Fin n) ℂ) :
+theorem flatten_inner (A Z : Matrix (Fin n) (Fin n) ℂ) :
     inner ℝ ((D5.S3.Quantum.Matrix.CartesianVariance.vectorize n) A) ((D5.S3.Quantum.Matrix.CartesianVariance.vectorize n) Z) = RHLinalg.rtrace (Aᴴ*Z) := by
   calc
     inner ℝ (D5.S3.Quantum.Matrix.CartesianVariance.vectorize n A)
@@ -158,7 +159,7 @@ end
 section
 variable {n : ℕ}
 
-private theorem trace_hermitianPart {G : Matrix (Fin n) (Fin n) ℂ} (hG : G.IsHermitian)
+theorem trace_hermitianPart {G : Matrix (Fin n) (Fin n) ℂ} (hG : G.IsHermitian)
     (Z : Matrix (Fin n) (Fin n) ℂ) :
     RHLinalg.rtrace (G*(selfAdjointPart ℝ Z : Matrix (Fin n) (Fin n) ℂ))=RHLinalg.rtrace (G*Z) := by
   have hs : (G*Zᴴ).trace = star ((G*Z).trace) := by
@@ -178,7 +179,7 @@ end
 section
 variable {n : ℕ}
 
-private theorem rankone_trace (Y : Matrix (Fin n) (Fin n) ℂ) (x : Fin n → ℂ) :
+theorem rankone_trace (Y : Matrix (Fin n) (Fin n) ℂ) (x : Fin n → ℂ) :
     RHLinalg.rtrace ((Matrix.vecMulVec x (star x))*Y) = RHLinalg.hermForm Y x := by
   unfold RHLinalg.rtrace RHLinalg.hermForm
   rw [Matrix.trace_mul_comm, Matrix.mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_comm]
@@ -211,7 +212,7 @@ end
 section
 variable {n : ℕ}
 
-private theorem psd_entry_bound_of_trace {A : Matrix (Fin n) (Fin n) ℂ} (hA : A.PosSemidef)
+theorem psd_entry_bound_of_trace {A : Matrix (Fin n) (Fin n) ℂ} (hA : A.PosSemidef)
     (R : ℝ) (hR : 0 < R) (htr : RHLinalg.rtrace A ≤ R) (i j : Fin n) : ‖A i j‖ ≤ R := by
   have hpsd : (R⁻¹ • A).PosSemidef := hA.smul (inv_nonneg.mpr hR.le)
   have hd : ∀ k, ((R⁻¹ • A) k k).re ≤ 1 := by
