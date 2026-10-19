@@ -453,7 +453,7 @@ $$
 \tag{O.32}
 $$
 
-因此固定 $d,B,t$，$M^2/N\to0$ 与 $M/K\to0$ 是联合误差趋零的一组充分条件。这里使用集体编码识别后的同一空间；原生门逼近误差、标签获取成本与物理时间标定另计。
+因此固定 $d,B,t$，$M^2/N\to0$ 与 $M/K\to0$ 是联合误差趋零的一组充分条件。反向地，对一个节点的 Dicke 窗口 $m=0,\ldots,M\leq N$，若任意至多 $K$ 标签的相位编码与联合恢复把误差降至 $0\leq\epsilon<2$，则必要条件为 $K\geq(M+1)(1-\epsilon/2)$。无能量限制的振子极限上，每个有限 $K$ 的统一恢复误差为二；先令窗口或标签数趋无限给出 (O.35) 的不同极限。这里使用集体编码识别后的同一空间；原生门逼近误差、标签获取成本与物理时间标定另计。
 
 证明。积分 $e^{-i(j-k)\theta}$ 得 (O.30)。对 $M\geq1$，输入 $(|0\rangle+|M\rangle)/\sqrt2$ 的输出差只有一对非零特征值，其迹范数为 $1-\operatorname{sinc}(M\pi/K)$。$M=0$ 时通道恒等。
 
@@ -476,9 +476,9 @@ $$
 \leq\frac{2|t|C_BM(M-1)}N.
 $$
 
-应用通道收缩性与三角不等式即得 (O.32)。$\square$
+应用通道收缩性与三角不等式即得 (O.32)。
 
-**定理 6.3（有限标签对可恢复激发范围的必要容量）。** 在 $d_0\geq1$ 个连续能级 $0,\ldots,d_0-1$ 上，对定义 6.1 的所有至多 $K$ 标签编码以及所有 CPTP 联合恢复，均有
+必要记录规模使用标准的有限经典侧信息恢复界作为中间步骤。[König、Renner 与 Schaffner，*The operational meaning of min- and max-entropy*，Theorem 2](https://arxiv.org/pdf/0807.1338) 将最优纠缠恢复写成 $2^{-H_{\min}(A|B)}/d_A$；[Tomamichel，*Quantum Information Processing with Finite Resources*，arXiv:1504.00233v5，Lemma 6.18](https://arxiv.org/pdf/1504.00233v5) 给经典 $K$ 值寄存器的条件最小熵损失至多 $\log_2 K$。这两条熵公式采用二进制单位。在完全退相干的 Choi 边缘上 $H_{\min}(A|B)=0$，故两者给纠缠保真度上界 $K/d_0$。下面直接验证当前模型的同一界，作为集体码容量推导的供应者，不另立一般恢复定理。在 $d_0\geq1$ 个连续能级 $0,\ldots,d_0-1$ 上，对定义 6.1 的所有至多 $K$ 标签编码以及所有 CPTP 联合恢复，
 
 $$
 \inf_{q,\mathcal R}\|\mathcal R\mathcal E_q-\mathrm{id}_{d_0}\|_\diamond
@@ -498,7 +498,7 @@ $$
 \tag{O.35}
 $$
 
-证明。使用归一化 Choi 态作为标准通道测试。取 $|\Omega\rangle=d_0^{-1/2}\sum_{j=0}^{d_0-1}|j,j\rangle$。标签 $y$ 的未归一化 Choi 算子 $J_y$ 满足
+确实，取归一化 Choi 测试 $|\Omega\rangle=d_0^{-1/2}\sum_{j=0}^{d_0-1}|j,j\rangle$。标签 $y$ 的未归一化 Choi 算子 $J_y$ 满足
 
 $$
 0\leq J_y\leq J_*=
@@ -518,6 +518,8 @@ f_y&=\langle\Omega|(\mathrm{id}\otimes\mathcal R_y)(J_y)|\Omega\rangle\\
 $$
 
 故总保真度 $f\leq K/d_0$。以 $|\Omega\rangle\langle\Omega|$ 作二结果测量，恢复输出与理想态的迹距离至少为 $2(1-f)$，给出 (O.34)，并与非负性合并。
+
+对单节点 Dicke 码，定义 1.2 的 $J_N$ 将 $m=0,\ldots,M$ 等距识别为这 $d_0=M+1$ 个不同电荷能级。该识别保持带有限参考的迹范数，因而 (O.34) 给出所述标签必要条件。
 
 对无限空间的任意固定编码与恢复，将输入限制到前 $d_0$ 个能级。恢复输出可用一个 CPTP 压回该窗口的映射作后处理：保留窗口内块，将窗口外概率送入 $|0\rangle$。该后处理在理想窗口输入上是恒等，且不增加迹范数。有限维下界因而仍是原误差的下界。令 $d_0\to\infty$ 得二；通道距离的通用上界也是二。固定 $K$ 时有限窗口误差随 $M$ 非减并趋二；固定 $M$ 时 (O.31) 趋零，得到 (O.35)。$\square$
 
@@ -646,7 +648,7 @@ $$
 
 这些列正交归一。令 $v=e_0$，从 $e_0$ 外逸的分量最早在第 $m+1$ 步返回，故前 $m$ 个返回振幅为 $q^n$。第 $m+1$ 步为 $q^{m+1}+1-|q|^2$。这给 (O.43)，也证明最小维数定义总可行。
 
-接着给出保持精确一步压缩的近似构造。对每个 $|\zeta|=1$ 取
+接着给出保持精确一步压缩的近似构造。其两点谱测度与相位平均有直接文献先例：[Simon，*Orthogonal polynomials with exponentially decaying recursion coefficients*，Theorem 2.2](https://arxiv.org/pdf/math/0603099) 固定前面的 Verblunsky 系数，对末端相位作 Haar 平均，得到 Bernstein–Szegő 测度。取该文 $n=1$、$\alpha_0=\overline q$，每个两点测度保留首矩 $q$，平均为密度 $(1-|q|^2)/|e^{i\theta}-q|^2$ 的 Poisson 测度，其正整数矩为 $q^n$。下面直接验证当前矩阵的对应恒等式，不把固定首矩的相位平均机制作为新发明。对每个 $|\zeta|=1$ 取
 
 $$
 U_\zeta=\begin{pmatrix}q&a_q\\\zeta a_q&-\zeta\overline q\end{pmatrix},
@@ -738,7 +740,9 @@ p_j=\langle v,\Pi_jv\rangle\geq0,\quad\sum_jp_j=1.
 \tag{O.55}
 $$
 
-定理 8.2 的构造因而是固定 Euler 相位叠加在压缩读出中的有限窗口包络。精确扩张维数、Hoeffding 浓缩和有限谱复返均为已知中间原理；本卷将它们组织为保持精确一步压缩的标量窗口上下界，不主张这些方法或对数容量规律的全局优先权。式 (O.44) 固定 $q$、非零 $\epsilon$ 和采样合同，不声称关于 $q\to1$、$\epsilon\to0$ 或连续时间的统一估计。它控制末端返回振幅，不是完整开放通道、连续测量联合分布或条件轨迹的模拟。
+定理 8.2 的构造因而是固定 Euler 相位叠加在压缩读出中的有限窗口包络。对数谱点数与指数长度窗口的随机幂和机制已有 [Erdős–Rényi，*A probabilistic approach to problems of Diophantine approximation*，Theorems 1–2，pp.303–305](https://www.renyi.hu/~p_erdos/1957-01.pdf) 的直接先例：他们对零目标的等权幂和使用独立圆周相位、指数尾界与并合界，并以同时 Dirichlet 逼近给出复返障碍。其打印结论没有要求一般首矩精确为 $q$。[Ambainis–Nahimovs，*Improved constructions of quantum automata*，Theorem 2 与 §3.2](https://arxiv.org/pdf/0805.1686) 也使用二维旋转块直和与等幅初态，在有限循环输入问题中实现对数状态数；那是零目标的模素数判别，不能直接替代本卷的一般 $q$ 合同。
+
+精确扩张维数、Simon 的固定首矩平均、Hoeffding 浓缩和有限谱复返均为归属明确的中间原理。本卷的容量陈述是它们在同一压缩合同中的定量综合，不把相位平均、二维块架构或对数容量规律宣称为原创。式 (O.44) 固定 $q$、非零 $\epsilon$ 和采样合同，不声称关于 $q\to1$、$\epsilon\to0$ 或连续时间的统一估计。它控制末端返回振幅，不是完整开放通道、连续测量联合分布或条件轨迹的模拟。
 
 ## 9. 内生观察者的可读精度与时钟容量
 

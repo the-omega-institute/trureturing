@@ -926,7 +926,7 @@ This proves the first formula. Expanding the squared chordal loss gives
 $2-2\operatorname{Re}\mathbb E[e^{i\Phi}\overline{\widehat u(Y)}]$.
 Conditioning on $Y$ makes its minimum $2-2\sum_yp_y|m_y|$, attained by aligning each estimate with $m_y$. This proves the risk identity.
 
-For (P.62), describe every randomized encoder by measurable functions $0\leq q_y(\varphi)\leq1$, with $\sum_{y=1}^Kq_y(\varphi)=1$ almost everywhere. Define
+For (P.62), the circular quantization value is a literature input: Pandey and Roychowdhury, [*Constrained Quantization for Probability Distributions*, arXiv:2305.11110v9, Theorem 4.3 and Propositions 4.1–4.2](https://arxiv.org/html/2305.11110v9), give distortion $a^2+1-2aK\sin(\pi/K)/\pi$ for reconstruction on the radius-$a$ circle. Set $a=1$ and use (P.61). The following fixed-mass argument also verifies the scope for arbitrary randomized labels directly; neither the sine constant nor equal-arc quantization is a new result here. Describe every randomized encoder by measurable functions $0\leq q_y(\varphi)\leq1$, with $\sum_{y=1}^Kq_y(\varphi)=1$ almost everywhere. Define
 
 $$
 p_y=\frac1{2\pi}\int_0^{2\pi}q_y(\varphi)\,d\varphi,
@@ -951,7 +951,7 @@ $$
 
 The formula includes $p_y=0,1$. Concavity of sine on $[0,\pi]$, $\sum_yp_y=1$, and Jensen's inequality give $\sum_y|v_y|\leq K\sin(\pi/K)/\pi$. Disjoint equal arcs realize equality, with deterministic labels. Taylor expansion of this value gives (P.63). $\square$
 
-**Definition 14.3 (objective and attribution).** The source-specific content of Theorem 14.2 is the exact conversion of posterior circular estimation risk and finite alphabet capacity into whole-output recovery error in the AURIC fiber; it is repo-derived from Theorem 8.1. The squared-chord estimation identity and circular fixed-mass argument are classical intermediates. The diamond norm is taken after averaging the unknown phase conditional on the supplied record. It is not the worst-case unknown-phase objective of Theorem 12.2. The equal-arc optimum allows any measurable encoder; an implementation with restricted native gates must separately realize that encoder and count all accessible side information, including timestamps and real-valued operands.
+**Definition 14.3 (objective and attribution).** The source-specific content of Theorem 14.2 is the exact conversion of posterior circular estimation risk and the cited finite alphabet capacity into whole-output recovery error in the AURIC fiber; it is repo-derived from Theorem 8.1. The squared-chord estimation identity, the quantization optimum and circular fixed-mass argument are attributed intermediates. The diamond norm is taken after averaging the unknown phase conditional on the supplied record. It is not the worst-case unknown-phase objective of Theorem 12.2. The equal-arc optimum allows any measurable encoder; an implementation with restricted native gates must separately realize that encoder and count all accessible side information, including timestamps and real-valued operands.
 
 ## 15. Increasing accessible records and the phase-recovery limit
 
