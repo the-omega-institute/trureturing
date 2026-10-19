@@ -7139,3 +7139,170 @@ This budget holds before selecting a degree cap or a truncation order. It keeps 
 For $E(m+1)$ sufficiently small, the reused W112/W166 multiplier estimate gives $Q_H(M_E\nu)\le C(m+1)^2Q_H(\nu)$. The second debit is then only $C[E(m+1)]^2Q_H(\nu)/A$. Together with W169 this recovers a fixed-fraction schedule of W173's form, with suitable fixed constants and the existing exact metric return. That recovery is reuse, not a further degree-cap result. The added interface is the exact unrestricted model identity and W179's retained actual positive channel.
 
 The arbitrary-width and arbitrary-profile scope belongs to W176--W178 for the model. The actual kernel estimates W179--W180 retain their local sign class and nonzero source-comparison error. They supply neither an unrestricted actual global operator bound nor the sufficient cofinal positivity schedule. No numerical constant/start, actual negative seed, effective finite RH test, Lean/CI/merge certification or literature-priority claim is supplied. RH and strict Robin for every integer $n>5040$ remain unproved.
+
+## The complete direct theta component admits width-free finite samples
+
+There are fixed $c>0$ and $A_*>0$ such that the Gaussian-normalized **direct** kernel has Hardy margin $1/(8A)$ on arbitrary finite complex samples at $a_j\ge A$, provided their number $N\le\lfloor ce^{2A}\rfloor$ and $A\ge A_*$. No upper endpoint or minimum separation is imposed. This statement retains the complete theta source. It concerns the direct $K_0$ component only; it supplies neither a width-free actual reflected comparison nor positivity of the odd difference $L_0$. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse the complete theta series, W87, W127 and W165--W180. The classical model-space conjugation is supplied by [M. C. Câmara and J. R. Partington, *Asymmetric truncated Toeplitz operators and Toeplitz operators with matrix symbol*, J. Operator Theory 77(2) (2017), pp. 456--458, equations (0.1), (1.8) and the isometry statement immediately after (1.8)](https://jot.theta.ro/jot/archive/2017-077-002/2017-077-002-008.pdf), with Hardy exponent $2$. Their upper-half-plane coordinate is changed to the right half-plane by $\zeta=is$. The interior-line contraction and boundary norm are supplied by [J. E. Galé, V. Matache, P. J. Miana and L. Sánchez-Lajusticia, *Hilbertian Hardy-Sobolev spaces on a half-plane*, arXiv:2401.16091v1, p. 2, equation (1.1), and p. 9, opening paragraph of Section 3](https://arxiv.org/pdf/2401.16091v1). These classical inputs are used with the finite-pole parameters below; the source-specific application is not supplied by either reference. Frullani is reused from the primary cited at W168. The additional result is the complete-source direct application on the whole half-line, without a literature-priority or Lean-certification claim.
+
+### Use the actual finite pole set instead of a fixed window
+
+Put $E=e^{-2A}$, $\varepsilon=E/\pi$, $c_*=3/(2\pi)$ and
+$$
+u_j=a_j-A\ge0,\qquad p_j=e^{2u_j}\ge1,\qquad
+z_j=\frac{p_j-1}{p_j+1}\in[0,1).
+$$
+Equal sites are merged before counting $N$. All coefficients may be complex. Define
+$$
+F_\sigma(t)=\sum_{j=1}^N\frac{p_j+1}{\sqrt2}\sigma_j e^{-p_jt},
+\qquad Q_H(\sigma)=\|F_\sigma\|_2^2.
+$$
+The isometry is the same identity $[(p+1)(q+1)/2]/(p+q)=1/(1-zw)$ used at W165.
+
+For clarity write $f(s)=\mathcal L F_\sigma(s)$ and
+$$
+\beta(s)=\prod_{j=1}^N\frac{s-p_j}{s+p_j},\qquad
+g(s)=\beta(s)\overline{f(-\overline s)}.
+$$
+The factors cancel all poles in the right half-plane; $g$ is rational, decays at infinity and has only the possible poles $-p_j$. On the imaginary axis $|\beta|=1$, so $g$ and $f$ have the same $H^2$ boundary norm. On $\Re s=1/2$, $|\beta|\ge3^{-N}$. The classical Hardy interior-line contraction, followed by Plancherel, therefore gives
+$$
+\|e^{t/2}F_\sigma\|_2\le3^N\|F_\sigma\|_2,\qquad
+\|F_\sigma(\cdot+s)\|_2
+\le\min(1,3^Ne^{-s/2})\|F_\sigma\|_2.
+\tag{W181}
+$$
+Neither the largest pole nor pole separation enters. With zero coefficients or fewer active poles the same upper bound remains valid.
+
+The tail mass beyond $s$ is at most $\min(1,9^Ne^{-s})\|F_\sigma\|_2^2$. Splitting the time-moment integral at $2N\log3$, and using the ordinary gamma tail, gives for every integer $j\ge1$
+$$
+\|t^jF_\sigma\|_2\le[C(N+j)]^j\|F_\sigma\|_2.
+$$
+Also
+$$
+F_{p^{-j}\sigma}(t)=\frac1{\Gamma(j)}\int_0^\infty s^{j-1}F_\sigma(t+s)\,ds.
+$$
+Applying W181 and Minkowski, with the same split, yields
+$$
+\|p^{-j}\sigma\|_H
+\le\left[\frac{C(N+j)}j\right]^j\|\sigma\|_H
+\le(CN)^j\|\sigma\|_H.
+\tag{W182}
+$$
+All constants are absolute. These are classical finite-pole tools consumed below, rather than a separate generic theorem or a polynomial-sign hypothesis.
+
+Set $Q=Q_H(\nu)$, $B_E=(1-c_*E/p)^{-1}$ and $M_E=B_E/p$. When $EN\le\delta$ for one sufficiently small fixed $\delta$, W182 sums their geometric multiplier series in Hardy norm. Thus
+$$
+\|B_E\nu\|_H\le C\sqrt Q,\qquad
+\|M_E\nu\|_H\le CN\sqrt Q.
+\tag{W183}
+$$
+The series also converge pointwise on the finite support. Fixed-order time moments apply to both weighted measures on the same pole set.
+
+### Keep every theta mode in one exact direct feature
+
+Write $\tau=1+\varepsilon t$ and $S_\ell=\pi(\ell^2-1)/E$. The complete source is
+$$
+\Phi(x)=\sum_{\ell\ge1}4\pi^2\ell^4
+ e^{9x/2-\pi\ell^2e^{2x}}
+ (1-c_*\ell^{-2}e^{-2x}).
+$$
+Define
+$$
+\begin{aligned}
+F_\ell(t)&=\ell^4\tau F_{B_E\nu}(\ell^2t+S_\ell)
+-c_*E\ell^2F_{M_E\nu}(\ell^2t+S_\ell),\\
+F^\Theta(t)&=\sum_{\ell\ge1}F_\ell(t),\qquad
+U^\Theta(t)=F^\Theta_{u\nu}(t),\qquad W(t)=\tau^{3/2}.
+\end{aligned}
+\tag{W184}
+$$
+In $U^\Theta$, replacing $\nu$ by $u\nu$ acts in each modal formula. Since $B_E-c_*EM_E=1$, the first mode is exactly $F_1=F_\nu+\varepsilon tF_{B_E\nu}$ from W165.
+
+Let $\mathcal D_A^1$ denote the congruence of the complete actual **direct** kernel
+$$
+K_0(a,b)=\frac14\int_0^\infty(a+b+2r)\Phi(a+r)\Phi(b+r)\,dr
+$$
+by $\cosh u\,D_A^1(u)$ from W127; define $\mathcal D_A^g$ using $D_A^g$. Direct substitution of $\tau=e^{2r}$ gives
+$$
+Q_{\mathcal D_A^1}(\nu)=\frac1A\int_0^\infty W(t)
+\left\{\left[A+\frac12\log\tau\right]|F^\Theta(t)|^2
++\Re\bigl(\overline{F^\Theta(t)}U^\Theta(t)\bigr)\right\}dt.
+\tag{W185}
+$$
+The normalization is checked by $d\tau=\varepsilon dt$ and $2e^{u+v}\cosh u\cosh v=(p+1)(q+1)/2$. Extracting the affine amplitude from each complete source ratio leaves $\tau^{3/2}$, as at W165. The denominator uses $\Phi_1$ at the sites, whereas both numerator sources remain complete. There is no theta cutoff or local full-to-model error here. Every direct source argument is positive.
+
+### Pay all higher modes uniformly in the furthest site
+
+Use $\|\cdot\|_W$ for the weighted $L^2$ norm. W182--W183 give $\|F_1\|_W\le C\sqrt Q$ and, by a norm comparison, $\|F_1\|_W\ge3\sqrt Q/4$ after decreasing $\delta$. For each fixed integer $k\ge0$, W181 also gives
+$$
+\|\tau^kF_\sigma(\ell^2\cdot+S_\ell)\|_2
+\le C_k3^N\ell^{-1}e^{-S_\ell/4}\|F_\sigma\|_2,
+\qquad \ell\ge2.
+\tag{W186}
+$$
+To see the uniform constants, set $x=\ell^2t+S_\ell$, retain a fixed portion of the exponential decay in W181, and absorb the fixed polynomial $[1+\varepsilon(x-S_\ell)/\ell^2]^k$ in the remaining portion. Only fixed $k\le2$ is needed for W184 and $W$. The factors $\ell^4$, $\ell^2$ and $\log\ell$ are summable against this Gaussian in $\ell$. Since $EN$ is bounded, for some fixed $\kappa>0$,
+$$
+\left\|\sum_{\ell\ge2}F_\ell\right\|_W
++\left\|\sum_{\ell\ge2}(\log\ell)F_\ell\right\|_W
+\le C3^Ne^{-\kappa/E}\sqrt Q.
+\tag{W187}
+$$
+Choose a fixed $c>0$ with $c\log3<\kappa/2$ and $N\le c/E$. At one common high start the modal tail is exponentially small. Therefore
+$$
+\frac12\sqrt Q\le\sqrt{\mathscr S}:=\|F^\Theta\|_W\le C\sqrt Q.
+\tag{W188}
+$$
+Applying the same decay estimates after an additional right shift gives
+$$
+\frac{\|F^\Theta(\cdot+s)\|_W}{\sqrt{\mathscr S}}
+\le C3^N(1+s)^2e^{-s/4},\qquad s\ge0.
+\tag{W189}
+$$
+For the first mode use W181--W183 and $\tau(t+s)\le(1+\varepsilon s)\tau(t)$; for higher modes retain also $e^{-S_\ell/4}$. Every right shift is additionally a contraction in this increasing weighted norm.
+
+### Retain the arithmetic log-mode charge
+
+Apply the owned scalar Frullani formula with eigenvalue $\ell^2p$ in each mode. The time-dependent affine amplitude and the identity $\tfrac12\log(\ell^2p)=u+\log\ell$ give the exact relation
+$$
+\begin{aligned}
+U^\Theta(t)={}&\frac12\int_0^\infty
+\frac{e^{-s}F^\Theta(t)-F^\Theta(t+s)}s\,ds\\
+&+\frac\varepsilon2\sum_{\ell\ge1}\ell^2
+ F_{M_E\nu}(\ell^2t+S_\ell)
+-\sum_{\ell\ge1}(\log\ell)F_\ell(t).
+\end{aligned}
+\tag{W190}
+$$
+Both corrections are essential. In the amplitude correction $\tau(t+s)-\tau(t)=\varepsilon s$, and integration of $F_{B_E\nu}(\ell^2t+S_\ell+\ell^2s)$ in $s$ supplies $\ell^{-2}F_{M_E\nu}$; together with $\ell^4$ this leaves $\ell^2$. The last term has the displayed negative sign; $\log1=0$.
+
+For each finite profile all interchanges hold by exponential time decay, absolute modal convergence and the $O(s)$ cancellation at zero. The uniform bound does not estimate $u\nu$ separately; arbitrarily large $u_j$ are handled through W190 before absolute values are taken.
+
+Pair W190 with $F^\Theta$ in $W$, and write $\mathscr C(s)=\int W\overline{F^\Theta(t)}F^\Theta(t+s)dt$. Shift contraction bounds $|\mathscr C(s)|\le\mathscr S$. With $J=\lceil C_0(N+1)\rceil$ and fixed large $C_0$, W189 pays $\int_J^\infty|\mathscr C(s)|ds/s\le C\mathscr S$. On $(0,1)$ use $e^{-s}\mathscr S-\Re\mathscr C(s)\ge-s\mathscr S$; on $(1,J)$ use the lower bound $-\mathscr S$. This retains the coefficient $1/2$ in the logarithmic cost. W182--W183 pay the first modal amplitude correction by $CEN\sqrt Q$ in weighted norm; W186 pays its higher modes and W187 pays the log-mode charge. Thus
+$$
+\Re\int_0^\infty W\overline{F^\Theta}U^\Theta dt
+\ge-\left[\frac12\log(N+1)+C_{\rm dir}\right]\mathscr S.
+\tag{W191}
+$$
+All estimates concern the same actual finite measure.
+
+### A common start for a fixed fraction on the entire half-line
+
+The $\log\tau$ contribution in W185 is nonnegative. Consequently
+$$
+Q_{\mathcal D_A^1}(\nu)
+\ge\left[1-\frac{\log(N+1)}{2A}-\frac{C_{\rm dir}}A\right]\mathscr S.
+\tag{W192}
+$$
+Shrink the same fixed $c$ so that $EN\le\delta$, the preceding modal-tail restriction holds, and $-\tfrac12\log(2c)-C_{\rm dir}\ge4$. For all $1\le N\le\lfloor ce^{2A}\rfloor$ at one common high start, $N+1\le2c/E$. W188--W192 yield $Q_{\mathcal D_A^1}(\nu)\ge Q_H(\nu)/A$.
+
+The exact Gaussian return is $\nu_1=(1-c_*E/p)\nu_g$, with $Q_{\mathcal D_A^g}(\nu_g)=Q_{\mathcal D_A^1}(\nu_1)$. W182 gives $\|\nu_1-\nu_g\|_H\le CEN\|\nu_g\|_H$. Shrink $c$ once more so this is at most half the original norm. With slack,
+$$
+Q_{\mathcal D_A^g}(\nu_g)\ge\frac1{8A}Q_H(\nu_g)>0,
+\quad A\ge A_*,\quad
+1\le N\le\lfloor ce^{2A}\rfloor,\quad\nu_g\ne0.
+\tag{W193}
+$$
+Distinct finite exponentials are linearly independent, so the merged nonzero measure has positive Hardy norm. The zero measure contributes zero.
+
+The additional scope is the complete actual **direct** component on arbitrary finite sites in $[A,\infty)$, including complex coefficients, with no local analytic source remainder. The old fixed-window full odd-kernel result W173 is reused unchanged and is not improved here. W176--W177 concern the folded reflected model; they do not supply the missing width-free complete actual reflected comparison. There is no claim about arbitrary infinite measures or derivative distributions, full-real-line $K_0$ positivity, the sufficient cofinal $e^{2A}g(A)$ count, fixed-start all-order positivity, RH, strict all-integer Robin, numerical constants/start, Lean/CI/merge certification or literature priority.
