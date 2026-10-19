@@ -8,7 +8,7 @@ The equation and conjecture are recorded in hanna2025a386666. All indices are na
 
 **Theorem 1.1 (Prime power subst).**
 
-$$\forall p: \mathbb{N}, [\operatorname{Fact}\left(\operatorname{Nat}.\operatorname{Prime}\left(p\right)\right)], \forall f: \operatorname{PowerSeries}\left(\operatorname{ZMod}\left(p\right)\right), (f)^{p} = \operatorname{subst}\left((X)^{p}, f\right)$$
+$$\forall p: \mathbb{N}, [\operatorname{Fact}\left(\operatorname{Nat}.\operatorname{Prime}\left(p\right)\right)], \forall f: \operatorname{PowerSeries}\left(\operatorname{ZMod}\left(p\right)\right), (f)^{p} = \operatorname{subst}\left(f, (X)^{p}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.prime_power_subst` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ For normalized series agreeing below d, the first possible difference of their s
 
 **Theorem 1.3 (Subst two agree).**
 
-$$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall d: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), (1 \le d) \implies ((\forall j: \mathbb{N}, (j < d) \implies (\operatorname{coeff}\left(j, f\right) = \operatorname{coeff}\left(j, g\right))) \implies (\forall j: \mathbb{N}, (j < (d) + (1)) \implies (\operatorname{coeff}\left(j, \operatorname{subst}\left((X)^{2}, f\right)\right) = \operatorname{coeff}\left(j, \operatorname{subst}\left((X)^{2}, g\right)\right))))$$
+$$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall d: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), (1 \le d) \implies ((\forall j: \mathbb{N}, (j < d) \implies (\operatorname{coeff}\left(j, f\right) = \operatorname{coeff}\left(j, g\right))) \implies (\forall j: \mathbb{N}, (j < (d) + (1)) \implies (\operatorname{coeff}\left(j, \operatorname{subst}\left(f, (X)^{2}\right)\right) = \operatorname{coeff}\left(j, \operatorname{subst}\left(g, (X)^{2}\right)\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.subst_two_agree` (`✓ std3`). ∎
 

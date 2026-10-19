@@ -82,7 +82,7 @@ Multiplication by X increases the degree of agreement by one.
 
 **Theorem 1.7 (Subst outer agree).**
 
-$$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall d: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), \forall u: \operatorname{PowerSeries}\left(R\right), (\operatorname{Agree}\left(d, f, g\right)) \implies (((X)^{2} \mid u) \implies (\operatorname{Agree}\left((2) \cdot (d), \operatorname{subst}\left(u, f\right), \operatorname{subst}\left(u, g\right)\right)))$$
+$$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall d: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), \forall u: \operatorname{PowerSeries}\left(R\right), (\operatorname{Agree}\left(d, f, g\right)) \implies (((X)^{2} \mid u) \implies (\operatorname{Agree}\left((2) \cdot (d), \operatorname{subst}\left(f, u\right), \operatorname{subst}\left(g, u\right)\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.subst_outer_agree` (`✓ std3`). ∎
 
