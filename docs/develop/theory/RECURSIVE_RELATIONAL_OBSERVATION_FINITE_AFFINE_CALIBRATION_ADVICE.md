@@ -1411,3 +1411,109 @@ PAID35明确列出的 `DefectGraphMinimumColoring`，包括其 private `repair_l
 [TARGET]: RECURSIVE_RELATIONAL_OBSERVATION_UNCALIBRATED_TARGET_ACQUISITION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Restored complete-frame parsing and a restricted EXTRA lower bound
+
+The following result concerns one explicitly described parser composition. It is a consequence for that composition on the original legal witness family; it does not change the receiver quantifier in Problem 19.2.
+
+**Definition 22.1 (restored complete-frame parser).** Fix a uniform deterministic receiver $R$ with the serial, fixed-tag, persistent held-right interface of EVENT 10.3. Its schema has a fixed finite number of genuine request, identifier, descriptor, comparison, event and acknowledgement fields. The contents and lengths of genuine repeated fields are arbitrary finite strings. A field may have been prepared at actual paid cost and may be changed at a charged routine; between two such charged actions its complete string is fixed. No optional history, padding or mathematical workspace is made a mandatory field, and the receiver is not given $d$, an old absolute time, a raw count or new advice in a field.
+
+Integer fields use the prescribed unary-binary-length tally: header cells extend a tally, payload cells consume and clear it on the return traversal, and the tally head finishes at its marked origin. Every genuinely required generation, transport, check, copy, clear, comparison, delimiter operation and head return is retained at its actual cost. Genuine field heads return to their designated origins. Held rights, endpoint binding, event order and all finite protocol phases remain installed and are part of the returned control convention.
+
+During an interval with no EXTRA action, the receiver parks mathematical tapes, counters, observer caches, prepared code and other unbounded workspaces. It does not use an unbounded cursor or buffer position as dispatch state. A delivery cursor may advance only under the following noninterference condition: it writes the required stream, and neither its old position nor the contents of the already written stream can affect any later branch of $R$. Under that condition translating the unused head and its uninspected past leaves every subsequent action unchanged. Retained history, a later inspection, an accessible buffer index, a nonreturning field head or an additional interpretation/navigation pass is either a charged action or outside Definition 22.1. A charged routine may occur inside a transaction, provided the parser returns to the stated entry convention before the next passive interval. Prepared values and code are data for this fixed hardware, not a $d$-dependent expansion of its finite control.
+
+At a completed Return, let $Q_R$ be the number of configurations consisting of the fixed finite control, the fixed bounded payload cells and the finitely many protocol phases. Static field strings are parameters of a passive interval, not extra returned states. The actual complete parser and all its operation traces remain in the model.
+
+**Theorem 22.2 (frequent charged actions in the restored parser class).** Let $R$ satisfy Definition 22.1 and suppose that its full original first-physical-new-block specification is completed at the new block's own Return, including $g_1$, the original time and boundary data, the source and tail, and the installed rights. There is a constant $L_R$, independent of $d$, all prepared values, and all genuine static-field widths and contents, such that the following holds for every $d\ge1$.
+
+Take the original zero-source birth family
+
+$$
+ x=0^\infty,\qquad p_0=0^d,\qquad r_0=G_d-1,\qquad q=1,\quad b=0,\quad H=1.
+$$
+
+Let $T$ be the number of actual Steps from that proper handoff through the completed Return of the first physical new block, and let $E$ be the actual total original EXTRA work in that same new-phase run. Thus $E$ includes every stationary acquisition and preparation action, every nonbaseline receiver action, every extra Extent service and its frames, all required extra mathematical work, and finite output; compulsory literal baseline traffic retains its original classification. Then
+
+$$
+T=G_{d-1}\le L_R(E+1),\qquad
+E\ge \frac{G_{d-1}}{L_R}-1.
+\tag{77}
+$$
+
+Consequently, for this parser class alone, no bound polynomial in the numerical $d+H$ can hold uniformly for the original EXTRA at $H=1$. The assertion is a lower bound on the same run's EXTRA, not on waiting or compulsory traffic by itself.
+
+**Proof.** First follow the supplied initialized source execution. At the handoff $p_0=0^d$ has $N_{p_0}=0$ and $r_0=G_d-1$. On $x=0^\infty$ every later acquired block is $0$, so the actual sum remains zero. The inclusive death of this prefix is $k_{p_0}=G_{d+1}-2$. Hence the first physical new block is reached after
+
+$$
+T=k_{p_0}-r_0+1=G_{d+1}-G_d=G_{d-1}
+$$
+
+complete actual transactions. Across all $T$ transactions, including the first physical new-block transaction, the receiver sees the exact original sequence of Emit values
+
+$$
+\operatorname{Low}(G_d-1),\operatorname{Low}(G_d),\ldots,\operatorname{Low}(G_{d+1}-2),
+$$
+
+The final displayed value is emitted in that terminal transaction; for $d=1$, $T=G_0=1$ and the list consists only of $\operatorname{Low}(1)$, with no preterminal transaction. Every prescribed Advance, Return, request, acknowledgement and held-right check is retained. The same source-blind no-Read/no-Advance floor is used for every paid Extent call. The private producer's raw cursor, clocks and caches remain private and do not create a receiver marker.
+
+The full tuple requirement is essential. The companion legal source $0^d10\,0^\infty$ has the same complete observations up to the first physical new block under the same floor and the same original handoff and owned boundary, but its first new block is $10$ rather than $0$, so $g_1$ differs. Thus an earlier completion cannot be substituted for the required first-new-block Return. This paired argument concerns the full tuple and does not give a boundary-only lower bound.
+
+It remains to bound a passive interval. Put $w(a)=\operatorname{Low}(a)$ and $W_k=w[0,G_k)$. Greedy Zeckendorf uniqueness gives $W_0=0$, $W_1=01$, and
+
+$$
+W_{k+1}=W_kW_{k-1}\qquad(k\ge1):
+$$
+
+for $0\le a<G_{k-1}$, the expansion of $G_k+a$ has a $1$ at $k$, a $0$ at $k-1$, and the unchanged lower expansion of $a$. Thus $w$ is the fixed point of the primitive substitution $0\mapsto01$, $1\mapsto0$. The standard primitive-substitution uniform-recurrence result supplies a finite recurrence regulator; choose one nondecreasing regulator $\rho$ that works for $w$ and for every suffix. A window in a suffix is a window in $w$, and uniform recurrence gives the same factor language, so the one regulator covers every starting count used below. No stronger assertion about primitive $S$-adic systems is needed.
+
+Fix a maximal interval containing no original EXTRA action, and let $F$ be the complete tuple of genuine static field strings and other fixed field snapshots during that interval. At every ready Return, record the returned finite control and bounded live payload cells as $q$. The tally is empty with its head at its origin. Required field-generation, copying, comparison and check passes finish with their heads at the origins and with the same snapshots $F$; finite event bits and held-right phases are already in $q$. Parked mathematical data and prepared code have not been accessed. A write-only delivery head satisfies the stated noninterference condition and can therefore be translated away.
+
+For each $(q,b)$, execute the actual mandatory parser operations on the fixed $F$, stopping at the first additional action, finite completion or stall. The result is a transition table $\delta_F$ whose returned states are among the $Q_R$ values. The table may depend on the arbitrary values and widths in $F$, and its decorated operation trace may be arbitrarily long; only its returned decision state is bounded. All compulsory header, payload, copy, comparison, clear and head-return actions remain in that trace. If another routine touches a parked workspace, interprets prepared code, navigates an unbounded field or otherwise performs an EXTRA action, the passive interval ends at that action. Therefore the correspondence is derived from the restoring operations of this parser, not from a finite-register assumption about the complete receiver or producer.
+
+Adjoin one absorbing marked state for the first additional action or finite completion and one stalled state to totalize the table. The resulting synchronous comparison has at most
+
+$$
+ n_R=Q_R+2
+$$
+
+states. Its input is a suffix of $w$. If its first mark occurs after $\ell$ zero outputs, the marked continuation is $0^\ell1^\infty$. The least cut whose suffix is uniformly recurrent is exactly $\ell$: every suffix starting before that cut contains at least one $0$ but only finitely many $0$'s, so is not uniformly recurrent, while at the cut the suffix is constant $1$. The finite-automaton first-marker estimate of Pritykin, *Almost Periodicity, Finite Automata Mappings and Related Effectiveness Issues*, arXiv:cs/0607009v1, Section 3, Theorem 4, therefore gives
+
+$$
+\ell\le \sum_{j=1}^{n_R}\rho^{\circ j}(1).
+$$
+
+A mark just before a Step is placed on the next comparison symbol, and completion at a clean Return is counted as a terminal mark. Set
+
+$$
+ B_R=1+\sum_{j=1}^{n_R}\rho^{\circ j}(1),\qquad L_R=B_R+1.
+$$
+
+Thus every passive clean interval contains at most $B_R$ completed clean Steps before its next charged action or completion. The constants depend only on $R$ and the common Low recurrence regulator; they do not depend on $d$, $F$, the widths of $F$, or prepared deadlines.
+
+Now let $A$ be the number of actual nonbaseline receiver cell actions on this same finite execution. Mark a Step dirty when its invocation-to-Return interval contains at least one of these actions. Then at most $A$ Steps are dirty, and the remaining clean Steps form at most $A+1$ nonempty clean blocks: every separation is charged to a distinct dirty Step or to a distinct charged action in an intervening Return gap. If the first marked action lies inside a transaction, the comparison accounts only for its prefix; the full transaction remains a dirty transaction in the actual trace. If the receiver finishes at a clean Return, that Return is the terminal mark. Consequently
+
+$$
+T\le B_R(A+1)+A\le (B_R+1)(A+1)\le L_R(E+1),
+$$
+
+because $A\le E$. Preparation, stationary acquisition, extra Extent calls and frames, local counters and flags, interpretation, copies, setup and finite output are all included in $E$ at their actual costs. The compulsory literal baseline is not relabeled as EXTRA, and no required field operation is erased. This proves (77). Finally $G_{j+2}\ge2G_j$ gives $G_{d-1}\ge2^{\lfloor(d-1)/2\rfloor}$, so a fixed $L_R$ cannot be a polynomial bound in numerical $d+H$ on this subclass at $H=1$. \square$
+
+The theorem's parser correspondence is deliberately narrower than the original receiver domain. It permits genuine static fields of arbitrary width, but only because their full strings are restored parameters of each passive interval and their complete processing remains charged. It retains actual persistent rights and phases; it does not reconstruct them from descriptor bits. If the canonical local completed count is genuinely required as a moving field, the specified counter implementation already performs at least $T-1$ mathematical updates before $T$ requests, yielding the stronger immediate inequality $T\le E+1$ for that implementation. A prepared moving identifier sequence is a different representation and is covered only when it separately satisfies Definition 22.1.
+
+## 23. Relation to the original-point prefix and the unresolved universal target
+
+The complete original-point-prefix construction in *Original handoff point prefixes with causal stopping and all-update stream work* has a different target and a different positive scope. It reconstructs the finite positional prefix $q_L(y_0)$ of the original handoff point $y_0=\mathcal T^{r_0}x$, retains the first actual block tuple and full original owned boundary, and stops at
+
+$$
+T_{\mathrm{stop}}=\max(t_1,\tau_L)\le\max(G_{d_0-1},G_L-1),
+$$
+
+where $\tau_L$ is the first auxiliary cut whose unconditional itinerary fibre has length at least $L$. Its producer refinement proves all-update cache-jump, clock, conversion and phase work on that finite run, including every actual acquisition and rebuild; its specified service, parser and receiver costs are retained in $B_{\mathrm{actual}}$ and in the displayed polynomial active bound. This is not the one-reset-only accounting of an earlier source, and $\tau_L$ is not the original raw-prefix stopping time $h_m$ for $q_m(t_0)$. The point-prefix result therefore cannot be used by identifying these two targets or their stopping cuts.
+
+That source already uses EVENT's complete parser and its parked event data, PAID's initialized source and current-return identities, and CORE's local cache, finite-successor, clock and countdown mechanisms and first-block cost composition. The all-update producer simulation and the accounting for every acquisition jump and rebuild belong to Sections 9–10 of the original-point-prefix source; its Section 8 accounts for clocks and loads over all updates. Together these results provide the positive continuation and its actual operation costs. They do not provide the operation-to-returned-control correspondence of Definition 22.1 or the charged-action partition in Theorem 22.2. Conversely, Theorem 22.2 does not alter the point-prefix construction: its lower bound counts the private mathematical and receiver actions that the positive construction keeps real, while the compulsory literal traffic remains in the original baseline.
+
+The exact remaining statement is still FA Problem 19.2: over the entire originally legal receiver domain, with the unchanged source, public information, rights, complete first-physical-new-block Return, full tuple including $g_1$, complete original owned boundary and the literal mandatory baseline, does some receiver achieve polynomial total EXTRA in numerical $d_0+H$? Theorem 22.2 settles only the explicitly restored complete-frame subclass. It neither proves nor refutes the existential universal-domain statement, supplies a lower bound for every original receiver, or supplies a polynomial unrestricted EXTRA upper bound. Receivers with persistent unbounded buffers or cursors that influence dispatch, nonreturning field heads, shared mandatory field/workspace state, or another lawful coupling remain outside the theorem; no universal returned-state normal form has been assumed. Waiting alone is compulsory traffic, not the EXTRA lower bound. The load-bearing facts are the actual restoring parser correspondence and the same-run charged-action partition.
+
+**Sources and exact boundary.** The witness and its inclusive birth/death and first-Return conventions are supplied by PAID Definitions 1.1–2.3 and Theorems 3.1–3.2, FA Proposition 19.1 and EVENT Proposition 13.1. The parser operations and held-right phases are supplied by EVENT Sections 10–11; the local cache, successor, clock and countdown mechanisms and first-block cost composition are supplied by *Stream-linear active digital core through the first actual block Return*. The all-update producer simulation and acquisition-jump costs are supplied by Sections 9–10 of *Original handoff point prefixes with causal stopping and all-update stream work*, with clocks and loads in its Section 8. That source also supplies the original point-prefix continuation. The uniform-recurrence input is the classical primitive Fibonacci substitution, with background in F. Durand, *Linearly recurrent subshifts have a finite number of non-periodic subshift factors*, arXiv:0807.4430v1 and corrigendum arXiv:0808.0868v1. The first-marker estimate is used only inside the proof above from Pritykin, arXiv:cs/0607009v1, Section 3, Theorem 4. No claim of a universal finite quotient, global literature priority, physical realization, or formal-kernel certification is made.
+
+## 追加锚（本行以下为增补区）

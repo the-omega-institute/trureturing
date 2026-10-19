@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3b472664b4d25d33ad7cd94dc60bf07fc5c6f9b86a25649db223dc739e4e4cca
+  normalized_sha256: sha256:3b472664b4d25d33ad7cd94dc60bf07fc5c6f9b86a25649db223dc739e4e4cca
+cas_ref: sha256:3b472664b4d25d33ad7cd94dc60bf07fc5c6f9b86a25649db223dc739e4e4cca
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.riemannZeta_ne_zero_of_real_mem_Ioo
+    target_statement_id: sha256:3765473a6590caf0c2aea4e41f7b9dff32861645b8e5bdc36614d292084ee423
+  - gid: D5/S3/Zeros/ActualZeroGeometry.rh_iff_nontrivial_zeros_on_line
+    target_statement_id: sha256:4de5f23947c1d5e4f77f08c073db86922ed4bf72d784bf2c0d0d7a1b2b78cdd5
+  - gid: D5/S3/Zeros/Symmetry/RiemannStabilizerFreeOrbit.riemann_stabilizer_free_orbit
+    target_statement_id: sha256:190625db540b4e4032fa831fccc1f022cf1a61b24343b23dd75f750c2830b507
+receipts:
+  unresolved_subitems: []

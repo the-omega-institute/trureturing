@@ -6,7 +6,7 @@
    utility: none
    digest: Integral reversion and ternary digit support prove Hanna's A386666 congruence. -/
 
-/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19172. -/
+/- Escape audit unfinished for published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
 
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
@@ -16,7 +16,7 @@ open PowerSeries
 
 namespace D5.S1.Recurrence.Invariants.SignedCatalanCubicSubstitutionModThree
 
-private theorem prime_power_subst (p : ℕ) [Fact p.Prime]
+theorem prime_power_subst (p : ℕ) [Fact p.Prime]
     (f : PowerSeries (ZMod p)) : f ^ p = f.subst (X ^ p) := by
   have h := MvPowerSeries.map_frobenius_expand (σ := Unit) (R := ZMod p)
     p (NeZero.ne p) (f := f)

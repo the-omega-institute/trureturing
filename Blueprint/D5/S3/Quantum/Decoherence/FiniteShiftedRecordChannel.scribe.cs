@@ -28,6 +28,18 @@ internal sealed class FiniteShiftedRecordChannelDocument : IScribeDocumentDefini
                     + "finite reindexing; they are conclusions, not additional hypotheses."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("diagonal-kraus-complete"),
+                DeclarationHandle.Create(Owner + "diagonal_kraus_complete"),
+                H("Finite unit-norm records give a complete diagonal Kraus family"),
+                StatementSource.FromAuthor(DiagonalKrausFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For finite index types ι and ε, any complex record whose rows have squared "
+                    + "norm one yields diagonal Kraus operators whose adjoint products sum to "
+                    + "the identity matrix. The theorem is uniform in both finite carriers and "
+                    + "the record values."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("finite-shifted-record-channel"),
                 DeclarationHandle.Create(Owner + "finite_shifted_record_channel"),
                 H("The actual finite marginal is a completely positive trace-preserving channel"),
@@ -58,6 +70,10 @@ internal sealed class FiniteShiftedRecordChannelDocument : IScribeDocumentDefini
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula Qualified(params string[] parts) => Seq(parts.SelectMany(
+        (part, index) => index == 0
+            ? new[] { F.Id(part) }
+            : new[] { Dot, F.Id(part) }).ToArray());
     private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula.BoundVariable Bound(string name, Formula type) =>
         new(FormulaIdentifier.Create(name), type);
@@ -80,6 +96,40 @@ internal sealed class FiniteShiftedRecordChannelDocument : IScribeDocumentDefini
         Seq(Sum, Underscore, Grp(index, Sp, InMacro, Sp, domain), Sp, Grp(body));
     private static Formula Let(Formula body) =>
         Seq(Operatorname, Grp(F.Id("let")), Sp, body, Semi, Sp);
+
+    private static Formula LambdaTyped(string name, Formula type, Formula body) =>
+        Seq(Open, F.Id("fun"), Sp, Seq(Open, F.Id(name), Colon, type, Close), Sp,
+            Mapsto, Sp, body, Close);
+
+    private static Formula SumOverType(string name, Formula type, Formula body) =>
+        Seq(new Formula.Subscript(Sum, Seq(F.Id(name), Colon, type)), Sp, body);
+
+    private static Formula DiagonalKrausFormula()
+    {
+        Formula system = F.Id("I"), environment = F.Id("E");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula recordType = new Formula.TypeArrow(system,
+            new Formula.TypeArrow(environment, complex));
+        Formula record = F.Id("record"), i = F.Id("i"), a = F.Id("a");
+        Formula rowValue = Apply(Apply(record, i), a);
+        Formula rowNorm = SumOverType("a", environment,
+            Seq(Call("norm", rowValue), Caret, Grp(Num(2))));
+        Formula rowHypothesis = All([Bound("i", system)], Eqn(rowNorm, Num(1)));
+        Formula diagonal = new Formula.Apply(Qualified("Matrix", "diagonal"),
+            [LambdaTyped("i", system, rowValue)]);
+        Formula conclusion = Eqn(
+            SumOverType("a", environment, Seq(Adjoint(diagonal), Sp, Cdot, Sp, diagonal)),
+            Num(1));
+        Formula statement = All([Bound("record", recordType)],
+            Logic(rowHypothesis, FormulaLogicOperator.Implies, conclusion));
+        statement = Seq(OpenBracket, Call("Fintype", environment), CloseBracket, Sp,
+            statement);
+        statement = All([Bound("E", F.Id("Type"))], statement);
+        statement = Seq(OpenBracket, Call("Fintype", system), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", system), CloseBracket, Sp, statement);
+        statement = All([Bound("I", F.Id("Type"))], statement);
+        return Disp(statement);
+    }
 
     private static Formula TheoremFormula(bool realization)
     {

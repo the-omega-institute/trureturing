@@ -89,3 +89,38 @@ This is a paper-level application used by the
 without a priority claim or Lean certification. A pointwise positive
 $\psi(t)-t$ is not a lower bound for the original Robin signed integral
 at the final selected integer's clock.
+
+## Direct full-Chebyshev sign changes on every fixed power window
+
+The earlier primary is J. Pintz, *On the remainder term of the prime number
+formula I. On a problem of Littlewood*, *Acta Arithmetica* **36**(4)
+(1980), 341–365, [DOI: 10.4064/aa-36-4-341-365](https://doi.org/10.4064/aa-36-4-341-365).
+The [original double-page scan](https://personal.math.ubc.ca/~gerg/teaching/592-Fall2018/papers/1980.Pintz_1a.pdf)
+has 13 PDF pages, 892,377 bytes and SHA-256
+`672485e100e7982d869430185858b3ab7e2d503543b6982715ee69e684e7e790`.
+Printed p.341, equation (1.4), and p.349, Corollary 1, equation (8.6),
+were read directly from the scan; they are on PDF pages 1 and 5, respectively.
+The cited statements are reused without a new proof or Lean certification.
+
+Equation (1.4) defines the full function
+$\Delta_4(x)=\psi(x)-x=\sum_{n\le x}\Lambda(n)-x$.
+Corollary 1 states unconditionally that, for every fixed $\varepsilon>0$,
+there is an ineffective $X_0(\varepsilon)$ such that every
+$X>X_0(\varepsilon)$ has a sign change of each $\Delta_i$, $1\le i\le4$,
+in $[X,X^{1+\varepsilon}]$. In particular, take
+$\varepsilon=r^{-1}-1$ and $X=Y^r$. The already published result gives
+
+$$
+\forall r\in(0,1)\quad\exists Y_*(r)\quad
+\forall Y>Y_*(r)\quad\exists t\in[Y^r,Y]:\quad\psi(t)>t.
+\tag{P80}
+$$
+
+All prime powers and the weak upper endpoint in $\psi$ remain.
+This input has no RH, simple-zero or $O(x^\sigma)$ hypothesis.
+The threshold depends on the fixed $r$; no effective start or uniformity
+as $r\uparrow1$ is supplied. It directly improves the allowed power
+windows in the preceding indirect application. The
+[same-source CA application](../Arith/caveney2012sacaga.md#retain-the-original-oscillation-exponent-on-the-regular-ga1-source)
+uses this published point-location estimate. A positive point is still
+not a lower bound for the complete Robin integral at the final source.

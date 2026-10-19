@@ -21,16 +21,18 @@ internal sealed class SignedCatalanCubicSubstitutionModThreeDocument : IScribeDo
                 + "S denotes signedCatalanSeries over ZMod 3. The function p denotes distinctPowersOfThree. "
                 + "The operation subst(f,u) means composition f(u). All remainders in the "
                 + "conjecture are integer remainders.")),
-            Node("square_linear", "The next coefficient of a difference of squares", SquareLinearFormula(),
-                "For series with constant coefficient one that agree below d, the coefficient "
-                + "difference of their squares below d+1 is twice their coefficient difference.", DescribeRole.Theorem),
-            Node("subst_two_agree", "Substitution extends coefficient agreement", SubstitutionAgreementFormula(),
-                "For d at least one, agreement below d implies agreement below d+1 after substitution by X squared. "
-                + "The qualified expression PowerSeries.subst u f means f(u).",
-                DescribeRole.Theorem),
-            Node("inverse_exists", "A normalized two-sided compositional inverse", InverseExistsFormula(),
-                "A series with zero constant coefficient and linear coefficient one has a two-sided "
-                + "compositional inverse with the same coefficients at zero and one.", DescribeRole.Theorem),
+            Node("prime_power_subst", "Prime power subst",
+                Disp(Seq(Forall, Sp, F.Id("p"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(OpenBracket, Call("Fact", new Formula.Apply(Seq(Operatorname, Grp(F.Id("Nat")), Dot, Operatorname, Grp(F.Id("Prime"))), [F.Id("p")])), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", Call("ZMod", F.Id("p"))), Comma, Sp, Seq(new Formula.Power(Parenthesized(F.Id("f")), F.Id("p")), Sp, Eq, Sp, Call("subst", F.Id("f"), new Formula.Power(Parenthesized(F.Id("X")), F.Id("p")))))))),
+                "Frobenius identifies the pth power with substitution by X to the pth power over ZMod p.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("square_linear", "Square linear",
+                Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("d"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("g"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("n"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Parenthesized(Seq(Call("constantCoeff", F.Id("f")), Sp, Eq, Sp, D(1))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(Call("constantCoeff", F.Id("g")), Sp, Eq, Sp, D(1))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(Forall, Sp, F.Id("j"), Colon, Sp, Naturals(), Comma, Sp, Parenthesized(Seq(F.Id("j"), Sp, Lt, Sp, F.Id("d"))), Sp, Implies, Sp, Parenthesized(Seq(Call("coeff", F.Id("j"), F.Id("f")), Sp, Eq, Sp, Call("coeff", F.Id("j"), F.Id("g")))))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(F.Id("n"), Sp, Lt, Sp, new Formula.Binary(Parenthesized(F.Id("d")), FormulaBinaryOperator.Add, Parenthesized(D(1))))), Sp, Implies, Sp, Parenthesized(Seq(new Formula.Binary(Parenthesized(Call("coeff", F.Id("n"), new Formula.Power(Parenthesized(F.Id("f")), D(2)))), FormulaBinaryOperator.Subtract, Parenthesized(Call("coeff", F.Id("n"), new Formula.Power(Parenthesized(F.Id("g")), D(2))))), Sp, Eq, Sp, new Formula.Binary(Parenthesized(D(2)), FormulaBinaryOperator.Multiply, Parenthesized(new Formula.Binary(Parenthesized(Call("coeff", F.Id("n"), F.Id("f"))), FormulaBinaryOperator.Subtract, Parenthesized(Call("coeff", F.Id("n"), F.Id("g")))))))))))))))))))))),
+                "For normalized series agreeing below d, the first possible difference of their squares is twice the coefficient difference.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("subst_two_agree", "Subst two agree",
+                Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("d"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("g"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Parenthesized(Seq(D(1), Sp, Le, Sp, F.Id("d"))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(Forall, Sp, F.Id("j"), Colon, Sp, Naturals(), Comma, Sp, Parenthesized(Seq(F.Id("j"), Sp, Lt, Sp, F.Id("d"))), Sp, Implies, Sp, Parenthesized(Seq(Call("coeff", F.Id("j"), F.Id("f")), Sp, Eq, Sp, Call("coeff", F.Id("j"), F.Id("g")))))), Sp, Implies, Sp, Parenthesized(Seq(Forall, Sp, F.Id("j"), Colon, Sp, Naturals(), Comma, Sp, Parenthesized(Seq(F.Id("j"), Sp, Lt, Sp, new Formula.Binary(Parenthesized(F.Id("d")), FormulaBinaryOperator.Add, Parenthesized(D(1))))), Sp, Implies, Sp, Parenthesized(Seq(Call("coeff", F.Id("j"), Call("subst", F.Id("f"), new Formula.Power(Parenthesized(F.Id("X")), D(2)))), Sp, Eq, Sp, Call("coeff", F.Id("j"), Call("subst", F.Id("g"), new Formula.Power(Parenthesized(F.Id("X")), D(2))))))))))))))))),
+                "For positive d, substitution by X squared improves agreement by at least one degree.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("inverse_exists", "Inverse exists",
+                Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Parenthesized(Seq(Call("constantCoeff", F.Id("f")), Sp, Eq, Sp, D(0))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(Call("coeff", D(1), F.Id("f")), Sp, Eq, Sp, D(1))), Sp, Implies, Sp, Parenthesized(Seq(Exists, Sp, F.Id("b"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Parenthesized(Seq(Call("constantCoeff", F.Id("b")), Sp, Eq, Sp, D(0))), Sp, Land, Sp, Parenthesized(Seq(Parenthesized(Seq(Call("coeff", D(1), F.Id("b")), Sp, Eq, Sp, D(1))), Sp, Land, Sp, Parenthesized(Seq(Parenthesized(Seq(Call("subst", F.Id("b"), F.Id("f")), Sp, Eq, Sp, F.Id("X"))), Sp, Land, Sp, Parenthesized(Seq(Call("subst", F.Id("f"), F.Id("b")), Sp, Eq, Sp, F.Id("X"))))))))))))))))),
+                "A series with zero constant and unit linear coefficient has a normalized two-sided compositional inverse.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("generatingSeries", "The integral generating series", GeneratingFormula(),
                 "Choose an integer series satisfying the displayed normalization and equation. "
                 + "Existence follows by constructing its compositional inverse B=XH. The "
@@ -123,36 +125,6 @@ internal sealed class SignedCatalanCubicSubstitutionModThreeDocument : IScribeDo
             reduced ? Power(f, 3) : Mul(D(4), Power(f, 3))))));
     private static Formula NormalizedEquation(Formula f) => All(
         Equal(Call("constantCoeff", f), D(0)), Equal(Coeff(D(1), f), D(1)), CubicEquation(f));
-
-    private static Formula RingScope(Formula body) => Seq(Bound("R", Named("Type")),
-        OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Sp, Parenthesized(body));
-    private static Formula RSeries() => Series(F.Id("R"));
-    private static Formula Subst(Formula argument, Formula series) => new Formula.Apply(
-        Seq(Named("PowerSeries"), Dot, Named("subst")), [argument, series]);
-    private static Formula AgreeAt(Formula d, Formula f, Formula g) => Seq(
-        Bound("m", Naturals()), Implication(Seq(F.Id("m"), Sp, Lt, Sp, d),
-            Equal(Coeff(F.Id("m"), f), Coeff(F.Id("m"), g))));
-    private static Formula SquareLinearFormula() => Disp(RingScope(Seq(Bound("d", Naturals()),
-        Bound("f", RSeries()), Bound("g", RSeries()), Implication(
-            Equal(Call("constantCoeff", F.Id("f")), D(1)), Implication(
-            Equal(Call("constantCoeff", F.Id("g")), D(1)), Implication(
-            AgreeAt(F.Id("d"), F.Id("f"), F.Id("g")), Seq(Bound("n", Naturals()), Implication(
-            Seq(N(), Sp, Lt, Sp, Add(F.Id("d"), D(1))), Equal(
-                Subtract(Coeff(N(), Power(F.Id("f"), 2)), Coeff(N(), Power(F.Id("g"), 2))),
-                Mul(D(2), Parenthesized(Subtract(Coeff(N(), F.Id("f")), Coeff(N(), F.Id("g"))))))))))))));
-    private static Formula SubstitutionAgreementFormula() => Disp(RingScope(Seq(Bound("d", Naturals()),
-        Implication(Seq(D(1), Sp, Leq, Sp, F.Id("d")), Seq(Bound("f", RSeries()),
-        Bound("g", RSeries()), Implication(AgreeAt(F.Id("d"), F.Id("f"), F.Id("g")),
-            AgreeAt(Add(F.Id("d"), D(1)), Subst(Power(X(), 2), F.Id("f")),
-                Subst(Power(X(), 2), F.Id("g")))))))));
-    private static Formula InverseExistsFormula() => Disp(RingScope(Seq(Bound("f", RSeries()),
-        Implication(Equal(Call("constantCoeff", F.Id("f")), D(0)), Implication(
-        Equal(Coeff(D(1), F.Id("f")), D(1)), Seq(Exists, Sp, F.Id("b"), Colon, Sp,
-        RSeries(), Comma, Sp, Parenthesized(All(
-            Equal(Call("constantCoeff", F.Id("b")), D(0)),
-            Equal(Coeff(D(1), F.Id("b")), D(1)),
-            Equal(Subst(F.Id("b"), F.Id("f")), X()),
-            Equal(Subst(F.Id("f"), F.Id("b")), X())))))))));
 
     private static Formula GeneratingFormula() => Disp(Equal(Cast(A(), Series(Integers())),
         Call("choose", Seq(Exists, Sp, F.Id("f"), Colon, Sp, Series(Integers()), Comma, Sp,
