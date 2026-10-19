@@ -7,7 +7,6 @@
    digest: Entanglement of formation has a supporting affine functional at every pure state. -/
 
 import D5.S3.Quantum.Entanglement.MoreauYosidaFormationSelectiveLoccRefutation
-import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Quantum.Matrix.CartesianVariance
 
 /-! A supporting affine functional for the finite-dimensional entanglement of formation.
