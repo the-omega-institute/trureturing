@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.claim; result=D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.result; claim=D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.claim; result=D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.result; claim=D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.claim
    digest: Absolute two-incoherence does not force the purity bound. -/
 
 /-

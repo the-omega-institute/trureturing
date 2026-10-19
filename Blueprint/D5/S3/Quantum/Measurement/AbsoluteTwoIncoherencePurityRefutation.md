@@ -34,6 +34,10 @@ $$\neg (\forall (\operatorname{n} : \mathbb{N}) , (4 \leq \operatorname{n}) \to 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jmpp-2022-absolute-two-incoherence-purity` (refuted) by `D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jmpp-2022-absolute-two-incoherence-purity","declaration_gid":"D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nathaniel Johnston; Shirin Moein; Rajesh Pereira; Sarah Plosker (2022). *Absolutely k-incoherent quantum states and spectral inequalities for factor width of a matrix*. DOI: [10.1103/PhysRevA.106.052417](https://doi.org/10.1103/PhysRevA.106.052417). URL: <https://arxiv.org/abs/2205.05110v2>.
