@@ -7306,3 +7306,146 @@ $$
 Distinct finite exponentials are linearly independent, so the merged nonzero measure has positive Hardy norm. The zero measure contributes zero.
 
 The additional scope is the complete actual **direct** component on arbitrary finite sites in $[A,\infty)$, including complex coefficients, with no local analytic source remainder. The old fixed-window full odd-kernel result W173 is reused unchanged and is not improved here. W176--W177 concern the folded reflected model; they do not supply the missing width-free complete actual reflected comparison. There is no claim about arbitrary infinite measures or derivative distributions, full-real-line $K_0$ positivity, the sufficient cofinal $e^{2A}g(A)$ count, fixed-start all-order positivity, RH, strict all-integer Robin, numerical constants/start, Lean/CI/merge certification or literature priority.
+
+## A sector contour pays the complete reflected source on the half-line
+
+There are fixed $c>0$ and $A_*>0$ such that the complete actual odd kernel $L_0$ has original Gaussian Hardy margin $1/(8A)$ on arbitrary finite complex samples at $a_j\ge A$, when $A\ge A_*$ and their number $N\le\lfloor ce^{2A}\rfloor$. No upper endpoint or minimum separation is imposed. This extends the full-kernel finite-site domain beyond W173's fixed small window. It retains every theta mode and the reflected exterior. The count rate is still a fixed fraction of $e^{2A}$; full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse W174--W193 and their cited classical Hardy, Carleman, Frullani and Cauchy inputs. W75--W77 already give width-independent fixed-order conclusions and explicit growing-order starts; they are not reproved here. The additional ingredient is a complete reflected-source error in a fixed complex sector, paired through the actual finite-pole space. The elementary matrix and contour estimates below are consumed in that actual source comparison, rather than retained as separate generic statements. This is paper mathematics, without a literature-priority or Lean-certification claim.
+
+### Keep both source parameters in one sector
+
+Put $E=e^{-2A}$, $\varepsilon=E/\pi$, $c_*=3/(2\pi)$ and $a(p)=(p+1)/\sqrt2$. On the real physical sites use $u_j=a_j-A\ge0$, $p_j=e^{2u_j}\ge1$, $z_j=(p_j-1)/(p_j+1)$. Equal sites are merged before counting $N$; coefficients may be complex. Keep $Q=Q_H(\nu)=\|F_\nu\|_2^2$ and the exact W127 Gaussian/first-mode normalizations.
+
+Fix $0<\vartheta<\pi/8$, $r_0=1/2$ and the exterior sector $\Omega=\{p:|\arg p|<\vartheta,\ |p|>r_0\}$. Principal logarithms and square roots are used. Boundary estimates follow by first working in a slightly larger fixed sector. For $p,q\in\Omega$ and $\rho\ge0$, let $P_+,P_-$ be the unordered roots of
+$$
+P^2-(1+\rho)(p+q)P+pq=0.
+$$
+Write $m=\min(|p|,|q|)$, $M=\max(|p|,|q|)$. Then
+$$
+|\arg P_\pm|\le\vartheta,\qquad
+\frac{m}{2(1+\rho)}\le|P_\pm|\le2(1+\rho)M.
+\tag{W194}
+$$
+Indeed the roots are eigenvalues of $\operatorname{diag}(p,q)B_\rho$, where
+$$
+B_\rho=\begin{pmatrix}1+\rho&\sqrt{\rho(\rho+2)}\\
+\sqrt{\rho(\rho+2)}&1+\rho\end{pmatrix}.
+$$
+This real positive definite matrix has determinant one and largest eigenvalue at most $2(1+\rho)$. Its product with the diagonal matrix is similar to $B_\rho^{1/2}\operatorname{diag}(p,q)B_\rho^{1/2}$. For an eigenvector the numerical value of that congruence is a nonnegative real combination of $p,q$, placing the eigenvalue in the same sector. The upper modulus bound follows from the operator norm; the product $P_+P_-=pq$ gives the lower one. In particular $\Re P_\pm\ge\cos\vartheta\,m/[2(1+\rho)]$.
+
+### Retain the complete theta multiplier, including its small argument
+
+For $\Re v>0$ define
+$$
+T_E(v)=\sum_{\ell\ge1}\ell^4e^{-\pi(\ell^2-1)v/E}
+ \left(1-\frac{c_*E}{\ell^2v}\right),\qquad
+t_E(v)=1-\frac{c_*E}{v}.
+$$
+The owned complete source gives $\Phi(A+\tfrac12\log v)=\Phi_g(A+\tfrac12\log v)T_E(v)$. On the fixed sector its ordinary Gaussian fourth- and second-moment sums imply
+$$
+|T_E(v)|\le C\left[1+\left(\frac E{|v|}\right)^{5/2}\right].
+\tag{W195}
+$$
+For $|v|/E\ge1$, split off the first mode and use $\Re v\ge\cos\vartheta|v|$ on the tail. For $|v|/E\le1$, the two Gaussian sums give the displayed power. Thus W195 also handles a negative real physical source coordinate; no evenness is imposed on $\Phi_1$.
+
+Set
+$$
+\begin{gathered}
+c_0=\frac{p+q}{2\sqrt{pq}},\qquad Y=\frac{\pi(p+q)}E,\qquad
+\mathrm{den}=t_E(p)t_E(q),\\
+\mathcal A_E=\frac{T_E(P_+)T_E(P_-)}{\mathrm{den}},\qquad
+\mathcal A_1=\frac{t_E(P_+)t_E(P_-)}{\mathrm{den}}.
+\end{gathered}
+\tag{W196}
+$$
+At one high start the denominator is bounded away from zero throughout $\Omega^2$. Symmetric analytic functions of the two roots remain holomorphic at root collisions; neither root reaches zero or a logarithmic cut. The bounds below give locally uniform integral domination.
+
+### An exact contour for the actual reflected component
+
+For real $p,q>r_0$, put $x=A+\tfrac14\log(pq)$ and $d=\tfrac14\log(p/q)$. Complete-source evenness gives $K_0(a,-b)=\tfrac12\int_{|d|}^\infty y\Phi(x+y)\Phi(x-y)dy$. Substitute $\cosh2y=c_0(1+\rho)$, so the exponential source parameters are $P_+,P_-$. Since $y\,dy=\Psi(c)dc/4$, its exact W127-normalized reflected kernel satisfies
+$$
+\frac{R_A^{\rm act}(p,q)}{a(p)a(q)}
+=\frac1{4A\sqrt{pq}}\int_0^\infty
+ Y e^{-Y\rho}\Psi(c_0(1+\rho))\mathcal A_E(p,q,\rho)\,d\rho.
+\tag{W197}
+$$
+The raw reflected integral has factor $\Phi_g(a)\Phi_g(b)/8$ in front of its $c$ integral. Multiplying by $\cosh u\cosh v\,D_A^1(u)D_A^1(v)$ and using $dc=c_0d\rho$ gives precisely W197. Here $\Re c_0\ge\cos\vartheta>0$, so the owned branch of $\Psi$ applies.
+
+Replacing $\mathcal A_E$ by $\mathcal A_1$ gives exactly the W174--W178 model, because $P_++P_-=(1+\rho)(p+q)$ and $P_+P_-=pq$ reproduce its entire prefactor. This is the folded model, rather than a raw negative-argument substitution of $\Phi_1$. W194--W196 continue W197 holomorphically to $\Omega^2$; agreement on positive real parameters suffices for the Cauchy application below. As $\rho\to\infty$ one source parameter tends to zero, and W195 retains the complete exterior where $x-y<0$.
+
+### A uniform error controlled by the Loewner logarithm kernel
+
+For $r,s>0$ write
+$$
+\mathcal L(r,s)=\int_0^\infty\frac{dh}{(r+h)(s+h)}.
+$$
+Its $L^2(dr)$ operator norm is at most $\pi^2$: it is the square of the classical Carleman operator already used at W177. The Stieltjes identity at W175 gives
+$$
+\frac{\Psi(c_0(1+\rho))}{\sqrt{pq}}
+=\int_0^\infty\frac{dh}{(p+h)(q+h)+(p+q)\rho h},\qquad
+\left|\frac{\Psi(c_0(1+\rho))}{\sqrt{pq}}\right|
+\le C\mathcal L(|p|,|q|).
+\tag{W198}
+$$
+Every summand in that denominator has argument in the fixed sector of half-angle $2\vartheta<\pi/2$, so taking its real part proves the inequality uniformly in $\rho$.
+
+For $0\le\rho\le1$, W194 bounds both real parts below by $\cos\vartheta\,m/4$. Since $m\ge r_0$, the ordinary higher-mode theta tail yields $|\mathcal A_E-\mathcal A_1|\le Ce^{-\kappa/E}$. All first-mode factors are bounded there. For $\rho\ge1$, W194--W195 instead give the complete bound $|\mathcal A_E-\mathcal A_1|\le C(1+\rho)^5$. Also $\Re Y\ge\cos\vartheta|Y|$ and $|Y|\ge C/E$. Integration against $|Y|e^{-\Re Y\rho}$ pays both the central error and the entire polynomial exterior by $Ce^{-\kappa/E}$, after decreasing $\kappa$. Therefore, with $\Delta_A=R_A^{\rm act}-R_A^1$,
+$$
+\left|\frac{\Delta_A(p,q)}{a(p)a(q)}\right|
+\le\frac CA e^{-\kappa/E}\mathcal L(|p|,|q|),\qquad p,q\in\Omega.
+\tag{W199}
+$$
+The constants do not depend on the largest pole, width or separation.
+
+### Pair the error through the same finite-pole space
+
+Let $\Gamma$ be the positively oriented boundary of $\Omega$, with its two rays and inner arc. For a finite profile set
+$$
+f_\sigma(s)=\sum_j\frac{a(p_j)\sigma_j}{s+p_j},\qquad
+\mathscr R_\sigma(\zeta)=\sum_j\frac{a(p_j)\sigma_j}{\zeta-p_j}=-f_\sigma(-\zeta).
+$$
+Reuse W181's rational conjugate $g(s)=\beta(s)\overline{f_\sigma(-\bar s)}$, $\beta(s)=\prod_j(s-p_j)/(s+p_j)$, and its boundary Hardy norm $\|g\|_{H^2}^2=Q_H(\sigma)$ in the owned Paley--Wiener normalization. Along either ray $|\beta|\ge\tan(\vartheta/2)^N$; on the inner arc $|\beta|\ge3^{-N}$. With $b=\min(\tan(\vartheta/2),1/3)>0$,
+$$
+\|\mathscr R_\sigma\|_{L^2(\Gamma)}
+\le b^{-N}\|g\|_{L^2(\Gamma)}
+\le Cb^{-N}\sqrt{Q_H(\sigma)}.
+\tag{W200}
+$$
+For the last bound write $g=\mathcal LG$ with $\|G\|_2^2=Q_H(\sigma)$. The paired Laplace kernel on a ray is $[e^{i\vartheta}t+e^{-i\vartheta}s]^{-1}$, whose absolute value is at most $[\cos\vartheta(t+s)]^{-1}$. The owned Carleman bound gives $\int_0^\infty|g(re^{i\vartheta})|^2dr\le\pi\sec\vartheta\|G\|_2^2$, and similarly for the other ray. On the finite arc use $|g(\zeta)|\le\|G\|_2/\sqrt{2\Re\zeta}$ and $\Re\zeta\ge r_0\cos\vartheta$.
+
+The kernel $\mathcal L(|\zeta|,|\eta|)$ is bounded on $L^2(\Gamma,|d\zeta|)$. Ray-ray pieces use the $\pi^2$ bound; arc-arc is finite; arc-ray pieces use $\mathcal L(r_0,s)\in L^2([r_0,\infty))$, since it is $O(\log s/s)$ at infinity.
+
+Apply Cauchy in both variables to $\Delta_A(p,q)/(a(p)a(q))$. The two rational factors for the complex pairing are $\mathscr R_{\bar\nu}$ and $\mathscr R_\nu$, with the same Hardy norm. W199--W200 make the resulting double boundary integral absolute. The outer closing arcs vanish: for a fixed second parameter the kernel is $O(\log|\zeta|/|\zeta|)$, whereas the rational factor is $O(1/|\zeta|)$. Constants needed for this limiting justification may depend on the fixed finite profile; the resulting norm bound does not. Iterated Cauchy and Fubini give
+$$
+|Q_{\Delta_A}(\nu)|
+\le\frac CA b^{-2N}e^{-\kappa/E}Q_H(\nu).
+\tag{W201}
+$$
+No coefficient total variation, determinant or gap estimate replaces the Hardy norm.
+
+### Consume the complete reflection in the actual odd kernel
+
+On real $p_j\ge1$, W178 and W183 give $Q_{R_A^1}(\nu)\le[\pi/4+C(EN)^2]Q/A$. Thus the complete actual kernel satisfies
+$$
+Q_{\mathcal K_A^1}(\nu)\ge Q_{\mathcal D_A^1}(\nu)
+-\frac1A\left[\frac\pi4+C(EN)^2+Cb^{-2N}e^{-\kappa/E}\right]Q.
+\tag{W202}
+$$
+The direct component is the complete actual W185/W192 feature, not its first mode. In particular $Q_{\mathcal D_A^1}\ge[A-\tfrac12\log(N+1)-C_{\rm dir}]\mathscr S/A$, with $\mathscr S\ge Q/4$ under the owned small-$EN$ and modal-tail conditions.
+
+Choose fixed $c>0$ small enough for those conditions, $c\log(b^{-2})<\kappa/2$, and a direct coefficient $-\tfrac12\log(2c)-C_{\rm dir}$ larger than four times the fixed reflected budget plus eight. Decreasing $c$ achieves all requirements. For $1\le N\le\lfloor c/E\rfloor$ at one common high start, $N+1\le2c/E$, the error in W201 is exponentially small and $EN$ is small. W202 therefore yields, with fixed slack,
+$$
+Q_{\mathcal K_A^1}(\nu)\ge\frac1A Q_H(\nu).
+\tag{W203}
+$$
+The exact W127 return is $\nu_1=(1-c_*E/p)\nu_g$. W182 gives $\|\nu_1-\nu_g\|_H\le CEN\|\nu_g\|_H$. Shrink the same $c$ so this is at most half the original norm. With slack,
+$$
+Q_{\mathcal K_A^g}(\nu_g)\ge\frac1{8A}Q_H(\nu_g)>0,
+\quad A\ge A_*,\quad
+1\le N\le\lfloor ce^{2A}\rfloor,\quad a_j\ge A,\quad\nu_g\ne0.
+\tag{W204}
+$$
+Distinct finite exponentials are independent, so the merged nonzero measure has positive Hardy norm. The zero measure contributes zero. Every direct/reflected contribution and theta mode is retained on this same source.
+
+W204 supplies the width-free full actual finite-site consumer absent from W173 and W193. It does not enlarge the exponential count rate, extend to arbitrary infinite measures or derivative distributions, or give a common start for all orders. The sufficient cofinal $e^{2A}g(A)$ schedule with $g(A)\to\infty$, full-real-line $K_0$ positivity, RH and strict all-integer Robin remain unproved. No numerical constant/start, actual negative witness, Lean/CI/merge certification or literature priority is supplied. The classical tools and previously accepted estimates are reused; the added content is their complete reflected-source comparison and full-kernel half-line application.
