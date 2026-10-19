@@ -5691,3 +5691,339 @@ Here $w>0$ is arbitrary and fixed. This is conditional source-specific witness l
 An immediate actual consumer is now available: if, for some fixed $w>0$ and an unbounded set of centers $A$, the complete actual $L_0$ is PSD on every real sample of at most $n_A$ sites in $(A-w,A+w)$, then RH follows. The hypothesis quantifies over every location and coefficient on each admitted sample, not one grid or a finite scan. It only requires finite order at each center and a cofinal collection of centers. In particular a local sign-degree estimate valid up to $e^{\kappa A}$ with any fixed $\kappa>2$ on an unbounded sequence of large centers would suffice, because any real $n$-point measure has a polynomial sign separator of degree at most $n-1$, and complex coefficients split into real and imaginary parts.
 
 Existing W91 has a small fixed $\kappa$, not $\kappa>2$, and does not meet this target. Under RH failure, combining its positivity with W108 bounds the minimum number of sites needed for a negative local witness from below and above; this supplies neither sign nor a contradiction. W96--W100 and their geometric interaction estimates are reused unchanged. The new input is the actual near-boundary strip bound and complete finite-node reconstruction making the qualitative W40 obstruction quantitative. No identity with Suzuki's physical Weil operator, original prime form or Robin functional is asserted. Full RH and strict Robin for every integer above5040 remain unproved.
+
+## A larger positive sign range for the complete theta kernel
+
+On the fixed small physical window of (W87)--(W91), a fixed positive
+$c_{\rm deg}$ permits polynomial-sign degree up to
+$c_{\rm deg}e^{2A}\log A/A$, with Hardy margin $\log A/(8A)$.
+For each fixed $0<\delta<2$, a stronger fixed margin $\delta/4$ is
+available up to $e^{(2-\delta)A}$. These are estimates for the same
+complete actual odd kernel and exact Gaussian-leading transport,
+including the reflected exterior. The required common starts are
+specified by the corresponding fixed parameters.
+
+The proof reuses the actual model formulas, all-order factorial
+remainder, moment-radius inequality, logarithmic multiplier norm and
+stationary comparison in (W55), (W57), (W87)--(W89). It sharpens the
+one-sided core allowance, pays the multiplier denominators before
+spending the factorials, and strengthens the full-source comparison.
+The methods are classical Hardy, Gaussian and Laplace estimates;
+this source-specific paper derivation carries no priority or
+Lean-verification claim.
+
+For each fixed $0<\delta<2$ there is $A_\delta$ so every nonzero real measure in the existing degree-$m$ polynomial-sign class satisfies
+
+$$
+Q_{\mathcal K_A^{\rm g}}(\nu)\ge\frac{\delta}{4}Q_H(\nu)>0,
+\qquad A\ge A_\delta,\quad 0\le m\le\lfloor e^{(2-\delta)A}\rfloor.
+\tag{W109}
+$$
+
+Complex finite samples are then admitted up to $\lfloor e^{(2-\delta)A}\rfloor+1$ sites by real/imaginary splitting, exactly as in W91. Here $\delta$ is fixed before the common start; no uniform $\delta$ tending to zero is asserted. The same actual Hardy metric and positive congruence are retained.
+
+### Keep the sharp one-sided logarithmic coefficient
+
+Write
+
+$$
+a=(a_n),\qquad Q=\|a\|_2^2=Q_H(\nu),\qquad (Ba)_n=a_{n+1}.
+$$
+
+The reused tail allowance gives
+
+$$
+\|B^j a\|_2\le\min(1,L_mq^{-j})\|a\|_2,\quad
+L_m=3\Lambda^{m/2},\quad q>4.
+$$
+
+Choose an integer J between c(m+1) and C(m+1) with L_m q^{-J}<=1. Cauchy--Schwarz on n<J and the geometric tail show
+
+$$
+\|a\|_1\le C\sqrt{m+1}\|a\|_2.
+$$
+
+For the actual generating function F_a(e^{it})=sum a_n e^{int}, the probability density |F_a|^2/Q on the circle is therefore bounded by C(m+1). With normalized circle measure, the set |1+e^{it}|<e^{-s} has length at most Ce^{-s}. Layer-cake integration gives
+
+$$
+\int\log|1+e^{it}|\frac{|F_a(e^{it})|^2}{Q}\frac{dt}{2\pi}
+ \ge-\log(m+1)-C.
+$$
+
+The other logarithm is bounded above by log2. Actual compact support inside(-1,1) gives absolute convergence of the moment series and its logarithmic boundary integrals. Thus the Hardy shift identity for this same sequence yields
+
+$$
+\begin{aligned}
+\Re\langle a,\operatorname{arctanh}(B)a\rangle
+&=\frac12\int\log\left|\frac{1+e^{it}}{1-e^{it}}\right|
+ |F_a(e^{it})|^2\frac{dt}{2\pi}\\
+&\ge-\left[\frac12\log(m+1)+C\right]Q.
+\end{aligned}
+\tag{W110}
+$$
+
+No favorable sign for the whole correction is assumed. The stationary T(t)=t/(2sinh t) contribution is bounded in absolute form by Q_H using the already-owned W57 comparison. Hence the exact first core satisfies
+
+$$
+Q_{H+\widetilde C_{\rm core}/A}(\nu)
+ \ge\left[1-\frac{\log(m+1)}{2A}-\frac CA\right]Q.
+\tag{W111}
+$$
+
+For m<=exp((2-delta)A), the bracket is at least delta/2-O(1/A). The coefficient1/2 comes from the actual logarithmic form and is not an unspecified log-norm constant.
+
+### Retain the denominator of each growing multiplier order
+
+For positive integer r, put f_r(z)=exp(-r atanh z). Its reflected series g_r(z)=f_r(-z)=exp(r atanh z)=sum c_{rj}z^j has nonnegative coefficients. Set
+
+$$
+\rho=1-\frac r{2(J+r)}\in[1/2,1).
+$$
+
+For all j>=0,
+
+$$
+\min(1,L_mq^{-j})\le\rho^{j-J}.
+$$
+
+For j<=J the right side is at least1; for j>J use q^{-1}<rho and L_mq^{-J}<=1. Therefore
+
+$$
+\begin{aligned}
+\|f_r(B)a\|_2/\|a\|_2
+&\le\sum_j c_{rj}\min(1,L_mq^{-j})\\
+&\le\rho^{-J}\left(\frac{1+\rho}{1-\rho}\right)^{r/2}
+ \le\left[\frac{C(m+r+1)}r\right]^{r/2}.
+\end{aligned}
+\tag{W112}
+$$
+
+Here rho^{-J}<=exp(r/2) and (1+rho)/(1-rho)<4(J+r)/r. The case r=0 is the identity, kept separate. This bound is uniform in m and r and applies to the same actual moment sequence; no extremal profile is changed.
+
+Also reuse the weighted moment tail on every measure sigma with the same sign separator:
+
+$$
+\sum_{n\ge0}\binom{n+\ell}{\ell}|a_n(\sigma)|^2
+ \le\frac{[C(m+\ell+1)]^\ell}{\ell!}Q_H(\sigma),
+\qquad \ell\ge0.
+\tag{W113}
+$$
+
+This follows from binom(n+ell,ell)<=(n+ell)^ell/ell! and the existing weighted tail bound, using (n+ell)^ell<=2^(ell-1)[(n+1)^ell+(ell-1)^ell] when ell>=1. Positive multipliers f_r and (1-z)^ell preserve the same separator, including root atoms. Multiplication by atanh z has separator zp of degree m+1 and the already-owned C log(m+2) norm cost; this is used only where an actual factor1/A accompanies it.
+
+### Strengthen the full-source error on the complete reflected contour
+
+Keep exactly the fixed complex offset bidisc and model Phi1 of W87--W88. The full-to-model comparison can be paid by
+
+$$
+\sup|M_A^{\rm g}-M_{A,1}^{\rm g}|
+ \le Ce^{-c e^{2A}},
+\tag{W114}
+$$
+
+in place of W87's coarser exp(-c exp A), without changing its model coefficients or all-N factorial remainder.
+
+Here is the whole-half-line payment. In the direct integral, both source arguments are in the right tail, at least A-O(1), throughout. Their full theta errors relative to the Gaussian factor are bounded by exp(-c exp2A), and the normalized Gaussian integral is already uniformly integrable in W46/W87.
+
+In the reflected integral use the SAME contour y=sqrt(d^2+E s), E=exp(-2A), with the complete even-source product Phi(x+y)Phi(x-y), x=A+(u+v)/2, as in W87. Choose a fixed large Y0 independently of A. On Re y<=Y0, the imaginary part of y is bounded by |Im d|, and both source arguments have real part at least A-O(1)-Y0. The full theta comparison there is exp(-c_Y0 exp2A); its Gaussian product is paid by the existing complete normalized majorant.
+
+On Re y>=Y0, both full Phi and the chosen narrow-strip Phi1 are uniformly bounded for all real source arguments. The x+y factor has bound
+
+$$
+C e^{C(A+\Re y)}\exp[-c_0e^{2A+2\Re y}].
+$$
+
+The Gaussian congruence costs at most e^{C_0 exp2A+CA}. Fix Y0 large enough that c0 exp(2Y0)>2C0+2. On this part of the curve, |y dy|<=C(1+Re y)d Re y. Integrating the resulting bound, and absorbing fixed exponential/polynomial prefactors, gives Ce^{-c exp2A}. This pays even the region Re(x-y)<0 for both complete and model factors; Phi1 is never treated as even. The other model/source difference term is paid by the same high x+y bound. Thus no reflected exterior is discarded.
+
+Together with the reused scalar Taylor/Stieltjes proof of W87, W114 gives, for every N>=3 with the SAME compatible B_{k,A},
+
+$$
+M_A^{\rm g}=S+C_{\rm core}/A+\sum_{1\le k<N}E^kB_{k,A}+R_{N,A},
+\quad
+\sup|R_{N,A}|\le C^NN!E^N+Ce^{-c e^{2A}}.
+\tag{W115}
+$$
+
+No finite theta cutoff is declared PSD. The model is only an algebraic expansion device, with its full-source error paid.
+
+### Pay each actual coefficient at its own order
+
+The exact W88 coefficient formulas together with W112--W113 give, for k>=1,
+
+$$
+|Q_{\cosh u\cosh v B_{k,A}}(\nu)|
+ \le[C(m+k+2)]^k\left(1+\frac{\log(m+k+2)}A\right)Q.
+\tag{W116}
+$$
+
+All constants are independent of A,k,m. The factorial cancellation has two different payments in the direct and reflected pieces.
+
+For the direct term, choose p,q in{0,1} from the r_a,r_b prefactors, put j=p+q, and let ell be the Taylor order in tau-1. Its E-order is k=ell+j. The Laplace integral contributes ell!, while the exact kernel identity is
+
+$$
+\cosh u\cosh v e^{-\ell(u+v)}\operatorname{sech}^{\ell+1}(u-v)
+ =\frac{(1-z)^\ell(1-w)^\ell}{(1-zw)^{\ell+1}}.
+$$
+
+Use the two actual measures sigma_p=(1-z)^ell f_{2p}(z)nu and sigma_q=(1-z)^ell f_{2q}(z)nu. For p=0 use the identity; for p=1, W112 with r=2 gives norm at most C(m+1). The polynomial multiplier has shift norm at most2^ell. Weighted Cauchy--Schwarz and W113 therefore pay the bilinear coefficient by [C(m+k+2)]^k/ell! times Q. The ell! from integration cancels this denominator.
+
+The three scalar amplitudes (x+0.5log tau)tau^(7/2-j) from W88 have order-ell Taylor coefficients bounded by C^(ell+1)(|x|+1), without an additional ell!. The affine x/A part contributes1 and atanh(z)/(2A),atanh(w)/(2A). The latter use the existing logarithmic norm and the degree-(m+1) separator after multiplication, at cost1+log(m+k+2)/A, not a new fixed power of m. The scalar log tau term has factor1/A and needs no extra moment multiplier. At fixed k only the finitely many prefactor cases occur: ell=k,k-1,k-2.
+
+For the reflected term, reuse precisely W89's stationary bilinear comparison
+
+$$
+|B_{h_j\circ\cosh}(\sigma,\tau)|
+ \le C^{j+1}\sqrt{Q_S(\sigma)Q_S(\tau)}.
+$$
+
+The exact prefactors in W88 produce only these cases (r,s are the exponents in exp(-ru-sv)):
+
+| W88 prefactor | E-order k | (r,s) | scalar factorial |
+|---|---:|---|---|
+| 1 | j | (j,j) | j! |
+| -r_a or -r_b | j+1 | (j+2,j) or (j,j+2) | j! |
+| c_*^2 exp(-2(a+b)) | j+2 | (j+2,j+2) | j! |
+| -2c_* exp(-(a+b)) s | j+2 | (j+2,j+2) | (j+1)! |
+
+The j=0,k=0 term is the already-separated first core. In every remaining case r+s=2k, |r-k|,|s-k|<=1 and the factorial is at most k!. For k>=2, the denominator from the two W112 bounds is at least (k-1)^k; k!<=(2(k-1))^k cancels it at an exponential-in-k cost. For k=1 the finite cases are checked by their displayed formulas, with r=0 the identity. The numerator is bounded by [C(m+k+2)]^k. The overall1/A from W88 is harmless. This pays the whole reflected coefficient, with no independently optimized measure and no leftover factorial in k. It proves W116 for the existing actual expansion coefficients.
+
+### Pay every fixed exponent below two
+
+For nonzero nu the sharp core and the same Cauchy/moment allowance as W90 give
+
+$$
+\begin{aligned}
+\frac{Q_{\mathcal K_A^{\rm g}}(\nu)}{Q}
+\ge{}&1-\frac{\log(m+1)}{2A}-\frac CA\\
+&-\sum_{1\le k<N}e^{-2Ak}[C(m+k+2)]^k
+ \left(1+\frac{\log(m+k+2)}A\right)\\
+&-C\Lambda^m\left[C^NN!e^{-2AN}+e^{-c e^{2A}}\right].
+\end{aligned}
+\tag{W117}
+$$
+
+Fix delta in(0,2), assume m<=exp((2-delta)A), and choose a fixed sufficiently large D_delta with
+
+$$
+N=\left\lceil D_\delta\left(1+\frac{m+1}{A}\right)\right\rceil\ge3.
+$$
+
+For k<N, m+k+2<=C_delta(m+1). At a common large A_delta, log[C(m+k+2)]<=(2-delta/2)A; the retained sum is therefore O_delta(exp(-delta A/2)). Its logarithmic factor is uniformly bounded. Likewise log(C^N N!)<=(2-delta/2)AN. Increasing D_delta pays Lambda^m and gives a factorial remainder at most exp(-c_delta A-c_delta m). Finally m=o(exp2A), so Lambda^m exp(-c exp2A)<=exp(-c exp2A/2) at the same common start.
+
+The first line of W117 is at least delta/2-O(1/A). Spend at most delta/4 on all the remaining terms to obtain W109. All estimates concern the SAME actual measure and full kernel. The start depends on fixed delta and fixed support; no quantitative numerical start is supplied.
+
+
+### One fixed start admits the larger moving sign count
+
+Let C>=1 dominate the fixed constants in W116--W117, and keep the positive source-error constant c separate. There exist fixed c_deg>0 and A_* such that, for every A>=A_* and every real measure in the same polynomial-sign class,
+
+$$
+0\le m\le\left\lfloor c_{\rm deg}\frac{e^{2A}\log A}{A}\right\rfloor
+\quad\Longrightarrow\quad
+Q_{\mathcal K_A^{\rm g}}(\nu)
+ \ge\frac{\log A}{8A}Q_H(\nu)>0
+\quad(\nu\ne0).
+\tag{W118}
+$$
+
+The constant c_deg is new notation, distinct from the source's c_*=3/(2pi). All source, support, norm and sign-separator contracts are unchanged. There is no assertion that the source count or the rate is optimal.
+
+To pay the growing-order terms directly, put L=log A, M_A=c_deg exp2A L/A and choose
+
+$$
+N=\left\lceil D\,\frac{A+m+1}{L}\right\rceil,
+\qquad D\ge\max(4,2\log\Lambda+4).
+$$
+
+D is fixed. Increase one A_* so L>=2D, M_A>=1, N>=3 and, for every m<=M_A,
+
+$$
+m+N+2\le2M_A,\qquad
+\log(CN)\le2A-L/2.
+\tag{W119}
+$$
+
+These bounds are uniform in the admitted m: the maximum of N is O(D M_A/L+D A/L), so log(CN)<=2A-L+O(1), and (m+N+2)/M_A<=1+D/L+o(1). Their constants depend only on fixed D,c_deg and source constants.
+
+The logarithmic coefficient factor in W117 is at most4. Set
+
+$$
+\theta_A=C e^{-2A}(m+N+2)
+ \le2C c_{\rm deg}L/A.
+$$
+
+For a fixed choice 0<c_deg<=min(1,1/(256C)) and sufficiently large A_*, theta_A<=1/2. Thus every retained coefficient and its log factor are paid by
+
+$$
+\sum_{1\le k<N} e^{-2Ak}[C(m+k+2)]^k
+ \left(1+\frac{\log(m+k+2)}A\right)
+ \le\frac{4\theta_A}{1-\theta_A}
+ \le\frac{L}{16A}.
+\tag{W120}
+$$
+
+The first core in W117 is bounded below by
+
+$$
+1-\frac{\log(m+1)}{2A}-\frac CA
+ \ge\frac{L-\log L-\log(2c_{\rm deg})-2C}{2A}
+ \ge\frac{L}{4A}.
+\tag{W121}
+$$
+
+Here m+1<=2M_A at the same fixed start.
+
+For the factorial remainder, W119 and log(N!)<=N logN give
+
+$$
+\log\left(\Lambda^m C^NN!e^{-2AN}\right)
+ \le m\log\Lambda-\frac{L}{2}N
+ \le-\frac D2 A-\left(\frac D2-\log\Lambda\right)m-\frac D2
+ \le-2(A+m).
+$$
+
+Any fixed multiplicative constants in W117 are absorbed by increasing A_*. The complete-source error obeys
+
+$$
+\Lambda^m e^{-c e^{2A}}
+ \le e^{-c e^{2A}/2},
+$$
+
+because m/e^{2A}<=c_deg L/A tends to0. The sum of these two actual remainders is at most L/(16A). Insert W120--W121 into the SAME W117 for the SAME measure to obtain L/(4A)-L/(16A)-L/(16A)=L/(8A), proving W118.
+
+No estimate uniform in a varying delta has been silently assumed. All quantities are directly paid from W117 with one fixed start and explicit moving N. No model is asserted positive independently of the full-source error.
+
+
+### Sample counts and the remaining sufficient target
+
+For arbitrary complex coefficients on at most
+$\lfloor c_{\rm deg}e^{2A}\log A/A\rfloor+1$ distinct sites in the same
+physical window, apply the real estimate separately to the real and
+imaginary parts. Each measure has a polynomial sign separator of
+degree at most one fewer than the site count, and the exact positive
+Gaussian transport preserves its signs. There is no internal gap or
+density restriction; repeated roots and root atoms remain in the real
+measure class. The margin is in the transported Hardy norm. Strictness for a nonzero real measure uses the same compact-moment uniqueness argument as (W91).
+
+For every fixed $\delta\in(0,2)$, the fixed-$\delta$ statement above
+retains the stronger margin $\delta/4$. The moving-count proof was
+paid directly from the uniform estimate, with one fixed
+$c_{\rm deg}$ and start; it was not inferred by substituting a
+varying $\delta$.
+
+Conditionally on RH failing, combine the new positive count with
+(W108), without changing that theorem's seed-dependent eventual
+start. The minimum number of sites required for a local negative
+witness exceeds the new admitted count and is at most
+$\lceil8(A+1)e^{2A}\rceil$ eventually. The upper bracket bound divided by the lower is $O(A^2/\log A)$. This is a comparison of
+bounds, not a measured value or an optimality claim. It supplies no
+contradiction.
+
+The complete all-sample sufficient count in (W108), all orders on
+one fixed window, and the original signed Robin upper remain unpaid.
+The existing geometric-family estimates retain their stated smaller
+rate; a larger-rate joint extension is not supplied here. No actual
+negative seed or sample, numerical start, effective finite RH test,
+identity with the original prime/Robin operator or RH proof is
+provided. Full RH and strict Robin for every integer $n>5040$
+remain unproved.
