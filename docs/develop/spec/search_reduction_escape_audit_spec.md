@@ -63,7 +63,7 @@ R 的加强仅可保留全部旧尝试并增加新尝试，旧尝试保持原预
 
 判定程序位于 `LeanInformationAuditRegAnalysis.SearchReduction`，入口为 `make search-reduction REQUESTS=<Lean声明清单> SEARCH_MODULES="<所需模块>"`。清单导入已编译目标、S 与基底的所有者模块及 `LeanInformationAuditRegAnalysis.SearchReduction.Commands`，逐条使用 `#search_reduction T at "<40位基线提交>" baseline [<基底模块>] using [<S声明>] as <结果名>`；`#search_reduction_config` 显示实际配置，`#search_reduction_catalog "<40位基线提交>"` 投影该提交的规范冻结清单。私有名的 `Name.num` 段以二进制 Lean 模块中的 Name 构造树传入探针，不打印后重解析为标识符。`make search-reduction-test` 编译专属校准夹具。已构建且输入未变时，`make search-reduction-run REQUESTS=<同一清单>` 只执行复跑；复跑期间不并发重建其导入模块。
 
-`make search-reduction-test` 显式构建三个独立校准模块。`make search-reduction-replay-test` 先构建它们共同使用的程序、候选和目标所有者，再并发重新编译 `Calibration`、`Faults`、`RealNegative` 的源命令，完整重跑各探针与 Lean 守卫；不以缓存命中代替确定性复跑。校准模块只导入自身需要的固定输入，不串联其他校准模块。
+`make search-reduction-test` 显式构建四个独立校准模块。`make search-reduction-replay-test` 先构建它们共同使用的程序、候选和目标所有者，再并发重新编译 `Calibration`、`Faults`、`RealNegative`、`VocabularyTests` 的源命令，完整重跑各探针与 Lean 守卫；不以缓存命中代替确定性复跑。校准模块只导入自身需要的固定输入，不串联其他校准模块。测试聚合命令不承担多个独立探针的累计预算；各 R 与词汇重建调用仍执行登记预算。
 
 每条请求生成独立 Lean 模块并在独立编译器进程中运行，文件位于 `.lake/build/search-reduction/`，请求目录包含外层编译器进程 ID，使并发执行的同名请求各自持有其输出。搜索进程只静态导入 R 程序和登记基底，候选所有者用 `loadExts := false` 读取，不执行其初始化器。源环境只供恢复完整类型、编译值及公理依赖；搜索环境从 Mathlib 与登记基底重新导入，不合并交付环境的属性、实例或搜索索引。基底源码及依赖 pin 必须与登记提交一致，D5 基底成员须在该提交已有冻结状态片。源快照比较只核验基底来源，不是复用判据中的程序字节条件。
 
