@@ -70,6 +70,11 @@ theorem doubledContent (n : Nat) : stair (n + n) = stair n + stair n := addition
 theorem doubledPair (n : Nat) : stair (n + n) = stair n + stair n ∧ 0 ≤ n :=
   ⟨addition n n, Nat.zero_le n⟩
 
+theorem shiftedAnswer (n : Nat) : stair (n+n) = 3*(n+n) := answer (n+n)
+
+theorem splitTarget (n : Nat) : stair n = 3*n ∧ stair (n+n) = 3*(n+n) :=
+  ⟨answer n, shiftedAnswer n⟩
+
 theorem changedPremise (n : Nat) (h : n = 0) : stair n = 3 * n := by
   subst n
   rfl

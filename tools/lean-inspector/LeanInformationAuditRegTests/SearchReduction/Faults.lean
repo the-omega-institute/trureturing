@@ -3,6 +3,7 @@ import LeanInformationAuditRegTests.SearchReduction.FaultPaths
 import LeanInformationAuditRegTests.SearchReduction.PresentationCoverage
 import LeanInformationAuditRegTests.SearchReduction.SingleSourceTests
 import LeanInformationAuditRegTests.SearchReduction.Candidates
+import LeanInformationAuditRegTests.SearchReduction.PresentationCandidates
 
 /-! Resource faults and missing inputs never certify finite-search failure. -/
 open Lean Meta
@@ -73,6 +74,23 @@ run_meta do
   using [LeanInformationAudit.Tests.SearchReduction.Candidates.answer] as targetPackingLeakResult
 #guard targetPackingLeakResult = Verdict.insufficient
 #guard targetPackingLeakResult.paired = Run.incomplete Failure.isolation
+
+#search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.splitTarget
+  at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
+  using [LeanInformationAudit.Tests.SearchReduction.Candidates.answer,
+    LeanInformationAudit.Tests.SearchReduction.Candidates.shiftedAnswer] as splitStructureLeakResult
+#guard splitStructureLeakResult = Verdict.insufficient
+#guard splitStructureLeakResult.paired = Run.incomplete Failure.isolation
+
+#search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContent
+  at "a5e5b163319079eeb1b4b431395c65e43beb4b07"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline,
+    LeanInformationAuditRegTests.SearchReduction.PresentationBaseline]
+  using [LeanInformationAudit.Tests.SearchReduction.PresentationCandidates.arithmetic]
+    as baselinePresentationStructureResult
+#guard baselinePresentationStructureResult = Verdict.insufficient
+#guard baselinePresentationStructureResult.paired = Run.incomplete Failure.isolation
 
 run_meta do
   let getType := fun n => do pure (← getConstInfo n).type
