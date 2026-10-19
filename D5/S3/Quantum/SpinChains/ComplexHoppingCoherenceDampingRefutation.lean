@@ -94,33 +94,19 @@ def claim : Prop :=
       occupation x.2 % 2 ≠ occupation y.2 % 2 →
       ‖twistedTrace p ψ x y‖ ≤ ‖spinTrace p ψ x y‖
 
-private def castOperator :
-    Matrix (Fock 4) (Fock 4) GaussianInt →+* Operator 4 :=
-  GaussianInt.toComplex.mapMatrix
-
-private theorem cast_adjoint (M : Matrix (Fock 4) (Fock 4) GaussianInt) :
-    castOperator Mᴴ = (castOperator M)ᴴ :=
-  Matrix.conjTranspose_map GaussianInt.toComplex GaussianInt.toComplex_star
-
-private theorem cast_smul (z : GaussianInt) (M : Matrix (Fock 4) (Fock 4) GaussianInt) :
-    castOperator (z • M) = GaussianInt.toComplex z • castOperator M :=
-  Matrix.map_smul' _ _ _ GaussianInt.toComplex.map_mul
-
-private def imaginary : GaussianInt := ⟨0, 1⟩
-
 private def hoppingG : Matrix (Fin 4) (Fin 4) GaussianInt :=
-  !![14, -9 + 16 * imaginary, -48, -12 - 12 * imaginary;
-    -9 - 16 * imaginary, 14, -12 + 12 * imaginary, -48;
-    -48, -12 - 12 * imaginary, -14, -16 + 9 * imaginary;
-    -12 + 12 * imaginary, -48, -16 - 9 * imaginary, -14]
+  !![14, -9 + 16 * (Zsqrtd.sqrtd : GaussianInt), -48, -12 - 12 * (Zsqrtd.sqrtd : GaussianInt);
+    -9 - 16 * (Zsqrtd.sqrtd : GaussianInt), 14, -12 + 12 * (Zsqrtd.sqrtd : GaussianInt), -48;
+    -48, -12 - 12 * (Zsqrtd.sqrtd : GaussianInt), -14, -16 + 9 * (Zsqrtd.sqrtd : GaussianInt);
+    -12 + 12 * (Zsqrtd.sqrtd : GaussianInt), -48, -16 - 9 * (Zsqrtd.sqrtd : GaussianInt), -14]
 
 private def hopping : Matrix (Fin 4) (Fin 4) ℂ :=
   (1 / 50 : ℂ) • hoppingG.map GaussianInt.toComplex
 
 private def eigenmodesG : Matrix (Fin 4) (Fin 4) GaussianInt :=
   !![3, 3, 4, 4; 3, -3, 4, -4;
-    4, -4 * imaginary, -3, 3 * imaginary;
-    4, 4 * imaginary, -3, -3 * imaginary]
+    4, -4 * (Zsqrtd.sqrtd : GaussianInt), -3, 3 * (Zsqrtd.sqrtd : GaussianInt);
+    4, 4 * (Zsqrtd.sqrtd : GaussianInt), -3, -3 * (Zsqrtd.sqrtd : GaussianInt)]
 
 /-- Twice the single-particle energies. -/
 private def eigenvaluesG : Fin 4 → GaussianInt := ![-3, -1, 1, 3]
@@ -130,13 +116,6 @@ private def annihilatorG (j : Fin 4) : Matrix (Fock 4) (Fock 4) GaussianInt :=
     if finTwoEquiv (t j) = true ∧
         (fun i => finTwoEquiv (s i)) = Function.update (fun i => finTwoEquiv (t i)) j false
     then (-1) ^ prefixCount (fun i => finTwoEquiv (t i)) j else 0
-
-private theorem annihilatorG_cast (j : Fin 4) :
-    castOperator (annihilatorG j) = annihilator j := by
-  ext s t
-  simp only [castOperator, RingHom.mapMatrix_apply, annihilatorG, Matrix.map_apply,
-    annihilator, Matrix.submatrix_apply, fullC_entry]
-  split_ifs <;> simp
 
 private def liftG (h : Matrix (Fin 4) (Fin 4) GaussianInt) :
     Matrix (Fock 4) (Fock 4) GaussianInt :=
@@ -150,8 +129,6 @@ private def gramFactorG (k : Fin 4) : Matrix (Fock 4) (Fock 4) GaussianInt :=
 
 private def weightsG : Fin 4 → GaussianInt := ![3, 1, 1, 3]
 
-private def vacuumG : Fock 4 → GaussianInt := fun s => if s = 0 then 1 else 0
-
 private def orbitalAG : Matrix (Fock 4) (Fock 4) GaussianInt :=
   3 • annihilatorG 0 + 4 • annihilatorG 2
 
@@ -159,14 +136,13 @@ private def orbitalBG : Matrix (Fock 4) (Fock 4) GaussianInt :=
   3 • annihilatorG 1 + 4 • annihilatorG 3
 
 /-- The two-particle Slater vector before division by 25. -/
-private def psiG : Fock 4 → GaussianInt := orbitalAGᴴ *ᵥ (orbitalBGᴴ *ᵥ vacuumG)
+private def psiG : Fock 4 → GaussianInt := orbitalAGᴴ *ᵥ (orbitalBGᴴ *ᵥ Pi.single 0 1)
 
 private def psi : Fock 4 → ℂ := fun s => (1/25 : ℂ) * GaussianInt.toComplex (psiG s)
 
 private theorem diagonalizationG :
     (2 : GaussianInt) • hoppingG =
-      eigenmodesGᴴ * Matrix.diagonal eigenvaluesG * eigenmodesG ∧
-    eigenmodesG * eigenmodesGᴴ = (50 : GaussianInt) • 1 := by
+      eigenmodesGᴴ * Matrix.diagonal eigenvaluesG * eigenmodesG := by
   decide +kernel
 
 private theorem lifted_diagonalizationG :
@@ -176,7 +152,7 @@ private theorem lifted_diagonalizationG :
     _ = liftG ((2 : GaussianInt) • hoppingG) := by
       simp only [liftG, Matrix.smul_apply, smul_smul, Finset.smul_sum, smul_eq_mul]
     _ = liftG (eigenmodesGᴴ * Matrix.diagonal eigenvaluesG * eigenmodesG) :=
-      congrArg liftG diagonalizationG.1
+      congrArg liftG diagonalizationG
     _ = _ := by decide +kernel
 
 private theorem ground_certificateG :
@@ -191,6 +167,7 @@ private theorem slater_coordinatesG :
       if s = ![1, 0, 0, 1] then 12 else
       if s = ![0, 1, 1, 0] then -12 else
       if s = ![0, 0, 1, 1] then 16 else 0 := by
+  rw [psiG, funext (Pi.single_apply (0 : Fock 4) (1 : GaussianInt))]
   decide +kernel
 
 private theorem psi_normG : star psiG ⬝ᵥ psiG = (625 : GaussianInt) := by
@@ -202,34 +179,36 @@ private theorem ground_kernelG : ∀ k : Fin 4, gramFactorG k *ᵥ psiG = 0 := b
   decide +kernel
 
 private theorem hamiltonian_cast :
-    hamiltonian hopping = (1/50 : ℂ) • castOperator (liftG hoppingG) := by
+    hamiltonian hopping = (1/50 : ℂ) • GaussianInt.toComplex.mapMatrix (liftG hoppingG) := by
+  have hann (j : Fin 4) : (annihilatorG j).map GaussianInt.toComplex = annihilator j := by
+    ext s t
+    simp only [annihilatorG, Matrix.map_apply, annihilator, Matrix.submatrix_apply,
+      fullC_entry]
+    split_ifs <;> simp
   unfold hamiltonian hopping liftG
-  simp only [map_sum, cast_smul, map_mul, cast_adjoint, annihilatorG_cast,
+  simp only [map_sum, RingHom.mapMatrix_apply,
+    Matrix.map_smul' _ _ _ GaussianInt.toComplex.map_mul, Matrix.map_mul,
+    Matrix.conjTranspose_map GaussianInt.toComplex GaussianInt.toComplex_star, hann,
     Finset.smul_sum, Matrix.smul_apply, Matrix.map_apply, smul_smul, smul_eq_mul]
 
-private theorem hopping_hermitian : hopping.IsHermitian := by
-  have h : hoppingGᴴ = hoppingG := by decide +kernel
-  unfold hopping Matrix.IsHermitian
-  rw [Matrix.conjTranspose_smul,
-    ← Matrix.conjTranspose_map GaussianInt.toComplex GaussianInt.toComplex_star, h]
-  norm_num
-
-private def gramFactor (k : Fin 4) : Operator 4 := castOperator (gramFactorG k)
+private def gramFactor (k : Fin 4) : Operator 4 := GaussianInt.toComplex.mapMatrix (gramFactorG k)
 
 private theorem ground_certificate :
     hamiltonian hopping + (2 : ℂ) • 1 =
       (1/100 : ℂ) • ∑ k, GaussianInt.toComplex (weightsG k) •
         ((gramFactor k)ᴴ * gramFactor k) := by
-  have h := congrArg castOperator ground_certificateG
-  simp only [map_add, cast_smul, map_one, map_sum, map_mul, cast_adjoint] at h
+  have h := congrArg GaussianInt.toComplex.mapMatrix ground_certificateG
+  simp only [map_add, map_sum, RingHom.mapMatrix_apply,
+    Matrix.map_one _ GaussianInt.toComplex.map_zero GaussianInt.toComplex.map_one,
+    Matrix.map_smul' _ _ _ GaussianInt.toComplex.map_mul, Matrix.map_mul,
+    Matrix.conjTranspose_map GaussianInt.toComplex GaussianInt.toComplex_star] at h
   rw [hamiltonian_cast]
   calc
-    _ = (1/100 : ℂ) • ((2 : ℂ) • castOperator (liftG hoppingG) +
+    _ = (1/100 : ℂ) • ((2 : ℂ) • GaussianInt.toComplex.mapMatrix (liftG hoppingG) +
         (200 : ℂ) • (1 : Operator 4)) := by module
     _ = _ := by
       norm_num only [map_ofNat] at h
-      rw [h]
-      rfl
+      exact congrArg ((1/100 : ℂ) • ·) h
 
 private theorem normalized_psi : Normalized psi := by
   have h := congrArg GaussianInt.toComplex psi_normG
@@ -247,11 +226,11 @@ private theorem ground_kernel (k : Fin 4) : gramFactor k *ᵥ psi = 0 := by
   have h := congrArg (fun v : Fock 4 → GaussianInt => GaussianInt.toComplex ∘ v)
     (ground_kernelG k)
   simp only [RingHom.map_mulVec, Function.comp_def, Pi.zero_apply, map_zero] at h
-  change castOperator (gramFactorG k) *ᵥ
+  change GaussianInt.toComplex.mapMatrix (gramFactorG k) *ᵥ
     (fun s => GaussianInt.toComplex (psiG s)) = (0 : Fock 4 → ℂ) at h
   change gramFactor k *ᵥ ((1/25 : ℂ) • (GaussianInt.toComplex ∘ psiG)) = 0
   rw [Matrix.mulVec_smul]
-  change (1/25 : ℂ) • (castOperator (gramFactorG k) *ᵥ
+  change (1/25 : ℂ) • (GaussianInt.toComplex.mapMatrix (gramFactorG k) *ᵥ
     (fun s => GaussianInt.toComplex (psiG s))) = 0
   rw [h, smul_zero]
 
@@ -337,7 +316,11 @@ private theorem trace_values :
 theorem result : ¬ claim := by
   intro h
   have hp : occupation witnessX.2 % 2 ≠ occupation witnessY.2 % 2 := by decide +kernel
-  have hv := h 4 hopping hopping_hermitian psi psi_ground partition witnessX witnessY hp
+  have hhG : hoppingG.IsHermitian := by decide +kernel
+  have hv := h 4 hopping
+    ((hhG.map GaussianInt.toComplex GaussianInt.toComplex_star).smul
+      (by norm_num [IsSelfAdjoint] : IsSelfAdjoint (1/50 : ℂ)))
+    psi psi_ground partition witnessX witnessY hp
   rw [trace_values.1, trace_values.2] at hv
   norm_num at hv
 
