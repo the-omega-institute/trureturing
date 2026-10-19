@@ -885,3 +885,122 @@ $$
 相位卷定理 17.2 的 $\sum_j-\log c_j$ 是固定二分支的记录强度，不是 (O.61) 中不同历史数的对数；两种界不能互相替代。只有已计入总空间的新张量载体才能支持相应的新鲜记录合同。每个有限阶段不完备也不要求极限误差为正：相位卷定理 15.2 已把极限恢复与目标对极限可读记录的可测性相联系。因此，有限未知、永久盲核和无界记录容量是分别需要条件的陈述。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 五模式回路的相干闭合与最小奇偶覆盖
+
+**定义 12.1（指定运输与额外的相干认同）。** 使用 [History Records，第127、131章](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md) 的同一五模式图：方形 $0-1-2-3-0$ 加支边 $0-4$，每点携带 $\mathbb C^2$。固定
+
+$$
+a=-iX,\qquad b=-iY,\qquad c=ba=iZ,
+\qquad
+U_{10}=a,\ U_{21}=c,\ U_{32}=a^\dagger,\ U_{03}=c^\dagger,\ U_{40}=b.
+\tag{O.63}
+$$
+
+反向边取伴随；恒等自环不增加以下约束。这里固定边的相干相位，不将 $U_{ji}$ 与 $-U_{ji}$ 任意替换。取每条无向非自环边的一个方向 $e:i\to j$，定义
+
+$$
+A_e=\langle j|\otimes I-\langle i|\otimes U_{ji},\qquad
+L_{\rm coh}=\sum_e A_e^\dagger A_e.
+\tag{O.64}
+$$
+
+这额外要求每点只有一个振幅 $\psi_i$，所有边同时满足 $\psi_j=U_{ji}\psi_i$。它不是原十五边仪器自动施加的合同；边仪器可以保留路径记录而不作这种振幅认同。这里的零空间问题也不同于逐步测量的联合概率。
+
+为免与 Fibonacci 权重混淆，将历史卷的点框架写成
+
+$$
+\Gamma_0=I,\quad\Gamma_1=a,\quad\Gamma_2=ca=-b,\quad
+\Gamma_3=a^\dagger ca=-c,\quad\Gamma_4=b.
+\tag{O.65}
+$$
+
+该卷第131章已给逐边关系
+
+$$
+U_{ji}=(-1)^{\nu_{ji}}\Gamma_j\Gamma_i^\dagger,
+\qquad \nu_{03}=1,\quad\nu_{30}=-1,
+\tag{O.66}
+$$
+
+其余边 $\nu=0$。本文的覆盖图保持这个基图和每条边的原运输：在每个基点上置同样数目的离散层，每条基边在各层上双射地提升，不另改边相位。只在这一覆盖类内比较层数。
+
+**定理 12.2（负回路的两层相干修复）。** 定义 12.1 的十维基载体满足
+
+$$
+\ker L_{\rm coh}=\{0\}.
+\tag{O.67}
+$$
+
+将点扩为 $(i,\eta)$，$\eta\in\mathbb Z_2$，并将每条边提升为
+
+$$
+(i,\eta)\longrightarrow(j,\eta+\nu_{ji}\bmod2),
+\qquad\widetilde U=U_{ji}.
+\tag{O.68}
+$$
+
+所得十点覆盖图连通，每个提升闭路运输均为 $I_2$，且其二十维载体上的传播算子满足
+
+$$
+\begin{aligned}
+\ker\widetilde L_{\rm coh}
+&=\left\{
+\sum_{i=0}^4\sum_{\eta\in\mathbb Z_2}
+|i,\eta\rangle\otimes(-1)^\eta\Gamma_i\psi:
+\psi\in\mathbb C^2\right\},\\
+\dim\ker\widetilde L_{\rm coh}&=2.
+\end{aligned}
+\tag{O.69}
+$$
+
+因此在保持原基图及运输的覆盖类内，使非零相容振幅存在所需最小层数恰为二。单位 $\psi$ 给出的归一化相容态需在 (O.69) 的和式前乘 $1/\sqrt{10}$。
+
+证明。幺正标记图的平行截面及回路不动空间是已知中间方法，参见 Bausch--Crosson，[*Analysis and limitations of modified circuit-to-Hamiltonian constructions*, §2.2.4、§6](https://arxiv.org/abs/1609.08571)。环图精确历史扇区见 Churilov，[*Finite Quantum Histories: Holonomy Spectra, Minimal Clocks, and Exact Clock-Change Covariance*, Corollary III.3, Eqs. (18)--(19)](https://arxiv.org/html/2608.05748v1)。后者的陈述针对环，本应用还须检查支边及提升图的连通性，不把它改称一般图定理。
+
+具体地，对 $\Psi=\sum_i|i\rangle\psi_i$，
+
+$$
+\langle\Psi,L_{\rm coh}\Psi\rangle
+=\sum_{e:i\to j}\|\psi_j-U_{ji}\psi_i\|^2.
+\tag{O.70}
+$$
+
+沿生成树 $0-1-2-3$ 与 $0-4$ 的相容条件给 $\psi_i=\Gamma_i\psi_0$。剩余切边要求
+
+$$
+\psi_0=c^\dagger a^\dagger ca\,\psi_0=-\psi_0,
+$$
+
+故 $\psi_0=0$，其余点也为零。这同时核对了该具体图的方形 holonomy 及其支边，不是从一般仪器的存在推断矛盾。
+
+在提升图置 $\widetilde\Gamma_{i,\eta}=(-1)^\eta\Gamma_i$。由同一逐边因子化 (O.66)，
+
+$$
+U_{ji}\widetilde\Gamma_{i,\eta}
+=(-1)^{\eta+\nu_{ji}}\Gamma_j
+=\widetilde\Gamma_{j,\eta+\nu_{ji}}.
+\tag{O.71}
+$$
+
+反向边也成立，因为 $-\nu$ 与 $\nu$ 模二相同，且运输取逆。生成树的边不换层，每层内连通；切边 $3\to0$ 换层，所以整个提升图连通。(O.71) 沿任何闭路望远镜相消，给恒等运输，并给 (O.69) 的全部相容向量。反过来，连通性使任一相容向量由根 $(0,0)$ 的一个 $\mathbb C^2$ 向量唯一确定，故零空间没有更多维数。各框架幺正且有十个正交配置，得到所列归一化。
+
+一层覆盖同构于原基图，(O.67) 排除它；两层构造已满足全部约束，证明最小性。这是该既定运输的 `repo-derived` 覆盖应用；平行截面方法、中心符号提升与已知循环历史原理不另列为新的一般定理。$\square$
+
+**命题 12.3（奇偶记录、圈数与路径方向的分离）。** 同一图的一圈方形绕行把提升层翻转，两圈使层恢复；它不记录完整绕行数。普通逻辑密度运输仍对一圈闭合，而此振幅认同不闭合。原边仪器在 $p=q$ 的平衡条件下仍具有负方形 holonomy，同时其平稳记录路径方向判别量为零。
+
+证明。由 (O.68)，每圈沿 $3\to0$ 一次，故 $\eta\mapsto\eta+1$；两圈相加为零。由 $c^\dagger a^\dagger ca=-I$，任意 $\rho$ 有 $(-I)\rho(-I)^\dagger=\rho$；负号只有在实际供应路径相位参照及相干比较时才能区分。最后使用历史卷第129、130、133章的同一仪器合同：$p,q,r>0$、$p+q+r<1$、均匀初始配置、每轮新边记录及实际读取。其已给公式为
+
+$$
+\Sigma_N=\frac{4N}{5}(p-q)\log\frac pq,
+\qquad \mathbb E W_N=\frac{4N}{5}(p-q).
+\tag{O.72}
+$$
+
+在 $p=q$ 时两者均为零，(O.63) 的运输不受这个选择影响。交换 $p,q$ 反转平均绕行方向，但不改变非负 $\Sigma_N$ 的值，也不改变中心负符号。故相干闭合障碍、计圈能力与记录路径偏置并非同一量。$\square$
+
+**假设 12.4（与记录及读出容量的接合）。** (O.69) 是保持指定相干边运输的数学扩张，给十个提升配置乘二维逻辑空间。它没有规定这些边怎样由原生门精确实现，也不供应准备、读取、保留或反转绕行位的接口。它不声称在所有可能联合编码中二十维最小；最小性只计定义 12.1 的覆盖层数。若要保存无界圈数或整个路径，仍须加入相应的记录容量，不能以这一位代替第11节的历史解码要求。
+
+顺序来源的另一种区别由 [Paid Return，第42–44节](RECURSIVE_RELATIONAL_OBSERVATION_PAID_ZECKENDORF_CURRENT_RETURN.md) 给出：固定源的已取得柱渐近缩成一点，移动当前点的零余量预测缺口却反复出现，并有精确 Bellman 取得费用。[Exact Current Boundary Provenance，第18节](RECURSIVE_RELATIONAL_OBSERVATION_EXACT_CURRENT_BOUNDARY_PROVENANCE.md) 的固定边界历史纤维则在同一完整当前点背后保留 $G_{d-1}$ 个不同过去。将其中任一种区别解释为本图的物理环境或时钟，仍须指定同一实现的编码、访问权和成本；这些不同合同不凭“裂隙”一词相互等同。
+
+## 追加锚（本行以下为增补区）

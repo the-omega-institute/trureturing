@@ -2454,3 +2454,151 @@ The recovered original boundary is its oriented region with its actual owned lif
 The original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization, full-original-response and arbitrary interior-cut obligations of Definitions 9.2 and 26.3 keep their original scopes. The exact FIB $p_J$/all-response problem and original global 8-versus-9 problem are different targets; no bridge to them is asserted by Corollary 41.1. Neither an unrestricted space/time/boundary/memory inverse nor an equivalence with a physical realization follows from this additional observation contract.
 
 ## 追加锚（本行以下为增补区）
+
+## 42. Acquired prediction budget and the moving frontier
+
+**Definition 42.1 (Same-run budget and continuation class).** Use exactly the initialized source, sequential raw endpoint, public events and persistent rights of Definitions 1.2 and 2.2–2.3. At the $n$-th actual return write
+
+$$
+d_n=|p_n|,\qquad \delta_n=k_{p_n}-n.
+\tag{159}
+$$
+
+The observer obtains these finite fields by the event reconstruction of Theorem 3.1, not by observing the private Read count. For each actually consumed complete block, with pre-read depth $d$, assign budget increment $G_d$ to block $0$, and $G_{d+1}$ to block $10$. Denote these increments by $c_j$. They count additional uniformly predictable source operations, not bits of Shannon information or physical time. An infinite continuation means infinitely many successive productive Next calls on one fixed $x\in K$; it is not one finitely completed infinite transaction.
+
+**Theorem 42.2 (Budget balance and recurrent prediction exhaustion).** In every such initialized run, at every finite return,
+
+$$
+n+\delta_n=\sum_{j:\,\text{block }j\text{ consumed by return }n}c_j.
+\tag{160}
+$$
+
+For every fixed $x\in K$ and its infinite continuation,
+
+$$
+d_n\longrightarrow\infty,\qquad
+\liminf_n\delta_n=0,\qquad
+\limsup_n\delta_n=\infty,
+\qquad
+\bigcap_{n\ge0}C_{p_n}=\{x\}.
+\tag{161}
+$$
+
+At infinitely many actual returns the acquired public chronology does not determine the next Emit uniformly over its exact compatible-source fibre. Thus recovery of the fixed original source through nested cylinders coexists with recurrent failure of one-step uniform prediction at the moving current point.
+
+Proof. The actual returned transitions, including the physically read forced zero, are
+
+$$
+\begin{array}{c|c|c}
+\text{precondition and actual block}&(d,\delta)\text{ after Next}&\text{raw Reads}\\\hline
+\delta>0&(d,\delta-1)&0\\
+\delta=0,\ 0&(d+1,G_d-1)&1\\
+\delta=0,\ 10&(d+2,G_{d+1}-1)&2.
+\end{array}
+\tag{162}
+$$
+
+These are Definition 2.2 and the child clock identities (5), after the same one Advance. Initially $n=\delta=0$. Without a new block, $n+\delta$ is unchanged; at a block read it increases by its stated $c_j$, because $n+\delta=k_p$. This proves (160) by induction.
+
+If nondecreasing $d_n$ were bounded, only finitely many blocks could be consumed, so $p_n$ and its finite $k_{p_n}$ would eventually be fixed. Unbounded $n$ would then contradict $n\le k_{p_n}$. Hence $d_n\to\infty$. Each new block is read from a zero-slack return. Infinitely many blocks therefore give infinitely many such returns. The post-read birth slack at new depth $d'$ is $G_{d'-1}-1$ in either branch of (162). These birth depths tend to infinity, proving both slack limits. Prefixes only extend; every fixed coordinate is eventually acquired, and their cylinders are nested with intersection $\{x\}$.
+
+At every zero-slack return Theorem 3.1 gives exact fibre $C_p$. Theorem 4.1 supplies two actual compatible sources $p0v,p10v$ whose next emitted bits differ. No deterministic function of that chronology can predict both bits correctly. This is a uniform all-tail statement; it does not exclude correct prediction for a particular source under an additional known generator or a smaller prior. The fixed source has not acquired new coordinates during the run. $\square$
+
+## 43. Exact minimax acquisition costs at an earned return
+
+**Definition 43.1 (Continuation task and counted resources).** Start at an actual earned return $(p,n)$ of Theorem 3.1, retaining its reconstructed record and live rights. Fix the same finite task $(L,H)$ of Definition 1.3, and put $D=D(L,H)$. A policy uses only the original Next event channel, tests at returns, and must stop correctly on every compatible raw tail. There is no extra scale, Reference, raw observation, wall-time channel or source promise. Theorem 4.1 makes $\delta\ge D$ the exact stopping guard, and Theorem 5.3 makes the first successful return the earliest legal stop on each tail, also for this continuation after its fixed past.
+
+Count additional Next calls and additional raw Reads by $R$ and $B$. The latter is a system charge for actual consumed bits, not an extra observation. Both are nondecreasing along one continuing run. Finite arithmetic, bit work, output, source provisioning and calibration have their separate costs in §§8, 19 and 25; they are not included in $R,B$.
+
+**Theorem 43.2 (Exact Bellman solution and a common worst tail).** If $\delta\ge D$, the earliest stop has $R=B=0$. Otherwise $D>0$; define
+
+$$
+a=\min\{j\ge0:G_j\ge D+1\},\qquad b=\max\{d,a\},\qquad d=|p|.
+\tag{163}
+$$
+
+The minimum all-tail worst additional Next count, and the all-tail worst raw count for the earliest policy, are respectively
+
+$$
+R_* =\delta+1+G_{b+1}-G_{d+1},\qquad
+B_* =b-d+2.
+\tag{164}
+$$
+
+The earliest policy minimizes both counts on each actual tail. Their maxima in (164) occur together on every tail
+
+$$
+t=0^{\,b-d}10v,\qquad v\in K.
+\tag{165}
+$$
+
+Consequently, for any fixed nonnegative logical prices $c_N,c_R$, the minimum all-tail worst charge is exactly $c_NR_*+c_RB_*$.
+
+Proof. The exact stopping obstruction of Theorem 4.1 holds at every intervening trace, so a correct deterministic policy cannot stop before the first ready return on any tail. Stopping there is allowed and computes the response. Any later stopping along that same tail has no smaller Next or Read count. Thus it remains to evaluate the earliest policy on the actual transitions (162).
+
+Let $V_D(d,\sigma)$ be its worst additional Next count. The two children of any complete prefix admit every legal tail, and the following resource transitions depend only on $(d,\sigma)$, so this notation does not discard a tail constraint. For $\sigma\ge D$ it is zero. If $0<\sigma<D$, the next $\sigma$ calls cannot become ready, make no Reads and end at slack zero; hence
+
+$$
+V_D(d,\sigma)=\sigma+W(d),\qquad W(d)=V_D(d,0).
+\tag{166}
+$$
+
+The source-selected next block gives the Bellman equation
+
+$$
+W(d)=1+\max\{V_D(d+1,G_d-1),\ V_D(d+2,G_{d+1}-1)\}.
+\tag{167}
+$$
+
+For $d\ge a$, both children are ready, so $W(d)=1$. At $d=a-1$, the zero child is not ready but the $10$ child is; using (166) and $W(a)=1$ gives $W(a-1)=G_{a-1}+1$. For $d\le a-2$ neither child is ready, and
+
+$$
+W(d)=\max\{G_d+W(d+1),\ G_{d+1}+W(d+2)\}.
+\tag{168}
+$$
+
+Downward induction now gives
+
+$$
+W(d)=1+\sum_{j=d}^{a-1}G_j\quad(d<a),\qquad W(d)=1\quad(d\ge a).
+\tag{169}
+$$
+
+Indeed substitution into (168) makes its first candidate exceed its second by $G_d>0$, including $d=a-2$. The preceding boundary calculation handles $d=a-1$ separately. These are finite recursions to ready children, so they also prove termination. Combining (166), (169) and
+
+$$
+\sum_{j=d}^{b-1}G_j=G_{b+1}-G_{d+1}
+\tag{170}
+$$
+
+gives the first formula in (164), with an empty sum when $b=d$.
+
+No unsuccessful read transition can have parent depth at least $a$. Starting at depth $d$, every parent at which a new block is read before stopping therefore has depth at most $b$; the last block has at most two digits. Thus the final depth is at most $b+2$, giving $B\le b-d+2$. On the one tail (165), the policy first consumes its initial slack, reads zeros at parent depths $d,\ldots,b-1$, consumes the insufficient birth slack after each, and finally reads $10$ at parent depth $b$. The zero at parent depth $j<b$ consumes $1+(G_j-1)=G_j$ calls before the next zero-slack return. The last $10$ costs one call and ends ready. This one run attains $\delta+1+\sum_{j=d}^{b-1}G_j$ calls and $b-d+2$ raw bits. For nonnegative prices the separate bounds give an upper bound on the sum, and this common run attains it; separate, possibly incompatible extrema have not been combined. Pointwise earliest stopping supplies the matching policy lower bound. $\square$
+
+**Corollary 43.3 (Sharp initialized cost and optimal linear constant).** For $D>0$ at the empty initialization,
+
+$$
+R_*=G_{a+1}-1<\phi^2D,\qquad B_*=a+2=\log_\phi D+O(1).
+\tag{171}
+$$
+
+The constant $\phi^2$ is the infimum of uniform linear constants for this initialized worst Next count. In particular $D=3$ has $a=3$, $R_*=7$, $B_*=5$, attained by a source beginning $00010$.
+
+Proof. Substitute $d=\delta=0$ and $G_1=2$ in (164). The standard Binet identity, applied with the present weights, gives
+
+$$
+G_{a+1}-\phi^2G_{a-1}=(-\phi^{-1})^{a+1}<1.
+\tag{172}
+$$
+
+Minimality in (163) gives $a\ge1$ and $G_{a-1}\le D$, so subtracting one proves the strict bound in (171). For $D=G_{a-1}$ the same $a$ is selected, and $(G_{a+1}-1)/G_{a-1}\to\phi^2$; no smaller constant works for all $D$. The bounds $G_{a-1}\le D<G_a$ and Binet growth give the logarithmic raw count. The displayed example follows either from (165) or directly from the transitions. These sharpen the valid upper bounds of Theorem 5.2 in its original observation class; they do not replace its other cost and retained-use conclusions. $\square$
+
+## 44. Scope of the prediction-budget quotient
+
+**Definition 44.1 (Cost state and supplier correspondence).** The pair $(d,\delta)$, with fixed $D$ and the already held interface and rights of Definition 43.1, is sufficient for this worst-cost recursion. It is not the finite state needed to print the actual emitted values, authenticate the original history, or reconstruct a newly handed-off boundary. Such tasks retain $p,n$, or their separately acquired substitutes, and their guards. The all-source costs here concern the original earned-record problem, not an unknown affine unit, capped precision or a drifting unit.
+
+The source-specific transition and split witnesses of Theorems 3.1, 4.1 and 12.3 supply (162), exact all-tail readiness and the actual continuation set. Minimax dynamic programming is an established intermediate method: [Bellman, *The Theory of Dynamic Programming*, §2](https://doi.org/10.1090/S0002-9904-1954-09848-8), with state $(d,\delta)$ and an adversarial raw-block branch rather than a controller selecting that block. Fibonacci summation and Binet's formula are arithmetic intermediates. The new `repo-derived` deductions are (160)–(161), the exact joint bounds (164) and their sharp initialized specialization; no general novelty for conservation, stopping or Fibonacci identities is asserted.
+
+The already supplied unknown-fixed-unit scale construction in Theorem 17.3 instead obtains a boundary from finite approximate replies and two genuine updates, using known $\alpha$, closed absolute error, unchanged unit, counted intervening Steps and exclusive continuing rights. It supplies neither the original private prefix nor an initialization-time age selector. The complete-point normal form and source-history fibres in [Exact Current Boundary Provenance, Theorem 6.4](RECURSIVE_RELATIONAL_OBSERVATION_EXACT_CURRENT_BOUNDARY_PROVENANCE.md) keep their fixed-boundary quantifier; that volume's §§11–17 treat the different problem of arbitrary handoff. Neither (161) nor the cost quotient removes those distinctions. No conversion of Next count, predictive budget or arc length to physical seconds is assumed.
+
+## 追加锚（本行以下为增补区）
