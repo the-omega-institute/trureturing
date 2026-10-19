@@ -34,6 +34,10 @@ $$\neg \left(\exists c \in \mathbb{R},\; 1 < c \land \left(\forall G \in Type,\;
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/TarnauceanuReciprocalSubgroupOrders.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/tarnauceanu-2024-reciprocal-subgroup-orders` (proved) by `D5/S3/FiniteGroups/TarnauceanuReciprocalSubgroupOrders.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"tarnauceanu-2024-reciprocal-subgroup-orders","declaration_gid":"D5/S3/FiniteGroups/TarnauceanuReciprocalSubgroupOrders.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Tărnăuceanu (2024). *On the sum of inverses of subgroup orders in finite groups*. URL: <https://www.math.uaic.ro/~martar/pdf/articole/articol%20141.pdf>.

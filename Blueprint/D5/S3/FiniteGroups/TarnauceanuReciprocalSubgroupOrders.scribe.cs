@@ -57,7 +57,10 @@ internal sealed class TarnauceanuReciprocalSubgroupOrdersDocument : IScribeDocum
                         + "modulo q and therefore does not assume infinitely many Sophie Germain primes. "
                         + "The proof concerns finite non-cyclic groups and gives no rate statement for "
                         + "the least value at a fixed group order."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tarnauceanu-2024-reciprocal-subgroup-orders"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] xs) =>
         new Formula.Apply(F.Id(name), [.. xs]);
