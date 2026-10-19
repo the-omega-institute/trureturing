@@ -334,7 +334,8 @@ private theorem pure_support_bound {a b : ℕ}
   refine ⟨W, hW, ?_, ?_⟩
   · rw [htrace P hPtr, hPid, hPtr, Complex.one_re]
     change -(L * R).trace.re - K * (1 - 1) = _
-    simpa only [sub_self, mul_zero, sub_zero] using hself
+    rw [sub_self, mul_zero, sub_zero]
+    exact hself
   · intro φ hφ
     let Q := rankOneDensity φ
     have hQ : Q.IsHermitian := (Matrix.posSemidef_vecMulVec_self_star φ).isHermitian
@@ -366,7 +367,7 @@ private theorem pure_support_bound {a b : ℕ}
     rw [hdiff] at hm
     rw [htrace Q hQtr]
     dsimp only [K]
-    nlinarith
+    exact (sub_le_sub_left (hh.trans_eq (by ring)) _).trans hm
 
 /-- The entanglement of formation has a supporting affine functional at every pure state. -/
 theorem result : claim := by
@@ -409,12 +410,12 @@ theorem result : claim := by
       p_sum := by simp
       ψ := fun _ => M
       average := by
-        simp only [Fin.sum_univ_one, Complex.ofReal_one, one_smul]
+        rw [Fin.sum_univ_one, Complex.ofReal_one, one_smul]
         rfl }
   have hcost : cost e = vonNeumannEntropy (marginalRight (pureDensityState ψ hψ)) := by
     change (∑ _ : Fin 1, (1 : ℝ) *
       vonNeumannEntropy (marginalRight (pureDensityState ψ hψ))) = _
-    simp
+    rw [Fin.sum_univ_one, one_mul]
   have hupper : E_F (pureDensityState ψ hψ) ≤
       ENNReal.ofReal (W * rankOneDensity ψ).trace.re := by
     calc
