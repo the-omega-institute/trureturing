@@ -32,7 +32,7 @@ Lean statement: `D5/S3/Quantum/Matrix/WassersteinMean.powerMean`
 
 *Commentary.*
 
-F A B t p is (A^p ⋄t B^p)^(1/p), with both the input powers and the outer reciprocal power interpreted by the real continuous functional calculus via SpectralGeometricLogEuclideanRefutation.mpow. The proposed limit uses that module’s LE t A B, namely exp((1−t) log A+t log B). This is the expression in Conjecture 5.7.
+F A B t p is (A^p ⋄t B^p)^(1/p), with both the input powers and the outer reciprocal power interpreted by the real continuous functional calculus via SpectralPower.mpow. The proposed limit uses that module’s LE t A B, namely exp((1−t) log A+t log B). This is the expression in Conjecture 5.7.
 
 **Definition 1.3 (Weak log-majorization).**
 
@@ -67,4 +67,4 @@ The prefix containing every eigenvalue gives det X≤det Y for the real determin
 - Truth anchor: `D5/S3/Quantum/Matrix/WassersteinMean.weakLogMajorization`
 - Truth anchor: `D5/S3/Quantum/Matrix/WassersteinMean.weakLogMajorization_det_le`
 - Dependency: [D5/S3/Quantum/Hiai/PsiMeanTraceConcavity](../Hiai/PsiMeanTraceConcavity.md)
-- Dependency: [D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation](SpectralGeometricLogEuclideanRefutation.md)
+- Dependency: [D5/S3/Quantum/Matrix/SpectralPower](SpectralPower.md)

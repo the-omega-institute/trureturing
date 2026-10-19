@@ -39,7 +39,7 @@ internal sealed class WassersteinMeanDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("F A B t p is (A^p ⋄t B^p)^(1/p), with both the input "
                     + "powers and the outer reciprocal power interpreted by the real continuous "
-                    + "functional calculus via SpectralGeometricLogEuclideanRefutation.mpow. "
+                    + "functional calculus via SpectralPower.mpow. "
                     + "The proposed limit uses that module’s LE t A B, namely "
                     + "exp((1−t) log A+t log B). This is the expression in Conjecture 5.7."))),
                 DescribeRole.Definition),

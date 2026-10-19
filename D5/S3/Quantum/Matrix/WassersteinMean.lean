@@ -6,7 +6,7 @@
    utility: none
    digest: Wasserstein means, real spectral powers and weak log-majorization. -/
 
-import D5.S3.Quantum.Matrix.SpectralGeometricLogEuclideanRefutation
+import D5.S3.Quantum.Matrix.SpectralPower
 import D5.S3.Quantum.Hiai.PsiMeanTraceConcavity
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 import Mathlib.Analysis.Matrix.Order
@@ -19,7 +19,7 @@ noncomputable section
 open Matrix Filter Topology
 open scoped MatrixOrder ComplexOrder
 namespace D5.S3.Quantum.Matrix.WassersteinMean
-open D5.S3.Quantum.Matrix.SpectralGeometricLogEuclideanRefutation (mpow)
+open D5.S3.Quantum.Matrix.SpectralPower (mpow)
 open D5.S3.Quantum.Hiai.PsiMeanTraceConcavity (geometricMean)
 
 /-- The binary Wasserstein mean in the explicit formula of Gan and Kim. -/

@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/GanKimConjectureRefutation.conjecture; result=D5/S3/Quantum/Matrix/GanKimConjectureRefutation.result; claim=D5/S3/Quantum/Matrix/GanKimConjectureRefutation.conjecture
    digest: Gan and Kim's Wasserstein power monotonicity fails at every interior weight. -/
 
+import D5.S3.Quantum.Matrix.SpectralPower
 import D5.S3.Quantum.Matrix.WassersteinMean
 import D5.S3.Quantum.Matrix.AlternativeMeanLinearization
 import Mathlib.Tactic.Module
@@ -22,7 +23,7 @@ open Matrix Filter Topology
 open scoped MatrixOrder ComplexOrder
 namespace D5.S3.Quantum.Matrix.GanKimConjectureRefutation
 open WassersteinMean AlternativeMeanLinearization
-open SpectralGeometricLogEuclideanRefutation (mpow LE mpow_one mpow_two)
+open SpectralPower (mpow LE mpow_one mpow_two posDef_two)
 open D5.S3.Quantum.Hiai.PsiMeanTraceConcavity (geometricMean)
 
 /-- Conjecture 5.7: decreasing weak-log-majorization convergence as p decreases to zero. -/
@@ -44,21 +45,12 @@ private def T₂ : Mat := (1 / Real.sqrt 881 : ℝ) • block 21 20 61
 
 private lemma block_pos {a b d : ℝ} (ha : 0 < a - b) (hd : 0 < d - b)
     (hb : 0 ≤ b) : (block a b d).PosDef := by
-  let L : Mat := !![1, 1; 0, 0]
-  have he : block a b d = diagonal ![((a - b : ℝ) : ℂ), ((d - b : ℝ) : ℂ)] +
-      b • (L.conjTranspose * L) := by
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [block, L, Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply,
-        Matrix.diagonal] <;> push_cast <;> ring
-  rw [he]
-  apply Matrix.PosDef.add_posSemidef
-  · apply Matrix.PosDef.diagonal
-    intro i
-    fin_cases i
-    · simpa using ha
-    · simpa using hd
-  · exact (Matrix.posSemidef_conjTranspose_mul_self L).smul hb
+  apply posDef_two
+  · linarith
+  · have hprod : 0 < (a - b) * (d - b) := mul_pos ha hd
+    have hleft : 0 ≤ b * (a - b) := mul_nonneg hb ha.le
+    have hright : 0 ≤ b * (d - b) := mul_nonneg hb hd.le
+    nlinarith
 
 private lemma P_pos : P.PosDef := block_pos (by norm_num) (by norm_num) (by norm_num)
 private lemma Q_pos : Q.PosDef := block_pos (by norm_num) (by norm_num) (by norm_num)
