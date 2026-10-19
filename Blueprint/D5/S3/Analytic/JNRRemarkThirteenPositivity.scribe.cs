@@ -31,14 +31,18 @@ internal sealed class JNRRemarkThirteenPositivityDocument : IScribeDocumentDefin
                 Conjecture + " The index type Fin (N + 1) represents the N + 1 poles and 1 ≤ N ensures at least two of them. The poles a are injective, lam is positive at each pole, mu is positive, and x differs from every a i. The source's exclusion is read as x ≠ a i, hence a i − x ≠ 0. No balance equation is assumed."),
             Node("result", "Strict positivity for every configuration", "result", DescribeRole.Theorem,
                 ClaimBody(), AssessedProvenance.FromRepo(Source),
-                "Set yᵢ = aᵢ − x, wᵢ = lam(i)², rᵢ = ‖yᵢ‖² and t = mu². Put αᵢ = wᵢ/(rᵢ+t), βᵢ = wᵢ/rᵢ and qᵢ = wᵢ/(rᵢ(rᵢ+t)); then βᵢ = αᵢ + t qᵢ. Let A = Σᵢ αᵢ, B = Σᵢ αᵢ yᵢ, C = Σᵢ βᵢ, D = Σᵢ βᵢ yᵢ and m = C⁻¹ D. Factoring the outer sums gives C S = Σⱼ qⱼ ⟨A yⱼ − B, C yⱼ − D⟩. The relation t Σᵢ qᵢ(yᵢ − m) = A m − B gives S = A Σᵢ qᵢ ‖yᵢ − m‖² + ‖A m − B‖²/t. Every coefficient is positive. Two distinct poles force a nonzero displacement from m, so the first term is positive and the second is nonnegative."),
+                "Set yᵢ = aᵢ − x, wᵢ = lam(i)², rᵢ = ‖yᵢ‖² and t = mu². Put αᵢ = wᵢ/(rᵢ+t), βᵢ = wᵢ/rᵢ and qᵢ = wᵢ/(rᵢ(rᵢ+t)); then βᵢ = αᵢ + t qᵢ. Let A = Σᵢ αᵢ, B = Σᵢ αᵢ yᵢ, C = Σᵢ βᵢ, D = Σᵢ βᵢ yᵢ and m = C⁻¹ D. Factoring the outer sums gives C S = Σⱼ qⱼ ⟨A yⱼ − B, C yⱼ − D⟩. The relation t Σᵢ qᵢ(yᵢ − m) = A m − B gives S = A Σᵢ qᵢ ‖yᵢ − m‖² + ‖A m − B‖²/t. Every coefficient is positive. Two distinct poles force a nonzero displacement from m, so the first term is positive and the second is nonnegative.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cork-disney-hogg-2025-jnr-remark13-positivity"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The private algebraic identities hold for every finite family in any real inner-product space. Strictness only needs two different vectors. For a constant family every original inner-product difference is zero; together these facts characterize the equality case. If D = 0, then m = 0 and the second square is ‖B‖²/t, which need not vanish. The conclusion concerns expression (18): equality with the source's earlier double sum away from (15), and physical realizations, are separate questions.")))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        DescribeRole role, Formula formula, AssessedProvenance provenance, string prose) =>
+        DescribeRole role, Formula formula, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("jnr-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Real() => Seq(Mathbb, Grp(X("R")));

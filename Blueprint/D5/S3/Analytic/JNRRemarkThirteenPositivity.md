@@ -48,6 +48,10 @@ $$\forall (N : \mathbb{N}), (1 \le N) \Rightarrow (\forall (lam : \operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/JNRRemarkThirteenPositivity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cork-disney-hogg-2025-jnr-remark13-positivity` (proved) by `D5/S3/Analytic/JNRRemarkThirteenPositivity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cork-disney-hogg-2025-jnr-remark13-positivity","declaration_gid":"D5/S3/Analytic/JNRRemarkThirteenPositivity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Josh Cork and Linden Disney-Hogg (2025). *Locations of JNR skyrmions*. DOI: [10.1007/s11040-025-09513-3](https://doi.org/10.1007/s11040-025-09513-3). URL: <https://arxiv.org/abs/2505.00075v2>.
