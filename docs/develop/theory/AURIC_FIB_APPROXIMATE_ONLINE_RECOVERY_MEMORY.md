@@ -306,6 +306,10 @@ $L_Kh_m^2$ with $L_K=2c_0+c_1$ (using the standard completely bounded
 operator norm estimate for left and right multiplication). This estimate is
 uniform in $x$ and $j$.
 
+Each relative operator is extended to the qutrit by acting as the identity on
+$\mathbb C\xi$. It therefore preserves the known phase block, and the same
+diamond estimate applies to the encoded qutrit and every untouched reference.
+
 For completeness, let $\Gamma_{t,x}$ be the positive subchannel obtained by
 conditioning on $X_t=x$ after the relative error has been formed. Its diamond
 norm is the probability $p_t(x)$, and $\sum_xp_t(x)=1$. The update gives
