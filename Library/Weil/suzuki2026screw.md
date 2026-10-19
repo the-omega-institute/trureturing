@@ -4529,3 +4529,352 @@ minimum-gap and sign-complexity estimates remain intact.
 This is a paper application of the already cited analytic transport,
 without a new general theorem, priority claim or Lean certification.
 Actual all-order positivity, full strict Robin and RH remain unproved.
+
+
+## Exponentially growing sign count on one fixed complete theta window
+
+The complete source admits a stronger fixed-window estimate than
+(W58): the allowed polynomial-sign degree can grow as $e^{\kappa A}$
+for some fixed $\kappa>0$. This is a repository-derived paper estimate
+for the same actual odd $L_0$, including the reflected exterior.
+It uses classical Taylor remainders, Stieltjes integrals, Hardy moments
+and Fourier comparison inside the actual-source proof. These tools
+are not proposed as new general results. Growing Laplace truncation
+also has classical precedents, for example
+[Paris, *On an extension of Watson's lemma due to Ursell*,
+arXiv:1505.06905v1](https://arxiv.org/pdf/1505.06905v1), Theorems 2--3.
+That selected-order theorem does not supply the uniform-in-order
+actual-source expansion needed here; its remainder is paid below.
+No literature priority or Lean verification is asserted.
+
+### Keep an exact congruence of the complete source
+
+Define the nonvanishing entire Gaussian leading factor and its
+one-term theta correction by
+
+$$
+\Phi_{\rm g}(t)=4\pi^2e^{9t/2-\pi e^{2t}},\qquad
+c_*=\frac3{2\pi},\qquad
+\Phi_1(t)=\Phi_{\rm g}(t)(1-c_*e^{-2t}).
+$$
+
+For real $A>0$ put $E=e^{-2A}$ and
+
+$$
+D_A^{\rm g}(u)=\sqrt{\frac{8\pi}{A}}
+ \frac{e^{A+u}}{\Phi_{\rm g}(A+u)},\qquad
+M_A^{\rm g}(u,v)=D_A^{\rm g}(u)L_0(A+u,A+v)D_A^{\rm g}(v).
+$$
+
+For real offsets $D_A^{\rm g}>0$. Thus $M_A^{\rm g}$ is an exact
+positive diagonal congruence of the complete $L_0$, rather than the
+kernel obtained by replacing its source by $\Phi_1$.
+Choose one sufficiently small fixed complex offset bidisc within the
+neighborhoods of (W46)--(W56). Choose a fixed $0<R<1/2$ whose
+$\operatorname{arctanh}$ image lies inside that bidisc, and put
+
+$$
+\begin{gathered}
+u=\operatorname{arctanh}z,\qquad v=\operatorname{arctanh}w,\qquad
+h=R/4,\qquad q=2/R,\qquad \Lambda=(1+4/R)^2,\\
+\mathcal K_A^{\rm g}(z,w)=\cosh u\cosh v\,M_A^{\rm g}(u,v),\qquad
+H(z,w)=\frac1{1-zw}.
+\end{gathered}
+$$
+
+Keep precisely the real finite signed measures of (W55):
+$\epsilon p\nu\ge0$, where $p$ is monic of degree $m$ with all
+roots in $[-h,h]$ and $\epsilon\in\{-1,1\}$. Repeated roots and
+atoms at roots are allowed. With $a_j=\int z^j\,d\nu(z)$, reuse
+
+$$
+Q_H(\nu)=\sum_{j\ge0}a_j^2,\qquad
+\sum_{j\ge0}q^{2j}a_j^2\le9\Lambda^mQ_H(\nu).
+$$
+
+For a physical measure on the corresponding window, the exact
+transport is
+
+$$
+d\nu(z)=\frac{d\mu(A+u)}{\cosh u\,D_A^{\rm g}(u)},\qquad
+z=\tanh u,\qquad
+Q_{L_0}(\mu)=Q_{\mathcal K_A^{\rm g}}(\nu).
+$$
+
+The positive weight and increasing coordinate preserve sign changes.
+All subsequent allowances concern this same transported measure.
+
+### Pay a complete expansion uniformly in its truncation order
+
+There are fixed $C,c,A_0>0$ and compatible real-symmetric coefficient
+kernels $B_{k,A}$, independent of the truncation order $N$, such that
+for every integer $N\ge3$ and $A\ge A_0$, on the fixed complex bidisc,
+
+$$
+\boxed{
+\begin{aligned}
+M_A^{\rm g}
+ &=S+\frac{C_{\rm core}}A
+   +\sum_{1\le k<N}E^k B_{k,A}+R_{N,A},\\
+\sup|R_{N,A}|
+ &\le C^N N!E^N+C e^{-c e^A},\\
+S(u,v)&=\operatorname{sech}(u-v),\\
+C_{\rm core}(u,v)
+ &=\frac{u+v}{2}S(u,v)-\frac{u-v}{2\sinh(u-v)}.
+\end{aligned}}
+\tag{W87}
+$$
+
+The removable values are included. In particular the remainder pays
+for $N$ growing with $A$; no fixed-$N$ asymptotic is extrapolated.
+
+First compare the full source with $\Phi_1$ inside the exact
+integrals. In the reflected integral, use evenness of the complete
+$\Phi$ first to obtain the product $\Phi(x+y)\Phi(x-y)$, where
+$a=A+u$, $b=A+v$, $x=(a+b)/2$, $d=(a-b)/2$.
+Only then compare it with the symmetric model
+$\Phi_1(x+y)\Phi_1(x-y)$. Since $\Phi_1$ is not even, this is
+not the raw source substitution in every occurrence of $K_0$.
+
+On the reflected contour $y=\sqrt{d^2+Es}$ from (W46),
+$|\Im y|\le|\Im d|$. When $\Re y\le A/2$, both arguments lie
+in the right tail and the relative theta-series error is
+$O(e^{-c e^A})$. The whole-half-line Gaussian majorant already paid
+in (W46) pays its normalized integral. When $\Re y>A/2$, the
+$x+y$ factor has the upper tail $e^{-c e^{3A}}$, which beats the
+normalizing cost $e^{C e^{2A}}$. The other complete-$\Phi$ and
+$\Phi_1$ factors are bounded on the chosen narrow strip. Integration
+of that tail therefore gives the same stated error. The direct
+integral has both arguments in the right tail throughout and is paid
+by its corresponding majorant. This proves a full-to-model normalized
+error at most $C e^{-c e^A}$ on the fixed bidisc. In particular the
+region $\Re(x-y)<0$ remains included.
+
+The model integrals make the remaining factorial allowance explicit.
+Set
+
+$$
+\begin{gathered}
+Q=2\pi e^{a+b},\qquad c_0=\cosh(a-b),\qquad Y=Qc_0,\\
+r_a=c_*e^{-2a},\qquad r_b=c_*e^{-2b},\\
+\Psi(s)=\frac{\operatorname{arcosh}s}{\sqrt{s^2-1}}
+ =\int_0^\infty\frac{dt}{s+\cosh t},\qquad \Psi(1)=1.
+\end{gathered}
+$$
+
+The branch of $\Psi$ is analytic for $\Re s>0$. Direct substitutions
+in the symmetric model give the complete normalized terms
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal P_{{\rm dir},1}^{\rm g}
+ &=Q\int_1^\infty
+ \left(x+\tfrac12\log\tau\right)\tau^{7/2}e^{-Y(\tau-1)}
+ (1-r_a/\tau)(1-r_b/\tau)\,d\tau,\\
+\mathcal P_{{\rm ref},1}^{\rm g}
+ &=\frac Q2\int_0^\infty e^{-Qs}\Psi(c_0+s)
+ \left[1-r_a-r_b-2c_*e^{-(a+b)}s
+       +c_*^2e^{-2(a+b)}\right]ds.
+\end{aligned}}
+\tag{W88}
+$$
+
+Here $(\mathcal P_{{\rm dir},1}^{\rm g}
+-\mathcal P_{{\rm ref},1}^{\rm g})/A$ is the model for
+$M_A^{\rm g}$. The reflected substitution is
+$s=\cosh(2y)-\cosh(2d)$. For complex offsets,
+$\Re Q,\Re Y\ge c e^{2A}$ on a small enough fixed bidisc.
+The displayed integrals are holomorphic there. Their equality on real
+offsets and the identity-theorem argument of (W38), (W46) identify
+the continuation. The actual-source comparison was paid separately
+and is not inferred from these model formulas.
+
+For the direct integral, expand the three amplitudes
+$(x+\tfrac12\log\tau)\tau^{7/2-j}$, $j=0,1,2$, at $\tau=1$.
+Their coefficients of order $\ell$ are bounded by
+$C^\ell(|x|+1)$. Their Taylor remainders on $\tau\ge1$ are
+bounded by
+$C^N(\tau-1)^N(1+\tau)^5(|x|+1)$, using the integral Taylor
+formula for the powers and logarithm. Integration against
+$e^{-\Re Y(\tau-1)}$, with the leading $Q$ and division by $A$,
+gives $C^N N!E^N$, for every $N$. The finitely many extra polynomial
+powers and index shifts are absorbed by increasing $C$.
+
+For the reflected amplitude the exact Stieltjes remainder is
+
+$$
+\begin{aligned}
+\Psi(c_0+s)
+ &=\sum_{j<N}(-s)^jh_j(c_0)
+   +(-s)^N\int_0^\infty
+    \frac{dt}{(c_0+\cosh t)^N(c_0+s+\cosh t)},\\
+h_j(c_0)&=\int_0^\infty(c_0+\cosh t)^{-j-1}\,dt.
+\end{aligned}
+$$
+
+Since $\Re c_0$ is bounded below positively, the remainder is
+bounded by $C^N s^N$. Its Laplace integral costs $C^N N!E^N$.
+The explicit prefactors in (W88) shift indices by at most two; their
+fixed extra factorial factors are also absorbed into $C^N N!$.
+Collecting equal powers of $E$ defines the same $B_{k,A}$ for every
+$N$. The leading direct and reflected terms are respectively
+$xS$ and $\Psi(c_0)/2=(a-b)/(2\sinh(a-b))$. Together with the
+full-source payment, this proves (W87).
+
+### Pay every retained coefficient polynomially in the same sign degree
+
+For some sufficiently large fixed absolute exponent $P$ and fixed
+$C_1$, the coefficients just constructed satisfy
+
+$$
+\boxed{
+\left|Q_{\cosh u\cosh v\,B_{k,A}}(\nu)\right|
+ \le[C_1(m+k+1)]^{P(k+1)}Q_H(\nu)
+ \qquad(k\ge1,\ A\ge A_0).}
+\tag{W89}
+$$
+
+Only existence of a fixed $P$ is used; no numerical value is claimed.
+A fixed-radius Cauchy bound alone would lose the polynomial dependence
+on $m$ and is not the coefficient estimate used here.
+
+The reused moment-radius bound first gives
+
+$$
+\sum_{n\ge\ell}a_n^2
+ \le\min(1,9\Lambda^m q^{-2\ell})Q_H(\nu),\qquad
+\sum_{n\ge0}(n+1)^j a_n^2
+ \le[C(m+j+1)]^jQ_H(\nu)\quad(j\ge1).
+$$
+
+Indeed, split the exponential tail at an index proportional to $m+1$
+and sum its polynomially weighted remainder. For the moment shift
+$B(a)_n=a_{n+1}$ and $f_r(z)=e^{-r\operatorname{arctanh}z}$,
+$r\ge0$, Cauchy on the circle of radius $1-1/(j+r+2)$ bounds the
+$j$th coefficient of $f_r$ by $[C(j+r+2)]^{r/2}$.
+Summing against
+$\|B^j a\|_2\le\min(1,3\Lambda^{m/2}q^{-j})\|a\|_2$,
+again splitting at an index proportional to $m+1$, yields
+
+$$
+\|f_r(B)a\|_2\le[C(m+r+1)]^{r/2+2}\|a\|_2.
+$$
+
+Weighted versions require no independently extremal moment sequence:
+$f_r(z)>0$ on the actual support, so $f_r\nu$ has the same
+separator $p$. Apply the preceding weighted-moment bound directly to
+that measure after paying its unweighted norm. Likewise
+$(1-z)^\ell>0$ and its shift operator has norm at most $2^\ell$.
+Multiplication by $\operatorname{arctanh}z$ costs the
+$C\log(m+2)$ norm already paid in (W57). The resulting measure has
+separator $zp$ of degree $m+1$, since
+$z\operatorname{arctanh}z\ge0$; its weighted moments are paid by
+the same argument.
+
+Every direct coefficient reduces to the exact identity
+
+$$
+\cosh u\cosh v\,e^{-\ell(u+v)}
+ \operatorname{sech}^{\ell+1}(u-v)
+ =\frac{(1-z)^\ell(1-w)^\ell}{(1-zw)^{\ell+1}}.
+$$
+
+Its form is the sum of $\binom{n+\ell}{\ell}$ times squares of
+finite moment differences. The preceding weighted bounds pay these
+terms, the extra $e^{-2u}$ or $e^{-2v}$ prefactors and the affine
+$x$ term. Scalar Taylor coefficients cost at most $C^\ell\ell!$.
+
+For the reflected coefficients use the stationary factors
+$h_j(\cosh t)$, $t=u-v$, $j\le k$. Put $b_0=3\pi/4$.
+The elementary hyperbolic-cosine factorization gives
+
+$$
+|\cosh(t+ib_0)+\cosh s|
+ \ge\cos^2(b_0/2)(\cosh t+\cosh s).
+$$
+
+The horizontal $L^1$ norm of $h_j(\cosh(t+ib_0))$ is therefore
+at most $C^{j+1}$. A Fourier contour shift, with convention
+$\widehat f(\xi)=\int f(t)e^{-i\xi t}dt$, gives
+$|\widehat{h_j\circ\cosh}(\xi)|
+\le C^{j+1}e^{-b_0|\xi|}$.
+The classical transform
+$\widehat{\operatorname{sech}}(\xi)
+=\pi/\cosh(\pi\xi/2)$ then bounds its stationary bilinear form
+by $C^{j+1}$ times the two $S$ norms. The remaining multipliers
+$e^{-ru-sv}$ have $r,s\le k+2$ and are paid above.
+The factors $j!$, $(j+1)!$ and the finitely specified prefactor
+cases are absorbed in powers of $m+k+1$. These estimates prove
+(W89) with one fixed $P$, without an exponential-in-$m$ coefficient
+cost or a combination of independently attainable profiles.
+
+### Spend the full allowance at a growing truncation order
+
+Reuse the first-core estimate of (W57), apply (W89) to the retained
+coefficients and apply (W55)'s Cauchy/moment allowance to (W87)'s
+remainder. The complete actual estimate is
+
+$$
+\boxed{
+\begin{aligned}
+\frac{|Q_{\mathcal K_A^{\rm g}-H}(\nu)|}{Q_H(\nu)}
+\le{}&\frac{C_3\log(m+2)+1}{A}\\
+ &+\sum_{1\le k<N}e^{-2Ak}[C_1(m+k+1)]^{P(k+1)}\\
+ &+C_2\Lambda^m
+       \left[C^NN!e^{-2AN}+e^{-c e^A}\right].
+\end{aligned}}
+\tag{W90}
+$$
+
+This holds for nonzero $\nu$ under the same sign contract, with
+constants independent of $m,N,A$. No favorable sign is assigned to
+either the reflected error or the full-theta correction.
+
+Choose fixed
+
+$$
+0<\kappa<\min\left\{\frac14,\frac1{8P},
+                         \frac1{16(C_3+1)}\right\},\qquad
+N=\left\lceil D\left(1+\frac{m+1}{A}\right)\right\rceil,
+$$
+
+where $D$ is a fixed sufficiently large constant depending on
+$\Lambda$, increased to make $N\ge3$. For $m\le e^{\kappa A}$,
+$\log N\le\kappa A+O(1)$ and
+$\log(C^NN!)\le N(\kappa A+O(1))$.
+Consequently the factorial remainder after multiplication by
+$\Lambda^m$ is at most $e^{-c_1A-c_1m}$, on increasing $D$.
+The full-theta remainder is at most $e^{-c e^A/2}$ since
+$\kappa<1$. For $k<N$ one has $m+k+1\le C_D(m+1)$, so each
+middle summand in (W90) is at most $e^{-Ak}$ for one common
+sufficiently large start. The first allowance is at most
+$C_3\kappa+o(1)$. Thus some common $A_1$ gives
+
+$$
+\boxed{Q_{\mathcal K_A^{\rm g}}(\nu)\ge\tfrac12Q_H(\nu)>0
+\quad\left(A\ge A_1,\quad
+0\le m\le\lfloor e^{\kappa A}\rfloor,\quad \nu\ne0\right).}
+\tag{W91}
+$$
+
+Strictness uses the existing compact-moment uniqueness argument.
+Through the exact positive transport this is an actual $L_0$
+estimate on the one fixed physical window
+$[A-\operatorname{arctanh}h,A+\operatorname{arctanh}h]$.
+For arbitrary complex coefficients on at most
+$\lfloor e^{\kappa A}\rfloor+1$ distinct sites there, apply the real
+estimate separately to the real and imaginary coefficient measures;
+each has at most one fewer sign change than its number of sites.
+Reality and symmetry make the two forms add. No internal node-gap
+restriction is imposed. The metric is the transported Hardy form,
+not the unweighted physical coefficient norm.
+
+The estimate strengthens (W58)'s linear sign range on a fixed small
+window. It does not replace (W77)'s arbitrary-width contract.
+At each fixed $A$ the allowed order remains finite, consistently with
+(W83)--(W86). No unrestricted fixed-window all-order positivity,
+arbitrary-width exponential range, numerical start, identification
+with the original prime/Robin source, uniform strict Robin bound or
+RH proof is supplied. Full RH and strict Robin for every integer
+$n>5040$ remain unproved.
