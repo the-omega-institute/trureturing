@@ -5,7 +5,7 @@ year: 2026
 title: Actual Robin price gaps, forced-core tail records and the selected-sign boundary
 doi: null
 url: https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md
-claim: Under the original source-window hypotheses, the complete selected response retains actual price-gap costs; every inactive-forced-prime core is a strict all-integer right-tail record with original-exponent own-size excess. A synthetic positive-reference model excludes height-and-envelope plus numerical full-Q reasoning alone. A cited unrefereed density theorem extends the original high-frequency range. Actual favorable slack and RH remain unproved.
+claim: Under the original source-window hypotheses, the complete selected response retains actual price-gap costs; every inactive-forced-prime core is a strict all-integer right-tail record with original-exponent own-size excess. A synthetic positive-reference model excludes height-and-envelope plus numerical full-Q reasoning alone. A cited unrefereed density theorem extends the original high-frequency range and complete compensated clock transport. Actual favorable slack and RH remain unproved.
 strata_touched: []
 license: Apache-2.0
 triage: anchor
@@ -11868,8 +11868,145 @@ to LDS2 as well. No supplied exponent or height assignment is reselected.
 For $\Theta\ge7/10$, including $\Theta=1$, the additional original
 parameter class is $13/30\le\eta<17/39$. Its upper endpoint increases
 by $1/390$. This is a consumed application of the cited density theorem.
-WRC still requires its separate short-interval input and retains its
-$\eta<13/30$ restriction. FCT's full-range uncompensated future account
-is already available. No uniformity as $\eta$ approaches the new endpoint,
+WRC's additional short-interval input is supplied in the application
+below. FCT's full-range uncompensated future account is already available. No uniformity as $\eta$ approaches the new endpoint,
 signed remaining-head upper, full original-range compensation estimate,
 strict Robin for every integer above 5040, or RH follows.
+
+
+## The same density inputs extend the complete compensated clock transport
+
+Keep LDS2's original conditional RH-failure source and WRC's original
+$0<a<5\kappa/8$, complete response $G_a$, full windows, maximizing ties,
+positive outgoing weights and endpoint conventions. Write
+
+$$
+c_\Theta=\frac3{2-\min\{\Theta,9/13\}},\qquad
+r_\Theta=1-\frac1{c_\Theta}
+=\frac{1+\min\{\Theta,9/13\}}3.
+\tag{DST1}
+$$
+
+The following is a consumed paper application of the cited density
+inputs and [Guth--Maynard, arXiv:2405.20552v2, Section 13.2](https://arxiv.org/html/2405.20552v2#S13.SS2).
+It supplies WRC4's short-interval input on LDS2; it does not reprove a
+general density theorem, prime-counting theorem or transport theorem.
+
+### Supply a uniform proportional-loss input to the published proof
+
+For every fixed $\delta>0$, the existing inputs imply
+
+$$
+N(\sigma,T)\ll_{\Theta,\delta}
+T^{(c_\Theta+\delta)(1-\sigma)}\log^{15}T
+\qquad(1/2\le\sigma\le1,\ T\ge51).
+\tag{DST2}
+$$
+
+For $\Theta\ge9/13$, put $\sigma_0=9999/10000$ and take
+$\epsilon=\delta(1-\sigma_0)$ in LDS1. On
+$1/2\le\sigma\le\sigma_0$ this gives
+$\epsilon\le\delta(1-\sigma)$. On $\sigma_0\le\sigma\le1$,
+NE1 gives $N(\sigma,T)\ll T^{1-\sigma}\log^{15}T$ because
+$58.05\sqrt{1-\sigma}\le0.5805<1$. Thus the fixed LDS1 loss is
+not silently made proportional as $\sigma\uparrow1$: Ford's separately
+owned uniform bound supplies that part.
+
+For $1/2<\Theta<9/13$, use the already cited fixed-real-part Ingham
+bound on a finite grid in $[1/2,\Theta]$. Choose one
+$\epsilon=\delta(1-\Theta)/4$ and maximum grid width
+$\omega\le\delta(1-\Theta)/(4c_\Theta)$. At a left gridpoint
+$\sigma_j\le\sigma\le\sigma_j+\omega$, monotonicity of the count and
+$3/(2-\sigma_j)\le c_\Theta$ give
+
+$$
+N(\sigma,T)\le N(\sigma_j,T)
+\ll_j T^{c_\Theta(1-\sigma_j)+\epsilon}
+\le T^{(c_\Theta+\delta)(1-\sigma)}.
+$$
+
+Only finitely many fixed constants occur. For $\sigma>\Theta$ the
+actual count is zero by the definition of $\Theta$. This proves DST2
+without a moving-$\sigma$ uniformity assumption or a zero attaining
+$\Theta$. The original source has $\Theta>1/2$.
+
+### Consume the variable-length short-interval consequence
+
+In the cited Section 13.2 proof, fix
+$r_\Theta<r<99/100$ and choose $\delta>0$ so that
+$c(1-r)<1$, where $c=c_\Theta+\delta$. For
+$x^r\le h\le x^{99/100}$ its same truncation
+
+$$
+T=(x/h)\exp\bigl(2(\log x)^{1/4}\bigr)
+$$
+
+has $T^c/x\le x^{-\kappa_r}$ eventually, for a fixed
+$\kappa_r>0$. Apply that proof with DST2 in place of its (13.3).
+The same explicit formula, total zero count in the left half and global
+Vinogradov--Korobov cap for zeros below this $T$ apply. The latter cap
+$1-\sigma\gg(\log T)^{-5/7}$ yields decay on the scale
+$\exp[-C_r(\log x)^{2/7}]$, which absorbs its fixed logarithmic
+factors and the stated $(\log x)^{1/4}$ loss. Bounded-height zeros
+are absorbed into the fixed start. Remove proper prime powers from the
+Mangoldt sum, with allowance $O(\sqrt x\log^2x)$, negligible since
+$r>r_\Theta>1/2$. With the original right-continuous convention this
+supplies, uniformly in the full indicated length range,
+
+$$
+\theta_1(x+h)-\theta_1(x)
+=h\left(1+O_{\Theta,r}\!\left(e^{-(\log x)^{1/4}}\right)\right),
+\qquad x^r\le h\le x^{99/100}.
+\tag{DST3}
+$$
+
+This is the Chebyshev consequence of the Mangoldt proof itself; no
+unaccounted loss is introduced by only multiplying a prime-counting
+error by $\log x$. The cap is the global zero-free statement at the
+new truncation $T$, not NE3's specialized original-mask height.
+
+### Pay WRC4 and reuse the complete transport
+
+LDS2 permits a single fixed
+$r_\Theta<r<\min\{1-\eta,99/100\}$. For each fixed finite $R>1$
+and every original core $B\le RX$, the unchanged floor gives
+
+$$
+\frac{t}{B^r}\ge\frac{d}{8R^r}
+ X^{1-\eta-r}\log X\longrightarrow\infty.
+$$
+
+Together with the original uniform $t/B\to0$, DST3 supplies SI2's
+variable blocks. Its same disjoint covering and full endpoint correction
+$K-\theta_1=O(\sqrt x)$ therefore give WRC4 for this fixed $R$.
+For every retained $B>RX$, WRC5's source-capacity and positive-height
+bound remains $C_4/R+C_5/M$ without any short-interval input or global
+clock ceiling. First choose $R$, then the common source start. WRC2--WRC3
+and WRC6--WRC7 now apply unchanged on the entire LDS2 region:
+
+$$
+\boxed{
+\sup_{\text{original labels and ties}}
+ \frac{|G_a(A)-G_a(B)|}{G_a(B)}\longrightarrow0,
+\qquad
+\frac{\mathcal G_X^A}{\mathcal G_X}\longrightarrow1,
+\qquad
+\frac{\displaystyle\int_{D_X}G_a(v)\,dv}{\mathcal G_X}
+ \longrightarrow1.}
+\tag{DST4}
+$$
+
+The complete future response and original compensation are both
+retained. LDS's common raw-head consumer and WRC7 give the same relative
+common-head comparison on this range. For $\Theta\ge9/13$, including
+$\Theta=1$, the upper bound is $\eta<17/39$; for
+$1/2<\Theta<9/13$, it is $\eta<(2-\Theta)/3$, always retaining
+$1-\Theta<\eta<1/2$. The cited unrefereed LDS1 input is needed for the
+former extension; the latter uses the classical Ingham input.
+
+Constants and starts may depend on the fixed $\Theta$, $\eta$ and $r$.
+No uniformity at the boundary of LDS2, absolute $o(M)$ recentering error,
+normalized-response ceiling, second compensation credit or signed upper
+on the selected set follows. This application has no host Lean
+verification; full original-range compensation, strict Robin for every
+integer above 5040 and RH remain unproved.
