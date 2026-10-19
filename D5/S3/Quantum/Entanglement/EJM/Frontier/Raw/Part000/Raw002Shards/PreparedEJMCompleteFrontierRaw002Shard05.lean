@@ -3,12 +3,13 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05
    mirror-E: none(waiver:exact-original-context-mathematical-source)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; premises=D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00336,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00337,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00338,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00339,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00340,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00341,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00342,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00343,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00344,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00345,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00346,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00347,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00348,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00349,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00350,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00351
-   digest: Each original canonical-cache suffix check in this shard retains its exact depth, full code, node index, actual cache and partial assignment. -/
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; premises=D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00336,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00338,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00339,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00340,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00341,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00342,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00343,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00344,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00345,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00346,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00347,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00348,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00349,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00350,D5/S3/Quantum/Entanglement/EJM/Frontier/Raw/Part000/Raw002Shards/PreparedEJMCompleteFrontierRaw002Shard05.raw_cut_00351
+   digest: Fifteen original Raw statements remain unchanged; raw_cut_00337 is owned by the imported exact Tail442 Assembly. -/
 
 /- Generated prepared source. Not compiled or kernel accepted.
 All original coordinates, four values, F1/F2, 32 blocks and scale are retained. -/
 import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierTypes
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.Raw002Tail442.Assembly
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 100000000
@@ -20,9 +21,6 @@ theorem raw_cut_00336 : EJMOriginalReplayAssembly.Accepted 13 5208 ⟨17358, by 
   unfold EJMOriginalReplayAssembly.Accepted
   decide +kernel
 
-theorem raw_cut_00337 : EJMOriginalReplayAssembly.Accepted 13 5209 ⟨17413, by decide⟩ := by
-  unfold EJMOriginalReplayAssembly.Accepted
-  decide +kernel
 
 theorem raw_cut_00338 : EJMOriginalReplayAssembly.Accepted 13 5210 ⟨17454, by decide⟩ := by
   unfold EJMOriginalReplayAssembly.Accepted
@@ -80,5 +78,22 @@ theorem raw_cut_00351 : EJMOriginalReplayAssembly.Accepted 13 5229 ⟨17876, by 
   unfold EJMOriginalReplayAssembly.Accepted
   decide +kernel
 
+
+#print axioms raw_cut_00336
+#print axioms raw_cut_00337
+#print axioms raw_cut_00338
+#print axioms raw_cut_00339
+#print axioms raw_cut_00340
+#print axioms raw_cut_00341
+#print axioms raw_cut_00342
+#print axioms raw_cut_00343
+#print axioms raw_cut_00344
+#print axioms raw_cut_00345
+#print axioms raw_cut_00346
+#print axioms raw_cut_00347
+#print axioms raw_cut_00348
+#print axioms raw_cut_00349
+#print axioms raw_cut_00350
+#print axioms raw_cut_00351
 
 end D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
