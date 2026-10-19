@@ -17,7 +17,7 @@ import Mathlib.Tactic.LinearCombination
 set_option autoImplicit false
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation
-open Matrix
+open _root_.Matrix
 open D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness (schmidtRank)
 open scoped BigOperators ComplexOrder Kronecker
 open D5.S3.Quantum.Information.PartialTraceMutualInformation

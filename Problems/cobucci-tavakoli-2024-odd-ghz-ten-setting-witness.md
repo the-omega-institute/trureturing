@@ -111,8 +111,7 @@ supplies the admission basis. Every supporting helper has a mathematical
 consumer.
 
 The four-slot escape audit is unfinished for `result`,
-`quadratic_projector`, `weight_le_one_of_total`, and
-`spectral_ensemble_nonempty`; see
+`weight_le_one_of_total`, and `spectral_ensemble_nonempty`; see
 [issue #17622](https://github.com/the-omega-institute/trureturing/issues/17622).
 Faithful statement bridges are available, but whole-family variation,
 sensitivity and actual observational-dependence evidence is not established.

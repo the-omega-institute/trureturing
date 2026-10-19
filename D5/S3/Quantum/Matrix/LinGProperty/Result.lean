@@ -20,7 +20,7 @@ open D5.S3.Quantum.Schatten
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
-private theorem diagonal_blocks {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
+theorem diagonal_blocks {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
     (hW : (fromBlocks A X Xᴴ B).PosSemidef) : A.PosSemidef ∧ B.PosSemidef := by
   have heA : (fromBlocks A X Xᴴ B).submatrix Sum.inl Sum.inl = A := by ext i j; rfl
   have heB : (fromBlocks A X Xᴴ B).submatrix Sum.inr Sum.inr = B := by ext i j; rfl

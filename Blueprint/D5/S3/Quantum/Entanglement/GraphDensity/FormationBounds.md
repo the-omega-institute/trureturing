@@ -416,6 +416,7 @@ The new formation lower bound combines the determinant readout estimate with the
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphDensity/FormationBounds.witness_lower`
 - Dependency: [D5/S3/Quantum/CloningMachine](../../CloningMachine.md)
 - Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
+- Dependency: [D5/S3/Quantum/Entanglement/GHZ/OddGhzTenSettingWitness](../GHZ/OddGhzTenSettingWitness.md)
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../StructuredNegativityCoincidenceRefutation.md)
 - Dependency: [D5/S3/Quantum/Fibers/PhysicalFiber](../../Fibers/PhysicalFiber.md)
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../../Information/ActualPureQubitGeometry.md)

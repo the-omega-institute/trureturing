@@ -106,6 +106,7 @@ The source expression uses eigenvalues and the literal partialTraceRight.
 -/
 
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
 import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import Mathlib.Analysis.Normed.Module.Normalize
 import D5.S3.Quantum.Fibers.PhysicalFiber

@@ -21,10 +21,6 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumStates/braunstein2006laplaciandensity")),
                 Blocks(Paragraph(Text("The dependent record has fields N, weight, nonneg, le_one, total, psi, unit and average. Page 18: “Let ρAB be a density matrix acting on CᵖA ⊗ CᑫB, where pq = n. Let Sρ = {{pi, |ψi⟩ : i = 1, 2, ..., N} : ρAB = ∑ⁿᵢ₌₁ pi|ψi⟩AB⟨ψi|, where |ψi⟩AB ∈ CᵖA ⊗ CᑫB, 0 ≤ pi ≤ 1 and ∑ᴺᵢ₌₁ pi = 1}.” The reconstruction is read over N ensemble terms and uses Euclidean unit vectors."))), DescribeRole.Definition),
 
-            Describe.Lean(DescribeId.Create("ctw-quadratic-projector"),
-                DeclarationHandle.Create(Prefix + "quadratic_projector"), H("The quadratic form of a rank-one density matrix"),
-                StatementSource.FromAuthor(Disp(ProjectorFormula())), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary complex vectors on a finite index type, the quadratic form of PureStateHandshake.rankOneDensity equals the complex embedding of the squared overlap norm."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("ctw-weight-le-one"),
                 DeclarationHandle.Create(Prefix + "weight_le_one_of_total"), H("A convex weight is at most one"),
                 StatementSource.FromAuthor(Disp(WeightFormula())), AssessedProvenance.FromRepo(),
@@ -94,11 +90,7 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
         return All("p", V("Nat"), All("q", V("Nat"), All("rho", Call("Matrix", index, index, V("Complex")),
             Eqn(Call("Ensemble", V("rho")), fields))));
     }
-    private static Formula ProjectorFormula() => All("n", V("Type"), Instances("n",
-        All("z", Vec(V("n")), All("psi", Vec(V("n")), Eqn(
-            DotProduct(Call("star", V("z")), C("Matrix", "mulVec",
-                C("PureStateHandshake", "rankOneDensity", V("psi")), V("z"))),
-            Coeff(C("Complex", "normSq", DotProduct(Call("star", V("z")), V("psi")))))))));
+
     private static Formula WeightFormula() => All("iota", V("Type"), Instances("iota",
         All("weight", Arrow(V("iota"), V("Real")),
             Imp(All("j", V("iota"), Leq(D(0), At(V("weight"), V("j")))),

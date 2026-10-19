@@ -19,8 +19,8 @@ H: D5/S3/Weil/ZetaLinear/Sylvester.hermForm_one (Lean: RHLinalg.hermForm_one)
    statement_id: sha256:0bee6888fa3690daa127e5b383b3b8d256de079f6eee0cf979026543af837ef4
    D5/S3/Weil/ZetaLinear/Sylvester.hermForm (Lean: RHLinalg.hermForm)
    statement_id: sha256:73fe60400b35034994e7c69515b0b2e4349284066d1b1d60c2cbc066f776f399
-Q: D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral.BlockSpectral.rankOneQuadratic
-   statement_id: sha256:5659aa687c061edd25e159ca3e5a9a61692535f1343999094decbbcde1c7500a
+Q: D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.quadratic_projector
+   statement_id: sha256:78fe0d4d1dc92c646a7c648e05619ae560d343eda875b00add21a0dd6a5d958a
 R: D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity
    statement_id: sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3
 J: D5/S3/Quantum/Information/PartialTraceMutualInformation.density_posSemidef
@@ -29,10 +29,10 @@ The public omega, basisVec, proj and witness definitions use the literal
 preregistered expressions. Proofs use ZMod.stdAddChar and Matrix.vecMulVec.
 Nine labels retain multiplicity at d = 1.
 The spectral Ensemble is transported from Fin (Fintype.card iota) × Fin 1
-to the arbitrary finite index type. The generic complex projector identity
-supplies its real-part specialization. The I owners import these declarations.
+to the arbitrary finite index type. The public SeparableStateLocalUnitaryStabilizerObstruction.quadratic_projector
+supplies the real-part specialization of the complex projector identity.
+The I owners import Ensemble and schmidtRank from this module.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17622
-quadratic_projector: proof_shape: bind-only; deps: Q,R; consumer: quadratic_rankone, SeparableStateLocalUnitaryStabilizerObstruction.ensemble_kernel, SeparableStateLocalUnitaryStabilizerObstruction.ensemble_support.
 weight_le_one_of_total: proof_shape: bind-only; deps: none; consumer: spectral_ensemble_nonempty, FormationBounds.Selective.conditionalEnsemble, BraunsteinGhoshSeveriniStarRefutation.Star.starEnsemble.
 spectral_ensemble_nonempty: proof_shape: bind-only; deps: R; consumer: density_ensemble, BraunsteinGhoshSeveriniStarRefutation.graph_ensemble_nonempty.
 All theorems have escape_witness: none. Dependencies use H/J/P/Q/R/S/T above.
@@ -98,7 +98,7 @@ import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
 import D5.S3.Fourier.FullBispectrumStability
 import D5.S3.Weil.ZetaLinear.Sylvester
 import D5.S3.Quantum.PureState.PureStateHandshake
-import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
+import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 open Matrix
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open scoped Kronecker
@@ -446,9 +446,6 @@ private theorem cutRank_le_d {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d
   fin_cases k <;> dsimp only [cutRank, schmidtRank] <;>
     exact (Matrix.rank_le_card_height _).trans (by simp)
 
-theorem quadratic_projector {n : Type*} [Fintype n] (z ψ : n → ℂ) : star z ⬝ᵥ (rankOneDensity ψ *ᵥ z) = (Complex.normSq (star z ⬝ᵥ ψ) : ℂ) := by
-  simpa only [rankOneDensity] using
-    D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral.BlockSpectral.rankOneQuadratic z ψ
 structure Ensemble {p q : ℕ} (ρ : (Matrix (Fin p × Fin q) (Fin p × Fin q) ℂ)) where
   N : ℕ
   weight : Fin N → ℝ
@@ -644,7 +641,7 @@ private theorem quadratic_rankone {ι : Type*} [Fintype ι] (g ψ : ι → ℂ) 
     (star g ⬝ᵥ (Matrix.vecMulVec ψ (star ψ) *ᵥ g)).re =
       Complex.normSq (star g ⬝ᵥ ψ) := by
   simpa only [rankOneDensity, Complex.ofReal_re] using
-    congrArg Complex.re (quadratic_projector g ψ)
+    congrArg Complex.re (D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.quadratic_projector g ψ)
 
 private theorem quadratic_sum {ι κ : Type*} [Fintype ι] [Fintype κ]
     (g : ι → ℂ) (p : κ → ℝ) (A : κ → Matrix ι ι ℂ) :
