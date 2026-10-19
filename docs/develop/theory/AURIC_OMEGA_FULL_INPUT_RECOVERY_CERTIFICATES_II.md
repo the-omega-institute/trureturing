@@ -3239,3 +3239,392 @@ Proof. The legal supremum equals $V_\partial$ by (S.216). Equation (S.218) and t
 The auxiliary support projection $P_E$ of Proposition 87.1 acts in the three-dimensional environment. The physical-output optimal-dual support is the separate equality (S.197) of Proposition 83.4, acting in the five-dimensional output. No identification of these supports, or positive-definite dual conclusion without (S.200), is part of the reductions. A fixed-input violation would disprove this sufficient witness assertion, and would not by itself construct a full-reference recovery beating the original diamond lower target. The broader branches, the conditional consequences and the encoder-dependent input assertions of Sections 80–84 retain their respective hypotheses and conclusions.
 
 ## 追加锚（本行以下为增补区）
+
+## 91. The boundary specialization and simultaneous orthogonal symmetry
+
+**Definition 91.1 (the same boundary family in two environment coordinates).** Retain $E_i,\mathcal T_\partial,\mathcal T_3,\rho_\star,c,r$ from (S.202), so $r=\sqrt c=\cos(\pi/8)$. Use the reordered output frame $(b_1,b_2,g_1,g_2,h)$ of Section 88. Write $T=[Z,0]\in\mathcal T_\partial$ and
+
+$$
+\begin{gathered}
+\widehat E_0=\frac1{\sqrt2}\begin{pmatrix}I_2\\0_2\\0_{1\times2}\end{pmatrix},\qquad
+\widehat E_1=\frac1{\sqrt2}\begin{pmatrix}0_2\\I_2\\0_{1\times2}\end{pmatrix},\\
+Z=\begin{pmatrix}Z_0\\Z_1\\v^T\end{pmatrix}\in\mathbb R^{5\times2},\qquad
+\operatorname{Tr}Z_0=\operatorname{Tr}Z_1=0,\qquad \|Z\|_F=1,\\
+X\in\mathsf D(\mathbb R^2),\qquad
+f_\partial(X,Z)=f_{[Z,0]}(JXJ^T)
+=\left\|[\widehat E_0\sqrt X/4\mid\widehat E_1\sqrt X/4\mid Z\sqrt X/2]\right\|_*.
+\end{gathered}
+\tag{S.241}
+$$
+
+Here $J$ is the inclusion used in (S.223). The two zero traces are exactly the two Frobenius constraints of (S.202); the row $v^T$ is the single outside-output direction. The environmental density $X$ is separate from the physical qutrit density $\rho_\star=\operatorname{diag}(1/4,1/4,1/2)$.
+
+For one common real matrix $M=[M_0\ M_1]\in\mathbb R^{2\times4}$ define
+
+$$
+\begin{gathered}
+MM^T\preceq I_2,\qquad G=MM^T=(g_{ij}),\qquad H=I_2-G,\qquad
+A=\tfrac12\operatorname{diag}(X,X),\\
+p=\tfrac12\sum_{i=0}^1\bigl(\operatorname{Tr}(\sqrt X\,M_i)\bigr)^2,\qquad
+\ell=\operatorname{Tr}\sqrt{\sqrt A(I_4-M^TM)\sqrt A},\\
+q=1-\lambda_{\min}(\sqrt XH\sqrt X)-p,\qquad
+\Theta(X,M)=\ell/4+\sqrt q/2.
+\end{gathered}
+\tag{S.242}
+$$
+
+The letters in (S.242) have these boundary dimensions. They specialize the common variables of Definition 88.1; they do not replace its three-dimensional domain.
+
+**Proposition 91.2 (support-safe exact boundary specialization).** The quantity $q$ in (S.242) is nonnegative, and
+
+$$
+\max_{\substack{X\in\mathsf D(\mathbb R^2)\\M\in\mathbb R^{2\times4},\ MM^T\preceq I_2}}\Theta(X,M)
+=\max_{\substack{X\in\mathsf D(\mathbb R^2)\\Z\in\mathcal L_2,\ \|Z\|_F=1}} f_\partial(X,Z)
+=\sqrt{V_\partial}.
+\tag{S.243}
+$$
+
+All displayed maxima include singular densities and singular $H$.
+
+Proof. Proposition 87.1 supplies the environmental support restriction: since $E_0,E_1,T$ annihilate $I-P_E$, only $P_EXP_E$ enters $\Phi_T(X)$. If its trace is $s>0$, normalization multiplies the root objective by $1/\sqrt s\geq1$; if $s=0$, the objective is zero. Proposition 85.3 then permits real symmetric $X$ by conjugation averaging. Neither operation removes real offdiagonal entries.
+
+Apply the rectangular trace/spectral duality used in (S.207) to (S.241). For fixed $X$, write the common dual matrix as $Q=[Q_0\ Q_1\ B]\in\mathbb R^{5\times6}$, with $QQ^T\preceq I_5$, and put $W=[\widehat E_0\sqrt X\mid\widehat E_1\sqrt X]$. At a fixed $B$, the maximum of the two code pairings is $\|(I_5-BB^T)^{1/2}W\|_*$. Indeed every code block $Q_c=[Q_0\ Q_1]$ satisfying $Q_cQ_c^T\preceq I_5-BB^T$ factors as $(I_5-BB^T)^{1/2}R$ for a contraction $R$ on the support; rectangular polar pairing attains its nuclear norm. This factorization and attainment remain valid with a kernel, as in the Watrous interface used in (S.227). Maximization over the unit sphere in $\mathcal L_2$ gives the support function $\|\Pi_2(B\sqrt X)\|_F$, including a zero projection. Thus, before eliminating $B$, the common-variable objective is
+
+$$
+\frac14\|(I_5-BB^T)^{1/2}W\|_*
++\frac12\|\Pi_2(B\sqrt X)\|_F,
+\qquad B^TB\preceq I_2.
+\tag{S.244}
+$$
+
+Write $B=[M^T;w^T]$, with $w\in\mathbb R^2$. Then $B^TB=G+ww^T$, so feasibility is exactly $ww^T\preceq H$. Since $W=[\sqrt A;0_{1\times4}]$, its Gram after multiplication by $(I_5-BB^T)^{1/2}$ is $\sqrt A(I_4-M^TM)\sqrt A$. The first term of (S.244) is therefore $\ell/4$, independent of $w$. Orthonormality of $\widehat E_0,\widehat E_1$ gives the two distinct projection penalties:
+
+$$
+\begin{aligned}
+\|\Pi_2(B\sqrt X)\|_F^2
+&=\operatorname{Tr}(XG)+w^TXw
+-\tfrac12\bigl(\operatorname{Tr}(\sqrt X M_0)\bigr)^2
+-\tfrac12\bigl(\operatorname{Tr}(\sqrt X M_1)\bigr)^2,\\
+\max_{ww^T\preceq H}w^TXw
+&=\lambda_{\max}(\sqrt H X\sqrt H).
+\end{aligned}
+\tag{S.245}
+$$
+
+For singular $H$, the constraint forces $w$ into $\operatorname{ran}H$. Inverting $\sqrt H$ only on that range shows it is equivalent to $w=\sqrt H u$ with $\|u\|\leq1$. Conversely $uu^T\preceq I_2$ implies $ww^T\preceq H$. A unit top eigenvector of $\sqrt H X\sqrt H$ attains (S.245), even if the eigenvalue is zero. This is the contribution of one row; a trace in its place would change the allowed rank of the outside contribution.
+
+The matrices $\sqrt H X\sqrt H$ and $\sqrt XH\sqrt X$ have identical spectra, as the two Grams of $\sqrt H\sqrt X$. In dimension two their largest eigenvalue is $\operatorname{Tr}(XH)-\lambda_{\min}(\sqrt XH\sqrt X)$. Since $\operatorname{Tr}(X(G+H))=1$, (S.245) becomes exactly $q$ in (S.242). Its projected-norm interpretation proves $q\geq0$. For each $X,M$, choose the attaining $w$, the attaining common code block, and then the attaining $Z$ in the projection direction. Those choices realize (S.244) simultaneously. Compactness and continuity supply all maxima, without inverses on null spaces. This proves (S.243). The norm duality and singular-compatible contraction factorization are the literature-attested intermediate tools of [Watrous, Section 1 and Section 2.1, Lemma 2](../../../Library/QuantumChannels/watrous2012simpler.md); the specialization is a consequence of the existing family-specific reduction. $\square$
+
+**Proposition 91.3 (ordered spectrum by joint symmetry).** For $O\in O(2)$ and $D=\operatorname{diag}(O,O,1)$, the transformations
+
+$$
+(X,Z)\longmapsto(OXO^T,DZO^T),\qquad
+M_i\longmapsto OM_iO^T
+\tag{S.246}
+$$
+
+preserve the respective objectives, constraints and $\|M\|_F$. Consequently the joint maxima in (S.243) may be expressed with
+
+$$
+X=\operatorname{diag}(x,y),\qquad x+y=1,\qquad x\geq y\geq0,\qquad
+\alpha=\sqrt x,\quad\beta=\sqrt y.
+\tag{S.247}
+$$
+
+Proof. The identities $D\widehat E_iO^T=\widehat E_i$ imply that each block of the matrix defining $f_\partial$ is transformed by the same left orthogonal $D$ and a right orthogonal $O^T$. Its nuclear norm is unchanged. Conjugation sends $Z_i$ to $OZ_iO^T$, preserving both zero traces, and preserves the full Frobenius norm of $Z$. For $\mathcal O=\operatorname{diag}(O,O)$, the transformed common matrix is $OM\mathcal O^T$; hence $G,H$ are conjugated by $O$, $A$ and $M^TM$ by $\mathcal O$, and both traces in $p$ are unchanged. These transformations preserve $\ell,q,\Theta$ and the contraction condition. The real spectral theorem, followed by a simultaneous interchange of the two coordinates if necessary, gives (S.247). The transformation also changes $Z$; it does not justify diagonalizing $X$ while holding a channel fixed. $\square$
+
+## 92. A weighted loss and the common eigenvalue-switch gain
+
+**Definition 92.1 (weighted energy and exact spectral correction).** In the ordered coordinates (S.247), for the same $X,M$ as in (S.242), put
+
+$$
+\begin{gathered}
+t=\|M\|_F^2=\operatorname{Tr}G,\qquad
+\mathcal J=\sum_{i=0}^1\operatorname{Tr}(\sqrt X\,M_i^TM_i),\\
+\kappa(x)=\max\left\{\frac y\alpha,
+\frac{\beta-\alpha+\sqrt{1+6\alpha\beta}}4\right\},\\
+\Delta=x(1-g_{11})-y(1-g_{22}),\qquad
+\omega=\frac{\sqrt{\Delta^2+4xyg_{12}^2}-\Delta}{2},\\
+F_0(x)=\frac{(2+\sqrt2)\sqrt x+\sqrt2\sqrt{1-x}}4
+=c\sqrt x+\frac{\sqrt{1-x}}{2\sqrt2}.
+\end{gathered}
+\tag{S.248}
+$$
+
+The correction $\omega\geq0$ includes eigenvalue switching when $\Delta\leq0$. The parameter $t$ is the square of the Frobenius radius of the dual contraction.
+
+**Proposition 92.2 (support-safe code loss).** Throughout (S.242),
+
+$$
+\ell\leq\sqrt2(\alpha+\beta)-\frac{\mathcal J}{2\sqrt2}.
+\tag{S.249}
+$$
+
+Proof. Set $L=\sqrt A(I_4-M^TM)\sqrt A$. Its support is contained in $\operatorname{supp}A$. On that support $Y=\sqrt A$ is positive definite. Use the fidelity variational formula of [Watrous, Section 2.1, (6) and Theorem 3](../../../Library/QuantumChannels/watrous2012simpler.md) with operands $I$ and $L$, restricted to this support, and this particular test matrix $Y$:
+
+$$
+\begin{aligned}
+\operatorname{Tr}\sqrt L
+&\leq\tfrac12\operatorname{Tr}(Y+Y^{-1}L)\\
+&=\operatorname{Tr}\sqrt A-\tfrac12\operatorname{Tr}(\sqrt A M^TM)\\
+&=\sqrt2(\alpha+\beta)-\frac1{2\sqrt2}
+\sum_i\operatorname{Tr}(\sqrt X M_i^TM_i).
+\end{aligned}
+\tag{S.250}
+$$
+
+All traces in the first line are on the support. In the second line, cyclicity and $A^{1/2}Y^{-1}A^{1/2}=\sqrt A$ on that support justify the equality; extending by zero gives the full-space expression. No commutation between $A$ and $M^TM$ is assumed. The result holds directly when $A$ is singular and uses a variational upper bound, not an asserted attaining inverse on its kernel. $\square$
+
+**Proposition 92.3 (both trace losses and the exact eigenvalue switch).** For every feasible common pair,
+
+$$
+yg_{22}-p\leq\kappa(x)\mathcal J,\qquad
+\lambda_{\min}(\sqrt XH\sqrt X)=y(1-g_{22})-\omega,
+\qquad q=x+yg_{22}-p+\omega.
+\tag{S.251}
+$$
+
+Proof. Write $M_i=\left(\begin{smallmatrix}a_i&b_i\\d_i&e_i\end{smallmatrix}\right)$. Directly from the two squared traces in $p$,
+
+$$
+\begin{aligned}
+yg_{22}-p
+&=\sum_i\left[-\tfrac x2a_i^2+yd_i^2+\tfrac y2e_i^2-\alpha\beta a_ie_i\right],\\
+\mathcal J&=\sum_i\left[\alpha(a_i^2+d_i^2)+\beta(b_i^2+e_i^2)\right].
+\end{aligned}
+\tag{S.252}
+$$
+
+When $\beta>0$, the $d_i$ term has quotient $y/\alpha$, and the $b_i$ term has quotient zero. Rescale the pair $(a_i,e_i)$ to $(\sqrt\alpha a_i,\sqrt\beta e_i)$. Its symmetric quadratic matrix and larger eigenvalue are
+
+$$
+\frac12\begin{pmatrix}-\alpha&-\sqrt{\alpha\beta}\\-\sqrt{\alpha\beta}&\beta\end{pmatrix},\qquad
+\frac{\beta-\alpha+\sqrt{(\alpha+\beta)^2+4\alpha\beta}}4
+=\frac{\beta-\alpha+\sqrt{1+6\alpha\beta}}4.
+\tag{S.253}
+$$
+
+This eigenvalue is nonnegative, since the determinant is $-\alpha\beta/2<0$. Taking the maximum of the two nonzero quotients proves the first inequality of (S.251), for each block and then their sum. At $y=0$, $\alpha=1,\beta=0,\kappa=0$ and the inequality is simply $-p\leq0$, with no rescaling by zero.
+
+The matrix $\sqrt XH\sqrt X$ has diagonal entries $x(1-g_{11})$, $y(1-g_{22})$ and offdiagonal $-\sqrt{xy}\,g_{12}$. Its smaller eigenvalue is the second diagonal entry minus $(\sqrt{\Delta^2+4xyg_{12}^2}-\Delta)/2$. This proves the exact identity for every sign of $\Delta$, including $x=y$ and repeated eigenvalues. Substitution into (S.242) gives the last identity. $\square$
+
+**Theorem 92.4 (gain-loss inequality on the common contraction).** For every pair in (S.242), expressed by the joint symmetry in ordered coordinates,
+
+$$
+\Theta(X,M)\leq F_0(x)
+-\left(\frac1{8\sqrt2}-\frac{\kappa(x)}{4\sqrt x}\right)\mathcal J
++\frac{\omega}{4\sqrt x}.
+\tag{S.254}
+$$
+
+If $\Delta>0$, there is the additional upper bound
+
+$$
+\Theta(X,M)\leq F_0(x)
+-\left(\frac1{8\sqrt2}-\frac{\kappa(x)}{4\sqrt x}\right)\mathcal J
++\frac{\sqrt x\,y}{4\Delta}g_{12}^2.
+\tag{S.255}
+$$
+
+Proof. Since $q\geq0$ and $x\geq1/2$, the supporting line to the square root at $x$ gives $\sqrt q\leq\alpha+(q-x)/(2\alpha)$. Combine this with (S.249) and (S.251): the code loss in $\ell/4$ is $\mathcal J/(8\sqrt2)$, while the residual term contributes at most $(\kappa\mathcal J+\omega)/(4\alpha)$. The remaining terms are $F_0(x)$, proving (S.254). When $\Delta>0$, rationalization gives
+
+$$
+\omega=\frac{2xyg_{12}^2}{\sqrt{\Delta^2+4xyg_{12}^2}+\Delta}
+\leq\frac{xyg_{12}^2}{\Delta},
+\tag{S.256}
+$$
+
+which proves (S.255). The hypothesis $\Delta>0$ is required for this denominator bound. At $x=1$, feasibility gives $\Delta=1-g_{11}\geq0$ and $\omega=0$, so (S.254) still holds even if $\Delta=0$. All terms in the first bound are defined at $x=1/2$. These are one-sided estimates of the exact objective (S.242), with $\mathcal J$ and $\omega$ evaluated at the same $M$. $\square$
+
+## 93. Rational spectral-band and all-spectrum exclusion radii
+
+**Theorem 93.1 (the spectral-band estimate).** If the boundary pair satisfies
+
+$$
+\frac{21}{25}\leq\lambda_{\max}(X)=x\leq\frac78,
+\qquad \|M\|_F\leq\frac1{10},
+\tag{S.257}
+$$
+
+then
+
+$$
+\Theta(X,M)\leq F_0(x)-\frac{\mathcal J}{1280}
+\leq F_0(x)-\frac{\|M\|_F^2}{4000}.
+\tag{S.258}
+$$
+
+Proof. By Proposition 91.3 it suffices to use (S.247), and the norm assumption is $t\leq1/100$. The following estimates use only rational comparisons:
+
+$$
+\alpha\geq\frac{229}{250},\qquad
+\frac{353}{1000}\leq\beta\leq\frac25,\qquad
+\alpha\beta\leq\frac{367}{1000}.
+\tag{S.259}
+$$
+
+Indeed $(229/250)^2<21/25$, $(353/1000)^2<1/8\leq y$, and $y\leq4/25$. Also $xy\leq84/625<(367/1000)^2$, because $x(1-x)$ decreases for $x\geq1/2$ and $x\geq21/25$. Consequently
+$y/\alpha\leq40/229<637/2000$ and
+$\sqrt{1+6\alpha\beta}\leq179/100$, the latter since
+$1+6(367/1000)=1601/500<(179/100)^2$. Thus
+
+$$
+\kappa(x)\leq\frac{(2/5)-(229/250)+(179/100)}4
+=\frac{637}{2000}.
+\tag{S.260}
+$$
+
+Here the displayed value bounds both entries of the maximum defining $\kappa$. Since $G\succeq0$, $g_{11},g_{22}\geq0$ and $g_{11}+g_{22}=t$, whence
+
+$$
+\begin{gathered}
+\Delta=(2x-1)-xg_{11}+yg_{22}
+\geq\frac{17}{25}-\frac78\frac1{100}
+=\frac{537}{800}>\frac{67}{100},\\
+g_{12}^2\leq g_{11}g_{22}\leq\frac{t^2}{4},\qquad
+\mathcal J\geq\beta t\geq\frac{353}{1000}t.
+\end{gathered}
+\tag{S.261}
+$$
+
+The first inequality for $\mathcal J$ uses $\alpha\geq\beta$ in (S.252). Since $xy\leq84/625<27/200$, (S.256) yields
+
+$$
+\omega\leq\frac{27}{536}t^2
+\leq\frac{27}{53600}t
+\leq\frac{1059}{2000000}t
+\leq\frac3{2000}\mathcal J.
+\tag{S.262}
+$$
+
+The middle scalar comparison is strict before multiplication by $t$, because $27\cdot2000000<1059\cdot53600$; it remains a non-strict inequality when $t=0$. Equations (S.251), (S.260) and (S.262) give $q\leq x+(8/25)\mathcal J$. Use this sharper bound in the square-root supporting line and retain (S.249). Then
+
+$$
+\begin{aligned}
+\Theta&\leq F_0(x)-\frac{\mathcal J}4
+\left(\frac1{2\sqrt2}-\frac8{25\alpha}\right),\\
+\frac1{2\sqrt2}-\frac8{25\alpha}
+&\geq\frac{353}{1000}-\frac{80}{229}
+=\frac1{320}+\frac{971}{1832000}>\frac1{320}.
+\end{aligned}
+\tag{S.263}
+$$
+
+The first lower bound follows again from $(353/1000)^2<1/8$ and $\alpha\geq229/250$. Thus $\Theta\leq F_0-\mathcal J/1280$. Finally
+$\mathcal J/1280\geq353t/1280000\geq t/4000$, since $353>320$. This proves both parts of (S.258), including $M=0$. $\square$
+
+**Proposition 93.2 (exact zero-contraction gap and a global coarse estimate).** For $x\in[1/2,1]$,
+
+$$
+\begin{aligned}
+r-F_0(x)
+&=\frac r2\left[(\sqrt x-\sqrt c)^2+
+(\sqrt{1-x}-\sqrt{1-c})^2\right]\\
+&\geq\frac r4(x-c)^2.
+\end{aligned}
+\tag{S.264}
+$$
+
+In particular $F_0(x)\leq r$, with equality exactly at $x=c$. For every feasible pair with $t\leq1$,
+
+$$
+q\leq x+yt,\qquad \Theta(X,M)\leq F_0(x)+t/4.
+\tag{S.265}
+$$
+
+Proof. The coefficient identities $c^2+1/8=c$ and $c(1-c)=1/8$ give
+$F_0(x)=r(\sqrt c\sqrt x+\sqrt{1-c}\sqrt{1-x})$. The two vectors inside the inner product are unit vectors. Expanding their squared distance proves the equality in (S.264) and its equality condition. Each squared difference is at least $(x-c)^2/4$, by factoring the difference of squares and bounding the sum of the two nonnegative roots by $2$. Adding the two bounds proves the last inequality, including the endpoints.
+
+For (S.265), positivity and $\operatorname{Tr}G=t$ imply $G\preceq tI_2$, hence $H\succeq(1-t)I_2$. Congruence by $\sqrt X$ and the minimum-eigenvalue bound yield
+$\lambda_{\min}(\sqrt XH\sqrt X)\geq(1-t)y$. As $p\geq0$, this gives $q\leq x+yt$. Also $\ell\leq\operatorname{Tr}\sqrt A=\sqrt2(\alpha+\beta)$ by positive-square-root monotonicity. The supporting line at $x$ therefore gives
+$\Theta\leq F_0(x)+yt/(4\alpha)\leq F_0(x)+t/4$, because $y\leq\alpha$ on $[1/2,1]$. Every comparison uses the same pair $X,M$. $\square$
+
+**Theorem 93.3 (a uniform radius over all boundary auxiliary densities).** For every $X\in\mathsf D(\mathbb R^2)$, including singular $X$, and every common feasible $M$,
+
+$$
+\|M\|_F\leq\frac1{100}
+\quad\Longrightarrow\quad
+\Theta(X,M)\leq r-\frac{\|M\|_F^2}{4000}.
+\tag{S.266}
+$$
+
+Proof. By joint symmetry order the spectrum as in (S.247), and put $t=\|M\|_F^2\leq1/10000$. Inside $[21/25,7/8]$, Theorem 93.1 and $F_0\leq r$ prove the assertion. Outside that interval the following strict rational margins apply. Since
+$(353/250)^2<2<(181/125)^2$, the formula $c=(2+\sqrt2)/4$ gives
+$c>853/1000$ and $c<431/500$. Therefore both $c-21/25$ and $7/8-c$ exceed $13/1000$. Moreover $c>21/25>81/100$, so $r>9/10$. Equation (S.264) then gives
+
+$$
+r-F_0(x)>\frac9{40}\left(\frac{13}{1000}\right)^2
+=\frac{1521}{40000000},\qquad
+\frac t4+\frac t{4000}\leq\frac{1001}{40000000}
+<\frac{1521}{40000000}.
+\tag{S.267}
+$$
+
+Combining (S.265) with this strict gap proves (S.266) outside the band as well. The included singular endpoint $x=1$ uses (S.265) directly and needs no strictly positive $X$. The radii $1/100$ here and $1/10$ in Theorem 93.1 correspond respectively to $t\leq1/10000$ and $t\leq1/100$. $\square$
+
+## 94. An exact overlap cost in the original boundary variables
+
+**Proposition 94.1 (traceless-block weighted overlap identity).** For the boundary variables of (S.241), without any diagonal assumption on $X$, set
+
+$$
+D_0=\tfrac12\operatorname{diag}(X,X,0),\qquad W=ZXZ^T.
+\tag{S.268}
+$$
+
+Then
+
+$$
+\operatorname{Tr}(D_0W)
+=\frac12\left[\det(X)\sum_{i=0}^1\|Z_i\|_F^2
++\sum_{i=0}^1\bigl(\operatorname{Tr}(XZ_i)\bigr)^2\right].
+\tag{S.269}
+$$
+
+Proof. The block trace gives
+$\operatorname{Tr}(D_0W)=\tfrac12\sum_i\operatorname{Tr}(XZ_iXZ_i^T)$; the outside row $v^T$ contributes zero to this trace. In a basis with $X=\operatorname{diag}(x,y)$, any real traceless block is $Z_i=\left(\begin{smallmatrix}a&b\\d&-a\end{smallmatrix}\right)$, and
+
+$$
+\begin{aligned}
+\operatorname{Tr}(XZ_iXZ_i^T)
+&=(x^2+y^2)a^2+xy(b^2+d^2)\\
+&=xy(2a^2+b^2+d^2)+(x-y)^2a^2\\
+&=\det(X)\|Z_i\|_F^2+\bigl(\operatorname{Tr}(XZ_i)\bigr)^2.
+\end{aligned}
+\tag{S.270}
+$$
+
+Both sides are invariant under the simultaneous conjugation $X\mapsto OXO^T$, $Z_i\mapsto OZ_iO^T$ of Proposition 91.3, so the identity holds for every real symmetric density. The calculation is polynomial and includes $y=0$ and $x=y$. Summing over the two blocks proves (S.269). This is an identity for a common $X,Z$, rather than separately optimized bounds on the two summands. $\square$
+
+## 95. Interpretation in the original actual family and the remaining contraction inequality
+
+**Corollary 95.1 (necessary dual radii for a strict violation).** Any boundary common pair with $\Theta(X,M)>r$ must satisfy
+
+$$
+\|M\|_F>\frac1{100};\qquad
+\lambda_{\max}(X)\in[21/25,7/8]
+\ \Longrightarrow\ \|M\|_F>\frac1{10}.
+\tag{S.271}
+$$
+
+The same necessary conditions hold for every maximizing common pair associated with a strict boundary violation through (S.243).
+
+Proof. The first implication is the contrapositive of Theorem 93.3. In the stated band, Theorem 93.1 and $F_0\leq r$ give the second. A strict boundary value is bounded by the jointly maximized common formulation, whose maximum is attained by Proposition 91.2; any such maximizing value above $r$ obeys these implications. The constraints are on a dual $2\times4$ contraction. They impose neither a radius on an active channel column nor a condition on the matrix rank of $T$ or its physical Kraus rank. $\square$
+
+**Definition 95.2 (the residual uniform obligation and its exact original-family meaning).** The remaining boundary assertion is
+
+$$
+\Theta(X,M)\leq r\qquad
+\text{for all }X\in\mathsf D(\mathbb R^2),\quad
+M\in\mathbb R^{2\times4},\quad MM^T\preceq I_2.
+\tag{S.272}
+$$
+
+Proposition 91.2 identifies this assertion with $V_\partial\leq c$; Propositions 86.1–86.2 and 90.2 identify it with (S.239), with every complex $3\times3$ environmental density retained and actual minimal Kraus rank three. The calibration of Proposition 89.1 provides a feasible value $r$ at $M=0$, and (S.213) provides a boundary feasible squared value $c$. These are lower calibrations for the full maximum; neither supplies its general upper bound.
+
+Theorems 92.4, 93.1 and 93.3 give upper estimates and the two exclusion neighborhoods, while (S.245), (S.251)'s eigenvalue formulas, (S.264)'s first equality and (S.269) are exact identities. For general $M$ outside those neighborhoods, sufficient control of the common $\omega$ against the weighted loss and $r-F_0(x)$ remains unproved. In particular (S.255) requires $\Delta>0$ and does not control the whole eigenvalue-switch regime. Neither (S.272) nor a uniform multiplier construction for (S.220) follows from the local estimates.
+
+For the original physical interpretation, Proposition 85.2 retains the full matrices $K_\alpha=[(E_0)_\alpha,(E_1)_\alpha,t_\alpha]$ and both TP trace constraints. Their actual minimal Kraus rank is three exactly when $Te_2\ne0$, independently of $\operatorname{rank}T$. If a strict boundary value were found, the perturbation $( [Z,0]+\varepsilon he_2^T)/\sqrt{1+\varepsilon^2}$ of (S.215), together with (S.214), would transfer its strict gap at the same auxiliary density to that actual rank-three class. The local bounds construct no such violation. The fixed physical input remains $\rho_\star$, the recovery ranges over all complex CPTP maps, and the Bény–Oreshkov fixed-state root-fidelity identity (133), with its unrestricted completion, is precisely the interface already used in (S.205)–(S.206) [Bény–Oreshkov, Section IV](../../../Library/QuantumChannels/beny2011simulation.md). No change of physical dimension or restriction of recovery Kraus number is implicit in the two-dimensional auxiliary boundary.
+
+The weighted quadratic comparison, eigenvalue correction, rational exclusions and overlap identity in Sections 92–94 are repo-derived consequences within this family. The norm duality, support-compatible contraction factorization and fidelity test-matrix inequality are literature-attested intermediate tools, with the exact Watrous citations attached to their uses above. The existing full-family reductions of Sections 85–90 retain their original domains and proofs; the estimates here do not assert a uniform fixed-input certificate or the broader full-reference target.
+
+## 追加锚（本行以下为增补区）
