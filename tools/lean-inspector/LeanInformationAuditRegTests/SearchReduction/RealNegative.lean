@@ -24,12 +24,40 @@ open LeanInformationAudit.Tests.SearchReduction
   using [] as frozenPackageResult
 #guard frozenPackageResult = Verdict.bindOnly
 
+/- §5 preserves the complete source telescope. robustKnowledge is a predicate
+definition, not a proof of the factivity statement; the conjunction theorem has
+different binders. Neither supplies a single-source view of this target.
+Its terminal predicate is not True, reflexive equality or an affine tautology,
+so N does not certify it as neutral. Projection from the target's own
+hKnowledge assumption belongs to R, independently of presentation lookup. -/
+run_meta do
+  let env ← Lean.getEnv
+  let target := (← Lean.getConstInfo
+    ``D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeFactivity.robust_knowledge_factivity).type
+  let .ok keys := LeanInformationAudit.SearchReduction.normalizedAtoms env target
+    | throwError "factivity target normalization failed"
+  if keys.all (·.isScope) then throwError "factivity was incorrectly certified neutral"
+  let definition := (← Lean.getConstInfo
+    ``D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeConjunction.robustKnowledge).type
+  if ← Lean.Meta.isProp definition then
+    throwError "predicate definition was treated as a proposition proof"
+  for name in #[
+      ``D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeConjunction.robustKnowledge,
+      ``D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeConjunction.robust_knowledge_conjunction] do
+    let source := (← Lean.getConstInfo name).type
+    let .ok sourceKeys := LeanInformationAudit.SearchReduction.normalizedAtoms env source
+      | throwError "factivity source normalization failed: {name}"
+    if LeanInformationAudit.SearchReduction.supportIncluded keys sourceKeys then
+      throwError "incompatible factivity source matched the complete telescope: {name}"
+  logInfo "factivity: nonneutral target; predicate definition and conjunction source do not match"
+
 #search_reduction D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeFactivity.robust_knowledge_factivity
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeConjunction]
   using [] as frozenProjectionResult
 #guard frozenProjectionResult = Verdict.bindOnly
-#guard frozenProjectionResult.presentation = Run.found
+#guard frozenProjectionResult.presentation = Run.exhausted
+#guard frozenProjectionResult.baseline = Run.found
 
 #print axioms frozenAliasResult.baselineProof
 #print axioms frozenPackageResult.baselineProof
