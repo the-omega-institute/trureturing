@@ -328,9 +328,7 @@ private theorem inverse_shift_norm_bound {n : ℕ} (m : Matrix (Fin n) (Fin n) �
   have hi := CStarAlgebra.ringInverse_le_ringInverse hlo hs
   have hscalar : (((c+t)•1 : Matrix (Fin n) (Fin n) ℂ)⁻¹)=(c+t)⁻¹•1 := by
     letI : Invertible ((c+t : ℝ) : ℂ) := invertibleOfNonzero (by exact_mod_cast hct.ne')
-    have he (a : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) : (a : ℂ) • A = a • A := by
-      ext i j
-      simp [Complex.real_smul, smul_eq_mul]
+    have he (a : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) : (a : ℂ) • A = a • A := Complex.coe_smul a A
     simpa only [invOf_eq_inv, ← Complex.ofReal_inv, he, inv_one] using
       (Matrix.inv_smul (A := (1 : Matrix (Fin n) (Fin n) ℂ)) ((c+t : ℝ) : ℂ) (by simp))
   simp only [← Matrix.nonsing_inv_eq_ringInverse,hscalar] at hi
@@ -725,10 +723,8 @@ private theorem uniformPositiveHolevoBound : (∀ n : ℕ, ∀ ρ σ : Matrix (F
   have hs := skew_relative_bound_of_uniform_positive σ ρ hσ hρ c (1/2) hc (by norm_num) (by norm_num) hσc hρc
   have hhalf (A B : Matrix (Fin n) (Fin n) ℂ) :
       (1/2:ℝ)•A+(1-(1/2:ℝ))•B=(1/2:ℂ)•(A+B) := by
-    ext i j
-    simp only [Matrix.add_apply,Matrix.smul_apply,Complex.real_smul,smul_eq_mul]
+    rw [show 1-(1/2:ℝ) = 1/2 by norm_num, ← smul_add, ← Complex.coe_smul]
     norm_num
-    ring
   have hl : -Real.log (1/2:ℝ)=Real.log 2 := by rw [one_div,Real.log_inv,neg_neg]
   rw [hhalf,hl] at hr hs
   rw [add_comm σ ρ,show σ-ρ=-(ρ-σ) by abel,traceNorm_neg] at hs
