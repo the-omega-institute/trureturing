@@ -7,7 +7,6 @@
    digest: Lotka–Volterra integrals and the last coordinate generate the rational function field. -/
 
 import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
 import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.Tactic.FieldSimp

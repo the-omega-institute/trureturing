@@ -37,7 +37,7 @@ internal sealed class LotkaVolterraIntegralBirationalityDocument : IScribeDocume
                     + "to S(F,n,n) for i ≥ n because the remaining coordinates are zero.",
                 AssessedProvenance.FromRepo()),
             Node("half", "The number of forward integrals", "half", HalfFormula(),
-                "Natural-number division gives m = floor((n+1)/2). Hence n = 2m−1 "
+                "Nat.div is natural-number floor division, giving m = floor((n+1)/2). Hence n = 2m−1 "
                     + "for positive odd n, and n = 2m for even n, including zero.",
                 AssessedProvenance.FromRepo()),
             Node("fk", "The forward integrals in both parities", "Fk", ForwardFormula(),
@@ -216,7 +216,7 @@ internal sealed class LotkaVolterraIntegralBirationalityDocument : IScribeDocume
         Equal(PartialSum(F.Id("i")), Over(Sum, "j", Range(F.Id("i")), Coordinate(F.Id("j"))))));
 
     private static Formula HalfFormula() => All("n", Naturals(),
-        Equal(Half(), Seq(Lfloor, Fraction(Add(F.Id("n"), D(1)), D(2)), Rfloor)));
+        Equal(Half(), At(Named("Nat", "div"), Add(F.Id("n"), D(1)), D(2))));
 
     private static Formula ForwardFormula()
     {
