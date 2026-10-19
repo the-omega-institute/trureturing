@@ -10,20 +10,8 @@ import tempfile
 
 TOOLS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS / 'briefgen'))
-from common import Context, entry, fail
+from common import BriefError, Context, entry, fail, sha, uint
 from standing_append import checker
-
-
-def uint(value, label):
-    if not re.fullmatch(r'[1-9][0-9]*', str(value)):
-        fail(13, label + ' must be a positive integer')
-    return int(value)
-
-
-def sha(value):
-    if not isinstance(value, str) or not re.fullmatch(r'[0-9a-f]{40}', value):
-        fail(13, 'full commit SHA required')
-    return value
 
 
 class Landing:
@@ -146,6 +134,11 @@ class Landing:
             if result.returncode:
                 fail(16, 'WORKTREE_REMOVE_FAILED ' + result.stderr.strip())
 
+    def devpush_red(self, merge, run_id, reason, code):
+        reason = ' '.join(str(reason).split())
+        print('DEVPUSH_RED', merge, 'run=' + run_id, 'reason=' + reason, flush=True)
+        fail(code, reason)
+
     def watch(self, args):
         if len(args) not in (1, 2):
             fail(10, 'land-watch.sh PR [WORKTREE]')
@@ -186,16 +179,27 @@ class Landing:
         if own is None: fail(2, 'DEVPUSH_NORUN ' + merge)
         run_id = str(own['databaseId'])
         try:
-            watched = self.gh('run', 'watch', run_id, '--exit-status', '--interval', '60',
-                              check=False, timeout=bounds[3])
+            self.verify_devpush(merge, run_id, bounds, interval)
+        except BriefError as exc:
+            self.devpush_red(merge, run_id, exc.message, exc.code)
         except subprocess.TimeoutExpired:
-            fail(124, 'DEVPUSH_TIMEOUT ' + merge + ' run=' + run_id)
+            self.devpush_red(merge, run_id, 'DEVPUSH_TIMEOUT', 124)
+        except FileNotFoundError as exc:
+            self.devpush_red(merge, run_id, str(exc), 11)
+        except (AssertionError, ValueError, KeyError, IndexError, TypeError, AttributeError) as exc:
+            self.devpush_red(merge, run_id, type(exc).__name__ + ': ' + str(exc), 13)
+        except (OSError, subprocess.SubprocessError) as exc:
+            self.devpush_red(merge, run_id, str(exc), 16)
+        self.cleanup(tree)
+
+    def verify_devpush(self, merge, run_id, bounds, interval):
+        watched = self.gh('run', 'watch', run_id, '--exit-status', '--interval', '60',
+                          check=False, timeout=bounds[3])
         status = json.loads(self.gh('run', 'view', run_id, '--json', 'status,conclusion').stdout)
         print('run', run_id, 'conclusion=' + str(status['conclusion']), 'watch_rc=' + str(watched.returncode), flush=True)
         if status['status'] != 'completed': fail(124, 'DEVPUSH_TIMEOUT ' + merge + ' run=' + run_id)
         if status['conclusion'] == 'success':
             print('DEVPUSH_OK', merge, 'run=' + run_id, flush=True)
-            self.cleanup(tree)
             return
         self.run('git', 'fetch', '-q', 'origin', 'dev')
         for i in range(bounds[2]):
@@ -207,17 +211,14 @@ class Landing:
                     self.run('git', 'fetch', '-q', 'origin', 'dev')
                 ancestry = self.run('git', 'merge-base', '--is-ancestor', merge, later['headSha'], check=False)
                 if ancestry.returncode not in (0, 1):
-                    reason = 'cannot check later run ancestry'
-                    print('DEVPUSH_RED', merge, 'run=' + run_id, 'reason=' + reason, flush=True)
-                    fail(16, reason)
+                    fail(16, 'cannot check later run ancestry')
                 if ancestry.returncode == 0:
                     print('DEVPUSH_OK_LATER', merge, 'own_run=' + run_id,
                           'later_run=' + str(later['databaseId']), 'later_head=' + later['headSha'], flush=True)
-                    self.cleanup(tree)
                     return
             print('DEVPUSH_LATER_WAIT', merge, i+1, flush=True)
             if i+1 < bounds[2]: self.pause(interval)
-        fail(1, 'DEVPUSH_RED ' + merge + ' run=' + run_id)
+        fail(1, 'no later successful containing run within OP_LATER_ROUNDS')
 
 
 def main(argv):

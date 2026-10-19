@@ -9,8 +9,8 @@ from pathlib import Path
 import re
 import sys
 import tempfile
-from landing import Landing, uint, sha
-from common import entry, fail
+from landing import Landing
+from common import entry, fail, main_lean_lock, main_warm_stamp, sha, uint
 
 
 def main(argv):
@@ -26,7 +26,7 @@ def main(argv):
     interval = argv[2] if len(argv) > 2 else '1800'
     if not re.fullmatch(r'[0-9]+(?:\.[0-9]+)?', interval): fail(13, 'invalid interval')
     op = Landing()
-    lock = Path(os.environ.get('OP_REFRESH_LOCK', str(op.ctx.state / 'main-lean.lock'))).resolve()
+    lock = main_lean_lock()
     lock_rounds = str(uint(os.environ.get('OP_REFRESH_LOCK_ROUNDS', '480'), 'lock rounds'))
     lock.parent.mkdir(parents=True, exist_ok=True)
     deadline = time.monotonic() + duration
@@ -71,7 +71,7 @@ def main(argv):
                                 result = subprocess.run(command, cwd=op.ctx.main, stdout=out, stderr=subprocess.STDOUT)
                             print('MAIN_WARM_' + label + '_EXIT=' + str(result.returncode), flush=True)
                             if result.returncode: fail(16, 'MAIN_WARM_' + label + '_FAILED')
-                        built = op.ctx.main / '.lake/build/.main-built-at'
+                        built = main_warm_stamp(op.ctx.main)
                         built.parent.mkdir(parents=True, exist_ok=True)
                         built.write_text(producer + ' ' + datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z') + '\n')
                     else:

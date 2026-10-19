@@ -8,7 +8,7 @@ op_init; op_main
 [ -d "$1" ] || op_fail 11 INPUT_MISSING "$1"
 T=$(cd "$1" && pwd -P)
 lag=${REFRESH_LAG_SECONDS:-10800}; op_uint REFRESH_LAG_SECONDS "$lag"
-lock=${OP_REFRESH_LOCK:-$OP_STATE/main-lean.lock}
+lock=$OP_REFRESH_LOCK
 rounds=${OP_REFRESH_LOCK_ROUNDS:-480}; op_uint OP_REFRESH_LOCK_ROUNDS "$rounds"
 [ "$T" != "$OP_MAIN" ] || { echo "CACHE_REFRESH skip tree=$T reason=is-main"; exit 0; }
 check_idle() {

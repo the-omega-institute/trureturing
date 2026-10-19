@@ -7,19 +7,7 @@ import sys
 
 TOOLS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS / 'briefgen'))
-from common import Context, entry, fail, lane_spec, load, name, read
-
-
-def positive(value):
-    if not re.fullmatch(r'[1-9][0-9]*', value):
-        fail(13, 'positive integer required: ' + value)
-    return value
-
-
-def sha(value):
-    if not re.fullmatch(r'[0-9a-f]{40}', value):
-        fail(13, 'full head SHA required')
-    return value
+from common import Context, entry, fail, lane_spec, load, name, read, sha, uint
 
 
 class Chain:
@@ -127,7 +115,7 @@ class Chain:
         pr = conclusion.get('pr_number') or conclusion.get('pr')
         if isinstance(pr, dict):
             pr = pr.get('number')
-        pr = positive(str(pr))
+        pr = str(uint(str(pr), 'PR'))
         self.postb(pr)
         self.reviews(1)
 
@@ -154,7 +142,7 @@ def main(argv):
         fail(10, 'invalid chain arguments; see README')
     if mode in ('postb-prepare', 'review-one'):
         lane, middle, tree = args
-        if mode == 'postb-prepare': positive(middle)
+        if mode == 'postb-prepare': uint(middle, 'PR')
         elif middle not in ('architecture', 'quality', 'tests'): fail(13, 'invalid review role')
         chain = Chain(lane, tree)
         if mode == 'postb-prepare':
@@ -186,7 +174,7 @@ def main(argv):
         chain.from_mirror(mirror)
         return
     lane, pr, round_number, tree, oldhead, rw, mw = args[:7]
-    positive(pr); positive(round_number); sha(oldhead); name(rw); name(mw)
+    uint(pr, 'PR'); uint(round_number, 'round'); sha(oldhead); name(rw); name(mw)
     chain = Chain(lane, tree)
     seat = 'rework-' + lane + '-' + rw
     mirror = 'mirror-' + lane + '-' + mw
