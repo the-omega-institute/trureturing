@@ -4,7 +4,31 @@
 
 CountedPositiveTriangleModThree
 
-**Theorem 1.1 (The actual numbered-path triangle modulo three).**
+**Theorem 1.1 (Reduce arbitrary signed translation using a supplied period).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.periodic_translate_residue`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.periodic_translate_residue` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On a path fixed after d forward steps, with d nonzero, translation by any integer q equals forward iteration by its residue timeIndex q below d. The path need not have least period d. This identifies signed translation with the finite forward-shift convention.
+
+**Theorem 1.2 (Parallel-edge relabelings have zero total reduced offset).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.parallel_edge_offset_sum_three_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.parallel_edge_offset_sum_three_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonzero period divisible by three, a vertex-fixing permutation of the actual parallel edges has total forward offset zero after reduction to ZMod 3. Individual orbit phases need not vanish. The relabel discrepancy argument uses this total cancellation.
+
+**Theorem 1.3 (The actual numbered-path triangle modulo three).**
 
 Lean statement: `D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.relativeForwardGyration_positive_triangle_mod_three`
 
@@ -26,5 +50,7 @@ Only the mod-three quotient is asserted. This gives neither the full mod-six sig
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.parallel_edge_offset_sum_three_zero`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.periodic_translate_residue`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.relativeForwardGyration_positive_triangle_mod_three`
 - Dependency: [D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration](CountedOriginalOrbitGyration.md)

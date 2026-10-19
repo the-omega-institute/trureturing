@@ -9,6 +9,20 @@ internal sealed class CountedPositiveTriangleLocalizedConsumerDocument : IScribe
         H("The same signed integer gyration lift"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("existing-six-countedpositivetrianglelocalizedconsumer-centralizer-product"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleLocalizedConsumer.centralizer_product"),
+                H("The triangle becomes a product law along a centralizing unit"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a monoid, a fixed element A and a ZMod 3-valued function satisfying the stated triangle identity, commuting U with A splits the value on U times V into the two unit contributions. Only U is required to commute with A in this identity. It supplies the multiplicative law for the constructed centralizer character."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("existing-six-countedpositivetrianglelocalizedconsumer-integergyrationvalue-nat-mod-three"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleLocalizedConsumer.integerGyrationValue_nat_mod_three"),
+                H("The natural-input signed lift has the original residue"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For nonnegative rectangular factors and a nonzero period divisible by three, reduction of the signed integer evaluator agrees with the reduced relative forward gyration. The comparison retains the original ranked periodic action."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("localizedcocycle-1"),
                 DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleLocalizedConsumer.integerValues_mod_three"),
                 H("Congruence after clearing a denominator"),
