@@ -11,6 +11,8 @@ import D5.S1.Words.Patterns.Separable.StableEndpointCodes
 
 namespace D5.S1.Words.Patterns.Separable.ActualCycles
 
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf uniformPmf_toOuterMeasure_apply)
 open D5.S1.Words.Patterns.Separable.CutFactorization
 open D5.S1.Words.Patterns.Separable.MinimumCutKernel
 open D5.S1.Words.Patterns.Separable.EndpointHistoryKernel
