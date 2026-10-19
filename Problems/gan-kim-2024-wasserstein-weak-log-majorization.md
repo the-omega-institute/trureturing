@@ -73,11 +73,11 @@ The same two positive definite integer matrices violate the conjectured comparis
 
 ## Triage
 
-**REFUTED — Conjecture 5.7, for every $0<t<1$.** For $A=\operatorname{diag}(81,1)$ and $B=\left(\begin{smallmatrix}41&40\\40&41\end{smallmatrix}\right)$, the comparison from $p=1/2$ to $q=1$ fails at the product of both eigenvalues.
+**PROVED — Refutation of Conjecture 5.7, for every $0<t<1$.** For $A=\operatorname{diag}(81,1)$ and $B=\left(\begin{smallmatrix}41&40\\40&41\end{smallmatrix}\right)$, the comparison from $p=1/2$ to $q=1$ fails at the product of both eigenvalues.
 
-**UNAFFECTED — Theorem 5.6 under (5.15).** The unconditional conjecture and the conditional theorem are distinct assertions. Direct violation of the literal hypothesis (5.15) by these matrices is ASSUMED-UNVERIFIED here: its primary-source text is unavailable locally, and no Lean theorem about that condition is asserted.
+**OPEN — formal non-implication for Theorem 5.6 under (5.15).** The unconditional conjecture and the conditional theorem are distinct assertions. Direct violation of the literal hypothesis (5.15) by these matrices is ASSUMED-UNVERIFIED here: its primary-source text is unavailable locally, and no Lean theorem about that condition is asserted.
 
-**OPEN HERE — convergence without monotonicity.** The determinant counterexample does not decide the limit of $F_t(p)$ as $p\downarrow0$. No global claim that this convergence is unresolved in the literature is made.
+**OPEN — convergence without monotonicity.** The determinant counterexample does not decide the limit of $F_t(p)$ as $p\downarrow0$. No global claim that this convergence is unresolved in the literature is made.
 
 ## ASSUMED-UNVERIFIED
 

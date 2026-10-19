@@ -22,6 +22,8 @@ open Matrix Filter Topology
 open scoped MatrixOrder ComplexOrder
 namespace D5.S3.Quantum.Matrix.GanKimConjectureRefutation
 open WassersteinMean AlternativeMeanLinearization
+open SpectralGeometricLogEuclideanRefutation (mpow LE)
+open D5.S3.Quantum.Hiai.PsiMeanTraceConcavity (geometricMean)
 
 /-- Conjecture 5.7: decreasing weak-log-majorization convergence as p decreases to zero. -/
 def conjecture : Prop :=
@@ -29,7 +31,7 @@ def conjecture : Prop :=
     ∀ t : ℝ, 0 < t → t < 1 →
       (∀ p q : ℝ, 0 < p → p < q →
         weakLogMajorization (powerMean A B t p) (powerMean A B t q)) ∧
-      Tendsto (fun p : ℝ => powerMean A B t p) (𝓝[>] 0) (𝓝 (logEuclideanMean A B t))
+      Tendsto (fun p : ℝ => powerMean A B t p) (𝓝[>] 0) (𝓝 (LE t A B))
 
 private abbrev Mat := Matrix (Fin 2) (Fin 2) ℂ
 private def block (a b d : ℝ) : Mat := !![(a : ℂ), (b : ℂ); (b : ℂ), (d : ℂ)]
@@ -67,37 +69,40 @@ private lemma squares : P * P = A ∧ Q * Q = B := by
   constructor <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     norm_num [P, Q, A, B, block, Matrix.mul_apply, Fin.sum_univ_two]
 
-private lemma half_powers : matrixPower A (1 / 2) = P ∧ matrixPower B (1 / 2) = Q := by
+private lemma half_powers : mpow A (1 / 2) = P ∧ mpow B (1 / 2) = Q := by
   constructor
-  · rw [matrixPower, ← CFC.rpow_eq_cfc_real A_pos.posSemidef.nonneg, ← CFC.sqrt_eq_rpow]
+  · rw [mpow, ← CFC.rpow_eq_cfc_real A_pos.posSemidef.nonneg, ← CFC.sqrt_eq_rpow]
     exact CFC.sqrt_unique squares.1 P_pos.posSemidef.nonneg
-  · rw [matrixPower, ← CFC.rpow_eq_cfc_real B_pos.posSemidef.nonneg, ← CFC.sqrt_eq_rpow]
+  · rw [mpow, ← CFC.rpow_eq_cfc_real B_pos.posSemidef.nonneg, ← CFC.sqrt_eq_rpow]
     exact CFC.sqrt_unique squares.2 Q_pos.posSemidef.nonneg
 
+open scoped Matrix.Norms.L2Operator in
 private lemma geometric_inverse {n : ℕ} {X Y : Matrix (Fin n) (Fin n) ℂ}
-    (hX : X.PosDef) (hY : Y.PosDef) : geometricMean X⁻¹ Y = gmInv X Y := by
-  have hS : (CFC.sqrt X).PosDef := hX.isStrictlyPositive.sqrt.posDef
-  have hM : (CFC.sqrt X * Y * CFC.sqrt X).PosDef := by
+    (hX : X.PosDef) (hY : Y.PosDef) : geometricMean (1 / 2) X⁻¹ Y = gmInv X Y := by
+  have hS : (CFC.rpow X (1 / 2)).PosDef :=
+    (hX.isStrictlyPositive.rpow X (1 / 2)).posDef
+  have hM : (CFC.rpow X (1 / 2) * Y * CFC.rpow X (1 / 2)).PosDef := by
     simpa only [star_eq_conjTranspose, hS.isHermitian.eq] using
       hS.isUnit.posDef_star_right_conjugate_iff.mpr hY
-  have hi : CFC.sqrt X⁻¹ = cfc (fun x : ℝ => x ^ (-(1 / 2 : ℝ))) X := by
-    rw [Matrix.nonsing_inv_eq_ringInverse, CFC.sqrt_ringInverse, CFC.sqrt_eq_rpow,
-      CFC.inverse_rpow X (1 / 2) (by norm_num) hX.isStrictlyPositive,
-      CFC.rpow_eq_cfc_real hX.posSemidef.nonneg]
-  have hii : X⁻¹⁻¹ = X := by
-    simp only [Matrix.nonsing_inv_eq_ringInverse]
-    exact Ring.inverse_inverse hX.isUnit
-  rw [geometricMean, hii, hi, gmInv]
-  have hs : cfc (fun x : ℝ => x ^ (1 / 2 : ℝ)) X = CFC.sqrt X := by
-    rw [CFC.sqrt_eq_rpow, CFC.rpow_eq_cfc_real hX.posSemidef.nonneg]
-  rw [hs]
-  have hm : cfc (fun x : ℝ => x ^ (1 / 2 : ℝ))
-      (CFC.sqrt X * Y * CFC.sqrt X) = CFC.sqrt (CFC.sqrt X * Y * CFC.sqrt X) := by
-    exact (CFC.sqrt_eq_rpow.trans
-      (CFC.rpow_eq_cfc_real hM.posSemidef.nonneg)).symm
-  rw [hm]
+  have hinv (s : ℝ) : CFC.rpow X⁻¹ s = CFC.rpow X (-s) := by
+    rw [Matrix.nonsing_inv_eq_ringInverse,
+      CFC.inverse_eq_rpow_neg_one hX.isStrictlyPositive]
+    exact (CFC.rpow_rpow X (-1) s (by norm_num) hX.isStrictlyPositive).trans
+      (congrArg (CFC.rpow X) (by ring : (-1 : ℝ) * s = -s))
+  have hi₁ : CFC.rpow X⁻¹ (1 / 2) = CFC.rpow X (-(1 / 2)) := hinv _
+  have hi₂ : CFC.rpow X⁻¹ (-1 / 2) = CFC.rpow X (1 / 2) := by
+    simpa only [neg_div, neg_neg] using hinv (-1 / 2)
+  have hp {Z : Matrix (Fin n) (Fin n) ℂ} (hZ : Z.PosSemidef) (s : ℝ) :
+      CFC.rpow Z s = cfc (fun x : ℝ => x ^ s) Z :=
+    CFC.rpow_eq_cfc_real hZ.nonneg
+  unfold geometricMean
+  change CFC.rpow X⁻¹ (1 / 2) *
+    CFC.rpow (CFC.rpow X⁻¹ (-1 / 2) * Y * CFC.rpow X⁻¹ (-1 / 2)) (1 / 2) *
+    CFC.rpow X⁻¹ (1 / 2) = gmInv X Y
+  rw [hi₁, hi₂, hp hM.posSemidef]
+  simp only [hp hX.posSemidef, gmInv]
 
-private lemma transports : geometricMean P⁻¹ Q = T₁ ∧ geometricMean A⁻¹ B = T₂ := by
+private lemma transports : geometricMean (1 / 2) P⁻¹ Q = T₁ ∧ geometricMean (1 / 2) A⁻¹ B = T₂ := by
   have h17 : 0 < Real.sqrt 17 := Real.sqrt_pos.mpr (by norm_num)
   have h881 : 0 < Real.sqrt 881 := Real.sqrt_pos.mpr (by norm_num)
   have sq17 := Real.sq_sqrt (show (0 : ℝ) ≤ 17 by norm_num)
@@ -140,11 +145,11 @@ private lemma mean_pos {n : ℕ} {X Y : Matrix (Fin n) (Fin n) ℂ}
     hC.isUnit.posDef_star_right_conjugate_iff.mpr hX
 
 private lemma endpoint_powers {X : Mat} (hX : X.IsHermitian) :
-    matrixPower X 1 = X ∧ matrixPower X 2 = X ^ 2 := by
+    mpow X 1 = X ∧ mpow X 2 = X ^ 2 := by
   constructor
-  · simp only [matrixPower, Real.rpow_one]
+  · simp only [mpow, Real.rpow_one]
     exact cfc_id' ℝ X hX
-  · simp only [matrixPower, Real.rpow_two]
+  · simp only [mpow, Real.rpow_two]
     exact cfc_pow_id X 2 hX
 
 private lemma family_values {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :

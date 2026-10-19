@@ -88,4 +88,6 @@ The full eigenvalue product in weak log-majorization would require the opposite 
 
 The definitions and the conjecture are attributed to Gan and Kim. The explicit matrices, Riccati calculations and determinant comparison are repository derivations. Theorem 5.6 retains its additional hypothesis (5.15) and is unaffected by a refutation of the unconditional conjecture. The exact text of (5.15), and a direct verification that these matrices violate it, are ASSUMED-UNVERIFIED because the primary text of that condition is unavailable locally. The determinant obstruction alone does not refute convergence without monotonicity.
 
-The supplied literature review reports no prior settlement in its examined references. Absence of later settlements and worldwide priority are not established. This citation-only note incorporates no external source software.
+The literature check covered "2301.07934" with conjecture or counterexample, Wasserstein mean with log-Euclidean and weak log-majorization, and the title. Related work checked: Bhatia–Jain–Lim 2019; arXiv:1904.09385; arXiv:2307.15315; arXiv:2501.00287, which cites Gan–Kim. None resolves Conjecture 5.7. Citation indexes were not exhaustively checked; no settlement found within that scope.
+
+Absence of later settlements and worldwide priority are not established. This citation-only note incorporates no external source software.

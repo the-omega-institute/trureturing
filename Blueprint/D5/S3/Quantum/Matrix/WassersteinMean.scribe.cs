@@ -14,22 +14,10 @@ internal sealed class WassersteinMeanDocument : IScribeDocumentDefinition
         + "and weak log-majorization through decreasingly sorted eigenvalue products.",
         H("Wasserstein power means and eigenvalue products"),
         Blocks(
-            Paragraph(Text("Luyining Gan and Sejong Kim, Weak log-majorization between the geometric "
-                + "and Wasserstein means. " + Locator + ".")),
+            Paragraph(Text(Locator + ".")),
             Paragraph(Text("A ⋄t B := (1 − t)² A + t² B + t(1 − t)[A(A^{−1} #B) + (A^{−1} #B)A]")),
             Paragraph(Text("Conjecture 5.7. Let A, B ∈ Pm and t ∈ (0, 1). Then "
                 + "(A^p ⋄t B^p)^{1/p} ց≺w log exp((1 − t) log A + t log B) as p ց 0.")),
-            Describe.Lean(
-                DescribeId.Create("wasserstein-geometric-mean"),
-                DeclarationHandle.Create(Module + ".geometricMean"),
-                H("The geometric matrix mean"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("For positive definite complex matrices, A # B is "
-                    + "A^(1/2) (A^(−1/2) B A^(−1/2))^(1/2) A^(1/2). The definition uses "
-                    + "CFC.sqrt and the matrix inverse. Its geometric interpretation is restricted "
-                    + "to positive definite matrices."))),
-                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("wasserstein-mean"),
                 DeclarationHandle.Create(Module + ".wassersteinMean"),
@@ -37,19 +25,11 @@ internal sealed class WassersteinMeanDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The mean is exactly the displayed polynomial expression "
-                    + "in A, B and A⁻¹ # B, with real weight t. For positive definite inputs and "
+                    + "in A, B and A⁻¹ # B, with real weight t. The geometric mean reuses the "
+                    + "base-first weighted mean in PsiMeanTraceConcavity at weight 1/2, using "
+                    + "CFC.rpow. For positive definite inputs and "
                     + "0≤t≤1 it also equals ((1−t)I+tT) A ((1−t)I+tT), where T=A⁻¹ # B "
                     + "is the positive definite solution of TAT=B."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("wasserstein-matrix-power"),
-                DeclarationHandle.Create(Module + ".matrixPower"),
-                H("Real matrix powers"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("A^p is cfc (fun x => x^p) A, using Real.rpow on the real "
-                    + "spectrum. The conjecture uses only positive definite inputs and positive p; "
-                    + "the total definition introduces no additional assertion outside that domain."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("wasserstein-power-mean"),
@@ -59,7 +39,9 @@ internal sealed class WassersteinMeanDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("F A B t p is (A^p ⋄t B^p)^(1/p), with both the input "
                     + "powers and the outer reciprocal power interpreted by the real continuous "
-                    + "functional calculus. This is the expression in Conjecture 5.7."))),
+                    + "functional calculus via SpectralGeometricLogEuclideanRefutation.mpow. "
+                    + "The proposed limit uses that module’s LE t A B, namely "
+                    + "exp((1−t) log A+t log B). This is the expression in Conjecture 5.7."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("wasserstein-weak-log-majorization"),
@@ -72,16 +54,6 @@ internal sealed class WassersteinMeanDocument : IScribeDocumentDefinition
                     + "of the first k eigenvalues of X is at most the corresponding product for Y. "
                     + "The empty prefix is harmless; the full prefix is essential. For the positive "
                     + "definite matrices in the conjecture, all eigenvalues are positive."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("wasserstein-log-euclidean-mean"),
-                DeclarationHandle.Create(Module + ".logEuclideanMean"),
-                H("The log-Euclidean mean"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The proposed limit is exp((1−t) log A+t log B). "
-                    + "Both logarithms use cfc Real.log, and the exponential uses cfc Real.exp. "
-                    + "For Hermitian matrices this is the usual matrix functional calculus."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("wasserstein-weak-log-majorization-determinant"),

@@ -2,10 +2,12 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/WassersteinMean
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Analysis.Matrix.HermitianFunctionalCalculus]
+   anchors: [mathlib/module/Mathlib.Analysis.Matrix.HermitianFunctionalCalculus, mathlib/module/Mathlib.Analysis.Matrix.Order]
    utility: none
    digest: Wasserstein means, real spectral powers and weak log-majorization. -/
 
+import D5.S3.Quantum.Matrix.SpectralGeometricLogEuclideanRefutation
+import D5.S3.Quantum.Hiai.PsiMeanTraceConcavity
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
@@ -17,26 +19,19 @@ noncomputable section
 open Matrix Filter Topology
 open scoped MatrixOrder ComplexOrder
 namespace D5.S3.Quantum.Matrix.WassersteinMean
-
-/-- The geometric mean A # B, using positive square roots and the matrix inverse. -/
-def geometricMean {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) :
-    Matrix (Fin n) (Fin n) ℂ :=
-  CFC.sqrt A * CFC.sqrt (CFC.sqrt A⁻¹ * B * CFC.sqrt A⁻¹) * CFC.sqrt A
+open D5.S3.Quantum.Matrix.SpectralGeometricLogEuclideanRefutation (mpow)
+open D5.S3.Quantum.Hiai.PsiMeanTraceConcavity (geometricMean)
 
 /-- The binary Wasserstein mean in the explicit formula of Gan and Kim. -/
 def wassersteinMean {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) :
     Matrix (Fin n) (Fin n) ℂ :=
   ((1 - t) ^ 2) • A + (t ^ 2) • B +
-    (t * (1 - t)) • (A * geometricMean A⁻¹ B + geometricMean A⁻¹ B * A)
-
-/-- Real powers are applied to the spectrum by the real continuous functional calculus. -/
-def matrixPower {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (p : ℝ) :
-    Matrix (Fin n) (Fin n) ℂ := cfc (fun x : ℝ => x ^ p) A
+    (t * (1 - t)) • (A * geometricMean (1 / 2) A⁻¹ B + geometricMean (1 / 2) A⁻¹ B * A)
 
 /-- The family (A^p diamond_t B^p)^(1/p). -/
 def powerMean {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) (t p : ℝ) :
     Matrix (Fin n) (Fin n) ℂ :=
-  matrixPower (wassersteinMean (matrixPower A p) (matrixPower B p) t) (1 / p)
+  mpow (wassersteinMean (mpow A p) (mpow B p) t) (1 / p)
 
 /-- All prefix products of the decreasingly sorted Hermitian eigenvalues are compared.
 The empty product is included and imposes only 1 ≤ 1. -/
@@ -44,11 +39,6 @@ def weakLogMajorization {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) : Prop :=
   ∃ hA : A.IsHermitian, ∃ hB : B.IsHermitian, ∀ k : ℕ, k ≤ n →
     (∏ i : Fin (Fintype.card (Fin n)), if i.val < k then hA.eigenvalues₀ i else 1) ≤
     (∏ i : Fin (Fintype.card (Fin n)), if i.val < k then hB.eigenvalues₀ i else 1)
-
-/-- The proposed log-Euclidean limit, with exponential and logarithm rendered by CFC. -/
-def logEuclideanMean {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) :
-    Matrix (Fin n) (Fin n) ℂ :=
-  cfc Real.exp ((1 - t) • cfc Real.log A + t • cfc Real.log B)
 
 /-- The last prefix in weak log-majorization compares the determinants. -/
 theorem weakLogMajorization_det_le {n : ℕ} {A B : Matrix (Fin n) (Fin n) ℂ}

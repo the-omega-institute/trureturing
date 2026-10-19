@@ -4,7 +4,7 @@
 
 Two positive definite integer matrices reverse the required determinant comparison between powers one half and one for every internal weight, refuting Conjecture 5.7.
 
-Luyining Gan and Sejong Kim, Weak log-majorization between the geometric and Wasserstein means. arXiv:2301.07934v4, §5, Conjecture 5.7.
+arXiv:2301.07934v4, §5, Conjecture 5.7.
 
 Conjecture 5.7. Let A, B ∈ Pm and t ∈ (0, 1). Then (A^p ⋄t B^p)^{1/p} ց≺w log exp((1 − t) log A + t log B) as p ց 0.
 
