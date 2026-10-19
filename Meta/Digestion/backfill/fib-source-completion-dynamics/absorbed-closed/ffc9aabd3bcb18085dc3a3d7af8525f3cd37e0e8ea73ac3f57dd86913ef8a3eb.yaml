@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:ffc9aabd3bcb18085dc3a3d7af8525f3cd37e0e8ea73ac3f57dd86913ef8a3eb
+  normalized_sha256: sha256:ffc9aabd3bcb18085dc3a3d7af8525f3cd37e0e8ea73ac3f57dd86913ef8a3eb
+cas_ref: sha256:ffc9aabd3bcb18085dc3a3d7af8525f3cd37e0e8ea73ac3f57dd86913ef8a3eb
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/FixedTailClosedBudget.fixed_tail_closed_budget
+    target_statement_id: sha256:e7539a39a9d8ff9d3ab2078f980e0a88ab22dac401684656d90312232d23b9d0
+  - gid: D5/S1/Digit/Infinite/ResetCodebookFinite.run_closed
+    target_statement_id: sha256:ad757764ca4c3e51557c6d79ea08fb96783b519c48f47b2bd8f7f04f1530dae6
+  - gid: D5/S1/Digit/Infinite/ResetCodebookGrowth.C_cost
+    target_statement_id: sha256:31c58bdfdd459edd717c75141e1f65df0873388937f304873b27d90040861698
+  - gid: D5/S1/Digit/Infinite/ResetCodebookGrowth.U_cost
+    target_statement_id: sha256:764b4f7b48fb0493db4c75497f65a1f93f6bb22a2668c7af29e582871fe13906
+  - gid: D5/S1/Digit/Infinite/ResetCodebookGrowth.V_cost
+    target_statement_id: sha256:f393d8fd962a9c617556a85d12433f096bd73a308fbdf575f5a58cb9c2de76d0
+  - gid: D5/S1/Digit/Infinite/ResetCodebookModel.actual_pair
+    target_statement_id: sha256:2752abc836443cfc26dcb3aa9e0296035c88ad636153f908e402da6189f63f2b
+  - gid: D5/S1/Digit/Infinite/ResetCodebookOrder.C_map
+    target_statement_id: sha256:e773d311e33f40a8cc73044da41bea86c2c3d564e2c5f774b28dd25b511a5243
+  - gid: D5/S1/Digit/Infinite/ResetCodebookOrder.U_map
+    target_statement_id: sha256:33aff6c9009673196247300dc92448c8792a3af84128276cb3d76e7bd931e4e0
+  - gid: D5/S1/Digit/Infinite/ResetCodebookOrder.V_map
+    target_statement_id: sha256:4d43d87134c2bd76638e0ade0195158e6a3a7ecc35be2eb3565f6200b077347e
+receipts:
+  unresolved_subitems: []
