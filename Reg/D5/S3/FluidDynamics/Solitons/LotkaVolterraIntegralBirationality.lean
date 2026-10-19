@@ -119,7 +119,7 @@ def registration :
       owner := `D5.S3.FluidDynamics.Solitons.LotkaVolterraIntegralBirationality
       name := `D5.S3.FluidDynamics.Solitons.LotkaVolterraIntegralBirationality.claim
       path := #[] }
-    coordinates := #[0, 3]
+    coordinates := #[0, 1, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
