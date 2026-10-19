@@ -846,3 +846,250 @@ asserted. The CS29 targets, Robin, endpoint half-variance and RH remain
 unproved. The source identities and estimates are directly reused;
 the growing-parameter transfer is a paper application without Lean
 certification, numerical execution or a literature-priority claim.
+
+## CS13. An explicit whole-matrix transfer and its finite signed consumer
+
+This application makes the original CS28 approximation effective, with
+explicit constants and a specified starting scale. The same comparison
+also supplies a finite positive bound for the original arithmetic middle.
+It reuses the classical Laguerre equation and energy comparison, global
+prime count, PNT tail allowance, reflected zero matrices and published
+finite-height verification. These are paper applications without new
+Lean certification or a literature-priority claim.
+
+### Exact source and target
+
+Keep CS18, CS23--CS24, CS28's exact arithmetic definition and original
+matrix map. For adjacent positive Fibonacci $a\le b$, $c=a+b$, use
+$X_c=\lceil\exp(c^4)\rceil$ and
+$Q_n^{mid}=Q_n(X_c)-Q_n(c)$, $\lambda_n^{mid}=h_n^*-Q_n^{mid}$,
+$n\in\{a,b,c\}$, with the complete $h^*=H+U-B$, every proper prime
+power and both original inclusive cutoffs. First make the original
+approximation effective at every such triple
+with $c\ge10^{24}$, then consume it in a finite all-vector bound:
+
+$$K_j^{mid}\succeq cI_2/50000\qquad(10^{24}\le c\le5\cdot10^{25}).$$
+
+The matrix is the ORIGINAL actual arithmetic middle, not a new surrogate
+or a scalar Li-positivity inference. The full RH/strictRobin target
+remains unchanged and unproved.
+
+### An explicit finite comparison from the classical equation
+
+The standard uniform Laguerre estimate already supplies the shape of the
+prefix bound, and is reused as background rather than presented as new.
+For a finite constant use the classical differential equation in
+[DLMF Table 18.8.1](https://dlmf.nist.gov/18.8#T1), its Laguerre row,
+with degree $n-1$ and parameter $1$. Together with the usual Liouville
+change of variable and energy/Gronwall estimate it permits the following
+explicit parameter comparison, without any unknown asymptotic start.
+
+Write $L=\log c$, $x_0=1/n$ and
+
+$$
+Y(x)=xe^{-x/2}L_{n-1}^{(1)}(x),\qquad p(x)=n/x-1/4.
+$$
+
+The cited equation gives $Y''+pY=0$. For every $c\ge10^{24}$,
+$(\log c)/c$ decreases and $\log(10^{24})<60$, so $L<c/3\le n$.
+Throughout $x_0\le x\le L$, therefore $x\le n$ and
+$p\ge3n/(4x)>0$. The terminating series already used in CS8 has
+decreasing alternating terms at $x_0$. Its first two terms and the
+derivative identity $(L_{n-1}^{(1)})'=-L_{n-2}^{(2)}$ give
+
+$$
+n/2\le L_{n-1}^{(1)}(x_0)\le n,\qquad
+-n(n-1)/2\le(L_{n-1}^{(1)})'(x_0)\le0.
+$$
+
+Thus $0<Y(x_0)\le1$ and $0\le Y'(x_0)\le n$; for the lower derivative
+bound the bracket is at least
+$(1-1/(2n))n/2-(n-1)/2=1/4$.
+
+Use the classical change $dt/dx=\sqrt p$, $V(t)=p(x)^{1/4}Y(x)$.
+Its exact transformed equation is
+
+$$
+V_{tt}+(1+r)V=0,\qquad
+r=\frac{5p'^2-4pp''}{16p^3}
+=\frac{n(2x-3n)}{16x(n-x/4)^3}.
+$$
+
+Since $x\le n$, $|r|\le4/(9nx)$, and hence
+
+$$
+\int_{x_0}^{L}|r|\sqrt p\,dx
+\le\frac4{9\sqrt n}\int_{1/n}^{L}x^{-3/2}\,dx<8/9.
+$$
+
+At $x_0$, $3n^2/4\le p(x_0)<n^2$ and $|p'(x_0)|=n^3$.
+The preceding initial bounds give
+
+$$
+|V_0|\le\sqrt n,\qquad
+|(V_t)_0|\le
+\left((4/3)^{1/4}+\tfrac14(4/3)^{5/4}\right)\sqrt n
+<\frac{16}{9}\sqrt n.
+$$
+
+The ordinary energy $E=V^2+V_t^2$ satisfies
+$|dE/dt|\le|r|E$. Integrating this inequality gives
+
+$$
+|V|\le\sqrt E\le\frac{25}{9}\sqrt n\exp(4/9)
+<\frac{50}{9}\sqrt n.
+$$
+
+Here $\sqrt E_0\le|V_0|+|(V_t)_0|$ and $\exp(4/9)<2$.
+Returning to the original polynomial and using
+$p^{-1/4}\le(4/3)^{1/4}(x/n)^{1/4}<(4/3)(x/n)^{1/4}$ yields
+
+$$
+|L_{n-1}^{(1)}(u)|\le\frac{200}{27}n^{1/4}e^{u/2}u^{-3/4}
+<10n^{1/4}e^{u/2}u^{-3/4},
+\quad \log2\le u\le L,\quad c/3\le n\le c.
+\tag{EB1}
+$$
+
+This comparison holds for every $c\ge10^{24}$. The integration begins
+at $1/n\le\log2$, so the actual finite prefix is contained in the
+proven range. These are explicit parameter calculations from a classical
+equation and energy comparison for the required consumer, with no
+claim of a new general Laguerre inequality.
+
+### Finite low prefix using the existing global prime count
+
+For every $c\ge10^{24}$, put $L=\log c>48$. Let
+$w(t)=t^{-1/2}(\log t)^{-3/4}$ and
+$g(t)=\sqrt t(\log t)^{-3/4}$. For $t\ge e^3$,
+$g'(t)=(1/2-3/(4\log t))w(t)\ge w(t)/4$.
+Also $w(2)<2$. The function $g$ increases on $[e^3,\infty)$, so
+$g(c)\ge g(10^{24})>10^{12}/60>100$.
+Thus
+
+$$\int_2^c w(t)dt<54+4g(c)<5g(c). \tag{EB2}$$
+
+The lower interval is bounded by $e^3w(2)<27\cdot2=54$.
+Reuse Rosser--Schoenfeld Corollary1 eq(3.6), already owned in
+[the existing Rosser--Schoenfeld entry](../Arith/rosser1962approximate.md): $\pi(x)<1.25506x/\log x$ for
+$x>1$. It directly gives $\vartheta(x)\le\pi(x)\log x<2x$.
+Stieltjes partial summation, with $\vartheta(2^-)=0$, gives
+
+$$
+\sum_{p\le c}\log p\,w(p)
+\le2cw(c)+2\int_2^c t(-w'(t))dt
+=4w(2)+2\int_2^c w(t)dt<11g(c).
+$$
+
+Monotonicity similarly gives
+$\sum_{2\le m\le c}w(m)\le w(2)+\int_2^c w(t)dt<6g(c)$.
+These are upper bounds on positive envelopes of the two ACTUAL finite
+sums; no primary-prime cancellation is assumed. EB1 then gives for
+all three actual indices
+
+$$|q_n|=|Q_n(c)|\le200c^{3/4}L^{-3/4}. \tag{EB3}$$
+
+The constant 200 rounds $10(11+6)=170$ outward. This replaces the
+prime-subset-of-integers log loss by the already available global count;
+no new prime-count theorem is derived.
+
+### The unchanged remote cutoff has an explicit finite allowance
+
+Use the complete CS24 formula with $N=c$, $U=\log X_c\ge c^4$.
+Its existing constants satisfy
+$C_\varepsilon=9.39+\kappa e^{d^2/2}+2e^{d^2/4}<22$,
+$M=1.515<2$, $4/5<d=0.8274<1$ and $\kappa=1.42620<3/2$.
+Together with $e<3$ these give
+$\varepsilon(u)\le22u^M e^{-d\sqrt u}$.
+For every $u\ge c^4$, monotonicity of $(\log u)/\sqrt u$ on $[e^2,\infty)$ gives
+
+$$
+\frac{(c+1)\log2+(c-1+M)\log u}{\sqrt u}
+\le\frac{2(1+4\log c)}c<\frac{482}{10^{24}}<\frac25.
+$$
+
+The last comparison uses that $(1+4\log c)/c$ decreases for
+$c\ge10^{24}$ and $\log(10^{24})<60$. Consequently the endpoint
+and integrand in the owned CS24 are at most
+$22e^{-2\sqrt u/5}$, and direct substitution into its displayed
+integral bound gives
+
+$$|r_n|=|Q_n-Q_n(X_c)|
+\le22(14+5\sqrt U)e^{-2\sqrt U/5}<1. \tag{EB4}$$
+
+For the last outward comparison put $z=\sqrt U\ge c^2\ge10^{48}$.
+Since $14+5z\le6z$ and $\exp(2z/5)\ge(2z/5)^3/6$,
+the bound is at most $12375/z^2<1$. No unknown asymptotic start,
+prime enumeration, exponential evaluation or numerical experiment is
+substituted for CS24. Every actual endpoint term remains.
+
+The exact original CS28 relation and row sum now give
+
+$$
+\|K_j^{mid}-K_{a,b}\|_{op}
+\le1000c^{3/4}(\log c)^{-3/4}+5
+<c/16000+5,\qquad c\ge10^{24}. \tag{EB5}
+$$
+
+Here $c^{1/4}\ge10^6$ and $L^{3/4}>16$ because $48^3>16^4$.
+
+### Pay the finite comparison with the same complete zero matrix
+
+Now restrict $10^{24}\le c\le5\cdot10^{25}$.
+
+Use the [exact Gram determinant/trace and reflected error](lagarias2007li.md#retain-a-uniformly-positive-gram-determinant)
+in PTL3--PTL4 directly. For $\gamma>c$,
+$\theta\ge\gamma/(\gamma^2+1)\ge5/(6\gamma)$, and
+$\sin x\ge5x/6$ for $0\le x\le1/2$. Substitution into that exact formula and
+$a\ge c/3$, $b\ge c/2$, $b^2+c^2\le2c^2$ gives
+
+$$
+\lambda_{min}(G_\rho)
+\ge(5/6)^{10}\frac{c^4}{144\gamma^4}
+>\frac{c^4}{1152\gamma^4}
+>\frac{c^4}{1536\gamma^4}.
+$$
+
+Indeed $(5/6)^5=3125/7776>2/5$, so its tenth power exceeds $4/25>1/8$.
+The existing radial row allowance is $2c^2/\gamma^4$, which is at most
+$c^4/(6144\gamma^4)$ for $c^2\ge12288$. Hence the SAME complete tail
+obeys $K^{tail}(c)\succeq c^4S_4^+(c)I/2048$.
+Only this application's outward constants change; no standalone
+constant-improvement result or repeated generic proof is retained.
+
+The [finite whole-Li estimate](lagarias2007li.md)'s FV3--FV4 explicit
+count and original annulus directly give
+
+$$K^{tail}(c)\succeq\frac{N_+(2c)-N_+(c)}{32768}I
+\succeq\frac{cL}{2^{19}}I
+\succ\frac{3c}{32768}I. \tag{EB6}$$
+
+This is a lower bound, not equality with an annulus. Keep FV6's exact
+head(H0)+Gram-band+error-band+complete-tail decomposition,
+$H_0=3\cdot10^{12}$. Its verified head and Gram band are positive
+semidefinite, and FV8 gives
+$\|E_{H_0,c}\|_{\rm op}<135c/(8\cdot10^8)<c/10^6$. Therefore
+
+$$K_{a,b}\succeq(3/32768-10^{-6})cI. \tag{EB7}$$
+
+All actual zeros, reflection partners and analytic multiplicities
+remain in their original common-source pieces.
+
+### Original arithmetic consumer and scope
+
+Combining EB5--EB7 on the SAME actual original matrix gives
+
+$$K_j^{mid}\succeq
+[(3/32768-10^{-6}-1/16000)c-5]I
+\succeq cI/50000. \tag{EB8}$$
+
+For this rational comparison use $3/32768>9/100000$ and
+$9/100000-10^{-6}-1/16000-1/50000=13/(2\cdot10^6)$;
+the latter multiplied by $c$ exceeds $5$ at $c\ge10^{24}$.
+
+EB5 is an effective approximation with the stated constants for every
+adjacent positive Fibonacci triple $c\ge10^{24}$; its error is
+$O(c^{3/4}(\log c)^{-3/4})$. EB8 additionally gives a finite sign for
+the original arithmetic middle, with CS28's unchanged source, cutoffs
+and full $h^*$. Cofinal positivity, an all-integer Robin interval beyond
+the existing results, and RH remain unresolved.
