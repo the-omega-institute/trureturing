@@ -21,6 +21,16 @@ internal sealed class SignedCatalanCubicSubstitutionModThreeDocument : IScribeDo
                 + "S denotes signedCatalanSeries over ZMod 3. The function p denotes distinctPowersOfThree. "
                 + "The operation subst(f,u) means composition f(u). All remainders in the "
                 + "conjecture are integer remainders.")),
+            Node("square_linear", "The next coefficient of a difference of squares", SquareLinearFormula(),
+                "For series with constant coefficient one that agree below d, the coefficient "
+                + "difference of their squares below d+1 is twice their coefficient difference.", DescribeRole.Theorem),
+            Node("subst_two_agree", "Substitution extends coefficient agreement", SubstitutionAgreementFormula(),
+                "For d at least one, agreement below d implies agreement below d+1 after substitution by X squared. "
+                + "The qualified expression PowerSeries.subst u f means f(u).",
+                DescribeRole.Theorem),
+            Node("inverse_exists", "A normalized two-sided compositional inverse", InverseExistsFormula(),
+                "A series with zero constant coefficient and linear coefficient one has a two-sided "
+                + "compositional inverse with the same coefficients at zero and one.", DescribeRole.Theorem),
             Node("generatingSeries", "The integral generating series", GeneratingFormula(),
                 "Choose an integer series satisfying the displayed normalization and equation. "
                 + "Existence follows by constructing its compositional inverse B=XH. The "
@@ -113,6 +123,36 @@ internal sealed class SignedCatalanCubicSubstitutionModThreeDocument : IScribeDo
             reduced ? Power(f, 3) : Mul(D(4), Power(f, 3))))));
     private static Formula NormalizedEquation(Formula f) => All(
         Equal(Call("constantCoeff", f), D(0)), Equal(Coeff(D(1), f), D(1)), CubicEquation(f));
+
+    private static Formula RingScope(Formula body) => Seq(Bound("R", Named("Type")),
+        OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Sp, Parenthesized(body));
+    private static Formula RSeries() => Series(F.Id("R"));
+    private static Formula Subst(Formula argument, Formula series) => new Formula.Apply(
+        Seq(Named("PowerSeries"), Dot, Named("subst")), [argument, series]);
+    private static Formula AgreeAt(Formula d, Formula f, Formula g) => Seq(
+        Bound("m", Naturals()), Implication(Seq(F.Id("m"), Sp, Lt, Sp, d),
+            Equal(Coeff(F.Id("m"), f), Coeff(F.Id("m"), g))));
+    private static Formula SquareLinearFormula() => Disp(RingScope(Seq(Bound("d", Naturals()),
+        Bound("f", RSeries()), Bound("g", RSeries()), Implication(
+            Equal(Call("constantCoeff", F.Id("f")), D(1)), Implication(
+            Equal(Call("constantCoeff", F.Id("g")), D(1)), Implication(
+            AgreeAt(F.Id("d"), F.Id("f"), F.Id("g")), Seq(Bound("n", Naturals()), Implication(
+            Seq(N(), Sp, Lt, Sp, Add(F.Id("d"), D(1))), Equal(
+                Subtract(Coeff(N(), Power(F.Id("f"), 2)), Coeff(N(), Power(F.Id("g"), 2))),
+                Mul(D(2), Parenthesized(Subtract(Coeff(N(), F.Id("f")), Coeff(N(), F.Id("g"))))))))))))));
+    private static Formula SubstitutionAgreementFormula() => Disp(RingScope(Seq(Bound("d", Naturals()),
+        Implication(Seq(D(1), Sp, Leq, Sp, F.Id("d")), Seq(Bound("f", RSeries()),
+        Bound("g", RSeries()), Implication(AgreeAt(F.Id("d"), F.Id("f"), F.Id("g")),
+            AgreeAt(Add(F.Id("d"), D(1)), Subst(Power(X(), 2), F.Id("f")),
+                Subst(Power(X(), 2), F.Id("g")))))))));
+    private static Formula InverseExistsFormula() => Disp(RingScope(Seq(Bound("f", RSeries()),
+        Implication(Equal(Call("constantCoeff", F.Id("f")), D(0)), Implication(
+        Equal(Coeff(D(1), F.Id("f")), D(1)), Seq(Exists, Sp, F.Id("b"), Colon, Sp,
+        RSeries(), Comma, Sp, Parenthesized(All(
+            Equal(Call("constantCoeff", F.Id("b")), D(0)),
+            Equal(Coeff(D(1), F.Id("b")), D(1)),
+            Equal(Subst(F.Id("b"), F.Id("f")), X()),
+            Equal(Subst(F.Id("f"), F.Id("b")), X())))))))));
 
     private static Formula GeneratingFormula() => Disp(Equal(Cast(A(), Series(Integers())),
         Call("choose", Seq(Exists, Sp, F.Id("f"), Colon, Sp, Series(Integers()), Comma, Sp,
