@@ -876,3 +876,154 @@ $\lceil\sqrt c\rceil$, this is a different decomposition of the SAME
 full matrix; no order comparison of the two heads is asserted.
 No positivity of the complete Li matrix, full retained Schur minimum,
 all-integer Robin, endpoint half-variance target or RH follows.
+
+## Reuse the joint zero sum to reduce the unpaid Li head
+
+Keep the actual Fibonacci matrix, all zero multiplicities and the
+inclusive-head convention of RT1--RT6 and PTL1--PTL6. Put
+$$
+ L=\log c,\qquad
+ \Omega_c=(L/\log L)^{1/3},\qquad
+ h_c=\left\lceil\sqrt{\frac{c}{2L}}\right\rceil,\qquad
+ R=57.54,\qquad \nu=\frac1{20R}.
+$$
+Work for sufficiently large adjacent positive Fibonacci $a\le b$,
+$a+b=c$, so $h_c\ge3\cdot10^{12}$ and $h_c<c$.
+No numerical starting value of $c$ is certified.
+
+For every integer cutoff $h_c\le H\le c$, the complete actual tail has
+$$
+ \boxed{\quad
+ K^{\rm tail}_{a,b}(H)
+ \succeq[\mu_c-\mathscr E_c]I_2,\qquad
+ \mu_c=\frac{c^4}{2^{19}}S_4^+(c),\qquad
+ \mathscr E_c\ll c e^{-\nu\Omega_c}=o(c).
+ \quad} \tag{DHR1}
+$$
+Thus every fixed $0<\kappa<1/(2^{24}\pi)$ gives
+$K^{\rm tail}_{a,b}(H)\succeq\kappa c\log c\,I_2$ eventually,
+uniformly over these cutoffs. The smaller exact head still grows
+without bound. This is a paper application of an owned zero-sum
+bound, without new Lean certification or a literature-priority claim.
+
+### Use the existing weighted sum at an auxiliary parameter
+
+The [joint density and zero-free application](../ArithSums/nicolas2025comparison.md#a-smaller-moving-cut-from-joint-density-and-zero-free-support)
+already bounds the intermediate positive quantity
+$$
+ B_2(A;T)=\sum_{\gamma>T}
+ \frac{m_\rho\bigl(A^{\beta-1/2}+A^{1/2-\beta}\bigr)}{\gamma^2}.
+$$
+For $\ell=\log A$, $\Omega(A)=(\ell/\log\ell)^{1/3}$ and
+$T_A=A^{1/4}e^{-\Omega(A)/(28R)}$, its bound is
+$$
+ B_2(A;T_A)\ll
+ \ell A^{-1/8}e^{\Omega(A)/(28R)}
+ +\ell^3e^{-\Omega(A)/(14R)}
+ +\ell^3A^{-1/14}.
+ \tag{DHR2}
+$$
+This intermediate estimate uses the positive real parameter $A$
+and the actual upper-zero multiset; no source-selection property
+of $A$ enters its proof. Here $A_c=c^2$ is an auxiliary parameter.
+
+The uniform explicit Ingham input and Ford zero-free support in
+that application are reused as stated there. Their analytic
+proofs and finite verified-height input remain external premises;
+global RH is not a premise. No density-layer proof or zero
+computation is repeated for the Li consumer.
+
+### Dominate the Li radial charge pointwise
+
+For the SAME upper zero put $\delta_\rho=|\beta-1/2|$.
+RT2's logarithmic calculation gives
+$|d_\rho|\le\delta_\rho/\gamma^2$.
+After its multiplicity-preserving reflection average, the index
+$n\le c$ error is at most $n^2d_\rho^2e^{c|d_\rho|}$.
+The original mixed entry and its row sum therefore give the
+nonnegative allowance
+$$
+ \mathscr E_c:=
+ 4c^2\sum_{\gamma>h_c}
+ \frac{m_\rho\delta_\rho^2}{\gamma^4}
+       e^{c\delta_\rho/\gamma^2}.
+ \tag{DHR3}
+$$
+It bounds the unit-phase comparison error on every sub-band of
+this tail. Critical-line zeros have zero charge, and the
+fourth-moment supplier in RT1 makes the sum finite for fixed $c$.
+
+For $\gamma>h_c$, one has
+$c/\gamma^2\le c/h_c^2\le2L$, $4\delta_\rho^2\le1$, and
+$$
+ e^{c\delta_\rho/\gamma^2}
+ \le(c^2)^{\delta_\rho}
+ \le(c^2)^{\beta-1/2}+(c^2)^{1/2-\beta}.
+$$
+Consequently, on the SAME zeros and heights,
+$$
+ \boxed{\quad
+ \mathscr E_c
+ \le\frac{c^2}{h_c^2}B_2(c^2;h_c)
+ \le2cL\,B_2(c^2;T_{c^2}).
+ \quad} \tag{DHR4}
+$$
+The last inequality uses positivity of the summands and the
+eventual comparison
+$$
+ \frac{h_c}{T_{c^2}}
+ \ge\frac{e^{\Omega(c^2)/(28R)}}{\sqrt{2L}}
+ \longrightarrow\infty.
+$$
+This is an upper-bound comparison for one common positive zero
+sum. All reflected partners and analytic multiplicities remain.
+
+Substituting $A=c^2$, $\ell=2L$ in DHR2 yields
+$$
+ \begin{aligned}
+ \mathscr E_c\ll{}&
+ c^{3/4}L^2e^{\Omega(c^2)/(28R)}
+ +cL^4e^{-\Omega(c^2)/(14R)}
+ +c^{6/7}L^4\\
+ \ll{}&ce^{-\Omega_c/(20R)}=o(c).
+ \end{aligned} \tag{DHR5}
+$$
+Here $\Omega(c^2)/\Omega_c\to2^{1/3}$,
+$\Omega_c/\log L\to\infty$ and $\Omega_c=o(L)$.
+The first and third terms have a fixed power saving in $c$;
+the middle term absorbs the displayed logarithms. No effective
+starting clock or new density theorem is claimed.
+
+### Keep the positive budget with the smaller original head
+
+For each $h_c\le H\le c$, use the exact SAME-source decomposition
+$$
+ K^{\rm tail}_{a,b}(H)
+ =K^{\rm tail}_{a,b}(c)+G_{H,c}+E_{H,c},\qquad
+ G_{H,c}\succeq0,\qquad
+ \|E_{H,c}\|_{\rm op}\le\mathscr E_c.
+ \tag{DHR6}
+$$
+Here $G_{H,c}$ is RT3's unit-phase Gram sum on $H<\gamma\le c$.
+Reflection preserves this finite band exactly. PTL1 pays the
+complete tail at $c$, and DHR5 pays the whole finite-band error.
+This proves DHR1 without subtracting separate lower bounds for
+two tails or assuming an order on their heads.
+
+At $H=h_c$, retain CS28's original arithmetic-middle allowance
+$\epsilon_{\rm mid}(c)=o(c)$. The original matrix obeys
+$$
+ \boxed{\quad
+ K_j^{\rm mid}\succeq K_j^{\rm head}(h_c)
+ +[\mu_c-\mathscr E_c-\epsilon_{\rm mid}(c)]I_2.
+ \quad} \tag{DHR7}
+$$
+The same eventual $\kappa c\log c$ budget is therefore available
+with $h_c\sim\sqrt{c/(2\log c)}$ and unchanged arithmetic endpoints.
+
+No lower bound for $K_j^{\rm head}(h_c)$ has been acquired.
+It contains every actual zero through $h_c$, including any
+unverified off-line zeros; finite verification does not verify
+this unbounded head. CS29's original weak signed probes, full
+Li/Schur positivity, the same-source Robin strict upper,
+strict Robin for every $n>5040$, and RH remain unresolved.
