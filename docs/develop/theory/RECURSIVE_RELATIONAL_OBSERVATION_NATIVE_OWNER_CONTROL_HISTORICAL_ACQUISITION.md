@@ -618,7 +618,10 @@ and original local banks not yet constructed. Do not insert the socket,
 Connect, installed $P$, PC-read events or auxiliary rows. Input cursor
 contains the acquired code word for $z$.
 
-One Step uses a sealed pre-word and a separate fresh working word.
+One Step first assigns the current-state head to its saved-pre-word
+slot, then initializes a separate fresh working destination. Each
+assignment is its own row; no saved-pre-word read precedes this setup.
+It uses that sealed pre-word and separate fresh working word.
 Select the original finite PC rule; fetch each old represented operand
 by typed Nth/tuple scan before assigning its replacement. Perform its
 finite test, one represented field read/write/birth or input/output
@@ -629,24 +632,43 @@ type's represented next ordinal. Event self-references use that next
 ordinal and do not recursively embed the event. Partial fields are
 updated by precisely their original initialization/write rows. A saved
 entry value is retained until the specific original overwrite/clear;
-there is no write at a semantic last-use boundary. Commit the represented
-post-word, input cursor and row count only after the entire working
-state/event is complete. A simulated Step is many auxiliary rows.
+there is no write at a semantic last-use boundary. Only after the entire
+working state/event is complete and sealed, assign its head to the
+represented-current-state slot. Call this single assignment the **state
+commit**. Next assign the saved post-input cursor to its own slot, then
+finish the replay's mark accounting of Definition 7.2. These are separate
+assignments, not one joint commit. Keep the saved pre-word unchanged
+throughout this block. No next Step or replay stopping test runs until
+the input-cursor assignment and mark accounting have finished. A
+simulated Step is many auxiliary rows.
 
 **Definition 7.2 (two finite replays).** First execute Step from this
 initial state until the represented PC is Ready and every acquired bit
 of $z$ has been consumed. On an earlier Ready with input remaining,
 consume its next original code bit by Step; do the same at represented
 Tail. At every other represented PC execute its original Advance rule.
-Increment a fresh backed tally only after each committed Step. Let its
-completed tally be $B$. This stopping test selects the Return after
-exactly $z$, not a Begin and not the first Boot return.
+After each state commit and input-cursor assignment, increment a fresh
+backed tally by a mark birth pointing to its old head, followed by a
+separate tally-head assignment. Let its completed tally be $B$. This
+stopping test selects the Return after exactly $z$, not a Begin and
+not the first Boot return.
 
-Copy $B,D$ into distinct mark lists and cancel them pairwise until
-the copied $D$ is empty. The remaining $B$ marks form $N$. Restart
-the original representation from the acquired $u,z$ and execute
-exactly $|N|$ committed Steps, decrementing a distinct copied countdown
-only after each commit. Serialize that resulting complete state,
+Copy $B,D$ completely into distinct immutable mark chains and initialize
+their respective cursor slots $x,y$ before entering cancellation. At
+each loop test, exit if $y$ is null. Otherwise read $x.\mathsf{next}$
+into a temporary and assign it to $x$; then read $y.\mathsf{next}$
+into a separate temporary and assign it to $y$. Each read and cursor
+assignment is a separate actual row. Return to the loop test only after
+the $y$ assignment; an intervening null $x$ does not select an exit.
+Only the exit after that test saves the remaining $x$ as $N$, by its
+own head assignment. Neither copied chain nor the original $B,D$ is
+rewritten or freed by these cursor assignments.
+
+Restart the original representation from the acquired $u,z$ and execute
+exactly $|N|$ state commits. Use a distinct copied countdown: after each
+state commit and input-cursor assignment, read its next field and
+separately assign that value to its cursor. Finish this decrement before
+the next countdown test or Step. Serialize that resulting complete state,
 including all original rights **as HistoricalData**, and the data
 binding $(o,\pi,u,z,N)$. Seal the record $R$ after its last bit/link
 is complete. The proof indices in this definition are not external
@@ -697,8 +719,14 @@ $r_z$ Steps, with original PC Ready and its $z$ input exhausted.
 Before that cut, an earlier Ready has remaining command bits, and
 no busy or Tail cut passes the stopping test. Thus $|B|=r_z$. Both
 $B$ and $D$ are actual lists created by their respective computations.
-Equation (OC.4) gives $0\le |D|\le |B|$; paired cancellation never
-requires a missing $B$ mark. Its remainder has length $|p|$.
+Equation (OC.4) gives $0\le |D|\le |B|$. After $i$ whole pairs the
+two cursor lengths are $r_z-i$ and $r_z-n-i$. If the latter is positive,
+both next reads for this pair are legal: the first cursor is nonnull
+before its assignment, and the still unchanged second cursor is
+nonnull before its own read. Both assignments finish before the next
+loop test. Thus exactly $r_z-n$ pairs finish, and the saved remainder
+has length $n=|p|$. The intermediate cut after only the first assignment
+is included in Lemma 7.4; it is not an exit or a whole pair.
 
 The second countdown replay consequently stops at original index
 $|p|$. Since $p$ is a prefix of $p_z$, determinism identifies its
@@ -721,30 +749,169 @@ live chronology, consistently with Lemma 4.2. This proves (OC.5),
 actual finite construction and the historical/live distinction.
 $\square$
 
-**Lemma 7.4 (every reconstruction prefix).** At a local proper prefix,
-the installation/receipt assertions of Definitions 3.2 and 5.4 hold.
-A parser stack contains just the sockets of the consumed constructor
-prefix and its current birth/link subphase. An ancestry stack contains
-its unprocessed structural work and constructed predecessor results;
-the outer removed-label list is its already prepended forward suffix.
-If $j$ replay Steps have committed, its sealed pre-word is exactly
-$C^0_j$; any pending Step has that unchanged pre-word and just its
-actual fresh working prefix. If $i$ cancellations have completed,
-the copied cursors have lengths $r_z-i$ and $r_z-n-i$. At $j$
-completed second-replay Steps its countdown is $n-j$. During
-serialization the committed record bits are exactly the encoded
-prefix of its sealed represented state, with at most a pending
-bit/link assignment. No unsealed record is available.
+**Lemma 7.4 (every reconstruction prefix).** Fix any $u,p$ of Theorem
+7.3 and put $d=r_z-n$. The following assertions hold at every actual
+local row cut of acquisition/reconstruction, including proper prefixes
+of a macro and the cuts between its individual assignments. Before a
+routine's operands have finished construction, its construction-prefix
+assertion applies; its completed-operand assertion is used only after
+initialization.
+The installation/receipt assertions are Definitions 3.2 and 5.4.
+A parser stack contains just the sockets of the completed constructor
+prefix and the current token's separate birth/link/push subphase.
+An ancestry stack contains its unprocessed structural work and
+constructed predecessor results; the outer removed-label list is
+its already prepended forward suffix.
 
-Proof. Apply OA20.4's pop/cons, copy/reversal, parsing and pre-word
-invariants to their identical macro expansions, substituting the
-Return tally $r_z$ for the earlier selected-Begin tally $b_w$.
-Lemma 5.3 supplies the new tally equality. Source invocation is barred
-inside a pending increment/append; Step commit is barred inside a
-pending working-state/event construction. Induction on actual local
-rows therefore gives the displayed prefix assertions. The live source
-simultaneously satisfies Lemma 4.2, with every physical capture residue
-still resident until its own actual overwrite. $\square$
+For either replay, let $k$ count fully finished Step iterations, each
+including its input-cursor and mark accounting, before the current
+iteration. Let $s,h,a$ indicate whether this iteration has performed,
+respectively, its state-head, post-input-cursor and accounting-head
+assignments. They are determined by the actual instruction subphase;
+their possible values, in order, are
+
+$$
+(s,h,a)\in\{(0,0,0),(1,0,0),(1,1,0),(1,1,1)\}.
+\tag{OC.5a}
+$$
+
+At the loop-return edge advance $k$ by one and reset these three
+indicators to zero. Write $q_j$ for the remaining acquired input-code
+suffix after $j$ original rows of $p_z$. Once initialization is
+complete, the actual current-state head denotes $C^0_{k+s}$ and the
+actual input cursor is $q_{k+h}$. At iteration entry the saved-pre-word
+slot retains its preceding value until its own setup assignment;
+after that assignment it holds unchanged $C^0_k$. Once the separate
+working-destination setup finishes, the fresh working data are exactly
+the construction prefix for the next original state/event. In the
+first replay the actual tally-head chain $T$ has length $k+a$; in the
+second the actual countdown cursor $Q$ has length $n-k-a$. In terms
+of the number $j=k+s$ of state commits and the pending-accounting
+indicator $\eta=s-a$, these same physical lengths are
+
+$$
+|T|=j-\eta,\qquad |Q|=n-j+\eta,
+\qquad \eta\in\{0,1\}.
+\tag{OC.5b}
+$$
+
+The two equalities refer to their respective replays. A born but
+not yet head-assigned tally mark is separate from $T$; a read next
+pointer is separate from $Q$ until its assignment. A loop test uses
+only the initialized entrance or a finished iteration. In the latter
+case all three assignments have completed and $\eta=0$; the loop-return
+edge then resets their indicators. Final $B$ and second-replay
+serialization use only such synchronized values, including the
+zero-Step second replay.
+
+For cancellation let $X_0,Y_0$ denote the completed copied chains,
+of lengths $r_z,d$. These are proof names for actual chains, not extra
+installed roots. For a chain $L$, let $\operatorname{tail}^e(L)$ be
+its suffix after $e$ next links, with $\operatorname{tail}^{|L|}(L)$
+null. Let $i$ count completed $y$-cursor assignments, hence completed
+pairs, and let $\delta$ be one exactly after the current pair's $x$
+assignment and before its $y$ assignment, zero otherwise. At every
+cancellation cut after both cursors are initialized,
+
+$$
+\begin{aligned}
+x&=\operatorname{tail}^{i+\delta}(X_0),&
+|x|&=r_z-i-\delta,\\
+y&=\operatorname{tail}^{i}(Y_0),&
+|y|&=d-i,\\
+0&\le i\le d,&
+\delta&\in\{0,1\},\qquad \delta=1\Longrightarrow i<d.
+\end{aligned}
+\tag{OC.5c}
+$$
+
+In the pending phase $\delta=1$, $y$ is nonnull even when $x$ is
+null. Only $\delta=0$ reaches a loop test or the saving of $N$;
+exit has $i=d$ and $|N|=n$. These assertions concern the actual
+cursor-slot values, including the one-assignment intermediate cut.
+The indices and indicators in (OC.5a)–(OC.5c) are proof notation
+determined by the execution, not supplied counts or added storage.
+
+During serialization the completed record bits are exactly the encoded
+prefix of its sealed represented state, with the current bit/link
+subphase separate. No unsealed record is available. All allocated
+intermediate cells retain their physical backing and initialized
+fields; clearing or advancing a cursor does not reclaim them.
+
+Proof. Reuse the pop/cons, copy/reversal, parser, ancestry-work and
+sealed-pre-word component invariants proved in OA20.4 for the same
+word-method expansions of OA18.3. A copy accumulator is the reverse
+of its consumed source prefix; a second reversal gives the completed
+copy. Every unfinished copy has its actual source suffix, accumulator
+and pending birth/head assignment, not a completed copy of the final
+length. Each parser token fills its popped left-first socket, and a
+branch's two pushes finish before the next token. Each bottom-up
+ancestry task replaces only its completed child results, and an outer
+removal prepends exactly its removed label. These component assertions
+include their individual reads, tests, births, links and control rows.
+Lemma 5.3 supplies the completed $D$ of length $d$, and the original-row
+induction in Theorem 7.3 supplies each completed represented successor.
+
+For replay bookkeeping, initialization gives $k=0$, the original
+entrance and $q_0$, with null first tally or the completed distinct
+countdown copy of length $n$. Iteration setup saves that current word
+and initializes its distinct destination by their separate assignments,
+before any working-state read. During working-state construction all
+three indicators are zero. Its reads and scans leave the saved pre-word,
+current-state head, input cursor and accounting head unchanged. The
+state-head assignment is possible only after that construction seals;
+the original-row induction identifies its value as $C^0_{k+1}$.
+It changes $s$ alone. The next input-cursor assignment installs exactly
+$q_{k+1}$ and changes $h$ alone. A Step consuming no input has
+$q_{k+1}=q_k$, but still has its own input-cursor assignment.
+
+In replay one the mark birth points to the old completed tally of
+length $k$ and does not change its head. Its later head assignment
+changes $a$ to one and makes length $k+1$. In replay two, a new Step
+starts only at a positive-countdown test, so $k<n$; the separate next
+read is legal and leaves $Q$ unchanged. Assigning that next pointer
+changes $a$ to one and makes length $n-k-1$. The final control edge
+replaces $(k,1,1,1)$ by $(k+1,0,0,0)$, preserving all physical values
+and displayed equations. Other fetches, slot accesses and intervening
+tests change none of these cursor heads or assignment statuses. Thus the
+assertions hold after every individual row, in particular with
+$\eta=1$ just after state commit and before mark accounting finishes.
+No further Step can consume that unfinished input/count state.
+
+For cancellation, completed copying and cursor initialization give
+$i=0,\delta=0$, $x=X_0,y=Y_0$, proving (OC.5c) initially. At a
+loop test the phase is $\delta=0$. If $y$ is nonnull then $i<d$,
+and $r_z-i=n+d-i\ge1$, so the $x$ next read is legal. It returns
+$\operatorname{tail}^{i+1}(X_0)$ into its temporary without changing
+either cursor. The separate $x$ assignment changes $\delta$ from
+zero to one and establishes exactly the first equation with exponent
+$i+1$. Throughout this phase $y=\operatorname{tail}^i(Y_0)$ is
+unchanged and nonnull. Its next read therefore legally returns
+$\operatorname{tail}^{i+1}(Y_0)$, even if the previous $x$ assignment
+made $x$ null. The $y$ assignment completes the pair: replace the
+proof indices by $i'=i+1,\delta'=0$. Both cursors are then their
+$i'$th suffixes, proving (OC.5c) at that cut as well. Neither next
+read alters a chain; immutable links keep any read temporary valid
+until its indicated assignment. All fetch, test and control rows
+between these assignments preserve these equations and the pending
+assignment status.
+This exhausts the actual rows of each pair, not merely pair endpoints.
+
+A null $y$ at a loop test forces $i=d,\delta=0$. Saving $x$ as $N$
+therefore retains a real suffix of length $r_z-d=n$ and reads no
+missing mark. For $n=0$, each pending phase instead has lengths
+$(d-i-1,d-i)$, including $(0,1)$ in the last pair, before both
+cursors become null. If $d=0$ the first test exits without a pair.
+Thus neither boundary case omits an intermediate actual cut.
+
+Finally the unchanged sealed serialization input and the pop/cons
+invariant give its completed bit prefix and each pending link/write;
+seal and availability occur only after completion. Source invocation
+is barred during reconstruction. Every local row writes only auxiliary
+storage and its actual shared event, so Lemma 4.2 holds simultaneously,
+with every physical capture residue resident until its own actual
+overwrite. This proves all clauses at every actual local row cut.
+$\square$
 
 ## 8. Actual publication and retained callable use
 
@@ -1046,7 +1213,13 @@ it is not replaced by a bound on only the collected frame length.
 Parsing consumes a finite received list. Ancestry decreases $\nu$.
 The first replay has $r_z$ committed Steps and the second has $n$;
 each Step scans finite sealed data and commits a finite fresh word.
-Cancellation consumes $r_z-n$ mark pairs. Encoding/printing traverse
+Cancellation consumes $r_z-n$ mark pairs. Its two next reads and two
+cursor assignments remain separate occurrences in $\ell_{\rm cancel}$,
+including the pending phase (OC.5c). The separate state-head,
+input-cursor and tally/countdown operations of (OC.5a)–(OC.5b) belong
+to their respective $\ell_{\rm replay1},\ell_{\rm replay2}$ bodies;
+their finite subphases have no uncharged atomic step. The proof
+indices/indicators allocate no backing. Encoding/printing traverse
 their sealed finite operands. Therefore (OC.10) terminates for every
 routine, including all pending append/link/commit subphases. At later
 $H$, add only the actually supplied input bits, real source rows,
@@ -1143,7 +1316,7 @@ parameter correspondences and limits.
 | --- | --- |
 | OA Definitions 1/4/12 and Theorems 13.2–13.3 | The **original** actual source/row expansion, original finite code, canonical installation, no sharing, current static right, incoming sites, successful reachable busy rows, output and true Return. Original initialization is unchanged. New admin rights are not among these conclusions. |
 | OA Definitions 19.1 and Lemma 19.2 | Assignment-provenance comparison, every physically resident saved-entry copy and operand exclusion. Lemma 4.2 supplies its all-prefix initialization and partial-original-installation cases; it does not declare enlarged chronology equal to original chronology. |
-| OA18.3, 20.2–20.4 | Linked-word routines, acquired-frame parsing, original complete-state representation and row-by-row replay including dead/unreachable material. New first replay stops at the Return for acquired $z$, and the measured distance includes the entire Finish and fresh-U route. The old $a_w\le n<b_w$, $w\ne\epsilon$ entry premise is not imported as an all-prefix supplier. |
+| OA18.3, 20.2–20.4 | Linked-word routines, acquired-frame parsing, original complete-state representation and row-by-row replay including dead/unreachable material. The reused OA20.4 components are its pop/cons, copy/reversal, parsing, ancestry-work and sealed-pre-word invariants; the actual cursor and replay-accounting assertions (OC.5a)–(OC.5c) have their separate individual-row proof in Lemma 7.4. New first replay stops at the Return for acquired $z$, and the measured distance includes the entire Finish and fresh-U route. The old $a_w\le n<b_w$, $w\ne\epsilon$ entry premise is not imported as an all-prefix supplier. |
 | OA21–22 | Completed retained DATA, genuine one-bit query ingress, actual print/ACK, current-right next use and same-run occurrence/width methods. The new route proves actual Ready by PC reads and pays their extra backing/rows. |
 | ER9.1–9.8 | Compound $U,L_\alpha,R_\alpha$ ancestry, entry antichain $j[\mathcal T]$, attained seed/word recovery and decreasing $\nu$. The input is the actually received $F_z(j(u))$; no primitive-root or arbitrary-entrance substitute is used. Empty historical word and empty original prefix remain included. |
 | [CSA6.3–6.4][CSA] | Four individual kernels and route agreement on its **own** acquired-seed, activation/input/ordinal structural runtime. Those are positive suppliers with stronger/different acquisition conditions; no $\kappa\iota$ four-view theorem is inferred. |
