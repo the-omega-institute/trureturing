@@ -24,6 +24,10 @@ $$\neg (\forall (m: \mathbb{N}), 1 \le m \Rightarrow (\forall (x: \operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hamming/AtashpendarKappaAlternatingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/atashpendar-mestel-roscoe-ryan-2018-kappa-alternating-minimizer` (refuted) by `D5/S3/Combinatorics/Hamming/AtashpendarKappaAlternatingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"atashpendar-mestel-roscoe-ryan-2018-kappa-alternating-minimizer","declaration_gid":"D5/S3/Combinatorics/Hamming/AtashpendarKappaAlternatingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Arash Atashpendar, David Mestel, A. W. Roscoe, and Peter Y. A. Ryan (2018). *A Proof of Entropy Minimization for Outputs in Deletion Channels via Hidden Word Statistics*. URL: <https://arxiv.org/abs/1807.11609v1>.
