@@ -7,7 +7,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 open Matrix
-open scoped ComplexOrder MatrixOrder
+open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open _root_.D5.S3.Quantum.Matrix.LinGProperty
 open _root_.D5.S3.Quantum.Schatten
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -45,8 +45,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     exact PosSemidef.one
   have hw' : (fromBlocks (1 : M) 0 (0 : M)ᴴ (1 : M)).PosSemidef := by
     simpa only [conjTranspose_zero] using hw
-  have ht : (1 : M).trace = 1 := by simp [M, Matrix.trace]
-  have hp : (1 : M).PosSemidef := PosSemidef.one
   exact @h 1 1 0 1 hw' 1 le_rfl 0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i

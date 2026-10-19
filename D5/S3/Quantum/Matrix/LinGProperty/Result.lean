@@ -64,8 +64,9 @@ theorem parameter_family {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
     have hzero : singularValuesSorted (phi c X) j = 0 := by
       rw [hx]
       simp only [phi, Matrix.trace_zero, mul_zero, zero_smul, add_zero]
-      rw [singularValuesSorted_eq_sqrt_eigenvalues_zero]
-      simp
+      simpa only [Complex.ofReal_zero, zero_smul, zero_mul] using
+        singularValuesSorted_smul_nonneg (0 : Matrix (Fin n) (Fin n) ℂ)
+          0 le_rfl j
     exact hzero ▸ hn
   have hAn : A ≠ 0 := fun ha => hz (Or.inl ha)
   have hBn : B ≠ 0 := fun hb => hz (Or.inr hb)
@@ -93,12 +94,14 @@ theorem parameter_family {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
     Complex.ext rfl (by simpa using (Complex.nonneg_iff.mp hB.trace_nonneg).2.symm)
   have hA' : A'.trace = 1 := by
     dsimp [A']; rw [Matrix.trace_smul, hat]
-    change ((r*r*a : ℝ) : ℂ) = 1
-    rw [hra]; rfl
+    apply Complex.ext
+    · simpa only [Complex.smul_re, Complex.ofReal_re, smul_eq_mul, Complex.one_re] using hra
+    · simp only [Complex.smul_im, Complex.ofReal_im, smul_zero, Complex.one_im]
   have hB' : B'.trace = 1 := by
     dsimp [B']; rw [Matrix.trace_smul, hbt]
-    change ((s*s*b : ℝ) : ℂ) = 1
-    rw [hsb]; rfl
+    apply Complex.ext
+    · simpa only [Complex.smul_re, Complex.ofReal_re, smul_eq_mul, Complex.one_re] using hsb
+    · simp only [Complex.smul_im, Complex.ofReal_im, smul_zero, Complex.one_im]
   obtain ⟨hAp, hBp⟩ := diagonal_blocks hW'
   have hL1 := normalized_arithmetic_bound hW' hA' hB' hAp hBp j
   have hnorm := normalized_conclusion hW' hA' hB' hc j hAp hBp hL1
@@ -118,11 +121,17 @@ theorem parameter_family {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
     exact singularValuesSorted_smul_nonneg _ _ (mul_pos hr hs).le j
   have hGM := (mean_phi_posSemidef hW hc).isHermitian
   have hGMs : ((r*s) • geometricMean (phi c A) (phi c B)).IsHermitian :=
-    hGM.smul (by simp)
+    hGM.smul (show IsSelfAdjoint (r*s) from IsSelfAdjoint.all _)
   have heig := eigenvalues_zero_smul _ hGM (r*s) (mul_pos hr hs).le hGMs j
   have heig' : (mean_phi_posSemidef hW' hc).isHermitian.eigenvalues₀ j =
       (r*s) * (mean_phi_posSemidef hW hc).isHermitian.eigenvalues₀ j := by
-    convert heig using 1 <;> simp only [← hmean]
+    have he := ((mean_phi_posSemidef hW' hc).isHermitian.eigenvalues_eq_eigenvalues_iff
+      hGMs).mpr (congrArg Matrix.charpoly hmean)
+    have hj := congrFun he ((Fintype.equivOfCardEq (Fintype.card_fin _)) j)
+    have he0 : (mean_phi_posSemidef hW' hc).isHermitian.eigenvalues₀ j =
+        hGMs.eigenvalues₀ j := by
+      simpa only [Matrix.IsHermitian.eigenvalues, Equiv.symm_apply_apply] using hj
+    exact he0.trans heig
   rw [hsing, heig'] at hnorm
   exact (mul_le_mul_iff_right₀ (mul_pos hr hs)).mp hnorm
 
@@ -130,5 +139,7 @@ theorem parameter_family {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
 theorem result : conjecture := by
   intro n A X B hW j
   exact parameter_family hW (c := 1) (by norm_num) ⟨j.val, by simpa using j.isLt⟩
+
+#print axioms result
 
 end D5.S3.Quantum.Matrix.LinGProperty

@@ -13,7 +13,7 @@ internal sealed class TraceDistanceBoundDocument : IScribeDocumentDefinition
                 H("The normalized overlap is at most one"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Eigenstructure/lin2016gproperty")),
-                Blocks(Paragraph(Text("Summing the coordinate block compressions gives a positive two-by-two matrix with diagonal entries one and off-diagonal entry tr X. Its positive semidefinite entry bound gives |tr X| squared at most one."))),
+                Blocks(Paragraph(Text("For every finite coordinate type and complex blocks A, X and B with positive semidefinite block matrix [A X; X-adjoint B] and tr A=tr B=1, the modulus |tr X| is at most one. Summing the coordinate block compressions gives a positive two-by-two matrix with diagonal entries one and off-diagonal entry tr X. Its positive semidefinite entry bound gives the required modulus bound."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("normalized-difference-square-le"),
                 DeclarationHandle.Create(Owner + "normalized_difference_square_le"),

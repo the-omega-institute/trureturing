@@ -13,6 +13,9 @@ internal sealed class CayleyResolventDocument : IScribeDocumentDefinition
         Item("resolvent", "Real-parameter resolvent",
             "For a real scalar s and a finite complex square matrix A, define R_s(A)=(sI−A) inverse. "
             + "The definition uses Mathlib's nonsingular inverse; the endpoint theorem requires positive definite denominators.", true),
+        Item("inverse_antitone", "Inverse reverses positive order",
+            "For every dimension and positive definite complex matrices P,Q with P≤Q, one has Q inverse≤P inverse. "
+            + "The comparison is the existing inverse antitonicity theorem on the strictly positive cone."),
         Item("endpoint_resolvent_factors", "Uniform endpoint factors",
             "For every dimension, let s≥2, U≤V, and suppose I+U, I−U and I−V are positive definite. Put H=V−U. "
             + "There is Z_U with R_s(V)−R_s(U)=R_s(U) Z_U R_s(U) and H≤Z_U≤3H. "

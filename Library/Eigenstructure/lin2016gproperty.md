@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Matrix/LinGProperty/TraceDistanceBound
   - D5/S3/Quantum/Matrix/LinGProperty/GeometricMeanBound
   - D5/S3/Quantum/Matrix/LinGProperty/ScalarPerturbation
+  - D5/S3/Quantum/Matrix/LinGProperty/Result
 license: citation-only
 triage: anchor
 ---
