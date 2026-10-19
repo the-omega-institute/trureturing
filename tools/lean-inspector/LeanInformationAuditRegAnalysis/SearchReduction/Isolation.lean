@@ -171,7 +171,7 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
           | .error failure => failure | _ => (.isolation, "search.isolation_failed")
         return unknown reason failure
     if clean.contains request.target then return unknown "search.target_already_in_baseline"
-    let (baseRun, attempts) ← search clean target.levelParams target.type #[] hints
+    let (baseRun, attempts, index?) ← searchIndexed clean target.levelParams target.type #[] hints
     let moduleNames := clean.header.moduleNames
     let preferred := (clean.constants.toList.toArray.qsort
       (fun a b => Name.quickLt a.1 b.1)).filterMap fun (name, _) =>
@@ -181,7 +181,7 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
     let preferred := (attempts.filterMap (·.proof?)).foldl
       (fun names proof => names ++ proof.getUsedConstants) preferred
     let (presentation, presentationEvidence?, presentationDetail) ←
-      baselinePresentation clean target.levelParams target.type preferred
+      baselinePresentation clean target.levelParams target.type preferred index?
     let observed : Observation := {
       target := request.target, base := baseRun, paired := .incomplete .undecided,
       verdict := classifyCertified true presentation baseRun false false (.incomplete .undecided),

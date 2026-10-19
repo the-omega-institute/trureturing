@@ -98,9 +98,9 @@ T 的作者证明能够编译，而 R(B + S) 仍未找到时，为“证据不�
 - 同一 telescope 下，有限逻辑引入和投影、B 的既有完整陈述及其投影的直接应用、True，以及钉版 `omega` 可核验的 Nat/Int 线性算术呈现均可用于证书。算术中的其余函数项按 `omega` 的解释保留；不调用归纳、候选 simp 集、候选实例或提交的等价定理来证明呈现关系。`n+n+n` 与 `3*n`、附带 `0≤n` 的打包属于这一边界。
 - 除源中已有目标分量或方向的直接排除外，打包恢复须在共同 telescope 中取得两个方向的证明；全部新增分量均须由上述规则和 B 闭合。参数运输限于定义相等的对应、既有陈述的直接应用及上述算术规则，不包含任意映射搜索或语义等价判定。
 
-基底认证与 S 排除共同调用 `restatementConversion`；`certifiedRestatement` 是该转换取得器的布尔投影。转换在同一 telescope 中取得双向证明，再从实际源声明的完整陈述恢复 T；投影与 Iff 方向递归组合进转换项。等价项、完整转换项与 T 的证明均执行 kernel 及标准公理闭包检查。B 的索引在隔离基底内构造，S 及候选环境中的新证明、扩展与提示不进入该索引。
+基底认证与 S 排除共同调用 `restatementConversion`；`certifiedRestatement` 是该转换取得器的布尔投影。转换在同一 telescope 中取得双向证明，再从实际源声明的完整陈述恢复 T；投影与 Iff 方向递归组合进转换项。等价项、完整转换项与 T 的证明均执行 kernel 及标准公理闭包检查。B 的索引在隔离基底内构造，可复用同一次基底搜索已构建的编译声明索引，不传递 metavariable、战术状态或成功缓存。认证 B 中某声明时，可直接应用该实际声明在共同 telescope 中的实例；S 中的新声明不因此进入 B。S 及候选环境中的新证明、扩展与提示不进入该索引。
 
-基底认证枚举 B 中实际可用的安全命题声明；显式基底模块中的声明及搜索成功证明的依赖优先，其余声明按稳定名称顺序检查，优先名单不缩小认证范围。整次认证使用独立默认命令心跳预算。Observation 及生成模块分别保留呈现认证的 `found`、`exhausted` 或具名 `incomplete`，不把搜索命中冒充呈现命中。呈现命中独立于 R(B) 的结果判 bind-only；只有认证正常完成且无证书，才可消费其否定读数形成非 bind-only。认证未完成且无独立搜索成功时为证据不足。规则未能取得证书不等于不等价；资源或执行异常具名输出证据不足。模型的 presentation 归一化不证明这些实际 Lean 规则的完备性。
+基底认证枚举 B 中实际可用的安全命题声明；显式基底模块中的声明及搜索成功证明的依赖优先，其余声明按稳定名称顺序检查，优先名单不缩小认证范围。语法预筛只排除确定的数据返回类型、刚性类型头或绑定项不相容的声明；依赖或可约头不明者仍交完整认证。每个源声明的转换尝试使用独立 Core/Meta/Term 状态及默认命令心跳预算；正常耗尽须完成全部候选，任一未完成尝试在没有成功证书时保留为证据不足。Observation 及生成模块分别保留呈现认证的 `found`、`exhausted` 或具名 `incomplete`，不把搜索命中冒充呈现命中。呈现命中独立于 R(B) 的结果判 bind-only；只有认证正常完成且无证书，才可消费其否定读数形成非 bind-only。认证未完成且无独立搜索成功时为证据不足。规则未能取得证书不等于不等价；资源或执行异常具名输出证据不足。模型的 presentation 归一化不证明这些实际 Lean 规则的完备性。
 
 任意 `P ↔ Q` 证明不是自动重述许可证：该证书自身可能承载新数学。超出上述呈现规则的关系不强行判等，继续搜索或报告证据不足。`statement_id` 相同或不同均不替代这项检查。
 
@@ -151,7 +151,7 @@ strict 与 collapsed 在同族同域互斥。逻辑上“不存在分离对”�
 | T1 | 无界闭包读法在所有已获证明的候选上退化 | `unbounded_closure_degenerate`、`finite_closure_degenerate` |
 | T2 | 字面编译读法把可编译别名也判为 content | `literal_accepts_alias`、`finite_literal_alias_endpoint` |
 | T3 | 具体有限规则系统计算得到 bind-only 与非 bind-only 两类非空，搜索成功给出原规则系统中的推导 | `concrete_nondegeneracy`、`genuine_paired_reduction`、`search_sound`、`finite_content_has_derivation` |
-| T4 | 受支持包装/别名/重述为 bind-only，规范化后的 helper 拆分与改名不改判词 | `restatement_bind_only`、`all_baseline_presentations_bind`、`helper_renaming_invariant`、`helper_splitting_invariant` |
+| T4 | 受支持包装/别名/重述为 bind-only，认证未完成不能形成 content，规范化后的 helper 拆分与改名不改判词 | `restatement_bind_only`、`certified_restatement_bind_only`、`incomplete_presentation_not_content`、`certified_non_bind_only_iff`、`all_baseline_presentations_bind`、`helper_renaming_invariant`、`helper_splitting_invariant` |
 | T5 | 成功集包含时的单调方向及配对判词的限定 | `union_found_iff`、`union_exhausted_iff`、`bind_only_monotone`、`baseline_miss_antitone`、`paired_content_preserved`、`paired_content_not_globally_antitone` |
 | T6 | S 中 T 及其重述的过滤防止自我配对，真实不同结构仍可闭合 | `dirty_structure_not_content`、`target_alias_cannot_close`、`mixed_target_leak_rejected` |
 | A1 | 实际 LawFact 命题上的 strict/collapsed 互斥，三态证据判词穷尽 | `strict_collapsed_exclusive`、`capture_exhaustive_exclusive`、`capture_strict_iff`、`capture_collapsed_iff`、`capture_unknown_iff` |

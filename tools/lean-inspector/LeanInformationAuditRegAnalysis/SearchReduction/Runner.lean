@@ -64,7 +64,7 @@ partial def presentation (goal : MVarId) (facts : Array Expr) : MetaM Bool := go
   for fact in facts do
     let before ← saveState
     try
-      let gs ← goal.apply fact
+      let gs ← withTransparency .reducible <| goal.apply fact
       if ← gs.allM (fun g => g.assumptionCore) then return true
     catch ex =>
       if ex.isRuntime || ex.isInterrupt then throw ex
@@ -277,8 +277,7 @@ private def exceptionOutcome (ex : Exception) : Run :=
   else if ex.isRuntime then .incomplete .execution
   else .incomplete .execution
 
-/-- Each call has fresh Core, Meta, Term and tactic state and its own heartbeat
-origin. Exceptions are caught outside that state, including resource failures. -/
+/-- Transport checked terms without references to attempt-local auxiliary declarations. -/
 def inlineGenerated (env : Environment) (proof : Expr) : MetaM Expr :=
   Core.transform proof (pre := fun expression => do
     if let .const name levels := expression then
@@ -290,6 +289,8 @@ def inlineGenerated (env : Environment) (proof : Expr) : MetaM Expr :=
         return .visit (value.instantiateLevelParams info.levelParams levels)
     return .continue)
 
+/-- Each call has fresh Core, Meta, Term and tactic state and its own heartbeat
+origin. Exceptions are caught outside that state, including resource failures. -/
 def attempt (env : Environment) (levels : List Name) (type : Expr)
     (strategy : String) (action : MVarId → MetaM Bool) : IO Attempt := do
   let work : CoreM Attempt := MetaM.run' do
@@ -354,29 +355,29 @@ private def introAll (goal : MVarId) : MetaM MVarId := do
 
 /-- Leaves can close with different strategies. Each leaf/strategy pair starts
 from a fresh Core/Meta/Term state with its own default command budget. -/
-def search (env : Environment) (levels : List Name) (type : Expr)
-    (extra : Array Name) (hints : Array (Nat × TSyntax `tactic)) : IO (Run × Array Attempt) := do
+def searchIndexed (env : Environment) (levels : List Name) (type : Expr)
+    (extra : Array Name) (hints : Array (Nat × TSyntax `tactic)) : IO (Run × Array Attempt × Option FactIndex) := do
   let context : Core.Context := {fileName := "<R_v1 structure>", fileMap := default, options := options}
   let planResult ← ((MetaM.run' do
     let index ← factIndex
     let used := ((← IO.getNumHeartbeats) - (← readThe Core.Context).initHeartbeats) / 1000
     IO.eprintln s!"R_v1 structural index heartbeats: {used}"
-    makePlan type index extra).run
+    return (index, ← makePlan type index extra)).run
     {context with initHeartbeats := ← IO.getNumHeartbeats} {env}).toIO'
-  let plan ← match planResult with
+  let (index, plan) ← match planResult with
     | .ok (plan, _) => pure plan
     | .error ex =>
       let row : Attempt := {
         strategy := "structure"
         outcome := exceptionOutcome ex
         detail := ← ex.toMessageData.toString }
-      return (row.outcome, #[row])
+      return (row.outcome, #[row], none)
   if plan.leaves.isEmpty then
     let row ← attempt env levels type "presentation/structure" fun goal => do
       let value ← (instantiateMVars plan.root : MetaM Expr).run' {} plan.state
       goal.assign value
       return true
-    return (row.outcome, #[row])
+    return (row.outcome, #[row], some index)
   let mut rows : Array Attempt := #[]
   let mut proofs : Array Expr := #[]
   let mut outcome := Run.found
@@ -406,7 +407,7 @@ def search (env : Environment) (levels : List Name) (type : Expr)
     -- Leaf proof terms stay internal; only a complete assembled proof may be
     -- exported as a witness for the original statement.
     rows := rows ++ leafRows.map (fun row => {row with proof? := none})
-  if outcome != .found then return (outcome, rows)
+  if outcome != .found then return (outcome, rows, some index)
   let row ← attempt env levels type "kernel/assembled" fun goal => do
     let assembly : MetaM Expr := do
       for h : i in [:plan.leaves.size] do
@@ -415,6 +416,12 @@ def search (env : Environment) (levels : List Name) (type : Expr)
     let value ← assembly.run' {} plan.state
     goal.assign value
     return true
-  return (row.outcome, rows.push row)
+  return (row.outcome, rows.push row, some index)
+
+/-- Callers that only need search outcomes do not retain the statement index. -/
+def search (env : Environment) (levels : List Name) (type : Expr)
+    (extra : Array Name) (hints : Array (Nat × TSyntax `tactic)) : IO (Run × Array Attempt) := do
+  let (outcome, rows, _) ← searchIndexed env levels type extra hints
+  return (outcome, rows)
 
 end LeanInformationAudit.SearchReduction
