@@ -4,21 +4,23 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.KyFanGap;
 
 internal sealed class UpperDocument : IScribeDocumentDefinition
 {
+    private const string Owner = "D5/S3/Combinatorics/Graph/KyFanGap/Upper.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The square-root upper-bound interface for zero-one matrices.",
+        "Universal square-root bounds for real symmetric zero-one matrices.",
         H("Universal Ky Fan upper bound"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("upper-bound-statement"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/KyFanGap/Upper.upperBoundStatement"),
-                H("Universal upper-bound statement"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Analytic/kitware2026rectangular")),
-                Blocks(Paragraph(Text("The statement bounds the Ky Fan sum of every symmetric zero-one matrix by the square-root expression."))),
-                DescribeRole.Definition),
+                DescribeId.Create("ky-fan-truncation"),
+                DeclarationHandle.Create(Owner + "kyFan_eq_of_ge"),
+                H("Truncation at the matrix dimension"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/kitware2026rectangular")),
+                Blocks(Paragraph(Text("Every singular value with index at least the matrix dimension vanishes. Hence extending a Ky Fan prefix beyond that dimension does not change its sum. The cited source supplies the singular-value machinery."))),
+                DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("ky-fan-zero"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/KyFanGap/Upper.kyFan_zero"),
-                H("Empty prefix"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Analytic/kitware2026rectangular")),
-                Blocks(Paragraph(Text("The empty Ky Fan prefix has value zero."))), DescribeRole.Theorem))));
+                DescribeId.Create("ky-fan-zero-one-upper-bound"),
+                DeclarationHandle.Create(Owner + "kyFan_le_of_zero_one"),
+                H("Square-root upper bound"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/kitware2026rectangular")),
+                Blocks(Paragraph(Text("The cited source supplies the variational machinery; the centering argument below establishes the graph bound. For a symmetric zero-one matrix A of order n, every Ky Fan prefix of length k is at most n times (1+sqrt(k))/2. Centering gives B=2A-J, with all entries of B equal to plus or minus one. An attaining signed orthonormal family pairs with B by at most sqrt(k) times n, using Cauchy-Schwarz and Bessel's inequality on the rows. Its pairing with J is at most n by Bessel's inequality on the constant vector. Summing these bounds proves the result; prefixes longer than n reduce by truncation. Diagonal entries equal to one are allowed."))),
+                DescribeRole.Theorem))));
 }
