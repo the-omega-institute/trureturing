@@ -448,3 +448,163 @@ The repository's itinerary stabilization and inverse-limit completion theorems h
 [MATHLIB]: https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Data/Nat/Fib/Zeckendorf.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Converse classification of an attained current boundary
+
+The boundary in Section 7 is a current object. It records the oriented phase arc allowed by the paid prefix and the lift owned at each of its two walls. This section asks exactly what that object determines when the producer has already returned. It does not replace the producer record, the unread endpoint, or the continuing right.
+
+**Definition 10.1 (Attained cuts, boundary records and their current fibres).** Let
+
+$$
+\mathcal A=\{(p,r):p\in\mathcal B,\ b_p\le r\le k_p\}.
+\tag{25}
+$$
+
+The empty word contributes the single pair $(\varnothing,0)$. Every $(p,r)\in\mathcal A$ is attained by every source in $C_p$ at return $r$ of the unrestricted run in Theorem 3.1. Write
+
+$$
+U_{p,r}=T^r(C_p).
+\tag{26}
+$$
+
+For $(p,r)\in\mathcal A$, let $\partial_{p,r}$ be the oriented closed arc $H[U_{p,r}]$ together with the included current lift at each wall, as transported by (21). The interior of an arc includes every lift over an interior split phase; at a wall only its recorded included lift is retained. If $\partial$ is any such boundary record, define $U(\partial)$ by this same rule. Thus
+
+$$
+U(\partial_{p,r})=U_{p,r}.
+\tag{27}
+$$
+
+This is a definition from the current boundary itself. It does not mention a historical prefix, an elapsed counter, a producer register, or a capability.
+
+For a finite $t$, put
+
+$$
+\delta(\partial)=\max\{t\ge0:\ v_t\text{ is constant on }U(\partial)\}.
+\tag{28}
+$$
+
+The maximum is taken only for an attained boundary record. The empty boundary has $U=K$ and $\delta=0$.
+
+**Theorem 10.2 (Exact current-wall invariant and loss of provenance).** For every $(p,r)\in\mathcal A$,
+
+$$
+\delta(\partial_{p,r})=k_p-r.
+\tag{29}
+$$
+
+Consequently the boundary preserves the exact number of future lowest-digit events that are uniform over its current compatible fibre. It does not, in general, preserve the pair $(p,r)$ that produced that fibre.
+
+**Proof.** Theorem 35.1 gives that all points of $C_p$ have the same itinerary below coordinate $k_p$ and that the two children $C_{p0}$ and $C_{p10}$ contain points whose first difference is exactly $k_p$. The conjugacy $\Phi T=S\Phi$ shifts this statement by $r$. Hence all points of $U_{p,r}$ agree below coordinate $k_p-r$, while the images of the two displayed split witnesses differ at that coordinate. This proves (29), including the case $r=k_p$. Equation (27) transfers the assertion from the producer notation to the independently defined boundary record. The second assertion follows from the explicit collision below. $\square$
+
+**Definition 10.3 (Boundary provenance fibre).** For an attained boundary record $\partial$, define
+
+$$
+\operatorname{Prov}(\partial)=\{(p,r)\in\mathcal A:\partial_{p,r}=\partial\}.
+\tag{30}
+$$
+
+This is a historical fibre of the boundary map, not a fibre of the current source map. If $\partial$ is proper, let $d(\partial)$ be the unique integer satisfying
+
+$$
+\operatorname{length}(H[U(\partial)])=\alpha^{d(\partial)}.
+\tag{31}
+$$
+
+For the empty boundary set $d(\partial)=0$.
+
+**Theorem 10.4 (Finite and exact classification of the attained provenance fibre).** If $\partial$ is an attained proper boundary, then
+
+$$
+\operatorname{Prov}(\partial)=
+\left\{(p,r)\in\mathcal A:
+\begin{array}{l}
+|p|=d(\partial),\\
+R^rH[C_p]=H[U(\partial)],\\
+\text{the endpoint lifts transported by (21) equal those of }\partial
+\end{array}\right\}.
+\tag{32}
+$$
+
+In particular, $\operatorname{Prov}(\partial)$ is finite and
+
+$$
+|\operatorname{Prov}(\partial)|\le G_{d(\partial)-1}\qquad(d(\partial)\ge1).
+\tag{33}
+$$
+
+For $\partial=\partial_{\varnothing,0}$ the provenance fibre is the singleton $\{(\varnothing,0)\}$.
+
+**Proof.** By Theorem 35.1 the phase length of a nonempty block cylinder $C_p$ is $\alpha^{|p|}$, and rotation does not change length. Since $0<\alpha<1$, equality of lengths forces $|p|=d(\partial)$. At a fixed $p$, two distinct values $r\ne r'$ cannot give the same proper oriented arc: otherwise the proper arc would be invariant under the nonzero rotation $R^{r-r'}$. An irrational rotation has no invariant proper finite-endpoint arc, because every endpoint orbit is infinite. There are exactly $G_{d-1}$ block words of digit length $d\ge1$, by the finite Zeckendorf count in Theorem 20.2. This proves (32) and (33); the empty case is immediate from $k_{\varnothing}=0$. $\square$
+
+The bound is genuinely nontrivial. At depth two, the two actual cuts
+
+$$
+(p,r)=(00,2),\qquad (p',r')=(10,1)
+\tag{34}
+$$
+
+have the same boundary record. Indeed, $H[C_{00}]$ is the oriented arc from $e_2$ to $e_3$, while $H[C_{10}]$ is the oriented arc from $e_1$ to $e_2$. Since $R e_m=e_{m-1}$ for $m\ge2$, both current arcs are the oriented arc from $0$ to $e_1$. Their endpoint ownership is also equal: for $C_{00}$, (21) sends the included lifts $x_2^+$ and $x_3^-$ under $T^2$ to $Z(0)$ and $x_1^-$; for $C_{10}$ it sends $x_1^+$ and $x_2^-$ under $T$ to the same two current lifts. Both pairs are attained, since
+
+$$
+b_{00}=2,\qquad b_{10}=1,\qquad k_{00}=3,\qquad k_{10}=2.
+$$
+
+Their common boundary has $\delta=1$ by (29), but its two historical descriptions have different acquired raw prefixes and different actual operation counts. Thus the loss is finite provenance ambiguity, not a whole-current-source ambiguity and not a claim that a missing API makes recovery impossible.
+
+**Definition 10.5 (Boundary-only finite DATA).** For finite $L,H$, define the current/continuation DATA of a current point $y$ by
+
+$$
+\operatorname{DATA}_{L,H}(y)=
+\left(v_H(y),\ (q_L(T^j y))_{0\le j\le H}\right).
+\tag{35}
+$$
+
+This deliberately contains no absolute source-time counter, acquired prefix, private register, unread endpoint, binding, or right. A boundary record is said to admit DATA$(L,H)$ when this value is constant on $U(\partial)$.
+
+**Theorem 10.6 (Exact quantified boundary-only response domain).** For every attained boundary $\partial$, every $L,H\ge0$, and
+
+$$
+D(L,H)=
+\begin{cases}
+H,&L=0,\\
+H+G_L-1,&L\ge1,
+\end{cases}
+\tag{36}
+$$
+
+the following are equivalent:
+
+$$
+\begin{aligned}
+&\operatorname{DATA}_{L,H}\text{ is constant on }U(\partial),\\
+&\partial\text{ alone determines one finite DATA value for every actual cut realizing it},\\
+&D(L,H)\le\delta(\partial).
+\end{aligned}
+\tag{37}
+$$
+
+When (37) holds, write the common value as $\operatorname{DATA}_{L,H}(\partial)$. This is a boundary-only finite current/continuation response; it is not the complete task response of Section 6, because it omits absolute counters, returned registers, the unread source and authority.
+
+**Proof.** Choose any $(p,r)\in\operatorname{Prov}(\partial)$. By (29), $U(\partial)$ is a current fibre with uniform itinerary length $\delta(\partial)=k_p-r$. If $D\le\delta$, the first $D$ future lowest-digit outputs agree on that fibre. Theorem 20.6 identifies a length-$G_L-1$ lowest-digit word with the current $L$-digit prefix, and the intervals beginning at times $0,\ldots,H$ cover exactly the first $D$ coordinates. Thus every component of (35) is constant, including the case $L=0$.
+
+Conversely, if $D>\delta$, the two child witnesses inside $U(\partial)$ supplied in the proof of Theorem 10.2 first differ at coordinate $\delta$. When $L=0$, that difference lies among the next $H$ outputs. When $L\ge1$, the length-$G_L-1$ window beginning at some $j\le H$ contains coordinate $\delta$; Theorem 20.6 then gives different $q_L(T^j y)$ values. Hence DATA is not constant. Equality of DATA for all actual realizations of a boundary is exactly constancy on the common set $U(\partial)$, proving all three equivalences. $\square$
+
+**Corollary 10.7 (Finite boundary decoding, conditional on boundary possession).** On the domain $D(L,H)\le\delta(\partial)$, the value $\operatorname{DATA}_{L,H}(\partial)$ can be selected from finitely many current temporal atoms. If $D=0$ it is the empty response. If $D\ge1$, enumerate the $D+1$ arcs cut by $e_1,\ldots,e_{D+1}$, use the oriented boundary and its endpoint ownership to select the unique atom met by $U(\partial)$, and apply the finite relabeling of Theorem 20.6 to obtain the $q_L$ entries. All labels and the finite table are generated by the integer recurrences of Sections 2 and 7; no exact-real source or whole-response oracle is used.
+
+This corollary is a conditional decoder for an already possessed finite boundary record. It does not install a boundary exporter, acquire a wall, create a selector, or supply a continuation right. Any such service requires its own actual endpoint, initialization, binding and output contract, with its work and storage added to the costs of Section 8.
+
+**Theorem 10.8 (An independently possessed operation counter repairs the finite historical loss).** Suppose an actual boundary record $\partial_{p,r}$ is accompanied by an independently retained counter $c$ whose interface contract authenticates that it is the number of completed producer Advances from the same initialization and run. Then $c=r$, and the pair $(\partial_{p,r},c)$ determines the unique provenance pair $(p,r)$. It also determines the finite event word $v_r(x)$ and the deterministic finite producer fields of Definition 2.2 under the fixed task context. It does not determine the unread tail, the live endpoint binding, or the continuing right.
+
+**Proof.** The counter gives $r=c$. Translate the current oriented arc backwards by $R^{-c}$. Its length gives the unique digit length $d$ in (31). The depth-$d$ cylinder phase intervals have disjoint interiors and the endpoint ownership formula of Theorem 20.2 assigns each boundary to one and only one block word $p$. Hence $p$ is unique, and $(p,c)$ is the only possible element of $\operatorname{Prov}(\partial)$ with that counter. Theorem 3.1 then reconstructs the paid raw word, the finite event word through return $c$, and all deterministic finite registers from $p$ and $c$; Theorem 6.2 gives the same conclusion for the declared fixed bounded interface.
+
+The counter is an already held fact about the same producer, not a number inferred from a phase wall. It therefore adds historical provenance but no raw datum. The unread endpoint and its binding/right are excluded from the reconstructed finite words by Definition 7.1 and remain independently held capabilities. A freely supplied or unauthenticated integer would not satisfy the theorem's premise. $\square$
+
+The collision (34) shows why the counter condition is substantive: boundary alone cannot choose between counts one and two, while boundary plus the actual counter does. The theorem is a repair of finite historical loss only. It neither reconstructs the entire infinite current configuration nor changes the original complete task, whose absolute counters, returned registers, unread endpoint and authority remain separate obligations.
+
+## 11. Scope, suppliers and remaining boundary
+
+The new content is the converse package (25)–(37): the exact current uniformity depth $\delta$, the finite provenance classification and collision, the quantified boundary-only DATA factor, and the counter-assisted recovery of $(p,r)$ under an authenticated same-run operation interface. The forward construction, current wall transport, finite response guard, bounded use and tail resumption are reused from Sections 3–7. RRO20.2, RRO20.6, RRO24.2 and RRO35.1 supply the phase intervals, endpoint ownership, temporal/positional equivalence and branching clocks. Boundary Dynamics 36.1–36.4 supplies the distinction between a current-image kernel and a full dynamic or authority-preserving recovery. NativeAcquiredPrefixCylinder supplies a positive exact-tail analogue under its own controller; PVC supplies a positive B-to-M/T service under its different native history and installation contract. Neither supplier is silently identified with this current-wall boundary.
+
+The boundary-only decoder is mathematical and conditional on possession of the finite boundary record. No native acquisition, exporter installation, receiver authority, free counter, full current reconstruction, complete register recovery without the fixed task context, or whole-source response oracle is claimed. The remaining gap is an independently installed current-boundary acquisition/conversion service, and the full four-expression programme still requires its original source, continuation and authority clauses.
+
+## 追加锚（本行以下为增补区）
