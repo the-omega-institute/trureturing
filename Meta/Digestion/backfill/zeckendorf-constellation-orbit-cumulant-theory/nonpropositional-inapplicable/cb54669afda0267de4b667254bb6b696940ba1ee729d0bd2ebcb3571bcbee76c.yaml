@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cb54669afda0267de4b667254bb6b696940ba1ee729d0bd2ebcb3571bcbee76c
+  normalized_sha256: sha256:cb54669afda0267de4b667254bb6b696940ba1ee729d0bd2ebcb3571bcbee76c
+cas_ref: sha256:cb54669afda0267de4b667254bb6b696940ba1ee729d0bd2ebcb3571bcbee76c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Upstream-only mathematical closure under CLAUDE.md section 3.2; this receipt is bookkeeping, not a new Lean theorem. For every nonempty H : Finset Int with min H=0, image x->max(H)-x reflected again with its recomputed maximum equals H. Pinned upstream closure: Finset.max'_le, Finset.le_max', Finset.min'_le, Finset.min'_mem, Finset.mem_image, Finset.image_image, sub_sub_cancel, and ordered-integer normalization. No usable frozen GID: EvenDenseConstellationMirrorCode is restricted to even dense gap codes; InvolutiveNegation.imageSet_involutive requires fixed-point-free negation (c-x may have fixed points); AdmissibleWindowFiniteSearch.normalizeNatTuple_spec requires natural admissible tuples; RationalIntervalExpression.checked_expression_encloses supplies box inequalities, not this arbitrary-set/max identity. Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. Search scope: All D5/**/*.lean including private declarations; whole-name and body-shape searches reflect|mirror|involut|translat|normaliz, Finset image/add/sub/min/max, plus floor|ceil|cutoff and finite-word/natural-cast shapes. Exact current suppliers and assumptions were checked, not only object names."
+    previous_atom_id: 9fad49c91e02dbb9f081e0cdd520be09d45de232523e85d1e575de377798fc23
+    next_atom_id: f559e80dcd2f5ca366719128586ce84730bd877f9ec85fa60516de3bca34ca73
