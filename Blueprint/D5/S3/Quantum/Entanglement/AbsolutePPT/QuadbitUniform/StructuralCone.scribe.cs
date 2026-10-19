@@ -1,4 +1,3 @@
-// UNCOMPILED source-only Scribe changes; no emission or C# validation has run.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -13,6 +12,14 @@ internal sealed class StructuralConeDocument : IScribeDocumentDefinition
             Paragraph(Text("These statements concern real scalar spectra and ordered step synthesis. Connecting " +
                     "the boundary inequalities to a physical APPT model, constructing an attaining state, and " +
                     "determining a purity supremum require additional results.")),
+            Describe.Lean(DescribeId.Create("appt-boundary-mass"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_mass"),
+                H("Mass identity for disjoint boundary blocks"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural N>=16, 6<=j<=N-10 and arbitrary real x:Fin 16 to Real, sum_k synth(positions N j,x)_k equals low(x)N+x5*j+H(head x)-D(tail x). This identity does not require feasibility or nonnegativity. It generalizes the dimension bookkeeping of the frozen actual_mass theorem, which now consumes the same implementation and preserves its N>=56 telescope. Proof shape: bind-only. This bookkeeping identity reuses mass_synth and finite-coordinate normalization; normalized_endpoint52_good, half_jump_endpoint52_good and bulk_endpoint52_good use it to express endpoint mass in boundary coordinates. It supplies no independent mathematical content or admission basis. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("appt-boundary-square"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_square"),
+                H("Square identity for disjoint boundary blocks"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For the same N,j and arbitrary x, write S=low(x)N+x5*j+H-D. Then sum_k synth(positions N j,x)_k^2=(2 low(x)+x5)S-low(x)(low(x)+x5)N+E(x5,head x,tail x). It includes negative and infeasible x. The kernel derivation uses the existing square_synth formula and strict ordering of all sixteen slot positions. The frozen N>=56 actual_square theorem keeps its original type and consumes this implementation. Proof shape: bind-only. This bookkeeping identity reuses square_synth, ordered slot indices and polynomial normalization; normalized_endpoint52_good, half_jump_endpoint52_good and bulk_endpoint52_good use it to express endpoint energy in boundary coordinates. It supplies no independent mathematical content or admission basis. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("appt-quadbit-structural-cone"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.structural_fixed_good"),
                 H("Unconditional fixed-cone estimate"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

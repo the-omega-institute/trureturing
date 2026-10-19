@@ -6,7 +6,55 @@ Three boundary inequalities bound the squared mass of every ordered probability 
 
 For l:Fin N to the reals, indices inside prefix and tail sums mean their natural values embedded in Fin N. Thus the three rows compare the first three entries with the last six, the first six with the last ten, and the first entry with the last three. N is arbitrary subject to N at least 67, with zero entries and repeated eigenvalues allowed.
 
-**Theorem 1.1 (Arbitrary-dimension squared-mass estimate).**
+**Theorem 1.1 (Nonnegative exact boundary packing).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_packed_nonneg`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_packed_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For N>=16 and every nonnegative original gap vector g:Fin N to Real, boundaryPacked is nonnegative at all sixteen slots. The first five entries retain the original first five gaps, slot five is the sum of the middle gaps, and the remaining ten entries retain the original last ten gaps. This consumed helper has proof shape bind-only and is used by the generalized concentration construction in ContinuousSpectrumAssembly; it supplies no new mathematical content or independent admission basis. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253.
+
+**Theorem 1.2 (Exact concentration of the original gap vector).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_lift_packed`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_lift_packed` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For N>=16 and every k with 5<=k.val<N-10, lifting boundaryPacked(g) at middle position k yields fixedGaps(g,k). All fifteen original boundary gaps remain unchanged, while the total middle mass is placed at k. The source exposes the existing single linear zero-extension implementation as boundaryLift for faithful Reg reconstruction. Proof shape: content. Admission basis: escape-witness; the support partition and injective slot embedding establish equality of complete gap vectors, including the zero middle-mass case. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253.
+
+**Theorem 1.3 (Compatibility of packing and spectrum synthesis).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_synth_lift`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_synth_lift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For N>=16 and 6<=j<=N-10, fullSynth applied to boundaryLift(x) equals the original synth(positions N j,x) as an entire real spectrum, for arbitrary x. The construction reuses the existing step functions and their original indices. Proof shape: content. Admission basis: escape-witness; the index reconstruction and linear synthesis identify the exact full spectrum, without a finite-valued spectral assumption. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253.
+
+**Theorem 1.4 (Exact rows retained under boundary packing).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_packed_image`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_packed_image` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For N>=16 and k in the middle gap interval, A times boundaryPacked(g) equals boundaryGapRows(g). The three rows remain exactly bottom-six minus top-three, bottom-ten minus top-six, and bottom-three minus the largest coordinate. The actual middle step has the same row image at every allowed position. Proof shape: content. Admission basis: escape-witness; this establishes the full row image and its preservation under arbitrary continuous concentration. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253.
+
+**Theorem 1.5 (Arbitrary-dimension squared-mass estimate).**
 
 $$\forall (N:\mathbb{N}), (67\leq N)\Rightarrow \forall (l:Fin\left(N\right)\to \mathbb{R}), ((Antitone\left(l\right))\land (\forall (i:Fin\left(N\right)), 0\leq l\left(i\right))\land (\sum_{i:Fin\left(N\right)} l\left(i\right)=1)\land (\sum_{i:Fin\left(3\right)} l\left(i\right)\leq \sum_{i:Fin\left(6\right)} l\left(N-6+i\right))\land (\sum_{i:Fin\left(6\right)} l\left(i\right)\leq \sum_{i:Fin\left(10\right)} l\left(N-10+i\right))\land (l\left(0\right)\leq \sum_{i:Fin\left(3\right)} l\left(N-3+i\right)))\Rightarrow \sum_{i:Fin\left(N\right)} (l\left(i\right))^{2}\leq \frac{9\cdot ((N:\mathbb{N}):\mathbb{R})+16\cdot ((\left\lfloor\frac{3\cdot N+4}{8}\right\rfloor:\mathbb{N}):\mathbb{R})}{(3\cdot ((N:\mathbb{N}):\mathbb{R})+2\cdot ((\left\lfloor\frac{3\cdot N+4}{8}\right\rfloor:\mathbb{N}):\mathbb{R}))^{2}}$$
 
@@ -216,5 +264,9 @@ The analytic argument uses ordered nonnegative block energies, Mathlib convex an
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_lift_packed`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_packed_image`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_packed_nonneg`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.boundary_synth_lift`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.three_row_scalar_bound`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone](QuadbitUniform/StructuralCone.md)

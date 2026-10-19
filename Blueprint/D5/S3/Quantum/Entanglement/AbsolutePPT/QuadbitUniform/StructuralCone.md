@@ -6,7 +6,31 @@ Ordered defects and bulk subtraction for the full three-row spectral cone.
 
 These statements concern real scalar spectra and ordered step synthesis. Connecting the boundary inequalities to a physical APPT model, constructing an attaining state, and determining a purity supremum require additional results.
 
-**Theorem 1.1 (Unconditional fixed-cone estimate).**
+**Theorem 1.1 (Mass identity for disjoint boundary blocks).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_mass`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N>=16, 6<=j<=N-10 and arbitrary real x:Fin 16 to Real, sum_k synth(positions N j,x)_k equals low(x)N+x5*j+H(head x)-D(tail x). This identity does not require feasibility or nonnegativity. It generalizes the dimension bookkeeping of the frozen actual_mass theorem, which now consumes the same implementation and preserves its N>=56 telescope. Proof shape: bind-only. This bookkeeping identity reuses mass_synth and finite-coordinate normalization; normalized_endpoint52_good, half_jump_endpoint52_good and bulk_endpoint52_good use it to express endpoint mass in boundary coordinates. It supplies no independent mathematical content or admission basis. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253.
+
+**Theorem 1.2 (Square identity for disjoint boundary blocks).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_square`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_square` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the same N,j and arbitrary x, write S=low(x)N+x5*j+H-D. Then sum_k synth(positions N j,x)_k^2=(2 low(x)+x5)S-low(x)(low(x)+x5)N+E(x5,head x,tail x). It includes negative and infeasible x. The kernel derivation uses the existing square_synth formula and strict ordering of all sixteen slot positions. The frozen N>=56 actual_square theorem keeps its original type and consumes this implementation. Proof shape: bind-only. This bookkeeping identity reuses square_synth, ordered slot indices and polynomial normalization; normalized_endpoint52_good, half_jump_endpoint52_good and bulk_endpoint52_good use it to express endpoint energy in boundary coordinates. It supplies no independent mathematical content or admission basis. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253.
+
+**Theorem 1.3 (Unconditional fixed-cone estimate).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.structural_fixed_good`
 
@@ -18,7 +42,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/Structura
 
 For all natural N at least 67, natural j from 6 to N-10, and arbitrary real x on sixteen slots with x nonnegative and all three actual A rows nonnegative, the synthesized spectrum has Euclidean norm at most sqrt(target N) times its mass. The positions are 1,2,3,4,5,j,N-9 through N. The target uses the natural integer t=(3*N+4)/8. There is no additional cone or certificate success assumption.
 
-**Theorem 1.2 (Quadratic endpoint control).**
+**Theorem 1.4 (Quadratic endpoint control).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.quadratic_interval_le_fun`
 
@@ -30,7 +54,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/Structura
 
 For any real function f and real a,b,c,l,r,x,M, assume f(y)=a y^2+b y+c for every real y, a is nonnegative, l≤x≤r, and f(l)≤M and f(r)≤M. Then f(x)≤M. This original helper applies Mathlib convex interval control to the quadratic and is consumed by the structural cone estimates and the actual-PSD moment proof.
 
-**Theorem 1.3 (Energy of two ordered blocks).**
+**Theorem 1.5 (Energy of two ordered blocks).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.ordered_block_energy`
 
@@ -238,6 +262,8 @@ The analytic argument uses ordered nonnegative block energies, Mathlib convex an
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_mass`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_square`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.ordered_block_energy`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.quadratic_interval_le_fun`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.structural_fixed_good`
