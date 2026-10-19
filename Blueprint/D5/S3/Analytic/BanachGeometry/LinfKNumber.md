@@ -72,7 +72,21 @@ $$claim \Leftrightarrow (\forall n: \mathbb{N}, (2 \le n) \Rightarrow ((\forall 
 
 Let X be Fin n → ℝ with the sup norm, V the extreme points of its closed unit ball, and n ≥ 2. The three conjuncts assert that every A ⊆ V is a K-set exactly when its real span is X, that an n-element K-set exists, and that every finite K-set has at least n elements. Together the last two give κ(X) = n under Definition 3. The extreme points are exactly the vectors with every coordinate of absolute value one. Their inclusion-minimal spanning subsets are exactly the bases contained in {±1}ⁿ.
 
-**Theorem 1.6 (Proof of the characterization and the K-number).**
+**Theorem 1.6 (Strict descent at active coordinates).**
+
+$$\forall n: \mathbb{N}, \forall w: \operatorname{Function}\left(\operatorname{Fin}\left(n\right), \mathbb{R}\right), \forall z: \operatorname{Function}\left(\operatorname{Fin}\left(n\right), \mathbb{R}\right), ((\neg w = 0) \land (\forall i: \operatorname{Fin}\left(n\right), (\operatorname{abs}\left(w\left(i\right)\right) = \left\lVert w \right\rVert) \Rightarrow (0 < z\left(i\right) \cdot w\left(i\right)))) \Rightarrow (\neg \operatorname{BJOrth}\left(w, z\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/BanachGeometry/LinfKNumber.active_not_BJ` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* D. Sain; J. Manna; K. Paul (2024). *On local preservation of orthogonality and its application to isometries*. URL: <https://arxiv.org/abs/2407.08900v1>.
+
+*Commentary.*
+
+For a nonzero finite real coordinate vector w, if zᵢwᵢ is strictly positive at every coordinate where |wᵢ| = ‖w‖, a sufficiently small negative multiple of z decreases every coordinate below ‖w‖. Finiteness gives one common step size. Therefore w is not Birkhoff–James orthogonal to z. This criterion controls the active facets in the image-vertex proof and in the polyhedral plane counterexample.
+
+**Theorem 1.7 (Proof of the characterization and the K-number).**
 
 $$claim$$
 
@@ -96,5 +110,6 @@ At a vertex u, a zero coordinate of y implies u ⊥B y. A kernel vector contradi
 - Truth anchor: `D5/S3/Analytic/BanachGeometry/LinfKNumber.IsKSet`
 - Truth anchor: `D5/S3/Analytic/BanachGeometry/LinfKNumber.IsScalarMulIsometry`
 - Truth anchor: `D5/S3/Analytic/BanachGeometry/LinfKNumber.PreservesBJAt`
+- Truth anchor: `D5/S3/Analytic/BanachGeometry/LinfKNumber.active_not_BJ`
 - Truth anchor: `D5/S3/Analytic/BanachGeometry/LinfKNumber.claim`
 - Truth anchor: `D5/S3/Analytic/BanachGeometry/LinfKNumber.result`
