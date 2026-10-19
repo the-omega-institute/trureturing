@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7b3cc36f6670dfbf0f958c1d3615e591c5771d71a68fcc3422a17b5dba388633
-  normalized_sha256: sha256:7b3cc36f6670dfbf0f958c1d3615e591c5771d71a68fcc3422a17b5dba388633
-cas_ref: sha256:7b3cc36f6670dfbf0f958c1d3615e591c5771d71a68fcc3422a17b5dba388633
-coverage_gids:
-  - gid: D5/S3/QuantumStates/ObservableAlgebraClosureDuality.koopman_closure_eq_stable_fiber_algebra
-    target_statement_id: sha256:c430d241e5338c646fe496e7b1f1aa6fa2de2c68ede70a86b1357f530ee3794d
-receipts:
-  unresolved_subitems: []

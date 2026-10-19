@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:98e25b387e539d31283647ee27a03702f2c6f93c8db05d924e789ded7e903d3d
-  normalized_sha256: sha256:98e25b387e539d31283647ee27a03702f2c6f93c8db05d924e789ded7e903d3d
-cas_ref: sha256:98e25b387e539d31283647ee27a03702f2c6f93c8db05d924e789ded7e903d3d
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/BackwardChains/BackwardChainLayerPeriodicity.backward_chain_and_layer_iff_periodic
-    target_statement_id: sha256:b00fd9191bf3e84762c85c0902f6fdb8803ae4bcc7863aea2dca0fea5e65e62e
-receipts:
-  unresolved_subitems: []

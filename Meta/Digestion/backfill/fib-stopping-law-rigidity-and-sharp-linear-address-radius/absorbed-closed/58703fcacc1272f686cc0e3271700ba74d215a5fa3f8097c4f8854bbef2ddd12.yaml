@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:58703fcacc1272f686cc0e3271700ba74d215a5fa3f8097c4f8854bbef2ddd12
+  normalized_sha256: sha256:58703fcacc1272f686cc0e3271700ba74d215a5fa3f8097c4f8854bbef2ddd12
+cas_ref: sha256:58703fcacc1272f686cc0e3271700ba74d215a5fa3f8097c4f8854bbef2ddd12
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SeedLaw.full_law_sections
+    target_statement_id: sha256:54aa8024fefc8554d33bb9cdd89e344fbcca9bdc7de7f3da8926b43939e5b0d7
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SeedLaw.full_same_seed_law_forces_sections
+    target_statement_id: sha256:9c32789fa2fb3b20feb3828bb47bd1903030dffc8f9982b6a8216d820a5568b7
+receipts:
+  unresolved_subitems: []

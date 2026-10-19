@@ -12,6 +12,12 @@ The supplier pins Lean 4.30.0 and Mathlib c5ea00351c28e24afc9f0f84379aa41082b118
 
 The scaling/positive determinant, irreducible and confined-chain developments are omitted. The decay and nonsingularity results determine the actual transient block, and the Neumann series gives summability of its first-entry weights. Retire this port when this repository's pinned Mathlib contains equivalent declarations and replace the live applications by direct reuse.
 
+The rowSum function records the total mass remaining after a fixed number of transitions. Nonnegative powers allow each entry to be bounded by its row sum. Splitting a power into two blocks gives a row-sum bound by the product of the earlier row sum and a uniform bound on the later block.
+
+Substochasticity makes each row sum nonincreasing in time. If every row loses a uniform positive amount of mass after N transitions, with N positive, repeated N-step blocks give a geometric upper bound. Division by N extends this bound to arbitrary times and forces each power entry to converge to zero.
+
+If I minus the matrix were singular, a nonzero vector would be fixed by the matrix and hence by every matrix power. Entrywise convergence and finiteness of the carrier force the same vector to be zero, a contradiction. This nonsingularity result applies to the internal substochastic matrix in the finite fair-bit exit denominator argument.
+
 **Theorem 1.1 (pow_nonneg).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SubstochasticEscape.pow_nonneg`

@@ -258,8 +258,8 @@ certificate of product at most one. It excludes neither an abstract
 contraction nor a kernel whose actual norm is better than its absolute
 certificate. Products greater than one tending to one, controlled
 approximate reconstruction, operators specified only on $\mathcal R$,
-measure/distribution kernels and other norm estimates remain separate
-possibilities. Finite atomic matrices are also outside the atomless
+measure kernels outside the marginal conditions below, distribution
+kernels and other norm estimates remain separate possibilities. Finite atomic matrices are also outside the atomless
 fiber argument.
 
 In particular, let $P_\pm$ project onto
@@ -301,3 +301,137 @@ or a lower bound for the original theta energy. Acquisition of $P_N$
 and the projected transfer's joint reconstruction/norm estimate remain
 unproved. The path, Gram projection and Neumann tools are classical
 applications, with no new general theorem or Lean certification.
+
+## Marginal Schur certificates also exclude singular raw-edge kernels
+
+This conditional application retains (S1)–(S6), the original even
+minimal form, its critical family and every prime power. Weighted
+Cauchy–Schwarz, Tonelli and the existing theta-jet separation are reused.
+The source-specific step is a radial-invariant set with
+$K_-(Z)>0$ and $K_+(Z)=0$. No new general Schur theorem,
+numerical gap, originality claim or Lean certification is supplied.
+
+### The measure-kernel certificate
+
+Let $\kappa_a(db)$ be a positive measurable kernel from negative
+edges $a$ to positive edges $b$, and let $\sigma(a,b)$ be a measurable
+complex phase with $|\sigma|=1$. Write
+
+$$
+\mathsf M(da,db)=K_-(da)\kappa_a(db),\qquad
+(Sf)(a)=\int\sigma(a,b)f(b)\kappa_a(db).
+$$
+
+Individual rows need not have a density relative to $K_+$; point
+masses are permitted. For finite strictly positive measurable weights
+$w_\pm$ and constants $a_0,b_0>0$, assume
+
+$$
+\begin{aligned}
+m(a):=\int w_+(b)\kappa_a(db)&\le a_0w_-(a)
+ &&(K_-\text{-a.e. }a),\\
+\int_{X\times E}w_-(a)\,d\mathsf M(a,b)
+ &\le b_0\int_Ew_+(b)\,dK_+(b)
+ &&(E\subset X\text{ measurable}),\\
+a_0b_0&\le1.
+\end{aligned}
+\tag{MK1}
+$$
+
+These are weighted marginal conditions, not pointwise comparisons of
+the two edge measures. Applied to simple functions and then by
+completion, weighted row Cauchy–Schwarz and the second marginal give
+
+$$
+\begin{aligned}
+\|Sf\|_{K_-}^2
+&\le\int_Xm(a)\int_X\frac{|f(b)|^2}{w_+(b)}
+                 \kappa_a(db)\,dK_-(a)\\
+&\le a_0\int_{X\times X}
+           w_-(a)\frac{|f(b)|^2}{w_+(b)}\,d\mathsf M(a,b)
+\le a_0b_0\|f\|_{K_+}^2.
+\end{aligned}
+$$
+
+The same inequalities ensure that the operator is independent of
+$K_+$-null changes of $f$. In particular, the column condition
+transports every $K_+$-null set to a $\kappa_a$-null set for
+$K_-$-almost every $a$.
+
+Suppose also that $SC_+h=C_-h$ on the original compact smooth even
+core. Boundedness and form density extend this identity to all $v_k$.
+Put $f_k=C_+v_k$ and $g_k=C_-v_k$. Mixed nullity gives
+$\|Sf_k\|=\|f_k\|$. The nonzero critical increment family and (MK1)
+therefore force $a_0b_0=1$ and equality in the row Cauchy–Schwarz
+step for each $k$. On every common conull row with $m(a)>0$ this yields
+
+$$
+f_k(b)=w_+(b)\overline{\sigma(a,b)}\,
+             \frac{g_k(a)}{m(a)}
+\quad\text{for every }k\ge1,
+\quad\kappa_a\text{-a.e. }b.
+\tag{MK2}
+$$
+
+Only countably many critical components are used. At a nondegenerate
+radial negative edge, some $g_k(a)$ is nonzero, so reconstruction
+requires $m(a)>0$. Equation (S5), applied to (MK2), confines that
+row to positive edges with the same unordered absolute endpoint pair.
+The finite fiber can have positive mass in a singular row; its
+$K_+$-atomlessness is not used here.
+
+### An actual radial set that no positive-edge marginal can supply
+
+Define the radial-invariant measurable set
+
+$$
+\begin{aligned}
+Z_0={}&\{(x,y):0<|x|<1,\ 3<|y|<4\}\\
+ &\quad\cup\{(x,y):0<|y|<1,\ 3<|x|<4\},\\
+Z={}&Z_0\setminus\bigcup_{n\ge2}
+ \left(\{\big||x|-|y|\big|=\log n\}
+       \cup\{|x|+|y|=\log n\}\right).
+\end{aligned}
+\tag{MK3}
+$$
+
+Swapping endpoints or changing either endpoint's sign preserves $Z$.
+On $Z_0$, every oriented separation is greater than two. Since
+$\psi_\Gamma$ decreases and $\psi_\Gamma(2)<1$, whereas
+$2\cosh(x/2)\cosh(y/2)\ge2$, the positive Gamma density in (S1)
+vanishes there and the negative density is strictly positive.
+The removed countable union of lines has planar Lebesgue measure zero.
+The positive smooth original $\Phi$ consequently gives
+$K_-(Z)>0$.
+
+Every prime-power graph has separation $\log n$ for an integer
+$n\ge2$. Such a separation is either the radial sum or the radial
+difference removed in (MK3). Thus all original prime graphs give $Z$
+zero mass as well. This proves
+
+$$
+K_+(Z)=0<K_-(Z).
+\tag{MK4}
+$$
+
+Both sign orientations are included in this argument. Mutual singularity
+of $K_+$ and $K_-$ on oriented edges alone would not establish (MK4)
+on a radial-invariant set.
+
+Apply the second marginal condition in (MK1) to $E=Z$. Positivity
+and $0<w_-<\infty$ imply $\kappa_a(Z)=0$ for $K_-$-almost every
+$a$. For almost every $a\in Z$, however, reconstruction and (MK2)
+give $m(a)>0$, and the radial separation statement confines the row
+to the same fiber, wholly contained in $Z$. This forces $m(a)=0$,
+contradicting $K_-(Z)>0$.
+
+Hence an exact full-core raw-edge reconstruction cannot have a phased
+measure kernel satisfying (MK1), including a kernel with deterministic
+point-mass rows. The conclusion is limited to that absolute marginal
+certificate. It excludes neither an abstract contraction nor a better
+actual norm than the absolute estimate, products greater than one,
+controlled approximate reconstruction, distribution kernels, or a
+transfer only between the projected increments in (S7). Those
+increments annihilate the critical family, so (MK2) gives no
+nonzero equality vector for them. The all-input half-bound, joint
+projected comparison, RH and Robin remain unresolved.

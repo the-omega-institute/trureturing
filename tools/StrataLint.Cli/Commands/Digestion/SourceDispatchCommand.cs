@@ -14,6 +14,7 @@ internal static class SourceDispatchCommand
             var (selectors, choice) = Parse(arguments);
             var (raw, document) = DigestionQuerySelection.ReadSourceMetadata(repository, selectors);
             var sources = document.RequireDigestionSources();
+            foreach (var source in sources) _ = AtomizerRegistry.Require(source.Atomizer);
             var updates = ImmutableArray.CreateBuilder<IngestCommand.LedgerUpdate>();
             if (choice is { } selected)
             {

@@ -6,6 +6,7 @@
    utility: none
    digest: Relative Poisson transfer for one or two native marked departure rows. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Estimation.TimeArrow.ActualMarkedPathPgfPoissonEnvelope
 import D5.S3.Combinatorics.Permanental.CycleGeodesic.CycleGeodesicMidpoint
 import Mathlib.Analysis.Fourier.AddCircleMulti
@@ -686,7 +687,7 @@ theorem actual_marked_count_poisson_relative (κ C₀ : ℝ)
       rw [he] at hh
       exact hh.trans ((mul_le_mul_of_nonneg_left hs hnw).trans_eq (by ring))
     rw [hHP, hqw]
-    have hh := prod_le_prod (fun j (_ : j ∈ (univ : Finset (Fin k))) =>
+    have hh := prod_le_prod₀ (fun j (_ : j ∈ (univ : Finset (Fin k))) =>
       (mul_pos (Real.exp_pos _) (Real.exp_pos _)).le) (fun j _ => hp j)
     simpa only [prod_mul_distrib, prod_const, card_univ, Fintype.card_fin, mul_pow] using hh
   have hCs : 1 ≤ Cs := by

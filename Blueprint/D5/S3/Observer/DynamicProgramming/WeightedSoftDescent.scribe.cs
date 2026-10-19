@@ -1,0 +1,131 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.DynamicProgramming;
+
+internal sealed class WeightedSoftDescentDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Weighted fiber comparison controls both soft recurrences at every finite horizon.",
+        H("Weighted Soft Dynamic-Programming Descent"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-partition-pos"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.partition_pos"),
+                H("Positive weighted exponential partition"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A nonnegative finite row with one positive entry has a strictly positive partition for every real input. The exponential is always positive. This helper is consumed by row_nonexp, one_step and full_certificate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-log-sandwich"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.log_sandwich"),
+                H("Exponential comparison becomes additive error"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Both multiplicative exponential bounds and positive logarithm arguments imply the absolute soft-value bound, using monotonicity of log and positive tau. It is consumed by row_nonexp and one_step."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-partition-compare"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.partition_compare"),
+                H("Row comparison survives positive summation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The two coefficient bounds hold at every index, including zero coefficients. Multiplication by the same positive input exponential and finite summation give both partition bounds. This is consumed by one_step."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-row-nonexp"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.row_nonexp"),
+                H("A soft row preserves a uniform coordinate bound"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A pointwise absolute input bound passes through the same weighted row without requiring its mass to be one. The proof uses the exponential sandwich and log_sandwich. It is consumed by soft_nonexp and the live horizon induction in value_bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-soft-nonexp"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.soft_nonexp"),
+                H("Nonexpansion in the finite function norm"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The row estimate yields nonexpansion in the finite function supremum norm. Empty index types remain in scope. The coarse and microscopic nonexpansion clauses of full_certificate use this theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-micro-argument"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.micro_argument"),
+                H("The actual microscopic log argument"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Splitting exp(-(c+v)/tau) gives exactly R times exp(-c/tau) times exp(-v/tau), with no assumption on the sign of c. This identity is consumed by micro_eq_soft and full_certificate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-micro-eq-soft"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.micro_eq_soft"),
+                H("Microscopic Bellman update as a weighted soft update"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The microscopic operation is the soft operation with weight R(x,y) exp(-c(x,y)/tau). No normalization is introduced. This equality is used in one_step, value_bound and full_certificate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-weight-rows"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.weight_rows"),
+                H("Stochastic microscopic rows yield positive weighted rows"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Stochasticity and nonnegativity imply that each indexed microscopic row has a positive entry; multiplying by a positive exponential preserves it. Zero transitions contribute zero regardless of the cost assigned there. The row facts are consumed by one_step, value_bound and full_certificate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-fiber-partition"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.fiber_partition"),
+                H("Regrouping along the same quotient map"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The weighted microscopic partition of a pulled-back coarse input is exactly the partition of the same-q weighted fiber kernel. The proof regroups the finite sum; one_step consumes the identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-kernel-zero-iff"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.kernel_zero_iff"),
+                H("Zero fiber weight means every fiber transition vanishes"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A fiber sum is zero exactly when all microscopic transition weights on that fiber vanish. The positive cost exponential does not alter zero support. full_certificate uses both directions."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-support-match"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.support_match"),
+                H("The same coarse matrix has exactly the fiber support"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The lower and upper exponential comparisons, together with nonnegativity, force the weighted fiber kernel and K at q(x),j to vanish together. This includes zero entries rather than restricting to positive support. full_certificate consumes the result."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-one-step"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.one_step"),
+                H("The actual one-step microscopic and coarse comparison"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real coarse input, regrouping along q and the supplied coefficient sandwich bound the actual microscopic update against the same unnormalized K update by delta. This feeds the arbitrary-horizon induction and the full certificate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-value-bound"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.value_bound"),
+                H("Linear accumulated error at every remaining horizon"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The proof constructs the live invariant for every natural n and every microscopic state: the absolute error of the two actual recurrences is at most n times delta. The base case uses identical terminal data. The arbitrary successor uses its induction hypothesis through row_nonexp, then one_step and the triangle inequality. This is the substantive all-horizon estimate, consumed by original194; a generic induction principle is not an existing error theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-original194"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.original194"),
+                H("Backward-time horizon estimate"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For the same surjective q, every real terminal g, every finite horizon H and t at most H, value_bound at n=H-t gives the norm bound (H-t) times delta. The underlying estimate is stronger and does not need surjectivity, but the original quantified hypothesis is retained. full_certificate consumes this theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-soft-full-certificate"),
+                DeclarationHandle.Create("D5/S3/Observer/DynamicProgramming/WeightedSoftDescent.full_certificate"),
+                H("Complete weighted soft-descent certificate"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The certificate derives positive actual log arguments, both zero-support equivalences, microscopic and coarse nonexpansion, and the one-step estimate for every real coarse input. It also gives both terminal equalities, both actual backward recurrences for t<H and the full norm bound for every g,H,t with t<=H. R is nonnegative and stochastic, costs are arbitrary real numbers, tau is positive, delta is nonnegative, and K is the same nonnegative row-positive matrix without normalization. Finite X and Y may be empty. The cases H=0, t=H, delta=0, negative costs and zero coefficients are preserved. This is a mathematical implication under the displayed assumptions; it asserts no empirical realization, resource bound or literature novelty."))),
+                DescribeRole.Theorem))));
+}

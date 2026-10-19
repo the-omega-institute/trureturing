@@ -246,14 +246,13 @@ private theorem projection_square_bound {Ω A B : Type*} [MeasurableSpace Ω]
     have hc := integral_norm_condExp_rpow_le (μ := μ) (m := MeasurableSpace.comap a inferInstance)
       (p := (2 : ℝ)) (by norm_num)
       (by simpa only [Real.rpow_two] using
-        ((memLp_two_iff_integrable_sq_norm (hf.sub hp).1).mp (hf.sub hp)))
+        ((memLp_two_iff_integrable_sq_norm (hf.sub hp).aestronglyMeasurable).mp (hf.sub hp)))
     simp only [Real.rpow_two,Real.norm_eq_abs,sq_abs] at hc
     convert hc using 1
     · apply integral_congr_ae
       filter_upwards [he] with ω hω
       rw [hω]
       rfl
-    · rfl
   have hmin := D5.S3.ConceptDynamics.Prediction.ConditionalExpectationOptimality.conditional_expectation_minimizes_mean_square_error μ b f h hb hf hh hhLp
   have hproj : (↑(condExpL2 ℝ ℝ hb.comap_le (hf.toLp f)) : Lp ℝ 2 μ) = hp.toLp p := by
     apply Lp.ext
@@ -332,7 +331,7 @@ private theorem screened_comparison
       nlinarith [sq_nonneg (g (q ω,v ω)+g (h (b ω),vb (b ω))),
         mul_nonneg hbnd.1 hbnd'.1]
   have hi : Integrable (fun ω => (f ω-k (b ω))^2) μ :=
-    (memLp_two_iff_integrable_sq (hfLp.sub hkLp).1).mp (hfLp.sub hkLp)
+    (memLp_two_iff_integrable_sq (hfLp.sub hkLp).aestronglyMeasurable).mp (hfLp.sub hkLp)
   have hbound := integral_mono hi ((integrable_const (1 : ℝ)).indicator hs) hdom
   rw [integral_indicator_const 1 hs,smul_eq_mul,mul_one] at hbound
   exact (ENNReal.ofReal_le_ofReal (hp.trans hbound)).trans_eq

@@ -11,7 +11,7 @@ public sealed partial class DigestionLedgerTests
     public void CasBackedLegacyBoundaryDoesNotContributeSourceOrBoundaryGaps()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
+        var atom = Assert.Single(GenericAtomizer.Atomize(source).Claims);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         var document = Ledger(
             atom,
@@ -30,7 +30,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void CasBackedNoAtomizerEntryIsSeenWithoutReplayingItsSpecificationSource()
+    public void CasBackedManualEntryIsSeenWithoutReplayingItsMissingSource()
     {
         var source = Encoding.UTF8.GetBytes("manual specification receipt\n");
         var atom = new DigestionAtom(
@@ -44,7 +44,7 @@ public sealed partial class DigestionLedgerTests
             atom,
             DigestionMigrationState.Partial,
             DigestionTruthState.Open,
-            atomizer: AtomizerRegistry.NoAtomizerId);
+            atomizer: AtomizerRegistry.GenericId);
         var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
@@ -58,7 +58,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void IngestKeepsCasBackedNoAtomizerEntryByteIdempotent()
+    public void IngestKeepsCasBackedManualEntryByteIdempotent()
     {
         var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
         var atom = new DigestionAtom(
@@ -71,7 +71,7 @@ public sealed partial class DigestionLedgerTests
             atom,
             DigestionMigrationState.Partial,
             DigestionTruthState.Open,
-            atomizer: AtomizerRegistry.NoAtomizerId);
+            atomizer: AtomizerRegistry.GenericId);
 
         var first = ReportFreeDigestionIngestor.Plan(
             ledger,
@@ -103,12 +103,10 @@ public sealed partial class DigestionLedgerTests
             "## 定理 40.2\n\nchanged。\n");
         var originalAtom = Assert.Single(AtomizerRegistry.Atomize(
             AtomizerRegistry.GenericId,
-            originalBytes,
-            TheoryAtomizerRules.None).Claims);
+            originalBytes).Claims);
         var changedAtom = Assert.Single(AtomizerRegistry.Atomize(
             AtomizerRegistry.GenericId,
-            changedBytes,
-            TheoryAtomizerRules.None).Claims);
+            changedBytes).Claims);
         var originalId = originalAtom.Fingerprints.RawSha256["sha256:".Length..];
         var changedId = changedAtom.Fingerprints.RawSha256["sha256:".Length..];
         var originalEntry = Entry(
@@ -126,8 +124,7 @@ public sealed partial class DigestionLedgerTests
         var entries = Assert.Single(plan.Document.RequireDigestionSources()).Entries;
         var currentKinds = AtomizerRegistry.ResolveContentKinds(
             AtomizerRegistry.GenericId,
-            changedBytes,
-            TheoryAtomizerRules.None);
+            changedBytes);
 
         Assert.NotEqual(originalId, changedId);
         var preserved = Assert.Single(entries, entry => entry.AtomId == originalId);
@@ -153,10 +150,10 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void IngestOnboardsRegisteredEmptySourceAndRemainsByteIdempotent()
     {
-        var atomizerId = SyntheticNumberedAtomizer.Id;
+        var atomizerId = AtomizerRegistry.GenericId;
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**定理 1.1(A)**。first。\n\n**定理 1.2(B)**。second。\n");
-        var atoms = AtomizerRegistry.Atomize(atomizerId, sourceBytes, DigestionTestSupport.Rules).Claims;
+        var atoms = AtomizerRegistry.Atomize(atomizerId, sourceBytes).Claims;
         var ledger = EmptyDocument(atomizerId);
 
         var first = ReportFreeDigestionIngestor.Plan(
@@ -198,9 +195,8 @@ public sealed partial class DigestionLedgerTests
     {
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(Test)**。single clause。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(
-            sourceBytes,
-            DigestionTestSupport.Rules).Claims);
+        var atom = Assert.Single(GenericAtomizer.Atomize(
+            sourceBytes).Claims);
         var document = StructuralLedger(atom);
         var expected = DirectoryLedgerTestSupport.Image(document);
 
@@ -218,9 +214,8 @@ public sealed partial class DigestionLedgerTests
     {
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(Test)**。single clause。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(
-            sourceBytes,
-            DigestionTestSupport.Rules).Claims);
+        var atom = Assert.Single(GenericAtomizer.Atomize(
+            sourceBytes).Claims);
         var document = StructuralLedger(atom);
         var source = Assert.Single(document.RequireDigestionSources());
         var entry = Assert.Single(source.Entries);
@@ -268,7 +263,7 @@ public sealed partial class DigestionLedgerTests
             new DigestionCoverageEdge(
                 gid,
                 TestModuleStatementId),
-            atomizer: AtomizerRegistry.NoAtomizerId);
+            atomizer: AtomizerRegistry.GenericId);
         var source = Assert.Single(template.RequireDigestionSources());
         var entry = Assert.Single(source.Entries);
         var chained = template.WithDigestionSources(
@@ -308,7 +303,7 @@ public sealed partial class DigestionLedgerTests
         rawEntries.AddRange(FrozenLedgerFiles(targetPath, "probe").Select(static file =>
             new RawRepositoryEntry(file.Path, ImmutableArray.CreateRange(file.Bytes))));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(RawRepositorySnapshot.Create(rawEntries))).Snapshot;
+            SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(RawRepositorySnapshot.Create(rawEntries)))).Snapshot;
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
@@ -331,7 +326,7 @@ public sealed partial class DigestionLedgerTests
     public void IngestOnboardsRegisteredEmptySourceWithCoarseFallback()
     {
         const string sourcePath = "docs/develop/theory/non-utf8.bin";
-        var atomizerId = SyntheticNumberedAtomizer.Id;
+        var atomizerId = AtomizerRegistry.GenericId;
         var sourceBytes = new byte[] { 0xff, 0x00, 0xfe };
         var ledger = Document(
             atomizerId,

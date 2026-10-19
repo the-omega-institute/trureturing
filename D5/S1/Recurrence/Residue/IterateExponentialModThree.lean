@@ -6,6 +6,7 @@
    utility: none
    digest: A396803 coefficients equal their indices modulo three. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.IterateExponentialParity
 import Mathlib.Data.Nat.Choose.Lucas
 

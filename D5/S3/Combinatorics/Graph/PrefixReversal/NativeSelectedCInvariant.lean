@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Classify Every Retained and New Native c Edge. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedCutRetention
 
 set_option autoImplicit false

@@ -304,6 +304,8 @@ def prunedShard {n m : ℕ} (k : ℕ)
         (fun b => SkeletonMinimal (Fin.cons i tail,b)),
       ∑ l ∈ rankVectors S (Fin.cons i tail,b), vectorTerm S (Fin.cons i tail,b) l
 
+
+
 /-- Exact equality with the signed lift of the actual polynomial. No
 coefficient table or desired calibration occurs in this theorem. -/
 theorem signedGyrationLift_eq_supportedEvaluator {n m : ℕ} (d : ℕ) [NeZero d]
@@ -321,6 +323,8 @@ theorem signedGyrationLift_eq_supportedEvaluator {n m : ℕ} (d : ℕ) [NeZero d
   apply Finset.sum_congr rfl
   intro l hl
   exact rankedTerm_eq_vectorTerm S (a,b) l hl
+
+
 
 end SignedSupport
 

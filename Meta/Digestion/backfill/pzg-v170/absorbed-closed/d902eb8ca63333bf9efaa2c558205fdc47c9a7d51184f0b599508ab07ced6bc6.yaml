@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d902eb8ca63333bf9efaa2c558205fdc47c9a7d51184f0b599508ab07ced6bc6
-  normalized_sha256: sha256:d902eb8ca63333bf9efaa2c558205fdc47c9a7d51184f0b599508ab07ced6bc6
-cas_ref: sha256:d902eb8ca63333bf9efaa2c558205fdc47c9a7d51184f0b599508ab07ced6bc6
-coverage_gids:
-  - gid: D5/S3/Arith/Congruence/ErdosStrausModularWitnesses.erdos_straus_modular_witnesses
-    target_statement_id: sha256:85bc646ab8eb92145a3aedfb789fd69e6755bf88f7d59ef4eb149c2d32faf9c3
-receipts:
-  unresolved_subitems: []

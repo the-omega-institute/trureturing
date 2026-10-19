@@ -220,6 +220,7 @@ source.residual_requires_open; no source-bound escape certificate is produced.
 Registration gap: exact dependent source-family reconstruction, lawful template readout,
 selection coordinates, whole-family variation, slot sensitivity and observational dependence
 are not all established by the retained registration evidence.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/18980
 -/
 
 import D5.S3.Quantum.Measurement.AntidistinguishabilitySpectrum
@@ -310,7 +311,7 @@ end
 section
 variable {n : ℕ}
 
-private theorem squared_modulus_lipschitz (z w : ℂ) (hz : ‖z‖ ≤ 1) (hw : ‖w‖ ≤ 1) :
+theorem squared_modulus_lipschitz (z w : ℂ) (hz : ‖z‖ ≤ 1) (hw : ‖w‖ ≤ 1) :
     |‖z‖ ^ 2 - ‖w‖ ^ 2| ≤ 2 * ‖z - w‖ := by
   calc
     |‖z‖ ^ 2 - ‖w‖ ^ 2| = |‖z‖ - ‖w‖| * (‖z‖ + ‖w‖) := by
@@ -398,7 +399,7 @@ end
 section
 variable {n r : ℕ}
 
-private theorem norm_square_gram_factor (V : Matrix (Fin n) (Fin r) ℂ) :
+theorem norm_square_gram_factor (V : Matrix (Fin n) (Fin r) ℂ) :
     (RHLinalg.normSqMatrix (V * Vᴴ)).map (algebraMap ℝ ℂ) =
       liftedRows V * (liftedRows V)ᴴ := by
   ext i j
@@ -560,7 +561,7 @@ end
 section
 variable {n r : ℕ}
 
-private theorem norm_square_gram_rank (V : Matrix (Fin n) (Fin r) ℂ) :
+theorem norm_square_gram_rank (V : Matrix (Fin n) (Fin r) ℂ) :
     (RHLinalg.normSqMatrix (V * Vᴴ)).rank ≤ r * r := by
   rw [← D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.rank_map_algebraMap
     (L := ℂ) (RHLinalg.normSqMatrix (V * Vᴴ)), norm_square_gram_factor]

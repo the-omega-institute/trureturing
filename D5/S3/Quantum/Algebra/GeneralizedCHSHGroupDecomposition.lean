@@ -599,12 +599,12 @@ private theorem delta_commute (n : ℕ) (hn : 2 ≤ n) (i j : ℤ) :
 private def kgens (n : ℕ) : Set (G n) := if 2 ≤ n then Set.range (delta n) else {1}
 private instance K_isMulCommutative (n : ℕ) : IsMulCommutative ((Subgroup.closure (kgens n))) := by
   apply Subgroup.isMulCommutative_closure
-  intro a ha b hb
+  intro a ha b hb _
   by_cases hn : 2 ≤ n
   · simp only [kgens, if_pos hn, Set.mem_range] at ha hb
     obtain ⟨i, rfl⟩ := ha
     obtain ⟨j, rfl⟩ := hb
-    exact (delta_commute n hn i j).eq
+    exact delta_commute n hn i j
   · simp only [kgens, if_neg hn, Set.mem_singleton_iff] at ha hb
     simp [ha, hb]
 open scoped IsMulCommutative

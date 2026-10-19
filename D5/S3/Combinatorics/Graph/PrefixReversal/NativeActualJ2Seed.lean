@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: One actual native seed cycle earns six joint paths, both literal restored halves, and all three retained-edge invariants. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2JointPaths
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2HalfPaths
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SelectedC

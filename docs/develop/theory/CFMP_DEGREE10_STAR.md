@@ -220,3 +220,11 @@ original CFMP minimum-six conjecture.
   Proposition 2.4 and Lemma 3.4.
 - F. Luo and T. Yang, *Volume and rigidity of hyperbolic polyhedral
   3-manifolds*, arXiv:1404.5365.
+
+
+## 实验材料入口
+
+正文中的程序名与结果文件路径对应以下固定版本；有限核验数据不代替普遍证明或 Lean 证书。
+
+- [verify_degree10_star.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/verify_degree10_star.py)
+- [audit_degree10_bounds.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/audit_degree10_bounds.py)

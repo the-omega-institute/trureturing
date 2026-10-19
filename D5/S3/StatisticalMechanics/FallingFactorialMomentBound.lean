@@ -69,7 +69,7 @@ theorem result : claim := by
       -- `1 - x ≤ e^{-x}` termwise
       have hbound : ∏ i ∈ range n, (1 - (i : ℝ) / k) ≤ exp (-(∑ i ∈ range n, (i : ℝ) / k)) := by
         rw [← sum_neg_distrib, Real.exp_sum]
-        refine prod_le_prod (fun i hi => ?_)
+        refine prod_le_prod₀ (fun i hi => ?_)
           (fun i _ => Real.one_sub_le_exp_neg ((i : ℝ) / k))
         have hi' : (i : ℝ) < n := by exact_mod_cast mem_range.mp hi
         rw [sub_nonneg, div_le_one hkR]

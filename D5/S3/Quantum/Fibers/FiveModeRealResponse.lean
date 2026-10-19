@@ -493,7 +493,7 @@ theorem full_rank_blind_fiber_neighborhood (rho : Matrix (Fin 5) (Fin 5) ℂ)
   have hp : 0 ≤ c rho := map_nonneg c hpositive.posSemidef.nonneg
   have hu : IsUnit (c rho) := hpositive.isUnit.map c
   have hs := hu.isStrictlyPositive hp
-  obtain ⟨r,hr,hlower⟩ := (CFC.exists_pos_algebraMap_le_iff hs.isSelfAdjoint).2
+  obtain ⟨r,hr,hlower⟩ := (CFC.exists_pos_algebraMap_le_iff (c rho) hs.isSelfAdjoint).2
     (fun x hx => hs.spectrum_pos hx)
   refine ⟨r,hr, ?_⟩
   intro D hD

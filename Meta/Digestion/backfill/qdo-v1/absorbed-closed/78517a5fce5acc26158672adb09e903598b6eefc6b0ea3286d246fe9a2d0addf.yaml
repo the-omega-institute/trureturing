@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:78517a5fce5acc26158672adb09e903598b6eefc6b0ea3286d246fe9a2d0addf
-  normalized_sha256: sha256:78517a5fce5acc26158672adb09e903598b6eefc6b0ea3286d246fe9a2d0addf
-cas_ref: sha256:78517a5fce5acc26158672adb09e903598b6eefc6b0ea3286d246fe9a2d0addf
-coverage_gids:
-  - gid: D5/S3/Observer/Naturality/DiagonalNaturalityDefect.diagonal_naturality_defect_eq_semiconjugacy_defect
-    target_statement_id: sha256:fbf73cce1ff01a996c2a44b4fea5d90a7c4aada705fed4fa3bbd92cbdec2c6f7
-receipts:
-  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:524c58f63fd6c3faae717f774a241a33b698a26ca8188bad1ea7140f9d5f4f93
+  normalized_sha256: sha256:524c58f63fd6c3faae717f774a241a33b698a26ca8188bad1ea7140f9d5f4f93
+cas_ref: sha256:524c58f63fd6c3faae717f774a241a33b698a26ca8188bad1ea7140f9d5f4f93
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的既有声明闭合本项。源定义的两个任意线性读口 ax+by+cz 和 a'x+b'y+c'z 在五模式上展开。Pi.mul_apply、mul_add、add_mul 与 sub_mul 的域代数规范化给出四角差 ab'+a'b；代入相同系数得到平方四角差 2ab。未限制域的特征。 本完整子句仓内无可用冻结 GID；仅使用纯上游结算路线，零新增 Lean 声明。
+    previous_atom_id: 6e45928492ecad0a288f236a5e0910eac4c68a42b12fd56e61a9c8dbf58af1f3
+    next_atom_id: f0b2fbe090c2acc46d282e9dce0e32ac0243de6bab754a7156c81deae3f5d8f1

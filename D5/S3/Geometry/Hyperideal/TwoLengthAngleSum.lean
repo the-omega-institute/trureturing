@@ -759,7 +759,7 @@ private theorem continuous_gaps (A B : ℝ) (hA : 1 < A) (hB : 4*A+5 < B) :
         simp only [gap, threshold, rawNum, leftRad, rightRad, values, selected, frame, Matrix.cons_val,
           Fin.isValue, Fin.reduceFinMk, Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty, Fin.ext_iff, rad, numerator] <;> norm_num <;> ring
 
-private theorem rad_positive (x y z : ℝ) (hx : 1 < x) (hy : 1 < y)
+theorem rad_positive (x y z : ℝ) (hx : 1 < x) (hy : 1 < y)
     (hz : 1 < z) : 0 < rad x y z := by
   have hp : 0 < 2*x*y*z := by positivity
   unfold rad

@@ -138,3 +138,97 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms registration
 
 end Reg.D5.S3.Arith.Robin.OriginalEarlyDivisorQuadrature
+
+noncomputable section
+set_option autoImplicit false
+open MeasureTheory Set
+open _root_.D5.S3.Arith.Robin.MellinWeightedVariation (weight)
+open _root_.D5.S3.Arith.Robin.OriginalEarlyDivisorQuadrature
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+namespace Reg.D5.S3.Arith.Robin.OriginalEarlyDivisorQuadrature.CenteredPhase
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ × ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ p => weight p.1 / 8) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {a b : ℝ}, 1 < a → a ≤ b →
+    (∫ x in a..b, weight x * betaOne x) =
+      weight b * centeredPrimitive b - weight a * centeredPrimitive a -
+        (∫ x in a..b, weightSlope x * centeredPrimitive x) ∧
+    |(∫ x in a..b, weight x * betaOne x) -
+      (weight b * centeredPrimitive b - weight a * centeredPrimitive a)| ≤
+        (weight a - weight b) / 16 ∧
+    |∫ x in a..b, weight x * betaOne x| ≤ R.readout () () (a, b)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := (h (a := 2) (b := 2) (by norm_num) le_rfl).2.2
+  change |∫ x in (2 : ℝ)..2, weight x * betaOne x| ≤ -1 at he
+  norm_num at he
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (0, 0), (2, 2), ?_⟩
+  change weight 0 / 8 ≠ weight 2 / 8
+  have hp := _root_.D5.S3.Arith.Robin.OriginalMovingWindowMoment.weight_pos
+    (show (1 : ℝ) < 2 by norm_num)
+  have hz : weight 0 = 0 := by simp [weight]
+  rw [hz]
+  linarith
+
+def family : Registration arena (type_of% (@weighted_bernoulli_phase)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨weighted_bernoulli_phase, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@weighted_bernoulli_phase) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.OriginalEarlyDivisorQuadrature.weighted_bernoulli_phase.__information_unit
+  realizationName := `Reg.D5.S3.Arith.Robin.OriginalEarlyDivisorQuadrature.CenteredPhase.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ p => weight p.1 / 8) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms registration
+
+end Reg.D5.S3.Arith.Robin.OriginalEarlyDivisorQuadrature.CenteredPhase

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8ef490d8b4042867b400fd80b85acf364e6a8513af71e652b65abcabf74530e9
-  normalized_sha256: sha256:8ef490d8b4042867b400fd80b85acf364e6a8513af71e652b65abcabf74530e9
-cas_ref: sha256:8ef490d8b4042867b400fd80b85acf364e6a8513af71e652b65abcabf74530e9
-coverage_gids:
-  - gid: D5/S3/Quantum/Algebra/CommutingProjectionFourSector.commuting_projection_four_sector_criterion
-    target_statement_id: sha256:f62b763d99a618fe2f59bd7eb753ceee4ba22fc1c491f873972111c60947bd31
-receipts:
-  unresolved_subitems: []

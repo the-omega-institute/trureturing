@@ -329,7 +329,6 @@ internal static partial class DigestionStatusEvaluator
         bool Affected(string path) => isBaseFactAffected?.Invoke(path) ?? PathChanged(changedSet, path);
 
         if (alignment != DigestionReceiptAlignment.Seen && Affected(entry.SourcePath)
-            || Affected(TheoryAtomizerDataLoader.DataPath)
             || DigestionFingerprint.IsCanonicalSha256(entry.CasRef)
                 && Affected(DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
             || entry.Receipts.TailAuthorization is { } tail && Affected(tail.Path))

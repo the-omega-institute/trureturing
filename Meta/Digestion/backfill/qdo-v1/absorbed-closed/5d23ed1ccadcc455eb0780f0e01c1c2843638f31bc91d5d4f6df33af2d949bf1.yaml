@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5d23ed1ccadcc455eb0780f0e01c1c2843638f31bc91d5d4f6df33af2d949bf1
-  normalized_sha256: sha256:5d23ed1ccadcc455eb0780f0e01c1c2843638f31bc91d5d4f6df33af2d949bf1
-cas_ref: sha256:5d23ed1ccadcc455eb0780f0e01c1c2843638f31bc91d5d4f6df33af2d949bf1
-coverage_gids:
-  - gid: D5/S3/Entropy/Observation/FiniteReadoutAlphabetEntropyCapacity.finite_readout_alphabet_entropy_capacity
-    target_statement_id: sha256:adb41451755244cf73e4f2f901ea675e5c85b07fad17be2c9b92881e67109602
-receipts:
-  unresolved_subitems: []

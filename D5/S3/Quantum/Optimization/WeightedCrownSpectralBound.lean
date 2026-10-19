@@ -608,7 +608,7 @@ private lemma matrix_le_scalar_of_sq_le {m : Type*} [Fintype m] [DecidableEq m] 
   have hnormsq : ‖A‖ ^ 2 = ‖A * A‖ := by
     exact hA.1.isSelfAdjoint.norm_mul_self.symm
   have hnormord : ‖A * A‖ ≤ ‖(c : ℂ) • A‖ :=
-    CStarAlgebra.norm_le_norm_of_nonneg_of_le hmulnon hsq
+    CStarAlgebra.norm_le_norm_of_le_of_nonneg hsq hmulnon
   have hcabs : ‖(c : ℂ)‖ = c := by
     exact (RCLike.norm_ofReal c).trans (abs_of_nonneg hc)
   have hnormsc : ‖(c : ℂ) • A‖ = c * ‖A‖ := by

@@ -8,6 +8,7 @@
 /- Same-witness companion to the unconditional native J2 parent cycle.
    Preserve the actual raw supplier and all three partitions before
    opening any child or choosing the final parent. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentCycle
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2Seed
 

@@ -107,7 +107,7 @@ private theorem alternations_double_odd (n q : Nat) :
         split <;> omega
       omega
 
-private theorem thueMorse_two_pow_add (k x : Nat) (hx : x < 2 ^ k) :
+theorem thueMorse_two_pow_add (k x : Nat) (hx : x < 2 ^ k) :
     thueMorse (2 ^ k + x) = !thueMorse x := by
   induction k generalizing x with
   | zero =>

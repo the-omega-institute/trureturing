@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6116e59072c81d42d71f4d94dc50f9df355a688e77a74f3b392cb5778698cb9d
-  normalized_sha256: sha256:6116e59072c81d42d71f4d94dc50f9df355a688e77a74f3b392cb5778698cb9d
-cas_ref: sha256:6116e59072c81d42d71f4d94dc50f9df355a688e77a74f3b392cb5778698cb9d
-coverage_gids:
-  - gid: D5/S0/Diagonal/Naturality/ScaleDefectComposition.diagonal_scale_defect_comp_le
-    target_statement_id: sha256:cd874ced3f14c255340d788a4dbd588632a11ba0503a4ec81d0e07598e38433d
-receipts:
-  unresolved_subitems: []

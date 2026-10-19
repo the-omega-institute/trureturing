@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Actual retained joint edges and ordered route cuts produce the literal P and Q fragments used by graph surgery. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.Walks.ActualPathRecoveryPrefix
 import D5.S3.Combinatorics.Graph.Walks.ActualRouteCutOrder
 

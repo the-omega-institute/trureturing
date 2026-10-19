@@ -30,11 +30,11 @@ abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature Lat
   (fun lattice => PowerSeries (Oscillator lattice))
 
 def actual : Realization signature := realize signature
-  (fun _ lattice series => PowerSeries.derivative (Oscillator lattice) series)
+  (fun _ lattice series => PowerSeries.derivative series)
   (fun empty => nomatch empty)
 
 def rejected : Realization signature := realize signature
-  (fun _ lattice series => PowerSeries.derivative (Oscillator lattice) series + 1)
+  (fun _ lattice series => PowerSeries.derivative series + 1)
   (fun empty => nomatch empty)
 
 def arena : Arena where
@@ -42,16 +42,16 @@ def arena : Arena where
   Law readout := ∀ (lattice : LatticeData) (charge : Charge lattice),
     readout.readout () lattice (halfCreationExponential lattice charge) =
       halfCreationExponential lattice charge *
-        PowerSeries.derivative (Oscillator lattice) (halfCreationSeries lattice charge)
+        PowerSeries.derivative (halfCreationSeries lattice charge)
 
 theorem source_bridge : (type_of% (@exponential_derivative)) ↔ arena.Law actual := Iff.rfl
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   have contradiction := law probeLattice 0
-  change PowerSeries.derivative (Oscillator probeLattice) (halfCreationExponential probeLattice 0) + 1 =
+  change PowerSeries.derivative (halfCreationExponential probeLattice 0) + 1 =
     halfCreationExponential probeLattice 0 *
-      PowerSeries.derivative (Oscillator probeLattice) (halfCreationSeries probeLattice 0) at contradiction
+      PowerSeries.derivative (halfCreationSeries probeLattice 0) at contradiction
   rw [exponential_derivative] at contradiction
   have impossible : (1 : PowerSeries (Oscillator probeLattice)) = 0 := by
     simpa only [add_eq_left] using contradiction
@@ -191,7 +191,7 @@ def arena : Arena where
   signature := signature
   Law readout := ∀ (lattice : LatticeData) (charge : Charge lattice) (degree : ℕ),
     readout.readout () ⟨lattice, degree⟩
-        (PowerSeries.derivative (Oscillator lattice) (halfCreationSeries lattice charge)) =
+        (PowerSeries.derivative (halfCreationSeries lattice charge)) =
       if degree % 2 = 0 then
         (2 : ℂ) • ∑ colour : Fin lattice.rank,
           (charge colour : ℂ) • (MvPolynomial.X (colour, degree / 2) : Oscillator lattice)
@@ -203,7 +203,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   have contradiction := law probeLattice 0 0
   change PowerSeries.coeff 0
-      (PowerSeries.derivative (Oscillator probeLattice) (halfCreationSeries probeLattice 0)) + 1 =
+      (PowerSeries.derivative (halfCreationSeries probeLattice 0)) + 1 =
     (if (0 : ℕ) % 2 = 0 then
       (2 : ℂ) • ∑ colour : Fin probeLattice.rank,
         ((0 : Charge probeLattice) colour : ℂ) •

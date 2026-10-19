@@ -18,9 +18,12 @@
      identify a coordinate's conditioned law with its original law. -/
 
 import D5.S3.ConceptDynamics.InterventionsExchange.FactualInterventionConsistency
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 import Mathlib.Probability.Independence.Basic
 import Mathlib.Tactic.NormNum
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -169,7 +172,7 @@ theorem randomization_bridge
 
 /-- With zero treatment mass, mathlib's conditional law is zero while the do law is not. -/
 theorem positive_treatment_probability_is_necessary :
-    let mu : Measure Bool := (PMF.uniformOfFintype Bool).toMeasure
+    let mu : Measure Bool := (uniformPmf Bool).toMeasure
     let treatment : Bool -> Bool := fun _ => false
     let outcome : Bool -> Bool -> Bool := fun _ _ => false
     RandomAssignment mu treatment outcome ∧
@@ -184,17 +187,17 @@ theorem positive_treatment_probability_is_necessary :
   · intro hLaw
     have hAtUniv := congrArg (fun law : Measure Bool => law Set.univ) hLaw
     have hConditionalMass :
-        conditionalOutcomeLaw (PMF.uniformOfFintype Bool).toMeasure
+        conditionalOutcomeLaw (uniformPmf Bool).toMeasure
           (fun _ : Bool => false) (fun _ _ : Bool => false) true Set.univ = 0 := by
       simp [conditionalOutcomeLaw, treatmentEvent]
     have hPotentialMass :
-        potentialOutcomeLaw (PMF.uniformOfFintype Bool).toMeasure
+        potentialOutcomeLaw (uniformPmf Bool).toMeasure
           (fun _ _ : Bool => false) true Set.univ = 1 := by
       change (Measure.map (fun _ : Bool => false)
-        (PMF.uniformOfFintype Bool).toMeasure) Set.univ = 1
+        (uniformPmf Bool).toMeasure) Set.univ = 1
       rw [Measure.map_apply_of_aemeasurable measurable_const.aemeasurable MeasurableSet.univ]
       simpa only [Set.preimage_univ] using
-        (measure_univ (μ := (PMF.uniformOfFintype Bool).toMeasure))
+        (measure_univ (μ := (uniformPmf Bool).toMeasure))
     rw [hConditionalMass, hPotentialMass] at hAtUniv
     exact zero_ne_one hAtUniv
 
@@ -230,14 +233,19 @@ theorem finite_measure_is_necessary :
     intro hLaw
     have hAtUniv := congrArg (fun law : Measure Unit => law Set.univ) hLaw
     simp [conditionalOutcomeLaw, potentialOutcomeLaw, treatmentEvent,
-      potentialOutcome] at hAtUniv
+      factualOutcome, potentialOutcome, ProbabilityTheory.cond,
+      Measure.map_apply measurable_const] at hAtUniv
+    change 0 = (Measure.map (fun _ : Unit => ())
+      ((⊤ : ENNReal) • Measure.dirac ())) Set.univ at hAtUniv
+    rw [Measure.map_apply measurable_const MeasurableSet.univ] at hAtUniv
+    simpa using hAtUniv
   exact ⟨by simp, hRandom, hPositive, hLawNe⟩
 
 #print axioms finite_measure_is_necessary
 
 /-- Correlated treatment and outcomes violate the bridge even on a positive treatment fiber. -/
 theorem random_assignment_is_necessary :
-    let mu : Measure Bool := (PMF.uniformOfFintype Bool).toMeasure
+    let mu : Measure Bool := (uniformPmf Bool).toMeasure
     let treatment : Bool -> Bool := id
     let outcome : Bool -> Bool -> Bool := fun u _ => u
     Measurable treatment ∧ Measurable outcome ∧
@@ -249,30 +257,30 @@ theorem random_assignment_is_necessary :
   have hTreatment : Measurable (id : Bool -> Bool) := measurable_id
   have hOutcome : Measurable (fun u : Bool => fun _ : Bool => u) := by fun_prop
   have hPositive :
-      TreatmentPositivity (PMF.uniformOfFintype Bool).toMeasure id true := by
-    simp [TreatmentPositivity, treatmentEvent, PMF.uniformOfFintype_apply,
+      TreatmentPositivity (uniformPmf Bool).toMeasure id true := by
+    simp [TreatmentPositivity, treatmentEvent, uniformPmf, PMF.ofFintype_apply,
       Fintype.card_bool]
   have hLawNe :
-      conditionalOutcomeLaw (PMF.uniformOfFintype Bool).toMeasure id
+      conditionalOutcomeLaw (uniformPmf Bool).toMeasure id
           (fun u : Bool => fun _ : Bool => u) true ≠
-        potentialOutcomeLaw (PMF.uniformOfFintype Bool).toMeasure
+        potentialOutcomeLaw (uniformPmf Bool).toMeasure
           (fun u : Bool => fun _ : Bool => u) true := by
     intro hLaw
     have hAtFalse := congrArg (fun law : Measure Bool => law {false}) hLaw
     change (Measure.map id
-        ((PMF.uniformOfFintype Bool).toMeasure[|({true} : Set Bool)])) {false} =
-      (Measure.map id (PMF.uniformOfFintype Bool).toMeasure) {false} at hAtFalse
+        ((uniformPmf Bool).toMeasure[|({true} : Set Bool)])) {false} =
+      (Measure.map id (uniformPmf Bool).toMeasure) {false} at hAtFalse
     rw [Measure.map_apply_of_aemeasurable measurable_id.aemeasurable
       (measurableSet_singleton false)] at hAtFalse
     rw [cond_apply (measurableSet_singleton true)] at hAtFalse
     rw [Measure.map_apply_of_aemeasurable measurable_id.aemeasurable
       (measurableSet_singleton false)] at hAtFalse
-    norm_num [PMF.toMeasure_apply_singleton, PMF.uniformOfFintype_apply,
+    norm_num [PMF.toMeasure_apply_singleton, uniformPmf, PMF.ofFintype_apply,
       Fintype.card_bool] at hAtFalse
     exact ENNReal.inv_ne_zero.mpr (by norm_num) hAtFalse.symm
   refine ⟨hTreatment, hOutcome, hPositive, ?_, hLawNe⟩
   intro hRandom
-  exact hLawNe (randomization_bridge (PMF.uniformOfFintype Bool).toMeasure id
+  exact hLawNe (randomization_bridge (uniformPmf Bool).toMeasure id
     (fun u : Bool => fun _ : Bool => u) true hTreatment hOutcome hRandom hPositive).1
 
 #print axioms random_assignment_is_necessary

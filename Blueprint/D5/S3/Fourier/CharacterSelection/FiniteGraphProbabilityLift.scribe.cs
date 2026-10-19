@@ -79,7 +79,7 @@ internal sealed class FiniteGraphProbabilityLiftDocument : IScribeDocumentDefini
                 H("The uniform conditional lift"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The canonical lift uses PMF.uniformOfFintype on the finite anchor space "
+                    "The canonical lift uses uniformPmf on the finite anchor space "
                     + "at every positive label. This is a faithful finite discrete probability "
                     + "measure: every anchor has mass the reciprocal of the anchor-space cardinality."))),
                 DescribeRole.Definition),
@@ -107,7 +107,7 @@ internal sealed class FiniteGraphProbabilityLiftDocument : IScribeDocumentDefini
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For any flip-invariant lift and any positive label y, the extracted conditional "
-                    + "anchor PMF equals PMF.uniformOfFintype on the full anchor space."))),
+                    + "anchor PMF equals uniformPmf on the full anchor space."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("positive-fiber-fair-bits"),
                 DeclarationHandle.Create(Prefix + "flip_invariant_positive_fiber_fair_bits"),

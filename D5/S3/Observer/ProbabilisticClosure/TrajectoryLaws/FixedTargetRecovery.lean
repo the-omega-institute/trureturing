@@ -29,7 +29,7 @@ namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FixedTargetRecovery
 def pastInformation : Filtration ℕ (inferInstance : MeasurableSpace Process) where
   seq := pastField
   mono' := monotone_nat_of_le_succ past_succ
-  le' r := (measurable_pi_lambda _ fun k => (measurable_pi_apply _).comp measurable_snd).comap_le
+  le' r := (Measurable.of_eval fun k => (measurable_pi_apply _).comp measurable_snd).comap_le
 
 /-- Fixed-order MAP choices from the original actual cell-mass maximizers. -/
 def fixedMAP (r : ℕ) (w : Fin r → Bool) : Label :=
@@ -61,7 +61,7 @@ private theorem posterior_condExp (r : ℕ) (a : Label) :
     posterior r a =ᵐ[(joint : Measure Process)]
       (joint : Measure Process)[targetIndicator a | pastField r] := by
   exact ProbabilityTheory.condDistrib_ae_eq_condExp
-    (measurable_pi_lambda _ fun k => (measurable_pi_apply _).comp measurable_snd)
+    (Measurable.of_eval fun k => (measurable_pi_apply _).comp measurable_snd)
     ((measurable_of_countable label).comp ((measurable_pi_apply 0).comp measurable_fst))
     (measurableSet_singleton a)
 
@@ -277,7 +277,7 @@ theorem actual_zero_unattained_infimum {U : Type*} [MeasurableSpace U]
     have hm : MeasurableSet {z : Process | target z ≠ fixedMAP r (pastWord r z)} := by
       have ht : Measurable target := (measurable_of_countable label).comp ((measurable_pi_apply 0).comp measurable_fst)
       exact (measurableSet_eq_fun ht ((measurable_of_finite (fixedMAP r)).comp
-        (measurable_pi_lambda _ fun k => (measurable_pi_apply _).comp measurable_snd))).compl
+        (Measurable.of_eval fun k => (measurable_pi_apply _).comp measurable_snd))).compl
     calc
       _ = μ (Prod.fst ⁻¹' {z : Process | target z ≠ fixedMAP r (pastWord r z)}) := by
         congr 1

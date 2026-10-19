@@ -516,7 +516,7 @@ theorem sparse_laplace_grid_certificate (μ ν : ℝ →₀ ℝ) (η gμ gν h :
     q hq hcard hη (Real.exp_lt_exp.mpr (by nlinarith))
     (by exact Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (by linarith) hgμ))
     (hpos μ hμ) (hpos ν hν) htotal (hsupp μ gμ hμsupport) (hsupp ν gν hνsupport)
-    (by simpa only [α, Finsupp.mapDomain_apply x.injective] using hmass)
+    (by simpa only [α, Finsupp.mapDomain_apply_of_injective x.injective] using hmass)
   have hpoly (σ : ℝ →₀ ℝ) :
       (Finsupp.mapDomain x σ).sum (fun t w => w * P.eval t) =
         ∑ k ∈ range (q + 1), P.coeff k * atomicLaplace σ ((k : ℝ) * h) := by

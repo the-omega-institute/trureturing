@@ -221,6 +221,10 @@ eligible numbered lowercase heading.
 
 ### 3. Ingest and verify the new atoms
 
+Register the canonical regular volume in the corresponding FILEMAP theory
+fragment with `digestion_source = true` before ingestion. Archive files and
+reader symlinks are ineligible.
+
 Run the canonical writer for the requested volume:
 
 ```sh
@@ -234,7 +238,8 @@ or Scribe verification. A failed ingest must be resolved from its actual
 
 Do not create or edit any `Meta/Digestion/**` file yourself. Locate the one
 generated `Meta/Digestion/backfill/<source_id>/source.toml` whose `path` equals
-the new volume, and require its `atomizer` to be `generic-v1`. Search the generated records in that source and read a matching ATOM:
+the new volume, and require its `atomizer` to be `generic-v1`. Search the
+generated records in that source and read a matching ATOM:
 
 ```sh
 make search-atoms SOURCE=<source-id> TEXT=<source-claim-keyword>

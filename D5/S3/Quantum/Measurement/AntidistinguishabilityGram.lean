@@ -151,7 +151,7 @@ private theorem psd_summand_kills_kernel (F : Fin n â†’ Matrix (Fin n) (Fin n) â
     exact (hF j).re_dotProduct_nonneg x
   have hri := (Finset.sum_eq_zero_iff_of_nonneg hn).mp hs i (mem_univ i)
   have him := (Complex.nonneg_iff.mp ((hF i).dotProduct_mulVec_nonneg x)).2
-  apply (hF i).dotProduct_mulVec_zero_iff x |>.mp
+  apply (hF i).dotProduct_mulVec_zero_iff |>.mp
   exact Complex.ext hri him.symm
 
 end

@@ -67,11 +67,11 @@ theorem nonzero_sample : ∃ c : groupCohomology
     · exact Subgroup.one_mem _
     · exact Subgroup.mem_zpowers g
   let A := Rep.trivial ℤ G (ZMod 2)
-  have hn : A.norm.hom (1 : ZMod 2) = 0 := by
+  have hn : A.norm.asHom.hom (1 : ZMod 2) = 0 := by
     simp [A, G, Rep.norm, Representation.norm, Rep.trivial, Representation.trivial,
       Fintype.card_fun, ZMod.card]
     decide
-  let z : LinearMap.ker A.norm.hom.toLinearMap := ⟨1, hn⟩
+  let z : LinearMap.ker A.norm.asHom.hom.toLinearMap := ⟨1, hn⟩
   refine ⟨Rep.FiniteCyclicGroup.groupCohomologyπOdd A g hg 3 (by decide) z, ?_⟩
   intro hz
   have hmem := (Rep.FiniteCyclicGroup.groupCohomologyπOdd_eq_zero_iff A g hg 3 (by decide) z).mp hz

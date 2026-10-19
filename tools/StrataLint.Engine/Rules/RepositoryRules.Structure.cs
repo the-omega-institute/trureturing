@@ -153,11 +153,9 @@ internal static partial class RepositoryRules
     internal const int DirectoryToleranceLimit = 192;
 
     // SL-003 current/audit capacity exclusions: theory inputs, the Lake manifest, the backfill
-    // inventory, atomizer dialect registry, canonical CAS blobs, and generated Blueprint
-    // Markdown projections are not artifacts the capacity pressure rule bounds. Machine
-    // inventories grow one entry per
-    // admitted unit and are never navigated as content buckets; the atomizer registry
-    // is one canonical strict-loader input, not a content artifact to split. A
+    // inventory, canonical CAS blobs, and generated Blueprint Markdown projections are
+    // not artifacts the capacity pressure rule bounds. Machine inventories grow one entry
+    // per admitted unit and are never navigated as content buckets. A
     // Blueprint document's structural slot is its .scribe.cs source. The .md is a FILEMAP
     // generated projection at the same stem, so counting both paths would cap a lawful
     // limit-sized Lean bucket at half that many blueprinted modules. This exclusion concerns
@@ -168,7 +166,6 @@ internal static partial class RepositoryRules
         || string.Equals(path, "lake-manifest.json", StringComparison.Ordinal)
         || string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
         || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-        || string.Equals(path, TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
         || FrozenStatePath.IsUnderRoot(path)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)

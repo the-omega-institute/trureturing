@@ -78,7 +78,7 @@ theorem futureLaw_readPrefix (θ : Presentation H) (J : Measure (PathSpace H))
   have hr : Measurable (readPrefix (S := Bool) n) := by unfold readPrefix; fun_prop
   rw [Measure.map_apply hr (measurableSet_singleton w)]
   change condDistrib (future t) (state t) J i _ = _
-  rw [condDistrib_apply_of_ne_zero (by unfold future; fun_prop) i hn,
+  rw [condDistrib_apply_of_ne_zero (by unfold state; fun_prop) (by unfold future; fun_prop) i hn,
     Measure.map_apply (by unfold future state; fun_prop)
       ((measurableSet_singleton i).prod ((measurableSet_singleton w).preimage
         hr)), hm]
@@ -105,7 +105,7 @@ theorem cylinder_future_law (θ : Presentation H) (J : Measure (PathSpace H))
   have hr : Measurable (readPrefix (S := Bool) (n+1)) := by unfold readPrefix; fun_prop
   change ((J.restrict _).map (future t)).map (readPrefix (n+1)) {v} =
     (J _ • futureLaw J t (h (Fin.last m))).map (readPrefix (n+1)) {v}
-  rw [Measure.map_smul, Measure.smul_apply, smul_eq_mul, futureLaw_readPrefix θ J hc t _ hi]
+  rw [Measure.map_smul _ hr.aemeasurable, Measure.smul_apply, smul_eq_mul, futureLaw_readPrefix θ J hc t _ hi]
   rw [Measure.map_map hr hf, Measure.map_apply (hr.comp hf) (measurableSet_singleton v),
     Measure.restrict_apply ((measurableSet_singleton v).preimage (hr.comp hf))]
   have he : (readPrefix (n+1) ∘ future (H := H) t) ⁻¹' {v} = Prod.snd ⁻¹' visibleCylinder t (n+1) v := by
@@ -190,7 +190,7 @@ theorem full_past_future_factor (θ : Presentation H) (J : Measure (PathSpace H)
     dsimp [μ,ν]
     rw [Measure.map_map hr hp, Measure.map_apply (hr.comp hp) (measurableSet_singleton p),
       Measure.restrict_apply ((measurableSet_singleton p).preimage (hr.comp hp)),
-      Measure.map_smul, Measure.smul_apply, smul_eq_mul,
+      Measure.map_smul _ hr.aemeasurable, Measure.smul_apply, smul_eq_mul,
       Measure.map_map hr hp, Measure.map_apply (hr.comp hp) (measurableSet_singleton p),
       Measure.restrict_apply ((measurableSet_singleton p).preimage (hr.comp hp))]
     change J ((past t ⁻¹' (readPrefix (n+1) ⁻¹' {p})) ∩
@@ -296,7 +296,7 @@ private theorem screening_from_fiber_factor
       CondIndepFun (MeasurableSpace.comap q inferInstance) hq.comap_le f g μ := by
   have hkernel (a : Q) : condDistrib g q μ a = K a := by
     ext B hB
-    rw [condDistrib_apply_of_ne_zero hg a (hn a),
+    rw [condDistrib_apply_of_ne_zero hq hg a (hn a),
       Measure.map_apply (hq.prodMk hg) ((measurableSet_singleton a).prod hB)]
     change (μ.map q {a})⁻¹ * μ ((q ⁻¹' {a}) ∩ (g ⁻¹' B)) = K a B
     have he := hfactor a Set.univ B MeasurableSet.univ hB
@@ -306,10 +306,10 @@ private theorem screening_from_fiber_factor
   have hpair (a : Q) (A : Set Y) (B : Set Z) (hA : MeasurableSet A) (hB : MeasurableSet B) :
       condDistrib (fun ω => (f ω,g ω)) q μ a (A ×ˢ B) =
         condDistrib f q μ a A * condDistrib g q μ a B := by
-    rw [condDistrib_apply_of_ne_zero (hf.prodMk hg) a (hn a),
+    rw [condDistrib_apply_of_ne_zero hq (hf.prodMk hg) a (hn a),
       Measure.map_apply (hq.prodMk (hf.prodMk hg))
         ((measurableSet_singleton a).prod (hA.prod hB)),
-      condDistrib_apply_of_ne_zero hf a (hn a),
+      condDistrib_apply_of_ne_zero hq hf a (hn a),
       Measure.map_apply (hq.prodMk hf) ((measurableSet_singleton a).prod hA), hkernel]
     simp only [Set.mk_preimage_prod, ← Set.inter_assoc]
     rw [hfactor a A B hA hB, mul_assoc]
@@ -438,7 +438,7 @@ private theorem original_future_transfer (θ : Presentation H) (t : ℤ) (i : Po
   ext B hB
   change condDistrib (future t) (state t) (jointLaw θ : Measure _) i.val B =
     condDistrib (future t) (state t) (retainedLaw θ : Measure _) i B
-  rw [condDistrib_apply_of_ne_zero hfo i.val hno, condDistrib_apply_of_ne_zero hfl i hnl,
+  rw [condDistrib_apply_of_ne_zero hso hfo i.val hno, condDistrib_apply_of_ne_zero hsl hfl i hnl,
     hmo,hml]
   change (ENNReal.ofReal (θ.initial i.val))⁻¹ * _ = (ENNReal.ofReal (θ.initial i.val))⁻¹ * _
   congr 1

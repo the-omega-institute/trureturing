@@ -103,6 +103,15 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                 Item("traceDistance_triangle", "Density distance triangle inequality", States(
                     Le(D(rho, tau), Add(D(rho, sigma), D(sigma, tau))), true)),
                 Item("traceDistance_le_one", "All density distances are at most one", States(Le(D(rho, sigma), Num(1)))),
+                Item("traceNorm_sub_orthogonal", "Orthogonal positive difference", All(
+                    [Bound("n", F.Id("Type"))], Seq(
+                        OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+                        OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
+                        All([Bound("A", csquare), Bound("B", csquare)],
+                            Implies(Call("PosSemidef", a), Implies(Call("PosSemidef", b),
+                                Implies(Eqn(Mul(a, b), Num(0)),
+                                    Eqn(TN(Sub(a, b)), Add(Call("re", Call("trace", a)),
+                                        Call("re", Call("trace", b))))))))))),
                 Item("trace_norm_jordan_mass", "Hermitian Jordan mass", All(
                     [Bound("n", F.Id("FiniteType")), Bound("A", csquare)],
                     Implies(QCall("Matrix", "IsHermitian", a), Eqn(TN(a),
@@ -123,7 +132,45 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                     + "parts, their trace-norm mass identity, complete positivity, and trace "
                     + "preservation. It assumes neither a contractivity field nor a Kraus "
                     + "representation of the recovery. The finite-record recovery-error theorem "
-                    + "consumes these laws; no computational recovery algorithm is asserted.")))));
+                    + "consumes these laws; no computational recovery algorithm is asserted.")),
+                Paragraph(Text(
+                    "For the signed-time prediction application in original Theorem 3.3, let d,e be "
+                    + "at least two, H any Hermitian matrix on the joint space, and rho any positive "
+                    + "semidefinite trace-one joint state. The partial trace is unnormalized and "
+                    + "the trace norm here is unhalved. Set h0=Re Tr(H)/(de), HA=Tr_B(H)/e-h0 I, "
+                    + "HB=Tr_A(H)/d, H0=HA tensor I+I tensor HB, and V=H-H0. The same-H residual "
+                    + "is R_ab=(id-E_A)[H,W_ab tensor I], where E_A(X)=Tr_B(X) tensor I/e; "
+                    + "delta(H) is the maximum of the Euclidean operator norms of these residuals.")),
+                Paragraph(Text(
+                    "A positive matrix R satisfies Re Tr(A R A*) <= ||A||^2 Re Tr(R). Indeed, "
+                    + "with S=sqrt(R), the C-star conjugation bound gives S A* A S <= ||A||^2 R. "
+                    + "Apply the positive trace map and trace cyclicity. For unitary U,W put "
+                    + "D=U-W, M=(U+W)/2, and r=||D||. If r=0 the endpoints agree. Otherwise the "
+                    + "positive matrices P_plus=(D+r M)R(D+r M)*/(2r) and "
+                    + "P_minus=(D-r M)R(D-r M)*/(2r) have difference U R U*-W R W* and sum "
+                    + "D R D*/r+r M R M*. Since ||M||<=1, their total trace is at most 2r Tr(R). "
+                    + "Partial trace preserves positivity and the unnormalized trace. The positive "
+                    + "trace-norm formula and triangle inequality therefore bound the reduced "
+                    + "endpoint difference by 2||U-W|| Tr(R), including singular and correlated R.")),
+                Paragraph(Text(
+                    "Fix any real t and define Z(s)=exp(i t s H0) exp(-i t s H) for 0<=s<=1. "
+                    + "The two exponential derivative formulas give "
+                    + "Z'(s)=-i t exp(i t s H0) V exp(-i t s H). Both factors are actual "
+                    + "unitaries, so ||Z'(s)||<=|t| ||V||. The vector-valued mean-value bound on "
+                    + "[0,1], followed by multiplication by exp(-i t H0), yields "
+                    + "||exp(-i t H)-exp(-i t H0)||<=|t| ||V||. The argument includes t<0 and "
+                    + "t=0 and uses no commutation assumption on H and H0.")),
+                Paragraph(Text(
+                    "The two Kronecker algebra embeddings preserve the exponential and their "
+                    + "images commute, hence exp(-i t H0)=exp(-i t HA) tensor exp(-i t HB). "
+                    + "The existing local partial-trace covariance identity applies to every joint "
+                    + "matrix, giving Tr_B(exp(-i t H0)rho exp(-i t H0)*)="
+                    + "exp(-i t HA)Tr_B(rho)exp(-i t HA)*. The endpoint estimate and the same-H "
+                    + "Weyl reconstruction inequality ||V||<=delta(H) give the bound "
+                    + "2|t|delta(H). Both reduced endpoints are positive trace-one matrices, so "
+                    + "their unhalved trace-norm difference is also at most two. Thus the actual "
+                    + "reduced-state prediction error is <=min(2,2|t|delta(H)) for every real t "
+                    + "and arbitrary joint rho, including noncommuting, singular and correlated states.")))));
     }
 
     private static DocumentBlock Item(string name, string title, Formula formula, bool definition = false) =>
@@ -142,6 +189,7 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
     };
     private static string Explanation(string name) => name switch
     {
+        "traceNorm_sub_orthogonal" => "For positive semidefinite complex matrices A and B with A B zero, A plus B is the positive square root of the Gram matrix of A minus B. The trace norm is therefore the sum of their real traces.",
         "exists_svd_sqrt_eigenvalues" => "For every finite complex square matrix, two unitary factors give a diagonal singular-value decomposition. The diagonal entries are the real square roots of the eigenvalues of its Gram matrix. The let-bound hH is the canonical Hermitian proof for that Gram matrix; ofReal denotes the real-to-complex embedding. The retained proof is Alex Meiburg's Physlib SVD.",
         "traceNorm" => "This is the real part of the trace of the positive square root of the Gram matrix.",
         "traceNorm_neg" => "Negation leaves the Gram matrix unchanged.",

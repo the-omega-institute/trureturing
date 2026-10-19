@@ -158,7 +158,6 @@ theorem golden_new_periodic_orbit_codes_close_and_are_nodup_eleven :
     goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine, goldenStepTarget,
     goldenOrbitStates, goldenTraceCode, goldenCodeAdd, goldenCodeMul,
     goldenCodePhi, goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_new_periodic_orbit_low_states_mem_eleven :
     goldenPeriodicOrbitRepresentativesExactlyEleven.Forall fun orbit =>

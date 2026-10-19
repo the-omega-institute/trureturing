@@ -24,3 +24,8 @@ The spin-1/2 case supplies the same two-dimensional invariant carrier used in [H
 The HS4 continuation derives its signed triple-product spectrum, constant unsigned-volume magnitude on this carrier, boundary-data disk and entropy-deficit formula from explicit Pauli and swap operators. It does not claim those formulas were proved by this paper. In particular the spin-1/2 unsigned volume operator is scalar; a claim that one state has greater volume magnitude than every other state in that same singlet carrier would fail.
 
 The paper supplies context for the entanglement/geometry investigation. It is not cited as a proof of the unrestricted HS4 conjecture, the logical-qubit complete-positivity tradeoff, a Fibonacci-to-intertwiner preparation map, or emergence of a smooth spacetime. The conventional closure and volume formulas used in the continuation are attributed separately to Barbieri and Schliemann.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1103/l1t8-84dk
+- Source: https://arxiv.org/abs/2601.14964v1

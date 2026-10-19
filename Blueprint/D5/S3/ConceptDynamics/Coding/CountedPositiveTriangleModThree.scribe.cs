@@ -9,6 +9,20 @@ internal sealed class CountedPositiveTriangleModThreeDocument : IScribeDocumentD
         H("The actual numbered-path triangle modulo three"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("existing-six-countedpositivetrianglemodthree-periodic-translate-residue"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.periodic_translate_residue"),
+                H("Reduce arbitrary signed translation using a supplied period"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("On a path fixed after d forward steps, with d nonzero, translation by any integer q equals forward iteration by its residue timeIndex q below d. The path need not have least period d. This identifies signed translation with the finite forward-shift convention."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("existing-six-countedpositivetrianglemodthree-parallel-edge-offset-sum-three-zero"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.parallel_edge_offset_sum_three_zero"),
+                H("Parallel-edge relabelings have zero total reduced offset"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a nonzero period divisible by three, a vertex-fixing permutation of the actual parallel edges has total forward offset zero after reduction to ZMod 3. Individual orbit phases need not vanish. The relabel discrepancy argument uses this total cancellation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("countedpositivetrianglemodthree-1"),
                 DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleModThree.relativeForwardGyration_positive_triangle_mod_three"),
                 H("The actual numbered-path triangle modulo three"),

@@ -20,12 +20,6 @@ public sealed partial class ProductionEnvironmentTests
         ]);
     }
 
-    private static void InstallDirectoryLedger(
-        RuleFixture fixture,
-        string atomizerId,
-        DigestionAtom atom) =>
-        InstallProjectedLedger(fixture, IngestLedger(atomizerId, atom), atom);
-
     private static void InstallProjectedLedger(
         RuleFixture fixture,
         BackfillInventoryDocument ledger,
@@ -86,7 +80,7 @@ public sealed partial class ProductionEnvironmentTests
             [entry],
             "fixture-source",
             RuleFixture.FixtureDigestionSourcePath,
-            atomizerId == AtomizerRegistry.NoAtomizerId
+            atomizerId == AtomizerRegistry.GenericId
                 ? GenreRegistryCheck.NoGenreRegistry
                 : GenreRegistryCheck.Collected([]));
     }

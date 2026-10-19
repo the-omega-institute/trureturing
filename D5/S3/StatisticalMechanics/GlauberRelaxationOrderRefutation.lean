@@ -211,7 +211,7 @@ private theorem Pq_stochastic (q : ℝ) (hq : 0 < q) :
   · intro j
     fin_cases j <;> norm_num [Pq.eq_1, Fin.sum_univ_succ] <;> field_simp <;> ring
 
-private theorem probability_mulVec {N : ℕ} {P : Matrix (Fin N) (Fin N) ℝ}
+theorem probability_mulVec {N : ℕ} {P : Matrix (Fin N) (Fin N) ℝ}
     {p : Fin N → ℝ} (hP : ∀ i j, 0 ≤ P i j)
     (hcol : ∀ j, (∑ i, P i j) = 1)
     (hp : D5.S3.TotalVariation.CycleSingleCutMinimax.Probability (A := Fin N) p) :

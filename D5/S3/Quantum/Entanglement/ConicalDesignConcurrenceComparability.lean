@@ -13,7 +13,7 @@ result
   admission_basis: open-problem-resolution (#13873; Proved)
 Direct frozen dependencies:
   D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm
-    statement_id: sha256:ec2ace26dd8d3b1f1b18defca9f881e75ab25f3e1a67abd2b14cdc72e2702569;
+    statement_id: sha256:12ad034b5758446e6d628c75121b3ad5f0c80bb305937e8c9ff87e82076bc059;
   D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_eq_max_re_tr_U
     statement_id: sha256:3487611db943d93cce4a86af60f6499c8a001bc73fe819953d9bfd08a4e811b1;
   D5/S3/Quantum/Foundation/FiniteStateChannel.DensityState
@@ -50,9 +50,22 @@ Private proof declarations (consumer -> prerequisite):
   normalized_monotonicity: proof_shape: bind-only; consumers: ratio_monotonicity.
   parameter_mono: proof_shape: bind-only; consumers: ratio_monotonicity.
   ratio_monotonicity: proof_shape: bind-only; consumers: result.
-Information-escape registration is paused under CLAUDE.md section 3.9.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16913
 Utility kind is none: universal matrix identities and estimates, with no finite
 certificate, bounded enumeration, checker or numerical-reduction declaration.
+-/
+
+/-
+traceNorm_isometry: proof_shape: bind-only; escape_witness: none.
+Consumers:
+  D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.bound_normal_form;
+  D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.dilation_from_completion;
+  D5.S3.QuantumChannels.SchurChannelMixedUnitaryDistance.reindex_traceNorm.
+Direct frozen dependencies:
+D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm; sha256:12ad034b5758446e6d628c75121b3ad5f0c80bb305937e8c9ff87e82076bc059
+Escape audit unfinished:
+  https://github.com/the-omega-institute/trureturing/issues/17573
+  https://github.com/the-omega-institute/trureturing/issues/16913
 -/
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
@@ -337,7 +350,7 @@ theorem traceNorm_isometry {M N : Type*} [Fintype M] [DecidableEq M]
     (CFC.sqrt (Xᴴ * X)).trace.re
   rw [hgram, hsqrt, Matrix.trace_mul_cycle, hV, Matrix.one_mul]
 
-private theorem traceNorm_smul_nonneg {n : Type*} [Fintype n] [DecidableEq n]
+theorem traceNorm_smul_nonneg {n : Type*} [Fintype n] [DecidableEq n]
     (X : Matrix n n ℂ) (c : ℝ) (hc : 0 ≤ c) :
     traceNorm ((c : ℂ) • X) = c * traceNorm X := by
   have htr (U : unitaryGroup n ℂ) :

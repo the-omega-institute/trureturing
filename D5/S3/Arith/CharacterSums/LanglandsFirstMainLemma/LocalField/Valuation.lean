@@ -41,9 +41,10 @@ private noncomputable def normalizedMultiplicativeValuation
     (F : Type*) [Field F] [ValuativeRel F] [TopologicalSpace F]
     [IsNonarchimedeanLocalField F] : Valuation F ℤᵐ⁰ :=
   (ValuativeRel.valuation F).map
-    (IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt F).toMulEquiv.toMonoidWithZeroHom
-    (fun _ _ h ↦ (map_le_map_iff
-      (IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt F)).2 h)
+    { toMonoidWithZeroHom :=
+        (IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt F).toMulEquiv.toMonoidWithZeroHom
+      monotone' := fun _ _ h ↦
+        (IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt F).map_le_map_iff'.mpr h }
 
 /-- Negative logarithm on the nonzero part of `ℤᵐ⁰`, with zero sent to infinity. -/
 private def multiplicativeToAdditiveOrder (a : ℤᵐ⁰) : WithTop ℤ :=
@@ -269,7 +270,7 @@ private lemma zpowers_exp_neg_one :
 private lemma canonicalValueGroup_eq_top
     (F : Type*) [Field F] [ValuativeRel F] [TopologicalSpace F]
     [IsNonarchimedeanLocalField F] :
-    MonoidWithZeroHom.valueGroup (.ofClass (ValuativeRel.valuation F)) = ⊤ := by
+    MonoidWithZeroHom.valueGroup (ValuativeRel.valuation F).toMonoidWithZeroHom = ⊤ := by
   rw [Subgroup.eq_top_iff']
   intro u
   apply MonoidWithZeroHom.mem_valueGroup

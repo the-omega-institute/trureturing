@@ -39,3 +39,8 @@ quartic root, strict spectral ordering or uniqueness against
 nonsymmetric site weights. Those require the separate derivation.
 Nor does E-optimality generally imply a rank-one certificate:
 the source explicitly allows multiple minimum eigenvectors.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1214/14-AOS1241
+- Source: https://arxiv.org/abs/1403.3805v1

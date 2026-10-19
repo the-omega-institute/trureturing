@@ -6,6 +6,7 @@
    utility: none
    digest: All-start alternation extrema and even reduced abelian complexity. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.ThueMorseReducedAbelianOdd
 import Mathlib.Order.Lattice.Nat
 import Mathlib.Algebra.BigOperators.Intervals

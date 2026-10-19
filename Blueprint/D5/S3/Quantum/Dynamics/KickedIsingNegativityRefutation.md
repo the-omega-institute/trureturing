@@ -228,7 +228,21 @@ $$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\rig
 
 For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over a as conjugation by V whenever U adjoint times U equals the identity. The operator rho and the matrix V are arbitrary complex matrices of the displayed sizes.
 
-**Theorem 1.19 (Refutation).**
+**Theorem 1.19 (Partial transpose under local conjugation).**
+
+$$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right))\times(\operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right))\times(\operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; \forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall V \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation.partialTransposeB\left(((Matrix.kronecker\left(U, V\right)) \cdot (rho)) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(U, V\right)\right))\right) = ((Matrix.kronecker\left(U, Matrix.map\left(V, star\right)\right)) \cdot (D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation.partialTransposeB\left(rho\right))) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(U, Matrix.map\left(V, star\right)\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.partialTransposeB_kronecker_conj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* T. Pathak (2026). *Mixed-State Entanglement in a Minimal Model of Quantum Chaos*. DOI: [10.48550/arXiv.2603.14292](https://doi.org/10.48550/arXiv.2603.14292). URL: <https://arxiv.org/abs/2603.14292v1>.
+
+*Commentary.*
+
+For every complex two-qubit matrix rho and arbitrary complex two-by-two matrices U and V, partial transposition on the second factor carries conjugation by U tensor V to conjugation by U tensor the entrywise complex conjugate of V. No Hermitian or unitary hypothesis is required.
+
+**Theorem 1.20 (Refutation).**
 
 $$\neg claim$$
 
@@ -260,6 +274,7 @@ Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The init
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.logNegativity`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.mutualHalf`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.partialTranspose`
+- Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.partialTransposeB_kronecker_conj`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.reducedAB`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.renyiHalf`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.result`

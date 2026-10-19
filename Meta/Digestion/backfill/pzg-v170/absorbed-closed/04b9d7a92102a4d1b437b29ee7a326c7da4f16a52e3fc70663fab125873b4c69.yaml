@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:04b9d7a92102a4d1b437b29ee7a326c7da4f16a52e3fc70663fab125873b4c69
-  normalized_sha256: sha256:04b9d7a92102a4d1b437b29ee7a326c7da4f16a52e3fc70663fab125873b4c69
-cas_ref: sha256:04b9d7a92102a4d1b437b29ee7a326c7da4f16a52e3fc70663fab125873b4c69
-coverage_gids:
-  - gid: D5/S3/PrimeForms/ThreeModFourDescent.prime_dvd_dvd_of_dvd_sq_add_sq
-    target_statement_id: sha256:2bb4361b4e6d1219a77fb8f7397c47f68f122d63920df96134d85914bfcac354
-receipts:
-  unresolved_subitems: []

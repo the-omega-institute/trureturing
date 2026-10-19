@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a52430905554625f2d02a286248625145c275924fc19e67eb0a0ccd81681321d
-  normalized_sha256: sha256:a52430905554625f2d02a286248625145c275924fc19e67eb0a0ccd81681321d
-cas_ref: sha256:a52430905554625f2d02a286248625145c275924fc19e67eb0a0ccd81681321d
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaBridge/NonnegativeEvaluationImageRank.nonnegative_evaluation_image_finrank_le_one
-    target_statement_id: sha256:486235330ad932a4f7a36b9341e2b82325e0ecbf81beda082af0bf41195538e7
-receipts:
-  unresolved_subitems: []

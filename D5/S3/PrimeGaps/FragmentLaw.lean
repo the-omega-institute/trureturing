@@ -171,7 +171,7 @@ theorem lintegral_weighted_finitePoissonLaw
 theorem finitePoissonLaw_isProbabilityMeasure (μ : FiniteMeasure ℝ) :
     IsProbabilityMeasure (finitePoissonLaw μ) := by
   unfold finitePoissonLaw
-  exact Measure.isProbabilityMeasure_map measurable_weightedEmpirical_sample.aemeasurable
+  exact inferInstance
 
 theorem measurable_fragment_sum :
     Measurable (fun ω : ℤ → FiniteMeasure ℝ =>
@@ -263,7 +263,7 @@ theorem fragmentLaw_isProbabilityMeasure (ζ : ℝ) : IsProbabilityMeasure (frag
   let : ∀ k : ℤ, IsProbabilityMeasure (finitePoissonLaw (cappedDyadicIntensity ζ k)) :=
     fun k => finitePoissonLaw_isProbabilityMeasure _
   unfold fragmentLaw
-  exact Measure.isProbabilityMeasure_map measurable_finiteFragments.aemeasurable
+  exact inferInstance
 
 theorem lintegral_fragmentLaw (ζ : ℝ) (h : ℝ → ℝ≥0∞) (hh : Measurable h) :
     (∫⁻ c, ∫⁻ u, h u ∂(c : Measure ℝ) ∂(fragmentLaw ζ)) =

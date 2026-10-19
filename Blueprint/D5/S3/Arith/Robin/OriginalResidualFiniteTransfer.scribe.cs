@@ -13,6 +13,11 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 
+    private static DocumentBlock Helper(string name, string title, string text) =>
+        Describe.Lean(DescribeId.Create("original-residual-" + name.Replace("_", "-").ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The unchanged finite Mobius floor response admits an explicit residual transfer with both moments, weighted floor variation and exact prefix payments.",
         H("Finite Transfer of the Original Mobius Floor Residual"),
@@ -24,8 +29,16 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                 + "function mu is Mathlib's actual Mobius function at every index, without "
                 + "a prime-only restriction or any modification at prime powers. "
                 + "M(k) is the existing full inclusive prefix sum of mu(d) for 1<=d<=k.")),
+            Paragraph(Text("The source-bound audit for log_bounds remains declared_unresolved under "
+                + "IE-C050/source.unsafe_or_external (Nat.add). The missing source-reconstruction "
+                + "binding certificate is tracked at https://github.com/the-omega-institute/trureturing/issues/17873. "
+                + "This is an unfinished audit, not a failure of the compiled inequality or evidence "
+                + "of a judge defect. The other new helper audits and full-positive transfer audit are validated.")),
             Def("mass", "Absolute block mass",
                 "For every natural N and real sequence a, A=mass(N,a)=sum(N<=m<2N,abs(a(m)))."),
+            Def("firstAbsoluteMoment", "First absolute moment on the original block",
+                "For every natural N and real sequence a, B=firstAbsoluteMoment(N,a)="
+                + "sum(N<=m<2N,m*abs(a(m))). The actual integer index remains inside the sum."),
             Def("variation", "Variation of the zero extension",
                 "For every N and a, V=variation(N,a)=abs(a(N))+sum(N<=m<2N-1,"
                 + "abs(a(m+1)-a(m)))+abs(a(2N-1)). For N>=1 this is precisely the "
@@ -53,6 +66,73 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                 "For every N,q,a,F, Z=replacement(N,q,a,F)="
                 + "-sum(q+1<=k<N,(F(k)+2)*J(k))/log N. The +2 pays a literal -2 "
                 + "in a supplied spectral prefix and is not absorbed into an endpoint."),
+            Def("centered", "The nonzero integer mean",
+                "For all natural d,m, centered(d,m)=(m mod d)/d-(d-1)/(2*d). For d>=1 "
+                + "the subtracted mean is the exact average on integer residues, including residue zero."),
+            Helper("centered_floor", "The original quotient decomposition",
+                "For every natural d>0 and m, floor(m/d)=m/d-centered(d,m)-(d-1)/(2*d), "
+                + "where the quotient on the left is natural division and the other quotient is real."),
+            Helper("variation_nonneg", "Nonnegative complete variation",
+                "For every natural N and arbitrary real sequence a, variation(N,a)>=0, "
+                + "including both endpoint absolute values and the entire interior difference sum."),
+            Helper("centered_pair_variation_bound", "Centered pairing with both jumps",
+                "For natural N,d with N>0 and d>0 and every real sequence a, "
+                + "abs(sum(N<=m<2N,a(m)*centered(d,m)))<=d*variation(N,a). "
+                + "No moment condition is needed. The same periodic primitive and summation-by-parts "
+                + "proof supply the two-moment floor bound and the full positive mean remainder."),
+            Describe.Lean(DescribeId.Create("original-residual-centered-pair-variation-sharp-bound"),
+                DeclarationHandle.Create(Prefix + "centered_pair_variation_sharp_bound"),
+                H("Sharp centered pairing with both jumps"), StatementSource.FromAuthor(SharpBVFormula()),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every positive natural N,d and arbitrary real sequence a, let "
+                        + "S(N,d,a)=sum(N<=m<2*N,a(m)*centered(d,m)). Then abs(S)<=d*V/16, "
+                        + "where V=variation(N,a) includes both zero-extension jumps. No sign or "
+                        + "moment hypothesis is imposed, including at N=1.")),
+                    Paragraph(Text("For the original private primitive P=r*(r-d)/(2*d), r=m mod d, "
+                        + "0<=r<=d and (2*r-d)^2>=0 give -d/8<=P<=0. Hence Q=P+d/16 "
+                        + "satisfies abs(Q)<=d/16. The unchanged primitive_step supplies the wrap. "
+                        + "Q is not the zero-based prefix: Q(0)=d/16. Before taking absolute values, "
+                        + "sum(a(m+1)-a(m))=a(2*N-1)-a(N) cancels the shift exactly. "
+                        + "Both coarse and sharp bounds use one private finite by-parts assembly, "
+                        + "with boundary terms a(2*N-1)*Q(2*N)-a(N)*Q(N). "
+                        + "The new range inference is consumed by the sharper full-positive transfer. "
+                        + "This finite estimate does not settle signed infinite transport or RH."))), DescribeRole.Theorem),
+            Helper("reciprocal_log_step", "Reciprocal logarithmic step",
+                "For every natural k>0, 1/(k+1)<=log(k+1)-log(k)."),
+            Helper("weighted_floor_prefix_bound", "Partial floor count with its negative endpoint",
+                "For natural h,j,m with 0<h<=j<m, "
+                + "sum(h<=k<=j,k*(floor(m/k)-floor(m/(k+1))))"
+                + "<=m*(1+log(j/h))-j. The terminal floor(m/(j+1)) is at least one. "
+                + "Its negative contribution -j is retained for the later joint cancellation."),
+            Helper("weighted_floor_bound", "Weighted original floor count",
+                "For natural N,h,m with 0<h<N and m<2*N, "
+                + "sum(h<=k<N,k*(floor(m/k)-floor(m/(k+1))))<=2*N*(1+log(2*N/h)). "
+                + "The proof keeps the exact terminal floor before taking its upper bound."),
+            Helper("log_bounds", "Logarithms on the finite divisor range",
+                "For natural N,d with 0<d<=N, 0<=log(N/d)<=log(N)."),
+            Helper("weighted_log_step", "Weighted logarithmic step",
+                "For every natural k>0, k*(log(k+1)-log(k))<=1."),
+            Helper("weightedVariation_firstMoment_bound", "Joint first-moment high variation",
+                "For natural N,h with 0<h<=N and arbitrary real a on the original block, "
+                + "assume only sum(N<=m<2N,m*a(m))=0. No zeroth moment is required. "
+                + "Put u=log(N/h) and B=firstAbsoluteMoment(N,a). Then the unchanged "
+                + "weightedVariation(N,h,a)<=B*(u+u*u/2). At h=N both sides vanish. "
+                + "The first moment rewrites the floor pair as a negative remainder pair. "
+                + "For delta(k)=log(k+1)-log(k), triangular finite summation keeps the "
+                + "negative endpoint -j*mass(N,a) until it cancels the entire "
+                + "mass(N,a)*sum(k*delta(k)) payment in the product difference. "
+                + "Finally sum(delta(k)*log(k/h))<=u*u/2 follows by telescoping squares. "
+                + "The existing finite transfer consumes this bound and recovers its old "
+                + "public allowance from B<=2*N*mass(N,a); no residual sign follows."),
+            Helper("prefix_bound", "Absolute actual Mobius prefix",
+                "For every natural q, abs(M(q))<=q, with every original Mobius index retained."),
+            Helper("sum_indices", "Exact finite integer sum",
+                "For every natural q, sum(1<=d<=q,d)=q*(q+1)/2 as a real identity."),
+            Helper("prefix_error_bound", "Shared error for an arbitrary finite difference",
+                "For natural N,h with h>0, arbitrary real arrays D,F and real e,c with c>=0, "
+                + "if abs(F(k)-M(k))<=e*k+c for h<=k<N, then "
+                + "abs(sum(h<=k<N,(F(k)-M(k))*D(k)))<=(e+c/h)*sum(h<=k<N,k*abs(D(k))). "
+                + "The statement needs no sign condition on D or vanishing moments."),
             Describe.Lean(DescribeId.Create("original-residual-finite-transfer"),
                 DeclarationHandle.Create(Prefix + "originalResidual_finite_transfer"),
                 H("The finite two-moment transfer"), StatementSource.FromAuthor(TransferFormula()),
@@ -111,6 +191,18 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                         + "and Gram projection, analytic residue suppliers, original "
                         + "construction, infinite account, strict Robin above 5040 "
                         + "and RH remain separate obligations."))), DescribeRole.Theorem))));
+
+    private static Formula SharpBVFormula()
+    {
+        var n = F.Id("N"); var d = F.Id("d"); var a = F.Id("a");
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula reals = Seq(Mathbb, Grp(F.Id("R")));
+        return Disp(Seq(Forall, Sp, n, Comma, d, InMacro, Sp, naturals, Comma,
+            Forall, Sp, a, InMacro, Sp, new Formula.Power(reals, naturals), Comma,
+            D(0), Lt, Sp, n, Land, Sp, D(0), Lt, Sp, d, Rightarrow, Sp,
+            Lvert, Sp, Call("S", n, d, a), Rvert, Sp, Le, Sp,
+            new Formula.Fraction(d, D(1,6)), Cdot, Sp, Call("V", n, a)));
+    }
 
     private static Formula TransferFormula()
     {

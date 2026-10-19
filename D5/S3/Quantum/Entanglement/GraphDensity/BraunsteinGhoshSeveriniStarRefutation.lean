@@ -87,6 +87,7 @@ Supporting modules in this delivery are not baseline-frozen prerequisites.
 Information-escape registration is paused under CLAUDE.md §3.9 「信息逃逸登记暂缓」.
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Entanglement.GraphDensity.SelectiveFormationBounds
 import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Weil.Probability.FiniteGaussianSchoenberg

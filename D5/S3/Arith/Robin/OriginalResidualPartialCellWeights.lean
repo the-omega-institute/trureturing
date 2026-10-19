@@ -581,4 +581,209 @@ theorem or6_partialCell_variation {N : ℕ} {a b : ℝ} (hN : 3 ≤ N)
 
 #print axioms or6_partialCell_variation
 
+private lemma actualEnergy_invSquare_cell {m : ℕ} (hm : 0 < m) :
+    (∫ t in (m : ℝ)..(m : ℝ) + 1, 1 / t ^ 2) = w m := by
+  have hmR : 0 < (m : ℝ) := by exact_mod_cast hm
+  have hm1R : 0 < (m : ℝ) + 1 := by linarith
+  have hcell : (m : ℝ) ≤ (m : ℝ) + 1 := by linarith
+  have hnonzero : ∀ t ∈ Set.uIcc (m : ℝ) ((m : ℝ) + 1), t ≠ 0 := by
+    intro t ht
+    rw [Set.uIcc_of_le hcell] at ht
+    exact (hmR.trans_le ht.1).ne'
+  have hint : IntervalIntegrable (fun t : ℝ => 1 / t ^ 2)
+      volume (m : ℝ) ((m : ℝ) + 1) := by
+    apply ContinuousOn.intervalIntegrable
+    exact continuousOn_const.div (continuousOn_id.pow 2)
+      (fun t ht => pow_ne_zero 2 (hnonzero t ht))
+  have hderiv : ∀ t ∈ Set.uIcc (m : ℝ) ((m : ℝ) + 1),
+      HasDerivAt (fun t : ℝ => -t⁻¹) (1 / t ^ 2) t := by
+    intro t ht
+    convert! (hasDerivAt_inv (hnonzero t ht)).neg using 1 <;>
+      simp only [neg_neg, one_div]
+  have he := intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hint
+  calc
+    _ = 1 / (m : ℝ) - 1 / ((m : ℝ) + 1) := by
+      simpa only [one_div, neg_sub_neg] using he
+    _ = w m := by
+      unfold w
+      field_simp [hmR.ne', hm1R.ne']
+      <;> ring
+
+private lemma actualEnergy_density_cap {N : ℕ} (hN : 3 ≤ N)
+    {t : ℝ} (hNt : (N : ℝ) ≤ t) :
+    activationDensity t ≤
+      ((Real.log (N : ℝ))⁻¹ + (Real.log (N : ℝ))⁻¹ ^ 2) * (1 / t ^ 2) := by
+  have hN1 : (1 : ℝ) < N := by exact_mod_cast (by omega : 1 < N)
+  have hLN : 0 < Real.log (N : ℝ) := Real.log_pos hN1
+  have ht1 : 1 < t := hN1.trans_le hNt
+  have ht0 : 0 < t := by linarith
+  have hLt : 0 < Real.log t := Real.log_pos ht1
+  have hlog : Real.log (N : ℝ) ≤ Real.log t :=
+    Real.log_le_log (by linarith) hNt
+  have hinv : (Real.log t)⁻¹ ≤ (Real.log (N : ℝ))⁻¹ := inv_anti₀ hLN hlog
+  have hleft : 0 ≤ (Real.log t)⁻¹ := inv_nonneg.mpr hLt.le
+  have hright : 0 ≤ (Real.log (N : ℝ))⁻¹ := inv_nonneg.mpr hLN.le
+  have hsquare : (Real.log t)⁻¹ ^ 2 ≤ (Real.log (N : ℝ))⁻¹ ^ 2 := by
+    nlinarith [mul_nonneg (sub_nonneg.mpr hinv) (add_nonneg hleft hright)]
+  have hnum := add_le_add hinv hsquare
+  calc
+    activationDensity t = ((Real.log t)⁻¹ + (Real.log t)⁻¹ ^ 2) * (1 / t ^ 2) := by
+      unfold activationDensity
+      field_simp [ht0.ne', hLt.ne']
+      <;> ring
+    _ ≤ _ := mul_le_mul_of_nonneg_right hnum (by positivity)
+
+private lemma actualEnergy_omega_cap {N m : ℕ} {a b : ℝ}
+    (hN : 3 ≤ N) (ha : 1 < a) (hab : a ≤ b) (hNm : N ≤ m) :
+    omega a b m ≤
+      ((Real.log (N : ℝ))⁻¹ + (Real.log (N : ℝ))⁻¹ ^ 2) * w m := by
+  let K : ℝ := (Real.log (N : ℝ))⁻¹ + (Real.log (N : ℝ))⁻¹ ^ 2
+  have hLN : 0 < Real.log (N : ℝ) :=
+    Real.log_pos (by exact_mod_cast (by omega : 1 < N))
+  have hK : 0 ≤ K := by dsimp [K]; positivity
+  have hmp : 0 < m := by omega
+  have hNmR : (N : ℝ) ≤ m := by exact_mod_cast hNm
+  have hmR : 0 < (m : ℝ) := by exact_mod_cast hmp
+  have hcell : (m : ℝ) ≤ (m : ℝ) + 1 := by linarith
+  have hi : IntervalIntegrable (fun t : ℝ => 1 / t ^ 2)
+      volume (m : ℝ) ((m : ℝ) + 1) := by
+    apply ContinuousOn.intervalIntegrable
+    rw [Set.uIcc_of_le hcell]
+    exact continuousOn_const.div (continuousOn_id.pow 2)
+      (fun t ht => pow_ne_zero 2 (hmR.trans_le ht.1).ne')
+  rw [omega_cell, cell_interval]
+  calc
+    _ ≤ ∫ t in (m : ℝ)..(m : ℝ) + 1, K * (1 / t ^ 2) := by
+      apply intervalIntegral.integral_mono_on hcell
+        (clipped_integrable ha hab _ _) (hi.const_mul K)
+      intro t ht
+      by_cases habt : t ∈ Set.Icc a b
+      · rw [Set.indicator_of_mem habt]
+        exact actualEnergy_density_cap hN (hNmR.trans ht.1)
+      · rw [Set.indicator_of_notMem habt]
+        exact mul_nonneg hK (by positivity)
+    _ = K * w m := by
+      rw [intervalIntegral.integral_const_mul, actualEnergy_invSquare_cell hmp]
+
+private lemma actualEnergy_datum_bounds {N m : ℕ} {a b : ℝ}
+    (hN : 3 ≤ N) (hNa : (N : ℝ) ≤ a) (hab : a ≤ b)
+    (hm : m ∈ Finset.Ico N (2 * N)) :
+    0 ≤ datum N a b m ∧ datum N a b m ≤ 1 + 1 / Real.log (N : ℝ) := by
+  have hmi := Finset.mem_Ico.mp hm
+  have hne : m ≠ 2 * N := by omega
+  have hmp : 0 < m := by omega
+  have hw : 0 < w m := w_pos hmp
+  have hLN : 0 < Real.log (N : ℝ) :=
+    Real.log_pos (by exact_mod_cast (by omega : 1 < N))
+  have ha : 1 < a :=
+    (show (1 : ℝ) < N by exact_mod_cast (by omega : 1 < N)).trans_le hNa
+  have hcap := actualEnergy_omega_cap hN ha hab hmi.1
+  simp only [datum, if_neg hne]
+  constructor
+  · exact div_nonneg (mul_nonneg hLN.le (omega_nonneg ha m)) hw.le
+  · apply (div_le_iff₀ hw).mpr
+    calc
+      Real.log (N : ℝ) * omega a b m ≤
+          Real.log (N : ℝ) *
+            (((Real.log (N : ℝ))⁻¹ + (Real.log (N : ℝ))⁻¹ ^ 2) * w m) :=
+        mul_le_mul_of_nonneg_left hcap hLN.le
+      _ = (1 + 1 / Real.log (N : ℝ)) * w m := by
+        field_simp [hLN.ne']
+        <;> ring
+
+private lemma actualEnergy_le_constant {N : ℕ} (hN : 3 ≤ N)
+    (a b t : ℝ) :
+    (∑ m ∈ Finset.Ico N (2 * N), (coeff N a b m) ^ 2 / w m) ≤
+      ∑ m ∈ Finset.Ico N (2 * N), w m * (datum N a b m - t) ^ 2 := by
+  have hNR : (N : ℝ) ≠ 0 := by exact_mod_cast (by omega : N ≠ 0)
+  have hmom := exact_moments hN a b
+  have hcoeff (m : ℕ) (hm : m ∈ Finset.Ico N (2 * N)) :
+      coeff N a b m = w m *
+        (datum N a b m - c N a b 0 - c N a b 1 * ((m : ℝ) / N)) := by
+    have hmi := Finset.mem_Ico.mp hm
+    have hne : m ≠ 2 * N := by omega
+    simp only [coeff, if_pos hmi, residual, if_neg hne]
+  have hpoint (m : ℕ) (hm : m ∈ Finset.Ico N (2 * N)) :
+      w m * (datum N a b m - t) ^ 2 =
+        ((coeff N a b m) ^ 2 / w m +
+          w m * (c N a b 0 + c N a b 1 * ((m : ℝ) / N) - t) ^ 2) +
+          2 * (c N a b 0 - t) * coeff N a b m +
+          (2 * c N a b 1 / (N : ℝ)) * ((m : ℝ) * coeff N a b m) := by
+    have hw : w m ≠ 0 := (w_pos (by
+      have := (Finset.mem_Ico.mp hm).1
+      omega)).ne'
+    simp only [hcoeff m hm]
+    field_simp [hw, hNR]
+    <;> ring
+  have hsum :
+      (∑ m ∈ Finset.Ico N (2 * N), w m * (datum N a b m - t) ^ 2) =
+        (∑ m ∈ Finset.Ico N (2 * N), (coeff N a b m) ^ 2 / w m) +
+        ∑ m ∈ Finset.Ico N (2 * N),
+          w m * (c N a b 0 + c N a b 1 * ((m : ℝ) / N) - t) ^ 2 := by
+    calc
+      _ = ∑ m ∈ Finset.Ico N (2 * N),
+          (((coeff N a b m) ^ 2 / w m +
+            w m * (c N a b 0 + c N a b 1 * ((m : ℝ) / N) - t) ^ 2) +
+            2 * (c N a b 0 - t) * coeff N a b m +
+            (2 * c N a b 1 / (N : ℝ)) * ((m : ℝ) * coeff N a b m)) := by
+        exact Finset.sum_congr rfl hpoint
+      _ = _ := by
+        simp only [Finset.sum_add_distrib, ← Finset.mul_sum,
+          hmom.1, hmom.2, mul_zero, add_zero]
+  have hnonneg : 0 ≤ ∑ m ∈ Finset.Ico N (2 * N),
+      w m * (c N a b 0 + c N a b 1 * ((m : ℝ) / N) - t) ^ 2 := by
+    apply Finset.sum_nonneg
+    intro m hm
+    exact mul_nonneg (w_pos (by
+      have := (Finset.mem_Ico.mp hm).1
+      omega)).le (sq_nonneg _)
+  linarith [hsum]
+
+/-- The original two-moment partial-cell coefficients have a uniform energy
+bound supplied by the actual activation density, on the original full block. -/
+theorem or6_partialCell_energy_bound {N : ℕ} {a b : ℝ} (hN : 3 ≤ N)
+    (hNa : (N : ℝ) ≤ a) (hab : a ≤ b) :
+    (∑ m ∈ Finset.Ico N (2 * N), (coeff N a b m) ^ 2 / w m) ≤
+      (1 + 1 / Real.log (N : ℝ)) ^ 2 / (8 * (N : ℝ)) := by
+  let B : ℝ := 1 + 1 / Real.log (N : ℝ)
+  have hNR : (N : ℝ) ≠ 0 := by exact_mod_cast (by omega : N ≠ 0)
+  have hmid (m : ℕ) (hm : m ∈ Finset.Ico N (2 * N)) :
+      (datum N a b m - B / 2) ^ 2 ≤ B ^ 2 / 4 := by
+    have hd := actualEnergy_datum_bounds hN hNa hab hm
+    change 0 ≤ datum N a b m ∧ datum N a b m ≤ B at hd
+    nlinarith [mul_nonneg hd.1 (sub_nonneg.mpr hd.2)]
+  calc
+    _ ≤ ∑ m ∈ Finset.Ico N (2 * N), w m * (datum N a b m - B / 2) ^ 2 :=
+      actualEnergy_le_constant hN a b (B / 2)
+    _ ≤ ∑ m ∈ Finset.Ico N (2 * N), w m * (B ^ 2 / 4) := by
+      apply Finset.sum_le_sum
+      intro m hm
+      exact mul_le_mul_of_nonneg_left (hmid m hm)
+        (w_pos (by have := (Finset.mem_Ico.mp hm).1; omega)).le
+    _ = (B ^ 2 / 4) * (∑ m ∈ Finset.Ico N (2 * N), w m) := by
+      rw [← Finset.sum_mul]
+      ring
+    _ = B ^ 2 / (8 * (N : ℝ)) := by
+      rw [(discrete_weights hN).1]
+      field_simp [hNR]
+      <;> ring
+    _ = _ := rfl
+
+/-- Exact original projection facts consumed by the response adjoint. -/
+theorem response_projection_interface {N : ℕ} (hN : 3 ≤ N) :
+    (gram N 0 0 = ∑ m ∈ Finset.Ico N (2 * N), w m ∧
+      gram N 0 1 = ∑ m ∈ Finset.Ico N (2 * N), w m * ((m : ℝ) / N) ∧
+      gram N 1 0 = gram N 0 1 ∧
+      gram N 1 1 = ∑ m ∈ Finset.Ico N (2 * N), w m * ((m : ℝ) / N) ^ 2) ∧
+    0 < delta N ∧
+    (∀ a b : ℝ,
+      (∑ m ∈ Finset.Ico N (2 * N), coeff N a b m) = 0 ∧
+      (∑ m ∈ Finset.Ico N (2 * N), (m : ℝ) * coeff N a b m) = 0) ∧
+    (∀ (a b : ℝ) (m : ℕ), m ∈ Finset.Ico N (2 * N) →
+      coeff N a b m = Real.log (N : ℝ) * omega a b m - c N a b 0 * w m -
+        c N a b 1 * (w m * ((m : ℝ) / N))) := by
+  exact ⟨gram_entries N, delta_pos hN, exact_moments hN,
+    fun a b m hm => coeff_on (a := a) (b := b) hN hm⟩
+
+
 end D5.S3.Arith.Robin.OriginalResidualPartialCellWeights

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4536b4abfc383bf09ecf167c3aa54ed04933e99d369d4fbcc3c1759dac7d30fc
-  normalized_sha256: sha256:4536b4abfc383bf09ecf167c3aa54ed04933e99d369d4fbcc3c1759dac7d30fc
-cas_ref: sha256:4536b4abfc383bf09ecf167c3aa54ed04933e99d369d4fbcc3c1759dac7d30fc
-coverage_gids:
-  - gid: D5/S0/Diagonal/Naturality/QuotientTwistBlindness.quotient_twist_blindness
-    target_statement_id: sha256:c7d867adb16f662d333ce50d902e37ff13c02056918f1f7bdc76b62b0bebdfb8
-receipts:
-  unresolved_subitems: []

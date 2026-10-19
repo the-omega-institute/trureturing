@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:38470526c6d35c410540531c3056bbc4115ee6c60a83af4f05f5010956093873
-  normalized_sha256: sha256:38470526c6d35c410540531c3056bbc4115ee6c60a83af4f05f5010956093873
-cas_ref: sha256:38470526c6d35c410540531c3056bbc4115ee6c60a83af4f05f5010956093873
-coverage_gids:
-  - gid: D5/S3/Quantum/Sharpness/BranchOverlap.pt_branch_overlap
-    target_statement_id: sha256:2bccdf83133cdedd661b7c277c88fd33e769d179708782d91e3cbff3be5b7a70
-receipts:
-  unresolved_subitems: []

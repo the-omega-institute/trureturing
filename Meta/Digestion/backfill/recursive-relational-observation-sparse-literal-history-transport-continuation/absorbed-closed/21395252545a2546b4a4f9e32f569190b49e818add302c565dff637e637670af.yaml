@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:21395252545a2546b4a4f9e32f569190b49e818add302c565dff637e637670af
+  normalized_sha256: sha256:21395252545a2546b4a4f9e32f569190b49e818add302c565dff637e637670af
+cas_ref: sha256:21395252545a2546b4a4f9e32f569190b49e818add302c565dff637e637670af
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Acquisition/NativeBoundedPreorderControl.native_bounded_preorder_control
+    target_statement_id: sha256:b4117a3a7a8b98f2f81b093171def96e0da6e027caddc069189c4ba875eb2b76
+receipts:
+  unresolved_subitems: []

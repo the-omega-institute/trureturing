@@ -6,6 +6,7 @@
    utility: none
    digest: Excursion reflection and up-step subsets count all permutations sorted by the machine. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotPaths
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.List.OfFn

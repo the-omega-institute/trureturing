@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:68f644451cc3fe788f3ece14ea84185f5ad5fb8ca0a4193c58a70b3894941636
+  normalized_sha256: sha256:68f644451cc3fe788f3ece14ea84185f5ad5fb8ca0a4193c58a70b3894941636
+cas_ref: sha256:68f644451cc3fe788f3ece14ea84185f5ad5fb8ca0a4193c58a70b3894941636
+coverage_gids:
+  - gid: D5/S0/History/WellFoundedLeafMassConservation.result
+    target_statement_id: sha256:4d1438157de9a8f586219142160ece9d5986e1623c785577b327297d18893f4d
+  - gid: D5/S3/ObserverMemory/Prediction/CausalRepairEnvelopes.common_causal_envelopes
+    target_statement_id: sha256:93c77a7e129c630fe24fa67e2792524c2e09d6b45f88740c123fc6fc7cea4b6b
+  - gid: D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.Prefix
+    target_statement_id: sha256:4dcacd32f9efc12dc36487652d0abbdfcaa728159022185e6cf7efd5031cd296
+  - gid: D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.feedbackActions
+    target_statement_id: sha256:0519b1e2c72fbb51dff71029976abd2f9c652f30e2d1753fd336f7d7d92c5b88
+  - gid: D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.feedbackMass
+    target_statement_id: sha256:84607d91da71425129a2e25d8b9b1a899739cb9fdd739508cdaf0015e1e477ac
+  - gid: D5/S3/ObserverMemory/Prediction/FeedbackNormalizationCriterion.restrictPrefix
+    target_statement_id: sha256:5e795d902f42ba52abef471c9d32e89c69769bc95fc8e880a375408835b11fdf
+receipts:
+  unresolved_subitems: []

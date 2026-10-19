@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ced9c34750a2695d4d81a570ec83ff4bfa908d582f220e476cd6966da322e9e1
-  normalized_sha256: sha256:ced9c34750a2695d4d81a570ec83ff4bfa908d582f220e476cd6966da322e9e1
-cas_ref: sha256:ced9c34750a2695d4d81a570ec83ff4bfa908d582f220e476cd6966da322e9e1
-coverage_gids:
-  - gid: D5/S3/Zeros/Repulsion/RepulsionMaximum.repulsion_profile_has_exact_maximum
-    target_statement_id: sha256:5c0fc4a01d8190cbfdbfa7e4bd4ee1d7b14cdb5bf60558fd1f1ac3cb5cb1e134
-receipts:
-  unresolved_subitems: []

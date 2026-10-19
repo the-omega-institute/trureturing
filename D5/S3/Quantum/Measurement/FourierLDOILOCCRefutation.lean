@@ -204,8 +204,8 @@ private lemma success_bddAbove (n : ℕ) : BddAbove (Set.range (success n)) := b
   rintro _ ⟨T, rfl⟩
   exact success_le_one n T
 
-private def c : ℝ := (Real.sqrt 2)⁻¹
-private lemma c_sq : c * c = 1/2 := by
+def c : ℝ := (Real.sqrt 2)⁻¹
+lemma c_sq : c * c = 1/2 := by
   unfold c
   rw [← mul_inv, Real.mul_self_sqrt (by norm_num : (0:ℝ) ≤ 2)]
   norm_num

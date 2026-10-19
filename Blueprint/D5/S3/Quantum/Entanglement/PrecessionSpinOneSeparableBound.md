@@ -4,7 +4,19 @@
 
 The spin-1 tensor spin-K/2 precession protocol has separable bound ½ [1 + 2^{−(K−1)} binom(K−1, (K−1)/2) (K−1)/(K+1)] for every odd K ≥ 7. This is Conjecture 2, Eq. (32), of Huynh-Vu, Zaw and Scarani (arXiv:2311.00806v2).
 
-**Definition 1.1 (Spin raising matrix).**
+**Definition 1.1 (Squared Frobenius mass of a rectangular matrix).**
+
+$$\forall I \in Type*,\; \forall J \in Type*,\; [\operatorname{Fintype}\left(I\right)] [\operatorname{Fintype}\left(J\right)] \forall M \in \operatorname{Matrix}\left(I, J, \mathbb{C}\right),\; \operatorname{entryNormSq}\left(M\right) = \sum_{i: I} \sum_{j: J} \left\lVert M\left(i, j\right) \right\rVert^{2}$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.entryNormSq` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary finite row and column types, entryNormSq is the sum of the squared absolute values of all complex matrix entries. It is the squared Frobenius norm and is zero for an empty index type.
+
+**Definition 1.2 (Spin raising matrix).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{Jplus}\left(n\right) = (i: \operatorname{Fin}\left((n + 1)\right)) \mapsto (r: \operatorname{Fin}\left((n + 1)\right)) \mapsto \operatorname{if}\left(\operatorname{val}\left(i\right) + 1 = \operatorname{val}\left(r\right), \operatorname{ofReal}\left(\operatorname{Real.sqrt}\left(\frac{\operatorname{NatCast}\left(n\right)}{2} \cdot (\frac{\operatorname{NatCast}\left(n\right)}{2} + 1) - (\frac{\operatorname{NatCast}\left(n\right)}{2} - \operatorname{NatCast}\left(\operatorname{val}\left(r\right)\right)) \cdot (\frac{\operatorname{NatCast}\left(n\right)}{2} - \operatorname{NatCast}\left(\operatorname{val}\left(r\right)\right) + 1)\right)\right), 0\right)$$
 
@@ -16,7 +28,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{Jplus}\left(n\right) = (i: \operator
 
 In the standard descending |j,m⟩ basis the raising matrix has entry √(j(j+1)−m(m+1)) on the one-step superdiagonal, with j = n/2, m = j−r and ℏ = 1.
 
-**Definition 1.2 (Spin x matrix).**
+**Definition 1.3 (Spin x matrix).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{Jx}\left(n\right) = \operatorname{smul}\left((\frac{1}{2}: \mathbb{C}), (\operatorname{Jplus}\left(n\right) + \operatorname{conjTranspose}\left(\operatorname{Jplus}\left(n\right)\right))\right)$$
 
@@ -28,7 +40,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{Jx}\left(n\right) = \operatorname{sm
 
 Jx is the Hermitian half-sum of the raising matrix and its conjugate transpose.
 
-**Definition 1.3 (Spin y matrix).**
+**Definition 1.4 (Spin y matrix).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{Jy}\left(n\right) = \operatorname{smul}\left((\frac{1}{2 \cdot I}: \mathbb{C}), (\operatorname{Jplus}\left(n\right) - \operatorname{conjTranspose}\left(\operatorname{Jplus}\left(n\right)\right))\right)$$
 
@@ -40,7 +52,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{Jy}\left(n\right) = \operatorname{sm
 
 Jy is the Hermitian y component obtained from the raising matrix and its conjugate transpose.
 
-**Definition 1.4 (Spin z matrix).**
+**Definition 1.5 (Spin z matrix).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{Jz}\left(n\right) = \operatorname{diagonal}\left((i: \operatorname{Fin}\left((n + 1)\right)) \mapsto \operatorname{ofReal}\left(\frac{\operatorname{NatCast}\left(n\right)}{2} - \operatorname{NatCast}\left(\operatorname{val}\left(i\right)\right)\right)\right)$$
 
@@ -52,7 +64,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{Jz}\left(n\right) = \operatorname{di
 
 Jz is diagonal in the standard basis with entries n/2 minus the descending index.
 
-**Definition 1.5 (Spin z rotation).**
+**Definition 1.6 (Spin z rotation).**
 
 $$\forall n \in \mathbb{N},\; \forall angle \in \mathbb{R},\; \operatorname{rotation}\left(n, angle\right) = \operatorname{Matrix.diagonal}\left((i: \operatorname{Fin}\left((n + 1)\right)) \mapsto \operatorname{Complex.exp}\left(-Complex.I \cdot (angle: \mathbb{C}) \cdot ((\frac{(n: \mathbb{R})}{2} - (\operatorname{val}\left(i\right): \mathbb{R}): \mathbb{R}): \mathbb{C})\right)\right)$$
 
@@ -64,7 +76,7 @@ $$\forall n \in \mathbb{N},\; \forall angle \in \mathbb{R},\; \operatorname{rota
 
 The diagonal spin rotation has phase exp(-I angle (n/2-i.val)) in the descending spin basis.
 
-**Definition 1.6 (Total angular momentum).**
+**Definition 1.7 (Total angular momentum).**
 
 $$\forall K \in \mathbb{N},\; \forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left((2 + 1)\right), \operatorname{Fin}\left((2 + 1)\right), \mathbb{C}\right),\; \forall B \in \operatorname{Matrix}\left(\operatorname{Fin}\left((K + 1)\right), \operatorname{Fin}\left((K + 1)\right), \mathbb{C}\right),\; \operatorname{total}\left(K, A, B\right) = \operatorname{kronecker}\left(A, (1: \operatorname{Matrix}\left(\operatorname{Fin}\left((K + 1)\right), \operatorname{Fin}\left((K + 1)\right), \mathbb{C}\right))\right) + \operatorname{kronecker}\left((1: \operatorname{Matrix}\left(\operatorname{Fin}\left((2 + 1)\right), \operatorname{Fin}\left((2 + 1)\right), \mathbb{C}\right)), B\right)$$
 
@@ -76,7 +88,7 @@ $$\forall K \in \mathbb{N},\; \forall A \in \operatorname{Matrix}\left(\operator
 
 The total operator is J on the tensor product, J^(1) ⊗ I + I ⊗ J^(K/2), represented by the Kronecker sum.
 
-**Definition 1.7 (Precession angle).**
+**Definition 1.8 (Precession angle).**
 
 $$\forall K \in \mathbb{N},\; \forall k \in \operatorname{Fin}\left(K\right),\; \operatorname{theta}\left(K, k\right) = \frac{2 \cdot Real.pi \cdot \operatorname{NatCast}\left(\operatorname{val}\left(k\right)\right)}{\operatorname{NatCast}\left(K\right)}$$
 
@@ -88,7 +100,7 @@ $$\forall K \in \mathbb{N},\; \forall k \in \operatorname{Fin}\left(K\right),\; 
 
 The k-th protocol angle is 2πk/K for k in Fin K. NatCast is the natural-to-real cast; ofReal is the real-to-complex cast. val is the underlying natural index, and n is twice the spin.
 
-**Definition 1.8 (Precessed observable).**
+**Definition 1.9 (Precessed observable).**
 
 $$\forall K \in \mathbb{N},\; \forall k \in \operatorname{Fin}\left(K\right),\; \operatorname{Jk}\left(K, k\right) = \operatorname{smul}\left(\operatorname{ofReal}\left(\operatorname{Real.cos}\left(\operatorname{theta}\left(K, k\right)\right)\right), \operatorname{total}\left(K, \operatorname{Jx}\left(2\right), \operatorname{Jx}\left(K\right)\right)\right) + \operatorname{smul}\left(\operatorname{ofReal}\left(\operatorname{Real.sin}\left(\operatorname{theta}\left(K, k\right)\right)\right), \operatorname{total}\left(K, \operatorname{Jy}\left(2\right), \operatorname{Jy}\left(K\right)\right)\right)$$
 
@@ -100,7 +112,7 @@ $$\forall K \in \mathbb{N},\; \forall k \in \operatorname{Fin}\left(K\right),\; 
 
 The protocol uses J_k = cos(2πk/K)J_x + sin(2πk/K)J_y.
 
-**Definition 1.9 (Positive spectral weight).**
+**Definition 1.10 (Positive spectral weight).**
 
 $$\forall x \in \mathbb{R},\; \operatorname{positiveWeight}\left(x\right) = \operatorname{if}\left(0 < x, 1, \operatorname{if}\left(x = 0, \frac{1}{2}, 0\right)\right)$$
 
@@ -112,7 +124,7 @@ $$\forall x \in \mathbb{R},\; \operatorname{positiveWeight}\left(x\right) = \ope
 
 The positive projector weights positive eigenvalues by one, zero by one half, and negative eigenvalues by zero.
 
-**Definition 1.10 (Positive spectral projector).**
+**Definition 1.11 (Positive spectral projector).**
 
 $$\forall T \in Type,\; [\operatorname{Fintype}\left(T\right)] [\operatorname{DecidableEq}\left(T\right)] \forall H \in \operatorname{Matrix}\left(T, T, \mathbb{C}\right),\; \forall h \in \operatorname{IsHermitian}\left(H\right),\; \operatorname{pos}\left(h\right) = \operatorname{h.cfc}\left(positiveWeight\right)$$
 
@@ -124,7 +136,7 @@ $$\forall T \in Type,\; [\operatorname{Fintype}\left(T\right)] [\operatorname{De
 
 For a Hermitian J, pos(J) = Σ_{λ>0} P_λ(J) + ½ P_0(J), with the source’s half weight at zero. The definition requires a proof h of Hermiticity and is exactly h.cfc positiveWeight. The finite spectrum requires no continuity hypothesis; its spectral expression is U diag(positiveWeight(eigenvalues)) Uᴴ. All protocol observables are Hermitian.
 
-**Definition 1.11 (Protocol average).**
+**Definition 1.12 (Protocol average).**
 
 $$\forall K \in \mathbb{N},\; \operatorname{Q}\left(K\right) = \operatorname{smul}\left((\frac{1}{(K: \mathbb{C})}: \mathbb{C}), \sum_{k: \operatorname{Fin}\left(K\right)} \operatorname{pos}\left(\operatorname{Jk}\left(K, k\right)\right)\right)$$
 
@@ -136,7 +148,7 @@ $$\forall K \in \mathbb{N},\; \operatorname{Q}\left(K\right) = \operatorname{smu
 
 Q_K is the average of the positive spectral projectors over k in Fin K.
 
-**Definition 1.12 (Product vector).**
+**Definition 1.13 (Product vector).**
 
 $$\forall K \in \mathbb{N},\; \forall a \in \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left((2 + 1)\right)\right),\; \forall b \in \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left((K + 1)\right)\right),\; \operatorname{productVector}\left(K, a, b\right) = \operatorname{WithLp.toLp}\left(2, (i: \operatorname{Prod}\left(\operatorname{Fin}\left((2 + 1)\right), \operatorname{Fin}\left((K + 1)\right)\right)) \mapsto \operatorname{a}\left(\operatorname{fst}\left(i\right)\right) \cdot \operatorname{b}\left(\operatorname{snd}\left(i\right)\right)\right)$$
 
@@ -148,7 +160,7 @@ $$\forall K \in \mathbb{N},\; \forall a \in \operatorname{EuclideanSpace}\left(\
 
 The tensor product of a spin-1 vector and a spin-K/2 vector is represented in the product basis by pointwise multiplication of the two coordinates.
 
-**Definition 1.13 (Separable score set).**
+**Definition 1.14 (Separable score set).**
 
 $$\forall K \in \mathbb{N},\; \operatorname{scores}\left(K\right) = \{t: \mathbb{R} \mid \exists a \in \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left((2 + 1)\right)\right),\; \exists b \in \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left((K + 1)\right)\right),\; (\left\lVert a \right\rVert = 1) \land \left((\left\lVert b \right\rVert = 1) \land (t = \operatorname{re}\left((\operatorname{dotProduct}\left(\operatorname{star}\left((\operatorname{productVector}\left(K, a, b\right)).ofLp\right), \operatorname{mulVec}\left(\operatorname{Q}\left(K\right), (\operatorname{productVector}\left(K, a, b\right)).ofLp\right)\right))\right))\right)\}$$
 
@@ -160,7 +172,7 @@ $$\forall K \in \mathbb{N},\; \operatorname{scores}\left(K\right) = \{t: \mathbb
 
 The score set consists of real quadratic expectations on unit product vectors in ℂ³ ⊗ ℂ^(K+1).
 
-**Definition 1.14 (Central binomial coefficient).**
+**Definition 1.15 (Central binomial coefficient).**
 
 $$\forall K \in \mathbb{N},\; \operatorname{c}\left(K\right) = \frac{1}{2^{(K - 1)}} \operatorname{NatCast}\left(\operatorname{Nat.choose}\left((K - 1), \operatorname{Nat.div}\left((K - 1), 2\right)\right)\right)$$
 
@@ -172,7 +184,7 @@ $$\forall K \in \mathbb{N},\; \operatorname{c}\left(K\right) = \frac{1}{2^{(K - 
 
 c K is 2^{−(K−1)} times the central binomial coefficient. Both K−1 and Nat.div use natural arithmetic (Nat.div is floor division); NatCast casts the binomial coefficient into ℝ.
 
-**Definition 1.15 (Huynh-Vu–Zaw–Scarani Conjecture 2).**
+**Definition 1.16 (Huynh-Vu–Zaw–Scarani Conjecture 2).**
 
 $$claim \Leftrightarrow (\forall K \in \mathbb{N},\; \operatorname{Odd}\left(K\right) \Rightarrow \left(K \ge 7 \Rightarrow \operatorname{IsGreatest}\left(\operatorname{scores}\left(K\right), \frac{1}{2} (1 + \operatorname{c}\left(K\right) \frac{\operatorname{NatCast}\left((K - 1)\right)}{\operatorname{NatCast}\left((K + 1)\right)})\right)\right))$$
 
@@ -184,7 +196,7 @@ $$claim \Leftrightarrow (\forall K \in \mathbb{N},\; \operatorname{Odd}\left(K\r
 
 The source states: "The separable bound for {ȷ̃, ȷ̃′} = {1, K/2} with K ≥ 7 is Psep_K({1, K/2}) = ½ [1 + 2^{−(K−1)} binom(K−1, (K−1)/2) (K−1)/(K+1)]." The source defines the precession protocol by "Jk := e^{−i(2πk/K)Jz/ℏ} Jx e^{i(2πk/K)Jz/ℏ} = cos(2πk/K)Jx + sin(2πk/K)Jy, where k ∈ {0, 1, . . . , K − 1}." Equations (2)–(3) state "PK := (1/K) Σ_{k=0}^{K−1} [Pr(Jk > 0) + ½ Pr(Jk = 0)], QK := (1/K) Σ_k pos(Jk)," and "Here, pos(Jk) is defined on the eigenstates |j, m⟩k of Jk, such that Jk|j, m⟩k = ℏm|j, m⟩k and 2 pos(Jk)|j, m⟩k = [1+sgn(m)]|j, m⟩k, with the usual convention sgn(0) = 0." Conjecture 2 and Eq. (32) are in arXiv v2, §III, PDF p. 8; Eqs. (1)–(3) are on PDF p. 2. The Lean statement binds the natural indices, casts them into ℝ for the final expression, and uses natural-number division in c.
 
-**Theorem 1.16 (Proof of the separable bound).**
+**Theorem 1.17 (Proof of the separable bound).**
 
 $$claim$$
 
@@ -212,6 +224,7 @@ The proof diagonalizes the spin-K/2 Jx operator with the binomial eigenbasis, ev
 - Truth anchor: `D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.Q`
 - Truth anchor: `D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.c`
 - Truth anchor: `D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.claim`
+- Truth anchor: `D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.entryNormSq`
 - Truth anchor: `D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.pos`
 - Truth anchor: `D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.positiveWeight`
 - Truth anchor: `D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.productVector`

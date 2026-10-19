@@ -447,7 +447,7 @@ public sealed partial class CoverBatchCommandTests
             {
                 var sourceText = "# PZG\n\n**\u5b9a\u7406 18.7(Historical)**. first historical clause.\n\n"
                     + "**\u63a8\u8bba:Historical second clause**. second historical clause.\n\n";
-                var atomized = PzgAtomizer.Atomize(Encoding.UTF8.GetBytes(sourceText), DigestionTestSupport.Rules);
+                var atomized = GenericAtomizer.Atomize(Encoding.UTF8.GetBytes(sourceText));
                 var parent = Assert.Single(atomized.Claims);
                 var children = Assert.Single(atomized.ClausePlans).Children;
                 ParentId = parent.Fingerprints.RawSha256["sha256:".Length..];
@@ -455,7 +455,7 @@ public sealed partial class CoverBatchCommandTests
                 var source = document.RequireDigestionSources()[0];
                 var parentEntry = source.Entries[0] with
                 {
-                    Atomizer = AtomizerRegistry.PzgId,
+                    Atomizer = AtomizerRegistry.GenericId,
                     AtomId = ParentId,
                     Fingerprints = parent.Fingerprints,
                     CasRef = parent.Fingerprints.RawSha256,
@@ -474,7 +474,7 @@ public sealed partial class CoverBatchCommandTests
                 }).ToImmutableArray();
                 var parentSource = source with
                 {
-                    Atomizer = AtomizerRegistry.PzgId,
+                    Atomizer = AtomizerRegistry.GenericId,
                     Entries = [parentEntry, .. externalChild ? childEntries.Take(1) : childEntries],
                 };
                 document = document.WithDigestionSources(externalChild
@@ -497,7 +497,15 @@ public sealed partial class CoverBatchCommandTests
                 }
             }
             DirectoryLedgerTestSupport.ReplaceWithProjection(inputs.Files, document);
-            inputs.Files[TheoryAtomizerDataLoader.DataPath] = Encoding.UTF8.GetString(DigestionTestSupport.RulesBytes);
+            var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes(inputs.Files[FileMapLoader.RelativePath]), "batch fixture");
+            var sourceEntries = document.RequireDigestionSources().Select(source => source.SourcePath)
+                .Where(path => manifest.Match(path).IsEmpty)
+                .Select(path => new FileMapEntry(path, FileMapKind.Data, FileMapAdmissionPlane.Content,
+                    "none", ["reader"], ["SnapshotDecoder"], false, "none", null, "committed-source",
+                    null, null, digestionSource: true));
+            inputs.Files[FileMapLoader.RelativePath] = Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(
+                new FileMapManifest(manifest.ResidencePolicy, manifest.Entries.Concat(sourceEntries)
+                    .OrderBy(entry => entry.Pattern, StringComparer.Ordinal).ToImmutableArray(), manifest.ArtifactKinds)).AsSpan());
             foreach (var (path, contents) in inputs.Files)
             {
                 var fullPath = Path.Combine(Root, path);

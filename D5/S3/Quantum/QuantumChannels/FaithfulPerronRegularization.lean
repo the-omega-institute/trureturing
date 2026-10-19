@@ -158,7 +158,7 @@ private theorem positive_definite_residual_lowering {d : ℕ} [NeZero d]
     ∃ η : ℝ, 0 < η ∧ (D - (η : ℂ) • ρ).PosSemidef := by
   letI : CStarAlgebra ((Matrix (Fin d) (Fin d) ℂ)) := { }
   obtain ⟨r, hr, hrD⟩ := (CFC.exists_pos_algebraMap_le_iff
-    hD.isHermitian.isSelfAdjoint).2 (fun z hz => hD.isStrictlyPositive.spectrum_pos hz)
+    D hD.isHermitian.isSelfAdjoint).2 (fun z hz => hD.isStrictlyPositive.spectrum_pos hz)
   let η : ℝ := r / (‖ρ‖ + 1)
   have hη : 0 < η := div_pos hr (by positivity)
   have hηr : η * ‖ρ‖ ≤ r := by
@@ -363,15 +363,15 @@ private lemma spectralRadius_eq_of_root_bounds {d : ℕ} [NeZero d] (T : (Matrix
     rw [← Module.End.hasEigenvalue_iff_mem_spectrum,
       Module.End.hasEigenvalue_iff_isRoot_charpoly,
       Polynomial.mem_roots T.charpoly_monic.ne_zero]
-  unfold spectralRadius
+  rw [spectralRadius_eq_of_unital]
   apply le_antisymm
   · apply iSup₂_le
     intro z hz
     have hb := ENNReal.ofReal_le_ofReal (hbound z ((hspec z).mp hz))
     simpa only [← coe_nnnorm, ENNReal.ofReal_coe_nnreal] using hb
   · have h : (‖(c : ℂ)‖₊ : ℝ≥0∞) ≤
-        ⨆ z ∈ spectrum ℂ T.toContinuousLinearMap, (‖z‖₊ : ℝ≥0∞) :=
-      le_iSup₂ (α := ℝ≥0∞) (c : ℂ) ((hspec (c : ℂ)).mpr hroot)
+        ⨆ z ∈ spectrum ℂ T.toContinuousLinearMap, (‖z‖₊ : ℝ≥0∞) := by
+      exact le_iSup₂_of_le (c : ℂ) ((hspec (c : ℂ)).mpr hroot) le_rfl
     simpa only [Complex.nnnorm_real, Real.nnnorm_of_nonneg hc,
       ← ENNReal.ofReal_eq_coe_nnreal hc] using h
 open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator

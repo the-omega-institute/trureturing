@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1b3e6df4f6ac105b43076d27f6e27dd0ed183b9e40f9097f1691cfb6240a44af
-  normalized_sha256: sha256:1b3e6df4f6ac105b43076d27f6e27dd0ed183b9e40f9097f1691cfb6240a44af
-cas_ref: sha256:1b3e6df4f6ac105b43076d27f6e27dd0ed183b9e40f9097f1691cfb6240a44af
-coverage_gids:
-  - gid: D5/S0/Carrier/Powers/GoldenCriticalBandScaling.golden_critical_band_scaling
-    target_statement_id: sha256:abb4d3b09b16f35bfd81a2236ac97997e7c7cacfc6d8386235610b8ccbf7e4b2
-receipts:
-  unresolved_subitems: []

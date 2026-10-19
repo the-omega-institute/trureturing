@@ -14,6 +14,11 @@ internal sealed class ProjectionAMGMRefutationDocument : IScribeDocumentDefiniti
         "A rank-one projection family gives a negative quadratic form for the matrix AM-GM difference.",
         H("Projection-matrix AM-GM refutation"),
         Blocks(
+            Entry("six-perms", "sixPerms", "The six permutations of three points", SixPerms(),
+                "The identity, the three transpositions, and the two products of adjacent transpositions list all permutations of Fin 3.", true, AssessedProvenance.FromRepo()),
+            Entry("six-perms-univ", "sixPerms_univ", "The list contains every permutation", Disp(Eq(V("sixPerms"),
+                Parenthesized(Seq(Qualified("Finset", "univ"), Colon, Call("Finset", Call("Equiv.Perm", Fin(Num(3)))))))),
+                "The finite set sixPerms equals the finite set of all permutations of Fin 3.", false, AssessedProvenance.FromRepo()),
             Entry("mean-proj", "meanProj", "Arithmetic mean of projections", MeanProj(),
                 "meanProj scales the finite sum of a projection family by the inverse of its cardinality.", true, AssessedProvenance.FromLiterature(Source)),
             Entry("sym-prod", "symProd", "Symmetrized projection product", SymProd(),
@@ -32,6 +37,16 @@ internal sealed class ProjectionAMGMRefutationDocument : IScribeDocumentDefiniti
             name == "result" ? new OpenProblemResolutionClaim(
                 ProblemSlugRef.Create("sun-luo-ye-2020-projection-matrix-amgm"),
                 ResolutionKind.Refuted) : null);
+
+    private static Formula SixPerms()
+    {
+        Formula Transposition(byte i, byte j) => Call("Equiv.swap",
+            Parenthesized(Seq(D(i), Colon, Fin(Num(3)))), D(j));
+        Formula s01 = Transposition(0, 1), s02 = Transposition(0, 2), s12 = Transposition(1, 2);
+        Formula type = Call("Finset", Call("Equiv.Perm", Fin(Num(3))));
+        return Disp(Eq(Parenthesized(Seq(V("sixPerms"), Colon, type)),
+            new Formula.SetLiteral([Num(1), s01, s02, s12, Mul(s01, s12), Mul(s12, s01)])));
+    }
 
     private static Formula MeanProj()
     {
