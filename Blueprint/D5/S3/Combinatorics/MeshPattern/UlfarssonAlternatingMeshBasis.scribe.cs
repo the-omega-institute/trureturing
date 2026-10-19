@@ -34,14 +34,18 @@ internal sealed class UlfarssonAlternatingMeshBasisDocument : IScribeDocumentDef
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("ulfarsson-result", "Conjecture 2.4.2 holds", "result", Disp(ClaimBody()),
                 "If a cell is unshaded, insert two points in that cell in either order. Both resulting permutations contain the pattern; exchanging the two points reverses the sign, so one resulting permutation is even. Therefore every forbidden pattern is fully shaded. A fully shaded pattern occurs only in its underlying permutation, which forces the forbidden patterns to be exactly the odd permutations with full shading. The argument uses only Av P = Alt; the minimality clause of IsBasis is unnecessary.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ulfarsson-2024-alternating-mesh-basis"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula MeshPatternFormula()
     {

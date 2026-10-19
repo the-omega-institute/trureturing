@@ -82,6 +82,10 @@ $$\forall P \in \operatorname{Set}\left(MeshPattern\right),\; (\operatorname{IsB
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/MeshPattern/UlfarssonAlternatingMeshBasis.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ulfarsson-2024-alternating-mesh-basis` (proved) by `D5/S3/Combinatorics/MeshPattern/UlfarssonAlternatingMeshBasis.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ulfarsson-2024-alternating-mesh-basis","declaration_gid":"D5/S3/Combinatorics/MeshPattern/UlfarssonAlternatingMeshBasis.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Henning Ulfarsson (2024). *BiSC: An algorithm for discovering generalized permutation patterns*. DOI: [10.48550/arXiv.2411.17778](https://doi.org/10.48550/arXiv.2411.17778). URL: <https://arxiv.org/abs/2411.17778v1>.
