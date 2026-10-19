@@ -55,7 +55,7 @@ partial def presentation (goal : MVarId) (facts : Array Expr) : MetaM Bool := go
       let gs ← goal.apply fact
       if ← gs.allM (fun g => g.assumptionCore) then return true
     catch ex =>
-      if ex.isRuntime || ex.isInterrupt then throw ex
+      if ex.isRuntime || ex.isInterrupt || ex.isMaxHeartbeat then throw ex
     before.restore
   let type ← withTransparency .reducible <| whnf (← goal.getType)
   if type.isForall then
@@ -375,7 +375,7 @@ def search (env : Environment) (levels : List Name) (type : Expr)
         let gs ← try
           (Term.withoutErrToSorry <| Tactic.run goal (evalTactic tacticSyntax)).run'
         catch ex =>
-          if ex.isRuntime || ex.isInterrupt then throw ex
+          if ex.isRuntime || ex.isInterrupt || ex.isMaxHeartbeat then throw ex
           return false
         return gs.isEmpty
       leafRows := leafRows.push row

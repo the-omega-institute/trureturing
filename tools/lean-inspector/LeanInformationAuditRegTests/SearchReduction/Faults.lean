@@ -1,4 +1,5 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Commands
+import LeanInformationAuditRegTests.SearchReduction.FaultPaths
 import LeanInformationAuditRegTests.SearchReduction.Candidates
 
 /-! Resource faults and missing inputs never certify finite-search failure. -/
