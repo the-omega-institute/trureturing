@@ -102,6 +102,10 @@ $$\neg (\forall (N: \mathbb{N}), (\forall (n: \mathbb{N}), (\forall (r: \operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/PolettiniPinnedTreeSpanRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/polettini-pinned-tree-span` (refuted) by `D5/S3/StatisticalMechanics/PolettiniPinnedTreeSpanRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"polettini-pinned-tree-span","declaration_gid":"D5/S3/StatisticalMechanics/PolettiniPinnedTreeSpanRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Matteo Polettini; Pedro E. Harunari; Sara Dal Cengio; Vivien Lecomte (2024). *Coplanarity of rooted spanning-tree vectors*. DOI: [10.1007/s11005-025-02026-8](https://doi.org/10.1007/s11005-025-02026-8). URL: <https://arxiv.org/abs/2407.16093v1>.

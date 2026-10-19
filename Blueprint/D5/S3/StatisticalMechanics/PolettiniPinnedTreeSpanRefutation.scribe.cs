@@ -59,12 +59,15 @@ internal sealed class PolettiniPinnedTreeSpanRefutationDocument : IScribeDocumen
                 + "The four vectors are therefore linearly dependent, and their span has dimension at most three, "
                 + "whereas n + 1 is four. The argument establishes the failure of the universal dimension formula; "
                 + "it does not assert a general replacement formula for arbitrary pinned graphs.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("polettini-pinned-tree-span"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("phdl-" + declaration.ToLowerInvariant()), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Q(string name)
