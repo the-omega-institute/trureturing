@@ -23,12 +23,12 @@ internal sealed class PathCHSNormClosedFormDocument : IScribeDocumentDefinition
             Node("zero", "The zero-weight continuant", ContinuantZeroFormula(), "continuant_zero", "At zero weight every term of the continuant is one.", DescribeRole.Theorem, false),
             Node("pathseries", "The reciprocal path continuant", PathSeriesFormula(), "path_hsymm_series", "The product over adjacency eigenvalues is the path determinant. Its reciprocal generates the symmetric polynomials.", DescribeRole.Theorem, false),
             Node("coefficients", "Even-degree values", ChsIdentityFormula(), "chs_formula", "Catalan substitution transforms the reciprocal continuant into a binomial second difference and a geometric series of reflections.", DescribeRole.Theorem, false),
-            Node("result", "Closed form for every even path norm", Disp(ClaimBody()), "result", "The second-difference expression gives the complete homogeneous symmetric value and hence its real root.", DescribeRole.Theorem, false),
+            Node("result", "Closed form for every even path norm", Disp(ClaimBody()), "result", "The second-difference expression gives the complete homogeneous symmetric value and hence its real root.", DescribeRole.Theorem, false, new OpenProblemResolutionClaim(ProblemSlugRef.Create("chavez-2023-path-chs-norm-closed-form"), ResolutionKind.Proved)),
             Node("degree", "Degree of the monic Chebyshev polynomial", DegreeFormula(), "chebS_degree", "The identity with the second-kind Chebyshev polynomial after scaling the variable gives degree n.", DescribeRole.Theorem, false)),
         []));
-    private static DocumentBlock Node(string id, string title, Formula formula, string name, string prose, DescribeRole role, bool literature) => Describe.Lean(
+    private static DocumentBlock Node(string id, string title, Formula formula, string name, string prose, DescribeRole role, bool literature, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("pathchsnormclosedform-" + id), DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+        literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula N(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Q(string name)
