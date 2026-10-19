@@ -252,5 +252,68 @@ def registration :
   options := #[] }
 
 end Rational
+namespace InverseAntitone
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℕ (fun n => Mat n) (fun n => Mat n → Prop)
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} {P Q : Mat n}, P.PosDef → Q.PosDef → P ≤ Q →
+    R.readout () n Q⁻¹ P⁻¹
+private theorem rejectedLaw : ¬ arena.Law rejected := by
+  intro h
+  exact h (n := 1) (P := 1) (Q := 1) _root_.Matrix.PosDef.one
+    _root_.Matrix.PosDef.one le_rfl
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 0, 1, ?_⟩
+  intro he
+  change (fun y : Mat 1 => (0 : Mat 1) ≤ y) = (fun y : Mat 1 => (1 : Mat 1) ≤ y) at he
+  have h10 : (1 : Mat 1) ≤ 0 := by rw [← congrFun he 0]
+  have hd := (_root_.Matrix.le_iff.mp h10).diag_nonneg (i := 0)
+  norm_num at hd
+def family : Registration arena (type_of% (@inverse_antitone)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@inverse_antitone, rejected, rejectedLaw⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejectedLaw
+  dependence := dependence
+def audit :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@inverse_antitone) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Matrix.CayleyResolvent.inverse_antitone.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.CayleyResolvent.InverseAntitone.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.CayleyResolvent
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end InverseAntitone
 end
 end Reg.D5.S3.Quantum.Matrix.CayleyResolvent

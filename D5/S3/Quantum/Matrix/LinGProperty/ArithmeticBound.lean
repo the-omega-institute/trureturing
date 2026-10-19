@@ -246,10 +246,14 @@ private theorem dilation_charpoly {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ) :
   let B := fromBlocks D 0 0 (-D)
   have hD : Dᴴ = D := by
     ext i j
-    by_cases hij : i = j <;> simp [D, hij, Ne.symm hij, Matrix.diagonal_apply]
+    by_cases hij : i = j
+    · subst j; simp [D, Matrix.diagonal_apply]
+    · simp [D, hij, Ne.symm hij, Matrix.diagonal_apply]
   have hxadj : Xᴴ = V.val * D * U.valᴴ := by
     rw [hX', conjTranspose_mul, conjTranspose_mul, conjTranspose_conjTranspose, hD,
       Matrix.mul_assoc]
+  have hXr : U.val * (D * V.valᴴ) = X := by rw [← Matrix.mul_assoc, ← hX']
+  have hXar : V.val * (D * U.valᴴ) = Xᴴ := by rw [← Matrix.mul_assoc, ← hxadj]
   have heq : fromBlocks 0 X Xᴴ (0 : Matrix (Fin n) (Fin n) ℂ) = M * B * Nᴴ := by
     dsimp [M, N, B]
     simp only [Matrix.smul_mul, fromBlocks_multiply, fromBlocks_conjTranspose,
@@ -257,7 +261,7 @@ private theorem dilation_charpoly {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ) :
       Matrix.zero_mul, add_zero, zero_add, Matrix.mul_assoc]
     ext i j
     rcases i with i | i <;> rcases j with j | j <;>
-      simp [Matrix.fromBlocks, Matrix.smul_apply, ← hX', ← hxadj] <;> ring
+      simp [Matrix.fromBlocks, Matrix.smul_apply, hXr, hXar] <;> ring
   rw [heq, charpoly_mul_comm, ← Matrix.mul_assoc, hi, Matrix.one_mul]
 
 private theorem dilation_eigenvalues {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ)
@@ -298,7 +302,8 @@ private theorem dilation_eigenvalues {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ)
       _ = Finset.univ.val.map (fun i => -singularValuesSorted X i) := by
         simp only [Fin.univ_val_map, Multiset.map_coe, List.map_ofFn, Function.comp_def]
       _ = Finset.univ.val.map (fun i : Fin (Fintype.card (Fin n)) => -singularValuesSorted X i.rev) := by
-        rw [← Multiset.map_univ_val_equiv Fin.revPerm, Multiset.map_map]; rfl
+        conv_lhs => rw [← Multiset.map_univ_val_equiv Fin.revPerm]
+        rw [Multiset.map_map]; rfl
       _ = _ := by rw [Fin.univ_val_map]
   have hr' : (fromBlocks 0 X Xᴴ (0 : Matrix (Fin n) (Fin n) ℂ)).charpoly.roots.map
       (RCLike.re : ℂ → ℝ) =
@@ -394,13 +399,18 @@ private theorem arithmetic_bound_real_trace {n : ℕ}
     exact charpoly_mul_comm Z Zᴴ
   have hspec := eigenvalues_zero_eq_of_charpoly hW.1 hL hWL k
   let T := U + V
-  let F := (1 / 2 : ℂ) • (Tᴴ * T)
+  let F := (((1 / 2 : ℝ) : ℂ)) • (Tᴴ * T)
   have hF : F.IsHermitian := (isHermitian_conjTranspose_mul_self T).smul (by simp [IsSelfAdjoint])
   let C := F + ((1 - X.trace.re : ℝ) : ℂ) • 1
   have hC : C.IsHermitian := hF.add (isHermitian_one.smul (by simp [IsSelfAdjoint]))
   have hcorr : (C - L).PosSemidef := by
-    simpa only [T, C, F, L, hUV] using normalized_gram_trace_correction U V
-      (by simpa only [hUU] using hA) (by simpa only [hVV] using hB)
+    convert normalized_gram_trace_correction U V
+      (by simpa only [hUU] using hA) (by simpa only [hVV] using hB) using 1
+    ext i l
+    simp only [T, C, F, L, hUV, Matrix.add_apply, Matrix.sub_apply,
+      Matrix.smul_apply, smul_eq_mul]
+    push_cast
+    ring
   have hsecond := eigenvalues_zero_mono_finite hL hC hcorr k
   rw [eigenvalues_zero_add_scalar_finite F hF (1 - X.trace.re) hC k,
     eigenvalues_zero_smul_finite (Tᴴ * T) (isHermitian_conjTranspose_mul_self T)

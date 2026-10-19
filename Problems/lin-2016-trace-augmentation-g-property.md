@@ -103,10 +103,9 @@ the conjecture.
 
 ## Evidence
 
-The exact universal statement is
-[`Result.conjecture`](../D5/S3/Quantum/Matrix/LinGProperty/Result.lean),
-with settlement theorem `Result.result` in the module address convention
-and Lean declaration `D5.S3.Quantum.Matrix.LinGProperty.result`.
+The exact universal statement and its settlement theorem are
+[`conjecture` and `result`](../D5/S3/Quantum/Matrix/LinGProperty/Result.lean),
+in Lean namespace `D5.S3.Quantum.Matrix.LinGProperty`.
 The theorem `parameter_family` covers every real c≥1.
 The live intermediate propositions are `normalized_arithmetic_bound`,
 `normalized_difference_square_le`, `arithmetic_sub_le_geometricMean`,

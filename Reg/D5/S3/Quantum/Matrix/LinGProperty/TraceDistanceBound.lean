@@ -12,10 +12,9 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 namespace Reg.D5.S3.Quantum.Matrix.LinGProperty.TraceDistanceBound
 universe u
-abbrev State := Σ n : Type u, Matrix n n ℂ
-abbrev signature : Signature.{0,u+1,0,0,0} where
-  Params := Unit
-  State _ := State.{u}
+abbrev signature : Signature.{u+1,u,0,0,0} where
+  Params := Type u
+  State n := Matrix n n ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -23,7 +22,7 @@ abbrev signature : Signature.{0,u+1,0,0,0} where
   Anchor := Empty
   finiteAnchor := inferInstance
 def actual : Realization signature :=
-  realize signature (fun _ _ M => M.2.PosSemidef) (fun e => nomatch e)
+  realize signature (fun _ _ M => M.PosSemidef) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
@@ -31,8 +30,8 @@ abbrev arena : Arena where
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
     {A X B : Matrix n n ℂ}, (fromBlocks A X Xᴴ B).PosSemidef →
     A.trace = 1 → B.trace = 1 →
-    R.readout () () ⟨n,
-      (((1-‖X.trace‖^2 : ℝ) : ℂ) • (1 : Matrix n n ℂ)) - (A-B)*(A-B)⟩
+    R.readout () n
+      ((((1-‖X.trace‖^2 : ℝ) : ℂ) • (1 : Matrix n n ℂ)) - (A-B)*(A-B))
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hw : (fromBlocks (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) 0 0
@@ -43,7 +42,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     (by simpa using hw) (by simp [Matrix.trace]) (by simp [Matrix.trace])
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
-  refine ⟨(), ⟨ULift.{u} Unit, 0⟩, ⟨ULift.{u} Unit, -1⟩, ?_⟩
+  refine ⟨ULift.{u} Unit, 0, -1, ?_⟩
   intro he
   have hn : (- (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)).PosSemidef := by
     have hz : (0 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ).PosSemidef := Matrix.PosSemidef.zero
@@ -80,7 +79,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ M => M.2.PosSemidef) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ M => M.PosSemidef) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -88,7 +87,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Matrix.LinGProperty.TraceDistanceBound
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
       stateBinder := 0
