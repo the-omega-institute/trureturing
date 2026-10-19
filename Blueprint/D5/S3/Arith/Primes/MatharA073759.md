@@ -58,6 +58,10 @@ $$\forall n \in \mathbb{N},\; (5 \le n) \Rightarrow (\operatorname{a}\left(n\rig
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/MatharA073759.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-oeis-a073759-least-prime-factor` (proved) by `D5/S3/Arith/Primes/MatharA073759.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-oeis-a073759-least-prime-factor","declaration_gid":"D5/S3/Arith/Primes/MatharA073759.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar (2026). *OEIS A073759: largest number neither a divisor of nor relatively prime to n*. URL: <https://oeis.org/A073759>.

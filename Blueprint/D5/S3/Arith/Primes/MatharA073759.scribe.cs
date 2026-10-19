@@ -41,13 +41,17 @@ internal sealed class MatharA073759Document : IScribeDocumentDefinition
                 + "and n divides n-k, so p is at most r and r is at most n-k. This bounds every candidate by n-p. "
                 + "Finally n-p is even: an even n has p=2, and an odd n has odd p. "
                 + "Hence a(n)=n-p=2*A046667(n).",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mathar-oeis-a073759-least-prime-factor"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("mathar-a073759-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Qualified(string owner, string name) =>
