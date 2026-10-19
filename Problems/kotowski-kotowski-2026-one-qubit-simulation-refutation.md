@@ -70,16 +70,18 @@ Tier 1 open question of a 2026 paper, preregistered in issue #19196 before any L
 
 | declaration | proof_shape | escape_witness | admission_basis |
 | --- | --- | --- | --- |
-| result | bind-only | none | open-problem-resolution |
-| definitions | bind-only | none | definitions used by `claim` |
+| result | content | the private helpers `usefulCount_bound` (a recursive bound on the useful leaves of a protocol tree) and `frame_rank` (the rank bound through an injection of sign pairs into the support) | open-problem-resolution |
+| `usefulCount_bound`, `frame_rank` (private) | content | themselves, on the live path of `result` | consumed helpers |
+| definitions and the remaining private helpers | bind-only | none | definitions used by `claim`, or consumed helpers |
 
-The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2. `utility: kind=certified-instance; basis=refutes`. There is no digestion atom.
+The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.2. `utility: kind=certified-instance; basis=refutes`. There is no digestion atom.
 
 ### What the settlement shows
 
-**Proved by `result`:** for every round budget R and every success probability q₀ > 0, some unital channel cannot be simulated in the model with at most R stages and success at least q₀.
+**Proved by `result`:** for every round budget R and every success probability q₀ > 0, some channel cannot be simulated in the model with at most R stages and success at least q₀.
 
 **Argued, not formalized.**
+- *Unital witness.* The witness channel Φ_n is unital, since its Kraus operators are diagonal with Σ_k D_k² = 1; the Lean statement certifies only that some channel fails.
 - *Mechanism.* A channel whose Kraus operators are forced to have very large rank cannot be split across few measurement outcomes. With one qubit of ancilla, each measurement has at most four high-rank outcomes, which caps the number of successful Kraus operators at 2·4^R. The contraction budget then caps the success probability.
 - *Scope.* The bound is compatible with the paper's theorem that one qubit suffices for success probability Ω(1/log d) on unital channels: that protocol samples a seed, applies one unitary dilation and measures a flag once, and for Φ_n it gives Ω(1/n²), below the bound O(4^R/n). The paper also recalls that exact simulation with one qubit is possible in O(log d) rounds; the refutation concerns O(1) rounds only. Whether Ω(1) success needs Θ(log d) rounds, or holds for other classes of channels, is not addressed.
 
