@@ -42,6 +42,8 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
                     Mul(Call("Matrix.of", Call("Function.curry", F.Id("psi"))),
                         Call("conjTranspose", Call("Matrix.of", Call("Function.curry", F.Id("psi")))))))),
                 "For a two-qubit vector, curry arranges its amplitudes into a two-by-two matrix. Tracing the right subsystem of its rank-one projector gives that matrix times its adjoint.", DescribeRole.Theorem, true),
+            Node("trace_projector_overlap", "Trace overlap of rank-one projectors", TraceProjectorOverlapFormula(),
+                "For any two complex vectors on a finite type n, the trace of the product of their rank-one projectors is the complex coercion of their squared overlap. Taking the real part gives the squared norm used in the Tiles product-overlap estimate.", DescribeRole.Theorem, true),
             Node("ensemble_kernel", "Zero quadratic form constrains every positive-weight vector", EnsembleKernelFormula(),
                 "Let psi be a finite family of complex vectors with nonnegative real weights w. If the quadratic form of their weighted rank-one projector sum vanishes at z, then every positive-weight vector is orthogonal to z. Positivity of the weighted squared overlaps prevents cancellation.", DescribeRole.Theorem, true),
             Node("result", "An infinite family proves the conjecture", Disp(Named("claim")),
@@ -110,6 +112,16 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
     private static Formula PauliMatrix(Formula p) => Call("pauliMatrix", p);
     private static Formula RankOne(Formula p) => Call("rankOneDensity", p);
     private static Formula Unit(Formula p) => Call("unitVector", p);
+
+    private static Formula TraceProjectorOverlapFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("a"), b = F.Id("b");
+        Formula rank(Formula x) => Call("D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity", x);
+        Formula overlap = Call("Complex.normSq", Call("dotProduct", Call("star", a), b));
+        return Disp(All("n", Named("Type"), Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            All("a", Arrow(n, Complexes), All("b", Arrow(n, Complexes),
+                EqTo(Call("Matrix.trace", Mul(rank(a), rank(b))), Parenthesized(Seq(overlap, Colon, Sp, Complexes))))))));
+    }
 
     private static Formula UnitFormula()
     {

@@ -12,6 +12,16 @@ internal sealed class FinitePathDynamicsDocument : IScribeDocumentDefinition
         "Weighted finite-path rigidity, boundary observability, and spectral power decay.",
         H("Finite-path rigidity and matrix decay"),
         Blocks(
+            Node("successor-telescope", "Successive differences telescope", "sum_succ_sub_castSucc",
+                All("n", Naturals(), All("f", Vector(Add(F.Id("n"), D(1)), Complexes()),
+                    Eq(Seq(new Formula.Subscript(F.Sum, Seq(F.Id("j"), Colon, Fin(F.Id("n")))),
+                            Parenthesized(Sub(Apply(F.Id("f"), QualifiedCall("Fin", "succ", F.Id("j"))),
+                                Apply(F.Id("f"), QualifiedCall("Fin", "castSucc", F.Id("j")))))),
+                        Sub(Apply(F.Id("f"), QualifiedCall("Fin", "last", F.Id("n"))),
+                            Apply(F.Id("f"), D(0)))))),
+                "For every natural n and complex-valued function f on Fin (n + 1), "
+                + "the sum of successor differences is the last value minus the first value.",
+                DescribeRole.Lemma),
             Node("zero-extension", "Zero endpoint extension", "zeroExtend",
                 All("m", Naturals(), All("z", Vector(F.Id("m"), Complexes()),
                     Eq(Call("zeroExtend", F.Id("z")),
