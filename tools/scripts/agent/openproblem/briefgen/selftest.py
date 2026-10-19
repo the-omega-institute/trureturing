@@ -206,7 +206,9 @@ def stub(kind, args):
         if '--json' in args and '--jq' not in args: print('[]')
         elif any('preregistration' in a for a in args):
             print('#12345 Preregister synthetic question\n#12346 Open problem (preregistration): synthetic question\n'
-                  '#12347 Open problem (preregistration): refute a synthetic conjecture (arXiv:2501.07269v2) at an explicit small case')
+                  '#12347 Open problem (preregistration): refute a synthetic conjecture (arXiv:2501.07269v2) at an explicit small case\n'
+                  '#12348 Open problem (preregistration): answer a synthetic basis question of quant-ph/9601020 in every dimension\n'
+                  '#12349 Open problem (preregistration): refute a synthetic journal conjecture (J. Synth. 2026, DOI 10.1000/xyz.123) on a forcing')
         else: print('#12345 Preregister synthetic question')
     else: raise RuntimeError('unexpected gh call ' + repr(args))
 
@@ -322,6 +324,8 @@ def case(tool, variant=None):
             assert oracle.returncode == 0, (oracle.returncode, oracle.stderr)
             compact = (root / 'oracle.md').read_text()
             assert '#12347 2501.07269\n' in compact, 'oracle brief does not name the issue by its arXiv identifier'
+            assert '#12348 quant-ph/9601020' in compact, 'oracle brief drops a legacy arXiv identifier'
+            assert '#12349 10.1000/xyz.123\n' in compact, 'oracle brief drops a DOI'
             assert 'refute a synthetic conjecture' not in compact, 'oracle brief keeps a full title that names an identifier'
             assert '#12345 Preregister synthetic question' in compact, 'oracle brief drops an issue without an identifier'
         if tool.stem in ('implb_head', 'rework_brief', 'gen_stage_briefs', 'stages'):

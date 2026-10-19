@@ -84,7 +84,8 @@ if track == "quick":
     text = text.replace("__WINDOW__", phrase)
 listing = pathlib.Path(prereg).read_text().rstrip("\n")
 if seat_id.startswith("nyxid-oracle:"):
-    # The oracle broker drops briefs above about 40 KB, so name each issue by the source identifiers in its title.
+    # The oracle broker drops briefs above about 40 KB, so name each issue by the source identifiers in its title
+    # (modern and legacy arXiv numbers, OEIS A-numbers, MathOverflow numbers, DOIs).
     import re
     rows = []
     for line in listing.splitlines():
@@ -93,7 +94,11 @@ if seat_id.startswith("nyxid-oracle:"):
             rows.append(line)
             continue
         number, title = match.groups()
-        ids = sorted(set(re.findall(r"(?<![\d.])(\d{4}\.\d{4,5})(?!\d)", title)) | set(re.findall(r"\bA\d{6}\b", title)))
+        ids = sorted(set(re.findall(r"(?<![\d.])(\d{4}\.\d{4,5})(?!\d)", title))
+                     | set(re.findall(r"(?<![\w.-])([a-z]+(?:-[a-z]+)*(?:\.[A-Z]{2})?/\d{7})(?!\d)", title))
+                     | set(re.findall(r"\bA\d{6}\b", title))
+                     | set(re.findall(r"\bMO ?\d{5,6}\b", title))
+                     | set(match.rstrip("):.,;") for match in re.findall(r"\b10\.\d{4,9}/[^\s,;]+", title)))
         rows.append(f"#{number} " + (", ".join(ids) if ids else title[:70]))
     listing = "\n".join(rows)
     text = text.replace("Open preregistration issues (number and title, one per line):",
