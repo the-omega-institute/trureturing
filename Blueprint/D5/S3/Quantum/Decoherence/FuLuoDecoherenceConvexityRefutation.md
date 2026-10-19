@@ -120,6 +120,82 @@ $$\neg (\forall d \in \mathbb{N},\; \forall k \in \operatorname{Fin}\left(d\righ
 
 For four system coordinates, four qubit environments in the state |0><0|, and detector unitaries (X, X, Z, Z), the two explicit density states have D equal to 5/16 while their midpoint has D equal to 3/8. Thus the Jensen inequality in the expanded claim is false.
 
+In the standard basis of Fin 4, the private definitions R false and R true are the two input matrices. The density states state false and state true use these matrices through CStarMatrix.ofMatrix. All entries below are real, regarded as complex numbers.
+
+$$
+\operatorname{R}\left(\operatorname{false}\right) = (\frac{1}{8}) \cdot (\begin{pmatrix}1&1&\sqrt{3}&\sqrt{3}\\1&1&\sqrt{3}&\sqrt{3}\\\sqrt{3}&\sqrt{3}&3&3\\\sqrt{3}&\sqrt{3}&3&3\end{pmatrix})
+$$
+
+$$
+\operatorname{R}\left(\operatorname{true}\right) = (\frac{1}{8}) \cdot (\begin{pmatrix}1&-1&\sqrt{3}&-\sqrt{3}\\-1&1&-\sqrt{3}&\sqrt{3}\\\sqrt{3}&-\sqrt{3}&3&-3\\-\sqrt{3}&\sqrt{3}&-3&3\end{pmatrix})
+$$
+
+The private lemma mixture identifies their midpoint with M.
+
+$$
+(\frac{1}{2}) \cdot (\operatorname{R}\left(\operatorname{false}\right)) + (\frac{1}{2}) \cdot (\operatorname{R}\left(\operatorname{true}\right)) = \operatorname{M}
+$$
+
+$$
+\operatorname{M} = (\frac{1}{8}) \cdot (\begin{pmatrix}1&0&\sqrt{3}&0\\0&1&0&\sqrt{3}\\\sqrt{3}&0&3&0\\0&\sqrt{3}&0&3\end{pmatrix})
+$$
+
+For the same tau and detectors, final_R and final_M give the output matrices B false, B true and BM.
+
+$$
+\forall b \in \operatorname{Bool},\; \operatorname{finalState}\left(\operatorname{tau}, \operatorname{detectors}, \operatorname{R}\left(b\right)\right) = \operatorname{B}\left(b\right)
+$$
+
+$$
+\operatorname{B}\left(\operatorname{false}\right) = (\frac{1}{8}) \cdot (\begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&3&3\\0&0&3&3\end{pmatrix})
+$$
+
+$$
+\operatorname{B}\left(\operatorname{true}\right) = (\frac{1}{8}) \cdot (\begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&3&-3\\0&0&-3&3\end{pmatrix})
+$$
+
+$$
+\operatorname{finalState}\left(\operatorname{tau}, \operatorname{detectors}, \operatorname{M}\right) = \operatorname{BM}
+$$
+
+$$
+\operatorname{BM} = (\frac{1}{8}) \cdot (\begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&3&0\\0&0&0&3\end{pmatrix})
+$$
+
+The positive square-root certificates use R itself for each endpoint, SM for M, S for B, and SBM for BM. The private lemmas R_pos, SM_pos, S_pos and SBM_pos certify positive semidefiniteness; R_square, SM_square, S_square and SBM_square certify the squares. The lemmas sqrt_R, sqrt_M, sqrt_B and sqrt_BM identify these with CFC.sqrt.
+
+$$
+\operatorname{SM} = (\frac{\sqrt{2}}{8}) \cdot (\begin{pmatrix}1&0&\sqrt{3}&0\\0&1&0&\sqrt{3}\\\sqrt{3}&0&3&0\\0&\sqrt{3}&0&3\end{pmatrix})
+$$
+
+$$
+\operatorname{S}\left(\operatorname{false}\right) = (\frac{1}{4}) \cdot (\begin{pmatrix}\sqrt{2}&0&0&0\\0&\sqrt{2}&0&0\\0&0&\sqrt{3}&\sqrt{3}\\0&0&\sqrt{3}&\sqrt{3}\end{pmatrix})
+$$
+
+$$
+\operatorname{S}\left(\operatorname{true}\right) = (\frac{1}{4}) \cdot (\begin{pmatrix}\sqrt{2}&0&0&0\\0&\sqrt{2}&0&0\\0&0&\sqrt{3}&-\sqrt{3}\\0&0&-\sqrt{3}&\sqrt{3}\end{pmatrix})
+$$
+
+$$
+\operatorname{SBM} = (\frac{1}{4}) \cdot (\begin{pmatrix}\sqrt{2}&0&0&0\\0&\sqrt{2}&0&0\\0&0&(\sqrt{2}) \cdot (\sqrt{3})&0\\0&0&0&(\sqrt{2}) \cdot (\sqrt{3})\end{pmatrix})
+$$
+
+$$
+\forall b \in \operatorname{Bool},\; (\operatorname{CFC}.\operatorname{sqrt}\left(\operatorname{R}\left(b\right)\right) = \operatorname{R}\left(b\right)) \land (\operatorname{Matrix}.\operatorname{PosSemidef}\left(\operatorname{R}\left(b\right)\right) \land ((\operatorname{R}\left(b\right)) \cdot (\operatorname{R}\left(b\right)) = \operatorname{R}\left(b\right)))
+$$
+
+$$
+(\operatorname{CFC}.\operatorname{sqrt}\left(\operatorname{M}\right) = \operatorname{SM}) \land (\operatorname{Matrix}.\operatorname{PosSemidef}\left(\operatorname{SM}\right) \land ((\operatorname{SM}) \cdot (\operatorname{SM}) = \operatorname{M}))
+$$
+
+$$
+\forall b \in \operatorname{Bool},\; (\operatorname{CFC}.\operatorname{sqrt}\left(\operatorname{B}\left(b\right)\right) = \operatorname{S}\left(b\right)) \land (\operatorname{Matrix}.\operatorname{PosSemidef}\left(\operatorname{S}\left(b\right)\right) \land ((\operatorname{S}\left(b\right)) \cdot (\operatorname{S}\left(b\right)) = \operatorname{B}\left(b\right)))
+$$
+
+$$
+(\operatorname{CFC}.\operatorname{sqrt}\left(\operatorname{BM}\right) = \operatorname{SBM}) \land (\operatorname{Matrix}.\operatorname{PosSemidef}\left(\operatorname{SBM}\right) \land ((\operatorname{SBM}) \cdot (\operatorname{SBM}) = \operatorname{BM}))
+$$
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Decoherence/FuLuoDecoherenceConvexityRefutation.D`

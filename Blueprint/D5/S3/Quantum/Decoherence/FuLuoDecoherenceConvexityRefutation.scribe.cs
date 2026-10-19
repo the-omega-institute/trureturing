@@ -43,17 +43,117 @@ internal sealed class FuLuoDecoherenceConvexityRefutationDocument : IScribeDocum
                 "For four system coordinates, four qubit environments in the state |0><0|, and detector unitaries (X, X, Z, Z), the two explicit density states have D equal to 5/16 while their midpoint has D equal to 3/8. Thus the Jensen inequality in the expanded claim is false.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("fu-luo-decoherence-convexity"),
-                    ResolutionKind.Refuted)))));
+                    ResolutionKind.Refuted), WitnessExposition()))));
 
     private static DocumentBlock SourceQuotation() => Paragraph(Text(
         "S. Fu and S. Luo, Quantifying Decoherence via Increases in Classicality, Entropy 23(12) (2021), 1594, Section 3. The source states verbatim: \"We conjecture that D(ρ_S|Π, U) is convex in ρ. It seems that a proof may require some deep mathematics.\" Equation (17) states \"J(ρ,Π) = 1 + tr(√ρ Π†(√ρ)) = 1 + Σ_i 〈i|√ρ|i〉².\" Equations (21)–(22) state \"ρ′_S = tr_E ρ′_SE = Σ_{i,j=1}^d tr(U_{Ei} ρ_E U_{Ej}†) · Π_i ρ_S Π_j\", with \"ρ_S ∘ Ω\", and Equation (27) states \"D(ρ_S|Π, U) = J(ρ′_S, Π) − J(ρ_S, Π)\"."));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
         string declaration, DescribeRole role, AssessedProvenance provenance,
-        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
+        OpenProblemResolutionClaim? resolution = null, DocumentBlock[]? exposition = null) => Describe.Lean(
         DescribeId.Create("fuluo-" + id), DeclarationHandle.Create(Prefix + declaration), H(title),
         StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
+        Blocks([Paragraph(Text(prose)), .. exposition ?? []]), role, openProblemResolutionClaim: resolution);
+
+    private static DocumentBlock[] WitnessExposition()
+    {
+        var f = Call("false");
+        var t = Call("true");
+        var q = Seq(Sqrt, Grp(D(3)));
+        var r = Seq(Sqrt, Grp(D(2)));
+        var nq = Seq(Minus, q);
+        var rq = Mul(r, q);
+        var midpointEntries = MatrixFour(
+            D(1), D(0), q, D(0),
+            D(0), D(1), D(0), q,
+            q, D(0), D(3), D(0),
+            D(0), q, D(0), D(3));
+        return [
+            Paragraph(Text("In the standard basis of Fin 4, the private definitions R false and R true are the two input matrices. The density states state false and state true use these matrices through CStarMatrix.ofMatrix. All entries below are real, regarded as complex numbers.")),
+            Display(Equal(Call("R", f), Scale(Fraction(D(1), D(8)), MatrixFour(
+                D(1), D(1), q, q,
+                D(1), D(1), q, q,
+                q, q, D(3), D(3),
+                q, q, D(3), D(3))))),
+            Display(Equal(Call("R", t), Scale(Fraction(D(1), D(8)), MatrixFour(
+                D(1), Seq(Minus, D(1)), q, nq,
+                Seq(Minus, D(1)), D(1), nq, q,
+                q, nq, D(3), Seq(Minus, D(3)),
+                nq, q, Seq(Minus, D(3)), D(3))))),
+            Paragraph(Text("The private lemma mixture identifies their midpoint with M.")),
+            Display(Equal(
+                Add(Scale(Fraction(D(1), D(2)), Call("R", f)),
+                    Scale(Fraction(D(1), D(2)), Call("R", t))), Call("M"))),
+            Display(Equal(Call("M"), Scale(Fraction(D(1), D(8)), midpointEntries))),
+            Paragraph(Text("For the same tau and detectors, final_R and final_M give the output matrices B false, B true and BM.")),
+            Display(All("b", Call("Bool"), Equal(
+                Call("finalState", Call("tau"), Call("detectors"), Call("R", F.Id("b"))),
+                Call("B", F.Id("b"))))),
+            Display(Equal(Call("B", f), Scale(Fraction(D(1), D(8)), MatrixFour(
+                D(1), D(0), D(0), D(0),
+                D(0), D(1), D(0), D(0),
+                D(0), D(0), D(3), D(3),
+                D(0), D(0), D(3), D(3))))),
+            Display(Equal(Call("B", t), Scale(Fraction(D(1), D(8)), MatrixFour(
+                D(1), D(0), D(0), D(0),
+                D(0), D(1), D(0), D(0),
+                D(0), D(0), D(3), Seq(Minus, D(3)),
+                D(0), D(0), Seq(Minus, D(3)), D(3))))),
+            Display(Equal(
+                Call("finalState", Call("tau"), Call("detectors"), Call("M")), Call("BM"))),
+            Display(Equal(Call("BM"), Scale(Fraction(D(1), D(8)), MatrixFour(
+                D(1), D(0), D(0), D(0),
+                D(0), D(1), D(0), D(0),
+                D(0), D(0), D(3), D(0),
+                D(0), D(0), D(0), D(3))))),
+            Paragraph(Text("The positive square-root certificates use R itself for each endpoint, SM for M, S for B, and SBM for BM. The private lemmas R_pos, SM_pos, S_pos and SBM_pos certify positive semidefiniteness; R_square, SM_square, S_square and SBM_square certify the squares. The lemmas sqrt_R, sqrt_M, sqrt_B and sqrt_BM identify these with CFC.sqrt.")),
+            Display(Equal(Call("SM"), Scale(Fraction(r, D(8)), midpointEntries))),
+            Display(Equal(Call("S", f), Scale(Fraction(D(1), D(4)), MatrixFour(
+                r, D(0), D(0), D(0),
+                D(0), r, D(0), D(0),
+                D(0), D(0), q, q,
+                D(0), D(0), q, q)))),
+            Display(Equal(Call("S", t), Scale(Fraction(D(1), D(4)), MatrixFour(
+                r, D(0), D(0), D(0),
+                D(0), r, D(0), D(0),
+                D(0), D(0), q, nq,
+                D(0), D(0), nq, q)))),
+            Display(Equal(Call("SBM"), Scale(Fraction(D(1), D(4)), MatrixFour(
+                r, D(0), D(0), D(0),
+                D(0), r, D(0), D(0),
+                D(0), D(0), rq, D(0),
+                D(0), D(0), D(0), rq)))),
+            Display(All("b", Call("Bool"),
+                SquareRootCertificate(Call("R", F.Id("b")), Call("R", F.Id("b"))))),
+            Display(SquareRootCertificate(Call("M"), Call("SM"))),
+            Display(All("b", Call("Bool"),
+                SquareRootCertificate(Call("B", F.Id("b")), Call("S", F.Id("b"))))),
+            Display(SquareRootCertificate(Call("BM"), Call("SBM")))
+        ];
+    }
+
+    private static DocumentBlock Display(Formula formula) => new DocumentBlock.DisplayFormula(formula);
+
+    private static Formula SquareRootCertificate(Formula matrix, Formula root) =>
+        new Formula.Logic(Parenthesized(Equal(Apply(Qualified("CFC", "sqrt"), matrix), root)),
+            FormulaLogicOperator.And, Parenthesized(new Formula.Logic(
+                CallQualified("Matrix", "PosSemidef", root), FormulaLogicOperator.And,
+                Parenthesized(Equal(Mul(root, root), matrix)))));
+
+    private static Formula Fraction(Formula numerator, Formula denominator) =>
+        Seq(Frac, Grp(numerator), Grp(denominator));
+
+    private static Formula MatrixFour(
+        Formula a, Formula b, Formula c, Formula d,
+        Formula e, Formula f, Formula g, Formula h,
+        Formula i, Formula j, Formula k, Formula l,
+        Formula m, Formula n, Formula o, Formula p) => Seq(
+        Begin, Grp(F.Id("pmatrix")),
+        a, Amp, b, Amp, c, Amp, d, RowBreak,
+        e, Amp, f, Amp, g, Amp, h, RowBreak,
+        i, Amp, j, Amp, k, Amp, l, RowBreak,
+        m, Amp, n, Amp, o, Amp, p,
+        End, Grp(F.Id("pmatrix")));
 
     private static Formula JFormula() => Disp(All("d", Nat(), All("rho", MatrixType(FinOf(F.Id("d"))),
         Equal(Call("J", F.Id("rho")), Add(D(1), SumOver("i", FinOf(F.Id("d")),
@@ -179,7 +279,8 @@ internal sealed class FuLuoDecoherenceConvexityRefutationDocument : IScribeDocum
     private static Formula DepFn(string name, Formula domain, Formula body) =>
         Parenthesized(new Formula.TypeArrow(Parenthesized(Seq(F.Id(name), Colon, Sp, domain)), body));
     private static Formula Call(string name, params Formula[] args) =>
-        new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+        args.Length == 0 ? Seq(Operatorname, Grp(F.Id(name))) :
+            new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
     private static Formula CallQualified(string owner, string name, params Formula[] args) =>
         new Formula.Apply(Qualified(owner, name), [.. args]);
     private static Formula Qualified(string owner, string name) =>
