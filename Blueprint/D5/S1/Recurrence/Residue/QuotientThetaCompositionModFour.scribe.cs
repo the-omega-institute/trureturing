@@ -31,6 +31,8 @@ internal sealed class QuotientThetaCompositionModFourDocument : IScribeDocumentD
                 + "D5.S1.Recurrence.Parity.ThetaSelfCompositionModFour.thetaSeries: its "
                 + "degree-zero coefficient is one, its positive square coefficients are "
                 + "two, and all other coefficients are zero.")),
+            Node("map_inverse", "Unit inversion commutes with ring homomorphisms", PublishedMapInverseFormula(),
+                "A coefficient ring homomorphism sends the inverse of a constant-one series to the inverse of its image."),
             Node("inverse_agreement", "Inverse agreement below a degree", InverseAgreementFormula(),
                 "If X^d divides G-F, it divides invOfUnit(F,1)*(G-F)*invOfUnit(G,1). "
                 + "The inverse identities identify that product with the difference of "
@@ -178,4 +180,15 @@ internal sealed class QuotientThetaCompositionModFourDocument : IScribeDocumentD
                 Biconditional(Equal(remainder, D(2)), square),
                 Biconditional(Equal(remainder, D(0)), Seq(Neg, Sp, Parenthesized(square))))))));
     }
+    private static Formula PublishedMapInverseFormula()
+    {
+        Formula r = F.Id("R"), s = F.Id("S"), hom = F.Id("hom"), f = F.Id("f");
+        return Disp(Seq(Bound("R", Named("Type")), OpenBracket, Call("CommRing", r), CloseBracket, Sp,
+            Bound("S", Named("Type")), OpenBracket, Call("CommRing", s), CloseBracket, Sp,
+            Bound("hom", Call("RingHom", r, s)), Bound("f", Call("PowerSeries", r)),
+            Implication(Equal(Call("constantCoeff", f), D(1)),
+                Equal(Call("map", hom, Call("invOfUnit", f, D(1))),
+                    Call("invOfUnit", Call("map", hom, f), D(1))))));
+    }
+
 }

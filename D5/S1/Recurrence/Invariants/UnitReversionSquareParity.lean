@@ -6,6 +6,8 @@
    utility: none
    digest: A contracting integer series and a lacunary mod-two fixed point prove A373312. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19022 -/
+
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.FieldTheory.Finite.Basic
@@ -16,7 +18,7 @@ namespace D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 
 variable {R : Type*} [CommRing R]
 
-private def Agree (d : ℕ) (f g : PowerSeries R) : Prop :=
+def Agree (d : ℕ) (f g : PowerSeries R) : Prop :=
   ∀ n < d, coeff n f = coeff n g
 
 private theorem agree_iff (d : ℕ) (f g : PowerSeries R) :
@@ -27,12 +29,12 @@ private theorem agree_mono {d e : ℕ} {f g : PowerSeries R}
     (h : Agree d f g) (he : e ≤ d) : Agree e f g :=
   fun n hn => h n (lt_of_lt_of_le hn he)
 
-private theorem agree_pow {d : ℕ} {f g : PowerSeries R}
+theorem agree_pow {d : ℕ} {f g : PowerSeries R}
     (h : Agree d f g) (k : ℕ) : Agree d (f ^ k) (g ^ k) :=
   (agree_iff _ _ _).mpr ((agree_iff _ _ _).mp h |>.trans
     (sub_dvd_pow_sub_pow f g k))
 
-private theorem agree_mul {d : ℕ} {f g u v : PowerSeries R}
+theorem agree_mul {d : ℕ} {f g u v : PowerSeries R}
     (h : Agree d f g) (h' : Agree d u v) : Agree d (f * u) (g * v) := by
   apply (agree_iff _ _ _).mpr
   have h1 := dvd_mul_of_dvd_left ((agree_iff _ _ _).mp h) u
@@ -365,9 +367,5 @@ theorem hanna_conjecture (n : ℕ) (_hn : 1 ≤ n) :
   change (a n : ZMod 2) = 1 ↔ ∃ k : ℕ, 1 ≤ k ∧ n = 2 ^ k - 1 at h
   exact ZMod.intCast_eq_one_iff_odd.symm.trans h
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms mod_two_fixed
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Invariants.UnitReversionSquareParity

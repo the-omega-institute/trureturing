@@ -7,6 +7,8 @@ t=$(mktemp -d "${TMPDIR:-/tmp}/op-pipeline-test.XXXXXX") || exit 16
 trap 'rm -rf "$t"' EXIT
 mkdir -p "$t/repo/tools/scripts/agent/openproblem/pipeline" "$t/repo/tools/scripts/agent/seat" "$t/bin" "$t/scratch/briefs" "$t/scratch/preset" "$t/state/spool" "$t/state/running" "$t/state/joblogs" "$t/tree with space" "$t/sshx"
 cp "$HERE/"*.sh "$t/repo/tools/scripts/agent/openproblem/pipeline/"
+mkdir -p "$t/repo/tools/scripts/agent/openproblem/briefgen"
+cp "$HERE/../briefgen/common.py" "$t/repo/tools/scripts/agent/openproblem/briefgen/"
 export OP_TEST_ROOT="$t" OP_SCRATCH="$t/scratch" OP_STATE="$t/state" SSHX_HOME="$t/sshx"
 export OP_POLL_SECONDS=0 OP_GATE_ROUNDS=2 OP_LOCK_ROUNDS=2 OP_RUNNER_POLL_SECONDS=0 OP_WATCH_MAX_SECONDS=0 OP_REFRESH_LOCK_ROUNDS=2
 export OP_NAME_PREFIX=test- OP_WAIT_SINCE=$(date +%s) OP_MAX_SEATS=16

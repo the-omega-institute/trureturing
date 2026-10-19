@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 
 TOOLS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS / 'briefgen'))
@@ -21,8 +22,20 @@ def stub(kind, args):
         seat, brief, tree, stage, stagger = args
         assert Path(brief).is_file() and Path(tree).is_dir()
         assert stage in ('implementation', 'review') and stagger == '0'
+        role = next((r for r in ('architecture', 'quality', 'tests') if '-'+r+'-' in seat), None)
+        if role:
+            preceding = {'architecture': None, 'quality': 'architecture', 'tests': 'quality'}[role]
+            deadline = time.monotonic() + 0.75
+            while preceding and '-'+preceding+'-' not in (root/'seats.txt').read_text():
+                assert time.monotonic() < deadline, 'review launch order stalled'
+                time.sleep(0.005)
         with (root / 'seats.txt').open('a') as out:
             out.write(seat + '\n')
+        if role and os.environ.get('CHAIN_REQUIRE_JOIN'):
+            deadline = time.monotonic() + 0.75
+            while len((root/'seats.txt').read_text().splitlines()) < 3:
+                assert time.monotonic() < deadline, 'reviews were not dispatched together'
+                time.sleep(0.005)
         if os.environ.get('CHAIN_DISPATCH_FAIL'):
             sys.exit(37)
         verdict = ('mirror-ready' if 'continue-' in seat or re.search(r'rework-.*-r\d+$', seat)
@@ -30,7 +43,7 @@ def stub(kind, args):
                    else 'approve')
         verdict = os.environ.get('CHAIN_VERDICT', verdict)
         if os.environ.get('CHAIN_REJECT_MIRROR') and 'mirror-' in seat: verdict = 'reject'
-        flight = ('b' if 'implb-' in seat else 'a') * 24
+        flight = (dict(architecture='c', quality='d', tests='e')[role] if role else 'b' if 'implb-' in seat else 'a') * 24
         path = root / 'sshx' / flight / 'attempt-10/result.json'
         path.parent.mkdir(parents=True, exist_ok=True)
         payload = {'conclusion': {'verdict': verdict, 'pr_number': 12345}}
@@ -175,8 +188,12 @@ def invoke(target, mode, root, env, args=None):
 
 
 def run(mode):
-    modes = list(('stagea', 'from-mirror', 'rework', 'prep-and-chain', 'stageb-go')) if mode == 'all' else [mode]
+    if mode == 'postb-reviews': return run_postb()
+    modes = list(('stagea', 'from-mirror', 'rework', 'prep-and-chain', 'stageb-go', 'postb-reviews')) if mode == 'all' else [mode]
     for mode in modes:
+        if mode == 'postb-reviews':
+            run_postb()
+            continue
         with tempfile.TemporaryDirectory(prefix='chain __fixture__ with spaces ') as tmp:
             root = Path(tmp).resolve()
             target, env = fixture(root, mode)
@@ -227,23 +244,59 @@ def run(mode):
                 result = invoke(target, mode, root, env, args)
                 assert result.returncode == 11, (mode, result.stdout, result.stderr)
                 assert not (root / 'seats.txt').read_text()
+        if mode == 'stagea': run_start_mirror()
         print('CHAIN_SELFTEST tool=' + mode + ' failed=0')
     return 0
 
 
-def compare(scratch_source, shim_source):
+
+def run_start_mirror():
+    for rejected in (False, True):
+        with tempfile.TemporaryDirectory(prefix='chain __mirror_start__ with spaces ') as tmp:
+            root = Path(tmp).resolve(); target, env = fixture(root, 'stagea')
+            if rejected: env['CHAIN_REJECT_MIRROR'] = '1'
+            result = invoke(target, 'stagea', root, env, ['sample', str(root/'tree'), '-', 'mirror-sample-r1'])
+            assert result.returncode == 0, (result.stdout, result.stderr)
+            seats = (root/'seats.txt').read_text().splitlines()
+            assert seats == (expected('from-mirror')[:1] if rejected else expected('from-mirror')), seats
+            if not rejected: print('CHAIN_SEQUENCE stagea-minus ' + ' -> '.join(seats))
+
+
+def run_postb():
+    cases = [({}, 0), ({'CHAIN_DISPATCH_FAIL': '1'}, 37), ({'CHAIN_CI_FAIL': '1'}, 38),
+             ({'CHAIN_NO_READY': '1'}, 13), ({'CHAIN_BAD_RESULT': '1'}, 13),
+             ({'CHAIN_NO_RESULT': '1'}, 13)]
+    for overrides, code in cases:
+        with tempfile.TemporaryDirectory(prefix='chain __postb__ with spaces ') as tmp:
+            root = Path(tmp).resolve(); target, env = fixture(root)
+            env.update(CHAIN_REQUIRE_JOIN='1', **overrides)
+            result = invoke(target, 'postb-reviews', root, env, ['sample', '12345', str(root/'tree')])
+            assert result.returncode == code, (overrides, result.returncode, result.stdout, result.stderr)
+            seats = (root/'seats.txt').read_text().splitlines()
+            wanted = expected('stagea')[-3:] if not any(k in overrides for k in ('CHAIN_CI_FAIL', 'CHAIN_NO_READY')) else []
+            assert seats == wanted, (overrides, seats)
+            if not overrides: print('CHAIN_SEQUENCE postb-reviews ' + ' -> '.join(seats))
+    print('CHAIN_SELFTEST tool=postb-reviews failed=0')
+    return 0
+
+def compare(scratch_source, shim_source=None):
     sources = {'stagea': scratch_source / 'chain-stagea-cont.sh',
+               'postb-reviews': scratch_source / 'chain-postb-reviews.sh',
                'from-mirror': scratch_source / 'chain-from-mirror.sh',
                'rework': scratch_source / 'chain-rework.sh',
                'stageb-go': scratch_source / 'stageb-go.sh',
-               'prep-and-chain': shim_source / 'prep-and-chain.sh'}
-    for mode in [*sources, 'prep-and-chain-mirror']:
-        source_mode = 'prep-and-chain' if mode == 'prep-and-chain-mirror' else mode
+               'prep-and-chain': (shim_source / 'prep-and-chain.sh') if shim_source else Path('unused')}
+    if shim_source is None:
+        sources = {key: sources[key] for key in ('stagea', 'postb-reviews')}
+    modes = [*sources, 'stagea-minus'] if shim_source is None else [*sources, 'prep-and-chain-mirror', 'stagea-minus']
+    for mode in modes:
+        source_mode = 'prep-and-chain' if mode == 'prep-and-chain-mirror' else 'stagea' if mode == 'stagea-minus' else mode
         sequences = []
         for legacy in (False, True):
             with tempfile.TemporaryDirectory(prefix='parity __fixture__ with spaces ') as tmp:
                 root = Path(tmp).resolve(); target, env = fixture(root, source_mode)
-                args = (['mirror', 'sample', str(root / 'tree'), 'mirror-sample-r1']
+                args = (['sample', str(root/'tree'), '-', 'mirror-sample-r1'] if mode == 'stagea-minus' else
+                        ['sample', '12345', str(root/'tree')] if mode == 'postb-reviews' else ['mirror', 'sample', str(root / 'tree'), 'mirror-sample-r1']
                         if mode == 'prep-and-chain-mirror' else arguments(mode, root))
                 if not legacy:
                     result = invoke(target, source_mode, root, env, args)
@@ -286,7 +339,8 @@ def compare(scratch_source, shim_source):
                                shlex.quote(str(target / 'pipeline/seat-wait.sh')) + ' "$seat" "$3" "$4" "$5" 0\n')
                     for block in ('lean-report-block.md', 'reuse-sweep-block.md'):
                         shutil.copyfile(target / 'templates/blocks' / block, scratch / 'briefs' / block)
-                    if mode in ('stagea', 'from-mirror'): args[1] = 'tree'
+                    if mode in ('stagea', 'from-mirror', 'stagea-minus'): args[1] = 'tree'
+                    elif mode == 'postb-reviews': args[2] = 'tree'; env['CHAIN_REQUIRE_JOIN'] = '1'
                     elif mode == 'rework':
                         args[3] = 'tree'; args = args[:5]
                         env.update(RW='r1', MW='rw1')
@@ -296,7 +350,8 @@ def compare(scratch_source, shim_source):
                                             cwd=root, env=env, text=True, capture_output=True, timeout=120)
                 assert result.returncode == 0, (mode, legacy, result.stdout, result.stderr)
                 sequences.append((root / 'seats.txt').read_text().splitlines())
-        assert sequences[0] == sequences[1] == expected('from-mirror' if mode == 'prep-and-chain-mirror' else mode), (mode, sequences)
+        wanted = expected('stagea')[-3:] if mode == 'postb-reviews' else expected('from-mirror' if mode in ('prep-and-chain-mirror', 'stagea-minus') else mode)
+        assert sequences[0] == sequences[1] == wanted, (mode, sequences)
         print('CHAIN_PARITY ' + mode + ' equal=true ' + ' -> '.join(sequences[0]), flush=True)
     return 0
 
@@ -304,6 +359,8 @@ def compare(scratch_source, shim_source):
 if __name__ == '__main__':
     if sys.argv[1:2] == ['--stub']:
         stub(sys.argv[2], sys.argv[3:])
+    elif sys.argv[1:2] == ['--compare-layer3'] and len(sys.argv) == 3:
+        sys.exit(compare(Path(sys.argv[2])))
     elif sys.argv[1:2] == ['--compare-scratch'] and sys.argv[3:4] == ['--shim'] and len(sys.argv) == 5:
         sys.exit(compare(Path(sys.argv[2]), Path(sys.argv[4])))
     else:
