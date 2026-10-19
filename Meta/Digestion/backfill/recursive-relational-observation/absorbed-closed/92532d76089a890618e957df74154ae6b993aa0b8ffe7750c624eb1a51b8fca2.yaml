@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:92532d76089a890618e957df74154ae6b993aa0b8ffe7750c624eb1a51b8fca2
+  normalized_sha256: sha256:92532d76089a890618e957df74154ae6b993aa0b8ffe7750c624eb1a51b8fca2
+cas_ref: sha256:92532d76089a890618e957df74154ae6b993aa0b8ffe7750c624eb1a51b8fca2
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/GaussianObservationLaw.gaussian_observation_law
+    target_statement_id: sha256:c48bfbd8e285008520b41974819ee11a9b56b0aff162803d81e8cccc979f89e4
+receipts:
+  unresolved_subitems: []

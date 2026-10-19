@@ -73,6 +73,14 @@ private theorem fourth_partial {N : ℕ} (hN : 0 < N) (M : ℕ) :
       simp only [Nat.cast_succ, ← add_assoc]
       linarith
 
+/-- The existing exact generic fourth-power partial tail, exposed without
+changing its private proof. The full-column remainder consumes this estimate.
+Exposure is reuse, not a new mathematical estimate. SOURCE_ONLY_UNCOMPILED. -/
+theorem inverse_fourth_partial_le {N : ℕ} (hN : 0 < N) (k : ℕ) :
+    (∑ j ∈ Finset.range k, 1 / ((N : ℝ) + (j : ℝ) + 1) ^ 4) ≤
+      1 / (3 * (N : ℝ) ^ 3) - 1 / (3 * ((N : ℝ) + (k : ℝ)) ^ 3) := by
+  simpa only [inverseFourth, exteriorIndex] using fourth_partial hN k
+
 private theorem majorant_partial {N : ℕ} (hN : 0 < N) (M : ℕ) :
     (∑ j ∈ Finset.range M, coefficientMajorant N j ^ 2) ≤
       16 / (27 * (N : ℝ) ^ 3) := by

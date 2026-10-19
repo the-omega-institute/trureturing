@@ -7,9 +7,8 @@ Pass --round N with the round you are about to dispatch. Without it the table's 
 is taken as the last completed one, which cannot detect a round that ran and was never written down.
 Pass --closed before merging instead: it requires the last round to carry no reject and no open round.
 
-The review standing is the one part of a lane PR body that goes stale purely by omission: closing a
-round is three edits — apply the findings, add the closed round's result rows, state the next round's
-layout — and doing only two of them is invisible until three seats spend twenty minutes each finding it.
+Closing a round requires three edits: apply the findings, add the closed round's result rows,
+and state the next round's layout. Check all three before dispatching the next round.
 
 Checks, all mechanical:
   1. every round number from 1 up to the highest one present has rows in the standing table;
@@ -28,12 +27,6 @@ Checks, all mechanical:
 
 Exit 0 clean, 1 findings, 2 bad usage. Findings print one per line as `STANDING <CODE> <detail>`.
 
-Case history this guards (each a real blocking finding, each costing a full review round):
-  #8422 round 3: table held round 1 only, prose still named round 2 as the open round (3 seats).
-  #8422 round 4 and #8407 round 3: same omission, one round later.
-  #8358: three tallies out of round order, no next-round layout line at all.
-  #8698 rounds 5 and 6: the recorded layout and the seats actually launched disagreed; each cost
-     a full review round, and the second one was found by the very seat it misattributed.
 """
 import re
 import subprocess
@@ -60,8 +53,8 @@ def carrier_family(name):
     return name.split("/")[0].strip().lower()
 
 
-# `is` must be a whole word here: with `\s*` the optional "is" eats the first two letters of a
-# carrier named "isolated-token-subagent" and the parse yields "olated-token-subagent" (live #8698).
+# The optional "is" requires trailing whitespace to preserve carrier names starting with "is",
+# such as "isolated-token-subagent".
 SEAT_ASSIGN = r"\b{seat}\b[`\s]*(?:seat\s*)?(?:is\s+)?[:=]?\s*([A-Za-z][\w-]*)"
 
 
@@ -83,10 +76,8 @@ def layout_findings(text, rnd, carriers):
     """Compare the recorded draw against the assignment about to be dispatched.
 
     The layout line IS the recorded draw: the sshx contract fixes it before the round's first
-    seat launches and forbids redrawing it. Nothing in the body can detect a dispatch that
-    diverged from it, because the layout line is replaced once the round's rows are written --
-    the two records never coexist. So the dispatcher states its assignment here, at the one
-    moment both exist. #8698 rounds 5 and 6 each cost a full review round to this divergence.
+    seat launches and forbids redrawing it. Writing the round's rows replaces the layout line,
+    so compare the dispatch assignment against the layout before writing those rows.
     """
     if carriers is None:
         return []
@@ -151,8 +142,8 @@ def check(body, next_round=None, closed=False, carriers=None):
     top = max(rounds)
     # Without --round, a body whose table simply stops early is indistinguishable from one whose
     # rounds really did stop there: nothing inside the body records a round that was run but never
-    # written down. That is exactly the omission this guards (#8422 round 3, #8407 round 3), so the
-    # caller supplies the round it is ABOUT TO DISPATCH and the table must hold every round below it.
+    # written down. The caller supplies the round it is ABOUT TO DISPATCH and the table must
+    # hold every round below it.
     if next_round is not None:
         if top != next_round - 1:
             findings.append(
@@ -207,7 +198,7 @@ def check(body, next_round=None, closed=False, carriers=None):
         text = dict((int(n), t) for n, t in layouts)[nxt]
         # Read the word the layout ASSIGNS to tests, not any nyxid mention downstream of it: these
         # layout lines routinely end with the true sentence "`tests` is never nyxid-oracle", and a
-        # proximity match on that sentence is a false positive (three live lanes, 2026-09-17).
+        # proximity match on that sentence is a false positive.
         for m in re.finditer(r"\btests\b[`\s]*(?:seat\s*)?(?:is\s*)?[:=]?\s*([A-Za-z][\w-]*)", text, re.I):
             if m.group(1).lower().startswith("nyxid"):
                 findings.append(f"STANDING TESTS-NYXID round {nxt} layout assigns tests to nyxid-oracle")
@@ -255,6 +246,10 @@ Round 3 seat layout at this head: quality nyxid-oracle / ChatGPT Pro, architectu
 
 
 def selftest():
+    import json
+    from pathlib import Path
+    fixture = Path(__file__).resolve().parent / 'briefgen/testdata/input.json'
+    assert check(json.loads(fixture.read_text())['body'], 1) == []
     cases = []
     cases.append(("clean", GOOD, []))
     cases.append(("gap", GOOD.replace("| 1 | `aaa` | architecture | codex-cli | reject |\n", ""), ["MISSING-SEAT"]))
@@ -265,9 +260,7 @@ def selftest():
     cases.append(("tests nyxid", GOOD.replace("| 2 | `aaa` | tests | codex-cli | reject |", "| 2 | `aaa` | tests | nyxid-oracle / ChatGPT Pro | reject |"), ["TESTS-NYXID"]))
     cases.append(("draw repeat in table", GOOD.replace("| 2 | `aaa` | architecture | nyxid-oracle / ChatGPT Pro | approve |\n| 2 | `aaa` | quality | codex-cli | reject |", "| 2 | `aaa` | architecture | codex-cli | approve |\n| 2 | `aaa` | quality | nyxid-oracle / ChatGPT Pro | reject |"), ["DRAW-REPEAT"]))
     cases.append(("draw repeat into next", GOOD.replace("Round 3 seat layout at this head: quality nyxid-oracle / ChatGPT Pro, architecture codex-cli", "Round 3 seat layout at this head: architecture nyxid-oracle / ChatGPT Pro, quality codex-cli"), ["DRAW-REPEAT"]))
-    # `seat = carrier` layouts with CJK punctuation (#9661 round 2): the assignment parser read
-    # architecture = nyxid, while the repeat check used a proximity regex that treats only ASCII
-    # commas as boundaries and swallowed "nyxid-oracle(ChatGPT Pro),quality" as nyxid on quality.
+    # Assignment and repeat checks must agree for `seat = carrier` layouts with CJK punctuation.
     eq_layout = "Round 3 seat layout: head `bbb`;{a} = {ac}(ChatGPT Pro),{q} = {qc},tests = codex-cli。"
     cases.append(("equals layout, nyxid moves", GOOD.replace(
         "Round 3 seat layout at this head: quality nyxid-oracle / ChatGPT Pro, architecture codex-cli, tests codex-cli.",
@@ -283,7 +276,7 @@ def selftest():
     cases.append(("never-nyxid sentence is not an assignment", never, []))
     cases.append(("tests colon nyxid", GOOD.replace("tests codex-cli.", "tests: nyxid-oracle / ChatGPT Pro."), ["TESTS-NYXID"]))
     cases.append(("missing round", GOOD.replace("| 1 | `aaa` | architecture | codex-cli | reject |\n| 1 | `aaa` | quality | nyxid-oracle / ChatGPT Pro | reject |\n| 1 | `aaa` | tests | codex-cli | reject |\n", ""), ["MISSING-ROUND"]))
-    zz22_r3 = """
+    incomplete_standing = """
 | round | head | seat | carrier | decision |
 | --- | --- | --- | --- | --- |
 | 1 | `aaa` | architecture | codex-cli | reject |
@@ -294,8 +287,8 @@ Round 1 tally: `approve 0, reject 3, abstain 0`.
 
 Round 2 seat layout at this head: architecture nyxid-oracle / ChatGPT Pro, quality codex-cli, tests codex-cli.
 """
-    cases.append(("#8422 round 3 body, no --round: invisible", zz22_r3, []))
-    cases.append(("#8422 round 3 body, --round 3", (zz22_r3, 3), ["ROUND-BEHIND", "LAYOUT-ROUND"]))
+    cases.append(("unrecorded round without --round is undetectable", incomplete_standing, []))
+    cases.append(("unrecorded round with --round 3", (incomplete_standing, 3), ["ROUND-BEHIND", "LAYOUT-ROUND"]))
     cases.append(("clean body, --round 3", (GOOD, 3), []))
     cases.append(("clean body, --round 4 is behind", (GOOD, 4), ["ROUND-BEHIND"]))
     closed_good = GOOD.replace(
@@ -326,15 +319,13 @@ Round 1 seat layout at `aaa`: quality nyxid-oracle / ChatGPT Pro, architecture c
     cases.append(("first publication, --closed", (first_pub, None, True), ["NO-TABLE"]))
 
     # --carriers states what is ABOUT TO BE DISPATCHED. The layout line is the recorded draw; the
-    # sshx contract fixes it before the round's first seat launches, so the two must agree. #8698
-    # rounds 5 and 6 each burned a full review round on exactly this divergence: the body recorded
-    # one seat->carrier assignment and a different one was launched, and nothing compared them.
+    # sshx contract fixes it before the round's first seat launches, so the two must agree.
     cases.append(("dispatch matches the recorded layout",
                   (GOOD, 3, False, {"quality": "nyxid-oracle", "architecture": "codex-cli", "tests": "codex-cli"}), []))
     cases.append(("dispatch swaps two seats against the layout",
                   (GOOD, 3, False, {"quality": "isolated-token-subagent", "architecture": "nyxid-oracle", "tests": "codex-cli"}),
                   ["LAYOUT-MISMATCH"]))
-    cases.append(("#8698 round 6: layout said architecture codex, subagent ran it",
+    cases.append(("architecture carrier differs from the recorded layout",
                   (GOOD, 3, False, {"architecture": "isolated-token-subagent", "quality": "nyxid-oracle", "tests": "codex-cli"}),
                   ["LAYOUT-MISMATCH"]))
     cases.append(("dispatch names no carrier for a seat the layout assigns",
@@ -343,9 +334,7 @@ Round 1 seat layout at `aaa`: quality nyxid-oracle / ChatGPT Pro, architecture c
                   (GOOD, 3, False, {"quality": "nyxid-oracle / ChatGPT Pro", "architecture": "codex-cli / OpenAI",
                                     "tests": "codex-cli / OpenAI"}), []))
     cases.append(("no --carriers leaves the layout uncompared", (GOOD, 3, False, None), []))
-    # A carrier whose name begins with "is" must not have those two letters eaten by the optional
-    # "is" in the assignment pattern. Found by running the live #8698 body, where the layout reads
-    # "quality isolated-token-subagent" and the parse returned "olated-token-subagent".
+    # A carrier whose name begins with "is" must retain those letters in the assignment pattern.
     is_carrier = GOOD.replace("quality nyxid-oracle / ChatGPT Pro, architecture codex-cli",
                               "architecture isolated-token-subagent / Anthropic Claude, quality nyxid-oracle / ChatGPT Pro")
     cases.append(("carrier name starting with 'is' is not truncated",
@@ -423,6 +412,48 @@ def main(argv):
     print(f"STANDING_CHECK findings={len(findings)}")
     return 1 if findings else 0
 
+
+
+def _append_invalid(message):
+    raise ValueError(message)
+
+def append_body(body, head, spec):
+    sp = spec
+    t = body
+    _bad = re.compile('\\b(asked|requested|requests|flagged|pointed out|complained|wanted|suggested|said|noted that|raised|all three seats|both seats|the seats? (?:asked|wanted))\\b', re.I)
+    for _s in sp['rows'] + [sp['tally'], sp['next']]:
+        _m = _bad.search(_s)
+        if _m:
+            _append_invalid(f'PROCESS_NARRATION {_m.group(0)!r} in: {_s[:160]}')
+    _adj = re.search('Disagreement adjudication:(.*)', sp['tally'], re.S)
+    if _adj:
+        _m = re.search('\\b(seat|seats|reject|rejects|rejected|approve|approves|approved|concern|concerns|read|reads|reviewer|reviewers)\\b', _adj.group(1), re.I)
+        if _m:
+            _append_invalid(f"ADJUDICATION_NARRATION {_m.group(0)!r}: state the operative result only, or 'none'")
+    _stale = re.search('[^.\\n]*\\b(?:Round \\d+[^.\\n]*\\b(?:pending|awaiting|in progress)|(?:review|reviews|merge)[^.\\n]*\\b(?:is|are) pending)[^.\\n]*\\.', t, re.I)
+    if _stale:
+        _append_invalid(f'STALE_STATUS sentence in body (remove it first): {_stale.group(0).strip()[:200]}')
+    _rn = re.match('Round (\\d+) tally', sp['tally'])
+    if _rn:
+        t = re.sub('^Round ' + _rn.group(1) + ' tally: 0 approve, 0 reject, 0 abstain[^\\n]*\\n\\n?', '', t, flags=re.M)
+    lines = t.split('\n')
+    idx = [i for i, l in enumerate(lines) if ROW.match(l)]
+    hdr = [i for i, l in enumerate(lines) if re.match('^\\|\\s*round\\s*\\|', l.strip())]
+    if idx:
+        ins = idx[-1] + 1
+    elif hdr:
+        ins = hdr[0] + 2
+    else:
+        _append_invalid('no standing table')
+    lines[ins:ins] = sp['rows']
+    t = '\n'.join(lines)
+    m = list(re.finditer('^Round \\d+ seat layout at [^\\n]*$', t, re.M))
+    if not m:
+        _append_invalid('no layout line')
+    L = m[-1]
+    nxt = sp['next'].replace('`HEAD`', '`' + head + '`')
+    t = t[:L.start()] + sp['tally'] + '\n\n' + nxt + t[L.end():]
+    return t
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

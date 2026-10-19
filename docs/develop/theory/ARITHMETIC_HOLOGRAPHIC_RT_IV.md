@@ -4609,3 +4609,248 @@ $$
 The corollary is a necessary restriction on the remaining full-support rank-$(7,4)$ calibrated local minima. It does not exclude the full-rank-stress class, the lower opposite ranks, or the global representative classes retained in Corollary 113.5. The unrestricted quarter optimum remains open. The original-channel reduction does not assert that an arbitrary leaking local minimum preserves these ranks or hypotheses under calibration.
 
 ## 追加锚（本行以下为增补区）
+
+## 119. Coherent-input bounds for diffuse and isotropic quotient stresses
+
+### 119.1. Actual channels and the full quotient hypothesis
+
+Keep the original channels $`A,B:\mathcal L(\mathbb C^8)\to\mathcal L(\mathbb C^4)`$, the four prescribed two-coordinate fibres, the fixed correlated encodings, and the unhalved arbitrary-reference diamond error $`\delta`$ of [RT III §91.1](ARITHMETIC_HOLOGRAPHIC_RT_III.md#911-original-channels-forward-grams-and-the-adaptive-theorem). Let $`G,H`$ be their actual correct-output forward Grams, with inner products conjugate-linear in the first argument. Thus $`G_{ff},H_{ff}\preceq I_2`$, and the encoded product coefficients use the transpose of $`K=G\odot H`$. Put
+
+$$
+L=T-K,\qquad T_{ff}=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+\tag{119.1}
+$$
+
+The hypotheses in this section are the full eight-coordinate identities
+
+$$
+\begin{aligned}
+R&\succeq0,\qquad R_{ii}=1,\qquad a_i\ne0,\qquad\alpha>0,\\
+G&=H\odot\bar R,\qquad
+P=\alpha\operatorname{diag}(a)R\operatorname{diag}(\bar a)\succeq0,
+\qquad PH=0.
+\end{aligned}
+\tag{119.2}
+$$
+
+They are imposed on the actual correct-output Grams; no quotient is inferred for arbitrary leaking channel pairs. Write
+
+$$
+\lambda=\|P\|_{\mathrm{op}}>0,\qquad
+p_i=P_{ii}>0,\qquad r=\frac{\operatorname{Tr}P}{\lambda},
+\qquad m=\frac{\max_i p_i}{\lambda}.
+\tag{119.3}
+$$
+
+### 119.2. One original coherent-reference witness
+
+**Lemma 119.1 (weighted tagged input).** Under (119.1)–(119.2), a reciprocal diagonal unitary change makes $`a`$ positive while preserving the entire original encoded product channel. In that gauge, set
+
+$$
+\begin{aligned}
+b_i&=\sqrt{p_i},& t&=\sum_i b_i^2=\operatorname{Tr}P,&
+\beta_f&=\|b_f\|_2,\\
+S&=\sum_f\beta_f,& c&=S^2,&
+A_0&=\sum_i b_i,\qquad s_f=\sum_{i\in f}b_i.
+\end{aligned}
+\tag{119.4}
+$$
+
+Then, with all original leakage retained,
+
+$$
+\delta\ge\frac{2}{c}\left[
+ t+\frac{A_0^2-\sum_f s_f^2}{2}
+       -\operatorname{Tr}\bigl((H\odot H)P\bigr)\right].
+\tag{119.5}
+$$
+
+**Proof.** Choose $`E_{ii}=\bar a_i/|a_i|`$. Multiply the entire $`i`$-th Stinespring column of $`A`$ by $`\bar E_{ii}`$ and that of $`B`$ by $`E_{ii}`$. Both maps remain isometries, and their input phases cancel in the correlated encoding on every matrix unit, including every wrong-output component. The forward Grams and quotient data transform as
+
+$$
+G'=EGE^*,\quad H'=E^*HE,\quad a'=Ea,\quad
+R'=E^{*2}RE^2,\quad P'=E^*PE.
+\tag{119.6}
+$$
+
+Thus (119.2) persists, $`a'`$ is positive, and both the full error and every entry of $`K`$ are unchanged. Suppress primes. In particular
+
+$$
+R_{ij}=\frac{P_{ij}}{b_i b_j},\qquad
+b^*Kb=\operatorname{Tr}\bigl((H\odot H)P\bigr),\qquad
+b^*Tb=t+\frac{A_0^2-\sum_f s_f^2}{2}.
+\tag{119.7}
+$$
+
+The trace in the middle is $`\sum_{i,j}H_{ij}^2P_{ji}`$; it uses a complex square, not a squared modulus.
+
+A block-density realization of the witness is
+
+$$
+W=\frac{bb^*}{c},\qquad
+\rho=\bigoplus_f\frac{b_f b_f^*}{S\beta_f},\qquad
+\operatorname{Tr}\rho=1,\qquad0\preceq W\preceq\rho.
+\tag{119.8}
+$$
+
+Indeed, weighted Cauchy–Schwarz gives $`|b^*x|^2\le S\sum_f|b_f^*x_f|^2/\beta_f=cx^*\rho x`$. To check the original normalization directly, use the unit input with four orthogonal reference tags
+
+$$
+|\psi\rangle=\sum_f\sum_{i\in f}
+       \frac{b_i}{\sqrt{S\beta_f}}|i\rangle\otimes|f\rangle_R.
+\tag{119.9}
+$$
+
+Compress the target-minus-product output to the span of $`|f,f\rangle\otimes|f\rangle_R`$. The target output is entirely in this space. The compressed error $`C`$ and a unit vector $`v`$ in it satisfy
+
+$$
+C_{fg}=\frac{\sum_{i\in f,j\in g}b_i b_j L_{ji}}
+                    {S\sqrt{\beta_f\beta_g}},\qquad
+v_f=\sqrt{\frac{\beta_f}{S}},\qquad
+v^*Cv=\frac{b^*L^{\mathsf T}b}{c}=\frac{b^*Lb}{c}.
+\tag{119.10}
+$$
+
+The transpose is required by the forward-Gram convention; the last equality holds because $`b`$ is real and $`L`$ is Hermitian. The complementary product output is positive. Pinching therefore bounds the full trace norm below by $`\|C\|_1+\operatorname{Tr}C=2\operatorname{Tr}C_+\ge2v^*Cv`$. Equations (119.7) and (119.10) prove (119.5). ∎
+
+### 119.3. Calibrated spectral bounds and diagonal concentration
+
+**Theorem 119.2 (diffuse-stress obstruction).** Suppose (119.2) holds and the actual channels are calibrated, so $`G_{ff}=H_{ff}=I_2`$. Their original error $`F(G,H)=\delta`$ obeys
+
+$$
+0<m\le\tfrac34,\qquad
+F(G,H)\ge\max\left\{0,\frac{r}{4m}-\frac4r\right\}
+       \ge\max\left\{0,\frac r3-\frac4r\right\}.
+\tag{119.11}
+$$
+
+For $`15/4\le r\le4`$, the stronger bound is
+
+$$
+F(G,H)\ge
+\frac{\left(5\sqrt3/2+\sqrt{r-15/4}\right)^2-16}{4r}.
+\tag{119.12}
+$$
+
+Consequently
+
+$$
+F(G,H)<\tfrac14\quad\Longrightarrow\quad
+r<\frac{1129}{300}.
+\tag{119.13}
+$$
+
+If $`P`$ is a positive scalar multiple of a rank-four orthogonal projection, then
+
+$$
+F(G,H)\ge\frac{6+5\sqrt3}{32}>\frac13>\frac14.
+\tag{119.14}
+$$
+
+**Proof.** Factor $`H=B^*B`$. Its four original column blocks $`B_f`$ are isometries. Thus $`BB^*=\sum_fB_fB_f^*\preceq4I`$, and $`H\preceq4I`$. If $`N`$ projects onto $`\ker H`$, positivity and $`PH=0`$ give
+
+$$
+H\preceq4(I-N),\qquad
+N_{ii}\le\tfrac34,\qquad P\preceq\lambda N,
+\qquad p_i\le\tfrac34\lambda.
+\tag{119.15}
+$$
+
+The Schur product theorem gives $`H\odot H\succeq0`$, with trace eight. Hence
+
+$$
+\operatorname{Tr}\bigl((H\odot H)P\bigr)\le8\lambda,
+\qquad\sum_f s_f^2\le2t,\qquad
+A_0\ge\frac{t}{\sqrt{\lambda m}},\qquad c\le4t.
+\tag{119.16}
+$$
+
+The target term in (119.7) is at least $`A_0^2/2`$. When $`t^2/(\lambda m)-16\lambda\ge0`$, Lemma 119.1 and (119.16) allow division by the upper bound $`c\le4t`$, giving the first lower bound in (119.11). When that numerator is negative, use $`F\ge0`$ instead. The cap $`m\le3/4`$ proves the second bound.
+
+For the refinement, put $`x_i=p_i/\lambda`$. These eight numbers lie in $`[0,3/4]`$ and sum to $`r`$. On the compact capped simplex a minimum of $`\sum_i\sqrt{x_i}`$ exists. If two coordinates are interior, move them at fixed sum to an endpoint of their feasible segment. Concavity makes at least one endpoint no larger. Repetition leaves at most one fractional coordinate. For $`15/4\le r\le4`$, the resulting multiset is five copies of $`3/4`$, one copy of $`r-15/4`$, and two zeros. Therefore
+
+$$
+\frac{A_0}{\sqrt\lambda}\ge
+       \frac{5\sqrt3}{2}+\sqrt{r-\frac{15}{4}}.
+\tag{119.17}
+$$
+
+The square of this lower bound exceeds sixteen throughout the interval: at its left endpoint the difference is $`11/4`$. Thus the denominator substitution is again legitimate, proving (119.12). Its numerator minus $`r`$ is
+
+$$
+\left(\frac{5\sqrt3}{2}+\sqrt{r-\frac{15}{4}}\right)^2-16-r
+       =-1+5\sqrt3\sqrt{r-\frac{15}{4}}.
+\tag{119.18}
+$$
+
+This is nonnegative exactly for $`r\ge15/4+1/75=1129/300`$. For $`r>4`$, (119.11) already gives $`F>1/3`$, while $`r<15/4`$ satisfies (119.13). Finally a scalar rank-four projection has $`r=4`$, and (119.12) becomes (119.14). ∎
+
+### 119.4. A uniform gap retaining arbitrary leakage
+
+**Theorem 119.3 (isotropic stress with actual leakage).** Suppose the original channels satisfy (119.2) and
+
+$$
+P=\lambda N_0,\qquad\lambda>0,\qquad
+N_0=N_0^*=N_0^2,\qquad\operatorname{rank}N_0=4.
+\tag{119.19}
+$$
+
+Then $`\delta>2/5`$. It is enough that $`\operatorname{ran}N_0\subseteq\ker H`$; equality with the entire opposite kernel is not required.
+
+**Proof.** Use the physical gauge of Lemma 119.1. Suppose $`\delta\le2/5`$. For the original basis input $`|i\rangle`$, the correct output has probability $`G_{ii}H_{ii}=H_{ii}^2`$, since $`R_{ii}=1`$. Measuring whether the output is the target basis vector gives
+
+$$
+\delta\ge2(1-H_{ii}^2),\qquad
+H_{ii}\ge\sqrt{\frac45}>\frac89.
+\tag{119.20}
+$$
+
+The actual correct-output blocks $`B_f`$ are contractions, so $`BB^*\preceq4I`$ still holds. With $`N`$ the projection onto $`\ker H`$, (119.19) and $`PH=0`$ imply $`N_0\preceq N`$. Consequently
+
+$$
+H\preceq4(I-N),\qquad
+x_i:=\frac{P_{ii}}{\lambda}\le N_{ii}
+       \le1-\frac{H_{ii}}4<\frac79,
+\qquad\sum_i x_i=4.
+\tag{119.21}
+$$
+
+The same finite concavity argument, now on the cap-$`7/9`$ simplex of sum four, leaves five copies of $`7/9`$, one of $`1/9`$, and two zeros. Thus
+
+$$
+\frac{A_0}{\sqrt\lambda}\ge\frac{5\sqrt7+1}{3},
+\qquad A_0^2\ge\lambda\frac{176+10\sqrt7}{9}.
+\tag{119.22}
+$$
+
+The original target identity still gives $`2b^*Tb\ge A_0^2`$. Also $`H\odot H\succeq0`$, $`\operatorname{Tr}(H\odot H)=\sum_iH_{ii}^2\le8`$, and $`c\le4\operatorname{Tr}P=16\lambda`$. Since $`A_0^2-16\lambda>0`$, the leakage-safe Lemma 119.1 yields
+
+$$
+\delta\ge\frac{A_0^2-16\lambda}{16\lambda}
+       \ge\frac{16+5\sqrt7}{72}>\frac25.
+\tag{119.23}
+$$
+
+The last strict inequality is equivalent to $`25\sqrt7>64`$, whose squared form is $`4375>4096`$. This contradicts the assumption and proves the theorem. ∎
+
+### 119.5. The full-support local-minimum consumer
+
+**Corollary 119.4.** Let $`(G,H)`$ be a local minimum on the full calibrated domain $`\mathcal E^2`$ of (118.1), with $`\operatorname{rank}G=7`$, a full-support kernel vector, and $`0<F(G,H)<1/4`$. Every common stress supplied by the quotient theorem satisfies
+
+$$
+\frac{\operatorname{Tr}P}{\|P\|_{\mathrm{op}}}
+              <\frac{1129}{300}.
+\tag{119.24}
+$$
+
+For the remaining rank-$`(7,4)`$ class, its four positive stress eigenvalues in Corollary 118.3 cannot be equal.
+
+**Proof.** [RT III Lemma 95.2](ARITHMETIC_HOLOGRAPHIC_RT_III.md#952-one-rank-seven-side-gives-a-supported-psd-quotient) gives the full identity (119.2), because the first kernel has full support. Apply Theorem 119.2. Section 118 gives rank four and full opposite-kernel range in the stated subquarter rank-$`(7,4)`$ case, and (119.14) excludes equal positive eigenvalues. ∎
+
+This conclusion concerns the actual common stress, rather than a freely chosen stress with the same support. Nonisotropic rank-four stresses satisfying (119.24), opposite rank three, and the global representative class with both ranks at most six remain outside these exclusions. Theorem 119.3 imposes its quotient on the full actual leaking Grams; it does not transfer calibrated local-minimum conditions to arbitrary leaking optimizers. The unrestricted global quarter optimum remains open.
+
+## 追加锚（本行以下为增补区）
+
+The full actual-quotient effective-rank extension, including its quantitative leakage bound, is proved in [RT V §120](ARITHMETIC_HOLOGRAPHIC_RT_V.md#120-effective-rank-bounds-for-full-actual-quotient-stresses).
+
+## 追加锚（本行以下为增补区）
