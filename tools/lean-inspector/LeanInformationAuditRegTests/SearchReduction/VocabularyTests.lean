@@ -33,6 +33,7 @@ run_meta do
   unless modes.contains ``VocabularyCandidates.PureMode.ab do throwError "missing constructor"
   unless modes.contains (``VocabularyCandidates.PureMode ++ `casesOn) do throwError "missing casesOn"
   discard <| check ``VocabularyCandidates.ForwardLaw
+  discard <| check ``VocabularyCandidates.nestedBox
   let first ← check ``VocabularyCandidates.easyBox
   let second ← check ``VocabularyCandidates.easyBoxOther
   let firstInfo := (first.find? ``VocabularyCandidates.easyBox).get!

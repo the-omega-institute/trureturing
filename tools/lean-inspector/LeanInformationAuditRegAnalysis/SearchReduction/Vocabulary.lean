@@ -77,7 +77,9 @@ mutual
       -- excluded from the separate bound on reconstruction work.
       withTheReader Core.Context (fun reader => {reader with maxHeartbeats := 0}) do
         checkReconstructionBudget ctx
-        transportVocabularyCore ctx n
+        -- A referenced global definition owns its telescope. Parameters of the
+        -- expression that mentioned it must never enter its proof obligations.
+        withLCtx {} {} <| transportVocabularyCore ctx n
         checkReconstructionBudget ctx
     catch ex =>
       if ex.isMaxHeartbeat then

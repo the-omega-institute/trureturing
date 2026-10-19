@@ -16,6 +16,8 @@ private theorem easyCertificateOther (n : Nat) : n = n := by omega
 def easyBox (n : Nat) : {x : Nat // x = n} := ⟨n, easyCertificate n⟩
 def easyBoxOther (n : Nat) : {x : Nat // x = n} := ⟨n, easyCertificateOther n⟩
 
+def nestedBox (n : Nat) : Nat := (easyBox n).val
+
 def hardBox (n : Nat) : {x : Nat // stair n = 3*n} := ⟨n, answer n⟩
 
 theorem easyProjection (n : Nat) : (easyBox n).1 = n := rfl
