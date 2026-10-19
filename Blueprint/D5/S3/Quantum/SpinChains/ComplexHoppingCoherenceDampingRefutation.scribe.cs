@@ -48,7 +48,10 @@ internal sealed class ComplexHoppingCoherenceDampingRefutationDocument : IScribe
                 StatementSource.FromAuthor(Disp(new Formula.Not(Named("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 ResultProse(),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sokolovs-2026-complex-hopping-coherence-damping-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(
