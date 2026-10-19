@@ -40,6 +40,95 @@ private partial def instanceParameters : Expr → Bool
   | .forallE _ _ body kind => kind == .instImplicit || instanceParameters body
   | _ => false
 
+/-- A target-independent overapproximation of the names that N can expose.
+Only compiled expression constants and definition values are read. A cycle or
+analysis depth limit widens to top; it never discards a possible source. -/
+structure RawOriginBound where
+  names : NameSet := {}
+  unknown : Bool := false
+
+private abbrev OriginMemo := Std.HashMap Name RawOriginBound
+
+private def mergeOrigins (a b : RawOriginBound) : RawOriginBound :=
+  { names := b.names.toList.foldl (fun s n => s.insert n) a.names,
+    unknown := a.unknown || b.unknown }
+
+private def expandableAlias (env : Environment) (name : Name) : Option DefinitionVal := do
+  if primitive name then none else
+  let .defnInfo d ← (env.setExporting false).find? name | none
+  if !instanceParameters d.type && aliasBody env d.value then some d else none
+
+private def originName (env : Environment) (fuel : Nat) (seen : NameSet)
+    (name : Name) : StateM OriginMemo RawOriginBound := do
+  match fuel with
+  | 0 => return { unknown := true }
+  | fuel + 1 =>
+    if let some result := (← get)[name]? then return result
+    if seen.contains name then return { unknown := true }
+    let mut result : RawOriginBound := { names := ({} : NameSet).insert name }
+    if let some d := expandableAlias env name then
+      for dep in d.value.getUsedConstants do
+        result := mergeOrigins result (← originName env fuel (seen.insert name) dep)
+    modify (·.insert name result)
+    return result
+
+/-- A closed raw bound contains the input constants and every constant in
+any expandable alias value it admits. This checker reads compiled data only. -/
+def rawBoundClosed (env : Environment) (e : Expr) (bound : RawOriginBound) : Bool :=
+  e.getUsedConstants.all bound.names.contains &&
+    bound.names.toList.all (fun name => match expandableAlias env name with
+      | none => true
+      | some d => d.value.getUsedConstants.all bound.names.contains)
+
+/-- A malformed or unfinished raw dependency certificate widens to top. -/
+def certifyRawBound (env : Environment) (e : Expr) (bound : RawOriginBound) : RawOriginBound :=
+  if bound.unknown || rawBoundClosed env e bound then bound else { unknown := true }
+
+/-- Shared memoization changes cost only. Unknown bounds always retain sources. -/
+def rawOrigins (env : Environment) (e : Expr) : StateM OriginMemo RawOriginBound := do
+  let mut result : RawOriginBound := {}
+  for name in e.getUsedConstants do
+    result := mergeOrigins result (← originName env 1024 {} name)
+  return certifyRawBound env e result
+
+/-- Every bound used to reject a source has a checked raw alias closure. -/
+theorem certified_raw_bound_closed (env : Environment) (e : Expr) (bound : RawOriginBound)
+    (known : (certifyRawBound env e bound).unknown = false) :
+    rawBoundClosed env e (certifyRawBound env e bound) = true := by
+  by_cases h : bound.unknown || rawBoundClosed env e bound = true
+  · simp only [certifyRawBound, h, ite_true] at known ⊢
+    simpa [known] using h
+  · simp [certifyRawBound, h] at known
+
+/-- The complete expression rendering is a structural locator. Its constant
+origins are retained as data, so lookup laws use lawful equality rather than
+an unproved property of the compiler's pointer-optimized Expr equality. -/
+structure PresentationKey where
+  rendering : String
+  constants : List Name
+  deriving BEq, ReflBEq, LawfulBEq, DecidableEq, Repr
+
+private def expressionKey (e : Expr) : PresentationKey :=
+  { rendering := reprStr e, constants := e.getUsedConstants.toList }
+
+/-- Key constructors and numeral constructors are generated syntax, not source
+anchors. All other compiled constants must have an origin in the source. -/
+def originAnchor (env : Environment) (name : Name) : Bool :=
+  !#[`Int, `Neg.neg, `OfNat.ofNat, `Int.instNegInt, `instOfNat].contains name &&
+  match (env.setExporting false).find? name with
+    | none | some (.ctorInfo _) => false
+    | _ => true
+
+def keyOriginCompatible (env : Environment) (bound : RawOriginBound)
+    (key : PresentationKey) : Bool :=
+  bound.unknown || key.constants.all (fun n =>
+    !originAnchor env n || bound.names.contains n)
+
+/-- The raw necessary condition reads the raw alias dependency bound only. -/
+def rawNecessary (env : Environment) (targetAtoms : List PresentationKey)
+    (bound : RawOriginBound) : Bool :=
+  targetAtoms.all (keyOriginCompatible env bound)
+
 private partial def normalizeAux (env : Environment) (e : Expr)
     (seen : NameSet) : StateT Nat (Except String) Expr := do
   let remaining ← get
@@ -182,7 +271,8 @@ private def componentKey (telescope : List (Expr × BinderInfo)) (e : Expr) : Ex
 
 /-- Nonneutral component sets form the directional index. The complete
 outer telescope is part of every component. Iff contributes its two views. -/
-partial def syntaxAtoms (e : Expr) (telescope : List (Expr × BinderInfo) := []) : List Expr :=
+partial def syntaxAtoms (e : Expr) (telescope : List (Expr × BinderInfo) := []) :
+    List PresentationKey :=
   if let .forallE _ d b bi := e then syntaxAtoms b (telescope ++ [(d, bi)])
   else if syntacticNeutral e then []
   else if e.isAppOfArity ``And 2 then
@@ -193,13 +283,56 @@ partial def syntaxAtoms (e : Expr) (telescope : List (Expr × BinderInfo) := [])
     let forward := mkForall .anonymous .default p (q.liftLooseBVars 0 1)
     let backward := mkForall .anonymous .default q (p.liftLooseBVars 0 1)
     (syntaxAtoms forward telescope ++ syntaxAtoms backward telescope).eraseDups
-  else [componentKey telescope e]
+  else [expressionKey (componentKey telescope e)]
 
-def normalizedAtoms (env : Environment) (e : Expr) : Except String (List Expr) := do
-  return syntaxAtoms (← normalizeSyntax env e)
+/-- The target-independent origin check certifies the actual keys returned by
+N. A violated origin invariant is an execution error, never an opaque miss. -/
+def normalizedAtomsWithOrigins (env : Environment) (e : Expr)
+    (bound : RawOriginBound) : Except String (List PresentationKey) := do
+  let atoms := syntaxAtoms (← normalizeSyntax env e)
+  if rawNecessary env atoms bound then return atoms
+  else throw ("search.presentation_origin_invariant: " ++
+    reprStr (atoms.flatMap (·.constants) |>.filter fun n =>
+      originAnchor env n && !bound.names.contains n))
+
+def normalizedAtoms (env : Environment) (e : Expr) : Except String (List PresentationKey) :=
+  normalizedAtomsWithOrigins env e ((rawOrigins env e).run' {})
+
+/-- Every exact directional match of actual, origin-certified normalized keys
+passes the raw necessary condition. The predicate certifies all source keys,
+independently of the requested target, before this monotonicity is applied. -/
+theorem raw_necessary_of_normalized_match (env : Environment) (source : Expr)
+    (bound : RawOriginBound) (sourceAtoms targetAtoms : List PresentationKey)
+    (normalized : normalizedAtomsWithOrigins env source bound = .ok sourceAtoms)
+    (matched : supportIncluded targetAtoms sourceAtoms = true) :
+    rawNecessary env targetAtoms bound = true := by
+  have valid : rawNecessary env sourceAtoms bound = true := by
+    unfold normalizedAtomsWithOrigins at normalized
+    cases hn : normalizeSyntax env source with
+    | error err => simp [hn, bind, Except.bind] at normalized
+    | ok value =>
+      simp only [hn, bind, Except.bind] at normalized
+      split at normalized
+      · have eq : syntaxAtoms value = sourceAtoms := Except.ok.inj normalized
+        simpa only [eq] using ‹rawNecessary env (syntaxAtoms value) bound = true›
+      · contradiction
+  simp only [rawNecessary, List.all_eq_true] at valid ⊢
+  simp only [supportIncluded, List.all_eq_true, List.contains_iff_mem] at matched
+  exact fun a ha => valid a (matched a ha)
+
+/-- Adding the raw prefilter preserves the actual directional query. -/
+theorem raw_prefilter_preserves_match (env : Environment) (source : Expr)
+    (bound : RawOriginBound) (sourceAtoms targetAtoms : List PresentationKey)
+    (normalized : normalizedAtomsWithOrigins env source bound = .ok sourceAtoms) :
+    (rawNecessary env targetAtoms bound && supportIncluded targetAtoms sourceAtoms) =
+      supportIncluded targetAtoms sourceAtoms := by
+  cases h : supportIncluded targetAtoms sourceAtoms
+  · simp
+  · simp [raw_necessary_of_normalized_match env source bound sourceAtoms targetAtoms normalized h]
 
 def normalizedLookup (env : Environment) (target : Expr)
-    (entries : List (Name × List Expr)) : Except String (List (Name × List Expr)) := do
+    (entries : List (Name × List PresentationKey)) :
+    Except String (List (Name × List PresentationKey)) := do
   return presentationLookup (← normalizedAtoms env target) entries
 
 /-- A leaf certificate sees the common telescope and at most one source view.
@@ -259,7 +392,8 @@ private partial def assemble (target source : Expr) : MetaM (Option Expr) := do
         return some (← mkLambdaFVars #[h] (mkApp proof (← projectView h path)))
   return none
 
-private partial def singleTelescope (target source : Expr) (xs : Array Expr) : MetaM (Option Expr) := do
+private partial def singleTelescope (target source : Expr) (xs : Array Expr) :
+    MetaM (Option Expr) := do
   match target, source with
   | .forallE n d b bi, .forallE _ d' b' bi' =>
     if bi != bi' then return none
@@ -292,6 +426,9 @@ def singleSourceConversion (target source : Expr) : MetaM (Option Expr) := do
   let env ← getEnv
   let targetAtoms ← match normalizedAtoms env target with
     | .ok atoms => pure atoms | .error err => throwError err
+  if targetAtoms.isEmpty then
+    let target ← normalizeCertified target
+    if let some conversion ← singleTelescope target source #[] then return some conversion
   let sourceAtoms ← match normalizedAtoms env source with
     | .ok atoms => pure atoms | .error err => throwError err
   unless supportIncluded targetAtoms sourceAtoms do return none

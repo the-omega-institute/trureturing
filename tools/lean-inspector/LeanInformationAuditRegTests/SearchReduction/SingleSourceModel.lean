@@ -15,6 +15,12 @@ theorem index_extension (target atoms : List Name) (name : Name)
     presentationLookup target (entries ++ [(name, atoms)]) = presentationLookup target entries := by
   simp [presentationLookup, h]
 
+/-- An unfinished raw dependency analysis retains every candidate. -/
+theorem unknown_raw_retained (env : Environment) (target : List PresentationKey)
+    (bound : RawOriginBound) (h : bound.unknown = true) :
+    rawNecessary env target bound = true := by
+  simp [rawNecessary, keyOriginCompatible, h]
+
 /-- A frozen conjunction grammar has an explicit semantic interpretation. -/
 inductive Statement where
   | neutral | atom (name : Name) | pack (left right : Statement)
@@ -85,8 +91,8 @@ theorem projection_and_pack :
 /-- Coverage is about keys produced by the actual normalizer, not an assumed
 independent normalization function. -/
 theorem normalized_lookup_complete (env : Environment) (target : Expr)
-    (atoms : List Expr) (hn : normalizedAtoms env target = .ok atoms)
-    (entries : List (Name × List Expr)) (b : Name × List Expr) :
+    (atoms : List PresentationKey) (hn : normalizedAtoms env target = .ok atoms)
+    (entries : List (Name × List PresentationKey)) (b : Name × List PresentationKey) :
     normalizedLookup env target entries = .ok (presentationLookup atoms entries) ∧
       (b ∈ presentationLookup atoms entries ↔
         b ∈ entries ∧ supportIncluded atoms b.2 = true) := by
@@ -126,7 +132,9 @@ theorem syntax_nondegenerate :
     presentationLookup [`r] [(`source, [`p, `q])] = [] := by decide
 
 run_meta do
-  for name in #[``lookup_complete, ``normalized_lookup_complete, ``index_extension,
+  for name in #[``certified_raw_bound_closed, ``unknown_raw_retained, ``raw_necessary_of_normalized_match,
+      ``raw_prefilter_preserves_match, ``lookup_complete, ``normalized_lookup_complete,
+      ``index_extension,
       ``normalize_sound, ``view_sound, ``holds_iff_atoms, ``subset_sound,
       ``presentation_sound, ``projection_and_pack, ``key_meet_hom,
       ``filter_not_constant, ``projection_requires_inclusion,
@@ -136,6 +144,8 @@ run_meta do
     unless standardAxioms axioms do
       throwError "single-source model has nonstandard axioms: {name}: {axioms}"
 
+#print axioms raw_necessary_of_normalized_match
+#print axioms raw_prefilter_preserves_match
 #print axioms normalize_sound
 #print axioms view_sound
 #print axioms single_premise_arithmetic_certificate

@@ -2,6 +2,7 @@ import LeanInformationAuditRegAnalysis.SearchReduction.Commands
 import LeanInformationAuditRegTests.SearchReduction.FaultPaths
 import LeanInformationAuditRegTests.SearchReduction.PresentationCoverage
 import LeanInformationAuditRegTests.SearchReduction.SingleSourceTests
+import LeanInformationAuditRegTests.SearchReduction.RawOriginsTests
 import LeanInformationAuditRegTests.SearchReduction.Candidates
 import LeanInformationAuditRegTests.SearchReduction.PresentationCandidates
 
@@ -74,6 +75,20 @@ run_meta do
   using [LeanInformationAudit.Tests.SearchReduction.Candidates.answer] as targetPackingLeakResult
 #guard targetPackingLeakResult = Verdict.insufficient
 #guard targetPackingLeakResult.paired = Run.incomplete Failure.isolation
+
+#search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.content
+  at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
+  using [LeanInformationAudit.Tests.SearchReduction.Candidates.splitTarget] as nonneutralPackLeakResult
+#guard nonneutralPackLeakResult = Verdict.insufficient
+#guard nonneutralPackLeakResult.paired = Run.incomplete Failure.isolation
+
+#search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.content
+  at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
+  using [LeanInformationAudit.Tests.SearchReduction.Candidates.shiftedAnswer] as closureLeakResult
+#guard closureLeakResult = Verdict.insufficient
+#guard closureLeakResult.paired = Run.incomplete Failure.isolation
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.splitTarget
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"

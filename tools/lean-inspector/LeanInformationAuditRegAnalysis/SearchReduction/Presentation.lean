@@ -205,43 +205,80 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
   let some index := index?
     | return (.incomplete .execution, none, "search.presentation_index_unavailable")
   let start ← IO.getNumHeartbeats
-  let mut entries := []
+  let targetAtoms ← match normalizedAtoms env target with
+    | .ok atoms => pure atoms
+    | .error err => return (.incomplete .execution, none,
+        s!"search.presentation_target_normalization: {err}")
+  let targetNormalized ← IO.getNumHeartbeats
+  let needsOrigins := targetAtoms.any (fun key => key.constants.any (originAnchor env))
+  let mut memo := {}
+  let mut eligible := #[]
+  let mut enumerated := 0
   for (name, info) in index.matcherConstants do
     if info.isUnsafe || (name.isInternalDetail && !isPrivateName name) then continue
     if !proofCandidate env info.type || !rigidlyCompatible env target info.type then continue
-    match normalizedAtoms env info.type with
-    | .error err => return (.incomplete .execution, none, s!"{err}: {name}")
-    | .ok atoms => entries := (name, atoms) :: entries
+    enumerated := enumerated + 1
+    let (bound, nextMemo) := if needsOrigins then (rawOrigins env info.type).run memo
+      else ({unknown := true}, memo)
+    memo := nextMemo
+    if rawNecessary env targetAtoms bound then
+      eligible := eligible.push (name, info.type, bound)
     if (← IO.getNumHeartbeats) - start > budget * 1000 then
       return (.incomplete .heartbeat, none,
-        s!"search.presentation_index_budget: indexed_sources={entries.length}, last={name}, " ++
-          s!"index_heartbeats={(← IO.getNumHeartbeats)-start}")
+        s!"search.presentation_raw_index_budget: raw_sources={enumerated}, " ++
+          s!"necessary_hits={eligible.size}, " ++
+          s!"raw_index_heartbeats={(← IO.getNumHeartbeats)-start}")
   let built ← IO.getNumHeartbeats
-  let .ok _atoms := normalizedAtoms env target
-    | return (.incomplete .execution, none, "search.presentation_target_normalization")
-  let .ok candidates := normalizedLookup env target entries.reverse
-    | return (.incomplete .execution, none, "search.presentation_query_normalization")
-  let hits := candidates
-  let queried ← IO.getNumHeartbeats
+  let mut normalized := 0
+  let mut hits := 0
   let mut checked := 0
+  let mut normalizationCost := 0
+  let mut queryCost := 0
   let mut conversionCost := 0
   let mut verificationCost := 0
   let mut failure := none
-  let detail := fun checked conversionCost verificationCost =>
-    s!"heartbeat_unit=internal, indexed_sources={entries.length}, candidates={hits.length}, checked_presentations={checked}, " ++
-    s!"index_heartbeats={built-start}, query_heartbeats={queried-built}, " ++
+  let detail := fun normalized hits checked normalizationCost queryCost
+      conversionCost verificationCost =>
+    s!"heartbeat_unit=internal, raw_sources={enumerated}, necessary_hits={eligible.size}, " ++
+    s!"normalized_sources={normalized}, " ++
+    s!"candidates={hits}, checked_presentations={checked}, " ++
+    s!"target_normalization_heartbeats={targetNormalized-start}, " ++
+    s!"raw_index_heartbeats={built-targetNormalized}, " ++
+    s!"normalization_heartbeats={normalizationCost}, query_heartbeats={queryCost}, " ++
     s!"conversion_heartbeats={conversionCost}, verification_heartbeats={verificationCost}"
-  for (name, _) in hits do
+  for (name, source, bound) in eligible do
+    let before ← IO.getNumHeartbeats
+    let sourceAtoms := if targetAtoms.isEmpty then .ok []
+      else normalizedAtomsWithOrigins env source bound
+    if !targetAtoms.isEmpty then normalized := normalized + 1
+    normalizationCost := normalizationCost + ((← IO.getNumHeartbeats) - before)
+    if (← IO.getNumHeartbeats) - start > budget * 1000 then
+      return (.incomplete .heartbeat, none,
+        detail normalized hits checked normalizationCost queryCost conversionCost verificationCost ++
+          ", search.presentation_index_budget")
+    match sourceAtoms with
+    | .error err =>
+      failure := some (.execution, s!"{err}: {name}")
+      continue
+    | .ok atoms =>
+      let before ← IO.getNumHeartbeats
+      let matched := supportIncluded targetAtoms atoms
+      queryCost := queryCost + ((← IO.getNumHeartbeats) - before)
+      unless matched do continue
+    hits := hits + 1
     let (row, evidence, converted, verified) ← baselineSource env levels target name
     checked := checked + 1
     conversionCost := conversionCost + converted
     verificationCost := verificationCost + verified
     if let some evidence := evidence then
-      return (.found, some evidence, detail checked conversionCost verificationCost)
+      return (.found, some evidence,
+        detail normalized hits checked normalizationCost queryCost conversionCost verificationCost)
     if let .incomplete reason := row.outcome then failure := some (reason, row.detail)
   match failure with
   | some (reason, text) => return (.incomplete reason, none,
-      detail checked conversionCost verificationCost ++ s!", {text}")
-  | none => return (.exhausted, none, detail checked conversionCost verificationCost)
+      detail normalized hits checked normalizationCost queryCost conversionCost verificationCost ++
+        s!", {text}")
+  | none => return (.exhausted, none,
+      detail normalized hits checked normalizationCost queryCost conversionCost verificationCost)
 
 end LeanInformationAudit.SearchReduction
