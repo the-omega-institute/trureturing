@@ -52,7 +52,7 @@ The canonical source is `D5/S3/Quantum/PureState/PureStateFormationSupportingFun
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Escape registration:** `Reg/D5/S3/Quantum/PureState/PureStateFormationSupportingFunctional.lean` (`result`).
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/PureState/PureStateFormationSupportingFunctional.lean.json`, statement `sha256:e737c6fcab8963681fefaef44d9b0911ded907b75571e52f37ccacd611433c55`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/PureState/PureStateFormationSupportingFunctional.lean.json`, statement `sha256:8155f1408fe70ea5113d2eae46a554ef73a9c52920d480bdc79485e97feeab70`.
 
 Declaration statements:
 - `result`: `sha256:f23e4348040e7cfac128c5c1ff0fb51bd369df0e61d9e4106fb8818155b378a9`;
