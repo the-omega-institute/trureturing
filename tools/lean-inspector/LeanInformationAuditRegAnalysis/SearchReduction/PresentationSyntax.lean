@@ -58,13 +58,27 @@ private def scopeHead (e : Expr) : ScopeHead :=
     | .bvar i => .variable i
     | _ => .other
 
+/-- Read alias heads without normalizing their arguments or predicate bodies.
+Unfinished head analysis remains unknown. The accepted N checks this same bound. -/
 private def rigidScopeHead (env : Environment) (e : Expr) : Option ScopeHead :=
-  match scopeHead e with
-  | .constant n => match (env.setExporting false).find? n with
-    | some (.inductInfo _) => some (.constant n)
-    | _ => none
-  | .other => none
-  | head => some head
+  go 64 {} e
+where
+  go (fuel : Nat) (seen : NameSet) (e : Expr) : Option ScopeHead := do
+    let fuel + 1 := fuel | none
+    match scopeHead e with
+    | .constant n =>
+      match (env.setExporting false).find? n with
+      | some (.inductInfo _) => some (.constant n)
+      | some (.defnInfo d) =>
+        if primitive n || seen.contains n || instanceParameters d.type ||
+            !aliasBody env d.value then none
+        else
+          let .const _ levels := e.getAppFn | none
+          go fuel (seen.insert n)
+            ((d.value.instantiateLevelParams d.levelParams levels).beta e.getAppArgs)
+      | _ => none
+    | .other => none
+    | head => some head
 
 private def rawScope (env : Environment) (e : Expr) : List (Nat × Option ScopeHead) :=
   match e with

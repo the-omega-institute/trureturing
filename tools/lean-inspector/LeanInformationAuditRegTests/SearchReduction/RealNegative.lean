@@ -29,8 +29,7 @@ open LeanInformationAudit.Tests.SearchReduction
   baseline [D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeConjunction]
   using [] as frozenProjectionResult
 #guard frozenProjectionResult = Verdict.bindOnly
-#guard frozenProjectionResult.presentation = Run.found ∨
-  frozenProjectionResult.presentation = Run.exhausted
+#guard frozenProjectionResult.presentation = Run.found
 
 #print axioms frozenAliasResult.baselineProof
 #print axioms frozenPackageResult.baselineProof

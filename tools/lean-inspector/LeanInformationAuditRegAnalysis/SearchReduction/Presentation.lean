@@ -170,6 +170,8 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
     | return (.incomplete .execution, none, "search.presentation_index_unavailable")
   let start ← IO.getNumHeartbeats
   let unitLimit := budget * 1000
+  let priorBound := (4 + 5 * index.matcherConstants.size) * unitLimit
+  IO.eprintln s!"presentation budget: independent_units, enumeration={index.matcherConstants.size}, unit_limit={unitLimit}, prior_heartbeats_bound={priorBound}"
   let targetAtoms ← match normalizedAtoms env target with
     | .ok atoms => pure atoms
     | .error err => return (.incomplete .execution, none,
@@ -186,8 +188,6 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
   let domain := productionDomain index.matcherConstants
   if (← IO.getNumHeartbeats) - domainStart > unitLimit then
     return (.incomplete .heartbeat, none, "search.presentation_domain_budget")
-  let priorBound := (4 + 5 * domain.size) * unitLimit
-  IO.eprintln s!"presentation budget: independent_units, domain={domain.size}, unit_limit={unitLimit}, prior_heartbeats_bound={priorBound}"
   let rawStart ← IO.getNumHeartbeats
   for (name, info) in domain do
     let scopeStart ← IO.getNumHeartbeats
@@ -209,6 +209,7 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
           s!"raw_index_heartbeats={(← IO.getNumHeartbeats)-start}")
   if (← IO.getNumHeartbeats) - rawStart > (1 + 2 * domain.size) * unitLimit then
     return (.incomplete .heartbeat, none, "search.presentation_enumeration_budget")
+  let rawBuilt ← IO.getNumHeartbeats
   let orderingStart ← IO.getNumHeartbeats
   if targetAtoms.all (·.isScope) then eligible := neutralFirst target eligible
   if (← IO.getNumHeartbeats) - orderingStart > unitLimit then
@@ -225,12 +226,13 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
   let mut failure := none
   let detail := fun normalized hits checked normalizationCost queryCost
       conversionCost verificationCost =>
-    s!"heartbeat_unit=internal, certificate_kind={certificateKind}, budget_semantics=independent_units, domain_sources={domain.size}, " ++
+    s!"heartbeat_unit=internal, certificate_kind={certificateKind}, budget_semantics=independent_units, enumeration_sources={index.matcherConstants.size}, domain_sources={domain.size}, " ++
     s!"unit_limit={unitLimit}, prior_heartbeats_bound={priorBound}, raw_sources={enumerated}, necessary_hits={eligible.size}, " ++
     s!"normalized_sources={normalized}, " ++
     s!"candidates={hits}, checked_presentations={checked}, " ++
     s!"target_normalization_heartbeats={targetNormalized-start}, " ++
-    s!"raw_index_heartbeats={built-targetNormalized}, " ++
+    s!"domain_heartbeats={rawStart-domainStart}, raw_index_heartbeats={rawBuilt-rawStart}, " ++
+    s!"ordering_heartbeats={built-orderingStart}, " ++
     s!"normalization_heartbeats={normalizationCost}, query_heartbeats={queryCost}, " ++
     s!"conversion_heartbeats={conversionCost}, verification_heartbeats={verificationCost}"
   for (name, source, bound) in eligible do

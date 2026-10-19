@@ -137,6 +137,8 @@ open LeanInformationAudit.Tests.SearchReduction
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [] as forwardPresentationResult
 #guard forwardPresentationResult.presentation = Run.found
+#guard forwardPresentationResult.presentationSource =
+  `LeanInformationAudit.Tests.SearchReduction.Baseline.commuted
 #guard forwardPresentationResult = Verdict.bindOnly
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.PresentationCandidates.iffBackward
@@ -144,6 +146,8 @@ open LeanInformationAudit.Tests.SearchReduction
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [] as backwardPresentationResult
 #guard backwardPresentationResult.presentation = Run.found
+#guard backwardPresentationResult.presentationSource =
+  `LeanInformationAudit.Tests.SearchReduction.Baseline.commuted
 #guard backwardPresentationResult = Verdict.bindOnly
 
 #print axioms aliasResult.baselineProof
