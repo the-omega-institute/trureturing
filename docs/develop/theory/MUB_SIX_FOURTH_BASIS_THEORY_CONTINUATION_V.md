@@ -3211,3 +3211,452 @@ separately closed fibres. It gives no uniform nonvanishing assertion or
 new neighborhood radius. Proposition 107.1 counts only aligned
 noncanonical rays with singular reflection-odd block; it does not count
 all common-flat rays or describe the full phase Jacobian.
+
+
+## 112. Symmetry-normalized overlap norms and physical multiple zeros
+
+Retain the original family, input convention, algebras and overlap
+polynomials of §§104–105. Put R=3−b² and let S be a localization of
+Q(i)[b] on which those original constructions are regular. At a real
+0<|b|<1 outside Z24, §105.2 supplies this regularity. Let A be the
+rank-twenty generic algebra, Ba the rank-ten aligned algebra, and O the
+rank-360 distinct-projective-mean algebra. Bars conjugate i and fix the
+real algebra generators. All statements below retain the physical tests
+and every relative root order.
+
+**Theorem 112.1.** There are specified nonzero real rational functions
+Do,Dm and a specified rational-function unit η such that
+\[
+ z_{\rm off}=D_o^2,\qquad h_m=\eta^{15}D_m,
+ \qquad \eta\bar\eta=1.
+\tag{112.1}
+\]
+The unit η is regular and invertible at every real punctured parameter
+outside Z24. An original generic orthogonal pair in different
+S3–Θ unions forces a zero of Do of multiplicity at least two, and hence
+a zero of zoff of multiplicity at least four. An original generic/aligned
+orthogonal pair forces a zero of Dm and hm of multiplicity at least two.
+These lower bounds do not assert that the multiplicities are even.
+
+### 112.1. Full-algebra overlap transport
+
+**Proof.** Let ι be the radial involution of the original generic algebra.
+It fixes K and sends G to −R/bar(G). Normalize a generic vector to upper
+channel sum three, writing v=w/√q on physical points. Its coefficient
+form, without a choice of √q, is
+\[
+ v=(Z_j,L_p(Z_j)/\kappa)_{j=0}^2,
+\quad E_p=\bar e_p,\quad
+ f_p(Z)=Z^3-3Z^2+3E_pZ-E_p/q_p,
+\]
+\[
+ B_p(Z)=\frac{Z^2-3Z+3E_p}{E_p},\qquad
+ L_p(Z)=G_p+C_p(Z-1)+D_p(B_p(Z)-1).
+\tag{112.2}
+\]
+Here Bp(Z) is the conjugate normalized root: q_p Z B_p(Z)=1
+modulo f_p, and its physical squared modulus is 1/q_p. Define
+\[
+ F_p(Z)=1+
+ \frac{\bar D_p(Z-1)+\bar C_p(B_p(Z)-1)}{\bar G_p}.
+\tag{112.3}
+\]
+The following three remainders modulo f_p vanish in A[Z]:
+\[
+ f_{\iota p}(F_p(Z)),\qquad
+ L_{\iota p}(F_p(Z))+\frac{R B_p(Z)}{\bar G_p},\qquad
+ F_{\iota p}(F_p(Z))-Z.
+\tag{112.4}
+\]
+For a proof using the complete original field rather than a pairwise
+sampling argument, take the actual analytic solution interval of §89.2.
+On it both channels are three-distinct, and applying Θ with upper mean
+restored gives (112.3), the lower-channel identity in (112.4), and the
+involutive return map. Each remainder has degree at most two and
+vanishes at all three distinct roots on that interval. Every coefficient
+therefore vanishes there. Fieldness of the original degree-twenty algebra
+and the field identity principle of §89.2 make these coefficient
+identities in A. The same argument gives the original circle identities
+and q_(ιp)=q_p G_p bar(G_p)/R.
+
+The three identities identify the full reciprocal-root multisets in a
+faithful generic splitting extension, and give
+\[
+ v_{\iota p}=-\frac{\bar\kappa}{\bar G_p}\,\Theta v_p.
+\tag{112.5}
+\]
+Adjoining κ if necessary is a faithful extension; the scalar identities
+below belong to the original base. Apply (112.4) independently to both
+factors, not to a single branch of the reducible pair algebra. All six
+relative root orders are retained. The resulting polynomial identities
+descend from the splitting extension to O. Torsion-freeness then extends
+them to the regular localization; no cubic discriminant or channel
+collision divisor is added to its specialization hypotheses.
+
+Let N be exactly Noff of §104.2. If S0 swaps the two endpoints and J
+applies ι to both, put
+\[
+ T=\frac{\bar G_pG_q}{R}.
+\]
+The product of the six overlaps ⟨vp,Pvq⟩/3 gives
+\[
+ S_0(N)=\bar N,\qquad J(N)=\bar N/\bar T^6,
+ \qquad S_0(T)=\bar T,\qquad J(T)=1/\bar T.
+\tag{112.6}
+\]
+Indeed endpoint reversal replaces P by P⁻¹, and Θ commutes with each
+synchronous permutation. Equation (112.5) supplies the scalar in the
+second identity. This proves (112.6) in the full original algebra, not
+only on physical evaluations.
+
+### 112.2. The exact rank-180 square root
+
+Set
+\[
+ L=N/T^3,\qquad \tau=JS_0,\qquad E=O^\tau.
+\]
+The involutions commute, and (112.6) yields
+\[
+ \tau(L)=L,\qquad S_0(L)=J(L)=\bar L.
+\tag{112.7}
+\]
+The unit u=K−K′ of §104.1 is τ-anti-invariant. Since 2 is invertible,
+projection to the two eigenspaces, followed by division of the
+anti-invariant part by u, gives
+\[
+ O=E\oplus uE.
+\tag{112.8}
+\]
+Thus E is finite projective of rank 180, and free over the chosen
+localization of the PID Q(i)[b]. Define
+\[
+ D_o=\operatorname{Nm}_{E/S}(L).
+\tag{112.9}
+\]
+Multiplication by L is the same on the two summands of (112.8), so
+Nm_O(L)=Do². Each generic point occurs eighteen times as each endpoint
+in the distinct-mean algebra. The two radial roots at a fixed K have
+product −R/(1+b²K²), and G bar(G)=(1+b²K²)X². Hence
+\[
+ \operatorname{Nm}_A(G\bar G)=R^{20},\qquad
+ \operatorname{Nm}_O(T)=
+ \frac{\operatorname{Nm}_A(G\bar G)^{18}}{R^{360}}=1.
+\tag{112.10}
+\]
+These are rational-function identities, proved in the generic splitting
+and valid at every regular specialization. Therefore zoff=Do² exactly,
+with no omitted scalar factor. Bar preserves E, and S0 acts on E and
+sends L to bar(L); determinant invariance gives Do=bar(Do). Thus
+Do∈Q(b). Its nonvanishing as a rational function follows from the
+nonzero half witness for zoff. This removes one specified forced square,
+not an assumed squarefree part or any further perfect power.
+
+### 112.3. A real mixed normalization
+
+In Ba put H=s(a+ic)=κg. The aligned involution ja fixes d and changes
+s to −s. Direct substitution in the phase formulas gives
+\[
+ (z,r,H)\longmapsto(\bar r,\bar z,-H),\qquad
+ w_{j_a a}=(-g)\Theta w_a.
+\]
+Together with (112.5), the three-position overlap product of (90.14)
+therefore satisfies, for Jm=ι⊗ja,
+\[
+ J_m(N_m)=(H/G)^3\bar N_m.
+\tag{112.11}
+\]
+The singleton positions are merely permuted. The same universal product
+identity holds on the entire aligned algebra, whose circle relation is
+H bar(H)=R. Define
+\[
+ g_N=\operatorname{Nm}_A(G),\qquad
+ h_N=\operatorname{Nm}_{B_a}(H),\qquad
+ \eta=h_N^2/g_N.
+\tag{112.12}
+\]
+All are units on the regular domain. Their ranks give
+\[
+ \eta\bar\eta=1,\qquad
+ \operatorname{Nm}_{A\otimes B_a}(H/G)
+   =h_N^{20}/g_N^{10}=\eta^{10}.
+\]
+Taking norms in (112.11) gives hm=η³⁰bar(hm), so
+\[
+ D_m=h_m/\eta^{15}=\bar D_m\in\mathbb Q(b).
+\tag{112.13}
+\]
+The half witness makes Dm nonzero. Multiplication by the unit η¹⁵
+preserves local zero orders. Equation (112.11) is a conjugation pairing;
+it does not imply that Dm is a square.
+
+### 112.4. Two distinct physical evaluations
+
+A matrix over a local parameter DVR whose reduction has corank r has
+determinant valuation at least r: constant invertible row and column
+operations reduce an invertible maximal minor, and every entry of the
+remaining Schur complement is divisible by the parameter. Also, if an
+element of a finite algebra vanishes at r distinct complex characters,
+its multiplication cokernel has dimension at least r. The distinct
+maximal ideals are comaximal, and evaluation surjects onto C^r through
+that cokernel. This argument retains nilpotents and ramified components.
+
+Consider a physical cross-union generic edge at b0 outside Z24. Equal K
+would put both endpoints in one S3–Θ union by §104.3; thus Kp≠Kq.
+Its ordered evaluations (p,q) and (q,p) both annihilate L and give two
+distinct characters of E. Indeed (112.8) identifies
+O≅E[Y]/(Y²−c), where c=u² is a unit of E. Its two extensions of each E-character
+are exactly a τ orbit. The two displayed pairs cannot be equal, and
+cannot be τ partners unless p=ιp and q=ιq. At a physical point the
+radial roots have negative product −R/(1+b²K²); they are distinct, so
+no such fixed point occurs. Thus multiplication by L on E has corank
+at least two, proving ord_b0(Do)≥2 and ord_b0(zoff)≥4.
+
+For a physical mixed edge, (p,a) and (ιp,ja a) are distinct characters
+annihilating Nm. Θ preserves orthogonality, and the regular original
+coverage retains both endpoints. Distinctness follows already from
+p≠ιp. The full rank-200 multiplication map has corank at least two,
+so ord_b0(hm)=ord_b0(Dm)≥2. No reducedness hypothesis on the other
+algebra points is needed.
+
+For precision, fibre length alone would not suffice: in S[x]/(x²−t),
+Nm(x)=−t has a simple zero despite the length-two nonreduced fibre.
+The proof counts distinct characters after the genuine quotient
+(112.8). Nor does corank two imply even valuation: the diagonal matrix
+(t,t,t) has determinant t³. These algebra examples delimit the argument;
+they are not asserted to occur as MUB fibres. This proves Theorem 112.1. ∎
+
+## 113. Exact orders of the original two norms at W
+
+**Theorem 113.1.** Let w(b)=W(b²), with W from §106. Then, for the
+original full norms of §105,
+\[
+ v_w(z_{\rm off})=0,\qquad v_w(h_m)=4.
+\tag{113.1}
+\]
+Consequently w has exponent exactly eight in the real numerator product
+P of §105.3. These are local factor statements; no other norm root is
+classified by them.
+
+### 113.1. Full original boundary identification
+
+**Proof.** By §106.4, w is irreducible over Q(i). Use the characteristic-zero
+W field and both signs of the aligned point in §107. To make the full
+ray identification explicit, adjoin σ=s/b with
+σ²=(Bx*²+4θ*)/B and j=ib with j²=−B. Obtain A*=ba* and c* from the
+original scaled Cramer equations, and put
+\[
+ z=\frac{2+j(\sigma+x_*)}{2-j(\sigma+x_*)},\qquad
+ r=\frac{2+j(\sigma-x_*)}{2-j(\sigma-x_*)},\qquad
+ H=\sigma(A_*+jc_*),
+\]
+\[
+ G_s=H(2+r)/(2+z),\qquad X_s=(G_s+\bar G_s)/2.
+\tag{113.2}
+\]
+The original generic u,v at Xs are exactly the affine-line and
+fraction-free-remainder expressions (108.2)–(108.4). Retain both roots
+in this same quadratic algebra. With their E=bar(e) and lower-channel
+polynomial L from (112.2), exact reduction gives
+\[
+ E=\frac{3(1+2z)}{(2+z)^2},\qquad
+ L\left(\frac3{2+z}\right)=\frac{3H}{2+z},\qquad
+ L\left(\frac{3z}{2+z}\right)=\frac{3Hr}{2+z},
+ \qquad q=\frac{|2+z|^2}{9}.
+\tag{113.3}
+\]
+These equalities are finite characteristic-zero identities: substitute
+(108.4), reduce σ² by its displayed relation, reduce j²=−B, and divide
+each remaining rational coefficient by W. The remainders are zero.
+The original E-circle, Y-circle and D-circle are zero by the same
+substitution. Both 2+z and 1−z are units; their norms are nonzero in
+the W field. Equivalently, at its complex embedding with real positive b,
+§107 gives unit phases and §108.7 gives 1/9<q<1, excluding z=1;
+faithfulness of that embedding proves the stated field nonvanishing.
+
+Put α=3/(2+z) and β=3z/(2+z). Equations (113.3) make the complete
+original cubic (Z−α)²(Z−β), with α≠β, and identify both lower-channel
+values. Thus the full mean-normalized boundary vector is
+\[
+ v_*=\frac3{2+z}(1,1,z;g,g,gr).
+\tag{113.4}
+\]
+This proves the relative phase and interpolation, not only the mean G
+and q identities.
+
+### 113.2. The full ordinary norm is a unit
+
+For any retained generic point p and boundary aligned point a, the six
+orders of (113.4) repeat each of its three singleton positions twice.
+The original six-order and three-position product definitions give
+\[
+ N_{\rm off}(p,*)=\frac{N_m(p,a)^2}{(2+z)^6}.
+\tag{113.5}
+\]
+The second endpoint scalar is not conjugated. The reverse identity is
+its formal bar. This is a polynomial product identity under repeated
+root specialization, or equivalently an identity in the universal
+splitting algebra. It does not treat evaluation at the two distinct
+root values as a faithful map from the nonreduced cubic algebra.
+
+The retained rank-180 mixed norm is nonzero by §109, with residue 46.
+Hence Nm is a unit on the retained-generic × entire-aligned algebra,
+and remains a unit on its boundary-aligned quotient. Equation (113.5)
+makes both rank-36 ordinary cross pieces units. The complete source
+factorization at W splits the rank-360 off-diagonal algebra into these
+two pieces and the rank-288 retained off-diagonal piece. There is no
+boundary × boundary piece, since both means would equal K*.
+The retained ordinary norm, with residue 76, makes the last piece a
+unit too. Therefore the full zoff is nonzero in the W field. Its
+regularity excludes a denominator pole, proving v_w(zoff)=0.
+
+### 113.3. Characteristic-zero lower bound for the mixed order
+
+Work over the DVR Q(i)[b]_(w). The complete original coordinates and
+mixed matrix are regular there by §§105,107–109. The source, radial and
+aligned algebras are étale at w. For example their displayed good map
+has retained field F_(137^18), removed radial discriminant 40, a
+squarefree aligned quintic and nonzero norm of Ka. Nonzero reductions
+certify the corresponding characteristic-zero discriminants are units
+modulo w.
+
+After an unramified splitting extension, hm is the determinant of the
+direct sum of the 200 cubic matrices (109.10), of total size 600.
+For the boundary generic point and its opposite Θ-aligned partner,
+Theorem 82.1 gives all three singleton overlaps zero. By (113.3),
+the quadratic Q(Z)=Am Z²+Bm Z+Cm therefore vanishes at α and β.
+Multiplication by Q in C[Z]/((Z−α)²(Z−β)) has kernel dimension
+at least two, namely deg gcd(Q,(Z−α)²(Z−β)). The reverse radial and
+aligned sign pair supplies a second distinct block of corank at least
+two. The complex embedding with real positive b is faithful, so this
+rank statement holds over the residue field. The determinant argument
+of §112.4 gives v_w(hm)≥4.
+
+### 113.4. A single exact local expansion proves equality
+
+Use the Gaussian prime above 137 with i↦37 and the field
+k=F137[ρ]/(ρ²−40), where 40 is a nonsquare. In k[ε]/(ε⁵) put
+B=99+ε. Let b lift 28 with b²=B; let K lift 31 as a root of the
+**complete** F0(B,K); let t=Ns/Ds, with Ds=∂K F0 before any factor
+removal. Let X± be both roots of
+\[
+ X^2-\frac{tX}{1+BK^2}-\frac{3-B}{1+BK^2}=0.
+\]
+Let d lift 21 as a root of the complete Q5, let θ lift 73 as a root of
+Φ(b,d,θ), and let s lift 78ρ with s²=d²+4θ. The relevant constant
+Hensel derivatives are 2b=56, Ds(31)=73, Q5′(21)=58 and Φθ=10;
+the radial and sign roots are also simple. Successive Newton steps
+therefore determine all series uniquely. In ascending ε powers they are
+\[
+\begin{aligned}
+ b&=(28,115,99,68,57),&K&=(31,108,130,47,41),\\
+ d&=(21,78,122,23,93),&\theta&=(73,27,80,0,71),\\
+ s&=\rho(78,78,80,88,87),\\
+ X_+&=(84+69\rho,64+58\rho,41+127\rho,44+67\rho,86+114\rho),
+\end{aligned}\tag{113.6}
+\]
+and X− is obtained by ρ↦−ρ. Three iterations y↦y−f(y)/f′(y)
+suffice modulo ε⁵.
+
+Use the original Cramer formulas for a,c. Substitution gives
+P0=P1=P2=0 and (d²+4θ)(a²+c²)=3−B modulo ε⁵. Reconstruct the generic
+u,v on each radial lift by (108.2)–(108.4); the original three equations
+vanish modulo ε⁵, with every divisor a unit. Evaluation of the literal
+cubic determinant (109.10), or of its equal expanded resultant (109.11),
+gives
+\[
+\begin{array}{c|cc}
+ &s&-s\\\hline
+ X_+&49+47\rho+O(\varepsilon)&(108+77\rho)\varepsilon^2+O(\varepsilon^3)\\
+ X_-&(108-77\rho)\varepsilon^2+O(\varepsilon^3)&49-47\rho+O(\varepsilon)
+\end{array}
+\tag{113.7}
+\]
+Their product is 51ε⁴ modulo ε⁵, since the two constant coefficient
+norms are 77 and 6, respectively, and 77·6=51 modulo 137.
+
+The other aligned d factors form the monic quartic
+\[
+ (d-33)(d-11)(d^2-58d+13).
+\]
+Retain both signs over this entire quotient. At ε=0 use the public
+ascending shape θ=(80,9,17,8,109) and the original Cramer formulas.
+All three equations and the circle hold. The two rank-eight norms of
+Nm, for X+ and X−, are 26+100ρ and 26−100ρ; their product is 31.
+These values are determined by the quadratic sign norm followed by
+the multiplication determinant on 1,d,d²,d³ in this quartic. Thus the
+complete removed-mean rank-twenty contribution is 74ε⁴ modulo ε⁵.
+The complementary retained rank-180 norm has constant value 46 by
+§109. Consequently the original complete norm satisfies
+\[
+ h_m=46\cdot31\cdot51\varepsilon^4+O(\varepsilon^5)
+     =116\varepsilon^4+O(\varepsilon^5).
+\tag{113.8}
+\]
+
+For the characteristic-zero upper bound, use the local integral model
+at this Gaussian prime and B=99. The complete source leading
+coefficient, full derivative divisors, reconstruction divisors and
+aligned phase divisors are units by the public retained and removed
+unit tables and the displayed simple-root constants. The literal full
+multiplication determinant therefore belongs to this local model.
+The leading coefficient of W is a unit too. Monic polynomial division,
+or Gauss's lemma after multiplying the unit denominators, implies that
+characteristic-zero divisibility by w⁵ would persist in this model.
+Its reduction would then vanish modulo ε⁵, contrary to 116≠0.
+Together with the lower bound this proves v_w(hm)=4. The normalization
+is also fixed by
+\[
+ W'(99)=118,\qquad (h_m/W^4)(99)=116/118^4=84\pmod{137}.
+\tag{113.9}
+\]
+This one local expansion is not an interpolation of the global norm.
+Finally w is real, regularity excludes it from both reduced denominators,
+and conjugation preserves its valuation. Equation (113.1) therefore
+gives exponent 0+0+4+4=8 in P. ∎
+
+## 114. A derivative-gcd guard for the remaining physical zeros
+
+**Corollary 114.1.** Write the specified real functions of Theorem 112.1
+in reduced form Do=ao/co and Dm=am/cm over Q[b], normalizing the
+nonzero numerators to be monic. Define
+\[
+ r_o=\gcd(a_o,a_o'),\qquad r_m=\gcd(a_m,a_m').
+\tag{114.1}
+\]
+Every physical cross-union generic edge outside Z24 lies over ro=0,
+and every physical mixed edge outside Z24 lies over rm=0. Thus a simple
+zero of ao excludes the former kind of edge, and a simple zero of am
+excludes the latter kind of edge.
+
+**Proof.** The denominators do not vanish on the regular real domain,
+so Theorem 112.1 gives numerator multiplicity at least two. In
+characteristic zero a root has multiplicity at least two precisely when
+it is a common root of the polynomial and its derivative. This gives
+both assertions. Constant numerators are allowed and have gcd one.
+
+Start with ro rm and remove all primary powers supported on J26 by
+the terminating repeated-gcd procedure of §111; clear constants and
+take the positive-leading primitive integer normalization. Denote the
+result Rmult,26. If Rmult,26(b)≠0 for 0<|b|<1, then either b is a
+separately closed J26 fibre, or neither forbidden type of edge exists.
+The within-union bipartite graph and all-aligned obstruction then give
+no noncanonical orthogonal triple. Single-canonical rigidity gives the
+same unique input basis and transported output basis as §110, and
+therefore the same fixed-pair no-quartet conclusion. ∎
+
+This construction takes the two derivative gcds separately after
+removing the specified ordered-pair square and harmless mixed gauge.
+Applying gcd(P,P′) directly would retain built-in squares from
+zoff=Do² and coefficient conjugation, and would not give this test.
+Theorem 113.1 identifies the already closed W contribution: its order
+in ao is zero and in am is four, hence in rm is three before J26 removal.
+Passing between b and B=b² preserves local multiplicities in the
+puncture because 2b≠0.
+
+The corollary does not compute the remaining gcd coefficients, their
+degrees or real-root counts, or prove that their zero set is strictly
+smaller than the earlier guard. Other repeated norm zeros need not be
+physical. The explicit separately closed finite set remains the
+26 signed points of §111, with all earlier interval and neighborhood
+results retaining their own scope. No whole-branch conclusion follows
+without resolving the remaining physical zeros or an independent argument.
