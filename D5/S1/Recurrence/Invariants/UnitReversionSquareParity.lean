@@ -6,7 +6,8 @@
    utility: none
    digest: A contracting integer series and a lacunary mod-two fixed point prove A373312. -/
 
-/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19022 -/
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19022
+Published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
 
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
@@ -25,7 +26,7 @@ private theorem agree_iff (d : ℕ) (f g : PowerSeries R) :
     Agree d f g ↔ (X : PowerSeries R) ^ d ∣ f - g := by
   simp [Agree, X_pow_dvd_iff, map_sub, sub_eq_zero]
 
-private theorem agree_mono {d e : ℕ} {f g : PowerSeries R}
+theorem agree_mono {d e : ℕ} {f g : PowerSeries R}
     (h : Agree d f g) (he : e ≤ d) : Agree e f g :=
   fun n hn => h n (lt_of_lt_of_le hn he)
 
@@ -42,7 +43,7 @@ theorem agree_mul {d : ℕ} {f g u v : PowerSeries R}
   convert dvd_add h1 h2 using 1
   ring
 
-private theorem agree_X {d : ℕ} {f g : PowerSeries R}
+theorem agree_X {d : ℕ} {f g : PowerSeries R}
     (h : Agree d f g) : Agree (d + 1) (X * f) (X * g) := by
   intro n hn
   cases n with
@@ -61,7 +62,7 @@ private theorem subst_inner_agree {d : ℕ} {u v : PowerSeries R}
   rw [coeff_subst' (.of_constantCoeff_zero hu), coeff_subst' (.of_constantCoeff_zero hv)]
   exact finsum_congr fun k => by rw [agree_pow h k n hn]
 
-private theorem subst_outer_agree {d : ℕ} {f g u : PowerSeries R}
+theorem subst_outer_agree {d : ℕ} {f g u : PowerSeries R}
     (h : Agree d f g) (hu : X ^ 2 ∣ u) :
     Agree (2 * d) (f.subst u) (g.subst u) := by
   have hz : constantCoeff u = 0 := X_dvd_iff.mp ((dvd_pow_self X (by omega)).trans hu)

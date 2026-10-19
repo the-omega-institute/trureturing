@@ -12,11 +12,11 @@ import D5.S1.Recurrence.Residue.IterateProductTwentyFiveModFive
 import D5.S1.Recurrence.Parity.DiagonalIterateEven
 
 open PowerSeries
-open D5.S1.Recurrence.Invariants.CompositionalIterateCongruence (iterate mobius mobius_iterate)
+open D5.S1.Recurrence.Invariants.CompositionalIterateCongruence (iterate mobius mobius_iterate mobius_zero mobius_denominator)
 open D5.S1.Recurrence.Residue.IterateProductTwentyFiveModFive (nilpotent_iterate)
 open private product_contract iterate_constant coeff_eq_of_dvd map_iterates from
   D5.S1.Recurrence.Invariants.ThreeFourIterateProductModSix
-open private mobius_zero mobius_denominator denominator from
+open private denominator from
   D5.S1.Recurrence.Invariants.CompositionalIterateCongruence
 open private iterate_add from D5.S1.Recurrence.Parity.DiagonalIterateEven
 

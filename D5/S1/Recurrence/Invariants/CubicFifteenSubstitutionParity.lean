@@ -6,6 +6,8 @@
    utility: none
    digest: Cubic lifting and a mod-two series identity prove Hanna's A392525 parity conjecture. -/
 
+-- Escape audit unfinished for published theorems: https://github.com/the-omega-institute/trureturing/issues/19129.
+
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 import Mathlib.FieldTheory.Finite.Basic
@@ -14,7 +16,7 @@ open PowerSeries
 
 namespace D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity
 
-private theorem prime_power_subst (p : ℕ) [Fact p.Prime]
+theorem prime_power_subst (p : ℕ) [Fact p.Prime]
     (f : PowerSeries (ZMod p)) : f ^ p = f.subst (X ^ p) := by
   have h := MvPowerSeries.map_frobenius_expand (σ := Unit) (R := ZMod p)
     p (NeZero.ne p) (f := f)
@@ -394,9 +396,5 @@ theorem hanna_conjecture (n : ℕ) (_hn : 1 ≤ n) : Odd (a n) ↔ ∃ k : ℕ, 
   · exact ⟨fun _ => h, fun _ => rfl⟩
   · exact ⟨fun he => (zero_ne_one he).elim, fun he => (h he).elim⟩
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms thue_series_equation
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity
