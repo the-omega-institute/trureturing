@@ -178,8 +178,9 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
       match clean.getModuleIdxFor? name with
       | some idx => if request.baseline.contains moduleNames[idx.toNat]! then some name else none
       | none => none
-    let preferred := (attempts.filterMap (·.proof?)).foldl
-      (fun names proof => names ++ proof.getUsedConstants) preferred
+    let proofDependencies := (attempts.filterMap (·.proof?)).foldl
+      (fun names proof => names ++ proof.getUsedConstants) #[]
+    let preferred := proofDependencies ++ preferred
     let (presentation, presentationEvidence?, presentationDetail) ←
       baselinePresentation clean target.levelParams target.type preferred index?
     let observed : Observation := {

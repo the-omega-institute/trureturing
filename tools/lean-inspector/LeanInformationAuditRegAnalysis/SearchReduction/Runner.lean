@@ -334,9 +334,10 @@ structure Plan where
   leaves : Array Leaf
   state : Meta.State
 
-private def makePlan (type : Expr) (index : FactIndex) (extra : Array Name) : MetaM Plan := do
+private def makePlan (type : Expr) (index : FactIndex) (extra : Array Name) :
+    MetaM (Plan × FactIndex) := do
   let root ← mkFreshExprMVar type
-  let goals ← (structural root.mvarId! extra).run' index
+  let (goals, warmed) ← (structural root.mvarId! extra).run index
   let leaves ← goals.mapM fun goal => goal.withContext do
     let mut parameters := #[]
     let mut arguments := #[]
@@ -344,7 +345,10 @@ private def makePlan (type : Expr) (index : FactIndex) (extra : Array Name) : Me
       parameters := parameters.push decl.toExpr
       unless decl.isLet do arguments := arguments.push decl.toExpr
     return { goal, closedType := ← mkForallFVars parameters (← goal.getType), arguments : Leaf }
-  return {root, leaves, state := ← get}
+  -- Matching only expands immutable baseline index entries. Preserve the full
+  -- declaration enumeration even if matcher retrieval consumed its input list.
+  return ({root, leaves, state := ← get},
+    {warmed with matcherConstants := index.matcherConstants})
 
 private def introAll (goal : MVarId) : MetaM MVarId := do
   let mut goal := goal
@@ -362,7 +366,8 @@ def searchIndexed (env : Environment) (levels : List Name) (type : Expr)
     let index ← factIndex
     let used := ((← IO.getNumHeartbeats) - (← readThe Core.Context).initHeartbeats) / 1000
     IO.eprintln s!"R_v1 structural index heartbeats: {used}"
-    return (index, ← makePlan type index extra)).run
+    let (plan, index) ← makePlan type index extra
+    return (index, plan)).run
     {context with initHeartbeats := ← IO.getNumHeartbeats} {env}).toIO'
   let (index, plan) ← match planResult with
     | .ok (plan, _) => pure plan
