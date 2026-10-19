@@ -1181,3 +1181,173 @@ low-radius defect has been obtained. The original CS29 probes,
 complete Li/Schur positivity, strict Robin for every $n>5040$ and RH
 remain unproved. No Lean certification, numerical starting value,
 new verified height or literature-priority claim is made.
+
+## A finite verified head pays the entire Fibonacci–Li matrix
+
+Keep RT1–RT3 and PTL1–PTL5's actual classical Li coefficients, the
+original matrix $\mathcal M$, all analytic multiplicities and the inclusive
+head convention. Let $a\le b$ be adjacent positive Fibonacci numbers,
+$c=a+b$, and put $H_0=3\cdot10^{12}$. The following is a finite paper
+application of those owned estimates and the published suppliers below:
+
+$$
+\boxed{K_{a,b}\succ0\quad(1024\le c\le5\cdot10^{25}).}
+\tag{FV1}
+$$
+
+For the upper part of this interval it supplies a uniform coefficient
+bound for the entire matrix:
+
+$$
+\boxed{K_{a,b}\succeq10^{-9}c\,I_2
+\quad(H_0<c\le5\cdot10^{25}).}
+\tag{FV2}
+$$
+
+These are statements about every vector in the original two-coordinate
+block, including its mixed entry. They do not follow merely from scalar
+Li coefficient positivity. They assert no new zero verification, no
+literature priority and no Lean certification.
+
+### Published finite inputs
+
+Reuse Platt–Trudgian,
+[*The Riemann hypothesis is true up to $3\cdot10^{12}$*,
+arXiv:2004.09765v1](https://arxiv.org/pdf/2004.09765v1), Theorem 1,
+printed p.2, which verifies through $3000175332800$. Its abstract and
+introduction explicitly include $0<\gamma\le H_0$. This is the same
+published premise used in the
+[verified-height form estimate](../Weil/fukushima2011dirichlet.md#a-sufficient-fixed-gap-supplier-with-its-unpaid-inputs).
+No computation underlying that premise is repeated.
+
+For an explicit zero-count input reuse Hasanalizade–Shen–Wong,
+[*Counting zeros of the Riemann zeta function*,
+arXiv:2107.06506v1](https://arxiv.org/pdf/2107.06506v1), Corollary 1.2,
+printed p.2, equation (1.5). For $T\ge e$ it states
+
+$$
+|N_+(T)-N_0(T)|
+\le0.1038\log T+0.2573\log\log T+9.3675,
+\qquad N_0(T)=\frac{T}{2\pi}\log\frac{T}{2\pi}-\frac{T}{2\pi}.
+$$
+
+The introduction defines $N_+$ with $0<\gamma\le T$; its argument-principle
+count in §2 includes analytic multiplicity. At a zero ordinate the same
+inclusive convention is obtained by approaching from above. The
+source's proof and numerical choices are not replayed. This is the
+zero-count supplier already used in the
+[finite Robin tail](../Analytic/polak2026finiterobinca.md#pay-the-entire-range-above-the-second-height).
+Since $\log T\ge1$, $\log\log T\le\log T$ and
+$0.1038+0.2573+9.3675<10$, it directly gives
+
+$$
+|N_+(T)-N_0(T)|\le10\log T\qquad(T\ge e).
+\tag{FV3}
+$$
+
+Only a coarse substitution into this existing count is needed.
+
+### An explicit positive budget above $c$
+
+For $c>H_0$ write $L=\log c>24$. Indeed $e<3$ and $3^4<100$ give
+$e^{24}<10^{12}<H_0$. From $\pi<4$, $\log(2/\pi)>-1$, and FV3,
+
+$$
+\begin{aligned}
+N_+(2c)-N_+(c)
+&\ge\frac{c}{2\pi}\bigl[L+\log(2/\pi)-1\bigr]
+ -10\log(2c)-10\log c\\
+&>\frac{c}{8}(L-2)-30L\\
+&>\left(\frac{11c}{96}-30\right)L
+\ge\frac{cL}{16}.
+\end{aligned}
+\tag{FV4}
+$$
+
+The last inequality uses $c\ge576$. PTL1 and its same-tail annulus
+bound PTL5 therefore give
+
+$$
+K^{\rm tail}_{a,b}(c)\succeq\mu_c I_2,
+\qquad \mu_c=\frac{c^4}{2^{19}}S_4^+(c)
+\ge\frac{N_+(2c)-N_+(c)}{2^{23}}
+>\frac{3c}{2^{24}}.
+\tag{FV5}
+$$
+
+The complete actual tail above $c$ remains in the block; no annulus
+replaces it by equality.
+
+### The intervening band retains its common Gram part
+
+If $1024\le c\le H_0$, the actual head through $c$ lies on the critical
+line by the published verification and is a positive semidefinite Gram
+sum. PTL1 makes its complete tail strictly positive, proving FV1 in
+this range.
+
+Now suppose $H_0<c\le5\cdot10^{25}$. Apply RT2–RT3's reflected comparison
+only on the finite band $H_0<\gamma\le c$. Reflection preserves this
+band and every multiplicity. Its unit-phase matrix $G_{H_0,c}$ is
+positive semidefinite; its error $E_{H_0,c}$ obeys RT3's row bound with
+the larger positive full tail $S_4^+(H_0)$ as envelope. Thus exactly
+
+$$
+\begin{aligned}
+K_{a,b}&=K^{\rm head}_{a,b}(H_0)+G_{H_0,c}+E_{H_0,c}
+ +K^{\rm tail}_{a,b}(c),\\
+K^{\rm head}_{a,b}(H_0)&\succeq0,\qquad G_{H_0,c}\succeq0,\\
+\|E_{H_0,c}\|_{\rm op}
+&\le\frac{c^2}{2}e^{c/(2H_0^2)}\mathscr R_4(H_0).
+\end{aligned}
+\tag{FV6}
+$$
+
+These four contributions partition the same actual zero sum. In
+particular the finite band's Gram part and error are coupled through
+the original phases, rather than optimized as independent sources.
+
+At this fixed $H_0$, $L_{H_0}=42$ because
+$2^{41}<H_0+4<2^{42}$. The owned RT1 formula gives, using
+$(2/H_0^2+1/H_0)/(H_0+4)<H_0^{-2}$,
+
+$$
+\mathscr R_4(H_0)
+<\frac{5632}{H_0^3}+\frac{21504}{H_0^4}
+<\frac{5633}{H_0^3}<\frac1{4\cdot10^{33}}.
+\tag{FV7}
+$$
+
+Here $H_0>21504$ and the final rational comparison is $22532<27000$.
+Moreover $c/(2H_0^2)\le25/9<3$ and $e^3<27$. Hence
+
+$$
+\|E_{H_0,c}\|_{\rm op}
+<\frac{27c^2}{8\cdot10^{33}}
+\le\frac{135c}{8\cdot10^8}.
+\tag{FV8}
+$$
+
+Combining FV5–FV8 on this same block yields
+
+$$
+K_{a,b}\succeq
+c\left(\frac3{2^{24}}-\frac{135}{8\cdot10^8}\right)I_2
+\succeq10^{-9}c\,I_2.
+\tag{FV9}
+$$
+
+For the final outward comparison, $2^{24}=16777216<17000000$ gives
+$3/2^{24}>7/(4\cdot10^7)$; the bracket exceeds
+$5/(8\cdot10^8)>10^{-9}$. This proves FV2 and the rest of FV1.
+All constant comparisons here are elementary paper inequalities; no
+zero scan, Li-coefficient evaluation or new experiment is used.
+
+### The unbounded head remains the missing input
+
+This finite result retains every actual zero and controls every direction
+of the original block. It is not an effective claim about the original
+arithmetic middle: CS28 supplies an $o(c)$ transfer without a certified
+finite common starting value, so that transfer cannot be substituted
+into FV1–FV2 over the displayed interval. The finite block bound supplies
+neither a Robin interval for all integers nor a cofinal signed head bound.
+The full RH and strict Robin for every integer $n>5040$ remain unresolved.
