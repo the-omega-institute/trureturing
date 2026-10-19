@@ -5,7 +5,7 @@ year: 2026
 title: Actual Robin price gaps, forced-core tail records and the selected-sign boundary
 doi: null
 url: https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md
-claim: Under the original source-window hypotheses, the complete selected response retains actual price-gap costs; every inactive-forced-prime core is a strict all-integer right-tail record with original-exponent own-size excess. A synthetic positive-reference model excludes height-and-envelope plus numerical full-Q reasoning alone. A cited unrefereed density theorem extends the original high-frequency range and complete compensated clock transport. Actual favorable slack and RH remain unproved.
+claim: Under the original source-window hypotheses, the complete selected response retains actual price-gap costs; every inactive-forced-prime core is a strict all-integer right-tail record with original-exponent own-size excess. A synthetic positive-reference model excludes height-and-envelope plus numerical full-Q reasoning alone. A cited unrefereed density theorem extends the original high-frequency range and complete compensated clock transport. Exact total-clock pressure raises the pure-future joint margin throughout the original range. Actual favorable slack and RH remain unproved.
 strata_touched: []
 license: Apache-2.0
 triage: anchor
@@ -12010,3 +12010,161 @@ normalized-response ceiling, second compensation credit or signed upper
 on the selected set follows. This application has no host Lean
 verification; full original-range compensation, strict Robin for every
 integer above 5040 and RH remain unproved.
+
+
+## The actual total-clock pressure supplies a joint margin without capacity loss
+
+Keep the complete original conditional RH-failure source, every fixed
+$1-\Theta<\eta<1/2$, all full windows, outgoing weights, maximizing ties
+and trace conventions. Keep the original positive $a<1$ unchanged.
+Reuse APC2's all-real pressure identity, EDH1's envelope descent,
+AO5's complete-response variation and JVM1--JVM4's analytic infimum.
+The additional consumer is the full compensated response at the actual
+total clock, before transporting any estimate back to the own-core clock.
+There is no new generic variational theorem, prime-counting input,
+literature-priority claim or Lean verification.
+
+### Use the exact total-clock lag before any capacity estimate
+
+Write $A(t)=\mathcal A_X(t)$, $h_m=V_X(t_m)-\gamma$ and
+$\Delta V(t)=V_X(t)-V_X(t_m)$. APC1, APC2 and EDH1 give at every real
+active clock, including every active tie,
+
+$$
+\begin{aligned}
+G_a(A(t))={}&s_{A(t)}
+ \bigl[h_m+\Delta V(t)+R_{\rm pp}(A(t))\bigr]
+ +(1-a)\frac{t}{\sqrt{A(t)}}
+ -a\frac{Q(A(t))}{\sqrt{A(t)}},\\
+\Delta V(t)={}&\int_t^{t_m}\lambda(A(v))\,dv,\qquad
+h_m\ge(d/2)X^{-\eta}-c_m.
+\end{aligned}
+\tag{TJV1}
+$$
+
+Here $c_m\le e^{-\ell_X}$, $R_{\rm pp}\ge0$ eventually and
+$|Q(x)|/\sqrt x\le H_Q$. The complete future and original compensation
+remain. In particular the total-clock lag coefficient is $1-a$;
+no estimate of $B-K(B)$ has entered this identity.
+
+Put $v_i=\sqrt{A_i/X}$ and
+$\mathcal S_i=G_a(A_i)-s_{A_i}\Delta V(t_i)$. The same coarse
+coercivity calculation as EDH3 gives
+
+$$
+\frac{\mathcal S_i}{M_X}
+\ge\frac{d(1-\eta)}8v_i+
+       \frac{d(1-a)}{16v_i}-o(1).
+$$
+
+Indeed $A_i\ge\ell_X$ implies
+$\log A_i/\log X\ge(1-\eta)/2$ eventually; use
+$h_m\ge(d/4)X^{-\eta}$ and the original $t_i\ge\ell_X$.
+The bounded stock allowance divided by $M_X$ tends to zero.
+Thus both $\mathcal S_i$ and $G_a(A_i)$ are uniformly positive
+eventually. This proof also applies to every real active clock.
+
+### Reuse the full functional with the actual total-clock trajectory
+
+Consider any cofinal sequence on which
+$\mathcal G_X^A/(M_XL_X)$ is bounded. With
+$x_i=t_i/\ell_X$, $h_i=\delta_i/\ell_X$ and
+$v_X(x)=\sqrt{A(\ell_Xx)/X}$, the preceding residual bound controls
+both tagged moments $\sum h_i v_i$ and $\sum h_i/v_i$.
+N2's all-choice ordering applies to $A$ as well as $B$. OSP2's same
+prefix/suffix argument therefore bounds $v_X$ above and away from zero
+on every fixed $I_\theta=[1+\theta,2-\theta]$, uniformly in every tie.
+This uses no global bound on $A/X$ or normalized response.
+
+On this interior range $\log A/\log X\to1$. TJV1 gives the tagged
+static terms
+$(d/2)v_i+(d/8)(1-a)x_i/v_i-o(1)$, while its retained envelope integral
+gives exactly OSP3 with $s_A,v_X$ in place of $s_B,u_X$.
+Use the same bounded-variation product bounds and original mesh as
+OSP3--OSP4, retaining every outgoing weight. Positivity permits dropping
+only outside tags for this lower comparison. Consequently
+
+$$
+\begin{aligned}
+\frac{\mathcal G_X^A}{M_XL_X}\ge{}&
+ \frac d2\int_{I_\theta}v_X(x)\,dx
+ +\frac d8(1-a)\int_{I_\theta}\frac{x}{v_X(x)}\,dx\\
+&+\frac d8\int_{1+\theta\le r<z\le2-\theta}
+       \frac{v_X(r)}{v_X(z)^2}\,dr\,dz-o(1).
+\end{aligned}
+$$
+
+Apply JVM2 and JVM6's existing interval rescaling, first fixing
+$\theta$ and then taking $\theta\downarrow0$. Any sequence violating
+the resulting lower bound would be a bounded-response sequence, so the
+argument covers the whole original family. AO5 and the same tagged
+monotone-selector quadrature give
+$\mathcal I_X^A-\mathcal G_X^A=o(1)$ throughout the original range;
+this absolute quadrature statement needs no WRC6 comparison with $B$.
+It follows that
+
+$$
+\boxed{\liminf\frac{\mathcal G_X^A}{M_XL_X}
+=\liminf\frac{\mathcal I_X^A}{M_XL_X}
+\ge R_{\rm joint}(1-a).}
+\tag{TJV2}
+$$
+
+All lower limits are uniform over the original full windows and ties.
+This strengthens AO4's scalar margin with the complete changing height,
+without a short-interval hypothesis.
+
+### Consume the pure-future and original-core comparisons on their own ranges
+
+For the already existing uncompensated $\mathsf H$, APC2's same exact
+account has lag coefficient $1$ and no local stock subtraction. The
+preceding argument applies to it with $b=1$. Use JVM1's same formulas to
+define $R_{\rm joint}(1)$: here $D_1(v)=2-6v^2$ and
+$\nu_1=1/\sqrt3$. The positivity, logarithmic divergence, convex
+integrand and smooth extremal in JVM3--JVM4 all hold at this endpoint,
+so their same sufficient comparison and value apply. This verifies the
+parameter interface; it introduces no new variational problem or
+optimizing arithmetic source. FCT3--FCT5 then consume the margin on the
+entire original range:
+
+$$
+\boxed{\liminf\frac{\mathcal P_X^H}{M_XL_X}
+=\liminf\frac{\mathcal H_X^B}{M_XL_X}
+=\liminf\frac{\mathcal I_X^H}{M_XL_X}
+\ge R_{\rm joint}(1)>\frac d2.}
+\tag{TJV3}
+$$
+
+The displayed lower limits may be infinite. Their equality follows
+from the positive source-relative comparisons already proved in FCT;
+it does not assert absolute $o(M_XL_X)$ differences.
+
+On LDS2, DST4 transports TJV2 back to the original compensated response.
+HC2 and CQ5 retain every original admissible-height head and the actual
+continuous core account. Thus on that range
+
+$$
+\boxed{\liminf\frac{\mathcal G_{X,\mathcal T}}{M_XL_X}
+\ge R_{\rm joint}(1-a),}
+\tag{TJV4}
+$$
+
+with the same lower margin for every original admissible-height head
+and $\mathcal J_X$. The upper branch of this transport takes the
+unrefereed LDS1 theorem as its cited input, exactly as in DST; TJV2--TJV3
+themselves need no additional density input.
+
+For $0<b_1<b_2\le1$, insert JVM2's positive optimizer for $b_2$ in the
+$b_1$ comparison. Its extra term is
+$(d/8)(b_2-b_1)\int_1^2x/u(x)\,dx>0$, so
+$R_{\rm joint}(b_2)>R_{\rm joint}(b_1)$. Therefore TJV4 strictly raises
+JVM6's margin wherever $Q_\eta>1$ in LDS2. Likewise
+$R_{\rm joint}(1)>R_{\rm joint}(1-a)$, and the same comparison with
+OSP5 at $b=1$ gives $R_{\rm joint}(1)>d/2$.
+
+The original $a$ and its one-use credit have not been changed or spent
+again. TJV3 concerns the original pure-future head; TJV4 concerns the
+original compensated head only on its paid transport range. No fixed
+clock-ratio ceiling, extra source, favorable window, or arithmetic
+attainment is asserted. The selected signed upper, strict Robin for
+every integer above 5040 and RH remain unproved.
