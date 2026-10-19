@@ -168,6 +168,24 @@ private partial def rigidlyCompatible (env : Environment) (target source : Expr)
   | target, .forallE .. => (inductiveHead env target).isNone && !target.isSort
   | _, _ => true
 
+private def rawBinderCount : Expr → Nat
+  | .forallE _ _ body _ => 1 + rawBinderCount body
+  | .mdata _ body => rawBinderCount body
+  | _ => 0
+
+/-- Neutral goals need no source-body normalization. Try the raw common
+telescope first without deleting or changing any directional-query member. -/
+def neutralFirst (target : Expr) (entries : Array (Name × Expr × RawOriginBound)) :=
+  let matching := entries.filter (fun entry => rawBinderCount entry.2.1 == rawBinderCount target)
+  let remaining := entries.filter (fun entry => rawBinderCount entry.2.1 != rawBinderCount target)
+  matching ++ remaining
+
+theorem neutralFirst_complete (target : Expr) (entries : Array (Name × Expr × RawOriginBound))
+    (entry : Name × Expr × RawOriginBound) :
+    entry ∈ neutralFirst target entries ↔ entry ∈ entries := by
+  by_cases h : rawBinderCount entry.2.1 = rawBinderCount target <;>
+    simp [neutralFirst, h]
+
 private def baselineSource (env : Environment) (levels : List Name) (target : Expr)
     (name : Name) : IO (Attempt × Option PresentationEvidence × Nat × Nat) := do
   let evidence ← IO.mkRef (none : Option PresentationEvidence)
@@ -229,6 +247,7 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
         s!"search.presentation_raw_index_budget: raw_sources={enumerated}, " ++
           s!"necessary_hits={eligible.size}, " ++
           s!"raw_index_heartbeats={(← IO.getNumHeartbeats)-start}")
+  if targetAtoms.isEmpty then eligible := neutralFirst target eligible
   let built ← IO.getNumHeartbeats
   let mut normalized := 0
   let mut hits := 0

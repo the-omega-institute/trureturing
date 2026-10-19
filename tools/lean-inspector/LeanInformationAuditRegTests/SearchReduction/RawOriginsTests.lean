@@ -1,4 +1,5 @@
 import Mathlib
+import LeanInformationAuditRegAnalysis.SearchReduction.Presentation
 import LeanInformationAuditRegTests.SearchReduction.SingleSourceModel
 import LeanInformationAuditRegTests.SearchReduction.PresentationBaseline
 
@@ -31,4 +32,17 @@ run_elab do
         count := count + 1
     unless count > 0 do throwError "production rejection fixture missing: {suffix}"
     logInfo m!"production raw rejection: {suffix}, declarations={count}, normalizations=0"
+
+run_elab do
+  unless standardAxioms (← Lean.collectAxioms ``neutralFirst_complete) do
+    throwError "neutral ordering coverage has nonstandard axioms"
+  let target ← Term.elabTerm (← `(∀ n : Nat, 0 < n + 1 ∧ True)) (some (mkSort .zero))
+  Term.synthesizeSyntheticMVarsNoPostponing
+  let target ← instantiateMVars target
+  let env ← getEnv
+  let index ← factIndex
+  let (outcome, evidence, detail) ← baselinePresentation env [] target (some index)
+  unless outcome == .found && evidence.isSome do
+    throwError "production neutral presentation: {reprStr outcome}: {detail}"
+  logInfo m!"production neutral presentation: found; {detail}"
 end LeanInformationAudit.Tests.SearchReduction.RawOriginsTests
