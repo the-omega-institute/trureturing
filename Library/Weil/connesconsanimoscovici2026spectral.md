@@ -11888,3 +11888,81 @@ $$
 In particular GHC6 holds at every sufficiently large level of the original cofinal FIB support schedule. It is a complete actual exterior inverse comparison, including all prime powers and the full pole; it imposes no retained dimension bound. Applying it to a retained residual still multiplies the bound by that residual map's squared operator norm. No unmeasured residual bound, finite retained sign or convergence of a complete regularized determinant follows from GHC6 alone.
 
 GHC2 pays a complete source-specific trace-class replacement, GHC3 consumes it with the actual full arithmetic operator, and GHC4--GHC5 supply an explicit infinite-rank inverse-budget consumer. GHC6 pays the complete exterior inverse trace error along the cofinal support schedule. No scientific producer, matrix, solve, determinant or direction screen is executed. These are conditional paper applications under the inherited form/source premises, without Lean/kernel certification. The complete retained/border sign, cofinal Weil positivity, original same-source Robin upper and RH remain unresolved.
+
+### Transport the complete physical Schur block with the Gamma model
+
+Keep GHC1--GHC6's actual complex even Weil operator, its original support and Fourier split. Put $L=(\log c)/2$, let $P_N$ retain the modes $0,\ldots,N$, and write $P_N^\perp=I-P_N$. Reuse G1--G4's SAME decomposition $\mathscr H_c=D_L+V_L$, with $\|V_L\|\le K_L$. The physical retained block and full coupling are
+
+$$
+A_{c,N}=P_N\mathscr H_cP_N,\qquad
+\mathscr B_{c,N}=P_N^\perp V_LP_N.
+$$
+
+The diagonal $D_L$ commutes with $P_N$, so $\mathscr B_{c,N}=P_N^\perp\mathscr H_cP_N$ on the finite Fourier space and $\|\mathscr B_{c,N}\|\le K_L$. This is the original complete physical coupling, including every prime power, both pole evaluations and the Gamma boundary. Finite Fourier vectors belong to the operator domain of $D_L+V_L$; the full exterior retains the common form domain used in GHC6.
+
+Let $H_{\rm ext}$ be that exterior and $\widetilde H_{\rm ext}=H_{\rm ext}+\mathscr E$ its accepted Gamma model, where $\mathscr E=\mathcal C_N-B_{\Gamma,N}$. Define the two exact physical Schur blocks using the SAME retained block and coupling:
+
+$$
+S_{c,N}=A_{c,N}-\mathscr B_{c,N}^*H_{\rm ext}^{-1}\mathscr B_{c,N},
+\qquad
+\widetilde S_{c,N}=A_{c,N}-\mathscr B_{c,N}^*\widetilde H_{\rm ext}^{-1}\mathscr B_{c,N}.
+$$
+
+Both inverses exist whenever GHC6's $\mathfrak a(c,N)>0$. The classical two-sided trace-ideal estimate, reused rather than reproved, now consumes G4's actual coupling bound and GHC6:
+
+$$
+\boxed{
+\|S_{c,N}-\widetilde S_{c,N}\|_1
+<\frac{K_L^2\log c}{4N\mathfrak a(c,N)^2}.}
+\tag{GHC7}
+$$
+
+The norm is the ordinary trace norm on the original $(N+1)$-dimensional orthonormal retained space. There is no multiplying rank or unsupplied residual norm. In particular, reuse G4's explicit full arithmetic budget
+
+$$
+K_{(\log c)/2}
+=C_\Gamma(\log c)+4\sinh((\log c)/2)
+ +2\sum_{2\le n<c}\frac{\Lambda(n)}{\sqrt n}
+=O(\sqrt c\log c).
+$$
+
+Here $C_\Gamma(\log c)=O(1)$ by G2, the pole budget is $O(\sqrt c)$, and GHC6 already uses the stated complete prime bound. Thus at $N(c)=\lceil e^c\rceil$, for all sufficiently large $c$,
+
+$$
+\boxed{
+\|S_{c,N(c)}-\widetilde S_{c,N(c)}\|_1
+<\frac{K_{(\log c)/2}^{\,2}\log c}{c^2N(c)}
+=O\!\left(\frac{(\log c)^3}{c}e^{-c}\right).}
+\tag{GHC8}
+$$
+
+This controls the entire physical retained block at every sufficiently large original FIB support level, even though its dimension is $\lceil e^c\rceil+1$. The same bound also controls its operator norm and hence the difference of the two least eigenvalues. It gives an absolute model error, not a sign for either Schur block or a relative error at a vanishing eigenvalue.
+
+#### Transport the original trial and its initial quadratic together
+
+The full physical comparison does not require changing the original legal finite-rank trial $Y$. In the earlier notation, let
+
+$$
+Q=A_{c,N}-\mathscr B_{c,N}^*Y-Y^*\mathscr B_{c,N}
+       +Y^*H_{\rm ext}Y,\qquad
+R=\mathscr B_{c,N}-H_{\rm ext}Y.
+$$
+
+Its correctly transported model terms are
+
+$$
+\widetilde Q=Q+Y^*\mathscr E Y,\qquad
+\widetilde R=R-\mathscr E Y.
+$$
+
+The existing exact inverse-residual identity, applied with this SAME $Y$ to each operator, gives
+
+$$
+Q-R^*H_{\rm ext}^{-1}R=S_{c,N},\qquad
+\widetilde Q-\widetilde R^*\widetilde H_{\rm ext}^{-1}\widetilde R
+=\widetilde S_{c,N}.
+$$
+
+Consequently GHC7--GHC8 control the fully transported trial expression too. Holding $Q$ and $R$ fixed while replacing only their inverse still gives GHC3/GHC6's separate $\|R\|^2$ allowance. The physical comparison here transports the initial quadratic and residual from their common actual coupling; it does not infer an unsaved value of $\|R\|$, construct a new trial or add a second surplus credit.
+
+This `repo-derived` application reuses the existing trace ideal, bounded perturbation and Schur/residual identities. Its additional paid quantity is the dimension-independent absolute error of the SAME complete physical Schur block under the Gamma model. It supplies no finite target matrix, actual retained or border sign, normalized ground-state approximation, complete regularized determinant limit or original same-source Robin upper. The inherited source/form identification remains conditional paper mathematics without Lean/kernel certification, and RH and strict Robin for every integer above5040 remain unresolved. No literature priority is asserted.
