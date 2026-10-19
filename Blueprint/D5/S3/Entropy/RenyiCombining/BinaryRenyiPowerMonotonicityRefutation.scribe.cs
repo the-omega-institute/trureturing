@@ -9,43 +9,54 @@ internal sealed class BinaryRenyiPowerMonotonicityRefutationDocument : IScribeDo
     private const string Prefix =
         "D5/S3/Entropy/RenyiCombining/BinaryRenyiPowerMonotonicityRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Entropy/liu2026binaryentropyhardness");
+        LibraryNoteRef.Create("D5/L/Entropy/liu2026binaryentropybounds");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Powered binary Renyi entropy can decrease as its positive order increases.",
         H("A decrease between orders one quarter and one half"),
         Blocks(
-            Node("powered", "The powered binary entropy", PoweredFormula(),
-                "Write hRenyi(alpha,x) for the binary Renyi entropy with natural logarithms: "
-                    + "log(x^alpha + (1-x)^alpha)/(1-alpha). The normalization log(2) "
-                    + "is the entropy of a fair bit. The outer exponent is a real power.",
-                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("claim", "Monotonicity in the order", ClaimFormula(),
-                "Section 1.4(b) asks whether the powered entropy is non-decreasing in alpha "
-                    + "for every fixed x in [0,1]. This proposition compares any two positive "
-                    + "orders a < b distinct from one; the value at order one requires a limiting definition.",
-                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("result", "The monotonicity proposition is false",
-                new Formula.Not(Named("claim")),
-                "At x = 1/17, the quarter-order entropy is "
-                    + "(4/3)(log(3) - log(17)/4), while the half-order entropy is log(25/17). "
-                    + "The identities 16^(1/4) = 2 and 16^(1/2) = 4 give these expressions. "
-                    + "The integer inequalities 17^4 times 2^9 < 3^16 and 25^16 < 17^16 times 2^9, "
-                    + "together with strict monotonicity of the logarithm, imply "
-                    + "hRenyi(1/4,1/17)/log(2) > 3/4 and "
-                    + "0 < hRenyi(1/2,1/17)/log(2) < 9/16. "
-                    + "Raising these positive bounds to the eighth and fourth powers and using "
-                    + "(3/4)^8 = (9/16)^4 gives powered(1/2,1/17) < powered(1/4,1/17). "
-                    + "Both orders are positive and distinct from one, and 1/17 lies in [0,1].",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+            Definition("powered", "The powered binary entropy", PoweredFormula(),
+                Blocks(
+                    Paragraph(Text("The binary Renyi entropy with natural logarithms is")),
+                    new DocumentBlock.DisplayFormula(EntropyFormula()),
+                    Paragraph(Text("The normalization is log(2), and the outer exponent is a real power. "
+                        + "This is the expression in Liu's question in Section 1.4(b).")))),
+            Definition("claim", "Monotonicity in the order", ClaimFormula(),
+                Blocks(Paragraph(Text(
+                    "For every binary probability, the proposed monotonicity compares any two "
+                        + "positive orders a < b distinct from one. Order one is excluded because "
+                        + "the source defines its entropy by a limit.")))),
+            Result()
         )));
 
-    private static DocumentBlock Node(string declaration, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+    private static DocumentBlock Definition(string declaration, string title, Formula formula,
+        BlockSequence commentary) => Describe.Lean(
             DescribeId.Create("liu-binary-renyi-power-" + declaration),
             DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
+            commentary, DescribeRole.Definition);
+
+    private static DocumentBlock Result() => Describe.Lean(
+        DescribeId.Create("liu-binary-renyi-power-result"),
+        DeclarationHandle.Create(Prefix + "result"), H("The monotonicity proposition is false"),
+        StatementSource.FromAuthor(Disp(new Formula.Not(Named("claim")))),
+        AssessedProvenance.FromRepo(Source),
+        Blocks(
+            Paragraph(Text("Take x = 1/17 and the orders 1/4 and 1/2. "
+                + "The identities 16^(1/4) = 2 and 16^(1/2) = 4 give the closed forms")),
+            new DocumentBlock.DisplayFormula(QuarterEntropyFormula()),
+            new DocumentBlock.DisplayFormula(HalfEntropyFormula()),
+            Paragraph(Text("The integer comparisons 17^4 times 2^9 < 3^16 and "
+                + "25^16 < 17^16 times 2^9 imply, by strict monotonicity of the natural logarithm,")),
+            new DocumentBlock.DisplayFormula(LogComparisonFormula()),
+            Paragraph(Text("Since log(2) is positive, these comparisons give "
+                + "hRenyi(1/4,1/17)/log(2) > 3/4 and "
+                + "0 < hRenyi(1/2,1/17)/log(2) < 9/16. "
+                + "Raising the positive bounds to the eighth and fourth powers, respectively, "
+                + "and using (3/4)^8 = (9/16)^4 yields "
+                + "powered(1/2,1/17) < powered(1/4,1/17). "
+                + "Both orders are positive and distinct from one, and 1/17 lies in [0,1]."))),
+        DescribeRole.Theorem);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] arguments) =>
@@ -59,13 +70,23 @@ internal sealed class BinaryRenyiPowerMonotonicityRefutationDocument : IScribeDo
         new Formula.Logic(premise, FormulaLogicOperator.Implies, body);
     private static Formula Fraction(Formula numerator, Formula denominator) =>
         new Formula.Fraction(numerator, denominator);
+    private static Formula LogOf(Formula value) => Call("log", value);
+
+    private static Formula EntropyFormula()
+    {
+        Formula alpha = F.Id("alpha"), x = F.Id("x");
+        return All("alpha", All("x", Rel(Call("hRenyi", alpha, x), FormulaRelationOperator.Equal,
+            Multiply(Fraction(D(1), Subtract(D(1), alpha)),
+                LogOf(Add(new Formula.Power(x, alpha),
+                    new Formula.Power(Subtract(D(1), x), alpha)))))));
+    }
 
     private static Formula PoweredFormula()
     {
         Formula alpha = F.Id("alpha"), x = F.Id("x");
         return All("alpha", All("x", Rel(Call("powered", alpha, x), FormulaRelationOperator.Equal,
             new Formula.Power(
-                Fraction(Call("hRenyi", alpha, x), Call("log", D(2))), Fraction(D(2), alpha)))));
+                Fraction(Call("hRenyi", alpha, x), LogOf(D(2))), Fraction(D(2), alpha)))));
     }
 
     private static Formula ClaimFormula()
@@ -83,4 +104,20 @@ internal sealed class BinaryRenyiPowerMonotonicityRefutationDocument : IScribeDo
             Imp(Rel(x, FormulaRelationOperator.LessThanOrEqual, D(1)), orders)));
         return new Formula.Logic(Named("claim"), FormulaLogicOperator.Iff, proposition);
     }
+
+    private static Formula QuarterEntropyFormula() => Rel(
+        Call("hRenyi", Fraction(D(1), D(4)), Fraction(D(1), D(1, 7))),
+        FormulaRelationOperator.Equal,
+        Multiply(Fraction(D(4), D(3)), Subtract(LogOf(D(3)), Fraction(LogOf(D(1, 7)), D(4)))));
+
+    private static Formula HalfEntropyFormula() => Rel(
+        Call("hRenyi", Fraction(D(1), D(2)), Fraction(D(1), D(1, 7))),
+        FormulaRelationOperator.Equal, LogOf(Fraction(D(2, 5), D(1, 7))));
+
+    private static Formula LogComparisonFormula() => new Formula.Logic(
+        Rel(Add(Multiply(D(4), LogOf(D(1, 7))), Multiply(D(9), LogOf(D(2)))),
+            FormulaRelationOperator.LessThan, Multiply(D(1, 6), LogOf(D(3)))),
+        FormulaLogicOperator.And,
+        Rel(Multiply(D(1, 6), LogOf(Fraction(D(2, 5), D(1, 7)))),
+            FormulaRelationOperator.LessThan, Multiply(D(9), LogOf(D(2)))));
 }
