@@ -608,3 +608,315 @@ The new content is the converse package (25)–(37): the exact current uniformit
 The boundary-only decoder is mathematical and conditional on possession of the finite boundary record. No native acquisition, exporter installation, receiver authority, free counter, full current reconstruction, complete register recovery without the fixed task context, or whole-source response oracle is claimed. The remaining gap is an independently installed current-boundary acquisition/conversion service, and the full four-expression programme still requires its original source, continuation and authority clauses.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Exact coordinates and equicardinal historical fibres
+
+**Definition 12.1 (Signed wall labels).** Extend the phase notation to every integer by $e_m=[-m\phi]$. This extension does not give a two-point fibre to a nonpositive label: $H^{-1}(e_m)=\{Z(-m)\}$ for $m\le0$. For $m\le1$ define the two wall-ownership conventions
+
+$$
+\chi_+(m)=\begin{cases}x_1^+,&m=1,\\ Z(-m),&m\le0,\end{cases}
+\qquad
+\chi_-(m)=\begin{cases}x_1^-,&m=1,\\ Z(-m),&m\le0.\end{cases}
+\tag{38}
+$$
+
+For $d\ge1$ put
+
+$$
+(A_d,B_d)=
+\begin{cases}
+(G_{d-1},G_d),&d\text{ even},\\
+(G_d,G_{d-1}),&d\text{ odd},
+\end{cases}
+\qquad
+J_d=\{G_d-1,\ldots,G_{d+1}-2\}.
+\tag{39}
+$$
+
+All arcs below have the positive orientation induced by increasing real phase. Their initial and terminal walls are ordered by this orientation, not by the numerical order of representatives in $[0,1)$. The boundary meaning remains Definition 7.1: the actual paid-frontier compatible region, with its included current lifts.
+
+**Theorem 12.2 (Closed classification and exact historical cardinality).** Every proper attained boundary has unique coordinates $(d,s)$ with $d\ge1$ and $s\in J_d$. Its oriented arc has length $\alpha^d$, initial wall $e_{A_d-s}$ and terminal wall $e_{B_d-s}$, and includes exactly the lifts
+
+$$
+\chi_+(A_d-s),\qquad \chi_-(B_d-s)
+\tag{40}
+$$
+
+at those respective walls. Denote this record by $\partial(d,s)$. For every $(p,r)\in\mathcal A$ with $p\ne\varnothing$ its coordinates are
+
+$$
+d=|p|,\qquad s=N_p+r.
+\tag{41}
+$$
+
+For $0\le N<G_{d-1}$ let $p_d(N)$ be the $d$-digit, zero-padded Zeckendorf word of $N$. It is a complete block word. The entire historical fibre, without additional exclusions, is
+
+$$
+\operatorname{Prov}(\partial(d,s))
+=\{(p_d(N),s-N):0\le N<G_{d-1}\}.
+\tag{42}
+$$
+
+In particular, every boundary of depth $d$ has exactly $G_{d-1}$ historical descriptions, and their return counts are precisely the consecutive integers
+
+$$
+s-G_{d-1}+1,\ldots,s.
+\tag{43}
+$$
+
+There are exactly $G_{d-1}$ distinct attained boundaries at that depth. The boundary preserves $d$, the sum $N_p+r$, and
+
+$$
+\delta(\partial(d,s))=G_{d+1}-2-s\in\{0,\ldots,G_{d-1}-1\}.
+\tag{44}
+$$
+
+It forgets the individual $N_p$ and $r$ whenever $d\ge2$. The empty boundary still has the singleton provenance fibre of Theorem 10.4.
+
+Proof. The finite value bijection in RRO20.2 and RRO35.1 gives exactly the words $p_d(N)$ for $0\le N<G_{d-1}$: these are the legal words of length $d$ ending in zero. Their birth times have the additional identity
+
+$$
+b_p+N_p=G_d-1.
+\tag{45}
+$$
+
+Indeed, if $p=q0$, then $N_p=N_q$ and $b_p=M_q-1=G_d-N_q-1$. This also covers $d=1$, $q=\varnothing$. If $p=q10$, then $d\ge2$, $N_p=N_q+G_{d-2}$ and $b_p=G_{d-1}-N_q-1$; use $G_d=G_{d-1}+G_{d-2}$. The definition of $k_p$ gives $k_p+N_p=G_{d+1}-2$. Thus the attained inequalities $b_p\le r\le k_p$ are exactly $s\in J_d$, independently of $N_p$.
+
+To obtain the walls, $Z(N_p)=p0^\infty$ and $HZ(N_p)=[N_p\phi]$ give $[S_p]=[N_p\phi]$. The Fibonacci identities
+
+$$
+(-\alpha)^{d+1}\equiv-G_{d-1}\phi\pmod1,
+\qquad
+(-\alpha)^{d+2}\equiv-G_d\phi\pmod1
+\tag{46}
+$$
+
+follow from $F_n\phi=F_{n+1}-(-\alpha)^n$, $G_j=F_{j+2}$; this identity follows by the Fibonacci recurrence and its first two values. The two real endpoints in (20), in increasing order, therefore have entrance indices $A_d-N_p,B_d-N_p$. Rotation by $r\phi$ subtracts $r$ from both indices, giving the walls in (40). The positive arc has length $\alpha^d$ by (20), including when its representatives cross zero.
+
+Because $s\ge G_d-1$ and $A_d,B_d\le G_d$, both current indices are at most one. Formula (21) gives exactly (38) and (40). All interior phase fibres are still included by Theorem 7.2. Thus ownership is a consequence of attainment and the wall roles; it is not an extra historical bit. The singleton assertion at $m\le0$ follows from the split-phase classification of RRO20.2: $e_m=H(Z(-m))$ is not $e_i$ for any $i\ge1$, by irrationality of $\phi$.
+
+Conversely, choose any $s\in J_d$ and any $N$ in the displayed finite range. Identity (45) and the upper lifetime identity show that $(p_d(N),s-N)$ is attained. Its return count is nonnegative: $G_d-1\ge G_{d-1}-1\ge N$. Theorem 3.1 realizes it on every source in its nonempty cylinder. Its boundary is exactly (40), independently of $N$. This proves existence of every specified record, not merely consistency of wall labels.
+
+Equality of two records forces equality of $d$ by their positive lengths. At fixed $d$, equality of their initial walls gives $[(s-s')\phi]=0$, hence $s=s'$. Equation (41) and the finite value bijection now prove (42), its exact cardinality and (43). The interval $J_d$ has $G_{d+1}-G_d=G_{d-1}$ elements, giving the boundary count. Equation (29) gives (44). At $d=1$, $J_1=\{1\}$ and the sole history is $(0,1)$; both the birth and last lifetime return are included. At $d=2$, $s=2,3$ each has both histories $N=0,1$, including collision (34). For every larger $d$, (45) uses non-strict inequalities at both ends, so no lifetime endpoint is removed. $\square$
+
+**Theorem 12.3 (Transport of the intrinsic coordinates).** If $s<G_{d+1}-2$, one actual Next from any cut represented by $\partial(d,s)$ reads no raw bit and has current compatible boundary
+
+$$
+\partial(d,s+1).
+\tag{47}
+$$
+
+Its emitted bit is $\operatorname{Low}(s)$, and its endpoint ownership follows $\chi_\pm(m)\mapsto\chi_\pm(m-1)$. At $s=G_{d+1}-2$, the next paid block selects exactly one of
+
+$$
+\partial(d+1,G_{d+1}-1),\qquad
+\partial(d+2,G_{d+2}-1),
+\tag{48}
+$$
+
+for blocks $0$ and $10$ respectively. Boundary alone cannot select that block or its next emitted bit. These assertions hold for every member of the historical fibre (42), with its actual unread tail and authority retained separately.
+
+Proof. In the first case $r<k_p$ by (44). Definition 2.2 leaves $p$ fixed and increments $r$, hence $s$ increments by one. The common finite representative is $Z(N_p+r)=Z(s)$, giving the emission. Rotation subtracts one from each wall index; (21) gives $x_1^\pm\mapsto Z(0)$ and $Z(a)\mapsto Z(a+1)$, proving the ownership statement even at collapse. At the last return $r=k_p$, the runtime reads its next complete block. For $p0$, the new $N$ is $N_p$; for $p10$ it is $N_p+G_d$. Inserting $r+1$ gives respectively $s+1=G_{d+1}-1$ and $s+G_d+1=G_{d+2}-1$. These are the births at the new depths by (45). The two actual child witnesses of Theorem 10.2 give different next emissions at this cut. Thus (48) is a pair of genuine source-selected possibilities, not a deterministic boundary-only action beyond the uniform horizon. Theorem 3.2 continues each actual tail; nothing here replaces one history in (42) by another during execution. $\square$
+
+## 13. Finite acquisition from approximate ordered wall phases
+
+**Definition 13.1 (Calibrated paired-wall replies).** The reference is the circle $\mathbb R/\mathbb Z$ with the exact origin $[0]=HZ(0)$, positive orientation, unit circumference, and the fixed known constant $\phi$. The constant has the finite algebraic specification $\phi^2=\phi+1$, $\phi>1$; its infinite expansion is not stored or supplied as a real-number oracle. This is a declared reference of the digital coordinate model, not an unknown physical calibration to be inferred from replies. Write
+
+$$
+\operatorname{dist}_{\mathbb T}([a],[b])=\min_{k\in\mathbb Z}|a-b-k|.
+\tag{49}
+$$
+
+An acquisition target is one fixed, paused proper attained boundary. Let its ordered phases be $\theta_-,\theta_+$. For a requested integer precision $n\ge1$, a valid reply is the pair of $n$-bit integers $(a_n,b_n)$, $0\le a_n,b_n<2^n$, such that, with $\varepsilon_n=2^{-n}$,
+
+$$
+\operatorname{dist}_{\mathbb T}([a_n2^{-n}],\theta_-)\le\varepsilon_n,
+\qquad
+\operatorname{dist}_{\mathbb T}([b_n2^{-n}],\theta_+)\le\varepsilon_n.
+\tag{50}
+$$
+
+Both inequalities refer jointly to the same target and reference throughout the call. No independence, unbiasedness, nesting or preferred rounding is required. The two wall roles are distinguished by the reply positions; their numerical order may be reversed. No winding number, real interval lift, historical prefix, absolute operation counter, exact integer wall label, depth or depth bound is supplied. The attained-class promise is substantive: these replies do not certify that promise for an arbitrary source.
+
+**Definition 13.2 (Finite candidate selection).** Request precisions $n=1,2,\ldots$. At stage $n$, compute the rational number
+
+$$
+\ell_n=\operatorname{dist}_{\mathbb T}([a_n2^{-n}],[b_n2^{-n}])-2\varepsilon_n.
+\tag{51}
+$$
+
+If $\ell_n\le0$, request the next precision. Otherwise enumerate $1\le j\le2n$ and $t\in J_j$. Retain a candidate $(j,t)$ exactly when its two ordered phases in (40) both satisfy (50) for the received pair. Count retained candidates up to two, keeping one candidate in workspace. Accept only when exactly one candidate remains after this finite enumeration; return its exact record (40). In every other case request the next precision. The rule uses the single current reply; it need not archive earlier replies.
+
+All these comparisons are exact finite arithmetic. For example represent $\alpha=\phi-1$ and each candidate phase by the fractional part of an element of $\mathbb Z[\phi]$. Circular comparisons reduce to the three possible integer shifts $-1,0,1$ of a difference of representatives in $[0,1)$. After clearing the dyadic denominator, signs reduce to signs of integers plus integers times $\sqrt5$; signs and equality are decided by integer signs and a comparison of squares. Integer parts are found by bounded integer binary search. In particular the exact-zero wall and a reply on the boundary of its error ball cause no undecidable real equality test.
+
+**Theorem 13.3 (All-reply exact acquisition without a supplied depth).** For every proper attained target $\partial(d,s)$ and every sequence of valid replies (50), Definition 13.2 terminates and returns precisely that boundary, including its endpoint ownership. If $N$ is the accepted precision, then
+
+$$
+1\le N\le d+5.
+\tag{52}
+$$
+
+No distinct proper attained boundary is compatible with the accepted reply pair. The acquisition determines the whole finite provenance set (42); it does not select its actual historical member.
+
+On a fixed finite number of binary work tapes, excluding the service that supplies the replies, the receiver can perform this acquisition with
+
+$$
+\begin{aligned}
+\text{bit work}&=O\bigl(P+4^N(N+c+1)^4\bigr),\\
+\text{simultaneous stored bits}&=O(P+c+N),\\
+\text{request/reply traffic}&=O\bigl(c+N(c+N+1)\bigr).
+\end{aligned}
+\tag{53}
+$$
+
+Here $P$ counts the fixed installed program and conventions and $c$ bounds endpoint/lease descriptor widths. Precision requests are self-delimiting binary integers; a reply has exactly $2n$ coordinate bits plus framing. An exact result represented by $(d,s)$, its two signed labels and the finite descriptions in (38) fits $O(c+d+1)$ bits and is included in the storage/work bounds. Explicit listing of every historical member, DATA output or archival of replies is additional output, not included in (53). No optimality is asserted.
+
+Proof. First the finite search excludes no compatible attained boundary. For any candidate depth $j$ compatible with a reply, the triangle inequality gives
+
+$$
+\alpha^j\ \ge\
+\operatorname{dist}_{\mathbb T}(\theta_-^{\rm candidate},\theta_+^{\rm candidate})
+\ \ge\ \ell_n.
+\tag{54}
+$$
+
+If $\ell_n>0$, it is a multiple of $2^{-n}$ and hence is at least $2^{-n}$. Since $\alpha^2<1/2$, $\alpha^{2n}<2^{-n}$. Thus (54) forces $j<2n$. In particular the true boundary is in the finite search whenever the search is attempted. An accepted singleton consequently is the true record and excludes every other attained record, including candidates of unbounded depth. This is a global exclusion over the stated class, rather than uniqueness inside an arbitrarily truncated list.
+
+It remains to prove a uniform stopping bound over all valid replies. Put $n=d+5$ and $\varepsilon=2^{-n}$. The true two-wall circular distance is
+
+$$
+g_d=\min\{\alpha^d,1-\alpha^d\}
+=\begin{cases}\alpha^2,&d=1,\\ \alpha^d,&d\ge2.\end{cases}
+$$
+
+Because $\alpha>1/2$,
+
+$$
+4\varepsilon=2^{-d-3}<\alpha^{d+2}\le g_d.
+\tag{55}
+$$
+
+The received wall distance is at least $g_d-2\varepsilon$, so $\ell_n\ge g_d-4\varepsilon>0$. Now let $(j,t)$ be any compatible candidate. Each of its wall phases is within $2\varepsilon$ of the corresponding true wall. Subtract the ordered phases in the circle; the positive arc offsets are $[\alpha^j]$ and $[\alpha^d]$. Their circular distance is therefore at most $4\varepsilon$.
+
+For $j\ne d$, ordinary lengths satisfy $|\alpha^j-\alpha^d|\ge\alpha^{d+2}$: among larger $j$ the smallest difference is $\alpha^d-\alpha^{d+1}=\alpha^{d+2}$, and among smaller $j$ it is $\alpha^{d-1}-\alpha^d=\alpha^{d+1}$. Also $|\alpha^j-\alpha^d|<\alpha$, so the distance via the other side of the circle is greater than $1-\alpha=\alpha^2\ge\alpha^{d+2}$. Hence their circular distance is at least $\alpha^{d+2}$, contradicting (55). This proves $j=d$ without any external depth information.
+
+For two distinct coordinates $t,s\in J_d$, their initial-wall displacement is $[(t-s)\phi]$, with $0<|t-s|\le G_{d-1}-1$. The existing golden finite-precision separation theorem, applied to integer labels with horizontal displacement budget $Q=G_{d-1}$ and to the nearest integer, gives
+
+$$
+\operatorname{dist}_{\mathbb T}([(t-s)\phi],0)
+>\frac1{\sqrt5 Q+1}>\frac1{4Q}\ge2^{-d-2}.
+\tag{56}
+$$
+
+This uses precisely the real integer-pair gap in [IrrationalSlopeFaithfulness][ISF], including its private `golden_finite_precision_stable`, not a previously supplied circle decoder. The last inequality uses $G_{d-1}\le2^d$. Compatibility would instead bound this distance by $2\varepsilon=2^{-d-4}$. Thus $t=s$. At $d=1$ there is already only one member of $J_1$, so that case requires no separation comparison. The stage $d+5$ has exactly the true candidate and accepts. Earlier accepted stages are correct by the first paragraph. Formula (40), rather than an unobserved side bit, determines endpoint ownership under the attained promise. Formula (42) gives the historical set; its multiplicity prevents selecting the actual member for $d\ge2$.
+
+For the finite bounds, stage $n$ examines at most
+
+$$
+\sum_{j=1}^{2n}|J_j|=\sum_{j=1}^{2n}G_{j-1}=G_{2n+1}-2<2^{2n+2}
+$$
+
+candidates. All Fibonacci values, search coordinates and coefficients of $\alpha^j$ for $j\le2n$ have $O(n)$ bits; $G_j\le2^{j+1}$ suffices. The integer part of $(t-A_j)\phi$ can be bracketed between integers of magnitude $O(G_{2n+1})$ and determined by $O(n)$ exact sign comparisons. Each comparison uses $O(n)$-bit integer arithmetic and at most grade-school multiplication, costing $O(n^2)$ work and $O(n)$ scratch. Generating coefficients, testing the two circular error balls, scanning/incrementing counters and framing records fit a conservative $O((n+c+1)^4)$ work per candidate. Powers, consecutive Fibonacci weights, one coordinate, one saved candidate and a count saturated at two suffice; the candidate list is not stored. Exact comparisons avoid an unbounded numerical-refinement subroutine. Summing the geometric candidate bounds through $N$ gives the first line of (53), and reusing scratch gives the second. Precision requests cost $O(c+\log(n+2))$ bits and replies $2n+O(c+1)$ bits. Their sum gives the third line. The final exact labels have magnitude $O(G_{d+1})$, and $d<2N$ at acceptance by (54), so their finite encodings fit the same bounds. $\square$
+
+**Theorem 13.4 (Information used by the paired calibrated contract).** On the full proper attained class, one initial wall, one terminal wall, or the unordered pair of wall phases cannot replace the ordered pair in Definition 13.1. Even exact knowledge of the selected single wall's included lift does not repair the first two failures. If the reference has an arbitrary unknown additive rotation, paired ordered phases cannot identify $s$ at a depth with $G_{d-1}>1$. These are obstructions for these specific reduced inputs, not a lower bound over all acquisition interfaces.
+
+Proof. The distinct records $\partial(1,1)$ and $\partial(3,4)$ both have initial phase $e_1$ and included lift $x_1^+$. The distinct records $\partial(1,1)$ and $\partial(2,3)$ both have terminal phase $e_0$ and lift $Z(0)$. The records $\partial(1,1)$ and $\partial(2,2)$ have the same unordered phase set $\{e_0,e_1\}$ but opposite wall roles and different positive lengths $\alpha,\alpha^2$. All these records are attained by Theorem 12.2. Finally, at a fixed $d$, the phases for $s'$ are obtained from those for $s$ by the common rotation $[(s'-s)\phi]$. Allowing the unknown reference rotation to differ by its negative gives identical paired readings for distinct $s,s'\in J_d$. Exact collisions also give identical arbitrarily precise reply sequences, so finite precision cannot repair any of these losses. The original calibrated paired contract retains exactly these omitted distinctions; no minimality claim about other possible readouts follows. $\square$
+
+## 14. A common-source digital wall service and retained use
+
+**Definition 14.1 (An explicit extended endpoint model).** Use the actual source, producer and sequential raw endpoint of Definitions 1.2 and 2.2. Add a finite digital service at this producer and a receiver with the acquisition rule of Definition 13.2. Initialization installs fixed finite programs, the reference of Definition 13.1, named channels and persistent permissions, all independently of $x$, and pays for them. Producer registers, raw cursor and receiver workspace start exactly as in Definition 1.2, with no acquired word; the receiver additionally has precision counter one and empty boundary storage. A fixed acknowledgement completes initialization. No source-specific wall, digit, seed, task table or future output is installed at initialization.
+
+A driver can invoke the original Next on the actual producer and can issue Park at any proper returned cut. Every Next, raw Read and output remains paid. The driver may receive the original event triples on its own channel; the wall receiver does not subscribe to them or observe driver command counts. Computation delays and elapsed physical time are not additional observations. Park is an authorized command on the already bound current producer, not a selector that searches for an unknown source satisfying a desired boundary. Its guard checks a returned, nonempty paid prefix. It excludes further driver Next calls until release and transfers the declared service turn to the receiver, which gets only a fixed Paused acknowledgement on its prebound channel. The target is this same current paid-frontier boundary. No new raw read, Advance or history copy occurs in Park. Parking the initial empty frontier has a typed refusal and is outside the proper-target theorem.
+
+During the pause, Wall$(n)$ is an authorized, paid readout action. The service reads its actual finite caches $d=|p|$, $N_p,r$ and computes $s=N_p+r$, the two phases in (40), and their canonical representatives $u_-,u_+\in[0,1)$. It sends the $n$-bit numerators
+
+$$
+a_n=\lfloor2^n u_-\rfloor,\qquad b_n=\lfloor2^n u_+\rfloor.
+\tag{57}
+$$
+
+This uses exact quadratic-integer comparisons as in Definition 13.2, with explicit equality handling at phase zero. It is finite digital arithmetic on already acquired finite producer registers. It reads neither the unread source nor an infinite current configuration, and supplies no exact-label query. Its phase and reference convention are public fixed code. Wall changes only charged service scratch and channel state; it preserves $p,r$, the current source, unread cursor/tail and permissions. A completed Wall return restores the same paused state. The receiver obtains the exact boundary by actual paid replies, writes the finite record (40), discards its approximation scratch and keeps that record with its actual channel permission. A lease is a permission on this one exclusive connection and mode; it is not a hidden timestamp, operation counter or historical label.
+
+The model permits finite arbitrary driver command prefixes ending in Park. No source-dependent infinite command word is part of initialization. Driver input acquisition, its output reception and its actual computation, if any, have their own costs. There is one common actual source throughout; the sender's registers, target boundary, reply coordinates, receiver record and later actions refer to this run, rather than to separately chosen realizations.
+
+**Theorem 14.2 (Installed digital acquisition and its complete resource boundary).** Every initialized run of Definition 14.1 that parks after a finite positive number $r$ of completed Next calls admits finite wall acquisition of its actual boundary. If the actual prefix has length $d$, the service produces valid replies (50), and the receiver finishes after $N\le d+5$ Wall calls with exactly $\partial_{p,r}$ and the retained permission. Every proper attained boundary of Theorem 12.2 occurs in such a run. No historical member is chosen by the receiver's computation.
+
+In the same run, through acquisition, there are exactly $r$ producer triples, $d$ paid raw-bit Reads, one successful Park, $N$ Wall requests with their $N$ returns, and the finite initialization/selection acknowledgements. The total coordinate traffic is $N(N+1)$ bits, with the framing, requests, permissions and final exact-record output additionally charged as in (53). The earlier producer stream contributes its existing $6r$ event bits before framing; driver commands, the $d$ raw replies and their transport are separate paid traffic. The digital service has additional work
+
+$$
+O\bigl(N(d+N+c+1)^3\bigr)
+\tag{58}
+$$
+
+and reusable workspace $O(d+N+c+1)$ bits. For the producer, service and receiver together the simultaneous digital storage is $O(P+c+d+N)$. If the driver uses workspace or retains outputs, or the backend stores the source, their actual simultaneous storage $S_{\rm driver},S_{\rm backend}$ is added: the full estimate is $S_{\rm driver}+S_{\rm backend}+O(P+c+d+N)$. No bound on those two summands or on a separately requested archive is implicit.
+
+One full accounting of bit work is
+
+$$
+\begin{aligned}
+C_{\rm init}+C_{\rm driver}+C_{\rm backend}
+&+O\bigl((r+d+1)(d+c+1)^2\bigr)\\
+&+O\bigl(4^N(N+c+1)^4+N(d+N+c+1)^3\bigr).
+\end{aligned}
+\tag{59}
+$$
+
+$C_{\rm init}$ is actual finite installation/binding/reference-program cost, $C_{\rm driver}$ includes actual driver command acquisition and any computation/retained archive, and $C_{\rm backend}$ includes actual source provisioning, generation, input service and any additional physical storage/transport costs. Initialization code occupies the $P$ stored bits. The displayed digital terms include their input/output scans and scratch clearing. There is no uniform bound on arbitrary backend latency or on the creation of all infinite $x\in K$, and no claim that a later arbitrary Resume obeys the initial acquisition bounds (14).
+
+Proof. Theorem 3.1 gives actual $p$, cursor $d$, current source $T^rx$ and attainment. The digital service computes the independently defined boundary of this actual paid frontier by Theorem 12.2. Rounding (57) has ordinary absolute error less than $2^{-n}$ and hence satisfies the circular inequalities (50), including a coordinate equal to zero. Pausing and exclusive access make those two replies and every later reply jointly valid for the same target. Theorem 13.3 therefore proves termination, exact selection and retention. Given $(d,s)$, take any history in (42), any source in its cylinder, and run exactly its prescribed $r$ Next calls before Park. Theorem 3.1 realizes that history and therefore this boundary. This establishes the claimed all-boundary domain. The same reasoning shows why the convenient witness $(0^d,s)$ used for an existence calculation is not a claim that the actual producer had prefix $0^d$ or counter $s$.
+
+There are exactly $d$ Reads and $r$ triples by Theorem 3.1. Park and Wall perform no further ones. Summing $2n$ coordinate bits over $n=1,\ldots,N$ gives $N(N+1)$. At a service call, coefficients of its phase coordinates have $O(d)$ bits; multiplication by $2^n$ gives $O(d+n)$-bit integer coefficients. Integer-part search for a canonical phase costs $O(d)$ sign tests, and binary search for its $n$-bit rounded value costs $O(n)$ more. Each sign test is grade-school integer arithmetic on $O(d+n)$ bits. Two walls, cache scans, framing and scratch clearing fit $O((d+n+c+1)^3)$ work and $O(d+n+c+1)$ workspace. Summing gives (58). Caches and scratch are reused; they do not retain the $N$ replies or the past event word.
+
+For completeness, the original finite prefix also has the digital work term shown in (59). Every earlier prefix has length at most $d$, every earlier time is at most $r\le k_p<G_{d+1}\le2^{d+2}$, and its finite representative has value at most $N_p+r=O(G_{d+1})$. Each emission's greedy calculation and each block-cache update thus fit $O((d+c+1)^2)$ bit work by the finite arithmetic of Section 8. There are $r$ emissions and $d$ consumed raw bits, with finite fixed-width event/command processing; this gives $O((r+d+1)(d+c+1)^2)$. Raw generation and non-digital input costs remain in $C_{\rm backend}$, and driver acquisition/computation is not erased by this producer bound. Adding (53) and (58) proves (59). The producer keeps its actual $p,r$ and raw binding, while the receiver keeps only its boundary and permission; their combined digital storage has the stated size. Nothing bounds any optional driver archive by this storage estimate. $\square$
+
+**Definition 14.3 (Bounded installed use after acquisition).** With its retained permission, the receiver may request Arm$(L,H)$ for finite nonnegative $L,H$. The actual paused producer admits it exactly when $D(L,H)\le\delta$, using its actual $k_p-r$; the receiver can compute the identical guard from (44). Admission installs the stated finite budget and returns a fixed acknowledgement. It supplies no historical prefix or absolute counter. The permitted subsequent finite command sequences are Peek$(\ell)$, $0\le\ell\le L$, and at most $H$ Tick calls, with the same refusal and budget conventions as Section 6. The receiver's DATA output is calculated from its acquired boundary by Corollary 10.7, rather than by a new query to the unread raw endpoint. Tick performs the actual original Next, delivers its emitted bit and return acknowledgement, and updates the receiver record by (47). The digital endpoint projects to these declared fields; the actual producer retains all its original fields. No complete-counter-bearing task response is attributed to the boundary-only receiver.
+
+**Theorem 14.4 (Guarded common-source use and route agreement).** In Definition 14.3, Arm is legal exactly on the DATA domain of Theorem 10.6. After $j$ accepted Ticks, $0\le j\le H$, the retained boundary is $\partial(d,s+j)$, the actual source is $T^{r+j}x$, the remaining budget is $H-j$, and its decoded answers agree with the actual source's spatial and temporal DATA. The producer has the same prefix $p$, same raw cursor and exact unread tail as at Park. Every such finite adaptive command sequence terminates without an additional raw Read. Release/Resume on the retained actual producer has precisely the continuation of Theorem 3.2.
+
+Proof. Equations (29) and (44) identify the producer and receiver guards with the condition of Theorem 10.6. At each allowed Tick before budget exhaustion, $\delta-j\ge H-j>0$, so Theorem 12.3 gives (47) and a read-free actual Next. After that Tick both slack and remaining advance budget decrease by one, preserving (18); Peek leaves them unchanged. Induction gives the stated source, boundary and budget for any adaptive finite command sequence. At every resulting cut the producer route, the chronological route of Theorem 7.2 and the newly acquired-boundary route describe the same $U_{p,r+j}$. Theorems 4.1 and 10.6 therefore make their DATA values equal, and Corollary 10.7 evaluates that common value. Its possible computational provenance witness is irrelevant to the actual selected run because DATA is constant on the whole current fibre. Endpoint transport agrees by (40) and (47), including collapse to $Z(0)$. The actual unchanged cursor and tail give Theorem 3.2 on Release/Resume.
+
+The finite decoder's work, literal DATA/query-output lengths, command scans, actual Tick execution, refusal outputs and any retained output archive are charged in addition to (59). Their finiteness follows from Corollary 10.7 and the finite command sequence; no new conversion-complexity bound is asserted. Rights are those installed and retained in Definition 14.1, and are never decoded from coordinates. In particular the statement reuses the existing DATA and continuation theorems; their evaluation and the capability handoff are not additional mathematical novelty. $\square$
+
+## 15. Suppliers, distinctions and remaining recovery conditions
+
+**Definition 15.1 (Attribution and exact comparison domain).** The exact coordinate and equicardinality theorem (39)–(45), its source-specific transport, and finite all-reply recovery (50)–(56) from approximate geometric input are `repo-derived`. The digital wall service is a finite realization of that input contract in an explicitly extended model. It is not a claimed improvement over direct exact-label export. The sender's forward wall calculation, exporter installation in itself, scalar separation, old DATA evaluation and counter repair are not counted as new mathematical results. No worldwide priority claim or new Lean certification is made.
+
+| Supplier | Reused content and distinction |
+| --- | --- |
+| This volume §§2–8 and §§10–11 | The paid sequential producer, event-only observer, forward walls, finite bit arithmetic, exact slack, conditional DATA, finite provenance search and authenticated-counter repair are existing results. Equation (45) makes the earlier upper bound an equality for every proper attained boundary and identifies the full fibre without searching over historical prefixes. The new receiver acquires exact walls from finite-precision phase replies; it is not an event subscriber recomputing exact labels. |
+| [RRO20.2, 20.6, 24.2, 35.1][RRO]; [Zeckendorf381–383][Z] | Exact finite value ranges, endpoint-inclusive cylinder geometry, block lifetimes, split-side transport/collapse and finite prediction are indispensable existing suppliers. Equations (40) and (47) specialize their exact endpoint conventions to the full attained class. Neither positional deletion nor arbitrary source mutation replaces the stated $T$. |
+| [SignedSeriesFibres][SSF] and its [owning Scribe][SSFB] | The exact real seam fibres, injective seam indexing and all other singleton fibres are positive supply. Its private `prependBlock` and the local `parse`, affine recurrences, fibre and classification proofs are included in that supply. They do not assert current historical equicardinality or install noisy-wall acquisition. |
+| [Golden slope separation][ISF] and its [owning Scribe][ISFB]; [GoldenHurwitzBound][GHB] | Existing irrational integer-pair injectivity and finite horizontal-budget gap, including private `slope_encoding_injective_of_irrational`, `golden_finite_precision_stable`, `two_lt_sqrt_five` and `golden_form_ne_zero`, supply (56). The private proofs are not treated as absent interfaces. The new step obtains a finite candidate-depth bound from the two geometric walls themselves and proves all-reply stopping; scalar separation alone does not do this. |
+| [Arithmetic tomography][ATISF] and its [Scribe][ATISFB] | Irrational linear-observer injectivity is already available for all integer pairs. Exact real injectivity does not give an unbounded-depth noisy circle decoder without the width argument (54). |
+| [MechanicalPhaseCalibration][MPC] and its [Scribe][MPCB]; RRO Context Geometry §33 | Local mechanical-word mismatch under separated moving cuts, and jointly calibrated noisy phase estimates under their common-source hypotheses, are existing results. Neither supplies an unknown winding count, reference calibration or the attained-boundary class promise used here. Definition 13.1 uses only circular errors and ordered wall roles, with the reference explicitly fixed. |
+| [NativeAcquiredPrefixCylinder][NAPC], [State][NAPS], [Reconstruction][NAPR] and their owning Scribes | Actual native paid-prefix execution and unread-tail restart, including private `next_native_spec`, `prefix_cons`, `raw_tail_add` and the driver proofs, are credited. Their seed/payload/Stop controller differs from this producer. The reconstruction Scribe explicitly distinguishes its mathematical normal form from a retained runtime archive. |
+| [PVC §§5–7][PVC], [CSA §§6–8][CSA], [AIF §§4,9][AIF], [Zeckendorf496/502][Z] | Direct native B-path-table to M, archive-to-T, whole-view kernels, installed paid conversion, acquired calls and continuing queries already exist. They use different input objects and history models. Definition 14.1 supplies the concrete same-run mapping for current phase walls; it does not claim those earlier services were missing or automatically apply them to a new interface. |
+| [InterfaceKernelCriterion][IKC] and its [Scribe][IKCB]; [predictive quotient][PCQ] and its [Scribe][PCQB]; Boundary Dynamics §§36.1–36.6 | Actual-image factorization and dynamic kernel obligations are existing abstract results. The coordinate classification, exact stopping over the infinite depth class, and paid input realization here discharge concrete obligations rather than add a generic quotient/replay wrapper. |
+| [FiniteOneStepFutureMemory][FOFM] and its [Scribe][FOFMB] | Finite-state all-laws one-step expectation sufficiency, pullback closure and minimum quotient dimension are positive supply, including private `separating_laws`. They do not give recursive invariant closure, a bit-memory optimum or a Zeckendorf wall/history decoder. |
+| Brattka–Gherardi–Pauly, [*Weihrauch Complexity in Computable Analysis*, Definition 9][WCA] | `literature-attested`: computable metric spaces and Cauchy representations supply the standard viewpoint of increasingly precise rational names. The dyadic replies (50), attained-class isolation and bound (52) are proved here for the stated source, not attributed to this general representation definition. |
+| Pinned [mathlib Zeckendorf module][MATHLIB] | `literature-attested`: finite canonical Zeckendorf representation, greatest-Fibonacci construction and uniqueness. These remain the arithmetic suppliers for $p_d(N)$ and finite representatives. Exact quadratic sign tests and grade-school integer arithmetic are standard intermediate mechanisms, not claimed discoveries. |
+
+**Definition 15.2 (Scope of the acquired recovery).** The independently specified current boundary has a finite, exactly classified historical kernel. The acquired receiver record recovers that boundary and its guarded finite DATA; the actual retained endpoint executes the corresponding authorized actions on the same source. These statements provide a boundary-to-finite-memory acquisition direction under weaker geometric input than exact labels. They do not make all four views mutually invertible: an actual historical member of (42), absolute chronology and original producer fields remain ambiguous without the separately authenticated counter of Theorem 10.8. A computational witness in (42) is never historical evidence. Whole infinite space remains unrecovered by Theorem 7.3, and the full continuation beyond the finite DATA horizon still depends on the actual unread source.
+
+The wall channel is an explicitly new digital operation on producer caches with source-independent initialization. It is not available on the original event-only endpoint of Definition 1.2. The construction proves its finite realization in this digital model, rather than merely postulating a symbolic inverse. Installation of an independent physical wall sensor, acquisition of the specified physical reference and a proof that its errors concern this same paused compatible region remain separate bridges. Unknown reference rotation/scale/orientation, moving targets, arbitrary or falsely promised wall pairs, revocation, concurrent clients and non-Advance source mutation are outside (50). No sensor, capability, calibration or backend is supplied by the uniqueness proof. Finite programs here have source-indexed storage growing with $d$; no uniform bounded memory, source-cost optimum, physical impossibility or universal two-generator reduction follows.
+
+All original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization and complete-response obligations retain their own exact scopes. In particular Native Source Call Task Recovery §§10.1/10.3/10.4, Native General Cut Acquisition §9.4 and OA §§11.3/17 are not settled by this different digital endpoint. The full common-relation programme, including general independent space/time/boundary/memory recovery with actual acquisition, rights and continuing use, remains unresolved.
+
+[SSF]: ../../../D5/S1/Digit/Infinite/SignedSeriesFibres.lean
+[SSFB]: ../../../Blueprint/D5/S1/Digit/Infinite/SignedSeriesFibres.scribe.cs
+[ISF]: ../../../D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.lean
+[ISFB]: ../../../Blueprint/D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.scribe.cs
+[GHB]: ../../../D5/S1/Depth/GoldenHurwitzBound.lean
+[ATISF]: ../../../D5/S3/Observer/ArithmeticTomography/IrrationalSlopeFaithfulness.lean
+[ATISFB]: ../../../Blueprint/D5/S3/Observer/ArithmeticTomography/IrrationalSlopeFaithfulness.scribe.cs
+[MPC]: ../../../D5/S1/Words/Mechanical/MechanicalPhaseCalibration.lean
+[MPCB]: ../../../Blueprint/D5/S1/Words/Mechanical/MechanicalPhaseCalibration.scribe.cs
+[IKC]: ../../../D5/S3/ObserverMemory/Refinement/InterfaceKernelCriterion.lean
+[IKCB]: ../../../Blueprint/D5/S3/ObserverMemory/Refinement/InterfaceKernelCriterion.scribe.cs
+[PCQ]: ../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveCompletionMaximalInvariantQuotient.lean
+[PCQB]: ../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/PredictiveCompletionMaximalInvariantQuotient.scribe.cs
+[FOFM]: ../../../D5/S3/ObserverMemory/Prediction/FiniteOneStepFutureMemory.lean
+[FOFMB]: ../../../Blueprint/D5/S3/ObserverMemory/Prediction/FiniteOneStepFutureMemory.scribe.cs
+[WCA]: https://arxiv.org/html/1707.03202v3
+
+## 追加锚（本行以下为增补区）
