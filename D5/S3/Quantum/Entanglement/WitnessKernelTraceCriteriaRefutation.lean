@@ -5,6 +5,7 @@
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.claim; result=D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.result; claim=D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.claim
    digest: A two-qubit witness satisfies the kernel criterion but not the trace criterion. -/
+import D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -17,6 +18,7 @@ set_option autoImplicit false
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation
 open Matrix
+open D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness (schmidtRank)
 open scoped BigOperators ComplexOrder Kronecker
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
@@ -41,10 +43,6 @@ def trOne {m n : ℕ} (W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
 
 local notation "tr₂" => trTwo
 local notation "tr₁" => trOne
-
-/-- Schmidt rank is the rank of the coefficient matrix. -/
-def schmidtRank {m n : ℕ} (v : Fin m × Fin n → ℂ) : ℕ :=
-  (Matrix.of fun i j => v (i, j)).rank
 
 /-- Either dimension-ordered alternative of the kernel criterion. -/
 def kernelCriterion {m n : ℕ} (W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) : Prop :=
@@ -209,6 +207,5 @@ theorem result : ¬ claim := by
   intro h
   exact no_trace ((h 2 2 counterexample witness).mp kernel)
 
-#print axioms result
 
 end D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation

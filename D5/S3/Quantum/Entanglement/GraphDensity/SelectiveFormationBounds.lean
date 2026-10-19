@@ -41,6 +41,8 @@ Information-escape registration is paused under CLAUDE.md §3.9 「信息逃逸�
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 import D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
 
+open D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness (Ensemble)
+
 noncomputable section
 open scoped BigOperators ComplexOrder MatrixOrder
 open Set Matrix

@@ -54,6 +54,7 @@ D5/S3/Quantum/FiniteDimensional.qubitZ
   sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
 -/
 
+import D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
 import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 import D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
@@ -79,6 +80,8 @@ set_option linter.unusedSimpArgs false
 set_option linter.unnecessarySimpa false
 set_option autoImplicit false
 namespace D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+open D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness (quadratic_projector)
+
 noncomputable section
 def unitVector {n : Type*} [Fintype n] (x : n → ℂ) : Prop := star x ⬝ᵥ x = 1
 def IsHermitianPauli (P : (Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) : Prop :=
@@ -385,9 +388,6 @@ private theorem PauliProductProjector_vector {ψ : (Fin 2 × Fin 2 → ℂ)} (hn
   obtain ⟨z,hz⟩ := equal_projectors_ray hn he'
   exact ⟨z • eigenVector p (if ep then 1 else 0),eigenVector q (if eq then 1 else 0),
     by rw [tensor_smul_left];exact hz⟩
-private theorem quadratic_projector {n : Type*} [Fintype n] (z ψ : n → ℂ) : star z ⬝ᵥ (rankOneDensity ψ *ᵥ z) = (Complex.normSq (star z ⬝ᵥ ψ) : ℂ) := by
-  simpa only [rankOneDensity] using
-    D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral.BlockSpectral.rankOneQuadratic z ψ
 theorem ensemble_kernel {n ι : Type*} [Fintype n] [Fintype ι] (ψ : ι → n → ℂ) (w : ι → ℝ) (hw : ∀ i,0 ≤ w i) (z : n → ℂ) (hzero : star z ⬝ᵥ ((∑ i,w i • rankOneDensity (ψ i)) *ᵥ z)=0) : ∀ i,0 < w i → star z ⬝ᵥ ψ i = 0 := by
   have he : ∑ i,w i*Complex.normSq (star z ⬝ᵥ ψ i)=0 := by
     have hC : ((∑ i,w i*Complex.normSq (star z ⬝ᵥ ψ i) : ℝ) : ℂ)=0 := by

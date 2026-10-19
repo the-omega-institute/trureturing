@@ -73,6 +73,7 @@ import D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
 import D5.S3.Quantum.Algebra.CStarSmaleHigherOrder
 open scoped BigOperators ComplexOrder MatrixOrder
 open Matrix Polynomial
+open D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness (Ensemble)
 open D5.S3.Combinatorics.Graph.DomiRankEntropyRefutation (entropyBits)
 open D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
 open D5.S3.Quantum.Information.PartialTraceMutualInformation

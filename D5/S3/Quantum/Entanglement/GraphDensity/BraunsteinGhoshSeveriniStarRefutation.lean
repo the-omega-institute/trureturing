@@ -93,8 +93,7 @@ import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Weil.Probability.FiniteGaussianSchoenberg
 import Mathlib.Analysis.Normed.Module.Normalize
 
-open private weight_le_one_of_total
-  from D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
+open D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness (Ensemble weight_le_one_of_total spectral_ensemble_nonempty)
 
 noncomputable section
 open scoped BigOperators ComplexOrder MatrixOrder

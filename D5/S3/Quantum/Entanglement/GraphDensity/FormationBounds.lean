@@ -116,6 +116,8 @@ import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 
+open D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness (Ensemble weight_le_one_of_total spectral_ensemble_nonempty)
+
 noncomputable section
 open D5.S3.Quantum.CloningMachine (binaryEntropyBits)
 open D5.S3.Quantum.Fibers.PhysicalFiber (physicalFiber finite_dimensional_physical_fiber)
@@ -131,22 +133,6 @@ set_option linter.unusedSimpArgs false
 set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
-structure Ensemble {p q : ℕ} (ρ : (Matrix (Fin p × Fin q) (Fin p × Fin q) ℂ)) where
-  N : ℕ
-  weight : Fin N → ℝ
-  nonneg : ∀ i, 0 ≤ weight i
-  le_one : ∀ i, weight i ≤ 1
-  total : ∑ i, weight i = 1
-  psi : Fin N → ((Fin p × Fin q) → ℂ)
-  unit : ∀ i, ∑ x, ‖psi i x‖ ^ 2 = 1
-  average : ∑ i, (weight i : ℂ) • rankOneDensity (psi i) = ρ
-
-private theorem weight_le_one_of_total {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (weight : ι → ℝ) (nonneg : ∀ i, 0 ≤ weight i) (total : ∑ i, weight i = 1)
-    (i : ι) : weight i ≤ 1 := by
-  rw [← total]
-  exact Finset.single_le_sum (fun j _ => nonneg j) (Finset.mem_univ i)
-
 def S {p : ℕ} (τ : Matrix (Fin p) (Fin p) ℂ) : ℝ :=
   if hτ : τ.IsHermitian then
     D5.S3.Quantum.Information.PartialTraceMutualInformation.spectralEntropy hτ / Real.log 2
@@ -579,41 +565,6 @@ end D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Analytic
 
 namespace D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
 open D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Analytic
-theorem spectral_ensemble_nonempty {p q : ℕ} (ρ : (Matrix (Fin p × Fin q) (Fin p × Fin q) ℂ))
-    (hρ : ρ.PosSemidef) (ht : ρ.trace=1) : Nonempty (Ensemble ρ) := by
-  classical
-  let e := Fintype.equivFin ((Fin p × Fin q))
-  let U := hρ.1.eigenvectorUnitary
-  have total : ∑ v, hρ.1.eigenvalues v = 1 := by
-    have hh := congrArg Complex.re hρ.1.trace_eq_sum_eigenvalues
-    simpa [ht,Complex.re_sum] using hh.symm
-  have unit (v : (Fin p × Fin q)) : ∑ x, ‖U x v‖^2 = 1 := by
-    change ∑ x, ‖(hρ.1.eigenvectorBasis v) x‖^2 = 1
-    rw [← EuclideanSpace.norm_sq_eq,hρ.1.eigenvectorBasis.orthonormal.norm_eq_one]
-    norm_num
-  have average : ∑ v, (hρ.1.eigenvalues v : ℂ) • rankOneDensity (fun x => U x v) = ρ := by
-    apply Eq.trans (b := Unitary.conjStarAlgAut ℂ _ hρ.1.eigenvectorUnitary
-      (diagonal (RCLike.ofReal ∘ hρ.1.eigenvalues))) ?_ hρ.1.spectral_theorem.symm
-    ext x y
-    simp [Unitary.conjStarAlgAut_apply,Matrix.mul_apply,Matrix.diagonal,rankOneDensity,
-      Matrix.vecMulVec_apply,Matrix.sum_apply,Matrix.smul_apply,smul_eq_mul,U]
-    apply Finset.sum_congr rfl
-    intro i _
-    ring
-  refine ⟨{
-    N := Fintype.card ((Fin p × Fin q))
-    weight := fun i => hρ.1.eigenvalues (e.symm i)
-    nonneg := fun i => hρ.eigenvalues_nonneg _
-    le_one := fun i => weight_le_one_of_total _ (fun v => hρ.eigenvalues_nonneg v) total (e.symm i)
-    total := ?_
-    psi := fun i x => U x (e.symm i)
-    unit := fun i => unit _
-    average := ?_
-  }⟩
-  · rw [Equiv.sum_comp e.symm]; exact total
-  · exact (Equiv.sum_comp e.symm
-      (fun v => (hρ.1.eigenvalues v : ℂ) • rankOneDensity (fun x => U x v))).trans average
-
 theorem formation_nonneg {q : ℕ} (ρ : (Matrix (Fin 2 × Fin q) (Fin 2 × Fin q) ℂ)) (he : Nonempty (Ensemble ρ)) : 0 ≤ E_F ρ := by
   apply le_csInf ((cost_set_nonempty_iff ρ).mpr he)
   rintro s ⟨e,rfl⟩
