@@ -7,6 +7,7 @@
    digest: A sign-frame channel obstructs bounded-round simulation with one ancilla qubit. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Matrix.RecordCapacity
 
 /-!
 Finite adaptive protocols on a system and a qubit, with a diagonal-Kraus obstruction
@@ -110,34 +111,24 @@ def frameNat (n : ℕ) :
     Matrix (Fin (Fintype.card (FrameIndex n))) (Fin (n * n)) ℂ :=
   (frame n).submatrix (Fintype.equivFin (FrameIndex n)).symm id
 
-private theorem projection_rank_trace {ι : Type} [Fintype ι]
-    (P : Matrix ι ι ℂ) (hP : P * P = P) : (P.rank : ℂ) = P.trace := by
-  classical
-  have hf : IsIdempotentElem P.toLin' := by
-    change P.toLin'.comp P.toLin' = P.toLin'
-    rw [← Matrix.toLin'_mul, hP]
-  have h := (LinearMap.IsIdempotentElem.isProj_range _ hf).trace
-  rw [Matrix.trace_toLin'_eq] at h
-  exact h.symm
-
 private theorem measurement_rank_sum {ι : Type} [Fintype ι] [DecidableEq ι]
     {k : ℕ} (P : Measurement ι k) :
     (∑ o, (CStarMatrix.ofMatrix.symm (P.projector o)).rank) = 2 * Fintype.card ι := by
-  have h : ((∑ o, (CStarMatrix.ofMatrix.symm (P.projector o)).rank) : ℂ) =
-      (2 * Fintype.card ι : ℕ) := by
-    push_cast
-    calc
-      _ = ∑ o, Matrix.trace (CStarMatrix.ofMatrix.symm (P.projector o)) := by
-        apply Finset.sum_congr rfl
-        intro o _
-        exact projection_rank_trace _ (P.projection o).isIdempotentElem.eq
-      _ = Matrix.trace (CStarMatrix.ofMatrix.symm (∑ o, P.projector o)) := by
-        exact (Matrix.trace_sum _ _).symm
-      _ = _ := by
-        rw [P.complete]
-        change Matrix.trace (1 : Matrix (ι × Fin 2) (ι × Fin 2) ℂ) = _
-        simp [Fintype.card_prod, mul_comm]
-  exact_mod_cast h
+  let f := Matrix.toLinAlgEquiv' (R := ℂ) (n := ι × Fin 2)
+  have hid (o : Fin k) :
+      IsIdempotentElem (f (CStarMatrix.ofMatrix.symm (P.projector o))) :=
+    (P.projection o).isIdempotentElem.map f
+  have hsum : (∑ o, f (CStarMatrix.ofMatrix.symm (P.projector o))) = 1 := by
+    rw [← map_sum]
+    change f (CStarMatrix.ofMatrix.symm (∑ o, P.projector o)) = 1
+    rw [P.complete]
+    exact f.map_one
+  have h :=
+    D5.S3.Quantum.Matrix.RecordCapacity.sum_range_finrank_of_idempotent_sum
+      (fun o => f (CStarMatrix.ofMatrix.symm (P.projector o))) hid hsum
+  change (∑ o, (CStarMatrix.ofMatrix.symm (P.projector o)).rank) =
+    Module.finrank ℂ ((ι × Fin 2) → ℂ) at h
+  simpa [Module.finrank_pi, Fintype.card_prod, mul_comm] using h
 
 private theorem measurement_few_large {ι : Type} [Fintype ι] [DecidableEq ι]
     {k r : ℕ} (P : Measurement ι k) (hr : 2 * Fintype.card ι < 5 * r)
