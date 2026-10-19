@@ -21,18 +21,18 @@ abbrev signature : Signature.{u+1,u,0,0,0} where
   Output _ _ := Prop
   Anchor := Empty
   finiteAnchor := inferInstance
-def actual : Realization signature :=
-  realize signature (fun _ _ M => M.PosSemidef) (fun e => nomatch e)
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
-abbrev arena : Arena where
-  signature := signature
+def actual : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ M => M.PosSemidef) (fun e => nomatch e)
+def rejected : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ _ => False) (fun e => nomatch e)
+abbrev arena : Arena.{u+1,u,0,0,0} where
+  signature := signature.{u}
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
     {A X B : Matrix n n ℂ}, (fromBlocks A X Xᴴ B).PosSemidef →
     A.trace = 1 → B.trace = 1 →
     R.readout () n
       ((((1-‖X.trace‖^2 : ℝ) : ℂ) • (1 : Matrix n n ℂ)) - (A-B)*(A-B))
-private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
   have hw : (fromBlocks (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) 0 0
       (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)).PosSemidef := by
@@ -40,7 +40,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     exact Matrix.PosSemidef.one
   exact @h (ULift.{u} Unit) inferInstance inferInstance 1 0 1
     (by simpa using hw) (by simp [Matrix.trace]) (by simp [Matrix.trace])
-private theorem dependence : ObservationalDependence signature.{u} actual := by
+private theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
   intro i
   refine ⟨ULift.{u} Unit, 0, -1, ?_⟩
   intro he
@@ -52,34 +52,34 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   have hh := hn.diag_nonneg (i := (⟨()⟩ : ULift.{u} Unit))
   norm_num at hh
 def family : Registration arena.{u} (type_of% @normalized_difference_square_le.{u}) where
-  actual := actual
+  actual := actual.{u}
   bridge := Iff.rfl
-  variation := ⟨@normalized_difference_square_le, rejected, rejected_law⟩
+  variation := ⟨@normalized_difference_square_le.{u}, rejected.{u}, rejected_law.{u}⟩
   sensitivity := by
     constructor
     · intro i
-      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      refine ⟨rejected.{u}, ?_, ?_, rejected_law.{u}⟩
       · intro j hj
         exact (hj (Subsingleton.elim _ _)).elim
       · funext e
         exact nomatch e
     · intro e
       exact nomatch e
-  dependence := dependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@normalized_difference_square_le.{u}) (Realization signature) Unit Unit where
+  dependence := dependence.{u}
+def audit.{u} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@normalized_difference_square_le.{u}) (Realization signature.{u}) Unit Unit where
   unitName := `D5.S3.Quantum.Matrix.LinGProperty.normalized_difference_square_le.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.LinGProperty.TraceDistanceBound.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ M => M.PosSemidef) (fun e => nomatch e))
+  readout := some (realize signature.{u} (fun _ _ M => M.PosSemidef) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -104,7 +104,7 @@ def actual : Realization signature :=
   realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
-abbrev arena : Arena where
+abbrev arena : Arena.{0,0,0,0,0} where
   signature := signature
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
     {A X B : Matrix n n ℂ}, (fromBlocks A X Xᴴ B).PosSemidef →
@@ -126,21 +126,21 @@ private theorem dependence : ObservationalDependence signature actual := by
 def family : Registration arena.{u} (type_of% @normalized_trace_norm_le_one.{u}) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@normalized_trace_norm_le_one, rejected, rejected_law⟩
+  variation := ⟨@normalized_trace_norm_le_one.{u}, rejected, rejected_law.{u}⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
+    arena.{u}.Law actual rejected rejected_law.{u}
   dependence := dependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+def audit.{u} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@normalized_trace_norm_le_one.{u}) (Realization signature) Unit Unit where
   unitName := `D5.S3.Quantum.Matrix.LinGProperty.normalized_trace_norm_le_one.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.LinGProperty.TraceDistanceBound.TraceNorm.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
