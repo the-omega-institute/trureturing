@@ -10,11 +10,11 @@ Fumio Hiai, Log-majorizations between quasi-geometric type means for matrices, L
 
 $$\operatorname{mpow}\left(X, p\right) = \operatorname{cfc}\left(\operatorname{realPowerFunction}\left(p\right), X\right)$$
 
-*Formalization.* `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.mpow` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Matrix/SpectralPower.mpow` (`✓ std3`).
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. DOI: [10.1016/j.laa.2026.01.003](https://doi.org/10.1016/j.laa.2026.01.003). URL: <https://arxiv.org/abs/2510.04691v3>.
+*Acknowledgement.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ $$\operatorname{wgm}\left(A, B, alpha\right) = \operatorname{mpow}\left(A, \frac
 
 *Formalization.* `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.wgm` (`✓ std3`).
 
-*Citation.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. DOI: [10.1016/j.laa.2026.01.003](https://doi.org/10.1016/j.laa.2026.01.003). URL: <https://arxiv.org/abs/2510.04691v3>.
+*Citation.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
 
 *Commentary.*
 
@@ -38,7 +38,7 @@ $$\operatorname{specMean}\left(A, B, alpha\right) = \operatorname{mpow}\left(\op
 
 *Formalization.* `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.specMean` (`✓ std3`).
 
-*Citation.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. DOI: [10.1016/j.laa.2026.01.003](https://doi.org/10.1016/j.laa.2026.01.003). URL: <https://arxiv.org/abs/2510.04691v3>.
+*Citation.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
 
 *Commentary.*
 
@@ -50,7 +50,7 @@ $$\operatorname{SG}\left(alpha, p, A, B\right) = \operatorname{mpow}\left(\opera
 
 *Formalization.* `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.SG` (`✓ std3`).
 
-*Citation.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. DOI: [10.1016/j.laa.2026.01.003](https://doi.org/10.1016/j.laa.2026.01.003). URL: <https://arxiv.org/abs/2510.04691v3>.
+*Citation.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
 
 *Commentary.*
 
@@ -60,9 +60,9 @@ Equation (2.4) applies Fα to A^p and B^p and then takes the 1/p power. The clai
 
 $$\operatorname{LE}\left(alpha, A, B\right) = \operatorname{cfc}\left(exp, \operatorname{smul}\left(1 - alpha, \operatorname{cfc}\left(log, A\right)\right) + \operatorname{smul}\left(alpha, \operatorname{cfc}\left(log, B\right)\right)\right)$$
 
-*Formalization.* `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.LE` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Matrix/SpectralPower.LE` (`✓ std3`).
 
-*Citation.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. DOI: [10.1016/j.laa.2026.01.003](https://doi.org/10.1016/j.laa.2026.01.003). URL: <https://arxiv.org/abs/2510.04691v3>.
+*Citation.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
 
 *Commentary.*
 
@@ -76,7 +76,7 @@ $$\forall m: \mathbb{N}, \forall X: \operatorname{Matrix}\left(\operatorname{Fin
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. DOI: [10.1016/j.laa.2026.01.003](https://doi.org/10.1016/j.laa.2026.01.003). URL: <https://arxiv.org/abs/2510.04691v3>.
+*Acknowledgement.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
 
 *Commentary.*
 
@@ -88,7 +88,7 @@ $$claim \Leftrightarrow (\forall alpha: \mathbb{R}, \forall p: \mathbb{R}, \fora
 
 *Formalization.* `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.claim` (`✓ std3`).
 
-*Citation.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. DOI: [10.1016/j.laa.2026.01.003](https://doi.org/10.1016/j.laa.2026.01.003). URL: <https://arxiv.org/abs/2510.04691v3>.
+*Citation.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
 
 *Commentary.*
 
@@ -106,7 +106,7 @@ $$\neg claim$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. DOI: [10.1016/j.laa.2026.01.003](https://doi.org/10.1016/j.laa.2026.01.003). URL: <https://arxiv.org/abs/2510.04691v3>.
+*Acknowledgement.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
 
 *Commentary.*
 
@@ -114,11 +114,12 @@ Take α=2, p=1, A=diag(1,1048576), and B=[[272,504],[504,1853]]/125. The orthogo
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.LE`
 - Truth anchor: `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.LogMajorized`
 - Truth anchor: `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.SG`
 - Truth anchor: `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.claim`
-- Truth anchor: `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.mpow`
 - Truth anchor: `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.specMean`
 - Truth anchor: `D5/S3/Quantum/Matrix/SpectralGeometricLogEuclideanRefutation.wgm`
+- Truth anchor: `D5/S3/Quantum/Matrix/SpectralPower.LE`
+- Truth anchor: `D5/S3/Quantum/Matrix/SpectralPower.mpow`
+- Dependency: [D5/S3/Quantum/Matrix/SpectralPower](SpectralPower.md)

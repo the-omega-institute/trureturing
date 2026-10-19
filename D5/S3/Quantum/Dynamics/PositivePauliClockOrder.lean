@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=terminal=atom:fe5b36d38c2fac1015344a14352d6ff7cd82263ac5c41117b9b858bdc3012968
    digest: Positive Pauli clock propagators and their implemented order comparison. -/
 
+import D5.S3.Quantum.Matrix.SpectralPower
 import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import D5.S3.Quantum.EnvironmentRecords
 import D5.S3.Quantum.Foundation.FiniteStateChannel
@@ -32,6 +33,7 @@ open Matrix NormedSpace
 open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 namespace D5.S3.Quantum.Dynamics.PositivePauliClockOrder
+open D5.S3.Quantum.Matrix.SpectralPower (posDef_two)
 
 open D5.S3.Quantum.FiniteDimensional
 open D5.S3.Quantum.EnvironmentRecords
@@ -56,35 +58,6 @@ def speed (v : ℝ) : QubitMatrix := CFC.sqrt (response v)
 def coefficientA : QubitMatrix := (3 / 2 : ℂ) • 1 + (1 / 2 : ℂ) • (qubitX + qubitZ)
 def coefficientB : QubitMatrix := (1 / 4 : ℂ) • (qubitZ - qubitX)
 def coefficientC : QubitMatrix := (1 / 4 : ℂ) • 1
-
-private lemma posDef_two (a b c : ℝ) (ha : 0 < a) (hd : 0 < a * c - b ^ 2) :
-    (!![(a : ℂ), (b : ℂ); (b : ℂ), (c : ℂ)] : QubitMatrix).PosDef := by
-  let U : QubitMatrix := !![1, 0; (b / a : ℝ), 1]
-  let D : QubitMatrix := Matrix.diagonal ![(a : ℂ), ((c - b ^ 2 / a : ℝ) : ℂ)]
-  have hD : D.PosDef := by
-    apply Matrix.posDef_diagonal_iff.mpr
-    intro i
-    fin_cases i
-    · change (0 : ℂ) < (a : ℂ)
-      exact_mod_cast ha
-    · have : 0 < c - b ^ 2 / a := by
-        apply (sub_pos.mpr ((div_lt_iff₀ ha).mpr ?_))
-        nlinarith
-      change (0 : ℂ) < ((c - b ^ 2 / a : ℝ) : ℂ)
-      exact_mod_cast this
-  have hU : IsUnit U := by
-    rw [Matrix.isUnit_iff_isUnit_det]
-    norm_num [U, Matrix.det_fin_two]
-  have heq : U * D * star U = !![(a : ℂ), (b : ℂ); (b : ℂ), (c : ℂ)] := by
-    have ha' : (a : ℂ) ≠ 0 := by exact_mod_cast ne_of_gt ha
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [U, D, Matrix.mul_apply, Matrix.vecMul, dotProduct,
-        Fin.sum_univ_two, Matrix.star_apply,
-        Complex.ofReal_div, Complex.ofReal_sub, Complex.ofReal_pow] <;>
-      field_simp <;> ring
-  rw [← heq]
-  exact hU.posDef_star_right_conjugate_iff.mpr hD
 
 private lemma response_entries (v : ℝ) : response v =
     !![((2 + v / 2 - v ^ 2 / 4 : ℝ) : ℂ), (((1 - v) / 2 : ℝ) : ℂ);

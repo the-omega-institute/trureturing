@@ -118,7 +118,7 @@ ActualPairSupply is independently defined through clipped readout, error bounds,
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/DecoderPeak.peak_trace_bound`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/DecoderReplay.actual_address_eq`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/DecoderReplay.trace_replay`
-- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace/Basic](DecoderOperationTrace/Basic.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderPeak](DecoderPeak.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderReplay](DecoderReplay.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderStartup](DecoderStartup.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral](FibonacciFactorCompletion/Bilateral.md)
