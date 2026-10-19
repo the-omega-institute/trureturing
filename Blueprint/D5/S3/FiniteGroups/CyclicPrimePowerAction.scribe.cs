@@ -14,6 +14,27 @@ internal sealed class CyclicPrimePowerActionDocument : IScribeDocumentDefinition
         H("Cyclic Prime-Power Split Extensions"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("cyclic-prime-power-cyclic-card"),
+                DeclarationHandle.Create("D5/S3/FiniteGroups/CyclicPrimePowerAction.cyclic_card"),
+                H("The cardinality of a cyclic residue group"),
+                StatementSource.FromAuthor(CyclicCard()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a nonzero natural number m, the multiplicative cyclic group "
+                    + "Cyclic m has cardinality m."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("cyclic-prime-power-kernel-card"),
+                DeclarationHandle.Create("D5/S3/FiniteGroups/CyclicPrimePowerAction.kernel_power_card"),
+                H("The power kernel has the prescribed prime-power cardinality"),
+                StatementSource.FromAuthor(KernelPowerCard()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a finite cyclic commutative group P of cardinality q^s, the kernel "
+                    + "of x ↦ x^(q^j) has cardinality q^j for every j from zero through s. "
+                    + "Here Type* denotes a carrier in an arbitrary universe, as in Lean."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cyclic-prime-power-action"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/CyclicPrimePowerAction.actionData"),
                 H("An actual action of exact prime order"),
@@ -113,6 +134,9 @@ internal sealed class CyclicPrimePowerActionDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name, params Formula[] xs) =>
         new Formula.Apply(F.Id(name), [.. xs]);
+    private static Formula NatCall(string member, params Formula[] xs) =>
+        new Formula.Apply(Seq(Operatorname, Grp(Seq(F.Id("Nat"), Dot, F.Id(member)))), [.. xs]);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.BindMany(FormulaQuantifier.ForAll,
             [new Formula.BoundVariable(FormulaIdentifier.Create(name), type)], body);
@@ -121,6 +145,35 @@ internal sealed class CyclicPrimePowerActionDocument : IScribeDocumentDefinition
             [new Formula.BoundVariable(FormulaIdentifier.Create(name), type)], body);
     private static Formula Equal(Formula x, Formula y) => Seq(x, Eq, y);
     private static Formula Pow(Formula x, Formula y) => Call("power", x, y);
+    private static Formula CyclicCard()
+    {
+        var m = F.Id("m");
+        Formula body = Seq(NatCall("card", Call("Cyclic", m)), Sp, Eq, Sp, m);
+        body = Seq(OpenBracket, Call("NeZero", m), CloseBracket, Sp, body);
+        return Disp(All("m", Seq(Mathbb, Grp(F.Id("N"))), body));
+    }
+
+    private static Formula KernelPowerCard()
+    {
+        var p = F.Id("P"); var q = F.Id("q"); var s = F.Id("s");
+        var j = F.Id("j");
+        var exponent = new Formula.Power(q, Call("val", j));
+        var hom = Parenthesized(Seq(Call("powMonoidHom", exponent), Sp, Colon, Sp,
+            p, To, Star, p));
+        var kernel = Call("ker", hom);
+        Formula body = Seq(NatCall("card", kernel), Sp, Eq, Sp, exponent);
+        body = All("j", Call("Fin", Seq(s, Plus, D(1))), body);
+        var cardinalityHypothesis = Seq(NatCall("card", p), Sp, Eq, Sp,
+            new Formula.Power(q, s));
+        body = new Formula.Logic(cardinalityHypothesis, FormulaLogicOperator.Implies, body);
+        body = All("s", Seq(Mathbb, Grp(F.Id("N"))), body);
+        body = All("q", Seq(Mathbb, Grp(F.Id("N"))), body);
+        body = Seq(OpenBracket, Call("CommGroup", p), CloseBracket, Sp,
+            OpenBracket, Call("IsCyclic", p), CloseBracket, Sp,
+            OpenBracket, Call("Finite", p), CloseBracket, Sp, body);
+        return Disp(All("P", Seq(F.Id("Type"), Star), body));
+    }
+
     private static Formula Action()
     {
         var p = F.Id("p"); var q = F.Id("q"); var s = F.Id("s");
