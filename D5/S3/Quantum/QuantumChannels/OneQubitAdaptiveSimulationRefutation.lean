@@ -277,14 +277,20 @@ private theorem frame_row_complete (n : ℕ) (hn : 0 < n) (i : FrameIndex n) :
 
 private theorem frame_complete (n : ℕ) (hn : 0 < n) :
     (∑ j, (Matrix.diagonal (frameNat n · j))ᴴ * Matrix.diagonal (frameNat n · j)) = 1 := by
-  ext i l
-  by_cases hil : i = l
-  · subst l
-    simp only [Matrix.sum_apply, Matrix.diagonal_conjTranspose,
-      Matrix.diagonal_mul_diagonal, Matrix.diagonal_apply_eq, Matrix.one_apply_eq]
-    exact frame_row_complete n hn ((Fintype.equivFin (FrameIndex n)).symm i)
-  · simp [Matrix.sum_apply, Matrix.diagonal_conjTranspose,
-      Matrix.diagonal_mul_diagonal, hil]
+  let D := Matrix.diagonalRingHom (Fin (Fintype.card (FrameIndex n))) ℂ
+  calc
+    _ = ∑ j, D (star (frameNat n · j) * (frameNat n · j)) := by
+      simp only [D, Matrix.diagonalRingHom_apply, Matrix.diagonal_conjTranspose,
+        Matrix.diagonal_mul_diagonal]
+      rfl
+    _ = D (∑ j, star (frameNat n · j) * (frameNat n · j)) := (map_sum D _ _).symm
+    _ = D 1 := by
+      congr 1
+      funext i
+      simpa only [Finset.sum_apply, Pi.mul_apply, Pi.star_apply, Pi.one_apply,
+        frameNat, Matrix.submatrix_apply, id_eq] using
+        frame_row_complete n hn ((Fintype.equivFin (FrameIndex n)).symm i)
+    _ = 1 := map_one D
 
 private def frameChannel (n : ℕ) (hn : 0 < n) :
     QuantumChannel (Fin (Fintype.card (FrameIndex n))) (Fin (Fintype.card (FrameIndex n))) :=
