@@ -11618,3 +11618,107 @@ $$
 Since $\beta$ has only19 rows, $R_{\mathcal F}$ restricted to $\ker\beta$ has rank at least494. On this kernel the old nineteen-channel update equals $L_*$, whereas HCN4 adds $(27/427)(Q-L_*)$, strictly positive on every vector with nonzero residual. This is a source-specific nonredundancy statement, not global domination of the nineteen-channel target. The two gains both consume the same inverse surplus and must not be added without a common paid comparison.
 
 The complete target sign, good-block/border payment and cofinal positivity remain unresolved. This does not revive the separately excluded rank-one endpoint family or alter any old certificate. No new source action, matrix, inverse, solve, determinant, Gram, numerical sign run, parameter scan, Lean proof or literature-priority claim is supplied.
+
+### The finite channel majorant pays a stronger complete contraction
+
+Keep the SAME actual $c=27$ exterior, $N=1280$, original trial $Y$, residual $R$, nineteen Gamma bins, $\rho=1/32$, far payments and common-form/source premises. Reuse the whole-space Young majorant $\mathcal V$ and its already paid comparison
+
+$$
+H_{\rm ext}\succeq\mathcal V^{-1}+g_0I,
+\qquad g_0=9/25.
+$$
+
+The inverse of this particular majorant retains only the original nineteen finite aggregate columns. Its norm need not pay the entire infinite Gamma boundary or pole. The following estimates apply the existing finite-bin Cauchy--Schwarz and positive-operator calculus to those exact columns; they assert no new general theorem or literature priority.
+
+Put $d=\log27$, $b_j=2j+1/2$ and
+
+$$
+h_{j,n}=\frac{2b_j(-1)^n}
+ {\sqrt d\,[b_j^2+(2\pi n/d)^2]},\qquad n>N.
+$$
+
+The nineteen original bins partition $0\le j<K$, where $K=6765$. For a bin $[a,b)$ the column is $U_{[a,b)}=\sqrt{c_a/(b-a)}\sum_{j=a}^{b-1}h_j$, with $0<c_a=1-e^{-b_ad}<1$. Thus
+
+$$
+\|U\|_{\rm HS}^2
+ =\sum_{[a,b)}\|U_{[a,b)}\|^2
+ \le\sum_{j=0}^{K-1}\|h_j\|^2.
+\tag{FCM1}
+$$
+
+Every norm here uses the actual normalized even exterior cosine basis. The sum over $n>N$ retains the selected support and the complete infinite far tail. Since the summand decreases with positive $n$, integration gives two bounds for the SAME column:
+
+$$
+\begin{aligned}
+\|h_j\|^2
+&=\frac{4b_j^2}{d}
+  \sum_{n>N}\frac1{[b_j^2+(2\pi n/d)^2]^2}\\
+&\le\frac{d^3b_j^2}{12\pi^4N^3},
+\qquad
+\|h_j\|^2\le\frac1{2b_j}.
+\end{aligned}
+\tag{FCM2}
+$$
+
+The first inequality uses $\sum_{n>N}n^{-4}\le1/(3N^3)$; the second enlarges the integral to $[0,\infty)$. Split the finite rate sum at $j=N$. Since $\sum_{j=0}^{N-1}(2j+1/2)^2<4N^3/3$, the first part is less than $d^3/(9\pi^4)$. The remaining part is bounded by
+
+$$
+\frac14\sum_{j=N}^{K-1}\frac1{j+1/4}
+\le\frac14\log\frac{K-3/4}{N-3/4}
+=\frac14\log\frac{27057}{5117}
+<\frac7{16}.
+$$
+
+For the last inequality, $27057/5117<11/2<e^{7/4}$; the exponential's degree-four positive Taylor sum already exceeds $11/2$. Also $d<10/3$, as certified by the degree-seven positive Taylor sum for $e^{10/3}>27$, and $\pi>3$. Consequently
+
+$$
+\boxed{
+\|U\|_{\rm HS}^2
+<\frac{1000}{19683}+\frac7{16}<\frac12.}
+\tag{FCM3}
+$$
+
+This is an analytic bound on the complete nineteen-column operator, with no rate truncation beyond the original fixed bins and no finite-mode replacement of its infinite support.
+
+Reuse the original full-space identity, with $J_0=\{1281,\ldots,32768\}$, $\mathcal F=\{32769,\ldots\}$ and $s=1+33\delta_{\rm ch}\ge1$:
+
+$$
+B:=\mathcal V^{-1}
+=\left[\Lambda_{J_0}+s^{-1}U_{J_0}U_{J_0}^*\right]
+ \oplus\frac{\Lambda_{\mathcal F}}{1+\rho}.
+$$
+
+The accepted complete reciprocal bound $\Lambda\preceq(331/100)I$, including the far constant, and FCM3 imply
+
+$$
+0<B\prec\frac{381}{100}I,
+\qquad
+H_{\rm ext}^{-1}
+\preceq(B+g_0I)^{-1}
+\preceq\frac{127}{139}\,\mathcal V.
+\tag{FCM4}
+$$
+
+Apply the SAME whole-inverse functional calculus to $B$, rather than paying the norm of the larger $T=\Lambda+B_{\rm GP}$. No Gamma or pole term has been removed from the actual $H_{\rm ext}$; the lower comparison with $B+g_0I$ was already proved by the whole-space Young argument and paid prime surplus.
+
+Retain the original complete far allowance
+
+$$
+L_*=Q-R^*\mathcal VR-\mathcal E_{\mathcal F},
+\qquad\mathcal E_{\mathcal F}\succeq0.
+$$
+
+Then $S_N=Q-R^*H_{\rm ext}^{-1}R$ satisfies
+
+$$
+\boxed{
+S_N\succeq\mathcal L_{\rm fin}
+:=\frac{127}{139}L_*+\frac{12}{139}Q,\qquad
+\mathcal L_{\rm fin}-\mathcal L_\sharp
+=\frac{1371}{59353}(Q-L_*)\succeq0.}
+\tag{FCM5}
+$$
+
+Indeed the discarded term in the first comparison is $(127/139)\mathcal E_{\mathcal F}\succeq0$. All original far charges therefore remain paid. The second comparison uses HCN4 exactly as published. It is strict as a quadratic inequality on every vector with nonzero residual, since $Q-L_*=R^*\mathcal VR+\mathcal E_{\mathcal F}$. In particular the previously established nonzero residual directions in $\ker\beta$ receive a strictly larger gain than HCN4; their rank argument is reused without repetition.
+
+This pays a strictly stronger complete inverse allowance and a globally stronger sufficient retained target than HCN4. It does not add a second copy of the same surplus to the nineteen-channel projection, and asserts no global ordering with $\mathcal L_g^{(19)}$. The complete matrix $Q$ is still not supplied by a cached scalar. The full retained/border sign, cofinal Weil positivity, the original all-integer strict Robin inequality and RH remain open. These are conditional paper applications under the inherited source, form/domain and sound-cache premises; no new scientific execution, Lean build or kernel certification is supplied.
