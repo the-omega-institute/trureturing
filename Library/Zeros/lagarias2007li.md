@@ -713,3 +713,166 @@ multiplicities; no positivity or polynomial lower bound for that head
 has been acquired. With a fixed verified height instead, the allowance
 retains its factor $e^{c/(2H^2)}$ and supplies no cofinal polynomial
 budget. The original head probes, CS29, Robin and RH remain unresolved.
+
+## The actual high-zero Fibonacci block carries a positive budget
+
+Keep RT1--RT6's actual zeta zero sums, their original two-coordinate matrix
+$\mathcal M$, all multiplicities and the inclusive head convention.
+Let $a\le b$ be adjacent positive Fibonacci numbers and $c=a+b\ge1024$.
+Use the single cutoff $H=c$: the head contains $|\Im\rho|\le c$ and
+the tail contains $|\Im\rho|>c$. Put
+$$
+ S_4^+(c)=\sum_{\Im\rho>c}\frac{m_\rho}{(\Im\rho)^4}.
+$$
+This is the same convergent positive zero tail used in RT1.
+The added estimate is an actual positive lower bound for this complete
+tail, rather than another estimate for the unitary-comparison error:
+$$
+ \boxed{\quad K^{\rm tail}_{a,b}(c)
+       \succeq \frac{c^4}{2^{19}}S_4^+(c)\,I_2\succ0.\quad}
+ \tag{PTL1}
+$$
+It uses the existing reflected-pair identity and unit-circle Gram matrix.
+The classical zero-counting asymptotic below is reused, not reproved.
+This is a paper application without new Lean certification or a
+literature-priority claim; it supplies no sign for the unknown head.
+
+### Retain a uniformly positive Gram determinant
+
+For the SAME upper zero $\rho=\beta+i\gamma$, $\gamma>c$, write
+$1-1/\rho=e^{d_\rho+i\theta_\rho}$ as in RT2. The open critical strip gives
+$$
+ \theta_\rho=
+ \arctan\frac{\beta}{\gamma}
+ +\arctan\frac{1-\beta}{\gamma},\qquad
+ \frac1{2\gamma}\le\theta_\rho\le\frac1\gamma,\qquad
+ |d_\rho|\le\frac1{2\gamma^2}.
+ \tag{PTL2}
+$$
+The angle bounds use
+$x/(1+x^2)\le\arctan x\le x$ for $x\ge0$.
+In particular $0<c\theta_\rho<1$.
+
+Set $A=a\theta_\rho/2$, $B=b\theta_\rho/2$ and
+$C=c\theta_\rho/2$, so $C-B=A$. The unit-circle comparison matrix
+for the coefficient triple $2(1-\cos(n\theta_\rho))$ is exactly
+$$
+ G_\rho=
+ 8\begin{pmatrix}
+ \sin^2B&\sin B\sin C\cos A\\
+ \sin B\sin C\cos A&\sin^2C
+ \end{pmatrix}.
+$$
+All three angles lie in $(0,1/2)$. Thus
+$$
+ \det G_\rho=64\sin^2A\sin^2B\sin^2C>0,\qquad
+ \operatorname{tr}G_\rho=8(\sin^2B+\sin^2C).
+$$
+Using $\sin x\ge x/2$ on $[0,1/2]$, $\sin x\le x$, and
+$\lambda_{\min}\ge\det/\operatorname{tr}$ for a positive $2$-by-$2$
+matrix gives
+$$
+ \lambda_{\min}(G_\rho)
+ \ge \frac{a^2b^2c^2\theta_\rho^4}{128(b^2+c^2)}
+ \ge \frac{a^2b^2c^2}{2048(b^2+c^2)\gamma^4}
+ \ge \frac{c^4}{147456\gamma^4}
+ \ge \frac{c^4}{2^{18}\gamma^4}.
+ \tag{PTL3}
+$$
+Here adjacency gives $a\ge c/3$, $b\ge c/2$ and
+$b^2+c^2\le2c^2$. No phase independence or verification that this
+zero lies on the critical line is assumed.
+
+### Pay the radial error on the same reflected pair
+
+Reflection of the upper zero, $\rho\mapsto1-\bar\rho$, preserves
+the ordinate and multiplicity, preserves $\theta_\rho$ and changes
+$d_\rho$ to $-d_\rho$. RT2 therefore represents the complete tail by
+summing the matrices from the reflected-average coefficient triple
+$$
+ T_n(\rho)=2\bigl(1-\cosh(nd_\rho)\cos(n\theta_\rho)\bigr),
+ \qquad n=a,b,c.
+$$
+This is an equality AFTER reflection averaging over the actual
+upper-zero set; it does not replace each unaveraged zero response
+by an independently chosen phase.
+
+For $1\le n\le c$, the existing radial-error estimate gives
+$$
+ |T_n(\rho)-2(1-\cos(n\theta_\rho))|
+ \le n^2d_\rho^2e^{c|d_\rho|}
+ \le \frac{n^2}{4\gamma^4}e^{c/(2\gamma^2)}.
+$$
+Write $E_\rho=\mathcal M(T_a,T_b,T_c)-G_\rho$.
+The original matrix map and its maximum absolute row sum give
+$$
+ \|E_\rho\|_{\rm op}
+ \le\frac{a^2+b^2+3c^2}{4\gamma^4}
+          e^{c/(2\gamma^2)}
+ \le\frac{2c^2}{\gamma^4}
+ \le\frac{c^4}{2^{19}\gamma^4}.
+$$
+The last inequality uses $c\ge1024$; the exponential is at most two
+because $\gamma>c$. Combining this with PTL3 yields
+$$
+ \mathcal M(T_a(\rho),T_b(\rho),T_c(\rho))
+       \succeq\frac{c^4}{2^{19}\gamma^4}I_2.
+ \tag{PTL4}
+$$
+Sum first over $c<\gamma\le Y$, where the reflected permutation is
+exact, and then let $Y\to\infty$ using RT2--RT3's convergence.
+All upper-zero multiplicities remain in this sum. This proves PTL1.
+Strict positivity uses the classical infinitude of zeta zeros and
+$S_4^+(c)>0$.
+
+### Use the positive tail on the original arithmetic middle
+
+Let $N_+(T)$ count the actual upper zeros with $0<\Im\rho\le T$,
+with analytic multiplicity. The same tail and its contained annulus give
+$$
+ \frac{c^4}{2^{19}}S_4^+(c)
+ \ge\frac{N_+(2c)-N_+(c)}{2^{23}}.
+$$
+Reuse Lagarias, [arXiv:math/0404394v4](https://arxiv.org/html/math/0404394),
+Theorem 2.1(4), equations (2.29)--(2.30), specialized to the trivial
+representation ($N=1$, conductor $Q=1$). This is the unconditional
+Riemann--von Mangoldt formula in the upper-zero convention:
+$$
+ N_+(T)=\frac{T}{2\pi}\log\frac{T}{2\pi}
+           -\frac{T}{2\pi}+O(\log T).
+$$
+It follows that
+$$
+ \frac{N_+(2c)-N_+(c)}{2^{23}}
+ =\left(\frac1{2^{24}\pi}+o(1)\right)c\log c.
+ \tag{PTL5}
+$$
+The source's strict upper endpoint can be changed to this inclusive
+convention: its formula bounds a jump's multiplicity by $O(\log T)$,
+so the same error term remains valid. Zeros at $c$ remain in the head;
+zeros at $2c$ stay in this annulus. No ordinate scan, zero certification
+or RH premise is used.
+
+For the SAME $K_j^{\rm mid}$ and original arithmetic endpoints in
+CS28, retain its actual common-matrix approximation allowance
+$\epsilon_{\rm mid}(c)=o(c)$. PTL1 gives
+$$
+ \boxed{\quad
+ K_j^{\rm mid}\succeq K_j^{\rm head}(c)
+ +\left[\frac{c^4}{2^{19}}S_4^+(c)
+            -\epsilon_{\rm mid}(c)\right]I_2.
+ \quad} \tag{PTL6}
+$$
+Consequently every fixed $\kappa<1/(2^{24}\pi)$ gives
+$K_j^{\rm mid}\succeq K_j^{\rm head}(c)+\kappa c\log c\,I_2$
+for all sufficiently large adjacent Fibonacci triples.
+
+The head at this cutoff contains all actual zeros through height $c$,
+including any unverified off-line zeros and their multiplicities.
+Its lower bound remains unknown. PTL6 would pay a negative head
+of size smaller than the displayed positive budget, but does not
+establish such a head bound. Compared with RT5--RT6's head at
+$\lceil\sqrt c\rceil$, this is a different decomposition of the SAME
+full matrix; no order comparison of the two heads is asserted.
+No positivity of the complete Li matrix, full retained Schur minimum,
+all-integer Robin, endpoint half-variance target or RH follows.
