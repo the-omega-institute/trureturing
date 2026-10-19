@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.PureState;
 
 internal sealed class PureStateFormationSupportingFunctionalDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Entanglement/PureStateFormationSupportingFunctional.";
+    private const string Prefix = "D5/S3/Quantum/PureState/PureStateFormationSupportingFunctional.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Entropy/holevo2026logsobolevformation");
 

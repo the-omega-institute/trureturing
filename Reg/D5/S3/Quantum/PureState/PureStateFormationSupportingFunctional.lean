@@ -1,12 +1,12 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional
+import D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional
 import Reg.Support.DependentFamily
 
 /-! Source-bound audit of the supporting functional at a bipartite pure state. -/
 
-namespace Reg.D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional
+namespace Reg.D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional
 
-open _root_.D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional
+open _root_.D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional
 open _root_.D5.S3.Quantum.Entanglement.MoreauYosidaFormationSelectiveLoccRefutation (E_F)
 open _root_.D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open _root_.D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity (pureDensityState)
@@ -97,11 +97,11 @@ def source_registration : Registration arena claim where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional.result)
+      (@_root_.D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional.result)
       (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional.unit
+  unitName := `Reg.D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional.unit
   realizationName :=
-    `Reg.D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional.source_registration
+    `Reg.D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -119,10 +119,10 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional
+    owner := `D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional
     definition := some {
-      owner := `D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional
-      name := `D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional.claim
+      owner := `D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional
+      name := `D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional.claim
       path := #[] }
     coordinates := #[0, 1, 4]
     readouts := #[{
@@ -140,4 +140,4 @@ def registration :
 #print axioms registration
 
 end
-end Reg.D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional
+end Reg.D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional

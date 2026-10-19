@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Entanglement/PureStateFormationSupportingFunctional
-   generality: G
-   mirror-B: D5/B/S3/Quantum/Entanglement/PureStateFormationSupportingFunctional
+/- GID: D5/S3/Quantum/PureState/PureStateFormationSupportingFunctional
+   generality: I
+   mirror-B: D5/B/S3/Quantum/PureState/PureStateFormationSupportingFunctional
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
@@ -22,7 +22,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional
+namespace D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional
 
 open _root_.Matrix Finset
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker
@@ -425,4 +425,4 @@ theorem result : claim := by
 
 #print axioms result
 
-end D5.S3.Quantum.Entanglement.PureStateFormationSupportingFunctional
+end D5.S3.Quantum.PureState.PureStateFormationSupportingFunctional
