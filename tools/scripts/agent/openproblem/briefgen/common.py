@@ -13,6 +13,8 @@ HERE = Path(__file__).resolve().parent
 TOOLS = HERE.parent
 REPO = TOOLS.parents[3]
 
+BUILD_SCOPE = '**Build scope (binding; supersedes every other build instruction in this brief).** Every `make lean` below means `make lean LEAN_TARGETS="<the dotted names of the delivered modules and of every frozen module you re-pin>"`, and every `make lean-report` means `make lean-report-scoped LEAN_TARGETS="<the same list>"`. Never run `make lean`, `make lean-report`, `make test` or `make gate` without a target list. The Lean build lock is shared by every worktree on this machine: an untargeted build after a merge of `origin/dev` recompiles hundreds of unrelated modules for hours and blocks every other lane. The doors (`make deposit-uncovered`, `make deposit`, `make cover`, `make emit`) choose their own scope (CLAUDE.md §8.2). If a step cannot be done with a target list, skip it and name it under `not_run`.'
+
 
 class BriefError(Exception):
     def __init__(self, code, message):

@@ -150,7 +150,7 @@ private theorem PathCoding.signed_equation {n m d : ℕ} [NeZero d]
   change x.val.val t = x.val.val ((t + -(k.val : ℤ)) + (k.val : ℤ))
   simp only [add_assoc, neg_add_cancel, add_zero]
 
-private theorem periodic_translate_residue {n d : ℕ} [NeZero d]
+theorem periodic_translate_residue {n d : ℕ} [NeZero d]
     {A : CountMat n n} (x : Path A)
     (hx : Function.IsPeriodicPt (shift A) d x) (q : ℤ) :
     translate (countedGraph A) q x = (shift A)^[(timeIndex (d := d) q).val] x := by
@@ -469,6 +469,27 @@ private theorem edgeCoding_three_zero {n d : ℕ} [NeZero d] (hd : 3 ∣ d)
     pathGyrationThree hd e.path = 0 := by
   rw [← edgeCoding_family_path]
   exact parallelCoding_three_zero hd e.family
+
+/-- Endpoint-preserving edge permutations have zero total forward offset modulo
+three on the original canonical path basis. The supplied primitive equivalence
+must be the literal coordinatewise action of that same edge permutation. -/
+theorem parallel_edge_offset_sum_three_zero {n d : ℕ} [NeZero d] (hd : 3 ∣ d)
+    {A : CountMat n n} (e : Edge A ≃ Edge A)
+    (hs : ∀ a, (e a).source = a.source)
+    (ht : ∀ a, (e a).target = a.target)
+    (u : PrimitivePath A d ≃ PrimitivePath A d)
+    (hu : ∀ x t, (u x).val.val t = e (x.val.val t)) :
+    ZMod.castHom hd (ZMod 3)
+      (∑ b : PathBasis A d, ZMod.finEquiv d (canonicalForwardOffset (u b.val))) = 0 := by
+  let c : EdgeCoding A A := ⟨e, hs, ht⟩
+  have he (x : PrimitivePath A d) : u x = c.path.primitive x := by
+    apply Subtype.ext
+    apply Subtype.ext
+    funext t
+    exact hu x t
+  simp_rw [he]
+  rw [← pathGyration_basis]
+  exact edgeCoding_three_zero hd c
 
 /- Explicit matrix-equality casts. Associators below are NOT identified with
    these casts: their discrepancy is a finite parallel-edge relabeling. -/

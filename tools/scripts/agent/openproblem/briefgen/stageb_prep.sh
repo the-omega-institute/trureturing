@@ -4,14 +4,32 @@ set -euo pipefail
 BRIEF_ENTRY_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
 if [ "${1:-}" = --selftest ]; then
   python3 "$BRIEF_ENTRY_DIR/selftest.py" "${BASH_SOURCE[0]}"
+  python3 "$BRIEF_ENTRY_DIR/../chains/selftest.py" stageb-go
   exit $?
 fi
+dispatch=0
+if [ "${1:-}" = --dispatch ]; then dispatch=1; shift; fi
 . "$BRIEF_ENTRY_DIR/common.sh"
 [ "$#" = 3 ] || op_fail 10 USAGE "stageb_prep.sh: expected 3 arguments"
 S=$OP_SCRATCH
 L=$1; NYX=$2; MF=$3
 op_name "$L"
+case "$NYX" in architecture|quality) ;; *) op_fail 13 INVALID_INPUT 'seat must be architecture or quality';; esac
+case "${REGEN:-1}" in 0|1) ;; *) op_fail 13 INVALID_INPUT 'REGEN must be 0 or 1';; esac
 op_file "$S/lanes/$L.json"
+WT=$(python3 - "$S/lanes/$L.json" "$OP_MAIN" <<'PY'
+from common import entry, fail, lane_spec
+from pathlib import Path
+def main(argv):
+    data = lane_spec(argv[1])
+    path = Path(data['worktree'])
+    path = (path if path.is_absolute() else Path(argv[2]) / path).resolve()
+    if not path.is_dir():
+        fail(11, 'worktree missing: ' + str(path))
+    print(path)
+raise SystemExit(entry(main, minimum=2, maximum=2))
+PY
+)
 for b in lean-report-block.md scoped-doors-block.md ci-gate-block.md dossier-sections-block.md frozen-state-contract-block.md sync-before-emit-block.md one-builder-commit-block.md reuse-sweep-block.md; do op_file "$(op_block "$b")"; done
 if [ -n "${ORCH_NOTE:-}" ]; then op_file "$ORCH_NOTE"; fi
 cd "$OP_MAIN" || exit 3
@@ -53,3 +71,6 @@ PYJ
 fi
 printf '\n## Pre-freeze review identity\nThe mirror-check seat for this lane is codex-cli flight `%s` (verdict %s; any blocking findings are listed under "Mirror-check fixes" and must all be applied before the doors). Use this id in the PR body sentence (a).\n' "$MF" "$V" >> "$f"
 python3 "$OP_BRIEF_DIR/fix_door_base.py" "$S/briefs/impl-op-w1-$L.stageB.filled.md"
+if [ "$dispatch" = 1 ]; then
+  bash "$OP_OPENPROBLEM_DIR/pipeline/seat-wait.sh" "${OP_NAME_PREFIX}implb-$L-r1" "$f" "$WT" implementation 0
+fi

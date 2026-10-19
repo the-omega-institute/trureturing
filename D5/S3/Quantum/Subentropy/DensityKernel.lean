@@ -44,7 +44,7 @@ private theorem det_spectral {ι : Type*} [Fintype ι] [DecidableEq ι]
   change (1 + s • diagonal (fun i => (hA.eigenvalues i : ℂ))).det = _
   rw [hd, Matrix.det_diagonal]
 
-private theorem spectral_prob {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem spectral_prob {ι : Type*} [Fintype ι] [DecidableEq ι]
     {A : Matrix ι ι ℂ} (hA : A.PosSemidef) (htr : A.trace = 1) :
     (∀ i, 0 ≤ hA.isHermitian.eigenvalues i) ∧
       ∑ i, hA.isHermitian.eigenvalues i = 1 := by

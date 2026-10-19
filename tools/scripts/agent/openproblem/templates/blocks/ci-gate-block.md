@@ -1,7 +1,7 @@
-## No local full gate; the required CI check is the gate (binding; overrides every step of this brief that runs `make gate` or reports a local gate)
+## No local full gate; the required CI check is the gate (binding; overrides every step of this brief that runs or reports a local full gate)
 
-`make gate` runs a full `make lean-report` (35–45 GB, one producer per machine), so every lane on this machine waits for it in turn. CLAUDE.md §8.2 makes local checks early feedback and the remote required check the admission authority. The CI `current` job runs the same Lean report, check-current, Scribe and check-delta on the PR's merge tree.
-- Run no `make gate`. The doors still run their own scoped checks (`make lean-report-scoped`, `ledger-align`, `make deposit-uncovered`/`make deposit`, `make emit`). `make lean-report` runs only where a `--selector` re-pin needs it.
+The local full gate builds a whole-library Lean report (35–45 GB, one producer per machine), so every lane on this machine waits for it in turn. CLAUDE.md §8.2 makes local checks early feedback and the remote required check the admission authority. The CI `current` job runs the same Lean report, check-current, Scribe and check-delta on the PR's merge tree.
+- Skip the local full gate and name it under `not_run`. The doors still run their own scoped checks (`ledger-align`, `make deposit-uncovered`/`make deposit`, `make emit`). A `--selector` re-pin uses `make lean-report-scoped LEAN_TARGETS="<exactly the selected modules, dotted>"`.
 - After the push and `make pr … DRAFT=1`, wait for the required check on the pushed head with `gh pr checks <PR> --watch` in a bounded wait.
   - If `required` fails, read the failing job's log (`gh run view <run> --log-failed`) and treat each Block diagnostic as the gate would have, under the authorized mechanical fixes. Push the fix and wait again.
   - Report `open` only for a diagnostic outside those fixes.

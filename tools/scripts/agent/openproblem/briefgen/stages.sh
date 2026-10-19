@@ -77,16 +77,16 @@ python3 - "$S/briefs/impl-op-w1-$L.stageA.md" "$S/briefs/mirror-check-$L.md" <<'
 from common import Context
 import sys,pathlib
 a=pathlib.Path(sys.argv[1]); t=a.read_text()
-sec=("## No lean report in Stage A (overrides every Stage A step that runs `make lean-report` or `make emit`)\n"
-     "The machine has one lean-report slot and each report takes over an hour, so Stage A does not produce one: do NOT run `make lean-report` or `make emit` here. "
-     "Stage A ends with `make lean` EXIT=0 (or the scoped `make lean LEAN_TARGETS=<module>` if an unrelated target fails), the direct `/usr/bin/time -l lake env lean <module>.lean` reading, `#print axioms`, the header check, and the Scribe test suites that render your document (`FormulaCorpusInventoryTests` and the renderer subset; they do not need a report). "
+sec=("## No lean report in Stage A (overrides every Stage A step that runs a Lean report or `make emit`)\n"
+     "The machine has one lean-report slot and each report takes over an hour, so Stage A does not produce one: do NOT run a Lean report or `make emit` here. "
+     "Stage A ends with `make lean LEAN_TARGETS=\"<the delivered modules and every frozen module you re-pin, dotted>\"` EXIT=0 (the build lock is shared by every worktree), the direct `/usr/bin/time -l lake env lean <module>.lean` reading, `#print axioms`, the header check, and the Scribe test suites that render your document (`FormulaCorpusInventoryTests` and the renderer subset; they do not need a report). "
      "Leave the `.md` projection absent or as it is; the Stage B door emits it. Report `mirror-ready` when those pass.\n")
 if 'No lean report in Stage A' not in t:
     i=t.find('\n## Steps'); assert i>=0
     t=t[:i]+'\n\n'+sec+t[i:]; a.write_text(t); print('stageA: no-report section added')
 m=pathlib.Path(sys.argv[2]); u=m.read_text()
 old='(regenerate it yourself with `make emit` if missing; emit is idempotent and does not freeze anything)'
-new='(Stage A does not emit: judge the `.scribe.cs` against the Lean source formula by formula, and do NOT run `make lean-report` or `make emit` — the Stage B door emits the `.md`)'
+new='(Stage A does not emit: judge the `.scribe.cs` against the Lean source formula by formula, and do NOT run a Lean report or `make emit` — the Stage B door emits the `.md`)'
 if old in u: m.write_text(u.replace(old,new)); print('mirror: no-emit wording')
 PY
 cat "$(op_block no-preflight-block.md)" >> "$S/briefs/impl-op-w1-$L.stageA.md"; cat "$(op_block no-preflight-block.md)" >> "$S/briefs/impl-op-w1-$L.stageB.md"

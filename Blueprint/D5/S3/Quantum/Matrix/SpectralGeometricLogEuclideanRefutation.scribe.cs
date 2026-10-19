@@ -107,7 +107,8 @@ internal sealed class SpectralGeometricLogEuclideanRefutationDocument : IScribeD
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
         string prose, DescribeRole role, bool literature) => Describe.Lean(
-            DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+            DescribeId.Create(id), DeclarationHandle.Create((name is "mpow" or "LE"
+                ? "D5/S3/Quantum/Matrix/SpectralPower." : Prefix) + name), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role,

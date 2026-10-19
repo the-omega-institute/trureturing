@@ -6,7 +6,7 @@ import Reg.Support.DependentFamily
 open _root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-namespace Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
+namespace Reg.D5.S3.ConceptDynamics.Coding.DecoderPeak
 
 universe u_1 u_2 u_3
 noncomputable section
@@ -16,8 +16,8 @@ def peak_bound_registration :
       (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_bound.{u_1,u_2,u_3})
       (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_1, 0, 0, 0}
         Cohort.peakSignature.{u_1,u_2,u_3} Cohort.peakReadout.{u_1,u_2,u_3} Cohort.peakAnchor.{u_1,u_2,u_3})) Unit Unit where
-  unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_bound_unit
-  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.peakBoundEvidence
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderPeak.peak_bound_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderPeak.Cohort.peakBoundEvidence
   realizationSource := none
   generated := false
   arena := .source ⟨Cohort.peakBoundArena.{u_1,u_2,u_3}⟩
@@ -53,8 +53,8 @@ def peak_trace_bound_registration :
       (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_trace_bound.{u_1,u_2,u_3})
       (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_1, 0, 0, 0}
         Cohort.peakSignature.{u_1,u_2,u_3} Cohort.peakReadout.{u_1,u_2,u_3} Cohort.peakAnchor.{u_1,u_2,u_3})) Unit Unit where
-  unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_trace_bound_unit
-  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.peakTraceBoundEvidence
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderPeak.peak_trace_bound_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderPeak.Cohort.peakTraceBoundEvidence
   realizationSource := none
   generated := false
   arena := .source ⟨Cohort.peakTraceBoundArena.{u_1,u_2,u_3}⟩
@@ -88,4 +88,4 @@ def peak_trace_bound_registration :
 
 end
 
-end Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
+end Reg.D5.S3.ConceptDynamics.Coding.DecoderPeak

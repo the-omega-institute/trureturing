@@ -6,6 +6,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -14,6 +15,161 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 TOOLS = HERE.parent
 DATA = HERE / 'testdata'
+
+REGISTRATION_CI_READING = (
+    'Report whether each Reg registration decodes at the delivered head from the scoped report, '
+    'and read its `DTR-*` finding from the required CI `current` job of the pushed head '
+    '(`gh run view <run-id> --log --job <current-job-id>`, the `DTR-` lines; report the run id '
+    'and job id); until that reading exists the registration is pending. '
+    'Never write `declared_validated` without that CI reading.')
+
+
+def assert_dtr_source(text):
+    for instruction in re.split(r'\n\s*\n|\n(?=\s*(?:[-*]|\d+\.)\s)', text):
+        # Decoding and CI validation may share a bullet, but have distinct sources.
+        for clause in re.split(r'(?<=[.;])\s+|\s+and\s+(?=(?:read|report)\b)',
+                               instruction, flags=re.I):
+            status = re.search(r'\b(?:DTR|declared_validated)\b|Reg registration state', clause)
+            report = re.search(r'\b(?:the\s+(?:scoped\s+)?report|scoped report|Lean report|report command)\b'
+                               r'|`[^`\n]*\breport[\w-]*[^`\n]*`'
+                               r'|\bmake\s+lean-report(?:-scoped)?(?![\w-])', clause, re.I)
+            assert not (status and report), \
+                'DTR findings and declared_validated require the pushed delivery head CI current job reading'
+
+
+def assert_unsafe_dtr_source(text):
+    try:
+        assert_dtr_source(text)
+    except AssertionError:
+        return
+    raise AssertionError('unsafe DTR source accepted: ' + text)
+
+
+def assert_scoped_builds(text, *, binding=False, all_commands=False):
+    from common import BUILD_SCOPE
+    if binding:
+        assert text.count(BUILD_SCOPE) == 1, 'missing or repeated Build-scope block'
+        text = text.replace(BUILD_SCOPE, '', 1)
+    # Exempt only the command mention, never the rest of its line: prohibitions,
+    # disclosure of an already-run gate, diagnostic descriptions and serialization.
+    for reference in (
+        r'(?:Do not|Never) run `make (?:lean|lean-report|test|gate)`',
+        r'- the exact command `make gate BASE=<40-hex>`;',
+        r'`make gate` reports `(?:describe red code=incomplete-library-locator|blueprint-namespace)`',
+        r'Do not paste the `make gate` JSON',
+        r'one `lake env lean`, `lake build` or `make lean …` invocation, never several in parallel',
+    ):
+        text = re.sub(reference, '', text)
+    commands = r'lean(?:-report(?:-scoped)?)?'
+    if all_commands:
+        commands += r'|test|gate'
+    for match in re.finditer(r'\bmake\s+(' + commands + r')(?![\w-])', text):
+        tail = text[match.end():].split('`', 1)[0].split('\n', 1)[0]
+        assert match[1] != 'lean-report', 'whole-library Lean report instruction'
+        assert re.match(r'''\s+LEAN_TARGETS=(?:"[^"\n]+"|'[^'\n]+'|[^\s`"']+)''', tail), \
+            'untargeted build instruction: ' + match[0] + tail
+
+
+def build_scope_regressions():
+    from common import BUILD_SCOPE
+    ci_source = ('Read `DTR-Declared` from the pushed delivery head required CI '
+                 '`current` job using `gh run view <run-id> --log --job <current-job-id>`.')
+    assert_dtr_source(ci_source)
+    assert_dtr_source(REGISTRATION_CI_READING)
+    assert_dtr_source('Run `make lean-report-scoped LEAN_TARGETS="D5.Sample"`.')
+    assert_dtr_source('- Run `make lean-report-scoped LEAN_TARGETS="D5.Sample"`.\n- ' + ci_source)
+    for command in ('make lean-report-scoped LEAN_TARGETS="D5.Sample"', 'make lean-report',
+                    'python3 report.py', 'custom-report --target D5.Sample'):
+        for text in (f'Read the DTR finding for the target in `{command}`.',
+                     f'For example `DTR-Unregistered` from `{command}`.',
+                     f'Read `{command}`\nfor the target\'s `DTR-Declared` finding.',
+                     f'Write `declared_validated` from `{command}`.'):
+            assert_unsafe_dtr_source(text)
+    for text in ('Read the `DTR-*` finding from the scoped report.',
+                 'Write `declared_validated` from the scoped report.',
+                 'Report the Reg registration state at the delivered head from the scoped report (decoded or not). '
+                 'Never write `declared_validated` without the reading.'):
+        assert_unsafe_dtr_source(text)
+    assert_scoped_builds(BUILD_SCOPE, binding=True, all_commands=True)
+    for text in ('', BUILD_SCOPE.replace('binding;', 'optional;'),
+                 *(BUILD_SCOPE + '\n' + command for command in (
+                     '`make lean`', '`make lean-report`', '`make test`',
+                     '`make gate BASE=abc`', '`make lean LEAN_TARGETS=""`',
+                     '`make lean-report-scoped`',
+                     '`make lean-report LEAN_TARGETS="D5.Sample"`'))):
+        try:
+            assert_scoped_builds(text, binding=True, all_commands=True)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError('unsafe build instruction accepted: ' + text)
+    references = (
+        *(prefix + ' `make ' + command + '`.'
+          for prefix in ('Do not run', 'Never run')
+          for command in ('lean', 'lean-report', 'test', 'gate')),
+        '- the exact command `make gate BASE=<40-hex>`;',
+        '`make gate` reports `describe red code=incomplete-library-locator`.',
+        '`make gate` reports `blueprint-namespace` if it is missing or different.',
+        'Do not paste the `make gate` JSON or its inventories into the body.',
+        'one `lake env lean`, `lake build` or `make lean …` invocation, never several in parallel',
+    )
+    for reference in references:
+        assert_scoped_builds(reference, all_commands=True)
+        for command in ('lean', 'lean-report', 'test', 'gate'):
+            try:
+                assert_scoped_builds(reference + ' Then run `make ' + command + '`.',
+                                     all_commands=True)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError('reference hid unsafe instruction: ' + reference)
+    blocks = sorted(path for path in (TOOLS / 'templates/blocks').rglob('*') if path.is_file())
+    assert blocks, 'missing implementation/rework/continuation blocks'
+    for path in [TOOLS / 'templates/impl-base-brief.md', *blocks]:
+        template = path.read_text()
+        try:
+            assert_dtr_source(template)
+            assert_scoped_builds(template, all_commands=True)
+        except AssertionError as exc:
+            raise AssertionError(str(path.relative_to(TOOLS)) + ': ' + str(exc)) from exc
+        for command in ('lean', 'lean-report', 'test', 'gate'):
+            try:
+                assert_scoped_builds(template + '\n`make ' + command + '`', all_commands=True)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError('template regression accepted: ' + str(path) + ': ' + command)
+    print('BUILD_SCOPE_REGRESSIONS template=targeted blocks=' + str(len(blocks)) +
+          ' negative_controls=passed')
+
+
+def head_generality_regressions(tool):
+    with tempfile.TemporaryDirectory(prefix='header fixtures __tokens__ ') as tmp:
+        root = Path(tmp); env = prepare(root)
+        spec_path = root / 'scratch/lanes/sample.json'
+        spec = json.loads(spec_path.read_text())
+        spec['target_md'] = spec['target_md'].replace('generality: I', 'generality: G')
+        spec_path.write_text(json.dumps(spec))
+        source = root / 'tree' / (spec['module'] + '.lean')
+        source.parent.mkdir(parents=True)
+
+        def check(expected):
+            result = subprocess.run(command(tool, root), cwd=root, env=env,
+                                    capture_output=True, text=True)
+            assert result.returncode == 0, (result.stdout, result.stderr)
+            text = (root / 'scratch/briefs/implb-sample-r1.head.md').read_text()
+            assert '`generality: ' + expected + '`' in text, text
+            assert_scoped_builds(text, binding=True)
+
+        for value in ('I', 'E', 'G'):
+            source.write_text('/-\n  generality: ' + value + ' \t\n-/\n')
+            check(value)
+        source.unlink()
+        check('G')
+        spec['target_md'] = spec['target_md'].replace('`generality: G`', '')
+        spec_path.write_text(json.dumps(spec))
+        check('I')
+    print('HEAD_GENERALITY_REGRESSIONS header=GIE fallback=target,default')
 
 
 def stub(kind, args):
@@ -47,7 +203,13 @@ def stub(kind, args):
         if os.environ.get('BRIEF_FIXTURE_API_EMPTY'): return
         print('{"executed":true,"diagnostics":[{"AdmissionEffect":1}]}')
     elif args[:2] == ['issue', 'list']:
-        print('[]' if '--json' in args and '--jq' not in args else '#12345 Preregister synthetic question')
+        if '--json' in args and '--jq' not in args: print('[]')
+        elif any('preregistration' in a for a in args):
+            print('#12345 Preregister synthetic question\n#12346 Open problem (preregistration): synthetic question\n'
+                  '#12347 Open problem (preregistration): refute a synthetic conjecture (arXiv:2501.07269v2) at an explicit small case\n'
+                  '#12348 Open problem (preregistration): answer a synthetic basis question of quant-ph/9601020 in every dimension\n'
+                  '#12349 Open problem (preregistration): refute a synthetic journal conjecture (J. Synth. 2026, DOI 10.1000/xyz.123) on a forcing')
+        else: print('#12345 Preregister synthetic question')
     else: raise RuntimeError('unexpected gh call ' + repr(args))
 
 
@@ -126,6 +288,10 @@ def collect(root, before):
         if path.is_file() and path.suffix in ('.md',):
             value=path.read_text()
             if before.get(str(path)) == value: continue
+            try:
+                assert_dtr_source(value)
+            except AssertionError as exc:
+                raise AssertionError(str(path.relative_to(root)) + ': ' + str(exc)) from exc
             for spelling in sorted({str(root),str(root.resolve())},key=len,reverse=True):
                 value=value.replace(spelling,'<FIXTURE>')
             value=value.replace(str(TOOLS.parents[3]),'<REPOSITORY>')
@@ -149,6 +315,43 @@ def case(tool, variant=None):
         result=subprocess.run(command(tool,root,variant),cwd=root,env=env,capture_output=True,text=True)
         assert result.returncode==0,(tool,result.returncode,result.stdout[-1200:],result.stderr[-3000:])
         assert 'SyntaxWarning' not in result.stderr,(tool,result.stderr)
+        if tool.name == 'render-search-brief.sh':
+            listed = (root / 'out.md').read_text()
+            assert '#12346 Open problem (preregistration): synthetic question' in listed, 'preregistration-titled issue missing'
+            assert listed.count('#12345 Preregister synthetic question') == 1, 'issue matched by both queries listed twice'
+            oracle = subprocess.run(['/bin/bash', str(tool), 'nyxid-oracle:fixture', str(root / 'oracle.md'), 'quick', '2601'],
+                                    cwd=root, env=env, capture_output=True, text=True)
+            assert oracle.returncode == 0, (oracle.returncode, oracle.stderr)
+            compact = (root / 'oracle.md').read_text()
+            assert '#12347 2501.07269\n' in compact, 'oracle brief does not name the issue by its arXiv identifier'
+            assert '#12348 quant-ph/9601020' in compact, 'oracle brief drops a legacy arXiv identifier'
+            assert '#12349 10.1000/xyz.123\n' in compact, 'oracle brief drops a DOI'
+            assert 'refute a synthetic conjecture' not in compact, 'oracle brief keeps a full title that names an identifier'
+            assert '#12345 Preregister synthetic question' in compact, 'oracle brief drops an issue without an identifier'
+        if tool.stem in ('implb_head', 'rework_brief', 'gen_stage_briefs', 'stages'):
+            path = ('implb-sample-r1.head.md' if tool.stem == 'implb_head' else
+                    'rework-sample.md' if tool.stem == 'rework_brief' else
+                    'impl-op-w1-sample.stageB.md')
+            text = (root / 'scratch/briefs' / path).read_text()
+            assert_scoped_builds(text, binding=True)
+            assert_dtr_source(text)
+            if tool.stem in ('gen_stage_briefs', 'stages'):
+                stage_a = (root / 'scratch/briefs/impl-op-w1-sample.stageA.md').read_text()
+                assert_scoped_builds(stage_a)
+            if tool.stem == 'implb_head':
+                from common import BUILD_SCOPE
+                assert BUILD_SCOPE + '\n\n- **SDK host.**' in text
+                assert REGISTRATION_CI_READING in text
+                for source in ('the scoped report', '`make lean-report-scoped LEAN_TARGETS="D5.Sample"`',
+                               '`python3 report.py`', '`custom-report --target D5.Sample`'):
+                    for unsafe in (f'Read the `DTR-*` finding from {source}.',
+                                   f'Write `declared_validated` from {source}.'):
+                        assert_unsafe_dtr_source(text.replace(REGISTRATION_CI_READING, unsafe))
+            if tool.stem == 'rework_brief':
+                audit = (TOOLS / 'templates/blocks/escape-audit-block.md').read_text()
+                assert text.count(audit) == 1, 'missing or repeated escape-audit block'
+                assert '"pending CI reading"; never write `declared_validated` without the CI reading.' in text
+                assert 'required CI `current` job: run `gh run view <run-id> --log --job <current-job-id>`' in text
         if variant == 'defaults':
             print('BRIEF_DEFAULTS tool='+tool.name+' exit='+str(result.returncode))
         outputs=collect(root,before)
@@ -158,6 +361,10 @@ def case(tool, variant=None):
 
 def run(tool):
     tool=tool.resolve()
+    if tool.stem in ('common', 'implb_head', 'lane_brief', 'rework_brief', 'gen_stage_briefs', 'stages'):
+        build_scope_regressions()
+    if tool.stem == 'implb_head':
+        head_generality_regressions(tool)
     if tool.stem == 'common':
         from common import Context, BriefError, entry, name
         for error in (AssertionError(), ValueError(' '), KeyError(), IndexError(), TypeError(), AttributeError(), ValueError('invalid field')):
