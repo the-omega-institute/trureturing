@@ -70,7 +70,9 @@ def reducedState {R : Type*} [Semiring R] [Star R]
     ψ (concatenate p l x.1 x.2.1 x.2.2 r) *
       star (ψ (concatenate p l y.1 y.2.1 y.2.2 r))
 
-def occupation {N : ℕ} (s : Fock N) : ℕ := ∑ i, (s i).val
+def occupation {N : ℕ} (s : Fock N) : ℕ :=
+  D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.occupationCount
+    (fun i => finTwoEquiv (s i))
 
 /-- Ordinary spin partial trace over B. -/
 def spinTrace {R : Type*} [Semiring R] [Star R]
