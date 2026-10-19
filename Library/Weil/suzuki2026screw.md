@@ -7812,3 +7812,121 @@ $$
 The original physical transport and separator signs are exactly those in W215/W219, with $\Xi=\Xi_A$. Both kernels are real symmetric, so the separate real/imaginary contracts give the same Hermitian bound for a complex measure. Nonzero compact moment uniqueness supplies strictness; the zero measure contributes zero.
 
 This pays the actual reflection missing from W219 and extends W214 from total separator degree to reciprocal separator mass. The fixed-low-support, arbitrarily-many-remote-sign-changes family described after W219 remains admitted for the smaller fixed $c$ once the common start is high enough. The proof keeps all theta modes and exterior terms jointly; it does not contradict the failure of a reciprocal-mass bound for the unrestricted old sector Cauchy norm. At each fixed compact window the weighted cap still restricts the number of local changes. Sufficient cofinal arbitrary-sign positivity, common-start all-order positivity, RH and the original strict all-integer Robin bound remain unproved. No unbounded-support physical source, derivative distribution, numerical constant/start, Lean/CI/merge certification or literature priority is supplied.
+
+
+## The folded first-mode model has negative local samples at exponential order
+
+There are fixed $C,A_*>0$ such that, for every $A\ge A_*$ and every $w>0$, one finite real source $\mu$ on at most $\lceil Ce^{2A}\rceil$ distinct sites in $[A,A+w)$ satisfies
+$$
+Q_{D_\phi}(\mu)<0,\qquad
+Q_{D_\phi-R_\phi^{\rm fold}}(\mu)<0,
+\qquad \phi=\Phi_1.
+\tag{W229}
+$$
+Here $D_\phi$ is the first-mode direct kernel obtained by replacing both sources in W185 by $\phi$, and $R_\phi^{\rm fold}$ is exactly the folded model in W221. The first mode is not even. This is a statement about that model, not a negative sample of the complete actual theta kernel. The full-source result W228 is unchanged. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse the scalar Frullani formula at W168/W190, the complete folded model and its absolute operator bounds W176--W177, and the classical quarter-Gamma multiplier already used in the [actual Weil normalization](frankliebseiringer2006hardy.md#common-test-and-normalization). The weighted approximation reuses [B. R. Draganov, *Strong converse inequalities for the weighted simultaneous approximation by the Szász--Mirakjan operator*, Serdica Math. J. 46 (2020), 261--286, pp.261--262, operator definition, weight (1.1) and the unnumbered direct estimate attributed there to [8, Theorem 1.2]](https://serdica.math.bas.bg/index.php/serdica/article/download/188/110/362). That direct supplier is Draganov, *Direct estimates of the weighted simultaneous approximation by the Szász--Mirakjan operator*, Period. Math. Hungar. 83 (2021), 88--109, [DOI 10.1007/s10998-020-00370-x](https://doi.org/10.1007/s10998-020-00370-x). The additional interface keeps the first-mode polynomial and logarithm commutator, pays the whole folded reflection, and transports one smooth negative profile to finite real sources with the count in W229. No new general Gamma, approximation or Carleman theorem, Lean certification or literature priority is claimed.
+
+### Keep the physical feature and its logarithm in the correct order
+
+For a finite physical source, put $p_j=e^{2a_j}$ and
+$$
+F(x)=\sum_j\mu_j e^{9a_j/2}e^{-p_jx},\qquad
+(IF)(x)=\int_x^\infty F(y)dy,\qquad
+(LF)(x)=\sum_j(\log p_j)\mu_j e^{9a_j/2}e^{-p_jx}.
+$$
+The owned Frullani formula writes $LF=\int_0^\infty(e^{-s}F-F(\cdot+s))ds/s$. Use it also to define $L$ on the smooth decaying profiles below. Set $BF=F-3IF/(2x)$. With $x=\pi e^{2r}$, the first-mode feature is $4\pi^2(x/\pi)^{9/4}BF(x)$. Multiplication of the original source by $a=(\log p)/2$ gives $BLF/2$, rather than $LBF/2$. Direct substitution therefore gives the exact physical form
+$$
+\mathcal D_\pi(F)=\frac2{\sqrt\pi}\int_\pi^\infty x^{7/2}
+\left[\log(x/\pi)|BF|^2+
+\Re\bigl(\overline{BF}\,BLF\bigr)\right]dx
+=Q_{D_\phi}(\mu).
+\tag{W230}
+$$
+
+### The homogeneous feature has the existing negative Gamma baseline
+
+Let $\mathcal D_0$ be W230 with lower limit zero. For real $F\in C_c^\infty(0,\infty)$, put $g(u)=e^{9u/4}F(e^u)$ and use the unitary Fourier convention $g(u)=(2\pi)^{-1/2}\int\widehat g(\xi)e^{-i\xi u}d\xi$. Write
+$$
+z=\frac94+i\xi,\qquad
+h(z)=1-\frac3{2(z-1)}=\frac{z-5/2}{z-1}.
+$$
+Right integration and the classical [digamma integral](https://dlmf.nist.gov/5.9.E16), with the owned Frullani formula, give
+$I x^{-z}=x^{1-z}/(z-1)$ and $Lx^{-z}=(\operatorname{digamma}(z)-\log x)x^{-z}$. Consequently
+$$
+BLx^{-z}=\left[h(z)(\operatorname{digamma}(z)-\log x)+h'(z)\right]x^{-z}.
+$$
+The $h'$ term is retained. Digamma recurrence gives
+$$
+\operatorname{digamma}(z)+\frac{h'(z)}{h(z)}
+=\operatorname{digamma}(z-2)+\frac1{z-2}+\frac1{z-5/2}.
+$$
+The last two reciprocals have zero real sum on this line. Mellin Plancherel yields
+$$
+\mathcal D_0(F)=\frac2{\sqrt\pi}\int_{\mathbb R}
+|\widehat g(\xi)|^2|h(9/4+i\xi)|^2
+\left[\Re\operatorname{digamma}(1/4+i\xi)-\log\pi\right]d\xi.
+\tag{W231}
+$$
+Compact logarithmic support gives rapidly decaying Fourier coefficients. The right-integral tails at zero, multiplied by $x^{7/2}$, are integrable; the digamma multiplier grows only logarithmically. Truncation and Plancherel thus justify this identity on the displayed profile class. It reuses the quarter-Gamma multiplier at Fourier frequency $2\xi$. At zero its value is $[\operatorname{digamma}(1/4)-\log\pi]/25<0$. For nonzero real $\eta\in C_c^\infty(\mathbb R)$, take $g_T(u)=T^{-1/2}\eta(u/T)$. Its Fourier mass concentrates at zero, so one fixed sufficiently large $T$ gives a real compact smooth $F$ with $\mathcal D_0(F)<0$.
+
+### Pay the cutoff and the whole folded reflection
+
+Put $F_R(x)=R^{-9/4}F(x/R)$. Its homogeneous form is unchanged: the $-\log R$ in $L$ cancels the scale term in $\log x$. In W230 the lower limit becomes $\pi/R$, whence $\mathcal D_\pi(F_R)\to\mathcal D_0(F)<0$.
+
+To pay the reflection, write $P=e^{2A}$, $E=1/P$, and retain the owned normalization $d\mu=w_A\,d\sigma$, $w_A=\cosh(a-A)D_A^1(a-A)$, $C_A^2=4\pi P/A$. With the normalized parameter $p=e^{2(a-A)}$, W220's identity $w_A\phi(a)=C_A(p+1)/\sqrt2$ gives exactly, at $x=\pi+t/P$,
+$$
+F_\sigma(t)=\frac{4\pi^2}{C_A}[F(x)-c_*IF(x)],\qquad
+F_{M_E\sigma}(t)=\frac{4\pi^2P}{C_A}IF(x),\qquad c_*=\frac3{2\pi}.
+$$
+The second equality cancels the original site factor $1-c_*/(Pp)$; no small inverse-multiplier norm is assumed. W176--W177 give the physical bound
+$$
+|Q_{R_\phi^{\rm fold}}(\mu)|\le
+\pi^4\int_\pi^\infty|F-c_*IF|^2dx
++c_*\pi^3\int_\pi^\infty|IF|^2dx
+=:\mathcal B_\pi(F).
+\tag{W232}
+$$
+The second model channel is used only in absolute norm. For $F_R$, the right side is $O_F(R^{-7/2}+R^{-3/2})$, since the squared norms of $F_R$ and $IF_R$ have those respective scales. Choose and fix $R$ large enough. The resulting one fixed real $f\in C_c^\infty(0,\infty)$, supported in some $[r,M]$ with $0<r<M$, satisfies
+$$
+\mathcal D_\pi(f)+\mathcal B_\pi(f)<-\delta
+\quad\text{for some fixed }\delta>0.
+\tag{W233}
+$$
+This smooth feature is not yet a finite source.
+
+### Approximate in the physical form domain before returning to finite sites
+
+Use $\|v\|_j=\|(1+x)^jv\|_2$ and $\|v\|_X=\|v\|_8+\|v'\|_8$. Right shifts satisfy $\|v(\cdot+s)\|_j\le(1+s)^{-k}\|v\|_{j+k}$. Thus $I$ maps norm $j+2$ to norm $j$. In Frullani, on $0<s<1$ write
+$e^{-s}v-v(\cdot+s)=(e^{-s}-1)v-\int_0^s v'(\cdot+u)du$; on $s>1$ use the shift bound with $k=1$. This gives
+$$
+\|Lv\|_j\le C_j(\|v\|_{j+1}+\|v'\|_j).
+\tag{W234}
+$$
+On $x\ge\pi$, multiplication by $x^{-1}$ is bounded. These estimates control $Bv,BLv$ in norm $3$ by $\|v\|_X$. The weight $x^{7/2}(1+|\log(x/\pi)|)$ is bounded by a constant times $(1+x)^6$ there. Cauchy proves continuity of $\mathcal D_\pi$ and $\mathcal B_\pi$ in $X$.
+
+For real $P\ge1$ use the classical Poisson polynomial approximation
+$$
+f_P(x)=e^{-Px}\sum_{k\ge0}f(k/P)\frac{(Px)^k}{k!},
+\qquad \deg(e^{Px}f_P)\le\lfloor PM\rfloor.
+\tag{W235}
+$$
+The cited primary explicitly permits noninteger $P$. Apply its direct derivative estimate with $r=1$, $\gamma_0=0$, $\gamma_\infty=10$ and weight $\mathfrak w(x)=(1+x)^{10}$. Its conditions $0\le\gamma_0<r$ and $\gamma_\infty\ne r$ hold. Our compact smooth $f$ satisfies all its continuity, local absolute-continuity and weighted derivative requirements. In its $K$-functional choose the competitor to be $f$ itself. The published inequality gives
+$$
+\|(1+x)^{10}(f_P-f)'\|_\infty
+\le\frac{C_f}P,\qquad
+C_f=C\|(1+x)^{10}(xf'')'\|_\infty<\infty.
+$$
+Both $f_P$ and $f$ vanish at infinity, since W235 is a finite polynomial times $e^{-Px}$. Integrating the derivative bound from infinity gives
+$|f_P(x)-f(x)|\le C_f(1+x)^{-9}/(9P)$.
+Thus $\|f_P-f\|_X=O_f(P^{-1})\to0$, by integrating $(1+x)^{-2}$ for the function and $(1+x)^{-4}$ for its derivative. This is the parameter and norm conversion of the published stronger estimate, rather than a new approximation theorem. W233 remains strictly negative for every sufficiently large $P$.
+
+Write $f_P=e^{-Px}\sum_{k=0}^{n_P}c_{k,P}x^k$, $n_P\le PM$, and deconflate by
+$$
+f_{P,h}(x)=e^{-Px}\sum_{k=0}^{n_P}c_{k,P}
+\left(\frac{1-e^{-hx}}h\right)^k.
+\tag{W236}
+$$
+At fixed $P,n_P$ this converges to $f_P$ in $X$: use $(1-e^{-hx})/h\le x$, its derivative $e^{-hx}\le1$, and polynomial times $e^{-Px}$ domination. It is a real sum of at most $n_P+1$ exponentials with distinct poles $P+jh$. Choose $h>0$ small enough to preserve the strict negative allowance and satisfy $n_Ph<P(e^{2w}-1)$. With $P=e^{2A}$ set $a_j=\tfrac12\log(P+jh)$ and multiply each exponential coefficient by $e^{-9a_j/2}$ to obtain the physical mass $\mu_j$. Every site is in $[A,A+w)$, the count is at most $PM+1\le\lceil Ce^{2A}\rceil$, and W230--W233 give W229. Zero coefficients are removed. Strict negativity excludes the zero measure. The common start and $C$ are independent of $w$; coefficients and gaps are not controlled.
+
+This application excludes the folded first-mode model as a positive proxy on all samples in any sufficient cofinal schedule $e^{2A}g(A)$ with $g(A)\to\infty$: its negative sources already occur at a fixed constant multiple of $e^{2A}$. It neither supplies a negative sample of the complete actual kernel nor proves that a better joint complete-source estimate is impossible. Higher theta modes and the actual model difference cannot simply be dropped on this family. The known negative Gamma baseline, scalar approximation and model operators are reused; the finite physical source/count/window bridge is the additional application. No sharp constant, numerical witness, stable coefficient bound, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied. RH and the original strict all-integer Robin bound remain unproved.
