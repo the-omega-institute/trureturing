@@ -42,6 +42,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   exact Bool.false_ne_true (@h (ULift.{u} Unit) inferInstance inferInstance 1 0 1
     (by simpa using hw) (by simp [Matrix.trace]) (by simp [Matrix.trace]))
 private theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
+  classical
   intro i
   refine ⟨ULift.{u} Unit, 0, -1, ?_⟩
   intro he
@@ -52,7 +53,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual.{u} :=
   have htrue : @decide ((-1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ).PosSemidef)
       (Classical.propDecidable _) = true := by
     rw [← he]
-    simp
+    exact decide_eq_true Matrix.PosSemidef.zero
   have hn : (- (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)).PosSemidef :=
     of_decide_eq_true htrue
   have hh := hn.diag_nonneg (i := (⟨()⟩ : ULift.{u} Unit))

@@ -30,6 +30,7 @@ private theorem rejectedLaw : ¬ arena.Law rejected := by
   apply h (n := 1) (A := 1) (X := 0) (B := 1) _ 1 (by norm_num)
   simpa only [conjTranspose_zero, fromBlocks_one] using (Matrix.PosSemidef.one : (1 : Block 1).PosSemidef)
 private theorem dependence : ObservationalDependence signature actual := by
+  classical
   intro i
   refine ⟨1, 0, -1, ?_⟩
   intro he
@@ -37,7 +38,7 @@ private theorem dependence : ObservationalDependence signature actual := by
     @decide ((-1 : Block 1).PosSemidef) (Classical.propDecidable _) at he
   have htrue : @decide ((-1 : Block 1).PosSemidef) (Classical.propDecidable _) = true := by
     rw [← he]
-    simp
+    exact decide_eq_true Matrix.PosSemidef.zero
   have hn : (-1 : Block 1).PosSemidef := of_decide_eq_true htrue
   have hd := hn.diag_nonneg (i := Sum.inl 0)
   norm_num at hd
