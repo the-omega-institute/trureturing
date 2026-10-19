@@ -1559,3 +1559,360 @@ actual off-line-pole hypothesis. It supplies neither those hypothetical
 pole data nor an unconditional lower bound on the original probes. There
 is no universal finite RH test, new RH equivalent, full Robin interval,
 numerical execution, Lean certification or literature-priority claim.
+
+## A complete analytic envelope from the actual pole geometry
+
+This application uses the same actual nearest packet and the same
+$H,E_n,K,C$ as FG6--FG8 and EO1--EO10. It does not change the
+arithmetic-middle probes. The external analytic input is the Hadamard
+product in Lagarias, arXiv:math/0404394v4, proof of Lemma 4.1, together
+with equation (1.4). The classical normalization follows from that
+version's equations (4.53), (4.58)--(4.60) at $n=1$ and the existing
+CS1 Laurent conventions. The identity $\eta_0=-\gamma_E$ is also explicit
+in Coffey, arXiv:0706.0343v2, Remark (ii) following equation (45).
+
+### GE1. Retain the complete actual zero sum
+
+Write
+$$
+ s_0=2+\gamma_E-\log(4\pi).
+$$
+The standard log-derivative and reflected-pair identities give
+$$
+ \frac{\xi'}{\xi}(s)=-s_0/2+
+ \sum_\rho m_\rho\left(\frac1{s-\rho}+\frac1\rho\right),
+ \qquad
+ \sum_\rho\frac{m_\rho}{\rho(1-\rho)}=s_0>0.
+ \tag{GE1}
+$$
+Zeros are distinct in the summation and carry their full multiplicities.
+The sums of the displayed COMBINED terms converge absolutely, locally
+uniformly away from the zeros. No unpaired reciprocal-zero sum is made
+absolute. The second formula is the difference of the first at $s=1$
+and $s=0$, with the functional equation. These are reused classical
+Hadamard/Li interfaces, not new generic product theorems.
+
+As in EO3, suppose the actual nearest Li poles have radius $r_0=1/R<1$.
+Then $|z_\rho|\le R$ for every actual zero, where
+$z_\rho=(\rho-1)/\rho$. Reflection gives the reciprocal bound, so
+$\max(|z_\rho|,|z_\rho|^{-1})\le R$.
+
+For $D_\rho=\rho(1-\rho)$, the actual classical strip gives
+$$
+ \Re D_\rho=\gamma^2+\beta(1-\beta)
+ \ge\min(|\rho|^2,|1-\rho|^2)>0.
+$$
+The whole-zero budget therefore has the parameter comparison
+$$
+ \frac{|D_\rho|}{\Re D_\rho}
+ \le\max\left(\frac{|\rho|}{|1-\rho|},
+             \frac{|1-\rho|}{|\rho|}\right)\le R.
+$$
+Summing $1/|D_\rho|\le R\,\Re(1/D_\rho)$ in GE1 gives
+$$
+ \sum_\rho\frac{m_\rho}{|\rho||1-\rho|}
+ \le S_R:=R s_0.
+ \tag{GE2}
+$$
+This retains all actual zeros. Its absolute-convergence input is the
+classical combined sum in GE1, and its spectral radius is the SAME
+actual radius already used by the original EO consumer.
+
+### GE2. Subtract the nearest poles before estimating the remainder
+
+Choose
+$$
+ 0<r_0<r_1<r_2<1
+$$
+so every actual Li pole outside the complete nearest packet has modulus
+at least $r_2$. Such a choice exists for an isolated finite nearest
+packet. Put $w_\rho=\rho/(\rho-1)$, as in FG7. Equation (1.4) and GE1
+give
+$$
+ G(w)=\frac1{(1-w)^2}
+ \left\{\frac{s_0}{2}+
+  w\sum_\rho\frac{m_\rho}
+   {\rho(\rho-1)(w-w_\rho)}\right\}.
+ \tag{GE3}
+$$
+For each of the nearest poles, exact subtraction uses
+$$
+ \frac{w}{(1-w)^2\rho(\rho-1)(w-w_\rho)}
+ -\frac1{w-w_\rho}
+ =\frac{z_\rho-w}{(1-w)^2}.
+$$
+Consequently the ORIGINAL pole-subtracted remainder is
+$$
+ H(w)=\frac1{(1-w)^2}
+ \left\{\frac{s_0}{2}
+   +\sum_{i=1}^d m_i(z_i-w)
+   +w\sum_{\rho\ {\rm outside\ the\ packet}}
+       \frac{m_\rho}{\rho(\rho-1)(w-w_\rho)}\right\}.
+ \tag{GE4}
+$$
+All other actual zeros and multiplicities remain in the last sum.
+On $|w|=r_1$, its denominators satisfy
+$|w-w_\rho|\ge r_2-r_1$. Thus
+$$
+ \sup_{|w|=r_1}|H(w)|\le
+ \frac{s_0/2+M(R+r_1)+r_1S_R/(r_2-r_1)}
+      {(1-r_1)^2}.
+ \tag{GE5}
+$$
+In particular EO6--EO10 may use the explicit values
+$$
+ A_{\rm spec}
+ =1+\frac{s_0/2+M(R+r_1)+r_1S_R/(r_2-r_1)}
+              {(1-r_1)^2},
+ \qquad B=1/r_1.
+ \tag{GE6}
+$$
+They give $|E_n|\le A_{\rm spec}B^n$ for every $n\ge1$ by the same
+owned Cauchy coefficient bound. This removes the independent
+circle-supremum parameter from the ORIGINAL finite signed-witness
+horizon EO8--EO9. It uses the actual complete pole packet, an actual
+annular gap and the classical strip; no phase genericity, missing-zero
+discard or substituted generating function is involved.
+
+### GE3. What finite actual zero information would certify the gap
+
+For every actual zero in the strip,
+$$
+ |z_\rho|^2
+ =1+\frac{1-2\beta}{|\rho|^2}\le1+\gamma^{-2}.
+$$
+For any
+$$
+ T\ge\frac{r_2}{\sqrt{1-r_2^2}},
+ \tag{GE7}
+$$
+all actual zeros with $|\gamma|>T$ therefore have $|w_\rho|>r_2$.
+Once the exact complete nearest packet is identified, exclusion of
+additional poles from $|w|<r_2$ only needs COMPLETE certified zero
+information through height $T$, including multiplicities and
+completeness. Identifying the exact packet, including any exact
+common-modulus ties, remains a separate input; ordinary finite root
+enclosures alone need not establish those equalities. No such
+hypothetical off-line packet or gap data are supplied by finite
+critical-line verification, and no zero computation is executed here.
+
+The consumer is an explicit spectral-data bound for the accepted
+original signed-witness horizon. It supplies no unconditional
+arithmetic sign, signed low-head bound, cofinal positivity, numerical
+certificate, RH/Robin proof or literature-priority claim. This is paper
+mathematics without Lean certification.
+
+## A computable original-probe horizon from rational packet bounds
+
+The decision procedure used here is Saugata Basu, *Algorithms in Real
+Algebraic Geometry: A Survey*, arXiv:1409.1534v1, Theorem 2.27 in
+Section 2.5.2; Theorem 2.1 and Section 2.1.1 state the effective
+Tarski--Seidenberg interface. It decides the rational polynomial
+feasibility questions below after clearing positive denominators.
+Its algorithm is reused, not reimplemented or executed. The growth
+input is the existing unequal-modulus FG4--FG5 application, and the
+signed recurrence and arithmetic error are exactly CS29 and EB.
+
+### QH1. One common compact packet
+
+Fix an integer $d\ge1$ and rational parameters
+$$
+ A\ge1,\qquad 1<B<R_-\le R_+,\qquad C_0\ge0,\qquad D=C_0+1.
+ \tag{QH1}
+$$
+Use $d$ root slots of weight one; repetitions encode analytic
+multiplicity. The packet space is
+$$
+ \mathcal P=\{(z_1,\ldots,z_d)\in\mathbb C^d:
+       1\le|z_i|\le R_+,\ \max_i|z_i|\ge R_-\}.
+$$
+It is a compact semialgebraic set in $2d$ real coordinates. At the
+Fibonacci indices define the enlarged real family
+$$
+ L_j=-\Re\sum_{i=1}^d z_i^{F_j}+e_j,\qquad
+ |e_j|\le AB^{F_j},\qquad j\ge198.
+ \tag{QH2}
+$$
+Actual conjugation-invariant packets are included. For every packet in
+this larger family, adjoining its conjugates gives
+$$
+ 2L_j=-\sum_{i=1}^d
+       \left(z_i^{F_j}+\overline{z_i}^{\,F_j}\right)+2e_j.
+$$
+Extend the errors to all other positive integer indices by zero.
+FG4--FG5 applies directly to this finite positive-weight power sum and
+its smaller exponential remainder, including coincident and
+unequal-modulus roots. Therefore
+$$
+ \limsup_{j\to\infty}|L_j|^{1/F_j}
+       =\max_i|z_i|\ge R_->1.
+ \tag{QH3}
+$$
+No exact common-modulus or conjugation constraint has to be decided
+inside the enlarged parameter family.
+
+### QH2. A finite rational feasibility sentence
+
+For each integer $N\ge200$, let $\Phi_N$ be the existential sentence
+over the reals with the SAME $2d$ packet coordinates at every index
+and with error variables $e_{198},\ldots,e_N$. Impose QH2's packet and
+error boxes, and for every $200\le k\le N$ impose
+$$
+ L_k\ge-D F_k^2,\qquad
+ 2L_{k-2}+2L_{k-1}-L_k\ge-D F_k^2.
+ \tag{QH4}
+$$
+These are polynomial inequalities with rational coefficients:
+$F_j$ is an integer exponent, $AB^{F_j}$ is rational, and the maximum
+constraint is a finite disjunction. Each $\Phi_N$ is decided by the
+cited exact real-closed-field procedure.
+
+Starting at $N=200$, decide $\Phi_N$ in increasing order and return the
+first $N$ for which it is false. This defines an algorithm from the
+rational inputs in QH1; its termination requires the joint argument
+below, not independent optimization of each index.
+
+### QH3. The decision loop terminates uniformly
+
+In the single compact space
+$$
+ \mathcal P\times\prod_{j\ge198}[-AB^{F_j},AB^{F_j}],
+$$
+let $K_N$ be the closed subset satisfying QH4 up to $N$. The sets are
+nested, and $\Phi_N$ is true exactly when $K_N$ is nonempty; unused
+errors can be filled by zero. If every $\Phi_N$ were true, compactness
+would give ONE common packet and ONE compatible error sequence
+satisfying QH4 for all $k\ge200$.
+
+For that same realization QH4 implies CS29's owned recurrence
+$$
+ |L_k|\le2|L_{k-2}|+2|L_{k-1}|+D F_k^2.
+$$
+The seeds satisfy its hypotheses with
+$$
+ W=\max\{1,3D,(d+A)R_+^{F_{199}}\}.
+$$
+Its existing cubic induction gives $|L_j|\le WF_j^3$ for every
+$j\ge198$, contradicting QH3. Consequently some $K_N$ is empty, and
+the exact decision loop halts.
+
+Its output is a TOTAL COMPUTABLE finite index from
+$(d,A,B,R_-,R_+,C_0)$. No closed-form bound on that output or useful
+runtime is asserted; neither the decision loop nor a solver is
+executed here. The common packet is retained across the entire
+finite horizon.
+
+### QH4. Consumer: the unchanged original arithmetic middle
+
+Suppose the ACTUAL coefficients have a complete finite pole-packet
+decomposition
+$$
+ \lambda_n=-\sum_{i=1}^d z_i^n+E_n,\qquad
+ |E_n|\le AB^n\quad(n\ge1),
+ \tag{QH5}
+$$
+with analytic multiplicity represented by repeated slots. The actual
+packet is closed under conjugation and lies in $\mathcal P$.
+Then $L_j=\lambda_{F_j}$ is a realization of QH2.
+
+Keep EO4's same $P_k,Q_k$, cutoffs, full archimedean term, endpoints
+and prime powers. If both original probes were at least
+$-C_0F_k^2$ for all $200\le k\le N$, EB's original common-matrix errors,
+paid by $F_k^2$ on this range exactly as in EO4, would imply QH4.
+For the returned false $\Phi_N$ this is impossible. Hence
+$$
+ \exists\,200\le k\le N:\qquad
+ P_k<-C_0F_k^2\quad\hbox{or}\quad Q_k<-C_0F_k^2.
+ \tag{QH6}
+$$
+For a real allowance, a supplied rational upper allowance gives the
+corresponding stronger violation. This is a uniform finite witness
+estimate for the original probes from rational packet bounds.
+
+### QH5. Finite actual geometry supplies these rational inputs
+
+Choose rational $0<r_1<r_2<1$, retain ALL actual poles in
+$|w|<r_1$, and certify that every other pole has $|w|\ge r_2$.
+The packet may have DIFFERENT moduli. A complete count supplies $d$
+slots with multiplicity, without deciding which roots coincide.
+Suppose a certified off-line member gives a rational
+$R_->B=1/r_1$, and a rational $R_+\ge R_-$ bounds the packet moduli.
+Since every remaining $|z|\le1/r_2<B$, the same $R_+$ bounds all
+actual zeros.
+
+GE1--GE6's calculation uses $R$ only as a common upper bound on
+$|z|,|z|^{-1}$ and on the retained packet moduli; exact equality of
+the retained moduli is not used. Reflection supplies the reciprocal
+bound for this global $R_+$. For this arbitrary complete packet it
+therefore gives the rational envelope
+$$
+ A=1+\frac{3/2+d(R_++r_1)+3r_1R_+/(r_2-r_1)}
+                  {(1-r_1)^2},
+ \qquad B=1/r_1,
+ \tag{QH7}
+$$
+using the classical $0<s_0=2+\gamma_E-\log(4\pi)<3$.
+Thus QH5 holds with wholly rational bounds. GE7's finite height
+exclusion certifies that no additional pole inside $r_2$ can occur
+above $T\ge r_2/\sqrt{1-r_2^2}$. Complete enclosures and counts through
+that height, the specified annular exclusion and the indicated
+off-line member would suffice for the inputs. Exact nearest-packet
+ties are not among them.
+
+No hypothetical off-line zero, packet data or numerical cutoff is
+supplied. The outcome is a source-specific paper composition of the
+owned Fibonacci growth and signed recurrence with classical compactness
+and exact real algebraic decision. It is not an unconditional sign,
+universal finite RH test, cofinal positivity or RH/Robin proof, and
+has no Lean certification or literature-priority claim.
+
+### QH6. Four complete boundary counts suffice
+
+The required rational packet bounds can also be supplied by four
+readings of the SAME actual generating function. Let
+$$
+ \mathcal F(w)=\xi\!\left(-\frac{w}{1-w}\right),\qquad |w|<1.
+$$
+It is holomorphic in this disk, and FG6 gives
+$G=\mathcal F'/\mathcal F$. For a zero-free circle define the
+counterclockwise count
+$$
+ \nu(r)=\frac1{2\pi i}\int_{|w|=r}G(w)\,dw.
+$$
+The classical argument principle, DLMF Section 1.10(iv),
+equation (1.10.9), identifies $\nu(r)$ with the COMPLETE number of
+zeros of $\mathcal F$ in the disk, including multiplicity. There are
+no poles of $\mathcal F$ in this disk.
+
+Suppose rational radii satisfy
+$$
+ 0<r_{\rm in}<r_*<r_1<r_2<1,
+$$
+all four circles are zero-free for the actual $\mathcal F$, and their
+complete counts satisfy
+$$
+ \nu(r_{\rm in})=0,\qquad
+ \nu(r_*)\ge1,\qquad
+ \nu(r_1)=\nu(r_2)=d.
+ \tag{QH8}
+$$
+Then $d\ge1$, the packet in $|w|<r_1$ has $d$ slots with
+multiplicity, and no additional pole has $|w|<r_2$.
+Every actual pole has $|w|>r_{\rm in}$, while at least one retained
+pole has $|w|<r_*$. Actual poles outside the unit disk obey these
+same lower-radius bounds automatically. Thus QH1 and QH5 hold with
+$$
+ R_+=1/r_{\rm in},\qquad R_-=1/r_*,\qquad B=1/r_1
+ \tag{QH9}
+$$
+and with the rational $A$ of QH7. The QH decision loop therefore
+returns a finite original-probe horizon using only these radii,
+the integer count $d$ and the allowance $C_0$.
+
+The witness bound is uniform over every packet consistent with these
+counts and ranges, and each realization uses the SAME packet across
+all indices in QH4. Individual root positions, exact radius ties and
+decisions about coincident slots are not needed for this witness-bound
+task. QH8's positive count is itself hypothetical off-line-zero
+information. No such actual count, numerical horizon or unconditional
+probe sign is supplied.
