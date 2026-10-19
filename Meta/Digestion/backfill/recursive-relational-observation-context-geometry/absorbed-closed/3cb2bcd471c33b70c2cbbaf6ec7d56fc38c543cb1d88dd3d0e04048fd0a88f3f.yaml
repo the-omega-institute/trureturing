@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:3cb2bcd471c33b70c2cbbaf6ec7d56fc38c543cb1d88dd3d0e04048fd0a88f3f
   normalized_sha256: sha256:3cb2bcd471c33b70c2cbbaf6ec7d56fc38c543cb1d88dd3d0e04048fd0a88f3f
 cas_ref: sha256:3cb2bcd471c33b70c2cbbaf6ec7d56fc38c543cb1d88dd3d0e04048fd0a88f3f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/SeriesInequalities/FiniteSourceCriticalTail.extension
+    target_statement_id: sha256:d5240b79c7ec28e3a153d7cc22aa667ec2b14ed3172bebb3020fd51cbd4f1243
 receipts:
   unresolved_subitems: []
