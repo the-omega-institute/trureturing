@@ -3,6 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A real two-copy Bell effect reads the squared hidden phase magnitude. -/
 
 import D5.S3.Quantum.Fibers.FiveModePhaseLift
