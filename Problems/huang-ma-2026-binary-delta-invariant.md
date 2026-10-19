@@ -43,7 +43,7 @@ For size $2m$, inversion of whole permutations in the determinant expansion give
 
 $$\det A\equiv(-1)^m\det B\pmod4.$$
 
-The rational alternating form associated to $DB$ has a symplectic basis. The frozen `D5.S3.QuadraticForms.SymplecticBasis.exists_isSymplecticBasis` and its pairing equations supply the basis used by `alternating_det_square`. The resulting identity says that $\Delta\det B$ is an integer square, where $\Delta=\prod_i d_i\ne0$.
+If $\det(DB)=0$, it is already a square. If $\det(DB)\ne0$, the rational alternating form associated to $DB$ is nondegenerate, so it has a symplectic basis and $\det(DB)$ is a square. The frozen `D5.S3.QuadraticForms.SymplecticBasis.exists_isSymplecticBasis` and its pairing equations supply the basis used by `alternating_det_square`. The resulting identity says that $\Delta\det B$ is an integer square, where $\Delta=\prod_i d_i\ne0$.
 
 If $\Delta q$ and $\Delta q_0$ are squares, cancellation over the rationals makes $q q_0$ an integer square. Any two nonzero residues $a,b\in\mathbb Z/4\mathbb Z$ whose product is a square coincide. Choosing one attained nonzero residue therefore leaves at most that residue and zero. This pairwise argument avoids choosing a valuation or an explicit nonzero residue.
 
