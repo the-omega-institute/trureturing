@@ -4485,3 +4485,47 @@ sign-complexity or minimum-gap estimates are outside this exclusion.
 The all-order positive lower bound, full strict Robin inequality and RH
 remain unproved. This is a paper application of existing results,
 without a priority claim or Lean certification.
+
+
+## The odd anchor also excludes a positive stationary lower comparison
+
+There is a separate obstruction to a strictly positive lower comparison
+with the same $T$. The complete odd kernel satisfies $L_0(0,0)=0$,
+whereas $T(0,0)=\Phi(0)^2/(8\pi)>0$. For every nonempty open
+$I\subset(0,\infty)$ and every $b>0$, some finite distinct sample
+$a_i\in I$ and nonzero real vector $c$ therefore satisfy
+
+$$
+\boxed{\sum_{i,j}c_iL_0(a_i,a_j)c_j
+ <b\sum_{i,j}c_iT(a_i,a_j)c_j.}
+\tag{W85}
+$$
+
+Indeed, otherwise $L_0-bT$ would be positive semidefinite on all finite
+samples in $I$. The same common-strip extension and cited analytic
+positivity transport used for (W83) would extend this to the origin,
+where its diagonal is $-b\Phi(0)^2/(8\pi)<0$. Reality and merging
+repeated nodes give the stated real distinct sample. The argument
+retains the full reflected exterior.
+
+By the same positive diagonal congruence, for each fixed $A>0$ and
+nonempty open $U$ with $A+U\subset(0,\infty)$,
+
+$$
+\boxed{\inf_{\substack{u_1,\ldots,u_n\in U\ \mathrm{distinct},\ n\ge1\\
+ c\in\mathbb R^n\setminus\{0\}}}
+ \frac{\sum_{i,j}c_iM_A(u_i,u_j)c_j}
+ {\sum_{i,j}c_iS(u_i,u_j)c_j}\le0.}
+\tag{W86}
+$$
+
+Thus a positive multiple of this stationary reference cannot supply
+the unrestricted all-order lower margin, even on a remote positive
+window. The zero lower bound required for actual kernel positivity
+is not excluded: (W85)--(W86) give no negative actual direction and
+do not decide whether the infimum is zero or negative. The restricted
+minimum-gap and sign-complexity estimates remain intact.
+
+This is a paper application of the already cited analytic transport,
+without a new general theorem, priority claim or Lean certification.
+Actual all-order positivity, full strict Robin and RH remain unproved.
