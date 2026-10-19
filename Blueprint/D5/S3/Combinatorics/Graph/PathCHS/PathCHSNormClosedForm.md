@@ -86,7 +86,7 @@ Rescaling the geometric series gives the inverse of 1−aX over any commutative 
 
 **Theorem 1.7 (The symmetric-polynomial generating function).**
 
-$$\forall I \in \operatorname{Type},\; \forall R \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] [\operatorname{CommRing}\left(R\right)] \forall a \in I \to R,\; \operatorname{PowerSeries}.\operatorname{mk}\left(\operatorname{fun} (d:\mathbb{N}) \mapsto \operatorname{MvPolynomial}.\operatorname{eval}\left(a, \operatorname{MvPolynomial}.\operatorname{hsymm}\left(I, R, d\right)\right)\right) \cdot \prod_{i:I} (1 - \operatorname{PowerSeries}.\operatorname{C}\left(\operatorname{a}\left(i\right)\right) \cdot \operatorname{PowerSeries}.\operatorname{X}) = 1$$
+$$\forall I \in \operatorname{Type},\; \forall R \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] [\operatorname{CommRing}\left(R\right)] \forall a \in I \to R,\; \operatorname{PowerSeries}.\operatorname{mk}\left(\operatorname{fun} (d:\mathbb{N}) \mapsto \operatorname{MvPolynomial}.\operatorname{eval}\left(a, \operatorname{MvPolynomial}.\operatorname{hsymm}\left(I, R, d\right)\right)\right) \cdot \prod_{i:I} (1 - \operatorname{PowerSeries}.\operatorname{C}\left(a\left(i\right)\right) \cdot \operatorname{PowerSeries}.\operatorname{X}) = 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm.hsymm_series_product` (`✓ std3`). ∎
 
@@ -98,7 +98,7 @@ Equation (1.1), page 2, gives the generating function. Grouping monomials by tot
 
 **Theorem 1.8 (Ring homomorphisms and constant-weight continuants).**
 
-$$\forall R \in \operatorname{Type},\; \forall S \in \operatorname{Type},\; [\operatorname{CommRing}\left(R\right)] [\operatorname{CommRing}\left(S\right)] \forall f \in R \to +* S,\; \forall x \in R,\; \forall n \in \mathbb{N},\; \operatorname{f}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{NarayanaStrip}.\operatorname{CiglerStripProductAlgebra}.\operatorname{cont}\left(\operatorname{Function}.\operatorname{const}\left(\mathbb{N}, x\right), 1, 1, n\right)\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{NarayanaStrip}.\operatorname{CiglerStripProductAlgebra}.\operatorname{cont}\left(\operatorname{Function}.\operatorname{const}\left(\mathbb{N}, \operatorname{f}\left(x\right)\right), 1, 1, n\right)$$
+$$\forall R \in \operatorname{Type},\; \forall S \in \operatorname{Type},\; [\operatorname{CommRing}\left(R\right)] [\operatorname{CommRing}\left(S\right)] \forall f \in R \to +* S,\; \forall x \in R,\; \forall n \in \mathbb{N},\; f\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{NarayanaStrip}.\operatorname{CiglerStripProductAlgebra}.\operatorname{cont}\left(\operatorname{Function}.\operatorname{const}\left(\mathbb{N}, x\right), 1, 1, n\right)\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{NarayanaStrip}.\operatorname{CiglerStripProductAlgebra}.\operatorname{cont}\left(\operatorname{Function}.\operatorname{const}\left(\mathbb{N}, f\left(x\right)\right), 1, 1, n\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm.continuant_map` (`✓ std3`). ∎
 

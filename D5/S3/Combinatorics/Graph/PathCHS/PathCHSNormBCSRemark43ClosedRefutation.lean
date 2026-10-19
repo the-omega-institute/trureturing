@@ -42,10 +42,11 @@ open D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm
 
 theorem result : ¬ claim := by
   have h6 : chs 2 6 = 1 := by
-    have hf : pathFormula 2 3 = 1 := by decide
+    have hf : pathFormula 2 3 = 1 := Eq.symm ((fun {a b} => Int.neg_inj.mp) rfl)
     simpa only [hf,Int.cast_one] using D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.chs_formula 2 3
   intro hc
-  have he := hc 2 6 (by decide) (by decide) (by decide) (by decide)
+  have he := hc 2 6 NeZero.one_le Nat.AtLeastTwo.prop
+    (Nat.even_iff.mpr rfl) (Nat.le_add_left (6 / 2) 0)
   norm_num [h6] at he
 
 end D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormBCSRemark43ClosedRefutation

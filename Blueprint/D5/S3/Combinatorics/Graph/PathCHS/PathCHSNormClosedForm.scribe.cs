@@ -39,6 +39,7 @@ internal sealed class PathCHSNormClosedFormDocument : IScribeDocumentDefinition
         return value;
     }
     private static Formula C(string name, params Formula[] args) => new Formula.Apply(Q(name), [.. args]);
+    private static Formula Apply(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula A(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula S(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
@@ -108,7 +109,7 @@ internal sealed class PathCHSNormClosedFormDocument : IScribeDocumentDefinition
     {
         var coefficient = C("MvPolynomial.eval", a, C("MvPolynomial.hsymm", index, r, V("d")));
         var series = C("PowerSeries.mk", Lambda("d", Nat(), coefficient));
-        var factor = S(D(1), M(C("PowerSeries.C", C("a", V("i"))), Q("PowerSeries.X")));
+        var factor = S(D(1), M(C("PowerSeries.C", Apply(V("a"), V("i"))), Q("PowerSeries.X")));
         var product = Seq(new Formula.Subscript(Prod, Seq(V("i"), Colon, index)), Sp, Parenthesized(factor));
         return Eq(M(series, product), D(1));
     }
@@ -119,7 +120,7 @@ internal sealed class PathCHSNormClosedFormDocument : IScribeDocumentDefinition
     private static Formula Continuant(Formula x, Formula n) => C("D5.S3.Combinatorics.NarayanaStrip.CiglerStripProductAlgebra.cont", C("Function.const", Nat(), x), D(1), D(1), n);
     private static Formula ContinuantMapFormula() => Disp(Generic(["R", "S"], ["CommRing R", "CommRing S"],
         All("f", Seq(V("R"), Sp, To, Sp, Plus, Star, Sp, V("S")), All("x", V("R"), All("n", Nat(),
-            Eq(C("f", Continuant(V("x"), V("n"))), Continuant(C("f", V("x")), V("n"))))))));
+            Eq(Apply(V("f"), Continuant(V("x"), V("n"))), Continuant(Apply(V("f"), V("x")), V("n"))))))));
     private static Formula ContinuantZeroFormula() => Disp(Generic(["R"], ["CommRing R"], All("n", Nat(), Eq(Continuant(Cast(D(0), V("R")), V("n")), D(1)))));
     private static Formula PathSeriesFormula() => Disp(All("n", Nat(), Eq(M(C("PowerSeries.mk", Lambda("d", Nat(), C("chs", V("n"), V("d")))),
         Continuant(Pow(Cast(Q("PowerSeries.X"), C("PowerSeries", Real())), D(2)), V("n"))), D(1))));

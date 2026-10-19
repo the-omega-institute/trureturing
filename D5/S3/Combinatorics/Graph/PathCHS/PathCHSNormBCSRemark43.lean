@@ -248,7 +248,7 @@ private theorem node_reciprocal_product (n : ℕ) (t : ℝ) :
   by_cases ht : t=0
   · subst t; simp [continuant_zero]
   · rw [← scaled_S_eval t ht n,← nodal_eq_S,Lagrange.eval_nodal]
-    have hc : t^n = ∏ _i : Fin n, t := by simp
+    have hc : t^n = ∏ _i : Fin n, t := (Fin.prod_const n t).symm
     rw [hc,← Finset.prod_mul_distrib]
     apply Finset.prod_congr rfl
     intro i hi
@@ -363,7 +363,7 @@ private theorem bilateral_eq_pathFormula (n m : ℕ) (hn : 1 ≤ n) :
         apply Finset.mem_image.mpr
         exact ⟨(-j).toNat, Finset.mem_range.mpr hh, hjr.symm⟩
       have hmul : m < (-j).toNat*N := by
-        have hq : m/N < (-j).toNat := by dsimp [M] at hlarge; omega
+        have hq : m/N < (-j).toNat := Nat.lt_of_succ_le hlarge
         exact (Nat.div_lt_iff_lt_mul hN).mp hq
       have hr : (N : ℤ)*j+m < 0 := by
         have hmul' : (m : ℤ) < ((-j).toNat : ℤ)*N := by exact_mod_cast hmul
@@ -379,7 +379,7 @@ private theorem bilateral_eq_pathFormula (n m : ℕ) (hn : 1 ≤ n) :
         apply Finset.mem_image.mpr
         exact ⟨(j-1).toNat, Finset.mem_range.mpr hh, hjr.symm⟩
       have hmul : m < (j-1).toNat*N := by
-        have hq : m/N < (j-1).toNat := by dsimp [M] at hlarge; omega
+        have hq : m/N < (j-1).toNat := Nat.lt_of_succ_le hlarge
         exact (Nat.div_lt_iff_lt_mul hN).mp hq
       have hr : (L : ℤ) < (N : ℤ)*j+m-1 := by
         have hmul' : (m : ℤ) < ((j-1).toNat : ℤ)*N := by exact_mod_cast hmul
@@ -390,7 +390,7 @@ private theorem bilateral_eq_pathFormula (n m : ℕ) (hn : 1 ≤ n) :
         Int.cast_zero, sub_self]
   have he : bilateralForm n (2*m) = ∑ j ∈ s ∪ t, f j := by
     unfold bilateralForm
-    simp only [Nat.mul_div_cancel_left m (by decide : 0 < 2)]
+    simp only [Nat.mul_div_cancel_left m Nat.zero_lt_two]
     change (∑ᶠ j : ℤ, f j) = _
     apply finsum_eq_finsetSum_of_support_subset
     intro j hj

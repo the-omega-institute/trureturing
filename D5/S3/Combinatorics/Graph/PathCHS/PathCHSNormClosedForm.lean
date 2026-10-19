@@ -365,13 +365,11 @@ private theorem second_difference (L j : ℕ) :
     | succ j =>
       simp only [map_add, map_sub, coeff_ofNat_mul, coeff_succ_X_mul,
         P13CatalanLagrangeBridge.binomialCoefficient]
-      have h1 : (↑(j+1+1) : ℤ) - 1 = (j+1 : ℕ) := by omega
-      have h2 : (↑(j+1+1) : ℤ) - 2 = (j : ℤ) := by omega
+      have h1 : (↑(j+1+1) : ℤ) - 1 = (j+1 : ℕ) := Int.sub_eq_iff_eq_add.mpr rfl
+      have h2 : (↑(j+1+1) : ℤ) - 2 = (j : ℤ) := Int.sub_eq_iff_eq_add.mpr rfl
       rw [h1, h2]
       have hb (r : ℕ) : (D5.S0.Conventions.IntegerIndexBinomial.binom L (r : ℤ) : ℚ) =
-          (Nat.choose L r : ℚ) := by
-        simp only [D5.S0.Conventions.IntegerIndexBinomial.binom,
-          if_neg (not_lt.mpr (Int.natCast_nonneg r)), Int.toNat_natCast, Int.cast_natCast]
+          (Nat.choose L r : ℚ) := Rat.ext rfl rfl
       rw [hb, hb, hb]
 
 end
