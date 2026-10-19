@@ -203,7 +203,10 @@ def stub(kind, args):
         if os.environ.get('BRIEF_FIXTURE_API_EMPTY'): return
         print('{"executed":true,"diagnostics":[{"AdmissionEffect":1}]}')
     elif args[:2] == ['issue', 'list']:
-        print('[]' if '--json' in args and '--jq' not in args else '#12345 Preregister synthetic question')
+        if '--json' in args and '--jq' not in args: print('[]')
+        elif any('preregistration' in a for a in args):
+            print('#12345 Preregister synthetic question\n#12346 Open problem (preregistration): synthetic question')
+        else: print('#12345 Preregister synthetic question')
     else: raise RuntimeError('unexpected gh call ' + repr(args))
 
 
@@ -309,6 +312,10 @@ def case(tool, variant=None):
         result=subprocess.run(command(tool,root,variant),cwd=root,env=env,capture_output=True,text=True)
         assert result.returncode==0,(tool,result.returncode,result.stdout[-1200:],result.stderr[-3000:])
         assert 'SyntaxWarning' not in result.stderr,(tool,result.stderr)
+        if tool.name == 'render-search-brief.sh':
+            listed = (root / 'out.md').read_text()
+            assert '#12346 Open problem (preregistration): synthetic question' in listed, 'preregistration-titled issue missing'
+            assert listed.count('#12345 Preregister synthetic question') == 1, 'issue matched by both queries listed twice'
         if tool.stem in ('implb_head', 'rework_brief', 'gen_stage_briefs', 'stages'):
             path = ('implb-sample-r1.head.md' if tool.stem == 'implb_head' else
                     'rework-sample.md' if tool.stem == 'rework_brief' else

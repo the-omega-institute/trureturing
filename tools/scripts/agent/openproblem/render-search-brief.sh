@@ -7,7 +7,8 @@
 #   WINDOW   quick track only: the arXiv listing window to scan, as YYMM or YYMM-YYMM
 #            (default: the previous and the current month)
 # Substitutes __SEAT_ID__, __SHA__ (current origin/dev), __OPEN_PREREGISTRATIONS__
-# (open GitHub issues whose title contains "Preregister") and, for the quick track, __WINDOW__.
+# (open GitHub issues whose title contains "Preregister" or "preregistration", deduplicated by number)
+# and, for the quick track, __WINDOW__.
 # Requires git, gh and python3.
 set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -50,8 +51,10 @@ git -C "$repo_root" fetch -q origin dev
 sha="$(git -C "$repo_root" rev-parse origin/dev)"
 prereg="$(mktemp)"
 trap 'rm -f "$prereg"' EXIT
-(cd "$repo_root" && gh issue list --state open --search "Preregister in:title" --limit 500 \
-  --json number,title --jq '.[] | "#\(.number) \(.title)"') > "$prereg"
+# GitHub title search matches whole words, so "Preregister" misses "Open problem (preregistration): …"; query both.
+(cd "$repo_root" && for query in "Preregister in:title" "preregistration in:title"; do
+  gh issue list --state open --search "$query" --limit 500 --json number,title --jq '.[] | "#\(.number) \(.title)"'
+done) | awk '!seen[$1]++' > "$prereg"
 [[ -s "$prereg" ]] || echo "(none)" > "$prereg"
 python3 - "$template" "$out" "$seat_id" "$sha" "$prereg" "$track" "$window" <<'PY'
 import datetime, pathlib, sys

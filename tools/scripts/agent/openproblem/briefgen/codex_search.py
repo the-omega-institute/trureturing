@@ -42,7 +42,7 @@ def main(argv):
     start = text.index('Read single files at')
     end = text.index('Read this repository first.') if track == 'deep' else text.index('\n\n', start)
     extra = (f'Your worktree `{worktree}` is a detached checkout of `origin/dev`. Read the repository locally, use web search and arXiv for the literature, '
-             'and run `ls Problems/` and `gh issue list --state all --search "Preregister in:title" --limit 500` yourself for the exclusion checks.')
+             'and run `ls Problems/`, `gh issue list --state all --search "Preregister in:title" --limit 500` and `gh issue list --state all --search "preregistration in:title" --limit 500` yourself for the exclusion checks.')
     if track == 'deep':
         extra += (' Also skip these candidates, which this session has already assessed (deferred, yielded to another active driver, or famous-hard): '
                   + exclusions + '\n\n')
