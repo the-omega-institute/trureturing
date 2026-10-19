@@ -5,7 +5,7 @@ year: 1978
 title: The analytic principle of the large sieve
 doi: 10.1090/S0002-9904-1978-14497-8
 url: https://doi.org/10.1090/S0002-9904-1978-14497-8
-claim: Folded large-sieve and actual moment inputs bound the complete arithmetic coupling tail; exact rational head coordinates give an effective two-sided metric with growing support and dimension, and a conditional Schur budget without all-scale positivity.
+claim: Exact folded prime moments and the complete arithmetic symbol give relative finite-head tail metrics. On odd supports an unaliased prime channel gives polynomial dimension loss and exponentially larger FIB heads. Physical/domain identification, intermediate rows, retained signed domination and RH remain unpaid.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -960,3 +960,236 @@ Hilbert/Fibonacci moment paper supplies that domination, the original
 Robin strict upper, all-order theta positivity at one fixed start,
 or RH. No assertion that the arithmetic columns and Berg's Fibonacci
 moment matrices are the same object is made.
+
+
+## A surviving prime channel gives polynomial dimension loss
+
+On the odd integer supports used by the FIB schedule, the actual
+prime variance lets the complete-tail comparison use polynomial
+function norms. This avoids the inverse-Hilbert loss in (49).
+Keep the exact columns, numerator coordinates (45), denominator
+bounds (47), complete smooth symbol (39), discrepancies $F,O$ and
+$U_c$ from (48). The following is a paper application of these actual
+arithmetic inputs and classical polynomial variation estimates, with
+no literature-priority or Lean/kernel claim.
+
+Assume $c\ge3$ is odd, $d=|S|>0$, $S\subset[-B,B]\cap\mathbb Z$,
+$B\ge1$ and integer $N\ge\max\{2B,4d^2\}$. Write
+$A=\widehat A_N$, $B_*=\widehat B_N$ for the two exact numerator
+polynomials, and define their function norm
+
+$$
+\mathcal I(A,B_*)=\int_{-1}^1(|A(x)|^2+|B_*(x)|^2)dx.
+$$
+
+The subscript on $B_*$ distinguishes this polynomial from the head
+radius $B$; it introduces no new symbol allowance.
+
+### Keep one actual prime frequency before estimating the metric
+
+For odd $c$, the two signed frequencies of the $j=2$ term of $P_c$
+do not collide with another label. By the exact folding rule (2),
+same-sign collision requires equal labels, and opposite-sign collision
+would require $2j=c$, impossible for odd $c$. Self-aliasing would require $c=4$,
+excluded by oddness. The two unchanged exponential coefficients consequently
+contribute their full squared mass to the same ordered-resonance
+energy:
+
+$$
+\mu_c\ge\frac{(\log2)^2}{4}>\frac1{16}.
+$$
+
+All other folded squared coefficients are nonnegative; the resonance
+correction itself is retained, rather than discarded from its formula.
+The covariance matrices of the integrands in (37) have determinant
+$\mu_c$ and trace $1+\kappa^2+\mu_c$, with the two mixed signs.
+Their smallest eigenvalue is at least determinant divided by trace.
+Since $\kappa<1$ and $\mu/(1+\kappa^2+\mu)$ increases with $\mu$,
+
+$$
+\boxed{\mathcal H_{c,d}(\widehat a_N,\widehat b_N)
+\ge\frac1{33}\mathcal I(A,B_*).}
+\tag{53}
+$$
+
+This is a function-norm comparison, independent of $d$. It is not a
+lower bound for the Euclidean norm of monomial coefficients. The
+empty prime polynomial at $c=2$ does not satisfy its premise; the
+previous estimates retain their scope there.
+
+### Apply classical polynomial variation directly to the discrete tail
+
+Reuse Legendre orthogonality from
+[DLMF 14.17.6](https://dlmf.nist.gov/14.17.E6), at order zero, and
+the endpoint/parity values in
+[Table 18.6.1](https://dlmf.nist.gov/18.6#T1).
+For the shifted orthonormal basis
+$\phi_j(x)=\sqrt{2j+1}P_j(2x-1)$ on $[0,1]$, the standard derivative
+matrix has entry $2\sqrt{(2j+1)(2k+1)}$ when $k<j$ and $j-k$ is
+odd, and zero otherwise. Integration by parts and the cited
+orthogonality give these entries. Its squared Frobenius norm is
+$\sum_{j<d}2(2j+1)j(j+1)=d^2(d^2-1)$.
+Thus the classical polynomial inverse estimate, applied here, gives
+$\|p'\|_2\le d^2\|p\|_2$ for $\deg p<d$, including $d=1$.
+For any such complex $p,q$, it follows that
+
+$$
+2\int_0^1|\overline p q|dx+
+\operatorname{Var}_{[0,1]}(\overline p q)
+\le4d^2\|p\|_2\|q\|_2.
+\tag{54}
+$$
+
+The same bound holds with $|pq|$ in place of $\overline p q$,
+using absolute continuity and the almost-everywhere product bound.
+These are existing polynomial estimates consumed inside the actual
+tail calculation, not new Markov or orthogonal-polynomial theorems.
+
+Let $\omega_m$ have mean $\alpha$ and discrepancy at most $D_\omega$
+on every consecutive integer block, and put
+
+$$
+\mathcal L_\omega(F)=N\sum_{m>N}\frac{\omega_m}{m^2}F(N/m).
+$$
+
+The continuous counting discrepancy
+$R(t)=\sum_{N<m\le t}\omega_m-\alpha(t-N)$ is bounded by
+$D_\omega+|\alpha|$, including its ordinary floor error. With
+$g(t)=t^{-2}F(N/t)$, ordinary partial summation gives
+
+$$
+\mathcal L_\omega(F)-\alpha\int_0^1F(x)dx
+=-N\int_N^\infty R(t)g'(t)dt,
+$$
+
+$$
+\int_N^\infty|g'(t)|dt
+=\frac1{N^2}\int_0^1x|2F(x)+xF'(x)|dx.
+$$
+
+Here $R(N)=0$ and the term at infinity vanishes. Applying (54)
+therefore yields the actual quadrature allowance
+
+$$
+\left|\mathcal L_\omega(\overline p q)
+ -\alpha\langle p,q\rangle\right|
+\le\frac{4d^2(D_\omega+|\alpha|)}N\|p\|_2\|q\|_2.
+\tag{55}
+$$
+
+For $\omega=1$, its discrete block discrepancy is zero. The same
+argument for $|pq|$ and $N\ge4d^2$ gives
+$\mathcal L_1(|pq|)\le2\|p\|_2\|q\|_2$.
+
+### Preserve the full signed symbol while taking this function norm
+
+Use $s_c=-\kappa-P_c+h_c$, $|h_c(m)|\le G_c/m$ from (39),
+including its full Gamma series and pole. Put
+
+$$
+\begin{aligned}
+D_1&=\kappa+F+G_c,\\
+D_2&=\kappa^2+\mu_c+2\kappa F+O
+       +2(\kappa+W)G_c+G_c^2,
+\end{aligned}
+\qquad 1+D_1+D_2=U_c.
+$$
+
+Apply (55) to the actual prime blocks, with $|P_c|\le W$.
+The smooth first-moment error is at most
+$2G_c\|p\|_2\|q\|_2/N$ by the last bound after (55).
+For the square retain every term of
+$s_c^2=\kappa^2+2\kappa P_c+P_c^2-2(\kappa+P_c)h_c+h_c^2$.
+Its smooth error is at most
+$[4(\kappa+W)G_c/N+2G_c^2/N^2]\|p\|_2^2$.
+These are within the following allowances:
+
+$$
+\begin{aligned}
+|\mathcal L_{s_c}(\overline p q)+\kappa\langle p,q\rangle|
+&\le\frac{4d^2D_1}N\|p\|_2\|q\|_2,\\
+|\mathcal L_{s_c^2}(|p|^2)-(\kappa^2+\mu_c)\|p\|_2^2|
+&\le\frac{4d^2D_2}N\|p\|_2^2.
+\end{aligned}
+\tag{56}
+$$
+
+No bounded partial sum of $h_c$ is assumed. Expand the complete
+numerator energy and use $2\|A\|_2\|B_*\|_2\le
+\|A\|_2^2+\|B_*\|_2^2$. The positive exterior error is bounded
+by $4d^2U_c/N$ times this sum of squared norms. Exact oddness of
+$s_c$ gives the other mixed sign for the negative exterior, where
+the same estimate applies to $A(-x),B_*(-x)$. Hence, on both full
+exterior signs together,
+
+$$
+\left|\pi^2N\|\widehat J_v\|_{\ell^2(|m|>N)}^2
+ -\mathcal H_{c,d}(\widehat a_N,\widehat b_N)\right|
+\le\frac{4d^2U_c}N\mathcal I(A,B_*).
+$$
+
+Combine this with (53), and then use (47)'s exact denominator
+bounds. With $r=B/N$ and
+
+$$
+\varepsilon^{\rm var}_{c,d,N}=\frac{132d^2U_c}N
+\le\frac{8448d^2c^2(1+\log c)^3}N,
+$$
+
+one obtains, uniformly for every complex head,
+
+$$
+\boxed{\begin{aligned}
+&(1+r)^{-2d}(1-\varepsilon^{\rm var}_{c,d,N})
+\frac{\mathcal H_{c,d}(\widehat a_N,\widehat b_N)}{\pi^2N}
+\le\mathcal E_N(v)\\
+&\hspace{10mm}\le
+(1-r)^{-2d}(1+\varepsilon^{\rm var}_{c,d,N})
+\frac{\mathcal H_{c,d}(\widehat a_N,\widehat b_N)}{\pi^2N}.
+\end{aligned}}
+\tag{57}
+$$
+
+A negative lower coefficient remains vacuous. Approximate moment
+cancellations are allowed: no inverse coefficient map is used.
+Both complete exterior signs, every prime power and the ordered
+resonance correction enter the same actual metric. Only its
+admissible odd-support variance has been used additionally.
+
+### Exponentially larger heads on the same FIB support schedule
+
+For sufficiently large levels, keep
+$c_r=3^{F_{r+1}}$, $N_r=\lceil e^{c_r}\rceil$, and allow
+
+$$
+B_r\le e^{c_r/3},\qquad1\le d_r\le e^{c_r/3}.
+$$
+
+Then $N_r\ge\max\{2B_r,4d_r^2\}$ eventually, and
+
+$$
+\boxed{\varepsilon^{\rm var}_{c_r,d_r,N_r}
+\le e^{-c_r/3+O(\log c_r)},\qquad
+(1\pm B_r/N_r)^{-2d_r}=1+O(e^{-c_r/3}).}
+\tag{58}
+$$
+
+The heads can now grow exponentially in $c_r$, beyond (50)'s
+linear range. They still do not exhaust the retained space at
+$N_r$. No matrix in this range has been constructed or solved here.
+For an actual exterior block with the same proved lower floor
+$D_{\rm ext}\succeq h_NI>0$, directly reuse the inverse-order
+consumer (52) with $\varepsilon^{\rm var}_{c,d,N}$:
+
+$$
+C_{\rm tail}^*D_{\rm ext}^{-1}C_{\rm tail}
+\preceq\frac{(1-B/N)^{-2d}(1+\varepsilon^{\rm var}_{c,d,N})}
+ {\pi^2Nh_N}\widehat T_N^*H_{c,d}\widehat T_N.
+\tag{59}
+$$
+
+The actual physical/form-domain bridge, every intervening row and
+signed domination by the retained form remain unpaid. This is a
+larger-head complete coupling allowance, not retained or cofinal
+Weil positivity. The full Robin strict upper, fixed-start all-order
+theta positivity and RH remain unproved.
