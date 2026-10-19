@@ -32,8 +32,9 @@ proof_shape: rational_isGF: content; consumers: D5.S1.Recurrence.Invariants.Hann
 proof_shape: result: content; consumers: settling result.
 escape_witness: none
 admission_basis: open-problem-resolution (#18850; Proved)
-Direct frozen dependencies: existing power-series suppliers at their original declaration addresses;
-declaration identities and the elaborated dependency closure are reported in the handover.
+Prerequisites: SignedCatalanCubicSubstitutionModThree, PowerSeriesNormalizedContraction,
+UnitReversionSquareParity (coefficient agreement), ScaledReversionCongruence (geometric series).
+Consumers: result settles #18850.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19089.
 Unbounded existence, uniqueness, and coefficient identities; no finite-instance computation.
 The source predicates IsGF and claim retain their literal expressions.
@@ -41,6 +42,8 @@ The source predicates IsGF and claim retain their literal expressions.
 
 import D5.S1.Recurrence.Invariants.SignedCatalanCubicSubstitutionModThree
 import D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
+import D5.S1.Recurrence.Invariants.UnitReversionSquareParity
+import D5.S1.Recurrence.Invariants.ScaledReversionCongruence
 
 set_option autoImplicit false
 

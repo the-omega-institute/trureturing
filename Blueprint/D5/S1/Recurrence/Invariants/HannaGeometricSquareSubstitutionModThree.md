@@ -52,4 +52,6 @@ Coefficientwise contraction constructs an integral compositional inverse. Froben
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaGeometricSquareSubstitutionModThree.claim`
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaGeometricSquareSubstitutionModThree.result`
 - Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](PowerSeriesNormalizedContraction.md)
+- Dependency: [D5/S1/Recurrence/Invariants/ScaledReversionCongruence](ScaledReversionCongruence.md)
 - Dependency: [D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree](SignedCatalanCubicSubstitutionModThree.md)
+- Dependency: [D5/S1/Recurrence/Invariants/UnitReversionSquareParity](UnitReversionSquareParity.md)

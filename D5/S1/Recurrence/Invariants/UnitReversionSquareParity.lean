@@ -22,7 +22,7 @@ variable {R : Type*} [CommRing R]
 def Agree (d : ℕ) (f g : PowerSeries R) : Prop :=
   ∀ n < d, coeff n f = coeff n g
 
-theorem agree_iff (d : ℕ) (f g : PowerSeries R) :
+private theorem agree_iff (d : ℕ) (f g : PowerSeries R) :
     Agree d f g ↔ (X : PowerSeries R) ^ d ∣ f - g := by
   simp [Agree, X_pow_dvd_iff, map_sub, sub_eq_zero]
 
