@@ -60,8 +60,12 @@ run_meta do
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [] as hiddenDependencyResult
-#guard hiddenDependencyResult = Verdict.insufficient
-#guard hiddenDependencyResult.baseline = Run.incomplete Failure.isolation
+-- R reconstructs the easy existential from the clean prefix, checks std3,
+-- and inlines its proof. A target thereby found in B is bind-only (§3.1).
+-- hardCertificateResult separately rejects the unreconstructible hidden answer.
+#guard hiddenDependencyResult = Verdict.bindOnly
+#guard hiddenDependencyResult.baseline = Run.found
+#print axioms hiddenDependencyResult.baselineProof
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.content
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"

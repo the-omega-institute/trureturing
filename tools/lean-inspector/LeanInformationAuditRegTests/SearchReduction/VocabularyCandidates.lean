@@ -5,6 +5,10 @@ open Candidates
 
 inductive PureMode where
   | ab | bc | ac
+  deriving DecidableEq, Repr, Inhabited
+
+-- A handwritten computational instance must not be silently replaced by deriving.
+def noncanonicalRepr : Repr PureMode := ⟨fun _ _ => "author"⟩
 
 structure ForwardLaw (p : Nat → Nat) : Prop where
   start : p 0 = 0

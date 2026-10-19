@@ -113,9 +113,10 @@ private partial def structureVocabulary (ctx : TransportContext) (n : Name)
   else
     transportVocabulary ctx n
 
-private def checkVocabularyClean (source base : Environment) : MetaM Unit := do
-  for (n, _) in (← getEnv).constants.toList do
-    if base.contains n then continue
+private def checkVocabularyClean (source base : Environment) (regenerated : NameSet := {}) : MetaM Unit := do
+  let localNames := (← getEnv).constants.foldStage2 (fun names n _ => names.push n) (#[] : Array Name)
+  for n in localNames do
+    if base.contains n || regenerated.contains n then continue
     if let some info := (source.setExporting false).find? n then
       -- A regenerated projection is a logical accessor, not an author body.
       if (projectionShape info).isSome then continue
@@ -151,18 +152,27 @@ private def prepare (source base : Environment) (request : Request)
       throwError "search.target_not_proposition: {request.target}"
     let forbidden := request.additions.foldl (fun ns n => ns.insert n) (({} : NameSet).insert request.target)
     let certificates ← IO.mkRef #[]
+    let regenerated ← IO.mkRef ({} : NameSet)
     let searchHeartbeats ← IO.mkRef 0
     let budgetStart ← IO.getNumHeartbeats
     let transport : TransportContext := {
       source, target := request.target, targetType := target.type, forbidden,
-      certificates? := some certificates, budgetStart, searchHeartbeats? := some searchHeartbeats}
+      certificates? := some certificates, regenerated? := some regenerated, budgetStart, searchHeartbeats? := some searchHeartbeats}
+    let mut roots := target.type.getUsedConstants
+    for n in request.additions do
+      if let some info := (source.setExporting false).find? n then
+        roots := roots ++ info.type.getUsedConstants
+    let preflightStart ← IO.getNumHeartbeats
+    vocabularyBudgetPreflight source roots
+    let preflightUsed := (← IO.getNumHeartbeats) - preflightStart
     for dep in target.type.getUsedConstants do transportVocabulary transport dep
     -- Both arms receive exactly the vocabulary of T and all registered S types.
     for n in request.additions do
       if let some info := (source.setExporting false).find? n then
         for dep in info.type.getUsedConstants do transportVocabulary transport dep
-    checkVocabularyClean source base
-    let excluded ← searchHeartbeats.get
+    checkVocabularyClean source base (← regenerated.get)
+    let accounted ← searchHeartbeats.get
+    let excluded := preflightUsed + accounted
     withTheReader Core.Context (fun reader =>
         {reader with initHeartbeats := reader.initHeartbeats + excluded}) do
       if paired then
@@ -174,8 +184,8 @@ private def prepare (source base : Environment) (request : Request)
           for type in types do
             for dep in type.getUsedConstants do transportVocabulary transport dep
           for n in request.additions do structureVocabulary transport n
-          checkVocabularyClean source base
-          let extraSearch := (← searchHeartbeats.get) - excluded
+          checkVocabularyClean source base (← regenerated.get)
+          let extraSearch := (← searchHeartbeats.get) - accounted
           withTheReader Core.Context (fun ctx =>
               {ctx with initHeartbeats := ctx.initHeartbeats + extraSearch}) do
             if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"

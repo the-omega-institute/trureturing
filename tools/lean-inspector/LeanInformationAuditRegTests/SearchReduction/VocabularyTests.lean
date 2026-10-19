@@ -20,9 +20,7 @@ set_option maxHeartbeats 0 in
 run_meta do
   let source ← getEnv
   enableInitializersExecution
-  let base ← importModules #[{module := `Mathlib},
-    {module := `LeanInformationAuditRegTests.SearchReduction.Baseline}]
-    options 0 (leakEnv := true) (loadExts := true)
+  let base ← referenceEnvironment
   enableInitializersExecution
   discard <| referenceHints
   let check := fun n => withEnv base do
@@ -34,6 +32,16 @@ run_meta do
   let modes ← check ``VocabularyCandidates.PureMode
   unless modes.contains ``VocabularyCandidates.PureMode.ab do throwError "missing constructor"
   unless modes.contains (``VocabularyCandidates.PureMode ++ `casesOn) do throwError "missing casesOn"
+  for n in #[``VocabularyCandidates.instDecidableEqPureMode,
+      ``VocabularyCandidates.instReprPureMode, ``VocabularyCandidates.instInhabitedPureMode] do
+    discard <| check n
+  let rejectedInstance ← try
+    discard <| check ``VocabularyCandidates.noncanonicalRepr
+    pure false
+  catch ex =>
+    unless (← ex.toMessageData.toString).startsWith "search.derived_computation_mismatch" do throw ex
+    pure true
+  unless rejectedInstance do throwError "author instance computation was replaced"
   discard <| check ``VocabularyCandidates.ForwardLaw
   discard <| check ``VocabularyCandidates.nestedBox
   let first ← check ``VocabularyCandidates.easyBox
@@ -41,7 +49,8 @@ run_meta do
   let firstInfo := (first.find? ``VocabularyCandidates.easyBox).get!
   let secondInfo := (second.find? ``VocabularyCandidates.easyBoxOther).get!
   unless firstInfo.value? == secondInfo.value? do throwError "author proof body changed reconstruction"
-  for (n, _) in first.constants.toList do
+  let localNames := first.constants.foldStage2 (fun ns n _ => ns.push n) (#[] : Array Name)
+  for n in localNames do
     if base.contains n then continue
     if let some info := (source.setExporting false).find? n then
       if ← withEnv source (isProp info.type) then
@@ -71,9 +80,7 @@ run_meta do
 run_meta do
   let source ← getEnv
   enableInitializersExecution
-  let base ← importModules #[{module := `Mathlib},
-    {module := `LeanInformationAuditRegTests.SearchReduction.Baseline}]
-    options 0 (leakEnv := true) (loadExts := true)
+  let base ← referenceEnvironment
   enableInitializersExecution
   discard <| referenceHints
   withEnv base do

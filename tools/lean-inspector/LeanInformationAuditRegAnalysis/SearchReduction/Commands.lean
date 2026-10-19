@@ -23,7 +23,8 @@ private def verdictName : Verdict → String
 
 private def attemptJson (a : Attempt) : Json := Json.mkObj [
   ("strategy", toJson a.strategy), ("outcome", runJson a.outcome),
-  ("axioms", toJson (a.axioms.map Name.toString)), ("detail", toJson a.detail)]
+  ("axioms", toJson (a.axioms.map Name.toString)), ("detail", toJson a.detail),
+  ("internal_heartbeats", toJson a.heartbeats)]
 
 /-- A human-readable projection. No code reads it back for classification. -/
 def observationJson (r : Observation) (baselineCommit : String := "") : Json := Json.mkObj [
@@ -317,8 +318,7 @@ syntax (name := searchReductionCatalogCmd) "#search_reduction_catalog " str : co
 @[command_elab searchReductionCatalogCmd] unsafe def elabSearchReductionCatalog : CommandElab := fun stx => do
   let `(#search_reduction_catalog $sha:str) := stx | throwUnsupportedSyntax
   enableInitializersExecution
-  let base ← importModules #[{module := `Mathlib}] options 0
-    (leakEnv := true) (loadExts := true)
+  let base ← referenceEnvironment
   let catalog ← baselineCatalog sha.getString #[] base
   logInfo (Json.mkObj [
     ("baseline_commit", toJson sha.getString), ("unit", toJson "frozen-D5-module"),
@@ -328,12 +328,13 @@ syntax (name := searchReductionCatalogCmd) "#search_reduction_catalog " str : co
 syntax (name := searchReductionConfigCmd) "#search_reduction_config" : command
 @[command_elab searchReductionConfigCmd] unsafe def elabSearchReductionConfig : CommandElab := fun _ => do
   enableInitializersExecution
-  let env ← importModules #[{module := `Mathlib}] options 0
-    (leakEnv := true) (loadExts := true)
+  let env ← referenceEnvironment
   let hints ← strategies env
   logInfo (Json.mkObj [("version", toJson "R_v1"), ("maxHeartbeats", toJson budget),
     ("transport", toJson transportVersion), ("reconstructionMaxHeartbeats", toJson reconstructionBudget),
-    ("configuration", toJson "R_v1/prefix-reconstruction-v1/200000"),
+    ("reconstructionBudgetSemantics", toJson "independent_units"),
+    ("pinnedDeriving", toJson (pinnedDerivingClasses.map Name.toString)),
+    ("configuration", toJson "R_v1/prefix-reconstruction-independent-units-v1/200000"),
     ("lean", toJson Lean.versionString), ("mathlib", toJson mathlibRevision),
     ("options", Json.mkObj [("maxRecDepth", toJson (1000 : Nat)),
       ("Elab.async", toJson false)]),

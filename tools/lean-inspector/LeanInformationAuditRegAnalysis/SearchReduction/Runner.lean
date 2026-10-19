@@ -21,6 +21,7 @@ structure Attempt where
   proof? : Option Expr := none
   axioms : Array Name := #[]
   detail : String := ""
+  heartbeats : Nat := 0
 
 /-- A baseline presentation witness contains its actual source and the checked
 full-statement conversion, independently of reference-search success. -/
@@ -42,7 +43,7 @@ structure Observation where
   presentationEvidence? : Option PresentationEvidence := none
   presentationDetail : String := ""
   reason : String := ""
-  configuration : String := "R_v1/prefix-reconstruction-v1/200000"
+  configuration : String := "R_v1/prefix-reconstruction-independent-units-v1/200000"
   catalogCount : Nat := 0
   loadedModules : Array Name := #[]
   catalogExcluded : Array Name := #[]
@@ -316,9 +317,10 @@ def attempt (env : Environment) (levels : List Name) (type : Expr)
   | .ok (result, state) =>
     if state.messages.hasErrors then
       return { strategy, outcome := .incomplete .execution, detail := "elaborator-errors" }
-    return result
+    return {result with heartbeats := (← IO.getNumHeartbeats) - start}
   | .error ex =>
-    return { strategy, outcome := exceptionOutcome ex, detail := (← ex.toMessageData.toString) }
+    return {
+      strategy, outcome := exceptionOutcome ex, detail := (← ex.toMessageData.toString), heartbeats := (← IO.getNumHeartbeats) - start }
 
 /-- All registered attempts are retained, in priority and stable import order.
 No direct invocation of hint (which can admit), native_decide or network. -/
