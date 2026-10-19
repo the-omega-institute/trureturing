@@ -8245,3 +8245,115 @@ $$
 It pays a fixed negative constant after scaling, not a quantity tending to zero. That allowance does not exclude W254's fixed negative margin. Consequently W253's unscaled $o(1)$ bound is not a sign conclusion. The next missing estimate in this route is a joint complete-source payment that removes this fixed scaled deficit for each fixed moment budget, or another argument eliminating the permitted negative directions. Improving the count without paying that deficit does not supply W258.
 
 The actual kernel, complete theta modes and reflected exterior remain unchanged throughout. W254 is conditional and supplies no actual negative complete-theta example. W228's exact positive range and W246--W253's unconditional lower bounds remain valid in their stated scopes. No stable finite-precision witness, numerical constants/start, Lean/kernel or CI/merge certification, exhaustive bibliography or priority is supplied. Full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved.
+
+
+## A small original moment excess gives actual positivity without a point-count cap
+
+There are fixed $\delta_0,C,A_*>0$ such that every $A\ge A_*$ and every compact finite complex original Gaussian source on $a\ge A$ with $Q_H(\sigma)>0$ and
+$\varepsilon=Q_{6,A}(\sigma)/Q_H(\sigma)-1\le\delta_0$ satisfy
+$$
+Q_{\mathcal K_A^g}(\sigma)
+\ge\frac1A\left[\frac18\log\frac1\varepsilon-C\right]Q_H(\sigma).
+\tag{W260}
+$$
+Here $\varepsilon>0$ automatically. There is no count, sign, width or internal-gap cap. All theta modes, the arithmetic logarithmic charge and the complete actual reflection remain present. This supplies a positive sector of the intrinsic moment budgets in W258; it does not supply W258 for every fixed budget, RH or strict Robin for every integer $n>5040$.
+
+Reuse W230/W234's forward Frullani logarithm, W238's right-integral/dilation calculation, W241's full actual reflection bound, W249's exact modal source order and W257's original Gaussian return. The additional application makes concentration near the physical endpoint pay the entire direct logarithm and both actual debits. No standalone Hardy, logarithmic-uncertainty or generic criterion is added. This is paper mathematics without Lean certification or a literature-priority claim.
+
+### Keep the excess and every modal feature on the same source
+
+Let $F$ be the original physical feature in W238, and use norms on $[\pi,\infty)$. W257 gives exactly
+$$
+\begin{aligned}
+D(F)^2&:=\int_\pi^\infty(x^6-\pi^6)|F(x)|^2dx
+=\pi^6\varepsilon\|F\|_2^2,\\
+N_\pi(F)^2&=\pi^6(1+\varepsilon)\|F\|_2^2,\qquad
+Q_H(\sigma)=4\pi^3 A\|F\|_2^2.
+\end{aligned}
+\tag{W261}
+$$
+The strictly positive weight off the single endpoint proves $\varepsilon>0$ for $Q_H>0$. Initially retain a finite modal cutoff $J\ge1$. Put
+$U=\mathscr T_JF$, $V=\mathscr V_JF$, $G=BU$, $W(x)=x^{7/2}$, and write $\|h\|_W^2=\int_\pi^\infty W|h|^2$.
+
+For $v\ge1$, changing variables gives
+$D(F(v\cdot))\le v^{-7/2}D(F)$: on the changed tail,
+$y^6-v^6\pi^6\le y^6-\pi^6$. Thus the W238 Minkowski calculation also gives $D(Bh)\le(8/5)D(h)$ and $D(U)\le C D(F)$, uniformly in $J$. For every higher mode, its input lies above $4\pi$, where $y^6\le C(y^6-\pi^6)$. W238 therefore gives
+$N_\pi(U-F)+N_\pi(V)\le C D(F)$, by summing $\ell^{-3}$ and $(\log\ell)\ell^{-3}$.
+
+The right-integral part of $G-F$ is small in the required weight as well. Apply integration by parts to $h=IF$ with
+$R(x)=\int_\pi^x t^{3/2}dt\le(x-\pi)x^{3/2}$, followed by Cauchy--Schwarz. The endpoint term vanishes at $\pi$ because $R(\pi)=0$, and at infinity by exponential decay. It gives
+$\|x^{3/4}IF\|_2\le2\|(x-\pi)x^{3/4}F\|_2\le C D(F)$.
+The last comparison uses $(x-\pi)^2x^{3/2}\le C(x^6-\pi^6)$. Together with W238 on $B(U-F)$ this proves $\|G-F\|_W\le C D(F)$ and $D(G)\le C D(F)$.
+
+Consequently, for one fixed sufficiently small $0<\delta_0\le1$, all $0<\varepsilon\le\delta_0$ satisfy, uniformly in $J$,
+$$
+\begin{aligned}
+\tfrac14\pi^{7/2}\|F\|_2^2\le S&:=\|G\|_W^2\le C\|F\|_2^2,\\
+0<r&:=\frac{\int_\pi^\infty(x-\pi)W(x)|G(x)|^2dx}{S}
+\le C\varepsilon.
+\end{aligned}
+\tag{W262}
+$$
+For the second bound use $(x-\pi)x^{7/2}\le C(x^6-\pi^6)$ and the just proved excess estimate on $G$. Its numerator is positive because $S>0$ and a nonzero $L^2$ feature cannot be supported at a single endpoint. All constants are independent of source count, coefficients and the modal cutoff.
+
+### Concentration pays the forward logarithm before any mode is discarded
+
+For $s>0$ let
+$\mathscr C(s)=\int_\pi^\infty W(x)\overline{G(x)}G(x+s)dx$.
+Increasing $W$, Cauchy--Schwarz and the definition of $r$ give
+$$
+|\mathscr C(s)|\le S\min(1,\sqrt{r/s}),\qquad
+\Re\langle G,LG\rangle_W
+\ge S[-\gamma-\log r-2]
+\ge S\left[\log\frac1\varepsilon-C\right].
+\tag{W263}
+$$
+Indeed $\|G(\cdot+s)\|_W^2\le\int_{\pi+s}^\infty W|G|^2\le S\min(1,r/s)$. Insert this correlation allowance directly in the owned forward Frullani formula. Its scalar integral is
+$\int_0^\infty(e^{-s}-\mathbf1_{s\le r})ds/s=-\gamma-\log r$, and the remaining tail costs
+$\int_r^\infty\sqrt{r/s}\,ds/s=2$.
+For each finite cutoff, the actual $G$ is smooth with exponential decay, so the pairing has the required cancellation at zero and convergence at infinity. This consumes the classical logarithm formula inside the actual-source estimate, rather than asserting positivity of an independent model.
+
+The original source order still requires $BLU$, not $LBU$. The exact commutator is
+$$
+BLU=LBU+\mathscr C_BU,\qquad
+(\mathscr C_BU)(x)=\frac3{2x}\int_x^\infty\log(y/x)U(y)dy,
+\qquad N_\pi(\mathscr C_BU)\le\frac6{25}N_\pi(U).
+\tag{W264}
+$$
+To obtain its sign, the forward formula gives
+$[x^{-1},L]h=-x^{-1}\int_x^\infty h(y)dy/y$ and $I$ commutes with $L$. Substitute $h=IU$ and interchange the two right integrals. For the norm, write $\mathscr C_BU=(3/2)\int_1^\infty(\log v)U(vx)dv$ and reuse W238's dilation cost; $(3/2)\int_1^\infty(\log v)v^{-7/2}dv=6/25$. Only this absolute bound is used, not a positive-semidefinite claim about the commutator.
+
+### Pay the complete arithmetic charge and reflected exterior in the original metric
+
+With the preceding notation W249 is exactly
+$$
+Q_{D_{\Phi_J}}(\mu)=\frac2{\sqrt\pi}
+\left[\int_\pi^\infty W\log(x/\pi)|G|^2
++\Re\langle G,LG\rangle_W
++\Re\langle G,\mathscr C_BU\rangle_W
+-2\Re\langle G,BV\rangle_W\right].
+$$
+The first term is nonnegative. W238/W250/W264 bound the commutator debit by $C N_\pi(F)^2$ and the entire log-mode debit by $C N_\pi(F)D(F)$, since $x^{7/2}\le\pi^{-5/2}x^6$ on this half-line. W261 makes both at most $C\|F\|_2^2$ when $\varepsilon\le\delta_0\le1$. In W263 use the lower bound for $S$ only on the nonnegative factor $\log(1/\varepsilon)$; use its upper bound on the constant negative allowance. It follows that
+$$
+Q_{D_{\Phi_J}}(\mu)
+\ge\frac{\pi^3}{2}\log\frac1\varepsilon\,\|F\|_2^2-C\|F\|_2^2.
+$$
+The constants are uniform in $J$. Pass to the complete actual direct form using precisely W251's compact-source theta convergence. W241 bounds the complete actual reflection, including its exterior and all paired corrections, by $C N_\pi(F)^2\le C\|F\|_2^2$. Thus the full same-source physical form satisfies
+$$
+\mathfrak E(F)\ge\frac{\pi^3}{2}\log\frac1\varepsilon\,\|F\|_2^2-C\|F\|_2^2.
+\tag{W265}
+$$
+Divide by W261's exact $Q_H=4\pi^3A\|F\|_2^2$ and enlarge the fixed constant. This proves W260 for the original Gaussian source. There is no inverse-multiplier return, point-count allowance, separately optimized response or replacement by the folded first mode.
+
+Choose a fixed $0<\delta_*\le\delta_0$ small enough that
+$(1/8)\log(1/\delta_*)-C\ge1/8$. Then
+$$
+Q_{6,A}(\sigma)\le(1+\delta_*)Q_H(\sigma)
+\quad\Longrightarrow\quad
+Q_{\mathcal K_A^g}(\sigma)\ge\frac1{8A}Q_H(\sigma)>0
+\quad(Q_H>0,\ A\ge A_*).
+\tag{W266}
+$$
+This intrinsic condition imposes no finite bound on the number of active sites or local sign changes. For example, by W182's one-site moments a Gaussian atom at $a=A$ has $Q_{6,A}/Q_H-1=O(e^{-2A})$. Fix a sufficiently high $A$ and a compact window of positive width. For each arbitrarily large finite site count, append distinct atoms with alternating nonzero real coefficients sufficiently small that the strict moment condition persists by continuity of the two quadratic norms. The active count and local sign degree are unbounded at this fixed window and start. This illustrates that the intrinsic hypothesis is not the old point-count or separator cap; the theorem itself covers every source satisfying that hypothesis, including its cancellations.
+
+Conversely, any negative actual source at the common start must have $Q_{6,A}/Q_H>1+\delta_*$. In particular W254's conditional witnesses, if RH fails, cannot lie in this small-excess sector. W258 still requires an estimate for EVERY fixed moment budget, including larger ratios; W260--W266 do not control those ratios or eliminate the conditional witnesses. Full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved. No explicit numerical threshold/start, stable finite-precision decision procedure, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied.
