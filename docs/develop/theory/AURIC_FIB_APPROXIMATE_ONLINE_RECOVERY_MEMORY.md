@@ -1755,9 +1755,14 @@ $$
 Starting with terminal $q_n=q$ gives the same $q_k=q$ at every time
 and hence $\mathfrak B_{[n]}(q)=n$. The two bounds in (15.2) would be
 four and nine, respectively. If the actual controller starts at state
-three, its occupation there is $2^{-k}$; starting in state one makes
-that occupation zero. Thus this unweighted backward sum can charge
-states of dwindling or zero forward occupation. In (14.4) the occupation
+three, its occupation there is one at time zero and zero for every
+$k\ge1$: $p_0=(0,0,1)^{\mathsf T}$ and
+$p_k=(1/2,1/2,0)^{\mathsf T}$ for every $k\ge1$, since both maps
+send all states into $\{1,2\}$ and fix states one and two.
+Starting in state one gives $p_k=(1,0,0)^{\mathsf T}$ for all $k\ge0$.
+Thus this unweighted backward sum charges state three at each step,
+although its forward occupation is zero after the first step
+(and at every time when starting in state one). In (14.4) the occupation
 is instead the one belonging to the same chosen controller and initial
 state. Both families are legal actual transition tables; no successful
 recovery is asserted for them. They disprove a transplantation of
