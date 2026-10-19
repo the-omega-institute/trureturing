@@ -40,7 +40,10 @@ internal sealed class LevensPascalianDocument : IScribeDocumentDefinition
                         "The Vandermonde determinant of the twenty-four distinct roots of q is rational and nonzero. Every field automorphism fixes it, so its permutation of those roots has sign one. The roots of P 49 are −1 and the signed square roots of the roots of q. Encoding an automorphism by its twenty-four signs and its even permutation is injective. Consequently the Galois group has order at most 2^24 * |alternatingGroup (Fin 24)|, strictly less than the hyperoctahedral order 2^24 * 24!.")),
                     Paragraph(Text(
                         "This excludes the abstract group isomorphism at n = 49. It does not determine the exact Galois group. The even-index sentence, Conjecture 6.3, and a classification of the other odd indices remain separate questions. The square-discriminant formula is classical; its general form appears in Filaseta–Moy, Lemma 3, as recorded with the source reference."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("levens-2025-pascalian-galois-square-discriminant"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(

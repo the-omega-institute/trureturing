@@ -58,6 +58,10 @@ $$\neg (\forall (m: \mathbb{N}), ((1 \le m) \Rightarrow (\operatorname{Nonempty}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/Galois/LevensPascalian.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/levens-2025-pascalian-galois-square-discriminant` (refuted) by `D5/S3/Factorization/Galois/LevensPascalian.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"levens-2025-pascalian-galois-square-discriminant","declaration_gid":"D5/S3/Factorization/Galois/LevensPascalian.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Owen Levens (2025). *Polynomials Arising from Sorted Binomial Coefficients*. DOI: [10.48550/arXiv.2511.03082](https://doi.org/10.48550/arXiv.2511.03082). URL: <https://arxiv.org/abs/2511.03082v1>.
