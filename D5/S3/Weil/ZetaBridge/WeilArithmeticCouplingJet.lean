@@ -13,6 +13,8 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.Normed.Group.InfiniteSum
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
@@ -938,6 +940,127 @@ theorem smooth_weight_actual_asymptotic (c : ℕ) (hc : 2 ≤ c) :
   · have hmass_upper := (smooth_mass_bounds hc hm).2
     have h := div_le_div_of_nonneg_right hupper_constant hmR.le
     linarith
+
+/-- The actual complete Gamma/pole witness, before any mode is chosen. -/
+def explicitSmoothK (c : ℕ) : ℝ :=
+  (2 * (Real.cosh (logLength c / 2) - 1) + 1 +
+    Real.exp (-logLength c / 2) / (1 - Real.exp (-2 * logLength c))) /
+      (2 * Real.pi / logLength c)
+
+/-- This is the complete existing asymptotic proof with its actual witness
+exposed. It does not identify a Classical.choose with that witness. -/
+theorem explicitSmoothK_spec (c : ℕ) (hc : 2 ≤ c) :
+    0 < explicitSmoothK c ∧ ∀ m : ℕ, 0 < m →
+      |(m : ℝ)^2 * smoothWeight c m - Real.pi / 4| ≤
+        explicitSmoothK c / (m : ℝ) := by
+  let C : ℝ := Real.exp (-logLength c / 2) /
+    (1 - Real.exp (-2 * logLength c))
+  let K : ℝ := poleCoefficient c + (1 + C) / modeScale c
+  have hL := owner_log_pos hc
+  have ha := modeScale_pos hc
+  have hden : 0 < 1 - Real.exp (-2 * logLength c) :=
+    sub_pos.mpr (Real.exp_lt_one_iff.mpr (by nlinarith))
+  have hC : 0 ≤ C := (div_pos (Real.exp_pos _) hden).le
+  have hU : 0 ≤ poleCoefficient c :=
+    div_nonneg (mul_nonneg (by norm_num)
+      (sub_nonneg.mpr (Real.one_le_cosh _))) ha.le
+  have hK : 0 < K :=
+    add_pos_of_nonneg_of_pos hU (div_pos (by linarith) ha)
+  have hupper_constant : poleCoefficient c + 3 / (4 * modeScale c) ≤ K := by
+    have h := div_le_div_of_nonneg_right
+      (show (3 / 4 : ℝ) ≤ 1 + C by linarith) ha.le
+    have he : (3 / 4 : ℝ) / modeScale c = 3 / (4 * modeScale c) := by ring
+    rw [he] at h
+    dsimp [K]
+    linarith
+  have hlower_constant : (1 / 4 + C) / modeScale c ≤ K := by
+    have h := div_le_div_of_nonneg_right
+      (show (1 / 4 : ℝ) + C ≤ 1 + C by linarith) ha.le
+    dsimp [K]
+    linarith
+  have hKeq : K = explicitSmoothK c := by
+    dsimp [K, C, explicitSmoothK, poleCoefficient, modeScale]
+    ring
+  rw [← hKeq]
+  refine ⟨hK, ?_⟩
+  intro m hm
+  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
+  have hw : 0 < frequency c (m : ℤ) := by
+    rw [frequency_nat]
+    exact mul_pos ha hmR
+  have hgamma := gamma_positive_lower hL hw
+  change Real.pi / 4 - (1 / 4 + C) / frequency c (m : ℤ) ≤ _ at hgamma
+  have hscale : (1 / 4 + C) / frequency c (m : ℤ) =
+      ((1 / 4 + C) / modeScale c) / (m : ℝ) := by
+    simp only [frequency_nat, div_mul_eq_div_div]
+  rw [hscale] at hgamma
+  have hpole : 0 ≤ poleSine (logLength c) (frequency c (m : ℤ)) := by
+    unfold poleSine
+    exact div_nonneg
+      (mul_nonneg (mul_nonneg (by norm_num) hw.le)
+        (sub_nonneg.mpr (Real.one_le_cosh _))) (by positivity)
+  have hmass : (m : ℝ) ^ 2 * smoothWeight c m =
+      poleSine (logLength c) (frequency c (m : ℤ)) +
+      ∑' j : ℕ, gammaSineTerm (logLength c) (frequency c (m : ℤ)) j := by
+    unfold smoothWeight
+    field_simp [hmR.ne']
+  apply abs_le.mpr
+  constructor
+  · have h := div_le_div_of_nonneg_right hlower_constant hmR.le
+    rw [hmass]
+    linarith
+  · have hmass_upper := (smooth_mass_bounds hc hm).2
+    have h := div_le_div_of_nonneg_right hupper_constant hmR.le
+    linarith
+
+
+/-- The same witness has the required cutoff bound. -/
+theorem explicitSmoothK_le {c : ℕ} (hc : 3 ≤ c) :
+    explicitSmoothK c ≤ Real.sqrt (c : ℝ) * logLength c := by
+  let s : ℝ := Real.sqrt (c : ℝ)
+  have hcR : (3 : ℝ) ≤ c := by exact_mod_cast hc
+  have hc0 : (0 : ℝ) < c := by linarith
+  have hs : 0 < s := Real.sqrt_pos.2 hc0
+  have hs2 : s^2 = (c : ℝ) := Real.sq_sqrt hc0.le
+  have hs1 : 1 ≤ s := Real.one_le_sqrt.2 (by linarith)
+  have hL : 0 < logLength c := owner_log_pos (by omega)
+  have hlogs : Real.log s = logLength c / 2 := Real.log_sqrt hc0.le
+  have hcosh : 2 * (Real.cosh (logLength c / 2) - 1) + 1 = s + 1/s - 1 := by
+    rw [← hlogs, Real.cosh_log hs]
+    simp only [one_div]
+    ring
+  have hexp1 : Real.exp (-logLength c / 2) = 1/s := by
+    rw [show -logLength c / 2 = -Real.log s by linarith [hlogs],
+      Real.exp_neg, Real.exp_log hs, one_div]
+  have hexp2 : Real.exp (-2 * logLength c) = 1/(c : ℝ)^2 := by
+    rw [show -2 * logLength c = -((2 : ℕ) * Real.log (c : ℝ)) by
+      dsimp [logLength]; norm_num,
+      Real.exp_neg, Real.exp_nat_mul, Real.exp_log hc0, one_div]
+  have hinv : 1/(c : ℝ)^2 ≤ 1/4 := by
+    apply (div_le_div_iff₀ (by positivity) (by norm_num)).2
+    nlinarith [sq_nonneg ((c : ℝ)-2)]
+  have hd : 0 < 1-1/(c : ℝ)^2 := by linarith
+  have hC : (1/s)/(1-1/(c : ℝ)^2) ≤ s := by
+    apply (div_le_iff₀ hd).2
+    have hi := mul_le_mul_of_nonneg_left hinv hs.le
+    have hsC : 1/s ≤ 3*s/4 := by
+      apply (div_le_iff₀ hs).2
+      nlinarith only [hs2,hcR]
+    linarith
+  have hbase : s + 1/s - 1 ≤ s := by
+    have hi : 1/s ≤ 1 := (div_le_one hs).2 hs1
+    linarith
+  have hnum : 2*(Real.cosh (logLength c/2)-1)+1+
+      Real.exp (-logLength c/2)/(1-Real.exp (-2*logLength c)) ≤ 2*s := by
+    rw [hcosh,hexp1,hexp2]
+    linarith
+  have hpi : (1 : ℝ) ≤ Real.pi := le_trans (by norm_num : (1:ℝ) ≤ 3) Real.pi_gt_three.le
+  calc
+    explicitSmoothK c ≤ (2*s)/(2*Real.pi/logLength c) :=
+      div_le_div_of_nonneg_right hnum (by positivity)
+    _ = s*logLength c/Real.pi := by field_simp [hL.ne',Real.pi_pos.ne']
+    _ ≤ s*logLength c := (div_le_self (by positivity) hpi)
+
 
 end
 end D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet

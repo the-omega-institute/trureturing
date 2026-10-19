@@ -295,6 +295,54 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                             + "neither a coefficient-uniform tail bound nor RH."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
+                    DescribeId.Create("explicit-smooth-k"),
+                    DeclarationHandle.Create(Owner + "explicitSmoothK"),
+                    H("An explicit constant for the complete smooth mass"),
+                    StatementSource.FromAuthor(Disp(Seq(Call("K", c), Eq,
+                        Call("div", Seq(D(2), Sp, Call("cosh-minus-one", Call("HalfLog", c)),
+                            Plus, D(1), Plus, Call("GammaCorrection", c)), Call("a", c))))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For L=log(c), a=2*pi/L and C=exp(-L/2)/(1-exp(-2*L)), "
+                        + "K(c)=(2*(cosh(L/2)-1)+1+C)/a. GammaCorrection denotes exactly C, "
+                        + "and cosh-minus-one(x) denotes cosh(x)-1. This formula fixes K "
+                        + "from c alone, with the entire exponential correction and pole term."))),
+                    DescribeRole.Definition),
+                Describe.Lean(
+                    DescribeId.Create("explicit-smooth-k-spec"),
+                    DeclarationHandle.Create(Owner + "explicitSmoothK_spec"),
+                    H("The specified constant controls every positive mode"),
+                    StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Rightarrow,
+                        Call("Positive", Call("K", c)), Land, Forall, Sp, m,
+                        InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                        Call("Positive", m), Rightarrow,
+                        Lvert, m, Caret, Grp(D(2)), Cdot, Call("smoothWeight", c, m),
+                        Minus, Frac, Grp(Pi), Grp(D(4)), Rvert, Leq,
+                        Frac, Grp(Call("K", c)), Grp(m)))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For every natural c>=2, K(c)>0 and the absolute error is at most "
+                        + "K(c)/m for every positive natural m. The complete pole plus the "
+                        + "convergent Gamma series remain in smoothWeight. The upper mass "
+                        + "bound and the lower Gamma estimate use the same explicit constant. "
+                        + "There is no lower frequency threshold; c=2 and m=1 are included."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("explicit-smooth-k-le"),
+                    DeclarationHandle.Create(Owner + "explicitSmoothK_le"),
+                    H("A cutoff bound for the same explicit constant"),
+                    StatementSource.FromAuthor(Disp(Seq(Call("AtLeastThree", c), Rightarrow,
+                        Call("K", c), Leq, Call("sqrt", c), Sp, Call("logLength", c)))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For every natural c>=3, K(c)<=sqrt(c)*log(c). Put s=sqrt(c). "
+                        + "Then exp(-L/2)=1/s, exp(-2*L)=1/c^2 and "
+                        + "2*(cosh(L/2)-1)+1=s+1/s-1<=s. The correction "
+                        + "(1/s)/(1-1/c^2) is at most s, so the numerator is at most 2*s. "
+                        + "Division by 2*pi/L and pi>=1 give the stated bound. This uses "
+                        + "the same K as the all-positive-mode estimate above."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("arithmetic-symbol-smooth-split"),
                     DeclarationHandle.Create(Owner + "arithmetic_symbol_smooth_split"),
                     H("The exact native smooth and prime split"),
