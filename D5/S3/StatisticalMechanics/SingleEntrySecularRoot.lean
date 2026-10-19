@@ -161,7 +161,7 @@ private theorem rational_unique_root {α : Type*} [DecidableEq α]
   exact (rational_strictAnti T v w C η m hη hw hv).injOn
     ⟨hy.1.1.le, hy.1.2⟩ ⟨hx0.le, hxm⟩ (hy.2.trans hfx.symm)
 
-private theorem weight_pos {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem weight_pos {ι : Type*} [Fintype ι] [DecidableEq ι]
     (a b : ι → ℝ) (ha : ∀ i, 0 < a i) (hb : ∀ i, 0 < b i)
     (S : Finset ι) : 0 < modeWeight a b S := by
   unfold modeWeight
@@ -244,5 +244,6 @@ theorem secular_unique_root {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty
       nlinarith [mul_nonneg hη.le hsum]
 
 #print axioms secular_unique_root
+#print axioms weight_pos
 
 end D5.S3.StatisticalMechanics.SingleEntrySecularRoot

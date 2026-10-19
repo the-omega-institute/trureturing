@@ -24,6 +24,10 @@ internal sealed class SingleEntrySecularRootDocument : IScribeDocumentDefinition
                 "With entry rate e and return rate h, F(x) = h + e W(empty) - x - e x times the sum of W(S)/(s(S)-x) over nonempty S. The symbols e and h denote eta and theta respectively.", DescribeRole.Definition),
             Node("secularSlope", "Pole-weight slope",
                 "The independent pole-weight expression is -1-e times the sum of W(S)s(S)/(s(S)-x)^2 over nonempty subsets. The theorem identifies it with the derivative of F throughout the nonnegative pre-pole interval and proves it strictly negative.", DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("single-entry-weight-pos"),
+                DeclarationHandle.Create(Prefix + "weight_pos"), H("Positive product-mode weights"),
+                StatementSource.FromAuthor(WeightFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any finite family of strictly positive binding and unbinding rates and every subset S, the empty-configuration mode weight W(S) is strictly positive. Each factor is q(i)>0 on S or 1-q(i)>0 off S."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("single-entry-secular-unique-root"),
                 DeclarationHandle.Create(Prefix + "secular_unique_root"), H("Unique scalar root"),
                 StatementSource.FromAuthor(RootFormula()), AssessedProvenance.FromRepo(),
@@ -62,6 +66,17 @@ internal sealed class SingleEntrySecularRootDocument : IScribeDocumentDefinition
         return And(Positive(x), And(All("i", F.Id("I"),
             Rel(x, FormulaRelationOperator.LessThan, Call("siteRate", a, b, F.Id("i")))),
             Rel(Call("secular", a, b, e, h, x), FormulaRelationOperator.Equal, D(0))));
+    }
+    private static Formula WeightFormula()
+    {
+        var fn = Seq(F.Id("I"), Sp, To, Sp, R());
+        var premise = And(All("i", F.Id("I"), Positive(Call("a", F.Id("i")))),
+            All("i", F.Id("I"), Positive(Call("b", F.Id("i")))));
+        var body = All("a", fn, All("b", fn, Imp(premise,
+            All("S", Call("Finset", F.Id("I")), Positive(Call("modeWeight", F.Id("a"), F.Id("b"), F.Id("S")))))));
+        return Disp(All("I", F.Id("Type"), Seq(
+            OpenBracket, Call("Fintype", F.Id("I")), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", F.Id("I")), CloseBracket, Sp, body)));
     }
     private static Formula RootFormula()
     {
