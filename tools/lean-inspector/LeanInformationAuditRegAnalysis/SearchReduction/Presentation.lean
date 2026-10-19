@@ -15,7 +15,6 @@ private partial def closePresentation (index : FactIndex) (extra : Array Expr)
   for decl in ← getLCtx do
     unless decl.isImplementationDetail do
       if ← isProp decl.type then facts := facts ++ (← components decl.toExpr)
-  if ← presentation goal facts then return true
   let type ← withTransparency .reducible <| whnf (← goal.getType)
   if type.isForall then
     let (_, next) ← goal.intro1
@@ -25,6 +24,7 @@ private partial def closePresentation (index : FactIndex) (extra : Array Expr)
     let goals ← goal.apply (← mkConstWithFreshMVarLevels ctor)
     if ← goals.allM (closePresentation index extra) then return true
   else
+    if ← presentation goal facts then return true
     try
       let leaves ← (structural goal #[]).run' index
       if ← leaves.allM (fun leaf => do
@@ -228,7 +228,7 @@ private def presentationResult (state : PresentationScan) :
 attempts may run together; all started tasks are joined in declaration order.
 Preferred B statements are tried first without speculative parallel work. -/
 def baselinePresentation (env : Environment) (levels : List Name) (target : Expr)
-    (preferred : Array Name) (index? : Option FactIndex) :
+    (preferred : Array Name) (index? : Option FactIndex) (exhaustive : Bool := true) :
     IO (Run × Option PresentationEvidence × String) := do
   let some index := index?
     | return (.incomplete .execution, none, "search.presentation_index_unavailable")
@@ -237,12 +237,16 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
   let mut state : PresentationScan := {}
   let mut pending : Array (Task (Except IO.Error (Attempt × Option PresentationEvidence))) := #[]
   for i in [:names.size] do
+    if !exhaustive && i ≥ preferred.size then
+      let (outcome, evidence, detail) := presentationResult state
+      return (if outcome == .exhausted then .incomplete .undecided else outcome,
+        evidence, detail ++ ", baseline_proof_already_found")
     let name := names[i]!
-    if seen.contains name then continue
-    seen := seen.insert name
     let some info := (env.setExporting false).find? name | continue
     if info.isUnsafe || (name.isInternalDetail && !isPrivateName name) then continue
     if !proofCandidate env info.type || !rigidlyCompatible env target info.type then continue
+    if seen.contains name then continue
+    seen := seen.insert name
     if i < preferred.size then
       state := recordPresentations state #[← baselineSource env levels target index name]
     else

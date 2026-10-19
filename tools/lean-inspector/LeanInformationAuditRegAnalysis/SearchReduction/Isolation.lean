@@ -182,7 +182,7 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
       (fun names proof => names ++ proof.getUsedConstants) #[]
     let preferred := proofDependencies ++ preferred
     let (presentation, presentationEvidence?, presentationDetail) ←
-      baselinePresentation clean target.levelParams target.type preferred index?
+      baselinePresentation clean target.levelParams target.type preferred index? (baseRun != .found)
     let observed : Observation := {
       target := request.target, base := baseRun, paired := .incomplete .undecided,
       verdict := classifyCertified true presentation baseRun false false (.incomplete .undecided),
