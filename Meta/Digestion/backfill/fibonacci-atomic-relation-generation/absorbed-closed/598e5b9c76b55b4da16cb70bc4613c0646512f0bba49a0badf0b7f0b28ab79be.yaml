@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:598e5b9c76b55b4da16cb70bc4613c0646512f0bba49a0badf0b7f0b28ab79be
+  normalized_sha256: sha256:598e5b9c76b55b4da16cb70bc4613c0646512f0bba49a0badf0b7f0b28ab79be
+cas_ref: sha256:598e5b9c76b55b4da16cb70bc4613c0646512f0bba49a0badf0b7f0b28ab79be
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/ForcedInventoryLeastMaximum.forced_inventory_least_maximum
+    target_statement_id: sha256:feea83138095e5a970486aaab37741281f5fc6ee1e689beed851ee4853dc97b6
+  - gid: D5/S3/Arith/GoldenResource/GoldenResourceOptimalLayerCount.optimal_layer_count_spec
+    target_statement_id: sha256:e8293c1abf4b996f7811d2574036d1937b0b09b08a5b62fa658a407c72c85e3e
+  - gid: D5/S3/Arith/GoldenResourceOptimalInteger.golden_resource_sigma_identity
+    target_statement_id: sha256:cc1b03bcb9ef0de556e591c672a7252de97d14c8dc21bba7030ff64f6a1c636f
+  - gid: D5/S3/Arith/GoldenResourceOptimalInteger.golden_resource_unique_optimum
+    target_statement_id: sha256:149b4bf984c5046f8cae1063275f5c9a6640ef07a6ce868a74c506293cc06d7e
+  - gid: D5/S3/Arith/GoldenResourceOptimalInteger.reciprocal_divisor_sum
+    target_statement_id: sha256:0124d5561f5dc9f9e7ee6408d1dd189ea320e8133b2373dc1317835835eb39b7
+receipts:
+  unresolved_subitems: []

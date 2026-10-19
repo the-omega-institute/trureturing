@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:529fa15da54b759d892feadecaa6098cdac9ca7f4e6c934936cea53b9ec3f0b8
   normalized_sha256: sha256:529fa15da54b759d892feadecaa6098cdac9ca7f4e6c934936cea53b9ec3f0b8
 cas_ref: sha256:529fa15da54b759d892feadecaa6098cdac9ca7f4e6c934936cea53b9ec3f0b8
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/TwoFourGapModThreeCurvature.two_four_gap_mod_three_admissible_iff
+    target_statement_id: sha256:49c7cc86590aa2409aa1a0b7d036526394c42fcd84d89754a56823e0b214705c
 receipts:
   unresolved_subitems: []

@@ -1,0 +1,8 @@
+每个单点边缘为：
+
+\[
+\mathbb P(X_{p,h}=1)=1-\frac1p.
+\]
+
+定义归一化 all-one correlation ratio：
+
