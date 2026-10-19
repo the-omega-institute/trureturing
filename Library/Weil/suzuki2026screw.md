@@ -8158,3 +8158,90 @@ $$
 The point locations can have arbitrary width and no positive minimum separation. The zero source gives zero. The bound is on the complete actual odd form, including the direct source, every theta logarithmic charge and the reflected exterior; the count is the sufficient cofinal schedule of W156, not a fixed fraction of $e^{2A}$.
 
 W253 gives a negative allowance tending to zero in the original Gaussian Hardy metric, not positive semidefiniteness. Negative values remain allowed, with magnitude at most $CA^{-1/2}Q_H(\sigma)$. The W156 implication requires actual positivity on its cofinal sample family; W253 does not satisfy that premise, exclude off-line zeros or bound the normalized margin of their transported witnesses. W228's exact positive range remains unchanged. A same-source positive margin or another argument eliminating the permitted negative directions is still required. No actual negative complete-theta witness, finite effective RH test, numerical constant/start, Lean/kernel or CI/merge certification, exhaustive bibliography or priority is supplied. Full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved.
+
+
+## Actual negative witnesses retain a fixed margin after scaling the Gaussian form by A
+
+The negative lower allowances W246--W253 must be compared with the margin of actual witnesses in the SAME metric. Conditional on RH failure, there are fixed $c,C,K,A_*>0$ such that every $A\ge A_*$ and every $w>0$ admit a real finite original Gaussian source $\sigma_{A,w}$ with
+$$
+\begin{gathered}
+\operatorname{supp}\sigma_{A,w}\subset[A,A+w),\qquad
+\#\operatorname{supp}\sigma_{A,w}\le\lceil Ce^{2A}\rceil,\\
+Q_H(\sigma_{A,w})=1,\qquad
+Q_{6,A}(\sigma_{A,w})\le K,\qquad
+Q_{\mathcal K_A^g}(\sigma_{A,w})\le-\frac cA.
+\end{gathered}
+\tag{W254}
+$$
+The constants can depend on the conditional actual negative seed, but not on $A$ or $w$. Support and site count are recorded in the physical $a$ coordinate. Equal sites are merged and zero coefficients removed. The kernel is the complete actual odd kernel, not the first-mode model; $Q_H$ and $Q_{6,A}$ are the original Gaussian quantities of W237--W253. No unconditional negative seed, numerical margin or stable coefficient bound is supplied.
+
+Reuse the actual negative seed W40/W102, the complete physical direct/modal/reflected identities W239--W251, the forward logarithm bound W234, the published approximation already transported in W235--W236, and the exact original Gaussian map W242. The added interface controls the complete actual form and both source norms through that approximation. The classical approximation and the first-mode witness W229 are not reproved. This is paper mathematics without Lean certification, exhaustive bibliography or a literature-priority claim.
+
+### The complete actual physical form is continuous in the owned approximation domain
+
+Use the same $X$ as W234,
+$\|F\|_X=\|(1+x)^8F\|_2+\|(1+x)^8F'\|_2$ on $(0,\infty)$.
+Retain $B=1-3I/(2x)$, the physical dilation sum $\mathscr T$ and the forward logarithm $L$. Define the direct form on this domain by
+$$
+\mathfrak D_\Phi(F)=\frac2{\sqrt\pi}\int_\pi^\infty x^{7/2}
+\left[\log(x/\pi)|B\mathscr TF|^2
++\Re\bigl(\overline{B\mathscr TF}\,B\mathscr TLF\bigr)\right]dx.
+$$
+Its logarithm remains in the source order $\mathscr TL$; equivalently W249 retains the full $-2\mathscr V$ charge after commuting it. W234 bounds $LF$ in weighted norm $3$ by $C\|F\|_X$. W238 and W250 bound $B\mathscr TF$ and $B\mathscr TLF$ in the cubic physical norm. The weights $x^{7/2}$ and $x^{7/2}\log(x/\pi)$ are bounded by $C(1+x)^6$ on this half-line. Thus the direct pairing is bounded on $X$.
+
+Define $\mathfrak R_\Phi(F)$ by the bounded folded model on $\mathscr TF$ and the exact paired integrals W240. Their absolute convergence and sesquilinear norm bounds W239--W241 apply in the same cubic norm. In particular the complete reflection, including its small-argument exterior, is continuous on $X$. With $\mathfrak E=\mathfrak D_\Phi-\mathfrak R_\Phi$,
+$$
+|\mathfrak E(F)-\mathfrak E(G)|
+\le C(\|F\|_X+\|G\|_X)\|F-G\|_X.
+\tag{W255}
+$$
+For every compact finite physical source $\mu$, this form agrees with $Q_{L_0}(\mu)$ on its physical feature
+$F(x)=\int e^{9a/2}e^{-e^{2a}x}d\mu(a)$, by the owned finite-modal identities and their justified limits. Each operation in the displayed definition uses only $F$ on $[\pi,\infty)$: forward shifts, right integrals, dilations by $\ell^2\ge1$ and the paired arguments in W240 never ask for a smaller physical coordinate. No infinite unnormalized modal measure or independent sign assignment is introduced.
+
+### Reuse approximation on one fixed actual negative feature
+
+If RH fails, take W102's fixed real actual seed $\mu_0$ on $(1,2)$. Its smooth exponentially decaying physical feature $F_0$ has $\mathfrak E(F_0)<0$. First multiply $F_0$ by a smooth cutoff that is zero near $0$ and one for $x\ge\pi$. This does not alter $\mathfrak E$, since only the right-hand physical tail is used. Then truncate at infinity. Exponential decay makes this second cutoff converge in $X$. By W255 one fixed real $f\in C_c^\infty(0,\infty)$, supported in $[r,M]$ with $0<r<M$, satisfies
+$$
+\mathfrak E(f)<-2\delta\quad\text{for some fixed }\delta>0,
+\qquad \|f\|_{L^2(\pi,\infty)}>0.
+\tag{W256}
+$$
+This argument does not assert that an arbitrary nonzero trace at $0$ can be approximated in the whole $H^1$ norm by functions vanishing there. The lower cutoff is legitimate because the physical form does not observe that interval.
+
+Apply W235 directly to this $f$ with the real parameter $P=e^{2A}$. Its already established derivative estimate gives $\|f_P-f\|_X=O_f(P^{-1})$ and degree $n_P\le PM$. Use W236's deconflation with $h>0$ so small that
+$\|f_{P,h}-f_P\|_X\le P^{-1}$ and $n_Ph<P(e^{2w}-1)$. Both requirements can be met for every $w>0$. The resulting physical feature is a real sum of at most $PM+1$ distinct exponentials with rates $P+jh$, hence a real physical source in $[A,A+w)$.
+
+For all sufficiently large $P$, W255--W256 give $\mathfrak E(f_{P,h})\le-\delta$. At the same common start, its $L^2(\pi,\infty)$ norm is bounded above and away from zero, and its cubic physical norm is bounded above. These constants depend only on $f$. The choice $\|f_{P,h}-f_P\|_X\le P^{-1}$ makes the bounds independent of $w$; the coefficients and required gap may depend on it. This applies the existing approximation rather than repeating its proof.
+
+### Return both norms exactly to the original Gaussian source
+
+Let $\mu_{A,w}$ be that physical source and put $d\mu_{A,w}=w_A^g\,d\sigma_{A,w}^{\rm raw}$. Its original physical feature is $F=f_{P,h}$. W242 gives, with $C_A^2=4\pi P/A$,
+$$
+\begin{aligned}
+F_{\sigma^{\rm raw}}(t)&=\frac{4\pi^2}{C_A}F(\pi+t/P),\\
+Q_H(\sigma^{\rm raw})&=4\pi^3 A\|F\|_{L^2(\pi,\infty)}^2,\\
+Q_{6,A}(\sigma^{\rm raw})&=\frac{4A}{\pi^3}\|x^3F\|_{L^2(\pi,\infty)}^2,\\
+Q_{\mathcal K_A^g}(\sigma^{\rm raw})&=\mathfrak E(F)\le-\delta.
+\end{aligned}
+\tag{W257}
+$$
+The physical numerator stays negative by a fixed amount, while both original Gaussian norms have size at most a fixed constant times $A$ and $Q_H/A$ is bounded away from zero. Divide the source by $\sqrt{Q_H(\sigma^{\rm raw})}$. This proves W254 with fixed $c,K$ and count constant $C=M+1$, after increasing the common start and taking $K\ge1$. There is no small-$EN$ inverse-multiplier return or coefficient-mass allowance. Very small $h$ and very large physical coefficients remain permitted.
+
+### The current negative budget is now measured against an actual witness scale
+
+Fix $w>0$, let $A_j\to\infty$ and let positive integers $n_j$ satisfy $n_je^{-2A_j}\to\infty$. The following would suffice for RH: for EVERY fixed $K\ge1$, there are $\eta_j(K)\ge0$ with $\eta_j(K)\to0$ such that, for all sufficiently large $j$, all real finite original Gaussian sources with
+$\operatorname{supp}\sigma\subset[A_j,A_j+w)$, at most $n_j$ active sites, $Q_H(\sigma)=1$ and $Q_{6,A_j}(\sigma)\le K$ obey
+$$
+A_jQ_{\mathcal K_{A_j}^g}(\sigma)\ge-\eta_j(K).
+\tag{W258}
+$$
+Indeed, if RH failed, choose the ONE fixed $K$ and $c,C$ of W254. Its sources eventually fit $n_j$, and satisfy the opposite bound $A_jQ_{\mathcal K_{A_j}^g}\le-c$, contradicting $\eta_j(K)\to0$. Neither uniformity in $K$ nor a numerical value of the conditional seed constants is needed. This is a sufficient estimate, not a necessary requirement for other RH methods; W258 itself remains unproved.
+
+W246 already gives on precisely this normalized fixed-budget class
+$$
+A_jQ_{\mathcal K_{A_j}^g}(\sigma)\ge-CK.
+\tag{W259}
+$$
+It pays a fixed negative constant after scaling, not a quantity tending to zero. That allowance does not exclude W254's fixed negative margin. Consequently W253's unscaled $o(1)$ bound is not a sign conclusion. The next missing estimate in this route is a joint complete-source payment that removes this fixed scaled deficit for each fixed moment budget, or another argument eliminating the permitted negative directions. Improving the count without paying that deficit does not supply W258.
+
+The actual kernel, complete theta modes and reflected exterior remain unchanged throughout. W254 is conditional and supplies no actual negative complete-theta example. W228's exact positive range and W246--W253's unconditional lower bounds remain valid in their stated scopes. No stable finite-precision witness, numerical constants/start, Lean/kernel or CI/merge certification, exhaustive bibliography or priority is supplied. Full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved.
