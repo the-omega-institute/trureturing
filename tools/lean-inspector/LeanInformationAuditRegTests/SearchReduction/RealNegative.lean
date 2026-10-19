@@ -49,7 +49,7 @@ run_meta do
       | throwError "factivity source normalization failed: {name}"
     if LeanInformationAudit.SearchReduction.supportIncluded keys sourceKeys then
       throwError "incompatible factivity source matched the complete telescope: {name}"
-  logInfo "factivity: nonneutral target; predicate definition and conjunction source do not match"
+  Lean.logInfo "factivity: nonneutral target; predicate definition and conjunction source do not match"
 
 #search_reduction D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeFactivity.robust_knowledge_factivity
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
