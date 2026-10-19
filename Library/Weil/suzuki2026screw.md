@@ -8651,7 +8651,7 @@ $$
 $$
 Consequently $0<\delta\le c(\log(3R))^{-K}$ gives $\mathfrak E(f)\ge S>0$ unless all profiles vanish. If $(R,R+\delta)\cap\pi\mathbb Z=\varnothing$, the loss in W283 can instead be replaced by a universal constant, so one fixed sufficiently small width gives that same joint positive margin. All constants are independent of $D$; the index set can grow up to order $\sqrt R$. The integer-square geometry and common base interval remain hypotheses. This does not prove positivity for arbitrary supports, every fixed moment budget or RH.
 
-Consume W249's complete direct source order, W240's full paired reflection, W269's support/Gamma estimate and W255/W257's actual-source transport. Classical Dirichlet hyperbola summation, von Mangoldt convolution, Mertens, Chebyshev and weighted Schur estimates are used inside the same-source argument. No standalone classical arithmetic or operator theorem is added. The fixed-width, dimension-independent bound across ALL resonances remains unproved; W283 pays an explicit $\log\log R$ loss there. This is paper mathematics without Lean certification or a literature-priority claim.
+Consume W249's complete direct source order, W240's full paired reflection, W269's support/Gamma estimate and W255/W257's actual-source transport. Classical Dirichlet hyperbola summation, von Mangoldt convolution, Mertens, Chebyshev and weighted Schur estimates are used inside the same-source argument. No standalone classical arithmetic or operator theorem is added. W283 pays an explicit $\log\log R$ loss across resonances; the entropy refinement W291 below replaces it by a universal constant for the same source class. This is paper mathematics without Lean certification or a literature-priority claim.
 
 ### Regroup the entire paired correction, including the integral tails
 
@@ -8777,4 +8777,98 @@ $D\subset[\lceil\sqrt{R/\pi}/2\rceil,\lfloor\sqrt{R/\pi}\rfloor]$ and $R$ large.
 $\|f\|_2^2\le\pi^{-7/2}(1+2^{-1/2})^2S$.
 For either admitted positive-width class, W290 consequently supplies selected actual sources with limiting sixth-moment ratio at most $5^6$ and a universal positive lower limit for $A Q_{\mathcal K_A^g}$. Their count is at most $\lceil(5\pi+1)e^{2A}\rceil$. This pays arbitrary joint coefficients and independent shapes on unboundedly many intervals. It does not cover every source in that budget; the approximation starts are not uniform over all tuples or $R$.
 
-The integer-square locations, common base interval and width/resonance contracts are essential. No density passage from these sparse configurations to arbitrary compact features is established. W258 for EVERY fixed moment budget, unrestricted complete positivity, full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved. No numerical constants/start, computational certificate, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied.
+The integer-square locations and common base interval remain hypotheses; W291 below supplies a fixed positive width through all resonances. No density passage from these sparse configurations to arbitrary compact features is established. W258 for EVERY fixed moment budget, unrestricted complete positivity, full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved. No numerical constants/start, computational certificate, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied.
+
+
+## Modal entropy pays the full resonance at a fixed width
+
+There are universal $R_0,C>0$ such that for EVERY $R\ge R_0$, $0<\delta\le1$, nonempty
+$D\subset\{1,\ldots,\lfloor\sqrt{R/\pi}\rfloor\}$ and arbitrary independent complex $g_d\in C_c^\infty((R,R+\delta))$, the SAME complete actual form, with
+$f=\sum_{d\in D}d^4g_d(d^2x)$, $U=\mathscr Tf$ and $S=\|U\|_{L^2(x^{7/2}dx)}^2$, satisfies
+$$
+\mathfrak E(f)\ge
+\left[\frac2{\sqrt\pi}\log\frac1\delta-C\right]S.
+\tag{W291}
+$$
+Thus one universal sufficiently small $\delta_*>0$ gives $\mathfrak E(f)\ge S>0$ for every nonzero tuple with $\delta\le\delta_*$, including ALL resonances and growing $D$. No exclusion of $\pi\mathbb Z$ and no logarithmic shrinking of the width are needed in this class. The integer-square positions, common base interval and short absolute width remain hypotheses. This does not establish arbitrary-support positivity, every-budget W258 or RH.
+
+Reuse W284--W287's exact complete reflection and dimension-uniform $B$ tails, W285's SAME-source normalized modes, W249's original charge order, W269's Gamma multiplier and cutoff control, and W290's actual Gaussian return. The additional input is the classical logarithmic endpoint of the sharp fractional Sobolev inequality, consumed as an entropy lower bound on this physical feature. It is not a new logarithmic Sobolev theorem. The elementary classical divisor bound and prime-power geometric sum below are also inputs, not standalone contributions. No Lean certification or literature-priority claim is made.
+
+### Keep the modal mass in the Gamma estimate
+
+Use the classical one-dimensional logarithmic Sobolev inequality
+$$
+\int_{\mathbb R}\log|\xi|\,|\widehat v(\xi)|^2d\xi
+\ge\int_{\mathbb R}|v(t)|^2\log|v(t)|^2dt-C_{\mathrm{LS}},
+\qquad \|v\|_2=1,
+\tag{W292}
+$$
+with a unitary Fourier transform. The supplier is [W. Beckner, *Pitt’s inequality and the fractional Laplacian: sharp error estimates*, arXiv:math/0701939v6, Section 2, printed page 5, equation (13)](https://arxiv.org/pdf/math/0701939v6), with its Fourier convention on printed page 2. Specialize its $L^2$ entropy form to dimension one; its $\log|v|$ becomes $\tfrac12\log|v|^2$, giving exactly the coefficient in W292. Changing the fixed Fourier convention changes only $C_{\mathrm{LS}}$. The source states the Schwartz class. For a complex profile the usual real/imaginary decomposition changes the universal constant by at most $\log2$. For our compact piecewise smooth cutoff profiles, the $O((1+|\xi|)^{-1})$ Fourier decay gives absolute integrability with the logarithmic weight. Bounded mollifications in a fixed compact set converge both in that weighted Fourier norm and in entropy, so the supplier applies by passage to the limit. This consumes the known endpoint and checks its interface with W247/W269, rather than adding a new logarithmic Sobolev theorem.
+
+Let $I=(R,R+\delta)$, $L=\lfloor\sqrt{(R+\delta)/\pi}\rfloor$ and keep the zero-extended actual $a_n(y)$ of W285, including its variable last mode. For $S>0$ set
+$$
+p_n=\frac1S\int_I|a_n(y)|^2\frac{dy}{y},\qquad
+\sum_{n\le L}p_n=1,\qquad
+H(p)=-\sum_{n\le L}p_n\log p_n.
+$$
+Put $u(t)=(\pi e^t)^{9/4}U(\pi e^t)$ for $t\ge0$ and zero otherwise. Its disjoint modal intervals have logarithmic length at most $\delta/R$, and on the $n$th interval it equals $a_n(y)$ with $t=\log(y/(\pi n^2))$. Thus $\|u\|_2^2=S$. Jensen on each actual interval, omitting zero-mass intervals, gives
+$\int |u|^2S^{-1}\log(|u|^2/S)dt\ge\log(R/\delta)-H(p)$.
+Apply W292 to $u/\sqrt S$. W231's full multiplier, including its $|h|^2$ factor, is at least $\log|\xi|-C$, as used in W269. The rank-two cutoff correction is bounded by $CS$ in the same weight. Hence
+$$
+\mathcal D_\pi(U)\ge\frac2{\sqrt\pi}
+\left[\log\frac R\delta-H(p)-C\right]S.
+\tag{W293}
+$$
+There is no derivative-norm allowance or replacement of a partial last mode by a full interval. All $p_n$ come from the original independent complex profiles after their actual divisor transform.
+
+### Charge the reflection only to its own divisor coordinates
+
+If $I\cap\pi\mathbb Z=\varnothing$, W287 vanishes and $H(p)\le\log L$ already proves W291 by the owned direct charge estimate. Otherwise there is exactly one integer $m$ with $\pi m\in I$. Put
+$$
+J_m=\{n\le L:n\mid m\},\qquad
+r=\sum_{n\in J_m}p_n,\qquad
+T(m)=\sum_{\substack{q\mid m\\q\ge2}}\frac{\Lambda(q)}{\sqrt q}.
+$$
+In W287 each prime-power $q\mid m$ acts by the partial involution
+$(n,y)\mapsto(m/(qn),\pi^2m^2/y)$ on the ACTUAL modal domain. It preserves counting measure times $dy/y$ on its domain, and its square is the identity there. Extension by zero makes its operator norm at most one. Both its input and output indices lie in $J_m$. Thus the entire prime-Hankel pairing, with all independent phases and reflected profile values retained, satisfies
+$$
+\frac{\sqrt\pi}{2}\,|\mathcal P(U)|\le T(m)\,rS.
+\tag{W294}
+$$
+This is not a bound using a separate source norm. W286 and the mixed/two-tail estimates following it continue to pay $\mathcal P(BU)-\mathcal P(U)$ by $CS$, uniformly in $D$.
+
+The same $r$ improves W293. Since $|J_m|\le\tau(m)$, grouping modal probabilities into $J_m$ and its complement gives
+$$
+H(p)\le\log L-r\log\frac L{\tau(m)}+\log2.
+$$
+Here $0\log0=0$, so $r=0$ and $r=1$ are included. The bound uses the full distribution of the same actual modes; it does not assume their amplitudes or phases are equal.
+
+The classical divisor bound gives $\log\tau(m)\le\varepsilon\log m+C_\varepsilon$ for each fixed $\varepsilon>0$. Also
+$T(m)\le\sum_{p\mid m}\log p/(\sqrt p-1)$.
+Separating a fixed finite set of small primes from the rest gives
+$T(m)\le\varepsilon\log m+C'_{\varepsilon}$, because $\sum_{p\mid m}\log p\le\log m$.
+Since $\pi m\in I$ and $\delta\le1$, one has $L\ge\sqrt m/2$ for $R$ large. Fixing $\varepsilon=1/8$ therefore yields
+$$
+\log\frac L{\tau(m)}-T(m)\ge\frac14\log m-C.
+\tag{W295}
+$$
+Increase the universal $R_0$ so the right side is nonnegative. No quantitative prime number theorem, inverse divisor matrix or growing-dimensional norm comparison is needed.
+
+### Combine the gains before discarding their common mass
+
+The original local charge still has
+$2\Re\langle U,V\rangle_W\le(\log L+C)S$, by W285's ordinary divisor Schur estimate. Combine this with W293, W294, W249 and ALL owned $B$, cutoff and folded-model allowances. For the resonant case this gives
+$$
+\mathfrak E(f)\ge\frac2{\sqrt\pi}
+\left[\log\frac R{L^2\delta}-C
++r\left(\log\frac L{\tau(m)}-T(m)\right)\right]S.
+\tag{W296}
+$$
+W295 makes its final term nonnegative. In the nonresonant case it is absent. Since $L^2\le(R+\delta)/\pi$, both cases prove W291. The $S=0$ case is zero, and W289's triangularity gives $S>0$ for every nonzero tuple. Choose a universal $\delta_*$ so the bracket in W291 is at least one.
+
+For EACH fixed nonzero tuple in this fixed-width positive class, apply the already owned W290 to its COMPLETE $f$. It returns actual original Gaussian finite-source families with $Q_H=1$,
+$Q_{6,A}\to\|x^3f\|_2^2/(\pi^6\|f\|_2^2)$ and
+$AQ_{\mathcal K_A^g}\to\mathfrak E(f)/(4\pi^3\|f\|_2^2)>0$.
+The count is at most $\lceil(M_f+1)e^{2A}\rceil$, $M_f=(R+\delta)/(\min D)^2$. The start remains tuple-dependent and independent of every $w>0$ for the selected approximants. On W290's upper-half index sets, interval count can tend to infinity while the limiting sixth-moment ratio is at most $5^6$ and the lower limit for $AQ_{\mathcal K_A^g}$ is uniformly positive. This now holds at a single fixed sufficiently small width through every resonance.
+
+The result removes the resonance-dependent width loss for these actual sources. It does not exhaust all features in that moment budget, and supplies neither a common approximation start over all tuples nor stable coefficient/gap bounds. No density passage from integer-square interval configurations to arbitrary compact features is established. Every-budget W258, unrestricted complete positivity, RH and strict Robin for EVERY integer $n>5040$ remain unproved. No numerical constants/start, computational certificate or exhaustive literature/priority claim is supplied.
