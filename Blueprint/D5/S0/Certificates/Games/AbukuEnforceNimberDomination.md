@@ -120,6 +120,10 @@ $$\neg (\forall X \in Type,\; \forall fA \in X \to \operatorname{Set}\left(X\rig
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Games/AbukuEnforceNimberDomination.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/abuku-etal-2024-enforce-nimber-domination` (refuted) by `D5/S0/Certificates/Games/AbukuEnforceNimberDomination.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"abuku-etal-2024-enforce-nimber-domination","declaration_gid":"D5/S0/Certificates/Games/AbukuEnforceNimberDomination.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Tomoaki Abuku; Shun-ichi Kimura; Hironori Kiya; Urban Larsson; Indrajit Saha; Koki Suetsugu; Takahiro Yamashita (2024). *Enforce and selective operators of combinatorial games*. DOI: [10.1007/s00182-024-00910-6](https://doi.org/10.1007/s00182-024-00910-6). URL: <https://arxiv.org/abs/2311.01006v2>.

@@ -92,7 +92,10 @@ internal sealed class AbukuEnforceNimberDominationDocument : IScribeDocumentDefi
                     + "position 2 the ordinary option values are {0,1}, whereas the "
                     + "intersection for the enforce operator is {0}. Their least excluded "
                     + "values are 2 and 1. Equality of outcomes therefore leaves a "
-                    + "positive nimber distinction undetermined."))), DescribeRole.Theorem))));
+                    + "positive nimber distinction undetermined."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("abuku-etal-2024-enforce-nimber-domination"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
