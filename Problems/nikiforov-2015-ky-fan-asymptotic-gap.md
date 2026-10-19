@@ -1,6 +1,7 @@
 ---
 slug: nikiforov-2015-ky-fan-asymptotic-gap
 bibkey: nikiforov2015extrema
+doi: null
 url: https://arxiv.org/abs/1502.00359v1
 triage: theorem
 motivation_gids:
@@ -61,7 +62,27 @@ Compactness gives a joint zero-defect limit. Restriction to its positive
 weight support gives a symmetric rational sign matrix with constant
 weighted row sum 1/sqrt(k), contradicting irrationality for nonsquare k.
 
-## Literature
+## Falsifier
+
+For a fixed positive nonsquare k, a sequence of symmetric zero-one matrices
+of orders at least k whose normalized Ky Fan sums tend to (1+sqrt(k))/2
+would refute the uniform-gap statement. Failure of an intermediate
+approximation estimate alone would invalidate that route without refuting
+the original infinitude conjecture. Finiteness of the set of prefixes
+admitting a strict limiting gap would refute the original conjecture.
+
+## Evidence
+
+The pinned definitions are in
+[Defs.lean](../D5/S3/Combinatorics/Graph/KyFanGap/Defs.lean).
+The exact settlement is `D5.S3.Combinatorics.Graph.KyFanGap.result` in
+[Result.lean](../D5/S3/Combinatorics/Graph/KyFanGap/Result.lean).
+The live intermediate results are `uniform_gap` in NearExtremal,
+`bilinear_defect_gap` in UniformGap, `exists_model_defect_gap` in Compactness,
+and `tendsto_xi_div` in BlowUp. The latter identifies the limit explicitly
+as the supremum over orders m+k. The uniform theorem applies to every
+positive nonsquare k, while the final infinitude argument uses primes.
+
 
 The source equation (12) and Theorem 4.3 give the universal upper bound
 and finite-order equality restriction. Nikiforov arXiv:1007.3949 and
@@ -80,3 +101,14 @@ extracts do not establish an exhaustive citation-index check.
 - PROVED: the pinned conjecture holds, using infinitely many primes as positive nonsquare prefixes.
 - OPEN: an effective or optimal value of the positive gap.
 - ASSUMED-UNVERIFIED: exhaustive citation-index coverage beyond the supplied source readings.
+
+
+## ASSUMED-UNVERIFIED
+
+The quoted source extracts and the literature reading above are supplied
+source information. The original papers and citation indexes have not been
+independently rechecked under the offline constraint. The stated reading
+scope distinguishes the finite-order equality results and the tau_k
+settlement from the xi_k asymptotic question; it does not certify an
+exhaustive priority claim. The [Library note](../Library/Eigenstructure/nikiforov2015extrema.md)
+records the source locators and the mathematical distinction.
