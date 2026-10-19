@@ -319,3 +319,232 @@ The records themselves are unchanged; no physical projection and renormalization
 For a full-domain calibrated local minimum with ranks $`(7,4)`$, a full-support first kernel, and $`0<\delta<1/4`$, the actual common quotient supplies (121.1). Therefore (121.2), (121.3), and (121.12) hold together with the actual-stress restriction $`\operatorname{Tr}P/\|P\|_{\mathrm{op}}<1129/300`$ of [RT IV Corollary 119.4](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1195-the-full-support-local-minimum-consumer). The explicit bounds improve the previously stated $`\lambda_1>7/2`$, top-two sum greater than seven, and tail less than one; no comparison is made with the unspecified numerical separation in RT IV Theorem 117.4. The intersection of these necessary regions has not been excluded. No full quotient or preserved local-minimum ranks are inferred for arbitrary leaking pairs, and the unrestricted global quarter optimum remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 122. Conditional exclusions from the symmetric-square record frame
+
+### 122.1. The actual quotient and the full-output spectral witness
+
+Retain the original channels, encodings, target, forward-Gram convention, and unhalved arbitrary-reference error $`\delta`$ of (120.1)–(120.4). Assume calibration and the full actual quotient
+
+$$
+G,H\succeq0,\qquad G_{ff}=H_{ff}=I_2,\qquad
+G=H\odot\bar R,\qquad R\succeq0,\quad R_{ii}=1.
+\tag{122.1}
+$$
+
+These are identities of the original eight-coordinate Grams. No complementary stress, local-minimum hypothesis, or rank assumption is imposed in this subsection. Define $`\mathcal A=H\odot H`$, using the complex square rather than the entrywise modulus square.
+
+**Proposition 122.1 (symmetric-square spectral obstruction).** Under (122.1),
+
+$$
+\delta\ge2-\frac{\operatorname{Tr}(\mathcal A R)}{16}
+\ge2-\frac12\lambda_{\max}(\mathcal A).
+\tag{122.2}
+$$
+
+**Proof.** Use the normalized tagged input and target vector
+
+$$
+|\Psi\rangle=\frac12\sum_{f=1}^4|f\rangle_R
+ \otimes\frac{|f,0\rangle+|f,1\rangle}{\sqrt2},
+\qquad |\Omega\rangle=\frac12\sum_{f=1}^4|f\rangle_R\otimes|f,f\rangle.
+\tag{122.3}
+$$
+
+As in (121.4)–(121.6), the target output is $`|\Omega\rangle\langle\Omega|`$, and the complete physical product output $`\sigma`$ is a density operator with
+
+$$
+\langle\Omega|\sigma|\Omega\rangle
+=\frac{\boldsymbol1^*K\boldsymbol1}{32}
+=\frac{\operatorname{Tr}(\mathcal A R)}{32}.
+\tag{122.4}
+$$
+
+The last equality follows from $`K_{ij}=H_{ij}^{2}\bar R_{ij}`$ and Hermiticity of $`R`$. The norm-one observable $`2|\Omega\rangle\langle\Omega|-I`$ acts on the reference and the full sixteen-dimensional physical output, so its expectation gives the first inequality of (122.2). Since $`R\succeq0`$ and $`\operatorname{Tr}R=8`$, the second follows from $`\operatorname{Tr}(\mathcal A R)\le8\lambda_{\max}(\mathcal A)`$. There is no conversion to a halved error. ∎
+
+### 122.2. A tail-free exclusion for correlation lifts
+
+Let $`U_f^{(0)}\in U(2)`$, $`1\le f\le4`$, have columns $`u_{f0}^{(0)},u_{f1}^{(0)}`$, and let $`H^{(0)}`$ be the Gram of these eight qubit records. On $`\operatorname{Sym}^2\mathbb C^2`$, put
+
+$$
+q_f^{(0)}=\frac{u_{f0}^{(0)}\otimes u_{f1}^{(0)}
+                    +u_{f1}^{(0)}\otimes u_{f0}^{(0)}}{\sqrt2},
+\qquad m_0=\lambda_{\min}\!\left(\sum_fq_f^{(0)}q_f^{(0)*}\right).
+\tag{122.5}
+$$
+
+**Theorem 122.2 (correlation-lift exclusion).** Suppose (122.1) holds and, for some positive semidefinite correlation matrix $`\Xi`$ on all eight original coordinates,
+
+$$
+H=H^{(0)}\odot\Xi,\qquad \Xi_{ii}=1.
+\tag{122.6}
+$$
+
+Then
+
+$$
+\lambda_{\max}(H\odot H)\le4-m_0,
+\qquad \delta\ge\frac{m_0}{2}.
+\tag{122.7}
+$$
+
+In particular, the entire subclass (122.6) with $`m_0\ge1/2`$ is excluded when $`\delta<1/4`$. Neither a rank-four hypothesis on $`H`$ nor a bound on its bottom-two spectral trace is required.
+
+**Proof.** For each $`f`$, the vectors $`u_{f0}^{(0)\otimes2},q_f^{(0)},u_{f1}^{(0)\otimes2}`$ form an orthonormal basis of the three-dimensional symmetric square. Hence the frame operator of the eight squared seed records is
+
+$$
+Q^{(0)}=\sum_{f,i}|u_{fi}^{(0)\otimes2}\rangle
+                      \langle u_{fi}^{(0)\otimes2}|
+=4I_3-\sum_fq_f^{(0)}q_f^{(0)*}.
+\tag{122.8}
+$$
+
+Its nonzero spectrum is that of $`\mathcal A_0=H^{(0)}\odot H^{(0)}`$, so $`\lambda_{\max}(\mathcal A_0)=4-m_0`$. The Schur product $`\Xi\odot\Xi`$ is positive semidefinite and has diagonal one. Thus Schur multiplication by it is positive and unital, and
+
+$$
+0\preceq\mathcal A_0\preceq(4-m_0)I_8
+\quad\Longrightarrow\quad
+0\preceq\mathcal A_0\odot(\Xi\odot\Xi)
+\preceq(4-m_0)I_8.
+\tag{122.9}
+$$
+
+This standard positivity step follows, for example, by writing a positive matrix as a sum of $`vv^*`$ and using $`X\odot vv^*=\operatorname{diag}(v)X\operatorname{diag}(v)^*`$; see Levick and Martin, [*Matrix N-dilations of quantum channels*, Example 6](https://doi.org/10.7153/oam-2018-12-59). The middle matrix in (122.9) is $`H\odot H`$. Proposition 122.1 proves the error bound. ∎
+
+Condition (122.6) is a structural restriction, not a factorization asserted for every remaining rank-four Gram. It includes records $`u_{fi}^{(0)}\otimes w_{fi}`$ for arbitrary unit ancillary records $`w_{fi}`$. The quantity $`m_0`$ belongs to the seed bases; it is not identified with the missing-direction minimum of the actual polar chart below.
+
+### 122.3. Tetrahedral seed families
+
+**Corollary 122.3 (tetrahedral correlation lifts).** Set $`c=1/\sqrt3`$, $`d=\sqrt{2/3}`$, and $`\omega=-1/2+i\sqrt3/2`$. Let
+
+$$
+U_1^{(0)}=I_2,\qquad
+U_f^{(0)}=\begin{pmatrix}c&-d\bar\omega^{\,f-2}\\
+d\omega^{f-2}&c\end{pmatrix},\quad f=2,3,4.
+\tag{122.10}
+$$
+
+Every actual quotient pair satisfying (122.1) whose opposite Gram is a correlation lift (122.6) of these bases obeys $`\delta\ge2/3`$. The blocks (122.12) below give a rank-four correlation lift with bottom-two trace $`2/5`$.
+
+**Proof.** In the orthonormal symmetric basis $`(e_0^{\otimes2},(e_0\otimes e_1+e_1\otimes e_0)/\sqrt2,e_1^{\otimes2})`$, the missing directions are
+
+$$
+q_1^{(0)}=(0,1,0)^{\mathsf T},\qquad
+q_f^{(0)}=\frac13(-2\bar\omega^{\,f-2},-1,2\omega^{f-2})^{\mathsf T}
+\quad(f=2,3,4).
+\tag{122.11}
+$$
+
+The identities $`1+\omega+\omega^2=0`$ and $`|\omega|=1`$ give $`\sum_fq_f^{(0)}q_f^{(0)*}=\tfrac43I_3`$. Therefore $`m_0=4/3`$, and Theorem 122.2 proves the error bound.
+
+For a rank-four member of this structural family, take original record blocks
+
+$$
+V_f=\begin{bmatrix}\sqrt{19/20}\,U_f^{(0)}\\
+t_f\sqrt{1/20}\,U_f^{(0)}\end{bmatrix},\qquad
+(t_1,t_2,t_3,t_4)=(1,1,-1,-1).
+\tag{122.12}
+$$
+
+Their Gram has (122.6) with $`\Xi_{fi,gj}=19/20+t_ft_g/20`$, which is the Gram of unit ancillary vectors. Its frame is $`\operatorname{diag}(19/5,19/5,1/5,1/5)`$: each diagonal block follows from unitarity, and the off-diagonal blocks vanish because $`\sum_ft_f=0`$. Thus its bottom-two trace is $`2/5`$, yet Corollary 122.3 still excludes every subquarter actual quotient over this Gram. This calculation asserts no compatible rank-seven $`G`$, common normer, or local minimum. ∎
+
+### 122.4. Exclusion sectors in the unchanged-record polar chart
+
+Assume now (122.1), $`\operatorname{rank}H=4`$, and $`\delta<1/4`$. Write the original four isometric record blocks, in the actual top-two environment space $`E`$ and its orthogonal complement, as
+
+$$
+V_f=\begin{bmatrix}C_f\\D_f\end{bmatrix},\qquad
+C_f=U_f A_f,\quad A_f=(I_2-D_f^*D_f)^{1/2},\quad U_f\in U(2),
+\qquad \tau=\sum_f\|D_f\|_F^2=\lambda_3(H)+\lambda_4(H).
+\tag{122.13}
+$$
+
+The chart and its invertibility follow from Corollary 121.2 and [RT IV Proposition 117.3](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1173-dominant-two-dimensional-record-spaces). In particular, $`\tau<2-\sqrt2<1`$. The records and channels themselves are unchanged.
+
+Let $`u_{f0},u_{f1}`$ be the columns of $`U_f`$. On $`\operatorname{Sym}^2E`$, define
+
+$$
+\begin{aligned}
+q_f&=(u_{f0}\otimes u_{f1}+u_{f1}\otimes u_{f0})/\sqrt2,
+&m&=\lambda_{\min}\!\left(\sum_fq_fq_f^*\right),\\
+B_f&=U_fA_fU_f^*,&T_f&=\operatorname{Sym}^2(B_f),\\
+d_{fi}&=\|D_fe_i\|^2,&r_{\mathrm{tail}}&=2\tau-\sum_{f,i}d_{fi}^{2},\\
+F_{\mathrm{att}}&=\sum_f(I_3-T_f^2)+\sum_f(T_fq_f)(T_fq_f)^*,
+&\beta&=\lambda_{\min}(F_{\mathrm{att}}).
+\end{aligned}
+\tag{122.14}
+$$
+
+Here $`\operatorname{Sym}^2(B_f)`$ is the restriction of $`B_f\otimes B_f`$ to the symmetric tensor space. The symbol $`r_{\mathrm{tail}}`$ is a tensor-frame tail trace, unrelated to the stress effective rank in §120.
+
+**Theorem 122.4 (actual polar and attenuated exclusion bounds).** Under these hypotheses,
+
+$$
+\begin{aligned}
+\lambda_{\max}(H\odot H)&\le4-\beta+r_{\mathrm{tail}},
+&\delta&\ge\frac{\beta-r_{\mathrm{tail}}}{2},\\
+\beta&\ge m-2\tau,
+&\delta&\ge\frac m2-2\tau+\frac12\sum_{f,i}d_{fi}^{2}.
+\end{aligned}
+\tag{122.15}
+$$
+
+Consequently every rank-four subquarter pair under these hypotheses must have $`\beta-r_{\mathrm{tail}}<1/2`$ and $`m<1/2+4\tau`$.
+
+**Proof.** Put $`h_{fi}=V_fe_i`$. The Gram of the eight vectors $`h_{fi}^{\otimes2}`$ is $`H\odot H`$, whose nonzero spectrum equals that of their positive frame operator $`Q`$ on $`\operatorname{Sym}^2\mathbb C^4`$. Decompose the latter space as $`\operatorname{Sym}^2E`$ and its seven-dimensional orthogonal complement, and write $`Q=(Q_{ab})_{a,b=0,1}`$. Since $`\|h_{fi}\|=1`$ and $`\|C_fe_i\|^2=1-d_{fi}`$,
+
+$$
+\operatorname{Tr}Q_{11}
+=\sum_{f,i}\bigl(1-(1-d_{fi})^2\bigr)=r_{\mathrm{tail}}.
+\tag{122.16}
+$$
+
+For a positive block matrix, Cauchy–Schwarz for its positive form gives
+
+$$
+|\langle x,Q_{01}y\rangle|^2
+\le\langle x,Q_{00}x\rangle\langle y,Q_{11}y\rangle.
+\tag{122.17}
+$$
+
+Writing $`a=\|Q_{00}\|_{\mathrm{op}}`$ and $`b=\|Q_{11}\|_{\mathrm{op}}`$, its Rayleigh quotient is therefore bounded by
+$`(\sqrt a\|x\|+\sqrt b\|y\|)^2\le(a+b)(\|x\|^2+\|y\|^2)`$. Hence
+
+$$
+\lambda_{\max}(Q)\le\lambda_{\max}(Q_{00})+\lambda_{\max}(Q_{11})
+\le\lambda_{\max}(Q_{00})+r_{\mathrm{tail}}.
+\tag{122.18}
+$$
+
+The cross blocks of the squared-record frame have been retained in this estimate; no vanishing of $`Q_{01}`$ is assumed.
+
+As in (122.8), set $`P_f=I_3-q_fq_f^*`$. The identity $`C_fe_i=B_fu_{fi}`$ yields
+
+$$
+Q_{00}=\sum_fT_fP_fT_f=4I_3-F_{\mathrm{att}},\qquad
+\lambda_{\max}(Q_{00})=4-\beta.
+\tag{122.19}
+$$
+
+Combining (122.18), (122.19), and Proposition 122.1 proves the first line of (122.15).
+
+For the second line, put $`e_f=\|D_f^*D_f\|_{\mathrm{op}}`$. The eigenvalues of $`B_f`$ lie in $`[\sqrt{1-e_f},1]`$, so $`(1-e_f)I_3\preceq T_f\preceq I_3`$ and $`\|T_f-I_3\|_{\mathrm{op}}=e_f`$. Since $`\sum_fe_f\le\tau`$,
+
+$$
+\begin{aligned}
+\|T_fP_fT_f-P_f\|_{\mathrm{op}}
+&=\|(T_f-I_3)P_fT_f+P_f(T_f-I_3)\|_{\mathrm{op}}\le2e_f,\\
+\lambda_{\max}(Q_{00})
+&\le\lambda_{\max}\!\left(\sum_fP_f\right)+2\tau
+=4-m+2\tau.
+\end{aligned}
+\tag{122.20}
+$$
+
+Thus $`\beta\ge m-2\tau`$. Substitute $`r_{\mathrm{tail}}=2\tau-\sum d_{fi}^{2}`$ into the first line of (122.15). Finally, either $`\beta-r_{\mathrm{tail}}\ge1/2`$ or $`m\ge1/2+4\tau`$ would imply $`\delta\ge1/4`$, proving the stated exclusion sectors. ∎
+
+In particular, if the actual polar missing directions satisfy $`\sum_fq_fq_f^*=\tfrac43I_3`$, the sector $`\tau\le5/24`$ is excluded. The structural estimate (122.7) has no tail penalty, but no numerical ordering with (122.15) is asserted when its seed minimum $`m_0`$ differs from the actual polar minimum $`m`$.
+
+The bound $`\tau<2-\sqrt2`$ alone does not imply either exclusion criterion in Theorem 122.4. Theorems 122.2 and 122.4 give conditional exclusions inside the actual-quotient class; they do not prove that every remaining full-support nonisotropic rank-$`(7,4)`$ local minimum belongs to those sectors. No full quotient is inferred for arbitrary leaking local minima, and the unrestricted global quarter optimum remains open.
+
+## 追加锚（本行以下为增补区）
