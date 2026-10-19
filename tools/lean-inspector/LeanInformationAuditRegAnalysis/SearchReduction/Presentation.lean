@@ -226,7 +226,7 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
   let mut verificationCost := 0
   let mut failure := none
   let detail := fun checked conversionCost verificationCost =>
-    s!"indexed_sources={entries.length}, candidates={hits.length}, checked_presentations={checked}, " ++
+    s!"heartbeat_unit=internal, indexed_sources={entries.length}, candidates={hits.length}, checked_presentations={checked}, " ++
     s!"index_heartbeats={built-start}, query_heartbeats={queried-built}, " ++
     s!"conversion_heartbeats={conversionCost}, verification_heartbeats={verificationCost}"
   for (name, _) in hits do

@@ -1,3 +1,4 @@
+import Mathlib.Combinatorics.Derangements.Finite
 import LeanInformationAuditRegAnalysis.SearchReduction.Isolation
 import LeanInformationAuditRegTests.SearchReduction.SingleSourceModel
 import LeanInformationAuditRegTests.SearchReduction.PresentationBaseline

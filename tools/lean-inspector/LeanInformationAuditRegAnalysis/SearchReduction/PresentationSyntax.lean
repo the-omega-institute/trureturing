@@ -66,6 +66,7 @@ def normalizeSyntax (env : Environment) (e : Expr) (fuel : Nat := 200000) : Exce
 private structure Affine where
   constant : Int := 0
   terms : List (Expr × Int) := []
+  deriving Inhabited
 
 private def affineAdd (a b : Affine) : Affine := Id.run do
   let mut terms := a.terms
@@ -140,7 +141,8 @@ private def componentKey (telescope : List (Expr × BinderInfo)) (e : Expr) : Na
       (affineScale (-1) (affine args[args.size-2]!))
     let sorted := vector.terms.toArray.qsort (fun a b => reprStr (nameless a.1) < reprStr (nameless b.1))
     vector := {vector with terms := sorted.toList.filter (fun t => t.2 != 0)}
-    if eq && (vector.terms.head?.map (fun t => t.2 < 0)).getD (vector.constant < 0) then
+    if eq && (vector.terms.head?.map (fun t => decide (t.2 < 0))).getD
+        (decide (vector.constant < 0)) then
       vector := affineScale (-1) vector
     let relation := if eq then "eq" else if e.isAppOf ``LT.lt || e.isAppOf ``Nat.lt ||
       e.isAppOf ``Int.lt then "lt" else "le"
@@ -218,7 +220,8 @@ private partial def assemble (target source : Expr) : MetaM (Option Expr) := do
     let some left ← assemble leftType source | return none
     let some right ← assemble rightType source | return none
     return ← withLocalDeclD `_singleSource source fun h => do
-      let proof ← mkAppM (if iff then ``Iff.intro else ``And.intro) #[mkApp left h, mkApp right h]
+      let constructor := if iff then ``Iff.intro else ``And.intro
+      let proof ← mkAppM constructor #[mkApp left h, mkApp right h]
       return some (← mkLambdaFVars #[h] proof)
   if let some proof ← onePremise target none then
     return ← withLocalDeclD `_singleSource source fun h => do
