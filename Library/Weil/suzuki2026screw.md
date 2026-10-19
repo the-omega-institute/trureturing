@@ -7669,3 +7669,146 @@ The physical transport is the same positive $d\sigma_g=d\mu/(\cosh uD_A^g(u))$ a
 At a fixed admitted $A$ with $ce^{2A}>2$, retain a positive atom at $a=A$. For arbitrarily large even $m$, choose $R$ so large that $m/R\le ce^{2A}-1$, take $m$ distinct separator roots in $[R,2R]$, and place alternating-sign atoms in the $m+1$ complementary intervals of that block. Their signs can be chosen so that $\prod_k(p-r_k)\,d\sigma\ge0$, including the retained atom at $p=1$. Then $\Xi\le1+m/R\le ce^{2A}$. There are $m$ actual sign changes, so no smaller-degree polynomial separates these alternating atoms. The lower support endpoint is still $A$, and $m$ has no bound as $R$ grows. Thus neither the old global $m\le ce^{2A}$ contract nor moving the entire support to a higher start supplies this fixed-$A$ direct conclusion. This is an admissible family construction, not an executed numerical experiment.
 
 For the complete actual odd kernel, the W212 reflected-source estimate still contains $b_0^{-2m}$. W215 controls $\sum_k r_k^{-1}$ and does not control that factor. No reciprocal-root replacement for the actual reflected error is established here. The new complete-direct estimate, the old full odd-kernel estimate W214, and their different source classes must remain distinct. There is no full odd-kernel positivity claim on W215, unrestricted sign or unbounded-support theorem, sufficient cofinal positivity, numerical constant/start, Lean certification or literature-priority claim. Full RH and the original strict all-integer Robin bound remain unproved.
+
+## Pairing the logarithmic theta dilations pays the complete reflection
+
+The complete actual reflected error admits a uniform bound in an exponentially weighted norm of the same source, without a support-count or sign condition. Its consumer extends the full odd-kernel conclusion W214 to the position-weighted separator class W215. There are fixed $c>0,A_*>0$ such that every compact finite real signed measure on $[A,\infty)$ satisfying W215, with $A\ge A_*$ and $\Xi_A\le ce^{2A}$, has original Gaussian Hardy margin $1/(8A)$ for the complete actual $L_0$. Complex measures require the separator condition separately on their real and imaginary parts. No upper support endpoint, atom-count or internal-gap restriction is added. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse the exact complete theta series, folded model W174--W178, direct feature W184--W191, source decomposition W205--W206, and position-sensitive shifts and Gaussian return W215--W219. The classical Hardy and Carleman suppliers are unchanged. The additional interface pairs the two exchanged logarithmic modes before bounding their finite-interval correction. It does not replace the old sector Cauchy norm by a reciprocal-root bound, or assert that the noneven first-mode source is even. This is paper mathematics, without a Lean-certification or literature-priority claim.
+
+### Keep every finite modal push-forward on the same source
+
+Write $\phi=\Phi_1$, $E=e^{-2A}$, $\varepsilon=E/\pi$, $c_*=3/(2\pi)$, $p=e^{2(a-A)}\ge1$, and $a(p)=(p+1)/\sqrt2$. Keep $B_E=(1-c_*E/p)^{-1}$, $M_E=(p-c_*E)^{-1}$ and the first-mode normalization
+$$
+w_A(a)=\cosh(a-A)D_A^1(a-A),\qquad
+w_A(a)\phi(a)=C_Aa(p),\qquad C_A^2=\frac{4\pi}{AE}.
+$$
+For a compact finite complex measure $\sigma$ on $p\ge1$, let $d\mu(a)=w_A(a)d\sigma(p)$. The complete source identity is
+$$
+\Phi(x)=\sum_{\ell\ge1}\ell^{-1/2}\phi(x+\log\ell),\qquad x\in\mathbb R.
+$$
+For a finite cutoff $L$, push $\ell^{-1/2}\mu$ forward by $a\mapsto a+\log\ell$, and divide there by $w_A$. Call the resulting normalized measure $\sigma_\ell$, and put $\sigma_{\le L}=\sum_{\ell\le L}\sigma_\ell$. Its new parameter is $p'=\ell^2p$. With $S_\ell=\pi(\ell^2-1)/E$, direct substitution gives
+$$
+\begin{aligned}
+F_{\sigma_\ell}(t)
+&=\ell^4F_{B_E\sigma}(\ell^2t+S_\ell)
+ -c_*E\ell^2F_{M_E\sigma}(\ell^2t+S_\ell),\\
+F_{M_E\sigma_\ell}(t)
+&=\ell^2F_{M_E\sigma}(\ell^2t+S_\ell),\qquad \sigma_1=\sigma.
+\end{aligned}
+\tag{W220}
+$$
+Indeed the pushed mass satisfies
+$a(p')d\sigma_\ell(p')=a(p)\ell^4e^{-S_\ell p}(1-c_*E/(\ell^2p))B_E(p)d\sigma(p)$.
+Every finite push-forward is a compact finite measure. No finite total-variation claim is made for the infinite unnormalized physical sum $\sum\ell^{-1/2}T_{\log\ell}\mu$; only the normalized feature limits below are used.
+
+### Pair the two exchanged modes before taking absolute values
+
+For any source function $\varphi$, define its folded reflection by
+$$
+R_\varphi^{\rm fold}(a,b)=\frac12\int_{|(a-b)/2|}^\infty
+y\varphi((a+b)/2+y)\varphi((a+b)/2-y)\,dy.
+$$
+For the complete even $\Phi$ this is the actual reflected component. For $\phi$, it is precisely the owned folded model, rather than a claim about an even extension of $\phi$.
+
+Let $\ell<k$, $H_{\ell k}=\tfrac12\log(k/\ell)>0$, $d=(a-b)/2$ and $z=(a+b)/2+\tfrac12\log(\ell k)$. Pair the $(\ell,k)$ and $(k,\ell)$ products in the finite source expansion. Their sum is even in the original integration variable $y$, so its weighted integral can start at the signed $d$. Opposite changes of variables turn the new integrands into $g(v)=\phi(z+v)\phi(z-v)$, which is even regardless of whether $\phi$ is even. Thus the paired raw contribution, before the coefficient $(\ell k)^{-1/2}$, is
+$$
+\begin{aligned}
+&R_\phi^{\rm fold}(a+\log\ell,b+\log k)
+ +R_\phi^{\rm fold}(a+\log k,b+\log\ell)\\
+&\hspace{8mm}+\frac{H_{\ell k}}2\int_\ell^k
+ \phi(a+\log s)\phi(b+\log(\ell k/s))\frac{ds}s.
+\end{aligned}
+\tag{W221}
+$$
+To check the correction, the two shifted integrals have weights $v-H$ and $v+H$ and lower limits $d+H$ and $d-H$. Their difference of unweighted tails is $H\int_{d-H}^{d+H}g(v)dv$; the original factor $1/2$ is retained. On this finite interval both physical arguments are at least $\min(a,b)+\log\ell\ge A$.
+
+Put $G_s=\int\phi(a+\log s)d\mu(a)$. If $R_{A,L}^{\rm act}$ denotes the same folded integral with the finite theta sum, W221 gives the exact finite identity
+$$
+Q_{R_{A,L}^{\rm act}}(\sigma)
+=Q_{R_A^1}(\sigma_{\le L})
+ +\sum_{\ell<k\le L}\frac{H_{\ell k}}{2\sqrt{\ell k}}
+ \int_\ell^k\overline{G_s}G_{\ell k/s}\frac{ds}s.
+\tag{W222}
+$$
+The finite-interval integral is real, since $s\mapsto\ell k/s$ preserves $ds/s$ and exchanges the two factors. It is bounded in absolute value below; no positive-form assertion for this correction is needed.
+
+### The modal norm limits require no sign separator
+
+For the original compact source define $Q_+=\|e^{t/2}F_\sigma\|_2^2$. This is finite because $p\ge1$. In this norm a right shift contracts by $e^{-s/2}$. The owned right-integral formula for $p^{-j}$ therefore gives norm at most $2^j$, without a sign condition. For sufficiently small fixed $E$, the geometric series yields
+$\|e^{t/2}F_{B_E\sigma}\|_2+\|e^{t/2}F_{M_E\sigma}\|_2\le C\sqrt{Q_+}$.
+Changing variables in W220 now gives
+$$
+\|\sigma_\ell\|_H\le C\ell^3e^{-S_\ell/2}\sqrt{Q_+},\qquad
+\|M_E\sigma_\ell\|_H\le C\ell e^{-S_\ell/2}\sqrt{Q_+}.
+\tag{W223}
+$$
+In particular the feature sums converge in $L^2$, and their differences from $F_\sigma,F_{M_E\sigma}$ are at most $Ce^{-\kappa_0/E}\sqrt{Q_+}$ for some fixed $\kappa_0>0$. Applying the two bounded model operators W176--W178 to the finite sums and passing to their norm limits gives
+$|\lim_LQ_{R_A^1}(\sigma_{\le L})-Q_{R_A^1}(\sigma)|\le Ce^{-\kappa_0/E}Q_+/A$.
+The model's second channel is still used only in absolute norm.
+
+### The finite interval keeps the joint Gaussian time gap
+
+For $s\ge1$ set $S_s=\pi(s^2-1)/E$ and
+$$
+V(t)=F_{B_E\sigma}(t)-\frac{c_*E}{1+\varepsilon t}F_{M_E\sigma}(t).
+$$
+The same-source normalization above gives exactly
+$$
+G_s=C_As^{9/2}V(S_s),\qquad
+\|e^{t/2}V\|_2^2\le CQ_+.
+\tag{W224}
+$$
+For every $s\in[\ell,k]$,
+$$
+S_s+S_{\ell k/s}\ge\frac{2\pi(\ell k-1)}E.
+$$
+Keep this joint damping before taking absolute values. With $V_+(t)=e^{t/2}V(t)$, Cauchy--Schwarz and the measure-preserving involution $s\mapsto\ell k/s$ give
+$$
+\begin{aligned}
+\left|\int_\ell^k\overline{V(S_s)}V(S_{\ell k/s})\frac{ds}s\right|
+&\le e^{-\pi(\ell k-1)/E}
+ \int_\ell^k|V_+(S_s)|^2\frac{ds}s\\
+&\le\frac{E}{2\pi\ell^2}e^{-\pi(\ell k-1)/E}\|V_+\|_2^2.
+\end{aligned}
+\tag{W225}
+$$
+Here $ds/s=E\,dS_s/(2\pi s^2)$. In W222 the powers from W224 combine to $(\ell k)^4$ after its $(\ell k)^{-1/2}$ coefficient. Since $C_A^2=4\pi/(AE)$, the absolute value of that pair's correction is at most
+$C H_{\ell k}(\ell k)^4\ell^{-2}e^{-\pi(\ell k-1)/E}Q_+/A$.
+The full double sum is at most $Ce^{-\kappa_1/E}Q_+/A$ for a fixed $\kappa_1>0$, since $\ell k\ge2$ and the remaining factors grow polynomially with a logarithm.
+
+For each fixed compact physical source, the complete modal expansion may also be passed through the folded integral. The absolute Gaussian fourth- and second-moment sums used at W195 control the small argument by a fixed power of its inverse; the other source argument tends to $+\infty$ and has double exponential decay. This is an integrable bound uniform on the compact pair of source sites. Finite total variation then justifies the limit of W222. These domination constants justify the identity only; they do not enter the uniform final norm estimate.
+
+Consequently the complete actual error, including all mixed modes and the full small-argument exterior, satisfies
+$$
+|Q_{\Delta_A}(\sigma)|
+\le\frac CAe^{-\kappa/E}Q_+,
+\qquad \Delta_A=R_A^{\rm act}-R_A^1,
+\quad Q_+=\|e^{t/2}F_\sigma\|_2^2.
+\tag{W226}
+$$
+This bound holds for every compact finite complex measure on $p\ge1$ at one common high start, without a separator, count, width or gap condition. It is a weighted-norm comparison; it does not give an unrestricted comparison in $Q_H$.
+
+### Consume the complete reflection at reciprocal separator cost
+
+Return to a real signed source with the W215 separator, $S=\sum r_k^{-1}$ and $\Xi=1+S$. W216 gives $Q_+\le3\cdot9^SQ_H(\sigma)$. W217 and W178 bound the folded model above by $[\pi/4+C(E\Xi)^2]Q_H(\sigma)/A$. Combining W226 with the complete actual direct lower W218, on the same measure and with $\mathscr S\ge Q_H(\sigma)/4$, gives
+$$
+\begin{aligned}
+Q_{\mathcal K_A^1}(\sigma)\ge{}&
+\left[1-\frac{\log\Xi}{2A}-\frac{C_{\rm dir}}A\right]\mathscr S\\
+&-\frac1A\left[\frac\pi4+C(E\Xi)^2
+ +Ce^{-\kappa/E+2(\log3)S}\right]Q_H(\sigma).
+\end{aligned}
+\tag{W227}
+$$
+Choose fixed $c>0$ sufficiently small for the existing direct/modal conditions, for $2c\log3<\kappa/2$, and for $-\tfrac12\log c-C_{\rm dir}$ to exceed four times the fixed reflected budget plus eight. At one common high start, $\Xi\le c/E$ then gives $Q_{\mathcal K_A^1}(\sigma)\ge Q_H(\sigma)/A$.
+
+The exact positive Gaussian return $\sigma_1=(1-c_*E/p)\sigma_g$ retains the same separator and reciprocal mass. W217 gives $\|\sigma_1-\sigma_g\|_H\le CE\Xi\|\sigma_g\|_H$. Shrink $c$ once more to make this at most half the original norm. With slack,
+$$
+Q_{\mathcal K_A^g}(\sigma_g)\ge\frac1{8A}Q_H(\sigma_g)>0,
+\qquad A\ge A_*,\quad\Xi\le ce^{2A},\quad\sigma_g\ne0.
+\tag{W228}
+$$
+The original physical transport and separator signs are exactly those in W215/W219, with $\Xi=\Xi_A$. Both kernels are real symmetric, so the separate real/imaginary contracts give the same Hermitian bound for a complex measure. Nonzero compact moment uniqueness supplies strictness; the zero measure contributes zero.
+
+This pays the actual reflection missing from W219 and extends W214 from total separator degree to reciprocal separator mass. The fixed-low-support, arbitrarily-many-remote-sign-changes family described after W219 remains admitted for the smaller fixed $c$ once the common start is high enough. The proof keeps all theta modes and exterior terms jointly; it does not contradict the failure of a reciprocal-mass bound for the unrestricted old sector Cauchy norm. At each fixed compact window the weighted cap still restricts the number of local changes. Sufficient cofinal arbitrary-sign positivity, common-start all-order positivity, RH and the original strict all-integer Robin bound remain unproved. No unbounded-support physical source, derivative distribution, numerical constant/start, Lean/CI/merge certification or literature priority is supplied.
