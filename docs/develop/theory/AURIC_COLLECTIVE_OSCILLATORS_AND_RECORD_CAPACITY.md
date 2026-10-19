@@ -316,7 +316,7 @@ $$
 
 所以两个初始单点均值完全相同的输入 $\kappa,\kappa'$，其已转移事件概率差为 $(1-e^{-\gamma t})(\kappa-\kappa')$。
 
-当 $\gamma\tau>0$、$m\geq1$ 且完整保留“无转移”及每一个首次转移步数时，独立记录寄存器需要至少 $m+1$ 个可完全区分的方向。与此相对，在同一个给定终点 $t>0$，丢弃这些时间标签的系统通道只有 Choi 秩二，最小纯环境维数为二。
+当 $\gamma\tau>0$、$m\geq1$ 且完整保留“无转移”及每一个首次转移步数时，独立记录寄存器需要至少 $m+1$ 个可完全区分的方向。与此相对，对固定 $\gamma>0$ 和给定终点 $t>0$，丢弃这些时间标签的系统通道只有 Choi 秩二，最小纯环境维数为二。
 
 证明。先把标准振幅阻尼通道作为计算 (O.21) 的中间步骤。由 $K_0^\dagger K_0+K_1^\dagger K_1=I$，一步通道完全正保迹，且直接展开为
 
@@ -339,7 +339,7 @@ A_j=s_\tau c_\tau^{j-1}A,\qquad1\leq j\leq m.
 \tag{O.23}
 $$
 
-故一个保留时间记录的等距嵌入是
+故一个在标签读出前保留相干时间记录的等距嵌入是
 
 $$
 V_m\psi=D_t\psi\otimes|\mathrm{vac}\rangle
@@ -347,7 +347,7 @@ V_m\psi=D_t\psi\otimes|\mathrm{vac}\rangle
 \tag{O.24}
 $$
 
-几何级数给 $D_t^\dagger D_t+\sum_jA_j^\dagger A_j=I$。对任意输入 $\rho$，第 $j$ 分支的概率为 $s_\tau^2c_\tau^{2(j-1)}\rho_{44}$，求和得 (O.21) 的两事件概率。$e_4=101$ 每次向 $e_0=000$ 转移同时减少第一和第三位占据，不改变第二位，因此也给该式的三个单点均值。
+几何级数给 $D_t^\dagger D_t+\sum_jA_j^\dagger A_j=I$。实际取得经典时间标签时还要在该寄存器上执行规定的标签读出。对任意输入 $\rho$，第 $j$ 分支的概率为 $s_\tau^2c_\tau^{2(j-1)}\rho_{44}$，求和得 (O.21) 的两事件概率。$e_4=101$ 每次向 $e_0=000$ 转移同时减少第一和第三位占据，不改变第二位，因此也给该式的三个单点均值。
 
 当 $\gamma\tau>0$ 时，每一个 (O.23) 都非零，无转移分支也非零。若只读独立记录寄存器就要无误识别全部 $m+1$ 个标签，其承载状态必须两两正交，故至少需要 $m+1$ 维。(O.24) 达到这一标签维数；它没有断言新鲜环境乘积空间 $2^m$ 维是最小需求。
 
@@ -363,7 +363,7 @@ $$
 
 终点通道与有序记录资源不同的区分，与 [最小记录扩张卷 §§5—8](RECURSIVE_RELATIONAL_OBSERVATION_MINIMAL_RECORD_DILATIONS.md#8-balanced-terminal-channels-and-homogeneous-kraus-word-rank) 的合同一致；这里的具体秩二阻尼例不改变该卷的源特定秩公式。$\square$
 
-**定义 4.3（连续缩放与相位遗忘的区别）。** 对上述碰撞模型，转移角 $\theta_\tau=\arccos e^{-\gamma\tau/2}\sim\sqrt{\gamma\tau}$。若它由持续时间 $\tau$ 的 Hamiltonian 脉冲实现，角速度尺度是 $\theta_\tau/\tau\sim\tau^{-1/2}$。相反，固定耦合强度 $g$、每次角度 $g\tau$ 给 $\cos^{2\lfloor t/\tau\rfloor}(g\tau)\to1$，没有该有限速率阻尼。$\gamma$ 因而来自指定的更新与耦合规则。
+**定义 4.3（连续缩放与相位遗忘的区别）。** 对上述碰撞模型，在固定 $\gamma>0$、$\tau\downarrow0$ 时，转移角 $\theta_\tau=\arccos e^{-\gamma\tau/2}\sim\sqrt{\gamma\tau}$。若它由持续时间 $\tau$ 的 Hamiltonian 脉冲实现，角速度尺度是 $\theta_\tau/\tau\sim\sqrt\gamma\,\tau^{-1/2}$。$\gamma=0$ 时转移角恒为零。相反，固定耦合强度 $g$、每次角度 $g\tau$ 给 $\cos^{2\lfloor t/\tau\rfloor}(g\tau)\to1$，没有该有限速率阻尼。$\gamma$ 因而来自指定的更新与耦合规则。
 
 [相位增益卷，定理 13.2 与定义 13.3](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#13-recorded-and-discarded-phase-on-the-same-orbit) 的相位遗忘改变跨块相干，不改变对角占据；(O.21) 则是人口转移。这里 $\kappa$ 是输入的联合占据，那个相位圆的 $r$ 是通道相干传递强度。联合占据相关性也不自动意味着纠缠。条件归一化后的状态不能替代 (O.21) 的完整分支权重。
 
@@ -376,7 +376,7 @@ $$
 \tag{O.26}
 $$
 
-是等距嵌入，有限维中可补全为更大空间上的酉。它是 (O.24) 的标准仪器树推广，不作为新的 Stinespring 定理。策略程序、时钟记录和全部历史标签可以由同一个联合模型承载；这不供应未知状态依赖的外部选择。
+是等距嵌入，有限维中可补全为更大空间上的酉。它是 (O.24) 的标准仪器树推广，不作为新的 Stinespring 定理。策略程序、时钟记录和全部历史标签可以由同一个联合模型承载；这不供应未知状态依赖的外部选择。该表示规定允许实验的概率结构，不为所有互不相容实验同时预设确定结果。
 
 [B0 因果八读恢复](FIB_QUADRATIC_B0_CAUSAL_EIGHT_READ_RECOVERY.md) 给出指定二次读出模型、实际前缀 $JMJMJ$ 及 $\mathsf B_0$ 条件下的记录依赖策略：六次已有 TOTAL 读数之后，第六动作选 $J$，每个可达七读 FULL 子片至多含一个真正二次世界与一个仿射世界；可根据整个子片选择末动作，总计至多八读。其经典代数读出不能直接代入 (O.26) 当作量子仪器。两者共同需要动作由已有历史确定，并用于所有仍相容候选；逐个世界各有可行动作的 $\forall x\exists a_x$ 不提供一个共同动作 $\exists a\forall x$。
 
