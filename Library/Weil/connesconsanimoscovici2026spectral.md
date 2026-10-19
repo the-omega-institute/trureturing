@@ -11966,3 +11966,117 @@ $$
 Consequently GHC7--GHC8 control the fully transported trial expression too. Holding $Q$ and $R$ fixed while replacing only their inverse still gives GHC3/GHC6's separate $\|R\|^2$ allowance. The physical comparison here transports the initial quadratic and residual from their common actual coupling; it does not infer an unsaved value of $\|R\|$, construct a new trial or add a second surplus credit.
 
 This `repo-derived` application reuses the existing trace ideal, bounded perturbation and Schur/residual identities. Its additional paid quantity is the dimension-independent absolute error of the SAME complete physical Schur block under the Gamma model. It supplies no finite target matrix, actual retained or border sign, normalized ground-state approximation, complete regularized determinant limit or original same-source Robin upper. The inherited source/form identification remains conditional paper mathematics without Lean/kernel certification, and RH and strict Robin for every integer above5040 remain unresolved. No literature priority is asserted.
+
+### A signed Gamma model for the complete complex Fourier exterior
+
+Keep G1--G4's periodic Fourier diagonal and actual full complex Weil form on $I=(-d/2,d/2)$, with $c\ge2$, $d=\log c$, and integer $N\ge\max(1,d)$. The even exterior uses the normalized cosines from GHC1--GHC8. On the odd exterior use $s_n(x)=\sqrt{2/d}\sin(2\pi nx/d)$, $n>N$, and put $\omega_n=2\pi n/d$. Reflection splits the complete Gamma boundary into these two invariant sectors.
+
+The SAME image kernel already displayed after G6 is
+
+$$
+B_L(x,y)=\sum_{j\ge0}\frac{2\cosh(b_j(x-y))}{e^{b_jd}-1},
+\qquad b_j=2j+1/2.
+$$
+
+Its hyperbolic decomposition retains a positive cosh square and a negative sinh square. Thus the odd compression has the exact bounded-form series
+
+$$
+B_{\Gamma,N}^{\rm odd}
+=-\sum_{j\ge0}(1-e^{-b_jd})|k(b_j)\rangle\langle k(b_j)|,
+\qquad
+k(b)_n=\frac{2\omega_n(-1)^n}{\sqrt d\,(b^2+\omega_n^2)}.
+$$
+
+Indeed integrating $\sinh(bx)$ against $s_n$ gives $-2\sqrt{2/d}\,\omega_n(-1)^n\sinh(bd/2)/(b^2+\omega_n^2)$, which yields the displayed coefficient and sign. The source's full periodic Gamma correction is therefore not positive on both parities. The positive all-parity Neumann-resolvent completion uses a different odd reference; it is not substituted for this periodic decomposition.
+
+#### Pay the complete odd sum-to-integral error
+
+Reuse GHC1--GHC2's trace-class cell quadrature, with $F_{\rm o}(b)=|k(b)\rangle\langle k(b)|$. Directly from $\sum_{n>N}n^{-2}\le1/N$ and the decreasing resolvent summand,
+
+$$
+\|k(b)\|^2\le\min\left\{\frac d{\pi^2N},\frac1b\right\},
+\qquad
+\|k'(b)\|\le
+\min\left\{\frac{2b}{(2\pi N/d)^2},\frac2b\right\}\|k(b)\|.
+$$
+
+For the second norm bound enlarge $\sum_{n>N}(b^2+\omega_n^2)^{-1}$ to its integral on $(0,\infty)$; the first uses the full tail. Hence
+
+$$
+\|F_{\rm o}'(b)\|_1
+\le\min\left\{\frac{d^3b}{\pi^4N^3},\frac4{b^2}\right\},
+\qquad
+\int_0^\infty\|F_{\rm o}'(b)\|_1db
+\le\frac dN\left(\frac2{\pi^2}+\frac2\pi\right).
+$$
+
+Split this integral at $b=2\pi N/d$. The classical rational integral gives, with the SAME $\mathcal C_N(n,m)=(-1)^{n+m}/[2(n+m)]$,
+
+$$
+\frac12\int_0^\infty F_{\rm o}(b)\,db=\mathcal C_N.
+$$
+
+The positive bodies use strong limits, while the differences of each sample and its half-cell integral sum in trace norm as in GHC2. Separately, $d\ge\log2$ gives
+
+$$
+\sum_{j\ge0}e^{-b_jd}
+=\frac{e^{-d/2}}{1-e^{-2d}}\le\frac4{3\sqrt2}<1,
+\qquad
+\sum_{j\ge0}e^{-b_jd}\|k(b_j)\|^2<\frac d{\pi^2N}.
+$$
+
+Thus, using $\pi>3$,
+
+$$
+\boxed{
+\|B_{\Gamma,N}^{\rm odd}+\mathcal C_N\|_1
+<\frac dN\left(\frac3{\pi^2}+\frac2\pi\right)
+<\frac dN.}
+\tag{GHC9}
+$$
+
+Every Gamma rate remains. No individual positive body's trace integral is assumed finite. GHC9 is an application to the actual odd sine columns; the classical Hilbert Gram and trace-ideal tools are reused.
+
+#### Consume both signs in the full arithmetic operator
+
+Let $B_{\Gamma,N}^{\rm all}=B_{\Gamma,N}^{\rm even}\oplus B_{\Gamma,N}^{\rm odd}$ and define
+
+$$
+\mathcal C_N^{\rm signed}=\mathcal C_N\oplus(-\mathcal C_N).
+$$
+
+GHC2 and GHC9 give the complete complex-exterior comparison
+
+$$
+\boxed{
+\|B_{\Gamma,N}^{\rm all}-\mathcal C_N^{\rm signed}\|_1
+<\frac{5d}{4N},\qquad
+\|B_{\Gamma,N}^{\rm all}-\mathcal C_N^{\rm signed}\|<\frac dN.}
+\tag{GHC10}
+$$
+
+The operator-norm bound uses the maximum of the two parity blocks. Replace only this exterior Gamma boundary in the actual full complex operator, keeping the full pole and all prime-power terms. In particular the odd pole is $-2|\langle\sinh(x/2),f\rangle|^2$ and remains in the operator; no positive odd-pole or odd-Gamma assumption is used.
+
+Write $H_{\rm ext}^{\rm all}$ and $\widetilde H_{\rm ext}^{\rm all}$ for the actual and signed-model exteriors. G4's complete bounded perturbation and GHC10 give both the SAME floor
+
+$$
+\mathfrak b(c,N)=A\!\left(\frac{2\pi(N+1)}{\log c}\right)
+-K_{(\log c)/2}-\frac{\log c}{N}.
+$$
+
+Whenever $\mathfrak b>0$, the already used resolvent and trace-ideal inequalities apply with trace allowance $5d/(4N)$ and inverse norm $1/\mathfrak b$. At $N(c)=\lceil e^c\rceil$, the owned asymptotics give $\mathfrak b/c\to1$, so $\mathfrak b\ge c/2$ eventually. On all sufficiently large original FIB support levels,
+
+$$
+\boxed{\begin{aligned}
+\|(H_{\rm ext}^{\rm all})^{-1}-(\widetilde H_{\rm ext}^{\rm all})^{-1}\|_1
+&<\frac{5\log c}{c^2N(c)},\\
+\|S_{c,N(c)}^{\rm all}-\widetilde S_{c,N(c)}^{\rm all}\|_1
+&<\frac{5K_{(\log c)/2}^{\,2}\log c}{c^2N(c)}
+=O\!\left(\frac{(\log c)^3}{c}e^{-c}\right).
+\end{aligned}}
+\tag{GHC11}
+$$
+
+Here the physical Schur blocks retain all complex modes $-N,\ldots,N$, equivalently $N+1$ even and $N$ odd coordinates. Their SAME full coupling is $P_N^\perp V_LP_N$ with norm at most $K_L$, exactly as in GHC7. Both pole evaluations, every prime power, the original domain and every Gamma rate remain. The trace bound covers all $2N(c)+1$ coordinates without a rank factor. The original legal-trial transport from GHC7--GHC8 applies with the full signed exterior change; it introduces no reselected trial, separate surplus credit or inferred residual norm.
+
+This `repo-derived` application extends the quantitative model from the complex even sector to the entire complex physical form, with the negative odd boundary and pole explicitly retained. It does not establish positivity of either Schur block, a favorable joint prime discrepancy, the complete determinant limit, the original Robin strict upper or RH. The inherited source/form identification and these deductions remain paper mathematics without Lean/kernel certification. No literature priority is asserted.
