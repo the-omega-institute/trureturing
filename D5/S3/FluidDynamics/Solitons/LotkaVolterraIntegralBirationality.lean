@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Lotka–Volterra integrals and the last coordinate generate the rational function field. -/
+   digest: Lotka–Volterra integrals and the last coordinate generate the rational function field -/
 
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
