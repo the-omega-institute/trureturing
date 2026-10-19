@@ -1013,3 +1013,130 @@ $$
 The initial modulus is $1/2$. Both labels have probability $1/2$, and their conditional means are respectively $0,1$. Thus one branch decreases to zero, but the expected modulus remains $1/2$, and the recovery error remains $1-r/2$. Adding any independent record also leaves $c_n$ unchanged. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Readable phase length and recovery on the same AURIC orbit
+
+**Definition 16.1 (the fixed recovered probe).** Use precisely the feasible orbit of Definition 11.1, including $0<\beta\leq1/2$ and its ellipsoidal radius bound. Prepare the logical probe $|+_{02}\rangle=(|0\rangle+|2\rangle)/\sqrt2$ and use the single phase-independent recovery $R_{\overline d}$ of Theorem 8.1. On the ordered support $(|0\rangle,|2\rangle)$ its output is
+
+$$
+\rho_{r,\varphi}
+=R_{\overline d}N(w_\varphi)(|+_{02}\rangle\langle+_{02}|)
+=\frac12\begin{pmatrix}1&re^{i\varphi}\\re^{-i\varphi}&1\end{pmatrix}.
+\tag{P.69}
+$$
+
+For a differentiable state curve and a POVM $(E_y)$ define $p_y=\operatorname{tr}(\rho E_y)$ and $F_E=\sum_{y:p_y>0}(\partial_\varphi p_y)^2/p_y$. The local quantum Fisher information is the supremum over POVMs at the parameter value in question. This is the statistical distinguishability of this specified probe output, not an optimization over the original five-dimensional channel, inputs or ancillas. Arbitrary POVMs and the supplied probe/recovery are mathematical access assumptions; Assumption 1.2 does not install them as native operations.
+
+**Theorem 16.2 (AURIC probe sensitivity and the distinct recovery deficit).** For the same orbit and output (P.69),
+
+$$
+F_Q(\rho_{r,\varphi})=r^2,\qquad
+d\ell^2=\tfrac14F_Q\,d\varphi^2,\qquad
+d\ell=\tfrac r2|d\varphi|,\qquad
+\delta(N(w_\varphi))=1-r.
+\tag{P.70}
+$$
+
+The statistical line element is invariant under differentiable reparameterization. At $r=0$ the recovery deficit is one while every phase outcome distribution from this probe is constant. Thus recovery deficit does not supply a strictly advancing phase clock.
+
+Proof. Theorem 8.1 gives $R_{\overline d}N(w_\varphi)=\Psi_{re^{i\varphi}}$, proving (P.69); Theorem 8.2 gives the last equality of (P.70). For the remaining step use the symmetric logarithmic derivative characterization of quantum Fisher information as an attributed intermediate: S. L. Braunstein and C. M. Caves, [*Statistical distance and the geometry of quantum states*, DOI:10.1103/PhysRevLett.72.3439](https://doi.org/10.1103/PhysRevLett.72.3439). In the usual Pauli convention put
+
+$$
+\rho=\tfrac12(I+r\cos\varphi\,\sigma_x-r\sin\varphi\,\sigma_y),\qquad
+L=r(-\sin\varphi\,\sigma_x-\cos\varphi\,\sigma_y).
+$$
+
+The Pauli anticommutation identities give $\partial_\varphi\rho=(\rho L+L\rho)/2$ and $L^2=r^2I$. For completeness, Hilbert--Schmidt Cauchy--Schwarz applied to $E_y^{1/2}\rho^{1/2}$ and $E_y^{1/2}L\rho^{1/2}$ gives
+
+$$
+(\partial_\varphi p_y)^2
+\leq p_y\operatorname{tr}(\rho L E_y L),\qquad
+F_E\leq\operatorname{tr}(\rho L^2)=r^2.
+$$
+
+The two spectral projections of $L$ attain equality when $r>0$: both probabilities are $1/2$ at the calibrated phase and their derivatives are $\pm r/2$. When $r=0$ the state is $I/2$ and the supremum is zero. This is also the standard equatorial-qubit specialization of W. Zhong et al., [*Fisher information under decoherence in Bloch representation*, Eq. (11), DOI:10.1103/PhysRevA.87.022337](https://arxiv.org/abs/1212.0917); the qubit Fisher formula is not a new general result here.
+
+If $\varphi=f(s)$, the chain rule gives $F_s=(f'(s))^2F_\varphi$, so $F_s ds^2/4=F_\varphi d\varphi^2/4$. The line element therefore needs no external parameter name. It still needs an actual clock correspondence to define a rate or a unit of physical time. Finally $\rho_{0,\varphi}=I/2$ proves the stated obstruction. $\square$
+
+**Definition 16.3 (phase, winding and calibration).** The map $z(\varphi)=e^{i\varphi}$ satisfies $\partial_\varphi z=iz$, while an internal clock correspondence $\varphi=f(\tau)$ gives $\partial_\tau z=if'(\tau)z$ and $d\ell/d\tau=r|f'(\tau)|/2$ when the length derivative is taken along increasing $\tau$. Neither the Euler identity nor (P.70) determines $f$. A circle value identifies $\varphi$ only modulo $2\pi$; an unwrapped coordinate additionally requires a retained winding label and a chosen reference. The curve $(\cos\varphi,\sin\varphi,a\varphi)$ is such an augmented coordinate representation, not a deduction of an extra spatial dimension. No native calibration, winding register or physical time unit is supplied by these identities. The optimal local measurement in Theorem 16.2 can depend on the calibrated phase; a globally implementable estimation protocol requires its own readout and record contract.
+
+## 17. One persistent record model for recovery loss and phase sensitivity
+
+**Definition 17.1 (branch records on the physical output blocks).** On the five-dimensional output set
+
+$$
+\Pi=V_0V_0^\dagger+V_1V_1^\dagger,\qquad
+\Omega=TT^\dagger,\qquad \Pi+\Omega=I_5.
+$$
+
+At position $j$ supply a fresh record carrier with unit vectors $|e_{P,j}\rangle,|e_{Q,j}\rangle$. They are independent tensor factors, initially independent of the input. Record the fixed block distinction using the isometry
+
+$$
+F_jx=\Pi x\otimes|e_{P,j}\rangle+\Omega x\otimes|e_{Q,j}\rangle.
+$$
+
+During record construction, previously written factors are retained and are not recoupled, overwritten or reversed. The terminal recovery's access to them is specified separately. Put
+
+$$
+g_j=\langle e_{Q,j}|e_{P,j}\rangle,\quad c_j=|g_j|,\quad
+G_n=\prod_{j=1}^n g_j,\quad C_n=|G_n|,\quad G_0=C_0=1.
+\tag{P.71}
+$$
+
+Writing $F^{(n)}x=\Pi x\otimes E_P^{(n)}+\Omega x\otimes E_Q^{(n)}$ with $E_b^{(n)}=\bigotimes_{j=1}^n e_{b,j}$ describes one and the same finite joint realization. Erasing records means taking their partial trace; full quantum access means retaining the whole isometric output. These are different allowed-operation contracts, and neither is identified with the classical unknown-phase flags in Definition 14.1.
+
+**Theorem 17.2 (same-record recovery and readable-length law).** For Definition 17.1 applied after $N(w_\varphi)$, erasing the records gives exactly $N(G_nw_\varphi)$. Its optimal whole-five-output recovery error and the Fisher information of the fixed probe/recovery of Definition 16.1 obey
+
+$$
+\delta_n^{\rm erase}=1-rC_n,\qquad
+F_{Q,n}^{\rm probe}=r^2C_n^2,\qquad
+d\ell_n=\tfrac{rC_n}{2}|d\varphi|.
+\tag{P.72}
+$$
+
+For $c_j>0$ define $\Theta_n=-\log C_n$. Then
+
+$$
+\Theta_n=\sum_{j=1}^n-\log c_j,\qquad
+C_n\longrightarrow0\ \Longleftrightarrow\
+\sum_{j=1}^\infty-\log c_j=+\infty.
+\tag{P.73}
+$$
+
+In contrast, full quantum access to the records permits error $1-r$, and no smaller error. The joint recovered probe, before its records are discarded, has Fisher information $r^2$ for every finite $n$, including $C_n=0$. Hence a decrease in (P.72) is a restriction of access in this model, rather than destruction of the joint phase dependence.
+
+Proof. The orthogonality $\Pi\Omega=0$ makes $F^{(n)}$ an isometry, regardless of record overlap. The partial trace fixes diagonal blocks and multiplies $\Pi X\Omega$ by $\langle E_Q^{(n)}|E_P^{(n)}\rangle=G_n$. Equation (P.25) then gives $N(G_nw_\varphi)$. This vector is feasible since $|G_n|\leq1$. Theorem 8.2 gives its recovery error; (P.69) gives the probe off-diagonal entry $rG_ne^{i\varphi}/2$. A fixed phase shift $\arg G_n$ leaves Fisher information unchanged, so Theorem 16.2 proves (P.72), also at $G_n=0$.
+
+Full quantum access permits a CPTP left inverse of $\operatorname{Ad}_{F^{(n)}}$. Explicitly, with $F=F^{(n)}$, choose any fixed density matrix $\eta$ on the five-dimensional output and use
+
+$$
+\mathcal L(X)=F^\dagger XF+
+\operatorname{tr}[(I-FF^\dagger)X]\eta.
+$$
+
+Thus $\mathcal L\operatorname{Ad}_F=\mathrm{id}$ and the original recovery is achievable. Conversely any recovery of $\operatorname{Ad}_F N(w_\varphi)$ composes with $\operatorname{Ad}_F$ to give a recovery of $N(w_\varphi)$, so its error cannot be smaller than $1-r$.
+
+Apply $R_{\overline d}$ to the five-dimensional part of the joint probe. The result is
+
+$$
+\begin{aligned}
+\widetilde\rho_{n,\varphi}
+&=\tfrac12\bigl(|u_n\rangle\langle u_n|+|v_n\rangle\langle v_n|
++re^{i\varphi}|u_n\rangle\langle v_n|
++re^{-i\varphi}|v_n\rangle\langle u_n|\bigr),\\
+u_n&=|0\rangle E_P^{(n)},\qquad v_n=|2\rangle E_Q^{(n)}.
+\end{aligned}
+\tag{P.74}
+$$
+
+The vectors $u_n,v_n$ are orthonormal even if the record vectors overlap. Equation (P.74) is a parameter-independent isometric embedding of (P.69). Every POVM on its image pulls back to a qubit POVM, and every qubit POVM extends to the joint space, so its Fisher supremum is exactly $r^2$. This assertion concerns the recovered joint probe; it does not assert a value for the optimal Fisher information of the original five-output channel.
+
+The tensor-product inner product proves (P.71), and taking negative logarithms proves (P.73). If a factor vanishes, all later $C_n$ vanish and the extended strength is $+\infty$ from that stage onward; this denotes perfect binary record distinction, not infinite elapsed time. $\square$
+
+**Proposition 17.3 (strict differences with finite cumulative loss).** The same feasible orbit admits a fresh-record sequence with $c_j<1$ at every stage and $C_n\to e^{-1}>0$. For $r>0$, its erased-record recovery error tends to $1-re^{-1}$ and its fixed-probe Fisher information tends to $r^2e^{-2}>0$. Thus a new nonzero record distinction at every stage does not force unlimited strength or complete phase loss.
+
+Proof. Take a two-dimensional carrier at every position, $e_{P,j}=|0\rangle$ and $e_{Q,j}=c_j|0\rangle+\sqrt{1-c_j^2}|1\rangle$, with $c_j=e^{-2^{-j}}$. Then $\Theta_n=\sum_{j=1}^n2^{-j}=1-2^{-n}$, and Theorem 17.2 gives the limits. Conversely a uniform bound $-\log c_j\geq\eta>0$ implies $\Theta_n\geq n\eta$. These are respectively summable and nonsummable strengths, not assertions about physical rates. $\square$
+
+**Definition 17.4 (record scope and mathematical attribution).** Tensor-product dephasing and quantum Fisher information under decoherence are standard intermediates, as in Zhong et al. cited in Theorem 16.2. The constant-overlap record model is already [the history-record volume, Definition 119.1 and Theorem 119.2](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md#119-持续追加可区分记录的强度与熵). The present application uses the actual AURIC output projectors and the same record isometry to obtain the joint recovery, erased recovery and fixed-probe length formulas (P.72)--(P.74); it makes no priority claim for the product/logarithm criterion or isometric reversibility. $\Theta_n$ measures one binary distinction. Its divergence neither counts indefinitely many perfectly readable histories nor implies that Shannon information about a fixed binary label is unbounded. Fresh tensor storage, preservation and native synthesis are additional premises. Classical readout of only part of the records need not implement the full-quantum left inverse used above.
+
+## 追加锚（本行以下为增补区）
