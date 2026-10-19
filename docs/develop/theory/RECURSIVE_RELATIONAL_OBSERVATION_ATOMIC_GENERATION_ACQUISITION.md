@@ -1010,3 +1010,830 @@ $$
 命题9.3及12.6的原端点安装障碍、原完整 INITIAL 域的费用和既有固定模型陈述保持各自原范围。定理15.1给的是该新仪器内的实际有限取得与保留使用；定理16.2排除的是这些独立投影上的全部互逆，不是物理或普遍四表达不可能性。完整历史、物理年龄、任意内部切面、任意可调用视图互转、完整操作菜单上的路线一致与动力学交换、通用生成元最小性以及联合总费用最优性仍需各自的构造或证明。这些条件结论不构成空间、时间、边界与记忆一般共同过程目标的完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Birth-typed local growth and its causal reconstruction
+
+**Definition 17.1 (the local source LAB).** Use FARG §2's ordered syntax
+$t::=\alpha\mid\beta\mid\langle t,t\rangle$, with logical addresses in
+$\{L,R\}^*$ and root $\varepsilon$. LAB starts with one actually allocated
+known $\alpha$ root. Its only source changes are
+
+$$
+P_p:\alpha\longmapsto\beta,\qquad
+S_p:\beta\longmapsto\langle\beta,\alpha\rangle
+\tag{AA.65}
+$$
+
+at the indicated current logical leaf. All finite legal addressed event
+words are admitted. There is no deletion, reset, graft, sharing, rerooting,
+unknown seed, exposed allocation ordinal or independent serial clock.
+These are local operations, not FARG §3's simultaneous global substitution
+$\rho$. Sections 17–23 concern this separate model; the sources and INITIAL
+interfaces of §§1–16 retain their stated hypotheses.
+
+For a present logical address define its birth type by
+
+$$
+b(p)=\begin{cases}
+\beta,&p\text{ ends in }L,\\
+\alpha,&p=\varepsilon\text{ or }p\text{ ends in }R.
+\end{cases}
+\tag{AA.66}
+$$
+
+Let $\mathcal D$ be the finite ordered terms having no $\alpha$ leaf at an
+$L$-ending address. For $t\in\mathcal D$, let $I(t)$ be its branch addresses
+and $A(t)$ the present addresses born $\alpha$ whose current subtree is not
+$\alpha$. Its generation events are
+
+$$
+E(t)=\{S_p:p\in I(t)\}\ \cup\ \{P_p:p\in A(t)\}.
+\tag{AA.67}
+$$
+
+At each address the possible local event list is empty, $P_p$, $S_p$, or
+$P_pS_p$, according to its birth type and final constructor. Put an edge
+$P_p\prec S_p$ when both exist, and an edge from the creating split
+$S_{\operatorname{parent}(p)}$ to the first local event at $p$, when that
+event exists. Their transitive closure is the generation causal order.
+Let $\mathcal H(t)$ be the actual successful $P/S$ words ending at $t$;
+requests, reads, maintenance, outputs and waiting are not events of this word.
+
+**Theorem 17.2 (exact source and event domain).** The reachable terms are
+exactly $\mathcal D$. For every $t\in\mathcal D$, $\mathcal H(t)$ is exactly
+the set of linear extensions of the labelled finite order (AA.67).
+Every prefix of every such extension is an actual legal source execution.
+Moreover the labelled causal order, even without a chosen linear extension,
+recovers $t$.
+
+Proof. A split creates a left $\beta$ and a right $\alpha$; neither operation
+turns anything into $\alpha$. This proves the necessary leaf condition.
+Conversely construct a target subtree from its specified birth type:
+promote a born-$\alpha$ root if its target is not $\alpha$; split if its
+target is a branch; then construct both children with their prescribed
+birth types. A born-$\beta$ target cannot be $\alpha$ by the leaf condition.
+Induction on the target term proves reachability.
+
+Every actual event has its creating split and its earlier local promotion,
+if required, before it, and occurs only once. Thus its word is an extension.
+Conversely take the next event of an extension. Its logical position has
+already been created, by its parent split or by initialization. If it is
+$P_p$, that position is still the born-$\alpha$ leaf: a split there would
+have required this promotion earlier. If it is $S_p$, its required promotion
+has occurred, or it was born $\beta$. No descendant event can have consumed
+this leaf, because every such event requires $S_p$ earlier. The proposed
+operation is therefore enabled. Induction proves legality at every prefix
+and the final term prescribed by (AA.67).
+
+For reconstruction, the present logical positions are the root together
+with both children of every listed split. A position is a branch exactly
+when its split is listed. At a remaining leaf it is $\beta$ exactly when
+it was born $\beta$ or its promotion is listed, and otherwise is $\alpha$.
+The empty event set recovers the initial $\alpha$. This also proves that
+causal membership and serial order are different observations. The generic
+finite-poset execution/extension principle is the existing
+`EnabledPathSwapConnectivity.result`; the source-specific obligation above
+identifies its enabled events with the actual operations (AA.65).
+$\square$
+
+**Definition 17.3 (source space and source boundary).** Realize the source
+by an oriented finite rooted tree $C(t)$: $C(\alpha)$ is terminal,
+$C(\beta)$ has one terminal left child, and $C(\langle u,v\rangle)$ has
+ordered children $C(u),C(v)$. Write $S_0$ for its actual address support and
+$B_0$ for its actual terminal-address antichain. A unary marker is material;
+it is not a logical growth target. Source edges alone define these views,
+excluding the auxiliary record edges introduced in §19.
+
+Arity recursively parses a valid $C(t)$ as terminal $\alpha$, unary
+$\beta$, or binary branch. Prefix closure of $B_0$ gives $S_0$, and maximal
+elements of $S_0$ give $B_0$. Hence $S_0$, $B_0$, and the labelled causal
+order of Theorem 17.2 recover one another at settled source cuts. This is
+an application of the existing ordered-tree/support method, with the unary
+case expressly retained; it supplies no chosen serial extension.
+
+## 18. Exact chronology remaining after every split is recorded
+
+**Definition 18.1 (promotion erasure).** Fix $t\in\mathcal D$, put
+$s=|I(t)|$, and let $\Sigma(t)$ consist of the words listing $I(t)$ once,
+with every branch ancestor before its branch descendants. Erasing all
+promotions defines $\pi:\mathcal H(t)\to\Sigma(t)$. For
+$\sigma=(v_1,\ldots,v_s)$ write $\operatorname{pos}_\sigma(v_i)=i$.
+For each $p\in A(t)$ set
+
+$$
+\ell_p=\begin{cases}0,&p=\varepsilon,\\
+\operatorname{pos}_\sigma(\operatorname{parent}(p)),&p\ne\varepsilon,
+\end{cases}
+\qquad
+u_p=\begin{cases}\operatorname{pos}_\sigma(p),&p\in I(t),\\
+s+1,&p\notin I(t).
+\end{cases}
+\tag{AA.68}
+$$
+
+Gap $j$, for $0\le j\le s$, is after exactly $j$ splits. Let $\Gamma(t,\sigma)$
+be the assignments $\gamma$ with $\ell_p\le\gamma(p)<u_p$ for every
+$p\in A(t)$, and put $m_j(\gamma)=|\{p:\gamma(p)=j\}|$.
+
+**Theorem 18.2 (exact erasure fibre and recovery criterion).** For every
+$t\in\mathcal D$ and every $\sigma\in\Sigma(t)$, the split word is realized
+on this same source domain, and
+
+$$
+F_t(\sigma):=|\pi^{-1}(\sigma)|
+=\sum_{\gamma\in\Gamma(t,\sigma)}\ \prod_{j=0}^{s}m_j(\gamma)!.
+\tag{AA.69}
+$$
+
+In particular, source plus the complete split chronology determines the
+complete generation word on this fibre if and only if
+
+$$
+u_p=\ell_p+1\quad\text{for every }p\in A(t).
+\tag{AA.70}
+$$
+
+For the task of returning every indexed actual generation event, any
+additional label, conditional on fixed $(t,\sigma)$, must distinguish
+$F_t(\sigma)$ values. A fixed-width binary content field consequently needs
+at least $\lceil\log_2 F_t(\sigma)\rceil$ bits. This conditions on fixed
+initialization, orientation, settled phase, source binding and rights;
+it supplies no extra runtime length, allocation order or other archive.
+
+Proof. For any $\sigma$, promote each born-$\alpha$ branch immediately
+before its listed split; after the splits promote the born-$\alpha$ final
+$\beta$ leaves. Creating splits have already occurred, so this is a lift.
+In any lift, $P_p$ must be after its creating split and before its own split,
+if it has one. These are exactly the gap inequalities (AA.68).
+
+Fix an assignment $\gamma$. In each gap choose any ordering of its
+$m_j$ distinct promotions. The surrounding split chain and these chosen
+orders respect every generating edge of (AA.67): the creator precedes its
+child's promotion; a promotion precedes its own split; a born-$\beta$
+child split follows its creator by the ancestor order in $\sigma$.
+There is no further precedence between promotions in the same gap.
+Theorem 17.2 makes every resulting word executable. Conversely a lift
+uniquely specifies its gaps and their promotion orders. This is a bijection,
+proving (AA.69), including empty products and $0!=1$.
+
+Each interval in (AA.68) is nonempty. If one has two gaps, hold all other
+assignments fixed and use those two choices; they give different words.
+If every interval is a singleton, its forced gap is $\ell_p$. These
+$\ell_p$ are distinct: the root contributes at most one promotion with
+index zero, and each split creates exactly one born-$\alpha$ child, its
+right child. Thus no forced gap contains two promotions, and every
+factorial in the sole summand is one. This proves (AA.70). When $s=0$,
+the two possible endpoints are $\alpha$ and $\beta$, with respectively
+zero promotions and the single root promotion; both fibres have size one.
+
+Two distinct lifts have the same length and differ at an indexed event.
+An exact retained label identifying them would force one answer to that
+index on both. Pigeonhole counting proves the label bound. Enumeration
+of the finite gap assignments and within-gap permutations gives a matching
+conditional alphabet; this last finite coding fact is not an acquisition
+or total-storage theorem. $\square$
+
+**Theorem 18.3 (split order cannot remove a genuine endpoint ambiguity
+uniformly).** For each $t\in\mathcal D$, the following are equivalent:
+$\pi$ is injective on all of $\mathcal H(t)$; $|\mathcal H(t)|=1$; and
+at every branch $v$ at least one of
+
+$$
+t_{vL}=\beta,\qquad t_{vR}=\alpha
+\tag{AA.71}
+$$
+
+holds. This does not say that every individual split fibre is ambiguous
+whenever the endpoint is ambiguous.
+
+Proof. If (AA.71) holds, at each split at most one child has any generation
+events. The local prefix is forced and the unique nonempty child list,
+if any, is forced recursively. Hence the complete list is unique.
+Conversely suppose both child subtrees have grown at some branch $v$.
+Execute the events creating $v$ and its split without yet growing either
+child. Both $S_{vL}$ and $P_{vR}$ are now enabled. Execute them adjacently
+in either order. They leave the same source and the same occurred event
+set; complete by any one extension of the remaining events. Such a
+completion exists by the finite-order correspondence in Theorem 17.2.
+The two words differ, while erasing the swapped promotion leaves exactly
+the same split word. Thus $\pi$ is not injective. $\square$
+
+**Proposition 18.4 (nonuniform fibres and the separate leaf-split model).**
+Let $t=\langle\langle\beta,\alpha\rangle,
+\langle\beta,\alpha\rangle\rangle$. After the common prefix
+$P_\varepsilon S_\varepsilon$, its three possible words are
+
+$$
+S_LP_RS_R,\qquad P_RS_LS_R,\qquad P_RS_RS_L.
+\tag{AA.72}
+$$
+
+The fibres over split words $(\varepsilon,L,R)$ and
+$(\varepsilon,R,L)$ have sizes two and one. In particular there is no
+finite set $K_t$ and bijection
+$\mathcal H(t)\simeq\Sigma(t)\times K_t$ whose first coordinate is $\pi$.
+
+Proof. The remaining required events are $S_L,P_R,S_R$, with the sole
+precedence $P_R\prec S_R$. These give exactly (AA.72). A product over
+$\Sigma(t)$ would have constant fibre size $|K_t|$, a contradiction.
+$\square$
+
+For comparison, define the separate growing leaf-split source by one
+initial uncoloured leaf and the sole local operation
+$*\mapsto\langle *,*\rangle$. At the ordered skeleton of this $t$, its
+histories are exactly the two branch-ancestor orders in $\Sigma(t)$.
+Its local left/right records count descendant splits only. Projection
+$\pi$ is onto, but is not a bijection and has no uniform independent
+complement here. Split-only records are sufficient for the split-recall
+task, not for LAB's complete $P/S$ recall. This comparison fixes the LAB
+endpoint and admitted schedules; it does not replace them by the leaf-split
+model or impose a deterministic schedule.
+
+The comparison also holds for genuinely acquired split records: start
+empty and, whenever an actual $S_p$ occurs, initialize its own empty tape
+and append its side at every proper branch ancestor, ignoring all $P$
+events. Each split appends exactly the
+new split to those local projections. By the same recursive child-shuffle
+interpretation, the tapes and current skeleton recover exactly $\sigma$.
+Thus actual online retention of the complete split chronology still leaves
+precisely the fibre (AA.69); the obstruction does not depend on treating
+$\sigma$ as an unacquired symbolic input.
+
+## 19. Acquired local records for all generation events
+
+**Definition 19.1 (ancestral routing tapes).** For an actual word $w$ ending
+at $t$, and each branch $v$, retain the word $W_v(w)$ obtained by taking
+all events strictly below $v$ in their actual order and writing their first
+side $L$ or $R$ below $v$. Events outside that subtree and events at $v$
+itself contribute nothing to $W_v$. These are auxiliary acquired records,
+not part of bare $S_0$ or $B_0$. Write $\mathcal W(w)=(W_v(w))_{v\in I(t)}$.
+
+For a reachable subtree $u$ born with type $b$, having $a$ current
+$\alpha$ leaves and $c$ current $\beta$ leaves, its event count is
+
+$$
+e_b(u)=a+2c-1-\mathbf1_{\{b=\beta\}}.
+\tag{AA.73}
+$$
+
+Indeed splits increase total leaves by one; promotions increase the number
+of $\beta$ leaves by one, while splits leave that number unchanged.
+Thus its split count is $a+c-1$ and its promotion count is
+$c-\mathbf1_{\{b=\beta\}}$. Set
+$x_v=e_\beta(t_{vL})$, $y_v=e_\alpha(t_{vR})$.
+
+**Theorem 19.2 (source-relative full-order supplement).** For every
+$t\in\mathcal D$, the map $w\mapsto\mathcal W(w)$ is a bijection from
+$\mathcal H(t)$ to the product of binary-word sets with respectively
+$x_v$ left and $y_v$ right symbols. Consequently
+
+$$
+|\mathcal H(t)|=F_{PS}(t)
+:=\prod_{v\in I(t)}\binom{x_v+y_v}{x_v}.
+\tag{AA.74}
+$$
+
+The tapes recover every indexed generation event using the current source.
+They can be acquired online without a future endpoint or decoding the old
+history: a successful event at $p$ appends its actual side at every proper
+logical ancestor, and a newly split $p$ receives an empty tape. Both
+promotions and splits perform these appends. After each completed update,
+all previous indexed answers remain correct and the new last answer is
+the actual new event.
+
+Proof. At a subtree root the local prefix is forced: empty, $P$, $S$, or
+$PS$, as in Definition 17.1. After that prefix, its remaining event list
+is exactly a shuffle of the two child lists. The word $W_v$ specifies
+which child supplies each successive event. Conversely, take any two
+child lists and any binary word with their lengths as multiplicities;
+consume the next event of its specified child at each symbol. Both child
+orders and the common root prefix are respected, so Theorem 17.2 proves
+actual executability. Induction on the finite term gives the asserted
+bijection and the ordinary shuffle count (AA.74), including zero child
+counts and an empty product.
+
+Here is direct indexed decoding. Use one-based indices; zero is out of
+range. At a subtree first handle its forced root prefix. For a later
+index $j$, scan to the $j$th symbol of its actual tape. A missing symbol
+returns OutOfRange. Otherwise count occurrences of that side through this
+symbol, obtaining $i$, and descend to that actual child with index $i$.
+Each descent goes to a smaller subtree; the occurrence count is within
+that child's event count. Thus every in-range call returns its literal
+kind and full logical address, and every out-of-range call is checked
+without following a nonexistent link.
+
+For online acquisition, projecting $w$ followed by an event at $p$ changes
+exactly those $W_v$ for which $v$ is a proper ancestor of $p$, by the one
+actual side appended at the end. A split creates no strict descendant
+event at its own new tape. These identities prove the invariant by induction
+on actual events, starting from the allocated $\alpha$ and no tapes.
+No next side is guessed, and no future subtree is an input. $\square$
+
+For fixed $t$, the tapes have exactly $F_{PS}(t)$ possible contents.
+Any supplement supporting all indexed generation queries must separate
+these words, so it needs that many conditional values. The finite-product
+alphabet attains this bound, but the literal tapes use more storage than
+its logarithm. Standard enumerative coding may number this product: if
+$L$ positions in a length-$q$ tape are $j_1<\cdots<j_x$, the colex coordinate
+is $\sum_{i=1}^{x}\binom{j_i-1}{i}$. This is the classical constant-weight
+ranking method, obtained by reading the coordinate order backwards in
+Cover's enumerative method, not a new ranking theorem. Mixed-radix packing
+would use $\lceil\log_2F_{PS}(t)\rceil$ content bits. Its arithmetic,
+framing, counts, backing and update work would be additional. The actual
+retention construction here uses literal tapes and claims no installed
+packed variant. A coordinate of radix one contains no conditional order
+information; a larger coordinate cannot be omitted while fixing $t$ and
+all other coordinates, because the product bijection then supplies
+histories differing at an allowed indexed query.
+
+## 20. Initialized acquisition, callable recall and a real next action
+
+**Assumption 20.1 (one owned LAB installation).** Fix a source-independent
+finite driver and its actual initialized input/output connections. Its
+allocator constructs the known $\alpha$ root and returns a reference bound
+to that very object, with current exclusive source read/write authority.
+It also supplies owned auxiliary records and finite work storage. Each
+fresh object returns its real reference and the rights needed to initialize
+and later read or extend it. Source and record rights remain current during
+the stated finite operations; no other writer, revocation, crash or interrupt
+is admitted. Every claimed completed operation has sufficient finite fresh
+material and workspace. Reference equality, null tests, individual field
+reads/writes, allocation, bit input/output and local acknowledgement are
+explicit ideal primitives with their own charges. References are actual
+bindings, not arbitrary numeral-to-object casts; their bit costs are not
+unit-size assumptions.
+
+Allocation has no observable quota or exhaustion branch in this ideal
+service. The assertions quantify finite executions with the required
+finite material supplied, not executions of an unspecified fixed-capacity
+device. If current capacity, allocation failure or a material-supply action
+is made observable, that resource state and its legal continuations must
+also enter the task; the content kernels of §21 alone are not asserted for
+that enlarged model.
+
+The source representation has parent, left and right fields. In addition,
+each source vertex has a distinct auxiliary header-reference field,
+initially null; it is excluded from the source-edge projection $S_0$.
+At a logical split position that field binds an actual tape header with
+head and tail references. A tape cell has a side bit and a next reference.
+The owner retains every source vertex, header and tape cell. Headers and
+links do not stand for unconstructed words. A work arena supports charged
+finite buffers and their clearing/reuse. The driver, root slot, authority,
+input and output connections are installed before an arbitrary schedule is
+supplied, with no source-dependent code or response table.
+
+**Definition 20.2 (requests and phases).** Use disjoint three-bit request
+tags for Tag, $P$, $S$, HasPromotion, HasSplit, FetchGrowth and Next.
+An address payload is $A(p)=1^{|p|}0p$, with $L,R$ encoded by bits.
+An index payload is $U(k)=1^k0$, $k\ge0$. The first five tags take $A(p)$;
+the last two take $U(k)$. The remaining three-bit tag returns BadFrame.
+These are prefix-free complete frames. Growth commands at an absent,
+branch, or wrong-type address return a tagged refusal without a source
+change; a missing right or wrong phase instead disables the primitive.
+Tag returns $\alpha,\beta,\mathsf{branch},\mathsf{absent}$. HasPromotion
+and HasSplit use (AA.67), returning false at absent addresses. FetchGrowth
+uses Theorem 19.2. Invalid indices return OutOfRange. Use distinct fixed
+three-bit reply tags for Tag, Boolean, Refusal, Growth, Recall, Next,
+OutOfRange and BadFrame. Their payloads are respectively a two-bit source
+tag, one Boolean bit, a two-bit refusal reason, a kind bit followed by
+$A(p)$ for Growth or Recall, two such kind/address pairs for Next, and
+empty payloads for the last two cases. Thus the result passed to Print is
+an actual finite word with a specified encoding.
+
+Ready has root cursor, empty request and pending-output fields, no unfinished
+source edit or tape append, and current source/record/input/output rights.
+The following phases are a finite control graph whose loops operate on
+actual finite lists and links.
+
+1. Receive obtains one bit in an occupied pending latch. It writes that bit
+   into the request backing before clearing the latch and enabling the next
+   input. Address-length marks or index marks are really constructed. The
+   parser retains its tag, subphase and remaining-length marks. A proper
+   frame prefix waits for its unsupplied suffix and produces no answer.
+2. Navigate follows the actual root links for acquired address bits, testing
+   logical arity before each child. It retains the root binding, current
+   cursor and remaining path; a unary marker cannot be followed as a logical
+   child. Guard tests the actual target and current authority. A query reads
+   the same source/tapes; it does not consult a prospective endpoint.
+3. For an enabled growth, Reserve obtains its finite required fresh source,
+   header and tape material before editing. Pending retains the actual
+   kind, target reference/address and ancestor-maintenance cursor. For $P$,
+   attach one new terminal left marker. For $S$, reuse the old unary marker
+   as the new left logical $\beta$ root: attach its new left marker, attach
+   the new right $\alpha$ root to the old root, and bind the empty tape
+   header there. Parent fields are initialized to these actual parents.
+   This implements (AA.65) with no source vertex deletion.
+4. Maintain starts from the actual edited target and walks its parent chain.
+   At each proper logical ancestor, compare the traversed child's reference
+   with that ancestor's two child fields, read its bound tape header and
+   append the corresponding side. The pending cursor records exactly which
+   ancestors remain. A new cell is initialized and linked before the header's
+   tail is advanced; pending append references/subphases remain explicit.
+   No input or query is admitted during Reserve, editing or maintenance.
+5. BuildAnswer constructs and seals a finite tagged reply. Print traverses
+   that backing and emits precisely its bits, followed by End. The supplied
+   local acknowledgement then enables Return. Return reaches the same root,
+   clears/reuses the request, index, traversal, append and output scratch,
+   and only then reenters Ready. No external acknowledgement arrival is
+   presumed; the local acknowledgement edge is part of Assumption 20.1.
+
+A recall traversal retains its acquired index marks, current subtree,
+current tape cursor, within-side counter, accumulated address and pending
+answer. Its loops implement Theorem 19.2 with backed counters. Thus an
+unbounded index is not an unbounded finite-control state. During all phases
+the joint state contains these fields, the actual source, auxiliary backing,
+current grants and program counter. The phase graph does not erase busy
+states from the process. Its inverse claims below are only at Ready.
+
+**Theorem 20.3 (completion-conditional acquired service).** Under
+Assumption 20.1, every actually received finite complete request other than
+Next in Definition 20.2, beginning at Ready, has a finite returned reply,
+with real output and return to Ready on that same source binding. Arbitrary
+finite interleavings of these requests preserve the actual-word/tape
+invariant of Theorem 19.2. Every finite legal LAB generation word can occur
+in such an execution. A partial request has only its acquired prefix and pending
+state; supplying a finite completion suffices for return.
+
+Proof. Induction on the number of received bits gives exactly the request
+backing and parser marks for that prefix: a bit is not released from its
+latch before its copy exists. The self-delimiting length or index marks
+therefore supply exactly the requested finite value at completion. A finite
+address traversal either reaches its actual subtree or detects its first
+blocked edge. The source arity decoder gives Tag, legality and the event
+membership tests. Fetch terminates by finite tape scans and strictly smaller
+subtrees, as proved in Theorem 19.2; counters are ordinary finite list
+operations, not answers supplied by a primitive oracle.
+
+The source template is finite. A growth address of depth $d$ has exactly
+$d$ proper logical ancestors; their references remain bound after the local
+edit. Maintain shortens this finite parent chain each iteration and appends
+exactly the required side at each. Pending fields prevent an unfinished
+append from becoming a service cut. The projection identity in Theorem 19.2
+then restores the invariant before printing. Refusals and queries preserve
+the source and tapes. Finite output traversal prints exactly its sealed
+reply; End, local acknowledgement, root return and finite scratch cleanup
+restore Ready. No later operation reads a cleared occupied latch or a
+released scratch field.
+
+Compose these arguments by induction on a finite sequence of completed
+requests. For any given finite legal generation word, supply its addressed
+$P/S$ frames in that order with sufficient finite material; the guards accept
+each by Theorem 17.2. The same fixed driver thus admits all the stated
+schedules. A proper input prefix has no enabled missing bit or premature
+answer; the proof resumes if a finite completion is supplied. No assertion
+of an actually realized infinite input, infinite run or uniform storage
+bound follows. $\square$
+
+**Definition 20.4 (the internal consumer Next).** After receiving $U(k)$,
+Next first calls the actual retained FetchGrowth handler without an outer
+return. OutOfRange returns without growth. Otherwise let its actual result
+be $(e,p)$. Navigate from the bound root to that same historical address
+$p$ in the current source. Follow logical left children while the current
+subtree is a branch, reaching a current leaf $q$. Its current tag selects
+$P_q$ if $\alpha$ and $S_q$ if $\beta$. Execute that source operation and
+its tape maintenance, and output the acquired old event $(e,p)$ and the
+actually executed new event and address. Finish Print, acknowledgement and
+Return as in Definition 20.2. The internal call retains its index, result,
+continuation phase and references; it does not assume a received answer
+from a separate unbound converter.
+
+**Theorem 20.5 (retained order selects a lawful operation on the same
+source).** Under Assumption 20.1, every complete Next request beginning at
+Ready returns as specified. At an in-range index it performs one genuine
+enabled LAB growth on the same source, preserves all earlier recall answers and makes its new
+event callable at the next Ready. Equal source and equal complete split
+chronology can nevertheless lead to different Next outputs and successors.
+The completion and invariant assertions extend to arbitrary finite
+interleavings of all seven request kinds.
+
+Proof. Every historical event address is still a logical position: there
+is no source deletion and a split preserves its root position. Navigation
+to $p$ therefore succeeds. The finite left descent reaches a logical leaf,
+whose tag has exactly one enabled operation in (AA.65). Current exclusive
+rights, retained source binding and finite material give its actual execution,
+rather than a simulation of a different tree. Theorem 20.3 supplies
+maintenance, real output and return. Its invariant says that the new word
+is the old word followed by this actual event; all previous entries persist.
+The same finite-output argument handles OutOfRange without growth.
+Induction on completed requests now extends Theorem 20.3's invariant and
+return assertion to interleavings that include Next.
+
+For a concrete separation take
+$t'=\langle\langle\beta,\alpha\rangle,\beta\rangle$ and the two words
+
+$$
+P_\varepsilon S_\varepsilon S_LP_R,
+\qquad P_\varepsilon S_\varepsilon P_RS_L.
+\tag{AA.75}
+$$
+
+Their common split word is $(\varepsilon,L)$, but FetchGrowth$(3)$ returns
+$S_L$ and $P_R$, respectively. Next$(3)$ thus descends to $LL$ and $R$,
+respectively. Both current leaves are $\beta$, so the actual enabled next
+operations are $S_{LL}$ and $S_R$. Their source successors and returned
+addresses differ. All initial control, current rights and endpoint source
+are the same; the acquired tape distinction is actually consumed. This
+finite witness illustrates the class-level obstruction of §18, rather than
+replacing its proof. $\square$
+
+## 21. Independent meanings, task kernels and settled dynamics
+
+**Definition 21.1 (two declared tasks on one process).** Fix the installation,
+root binding, rights and Ready domain of §20. The causal task $Q_c$ consists
+of Tag, HasPromotion, HasSplit and addressed $P/S$, with their complete
+finite replies, enabledness/refusals and resulting settled source. Records
+are auxiliary to this task and are not permitted selector inputs. The full
+generation task $Q_g$ additionally permits FetchGrowth and Next, with
+Next's returned pair and actual source/record successor. Its settled semantic
+state is the current source and routing tapes with this fixed binding and
+rights. Input, pending state and output are empty at Ready.
+
+Task equivalence compares the same future finite request sequences, their
+legality and outputs, and the corresponding semantic successors at every
+step. These are semantic service tasks. Neither task exposes allocator
+numerals, obsolete scratch identities, elapsed primitive ticks, the request
+archive, or arbitrary intermediate controller cuts. The actual process
+contains those intermediate transitions and resources; they have not been
+identified with successful growth events. Equality of source and record
+objects below means rooted oriented equality of their contents and actual
+binding relations in this fixed installation, disregarding raw fresh-name
+spellings. It does not compare unrelated roots or different authorities.
+
+Let $T_c$ be the labelled causal order of actual creation/lifecycle events,
+$T_s=\pi(w)$ the actual split word, and $T_g=w$ the actual successful
+generation word. Complete controller chronology $T_{\rm ctl}$ instead
+records input, source edits, tape updates, query work, printing and return;
+it is not any of these three observations.
+
+Memory $M_c$ selects the actual retained source fields and the bound service
+entry of §20 restricted to $Q_c$, with its present authority; attached tape
+backing is not part of this observation.
+Memory $M_g$ is the retained source plus actual attached tapes, their live
+readable backing and the §20 callable driver. These are acquired objects,
+not tables of answers to hypothetical requests. Define the expressly
+supplemented spatial and boundary views
+
+$$
+S_g=(S_0,\mathcal W),\qquad B_g=(B_0,\mathcal W).
+\tag{AA.76}
+$$
+
+The tape component denotes actual attached local record contents. These
+are not claims that bare geometry contains serial order, nor unrestricted
+copies of the entire controller history in each view.
+
+**Theorem 21.2 (exact task recovery and route agreement).** On the stated
+Ready domain, $S_0,B_0,T_c,M_c$ separately have exactly the $Q_c$ task
+kernel and recover one another. Likewise $S_g,B_g,T_g,M_g$ separately have
+exactly the $Q_g$ task kernel and recover one another. All these mathematical
+recovery routes agree on their declared actual images. They commute with
+the declared tasks' lawful settled operations, including the complete
+Next reply and its actual successor. The bare $S_0,B_0,T_c$ cannot generally
+recover $T_g$, even if $T_s$ is additionally supplied. No inverse for
+$T_{\rm ctl}$ or for arbitrary busy cuts is asserted.
+
+Proof. Definition 17.3 converts $S_0$ and $B_0$ and decodes $t$.
+Theorem 17.2 converts $t$ to and from $T_c$. Traversing the actual backing
+of $M_c$ gives the same term; the fixed retained driver and rights describe
+its source-backed memory expression. All $Q_c$ replies and source updates
+are functions of this $t$. Conversely distinct finite ordered labelled
+terms have different Tag replies at some logical address: descend through
+common branches to their first different constructor or leaf type. Thus
+$Q_c$ equivalence is exactly equality of $t$, giving each asserted kernel.
+Different acquired tapes do not affect this smaller task, because it has
+neither recall nor a selector reading them.
+
+For the full task, source decoding and Theorem 19.2 reconstruct $w$ from
+either supplemented geometry or $M_g$'s readable backing. In the reverse
+direction execute the supplied finite $w$ from the known $\alpha$, with
+its specified ancestral appends, to reconstruct exactly $t,\mathcal W$;
+then take source support, terminals or the corresponding retained-object
+description. This mathematical reconstruction does not install new rights
+from a description. The actual callable object exists by §20, under its
+separate present-access premises. Every algorithm uses the same $w$ and
+actual-source interpretation, so every route returns the view of that same
+semantic state. Inverse and triangle identities follow from these explicit
+round trips, not from choosing independently compatible representatives.
+
+Equal $t,\mathcal W$ gives identical guards, recalls, selected leaves,
+replies and source/record updates by §§19–20. For a successful event $e$,
+its reconstructed word becomes $we$ under either order of recovery and
+update. A refusal or ordinary query leaves $w$ unchanged; Next either
+refuses or chooses the same $e$ by the same recalled event and current
+left descent, then makes that very update. Induction gives agreement for
+every finite request sequence and all its settled successors. Distinct
+words are separated by FetchGrowth at a first differing index, or by
+in-range versus OutOfRange if one is a proper prefix. Hence the task
+kernel is exactly equality of $w$, separately for each full view.
+
+Equation (AA.75) proves the stated failure for the bare views plus split
+order. Finally two executions differing only by an extra completed Tag
+query have identical $t,w,\mathcal W$ but different $T_{\rm ctl}$. During
+Receive an acquired index prefix or during Maintain an unprocessed ancestor
+also changes the next lawful controller action while settled source data
+alone omit it. These distinctions explain both the Ready restriction and
+the separate chronology domains. $\square$
+
+## 22. Same-run resources and the literal-journal baseline
+
+**Proposition 22.1 (located construction counts).** In a finite completed
+LAB run let $P,S,N$ be the numbers of successful promotions, splits and
+all generation events, including those chosen by Next. Let $a,c$ be the
+current leaf counts and let
+
+$$
+D=\sum_{e\text{ in the actual generation word}}|\operatorname{addr}(e)|.
+\tag{AA.77}
+$$
+
+Then the source has
+
+$$
+P=c,\qquad S=a+c-1,\qquad N=a+2c-1,\qquad
+V=1+P+2S=2a+3c-1
+\tag{AA.78}
+$$
+
+physical vertices. The literal routing construction has exactly $S$ tape
+headers, $D$ tape cells and $D$ side-bit appends. These are persistent
+objects in addition to the driver, bindings and service work.
+
+Under the field conventions of Assumption 20.1, source parent/left/right
+initialization and attachment use exactly $3+4P+8S$ located field
+assignments. Auxiliary source-header slots, header initialization/binding
+and tape initialization/linking use exactly
+
+$$
+V+3S+4D
+\tag{AA.79}
+$$
+
+further located data-field assignments. This is an explicit construction
+account, excluding allocation/grant operations, reference-bit expansion,
+register assignments, tests, navigation, input, output, acknowledgement
+and cleanup. Those remain charged; neither formula is a total tariff.
+
+Proof. A promotion increases the $\beta$ count by one and adds one source
+marker; a split increases the $\alpha$ count by one, leaves the $\beta$
+count unchanged and adds two source vertices. Starting from $\alpha$ gives
+(AA.78). An event at depth $d$ has exactly $d$ proper logical ancestors,
+so its maintenance creates $d$ tape cells. Summing gives $D$; each split
+creates exactly its one header.
+
+The initial root has three initialized source fields. A promotion initializes
+its marker's three source fields and writes the old root's left link.
+A split initializes six fields on two fresh vertices and writes its two
+attachments; all reused parent fields remain correct. Every source vertex
+also initializes one null auxiliary slot, giving $V$. Each split initializes
+two header fields and binds its source slot, giving $3S$. At a located
+header, append initializes a cell's bit and null next field, then writes
+either the old tail's next or the empty head, and finally the header tail.
+That is four field assignments in either case. No other source or tape
+content field is changed by the specified construction. $\square$
+
+**Proposition 22.2 (same-task journal sufficiency and conditioning).**
+Replace the routing tapes by one actually acquired literal journal of
+successful addresses, appending $A(p)=1^{|p|}0p$ after each successful
+event and before the next Ready. Under the same source initialization,
+rights, finite-input and return premises, this journal also suffices for
+the entire $Q_g$ task. Its literal address content after that run is
+
+$$
+J=\sum_e(2|\operatorname{addr}(e)|+1)=2D+N.
+\tag{AA.80}
+$$
+
+A separate kind bit per event is sufficient but unnecessary on this legal
+domain. Neither this journal nor the routing construction is proved to
+minimize total price or dominate the other on all resource coordinates.
+
+Proof. The address framing uniquely parses the actual finite address list.
+At a born-$\beta$ position its sole possible event is $S$. At a
+born-$\alpha$ position its first event is $P$ and its only possible second
+event is $S$. Thus the event kinds can be recovered by counting the earlier
+occurrences of that address, or by replaying the finite list from the known
+initial root. Both methods are ordinary paid finite work. Scanning to an
+acquired index recovers the same event as FetchGrowth, including checked
+OutOfRange. The actual source still supplies Tag, guards and the current
+left descent; use the same Next consumer and append its real new address.
+The acquisition, printing and return argument of §20 applies with journal
+append in place of ancestor maintenance. Equation (AA.80) counts the exact
+written payload. A linked bit implementation also pays its cells, links,
+head/tail, framing and access work.
+
+For equal source and task, the routing tapes write $D$ literal side bits
+at their actual ancestors, but require $S$ located headers and those
+ancestor visits. The journal writes $2D+N$ address bits in one stream and
+can instead pay scans, occurrence counting or replay for recall. The source
+construction (AA.78) is common to both. These are different sufficient
+representations; no weighted price model or workload has identified a
+whole-run optimum. In particular a content-alphabet bound is not a bound
+on simultaneous material, pointer bits, running time or energy. $\square$
+
+**Definition 22.3 (complete charging domain and indispensable distinctions).**
+For the displayed driver, a complete address request receives
+$3+(2|p|+1)$ bits, and a complete index request receives $3+(k+1)$ bits.
+Sum these lengths over the actual requests, including refused operations.
+Add the actual reply bits emitted, source navigations, null/type/reference
+tests, header and tape reads, backed-counter operations, source allocations,
+header/cell allocations, output construction/reads, local acknowledgements,
+root returns and scratch clearing/reuse. An event at depth $d$ makes exactly
+$d$ ancestor-maintenance iterations; recall and Next additionally pay their
+actual finite scans and current-source descent. No binomial arithmetic is
+used by this literal-tape runtime.
+
+Simultaneous material includes the installed program and endpoint state,
+root/source and header bindings, current grants, $V$ source vertices with
+their auxiliary slots, $S$ headers, $D$ tape cells, acquired request bits,
+pending latches, unary marks/counters, traversal/reference registers,
+reserved but unattached material, unfinished appends, answer backing and
+printing cursor. Work-space reuse has its stated charged clear/reuse
+operations. Reference widths and allocation/grant work depend on the
+chosen implementation and are not suppressed by the located-field count.
+The same categories apply to a journal consumer, replacing its record
+layout and scans. These accounts concern one actual run, not sums of
+separately optimal producers and consumers.
+
+For $Q_c$ no serial supplement is needed. For $Q_g$, the precise conditional
+order requirement at fixed $t$ is (AA.74), and with an already supplied
+$\sigma$ it is (AA.69). Any additional accessible side information $Z$
+changes the latter conditioning to the actually admitted words with fixed
+$(t,\sigma,Z)$; neither old count is automatically a lower bound for that
+smaller fibre. Giving an observable allocation order, meter, request archive
+or hidden selector can therefore change the theorem's premises. The
+specified driver exposes none of these as free recall inputs.
+
+The known $\alpha$ seed can produce $\beta$, so two independently supplied
+unknown leaves are unnecessary for this model. The two lifecycle stages
+nevertheless have different current tags, promotion membership and lawful
+operations. Suppressing the unary marker identifies the initial $\alpha$
+with the promoted $\beta$ in bare support, while Tag and HasPromotion
+separate them. Fusing $P$ and $S$ would remove that admitted intermediate
+state and change $Q_g$. One opcode name with a tag guard can implement
+both templates; this is no proof of universal generator minimality.
+Likewise (AA.74) makes the order distinction necessary for the declared
+recall task, not this particular tape layout or its caches. Finite driver
+code does not bound eventual source, record or work storage.
+
+## 23. Supplier correspondence and unresolved recovery domains
+
+**Definition 23.1 (mathematical attribution).** The source-relative erasure
+fibres (AA.68)–(AA.72), their universal endpoint criterion, and their join
+to the all-event acquired records and lawful Next consumer are
+`repo-derived` ordinary mathematical results. The following ingredients
+are reused with the indicated exact correspondence.
+
+| Supplier | Supplied statement and correspondence; boundary |
+| --- | --- |
+| [FARG §§2–3](FIBONACCI_ATOMIC_RELATION_GENERATION.md) | Ordered two-leaf syntax and its interpretations are reused. Its global $\rho$ acts at every leaf; LAB (AA.65) acts at one acquired current address. No global-substitution inverse or fixed-epoch theorem is transported to these arbitrary local schedules. |
+| [PG §40](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) | Task-relative strategy visibility and equal-endpoint order sensitivity supply the general criterion. Here the permitted selector is the actual FetchGrowth/left-descent Next, and §§18–20 prove its exact source fibres, acquisition and legality rather than assuming a strategy with distinguishable successors. |
+| [NCR §8](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md) | Independent command order requires an acquired complement on its fixed Native source and semantic cuts. Its multinomial histogram is not LAB's promotion-erasure fibre: (AA.69) depends on the creating and consuming split indices, and (AA.72) has unequal fibre sizes. Generic finite ranking and the row-lookup separation argument remain credited suppliers. |
+| [D5 EnabledPathSwapConnectivity](../../../D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.lean) and its [Scribe](../../../Blueprint/D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.scribe.cs) | Its finite event type is $E(t)$, its endpoint cuts are $\varnothing,E(t)$, and its enabled predicate requires freshness and all predecessors. Theorem 17.2 proves the missing equality with actual LAB guards and every intermediate prefix. Generic extension existence and legal adjacent-swap connectivity are not new results. |
+| [D5 SwapClosureExtensionInvariance](../../../D5/S3/ConceptDynamics/PartialIdentification/SwapClosureExtensionInvariance.lean) and its [Scribe](../../../Blueprint/D5/S3/ConceptDynamics/PartialIdentification/SwapClosureExtensionInvariance.scribe.cs) | Its fixed-coordinate parent-local system and replayable swap-chain hypotheses explain the generic invariance method. LAB instead has dynamically created source nodes; its concrete two-event square in Theorem 18.3 is proved directly. The old fixed-coordinate theorem alone is not a source-growth realization. |
+| [D5 NativeUniformTree](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.scribe.cs) | `term_at_prim`, `readout_prim` and private `treeView`, `child`, `walkStep`, `walk_exact`, `rootReply`, `readout_walk` supply exact finite ordered-tree navigation and its four-valued readout. Our logical traversal has that meaning; §20 separately supplies the local-growth source binding and rights. Its `substitution_prim` is global substitution and is not the LAB update. |
+| [D5 NativeFullSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs) | `sourceControl`, `initialControl`, `native_source_producer` and private `traverse`, `production_reads`, `stationary` already give source-blind stationary acquisition of an entire unknown finite tree through actual Native reads, with acquired stacks and full chronology. LAB instead starts from an actually allocated known seed and retains its own local choices. It claims neither a missing general tree producer nor an implementation of those Native reads by its new link primitives. |
+| [D5 SourceTreeEncoding](../../../D5/S0/History/Spacetime/SourceTreeEncoding.lean) and its [Scribe](../../../Blueprint/D5/S0/History/Spacetime/SourceTreeEncoding.scribe.cs); [EventHistoryInduction](../../../D5/S0/History/Generation/EventHistoryInduction.lean) and its [Scribe](../../../Blueprint/D5/S0/History/Generation/EventHistoryInduction.scribe.cs) | Tagged free-tree grammar and right-appending finite-history induction are existing methods. Their generic codes do not encode our unary-marker material or prove the birth-type source correspondence without §17. |
+| [D5 TypedFiniteViewKernel](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean) and its [Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.scribe.cs); [PredictiveMemoryMinimalQuotient](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean) and its [Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.scribe.cs) | Typed edges, legality, labels and successor factorization must be given independently; readout factorization alone is insufficient. Our supplied edges are the framed requests, the readout is their literal reply, and the relevant settled state is the one in Definition 21.1. Theorem 21.2 verifies their actual factorization; no new generic quotient theorem is claimed. |
+| [SSA §§7,9,13](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md), [PVC §§6,10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md), [owner-control §§8–9](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_CONTROL_HISTORICAL_ACQUISITION.md), and PR57 in [Transport Memory Completion §57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | Same-source mathematical inverses, actually retained requests, paid real publication/call/return and subsequent source use are already supplied on their own domains. SSA's acquired fixed-$H$ patches, PVC's unused-lane D2 and PR57's original ports/meters do not install Assumption 20.1. LAB supplies a different explicit initialized arena and local templates, with its own counts, not their tariffs or a new general converter. |
+| [Growing unary atlas §§5–8](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_UNARY_STORAGE_ATLAS.md), [growing paid cycle §§6–12](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_PAID_VIEW_CYCLE.md), [general-target cycle §§1–5,12](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GENERAL_TARGET_INCIDENCE_CYCLE.md), and §§15–16 of this volume | These already treat growing storage, current-owner distinctions, acquired selection, retained use and chronology/geometry kernels under their stated initializations. LAB does not fill a purported absence of such APIs. Its extra mathematical centre is the exact split-erasure condition and the correction from split-only to all-event records on this birth-typed source. The current-source record and grants cannot be replaced by an old historical service. |
+| [T. M. Cover, *Enumerative Source Encoding*, Props. 1–2, inverse algorithm and constant-weight Example 2](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf) | `literature-attested`: rank finite words by counts of preceding prefix blocks, with inverse; reverse coordinate reading gives the colex convention used after (AA.74). Binary shuffles and their binomial counts are classical intermediate tools. This supplies neither the LAB erasure fibres nor the actual-source acquisition/consumer premises. |
+| [C. H. Bennett, *Logical Reversibility of Computation*, introduction](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html) | `literature-attested`: retaining a computation history and later reusing its redundancy are established methods. Proposition 22.2 uses ordinary record/replay, not reversible erasure or a thermodynamic bound. |
+| Pinned mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679`, [Order/Extension/Linear](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Order/Extension/Linear.lean) and [Data/Nat/Choose/Basic](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Data/Nat/Choose/Basic.lean) | `extend_partialOrder`, `choose_succ_succ`, `choose_zero_right` and `choose_self` supply standard extension and binomial identities, including empty-side cases. They do not establish that an extension is an executable LAB history; that is Theorem 17.2's source bridge. |
+
+Removing ranking, generic view transport and record/replay leaves the
+birth-type domain, the exact nonuniform gap fibres, the criterion (AA.70),
+and the universal obstruction of Theorem 18.3. These are the specific
+mathematical delta asserted here, with the acquired Next join as their
+operational application. The attribution is not an exhaustive worldwide
+originality assertion. All proofs in §§17–23 are ordinary mathematical
+proofs; no new Lean certification is part of these statements.
+
+**Definition 23.2 (remaining domains).** The positive serial recovery
+uses acquired tapes in (AA.76), not bare source space/boundary. Bare views
+recover causal-generation membership on $\mathcal D$; complete split order
+repairs full order precisely on the fibres (AA.70), and does not uniformly
+repair any genuinely ambiguous endpoint. A task asking only split recall
+can retain split-only tapes; substituting that smaller task does not meet
+$Q_g$. Arbitrary exogenous selectors reading more state require their own
+factorization and acquisition conditions.
+
+Assumption 20.1 is a declared new initialized ideal process. Realizing its
+allocator, binding, grants, link primitives and finite driver on an old
+Native apparatus or physical device requires a faithful additional
+implementation and resource correspondence. Unknown-source acquisition,
+access after revocation, import of an arbitrary named historical cut,
+all-phase four-view inverses, complete controller chronology, physical
+refinement below the declared primitives and whole-price optimality remain
+separate obligations. Source and auxiliary space can grow without bound
+across finite prefixes; an actual coherent infinite run is not constructed
+by the finite-prefix theorem alone.
+
+The original fixed-$G_{\rm gc}$ apparatus, original $Q$, parked consumer,
+unchanged initialization, terminal and final-no-Ready conditions retain
+their exact previous scopes and unresolved bridges. Neither LAB nor the
+separate leaf-split model settles them. The full common-process objective
+for independently meaningful space, time, boundary and memory also retains
+its general acquisition, recovery and parsimony obligations beyond this
+bounded birth-typed source.
+
+## 追加锚（本行以下为增补区）
