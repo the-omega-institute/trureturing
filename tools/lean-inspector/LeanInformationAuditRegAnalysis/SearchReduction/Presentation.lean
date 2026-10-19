@@ -118,7 +118,7 @@ partial def restatementConversion (target source : Expr) (index : FactIndex := {
       before.restore
     return none
 
-/-- Both baseline certification and structure exclusion use this procedure. -/
+/-- The wide structure exclusion retains the legacy conversion relation. -/
 def certifiedRestatement (target source : Expr) (index : FactIndex := {}) : MetaM Bool := do
   return (← restatementConversion target source index).isSome
 
@@ -200,7 +200,7 @@ private def baselineSource (env : Environment) (levels : List Name) (target : Ex
 query precede all Meta operations on candidate statements. No whnf is run for
 an unmatched source. Every failure remains incomplete unless a proof is found. -/
 def baselinePresentation (env : Environment) (levels : List Name) (target : Expr)
-    (preferred : Array Name) (index? : Option FactIndex) (_exhaustive : Bool := true) :
+    (index? : Option FactIndex) :
     IO (Run × Option PresentationEvidence × String) := do
   let some index := index?
     | return (.incomplete .execution, none, "search.presentation_index_unavailable")
@@ -219,8 +219,7 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
     | return (.incomplete .execution, none, "search.presentation_target_normalization")
   let .ok matches := normalizedLookup env target entries.reverse
     | return (.incomplete .execution, none, "search.presentation_query_normalization")
-  let hits := matches.filter (fun e => preferred.contains e.1) ++
-    matches.filter (fun e => !preferred.contains e.1)
+  let hits := matches
   let queried ← IO.getNumHeartbeats
   let mut checked := 0
   let mut conversionCost := 0

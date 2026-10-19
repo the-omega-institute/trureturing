@@ -132,7 +132,7 @@ private def prepare (source base : Environment) (request : Request)
         if base.contains n then throwError "search.structure_already_in_baseline: {n}"
         let info ← checkedSource source n
         for dep in info.type.getUsedConstants do copyVocabulary source dep
-        let (present, _, _) ← baselinePresentation (← getEnv) info.levelParams info.type #[] (some index)
+        let (present, _, _) ← baselinePresentation (← getEnv) info.levelParams info.type (some index)
         if present == .found then throwError "search.structure_baseline_presentation: {n}"
         if let .incomplete _ := present then throwError "search.structure_presentation_incomplete: {n}"
         types := types ++ (← structureTypes source n)
@@ -229,17 +229,8 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
         return unknown reason failure
     if clean.contains request.target then return unknown "search.target_already_in_baseline"
     let (baseRun, attempts, index?) ← searchIndexed clean target.levelParams target.type #[] hints
-    let moduleNames := clean.header.moduleNames
-    let preferred := (clean.constants.toList.toArray.qsort
-      (fun a b => Name.quickLt a.1 b.1)).filterMap fun (name, _) =>
-      match clean.getModuleIdxFor? name with
-      | some idx => if request.baseline.contains moduleNames[idx.toNat]! then some name else none
-      | none => none
-    let proofDependencies := (attempts.filterMap (·.proof?)).foldl
-      (fun names proof => names ++ proof.getUsedConstants) #[]
-    let preferred := proofDependencies ++ preferred
     let (presentation, presentationEvidence?, presentationDetail) ←
-      baselinePresentation clean target.levelParams target.type preferred index? (baseRun != .found)
+      baselinePresentation clean target.levelParams target.type index?
     let observed : Observation := {
       target := request.target, base := baseRun, paired := .incomplete .undecided,
       verdict := classifyCertified true presentation baseRun false false (.incomplete .undecided),
