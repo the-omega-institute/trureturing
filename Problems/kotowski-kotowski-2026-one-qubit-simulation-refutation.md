@@ -72,6 +72,7 @@ Tier 1 open question of a 2026 paper, preregistered in issue #19196 before any L
 | --- | --- | --- | --- |
 | result | content | the private helpers `usefulCount_bound` (a recursive bound on the useful leaves of a protocol tree) and `frame_rank` (the rank bound through an injection of sign pairs into the support) | open-problem-resolution |
 | `usefulCount_bound`, `frame_rank` (private) | content | themselves, on the live path of `result` | consumed helpers |
+| `frameNat_rank`, `tree_energy_bound`, `simulation_bound` (private) | content | `usefulCount_bound` or `frame_rank`, which they use | consumed helpers |
 | definitions and the remaining private helpers | bind-only | none | definitions used by `claim`, or consumed helpers |
 
 The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.2. `utility: kind=certified-instance; basis=refutes`. There is no digestion atom.
