@@ -11,16 +11,14 @@ result:
   proof_shape: content (dyadic support induction and stabilized series construction)
   escape_witness: none
   admission_basis: open-problem-resolution (#19138; Proved)
-Direct frozen dependencies (declaration identities at the merged dev base):
+Direct frozen dependencies:
   D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo.lagrange_coefficient
-    statement_id: sha256:81f9e16808d9c491ff86a34e6bc2734ff65bb35128a1cae2aac5acffd2329b46
   D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.square_linear
-    statement_id: sha256:c86b1a97015829f5473a85735d05b2d28ce1669bd9b20245fc14eba2df19edae
   D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.subst_two_agree
-    statement_id: sha256:df6eb612af289b17ac13e3bc808e1777f8c9ae9eb942221828b083e4dd08f083
   D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.inverse_exists
-    statement_id: sha256:2904de6f4cbe7c37a40fbf663d2e985f57c76b94fc4fb4c97cb67464c2dfaa12
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19172.
+The three SignedCatalanCubicSubstitutionModThree declarations are existing public dev
+owners; their supplier audit is https://github.com/the-omega-institute/trureturing/issues/19089.
+Escape audit unfinished for result: https://github.com/the-omega-institute/trureturing/issues/19172.
 Coefficient agreement is written out; its original coefficient lemmas are reused directly.
 Definitions have no independent proof claim and have escape_witness: none:
   IsGF: bind-only; consumers claim, inverse_squared, is_gf_of_squared_inverse.

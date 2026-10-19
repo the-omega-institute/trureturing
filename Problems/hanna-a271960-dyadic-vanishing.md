@@ -50,7 +50,7 @@ Let $B$ be the compositional inverse of $A$ and put $H=B+2X^2$. Substitution int
 
 Expanding $(H-2X^2)^r$ at an even degree eliminates odd powers of $H$. Even powers reduce via $H^2=B(X^2)$. Induction then gives $[X^N]B^r=0$ when $2r<N$, $2^s\mid N-2r$ and $r<2^s$. Lagrange inversion, supplied by `NonnestingOneThreeTwoTwo.lagrange_coefficient`, transfers this to the required coefficients at $N=2^n$, $r=2^k$, $s=k+1$.
 
-Existence is obtained by stabilization of the iteration $F\mapsto F+(F(X^2)-F^2-2X)/2$ from one, followed by reversion. The coefficient-agreement steps use the original `SignedCatalanCubicSubstitutionModThree.square_linear` and `subst_two_agree`; its `inverse_exists` supplies the two-sided inverse. These declarations occur in the elaborated proof dependency path.
+Existence is obtained by stabilization of the iteration $F\mapsto F+(F(X^2)-F^2-2X)/2$ from one, followed by reversion. The coefficient-agreement steps reuse the existing public dev owners `SignedCatalanCubicSubstitutionModThree.square_linear` and `subst_two_agree`; its existing public `inverse_exists` supplies the two-sided inverse. These declarations occur in the elaborated proof dependency path; their supplier audit is [#19089](https://github.com/the-omega-institute/trureturing/issues/19089).
 
 ## Falsifier
 
@@ -58,9 +58,9 @@ A normalized rational solution with a nonzero coefficient in the specified range
 
 ## Evidence
 
-`D5.S3.Combinatorics.PowerSeries.HannaA271960DyadicVanishing.result` proves the complete `claim`, including existence. Its admission basis is `open-problem-resolution (#19138; Proved)`; generality is G and utility is none. The three original owner declarations are published with their statements and proofs preserved.
+`D5.S3.Combinatorics.PowerSeries.HannaA271960DyadicVanishing.result` proves the complete `claim`, including existence. Its admission basis is `open-problem-resolution (#19138; Proved)`; generality is G and utility is none. This is the lane's only new public theorem audit target.
 
-The four-slot escape audit is unfinished for `result` and the published `square_linear`, `subst_two_agree` and `inverse_exists`: [#19172](https://github.com/the-omega-institute/trureturing/issues/19172). The infinite power-series and arbitrary-ring telescopes need faithful source-family reconstruction, equivalence, observational dependence, variation and sensitivity evidence. No compiled registration or `declared_validated` finding is claimed.
+The four-slot escape audit is unfinished for `result`: [#19172](https://github.com/the-omega-institute/trureturing/issues/19172). Its infinite power-series telescope needs faithful source-family reconstruction, equivalence, observational dependence, variation and sensitivity evidence. No compiled registration or `declared_validated` finding is claimed.
 
 ### Experiment
 

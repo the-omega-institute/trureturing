@@ -6,6 +6,8 @@ Reversion and dyadic coefficient decimation prove Hanna's A271960 conjecture.
 
 All series have rational coefficients. The operation subst(u,f) is PowerSeries.subst u f, namely f(u). Natural subtraction in the coefficient index is exact under the displayed bounds.
 
+The proof reuses the existing public dev owners SignedCatalanCubicSubstitutionModThree.square_linear, subst_two_agree and inverse_exists. Their supplier audit is tracked in https://github.com/the-omega-institute/trureturing/issues/19089; the unfinished audit for result is tracked in https://github.com/the-omega-institute/trureturing/issues/19172.
+
 **Definition 1.1 (The normalized generating function).**
 
 $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{IsGF}\left(A\right) \iff ((\operatorname{constantCoeff}\left(A\right) = 0) \land ((\operatorname{coeff}\left(1, A\right) = 1) \land ((A)^{2} = \operatorname{subst}\left((X + 2 \cdot (A)^{2})^{2}, A\right)))))$$

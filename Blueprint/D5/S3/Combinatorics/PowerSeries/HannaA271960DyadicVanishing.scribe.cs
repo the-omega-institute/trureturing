@@ -17,6 +17,12 @@ internal sealed class HannaA271960DyadicVanishingDocument : IScribeDocumentDefin
             Paragraph(Text("All series have rational coefficients. The operation subst(u,f) "
                 + "is PowerSeries.subst u f, namely f(u). Natural subtraction in the coefficient "
                 + "index is exact under the displayed bounds.")),
+            Paragraph(Text("The proof reuses the existing public dev owners "
+                + "SignedCatalanCubicSubstitutionModThree.square_linear, subst_two_agree and "
+                + "inverse_exists. Their supplier audit is tracked in "
+                + "https://github.com/the-omega-institute/trureturing/issues/19089; "
+                + "the unfinished audit for result is tracked in "
+                + "https://github.com/the-omega-institute/trureturing/issues/19172.")),
             Node("IsGF", "The normalized generating function", GfFormula(),
                 "OEIS A271960, NAME (unpaginated): \"G.f. A(x) satisfies: A(x)^2 = A( (x + 2*A(x)^2)^2 ).\" "
                 + "OFFSET 1 and EXAMPLE A(x) = x + 2*x^2 + 9*x^3 + 50*x^4 + 312*x^5 + … "
