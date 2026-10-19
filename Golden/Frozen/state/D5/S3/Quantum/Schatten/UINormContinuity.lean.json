@@ -1,0 +1,1 @@
+{"statement_id":"sha256:62c213b824157a8414cc8c77fa0da04305875ce30dbd8843b913b4a6010abdd2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Schatten),6:UINorm),12:continuous_N)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Schatten),6:UINorm),28:sq_le_mul_of_balanced_bounds)","kind":"theorem"}]}

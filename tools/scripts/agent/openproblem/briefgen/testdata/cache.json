@@ -1,0 +1,7 @@
+{
+  "archives": {
+    "current.zip": {"modules": [{"fib_analysis": {"applications": []}}]},
+    "obsolete.zip": {"modules": [{"fib_analysis": []}]}
+  },
+  "expected": "PURGE_STALE_FIB scanned=2 stale=1 deleted=1\n  obsolete.zip\n"
+}

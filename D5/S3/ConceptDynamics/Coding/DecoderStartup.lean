@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: Actual acquisition and safe live competitors force finite decoder startup. -/
-import D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
+import D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Basic
 
 set_option autoImplicit false
 namespace D5.S3.ConceptDynamics.Coding.DecoderOperationTrace

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:c78c5d3738220c30a10336c52760276396f70f3af35b0c9a899098eec26a2f01
+  normalized_sha256: sha256:c78c5d3738220c30a10336c52760276396f70f3af35b0c9a899098eec26a2f01
+cas_ref: sha256:c78c5d3738220c30a10336c52760276396f70f3af35b0c9a899098eec26a2f01
+coverage_gids:
+  - gid: D5/S3/Constants/FiniteStieltjesOperatorRealization.diagonalOperator
+    target_statement_id: sha256:1547db1e9169b35a01f99ab89b7b3519cfa0ed0ee60719753261c4cc05e21bb5
+  - gid: D5/S3/Constants/FiniteStieltjesOperatorRealization.diagonal_operator_nonnegative
+    target_statement_id: sha256:4136909fe200f32bbee79d1dfd56d2f3dd0bdc78ed45d7d5733aca502dabd17d
+  - gid: D5/S3/Constants/FiniteStieltjesOperatorRealization.finiteMoment
+    target_statement_id: sha256:c173e2ec5b59f632a8c0c3f689254dfe0159660ebf28624b41e83ab37c9cf987
+  - gid: D5/S3/Constants/FiniteStieltjesOperatorRealization.moment_eq_operator_pairing
+    target_statement_id: sha256:69d4aa3a238adebe3cdee950bafc8d19b9904be106b8c1251fb39b63607b9f5d
+  - gid: D5/S3/Constants/FiniteStieltjesOperatorRealization.rootWeightVector
+    target_statement_id: sha256:94442a4fd4924aa50cb303b5ead21faac4d741342cb283fd602df9a71ce5e05e
+receipts:
+  unresolved_subitems: []

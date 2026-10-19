@@ -6,6 +6,7 @@
    utility: none
    digest: Three-row scalar purity bound with the natural integer optimizer. -/
 
+/- UNCOMPILED integration changes; original upstream proofs are preserved. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
 
 set_option autoImplicit false
@@ -19,7 +20,7 @@ noncomputable section
 private def middleColumn : Fin 3 → ℝ := ![-3,-6,-1]
 
 
-private theorem positions_bounds (N j : ℕ) (hN : 67 ≤ N)
+private theorem positions_bounds (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (q : Fin 16) :
     1 ≤ positions N j q ∧ positions N j q ≤ N := by
   have hq := q.isLt
@@ -28,7 +29,7 @@ private theorem positions_bounds (N j : ℕ) (hN : 67 ≤ N)
 
 
 -- The embedding is in ORIGINAL gap indices, so its value is one below the step.
-private def slot (N : ℕ) (hN : 67 ≤ N) (j : ℕ) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
+private def slot (N : ℕ) (hN : 56 ≤ N) (j : ℕ) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
     Fin 16 ↪ Fin N where
   toFun q := ⟨positions N j q - 1, by
     have := positions_bounds N j hN hj hj' q
@@ -41,28 +42,28 @@ private def slot (N : ℕ) (hN : 67 ≤ N) (j : ℕ) (hj : 6 ≤ j) (hj' : j ≤
     apply (positions_strict N j hN hj hj').injective
     omega
 
-private theorem slot_step (N j : ℕ) (hN : 67 ≤ N)
+private theorem slot_step (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (q : Fin 16) :
     (slot N hN j hj hj' q).val + 1 = positions N j q := by
   have := positions_bounds N j hN hj hj' q
   change positions N j q - 1 + 1 = positions N j q
   omega
 
-private theorem slot_five (N j : ℕ) (hN : 67 ≤ N)
+private theorem slot_five (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) :
     (slot N hN j hj hj' 5).val + 1 = j := by
   calc
     _ = positions N j 5 := slot_step N j hN hj hj' 5
     _ = j := by norm_num [positions]
 
-private def middle (N : ℕ) : Finset (Fin N) :=
+def middle (N : ℕ) : Finset (Fin N) :=
   univ.filter (fun k => 5 ≤ k.val ∧ k.val < N-10)
 
-private theorem mem_middle {N : ℕ} (k : Fin N) :
+theorem mem_middle {N : ℕ} (k : Fin N) :
     k ∈ middle N ↔ 5 ≤ k.val ∧ k.val < N-10 := by
   simp [middle]
 
-private theorem slot_boundary (N j : ℕ) (hN : 67 ≤ N)
+private theorem slot_boundary (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (q : Fin 16) (hq : q ≠ 5) :
     slot N hN j hj hj' q ∉ middle N := by
   have hqv := q.isLt
@@ -75,7 +76,7 @@ private theorem slot_boundary (N j : ℕ) (hN : 67 ≤ N)
   dsimp only [positions]
   split_ifs <;> omega
 
-private theorem boundary_covered (N j : ℕ) (hN : 67 ≤ N)
+private theorem boundary_covered (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (k : Fin N) (hk : k ∉ middle N) :
     ∃ q : Fin 16, q ≠ 5 ∧ slot N hN j hj hj' q = k := by
   have hkN := k.isLt
@@ -99,14 +100,14 @@ private theorem boundary_covered (N j : ℕ) (hN : 67 ≤ N)
       dsimp only [positions]
       split_ifs <;> omega
 
-private def middleMass {N : ℕ} (g : Fin N → ℝ) : ℝ := ∑ k ∈ middle N, g k
+def middleMass {N : ℕ} (g : Fin N → ℝ) : ℝ := ∑ k ∈ middle N, g k
 
-private def boundaryGaps {N : ℕ} (g : Fin N → ℝ) : Fin N → ℝ :=
+def boundaryGaps {N : ℕ} (g : Fin N → ℝ) : Fin N → ℝ :=
   fun k => if k ∈ middle N then 0 else g k
 
-private def unitGap {N : ℕ} (k : Fin N) : Fin N → ℝ := Pi.single k 1
+def unitGap {N : ℕ} (k : Fin N) : Fin N → ℝ := Pi.single k 1
 
-private def fixedGaps {N : ℕ} (g : Fin N → ℝ) (k : Fin N) : Fin N → ℝ :=
+def fixedGaps {N : ℕ} (g : Fin N → ℝ) (k : Fin N) : Fin N → ℝ :=
   boundaryGaps g + middleMass g • unitGap k
 
 -- All 15 boundary entries are literally unchanged in EVERY fixed term.
@@ -117,12 +118,12 @@ private theorem fixedGaps_boundary {N : ℕ} (g : Fin N → ℝ)
   simp [fixedGaps, boundaryGaps, unitGap, hi, hik, Ne.symm hik]
 
 -- Fixed coordinates do not depend on the middle position j.
-private def packed {N : ℕ} (hN : 67 ≤ N) (g : Fin N → ℝ) (q : Fin 16) : ℝ :=
+def packed {N : ℕ} (hN : 56 ≤ N) (g : Fin N → ℝ) (q : Fin 16) : ℝ :=
   if hh : q.val < 5 then g ⟨q.val, by omega⟩ else
   if q.val = 5 then middleMass g else
   g ⟨N - 10 + (q.val - 6), by have := q.isLt; omega⟩
 
-private theorem packed_boundary (N j : ℕ) (hN : 67 ≤ N)
+private theorem packed_boundary (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (g : Fin N → ℝ)
     (q : Fin 16) (hq : q ≠ 5) :
     packed hN g q = g (slot N hN j hj hj' q) := by
@@ -146,7 +147,7 @@ private theorem packed_boundary (N j : ℕ) (hN : 67 ≤ N)
     simp only [positions, if_neg hh, if_neg hq5]
     omega
 
-private theorem packed_nonneg {N : ℕ} (hN : 67 ≤ N)
+theorem packed_nonneg {N : ℕ} (hN : 56 ≤ N)
     (g : Fin N → ℝ) (hg : ∀ k, 0 ≤ g k) : ∀ q, 0 ≤ packed hN g q := by
   intro q
   dsimp only [packed]
@@ -156,7 +157,7 @@ private theorem packed_nonneg {N : ℕ} (hN : 67 ≤ N)
   · exact hg _
 
 -- This is only a linear zero extension; the distinct slot embedding is explicit.
-private def lift16 (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
+private def lift16 (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
     (Fin 16 → ℝ) →ₗ[ℝ] (Fin N → ℝ) where
   toFun x := ∑ q, x q • unitGap (slot N hN j hj hj' q)
   map_add' x y := by
@@ -169,7 +170,7 @@ private def lift16 (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
     rw [Finset.smul_sum]
     exact sum_congr rfl (fun q _ => mul_smul _ _ _)
 
-private theorem lift_packed (N : ℕ) (hN : 67 ≤ N) (g : Fin N → ℝ)
+theorem lift_packed (N : ℕ) (hN : 56 ≤ N) (g : Fin N → ℝ)
     (k : Fin N) (hk : k ∈ middle N) :
     lift16 N (k.val+1) hN (by have := (mem_middle k).mp hk; omega)
       (by have := (mem_middle k).mp hk; omega) (packed hN g) = fixedGaps g k := by
@@ -211,15 +212,15 @@ private theorem lift_packed (N : ℕ) (hN : 67 ≤ N) (g : Fin N → ℝ)
     · exact fun h => (h (mem_univ _)).elim
 
 -- The old step synthesis generalized from Fin 9 to Fin m is the ONLY synthesis.
-private abbrev fullSynth (N : ℕ) : (Fin N → ℝ) →ₗ[ℝ] (Fin N → ℝ) :=
+abbrev fullSynth (N : ℕ) : (Fin N → ℝ) →ₗ[ℝ] (Fin N → ℝ) :=
   synth (fun k : Fin N => k.val+1)
 
-private theorem fullSynth_unit {N : ℕ} (k : Fin N) :
+theorem fullSynth_unit {N : ℕ} (k : Fin N) :
     fullSynth N (unitGap k) = step N (k.val+1) := by
   classical
   simp [fullSynth, synth, unitGap]
 
-private theorem synth_lift (N j : ℕ) (hN : 67 ≤ N)
+theorem synth_lift (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ) :
     fullSynth N (lift16 N j hN hj hj' x) = synth (d := N) (positions N j) x := by
   change fullSynth N (∑ q, x q • unitGap (slot N hN j hj hj' q)) = _
@@ -231,7 +232,7 @@ private theorem synth_lift (N j : ℕ) (hN : 67 ≤ N)
   rw [map_smul, fullSynth_unit, slot_step N j hN hj hj']
 
 -- The exact original sums, oriented bottom minus top. No selected terms dropped.
-private def slackMap (N : ℕ) (hN : 67 ≤ N) : (Fin N → ℝ) →ₗ[ℝ] (Fin 3 → ℝ) where
+def slackMap (N : ℕ) (hN : 56 ≤ N) : (Fin N → ℝ) →ₗ[ℝ] (Fin 3 → ℝ) where
   toFun l := ![
     (∑ i : Fin 6, l ⟨N-6+i.val, by omega⟩) - ∑ i : Fin 3, l ⟨i.val, by omega⟩,
     (∑ i : Fin 10, l ⟨N-10+i.val, by omega⟩) - ∑ i : Fin 6, l ⟨i.val, by omega⟩,
@@ -243,7 +244,7 @@ private def slackMap (N : ℕ) (hN : 67 ≤ N) : (Fin N → ℝ) →ₗ[ℝ] (Fi
     ext r
     fin_cases r <;> simp [Finset.mul_sum, mul_sub] <;> ring
 
-private theorem middle_step_slack (N j : ℕ) (hN : 67 ≤ N)
+private theorem middle_step_slack (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) :
     slackMap N hN (step N j) = middleColumn := by
   ext r
@@ -253,7 +254,7 @@ private theorem middle_step_slack (N j : ℕ) (hN : 67 ≤ N)
 
 set_option maxHeartbeats 2000000 in
 -- All sixteen slots and all three original rows are evaluated separately.
-private theorem slot_step_slack (N j : ℕ) (hN : 67 ≤ N)
+private theorem slot_step_slack (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (q : Fin 16) :
     slackMap N hN (step N (positions N j q)) = fun r => A r q := by
   rw [positions_literal N j hN]
@@ -262,7 +263,7 @@ private theorem slot_step_slack (N j : ℕ) (hN : 67 ≤ N)
     simp (disch := omega) [slackMap, A, step, Fin.sum_univ_succ, if_pos, if_neg] <;>
     norm_num
 
-private theorem slack_synth (N j : ℕ) (hN : 67 ≤ N)
+private theorem slack_synth (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ) :
     slackMap N hN (synth (d := N) (positions N j) x) = A *ᵥ x := by
   change slackMap N hN (∑ q, x q • step N (positions N j q)) = _
@@ -277,10 +278,10 @@ private theorem slack_synth (N j : ℕ) (hN : 67 ≤ N)
       simp [Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]
 
 -- The A-image of the full Fin N gap vector is the original row-slack vector.
-private def gapRows (N : ℕ) (hN : 67 ≤ N) : (Fin N → ℝ) →ₗ[ℝ] (Fin 3 → ℝ) :=
+def gapRows (N : ℕ) (hN : 56 ≤ N) : (Fin N → ℝ) →ₗ[ℝ] (Fin 3 → ℝ) :=
   (slackMap N hN).comp (fullSynth N)
 
-private theorem gaps_split {N : ℕ} (g : Fin N → ℝ) :
+theorem gaps_split {N : ℕ} (g : Fin N → ℝ) :
     boundaryGaps g + ∑ k ∈ middle N, g k • unitGap k = g := by
   classical
   ext i
@@ -298,7 +299,7 @@ private theorem gaps_split {N : ℕ} (g : Fin N → ℝ) :
       simp [unitGap, hki, Ne.symm hki]
     simp [boundaryGaps, hi, hz]
 
-private theorem gapRows_fixed (N : ℕ) (hN : 67 ≤ N) (g : Fin N → ℝ)
+private theorem gapRows_fixed (N : ℕ) (hN : 56 ≤ N) (g : Fin N → ℝ)
     (k : Fin N) (hk : k ∈ middle N) :
     gapRows N hN (fixedGaps g k) = gapRows N hN g := by
   have hu (i : Fin N) (hi : i ∈ middle N) :
@@ -327,7 +328,7 @@ private theorem gapRows_fixed (N : ℕ) (hN : 67 ≤ N) (g : Fin N → ℝ)
       rw [map_smul]
     _ = gapRows N hN g := by rw [gaps_split g]
 
-private theorem packed_image (N : ℕ) (hN : 67 ≤ N) (g : Fin N → ℝ)
+theorem packed_image (N : ℕ) (hN : 56 ≤ N) (g : Fin N → ℝ)
     (k : Fin N) (hk : k ∈ middle N) :
     A *ᵥ packed hN g = gapRows N hN g := by
   have hj : 6 ≤ k.val+1 := by have := (mem_middle k).mp hk; omega
@@ -349,7 +350,7 @@ private theorem middle_barycentric {N : ℕ} (g : Fin N → ℝ)
 
 -- The fixed-cone estimate follows from arbitrary ordered defects,
 -- scalar interval estimates and constructive bulk subtraction.
-private theorem norm_from_fixed_cones (N : ℕ) (hN : 67 ≤ N) (c : ℝ)
+private theorem norm_from_fixed_cones (N : ℕ) (hN : 56 ≤ N) (c : ℝ)
     (fixedGood : ∀ (j : ℕ), 6 ≤ j → j ≤ N-10 →
       ∀ x : Fin 16 → ℝ, (∀ q, 0 ≤ x q) → (∀ r, 0 ≤ (A *ᵥ x) r) →
         spectralGood c (synth (d := N) (positions N j) x))
@@ -411,6 +412,7 @@ theorem three_row_scalar_bound (N : ℕ) (hN : 67 ≤ N)
     let t : ℕ := (3*N+4)/8
     ∑ i, (l i)^2 ≤ (9*(N : ℝ)+16*(t : ℝ))/(3*(N : ℝ)+2*(t : ℝ))^2 := by
   classical
+  have h56 : 56 ≤ N := by omega
   -- The arbitrary-defect proof supplies fixedGood with no success premise.
   have fixedGood : ∀ (j : ℕ), 6 ≤ j → j ≤ N-10 →
       ∀ x : Fin 16 → ℝ, (∀ q, 0 ≤ x q) → (∀ r, 0 ≤ (A *ᵥ x) r) →
@@ -419,13 +421,13 @@ theorem three_row_scalar_bound (N : ℕ) (hN : 67 ≤ N)
     intro j hj hj' x hx hAx
     exact structural_fixed_good N j hN hj hj' x hx hAx
 
-  have hrows : ∀ r, 0 ≤ slackMap N hN l r := by
+  have hrows : ∀ r, 0 ≤ slackMap N h56 l r := by
     intro r
     fin_cases r
     · exact sub_nonneg.mpr hL3
     · exact sub_nonneg.mpr hL4
     · exact sub_nonneg.mpr hC3
-  have hgood := norm_from_fixed_cones N hN (Real.sqrt (target N)) fixedGood l ho hn hrows
+  have hgood := norm_from_fixed_cones N h56 (Real.sqrt (target N)) fixedGood l ho hn hrows
   have hb := spectralGood_square (Real.sqrt (target N)) l (Real.sqrt_nonneg _)
     (by rw [hmass]; norm_num) hgood
   rw [hmass, Real.sq_sqrt (target_nonneg N)] at hb

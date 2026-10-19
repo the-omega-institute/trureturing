@@ -15,6 +15,9 @@ import Mathlib.Algebra.Polynomial.Eval.Irreducible
 import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
+import Mathlib.Algebra.Group.TypeTags.Hom
+import Mathlib.GroupTheory.QuotientGroup.Defs
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -696,6 +699,29 @@ theorem minus_cube_normal_form (u : Minus4ˣ) :
     simpa only [minusSynthesis, LinearMap.coe_mk, AddHom.coe_mk, k, ZMod.natCast_zmod_val] using ht.symm
   obtain ⟨v, hv⟩ := exists_original_cube_of_quotient_eq u (Bminus^k.val) hq
   exact ⟨k, v, hv⟩
+
+
+/-- The already oriented character of the literal common residue unit group.
+This does not descend through time until a time-annihilation proof is supplied. -/
+def residueCharacter : Additive (Common 4)ˣ →+ ZMod 3 := cK
+
+/-- Read the Bplus exponent of THIS integral cube factorization.
+The root and the exponent are supplied together, not chosen independently. -/
+theorem residueCharacter_plus_factorization (u : Plus4ˣ)
+    (i j : Fin 3) (v : Plus4ˣ)
+    (hu : u = alpha^i.val * Bplus^j.val * v^3) :
+    residueCharacter (Additive.ofMul (Units.map (rplus 4).toMonoidHom u)) =
+      (j.val : ZMod 3) := by
+  change plusCharacterK (Additive.ofMul u) = (j.val : ZMod 3)
+  rw [hu]
+  have hthree : (3 : ZMod 3) = 0 := by decide
+  simp only [ofMul_mul, ofMul_pow, map_add, map_nsmul,
+    plusCharacterK_alpha, plusCharacterK_B, nsmul_eq_mul, Nat.cast_ofNat, hthree,
+    mul_zero, mul_one, zero_mul, zero_add, add_zero]
+
+
+
+
 
 /-- Compatibility consumer. The hypothesis is literal equality
 of residues under the existing rplus/rminus maps, not a rho-image premise. -/

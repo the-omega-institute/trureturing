@@ -1955,6 +1955,15 @@ $$
 
 **证明范围。** 上述有限核验不证明第 29–35 节的全称论断；这些论断的证明地位以本文书面推导和相应 Lean 声明分别判定。
 
+
+## 实验材料入口
+
+正文中的程序名与结果文件路径对应以下固定版本；有限核验数据不代替普遍证明或 Lean 证书。
+
+- [README.md](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/rro-sft-29-35/README.md)
+- [verify_closure.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/rro-sft-profile-closure/verify_closure.py)
+- [verification-summary.json](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/rro-sft-profile-closure/verification-summary.json)
+
 ## 36. 第 6.2 条的同一实际边实现与有符号过去词
 
 本节展开第 6.2 条中两个容易混淆的识别：单侧提升的计数模型怎样保留原来的实际 C 边，以及反转后的有限路径怎样还原为 B 的正向过去词。所用输入仍是第 2.3 条的实际边唯一提升和有限遗忘；证书情形仍只用第 4.1 条的原长兼容方程。

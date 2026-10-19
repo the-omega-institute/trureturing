@@ -133,7 +133,7 @@ noncomputable def hInv (α : ℝ) : ℝ → ℝ :=
 noncomputable def star (a b : ℝ) : ℝ :=
   D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining.bconv a b
 
-private lemma h_eq (α : ℝ) : h α = fun p =>
+lemma h_eq (α : ℝ) : h α = fun p =>
     if α = 1 then Real.binEntropy p else Real.log (p ^ α + (1 - p) ^ α) / (1 - α) := by
   funext p
   simp only [h, D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining.hRenyi,
@@ -147,13 +147,13 @@ def claim : Prop := ∃ αhat : ℝ, 1 < αhat ∧ αhat < (13863 : ℝ) / 10000
   (∀ α : ℝ, 2 ≤ α → ∀ y ∈ Icc 0 (Real.log 2),
     ConcaveOn ℝ (Icc 0 (Real.log 2)) (fun x => G α x y))
 
-private def psi (α t : ℝ) : ℝ := h α ((1 - t) / 2)
+def psi (α t : ℝ) : ℝ := h α ((1 - t) / 2)
 private def inverseBias (α x : ℝ) : ℝ := 1 - 2 * hInv α x
-private def slope (α t : ℝ) : ℝ :=
+def slope (α t : ℝ) : ℝ :=
   if α = 1 then Real.artanh t else α * (((1 + t) / 2) ^ (α - 1) - ((1 - t) / 2) ^ (α - 1)) /
     (2 * (α - 1) * (((1 + t) / 2) ^ α + ((1 - t) / 2) ^ α))
 
-private lemma powerSum_pos {α p : ℝ} (hp : p ∈ Icc 0 (1 / 2)) :
+lemma powerSum_pos {α p : ℝ} (hp : p ∈ Icc 0 (1 / 2)) :
     0 < p ^ α + (1 - p) ^ α := by
   have hw : 0 < 1 - p := by linarith [hp.2]
   exact add_pos_of_nonneg_of_pos (Real.rpow_nonneg hp.1 _) (Real.rpow_pos_of_pos hw _)
@@ -201,7 +201,7 @@ private lemma h_hasDerivAt {α p : ℝ} (hne : α ≠ 1) (hp : p ∈ Ioo 0 (1 / 
   field_simp
   <;> ring
 
-private lemma h_strictMonoOn {α : ℝ} (hα : 0 < α) : StrictMonoOn (h α) (Icc 0 (1 / 2)) := by
+lemma h_strictMonoOn {α : ℝ} (hα : 0 < α) : StrictMonoOn (h α) (Icc 0 (1 / 2)) := by
   by_cases hne : α = 1
   · rw [h_eq]
     simpa [hne, one_div] using Real.binEntropy_strictMonoOn
@@ -218,7 +218,7 @@ private lemma h_strictMonoOn {α : ℝ} (hα : 0 < α) : StrictMonoOn (h α) (Ic
     exact div_pos_of_neg_of_neg (mul_neg_of_pos_of_neg hα (sub_neg.mpr hr))
       (mul_neg_of_neg_of_pos (by linarith) hs)
 
-private lemma h_image {α : ℝ} (hα : 0 < α) : h α '' Icc 0 (1 / 2) = Icc 0 (Real.log 2) := by
+lemma h_image {α : ℝ} (hα : 0 < α) : h α '' Icc 0 (1 / 2) = Icc 0 (Real.log 2) := by
   rw [(h_continuousOn hα).image_Icc_of_monotoneOn (by norm_num)
     (h_strictMonoOn hα).monotoneOn, h_zero hα, h_half hα]
 
@@ -227,11 +227,11 @@ private lemma hInv_spec {α x : ℝ} (hα : 0 < α) (hx : x ∈ Icc 0 (Real.log 
   have him : x ∈ h α '' Icc 0 (1 / 2) := by rw [h_image hα]; exact hx
   exact ⟨Function.invFunOn_mem him, Function.invFunOn_eq him⟩
 
-private lemma hInv_h {α p : ℝ} (hα : 0 < α) (hp : p ∈ Icc 0 (1 / 2)) :
+lemma hInv_h {α p : ℝ} (hα : 0 < α) (hp : p ∈ Icc 0 (1 / 2)) :
     hInv α (h α p) = p :=
   (h_strictMonoOn hα).injOn.leftInvOn_invFunOn hp
 
-private lemma hInv_continuousOn {α : ℝ} (hα : 0 < α) :
+lemma hInv_continuousOn {α : ℝ} (hα : 0 < α) :
     ContinuousOn (hInv α) (Icc 0 (Real.log 2)) := by
   let e : Icc (0 : ℝ) (1 / 2) ≃ Icc (0 : ℝ) (Real.log 2) :=
     { toFun := fun p => ⟨h α p, by rw [← h_image hα]; exact mem_image_of_mem _ p.property⟩
@@ -260,7 +260,7 @@ private lemma psi_continuousOn {α : ℝ} (hα : 0 < α) : ContinuousOn (psi α)
   (h_continuousOn hα).comp ((continuousOn_const.sub continuousOn_id).div_const 2)
     (fun t ht => ⟨by linarith [ht.2], by linarith [ht.1]⟩)
 
-private lemma slope_pos {α t : ℝ} (hα : 0 < α) (ht : t ∈ Ioo 0 1) : 0 < slope α t := by
+lemma slope_pos {α t : ℝ} (hα : 0 < α) (ht : t ∈ Ioo 0 1) : 0 < slope α t := by
   by_cases hne : α = 1
   · simpa [slope, hne] using Real.artanh_pos ht
   have hw : 0 < (1 - t) / 2 := by linarith [ht.2]
@@ -277,7 +277,7 @@ private lemma slope_pos {α t : ℝ} (hα : 0 < α) (ht : t ∈ Ioo 0 1) : 0 < s
     exact div_pos (mul_pos hα (sub_pos.mpr hr))
       (mul_pos (mul_pos (by norm_num) (by linarith)) hs)
 
-private lemma psi_hasDerivAt {α t : ℝ} (hα : 0 < α) (ht : t ∈ Ioo 0 1) :
+lemma psi_hasDerivAt {α t : ℝ} (hα : 0 < α) (ht : t ∈ Ioo 0 1) :
     HasDerivAt (psi α) (-slope α t) t := by
   have hp : (1 - t) / 2 ∈ Ioo (0 : ℝ) (1 / 2) :=
     ⟨by linarith [ht.2], by linarith [ht.1]⟩
@@ -333,9 +333,9 @@ private lemma inverseBias_hasDerivAt {α x : ℝ} (hα : 0 < α) (hx : x ∈ Ioo
   filter_upwards [Icc_mem_nhds hx.1 hx.2] with z hz
   exact (inverseBias_spec hα hz).2
 
-private def ratio (t : ℝ) : ℝ := (1 - t) / (1 + t)
+def ratio (t : ℝ) : ℝ := (1 - t) / (1 + t)
 
-private lemma ratio_mem {t : ℝ} (ht : t ∈ Ioo 0 1) : ratio t ∈ Ioo 0 1 := by
+lemma ratio_mem {t : ℝ} (ht : t ∈ Ioo 0 1) : ratio t ∈ Ioo 0 1 := by
   have hd : 0 < 1 + t := by linarith [ht.1]
   exact ⟨div_pos (by linarith [ht.2]) hd,
     (div_lt_one hd).mpr (by linarith [ht.1])⟩
@@ -371,7 +371,7 @@ private lemma T_ratio {α t : ℝ} (ht : t ∈ Ioo 0 1) :
   field_simp
   <;> ring
 
-private lemma slope_eq {α t : ℝ} (hα : α ≠ 1) (ht : t ∈ Ioo 0 1) :
+lemma slope_eq {α t : ℝ} (hα : α ≠ 1) (ht : t ∈ Ioo 0 1) :
     slope α t = α / (α - 1) * CachinElasticityMonotone.T (α - 1) (ratio t) /
       (1 + t * CachinElasticityMonotone.T (α - 1) (ratio t)) := by
   have hu : 0 < (1 + t) / 2 := by linarith [ht.1]
@@ -388,7 +388,7 @@ private lemma slope_eq {α t : ℝ} (hα : α ≠ 1) (ht : t ∈ Ioo 0 1) :
   field_simp
   <;> ring
 
-private lemma T_comp_hasDerivAt {n t : ℝ} (hn : n ≠ 0) (ht : t ∈ Ioo 0 1) :
+lemma T_comp_hasDerivAt {n t : ℝ} (hn : n ≠ 0) (ht : t ∈ Ioo 0 1) :
     HasDerivAt (fun s => CachinElasticityMonotone.T n (ratio s))
       (CachinElasticityMonotone.T n (ratio t) * CachinElasticityMonotone.A n (ratio t) / t) t := by
   have hr := ratio_mem ht
@@ -409,7 +409,7 @@ private lemma T_comp_hasDerivAt {n t : ℝ} (hn : n ≠ 0) (ht : t ∈ Ioo 0 1) 
     field_simp [hd0]
     <;> ring
 
-private lemma slope_hasDerivAt {α t : ℝ} (hα : 0 < α) (hne : α ≠ 1) (ht : t ∈ Ioo 0 1) :
+lemma slope_hasDerivAt {α t : ℝ} (hα : 0 < α) (hne : α ≠ 1) (ht : t ∈ Ioo 0 1) :
     HasDerivAt (slope α)
       (slope α t * CachinElasticityMonotone.F (α - 1) (ratio t) / t) t := by
   have hn : α - 1 ≠ 0 := sub_ne_zero.mpr hne

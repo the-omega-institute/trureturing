@@ -37,9 +37,9 @@ def claim : Prop := ∀ (n : ℕ) (hn : 1 ≤ n) (z : Fin n → ℂ), (∀ j, z 
       3 * ∑ j, ‖z j‖⁻¹ ^ 2 + ‖∑ j, (z j)⁻¹‖ ^ 2) ↔
         ∀ j, ∃ r : ℝ, z j = (r : ℂ) * z ⟨0, hn⟩)
 
-private def J (n : ℕ) : Matrix (Fin n) (Fin n) ℂ := fun _ _ => 1
+def J (n : ℕ) : Matrix (Fin n) (Fin n) ℂ := fun _ _ => 1
 
-private theorem J_sq (n : ℕ) : J n * J n = (n : ℂ) • J n := by
+theorem J_sq (n : ℕ) : J n * J n = (n : ℂ) • J n := by
   rw [show J n = Matrix.vecMulVec (1 : Fin n → ℂ) (1 : Fin n → ℂ) by
     ext i j
     simp [J, Matrix.vecMulVec]]
@@ -47,7 +47,7 @@ private theorem J_sq (n : ℕ) : J n * J n = (n : ℂ) • J n := by
   congr 1
   simp [dotProduct]
 
-private theorem J_conjTranspose (n : ℕ) : (J n)ᴴ = J n := by
+theorem J_conjTranspose (n : ℕ) : (J n)ᴴ = J n := by
   rw [show J n = Matrix.vecMulVec (1 : Fin n → ℂ) (1 : Fin n → ℂ) by
     ext i j
     simp [J, Matrix.vecMulVec]]
@@ -151,7 +151,7 @@ private theorem core_trace (n : ℕ) (b : Fin n → ℂ) :
   push_cast
   ring
 
-private def B {n : ℕ} (b : Fin n → ℂ) : Matrix (Fin n) (Fin n) ℂ :=
+def B {n : ℕ} (b : Fin n → ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   diagonal b * (1 + J n)
 
 private theorem eval_charpoly_B {n : ℕ} (b : Fin n → ℂ) (t : ℂ)
@@ -331,7 +331,7 @@ private theorem reversed_derivative {n : ℕ} (z : Fin n → ℂ) (hz : ∀ j, z
   rw [Polynomial.reflect_mul _ _ (by simp : (X : ℂ[X]).natDegree ≤ 1)
     (product_degree _ _), Polynomial.reflect_one_X, one_mul, reflect_product]
 
-private theorem roots_derivative {n : ℕ} (z : Fin n → ℂ) (hz : ∀ j, z j ≠ 0) :
+theorem roots_derivative {n : ℕ} (z : Fin n → ℂ) (hz : ∀ j, z j ≠ 0) :
     (P z).derivative.roots.map (fun w => w⁻¹) = (B (fun j => (z j)⁻¹)).charpoly.roots := by
   have hc : (∏ j, -z j) ≠ 0 := Finset.prod_ne_zero_iff.mpr (fun j _ => neg_ne_zero.mpr (hz j))
   have hq0 : (P z).derivative.eval 0 ≠ 0 := by

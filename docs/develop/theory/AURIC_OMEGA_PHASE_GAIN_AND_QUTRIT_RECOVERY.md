@@ -321,3 +321,403 @@ For an externally specified source or historical fiber, applying these statement
 **Definition 6.3 (mathematical attribution).** The owner's exact finite-word and fixed-event results, standard quantum-channel definitions, Watrous fidelity properties and Bény–Oreshkov duality are reused in their stated domains. Exact finite Kraus recovery and full-output completion already have [repository sources](../../../Blueprint/D5/S3/Quantum/Recovery/FiniteKrausReversibility.md); they are not redeclared as new general results here. The same-actual-encoder composition (P.7)–(P.8), the specified witnesses and counterexamples (P.11)–(P.19), and their class comparison (P.20) are repo-derived ordinary application proofs. No global originality or priority is inferred. The owner's [finite-root continuation](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_FINITE_ROOT_CONTINUATION.md#65-精确根指定与原固定菜单的条件接口) treats population-constrained input existence and adds no encoder preparation or recovery theorem. Finite algebraic or numerical controls can check displayed identities on their tested inputs; the all-channel and all-reference claims here depend on the analytic proofs, not finite sampling. These source proofs do not assert Lean/kernel verification.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. The fixed complex extension fiber and its channel metric
+
+**Definition 7.1 (the whole observed-input restriction).** Fix $0<\beta\leq1/2$, $a=1-\beta$, and retain the passive input, output and physical correspondence of Definition 1.1. Write
+
+$$
+\begin{gathered}
+P=|0\rangle\langle0|+|1\rangle\langle1|,\qquad Q=|2\rangle\langle2|,\qquad
+H=|e_4\rangle\langle2|,\\
+V_0=|e_0\rangle\langle0|+|e_1\rangle\langle1|,\qquad
+V_1=|e_2\rangle\langle0|+|e_3\rangle\langle1|,\\
+p_0=a,\quad p_1=\beta,\qquad
+V_j^\dagger V_k=\delta_{jk}P,\quad H^\dagger H=Q,\quad V_j^\dagger H=0.
+\end{gathered}
+\tag{P.21}
+$$
+
+The fiber $\mathfrak F_\beta$ consists of all complex-linear CPTP maps $N:M_3\to M_5$ satisfying, for every $X\in M_3$,
+
+$$
+N(PXP)=aV_0XV_0^\dagger+\beta V_1XV_1^\dagger,
+\qquad N(QXQ)=HXH^\dagger.
+\tag{P.22}
+$$
+
+In particular $N(Q)=|e_4\rangle\langle e_4|$. This fixes the entire $P$-supported matrix algebra, rather than just two states in it. The output sectors are the fixed orthogonal spaces $F=\operatorname{ran}V_0\oplus\operatorname{ran}V_1$ and $\mathbb C e_4$. No output rotation or change of third output is included in this definition.
+
+For a complex column $c=(c_0,c_1)$ with $\|c\|_2\leq1$, put
+
+$$
+w(c)=(\sqrt a\,c_0,\sqrt\beta\,c_1),\qquad r(c)=\|w(c)\|_2,
+$$
+
+and define its gluing-coordinate map on every complex matrix by
+
+$$
+\begin{aligned}
+N_c(X)={}&aV_0XV_0^\dagger+\beta V_1XV_1^\dagger+HXH^\dagger\\
+&+\sum_{j=0}^1\bigl(w_j(c)V_jXH^\dagger+
+                  \overline{w_j(c)}HXV_j^\dagger\bigr).
+\end{aligned}
+\tag{P.23}
+$$
+
+These coordinates use the fixed Kraus choices $(\sqrt a V_0,\sqrt\beta V_1)$ and $H$. The general completeness of such contraction coordinates is the gluing theorem of J. Åberg, [*Gluing of completely positive maps*, arXiv:quant-ph/0302182v2, Proposition 3, (4)–(5)](https://arxiv.org/pdf/quant-ph/0302182v2), with trace preservation supplied by Proposition 1. Its concrete hypotheses and both directions for (P.22) are verified as an intermediate in the following proof. The gluing ball itself is literature-attested.
+
+All diamond norms below are unhalved: for a linear map $\Lambda$ this norm is the supremum of $\|(\Lambda\otimes\mathrm{id}_m)(X)\|_1$ over every finite $m$ and every complex matrix $X$ with $\|X\|_1=1$. Recoveries remain arbitrary complex CPTP maps on all of $M_5$.
+
+**Theorem 7.2 (exact metric on the fixed complex fiber).** In the gluing coordinates (P.23), which biject the complex unit two-ball with $\mathfrak F_\beta$,
+
+$$
+\|N_c-N_d\|_\diamond
+=\|w(c)-w(d)\|_2
+=\sqrt{a|c_0-d_0|^2+\beta|c_1-d_1|^2}.
+\tag{P.24}
+$$
+
+The upper bound holds for every finite reference and every complex input matrix. A pure input without a reference attains it. The bijection is the cited gluing intermediate; (P.24) is the operational metric in these fixed weighted coordinates.
+
+**Proof.** For the gluing intermediate, Åberg's source spaces are $P A$ and $Q A$, and its target spaces are $F$ and $\mathbb C e_4$. The restricted maps in (P.22) are trace preserving between those spaces: their Kraus TP sums are $P$ and $Q$. Since $a,\beta>0$ and $V_0,V_1$ have orthogonal nonzero ranges, their two Kraus matrices are linearly independent; the other restriction has the single nonzero Kraus matrix $H$. Every $N$ in (P.22) is a trace-preserving gluing. Equivalently it is subspace preserving: for a pure input in either sector its output has zero weight outside the corresponding target sector. In any Kraus representation positivity then forces every Kraus vector at that input into that sector. Thus Proposition 3 applies with a $2\times1$ matrix $C=c$; its condition $cc^\dagger\preceq I_2$ is precisely $\|c\|_2\leq1$, and its cross terms are (P.23).
+
+One can also verify the necessity in this specialization directly, without a locality assumption. Use the input-first unnormalized Choi matrix $J_N=\sum_{i,k=0}^2|i\rangle\langle k|\otimes N(|i\rangle\langle k|)$ and set
+
+$$
+\xi_j=\sum_{i=0}^1|i\rangle\otimes V_j|i\rangle,
+\qquad h=|2\rangle\otimes e_4.
+$$
+
+The two diagonal input blocks of $J_N$ are $\sum_jp_j|\xi_j\rangle\langle\xi_j|$ and $|h\rangle\langle h|$. A vector of zero quadratic form for a PSD matrix is in its kernel, as follows by taking its positive square root. Consequently all remaining Choi entries must join $\operatorname{span}(\xi_0,\xi_1)$ to $\mathbb C h$. The only possible form is
+
+$$
+J_N=\sum_jp_j|\xi_j\rangle\langle\xi_j|+|h\rangle\langle h|
++\sum_j\bigl(w_j|\xi_j\rangle\langle h|+
+                 \overline{w_j}|h\rangle\langle\xi_j|\bigr).
+$$
+
+In the orthonormal basis $(\xi_0/\sqrt2,\xi_1/\sqrt2,h)$ its nonzero block and its Schur-complement condition are
+
+$$
+\begin{pmatrix}
+2a&0&\sqrt2w_0\\
+0&2\beta&\sqrt2w_1\\
+\sqrt2\overline{w_0}&\sqrt2\overline{w_1}&1
+\end{pmatrix}\succeq0
+\quad\Longleftrightarrow\quad
+\frac{|w_0|^2}{a}+\frac{|w_1|^2}{\beta}\leq1.
+\tag{P.25}
+$$
+
+Indeed completing the square in the first two coordinates leaves the last quadratic coefficient $1-|w_0|^2/a-|w_1|^2/\beta$. Taking $c_j=w_j/\sqrt{p_j}$ gives exactly the asserted domain and (P.23). The Choi convention differs from the output-first convention in Watrous by a tensor swap only.
+
+For sufficiency, an explicit Kraus list for every permitted complex $c$ is
+
+$$
+K_j=\sqrt{p_j}V_j+\overline{c_j}H\quad(j=0,1),
+\qquad K_*=\sqrt{1-\|c\|_2^2}\,H.
+\tag{P.26}
+$$
+
+Its TP sum is $(a+\beta)P+Q=I_3$ because $V_j^\dagger H=0$; its channel is (P.23) on every matrix. This also covers $\|c\|_2=1$, where $K_*=0$. Positivity, Kraus representation and TP are used in the finite-dimensional sense of [Watrous, *The Theory of Quantum Information*, Chapter 2, Theorem 2.22 and Corollary 2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). The positive weights make $w$ and then $c$ unique, for example by evaluating $N(|0\rangle\langle2|)$ on the independent vectors $e_0,e_2$. This completes the specialized gluing verification.
+
+It remains to prove the metric. Put $v=w(c)-w(d)$ and $s=\|v\|_2$. If $s=0$, (P.23) makes the difference map zero. Otherwise define the isometry $J_v:A\to B$ by
+
+$$
+J_v|i\rangle=s^{-1}\sum_{j=0}^1v_jV_j|i\rangle\quad(i=0,1),
+\qquad J_v|2\rangle=e_4.
+$$
+
+Let $Z=P-Q$ and $\mathcal O(X)=PXQ+QXP=(X-ZXZ)/2$. Direct substitution gives the identity of linear maps
+
+$$
+(N_c-N_d)(X)=sJ_v\mathcal O(X)J_v^\dagger.
+\tag{P.27}
+$$
+
+For every finite reference, unitary invariance and the triangle inequality give $\|(\mathcal O\otimes\mathrm{id})(X)\|_1\leq\|X\|_1$, even for non-Hermitian $X$. Isometric conjugation preserves all singular values other than appended zeros, so (P.27) proves the upper bound $s$ at every reference size. For $\eta=(|0\rangle+|2\rangle)/\sqrt2$, $\mathcal O(|\eta\rangle\langle\eta|)$ has eigenvalues $1/2,-1/2,0$ and trace norm one. Its image in (P.27) has trace norm $s$. This proves (P.24), including attainment and complex phases. These direct bounds agree with the complete-reference diamond interface in [Watrous, Chapter 3, Definition 3.43, Proposition 3.44 and Theorem 3.46](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf). $\square$
+
+## 8. Complete recovery on the complex fiber
+
+**Theorem 8.1 (a recovery budget and simultaneous domination).** For each complex $t=(t_0,t_1)$ with $\|t\|_2\leq1$, define $R_t:M_5\to M_3$ by the Kraus list
+
+$$
+T_j=V_j^\dagger+\overline{t_j}H^\dagger\quad(j=0,1),
+\qquad T_*=\sqrt{1-\|t\|_2^2}\,H^\dagger.
+\tag{P.28}
+$$
+
+It is CPTP on the entire output, and with the bilinear scalar $h(c,t)=\sum_jw_j(c)t_j$ its composition on every $X\in M_3$ is
+
+$$
+R_tN_c(X)=\Psi_{h(c,t)}(X),\qquad
+\Psi_h(X)=PXP+QXQ+hPXQ+\overline h QXP.
+\tag{P.29}
+$$
+
+For all $c$ and $t$ in their balls,
+
+$$
+\|R_tN_c-\mathrm{id}_3\|_\diamond=|1-h(c,t)|.
+\tag{P.30}
+$$
+
+Conversely, every complex whole-output CPTP recovery $R$ determines a single $t_R$ with $\|t_R\|_2\leq1$ such that simultaneously for every $c$,
+
+$$
+\|RN_c-\mathrm{id}_3\|_\diamond
+\geq|1-h(c,t_R)|
+=\|R_{t_R}N_c-\mathrm{id}_3\|_\diamond.
+\tag{P.31}
+$$
+
+Thus one member of (P.28) weakly improves that recovery's error at every channel in this fixed fiber. This comparison concerns the stated diamond-error objectives, not equality of the arbitrary recovery maps.
+
+**Proof.** The TP sum of (P.28) is
+
+$$
+\sum_jT_j^\dagger T_j+T_*^\dagger T_*
+=V_0V_0^\dagger+V_1V_1^\dagger+HH^\dagger=I_5.
+\tag{P.32}
+$$
+
+All cross terms vanish since $V_j|2\rangle=0$ and $HP=0$. In particular no part of $M_5$ is left undefined. On $PXP$, each branch $V_j$ is decoded identically and its weight is $p_j$; their sum is $PXP$. On $QXQ$, the sum of the squared $H^\dagger$ coefficients is one and gives $QXQ$. The cross basis elements satisfy
+
+$$
+R_t\bigl(V_j|i\rangle\langle e_4|\bigr)=t_j|i\rangle\langle2|
+\quad(i=0,1),
+$$
+
+with the adjoint relation for the opposite block. Applying (P.23) proves (P.29) on a basis of all nine complex matrix units, hence on every matrix, and after tensoring with every reference. In particular $|h(c,t)|\leq r(c)\leq\sqrt a\leq1$.
+
+For the norm identity set $\kappa=h-1$. If $\kappa=0$ the difference map vanishes. Otherwise the unitary $U_\kappa=(\kappa/|\kappa|)P+Q$ gives
+
+$$
+\Psi_h-\mathrm{id}_3=|\kappa|\operatorname{Ad}_{U_\kappa}\circ\mathcal O.
+$$
+
+The reference-uniform contraction bound for $\mathcal O$ proved in Theorem 7.2 gives an upper bound $|\kappa|$. The same pure state $\eta$ used there gives an output difference with two nonzero eigenvalues $\pm|\kappa|/2$, so it attains this bound. This proves (P.30) for arbitrary complex $h$ that occurs here, without restricting references or input matrices.
+
+For the converse, represent any $R$ by a finite Stinespring isometry $W:B\to A\otimes E$, so $R(Y)=\operatorname{Tr}_E(WYW^\dagger)$. Such an isometry exists for every finite-dimensional complex CPTP map by the cited Corollary 2.27. Define
+
+$$
+\begin{gathered}
+A_R:\mathbb C^2\to E,\qquad
+A_R f_j=(\langle0|\otimes I_E)WV_j|0\rangle,\\
+b_R=(\langle2|\otimes I_E)We_4,\qquad
+(t_R)_j=b_R^\dagger A_Rf_j
+=\langle0|R(V_j|0\rangle\langle e_4|)|2\rangle,
+\end{gathered}
+\tag{P.33}
+$$
+
+where $f_0,f_1$ are the standard coordinate vectors of $\mathbb C^2$. The map $f_j\mapsto V_j|0\rangle$ is an isometry, $W$ is an isometry, and $\langle0|\otimes I_E$ is a contraction. Hence $\|A_R\|_{\rm op}\leq1$; also $\|b_R\|_2\leq1$. Therefore the row $b_R^\dagger A_R$ has Euclidean norm at most one, giving $\|t_R\|_2\leq1$. This budget uses the same isometry $W$ for both branches and all channels.
+
+The matrix $E_{02}=|0\rangle\langle2|$ has trace norm one and
+
+$$
+N_c(E_{02})=\sum_jw_j(c)V_j|0\rangle\langle e_4|.
+$$
+
+Its recovered $(0,2)$ matrix entry is $h(c,t_R)$. A matrix entry is bounded by the trace norm, so
+
+$$
+\|RN_c-\mathrm{id}_3\|_\diamond
+\geq\|RN_c(E_{02})-E_{02}\|_1
+\geq|h(c,t_R)-1|.
+$$
+
+The first inequality uses the defining norm over all complex matrices, with reference size one already sufficient for this lower certificate. Combining it with (P.30) proves (P.31). No assumption that $R$ preserves either input sector, has real Kraus entries, or belongs to the displayed decoder family entered the lower bound. $\square$
+
+**Theorem 8.2 (exact individual optimum and fiber equality cases).** For every $c$ in the complex unit two-ball,
+
+$$
+\delta(N_c)=1-r(c).
+\tag{P.34}
+$$
+
+If $r(c)>0$, a single attaining decoder is (P.28) with $t_j=\overline{w_j(c)}/r(c)$. It serves every unknown input matrix and every finite reference. If $r(c)=0$, then $c=0$ and every decoder (P.28) attains error one. Over the whole fixed fiber,
+
+$$
+\min_{N\in\mathfrak F_\beta}\delta(N)=1-\sqrt a,
+\qquad \max_{N\in\mathfrak F_\beta}\delta(N)=1.
+\tag{P.35}
+$$
+
+For $0<\beta<1/2$ the minimizers are exactly $c=(e^{i\phi},0)$, $\phi\in\mathbb R$; for $\beta=1/2$ they are exactly $\|c\|_2=1$. For every positive $\beta$ the unique maximizing channel is $N_0$.
+
+**Proof.** For any $R$, (P.31) and Cauchy–Schwarz imply
+
+$$
+\|RN_c-\mathrm{id}_3\|_\diamond
+\geq|1-h(c,t_R)|\geq1-|h(c,t_R)|\geq1-r(c).
+$$
+
+For $r(c)>0$, the stipulated $t$ has norm one, and $h(c,t)=r(c)$ is real. Equations (P.29)–(P.30) then attain $1-r(c)$. For $r(c)=0$, $h=0$ for every $t$ and the recovered map is $PXP+QXQ$; its error is one by (P.30). Both weights are positive, so $r=0$ forces $c=0$.
+
+Finally,
+
+$$
+r(c)^2=a\|c\|_2^2-(a-\beta)|c_1|^2\leq a.
+$$
+
+If $a>\beta$, equality requires both $\|c\|_2=1$ and $c_1=0$, and these requirements suffice. If $a=\beta=1/2$, equality is equivalent to $\|c\|_2=1$. The minimum of $r$ is zero only at $c=0$. This proves every equality case in (P.35). $\square$
+
+## 9. Compatibility of one recovery with several full channels
+
+**Theorem 9.1 (exact common-optimal ray criterion).** Let $S$ be any nonempty subset of the complex unit two-ball. There exists one complex whole-output CPTP recovery $R$ such that
+
+$$
+\|RN_c-\mathrm{id}_3\|_\diamond=\delta(N_c)
+\quad\text{for every }c\in S
+\tag{P.36}
+$$
+
+if and only if all nonzero $w(c)$, $c\in S$, have one identical unit direction $w(c)/r(c)$. The condition is vacuous when all $w(c)$ vanish. A zero member imposes no additional restriction on this existence criterion. The direction includes complex phase; identifying directions modulo a phase gives an incorrect criterion.
+
+**Proof.** Suppose first that a common $R$ exists, and take its one vector $t_R$ from (P.33). For each member with $r=r(c)>0$, Theorems 8.1–8.2 give
+
+$$
+1-r\leq1-|h(c,t_R)|\leq|1-h(c,t_R)|
+\leq\|RN_c-\mathrm{id}_3\|_\diamond=1-r.
+$$
+
+All terms are equal. Thus $|h(c,t_R)|=r$, and equality in $|1-h|\geq1-|h|$ forces $h(c,t_R)=r$ real and positive. More explicitly the difference between the squares of these two quantities is $2(|h|-\operatorname{Re}h)$, so its vanishing fixes this phase. Equality in Cauchy–Schwarz, together with $\|t_R\|_2\leq1$, then forces
+
+$$
+\|t_R\|_2=1,\qquad
+t_R=\overline{w(c)}/r(c).
+\tag{P.37}
+$$
+
+Since the left side is fixed by $R$, all nonzero directions are identical. The argument also covers $r=1$ if it occurs; there is no division by $1-r$.
+
+Conversely, if the nonzero directions equal a unit vector $d$, take $t=\overline d$ in (P.28). Then $h(c,t)=r(c)$ for every nonzero member; it is zero on every zero member. Equation (P.30) gives exactly each individual error (P.34). If all members vanish, take $t=0$. This constructs one whole-output map before the unknown channel member, unknown input and reference are chosen. In particular a pair $w$ and $e^{i\phi}w$ with $w\ne0$ satisfies the criterion exactly when $e^{i\phi}=1$. $\square$
+
+**Theorem 9.2 (shared minimax value and a strict two-channel separation).** For any such nonempty $S$, define
+
+$$
+\Delta_{\rm sh}(S)=\inf_{R\ {\rm CPTP}:M_5\to M_3}
+\sup_{c\in S}\|RN_c-\mathrm{id}_3\|_\diamond.
+$$
+
+The exact common-recovery optimization has the attained representation
+
+$$
+\Delta_{\rm sh}(S)=\min_{\|t\|_2\leq1}
+\sup_{c\in S}\left|1-\sum_jw_j(c)t_j\right|.
+\tag{P.38}
+$$
+
+In particular, for the legal parameters
+
+$$
+c^A=(\sqrt{\beta/a},0),\qquad c^B=(0,1),\qquad s=\sqrt\beta,
+\tag{P.39}
+$$
+
+one has
+
+$$
+\begin{gathered}
+\delta(N_{c^A})=\delta(N_{c^B})=1-\sqrt\beta,\\
+\|N_{c^A}-N_{c^B}\|_\diamond=\sqrt{2\beta},\\
+\Delta_{\rm sh}(\{c^A,c^B\})=1-\sqrt{\beta/2}
+>1-\sqrt\beta.
+\end{gathered}
+\tag{P.40}
+$$
+
+The last value optimizes all complex CPTP recoveries, with one shared decoder required for both encoders and every unknown input and finite reference.
+
+**Proof.** For every $R$, its one $t_R$ in (P.31) bounds all errors below by the objective on the right of (P.38). Conversely, for any allowed $t$, (P.30) realizes that objective simultaneously using $R_t$. This proves equality of the infima. The objective is finite and continuous even if $S$ is infinite or not closed: the reverse triangle inequality and $\|w(c)\|_2\leq\sqrt a$ show that it is $\sqrt a$-Lipschitz in $t$. The complex closed unit ball is compact as a real four-dimensional set, so a minimizing $t$ and its single whole-output decoder exist.
+
+For (P.39), $\beta\leq a$ proves $\|c^A\|_2\leq1$ and $\|c^B\|_2=1$. Their weighted vectors are $w^A=(s,0)$ and $w^B=(0,s)$. Thus (P.34) gives both individual values and (P.24) gives their distance. To give a lower certificate for an arbitrary $R$, let $t=t_R$. Then
+
+$$
+\begin{aligned}
+\max\{\|RN_{c^A}-\mathrm{id}\|_\diamond,
+       \|RN_{c^B}-\mathrm{id}\|_\diamond\}
+&\geq\max\{|1-st_0|,|1-st_1|\}\\
+&\geq1-s\min\{\operatorname{Re}t_0,\operatorname{Re}t_1\}
+\geq1-s/\sqrt2.
+\end{aligned}
+\tag{P.41}
+$$
+
+For the final inequality, if both real parts exceeded $1/\sqrt2$, then $|t_0|^2+|t_1|^2>1$, contrary to (P.33). This certificate makes no restriction on the recovery other than whole-output complex CPTP.
+
+For the matching upper value choose $t_0=t_1=1/\sqrt2$ in (P.28), so that $T_*=0$. Its TP sum is $I_5$ by (P.32), and its composition with either channel is the same map on every complex input matrix:
+
+$$
+R_tN_{c^A}=R_tN_{c^B}
+=\frac{1+s/\sqrt2}{2}\,\mathrm{id}_3
++\frac{1-s/\sqrt2}{2}\operatorname{Ad}_Z.
+\tag{P.42}
+$$
+
+Equation (P.30) bounds the diamond error at every finite reference by $1-s/\sqrt2$ and attains it on $\eta$. This proves (P.40). Strictness follows from $s>0$. At $\beta=1/2$, both parameters lie on the unit sphere: the individual value is $1-1/\sqrt2$, their distance is one, and their shared optimum is $1/2$. These are values in the unhalved convention. $\square$
+
+## 10. Endpoints, native observables and mathematical scope
+
+**Theorem 10.1 (the zero-weight coordinate is absent).** At $\beta=0$, the fiber defined by (P.22) is parametrized injectively by a single complex number $\zeta$ with $|\zeta|\leq1$:
+
+$$
+N_\zeta(X)=V_0XV_0^\dagger+HXH^\dagger
++\zeta V_0XH^\dagger+\overline\zeta HXV_0^\dagger.
+\tag{P.43}
+$$
+
+Its exact quantities are
+
+$$
+\|N_\zeta-N_\xi\|_\diamond=|\zeta-\xi|,
+\qquad \delta(N_\zeta)=1-|\zeta|.
+\tag{P.44}
+$$
+
+For any nonempty set of these channels, a common individually optimal recovery exists exactly when all its nonzero $\zeta$ have the same phase $\zeta/|\zeta|$. Zeros impose no extra constraint. Its shared minimax value is
+
+$$
+\min_{|t|\leq1}\sup_{\zeta\in S}|1-\zeta t|.
+\tag{P.45}
+$$
+
+The individual minimum is zero exactly at $|\zeta|=1$; the maximum is one exactly at $\zeta=0$. There is no injective two-ball parametrization at this endpoint.
+
+**Proof.** The $P$ restriction has the single nonzero Kraus matrix $V_0$, so Åberg's Proposition 3 now has a $1\times1$ gluing matrix, not a $2\times1$ one. Equivalently the Choi kernel argument above removes the whole $\xi_1$ direction before a Schur complement is taken, leaving $|\zeta|\leq1$. A direct Kraus list is $V_0+\overline\zeta H$ and $\sqrt{1-|\zeta|^2}H$. This proves necessity, sufficiency and injectivity in (P.43).
+
+The metric proof (P.27) applies with the one active component $v=\zeta-\xi$. To complete the decoder on the whole five-dimensional output, for each $|t|\leq1$ take
+
+$$
+T_0=V_0^\dagger+\overline t H^\dagger,\qquad
+T_1=V_1^\dagger,\qquad T_*=\sqrt{1-|t|^2}H^\dagger.
+$$
+
+The inactive branch $T_1$ is needed for the TP sum $I_5$ although the encoder never occupies its range. These Kraus matrices give $\Psi_{\zeta t}$ on every matrix and error $|1-\zeta t|$ by the proof of (P.30). For an arbitrary recovery, retain only the $j=0$ entry in (P.33), obtaining $|t_R|\leq1$ and the bound $|1-\zeta t_R|$. This proves (P.44)–(P.45), the phase criterion by the equality argument (P.37), and all extremal cases. If one formally retains a discarded coordinate $c_1$, maps with the same $c_0=\zeta$ coincide; it is not a channel parameter. The two parameters in (P.39) consequently both reduce to $\zeta=0$ at zero beta, with distance zero and individual and shared errors one, so their strict separation requires $\beta>0$. $\square$
+
+**Theorem 10.2 (fixed native outputs throughout the fiber).** For every positive $\beta$ and every permitted complex $c$, the physical channel $N_c^{\rm ph}$ obtained by (P.1) belongs to $\mathcal C_\beta$ and has the identical native candidate outputs (P.13), with the physical sign interchange (P.2). Under exactly Assumption 1.2,
+
+$$
+B_0=0,\qquad B_1=a,\qquad B_k=1\ (k\geq2),\qquad \gamma=\beta
+\tag{P.46}
+$$
+
+for every member, while its full-input optimum is (P.34). The same assertions at zero beta use (P.43) and (P.44). Real $c$ and real $\zeta$ give real passive Kraus representations, so these subfamilies belong to $\mathcal R_\beta$. All metric, optimum and common-recovery statements transport to the fixed physical frames by (P.16), including the same single shared recovery for each specified set.
+
+**Proof.** The two passive inputs $\chi_\pm$ lie entirely in $P A$, so (P.22) gives exactly (P.13), independently of the cross-block coefficients. The four vectors displayed there are orthonormal and their difference is purely imaginary Hermitian with spectrum $(a,\beta,0,-\beta,-a)$. Thus these are actual members of $\mathcal C_\beta$ in the prescribed physical coordinates, rather than an inference from their populations. Their actual common diagonal is $(a/2,a/2,\beta/2,\beta/2,0)$. Theorem 2.1 applies on each same encoder with the same native candidate pair and proves (P.46); it requires the independent constrained drives and forward-call budget of Assumption 1.2. At zero the inactive branch drops out and the same conclusion follows with $B_1=1$. At half beta it reads $B_1=1/2$, $B_2=1$.
+
+The Kraus lists (P.26) and the list for (P.43) have real entries for real parameters, proving the claimed real subfamilies. For all complex parameters, (P.16) is a fixed bijection on the full recovery class. The same $D,L$ conjugate every member; for a common passive recovery $R$, the one map $R^{\rm ph}=\operatorname{Ad}_L\circ R\circ\operatorname{Ad}_{D^\dagger}$ therefore serves every corresponding physical member. Unitary invariance with every reference proves the physical metric and recovery assertions. These coordinate equalities do not install physical gates or assert that the arbitrary CPTP decoders are realizable by the native unitary-and-terminal-measurement menu. $\square$
+
+**Definition 10.3 (inherited content and applicability limits).** The scalar path $c=(\lambda,0)$, $0\leq\lambda\leq1$, is the interpolation in the supplied phase-budget/recovery manuscript. Its formulas $\delta=1-\sqrt a\lambda$ and $\|N_\lambda-N_\mu\|_\diamond=\sqrt a|\lambda-\mu|$, and its error range $[1-\sqrt a,1]$, are inherited reference content. Its coherent and erased endpoints are already Theorems 4.1 and 5.1. The fixed-fiber extrema (P.35) identify additional equality cases but do not make that scalar error interval a new result.
+
+The [companion certificates, Theorem 18.2](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#18-an-actual-real-kraus-family-with-coupled-third-column-data) allow a varying third output; (P.22) fixes it to the pure state on $e_4$. [Sections 31–32 there](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#31-complete-weighted-rank-two-plane-coordinates) already give real rank-two plane and arbitrary-third-column coordinates, including overlapping real boundary instances of this fiber. Explicitly, at their $\theta=0$, identify $(b_1,g_1,b_2,g_2,h)$ with $(e_0,e_1,e_2,e_3,e_4)$ and take $A=(\sqrt a e_0,\sqrt\beta e_2)$ and $T=(c_0e_4,c_1e_4)$ with real $c$ of norm one. Their (R.149) is then (P.26) with $K_*=0$. These instances are not additional content of this parametrization. No arbitrary-third-output reduction or common-projection estimate is used in (P.24)–(P.45). A channel agreeing only on the two phase states need not satisfy the whole-algebra restriction or the fixed third output in (P.22); the fiber equalities therefore do not settle the broader sharp-curve questions of Definition 6.2 or the companion volumes.
+
+The complete contraction parametrization is literature-attested in Åberg's cited Proposition 3. Kraus rank and extreme-point structure of general gluings also belong to its Propositions 4–5; no claim of new general gluing geometry is attached here. A related implementation-sensitive control-sector description is [Abbott, Wechs, Horsman, Mhalla and Branciard, *Communication Through Coherent Control of Quantum Channels*, Quantum **4**, 333, arXiv:1810.09826v3, Appendix A, (A7)–(A9)](https://arxiv.org/pdf/1810.09826v3). It constrains an implementation transformation matrix by its channel Choi support and pseudoinverse. Its Appendix D, (D1)–(D2), studies channel differences with a separately supplied coherent control sector and defines distance as one half of the diamond norm. That control-sector setting and normalization are distinct from (P.22) and its unhalved qutrit recovery objective; the general fact that restricted channel descriptions can omit coherent information is already present in those sources.
+
+The source-specific compositions here are the weighted full-fiber metric (P.24), the recovery comparison and equality analysis (P.28)–(P.38), and the shared-recovery separation (P.39)–(P.42), together with their explicitly stated endpoint and physical-coordinate consequences. They are repo-derived ordinary finite-dimensional paper arguments using the attributed intermediates. This attribution asserts no global priority or source audit beyond the cited overlap, and no Lean/kernel verification or physical realization.
+
+A known-channel decoder may depend on its known complex direction but acts on all unknown inputs and references. A common decoder in (P.36) or (P.38) is chosen once for the whole specified set. Neither construction supplies the channel parameter by calibration or observation: all native candidate states in (P.46) coincide across the fiber. Identifying an external source with this fiber, acquiring its inputs, transporting histories, and providing native encoder or decoder apparatus require additional hypotheses. The phase-call bounds remain exactly those of Assumption 1.2; passive coordinate changes, arbitrary recoveries and reference systems add no free native operation.
+
+## 追加锚（本行以下为增补区）

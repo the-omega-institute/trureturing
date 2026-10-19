@@ -6,6 +6,7 @@
    utility: none
    digest: Boundary and middle envelopes lie below the naturally rounded bulk maximum. -/
 
+/- UNCOMPILED integration changes; original upstream proofs are preserved. -/
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Tactic.FinCases
 import Mathlib.Data.Real.Basic
@@ -33,12 +34,12 @@ def positions (N j : ℕ) (q : Fin 16) : ℕ :=
   if q.val < 5 then q.val + 1 else
   if q.val = 5 then j else N - 10 + (q.val - 6) + 1
 
-theorem positions_literal (N j : ℕ) (hN : 67 ≤ N) :
+theorem positions_literal (N j : ℕ) (hN : 56 ≤ N) :
     positions N j = ![1,2,3,4,5,j,N-9,N-8,N-7,N-6,N-5,N-4,N-3,N-2,N-1,N] := by
   funext q
   fin_cases q <;> simp [positions] <;> omega
 
-theorem positions_strict (N j : ℕ) (hN : 67 ≤ N)
+theorem positions_strict (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) : StrictMono (positions N j) := by
   intro q r hqr
   have hq := q.isLt
@@ -63,7 +64,7 @@ def middleEnvelope₁ (N : ℝ) : ℝ := 25/(24*(N-1))
 def middleEnvelope₂ (N : ℝ) : ℝ := 36/(35*N-80)
 def commonEnvelope (N : ℝ) : ℝ := 16*(15*N-8)/(15*N-4)^2
 
-private lemma scalar_denominators (N : ℝ) (hN : 67 ≤ N) :
+private lemma scalar_denominators (N : ℝ) (hN : 56 ≤ N) :
     0 < N+3 ∧ 0 < 24*(N-1) ∧ 0 < 35*N-80 ∧ 0 < 15*N-4 := by
   constructor
   · linarith
@@ -71,16 +72,16 @@ private lemma scalar_denominators (N : ℝ) (hN : 67 ≤ N) :
   · linarith
   constructor <;> linarith
 
-private lemma bulk_denominator (N j : ℝ) (hN : 67 ≤ N) (hj : 0 ≤ j) :
+private lemma bulk_denominator (N j : ℝ) (hN : 56 ≤ N) (hj : 0 ≤ j) :
     0 < 3*N+2*j := by linarith
 
-private lemma bulk_index_bounds (N : ℕ) (hN : 67 ≤ N) :
+private lemma bulk_index_bounds (N : ℕ) (hN : 56 ≤ N) :
     6 ≤ bulkIndex N ∧ bulkIndex N ≤ N-10 ∧
       3*N ≤ 8*bulkIndex N+3 ∧ 8*bulkIndex N ≤ 3*N+4 := by
   dsimp [bulkIndex]
   omega
 
-private lemma bulk_rounding_bounds (N : ℕ) (hN : 67 ≤ N) :
+private lemma bulk_rounding_bounds (N : ℕ) (hN : 56 ≤ N) :
     -4 ≤ 3*(N : ℝ)-8*(bulkIndex N : ℝ) ∧
       3*(N : ℝ)-8*(bulkIndex N : ℝ) ≤ 3 := by
   obtain ⟨_, _, hl, hu⟩ := bulk_index_bounds N hN
@@ -90,7 +91,7 @@ private lemma bulk_rounding_bounds (N : ℕ) (hN : 67 ≤ N) :
 
 lemma boundary_envelope_le_common (N : ℝ) (hN : 67 ≤ N) :
     boundaryEnvelope N ≤ commonEnvelope N := by
-  obtain ⟨hH, _, _, hB⟩ := scalar_denominators N hN
+  obtain ⟨hH, _, _, hB⟩ := scalar_denominators N (by linarith)
   have hx : 0 ≤ N-67 := sub_nonneg.mpr hN
   apply (div_le_div_iff₀ (sq_pos_of_pos hH) (sq_pos_of_pos hB)).2
   apply sub_nonneg.mp
@@ -98,19 +99,19 @@ lemma boundary_envelope_le_common (N : ℝ) (hN : 67 ≤ N) :
     _ = 15*(N-67)^3+1972*(N-67)^2+64939*(N-67)+8722 := by ring
     _ ≥ 0 := by positivity
 
-lemma middle_envelope₁_le_common (N : ℝ) (hN : 67 ≤ N) :
+lemma middle_envelope₁_le_common (N : ℝ) (hN : 56 ≤ N) :
     middleEnvelope₁ N ≤ commonEnvelope N := by
   obtain ⟨_, hE, _, hB⟩ := scalar_denominators N hN
-  have hx : 0 ≤ N-67 := sub_nonneg.mpr hN
+  have hx : 0 ≤ N-56 := sub_nonneg.mpr hN
   apply (div_le_div_iff₀ hE (sq_pos_of_pos hB)).2
   apply sub_nonneg.mp
   calc
-    _ = 135*(N-67)^2+12258*(N-67)+217943 := by ring
+    _ = 135*(N-56)^2+9288*(N-56)+99440 := by ring
     _ ≥ 0 := by positivity
 
 lemma middle_envelope₂_le_common (N : ℝ) (hN : 67 ≤ N) :
     middleEnvelope₂ N ≤ commonEnvelope N := by
-  obtain ⟨_, _, hE, hB⟩ := scalar_denominators N hN
+  obtain ⟨_, _, hE, hB⟩ := scalar_denominators N (by linarith)
   have hx : 0 ≤ N-67 := sub_nonneg.mpr hN
   apply (div_le_div_iff₀ hE (sq_pos_of_pos hB)).2
   apply sub_nonneg.mp
@@ -118,7 +119,7 @@ lemma middle_envelope₂_le_common (N : ℝ) (hN : 67 ≤ N) :
     _ = 300*(N-67)^2+20840*(N-67)+59244 := by ring
     _ ≥ 0 := by positivity
 
-private lemma common_le_bulk_of_rounding (N t : ℝ) (hN : 67 ≤ N)
+private lemma common_le_bulk_of_rounding (N t : ℝ) (hN : 56 ≤ N)
     (hl : -4 ≤ 8*t-3*N) (hu : 8*t-3*N ≤ 4) :
     commonEnvelope N ≤ bulkValue N t := by
   let z := 8*t-3*N
@@ -134,7 +135,7 @@ private lemma common_le_bulk_of_rounding (N t : ℝ) (hN : 67 ≤ N)
     _ = (z+4)*((15*N-8)*(4-z)+32) := by dsimp [z]; ring
     _ ≥ 0 := mul_nonneg hleft hright
 
-lemma common_le_integer_bulk (N : ℕ) (hN : 67 ≤ N) :
+lemma common_le_integer_bulk (N : ℕ) (hN : 56 ≤ N) :
     commonEnvelope (N : ℝ) ≤ bulkValue (N : ℝ) (bulkIndex N : ℝ) := by
   obtain ⟨hl, hu⟩ := bulk_rounding_bounds N hN
   apply common_le_bulk_of_rounding _ _ (by exact_mod_cast hN) <;> linarith
@@ -142,13 +143,13 @@ lemma common_le_integer_bulk (N : ℕ) (hN : 67 ≤ N) :
 /- Strict optimality over ALL natural j, hence over 6 <= j <= N-10.
    d=-4 is included: the left-neighbor bracket is exactly 16, so the
    half-integer continuous tie is resolved in favor of this t. -/
-private lemma bulk_integer_strict (N j : ℕ) (hN : 67 ≤ N) (hne : j ≠ bulkIndex N) :
+private lemma bulk_integer_strict (N j : ℕ) (hN : 56 ≤ N) (hne : j ≠ bulkIndex N) :
     bulkValue (N : ℝ) (j : ℝ) < bulkValue (N : ℝ) (bulkIndex N : ℝ) := by
   let n : ℝ := N
   let t : ℝ := bulkIndex N
   let d : ℝ := 3*n-8*t
   let R (x : ℝ) := 36*n^2-36*n*(t+x)-64*t*x
-  have hn : 67 ≤ n := by dsimp [n]; exact_mod_cast hN
+  have hn : 56 ≤ n := by dsimp [n]; exact_mod_cast hN
   have ht : 0 ≤ t := Nat.cast_nonneg _
   have hround : -4 ≤ d ∧ d ≤ 3 := bulk_rounding_bounds N hN
   have hcoef : 0 ≤ 36*n+64*t := by linarith
@@ -189,7 +190,7 @@ private lemma bulk_integer_strict (N j : ℕ) (hN : 67 ≤ N) (hne : j ≠ bulkI
     _ = (t-(j : ℝ))*R (j : ℝ) := by dsimp [R]; ring
     _ > 0 := hprod
 
-lemma bulk_integer_maximum (N j : ℕ) (hN : 67 ≤ N) :
+lemma bulk_integer_maximum (N j : ℕ) (hN : 56 ≤ N) :
     bulkValue (N : ℝ) (j : ℝ) ≤ bulkValue (N : ℝ) (bulkIndex N : ℝ) := by
   by_cases hj : j = bulkIndex N
   · simp [hj]

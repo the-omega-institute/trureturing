@@ -1,3 +1,4 @@
+// UNCOMPILED source-only Scribe changes; no emission or C# validation has run.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 
@@ -37,6 +38,22 @@ internal sealed class ActualPSDMomentDocument : IScribeDocumentDefinition
             )),
             Paragraph(Text(
 "For w at most e at most 1/2, the exact full-polynomial secant and its nonnegative factor decomposition give F(w,e) at most F(w,w). For e at least 1/2, the exact truncated-polynomial secant gives U(w,e) at most U(w,1/2), which is at most F(w,1/2) and hence at most F(w,w). Finally F(w,w)=4-2w-4w^2+w^3+w^4. The private scalar proof works up to w=1/2; the public statement retains the original upper endpoint. This middle estimate is only one dimension-independent obligation for a later rounded-purity assembly; it asserts neither an all-dimension purity theorem nor a physical APPT characterization."
-            ))
+            )),
+            Describe.Lean(DescribeId.Create("appt-quadbit-actual-psd-nonflat-middle-energy"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSDMoment.actual_psd_nonflat_middle_energy"),
+                H("Middle energy with arbitrary ordered tails"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every real w, h:Fin 5 to Real and d:Fin 9 to Real, assume h is antitone and nonnegative, d is monotone with 0<=d_i<=1 for every i, H+D<=4-6w, and 1/4<=w<=1/2. Here H=sum h_i, D=sum d_i, H2=sum h_i^2, D2=sum d_i^2, and E=w(H+D)+H2+D2. All indices are zero based. The sole matrix premise is positive semidefiniteness of K_w, whose rows are [2(1-d8),-(w+h0+d7),-(w+h1+d5)], [-(w+h0+d7),2(1-d6),-(w+h2+d4)], [-(w+h1+d5),-(w+h2+d4),2(1-d3)]. Then E is at most 4-2w-4w^2+w^3+w^4 if w<=(5-sqrt(17))/2, and at most (4-6w)(4-5w) otherwise. The endpoint belongs to the first branch. No tail-transfer, energy or purity inequality is assumed; repeated defects, zero coordinates and singular PSD matrices remain in scope.")),
+                    Paragraph(Text("The quadratic forms at (1,1,1) and (1,1,0) derive H3+D6<=3-3w and h0+D3<=2-w, where H3=h0+h1+h2, D6=d3+...+d8 and D3=d6+d7+d8. These are the original StructuralCone defect rows with u=1 and v=w. For w at most (5-sqrt(17))/2 and h0<=1, the reused small_head_energy bound E<=4-2w-6w^2 implies the polynomial bound. For h0>=1 put r=D3 and replace h by (h0+r,h1,h2,h3,h4) and d by zero. The full plus/minus congruence proves PSD of the shifted flat matrix. The reused ordered-tail bounds D2<=r^2, r<=D and D<=3r give the energy difference w(r-D)+2h0*r+r^2-D2 >= 2r(h0-w)+(r^2-D2)>=0. Thus the wD charge is paid by the original ordering and h0>=1, w<=1/2. The replacement head mass is H+r<=H+D<=4-6w, so actual_psd_flat_tail_middle_energy applies with the same w. Above the branch point, the reused total_energy_estimate gives E<=(4-6w)(4-5w) directly from the defect rows."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("appt-quadbit-actual-psd-small-jump-defect-bound"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSDMoment.actual_psd_small_jump_defect_bound"),
+                H("Small-jump mass and square bound"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every natural N>=56 and arbitrary real j,w with j>=6 and 0<=w<=1/4, let h:Fin 5 to Real be antitone and nonnegative, and d:Fin 9 to Real be monotone with every entry in [0,1]. Assume H+D<=4-6w and the same literal K_w displayed above is PSD. There is no integrality or upper-bound premise on j. Set S=Real.ofNat(N)+w*j+H-D and E=w(H+D)+H2+D2. Then (2+w)S-(1+w)Real.ofNat(N)+E<=target(N)*S^2. Here target(N)=(9 Real.ofNat(N)+16 Real.ofNat(t))/(3 Real.ofNat(N)+2 Real.ofNat(t))^2 with natural t=(3*N+4)/8; division precedes coercion. These are all the source parameters and premises, including both closed endpoints of the w interval.")),
+                    Paragraph(Text("Apply actual_psd_zero_jump_moment to g_i=w+h_i for all five head coordinates and to the original d. The identities sum g_i=5w+H and sum g_i^2=H2+2wH+5w^2, together with 5w+H+D<=4-w<=4, retain its full hypotheses and literal matrix. Rearrangement gives E<=7/2+(1/4-w)(H-D)+5w/4-5w^2. Since w(1/4-w)>=0 and j>=6, the left side of the claimed bound is at most (9/4)S-(5N/4-7/2). The reused square_completion theorem bounds this by theta*S^2, with theta=16(15N-8)/(15N-4)^2; positivity and its discriminant follow for N>=56. The existing common_le_integer_bulk comparison then gives theta<=target(N), preserving natural rounding.")),
+                    Paragraph(Text("The two estimates are repository derivations from the existing actual-PSD moment, ordered-block, scalar-envelope and norm framework. Hildebrand's PPT-from-spectrum criterion supplies the spectral-matrix context; it is not an attribution of these defect-energy derivations. Their application to the original spectrum is given in ContinuousSpectrumAssembly with the full parameter correspondence. They assert bounds on the stated real data, without an APPT sufficiency or equality classification."))),
+                DescribeRole.Theorem)
+
         )));
 }

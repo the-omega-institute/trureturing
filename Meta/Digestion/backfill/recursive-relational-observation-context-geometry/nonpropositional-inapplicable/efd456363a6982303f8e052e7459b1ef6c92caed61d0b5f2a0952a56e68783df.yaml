@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:efd456363a6982303f8e052e7459b1ef6c92caed61d0b5f2a0952a56e68783df
+  normalized_sha256: sha256:efd456363a6982303f8e052e7459b1ef6c92caed61d0b5f2a0952a56e68783df
+cas_ref: sha256:efd456363a6982303f8e052e7459b1ef6c92caed61d0b5f2a0952a56e68783df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯钉版上游闭合，无可用仓内冻结 GID。mathlib 修订 56a005855ea17e0b0958f73ec801ae140b0a1679：ProbabilityTheory.strong_law_ae、ProbabilityTheory.iIndepFun.comp、ProbabilityTheory.IdentDistrib.comp、ProbabilityTheory.IdentDistrib.integral_eq、MeasureTheory.Integrable.of_bound、MeasureTheory.integral_finsetSum、MeasureTheory.integral_const_mul、MeasureTheory.ae_all_iff；有限八态表和六类逆矩阵由定义性展开与有限决定/代数规范化核对。同一完整三元组的六特征均有界，N≥1 时两个乘积样本均值无偏，六均值同时几乎处处收敛；同批样本的逆矩阵输出逐项等于六类经验频率，非负、总和为一并满足全部六个(52.16)不等式。实际独立同分布轨迹是条件，不对轨迹内部增加独立假设。
+    previous_atom_id: 6c2d26a7be31f69bab37ce5b64c6b7ce9e6d4516a10b3d7c785233c784c76b3e
+    next_atom_id: 7287d764bb97f50cd02ce868766a505258ea4ffaed82094e9a91dd3240a2795a
