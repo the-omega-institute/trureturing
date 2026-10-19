@@ -4044,3 +4044,457 @@ The universal half-beta rank-three mixed-Gram estimate remains unproved here, as
 The operator and matrix budgets, the restricted coefficient comparison, and the common-contraction counterexample with its full directional certificate are repo-derived mathematics for this family. The boundary normal form is reused from Sections 85–95, with the exact correspondence (S.276), rather than claimed as an additional reduction. Rectangular trace/spectral duality and the support-compatible contraction factorization are attributed to the interfaces in [Watrous, Section 1 and Section 2.1, Lemma 2](../../../Library/QuantumChannels/watrous2012simpler.md); Hilbert–Schmidt Cauchy–Schwarz is used inside (S.285). The exact one-constraint alternative is the [Boyd–Vandenberghe Appendix B.2 interface](../../../Library/QuadraticForms/boydvandenberghe2004convex.md) applied in Proposition 87.3. The physical normalization continues to use [Bény–Oreshkov, Section IV, (133), with Corollary 5](../../../Library/QuantumChannels/beny2011simulation.md), as in Proposition 85.3. These attributed general tools do not state the family-specific constant or settle the remaining universal tradeoff. No literature-priority claim is attached to the new family-specific consequences.
 
 ## 追加锚（本行以下为增补区）
+
+## 102. Actual reference-environment states and their forced product kernels
+
+**Definition 102.1 (the tensor carrier and the weighted state).** Retain the entire sphere $\mathcal T$ of Definition 85.1, its subset $\mathcal T_3$, its boundary $\mathcal T_\partial$, and the same actual Kraus matrices $K_\alpha$ of (S.204). Fix $H_R=\mathbb C^3$ with reference labels $i=0,1,2$ and $H_E=\mathbb C^3$ with environment labels $\alpha=0,1,2$. The reference label is first in $|i,e_\alpha\rangle$. The output is $H_B=\mathbb C^5$, with real orthonormal frame $(b_1,b_2,g_1,g_2,h)$. These are three different spaces. Write $E_2=T$, $p=(1/4,1/4,1/2)$, and
+
+$$
+\begin{gathered}
+L_T:H_R\otimes H_E\longrightarrow H_B,
+\qquad L_T|i,e_\alpha\rangle=\sqrt{p_i}\,K_\alpha|i\rangle,\\
+L_T=[E_0/2\mid E_1/2\mid T/\sqrt2],\qquad
+\sigma_T=L_T^\dagger L_T,\qquad
+\mathscr E_T=\ker L_T,\qquad d_T=\operatorname{rank}L_T,\\
+\tau_T=\frac{P_{\mathscr E_T^\perp}}{d_T},\qquad
+q=|0,e_2\rangle,\qquad q'=|1,e_2\rangle.
+\end{gathered}
+\tag{S.305}
+$$
+
+Here $\sigma_T$ is the actual reference-environment marginal of the fixed-$\rho_\star$ purification after encoding, whereas $\tau_T$ is its flattened support state. The normalization and fidelity identity are those of Proposition 85.3, not a replacement recovery interface. The following application keeps their parameter correspondence explicit.
+
+**Proposition 102.2 (actual normalization, marginal and the full mixed Gram).** For every $T\in\mathcal T$, including $T\in\mathcal T_\partial$ on this specified carrier,
+
+$$
+\begin{gathered}
+\sigma_T\succeq0,\qquad \operatorname{Tr}\sigma_T=1,
+\qquad \operatorname{Tr}_E\sigma_T=\rho_\star,\\
+(\sigma_T)_{i\alpha,j\gamma}
+=\sqrt{p_ip_j}\sum_b(K_\alpha)_{bi}(K_\gamma)_{bj},\\
+f(\sigma_T,\rho_\star\otimes X)
+=\|L_T(\sqrt{\rho_\star}\otimes\sqrt X)\|_*
+=f_T(X)=\operatorname{Tr}\sqrt{\Phi_T(X)}
+\quad(X\in\mathsf D(H_E)).
+\end{gathered}
+\tag{S.306}
+$$
+
+Proof. Proposition 85.2 supplies the actual trace-preserving channel: $\sum_\alpha K_\alpha^\dagger K_\alpha=I_3$. Its encoded purification is
+$\sum_{i,\alpha}\sqrt{p_i}|i\rangle_R\otimes K_\alpha|i\rangle_B\otimes e_\alpha$.
+Tracing out $B$ gives the displayed entries, because the Kraus entries are real. They are precisely the entries of $L_T^\dagger L_T$. Thus positivity follows from the Gram representation, and
+
+$$
+\operatorname{Tr}\sigma_T
+=\tfrac14\|E_0\|_F^2+\tfrac14\|E_1\|_F^2+\tfrac12\|T\|_F^2=1.
+\tag{S.307}
+$$
+
+The $(i,j)$ entry of the reference marginal is
+$\sqrt{p_ip_j}\sum_\alpha\langle K_\alpha i,K_\alpha j\rangle
+=\sqrt{p_ip_j}\delta_{ij}$.
+This uses all the TP overlaps, including the two stipulated overlaps with $T$; it gives $\rho_\star$ in the fixed reference coordinates.
+
+For a possibly singular complex density $X$, set $D=\rho_\star\otimes X$. The positive sandwich $\sqrt D\,\sigma_T\sqrt D$ is the right Gram of $L_T\sqrt D$. Its square-root trace is the nuclear norm of that rectangular matrix. Multiplication by the second physical square root gives
+
+$$
+L_T\sqrt D=[E_0\sqrt X/4\mid E_1\sqrt X/4\mid T\sqrt X/2].
+\tag{S.308}
+$$
+
+Its left Gram is exactly $\Phi_T(X)$ in (S.203); left and right Grams have the same nonzero eigenvalues. This proves the remaining equalities. In particular, the coefficients in (S.308) are $p_i$, not $\sqrt{p_i}$. No inverse, diagonal restriction on $X$, or output full-support hypothesis is used. The physical input $\rho_\star$ and the auxiliary density $X$ remain independent even when their numerical arrays agree. All offdiagonal entries between the three blocks of $\sigma_T$ are retained. $\square$
+
+**Proposition 102.3 (exact Gram rank and product kernel).** Throughout $\mathcal T$,
+
+$$
+\begin{gathered}
+\ker\sigma_T=\mathscr E_T,\qquad q,q'\in\mathscr E_T,\\
+d_T=\dim\bigl(U+\operatorname{ran}T\bigr)
+=\begin{cases}4,&h^TT=0,\\5,&h^TT\ne0,\end{cases}
+\qquad U=\operatorname{span}\{b_1,b_2,g_1,g_2\},\\
+\dim\mathscr E_T=9-d_T\in\{4,5\},\qquad
+\tau_T=\rho_{\mathscr E_T^\perp}.
+\end{gathered}
+\tag{S.309}
+$$
+
+Here the last expression denotes the normalized projection onto $\mathscr E_T^\perp$, the object named `rhoPerp` at the subspace $\mathscr E_T$ in the [local-distinguishability source](../../../D5/S3/Quantum/Entanglement/LocalDistinguishability/KiemKyeLocalDistinguishability.lean).
+
+Proof. For every complex coefficient vector $z$, $z^\dagger\sigma_Tz=\|L_Tz\|^2$. Hence the two kernels coincide. Both $E_0e_2$ and $E_1e_2$ vanish, giving the two stated product kernel vectors. Each is unit length and has coefficient-matrix rank one. The first two blocks of $L_T$ already span $U$, so its range is $U+\operatorname{ran}T$. The orthogonal complement of $U$ in $H_B$ is exactly $\mathbb Ch$. Thus this range has dimension four if $h^TT=0$, and otherwise contains $h$ modulo $U$ and has dimension five. Rank-nullity gives the kernel dimension. Its orthogonal-complement projection has trace $d_T$, proving the normalized-projection identity, positivity and unit trace.
+
+These ranks do not coincide with either matrix rank of $T$ or Kraus rank. For example $T=b_1e_2^T$ has norm one, zero overlaps with both $E_i$, $Te_2\ne0$, matrix rank one, minimal Kraus rank three and Gram rank four. The boundary choice $T=b_1e_1^T$ has zero overlaps because its nonzero column meets $b_2,g_2$, both perpendicular to $b_1$; it has Kraus rank two and Gram rank four. The boundary choice $T=he_0^T$ has Kraus rank two and Gram rank five. These are actual examples by Proposition 85.2. $\square$
+
+## 103. Projection-state and actual-state applications of the existing kernel criterion
+
+**Definition 103.1 (the exact geometric predicates).** On the fixed tensor product $H_R\otimes H_E$ let $\mathcal H$ be the trace-one Hermitian affine space. For a vector $z=\sum_{i,\alpha}z_{i\alpha}|i,e_\alpha\rangle$, its Schmidt rank is the complex matrix rank of $(z_{i\alpha})$. For $j=1,2,3$ put
+
+$$
+\mathrm{BP}_j=\{A\in\mathcal H:
+ z^\dagger Az\geq0\text{ for every }z\text{ of Schmidt rank at most }j\}.
+\tag{S.310}
+$$
+
+This is the `BP` predicate of the same source, with $m=n=3$. A boundary point in its `OnBoundary` sense lies in $\mathrm{BP}_j$ and in $\overline{\mathcal H\setminus\mathrm{BP}_j}$. Its `LocallyDistinguishable` conclusion means that every matrix neighborhood of the stated center meets $\mathrm{BP}_j\setminus\mathrm{BP}_{j+1}$. The geometric definitions are literature-attested in [Kiem–Kye, Sections 2 and 3](../../../Library/QuantumContext/kiemkye2026localgeometry.md). The adjacent-neighborhood assertion is the question quoted from their Section 5; the public result and its general proof are reused from the existing repository source, including its private lemmas. Matrix size nine by itself would not specify this tensor product or these Schmidt-rank tests.
+
+**Proposition 103.2 (the public result at the flattened state).** For each $T\in\mathcal T$ on the fixed three-coordinate environment, every neighborhood of $\tau_T$ meets $\mathrm{BP}_1\setminus\mathrm{BP}_2$ and also meets $\mathrm{BP}_2\setminus\mathrm{BP}_3$.
+
+Proof. The subspace $\mathscr E_T$ is nonzero and proper by (S.309). The state $\tau_T$ is PSD and trace one, hence belongs to $\mathrm{BP}_1$. For $0<t<1$ define
+
+$$
+B_t=\frac{\tau_T-t|q\rangle\langle q|}{1-t}.
+\tag{S.311}
+$$
+
+It is Hermitian and trace one. Since $q\in\ker\tau_T$, its quadratic value at the unit product vector $q$ is $-t/(1-t)<0$. Therefore $B_t\in\mathcal H\setminus\mathrm{BP}_1$, and $B_t\to\tau_T$ as $t\downarrow0$. This verifies the entire boundary premise.
+
+Apply the existing public theorem `D5.S3.Quantum.Entanglement.LocalDistinguishability.KiemKyeLocalDistinguishability.result` with $(m,n,E,k,\ell)=(3,3,\mathscr E_T,1,1)$ and then $(3,3,\mathscr E_T,1,2)$. The premises $1\leq k\leq\ell<\min(m,n)$ hold in both cases, and its prescribed center `rhoPerp E` is exactly $\tau_T$. There is no genericity premise. This discharges every hypothesis of the cited theorem at that center. $\square$
+
+**Proposition 103.3 (the private-source implication at the actual state).** For each $T\in\mathcal T$, every neighborhood of the actual weighted state $\sigma_T$ meets $\mathrm{BP}_j\setminus\mathrm{BP}_{j+1}$ for $j=1,2$.
+
+Proof. This is the implication of the existing private `closure_of_low_rank_kernel`, followed by the existing private `closure_locallyDistinguishable`, in the same source. Its substitutions are $A=\sigma_T$, $v=q$, $m=n=3$ and $j=1$ or $2$. Positivity, trace one and $Aq=0$ follow from (S.306) and (S.309). The vector $q$ is unit, has Schmidt rank $1\leq j+1$, and $j<3$ in both tensor factors. Thus all its premises hold at the actual state. This is a different source implication from the public projection-state theorem.
+
+The instantiated construction in that proof can be made explicit, without an additional general kernel criterion. For $s>0$ put
+
+$$
+u_{1,s}=\frac{q+s|1,e_0\rangle}{\sqrt{1+s^2}},\qquad
+u_{2,s}=\frac{q+s|1,e_0\rangle+s|2,e_1\rangle}{\sqrt{1+2s^2}}.
+\tag{S.312}
+$$
+
+The coefficient matrices have, respectively, two and three nonzero entries on distinct rows and distinct columns. Their ranks are exactly two and three. Both vectors have unit norm and converge to $q$. Fix $j$ and write $u_s=u_{j,s}$, $P_s=I-|u_s\rangle\langle u_s|$. Positivity and cyclicity give
+
+$$
+D_s=\operatorname{Tr}(P_s\sigma_TP_s)
+=1-\langle u_s,\sigma_Tu_s\rangle\longrightarrow1,
+\qquad A_s=D_s^{-1}P_s\sigma_TP_s.
+\tag{S.313}
+$$
+
+For all sufficiently small positive $s$, $D_s>0$. Then $A_s$ is PSD, trace one and annihilates $u_s$. Since $\sigma_Tq=0$ and $\sigma_T$ is Hermitian, $(I-|q\rangle\langle q|)\sigma_T(I-|q\rangle\langle q|)=\sigma_T$. Continuity consequently gives $A_s\to\sigma_T$, even when $d_T=4$.
+
+The unit vectors with coefficient rank at most $j$ form a nonempty compact set $\mathcal U_j$: rank at most $j$ is closed by the vanishing minors, and the unit sphere is compact. Define
+
+$$
+\alpha_s=\max_{z\in\mathcal U_j}|\langle u_s,z\rangle|^2<1,
+\qquad Q_s=\alpha_s I-|u_s\rangle\langle u_s|.
+\tag{S.314}
+$$
+
+The strict inequality follows from equality in Cauchy–Schwarz: overlap one would force $z$ to be a scalar multiple of $u_s$, contradicting their different ranks. For any vector of rank at most $j$, homogeneity gives $z^\dagger Q_sz\geq0$; at $u_s$ the value is $\alpha_s-1<0$. For each fixed sufficiently small $s$, take $\delta>0$ small enough that $1+\delta\operatorname{Tr}Q_s>0$ and put
+
+$$
+W_{s,\delta}=\frac{A_s+\delta Q_s}{1+\delta\operatorname{Tr}Q_s}.
+\tag{S.315}
+$$
+
+This is trace-one Hermitian, belongs to $\mathrm{BP}_j$, and fails the rank-$(j+1)$ test at $u_s$, since its value there is $\delta(\alpha_s-1)/(1+\delta\operatorname{Tr}Q_s)<0$. Hence $W_{s,\delta}\in\mathrm{BP}_j\setminus\mathrm{BP}_{j+1}$. Sending $\delta\downarrow0$ at fixed $s$ places $A_s$ in the closure of that difference. Its closure is closed, and $A_s\to\sigma_T$, so $\sigma_T$ is in the same closure. The neighborhood formulation is the definition of closure. These are the normalized-compression and compact-overlap steps of the cited private proof, specialized to the forced product kernel; they are not a new general lemma. $\square$
+
+**Proposition 103.4 (carrier and witness limits).** The two adjacent conclusions of Propositions 103.2–103.3 on $\mathcal T_\partial$ use the padded carrier $\mathbb C^3_R\otimes\mathbb C^3_E$. They do not assert both conclusions after deleting the zero Kraus coordinate. The nearby matrices in $\mathrm{BP}_j\setminus\mathrm{BP}_{j+1}$ are not density matrices or Choi matrices of CPTP maps.
+
+Proof. On $\mathcal T_\partial$, $K_2=0$. Removing its environment coordinate leaves $\mathbb C^3\otimes\mathbb C^2$, where $q,q'$ no longer exist as those coordinate vectors. Moreover $\ell=2$ fails $\ell<\min(3,2)$ in the public theorem, so its second adjacent conclusion is unavailable on that compressed carrier. Zero padding is legitimate as an environment representation, but changes the tensor dimensions relevant to this assertion.
+
+Membership outside $\mathrm{BP}_{j+1}$ gives a vector with negative quadratic value, so every such witness is non-PSD. An actual reference-environment density and a CPTP Choi matrix are PSD. Thus these geometric perturbations do not supply legal channel perturbations, an auxiliary optimizer, an LOCC implementation, or a quantitative recovery inequality. The two nested limits in (S.313)–(S.315) also supply no convergence rate. $\square$
+
+## 104. Flattening preserves support but changes weights and the physical marginal
+
+**Proposition 104.1 (the product-family flattening obstruction).** For $0\leq\epsilon\leq1$ use $u_\epsilon$ and $T^{\rm prod}_\epsilon=hu_\epsilon^T$ from (S.233), including its rank-two endpoint at zero. Put $\omega=\operatorname{diag}(1/2,1/2,0)$, $\nu_\epsilon=|u_\epsilon\rangle\langle u_\epsilon|$ and $J_E=\operatorname{diag}(1,1,0)$ on $H_E$. Then
+
+$$
+\begin{aligned}
+\sigma^{\rm prod}_\epsilon
+&=(|0\rangle\langle0|+|1\rangle\langle1|)\otimes\frac{\omega}{4}
+  +|2\rangle\langle2|\otimes\frac{\nu_\epsilon}{2},\\
+P_\epsilon
+&=(|0\rangle\langle0|+|1\rangle\langle1|)\otimes J_E
+  +|2\rangle\langle2|\otimes\nu_\epsilon,\\
+\tau^{\rm prod}_\epsilon&=P_\epsilon/5,\qquad
+\operatorname{Tr}_E\tau^{\rm prod}_\epsilon
+=\operatorname{diag}(2/5,2/5,1/5)\ne\rho_\star.
+\end{aligned}
+\tag{S.316}
+$$
+
+The nonzero eigenvalues of $\sigma^{\rm prod}_\epsilon$ are $1/8$ four times and $1/2$ once; those of $\tau^{\rm prod}_\epsilon$ are $1/5$ five times. Both full matrices have four further zero eigenvalues. In the separate existing optimized product comparison, the states at $\epsilon=1/2$ and $\epsilon=1$ have optimized squared objectives $3/4$ and $1/2$ despite their identical global spectra; their full support projections are different.
+
+Proof. Output orthogonality gives $E_i^TT=0$ and $E_0^TE_1=0$. Also $E_i^TE_i=\omega$ and $T^TT=\nu_\epsilon$. The three diagonal reference blocks in $L_T^\dagger L_T$ are therefore $\omega/4,\omega/4,\nu_\epsilon/2$, proving the first formula. The reference blocks are orthogonal sectors even when $u_\epsilon$ overlaps $\operatorname{ran}J_E$. Their ranks are $2,2,1$ and their nonzero eigenvalues are as stated. Thus $P_\epsilon$ is the support projection, with rank five. Its reference partial trace has diagonal $(2,2,1)$, proving the last formula after division by five. The actual reference marginal instead has diagonal $(1/4,1/4,1/2)$ by (S.306).
+
+This changes the very weighted state, not just its representation. For example, at $\epsilon=1$ and $\bar X=\operatorname{diag}(1/4,1/4,1/2)$ on $H_E$, the diagonal positive operators give
+
+$$
+f(\sigma^{\rm prod}_1,\rho_\star\otimes\bar X)^2=\frac12,
+\qquad
+f(\tau^{\rm prod}_1,\rho_\star\otimes\bar X)^2=\frac9{20}.
+\tag{S.317}
+$$
+
+Indeed the four active tensor coordinates contribute $1/(8\sqrt2)$ each and the last contributes $1/(2\sqrt2)$ to the first root fidelity, totaling $1/\sqrt2$. For the flattened state they contribute $1/(4\sqrt5)$ each and $1/(2\sqrt5)$ on the last coordinate, totaling $3/(2\sqrt5)$. Thus even this fixed-input objective changes upon flattening. Moreover $\tau^{\rm prod}_\epsilon$ cannot be the reference-environment marginal of that same encoded purification with physical input $\rho_\star$, because its reference marginal is different.
+
+For the separate optimized product comparison, the spectrum and kernel assertions follow from (S.316) and Propositions 102.3 and 103.2–103.3. The exact already-established formula of Proposition 89.2 is
+
+$$
+\max_X f_{T^{\rm prod}_\epsilon}(X)^2
+=\frac{1+\sqrt{(1-\epsilon)/2}}2.
+\tag{S.318}
+$$
+
+Its two substitutions give $3/4$ and $1/2$. At $\epsilon=1/2$, Proposition 89.3 supplies the same single offdiagonal optimizer $X_{\rm off}$ in (S.237), whose spectrum is $(5/6,1/6,0)$. At $\epsilon=1$, $\bar X$ in (S.317) attains the value $1/2$. Finally the $|2\rangle$ block of the support projection is $\nu_\epsilon$. The line through $(e_0+e_2)/\sqrt2$ differs from the line through $e_2$, so $P_{1/2}\ne P_1$. This comparison reuses the product-family optimum; it is not an equal-support comparison and its optimized values are not assigned to any of the mixed-output examples below. The limit $\epsilon\downarrow0$ of (S.318) is $c$, attained in that limit on the rank-two boundary, whereas every positive $\epsilon$ has actual Kraus rank three. $\square$
+
+## 105. A same-support pair with a different fixed common-density value
+
+**Proposition 105.1 (legal channels and identical exact kernel).** Define
+
+$$
+T^{(h)}=he_2^T,\qquad
+w_b=\frac{h+\sqrt3\,b_2}{2},\qquad
+T^{(b)}=w_be_2^T,\qquad
+\bar X=\operatorname{diag}(1/4,1/4,1/2)\text{ on }H_E.
+\tag{S.319}
+$$
+
+These are actual minimal-Kraus-rank-three members of $\mathcal T_3$, with matrix rank one for $T$, and have the same exact support
+
+$$
+S=\operatorname{span}\{|0,e_0\rangle,|0,e_1\rangle,
+ |1,e_0\rangle,|1,e_1\rangle,|2,e_2\rangle\}.
+\tag{S.320}
+$$
+
+Their kernels are $S^\perp$ and their flattened states are both $P_S/5$.
+
+Proof. Each $w\in\{h,w_b\}$ is a real unit vector. The only nonzero column of $T=we_2^T$ is the third, so $\|T\|_F=1$, $\langle E_i,T\rangle_F=0$ and $Te_2=w\ne0$. The actual Kraus list is
+
+$$
+A_0=[b_1/\sqrt2,g_1/\sqrt2,0],\quad
+A_1=[b_2/\sqrt2,g_2/\sqrt2,0],\quad
+A_2=[0,0,w].
+\tag{S.321}
+$$
+
+Its TP sum is $\operatorname{diag}(1/2,1/2,0)+\operatorname{diag}(1/2,1/2,0)+\operatorname{diag}(0,0,1)=I_3$. This gives a CPTP map on complex matrices. In a complex linear relation among these matrices, the first column forces the coefficients of $A_0,A_1$ to vanish, and $w\ne0$ forces the third coefficient to vanish. Thus the Kraus rank is exactly three. For $f_j^\pm=(b_j\pm ig_j)/\sqrt2$, the phase outputs are $\tfrac12\sum_j|f_j^\pm\rangle\langle f_j^\pm|$. The four vectors $f_j^\pm$ are orthonormal, giving the required difference spectrum $(1/2,1/2,0,-1/2,-1/2)$.
+
+The only nonzero columns of $L_T$ are those indexed by (S.320), with output vectors
+
+$$
+\frac{b_1}{2\sqrt2},\quad\frac{b_2}{2\sqrt2},\quad
+\frac{g_1}{2\sqrt2},\quad\frac{g_2}{2\sqrt2},\quad\frac{w}{\sqrt2}.
+\tag{S.322}
+$$
+
+The first four span $U$. Both choices of $w$ have nonzero $h$ component, so these five columns are linearly independent. The restriction of $L_T$ to $S$ is injective and it vanishes on $S^\perp$. This proves the exact kernel and support equalities, rather than inferring them merely from equal ranks. $\square$
+
+**Proposition 105.2 (exact fixed-$\bar X$ values and their limited implication).** For the same positive auxiliary density $\bar X$,
+
+$$
+f_{T^{(h)}}(\bar X)^2=\frac12,
+\qquad
+f_{T^{(b)}}(\bar X)^2=\frac{15+3\sqrt{21}}{64}<\frac12<c.
+\tag{S.323}
+$$
+
+Proof. Let $P_U$ be the output projection onto $U$. Direct substitution into (S.203) gives
+$\Phi_{we_2^T}(\bar X)=P_U/128+|w\rangle\langle w|/8$.
+For $w=h$, its eigenvalues are $1/128$ four times and $1/8$ once. Its square-root trace is $8/\sqrt{128}$, proving the first value.
+
+For $w=w_b$, the directions $b_1,g_1,g_2$ retain eigenvalue $1/128$. On $(b_2,h)$ the remaining block is
+
+$$
+\frac1{128}\begin{pmatrix}13&4\sqrt3\\4\sqrt3&4\end{pmatrix}.
+\tag{S.324}
+$$
+
+Its trace is $17/128$ and determinant is $1/4096$. For a positive $2\times2$ block $B$, its two eigenvalues give $(\operatorname{Tr}\sqrt B)^2=\operatorname{Tr}B+2\sqrt{\det B}$. Thus this block contributes $\sqrt{21}/\sqrt{128}$, and the full square-root trace is $(3+\sqrt{21})/\sqrt{128}$. Squaring proves (S.323); the strict comparison follows from $3\sqrt{21}<17$, verified by $189<289$. Both examples lie below $c$.
+
+Their common kernel, support projection and public projection-state theorem inputs therefore do not determine the exact fixed-$\bar X$ objective. This assertion compares one common auxiliary density. It does not compare their optimized values, transfer (S.318) to $T^{(b)}$, or refute an upper bound shared by all channels with that support. $\square$
+
+## 106. Equal support, complete spectrum and both marginals at a fixed auxiliary density
+
+**Proposition 106.1 (the isospectral actual pair).** Define in the same fixed frames
+
+$$
+w_a=\frac{h+\sqrt3\,b_1}{2},\qquad
+T_a=w_ae_2^T,\qquad T_b=w_be_2^T,\qquad
+X_0=\operatorname{diag}(1/2,1/4,1/4)\text{ on }H_E.
+\tag{S.325}
+$$
+
+Both $T_a,T_b$ belong to $\mathcal T_3$. Their actual states have the same exact support $S$ in (S.320), the same complete global spectrum, and the same two marginals in the fixed coordinates:
+
+$$
+\begin{gathered}
+\operatorname{spec}(\sigma_a)=\operatorname{spec}(\sigma_b)
+=\left\{\frac18\ (\text{multiplicity }3),\quad
+\frac{5+\sqrt{21}}{16},\frac{5-\sqrt{21}}{16},\quad
+0\ (\text{multiplicity }4)\right\},\\
+\operatorname{Tr}_E\sigma_a=\operatorname{Tr}_E\sigma_b
+=\rho_\star,\qquad
+\operatorname{Tr}_R\sigma_a=\operatorname{Tr}_R\sigma_b
+=\operatorname{diag}(1/4,1/4,1/2)\text{ on }H_E.
+\end{gathered}
+\tag{S.326}
+$$
+
+Proof. Both $w_a,w_b$ are unit vectors with nonzero $h$ component. The norm, overlaps, TP sum and complex Kraus-independence argument in (S.321) apply with these exact two choices of $w$. Thus their actual Kraus ranks are three, their phase spectra are as required, and their matrices $T_a,T_b$ have rank one. The five columns (S.322) are independent for each, proving the common support $S$ and Gram rank five.
+
+Order the five basis vectors of $S$ exactly as in (S.320). The two restricted states are
+
+$$
+\sigma_a|_S=\frac18
+\begin{pmatrix}
+1&0&0&0&\sqrt3\\
+0&1&0&0&0\\
+0&0&1&0&0\\
+0&0&0&1&0\\
+\sqrt3&0&0&0&4
+\end{pmatrix},\qquad
+\sigma_b|_S=\frac18
+\begin{pmatrix}
+1&0&0&0&0\\
+0&1&0&0&\sqrt3\\
+0&0&1&0&0\\
+0&0&0&1&0\\
+0&\sqrt3&0&0&4
+\end{pmatrix}.
+\tag{S.327}
+$$
+
+Both vanish on $S^\perp$. In each the coupled $2\times2$ block has trace $5/8$ and determinant $1/64$. Its characteristic polynomial is $\lambda^2-(5/8)\lambda+1/64$, giving $(5\pm\sqrt{21})/16>0$. The other three eigenvalues on $S$ are $1/8$. Equivalently, the restricted characteristic polynomial is
+$(\lambda-1/8)^3(\lambda^2-(5/8)\lambda+1/64)$ and its determinant is $1/32768>0$. This verifies all multiplicities and support claims.
+
+The only offdiagonals of $\sigma_a$ join $|0,e_0\rangle$ to $|2,e_2\rangle$; those of $\sigma_b$ join $|0,e_1\rangle$ to $|2,e_2\rangle$. Each pair has different reference labels and different environment labels. Hence both partial traces kill these offdiagonals. The common diagonal gives reference sums $(1/4,1/4,1/2)$ and environment sums $(1/4,1/4,1/2)$, proving the equalities in their respective spaces. They are equality of matrices in the fixed frames, not just equality of marginal spectra. $\square$
+
+**Proposition 106.2 (strict fixed-$X_0$ separation below the proposed bound).** The auxiliary density $X_0$ is positive definite and common to both channels. At precisely this density,
+
+$$
+\begin{gathered}
+f_a:=f_{T_a}(X_0)=\frac{1+\sqrt2+\sqrt7}{8},\qquad
+f_b:=f_{T_b}(X_0)
+=\frac{2\sqrt2+1+\sqrt{9+2\sqrt2}}{8\sqrt2}>f_a,\\
+f_a^2=\frac{5+\sqrt2+\sqrt7+\sqrt{14}}{32},\qquad
+f_b^2=\frac{9+3\sqrt2+(1+2\sqrt2)\sqrt{9+2\sqrt2}}{64},\\
+f_a^2,f_b^2\leq\frac{35}{64}<\frac34<c.
+\end{gathered}
+\tag{S.328}
+$$
+
+Proof. The eigenvalues of $X_0$ are $1/2,1/4,1/4>0$, and they sum to one. In output order $(b_1,b_2,g_1,g_2,h)$, (S.203) gives the exact matrices
+
+$$
+128\Phi_a(X_0)=
+\begin{pmatrix}
+8&0&0&0&2\sqrt3\\
+0&1&0&0&0\\
+0&0&2&0&0\\
+0&0&0&1&0\\
+2\sqrt3&0&0&0&2
+\end{pmatrix},\qquad
+128\Phi_b(X_0)=
+\begin{pmatrix}
+2&0&0&0&0\\
+0&7&0&0&2\sqrt3\\
+0&0&2&0&0\\
+0&0&0&1&0\\
+0&2\sqrt3&0&0&2
+\end{pmatrix}.
+\tag{S.329}
+$$
+
+For the first coupled block the trace and determinant are $10$ and $4$ before division by $128$, giving square-root trace $\sqrt{14}$. Its other three scalar blocks contribute $2+\sqrt2$. Thus $f_a=(2+\sqrt2+\sqrt{14})/\sqrt{128}$, the stated value. For the second coupled block the trace and determinant are $9$ and $2$, giving $\sqrt{9+2\sqrt2}$. Its other scalar blocks contribute $2\sqrt2+1$, giving $f_b$. The $2\times2$ identity used in Proposition 105.2 applies because each block has positive trace and determinant. Squaring the two positive expressions yields the displayed squared values.
+
+For an exact strict comparison put $u=\sqrt2-1>0$ and $v=\sqrt{9+2\sqrt2}>0$. Then
+
+$$
+(uv)^2=19-12\sqrt2>1,
+\qquad (u+v)^2=12+2uv>14.
+\tag{S.330}
+$$
+
+The first strict inequality is equivalent to $3>2\sqrt2$, which follows by squaring positive sides from $9>8$. Hence $uv>1$, $u+v>\sqrt{14}$ and
+$f_b-f_a=(u+v-\sqrt{14})/(8\sqrt2)>0$. Positivity also implies $f_b^2>f_a^2$.
+
+Each matrix in (S.329) is positive definite and has trace $14$, so each $\Phi$ has rank five and trace $7/64$. Cauchy–Schwarz on its five square-root eigenvalues gives $(\operatorname{Tr}\sqrt\Phi)^2\leq5\operatorname{Tr}\Phi=35/64$. Finally $35/64<3/4$ and $3/4<c$ because $1/\sqrt2>1/2$. This proves the common upper comparison as well as the strict separation. $\square$
+
+## 107. Joint covariance and equality of the optimized values
+
+**Proposition 107.1 (the exact permutation correspondence).** Let $V$ exchange $e_0,e_1$ and fix $e_2$ on $H_E$. Let $W$ exchange $b_1,b_2$ and exchange $g_1,g_2$, fixing $h$ on $H_B$. For every complex density $X$,
+
+$$
+\begin{gathered}
+WE_iV=E_i\quad(i=0,1),\qquad WT_aV=T_b,\\
+\mathcal K_{T_b}(X)=W\mathcal K_{T_a}(VXV^\dagger)
+\operatorname{diag}(V,V,V),\\
+\Phi_{T_b}(X)=W\Phi_{T_a}(VXV^\dagger)W^\dagger,
+\qquad f_{T_b}(X)=f_{T_a}(VXV^\dagger),\\
+\max_{X\in\mathsf D(H_E)}f_{T_b}(X)^2
+=\max_{X\in\mathsf D(H_E)}f_{T_a}(X)^2.
+\end{gathered}
+\tag{S.331}
+$$
+
+Proof. Both $V,W$ are real orthogonal involutions. Acting on the first two columns verifies $WE_iV=E_i$; on the third column $V$ fixes $e_2$ and $Ww_a=w_b$, giving $WT_aV=T_b$. For $Y=VXV^\dagger$, positive-square-root uniqueness gives $\sqrt Y=V\sqrt XV^\dagger$, including at singular $X$. Substitute this into every block of $\mathcal K_{T_a}(Y)$ and use the two identities just proved. The right multiplication by $\operatorname{diag}(V,V,V)$ removes the remaining right factors, giving the rectangular identity in (S.331). Multiplying by its adjoint gives the $\Phi$ identity. Nuclear norms and square-root traces are invariant under these unitary multiplications. Finally $X\mapsto VXV^\dagger$ is a bijection of all complex densities, proving equality of the maxima with no diagonal or full-rank restriction.
+
+The actual state relation is equally explicit:
+
+$$
+L_b=WL_a(I_3\otimes V),\qquad
+\sigma_b=(I_3\otimes V)\sigma_a(I_3\otimes V^\dagger),\qquad
+VX_0V^\dagger=\operatorname{diag}(1/4,1/2,1/4)\ne X_0.
+\tag{S.332}
+$$
+
+Thus the covariance transports the auxiliary density along with the channel. It explains both the isospectrality and the fixed-$X_0$ separation without identifying those fixed-input values with optima. This is the three-coordinate permutation instance of the joint-symmetry mechanism in Proposition 91.3: its displayed two-coordinate action is extended by fixing $e_2$, and (S.331) verifies the extension directly. It also respects the simultaneous environment transport of [volume I, Theorem 13.2](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#13-complete-joint-geometry-for-filtered-certificates); no general extension is inferred merely from the two-coordinate statement.
+
+At channel level the Kraus lists (S.321) satisfy
+$WA_0^a=A_1^b$, $WA_1^a=A_0^b$, $WA_2^a=A_2^b$. Relabeling the Kraus sum gives $N_b=\operatorname{Ad}_W\circ N_a$. For every whole-output complex CPTP recovery $R_a$, set $R_b=R_a\circ\operatorname{Ad}_{W^\dagger}$. Then $R_bN_b=R_aN_a$. The inverse correspondence is $R_a=R_b\circ\operatorname{Ad}_W$. Consequently their optimized recovery values agree, also directly by the operational interface of Proposition 85.3. This is mathematical covariance, with no assumed physical availability of an output gate or decoder. $\square$
+
+**Proposition 107.2 (what the retained observations fail to determine).** Define the observation
+
+$$
+\mathcal O(T)=\bigl(P_{\operatorname{supp}\sigma_T},
+ \operatorname{spec}\sigma_T,\operatorname{Tr}_E\sigma_T,
+ \operatorname{Tr}_R\sigma_T\bigr).
+\tag{S.333}
+$$
+
+There is no function of only $(\mathcal O(T),X)$ equal to $f_T(X)^2$ for every $T\in\mathcal T_3$ and every auxiliary density $X$. The pair in Section 106 does not give a separation of optimized values or a violation of (S.239).
+
+Proof. Proposition 106.1 gives $\mathcal O(T_a)=\mathcal O(T_b)$ in the fixed coordinates, and Proposition 106.2 uses the very same $X_0$ with unequal objective values. A function of the stipulated data would assign equal values to these two arguments, a contradiction. This also proves exact determination fails after retaining both full marginals, not merely their spectra.
+
+The fidelity depends on the spectrum of $\sqrt{\rho_\star\otimes X}\,\sigma_T\sqrt{\rho_\star\otimes X}$. The recorded separate spectra and marginals do not determine the relative placement of the eigenspaces of $\sigma_T$ against that product operator. In (S.327), precisely the mixed Gram entry is moved from $|0,e_0\rangle$ to $|0,e_1\rangle$ while $X_0$ assigns those coordinates different weights. The exact matrices (S.329) exhibit the resulting change. The fixed-density inequalities lie below $c$ by (S.328), and the optimized values are equal by (S.331), proving the two stated limits.
+
+An upper bound need not reconstruct an exact value. In particular, taking a supremum over the unresolved relative orientations can give a common bound on an observation class; the unequal values alone neither contradict such a bound nor rule out every method using support or spectral information. The separate product comparison (S.318) shows that the global spectrum alone also fails to determine its optimized values, but its support projections differ. Neither comparison refutes all spectral upper bounds. $\square$
+
+## 108. Quantitative recovery targets and the separate support conditions
+
+**Definition 108.1 (the unchanged mixed-Gram and diamond obligations).** The half-beta actual-rank-three mixed-Gram target, denoted Original18926, retains the universal fixed-$\rho_\star$ requirement (S.152)–(S.154), with every admissible real third column and every mixed Kraus-index term. Sections 102–107 concern the three-environment $\lambda=1$ realization of Definition 85.1; they do not parameterize its other original-family branches. In this realization (S.239) is the corresponding universal bound on the fixed-input optimized fidelity, equivalently $v_T^2\leq c$ for all $T\in\mathcal T_3$. It remains a quantitative obligation, not a consequence of a product kernel or a local blockpositive-set statement.
+
+The separate broader target is [volume I, Definition 47.2, (R.243)](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#47-applicability-and-the-remaining-recovery-problem): $\delta_N\geq1-\sqrt{1-\beta}$ for every stipulated original-real actual encoder with arbitrary $0<\beta\leq1/2$, arbitrary admissible third columns and actual ranks up to nine, against all whole-output complex CPTP recoveries and the unhalved diamond norm on all finite complex references. The present fixed-input examples settle neither universal target.
+
+**Proposition 108.2 (the exact strict-positive qualification).** For $T\in\mathcal T$, write $u_T=v_T^2$. The assertion $u_T\leq c$ yields a trace-at-most-$c$ PSD fixed-input dual through (S.153). A literal positive-definite certificate of (S.152)–(S.154) exists exactly under
+
+$$
+u_T<c\quad\text{or}\quad
+\bigl[u_T=c\text{ and }N_T(\rho_\star)\succ0\bigr].
+\tag{S.334}
+$$
+
+Within this realization full physical-output support is equivalent to $d_T=5$; actual Kraus rank three alone does not imply it.
+
+Proof. Proposition 74.4 supplies dual attainment and equality of its minimum trace with $u_T$, allowing PSD dual optima. If $u_T<c$, add a positive multiple $\eta I_5$ to an optimum, with $5\eta\leq c-u_T$. Feasibility is preserved, the result is positive definite, and its trace is at most $c$. If $u_T=c$, every feasible dual of trace at most $c$ must be optimal. Its range equals that of $N_T(\rho_\star)^T$ by Proposition 83.4, so it is positive definite exactly when this output has full support. If $u_T>c$, the attained minimum excludes any such dual. This proves the equivalence, which is precisely (S.200) at the present parameters.
+
+Directly from the same actual realization,
+
+$$
+N_T(\rho_\star)=\tfrac14E_0E_0^T+\tfrac14E_1E_1^T+\tfrac12TT^T
+=L_TL_T^\dagger.
+\tag{S.335}
+$$
+
+Its rank is $d_T$, proving the full-output assertion. The legal rank-three example $T=b_1e_2^T$ in Proposition 102.3 has $d_T=4$, disproving any implication from Kraus rank three alone to full output support. This example by itself makes no assertion that $u_T=c$. The support condition is needed only at equality, exactly as in (S.334). $\square$
+
+**Definition 108.3 (source reuse and mathematical limits).** The applications here are repo-derived correspondences and finite algebraic obstructions. Their actual Gram and recovery normalization reuse (S.206), Proposition 85.3 and its [Bény–Oreshkov Section IV, (133), with Corollary 5](../../../Library/QuantumChannels/beny2011simulation.md) interface. The optimized product values reuse Proposition 89.2, and the isospectral comparison is an explicit application of joint covariance. The projection-state theorem is the existing public `result`; the weighted-state implication is the existing private `closure_of_low_rank_kernel`, whose instantiated proof is given in Proposition 103.3. No general kernel theorem or literature-priority conclusion is added by these applications. The literature completeness limitation in the [Kiem–Kye note](../../../Library/QuantumContext/kiemkye2026localgeometry.md) remains in force.
+
+The $9\times9$ PSD matrix of (S.220) acts on the real space $\mathcal L_2\oplus\mathbb R$, with $\dim\mathcal L_2=8$. It is not an operator on $H_R\otimes H_E$ under any correspondence supplied here. Its common-$Q$ numerical inequality remains required. The fixed-multiplier route and calibration of Sections 99–100 are existing sufficient routes, not additional progress supplied by the product-kernel observation. A singular multiplier still requires the range condition (S.221); neither local distinguishability nor positive semidefiniteness of the actual state supplies that condition or the missing estimate.
+
+The auxiliary support in (S.218) acts on $H_E$, the dual support in (S.197) acts on $H_B$, and the kernels in (S.309) lie in $H_R\otimes H_E$. Their distinct roles and the equality qualification (S.334) prevent a PSD-dual statement from being promoted without its premises to a strict-positive S.152–S.154 certificate. These mathematical tensor identifications, covariance relations and obstructions impose no physical realization, native control, or quantum-field derivation. Such claims require additional empirical and model bridges beyond the actual finite-dimensional channels specified here.
+
+## 追加锚（本行以下为增补区）
