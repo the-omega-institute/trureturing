@@ -397,3 +397,357 @@ $$
 从原生机制决定 $B,\gamma,D$、物理时间标度、空间局域性，以及哪些源、环境与记录实际可取得，是独立的模型条件。本文的有限模与记录定理不通过命名替代这些条件，也不把纸面推导表述为已完成 Lean/kernel 核验或经验确认。
 
 ## 追加锚（本行以下为增补区）
+
+## 6. 有限相位记录与集体振子的相干范围
+
+**定义 6.1（相位编码、能级窗口与恢复合同）。** 对单模数算子 $\hat n|j\rangle=j|j\rangle$ 取 $U_\varphi=e^{-i\varphi\hat n}$。未知相位均匀分布于圆周；一个至多 $K\geq1$ 标签的随机编码由可测函数 $q_y(\varphi)\geq0$、$\sum_yq_y(\varphi)=1$ 给出。标签机制与未知量子输入独立，接收者只有量子输出和该经典标签，没有额外的相关相位参考。有限窗口上的通道为
+
+$$
+\mathcal E_q(\rho)=\sum_{y=1}^K|y\rangle\langle y|\otimes
+\int_0^{2\pi}q_y(\varphi)U_\varphi\rho U_\varphi^\dagger
+\frac{d\varphi}{2\pi}.
+\tag{O.28}
+$$
+
+定义 $\mathcal H_M=\operatorname{span}\{|0\rangle,\ldots,|M\rangle\}$，diamond 范数不除以二。等弧标签记录相位所在的 $K$ 个等长圆弧之一，并按中心作逆相位校正。其剩余误差 $\theta$ 均匀分布于 $[-\alpha,\alpha]$、$\alpha=\pi/K$，通道记为
+
+$$
+\mathcal D_K(\rho)=\frac1{2\alpha}\int_{-\alpha}^{\alpha}
+ e^{-i\theta\hat n}\rho e^{i\theta\hat n}\,d\theta.
+\tag{O.29}
+$$
+
+一般相位分布 $\mu$ 的作用由其 Fourier 矩给出：$|j\rangle\langle k|$ 乘以 $\widehat\mu(j-k)=\int e^{-i(j-k)\varphi}\,d\mu(\varphi)$。因此第一阶矩不能决定所有相干；例如 $\tfrac12(\delta_0+\delta_\pi)$ 和均匀圆周分布的第一阶矩同为零，第二阶矩分别为一和零。这是数相位共轭的标准 Fourier 计算，用于区分相位恢复卷中单一跨块相干与这里的多阶任务。
+
+**定理 6.2（等弧记录与有限 AURIC 振子网络的联合误差）。** 定义 6.1 的校正通道满足
+
+$$
+\mathcal D_K(|j\rangle\langle k|)
+=\operatorname{sinc}\left(\frac{(j-k)\pi}{K}\right)|j\rangle\langle k|,
+\qquad \operatorname{sinc}(x)=\frac{\sin x}{x},\quad\operatorname{sinc}(0)=1,
+\tag{O.30}
+$$
+
+且对整数 $M\geq0$，
+
+$$
+1-\operatorname{sinc}\left(\frac{M\pi}{K}\right)
+\leq\|\mathcal D_K-\mathrm{id}\|_{\diamond,\mathcal H_M}
+\leq\min\left\{2,\frac{\pi^2M^2}{6K^2}\right\}.
+\tag{O.31}
+$$
+
+固定 $M$ 时，该误差为 $\pi^2M^2/(6K^2)+O(K^{-4})$。对定义 1.1—1.2 的 $d$ 模共同空间 $\mathcal F_{\leq M}^{(d)}$，将 (O.29) 中的数算子改为总激发数，令
+
+$$
+V_N(t)=e^{-it\widetilde H_N(B)/\hbar},\qquad
+V(t)=e^{-itH(B)|_{\mathcal F_{\leq M}^{(d)}}/\hbar}.
+$$
+
+在 $M\leq N$ 时，
+
+$$
+\left\|\mathcal D_K\circ\operatorname{Ad}_{V_N(t)}-
+\operatorname{Ad}_{V(t)}\right\|_{\diamond,\leq M}
+\leq\frac{2|t|C_BM(M-1)}{N}+\frac{\pi^2M^2}{6K^2}.
+\tag{O.32}
+$$
+
+因此固定 $d,B,t$，$M^2/N\to0$ 与 $M/K\to0$ 是联合误差趋零的一组充分条件。这里使用集体编码识别后的同一空间；原生门逼近误差、标签获取成本与物理时间标定另计。
+
+证明。积分 $e^{-i(j-k)\theta}$ 得 (O.30)。对 $M\geq1$，输入 $(|0\rangle+|M\rangle)/\sqrt2$ 的输出差只有一对非零特征值，其迹范数为 $1-\operatorname{sinc}(M\pi/K)$。$M=0$ 时通道恒等。
+
+为证上界，将数算子平移为 $A=\hat n-(M/2)I$，不改变共轭通道。对任意辅助空间和迹类 $X$，$\|[A\otimes I,X]\|_1\leq2\|A\|\|X\|_1=M\|X\|_1$。所以 $\|\operatorname{ad}_{\hat n}\|_\diamond\leq M$。幺正通道保持迹范数，用带积分余项的二阶展开得
+
+$$
+\left\|\operatorname{Ad}_{e^{-i\theta\hat n}}-\mathrm{id}
++i\theta\operatorname{ad}_{\hat n}\right\|_\diamond
+\leq\frac{\theta^2M^2}{2}.
+\tag{O.33}
+$$
+
+对称平均消去一次项，且 $\mathbb E\theta^2=\alpha^2/3$。两通道的距离至多二，得到 (O.31)。下界的 Taylor 展开与此上界夹住同一个二次领先项。
+
+多模总数在该窗口内的谱也包含于 $[0,M]$，以上上界不受简并度影响。两个网络演化保持这个窗口。由定理 2.1 及任意有限参考上的幺正通道比较，
+
+$$
+\|\operatorname{Ad}_{V_N(t)}-\operatorname{Ad}_{V(t)}\|_\diamond
+\leq2\|V_N(t)-V(t)\|
+\leq\frac{2|t|C_BM(M-1)}N.
+$$
+
+应用通道收缩性与三角不等式即得 (O.32)。$\square$
+
+**定理 6.3（有限标签对可恢复激发范围的必要容量）。** 在 $d_0\geq1$ 个连续能级 $0,\ldots,d_0-1$ 上，对定义 6.1 的所有至多 $K$ 标签编码以及所有 CPTP 联合恢复，均有
+
+$$
+\inf_{q,\mathcal R}\|\mathcal R\mathcal E_q-\mathrm{id}_{d_0}\|_\diamond
+\geq2\max\left\{0,1-\frac K{d_0}\right\}.
+\tag{O.34}
+$$
+
+若误差至多为 $0\leq\epsilon<2$，必要条件为 $K\geq d_0(1-\epsilon/2)$。它不是充分条件。若恢复范围是无能量限制的整个单模 Fock 空间，则每个有限 $K$ 编码和每个 CPTP 恢复的 diamond 误差恰为二。特别地，
+
+$$
+\begin{aligned}
+\lim_{K\to\infty}\lim_{M\to\infty}
+\|\mathcal D_K-\mathrm{id}\|_{\diamond,\mathcal H_M}&=2,\\
+\lim_{M\to\infty}\lim_{K\to\infty}
+\|\mathcal D_K-\mathrm{id}\|_{\diamond,\mathcal H_M}&=0.
+\end{aligned}
+\tag{O.35}
+$$
+
+证明。使用归一化 Choi 态作为标准通道测试。取 $|\Omega\rangle=d_0^{-1/2}\sum_{j=0}^{d_0-1}|j,j\rangle$。标签 $y$ 的未归一化 Choi 算子 $J_y$ 满足
+
+$$
+0\leq J_y\leq J_*=
+\frac1{d_0}\sum_{j=0}^{d_0-1}|j,j\rangle\langle j,j|,
+\tag{O.36}
+$$
+
+因为 $q_y\leq1$，而均匀相位平均消去不同能级间的交叉项。任意联合恢复在该经典标签上限制为 CPTP 映射 $\mathcal R_y$。完全正性保持 (O.36) 的序关系，因此该标签对恢复后纠缠保真度的贡献至多为
+
+$$
+\begin{aligned}
+f_y&=\langle\Omega|(\mathrm{id}\otimes\mathcal R_y)(J_y)|\Omega\rangle\\
+&\leq\frac1{d_0^2}\sum_{j=0}^{d_0-1}
+\langle j|\mathcal R_y(|j\rangle\langle j|)|j\rangle
+\leq\frac1{d_0}.
+\end{aligned}
+$$
+
+故总保真度 $f\leq K/d_0$。以 $|\Omega\rangle\langle\Omega|$ 作二结果测量，恢复输出与理想态的迹距离至少为 $2(1-f)$，给出 (O.34)，并与非负性合并。
+
+对无限空间的任意固定编码与恢复，将输入限制到前 $d_0$ 个能级。恢复输出可用一个 CPTP 压回该窗口的映射作后处理：保留窗口内块，将窗口外概率送入 $|0\rangle$。该后处理在理想窗口输入上是恒等，且不增加迹范数。有限维下界因而仍是原误差的下界。令 $d_0\to\infty$ 得二；通道距离的通用上界也是二。固定 $K$ 时有限窗口误差随 $M$ 非减并趋二；固定 $M$ 时 (O.31) 趋零，得到 (O.35)。$\square$
+
+## 7. 固定返回容量的有限误差稳定性
+
+**定义 7.1（同一幺正的近似幂压缩）。** 沿用定义 3.1 的 $J,U,K,R_n$，以 $D=\dim\mathcal H$、$p=\dim\mathcal S$ 记总维数和保留维数。设
+
+$$
+D_K=I-K^\dagger K,\quad s=\operatorname{rank}D_K>0,\quad
+\lambda=\lambda_{\min}^{+}(D_K),\quad\kappa=\|K\|\leq1,
+\quad\Delta_n=R_n-K^n.
+\tag{O.37}
+$$
+
+$D_K$ 是正算子，$0<\lambda\leq1$，且 $\Delta_0=\Delta_1=0$。下文的 $D_K$ 是缺陷算子，不是相位校正通道 $\mathcal D_K$。
+
+**定理 7.2（FIB 返回容量界的稳定版本）。** 对整数 $m\geq1$，若
+
+$$
+\max_{1\leq n\leq m}\|\Delta_n\|\leq\epsilon,
+\qquad (m-1)(1+\kappa)^2\epsilon<\lambda,
+\tag{O.38}
+$$
+
+则 $D\geq p+ms$。等价地，对 $m\geq2$，
+
+$$
+D<p+ms\quad\Longrightarrow\quad
+\max_{2\leq n\leq m}\|R_n-K^n\|
+\geq\frac{\lambda}{(m-1)(1+\kappa)^2}.
+\tag{O.39}
+$$
+
+若整个封闭载体恰为长度 $\ell$ 的合法链、没有其他辅助空间，取
+
+$$
+m_\ell=\left\lfloor\frac{F_{\ell+2}-p}{s}\right\rfloor+1,
+$$
+
+则 $m_\ell\geq2$，且 (O.39) 在 $m=m_\ell$ 成立。这是定理 3.2 的算符误差加强，不指定某一初态的复兴峰高。
+
+证明。把 $F=[J,UJ,\ldots,U^mJ]$ 看作从 $\mathcal S^{\oplus(m+1)}$ 到 $\mathcal H$ 的块列算子，令 $G=F^\dagger F$。其上三角块为 $G_{ij}=R_{j-i}$。定义 Hermitian 参考矩阵 $G_K$，上三角块为 $K^{j-i}$，下三角取伴随。零步和一步误差均为零，所以每个块行至多有 $m-1$ 个非零误差块。由块矩阵的行列和范数界，
+
+$$
+\|G-G_K\|\leq(m-1)\epsilon.
+\tag{O.40}
+$$
+
+令 $B_0$ 为主对角 $I$、上邻对角 $-K$ 的块矩阵。它可写成单位算子减一个范数至多 $\kappa$ 的块移位，故 $\|B_0\|\leq1+\kappa$，而
+
+$$
+FB_0=[J,L,UL,\ldots,U^{m-1}L],\qquad L=UJ-JK.
+$$
+
+直接乘出参考矩阵得
+
+$$
+B_0^\dagger G_KB_0=\operatorname{diag}(I,D_K,\ldots,D_K),
+$$
+
+于是
+
+$$
+\left\|B_0^\dagger GB_0-
+\operatorname{diag}(I,D_K,\ldots,D_K)\right\|
+\leq(1+\kappa)^2(m-1)\epsilon.
+\tag{O.41}
+$$
+
+在 $\mathcal W=\mathcal S\oplus((\ker D_K)^\perp)^{\oplus m}$ 上，参考矩阵的二次型至少为 $\lambda I$，且 $\dim\mathcal W=p+ms$。条件 (O.38) 保证实际 Gram 矩阵的二次型在 $\mathcal W$ 上仍严格为正，因此其秩至少为 $p+ms$。另一方面，$\operatorname{rank}(B_0^\dagger GB_0)\leq\operatorname{rank}F\leq D$。这证明维数界；以实际最大误差作 $\epsilon$ 得反向读法 (O.39)。
+
+合法链维数为 $F_{\ell+2}$，而 $s=\operatorname{rank}L\leq F_{\ell+2}-p$，故 $m_\ell\geq2$。其定义给 $F_{\ell+2}<p+m_\ell s$，代入即可。经典精确扩张的出处沿用定理 3.2；本条在同一固定实现上加入非零谱隙和 Gram 扰动控制。$\square$
+
+## 8. 精确与近似指数返回的不同维数律
+
+**定义 8.1（有限窗口的标量返回实现）。** 固定 $q\in\mathbb C$、$|q|<1$，整数 $m\geq1$，误差 $\epsilon\geq0$。记 $D_{\min}(m,q,\epsilon)$ 为存在单位向量 $v\in\mathbb C^D$ 与同一个 $U\in U(D)$ 满足下式的最小 $D$：
+
+$$
+\langle v,Uv\rangle=q,\qquad
+\max_{1\leq n\leq m}|\langle v,U^nv\rangle-q^n|\leq\epsilon.
+\tag{O.42}
+$$
+
+一步压缩在所有误差等级下都要求精确。每个终点只压缩一次；没有中途测量、环境重置或随 $n$ 改变的门。$q=e^{-(\gamma/2+i\omega)\tau}$ 是一个可选参数化，需要另外指定 $\tau>0$、$\gamma>0$、$\omega\in\mathbb R$；$q=0$ 也属于数学模型，但不来自有限的这三个参数。
+
+**定理 8.2（同一固定结构的线性精确容量与对数近似容量）。** 定义 8.1 满足
+
+$$
+D_{\min}(m,q,0)=m+1.
+\tag{O.43}
+$$
+
+对固定 $q$ 和固定 $0<\epsilon<1$，
+
+$$
+D_{\min}(m,q,\epsilon)=\Theta_{q,\epsilon}(\log m)
+\quad(m\to\infty).
+\tag{O.44}
+$$
+
+更明确地，$m\geq2$ 时有
+
+$$
+D_{\min}(m,q,\epsilon)\leq
+\min\left\{m+1,\ 2\left\lceil4\epsilon^{-2}
+\log(8(m-1))\right\rceil\right\}.
+\tag{O.45}
+$$
+
+令 $b_0=(1-\epsilon)/3$，选择任意整数 $n_0\geq1$ 使 $|q|^{n_0}\leq b_0$，并令 $Q_0=\lceil6\pi/(1-\epsilon)\rceil$。每个可行维数都满足
+
+$$
+m<n_0Q_0^D,\qquad
+D>\frac{\log(m/n_0)}{\log Q_0}.
+\tag{O.46}
+$$
+
+证明。精确下界是有限步幺正扩张的缺陷维数结论，采用定理 3.2 已归属的 Levy–Shalit Theorem 1.3；也可在定理 7.2 取 $p=s=1$、$\lambda=1-|q|^2$、$\epsilon=0$。为给出当前标量模型的显式上界，取正交基 $e_0,\ldots,e_m$，$a_q=\sqrt{1-|q|^2}$，规定
+
+$$
+Ue_0=qe_0+a_qe_1,\qquad
+Ue_j=e_{j+1}\ (1\leq j<m),\qquad
+Ue_m=a_qe_0-\overline q e_1.
+\tag{O.47}
+$$
+
+这些列正交归一。令 $v=e_0$，从 $e_0$ 外逸的分量最早在第 $m+1$ 步返回，故前 $m$ 个返回振幅为 $q^n$。第 $m+1$ 步为 $q^{m+1}+1-|q|^2$。这给 (O.43)，也证明最小维数定义总可行。
+
+接着给出保持精确一步压缩的近似构造。对每个 $|\zeta|=1$ 取
+
+$$
+U_\zeta=\begin{pmatrix}q&a_q\\\zeta a_q&-\zeta\overline q\end{pmatrix},
+\qquad f_n(\zeta)=\langle e_0,U_\zeta^ne_0\rangle.
+\tag{O.48}
+$$
+
+列的内积为零且范数为一，因此 $U_\zeta$ 幺正。$f_n$ 是 $\zeta$ 的非负次幂多项式，其常数项为 $q^n$：在 $\zeta=0$ 时矩阵的第二行是零。均匀圆周平均消去其全部正次幂，所以
+
+$$
+|f_n(\zeta)|\leq1,\qquad f_1(\zeta)=q,\qquad
+\mathbb E_\zeta f_n(\zeta)=q^n.
+\tag{O.49}
+$$
+
+一次性独立取 $d_1$ 个均匀相位，设
+
+$$
+U=\bigoplus_{j=1}^{d_1}U_{\zeta_j},\qquad
+v=d_1^{-1/2}(e_0\oplus\cdots\oplus e_0).
+\tag{O.50}
+$$
+
+这时 $D=2d_1$，一步压缩精确为 $q$，而 $R_n=d_1^{-1}\sum_jf_n(\zeta_j)$。
+
+使用 Hoeffding 的独立有界变量不等式作为经典中间步骤，见 [*Probability Inequalities for Sums of Bounded Random Variables*](https://doi.org/10.1080/01621459.1963.10500830)。在这里所需的 $[-1,1]$ 范围，中心化对数矩母函数的二阶导数是指数倾斜分布下的方差，至多为一；其零点处函数值和一阶导数都是零，所以该函数至多为参数平方的一半。独立相乘并用指数 Markov 不等式，得到样本平均的双侧偏差超过 $u>0$ 的概率至多 $2e^{-d_1u^2/2}$。实部和虚部分别满足该条件；复数模超过 $\epsilon$ 意味着其中一者超过 $\epsilon/\sqrt2$。因此
+
+$$
+\Pr(|R_n-q^n|>\epsilon)\leq4e^{-d_1\epsilon^2/4},
+$$
+
+再对 $n=2,\ldots,m$ 并合得
+
+$$
+\Pr\left(\max_{2\leq n\leq m}|R_n-q^n|>\epsilon\right)
+\leq4(m-1)e^{-d_1\epsilon^2/4}.
+\tag{O.51}
+$$
+
+取 $d_1=\lceil4\epsilon^{-2}\log(8(m-1))\rceil$，右侧至多为 $1/2$，故至少存在一组固定相位使全部要求成立。结合 (O.43) 得 (O.45)。随机化只证明这样一组相位存在；选定后，整个 $U,v$ 固定，演化不再注入随机性。这个界不提供给定原生门集上的高效选相或编译算法。
+
+最后证明下界，使用同时相位逼近的经典鸽巢论证。任意 $D$ 维幺正 $V$ 的本征值写成 $e^{2\pi i x_j}$。将 $[0,1)^D$ 分为 $Q_0^D$ 个边长 $1/Q_0$ 的半开方块。$Q_0^D+1$ 个向量 $(kx_1,\ldots,kx_D)\bmod1$ 中必有两个落于同块，所以存在 $1\leq l\leq Q_0^D$ 使
+
+$$
+\|V^l-I\|\leq\frac{2\pi}{Q_0}\leq b_0.
+\tag{O.52}
+$$
+
+应用于 $V=U^{n_0}$，置 $n=n_0l$。于是 $n\leq n_0Q_0^D$，且
+
+$$
+|R_n-1|\leq b_0,\qquad |q^n|\leq b_0,\qquad
+|R_n-q^n|\geq1-2b_0=\frac{1+2\epsilon}{3}>\epsilon.
+$$
+
+该步必在允许窗口以外，故 $m<n_0Q_0^D$，给 (O.46)。固定 $q,\epsilon$ 时 $n_0,Q_0$ 是常数；与 (O.45) 合并即得 (O.44)。$q=0$ 时可取 $n_0=1$，不使用 $\log|q|$。$\square$
+
+**推论 8.3（精度转折、复返与单时刻统计）。** 对 $m\geq2$，
+
+$$
+\epsilon<\frac{1-|q|^2}{(m-1)(1+|q|)^2}
+\quad\Longrightarrow\quad D_{\min}(m,q,\epsilon)=m+1.
+\tag{O.53}
+$$
+
+对任意固定有限维 $U$、单位向量 $v$ 和 $|q|<1$，
+
+$$
+\limsup_{n\to\infty}|\langle v,U^nv\rangle-q^n|=1.
+\tag{O.54}
+$$
+
+若窗口内振幅误差至多为 $\epsilon$，则相应单时刻生存概率误差至多为 $2\epsilon$。
+
+证明。将定理 7.2 代入 $p=s=1$、$\lambda=1-|q|^2$、$\kappa=|q|$，再用 (O.43) 的上界，得到 (O.53)。有限本征相位的同时复返给一列 $n_j\to\infty$ 满足 $U^{n_j}\to I$：让 (O.52) 的分割不断变细；若所选正整数有无界子列便得到结论，若它们有有界子列，则某个正整数给精确周期，其倍数给出所需序列。沿该列 $R_{n_j}\to1$、$q^{n_j}\to0$。反之 $|R_n-q^n|\leq1+|q|^n$，所以其上极限恰为一。概率界由
+
+$$
+\bigl||R_n|^2-|q|^{2n}\bigr|
+\leq|R_n-q^n|(|R_n|+|q|^n)\leq2\epsilon
+$$
+
+得到。$\square$
+
+**定义 8.4（静态谱解释与归属范围）。** 谱分解 $U=\sum_j e^{-i\theta_j}\Pi_j$ 给
+
+$$
+R_n=\sum_jp_je^{-in\theta_j},\qquad
+p_j=\langle v,\Pi_jv\rangle\geq0,\quad\sum_jp_j=1.
+\tag{O.55}
+$$
+
+定理 8.2 的构造因而是固定 Euler 相位叠加在压缩读出中的有限窗口包络。精确扩张维数、Hoeffding 浓缩和有限谱复返均为已知中间原理；本卷将它们组织为保持精确一步压缩的标量窗口上下界，不主张这些方法或对数容量规律的全局优先权。式 (O.44) 固定 $q$、非零 $\epsilon$ 和采样合同，不声称关于 $q\to1$、$\epsilon\to0$ 或连续时间的统一估计。它控制末端返回振幅，不是完整开放通道、连续测量联合分布或条件轨迹的模拟。
+
+## 9. 内生观察者的可读精度与时钟容量
+
+**定义 9.1（实际接口和任务价值）。** 采用第 5 节的内生策略 $a=\pi(h)$，把允许的门、记录的实际可读字段、读出精度、资源成本纳入未来节点等价。未被安装为操作数的原始时间记录不自动成为策略的输入。在《[原生在线获取与执行](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ONLINE_ACQUISITION_ACTUATION.md)》的 $\omega$ 运行时，Corollary 9.1 给联合结构—时间接口的纤维大小 $2^{r(c)}$；只有原始叶标签的首次分类 Probe 减少 $r(c)$，其他执行行不减少它。Theorem 10.3 和 Corollary 10.4 分别区分原始时间纤维 $\prod_i2^{h_i}C_{h_i-1}$ 与固定形状的联合纤维 $2^{\sum_i h_i}$。这里引用这些精确执行结论，不将它们移植到该卷的 $\iota$ 运行时。
+
+在固定相位任务中，可用《[相位增益与 qutrit 恢复](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md)》定义 15.1 的 $rc_n$ 作为期望恢复价值。它的增量 $r(c_{n+1}-c_n)$ 非负，但独立记录以及该卷命题 15.3 给零增量；执行步数、纤维基数和任务价值不是同一变量。精确实数响应的单射也没有指定有限记录成本。《[V1 整纤维饱和](FIB_V1_ENTIRE_GAIN_PLANE_SATURATION.md)》定理 31.2 与《[C35 整纤维 JM 响应](FIB_C35_ENTIRE_JM_RESPONSE_INJECTIVITY.md)》定理 2.1 分别针对其指定历史证明实际响应单射；本卷的均匀相位容量式没有为这些非均匀实代数纤维提供误差标定或编码器。
+
+**定理 9.2（完全可辨时刻的额外容量）。** 若一个闭合实现中的观察者必须在时刻 $0,1,\ldots,m$ 保存可由同一个无误差读出测量完全区分的时钟态，则时钟承载空间至少为 $m+1$ 维。因此，定理 8.2 的对数返回实现没有给出包含这种完整时钟及全部历史档案的对数总维数保证。
+
+证明。设时钟态为 $\rho_0,\ldots,\rho_m$，测量效应为 $E_0,\ldots,E_m$，$\sum_jE_j=I$ 且 $\operatorname{tr}(E_j\rho_k)=\delta_{jk}$。正性给 $E_k$ 在 $\operatorname{supp}\rho_k$ 上等于一，并在所有 $\operatorname{supp}\rho_j$、$j\ne k$ 上等于零。由于 $E_k$ 自伴，其一与零本征空间正交，所以各状态的非零支撑彼此正交，至少需要 $m+1$ 个方向。对纯经典记录，这正是 $m+1$ 个正交符号的计数。若另行采用独立张量时钟寄存器，其维数应与返回系统维数相乘；若共享空间则仍需证明二者的联合可实现性，不能直接相加或相乘最优值。$\square$
+
+## 追加锚（本行以下为增补区）

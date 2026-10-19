@@ -863,3 +863,153 @@ In particular every $\rho_{nn}$ is unchanged. This phase averaging is dephasing.
 The source-specific results (P.48), (P.51) and (P.56) are repo-derived applications of the existing exact fiber metric and recovery theorems. General gluing and coherent-control antecedents retain the attribution of Definition 10.3. The circle does not reconstruct an unknown channel, supply a native decoder, or identify phase uncertainty with a loss of population.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Partial phase records and their exact finite alphabet budget
+
+**Definition 14.1 (accessible input-independent record).** Use the fixed orbit of Definition 11.1, with $w_\varphi=re^{i\varphi}d$, $\|d\|_2=1$, and the same feasible radius $r$. Write $N(w)$ for the channel with weighted coherence vector $w$ in (P.25). Let $\Phi$ be a random phase and $Y$ a finite or countable classical record. Their joint law is independent of the unknown logical input. Set
+
+$$
+p_y=\Pr(Y=y),\qquad m_y=\mathbb E[e^{i\Phi}\mid Y=y],\qquad
+c(Y)=\sum_y p_y|m_y|.
+\tag{P.59}
+$$
+
+Zero-probability labels may be omitted. The supplied record and quantum output form the channel
+
+$$
+\mathcal N_Y(X)=\sum_y p_y|y\rangle\langle y|\otimes N(rm_yd)(X).
+\tag{P.60}
+$$
+
+For countably many labels the sum converges in trace norm. The recovery can read this actual label and access the entire five-dimensional output, as in Theorems 8.1–8.2. There is no additional phase reference correlated with $\Phi$. Since $|m_y|\leq1$, every conditional vector remains in the original feasible fiber. Recording, encoding and accessing $Y$ are supplied resources, not consequences of the channel's definition.
+
+**Theorem 14.2 (partial-record recovery and finite alphabet capacity).** Under Definition 14.1,
+
+$$
+\delta(\mathcal N_Y)=1-rc(Y),\qquad
+1-c(Y)=\frac12\inf_{|\widehat u(Y)|=1}
+\mathbb E|e^{i\Phi}-\widehat u(Y)|^2.
+\tag{P.61}
+$$
+
+If $\Phi$ is uniform on the circle and $Y$ has at most $K\geq1$ values, even allowing arbitrary randomized encoders, then
+
+$$
+\begin{aligned}
+\max_Y c(Y)&=\frac K\pi\sin\frac\pi K,\\
+\min_Y\delta(\mathcal N_Y)&=1-r\frac K\pi\sin\frac\pi K.
+\end{aligned}
+\tag{P.62}
+$$
+
+An equal-arc label attains both optima. For a fixed-width $b$-bit record, $K=2^b$, and fixed $r$,
+
+$$
+\delta_b-(1-r)=\frac{r\pi^2}{6}4^{-b}+O(16^{-b})
+\quad(b\to\infty).
+\tag{P.63}
+$$
+
+Proof. On branch $y$, Theorem 8.1 supplies a decoder with
+$t_y=e^{-i\arg m_y}\overline d$ when $m_y\ne0$; any feasible vector works when $m_y=0$. Its composition is $\Psi_{r|m_y|}$. Measuring the label and applying these decoders gives $\Psi_{rc(Y)}$, with error $1-rc(Y)$.
+
+Conversely, an arbitrary recovery restricts on each label to a CPTP map, with one budget vector $t_y$ satisfying $\|t_y\|_2\leq1$. The same $E_{02}$ test used in (P.57) gives
+
+$$
+\|\mathcal R\mathcal N_Y-\mathrm{id}_3\|_\diamond\geq|1-h|,
+\qquad h=r\sum_y p_ym_yd\cdot t_y,
+\qquad |h|\leq rc(Y).
+\tag{P.64}
+$$
+
+This proves the first formula. Expanding the squared chordal loss gives
+$2-2\operatorname{Re}\mathbb E[e^{i\Phi}\overline{\widehat u(Y)}]$.
+Conditioning on $Y$ makes its minimum $2-2\sum_yp_y|m_y|$, attained by aligning each estimate with $m_y$. This proves the risk identity.
+
+For (P.62), describe every randomized encoder by measurable functions $0\leq q_y(\varphi)\leq1$, with $\sum_{y=1}^Kq_y(\varphi)=1$ almost everywhere. Define
+
+$$
+p_y=\frac1{2\pi}\int_0^{2\pi}q_y(\varphi)\,d\varphi,
+\qquad v_y=\frac1{2\pi}\int_0^{2\pi}e^{i\varphi}q_y(\varphi)\,d\varphi.
+\tag{P.65}
+$$
+
+Then $c(Y)=\sum_y|v_y|$. The next rearrangement is the classical fixed-mass maximization of a linear integral, often called the bathtub principle; see Lieb and Loss, [*Analysis*](https://doi.org/10.1090/gsm/014). It is an intermediate circular quantization argument, not a new general rearrangement theorem. Choose $\theta_y=\arg v_y$ (arbitrary for $v_y=0$), and let $A_y$ be the centered circular arc of length $2\pi p_y$. With $b_y=\cos(\pi p_y)$,
+
+$$
+(q_y-\mathbf1_{A_y})(\cos(\varphi-\theta_y)-b_y)\leq0
+\quad\hbox{almost everywhere}.
+$$
+
+Inside the arc the two factors have opposite signs; outside the arc they also do. Their mass difference integrates to zero. Thus
+
+$$
+|v_y|\leq\frac1{2\pi}\int_{A_y}\cos(\varphi-\theta_y)\,d\varphi
+=\frac{\sin(\pi p_y)}\pi.
+\tag{P.66}
+$$
+
+The formula includes $p_y=0,1$. Concavity of sine on $[0,\pi]$, $\sum_yp_y=1$, and Jensen's inequality give $\sum_y|v_y|\leq K\sin(\pi/K)/\pi$. Disjoint equal arcs realize equality, with deterministic labels. Taylor expansion of this value gives (P.63). $\square$
+
+**Definition 14.3 (objective and attribution).** The source-specific content of Theorem 14.2 is the exact conversion of posterior circular estimation risk and finite alphabet capacity into whole-output recovery error in the AURIC fiber; it is repo-derived from Theorem 8.1. The squared-chord estimation identity and circular fixed-mass argument are classical intermediates. The diamond norm is taken after averaging the unknown phase conditional on the supplied record. It is not the worst-case unknown-phase objective of Theorem 12.2. The equal-arc optimum allows any measurable encoder; an implementation with restricted native gates must separately realize that encoder and count all accessible side information, including timestamps and real-valued operands.
+
+## 15. Increasing accessible records and the phase-recovery limit
+
+**Definition 15.1 (a fixed target and nested actual records).** Fix one random unit complex number $X=e^{i\Phi}$ throughout the experiment. Let $\mathcal F_n$ be the sigma-algebra generated by the observer's actual accessible finite or countable record at stage $n$, with $\mathcal F_n\subseteq\mathcal F_{n+1}$. Put
+
+$$
+Z_n=\mathbb E[X\mid\mathcal F_n],\qquad
+c_n=\mathbb E|Z_n|,\qquad
+\mathcal F_\infty=\sigma\left(\bigcup_n\mathcal F_n\right),
+\qquad \delta_n=1-rc_n.
+\tag{P.67}
+$$
+
+By Theorem 14.2, $\delta_n$ is the optimal error for the effective channel supplied with that stage's record. This definition does not replace the fixed target by a newly diffusing phase at every stage.
+
+**Theorem 15.2 (recoverable phase in the accessible limit).** Under Definition 15.1,
+
+$$
+\begin{aligned}
+c_n&\uparrow\mathbb E|\mathbb E[X\mid\mathcal F_\infty]|,\\
+\delta_n&\downarrow1-r\mathbb E|\mathbb E[X\mid\mathcal F_\infty]|,\\
+\lim_nc_n=1&\quad\Longleftrightarrow\quad
+X\text{ is }\mathcal F_\infty\text{-measurable up to null sets}.
+\end{aligned}
+\tag{P.68}
+$$
+
+For $r>0$, the last condition is equivalent to $\delta_n\to1-r$; for $r=0$ all recovery errors are one regardless of the record.
+
+Proof. Use the standard upward convergence theorem for conditional expectations as an intermediate, with the following $L^2$ argument fixing its hypotheses. The tower property and conditional Jensen inequality give
+
+$$
+|Z_n|\leq\mathbb E[|Z_{n+1}|\mid\mathcal F_n],
+\qquad c_n\leq c_{n+1}.
+$$
+
+Conditional expectation is an orthogonal projection in $L^2$. For $j>i$,
+$\|Z_j-Z_i\|_2^2=\|Z_j\|_2^2-\|Z_i\|_2^2$, while $\|Z_n\|_2\leq1$.
+Hence $Z_n$ has an $L^2$ limit $Z$. A subsequence converges almost surely, making $Z$ measurable in $\mathcal F_\infty$. For any event in any $\mathcal F_i$, the defining conditional-integral identity passes to the limit. The union of the increasing sigma-algebras is an algebra generating $\mathcal F_\infty$; the monotone-class argument extends that identity to every event in $\mathcal F_\infty$. Therefore $Z=\mathbb E[X\mid\mathcal F_\infty]$.
+
+The inequality $||Z_n|-|Z||\leq|Z_n-Z|$ gives convergence of the expected moduli. If its limit is one, $|Z|\leq1$ implies $|Z|=1$ almost surely. Orthogonal projection then gives
+
+$$
+\mathbb E|X-Z|^2=1-\mathbb E|Z|^2=0.
+$$
+
+Thus $X=Z$ almost surely. The converse follows by conditional expectation and the convergence already proved. Substituting (P.67) proves all recovery statements. No recovery operation with a physically installed infinite register is required for these finite-stage limits. $\square$
+
+**Proposition 15.3 (record refinement need not improve each realized posterior).** There is a refinement of the accessible record for which half the posterior phase magnitudes decrease while $c_n$ does not change. Consequently neither record length nor an individual realized posterior magnitude is a strictly increasing recovery value.
+
+Proof. Take $X\in\{1,-1\}$ with probabilities $3/4,1/4$, initially no record. Define the joint law
+
+$$
+\Pr(X=1,Y=0)=\tfrac14,\quad
+\Pr(X=-1,Y=0)=\tfrac14,\quad
+\Pr(X=1,Y=1)=\tfrac12.
+$$
+
+The initial modulus is $1/2$. Both labels have probability $1/2$, and their conditional means are respectively $0,1$. Thus one branch decreases to zero, but the expected modulus remains $1/2$, and the recovery error remains $1-r/2$. Adding any independent record also leaves $c_n$ unchanged. $\square$
+
+## 追加锚（本行以下为增补区）
