@@ -95,12 +95,36 @@ extracts do not establish an exhaustive citation-index check.
 
 ## Triage
 
-- PROVED: the signed Ky Fan upper and attainment formulas for real symmetric matrices.
-- PROVED: the universal zero-one upper bound and the positive uniform gap for every positive nonsquare k and every order n≥k.
-- PROVED: blow-up lower bounds, monotonicity under isolated-vertex padding, and convergence of xi(k,n)/n to sup_m xi(k,m+k)/(m+k) for every k≥1.
-- PROVED: the pinned conjecture holds, using infinitely many primes as positive nonsquare prefixes.
+- PROVED: the signed Ky Fan upper and attainment formulas for real symmetric matrices (`D5/S3/Combinatorics/Graph/KyFanGap/SignedVariational.signed_pairing_le_kyFan`, `D5/S3/Combinatorics/Graph/KyFanGap/SignedVariational.exists_signed_pairing_eq_kyFan`).
+- PROVED: the universal zero-one upper bound and the positive uniform gap for every positive nonsquare k and every order n≥k (`D5/S3/Combinatorics/Graph/KyFanGap/Upper.kyFan_le_of_zero_one`, `D5/S3/Combinatorics/Graph/KyFanGap/NearExtremal.uniform_gap`).
+- PROVED: blow-up lower bounds, monotonicity under isolated-vertex padding, and convergence of xi(k,n)/n to sup_m xi(k,m+k)/(m+k) for every k≥1 (`D5/S3/Combinatorics/Graph/KyFanGap/BlowUp.kyFan_blowUp_le_xi`, `D5/S3/Combinatorics/Graph/KyFanGap/BlowUp.xi_blowUp`, `D5/S3/Combinatorics/Graph/KyFanGap/BlowUp.xi_mono`, `D5/S3/Combinatorics/Graph/KyFanGap/BlowUp.tendsto_xi_div`).
+- PROVED: the pinned conjecture holds, using infinitely many primes as positive nonsquare prefixes (`D5/S3/Combinatorics/Graph/KyFanGap/Result.result`).
 - OPEN: an effective or optimal value of the positive gap.
 - ASSUMED-UNVERIFIED: exhaustive citation-index coverage beyond the supplied source readings.
+
+### What the settlement shows
+
+PROVED (`D5/S3/Combinatorics/Graph/KyFanGap/Compactness.exists_model_defect_gap`,
+`D5/S3/Combinatorics/Graph/KyFanGap/UniformGap.bilinear_defect_gap`):
+the decisive obstruction is a positive lower bound on the joint sign and
+weighted-row-sum defect in a fixed finite-dimensional compact model.
+Moment compression transfers that bound uniformly to arbitrary sample
+sizes. The two defects use the same weights and matrix; separate limiting
+models would not give the rationality contradiction.
+
+PROVED (`D5/S3/Combinatorics/Graph/KyFanGap/NearExtremal.uniform_gap`):
+the result extends beyond graph adjacency matrices to all real symmetric
+zero-one matrices, allowing nonzero diagonal. No additional graph
+structure is needed. It strengthens the supplied finite-order equality
+restriction to a gap independent of the order for each positive nonsquare
+prefix.
+
+PROVED (`D5/S3/Combinatorics/Graph/KyFanGap/Result.result`):
+the singular-value asymptotic question in Conjecture 4.7 is settled in its
+pinned formulation. OPEN: effective or sharp gaps, an independent
+formalization of the source's square-prefix extremal constructions, and
+any further consequences for other source questions. No settlement of
+the distinct algebraically ordered eigenvalue problem is asserted here.
 
 
 ## ASSUMED-UNVERIFIED
