@@ -48,6 +48,10 @@ $$\neg (\forall (n: \mathbb{N}), [\operatorname{NeZero}\left(n\right)], \forall 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/LiTanCirculantPositivityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/li-tan-circulant-positivity-refutation` (refuted) by `D5/S3/Quantum/Matrix/LiTanCirculantPositivityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"li-tan-circulant-positivity-refutation","declaration_gid":"D5/S3/Quantum/Matrix/LiTanCirculantPositivityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mao-Sheng Li; Yi-Xi Tan (2024). *On the Bargmann invariants for quantum imaginarity*. DOI: [10.48550/arXiv.2412.08022](https://doi.org/10.48550/arXiv.2412.08022). URL: <https://arxiv.org/abs/2412.08022v1>.
