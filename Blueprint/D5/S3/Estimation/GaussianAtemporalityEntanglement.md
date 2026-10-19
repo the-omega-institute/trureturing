@@ -106,6 +106,10 @@ $$\forall VA \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/GaussianAtemporalityEntanglement.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gaussian-atemporality-entanglement` (proved) by `D5/S3/Estimation/GaussianAtemporalityEntanglement.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gaussian-atemporality-entanglement","declaration_gid":"D5/S3/Estimation/GaussianAtemporalityEntanglement.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Minjeong Song; Jayne Thompson; Matthew S. Winnel; Biveen Shajilal; Timothy C. Ralph; Syed M. Assad; Mile Gu (2025). *Gaussian Atemporality: When Gaussian Quantum Correlations Imply Common Cause*. DOI: [10.48550/arXiv.2508.11804](https://doi.org/10.48550/arXiv.2508.11804). URL: <https://arxiv.org/abs/2508.11804v2>.
