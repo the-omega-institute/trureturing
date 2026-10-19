@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:43d0940823a09cac3b650ecb76818ed523a2f9b92a0400c7d3edb46cfcffba12
+  normalized_sha256: sha256:43d0940823a09cac3b650ecb76818ed523a2f9b92a0400c7d3edb46cfcffba12
+cas_ref: sha256:43d0940823a09cac3b650ecb76818ed523a2f9b92a0400c7d3edb46cfcffba12
+coverage_gids:
+  - gid: D5/S3/Analytic/Certified/TrigEnvelopePhaseReduction.abs_cos_sub_partial_le
+    target_statement_id: sha256:a883454a1e7235b012abdb6a5529e609cf3353b3b42c5f43d9f2c79e15c9311d
+receipts:
+  unresolved_subitems: []
