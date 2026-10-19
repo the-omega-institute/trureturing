@@ -6865,3 +6865,157 @@ $$
 The source and final original Gaussian Hardy metric are unchanged. Repeated roots, root atoms, arbitrary density and confluence remain included. Existing real/imaginary splitting admits arbitrary complex coefficients on at most $\lfloor M_A\rfloor+1$ distinct sites in the same fixed small physical window, without an internal gap assumption.
 
 The degree cap increases over W148 by a factor of order $(A/\log A)^{1/12}$, with the stated smaller margin constant. This uses the actual indefinite rank observable and its logarithmic centering; it does not assert that higher direct coefficients are all nonnegative. Under RH failure, on this same fixed small window beyond all positive starts, W156 and W164 give an upper/lower bracket ratio $O_\varepsilon((A/\log A)^{1/4})$ for the minimum negative-witness site count. This compares bounds only and determines neither an actual minimum nor an optimum or contradiction. The sufficient full count, all-order or larger-rate multiwindow positivity, original signed prime/Robin upper and full RH remain unproved. No actual negative seed/sample, numerical negative margin, numerical $C_\varepsilon$ or positive start, effective finite RH test, Lean certification or literature-priority claim is supplied. Classical logarithmic and weighted-moment tools, complete remainders and exact norm transport are reused in this source-specific paper application.
+
+
+## Complete direct logarithmic control admits a fixed exponential fraction
+
+On the same fixed small physical window and original real polynomial-sign class as W164, there are a fixed $c_{\rm frac}>0$ and one common sufficiently high start such that degree $m\le\lfloor c_{\rm frac}e^{2A}\rfloor$ has lower margin $1/(8A)$ in the original Gaussian Hardy metric. This keeps the complete actual theta source, the reflected exterior and arbitrary confluence. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse W55, W88--W89, W112--W116, W127, W134--W135 and W156--W164. The complete direct integral is kept unexpanded. Its logarithmic observable is controlled by right shifts in an increasing weighted norm, including the correction from its time-dependent amplitude. The scalar logarithm representation is classical: [N. Merhav and I. Sason, *An Integral Representation of the Logarithmic Function with Applications in Information Theory*, Entropy 22(1), Article 51 (2020), author version p. 2, equation (1)](https://arxiv.org/pdf/1912.05812v2), with stated domain $p>0$. That reference supplies the scalar formula; the complete-source estimates below are its paper application, without a literature-priority or Lean-certification claim.
+
+### Keep an exact feature of the whole direct model
+
+Put $E=e^{-2A}$, $\varepsilon=E/\pi$, $T=m+1$, $Q=Q_H(\nu)$ and
+$$
+p(z)=e^{2u}=\frac{1+z}{1-z},\qquad u=\operatorname{arctanh}z,\qquad
+B_E(z)=\left(1-\frac{c_*E}{p(z)}\right)^{-1},\quad c_*=\frac3{2\pi}.
+$$
+At one fixed high start, $B_E$ is positive on the actual real support and holomorphic and uniformly bounded on the fixed complex disc. For an actual signed measure $\sigma$, define
+$$
+F_\sigma(t)=\int\frac{p(z)+1}{\sqrt2}e^{-p(z)t}\,d\sigma(z),\qquad t\ge0.
+$$
+The identity $[(p+1)(q+1)/2]/(p+q)=1/(1-zw)$ gives $\int_0^\infty F_\sigma^2dt=Q_H(\sigma)$. Set
+$$
+\begin{gathered}
+F(t)=F_\nu(t)+\varepsilon tF_{B_E\nu}(t),\qquad
+U(t)=F_{u\nu}(t)+\varepsilon tF_{B_Eu\nu}(t),\\
+W(t)=(1+\varepsilon t)^{3/2},\qquad
+\mathscr S=\int_0^\infty W(t)F(t)^2\,dt.
+\end{gathered}
+$$
+In W88 use $\tau=1+\varepsilon t$ and the exact W127 normalization. Then $Q_{\rm physical}\,d\tau=2\sqrt{pq}\,dt$, $Y(\tau-1)=(p+q)t$, and its normalized amplitude is
+$$
+\frac{\tau^{7/2}(1-r_a/\tau)(1-r_b/\tau)}{(1-r_a)(1-r_b)}
+=\tau^{3/2}[1+\varepsilon tB_E(z)][1+\varepsilon tB_E(w)].
+$$
+Consequently the entire normalized direct model form is exactly
+$$
+Q_{{\rm dir},1}(\nu)=\frac1A\int_0^\infty W(t)
+\left\{\left[A+\frac12\log(1+\varepsilon t)\right]F(t)^2+F(t)U(t)\right\}dt.
+\tag{W165}
+$$
+The displayed logarithm contributes a nonnegative form. The $FU$ term retains the actual $x=A+(u+v)/2$ cross term. Reflection and the complete-source error are paid separately below; this is not a PSD assertion for a theta truncation.
+
+### Reuse the moment costs before taking a logarithm
+
+W112 with $r=2j$ gives, uniformly for every integer $j\ge1$,
+$$
+\|p^{-j}\nu\|_H\le
+\left[\frac{C(T+j)}j\right]^j\sqrt Q\le(CT)^j\sqrt Q.
+$$
+Here $(T+j)/j\le T+1\le2T$, so this bound may be summed over all $j$. If $CET\le1/4$, the actual multiplier series for $B_E$ converges in Hardy moment norm and on the compact support, giving
+$$
+\|B_E\nu\|_H\le C\sqrt Q,\qquad
+\|(B_E/p)\nu\|_H\le CT\sqrt Q.
+$$
+Both positive multipliers preserve the same degree-$m$ separator. Exact time moments are
+$$
+\int_0^\infty t^{2j}F_\sigma(t)^2dt
+=\frac{(2j)!}{2^{2j}}
+Q_{(1-z)^{2j}(1-w)^{2j}/(1-zw)^{2j+1}}(\sigma).
+$$
+For the fixed orders $j=0,1,2$, W113 and the bounded polynomial multiplier therefore yield $\|t^jF_\sigma\|_2\le C_jT^j\|\sigma\|_H$ on the same sign class. Since $1\le W\le(1+\varepsilon t)^2$, these bounds give, for a fixed sufficiently small $\delta>0$ and $ET\le\delta$,
+$$
+\frac12\sqrt Q\le\sqrt{\mathscr S}\le C\sqrt Q,\qquad
+\|F_{(B_E/p)\nu}\|_W\le CT\sqrt Q.
+\tag{W166}
+$$
+The lower bound is a norm comparison: $\|F\|_W\ge\|F_\nu\|_W-\varepsilon\|tF_{B_E\nu}\|_W\ge[1-C\varepsilon T(1+\varepsilon T)]\sqrt Q$, after the fixed geometric multiplier bound. No pointwise ordering of signed Laplace transforms is used.
+
+On the fixed complex disc $|z|\le R$, $\Re p(z)\ge c>0$. Cauchy coefficient pairing with W55, using $Rq=2$, gives the actual tail
+$$
+|F(t)|\le C\Lambda^{m/2}(1+\varepsilon t)e^{-ct}\sqrt Q.
+\tag{W167}
+$$
+This uses neither a total-variation bound nor a bound on the number or separation of atoms.
+
+### Right shifts pay the complete logarithmic observable
+
+For $p>0$, the classical scalar formula is $\log p=\int_0^\infty(e^{-s}-e^{-ps})\,ds/s$. It gives the exact feature identity
+$$
+U(t)=\frac12\int_0^\infty\frac{e^{-s}F(t)-F(t+s)}s\,ds
++\frac{\varepsilon}{2}F_{(B_E/p)\nu}(t).
+\tag{W168}
+$$
+The final term is essential: $F(t+s)$ contains $\varepsilon(t+s)F_{B_E\nu}(t+s)$, whereas multiplying the source by $e^{-ps}$ retains $\varepsilon t$. Their difference is $\varepsilon sF_{B_E\nu}(t+s)$, whose integral is $\varepsilon F_{(B_E/p)\nu}(t)$.
+
+Right shifts contract the increasing weighted norm:
+$$
+\|F(\cdot+s)\|_W^2=\int_s^\infty W(r-s)F(r)^2dr\le\mathscr S.
+$$
+Thus $\mathscr C(s)=\int_0^\infty W(t)F(t)F(t+s)dt\le\mathscr S$. Equations W166--W167 also imply
+$$
+\frac{|\mathscr C(s)|}{\mathscr S}\le C\Lambda^{m/2}(1+s)e^{-cs}.
+$$
+Choose $J=\lceil C_0T\rceil$ with fixed sufficiently large $C_0$. The tail $\int_J^\infty|\mathscr C(s)|\,ds/s$ is at most $C\mathscr S$, uniformly in $m,A$. For $0<s<1$, use $e^{-s}\mathscr S-\mathscr C(s)\ge-s\mathscr S$; for $1\le s\le J$, use $-\mathscr C(s)\ge-\mathscr S$. Therefore the integral in W168, paired with $F$, is at least $-[\tfrac12\log T+C]\mathscr S$. Its correction term costs at most $CET\mathscr S$ by W166, absorbed in a fixed constant. It follows that
+$$
+\int_0^\infty WFU\,dt\ge-[\tfrac12\log T+C_{\rm dir}]\mathscr S,
+\qquad
+Q_{{\rm dir},1}(\nu)\ge
+\left[1-\frac{\log T}{2A}-\frac{C_{\rm dir}}A\right]\mathscr S.
+\tag{W169}
+$$
+All pairings refer to the same measure. Compact support with $p$ bounded positively gives exponential time decay and the $O(s)$ cancellation at zero needed for Fubini. The sharp coefficient $1/2$ is retained without declaring each asymptotic direct coefficient nonnegative.
+
+### The full reflected integral retains its inverse-size factor
+
+The reflected part of W88, after W127, has no $x$ factor and carries $1/A$ throughout. Keep that factor in the existing W116 and W134--W135 payments. Its compatible expansion and analytic remainder satisfy, for every $N\ge3$,
+$$
+\begin{gathered}
+K_{{\rm ref},1}=\frac1A\sum_{0\le k<N}E^kR_k+R_{{\rm ref},N},\\
+|Q_{R_0}(\nu)|\le CQ,\qquad
+|Q_{R_k}(\nu)|\le[C(T+k+1)]^kQ\quad(k\ge1),\\
+\sup|R_{{\rm ref},N}|\le\frac{C^NN!E^N}A.
+\end{gathered}
+\tag{W170}
+$$
+These are the reflected portions of the owned proofs: W89 bounds the stationary $h_j$ bilinear forms, W112's multiplier-order denominators cancel the factorials, and the geometric normalization convolution has total degree $k$. Its polynomially many terms are absorbed in $C^k$. No $x$ or logarithmic observable occurs in that convolution. The old Stieltjes and geometric remainders retain the same $1/A$ and the whole reflected half-line.
+
+Fix $D\ge\log\Lambda+4$ and take $N=\lceil D(T+A)\rceil$. If $c_{\rm frac}>0$ is fixed sufficiently small and $m\le c_{\rm frac}/E$, one common high start ensures
+$$
+CE(T+N+2)\le\tfrac12,\qquad CEN\le e^{-3},\qquad ET\le\delta.
+$$
+The coefficient sum in W170 is bounded by a fixed constant times $Q/A$. Its remainder form is at most
+$$
+\frac CA\Lambda^m(CEN)^NQ
+\le\frac CAe^{m\log\Lambda-3N}Q
+\le\frac CAe^{-2(A+m)}Q.
+$$
+Hence, for a fixed $C_{\rm ref}$,
+$$
+|Q_{{\rm ref},1}(\nu)|\le\frac{C_{\rm ref}}A Q.
+\tag{W171}
+$$
+The complete actual-source comparison from W114, multiplied by the bounded W127 factors, costs at most $C\Lambda^me^{-\kappa/E}Q$. Shrink $c_{\rm frac}$ so $c_{\rm frac}\log\Lambda<\kappa/2$; this error is at most $Q/A$ at the same high start. Every theta mode and the reflected exterior remain paid.
+
+### One fixed fraction and one common start
+
+Choose the same fixed $c_{\rm frac}>0$ small enough for all preceding restrictions and
+$$
+-\frac12\log(2c_{\rm frac})-C_{\rm dir}\ge4C_{\rm ref}+8.
+$$
+For all $0\le m\le\lfloor c_{\rm frac}e^{2A}\rfloor$ at one common high start, $T\le2c_{\rm frac}/E$. W169 and $\mathscr S\ge Q/4$ give $Q_{{\rm dir},1}\ge(C_{\rm ref}+2)Q/A$. Subtract W171 and the complete-source error to obtain
+$$
+Q_{\mathcal K_A^1}(\nu)\ge\frac1A Q_H(\nu)>0\qquad(\nu\ne0).
+\tag{W172}
+$$
+Use the exact W127 transport $\nu_1=(1-r_E)\nu_g$. W112 with $r=2$ gives $\|\nu_1-\nu_g\|_H\le CET\|\nu_g\|_H$. Shrink the fixed $c_{\rm frac}$ again so this is at most half the original norm. Thus $Q_H(\nu_1)\ge Q_H(\nu_g)/4$. In particular, with slack,
+$$
+Q_{\mathcal K_A^g}(\nu_g)\ge\frac1{8A}Q_H(\nu_g)>0,
+\quad A\ge A_*,\quad
+0\le m\le\lfloor c_{\rm frac}e^{2A}\rfloor,\quad\nu_g\ne0.
+\tag{W173}
+$$
+The complete source, fixed window, original sign contract and original Gaussian Hardy metric are unchanged. Repeated roots and root atoms, arbitrary density and confluence remain included. The existing real/imaginary split admits arbitrary complex coefficients on at most $\lfloor c_{\rm frac}e^{2A}\rfloor+1$ distinct sites, without an internal gap. Nonzero moment norm uses the owned compact moment uniqueness; the zero measure contributes zero.
+
+The cap exceeds W164 by a factor of order $(A/\log A)^{1/4}$, with the stated smaller margin. Under RH failure, on this same small window beyond all positive starts, W156 and W173 put the minimum negative-witness count strictly above $\lfloor c_{\rm frac}e^{2A}\rfloor+1$ and at most $\lceil C_\varepsilon e^{2A}\rceil$. The ratio of these bracket bounds is $O_\varepsilon(1)$. This compares bounds only; no actual seed, negative margin, numerical count constant, exact minimum or contradiction is supplied. Positivity for the sufficient cofinal count $e^{2A}g(A)$ with $g(A)\to\infty$, all-order PSD, larger-rate multiwindow positivity, the original signed prime/Robin upper and full RH remain unproved. No numerical $c_{\rm frac}$ or start, effective finite RH test, Lean/CI/merge certification or literature-priority claim is supplied. Classical logarithm, shift, moment and complete-source estimates are reused in this source-specific paper application.
