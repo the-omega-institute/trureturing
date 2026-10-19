@@ -297,7 +297,7 @@ private theorem cycle_length_eq_of_decomposition
   simp [Nat.add_comm, Nat.add_assoc]
 
 
-private theorem exists_simpleCycle_cycleMeanDominates (weight : E → ℝ)
+theorem exists_simpleCycle_cycleMeanDominates (weight : E → ℝ)
     {base : V} (reference : G.Walk base base) (hne : 0 < reference.length) :
     ∃ (simpleBase : V) (simple : G.Walk simpleBase simpleBase),
       IsSimpleCycle simple ∧ CycleMeanDominates weight simple reference := by
@@ -379,7 +379,7 @@ private theorem exists_simpleCycle_mean_gt_of_closedWalk
   nlinarith
 
 
-private theorem forall_closedWalk_mean_le_iff_simpleCycle
+theorem forall_closedWalk_mean_le_iff_simpleCycle
     (weight : E → ℝ) (level : ℝ) :
     (∀ (base : V) (cycle : G.Walk base base),
       MaxPlusPotential.walkWeight weight cycle ≤ cycle.length * level) ↔
