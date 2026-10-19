@@ -20,7 +20,7 @@ They construct compounds for d = 2 and d = 4 and prove that none exists for d = 
 - For d = 5, 6, 7, 8 they enumerate the Weyl–Heisenberg fiducials and find no compound. The introduction states: "for d = 5, 6, 7, 8 we give evidence in support of the same conclusion."
 - For d = 8 they add: "dimension 8 also houses SICs that are not based on the WH group … Whether a SIC-compound can be formed from these exceptional SICs is left as an open question."
 
-The verbatim statements are in [the literature note](../Library/QuantumChannels/tavakolibengtssongisinrenes2020siccompounds.md).
+The verbatim statements are in [the literature note](../Library/QuantumContext/tavakolibengtssongisinrenes2020siccompounds.md).
 
 Issue [#18207](https://github.com/the-omega-institute/trureturing/issues/18207) reads the exceptional SICs as the Hoggar SICs: the orbits of a fiducial vector under the three-qubit Pauli group. Its claim is the negative answer to the question. The claim is refuted, which answers the question in the positive: a SIC-compound in dimension 8 is formed from eight Hoggar SICs.
 

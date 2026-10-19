@@ -8,7 +8,7 @@ internal sealed class LossyQubitPartialJMTightnessDocument : IScribeDocumentDefi
 {
     private const string Prefix = "D5/S3/Quantum/Measurement/LossyQubitPartialJMTightness.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumChannels/lobo2026generalized");
+        LibraryNoteRef.Create("D5/L/QuantumContext/lobo2026generalized");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Partial joint measurability bounds the efficiency of two lossy projective qubit measurements.",
