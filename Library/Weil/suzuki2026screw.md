@@ -5491,3 +5491,203 @@ unsigned; no comparison of $\mathcal M(\mu)^2$ with a nearly null
 compact form is supplied. No all-order positivity on one fixed window,
 original signed prime/Robin estimate, strict Robin for every integer
 above5040, numerical start or RH proof follows.
+
+## Finite remote-window horizons for negative actual theta witnesses
+
+The qualitative transport (W40) can be made quantitative for the complete
+actual odd kernel. A fixed negative physical seed yields a finite-site
+negative witness in every remote window, with an explicit count and
+reconstruction. This supplies a cofinal finite-order positivity target;
+the required positivity is not established. The argument uses classical
+Gaussian summation, conformal coordinates, Cauchy coefficients and
+Lagrange interpolation, with the actual full source retained. It is a
+repository-derived paper estimate without a priority or Lean-verification
+claim. The Fourier and zero-exclusion interface (W37)--(W40) is reused.
+
+### Bound the complete source as the strip approaches its boundary
+
+For the source's normalization,
+
+$$
+\Phi(z)=\sum_{n\ge1}(4\pi^2n^4e^{9z/2}-6\pi n^2e^{5z/2})
+ e^{-\pi n^2e^{2z}},\qquad \Phi(-z)=\Phi(z).
+$$
+
+For every $0<\eta<\pi/4$, put $c_\eta=\cos(2\eta)$. Elementary Gaussian summation gives, for every $y>0$ and $k=2,4$,
+
+$$
+\sum_{n\ge1}n^k e^{-yn^2}\le C_k y^{-(k+1)/2}.
+$$
+
+For example bound $(n\sqrt y)^k e^{-yn^2/2}$ by its real maximum and sum the remaining decreasing Gaussian by its integral. It follows directly from the actual full theta series, for $x\ge0$ and $|v|\le\eta$, that
+
+$$
+|\Phi(x+iv)|\le C c_\eta^{-5/2}e^{-x/2}.
+$$
+
+Evenness gives the same bound with $e^{-|x|/2}$ for every real $x$. Here and below $C$ is a fixed absolute constant for this fixed source normalization; its value can be enlarged, but has no dependence on $\eta$ or any window center. No positivity or zero-free logarithm of Phi is used.
+
+Reuse the exact holomorphic extension W38, with $p=(a+b)/2$, $d=(a-b)/2$:
+
+$$
+\widetilde K_0(a,b)=\frac12\left[\int_0^\infty y\Phi(y+d)\Phi(y-d)dy
+ -\int_0^p y\Phi(y+d)\Phi(y-d)dy\right],
+\quad \widetilde L_0(a,b)=\widetilde K_0(a,b)-\widetilde K_0(a,-b).
+$$
+
+The finite integral is the W38 path integral, not a changed lower endpoint. Write $x=\Re p$, $s=\Re d$. On the positive real $y$ line the absolute product is bounded by
+
+$$
+C c_\eta^{-5}e^{-(|y+s|+|y-s|)/2}
+ =C c_\eta^{-5}e^{-\max(y,|s|)}.
+$$
+
+Thus the infinite integral and the horizontal part of the finite integral are uniformly bounded: $\int_0^\infty y e^{-\max(y,|s|)}dy\le C$. Negative real $p$ gives the same absolute bound by evenness of the product and oddness of $y$ times the product. Deform the finite path to $0\to x\to p$. All shifted source arguments along it remain in the original strip: their imaginary parts are between the real-path values $\pm\Im d$ and the endpoint values $\Im a,\Im b$. Its vertical part is at most
+
+$$
+C c_\eta^{-5}\eta(|x|+\eta)e^{-\max(|x|,|s|)}\le Cc_\eta^{-5}.
+$$
+
+The same argument applies to $b\mapsto-b$. Consequently there is one absolute $D\ge1$ such that
+
+$$
+\sup_{a,b\in D_\eta}|\widetilde L_0(a,b)|\le D[\cos(2\eta)]^{-5}.
+\tag{W101}
+$$
+
+This is a bound for the complete actual kernel on the full strip product, not just on a compact substrip square. It retains the reflected term and needs no source replacement.
+
+### Keep a bounded exact disc kernel at a moving center
+
+For $A\ge2$ set
+
+$$
+q_A=\frac{A+1}{A},\qquad \eta_A=\frac{\pi}{4q_A},\qquad
+\chi_A(t)=A+q_A^{-1}\operatorname{arctanh}t.
+$$
+
+The map $\chi_A$ takes the unit disc to $D_{\eta_A}$. Also
+
+$$
+\cos(2\eta_A)=\sin\frac{\pi}{2(A+1)}\ge\frac1{A+1}.
+$$
+
+Thus the exact two-variable pullback
+
+$$
+\mathscr L_A(t,s)=\widetilde L_0(\chi_A(t),\chi_A(s))
+ =\sum_{p,q\ge0}c_{pq}^{(A)}t^ps^q
+$$
+
+is bounded by $M_A=D(A+1)^5$ on the unit bidisc. Cauchy, with radii increasing to1, gives $|c_{pq}^{(A)}|\le M_A$. The coefficients are real and symmetric. There is no Gaussian-leading approximation and no change to the actual physical quadratic form.
+
+Suppose a fixed actual finite real seed, at points $a_\ell\in(1,2)$ and with coefficients $b_\ell$, satisfies
+
+$$
+\sum_\ell|b_\ell|=1,\qquad
+\sum_{\ell,k}b_\ell b_kL_0(a_\ell,a_k)=-\varepsilon<0.
+\tag{W102}
+$$
+
+Let $t_\ell=\tanh(q_A(a_\ell-A))$, $r_A=\max_\ell|t_\ell|$ and $\beta_p=\sum_\ell b_\ell t_\ell^p$. For $A\ge2$ we have $0<r_A<1$, $r_A\le\tanh A$, and hence $1-r_A\ge e^{-2A}$. All full series converge absolutely on this finite seed. For the $n$-by-$n$ coefficient block,
+
+$$
+Q_{A,n}=\sum_{0\le p,q<n}c_{pq}^{(A)}\beta_p\beta_q,
+\qquad
+|Q_{A,n}+\varepsilon|\le\frac{2M_A r_A^n}{(1-r_A)^2}.
+\tag{W103}
+$$
+
+This is simply the omitted double geometric sum, applied to the complete kernel and the same actual seed. A sufficient explicit integer is
+
+$$
+n\ge2+\left\lceil\frac{\log\left(1+\frac{8M_A}{\varepsilon(1-r_A)^2}\right)}{1-r_A}\right\rceil.
+\tag{W104}
+$$
+
+It makes the error in W103 at most $\varepsilon/4$, so $Q_{A,n}\le-3\varepsilon/4$. W104 is an upper horizon, not a test of all possible negative directions or a numeric value without the seed/margin.
+
+### Reconstruct the negative block on explicit physical nodes
+
+Fix any $w>0$ and any $n\ge2$ for which the error in W103 is at most $\varepsilon/4$. Put $E_A=(1-r_A)^{-1}$ and choose
+
+$$
+h=\min\left\{\frac12,\frac12\tanh(q_Aw),
+ 10^{-(n-1)}\min\left(\frac12,\frac{\varepsilon}{16M_A(E_A+1)}\right)\right\}>0.
+$$
+
+Use the $n$ distinct real disc nodes $x_j=jh/(n-1)$, $0\le j<n$, with Lagrange polynomials $\ell_j$ and weights
+
+$$
+\alpha_j=\sum_\ell b_\ell\ell_j(t_\ell),\qquad \nu_A=\sum_{j=0}^{n-1}\alpha_j\delta_{\chi_A(x_j)}.
+\tag{W105}
+$$
+
+These are actual physical points in $[A,A+w)\subset(A-w,A+w)$. Real polynomial interpolation gives $\sum_j\alpha_jx_j^p=\beta_p$ for every $p<n$. Moreover
+
+$$
+\sum_j|\alpha_j|\le(10/h)^{n-1}.
+$$
+
+Indeed $|t_\ell-x_k|\le1+h\le3/2$ and the denominators are $(h/(n-1))^{n-1}j!(n-1-j)!$ in absolute value. Sum their inverses and use $(n-1)!\ge((n-1)/e)^{n-1}$.
+
+If $\gamma_p=\sum_j\alpha_jx_j^p$, its high tail obeys
+
+$$
+H:=\sum_{p\ge n}|\gamma_p|
+ \le2\,10^{n-1}h
+ \le\min\left(1,\frac{\varepsilon}{8M_A(E_A+1)}\right).
+$$
+
+The low tail satisfies $\sum_{p<n}|\gamma_p|\le E_A$. The complete actual coefficient series therefore gives
+
+$$
+|Q_{L_0}(\nu_A)-Q_{A,n}|
+ \le M_A(2E_AH+H^2)\le\varepsilon/4.
+$$
+
+Consequently
+
+$$
+Q_{L_0}(\nu_A)\le-\varepsilon/2<0,
+\qquad \#\operatorname{supp}\nu_A\le n.
+\tag{W106}
+$$
+
+This proves the finite-site realization, including every mixed high coefficient. It is not an inference from a negative derivative matrix without a remainder. The weights can be enormous and gaps extremely small; neither stable recovery nor a finite precision certificate is claimed. The explicit formulas are mathematical constructions, not executed solvers.
+
+### Consume a common finite-order schedule on cofinal centers
+
+Set
+
+$$
+n_A=\left\lceil8(A+1)e^{2A}\right\rceil.
+$$
+
+Because $r_A\le1-e^{-2A}$, W103 for $n=n_A$ is at most
+
+$$
+2D(A+1)^5e^{4A}e^{-8(A+1)}
+ =2D(A+1)^5e^{-4A-8}\longrightarrow0.
+\tag{W107}
+$$
+
+For every fixed actual seed W102, the construction W105 therefore yields a negative physical sample on at most $n_A$ sites in every window $(A-w,A+w)$ beyond a single seed-dependent start. The count has no width dependence; the stencil's resolution does depend on $w$. No optimality of the exponent2 or the factor8 is asserted.
+
+If RH fails, the already-owned W40 applied to the fixed interval $(1,2)$ supplies precisely a finite negative seed W102: the kernel is real symmetric, so real coefficients suffice, and they may be normalized by total variation. Therefore
+
+$$
+\begin{gathered}
+\mathrm{RH\ false}\quad\Longrightarrow\quad
+\exists A_\varepsilon\ \forall A\ge A_\varepsilon:\\
+\text{a real negative }L_0\text{ sample exists in }(A-w,A+w)
+\text{ on at most }\lceil8(A+1)e^{2A}\rceil\text{ sites}.
+\end{gathered}
+\tag{W108}
+$$
+
+Here $w>0$ is arbitrary and fixed. This is conditional source-specific witness localization with a quantitative count, not a found negative theta sample. No off-line zero, negative seed, numerical start or actual counterexample has been supplied.
+
+An immediate actual consumer is now available: if, for some fixed $w>0$ and an unbounded set of centers $A$, the complete actual $L_0$ is PSD on every real sample of at most $n_A$ sites in $(A-w,A+w)$, then RH follows. The hypothesis quantifies over every location and coefficient on each admitted sample, not one grid or a finite scan. It only requires finite order at each center and a cofinal collection of centers. In particular a local sign-degree estimate valid up to $e^{\kappa A}$ with any fixed $\kappa>2$ on an unbounded sequence of large centers would suffice, because any real $n$-point measure has a polynomial sign separator of degree at most $n-1$, and complex coefficients split into real and imaginary parts.
+
+Existing W91 has a small fixed $\kappa$, not $\kappa>2$, and does not meet this target. Under RH failure, combining its positivity with W108 bounds the minimum number of sites needed for a negative local witness from below and above; this supplies neither sign nor a contradiction. W96--W100 and their geometric interaction estimates are reused unchanged. The new input is the actual near-boundary strip bound and complete finite-node reconstruction making the qualitative W40 obstruction quantitative. No identity with Suzuki's physical Weil operator, original prime form or Robin functional is asserted. Full RH and strict Robin for every integer above5040 remain unproved.
