@@ -46,6 +46,10 @@ $$\neg (\operatorname{schrodingerHamiltonian} \in \operatorname{L})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/JeudyRouleuxGlobalPermutationLie.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jeudy-rouleux-global-permutation-lie` (refuted) by `D5/S3/Quantum/Algebra/JeudyRouleuxGlobalPermutationLie.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jeudy-rouleux-global-permutation-lie","declaration_gid":"D5/S3/Quantum/Algebra/JeudyRouleuxGlobalPermutationLie.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* C. Jeudy; M. Rouleux (2024). *Generalized exchange operators for a system of spin-1 particles*. DOI: [10.1088/1742-6596/2912/1/012043](https://doi.org/10.1088/1742-6596/2912/1/012043). URL: <https://arxiv.org/abs/2411.03952v1>.

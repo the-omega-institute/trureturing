@@ -23,14 +23,17 @@ internal sealed class JeudyRouleuxGlobalPermutationLieDocument : IScribeDocument
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The Hamiltonian does not belong", new Formula.Not(Parenthesized(ClaimBody())),
                 "Every global permutation preserves equality of the first two particle labels, so its generated Lie algebra commutes with the diagonal projector onto that equality. The Hamiltonian's commutator with the projector has entry one at row (1,0,0), column (0,0,1). Hence the Hamiltonian is outside L. This disproves the membership expectation in Section 3.1. The source's CSCO comparisons and the enlarged space in Section 6 are outside this result.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("jeudy-rouleux-global-permutation-lie"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("jr-global-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
