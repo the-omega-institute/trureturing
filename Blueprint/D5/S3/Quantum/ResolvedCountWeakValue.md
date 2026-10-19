@@ -22,6 +22,10 @@ $$\forall (k : \mathbb{N}), (\forall (A : \operatorname{LinearIsometryEquiv}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/ResolvedCountWeakValue.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wiseman-steinberg-hallaji-2023-resolved-count-weak-values` (proved) by `D5/S3/Quantum/ResolvedCountWeakValue.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wiseman-steinberg-hallaji-2023-resolved-count-weak-values","declaration_gid":"D5/S3/Quantum/ResolvedCountWeakValue.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* H. M. Wiseman, A. M. Steinberg, M. Hallaji (2023). *Obtaining a single-photon weak value from experiments using a strong (many-photon) coherent state*. DOI: [10.1116/5.0137579](https://doi.org/10.1116/5.0137579). URL: <https://arxiv.org/abs/2211.15761v2>.
