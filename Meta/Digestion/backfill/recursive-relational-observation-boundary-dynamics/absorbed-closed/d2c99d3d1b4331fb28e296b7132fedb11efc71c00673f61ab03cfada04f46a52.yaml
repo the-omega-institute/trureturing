@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:d2c99d3d1b4331fb28e296b7132fedb11efc71c00673f61ab03cfada04f46a52
   normalized_sha256: sha256:d2c99d3d1b4331fb28e296b7132fedb11efc71c00673f61ab03cfada04f46a52
 cas_ref: sha256:d2c99d3d1b4331fb28e296b7132fedb11efc71c00673f61ab03cfada04f46a52
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/IncoherentCone.psd_diag_le_trace
+    target_statement_id: sha256:32e09264ac2d88eb4084cdc6b643073ff743597cf266b3a9caa699c5e0ec73a3
 receipts:
   unresolved_subitems: []
   chain_atoms:
