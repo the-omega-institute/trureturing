@@ -12080,3 +12080,157 @@ $$
 Here the physical Schur blocks retain all complex modes $-N,\ldots,N$, equivalently $N+1$ even and $N$ odd coordinates. Their SAME full coupling is $P_N^\perp V_LP_N$ with norm at most $K_L$, exactly as in GHC7. Both pole evaluations, every prime power, the original domain and every Gamma rate remain. The trace bound covers all $2N(c)+1$ coordinates without a rank factor. The original legal-trial transport from GHC7--GHC8 applies with the full signed exterior change; it introduces no reselected trial, separate surplus credit or inferred residual norm.
 
 This `repo-derived` application extends the quantitative model from the complex even sector to the entire complex physical form, with the negative odd boundary and pole explicitly retained. It does not establish positivity of either Schur block, a favorable joint prime discrepancy, the complete determinant limit, the original Robin strict upper or RH. The inherited source/form identification and these deductions remain paper mathematics without Lean/kernel certification. No literature priority is asserted.
+
+### A cubic complete Gamma remainder retains the signed odd endpoint
+
+Keep exactly GHC1--GHC11's full complex exterior, $c\ge2$, $d=\log c$, integer $N\ge\max(1,d)$, rates $b_j=2(j+1/4)$ and columns $h(b),k(b)$. The Hilbert matrix and both complete Gamma series are reused. The extra source-specific input is the fixed quarter-lattice endpoint and the evenness of both column products in $b$; the first-derivative quadrature bound did not use these cancellations. Classical Euler--Maclaurin summation and its periodic Bernoulli remainder are reused, as in [DLMF 2.10(i)](https://dlmf.nist.gov/2.10.i). No new general summation theorem, numerical certificate, literature priority or Lean/kernel verification is asserted.
+
+Put
+$$
+ \ell_N=k(0),\qquad
+ (\ell_N)_n=\frac{\sqrt d\,(-1)^n}{\pi n},\qquad
+ \tau_d=\frac{e^{-d/2}}{1-e^{-2d}}-\frac14,
+$$
+and define the explicit signed model
+$$
+ \boxed{\mathcal C_N^{[3]}=
+ \mathcal C_N\oplus\bigl(-\mathcal C_N+
+               \tau_d|\ell_N\rangle\langle\ell_N|\bigr).}
+ \tag{GHC12}
+$$
+The correction is negative for $c\ge25$: $4/\sqrt c\le4/5<1-c^{-2}$. It stays in the odd model with this sign. Also
+$\|\ell_N\|^2\le d/(\pi^2N)$, so it is an actual bounded rank-one operator on the entire odd exterior.
+
+#### Use the actual lattice before taking a trace norm
+
+For $F_{\rm e}(b)=|h(b)\rangle\langle h(b)|$ and
+$F_{\rm o}(b)=|k(b)\rangle\langle k(b)|$, both $F$ are even and $F'(0)=0$. Apply shifted Euler--Maclaurin first to $0\le b\le2J$ with samples $2j+1/2$, $0\le j<J$, in trace-class pairings. Here
+$B_1(1/4)=-1/4$, $B_3(1/4)=3/64$ and
+$|B_3(x)|=|x(x-1/2)(x-1)|\le1/8$ on $[0,1]$.
+The upper-endpoint terms tend to zero in trace norm. The third-order integral remainder therefore gives
+$$
+ \boxed{\left\|\mathcal E(F)\right\|_1
+ \le\frac1{32}\|F''(0)\|_1+
+          \frac1{12}\int_0^\infty\|F'''(b)\|_1\,db,}
+ \qquad
+ \mathcal E(F)=\sum_{j\ge0}F(b_j)
+           -\frac12\int_0^\infty F(b)\,db-\frac14F(0).
+ \tag{GHC13}
+$$
+The displayed difference means the limit of those finite-cutoff differences. Neither positive body is asserted trace class. The inherited strong sums and integrals identify the two bodies after the difference has converged in trace norm.
+
+Here all the trace-class differentiability and endpoint conditions can be paid explicitly. Set $\Omega=2\pi N/d$ and let $u$ denote either $h$ or $k$. Partial fractions give, for $0\le r\le3$,
+$$
+ |u_n^{(r)}(b)|
+ \le\frac{2r!}{\sqrt d\,(b^2+\omega_n^2)^{(r+1)/2}}.
+$$
+If $U_r$ is the $\ell^2$ norm of this majorant, decreasing-sum integrals give
+$$
+ U_r(b)^2\le
+ \frac{2(r!)^2}{\pi(2r+1)}\Omega^{-2r-1},\qquad
+ U_r(b)^2\le
+ \frac{2(r!)^2}{\pi}b^{-2r-1}
+       \int_0^\infty(1+t^2)^{-r-1}\,dt\quad(b>0).
+$$
+The four integrals in the second bound are
+$\pi/2,\pi/4,3\pi/16,5\pi/32$. Since
+$\|F'''\|_1\le2U_0U_3+6U_1U_2$, these imply respectively
+$\|F'''(b)\|_1\le6\Omega^{-4}$ for $b\le\Omega$ and
+$\|F'''(b)\|_1\le12b^{-4}$ for $b\ge\Omega$. Thus, for either product,
+$$
+ \boxed{\int_0^\infty\|F'''(b)\|_1\,db
+             \le10\Omega^{-3},\qquad
+ \|F_{\rm e}''(0)\|_1\le\frac{d^3}{6\pi^4N^3},\qquad
+ \|F_{\rm o}''(0)\|_1\le\frac{d^3}{\pi^4N^3}.}
+ \tag{GHC14}
+$$
+For example, the even endpoint is $2|h'(0)\rangle\langle h'(0)|$.
+For the odd endpoint, use $k'(0)=0$,
+$k''(0)_n=-2(\ell_N)_n/\omega_n^2$ and
+$\|\ell_N\|^2\le d/(\pi^2N)$. The same derivative bounds show that
+$F,F',F''$ tend to zero in trace norm at infinity, justifying the cutoff passage in GHC13. All derivatives are taken in trace norm on each finite interval.
+
+#### Retain the exponentially weighted body in the same cancellation
+
+Reuse GHC2's entire-rate bound $\sum_jb_j^2e^{-db_j}<5$.
+Since $h(0)=0$ and
+$\|h(b)\|^2\le b^2d^3/(12\pi^4N^3)$,
+$$
+ \left\|\sum_{j\ge0}e^{-db_j}F_{\rm e}(b_j)\right\|_1
+       \le\frac{5d^3}{12\pi^4N^3}.
+$$
+For the odd body,
+$\|k(b)-\ell_N\|\le(b/\Omega)^2\|\ell_N\|$ and
+$\|k(b)\|\le\|\ell_N\|$, hence
+$$
+ \left\|\sum_{j\ge0}e^{-db_j}
+          [F_{\rm o}(b_j)-F_{\rm o}(0)]\right\|_1
+       \le\frac{5d^3}{2\pi^4N^3}.
+$$
+Its omitted constant is exactly
+$\sum_je^{-db_j}F_{\rm o}(0)$, already retained in $\tau_d$.
+The actual identities are therefore
+$$
+ B_{\Gamma,N}^{\rm even}-\mathcal C_N
+   =\mathcal E(F_{\rm e})-\sum_je^{-db_j}F_{\rm e}(b_j),
+$$
+$$
+ B_{\Gamma,N}^{\rm odd}+\mathcal C_N
+       -\tau_d|\ell_N\rangle\langle\ell_N|
+   =-\mathcal E(F_{\rm o})
+       +\sum_je^{-db_j}[F_{\rm o}(b_j)-F_{\rm o}(0)].
+$$
+Every Gamma rate and each parity sign remains. GHC13--GHC14 now give
+$$
+ \boxed{\begin{aligned}
+ \|B_{\Gamma,N}^{\rm even}-\mathcal C_N\|_1
+ &\le\left(\frac{27}{64\pi^4}+\frac5{48\pi^3}\right)
+                   \frac{d^3}{N^3}<\frac{d^3}{100N^3},\\
+ \|B_{\Gamma,N}^{\rm odd}+\mathcal C_N
+        -\tau_d|\ell_N\rangle\langle\ell_N|\|_1
+ &\le\left(\frac{81}{32\pi^4}+\frac5{48\pi^3}\right)
+                   \frac{d^3}{N^3}<\frac{d^3}{25N^3},\\
+ \|B_{\Gamma,N}^{\rm all}-\mathcal C_N^{[3]}\|_1
+ &<\frac{d^3}{20N^3}.
+ \end{aligned}}
+ \tag{GHC15}
+$$
+The strict constants follow already from $\pi>3$:
+$1/192+5/1296<1/100$ and $1/32+5/1296<1/25$.
+The full-space bound sums the two trace norms. It has no finite exterior dimension, coefficient or rank restriction.
+
+At the original $c=27$, $N=1280$, the EVEN Hilbert model is unchanged. GHC3's actual full-arithmetic operators still both exceed $g_0I$, so the same resolvent identity directly improves its allowance to
+$$
+ \boxed{\|H_{\rm ext}^{-1}-\widetilde H_{\rm ext}^{-1}\|_1
+       <\frac{d^3}{100N^3g_0^2}
+       <\frac{6250}{2187\cdot1280^3}<10^{-8}.}
+ \tag{GHC16}
+$$
+This is an exact paper bound, without a numerical solve or an inferred saved-residual norm. Congruence with the original residual still carries its squared norm as in GHC3.
+
+#### The same full physical Schur block has a cubic-rate model error
+
+For the entire complex physical operator, replace only the exterior Gamma boundary by $\mathcal C_N^{[3]}$. Call the resulting exterior $\widehat H_{\rm ext}^{\rm all}$ and its physical retained Schur block $\widehat S_{c,N}^{\rm all}$. The actual complete coupling $\mathscr B=P_N^\perp V_LP_N$ is unchanged, with $\|\mathscr B\|\le K_{d/2}$ as in GHC7--GHC11. Every prime power, both pole evaluations, the negative odd pole and the original common form domain remain.
+
+GHC15 gives the common sufficient floor
+$$
+ \mathfrak b_3(c,N)=
+ A\!\left(\frac{2\pi(N+1)}d\right)-K_{d/2}
+          -\frac{d^3}{20N^3}.
+$$
+Whenever $\mathfrak b_3>0$, the existing resolvent and two-sided trace-ideal inequalities apply. At the SAME $N(c)=\lceil e^c\rceil$, $\mathfrak b_3/c\to1$ and hence $\mathfrak b_3\ge c/2$ eventually. Consequently
+$$
+ \boxed{\begin{aligned}
+ \|(H_{\rm ext}^{\rm all})^{-1}
+        -(\widehat H_{\rm ext}^{\rm all})^{-1}\|_1
+ &<\frac{(\log c)^3}{5c^2N(c)^3},\\
+ \|S_{c,N(c)}^{\rm all}-\widehat S_{c,N(c)}^{\rm all}\|_1
+ &<\frac{K_{(\log c)/2}^{\,2}(\log c)^3}
+                   {5c^2N(c)^3}
+ =O\!\left(\frac{(\log c)^5}{c}e^{-3c}\right).
+ \end{aligned}}
+ \tag{GHC17}
+$$
+The last step reuses GHC8's $K_{(\log c)/2}^2=O(c(\log c)^2)$. This controls all $2N(c)+1$ actual retained coordinates without a dimension factor, also on the original cofinal FIB supports. The legal-trial transport of GHC7--GHC8 applies with this same exterior change; its initial quadratic and residual must still be transported together.
+
+The gain is the actual cubic complete-source error and its explicit signed odd endpoint, rather than a new determinant or positivity criterion. Absolute accuracy still gives no sign for a vanishing Schur minimum, no relative control at that minimum, no complete determinant limit and no favorable joint prime discrepancy. The original same-source Robin strict upper, all-integer Robin above 5040 and RH remain unresolved. These deductions retain the inherited paper source/form premises and are not Lean/kernel-certified.
