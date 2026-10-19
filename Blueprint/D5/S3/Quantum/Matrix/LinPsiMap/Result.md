@@ -42,6 +42,6 @@ For positive diagonal traces, a block congruence normalizes them separately. Red
 
 - Truth anchor: `D5/S3/Quantum/Matrix/LinPsiMap/Result.conjecture`
 - Truth anchor: `D5/S3/Quantum/Matrix/LinPsiMap/Result.result`
-- Dependency: [D5/S3/Quantum/Matrix/LinGProperty/SpectralConclusion](../LinGProperty/SpectralConclusion.md)
+- Dependency: [D5/S3/Quantum/Matrix/LinGProperty/Result](../LinGProperty/Result.md)
 - Dependency: [D5/S3/Quantum/Matrix/LinPsiMap/GramDiscrepancy](GramDiscrepancy.md)
 - Dependency: [D5/S3/Quantum/Matrix/LinPsiMap/ReductionBlock](ReductionBlock.md)

@@ -8,7 +8,7 @@
 
 import D5.S3.Quantum.Matrix.LinPsiMap.ReductionBlock
 import D5.S3.Quantum.Matrix.LinPsiMap.GramDiscrepancy
-import D5.S3.Quantum.Matrix.LinGProperty.SpectralConclusion
+import D5.S3.Quantum.Matrix.LinGProperty.Result
 
 /-! The two comparisons follow from the reduction block and the common trace overlap. -/
 
@@ -21,12 +21,6 @@ open D5.S3.Quantum.Schatten
 
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
-
-private theorem diagonal_blocks {n : ℕ} {A X B : Matrix (Fin n) (Fin n) ℂ}
-    (hW : (fromBlocks A X Xᴴ B).PosSemidef) : A.PosSemidef ∧ B.PosSemidef := by
-  have heA : (fromBlocks A X Xᴴ B).submatrix Sum.inl Sum.inl = A := by ext i j; rfl
-  have heB : (fromBlocks A X Xᴴ B).submatrix Sum.inr Sum.inr = B := by ext i j; rfl
-  exact ⟨heA ▸ hW.submatrix Sum.inl, heB ▸ hW.submatrix Sum.inr⟩
 
 private theorem psi_smul {n : ℕ} (r : ℝ) (T : Matrix (Fin n) (Fin n) ℂ) :
     psi (r • T) = r • psi T := by
