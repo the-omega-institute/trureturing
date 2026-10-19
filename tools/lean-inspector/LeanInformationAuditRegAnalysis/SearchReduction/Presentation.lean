@@ -50,6 +50,10 @@ private partial def equivalent (index : FactIndex) (extra : Array Expr)
       equivalent index extra (body.instantiate1 x) (body'.instantiate1 x) (xs.push x)
   | .forallE .., _ | _, .forallE .. => return none
   | _, _ =>
+    -- Delta-reduce explicit subterms as well as the proposition's head.
+    -- This uses definitional equality without any simp extension or theorem.
+    let left ← withReducible <| reduce left (skipTypes := false)
+    let right ← withReducible <| reduce right (skipTypes := false)
     let mut facts := #[]
     for fact in extra do
       let mut value := fact
