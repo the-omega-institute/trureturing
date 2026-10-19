@@ -320,4 +320,6 @@ theorem context_0_0_1558776 : TransientEJMOriginalAdaptiveFrontierBridge.Accepte
   · exact context_1_2_1558774
   · exact context_1_3_1558775
 
+#print axioms context_0_0_1558776
+
 end D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
