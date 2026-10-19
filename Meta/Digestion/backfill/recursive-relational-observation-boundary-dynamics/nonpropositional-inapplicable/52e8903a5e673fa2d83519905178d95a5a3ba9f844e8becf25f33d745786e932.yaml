@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:52e8903a5e673fa2d83519905178d95a5a3ba9f844e8becf25f33d745786e932
+  normalized_sha256: sha256:52e8903a5e673fa2d83519905178d95a5a3ba9f844e8becf25f33d745786e932
+cas_ref: sha256:52e8903a5e673fa2d83519905178d95a5a3ba9f844e8becf25f33d745786e932
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only reuse, zero new Lean and no repository GID for this conditional-normalization statement. Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. Finset.sum_div, div_self, div_nonneg and ne_of_gt close the entire probability-distribution assertion. At an arbitrary cut, H and Z are the finite output prefix/suffix and A,V the action prefix/suffix; Theorem 52.3 item (3) is precisely equality of the suffix sums for every future action word. For each positive prefix mass, the quotient is nonnegative and its finite suffix sum is one. The definition of F_h and restriction of comparisons to the same layer/interface introduce no further proposition. Exact quantified probe Trureturing/ZG1Conditional.lean compiled with make lean; axiom closure propext, Classical.choice, Quot.sound.
+    previous_atom_id: ab9c31972a0ca3998fe8bf7e07e808796a1742c18d8186162a258551abbd9b58
+    next_atom_id: d90c5d36d199e6491601cb123bbfd444c6d3490c7ffd196359991fa5eea8b62a

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a62f2171195a60828ed09e273d7cff392b9506eaacac960feb04e8abd8ef7449
+  normalized_sha256: sha256:a62f2171195a60828ed09e273d7cff392b9506eaacac960feb04e8abd8ef7449
+cas_ref: sha256:a62f2171195a60828ed09e273d7cff392b9506eaacac960feb04e8abd8ef7449
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only reuse; zero new Lean and no freeze/deposit. Pinned mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. Fully qualified upstream suppliers: Matrix.PosSemidef.diag_nonneg, Matrix.PosSemidef.diagonal, Complex.nonneg_iff, Matrix.trace, Matrix.mul_apply, Matrix.kroneckerMap_apply, Matrix.vecMulVec_apply, Matrix.diagonal_apply, Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three, Real.sq_sqrt, abs_le. No existing frozen project GID was identified for the full 55.2 numeric response-extrema assertion. The probe uses actual complex matrices on (Fin 2 x Fin 2) x Fin 3, the exact source v=x+sqrt(3)/2*y+1/2*z and R=vv*. Testers are all PSD C satisfying every entry of Tr_A(C)=I_B, and responses are the actual trace R*(C tensor I_D). The trace is real; diagonal entries lie in [0,1], the exact reduced response is 3/4+(c00+c11)/4, and the explicit PSD testers C+ and C- attain 5/4 and 3/4. IsGreatest/IsLeast statements and the attained absolute defect 1/4 are checked. This is an upstream-only numeric normalization, not a new Lean theorem or an assertion about 55.3.'
+    previous_atom_id: f91c745520414909c07a1379a90c40337069e5f57284f2746e8e1e9f4701a854
+    next_atom_id: 13d3d2a9db961aa4b858b52b75c074d24e78a55daddd96277bb3a82a167ab85e
