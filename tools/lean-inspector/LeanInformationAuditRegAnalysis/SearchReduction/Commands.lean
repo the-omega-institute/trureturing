@@ -94,9 +94,9 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
 syntax (name := referenceBaselineProbeTac) "reference_baseline " ident " at " str
   " baseline " "[" ident,* "]" " from " "[" ident,* "]" : tactic
 
-/-- This tactic succeeds exactly when the original baseline task is found.
-Incomplete replays log a compilation error, so fail_if_success cannot turn a
-resource fault into a negative certificate. -/
+/-- Only normal exhaustion fails inside the negative guard. An incomplete
+replay returns successfully with an error, so `fail_if_success` rejects it
+without rolling the diagnostic back as an ordinary tactic exception. -/
 @[tactic referenceBaselineProbeTac] unsafe def evalReferenceBaselineProbe : Tactic := fun stx => do
   match stx with
   | `(tactic| reference_baseline $target:ident at $sha:str baseline [$bs:ident,*]
@@ -111,7 +111,7 @@ resource fault into a negative certificate. -/
     | .exhausted => throwError "search.normal_exhaustion"
     | .incomplete failure =>
       logError m!"search.replay_incomplete: {reprStr failure}: {result.reason}"
-      throwError "search.replay_incomplete"
+      return
   | _ => throwUnsupportedSyntax
 
 syntax (name := searchReductionProbeCmd) "#search_reduction_probe " ident " at " str

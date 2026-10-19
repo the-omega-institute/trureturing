@@ -96,3 +96,22 @@ run_meta do
   let implicit := Expr.forallE name domain body .implicit
   if ← certifiedRestatement answer implicit then
     throwError "presentation erased BinderInfo"
+
+run_meta do
+  let saved ← saveState
+  let goal ← mkFreshExprMVar (mkConst ``True)
+  let target := mkIdent `ReferenceSearchMissing.target
+  let owner := mkIdent `LeanInformationAuditRegTests.SearchReduction.Candidates
+  let rejected ← try
+    discard <| (Elab.Term.withoutErrToSorry <| Elab.Tactic.run goal.mvarId!
+      (Elab.Tactic.evalTactic (← `(tactic|
+        fail_if_success (reference_baseline $target
+          at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be" baseline []
+          from [$owner]))))).run'
+    pure false
+  catch ex =>
+    let message ← ex.toMessageData.toString
+    unless message.startsWith "The tactic provided to `fail_if_success` succeeded" do throw ex
+    pure true
+  saved.restore
+  unless rejected do throwError "outer negative guard accepted an incomplete replay"
