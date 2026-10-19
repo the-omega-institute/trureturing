@@ -126,6 +126,5 @@ SynchronousHighSource(P,U,z,w)=address(synchronousPrefix(P,U,z)++w), and synchro
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FixedSources.synchronous_address_injective`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FixedSources.synchronous_length`
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](../DecoderOperationTrace.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderStartup](../DecoderStartup.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations](Operations.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry](TailGeometry.md)

@@ -186,7 +186,7 @@ def peak_monotone_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
+    owner := `D5.S3.ConceptDynamics.Coding.DecoderPeak
     definition := none
     coordinates := #[0, 1, 2, 3, 4, 5]
     readouts := #[{
