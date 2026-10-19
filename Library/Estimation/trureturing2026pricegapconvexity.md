@@ -12168,3 +12168,73 @@ original compensated head only on its paid transport range. No fixed
 clock-ratio ceiling, extra source, favorable window, or arithmetic
 attainment is asserted. The selected signed upper, strict Robin for
 every integer above 5040 and RH remain unproved.
+
+## The original witness comparator raises the full response margin
+
+Keep the same original witness, fixed $d,\eta$, window, ceiling, all prime labels, weights and maximizing ties as in TJV. No new density or arithmetic sign input is used.
+
+Let $m$ be the original witness, $\log m=X$, $F(m)\ge\gamma+dX^{-\eta}$, and let $m_0=\operatorname{lcm}(5040,m)$ with $d_0=\log(m_0/m)\in[0,\log5040]$. Reuse N1.1's literal legal comparator $p m_0$, including when $p\mid m_0$. For each original label $p$, $t=\log p$, N1.1 and nonnegative Euler increments give
+
+$$
+F(N_p)\ge\gamma+dX^{-\eta}-[f(X+d_0+t)-f(X)].
+$$
+
+Since $V_X(t)=F(N_p)-c_p$ and $c_p\le e^{-\ell_X}$, in particular at the original last label
+
+$$
+h_m=V_X(t_m)-\gamma\ge dX^{-\eta}-\frac{d_0+t_m}{X\log X}-e^{-\ell_X}
+\ge(3d/4-\epsilon_X)X^{-\eta},\qquad\epsilon_X\to0.
+\tag{WPH1}
+$$
+
+Here the decreasing derivative $f'=\lambda$ gives the first displayed cost bound, $t_m\le2\ell_X=(d/4)X^{1-\eta}\log X$, and $X^\eta/(X\log X)\to0$. This does not assume that $m_0$ belongs to the finite core domain or that $p$ is absent from it. The original full-domain maximization supplies the comparison. The original ceiling $R_X$ is unchanged.
+
+Consume this stronger terminal height in the exact EDH2/TJV1 pressure identities. The old coarse coercivity and compact interior localization remain valid. On each fixed localized interior, the normalized static height term is now $(3d/4)v_X-o(1)$ instead of $(d/2)v_X-o(1)$; all other terms and the complete envelope-descent integral remain unchanged.
+
+For the existing JVM notation $A=\int_1^2u$, the already proved identity $\inf_u A\mathcal D_b[u]=\mathcal C_b$, together with its attained scaling family, directly yields
+
+$$
+\inf_u\frac d8[6A+\mathcal D_b[u]]
+=\frac d4\sqrt{6\mathcal C_b}
+=\sqrt{3/2}\,R_{\rm joint}(b).
+\tag{WPH2}
+$$
+
+This is reuse of JVM2's homogeneity, not a new generic variational theorem. In the existing interior substitution $x=hz+3\theta$, $u_X(x)=\sqrt h\,\widetilde u(z)$, the changed first term and both retained terms have the same lower factor $h^{3/2}$; $x\ge hz$ pays the lag term as before. First take the original source lower limit at fixed $\theta$ and then $\theta\downarrow0$. The bounded-response contradiction and all-tie quadrature are exactly those of OSP/TJV; the $\epsilon_X$ loss is $o(1)$ on this fixed compact interior.
+
+Thus throughout the full original range $1-\Theta<\eta<1/2$, TJV2 and TJV3 improve to
+
+$$
+\liminf\frac{\mathcal G_X^A}{M_XL_X}
+=\liminf\frac{\mathcal I_X^A}{M_XL_X}
+\ge\sqrt{3/2}\,R_{\rm joint}(1-a),
+\tag{WPH3}
+$$
+
+$$
+\liminf\frac{\mathcal P_X^H}{M_XL_X}
+=\liminf\frac{\mathcal H_X^B}{M_XL_X}
+=\liminf\frac{\mathcal I_X^H}{M_XL_X}
+\ge\sqrt{3/2}\,R_{\rm joint}(1).
+\tag{WPH4}
+$$
+
+On the same full original range, EDH2/OSP4/JVM6 give for the original own-core compensated source
+
+$$
+\liminf\frac{\mathcal G_{X,\mathcal T}}{M_XL_X}
+\ge\sqrt{3/2}\,R_{\rm joint}(1-aQ_\eta).
+\tag{WPH5}
+$$
+
+The same bound holds for the original admissible-height heads and $\mathcal J_X$ by the already paid HC2/CQ5 comparison. Only on LDS2 does DST4 additionally improve this to
+
+$$
+\liminf\frac{\mathcal G_{X,\mathcal T}}{M_XL_X}
+\ge\sqrt{3/2}\,R_{\rm joint}(1-a),
+\tag{WPH6}
+$$
+
+with the same admissible-height and integral consequences. WPH5 retains the original positive $1-aQ_\eta$ and the existing count suppliers' strict cuts. WPH6 retains DST's explicitly attributed unrefereed density input on its upper branch; WPH3--WPH4 use no such input.
+
+All limits remain uniform over the original full windows and ties. This is a fixed-parameter quantitative strengthening for the same $d,\ell_X,M_X$; it does not obtain the gain by renaming the witness constant and thereby changing the original source. No compensation is spent twice, no source clock or future horizon is replaced, and the analytic minimizer is not asserted to be arithmetically attainable. The actual same-source boundary-minus-credit upper, strict Robin above 5040 and RH remain unresolved. No Lean/kernel verification or literature-priority claim is made.
