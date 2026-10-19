@@ -29,6 +29,9 @@ internal sealed class AbsoluteTwoIncoherencePurityRefutationDocument : IScribeDo
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Owner + ".result"),
                 H("result"), StatementSource.FromAuthor(Disp(Seq(Neg, Sp, Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Paper),
-                Blocks(Paragraph(Text("A density matrix in dimension five is absolutely two-incoherent and has purity strictly greater than one quarter. The rank of a squared-modulus Gram matrix is at most four, which separates the relevant unitary orbit from the trace-one locally positive matrices."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("A density matrix in dimension five is absolutely two-incoherent and has purity strictly greater than one quarter. The rank of a squared-modulus Gram matrix is at most four, which separates the relevant unitary orbit from the trace-one locally positive matrices."))), DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("jmpp-2022-absolute-two-incoherence-purity"),
+                    ResolutionKind.Refuted)))));
     private static Formula ClaimBody() => Seq(Forall, Sp, Parenthesized(Seq(X("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Seq(Parenthesized(Seq(D(4), Sp, Leq, Sp, X("n"))), Sp, To, Sp, Seq(Forall, Sp, Parenthesized(Seq(X("rho"), Sp, Colon, Sp, App(X("Matrix"), Parenthesized(App(X("Fin"), X("n"))), Parenthesized(App(X("Fin"), X("n"))), Seq(Mathbb, Grp(F.Id("C")))))), Sp, Comma, Sp, Seq(Parenthesized(App(X("IsAbsolutelyKIncoherent"), D(2), X("rho"))), Sp, To, Sp, Seq(Seq(Parenthesized(Seq(Parenthesized(Parenthesized(Seq(X("rho"), Sp, Cdot, Sp, X("rho")))), Dot, X("trace"))), Dot, X("re")), Sp, Leq, Sp, new Formula.Fraction(D(1), Parenthesized(Seq(Parenthesized(Seq(X("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Sp, Minus, Sp, D(1)))))))));
 }
