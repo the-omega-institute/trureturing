@@ -65,15 +65,30 @@ open LeanInformationAudit.Tests.SearchReduction
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.content
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
-  using [LeanInformationAudit.Tests.SearchReduction.Candidates.intermediate] as contentResult
-#guard contentResult.baseline = Run.exhausted
-#guard contentResult.paired = Run.found
-#guard contentResult = Verdict.nonBindOnly
+  using [LeanInformationAudit.Tests.SearchReduction.Candidates.intermediate] as arithmeticRestatementResult
+#guard arithmeticRestatementResult.baseline = Run.exhausted
+#guard arithmeticRestatementResult.paired = Run.incomplete Failure.isolation
+#guard arithmeticRestatementResult = Verdict.insufficient
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.contentPair
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
-  using [LeanInformationAudit.Tests.SearchReduction.Candidates.intermediate] as mixedResult
+  using [LeanInformationAudit.Tests.SearchReduction.Candidates.intermediate] as packedArithmeticResult
+#guard packedArithmeticResult = Verdict.insufficient
+#guard packedArithmeticResult.paired = Run.incomplete Failure.isolation
+
+#search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContent
+  at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
+  using [LeanInformationAudit.Tests.SearchReduction.Candidates.addition] as contentResult
+#guard contentResult.baseline = Run.exhausted
+#guard contentResult.paired = Run.found
+#guard contentResult = Verdict.nonBindOnly
+
+#search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.doubledPair
+  at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
+  using [LeanInformationAudit.Tests.SearchReduction.Candidates.addition] as mixedResult
 #guard mixedResult = Verdict.nonBindOnly
 
 #print axioms aliasResult.baselineProof

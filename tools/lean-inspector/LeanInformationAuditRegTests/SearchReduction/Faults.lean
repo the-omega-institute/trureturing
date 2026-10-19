@@ -63,3 +63,35 @@ run_meta do
   using [LeanInformationAudit.Tests.SearchReduction.Candidates.iffAnswer] as iffLeakResult
 #guard iffLeakResult = Verdict.insufficient
 #guard iffLeakResult.paired = Run.incomplete Failure.isolation
+
+#search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.contentPair
+  at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
+  using [LeanInformationAudit.Tests.SearchReduction.Candidates.answer] as targetPackingLeakResult
+#guard targetPackingLeakResult = Verdict.insufficient
+#guard targetPackingLeakResult.paired = Run.incomplete Failure.isolation
+
+run_meta do
+  let getType := fun n => do pure (← getConstInfo n).type
+  let answer ← getType ``LeanInformationAudit.Tests.SearchReduction.Candidates.answer
+  let changed ← getType ``LeanInformationAudit.Tests.SearchReduction.Candidates.changedPremise
+  if ← certifiedRestatement answer changed then
+    throwError "presentation erased a premise from the full telescope"
+  if ← certifiedRestatement changed answer then
+    throwError "presentation erased a premise in the reverse direction"
+
+run_meta do
+  let source := (← getConstInfo
+    ``LeanInformationAudit.Tests.SearchReduction.Baseline.commuted).type
+  forallTelescopeReducing source fun xs body => do
+    for direction in #[← mkArrow body.appFn!.appArg! body.appArg!,
+        ← mkArrow body.appArg! body.appFn!.appArg!] do
+      let target ← mkForallFVars xs direction
+      unless ← certifiedRestatement target source do
+        throwError "presentation failed to preserve a full-telescope Iff direction"
+  let answer := (← getConstInfo
+    ``LeanInformationAudit.Tests.SearchReduction.Candidates.answer).type
+  let .forallE name domain body _ := answer | throwError "fixture telescope missing"
+  let implicit := Expr.forallE name domain body .implicit
+  if ← certifiedRestatement answer implicit then
+    throwError "presentation erased BinderInfo"

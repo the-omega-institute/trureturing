@@ -331,7 +331,7 @@ end AuricFibUniversalProduction
         leaf['input_identity'] = 'f' * 64
         with self.assertRaisesRegex(ValueError, 'fib.analysis_program_missing'):
             fib_analysis.produce(copy.deepcopy(row), previous, '')
-        stats = fib_analysis.produce(row, previous, ROOT / '.lake/build/lean-inspector/reg/bin/auricFibAnalysis')
+        stats = fib_analysis.produce(row, previous, ROOT / 'tools/scripts/auric-fib-analysis.sh')
         self.assertEqual(stats['generated'], 1)
         self.assertEqual(stats['analysis-invocations'], 1)
         self.assertGreater(stats['analysis-ns'], 0)

@@ -1,4 +1,4 @@
-import LeanInformationAuditRegAnalysis.SearchReduction.Runner
+import LeanInformationAuditRegAnalysis.SearchReduction.Presentation
 
 /-! Compiled-environment isolation and immutable baseline provenance. -/
 
@@ -46,32 +46,21 @@ partial def copyVocabulary (source : Environment) (n : Name)
   addDecl (.defnDecl value)
   setReducibilityStatus n .reducible
 
-private partial def aliasType (target type : Expr) : MetaM Bool := do
-  let saved ← saveState
-  if ← isDefEq target type then return true
-  saved.restore
-  forallTelescopeReducing type fun xs body => do
-    let body ← whnf body
-    if body.isAppOfArity ``And 2 || body.isAppOfArity ``Iff 2 then
-      return (← aliasType target (← mkForallFVars xs body.appFn!.appArg!)) ||
-        (← aliasType target (← mkForallFVars xs body.appArg!))
-    return false
-
 /-- S may not contain T, its supported full-statement aliases, or a dependency
 on either. Conjunction packaging is inspected before the structure is copied. -/
 partial def copyStructure (source : Environment) (target : Name) (targetType : Expr)
-    (n : Name) (visiting : NameSet := {}) : MetaM Unit := do
+    (n : Name) (index : FactIndex) (visiting : NameSet := {}) : MetaM Unit := do
   if n == target then throwError "search.target_leak: {n}"
   if visiting.contains n then return
   let info ← checkedSource source n
-  if ← withEnv source (aliasType targetType info.type) then
+  if ← withEnv source (certifiedRestatement targetType info.type index) then
     throwError "search.target_restatement: {n}"
   if (← getEnv).contains n then return
   for dep in info.getUsedConstantsAsSet do
     if (← getEnv).contains dep then continue
     let depInfo ← sourceInfo source dep
     if ← withEnv source (isProp depInfo.type) then
-      copyStructure source target targetType dep (visiting.insert n)
+      copyStructure source target targetType dep index (visiting.insert n)
     else
       copyVocabulary source dep
   match info with
@@ -87,9 +76,10 @@ private def prepare (source base : Environment) (request : Request)
       throwError "search.target_not_proposition: {request.target}"
     for dep in target.type.getUsedConstants do copyVocabulary source dep
     if paired then
+      let index ← factIndex
       for n in request.additions do
         if base.contains n then throwError "search.structure_already_in_baseline: {n}"
-        copyStructure source request.target target.type n
+        copyStructure source request.target target.type n index
     return (← getEnv, target)
   try
     let context : Core.Context := {

@@ -136,9 +136,10 @@ def finish(row, analyzer, stats):
         if not analyzer:
             raise ValueError("fib.analysis_program_missing")
         started = time.monotonic_ns()
-        result = subprocess.run([str(analyzer), "--compiled-batch"],
+        result = subprocess.run([str(analyzer), "--batch"],
             input=json.dumps([x["request"] for x in pending]),
-            text=True, capture_output=True, check=False)
+            text=True, capture_output=True, check=False,
+            env=dict(os.environ, LEAN_FIB_COMPILED_PROJECTION="1"))
         analysis_ns = time.monotonic_ns() - started
         if result.returncode not in (0, 2):
             raise ValueError(f"fib.analysis_failed:exit={result.returncode}:{result.stderr}")

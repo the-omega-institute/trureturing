@@ -1,11 +1,14 @@
 import LeanInformationAuditRegAnalysis.AuricFib.Qualification
 
+/-! Arithmetic entry and compiler artifact projection; decoded metadata alone
+does not acquire source evidence at the public arithmetic entry. -/
+
 open Lean LeanInformationAudit.AuricFib
 
 /-- Each independent request retains its complete SPEC 9 output and rejection. -/
 def main (args : List String) : IO UInt32 := do
-  let compiled := args == ["--compiled-batch"]
-  let batch := args == ["--batch"] || compiled
+  let compiled := (← IO.getEnv "LEAN_FIB_COMPILED_PROJECTION") == some "1"
+  let batch := args == ["--batch"]
   if !args.isEmpty && !batch then
     IO.println (unavailableReport "refuted"
       "expected no arguments or --batch, with JSON on stdin" "invalid-input").compress

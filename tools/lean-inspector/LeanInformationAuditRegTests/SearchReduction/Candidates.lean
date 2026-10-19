@@ -55,6 +55,25 @@ theorem iffAnswer (n : Nat) : stair n = 3 * n ↔ True := by
     have h := intermediate n
     omega
 
+/-- A translation law has two independent parameters; the diagonal target
+requires only its specialization. Its proof uses induction, not the target. -/
+theorem addition (n m : Nat) : stair (n + m) = stair n + stair m := by
+  induction m with
+  | zero => simp [stair]
+  | succ m ih =>
+    change 3 + stair (n + m) = stair n + (3 + stair m)
+    rw [ih]
+    omega
+
+theorem doubledContent (n : Nat) : stair (n + n) = stair n + stair n := addition n n
+
+theorem doubledPair (n : Nat) : stair (n + n) = stair n + stair n ∧ 0 ≤ n :=
+  ⟨addition n n, Nat.zero_le n⟩
+
+theorem changedPremise (n : Nat) (h : n = 0) : stair n = 3 * n := by
+  subst n
+  rfl
+
 -- Neither a candidate simp theorem nor a candidate instance is a baseline fact.
 instance : Fact (∀ n, stair n = 3 * n) := ⟨answer⟩
 register_hint 10000 exact LeanInformationAudit.Tests.SearchReduction.Candidates.answer _
