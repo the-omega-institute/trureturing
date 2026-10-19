@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:616f19d98383d81732e83f03162804d27a481f3f2937441778fcdfdcbf0523cc
   normalized_sha256: sha256:616f19d98383d81732e83f03162804d27a481f3f2937441778fcdfdcbf0523cc
 cas_ref: sha256:616f19d98383d81732e83f03162804d27a481f3f2937441778fcdfdcbf0523cc
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Certified/TrigEnvelopePhaseReduction.abs_cos_sub_partial_le
+    target_statement_id: sha256:a883454a1e7235b012abdb6a5529e609cf3353b3b42c5f43d9f2c79e15c9311d
 receipts:
   unresolved_subitems: []
