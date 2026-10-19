@@ -1,0 +1,69 @@
+fingerprints:
+  raw_sha256: sha256:ed9d7d5ac0fd43572fc72bdba7e5d700fdd63ee3111e1bf511cdf1d3d0ed3de5
+  normalized_sha256: sha256:ed9d7d5ac0fd43572fc72bdba7e5d700fdd63ee3111e1bf511cdf1d3d0ed3de5
+cas_ref: sha256:ed9d7d5ac0fd43572fc72bdba7e5d700fdd63ee3111e1bf511cdf1d3d0ed3de5
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.commonStableEquivalences
+    target_statement_id: sha256:d1aa0a4edc4cea393409086e6ec8b1e13d6fbe3b019593bc6bf9dc9ec09a938e
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlledClassCount
+    target_statement_id: sha256:26a70e47a917f82f9bd9f5c57ce062aa54b638ed3a2b9036adccbb2055e5b198
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlledClassCount_mono
+    target_statement_id: sha256:29e0ff1f4bd3e8153aeb7945ad535f55537f073164dcba03060a78aee5becdea
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlledDepthQuotientFintype
+    target_statement_id: sha256:dbd7dd81c389fca0c740695e8bee3f60b3a64aebbcdb6c9262d4fabf2bd9c5fd
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlledDepthSetoid
+    target_statement_id: sha256:0f3d015890c61d89bd7360c6a8c5b88672567c7a535062f5832374910aad76d8
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlledLimitClassCount
+    target_statement_id: sha256:254b4b23a60ef99dd0601de6883d07c0b172edf2f2de30a856c6eb2a7139ae98
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlledLimitRelation
+    target_statement_id: sha256:c24913e84cdff6ba7b9130f4375cb4e4fef18799a37c0bc3b3fd1cd642e92d50
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlledLimitSetoid
+    target_statement_id: sha256:f9572ec293aaacc599124f27824f924809d044eda774b4fe31ea1bf2e6ce4a9e
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlledRefinementOperator
+    target_statement_id: sha256:f4075d213681a4f1c8e648d38561153a6f4502016f5e19b67091ecb24b79fc85
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlledStabilityDepth
+    target_statement_id: sha256:4c1e1852378fb77f83d86d061e7ece2e455733f6da1e71cde39afce38018c4c1
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlled_finite_stability
+    target_statement_id: sha256:2636af4adcf79e51c28f62b998504a0dc4ae355f066c666cc5fbcb594201e2de
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlled_setoid_eq_of_class_count_eq
+    target_statement_id: sha256:a5fd91aeb81736c8e2605f7ee82349ccb135009450484c00714ed1a26ba1688a
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlled_stable_relation_eq_limit
+    target_statement_id: sha256:1c1b774847ea77bfc792852b7a1314dc3def1d8be9f9e0f45f8012462967dba1
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledRelationRecursion.controlledDepthRelation
+    target_statement_id: sha256:20b0eae15b55423465a981b1570468be6ffbecc2719fa32b1a7bfab44ecbab53
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledRelationRecursion.controlled_behavior_relation_recursion
+    target_statement_id: sha256:0f13defa063529ddef7119476cdc35c19e365b9e7846e004b727860b05c47f70
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledRelationRecursion.readoutKernel
+    target_statement_id: sha256:5995a5b749cecf2dce709f0aa7a4fd222e142ca8e90897106328250144800058
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.Signature
+    target_statement_id: sha256:440208a54088337eaa654c7d6bf405b0b7773e1cc48f09813bb3ee48f474bcaa
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.SignatureCompleteAt
+    target_statement_id: sha256:239ae841d5c0931fb3a1e30fad29ea5c36ca5bbb813d446ac16db71e30aeeaaf
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.SignatureCompletion
+    target_statement_id: sha256:ac5c71c47835a759cd62994b4ce415c5f14989a066f976a561b122f52cfdc5cc
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.boundedWordEquivalent
+    target_statement_id: sha256:de920c82d7916da64051486b5813448738b2e83a5d3762a0702873506ae00320
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.controlledSignature
+    target_statement_id: sha256:4bea5779e82b8cfb6d3d00c228d540c03f9c44a97e2263d16b8d0eb3e03b4692
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.controlled_signature_algorithm_correctness
+    target_statement_id: sha256:a964da225adccc3c818bea91549242d5daa71670d211c5b2565b1e58a1cc34a8
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.signatureProjection
+    target_statement_id: sha256:f46fad62955f9adc0bbe940a79014b16a253a49ef1633d8a944d1c7c80b57947
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.stabilizationDepth
+    target_statement_id: sha256:20f7801a3a1637920d532bfdfd73aeefef37e13a020f69786738f4d6919cf7fa
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.ControlledCompletion
+    target_statement_id: sha256:4de1a6c981097548b401ae44a0a4c17dab0d06f6905a73862f75040b075692ef
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.completionProjection
+    target_statement_id: sha256:b15ec6e0891b1a46ee53ce04eb8932154faa2aac6c60506df7a3850221643757
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.completionReadout
+    target_statement_id: sha256:608ba44db31d9c48a5eba67a9e82b7313985d4e452a8cc8f30712e3ca7de528c
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.completionUpdate
+    target_statement_id: sha256:54288991709b09c27034615cfe7e32b027d18f0b773e5c5b4340211cffbc835f
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.controlledBehavior
+    target_statement_id: sha256:7b25fb9d7c463ccf633afe79dd8561557aa85cd22539cba8b84c86b6ad92b2b7
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.controlledCompletionFintype
+    target_statement_id: sha256:a30edd1d3517e5d51661d0d234b34eaec0f53702453fe95351d6ff38e1e82b00
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.runWord
+    target_statement_id: sha256:2f9f059e60415f429623128efb6c8c285febf97c5fa064a3b9d5f3a9796b56ad
+receipts:
+  unresolved_subitems: []
