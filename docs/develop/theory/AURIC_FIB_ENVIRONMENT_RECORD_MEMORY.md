@@ -863,3 +863,562 @@ rotated products.
 [DRW]: https://arxiv.org/html/1611.09541v2
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Exact rotated growth from an integral residue invariant
+
+**Definition 8.1 (Actual letters and integral coordinates).** In this
+section fix the instrument of Definition 2.1 at $\theta=\pi/6$, so that
+$c=\sqrt3/2$, $s=1/2$. Retain the actual qutrit matrices $U_0,U_1,W$
+of Theorem 2.2 and set
+
+$$
+V_0=cU_0+isU_1,\qquad V_1=isU_0+cU_1=V_0W,\qquad
+\zeta=e^{i\pi/6}=\frac{\sqrt3+i}{2}.
+\tag{8.1}
+$$
+
+The reducing summands are $\mathbb C\xi$ and $T=\xi^\perp$ as in
+Theorem 6.1. Besides its orthonormal basis $(t_1,t_2)$, use the basis
+
+$$
+b_1=(1,0,-1)^{\mathsf T},\qquad b_2=(0,1,-1)^{\mathsf T},\qquad
+C=\begin{pmatrix}
+1/\sqrt2&-1/\sqrt2\\
+\sqrt{3/2}&\sqrt{3/2}
+\end{pmatrix}.
+\tag{8.2}
+$$
+
+Here $[b_1\ b_2]=[t_1\ t_2]C$ and $\det C=\sqrt3$. For an
+operator $L$ preserving $T$, denote its matrix in $(b_1,b_2)$ by
+$\widehat L=C^{-1}L_TC$. These are coordinates on the same subspace;
+the basis $b_1,b_2$ is not asserted orthonormal. Put
+
+$$
+\tau=i\sqrt3,\qquad \mathcal O=\mathbb Z[\tau]\subset\mathbb C,
+\qquad \tau^2=-3,\qquad P_j=-2i\widehat V_j.
+\tag{8.3}
+$$
+
+For a chronological history $h=(h_1,\ldots,h_n)$ write
+$P_h=P_{h_n}\cdots P_{h_1}$, with $P_{\varnothing}=I_2$.
+Thus $P_h=(-2i)^nC^{-1}(Q_h)_TC$, where $Q_h$ retains the
+chronological convention of Definition 3.1. The scalar in (8.3) is
+an algebraic device for proving identities, not a replacement of an
+instrument branch.
+
+**Theorem 8.2 (All finite positive words and exact fixed-horizon growth).**
+For the actual instrument of Definition 8.1, the map from finite binary
+histories to qutrit projective words is injective, including between
+different lengths:
+
+$$
+[Q_h]=[Q_g]\quad\Longleftrightarrow\quad h=g.
+\tag{8.4}
+$$
+
+In particular,
+
+$$
+m_n^{\mathrm{rot}}=2^n\quad(n\ge0),\qquad
+\lim_{n\to\infty}(m_n^{\mathrm{rot}})^{1/n}=2,\qquad
+\lim_{n\to\infty}\frac{\log m_n^{\mathrm{rot}}}{n}=\log2.
+\tag{8.5}
+$$
+
+This gives the exact fixed-angle sequence asked for in Definition 7.3;
+the bound in Theorem 6.1 is a weaker consequence.
+
+Proof. First verify the correspondence with the actual letters. Applying
+the permutations of Theorem 2.2 to $b_1,b_2$ gives
+
+$$
+\widehat U_0=\begin{pmatrix}1&0\\-1&-1\end{pmatrix},\qquad
+\widehat U_1=\begin{pmatrix}0&1\\-1&-1\end{pmatrix},\qquad
+\widehat W=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{8.6}
+$$
+
+For example, $U_0b_1=b_1-b_2$, $U_0b_2=-b_2$,
+$U_1b_1=-b_2$, $U_1b_2=b_1-b_2$, and $W$ interchanges $b_1,b_2$.
+The relation (8.2) also verifies that these are the conjugates of
+the orthonormal restrictions in Theorem 6.1. Equations (8.1)–(8.3)
+therefore give the integral matrices
+
+$$
+\begin{aligned}
+P_0&=\widehat U_1-\tau\widehat U_0
+ =\begin{pmatrix}-\tau&1\\\tau-1&\tau-1\end{pmatrix},\\
+P_1&=\widehat U_0-\tau\widehat U_1
+ =\begin{pmatrix}1&-\tau\\\tau-1&\tau-1\end{pmatrix}
+ =P_0\widehat W,\\
+\det P_0&=1-\tau^2=4,\qquad \det P_1=\tau^2-1=-4.
+\end{aligned}
+\tag{8.7}
+$$
+
+Both matrices are invertible over the field $\mathbb Q(\tau)$.
+This is the field in which cancellation below is performed.
+
+Every element of $\mathcal O$ has a unique expression $a+b\tau$
+with $a,b\in\mathbb Z$, since $1,\tau$ are linearly independent over
+$\mathbb Q$. Define
+
+$$
+\phi:\mathcal O\longrightarrow\mathbb F_2,\qquad
+\phi(a+b\tau)=a+b\pmod2.
+\tag{8.8}
+$$
+
+It preserves addition and the unit. For multiplication,
+
+$$
+(a+b\tau)(c+d\tau)=(ac-3bd)+(ad+bc)\tau,
+$$
+
+whose coefficient sum modulo two is
+$ac+bd+ad+bc=(a+b)(c+d)$. Thus $\phi$ is a ring homomorphism.
+There is no need to identify $\mathcal O$ with the full ring of
+integers of its field. Applying $\phi$ entrywise gives
+
+$$
+\phi(P_0)=\phi(P_1)=E=\begin{pmatrix}1&1\\0&0\end{pmatrix},\qquad
+E^2=E\ne0,\qquad
+\phi(\widehat W)E=\begin{pmatrix}0&0\\1&1\end{pmatrix}\ne E.
+\tag{8.9}
+$$
+
+Consequently every nonempty positive product of $P_0,P_1$, at
+every length, has residue $E$: the residue of a product of length
+$k\ge1$ is $E^k=E$.
+
+Suppose two distinct words of the same length have equal $P$ products.
+Read the factors from the left and cancel their common leading factors
+over $\mathbb Q(\tau)$. In chronological notation this reads the
+histories from the latest label backwards; reversal of binary strings
+is a bijection and loses no history. At the first unequal factor,
+exchange the two sides if necessary to obtain
+
+$$
+P_0X=P_1Y=P_0\widehat W Y,\qquad X=\widehat W Y.
+\tag{8.10}
+$$
+
+The tails $X,Y$ are integral positive products of the same length
+$k\ge0$. If $k=0$, both tails are $I_2$, and (8.10) would force
+$I_2=\widehat W$, which is false. If $k\ge1$, their residues are
+both $E$, and reducing the integral equality $X=\widehat W Y$
+would give $E=\phi(\widehat W)E$, contradicting (8.9).
+This proves same-length injectivity of the integral products.
+In particular no inverse was taken modulo two: $\det P_j$ has zero
+residue, but all inverses were used in $\mathbb Q(\tau)$ before
+reducing the integral equality of tails.
+
+To pass to qutrit projective words, keep the common line and its phase.
+The actual permutations fix $\xi$, so (8.1) gives
+
+$$
+V_j\xi=\zeta\xi,\qquad Q_h\xi=\zeta^{|h|}\xi.
+\tag{8.11}
+$$
+
+If $|h|=|g|=n$ and $Q_h=\lambda Q_g$, applying both sides to
+$\xi\ne0$ forces $\lambda=1$. Restriction to $T$ and multiplication
+by the common factor $(-2i)^n$ then give $P_h=P_g$. The preceding
+argument forces $h=g$. This also handles $n=0$, where the sole
+product is the identity.
+
+For different lengths, assume $|h|=m>n=|g|\ge0$ and
+$Q_h=\lambda Q_g$. Equation (8.11) forces
+$\lambda=\zeta^{m-n}$. Restriction and the definition of $P_h$ give
+an equality in $M_2(\mathcal O)$:
+
+$$
+P_h=(-2i)^{m-n}\zeta^{m-n}P_g
+    =(1-\tau)^{m-n}P_g,
+\qquad -2i\zeta=1-\tau.
+\tag{8.12}
+$$
+
+Its left side is a nonempty product and has residue $E\ne0$.
+Its right side has residue zero, since $\phi(1-\tau)=0$ and
+$m-n>0$. This remains true when $g$ is empty and $P_g=I_2$.
+The contradiction excludes every cross-length collision. There are
+exactly $2^n$ histories at length $n$, so (8.4) implies (8.5).
+The proof uses an invariant for every word, rather than an enumeration,
+infinite order, density, or a group-ball estimate. $\square$
+
+## 9. Exact retained memory and its recovery permissions
+
+**Convention 9.1 (Restricted correction and primary correspondence).**
+Use precisely Assumption 1.4 and the complete counted view of
+Definition 1.5. Every binary label is actually measured and supplied;
+the same fixed instrument is repeated with a fresh pure environment
+at each step. Only classical record updates occur between steps.
+The terminal decoder may be any CPTP map on the whole five-dimensional
+$H$, while the input to be recovered is $B\mathbb C^3=R$, entangled
+with any untouched finite reference $Z$. There is no reference read,
+intermediate quantum feedback, adaptive instrument, input-dependent
+quantum side information, or success postselection. Success may be
+required only after averaging over all labels and classical randomness.
+
+The one-step correction supplier [GW1, Proposition 2, §II.C.1] has the
+criterion
+
+$$
+t_\alpha^\dagger t_\alpha=c_\alpha I,\qquad
+c_\alpha\ge0,\qquad\sum_\alpha c_\alpha=1.
+\tag{9.1}
+$$
+
+Its system corresponds here to the qutrit $\mathbb C^3\cong R$.
+For the actual measured branches $A_j$ of §2 the correspondence is
+
+$$
+A_jB=Bt_j,\qquad t_j=V_j/\sqrt2,\qquad
+t_j^\dagger t_j=I_3/2.
+\tag{9.2}
+$$
+
+This is a scaled unitary on the restricted system. The full operators
+$A_j:H\to H$ have range in the proper subspace $R$ and are not
+scaled full-$H$ unitaries. For a history $h$, its restricted Kraus
+operator is $2^{-n/2}Q_h$. The fresh-environment model and chronological
+product are the deferred-correction case of [GW2, Proposition 2,
+(10)–(12), Figure 1(c)], with all earlier correcting channels the
+identity. That supplier allows more feedback than Assumption 1.4;
+only this deferred case is used here. The named realization of
+[DIL, Theorem 2.2 and Assumption 2.3] has the same one-step correction
+interface on its entire system; its system is not identified with the
+present full $H$.
+
+For an arbitrary random summary $a$, use the actual conditional errors
+$F_h=\sqrt{w_{a,h}}Q_h$ of Definition 3.2. The code in [KL,
+Theorem 3.2, (19)–(20)] is all of $\mathbb C^3$, or $R$ after
+embedding. Its cross-term condition is
+
+$$
+F_h^\dagger F_k=\gamma_{hk}I_3.
+\tag{9.3}
+$$
+
+Theorem 3.3 already derives (9.3), including arbitrary full-$H$
+decoders and ensemble-only success, and identifies it with one
+projective class per positive view. Fine-label correction under
+(9.1)–(9.2) alone would not justify merging fine labels. That existing
+summary criterion, with the exact count in Theorem 8.2, supplies the
+memory conclusions below.
+
+**Theorem 9.2 (Optimal alphabet, bits, and discrete entropy).** At every
+known horizon $n\ge0$ for the actual $\theta=\pi/6$ instrument,
+under Convention 9.1 the following minima are attained:
+
+$$
+\begin{aligned}
+\min |\text{finite terminal alphabet}|&=2^n,\\
+\min \text{fixed-length binary bits}&=n,\\
+\min H_{\mathrm{Sh}}(\mathsf Y)&=n.
+\end{aligned}
+\tag{9.4}
+$$
+
+The last minimum ranges over discrete complete decoder-visible views
+$\mathsf Y$, including countable views with possibly infinite Shannon
+entropy. The bounds allow random summaries and arbitrary full-$H$
+CPTP decoders. More strongly, the entire chronological history is a
+function of any successful discrete complete view almost surely.
+Here $H_{\mathrm{Sh}}(\mathsf Y)=-\sum_y p_y\log_2p_y$, with
+$0\log_2 0=0$; all entropies in this section are Shannon entropies
+in bits.
+
+Proof. Let $\mathsf H_n$ be the history variable. By Definition 3.1,
+every $h\in\{0,1\}^n$ has probability $2^{-n}$ for every permitted
+qutrit-reference input. If a summary value $a$ receives positive
+conditional weight from histories $h,g$, Theorem 3.3 requires
+$[Q_h]=[Q_g]$. Theorem 8.2 forces $h=g$. Thus the nonempty supports
+$\{a:r(a\mid h)>0\}$ are disjoint for all $2^n$ histories. This
+uses the existing criterion with its ensemble-only and full-$H$
+decoder hypotheses; no unitary restriction on a competing decoder is
+being imposed.
+
+Every finite view consequently has at least $2^n$ values of positive
+probability. On a countable view, assign to each positive-probability
+value its unique history. This defines a function with
+$\mathsf H_n=g(\mathsf Y)$ almost surely, so
+
+$$
+H_{\mathrm{Sh}}(\mathsf Y)=H_{\mathrm{Sh}}(\mathsf H_n)
+ +H_{\mathrm{Sh}}(\mathsf Y\mid\mathsf H_n)
+\ge H_{\mathrm{Sh}}(\mathsf H_n)=n.
+\tag{9.5}
+$$
+
+The chain rule remains valid with the nonnegative extended entropy
+of a countable view. A register of $b$ fixed-length binary bits has
+at most $2^b$ values; hence $2^b\ge2^n$ requires $b\ge n$.
+
+For attainment, initialize the integer record $r_0=0$ and, on the
+supplied chronological label $h_k$, update
+
+$$
+r_k=2r_{k-1}+h_k,\qquad 0\le r_k<2^k\le2^n.
+\tag{9.6}
+$$
+
+At the declared deterministic prefix $k$, $r_k$ is the length-$k$
+binary history with leading zeros interpreted using that prefix.
+At termination the known $n$ makes $r_n$ a bijective encoding of
+the complete history. This is an online shift register with $n$
+binary bits, at most $2^n$ values at every prefix, and no extra
+history archive. Its terminal law is uniform, so its entropy is $n$.
+
+Decode $r_n$ to its history $h$ and use the full-$H$ unitary of
+equation (3.3), with the chronological product $Q_h$:
+
+$$
+D_h=BQ_h^\dagger B^\dagger+(I_5-P_R),\qquad
+\mathcal D_h=\operatorname{Ad}_{D_h}.
+\tag{9.7}
+$$
+
+On $R$ it is the inverse of the actual accumulated qutrit unitary;
+on $R^\perp$ it is identity. Therefore
+$D_h^\dagger D_h=D_hD_h^\dagger=I_5$ and $D_hBQ_h=B$.
+For every density $\rho$ on $\mathbb C^3\otimes Z$, the normalized
+conditional output is corrected by
+
+$$
+(D_h\otimes I_Z)(BQ_h\otimes I_Z)\rho
+(BQ_h\otimes I_Z)^\dagger(D_h\otimes I_Z)^\dagger
+=(B\otimes I_Z)\rho(B\otimes I_Z)^\dagger.
+\tag{9.8}
+$$
+
+The right side is independent of $h$, so averaging also recovers it.
+The block extension defines a channel on all $H$, but recovery is
+asserted only for embedded qutrit inputs. At $n=0$ the register has
+one value, entropy zero, and $D_{\varnothing}=I_5$. $\square$
+
+**Theorem 9.3 (Seeds and measurable complete views).** Under the same
+permissions, a successful standard Borel complete view determines
+$\mathsf H_n$ measurably almost surely. If a separately supplied
+shared seed $S$ is explicitly declared free and is independent of
+$\mathsf H_n$, the conditional finite alphabet bound is still $2^n$
+for almost every seed. For a discrete counted view $\mathsf Y$,
+
+$$
+H_{\mathrm{Sh}}(\mathsf Y\mid S)\ge n,
+\tag{9.9}
+$$
+
+and the shift register, ignoring $S$, attains equality. A correlated
+decoder-visible seed is part of the counted joint view instead.
+
+Proof. Use the measures $\nu_h$, $\lambda=\sum_h\nu_h$ and densities
+$f_h=d\nu_h/d\lambda$ of Convention 3.4. Its almost-everywhere summary
+criterion and Theorem 8.2 imply that, outside one common null set,
+at most one $f_h$ is positive. Since $\sum_h f_h=1$, exactly one is
+positive there. The measurable sets where this is $h$ give a
+measurable history function. Thus this conclusion does not rely on
+individual continuous outcomes having positive probability.
+
+For a free independent shared seed, the rank-one-Choi argument of
+Theorem 3.3 applied to the averaged recovery identity first gives
+conditional exact recovery for almost every $S$. Independence
+leaves every history conditionally uniform with probability $2^{-n}$.
+There are finitely many histories, so these conditions can be imposed
+on one common full-measure seed set. Apply the disjoint-support and
+entropy arguments of Theorem 9.2 at each such seed, then average the
+conditional entropies to obtain (9.9).
+
+Discarded private randomness is already averaged into the compression
+kernel. If a visible seed is correlated with the history, its joint
+value with all other visible data is the complete view to which the
+criterion applies. For example, a seed equal to the history could
+make an auxiliary register constant, but that joint view still
+contains the whole history. For a non-discrete view the conclusion
+is measurable determination of the finite history; it is not a
+lower bound on differential entropy, and does not turn a continuous
+alphabet into a finite one. $\square$
+
+**Theorem 9.4 (Identical full averaged channel, different exact records).**
+For the same dilation and preparation of Definition 2.1, measurement
+at $\theta=0$ and at $\theta=\pi/6$ gives, under the same recovery
+permissions, the following minimum terminal alphabets:
+
+$$
+\begin{array}{c|cccc}
+&n=0&n=1&n=2&n\ge3\\ \hline
+\theta=0&1&2&4&6\\
+\theta=\pi/6&1&2&4&2^n
+\end{array}
+\tag{9.10}
+$$
+
+The averaged channels nevertheless coincide on every complex $M_5$
+input and every untouched finite reference. The rotated $n$-bit
+minimum counts the complete retained terminal statistic, rather
+than the entire apparatus or all operations.
+
+Proof. At $\theta=0$, $g_j=f_j$ and $A_j=K_j$, so Theorem 5.1
+applies. At $\theta=\pi/6$, Theorem 9.2 applies. Full-channel
+equality follows from Theorem 2.2, which cancels the cross terms
+of the two rotated Kraus conjugations on every complex input.
+Thus it is the supplied measured instrument and retained view,
+in addition to the common averaged channel, that specify this
+record-recovery problem.
+
+The six-state homogeneous accumulator of Theorem 5.1 and the shift
+register (9.6) process all $n$ actual labels. Both still require the
+label acquisitions, measurements, communication, and fresh
+environment preparations of Assumption 1.4. The declared horizon,
+deterministic clock, calibration, fixed descriptions or tables,
+exact matrix precision, and inverse controls are separate resources
+as in Definition 1.5. A clock or control choice that varies with the
+history is counted in the joint view. The generic construction of
+Definition 4.2 permits $2n2^n$ transition entries and $2^n$ inverse
+controls in the rotated case; neither those upper bounds nor (9.6)
+assert a minimal table size, synthesis cost, or finite precision
+implementation of the inverses. Equation (9.7) supplies a full-$H$
+decoder for restricted inputs and does not invert the nonunitary
+five-dimensional channel on arbitrary $H$ inputs. $\square$
+
+## 10. Restricted rotation group and remaining mathematical boundaries
+
+**Theorem 10.1 (Actual restricted group and the inverse-letter boundary).**
+Let $\Gamma_T$ be the subgroup of $PU(2)$ generated by the restrictions
+$[V_{0,T}],[V_{1,T}]$ in the orthonormal basis of Theorem 6.1 at
+$\theta=\pi/6$. Then
+
+$$
+\Gamma_T\cong G(6,3)\cong C_6*_{C_2}D_3,
+\tag{10.1}
+$$
+
+where $D_3$ has order six. The actual qutrit letters also obey
+
+$$
+V_0^{-1}V_1=W\ne I_3,\qquad (V_0^{-1}V_1)^2=I_3.
+\tag{10.2}
+$$
+
+Thus injectivity of positive words in Theorem 8.2 does not assert
+freeness of the group on these two generators. Identification (10.1)
+concerns the restricted group; it does not identify the full qutrit
+projective group, which retains relative phases between $T$ and
+$\mathbb C\xi$.
+
+Proof. Use conjugation on traceless Hermitian $2\times2$ matrices,
+in Pauli order $(\sigma_x,\sigma_y,\sigma_z)$, to define
+$\pi:U(2)\to SO(3)$. Its kernel is precisely the scalar unitaries:
+an operator acting trivially by conjugation commutes with all three
+Pauli matrices, hence with all of $M_2$, and is scalar. This realizes
+$PU(2)$ faithfully as rotations. Put
+
+$$
+D=\begin{pmatrix}e^{-i\pi/6}&0\\0&e^{i\pi/6}\end{pmatrix},\qquad
+F=U_{0,T}W_T
+ =\begin{pmatrix}-1/2&\sqrt3/2\\-\sqrt3/2&-1/2\end{pmatrix}.
+\tag{10.3}
+$$
+
+Exact conjugation of the Pauli matrices gives
+
+$$
+d=\pi(D)=\begin{pmatrix}
+1/2&-\sqrt3/2&0\\\sqrt3/2&1/2&0\\0&0&1
+\end{pmatrix},\qquad
+r=\pi(F)=\begin{pmatrix}
+-1/2&0&\sqrt3/2\\0&1&0\\-\sqrt3/2&0&-1/2
+\end{pmatrix}.
+\tag{10.4}
+$$
+
+They are rotations by $\pi/3$ about $z$ and $2\pi/3$ about $y$,
+respectively. Their axes are perpendicular and their exact orders
+are six and three. Write $w=\pi(W_T)$,
+$x=\pi(V_{0,T})$, $y=\pi(V_{1,T})$. Since $D^3=iW_T$,
+$U_{0,T}=FW_T$, $V_{0,T}=U_{0,T}D$, and $V_{1,T}=V_{0,T}W_T$,
+the forward correspondence is
+
+$$
+w=d^3,\qquad x=rd^4,\qquad y=rd.
+\tag{10.5}
+$$
+
+Conversely the actual rotation matrices satisfy
+$wrw=r^{-1}$ and $r^3=1$, so
+
+$$
+w=x^{-1}y,\qquad r=wxwx^{-1},\qquad d=r^{-1}y.
+\tag{10.6}
+$$
+
+For example, (10.5) gives
+$wxwx^{-1}=wrwr^{-1}=r^{-2}=r$. These reverse equations prove
+$\langle x,y\rangle=\langle d,r\rangle$; merely expressing $x,y$
+in terms of $d,r$ would not suffice.
+
+The primary classification used here is Radin–Sadun, *Subgroups of
+SO(3) Associated with Tilings*, Journal of Algebra **202**, 611–633,
+[author-hosted journal article][RS], Theorem 1(ii) and Corollary 2,
+p. 613, DOI [10.1006/jabr.1997.7320][RS-DOI]. It defines $G(p,q)$
+using rotations by $2\pi/p$ and $2\pi/q$ about perpendicular axes.
+For even $p\ge4$ and odd $q\ge3$, it gives the faithful presentation,
+with its abstract generators mapped to those actual rotations,
+
+$$
+G(p,q)\cong
+\langle a,b\mid a^p=b^q=1,\ a^{p/2}ba^{p/2}b=1\rangle.
+\tag{10.7}
+$$
+
+A common spatial rotation sends the paper's ordered $x,y$ axes to
+the present $z,y$ axes. Thus $p=6,q=3$, $a\mapsto d$, $b\mapsto r$
+satisfy its precise hypotheses. The theorem supplies injectivity of
+this presentation, beyond the elementary verification that the
+relators vanish. Corollary 2 identifies it as $C_6*_{C_2}D_3$,
+where the common involution is $d^3$ and
+$D_3=\langle r,d^3\mid r^3=(d^3)^2=1,\ d^3rd^3r=1\rangle$.
+Together with (10.5)–(10.6) and the faithful adjoint map this proves
+(10.1). This is an application of the cited classification; none
+of it is a premise of the elementary residue proof of Theorem 8.2.
+
+Finally $V_1=V_0W$ from the actual qutrit matrices gives (10.2)
+directly. The nontrivial reduced inverse-letter word
+$(0^{-1}1)^2$ is therefore a relation, despite the absence of any
+collision between positive words. Restriction to $T$ discards the
+relative block phase with $\mathbb C\xi$, so the restricted
+identification alone makes no claim of an isomorphism for the full
+$PU(3)$ subgroup. $\square$
+
+**Convention 10.2 (Sources and unresolved extensions).** The basis
+correspondence, integral residue argument, and the fixed-instrument
+record consequences in §§8–9 are repo-derived ordinary deductions
+from the actual owner matrices and the existing summary criterion.
+The correction interfaces in Convention 9.1 and the faithful rotation
+classification used inside Theorem 10.1 are literature-attested
+suppliers, with their system, code, generator, and hypothesis
+correspondences specified there. These are statements within the
+declared finite-dimensional model.
+
+The all-length projective assertion (8.4) is for the actual qutrit,
+using its common $\xi$ eigenphase. It is not inferred merely from
+the restricted $PU(2)$ group, density, a spectral gap, or infinite
+order. No spectral-gap constant, mixing rate, or estimate for a
+different walk enters these conclusions.
+
+The exact sequence for other angles or parameters, other measured
+realizations of the same averaged channel, approximate recovery,
+quantum summaries or retained quantum environments, intermediate
+feedback or adaptive label acquisition, postselected recovery,
+reference access, and exact inverse-control cost are unresolved by
+these results. The absent-label code problem remains the different
+problem of [OWN, Definition 21.1 and Theorem 21.2]. The retained
+classical memory optimum does not add a physical realization or a
+finite precision implementation premise to the mathematical model.
+
+[RS]: https://web.ma.utexas.edu/users/radin/papers/subgroups.pdf
+[RS-DOI]: https://doi.org/10.1006/jabr.1997.7320
+
+## 追加锚（本行以下为增补区）
