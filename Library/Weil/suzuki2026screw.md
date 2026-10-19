@@ -8063,3 +8063,98 @@ Q_{\mathcal K_A^g}(\sigma)
 \tag{W245}
 $$
 and the reflected debit is $C A^{-1/2}Q_H$ under W244. A sufficient direct lower margin, or another joint payment giving positivity of this complete form, is still missing. The old exponential $Q_+$ comparison W226 and small-complexity positive result W228 remain valid in their own scopes; W237--W245 add a polynomial/tail payment on a larger finite-sample range and do not enlarge W228's positive range. No actual negative complete-theta witness, common-start all-order positivity, sufficient cofinal positivity, numerical constants/start, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied. RH and the original strict Robin inequality for every integer $n>5040$ remain unproved.
+
+
+## A polynomial budget bounds the complete direct and odd forms from below
+
+The missing direct component in W245 has an unconditional lower bound in the same polynomial metric. There are fixed $C,A_*>0$ such that every $A\ge A_*$ and every compact finite complex source on $[A,\infty)$ satisfy
+$$
+Q_{\mathcal D_A^g}(\sigma)\ge-\frac CAQ_{6,A}(\sigma),\qquad
+Q_{\mathcal K_A^g}(\sigma)\ge-\frac CAQ_{6,A}(\sigma).
+\tag{W246}
+$$
+Here $Q_{6,A}$, the original Gaussian transport, and the complete actual direct and odd kernels are exactly those in W237--W245. Neither sign, atom count, width nor separation is restricted. This gives a full-form lower bound on the sufficient cofinal sample schedule below. Its right side is negative: it proves neither positivity on that schedule nor RH or strict Robin for every integer $n>5040$.
+
+Reuse the owned homogeneous Gamma multiplier W231, scalar Frullani formula, complete theta source W184--W190, physical modal norm W238 and exact Gaussian return W242. The additional interface pays the finite physical cutoff and the entire arithmetic logarithmic mode term in the cubic physical source norm. The classical Mellin/Gamma lower bound is not reproved. Fixed-window semiboundedness of the Weil form is already recorded in [Connes--Consani--Moscovici, Proposition 3.3, arXiv:2511.22755v1, printed p.8](connesconsanimoscovici2026spectral.md); it has a fixed multiplicative support interval and that interval's Hilbert norm. The uniform physical-source estimate here requires the displayed cubic-norm transport and does not reprove their spectral construction. This is paper mathematics without Lean certification, exhaustive bibliography or a literature-priority claim.
+
+### Pay the cutoff without estimating the source position multiplier
+
+Use W230's physical first-mode form $\mathcal D_\pi$, $I$ the right integral, $L$ the forward Frullani logarithm, $c=3/2$, $B=1-cI/x$, and $N_b(F)=\|x^3F\|_{L^2(b,\infty)}$. Initially take a physical feature from a compact finite complex source. Put $F_0=\mathbf1_{[\pi,\infty)}F$ and $m=\int_\pi^\infty F(y)dy$. For $0<x<\pi$,
+$$
+BF_0(x)=-\frac{cm}x,\qquad
+LF_0(x)=-\int_\pi^\infty\frac{F(y)}{y-x}dy,\qquad
+ILF_0(x)=\int_\pi^\infty[-\gamma-\log(y-x)]F(y)dy.
+$$
+The last identity follows from the owned scalar Laplace logarithm formula at $x=\pi$, followed by integration of the preceding expression for $LF_0$. On $x\ge\pi$ the forward shifts and right integrals see only the original $F$, so the direct integrand is unchanged. Consequently
+$$
+\begin{aligned}
+\mathcal D_\pi(F)&=\mathcal D_0(F_0)-\mathcal C_\pi(F),\\
+\mathcal C_\pi(F)&=\frac2{\sqrt\pi}\left[
+-\frac{9\pi^{5/2}}{25}|m|^2
++\Re\bigl(\overline m\,\ell_\pi(F)\bigr)\right],\\
+\ell_\pi(F)&=\int_\pi^\infty k_\pi(y)F(y)dy,\\
+k_\pi(y)&=\frac32\int_0^\pi\frac{x^{5/2}}{y-x}dx
+-\frac94\int_0^\pi x^{3/2}[\gamma+\log(y-x)]dx.
+\end{aligned}
+\tag{W247}
+$$
+This cutoff form has rank at most two in the physical weighted space. The first integral in $k_\pi$ has at most a logarithmic singularity at $y=\pi$; the second is finite there and grows at most logarithmically at infinity. Thus $k_\pi(y)y^{-3}$ is square integrable, as is $y^{-3}$, and Cauchy--Schwarz gives $|m|+|\ell_\pi(F)|\le C N_\pi(F)$ and $|\mathcal C_\pi(F)|\le C N_\pi(F)^2$. No largest-source-position or source-coefficient norm enters.
+
+W231's real Gamma multiplier is bounded below: its rational factor is bounded on $\Re z=9/4$, while the real digamma factor is continuous and tends to positive infinity at large frequency. Its existing Mellin identity therefore gives $\mathcal D_0(F_0)\ge-C\|x^{7/4}F_0\|_2^2$. The zero extension is in that logarithmic form domain. Indeed $g_0(u)=e^{9u/4}F_0(e^u)$ is smooth on each side of its single jump, with integrable one-sided derivative and exponential decay at the right end; its Fourier transform is $O((1+|\xi|)^{-1})$. Smooth cutoffs converge in the logarithmically weighted Fourier norm, so W231 extends to this profile. Below $\pi$ its Frullani singularity at the jump is logarithmic and its displayed $B$ tail is integrable in the physical form. The complex case follows by separate real and imaginary parts. These facts justify the identity, not a uniform derivative allowance. Since $x^{7/2}\le\pi^{-5/2}x^6$ for $x\ge\pi$, W247 yields
+$$
+\mathcal D_\pi(F)\ge-CN_\pi(F)^2.
+\tag{W248}
+$$
+The logarithm itself is not bounded above in this norm; only its required signed lower form is used.
+
+### Keep the entire theta logarithmic charge on the same physical feature
+
+For the original physical feature $\mathscr F$ of W238 define finite modal sums
+$$
+\mathscr T_J\mathscr F(x)=\sum_{\ell\le J}\ell^4\mathscr F(\ell^2x),\qquad
+\mathscr V_J\mathscr F(x)=\sum_{\ell\le J}(\log\ell)\ell^4\mathscr F(\ell^2x).
+$$
+Let $\Phi_J$ be the corresponding finite theta source. Scalar dilation gives $\mathscr T_JL=L\mathscr T_J-2\mathscr V_J$. The complete direct feature is $B\mathscr T_J\mathscr F$, whereas multiplying the ORIGINAL source by $a$ gives $B\mathscr T_JL\mathscr F/2$. W230 with this order retained gives the exact identity
+$$
+Q_{D_{\Phi_J}}(\mu)
+=\mathcal D_\pi(\mathscr T_J\mathscr F)
+-\frac4{\sqrt\pi}\Re\int_\pi^\infty x^{7/2}
+\overline{B\mathscr T_J\mathscr F(x)}\,
+ B\mathscr V_J\mathscr F(x)\,dx.
+\tag{W249}
+$$
+The negative sign and factor two in the logarithmic charge are retained. This is the physical form of the arithmetic term in W190, not a source replacement or an estimate of $a\mu$ separately.
+
+The already owned W238 dilation gives, uniformly in $J$,
+$$
+N_\pi(\mathscr T_J\mathscr F)+N_\pi(\mathscr V_J\mathscr F)
++N_\pi(B\mathscr T_J\mathscr F)+N_\pi(B\mathscr V_J\mathscr F)
+\le C N_\pi(\mathscr F).
+\tag{W250}
+$$
+Both feature series converge in this norm, since $\sum\ell^{-3}$ and $\sum(\log\ell)\ell^{-3}$ converge. W248 applies to each finite physical push-forward. Cauchy--Schwarz with $x^{7/2}\le\pi^{-5/2}x^6$ bounds the entire charge in W249 by $C N_\pi(\mathscr F)^2$. Hence $Q_{D_{\Phi_J}}(\mu)\ge-CN_\pi(\mathscr F)^2$, with a constant independent of $J$.
+
+For the original compact finite physical source, normal absolute theta convergence on direct arguments $a+r\ge A$ and their Gaussian decay pass this finite-cutoff direct form to the complete actual one. Position multipliers are bounded on each original compact source; these bounds justify the limit only and do not occur in the final norm inequality. There is no assertion of finite total variation for an infinite unnormalized modal push-forward. Thus
+$$
+Q_{D_\Phi}(\mu)\ge-CN_\pi(\mathscr F)^2.
+\tag{W251}
+$$
+Reuse W242's exact original Gaussian identity $N_\pi(\mathscr F)^2=\pi^3Q_{6,A}(\sigma)/(4A)$. No inverse multiplier, small $EN$ condition or first-mode metric return is used. This proves the first half of W246. W237's absolute bound for the complete ACTUAL reflection proves its second half on exactly the same source.
+
+### Consume the lower bound on every sample of the cofinal schedule
+
+If $\sigma$ has $N\ge1$ distinct active sites after merging equal sites, with arbitrary complex coefficients, the already owned W243 moment bound gives
+$$
+Q_{\mathcal D_A^g}(\sigma),\ Q_{\mathcal K_A^g}(\sigma)
+\ge-\frac CA(1+e^{-2A}N)^6Q_H(\sigma).
+\tag{W252}
+$$
+For $n_A=\lceil e^{2A}A^{1/12}\rceil$ this implies, uniformly over ALL these sources with $1\le N\le n_A$ and $A\ge A_*$,
+$$
+Q_{\mathcal D_A^g}(\sigma),\ Q_{\mathcal K_A^g}(\sigma)
+\ge-CA^{-1/2}Q_H(\sigma).
+\tag{W253}
+$$
+The point locations can have arbitrary width and no positive minimum separation. The zero source gives zero. The bound is on the complete actual odd form, including the direct source, every theta logarithmic charge and the reflected exterior; the count is the sufficient cofinal schedule of W156, not a fixed fraction of $e^{2A}$.
+
+W253 gives a negative allowance tending to zero in the original Gaussian Hardy metric, not positive semidefiniteness. Negative values remain allowed, with magnitude at most $CA^{-1/2}Q_H(\sigma)$. The W156 implication requires actual positivity on its cofinal sample family; W253 does not satisfy that premise, exclude off-line zeros or bound the normalized margin of their transported witnesses. W228's exact positive range remains unchanged. A same-source positive margin or another argument eliminating the permitted negative directions is still required. No actual negative complete-theta witness, finite effective RH test, numerical constant/start, Lean/kernel or CI/merge certification, exhaustive bibliography or priority is supplied. Full RH and the original strict Robin inequality for every integer $n>5040$ remain unproved.
