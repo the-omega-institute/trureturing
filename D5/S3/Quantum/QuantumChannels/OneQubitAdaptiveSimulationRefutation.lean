@@ -90,7 +90,7 @@ structure RandomizedProtocol (ι : Type) [Fintype ι] [DecidableEq ι] (R : ℕ)
   probability : StdSimplex ℝ (Fin seeds)
   tree : Fin seeds → Protocol ι R
 
-def RandomizedProtocol.successfulMap {ι : Type} [Fintype ι] [DecidableEq ι]
+def RandomizedProtocol.mixtureMap {ι : Type} [Fintype ι] [DecidableEq ι]
     {R : ℕ} (p : RandomizedProtocol ι R) (X : Matrix ι ι ℂ) : Matrix ι ι ℂ :=
   ∑ s, (p.probability.weights s : ℂ) • (p.tree s).successfulMap X
 
@@ -101,7 +101,7 @@ def claim : Prop :=
       ∃ p : RandomizedProtocol (Fin d) R₀, ∃ q : ℝ,
         q₀ ≤ q ∧
         ∀ X : Matrix (Fin d) (Fin d) ℂ,
-          p.successfulMap X = (q : ℂ) •
+          p.mixtureMap X = (q : ℂ) •
             CStarMatrix.ofMatrix.symm
               (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X))
 
@@ -650,7 +650,7 @@ private theorem frame_energy_identity (n : ℕ) {κ : Type} [Fintype κ]
 
 private theorem simulation_bound (n : ℕ) (hn : 2 ≤ n) {R : ℕ}
     (p : RandomizedProtocol (Fin (Fintype.card (FrameIndex n))) R) (q : ℝ)
-    (heq : ∀ X, p.successfulMap X = (q : ℂ) •
+    (heq : ∀ X, p.mixtureMap X = (q : ℂ) •
       CStarMatrix.ofMatrix.symm
         ((frameChannel n (by omega)).toCompletelyPositiveMap (CStarMatrix.ofMatrix X))) :
     q * n ≤ 4 * (4 : ℝ) ^ R := by
@@ -668,7 +668,7 @@ private theorem simulation_bound (n : ℕ) (hn : 2 ≤ n) {R : ℕ}
     have h := heq X
     rw [frameChannel_action] at h
     simpa only [κ, K, w, Fintype.sum_sigma, Fintype.sum_prod_type,
-      RandomizedProtocol.successfulMap, Protocol.successfulMap, PhyslibLeaf.MatrixMap.of_kraus,
+      RandomizedProtocol.mixtureMap, Protocol.successfulMap, PhyslibLeaf.MatrixMap.of_kraus,
       LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk, Finset.smul_sum] using h
   have hidentity := frame_energy_identity n w K q hmap
   have htotal : (∑ k, w k * coefficientEnergy n (K k)) ≤

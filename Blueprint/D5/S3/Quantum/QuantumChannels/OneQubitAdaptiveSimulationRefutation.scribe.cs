@@ -15,7 +15,7 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
         H("One ancillary qubit cannot give constant-round universal channel simulation"),
         Blocks(
             Node("workspace", "Workspace", "The system and its ancillary qubit", WorkspaceFormula(),
-                "For a system with coordinate type I, the joint workspace has coordinates I times Fin(2). Workspace is the complex square-matrix algebra with its operator norm. In the formulas, mat(T) is the ordinary matrix underlying a workspace operator T, namely the inverse of CStarMatrix.ofMatrix; adjoint denotes conjugate transpose.", true),
+                "For a system with coordinate type I, the joint workspace has coordinates I times Fin(2). Workspace is the complex square-matrix algebra with its operator norm. In the formulas, ofMatrix denotes CStarMatrix.ofMatrix, and symm(ofMatrix) is its inverse, taking a workspace operator to its ordinary matrix; adjoint denotes conjugate transpose. The finite-type and decidable-equality structures on I are assumed to exist.", true),
             Node("measurement", "Measurement", "A complete projective measurement", MeasurementFormula(),
                 "A measurement consists of a family P of k workspace operators and a proof that their underlying matrices form a complete family of pairwise orthogonal self-adjoint projections. Zero projections are allowed. There is no bound on k. This is the projective-measurement operation allowed in Question 6.1 of Kotowski and Kotowski. The displayed dependent sum spells out the projector and record fields.", true),
             Node("protocol", "Protocol", "Adaptive protocol trees", ProtocolFormula(),
@@ -33,15 +33,15 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
             Node("tree-successful-map", "successfulMap", "The successful map of a tree", TreeMapFormula(),
                 "For a deterministic tree t, sum the Kraus conjugations over every complete history and both final ancillary basis coordinates. Failed histories contribute zero. This is the unnormalized successful map; equality to q times a trace-preserving target channel gives input-independent success probability q, as in the postselection convention of Definition 2.3.", true),
             Node("randomized-protocol", "RandomizedProtocol", "Finite classical randomization", RandomizedFormula(),
-                "The record has a natural number N of seeds, a real probability vector w in the standard simplex on Fin(N), and a tree c(s) of the same depth bound for each seed. The standard simplex requires nonnegative weights with sum one. The dependent sums describe the seeds, probability and tree fields. This is the finite classical randomization allowed in the simulation model.", true),
-            Node("randomized-successful-map", "successfulMap", "The successful map after randomization", RandomizedMapFormula(),
+                "The record has a natural number N of seeds, a real probability vector w in the standard simplex on Fin(N), and a tree c(s) of the same depth bound for each seed. The standard simplex requires nonnegative weights with sum one. The dependent sum selects N, and its body is the product of the probability and tree fields. This is the finite classical randomization allowed in the simulation model.", true),
+            Node("randomized-successful-map", "mixtureMap", "The successful map after randomization", RandomizedMapFormula(),
                 "For a randomized protocol p, average the successful maps of its trees with its real simplex weights, cast to complex scalars. Each input matrix uses the same distribution of trees.", true),
             Node("claim", "claim", "Universal depth and success constants", ClaimFormula(),
-                "This is the affirmative reading of Question 6.1: there are a natural depth bound Rzero and a positive real qzero, both independent of dimension and target channel, such that every completely positive trace-preserving channel has an exact successful map q times that channel with q at least qzero. Here channelAction(Phi,X) is the action of the channel Phi on the ordinary matrix X. Equality is on every complex matrix, not only one input state. The source's Definition 2.3 supplies the postselection convention; Question 6.1 adds projective measurements and adaptive unitaries. The definition imposes qzero at most q and does not include a separate upper bound on q.", true),
+                "This is the affirmative reading of Question 6.1: there are a natural depth bound Rzero and a positive real qzero, both independent of dimension and target channel, such that every completely positive trace-preserving channel has an exact successful map q times that channel with q at least qzero. The displayed channel action first applies ofMatrix to X, then the channel's toCompletelyPositiveMap, and finally symm(ofMatrix). Equality is on every complex matrix, not only one input state. The source's Definition 2.3 supplies the postselection convention; Question 6.1 adds projective measurements and adaptive unitaries. The definition imposes qzero at most q and does not include a separate upper bound on q.", true),
             Node("frame-index", "FrameIndex", "Basis coordinates and sign coordinates", FrameIndexFormula(),
                 "For m=n squared, the coordinate type is the disjoint sum of m basis labels and all Boolean strings of length m. Its cardinality is d=m+2 to the m. No positivity assumption on n is part of this type definition."),
             Node("frame", "frame", "The sign frame", FrameFormula(),
-                "The basis rows form the identity matrix. A Boolean sign row has entry +1/n where the Boolean is true and -1/n where it is false. Thus the sign agrees with boolSign applied to the Boolean complement. The definition includes n=0, where there are no column indices. For positive n every row has squared Euclidean norm one."),
+                "The basis rows form the identity matrix. A Boolean sign row has entry +1/n where the Boolean is true and -1/n where it is false. The displayed real conditional equals boolSign applied to the Boolean complement; ofReal embeds it into the complex numbers. The notation natCast(C,n) denotes the natural-to-complex embedding of the denominator. The definition includes n=0, where there are no column indices. For positive n every row has squared Euclidean norm one."),
             Node("frame-nat", "frameNat", "Relabelling the frame by a finite ordinal", FrameNatFormula(),
                 "Relabel the rows of frame(n) by Fin(card(FrameIndex(n))) using the inverse of Fintype.equivFin; the column labels are unchanged. This puts the same frame on the coordinate type used by the universal channel claim."),
             Describe.Lean(
@@ -50,7 +50,7 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
                 StatementSource.FromAuthor(Disp(new Formula.Not(V("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Paragraph(Text("The sign-frame family is a repository construction addressing the question of Kotowski and Kotowski. Fix an integer n at least 2, put m=n squared and d=m+2 to the m, and let A=frame(n). Relabel its rows by frameNat(n) when using Fin(d). With D_j the diagonal matrix formed from column j, define the channel Phi_n by the sum of D_j X D_j adjoint. The unit norm of every row makes this channel trace preserving and unital.")),
+                    Paragraph(Text("The sign-frame family is a repository construction addressing the question of Kotowski and Kotowski. Fix an integer n at least 2, put m=n squared and d=m+2 to the m, and let A=frame(n). Relabel its rows by frameNat(n) when using Fin(d). With D_j the diagonal matrix formed from column j, define the channel Phi_n by the sum of D_j X D_j adjoint. The unit norm of every row makes this channel trace preserving and unital. In the displayed bound natCast(R,n) denotes the natural-to-real embedding.")),
                     new DocumentBlock.DisplayFormula(FrameChannelBoundFormula()),
                     Paragraph(Text("Suppose the successful map equals q Phi_n on every matrix. For every seed of positive probability, each successful compressed Kraus matrix is diagonal of the form diag(A v). Every nonzero such matrix has rank at least r=2 to the (m-1) plus 1. Since 5r>2d, a projective measurement on the joint 2d-dimensional workspace has at most four outcomes admitting a nonzero successful continuation. A deterministic tree of depth at most R therefore has at most 4 to the R useful histories and at most 2 times 4 to the R nonzero successful compressed Kraus matrices. This is a bound for each tree, irrespective of how many seeds occur in the finite randomization.")),
                     Paragraph(Text("Each of these compressed Kraus matrices is a contraction. The basis rows give |v_j| at most 1. Choosing sign rows separately for the real and imaginary parts gives sum_j |Re(v_j)| at most n and sum_j |Im(v_j)| at most n. Consequently sum_j |v_j| squared is at most 2n. The total coefficient energy of one tree is at most 4n times 4 to the R. Averaging over the seeds preserves this bound, while comparison on the basis-coordinate diagonal inputs gives total weighted coefficient energy q m. Hence q n is at most 4 times 4 to the R, or equivalently q is at most 4 times 4 to the R divided by n.")),
@@ -72,7 +72,7 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
     private static Formula At(Formula function, params Formula[] arguments) =>
         new Formula.Apply(function, [.. arguments]);
-    private static Formula Par(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula EqTo(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula LeTo(Formula left, Formula right) =>
@@ -82,18 +82,19 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
     private static Formula NeTo(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
     private static Formula And(Formula left, Formula right) =>
-        new Formula.Logic(left, FormulaLogicOperator.And, right);
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
     private static Formula Imp(Formula left, Formula right) =>
-        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
     private static Formula IffTo(Formula left, Formula right) =>
-        new Formula.Logic(left, FormulaLogicOperator.Iff, right);
+        new Formula.Logic(left, FormulaLogicOperator.Iff, Parenthesized(right));
     private static Formula Mul(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
     private static Formula PlusTo(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Add, right);
     private static Formula Arrow(Formula from, Formula to) => new Formula.TypeArrow(from, to);
-    private static Formula Product(Formula left, Formula right) => Seq(Par(left), Sp, Times, Sp, Par(right));
-    private static Formula Pair(Formula left, Formula right) => Par(Seq(left, Comma, Sp, right));
+    private static Formula Product(Formula left, Formula right) =>
+        Parenthesized(Seq(Parenthesized(left), Sp, Times, Sp, Parenthesized(right)));
+    private static Formula Pair(Formula left, Formula right) => Parenthesized(Seq(left, Comma, Sp, right));
     private static Formula Typed(Formula term, Formula type) => Seq(term, Sp, Colon, Sp, type);
     private static Formula Fin(Formula size) => Call("Fin", size);
     private static Formula Mat(Formula index) => Call("Matrix", index, index, Complex);
@@ -106,18 +107,22 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
     private static Formula K(Formula tree, Formula prefix, Formula history, Formula ancilla) =>
         Call("krausFrom", tree, prefix, history, ancilla);
     private static Formula Adj(Formula value) => Call("adjoint", value);
+    private static Formula MatrixOf(Formula value) => At(Call("symm", V("ofMatrix")), value);
+    private static Formula ChannelAction(Formula channel, Formula value) =>
+        MatrixOf(At(Call("toCompletelyPositiveMap", channel), Call("ofMatrix", value)));
     private static Formula.BoundVariable B(string name, Formula domain) =>
         new(FormulaIdentifier.Create(name), domain);
     private static Formula All(Formula.BoundVariable[] variables, Formula body) =>
-        new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
+        new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], Parenthesized(body));
     private static Formula Some(Formula.BoundVariable[] variables, Formula body) =>
-        new Formula.BindMany(FormulaQuantifier.Exists, [.. variables], body);
+        new Formula.BindMany(FormulaQuantifier.Exists, [.. variables], Parenthesized(body));
     private static Formula SumOver(string name, Formula domain, Formula body) =>
-        Seq(F.Sum, Underscore, Grp(Typed(V(name), domain)), Sp, Par(body));
+        Seq(F.Sum, Underscore, Grp(Typed(V(name), domain)), Sp, Parenthesized(body));
     private static Formula SigmaOver(string name, Formula domain, Formula body) =>
-        Seq(Sigma, Underscore, Grp(Typed(V(name), domain)), Sp, Par(body));
+        Seq(Sigma, Underscore, Grp(Typed(V(name), domain)), Sp, Parenthesized(body));
     private static Formula System(Formula body) => All(
-        [B("I", V("Type")), B("f", Call("Fintype", V("I"))), B("e", Call("DecidableEq", V("I")))], body);
+        [B("I", V("Type"))], Imp(And(Call("Nonempty", Call("Fintype", V("I"))),
+            Call("Nonempty", Call("DecidableEq", V("I")))), body));
     private static Formula OnTree(Formula body) => System(All(
         [B("R", N), B("t", Tree(V("I"), V("R")))], body));
     private static Formula OnLeaf(Formula body) => All([B("R", N), B("b", V("Bool"))], body);
@@ -140,7 +145,7 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
     private static Formula MeasurementFormula()
     {
         Formula i = V("I"), k = V("k"), p = V("P"), o = V("o"), z = V("z");
-        Formula po = Call("mat", At(p, o)), pz = Call("mat", At(p, z));
+        Formula po = MatrixOf(At(p, o)), pz = MatrixOf(At(p, z));
         Formula laws = And(All([B("o", Fin(k))], EqTo(Adj(po), po)),
             And(All([B("o", Fin(k))], EqTo(Mul(po, po), po)),
                 And(All([B("o", Fin(k)), B("z", Fin(k))], Imp(NeTo(o, z), EqTo(Mul(po, pz), D(0)))),
@@ -174,7 +179,7 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
     {
         Formula t = V("t"), h = V("h"), a = V("a"), i = V("i"), j = V("j");
         Formula entry = At(K(t, V("B"), h, a), i, j);
-        Formula compressed = At(Call("mat", Mul(Call("branch", t, h), V("B"))), Pair(i, a), Pair(j, D(0)));
+        Formula compressed = At(MatrixOf(Mul(Call("branch", t, h), V("B"))), Pair(i, a), Pair(j, D(0)));
         Formula flag = Call("succeeds", t, h);
         return OnTree(All([B("B", Space(V("I"))), B("h", Hist(t)), B("a", Fin(D(2))),
             B("i", V("I")), B("j", V("I"))], And(
@@ -191,7 +196,7 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
 
     private static Formula RandomizedFormula() => System(All([B("R", N)],
         EqTo(Call("RandomizedProtocol", V("I"), V("R")),
-            SigmaOver("N", N, SigmaOver("w", Call("StdSimplex", Real, Fin(V("N"))),
+            SigmaOver("N", N, Product(Call("StdSimplex", Real, Fin(V("N"))),
                 Arrow(Fin(V("N")), Tree(V("I"), V("R"))))))));
 
     private static Formula RandomizedMapFormula()
@@ -199,15 +204,15 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
         Formula p = V("p"), s = V("s"), x = V("X");
         Formula weight = Call("ofReal", Call("weights", Call("probability", p), s));
         return System(All([B("R", N), B("p", Call("RandomizedProtocol", V("I"), V("R"))),
-            B("X", Mat(V("I")))], EqTo(Call("successfulMap", p, x),
+            B("X", Mat(V("I")))], EqTo(Call("mixtureMap", p, x),
                 SumOver("s", Fin(Call("seeds", p)), Mul(weight, Call("successfulMap", Call("tree", p, s), x))))));
     }
 
     private static Formula ClaimFormula()
     {
         Formula d = V("d"), phi = V("Phi"), q = V("q"), x = V("X");
-        Formula simulation = All([B("X", Mat(Fin(d)))], EqTo(Call("successfulMap", V("p"), x),
-            Mul(Call("ofReal", q), Call("channelAction", phi, x))));
+        Formula simulation = All([B("X", Mat(Fin(d)))], EqTo(Call("mixtureMap", V("p"), x),
+            Mul(Call("ofReal", q), ChannelAction(phi, x))));
         return IffTo(V("claim"), Some([B("Rzero", N), B("qzero", Real)],
             And(LtTo(D(0), V("qzero")), All([B("d", N), B("Phi", Call("QuantumChannel", Fin(d), Fin(d)))],
                 Some([B("p", Call("RandomizedProtocol", Fin(d), V("Rzero"))), B("q", Real)],
@@ -227,7 +232,8 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
             EqTo(At(Call("frame", n), Call("inl", i), j), Call("ite", EqTo(i, j), D(1), D(0))));
         Formula signs = All([B("s", Arrow(columns, V("Bool"))), B("j", columns)],
             EqTo(At(Call("frame", n), Call("inr", s), j),
-                new Formula.Fraction(Call("ite", At(s, j), D(1), new Formula.Negate(D(1))), n)));
+                new Formula.Fraction(Call("ofReal", Call("ite", At(s, j), D(1), new Formula.Negate(D(1)))),
+                    Call("natCast", Complex, n))));
         return All([B("n", N)], And(basis, signs));
     }
 
@@ -244,12 +250,12 @@ internal sealed class OneQubitAdaptiveSimulationRefutationDocument : IScribeDocu
         Formula n = V("n"), index = OrdinalFrameType(n), x = V("X"), q = V("q");
         Formula diagonal = Call("diagonal", Seq(LambdaLower, Sp, Typed(V("i"), index), Comma, Sp,
             At(Call("frameNat", n), V("i"), V("j"))));
-        Formula action = Call("channelAction", V("Phi"), x);
+        Formula action = ChannelAction(V("Phi"), x);
         Formula definition = All([B("X", Mat(index))], EqTo(action,
             SumOver("j", Fin(FrameSize(n)), Mul(Mul(diagonal, x), Adj(diagonal)))));
-        Formula exact = All([B("X", Mat(index))], EqTo(Call("successfulMap", V("p"), x), Mul(Call("ofReal", q), action)));
+        Formula exact = All([B("X", Mat(index))], EqTo(Call("mixtureMap", V("p"), x), Mul(Call("ofReal", q), action)));
         Formula bound = All([B("R", N), B("p", Call("RandomizedProtocol", index, V("R"))), B("q", Real)],
-            Imp(exact, LeTo(Mul(q, n), Mul(D(4), new Formula.Power(D(4), V("R"))))));
+            Imp(exact, LeTo(Mul(q, Call("natCast", Real, n)), Mul(D(4), new Formula.Power(D(4), V("R"))))));
         return Disp(All([B("n", N)], Imp(LeTo(D(2), n),
             Some([B("Phi", Call("QuantumChannel", index, index))], And(definition, bound)))));
     }
