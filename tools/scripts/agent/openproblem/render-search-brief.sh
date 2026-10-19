@@ -10,9 +10,17 @@
 # (open GitHub issues whose title contains "Preregister") and, for the quick track, __WINDOW__.
 # Requires git, gh and python3.
 set -euo pipefail
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ "${1:-}" == --selftest ]]; then
+  exec python3 "$script_dir/briefgen/selftest.py" "${BASH_SOURCE[0]}"
+fi
+if [[ "${1:-}" == --codex ]]; then
+  shift
+  exec python3 "$script_dir/briefgen/codex_search.py" "$@"
+fi
 if [[ $# -lt 2 || $# -gt 4 || -z "$1" || -z "$2" ]]; then
   echo "usage: render-search-brief.sh SEAT_ID OUT [deep|quick] [WINDOW]" >&2
-  exit 2
+  exit 10
 fi
 seat_id="$1"
 out="$2"
@@ -21,23 +29,23 @@ window="${4:-}"
 case "$track" in
   deep) template_name="search-brief.md" ;;
   quick) template_name="search-brief-quick.md" ;;
-  *) echo "render-search-brief: TRACK must be deep or quick, got '$track'" >&2; exit 2 ;;
+  *) echo "render-search-brief: TRACK must be deep or quick, got '$track'" >&2; exit 13 ;;
 esac
 if [[ "$track" == deep && -n "$window" ]]; then
   echo "render-search-brief: WINDOW applies only to the quick track" >&2
-  exit 2
+  exit 13
 fi
 if [[ -n "$window" && ! "$window" =~ ^[0-9]{4}(-[0-9]{4})?$ ]]; then
   echo "render-search-brief: WINDOW must be YYMM or YYMM-YYMM, got '$window'" >&2
-  exit 2
+  exit 13
 fi
-command -v git >/dev/null || { echo "render-search-brief: git not found" >&2; exit 2; }
-command -v gh >/dev/null || { echo "render-search-brief: gh not found" >&2; exit 2; }
-command -v python3 >/dev/null || { echo "render-search-brief: python3 not found" >&2; exit 2; }
+command -v git >/dev/null || { echo "render-search-brief: git not found" >&2; exit 12; }
+command -v gh >/dev/null || { echo "render-search-brief: gh not found" >&2; exit 12; }
+command -v python3 >/dev/null || { echo "render-search-brief: python3 not found" >&2; exit 12; }
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(git -C "$script_dir" rev-parse --show-toplevel)"
 template="$script_dir/templates/$template_name"
-[[ -f "$template" ]] || { echo "render-search-brief: missing $template" >&2; exit 2; }
+[[ -f "$template" ]] || { echo "render-search-brief: missing $template" >&2; exit 11; }
 git -C "$repo_root" fetch -q origin dev
 sha="$(git -C "$repo_root" rev-parse origin/dev)"
 prereg="$(mktemp)"
@@ -67,7 +75,7 @@ if track == "quick":
     end = end or start
     if end < start:
         print(f"render-search-brief: WINDOW end {end} precedes start {start}", file=sys.stderr)
-        sys.exit(2)
+        sys.exit(13)
     phrase = (f"{month_name(start)} (arXiv identifiers {start}.*)" if start == end else
               f"{month_name(start)} to {month_name(end)} (arXiv identifiers {start}.* to {end}.*)")
     text = text.replace("__WINDOW__", phrase)

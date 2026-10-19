@@ -198,34 +198,52 @@ private theorem packed_full (l : Fin (m*n) → ℝ) :
       simp [pack, packedBoundaryValues, fullPackingEquiv, he, packEquiv, packIndex]
   · simp [middleValues, fullPackingEquiv, he]
 
-theorem spectral_reduction (rho : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
+/-- Both Bell pencils for the actual labelled diagonal, with arbitrary local
+dimensions at least three. No ordering, positivity or mass premise is used. -/
+theorem diagonal_necessary_both
+    (e : (Fin m × Fin n) ≃ Fin (m*n)) (l : Fin (m*n) → ℝ)
+    (hdiag : APPT (diagonal (fun p => (l (e p) : ℂ)))) :
+    (K1 (cornerBoundaryValues (m*n) (total_ge hm hn) l)).PosSemidef ∧
+      (K2 (cornerBoundaryValues (m*n) (total_ge hm hn) l)).PosSemidef := by
+  classical
+  let σ : Equiv.Perm (Fin m × Fin n) := (fullPackingEquiv hm hn).trans e.symm
+  have hp : APPT (diagonal (fun p => (l ((fullPackingEquiv hm hn) p) : ℂ))) := by
+    have h := appt_conjugate hdiag (permutationU σ)
+    rw [permutation_conjugate, Matrix.submatrix_diagonal_equiv] at h
+    simpa only [σ, Function.comp_def, Equiv.trans_apply, Equiv.apply_symm_apply] using h
+  have hb : packedBoundaryValues hm hn l =
+      cornerBoundaryValues (m*n) (total_ge hm hn) l := by
+    funext q
+    apply congrArg l
+    apply Fin.ext
+    fin_cases q <;> simp [packedBoundaryValues, cornerBoundaryValues, boundaryMiddleEquiv,
+      finSumFinEquiv, Equiv.sumAssoc, Fin.addCases] <;> omega
+  rw [← hb]
+  apply (necessary_both hm hn) _ ((middleValues hm hn) l)
+  rw [(packed_full hm hn)]
+  exact hp
+
+/-- One sorted spectrum, retaining APPT of its actual diagonal in the supplied
+labelling. This is consumed by the old two-pencil reduction and the rank-four
+physical consumer; neither consumer needs a second diagonalization. -/
+theorem diagonal_spectral_reduction
+    (e : (Fin m × Fin n) ≃ Fin (m*n))
+    (rho : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
     (hrho : rho.PosSemidef) (htrace : rho.trace = 1) (happt : APPT rho) :
     ∃ l : Fin (m*n) → ℝ, Antitone l ∧ (∀ i, 0 ≤ l i) ∧ (∑ i, l i = 1) ∧
-      (K1 (cornerBoundaryValues (m*n) (total_ge hm hn) l)).PosSemidef ∧ (K2 (cornerBoundaryValues (m*n) (total_ge hm hn) l)).PosSemidef ∧
+      APPT (diagonal (fun p => (l (e p) : ℂ))) ∧
       (rho * rho).trace.re = ∑ i, (l i)^2 := by
   classical
   let H := hrho.isHermitian
   have hc : Fintype.card I = m*n := by simp [Fintype.card_prod]
   let l : Fin (m*n) → ℝ := fun i => H.eigenvalues₀ (Fin.cast hc.symm i)
-  let P := diagonal (fun q => (l ((fullPackingEquiv hm hn) q) : ℂ))
+  let P := diagonal (fun q => (l (e q) : ℂ))
   obtain ⟨U, hU⟩ := QutritHildebrandSufficiency.OrderedDiagonalization.sorted_diagonalization
-    hc rho H (fullPackingEquiv hm hn)
+    hc rho H e
   change rho = (U : Matrix I I ℂ) * P * (U : Matrix I I ℂ)ᴴ at hU
   have hp : APPT P := by
     rw [hU] at happt
     exact appt_unconjugate P U happt
-  have hboth : (K1 (cornerBoundaryValues (m*n) (total_ge hm hn) l)).PosSemidef ∧
-      (K2 (cornerBoundaryValues (m*n) (total_ge hm hn) l)).PosSemidef := by
-    have hb : packedBoundaryValues hm hn l = cornerBoundaryValues (m*n) (total_ge hm hn) l := by
-      funext q
-      apply congrArg l
-      apply Fin.ext
-      fin_cases q <;> simp [packedBoundaryValues, cornerBoundaryValues, boundaryMiddleEquiv,
-        finSumFinEquiv, Equiv.sumAssoc, Fin.addCases] <;> omega
-    rw [← hb]
-    apply (necessary_both hm hn) _ ((middleValues hm hn) l)
-    rw [(packed_full hm hn)]
-    exact hp
   have hord : Antitone l := by
     intro i j hij
     exact H.eigenvalues₀_antitone (show Fin.cast hc.symm i ≤ Fin.cast hc.symm j from hij)
@@ -236,7 +254,7 @@ theorem spectral_reduction (rho : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
   have htP : P.trace = ((∑ i, l i : ℝ) : ℂ) := by
     dsimp only [P]
     rw [trace_diagonal]
-    have he := (fullPackingEquiv hm hn).sum_comp (fun i => (l i : ℂ))
+    have he := e.sum_comp (fun i => (l i : ℂ))
     rw [he]
     simp
   have ht : ∑ i, l i = 1 := by
@@ -245,11 +263,23 @@ theorem spectral_reduction (rho : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
   have hpurP : (P * P).trace = ((∑ i, (l i)^2 : ℝ) : ℂ) := by
     dsimp only [P]
     rw [diagonal_mul_diagonal, trace_diagonal]
-    have he := (fullPackingEquiv hm hn).sum_comp (fun i => (l i : ℂ) * (l i : ℂ))
+    have he := e.sum_comp (fun i => (l i : ℂ) * (l i : ℂ))
     rw [he]
     simp [pow_two]
-  refine ⟨l, hord, hnonneg, ht, hboth.1, hboth.2, ?_⟩
+  refine ⟨l, hord, hnonneg, ht, hp, ?_⟩
   rw [hU, unitary_purity_trace, hpurP, Complex.ofReal_re]
+
+/-- The original public interface is preserved. Both pencils now consume the
+same actual diagonal APPT evidence returned by `diagonal_spectral_reduction`. -/
+theorem spectral_reduction (rho : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
+    (hrho : rho.PosSemidef) (htrace : rho.trace = 1) (happt : APPT rho) :
+    ∃ l : Fin (m*n) → ℝ, Antitone l ∧ (∀ i, 0 ≤ l i) ∧ (∑ i, l i = 1) ∧
+      (K1 (cornerBoundaryValues (m*n) (total_ge hm hn) l)).PosSemidef ∧ (K2 (cornerBoundaryValues (m*n) (total_ge hm hn) l)).PosSemidef ∧
+      (rho * rho).trace.re = ∑ i, (l i)^2 := by
+  obtain ⟨l, ho, hnonneg, ht, hdiag, hpur⟩ :=
+    diagonal_spectral_reduction (fullPackingEquiv hm hn) rho hrho htrace happt
+  obtain ⟨h1, h2⟩ := diagonal_necessary_both hm hn (fullPackingEquiv hm hn) l hdiag
+  exact ⟨l, ho, hnonneg, ht, h1, h2, hpur⟩
 
 end FiniteCorner
 

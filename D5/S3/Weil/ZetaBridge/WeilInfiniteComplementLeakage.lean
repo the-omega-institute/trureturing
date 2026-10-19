@@ -87,13 +87,13 @@ private theorem inverse_square_partial {d : ℝ} (hd : 0 < d) (M : ℕ) :
       simp only [add_assoc] at hstep ih
       linarith
 
-private theorem inverse_square_partial_le {d : ℝ} (hd : 0 < d) (M : ℕ) :
+theorem inverse_square_partial_le {d : ℝ} (hd : 0 < d) (M : ℕ) :
     (∑ j ∈ Finset.range M, ((d + (j : ℝ) + 1)⁻¹) ^ 2) ≤ d⁻¹ := by
   have h := inverse_square_partial hd M
   have hpos : 0 ≤ (d + (M : ℝ))⁻¹ := by positivity
   linarith
 
-private theorem inverse_square_summable {d : ℝ} (hd : 0 < d) :
+theorem inverse_square_summable {d : ℝ} (hd : 0 < d) :
     Summable (fun j : ℕ => ((d + (j : ℝ) + 1)⁻¹) ^ 2) :=
   summable_of_sum_range_le (fun _ => sq_nonneg _) (inverse_square_partial_le hd)
 

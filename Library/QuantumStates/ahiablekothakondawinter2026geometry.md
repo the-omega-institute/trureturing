@@ -9,6 +9,8 @@ claim: "Conjecture 6.7 states equality of APPT maximum purity and the inscribed 
 strata_touched:
   - D5/S3/Quantum/Entanglement/AbsolutePPT/QutritPerturbationAttainment
   - D5/S3/Quantum/Entanglement/AbsolutePPT/QutritQuditMaximumPurity
+  - D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitMaximumPurity
+  - D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity
   - D5/S3/Quantum/Entanglement/AbsoluteSeparability/AhiableKothakondaWinterEq31
 license: citation-only
 triage: anchor
@@ -97,3 +99,80 @@ Page 11:
 > Suppose $\lambda$ is the spectrum of a bipartite state. Then $\lambda\in \mathrm{APPT}_{m,n}$ if and only if for all unitaries $U\in \mathcal{U}(mn)$, $(U\diag(\lambda)U^\dagger)^\Gamma \geq 0$.
 
 The matrix encoding uses the second-factor partial transpose on `Fin 3 × Fin n`. Its trace-squared purity is the real part of `Matrix.trace (rho * rho)`. The qutrit sector substitutes m = 3 and t = n in Corollary 6.4. The two candidate purities become (3n + 8)/(3n + 2)^2 and 3/(8n).
+
+
+## Four-row correspondence and scope
+
+Theorem 6.3 computes the exact optimum **inside** the inscribed polytope
+$\mathcal P_{m,n}$; Corollary 6.4 gives its branch and parity formulas.
+Since this polytope is contained in APPT, its optimum and listed attaining
+spectra supply an APPT lower bound. The unrestricted APPT upper bound is
+the additional assertion of Conjecture 6.7. The formulas and attainers
+quoted above must not be attributed to a later proof of that upper bound.
+
+For $m=4$, put
+$$
+ t=\left\lceil\frac{3n}{2}\right\rceil
+   =\left\lfloor\frac{12n+4}{8}\right\rfloor,
+ \qquad D=12n+2t.
+$$
+On the two-level branch, the published spectrum is
+$$
+ \frac{(5^t,3^{4n-t})}{D},
+ \qquad F(n)=\frac{36n+16t}{D^2}
+ =\begin{cases}
+    \dfrac{4}{15n},& n\text{ even},\\[1ex]
+    \dfrac{60n+8}{(15n+1)^2},& n\text{ odd}.
+   \end{cases}
+$$
+Here the superscripts in the spectrum denote multiplicities. A coordinate
+projector $P$ of rank $t$ realizes it as $\rho_*=(3I+2P)/D$.
+The printed transition specializes to
+$n^*=7+3\sqrt5\in(13,14)$, so this is the published inner-polytope branch
+for every integer $n\ge14$. The rank-one branch, its attaining spectrum,
+and the transition are also published prior work.
+
+At $n=13$, the published rank-one vertex of Eq. (47) is
+$\rho_{13}=(I+2|00\rangle\langle00|)/54$, with spectrum
+$(3,1^{51})/54$. Its actual APPT purity is $5/243$, whereas the two-level
+formula gives $F(13)=197/9604$, and
+$$
+ \frac5{243}-\frac{197}{9604}=\frac{149}{2333772}>0.
+$$
+This witness rules out an eventual threshold at or below 13 for the
+assertion that $F(n)$ is the APPT maximum at every later dimension. It
+does not determine the APPT maximum at 13 or in any other dimension
+7 through 13. The witness mechanism and this inner-polytope comparison
+come from the paper, rather than a new lower-bound construction.
+
+The existing four-row consumers listed in `strata_touched` relate the
+literal complex-density APPT problem to this conjecture. The
+`QuadbitQuintitMaximumPurity` owner also explains the complete varying-$n$
+application: one sorted spectrum retains its actual APPT labelled
+diagonal, the genuine product corners give its literal K1 and rank-four
+necessary inequality, and `actual_k1_l4_purity_bound` applies at
+$N=4n\ge56$. The coordinate-projector density gives actual attainment,
+so together these yield the real attained supremum and the two parity
+formulas for $n\ge14$, with least eventual onset 14. The scalar theorem
+with premise $N\ge56$ is not used at $N=52$ for the witness.
+
+A prior formal result,
+`APPTReview.appt_rectangular_maximum_formula` in
+[mxym/math at commit 479acd5d6269faf94433ad6b694c5b7979027c69](https://github.com/mxym/math/blob/479acd5d6269faf94433ad6b694c5b7979027c69/formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean#L78),
+already states the rounded physical maximum for $m\ge3$ and
+$n\ge m^3-m-2$, hence for $m=4,n\ge58$. The candidate additional result
+is the universal APPT upper bound in $14\le n\le57$. The paper already
+supplies the inner-polytope formulas, listed attainers and transition;
+none is a new priority claim here, and no external code is transplanted.
+
+The historical $n\ge17$ application has compilation and accepted scoped
+axiom-closure evidence. Official CI has now compiled the complete
+$n\ge14$ physical application and its suppliers, and the scalar
+$N\ge56$ result has a separate selected successful build. The current
+full axiom/report closure, supplier registration evidence and final
+official acceptance remain pending; the present Scribe/Reg/Library
+source updates are uncompiled. The primary-source comparison used here
+is confined to v2 and is not an exhaustive later-literature or uniqueness
+check. No final unique completion, general-$m$ resolution, classification
+of all maximizers, equality of APPT with absolute separability, or
+maximum in dimensions 7 through 13 is asserted by this update.

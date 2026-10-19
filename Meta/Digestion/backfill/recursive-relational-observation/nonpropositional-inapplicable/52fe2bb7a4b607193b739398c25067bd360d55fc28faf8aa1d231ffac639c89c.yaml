@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:52fe2bb7a4b607193b739398c25067bd360d55fc28faf8aa1d231ffac639c89c
+  normalized_sha256: sha256:52fe2bb7a4b607193b739398c25067bd360d55fc28faf8aa1d231ffac639c89c
+cas_ref: sha256:52fe2bb7a4b607193b739398c25067bd360d55fc28faf8aa1d231ffac639c89c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: '本项命题全部子句仅由钉版上游闭合，仓内无可用覆盖GID；不新增Lean或冻结。 mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679; upstream: LinearMap.liftOfSurjective, LinearMap.equivOfSurjective_apply, LinearMap.ker_adjoint_comp_self, LinearMap.isometryOfInner, LinearMap.injective_iff_surjective_of_finrank_eq_finrank, LinearIsometryEquiv.ofSurjective, LinearMap.adjoint_inner_right, LinearMap.adjoint_inner_left, LinearMap.IsSymmetric.pow, Submodule.span_induction. 非作者完整子句绑定证书 flight 6ad4ee3f6d73719093472122，最终 make lean exit 0。子句复核：源的规范实现由137.2给正性、前缀匹配、rank H维数和生成性；minimal_realization_unique_statement 对任意同维正竞争者给唯一输入保持正交交织及每个未来矩相同，无额外竞争者限制。'
+    previous_atom_id: 4f9e4451de8c7ceebf085511e1261ea10a1db1ab4336d64b3ff6ff20bff4baad
+    next_atom_id: a150b4330804ce1b04022ccd7408482b171a58e13c02dd3be84599f2748ebd05

@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:1279df58d7e86c1afff57585fc9e8ac4ac5067cb9d0c7cef5858a54173639447
+  normalized_sha256: sha256:1279df58d7e86c1afff57585fc9e8ac4ac5067cb9d0c7cef5858a54173639447
+cas_ref: sha256:1279df58d7e86c1afff57585fc9e8ac4ac5067cb9d0c7cef5858a54173639447
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/CARFourStateReverseObstruction.result
+    target_statement_id: sha256:c3a443ec93cc56d8ec2ec934ced5391f8834436c25049f926ca4650f6305101a
+  - gid: D5/S3/Estimation/DecisionRisk/CARRevelationScaling.result
+    target_statement_id: sha256:11838d3505e7b8ba83513a21a8bec7bb3a5a7af86d4a47c5dd3a7ab5bb4bad2e
+  - gid: D5/S3/Estimation/DecisionRisk/CARUniformReverseObstruction.result
+    target_statement_id: sha256:23b86563a5edda7f0514fb7c6dc24d548a26788ff3aa98dc0e772d93003157c9
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.deficiency_risk_bound
+    target_statement_id: sha256:dd23c8bcbd039d6a5aca055ba4e8c9b9c0d7398d41f2ddfb80ef9cea1ca2c746
+receipts:
+  unresolved_subitems: []

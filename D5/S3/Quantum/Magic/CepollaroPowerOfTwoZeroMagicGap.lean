@@ -154,7 +154,7 @@ private theorem tau_unit (d : ℕ) : tau d * star (tau d) = 1 := by
   rw [← Complex.exp_conj, ← Complex.exp_add]
   simp [neg_div]
 
-private theorem displacement_entry (d : ℕ) [NeZero d] (a b x y : ZMod d) :
+theorem displacement_entry (d : ℕ) [NeZero d] (a b x y : ZMod d) :
     displacement d a b x y =
       if x.val = (y.val + a.val) % d then windowRoot d ^ (b.val*y.val) else 0 := by
   have hp : shiftMatrix d ^ a.val = (shiftPerm d ^ a.val).permMatrix ℂ := by

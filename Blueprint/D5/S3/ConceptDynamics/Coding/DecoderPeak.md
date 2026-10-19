@@ -34,4 +34,4 @@ Every state reachable with at most H acquisitions is reachable with at most K wh
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/DecoderPeak.peak_monotone`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/DecoderPeak.peak_trace_bound`
-- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](DecoderOperationTrace.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace/Basic](DecoderOperationTrace/Basic.md)

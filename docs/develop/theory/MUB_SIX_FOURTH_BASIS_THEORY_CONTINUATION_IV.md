@@ -3245,3 +3245,5 @@ factors this follows from §94.5; at their roots it follows from Theorems
 95.1 and 96.1. In particular all twenty explicitly certified parameters
 from §§92–96 are included. Every zero of the remaining guard is retained;
 these arguments do not establish that the displayed factors exhaust it.
+
+后续的 guard 重建与新增例外纤维处理见[理论续卷 V](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_V.md)。

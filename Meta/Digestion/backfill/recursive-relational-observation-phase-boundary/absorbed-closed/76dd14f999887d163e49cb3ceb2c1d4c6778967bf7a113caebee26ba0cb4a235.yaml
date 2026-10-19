@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:76dd14f999887d163e49cb3ceb2c1d4c6778967bf7a113caebee26ba0cb4a235
+  normalized_sha256: sha256:76dd14f999887d163e49cb3ceb2c1d4c6778967bf7a113caebee26ba0cb4a235
+cas_ref: sha256:76dd14f999887d163e49cb3ceb2c1d4c6778967bf7a113caebee26ba0cb4a235
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.initial_termination_uniform_reachable_gap
+    target_statement_id: sha256:49e834bf7b968537169ead0ab3b152e533efe3f83b5fb48c292ed4cfd60d5821
+receipts:
+  unresolved_subitems: []

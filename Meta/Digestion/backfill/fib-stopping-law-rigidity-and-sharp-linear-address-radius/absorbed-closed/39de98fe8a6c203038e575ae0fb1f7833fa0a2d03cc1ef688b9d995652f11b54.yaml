@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:39de98fe8a6c203038e575ae0fb1f7833fa0a2d03cc1ef688b9d995652f11b54
+  normalized_sha256: sha256:39de98fe8a6c203038e575ae0fb1f7833fa0a2d03cc1ef688b9d995652f11b54
+cas_ref: sha256:39de98fe8a6c203038e575ae0fb1f7833fa0a2d03cc1ef688b9d995652f11b54
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SignatureSharpness.exact_signature_radius_with_law_zero_witness
+    target_statement_id: sha256:616f1166a29e117e17bf32d9c97cb8a2f0e9d3f06864ec330419fbf7d0be432c
+receipts:
+  unresolved_subitems: []

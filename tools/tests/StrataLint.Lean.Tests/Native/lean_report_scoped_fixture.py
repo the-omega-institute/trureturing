@@ -247,15 +247,26 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         receipt.write_text('deliberately unreadable whole receipt')
         seed_base = self.root / '.lake/lean-report-seed-base.json'
         seed_base.write_text('full seed generation metadata')
-        before = [canonical.read_bytes(), receipt.read_bytes(), seed_base.read_bytes()]
+        full_archive = self.root / '.lake/build/lean-inspector/report.zip'
+        full_archive.parent.mkdir(parents=True, exist_ok=True)
+        full_archive.write_bytes(b'previous whole-report archive')
+        protected = [canonical, receipt, seed_base, full_archive]
+        before = [path.read_bytes() for path in protected]
         self.write('D5/A.lean', 'import D5.B\n/- import D5.Alone /- nested comment -/ -/\ndef value : Nat := D5.hidden\n')
         self.write('D5/Alone.lean', 'this sibling deliberately does not compile\n')
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = '["reg/Reg"]'
         self.scoped('D5.A')
         self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'}, '[FAIL] report_is_exact_import_closure')
+        phases = [json.loads(line) for line in (self.logs / 'native-phases.jsonl').read_text().splitlines()]
+        inspections = [row for row in phases if row['phase'] == 'native-inspect' and row['boundary'] == 'start']
+        self.assertEqual(len(inspections), 1, '[FAIL] selected_modules_share_one_native_inspection_batch')
+        cold_work = json.loads((self.logs / 'work.json').read_text())
+        self.assertEqual(cold_work['extracted_module_names'], ['D5.A', 'D5.B'])
+        self.assertEqual(cold_work['compiled_module_names'],
+                         ['D5.A', 'D5.B', 'LeanInformationAudit.Contract.InputDiscovery'])
         self.assertFalse((self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip').exists(),
                          '[FAIL] unrelated_module_is_never_extracted')
-        self.assertEqual(before, [canonical.read_bytes(), receipt.read_bytes(), seed_base.read_bytes()],
+        self.assertEqual(before, [path.read_bytes() for path in protected],
                          '[FAIL] whole_report_and_seed_base_are_untouched')
         self.assertFalse(publication.member(self.output, '.reuse.json').exists())
         self.verify('D5.A')

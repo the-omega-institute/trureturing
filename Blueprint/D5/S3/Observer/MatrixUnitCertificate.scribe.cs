@@ -11,6 +11,19 @@ internal sealed class MatrixUnitCertificateDocument : IScribeDocumentDefinition
         H("Exact Matrix Units from a Finite Weyl Pair"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("cyclic-shift-power-entries"),
+                DeclarationHandle.Create(
+                    "D5/S3/Observer/MatrixUnitCertificate.shift_matrix_pow_apply"),
+                H("Entries of every cyclic shift power"),
+                StatementSource.FromAuthor(ShiftPowerFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every nonzero natural cardinality M, every natural exponent n, and "
+                        + "cyclic indices r and s, the (r,s) entry of the nth power of "
+                        + "shiftMatrix M is the complex number one exactly when r-s equals "
+                        + "the image of n in Z/MZ, and is zero otherwise."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("fourier-matrix-units-are-single-entry-matrices"),
                 DeclarationHandle.Create(
                     "D5/S3/Observer/MatrixUnitCertificate.matrix_unit_eq_single"),
@@ -62,6 +75,26 @@ internal sealed class MatrixUnitCertificateDocument : IScribeDocumentDefinition
                                     "relation for the same Weyl-generated family."))),
                 DescribeRole.Theorem
             ))));
+
+    private static Formula ShiftPowerFormula() => Disp(Seq(
+        Begin, Grp(F.Id("gathered")),
+        Forall, Sp, F.Id("M"), Sp, InMacro, Sp,
+        Mathbb, Grp(F.Id("N")), Sp, OpenBracket,
+        Operatorname, Grp(F.Id("NeZero")), Sp, F.Id("M"), CloseBracket, Comma, RowBreak,
+        Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+        Forall, Sp, F.Id("r"), Comma, Sp, F.Id("s"), Sp, InMacro, Sp,
+        Mathbb, Grp(F.Id("Z")), Slash, F.Id("M"), Mathbb, Grp(F.Id("Z")), Comma, RowBreak,
+        Open, Operatorname, Grp(F.Id("shiftMatrix")), Open, F.Id("M"), Close,
+        Caret, Grp(F.Id("n")), Close, Underscore, Grp(F.Id("r"), F.Id("s")), Eq,
+        Begin, Grp(F.Id("cases")),
+        Open, D(1), Colon, Mathbb, Grp(F.Id("C")), Close, Comma, Amp,
+        F.Id("r"), Minus, F.Id("s"), Eq,
+        Open, F.Id("n"), Colon, Mathbb, Grp(F.Id("Z")), Slash,
+        F.Id("M"), Mathbb, Grp(F.Id("Z")), Close, RowBreak,
+        Open, D(0), Colon, Mathbb, Grp(F.Id("C")), Close, Comma, Amp,
+        Operatorname, Grp(F.Id("otherwise")),
+        End, Grp(F.Id("cases")),
+        End, Grp(F.Id("gathered"))));
 
     private static Formula MatrixUnitRelationFormula() => Disp(Seq(
         Begin, Grp(F.Id("gathered")),

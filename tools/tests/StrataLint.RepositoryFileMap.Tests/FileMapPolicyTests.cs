@@ -127,7 +127,12 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
         var root = TestRepositoryLayout.FindRoot();
         var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(RepositoryPolicyLoader.LoadRepository(root)).Policy;
         var archive = Directory.GetFiles(Path.Combine(root, "docs/develop/archive/theory"));
-        Assert.Equal(10, archive.Length);
+        Assert.NotEmpty(archive);
+        Assert.Equal(
+            policy.Manifest.Entries
+                .Where(entry => entry.Pattern.StartsWith("docs/develop/archive/theory/", StringComparison.Ordinal))
+                .Select(entry => entry.Pattern).Order(StringComparer.Ordinal),
+            archive.Select(file => Path.GetRelativePath(root, file).Replace('\\', '/')).Order(StringComparer.Ordinal));
         foreach (var file in archive)
         {
             var path = RepoPath.CreateKnown(Path.GetRelativePath(root, file).Replace('\\', '/'));

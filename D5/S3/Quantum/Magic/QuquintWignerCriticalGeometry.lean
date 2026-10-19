@@ -50,14 +50,14 @@ private theorem zeta_value : zeta = ⟨(radical ^ 2 - 12) / 8, radical / 4⟩ :=
   · simpa [zeta, Complex.exp_re] using hc
   · simpa [zeta, Complex.exp_im] using hs
 
-private def powerTable : Fin 5 → ℂ :=
+def powerTable : Fin 5 → ℂ :=
   ![1, ⟨(radical ^ 2 - 12) / 8, radical / 4⟩,
     ⟨(8 - radical ^ 2) / 8, (radical ^ 3 - 12 * radical) / 16⟩,
     ⟨(8 - radical ^ 2) / 8, (12 * radical - radical ^ 3) / 16⟩,
     ⟨(radical ^ 2 - 12) / 8, -radical / 4⟩]
 
 set_option maxHeartbeats 2000000 in
-private theorem zeta_powers (i : Fin 5) : zeta ^ i.val = powerTable i := by
+theorem zeta_powers (i : Fin 5) : zeta ^ i.val = powerTable i := by
   have h := radical_quartic
   fin_cases i <;> apply Complex.ext <;>
     norm_num [powerTable, zeta_value, pow_succ, Complex.mul_re, Complex.mul_im] <;> grind only

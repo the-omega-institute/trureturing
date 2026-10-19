@@ -22,6 +22,22 @@ internal sealed class ResetQ4UnitCubesDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Independent finite cubic characters saturate the Dirichlet rank of the original quartic reset orders.",
         H("Cube normal forms in the quartic reset orders"), Blocks(
+            Describe.Lean(
+                DescribeId.Create("existing-six-resetq4unitcubes-residuecharacter"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/ResetQ4UnitCubes.residueCharacter"),
+                H("Expose the oriented character of the literal common residue units"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Expose the existing oriented readout cK as an additive homomorphism from the common residue units into ZMod 3. It selects the native exponent in the integral unit factorization."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("existing-six-resetq4unitcubes-residuecharacter-plus-factorization"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/ResetQ4UnitCubes.residueCharacter_plus_factorization"),
+                H("Read the residue coordinate of a supplied integral cube factorization"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For the stated plus-order unit factorization, the native common residue character reads the one-plus-time exponent j in ZMod 3. The same j is carried into the original centralizer factorization."))),
+                DescribeRole.Theorem),
+
+
             Paragraph(Text("Use the literal original orders Plus(4)=Int[X]/(X^4-X^3-X^2-X-1) "
                 + "and Minus(4)=Int[X]/(X^4+X^3+X^2+X+1). alpha and beta are the classes of X "
                 + "as units, and Bplus=1+alpha, Bminus=1+beta. Their integral inverse polynomials "
