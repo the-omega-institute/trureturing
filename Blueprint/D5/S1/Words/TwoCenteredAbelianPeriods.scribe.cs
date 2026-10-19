@@ -47,7 +47,10 @@ internal sealed class TwoCenteredAbelianPeriodsDocument : IScribeDocumentDefinit
                 + "When both lengths are positive, the proof gives their least common multiple "
                 + "as a period. A zero length is excluded by the nonempty-block condition. "
                 + "No earlier answer was identified in the bounded literature screen; "
-                + "completeness of that screen remains unverified."))));
+                + "completeness of that screen remains unverified.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("akp-2012-two-centered-abelian-periods"),
+                    ResolutionKind.Proved)))));
 
     private static string QuestionText() =>
         "Open problem 6.2, p. 14: “Let k be an integer. Does there exist a non-periodic word "
@@ -59,10 +62,11 @@ internal sealed class TwoCenteredAbelianPeriodsDocument : IScribeDocumentDefinit
         + "and positive block lengths.";
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        DescribeRole role, AssessedProvenance provenance, string prose) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
         StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula CentralFormula()
     {

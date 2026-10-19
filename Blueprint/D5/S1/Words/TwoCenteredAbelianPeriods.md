@@ -46,6 +46,10 @@ $$\forall k \in Nat,\; (1 \le k) \Rightarrow (\forall r \in Nat,\; \forall w \in
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/TwoCenteredAbelianPeriods.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/akp-2012-two-centered-abelian-periods` (proved) by `D5/S1/Words/TwoCenteredAbelianPeriods.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"akp-2012-two-centered-abelian-periods","declaration_gid":"D5/S1/Words/TwoCenteredAbelianPeriods.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* S. Avgustinovich, J. Karhumäki and S. Puzynina (2012). *On abelian versions of critical factorization theorem*. DOI: [10.1051/ita/2011121](https://doi.org/10.1051/ita/2011121). URL: <https://www.numdam.org/item/ITA_2012__46_1_3_0/>.
