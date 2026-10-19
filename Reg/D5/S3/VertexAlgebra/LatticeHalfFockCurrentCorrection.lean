@@ -381,5 +381,66 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end CorrPartial
 
+namespace LiftConstant
+
+abbrev signature := LiftReadout.signature
+abbrev actual := LiftReadout.actual
+abbrev rejected := LiftReadout.rejected
+
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (D : LatticeData) (charge : Charge D) (scalar : ℂ),
+    readout.readout () ⟨D, charge⟩ (MvPolynomial.C scalar) = MvPolynomial.C scalar
+
+theorem source_bridge : (type_of% (@correctionLift_C)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  obtain ⟨parameter⟩ := indexFamily_nonempty
+  have contradiction := law parameter.1 0 0
+  simpa [rejected, LiftReadout.rejected, realize] using contradiction
+
+def familyRegistration : Registration arena (type_of% (@correctionLift_C)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp correctionLift_C, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := LiftReadout.dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@correctionLift_C) (type_of% (realize signature actual.readout actual.anchor))
+    (type_of% (@correctionLift)) Unit where
+  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockCurrentCorrection.correctionLift_C "__information_unit"
+  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockCurrentCorrection.LiftConstant.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockCurrentCorrection
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end LiftConstant
+
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockCurrentCorrection
