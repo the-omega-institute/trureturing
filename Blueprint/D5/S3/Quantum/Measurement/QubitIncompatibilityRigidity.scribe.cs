@@ -8,7 +8,7 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
 {
     private const string Prefix = "D5/S3/Quantum/Measurement/QubitIncompatibilityRigidity.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumChannels/torii2025comparing");
+        LibraryNoteRef.Create("D5/L/QuantumContext/torii2025comparing");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Restricted-state compatibility determines incompatible unbiased qubit pairs.",

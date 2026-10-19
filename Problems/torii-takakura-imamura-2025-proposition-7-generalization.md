@@ -22,7 +22,7 @@ Two pairs of unbiased qubit observables are operationally equivalent when, for e
 pair is $S$-compatible exactly when the other is; $S$-compatibility means that some four-outcome POVM has
 both margins with the same Born probabilities as the pair on every state of $S$. Proposition 7 proves that,
 for $|a_1|=|a_2|$ and $|b_1|=|b_2|$ in $(1/\sqrt2,1]$, equivalence forces equality up to signs and exchange.
-The verbatim texts are in [the literature note](../Library/QuantumChannels/torii2025comparing.md). Issue
+The verbatim texts are in [the literature note](../Library/QuantumContext/torii2025comparing.md). Issue
 [#15522](https://github.com/the-omega-institute/trureturing/issues/15522) preregisters the general statement
 and the route.
 
