@@ -736,7 +736,7 @@ private theorem beta_from_native_successors (F : CommonFlow) (W : BDescriptor)
       have hl : lower ≠ 0 := by norm_num [lower]
       exact ne_of_gt ((pos_iff_ne_zero.mpr hl).trans_le D.property.1)
     have hf : v D ≠ ∞ := ENNReal.sub_ne_top (by simp)
-    rw [NativeBorelCommonFlow.residualA, Measure.map_smul, smul_smul,
+    rw [NativeBorelCommonFlow.residualA, Measure.map_smul _ prependA_embedding.measurable.aemeasurable, smul_smul,
       ENNReal.mul_inv_cancel h0 hf, one_smul]
     have hs : 1 - v D = law D {betaStop} := ENNReal.sub_sub_cancel (by simp) prob_le_one
     rw [hs]

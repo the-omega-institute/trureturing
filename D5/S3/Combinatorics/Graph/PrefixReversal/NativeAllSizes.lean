@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Native Hamilton cycles exist at every label count at least four. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeThreeLabelFullDomain
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFourBase
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFiveBase

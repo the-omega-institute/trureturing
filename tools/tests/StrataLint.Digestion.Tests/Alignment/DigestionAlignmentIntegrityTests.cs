@@ -29,7 +29,7 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(currentBytes, [forgedCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => Atomized(currentAtom));
+            _ => (_) => Atomized(currentAtom));
 
         Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(forgedAtom)));
         Assert.Equal(forgedAtom.Fingerprints, result.AtomFor(AtomId(forgedAtom))?.Fingerprints);
@@ -54,7 +54,7 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(currentBytes, [oldCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => Atomized(currentAtom));
+            _ => (_) => Atomized(currentAtom));
 
         Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(oldAtom)));
         Assert.Equal(oldAtom.Fingerprints, result.AtomFor(AtomId(oldAtom))?.Fingerprints);
@@ -76,7 +76,7 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(currentBytes, [oldCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => Atomized(currentAtom));
+            _ => (_) => Atomized(currentAtom));
 
         Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(oldAtom)));
         Assert.Equal(oldAtom.Fingerprints, result.AtomFor(AtomId(oldAtom))?.Fingerprints);
@@ -99,7 +99,7 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(currentBytes, [currentCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => Atomized(currentAtom));
+            _ => (_) => Atomized(currentAtom));
 
         Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(currentAtom)));
         Assert.Equal(currentAtom.Fingerprints, result.AtomFor(AtomId(currentAtom))?.Fingerprints);
@@ -115,7 +115,7 @@ public sealed partial class DigestionAlignmentTests
 
             """;
         var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
-        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var atomized = GenericAtomizer.Atomize(sourceBytes);
         var parent = Assert.Single(atomized.Claims);
         var clausePlan = Assert.Single(atomized.ClausePlans);
         Assert.Equal(2, clausePlan.Children.Length);
@@ -156,12 +156,12 @@ public sealed partial class DigestionAlignmentTests
             unchained,
             snapshot,
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => atomized);
+            _ => (_) => atomized);
         var admitted = DigestionLedgerAligner.Evaluate(
             chained,
             snapshot,
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => atomized);
+            _ => (_) => atomized);
 
         Assert.All([firstId, secondId], childId => Assert.Equal(
             DigestionReceiptAlignment.Seen,
@@ -214,7 +214,7 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(parentBytes, [parentCapture, firstCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => atomized);
+            _ => (_) => atomized);
 
         Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(firstId));
         Assert.Null(result.AtomFor(firstId));
@@ -263,7 +263,7 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(parentBytes, [parentCapture, firstCapture, probeCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => atomized);
+            _ => (_) => atomized);
 
         Assert.Equal(
             DigestionReceiptAlignment.Seen,
@@ -285,7 +285,7 @@ public sealed partial class DigestionAlignmentTests
             ledger,
             Snapshot(bytes, [captured]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => Atomized(atom));
+            _ => (_) => Atomized(atom));
 
         Assert.Equal(
             DigestionReceiptAlignment.Seen,
@@ -303,13 +303,13 @@ public sealed partial class DigestionAlignmentTests
 
             """;
         var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
-        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var atomized = GenericAtomizer.Atomize(sourceBytes);
         var parent = Assert.Single(atomized.Claims);
         Assert.Single(atomized.ClausePlans);
         var captured = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
         var loaded = WithAtomizer(
             Ledger([], CasEntry("parent", parent, captured.Reference)),
-            AtomizerRegistry.PzgId);
+            AtomizerRegistry.GenericId);
         var source = Assert.Single(loaded.RequireDigestionSources());
         var absorbedParent = Assert.Single(source.Entries) with
         {
@@ -344,7 +344,7 @@ public sealed partial class DigestionAlignmentTests
 
             """;
         var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
-        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var atomized = GenericAtomizer.Atomize(sourceBytes);
         var parent = Assert.Single(atomized.Claims);
         var plan = Assert.Single(atomized.ClausePlans);
         var first = plan.Children[0];
@@ -352,7 +352,7 @@ public sealed partial class DigestionAlignmentTests
         var firstCapture = DigestionCasStore.Capture(first.RawBytes.AsSpan());
         var baseline = WithAtomizer(
             Ledger([], CasEntry("parent", parent, parentCapture.Reference)),
-            AtomizerRegistry.PzgId);
+            AtomizerRegistry.GenericId);
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
         var firstId = firstCapture.Reference["sha256:".Length..];
@@ -471,7 +471,7 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(parentBytes, [parentCapture, firstCapture, invalidCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => atomized);
+            _ => (_) => atomized);
 
         Assert.All([firstId, invalidId], childId => Assert.Equal(
             DigestionReceiptAlignment.Rejected,
@@ -517,14 +517,14 @@ public sealed partial class DigestionAlignmentTests
 
             """;
         var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
-        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var atomized = GenericAtomizer.Atomize(sourceBytes);
         var parent = Assert.Single(atomized.Claims);
         var first = Assert.Single(atomized.ClausePlans).Children[0];
         var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
         var childCapture = DigestionCasStore.Capture(first.RawBytes.AsSpan());
         var baseline = WithAtomizer(
             Ledger([], CasEntry("parent", parent, parentCapture.Reference)),
-            AtomizerRegistry.PzgId);
+            AtomizerRegistry.GenericId);
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
         var childId = childCapture.Reference["sha256:".Length..];

@@ -1,0 +1,17 @@
+**定理 2.1（单侧平方缺陷的实际分量分解）。** 对每个 $j\ge0$ 和 $d\in\{L,R\}$，令 $e_d^{R_\ell}(j)$ 使用 $R_\ell$ 自身的 $q_0,p_j^d$ 定义。则
+
+$$
+e_d^P(j)=\sum_{\ell=1}^Lw_\ell e_d^{R_\ell}(j).
+\tag{2.1}
+$$
+
+在扩展非负实数中，若 $A_{R_\ell}=A_{R_\ell}(0)$，则
+
+$$
+\max_\ell\sqrt{w_\ell}\,A_{R_\ell}\le A_P
+\le\sum_{\ell=1}^L\sqrt{w_\ell}\,A_{R_\ell}.
+\tag{2.2}
+$$
+
+因此 $A_P<\infty$ 当且仅当每个正权分量的 $A_{R_\ell}<\infty$。这同样适用于尚未合并的正权隐藏闭类；相同可见律的重复只改变分解的写法。
+

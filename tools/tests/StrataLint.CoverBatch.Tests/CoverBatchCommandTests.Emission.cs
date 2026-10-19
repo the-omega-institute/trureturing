@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -186,6 +187,21 @@ public sealed partial class CoverBatchCommandTests
             path => File.ReadAllBytes(Path.Combine(repositoryRoot, path)));
         foreach (var document in documents)
             WriteScribeFixture(root, document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
+        var raw = RawRepositorySnapshot.Create(documents
+            .Select(document => new RawRepositoryEntry(document.Path, document.Bytes))
+            .Concat(Directory.EnumerateFiles(Path.Combine(root, BackfillInventoryLoader.RootPath),
+                "source.toml", SearchOption.AllDirectories).Select(path => new RawRepositoryEntry(
+                    Path.GetRelativePath(root, path).Replace('\\', '/'), [.. File.ReadAllBytes(path)]))));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        var manifest = FileMapLoader.LoadSnapshot(snapshot);
+        var sourceEntries = BackfillInventoryLoader.LoadForDigestion(snapshot).RequireDigestionSources()
+            .Select(source => source.SourcePath).Where(path => manifest.Match(path).IsEmpty)
+            .Select(path => new FileMapEntry(path, FileMapKind.Data, FileMapAdmissionPlane.Content,
+                "none", ["reader"], ["SnapshotDecoder"], false, "none", null, "committed-source",
+                null, null, digestionSource: true));
+        WriteScribeFixture(root, FileMapLoader.RelativePath, Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(
+            new FileMapManifest(manifest.ResidencePolicy, manifest.Entries.Concat(sourceEntries)
+                .OrderBy(entry => entry.Pattern, StringComparer.Ordinal).ToImmutableArray(), manifest.ArtifactKinds)).AsSpan()));
     }
 
     private static void WriteValuesInputs(string root)

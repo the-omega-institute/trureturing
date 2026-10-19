@@ -70,7 +70,7 @@ public sealed partial class DigestionAlignmentTests
                     .Prepend(parentCapture)
                     .DistinctBy(static capture => capture.RelativePath, StringComparer.Ordinal)),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => new AtomizedTheoryDocument(
+            _ => (_) => new AtomizedTheoryDocument(
                 [parent],
                 [new DigestionSlice(true, parent.RawBytes)],
                 [new DigestionClausePlan(parent, children.ToImmutableArray())],
@@ -126,7 +126,7 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(parentBytes, childCaptures.Prepend(parentCapture)),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => new AtomizedTheoryDocument(
+            _ => (_) => new AtomizedTheoryDocument(
                 [parent],
                 [new DigestionSlice(true, parent.RawBytes)],
                 [new DigestionClausePlan(parent, children.ToImmutableArray())],
@@ -175,7 +175,7 @@ public sealed partial class DigestionAlignmentTests
             ledger,
             Snapshot(parentBytes.ToArray(), [captured]),
             DigestionAlignmentMode.Ingest,
-            _ => (_, _) => invalid);
+            _ => (_) => invalid);
 
         Assert.Contains(result.Findings, finding => finding.Contains(
             "clause plan",
@@ -215,7 +215,7 @@ public sealed partial class DigestionAlignmentTests
             ledger,
             Snapshot(parentBytes.ToArray(), [captured]),
             DigestionAlignmentMode.Ingest,
-            _ => (_, _) => invalid);
+            _ => (_) => invalid);
 
         Assert.Contains(result.Findings, finding => finding.Contains(
             "do not tile",
@@ -236,10 +236,10 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) =>
+            _ => (_) =>
             {
                 calls++;
-                return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+                return GenericAtomizer.Atomize(sourceBytes);
             },
             changes: changes);
 
@@ -274,10 +274,10 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) =>
+            _ => (_) =>
             {
                 calls++;
-                return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+                return GenericAtomizer.Atomize(sourceBytes);
             },
             changes: RawChangeSet.Create([parentPath]));
 
@@ -289,8 +289,7 @@ public sealed partial class DigestionAlignmentTests
 
     [Theory]
     [InlineData("docs/source.md")]
-    [InlineData("Meta/Digestion/atomizers.toml")]
-    [InlineData("tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs")]
+    [InlineData("tools/StrataLint.Engine/Digestion/Atomizers/GenericAtomizer.cs")]
     public void AdmissionRechecksAllClauseChainsWhenAtomizerInputIsInDelta(string changedPath)
     {
         var (sourceBytes, _, candidate, parentCapture, childCapture) =
@@ -300,10 +299,10 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) =>
+            _ => (_) =>
             {
                 calls++;
-                return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+                return GenericAtomizer.Atomize(sourceBytes);
             },
             changes: RawChangeSet.Create([changedPath]));
 
@@ -323,10 +322,10 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
             DigestionAlignmentMode.Admission,
-            _ => (_, _) =>
+            _ => (_) =>
             {
                 calls++;
-                return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+                return GenericAtomizer.Atomize(sourceBytes);
             },
             changes: RawChangeSet.Create([parentCapture.RelativePath]));
 

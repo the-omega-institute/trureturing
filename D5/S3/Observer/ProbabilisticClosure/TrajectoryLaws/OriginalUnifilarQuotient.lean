@@ -383,7 +383,7 @@ private theorem actual_class_cylinder (θ : Presentation H) (hu : RowUnifilar θ
     · exact cylinder_measurable t n h w
     · exact MeasurableSet.empty
   rw [measureReal_def,Measure.map_apply (by
-    exact (measurable_pi_lambda _ fun t => (measurable_of_finite (classOf θ.matrix)).comp
+    exact (Measurable.of_eval fun t => (measurable_of_finite (classOf θ.matrix)).comp
       ((measurable_pi_apply t).comp measurable_fst)).prodMk measurable_snd)
     (cylinder_measurable t n q w),he]
   change J.real (⋃ h, f h) = _
@@ -424,7 +424,7 @@ theorem actual_marked_quotient [MeasurableSpace H] [MeasurableSingletonClass H]
   let F : PathSpace H → PathSpace (FutureClass (trim θ).matrix) :=
     fun z => (fun t => originalClass θ t z,z.2)
   have hF : Measurable F :=
-    (measurable_pi_lambda _ fun t => originalClass_measurable θ t).prodMk measurable_snd
+    (Measurable.of_eval (fun t => originalClass_measurable θ t)).prodMk measurable_snd
   have hmap : markedLaw θ = (retainedLaw θ : Measure _).map (classPath (trim θ).matrix) := by
     change ((retainedLaw θ : Measure _).map (includePath θ)).map F = _
     rw [Measure.map_map hF (inclusion_measurable θ)]

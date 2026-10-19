@@ -2,6 +2,8 @@
 # Requires Bash, git, and the SDK selected by global.json.
 # BASE selects the comparison revision (default origin/dev). PATHS supplies an
 # existing NUL-separated manifest instead of computing tracked and untracked changes.
+# EMIT_FULL_REPORT explicitly consumes an existing complete report bundle instead
+# of producing a scoped report. Its input and material checks remain mandatory.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
@@ -32,16 +34,26 @@ fi
 
 dotnet build "$PROJECT" --configuration Release --nologo --verbosity quiet
 SCRIBE_DLL="$ROOT/tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll"
-LEAN_TARGETS="$(dotnet "$SCRIBE_DLL" lean-inputs --paths-from "$PATHS_FILE")"
-[[ -n "$LEAN_TARGETS" ]] || { echo 'scribe: Lean input scope is empty' >&2; exit 2; }
-LEAN_TARGETS="${LEAN_TARGETS//$'\n'/ }"
-make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS"
+consumer_args=(--role scribe-consumer)
+emit_args=(--paths-from "$PATHS_FILE")
+if [[ -n "${EMIT_FULL_REPORT:-}" ]]; then
+  LEAN_REPORT="$EMIT_FULL_REPORT"
+  [[ "$LEAN_REPORT" == /* ]] || LEAN_REPORT="$ROOT/$LEAN_REPORT"
+  consumer_args+=(--report "$LEAN_REPORT" --validate-materials)
+else
+  LEAN_TARGETS="$(dotnet "$SCRIBE_DLL" lean-inputs --paths-from "$PATHS_FILE")"
+  [[ -n "$LEAN_TARGETS" ]] || { echo 'scribe: Lean input scope is empty' >&2; exit 2; }
+  LEAN_TARGETS="${LEAN_TARGETS//$'\n'/ }"
+  make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS"
+  consumer_args+=(--report "$LEAN_REPORT" --targets "$LEAN_TARGETS")
+  emit_args+=(--scoped)
+fi
 
 run_scribe() {
   local command=(dotnet "$SCRIBE_DLL" "$1")
   if [[ "$1" == "emit" ]]; then
-    command+=(--paths-from "$PATHS_FILE" --scoped)
-    "$CONSUMER" --role scribe-consumer --report "$LEAN_REPORT" --targets "$LEAN_TARGETS" -- "${command[@]}"
+    command+=("${emit_args[@]}")
+    "$CONSUMER" "${consumer_args[@]}" -- "${command[@]}"
   else
     "${command[@]}"
   fi

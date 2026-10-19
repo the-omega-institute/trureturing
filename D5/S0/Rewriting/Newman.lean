@@ -6,7 +6,7 @@
    digest: Terminating locally confluent rewrite systems have unique reachable normal forms. -/
 
 import Mathlib.Logic.Relation
-import Mathlib.Logic.ExistsUnique
+import Mathlib.Basic.ExistsUnique
 
 theorem newman_unique_normal_form {α : Type*} (r : α → α → Prop)
     (termination : WellFounded (Function.swap r))

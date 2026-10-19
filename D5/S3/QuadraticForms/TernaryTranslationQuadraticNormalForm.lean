@@ -272,7 +272,7 @@ private lemma fourier_shift_real (f : (Fin d → ZMod 3) → K) (b : (Fin d → 
     intro r _
     rw [(chi_laws t r 0).2.2.2.2.2]
     have hi : star ((algebraMap (ZMod 2) K) (b r)) = (algebraMap (ZMod 2) K) (b r) := by
-      ext <;> simp [QuadraticAlgebra.algebraMap_eq]
+      ext <;> simp
     rw [hi]
     exact mul_comm _ _
   · simp only [hat, ft, (chi_laws (0 : (Fin d → ZMod 3)) _ 0).2.1, one_mul, map_sum]

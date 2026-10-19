@@ -160,7 +160,43 @@ $$
 
 On the auxiliary two-dimensional factor take P+ = (1,i)(1,i)*/2 and P- = (1,-i)(1,-i)*/2. Their transpose exchanges them. Compress to these flag sectors with B+ and B-, and put E(X) = B+(X) + B-(X)^T and D(A) = A tensor P+ + A^T tensor P-. The lift D Phi E/2 has four completely positive branches for every complex PPT Phi. It is invariant under transpose on input and output, so its real restriction is IPT and complexifies back to the lift. The identity E D = 2 id makes the lift preserve composition. Completely positive insertion A tensor P+ and compression B+ recover Phi squared divided by two. This transfers entanglement breaking from the lifted square. The lift adapts the conjugate-flag construction rho tensor P+ + rho partially transposed tensor P- of Huber, Lami, Lancien and Müller-Hermes, arXiv v1, Section III.C, PDF p. 8, the second lemma labelled III.1. The map normalization, composition law and recovery are the consequences used here.
 
-**Definition 1.14 (Finite positive measure-and-prepare form).**
+**Definition 1.14 (Normalized finite separable mixtures).**
+
+$$\forall X \in \operatorname{Type},\; [\operatorname{Fintype}\left(X\right)] \forall Y \in \operatorname{Type},\; [\operatorname{Fintype}\left(Y\right)] \forall rho \in \operatorname{Matrix}\left(X \times Y, X \times Y, \mathbb{C}\right),\; \operatorname{IsSeparable}\left(rho\right) \Leftrightarrow (\exists n \in \mathbb{N},\; \exists p \in \operatorname{Fin}\left(n\right) \to \mathbb{R},\; \exists sigma \in \operatorname{Fin}\left(n\right) \to \operatorname{Matrix}\left(X, X, \mathbb{C}\right),\; \exists tau \in \operatorname{Fin}\left(n\right) \to \operatorname{Matrix}\left(Y, Y, \mathbb{C}\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; 0 \le p\left(i\right)) \land ((\sum_{i:\operatorname{Fin}\left(n\right)} (p\left(i\right)) = 1) \land ((\forall i \in \operatorname{Fin}\left(n\right),\; ((\operatorname{Matrix}.\operatorname{PosSemidef}\left(sigma\left(i\right)\right)) \land (\operatorname{Matrix}.\operatorname{trace}\left(sigma\left(i\right)\right) = 1)) \land ((\operatorname{Matrix}.\operatorname{PosSemidef}\left(tau\left(i\right)\right)) \land (\operatorname{Matrix}.\operatorname{trace}\left(tau\left(i\right)\right) = 1))) \land (rho = \sum_{i:\operatorname{Fin}\left(n\right)} (\operatorname{HSMul}.\operatorname{hSMul}\left((p\left(i\right): \mathbb{C}), \operatorname{Matrix}.\operatorname{kronecker}\left(sigma\left(i\right), tau\left(i\right)\right)\right))))))$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.IsSeparable` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A separable bipartite matrix is a finite convex mixture of tensor products of positive semidefinite trace-one matrices. The two index types are arbitrary finite types.
+
+**Definition 1.15 (The conditional ancillary matrix).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right),\; \forall P \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(r\right), \operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(r\right), K\right),\; \operatorname{weighted}\left(M, P\right) = \operatorname{fun} (u: \operatorname{Fin}\left(r\right)) \mapsto \operatorname{fun} (v: \operatorname{Fin}\left(r\right)) \mapsto \operatorname{Matrix}.\operatorname{trace}\left((M*(\operatorname{fun} (i: \operatorname{Fin}\left(n\right)) \mapsto \operatorname{fun} (j: \operatorname{Fin}\left(n\right)) \mapsto P\left((i, u), (j, v)\right)))\right)$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.weighted` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The effect M is paired by trace with each system slice of P; the remaining two coordinates index the ancillary matrix.
+
+**Theorem 1.16 (Positive conditional ancillary matrices).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right),\; \forall P \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(r\right), \operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(r\right), K\right),\; (\operatorname{Matrix}.\operatorname{PosSemidef}\left(M\right)) \Rightarrow ((\operatorname{Matrix}.\operatorname{PosSemidef}\left(P\right)) \Rightarrow (\operatorname{Matrix}.\operatorname{PosSemidef}\left(\operatorname{weighted}\left(M, P\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.weighted_psd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A positive effect and a positive joint input give a positive conditional ancillary matrix, by rank-one decomposition and positive congruence.
+
+**Definition 1.17 (Finite positive measure-and-prepare form).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right) \to_{l[K]} \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right),\; \operatorname{HasPrepare}\left(Phi\right) \Leftrightarrow (\exists k \in \mathbb{N},\; \exists M \in \operatorname{Fin}\left(k\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right),\; \exists N \in \operatorname{Fin}\left(k\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right),\; (\forall j \in \operatorname{Fin}\left(k\right),\; (\operatorname{Matrix}.\operatorname{PosSemidef}\left(M\left(j\right)\right)) \land (\operatorname{Matrix}.\operatorname{PosSemidef}\left(N\left(j\right)\right))) \land (\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right),\; Phi\left(A\right) = \sum_{j:\operatorname{Fin}\left(k\right)} (\operatorname{Matrix}.\operatorname{trace}\left((M\left(j\right) * A)\right) \cdot N\left(j\right))))$$
 
@@ -172,7 +208,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \fo
 
 A finite family of positive measurement matrices M and positive preparation matrices N represents Phi by the sum of trace(M(j) A) times N(j), for every input matrix A. The natural number k counts all terms; n and m are arbitrary input and output dimensions over an RCLike scalar field K. Scalar multiplication is displayed by a centered dot.
 
-**Theorem 1.15 (Positive measure-and-prepare maps break entanglement).**
+**Theorem 1.18 (Positive measure-and-prepare maps break entanglement).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right) \to_{l[K]} \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right),\; (\operatorname{HasPrepare}\left(Phi\right)) \Rightarrow (\operatorname{IsEB}\left(Phi\right))$$
 
@@ -184,7 +220,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \fo
 
 Every positive amplified input has separable output under a map with finite positive measure-and-prepare form. Positivity of each weighted matrix follows from a rank-one decomposition of the measurement matrix and positive congruence of the input; tensor products with the positive preparations then form a finite separable sum.
 
-**Theorem 1.16 (Composition preserves complete positivity).**
+**Theorem 1.19 (Composition preserves complete positivity).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall p \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right) \to_{l[K]} \operatorname{Matrix}\left(\operatorname{Fin}\left(p\right), \operatorname{Fin}\left(p\right), K\right),\; \forall Psi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right) \to_{l[K]} \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right),\; (\operatorname{MatrixMap}.\operatorname{IsCompletelyPositive}\left(Phi\right)) \Rightarrow ((\operatorname{MatrixMap}.\operatorname{IsCompletelyPositive}\left(Psi\right)) \Rightarrow (\operatorname{MatrixMap}.\operatorname{IsCompletelyPositive}\left((Phi) \circ_{l} (Psi)\right)))$$
 
@@ -196,7 +232,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \fo
 
 The composition of completely positive linear matrix maps is completely positive, over every RCLike field and all finite dimensions.
 
-**Theorem 1.17 (Double transposition preserves complete positivity).**
+**Theorem 1.20 (Double transposition preserves complete positivity).**
 
 $$\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right) \to_{l[\mathbb{C}]} \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), \mathbb{C}\right),\; (\operatorname{MatrixMap}.\operatorname{IsCompletelyPositive}\left(Phi\right)) \Rightarrow (\operatorname{MatrixMap}.\operatorname{IsCompletelyPositive}\left((\operatorname{LinearEquiv}.\operatorname{toLinearMap}\left(\operatorname{Matrix}.\operatorname{transposeLinearEquiv}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), \mathbb{C}, \mathbb{C}\right)\right)) \circ_{l} ((Phi) \circ_{l} (\operatorname{LinearEquiv}.\operatorname{toLinearMap}\left(\operatorname{Matrix}.\operatorname{transposeLinearEquiv}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}, \mathbb{C}\right)\right)))\right))$$
 
@@ -208,7 +244,7 @@ $$\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall Phi \in \opera
 
 For every completely positive complex-linear matrix map, transposing its input and output gives a completely positive map. Input and output dimensions may differ.
 
-**Theorem 1.18 (The three conjectures are equivalent).**
+**Theorem 1.21 (The three conjectures are equivalent).**
 
 $$(PPT2C \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{C}\right))) \land (\operatorname{IPT2}\left(\mathbb{C}\right) \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{R}\right)))$$
 
@@ -236,6 +272,7 @@ IPT² over either field in dimension 2n implies PPT² over ℂ in dimension n by
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.IsEB`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.IsIPT`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.IsPPT`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.IsSeparable`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.PPT2C`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.SEP`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.choi_psd_of_cp`
@@ -245,5 +282,7 @@ IPT² over either field in dimension 2n implies PPT² over ℂ in dimension n by
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.prepare_eb`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.ptFirst`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.weighted`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.weighted_psd`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)
 - Dependency: [D5/S3/Weil/Probability/FiniteGaussianSchoenberg](../../Weil/Probability/FiniteGaussianSchoenberg.md)

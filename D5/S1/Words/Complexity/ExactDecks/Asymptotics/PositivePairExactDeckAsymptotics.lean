@@ -27,6 +27,7 @@ Library search: no project declaration packages the exact upper injection or
 -/
 
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckLowerBound
 import D5.S1.Words.Complexity.ExactDecks.UpperBound.FullLyndonRecovery
 
@@ -279,7 +280,7 @@ theorem actual_exactKDeckImage_weightedLyndon_isTheta
             (n ^ coordinate.1.2.1.length + 1) := hinjection
       _ ≤ ∏ coordinate : ↑retained,
           (2 * n ^ coordinate.1.2.1.length) := by
-        apply Finset.prod_le_prod (fun _ _ => Nat.zero_le _)
+        apply Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _)
         intro coordinate _
         have hpow : 1 ≤ n ^ coordinate.1.2.1.length :=
           Nat.one_le_pow coordinate.1.2.1.length n (by omega)

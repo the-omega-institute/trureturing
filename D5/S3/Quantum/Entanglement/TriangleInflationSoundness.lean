@@ -105,7 +105,7 @@ private theorem cellWeight_bounds (S : InflationSpec Copy Node) (R : ResponseMod
     0 ≤ cellWeight S R o u ∧ cellWeight S R o u ≤ 1 := by
   classical
   exact ⟨Finset.prod_nonneg (fun v _ => (nodeResponse_bounds S R v (o v) u).1),
-    Finset.prod_le_one (fun v _ => (nodeResponse_bounds S R v (o v) u).1)
+    Finset.prod_le_one₀ (fun v _ => (nodeResponse_bounds S R v (o v) u).1)
       (fun v _ => (nodeResponse_bounds S R v (o v) u).2)⟩
 
 private theorem cellWeight_integrable (S : InflationSpec Copy Node) (R : ResponseModel)
@@ -175,7 +175,7 @@ private theorem blockWeight_integrable (S : InflationSpec Copy Node) (R : Respon
   have hn : 0 ≤ blockWeight S R J o u :=
     Finset.prod_nonneg (fun v _ => (nodeResponse_bounds S R v (o v) u).1)
   have hle : blockWeight S R J o u ≤ 1 :=
-    Finset.prod_le_one (fun v _ => (nodeResponse_bounds S R v (o v) u).1)
+    Finset.prod_le_one₀ (fun v _ => (nodeResponse_bounds S R v (o v) u).1)
       (fun v _ => (nodeResponse_bounds S R v (o v) u).2)
   simpa [Real.norm_eq_abs, abs_of_nonneg hn] using hle
 

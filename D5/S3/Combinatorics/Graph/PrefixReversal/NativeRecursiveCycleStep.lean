@@ -11,6 +11,7 @@
    full independent parent domain is earned by NativeOuterChildAssembly.
    This is not yet an all-n induction: the next J-state still needs its
    own b-cut membership and E/O endpoint propagation. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 
 set_option autoImplicit false

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:12e5c5ae2a8cf6ce7e9f44bc49f184ee62f6fb29f21a1081f491b4dedffe0ca5
-  normalized_sha256: sha256:12e5c5ae2a8cf6ce7e9f44bc49f184ee62f6fb29f21a1081f491b4dedffe0ca5
-cas_ref: sha256:12e5c5ae2a8cf6ce7e9f44bc49f184ee62f6fb29f21a1081f491b4dedffe0ca5
-coverage_gids:
-  - gid: D5/S3/Observer/MetricGeometry/OutputTrajectoryError.output_trajectory_error
-    target_statement_id: sha256:002ee4468f4b4472a0e1bed0dbf4ec457fff1381bae1380512089f53f7bc57e0
-receipts:
-  unresolved_subitems: []

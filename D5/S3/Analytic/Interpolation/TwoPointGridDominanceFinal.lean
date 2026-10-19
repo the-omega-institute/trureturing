@@ -6,6 +6,7 @@
    utility: none
    digest: Two-point grid dominance and the exact diagonal equality criterion. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Analytic.Interpolation.TwoPointGridDominanceBound
 import D5.S3.Analytic.Knapsack.GreedyFillPair
 

@@ -18,8 +18,7 @@ theorem zmod_hom_to_torsion_free_eq_zero {n : ℕ} (hn : n ≠ 0) {A : Type*}
     f = 0 := by
   ext x
   change f x = 0
-  apply nsmul_right_injective hn
-  change n • f x = n • (0 : A)
+  apply (nsmul_eq_zero_iff_right hn).mp
   simpa only [map_nsmul, map_zero, nsmul_zero] using
     congrArg f (ZModModule.char_nsmul_eq_zero n x)
 

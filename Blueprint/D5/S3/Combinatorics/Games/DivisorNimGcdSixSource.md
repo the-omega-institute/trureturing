@@ -55,3 +55,4 @@ The source-reduction information registration is validated. The parent informati
 - Truth anchor: `D5/S3/Combinatorics/Games/DivisorNimGcdSixSource.gcd_six_parent_tail`
 - Truth anchor: `D5/S3/Combinatorics/Games/DivisorNimGcdSixSource.gcd_six_source_reduction`
 - Dependency: [D5/S3/Combinatorics/Games/DivisorNimBound](DivisorNimBound.md)
+- Dependency: [D5/S3/Combinatorics/Games/DivisorNimPeriodPropagation](DivisorNimPeriodPropagation.md)

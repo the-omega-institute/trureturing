@@ -252,8 +252,8 @@ theorem leaf_neighbor_isUniversal {V : Type*} [Fintype V] [DecidableEq V]
           apply mem_singleton.mpr
           exact Set.mem_singleton_iff.mp
             (D.incidenceSet_inter_incidenceSet_subset hxy
-              ⟨(mem_incidenceFinset _ _ _).mp (mem_inter.mp he).1,
-                (mem_incidenceFinset _ _ _).mp (mem_inter.mp he).2⟩))
+              ⟨SimpleGraph.mem_incidenceFinset.mp (mem_inter.mp he).1,
+                SimpleGraph.mem_incidenceFinset.mp (mem_inter.mp he).2⟩))
         _ = 1 := card_singleton _
     have hunion : (D.incidenceFinset x ∪ D.incidenceFinset y).card ≤ D.edgeFinset.card :=
       card_le_card (union_subset (D.incidenceFinset_subset x) (D.incidenceFinset_subset y))
@@ -301,7 +301,7 @@ theorem leaf_neighbor_isUniversal {V : Type*} [Fintype V] [DecidableEq V]
       apply Finset.disjoint_left.mpr
       intro e hi he
       obtain ⟨i, _, rfl⟩ := mem_image.mp he
-      have hm := ((mem_incidenceFinset _ _ _).mp hi).2
+      have hm := (SimpleGraph.mem_incidenceFinset.mp hi).2
       simp only [Sym2.mem_iff] at hm
       rcases hm with hm | hm
       · exact havoidx _ hm.symm

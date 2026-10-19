@@ -77,7 +77,7 @@ private def EdgesRooted {n : Nat} (R : Setoid (ZMod n))
 private def EdgesRelated {n : Nat} (R : Setoid (ZMod n))
     (es : List (ZMod n × ZMod n)) : Prop := ∀ e ∈ es, R.r e.1 e.2
 
-private def formsEdges (n k : Nat) : List Form → List (ZMod n × ZMod n)
+def formsEdges (n k : Nat) : List Form → List (ZMod n × ZMod n)
   | [] => []
   | f :: fs => formPair n k f :: formsEdges n (k + 1) fs
 
@@ -186,7 +186,7 @@ private theorem odd_cap_rooted (n j : Nat) (R : Setoid (ZMod n))
     Form.V, Form.VI] at he ⊢
   all_goals aesop (add safe forward [rooted_forward, rooted_backward])
 
-private theorem even_edges_peel {h : Half} {m n j : Nat} {s : State}
+theorem even_edges_peel {h : Half} {m n j : Nat} {s : State}
     (i : StepIndex s) (p : EvenTail h m (stepTarget i))
     (hn : n = 2 * (j + m + 1)) :
     formsEdges n j (evenTailLowForms (m := m + 1) ⟨i, p⟩ ++
@@ -209,7 +209,7 @@ private theorem even_edges_peel {h : Half} {m n j : Nat} {s : State}
     (evenTailLowForms p ++ (evenTailHighForms p).reverse), hlen, hk]
   rfl
 
-private theorem odd_edges_peel {h : Half} {m n j : Nat} {s : State}
+theorem odd_edges_peel {h : Half} {m n j : Nat} {s : State}
     (i : StepIndex s) (p : OddTail h m (stepTarget i))
     (hn : n + 1 = 2 * (j + m + 1)) :
     formsEdges n j (oddTailLowForms (m := m + 1) ⟨i, p⟩ ++
@@ -333,7 +333,7 @@ private theorem formsEdges_get (n k : Nat) (xs : List Form) (i : Fin xs.length) 
       · simp [formsEdges]
       · simpa [formsEdges, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using ih (k+1) i
 
-private theorem choice_edges_mem {t : Nat} (c : Choices t) (e : ZMod (3*t) × ZMod (3*t)) :
+theorem choice_edges_mem {t : Nat} (c : Choices t) (e : ZMod (3*t) × ZMod (3*t)) :
     e ∈ formsEdges (3*t) 2 (choiceForms c) ↔ ∃ i, chosenPair c i = e := by
   constructor
   · intro he
@@ -359,7 +359,7 @@ private theorem choice_edges_related {t : Nat} (c : Choices t) :
   obtain ⟨i, hi⟩ := (choice_edges_mem c e).mp he
   exact Relation.EqvGen.rel _ _ ⟨i, hi⟩
 
-private theorem even_decode_forms (r : Nat) (hr : 1 ≤ r) {h : Half}
+theorem even_decode_forms (r : Nat) (hr : 1 ≤ r) {h : Half}
     (p : EvenPath h (3*r-3)) :
     choiceForms (evenPathChoices r hr p) = evenPathForms p := by
   apply List.ext_get
@@ -368,7 +368,7 @@ private theorem even_decode_forms (r : Nat) (hr : 1 ≤ r) {h : Half}
     simp [choiceForms, evenPathChoices]
     rfl
 
-private theorem odd_decode_forms (r : Nat) (hr : 1 ≤ r) {h : Half}
+theorem odd_decode_forms (r : Nat) (hr : 1 ≤ r) {h : Half}
     (p : OddPath h (3*r-1)) :
     choiceForms (oddPathChoices r hr p) = oddPathForms p := by
   apply List.ext_get
@@ -424,7 +424,7 @@ private theorem balanced_edges_rooted (t : Nat) (ht : 2 ≤ t) (c : Choices t)
         rw [← odd_decode_forms r hr p.1]
         exact choice_edges_related _
 
-private theorem active_iff_of_related {t : Nat} (c : Choices t)
+theorem active_iff_of_related {t : Nat} (c : Choices t)
     {u v : ZMod (3*t)} (h : (supportSetoid c).r u v) : Active c u ↔ Active c v := by
   induction h with
   | rel u v h =>
@@ -436,7 +436,7 @@ private theorem active_iff_of_related {t : Nat} (c : Choices t)
   | symm u v h ih => exact ih.symm
   | trans u v w h1 h2 ih1 ih2 => exact ih1.trans ih2
 
-private theorem active_rooted (t : Nat) (ht : 2 ≤ t) (c : Choices t)
+theorem active_rooted (t : Nat) (ht : 2 ≤ t) (c : Choices t)
     (hc : Balanced c) (v : ActiveVertex c) : Rooted (supportSetoid c) v.1 := by
   obtain ⟨i, hi⟩ := v.2
   have he := balanced_edges_rooted t ht c hc (chosenPair c i)

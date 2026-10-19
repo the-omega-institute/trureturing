@@ -1,0 +1,78 @@
+**Theorem 79.1 (an explicit Cassels pairing).** Let $q,r$ be distinct primes with
+
+$$q\equiv1\pmod{24},\qquad r\equiv19\pmod{24},\qquad (5/q)=(5/r)=(q/r)=1.$$
+
+Put $D=qr$ and $E_D:y^2=x(x+5D)(x-15D)$. In the complete two-descent pair convention $(x,x+5D)$, the classes
+
+$$\lambda=(q,1),\qquad \mu=(1,q)$$
+
+belong to the full two-Selmer group, and their multiplicative Cassels pairing is
+
+$$\boxed{\langle\lambda,\mu\rangle=\left(\frac{-5r}{q}\right)_4.}$$
+
+Here the rational quartic symbol of the quadratic residue $-5r$ is its $(q-1)/4$ power modulo $q$, identified with $\{1,-1\}$. If this symbol is $-1$, then $\operatorname{rank}E_D(\mathbb Q)\le1$, without assuming finiteness of $\Sha$.
+
+Consequently, if $B_N=DC^2$ is an actual golden ternary block and this quartic symbol is $-1$, all conclusions of Theorem 78.1 hold: the original translated point generates the full free rational group, every non-two-torsion point supplies the denominator bound, and an affine integral point nonsingular at both $q,r$ forces $C=1$. The quartic-parametrization conclusion of Corollary 78.2 also holds with its mutual-nonresidue hypothesis replaced by the hypotheses of this theorem and the negative quartic symbol.
+
+**Proof: Selmer space and pairing convention.** Since at most one prime is three modulo four, reciprocity gives $(r/q)=1$. The corrected local computation in §78 for type $(1,19)$ and $\beta=0$ gives full Selmer dimension five, with equations
+
+$$a=y_5,\qquad x_5+x_r+y_5+y_r=0$$
+
+in coordinates $(a,x_5,x_q,x_r,y_5,y_q,y_r)$. The two classes in the statement satisfy these equations. The rational two-torsion classes $(-3,5qr)$ and $(-5qr,1)$, together with $(-15,5)$, $\lambda$ and $\mu$, are independent: their respective binary coordinate masks are $113,14,19,4,32$. The $x_r$, $y_r$, $a$, $x_q$, and $y_q$ coordinates successively verify independence. Thus the pure Selmer dimension is three.
+
+Use the tangent-plane pairing formula in Shukla–Stoll, *The Cassels–Tate pairing on 2-Selmer groups of elliptic curves*, [arXiv:2302.01640](https://arxiv.org/pdf/2302.01640), §3.2, equations (3.9)–(3.10), printed pages 6–7. Its roots here are $0,-5qr,15qr$. The formula is independent of choices and agrees with the Cassels–Tate pairing. The same primary source, printed page 2, states that the Mordell–Weil image lies in the kernel, which is the image of the four-Selmer group. These statements require no finiteness of $\Sha$.
+
+The triple for $\lambda$ is $(q,1,q)$. Its auxiliary conics are
+
+$$H_1:z_2^2-qz_3^2=20qr t^2,\qquad H_2:z_1^2-z_3^2=15r t^2,\qquad H_3:z_2^2-qz_1^2=5qr t^2.$$
+
+Since $\lambda$ is locally soluble everywhere, each conic is. The Hasse principle gives rational $a,b$ with
+
+$$a^2-qb^2=5qr.$$
+
+Normalization to $t=1$ is valid because a nontrivial rational point with $t=0$ would make $q$ a square. Choose $Q_3=(t,z_1,z_2)=(1,b,a)$, $Q_1=(t,z_2,z_3)=(1,2a,2b)$ and
+
+$$Q_2=(t,z_1,z_3)=\left(1,\frac{15r+1}{2},\frac{1-15r}{2}\right).$$
+
+The relevant tangent forms are
+
+$$L_2=\frac{15r+1}{2}z_1-\frac{1-15r}{2}z_3-15rt,\qquad L_3=az_2-qbz_1-5qrt.$$
+
+The triple for $\mu$ is $(1,q,q)$, so the pairing is
+
+$$\prod_v(L_2(P_v)L_3(P_v),q)_v,$$
+
+where $P_v$ is a local covering point avoiding tangent zeros and $(\ ,\ )_v$ denotes the quadratic Hilbert symbol. Dividing the conic equations or tangent forms by nonzero rational constants does not change this global product, by Hilbert reciprocity.
+
+**Proof: the places away from $q$.** At $2,3,5,r$ and infinity, $q$ is locally a square, by its residues, the displayed quadratic symbols, and positivity. All these factors are one. The same holds at every other place where $q$ is a square.
+
+Let $p\nmid30qr$ be odd and $q$ a nonsquare unit in $\mathbb Q_p$. The norm equation forces $a,b$ to be $p$-integral: otherwise their leading terms cannot cancel modulo $p$, contradicting the unit right side. Thus both chosen tangent points are integral on smooth conics modulo $p$, with $t=1$, and both tangent forms are primitive since their $t$ coefficients are units.
+
+A primitive integral local covering point has $t$ a unit. Otherwise $H_3$ and nonsquareness of $q$ force $p\mid z_1,z_2$, and $H_2$ then forces $p\mid z_3$, contradicting primitivity. Normalize $t=1$. Each nonzero tangent evaluation has even valuation. Indeed, if the reduced point differs from the tangency point, the evaluation is a unit. Near the tangency point an integral change of coordinates puts the smooth conic and its tangent into the form
+
+$$a_0XZ+b_0Y^2+c_0YZ+d_0Z^2=0,\qquad Z=0,$$
+
+with $a_0,b_0$ units. Near $(1,0,0)$ one has
+
+$$Z(a_0X+c_0Y+d_0Z)=-b_0Y^2,$$
+
+so the valuation of the tangent coordinate $Z$ is even. This applies to both $L_2$ and $L_3$. Local points can avoid their finitely many zero loci on the smooth covering. Since the Hilbert symbol with a nonsquare unit at an odd prime depends only on valuation parity, the factor is one. This accounts also for possible auxiliary primes in the rational conic solution.
+
+**Proof: the factor at $q$.** The terms in $a^2-qb^2$ have opposite valuation parity, while their difference has valuation one. Therefore $v_q(b)=0$ and $v_q(a)\ge1$. Write $a=qA$ with $A$ integral at $q$, so
+
+$$b^2+5r=qA^2,\qquad b^2\equiv-5r\pmod q.$$
+
+Take $t=1$, $z_1=-b$, $z_2=qA$, and use Hensel's lemma to choose $z_3^2=b^2-15r$ with $z_3\equiv-2b\pmod q$. This is a local covering point. Direct substitution gives
+
+$$L_3=2qb^2,\qquad L_2\equiv\frac{b(3b+1)^2}{2}\pmod q.$$
+
+If $3b+1\equiv0\pmod q$, choose the other root, $z_3\equiv2b$. Then
+
+$$L_2\equiv-\frac{3b(b-1)^2}{2}\pmod q.$$
+
+This square factor is nonzero in that exceptional case because $q>3$. Thus one choice always makes $L_2$ a unit. As $(2/q)=(-1/q)=(-3/q)=1$, the $L_3$ Hilbert factor is one and the $L_2$ factor is $(b/q)$. From $b^2\equiv-5r\pmod q$ this equals $(-5r/q)_4$, proving the formula.
+
+A negative pairing value gives rank at least two for the alternating form on the three-dimensional pure Selmer space. Its radical has dimension at most one and contains the Mordell–Weil image modulo finite torsion. Hence the rational rank is at most one. Under an actual-block premise, §78's original point is nonzero in the torsion-free intersection of nonsingular subgroups, so the rank is exactly one. The rest of its integral-preimage, original Pell-index, height and denominator proof depends only on this rank bound and the unchanged original support inputs, proving the stated consumers.
+
+This gives a quartic-symbol guard in the mutual-residue type $(1,19)$. The type $(7,13)$, the positive quartic-symbol subcase, and unrestricted higher-rank cases are not decided. No infinitude, previously surviving numerical pair, priority over all literature, or global WSS conclusion is asserted.
+

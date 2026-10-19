@@ -4,10 +4,12 @@ set -euo pipefail
 ROLE=""
 REPORT=""
 TARGETS=""
+VALIDATE_MATERIALS=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --role) ROLE="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
+    --validate-materials) VALIDATE_MATERIALS=1; shift ;;
     --targets)
       [[ $# -ge 2 && -n "$2" ]] || { echo 'report-consumer: --targets must be nonempty' >&2; exit 2; }
       TARGETS="$2"; shift 2 ;;
@@ -15,6 +17,10 @@ while [[ $# -gt 0 ]]; do
     *) echo "report-consumer: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
+if [[ "$VALIDATE_MATERIALS" == 1 && -n "$TARGETS" ]]; then
+  echo 'report-consumer: --validate-materials requires a full report' >&2
+  exit 2
+fi
 
 REPAIR='run make lean-report first'
 if [[ -n "$TARGETS" ]]; then
@@ -50,6 +56,9 @@ if [[ -n "$TARGETS" ]]; then
   "$INPUT_VERIFIER" verify-scoped --repository "$ROOT" --report "$SNAPSHOT_REPORT" --targets "$TARGETS"
 else
   "$INPUT_VERIFIER" verify --repository "$ROOT" --report "$SNAPSHOT_REPORT"
+  if [[ "$VALIDATE_MATERIALS" == 1 ]]; then
+    python3 -B "$ROOT/tools/lean-inspector/publication.py" validate "$SNAPSHOT_REPORT" --repository "$ROOT"
+  fi
 fi
 set +e
 "$SUPERVISOR" --role "$ROLE" -- env STRATALINT_LEAN_REPORT="$SNAPSHOT_REPORT" "$@"

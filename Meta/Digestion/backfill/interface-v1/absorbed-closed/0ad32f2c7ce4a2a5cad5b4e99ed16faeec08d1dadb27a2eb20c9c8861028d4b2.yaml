@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
-  normalized_sha256: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
-cas_ref: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
-coverage_gids:
-  - gid: D5/S0/Diagonal/CaptureIntersectionCardinality.capture_intersection_cardinality
-    target_statement_id: sha256:83cc9ba5cfdc0ca33adb169d9437c5efb5517df833109ba9878cbd690ed30c88
-receipts:
-  unresolved_subitems: []

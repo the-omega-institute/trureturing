@@ -68,10 +68,10 @@ theorem conull_measurable_injection_probability_isomorphism
     letI : IsProbabilityMeasure
         (Measure.map (fun z : Set.range q => (z : O)) rangeMeasure) :=
       h_range_map.symm ▸ inferInstance
-    exact Measure.isProbabilityMeasure_of_map (fun z : Set.range q => (z : O))
+    exact Measure.isProbabilityMeasure_of_map measurable_subtype_coe.aemeasurable
   let mu : Measure X := rangeMeasure.map embedding.equivRange.symm
   letI : IsProbabilityMeasure mu :=
-    Measure.isProbabilityMeasure_map embedding.equivRange.symm.measurable.aemeasurable
+    inferInstance
   refine ⟨mu, inferInstance, ?_, ?_⟩
   · calc
       Measure.map q mu =

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e6bb853b3a0b26302834039841f589e17d37d4b6ed06575d223431ce60a063d1
-  normalized_sha256: sha256:e6bb853b3a0b26302834039841f589e17d37d4b6ed06575d223431ce60a063d1
-cas_ref: sha256:e6bb853b3a0b26302834039841f589e17d37d4b6ed06575d223431ce60a063d1
-coverage_gids:
-  - gid: D5/S1/Recurrence/BivariateWordSeries.bookkeeping_series_self_functional_equation
-    target_statement_id: sha256:b07cc877912e1f67284221fd544f4c477566698c474180c585466b47cb5a90f9
-receipts:
-  unresolved_subitems: []

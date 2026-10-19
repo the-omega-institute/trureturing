@@ -90,7 +90,6 @@ theorem circle_double_cover_history_lift :
       have squareExpPi : Circle.exp Real.pi ^ 2 = 1 := by
         rw [← Circle.exp_natCast_mul]
         convert Circle.exp_two_pi using 1
-        norm_num
       have coerced : ((Circle.exp Real.pi : Circle) : ℂ) ^ 2 = 1 :=
         congrArg (fun point : Circle => (point : ℂ)) squareExpPi
       rcases (sq_eq_one_iff.mp coerced) with hOne | hNegOne

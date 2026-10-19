@@ -164,7 +164,6 @@ internal static partial class RepositoryPathPolicy
             or "Library/queries.yaml" or AssumptionRegistryPath
             or "D5/X_Frontier/HeartsAuthorizations.md"
             or "Golden/values-kernels.toml" or "Golden/gate-authority-roots.toml"
-            or "Meta/Digestion/atomizers.toml"
             or CacheProductionActionPath
             or CachePublicationWorkflowPath
             or TruthReleasePublicationWorkflowPath

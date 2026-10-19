@@ -6,6 +6,7 @@
    utility: none
    digest: The unique doubled-row integer series has dyadic-neighbor odd support. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport
 
 open PowerSeries

@@ -6,6 +6,7 @@
    utility: none
    digest: The fourth iterate of A396798 has coefficients above degree two divisible by eight. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.IterateProductFourFiveEighthModEight
 
 open PowerSeries

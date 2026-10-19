@@ -32,6 +32,7 @@ internal sealed class SupportAndEdgeWordReflectionDocument : IScribeDocumentDefi
             Def("natChi", "Character on a natural-number action", NatCharacterFormula(), "The displayed expression is the literal body of natChi. The two local counts test fixed points and nonfixed points fixed by the square. Dividing the latter by two uses Nat.div; both counts and the quotient are cast to integers."),
             Def("natProd", "Word action on natural numbers", NatProdFormula(), "The list head acts after the tail, matching multiplication of permutations."),
             Def("evalMoment", "Recursive edge-word evaluator", EvalFormula(), "At depth zero evaluate the accumulated word. At positive depth append each edge once and sum the recursive values. Repeated edges and all edge orders are included."),
+            Thm("sum_fin_cons", "Sum over a function by its first value", SumFinConsFormula(), "The equivalence Fin.consEquiv decomposes a function on Fin(m + 1) into its first value and its restriction to the remaining m coordinates. Summation over this product gives the two nested sums."),
             Thm("evalMoment_sound", "Soundness of the evaluator", EvalSoundFormula(), "Induction on the remaining word length identifies the recursive sum with the sum over functions Fin r → Fin m. Natural-number actions agree with the corresponding permutations on Fin n, including repeated or equal endpoints."),
             Thm("evalMoment_two_fin", "Two-prefix decomposition", TwoFinFormula(), "Two applications of the evaluator recursion expose the first two edge choices as finite sums, leaving the remaining r choices recursive."),
             Def("wordMoment", "Moment indexed by an edge enumeration", WordMomentFormula(), "The index function chooses unordered edges; the list of their transpositions has length r and is multiplied in increasing index order."),
@@ -165,6 +166,15 @@ internal sealed class SupportAndEdgeWordReflectionDocument : IScribeDocumentDefi
     {
         Formula m = F.Id("m"), e = F.Id("e"), r = F.Id("r");
         return All("n", Nat(), All("m", Nat(), All("G", Graph(n), All("e", Fn(Fin(m), Call("Sym2", Fin(n))), Implies(Equal(App(Q("Finset", "image"), e, Cast(Q("Finset", "univ"), Call("Finset", Fin(m)))), EdgeSet(g)), Implies(App(Q("Function", "Injective"), e), All("r", Nat(), Equal(C("Mr2", g, r), C("wordMoment", e, r)))))))));
+    }
+    private static Formula SumFinConsFormula()
+    {
+        Formula m = F.Id("m"), alpha = F.Id("alpha"), beta = F.Id("beta"), f = F.Id("f"), w = F.Id("w"), a = F.Id("a");
+        Formula lhs = SumOver("w", Fn(Fin(Add(m, D(1))), alpha), App(f, w));
+        Formula rhs = SumOver("a", alpha, SumOver("w", Fn(Fin(m), alpha), App(f, App(Q("Fin", "cons"), a, w))));
+        return All("m", Nat(), All("alpha", F.Id("Type"), All("beta", F.Id("Type"),
+            Inst(Call("Fintype", alpha), Inst(Call("AddCommMonoid", beta),
+                All("f", Fn(Parenthesized(Fn(Fin(Add(m, D(1))), alpha)), beta), Equal(lhs, rhs)))))));
     }
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>

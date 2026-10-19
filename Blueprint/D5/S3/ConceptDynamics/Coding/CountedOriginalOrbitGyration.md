@@ -28,7 +28,21 @@ Lean statement: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.orbit
 
 The orbit relation is reachability by nonnegative iterates of the actual forward shift on primitive paths. Periodic coordinate reduction identifies it with cyclic rotation of their finite restrictions. The original edge key compares source, target, then parallel-edge number; its induced lexicographic word key selects a unique least rotation of each primitive word. This yields a bijection from the actual path-orbit quotient to the least-word basis. Finiteness is obtained from the finite legal-word carrier, without graph inhabitedness assumptions.
 
-**Theorem 1.3 (From actual forward offsets to the order-type lift).**
+**Theorem 1.3 (Primitive-path cardinality is period times orbit cardinality).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.primitivePath_card_eq_period_mul_orbit_card`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.primitivePath_card_eq_period_mul_orbit_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every square count matrix A and every positive period d, the number of actual paths of minimal period d equals d times the number of their actual forward-shift orbits. Each path determines its least numbered representative and its forward phase in Fin d. Shifting the representative by that phase recovers the path. Conversely, minimal period makes phases below d unique, so this correspondence is a bijection with the product of the canonical basis and Fin d. The quotient-to-basis equivalence then gives the cardinality identity.
+
+This is the classical count for free finite cyclic orbits on the original path carrier. No nonempty graph or nonempty primitive stratum is required: empty strata contribute zero on both sides.
+
+**Theorem 1.4 (From actual forward offsets to the order-type lift).**
 
 Lean statement: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.relativeForwardGyration_eq_order_types`
 
@@ -48,5 +62,6 @@ This uses the classical finite-orbit transversal and necklace/least-rotation met
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.numberedWordEquiv`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.orbitBasisEquiv`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.primitivePath_card_eq_period_mul_orbit_card`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.relativeForwardGyration_eq_order_types`
 - Dependency: [D5/S3/ConceptDynamics/Coding/CountedOrderTypeGyration](CountedOrderTypeGyration.md)

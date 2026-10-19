@@ -1,0 +1,28 @@
+fingerprints:
+  raw_sha256: sha256:a4b2e9fcbe6a868d3c0ee7d3850615004fd153690e9e381f966f4377bd16fb9c
+  normalized_sha256: sha256:a4b2e9fcbe6a868d3c0ee7d3850615004fd153690e9e381f966f4377bd16fb9c
+cas_ref: sha256:a4b2e9fcbe6a868d3c0ee7d3850615004fd153690e9e381f966f4377bd16fb9c
+coverage_gids:
+  - gid: D5/S0/Computability/ClosureUndecidable.closure_reading_unreachable
+    target_statement_id: sha256:6e3ad9d42f74bd675293868cfdee37b4b0392188e4e70ad2d91f4da245bbe7ed
+  - gid: D5/S0/Computability/ClosureUndecidable.empty_ledger_reading_unreachable
+    target_statement_id: sha256:b49c9216ea5a6f66e1a9278e62138ead3648f0b5f2c0d9193f99c29388df6be2
+  - gid: D5/S0/Computability/FiniteCounterexampleCertificate.finite_readout_counterexample_certificate
+    target_statement_id: sha256:77a994d71365d345fe49ac4d4e6db7db07633e00729e27a0ccd36bf58454b913
+  - gid: D5/S0/Computability/Searchability/SearchableWindowDecision.searchable_window_forall_decidable
+    target_statement_id: sha256:ab0ca86caa35256a1ebd50c68ebbc61ff01de01c65a9522cc285c6deb3486519
+  - gid: D5/S1/FixedPoints/KleeneStageLimit.inductive_definition_is_supremum_of_stages
+    target_statement_id: sha256:607af35898f9c3c798eed2bb530aefa73431817477cbe4207b7feb8490a8053f
+  - gid: D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.stateThread_bijective_iff_complete_and_separates
+    target_statement_id: sha256:0d91e3985a546087c4546dca2294ef335dd71c20c631faf7a03219fc58d6456e
+  - gid: D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.finite_cofiltered_limit_nonempty
+    target_statement_id: sha256:469bbcf6b74214f920f6b8355e8e333fc9a28b0094320c599ede19d0233530fe
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - ffbd20995aff3e398e99627e033615aa57880a3b72d1fa1d7be8f418a7a43da1
+    - d9d9d7aa12e5f4bfd7e75d68c53e041d2dcfbb960026d579cbc36edbd3d39e2e
+    - f84610efa701b9d6090316418c6d0782526882baa5a5547fd7e767ae1adba3bf
+    - 5fca13f9be96303e94286df3da5bfc27d8a952e1ed11fe41e61f8a88d177b814
+    - 293ae0d6a2502dedc0656fc303c72072aeb8b37c942f2d231390b7ac2e10a4b3
+    - 5ca171ebc41bf1fb6b901964bb1eb8d0632390fbdff1b12c17226ed0db0e8320

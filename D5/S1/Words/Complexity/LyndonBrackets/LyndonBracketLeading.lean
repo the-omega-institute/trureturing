@@ -6,6 +6,7 @@
    utility: none
    digest: Closed standard factors have their defining Lyndon word as leading monomial. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.LyndonBrackets.LyndonBracketAlgebra
 
 set_option autoImplicit false

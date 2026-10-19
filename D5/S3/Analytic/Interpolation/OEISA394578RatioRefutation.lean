@@ -102,7 +102,7 @@ theorem result : ¬ claim := by
         norm_num
         rw [mul_comm _ (1 / 2 : ℚ)]
         apply mul_le_mul_of_nonneg_left _ (by norm_num)
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro i hi
           positivity
         · intro i hi

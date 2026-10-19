@@ -15,7 +15,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Zigzag
 
-private noncomputable def evenTailReflection :
+noncomputable def evenTailReflection :
     (m : Nat) -> (s : State) -> EvenTail .positive m s ≃ EvenTail .negative m s
   | 0, _ => Equiv.refl _
   | m + 1, _ => Equiv.psigmaCongrRight fun i =>

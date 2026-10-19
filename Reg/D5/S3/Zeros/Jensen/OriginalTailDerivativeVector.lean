@@ -1,3 +1,4 @@
+import Batteries.Tactic.OpenPrivate
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Zeros.Jensen.OriginalTailDerivativeVector
 import Reg.Support.DependentFamily

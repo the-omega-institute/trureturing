@@ -170,7 +170,7 @@ theorem boundedMeasureTensorSquare (S : LightProfinite)
       boundedCoefficientMap S c F ≫ PToIntegerMeasures := by
   apply Pi.hom_ext
   intro j
-  simp only [Category.assoc, measureTailMap, Pi.lift_π,
+  simp only [Category.assoc, measureTailMap, Pi.lift_comp_π,
     PToIntegerMeasures_coordinate]
   apply (nullSeqPointsEquiv S).injective
   ext s n

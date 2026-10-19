@@ -38,8 +38,11 @@ theorem log_add_sub_log_eq_log_inverse {A : H →L[ℂ] H} (hA : IsStrictlyPosit
     rintro y ⟨x, hx', rfl⟩
     exact (add_pos_of_pos_of_nonneg zero_lt_one (mul_nonneg hc (inv_nonneg.mpr (hx x hx').le))).ne'
   have hadd : cfc (fun x : ℝ => x + c) A = A + algebraMap ℝ (H →L[ℂ] H) c := by
-    simpa only [id_eq, cfc_id ℝ A hA.isSelfAdjoint] using
-      cfc_add_const c id A continuousOn_id hA.isSelfAdjoint
+    calc
+      cfc (fun x : ℝ => x + c) A = cfc id A + algebraMap ℝ (H →L[ℂ] H) c :=
+        cfc_add_const c id A continuousOn_id hA.isSelfAdjoint
+      _ = A + algebraMap ℝ (H →L[ℂ] H) c := by
+        rw [cfc_id ℝ A hA.isSelfAdjoint]
   have hinside : cfc (fun x : ℝ => 1 + c * x⁻¹) A = 1 + c • Ring.inverse A := by
     rw [cfc_const_add 1 (fun x : ℝ => c * x⁻¹) A (continuousOn_const.mul hinv) hA.isSelfAdjoint,
       map_one, cfc_const_mul c _ A hinv, cfc_ringInverse_id A hA.isUnit hA.isSelfAdjoint]

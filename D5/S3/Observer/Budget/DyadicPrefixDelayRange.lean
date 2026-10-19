@@ -417,6 +417,10 @@ def clockTag (d n : Nat) : Fin (2 ^ d) × Fin 2 :=
 noncomputable def realizedTimes (d : Nat) (b : Fin 2) (D : Nat) :
     Finset Nat := by
   classical
+  letI : DecidablePred (fun n =>
+      ∃ p : Protocol (d + 1), deadlineFamily d b D p ∧
+        ∃ r : Fin (2 ^ (d + 1)), terminalTime (2 ^ (d + 1)) b p r.val = n) :=
+    fun _ => Classical.propDecidable _
   exact (Finset.range (D + 1)).filter (fun n =>
     ∃ p : Protocol (d + 1), deadlineFamily d b D p ∧
       ∃ r : Fin (2 ^ (d + 1)), terminalTime (2 ^ (d + 1)) b p r.val = n)
@@ -572,6 +576,7 @@ theorem deadline_family_operational_capacity (d : Nat) (b : Fin 2) (D : Nat) :
         obtain ⟨p, hp, htime⟩ :=
           (range t.val 0 0 t.isLt (by decide)).2 (by simpa [earliestTime, P] using he)
         have hn : earliestTime d t.val ∈ realizedTimes d b D := by
+          rw [realizedTimes]
           apply Finset.mem_filter.mpr
           refine ⟨Finset.mem_range.mpr (by omega), p, hp,
             ⟨2 * t.val, by have := t.isLt; omega⟩, ?_⟩
@@ -588,6 +593,7 @@ theorem deadline_family_operational_capacity (d : Nat) (b : Fin 2) (D : Nat) :
         obtain ⟨p, hp, htime⟩ :=
           (range t.val 0 1 t.isLt (by decide)).2 (by simpa [earliestTime, P] using helig)
         have hn : earliestTime d t.val + P ∈ realizedTimes d b D := by
+          rw [realizedTimes]
           apply Finset.mem_filter.mpr
           refine ⟨Finset.mem_range.mpr (by omega), p, hp,
             ⟨2 * t.val, by have := t.isLt; omega⟩, ?_⟩

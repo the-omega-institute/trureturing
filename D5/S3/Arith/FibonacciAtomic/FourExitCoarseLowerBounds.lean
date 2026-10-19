@@ -50,7 +50,7 @@ private theorem leaf_support_geometry (k : Nat) (u : Address) :
     have finite : ∀ v : Q,
         (Finset.univ.filter (fun r : Fin 4 => v.val ∈ leafAddresses (active r))).card ≤ 2 ∧
         ((Finset.univ.filter (fun r : Fin 4 => v.val ∈ leafAddresses (active r))).erase 2).card ≤ 1 := by
-      decide
+      decide +kernel
     intro v
     by_cases hv : v ∈ Q
     · exact finite ⟨v,hv⟩
@@ -68,7 +68,7 @@ private theorem leaf_support_geometry (k : Nat) (u : Address) :
         (Finset.univ.filter (fun r : Fin 4 => v.val ∈ leafAddresses (comp r))).card ≠ 3 ∧
         (Finset.univ.filter (fun r : Fin 4 => v.val ∈ leafAddresses (comp r))).card +
           (if v.val ∈ leafAddresses R₀ then 1 else 0) ≠ 4 := by
-      decide
+      decide +kernel
     intro v
     by_cases hv : v ∈ Q
     · exact finite ⟨v,hv⟩

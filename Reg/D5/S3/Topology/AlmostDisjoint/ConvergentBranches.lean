@@ -154,7 +154,7 @@ theorem whole_range_invalid : ¬ rangeCertificate.{u, v} witnessParams.{u, v} un
   intro n hn
   have hn0 : n.down ≠ 0 := by
     intro hz
-    exact hn.2 (mem_singleton_iff.mpr (ULift.ext n ⟨0⟩ hz))
+    exact hn.2 (mem_singleton_iff.mpr (ULift.ext hz))
   refine ⟨mem_univ n, ?_⟩
   change (if n.down = 0 then (⟨false⟩ : ULift.{v} Bool) else ⟨true⟩) ≠ ⟨false⟩
   rw [if_neg hn0]

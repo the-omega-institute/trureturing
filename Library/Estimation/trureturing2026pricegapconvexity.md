@@ -8313,7 +8313,15 @@ does not apply to this remote completion. Conversely, the added support
 does not satisfy the fixed prime-free support contract of the
 archimedean positivity theorem. The all-support constrained criterion
 still needs its positivity estimate. The added remote prime powers
-must also be present in any semilocal comparison; no bound for their
-compressed trace, or for the enlarged completion's semilocal trace,
-is supplied by WT12. The missing same-test signed lower bound, the
-original strict Robin upper and RH remain unproved.
+must also be present in any semilocal comparison. The semilocal note
+now supplies a separate bound for the added term,
+[\(\operatorname{Tr}(D_{S_X}(h_{e_X})P_{S_X})=o(L_X)\)](../Weil/connesconsanimoscovici2024semilocal.md#the-remote-pole-null-completion-has-a-negligible-semilocal-trace),
+using its actual orthogonal projection and the prescribed family
+$S_X=\{\infty\}\cup\{p:p\le\mathsf V_X\}$ for the original test's
+support scale. This family need not contain every prime through the
+remote completion's enlarged support. The stronger comparison on that
+enlarged family still requires a sharper trace estimate or a joint
+signed bound that retains its growing correction. The added remote
+prime powers and the original $H_X$ trace remain part of the same-test
+joint comparison. That signed lower bound, the original strict Robin
+upper and RH remain unproved.

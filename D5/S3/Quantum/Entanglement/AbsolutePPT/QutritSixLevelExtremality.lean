@@ -362,7 +362,7 @@ private theorem trace_support_zero_kernel (rho : Matrix (Fin 3 × Fin 3) (Fin 3 
     (hz : (W*rho).trace.re = 0) :
     K1 ((fun i : Fin 9 => h.1.isHermitian.eigenvalues₀ (Fin.cast (by simp [Fintype.card_prod]) i))) *ᵥ kernel1 = 0 := by
   have hk := ((hildebrand_criterion rho h.1 h.2.1).mp h.2.2).1
-  apply (hk.dotProduct_mulVec_zero_iff kernel1).mp
+  apply (hk.dotProduct_mulVec_zero_iff).mp
   have ht := trace_support_ge rho h.1.isHermitian
   have hn := supporting_spectral_nonneg ((fun i : Fin 9 => h.1.isHermitian.eigenvalues₀ (Fin.cast (by simp [Fintype.card_prod]) i))) hk
   rw [hz] at ht
@@ -467,7 +467,7 @@ private theorem kernel_inherited {J : Type} [Fintype J] (A B C : Matrix J J ℝ)
     have hm' := mul_nonneg ha.le hAn
     linarith
   have hz' := (mul_eq_zero.mp hz).resolve_left (ne_of_gt ha)
-  apply (hA.dotProduct_mulVec_zero_iff q).mp
+  apply (hA.dotProduct_mulVec_zero_iff).mp
   simpa using hz'
 private theorem repeated_level_inherited (a b : ℝ) (l m r : Fin 9 → ℝ)
     (ha : 0 < a) (hb : 0 ≤ b) (hl : Antitone l) (hm : Antitone m)

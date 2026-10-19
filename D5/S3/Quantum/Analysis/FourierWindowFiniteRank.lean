@@ -222,7 +222,7 @@ theorem fourier_window_finite_rank_approximation :
                 f x ∂μ) := by
       let g : E → ℂ := A.indicator (fun x => f x)
       have hg2 : MemLp g 2 μ :=
-        MemLp.indicator hA (Lp.memLp f)
+        MemLp.indicator hA.nullMeasurableSet (Lp.memLp f)
       have hgsupport : ∀ x : E, x ∉ A → g x = 0 := by
         intro x hx
         simp only [g, Set.indicator_of_notMem hx]
@@ -365,7 +365,7 @@ theorem fourier_window_finite_rank_approximation :
       ‖mon k s x‖ = ∏ j : Fin k, ‖x (s j)‖ := by
         simp [mon, norm_prod]
       _ ≤ ∏ _j : Fin k, r := by
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro j hj
           exact norm_nonneg _
         · intro j hj
@@ -375,7 +375,7 @@ theorem fourier_window_finite_rank_approximation :
   have hmon_mem (S : Set E) (hS : MeasurableSet S) (hμS : μ S ≠ (∞ : ℝ≥0∞)) (r : ℝ) (hr : 0 ≤ r) (hSr : ∀ x ∈ S, ‖x‖ ≤ r) (k : ℕ) (s : Fin k → Fin n) :
       MemLp (S.indicator (mon k s)) 2 μ := by
     apply
-      (memLp_indicator_const 2 hS ((r ^ k : ℝ) : ℂ) (Or.inr hμS)).of_le
+      (memLp_indicator_const 2 hS.nullMeasurableSet ((r ^ k : ℝ) : ℂ) (Or.inr hμS)).of_le
     · exact (hmon_cont k s).aestronglyMeasurable.indicator hS
     · filter_upwards [] with x
       by_cases hxs : x ∈ S

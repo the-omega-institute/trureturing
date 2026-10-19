@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:df21c59693a80bf785b58ee02042aea31303c02403d7721036e4b6501d4870d0
-  normalized_sha256: sha256:df21c59693a80bf785b58ee02042aea31303c02403d7721036e4b6501d4870d0
-cas_ref: sha256:df21c59693a80bf785b58ee02042aea31303c02403d7721036e4b6501d4870d0
-coverage_gids:
-  - gid: D5/S3/Fourier/CotangentHeckeIdentity.cotangent_double_angle
-    target_statement_id: sha256:3f8b9444f7c24c3745cf7ea003f9bf5cffea13f16a5f3211f29693b95bffd62b
-receipts:
-  unresolved_subitems: []

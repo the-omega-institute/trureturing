@@ -64,7 +64,21 @@ $$\operatorname{claim} \Leftrightarrow (\forall (d: \mathbb{N}), \forall (Phi: \
 
 Section V, page 9, after the proof of Theorem 3: "It seems quite likely that in Eq. (8) the first inequality should be strict and the second one should be an equality. However, this is still an unsettled issue." This proposition states the equality in the second inequality. d ranges over all natural dimensions, Phi over canonical channels on Fin d, and IsSchurChannel is the sole hypothesis. MixedUnitary represents Conv(U_d), and SchurMixedUnitary represents Λ_d. The empty dimension is included; both sets still contain the identity channel.
 
-**Theorem 1.6 (The two diamond-distance infima are equal).**
+**Theorem 1.6 (Trace norm is invariant under finite reindexing).**
+
+$$\forall (a: \operatorname{Type}), \forall (b: \operatorname{Type}), [\operatorname{Fintype}\left(a\right)] [\operatorname{DecidableEq}\left(a\right)] [\operatorname{Fintype}\left(b\right)] [\operatorname{DecidableEq}\left(b\right)] \forall (e: \operatorname{Equiv}\left(a, b\right)), \forall (X: \operatorname{Matrix}\left(a, a, \mathbb{C}\right)), \operatorname{traceNorm}\left(\operatorname{Matrix}.\operatorname{reindexAlgEquiv}\left(\mathbb{C}, \mathbb{C}, e\right)\left(X\right)\right) = \operatorname{traceNorm}\left(X\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.reindex_traceNorm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nengkun Yu, Runyao Duan and Quanhua Xu (2017). *Bounds on the distance between a unital quantum channel and the convex hull of unitary channels*. DOI: [10.1109/TIT.2016.2641447](https://doi.org/10.1109/TIT.2016.2641447). URL: <https://arxiv.org/abs/1201.1172>.
+
+*Commentary.*
+
+For finite decidable index types a and b, an equivalence e preserves the trace norm under Matrix.reindexAlgEquiv. This identity also gives the submatrix form for the inverse equivalence, and it identifies ancillary coordinates in the capacity bounds.
+
+**Theorem 1.7 (The two diamond-distance infima are equal).**
 
 $$\operatorname{claim}$$
 
@@ -80,7 +94,7 @@ $$\operatorname{claim}$$
 
 *Commentary.*
 
-Copy a basis vector i to (i,i), apply the channel on the first factor while retaining the second, and recover coherently from the correlated subspace. On its complement, recovery maps (k,i) to i. These Kraus operators sum to a trace-preserving channel. The resulting superchannel fixes every Schur channel and contracts diamond distance. Each diagonal entry of a unitary is the midpoint of two unit complex phases; independent choices of those phases give a uniform family of 2^d diagonal unitaries. Thus every unitary mixture has a Schur unitary mixture at no greater distance from Phi. Set inclusion gives the opposite inequality. This proves equality of infima without requiring an attained minimum. Pointwise recovery errors need only satisfy the contraction inequality. The argument gives no closed form for the common distance. Relating positive distance to nonmembership requires compactness or closedness beyond the present theorem.
+Copy a basis vector i to (i,i), apply the channel on the first factor while retaining the second, and recover coherently from the correlated subspace. On its complement, recovery maps (k,i) to i. These Kraus operators sum to a trace-preserving channel. The resulting superchannel fixes every Schur channel and contracts diamond distance. Each diagonal entry of a unitary is the midpoint of two unit complex phases; independent choices of those phases give a uniform family of 2^d diagonal unitaries. Thus every unitary mixture has a Schur unitary mixture at no greater distance from Phi. Set inclusion gives the opposite inequality. This proves equality of infima without requiring an attained minimum. Pointwise recovery errors need only satisfy the contraction inequality. The argument gives no closed form for the common distance. Relating positive distance to nonmembership requires compactness or closedness beyond the present theorem. The amplified contraction estimates in this proof also have a finite-window channel application. Let A, B and C be independent finite decidable coordinate types, C1:A->B and C2:B->C canonical CPTP channels, and PA, PB and PC arbitrary specified real-time CPTP families. For a,b>0 and T>=0 define e_T(C1;a) as one half of the supremum, over 0<=t<=T, of the unhalved stabilized diamondDistance between C1 comp PA(t) and PB(a*t) comp C1; use the analogous definition for the other channels. The stabilization tests every finite reference dimension and every joint density input, including correlated inputs. The existing diamond_bounds bounds the distances by two; adjoining zero defines empty windows and does not change a nonnegative-horizon supremum, since t=0 belongs to the window. Thus 0<=e_T<=1. For a common joint input rho, insert the output of C2 comp PB(a*t) comp C1 between those of C2 comp C1 comp PA(t) and PC((a*b)*t) comp C2 comp C1. The existing traceDistance_triangle splits the error. Applying trace_contract_rectangular to referenceChannel C2 bounds the first term by the first channel error on rho. For the second term use the density state obtained from rho by referenceChannel C1; reference_error_le_diamond bounds it by the stabilized error of C2 at time a*t. The two bounded time suprema, 0<=a*t<=a*T and b*(a*t)=(a*b)*t yield e_T(C2 comp C1;a*b)<=e_T(C1;a)+e_(a*T)(C2;b), with the factor one half applied to the unhalved estimates. This includes T=0 and empty coordinate types through the zero convention; no identity at time zero, maximum attainment, semigroup, continuity, generator, recovery or locality is assumed. This application uses the existing estimates; the Schur-channel equality itself requires its stated Schur hypothesis. A complete application to actual rectangular stochastic channels and stochastic evolution requires their canonical CPTP realization and the corresponding diagonal relative-entropy identification. That realization is not established here. Channel composition alone supplies no RG universality or effective dynamics, and its residual estimate does not guarantee recovery of a specified state family.
 
 ## References
 
@@ -89,6 +103,7 @@ Copy a basis vector i to (i,i), apply the channel on the first factor while reta
 - Truth anchor: `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.SchurMixedUnitary`
 - Truth anchor: `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.claim`
 - Truth anchor: `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.distToSet`
+- Truth anchor: `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.reindex_traceNorm`
 - Truth anchor: `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.result`
 - Dependency: [D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability](../Quantum/Entanglement/ConicalDesignConcurrenceComparability.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteDiamondDistance](../Quantum/Foundation/FiniteDiamondDistance.md)

@@ -121,9 +121,6 @@ private theorem positive_ne_zero : positiveRow ≠ 0 := by
 private theorem positive_character : resetCharacter 1 positiveRow = 1 := by
   norm_num [resetCharacter, positiveRow, Fin.sum_univ_one,
     MonoidAlgebra.coeff_single]
-  change (MonoidAlgebra.single (1 : Sign) (1 : ℤ)).coeff (Multiplicative.ofAdd true) = 0
-  simp [MonoidAlgebra.coeff_single,
-    show (Multiplicative.ofAdd true : Sign) ≠ 1 by decide]
 
 private def rowRegistration (law : Realization signature → Prop) (Target : Prop)
     (bridge : law actual ↔ Target) (hp : law actual) (hn : ¬ law bad) :

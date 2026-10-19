@@ -10,7 +10,6 @@ namespace StrataLint.DeclaredTemplate.Tests;
 
 public sealed class SourceFamilyEvidenceTests
 {
-    // SourceFamilyEvidence.lean checks this literal against the real imported-source exporter.
     private static JsonArray CompiledWire(string fixture = "CompiledSourceWire.lean")
     {
         var literal = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(),
@@ -137,12 +136,24 @@ public sealed class SourceFamilyEvidenceTests
     }
 
     [Fact]
-    public void four_original_compiled_occurrences_pass_strict_import_join()
+    public void original_source_compiled_occurrences_pass_strict_import_join()
     {
         var wire = CompiledWire();
         var (snapshot, report, selected) = Inputs(wire);
         var evidence = InformationTemplateEvidence.Collect(snapshot, report, selected);
-        Assert.Equal(4, evidence.Inventory.Count);
+        var cyclicNames = OriginalCyclicInventory()["sources"]!.AsArray()
+            .Where(source => source!["expected_reg_owner"]!.GetValue<string>() ==
+                "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesCore")
+            .SelectMany(source => source!["expected_original_declarations"]!.AsArray())
+            .Select(name => name!.GetValue<string>());
+        var expectedNames = cyclicNames.Concat(new[] {
+            "D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.history_law_conditional_expectation",
+            "D5.S3.Quantum.Information.InfiniteCalibrationControl.result",
+        }).Order(StringComparer.Ordinal);
+        Assert.Equal(expectedNames, wire.SelectMany(module => module!["records"]!.AsArray())
+            .Select(record => record!["key"]!["theorem"]!.GetValue<string>()).Order(StringComparer.Ordinal));
+        Assert.Equal(expectedNames.Count(), evidence.Inventory.Count);
+        Assert.All(evidence.Occurrences.Values, occurrence => Assert.True(occurrence.HasFourSlots));
         var scope = wire[0]!["records"]![0]!["certificate"]!["source_binding"]!;
         Assert.Equal(13, scope["telescope_size"]!.GetValue<int>());
         Assert.Equal(2, scope["level_count"]!.GetValue<int>());
@@ -371,15 +382,32 @@ public sealed class SourceFamilyEvidenceTests
             LeanAxiomReport.Create(files), [selected[0]]).Inventory);
     }
     [Fact]
-    public void obsolete_named_reference_fixture_is_rejected_by_current_join()
+    public void current_named_reference_fixture_passes_join_and_rejects_obsolete_identity()
     {
         var wire = CompiledWire("CompiledNamedClaimWire.lean");
         var (snapshot, report, selected) = Inputs(wire);
-        // Closed certificate shape cannot make an obsolete source-reference
-        // encoding current. Current positive joins use producer conformance
-        // vectors and the independently addressed native source materials.
+        var evidence = InformationTemplateEvidence.Collect(snapshot, report, selected);
+        Assert.Equal(4, evidence.Inventory.Count);
+        Assert.All(evidence.Occurrences.Values, occurrence => Assert.True(occurrence.HasFourSlots));
+        const string obsoleteIdentity = "077469a440fdda03bf5eba66fc4a29d6c5a6f0e9a1d5e9833092c8fce252f517";
+        var row = wire[0]!["records"]![0]!;
+        var binding = row["certificate"]!["source_binding"]!;
+        var entry = binding["definition_entry"]!;
+        Assert.Empty(entry["path"]!.AsArray());
+        Assert.NotEqual(obsoleteIdentity, entry["reference_identity"]!.GetValue<string>());
+        entry["reference_identity"] = obsoleteIdentity;
+        row["statement_identity"] = obsoleteIdentity;
+        binding["source_type_identity"] = obsoleteIdentity;
+        row["escape_from"]!["type_identity"] = obsoleteIdentity;
+        row["certificate"]!["extraction_inputs"]!.AsArray().Single(input =>
+            input!["name"]!.GetValue<string>() == row["key"]!["theorem"]!.GetValue<string>())!
+            ["type_identity"] = obsoleteIdentity;
+        InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire[0]), selected[0].Value, snapshot);
+        var files = report.Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value);
+        files[selected[0].Value] = files[selected[0].Value] with {
+            InformationTemplates = JsonSerializer.SerializeToElement(wire[0]) };
         var error = Assert.Throws<FormatException>(() =>
-            InformationTemplateEvidence.Collect(snapshot, report, selected));
+            InformationTemplateEvidence.Collect(snapshot, LeanAxiomReport.Create(files), selected));
         Assert.Contains("reference identity differs from current declaration", error.Message, StringComparison.Ordinal);
         Assert.All(wire, module =>
         {

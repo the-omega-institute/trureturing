@@ -153,7 +153,7 @@ private theorem mixture_renderer (M : Observer Z) (e : InstalledEmitter M)
   rw [tailMixture, Measure.map_finset_sum' (measurable_of_countable _).aemeasurable]
   apply Finset.sum_congr rfl
   intro z _
-  rw [Measure.map_smul]
+  rw [Measure.map_smul _ (measurable_of_countable _).aemeasurable]
   by_cases hz : row M H.val.1 z = 0
   · simp [hz]
   · rw [installed_configuration_identity M e s z H.val.2
@@ -726,8 +726,9 @@ theorem native_countable_posterior_concentration (μ : PMF Depth) (k : Depth)
 def pureTail (k : Depth) (s : ActivePhase) : Measure (ValidTail s) :=
   (rawReadLaw (rate k)).map (validStopped s)
 
-instance (k : Depth) (s : ActivePhase) : IsProbabilityMeasure (pureTail k s) :=
-  Measure.isProbabilityMeasure_map (validStopped_measurable s).aemeasurable
+instance (k : Depth) (s : ActivePhase) : IsProbabilityMeasure (pureTail k s) := by
+  unfold pureTail
+  infer_instance
 
 private theorem target_mixture_apply (μ : PMF Depth) (s : ActivePhase) (H : PhaseHistory s) (E : Set (ValidTail s)) (hE : MeasurableSet E) :
     rawTarget μ H.val.1 H.val.2 s E =
@@ -780,7 +781,7 @@ private theorem countable_mixture_atom_tv {A : Type*} [MeasurableSpace A]
     · exact mul_le_of_le_one_right zero_le (hmass i)
   have hl : ν k*P k E.val ≤ Q E.val := by
     rw [hQ E.val E.property]
-    exact ENNReal.le_tsum k
+    exact ENNReal.le_tsum (f := fun i => ν i * P i E.val) k
   have hu : Q E.val ≤ ν k*P k E.val+(1-ν k) := by
     rw [hQ E.val E.property, ENNReal.tsum_eq_add_tsum_ite k]
     convert add_le_add (le_refl (ν k * P k E.val)) hrest using 1 <;> try rfl

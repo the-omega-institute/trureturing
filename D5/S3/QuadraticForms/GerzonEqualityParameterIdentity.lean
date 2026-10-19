@@ -216,7 +216,7 @@ open Module
 variable {F S : Type*} [Field F] [AddCommGroup S] [Module F S]
 variable {n : ℕ}
 
-private theorem gram_pair_sum (K : LinearMap.BilinForm F S) (P : Fin n → S) (a b : F)
+theorem gram_pair_sum (K : LinearMap.BilinForm F S) (P : Fin n → S) (a b : F)
     (hgram : ∀ i j, K (P i) (P j) = if i = j then a ^ 2 else b)
     (t : Fin n → F) (j : Fin n) :
     K (∑ i, t i • P i) (P j) = (a ^ 2 - b) * t j + b * ∑ i, t i := by

@@ -88,6 +88,20 @@ $$\frac{1}{2 \cdot \varphi^{3}} < \Re{c} \land \Re{c} < \frac{1}{\varphi^{2}}$$
 
 The real coordinate of c lies strictly between the two displayed golden thresholds.
 
+For the fixed complex center c defined above, put r = c.re = 23815329946211908/10^17, phi = (1 + sqrt(5))/2, L = 1/(2*phi^3) and U = 1/phi^2. For every p : Nat.Primes define goldenCandidateOrbitScale(p) = log(2)/log(p) and goldenCandidateOrbit(p) = goldenCandidateOrbitScale(p)*r. Here log is the real natural logarithm and p is coerced to its positive real value. These expressions use this exact c; they introduce no zero assumption. The logarithmic parameter correspondence is the one in `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling`: with the prime-two input s and prime-p output (log(2)/log(p))*s, the local-factor values agree. Since the scale is real, its product with c has real part goldenCandidateOrbit(p).
+
+The complete prime classification is: for every p : Nat.Primes, L < goldenCandidateOrbit(p) and goldenCandidateOrbit(p) < U if and only if p.val = 2 or p.val = 3. There is no upper bound on p. More precisely, L < goldenCandidateOrbit(3) < U, while goldenCandidateOrbit(5) < L; indeed goldenCandidateOrbit(p) < L for every prime p with 5 <= p.val. The arguments 2, 3 and 5 denote their prime-subtype values.
+
+The algebraic estimates use sqrt(5)^2 = 5 and sqrt(5) >= 0 to obtain 1618/1000 < phi < 13/8. The identity phi^2 = phi + 1 gives phi^3 = 2*phi + 1, hence 2*(1618/1000) + 1 < phi^3 < 17/4. The fixed rational coordinate satisfies 238/1000 < r < 1/4 and r > 0. Thus, writing A = 2*phi^3*r, the lower comparison 2*(2*(1618/1000) + 1)*(238/1000) > 2 yields A > 2. For the upper comparison, phi^3*r < (17/4)*r < 17/16, so A < 17/8 < 9/4. Therefore 2 < A < 9/4.
+
+All logarithmic denominators are positive because every prime is greater than one. Strict logarithm monotonicity and log(x^n) = n*log(x) give log(3) < log(4) = 2*log(2). The exact integer inequality 2^9 = 512 < 625 = 5^4 gives 9*log(2) < 4*log(5), hence (9/4)*log(2) < log(5). These comparisons require only positive real inputs.
+
+For p = 3, log(2) < log(3), so 0 < log(2)/log(3) < 1 and goldenCandidateOrbit(3) < r < U, using c_in_golden_window. Also log(3) < 2*log(2) < A*log(2). Dividing by the positive log(3) yields 1 < (log(2)/log(3))*A = (2*phi^3)*goldenCandidateOrbit(3), which is exactly L < goldenCandidateOrbit(3). For any prime p >= 5, log(p) >= log(5) > (9/4)*log(2) > A*log(2). Dividing by the positive log(p) yields (2*phi^3)*goldenCandidateOrbit(p) < 1, or goldenCandidateOrbit(p) < L. This includes p = 5 and excludes the whole unbounded range uniformly.
+
+For p = 2, log(2)/log(2) = 1, so goldenCandidateOrbit(2) = r and c_in_golden_window supplies both strict bounds. Every prime has p.val >= 2, and 4 is composite. Thus a prime distinct from 2 and 3 has p.val >= 5 and is excluded by the preceding uniform estimate; conversely primes 2 and 3 satisfy both bounds. This proves both directions of the classification using the fixed center, logarithm monotonicity, the golden-ratio identities and the stated rational comparisons.
+
+This is an arithmetic application of the existing center and scaling results. The center-window statement and the parameter correspondence do not assert that c is a local-factor zero, that a transported candidate is a zero, or that the center-jet hypotheses hold. The classification gives no RH conclusion and no necessary or optimal summability criterion.
+
 **Theorem 1.8 (The square contains its center).**
 
 $$c \in Q$$
@@ -190,3 +204,4 @@ This is the first layer of the G-c certificate in 增订十/三十三: it reduce
 - Truth anchor: `D5/S3/Analytic/GermWindow/GermZeroCertificateReduction.truncation_taylor_remainder_of_curv`
 - Dependency: [D5/S3/Analytic/EulerGerm/LocalFactorZeroDivisor](../EulerGerm/LocalFactorZeroDivisor.md)
 - Dependency: [D5/S3/Weil/ZetaAnalytic/RoucheZeroCount](../../Weil/ZetaAnalytic/RoucheZeroCount.md)
+- Narrative reference: [D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling](../EulerGerm/LocalFactorUniversalScaling.md)

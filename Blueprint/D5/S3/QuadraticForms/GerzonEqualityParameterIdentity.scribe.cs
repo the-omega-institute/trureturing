@@ -14,6 +14,10 @@ internal sealed class GerzonEqualityParameterIdentityDocument : IScribeDocumentD
         "At Gerzon equality, the equiangular parameters satisfy a² = (d + 2)b over every field of characteristic different from two and in every dimension at least two.",
         H("Gerzon equality without dimension congruence restrictions"),
         Blocks(
+            Entry("gram-pair-sum", "gram_pair_sum", "Pairing a linear combination with an equiangular vector", GramPairSumFormula(),
+                AssessedProvenance.FromRepo(),
+                "A bilinear form with constant diagonal value a squared and constant off-diagonal value b pairs a linear combination with its j-th vector by separating the j-th coefficient from the sum of all coefficients. The scalar field and the module are arbitrary; neither symmetry nor nondegeneracy is needed.",
+                DescribeRole.Theorem),
             Entry("equiangular-system", "IsEquiangularSystem", "Equiangular systems", EquiangularDefinition(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note)),
                 "Definition 2.8, page 5: “Let Φ = {ϕⱼ}ⱼ∈[n] be a sequence of vectors in a quadratic space W over F_q. For a, b ∈ F_q, Φ is called an (a, b)-equiangular system if: (i) ⟨ϕⱼ, ϕⱼ⟩ = a for every j ∈ [n], (ii) ⟨ϕᵢ, ϕⱼ⟩² = b for every i ≠ j in [n].” The sequence is represented by φ : Fin n → Fin d → F, the pairing by B, and the field parameters by a and b. Fin n indexes n vectors from zero; [n] in the paper indexes the same number from one. The predicate is polymorphic in the field and does not require its finiteness.",
@@ -26,6 +30,28 @@ internal sealed class GerzonEqualityParameterIdentityDocument : IScribeDocumentD
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 "The statement holds, including dimensions congruent to zero or one in the field. An orthogonal basis reduces the form to diagonal coordinates. The rank-one operators either form a basis of the selfadjoint-matrix space or span its trace-zero hyperplane. Their fourth-moment operator has the form α·id + β·tr·I; comparison of a diagonal matrix unit and a symmetric off-diagonal pair forces α = 2β. The resulting parameter equation uses no division by d or d − 1. The proof also works over infinite fields of characteristic different from two. Dimension one is excluded: with one vector the off-diagonal equation has no instances, so b can vary independently of a.",
                 DescribeRole.Theorem))));
+
+    private static Formula GramPairSumFormula()
+    {
+        var index = Call("Fin", V("n"));
+        var gram = All(V("i"), index, All(V("j"), index,
+            Equal(Call("K", Call("P", V("i")), Call("P", V("j"))),
+                Call("if", Equal(V("i"), V("j")), Square(V("a")), V("b")))));
+        var sum = Seq(new Formula.Subscript(Sum, Seq(V("i"), Colon, Sp, index)), Sp,
+            Parenthesized(Call("smul", Call("t", V("i")), Call("P", V("i")))));
+        var coefficients = Seq(new Formula.Subscript(Sum, Seq(V("i"), Colon, Sp, index)), Sp, Call("t", V("i")));
+        var equation = Equal(Call("K", sum, Call("P", V("j"))),
+            Add(Multiply(Parenthesized(Subtract(Square(V("a")), V("b"))), Call("t", V("j"))),
+                Multiply(V("b"), Parenthesized(coefficients))));
+        var body = All(V("K"), Apply(Qualified("LinearMap", "BilinForm"), V("F"), V("S")),
+            All(V("P"), Arrow(index, V("S")), All(V("a"), V("F"), All(V("b"), V("F"),
+                Imp(gram, All(V("t"), Arrow(index, V("F")), All(V("j"), index, equation)))))));
+        var structures = Seq(OpenBracket, Call("Field", V("F")), CloseBracket, Sp,
+            OpenBracket, Call("AddCommGroup", V("S")), CloseBracket, Sp,
+            OpenBracket, Call("Module", V("F"), V("S")), CloseBracket, Sp, All(V("n"), Nat, body));
+        var type = Seq(V("Type"), Star);
+        return All(V("F"), type, All(V("S"), type, structures));
+    }
 
     private static Formula EquiangularDefinition()
     {

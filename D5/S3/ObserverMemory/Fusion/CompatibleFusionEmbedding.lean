@@ -141,7 +141,7 @@ private theorem family_intersection_embedding
       exact realizes i
   let rangeEquivalence :=
     Equiv.ofInjective (completionEmbedding component) embeddingInjective
-  let compatibleEquivalence := Equiv.setCongr exactImage
+  let compatibleEquivalence := Set.equivOfEq exactImage
   refine ⟨embeddingInjective, intertwines, exactImage,
     rangeEquivalence.trans compatibleEquivalence, ?_⟩
   intro fused

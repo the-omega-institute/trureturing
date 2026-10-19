@@ -15,25 +15,19 @@ namespace D5.S0.Diagonal.Probability.GeneralEquivariantEscape
 
 open D5.S0.Diagonal
 open Diagonal.EscapeCount Diagonal.EquivariantEscape
+open D5.S0.Diagonal.Probability.EquivariantEscape
 
 variable {G : Type u} {A : Type v} {Y : Type w}
 
-/- Library-search audit trail (2026-08-15):
-   * `D5/` contains the general orbit-product count as `equivariant_escaped_card`
-     and only the transitive probability theorem
-     `transitive_equivariant_escape_probability`; no general-action probability
-     declaration was found.
-   * Pinned Mathlib supplies the exact uniform-event bridge
-     `PMF.toOuterMeasure_uniformOfFintype_apply`, the finite dependent-product
-     count `Fintype.card_pi`, and the finite-product/cast arithmetic used below.
-     No theorem packages this orbit-decomposition probability formula. -/
+/- The orbit-product count is `equivariant_escaped_card`. Its probability form uses
+   the imported finite-uniform PMF bridge and `Fintype.card_pi` for the listing count. -/
 
 /-- For an arbitrary finite action, uniform equivariant escape probability is the ratio of
 the orbit-product escape count to the orbit-product listing count. -/
 theorem general_equivariant_escape_probability [Group G] [MulAction G A]
     [Fintype A] [Fintype Y] [Nonempty Y]
     (D : OrbitDecomposition (G := G) (A := A) Y) (f : Y -> Y) :
-    (PMF.uniformOfFintype (EquivariantListing G A Y)).toOuterMeasure
+    (uniformPmf (EquivariantListing G A Y)).toOuterMeasure
         {g | IsEscaped f g.1} =
       (↑(∏ i : OrbitIndex G A,
           (Fintype.card Y ^ Fintype.card (StabilizerOrbit G A i) -
@@ -53,7 +47,7 @@ theorem general_equivariant_escape_probability [Group G] [MulAction G A]
     rw [← pow_succ']
     congr 1
     exact Nat.sub_add_cancel (Fintype.card_pos_iff.mpr ⟨diagonalOrbit i⟩)
-  rw [PMF.toOuterMeasure_uniformOfFintype_apply]
+  rw [uniformPmf_toOuterMeasure_apply]
   have hEscapedCard :
       Fintype.card ↥({g | IsEscaped f g.1} : Set (EquivariantListing G A Y)) =
         Nat.card ↥({g | IsEscaped f g.1} : Set (EquivariantListing G A Y)) :=

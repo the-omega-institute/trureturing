@@ -39,21 +39,21 @@ internal static partial class IngestCommand
             (currentRaw, current, document) = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(currentRaw, wholeSourceRecords.Raw));
             var cache = new Dictionary<(string Id, string Hash), AtomizedTheoryDocument>();
             var kindCache = new Dictionary<(string Id, string Hash), (AtomizedTheoryDocument Document, Dictionary<string, string> Kinds)>();
-            Func<string, TheoryAtomizer> atomizers = id => (bytes, rules) =>
+            Func<string, TheoryAtomizer> atomizers = id => (bytes) =>
             {
                 var key = (id, Convert.ToHexStringLower(SHA256.HashData(bytes)));
                 if (!cache.TryGetValue(key, out var atomized))
-                    cache[key] = atomized = (dependencies.AtomizerResolver ?? (static name => AtomizerRegistry.Require(name).Atomize))(id)(bytes, rules);
+                    cache[key] = atomized = (dependencies.AtomizerResolver ?? (static name => AtomizerRegistry.Require(name).Atomize))(id)(bytes);
                 return atomized;
             };
             Func<string, TheoryAtomizerWithContentKinds>? kindAtomizers = dependencies.AtomizerResolver is not null
-                && dependencies.ContentKindAtomizerResolver is null ? null : id => (bytes, rules, contentKinds) =>
+                && dependencies.ContentKindAtomizerResolver is null ? null : id => (bytes, contentKinds) =>
                 {
                     var key = (id, Convert.ToHexStringLower(SHA256.HashData(bytes)));
                     if (!kindCache.TryGetValue(key, out var cached))
                     {
                         var kinds = new Dictionary<string, string>(StringComparer.Ordinal);
-                        var atomized = (dependencies.ContentKindAtomizerResolver ?? (static name => AtomizerRegistry.Require(name).AtomizeWithContentKinds))(id)(bytes, rules, kinds);
+                        var atomized = (dependencies.ContentKindAtomizerResolver ?? (static name => AtomizerRegistry.Require(name).AtomizeWithContentKinds))(id)(bytes, kinds);
                         kindCache[key] = cached = (atomized, kinds);
                     }
                     if (contentKinds is not null)

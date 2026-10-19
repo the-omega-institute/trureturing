@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0f0af0e4772a2ef1179abf2ed24ddf03abe23dc4a5dedcc4f63c17321e6ecc6a
+  normalized_sha256: sha256:0f0af0e4772a2ef1179abf2ed24ddf03abe23dc4a5dedcc4f63c17321e6ecc6a
+cas_ref: sha256:0f0af0e4772a2ef1179abf2ed24ddf03abe23dc4a5dedcc4f63c17321e6ecc6a
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SeedLaw.original_rule_radius_lower
+    target_statement_id: sha256:9bf80e6d67726a8d1aa75c6db60dc6c29ac199044c4845b9dc33a394aaef0e2d
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SeedLaw.stopping_witness_full_law
+    target_statement_id: sha256:e7ab45f7af8236f63b28e4c2ed33cb5373c6cd305363cf99c623ed973a31bff0
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SeedLaw.stopping_witness_original_contract
+    target_statement_id: sha256:4cbe99ca79287b8b031d8196bf654bd6c34eecf371d6b0c4a52dc07058e1d7af
+receipts:
+  unresolved_subitems: []

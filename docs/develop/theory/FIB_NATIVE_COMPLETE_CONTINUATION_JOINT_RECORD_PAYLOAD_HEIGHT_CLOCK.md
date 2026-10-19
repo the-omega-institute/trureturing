@@ -1757,3 +1757,423 @@ programme is a consequence of these conditional results.
 [CE]: https://github.com/the-omega-institute/trureturing/blob/08c605faf9961fd5381c4ef09db19cabc302657a/docs/develop/theory/FIB_NATIVE_EXACT_CRITICAL_ENERGY_RESPONSE_AND_SCALE_ALTERNATIVES.md
 
 ## 追加锚（本行以下为增补区）
+
+
+## 69. The constructor's causal prefixes and actual FIRST
+
+**Definition 69.1 (the fixed constructor and its unchanged target).**
+Retain Convention 59.1 and its separate source/minimax/unaveraged-face
+suppliers. Let GC denote
+[the global-actual-count owner](FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md).
+Fix one finite weak law satisfying (GC.9) and let $\Psi$ be its
+complete normalized constructor of GC Proposition 10.1, including the
+full five-mode coherent completion. On native coordinates use exactly
+GC §21's complex-linear dictionary. The ideal twelve outputs and HALF
+objective $E$ remain those of (JRH.1)–(JRH.2); $\Psi$ is the
+approximate constructor, not that ideal output.
+
+The chronological decoder used by $\Psi$ is DIRECT REUSE of Theorem
+66.1 and (JRH.54)–(JRH.56), with the full-domain factors in (GC.44)–
+(GC.46). Those factors have rank-one $0\preceq F_j\prec I_2$,
+so the existing theorem's hypotheses apply; pure pieces use its pure
+live case. The no-event, activity, Kraus, conditional-reference and
+Borel identities are precisely those existing identities, together
+with (GC.53)–(GC.54). No new monitor synthesis is asserted. Access to
+a causal reservoir, independently initialized environment, calibrated
+couplings, survivor outputs and the original aligned clock remains an
+added assumption as in §68 and GC Assumption 25.1.
+
+A causal prefix at absolute time $6+a$ retains every actual failure
+already recorded, with its original label and actual event time, and
+retains the unnormalized not-yet-failed branch as a separate component.
+The complete prefix, including both parts and any abort/wrong sectors,
+is normalized. FIRST is the time when absorbing failure actually occurs;
+a scalar field written later and named a timestamp is different data.
+
+**Theorem 69.2 (no late draw implements these causal prefixes).** For
+each original signed history, put
+
+$$
+m_y=\operatorname{tr}(M\rho_{y,e,n})
+ =m_1(64-y)/128+m_2/2>0,\qquad G(a)=2a/(1+a).
+\tag{JRH.71}
+$$
+
+For every $0<a<1$, the constructor has actual failure probability
+$m_yG(a)>0$ by time $6+a$. A protocol having no failure detector or
+absorbing event before absolute seven has probability zero for that
+same prefix event. It therefore cannot realize $\Psi$ as a causal
+FIRST instrument, even if a terminal classical draw reproduces its
+final distribution of timestamp metadata.
+
+Proof. In (GC.53) integrate the existing failure density over $[0,a]$
+and sum its five original weights. This gives $m_yG(a)$, positive
+by source positivity. A protocol with no such earlier physical event
+has no actual failure record in this prefix, so its probability is
+zero. A terminal draw does not change any record that already existed
+at $6+a$. The disagreement concerns an observable prefix event of
+the declared clock instrument. It is unaffected by relabelling the
+late scalar as FIRST. $\square$
+
+This is a source-specific causal obstruction. It neither changes the
+original error objective into a new prefix minimax nor excludes a
+separately supplied causal continuous-time detector. A final channel
+on metadata alone cannot certify the physical FIRST requirement.
+
+## 70. Countable failure times cannot approximate the continuous constructor
+
+**Theorem 70.1 (normalized complete HALF singular-law bound).** Suppose
+$\Phi$ and $\Psi$ have the same declared complete stopped-output
+space and are both normalized. Suppose all actual failure times of
+$\Phi$ are supported on one countable set $S\subseteq[0,1]$,
+across the original labels and histories. Then on every original
+history
+
+$$
+\frac12\|\Phi(E\rho_{y,e,n}E^\dagger)
+             -\Psi(E\rho_{y,e,n}E^\dagger)\|_{1,\rm stopped\text{-}cq}
+ \ge m_y.
+\tag{JRH.72}
+$$
+
+This applies to every deterministic grid, regardless of its mesh.
+It also obstructs convergence in any complete reference-safe norm
+that includes the trivial reference.
+
+Proof. In the five failure sectors select the Borel event with relative
+time in $[0,1]\setminus S$. The constructor is absolutely continuous,
+so the total trace on this event is $m_y$; $\Phi$ assigns zero.
+Let $H$ be constructor minus simulator output and $Q$ the projection
+onto this event. Then $\operatorname{tr}(QH)=m_y$. Completeness and
+normalization give $\operatorname{tr}H=0$, so
+$\operatorname{tr}((I-Q)H)=-m_y$, where the complement includes
+live, every other failure event, abort and all zero-target sectors.
+Measuring this two-sector partition contracts trace norm, hence
+
+$$
+\|H\|_{1,\rm stopped\text{-}cq}
+ \ge |\operatorname{tr}(QH)|+|\operatorname{tr}((I-Q)H)|=2m_y.
+\tag{JRH.73}
+$$
+
+Dividing by two proves the claim. A trivial reference is already a
+permitted test in every complete norm. $\square$
+
+This is an application of singularity of atomic and absolutely
+continuous measures to the particular constructor. It is a distance
+from $\Psi$, not a lower bound $E_*+m_y$ against the IDEAL outputs.
+Triangle inequalities do not give such an additive ideal-error claim.
+Weak convergence of finer grid laws does not imply convergence in
+(JRH.72)'s total-variation/trace norm. A continuously shifted random
+grid need not have a common countable support; it falls outside this
+hypothesis and still needs its own causal event-time resource.
+
+## 71. A stronger reference-safe estimate for the original HALF objective
+
+**Definition 71.1 (complete stopped-channel distance).** For lawful TP
+channels $\Phi,\Psi$ on the full five-mode complex input, with common
+actual output types and time coordinates, define
+
+$$
+d_{\rm ref}(\Phi,\Psi)=\frac12
+ \sup_{\substack{R\text{ finite}\\X\in\mathsf D(\mathbb C^5\otimes R)}}
+ \|[(\Phi-\Psi)\otimes\operatorname{id}_R](X)\|_{1,\rm stopped\text{-}cq}.
+\tag{JRH.74}
+$$
+
+The norm includes the complete live block and the variation norm of
+each matrix-valued Borel failure measure, together with all declared
+singular, abort, wrong-support and zero-target sectors. Conditional
+reference operators, not just reference marginals, are retained.
+Analogous distances are used between intermediate finite cq algebras
+in an adaptive construction. Any record comparison first specifies
+common classical coordinates. If the original objective forgets an
+extra retained record, that forgetting is one fixed TP map.
+
+This is only a SUFFICIENT error estimate for the original twelve-input
+objective. It does not replace that objective by complete-channel
+minimization, alter its competitor class or grant access to a reference.
+
+**Theorem 71.2 (error transfer at the unchanged target).** On such common
+spaces,
+
+$$
+|E(\Phi)-E(\Psi)|\le d_{\rm ref}(\Phi,\Psi).
+\tag{JRH.75}
+$$
+
+In particular, conditional on the inherited $E(\Psi)=E_*$ supplier,
+$d_{\rm ref}(\Phi,\Psi)\le\eta$ gives $E(\Phi)\le E_*+\eta$.
+It gives neither equality to $E_*$ nor exact resource optimality.
+
+Proof. For each of the twelve unchanged normalized inputs the reverse
+triangle inequality against its fixed ideal output bounds the difference
+of HALF errors by HALF the norm of $(\Phi-\Psi)$ on that input.
+This is at most (JRH.74), already with the trivial reference. Taking
+the maximum over the same finite twelve-element set proves (JRH.75).
+Any specified forgetting of records contracts the norm and preserves
+the same upper bound. No average over histories or source prior is
+introduced. $\square$
+
+## 72. Finite adaptive errors without conditional-probability division
+
+**Theorem 72.1 (prefix and mass-weighted transfer).** Consider a fixed
+finite-depth adaptive instrument with genuine classical prefix records,
+on fixed full intermediate matrix blocks. Let the two implementations
+have stage channels $T_{k,h}$ and $S_{k,h}$ at depth $k$ and prefix
+$h$, each complete and TP on the entire incoming block. Suppose their
+complete reference-safe HALF distances are at most $\varepsilon_{k,h}$.
+Pad stopped paths by identity to a common finite depth $N$. For a
+normalized joint input $X$ let $p_S(h|X)$ be the unnormalized mass of
+prefix $h$ obtained using the $S$ stages before depth $k$. Then
+
+$$
+\begin{aligned}
+d_{\rm ref}(\Phi_T,\Phi_S)
+&\le\sup_{R,X}\sum_{k=1}^N\sum_{h\text{ at }k}
+          p_S(h|X)\varepsilon_{k,h}\\
+&\le\sum_{k=1}^N\max_{h\text{ at }k}\varepsilon_{k,h}.
+\end{aligned}
+\tag{JRH.76}
+$$
+
+For a specified causal-prefix output, the same estimate holds if each
+stage ending or truncated at that cut satisfies its corresponding
+complete bound on the actual prefix output, retaining stopped branches
+and survivors together. A terminal-stage bound alone is not a bound
+on its earlier causal prefixes.
+
+Proof. Replace one depth at a time, with the $S$ prefix, one differing
+stage, and the $T$ continuation. Their difference is the finite
+composition telescoping sum. A genuine prefix record is a classical
+direct sum, so its input is $\bigoplus_hX_h$, where $X_h\succeq0$
+includes the reference and $\operatorname{tr}X_h=p_S(h|X)$.
+Homogeneity of the complete stage bound gives
+
+$$
+\tfrac12\|[(T_{k,h}-S_{k,h})\otimes\operatorname{id}_R](X_h)\|_1
+ \le\varepsilon_{k,h}\operatorname{tr}X_h.
+\tag{JRH.77}
+$$
+
+If the trace is zero, positivity gives $X_h=0$ and this contribution
+is zero. For a positive trace this is just the bound on $X_h$ divided
+by its trace, multiplied back; the construction never postselects or
+physically divides a branch by its mass. The norm of a classical direct
+sum is the sum of its block norms. Every subsequent complete TP
+continuation contracts Hermitian trace norm, including after tensoring
+$I_R$. Summing the hybrid differences yields the first bound in
+(JRH.76). At each depth prefix masses sum to at most one, with stopped
+identity paths contributing zero error, proving the second. For a prefix
+output apply the same argument to the stages ended or truncated at that
+cut, using their assumed prefix bounds and complete survivor/stopped
+interfaces. This does not assert a bound for
+normalized rare-event conditional outputs without a mass lower bound.
+$\square$
+
+**Corollary 72.2 (native word errors in those stages).** Let $U,W$ be
+EXACT isometries from the same incoming space into the same outgoing
+space, with $|z|=1$ and $\|W-zU\|_{\rm op}\le\epsilon$. After
+any common TP read/routing/discard operation, the complete HALF stage
+error is at most $\epsilon$, at all passive references. Such estimates
+may be inserted in (JRH.76), provided the common record and full-domain
+TP interfaces remain lawful.
+
+Proof. Tensoring $I_R$ does not change the operator norm. For any
+normalized $X\succeq0$, expand the output difference as
+
+$$
+((W-zU)\otimes I_R)X(W^\dagger\otimes I_R)
+ +(zU\otimes I_R)X((W-zU)^\dagger\otimes I_R).
+\tag{JRH.78}
+$$
+
+The trace norm product inequality and $\|W\|=\|U\|=1$ give
+norm at most $2\epsilon$; a common TP continuation contracts it.
+The HALF convention yields $\epsilon$. This is the standard isometry
+estimate also used in Native (VII.15), here applied to the complete
+record stages. A general approximate matrix need not have norm one
+and cannot be substituted into this bound without its norm factors.
+$\square$
+
+## 73. Absolutely continuous density approximation with unchanged endpoint data
+
+**Theorem 73.1 (reference-safe normalized $L^1$ transfer).** Keep the
+SAME finite constructor, acquisition encoders, decoder effects $F_j$,
+live factors and high decoder of Definition 69.1. Replace its common
+density $g$ by any $\widetilde g\in L^1([0,1])$ satisfying
+$\widetilde g\ge0$ almost everywhere and $\int_0^1\widetilde g=1$.
+Let
+
+$$
+\widetilde G(a)=\int_0^a\widetilde g(u)\,du,\qquad
+\widetilde Z_j(a)=\sqrt{I-\widetilde G(a)F_j}.
+\tag{JRH.79}
+$$
+
+Use the existing §66 monitor with these substituted scalar functions,
+interpreting its differential identities almost everywhere, and retain
+the same terminal survivor isometries. This defines a conditional causal
+constructor $\widetilde\Psi$ with the same complete terminal live map,
+terminal survivor effects, integrated failure effects and integrated
+activity on EVERY entire fibre. In particular the original per-fibre
+budget is preserved for this specific change. Moreover
+
+$$
+\boxed{d_{\rm ref}(\widetilde\Psi,\Psi)
+ =\tfrac12\|EME^\dagger\|_{\rm op}\,
+                      \|\widetilde g-g\|_{L^1}
+ =\tfrac12\|M\|_{\rm op}\,\|\widetilde g-g\|_{L^1}}.
+\tag{JRH.80}
+$$
+
+This equality concerns the common complete stopped channels; it also
+holds if their identical acquisition labels are retained. With
+$E(\Psi)=E_*$ supplied separately it gives the corresponding sufficient
+upper bound on the unchanged original $E(\widetilde\Psi)$.
+
+Proof. Each $F_j\prec I$ has a strictly positive spectral gap from
+one, and $0\le\widetilde G\le1$. Functional calculus on this compact
+spectral interval makes $\widetilde Z_j$ absolutely continuous. The
+existing (JRH.54)–(JRH.55) identities therefore apply almost everywhere
+with the substituted functions, and their integrated identities apply
+on every Borel set. This uses the fundamental theorem for absolutely
+continuous functions, without a new Kraus or monitor derivation.
+Nonnegative integrable jump coefficients and those identities give a
+normalized instrument. The endpoint values are still
+$\widetilde G(0)=0$, $\widetilde G(1)=1$. Thus the terminal
+survivor effect and terminal live factor are unchanged. Intermediate
+survivor effects may differ; they are not claimed to be unchanged.
+
+The activity computation in (JRH.56) is the endpoint difference of
+the primitive $-\log(1-fG)$ for the nonzero eigenvalue $f<1$.
+The absolutely continuous chain rule applies to $\widetilde G$,
+including intervals where it is constant, so this endpoint difference
+is still $-\log(1-f)$. Pure pieces retain zero activity and the high
+decoder is unchanged. For the GC factors this is exactly (GC.50),
+on each ENTIRE fibre. No smoothness or strictly positive lower bound
+on $\widetilde g$ is needed for this conditional mathematical
+instrument. Supplying the changed time-dependent coupling and actual
+clock remains a separate apparatus assumption.
+
+Only the failure densities differ. For a normalized joint input $X$
+let
+$T_R=\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$.
+It is positive: cyclicity of partial trace rewrites it with $\sqrt{EME^\dagger}$
+on both sides of $X$. By the existing reference identity (GC.54),
+the norm difference in a failure component is its scalar $L^1$
+difference times the trace of this positive operator. Summing the
+separate five nonnegative weights, whose sum is one, gives exactly
+
+$$
+\tfrac12\|[(\widetilde\Psi-\Psi)\otimes\operatorname{id}_R](X)\|_1
+ =\tfrac12\|\widetilde g-g\|_{L^1}
+              \operatorname{tr}(EME^\dagger X_A).
+\tag{JRH.81}
+$$
+
+Live and all other sectors have zero difference, including both zero
+failure labels separately. If acquisition labels are retained, the
+same calculation uses their positive conditional reference operators;
+their traces sum to this same pairing by $\sum N_j^{\,f}=M$.
+The supremum of the pairing is $\|EME^\dagger\|_{\rm op}$,
+achieved on a maximum-eigenvalue input with trivial reference. Since
+$E$ is isometric, this equals $\|M\|_{\rm op}$. This proves
+(JRH.80), and Theorem 71.2 gives the original-objective upper bound.
+$\square$
+
+**Corollary 73.2 (cell averages are continuous-time laws, not grid atoms).**
+For a finite interval partition of mesh at most $\Delta$, let
+$\widetilde g$ equal the average of $g(a)=2/(1+a)^2$ in each cell.
+Then it is nonnegative, normalized and absolutely continuous as a
+measure, and
+
+$$
+\|\widetilde g-g\|_{L^1}\le4\Delta,\qquad
+ d_{\rm ref}(\widetilde\Psi,\Psi)\le2\|M\|_{\rm op}\Delta.
+\tag{JRH.82}
+$$
+
+Proof. Cell integration preserves mass and nonnegativity. Since
+$|g'(a)|=4/(1+a)^3\le4$, the difference between a point value and
+its cell average is at most four times that cell's width. Integrating
+over all cells gives $4\Delta$. Apply (JRH.80). Conditional on a
+cell, time still has a density throughout that interval. This is
+continuous jitter within cells, with its own causal implementation
+requirement, rather than an event at a selected endpoint. Hence
+Theorem 70.1 does not apply to these laws. $\square$
+
+## 74. What complete channel accuracy leaves undecided
+
+**Proposition 74.1 (small channel error does not certify sharp resources).**
+Arbitrarily small complete channel error does not preserve exact output
+rank. Consequently the error estimates above alone imply no exact
+sharp $\mathsf W$, occupied-count, zero-sector, activity-budget or
+$E=E_*$ statement for arbitrary perturbations.
+
+Proof. Let $J:\mathbb C^2\to\mathbb C^3$ be an isometry and define
+
+$$
+\Phi_0(X)=JXJ^\dagger,\qquad
+\Phi_\epsilon(X)=(1-\epsilon)JXJ^\dagger+
+                   \epsilon\operatorname{tr}(X)I_3/3,
+\qquad0<\epsilon<1.
+\tag{JRH.83}
+$$
+
+Both maps are TP/CP. For every normalized input $\Phi_0$ has
+support dimension at most two and $\Phi_\epsilon$ has support
+dimension three. At every reference, their difference is $\epsilon$
+times the difference of two channels, whose HALF output norm is at
+most one. Hence $d_{\rm ref}(\Phi_\epsilon,\Phi_0)\le\epsilon$,
+while the rank jumps for every positive $\epsilon$. The same type
+of positive small addition can populate an exact zero sector. An
+actual label can also be subdivided by an independently generated
+coin without changing a forgotten-label channel, although it changes
+the actual count. If records are retained they must instead be
+compared on their declared common record space; a Kraus refinement
+alone never supplies such a generated record. Thus channel closeness
+is insufficient evidence for the discrete or exact resource claims.
+
+For positivity alone there is a separate useful open condition: if
+$I-F\succeq e^{-A}I$ and a Hermitian effect perturbation satisfies
+$\|\widetilde F-F\|_{\rm op}<e^{-A}$, the eigenvalue inequality
+gives $I-\widetilde F\succ0$. It does not give the original lower
+bound $e^{-A}I$, nor the original activity bound $A$. Likewise
+(JRH.75) transfers only an error inequality. The exact-resource
+statements for Theorem 73.1 hold because the acquisition, $F_j$ and
+endpoint factors were fixed and the budget was separately proved
+invariant; they do not follow from small distance itself. $\square$
+
+Finite adaptive telescoping, isometry norm estimates and $L^1$/variation
+identities are established methods. Their applications here concern the
+original complete stopped channel, conditional reference operators,
+causal prefixes and fixed GC factors. GC's moment/contact stability
+and the [quantitative-output-stability owner §§4–10](FIB_NATIVE_COMPLETE_CONTINUATION_QUANTITATIVE_OUTPUT_STABILITY.md)
+address different moment and height deficits; those estimates are not
+a substitution of a diamond objective for the original HALF objective.
+If a finite alphabet compiler is invoked, Dawson–Nielsen,
+[*The Solovay–Kitaev algorithm*, Definition 1](https://arxiv.org/html/quant-ph/0505030v2),
+requires a specified finite inverse-closed dense alphabet and its
+compilation setup. The continuous ideal native menu, or exact finite
+reachability alone, supplies no calibrated pulse count, duration or
+hardware-clock error bound from that theorem.
+
+The native gap remains the actually supplied common acquisition on the
+one unknown specimen, genuine complete records, all jointly counted
+accessible shares, full-domain TP decoding and irreversible environment
+removal, plus causal absorbing coupling and a real aligned FIRST clock
+with every read, pulse and routing completed before its cut. GC §25's
+extra initialization/Lüders/feedback/routing permissions are conditional
+supplies, never authorizations conferred by theory. No finite
+acquisition dimension certifies a finite exact Borel-time apparatus.
+The original source/root/rank/TP, minimax, separate unaveraged face,
+sharp JOINT and finite/countable/stipulated measurable full-class
+suppliers retain their unverified conditions. The all-budget,
+all-contrast roof, exact optimal actual counts, coefficients,
+orientations, ordering, connected coverage, all boundary gluing and
+joint limits of the original through-2027 programme are unchanged and
+incomplete. Neither a late scalar timestamp nor channel approximation
+silently replaces any of those requirements.
+
+## 追加锚（本行以下为增补区）

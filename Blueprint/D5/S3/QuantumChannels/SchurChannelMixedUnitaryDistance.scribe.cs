@@ -30,8 +30,11 @@ internal sealed class SchurChannelMixedUnitaryDistanceDocument : IScribeDocument
             Node("claim", "The equality asked after Equation (8)", ClaimFormula(),
                 "Section V, page 9, after the proof of Theorem 3: \"" + Question + "\" This proposition states the equality in the second inequality. d ranges over all natural dimensions, Phi over canonical channels on Fin d, and IsSchurChannel is the sole hypothesis. MixedUnitary represents Conv(U_d), and SchurMixedUnitary represents Λ_d. The empty dimension is included; both sets still contain the identity channel.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("reindex_traceNorm", "Trace norm is invariant under finite reindexing", ReindexTraceNormFormula(),
+                "For finite decidable index types a and b, an equivalence e preserves the trace norm under Matrix.reindexAlgEquiv. This identity also gives the submatrix form for the inverse equivalence, and it identifies ancillary coordinates in the capacity bounds.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "The two diamond-distance infima are equal", Disp(Named("claim")),
-                "Copy a basis vector i to (i,i), apply the channel on the first factor while retaining the second, and recover coherently from the correlated subspace. On its complement, recovery maps (k,i) to i. These Kraus operators sum to a trace-preserving channel. The resulting superchannel fixes every Schur channel and contracts diamond distance. Each diagonal entry of a unitary is the midpoint of two unit complex phases; independent choices of those phases give a uniform family of 2^d diagonal unitaries. Thus every unitary mixture has a Schur unitary mixture at no greater distance from Phi. Set inclusion gives the opposite inequality. This proves equality of infima without requiring an attained minimum. Pointwise recovery errors need only satisfy the contraction inequality. The argument gives no closed form for the common distance. Relating positive distance to nonmembership requires compactness or closedness beyond the present theorem.",
+                "Copy a basis vector i to (i,i), apply the channel on the first factor while retaining the second, and recover coherently from the correlated subspace. On its complement, recovery maps (k,i) to i. These Kraus operators sum to a trace-preserving channel. The resulting superchannel fixes every Schur channel and contracts diamond distance. Each diagonal entry of a unitary is the midpoint of two unit complex phases; independent choices of those phases give a uniform family of 2^d diagonal unitaries. Thus every unitary mixture has a Schur unitary mixture at no greater distance from Phi. Set inclusion gives the opposite inequality. This proves equality of infima without requiring an attained minimum. Pointwise recovery errors need only satisfy the contraction inequality. The argument gives no closed form for the common distance. Relating positive distance to nonmembership requires compactness or closedness beyond the present theorem. The amplified contraction estimates in this proof also have a finite-window channel application. Let A, B and C be independent finite decidable coordinate types, C1:A->B and C2:B->C canonical CPTP channels, and PA, PB and PC arbitrary specified real-time CPTP families. For a,b>0 and T>=0 define e_T(C1;a) as one half of the supremum, over 0<=t<=T, of the unhalved stabilized diamondDistance between C1 comp PA(t) and PB(a*t) comp C1; use the analogous definition for the other channels. The stabilization tests every finite reference dimension and every joint density input, including correlated inputs. The existing diamond_bounds bounds the distances by two; adjoining zero defines empty windows and does not change a nonnegative-horizon supremum, since t=0 belongs to the window. Thus 0<=e_T<=1. For a common joint input rho, insert the output of C2 comp PB(a*t) comp C1 between those of C2 comp C1 comp PA(t) and PC((a*b)*t) comp C2 comp C1. The existing traceDistance_triangle splits the error. Applying trace_contract_rectangular to referenceChannel C2 bounds the first term by the first channel error on rho. For the second term use the density state obtained from rho by referenceChannel C1; reference_error_le_diamond bounds it by the stabilized error of C2 at time a*t. The two bounded time suprema, 0<=a*t<=a*T and b*(a*t)=(a*b)*t yield e_T(C2 comp C1;a*b)<=e_T(C1;a)+e_(a*T)(C2;b), with the factor one half applied to the unhalved estimates. This includes T=0 and empty coordinate types through the zero convention; no identity at time zero, maximum attainment, semigroup, continuity, generator, recovery or locality is assumed. This application uses the existing estimates; the Schur-channel equality itself requires its stated Schur hypothesis. A complete application to actual rectangular stochastic channels and stochastic evolution requires their canonical CPTP realization and the corresponding diagonal relative-entropy identification. That realization is not established here. Channel composition alone supplies no RG universality or effective dynamics, and its residual estimate does not guarantee recovery of a specified state family.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("yu-duan-xu-2017-schur-channel-diamond-equality"),
@@ -40,7 +43,7 @@ internal sealed class SchurChannelMixedUnitaryDistanceDocument : IScribeDocument
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("ydx-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("ydx-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
@@ -65,6 +68,21 @@ internal sealed class SchurChannelMixedUnitaryDistanceDocument : IScribeDocument
     private static Formula Member(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
     private static Formula SumOver(string name, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(F.Id(name), Colon, Sp, type), Sp, body);
+
+    private static Formula ReindexTraceNormFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), e = F.Id("e"), x = F.Id("X");
+        Formula matrix = Call("Matrix", a, a, Complexes());
+        Formula instances = Seq(OpenBracket, Call("Fintype", a), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", a), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", b), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", b), CloseBracket, Sp);
+        Formula equiv = Call("Equiv", a, b);
+        Formula norm(Formula value) => Call("traceNorm", value);
+        Formula indexed = App(App(Qualified("Matrix", "reindexAlgEquiv"), Complexes(), Complexes(), e), x);
+        return Disp(All("a", Named("Type"), All("b", Named("Type"), Seq(instances,
+            All("e", equiv, All("X", matrix, Equal(norm(indexed), norm(x))))))));
+    }
 
     private static Formula MixedFormula()
     {

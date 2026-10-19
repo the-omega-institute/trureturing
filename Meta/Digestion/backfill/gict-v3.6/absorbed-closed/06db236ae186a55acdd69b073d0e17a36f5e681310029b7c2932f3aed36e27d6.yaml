@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:06db236ae186a55acdd69b073d0e17a36f5e681310029b7c2932f3aed36e27d6
-  normalized_sha256: sha256:06db236ae186a55acdd69b073d0e17a36f5e681310029b7c2932f3aed36e27d6
-cas_ref: sha256:06db236ae186a55acdd69b073d0e17a36f5e681310029b7c2932f3aed36e27d6
-coverage_gids:
-  - gid: D5/S3/Zeros/Symmetry/TwelveOrbitMultiplicity.twelve_orbit_multiplicity
-    target_statement_id: sha256:0dfe4561d139bd9ac25e8e50e00f5e642a0e0e7d99f95dc191813ce47aec7778
-receipts:
-  unresolved_subitems: []

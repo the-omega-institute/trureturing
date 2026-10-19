@@ -19,6 +19,10 @@ internal sealed class FullySeparableExchangeObstructionDocument : IScribeDocumen
                 "The input matrix is reindexed by the join of the lost and retained configurations. The existing partialTraceFirst sums the same lost configuration in both indices, giving the usual finite partial trace.", AssessedProvenance.FromRepo()),
             Node("IsFullySeparableLocal", "Finite convex mixtures of local density states", SeparableFormula(),
                 "Full separability is a convex combination of product states. Each DensityState L is a positive trace-one local matrix, val forgets its proof, and Complex.ofReal embeds each nonnegative real mixture weight into the complex scalars. The product and sum are over all sites and all mixture indices.", AssessedProvenance.FromLiterature(Quinta)),
+            Describe.Lean(DescribeId.Create("exchange-density-psd"), DeclarationHandle.Create(Prefix + "density_psd"),
+                H("Density states are positive semidefinite"), StatementSource.FromAuthor(DensityPsdFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every finite local carrier L, forgetting the CStarMatrix wrapper of a DensityState L gives a positive semidefinite complex matrix. Positivity is transported through CStarMatrix.ofMatrixStarAlgEquiv.symm."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("separable-exchange-zero"), DeclarationHandle.Create(Prefix + "separable_exchange_zero"),
                 H("A zero exchanged diagonal annihilates coherence"), StatementSource.FromAuthor(ExchangeFormula()),
                 AssessedProvenance.FromRepo(),
@@ -54,6 +58,11 @@ internal sealed class FullySeparableExchangeObstructionDocument : IScribeDocumen
         ? Seq(OpenBracket, Call("Fintype", F.Id(name)), CloseBracket, Sp, OpenBracket, Call("DecidableEq", F.Id(name)), CloseBracket, Comma, Sp, body)
         : Seq(OpenBracket, Call("DecidableEq", F.Id(name)), CloseBracket, Comma, Sp, body);
     private static Formula Context(Formula body) => All("V", F.Id("Type"), All("L", F.Id("Type"), Instances("V", Instances("L", body, true), true)));
+    private static Formula DensityPsdFormula() => All("L", F.Id("Type"), Instances("L",
+        All("sigma", Call("DensityState", F.Id("L")),
+            Qualified("Matrix", "PosSemidef", Apply(
+                Seq(Operatorname, Grp(F.Id("CStarMatrix"), Dot, F.Id("ofMatrix"), Dot, F.Id("symm"))),
+                Val(F.Id("sigma"))))), true));
     private static Formula SumOver(string name, Formula type, Formula body) => Seq(new Formula.Subscript(Sum, Seq(F.Id(name), Colon, type)), Sp, Parenthesized(body));
     private static Formula ProductOver(string name, Formula type, Formula body) => Seq(new Formula.Subscript(Prod, Seq(F.Id(name), Colon, type)), Sp, Parenthesized(body));
 

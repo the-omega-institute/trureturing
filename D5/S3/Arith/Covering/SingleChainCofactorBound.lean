@@ -15,9 +15,6 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open scoped BigOperators
-open private Erdos7.OddDistinctCoveringSystem.owner_has_private_point from
-  D5.S3.Arith.Covering.ConcentratedPrimeSingleton
-
 namespace Erdos7.OddDistinctCoveringSystem
 
 /- A complete saturated chain cannot have a larger cofactor prime.

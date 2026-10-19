@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9b2e9bf00fcd10a8a6a8cc12c75ebf41c704adb5d31603830361ec9426bee769
-  normalized_sha256: sha256:9b2e9bf00fcd10a8a6a8cc12c75ebf41c704adb5d31603830361ec9426bee769
-cas_ref: sha256:9b2e9bf00fcd10a8a6a8cc12c75ebf41c704adb5d31603830361ec9426bee769
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/FiniteCountermodels/CanonicalPathBranchNoncommutation.path_limit_branch_noncommutation_ssot
-    target_statement_id: sha256:52fdfd37a2d0cdfeb93fe069b49829352ec671de6b4207d5dedb088b269a7548
-receipts:
-  unresolved_subitems: []

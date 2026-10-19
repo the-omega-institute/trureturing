@@ -400,7 +400,7 @@ theorem archive_clock_recovery_and_finite_ambiguity
   have hnotEdges : Not (forall pair, SynchronouslyReachable S X0 pair -> forall a,
       SynchronizedEdge S pair a -> S.cost a pair.1 - S.cost a pair.2 = 0) := by
     intro hedges
-    exact hnotRecoverable ((equivalence.out 0 2).mpr hedges)
+    exact hnotRecoverable ((equivalence.out 1 3).mpr hedges)
   push Not at hnotEdges
   rcases hnotEdges with ⟨badPair, hbadReachable, badAction, hbadEdge, hbadCost⟩
   let HasPathLength (k : Nat) : Prop :=

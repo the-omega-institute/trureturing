@@ -136,7 +136,7 @@ theorem result : ¬ claim := by
       Module.card_eq_pow_finrank
     have hc8 : Fintype.card inputSpace = 8 := by
       have heq : (inputSpace : Set W) = {v : W | v 2 = 0} := rfl
-      exact (Fintype.card_congr (Equiv.setCongr heq)).trans hcardInput
+      exact (Fintype.card_congr (Set.equivOfEq heq)).trans hcardInput
     rw [hc8] at hc
     exact Nat.pow_right_injective (by decide : 1 < 2) (by simpa using hc.symm)
   let F : K → K := fun x => e (G (e.symm x))

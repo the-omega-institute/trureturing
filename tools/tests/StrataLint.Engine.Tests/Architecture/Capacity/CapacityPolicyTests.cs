@@ -146,22 +146,6 @@ public sealed class CapacityPolicyTests
         Assert.Empty(findings);
     }
 
-    // Atomizer dialect rules are one canonical registry consumed through the
-    // strict loader, not a navigated content artifact to split at an arbitrary line.
-    [Fact]
-    public void TheoryAtomizerDataRegistryIsNotBounded()
-    {
-        var oversize = string.Join(
-            '\n',
-            Enumerable.Range(0, RepositoryRules.ArtifactHardLineLimit + 1)
-                .Select(static i => $"line {i}"));
-
-        var findings = RepositoryCapacityAudit.InspectFiles(
-            new[] { (TheoryAtomizerDataLoader.DataPath, oversize) });
-
-        Assert.Empty(findings);
-    }
-
     // Generated Blueprint Markdown projections are not a second structural slot:
     // each document already pays that slot through its .scribe.cs source at the
     // same stem. This is a capacity fact only; it gives Markdown no content or

@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Eight actual third-order joint paths restore both exhaustive four-path boundary partitions on the same Hamilton cycle. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
 
 set_option autoImplicit false

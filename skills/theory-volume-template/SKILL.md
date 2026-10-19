@@ -58,14 +58,9 @@ q = \bar q \circ \eta
 
 真源是代码,不是本节;本节只是它的读法。出处按符号名给,不给行号(行号会漂移)。
 
-**1. 谁会被消化。** `DigestionOpaquePathPolicy.IsTheoryDocument`:凡路径以 `docs/develop/theory/`
-开头者即理论卷,**由路径规则判定,不由任何名单枚举**。⟹ 放进那个目录的 `.md` 一定会被消化;
-不想被消化的文件(模板、说明、草稿)**不能**放在那里。
+**1. 谁会被消化。** FILEMAP 唯一登记为 `digestion_source = true` 的 canonical 常规理论输入可被发现与摄入；新卷须在对应 FILEMAP theory 分片登记。archive 与仅供现有读者引用的 symlink 不属于源。未登记的常规理论输入仍由 FILEMAP 保管，不能因清理遗漏。
 
-**2. 用哪个消化器。** `Meta/Digestion/backfill/<source_id>/source.toml` 的 `atomizer` 字段。
-新卷一律用 `generic-v1`(`genre_registry_check = "no-registry"`):它是**规则**不是词表,
-不需要往 `Meta/Digestion/atomizers.toml` 登记任何体裁词,也就不会连带改判别的卷。
-`source.toml` 由 `make ingest SOURCE=<卷路径>` 首次运行时自动写出,不必手写。
+**2. 用哪个消化器。** 唯一现役格式是 `generic-v1`，源 metadata 的 `atomizer` 也只能使用此值。正文沿用 generic Markdown 语法，不需要词汇表或方言登记。其他 atomizer 标识在 parser-bearing 操作中明确拒绝。
 
 **3. 地址(locator)有四路,全部只看字节。**(`GenericAtomizer` + `MarkdownAstAtomizer`)
 

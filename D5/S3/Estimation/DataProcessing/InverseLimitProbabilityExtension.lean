@@ -80,13 +80,13 @@ theorem exists_unique_probability_extension
     choose x hx using fun j => lift_symbol l (y j)
     exact ⟨x, funext hx⟩
   let H (l : ℕ) : Set (ProbabilityMeasure X) :=
-    {μ | μ.map (hπ l).measurable.aemeasurable = Q l}
+    {μ | μ.map (levelProjection q n l) = Q l}
   have hHclosed (l : ℕ) : IsClosed (H l) :=
     isClosed_eq (ProbabilityMeasure.continuous_map (hπ l)) continuous_const
   have hHnonempty (l : ℕ) : (H l).Nonempty := by
     choose s hs using hsurj l
     have hsm : Measurable s := measurable_of_countable s
-    refine ⟨(Q l).map hsm.aemeasurable, ?_⟩
+    refine ⟨(Q l).map s, ?_⟩
     apply Subtype.ext
     change ((Q l : Measure (Fin n → B l)).map s).map (levelProjection q n l) = _
     rw [Measure.map_map (hπ l).measurable hsm]

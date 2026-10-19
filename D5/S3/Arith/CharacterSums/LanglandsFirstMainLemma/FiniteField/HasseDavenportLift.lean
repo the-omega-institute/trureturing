@@ -225,9 +225,6 @@ theorem sum_divisorPrimeIndex_eq_closedPointPowerSum
       apply Finset.sum_congr rfl
       intro e _
       rw [Finset.mul_sum]
-      apply Fintype.sum_congr
-      rintro ⟨⟨p, hpmonic, _⟩, _⟩
-      rfl
 
 noncomputable def conjugacyClassGaussTerm
     (χ : FiniteMulChar k) (ψ : FiniteAddChar k) (c : ConjRootClass k K) : ℂ :=

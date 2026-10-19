@@ -4,7 +4,19 @@
 
 Real trace-zero Hermitian readout fibers equal residual and projection fibers.
 
-**Theorem 1.1 (Trace readout fibers are residual and projection fibers on the real carrier).**
+**Lemma 1.1 (Removing the scalar trace component gives a trace-zero Hermitian matrix).**
+
+$$\forall (d: Type*), [\operatorname{Fintype}(d)] [\operatorname{Nonempty}(d)] [\operatorname{DecidableEq}(d)] \forall (E: \operatorname{Matrix}(d, d, \mathbb{C})), \operatorname{IsHermitian}(E) \Rightarrow (\operatorname{IsHermitian}((E - \operatorname{smul}(\frac{\operatorname{trace}(E)}{(\operatorname{card}(d): \mathbb{C})}, (1: \operatorname{Matrix}(d, d, \mathbb{C}))))) \land \operatorname{trace}((E - \operatorname{smul}(\frac{\operatorname{trace}(E)}{(\operatorname{card}(d): \mathbb{C})}, (1: \operatorname{Matrix}(d, d, \mathbb{C}))))) = 0)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fibers/TraceZeroReadoutOrthogonalEquivalence.centered_effect_mem` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a Hermitian matrix on a nonempty finite index type, subtracting its trace divided by the dimension times the identity preserves Hermiticity and makes the trace zero. These two conditions are precisely membership in the real trace-zero Hermitian subspace. The formula expands both that membership and the centered matrix.
+
+**Theorem 1.2 (Trace readout fibers are residual and projection fibers on the real carrier).**
 
 $$\forall d: \operatorname{Type}, m: Nat, [\operatorname{Fintype}(d)], [\operatorname{Nonempty}(d)], [\operatorname{DecidableEq}(d)]\\{}E: \operatorname{Fin}(m+1) \to \operatorname{Matrix}(d, d, \mathbb{C}), \rho, \sigma: \operatorname{Matrix}(d, d, \mathbb{C}), \rho \operatorname{PosSemidef} \land \operatorname{trace}(\rho) = 1, \sigma \operatorname{PosSemidef} \land \operatorname{trace}(\sigma) = 1,\\{}\forall i: \operatorname{Fin}(m+1), (E(i) \operatorname{PosSemidef} \land (1 - E(i)) \operatorname{PosSemidef}) \Rightarrow\\{}V = \operatorname{HermitianTraceZero}(d), \operatorname{V0}(V, E) = \operatorname{span}_{\mathbb{R}}(\operatorname{range}(\operatorname{centeredEffect}(E(i)))), \operatorname{R0}(V, E) = V0^{\perp},\\{}((\operatorname{finiteTraceReadout}(E, \rho)=\operatorname{finiteTraceReadout}(E, \sigma)) \Leftrightarrow (\forall i, \operatorname{Tr}((\rho-\sigma)E(i)) = 0)) \land\\{}((\forall i, \operatorname{Tr}((\rho-\sigma)E(i)) = 0) \Leftrightarrow (X_\rho - X_\sigma \in R_{0})) \land\\{}((X_\rho - X_\sigma \in R_{0}) \Leftrightarrow (P_{V_{0}}(X_\rho)=P_{V_{0}}(X_\sigma))).$$
 
@@ -22,5 +34,6 @@ The frozen finite expectation-word residual theorem is applied on the real subty
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Fibers/TraceZeroReadoutOrthogonalEquivalence.centered_effect_mem`
 - Truth anchor: `D5/S3/Quantum/Fibers/TraceZeroReadoutOrthogonalEquivalence.readout_fiber_orthogonal_equivalence`
 - Dependency: [D5/S3/Quantum/Fibers/ReadoutOrthogonalEquivalence](ReadoutOrthogonalEquivalence.md)

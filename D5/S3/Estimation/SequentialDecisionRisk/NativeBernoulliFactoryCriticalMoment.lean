@@ -97,7 +97,7 @@ private lemma seeded_uniform_coin_law (ν : Measure Seed) [IsProbabilityMeasure 
     (p : unitInterval) : (RawLaw ν).map (Bits p) = Law ν p := by
   have := uniform_probability
   have hm : Measurable (fun tape : ℕ → ℝ => fun n : ℕ => Coin p (tape n)) :=
-    measurable_pi_lambda _ (fun n => (coin_measurable p).comp (measurable_pi_apply n))
+    Measurable.of_eval (fun n => (coin_measurable p).comp (measurable_pi_apply n))
   have hprod := Measure.map_prod_map ν (Measure.infinitePi (fun _ : ℕ => Uniform))
     measurable_id hm
   rw [Measure.map_id, Measure.infinitePi_map_pi (fun _ : ℕ => Uniform)
@@ -181,7 +181,7 @@ private lemma common_rate_output_law (π : Seed → Bool → History → Action)
     (RawLaw ν).real ((stoppedValue (CellAt π S p p) (Calls π S p p)) ⁻¹' {cell}) =
       (Law ν p).real ((stoppedValue (FlatCellAt π S) (FlatCalls π S)) ⁻¹' {cell}) := by
   have hm : Measurable (fun ω : Seed × (ℕ → ℝ) => Bits p ω) := measurable_fst.prodMk
-    (measurable_pi_lambda _ (fun n => (coin_measurable p).comp
+    (Measurable.of_eval (fun n => (coin_measurable p).comp
       ((measurable_pi_apply n).comp measurable_snd)))
   have ho := (output_stopped_measurable π hπ S).mono
     (calls_stopping π hπ S).measurableSpace_le le_rfl
@@ -205,7 +205,7 @@ private lemma common_rate_cost_law (π : Seed → Bool → History → Action)
     (∫⁻ ω, RawCost π S p p a ω ∂(RawLaw ν)) =
       ∫⁻ ω, FlatCost π S a ω ∂(Law ν p) := by
   have hm : Measurable (fun ω : Seed × (ℕ → ℝ) => Bits p ω) := measurable_fst.prodMk
-    (measurable_pi_lambda _ (fun n => (coin_measurable p).comp
+    (Measurable.of_eval (fun n => (coin_measurable p).comp
       ((measurable_pi_apply n).comp measurable_snd)))
   have hM := (calls_stopping π hπ S).measurable.mono
     (calls_stopping π hπ S).measurableSpace_le le_rfl

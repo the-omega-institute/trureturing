@@ -145,7 +145,7 @@ theorem roth_key_inequality
     rw [hMboxdef]
     calc (1 : ℝ) = ∏ _j : ι, (1 : ℝ) := by simp
       _ ≤ ∏ j, ((d j : ℝ) + 1) :=
-        Finset.prod_le_prod (fun j _ ↦ zero_le_one)
+        Finset.prod_le_prod₀ (fun j _ ↦ zero_le_one)
           (fun j _ ↦ le_add_of_nonneg_left (Nat.cast_nonneg (d j)))
   have hMbox0 : (0 : ℝ) < Mbox := lt_of_lt_of_le zero_lt_one hMbox1
   have hCα0 : ∀ j, (0 : ℝ) < Cα j := fun j ↦ lt_of_lt_of_le zero_lt_one (hCα1 j)
@@ -228,7 +228,7 @@ theorem roth_key_inequality
       calc (∏ v : InfinitePlace K, v y ^ v.mult)
           ≤ ∏ v : InfinitePlace K,
               (C * (⨆ i, v (x i)) * (∏ i, max (v (β i)) 1 ^ e i) * s v) ^ v.mult :=
-            Finset.prod_le_prod (fun v _ ↦ pow_nonneg (v.1.nonneg _) _)
+            Finset.prod_le_prod₀ (fun v _ ↦ pow_nonneg (v.1.nonneg _) _)
               fun v _ ↦ pow_le_pow_left₀ (v.1.nonneg _) (hinf v) _
         _ = (∏ _v : InfinitePlace K, C ^ _v.mult)
               * (∏ v : InfinitePlace K, (⨆ i, v (x i)) ^ v.mult)
@@ -283,7 +283,7 @@ theorem roth_key_inequality
           * ∏ v ∈ Sfin, t v := by
       calc (∏ᶠ v : FinitePlace K, v y)
           ≤ ∏ᶠ v : FinitePlace K, (⨆ i, v (x i)) * (∏ i, max (v (β i)) 1 ^ e i) * t v :=
-            finprod_le_finprod (FinitePlace.hasFiniteMulSupport hy) (fun v ↦ v.1.nonneg _)
+            finprod_le_finprod₀ (FinitePlace.hasFiniteMulSupport hy) (fun v ↦ v.1.nonneg _)
               (hmulsupp (hmulsupp hfsup hfprod) hft) hfin
         _ = (∏ᶠ v : FinitePlace K, ⨆ i, v (x i))
               * (∏ᶠ v : FinitePlace K, ∏ i, max (v (β i)) 1 ^ e i)
@@ -436,7 +436,7 @@ theorem roth_key_inequality
       intro hzero
       apply hQ0
       ext a
-      simpa only [coeff_zero, Pi.zero_apply] using congrFun hzero a
+      simpa only [MvPolynomial.coeff_zero, Pi.zero_apply] using! congrFun hzero a
     rw [MvPolynomial.mulHeight, ← hcoe (AddMonoidAlgebra.coeff Q)]
     change Height.mulHeight (fun a : ι →₀ ℕ ↦ Q.coeff a) =
       Height.mulHeight (fun I : (∀ j, Fin (d j + 1)) ↦ Q.coeff (boxMonomial d I))
@@ -458,7 +458,7 @@ theorem roth_key_inequality
     intro a
     have hmax : (∏ j, max (w (sPlaceAbsValue a) (α j (sPlaceAbsValue a))) 1 ^ d j) ^ 2 ≤ Pα := by
       rw [← Finset.prod_pow, hPαdef]
-      refine Finset.prod_le_prod (fun j _ ↦ pow_nonneg (pow_nonneg
+      refine Finset.prod_le_prod₀ (fun j _ ↦ pow_nonneg (pow_nonneg
         (le_trans zero_le_one (le_max_right _ _)) _) _) fun j _ ↦ ?_
       rw [← pow_mul, Nat.mul_comm]
       exact pow_le_pow_left₀ (le_trans zero_le_one (le_max_right _ _))
@@ -517,7 +517,7 @@ theorem roth_key_inequality
             ring_nf
     calc (∏ j, localApprox Sinf Sfin w (α j) a (β j) ^ ν a j)
         ≤ ∏ j, Real.exp (-(κ * lam a) * ((ν a j : ℝ) * logHeight₁ (β j))) :=
-          Finset.prod_le_prod (fun j _ ↦ pow_nonneg (hLocalApproxNonneg _ _ _ _ _ _) _)
+          Finset.prod_le_prod₀ (fun j _ ↦ pow_nonneg (hLocalApproxNonneg _ _ _ _ _ _) _)
             fun j _ ↦ hterm j
       _ = Real.exp (∑ j, -(κ * lam a) * ((ν a j : ℝ) * logHeight₁ (β j))) :=
           (Real.exp_sum _ _).symm
@@ -529,7 +529,7 @@ theorem roth_key_inequality
       ≤ Real.exp (-(κ * (∑ a : ↥Sinf ⊕ ↥Sfin, lam a) * T * D)) := by
     calc (∏ a : ↥Sinf ⊕ ↥Sfin, ∏ j, localApprox Sinf Sfin w (α j) a (β j) ^ ν a j)
         ≤ ∏ a : ↥Sinf ⊕ ↥Sfin, Real.exp (-(κ * lam a * (T * D))) :=
-          Finset.prod_le_prod (fun a _ ↦ Finset.prod_nonneg fun j _ ↦
+          Finset.prod_le_prod₀ (fun a _ ↦ Finset.prod_nonneg fun j _ ↦
             pow_nonneg (hLocalApproxNonneg _ _ _ _ _ _) _) fun a _ ↦ hsmall a
       _ = Real.exp (∑ a : ↥Sinf ⊕ ↥Sfin, -(κ * lam a * (T * D))) := (Real.exp_sum _ _).symm
       _ = Real.exp (-(κ * (∑ a : ↥Sinf ⊕ ↥Sfin, lam a) * T * D)) := by
@@ -555,7 +555,7 @@ theorem roth_key_inequality
               (algebraMap K F (β j) - α j (sPlaceAbsValue a))) ^ ν a j)) ^ sPlaceWeight a)
         ≤ ∏ a : ↥Sinf ⊕ ↥Sfin, ((Mbox ^ 2 * 4 ^ n * Pα) ^ sPlaceWeight a
             * ∏ j, localApprox Sinf Sfin w (α j) a (β j) ^ ν a j) :=
-          Finset.prod_le_prod (fun a _ ↦ pow_nonneg (mul_nonneg hMbox0.le (hg0 a)) _)
+          Finset.prod_le_prod₀ (fun a _ ↦ pow_nonneg (mul_nonneg hMbox0.le (hg0 a)) _)
             fun a _ ↦ hstep a
       _ = (Mbox ^ 2 * 4 ^ n * Pα) ^ Wsum
             * ∏ a : ↥Sinf ⊕ ↥Sfin, ∏ j, localApprox Sinf Sfin w (α j) a (β j) ^ ν a j := by

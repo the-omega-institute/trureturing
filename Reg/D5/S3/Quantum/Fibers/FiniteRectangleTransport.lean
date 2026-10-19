@@ -208,3 +208,91 @@ noncomputable def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _
 
 end
 end Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport.WeightCompatibility
+
+namespace Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport.Polygon
+noncomputable section
+open Set
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+def signature : Signature where
+  Params := State
+  State := fun _ => List State
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => List State
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature
+  (fun _ x xs => x :: xs) (fun e => nomatch e)
+def rejected : Realization signature := realize signature
+  (fun _ _ _ => ([] : List State)) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (b : Base) (x : State) (xs : List State)
+    (_hx : x.1 ∈ Ioo (lower b) (upper b))
+    (_h : List.IsChain (LawfulLeg (phaseWeight b) (lower b) (upper b)) (x :: xs)),
+    Admissible b xs.length (polygon (R.readout () x xs))
+
+private theorem rejected_fails : ¬ arena.Law rejected := by
+  intro h
+  have hx : (1/5:ℝ) ∈ Ioo (lower ((2/5:ℝ),2/5,1/5))
+      (upper ((2/5:ℝ),2/5,1/5)) := by norm_num [lower,upper]
+  have hh := h ((2/5:ℝ),2/5,1/5) (1/5,0,0) [] hx (by simp)
+  have hi := hh.2.1 0 (by simp)
+  norm_num [rejected,realize,lower,polygon] at hi
+
+def registration : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨polygon_admissible,rejected,rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected,?_,rfl,rejected_fails⟩
+      intro j hj
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
+    · intro i; exact nomatch i
+  dependence := by
+    intro i
+    refine ⟨(0:State),[],[(1:State)],?_⟩
+    intro he
+    have hi := congrArg List.length he
+    norm_num [actual,realize] at hi
+
+noncomputable def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@D5.S3.Quantum.Fibers.FiniteRectangleTransport.polygon_admissible)
+    (type_of% (realize signature (fun _ x xs => x :: xs)
+      (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport.Polygon.__information_unit,
+  realizationName := `Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport.Polygon.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ x xs => x :: xs)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.FiniteRectangleTransport,
+    definition := none,
+    coordinates := #[1],
+    readouts := #[{
+      path := #["body","body","body","body","body","arg","arg"],
+      stateBinder := 2,
+      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+end
+end Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport.Polygon

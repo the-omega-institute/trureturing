@@ -21,7 +21,7 @@ public sealed class StructuralGenerationTests
         Assert.Equal(2, plan.ResidualOpenAdded);
         Assert.Equal(new[] { first, second }.Order(), plan.CasObjects.Select(item => Encoding.UTF8.GetString(item.Bytes.AsSpan())).Order());
         Assert.All(plan.Document.RequireDigestionEntries(), entry => Assert.Empty(entry.Receipts.ChainAtoms));
-        var atomized = GenericAtomizer.Atomize(Encoding.UTF8.GetBytes(first + second), TheoryAtomizerRules.None);
+        var atomized = GenericAtomizer.Atomize(Encoding.UTF8.GetBytes(first + second));
         Assert.Equal(Encoding.UTF8.GetBytes(first + second), atomized.Reassemble().ToArray());
     }
 
@@ -42,7 +42,7 @@ public sealed class StructuralGenerationTests
         Assert.True(result.Success, result.Error);
         Assert.Equal(25, result.Output.Split('\n').Count(line => line.StartsWith("DECOMPOSE_SEGMENT type=claim", StringComparison.Ordinal)));
         var plan = DigestionDecomposition.Plan(f.Parent, DecomposeFixture.Atom(text).RawBytes,
-            GenericAtomizer.Atomize, f.Rules, f.Snapshot);
+            GenericAtomizer.Atomize, f.Snapshot);
         Assert.Equal(Encoding.UTF8.GetBytes(text), plan.Segments.SelectMany(segment => segment.Atom.RawBytes).ToArray());
         Assert.All(plan.Children.Skip(1), child =>
         {
@@ -69,7 +69,7 @@ public sealed class StructuralGenerationTests
             .Replace("\n", newline, StringComparison.Ordinal);
         var f = new DecomposeFixture(text, AtomizerRegistry.GenericId);
         var plan = DigestionDecomposition.Plan(f.Parent, DecomposeFixture.Atom(text).RawBytes,
-            GenericAtomizer.Atomize, f.Rules, f.Snapshot);
+            GenericAtomizer.Atomize, f.Snapshot);
         Assert.Equal(2, plan.Children.Length);
         Assert.Equal(3, plan.Segments.Count(segment => segment.Kind == DigestionSegmentKind.Structural));
         var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
@@ -91,7 +91,7 @@ public sealed class StructuralGenerationTests
         }
         // Replay uses stored identities and exact parent gaps, even if fresh grammar changes.
         var replay = DigestionDecomposition.Plan(parent, DecomposeFixture.Atom(text).RawBytes,
-            (_, _) => throw new InvalidOperationException("fresh grammar must not run"), f.Rules, f.Snapshot);
+            (_) => throw new InvalidOperationException("fresh grammar must not run"), f.Snapshot);
         Assert.Equal(plan.Segments.Select(segment => (segment.Kind, segment.Atom.StartByte, segment.Atom.EndByte)),
             replay.Segments.Select(segment => (segment.Kind, segment.Atom.StartByte, segment.Atom.EndByte)));
         Assert.Equal(Encoding.UTF8.GetBytes(text), replay.Segments.SelectMany(segment => segment.Atom.RawBytes).ToArray());
@@ -104,7 +104,7 @@ public sealed class StructuralGenerationTests
         Assert.Contains(parent.AtomId, alignment.VerifiedClausePlanParents);
         var entries = f.Document.RequireDigestionEntries().ToDictionary(entry => entry.AtomId, StringComparer.Ordinal);
         Assert.Equal(ids.Append(parent.AtomId).Order(),
-            DigestionDecomposition.ValidatedClosure([parent.AtomId], entries, f.Snapshot, f.Rules).Order());
+            DigestionDecomposition.ValidatedClosure([parent.AtomId], entries, f.Snapshot).Order());
         foreach (var prior in f.Baseline.Entries.Where(entry => entry.Path != DecomposeFixture.PathFor(f.Parent)))
             Assert.Equal(prior.Bytes.ToArray(), f.Current.Entries.Single(entry => entry.Path == prior.Path).Bytes.ToArray());
         Assert.Same(before, f.Current);
