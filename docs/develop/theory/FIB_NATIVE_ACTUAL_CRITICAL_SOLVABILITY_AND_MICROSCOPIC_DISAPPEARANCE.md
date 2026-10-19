@@ -4863,3 +4863,133 @@ fixed-data statement. All full complex domains, actual-choice quantifiers,
 raw source charges, original clock and both deaths remain unchanged.
 
 ## 追加锚（本行以下为增补区）
+
+## 58. Complete finite-response reconstruction and normalized core comparison
+
+**Definition 58.1 (fixed conditional data).** Write R, P, L and E for the sources named in R Definition 24.1. Fix one original datum of R Definition 32.1, with all its analytic antecedents: the original jointly realized signed rational source, the larger-interval probability, pole, coefficient and bracket margins of L Definition 35.1, L Lemma 41.2, P §§76, 87–88, 97, 104–107 and E Theorem 3.1. Assume $C_{\rm resp}=C_4=0$, without asserting that this stratum occurs. Fix the physical cutoff $\chi$ of R Definition 52.1, both source-to-face and denominator margins and a sufficiently small estimating $\ell>0$ before $s\downarrow0$. All constants below may depend on these fixed data. Retain the raw source and measure, both original Dirichlet faces, every real phase frequency and the full complex form and operator domains of R (1.5), transported by $\mathcal T_s\mathcal U_s$ and zero extended as in R (32.4).
+Use the actual normalized Fredholm charges $g_0,\ldots,g_4$ of §§31, 36–45, with their owning equations and $\langle p,g_i\rangle=\delta_{i0}$, not arbitrary trial charges. In particular $g_1,g_2\in L^1$, $\omega^{6-i}g_i\in L^2$ for $i=1,2,3$, $g_3\in L^{6/5}$, and all five charges have fixed $L^2$ norms; these are (38.1), (44.3), (45.3) and R (24.29). The supplied charge regularity and lawful complex both-face pairings retain their ordinary conditional scope. No additional regularity of $g_4$ is required below. Let $p>0$, $\|p\|_2=1$, $\mu=\int Vp^2>0$, $\gamma=C_*^{-1}$ and $u_s$ be the positive unit early vector of Lemma 53.3. Keep its compact reconstruction convergence and isolated algebraically simple nonzero mode. Define
+$$
+T=s^{-2},\quad q_s(t;\eta,\xi)=j_0s^7e^{\lambda s^2t}p^B_{s^2t}(Y_s\eta,Y_s\xi),\quad H_s=\int_0^TQ_s(t)dt,\quad F_s=j_0^{-1}\int_1^Tq_s(t;0,\cdot)dt,\quad N_s=F_sH_s,\quad N_0=VG_0,\quad G_s=\sum_{i=0}^4s^ig_i,\quad E_s=(N_s-C_*)G_s.
+\tag{58.1}
+$$
+Here $E_s$ denotes this residual, not the actual energy denoted by the same letter in R (32.5); $N_0$ is the bounded product, not a full-space threshold inverse. Multiplication follows the return. The $B$-clock is independent of $a$; $j_0^{-1}$ belongs only to the field. All complete coefficients include their $\nu$ and $\lambda$ terms. Every finite probe $M$ used below is fixed separately before $s\downarrow0$.
+
+**Theorem 58.2 (complete response and finite-return left vector).** Under Definition 58.1, for all sufficiently small $s$,
+$$
+\|H_sE_s\|_2\le C_ds^4,\qquad z_s:=\frac{H_sG_s}{\|H_sG_s\|_2}\ \text{is defined},\qquad \|z_s-u_s\|_2\le C_ds^4.
+\tag{58.2}
+$$
+The orientation is the positive $p$ orientation. Before zero extension $H_sG_s$ belongs to the original transported operator domain, including both faces.
+
+Proof. First establish two response bounds on the entire common space. The group (2.6) has weights $(1,1,2,3)$, homogeneous dimension seven and unit Lebesgue Haar measure; left translation gives $X,Y$ and $d_E(\eta,\xi)=\rho(\eta^{-1}\xi)$. Set $N=(r^{12}+y^{12}+z^6+w^4)^{1/12}$. It is positive and smooth off zero, homogeneous of degree one; $\kappa=N^{-5}$ is smooth off zero and has degree $2-7$. Its radial singularity has finite integral $\int_0^1r^{6-5}dr$. Thus it is a type-two distribution in Fischer–Ruzhansky, *Sobolev spaces on graded groups*, [arXiv:1311.0192v1, §2.1, Definition 2.3 and the positive-order paragraph](https://arxiv.org/html/1311.0192v1#S2.SS1). Proposition 2.1 gives $\rho^{-5}\le C\kappa$. R (45.3) therefore gives $|H_sh|\le C(|h|*\kappa)$ with exactly the input-first convolution of (30.1). The primary's Theorem 2.4 applies with $\nu=2$, $Q=7$, $p=14/11$, $q=2$: both exponents are interior and $1/p-1/q=2/7$. Consequently
+$$
+\|H_sh\|_2\le C\|h\|_{14/11},\qquad \|H_sh\|_2\le CT\|h\|_2.
+\tag{58.3}
+$$
+The first inequality is initially on compact inputs; simultaneous approximation in $L^{14/11}\cap L^2$ identifies its extension with the original finite-time $H_s$, since the two limits agree locally in measure. The second follows from the shifted killed contractions, whose norm is at most $e^\lambda$ for $t\le T$. Absolute domination treats complex inputs and zero-extended outputs. Only the majorant is homogeneous; no homogeneity of the native killed kernel, critical time-norm integration, or inverse at native kinetic threshold is used.
+
+For completeness retain the exact entire residual partition. Put $m_i=4-i$, $R_{i,s}=H_sg_i-\sum_{j=0}^{m_i}s^jG_jg_i$, $\mathfrak F_{n,s}=F_s-\sum_{k=0}^ns^kV_k$ and $D_s=N_s-N_0$. R (24.24), (24.26), (24.40)–(24.41), including $\rho=-C_4/(a\gamma^2\mu)=0$, give
+$$
+E_s=\sum_{i=0}^3s^i\left[F_sR_{i,s}+\sum_{j=0}^{4-i}s^j\mathfrak F_{4-i-j,s}(G_jg_i)\right]+s^4D_sg_4.
+\tag{58.4}
+$$
+All bounds in the following partition apply to complete products, in this factor order.
+
+For $i=0$, (31.4) is the complete both-face return estimate, including noncompact input, actual and safe remote inputs, every coefficient deletion and every $t>T$ restoration. R (45.3) gives $\|q_s(t;0,\cdot)\|_{14/11}\le Ct^{-3/4}$ and hence $\|F_s\|_{14/11}\le Cs^{-1/2}$. Thus $\|F_sR_{0,s}\|_{14/11}\le Cs^{9/2}(1+|\log s|)$. For its five field products, in order $j=0,\ldots,4$, choose
+$$
+(P,q)=(8,56/37),(4,28/15),(8/3,56/23),(15/8,210/53),(3/2,42/5).
+\tag{58.5}
+$$
+Each reciprocal sum is $11/14$. For $j=0$, $G_0g_0=p/(\gamma\mu)$ has the required norm by $|p|\le C(1+\rho)^{-5}$. For $j\ge1$, apply (30.4) to every $n+m=j$ with seed input exponents $(p_0,\ldots,p_4)=(1,1,1,7/6,7/5)$, justified by $(10-n)p_n>7$ in (31.3). Above time one the respective largest powers at the four chosen outputs are $-9/8,-17/16,-67/60,-13/12$, all below $-1$. Below one the same envelope gives each weighted $L^q$ input, and the $L^1$ kernel gives integrable $t^{m/2}$. Lemma 32.1 applies with $n=4-j<\alpha_P=5-7/P$, including its source-path, retained-coefficient and infinite-time restorations. The five total input powers, including $s^j$, are $33/8,17/4,35/8,64/15,13/3$. By (58.3) all six seed responses are $O(s^{33/8})$.
+
+For $i=1,2,3$, split $R_{i,s}$ by the fixed height $|r|=L/4$, $L=\ell/s$, and Taylor expand only the inner safe heat through $4-i$, keeping $L,T$ fixed under differentiation. At derivative $k=5-i$, R (24.8) with output two and weighted $L^2$ inputs controls $t<1$ by integrable powers $t^{(k-n)/2}$. Multiplication by the uniformly bounded $L^{7/2}$ norm of $F_s$ gives output $14/11$. Above one use output infinity and exactly the following R (24.34) lists, indexed by $n=0,\ldots,k$:
+$$
+\begin{array}{c|c|c}
+i&(p_n)&\text{time powers}\\ \hline
+1&(1,1,7/6,7/5,7/4)&(-3/2,-2,-2,-2,-2)\\
+2&(1,7/6,7/5,7/4)&(-2,-2,-2,-2)\\
+3&(6/5,18/13,18/11)&(-23/12,-73/36,-77/36)
+\end{array}
+\tag{58.6}
+$$
+Every power is strictly integrable and each membership follows from (38.1), (43.4), (44.3), (45.3), not from arbitrary charge moments. Multiplying by $F_s\in L^{14/11}$ costs $s^{-1/2}$; the Taylor and exterior charge factors together are $s^5$. Each of these three responses is therefore $O(s^5+s^{9/2})$. This uses finite-time strip derivatives, not derivatives of a nonzero-parameter infinite-time return.
+
+Here are all nine lower field products in (58.4). The last column is their full $L^{14/11}$ input power, including $s^{i+j}$; $q$ is the norm of $G_jg_i$ and $P$ that of the field remainder.
+$$
+\begin{array}{c|c|c|c|c|c}
+i&j&P&q&\alpha_P&\text{power}\\ \hline
+1&0&210/53&15/8&97/30&127/30\\
+1&1&70/27&5/2&23/10&43/10\\
+1&2&42/19&3&11/6&29/6\\
+1&3&28/15&4&5/4&5\\
+2&0&7/2&2&3&5\text{ with }(1+|\log s|)\\
+2&1&70/27&5/2&23/10&5\\
+2&2&42/19&3&11/6&5\\
+3&0&7/2&2&3&5\\
+3&1&70/27&5/2&23/10&5
+\end{array}
+\tag{58.7}
+$$
+Indeed every row has $1/P+1/q=11/14$ and $n=4-i-j<\alpha_P$. The complete Lemma 32.1 remainder has power $\min(n+1,\alpha_P)$, with its stated equality logarithm, giving the table. To verify all return norms, interpolate $g_1,g_2\in L^1$ with $\omega^{6-i}g_i\in L^2$: if $\theta=2(1-1/p)$ then $\omega^{(6-i)\theta}g_i\in L^p$. For input degrees $n=0,1,2,3$ use $(1,7/6,7/5,7/4)$; the available weights exceed or equal $n$. In every split $n+m=j$ above one, (30.4)'s power is $j/2-7/2+7/(2q)$. For $(j,q)=(1,5/2),(2,3),(3,4)$ these are $-8/5,-4/3,-9/8$; the $j=0$ rows have powers $-49/30,-7/4$. For $g_3$, interpolate its actual $L^{6/5}$ and $\omega^3L^2$ norms: use $p_0=6/5$, $p_1=18/13$. The powers are $-7/6$ at $(j,q)=(0,2)$ and $-61/60,-203/180$ for the two splits at $(1,5/2)$. Below one, weighted $L^2$ inputs handle every $q\ge2$, with worst power $-7/8$; the sole $q<2$ case $G_0g_1\in L^{15/8}$ follows from its interpolated $L^{15/8}$ input and the $L^1$ kernel. Thus all endpoints are integrable. The sole field logarithm satisfies $s^5(1+|\log s|)=O(s^4)$; the other powers exceed four. Apply (58.3) to these full restored products.
+
+Restore the rest of the three lower-return partitions individually. R (24.35)–(24.36) and Lemma 41.2 give exterior $L^2$ powers at least $6,7,41/6$ for $i=1,2,3$, respectively, for original inner path deletions, every retained coefficient safe-path deletion and every forced coefficient tail $t>T$. Both actual and safe remote-input joint products separately have power six, by R Lemma 41.1 and $\|g_i^{\rm out}\|_2\le CL^{-(6-i)}$. The second channel in (58.3) gives response powers at least $4,5,29/6$ and four, respectively. The covariance comparison uses the original denominator margins even on surviving paths outside the safe strip. Safe paths cannot end beyond either original face; thus these restorations cover the zero-extended output as well.
+
+There remain exactly nineteen retained remote coefficient products $s^{i+k+j}V_kG_jg_i^{\rm out}$: for $i=1$, $k=0,1,2,3$ have $j=0,\ldots,3-k$; for $i=2$, $k=0,1,2$ have $j=0,\ldots,2-k$; for $i=3$, $k=0,1$ have $j=0,\ldots,1-k$. R (41.8)–(41.10) give $L^2$ power at least six for fourteen of them, with every $n+m=j$ retained; (58.3) pays them. The five remaining index triples $(i,k,j)$ are $(1,0,3),(1,2,0),(2,2,0),(1,2,1),(1,3,0)$. For $g_1,g_2$, the preceding interpolation gives on the remote set
+$$
+\|r^ng_i^{\rm out}\|_p\le CL^{-((6-i)\theta-n)},\quad \theta=2(1-1/p),\quad 1\le p\le2,\quad n\le(6-i)\theta.
+\tag{58.8}
+$$
+
+With field norm $P$ and return output $q$, require $1/P+1/q=11/14$. For a split $n+m=j$ the ordered kernel power is $m/2-(7/2)(1/p-1/q)$ and the exterior $s$ power is $i+k+m+(6-i)\theta$. The complete choices above time one are:
+$$
+\begin{array}{c|c|c|c|c}
+(i,k,j)&(P,q)&(m,n,p)&\text{time powers}&\text{total }s\text{ powers}\\ \hline
+(1,0,3)&(7/4,14/3)&(0,3,3/2),(1,2,4/3),(2,1,8/7),(3,0,1)&-19/12,-11/8,-21/16,-5/4&13/3,9/2,17/4,4\\
+(1,2,0),(2,2,0)&(3,42/19)&(0,0,6/5)&-4/3&14/3,\ 16/3\\
+(1,2,1)&(3,42/19)&(0,1,6/5),(1,0,1)&-4/3,-17/12&14/3,4\\
+(1,3,0)&(4,28/15)&(0,0,1)&-13/8&4
+\end{array}
+\tag{58.9}
+$$
+Every listed $p\le q$ satisfies (58.8), and every time power is below $-1$. Below one, the first row uses $V\in L^{7/2}$, output two and weighted remote $L^2$ inputs, with powers $t^{m/2}$ and exterior power at least six. The middle rows keep $P=3,q=42/19$, with weighted remote $L^2$ inputs giving $t^{m/2-1/6}$ and exterior power at least six. The last row uses $p=q=28/15$ and the $L^1$ kernel: $\theta=13/14$ gives available weight $65/14$, and total power $4+65/14$. These are splits of the same coefficient integral at one. The fields really have these norms: integrating (32.3) gives $V_k\in L^P$ whenever $k<5-7/P$, strictly satisfied for $(k,P)=(0,7/4),(0,7/2),(2,3),(3,4)$. Thus (58.9) pays all splits in all five products by the first channel of (58.3); none is discarded.
+
+Finally R (45.3) gives uniform $F_s,V\in L^r$ for each fixed $r>7/5$. For $t<1$, use $F_s\in L^3$ and the $2\to2$ heat bound to obtain an integrable $2\to6/5$ product bound. For $1<t<T$, use $F_s\in L^{42/29}$ and $Q_s(t):L^2\to L^7$; $29/42+1/7=5/6$ and R (45.6) gives the integrable power $-5/4$. Hence $N_s:L^2\to L^{6/5}$ is uniformly bounded. The identical canonical estimates define $N_0$ as $\int_0^\infty VP_tdt$ in both $L^{6/5}$ and $L^2$; the latter product is R Lemma 41.1. On compact inputs these are the actual products, and density with both target-space bounds identifies their versions. This does not require an unweighted $G_0$ on arbitrary $L^2$. Since R (41.1) gives $\|D_s\|_{2\to2}=O(s^{4/7})$, spatial interpolation yields
+$$
+\|D_s\|_{2\to14/11}\le \|D_s\|_{2\to6/5}^{6/7}\|D_s\|_{2\to2}^{1/7}\le Cs^{4/49},\qquad
+\|H_s[s^4D_sg_4]\|_2\le Cs^{4+4/49}.
+\tag{58.10}
+$$
+Here $11/14=(6/7)(5/6)+(1/7)(1/2)$, and only the fixed $L^2$ norm of $g_4$ is used. All native times remain finite and both deaths remain present. Adding the six seed terms, three safe Taylor blocks, nine fields, all restorations, all nineteen remote products and the last charge in (58.4) proves the first bound in (58.2), without cancellation or sign.
+
+For the vector assertion put $v_s=H_sG_s$. R (24.16) gives $H_sg_0=(C_*/\mu)p+O_{L^2}(s)$. For $i=1,2,3$, their owned $L^{6/5}\cap L^2$ memberships, contraction below one and the integrable $t^{-7/6}$ bound above one give uniformly bounded $H_sg_i$. For $g_4$, $s^4\|H_sg_4\|_2=O(s^2)$ by (58.3). Thus $v_s=(C_*/\mu)p+O_{L^2}(s)$, with positive nonzero leading coefficient.
+
+Spectral calculus on the native realization gives $C_sH_sh=(I-Q_s(T))h$ and $H_sh\in D(C_s)$ for $h\in L^2(\Omega_s)$, followed by zero extension; it preserves both Dirichlet faces. The exact bounded-product identity is $(L_s-C_*)v_s=H_sE_s$, where $L_s=H_sF_s$. By Lemma 53.3 and R Lemma 24.4, $L_s\to K_{\rm rec}$ in norm with isolated algebraically simple eigenvalue $C_*$. On the complementary range of its rank-one Riesz projection $P_s$, the inverse of $L_s-C_*$ is uniformly bounded: fix a contour separating $C_*$ from the remaining limiting spectrum and use norm convergence of resolvents, also at $C_*$ on the complementary range. Therefore $\|(I-P_s)v_s\|_2\le C\|H_sE_s\|_2$. The real vector $P_sv_s$ is a scalar multiple of $u_s$, with scalar tending to $C_*/\mu>0$. Normalizing $v_s$, whose norm is bounded away from zero, gives the second bound in (58.2). This is spectral isolation of compact reconstruction, not a positive native kinetic threshold gap. $\square$
+
+**Theorem 58.3 (entire normalized retained-core comparison).** Under Definition 58.1, define every tilde quantity by substituting the vector $z_s$ of Theorem 58.2 for $u_s$ in the following exact R (24.42), (52.1) core, consistently in every occurrence:
+$$
+\begin{gathered}
+x_s=F_su_s,\quad m_s=\int F_s|u_s|^2,\quad \delta_s=s^5\int f(Y_s\xi)|u_s|^2d\xi,\quad n_s=m_s+\delta_s,\quad d_s=\langle G_s,u_s\rangle,\quad R_s=\langle E_s,u_s\rangle,\\
+\delta_{\chi,s}=s^5\int P_\chi(Y_s\xi)|u_s|^2d\xi,\quad
+Q_{\chi,s}=j_0s^5\iint\Pi_\chi(Y_s\eta,Y_s\xi)\overline{x_s(\eta)}x_s(\xi)d\eta d\xi,\quad
+c_s=\frac{n_s+\delta_{\chi,s}}{d_s},\\
+\mathcal J_s=c_sR_s+C_*\delta_{\chi,s}+Q_{\chi,s}=n_s(\mathcal C_{\chi,s}-C_*),\qquad
+\widetilde{\mathcal C}_{\chi,s}:=C_*+\frac{\widetilde c_s\langle E_s,z_s\rangle+C_*\widetilde\delta_{\chi,s}+\widetilde Q_{\chi,s}}{\widetilde n_s}.
+\end{gathered}
+\tag{58.11}
+$$
+Here $f=W_{1,d}$ is the full long field in physical variables, whereas $P_\chi=\chi\mathcal T_3f$ is the retained polynomial. The kernel $\Pi_\chi$ keeps the sum of the two endpoint weighted degrees at most three. In particular the denominator contains the full $\delta_s$, not $\delta_{\chi,s}$. Then both exact and substituted denominators $n_s,d_s$ are nonzero for small $s$, and
+$$
+|\widetilde{\mathcal C}_{\chi,s}-\mathcal C_{\chi,s}|
+\le C_{d,\chi}\bigl(s^{65/8}+s^9+s^{13}\bigr)=o(s^8).
+\tag{58.12}
+$$
+
+Proof. Put $\epsilon_s=\|z_s-u_s\|_2$. Both vectors have norm one. Bounded $f,P_\chi$ give $|\widetilde\delta_s-\delta_s|+|\widetilde\delta_{\chi,s}-\delta_{\chi,s}|\le Cs^5\epsilon_s$. Uniform boundedness of $F_s$ and the fixed $\|G_s\|_2$ give $|\widetilde m_s-m_s|+|\widetilde n_s-n_s|+|\widetilde d_s-d_s|\le C\epsilon_s$. Since $n_s\to\mu>0$, $d_s=1+O(s)$ and $\epsilon_s\to0$, all four denominators are bounded away from zero, and $|\widetilde c_s-c_s|\le C\epsilon_s$. The inherited tested identity R (24.39), (24.42) gives $R_s=O(s^5)$; independently R (41.7) gives $|\langle E_s,z_s-u_s\rangle|\le Cs^{33/8}\epsilon_s$.
+For the late term put $e_s=F_s(z_s-u_s)$. Uniform $F_s\in L^2$ gives $\|x_s\|_1\le C$ and $\|e_s\|_1\le C\epsilon_s$. If $B_\chi$ is the sesquilinear pairing with kernel $\Pi_\chi(Y_s\eta,Y_s\xi)$, the exact difference is $j_0s^5[B_\chi(e_s,x_s)+B_\chi(x_s,e_s)+B_\chi(e_s,e_s)]$. The kernel is bounded, so this costs $Cs^5(\epsilon_s+\epsilon_s^2)$, retaining both single-input terms and the cross term. Also $\delta_{\chi,s},Q_{\chi,s}=O(s^5)$ and $c_s=O(1)$, so the entire numerator $\mathcal J_s$ is $O(s^5)$. Changing $c_s$ costs $Cs^5\epsilon_s$; changing the final division by $n_s$ costs the same, using its positive lower bound and $|\widetilde n_s-n_s|=O(\epsilon_s)$. Thus
+$$
+|\widetilde{\mathcal C}_{\chi,s}-\mathcal C_{\chi,s}|\le C\{s^{33/8}\epsilon_s+s^5(\epsilon_s+\epsilon_s^2)\}.
+\tag{58.13}
+$$
+Insert $\epsilon_s=O(s^4)$ from (58.2). The three powers are $65/8,9,13$, all strictly larger than eight, proving (58.12). No condition $\mathfrak m_d=0$ entered. R Theorems 52.3 and 54.1 may consequently use the substituted core with the same $o_{d,M,\chi}(s^8)$ remainder, keeping the complete-minus-retained mass, both single-outer late inputs, the two-outer term and joint subtraction; each finite $M$ remains separately fixed. The known $s^8\log(1/(Ms^6))$ uplift in R Theorem 49.2 is unchanged. The entire approximant in (58.11) remains unsigned; its precision supplies no strict selecting inequality, actual-state branch, phase-orbit convergence or source-family obstruction. Zero-stratum occurrence, analytic $L^2$ preparation and physical spatial dimension remain unresolved. The comparison is a repository-derived conditional deduction; the cited Fischer–Ruzhansky interface and classical spectral calculus, Riesz projection and interpolation steps are intermediate results, not novelty claims. The underlying analytic suppliers are not independently recertified here. $\square$
+
+## 追加锚（本行以下为增补区）
