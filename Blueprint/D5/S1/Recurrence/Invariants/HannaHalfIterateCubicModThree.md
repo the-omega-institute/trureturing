@@ -36,6 +36,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaHalfIterateCubicModThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a107099-half-iterate-mod-three` (proved) by `D5/S1/Recurrence/Invariants/HannaHalfIterateCubicModThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a107099-half-iterate-mod-three","declaration_gid":"D5/S1/Recurrence/Invariants/HannaHalfIterateCubicModThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2005). *OEIS A107099, compositional half-iterate of x + 4*x^3*. URL: <https://oeis.org/A107099>.
