@@ -6,6 +6,8 @@
    utility: none
    digest: Scaled reversion has a unique integral solution congruent to the geometric series. -/
 
+/- Escape audit unfinished for published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
+
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.PowerSeries.WellKnown
@@ -158,7 +160,7 @@ private theorem map_argument {S : Type*} [CommRing S] (hom : R →+* S)
   ext n
   simp [coeff_map]
 
-private noncomputable def geometric : PowerSeries R := X * mk 1
+noncomputable def geometric : PowerSeries R := X * mk 1
 
 private theorem geometric_argument :
     argument (-1 : R) geometric = X * rescale (-1) (mk 1) := by
@@ -292,12 +294,6 @@ theorem hanna_a393856 (n : ℕ) (hn : 1 ≤ n) : a 4 n % 5 = 1 := by
 theorem hanna_a393857 (n : ℕ) (hn : 1 ≤ n) : a 5 n % 6 = 1 := by
   simpa using coeff_congruence 5 (by omega) n hn
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms generating_equation_rational
-#print axioms coeff_congruence
-#print axioms hanna_a393856
-#print axioms hanna_a393857
 
 end D5.S1.Recurrence.Invariants.ScaledReversionCongruence
 

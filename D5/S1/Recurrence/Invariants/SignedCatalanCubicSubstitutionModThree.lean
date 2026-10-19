@@ -6,6 +6,8 @@
    utility: none
    digest: Integral reversion and ternary digit support prove Hanna's A386666 congruence. -/
 
+/- Escape audit unfinished for published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
+
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.FieldTheory.Finite.Basic
@@ -14,7 +16,7 @@ open PowerSeries
 
 namespace D5.S1.Recurrence.Invariants.SignedCatalanCubicSubstitutionModThree
 
-private theorem prime_power_subst (p : ℕ) [Fact p.Prime]
+theorem prime_power_subst (p : ℕ) [Fact p.Prime]
     (f : PowerSeries (ZMod p)) : f ^ p = f.subst (X ^ p) := by
   have h := MvPowerSeries.map_frobenius_expand (σ := Unit) (R := ZMod p)
     p (NeZero.ne p) (f := f)
@@ -28,7 +30,7 @@ private theorem agree_iff {R : Type*} [CommRing R] (d : ℕ) (f g : PowerSeries 
     Agree d f g ↔ (X : PowerSeries R) ^ d ∣ f - g := by
   simp [Agree, X_pow_dvd_iff, map_sub, sub_eq_zero]
 
-private theorem square_linear {R : Type*} [CommRing R] {d : ℕ}
+theorem square_linear {R : Type*} [CommRing R] {d : ℕ}
     {f g : PowerSeries R} (hf : constantCoeff f = 1) (hg : constantCoeff g = 1)
     (h : Agree d f g) (n : ℕ) (hn : n < d + 1) :
     coeff n (f ^ 2) - coeff n (g ^ 2) = 2 * (coeff n f - coeff n g) := by
@@ -43,7 +45,7 @@ private theorem square_linear {R : Type*} [CommRing R] {d : ℕ}
   have hc := X_pow_dvd_iff.mp hd n hn
   simpa only [map_sub, coeff_C_mul, sub_eq_zero] using hc
 
-private theorem subst_two_agree {R : Type*} [CommRing R] {d : ℕ}
+theorem subst_two_agree {R : Type*} [CommRing R] {d : ℕ}
     (hd : 1 ≤ d) {f g : PowerSeries R} (h : Agree d f g) :
     Agree (d + 1) (f.subst ((X : PowerSeries R) ^ 2)) (g.subst ((X : PowerSeries R) ^ 2)) := by
   intro n hn
@@ -168,7 +170,7 @@ private theorem normalized_equation :
   simp only [residual, map_sub, map_add] at hc ⊢
   omega
 
-private theorem inverse_exists {R : Type*} [CommRing R] (f : PowerSeries R)
+theorem inverse_exists {R : Type*} [CommRing R] (f : PowerSeries R)
     (hf : constantCoeff f = 0) (hf1 : coeff 1 f = 1) :
     ∃ b : PowerSeries R, constantCoeff b = 0 ∧ coeff 1 b = 1 ∧
       f.subst b = X ∧ b.subst f = X := by
@@ -459,9 +461,5 @@ theorem hanna_conjecture (n : ℕ) (hn : 0 < n) :
   · apply (ZMod.intCast_eq_intCast_iff' _ _ 3).mp
     simpa only [Int.cast_mul, Int.cast_ofNat, Int.cast_natCast, hc] using hs.2.2
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms signed_catalan_mod_three
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Invariants.SignedCatalanCubicSubstitutionModThree
