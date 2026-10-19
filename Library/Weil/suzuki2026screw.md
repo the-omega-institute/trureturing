@@ -6407,3 +6407,178 @@ This is a genuine range enlargement over W118: M_A/[c_deg e2A logA/A] tends to i
 Conditionally on RH failing, on this SAME fixed small window, beyond all relevant starts combine W140's admitted positive count with W126's upper ceil12 exp2A log(A+1). The minimum local negative-witness site count lies above the new positive count and below that conditional upper; the upper bracket bound divided by the lower is O(sqrt(A logA)). This compares bounds only, gives no actual minimum/optimum or contradiction, and does not establish the smaller sufficient count's positivity.
 
 No larger-rate multiwindow coupling, full sample schedule positivity, all-order fixed-window PSD, original signed prime/Robin upper or operator identification follows. No actual negative seed/sample/zero, numerical start, finite RH test or Lean/CI/merge certification. Full RH and strict Robin for every integer $n>5040$ remain unproved. Classical Bergman/area/moment tools are reused; this is a repository-derived paper application with no literature-priority claim.
+
+
+## A second signed correction enlarges the actual theta range
+
+On the same fixed small physical window and real polynomial-sign class as W118 and W140, there are fixed $c_{\rm cub}>0$ and one common sufficiently high start such that degrees up to $c_{\rm cub}e^{2A}(\log A/A)^{1/3}$ have lower margin $\log A/(192A)$ in the original Gaussian Hardy metric. This keeps the complete actual theta source and its reflected exterior. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse W88, W89, W110--W112 and W127--W135. Put $E=e^{-2A}$, $u=\operatorname{arctanh}z$, $v=\operatorname{arctanh}w$, $x=A+(u+v)/2$, $c_0=\cosh(u-v)$ and $c_*=3/(2\pi)$. Keep the exact normalized kernel $\mathcal K_A^1$ of W127, and set
+$$
+f_r(z)=e^{-r\operatorname{arctanh}z},\qquad
+\mathcal J_2(z,w)=\frac{(1-z)^2(1-w)^2}{(1-zw)^3},\qquad
+\mathcal J_0(z,w)=f_2(z)f_2(w)H(z,w),
+$$
+$$
+h_j(c)=\int_0^\infty(c+\cosh t)^{-j-1}\,dt.
+$$
+Here $h_0$ is the function $\Psi$ from W88. Constants below depend only on the already fixed window and source bounds, not on the admitted degree or the truncation order.
+
+### The complete second coefficient after the exact normalization
+
+The whole order-two coefficient in the same expansion as W132--W135 is
+$$
+\begin{aligned}
+\mathcal D_{2,A}(z,w)={}&
+\frac{35x+12}{16\pi^2A}\mathcal J_2(z,w)
++\frac{c_*x}{\pi A}\mathcal J_0(z,w)\\
+&+\frac{\cosh u\cosh v\,e^{-2(u+v)}}A
+\left[\frac{c_*}{2\pi}h_0(c_0)-\frac1{4\pi^2}h_2(c_0)\right].
+\end{aligned}
+\tag{W141}
+$$
+To identify it from the exact W88 amplitudes, write $\tau=1+t$, $s_a=r_a/(1-r_a)$ and $s_b=r_b/(1-r_b)$. The normalized direct amplitude is
+$$
+(x+\tfrac12\log\tau)
+\left[\tau^{7/2}+(s_a+s_b)t\tau^{5/2}+s_as_b t^2\tau^{3/2}\right].
+$$
+The main $t^2$ coefficient is $35x/8+3/2$. Integration supplies $2!Q^{-2}c_0^{-3}$, where $Q=2\pi e^{a+b}$, and
+$$
+\cosh u\cosh v\,e^{-2(u+v)}\operatorname{sech}^3(u-v)=\mathcal J_2(z,w).
+$$
+This gives the first term of W141. The leading $xt$ term in the second summand uses $s_a+s_b=r_a+r_b+O(E^2)$ and
+$$
+r_a+r_b=2c_*E e^{-(u+v)}c_0.
+$$
+Its factor $Q^{-1}c_0^{-2}$ gives $(c_*/\pi)(x/A)\mathcal J_0$. Higher terms from $s_a+s_b$ start at order $E^3$ after integration; $s_as_b t^2$ starts at order $E^4$.
+
+For the reflected integral, the normalized exact prefactor is
+$$
+1-\frac{2c_*e^{-(a+b)}s}{(1-r_a)(1-r_b)}.
+$$
+The unmodified Stieltjes term with $j=2$, after subtraction, gives $-h_2/(AQ^2)$. The special $s$ prefactor first contributes at this same order, with positive sign after subtraction, giving $c_*e^{-2(u+v)}h_0/(2\pi A)$. Its denominator correction and higher Stieltjes terms start at order $E^3$. Thus W141 retains both reflected contributions and all normalization terms of order two; it assumes no positivity of a first-mode reference.
+
+### The weighted logarithmic payment for the second direct term
+
+For $\sigma=(1-z)^2\nu$, define
+$$
+b_n=\int z^n\,d\sigma(z),\qquad
+d_n=\binom{n+2}{2},\qquad
+\mathcal E_2=Q_{\mathcal J_2}(\nu)=\sum_{n\ge0}d_nb_n^2,\qquad
+G(w)=\sum_{n\ge0}d_nb_nw^n.
+$$
+The positive multiplier preserves the same separator degree, including repeated roots and atoms at roots. Use the probability measure
+$$
+d\mu_2(w)=2(1-|w|^2)\frac{d\mathcal A(w)}\pi,\qquad
+\int_{\mathbb D}|w|^{2n}\,d\mu_2(w)=\frac1{d_n}.
+$$
+The existing moment-radius bound supplies $\sum q^{2n}b_n^2\le9\Lambda^m Q_H(\sigma)\le9\Lambda^m\mathcal E_2$. Split $\sum d_n|b_n|$ at an integer $J$ proportional to $m+1$. Cauchy--Schwarz bounds its first part by $CJ^{3/2}\sqrt{\mathcal E_2}$, since $\sum_{n<J}d_n\le CJ^3$, and its tail by
+$$
+C\Lambda^{m/2}(J+1)^2q^{-J}\sqrt{\mathcal E_2}.
+$$
+Choose the fixed proportionality constant large enough that $\Lambda^{m/2}(J+1)^{1/2}q^{-J}$ stays bounded uniformly for $m\ge0$. Consequently
+$$
+\int_{\mathbb D}|G|^2\,d\mu_2=\mathcal E_2,\qquad
+\sup_{\mathbb D}|G|^2\le C(m+1)^3\mathcal E_2.
+\tag{W142}
+$$
+For $0<\varepsilon\le1$, the region $|1+w|<\varepsilon$ has $\mu_2$-mass at most $4\varepsilon^3$: on it $1-|w|^2\le2\varepsilon$ and its Euclidean area is at most $\pi\varepsilon^2$. For nonzero $\sigma$, the probability bound in the logarithmic layer-cake argument is therefore $\min(1,C(m+1)^3e^{-3s})$. As in W129 this gives
+$$
+\int_{\mathbb D}\Re\operatorname{arctanh}(w)|G(w)|^2\,d\mu_2(w)
+\ge-[\tfrac12\log(m+1)+C]\mathcal E_2.
+$$
+Indeed $\log|1-w|\le\log2$, while the negative part of $\log|1+w|$ costs at most $\log(m+1)+C$. Orthogonality gives
+$$
+\int_{\mathbb D}w^j|G(w)|^2\,d\mu_2(w)
+=\sum_{n\ge0}d_nb_nb_{n+j}.
+$$
+Thus the moment identity used in W130 applies with weights $d_n$. Compact real support strictly inside $(-1,1)$ gives absolute convergence. The actual joint lower bound is
+$$
+Q_{x\mathcal J_2/A}(\nu)\ge
+\left[1-\frac{\log(m+1)}{2A}-\frac CA\right]Q_{\mathcal J_2}(\nu).
+\tag{W143}
+$$
+For $\mathcal J_0$, apply the existing W110 Hardy logarithmic allowance directly to $f_2\nu$, with the same separator. It supplies the same bracket times $Q_H(f_2\nu)$, after increasing $C$. Zero measures contribute zero. These classical weighted moments and endpoint-volume bounds are used inside the source-specific second-coefficient payment, rather than introduced as an unused generic criterion.
+
+### Keep both direct signs and pay the reflected parts
+
+If $A\ge\tfrac12\log(m+1)+C$, W143 and the preceding $\mathcal J_0$ allowance make the entire direct part of W141 nonnegative. Its $12\mathcal J_2$ term is also nonnegative. The first direct correction is already nonnegative by W131--W133.
+
+No sign is assigned to the stationary forms involving $h_0$ or $h_2$. The existing W89 comparison bounds each reflected form in W141 by $CQ_H(f_2\nu)$ in absolute value. W112 with $r=2$ pays this by $C(m+1)^2Q_H(\nu)$. Together with W133,
+$$
+E Q_{\mathcal D_{1,A}}(\nu)+E^2Q_{\mathcal D_{2,A}}(\nu)
+\ge-\frac CA\left[E(m+1)+E^2(m+1)^2\right]Q_H(\nu).
+$$
+Under the same condition $A\ge\tfrac12\log(m+1)+C$, combining this with W111, W134 and W135 gives, for every $N\ge3$ at the same start and every nonzero measure in the stated sign class,
+$$
+\begin{aligned}
+\frac{Q_{\mathcal K_A^1}(\nu)}{Q_H(\nu)}\ge{}&
+1-\frac{\log(m+1)}{2A}-\frac CA
+-\frac CA\left[E(m+1)+E^2(m+1)^2\right]\\
+&-\sum_{3\le k<N}E^k[C(m+k+2)]^k
+\left[1+\frac{\log(m+k+2)}A\right]\\
+&-C\Lambda^m\left[C^NN!E^N+e^{-c e^{2A}}\right].
+\end{aligned}
+\tag{W144}
+$$
+All terms concern the same actual measure. The uniform suppliers W134--W135 hold before the former degree cap is selected; their coefficient, all-$N$ remainder and complete reflected-exterior bounds are reused unchanged.
+
+### One common start for the cube-root range
+
+Put $L=\log A$ and fix $C\ge1$ dominating the preceding bounds. Choose a fixed sufficiently small $c_{\rm cub}>0$, for example $c_{\rm cub}\le1/(64C)$ after increasing $C$, and set
+$$
+M_A=c_{\rm cub}e^{2A}(L/A)^{1/3},\qquad
+N=\left\lceil D\frac{A+m+1}L\right\rceil,\qquad D\ge8+4\log\Lambda.
+$$
+For all $0\le m\le\lfloor M_A\rfloor$, one common high start ensures
+$$
+N\ge3,\qquad m+N+2\le2M_A,\qquad
+\log(CN)\le2A-L/4.
+\tag{W145}
+$$
+The largest $N$ is $O(DM_A/L+DA/L)$, so $\log(CN)\le2A-L/3-(2/3)\log L+O(1)$, while $(m+N+2)/M_A\le1+D/L+o(1)$. These estimates are uniform over the admitted degrees. Since $m+1\le2M_A$,
+$$
+1-\frac{\log(m+1)}{2A}-\frac CA
+\ge\frac{L-\log L-3\log(2c_{\rm cub})-6C}{6A}
+\ge\frac{L}{12A}.
+\tag{W146}
+$$
+In particular both direct-sign thresholds hold. Write $\xi=E(m+1)\le2c_{\rm cub}(L/A)^{1/3}$. At the same start the reflected loss $C(\xi+\xi^2)/A$ is at most $L/(48A)$. For $\vartheta=CE(m+N+2)\le2Cc_{\rm cub}(L/A)^{1/3}$, the logarithmic coefficient factor in W144 is at most $4$ and $\vartheta\le1/2$. Hence
+$$
+\sum_{3\le k<N}E^k[C(m+k+2)]^k
+\left[1+\frac{\log(m+k+2)}A\right]
+\le\frac{4\vartheta^3}{1-\vartheta}
+\le64C^3c_{\rm cub}^3\frac LA\le\frac{L}{48A}.
+$$
+For the factorial remainder, W145 gives
+$$
+\log(\Lambda^m C^NN!e^{-2AN})
+\le m\log\Lambda-\tfrac L4N\le-2(A+m).
+$$
+Also $m/e^{2A}\le c_{\rm cub}(L/A)^{1/3}\to0$, so $\Lambda^m e^{-c e^{2A}}\le e^{-c e^{2A}/2}$ at the same start. With all fixed factors restored, the two remainders together cost at most $L/(48A)$. Inserting the three allowances in W144 yields
+$$
+Q_{\mathcal K_A^1}(\nu)\ge\frac{\log A}{48A}Q_H(\nu)>0
+\quad(A\ge A_*,\ 0\le m\le\lfloor M_A\rfloor,\ \nu\ne0).
+\tag{W147}
+$$
+This uses one fixed constant and common start in the uniform estimate.
+
+### Return to the original metric and actual sample class
+
+Use the exact W127 transport $\nu_1=(1-r_E)\nu_g$ and the existing W140 norm-return argument. W112 with $r=2$ gives
+$$
+\|\nu_1-\nu_g\|_H\le CE(m+1)\|\nu_g\|_H=o(1)\|\nu_g\|_H
+$$
+uniformly in the new range. Increase the same fixed start until $Q_H(\nu_1)\ge Q_H(\nu_g)/4$. Equations W127 and W147 then give
+$$
+Q_{\mathcal K_A^g}(\nu_g)\ge\frac{\log A}{192A}Q_H(\nu_g)>0,
+\qquad
+0\le m\le\left\lfloor c_{\rm cub}e^{2A}\left(\frac{\log A}{A}\right)^{1/3}\right\rfloor,
+\quad A\ge A_*,\quad\nu_g\ne0.
+\tag{W148}
+$$
+Both the complete actual source and the final original Gaussian Hardy metric are unchanged. Repeated roots, atoms at roots, arbitrary density and confluence remain included. For arbitrary complex coefficients on at most $\lfloor M_A\rfloor+1$ distinct sites in this same fixed small physical window, apply W148 to the real and imaginary transported measures, whose separator degrees are at most one fewer than the site count. No internal gap is required. Strictness uses the existing compact moment uniqueness for nonzero measures.
+
+Compared with W140, the admitted degree increases by a factor of order $(A/\log A)^{1/6}$, which tends to infinity; the margin constant is smaller. The additional input is the whole actual second coefficient and its weighted logarithmic payment. The first correction, higher coefficient bounds, complete remainders and norm return are reused.
+
+If RH fails, on this same fixed small window beyond all relevant starts, W126 and W148 put the minimum local negative-witness site count between the new positive count and the conditional upper count $\lceil12e^{2A}\log(A+1)\rceil$. The ratio of these bracket bounds is $O(A^{1/3}(\log A)^{2/3})$. This compares bounds only; it supplies no actual minimum, optimum, contradiction or negative seed/sample. Positivity for the sufficient full count, a larger-rate multiwindow estimate, all-order positivity and the original signed Robin upper remain unproved. No numerical start, effective finite RH test or Lean certification is supplied. Classical weighted moment and logarithmic tools are reused in this repository-derived paper application, with no literature-priority claim. Full RH and strict Robin for every integer $n>5040$ remain unproved.
