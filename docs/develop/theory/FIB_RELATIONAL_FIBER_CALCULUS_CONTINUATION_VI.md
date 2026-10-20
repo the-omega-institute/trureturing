@@ -415,7 +415,7 @@ contraction certificate for the response map, not a \(p_J\) result. The
 analytical ratio is only a separating coordinate in that construction; it is
 not an acquired response. Consequently, any global claim that collisions are
 confined to the \(p=24\) mirror sector is false, while the exact-\(p_J\) joint
-witness question below remains unchanged.
+witness question is resolved below by global branch injectivity.
 
 Second, Theorem 31.1 gives a finite necessary response reduction. If one
 child contains both a distinct final-\(J\) collision pair and a distinct
@@ -429,34 +429,23 @@ so at most \(74937\) scalar responses can support that joint collision
 pattern. This is a response/action-support restriction, not an acquisition
 protocol and not a finite-controller construction.
 
-The remaining joint witness system is the one in Definition 32.1 and its
-equation (32.1): for
-\(F\in\{J,M\}\) and \(a\in\{0,1\}\), choose legal reconstructed worlds
-\(W_{Fa}\) with
+The newer all-response geometry closes the exact-\(p_J\) witness question
+that this finite reduction left open. Its global two-branch parametrization,
+opposite-branch order, lower-branch order, and upper-branch joint-response
+injectivity imply
 
 $$
-0<r_{Fa}<1,\quad b_{Fa}>0,\quad
-\mathsf S_{p_J}(r_{Fa},b_{Fa})=0,\quad
-p(W_{Fa})=p_J,\quad u_M(W_{Fa})=v,
+f_{MM}\!\restriction_{\mathcal C_v}\ \text{is injective}
+\qquad\text{for every }v\in\mathbb R,
 $$
 
-and require simultaneously
-
-$$
-f_{MJ}(W_{J0})=f_{MJ}(W_{J1}),\quad W_{J0}\ne W_{J1},\qquad
-f_{MM}(W_{M0})=f_{MM}(W_{M1}),\quad W_{M0}\ne W_{M1}.
-$$
-
-Elimination roots may be extraneous; neither feasibility nor a common legal
-child follows from the scalar projections. Existence of such a witness at
-one of the at most \(74937\) responses, together with the inherited
-sixth-\(J\) \(L_1\) child of Theorem 8.1, would establish the local fifth-\(M\)
-\(L_2\) route through Theorem 17.1. Exclusion at every candidate would
-exclude every sixth-\(M\) \(L_1\) at \(p_J\). Theorem 31.1 retains singular
-and degree-drop cases in the necessary candidate reduction; their
-realizability or exclusion remains open. Other fifth responses, terminal
-components, replacement worlds, unrestricted adaptive readers, and the
-native acquisition/controller bridge also remain open.
+where \(\mathcal C_v=\mathcal F(H_4,M,p_J,M,v)\). Consequently no exact
+acquired-\(M\) child contains a distinct terminal-\(M\) collision pair, and
+the unchanged same-child predicate requiring both a terminal-\(J\) pair and a
+terminal-\(M\) pair is false. The earlier \(74937\)-response reduction is
+still a valid necessary sieve, but it is no longer an open existence test at
+\(p_J\). The theorem does not decide other fifth responses, ancestor
+conditions, or arbitrary adaptive readers.
 
 ## 65. Response-collision strata and promotion to an executable obstruction
 
@@ -479,7 +468,8 @@ The off-\(24\) construction now proves that
 \(p\in(2,3)\) and two worlds having unequal analytical ratios. The exact
 \(p_J\) joint-witness set is a different stratum: Theorem 31.1 bounds only
 the responses that can support both a final-\(J\) collision and a final-\(M\)
-collision in one child at that fixed \(p_J\). Consequently,
+collision in one child at that fixed \(p_J\). The newer global branch argument
+then excludes the final-\(M\) pair for every such child. Consequently,
 
 $$
 \Sigma_{\mathrm{resp}}\ne\varnothing
@@ -498,10 +488,11 @@ with the same complete post-observation state \(s\), and prove that every
 permitted continuation depends only on that state. If a later permitted action
 has a different successor or response on the two worlds, the present
 collision is only an observation-fiber collision and may be recoverable.
-Thus the correct research order is: stratify response collisions by the
-parameter and terminal action, solve the exact-\(p_J\) joint witness or its
-exclusion, and only then add the acquisition, permission, successor, and
-finite-controller data needed for an executable obstruction or protocol.
+The exact-\(p_J\) geometry now supplies the exclusion side of this test for
+the terminal-\(M\) pair, while the off-\(24\) collision remains a separate
+response stratum. Acquisition, permission, successor, and finite-controller
+data are still required before either stratum becomes an executable
+obstruction or protocol.
 
 ## 66. Behaviour kernels and chronology fibres from the latest dev boundary
 
@@ -812,3 +803,119 @@ does not turn an averaged-channel optimum into a single seed that succeeds on
 every history. The finite result belongs after the acquisition and
 branch-complete conditions above; it cannot be used as a universal memory
 bound for other FIB contracts.
+
+## 71. Finite geometric fibres and the promotion boundary
+
+The newest common-parent geometry gives a sharper separation between a finite
+semantic fibre and an executable observation protocol. Write
+
+$$
+\mathcal F_{p,v}=\mathcal F(H_4,M,p,M,v),\qquad
+\mathcal F^{\mathrm{reg}}_{p,v}
+ =\{W\in\mathcal F_{p,v}:\Lambda(W)\ne0\}.
+$$
+
+For every real \(p\) in the certified interval \(\mathcal P\), and every
+real \(v\), the all-response elimination gives
+
+$$
+|\mathcal F_{p,v}|\le49,
+\qquad
+|\mathcal F^{\mathrm{reg}}_{p,v}|\le18.
+$$
+
+The first number comes from the nonzero resultant and affine Bézout after the
+zero-safe singular lift is included. The second allocates the fixed
+resultant multiplicity with the exceptional base factors removed. At the
+original exact \(p_J\), the distinct regular terminal \(M\) collision locus
+is also globally finite:
+
+$$
+|\mathcal T_M^{\mathrm{ord}}|\le4802,
+\qquad
+|\mathcal T_M^{\mathrm{un}}|\le2401,
+$$
+
+where the pairs range over all real acquired responses. These are bounds on
+the complete mathematical world model; they do not say that a reader has
+acquired \(v\), or that a controller can enumerate the worlds.
+
+The same geometry now settles the exact \(p_J\) child question. Its global
+two-branch parametrization and branch-order certificates imply
+
+$$
+f_{MM}\!\restriction_{\mathcal F_{p_J,v}}\text{ is injective}
+\qquad(v\in\mathbb R).
+$$
+
+Thus no exact acquired \(M\) child contains two different worlds with the
+same terminal \(M\) response. In particular, a child cannot contain both the
+terminal \(J\) collision pair and the terminal \(M\) collision pair required
+by the earlier \(L_1/L_2\) predicate. This is
+an actual exclusion of that exact geometric predicate, not merely a finite
+candidate list.
+
+There is nevertheless a nontrivial observation fibre. At the exact \(p_J\),
+there exist two distinct regular worlds with the same acquired response
+
+$$
+u_M(W_0)=u_M(W_1)=v_{\mathrm{loc}},
+\qquad
+\frac{15145}{100}<v_{\mathrm{loc}}<\frac{15147}{100},
+$$
+
+while \(f_{MM}(W_0)\ne f_{MM}(W_1)\). The current response therefore leaves
+two candidates, but one permitted terminal \(M\) read separates them. This is
+the concrete pattern
+
+$$
+\text{nontrivial observation fibre}
+\;+
+\text{injective future readout}
+\;\Longrightarrow\;
+\text{recoverable task fibre}.
+$$
+
+The promotion rule is now precise:
+
+$$
+\text{finite geometric fibre}
+\not\Rightarrow
+\text{finite acquisition},
+\qquad
+\text{response collision}
+\not\Rightarrow
+\text{irrecoverability}.
+$$
+
+To turn the injective terminal read into a controller theorem, the source
+contract must still declare that \(v\) has actually been acquired, that the
+terminal \(M\) action is legal, that its response is recorded, and that its cost and
+successor update are available. Under those clauses, the child-specific
+target \(f_{MM}\) has a one-step recovery certificate; without them, the
+geometry remains a semantic result only.
+
+The latest quantum recovery volume supplies a parallel quantitative result.
+For the fixed six-cell horizon-three partition, the exact terminal-channel
+optimum is
+
+$$
+\varepsilon_{\mathcal P}
+ =\frac{793-88\sqrt{13}}{1508}
+ <\frac{11}{32},
+$$
+
+where \(11/32\) is the sum of the two separate ambiguous-record optima.
+The strict improvement comes from a common tester and a joint decoder family;
+it cannot be obtained by adding recordwise minima. The global peak-six online
+threshold \(E^*\) of Section 70 is a separate optimization over the whole
+declared contract and satisfies
+
+$$
+\varepsilon_{\mathrm{op}}(6,3)=E^*
+\le\varepsilon_{\mathcal P}.
+$$
+
+Both statements are contract-relative and ordinary mathematical results. They
+do not provide a universal \(W_n\) law, a physical register cost, or Lean/
+kernel certification.
