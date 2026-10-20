@@ -466,7 +466,7 @@ $$
 \Psi_{M^3}(W)=(p(W),u_M(W),m_M(W))
 $$
 
-denote the three actual responses of the fixed (M,M,M) continuation, and
+denote the three actual responses of the fixed \((M,M,M)\) continuation, and
 put
 
 $$
@@ -474,12 +474,12 @@ $$
  =\{y:\exists W\ne W',\ \Psi_{M^3}(W)=\Psi_{M^3}(W')=y\}.
 $$
 
-The off-(24) construction now proves that
+The off-\(24\) construction now proves that
 \(\Sigma_{\mathrm{resp}}\) contains a point with
 \(p\in(2,3)\) and two worlds having unequal analytical ratios. The exact
 \(p_J\) joint-witness set is a different stratum: Theorem 31.1 bounds only
-the responses that can support both a final-(J\) collision and a final-(M\)
-collision in one child at that fixed (p_J). Consequently,
+the responses that can support both a final-\(J\) collision and a final-\(M\)
+collision in one child at that fixed \(p_J\). Consequently,
 
 $$
 \Sigma_{\mathrm{resp}}\ne\varnothing
@@ -494,11 +494,94 @@ $$
 (g(W),s),\qquad(g(W'),s),\qquad g(W)\ne g(W'),
 $$
 
-with the same complete post-observation state (s), and prove that every
+with the same complete post-observation state \(s\), and prove that every
 permitted continuation depends only on that state. If a later permitted action
 has a different successor or response on the two worlds, the present
 collision is only an observation-fiber collision and may be recoverable.
 Thus the correct research order is: stratify response collisions by the
-parameter and terminal action, solve the exact-(p_J) joint witness or its
+parameter and terminal action, solve the exact-\(p_J\) joint witness or its
 exclusion, and only then add the acquisition, permission, successor, and
 finite-controller data needed for an executable obstruction or protocol.
+
+## 66. Behaviour kernels and chronology fibres from the latest dev boundary
+
+The current native joint-state result supplies a concrete instance of the
+task-relative quotient used above. On its authentic finite-history domain,
+the current-continuation kernel, the complete raw-state kernel, the extracted
+key kernel, and the partial-time kernel coincide:
+
+$$
+z\equiv_{\mathrm{now}}w
+\iff
+\mathcal K(z)=\mathcal K(w)
+\iff
+X^+(z)=X^+(w)
+\iff
+T_{\mathrm{cut}}(z)=T_{\mathrm{cut}}(w).
+$$
+
+This is a behaviour quotient: equal representatives have the same legal
+trials, responses, guards, charges, successors, and finite future experiment
+trees. It is not an exact-history quotient. For a captured key, write
+
+$$
+p=n-\kappa,\qquad q=m-1.
+$$
+
+The same current state has exactly
+
+$$
+L(\mathcal K)=\binom{p+q}{p}
+$$
+
+lawful owner-order chronologies. If \(p,q>0\), this number is greater than
+one, so no function of the current raw state alone can recover the executed
+total chronology. The post-capture cross-owner order is therefore
+chronology-only memory for the continuation task, while the capture frontier
+\(\kappa\) remains behaviour-bearing memory.
+
+The distinction is operational. Two histories obtained from the same Armed cut can have the same visible
+input and row counts but different capture ranks; a later lawful acquisition
+and public return separates them. Dropping the captured read boundary
+therefore breaks a future-use task even when it preserves the present target
+candidate set. Conversely, retaining the owner chains and the capture bracket
+is sufficient for the stated partial-time task on the authentic image; it does
+not install a universal chronology logger or a decoder for fabricated keys.
+
+## 67. Joint recovery is not the sum of local fibre optima
+
+The latest finite quantum application gives a complementary composition
+result. For its fixed six-record horizon-three partition, arbitrary
+system-only terminal channels have exact error
+
+$$
+\varepsilon_{\mathcal P}
+ =\frac{793-88\sqrt{13}}{1508},
+$$
+
+which is strictly below the mass-weighted sum \(11/32\) of the two separate
+binary optima. A common input and projector certify the lower bound while a
+single balanced family of channels attains it. The improvement comes from a
+joint witness, not from adding independently optimal recordwise decoders.
+
+The same fixed partition has a legal peak-six online realization at horizon
+three. This establishes an attainable finite protocol under its declared
+permissions, but it does not determine the minimum over all partitions,
+causal controllers, shared seeds, physical registers, or arbitrary horizons.
+In particular, six terminal cells and eight raw histories both still require
+three bits under a fixed-length binary register.
+
+These results sharpen the promotion rule of Section 65:
+
+$$
+\text{response collision}
+\;\to\;
+\text{acquired continuation collision}
+\;\to\;
+\text{finite-controller obstruction}
+$$
+
+are three different claims. The first is now witnessed off \(24\); the second
+requires typed acquisition and successor data; the third additionally needs a
+finite-history or trap argument. None follows from the preceding one by
+relabeling the response.
