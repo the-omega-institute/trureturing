@@ -10,9 +10,7 @@ Lean statement: `D5/S3/Quantum/Matrix/FuruichiAmlashiHyperbolicRatio.phi`
 
 *Formalization.* `D5/S3/Quantum/Matrix/FuruichiAmlashiHyperbolicRatio.phi` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* S. Furuichi and M. Eghbali Amlashi (2024). *On bounds of logarithmic mean and mean inequality chain*. DOI: [10.7153/mia-2024-27-27](https://doi.org/10.7153/mia-2024-27-27). URL: <https://arxiv.org/abs/2203.01134>.
+*Citation.* S. Furuichi and M. Eghbali Amlashi (2024). *On bounds of logarithmic mean and mean inequality chain*. DOI: [10.7153/mia-2024-27-27](https://doi.org/10.7153/mia-2024-27-27). URL: <https://arxiv.org/abs/2203.01134>.
 
 *Commentary.*
 
@@ -24,9 +22,7 @@ Lean statement: `D5/S3/Quantum/Matrix/FuruichiAmlashiHyperbolicRatio.claim`
 
 *Formalization.* `D5/S3/Quantum/Matrix/FuruichiAmlashiHyperbolicRatio.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* S. Furuichi and M. Eghbali Amlashi (2024). *On bounds of logarithmic mean and mean inequality chain*. DOI: [10.7153/mia-2024-27-27](https://doi.org/10.7153/mia-2024-27-27). URL: <https://arxiv.org/abs/2203.01134>.
+*Citation.* S. Furuichi and M. Eghbali Amlashi (2024). *On bounds of logarithmic mean and mean inequality chain*. DOI: [10.7153/mia-2024-27-27](https://doi.org/10.7153/mia-2024-27-27). URL: <https://arxiv.org/abs/2203.01134>.
 
 *Commentary.*
 
