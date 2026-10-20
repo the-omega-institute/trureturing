@@ -77,7 +77,10 @@ internal sealed class SturmianMapCumulativeRefutationDocument : IScribeDocumentD
                     + "g(d) = min{⟨dα⟩, 1 − ⟨dα⟩}; this stronger assertion removes that restriction. "
                     + "The refutation does not assert exact maxima, an interval family, or any change "
                     + "to the Fibonacci special case."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("joshi-2025-sturmian-map-cumulative-bound"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula MapLengthFormula()
     {
