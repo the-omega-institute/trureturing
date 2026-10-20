@@ -1314,3 +1314,326 @@ the model, and the unresolved original joint memory problem remains
 the one in Definition 50.1 and Recovery Question 32.2.
 
 ## 追加锚（本行以下为增补区）
+
+## 59. Exact recovery of an input-independent biased binary unitary mixture
+
+**Definition 59.1 (Finite channel, numerical range and error).** Let
+$d\ge1$, let $M_d=\mathcal B(\mathbb C^d)$, and write
+$\operatorname{Ad}_U(X)=UXU^\dagger$ for a unitary $U\in U(d)$. Put
+$q=1-p$ and
+
+$$
+\mathcal N_{p,U}=p\,\operatorname{id}_{M_d}+q\,\operatorname{Ad}_U,
+\qquad
+\nu(U)=\operatorname{dist}\bigl(0,\operatorname{conv}\operatorname{spec}(U)\bigr).
+\tag{59.1}
+$$
+
+The distance is Euclidean distance in $\mathbb C$, and the convex hull uses
+all eigenvalues of the whole input space, with multiplicity irrelevant. For a
+CPTP recovery $\mathcal R:M_d\to M_d$, the error is the unhalved diamond
+norm $\|\mathcal R\mathcal N_{p,U}-\operatorname{id}\|_\diamond$; the
+supremum includes every finite untouched reference. The weights $p,q$ are
+fixed before the input and are independent of the input and reference.
+
+**Theorem 59.2 (Exact arbitrary-finite biased binary recovery).** For every
+finite $d$, every unitary $U$, and every $p\in[0,1]$,
+
+$$
+\min_{\mathcal R\ {\mathrm{CPTP}}}
+\left\|\mathcal R\mathcal N_{p,U}-\operatorname{id}\right\|_\diamond
+=\delta_p(U)
+:=1-\sqrt{1-4pq\bigl(1-\nu(U)^2\bigr)}.
+\tag{59.2}
+$$
+
+The minimum is attained by a system-only CPTP map. No access to a noise
+environment, postselection, intermediate correction or reference read is
+used or allowed in this statement.
+
+**Proof.** Choose an eigenbasis $U|j\rangle=u_j|j\rangle$ and probabilities
+$s_j\ge0$ with $\sum_js_j=1$ such that
+$t=\sum_js_ju_j$ has $|t|=\nu(U)$. Such probabilities exist by compactness
+of the spectral polygon. Let
+$|\psi_s\rangle=\sum_j\sqrt{s_j}|j\rangle_S|j\rangle_Z$ and
+$\sigma=\sum_js_j|j\rangle\langle j|$. For arbitrary Kraus operators
+$R_k$ of a CPTP map $\mathcal R$, the squared overlap of the output with
+$|\psi_s\rangle$ is
+
+$$
+ f_s=\sum_k\left(
+ p\left|\sum_js_j(R_k)_{jj}\right|^2+
+ q\left|\sum_js_ju_j(R_k)_{jj}\right|^2\right).
+\tag{59.3}
+$$
+
+Set $x_{k,j}=\sqrt{s_j}(R_k)_{jj}$ and let $L$ be the two-row matrix
+$L_{0j}=\sqrt{ps_j}$, $L_{1j}=\sqrt{qs_j}u_j$. Its Gram matrix is
+
+$$
+LL^\dagger=
+\begin{pmatrix}p&\sqrt{pq}\,\overline t\\
+\sqrt{pq}\,t&q\end{pmatrix},
+$$
+
+so its largest eigenvalue is
+
+$$
+F=\frac{1+\sqrt{(p-q)^2+4pq|t|^2}}2
+ =\frac{1+\sqrt{1-4pq(1-\nu(U)^2)}}2.
+\tag{59.4}
+$$
+
+Trace preservation alone supplies the needed budget:
+
+$$
+\sum_k\|x_k\|^2
+=\sum_js_j\sum_k|(R_k)_{jj}|^2
+\le\sum_js_j\sum_{k,a}|(R_k)_{aj}|^2=1.
+\tag{59.5}
+$$
+
+Therefore (59.3) is at most $F$. If $P=|\psi_s\rangle\langle\psi_s|$ and
+$\rho=(\mathcal R\mathcal N_{p,U}\otimes\operatorname{id})(P)$, the binary
+test $\{P,I-P\}$ gives
+$\|\rho-P\|_1\ge2(1-\operatorname{Tr}(P\rho))\ge2(1-F)$. Hence every
+recovery has diamond error at least $2(1-F)=\delta_p(U)$, with one witness
+fixed before the recovery is chosen.
+
+It remains to attain the bound. If $p=0$ or $p=1$, invert the certain
+unitary branch. If $\nu(U)=1$, the spectral polygon is a singleton on the
+unit circle, so $\operatorname{Ad}_U=\operatorname{id}$ and the identity
+recovery attains zero. Suppose first that $0<p<1$ and $0<\nu(U)<1$.
+Multiplication of $U$ by one scalar phase does not change its channel, so
+rotate the closest point of the spectral polygon to $\nu(U)>0$. Convex
+minimality then gives $\operatorname{Re}u_j\ge\nu(U)$ for every $j$. Put
+$\theta=\arccos\nu(U)<\pi/2$ and write $u_j=e^{it_j}$ with
+$|t_j|\le\theta$. The supporting line at the closest point meets the unit
+circle only at $e^{\pm i\theta}$; a convex combination giving the real
+closest point uses both endpoints. Thus the centred arc is a property of
+the entire spectrum, including multiplicities and every reducing block.
+
+Let
+
+$$
+M_2=\begin{pmatrix}p&\sqrt{pq}\cos\theta\\
+\sqrt{pq}\cos\theta&q\end{pmatrix}
+$$
+
+and let $v=(v_0,v_1)$ be a real unit top eigenvector, chosen with
+$v_0,v_1>0$. Then, for
+$a_j=\sqrt p\,v_0+\sqrt q\,v_1e^{it_j}$,
+
+$$
+|a_j|^2\ge v^{\mathsf T}M_2v=F>0.
+\tag{59.6}
+$$
+
+Starting with Kraus operators $A_0=\sqrt pI$ and $A_1=\sqrt qU$, rotate
+this Kraus representation by $v$:
+$C_0=v_0A_0+v_1A_1=\operatorname{diag}(a_j)$ and
+$C_1=-v_1A_0+v_0A_1$. Define diagonal operators
+
+$$
+D_{jj}=\frac{\overline{a_j}}{|a_j|},\qquad
+(K_0)_{jj}=\frac{\sqrt F}{|a_j|},\qquad
+(K_1)_{jj}=\sqrt{1-\frac F{|a_j|^2}}.
+\tag{59.7}
+$$
+
+Then $D$ is unitary and $K_0^\dagger K_0+K_1^\dagger K_1=I$. The recovery
+with Kraus $K_0D,K_1D$ is CPTP, and
+$(K_0D)C_0=\sqrt F I$. The remaining composite Kraus operators have
+summed effect $(1-F)I$, so, when $F<1$, they define a CPTP map $\mathcal M$
+with
+
+$$
+\mathcal R\mathcal N_{p,U}=F\,\operatorname{id}+(1-F)\mathcal M.
+\tag{59.8}
+$$
+
+CPTP maps have diamond norm one; therefore (59.8) has error at most
+$2(1-F)$. This equals the lower bound and proves attainment, including all
+finite references. The case $\nu(U)=0$ remains. Here the chosen convex
+combination can be taken with $t=0$, so (59.4) gives $F=\max(p,q)$. If
+$p\ge q$, use the identity recovery; its error is at most
+$2q=2(1-F)$ by homogeneity and the triangle inequality. If $q>p$, use
+$\operatorname{Ad}_{U^\dagger}$ and obtain the same bound. The lower bound
+already proves equality. $\square$
+
+## 60. One fixed ambiguous record and the full-space interface
+
+**Definition 60.1 (Fixed one-record law).** At a declared horizon, let one
+terminal record contain exactly two histories $a,b$, with total
+input-independent mass $m\in[0,1]$ and conditional weights $p,q$; thus its
+masses are $mp,mq$. Every other record is a singleton history with masses
+whose sum is $1-m$. The terminal decoder is an arbitrary CPTP map on the
+retained system and is chosen after the record. The law is averaged once;
+there is no exchange of a conditional infimum with an average.
+
+**Theorem 60.2 (Exact fixed-record consumer).** With
+$U=Q_a^\dagger Q_b$, the minimum averaged encoded qutrit error for the law
+of Definition 60.1 is
+
+$$
+ m\,\delta_p(U).
+\tag{60.1}
+$$
+
+The same value holds for arbitrary terminal CPTP maps $M_5\to M_5$ on the
+encoded $H=\mathbb C^5$ system of §§1–3. The assertion concerns one fixed
+ambiguous record and separately decoded singleton records only.
+
+**Proof.** The pair channel is
+$\operatorname{Ad}_{Q_a}\circ\mathcal N_{p,U}$. Use the minimizing
+probabilities from Theorem 59.2 and its purification $P$. For any pair
+decoder $D$, $D\circ\operatorname{Ad}_{Q_a}$ is a CPTP recovery in that
+theorem, so the pair output has overlap at most $F=1-\delta_p(U)/2$ with
+$P$. Every singleton output is a state and therefore has overlap at most
+one with the same $P$. The complete averaged output consequently has overlap
+at most $mF+1-m$. The binary test $\{P,I-P\}$ gives the lower bound
+$2m(1-F)=m\delta_p(U)$ for every decoder family, on one common input.
+
+For attainment, use the Theorem 59.2 recovery composed with
+$\operatorname{Ad}_{Q_a^\dagger}$ on the ambiguous record, and use
+$\operatorname{Ad}_{Q_\ell^\dagger}$ on singleton history $\ell$. The
+averaged channel is
+
+$$
+(1-m)\operatorname{id}+m\,\mathcal R_*\mathcal N_{p,U},
+$$
+
+so homogeneity gives exactly $m\delta_p(U)$. In the actual full-space model,
+let $\iota(X)=BXB^\dagger$ and
+$C(X)=B^\dagger XB+\operatorname{Tr}((I_5-BB^\dagger)X)|0\rangle\langle0|$.
+The Kraus operators $B^\dagger$ and $|0\rangle\langle w|$ for an orthonormal
+basis of $R^\perp$ show that $C$ is CPTP and $C\iota=\operatorname{id}_3$.
+Compressing any full decoder by $C$ cannot increase the diamond norm. Conversely
+$\iota\mathcal R C$ is a full CPTP extension, and
+$\iota\otimes\operatorname{id}$ preserves all singular values except added
+zeros. Thus the qutrit lower and upper bounds are exactly the full-$H$ bounds.
+The proof does not grant recovery of arbitrary unencoded $M_5$ inputs. $\square$
+
+**Corollary 60.3 (Input-independent mixture versus Born-weight instrument).**
+Theorem 60.2 applies when $m,p,q$ are fixed classical weights independent of
+input and reference. It does not apply to an instrument whose branch weights
+are $\operatorname{Tr}(E_j\rho)$ or otherwise depend on the unknown input;
+that is a different model and no Born-weight controller conclusion is drawn.
+Likewise, several ambiguous records cannot be assigned the sum of their
+separate minima: the common-witness argument above is certified for one
+record only.
+
+## 61. Equal-pair qutrit applications and actual-word examples
+
+**Theorem 61.1 (Equal-parity pair optimum).** Let $h,k$ be distinct actual
+length-$n$ histories with the same determinant parity. Then
+
+$$
+Q_h^\dagger Q_k=1\oplus L_{h,k},\qquad L_{h,k}\in SU(2).
+$$
+
+Choose $U_2\in SU(2)$ with
+$L_{h,k}=U_2\operatorname{diag}(e^{i\theta},e^{-i\theta})U_2^\dagger$,
+$0\le\theta\le\pi$. For equal conditional weights $p=q=1/2$,
+
+$$
+\delta(\theta)=1-\max\{\cos\theta,0\}.
+\tag{61.1}
+$$
+
+A fixed deterministic partition containing this pair and all other histories
+as singleton records has exact averaged optimum
+$2\delta(\theta)/2^n$ over all terminal CPTP decoder families, including
+full-$H$ decoders on the encoded source.
+
+**Proof.** The common fixed line in Theorem 2.2 supplies the first summand,
+while equal determinant parity makes the second summand an $SU(2)$ matrix.
+Conjugating within $T$ gives the displayed spectrum. The convex hull of
+$\{1,e^{i\theta},e^{-i\theta}\}$ has distance $\max(\cos\theta,0)$ from
+zero. Substitute $p=q=1/2$ into (59.2), then put $m=2/2^n$ in (60.1).
+The full-space assertion is the retraction argument in Theorem 60.2. $\square$
+
+The chronological pair $00,11$ at $n=2$ has
+$\cos\theta=-1/2$ by the exact qutrit matrices, hence its conditional
+CPTP optimum is $1$ and its one-pair/singleton averaged optimum is
+$2/4=1/2$. The specified $SU(2)$ midpoint decoder from Recovery §43 has
+conditional error $1-\cos\theta=3/2$, so that decoder gives $3/4$ after the
+same partition; it is not CPTP-optimal. At $n=3$, the actual pair $000,101$
+has $\cos\theta=5/8$, so its conditional optimum is $3/8$ and its fixed
+partition optimum is $(2/8)(3/8)=3/32$. These two trace values are exact
+consequences of the displayed source letters and are not claims about other
+pairs or global controllers.
+
+The opposite-parity pair $000,111$ is outside the equal-parity $SU(2)$
+reduction: its relative determinant is $-1$. A bounded numerical check for
+this actual pair with conditional weight $p=0.22$ found eigenphases
+$0$, $0.7069517278872175$, and $2.4346409257025754$, numerical-range distance
+$\nu=0.34616086124280615$, and formula value
+$\delta=0.3708342925347834$. An unrestricted qutrit recovery SDP returned
+$0.370834292505157$ with status `optimal`. These floating-point values are
+corroboration of the arbitrary-dimensional theorem, not an exact symbolic
+claim, and they do not license the equal-parity midpoint formula.
+
+**Proposition 61.2 (Actual equal-parity endpoint exclusions).** Distinct
+same-parity actual words cannot have $\theta=0$, $\theta=\pi/2$ or
+$\theta=\pi$. No assertion that every interior angle occurs is made.
+
+**Proof.** The existing quaternion lift and ideal separation give
+$D=N(C_h-C_k)\in48\mathbb Z_{>0}$, while the exact trace identity of
+Theorem 48.1 is
+
+$$
+2\cos\theta=2-\frac{D}{4^n}.
+$$
+
+The value $\theta=0$ would force $D=0$, contradicting distinctness. The
+values $\theta=\pi/2$ and $\theta=\pi$ would force respectively
+$D=2\cdot4^n$ and $D=4\cdot4^n$, neither divisible by $3$, whereas every
+actual $D$ is divisible by $48$. This arithmetic restriction concerns
+actual reachable equal-parity pairs; the abstract theorem permits every
+$\theta\in[0,\pi]$. $\square$
+
+## 62. Sources, literature scope and retained boundaries
+
+**Source mapping.** The definitions of the instrument, fairness, chronology,
+full-space retraction and terminal permissions are those already published in
+Recovery §§1–3. The actual-word quaternion coordinates and ideal separation are
+this volume's Theorems 45.2 and 46.1; the exact trace bridge is Theorem 48.1.
+Theorem 59.2 is the arbitrary-finite ordinary proof above, and
+Theorems 60.2 and 61.1 are its one-record and actual-history applications.
+
+**Literature statement.** Bounded primary-source searches inspected
+Shahbeigi–Sadri–Moradi–Zyczkowski–Karimipour, *Quasi-inversion of quantum and
+classical channels in finite dimensions* (arXiv:2104.06062v3), Barnum–Knill,
+*Reversing quantum dynamics with near-optimal quantum and classical fidelity*
+(arXiv:quant-ph/0004088v2), Beny–Oreshkov, *General conditions for approximate
+quantum error correction and near-optimal recovery channels* (arXiv:0907.5391v4),
+Faizan–Faryad, *Quasi Inverse of Qubit Channels for Mixed States*
+(arXiv:2410.02414v3), and Watrous, *The Theory of Quantum Information*,
+Chapter 3. The first four use averaged or fidelity/trace-distance objectives,
+restricted dimensions, or near-optimal comparisons; they do not supply the
+literal all-finite-reference diamond formula (59.2). Watrous Theorem 3.51 and
+Theorem 3.46 supply the pure-input stabilization used for the norm argument.
+A bounded search did not identify an exact prior theorem, but this is neither a
+novelty claim nor a priority claim. One metadata-only candidate was unavailable
+(HTTP 403), and the search did not establish literature completeness.
+
+**Numerical and exact corroboration.** Exact Gram and endpoint identities,
+exact actual-pair traces, and unrestricted finite SDPs using SCS via CVXPY
+1.7.5 provide the quoted corroboration; the reported SDP statuses for the
+cases quoted above are `optimal`. Floating-point feasibility residuals are
+evidence only, not proofs.
+
+**What remains open.** The results above do not optimize over all changing,
+stochastic or shared-seed controllers, several ambiguous records, pair choices,
+causal residual compatibility, global memory width, physical register size,
+gate or precision cost, or arbitrary-horizon joint memory laws. They do not
+prove a common decoder for several different eigenbases, additive errors from
+separate cells, reachability of every interior actual angle, or any physical
+installation. Recovery Question 32.2, Definition 44.3 and this volume's
+Definition 50.1 remain in force. The theorem is an ordinary finite-dimensional
+channel result with the stated model permissions; it is not Lean or kernel
+certification. No claim is made for the separate input-dependent Born-weight
+instrument.
+
+## 追加锚（本行以下为增补区）
