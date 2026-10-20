@@ -14095,3 +14095,226 @@ cutoff error. The remaining comparison between first-prime transport
 and this same integer's defect is unproved. Generic fixed-family
 Jensen obstructions are not removed by the construction; no pressure
 sign, new finite verification interval or RH/Robin proof follows.
+
+## Actual pressure order of the calibrated growing family
+
+Retain exactly the source, cutoff, degree and calibration of APC1–APC11.
+The following repo-derived application estimates their actual unrestricted
+pressure correction $G_A$. It reuses the BPY law, the complete pressure
+identity, the published PNT input and standard Laplace/Gamma asymptotics.
+The earlier fixed-family signed Jensen tests do not supply this
+moving-degree relative estimate. No literature priority, numerical common
+starting threshold, Lean certification or RH/Robin proof is claimed.
+
+### The complete actual-pressure remainder
+
+Put
+
+$$
+B(x)=\gamma+\log\log x-\frac1{\log x}\qquad(x\ge e).
+$$
+
+GAK29 and GAK38 already give
+$M(\lambda(x))=B(x)-I_\psi(x)-R(x)$, with the unrestricted pressure
+and every prime power retained. Reuse
+[Johnston–Yang, arXiv:2204.01980v2](https://arxiv.org/pdf/2204.01980v2),
+Theorem 1.1, equation (1.3), as recorded in the
+[existing supplier note](../Weil/johnstonyang2022pnt.md):
+
+$$
+|\psi(u)-u|\le9.39u(\log u)^{1.515}
+ e^{-0.8274\sqrt{\log u}}\qquad(u\ge2).
+$$
+
+After $v=\log u$, its contribution to $|I_\psi(x)|$ is bounded by a
+constant times
+$\int_{\log x}^\infty(1+v)v^{-0.485}e^{-0.8274\sqrt v}\,dv$.
+Absorbing the polynomial into a smaller exponential, and using the
+existing whole-reserve upper $R(x)=O(x^{-1/2})$, gives fixed $C,b>0$ with
+
+$$
+|M(\lambda(x))-B(x)|\le C e^{-b\sqrt{\log x}}
+\qquad(x\ \text{sufficiently large}).
+\tag{ACP1}
+$$
+
+This is an application of the published theorem, without rerunning its
+computations or independently certifying its whole proof. The difference
+on the left is continuous, bounded on compact subsets of $[e,\infty)$,
+and tends to zero, so it is globally bounded there.
+
+For $j=k,k+1$, split the whole source at $c=A^{-1/2}$. Above this cut,
+$A\chi_A(c)\ge\sqrt A$; below it use the global bound and
+$|\nu_j|(c<A^{-1/2})\le A^{-2}M_{-4}(j)$. GPC2 consequently gives
+
+$$
+\int|M(\lambda(A\chi_A(c)))-B(A\chi_A(c))|\,d|\nu_j|(c)
+\le e^{-b_1\sqrt L+O(j)}+e^{-2L+O(j)}
+\tag{ACP2}
+$$
+
+for a fixed $b_1>0$. Arbitrarily small and clamped clocks are included.
+The same allowance applies to the value at $x=A$ and to the bounded
+adjacent mixture.
+
+### The other interpolation node and the finite Laplace calculation
+
+Since $\mu$ is a probability law with $\int c\,d\mu=1$, the strict
+inequality $\log c<c-1$ away from $c=1$ gives $h'(1)<0$.
+The law is nontrivial because $h(0)=m>1$. Define
+
+$$
+\beta_1=-\frac{m-1}{m}h'(1)>0,\qquad
+v(u)=Q(h(1-u))=-\beta_1u\exp(O(u)).
+\tag{ACP3}
+$$
+
+Here $Q'(1)=-(m-1)/m$; $\beta_1$ belongs to node $1$, whereas
+APC2's positive $\alpha$ belongs to node $0$. All real moments justify
+the derivatives. Choose fixed $u_0\in(0,1)$ and $D<\infty$ so that
+$v(u)<0$ and $|\log[-v(u)/(\beta_1u)]|\le Du$ for $0<u\le u_0$.
+
+For one clamped clock put $z=\log(A\chi_A(c))\ge1$. The standard
+logarithm and reciprocal-logarithm formula is
+
+$$
+B(A\chi_A(c))-B(A)
+=\int_0^\infty(e^{-Lu}-e^{-zu})(1/u+1)\,du.
+$$
+
+Only $[0,u_0]$ is interchanged with the signed source. The absolute
+remaining tail is at most $C(e^{-u_0L}+e^{-u_0z})$, whose source
+integral is at most $CA^{-u_0}[M_0(j)+M_{-u_0}(j)]$.
+Near zero, absolute Fubini uses the cancelling difference and
+
+$$
+\frac{|1-\chi_A(c)^{-u}|}{u}
+\le|\log\chi_A(c)|[1+\chi_A(c)^{-u_0}].
+$$
+
+Its absolute integral is finite by neighboring fixed real moments;
+clamping a clock below $e/A<1$ decreases its absolute logarithm.
+No two divergent $1/u$ integrals are separated.
+
+Write $\tau=e/A$. For $c<\tau$ and $0<u\le u_0$,
+
+$$
+\frac{|\tau^{-u}-c^{-u}|}{u}
+\le\log(\tau/c)c^{-u_0}
+\le C\tau^{4-u_0}c^{-4}.
+$$
+
+The last bound follows from
+$\sup_{0<t<1}t^{4-u_0}\log(1/t)<\infty$. It pays the complete
+replacement of the truncated clamped Mellin factor by $H_j(1-u)$.
+Thus, for some fixed $c_0>0$,
+
+$$
+S_{A,j}:=\int[B(A\chi_A(c))-B(A)]\,d\nu_j(c)
+=\int_0^{u_0}e^{-Lu}v(u)^j(1/u+1)\,du
+ +O(e^{-c_0L+O(j)}).
+\tag{ACP4}
+$$
+
+### Moving degree, actual pressure and exact calibration
+
+The integral in ACP4 has sign $(-1)^j$. Its magnitude lies between
+
+$$
+\beta_1^j\int_0^{u_0}e^{-(L+Dj)u}(u^{j-1}+u^j)\,du
+$$
+
+and the same expression with $L-Dj$. The full Gamma integrals have
+leading value $\beta_1^j(j-1)!/L^j$. The $u^j$ term and the removed
+Gamma tails cost $O(j/L)$ relatively; changing $L$ to $L\pm Dj$
+costs $O(j^2/L)$. Since $j=k,k+1$ and $k=\lfloor L^{1/3}\rfloor$,
+
+$$
+S_{A,j}=\frac{(-\beta_1)^j(j-1)!}{L^j}
+ \left(1+O\!\left(\frac{j^2}{L}\right)\right).
+\tag{ACP5}
+$$
+
+The logarithm of this main magnitude is $-O(j\log L)$, and
+$j\log L=o(\sqrt L)$. Therefore the whole actual-pressure allowance
+ACP2 and the cutoff remainder ACP4 are negligible relatively, including
+the $\exp(O(j))$ variation cost. The actual individual gap satisfies
+
+$$
+F_{A,j}:=\int M(\lambda(A\chi_A(c)))\,d\nu_j(c)-M(\lambda(A))
+=\frac{(-\beta_1)^j(j-1)!}{L^j}
+ \left(1+O\!\left(\frac{j^2}{L}\right)\right).
+\tag{ACP6}
+$$
+
+This transfers a moving-order calculation to the actual unrestricted
+pressure; it is neither a fixed-order substitution nor a smooth-only
+sign claim.
+
+Use the unchanged actual ratio $r_A$ from APC6. In
+$G_A=(F_{A,k+1}-r_AF_{A,k})/(1-r_A)$, the two numerator main terms
+have the same sign, so their coefficients add. Equations APC6 and ACP6 give
+
+$$
+G_A=(-1)^{k+1}
+ \frac{\beta_1^k(k-1)![\beta_1k+\alpha(k+1)]}{L^{k+1}}
+ \left(1+O\!\left(\frac{k^2}{L}\right)\right).
+\tag{ACP7}
+$$
+
+The denominator $1-r_A=1+O(k/L)$ is absorbed in this relative error.
+Consequently $G_A>0$ for odd $k$ and $G_A<0$ for even $k$, eventually
+in both parity sectors. Stirling at this actual degree gives
+
+$$
+\log|G_A|=-\left(\frac23+o(1)\right)L^{1/3}\log L,
+\qquad G_A\to0,
+\qquad \sqrt A\log A\,|G_A|\to\infty.
+\tag{ACP8}
+$$
+
+These are the actual gap's sign and magnitude, rather than growth
+inferred from an upper allowance.
+
+### What the comparison supplies at the original integer
+
+Put $V_A=\int M(\lambda(A\chi_A(c)))\,d\sigma_A(c)$.
+The same mixture of ACP5 and ACP2 proves
+
+$$
+V_A-B(A)=G_A(1+o(1)),\qquad R(A)=o(|G_A|).
+\tag{ACP9}
+$$
+
+The second assertion uses the valid whole-reserve upper
+$R(A)=O(A^{-1/2})$. It does not treat a reserve lower constant as an
+upper budget. For odd $k$ the actual pressure upper
+$M(\lambda(A))<V_A$ holds eventually, but $V_A>B(A)$ with a shift
+larger than the root scale. For even $k$, $V_A<B(A)$ but
+$M(\lambda(A))>V_A$. Thus this single comparison does not give the
+proposed sufficient pressure upper $M(\lambda(A))<B(A)$ on either
+sector. It determines neither the sign of $M(\lambda(A))-B(A)$ nor
+the outcome of a compensated argument.
+
+For every original integer $n$ with its own $A=\log n$, the exact target is
+
+$$
+\Delta(n)=B(A)-M(\lambda(A))+d_A(n)>0
+\quad\Longleftrightarrow\quad
+ d_A(n)>M(\lambda(A))-B(A).
+\tag{ACP10}
+$$
+
+The stronger pressure upper is sufficient, not necessary. Retain APC10's
+same-integer identity unchanged:
+$\int d_{\lambda(A\chi_A(c))}(n)\,d\sigma_A(c)=d_A(n)+G_A$.
+ACP7 now estimates its previously unspecified correction. Pointwise
+nonnegative defects do not imply a nonnegative signed average, and no
+other optimizer replaces $n$. No existence of an own-price zero-defect
+integer in a specified parity sector is asserted.
+
+APC9–APC11 still pay the complete smoothed and proper-power responses.
+The comparison of first-prime transport with this same integer's defect
+remains unproved. Exact price calibration and a favorable pressure
+comparison do not by themselves remove the larger averaged benchmark
+shift; no RH or all-integer Robin conclusion follows.
