@@ -8,6 +8,10 @@
 
 -- Escape audit unfinished for published theorems: https://github.com/the-omega-institute/trureturing/issues/19129.
 
+/- Escape audit unfinished for these published suppliers: https://github.com/the-omega-institute/trureturing/issues/19133
+proof_shape: power_two_zero: bind-only; consumer: D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result (via its live helper chain).
+-/
+
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 import Mathlib.FieldTheory.Finite.Basic
@@ -40,7 +44,7 @@ private theorem dyadic_halve (n : ℕ) (hn : n ≠ 1) :
     refine ⟨k + 1, ?_⟩
     rw [pow_succ, ← hk, Nat.div_mul_cancel hd]
 
-private theorem power_two_zero : constantCoeff powerTwoSeries = 0 := by
+theorem power_two_zero : constantCoeff powerTwoSeries = 0 := by
   have hz : ¬ ∃ k : ℕ, 0 = 2 ^ k := by
     rintro ⟨k, hk⟩
     exact pow_ne_zero k (by decide : (2 : ℕ) ≠ 0) hk.symm

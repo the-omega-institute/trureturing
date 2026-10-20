@@ -764,3 +764,96 @@ AOM：《AURIC FIB approximate online recovery memory》，模型、全空间回
 [BG]: https://doi.org/10.4171/JEMS/337
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 有限时域的零误差连续性与极限次序
+
+**定义 12.1（固定长度的相对矩阵分离）。** 保持定义 2.1 的全部权限，取整数 $n\ge1$。在命题 1.3 的同一个正交基中置
+
+$$
+d_n=\min_{h\ne g\in\{0,1\}^n}\|F_h-F_g\|_{\mathrm F},
+\qquad h_2(p)=-p\log_2p-(1-p)\log_2(1-p).
+$$
+
+端点取 $0\log_2 0=0$。引理 9.1 使有限集合中的 $F_h$ 两两不同，故 $d_n>0$。这里比较的是保留共同方向相对相位的矩阵，而不是投影类。$d_n$ 可以依赖 $n$，不假设统一正下界。
+
+**定理 12.2（有限历史的连续熵下界）。** 若
+
+$$
+0<\varepsilon<1/4,\qquad
+\delta_n=\frac{16\varepsilon}{d_n^2}\le\frac12,
+$$
+
+则
+
+$$
+E_n(\varepsilon)\ge
+n-h_2(\delta_n)-\delta_n\log_2(2^n-1).
+\tag{12.1}
+$$
+
+因此对每个固定整数 $n\ge1$，
+
+$$
+\lim_{\varepsilon\downarrow0}E_n(\varepsilon)=n.
+\tag{12.2}
+$$
+
+该结论不使用假设 3.2 的谱隙，也不把平均恢复加强为逐种子或逐历史恢复。
+
+证明。任取一个成功方案。在其实际联合分布 (2.1) 上，对同一组基向量 $f_1,f_2$ 分别使用命题 4.2，取得可测单位中心 $c^{(a)}_{Y,S}$，满足
+
+$$
+\mathbb E\|F_{\mathsf H_n}f_a-c^{(a)}_{Y,S}\|^2
+\le2\varepsilon\qquad(a=1,2).
+$$
+
+把两列中心组成线性算子 $\widehat F_{Y,S}$，其定义为 $\widehat F_{Y,S}f_a=c^{(a)}_{Y,S}$。它不必酉，但
+
+$$
+\mathbb E\|F_{\mathsf H_n}-\widehat F_{Y,S}\|_{\mathrm F}^2
+\le4\varepsilon.
+\tag{12.3}
+$$
+
+按一个固定的历史顺序解决并列最近点，令 $\widehat{\mathsf H}_n(Y,S)$ 是有限集合 $\{F_h\}$ 中距 $\widehat F_{Y,S}$ 最近的标签。有限次可测比较保证这个猜测可测。若它猜错，则最近点性质和三角不等式给
+
+$$
+d_n\le
+\|F_{\mathsf H_n}-F_{\widehat{\mathsf H}_n}\|_{\mathrm F}
+\le2\|F_{\mathsf H_n}-\widehat F_{Y,S}\|_{\mathrm F}.
+$$
+
+所以错误概率 $p$ 满足 $p\le16\varepsilon/d_n^2=\delta_n$。以错误指示位分解条件熵：给定 $(Y,S)$ 且猜对时历史唯一，猜错时至多有 $2^n-1$ 个历史。因此标准 Fano 估计在同一联合分布上给出
+
+$$
+H(\mathsf H_n\mid Y,S)
+\le h_2(p)+p\log_2(2^n-1).
+$$
+
+此处不要求 $S$ 离散：先条件于完整视图，再用二元熵的凹性平均即可。可数 $Y$ 和标准 Borel 种子均由定义 2.1 允许。由于 $S$ 独立于公平实际历史，$H(\mathsf H_n\mid S)=n$，故
+
+$$
+H(Y\mid S)\ge I(\mathsf H_n;Y\mid S)
+\ge n-h_2(p)-p\log_2(2^n-1).
+$$
+
+若左侧无限，不等式直接成立；有限时是普通条件互信息恒等式。函数 $h_2(p)+p\log_2(2^n-1)$ 在 $[0,1/2]$ 上不减，可以用 $\delta_n$ 代替 $p$。对任意成功方案取下确界得到 (12.1)，不要求最优方案存在。固定 $n$ 后 $d_n>0$，下界随 $\varepsilon\downarrow0$ 趋于 $n$；完整历史方案给 $E_n(\varepsilon)\le n$，从而得到 (12.2)。$\square$
+
+**推论 12.3（同一仪器的两种迭代极限）。** 对定义 1.2 的固定仪器、完整终端视图与平均不折半钻石误差，
+
+$$
+\lim_{\varepsilon\downarrow0}\lim_{n\to\infty}
+\frac{E_n(\varepsilon)}n=0,
+\qquad
+\lim_{n\to\infty}\lim_{\varepsilon\downarrow0}
+\frac{E_n(\varepsilon)}n=1.
+\tag{12.4}
+$$
+
+证明。对每个固定 $0<\varepsilon<1/4$，定理 7.5 给出与 $n$ 无关的有限上界，且条件离散熵非负，故 $E_n(\varepsilon)/n\to0$。反向次序由定理 12.2 对每个固定 $n\ge1$ 给出内层极限一，再取 $n\to\infty$。两条论证都不使用假设 3.2。$\square$
+
+**约定 12.4（方法归属与次序边界）。** 最近点、平方失真转错误率和 Fano 条件熵界是标准方法；Fano 不等式及其条件形式可参见 J. Scarlett 与 V. Cevher，*An Introductory Guide to Fano's Inequality with Applications in Statistical Estimation*，[arXiv:1901.00555](https://arxiv.org/abs/1901.00555)，定理 1、3。这里的 repo-derived 内容是把命题 4.2 的全空间平均恢复失真接到同一个实际有限历史，得到 (12.1)–(12.4)，不主张新的通用 Fano 不等式或文献优先权。
+
+式 (12.4) 比较终端保留熵率，不是在线峰值宽度、实际采集次数或总物理成本。它不交换量子仪器、不改变反馈权限，也不宣告联合极限存在。式 (12.1) 的精度阈值依赖 $d_n$；未给出它对 $n$ 的统一下界，故有限时域连续性本身不决定 $\varepsilon=\varepsilon(n)$ 的全部交叉标度。
+
+## 追加锚（本行以下为增补区）
