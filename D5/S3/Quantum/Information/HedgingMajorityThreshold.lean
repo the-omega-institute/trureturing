@@ -7,8 +7,7 @@
    digest: Certain majority success in qubit hedging requires certain single-game success. -/
 
 import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
-import D5.S3.QuantumStates.ZeroWeightSupportFace
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.QuantumStates.UnitWeightSupport
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 
 /-! Strict-majority certainty for the parallel Arunachalam–Molina–Russo qubit game. -/
@@ -44,7 +43,9 @@ def outcomeProj (θ : ℝ) (b : Fin 2) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2
 /-- The game-by-game tensor, regrouped into Bob's and Alice's words. -/
 def gameTensor (n : ℕ) (M : Fin n → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
     Matrix ((Fin n → Fin 2) × (Fin n → Fin 2)) ((Fin n → Fin 2) × (Fin n → Fin 2)) ℂ :=
-  fun p q => ∏ i, M i (p.1 i, p.2 i) (q.1 i, q.2 i)
+  (D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap
+    (fun _ : Fin n => Fin 2 × Fin 2) M).submatrix
+      (fun p i => (p.1 i, p.2 i)) (fun q i => (q.1 i, q.2 i))
 
 /-- The projection onto outcomes with at least k successes. -/
 def winAtLeast (n k : ℕ) (θ : ℝ) :=
@@ -54,9 +55,9 @@ def winAtLeast (n k : ℕ) (θ : ℝ) :=
 /-- The output of Bob's joint channel, acting on the first word. -/
 def output {m n : ℕ} (K : Fin m → Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
     (α : ℝ) :=
-  ∑ l, (K l ⊗ₖ (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)) *
-    vecMulVec (sharedVec n α) (star (sharedVec n α)) *
-    (K l ⊗ₖ (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ))ᴴ
+  let L := fun l => K l ⊗ₖ (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
+  D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus L L
+    (vecMulVec (sharedVec n α) (star (sharedVec n α)))
 
 /-- Certain majority success is equivalent to certain single-game success. -/
 def claim : Prop :=
@@ -116,11 +117,13 @@ private theorem outcome_laws (θ : ℝ) :
     fin_cases a <;> fin_cases b
     · change outcomeProj θ 0 * outcomeProj θ 0 = outcomeProj θ 0
       rw [hzero]
-      noncomm_ring [hp]
+      exact (show IsIdempotentElem (outcomeProj θ 1) from hp).one_sub.eq
     · change outcomeProj θ 0 * outcomeProj θ 1 = 0
-      rw [hzero, sub_mul, one_mul, hp, sub_self]
+      rw [hzero]
+      exact (show IsIdempotentElem (outcomeProj θ 1) from hp).one_sub_mul_self
     · change outcomeProj θ 1 * outcomeProj θ 0 = 0
-      rw [hzero, mul_sub, mul_one, hp, sub_self]
+      rw [hzero]
+      exact (show IsIdempotentElem (outcomeProj θ 1) from hp).mul_one_sub_self
     · exact hp
 
 private theorem outcome_tensor_product {n : ℕ} (θ : ℝ) (a b : Fin n → Fin 2) :
@@ -175,33 +178,8 @@ private theorem winning_projector (n k : ℕ) (θ : ℝ) :
 private theorem tensor_trace {n : ℕ}
     (M : Fin n → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
     trace (gameTensor n M) = ∏ i, trace (M i) := by
-  let tensor (r : ℕ) (N : Fin r → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
-      Matrix (Fin r → Fin 2 × Fin 2) (Fin r → Fin 2 × Fin 2) ℂ :=
-    fun p q => ∏ i, N i (p i) (q i)
-  have ht : ∀ (r : ℕ) (N : Fin r → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ),
-      trace (tensor r N) = ∏ i, trace (N i) := by
-    intro r
-    induction r with
-    | zero =>
-      intro N
-      norm_num [tensor, trace, Matrix.diag, Fintype.card_fun]
-    | succ r ih =>
-      intro N
-      have he : trace (tensor (r + 1) N) =
-          trace (N 0 ⊗ₖ tensor r (fun i => N i.succ)) := by
-        change (∑ p : Fin (r + 1) → Fin 2 × Fin 2, ∏ i, N i (p i) (p i)) =
-          ∑ p : (Fin 2 × Fin 2) × (Fin r → Fin 2 × Fin 2),
-            N 0 p.1 p.1 * ∏ i, N i.succ (p.2 i) (p.2 i)
-        rw [← (Fin.consEquiv (fun _ : Fin (r + 1) => Fin 2 × Fin 2)).sum_comp]
-        apply Finset.sum_congr rfl
-        intro p _
-        change (∏ i, N i ((Fin.cons p.1 p.2 : Fin (r + 1) → Fin 2 × Fin 2) i)
-          ((Fin.cons p.1 p.2 : Fin (r + 1) → Fin 2 × Fin 2) i)) =
-          N 0 p.1 p.1 * ∏ i, N i.succ (p.2 i) (p.2 i)
-        rw [Fin.prod_univ_succ]
-        rfl
-      rw [he, trace_kronecker, ih, Fin.prod_univ_succ]
-  rw [← ht n M]
+  simp only [trace, Matrix.diag_apply]
+  rw [Fintype.prod_sum]
   change (∑ p : (Fin n → Fin 2) × (Fin n → Fin 2),
     ∏ i, M i (p.1 i, p.2 i) (p.1 i, p.2 i)) =
     ∑ p : Fin n → Fin 2 × Fin 2, ∏ i, M i (p i) (p i)
@@ -216,7 +194,8 @@ private theorem shared_density (n : ℕ) (α : ℝ) :
       gameTensor n (fun _ => pairState α) := by
   ext p q
   simp only [vecMulVec_apply, sharedVec, Pi.star_apply, star_prod,
-    pairState, gameTensor, Finset.prod_mul_distrib]
+    pairState, gameTensor, Matrix.submatrix_apply,
+    D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap, Finset.prod_mul_distrib]
 
 private theorem pair_trace (α : ℝ) (ha : 0 < α) (ha' : α ≤ 1) :
     trace (pairState α) = 1 := by
@@ -236,29 +215,26 @@ private def testLocal (θ : ℝ) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ 
 
 private theorem local_zero_compression (θ : ℝ) :
     outcomeProj θ 1 * testLocal θ * outcomeProj θ 1 = 0 := by
-  ext p q
-  rcases p with ⟨y,z⟩
-  rcases q with ⟨y',z'⟩
-  fin_cases y <;> fin_cases z <;> fin_cases y' <;> fin_cases z' <;>
-    norm_num [outcomeProj, vecMulVec_apply, winVec, testLocal, Matrix.mul_apply,
-      Fintype.sum_prod_type, Fin.sum_univ_two, kroneckerMap_apply, diagonal,
-      Pi.star_apply, Fin.isValue, ite_true, ite_false, zero_ne_one, one_ne_zero,
-      Matrix.one_apply, Complex.star_def, Complex.conj_ofReal,
-      ← Complex.ofReal_cos, ← Complex.ofReal_sin] <;> ring
+  unfold outcomeProj
+  rw [ite_eq_left rfl, vecMulVec_mul, vecMulVec_mul_vecMulVec]
+  have h : ((star (fun p : Fin 2 × Fin 2 => winVec θ p.1 p.2)) ᵥ* testLocal θ) ⬝ᵥ
+      (fun p => winVec θ p.1 p.2) = 0 := by
+    simp [vecMul, dotProduct, winVec, testLocal, Fintype.sum_prod_type,
+      Fin.sum_univ_two, kroneckerMap_apply, diagonal, Matrix.one_apply,
+      Complex.star_def, ← Complex.ofReal_cos, ← Complex.ofReal_sin]
+    ring
+  rw [h, zero_smul, vecMulVec_zero]
 
 private theorem majority_intersection {n k : ℕ} (hn : n < 2 * k)
     (a b : Fin n → Fin 2) (ha : k ≤ #{i | a i = 1})
     (hb : k ≤ #{i | b i = 1}) : ∃ i, a i = 1 ∧ b i = 1 := by
-  by_contra h
-  have hd : Disjoint (Finset.univ.filter fun i => a i = 1)
-      (Finset.univ.filter fun i => b i = 1) := by
-    rw [Finset.disjoint_left]
-    intro i hi hj
-    exact h ⟨i, (Finset.mem_filter.mp hi).2, (Finset.mem_filter.mp hj).2⟩
-  have hc := Finset.card_le_card (Finset.subset_univ
-    ((Finset.univ.filter fun i => a i = 1) ∪ (Finset.univ.filter fun i => b i = 1)))
-  rw [Finset.card_union_of_disjoint hd, Finset.card_univ, Fintype.card_fin] at hc
-  omega
+  obtain ⟨i, hi⟩ := Finset.inter_nonempty_of_card_lt_card_add_card
+    (Finset.subset_univ (Finset.univ.filter fun i => a i = 1))
+    (Finset.subset_univ (Finset.univ.filter fun i => b i = 1))
+    (by simpa only [Finset.card_univ, Fintype.card_fin] using
+      (show n < #{i | a i = 1} + #{i | b i = 1} by omega))
+  exact ⟨i, (Finset.mem_filter.mp (Finset.mem_inter.mp hi).1).2,
+    (Finset.mem_filter.mp (Finset.mem_inter.mp hi).2).2⟩
 
 private theorem majority_zero_compression {n k : ℕ} (hn : n < 2 * k) (θ : ℝ) :
     winAtLeast n k θ * gameTensor n (fun _ => testLocal θ) * winAtLeast n k θ = 0 := by
@@ -282,7 +258,9 @@ private theorem majority_zero_compression {n k : ℕ} (hn : n < 2 * k) (θ : ℝ
 private theorem output_psd {m n : ℕ}
     (K : Fin m → Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) (α : ℝ) :
     (output K α).PosSemidef := by
-  unfold output
+  simp only [output,
+    D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus,
+    LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
   exact Matrix.posSemidef_sum _ fun l _ =>
     (posSemidef_vecMulVec_self_star (sharedVec n α)).mul_mul_conjTranspose_same _
 
@@ -298,11 +276,9 @@ private theorem output_trace {m n : ℕ}
         (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)) =
         (∑ l, (K l)ᴴ * K l) ⊗ₖ
           (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) := by
-      ext p q
-      simp only [Matrix.sum_apply, kroneckerMap_apply]
-      change (∑ l, ((K l)ᴴ * K l) p.1 q.1 * (1 : Matrix _ _ ℂ) p.2 q.2) =
-        (∑ l, ((K l)ᴴ * K l) p.1 q.1) * (1 : Matrix _ _ ℂ) p.2 q.2
-      exact (Finset.sum_mul _ _ _).symm
+      exact (map_sum ((Matrix.kroneckerBilinear (R := ℂ) (α := ℂ)).flip
+        (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ))
+          (fun l => (K l)ᴴ * K l) Finset.univ).symm
     rw [hs, hK, one_kronecker_one]
   obtain ⟨channel, action⟩ :=
     D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel
@@ -313,7 +289,9 @@ private theorem output_trace {m n : ℕ}
     (CStarMatrix.ofMatrix (vecMulVec (sharedVec n α) (star (sharedVec n α)))))) =
       trace (vecMulVec (sharedVec n α) (star (sharedVec n α))) at ht
   rw [action] at ht
-  change trace (output K α) = _ at ht
+  simp only [output,
+    D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus,
+    LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
   rw [ht, shared_density, tensor_trace]
   simp only [pair_trace α ha ha', Finset.prod_const_one]
 
@@ -356,13 +334,12 @@ private theorem local_channel_readout {m n : ℕ}
       (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) ⊗ₖ D := by
     calc
       _ = (∑ l, (K l)ᴴ * K l) ⊗ₖ D := by
-        ext p q
-        simp only [Matrix.sum_apply, kroneckerMap_apply]
-        change (∑ l, ((K l)ᴴ * K l) p.1 q.1 * D p.2 q.2) =
-          (∑ l, ((K l)ᴴ * K l) p.1 q.1) * D p.2 q.2
-        exact (Finset.sum_mul _ _ _).symm
+        exact (map_sum ((Matrix.kroneckerBilinear (R := ℂ) (α := ℂ)).flip D)
+          (fun l => (K l)ᴴ * K l) Finset.univ).symm
       _ = _ := by rw [hK]
-  unfold output
+  simp only [output,
+    D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus,
+    LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
   rw [Matrix.mul_sum, trace_sum]
   calc
     _ = ∑ l, trace ((((K l)ᴴ * K l) ⊗ₖ D) *
@@ -409,22 +386,6 @@ private theorem output_marginal {m n : ℕ}
         α ^ 2 - Real.cos θ ^ 2)
   simp only [ht, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
 
-private theorem projection_support {ι : Type*} [Fintype ι]
-    (P ρ : Matrix ι ι ℂ) (hP : Pᴴ = P) (hPP : P * P = P)
-    (hρ : ρ.PosSemidef) (ht : trace (P * ρ) = trace ρ) : ρ = P * ρ * P := by
-  classical
-  have hQ : (1 - P)ᴴ = 1 - P := by
-    rw [conjTranspose_sub, conjTranspose_one, hP]
-  have hQQ : (1 - P) * (1 - P) = 1 - P := by
-    noncomm_ring [hPP]
-  have htQ : trace (ρ * (1 - P)) = 0 := by
-    rw [mul_sub, mul_one, trace_sub, trace_mul_comm ρ P, ht, sub_self]
-  have hs := D5.S3.QuantumStates.ZeroWeightSupportFace.zero_weight_support_face
-    ρ (1 - P) hρ hQ hQQ htQ
-  have he : 1 - (1 - P) = P := by abel
-  rw [he] at hs
-  exact hs.2
-
 private def signedUnit (r : ℝ) : ℂ := if 0 ≤ r then 1 else -1
 
 private theorem signedUnit_norm (r : ℝ) : star (signedUnit r) * signedUnit r = 1 := by
@@ -454,10 +415,11 @@ private theorem certain_strategy {n k : ℕ} (hk : k ≤ n) (α θ : ℝ)
   let phases : (Fin n → Fin 2) → ℂ := fun x => ∏ i, phase (x i)
   let U : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ := diagonal phases
   have hU : Uᴴ * U = 1 := by
-    rw [show U = diagonal phases from rfl, diagonal_conjTranspose,
-      diagonal_mul_diagonal, ← diagonal_one]
-    apply congrArg diagonal
-    funext x
+    change star (diagonal phases) * diagonal phases = 1
+    apply Unitary.star_mul_self_of_mem
+    rw [Matrix.diagonal_mem_unitary, Pi.mem_unitary_iff]
+    intro x
+    rw [Unitary.mem_iff_star_mul_self]
     change star (∏ i, phase (x i)) * (∏ i, phase (x i)) = 1
     rw [star_prod, ← Finset.prod_mul_distrib]
     simp only [phase, signedUnit_norm, Finset.prod_const_one]
@@ -486,12 +448,15 @@ private theorem certain_strategy {n k : ℕ} (hk : k ≤ n) (α θ : ℝ)
     rw [mul_one, ← Finset.prod_mul_distrib]
     exact Finset.prod_congr rfl fun i _ => hamp _ _
   have hout : output (fun _ : Fin 1 => U) α = gameTensor n (fun _ => outcomeProj θ 1) := by
-    unfold output
+    simp only [output,
+      D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus,
+      LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
     rw [Fin.sum_univ_one, mul_vecMulVec, vecMulVec_mul, vecMul_conjTranspose,
       star_star, hUv]
     ext p q
     simp only [v, vecMulVec_apply, Pi.star_apply, star_prod, outcomeProj, ite_true,
-      gameTensor, Finset.prod_mul_distrib]
+      gameTensor, Matrix.submatrix_apply,
+      D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap, Finset.prod_mul_distrib]
   refine ⟨1, (fun _ => U), ?_, ?_⟩
   · rw [Fin.sum_univ_one]
     exact hU
@@ -519,8 +484,9 @@ theorem result : claim := by
   constructor
   · rintro ⟨m, K, hK, hwin⟩
     obtain ⟨hP, hPP⟩ := winning_projector n k θ
-    have hs := projection_support (winAtLeast n k θ) (output K α) hP hPP
-      (output_psd K α) (hwin.trans (output_trace K hK α ha ha').symm)
+    have hs := D5.S3.QuantumStates.UnitWeightSupport.unit_weight_support_face
+      (output K α) (winAtLeast n k θ) (output_psd K α) hP hPP
+      (output_trace K hK α ha ha') ((trace_mul_comm _ _).trans hwin)
     have hz : trace (gameTensor n (fun _ => testLocal θ) * output K α) = 0 := by
       conv_lhs => rw [hs]
       rw [← mul_assoc, trace_mul_cycle, ← mul_assoc, majority_zero_compression hn θ,
