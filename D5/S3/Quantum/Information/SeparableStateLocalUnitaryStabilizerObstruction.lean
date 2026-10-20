@@ -16,8 +16,18 @@ The finite Gaussian-integer certificates are consumed bind-only normalization he
 the new mathematical conclusion excludes a continuous family of local-unitary orbits.
 Utility is none: these proof-normalization certificates supply no independent finite
 instance, checker interface, numerical approximation, or conditional numerical reduction.
-Information-escape registration is paused under CLAUDE.md section 3.9.
-Direct frozen dependencies (declaration statement_id, from baseline Freeze events):
+Escape audit unfinished for trace_projector_overlap: https://github.com/the-omega-institute/trureturing/issues/17573
+trace_projector_overlap: proof_shape: bind-only; escape_witness: none.
+Consumer: D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Gap.rankOne_trace_product.
+The overlap identity specializes BornReduction.rank_one_pure_state_modulus_square_reduction
+and uses Matrix.trace_mul_comm to match the projector order.
+Escape audit for quadratic_projector unfinished: https://github.com/the-omega-institute/trureturing/issues/18546
+quadratic_projector proof_shape: bind-only; escape_witness: none;
+consumer(s): ensemble_kernel; KiemKyeLocalDistinguishability.qf_proj.
+Its direct frozen dependency is PureStateHandshake.rankOneDensity, identified below.
+Direct frozen dependencies (declaration statement_id, from the Lean report):
+D5/S3/Observer/BornReduction.rank_one_pure_state_modulus_square_reduction
+  sha256:b7155f94bd432210b5cbf71d0d3184450ca73a997dcd978a493c907ee4fc45e0
 D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics.unitaryEvolution
   sha256:e09d20adbc78becc29a640f4fb9bab3d1627ee36e10e97ed437a96cd4b7596f5
 D5/S3/Quantum/Recovery/FiniteLocalLatitudeGeometry.productVector
@@ -35,7 +45,7 @@ D5/S3/Quantum/Magic/WignerDistanceMinimum.spectral
 D5/S3/Quantum/Magic/WignerDistanceMinimum.eigenVector
   sha256:c5204f0e664257bf63f638761ad1ece981a1b9b7c22f39e57af86168fda8fecd
 D5/S3/Quantum/Magic/WignerDistanceMinimum.spectral_stabilizer
-  sha256:d62ad9cb01d5fb9fdd3b7e929050226246f7dc58861af5ee77618f6f09c576b1
+  sha256:5762f6039d32b42ad3cf3be80e8717142a1bcdf659cd770821103f4e323682e0
 D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.IsDensity
   sha256:0386217fa1109c4358c01b5fe2db195888fa2f776c05e63cec2e880416d1c8ff
 D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli
@@ -48,6 +58,7 @@ D5/S3/Quantum/FiniteDimensional.qubitZ
   sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
 -/
 
+import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 import D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.PureState.PureStateHandshake
@@ -378,18 +389,9 @@ private theorem PauliProductProjector_vector {ψ : (Fin 2 × Fin 2 → ℂ)} (hn
   obtain ⟨z,hz⟩ := equal_projectors_ray hn he'
   exact ⟨z • eigenVector p (if ep then 1 else 0),eigenVector q (if eq then 1 else 0),
     by rw [tensor_smul_left];exact hz⟩
-private theorem quadratic_projector {n : Type*} [Fintype n] (z ψ : n → ℂ) : star z ⬝ᵥ (rankOneDensity ψ *ᵥ z) = (Complex.normSq (star z ⬝ᵥ ψ) : ℂ) := by
-  simp only [rankOneDensity,Matrix.mulVec,dotProduct,Matrix.vecMulVec_apply,Pi.star_apply]
-  rw [← Complex.mul_conj]
-  simp only [map_sum,map_mul]
-  rw [Finset.sum_mul]
-  apply Finset.sum_congr rfl
-  intro i hi
-  rw [Finset.mul_sum, Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro j hj
-  simp only [← Complex.star_def, star_star]
-  ring
+theorem quadratic_projector {n : Type*} [Fintype n] (z ψ : n → ℂ) : star z ⬝ᵥ (rankOneDensity ψ *ᵥ z) = (Complex.normSq (star z ⬝ᵥ ψ) : ℂ) := by
+  simpa only [rankOneDensity] using
+    D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral.BlockSpectral.rankOneQuadratic z ψ
 theorem ensemble_kernel {n ι : Type*} [Fintype n] [Fintype ι] (ψ : ι → n → ℂ) (w : ι → ℝ) (hw : ∀ i,0 ≤ w i) (z : n → ℂ) (hzero : star z ⬝ᵥ ((∑ i,w i • rankOneDensity (ψ i)) *ᵥ z)=0) : ∀ i,0 < w i → star z ⬝ᵥ ψ i = 0 := by
   have he : ∑ i,w i*Complex.normSq (star z ⬝ᵥ ψ i)=0 := by
     have hC : ((∑ i,w i*Complex.normSq (star z ⬝ᵥ ψ i) : ℝ) : ℂ)=0 := by
@@ -516,6 +518,13 @@ private theorem product_marginal (a b : (Fin 2 → ℂ)) (hb : unitVector b) : p
   rw [projector_tensor]
   change partialTraceRight (Matrix.kronecker (rankOneDensity a) (rankOneDensity b))=_
   rw [partialTraceRight_kronecker,trace_projector,hb,one_smul]
+theorem trace_projector_overlap {n : Type*} [Fintype n] (a b : n → ℂ) : (rankOneDensity a * rankOneDensity b).trace=(Complex.normSq (star a ⬝ᵥ b) : ℂ) := by
+  rw [Matrix.trace_mul_comm]
+  simpa only [D5.S3.Observer.Conditioning.recordWeight,
+    D5.S3.Quantum.FiniteDimensional.bornProbability, rankOneDensity,
+    Complex.normSq_eq_norm_sq] using
+    D5.S3.Observer.BornReduction.rank_one_pure_state_modulus_square_reduction
+      (fun _ : Unit => rankOneDensity a) (rankOneDensity b) () a b rfl rfl
 private theorem unitary_unit (A : Matrix.unitaryGroup (Fin 2) ℂ) {a : (Fin 2 → ℂ)} (ha : unitVector a) : unitVector ((A : (Matrix (Fin 2) (Fin 2) ℂ))*ᵥ a) := by
   unfold unitVector at *
   rw [unitary_preserves_overlap _ (Matrix.mem_unitaryGroup_iff'.mp A.property)]

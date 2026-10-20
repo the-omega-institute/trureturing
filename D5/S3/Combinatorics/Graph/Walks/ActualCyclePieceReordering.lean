@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Supplied actual cycle pieces are oriented along a route and joined with exact support and retained-edge inventories. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 import D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 import Mathlib.Data.List.FinRange

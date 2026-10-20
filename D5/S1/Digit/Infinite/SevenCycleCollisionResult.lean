@@ -7,6 +7,7 @@
    digest: A seven-cycle actual singleton rival refutes unconditional finite-future separation. -/
 
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Digit.Infinite.SevenCycleCoherenceRefutation
 
 set_option autoImplicit false

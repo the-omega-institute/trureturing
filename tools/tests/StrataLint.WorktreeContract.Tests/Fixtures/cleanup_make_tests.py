@@ -54,6 +54,11 @@ class CleanupMakeTests(NativeFixture):
     def git(self, *arguments, cwd=None, input=None):
         return self.run_command(["git", *arguments], cwd, input).stdout.strip()
 
+    def build_cli(self, repository):
+        self.mark_phase("canonical-build")
+        self.run_command(["make", "--no-print-directory", "-C", repository / "tools", "dotnet",
+                          "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], phase="canonical-build")
+
     def setUp(self):
         self.fixture_started = time.monotonic()
         self.mark_phase("initialize")
@@ -90,9 +95,6 @@ class CleanupMakeTests(NativeFixture):
         # The selected CLI project and its production references do not build test
         # sources. Copy its current tool inputs without unrelated test checkouts.
         copy_source(SOURCE, self.repository)
-        self.mark_phase("canonical-build")
-        self.run_command(["make", "--no-print-directory", "-C", self.repository / "tools", "dotnet",
-                          "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], phase="canonical-build")
         self.mark_phase("preservation-lanes")
         self.dirty = self.add_lane("dirty")
         (self.dirty / "owned").write_text("unpublished dirty\n")
@@ -231,6 +233,7 @@ class CleanupMakeTests(NativeFixture):
                         ignore=shutil.ignore_patterns("bin", "obj"))
         for name in ("Directory.Build.props", "Directory.Packages.props", "global.json"):
             shutil.copy2(self.repository / name, selected / name)
+        self.build_cli(selected)
         self.diverge_main_adapter()
         (selected / "owned").write_text("old staged value\n")
         self.git("add", "owned", cwd=selected)
@@ -288,6 +291,7 @@ class CleanupMakeTests(NativeFixture):
                         ignore=shutil.ignore_patterns("bin", "obj"))
         for name in ("Makefile", "Directory.Build.props", "Directory.Packages.props", "global.json"):
             shutil.copy2(self.repository / name, selected / name)
+        self.build_cli(selected)
         self.diverge_main_adapter()
         for tree in (selected, later):
             (tree / "deleted").write_text("delete from ordinary snapshot\n")
@@ -331,6 +335,7 @@ class CleanupMakeTests(NativeFixture):
             recovery_verified=True)), flush=True)
 
     def test_production_cleanup_entrances(self):
+        self.build_cli(self.repository)
         entrances = [
             (["-C", self.repository / "tools"], "clean-lanes", self.root),
             (["-C", self.repository / "tools"], "clean-all", self.root),

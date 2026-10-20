@@ -243,6 +243,15 @@ theorem trace_local_left {a b : Type} [Fintype a] [Fintype b]
   have hs (M : Matrix (a × b) (a × b) ℂ) : F Mᴴ = (F M)ᴴ := rfl
   rw [hp,map_mul,map_mul,hs,hv,trace_local_right _ V U hU,← hp]
 
+theorem partialTransposeB_kronecker_conj (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
+    (U V : Matrix (Fin 2) (Fin 2) ℂ) :
+    partialTransposeB ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
+      (U ⊗ₖ V.map star) * partialTransposeB ρ * (U ⊗ₖ V.map star)ᴴ := by
+  ext ⟨a,b⟩ ⟨c,d⟩
+  simp [partialTransposeB, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Fintype.sum_prod_type, Fin.sum_univ_two]
+  ring
+
 set_option maxHeartbeats 4000000 in
 -- The four-site spectral certificates expand finite matrix products and exponentials.
 /-- The four-site generic product state violates Conjecture 1 at α = 1/2. -/
@@ -710,14 +719,6 @@ theorem result : ¬ claim := by
       traceNorm (V * A * Vᴴ) = traceNorm A := by
     rw [traceNorm_spectrum _ (Matrix.isHermitian_mul_mul_conjTranspose V hA),
       traceNorm_spectrum A hA, spectrum_conjugate A V hA hV]
-  have pt_local (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
-      (U V : Matrix (Fin 2) (Fin 2) ℂ) :
-      partialTransposeB ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
-        (U ⊗ₖ V.map star) * partialTransposeB ρ * (U ⊗ₖ V.map star)ᴴ := by
-    ext ⟨a,b⟩ ⟨c,d⟩
-    simp [partialTransposeB, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Fintype.sum_prod_type, Fin.sum_univ_two]
-    ring
   have conjugate_unitary {n : Type} [Fintype n] [DecidableEq n]
       (U : Matrix n n ℂ) (hU : Uᴴ * U = 1) :
       (U.map star)ᴴ * U.map star = 1 := by
@@ -760,7 +761,7 @@ theorem result : ¬ claim := by
       intro i _
       exact hρ.apply (i,a) (i,b)
     refine ⟨?_,?_,?_,?_⟩
-    · rw [pt_local]
+    · rw [partialTransposeB_kronecker_conj]
       exact norm_conjugate _ _ hpt (tensor_pair_unitary U (V.map star) hU
         (conjugate_unitary V hV))
     · exact renyi_conjugate ρ _ hρ (tensor_pair_unitary U V hU hV)

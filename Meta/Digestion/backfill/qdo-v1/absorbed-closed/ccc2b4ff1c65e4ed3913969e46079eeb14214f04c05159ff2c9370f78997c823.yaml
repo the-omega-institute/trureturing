@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ccc2b4ff1c65e4ed3913969e46079eeb14214f04c05159ff2c9370f78997c823
-  normalized_sha256: sha256:ccc2b4ff1c65e4ed3913969e46079eeb14214f04c05159ff2c9370f78997c823
-cas_ref: sha256:ccc2b4ff1c65e4ed3913969e46079eeb14214f04c05159ff2c9370f78997c823
-coverage_gids:
-  - gid: D5/S3/Observer/Residuals/FiniteShellResidual.finite_shell_check_does_not_close_residual
-    target_statement_id: sha256:6cf8ab42abd7d198994e857476af9f0ea3f084aa2210fb1d8fc16dc6dcdc3979
-receipts:
-  unresolved_subitems: []

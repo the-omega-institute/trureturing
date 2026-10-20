@@ -1,12 +1,15 @@
 import D5.S3.ConceptDynamics.Coding.DecoderReplay
 import Reg.Support.DecoderOperationTraceCohort
+import Batteries.Tactic.OpenPrivate
 
 open _root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-namespace Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort
+namespace Reg.D5.S3.ConceptDynamics.Coding.DecoderReplay.Cohort
 
 open private frame stop stream no_run_back from Reg.Support.DecoderOperationTraceCohort
+
+open _root_.Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort
 
 universe u v w
 noncomputable section
@@ -149,4 +152,4 @@ def actualAddressEqEvidence : Registration actualAddressEqArena.{u,v,w}
   dependence := run_full_dependence
 
 end
-end Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort
+end Reg.D5.S3.ConceptDynamics.Coding.DecoderReplay.Cohort

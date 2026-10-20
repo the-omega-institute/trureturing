@@ -1,6 +1,8 @@
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.RegularExpressions;
+using Tomlyn.Model;
 
 namespace StrataLint.Engine;
 
@@ -58,6 +60,18 @@ internal sealed class FileMapGlob
         }
 
         return GetOrCompile(pattern);
+    }
+
+    internal static ImmutableArray<string> ParseExclusions(TomlTable table, string location)
+    {
+        if (!table.TryGetValue("exclude", out var raw)) return [];
+        if (raw is not TomlArray { Count: > 0 } array || array.Any(value => value is not string))
+            throw new FileMapParseException(location, "exclude must be a non-empty string array");
+        var values = array.Cast<string>().ToImmutableArray();
+        if (!values.SequenceEqual(values.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)))
+            throw new FileMapParseException(location, "exclude must be unique and ordinally sorted");
+        foreach (var value in values) _ = Create(value);
+        return values;
     }
 
     // Each entry validates before sharing the immutable compiled pattern.

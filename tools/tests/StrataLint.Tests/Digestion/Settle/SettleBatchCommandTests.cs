@@ -15,7 +15,7 @@ public sealed partial class SettleBatchCommandTests
     [InlineData("COVER_DISPOSITION_PRESENT")]
     [InlineData("UNRESOLVED_SUBITEMS_PRESENT")]
     [InlineData("BROKEN_CHAIN")]
-    [InlineData("ATOMIZER_NONE")]
+    [InlineData("ATOMIZER_UNSUPPORTED")]
     [InlineData("SOURCE_MISSING")]
     [InlineData("OCCURRENCE_MISSING")]
     [InlineData("ATOM_ABSENT")]
@@ -35,13 +35,13 @@ public sealed partial class SettleBatchCommandTests
             "COVER_DISPOSITION_PRESENT" => target with { Receipts = target.Receipts with { CoverDisposition = new(new(DigestionMigrationState.Partial, DigestionTruthState.Closed), ["D5/S0/Carrier/Probe"], []) } },
             "UNRESOLVED_SUBITEMS_PRESENT" => target with { Receipts = target.Receipts with { UnresolvedSubitems = ["live obligation"] } },
             "BROKEN_CHAIN" => target with { Receipts = target.Receipts with { ChainAtoms = [new string('f', 64)] } },
-            "ATOMIZER_NONE" => target with { Atomizer = AtomizerRegistry.NoAtomizerId },
+            "ATOMIZER_UNSUPPORTED" => target with { Atomizer = "none" },
             "RECEIPT_PRESENT" => Settled(target) with { ProjectedStatus = target.ProjectedStatus },
             _ => target,
         };
         fixture = fixture.WithEntries(fixture.Ledger.RequireDigestionEntries().Select(entry => entry == target ? updated : entry));
-        if (code == "ATOMIZER_NONE") fixture = fixture with { Ledger = fixture.Ledger.WithDigestionSources([
-            fixture.Ledger.RequireDigestionSources().Single() with { Atomizer = AtomizerRegistry.NoAtomizerId }]) };
+        if (code == "ATOMIZER_UNSUPPORTED") fixture = fixture with { Ledger = fixture.Ledger.WithDigestionSources([
+            fixture.Ledger.RequireDigestionSources().Single() with { Atomizer = "none" }]) };
         if (code == "ATOM_AMBIGUOUS")
         {
             var source = fixture.Ledger.RequireDigestionSources().Single();

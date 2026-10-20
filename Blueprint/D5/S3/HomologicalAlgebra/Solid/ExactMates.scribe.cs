@@ -14,7 +14,10 @@ internal sealed class ExactMatesDocument : IScribeDocumentDefinition
                 H("exact Adjunction Derived unit mate"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("A mate relation for an exact adjunction remains the same relation after unbounded derived localization. This is proved from the actual localized unit, rather than assumed as an additional adjunction compatibility."))),
+                Blocks(
+                    Paragraph(Text("A mate relation for an exact adjunction remains the same relation after unbounded derived localization. This is proved from the actual localized unit, rather than assumed as an additional adjunction compatibility.")),
+                    Paragraph(Text("Mathlib.Algebra.Homology.DerivedCategory.ExactFunctor provides NatTrans.mapDerivedCategory for natural transformations between additive functors preserving finite limits and finite colimits between abelian categories with derived categories. It descends the degreewise transformation through the unbounded quasi-isomorphism localization and commutes with integer shifts. Shift compatibility is transported through localization; no additional derived-existence hypothesis is introduced.")),
+                    Paragraph(Text("For every integer-indexed complex X, NatTrans.mapDerivedCategory_app_Q_obj identifies the component of the localized transformation at Q(X) with the degreewise map conjugated by the two exact-functor localization comparisons. This formula supplies the mate and defining-cell compatibility used in the solid derived construction."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("solid-exactmates-exactadjunctionderived-homequiv-mate"),

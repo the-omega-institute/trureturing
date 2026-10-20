@@ -45,7 +45,7 @@ theorem native_four_hamiltonian_cycle :
     rw [hcard]
     norm_num [Configuration, Fintype.card_perm, Nat.factorial]
   let q := p.map f
-  have hq : q.IsHamiltonian := hp.map f hf
+  have hq : q.IsHamiltonian := hp.map hf
   have hbn : b 3 ≠ (1 : Configuration 3) := by
     intro he
     have hx := congrArg (fun z : Configuration 3 => (z (0 : Fin 4)).val) he

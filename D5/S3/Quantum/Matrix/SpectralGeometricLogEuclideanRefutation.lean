@@ -62,6 +62,7 @@ proof_shape: result = bind-only; live_consumers: external-open-problem-resolutio
 admission_basis: open-problem-resolution (#16129; Refuted).
 -/
 
+import D5.S3.Quantum.Matrix.SpectralPower
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
@@ -79,11 +80,10 @@ noncomputable section
 open Matrix
 open scoped ComplexOrder MatrixOrder
 namespace D5.S3.Quantum.Matrix.SpectralGeometricLogEuclideanRefutation
+open D5.S3.Quantum.Matrix.SpectralPower (mpow LE mpow_one mpow_two)
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-/-- Real matrix power through the continuous functional calculus. -/
-noncomputable def mpow (X : Matrix n n ℂ) (p : ℝ) : Matrix n n ℂ := cfc (fun t : ℝ => t ^ p) X
 /-- The weighted geometric mean `A #_α B = A^{1/2} (A^{-1/2} B A^{-1/2})^α A^{1/2}`. -/
 noncomputable def wgm (A B : Matrix n n ℂ) (α : ℝ) : Matrix n n ℂ :=
   mpow A (1 / 2) * mpow (mpow A (-1 / 2) * B * mpow A (-1 / 2)) α * mpow A (1 / 2)
@@ -93,9 +93,6 @@ noncomputable def specMean (A B : Matrix n n ℂ) (α : ℝ) : Matrix n n ℂ :=
 /-- `SGα,p(A,B) = Fα(A^p, B^p)^{1/p}`, equation (2.4). -/
 noncomputable def SG (α p : ℝ) (A B : Matrix n n ℂ) : Matrix n n ℂ :=
   mpow (specMean (mpow A p) (mpow B p) α) (1 / p)
-/-- The Log-Euclidean mean `LEα(A,B) = exp((1 - α) log A + α log B)`. -/
-noncomputable def LE (α : ℝ) (A B : Matrix n n ℂ) : Matrix n n ℂ :=
-  cfc Real.exp ((1 - α) • cfc Real.log A + α • cfc Real.log B)
 /-- Log-majorization `X ≺log Y` for positive definite `X, Y`: the product of any `k`
 eigenvalues of `X` is at most the product of some `k` eigenvalues of `Y` (equivalently, the
 products of the `k` largest eigenvalues are ordered), and the determinants agree. -/
@@ -146,12 +143,6 @@ private lemma cfc_diag [Nonempty n] (f : ℝ → ℝ) (d : n → ℝ) :
   funext i
   simpa using (cfc_algebraMap (A := ℂ) (d i) f)
 
-private lemma mpow_one {X : Matrix n n ℂ} (hX : X.IsHermitian) : mpow X 1 = X := by
-  simpa [mpow, Real.rpow_one] using cfc_id' ℝ X hX.isSelfAdjoint
-
-private lemma mpow_two {X : Matrix n n ℂ} (hX : X.IsHermitian) : mpow X 2 = X * X := by
-  simp only [mpow, Real.rpow_two]
-  rw [cfc_pow_id X 2 hX.isSelfAdjoint, pow_two]
 
 private def A : Matrix (Fin 2) (Fin 2) ℂ := diagonal ![1, 1048576]
 private def B : Matrix (Fin 2) (Fin 2) ℂ := !![272/125, 504/125; 504/125, 1853/125]
@@ -359,7 +350,7 @@ private lemma LE_le : LE 2 A B ≤ (2:ℝ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) 
   have hspec : ∀ x ∈ spectrum ℝ (Real.log 2 • N), x ≤ Real.log 2 := by
     apply (le_algebraMap_iff_spectrum_le hg).mp
     simpa [Algebra.algebraMap_eq_smul_one] using hg_le
-  rw [LE, logarithm]
+  rw [D5.S3.Quantum.Matrix.SpectralPower.LE, logarithm]
   have hb := cfc_le_algebraMap Real.exp 2 (Real.log 2 • N) (fun x hx => by
     calc Real.exp x ≤ Real.exp (Real.log 2) := Real.exp_le_exp.mpr (hspec x hx)
          _ = 2 := Real.exp_log (by norm_num)) (ha := hg)

@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: The same actual source cycle earns exact restored-cut inventories for single-order and half-boundary reconstruction. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.Walks.ActualJointPartitionUpdate
 
 set_option autoImplicit false

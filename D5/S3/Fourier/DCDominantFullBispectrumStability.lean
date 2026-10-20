@@ -6,6 +6,7 @@
    utility: none
    digest: Uncalibrated full-bispectrum stability under source DC dominance. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Fourier.FullBispectrumStability
 
 namespace D5.S3.Fourier.DCDominantFullBispectrumStability

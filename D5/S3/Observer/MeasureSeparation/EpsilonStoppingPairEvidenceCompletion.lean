@@ -7,7 +7,10 @@
 
 import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
 import Mathlib.MeasureTheory.Measure.NullMeasurable
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
 
 /- Library-search audit trail (2026-08-25):
    * Pinned Mathlib searches for probability Hellinger distance and Kakutani
@@ -195,10 +198,10 @@ theorem empty_state_has_no_posterior : IsEmpty (PMF Empty) := by
 
 /-- At zero threshold, the constant fair Boolean posterior never stops. -/
 theorem zero_threshold_may_never_stop :
-    epsilonStoppingTime 0 (fun _ : Nat ↦ PMF.uniformOfFintype Bool) = ⊤ := by
+    epsilonStoppingTime 0 (fun _ : Nat ↦ uniformPmf Bool) = ⊤ := by
   rw [epsilon_stopping_time_eq_top_iff]
   intro time
-  simp [posteriorError, PMF.uniformOfFintype_apply]
+  simp [posteriorError, uniformPmf, PMF.ofFintype_apply]
 
 #print axioms zero_threshold_may_never_stop
 

@@ -133,7 +133,7 @@ namespace Atlas.GroupTheory
 /-- A nonabelian simple group has trivial center. -/
 theorem center_eq_bot_of_simple_nonabelian (G : Type*) [Group G] [IsSimpleGroup G]
     (hn : ¬IsMulCommutative G) : Subgroup.center G=⊥ := by
-  rcases IsSimpleGroup.eq_bot_or_eq_top_of_normal (Subgroup.center G) inferInstance with h|h
+  rcases IsSimpleGroup.eq_bot_or_eq_top_of_normal (Subgroup.center G) with h|h
   · exact h
   · exact (hn (Subgroup.center_eq_top_iff.mp h)).elim
 

@@ -860,7 +860,7 @@ theorem fibonacci_recurrence_polynomial_nonsquare : (∀ (r : ℕ), 119 ≤ r �
         rw [norm_prod]
         calc
           ∏ i : Fin r, ‖Complex.sqrt (1 + (lam i : ℂ) * z)‖ ≤ ∏ _i : Fin r, Real.sqrt 2 := by
-            apply Finset.prod_le_prod (fun _ _ => norm_nonneg _)
+            apply Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _)
             intro i _
             have hn : ‖1 + (lam i : ℂ) * z‖ ≤ 2 := by
               have ht := norm_add_le (1 : ℂ) ((lam i : ℂ) * z)

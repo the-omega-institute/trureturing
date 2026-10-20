@@ -315,7 +315,7 @@ private theorem finite_bad : ¬ finiteArena.Law pathBad := by
   have hm : MeasurableSet {x : ℕ → Unit ⊕ Bool | x 1 = .inr true} := by measurability
   have hx := congrArg (fun μ : Measure (ℕ → Unit ⊕ Bool) => μ {x | x 1 = .inr true}) hh
   rw [Measure.map_apply (by fun_prop) hm,
-    Measure.map_apply (by exact measurable_pi_lambda _ (fun n => measurable_run (stopped d) (.inl ()) n)) hm] at hx
+    Measure.map_apply (by exact Measurable.of_eval (fun n => measurable_run (stopped d) (.inl ()) n)) hm] at hx
   simp [pathBad,realize,path,run,stopped,successor,d] at hx
 
 def finiteRecord : Registration finiteArena (type_of% (@finite_exit_laws)) where

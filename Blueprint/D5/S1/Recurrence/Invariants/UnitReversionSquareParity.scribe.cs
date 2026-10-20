@@ -24,6 +24,12 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
                 + "P(n), r(f), and q(f) in the construction are integer power series. Indices "
                 + "and exponents are natural numbers, including subtraction in 2^k-1; a(n) "
                 + "is an integer. In the mod-two identity X and the arithmetic lie over ZMod(2).")),
+            Node("Agree", "Agreement of coefficient prefixes", PublishedAgreeFormula(),
+                "Two series agree below d when their coefficients at every natural index less than d coincide.", DescribeRole.Definition),
+            Node("agree_pow", "Powers preserve agreement", PublishedPowerFormula(),
+                "The difference of powers is divisible by the difference of the original series."),
+            Node("agree_mul", "Products preserve agreement", PublishedProductFormula(),
+                "The difference of products is a sum of two multiples of the original differences."),
             Node("generatingSeries", "Construction of the integer series", GeneratingFormula(),
                 "Write A=X*B. The equation B=r(B)^2*subst(B,q(B)) contracts agreement "
                 + "by one degree for series of constant coefficient 1. The inverse r(B) "
@@ -151,4 +157,34 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
         Implication(Positive(N()), Parenthesized(Seq(Call("Odd", Call("a", N())), Sp, Iff, Sp,
             Seq(Exists, Sp, K(), Colon, Sp, Naturals(), Comma, Sp,
                 And(Positive(K()), Equal(N(), Subtract(Power(D(2), K()), D(1))))))))));
+    private static Formula PublishedRing() => F.Id("R");
+    private static Formula PublishedSeries() => Call("PowerSeries", PublishedRing());
+    private static Formula PublishedBinders() => Seq(Bound("R", Named("Type")),
+        OpenBracket, Call("CommRing", PublishedRing()), CloseBracket, Sp);
+    private static Formula PublishedAgreeFormula()
+    {
+        Formula d = F.Id("d"), f = F.Id("f"), g = F.Id("g"), n = F.Id("n");
+        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
+            Bound("f", PublishedSeries()), Bound("g", PublishedSeries()),
+            Equal(Call("Agree", d, f, g), Parenthesized(Seq(Bound("n", Naturals()),
+                Implication(Seq(n, Sp, Lt, Sp, d), Equal(Call("coeff", n, f), Call("coeff", n, g))))))));
+    }
+    private static Formula PublishedPowerFormula()
+    {
+        Formula d = F.Id("d"), f = F.Id("f"), g = F.Id("g"), k = F.Id("k");
+        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
+            Bound("f", PublishedSeries()), Bound("g", PublishedSeries()),
+            Implication(Call("Agree", d, f, g), Seq(Bound("k", Naturals()),
+                Call("Agree", d, Power(f, k), Power(g, k))))));
+    }
+    private static Formula PublishedProductFormula()
+    {
+        Formula d = F.Id("d"), f = F.Id("f"), g = F.Id("g"), u = F.Id("u"), v = F.Id("v");
+        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
+            Bound("f", PublishedSeries()), Bound("g", PublishedSeries()),
+            Bound("u", PublishedSeries()), Bound("v", PublishedSeries()),
+            Implication(Call("Agree", d, f, g), Implication(Call("Agree", d, u, v),
+                Call("Agree", d, Mul(f, u), Mul(g, v))))));
+    }
+
 }

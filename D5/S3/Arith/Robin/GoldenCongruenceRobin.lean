@@ -68,7 +68,7 @@ private theorem sigma_totient_core_bound {n : ℕ} (h5040 : 5040 ∣ n) (hmod : 
     have hratio : (ArithmeticFunction.sigma 1 m : ℝ) / m ≤
         ∏ p ∈ m.primeFactors, (p : ℝ) / ((p : ℝ) - 1) := by
       rw [hsprod, hnprod, ← Finset.prod_div_distrib]
-      exact Finset.prod_le_prod
+      exact Finset.prod_le_prod₀
         (fun p _ => div_nonneg (Finset.sum_nonneg (fun i _ => by positivity)) (by positivity))
         (fun p hp => hgeom p (Nat.prime_of_mem_primeFactors hp) _)
     have hphi : (Nat.totient m : ℝ) * (∏ p ∈ m.primeFactors, (p : ℝ)) =
@@ -212,7 +212,7 @@ private theorem omitted_small_prime_product (n : ℕ) (y : ℝ) (E : Finset ℕ)
     exact hEn p he (Nat.dvd_of_mem_primeFactors (mem_filter.mp hs).1)
   have hb : (∏ p ∈ S, F p) * (∏ p ∈ E, F p) ≤ ∏ p ∈ B, F p := by
     rw [← prod_union hdis]
-    exact prod_le_prod_of_subset_of_one_le hsub
+    exact prod_le_prod_of_subset_of_one_le₀ hsub
       (fun p hp => (hone p (mem_filter.mp (hsub hp)).2).trans' zero_le_one)
       (fun p hp _ => hone p (mem_filter.mp hp).2)
   have hc : (∏ p ∈ E, F p) * (∏ p ∈ E, G p) = 1 := by

@@ -106,9 +106,9 @@ theorem nyman_beurling_target_quotient_criterion
       Tendsto (fun N => Metric.infDist χ (S N)) atTop (𝓝 0)] := by
   have hFour := hilbert_target_criteria S hS χ
   tfae_have 1 ↔ 2 := nymanBeurling
-  tfae_have 2 ↔ 3 := hFour.out 0 1
-  tfae_have 2 ↔ 4 := hFour.out 0 2
-  tfae_have 2 ↔ 5 := hFour.out 0 3
+  tfae_have 2 ↔ 3 := hFour.out 1 2
+  tfae_have 2 ↔ 4 := hFour.out 1 3
+  tfae_have 2 ↔ 5 := hFour.out 1 4
   tfae_finish
 
 /-- The four Hilbert-space criteria can all hold: use a constant line and a vector on it. -/
@@ -126,8 +126,8 @@ example :
   have hmem : e₁ ∈ cumulativeSpace S := by
     exact (le_iSup S 0).trans (Submodule.le_topologicalClosure _) <|
       Submodule.mem_span_singleton_self e₁
-  exact ⟨hmem, (hFour.out 0 1).1 hmem, (hFour.out 0 2).1 hmem,
-    (hFour.out 0 3).1 hmem⟩
+  exact ⟨hmem, (hFour.out 1 2).1 hmem, (hFour.out 1 3).1 hmem,
+    (hFour.out 1 4).1 hmem⟩
 
 /-- The four Hilbert-space criteria can all fail: use the other coordinate vector. -/
 example :
@@ -149,8 +149,8 @@ example :
     rintro ⟨a, ha⟩
     have hcoord := congrArg (fun v : EuclideanSpace ℝ (Fin 2) => v 1) ha
     simp [e₁, e₂] at hcoord
-  exact ⟨hnotmem, mt (hFour.out 0 1).2 hnotmem, mt (hFour.out 0 2).2 hnotmem,
-    mt (hFour.out 0 3).2 hnotmem⟩
+  exact ⟨hnotmem, mt (hFour.out 1 2).2 hnotmem, mt (hFour.out 1 3).2 hnotmem,
+    mt (hFour.out 1 4).2 hnotmem⟩
 
 #print axioms hilbert_target_criteria
 #print axioms nyman_beurling_target_quotient_criterion

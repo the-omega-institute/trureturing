@@ -6,6 +6,7 @@
    utility: none
    digest: Doubled-space operator monotonicity yields positive-half-line concavity. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Continuity
 import Mathlib.Tactic.Module
@@ -108,9 +109,9 @@ omit [Nontrivial H] in
 private theorem corner_mono {A B : L (HSum H)} (h : A ≤ B) :
     hsumProj H 0 ∘L A ∘L hsumIncl H 0 ≤ hsumProj H 0 ∘L B ∘L hsumIncl H 0 := by
   apply sub_nonneg.mp
-  have hpos := ((ContinuousLinearMap.nonneg_iff_isPositive _).mp
+  have hpos := ((ContinuousLinearMap.nonneg_iff_isPositive (f := _)).mp
     (sub_nonneg.mpr h)).adjoint_conj (hsumIncl H 0)
-  have hp := (ContinuousLinearMap.nonneg_iff_isPositive _).mpr hpos
+  have hp := (ContinuousLinearMap.nonneg_iff_isPositive (f := _)).mpr hpos
   simpa [ContinuousLinearMap.comp_sub, ContinuousLinearMap.sub_comp] using hp
 
 /-- Continuous functional calculus turns genuine operator monotonicity on the

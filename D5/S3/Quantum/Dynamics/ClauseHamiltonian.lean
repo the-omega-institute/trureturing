@@ -78,7 +78,7 @@ theorem clause_partition_recovery {n : Nat} (F : Formula n) :
     (hiddenHamiltonian F).IsHermitian ∧ (fullHamiltonian F).IsHermitian ∧
     (∀ c ∈ F, (clauseProjector c).IsHermitian ∧
       clauseProjector c * clauseProjector c = clauseProjector c ∧
-      ∃ s : Finset (Fin n), s.card ≤ c.length ∧
+      ∃ s : Finset (Fin n), s.card ≤ c.size ∧
         ∀ a b : Assignment n, (∀ i ∈ s, a i = b i) →
           clauseProjector c a a = clauseProjector c b b) ∧
     ((Fintype.card (Assignment n) : Complex)⁻¹ •
@@ -100,7 +100,7 @@ theorem clause_partition_recovery {n : Nat} (F : Formula n) :
           (1 : Matrix (Assignment n) (Assignment n) Complex)) ∧
     (∀ c d : Std.Sat.CNF.Clause (Fin n),
       clauseProjector c * clauseProjector d = clauseProjector d * clauseProjector c) ∧
-    clauseProjector (n := n) [] = 1 ∧
+    clauseProjector (n := n) Std.Sat.CNF.Clause.empty = 1 ∧
     (∀ M : Matrix Bool Bool Complex,
       let C := fullHamiltonian F * (M ⊗ₖ 1) - (M ⊗ₖ 1) * fullHamiltonian F
       C - ((Fintype.card (Assignment n) : Complex)⁻¹ • partialTraceRight C) ⊗ₖ
@@ -300,7 +300,7 @@ theorem clause_partition_recovery {n : Nat} (F : Formula n) :
     intro a
     simp [isSelfAdjoint_iff]
   · intro c _
-    refine ⟨?_, ?_, (c.map Prod.fst).toFinset, ?_, ?_⟩
+    refine ⟨?_, ?_, c.atoms.toList.toFinset, ?_, ?_⟩
     · apply Matrix.isHermitian_diagonal_iff.mpr
       intro a
       cases c.eval a <;> simp [isSelfAdjoint_iff]
@@ -308,14 +308,12 @@ theorem clause_partition_recovery {n : Nat} (F : Formula n) :
       congr 1
       funext a
       cases c.eval a <;> simp
-    · exact (List.toFinset_card_le _).trans (by simp)
+    · exact (List.toFinset_card_le _).trans (by simp [Std.Sat.CNF.Clause.size])
     · intro a b hab
       have same := Std.Sat.CNF.Clause.eval_congr a b c (by
         intro i hi
         apply hab i
-        rcases hi with hi | hi
-        · exact List.mem_toFinset.mpr (List.mem_map.mpr ⟨(i, false), hi, rfl⟩)
-        · exact List.mem_toFinset.mpr (List.mem_map.mpr ⟨(i, true), hi, rfl⟩))
+        exact List.mem_toFinset.mpr (by simpa [Std.Sat.CNF.Clause.VarMem] using hi))
       simp only [clauseProjector, Matrix.diagonal_apply_eq, same]
   · have visibleTrace : Matrix.trace visibleProjector = 1 := by
       simp [visibleProjector, Matrix.trace_diagonal, Fintype.sum_bool]

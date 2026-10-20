@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7e47cd0779d95fbf6cd811d632df752946939c179a0ae2d17371fdc9d5b6d0e5
-  normalized_sha256: sha256:7e47cd0779d95fbf6cd811d632df752946939c179a0ae2d17371fdc9d5b6d0e5
-cas_ref: sha256:7e47cd0779d95fbf6cd811d632df752946939c179a0ae2d17371fdc9d5b6d0e5
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Dynamics/ResidualKernelInvariance.residual_kernel_invariant
-    target_statement_id: sha256:815932b0eae28518106e6358b421712250da5a16177a743b3a5a05d009096707
-receipts:
-  unresolved_subitems: []

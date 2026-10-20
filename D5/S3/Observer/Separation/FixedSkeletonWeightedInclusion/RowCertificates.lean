@@ -774,7 +774,7 @@ theorem product_cover_value {J : Type*} [Fintype J] [DecidableEq J] {X Y Z : J �
         (optimalRowCover (φ i) (hφ i) x : ℝ) else 0)).symm
     simp_rw [incidence]
     rw [eq]
-    apply Finset.one_le_prod
+    apply Finset.one_le_prod₀
     intro i hi
     have hh : (1 : ℝ) ≤ ((∑ x, if (∃ y, φ i x y = z i) then
         optimalRowCover (φ i) (hφ i) x else 0 : ℚ) : ℝ) := by exact_mod_cast hc i (z i)
@@ -794,7 +794,7 @@ theorem product_cover_value {J : Type*} [Fintype J] [DecidableEq J] {X Y Z : J �
         (dual i z : ℝ) else 0)).symm
     simp_rw [incidence]
     rw [eq]
-    apply Finset.prod_le_one
+    apply Finset.prod_le_one₀
     · intro i hi; exact Finset.sum_nonneg (fun z _ => by split_ifs; exact_mod_cast hd i z; exact le_rfl)
     · intro i hi
       have hh : ((∑ z, if (∃ y, φ i (x i) y = z) then dual i z else 0 : ℚ) : ℝ) ≤ 1 := by

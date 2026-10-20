@@ -1,0 +1,1 @@
+**证明。** 动态交换子中加减 $\mathcal C_2\mathcal P_{at}^B\mathcal C_1$，利用前后复合 CPTP 映射不增钻石范数，再对时间取上确界即得第一式。

@@ -1,3 +1,4 @@
+import Batteries.Tactic.OpenPrivate
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedResidualSynthesis
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration

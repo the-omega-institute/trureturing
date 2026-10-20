@@ -641,7 +641,6 @@ private lemma halfspace_prepared (j : Fin 7) :
   all_goals norm_num [Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons,
     Matrix.cons_val_succ', Matrix.cons_val_zero', Fin.add_def, reduceCtorEq,
     Matrix.smul_apply, Matrix.add_apply, smul_eq_mul]
-  all_goals simp only [reduceCtorEq, if_true, if_false]
   all_goals dsimp only [pauliMatrix]
   all_goals try simp only [Matrix.smul_apply, smul_eq_mul]
   all_goals with_unfolding_all simp only [Matrix.one_apply]

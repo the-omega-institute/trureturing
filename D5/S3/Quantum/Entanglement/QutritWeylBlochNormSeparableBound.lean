@@ -6,6 +6,7 @@
    utility: none
    digest: Two-qutrit Weyl–Bloch ℓ1 norm has sharp separable bound 25. -/
 
+import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Algebra.Order.Chebyshev
@@ -39,15 +40,7 @@ def bloch
 def l1 (ρ : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) : ℝ :=
   ∑ i, ∑ j, ∑ k, ∑ l, ‖bloch ρ i j k l‖
 
-def IsSeparable
-    (ρ : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) : Prop :=
-  ∃ (n : ℕ) (p : Fin n → ℝ)
-    (σ : Fin n → Matrix (Fin 3) (Fin 3) ℂ)
-    (τ : Fin n → Matrix (Fin 3) (Fin 3) ℂ),
-    (∀ t, 0 ≤ p t) ∧
-      (∑ t, p t = 1) ∧
-      (∀ t, IsDensity (σ t) ∧ IsDensity (τ t)) ∧
-      ρ = ∑ t, (p t : ℂ) • (σ t ⊗ₖ τ t)
+open D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence (IsSeparable)
 
 def claim : Prop :=
   (∀ ρ, IsSeparable ρ → l1 ρ ≤ 25) ∧
@@ -413,9 +406,9 @@ private lemma violation_coefficients (i j k l : Fin 3) :
   simp only [violationMatrix, Matrix.smul_apply, Matrix.vecMulVec_apply, smul_eq_mul,
     Pi.star_apply, rawVector]
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num [Fin.sum_univ_succ, Fin.add_def, violationPhase, pow_succ] <;>
     apply Complex.ext <;>
-    norm_num [Fin.sum_univ_succ, Fin.add_def, violationPhase, pow_succ,
-      Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
+    norm_num [Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
       Complex.div_re, Complex.div_im, Complex.star_def, Complex.conj_re, Complex.conj_im] <;>
     ring_nf <;> norm_num [hs, hs3, hs4, hs6, hs8] <;> ring
 
@@ -452,6 +445,5 @@ private lemma nonvacuity : ∃ ψ : Fin 3 × Fin 3 → ℂ,
 
 theorem result : claim := ⟨separable_bound, sharpness, nonvacuity⟩
 
-#print axioms result
 
 end D5.S3.Quantum.Entanglement.QutritWeylBlochNormSeparableBound

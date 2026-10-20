@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:eefca463e3d2f1f4ce059d89d86866ffd59219899fbc3350a75c811c3c1fbee4
-  normalized_sha256: sha256:eefca463e3d2f1f4ce059d89d86866ffd59219899fbc3350a75c811c3c1fbee4
-cas_ref: sha256:eefca463e3d2f1f4ce059d89d86866ffd59219899fbc3350a75c811c3c1fbee4
-coverage_gids:
-  - gid: D5/S0/Computability/ConditionalComplexityFloor.conditional_complexity_floor
-    target_statement_id: sha256:53eb2a141bfcf5f6cff36dde708f8ae4f339a7d7227d42ef2bce01ac892cf2c0
-receipts:
-  unresolved_subitems: []

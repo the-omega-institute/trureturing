@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Actual five surviving words consume the native rows and seam constructions. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SurvivingRows
 set_option autoImplicit false
 

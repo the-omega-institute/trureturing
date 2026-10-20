@@ -9,6 +9,13 @@ internal sealed class CountedLocalizedGyrationResidueDocument : IScribeDocumentD
         H("Signed congruence for the fixed positive-lift cochain"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("existing-six-countedlocalizedgyrationresidue-dyadicgyration-nonnegative"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.dyadicGyration_nonnegative"),
+                H("The dyadic cochain recovers the actual forward residue"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a nonzero period divisible by three, cast the nonnegative rectangular factors through the integers into the dyadic ring. Their dyadic gyration equals the reduction of the original ranked relative forward gyration. This is the bridge used by the relabel, positive-word and presentation-time comparisons."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("countedlocalizedgyrationresidue-1"),
                 DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.canonicalLocalizedGyration_signed_agreement"),
                 H("Signed congruence for the fixed positive-lift cochain"),

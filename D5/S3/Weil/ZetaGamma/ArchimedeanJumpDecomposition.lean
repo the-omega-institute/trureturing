@@ -210,7 +210,7 @@ private theorem digamma_increment_sum (t : ℝ) :
       rw [← (summable_digamma_increment t).sum_add_tsum_nat_add 1]
       simp
 
-private theorem jump_density_eq_tsum {x : ℝ} (hx : 0 < x) :
+theorem jump_density_eq_tsum {x : ℝ} (hx : 0 < x) :
     archimedeanJumpDensity x =
       ∑' n : ℕ, Real.exp (-((2 : ℝ) * n + 1 / 2) * x) := by
   have hr0 : 0 ≤ Real.exp (-2 * x) := (Real.exp_pos _).le

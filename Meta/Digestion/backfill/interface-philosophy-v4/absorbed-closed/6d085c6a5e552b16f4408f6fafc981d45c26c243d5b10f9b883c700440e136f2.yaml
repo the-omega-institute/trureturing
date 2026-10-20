@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6d085c6a5e552b16f4408f6fafc981d45c26c243d5b10f9b883c700440e136f2
-  normalized_sha256: sha256:6d085c6a5e552b16f4408f6fafc981d45c26c243d5b10f9b883c700440e136f2
-cas_ref: sha256:6d085c6a5e552b16f4408f6fafc981d45c26c243d5b10f9b883c700440e136f2
-coverage_gids:
-  - gid: D5/S0/Computability/LedgerGovernance/GuardedWallPersistence.guarded_wall_persists_in_ledger_limit
-    target_statement_id: sha256:66cb97d4881b0fb34924da3f3eb8f854108740ed026612fe935914b162562bbd
-receipts:
-  unresolved_subitems: []

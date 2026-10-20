@@ -255,7 +255,7 @@ private theorem compression_pairing {H : Type} [NormedAddCommGroup H] [InnerProd
 private theorem compression_pos {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     (D : Fin 2 → H) (E : H →L[ℂ] H) (hE : 0 ≤ E) :
     (compression D E).PosSemidef := by
-  have hp := (ContinuousLinearMap.nonneg_iff_isPositive E).mp hE
+  have hp := (ContinuousLinearMap.nonneg_iff_isPositive (f := E)).mp hE
   apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
   · ext i j
     simp only [compression, Matrix.conjTranspose_apply]
@@ -365,8 +365,8 @@ private theorem effect_probability_bounds {H : Type} [NormedAddCommGroup H]
     (v : H) (hv : ‖v‖ = 1) :
     0 ≤ (⟪v, E v⟫_ℂ).re ∧ (⟪v, E v⟫_ℂ).re ≤ 1 := by
   constructor
-  · exact ((ContinuousLinearMap.nonneg_iff_isPositive E).mp hE).re_inner_nonneg_right v
-  · have hc := ((ContinuousLinearMap.nonneg_iff_isPositive (1 - E)).mp hEc).re_inner_nonneg_right v
+  · exact ((ContinuousLinearMap.nonneg_iff_isPositive (f := E)).mp hE).re_inner_nonneg_right v
+  · have hc := ((ContinuousLinearMap.nonneg_iff_isPositive (f := 1 - E)).mp hEc).re_inner_nonneg_right v
     change 0 ≤ (⟪v, v - E v⟫_ℂ).re at hc
     rw [inner_sub_right, Complex.sub_re, inner_self_eq_norm_sq_to_K] at hc
     norm_num [hv] at hc

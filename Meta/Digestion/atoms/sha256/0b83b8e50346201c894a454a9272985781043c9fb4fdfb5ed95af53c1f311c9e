@@ -1,0 +1,7 @@
+对支持相容且全部相对熵有限的 $\rho,\sigma$，定义 $\ell_{\mathcal C}(\rho,\sigma)=D(\rho\Vert\sigma)-D(\mathcal C\rho\Vert\mathcal C\sigma)$。则
+\[
+ \boxed{\ell_{\mathcal C_2\mathcal C_1}(\rho,\sigma)
+ =\ell_{\mathcal C_1}(\rho,\sigma)
+ +\ell_{\mathcal C_2}(\mathcal C_1\rho,\mathcal C_1\sigma).}
+\]
+

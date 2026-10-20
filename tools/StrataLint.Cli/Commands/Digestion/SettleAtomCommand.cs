@@ -123,8 +123,7 @@ internal static partial class SettleAtomCommand
             .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
         // Reuse decomposition's complete CAS/identity/Plan/Materialize validation, including
         // the target, before trusting any stored terminal directory or invoking the writer.
-        var closure = DigestionDecomposition.ValidatedClosure([target.AtomId], entries, snapshot,
-            TheoryAtomizerDataLoader.Load(snapshot));
+        var closure = DigestionDecomposition.ValidatedClosure([target.AtomId], entries, snapshot);
         closure.Remove(target.AtomId);
         var closureDocument = ClosureDocument(document, closure, target.AtomId);
         DigestionLedgerEvaluation evaluation;

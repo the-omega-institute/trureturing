@@ -154,7 +154,7 @@ private lemma intertwine (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     rootWeights a b c i * quotient a b c (![0,1,2,5,4,3] i) (![0,1,2,5,4,3] j)
   fin_cases i <;> fin_cases j <;>
     norm_num [symmetric, rootWeights, quotient] <;>
-    ring_nf <;> simp [Real.sq_sqrt ha.le, Real.sq_sqrt hb.le, Real.sq_sqrt hc.le] <;> ring
+    ring_nf <;> simp [Real.sq_sqrt ha.le, Real.sq_sqrt hb.le, Real.sq_sqrt hc.le] <;> ring <;> simp
 
 /-- The exact diagonal similarity, including the coordinate permutation. -/
 private theorem diagonal_similarity (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :

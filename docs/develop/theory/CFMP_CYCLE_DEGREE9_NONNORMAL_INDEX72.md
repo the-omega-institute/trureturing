@@ -52,3 +52,10 @@ The companion verifier verify_cycle9_psl71.py is deterministic and standard-libr
 ## Sources and scope
 
 The [4,9,3] Coxeter presentation and six-sector face/link construction are the project’s merged reference in PR #12065, docs/develop/theory/CFMP_CYCLE_DEGREE9.md. The finite-subgroup input used here is the Tits theorem cited by the project’s finite-quotient reference, docs/develop/theory/CFMP_CYCLE_DEGREE9_FINITE_QUOTIENT.md: finite-order elements of a Coxeter group are conjugate into finite standard parabolic subgroups. A precise primary account is Davis, *The Geometry and Topology of Coxeter Groups*, Theorem 12.3.4(i), p. 251, with Corollary D.2.9, p. 446, attributing the result to Tits (https://people.math.osu.edu/davis.12/davisbook.pdf); the project also records Howlett’s exposition (https://www.maths.usyd.edu.au/u/ResearchReports/Algebra/How/1997-6.html). The orientation-presentation rewrite is the direct Reidemeister–Schreier calculation shown above; a general adjacent-reflection-product precedent is Conder–Martin, *Cusps, triangle groups and hyperbolic 3-folds*, J. Austral. Math. Soc. 55 (1993), pp. 152–153 and 160–161 (https://doi.org/10.1017/S1446788700032018). This note applies those cited inputs and makes no Lean claim.
+
+
+## 实验材料入口
+
+正文中的程序名与结果文件路径对应以下固定版本；有限核验数据不代替普遍证明或 Lean 证书。
+
+- [verify_cycle9_psl71.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/verify_cycle9_psl71.py)

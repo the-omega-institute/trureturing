@@ -59,7 +59,7 @@ noncomputable def phiSquaredBranch : Set GoldenInt :=
 
 @[simp] private theorem shift_digits_apply (offset i : Nat) (r : RawDigits) :
     shiftDigits offset r (offset + i) = r i := by
-  apply Finsupp.mapDomain_apply
+  apply Finsupp.mapDomain_apply_of_injective
   exact fun _ _ equality ↦ Nat.add_left_cancel equality
 
 private theorem shift_digits_eq_zero_of_lt {offset i : Nat} (r : RawDigits)

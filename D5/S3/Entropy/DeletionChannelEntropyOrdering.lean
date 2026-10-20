@@ -32,6 +32,7 @@ Consumers (prerequisite -> consumer): embeddings_eq_count -> weights_u, weights_
   entropy_from_hist, product_lt -> entropy_order; entropy_order -> result.
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S0.Certificates.Hypergraphs.OrientationEntropyBalance
 import D5.S3.Entropy.MaxEntropy
 import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore

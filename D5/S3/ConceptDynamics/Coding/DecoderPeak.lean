@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: Every primitive trace vertex is bounded by the complete horizon peak. -/
-import D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
+import D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Basic
 
 set_option autoImplicit false
 namespace D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
@@ -52,5 +52,15 @@ theorem peak_trace_bound (action : C → Op C I O) (initial : C)
   obtain ⟨u,hu,ht,he⟩ := trace_vertex_split hr c hc
   exact peak_bound action initial Record enc H c
     ⟨a,r,u,ha,hu,(run_mono ht).1.trans hq,he⟩
+
+theorem peak_monotone (action : C → Op C I O) (initial : C)
+    (Record : (ℕ → O) → (ℕ → I) → Prop) (enc : C → List Bool) :
+    Monotone (Peak action initial Record enc) := by
+  intro H K hHK
+  apply iSup_le
+  intro c
+  apply iSup_le
+  rintro ⟨a,r,t,ha,hr,hq,hc⟩
+  exact peak_bound action initial Record enc K c ⟨a,r,t,ha,hr,hq.trans hHK,hc⟩
 
 end D5.S3.ConceptDynamics.Coding.DecoderOperationTrace

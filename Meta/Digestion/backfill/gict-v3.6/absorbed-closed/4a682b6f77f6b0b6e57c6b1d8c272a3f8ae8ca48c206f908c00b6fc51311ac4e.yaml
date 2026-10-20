@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4a682b6f77f6b0b6e57c6b1d8c272a3f8ae8ca48c206f908c00b6fc51311ac4e
-  normalized_sha256: sha256:4a682b6f77f6b0b6e57c6b1d8c272a3f8ae8ca48c206f908c00b6fc51311ac4e
-cas_ref: sha256:4a682b6f77f6b0b6e57c6b1d8c272a3f8ae8ca48c206f908c00b6fc51311ac4e
-coverage_gids:
-  - gid: D5/S1/Phase/HeckeOstrowskiCoboundary.hecke_ostrowski_coboundary
-    target_statement_id: sha256:0ee032fbaeeefe775cca39722344d73afc939dbfae8cd407aa295e3683b73969
-receipts:
-  unresolved_subitems: []

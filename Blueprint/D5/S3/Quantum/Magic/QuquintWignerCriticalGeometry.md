@@ -30,31 +30,55 @@ $$\mathrm{zeta}=\mathrm{Complex}.\mathrm{exp}(2\cdot(\mathrm{Real}.\mathrm{pi}:\
 
 The phase convention uses exp of two pi times the imaginary unit divided by five.
 
-**Definition 1.3 (The phase-point kernel).**
+**Definition 1.3 (The five powers in radical coordinates).**
+
+$$\mathrm{powerTable} = [1,\mathrm{Complex}.\mathrm{mk}((\mathrm{radical}^{2}-12)/8,\mathrm{radical}/4),\mathrm{Complex}.\mathrm{mk}((8-\mathrm{radical}^{2})/8,(\mathrm{radical}^{3}-12\cdot\mathrm{radical})/16),\mathrm{Complex}.\mathrm{mk}((8-\mathrm{radical}^{2})/8,(12\cdot\mathrm{radical}-\mathrm{radical}^{3})/16),\mathrm{Complex}.\mathrm{mk}((\mathrm{radical}^{2}-12)/8,-\mathrm{radical}/4)]$$
+
+*Formalization.* `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.powerTable` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The vector lists complex powers in the order zero through four. Complex.mk pairs a real part with an imaginary part; radical is real.
+
+**Theorem 1.4 (Exact fifth-root powers).**
+
+$$\forall i:\mathrm{Fin} 5,\mathrm{zeta}^{\mathrm{val}(i)} = \mathrm{powerTable}(i)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.zeta_powers` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every natural representative of Fin 5 selects the corresponding entry of the radical table.
+
+**Definition 1.5 (The phase-point kernel).**
 
 $$\forall q p x y:\mathrm{Fin} 5,\mathrm{phasePoint}(q,p,x,y)=\mathrm{ite}((x:\mathrm{ZMod}(5))+(y:\mathrm{ZMod}(5)) = 2\cdot(q:\mathrm{ZMod}(5)),\mathrm{zeta}^{\mathrm{val}((p:\mathrm{ZMod}(5))\cdot((x:\mathrm{ZMod}(5))-(y:\mathrm{ZMod}(5))))},0)$$
 
 *Formalization.* `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.phasePoint` (`✓ std3`).
 
-*Citation.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657).
+*Citation.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657). URL: <https://arxiv.org/abs/2512.19657v2>.
 
 *Commentary.*
 
 The condition and exponent arithmetic are in ZMod 5. val converts the exponent to a natural number. This is the paper's phase-point convention after exchanging the labels p and q.
 
-**Definition 1.4 (The Wigner quadratic form).**
+**Definition 1.6 (The Wigner quadratic form).**
 
 $$\forall v:\mathrm{State},\forall q p:\mathrm{Fin} 5,\mathrm{wigner}(v,q,p)=\mathrm{Complex}.\mathrm{re}(\mathrm{dotProduct}(\mathrm{star}(\mathrm{WithLp}.\mathrm{ofLp}(v)),\mathrm{Matrix}.\mathrm{mulVec}(\mathrm{phasePoint}(q,p),\mathrm{WithLp}.\mathrm{ofLp}(v))))/5$$
 
 *Formalization.* `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.wigner` (`✓ std3`).
 
-*Citation.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657).
+*Citation.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657). URL: <https://arxiv.org/abs/2512.19657v2>.
 
 *Commentary.*
 
 The real part of the Hermitian phase-point pairing is divided by five.
 
-**Definition 1.5 (The Wigner norm sum).**
+**Definition 1.7 (The Wigner norm sum).**
 
 $$\forall v:\mathrm{State},\mathrm{lOne}(v)=\sum_{q:\mathrm{Fin} 5}\sum_{p:\mathrm{Fin} 5}\mathrm{abs}(\mathrm{wigner}(v,q,p))$$
 
@@ -66,19 +90,19 @@ $$\forall v:\mathrm{State},\mathrm{lOne}(v)=\sum_{q:\mathrm{Fin} 5}\sum_{p:\math
 
 The two finite sums include all twenty-five phase points.
 
-**Definition 1.6 (The specified ququint state).**
+**Definition 1.8 (The specified ququint state).**
 
 $$\mathrm{psi}=\mathrm{WithLp}.\mathrm{toLp}(2,(1/(\sqrt{5}:\mathbb{C}))\cdot[1,1,\mathrm{zeta}^{3},1,\mathrm{zeta}^{2}])$$
 
 *Formalization.* `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.psi` (`✓ std3`).
 
-*Citation.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657).
+*Citation.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657). URL: <https://arxiv.org/abs/2512.19657v2>.
 
 *Commentary.*
 
 Appendix E, equation E.3a, specifies this normalized five-component state.
 
-**Definition 1.7 (The vanishing phase points).**
+**Definition 1.9 (The vanishing phase points).**
 
 $$\mathrm{zeroPoints}=\mathrm{Finset}.\mathrm{filter}(((qp:(\mathrm{Fin} 5\times\mathrm{Fin} 5))\mapsto\mathrm{wigner}(\mathrm{psi},(qp).1,(qp).2) = 0),\mathrm{Finset}.\mathrm{univ})$$
 
@@ -90,7 +114,7 @@ $$\mathrm{zeroPoints}=\mathrm{Finset}.\mathrm{filter}(((qp:(\mathrm{Fin} 5\times
 
 Filtering the finite phase plane by the vanishing predicate defines zeroPoints.
 
-**Theorem 1.8 (The exact zero set).**
+**Theorem 1.10 (The exact zero set).**
 
 $$\mathrm{zeroPoints}=\left\{(0,3), (1,3), (2,4), (3,1), (4,4)\right\}$$
 
@@ -102,7 +126,7 @@ $$\mathrm{zeroPoints}=\left\{(0,3), (1,3), (2,4), (3,1), (4,4)\right\}$$
 
 The exact Wigner table determines these five points.
 
-**Theorem 1.9 (The zero-set cardinality).**
+**Theorem 1.11 (The zero-set cardinality).**
 
 $$\mathrm{Finset}.\mathrm{card}(\mathrm{zeroPoints})=5$$
 
@@ -114,7 +138,7 @@ $$\mathrm{Finset}.\mathrm{card}(\mathrm{zeroPoints})=5$$
 
 The five displayed points are distinct.
 
-**Theorem 1.10 (The norm sum at the specified state).**
+**Theorem 1.12 (The norm sum at the specified state).**
 
 $$\mathrm{lOne}(\mathrm{psi})=1+2\cdot\sqrt{5}/5$$
 
@@ -126,7 +150,7 @@ $$\mathrm{lOne}(\mathrm{psi})=1+2\cdot\sqrt{5}/5$$
 
 The exact twenty-five-entry Wigner table gives this value.
 
-**Definition 1.11 (The signed phase-point sum).**
+**Definition 1.13 (The signed phase-point sum).**
 
 $$\mathrm{gradient}=\sum_{q:\mathrm{Fin} 5}\sum_{p:\mathrm{Fin} 5}(\mathrm{SignType}.\mathrm{sign}(\mathrm{wigner}(\mathrm{psi},q,p)):\mathbb{C})\cdot\mathrm{phasePoint}(q,p)$$
 
@@ -138,7 +162,7 @@ $$\mathrm{gradient}=\sum_{q:\mathrm{Fin} 5}\sum_{p:\mathrm{Fin} 5}(\mathrm{SignT
 
 The SignType coefficient is explicitly coerced to the complex scalar field.
 
-**Definition 1.12 (The constrained real tangent space).**
+**Definition 1.14 (The constrained real tangent space).**
 
 $$\forall v:\mathrm{State},v \in \mathrm{tangent}\iff(\mathrm{dotProduct}(\mathrm{star}(\mathrm{WithLp}.\mathrm{ofLp}(\mathrm{psi})),\mathrm{WithLp}.\mathrm{ofLp}(v)) = 0 \land (\forall qp:(\mathrm{Fin} 5\times\mathrm{Fin} 5),qp \in \mathrm{zeroPoints}\implies\mathrm{Complex}.\mathrm{re}(\mathrm{dotProduct}(\mathrm{star}(\mathrm{WithLp}.\mathrm{ofLp}(\mathrm{psi})),\mathrm{Matrix}.\mathrm{mulVec}(\mathrm{phasePoint}((qp).1,(qp).2),\mathrm{WithLp}.\mathrm{ofLp}(v)))) = 0))$$
 
@@ -150,7 +174,7 @@ $$\forall v:\mathrm{State},v \in \mathrm{tangent}\iff(\mathrm{dotProduct}(\mathr
 
 tangent is the real Submodule of State cut out by complex orthogonality to psi and the five real phase-point pairing constraints.
 
-**Definition 1.13 (The component phases).**
+**Definition 1.15 (The component phases).**
 
 $$\mathrm{phases}=[1,1,\mathrm{zeta}^{3},1,\mathrm{zeta}^{2}]$$
 
@@ -162,7 +186,7 @@ $$\mathrm{phases}=[1,1,\mathrm{zeta}^{3},1,\mathrm{zeta}^{2}]$$
 
 This vector has type Fin 5 to the complex numbers.
 
-**Definition 1.14 (Phase-adjusted real coordinates).**
+**Definition 1.16 (Phase-adjusted real coordinates).**
 
 $$\forall u:(\mathrm{Fin} 10\to\mathbb{R}),\mathrm{gauge}(u)=\mathrm{WithLp}.\mathrm{toLp}(2,((i:\mathrm{Fin} 5)\mapsto\mathrm{phases}(i)\cdot\mathrm{Complex}.\mathrm{mk}(u(\mathrm{Fin}.\mathrm{castAdd}(5,i)),u(\mathrm{Fin}.\mathrm{natAdd}(5,i)))))$$
 
@@ -174,7 +198,7 @@ $$\forall u:(\mathrm{Fin} 10\to\mathbb{R}),\mathrm{gauge}(u)=\mathrm{WithLp}.\ma
 
 The first five real coordinates and the last five imaginary coordinates are multiplied by phases.
 
-**Definition 1.15 (The exact real basis matrix).**
+**Definition 1.17 (The exact real basis matrix).**
 
 $$\mathrm{basisMatrix}:\mathrm{Matrix}(\mathrm{Fin} 10,\mathrm{Fin} 4,\mathbb{R})=[[-1,\mathrm{radical}^{2}/4-3,-\mathrm{radical}^{3}/10+\mathrm{radical},-\mathrm{radical}^{3}/40],[3-\mathrm{radical}^{2}/4,3-\mathrm{radical}^{2}/4,3\cdot\mathrm{radical}^{3}/40-\mathrm{radical},-3\cdot\mathrm{radical}^{3}/40+\mathrm{radical}],[\mathrm{radical}^{2}/4-3,-1,\mathrm{radical}^{3}/40,\mathrm{radical}^{3}/10-\mathrm{radical}],[1,0,0,0],[0,1,0,0],[0,0,-1,2-\mathrm{radical}^{2}/4],[0,0,\mathrm{radical}^{2}/4-2,\mathrm{radical}^{2}/4-2],[0,0,2-\mathrm{radical}^{2}/4,-1],[0,0,1,0],[0,0,0,1]]$$
 
@@ -186,7 +210,7 @@ $$\mathrm{basisMatrix}:\mathrm{Matrix}(\mathrm{Fin} 10,\mathrm{Fin} 4,\mathbb{R}
 
 The ten rows are listed in the real-then-imaginary order used by gauge. The checked constraint, selector, and elimination identities establish a basis of tangent.
 
-**Definition 1.16 (The real linear coordinate equivalence).**
+**Definition 1.18 (The real linear coordinate equivalence).**
 
 $$\mathrm{tangentEquiv}:(\mathrm{Fin} 4\to\mathbb{R})\equiv_{\mathrm{l}}[\mathbb{R}]\mathrm{tangent},(\forall a:(\mathrm{Fin} 4\to\mathbb{R}),(\mathrm{tangentEquiv}(a):\mathrm{State})=\mathrm{gauge}(\mathrm{Matrix}.\mathrm{mulVec}(\mathrm{basisMatrix},a))) \land (\forall v:\mathrm{tangent},\mathrm{tangentEquiv}.\mathrm{symm}(v)=[\mathrm{Complex}.\mathrm{re}(\mathrm{WithLp}.\mathrm{ofLp}((v:\mathrm{State}))(3)/\mathrm{phases}(3)),\mathrm{Complex}.\mathrm{re}(\mathrm{WithLp}.\mathrm{ofLp}((v:\mathrm{State}))(4)/\mathrm{phases}(4)),\mathrm{Complex}.\mathrm{im}(\mathrm{WithLp}.\mathrm{ofLp}((v:\mathrm{State}))(3)/\mathrm{phases}(3)),\mathrm{Complex}.\mathrm{im}(\mathrm{WithLp}.\mathrm{ofLp}((v:\mathrm{State}))(4)/\mathrm{phases}(4))])$$
 
@@ -198,7 +222,7 @@ $$\mathrm{tangentEquiv}:(\mathrm{Fin} 4\to\mathbb{R})\equiv_{\mathrm{l}}[\mathbb
 
 The forward map carries the displayed state into tangent. The inverse removes the phases and takes real coordinates 3 and 4 and imaginary coordinates 3 and 4; both inverse laws are proved.
 
-**Theorem 1.17 (The tangent dimension).**
+**Theorem 1.19 (The tangent dimension).**
 
 $$\mathrm{Module}.\mathrm{finrank}(\mathbb{R},\mathrm{tangent})=4$$
 
@@ -210,7 +234,7 @@ $$\mathrm{Module}.\mathrm{finrank}(\mathbb{R},\mathrm{tangent})=4$$
 
 The real linear equivalence gives dimension four.
 
-**Theorem 1.18 (Restriction to the nonzero Wigner points).**
+**Theorem 1.20 (Restriction to the nonzero Wigner points).**
 
 $$\mathrm{gradient}=\sum_{qp \in (\mathrm{Finset}.\mathrm{univ}\setminus\mathrm{zeroPoints})}(\mathrm{SignType}.\mathrm{sign}(\mathrm{wigner}(\mathrm{psi},(qp).1,(qp).2)):\mathbb{C})\cdot\mathrm{phasePoint}((qp).1,(qp).2)$$
 
@@ -226,7 +250,7 @@ Names below are the public Lean names in D5.S3.Quantum.Magic.QuquintWignerCritic
 
 zeroPoints is the set of vanishing Wigner entries of psi. tangent imposes complex orthogonality to psi and vanishing real phase-point pairings at every point of zeroPoints.
 
-**Theorem 1.19 (Exact zero set and dimension).**
+**Theorem 1.21 (Exact zero set and dimension).**
 
 $$\mathrm{zeroPoints}=\{(0,3),(1,3),(2,4),(3,1),(4,4)\} \land \mathrm{Finset}.\mathrm{card}(\mathrm{zeroPoints})=5 \land \mathrm{Module}.\mathrm{finrank}(\mathbb{R},\mathrm{tangent})=4 \land \mathrm{lOne}(\mathrm{psi})=1+2\sqrt{5}/5$$
 
@@ -234,13 +258,13 @@ $$\mathrm{zeroPoints}=\{(0,3),(1,3),(2,4),(3,1),(4,4)\} \land \mathrm{Finset}.\m
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657).
+*Acknowledgement.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657). URL: <https://arxiv.org/abs/2512.19657v2>.
 
 *Commentary.*
 
 The exact Wigner table is evaluated using radical. The public real linear equivalence tangentEquiv gives four real coordinates on tangent. Its inverse removes the component phases and selects four real coordinates. Checked matrix identities establish both inverse laws for the original constraint subspace.
 
-**Theorem 1.20 (Critical gradient).**
+**Theorem 1.22 (Critical gradient).**
 
 $$\mathrm{Matrix}.\mathrm{mulVec}(\mathrm{gradient},\mathrm{WithLp}.\mathrm{ofLp}(\mathrm{psi}))=(5\cdot\mathrm{lOne}(\mathrm{psi}):\mathbb{C})\cdot\mathrm{WithLp}.\mathrm{ofLp}(\mathrm{psi})$$
 
@@ -248,13 +272,13 @@ $$\mathrm{Matrix}.\mathrm{mulVec}(\mathrm{gradient},\mathrm{WithLp}.\mathrm{ofLp
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657).
+*Acknowledgement.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657). URL: <https://arxiv.org/abs/2512.19657v2>.
 
 *Commentary.*
 
 gradient is the sum of phasePoint matrices weighted by SignType.sign of the Wigner entries of psi. The public gradient_restricted identity identifies this restricted sum with gradient, whose definition includes all points and has zero coefficients on zeroPoints.
 
-**Theorem 1.21 (Vanishing first variation).**
+**Theorem 1.23 (Vanishing first variation).**
 
 $$\forall v:\mathrm{tangent},\mathrm{HasDerivAt}(((e:\mathbb{R})\mapsto \mathrm{lOne}(\mathrm{psi}+e\cdot(v:\mathrm{State}))),0,0)$$
 
@@ -262,13 +286,13 @@ $$\forall v:\mathrm{tangent},\mathrm{HasDerivAt}(((e:\mathbb{R})\mapsto \mathrm{
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657).
+*Acknowledgement.* Muhammad Erew and Moshe Goldstein (2025). *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*. DOI: [10.48550/arXiv.2512.19657](https://doi.org/10.48550/arXiv.2512.19657). URL: <https://arxiv.org/abs/2512.19657v2>.
 
 *Commentary.*
 
 The Lean statement is HasDerivAt with derivative zero, for every vector in tangent. Hermitian symmetry gives an exact quadratic expansion of each Wigner entry. On zeroPoints the linear coefficient vanishes. At the other points the derivative of absolute value multiplies the coefficient by its sign, and the gradient identity and orthogonality to psi make their sum zero.
 
-**Theorem 1.22 (Exact Wigner expansion).**
+**Theorem 1.24 (Exact Wigner expansion).**
 
 $$\forall v:\mathrm{State},\forall q p:\mathrm{Fin} 5,\forall e:\mathbb{R},\mathrm{wigner}(\mathrm{psi}+e\cdot v,q,p)=\mathrm{wigner}(\mathrm{psi},q,p)+e\cdot(2\cdot\mathrm{Complex}.\mathrm{re}(\mathrm{dotProduct}(\mathrm{star}(\mathrm{WithLp}.\mathrm{ofLp}(\mathrm{psi})),\mathrm{Matrix}.\mathrm{mulVec}(\mathrm{phasePoint}(q,p),\mathrm{WithLp}.\mathrm{ofLp}(v))))/5)+e^{2}\cdot\mathrm{wigner}(v,q,p)$$
 
@@ -280,7 +304,7 @@ $$\forall v:\mathrm{State},\forall q p:\mathrm{Fin} 5,\forall e:\mathbb{R},\math
 
 This existing expansion is now public for normalized perturbations. The proof uses the Hermitian phase-point pairings and real scalar multiplication.
 
-**Theorem 1.23 (Cancellation of the linear sum).**
+**Theorem 1.25 (Cancellation of the linear sum).**
 
 $$\forall v:\mathrm{tangent},\sum_{q:\mathrm{Fin} 5}\sum_{p:\mathrm{Fin} 5}(\mathrm{SignType}.\mathrm{sign}(\mathrm{wigner}(\mathrm{psi},q,p)):\mathbb{R})\cdot(2\cdot\mathrm{Complex}.\mathrm{re}(\mathrm{dotProduct}(\mathrm{star}(\mathrm{WithLp}.\mathrm{ofLp}(\mathrm{psi})),\mathrm{Matrix}.\mathrm{mulVec}(\mathrm{phasePoint}(q,p),\mathrm{WithLp}.\mathrm{ofLp}((v:\mathrm{State})))))/5)=0$$
 
@@ -309,6 +333,7 @@ Scope: this module concerns this state in dimension five. It does not claim a ge
 - Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.lOne_psi`
 - Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.phasePoint`
 - Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.phases`
+- Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.powerTable`
 - Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.psi`
 - Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.tangent`
 - Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.tangentEquiv`
@@ -319,5 +344,6 @@ Scope: this module concerns this state in dimension five. It does not claim a ge
 - Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.zero_points_card`
 - Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.zero_points_eq`
 - Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.zeta`
+- Truth anchor: `D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.zeta_powers`
 - Dependency: [D5/S3/Constants/PentagonCosines](../../Constants/PentagonCosines.md)
 - Dependency: [D5/S3/Quantum/Magic/QuquintCertificateData](QuquintCertificateData.md)

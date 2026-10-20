@@ -241,10 +241,9 @@ theorem actual_spectral_mixture_upper {n J : Type*} [Fintype n] [DecidableEq n] 
     apply HasDerivAt.fun_sum
     intro i _
     convert ((hgd i).hasDerivAt.pow 2).smul (hrd i).hasDerivAt using 1
-    · rfl
-    · simp only [show 2 - 1 = (1 : ℕ) by decide, pow_one, Nat.cast_ofNat, Pi.pow_apply]
-      rw [add_comm]
-      congr 1
+    simp [Pi.pow_apply]
+    rw [add_comm]
+    rfl
   have hdt : deriv M t = B := hd.deriv
   obtain ⟨L, hL, hsolve⟩ := exists_hermitian_sld_of_psd_curve M B t hd hpos
   have hLi : ∀ i, ∃ Li : Matrix n n ℂ, Li.IsHermitian ∧

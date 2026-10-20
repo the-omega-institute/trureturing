@@ -297,7 +297,7 @@ private theorem scale_ne : ((Real.sqrt 2 : ℂ)⁻¹) ≠ 0 := by
 private def encoding : (Fin 3 → ℂ) →ₗ[ℂ] ((Σ _ : Fin 3, Fin 2 × Fin 1) → ℂ) :=
   ((Real.sqrt 2 : ℂ)⁻¹) • LinearMap.pi (fun a => LinearMap.proj (coord a.1 a.2.1))
 
-private theorem scale_normSq : Complex.normSq ((Real.sqrt 2 : ℂ)⁻¹) = (1/2 : ℝ) := by
+theorem scale_normSq : Complex.normSq ((Real.sqrt 2 : ℂ)⁻¹) = (1/2 : ℝ) := by
   rw [map_inv₀]
   simp only [Complex.normSq_ofReal]
   rw [Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]

@@ -13,6 +13,7 @@ The Gamma0 character-square law and q-expansion coefficient law remain outstandi
 import Mathlib.NumberTheory.ModularForms.Basic
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 import Mathlib.NumberTheory.ModularForms.Identities
+import Mathlib.NumberTheory.ModularForms.NormTrace
 import Mathlib.NumberTheory.DirichletCharacter.GaussSum
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.Tactic.FieldSimp

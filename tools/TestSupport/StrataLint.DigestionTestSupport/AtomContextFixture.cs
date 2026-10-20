@@ -16,7 +16,7 @@ internal sealed record AtomContextFixture(
     internal static AtomContextFixture Create(string text = ThreeClaims, bool expand = false)
     {
         var bytes = Encoding.UTF8.GetBytes(text);
-        var atomized = AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes, DigestionTestSupport.Rules);
+        var atomized = AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes);
         var entries = atomized.Claims.Select(Entry).ToDictionary(static entry => entry.AtomId);
         if (expand)
         {
@@ -47,7 +47,6 @@ internal sealed record AtomContextFixture(
     {
         var files = new List<RawRepositoryEntry>
         {
-            new(TheoryAtomizerDataLoader.DataPath, [.. DigestionTestSupport.RulesBytes]),
         };
         if (includeSource) files.Add(new RawRepositoryEntry(SourcePath, [.. SourceBytes]));
         var cas = new Dictionary<string, DigestionAtom>();
@@ -76,6 +75,6 @@ internal sealed record AtomContextFixture(
     }
 
     internal RepositorySnapshot Snapshot(bool includeSource = true) =>
-        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawSnapshot(includeSource))).Snapshot;
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(RawSnapshot(includeSource)))).Snapshot;
 
 }

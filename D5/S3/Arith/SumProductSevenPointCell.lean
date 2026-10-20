@@ -307,7 +307,8 @@ private theorem image_card_ge_twentyfour {α : Type*} [DecidableEq α]
     _ ≤ (pairs.image f).card := Finset.card_le_card
       (Finset.image_subset_image Finset.sdiff_subset)
 
-private theorem geometric_pair_image_subset (b r : ℝ) :
+set_option maxHeartbeats 400000 in
+theorem geometric_pair_image_subset (b r : ℝ) :
     pairs.image (fun p => b * r ^ p.1.val + b * r ^ p.2.val) ⊆
       ((Finset.range 7).image (fun i => b * r ^ i)) +
         ((Finset.range 7).image (fun i => b * r ^ i)) := by

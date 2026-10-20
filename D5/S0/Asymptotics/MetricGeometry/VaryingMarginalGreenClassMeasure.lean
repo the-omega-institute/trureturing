@@ -42,7 +42,7 @@ theorem varying_greenClass_measure_le_hausdorffMeasure {O : Type*} [Fintype O]
     (Measure.infinitePi μ) (greenClass S t) ≤ μH[namingDim O] (greenClass S t) := by
   rw [varying_greenClass_measure, hausdorffMeasure_eq_stringMeasure, greenClass_measure,
     ← Finset.prod_const]
-  exact Finset.prod_le_prod (fun _ _ => bot_le) h
+  exact Finset.prod_le_prod₀ (fun _ _ => bot_le) h
 
 /-- Lower bounds by uniform singleton mass give mass at least critical Hausdorff measure. -/
 theorem hausdorffMeasure_le_varying_greenClass_measure {O : Type*} [Fintype O]
@@ -53,7 +53,7 @@ theorem hausdorffMeasure_le_varying_greenClass_measure {O : Type*} [Fintype O]
     μH[namingDim O] (greenClass S t) ≤ (Measure.infinitePi μ) (greenClass S t) := by
   rw [varying_greenClass_measure, hausdorffMeasure_eq_stringMeasure, greenClass_measure,
     ← Finset.prod_const]
-  exact Finset.prod_le_prod (fun _ _ => bot_le) h
+  exact Finset.prod_le_prod₀ (fun _ _ => bot_le) h
 
 example {O : Type*} [MeasurableSpace O] [MeasurableSingletonClass O]
     (μ : ℕ → Measure O) [∀ i, IsProbabilityMeasure (μ i)] (t : ℕ → O) :

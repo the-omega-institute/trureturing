@@ -229,8 +229,8 @@ private theorem gaussianProduct_memLp (f g : Lp ℝ 2 μ) :
       (ENNReal.coe_inv (by norm_num : (2 : ℝ≥0) ≠ 0)).symm
     rw [h4, h2, ← ENNReal.coe_add]
     norm_num⟩
-  exact (gaussian_memLp_four μ P W hW g).mul'
-    (gaussian_memLp_four μ P W hW f)
+  exact (gaussian_memLp_four μ P W hW f).fun_mul (r := 2)
+    (gaussian_memLp_four μ P W hW g)
 
 /-- Actual L²(P) class of the original W's centered square. -/
 def centeredSquare (f : Lp ℝ 2 μ) : Lp ℝ 2 P :=

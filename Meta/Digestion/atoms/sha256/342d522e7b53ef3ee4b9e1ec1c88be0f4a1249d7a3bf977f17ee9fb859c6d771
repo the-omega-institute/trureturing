@@ -1,0 +1,4 @@
+$$
+\boxed{\mathcal A(V_A)-\mathcal A(V_{A'})=\sum_p(\mathbf1_A(p)-\mathbf1_{A'}(p))(e_{i_p}-e_{i_p+1});}
+$$
+

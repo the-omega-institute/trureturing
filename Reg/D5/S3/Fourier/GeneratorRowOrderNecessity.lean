@@ -1,3 +1,4 @@
+import Batteries.Tactic.OpenPrivate
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.GeneratorRowOrderNecessity
 import Reg.Support.DependentFamily

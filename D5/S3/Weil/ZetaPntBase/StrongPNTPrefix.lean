@@ -122,7 +122,12 @@ theorem BorelCaratheodoryDeriv {M r R : ℝ} {f : ℂ → ℂ} {z : ℂ}
     (hyp_z : z ∈ Metric.closedBall 0 r) :
     ‖deriv f z‖ ≤ 16 * M * R ^ 2 / (R - r) ^ 3 := by
   have hr' : 2 * M * ((R + r) / 2) ^ 2 / ((R - (R + r) / 2) * ((R + r) / 2 - r) ^ 2) =
-      4 * M * (R + r) ^ 2 / (R - r) ^ 3 := by field_simp; ring
+      4 * M * (R + r) ^ 2 / (R - r) ^ 3 := by
+    have hA : R - (R + r) / 2 = (R - r) / 2 := by ring
+    have hB : (R + r) / 2 - r = (R - r) / 2 := by ring
+    rw [hA, hB]
+    field_simp [sub_ne_zero.mpr (by linarith : R - r ≠ 0)]
+    ring
   calc ‖deriv f z‖
       _ ≤ 4 * M * (R + r) ^ 2 / (R - r) ^ 3 := hr' ▸
           DerivativeBound Mpos rpos (by linarith) (by linarith) analytic_f zeroAtZero realPartBounded hyp_z
@@ -370,7 +375,7 @@ lemma norm_fOfZero_le_norm_BlaschkeOfZero {r R : ℝ} {f : ℂ → ℂ}
   rw [BlaschkeOfZero r_pos r_lt_one r_lt_R finiteZeros hf_neq_zero_at_zero, ← mul_one ‖f 0‖]
   refine mul_le_mul (by rw[mul_one]) ?_ (zero_le_one) (mul_nonneg (norm_nonneg (f 0)) zero_le_one)
   rw [← Finset.prod_const_one (s := (finiteSetOfZeros_mono r_lt_one finiteZeros).toFinset)]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro ρ hρ
     exact zero_le_one
   · intro ρ hρ
@@ -475,7 +480,7 @@ theorem ZerosBound {B r R : ℝ} {f : ℂ → ℂ}
       = ∏ ρ ∈ (finiteSetOfZeros_mono r_lt_one finiteZeros).toFinset, (R / r) ^ analyticOrderNatAt f ρ := by
         rw [Finset.prod_pow_eq_pow_sum]
     _ ≤ ∏ ρ ∈ (finiteSetOfZeros_mono r_lt_one finiteZeros).toFinset, (R / ‖ρ‖) ^ analyticOrderNatAt f ρ := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro ρ _
         exact pow_nonneg (div_nonneg (le_of_lt R_pos) (le_of_lt r_pos)) _
       · intro ρ hρ

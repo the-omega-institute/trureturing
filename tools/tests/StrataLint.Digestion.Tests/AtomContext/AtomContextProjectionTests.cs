@@ -26,16 +26,16 @@ public sealed class AtomContextProjectionTests
     }
 
     [Fact]
-    public void AtomContextFailsClosedOnAtomizerNone()
+    public void AtomContextFailsClosedOnUnsupportedAtomizer()
     {
         var fixture = Create();
         var source = fixture.Ledger.RequireDigestionSources().Single();
         fixture = fixture with { Ledger = fixture.Ledger.WithDigestionSources([source with
         {
-            Atomizer = AtomizerRegistry.NoAtomizerId,
-            Entries = [.. source.Entries.Select(entry => entry with { Atomizer = AtomizerRegistry.NoAtomizerId })],
+            Atomizer = "none",
+            Entries = [.. source.Entries.Select(entry => entry with { Atomizer = "none" })],
         }]) };
-        AssertCode("ATOMIZER_NONE", () => Resolve(fixture, Id(fixture.Atomized.Claims[1])));
+        AssertCode("ATOMIZER_UNSUPPORTED", () => Resolve(fixture, Id(fixture.Atomized.Claims[1])));
     }
 
     [Fact]
@@ -131,7 +131,7 @@ public sealed class AtomContextProjectionTests
         fixture = fixture.WithEntries(entries.Values);
         var raw = RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Concat(
             materialized.CasObjects.Select(item => new RawRepositoryEntry(item.RelativePath, item.Bytes))));
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
         var result = DigestionAtomContextProjection.Resolve(snapshot, fixture.Ledger, Id(suffix));
         Assert.Equal(Id(prefix), result.Previous!.Value.AtomId);
         Assert.Equal(Id(plan.Children[1]), result.Next!.Value.AtomId);

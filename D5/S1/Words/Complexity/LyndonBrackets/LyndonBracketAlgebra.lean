@@ -6,6 +6,7 @@
    utility: none
    digest: Recursive standard brackets are homogeneous integral word polynomials. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.LyndonBrackets.LyndonStandardFactorization
 
 set_option autoImplicit false

@@ -14,7 +14,7 @@ public sealed class SearchAtomsCommandTests
         var raw = RawRepositorySnapshot.Create([
             RawRepositoryEntry.FromText($"Meta/Digestion/backfill/source/residual-open/{id}.yaml", "invalid: ["),
             RawRepositoryEntry.FromText("Meta/Digestion/backfill/source/source.toml", "invalid = ["),
-            RawRepositoryEntry.FromText(TheoryAtomizerDataLoader.DataPath, "invalid = ["),
+            RawRepositoryEntry.FromText("Meta/unrelated.toml", "invalid = ["),
             RawRepositoryEntry.FromText(DigestionCasStore.RootPath + id, "stored needle"),
         ]);
         var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
@@ -140,7 +140,7 @@ public sealed class SearchAtomsCommandTests
         Assert.DoesNotContain(Id(fixture.Atomized.Claims[0]), console.Output, StringComparison.Ordinal);
         Assert.DoesNotContain(Id(fixture.Atomized.Claims[2]), console.Output, StringComparison.Ordinal);
         Assert.DoesNotContain(gateway.ScopedCurrentReads.SelectMany(static scope => scope),
-            path => path.EndsWith(".yaml", StringComparison.Ordinal) || path.Contains(TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal));
+            path => path.EndsWith(".yaml", StringComparison.Ordinal) || path.Contains("Meta/unrelated.toml", StringComparison.Ordinal));
     }
 
     [Fact]

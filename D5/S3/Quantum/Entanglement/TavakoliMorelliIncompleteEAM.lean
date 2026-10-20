@@ -131,7 +131,7 @@ private theorem hsSq_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
   rw [← map_star, ← map_mul, trace_toEuclideanCLM]
   rw [Matrix.star_eq_conjTranspose, ← hsSq_eq_trace]
 
-private theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ]
+theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ]
     (R S : Matrix κ κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm (R * S) ≤
       Real.sqrt (entryNormSq R) * Real.sqrt (entryNormSq S) := by

@@ -13,13 +13,11 @@ public sealed class DigestionContentKindTests
         var bytes = Encoding.UTF8.GetBytes(markdown);
         var atom = Assert.Single(AtomizerRegistry.Atomize(
             AtomizerRegistry.GenericId,
-            bytes,
-            TheoryAtomizerRules.None).Claims);
+            bytes).Claims);
 
         var kinds = AtomizerRegistry.ResolveContentKinds(
             AtomizerRegistry.GenericId,
-            bytes,
-            TheoryAtomizerRules.None);
+            bytes);
 
         Assert.Equal(expectedKind, kinds[atom.Fingerprints.RawSha256]);
     }
@@ -31,13 +29,11 @@ public sealed class DigestionContentKindTests
             "## Dictionary\n\n| key | value |\n| --- | --- |\n| M(S) | residual escape mass |\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(
             AtomizerRegistry.GenericId,
-            bytes,
-            TheoryAtomizerRules.None).Claims);
+            bytes).Claims);
 
         var kinds = AtomizerRegistry.ResolveContentKinds(
             AtomizerRegistry.GenericId,
-            bytes,
-            TheoryAtomizerRules.None);
+            bytes);
 
         Assert.Equal("section", kinds[atom.Fingerprints.RawSha256]);
     }
@@ -48,19 +44,17 @@ public sealed class DigestionContentKindTests
         var bytes = Encoding.UTF8.GetBytes(
             "**定理 6.62**。主张。\n\n**独立补充**。第二子句。\n");
         var document = AtomizerRegistry.Atomize(
-            AtomizerRegistry.PzgId,
-            bytes,
-            DigestionTestSupport.Rules);
+            AtomizerRegistry.GenericId,
+            bytes);
         var plan = Assert.Single(document.ClausePlans);
 
         var kinds = AtomizerRegistry.ResolveContentKinds(
-            AtomizerRegistry.PzgId,
-            bytes,
-            DigestionTestSupport.Rules);
+            AtomizerRegistry.GenericId,
+            bytes);
 
-        Assert.Equal("theorem", kinds[plan.Parent.Fingerprints.RawSha256]);
+        Assert.Equal("定理", kinds[plan.Parent.Fingerprints.RawSha256]);
         Assert.All(
             plan.Children,
-            child => Assert.Equal("theorem", kinds[child.Fingerprints.RawSha256]));
+            child => Assert.Equal("定理", kinds[child.Fingerprints.RawSha256]));
     }
 }

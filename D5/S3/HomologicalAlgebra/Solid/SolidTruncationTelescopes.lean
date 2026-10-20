@@ -24,6 +24,7 @@ Research: Rodríguez Camargo, Notes on Solid Geometry, Theorem 3.3.1.
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
+set_option synthInstance.maxHeartbeats 100000
 open CategoryTheory Limits HomologicalComplex
 
 namespace LightCondensed.Solid

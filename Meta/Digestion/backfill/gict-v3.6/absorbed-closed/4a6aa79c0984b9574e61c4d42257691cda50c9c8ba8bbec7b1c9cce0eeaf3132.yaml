@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4a6aa79c0984b9574e61c4d42257691cda50c9c8ba8bbec7b1c9cce0eeaf3132
-  normalized_sha256: sha256:4a6aa79c0984b9574e61c4d42257691cda50c9c8ba8bbec7b1c9cce0eeaf3132
-cas_ref: sha256:4a6aa79c0984b9574e61c4d42257691cda50c9c8ba8bbec7b1c9cce0eeaf3132
-coverage_gids:
-  - gid: D5/S3/PrimeForms/Splitting/EisensteinCriterion.neg_three_isSquare_iff
-    target_statement_id: sha256:aa979361c452ff7d44050f90590485cf8ac9e8102dd9a288d27c260b564e277b
-receipts:
-  unresolved_subitems: []

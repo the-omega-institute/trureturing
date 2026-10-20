@@ -6,6 +6,38 @@ namespace StrataLint.Tests;
 public sealed partial class CoverAtomTests
 {
     [Theory]
+    [InlineData("wm-v1")]
+    [InlineData("cone-v1")]
+    [InlineData("gict-v1")]
+    [InlineData("pzg-v1")]
+    [InlineData("observer-v1")]
+    [InlineData("periodic-tree-v1")]
+    [InlineData("dialect:qdo")]
+    [InlineData("dialect:arbitrary")]
+    [InlineData("none")]
+    [InlineData("unknown")]
+    public void CoverRejectsUnsupportedSourceFormatsBeforeWriting(string format)
+    {
+        var inputs = new CoverSpec().Materialize();
+        var source = Assert.Single(inputs.Document.RequireDigestionSources());
+        var files = DirectoryLedgerTestSupport.Project(inputs.Files);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(files, inputs.Document.WithDigestionSources(
+            [source with { Atomizer = format, Entries = [.. source.Entries.Select(entry => entry with { Atomizer = format })] }]));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var repository = new FakeRepositoryGateway(RawChangeSet.Create([]), CoverWorld.Raw(files), CoverWorld.Raw(files));
+
+        var result = CoverAtomCommand.Run(temporary.Path, repository,
+            new FakeLeanReportSource(inputs.Report), CoverWorld.FixtureUtc,
+            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid]);
+
+        Assert.False(result.Success);
+        Assert.Contains("Unknown atomizer id", result.Error);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void CoverIgnoresUnrelatedMalformedLedgerRecords(bool sameSource)
@@ -98,11 +130,12 @@ public sealed partial class CoverAtomTests
             repository.ScopedCurrentReads[0]);
         Assert.Equal(
             [
-                TheoryAtomizerDataLoader.DataPath,
                 "D5",
                 "Reg",
                 "Trureturing.lean",
                 "Golden/Frozen/state",
+                FileMapLoader.RelativePath,
+                ":(glob)Meta/FILEMAP.*.toml",
                 DigestionQuerySelection.Literal(source.SourcePath),
             ],
             repository.ScopedCurrentReads[1]);
@@ -118,7 +151,7 @@ public sealed partial class CoverAtomTests
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Meta/domains.yaml"] = "domains\n",
-            ["Meta/Digestion/atomizers.toml"] = "rules\n",
+            ["Meta/Digestion/backfill/probe/source.toml"] = "rules\n",
             ["D5/S0/Carrier/Probe.lean"] = "theorem probe : True := True.intro\n",
             ["D5.lean"] = "sibling of the D5 directory\n",
             ["docs/source.md"] = "source\n",
@@ -130,7 +163,7 @@ public sealed partial class CoverAtomTests
         var current = repository.ReadCurrent(["Meta", "D5", "docs/source.md"]);
 
         Assert.Equal(
-            ["D5/S0/Carrier/Probe.lean", "Meta/Digestion/atomizers.toml", "Meta/domains.yaml", "docs/source.md"],
+            ["D5/S0/Carrier/Probe.lean", "Meta/Digestion/backfill/probe/source.toml", "Meta/FILEMAP.toml", "Meta/domains.yaml", "docs/source.md"],
             current.Entries.Select(static entry => entry.Path).Order(StringComparer.Ordinal).ToArray());
     }
 }

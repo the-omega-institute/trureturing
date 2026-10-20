@@ -17,6 +17,7 @@ DiscreteInt, using the official Mathlib monoidal APIs.
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
+set_option synthInstance.maxHeartbeats 100000
 open CategoryTheory Limits LightProfinite OnePoint MonoidalCategory MonoidalClosed
 open scoped BigOperators
 

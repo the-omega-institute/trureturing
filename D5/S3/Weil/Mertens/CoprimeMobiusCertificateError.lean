@@ -6,6 +6,7 @@
    utility: none
    digest: Bound the uniform error of the coprime truncated Mobius certificate. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Arith.Congruence.DivisorDifferenceGcdHeinz
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 import Mathlib.Data.Real.Basic
