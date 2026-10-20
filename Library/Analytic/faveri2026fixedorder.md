@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, a classwise all-column pure-dual-power application under a specified length condition, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, a tame growing-ray application improving the complete classwise pole on an unbalanced length range, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray and zero-support applications improving the complete classwise pole and paying it on a specified original witness sector, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -1744,6 +1744,219 @@ U\ge D^{4/3}N^4H_0^{8/3}
 $$
 
 to make $U^{5/6}\mathcal C$ bounded by $UK$, up to epsilon losses. But the original $r+m\ge t\ge1$ implies $4r/3+4m\ge4/3$ before the small losses, already exceeding one at $H_0=1$. The application supplies only the stated all-column upper-bound improvement. Other dual terms, coverage of the actual witnesses, the earlier cross-class signed contraction and signed Robin restoration remain open. It has no complete local Lean certification and makes no literature-novelty claim.
+
+### Separating zero-only support in the same all-column pole
+
+Primes used only to preserve zero values can be removed by [DDDS, arXiv:2410.03048v3](https://arxiv.org/html/2410.03048v3#S6), Lemma 6.1(iii), before applying the conductor-dependent moment. This application retains their divisor shifts and the original weighted ray-divisor sum. It improves (B8) and pays the classwise all-column pure-sixth-power pole on a nonempty sector of the original witness domain. The full witness domain, other dual terms and signed Robin restoration remain open.
+
+An existing angular Möbius annular application appears in [Dunn–Radziwiłł, *Bias in cubic Gauss sums: Patterson's conjecture*, arXiv:2109.07463v3](https://arxiv.org/pdf/2109.07463v3), Proposition 8.1 and equations (8.5)–(8.8). Its final estimate assumes RH for Größencharakter twists and invokes that hypothesis in (8.6). DDDS §8.2.4 also applies a local-factor divisor expansion to its different polar-term coefficients. The inputs used below are the owned moment (B2) and DDDS's coprimality identity; the known local formula and Rankin method are reused, without a literature-novelty claim for this application.
+
+#### Zero-only primes have an epsilon cost
+
+Let $f$ contain the additional genuine tame character data, with $F=q_f$, and let $a$ be a disjoint squarefree modulus used only for zeros. Keep the fixed bad set $S_0$, $h=-3$, infinity mode $\ell=\pm1$, and squarefree $e,n$ with $(e,nf)=(n,f)=(en,a)=1$. Write $E=q_e$. The source identity with the denominator character retained is
+
+$$
+\begin{aligned}
+\Delta_{\chi,a}(z)\Psi_{\chi,ena}(hen,z)
+&=\sum_{d\mid a}\mu(d)\chi(d)q_d^{-z}
+g_3(hen,d)\Psi_{\chi,en}(hend,z),\\
+\Delta_{\chi,a}(z)
+&=\prod_{\mathfrak p\mid a}
+\left(1-\chi(\mathfrak p)^3q_{\mathfrak p}^{2-3z}\right).
+\end{aligned}
+\tag{C1}
+$$
+
+In the two local elimination equations in DDDS's proof, the exponent-one term gains $\chi(\mathfrak p)$ and the exponent-two term gains $\chi(\mathfrak p)^2$, giving the displayed determinant. This is the weighted application of the existing identity, initially on $\Re z>3/2$ and then by continuation on the required fixed line $\sigma>1$. Conjugate the whole identity for the other orientation.
+
+Here $|g_3(hen,d)|=q_d^{1/2}$. The numerator $hend$ is squarefree away from $S_0$. Applying (A5) to the filter $en$, and the unfiltered shifted-numerator version of (B2), bounds the squared mean of $\Psi_{\chi,en}(hend,z)$ by
+
+$$
+(FEq_dM)^\varepsilon F(Eq_d)^{1/2}
+M^{1+\varepsilon}(1+|t|)^2.
+$$
+
+The two positive divisor sums retain the exponents $5/2-4\sigma$ and $2-4\sigma$. The additional outer condition $(n,a)=1$ can be kept in these positive means. No comparison of absolute Dirichlet-series values under deletion is used.
+
+Minkowski in (C1), allowing $d$-dependent outer phases, now leaves
+
+$$
+\sum_{d\mid a}q_d^{3/4-\sigma+\eta}
+\ll_{\sigma,\varepsilon}q_a^\varepsilon,
+$$
+
+for sufficiently small auxiliary $\eta>0$. This is a divisor-product bound, since $\sigma-3/4-\eta>0$, rather than convergence of the sum over all ideals $d$. Also $|\Delta_{\chi,a}(z)|^{-1}\le\zeta_F(3\sigma-2)$. Thus zero-only $a$ costs epsilon in (B2), with no addition to $F$.
+
+The $\vartheta$ expansion used in (B3) remains compatible: $v\mid d'$ is coprime to $a$, so the shifted numerator $hevdn'$ remains squarefree. The sum $\sum_vq_v^{-5/4}$ is unchanged. All original zero masks are enforced before these identities are used.
+
+#### Keep the weighted ray sum before the core sums
+
+Use the same actual all-column decomposition and definitions
+
+$$
+h=gx,\quad k=gy,\quad x=cs_0z,\quad y=c't_0w,
+\qquad f_c=\operatorname{rad}(r_6(c)),
+$$
+
+$$
+f_0=f_cs_0f_{c'}t_0,\qquad
+R=\operatorname{rad}(gcc'S_0)/f_0.
+$$
+
+Write $R_g$ and $r_g$ for the good parts outside $S_0$. The exact root CRT places the additional finite single-variable twists on $f_0$. The exclusion-product divisor $r\mid R$ adds a twist supported on $r_g$. Reciprocity on the original fixed primary classes therefore permits
+
+$$
+F\le q_{f_0}q_{r_g}.
+$$
+
+The remaining primes of $\operatorname{rad}(gcc'\ell)$ are zero-only and are handled by (C1). Their cost is $K^\varepsilon q_\ell^\varepsilon$, including inactive sixth powers. The original $q_\ell^{-5}$ row weight absorbs this loss uniformly in its finite cutoff.
+
+For $m=gcs_0=ab$, reuse $a=a_ga_c$, $b=b_gb_cs_0$ and the same squarefree distribution constraints. Define the part of (B5) without its conductor factor by
+
+$$
+\mathcal L_c^2
+=X^{1/3}\frac N{q_b}
+\left(\frac D{q_a}\right)^{1/2}\mathcal B^2,
+\qquad X=K/(q_gq_cq_{s_0}).
+$$
+
+For each fixed $r$, (B5) with this modulus gives
+
+$$
+\sum_e|H_{c,r,e}^{a,b}|^2
+\ll K^\varepsilon q_\ell^\varepsilon
+q_{f_0}q_{r_g}\mathcal L_c^2.
+\tag{C2}
+$$
+
+Keep the original $q_r^{-5/6}$ weight. The joint relation
+
+$$
+q_{f_0}q_{R_g}=q_{\operatorname{rad}(gcc')}
+\le q_gq_{\operatorname{rad}c}q_{\operatorname{rad}c'}
+$$
+
+is stronger than separately majorizing its factors. Put
+
+$$
+\mathcal T_c=(q_{f_c}q_{s_0})^{5/6}
+q_{\operatorname{rad}c}^{1/6}.
+$$
+
+The weighted conductor sum satisfies
+
+$$
+\sum_{r\mid R}q_r^{-5/6}F
+\ll K^\varepsilon q_{f_0}q_{R_g}^{1/6}
+\le K^\varepsilon q_g^{1/6}\mathcal T_c\mathcal T_{c'}.
+\tag{C3}
+$$
+
+For any nonempty opposite original factorization, $\operatorname{rad}c'\mid b_{c'}$ and
+
+$$
+\mathcal T_{c'}\le q_{\operatorname{rad}c'}q_{t_0}
+\le q_{b_{c'}}q_{t_0}\ll N/q_{b_g'}\le CN.
+$$
+
+An empty opposite range contributes zero. Consequently the squared norm in the weighted $(r,e)$ variables on the $c$ side has the uniform bound
+
+$$
+\ll K^\varepsilon q_\ell^\varepsilon
+q_g^{1/6}N\mathcal T_c\mathcal L_c^2.
+\tag{C4}
+$$
+
+Use the symmetric statement for the other side. This upper envelope depends only on its own core and is uniform in the opposite-core-dependent vectors. The order is Cauchy in weighted $(r,e)$ for each fixed core pair, uniform scalar envelopes, and then positive core sums.
+
+#### The positive core moment used in the consumer
+
+The square roots in (C4) require
+
+$$
+\mathcal G(V)=
+\sum_{\substack{c\ {\rm powerful},\ a_c\mid\operatorname{rad}c\\
+b_c=c/a_c,\ q_{b_c}\le V}}
+w(c)q_{a_c}^{-5/12}q_{b_c}^{-2/3}
+q_{\operatorname{rad}c}^{1/2}
+\ll_\varepsilon V^{1/12+\varepsilon}.
+\tag{C5}
+$$
+
+For a prime exponent $j\ge2$ and choice $\delta=0,1$, insert the Rankin factor $q_{b_c}^{-s}$. The local exponent is $2j/3-\delta/4-1/2+1/3+(j-\delta)s$ if $6\nmid j$, and $2j/3-\delta/4-1/2+(j-\delta)s$ otherwise. Every exponent exceeds one for $s>1/12$. The critical case $j=2,\delta=1$ is $11/12+s$; $j=2,\delta=0$ gives $7/6+2s$, and multiples of six give at least $13/4$ before the $s$ term. Convergence of this positive Euler product proves (C5).
+
+The square root of $\mathcal L_c^2$ is
+
+$$
+K^{1/6}D^{1/4}N^{1/2}
+q_{a_g}^{-5/12}q_{b_g}^{-2/3}
+q_{a_c}^{-5/12}q_{b_c}^{-2/3}q_{s_0}^{-2/3}\mathcal B.
+$$
+
+Equation (C4) adds $q_g^{1/12}N^{1/2}\mathcal T_c^{1/2}$, with $\mathcal T_c^{1/2}\le q_{\operatorname{rad}c}^{1/2}q_{s_0}^{5/12}$. The remaining $s_0$ exponent is $-1/4$. The original constraint $q_{b_g}q_{b_c}q_{s_0}\ll N$ permits (C5) with $V=CN/(q_{b_g}q_{s_0})$. Its extra $s_0^{-1/12}$ leaves a negative exponent $-1/3$, dropped only in this positive bound. Choices of $s_0$ cost $q_g^\varepsilon$.
+
+After summing cores, the square-root envelope at a fixed distribution of $g$ is
+
+$$
+K^\varepsilon q_\ell^\varepsilon
+K^{1/6}D^{1/4}N^{13/12}
+q_{a_g}^{-1/3}q_{b_g}^{-2/3}\mathcal B.
+\tag{C6}
+$$
+
+All auxiliary epsilon powers are chosen relative to one final epsilon; the original profile and height norms are retained.
+
+#### A hybrid bound that pays an original witness sector
+
+For each fixed pair of cores, first use Cauchy in the weighted $(r,e)$ Hilbert space and triangle over the distributions $a_g$. Low distributions have (C4), uniformly in the opposite core. High distributions retain the existing coefficient-uniform cubic envelope after the same weighted ray sum. After taking absolute values and summing core pairs, the numerical envelopes depend on their own cores. Cauchy over $a_g\mid\operatorname{rad}g$ costs $q_g^\varepsilon$ and yields a sum of squared numerical envelopes. Splitting this sum at $q_{a_g}=A$ retains low–high cross terms and requires no common coefficient vector.
+
+Squaring (C6), use $\sum_{q_{a_g}\le A}q_{a_g}^{-2/3}\ll A^{1/3}$ and convergence of $\sum_{b_g}q_{b_g}^{-4/3}$. The low part is
+
+$$
+\ll K^\varepsilon D^{5/6}N^{5/2}A^{1/3}\mathcal B^2.
+\tag{C7}
+$$
+
+The high part is the unchanged (B7). Keep the existing $K^{1+\varepsilon}$ treatment of $z=w=1$ and its algebraically added counterpart. The $\ell$ sum now has weight $q_\ell^{-5+\varepsilon}$ and converges uniformly in $L$. For $1\le A\le D$ this proves the complete classwise all-column pure-sixth-power pole bound
+
+$$
+\boxed{
+|\mathcal C^{a,\rm all}_{6,L}[c_j]|
+\ll K^\varepsilon\left\{
+K(1+N^{1/3})\mathcal P^2
++D^{4/3}NA^{-1/3}\mathcal P^2
++D^{5/6}N^{5/2}A^{1/3}\mathcal B^2
+\right\}.
+}
+\tag{C8}
+$$
+
+No original Möbius phase, column status, repeated prime or common gcd has been omitted. For $\mathcal B\le CH_0\mathcal P$, $H_0\ge1$, set $A=D^{3/4}N^{-9/4}H_0^{-3}$ when $D\ge N^3H_0^4$. Then $1\le A\le D$ and
+
+$$
+\boxed{
+|\mathcal C^{a,\rm all}_{6,L}[c_j]|
+\ll K^\varepsilon\mathcal P^2
+\left\{K(1+N^{1/3})+D^{13/12}N^{7/4}H_0\right\}.
+}
+\tag{C9}
+$$
+
+With fixed power room in $D>N^3H_0^4$, this improves the earlier cubic and absolute comparisons. Where (B9) improves, the ratio of the new term to its term is $D^{-5/36}N^{1/12}H_0^{5/9}$, which is also smaller with power room in the stated range. Retain the minimum with all previous estimates elsewhere.
+
+For the original row scale $U=U_j\ge1$, bounded $\mathcal P$ and the same original row-transform costs, sufficient conditions to pay this pole at $(UK)^\varepsilon UK$ are
+
+$$
+\boxed{N^2\le U,\qquad D\ge N^3H_0^4,
+\qquad DN^9H_0^{12}\le U^2.}
+\tag{C10}
+$$
+
+Indeed the pole factor is $U^{5/6}$; $N^2\le U$ pays $KN^{1/3}$, and division of the new term by $K$ leaves $D^{1/12}N^{3/4}H_0$, paid by the last condition.
+
+At the original $t=1$ witness setting, write $D=U^r$, $N=U^m$ and $H_0\ll U^h$. Retain $r\le1$, $r+m\ge1$, $0\le m\le1/2$ and their original arbitrarily small losses. If $9m+12h<1$ with fixed reserve, then $r+9m+12h<2$, and $r>3m+4h$ follows from $r\ge1-m$ and $4h<(1-9m)/3$. Thus (C10) holds after absorbing the small losses. This includes a nonempty interval $0\le m<1/9$ at fixed height. The witness theorem does not guarantee that returned witnesses lie in this sector, and no length or shared height budget has been reset.
+
+This source-conditional application pays the specified classwise all-column pure-sixth-power pole only on that sector. It supplies no bound for the remaining dual ideals, the earlier cross-class signed pole, all other witness sectors or signed same-integer Robin restoration. RH and the full Robin inequality remain unproved; no complete analytical Lean certification is claimed.
 
 ## The possible FIB interface
 
