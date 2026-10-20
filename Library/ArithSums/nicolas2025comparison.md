@@ -13478,3 +13478,306 @@ bounded at this reserve. This application is paper mathematics using
 published and existing inputs, with no Lean certification or literature
 priority claim. RH and strict Robin for every integer $n>5040$ remain
 unproved.
+
+## A full-response budget for logarithmically growing signed xi clocks
+
+This application reuses XLR1's published Biane–Pitman–Yor law, the
+integrated explicit formula GAK10–GAK16, GPP2–GPP4 and the original
+same-integer account GAK37–GAK39. It is a repo-derived application controlling a changing family of
+signed clocks; the fixed positive-law allowance XLR8 is not applied
+to that family. The interpolation algebra is standard, and no
+literature priority or Lean certification is claimed.
+
+The additional classical inputs are
+[Johnston–Yang, arXiv:2204.01980v2](https://arxiv.org/pdf/2204.01980v2),
+Lemma 2.7, already recorded as
+[PK (Z1)](../Analytic/polak2026finiterobinca.md#the-additional-published-input),
+and [DLMF 5.11.9](https://dlmf.nist.gov/5.11.E9) and
+[25.2.10](https://dlmf.nist.gov/25.2.E10).
+The latter formula with $n=1$ gives
+$\zeta(\sigma+it)=O((1+|t|)^3)$ uniformly for $0\le\sigma\le1/2$:
+the periodic-Bernoulli integral is uniformly absolutely bounded
+there, and its coefficient is a cubic polynomial. Vertical-strip
+Stirling and the entire continuation of $\xi$ consequently give
+rapid vertical decay for XLR1's
+$h(s)=2m^{1-s}\xi(s)$ on this strip. These are published inputs and
+their parameter correspondence, rather than new zeta estimates.
+
+### One signed family and a common degree cap
+
+Put $m=\pi/3$ and retain the whole law $\mu$ of XLR1, with
+$h(s)=\int c^{s-1}\,d\mu(c)$. For an integer $k\ge1$ define
+
+$$
+Q(z)=(1-z)(1-z/m),\qquad
+P_k(z)=1-Q(z)^k=\sum_{j=1}^{2k}p_{k,j}z^j,
+$$
+
+$$
+\nu_k=\sum_{j=1}^{2k}p_{k,j}\mu^{*j},\qquad
+H_k(s)=\int c^{s-1}\,d\nu_k(c)=P_k(h(s)).
+\tag{GPC1}
+$$
+
+Here convolution is multiplicative. The signed mass, first moment
+and inverse first moment are all one, since
+$h(0)=m$ and $h(1)=h(2)=1$. Also $H_k(\rho)=0$ at every actual
+nontrivial zero, with no critical-line assumption. The usual
+polynomial interpolation gives vanishing derivatives of $H_k-1$
+through order $k-1$ at $s=0,1$. These algebraic identities provide
+neither positivity of $\nu_k$ nor Jensen's inequality.
+
+For real $t$ let $b_t=\int c^t\,d\mu(c)$ and
+$R_t=(1+b_t)(1+b_t/m)$. All these moments are finite. The
+coefficient absolute-value envelope gives
+
+$$
+M_t(k):=\int c^t\,d|\nu_k|(c)\le1+R_t^k.
+\tag{GPC2}
+$$
+
+Fix $\eta=1/24$. Choose one $\kappa>0$ so that
+$\kappa\log R_t\le\eta$ for every
+$t\in\{0,-1,-4,-2/3,1/3\}$. For $1\le k\le\kappa\log A$,
+
+$$
+M_t(k)\le2A^\eta
+\qquad(t\in\{0,-1,-4,-2/3,1/3\},\ A\ge1).
+\tag{GPC3}
+$$
+
+The same $\kappa$ is decreased below to control the complete zero
+spectrum. No bounded-total-variation or fixed-degree limit is assumed.
+
+Write $\rho=\beta+i\gamma$, $\delta_\rho=1-\beta$. The classical
+zero-free region, together with the existing finite verification for
+$|\gamma|<2$, gives
+
+$$
+\delta_\rho\ge\frac{a_0}{\log(2+|\gamma|)},\qquad
+a_0=\min\{1/5.5666305,\ (\log2)/2\}>0.
+$$
+
+Only this finite head uses verified criticality. Rapid vertical
+decay supplies $B_0<\infty$ with
+$|h(\rho/2)|\le B_0/(1+|\gamma|)^2$. Since
+
+$$
+\log_+|Q(z)|
+\le(1+1/m)|z|,
+$$
+
+there is a fixed $B>0$ with
+$\log_+|Q(h(\rho/2))|\le(B/a_0)\delta_\rho$.
+Reduce $\kappa$ so that $\kappa B/a_0\le1/4$. Then, simultaneously
+for all actual zeros and all $k\le\kappa\log A$,
+
+$$
+A^{\beta/2-1/2}|H_k(\rho/2)|
+\le2\exp\!\left(-\frac{\delta_\rho\log A}{4}\right).
+\tag{GPC4}
+$$
+
+Indeed $|H_k|\le1+|Q(h)|^k\le2A^{\delta_\rho/4}$.
+This bounds filter growth and the zero-free gap on the same zero.
+No numerical value of $\kappa$ or common starting point is supplied.
+
+### Uniform full smoothed response
+
+Keep $L=\log A$, $T_A=\sqrt A L$, and the unchanged $K,F_A,J_c^\psi$.
+In particular $J_1^\psi=-I_\psi$; the integrated zero coefficient in
+$J_c^\psi$ has the positive sign $c^{\rho-1}F_A(\rho)$.
+The following assertions hold uniformly through the common degree cap:
+
+$$
+\begin{aligned}
+\sup_{1\le k\le\kappa L}T_A|J_{\nu_k}^\psi(A)|&\longrightarrow0,\\
+\sup_{1\le k\le\kappa L}
+\left|T_A\mathcal T_{\ge2}(A,\nu_k)
+ -B(A)(H_k(1/2)-1)\right|&\longrightarrow0.
+\end{aligned}
+\tag{GPC5}
+$$
+
+Here $J_\nu^\psi=\int J_c^\psi\,d\nu(c)$ and the actual transport is
+
+$$
+\mathcal T_{\ge2}(A,\nu)
+=\int_A^\infty
+ \left[\int\frac{P_{\ge2}(cu)}c\,d\nu(c)-P_{\ge2}(u)\right]K(u)\,du.
+$$
+
+All powers, all positive clocks and the entire infinite tail remain.
+We establish absolute integrability against $|\nu_k|$ before using
+any signed cancellation.
+
+Put $E_A=\{c<A^{-1/2}\}$ and abbreviate $M_t=M_t(k)$. The absolute
+measure satisfies
+
+$$
+\begin{aligned}
+|\nu_k|(E_A)&\le A^{-2}M_{-4},\\
+\int_{E_A}c^{-1}\,d|\nu_k|&\le A^{-3/2}M_{-4},\\
+\int_{E_A}c^{-1/2}\,d|\nu_k|&\le A^{-7/4}M_{-4}.
+\end{aligned}
+\tag{GPC6}
+$$
+
+For absolute integrability of $J_\nu^\psi$, apply XLR3 to
+$|\nu_k|$, splitting at $c=u^{-1/2}$ for each $u$.
+Above that cut the logarithmic PNT gives
+$O(M_0u/\log^2u)$; below it the trivial
+$\psi(t)\le t\log_+t$ gives $O(M_{-4}u^{-1}(1+\log u))$.
+Both are $K$-integrable. For the actual contribution of the fixed
+$E_A$, split again at $u^{-1/2}$. The upper part costs
+$O(M_{-4}A^{-3/2}/L)$ after multiplication by $T_A$, and the lower
+part costs $O(M_{-4}L A^{-3/2})$.
+
+On $E_A^c$ one has $cu\ge\sqrt A$. The finite-endpoint integrated
+explicit formula and GAK13 therefore apply. The zero count makes
+$\mathcal S_1=\sum_\rho m_\rho/(|\rho||1-\rho|)$ finite.
+Replacing the complementary Mellin integral by the full
+$H_k(\rho)=0$ leaves only $E_A$; GPC6 bounds its normalized cost
+by $O(M_{-4}\mathcal S_1/A)$. The constant and trivial-zero terms
+have absolute normalized cost $O(M_{-1}/\sqrt A)$:
+their integral is $O(M_{-1}/(AL))$, using
+$|\log(1-(cu)^{-2})|\le2(cu)^{-2}$ on the good set.
+
+All constants here are independent of $k$. GPC3 makes each allowance
+vanish, proving the first line of GPC5. This uses absolute elementary
+remainders, not a one-sided positive-law estimate for signed $\nu_k$.
+
+### The square term with every zero retained
+
+Define
+
+$$
+S_\nu(A)=\int_A^\infty\int
+ \frac{\psi(\sqrt{cu})-\sqrt{cu}}c\,d\nu(c)K(u)\,du.
+$$
+
+On $E_A$, $c<1$ and the absolute integrand before multiplication
+by $K$ is at most
+$\sqrt u\,c^{-1/2}(1+\log u)$. GPC6 bounds its normalized tail
+by $O(M_{-4}L^2 A^{-7/4})$.
+
+For the whole square integral,
+$c^{-1/2}(1+\log_+c)\le C(1+c^{-1})$ supplies an absolute
+large-clock majorant; its small-clock part is covered by GPC6.
+On $E_A^c$, $\sqrt{cu}\ge A^{1/4}$. The same finite-endpoint
+explicit-formula argument, now with $s=\rho/2$, has zero coefficient
+
+$$
+-\frac12c^{\rho/2-1}F_A(\rho/2).
+$$
+
+The factor $1/2$ follows from the original $1/\rho$ coefficient;
+it is not absorbed into the zero multiplicity. GAK13 gives a
+summable finite-endpoint majorant. The constant and trivial-zero
+terms again cost $O(M_{-1}/\sqrt A)$ after normalization, using
+$|\log(1-(cu)^{-1})|\le2/(cu)$.
+Completing the complementary Mellin moment to $H_k(\rho/2)$ costs
+$O(M_{-4}A^{-3/2}\mathcal S_2)$, where
+
+$$
+\mathcal S_2=\sum_\rho\frac{m_\rho}{|\rho||1-\rho/2|}<\infty.
+$$
+
+For the complete full-law sum, GAK13 and GPC4 give the common
+normalized majorant
+
+$$
+C\sum_\rho
+ \frac{m_\rho}{|\rho||1-\rho/2|}
+ \exp\!\left(-\frac{\delta_\rho\log A}{4}\right)
+ \longrightarrow0.
+\tag{GPC7}
+$$
+
+Both ordinate signs and actual multiplicities occur in these sums.
+The convergence follows from the summable $\mathcal S_2$ majorant
+and $\delta_\rho>0$ at each actual zero; GPC4 makes it independent
+of the changing $k$. This proves
+$\sup_{k\le\kappa L}T_A|S_{\nu_k}(A)|\to0$.
+It does not exchange an unsmoothed zero series absolutely.
+
+### Every remaining prime power
+
+For every $t>0$ there is the exact finite-sum identity
+
+$$
+\begin{aligned}
+P_{\ge2}(t)&=\psi(\sqrt t)+R_3(t),\\
+R_3(t)&=\sum_{j\ge3}\vartheta(t^{1/j})-P_{\ge2}(\sqrt t).
+\end{aligned}
+$$
+
+The global Chebyshev bound and the number of admissible exponents
+give $|R_3(t)|\le C t^{1/3}(1+\log_+t)^2$. Below the first prime
+power both sides vanish; no small-$t$ singularity is introduced.
+For $u\ge A\ge e$,
+
+$$
+\int\frac{|R_3(cu)|}{c}\,d|\nu_k|(c)
+\le C u^{1/3}(1+\log u)^2(M_{-2/3}+M_{1/3}).
+$$
+
+Here $(1+\log_+(cu))^2\le C(1+\log u)^2(1+c)$.
+The full normalized $K$-tail is
+$O(A^{\eta-1/6}L^2)\to0$, uniformly in $k$.
+This also supplies absolute Fubini for the complete remainder.
+Separately GPP2 pays the reference
+$P_{\ge2}(u)-\sqrt u=o(\sqrt u)$ on the entire $u\ge A$ tail,
+with no growing total-variation multiplier on that reference.
+The square main term is
+$\sqrt u\int c^{-1/2}\,d\nu_k=\sqrt u\,H_k(1/2)$.
+Combining these facts proves the second line of GPC5.
+
+### The original integer's account and the unpaid estimate
+
+XLR2 gives $b=h(1/2)\in[1,\sqrt m]$ and
+$-1<Q(b)\le0$. For even $k$,
+$H_k(1/2)-1=-Q(b)^k\le0$. Thus GPC5 supplies one
+$\epsilon_*(A)\to0$, independent of even $k$ in the cap, such that
+
+$$
+T_A[J_{\nu_k}^\psi(A)+\mathcal T_{\ge2}(A,\nu_k)]
+\le\epsilon_*(A).
+\tag{GPC8}
+$$
+
+For any integer-valued $k(A)\to\infty$ within the cap, this combined
+expression tends to zero in absolute value; parity is unnecessary
+for that limit. No convergence to a positive law or to $\delta_1$
+is asserted.
+
+Use the centered response
+$J_c^\vartheta=-c^{-1}\int_A^\infty[\vartheta(cu)-cu]K(u)\,du$
+and $\mathcal T_\vartheta=J_1^\vartheta-\int J_c^\vartheta\,d\nu_k$.
+Their integrability follows from the preceding $\psi$ and
+proper-power bounds. For each integer's own $A=\log n>e^{107}$,
+mass one preserves the exact account
+
+$$
+\Delta(n)=R(A)+d_A(n)-J_{\nu_k}^\psi
+ -\mathcal T_\vartheta(A,\nu_k)-\mathcal T_{\ge2}(A,\nu_k).
+$$
+
+GAK37 and GPC8 therefore imply, eventually and uniformly for even
+$2\le k\le\kappa L$,
+
+$$
+T_A\Delta(n)>
+ Q_R+\frac{L}{(L+2)^3}+T_A d_A(n)
+ -T_A\mathcal T_\vartheta(A,\nu_k)-\epsilon_*(A).
+\tag{GPC9}
+$$
+
+The nonnegative defect and unrestricted pressure still belong to
+this same integer. GPC5–GPC9 admit clocks with an increasing number
+of exact logarithmic moment cancellations while paying the full
+smoothed and higher-power response. They do not bound the
+remaining first-prime transport against that defect. In particular,
+$J_{\nu_k}^\psi+\mathcal T_\vartheta+\mathcal T_{\ge2}=J_1^\psi$
+still holds exactly. No mean-one price normalization, signed Jensen
+inequality, new finite verification interval or RH/Robin proof follows.
