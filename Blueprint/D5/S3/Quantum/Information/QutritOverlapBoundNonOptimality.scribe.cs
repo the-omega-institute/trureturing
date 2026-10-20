@@ -53,7 +53,10 @@ internal sealed class QutritOverlapBoundNonOptimalityDocument : IScribeDocumentD
                         "Equality would force ψ into the span of two standard-basis vectors and into the span of two transformed-basis vectors. Equality in Cauchy–Schwarz makes those two planes coincide. In dimension three their remaining basis vectors are both orthogonal to that plane, so their overlap has modulus one, contradicting c < 1.")),
                     Paragraph(Text(
                         "At c = 3/4 the bound is 1 − (3/4)² = 7/16. The universal attainment assertion would supply a state and unitary attaining this value, but the strict inequality above rules that out."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zozor-bosyk-portesi-2014-qutrit-overlap-bound-non-optimality"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
