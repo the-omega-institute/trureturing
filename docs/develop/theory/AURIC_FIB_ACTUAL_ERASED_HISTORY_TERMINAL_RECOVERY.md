@@ -1459,3 +1459,829 @@ those recorded in [Watrous, Chapter 2, Theorems 2.22 and 2.26][TQI2].
 [BKK]: https://arxiv.org/pdf/0705.1574 "C. Bény, A. Kempf and D. W. Kribs, Quantum Error Correction of Observables"
 
 ## 追加锚（本行以下为增补区）
+
+## 105. Terminal recovery tested without a reference
+
+**Definition 105.1 (No-reference minimax).** Keep the complex qutrit,
+original identity target and actual powers $\mathcal N_n=F^n$ of
+Definition 93.1. Write
+
+$$
+d(\rho,\tau)=\frac12\|\rho-\tau\|_1,\qquad
+\mu_n=\min_{D\ {\rm CPTP}}\ \max_{\rho\in\mathsf D(\mathbb C^3)}
+ d(D\mathcal N_n(\rho),\rho).
+\tag{105.1}
+$$
+
+For each horizon, one terminal CPTP map $D:M_3\to M_3$ is chosen before
+the unknown input. The input set contains every complex density matrix,
+including mixed states and pure states with arbitrary complex phases.
+The decoder receives only the terminal qutrit. There is no reference
+input or reference access, history register, intermediate correction,
+postselection or restriction to a smaller input code. A CPTP decoder may
+use an internal ancillary system and discard it, as usual; its induced
+map on the qutrit is still the single map in (105.1).
+
+For the channel $\Phi_s$ in (93.5), define
+
+$$
+e_s(\mathcal R)=\max_{\rho\in\mathsf D(\mathbb C^3)}
+ d(\mathcal R\Phi_s(\rho),\rho),\qquad
+\mu(s)=\min_{\mathcal R\ {\rm CPTP}}e_s(\mathcal R),
+\qquad -\frac12\le s\le1.
+\tag{105.2}
+$$
+
+The precise correspondence (93.10) gives
+
+$$
+\mathcal N_n=\operatorname{Ad}_{U_0}\circ\Phi_{s_n},\qquad
+\mathcal R=D\circ\operatorname{Ad}_{U_0},\qquad
+D=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger},\qquad
+\mu_n=\mu(s_n)\quad(n\ge1).
+\tag{105.3}
+$$
+
+At infinity, (93.7) gives $\mu_\infty=\mu(0)$. The empty horizon instead
+has $\mathcal N_0=\operatorname{id}$; it is not the parameter $s=0$.
+No additional unitary is applied to the target in (105.3).
+
+**Lemma 105.2 (Physical parameter interval and attainment).** The map
+$\Phi_s$ is CPTP exactly for real $s\in[-1/2,1]$. Every maximum and minimum
+in (105.1)–(105.2) is attained.
+
+*Proof.* Put $a=(1+s)/2$ and $b=(1-s)/2$. On the stated interval a Kraus
+representation of $\Phi_s$ is
+
+$$
+\operatorname{diag}(1,s,0),\quad
+\sqrt{a-s^2}\,|1\rangle\langle1|,\quad
+\sqrt a\,|2\rangle\langle2|,\quad
+\sqrt b\,|2\rangle\langle1|,\quad
+\sqrt b\,|1\rangle\langle2|.
+\tag{105.4}
+$$
+
+Here $a-s^2=(1-s)(1+2s)/2\ge0$, and the adjoint products sum to $I$.
+Conversely positivity of the output populations requires $a,b\ge0$.
+In the output-first convention (93.9), the Choi principal block on
+$|00\rangle,|11\rangle$ is $\left(\begin{smallmatrix}1&s\\s&a\end{smallmatrix}\right)$.
+Complete positivity therefore requires $a-s^2\ge0$, which together with
+$a,b\ge0$ gives exactly $-1/2\le s\le1$.
+
+The density matrices form a compact set. The Choi matrices of qutrit
+CPTP maps form the compact set
+$\{J\ge0:\operatorname{Tr}_{\rm out}J=I\}$: it is closed and every
+member has trace three. The error is continuous in the channel and input.
+Maximizing over a compact input set preserves continuity, and minimizing
+over the compact decoder set attains the minimum. $\square$
+
+**Lemma 105.3 (Inputs, metric and continuity).** For each fixed decoder,
+the input maximum in (105.2) equals the maximum over pure states. Moreover
+
+$$
+|e_s(\mathcal R)-e_t(\mathcal R)|\le |s-t|,
+\qquad |\mu(s)-\mu(t)|\le |s-t|
+\quad(s,t\in[-1/2,1]).
+\tag{105.5}
+$$
+
+*Proof.* The error is convex in $\rho$. A spectral decomposition of any
+mixed density matrix bounds its error by a convex combination of pure
+input errors, hence by the largest such error. The reverse inequality
+holds because pure states are among the allowed inputs.
+
+For any Hermitian traceless $3\times3$ matrix $X$,
+
+$$
+\frac12\|X\|_1=\|X\|_{\rm op}.
+\tag{105.6}
+$$
+
+Indeed, unless $X=0$, the sum of its positive eigenvalues equals the sum
+of the absolute values of its negative eigenvalues. In dimension three,
+at least one of these two sums consists of a single eigenvalue, whose
+absolute value is at least that of each other eigenvalue. Every recovery
+error on a density input has this Hermitian traceless form. Equation
+(105.6) does not identify (105.2) with an induced Schatten norm whose
+supremum also includes arbitrary non-Hermitian matrices.
+
+For a density matrix $\rho$, write $z=\rho_{01}$ and
+$h=(\rho_{11}-\rho_{22})/2$. Directly from (93.5),
+
+$$
+(\Phi_s-\Phi_t)(\rho)=(s-t)
+ \begin{pmatrix}0&z&0\\\overline z&h&0\\0&0&-h\end{pmatrix},
+\qquad
+\frac12\|(\Phi_s-\Phi_t)(\rho)\|_1
+ \le |s-t|(|z|+|h|)\le |s-t|.
+\tag{105.7}
+$$
+
+The first bound splits the matrix into its off-diagonal and diagonal
+parts. Positivity gives $|z|\le\sqrt{\rho_{00}\rho_{11}}\le1/2$,
+and $|h|\le1/2$. A CPTP map contracts the trace norm of Hermitian
+matrices: applying it to the positive and negative parts proves this
+from positivity and trace preservation. The reverse triangle inequality
+and (105.7) thus bound the change in each input error by $|s-t|$,
+uniformly in the decoder. Taking input maxima and then decoder minima
+proves (105.5). $\square$
+
+## 106. Exact Fourier guessing and a lower bound for every decoder
+
+Let $E_{ij}=|i\rangle\langle j|$, $Q_j=E_{jj}$,
+$Q_{01}=Q_0+Q_1$, and $\omega=e^{2\pi i/3}$. Define the Fourier basis
+and its output ensemble by
+
+$$
+|\psi_k\rangle=\frac{|0\rangle+\omega^k|1\rangle+
+                              \omega^{2k}|2\rangle}{\sqrt3},
+\quad P_k=|\psi_k\rangle\langle\psi_k|,
+\quad \sigma_k=\Phi_s(P_k)=\frac{I+sA_k}{3},
+\quad A_k=\omega^{-k}E_{01}+\omega^k E_{10},
+\quad k=0,1,2.
+\tag{106.1}
+$$
+
+The projectors $P_k$ are pairwise orthogonal and sum to $I$, since
+$1+\omega+\omega^2=0$. The outputs form an equiprobable geometrically
+uniform ensemble:
+$\sigma_k=S^k\sigma_0S^{-k}$ with
+$S=\operatorname{diag}(1,\omega,\omega^2)$.
+The primal POVM and dual positive-operator formulations for this setting
+are those of [Assalini–Cariolaro–Pierobon, §§II–III][ACP-FG]. The following
+calculation gives both certificates for the particular ensemble (106.1).
+
+**Theorem 106.1 (Fourier guessing).** For every $-1/2\le s\le1$, the
+optimal equal-prior guessing probability for $\{\sigma_0,\sigma_1,\sigma_2\}$
+is exactly
+
+$$
+G(s)=\max_{\substack{M_k\ge0\\\sum_kM_k=I}}
+       \frac13\sum_{k=0}^2\operatorname{Tr}(M_k\sigma_k)
+     =\frac13+\frac{2|s|}{9}.
+\tag{106.2}
+$$
+
+*Proof.* Write $q=|s|$. The matrices $A_k$ satisfy
+
+$$
+A_k^\dagger=A_k,\qquad A_k^2=Q_{01},\qquad
+\operatorname{Tr}A_k=0,\qquad \sum_kA_k=0.
+\tag{106.3}
+$$
+
+For $s\ne0$ put $\varepsilon=\operatorname{sign}s$. The operators
+
+$$
+M_k=\frac{I+\varepsilon A_k}{3}
+\tag{106.4}
+$$
+
+are positive, have eigenvalues $0,1/3,2/3$, and sum to $I$. Each one gives
+
+$$
+\operatorname{Tr}(M_k\sigma_k)
+ =\frac{\operatorname{Tr}I+\varepsilon s\operatorname{Tr}Q_{01}}9
+ =\frac13+\frac{2q}{9}.
+\tag{106.5}
+$$
+
+The equal-prior average has the same value. At $s=0$ use $M_k=I/3$.
+
+For the dual certificate set
+
+$$
+Y=\frac I9+\frac q9Q_{01},\qquad
+Y-\frac{\sigma_k}{3}=\frac{qQ_{01}-sA_k}{9}\ge0,
+\qquad \operatorname{Tr}Y=\frac13+\frac{2q}{9}.
+\tag{106.6}
+$$
+
+The residual has eigenvalues $0,0,2q/9$: in the $01$ block its diagonal
+entries are $q/9$ and its off-diagonal entries are
+$-s\omega^{-k}/9,-s\omega^k/9$. In particular the $Q_0,Q_1$ in this
+certificate are computational projectors, not Fourier projectors.
+For any POVM $\{N_k\}$, the trace of the product of two positive matrices
+is nonnegative, so
+
+$$
+\frac13\sum_k\operatorname{Tr}(N_k\sigma_k)
+ \le\sum_k\operatorname{Tr}(N_kY)=\operatorname{Tr}Y.
+\tag{106.7}
+$$
+
+The displayed primal attains the dual value, proving (106.2), including
+$q=0$. $\square$
+
+**Theorem 106.2 (All-decoder obstruction).** On the entire physical
+parameter interval,
+
+$$
+\boxed{\displaystyle
+\mu(s)\ge\max\left\{\frac12,\frac23-\frac{2|s|}{9}\right\}.}
+\tag{106.8}
+$$
+
+*Proof.* Fix an arbitrary CPTP decoder $\mathcal R$. Its adjoint is CP
+and unital, so $N_k=\mathcal R^\dagger(P_k)$ form a POVM. By (106.2),
+
+$$
+\frac13\sum_k\operatorname{Tr}
+       [P_k\mathcal R\Phi_s(P_k)]
+ =\frac13\sum_k\operatorname{Tr}(N_k\sigma_k)\le G(s).
+\tag{106.9}
+$$
+
+Consequently some $k$, allowed to depend on this fixed decoder, has
+$\operatorname{Tr}[P_k\mathcal R\Phi_s(P_k)]\le G(s)$.
+For any state $\tau$ and rank-one projector $P$, the trace-distance
+variational formula, tested on the effect $P$, gives
+$d(\tau,P)\ge1-\operatorname{Tr}(P\tau)$. Thus
+
+$$
+e_s(\mathcal R)\ge
+ d(\mathcal R\Phi_s(P_k),P_k)\ge1-G(s)
+ =\frac23-\frac{2|s|}{9}.
+\tag{106.10}
+$$
+
+Independently, the two orthogonal pure states
+
+$$
+H_\pm=|a_\pm\rangle\langle a_\pm|,
+\qquad |a_\pm\rangle=(|0\rangle\pm|2\rangle)/\sqrt2
+\tag{106.11}
+$$
+
+have the identical output
+$\Phi_s(H_\pm)=\operatorname{diag}(1/2,(1-s)/4,(1+s)/4)$.
+Their decoded outputs are therefore the same state $\tau$.
+The triangle inequality yields
+$1=d(H_+,H_-)\le d(H_+,\tau)+d(\tau,H_-)$, and hence
+$e_s(\mathcal R)\ge1/2$. Both bounds hold for each decoder separately.
+Taking its minimum proves (106.8), without exchanging the input and
+decoder quantifiers. $\square$
+
+## 107. Endpoints, positive parameters and actual finite intervals
+
+**Lemma 107.1 (Replacer and the zero-parameter identity decoder).** The
+CPTP replacer $\mathcal T(X)=\operatorname{Tr}(X)I/3$ has
+$e_s(\mathcal T)=2/3$ for every physical $s$. Also
+$e_0(\operatorname{id})=2/3$. Its pure maximizing inputs are exactly
+those with $p_0=1/3$, where $p_j=|\langle j,v\rangle|^2$.
+
+*Proof.* Kraus operators $E_{ij}/\sqrt3$ realize $\mathcal T$.
+For every pure state $P$, $I/3-P$ has eigenvalues $-2/3,1/3,1/3$.
+Convexity handles mixed inputs and gives the stated replacer error.
+
+For the identity decoder at $s=0$, put $t=p_1+p_2$.
+A unitary on $\operatorname{span}\{|1\rangle,|2\rangle\}$ sends the lower
+part of a pure input to $(\sqrt t,0)$ and leaves the lower output
+$tI_2/2$ invariant. After also removing the upper phase, its error is
+unitarily conjugate to
+
+$$
+\begin{pmatrix}
+0&-\sqrt{t(1-t)}&0\\
+-\sqrt{t(1-t)}&-t/2&0\\
+0&0&t/2
+\end{pmatrix}.
+\tag{107.1}
+$$
+
+The eigenvalues are $t/2$ and
+$(-t\pm\sqrt{t(16-15t)})/4$. Since
+$\sqrt{t(16-15t)}\ge t$ on $[0,1]$, (105.6) gives the error
+
+$$
+f(t)=\frac{t+\sqrt{t(16-15t)}}4\le\frac23.
+\tag{107.2}
+$$
+
+Indeed $8/3-t>0$ and
+
+$$
+(8/3-t)^2-t(16-15t)=16(t-2/3)^2.
+\tag{107.3}
+$$
+
+Equality holds exactly at $t=2/3$. At every such input $P$,
+$\Phi_0(P)=I/3$ and the error is $I/3-P$. $\square$
+
+**Proposition 107.2 (Endpoints and positive-branch upper bound).**
+
+$$
+\mu_0=0,\qquad \mu_1=\mu(1)=\frac12,\qquad
+\mu_\infty=\mu(0)=\frac23,
+\tag{107.4}
+$$
+
+and, for $0\le s\le1$,
+
+$$
+e_s(\operatorname{id})=\frac23-\frac{s}{6},\qquad
+\mu(s)\le\frac23-\frac{s}{6}.
+\tag{107.5}
+$$
+
+*Proof.* The empty horizon is recovered exactly by the identity decoder.
+At parameter one, $\Phi_1$ is pinching into the $01$ block and the $2$
+block. For a pure state with population $p_2$, its error has eigenvalues
+$0,\pm\sqrt{p_2(1-p_2)}$, so
+$e_1(\operatorname{id})=1/2$. The lower bound (106.8) proves
+$\mu(1)=1/2$. At parameter zero, (106.8) and the replacer prove
+$\mu(0)=2/3$.
+
+Linearity gives $\Phi_s=s\Phi_1+(1-s)\Phi_0$ for $0\le s\le1$.
+The triangle inequality and Lemma 107.1 therefore give the upper bound
+in (107.5) for every density input. To see equality for this fixed
+decoder, use the pure state with real coordinates
+
+$$
+v=(\sqrt{1/3},\sqrt{1/6},\sqrt{1/2})^{\mathsf T},\qquad P=vv^\dagger.
+\tag{107.6}
+$$
+
+Here $(\Phi_0(P)-P)v=-2v/3$, and direct block pinching gives
+$(\Phi_1(P)-P)v=-v/2$. Thus
+$(\Phi_s(P)-P)v=-(2/3-s/6)v$. Its error is at least $2/3-s/6$,
+matching the upper bound. This proves the identity-decoder value,
+without asserting that this decoder minimizes (105.2). $\square$
+
+**Corollary 107.3 (Actual-horizon intervals and convergence).** For
+$q_n=2^{1-n}$, the exact transport (105.3) yields
+
+$$
+\begin{aligned}
+\frac23-\frac{2q_n}{9}\le\mu_n\le\frac23
+ &&(n\ge2\text{ even}),\\
+\frac23-\frac{2q_n}{9}\le\mu_n\le\frac23-\frac{q_n}{6}
+ &&(n\ge3\text{ odd}).
+\end{aligned}
+\tag{107.7}
+$$
+
+In particular,
+
+$$
+\frac59\le\mu_2\le\frac23,\qquad
+\frac{11}{18}\le\mu_3\le\frac58.
+\tag{107.8}
+$$
+
+*Proof.* Even horizons have $s_n=-q_n$, and odd horizons have $s_n=q_n$.
+For every $n\ge2$, $0<q_n\le1/2$, so the Fourier term of (106.8)
+is greater than $1/2$. Use the replacer for the even upper bound
+and (107.5) for the odd upper bound. In the original coordinates the
+latter decoder is $\operatorname{Ad}_{U_0^\dagger}$, by (93.10).
+Substitution of $q_2=1/2,q_3=1/4$ gives (107.8). Also
+
+$$
+0\le\frac23-\mu_n\le\frac{2q_n}{9}\quad(n\ge2),
+\qquad \lim_{n\to\infty}\mu_n=\frac23.
+\tag{107.9}
+$$
+
+This agrees with continuity (105.5) and $\mu(0)=2/3$.
+No finite $s_n$ is zero. $\square$
+
+The interval widths in (107.7) are $2q_n/9$ for even horizons and
+$q_n/18$ for odd horizons. These are upper and lower certificates for
+the common-decoder, all-input problem; they do not give its exact value
+at any actual finite $n\ge2$.
+
+## 108. A CPTP family for the negative branch
+
+For parameters
+
+$$
+0<u<1,\qquad 0<\eta\le\sqrt{(1-u)/2},\qquad
+ a_u=\frac{1-u}{2},\quad b_u=\frac{1+u}{2},
+\tag{108.1}
+$$
+
+define a terminal map on every complex matrix by
+
+$$
+\mathcal R_{u,\eta}(X)=
+\begin{pmatrix}
+x_{00}&-\eta x_{01}&0\\
+-\eta x_{10}&a_u x_{11}+b_u x_{22}&0\\
+0&0&b_u x_{11}+a_u x_{22}
+\end{pmatrix}.
+\tag{108.2}
+$$
+
+**Lemma 108.1 (Complete positivity and exact composition).** The map
+(108.2) is CPTP, including the equality case in (108.1). For
+$0\le q\le1/2$, its composition
+$\Lambda_q=\mathcal R_{u,\eta}\circ\Phi_{-q}$ is
+
+$$
+\Lambda_q(X)=
+\begin{pmatrix}
+x_{00}&q\eta x_{01}&0\\
+q\eta x_{10}&\frac{1+uq}{2}x_{11}+\frac{1-uq}{2}x_{22}&0\\
+0&0&\frac{1-uq}{2}x_{11}+\frac{1+uq}{2}x_{22}
+\end{pmatrix},\qquad \Lambda_0=\Phi_0.
+\tag{108.3}
+$$
+
+*Proof.* Kraus operators for (108.2) are
+
+$$
+\operatorname{diag}(1,-\eta,0),\quad
+\sqrt{a_u-\eta^2}\,|1\rangle\langle1|,\quad
+\sqrt{a_u}\,|2\rangle\langle2|,\quad
+\sqrt{b_u}\,|2\rangle\langle1|,\quad
+\sqrt{b_u}\,|1\rangle\langle2|.
+\tag{108.4}
+$$
+
+All square roots are real and nonnegative, and the adjoint products sum
+to $I$. Composition multiplies the lower population mixing parameters
+$-u$ and $-q$, giving $uq$, and multiplies the surviving coherence
+parameters $-\eta$ and $-q$, giving $q\eta$. This gives (108.3) on every
+matrix unit. $\square$
+
+Both $\Phi_{-q}$ and $\mathcal R_{u,\eta}$ commute with conjugation by
+every diagonal unitary. For a pure input
+$z_j=e^{i\theta_j}\sqrt{p_j}$, its recovery error is therefore a diagonal
+unitary conjugate of the error at
+
+$$
+v(p)=(\sqrt{p_0},\sqrt{p_1},\sqrt{p_2})^{\mathsf T},\qquad
+P(p)=v(p)v(p)^\dagger,\qquad
+\mathcal P=\{p_j\ge0:\ p_0+p_1+p_2=1\}.
+\tag{108.5}
+$$
+
+When a coordinate vanishes its phase is immaterial. The matrices are
+continuous on this entire closed simplex. By Lemma 105.3 and (105.6),
+
+$$
+E_{u,\eta}(q):=e_{-q}(\mathcal R_{u,\eta})
+ =\max_{p\in\mathcal P}f_q(p),\qquad
+f_q(p)=\|\Delta(q,p)\|_{\rm op},\qquad
+\Delta(q,p)=\Lambda_q(P(p))-P(p).
+\tag{108.6}
+$$
+
+Thus this maximization includes every complex pure input and every
+mixed input, rather than only the real-coordinate representatives used
+to compute it. Directly from (108.3),
+
+$$
+\Delta(q,p)=\Delta(0,p)+qB(p),\qquad
+B(p)=
+\begin{pmatrix}
+0&\eta\sqrt{p_0p_1}&0\\
+\eta\sqrt{p_0p_1}&u(p_1-p_2)/2&0\\
+0&0&-u(p_1-p_2)/2
+\end{pmatrix}.
+\tag{108.7}
+$$
+
+By Lemma 107.1 the full maximizing set at zero is
+
+$$
+\mathcal S=\{(1/3,x,2/3-x):\ 0\le x\le2/3\},\qquad
+f_0|_{\mathcal S}=\frac23,\qquad
+\Delta(0,p)=I/3-P(p)\quad(p\in\mathcal S).
+\tag{108.8}
+$$
+
+The last matrix has eigenvalues $-2/3,1/3,1/3$. Its minimum eigenvalue
+is simple with normalized eigenvector $v(p)$, even at the endpoints
+$x=0$ and $x=2/3$. Its first variation in $q$ is
+
+$$
+\begin{aligned}
+g(x)&=v(p)^\dagger B(p)v(p)
+ =\frac u2(p_1-p_2)^2+2\eta p_0p_1\\
+ &=2u(x-1/3)^2+\frac{2\eta}{3}x.
+\end{aligned}
+\tag{108.9}
+$$
+
+The two nonnegative terms cannot both vanish. Hence
+
+$$
+\kappa(u,\eta)=\min_{0\le x\le2/3}g(x)>0.
+\tag{108.10}
+$$
+
+Its explicit value follows by completing the square:
+
+$$
+g(x)=2u\left(x-\frac13+\frac{\eta}{6u}\right)^2
+       +\frac{\eta(4u-\eta)}{18u},\qquad
+\kappa(u,\eta)=
+\begin{cases}
+\displaystyle\frac{\eta(4u-\eta)}{18u},&0<\eta\le2u,\\[5pt]
+\displaystyle\frac{2u}{9},&\eta\ge2u.
+\end{cases}
+\tag{108.11}
+$$
+
+Here $u>0$ ensures the denominators are nonzero. In the first case the
+quadratic's vertex $1/3-\eta/(6u)$ belongs to $[0,2/3]$; in the second
+it is nonpositive, so the interval minimum is at zero. The cases agree
+at $\eta=2u$ and always retain the CPTP restriction (108.1).
+
+## 109. Uniform maximizer envelope and a strict negative tail
+
+**Theorem 109.1 (Fixed-decoder negative-branch expansion).** For each
+fixed admissible pair $(u,\eta)$ in (108.1),
+
+$$
+E_{u,\eta}(q)=\frac23-\kappa(u,\eta)q+o(q)
+\qquad(q\downarrow0).
+\tag{109.1}
+$$
+
+The remainder is for the maximum over the full input set in (105.2).
+
+*Proof.* Put $M=2/3$. The simplex $\mathcal P$ is compact, and both
+$\Delta(0,p)$ and $B(p)$ are continuous on it. At each $p\in\mathcal S$,
+the minimum eigenvalue has gap one from the other two eigenvalues,
+and its absolute value exceeds theirs by $1/3$. Compactness and
+continuity of the ordered Hermitian eigenvalues give a relative open
+neighborhood $\mathcal U$ of $\mathcal S$ in $\mathcal P$, with compact
+closure, and $\epsilon>0$, such that on
+$[0,\epsilon]\times\overline{\mathcal U}$ the minimum eigenvalue stays
+simple and its absolute value alone determines the operator norm.
+In particular
+
+$$
+f_q(p)=-\lambda_{\min}(\Delta(q,p))
+\quad(0\le q\le\epsilon,\ p\in\overline{\mathcal U}).
+\tag{109.2}
+$$
+
+No differentiability with respect to $p$ is needed here, including at
+zero coordinates. To make the uniformity explicit, write the ordered
+eigenvalues as $\lambda_1<\lambda_2\le\lambda_3$. The minimum-eigenvalue
+projector on this neighborhood is the continuous matrix
+
+$$
+\Pi(q,p)=
+\frac{(\Delta(q,p)-\lambda_2I)(\Delta(q,p)-\lambda_3I)}
+     {(\lambda_1-\lambda_2)(\lambda_1-\lambda_3)}.
+\tag{109.3}
+$$
+
+The denominator is bounded away from zero after shrinking the
+neighborhood and $\epsilon$ if necessary; equality of $\lambda_2$ and
+$\lambda_3$ causes no difficulty. For fixed $p$, the variational
+characterization of the minimum eigenvalue bounds its difference
+quotient between the expectations of $B(p)$ in the two corresponding
+minimum eigenspaces. Continuity of $\Pi$ then gives
+
+$$
+\partial_q f_q(p)=-\operatorname{Tr}(\Pi(q,p)B(p)).
+\tag{109.4}
+$$
+
+This derivative is jointly continuous on the compact neighborhood.
+Integrating in $q$ proves
+
+$$
+f_q(p)=f_0(p)+q h(p)+r(q,p),\qquad
+h(p)=-\operatorname{Tr}(\Pi(0,p)B(p)),\qquad
+\sup_{p\in\overline{\mathcal U}}\frac{|r(q,p)|}{q}\longrightarrow0.
+\tag{109.5}
+$$
+
+Indeed the quotient is bounded by
+
+$$
+\sup_{0\le a\le q,\,p\in\overline{\mathcal U}}
+|\partial_a f_a(p)-h(p)|,
+$$
+
+which tends to zero by uniform continuity. On $\mathcal S$, (108.9)
+gives $h(1/3,x,2/3-x)=-g(x)$.
+
+It remains to pass from this neighborhood to the global input maximum.
+Let $L=\max_{p\in\mathcal P}\|B(p)\|_{\rm op}$. The reverse triangle
+inequality gives $|f_q(p)-f_0(p)|\le Lq$ throughout $\mathcal P$.
+For any maximizer $p_q$ of $f_q$, comparison with a point of $\mathcal S$
+therefore yields
+
+$$
+E_{u,\eta}(q)\ge M-Lq,\qquad f_0(p_q)\ge M-2Lq.
+\tag{109.6}
+$$
+
+Every accumulation point of such maximizers as $q\downarrow0$ belongs
+to the exact maximizing set $\mathcal S$. Thus all global maximizers
+lie in $\mathcal U$ for sufficiently small $q$: otherwise a sequence
+outside that neighborhood would have an accumulation point outside
+$\mathcal U$ but inside $\mathcal S$.
+
+Using (109.5) at these maximizers gives
+
+$$
+\frac{E_{u,\eta}(q)-M}{q}
+ =\frac{f_0(p_q)-M}{q}+h(p_q)+o(1)
+ \le h(p_q)+o(1).
+\tag{109.7}
+$$
+
+Compactness and localization imply that the limsup is at most
+$\max_{\mathcal S}h=-\kappa(u,\eta)$. Choose a fixed $p_*\in\mathcal S$
+minimizing $g$. Then (109.5) at $p_*$ gives the reverse bound
+
+$$
+E_{u,\eta}(q)\ge f_q(p_*)=M-\kappa(u,\eta)q+o(q).
+\tag{109.8}
+$$
+
+The liminf and limsup agree, proving (109.1). $\square$
+
+**Corollary 109.2 (Explicit strict tail).** Set
+
+$$
+u_* =\frac{\sqrt{33}-1}{16},\qquad
+\eta_*=2u_*,\qquad
+\kappa_* =\frac{\sqrt{33}-1}{72}>0.
+\tag{109.9}
+$$
+
+Then $0<u_*<1$, and $8u_*^2+u_*-1=0$ gives
+$\eta_*^2=(1-u_*)/2$. Thus the decoder is CPTP even at the saturated
+constraint. Equation (108.9) becomes
+$g(x)=2u_*x^2+2u_*/9$, so its minimum is $\kappa_*=2u_*/9$.
+There exists $q_0\in(0,1/2]$ such that
+
+$$
+\mu(-q)\le e_{-q}(\mathcal R_{u_*,\eta_*})
+ \le\frac23-\frac{\kappa_*}{2}q
+ =\frac23-\frac{\sqrt{33}-1}{144}q<\frac23
+\quad(0<q<q_0).
+\tag{109.10}
+$$
+
+*Proof.* Divide the remainder in (109.1) by $q$ and choose a positive
+neighborhood on which its absolute value is at most $\kappa_*/2$.
+The minimax is at most the error of this particular decoder. $\square$
+
+Since $q_n=2^{1-n}\to0$, every sufficiently large even actual horizon
+satisfies
+
+$$
+\mu_n\le\frac23-\frac{\sqrt{33}-1}{144}\,2^{1-n}<\frac23.
+\tag{109.11}
+$$
+
+In the original coordinates the legal decoder is
+$D=\mathcal R_{u_*,\eta_*}\circ\operatorname{Ad}_{U_0^\dagger}$.
+It is a single CPTP map for all inputs, with the permissions in
+Definition 105.1. Equation (109.1) is the asymptotic error of a fixed
+decoder; it is not an asymptotic equality for $\mu(-q)$. The existence
+of $q_0$ supplies no numerical threshold and makes no assertion about
+every individual even horizon.
+
+## 110. A uniform gap from stabilized terminal recovery
+
+Use exactly $\delta_n$ of (93.8): a reference may participate in the
+input test and remains untouched, while the decoder still acts only on
+the terminal qutrit. This differs from (105.1) in its input test, not in
+the decoder's available registers. The stabilized trace-norm convention
+is the one cited in §93 from [Watrous, Chapter 3][TQI3]. Its operational
+channel-comparison setting, with auxiliary input systems and CPTP
+composition, is also developed in [Jenčová][JC-COMP].
+
+**Lemma 110.1 (Comparison and power monotonicity).** For all horizons,
+$\mu_n\le\delta_n$. For finite $n\ge0$,
+
+$$
+\delta_n\le\delta_{n+1}.
+\tag{110.1}
+$$
+
+*Proof.* For each fixed decoder, the reference tests in (93.8) include
+every no-reference density input, by taking a one-dimensional reference.
+Its stabilized error therefore dominates its error in (105.1).
+Taking decoder minima preserves this inequality.
+
+For every CPTP decoder $D$ at horizon $n+1$, $D\circ F$ is a legal
+terminal CPTP decoder at horizon $n$, and the original powers obey
+
+$$
+(D\circ F)\circ F^n=D\circ F^{n+1}.
+\tag{110.2}
+$$
+
+These recovered channels are identical also after tensoring with any
+untouched reference. Hence $\delta_n$ is at most the stabilized error
+of $D$ at horizon $n+1$. Minimize over that $D$ to obtain (110.1).
+The composition is $D\circ F$, with no operation on the reference.
+$\square$
+
+**Theorem 110.2 (Uniform stabilized-versus-no-reference gap).** For every
+finite $n\ge2$, and also at the limiting channel,
+
+$$
+\boxed{\displaystyle
+\delta_n-\mu_n\ge\delta_2-\frac23>\frac{2}{87}.}
+\tag{110.3}
+$$
+
+At the two smaller horizons the gap is zero, and its exact limit is
+
+$$
+\delta_0-\mu_0=\delta_1-\mu_1=0,\qquad
+\lim_{n\to\infty}(\delta_n-\mu_n)
+ =\delta_\infty-\mu_\infty=\frac{2}{15}.
+\tag{110.4}
+$$
+
+*Proof.* Theorem 94.2, (94.3)–(94.4), gives
+
+$$
+\delta_2=1-\frac3{H(r_*)},\qquad
+H(r)=7+r^2-4r+\frac4{1-r^2},\qquad 0<r_*<\frac13.
+\tag{110.5}
+$$
+
+The denominator $1-r_*^2$ is positive, and the exact identity
+
+$$
+H(r_*)-\frac{29}{3}
+ =r_*^2+4\left(\frac13-r_*\right)
+       +\frac{4r_*^2}{1-r_*^2}>0
+\tag{110.6}
+$$
+
+implies $H(r_*)>29/3>9$. Consequently
+
+$$
+\delta_2-\frac23
+ =\frac13-\frac3{H(r_*)}
+ >\frac13-\frac9{29}=\frac2{87}.
+\tag{110.7}
+$$
+
+For $n\ge2$, Lemma 110.1 gives $\delta_n\ge\delta_2$ and the legal
+replacer gives $\mu_n\le2/3$. These prove (110.3) at every such finite
+horizon. By (94.9) and (107.9), the two sequences converge respectively
+to $4/5$ and $2/3$. Taking their difference proves both the limiting
+case of (110.3) and the limit $4/5-2/3=2/15$. Finally Theorem 94.2 and
+(107.4) give identical values zero at horizon zero and $1/2$ at horizon
+one, proving the two zero gaps. $\square$
+
+This proof uses the exact stabilized horizon-two theorem, the original
+power composition and a no-reference replacer. The comparison
+$\mu_n\le\delta_n$ alone would not yield a strictly positive gap.
+The constants in (110.3)–(110.4) concern the declared half trace-distance
+and half diamond-distance conventions throughout; no reference is made
+available to a decoder.
+
+## 111. Mathematical correspondence and the remaining finite minimax
+
+The Fourier ensemble in §106 has precisely the equal-prior cyclic
+symmetry required by [Assalini–Cariolaro–Pierobon, §§II–III][ACP-FG].
+That framework supplies the primal POVM and dual domination problems.
+The displayed matrices $M_k,Y$, their matching value $G(s)$ and the
+adjoint pullback through a common decoder give the channel-specific
+bound (106.8). The optimality of that finite guessing task does not
+establish optimality of a recovery channel over all density inputs.
+
+The negative-branch construction uses a full-qutrit Kraus family,
+phase covariance, the Hermitian traceless qutrit identity (105.6), and
+a uniform simple-eigenvalue expansion localized at the entire compact
+maximizing set. These statements concern a worst-state half trace
+distance without a reference. The stabilized framework in
+[Watrous, Chapter 3][TQI3] and [Jenčová][JC-COMP] supplies the distinction
+between that test and a test with an untouched reference. Neither that
+norm distinction nor the general discrimination framework supplies the
+model-specific coefficients $2/9$, $\kappa_*$, $2/87$ or $2/15$;
+their derivations are (106.2), (108.9)–(109.9) and (110.5)–(110.7),
+using the actual-channel and stabilized results in §§93–94.
+
+The remaining exact finite problem is the unrestricted optimization
+
+$$
+\min_{\mathcal R\ {\rm CPTP}}
+\max_{\rho\in\mathsf D(\mathbb C^3)}
+\frac12\|\mathcal R\Phi_{(-1/2)^{n-1}}(\rho)-\rho\|_1
+\qquad(n\ge2).
+\tag{111.1}
+$$
+
+The intervals (107.7)–(107.8), the sufficiently large even-horizon
+improvement (109.11), and the uniform comparison (110.3) leave its exact
+finite values and minimizing decoders undetermined. The fixed-decoder
+coefficient in (109.1) is not a minimax coefficient. No uniform numerical
+asymptotic threshold or strict improvement at all even horizons follows
+from that expansion. The exact endpoint and limiting values, the finite
+bounds and the gap all retain the original input set, identity target
+and terminal permissions of (105.1).
+
+[ACP-FG]: https://arxiv.org/abs/1001.1385 "Assalini, Cariolaro and Pierobon, Sections II–III"
+[JC-COMP]: https://arxiv.org/abs/1512.07016 "Jenčová, arXiv:1512.07016"
+
+## 追加锚（本行以下为增补区）
