@@ -166,3 +166,165 @@ $$
 边界必须按声明任务保存跨来源、跨尺度、跨历史和跨参考系统的联合响应。
 这些附加对象不是自动增加的空间轴；它们是为了使观察商、度量桥、合法
 拼接和算子演化同时良定义而必须保留的关系数据。
+
+## 96. 公共局部框架下的正半定振幅边界
+
+§95 记录了一个联合谱目标的逃逸对：所有 horizon 的两个 qutrit 边缘都
+是 $I_3/3$，但联合负性和 Schmidt number 仍随 horizon 改变。最新 DEV 的
+实际 Choi 理论还给出了更强的结构性检验：即使允许把联合状态写成一组
+三维振幅的有限混合，也不能把这种表示沿所有 horizon 保持下去。
+
+**定义 96.1（公共正半定振幅类）。** 对
+$\rho\in\mathcal D(\mathbb C^3\otimes\mathbb C^3)$，写
+
+$$
+|C\rangle\!\rangle=\sum_{a,b=0}^2C_{ab}|a,b\rangle .
+$$
+
+称 $\rho$ 属于 $\mathsf{PPSD}$，如果存在同一对局部酉 $L,R$、有限个
+$C_k=C_k^\dagger\succeq0$ 和概率 $p_k$，满足
+
+$$
+\begin{gathered}
+p_k\ge0,\qquad \sum_kp_k=1,\qquad
+\operatorname{Tr}(C_k^2)=1,\\
+(L\otimes R)\rho(L\otimes R)^\dagger
+ =\sum_kp_k|C_k\rangle\!\rangle\langle\!\langle C_k| .
+\end{gathered}
+\tag{96.1}
+$$
+
+这里的 $L,R$ 对同一 ensemble 的所有项都相同。这个定义描述的是一种
+受限的三维算子边界；它不是任意 Choi 分解，也不是把参考 qutrit 当成
+第四个空间方向。
+
+对实际 FIB Choi 家族 $\omega_n$，定义结构目标
+
+$$
+\chi_{\mathsf{PPSD}}(\omega)=
+\mathbf 1_{\{\omega\in\mathsf{PPSD}\}}.
+\tag{96.2}
+$$
+
+它与 §95 的联合谱目标不同：这里询问的是“能否在一个公共局部框架中
+由正半定三维振幅组成有限混合”，而不是直接询问负性大小。
+
+**定理 96.2（horizon 二处的结构逃逸）。** 对有限 horizon 的实际 Choi
+状态，有
+
+$$
+\chi_{\mathsf{PPSD}}(\omega_n)=1
+\quad\Longleftrightarrow\quad n\in\{0,1\}.
+\tag{96.3}
+$$
+
+特别地，
+
+$$
+\lambda(\omega_1)=\lambda(\omega_2)
+ =\left(\frac{I_3}{3},\frac{I_3}{3}\right),
+\qquad
+\chi_{\mathsf{PPSD}}(\omega_1)=1,
+\quad
+\chi_{\mathsf{PPSD}}(\omega_2)=0.
+\tag{96.4}
+$$
+
+所以局部边缘读出不能恢复这一结构目标；这给出一个不同于负性和
+Schmidt number 的信息逃逸对。
+
+**证明。** DEV §91.2 已给出 $n=0$ 的单项振幅
+$I_3/\sqrt3$，以及 $n=1$ 的两项振幅
+
+$$
+\operatorname{diag}(1,1,0)/\sqrt2,
+\qquad
+\operatorname{diag}(0,0,1),
+$$
+
+其权重为 $2/3,1/3$，并给出相应的公共局部框架。因此
+$\chi_{\mathsf{PPSD}}(\omega_0)=\chi_{\mathsf{PPSD}}(\omega_1)=1$。
+
+为说明排除机制，若 (96.1) 成立，则交换算子 $\mathsf S$ 与参考部分
+转置给出
+
+$$
+\sigma^\Gamma=Q\mathsf S,
+\qquad
+Q=\sum_kp_k(C_k\otimes C_k)\succeq0,
+\qquad
+Q\mathsf S=\mathsf S Q,
+\tag{96.5}
+$$
+
+其中 $\sigma=(L\otimes R)\rho(L\otimes R)^\dagger$。于是
+$\sigma^\Gamma$ 的严格正特征子空间只能落在
+$\operatorname{Sym}^2(\mathbb C^3)$ 中。这个性质在局部框架变换下保持：
+
+$$
+\bigl((L\otimes R)\rho(L\otimes R)^\dagger\bigr)^\Gamma
+ = (L\otimes\overline R)\rho^\Gamma
+   (L\otimes\overline R)^\dagger .
+\tag{96.6}
+$$
+
+而 DEV §91.2 对 $n\ge2$ 的实际状态给出一个严格正的部分转置平面：
+
+$$
+|1\rangle\otimes
+\operatorname{span}\{|1\rangle,|2\rangle\}
+\subseteq H_+(\widetilde\omega_n^\Gamma).
+\tag{96.7}
+$$
+
+任何形如 $a\otimes B$ 且 $a\ne0$、$\dim B\ge2$ 的平面都不可能包含在
+$\operatorname{Sym}^2(\mathbb C^3)$ 中：若
+$a\otimes b=b\otimes a$，则 $b$ 必须属于 $a$ 的一维张成空间。
+因此 (96.7) 与 (96.5) 矛盾；局部酉只把这个平面送到另一个同维的
+乘积平面，不能消除矛盾。故所有 $n\ge2$ 都有
+$\chi_{\mathsf{PPSD}}(\omega_n)=0$。与 $n=0,1$ 的显式构造合并，得
+(96.3)。将 $n=1,2$ 代入 §95 的边缘恒等式即得 (96.4)。证毕。
+
+这个定理把 horizon 2 标记为一个结构转折点。它不是说三维接口在
+horizon 2 失效，而是说以下更强的边界假设失效：
+
+$$
+\boxed{
+\text{一个公共局部框架}
+ +
+\text{有限个正半定三维振幅}
+ +
+\text{对全部 horizon 的同类分解}.
+}
+$$
+
+仍可保留完整 Choi 矩阵、允许非正半定或非 Hermitian 的 Kraus 振幅，
+或直接保留部分转置的谱数据；这些选择保存的是不同的关系。不能从
+$\chi_{\mathsf{PPSD}}(\omega_2)=0$ 单独推出某一种替代编码已经存在。
+
+**推论 96.3（局部三维边界的三层判定）。** 对实际 Choi 族，至少要分开
+检查以下三件事：
+
+$$
+\boxed{
+\begin{array}{rcl}
+\text{局部边缘充分性}&:&\lambda(\omega_n);\\
+\text{联合谱充分性}&:&(N(\omega_n),\operatorname{SN}(\omega_n));\\
+\text{结构分解充分性}&:&\chi_{\mathsf{PPSD}}(\omega_n).
+\end{array}}
+\tag{96.8}
+$$
+
+第一项对所有 horizon 都相同；第二项在有限 horizon 仍有衰减的非零
+见证；第三项在 $n=2$ 已从 1 变为 0。因而“边缘不变”“联合相关很小”
+和“仍存在公共正半定振幅边界”是三个不同命题，不能互相替代。
+
+这对三维稳定窗口的含义是：局部维数可以保持为 3，而可用的边界表示
+类别随递归深度发生结构相变。若项目把公共正半定振幅当作边界协议，
+它至多覆盖 $n=0,1$；要继续递归，协议必须显式增加允许的算子关系或
+历史记忆。新增的不是第四根空间轴，而是跨 horizon 的表示资源。
+
+**开放边界 96.4。** 定理 96.2 只排除公共正半定 Hermitian 振幅这一
+具体表示类。它没有给出任意有限维近似表示的最优误差，也没有证明某个
+非正半定表示的最小容量；完整 Choi 恢复、连续 horizon 的近似压缩、
+以及这些算子边界与原生 FIB 空间运输的对应仍需分别证明。

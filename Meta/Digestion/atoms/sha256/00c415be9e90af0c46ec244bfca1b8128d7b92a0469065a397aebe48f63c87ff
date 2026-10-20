@@ -1,0 +1,35 @@
+**定义 96.1（公共正半定振幅类）。** 对
+$\rho\in\mathcal D(\mathbb C^3\otimes\mathbb C^3)$，写
+
+$$
+|C\rangle\!\rangle=\sum_{a,b=0}^2C_{ab}|a,b\rangle .
+$$
+
+称 $\rho$ 属于 $\mathsf{PPSD}$，如果存在同一对局部酉 $L,R$、有限个
+$C_k=C_k^\dagger\succeq0$ 和概率 $p_k$，满足
+
+$$
+\begin{gathered}
+p_k\ge0,\qquad \sum_kp_k=1,\qquad
+\operatorname{Tr}(C_k^2)=1,\\
+(L\otimes R)\rho(L\otimes R)^\dagger
+ =\sum_kp_k|C_k\rangle\!\rangle\langle\!\langle C_k| .
+\end{gathered}
+\tag{96.1}
+$$
+
+这里的 $L,R$ 对同一 ensemble 的所有项都相同。这个定义描述的是一种
+受限的三维算子边界；它不是任意 Choi 分解，也不是把参考 qutrit 当成
+第四个空间方向。
+
+对实际 FIB Choi 家族 $\omega_n$，定义结构目标
+
+$$
+\chi_{\mathsf{PPSD}}(\omega)=
+\mathbf 1_{\{\omega\in\mathsf{PPSD}\}}.
+\tag{96.2}
+$$
+
+它与 §95 的联合谱目标不同：这里询问的是“能否在一个公共局部框架中
+由正半定三维振幅组成有限混合”，而不是直接询问负性大小。
+
