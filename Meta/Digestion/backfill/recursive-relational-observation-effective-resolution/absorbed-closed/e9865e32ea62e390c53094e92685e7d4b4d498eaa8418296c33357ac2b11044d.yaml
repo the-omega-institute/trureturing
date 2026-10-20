@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e9865e32ea62e390c53094e92685e7d4b4d498eaa8418296c33357ac2b11044d
-  normalized_sha256: sha256:e9865e32ea62e390c53094e92685e7d4b4d498eaa8418296c33357ac2b11044d
-cas_ref: sha256:e9865e32ea62e390c53094e92685e7d4b4d498eaa8418296c33357ac2b11044d
-coverage_gids:
-  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/EffectiveRationalTransportTail.historical_survivor_transport
-    target_statement_id: sha256:49c30ef5eca1561afc98d9afcd10c255fb08169c4b6a21af1b2d9313757d767f
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6793d3b8ecc42a644473c7e94a8ba4812e1c7e1c2926d18b5c1a214e0ed085c6
-  normalized_sha256: sha256:6793d3b8ecc42a644473c7e94a8ba4812e1c7e1c2926d18b5c1a214e0ed085c6
-cas_ref: sha256:6793d3b8ecc42a644473c7e94a8ba4812e1c7e1c2926d18b5c1a214e0ed085c6
-coverage_gids:
-  - gid: D5/S0/Computability/Coding/DepthBudgetIidGreedyOptimality.depth_budget_iid_greedy_optimality
-    target_statement_id: sha256:70c1aaa1ef1027db27bcdfa27a4083f5cd7039fe24251663cbeaf1ff32f4fbd2
-receipts:
-  unresolved_subitems: []
