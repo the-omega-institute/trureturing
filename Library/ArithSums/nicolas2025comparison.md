@@ -13781,3 +13781,317 @@ remaining first-prime transport against that defect. In particular,
 $J_{\nu_k}^\psi+\mathcal T_\vartheta+\mathcal T_{\ge2}=J_1^\psi$
 still holds exactly. No mean-one price normalization, signed Jensen
 inequality, new finite verification interval or RH/Robin proof follows.
+
+## Exact nonlinear price calibration with adjacent growing xi clocks
+
+This repo-derived application reuses GPC1–GPC9 and XLR1, including
+the published BPY law, all real moments and the complete growing-family
+response budget. Adjacent-error extrapolation, polynomial
+interpolation and Gamma integrals are standard tools. The additional
+calculation concerns their full-law, moving-degree price error and
+the actual small-clock cutoff. No literature priority, Lean
+certification or signed Jensen inequality is claimed.
+
+### The same source and the actual price observation
+
+Retain $m=\pi/3$, $h$, $Q$, $\nu_j$ and $H_j$ of GPC1.
+Write $L=\log A$, $T_A=\sqrt A L$, and choose
+
+$$
+k=k(A)=\lfloor L^{1/3}\rfloor,\qquad
+\chi_A(c)=\max(c,e/A),\qquad
+\lambda(x)=\frac1{x\log x}\quad(x\ge e).
+$$
+
+The normalized price observation is
+
+$$
+y_A(c)=\frac{\lambda(A\chi_A(c))}{\lambda(A)}
+ =\frac{AL}{A\chi_A(c)\log(A\chi_A(c))}.
+\tag{APC1}
+$$
+
+For all $c>0$, $y_A(c)\le L/c$. Thus its integral against each
+$|\nu_j|$ is finite. Define
+
+$$
+Y_{A,j}=\int y_A(c)\,d\nu_j(c),\qquad
+E_{A,j}=1-Y_{A,j}\qquad(j=k,k+1).
+$$
+
+The original source and its image under $\chi_A$ remain distinct.
+The effect of this cutoff on the prime responses is estimated below.
+
+All real moments justify differentiating $h$ near zero. The elementary
+$\log c\le c-1$ gives
+$h'(0)=\int c^{-1}\log c\,d\mu\le1-m<0$. Consequently
+
+$$
+\alpha=-\frac{m-1}{m}h'(0)>0,\qquad
+g(u)=Q(h(-u))=\alpha u\exp(O(u)).
+\tag{APC2}
+$$
+
+Here $Q'(m)=(m-1)/m$. Choose a fixed $u_0\in(0,1)$ and $D<\infty$
+so that $g(u)>0$ and
+$|\log(g(u)/(\alpha u))|\le Du$ for $0<u\le u_0$.
+Neither constant depends on $A$ or $j$.
+
+### The complete price error from a finite Laplace interval
+
+Use only the truncated function
+
+$$
+f_A(c)=Lc^{-1}\int_0^{u_0}e^{-u(L+\log c)}\,du.
+$$
+
+This integral also defines the value when $L+\log c=0$.
+No full half-line Laplace integral is interchanged with the clock law.
+Put $\tau=e/A$. For $c\ge\tau$,
+
+$$
+|y_A(c)-f_A(c)|
+ =y_A(c)e^{-u_0(L+\log c)}
+ \le L A^{-u_0}c^{-1-u_0}.
+$$
+
+For $c<\tau$,
+
+$$
+|f_A(c)|\le Lu_0[c^{-1}+A^{-u_0}c^{-1-u_0}],
+\qquad y_A(c)=AL/e.
+$$
+
+Using GPC2's absolute moments
+$M_t(j)=\int c^t\,d|\nu_j|$ and
+$\int_{c<\tau}c^{-q}\,d|\nu_j|\le\tau^{4-q}M_{-4}(j)$
+for $q=0,1,1+u_0$ proves the whole-law bound
+
+$$
+\left|Y_{A,j}-\int f_A\,d\nu_j\right|
+ \le L A^{-u_0}M_{-1-u_0}(j)
+       +C L A^{-3}M_{-4}(j).
+\tag{APC3}
+$$
+
+All $c>0$, including $Ac\le1$, occur in this estimate.
+Absolute Fubini on $[0,u_0]$ follows from
+$M_{-1}(j)+M_{-1-u_0}(j)<\infty$. Therefore
+
+$$
+\int f_A\,d\nu_j
+ =L\int_0^{u_0}e^{-Lu}H_j(-u)\,du
+ =1-e^{-u_0L}-L\int_0^{u_0}e^{-Lu}g(u)^j\,du.
+$$
+
+For $j=k,k+1$, GPC2 gives $M_t(j)=\exp(O(j))$ at every fixed $t$.
+Since $j=O(L^{1/3})$, APC3 implies, for one fixed $c_0>0$,
+
+$$
+E_{A,j}=I_{L,j}+O(e^{-c_0L}),\qquad
+I_{L,j}=L\int_0^{u_0}e^{-Lu}g(u)^j\,du.
+\tag{APC4}
+$$
+
+The cutoff and truncation have thus been controlled before taking a
+relative asymptotic.
+
+### Moving order and the separated adjacent errors
+
+For $L>2Dj$, APC2 bounds $I_{L,j}$ between
+
+$$
+\alpha^jL\int_0^{u_0}e^{-(L+Dj)u}u^j\,du
+\quad\hbox{and}\quad
+\alpha^jL\int_0^{u_0}e^{-(L-Dj)u}u^j\,du.
+$$
+
+The corresponding full Gamma integrals are
+$\alpha^jL j!/(L\pm Dj)^{j+1}$. The fraction beyond $u_0$ is at most
+$(j+1)/[(L\pm Dj)u_0]$, by the first moment of the normalized positive
+Gamma integral. As $j=k,k+1$, one has $j^2/L\to0$, so
+
+$$
+I_{L,j}=\frac{\alpha^j j!}{L^j}
+       \left(1+O\!\left(\frac{j^2}{L}\right)\right).
+$$
+
+Moreover $\log(\alpha^j j!L^{-j})=-O(j\log L)=o(L)$.
+The absolute error in APC4 is therefore negligible relative to this
+main term. This proves the full-law, moving-order formula
+
+$$
+E_{A,j}=\frac{\alpha^j j!}{L^j}
+       \left(1+O\!\left(\frac{j^2}{L}\right)\right),
+\qquad j=k,k+1.
+\tag{APC5}
+$$
+
+In particular the two errors are positive eventually, and their
+actual ratio satisfies
+
+$$
+r_A=\frac{E_{A,k+1}}{E_{A,k}}
+ =\frac{\alpha(k+1)}L
+       \left(1+O\!\left(\frac{k^2}{L}\right)\right)\longrightarrow0.
+\tag{APC6}
+$$
+
+Thus $0<r_A<1/2$ eventually. No numerical common starting point or
+numerical error constant is supplied; no fixed-order expansion has
+been applied to a changing order.
+
+### Exact calibration and the source properties it preserves
+
+Apply the standard adjacent-error extrapolation to the actual errors:
+
+$$
+\sigma_A=\frac{\nu_{k+1}-r_A\nu_k}{1-r_A},
+\qquad
+\bar\sigma_A=(\chi_A)_\#\sigma_A.
+\tag{APC7}
+$$
+
+The first is the full source measure; the second is the actual
+clamped clock measure. By definition of $r_A$,
+
+$$
+\int y_A\,d\sigma_A
+ =\frac{Y_{A,k+1}-r_AY_{A,k}}{1-r_A}=1.
+$$
+
+For $\sigma_A$, mass, first clock moment and inverse clock moment
+are all one. Its Mellin transform vanishes at every actual xi zero.
+At $s=0,1$, all derivatives of $H_{\sigma_A}-1$ through order $k-1$
+vanish, since both adjacent transforms have these properties.
+For each fixed real $t$,
+
+$$
+N_t(A):=\int c^t\,d|\sigma_A|(c)
+ \le\frac{M_t(k+1)+r_AM_t(k)}{1-r_A}
+ =\exp(O(k))=A^{o(1)}.
+\tag{APC8}
+$$
+
+These exact Mellin, jet and clock-moment properties refer to
+$\sigma_A$ before the cutoff. They are not asserted for
+$\bar\sigma_A$. The latter has mass one and exact nonlinear price
+mean $\int\lambda(Ac)\,d\bar\sigma_A(c)=\lambda(A)$.
+Neither measure is asserted positive or ordered by Jensen's inequality.
+
+### Pay the complete original response after the cutoff
+
+Since $k,k+1\to\infty$ and eventually $k+1\le\kappa L$,
+GPC5 and its limit along growing orders give
+
+$$
+T_A|J_{\sigma_A}^\psi(A)|
+ +T_A|\mathcal T_{\ge2}(A,\sigma_A)|\longrightarrow0.
+$$
+
+This uses linearity on mass-one signed measures and bounded mixing
+coefficients. In particular
+$H_j(1/2)-1=-Q(h(1/2))^j\to0$; no uniform absolute limit for all
+fixed orders is assumed.
+
+It remains to pay the actual cutoff, which need not preserve exact
+Mellin zeros. Since $\tau=e/A<A^{-1/2}$ eventually, GPC's absolute
+small-clock argument gives
+
+$$
+T_A\int_{c<\tau}|J_c^\psi(A)|\,d|\sigma_A|(c)
+ =O(N_{-4}(A)L A^{-3/2}).
+$$
+
+Also $J_\tau^\psi(A)=O(L)$. On $A\le u\le A^2$, the trivial
+$\psi(t)\le t\log_+t$ bounds its integrand before $K$ by $u(L+2)$,
+and $\int_A^{A^2}uK(u)\,du=O(1)$. On $u\ge A^2$,
+$\tau u\ge\sqrt u$, so the existing logarithmic PNT gives an
+integrable $O(u/\log^2u)$ bound. Finally
+$|\sigma_A|(\{c<\tau\})\le\tau^4N_{-4}(A)$. Hence
+
+$$
+T_A|J_{\bar\sigma_A}^\psi-J_{\sigma_A}^\psi|
+ \le C N_{-4}(A)
+       [L A^{-3/2}+L^2 A^{-7/2}]\longrightarrow0.
+$$
+
+GPP2 and its bounded initial interval give
+$P_{\ge2}(t)\le C\sqrt t$ for all $t>0$. Both laws have mass one,
+so the reference $P_{\ge2}(u)$ cancels in their transport difference.
+The complete small-clock and cutoff terms consequently cost
+
+$$
+\begin{aligned}
+T_A|\mathcal T_{\ge2}(A,\bar\sigma_A)
+       -\mathcal T_{\ge2}(A,\sigma_A)|
+&\le CB(A)\left[
+ \int_{c<\tau}c^{-1/2}\,d|\sigma_A|
+ +\tau^{-1/2}|\sigma_A|(\{c<\tau\})\right]\\
+&\le C N_{-4}(A)A^{-7/2}\longrightarrow0.
+\end{aligned}
+$$
+
+The error estimates include every original clock value, every prime
+power and the entire $u\ge A$ tail. They also prove absolute integrability
+of the modified responses. Thus the actual price-calibrated clock
+law has the full component budget
+
+$$
+T_A|J_{\bar\sigma_A}^\psi(A)|
+ +T_A|\mathcal T_{\ge2}(A,\bar\sigma_A)|\longrightarrow0.
+\tag{APC9}
+$$
+
+No one-sided positive-law constant has been transferred to a signed law.
+
+### Original pressure and the same integer
+
+For each original integer's $A=\log n$, put
+$\lambda_A=1/(AL)$ and
+$\Lambda_A(c)=\lambda(A\chi_A(c))$.
+The same source satisfies $\int\Lambda_A\,d\sigma_A=\lambda_A$
+exactly. The actual unrestricted pressure is integrable:
+its existing asymptotic
+$M(\lambda(x))=\gamma+\log\log x-1/\log x+O(1/\log^2x)$,
+together with the cutoff $x\ge e$, bounds it by $C_A(1+c)$ on this
+source; APC8 supplies the required absolute moment.
+
+Keep $d_\lambda(n)=M(\lambda)-W(n)+\lambda\log n$ and define
+$G_A=\int M(\Lambda_A(c))\,d\sigma_A-M(\lambda_A)$.
+Exact calibration gives the same-integer identity
+
+$$
+\int d_{\Lambda_A(c)}(n)\,d\sigma_A(c)=d_A(n)+G_A.
+\tag{APC10}
+$$
+
+The nonnegativity of each individual defect does not supply a sign
+for this signed integral or for $G_A$.
+
+Define $\mathcal T_\vartheta$ using $\bar\sigma_A$ and the centered
+response of GPC9. APC9 pays its integrability and leaves the original
+exact account intact:
+
+$$
+\Delta(n)=R(A)+d_A(n)-J_{\bar\sigma_A}^\psi
+ -\mathcal T_\vartheta(A,\bar\sigma_A)
+ -\mathcal T_{\ge2}(A,\bar\sigma_A).
+$$
+
+The unchanged GAK37 reserve therefore gives, eventually, one
+$\epsilon(A)\to0$ such that
+
+$$
+T_A\Delta(n)>
+ Q_R+\frac{L}{(L+2)^3}+T_A d_A(n)
+ -T_A\mathcal T_\vartheta(A,\bar\sigma_A)-\epsilon(A).
+\tag{APC11}
+$$
+
+This instantiates the original account with an explicitly calibrated
+price family, unbounded source moment-cancellation order and paid
+cutoff error. The remaining comparison between first-prime transport
+and this same integer's defect is unproved. Generic fixed-family
+Jensen obstructions are not removed by the construction; no pressure
+sign, new finite verification interval or RH/Robin proof follows.
