@@ -49,7 +49,7 @@ def liveValue (value : Expr) : MetaM Expr := do
         return .done (← withReducible <| whnf e)
     return .done e)
 
-private def generated (env : Environment) (n : Name) : Bool :=
+def compilerGenerated (env : Environment) (n : Name) : Bool :=
   !allowCompletion env n || isMatcherCore env n || isAuxRecursor env n
 
 private structure ExtractionState where
@@ -63,7 +63,7 @@ private abbrev ExtractM := StateRefT ExtractionState MetaM
 /-- Ownership is transitive: an equation of a matcher or a nested proof
 auxiliary belongs to the same author declaration as its generated parent. -/
 private partial def declarationOwner (name : Name) : MetaM Name := do
-  if !(generated (← getEnv) name || (← isEqnThm name)) then return name
+  if !(compilerGenerated (← getEnv) name || (← isEqnThm name)) then return name
   let mut parent := (← isEqnThm? name).getD name.getPrefix
   while !parent.isAnonymous && !((← getEnv).contains parent) do parent := parent.getPrefix
   if parent.isAnonymous || parent == name then
@@ -90,7 +90,7 @@ private partial def dependencyNames (base : Environment) (owner : Name)
     let depInfo := ((← getEnv).setExporting false).find? dep
     if !base.contains dep && depInfo.any vocabularyKind then
       result := result ++ (← dependencyNames base owner depInfo.get! cache (seen.insert dep))
-    else if !base.contains dep && (generated (← getEnv) dep || (← isEqnThm dep)) then
+    else if !base.contains dep && (compilerGenerated (← getEnv) dep || (← isEqnThm dep)) then
       let some aux := ((← getEnv).setExporting false).find? dep
         | throwError "graph.generated_missing:{dep}"
       let parent ← declarationOwner dep
@@ -418,9 +418,11 @@ private def annotateGraph (graph : ProofGraph) : MetaM ProofGraph := do
           analyticPremise (vertex graph p).type (vertex graph edge.conclusion).type
       edge := {edge with analytic}
     catch ex =>
-      graph := {graph with
-        complete := false,
-        issues := s!"graph.analytic:{edge.source}:{← ex.toMessageData.toString}" :: graph.issues}
+      let issue := s!"graph.analytic:{edge.source}:{← ex.toMessageData.toString}"
+      if edge.window != 1 then
+        graph := {graph with issues := issue :: graph.issues}
+        continue
+      graph := {graph with complete := false, issues := issue :: graph.issues}
     edges := edges ++ [edge]
   return {graph with edges}
 
@@ -433,6 +435,8 @@ def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false) : Meta
     let available := if allGiven then edge.premises else statementPremises edge seeds
     let analytic := edge.analytic
     let result ← localRebuild (vertex graph edge.conclusion).type (available.map (vertex graph · |>.type))
+    let result := if edge.window != 1 && result.cost != .zero then
+      {result with cost := .unknown} else result
     let used := result.used.map (available[·]!)
     let edge := if allGiven then
         if paired then {edge with pairedVisibleCost := result.cost, pairedGivenUsedPremises := used}
@@ -556,6 +560,8 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
     pairedVisible := graphInterval (armGraph graph true true) pairSeeds,
     baselineProbe := baseProbe, pairedProbe, selectedSeeds, witnessEdges, targetPartComplete,
     noAuxiliary := !(raw.vertices.any (·.structureSeed)),
+    selectedSeedDepths := selectedSeeds.map (fun id =>
+      (id, intervalDP baselineGraph baseSeeds id)),
     proofHardSeeds := selectedSeeds.filter (fun id =>
       selectedStructureSeed graph selectedSeeds id &&
         match depth baselineGraph costLower baseSeeds id with

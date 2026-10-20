@@ -26,6 +26,30 @@ def nestedBox (n : Nat) : Nat := (easyBox n).val
 
 def hardBox (n : Nat) : {x : Nat // stair n = 3*n} := ⟨n, answer n⟩
 
+private def representative {E : Type*} (a : E → Fin 3) : (E → Bool) × (E → Bool) :=
+  (fun e => decide (a e ≠ 0), fun e => decide (a e = 2))
+
+def representatives {E : Type*} (a : E → Fin 3) : (E → Bool) × (E → Bool) :=
+  representative a
+
+private theorem certificateCombinator (n : Nat) : n = n := rfl
+
+-- A proof-valued argument inside a computational telescope is payload too.
+structure ProofFunctionBox where
+  certificate : ∀ n : Nat, n = n
+  data : Nat
+
+def proofFunctionBox : ProofFunctionBox := ⟨certificateCombinator, 0⟩
+
+def dependentBox (a : Nat → Nat) : {f : Nat → Nat // ∀ n, f n = a n} :=
+  ⟨fun n => a n, fun n => rfl⟩
+
+def proofIndexed (_h : True) : Type := Nat
+
+private theorem sideTruth : True := True.intro
+
+theorem proofIndexedReflexive (x : proofIndexed sideTruth) : x = x := rfl
+
 theorem easyProjection (n : Nat) : (easyBox n).1 = n := rfl
 theorem hardProjection (n : Nat) :
     stair (hardBox n).1 = 3*(hardBox n).1 := (hardBox n).2

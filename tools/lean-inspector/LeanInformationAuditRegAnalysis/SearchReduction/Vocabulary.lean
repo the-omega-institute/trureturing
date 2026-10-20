@@ -11,7 +11,7 @@ import LeanInformationAuditRegAnalysis.SearchReduction.PinnedDeriving
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev transportVersion : String := "prefix-reconstruction-checked-certificate-copy-v2"
+abbrev transportVersion : String := "prefix-reconstruction-checked-certificate-copy-v3"
 abbrev reconstructionBudget : Nat := 200000
 
 private initialize referenceEnvironmentCache : IO.Ref (Option Environment) ← IO.mkRef none
@@ -245,14 +245,21 @@ mutual
   partial def reconstructExpression (ctx : TransportContext) (owner : Name) (e : Expr) : MetaM Expr :=
     Meta.transform e (pre := fun part => do
       checkReconstructionBudget ctx
+      -- Existing kernel vocabulary requires no transport or proof expansion.
+      let env ← getEnv
+      if part.getUsedConstants.all env.contains then return .done part
       if ← withEnv ctx.source (isProof part) then
         let type ← withEnv ctx.source (inferType part)
-        let xs ← localParameters
-        let closed ← mkForallFVars xs type
+        -- Transform caches repeated payload expressions across binder scopes.
+        -- Only their actual free variables may occur in a cached replacement.
+        let used ← (Lean.collectFVars (Lean.collectFVars {} part) type).addDependencies
+        let xs := (← localParameters).filter (fun x => used.fvarSet.contains x.fvarId!)
+        let closed ← mkForallFVars xs type (generalizeNondepLet := false)
         let closed ← reconstructExpression ctx owner closed
         if closed.getUsedConstants.any ctx.bound.contains then
           throwError "search.vocabulary_certificate_unclosed: {owner}: group-local type {closed}"
-        let proof ← copyCertificateExpression ctx (← mkLambdaFVars xs part)
+        let proof ← copyCertificateExpression ctx
+          (← mkLambdaFVars xs part (generalizeNondepLet := false))
         let levels := (collectLevelParams (collectLevelParams {} closed) proof).params.toList
         let beforeCheck ← getEnv
         let checked ← checkProof (← mkFreshUserName `_prefixCertificate) levels closed proof
@@ -395,6 +402,28 @@ def checkTargetVocabularyProjections (source base : Environment) (target : Expr)
       if converted then
         throwError "search.target_in_vocabulary_certificate: {owner}: field {structureName}.{index}: {closed}"
     return .continue)
+
+/-- Reconstruct the complete statement so proof constants in dependent indices
+are copied as checked inline payload, never installed as standalone facts. -/
+def transportStatement (ctx : TransportContext) (owner : Name) (type : Expr) : MetaM Expr := do
+  let spent ← match ctx.searchHeartbeats? with
+    | some spent => pure spent
+    | none => IO.mkRef 0
+  let ctx := {ctx with
+    searchHeartbeats? := some spent,
+    budgetStart := (← IO.getNumHeartbeats), budgetExcludedStart := (← spent.get)}
+  withTheReader Core.Context (fun reader => {reader with maxHeartbeats := 0}) do
+    let result ← reconstructExpression ctx owner type
+    checkReconstructionBudget ctx
+    unless !result.hasFVar && !result.hasMVar do
+      throwError "search.statement_not_closed: {owner}"
+    let own := (← IO.getNumHeartbeats) - ctx.budgetStart -
+      ((← spent.get) - ctx.budgetExcludedStart)
+    spent.modify (· + own)
+    return result
+
+def copyStatement (source : Environment) (owner : Name) (type : Expr) : MetaM Expr :=
+  transportStatement {source} owner type
 
 /-- The import and witness-export paths use the same reconstruction kernel. -/
 def copyVocabulary (source : Environment) (n : Name) (visiting : NameSet := {}) : MetaM Unit :=

@@ -55,7 +55,10 @@ private def intervalJson (i : Interval) : Json := Json.mkObj [
 private def graphJson (r : GraphReading) : Json := Json.mkObj [
   ("sharing_configuration", toJson sharingConfiguration),
   ("k", toJson r.k), ("vertices", toJson r.graph.vertices.length),
-  ("edges", toJson r.graph.edges.length), ("complete", toJson r.graph.complete),
+  ("edges", toJson r.graph.edges.length),
+  ("baseline_edges", toJson (r.graph.edges.filter (fun edge => edgeActive edge)).length),
+  ("paired_edges", toJson (r.graph.edges.filter (fun edge => edgeActive edge true)).length),
+  ("complete", toJson r.graph.complete),
   ("issues", toJson r.graph.issues),
   ("declarations", toJson (r.graph.vertices.map fun v => Json.mkObj [
     ("id", toJson v.id), ("constant", toJson (v.origin.constName?.map Name.toString)),
@@ -70,11 +73,13 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
   ("baseline_zero_checked", toJson r.baselineProof?.isSome),
   ("paired_zero_checked", toJson r.pairedProof?.isSome),
   ("selected_seeds", toJson r.selectedSeeds),
+  ("seed_baseline_intervals", toJson (r.selectedSeedDepths.map fun (id, interval) =>
+    Json.mkObj [("id", toJson id), ("interval", intervalJson interval)])),
   ("B_used", toJson (r.graph.vertices.filter (·.seed) |>.map fun v =>
     Json.mkObj [("id", toJson v.id), ("constant", toJson (v.origin.constName?.map Name.toString)),
       ("opaque", toJson v.opaqueDecl)])),
   ("c_histogram", Json.mkObj (([EdgeCost.zero, .one, .unknown]).map fun c =>
-    (reprStr c, toJson (r.graph.edges.filter (·.cost == c)).length))),
+    (reprStr c, toJson (r.graph.edges.filter (fun edge => edgeActive edge && edge.cost == c)).length))),
   ("priced_edges", toJson (r.graph.edges.map fun edge => Json.mkObj [
     ("conclusion", toJson edge.conclusion), ("premises", toJson edge.premises),
     ("head", toJson (edge.source.map Name.toString)), ("window", toJson edge.window),
@@ -87,7 +92,8 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
     ("shared_data", toJson edge.sharedData?),
     ("coupled", toJson (edge.sharedData?.map fun shared =>
       if shared then "coupled" else "independent")),
-    ("cost", toJson (reprStr edge.cost)), ("paired_cost", toJson (reprStr edge.pairedCost)),
+    ("cost", toJson (if edgeActive edge then some (reprStr edge.cost) else none)),
+    ("paired_cost", toJson (if edgeActive edge true then some (reprStr edge.pairedCost) else none)),
     ("detail", toJson edge.detail)])),
   ("witness_edges", toJson r.witnessEdges),
   ("witness_kinds", Json.mkObj [

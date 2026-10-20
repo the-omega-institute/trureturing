@@ -140,6 +140,7 @@ structure GraphReading where
   presentationComplete : Bool := false
   witnessEdges : List Nat := []
   proofHardSeeds : List Nat := []
+  selectedSeedDepths : List (Nat × Interval) := []
   targetPartComplete : Bool := true
   noAuxiliary : Bool := false
   priorReferenceSuccess : Bool := false
@@ -368,9 +369,6 @@ def isWitnessEdge (graph : ProofGraph) (selected : List Nat) (edge : GraphEdge) 
       (graph.vertices.find? (·.id == p)).any fun v =>
         v.structureSeed && !v.seed && !v.targetPart &&
           !edge.analytic.contains p && selected.contains p)
-
-def hasWitness (reading : GraphReading) : Bool :=
-  reading.graph.edges.any (isWitnessEdge reading.graph reading.selectedSeeds)
 
 def classifyGraph (reading : GraphReading) : Verdict :=
   if reading.presentationCertified || reading.priorReferenceSuccess ||

@@ -61,9 +61,9 @@ run_cmd do
           throwError "Omega certificate retained as a nonseed vertex: {n}"
       -- Rebuild only statement vocabulary before any local probe.
       let reading ← withEnv base do
-        for v in graph.vertices do
-          for dep in v.type.getUsedConstants do copyVocabulary source dep
-        evaluateGraph graph
+        let vertices ← graph.vertices.mapM fun v => do
+          return {v with type := ← copyStatement source (v.origin.constName?.getD .anonymous) v.type}
+        evaluateGraph {graph with vertices}
       let certified := {reading with
         isolated := true, structureChecked := true,
         structureClean := true, presentationComplete := true}

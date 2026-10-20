@@ -34,7 +34,19 @@ run_meta do
   unless rejectedInstance do throwError "author instance computation was replaced"
   discard <| check ``VocabularyCandidates.ForwardLaw
   discard <| check ``VocabularyCandidates.nestedBox
+  discard <| check ``VocabularyCandidates.representatives
+  discard <| check ``VocabularyCandidates.proofFunctionBox
+  discard <| check ``VocabularyCandidates.dependentBox
   discard <| check ``VocabularyCandidates.continuousBox
+  withEnv base do
+    let n := ``VocabularyCandidates.proofIndexedReflexive
+    let statement := ((source.setExporting false).find? n).get!.type
+    let rebuilt ← copyStatement source n statement
+    unless !(rebuilt.getUsedConstants.any (fun name => name.toString.endsWith ".sideTruth")) do
+      throwError "proof-index certificate was not inlined"
+    let result ← localRebuild rebuilt
+    unless result.cost == .zero && result.proof?.isSome do
+      throwError "proof-index statement did not reconstruct"
   let first ← check ``VocabularyCandidates.easyBox
   let second ← check ``VocabularyCandidates.easyBoxOther
   let firstInfo := (first.find? ``VocabularyCandidates.easyBox).get!

@@ -37,9 +37,9 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
   -- Recover only vocabulary needed by the statement. Certificate elaboration
   -- stays in B's environment, including its registered tactic implementations.
   -- The detached source environment supplies no extension state or proofs.
-  for dep in info.type.getUsedConstants do copyVocabulary source dep
-  if (← singleSourceConversion targetType info.type).isSome ||
-      (← certifiedRestatement targetType info.type index) then
+  let type ← copyStatement source n info.type
+  if (← singleSourceConversion targetType type).isSome ||
+      (← certifiedRestatement targetType type index) then
     throwError "search.target_restatement: {n}"
   if (← getEnv).contains n then return
   for dep in info.getUsedConstantsAsSet do
@@ -50,8 +50,8 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
     else
       throwError "search.structure_vocabulary_not_reconstructed: {dep}"
   match info with
-  | .thmInfo value => addDecl (.thmDecl value)
-  | .defnInfo value => addDecl (.defnDecl value)
+  | .thmInfo value => addDecl (.thmDecl {value with type})
+  | .defnInfo value => addDecl (.defnDecl {value with type})
   | _ => throwError "search.unsupported_structure_kind: {n}"
 
 /-- The finite union guard uses abstract S assumptions and their projections.
@@ -91,7 +91,7 @@ private partial def structureTypes (source : Environment) (n : Name)
     (seen : NameSet := {}) : MetaM (Array Expr) := do
   if seen.contains n || (← getEnv).contains n then return #[]
   let info ← checkedSource source n
-  let mut result := #[info.type]
+  let mut result := #[← copyStatement source n info.type]
   for dep in info.getUsedConstantsAsSet do
     if (← getEnv).contains dep then continue
     let depInfo ← sourceInfo source dep
@@ -120,6 +120,10 @@ private def checkVocabularyClean (source base : Environment) (regenerated : Name
     if let some info := (source.setExporting false).find? n then
       -- A regenerated projection is a logical accessor, not an author body.
       if (projectionShape info).isSome then continue
+      -- Kernel-rebuilt logical constructors and eliminators are vocabulary.
+      match info with
+      | .inductInfo _ | .ctorInfo _ | .recInfo _ => continue
+      | _ => pure ()
       if ← withEnv source (isProp info.type) then
         throwError "search.author_proof_in_common_vocabulary: {n}"
 
@@ -130,16 +134,20 @@ private def prepareAdditions (source base : Environment) (index : FactIndex) :
     List Name → Array Expr → MetaM (Array Expr × Nat)
   | [], types => pure (types, 0)
   | n :: rest, types => do
+    if compilerGenerated source n || (← withEnv source <| isEqnThm n) then
+      IO.eprintln s!"structure member: source={n}, disposition=folded-compiler-auxiliary"
+      return ← prepareAdditions source base index rest types
     if base.contains n then throwError "search.structure_already_in_baseline: {n}"
     let info ← checkedSource source n
-    for dep in info.type.getUsedConstants do copyVocabulary source dep
+    let type ← copyStatement source n info.type
     let started ← IO.getNumHeartbeats
-    let (present, _, detail) ← baselinePresentation (← getEnv) info.levelParams info.type (some index)
+    let (present, evidence?, detail) ← baselinePresentation (← getEnv) info.levelParams type (some index)
       (requireNonneutral := true)
     let used := (← IO.getNumHeartbeats) - started
     IO.eprintln s!"structure presentation: source={n}, independent_heartbeats={used}, {detail}"
     withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
-      if present == .found then throwError "search.structure_baseline_presentation: {n}"
+      if present == .found then
+        throwError "search.structure_baseline_presentation: {n}: source={evidence?.map (·.source)}"
       if let .incomplete _ := present then throwError "search.structure_presentation_incomplete: {n}"
       let types := types ++ (← structureTypes source n)
       let (types, remainingUsed) ← prepareAdditions source base index rest types
@@ -165,11 +173,15 @@ private def prepare (source base : Environment) (request : Request)
     let preflightStart ← IO.getNumHeartbeats
     vocabularyBudgetPreflight source roots
     let preflightUsed := (← IO.getNumHeartbeats) - preflightStart
-    for dep in target.type.getUsedConstants do transportVocabulary transport dep
+    let type ← transportStatement transport request.target target.type
+    let target := match target with
+      | .thmInfo value => ConstantInfo.thmInfo {value with type}
+      | .defnInfo value => ConstantInfo.defnInfo {value with type}
+      | other => other
     -- Both arms receive exactly the vocabulary of T and all registered S types.
     for n in request.additions do
       if let some info := (source.setExporting false).find? n then
-        for dep in info.type.getUsedConstants do transportVocabulary transport dep
+        discard <| transportStatement transport n info.type
     checkTargetVocabularyProjections source base target.type
     checkVocabularyClean source base (← regenerated.get)
     let accounted ← searchHeartbeats.get
@@ -183,7 +195,7 @@ private def prepare (source base : Environment) (request : Request)
         -- prepareAdditions adjusts only its recursive continuation's reader.
         withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
           for type in types do
-            for dep in type.getUsedConstants do transportVocabulary transport dep
+            discard <| transportStatement transport request.target type
           for n in request.additions do structureVocabulary transport n
           checkVocabularyClean source base (← regenerated.get)
           let extraSearch := (← searchHeartbeats.get) - accounted
@@ -291,8 +303,9 @@ private unsafe def runCore (source base : Environment) (request : Request) : IO 
     let work : CoreM Observation := MetaM.run' do
       let added := if structureChecked then request.additions else #[]
       let graph ← withEnv source <| extractGraph base request.target added
-      for v in graph.vertices do
-        for dep in v.type.getUsedConstants do copyVocabulary source dep
+      let vertices ← graph.vertices.mapM fun v => do
+        return {v with type := ← copyStatement source (v.origin.constName?.getD .anonymous) v.type}
+      let graph := {graph with vertices}
       let graphEnv ← getEnv
       let reading ← withEnv graphEnv <| evaluateGraph graph
       let baselineProof? ← if upperIsZero reading.baseline then
@@ -300,7 +313,7 @@ private unsafe def runCore (source base : Environment) (request : Request) : IO 
       let pairedProof? ← if upperIsZero reading.paired then
         withEnv pairedEnv do
           for v in graph.vertices do
-            for dep in v.type.getUsedConstants do copyVocabulary source dep
+            discard <| copyStatement source (v.origin.constName?.getD .anonymous) v.type
           assembleZero reading.graph true
         else pure none
       let reading := {reading with
