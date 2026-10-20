@@ -51,6 +51,8 @@ are those in #19029; no independent separability theorem is asserted.
 
 
 import D5.S3.Quantum.FiniteDimensional
+import D5.S3.Estimation.GaussianThermometryJointMeasurementRefutation
+import D5.S3.Quantum.Thermal.PositiveOneModeWilliamson
 import D5.S3.Quantum.Measurements.GeneralDyneSteadyStateOptimality
 
 /-! Binding conventions for M. Song et al., "Gaussian Atemporality: When Gaussian Quantum Correlations Imply

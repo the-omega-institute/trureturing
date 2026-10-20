@@ -129,5 +129,7 @@ For each physical local uncertainty matrix, D5.S3.Quantum.Measurements.GeneralDy
 - Truth anchor: `D5/S3/Estimation/GaussianAtemporalityEntanglement.forwardX`
 - Truth anchor: `D5/S3/Estimation/GaussianAtemporalityEntanglement.partialTransposeA`
 - Truth anchor: `D5/S3/Estimation/GaussianAtemporalityEntanglement.result`
+- Dependency: [D5/S3/Estimation/GaussianThermometryJointMeasurementRefutation](GaussianThermometryJointMeasurementRefutation.md)
 - Dependency: [D5/S3/Quantum/FiniteDimensional](../Quantum/FiniteDimensional.md)
 - Dependency: [D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality](../Quantum/Measurements/GeneralDyneSteadyStateOptimality.md)
+- Dependency: [D5/S3/Quantum/Thermal/PositiveOneModeWilliamson](../Quantum/Thermal/PositiveOneModeWilliamson.md)
