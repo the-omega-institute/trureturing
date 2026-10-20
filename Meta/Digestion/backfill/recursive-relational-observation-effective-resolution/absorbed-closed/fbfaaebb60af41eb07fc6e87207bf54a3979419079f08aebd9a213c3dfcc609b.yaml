@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:fbfaaebb60af41eb07fc6e87207bf54a3979419079f08aebd9a213c3dfcc609b
   normalized_sha256: sha256:fbfaaebb60af41eb07fc6e87207bf54a3979419079f08aebd9a213c3dfcc609b
 cas_ref: sha256:fbfaaebb60af41eb07fc6e87207bf54a3979419079f08aebd9a213c3dfcc609b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/SparseGridIntegrability.sparse_grid_integrability
+    target_statement_id: sha256:adcd6f6f71a4a41df1ced39b093d01e43480c7fe6e72f24a0f5e3aa6c69d3a15
 receipts:
   unresolved_subitems: []
