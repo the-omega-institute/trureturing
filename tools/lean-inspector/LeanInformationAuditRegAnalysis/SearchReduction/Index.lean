@@ -90,15 +90,14 @@ structure ReferenceIndex where
   statementHeads : Std.HashMap (List Name) (Array Name) := {}
   projections : LazyDiscrTree Fact := {}
 
-/-- Production state is constant size. The optional legacy oracle belongs to
-an explicitly requested test, never the ordinary compiled-audit path. -/
+/-- Production state is constant size. The optional query-record handle belongs
+to an explicitly requested test, never the ordinary compiled-audit path. -/
 structure FactIndex where
   environment? : Option Environment := none
   localContext : LocalContext := {}
   localInstances : LocalInstances := #[]
   enumerationSize : Nat := 0
-  reference? : Option ReferenceIndex := none
-  verify : Bool := false
+  verificationGroup? : Option Nat := none
 
 /-- Keep a declaration's temporary normalization caches out of the next one.
 Fresh-name allocation is preserved because retained entries own local contexts. -/
@@ -130,30 +129,83 @@ private def referenceIndex : MetaM ReferenceIndex := do
       else pure index
   return {statements, statementHeads, projections := index.toLazy}
 
+private inductive VerificationQuery where
+  | statement (key : UInt64) (actual : Array Name)
+  | matcher (key : List Name) (actual : Array Name)
+  | projection (query : Expr) (actual : Array Fact) (environment : Environment)
+      (context : Meta.Context) (state : Meta.State)
+
+private structure VerificationGroup where
+  environment : Environment
+  context : Meta.Context
+  state : Meta.State
+  queries : Array VerificationQuery := #[]
+
+/-- Test records are scoped to one outer probe, including its negative replay.
+Production queries allocate no records and retain no previous target. -/
+private initialize verificationGroups : IO.Ref (Array VerificationGroup) ← IO.mkRef #[]
+
+def resetIndexVerification : IO Unit := verificationGroups.set #[]
+
 def factIndex : MetaM FactIndex := do
   let env ← getEnv
   let enumerationSize := env.constants.fold (fun n _ _ => n + 1) 0
   let verify := (← IO.getEnv "SEARCH_REDUCTION_VERIFY_INDEX") == some "1"
   let localContext ← getLCtx
   let localInstances ← getLocalInstances
-  return {environment? := some env, localContext, localInstances, enumerationSize, verify}
+  let verificationGroup? ← if verify then do
+    let groups ← verificationGroups.get
+    verificationGroups.set (groups.push {
+      environment := env, context := ← read, state := ← get})
+    pure (some groups.size)
+  else pure none
+  return {
+    environment? := some env, localContext, localInstances, enumerationSize, verificationGroup?}
 
-private def reference : StateRefT FactIndex MetaM ReferenceIndex := do
-  if let some reference := (← get).reference? then return reference
-  let state ← get
-  let reference ← match state.environment? with
-    | some env => withEnv env <| withLCtx state.localContext state.localInstances referenceIndex
-    | none => pure {}
-  modify fun state => {state with reference? := some reference}
-  return reference
+private def recordQuery (index : FactIndex) (query : VerificationQuery) : IO Unit := do
+  if let some group := index.verificationGroup? then
+    verificationGroups.modify fun groups => groups.modify group fun entry =>
+      {entry with queries := entry.queries.push query}
 
 private def checkCandidates [BEq α] (kind : String) (actual expected : Array α) :
     MetaM Unit := do
   unless actual == expected do
     IO.eprintln s!"search.index_equivalence_failed: {kind}, new={actual.size}, old={expected.size}"
-    -- An expected insufficient verdict must not swallow a failed test assertion.
     IO.Process.exit 1
   IO.eprintln s!"index-equivalence kind={kind} equal=true candidates={actual.size}"
+
+/-- Replay the original eager index after the production search has completed.
+Its independent, unbounded test context cannot spend any R_v1 search budget.
+Every lookup, including lookups whose StateRefT state is discarded, is recorded.
+The records are detached before replay and released at the end of this probe. -/
+def verifyIndexQueries : IO Unit := do
+  let groups ← verificationGroups.swap #[]
+  for group in groups do
+    if group.queries.isEmpty then continue
+    let work : CoreM Unit := do
+      let mut reference ← referenceIndex.run' group.context group.state
+      for query in group.queries do
+        match query with
+        | .statement key actual =>
+          (checkCandidates "statement" actual (reference.statements[key]?.getD #[])).run'
+        | .matcher key actual =>
+          (checkCandidates "matcher" actual (reference.statementHeads[key]?.getD #[])).run'
+        | .projection query actual env context state =>
+          let (expected, warmed) ← (withEnv env <| reference.projections.getMatch query).run' context state
+          reference := {reference with projections := warmed}
+          (checkCandidates "projection" actual (expected.appendResults #[])).run'
+    let context : Core.Context := {
+      fileName := "<index equivalence>", fileMap := default,
+      options := (({} : Options).set `maxHeartbeats 0).set `maxRecDepth 1000,
+      initHeartbeats := ← IO.getNumHeartbeats, maxHeartbeats := 0}
+    match ← (work.run context {env := group.environment}).toIO' with
+    | .ok (_, state) =>
+      if state.messages.hasErrors then
+        IO.eprintln "search.index_equivalence_oracle_errors"
+        IO.Process.exit 1
+    | .error ex =>
+      IO.eprintln s!"search.index_equivalence_oracle_failed: {← ex.toMessageData.toString}"
+      IO.Process.exit 1
 
 /-- Hash collisions remain candidates; equality is still checked by the caller. -/
 def statementCandidates (key : UInt64) : StateRefT FactIndex MetaM (Array Name) := do
@@ -161,8 +213,8 @@ def statementCandidates (key : UInt64) : StateRefT FactIndex MetaM (Array Name) 
   let names := env.constants.fold (init := #[]) fun names name info =>
     if allowed name info && info.type.hash == key then names.push name else names
   let names := names.qsort Name.quickLt
-  if (← get).verify then
-    checkCandidates "statement" names ((← reference).statements[key]?.getD #[])
+  if (← get).verificationGroup?.isSome then
+    recordQuery (← get) (.statement key names)
   return names
 
 /-- Preserve the old coarse bucket, including candidates rejected by the
@@ -173,8 +225,8 @@ def matcherCandidates (key : List Name) : StateRefT FactIndex MetaM (Array Name)
     if allowed name info && statementHead info.type == key && !key.getLast!.isAnonymous
       then names.push name else names
   let names := names.qsort Name.quickLt
-  if (← get).verify then
-    checkCandidates "matcher" names ((← reference).statementHeads[key]?.getD #[])
+  if (← get).verificationGroup?.isSome then
+    recordQuery (← get) (.matcher key names)
   return names
 
 /-- A singleton lookup uses Lean's exact wildcard, arrow and scoring semantics.
@@ -217,11 +269,8 @@ def projectionCandidates (query : Expr) : StateRefT FactIndex MetaM (Array Fact)
   let (hits, _) ← tree.toLazy.getMatch query
   let actual := hits.appendResults #[]
   IO.eprintln s!"structural query: retained_entries={retained}, candidates={actual.size}"
-  if (← get).verify then
-    let reference ← reference
-    let (expected, warmed) ← reference.projections.getMatch query
-    modify fun state => {state with reference? := some {reference with projections := warmed}}
-    checkCandidates "projection" actual (expected.appendResults #[])
+  if index.verificationGroup?.isSome then
+    recordQuery index (.projection query actual (← getEnv) (← read) (← getThe Meta.State))
   return actual
 
 end LeanInformationAudit.SearchReduction

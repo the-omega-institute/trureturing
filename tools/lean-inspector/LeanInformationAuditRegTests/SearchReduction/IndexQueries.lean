@@ -1,7 +1,10 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Index
 
 /-! Retrieval keeps the original environment boundary and the empty-index
-contract even when subsequent proof checking adds declarations. -/
+contract even when subsequent proof checking adds declarations.
+
+`SEARCH_REDUCTION_VERIFY_INDEX=1 make search-reduction-replay-test` also compares
+every actual lookup with the eager reference, after each completed probe. -/
 namespace LeanInformationAudit.Tests.SearchReduction.IndexQueries
 open Lean Meta Elab LeanInformationAudit.SearchReduction
 

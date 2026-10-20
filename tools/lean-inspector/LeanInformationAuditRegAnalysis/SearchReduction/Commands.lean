@@ -169,6 +169,7 @@ syntax (name := searchReductionProbeCmd) "#search_reduction_probe " ident " at "
   match stx with
   | `(#search_reduction_probe $target:ident at $sha:str baseline [$bs:ident,*]
       using [$ss:ident,*] from [$owners:ident,*] as $name:ident) =>
+    resetIndexVerification
     profilePhase "imports/source"
     let (source, shared) ← importSource (owners.getElems.map fun n => {module := n.getId})
     let result ← run source {
@@ -186,6 +187,7 @@ syntax (name := searchReductionProbeCmd) "#search_reduction_probe " ident " at "
           discard <| checkProof (name.getId ++ `baselineFailureGuard) [] guardType guardProof
         finally activeProbe.set none
       publish name.getId result (some source)
+    verifyIndexQueries
     logInfo (observationJson result sha.getString).compress
   | _ => throwUnsupportedSyntax
 
@@ -239,6 +241,9 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       cmd := "lean", args := #["-j1", "--root=" ++ directory.toString,
         "-o", output.toString, input.toString]}
     if child.exitCode != 0 then
+      if (← IO.getEnv "SEARCH_REDUCTION_VERIFY_INDEX") == some "1" then
+        IO.eprintln s!"{child.stdout}\n{child.stderr}"
+        IO.Process.exit 1
       let failed : Observation := {
         target := target.getId, base := .incomplete .execution, paired := .incomplete .execution,
         verdict := .insufficient, reason := s!"search.probe_compile_failed: exit {child.exitCode}" }
