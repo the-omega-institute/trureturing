@@ -1,6 +1,7 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Commands
 import LeanInformationAuditRegTests.SearchReduction.Candidates
 import LeanInformationAuditRegTests.SearchReduction.PresentationCandidates
+import LeanInformationAuditRegTests.SearchReduction.GraphCandidates
 
 /-! Executed, kernel-checked negative calibration and a paired induction test.
 Each command emits a standalone Lean probe under .lake/build/search-reduction. -/
@@ -8,6 +9,30 @@ open LeanInformationAudit.SearchReduction
 open LeanInformationAudit.Tests.SearchReduction
 
 #search_reduction_config
+
+#search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.square
+  at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
+  using [LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareFact] as squareResult
+#guard squareResult = Verdict.nonBindOnly
+#guard squareResult.baseline = Run.exhausted
+#guard squareResult.paired = Run.found
+
+#search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.square
+  at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
+  using [LeanInformationAudit.Tests.SearchReduction.GraphCandidates.trueFact] as neutralTrueResult
+#guard neutralTrueResult = Verdict.insufficient
+#guard neutralTrueResult.baseline = Run.exhausted
+#guard neutralTrueResult.paired = Run.exhausted
+
+#search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.square
+  at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
+  using [LeanInformationAudit.Tests.SearchReduction.GraphCandidates.arithmeticFact] as neutralArithmeticResult
+#guard neutralArithmeticResult = Verdict.insufficient
+#guard neutralArithmeticResult.baseline = Run.exhausted
+#guard neutralArithmeticResult.paired = Run.exhausted
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.statementAlias
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"

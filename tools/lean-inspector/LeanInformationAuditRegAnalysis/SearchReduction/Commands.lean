@@ -17,13 +17,13 @@ private initialize requestEnvironment : IO.Ref (Option Environment) ← IO.mkRef
 
 /-- Module bytes are immutable. The common import state contains only Mathlib;
 source and baseline fork it before independently initializing extension state. -/
-private def importSource (owners : Array Import) : IO (Environment × ImportState) :=
+private def importSource (owners : Array Import) : IO (Environment × ImportState × ImportState) :=
   withImporting do
     let (_, shared) ← (importModulesCore #[{module := `Mathlib}]).run default
     let (_, sourceState) ← (importModulesCore owners).run shared
     let source ← finalizeImport sourceState owners options 0
-      (leakEnv := true) (loadExts := false)
-    return (source, shared)
+      (leakEnv := false) (loadExts := false)
+    return (source, shared, sourceState)
 
 /-- The nested negative replay shares this probe's immutable module bytes.
 The reference is cleared before returning; it never caches across targets. -/
@@ -207,7 +207,9 @@ without rolling the diagnostic back as an ordinary tactic exception. -/
     profilePhase "imports/source"
     let (source, shared) ← match ← activeProbe.get with
       | some context => pure context
-      | none => importSource (owners.getElems.map fun n => {module := n.getId})
+      | none => do
+        let (source, shared, _) ← importSource (owners.getElems.map fun n => {module := n.getId})
+        pure (source, shared)
     let result ← run source {
       target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
       baselineCommit := sha.getString } shared
@@ -252,8 +254,21 @@ private def writeRequest (path : System.FilePath) (request : Request)
   writeModule env path (writeIR := false)
 
 unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) : CommandElabM Unit := do
-  let (source, shared) ← importSource (owners.map fun n => {module := n})
+  let imports := owners.map fun n => {module := n : Import}
+  let (source, shared, sourceState) ← importSource imports
+  -- Exported proof expressions retain source module storage; transient
+  -- environment maps and extension states need not be made persistent.
+  probeRegions.modify (· ++ source.header.regions)
   let result ← run source request shared
+  -- Publish in a fully initialized fork of the same immutable module storage.
+  -- The baseline has already returned, and no author extension enters it.
+  -- This also gives the module writer the complete extension array without
+  -- importing a second copy of all Mathlib bytes into the compiler prelude.
+  let mainModule := (← getEnv).header.mainModule
+  enableInitializersExecution
+  let serialization ← withImporting <|
+    finalizeImport sourceState imports options 0 (leakEnv := false) (loadExts := true)
+  modifyEnv fun _ => serialization.setMainModule mainModule
   liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
     if result.verdict == .nonBindOnly then
       -- Construct syntax identifiers directly from the exact Name AST.
@@ -345,8 +360,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let directory ← IO.FS.realPath directory
     let input := directory / (moduleName ++ ".lean")
     let output := directory / (moduleName ++ ".olean")
-    let imports := String.join ((#[`Mathlib, `LeanInformationAuditRegAnalysis.SearchReduction.Commands] ++
-      bs.getElems.map (fun n => n.getId)).toList.map fun n => s!"import {n}\n")
+    let imports := "import LeanInformationAuditRegAnalysis.SearchReduction.Commands\n"
     let payload := directory / "request.olean"
     writeRequest payload {
       target := target.getId, «baseline» := bs.getElems.map (·.getId),
