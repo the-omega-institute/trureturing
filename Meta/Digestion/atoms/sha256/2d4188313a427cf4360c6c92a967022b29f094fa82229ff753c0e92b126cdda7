@@ -1,0 +1,48 @@
+## 85. FIB 多主体反馈、平均场 HJB–FP 系统与均衡不可辨识
+
+固定有限上下文闭包 \(E_j\)，给定主体数 \(N\)、动作集 \(\mathcal A\)、受控核 \(Q_j^a(x,\mu,y)\)、相互作用代价 \(\ell_j(x,\mu,a)\) 和终端代价 \(G_j(x,\mu)\)。FIB 只给状态和组合关系。对经验测度 \(\mu\) 和动作律 \(\alpha(a\mid x)\)，定义
+\[
+\Phi_j(\mu,\alpha)(y)
+=\sum_{x,a}\mu(x)\alpha(a\mid x)Q_j^a(x,\mu,y),
+\]
+\[
+L_j(\mu,\alpha)
+=\sum_{x,a}\mu(x)\alpha(a\mid x)\ell_j(x,\mu,a).
+\]
+规划者的分布值函数满足
+\[
+U_T(\mu)=G_j(\mu),
+\qquad
+U_t(\mu)
+=\inf_\alpha\{L_j(\mu,\alpha)+U_{t+1}(\Phi_j(\mu,\alpha))\}.
+\]
+这是概率单纯形上的 HJB；统一 Lipschitz 和近乘积初态下，有限时域 \(N\)-主体值可在适当范数中以 \(O(N^{-1/2})\) 逼近该分布控制值。
+
+给定人口流 \(m_t\)，个体最佳响应满足
+\[
+v_T(x)=G_j(x,m_T),
+\]
+\[
+v_t(x)
+=\min_a\left\{\ell_j(x,m_t,a)
++\sum_yQ_j^a(x,m_t,y)v_{t+1}(y)\right\}.
+\]
+要求前向一致性
+\[
+m_{t+1}(y)
+=\sum_{x,a}m_t(x)\alpha_t^\ast(a\mid x;m_t)
+Q_j^a(x,m_t,y)
+\]
+便得到有限时域 HJB–FP 均衡。有限状态下存在性可由混合策略紧性得到；唯一性仍需单调性、压缩性或严格凸势。单状态、动作 \(\{-1,+1\}\)、代价
+\[
+\ell(a,p)=-a(2p-1)
+\]
+已有至少两个纯均衡，说明 FIB 递归不能选择均衡分支。
+
+若只有标签观察，受控核须满足 lumpability 才能在标签空间递推；否则必须使用信念状态。观察均衡流只识别动作加权核
+\[
+\bar Q_t(x,m_t,\cdot)
+=\sum_a\alpha_t^\ast(a\mid x;m_t)Q_j^a(x,m_t,\cdot),
+\]
+没有动作 positivity、受控干预或已知核时，不能分解各 \(Q_j^a\)。给所有动作代价加同一状态基线也不改变 argmin，故代价本身还存在规范不可辨识。连续 HJB–FP 或 master 方程需要另加位置嵌入、生成器极限、边界和唯一性；它们不是 FIB 递归自动产生的物理均衡。
+

@@ -1,0 +1,42 @@
+**定理 38.2（满支撑测试暴露唯一编码后信道，repo-derived）。** 设 $p$ 为上述二次型的任意最小点，$A=\{s:p_s>0\}$。若 $\|\mathcal F-\mathcal T\|_\diamond=\delta_*$，则
+
+$$
+\mathcal F(|s\rangle\langle t|)=K_{st}|T_s\rangle\langle T_t|
+\qquad(s,t\in A).
+$$
+
+在任一有限乘积混合分解 $\mathcal F=\sum_z w_z\mathcal F_z$ 中，每个 $w_z>0$ 的分量也满足这个矩阵单位等式。若存在满支撑最小点，则在允许类内
+
+$$
+f_p(\mathcal F)=q
+\quad\Longleftrightarrow\quad
+\mathcal F=\mathcal F_K
+\quad\Longleftrightarrow\quad
+\|\mathcal F-\mathcal T\|_\diamond=\delta_*.
+$$
+
+因此 $\mathcal F_K$ 是允许编码后信道凸集的暴露点。这里只断言源编码后的作用唯一，不断言物理局部信道、Kraus 表示、环境等距或编码算符空间之外的作用唯一。满支撑最小点只须存在，不须是唯一最小点。
+
+**证明。** 对每个乘积分量取局部 Stinespring 等距，记第 $s$ 编码基向量的扩张输出为 $\Xi_{zs}$，并置
+
+$$
+\zeta_{zs}=(\langle T_s|\otimes I)\Xi_{zs},\qquad
+C^z_{st}=\langle\zeta_{zt},\zeta_{zs}\rangle,\qquad
+D^z_{st}=K_{st}-\operatorname{Re}C^z_{st}.
+$$
+
+第 36.1 节的投影环境 Ky Fan 界给出 $|C^z_{st}|\le K_{st}$，故所有 $D^z_{st}\ge0$。沿同一个参考测试展开，得到
+
+$$
+f_p(\mathcal F)=\sum_{z,s,t}w_zp_sp_t\operatorname{Re}C^z_{st},
+\qquad q-f_p(\mathcal F)=\sum_{z,s,t}w_zp_sp_tD^z_{st}.
+$$
+
+二元测试给出 $\|\mathcal F-\mathcal T\|_\diamond\ge2(1-f_p(\mathcal F))$。达到最优值因而迫使 $f_p(\mathcal F)=q$。非负和为零，故 $w_z>0$ 且 $s,t\in A$ 时 $D^z_{st}=0$。对角项给出 $\|\zeta_{zs}\|^2=1$；$\Xi_{zs}$ 本来是单位向量，正交投影的勾股等式遂给出
+
+$$
+\Xi_{zs}=T_s\otimes\zeta_{zs}.
+$$
+
+非对角项满足 $\operatorname{Re}C^z_{st}=K_{st}$ 及 $|C^z_{st}|\le K_{st}$，所以 $C^z_{st}=K_{st}$，包括 $K_{st}=0$ 的情形。对 $|\Xi_{zs}\rangle\langle\Xi_{zt}|$ 作环境偏迹即得矩阵单位等式。此推导只用测试等号，故满支撑时 $f_p=q$ 已迫使整个编码后信道为 $\mathcal F_K$。反向由共同达到构造与其范数公式成立。证毕。
+

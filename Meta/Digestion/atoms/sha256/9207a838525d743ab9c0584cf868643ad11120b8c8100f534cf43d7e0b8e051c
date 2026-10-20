@@ -1,0 +1,8 @@
+**推论 261.3（纤维直径的传播界）。** 对任意范数，
+
+$$
+\operatorname{diam}(\mathcal B_{t+1})
+\le
+\|A_{a_t}\|\operatorname{diam}(\mathcal B_t).
+$$
+

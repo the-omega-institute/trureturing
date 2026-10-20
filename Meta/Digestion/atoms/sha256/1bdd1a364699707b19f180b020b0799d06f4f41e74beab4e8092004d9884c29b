@@ -1,0 +1,6 @@
+其中：
+
+* \(\phi\) 读取局部 Weil source；
+* \(\theta\) 是 resolvent budget 的影子价格；
+* \(\theta w_a\) 是为保持 Fourier 非负而加入的 resolvent counterterm。
+

@@ -1,0 +1,17 @@
+**Definition 16.1 (Polynomial data and anchored pairs).** Let $d\in\mathbb R[t]$ be nonzero and globally nonnegative, of exact degree $2m$, where $m\ge0$, and write $\delta=[t^{2m}]d>0$. Put $\Delta v(t)=v(t+1)-v(t)$ and $\operatorname{fall}_j(t)=\prod_{i=0}^{j-1}(t-i)$, with $\operatorname{fall}_0=1$. A degree-bounded anchored pair for $d$ is a pair of real polynomials $p,s$ satisfying
+
+$$
+\deg p,\deg s\le m,\qquad s(0)=0,\qquad d=p^2+\Delta(s^2).
+\tag{16.1}
+$$
+
+The zero polynomial is permitted in a degree bound. Positive orientation means $[t^m]p=\sqrt\delta$. Define the discrete integral polynomial by
+
+$$
+P(t)=\sum_{j=0}^{2m}\Delta^j d(0)\binom{t}{j+1},\qquad
+\binom{t}{j}=\frac{\operatorname{fall}_j(t)}{j!}.
+\tag{16.2}
+$$
+
+Throughout this section, a gap index is the number of zeros between successive ticks; the corresponding interevent duration is one larger. Adjoints are denoted by $\dagger$, and the star on a CP map denotes its trace dual. Real matrices act on the full complex matrix algebra, as in Definition 1.2.
+

@@ -1,0 +1,36 @@
+## 8.1 有限时域目标
+
+设
+
+\[
+\tau:X\to X
+\]
+
+为更新，\(q:X\to O\) 为当前读数。定义长度 \(N\) 的未来轨迹
+
+\[
+T_N(x)
+=
+\bigl(q(x),q(\tau x),\ldots,q(\tau^N x)\bigr).
+\]
+
+定义预测逃逸关系
+
+\[
+\boxed{
+\mathcal E_N(q,\tau)
+=
+\mathcal E(q;T_N).
+}
+\]
+
+它记录当前读数相同、但在未来 \(N\) 步内会出现不同读数的状态对。
+
+显然
+
+\[
+\mathcal E_N(q,\tau)
+\subseteq
+\mathcal E_{N+1}(q,\tau).
+\]
+

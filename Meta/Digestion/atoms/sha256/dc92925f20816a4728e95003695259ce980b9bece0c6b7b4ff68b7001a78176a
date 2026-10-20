@@ -1,0 +1,4 @@
+**定理 5.4（单边判据）。** 设 $v\in\{-1,1\}^L$,$L\ge3$,两种值都出现。设存在 $\varepsilon\in\{\pm1\}$ 与正整数 $\ell,\ell'$,使:$U$(长度为 $\ell$ 的 $\varepsilon$-游程之并)与 $U'$(长度为 $\ell'$ 的 $(-\varepsilon)$-游程之并)都非空;每个其他 $\varepsilon$-游程长度 $\ell''$ 满足 $\gcd(\ell+1,\ell''+1)=1$;每个其他 $(-\varepsilon)$-游程长度 $\ell'''$ 满足 $\gcd(\ell'+1,\ell'''+1)=1$;并且 $C_L$ 中恰有一条边一端在 $U$、另一端在 $U'$。则 $\mathcal A_v=M_L(\mathbb R)$,$(\Delta_L,V)$ 的共享交换子只含数量矩阵,没有非平凡共享对称。
+
+**证明。** 由引理 5.3,$P_U,P_{U'}\in\mathcal A_v$。$U\cap U'=\varnothing$,故 $X=P_{U'}A_LP_U=\sum E_{i'i}$,和取遍一端 $i\in U$、另一端 $i'\in U'$ 的边;由假设 $X=E_{i'i}$,其中 $i'=i\pm1$。$A_L$ 与 $P$ 都对称,$X^{\top}=P_UA_LP_{U'}\in\mathcal A_v$,于是 $XX^{\top}=E_{i'i'}$ 与 $X^{\top}X=E_{ii}$ 都在 $\mathcal A_v$ 中。$i$ 与 $i'$ 相邻,由引理 5.1 得结论。∎
+

@@ -1,0 +1,30 @@
+**推论 52.2（边流鞅与条件协方差）。** 在共同历史过滤 \(\mathcal F_n=\sigma(X_0,\ldots,X_n)\) 下，令
+\[
+M_N^i=\mathsf J_N(i)-p_i\bigl(\mathsf L_N(i)-\mathsf L_N(i+1)\bigr).
+\]
+则 \(M_N^i\) 是鞅。若
+\[
+b_i(k)=p_i({\bf1}_{\{k=i\}}-{\bf1}_{\{k=i+1\}}),
+\]
+则一步条件协方差核为
+\[
+\Gamma^{\mathrm{edge}}_{ij}(k)
+=\delta_{ij}p_i({\bf1}_{\{k=i\}}+{\bf1}_{\{k=i+1\}})
+-b_i(k)b_j(k),
+\]
+并且
+\[
+\langle M^i,M^j\rangle_N
+=\sum_{n<N\wedge\tau}\Gamma^{\mathrm{edge}}_{ij}(X_n).
+\]
+在终点 \(\tau\)，净边流本身恒为 \(1\)，所以正确的随机量是鞅终值：
+\[
+\operatorname{Cov}(M_\tau^i,M_\tau^j)
+=\sum_{k=0}^{L-1}\mathcal G(k)\Gamma^{\mathrm{edge}}_{ij}(k)
+=\operatorname{Cov}\left(
+p_i(\mathsf L_\tau(i)-\mathsf L_\tau(i+1)),
+p_j(\mathsf L_\tau(j)-\mathsf L_\tau(j+1))
+\right).
+\]
+这里不能把不同边的流当成独立历史；相邻边虽无同一步双跨，却可通过同一当前位置产生条件协方差。
+

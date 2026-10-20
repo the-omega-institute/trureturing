@@ -1,0 +1,25 @@
+**推论 1528.1（稀有尾标签的信息尺度）。** 固定 $\kappa$，令 $\delta\uparrow s$，并记 $\lambda=\lambda_\delta\downarrow0$、$B_*=(1-s)^2/4>0$。则
+
+$$
+\frac{H(Z\mid X)}{H(Z)}\longrightarrow1,\qquad
+\frac{I(Z;X)}{H(Z)}\longrightarrow0,\qquad
+\frac{I(Z;X)}{\lambda}\longrightarrow-\log B_*.
+$$
+
+**证明。** $B_\delta\to B_*$，因为极限主通道为均值 $s$ 的乘积律，其 $(-,-)$ 格概率即 $B_*$。二元熵在零附近给
+
+$$
+h_2(\lambda)=\lambda\log(1/\lambda)+\lambda+O(\lambda^2),
+$$
+
+以及
+
+$$
+B_\delta h_2(\lambda/B_\delta)
+=\lambda\log(B_\delta/\lambda)+\lambda+O_\kappa(\lambda^2).
+$$
+
+两式相减，得 $I(Z;X)=-\lambda\log B_\delta+O_\kappa(\lambda^2)$；再按相应尺度相除即得。证毕。
+
+互信息趋零与总标签熵趋零同时发生，但它们的比值还保留了不同内容。即使来源已经非常接近一个标签，罕见副标签仍不必由观察可靠识别；绝对成本小与相对恢复充分不是同一判断。
+

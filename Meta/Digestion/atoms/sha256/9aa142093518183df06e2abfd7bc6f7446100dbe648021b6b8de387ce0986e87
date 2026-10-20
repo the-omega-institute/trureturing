@@ -1,0 +1,20 @@
+**定义 281.1（记录偏序与分支作用）。** 令有限事件集 $E$ 带偏序 $\preceq$。每个事件 $e\in E$ 有分支作用
+
+$$
+U_e:X\to X.
+$$
+
+一个线性扩展 $\ell=(e_1,\ldots,e_n)$ 满足 $e_i\preceq e_j\Rightarrow i\le j$，其后继为
+
+$$
+U_\ell=U_{e_n}\circ\cdots\circ U_{e_1}.
+$$
+
+称一对无序事件 $e,f$ 在可达集合 $Y\subseteq X$ 上可交换，若
+
+$$
+U_f(U_e(x))=U_e(U_f(x))
+\qquad
+(\forall x\in Y).
+$$
+

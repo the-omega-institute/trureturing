@@ -1,0 +1,12 @@
+以下等价：
+
+1. 存在 \(\overline A:B\to\mathsf{Prop}\)，使：
+
+   \[
+   A(x)\leftrightarrow\overline A(q(x));
+   \]
+
+2. \(A\) 在每个 CUT 纤维上保持不变；
+3. \(\partial_qA=\varnothing\)；
+4. \(A=A_q^\forall=A_q^\exists\)。
+

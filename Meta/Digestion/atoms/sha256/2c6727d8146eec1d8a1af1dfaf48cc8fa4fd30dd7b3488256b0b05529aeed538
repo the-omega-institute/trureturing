@@ -1,0 +1,74 @@
+**Theorem 21.3 (Exact four-window response and the boundary scale).** Put
+
+$$
+M_i(q)=\sum_{k\ge0}(k+1)q^kP_i(k),\qquad E=\{1010,0101\}.
+$$
+
+Then
+
+$$
+\nu_{\gamma_{\varepsilon,q}}^{(4)}(E)
+=\frac{2\varepsilon aq}{M_0(q)+\varepsilon M_1(q)},\qquad
+\left.\partial_\varepsilon\nu_{\gamma_{\varepsilon,q}}^{(4)}(E)\right|_{0+}
+=\frac{2aq}{M_0(q)}
+=\frac{2a}{(h+1)A}q^{-(h-1)}(1+O(q)).
+\tag{21.13}
+$$
+
+There is a constant $C$ such that
+
+$$
+\left|d_{\rm TV}\!\left(\nu_{\gamma_{\varepsilon,q}}^{(4)},
+\nu_{\gamma_{0,q}}^{(4)}\right)-\frac{2}{2+(h+1)R}\right|\le Cq.
+\tag{21.14}
+$$
+
+For every pair of sequences $q_n\in(0,1)$ and $\varepsilon_n>0$ with $q_n\to0$ and $\varepsilon_n\to0$, put $R_n=Aq_n^{h-1}/(\varepsilon_na)$. Then
+
+$$
+\left[\ \forall W\in\mathbb N_{\ge1},\quad
+ d_{\rm TV}\!\left(\nu_{\gamma_{\varepsilon_n,q_n}}^{(W)},
+ \nu_{\gamma_{0,q_n}}^{(W)}\right)\longrightarrow0\ \right]
+\quad\Longleftrightarrow\quad
+\frac{\varepsilon_n}{q_n^{h-1}}\longrightarrow0.
+\tag{21.15}
+$$
+
+For $0<R<\infty$, the endpoint mixture identity (21.16) for four-symbol marginals does not extend to a mixture of the whole stationary endpoint processes: their five-symbol cylinder $10101$ differs.
+
+Proof. By (21.3), each word in $E$ has probability $\gamma_{\varepsilon,q}(1)/\mu_{\gamma_{\varepsilon,q}}$; $P_\varepsilon(1)=\varepsilon a$ and $\mu_{\gamma_{\varepsilon,q}}=(M_0+\varepsilon M_1)/(Z_0+\varepsilon Z_1)$, giving (21.13). Also $M_0(q)=(h+1)Aq^h(1+O(q))$.
+
+Let $\nu_1$ and $\nu_h$ be the stationary periodic laws with deterministic gap counts $1$ and $h$. Formula (21.3)–(21.4), checked according to the number of ticks in a four-symbol word, gives
+
+$$
+\nu_{\bar\gamma_R}^{(4)}
+=\frac{2}{2+(h+1)R}\nu_1^{(4)}
+ +\frac{(h+1)R}{2+(h+1)R}\nu_h^{(4)}.
+\tag{21.16}
+$$
+
+Indeed $\nu_1^{(4)}$ is supported on $E$, while every word outside $E$ has the $\nu_h$ probability multiplied by $(h+1)R/[2+(h+1)R]$; this includes the all-zero word through (21.9). The supports of $\nu_1^{(4)}$ and $\nu_h^{(4)}$ are disjoint, so the distance in (21.16) from $\nu_h^{(4)}$ is exactly $2/[2+(h+1)R]$. Apply (21.6) to the perturbed law and (21.5) with $d_0$ to the boundary law to obtain (21.14).
+
+To prove the forward implication in (21.15), suppose $\varepsilon_n/q_n^{h-1}\to0$, so $R_n\to\infty$, and fix any $W\ge1$. The boundary estimate (21.11), with its first moment, gives
+$d_{\rm TV}(\nu_{\gamma_{0,q_n}}^{(W)},\nu_h^{(W)})\le C_0Wq_n$
+by the interval-and-phase and subsequent-gap coupling in the proof of Theorem 21.2. Each length-$W$ cylinder in (21.3)–(21.4) for $\bar\gamma_R$ is a finite product or sum of $\alpha_R,\beta_R$, divided by $\bar\mu_R\ge2$. Thus it is continuous at $(\alpha_R,\beta_R)=(0,1)$ and converges to the corresponding $\nu_h$ cylinder as $R\to\infty$. Since $\{0,1\}^W$ is finite, this is convergence in total variation. Together with the actual general-window bound (21.6), the triangle inequality gives
+
+$$
+\begin{aligned}
+ d_{\rm TV}\!\left(\nu_{\gamma_{\varepsilon_n,q_n}}^{(W)},
+ \nu_{\gamma_{0,q_n}}^{(W)}\right)
+ &\le (C+C_0)Wq_n+
+ d_{\rm TV}\!\left(\nu_{\bar\gamma_{R_n}}^{(W)},\nu_h^{(W)}\right)
+ \longrightarrow0.
+\end{aligned}
+$$
+
+Conversely, agreement on every fixed window includes $W=4$. Equation (21.14) then forces $2/[2+(h+1)R_n]\to0$, hence $R_n\to\infty$, which is equivalent to $\varepsilon_n/q_n^{h-1}\to0$ because $A,a>0$.
+
+For the asserted failure of process identification, (21.3) gives, when $0<R<\infty$,
+
+$$
+\bar\nu_R(10101)=\frac1{(1+R)[2+(h+1)R]},
+$$
+whereas the endpoint process mixture with the weights forced by (21.16) assigns $1/[2+(h+1)R]$ to this word: $\nu_1(10101)=1/2$ and $\nu_h(10101)=0$. The two quantities differ, proving the claim. $\square$
+

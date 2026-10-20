@@ -1,0 +1,14 @@
+Here $E^\rho$ is exactly (43.2) with circumference $\rho$, tensor
+$M_\kappa$ and mass $\mu$. This quantitative formula requires only the
+stated minimum separation, and allows all relative rates and both signs.
+In particular for $\mu$ in positive compact sets:
+
+- If $\rho\to\infty$ and $z$ stays in a compact subset of
+  $\mathbb R^3\setminus\{0\}$, then $E^\rho_{\kappa,\mu}(z)
+  -Y_{\kappa,\mu}(z)\to0$ uniformly.
+- If $\rho$ stays in a positive compact set, (43.7) is a uniform absolute
+  approximation on compact phase sets separated from its wrapped pole.
+  These sets may have $z_w=0$ and $z_x\notin\rho\mathbb Z$.
+- If $\rho\to0$ and $z_w$ stays in a compact set bounded away from zero,
+  uniformly in $z_x$ modulo $\rho$,
+

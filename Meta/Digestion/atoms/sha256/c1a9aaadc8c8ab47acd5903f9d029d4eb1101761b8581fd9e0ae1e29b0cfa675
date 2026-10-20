@@ -1,0 +1,10 @@
+现在给边界或载体附加一个解析对象 $V=(V_n)_n$、测试集 $T$、目标点 $x$ 与操作代数 $A$。可以分别提出四种性质：
+
+* **uniform completion**：投影误差趋于零，例如
+  $\|I-P_{V_n}\|\to0$；
+* **state-family completion**：测试集上的残差趋于零，例如
+  $\sup_{t\in T}\|P_{V_n}^{\perp}t\|\to0$（有界测试集的直观写法；仓内形式化支点使用 $\operatorname{ENNReal}$ 上确界）；
+* **member-target completion**：只要求一个指定 $x\in T$ 的残差趋于零；
+* **algebra equality**：由允许窗口生成的指定 unital 或 $*$-代数恰好等于目标代数；
+* **observable containment**：只要求一族指定 observable 包含于该生成代数；这是较弱的独立标签。
+

@@ -1,0 +1,25 @@
+**定义 38.1（编码后信道与共同测试）。** 沿用第 36.1 节的有限谱模型，令扇区集合为非空有限集 $S$，$N=|S|$，目标向量为 $T_s=J_d|s\rangle$，目标信道为 $\mathcal T(X)=J_dXJ_d^*$。残余平方根谱及其核仍记为 $v_s$、$K_{st}=\langle v_t,v_s\rangle$。允许的物理操作仍是两侧局部 CPTP 映射的乘积或有限共享经典随机混合，无通信、后选择或额外共享纠缠。其编码后信道记为 $\mathcal F=\Phi\circ\mathcal J_\lambda$，不要求任何基扇区输出正确。定义
+
+$$
+q=\min_{p\in\Delta_S}p^{\mathsf T}Kp,
+\qquad \delta_*=2(1-q),
+\qquad \mathcal F_K(X)=J_d(K\circ X)J_d^*.
+$$
+
+对任一最小点 $p$，取同一个参考输入和理想输出
+
+$$
+|\Omega_p\rangle=\sum_s\sqrt{p_s}|s\rangle_R|s\rangle_L,
+\qquad |\Theta_p\rangle=\sum_s\sqrt{p_s}|s\rangle_RT_s,
+$$
+
+并记二元投影测试的成功概率为
+
+$$
+f_p(\mathcal F)=\langle\Theta_p|
+(\operatorname{id}_R\otimes\mathcal F)
+(|\Omega_p\rangle\langle\Omega_p|)|\Theta_p\rangle.
+$$
+
+本节钻石范数均不含二分之一。第 36.1 节给出 $f_p(\mathcal F)\le q$ 及共同最优误差 $\delta_*$；下面研究哪些信道能够达到等号，以及接近等号迫使什么。
+

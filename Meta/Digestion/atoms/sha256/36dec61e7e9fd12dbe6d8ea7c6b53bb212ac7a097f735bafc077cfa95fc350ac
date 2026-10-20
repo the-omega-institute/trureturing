@@ -1,0 +1,5 @@
+这与仓库中的两类结果应当分别连接：
+
+* `RefinementTargetRiskMonotonicity` 证明精化读出会缩小目标风险，但没有自动给出风险影响的数值大小。
+* `TermBoundDoesNotBoundFamilySum` 明确证明：单项趋于零，不保证不断增长的项族总和也按同样尺度趋于零。当前模型中，单项为 \(O(1/T)\)，有 \(O(T/\ln T)\) 项，总量降为较慢的 \(O(1/\ln T)\)。
+

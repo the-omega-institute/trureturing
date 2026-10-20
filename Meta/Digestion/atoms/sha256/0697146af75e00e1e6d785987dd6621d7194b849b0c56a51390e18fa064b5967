@@ -1,0 +1,54 @@
+## 194. FIB 路径上的外加辐射输运、黑体辐射与光学厚度极限
+
+固定 FIB 路径并外加每条边的长度、方向、时间步长和光子频率 \(\nu\)。FIB 只给可拼接状态与次序；光速、频率测度、吸收/散射截面、发射源、温度和边界入射量均外加。离散输运可写成
+$$
+I_{k+1}(\nu,\Omega)
+=\int K_k(\nu,\Omega\mid\nu',\Omega')I_k(\nu',\Omega')\,{\rm d}\nu'{\rm d}\Omega'
++S_k(\nu,\Omega).
+\tag{194.1}
+$$
+连续嵌入中，给定 \(\kappa_\nu,\sigma_\nu,j_\nu\) 和相函数 \(p_\nu\)，比强度满足
+$$
+\frac1c\partial_tI_\nu+\Omega\cdot\nabla_xI_\nu
+=-(\kappa_\nu+\sigma_\nu)I_\nu+j_\nu
++\sigma_\nu\int_{S^2}p_\nu(\Omega,\Omega')I_\nu(\Omega')\,{\rm d}\Omega'.
+\tag{194.2}
+$$
+令
+$$
+u_\nu=\frac1c\int_{S^2}I_\nu\,{\rm d}\Omega,\qquad
+F_\nu=\int_{S^2}\Omega I_\nu\,{\rm d}\Omega .
+\tag{194.3}
+$$
+频率保持的弹性散射下，
+$$
+\partial_tu_\nu+\nabla\cdot F_\nu=4\pi j_\nu-c\kappa_\nu u_\nu .
+\tag{194.4}
+$$
+若光学厚度大、角向混合充分且边界层可分离，输运消光 \(\chi_\nu^{\rm tr}=\kappa_\nu+\sigma_\nu(1-g_\nu)\) 给出
+$$
+F_\nu=-D_\nu\nabla u_\nu+O(\epsilon_\nu^2),
+\qquad D_\nu=\frac{c}{3\chi_\nu^{\rm tr}},
+\qquad \epsilon_\nu=\frac1{L(\kappa_\nu+\sigma_\nu)} ,
+\tag{194.5}
+$$
+以及辐射扩散方程
+$$
+\partial_tu_\nu-\nabla\cdot(D_\nu\nabla u_\nu)
+=4\pi j_\nu-c\kappa_\nu u_\nu+O(\epsilon_\nu^2).
+\tag{194.6}
+$$
+光学薄区沿特征线自由传播；重尾自由程可产生 Lévy 超扩散，不能由 FIB 路径长度决定。
+
+Planck 谱还要求局部热平衡、Kirchhoff 关系、各向同性腔和零光子化学势：
+$$
+j_\nu=\kappa_\nu B_\nu(T),\qquad
+B_\nu(T)=\frac{2h\nu^3}{c^2}\frac1{e^{h\nu/(k_BT)}-1},
+\tag{194.7}
+$$
+$$
+u_\nu^{\rm eq}=\frac{4\pi}{c}B_\nu(T).
+\tag{194.8}
+$$
+只有弹性散射而没有数目改变的发射/吸收时，平衡可带非零化学势而非必然 Planck 谱。只测总强度无法分别识别频率依赖的吸收、散射和发射。自由流、厚介质扩散、超扩散、LTE 腔和非 LTE 稳态都可由同一 FIB 接续承载，具体选择来自外加核、边界和热力学条件。
+

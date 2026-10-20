@@ -1,0 +1,86 @@
+### 56.2 A uniform lower bound after the common prefix
+
+<a id="TM56-T1"></a>
+**Theorem TM56.1 (common-prefix barrier).** For every $H\ge8$, every fixed actual positive context $v$ on either fixed side, and every $\mathrm{CPF}(v,H)$ controller recovering the initial target on complete $U_H$ with a finite supplied alphabet $\mathcal L$,
+
+<a id="TM56-E07"></a>
+$$
+|\mathcal L|\ge\frac h3-2.
+\tag{TM.5607}
+$$
+
+This quantifies arbitrary exact-source labels, all three initial target bands, all actual words and brackets, and every permitted post-prefix continuation. It imposes no terminal `Size_H` hypothesis.
+
+**Proof.** Let $z_0=\lfloor h/2\rfloor+1$. For $h\ge7$, all pairs selected below are positive finite unit targets. Choose one genuine $\omega_{2z-w,w-z}$ per selected target with a fixed ordered bracketing, and retain the label actually supplied on that exact tree. If there are more selected targets than labels, two witnesses share a label. Their initial Reads are all 1. Reads after a common accepted context are also equal: they give the same ordered product with $E_0(v)$ and the original unit read. Thus equal labels and the displayed common responses give equal complete prefix records, including the number and identities of any intervening Reads.
+
+If $c\le2h/3$, including $c<0$, select
+
+<a id="TM56-E08"></a>
+$$
+S_{RA}=\{(z,h):\max(z_0,c+1)\le z\le h-1\},
+\qquad
+|S_{RA}|=h-\max(z_0,c+1)\ge h/3-1.
+\tag{TM.5608}
+$$
+
+Every context rejects since $z>c$, and every unchanged first $\rho$ accepts at $w=h$, including $4h\le H$. The original targets are tag 1. The post-$\rho$ resource pair is $(4h,4(z+h))$, with $4(z+h)>H$, and the current read is the original $E_1=1$. Thus all current targets equal $(0,1,4h)$. Two equal labels would give a permanent collision of distinct initial targets. Each label can therefore cover at most one selected witness. The size estimate uses $z_0\le h/2+1$ and $c+1\le2h/3+1$.
+
+If $c>2h/3$, then $c\ge z_0$. For $k\le2h/3$ select the accepted-context, rejected-$\rho$ row
+
+<a id="TM56-E09"></a>
+$$
+S_R=\{(z_0,w):\max(z_0+1,k+1)\le w\le h\},
+\qquad |S_R|=h-\max(z_0,k).
+\tag{TM.5609}
+$$
+
+The inequalities $w\le h\le2z_0-1$ and $z_0+w>h$ make every pair a genuine original tag-1 target. The context accepts and $\rho$ rejects because $w>k$. Each resulting source has next size $4w+q>H$, current size $4z_0+p$ and common current read $E_0(v)$, on either fixed context side. Hence its current target is $(0,E_0(v),4z_0+p)$ and equal labels yield equal complete records and a permanent collision. For $k\le h/2$ the row has at least $h-z_0\ge h/2-1$ members; for $h/2<k\le2h/3$ it has $h-k\ge h/3$ members.
+
+If $2h/3<k<h$, use
+
+<a id="TM56-E10"></a>
+$$
+S_A=\left\{(z,k):
+\max\left(\left\lfloor\frac k2\right\rfloor+1,h-k+1\right)
+\le z\le k-1\right\}.
+\tag{TM.5610}
+$$
+
+We have $z\le k-1\le c$, $k\le2z-1$ and $z+k>h$. Thus all selected pairs are positive original tag-1 targets and both prefix actions accept. The exact boundary-column arithmetic is
+
+<a id="TM56-E11"></a>
+$$
+4k+q\le H<4(k+1)+q,
+\qquad
+4(z+k)+p+q\ge4(h+1)+p+q>H.
+\tag{TM.5611}
+$$
+
+The post-$\rho$ current read is $E_1(v)$: it is the ordered context factor times the original $E_1=1$, on the chosen side. Every current target is consequently $(0,E_1(v),4k+q)$. Equal labels give the same complete record and the same current target before any later continuation. Their initial targets remain distinct. The column size is
+
+<a id="TM56-E12"></a>
+$$
+\begin{aligned}
+|S_A|
+&=k-\max\left(\left\lfloor\frac k2\right\rfloor+1,h-k+1\right)\\
+&=\min\left(\left\lceil\frac k2\right\rceil-1,2k-h-1\right)
+\ge h/3-1.
+\end{aligned}
+\tag{TM.5612}
+$$
+
+Finally, $k\ge h$ forces $k=c=h$ by (TM.5605). Use
+
+<a id="TM56-E13"></a>
+$$
+S_A'=\{(z,h):z_0\le z\le h-1\},
+\qquad |S_A'|=h-z_0\ge h/2-1.
+\tag{TM.5613}
+$$
+
+Both attempts accept, the current size is $4h+q\le H$, and the next size is $4(z+h)+p+q>H$. The common current target is $(0,E_1(v),4h+q)$, giving the same collision. This endpoint is possible only when $0<p\le q\le\delta$, and is retained wherever the actual context allows it.
+
+Every case therefore requires at least as many labels as its selected witness set. For $h\ge7$ these counts exceed the stated $h/3-2$ bound; for $2\le h\le6$ its right side is nonpositive. This proves (TM.5607) for all $H\ge8$ and all four residues. The actual label of each selected tree, rather than any target-factorized advice, drives the pigeonhole argument. Even an attempted earlier stop on equal labels and equal Reads cannot return two different initial targets. $\square$
+
+If a particular continuation is `Size_H`, the three main sets enter it at $4h$, $4z_0+p$ and $4k+q$, respectively. The theorem instead uses equal complete records and equal current $q_H$ at the prefix boundary, which proves impossibility for every ambient continuation.
+

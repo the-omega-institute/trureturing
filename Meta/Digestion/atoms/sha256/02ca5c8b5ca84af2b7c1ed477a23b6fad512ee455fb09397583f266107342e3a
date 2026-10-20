@@ -1,0 +1,11 @@
+**Proposition 36.5 (Finite-valued side observations and the global/local distinction).** A finite-valued side observation does not automatically calibrate every source. More precisely, for any finite-valued $\beta:X\to E$, any finite $S\subset\mathbb P$ and every $b\in\{0,1\}^{S}$, at least one occupied joint cell
+
+$$
+\{x\in X:\beta(x)=e,\ d_S(N(x))=b\}
+\tag{36.16}
+$$
+
+has unbounded $\Omega$. For finite-valued index-side $\alpha$, at least one $P_a$ is infinite, and in that same index cell every finite probe pattern has unbounded $\Omega$ and Corollary 36.2 applies. Nevertheless, individual cells selected by additional source relations can have finite upper bounds, as in Proposition 36.4. There is no finite constant bounding $\Omega$ on all of $X$, or $\omega$ on all of $W$.
+
+**Proof.** For each fixed $S,b$, Theorem 35.2 makes the pullback of $W_{S,b}$ to $X$ unbounded in $\Omega$. Its partition by the finitely many values of $\beta$ must have an unbounded part: otherwise the maximum of the finitely many finite bounds on its occupied parts would bound the whole fibre. For index-side $\alpha$, infinitely many prime indices have nonempty windows, and finitely many finite sets cannot cover them. An infinite $P_a$ therefore exists and Theorem 36.1 applies. Taking $S=\varnothing$ in Theorem 35.2 rules out a global constant. These statements do not say that every cell of an arbitrary $\beta$ is unbounded, nor extend the index-only criterion to arbitrary restrictions on $g$ or $N$.
+

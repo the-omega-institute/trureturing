@@ -1,0 +1,70 @@
+## 272. FIB 网络上的外加中微子输运、味振荡与探测计数统计
+
+设 FIB 第 (j) 层给出带端口的有向骨架 (\mathcal G_j=(V_j,E_j,\partial V_j,\mathsf P_j))。其中路径只表示粒子可能经过的组合序列；中微子能量、传播距离、质量平方差、混合矩阵、介质电子密度、相干长度、源谱和探测器截面均须外加。沿一条给定嵌入路径 (x\mapsto r(x))，用味空间密度矩阵 (\varrho(x,E)) 描述传播，可写成带外加哈密顿量和退相干的方程
+
+$$
+\frac{d\varrho}{dx}
+=-\mathrm i[H(E,x),\varrho]
++\mathcal D_x(\varrho),
+$$
+
+$$
+H(E,x)=\frac{1}{2E}U\,\operatorname{diag}(m_1^2,m_2^2,m_3^2)U^\dagger+V_{\mathrm m}(E,x)+H_{\mathrm{new}}(E,x).
+\tag{272.1}
+$$
+
+矩阵 (U)、质量平方差 (m_a^2-m_b^2)、物质势 (V_{\mathrm m})、可能的非标准项 (H_{\mathrm{new}}) 与耗散算子 (\mathcal D_x) 都不由 FIB 递归决定。无退相干、均匀真空和两味近似下，转化概率才可化为
+
+$$
+P_{\alpha\to\beta}(L,E)
+=\sin^2(2\theta)\sin^2\!\left(\frac{\Delta m^2L}{4E}\right),
+\qquad \alpha\ne\beta,
+\tag{272.2}
+$$
+
+这只是给定外加参数后的特例。若路径穿过分段介质，传播算子是有序乘积
+
+$$
+S_j(E)=\mathcal T\exp\!\left[-\mathrm i\int H(E,x)\,dx\right],
+\qquad
+P_{\alpha\to\beta}=|S_{j,\beta\alpha}|^2,
+\tag{272.3}
+$$
+
+节点和接缝只决定哪些段可以连接；每段长度、密度和界面匹配决定乘积中的相位与振幅。
+
+若 FIB 分支给出多条未分辨路径 (\pi)，源的相位或生产时刻使其相干，则振幅先相加
+
+$$
+\mathcal A_{\alpha\to\beta}(E)=\sum_{\pi}a_\pi(E)\,[S_\pi(E)]_{\beta\alpha},
+\qquad
+P_{\alpha\to\beta}=|\mathcal A_{\alpha\to\beta}|^2.
+\tag{272.4}
+$$
+
+若路径长度涨落超过相干长度，则应先按外加路径分布平均概率而非振幅；两种极限一般不同。FIB 的路径计数本身不决定相干还是非相干的取法。
+
+给定源强度 (\Phi_\alpha(E,t))、截面 (\sigma_\beta(E))、几何接受率 (A_d(E,\Omega)) 和效率 (\epsilon_d(E))，探测器计数强度可写成
+
+$$
+\lambda_d(t)=\sum_\alpha\int
+\Phi_\alpha(E,t)P_{\alpha\to\beta}(E)\sigma_\beta(E)A_d(E,\Omega)\epsilon_d(E)\,dE\,d\Omega.
+\tag{272.5}
+$$
+
+在给定强度且事件独立时，时间窗计数 (N_d(T)) 为 Poisson，
+
+$$
+\Pr\{N_d(T)=n\}=e^{-\Lambda_d(T)}\frac{\Lambda_d(T)^n}{n!},
+\qquad
+\Lambda_d(T)=\int_0^T\lambda_d(t)\,dt.
+\tag{272.6}
+$$
+
+源闪烁、束流漂移、共同介质扰动或未建模背景会令强度随机化，产生 Cox 混合、过度离散和跨探测器协方差。能谱重建还受能量分辨率核、阈值、死时间和误识别矩阵影响；同一振荡概率在不同响应协议下可得到不同计数尾部。
+
+在恒定真空两味模型中，固定一个 FIB 路径长度 (L)，调节 (\Delta m^2L/E) 可以让转化概率接近零、接近一或处于中间值，而不改变任何 FIB 邻接和接缝。再调节退相干率可在相同平均概率下改变基线相关和方差；调节源谱与探测截面还可保持总计数均值而改变能谱形状。因此仅由 FIB 路径长度比、端口数量或 Fibonacci 层数，不能识别混合角、质量平方差、物质势、相干长度或计数统计律。
+
+当 (j\to\infty) 时，必须同时规定嵌入路径的长度测度、介质剖面收敛、能量和角度的缩放、相干与退相干的次序以及探测器分辨率。有限事件数的中心极限、稀有转换的 Poisson 极限和随机介质下的非高斯极限对应不同外加假设。故 FIB ATOM 递归在中微子问题中只提供组合路径、端口和层级连接；振荡相位、介质效应、首达输运、源—探测联合律及其极限均须由外加物理模型给出，不能从 FIB 递归单独推出。
+
+

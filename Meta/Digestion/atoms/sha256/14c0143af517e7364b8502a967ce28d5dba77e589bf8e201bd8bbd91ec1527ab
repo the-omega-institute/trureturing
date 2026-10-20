@@ -1,0 +1,37 @@
+**定理 1383.1（总变差下的来源数下界）。** 设有限乘积来源准确生成 $Q$，但其目标为 $P$，且
+
+$$
+\operatorname{TV}(P,Q)=\frac12\sum_x|P(x)-Q(x)|\le\delta.
+$$
+
+以 $k_P=|\mathbb E_P\prod_iX_i|$ 定义目标矩，则其权重部分和满足
+
+$$
+W_s\le\min\{1,1-k_P+A_s(P)+2\delta\}.
+$$
+
+当 $k_P>0$ 时，还可将 $A_s(P)$ 换成第 1381 节与目标矩同号的 $A_s^\sigma(P)$。若来源有 $r$ 个正标签，则 $A_r(P)\ge k_P-2\delta$。对固定 $0<\kappa<1$ 的纯奇偶目标，若 $0\le\delta<\kappa/2$ 固定，允许该误差的最少来源数 $r_N^{(\delta)}$ 满足
+
+$$
+\left\lceil\frac{2^N(\kappa-2\delta)}{1+\kappa}\right\rceil
+\le r_N^{(\delta)}\le2^{N-1},
+\qquad
+\frac{\log r_N^{(\delta)}}N\longrightarrow\log2.
+$$
+
+**证明。** 若 $k_P=0$，所述部分和界由 $W_s\le1$ 直接成立。否则令 $\chi(x)=\prod_ix_i$、$\sigma=\operatorname{sign}(\mathbb E_P\chi)$ 及 $\nu=Q-P$。选取最大的 $s$ 个来源标签，并将其中与目标矩同号的通道模态组成集合 $B$。如第 1381 节的带符号证明，$|B|\le s$、$\chi=\sigma$ 在 $B$ 上成立，且
+
+$$
+\sigma\mathbb E_Q\chi\le1-W_s+Q(B).
+$$
+
+因此
+
+$$
+k_P\le1-W_s+P(B)+\nu(\mathbf1_B-\sigma\chi).
+$$
+
+函数 $\mathbf1_B-\sigma\chi$ 在 $B$ 上为零、在同号补集上为负一、在异号格上为一，其振幅至多为二。总质量为零的 $\nu$ 满足 $|\nu(h)|\le\operatorname{TV}(P,Q)(\sup h-\inf h)$：从 $h$ 减去其下确界后，分别用 $\nu$ 的正负部分均有质量 $\operatorname{TV}(P,Q)$ 即得。于是扰动项至多为 $2\delta$，并以 $P(B)\le A_s^\sigma(P)\le A_s(P)$ 得部分和界。取全部标签，再用 $A_r(P)\le r(1+\kappa)2^{-N}$，得整数下界。原来的准确条件来源也满足误差限制，给 $2^{N-1}$ 上界；两端取对数即可。证毕。
+
+这里的矩变化与格质量变化属于同一扰动，联合估计保留了它们的关系。所得 $r_N^{(\delta)}$ 与前面准确生成的优化问题不同。上面的秩结论只处理 $\delta<\kappa/2$；在边界处，公平乘积律与目标的总变差恰为 $\kappa/2$，所以允许 $\delta\ge\kappa/2$ 时确有单标签来源。低于边界的准确有限来源数仍未由上下界决定。
+

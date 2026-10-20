@@ -1,0 +1,15 @@
+# 第一千二百三十六部　“道—相—概念—破缺”的新表
+
+| 层    | 数学对象                                        | 动力学意义                 |
+| ---- | ------------------------------------------- | --------------------- |
+| 道    | \((E_\omega,E_\omega^\#,\#,\omega)\)        | 未选边的双层关系              |
+| 第一相  | \(\mathcal K_\omega(w,z)\)                  | 所有观察点之间的关系核           |
+| 有    | \(\mathcal K_\omega\succeq0\)               | 可 Gram 化、可 Hilbert 实现 |
+| 概念空间 | \(K(\Theta_\omega)\) 或 \(B(E_\omega)\)      | 正关系核生成的观察世界           |
+| 观察者  | reproducing-kernel vector \(K_z\)           | 某一局部评价方向              |
+| 历史   | model-space／canonical-system flow           | 概念形成的内部传播             |
+| 零相   | \(K_z\) 为零范数                                | 当前接口不可区分              |
+| 破缺   | \(K_z\) 为负范数                                | 非 Hilbert 方向          |
+| 离线零点 | \(\operatorname{ind}_-\mathcal K_\omega>0\) | 负概念出生                 |
+| 黄金比例 | \(\omega_{n+1}/\omega_n=\varphi^{-2}\)      | 最小自相似观察时钟             |
+| 整数荷  | 负指标跳跃／Chern 荷                               | 缺陷是否真实存在              |

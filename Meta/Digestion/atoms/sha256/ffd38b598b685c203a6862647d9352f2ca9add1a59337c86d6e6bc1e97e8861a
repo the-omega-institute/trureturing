@@ -1,0 +1,32 @@
+**命题 951.1（对称转变点的准确局部量级）。** 当 $0<r<1/4$ 时，$k=r$ 位于已解合法区间内部。令 $\varepsilon=k-r\downarrow0$，则
+
+$$
+d_2^{\mathrm{sym}}(P_{r,r+\varepsilon})
+=\frac{3r}{4}+\frac34\varepsilon^2+O(\varepsilon^3).
+$$
+
+因此对称最优距离在该点的一阶导数与左侧常值分支相接，右侧二阶导数为 $3/2$。唯一最佳同通道参数却已经按
+
+$$
+z_a=\frac12-\frac\varepsilon2+O(\varepsilon^2)
+$$
+
+移动。若 $J$ 为均匀律，则
+
+$$
+\operatorname{TV}(Q^{\mathrm{sym}}_{r,r+\varepsilon},J)
+=\frac34\varepsilon+O(\varepsilon^2).
+$$
+
+证明。此时 $a=1-\varepsilon$，$b=1+2r+\varepsilon$。在 $z=1/2$，有 $a'=2,b'=-2,a''=b''=-8$，所以
+
+$$
+g(1)=1,\qquad g'(1)=-1,\qquad g''(1)=-4.
+$$
+
+代入第 950 节的距离公式得到二阶展开；反函数导数给出 $z_a$ 的展开。令同通道均值 $m=2z_a-1=-\varepsilon+O(\varepsilon^2)$，相对均匀律逐格展开乘积，首阶为 $m(x_1+x_2+x_3)/8$。八个符号和的绝对值总和为 $12$，于是全变差首阶为 $3|m|/4$，得到最后一式。
+
+本节的变化与第 945 节不同：这里最佳观察律本身连续，只是它的一阶移动未被最优误差的一阶导数反映。零三阶矩处则发生最佳点集合的突变。两种现象分别由准确计算确认，不用一个“不可言说”或“相变”名称把它们混在一起。
+
+项目 `D5/S3/TotalVariation/Metric.lean` 的 `total_variation_triangle` 与 `total_variation_eq_sup_event_gap` 为本批提供两项精确接口：同一有限载体上的三角不等式，以及等总质量函数间全变差对任意事件概率差的控制。第 944、945 节使用前者，第 950 节使用后者；事件的选择、凹包络、唯一性与展开仍是本批另外给出的普通推导。源码阅读不等同于本批已编译这些具体应用。
+

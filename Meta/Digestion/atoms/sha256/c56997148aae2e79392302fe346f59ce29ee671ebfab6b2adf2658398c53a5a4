@@ -1,0 +1,53 @@
+**推论 903.1（二维参数区域上的全局结果）。** 对
+
+$$
+\frac12\le\rho<1,\qquad
+0<\delta\le(1-\rho)^2,
+$$
+
+第 902 节全部结论成立。因此
+
+$$
+d_2(P_{\rho,\rho(1-\rho)+\delta})
+=\frac{3\delta}{2(3+2\rho-\rho^2+\delta)},
+$$
+
+并恰有三个最近二态观察律。这将第 892 节从一条固定相关切线扩充为二维区域，包括原表 $a=0$ 的合法端点。
+
+证明。写 $e=1-\rho\in(0,1/2]$。则
+
+$$
+a=e^2-\delta,\quad B=2e-e^2+\delta,\quad
+D=(2-e)^2-\delta,\quad C=4-e^2+\delta.
+$$
+
+$T=12\delta/C$ 随 $\delta$ 增加，故 $T\le3e^2\le3/4$。同时
+
+$$
+D-3a=4-4e-2e^2+2\delta\ge\frac32,
+\qquad D-B=4-6e+2e^2-2\delta\ge1.
+$$
+
+要核对 $T<B$，考察
+
+$$
+h(\delta)=(4-e^2+\delta)(2e-e^2+\delta)-12\delta.
+$$
+
+在 $0\le\delta\le e^2$ 上，$h'(\delta)\le-8+2e<0$，而 $h(e^2)=4e(2-3e)>0$，故所需不等式成立。
+
+最后，$T\le16\delta/5$ 给出
+
+$$
+\begin{aligned}
+F_+(T)
+&\ge8e(1-e)+\frac{-44+32e}{5}\delta
+-\frac{64}{25}\delta^2\\
+&\ge e\left(8-\frac{84}{5}e+\frac{32}{5}e^2
+-\frac{64}{25}e^3\right)
+\ge\frac{22}{25}e>0.
+\end{aligned}
+$$
+
+括号内多项式在 $[0,1/2]$ 上严格递减，端点值为 $22/25$。于是 $T<t_+$，第 902 节四个严格条件全部得到满足。
+

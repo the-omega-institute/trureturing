@@ -1,0 +1,9 @@
+\sum_{u,v\in V}f_v\,
+\mathcal C_\theta(v,u)h_u.
+\]
+逐点取 \(f={\bf1}_{\{v\}}\) 得
+\[
+\boxed{
+\frac{\partial}{\partial\theta_u}
+ \langle\eta_v\rangle_\theta
+ =

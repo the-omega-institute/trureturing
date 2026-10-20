@@ -1,0 +1,29 @@
+## 定理 128.2（余因子的 restricted-zeta 后验）
+
+对：
+
+\[
+\gcd(m,P_S)=1,
+\]
+
+有：
+
+\[
+\boxed{
+\mathbb P(M=m\mid V_p=k_p,\ p\in S)
+=
+\frac{m^{-s}}{Z_{S^c}(s)},
+}
+\]
+
+其中：
+
+\[
+Z_{S^c}(s)
+=
+\prod_{p\notin S}(1-p^{-s})^{-1}
+=
+\zeta(s)
+\prod_{p\in S}(1-p^{-s}).
+\]
+

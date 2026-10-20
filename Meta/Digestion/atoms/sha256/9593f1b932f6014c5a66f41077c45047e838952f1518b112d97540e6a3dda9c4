@@ -1,0 +1,4 @@
+## 20. Unknown parameter identification by paid conditional gap pairs
+
+The fixed rational center of Section 19 admits a finite conditional statistic that removes the unknown geometric parameter. This section addresses that part of the unknown-$q$ boundary in Definition 19.5: it proves a single family-uniform risk guarantee with pointwise finite mean acquisition, effective deadlines on supplied compact bands, and the optimal deterministic-deadline order on bands approaching zero. Sections 17–19 retain their common-known-$q$ meanings. In particular their $q^{-1}$ order at zero is a different experiment from the composite $\epsilon^{-2}$ order below.
+

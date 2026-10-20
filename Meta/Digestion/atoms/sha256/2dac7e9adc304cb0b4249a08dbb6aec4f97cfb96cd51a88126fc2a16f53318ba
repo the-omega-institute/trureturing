@@ -1,0 +1,26 @@
+**引理 1123.1（临界方程的精确余量式）。** 令
+
+$$
+t_N=\operatorname{atanh}u_N,\qquad r_N=e^{-2t_N},\qquad
+\Delta_N=N\log2-t_N.
+$$
+
+则
+
+$$
+\Delta_N=N\log(1+r_N)+\frac{2(N-1)t_Nr_N}{1+r_N}>0.
+$$
+
+并且 $t_N/N\to\log2$、$\Delta_N\to0$。
+
+**证明。** 对 $u=\tanh t$，二元熵的表达式化为 $K(u)=ut-\log\cosh t$。代入 $ut=NK(u)$ 得 $N\log\cosh t=(N-1)t\tanh t$。再用
+
+$$
+\log\cosh t=t-\log2+\log(1+e^{-2t}),\qquad
+\tanh t=1-\frac{2e^{-2t}}{1+e^{-2t}},
+$$
+
+整理即得精确余量式，右侧每项为正。
+
+第 1122 节保证 $u_N\to1$；临界方程又给 $t_N/N=K(u_N)/u_N\to\log2$。因此 $t_N$ 与 $N$ 同阶且正，余量式给出 $0<\Delta_N=O(N^2e^{-2t_N})\to0$。这里指数衰减胜过固定次幂，未以数值拟合替代方程。证毕。
+

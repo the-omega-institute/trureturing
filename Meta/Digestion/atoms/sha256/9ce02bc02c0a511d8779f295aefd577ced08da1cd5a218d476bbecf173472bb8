@@ -1,0 +1,30 @@
+**命题 1523.1（全区间达到构造）。** 记 $q_r(x)=(1+rx)/2$，令
+
+$$
+Q_\delta^+
+=w_\delta q_{r_\delta}\otimes q_{r_\delta}
++\lambda_\delta\delta_{(-,-)}.
+$$
+
+它的四个格概率为
+
+$$
+Q_\delta^+(+,+)=b,\qquad
+Q_\delta^+(+,-)=Q_\delta^+(-,+)=\frac{1-\kappa}{4}+\frac\delta2,\qquad
+Q_\delta^+(-,-)=b-\delta.
+$$
+
+故 $\operatorname{TV}(P,Q_\delta^+)=\delta$。
+
+**证明。** $1+r_\delta=(1+\kappa)/(1+\delta)$ 给主模态概率 $w_\delta(1+r_\delta)^2/4=b$。又 $w_\delta r_\delta^2=(\kappa-\delta)^2/(1+\kappa)$，所以
+
+$$
+\frac{w_\delta(1-r_\delta^2)}4
+=\frac{(1+\delta)^2-(\kappa-\delta)^2}{4(1+\kappa)}
+=\frac{1-\kappa}{4}+\frac\delta2.
+$$
+
+其余格由总质量为一得到 $b-\delta$，也等于原构造中两个非负分量之和。直接比较目标，两个负奇偶格各超额 $\delta/2$，另一正格短少 $\delta$，主模态不变，故总变差为 $\delta$。证毕。
+
+同时翻转两个观察坐标，得到另一达到来源 $Q_\delta^-$。这里的构造没有把一个部分和松弛最优向量直接当作实际生成器；全部概率由同一组乘积通道实现。
+

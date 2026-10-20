@@ -1,0 +1,49 @@
+**定义 442.1（固定装置与有限轮规则）。** 取 $S=\mathbb C^5$、$I=[\arctan(1/\sqrt2),\arctan\sqrt2]$，固定 $u\in I$ 及定理 413.1 在 $r=\tan u$ 给出的一个归一化平衡见证 $b$。完整采用定义 440.1 的确切 ket 代表 $q_i(t)$、制备 $J_t$、$b_a=D^ab$、四维原始记录空间 $R_2=(\mathbb C^2)^{\otimes2}$ 上的仪器及固定反馈 $U_a(u)$。特别地，实际 $Q_0$ 包括反对称方向，不能将装置改成只定义在三维制备像上的仪器。每次调用取迹量子 $R_2$，保留全部实际标签 $a=0,1,2$，得到
+
+$$
+\begin{aligned}
+\mathcal Q_t(X)&:=\mathcal Q_{u,t}(X)
+ =\sum_{a=0}^2|a\rangle\langle a|_C\otimes A_a(t)XA_a(t)^\dagger,
+ &C&=\mathbb C^3,\\
+A_a(t)&=U_a(u)\operatorname{diag}_{i=1}^5\langle b_a|q_i(t)\rangle,
+ &\sum_a A_a(t)^\dagger A_a(t)&=I_S,\qquad A_a(u)=I_S/\sqrt3.
+\end{aligned}
+$$
+
+这些恒等式及对任意未操作参考的有效性来自定理 415.1 和定义 440.1。各次调用使用新鲜隐藏环境；已取迹的量子记录与隐藏 Kraus 指标不再可访问。两参数下使用同一个控制器，其规则可依赖固定的 $u,b$，不依赖实际参数 $t$。
+
+固定一个有限维完整活动空间 $A$，包含查询系统 $S$、全部可变初始记忆以及后续会重读的所有有限控制摘要。输入允许 $A$ 上任意密度算子及其与任意有限维未操作参考 $F$ 的纠缠。每轮的共同前处理、后处理均完全正保迹，借助一个固定有限维辅助空间 $K$ 恰好调用一次 $\mathcal Q_t$，形成同一有限结果完整仪器
+
+$$
+\begin{aligned}
+\Gamma_t&=\mathcal R\circ(\mathcal Q_t\otimes\operatorname{id}_K)\circ\mathcal P,\\
+\Gamma_t(X)&=\bigoplus_{z\in Z}\mathcal N_{t,z}(X)
+                  \ \oplus\ \bigoplus_{y\in Y}\mathcal E_{t,y}(X),\\
+\mathcal N_{t,z}&:\mathcal L(A)\longrightarrow\mathcal L(A),
+&\mathcal E_{t,y}&:\mathcal L(A)\longrightarrow\mathcal L(M_y).
+\end{aligned}
+$$
+
+这里 $Z,Y$ 为固定有限标签集，$M_y$ 有限维；每个标签包含该轮实际 $a$、控制器实际测量结果及继续或停止标志，包括零概率标签。全部分支完全正，其完整直和保迹，终端集合 $Y$ 包含每一种失败和成功。共同的 $\mathcal P,\mathcal R$ 包含该轮的有限控制与记录操作，每轮在所有分支上有限完成。继续分支将全部仍可操作的量子记忆和有限摘要送回 $A$；终端分支保留全部最终可访问记忆，此后不再操作。
+
+每轮将实际结果按顺序追加到经典档案。旧档案始终保留，但下一轮只读取 $A$ 中的摘要与记忆，不重读旧档案；同一 $\Gamma_t$ 因而在每轮重复使用。所有会改变下一轮规则的可变数据都必须包括在 $A$ 内。只为成本计算记
+
+$$
+\mathcal N_t=\sum_{z\in Z}\mathcal N_{t,z}.
+$$
+
+从活动入口开始计数，每完成一轮计一次装置调用；$T\in\{1,2,\ldots,\infty\}$。完整停止映射 $\mathcal S_t$ 仍按定义 441.1 取全部终端历史的无条件直和。具体地，若 $h=(z_1,\ldots,z_n)$ 是继续历史，则终端块 $(h,y)$ 的映射为
+
+$$
+\mathcal S_{t,(h,y)}
+ =\mathcal E_{t,y}\circ\mathcal N_{t,z_n}\circ\cdots\circ\mathcal N_{t,z_1},
+\qquad n\ge0,
+$$
+
+空继续历史对应 $\mathcal E_{t,y}$，其调用数为一。块标签保留整个有序档案，块内保留 $M_y$；对所有 $h,y$ 求和不删除失败叶，也不作停止或成功的条件归一化。记
+
+$$
+\sigma_t(\rho)=(\operatorname{id}_F\otimes\mathcal S_t)(\rho_{FA}),\qquad
+m_t(\rho)=\mathbb E_{t,\rho}T.
+$$
+

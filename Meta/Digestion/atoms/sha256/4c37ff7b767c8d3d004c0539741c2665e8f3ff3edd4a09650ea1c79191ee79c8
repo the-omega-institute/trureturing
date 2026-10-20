@@ -1,0 +1,24 @@
+## 定理 136.2（KL 的素数可加性）
+
+\[
+\boxed{
+D(\mathbb P_s\Vert\mathbb P_t)
+=
+\sum_p
+D(\gamma_{p,s}\Vert\gamma_{p,t}).
+}
+\]
+
+局部项为：
+
+\[
+\boxed{
+D(\gamma_{p,s}\Vert\gamma_{p,t})
+=
+\log
+\frac{1-p^{-s}}{1-p^{-t}}
++
+\frac{(t-s)\log p}{p^s-1}.
+}
+\]
+

@@ -1,0 +1,12 @@
+**命题 256.2（临界余量是可见的未来关系）。** 取
+
+$$
+A_\varepsilon=1-\varepsilon,
+\qquad
+b_\varepsilon=\varepsilon,
+\qquad
+0<\varepsilon<1.
+$$
+
+所有模型的固定点都为 $1$，但解析子为 $R_\varepsilon=\varepsilon^{-1}$，截断界和失配界随 $\varepsilon\downarrow0$ 发散。
+

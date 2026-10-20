@@ -1,0 +1,49 @@
+**命题 401.2（当前轮廓的显式变换应用）。** 对 $\Re z>0$，有
+
+$$
+\boxed{
+T_{v_0,v_1}(z)=\frac1z\int_{v_0}^{v_1}p(u)e^{(z-1)u}\,du.}
+\tag{401.3}
+$$
+
+若 $z\ne1$，令 $w=z-1$，右侧完全显式为
+
+$$
+\boxed{
+T_{v_0,v_1}(z)=\frac1z
+\left[e^{wu}\left(
+\frac{p(u)}w-\frac{Au+D-A}{w^2}+\frac A{w^3}
+\right)\right]_{u=v_0}^{u=v_1}.}
+\tag{401.4}
+$$
+
+在 $z=1$ 处只取可去值
+
+$$
+T_{v_0,v_1}(1)
+=\left[\frac A6u^3+\frac{D-A}{2}u^2+c_{\mathrm{diag}}u\right]_{v_0}^{v_1}.
+\tag{401.5}
+$$
+
+同一实际轮廓和的反演接口，对任意固定 $\sigma>1$，为
+
+$$
+\boxed{
+S_{x;M,N}^{(0)}
+=\frac1{2\pi i}\int_{\Re z=\sigma}
+\frac{\mathcal B(z)}{\zeta(z)}\,
+x^{z-1}T_{v_0,v_1}(z)\,dz.}
+\tag{401.6}
+$$
+
+证明。由（400.2）及 $Q-Q'=p$，
+
+$$
+g(v)=\int_{M/x}^{(N+1)/x}
+\mathbf1_{v\le r}\frac{p(\log r)}{r^2}\,dr.
+$$
+
+外层 $r$ 属于远离零的紧区间，$\Re z>0$ 支付内层 $\int_0^r|v^{z-1}|dv$，所以 Fubini 和 $\int_0^rv^{z-1}dv=r^z/z$ 给（401.3）。对二次 $p$ 积分得到（401.4）；$z=1$ 直接积分，不把式（401.4）的表面分母当作实际极点。分部求和一次还给固定竖线上的 $T(z)=O_{\sigma,v_0,v_1}((1+|\Im z|)^{-2})$。
+
+经典 Mellin 反演（例如 [DLMF §1.14(iv)](https://dlmf.nist.gov/1.14#iv)）应用于连续、分段光滑的 $G$，其变换为 $x^{z-1}T(z)$。在 $\sigma>1$ 上，（385.11）的实际绝对 Dirichlet 收敛与上述竖线可积界支付求和交换，直接插入已有 $\mathcal C(z)=\mathcal B(z)/\zeta(z)$，得到（401.6）。这里没有移动积分线，没有写出未支付的无穷零点留数和。$\square$
+

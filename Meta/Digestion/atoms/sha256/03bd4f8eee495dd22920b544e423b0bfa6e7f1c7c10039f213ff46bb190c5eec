@@ -1,0 +1,19 @@
+**定义 32.2（容量与尺寸商标签）。** 写初始组成为 $c(t)=(a,b)$，并置
+
+$$
+m=a+b,\qquad \lambda_1=m+b,\qquad \lambda_2=2m+b.
+\tag{TM.3201}
+$$
+
+对整数 $M\ge1$ 定义仅依初始尺寸的标签
+
+$$
+\sigma_M(t)=\left\lfloor\frac{m}{4}\right\rfloor\bmod M
+\ \in\{0,\ldots,M-1\}.
+\tag{TM.3202}
+$$
+
+记合同 A、B 在整个 $\mathcal T_H$ 上的最小可用标签字母表大小分别为 $M_A(H)$、$M_B(H)$。这里对任意固定标签函数 $h$ 和符合相应合同的程序或解码函数取最小值，不要求 $h$ 仅依尺寸，也不把标签生产费用计入这个容量。空标签字母表不可供应非空来源；大小一表示没有随来源变化的补充。
+
+合同 B 的一般静态纤维计数和缺陷图着色框架复用仓内 [MinimalAppealLabelCount](../../../D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.lean)、[DefectGraphMinimumColoring](../../../D5/S3/ConceptDynamics/Coding/DefectGraphMinimumColoring.lean) 及 [BinaryRepairCost](../../../D5/S3/ConceptDynamics/Coding/BinaryRepairCost.lean) 的相应结论。Charpenay–Le Treust–Roumy，[*Zero-Error Coding for Computing with Encoder Side-Information*，arXiv:2211.03649v1，定义 II.1、III.1、IV.1 与定理 III.4](https://arxiv.org/pdf/2211.03649v1)，提供成熟的零误差编码及图着色对应。该文的独立同分布多次来源、期望前缀长度率和成对共享侧信息假设不作为本节单来源、固定宽度补充及不可逆取得的前提，也不供应下面的数值阈值。
+

@@ -1,0 +1,15 @@
+**定义 323.1（任务损失与策略风险）。** 设有限任务值集 \(V\)，损失函数
+\[
+\ell:\widehat V\times V\to[0,1].
+\]
+给定策略 \(\pi\)、任务 \(\phi:S\to V\) 和解码器 \(f:Z_\pi\to\widehat V\)，定义最坏状态风险
+\[
+R_\pi(f;\phi)
+=\max_{s\in S}\sum_z C_\pi(z\mid s)\ell(f(z),\phi(s)).
+\]
+定义策略对任务的最小风险
+\[
+\boxed{\delta_\pi(\phi)=\min_f R_\pi(f;\phi).}\tag{323.1}
+\]
+称 \(\phi\) 在误差预算 \(\varepsilon\) 下可恢复，若 \(\delta_\pi(\phi)\le\varepsilon\)。最坏风险使用最大状态而非先验平均；若另有共同先验，可定义对应的平均版本，但二者不能互换。
+

@@ -1,0 +1,57 @@
+## 192. FIB 网络上的外加超导 Ginzburg–Landau、磁通量子化、涡旋与 Josephson 统计
+
+FIB 图可提供顶点、边和可选环路；面胞腔、取向和填充关系仍需外加。令 \(B_0\) 为顶点到边的关联矩阵，\(B_1\) 为边到面胞腔的关联矩阵，满足 \(B_1B_0=0\)。对顶点序参量 \(\psi_v\in\mathbb C\)、边规范势 \(A_e\in\mathbb R\) 和耦合 \(q\)，定义
+$$
+(D_A\psi)_e=e^{-{\rm i}qA_e}\psi_{h(e)}-\psi_{t(e)},
+\qquad
+B_f=(B_1A)_f .
+\tag{192.1}
+$$
+规范变换
+$$
+\psi_v\mapsto e^{{\rm i}q\chi_v}\psi_v,\qquad
+A\mapsto A+B_0\chi
+\tag{192.2}
+$$
+保持 \(|D_A\psi|\) 和 \(B\) 不变。一个外加离散 Ginzburg–Landau 自由能为
+$$
+\mathcal F(\psi,A)
+=\sum_vw_v\left[\alpha(T)|\psi_v|^2+\frac\beta2|\psi_v|^4\right]
++\frac\kappa2\sum_ew_e|(D_A\psi)_e|^2
++\frac1{2\mu}\sum_fw_f(B_f-B_f^{\rm ext})^2 .
+\tag{192.3}
+$$
+系数、温度、磁场、边界和时间尺度不由 FIB 递归给出。可再选时间依赖梯度流；无电流边界、周期边界和 Josephson 接触会产生不同极小值与动力学。
+
+在 \(\psi_v\ne0\) 的区域写 \(\psi_v=|\psi_v|e^{{\rm i}\theta_v}\)。沿闭环 \(C\) 的紧致相位绕数满足
+$$
+\sum_{e\in C}(\theta_{h(e)}-\theta_{t(e)})=2\pi n_C,\qquad
+\sum_{e\in C}\varphi_e=2\pi n_C-q\Phi_C,
+\tag{192.4}
+$$
+其中 \(\varphi_e=\theta_{h(e)}-\theta_{t(e)}-qA_e\)，\(n_C\in\mathbb Z\)，\(\Phi_C\) 是外加面胞腔定义的环路磁通。在深 Meissner 区域协变相位梯度趋于零时，
+$$
+\Phi_C=n_C\Phi_0,\qquad \Phi_0=\frac{2\pi}{q}\quad(\hbar=1),
+\tag{192.5}
+$$
+物理单位下 Cooper 对给出 \(\Phi_0=h/(2e)\)。这要求紧致单值相位、闭环和没有零幅度路径；相位非紧致、环路开口或涡旋核心都会改变直接推导。故磁通量子化来自外加规范结构，不是 FIB 标签的内禀单位。
+
+涡旋由幅度压低和非零相位绕数共同定义。相干长度与穿透深度之比 \(\kappa_{\rm GL}=\lambda/\xi\) 由 GL 系数、规范耦合和离散谱决定；连续各向同性近似下 \(1/\sqrt2\) 分界只是在特定模型中的第一类/第二类判据。有限图、各向异性边权、外磁通和面面积会改变涡旋数、间距和钉扎位置。若两个顶点簇以弱耦合结相连，可另加
+$$
+\mathcal F_{J,e}=-E_{J,e}\cos\varphi_e,\qquad
+I_e=I_{c,e}\sin\varphi_e,\qquad
+\dot\varphi_e=\frac{2e}{\hbar}V_e .
+\tag{192.6}
+$$
+含电容、电阻、偏置和随机驱动的 RCSJ 方程可写成
+$$
+C_e\frac{\Phi_0}{2\pi}\ddot\varphi_e
++\frac{\Phi_0}{2\pi R_e}\dot\varphi_e
++I_{c,e}\sin\varphi_e
+=I_e^{\rm bias}+\eta_e(t).
+\tag{192.7}
+$$
+只有另加热浴温度和涨落—耗散关系时，\(\eta_e\) 才是热噪声；phase slip、Shapiro 台阶和电压分布依赖结参数、驱动、噪声和网络环路。
+
+若图列细化、面权和 \(\xi,\lambda\) 按外加规则缩放，(192.3) 可趋向连续二维或三维 GL 泛函；先取 \(q\to0\)、强阻尼或不同热力学极限会改变量子化、动力学和涡旋统计。振幅观测可以看见 \(|\psi|^2\) 却看不见环路绕数，稀疏电流观测也可能漏掉同调环路的磁通。因此正常态、Meissner 态、涡旋晶格、随机 Josephson 相滑移及其统计均是外加参数和边界条件下的模型结论，不存在由 FIB ATOM 递归单独确定的普适超导定律。
+

@@ -1,0 +1,8 @@
+对离线零点，这个有限实验可以是：
+
+* 一个适当 shifted 深度 \(\omega<|\delta|\)；
+* 一个 Hardy 负时间通道；
+* 一个有理边界采样点；
+* 一个有限 Gram 矩阵；
+* 一个 Poisson/Hankel feature。
+

@@ -1,0 +1,21 @@
+**定义 383.1（同一实际族的权重与对数变量）。** 沿用定义 362.1、382.1 的 Fibonacci 数列 $F_n$、$\Phi=(1+\sqrt5)/2$、$L=\log\Phi>0$、实际正整数原子 $\Psi_d$ 和 $E_d=\log\Psi_d-L\varphi(d)$。对每个有限集合 $S\subseteq\mathbb N_{>0}$，记
+
+$$
+\begin{aligned}
+D(S)&=\{d\in\mathbb N_{>0}:\exists s\in S,\ d\mid s\},\\
+M(S)&=\operatorname{lcm}\{F_s:s\in S\},\\
+W(S)&=\sum_{d\in D(S)}\varphi(d),& k(S)&=\#D(S),\\
+\Delta(S)&=\log M(S)-LW(S),& C&=16^{1/3}.
+\end{aligned}
+\tag{383.1}
+$$
+
+空最小公倍数取一，空和取零。$W(S)$ 依赖指标表示 $S$，不定义为整数 $M(S)$ 的函数。所有对数均为自然对数；正底数实幂取 $t^a=\exp(a\log t)$，零权重处约定 $0^{2/3}=0$。当 $W(S)>0$ 时，定义
+
+$$
+\eta(S)=2C\,W(S)^{-1/3},\qquad B(S)=\log(LW(S));
+\tag{383.2}
+$$
+
+当 $\log M(S)>0$ 时，定义 $D_0(S)=\log(\log M(S))$。$\sigma$ 与 Euler 常数 $\gamma$ 沿用（362.2）。
+

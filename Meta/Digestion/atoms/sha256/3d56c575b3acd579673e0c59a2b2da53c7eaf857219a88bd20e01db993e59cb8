@@ -1,0 +1,60 @@
+**命题 21.4（有限谱的转移矩阵递归与边界根）。** 对谱参数 $z$ 定义
+
+$$
+\mathsf T_r(z)=
+\begin{pmatrix}
+1+zr/\theta&r/\theta\\
+z&1
+\end{pmatrix},
+\qquad
+M_j(z)=
+\mathsf T_{r_{(W_j)_{L_j-1}}}(z)\cdots
+\mathsf T_{r_{(W_j)_0}}(z).
+$$
+
+每个矩阵的行列式为 $1$。由 $W_{j+2}=W_{j+1}W_j$，乘法次序为
+
+$$
+M_{j+2}=M_jM_{j+1}.
+$$
+
+若 $x_j(z)=\tfrac12\operatorname{tr}M_j(z)$，则
+
+$$
+x_{j+2}=2x_{j+1}x_j-x_{j-1}\qquad(j\ge1),
+$$
+
+初值为
+
+$$
+x_0=1+\frac{zr_\alpha}{2\theta},\qquad
+x_1=1+\frac{zr_\beta}{2\theta},\qquad
+x_2=1+\frac{z(r_\alpha+r_\beta)}{\theta}
++\frac{z^2r_\alpha r_\beta}{2\theta^2}.
+$$
+
+这给出有限词转移矩阵的半迹递归。反射—吸收本征值仍须由实际边界根判定：
+
+$$
+\bigl(M_j(\lambda-1)\bigr)_{11}=0.
+$$
+
+不能仅以半迹的某个取值替代此边界条件。
+
+**证明。** 令 $f$ 为本征向量并设
+
+$$
+J_i=\frac{\theta}{r_{(W_j)_i}}(f_{i+1}-f_i),
+\qquad J_{-1}=0,\qquad f_{L_j}=0.
+$$
+
+本征方程 $K_jf=\lambda f$ 给出 $J_i-J_{i-1}=(\lambda-1)f_i$，所以
+
+$$
+\binom{f_{i+1}}{J_i}
+=\mathsf T_{r_{(W_j)_i}}(\lambda-1)
+\binom{f_i}{J_{i-1}}.
+$$
+
+左反射条件固定初始向量为 $(f_0,0)^{\mathsf T}$，且非零本征向量必有 $f_0\ne0$；右吸收条件因此恰为 $M_{11}=0$。反过来，该根和初始向量 $(1,0)^{\mathsf T}$ 构造出非零本征向量，所以边界根条件是充要的。半迹递归来自 $M_{j+1}=M_{j-1}M_j$、循环迹恒等式及行列式为一时的 Cayley—Hamilton 恒等式，不另给边界谱条件。$\square$
+

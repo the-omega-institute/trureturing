@@ -1,0 +1,8 @@
+由迹配对自伴性，
+\[
+\operatorname{Tr}(F\rho)-\operatorname{Tr}(F\Delta_Z(\rho))
+=
+\operatorname{Tr}\bigl((F-\Delta_Z^*F)\rho\bigr).
+\]
+右侧对密度矩阵的绝对值上确界等于 Hermitian 算子的算子范数：取其最大绝对值本征向量的纯态达到上界。证毕。
+

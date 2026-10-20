@@ -1,0 +1,6 @@
+在 Zeckendorf/Fibonacci digit basis 中：
+
+* 加法通过有限 carry rewrite 传播；
+* 模固定整数的 residue 可由有限状态读取；
+* 乘法则不再局部。
+

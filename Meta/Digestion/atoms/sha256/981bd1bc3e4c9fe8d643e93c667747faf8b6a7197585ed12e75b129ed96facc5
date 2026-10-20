@@ -1,0 +1,18 @@
+# Auric FIB ATOM：联合投影、多窗关系阶数与响应纤维
+
+**Reference input: open.** 本卷完整保存三份供文的陈述、定义、证明、证明草图、表格、例子、重复说明、历史归属、总结与拟议形式化内容。原作者称为“定理”或“证明”的文字仍是 open 参考输入；Lean 声明、证明项及其公理闭包才承载本库形式系统内的数学真值，本文不认证当前 Lean/Frozen 状态、物理实现或优先权。
+
+**来源。** 供文属 mixed supplied provenance，原始作者及原始模型均 unknown；接收时点为 2026-10-10。来源标识分别为 `joint-projection-source.md`、`multiwindow-relational-order-source.md`、`response-fiber-source.md`。下表的 SHA-256 标识接收的原始文件，正文中的来源边界标识各自完整文本的归属，不把编辑者注释归给原作者。
+
+| 部分 | 原始供文标识 | 原始物理行数 | 原始 SHA-256 |
+| --- | --- | ---: | --- |
+| I 联合投影 | `joint-projection-source.md` | 1349 | `fce1a430ec465d9c5b0b011034f45589e131c7238c441c1a7e010dff60fb8f5c` |
+| II 多窗关系阶数 | `multiwindow-relational-order-source.md` | 1448 | `e2dd759a14ecd006facace8f695ae8a662306c187b4f34289eb9f8c200db3b79` |
+| III 响应—纤维 | `response-fiber-source.md` | 931 | `28e92da52776e1f7b13a6b990f09e46e7a31a0a87a14ab2875fa31af8e04afc3` |
+
+**历史读法。** 供文的“当前 HEAD”“当前 dev”“最新”“本次”“本轮”“新增”及 Lean/Frozen 语言一律归属供文及其历史引用：[912f4990050451866c2bb1cf71e33151a637d4b7](https://github.com/the-omega-institute/trureturing/commit/912f4990050451866c2bb1cf71e33151a637d4b7) 与 [3a56aa49697ab7641b7dbe616e0424327c69d2ca](https://github.com/the-omega-institute/trureturing/commit/3a56aa49697ab7641b7dbe616e0424327c69d2ca)。原文链接和历史断言完整保留，不能据它们声称本文取得当前形式化证明或新颖性。给出的 Lean 文件建议只是原作者的拟议工作。
+
+**结构规范化。** 全文只对 Markdown 层级、唯一局部地址及数学入口作结构规范化：原 `\(...\)` 改为 `$...$`，原 `\[...\]` 改为 `$$`，公式中单独成行的等号并入前一公式行以避免 setext 标题，TeX 符号及公式内容保留；代码围栏原样保存。原中文节号、原定理/定义名称与编号保留在标题及下面的对应表。每部分十二、十二、十节分别赋予本卷全局节号 1–12、13–24、25–34；这些号码是本文局部定位，不规定 Lean 名称、依赖或覆盖。
+
+**编者限定。** 所有以“编者限定”开头的引用段均与供文原文分开，限定其支持、定义域、共同来源、观测类型、取得条件与物理解释；不会替换原句或静默修正原式。尤其第一部分原定理 4 的展开分母中 $s_j^{B_J}$ 原样保留，其与 $\pi_H(J,i)$ 定义所需 $s_i^{B_J}$ 的不一致在该定理旁单独标明。数学与物理桥接未被这些注释证明。
+

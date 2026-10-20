@@ -1,0 +1,19 @@
+# 第九百六十部　理论深度审计
+
+| 结果                                     | 类型        | 是否新增逃逸信息 |
+| -------------------------------------- | --------- | -------: |
+| 黄金最小 hull 的公共谱                         | 严格观察者定理   |    **是** |
+| 同谱不能恢复 phase                           | no-go     |    **是** |
+| local Green jet 读取原点                   | 新可见性层     |    **是** |
+| Fricke invariant 等于 commutator Casimir | 核心精确桥     |    **是** |
+| \(\operatorname{tr}[A,B]=2+\lambda^2\) | 精确算术      |    **是** |
+| Cayley cubic Lorentz 切锥                | 核心几何      |    **是** |
+| \(DT_p\) 的 \(\varphi^{\pm2},-1\)       | 核心黄金导数定理  |    **是** |
+| stable defect \(\asymp F_n^{-2}\)      | 新尺度律      |    **是** |
+| Chebyshev 等于 transfer discriminant     | 核心证书解释    |    **是** |
+| 黄金 gap label 而非点坐标                     | 已知模型的结构解释 |    **是** |
+| Prime–Weil 到 \(SL_2\) cocycle          | 中心新桥      |     尚未闭合 |
+| trace-orbit boundedness 等价 RH          | 最终目标      |      未证明 |
+
+---
+

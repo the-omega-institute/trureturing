@@ -1,0 +1,30 @@
+## 435. 临界连续 primorial 的同筛粗糙前缀与真实核联合窗口
+
+沿用 §§428、430、433–434 的连续 primorial、实际阶乘过滤核及完整配对。对实数 \(z\ge2\)，记
+
+\[
+L=\log z,\qquad P_z=\prod_{p\le z}p,\qquad
+M_z(n)=M_{P_z}(n)=\sum_{\substack{1\le r\le n\\P^-(r)>z}}\mu(r),
+\]
+
+其中 \(P^-(1)=\infty\)。过滤核仍为
+\(\eta_z(y)=\sum_{d\mid P_z}\mu(d)\eta(y/d)\)，相邻块仍为
+\(J_x^{\eta_z}(n)=P_x^{\eta_z}(n)-P_x^{\eta_z}(n+1)\)。
+
+以下 \(x=x(z)>1\) 是同一实际源函数，满足
+
+\[
+\frac{x(z)}z\longrightarrow1\qquad(z\to\infty).
+\tag{CW.1}
+\]
+
+每个 \(z\) 的全部行使用同一个过滤器 \(P_z\) 和同一个 \(x(z)\)，不逐行重选 cutoff。定义上一节临界轮廓的正数
+
+\[
+c_0=\Xi_1(0)=e^{-\gamma_E}\int_0^\infty
+e^{-v}\frac{\varphi(v)-1-v}{v^2}dv>0.
+\tag{CW.2}
+\]
+
+该正性由 \(\varphi(v)>1+v\) 给出，积分两端已由全参数 Laplace 包络支付。
+

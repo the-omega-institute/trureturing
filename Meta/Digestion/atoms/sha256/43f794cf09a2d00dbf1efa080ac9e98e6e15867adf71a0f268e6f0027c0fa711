@@ -1,0 +1,22 @@
+### 16.8 验证、文献和仍需解决的目标
+
+参考程序 `research.py` 构造生成树净化、闭式热三态原始/对偶证书、精确协变通道，以及共同响应表到相位控制的映射。`verify.py` 固定种子 20260924，实际通过 20 项命名分组检查：10 个温度的通道校准与对偶见证；144 个不同共同环境维数的有限可行比较；50 个任意输入的协变检验；30 个 Gibbs/经典 KL 检验；2/3/4 维生成树实例；504 张 Boolean 表的同律 cut 身份；三角形 cut/PSD 间隙及 4000 次合法舍入；90 位精度的高温常数。舍入在三角形上每次 cut 为 2，不由此认领一般图上的精确性。
+
+| $r$ | 两态逐对上限 $f$ | 全通道固定相位最优 $F_{\mathrm{SDP}}$ | 加入精确协变的最优 $F_{\mathrm{cov}}$ |
+|---:|---:|---:|---:|
+| 0.1 | 0.997496867163 | 0.997495819386 | 0.683012701892 |
+| 0.5 | 0.935414346693 | 0.934653196881 | 0.683012701892 |
+| 0.9 | 0.771362431027 | 0.758674748734 | 0.683012701892 |
+| 0.99 | 0.714107834994 | 0.691545580886 | 0.683012701892 |
+
+数值矩阵运算含浮点舍入；最接近纯态的样本对偶零特征值有约 $1.93\times10^{-13}$ 的符号误差，原始/对偶差最大约 $2.18\times10^{-13}$。这不是严格区间证书。一般最优值由上述解析可行构造和弱对偶相遇证明承担。没有独立同行/异模型审查、Lean kernel 或 Scribe 编译、CI、真实硬件或神经网络 benchmark。
+
+[Cook00] S. Cook. *The P versus NP Problem*. Clay Mathematics Institute, official Millennium problem description, https://www.claymath.org/wp-content/uploads/2022/06/pvsnp.pdf 。采用判定语言、统一多项式算法、NP 证书和归约的定义，不把全文中尚待解决的 P/NP 分离当作本章前件。网络文件路径的 2022 日期不是原始数学问题提出年份。
+
+[Singer11] A. Singer. *Angular synchronization by eigenvectors and semidefinite programming*. Applied and Computational Harmonic Analysis 30(1), 20–36 (2011), DOI 10.1016/j.acha.2010.02.001; arXiv:0905.3174。原文开头无噪数据的生成树传播与含噪同步优化提供方法背景；本章的射影酉回路判据由 §15 的共同振幅等号条件推导，并不将标量同步原文冒认为已证明本章全部量子陈述。
+
+[GW95] M. X. Goemans, D. P. Williamson. *Improved approximation algorithms for maximum cut and satisfiability problems using semidefinite programming*. Journal of the ACM 42(6), 1115–1145 (1995), DOI 10.1145/227683.227684; 作者全文 https://math.mit.edu/~goemans/PAPERS/maxcut-jacm.pdf 。使用二值/单位向量问题、随机超平面舍入及其已知近似保证。接受稿页面 5 的图和公式已视觉核对。NP-hard 性和舍入原理不作本项目新发现。
+
+[NMLW25] 的完整出处与读取范围见 §15.8。本轮又核对原始对偶正块公式，未发现对这里正交热三态闭式值的直接命中，但这不是优先权证明。新增候选主要为 (16.2) 的全温原始/对偶同值构造，以及同一非对易热模型的精确协变最优 (16.4)；群同步、MAX-CUT、SDP 及仓内 cut 恒等式均注明复用身份。
+
+结果集中在本主卷，文献进入 `Library/PredictiveReduction/`，Scribe 只关联已存在的真实声明；它不使本章新最优值自动获得 Lean 身份。剩余目标包括：三态模长而非实部目标的全温精确值；一般非对易条件 Hamiltonian 和多能隙的协变优化；限定辅助环境秩或离散控制时的复杂度及近似界；原始量子态/极分解估计误差对全局回路证书的稳定传播。这里没有证明 P=NP、P≠NP，也没有用几何不可行性替代算法复杂度下界。

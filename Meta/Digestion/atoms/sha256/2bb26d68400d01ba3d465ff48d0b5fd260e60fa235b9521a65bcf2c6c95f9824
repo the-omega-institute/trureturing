@@ -1,0 +1,41 @@
+# 90. 有限阿贝尔群上的二元角色观察
+
+令 \(G\) 为有限阿贝尔群，记：
+
+\[
+\mu_2=\{+1,-1\}.
+\]
+
+给定二元角色（character）：
+
+\[
+\chi_j:G\to\mu_2,
+\qquad
+j=1,\ldots,m.
+\]
+
+定义联合角色画像：
+
+\[
+\Phi_{\chi}:G\to\mu_2^m,
+\qquad
+\Phi_{\chi}(g)
+=(\chi_1(g),\ldots,\chi_m(g)).
+\]
+
+令：
+
+\[
+H
+=
+\langle\chi_1,\ldots,\chi_m\rangle
+\le
+\operatorname{Hom}(G,\mu_2).
+\]
+
+因为每个元素阶至多为二，\(H\) 是一个 \(\mathbb F_2\)-向量空间。记：
+
+\[
+r=\dim_{\mathbb F_2}H.
+\]
+

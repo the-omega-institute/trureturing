@@ -1,0 +1,24 @@
+## 10. ADMIT 正规形 `[D]`
+
+状态准入 \(A:X\to\mathsf{Prop}\) 被输运为：
+
+\[
+\boxed{
+A^\sharp(b,r)
+=
+A(\Phi_q^{-1}(b,r)).
+}
+\]
+
+若存在 \(\overline A:B\to\mathsf{Prop}\) 满足：
+
+\[
+A^\sharp(b,r)\leftrightarrow\overline A(b),
+\]
+
+则 ADMIT 不依赖余量，能够下降到界面。
+
+否则，同一可见坐标 \(b\) 下既有合法余量项，也有非法余量项。
+
+---
+

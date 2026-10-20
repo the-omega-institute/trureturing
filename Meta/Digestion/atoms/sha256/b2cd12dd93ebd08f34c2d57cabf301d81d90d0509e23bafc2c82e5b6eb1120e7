@@ -1,0 +1,147 @@
+### 80.1 实际来源、整个原片与完整目标
+
+使用[斐波那契实际来源卷][80源FIB]定义14.5、命题14.6、定理14.7、定义17.1及定理17.2。每步删除一个三位窗口，标签集为 $\Lambda=\{3,0,5,2,25\}$；$0$ 是空窗标签，$25$ 是单个标签。地址域为 $A_0=\Omega$、$A_1=\{\omega\in\Omega:\omega_0=0\}$。置
+
+$$
+g=\sqrt5-2,\quad g^2+4g=1,\quad 0<g<\frac14,\qquad
+t=\frac{1+g}{2},\quad u=\frac{1-g}{2}=t^2,\quad \phi=1+t,
+$$
+
+$$
+\lambda=\frac u{10},\quad 0\le\beta<\lambda,\quad
+\delta=\lambda-\beta>0,\qquad I_0=[-1,\phi],\quad I_1=[-1,t].
+\tag{80.1}
+$$
+
+一个应用只使用一个实预算 $\beta$。实际前接映射、逆映射和guard为
+
+$$
+f_\ell(x)=\Delta_\ell-gx,\qquad F_\ell(x)=\frac{\Delta_\ell-x}{g},
+\qquad(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,u,1,2-t),
+$$
+
+$$
+0\to0:3,0,2;\qquad0\to1:5,25;\qquad
+1\to0:3,0;\qquad1\to1:5.
+\tag{80.2}
+$$
+
+合法根像依空间次序为 $[-1,-u],[-u,g],[g,t],[t,2t],[2t,\phi]$。guard一只允许前三块，在闭端点 $t$ 允许 $5$ 而不允许 $2$。有限词按 $f_{XY}=f_X\circ f_Y$ 复合。沿实际来源有 $x_j=f_{\ell_j}(x_{j+1})$；正时刻incoming guard由前一实际标签的输出决定：$3,0,2$ 输出零，$5,25$ 输出一。初始guard单独指定，不能按未来标签重选。
+
+原六闭色及其端点归属不变：
+
+$$
+\begin{aligned}
+E_0^\beta&=[-1,-u-\delta],&
+E_1^\beta&=\left[\frac{3(g-1)}5+\delta,\frac{11g-1}{10}-\delta\right],\\
+E_2^\beta&=\left[\frac{6g-1}5+\delta,\frac{3+7g}{10}-\delta\right],&
+E_3^\beta&=\left[\frac{1+4g}5+\delta,\frac{7+13g}{10}-\delta\right],\\
+E_4^\beta&=\left[\frac{3+7g}5+\delta,\frac{11+9g}{10}-\delta\right],&
+E_5^\beta&=[2t+\delta,\phi].
+\end{aligned}
+\tag{80.3}
+$$
+
+闭成员资格不自动供应另一个端点规则下的实际噪声目标取得。
+
+固定一个已经给定的有限端点集 $B\subseteq I_0$，含观察、闭色、状态区间及合法根域的全部端点，并满足原过滤逆闭合
+
+$$
+e\in B,\quad F_\ell(e)\in I_0\quad\Longrightarrow\quad F_\ell(e)\in B.
+\tag{80.4}
+$$
+
+对 $B_s=B\cap I_s$，保留每个端点singleton及相邻端点间的整个闭区间。全部原来源边取齐：
+
+$$
+(s,P)\xrightarrow{\ell}(s',Q)
+\quad\Longleftrightarrow\quad
+s\xrightarrow{\ell}s'\text{ 合法},\quad
+P\subseteq f_\ell(I_{s'}),\quad Q\subseteq F_\ell(P).
+\tag{80.5}
+$$
+
+最后一项等价于 $f_\ell(Q)\subseteq P$，不能用反向包含或相交代替。完整配对图 $G_B$ 保留两侧实际guard、整个原片、全部原边及全部共同原闭色资格。共同色要求两份整个片都在该色内；边在出发顶点使用共同色，有限路径终端不重复观察。下文既不更换 $B$，也不重划、取商或删除额外原边。
+
+固定同一个 $G_B$ 中已经供应的相干实际本原typed singleton rival $R$，本原周期恰为奇数 $p>1$。其完整第二节点为
+
+$$
+(u_r,\{y_r\}),\qquad r\in\mathbb Z/p\mathbb Z.
+\tag{80.6}
+$$
+
+每个节点与周期边已有原同图成员资格。定理36.22和命题39.6.1承担相干性、实际周期和单点接口；仅有一列实数坐标不能代替它们。
+
+取偶数 $m\ge2$、$h=mp$，四对始终为
+
+$$
+(a,b)\in\{(3,0),(0,5),(5,2),(2,25)\},\qquad
+U=Ta3,\quad W=Tb0,\quad |T|=h-2.
+\tag{80.7}
+$$
+
+两完整词逐步满足实际guard，第一guard均从零返回零。共同链的位置为 $i=0,\ldots,h-3$；四个分叉位置记为 $\mathsf D_-,\mathsf D_+,\mathsf E_-,\mathsf E_+$，相位分别为 $h-2,h-2,h-1,h-1$。此位置记号与后面的字面块 $D_-,D_+$ 不同。共同链的实际状态序列相同；$\mathsf D_\pm$ 输入是该共同链供应的 $s_{h-2}$，$\mathsf E_-,\mathsf E_+$ 输入分别为 $b_{\rm out}(a),b_{\rm out}(b)$。对 $(5,2),(2,25)$，合法性强制 $s_{h-2}=0$；对另两对保留原路径供应的输入。两个末标签 $3,0$ 都输出零。
+
+以同一个实际尾集合构造原(63.3)—(63.8)的凸包。令 $K_0$ 为全部无限 $U,W$ 拼接在共同基点的实际坐标集，$\xi_-<\xi_+$ 为两个正斜率完整返回映射的固定点，则
+
+$$
+\begin{aligned}
+H_0&=[\xi_-,\xi_+]=\operatorname{conv}K_0,\\
+H_i&=f_{T_{<i}}^{-1}(H_0)\quad(0\le i\le h-3),\\
+H_{\mathsf D_-}&=f_af_3(H_0),&H_{\mathsf D_+}&=f_bf_0(H_0),\\
+H_{\mathsf E_-}&=f_3(H_0),&H_{\mathsf E_+}&=f_0(H_0).
+\end{aligned}
+\tag{80.8}
+$$
+
+这里所有端点、凸包和中间坐标来自同一对零到零完整词及同一尾集合，不是独立选择的可达点。若 $\varepsilon_{a,b}$ 在 $(3,0),(5,2)$ 为二、其余两对为一，则
+
+$$
+|H_0|=\frac{\varepsilon_{a,b}g^{h-1}}{1-g^h}>0,\qquad
+|H_i|=g^{-i}|H_0|.
+\tag{80.9}
+$$
+
+每个命名位置的准入保留全部原(63.11)：
+
+$$
+\begin{aligned}
+&H_v\subseteq I_{s_v}\text{ 且位于实际首标签的合法根域};\\
+&B\cap\operatorname{int}H_v=\varnothing;\\
+&\exists c_v\in\{0,\ldots,5\},\quad
+H_v\cup\{y_{r(v)}\}\subseteq E_{c_v}^\beta,\qquad
+r(v)=\operatorname{ph}(v)\bmod p.
+\end{aligned}
+\tag{80.10}
+$$
+
+命题63.2在同一 $B$ 下给出唯一非退化整个承载片 $P_v\supseteq H_v$，包括其整个根域与共同色，并逐边供应两条原配对返回。它使用引理63.1：原片端点的合法逆像仍在 $B$，内部同源点遂提升为整个 $Q\subseteq F_\ell(P)$。这不是把 $H_v$ 当作 $P_v$。共同链完整顶点是
+
+$$
+v_i=\bigl((s_i,P_i),(u_{i\bmod p},\{y_{i\bmod p}\})\bigr).
+\tag{80.11}
+$$
+
+相位记号的起点取给定rival在共同基点的实际节点；另取索引起点只同步平移 $r(v)$，不重选来源。顶点身份还保留这两个节点的全部共同闭色资格，不能人为加入命名相位来阻止原图中的身份相等。
+
+原完整最小目标另外要求第一投影不相干、第二投影相干，$h+2$ 个不同完整命名顶点构成整个原SCC，非空返回gcd恰为 $h$。准入供应的不相同第一返回词 $U,W$ 处在一个强连通核心中；它们单独只给包含核心的SCC返回gcd整除 $h$。原定理63.3的其余义务是：所有完整内部边均满足
+
+$$
+\operatorname{ph}(w)=\operatorname{ph}(v)+1\pmod h
+\quad(v,w\in\mathcal N,\ v\to w),
+\tag{80.12}
+$$
+
+且以完整图的全部后继定义
+
+$$
+\begin{aligned}
+X_0&=\operatorname{Succ}(\mathcal N)\setminus\mathcal N,\\
+X_{n+1}&=X_n\cup(\operatorname{Succ}(X_n)\setminus\mathcal N),\\
+\operatorname{Succ}(X_n)\cap\mathcal N&=\varnothing\quad(n\ge0).
+\end{aligned}
+\tag{80.13}
+$$
+
+这里 $\mathcal N$ 是全部命名完整顶点的集合。单向离开允许存在；真正的外部返程才使整个SCC超出 $\mathcal N$。内部边必须按整个 $P_v,P_w$ 检查，凸包以外但仍在片内的点能够供应额外边。
+

@@ -1,0 +1,31 @@
+**命题 1642.1（有限混合像的距离控制）。** 令
+
+$$
+\mathcal K_r(\mathcal C)
+=\left\{\sum_{j=1}^rw_jq_j:w\in\Delta_r, q_j\in\mathcal C\right\},
+\qquad
+d_r(P,\mathcal C)=\min_{Q\in\mathcal K_r(\mathcal C)}\operatorname{TV}(P,Q).
+$$
+
+对正整数 $r$，这些集合非空、紧并随 $r$ 嵌套，且
+
+$$
+\begin{aligned}
+h(\mathcal K_r(\mathcal C),\mathcal K_r(\mathcal D))
+&\le h(\mathcal C,\mathcal D),\\
+|d_r(P,\mathcal C)-d_r(P',\mathcal D)|
+&\le\operatorname{TV}(P,P')+h(\mathcal C,\mathcal D).
+\end{aligned}
+$$
+
+**证明。** 混合像是紧参数域 $\Delta_r\times\mathcal C^r$ 的连续像，零权重给嵌套。记 $\eta=h(\mathcal C,\mathcal D)$；对一张具体混合，逐项选 $r_j\in\mathcal D$ 使 $\operatorname{TV}(q_j,r_j)\le\eta$。紧性保证最近点取得。保留全部权重，得到
+
+$$
+\operatorname{TV}\left(\sum_jw_jq_j,\sum_jw_jr_j\right)
+\le\sum_jw_j\operatorname{TV}(q_j,r_j)\le\eta.
+$$
+
+交换集合得到 Hausdorff 界。对目标 $P'$ 的一个最近混合使用该界和三角不等式，再交换两端，得到第二式。证毕。
+
+这项界同时适用于全部 $r$，没有为不同来源数另选有利的模型距离。它保留了同一组权重及逐项通道对应；若只知道两套模型各自能生成一些相近边缘，而没有集合距离控制，不能直接套用。
+

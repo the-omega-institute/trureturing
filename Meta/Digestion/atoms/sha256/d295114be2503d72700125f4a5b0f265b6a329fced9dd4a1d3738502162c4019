@@ -1,0 +1,20 @@
+**命题 1544.1（未归一化亏损趋零）。** 固定有限 $\alpha>1$，令 $M_m=2^{2m-1}$、$\tau_m=M_mp_m^\alpha$。在第 1348 节公平加点来源已为准确最优者的最终范围内，第 1543 节来源的幂和亏损满足
+
+$$
+0\le e_m:=a^\alpha+\tau_m-\sum_jw_j^\alpha
+\le a^\alpha-(a-\delta_m)^\alpha+\tau_m\longrightarrow0.
+$$
+
+其 Rényi 熵超过准确最小值的差也趋于零。
+
+**证明。** 非负下界由该范围内的准确最优幂和得到；来源的幂和至少含主项 $(a-\delta_m)^\alpha$，给上界。$\delta_m\to0$，且 $\tau_m=\kappa^\alpha M_m^{1-\alpha}\to0$。熵差等于
+
+$$
+\frac1{\alpha-1}\log\frac{a^\alpha+\tau_m}
+{a^\alpha+\tau_m-e_m},
+$$
+
+分子和分母均趋于 $a^\alpha>0$，故差趋零。证毕。
+
+本节只使用 $e_m\to0$，没有断言 $e_m/\tau_m\to0$。因此它不反驳第 1447–1449 节在更强尾部尺度上的标签稳定性。当前目标是检验：固定高阶成本接近最优，是否足以让所有关注情形下的标签实验都接近。
+

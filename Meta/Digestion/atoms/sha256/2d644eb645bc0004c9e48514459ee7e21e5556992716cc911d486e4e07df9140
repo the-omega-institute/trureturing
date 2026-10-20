@@ -1,0 +1,55 @@
+**Theorem 15.2 (Completion does not require the residual to vanish).** Every pair in Definition 15.1 and every $0<q<1$ yield a homogeneous complete real instrument on the full algebra $M_D(\mathbb C)$ whose exact actual gap law is $\widehat\gamma$. Its zero branch has Choi rank exactly two and its tick branch has one nonzero rank-one Kraus matrix. Every positive-probability tick resets to the same pure density. The observability Gramian is faithful and the zero-word reachable span is all of $\mathbb C^D$.
+
+Proof. Use the Newton lift (11.1) with
+
+$$
+p=\sqrt n P,\quad s=\sqrt n S,\quad
+u_j=\Delta^{j+1}s(0),\quad v_j=\Delta^jp(0),\quad
+u_m=0,\quad v_m=m!\sqrt n\ne0.
+\tag{15.2}
+$$
+
+Thus $A,B,x,f,F$ have exactly the block definitions of (11.1), and the raw map is $\mathcal T_q(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T})$. This uses the Newton algebra in the proof of Theorem 11.2, without importing that theorem's monomial-intensity conclusion. In detail, finite differences give $e_0^{\mathsf T}U^tv=p(t)$ and $e_0^{\mathsf T}U^tu=\Delta s(t)$. The block powers and anchor give
+
+$$
+f^{\mathsf T}A^kx=s(k),\qquad
+f^{\mathsf T}A^tBA^rx=p(t),\qquad BA^rB=0.
+\tag{15.3}
+$$
+
+Among words of length $k$, the all-$A$ word contributes $s(k)^2$, the $k$ one-$B$ words contribute $\sum_{t<k}p(t)^2$, and every word containing at least two $B$ factors vanishes. Hence the actual raw intensity is
+
+$$
+\operatorname{Tr}[F\mathcal T_q^k(xx^{\mathsf T})]
+=q^k\left(s(k)^2+\sum_{t<k}p(t)^2\right)=q^kH(k).
+\tag{15.4}
+$$
+
+This includes the empty word at $k=0$, with zero detector amplitude. As before, $A$ is upper triangular with unit diagonal and $B$ is upper triangular with zero diagonal. Thus the full complex superoperator matrix $q(A\otimes A+B\otimes B)$ has spectrum $\{q\}$ and is stable. Set $Q=\sum_{k\ge0}(\mathcal T_q^*)^k(F)$.
+
+The faithfulness and reachability arguments of Theorem 11.2 require only $p_m\ne0$, not the polynomial identity (10.10). To check their exact premises, if $y=(y_T,y_s)$ has $y^*Qy=0$, every word detector amplitude vanishes. The rows $f^{\mathsf T}A^tB=p(t)e_{m+1}^{\mathsf T}$ for $0\le t\le m$ force $y_s=0$. The rows $e_0^{\mathsf T}U^j$ for $0\le j\le m$ then force $y_T=0$, since their binomial coefficient matrix has determinant one. This works for complex vectors and proves $Q>0$ on the full memory. Likewise $v_m\ne0$ makes $v,Nv,\ldots,N^mv$ a basis of the target; the invertible binomial change of basis makes $A^jBx=(U^jv,0)$, $0\le j\le m$, span that target. Including $x$ gives all $D$ dimensions.
+
+Now apply Theorem 2.1 with raw matrices $\sqrt qA,\sqrt qB$, detector $f$, reset $x$, and its actual normalization
+
+$$
+z=x^{\mathsf T}Qx=Z_H(q),\qquad G=Q^{1/2},\qquad
+\xi=Gx/\sqrt{Z_H(q)},\qquad \tau=\xi\xi^{\mathsf T}.
+\tag{15.5}
+$$
+
+All its hypotheses have been established. Its completed matrices and branches are
+
+$$
+\begin{aligned}
+L_A&=\sqrt q\,GAG^{-1},&L_B&=\sqrt q\,GBG^{-1},&J&=\xi f^{\mathsf T}G^{-1},\\
+\Phi(X)&=L_AXL_A^{\mathsf T}+L_BXL_B^{\mathsf T},&&
+\Psi(X)=JXJ^{\mathsf T},\\
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J&=I_D,&
+\rho(\Phi)&=q,&\Psi\Phi^k(\tau)&=\widehat\gamma_k\tau.
+\end{aligned} \tag{15.6}
+$$
+
+Theorem 2.1 supplies real matrices, full complex complete positivity, trace completeness and the actual pure reset. Invertible $A$ and nonzero rank-one nilpotent $B$ are linearly independent over $\mathbb C$; similarity and nonzero scaling preserve this independence. Thus the zero Choi rank is exactly two. Both factors of $J$ are nonzero, so its matrix rank and the tick Choi rank are one. For every raw word $w$, $L_w\xi=q^{|w|/2}Gwx/\sqrt{Z_H(q)}$, so the completed reachable span is also full.
+
+Exactly the target and source coordinates of (11.1) are used. The two zero Kraus contributions are summed inside $\Phi$; their labels do not survive. All matrices are fixed in time. There is no additional quantum or classical register, retained clock, correlated external input or controller. This proves the resource contract for the actual law in (15.1), regardless of whether $e$ vanishes. $\square$
+

@@ -1,0 +1,14 @@
+### definition 36.2: 五个原 Window 标签与选择
+
+令 $\mathcal S=\{000,100,010,101,001\}$，仅在 $b\in\mathcal S$ 时定义标签
+
+$$
+000\mapsto\mathrm{zero},\quad100\mapsto\mathrm{low},\quad
+010\mapsto\mathrm{middle},\quad101\mapsto\mathrm{ends},\quad
+001\mapsto\mathrm{high}.
+$$
+
+它们采用原 `Window.bits` 的低至高印字次序 $(b_0,b_1,b_2)$；占位轴仍为 $(x,y,z)=(b_0,b_2,b_1)$。扩大的数学输出域分别含五个选中标签、三个互异的排除标签 $\mathrm{excluded}(011)$、$\mathrm{excluded}(110)$、$\mathrm{excluded}(111)$ 及 $\dagger$。定义选择事件 $\mathsf S=\{\tau_3<\infty,b\in\mathcal S\}$；不把排除标签映到 zero。
+
+此定义只给 acquired-state 统计及其数学 pushforward，不把 `LiteralWindowEnd.triple` 在非法三位上的默认值应用于原生标记。标签对应取自 [LiteralWindowEnd](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.lean)，`Window`、`bits`；其 `step`、`observe` 是另有定义域的操作。
+

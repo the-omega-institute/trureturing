@@ -1,0 +1,25 @@
+## 73. FIB 状态载体上的外加量子信道、退相干与谱隙
+
+令 \(S\) 是有限 FIB 状态集，外加 Hilbert 空间为
+\(\mathcal H=\mathbb C^S\)，基态记为 \(\lvert i\rangle\)。FIB 只提供 \(S\)、标签和组合索引；密度矩阵、Hamiltonian、CP/CPTP 映射及所有速率均是外加结构。经典概率 \(p\) 可嵌入为
+\[
+\iota(p)=\sum_i p_i\lvert i\rangle\langle i\rvert.
+\]
+若标签 \(g:S\to\mathcal A\)，令
+\[
+P_a=\sum_{g(i)=a}\lvert i\rangle\langle i\rvert,
+\qquad
+\Delta_g(\rho)=\sum_{a\in\mathcal A}P_a\rho P_a.
+\]
+对 \(\eta\in[0,1]\) 定义 CPTP 通道
+\[
+\Phi_\eta=(1-\eta)\operatorname{Id}+\eta\Delta_g.
+\]
+若 \(X\in\ker\Delta_g\) 是跨标签相干块，则
+\[
+\Phi_\eta^n(X)=(1-\eta)^nX.
+\]
+因此离散退相干率可记为
+\(\gamma_d=-\log(1-\eta)\)；\(\eta=1\) 时跨标签相干一步消失。固定点代数
+\(\{\rho:\Delta_g(\rho)=\rho\}\) 通常包含多个块对角态，所以退相干率不等于唯一平衡态的混合隙。
+

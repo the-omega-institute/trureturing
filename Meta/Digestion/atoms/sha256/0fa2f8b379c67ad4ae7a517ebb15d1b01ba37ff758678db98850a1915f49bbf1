@@ -1,0 +1,103 @@
+### 50.3 四条实际 channel 的 autocorrelation 满秩证书
+
+写 `T_l b_l=(U_l,V_l)^T`。四条实际 Fourier channel 系数分别为
+
+```math
+(u_l),\qquad(g_lu_l),\qquad(U_lu_l),\qquad(V_lu_l),
+```
+
+其中 `g_l,U_l,V_l` 均为单位复数。令 `c_l=conjugate(u_l)u_(l+1)`，下标模三。四条相位条件给出 `Lc=0`，矩阵 `L` 的第 `l` 列为
+
+```math
+L_{\cdot l}=\begin{pmatrix}
+1\\\overline{g_l}g_{l+1}\\
+\overline{U_l}U_{l+1}\\\overline{V_l}V_{l+1}
+\end{pmatrix}.
+```
+
+先设 `epsilon_2=-epsilon_1`。此时 `b1,b2` 正交，平方范数均为二。分别相加 `L` 的前两行与后两行，得到
+
+```math
+(A_0,0,B_0),\qquad(C_0,0,D_0),
+```
+
+其中
+
+```math
+A_0=\langle b_0,b_1\rangle,\quad B_0=\langle b_2,b_0\rangle,
+\qquad C_0=\langle T_0b_0,T_1b_1\rangle,\quad
+D_0=\langle T_1b_2,T_0b_0\rangle.
+```
+
+令
+
+```math
+C=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+K=\begin{pmatrix}-a/h&-h-ia\\-h+ia&a/h\end{pmatrix}.
+```
+
+直接相乘给出
+
+```math
+C^*(\sqrt6T_1)=-3I-iK,\qquad
+\sqrt6T_0=\sqrt6T_1+3C,\qquad
+R:=T_0^*T_1=-\frac{I+iK}{2}.
+```
+
+这里 `K*=K, Tr(K)=0`。取酉矩阵 `E=(b1/sqrt(2),b2/sqrt(2))`，记 `K'=E*KE`。在此基中展开 `R* b0`，利用 `||b0||²=2` 与 `Tr(K')=0`，恰得
+
+```math
+A_0D_0-B_0C_0=2iK'_{21}.
+```
+
+该量非零。否则 Hermitian 性使 `K'` 为 `diag(k,-k)`；而 `E` 的四个矩阵元平方模均为 `1/2`，所以 `K=E diag(k,-k) E*` 的两个对角元都为零，与 `K11=-a/h!=0` 矛盾。因此两条行和强制 `c0=c2=0`，再由第一行得到 `c1=0`。
+
+现在设 `epsilon_1=epsilon_2`。此时 `b1=b2`、`T1b1=T2b2`，所以 `L` 的每行都有形式 `(rho,1,conjugate(rho))`，对应四个单位复数
+
+```math
+1,\qquad r=\overline{g_0}g_1,\qquad
+u=\overline{U_0}U_1,\qquad v=\overline{V_0}V_1.
+```
+
+三个不同的 `rho` 已足以使秩为三：将每行乘以 `rho`，就得到行形 `(rho²,rho,1)` 的 Vandermonde 矩阵。
+
+置 `k0=|A||B|, k1=|P||Q|, e=epsilon_0 epsilon_1`。由二维输出的显式公式，
+
+```math
+r=\frac{eP\overline Q\overline A B}{k_0k_1},\qquad
+\frac{V_l}{U_l}=
+-\frac{\varepsilon_l i\overline{\alpha_l\beta_l}}
+ {|\alpha_l||\beta_l|},\qquad
+t:=\frac vu=\frac{e\overline{PQ}AB}{k_0k_1}.
+```
+
+下列精确虚部恒等式给出 `r!=1` 及 `t notin {1,r,r^(-1)}`：
+
+```math
+\operatorname{Im}(P\overline Q\overline A B)
+=-\frac{3a(s+3)}{2h}\ne0,
+```
+
+```math
+\operatorname{Im}(P\overline A)=3\operatorname{Im}P>0,\qquad
+\operatorname{Im}(\overline Q B)=-3\operatorname{Im}Q<0,
+```
+
+```math
+\operatorname{Im}(AB\overline{PQ})
+=\frac32\bigl((3-a)\operatorname{Im}Q+(3+a)\operatorname{Im}P\bigr)>0.
+```
+
+其中 `Im P=(h+a/h)/2, Im Q=(h-a/h)/2` 在本支均为正。第一式也可由 `P conjugate(A)=-(3-a)/2+3i Im P` 与 `conjugate(Q) B=-(3+a)/2-3i Im Q` 直接得到。中间两式分别结合
+
+```math
+\frac rt=\frac{P\overline A}{\overline P A},\qquad
+rt=\frac{\overline Q B}{Q\overline B}
+```
+
+排除 `t=r`、`t=r^(-1)`；最后一式排除 `t=1`。
+
+若四个 `rho` 只有至多两个值，因为 `r!=1`，必有 `u,v in {1,r}`，从而 `v/u in {1,r,r^(-1)}`，矛盾。因此这一符号情形也有 `rank L=3`。
+
+两种情形穷尽八个选择。于是 `c0=c1=c2=0`，在三循环上这意味着至多一个 `u_l` 非零；该射线必为 canonical，完成核心刚性证明。
+

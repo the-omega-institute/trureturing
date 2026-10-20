@@ -1,0 +1,46 @@
+**定义 431.1（完整有限分裂树与深度值）。** 设 $I$ 为有限指标集，每个复 Hilbert 空间 $\mathcal H_i$ 满足 $1\le\dim\mathcal H_i<\infty$，并记
+
+$$
+\mathcal D(\mathcal H_i)
+=\{P\in\operatorname{Herm}(\mathcal H_i):P\succeq0,\ \operatorname{tr}P=1\},
+\qquad X=\prod_{i\in I}\mathcal D(\mathcal H_i).
+$$
+
+沿用定义430.1的完整树约定：以 $A\in X$ 为根的坐标树 $\mathsf T$ 是一棵自身有限的有根树，每个节点 $v$ 带标签 $P_v\in X$。每个内部节点选择一个坐标 $i=i(v)$，有有限非空的子节点集，并满足
+
+$$
+P_{v,i}=\sum_j\lambda_{vj}P_{vj,i},\qquad
+\lambda_{vj}\ge0,\qquad \sum_j\lambda_{vj}=1,
+\qquad P_{vj,h}=P_{v,h}\quad(h\ne i).
+$$
+
+有限分支数不设统一上界；选择的坐标可以重复，也可以依节点而变。允许提前终止、不同叶深和单子节点分解。所有零权、剩余及失败分支均保留。深度是各根叶路径上的内部节点数的最大值，单子节点也计数。节点权重 $w_v$ 是根到该节点的边概率之积，根权重为 $1$。
+
+固定 $0\le H<\infty$。对任意函数 $f:X\to[0,H]$，不加可测性条件，定义
+
+$$
+\operatorname{val}_f(\mathsf T)=\sum_{\ell\text{ 为叶}}w_\ell f(P_\ell),\qquad
+T_n^f(A)=\sup_{\operatorname{depth}(\mathsf T)\le n}\operatorname{val}_f(\mathsf T),
+\qquad T_\infty^f(A)=\sup_{n\in\mathbb N_0}T_n^f(A).
+$$
+
+深度零的树只有根叶，故 $T_0^f(A)=f(A)$。上确界遍历完整的有限树，不预设存在最优树。
+
+加性效果树的根局部因子是 $X_{\varnothing,i}=A_i$。在选择坐标 $i$ 的内部节点，要求
+
+$$
+X_{v,i}=\sum_jX_{vj,i},\qquad X_{vj,i}\succeq0,
+\qquad X_{vj,h}=X_{v,h}\quad(h\ne i).
+$$
+
+若叶的所有 $a_{\ell,i}=\operatorname{tr}X_{\ell,i}$ 都严格为正，其收益为
+
+$$
+\left(\prod_i a_{\ell,i}\right)
+f\left(\left(\frac{X_{\ell,i}}{a_{\ell,i}}\right)_i\right).
+$$
+
+若任一迹为零，该叶收益定义为零，不对零迹作除法。加性树同样保留全部节点并采用同一深度计数。
+
+这种保持重心的有限分裂，与方向凸性及有限阶层合测度中的原子分裂有共同的代数形式。方向凸性及分别凸性的关系见 Matoušek–Plecháč，*On Functional Separately Convex Hulls*，Discrete & Computational Geometry 19 (1998), 105–130，[doi:10.1007/PL00009331](https://doi.org/10.1007/PL00009331)；有限次原子分裂见 Müller–Šverák，*Convex integration for Lipschitz mappings and counterexamples to regularity*，Annals of Mathematics 157 (2003), §2, 717–719，[doi:10.4007/annals.2003.157.715](https://doi.org/10.4007/annals.2003.157.715)。这里允许的变化发生在单个完整矩阵坐标内，收益取上确界；这些方向和优化方向须与文献中的具体定义区分，文献中连续函数、开域及凸下包络的结论不直接给出下述任意有界收益的深度比较。
+

@@ -1,0 +1,40 @@
+**命题 25.1（区间平衡产生的有效响应）。** 令 $a_F=\varphi^{-2}$，并沿用
+
+$$
+\bar r=a_Fr_\alpha+(1-a_F)r_\beta,
+\qquad
+D=\frac{\theta\varphi^4}{\delta\bar r}.
+$$
+
+对 Fibonacci 词的任意区间 $[b,c)$，有
+
+$$
+\left|\sum_{i=b}^{c-1}r_{(W_j)_i}-\bar r(c-b)\right|
+\le |r_\alpha-r_\beta|.
+$$
+
+因此对每个连续源 $f$，离散 Green 算子
+
+$$
+(\mathcal T_jf)(u)=\epsilon_j\sum_{i=0}^{L_j-1}
+G_j(\iota_j(u),i)f(i/L_j)
+$$
+
+收敛到
+
+$$
+(\mathcal Tf)(u)=\frac1D\int_0^1(1-\max(u,v))f(v)\,dv,
+$$
+
+并满足
+
+$$
+-D(\mathcal Tf)''=f,
+\qquad
+(\mathcal Tf)'(0)=0,
+\qquad
+(\mathcal Tf)(1)=0.
+$$
+
+这里的 $O(L_j^{-1})$ 一致核误差来自均匀区间平衡；只有整体字母频率收敛而没有区间误差界时，不能推出这个一致响应结论。
+

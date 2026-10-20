@@ -1,0 +1,38 @@
+**定义 287.1（原条件核与全比例缩放）。** 沿用定义 285.1–285.2 的自由有序非空满二叉树、叶 $\alpha,\beta$、组成纤维均匀律 $U(a,b)$ 和原替换
+
+$$
+\rho(\alpha)=\beta,\qquad \rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad \rho(\langle t_1,t_2\rangle)=\langle\rho(t_1),\rho(t_2)\rangle.
+$$
+
+叶积使用 $A^2=1,B^2=-1,AB+BA=1$，三个窗口为同一实际树的
+$W_3(t)=(E(t),E(\rho t),E(\rho^2t))$；左右次序和全部括号属于来源数据。固定整数 $a,b\ge1$，记
+
+$$
+k=\min(a,b),\qquad M=\max(a,b),\qquad d=k+1\ge2,
+\qquad \delta=\frac d{M+d},\quad \tau=1-\delta,
+\quad \nu=\frac{\tau}{1+\tau},\quad
+\varrho=\frac{\delta}{1+\tau},\quad
+v=\frac{\tau}{(1+\tau)^2},\quad \chi=1-\varrho^2.
+$$
+
+此处 $\varrho$ 是标量，不是树替换 $\rho$。当 $a\le b$ 时以 $\alpha$ 分隔，当 $b<a$ 时以 $\beta$ 分隔，保留全部 $d$ 个间隔 $r_0,\ldots,r_{d-1}$，其和为 $M$。置
+
+$$
+\begin{gathered}
+\xi_i=r_i\bmod2,\qquad h=\sum_{i=0}^{d-1}\xi_i,\qquad
+\varepsilon_j=\sum_{i<j}\xi_i\bmod2\quad(0\le j\le d),\\
+H=\sum_{i\text{ 奇}}r_i,\qquad
+O=\sum_{\substack{1\le j<d\\j\text{ 奇}}}\varepsilon_j,
+\qquad E=\sum_{\substack{1\le j<d\\j\text{ 偶}}}\varepsilon_j,
+\qquad X=(H,O,E).
+\end{gathered}
+$$
+
+标量 $E$ 由参数与叶积函数 $E(t)$ 区分。原完整奇偶律为 $\mathsf R_{d,M}$。参考律 $\mathsf Q_{d,M}$ 是全部 $d$ 个 $\operatorname{Bernoulli}(\nu)$ 位条件于 $h\equiv M\pmod2$ 的律。参考树律 $\widetilde U(a,b)$ 使用原同一个核 $K_\xi$：给定完整 $\xi$，令 $s_\xi=(M-h)/2$，在 $\sum_iT_i=s_\xi$ 的非负整数弱组成上均匀取 $T$，置 $r=2T+\xi$，恢复指定方向的叶词并均匀取全部原 Catalan 括号。终端位和末间隔均保留。记
+
+$$
+D_W(a,b)=\left\|(W_3)_*U(a,b)-(W_3)_*\widetilde U(a,b)\right\|_{\mathrm{TV}},
+\qquad \|P-Q\|_{\mathrm{TV}}=\frac12\sum_x|P(x)-Q(x)|.
+$$
+

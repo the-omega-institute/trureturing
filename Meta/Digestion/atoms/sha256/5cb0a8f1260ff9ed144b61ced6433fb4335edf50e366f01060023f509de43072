@@ -1,0 +1,141 @@
+### 78.1 实际来源、原规范片与全部联合条件
+
+一个时间步删除一个三位窗口。沿用定义14.5、命题14.6、定理14.7、定义17.1及定理17.2，标签集为 $\Lambda=\{3,0,5,2,25\}$，其中 $0$ 是单个空窗标签，$25$ 是单个标签。实际地址域为 $A_0=\Omega$、$A_1=\{\omega\in\Omega:\omega_0=0\}$。置
+
+$$
+g=\sqrt5-2,\qquad g^2+4g=1,\qquad 0<g<\frac14,\qquad
+t=\frac{1+g}{2},\quad u=\frac{1-g}{2}=t^2,\quad \phi=1+t,
+$$
+
+$$
+\lambda=\frac{u}{10},\qquad 0\le\beta<\lambda,\qquad
+\delta=\lambda-\beta>0,\qquad I_0=[-1,\phi],\quad I_1=[-1,t].
+\tag{78.1}
+$$
+
+预算是每次应用中固定的实数，包括零预算。分支、逆分支及合法状态转移为
+
+$$
+f_\ell(x)=\Delta_\ell-gx,\qquad F_\ell(x)=\frac{\Delta_\ell-x}{g},\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,u,1,2-t),
+$$
+
+$$
+0\to0:3,0,2;\qquad0\to1:5,25;\qquad
+1\to0:3,0;\qquad1\to1:5.
+\tag{78.2}
+$$
+
+五个合法根像依空间次序为 $[-1,-u],[-u,g],[g,t],[t,2t],[2t,\phi]$。guard 一只允许前三块，在 $t$ 允许 $5$ 而不允许 $2$。有限词采用实际前接顺序 $f_{XY}=f_X\circ f_Y$。同一分量的全部坐标、标签和状态由其同一条实际合法地址承担，满足 $x_j=f_{\ell_j}(x_{j+1})$。初始状态另行声明；正时刻的 incoming guard 是前一实际标签的输出，且
+
+$$
+\operatorname{out}(3)=\operatorname{out}(0)=\operatorname{out}(2)=0,\qquad
+\operatorname{out}(5)=\operatorname{out}(25)=1.
+\tag{78.3}
+$$
+
+六个原闭色恰为
+
+$$
+\begin{aligned}
+E_0^\beta&=[-1,-u-\delta],&
+E_1^\beta&=\left[\frac{3(g-1)}5+\delta,\frac{11g-1}{10}-\delta\right],\\
+E_2^\beta&=\left[\frac{6g-1}5+\delta,\frac{3+7g}{10}-\delta\right],&
+E_3^\beta&=\left[\frac{1+4g}5+\delta,\frac{7+13g}{10}-\delta\right],\\
+E_4^\beta&=\left[\frac{3+7g}5+\delta,\frac{11+9g}{10}-\delta\right],&
+E_5^\beta&=[2t+\delta,\phi].
+\end{aligned}
+\tag{78.4}
+$$
+
+原端点归属固定。闭色成员关系不自动供应指定归属规则下的实际噪声取得。
+
+每次应用先给定同一个有限端点集 $B\subseteq I_0$。它包含全部观察、闭色、状态区间及合法根域端点，并对全部原标签满足
+
+$$
+e\in B,\quad F_\ell(e)\in I_0\quad\Longrightarrow\quad F_\ell(e)\in B.
+\tag{78.5}
+$$
+
+对于 $B_s=B\cap I_s$，全部端点 singleton 及每对相邻端点之间的整个闭区间都是原片。全部原来源边严格按
+
+$$
+(s,P)\xrightarrow{\ell}(s',Q)\quad\Longleftrightarrow\quad
+s\xrightarrow{\ell}s'\text{ 合法},\qquad
+P\subseteq f_\ell(I_{s'}),\qquad Q\subseteq F_\ell(P)
+\tag{78.6}
+$$
+
+取齐。最后一项等价于 $f_\ell(Q)\subseteq P$，检查的是整个原片。完整配对图 $G_B$ 保留两侧实际 guard、两份整个原片、全部原边及全部共同原闭色资格。共同色 $c$ 要求两份整个原片均包含于 $E_c^\beta$；每条配对边在出发顶点使用一个共同色，有限路径终端不重复观察。应用中不更换 $B$、重划原片或删去任何额外内部、外部原边。
+
+定义31.1—31.3及定理31.4供应给定图中整条有限、无限路径的联合实际来源提升。有限路径只在终端选一次 guard 相容的合法尾，再沿已有边前接；无限路径由嵌套闭像和 $g^N\operatorname{diam}I_0\to0$ 联合提升。64.4保留该论证在一般实预算下的适用范围。引理31.2的有限端点构造仍限于其 $\mathbb Q(t)$ 种子条件；本章对一般实预算始终假设所需有限 $B,G_B$ 已给，不证明它们存在。
+
+第二来源固定为同一 $G_B$ 中已供应的相干、实际本原 singleton rival $R$，本原周期恰为奇数 $p>1$。其相位坐标、实际 incoming guard、原 singleton 节点及每条实际周期边均已具有同图成员资格。以共同基点的完整第二节点为相位零，记为
+
+$$
+(u_r,\{y_r\}),\qquad r\in\mathbb Z/p\mathbb Z.
+\tag{78.7}
+$$
+
+相干指同基点返回词同步至共同长度后相等，不以颜色词或侧别替代。其相干性沿用定理36.22及原 singleton 合同；命题39.6.1保留第一不相干分支的非退化性。周期倍数恢复全部第二节点，包括实际 guard，不能只恢复标量。旋转仅重新标记该已给实际周期，不能重置其输入类型。
+
+取偶数 $m\ge2$，置 $h=mp$，保留四个有序标签对
+
+$$
+(a,b)\in\{(3,0),(0,5),(5,2),(2,25)\}.
+$$
+
+两条命名返回仍为 $U=Ta3,W=Tb0$、$|T|=h-2$。只量化每步满足(78.2)且第一 guard 从零返回零的两条路径；共同 $T$ 上的状态相同。共同链位置为 $i=0,\ldots,h-3$，四个分叉位置记为 $\mathsf D_-,\mathsf D_+,\mathsf E_-,\mathsf E_+$，相位分别为 $h-2,h-2,h-1,h-1$。字面块 $D_\pm$ 与这些位置分开记号。
+
+令 $\xi_-<\xi_+$ 为 $f_U,f_W$ 的固定点，$K_0$ 为同一对实际零到零词的全部无限 $U,W$ 块拼接在基点取得的第一坐标集合。直接使用63.2的同源凸包：
+
+$$
+\begin{aligned}
+H_0&=[\xi_-,\xi_+]=\operatorname{conv}K_0,\\
+H_i&=f_{T_{<i}}^{-1}(H_0)\quad(0\le i\le h-3),\\
+H_{\mathsf D_-}&=f_af_3(H_0),&H_{\mathsf D_+}&=f_bf_0(H_0),\\
+H_{\mathsf E_-}&=f_3(H_0),&H_{\mathsf E_+}&=f_0(H_0).
+\end{aligned}
+\tag{78.8}
+$$
+
+所有凸包使用同一个尾集合；逆像运输同一来源坐标，不反转(78.6)。对每个共同链及分叉位置 $v$，第一状态 $s_v$ 来自实际路径，第二相位为 $r(v)=\operatorname{ph}(v)\bmod p$，完整准入逐项为
+
+$$
+\begin{aligned}
+&\text{(i) }H_v\subseteq I_{s_v}\text{，且位于其实际首标签的合法根域};\\
+&\text{(ii) }B\cap\operatorname{int}H_v=\varnothing;\\
+&\text{(iii) }\exists c_v\in\{0,\ldots,5\},\qquad
+H_v\cup\{y_{r(v)}\}\subseteq E_{c_v}^\beta.
+\end{aligned}
+\tag{78.9}
+$$
+
+这是全部(63.11)，不是只检查内部端点。命题63.2在全部准入下供应唯一非退化整个原承载片 $P_v\supseteq H_v$、整片根域和共同色，以及两条原配对返回。共同链完整顶点为
+
+$$
+v_i=\bigl((s_i,P_i),(u_{i\bmod p},\{y_{i\bmod p}\})\bigr).
+\tag{78.10}
+$$
+
+原完整最小目标还要求：第一投影返回不相干，第二投影为上述相干 rival，命名集合 $\mathcal N$ 有 $h+2$ 个不同完整配对顶点且是整个原 SCC，非空返回长度 gcd 恰为 $h$。定理63.3和64.1—64.5要求对完整图中每条内部边按整个原片检查
+
+$$
+\operatorname{ph}(w)=\operatorname{ph}(v)+1\pmod h,
+\qquad v,w\in\mathcal N,\quad v\to w.
+\tag{78.11}
+$$
+
+这就是全部(63.13)。$\operatorname{Succ}$ 取完整 $G_B$ 的全部后继，真实外部义务为
+
+$$
+\begin{aligned}
+X_0&=\operatorname{Succ}(\mathcal N)\setminus\mathcal N,\\
+X_{n+1}&=X_n\cup\bigl(\operatorname{Succ}(X_n)\setminus\mathcal N\bigr),\\
+\operatorname{Succ}(X_n)\cap\mathcal N&=\varnothing\qquad\text{对所有 }n\ge0.
+\end{aligned}
+\tag{78.12}
+$$
+
+这就是全部(63.15)，允许单向离开。第60章适用的整片条带、四行实际后继、同源返回点精确间距、点界、宽度界及八行偏移／失配继续在同一实现中联合承担；各先修局部预算域保持原假设，不能分别优化后拼接。以下准入蕴涵不提前使用实际 period-$h$ 才能调用的循环类不交、容量或最小结构，也不假设(78.11)、(78.12)成立。
+

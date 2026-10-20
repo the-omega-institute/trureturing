@@ -1,0 +1,98 @@
+### 55.1 Same actual source, original target, and conditional advice
+
+<a id="TM55-D1"></a>
+**Definition TM55.1 (the unchanged conditional task).** An actual source is a nonempty ordered binary tree
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle,
+\qquad \rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{TM.5501}
+$$
+
+Tree equality retains leaf order and every bracket. Write $c(t)=(a_\alpha,a_\beta)$, $m=a_\alpha+a_\beta$, $n=a_\alpha+2a_\beta$, and $E_j(t)=E(\rho^jt)$. The associative Clifford leaf product satisfies $E(\alpha)=A$, $E(\beta)=B$, $A^2=1$, $B^2=-1$, $AB+BA=1$. For the public fixed integer cap $H\ge1$, put
+
+$$
+\begin{aligned}
+\mathcal T_H&=\{t:1\le\lambda(t)\le H\},\\
+U_H&=\{t\in\mathcal T_H:(E_0(t),E_1(t),E_2(t))=(1,1,1)\},\\
+q_H(t)&=\begin{cases}
+(0,E_0(t),m),&n>H,\\
+(1,c(t),E_0(t),E_1(t)),&n\le H<m+n,\\
+(2,c(t),(E_0(t),E_1(t),E_2(t))),&m+n\le H.
+\end{cases}
+\end{aligned}
+\tag{TM.5502}
+$$
+
+The tag-2 coordinates are the published $(2,\eta)$ in the equivalent composition/three-window representation of TM51.1. Throughout a run the required output is the initial $q_H(t)$ of this same tree. The current $q_H(t_{\rm cur})$ describes future behavior and does not redefine that output.
+
+The permitted online actions are current `Read`, a whole $\rho$ attempt, and a whole left or right concatenation with a named actual nonempty positive context. `Read` returns actual current $E$ and preserves the source. A modification accepts exactly when the entire candidate has at most $H$ leaves; equality accepts. Rejection preserves the entire source and supplies no candidate read. The complete record retains public inputs, label, action/context identities, actual responses and actual reads. Every decision depends only on public initialization and that acquired record. These ambient semantics continue after the source leaves $U_H$.
+
+For any nonempty $\mathcal F\subseteq U_H$, let $A(\mathcal F;H)$ be the least size of a finite nonempty alphabet $\mathcal L$ for which a genuinely supplied same-unmodified-initial-source function $\ell:\mathcal F\to\mathcal L$ and one effective deterministic original-interface controller satisfy
+
+$$
+\forall t\in\mathcal F:\quad
+\Pi(H,\ell(t);t)\text{ stops after finitely many source calls and outputs }q_H(t).
+\tag{TM.5503}
+$$
+
+The declared family is public; sources with the same label have the same public initialization. Set $A_U(H)=A(U_H;H)$ for $H\ge8$. The minimization permits arbitrary source-dependent suppliers, including dependence on leaf order and bracketing, and all finite adaptive protocols, arbitrary acquired memory, both context sides, mixed positive contexts, `Read`, and unrestricted accepted replacement depth. Necessity below imposes no factorization or computability restriction on a competing supplier. The exhibited sufficient suppliers/controllers are uniformly effective from $H$ and authentic initial-source information.
+
+Such information can be an already supplied original target, or a parsed, certified archive authentically paired with this exact unmodified initial tree. Its acquisition, pairing, label production, delivery and retention are separate obligations. The consumer receives only the public data and the supplied symbol. A public formula or dictionary describes possible targets and does not reveal the unknown live row. An equivalent witness or another tree's archive does not authenticate the running source. There is no reset, copy, replacement of the running tree by a witness, source inverse, navigation, changed cap, hidden target/size port, or new cost observation. The empty family at $H<8$ is outside the substantive theorems; its alphabet may be assigned 0 under an empty-alphabet convention.
+
+<a id="TM55-S1"></a>
+**Reused source correspondence.** Put $h=\lfloor H/4\rfloor$ and $H=4h+\delta$, $0\le\delta\le3$. Atomic360.2–4 and TM51.2–3 give exactly
+
+$$
+\begin{gathered}
+c(t)=(4r,4s),\qquad r,s\ge1,\quad r+s\le h,\\
+z=r+s,\quad w=r+2s,\qquad
+2\le z\le h,\quad z+1\le w\le2z-1,\\
+m=4z,\quad n=4w,\quad m+n=4(z+w),\qquad
+r=2z-w,\quad s=w-z.
+\end{gathered}
+\tag{TM.5504}
+$$
+
+For every such pair a genuine source is any fixed ordered bracketing of
+
+$$
+\omega_{r,s}
+=\alpha^{2r-1}\beta^{2s}\alpha\beta^{2s-1}\alpha^{2r}\beta.
+\tag{TM.5505}
+$$
+
+In Atomic360's order $(x_{00},x_{10},x_{01},x_{11};y_{00},y_{01},y_{10},y_{11})$, its eight edge multiplicities are $(r,r,r,r;s,s,s,s)$. They are positive and balanced with connected support. In the unit specialization of Atomic360.2, the unique parameters are $(u,v,w,p,q)=(0,0,0,0,0)$ and all four $\alpha$ edge counts agree, as do all four $\beta$ counts. Setting just one group to zero gives disconnected support; setting both to zero gives an excluded empty source. Thus these are genuine common-source constraints. Atomic360.3 states that every qualifying leaf word is precisely an Euler-circuit label sequence with those counts and that every ordered bracketing of every such word is an actual source. The displayed witnesses certify existence; they do not replace the family or the running source.
+
+For $w\le h$ use the finite-target abbreviation
+
+$$
+\tau_h(z,w)=\begin{cases}
+(2,(4(2z-w),4(w-z)),(1,1,1)),&z+w\le h,\\
+(1,(4(2z-w),4(w-z)),1,1),&z+w>h.
+\end{cases}
+\tag{TM.5506}
+$$
+
+For $w>h$ the target is $(0,1,4z)$, regardless of the hidden $w$. Such a target exists exactly when $2\le z\le h$ and $2z-1>h$, with witness $\omega_{1,z-1}$. Finite points have distinct targets; hidden compositions in one tag-0 row have one target. The comparisons $w\le h$ and $z+w\le h$ are exactly $4w\le H$ and $4(z+w)\le H$ at every cap residue. This does not prove that the unrestricted optimum depends only on $h$.
+
+<a id="TM55-S2"></a>
+**Reused history correspondence and terminal acquisition.** TM30.1 gives whole guards and ordered source transport; TM30.2 gives equality of all future responses for equal current $q_H$ under common initialization. TM38.1 applies when the complete past records are also equal: equal current $q_H$ paired with different original targets is a permanent collision. TM45.1–4 retains those original/current pairs and the ordered known outer factors. Therefore the extra size of a stored record cannot repair a difference that never entered it.
+
+Before the first $\rho$, accepted contexts on a common history contribute $(U,V)$ to current/next size, with
+
+$$
+0\le U\le V,\qquad
+m_{\rm cur}=m+U,\quad n_{\rm cur}=n+V,
+\qquad E_{j,\rm cur}=L_jE_j(t)R_j.
+\tag{TM.5507}
+$$
+
+Each positive context $v$ has $d_0(v)\ge1$ and $d_0(v)\le d_1(v)\le2d_0(v)$, irrespective of its side. The factors $L_j,R_j$ are the actually ordered known products from those contexts. They are not commuted. A rejection changes neither contributions nor factors. A first accepted replacement changes the resource pair to $(n+V,m+n+U+V)$ and the current read to $L_1E_1(t)R_1$.
+
+Write $\operatorname{Size}_H$ for the already published TM51.5 terminal entry-size procedure, directly reusing TM44.5 proof equations (TM.4419–20). Its sole source hypothesis is an ambient entry tree with integer size $1\le M\le H$. It uses no `Read` or replacement, returns that entry $M$, ends at current size $H$, and makes at most $\lceil\log_2H\rceil+1$ whole source calls including the final single-$\alpha$ rejection. Its controller maintains $l<M\le u$, inserted size $H-u$, and actual current size $M+H-u$; the positive right macro of length $u-\lfloor(l+u)/2\rfloor$ accepts exactly when $M\le\lfloor(l+u)/2\rfloor$. All uses below check the entry hypothesis. This is a cited acquisition lemma, not a new proof wrapper or size port.
+
+TM47.2's lifting hypothesis is also concrete here: the actual witnesses cover every allowed initial target, and sources with the same initial $q_H$ and supplied label have the same complete record, stopping output and accepted depth by TM30.2. Thus a controller correct on the representatives is correct on every qualifying word and ordered bracketing in those target fibers. A lower argument may instead choose any actual representative in each target fiber and retain its actual supplied label; no target factorization is assumed.
+

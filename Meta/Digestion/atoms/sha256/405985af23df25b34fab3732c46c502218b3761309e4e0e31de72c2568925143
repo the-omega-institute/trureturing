@@ -1,0 +1,35 @@
+**定理 1406.1（指数预算的 Shannon 节省范围）。** 设 $\eta_N>0$、$\eta_N\to0$，且 $\theta_N\to\theta\in[0,1)$。则
+
+$$
+\frac{a(1-\theta)}{T(\kappa)}
+\le\liminf_N\frac{D_N-F_N(\kappa,\eta_N)}{\eta_ND_N}
+\le\limsup_N\frac{D_N-F_N(\kappa,\eta_N)}{\eta_ND_N}
+\le\frac{1-\theta}{\gamma_\kappa}.
+$$
+
+**证明。** 取整数 $s_N=\lceil\sqrt N\rceil$，令
+
+$$
+j_N=\left\lceil\log_2\frac{T(\kappa)}{\eta_N}\right\rceil+s_N,
+\quad r_N=\left\lfloor2^{j_N}\frac{\eta_N}{T(\kappa)}\right\rfloor,
+\quad\rho_N=r_N2^{-j_N}.
+$$
+
+因 $\theta<1$，最终 $j_N\le N-2$，且 $\rho_N\sim\eta_N/T$；设剩余维数 $m_N=N-j_N$，则 $D_{m_N}/D_N\to1-\theta$。第 1327 节的同一局部来源给
+
+$$
+D_N-F_N\ge\rho_N[aD_{m_N}-h_2(\kappa)].
+$$
+
+归一化即得下界。
+
+对上界，使用第 1325 节较精确的 $D_N-F_N\le A_N\log(M_NA_N)$。此时 $c_N/\eta_N\to0$，从而 $A_N/\eta_N\to1/\gamma_\kappa$，并且
+
+$$
+\log(M_NA_N)/D_N\longrightarrow1-\theta.
+$$
+
+两因子相乘得到上界。证毕。
+
+系数中的 $1-\theta$ 反映前缀识别占据的维数比例；所选格仍是观察能够识别的格，所以没有另加一个隐藏选择位的熵。该结论未覆盖临界 $\theta=1$ 的细致节省，也未确定两端之间的准确系数。
+

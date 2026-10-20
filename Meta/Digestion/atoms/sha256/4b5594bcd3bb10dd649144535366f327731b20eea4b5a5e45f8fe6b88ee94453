@@ -1,0 +1,101 @@
+## 244. FIB 图族上的玻色—爱因斯坦凝聚、量子涡旋与 Kibble–Zurek 缺陷统计
+
+本节研究外加玻色场在 FIB 图族上经过凝聚相变和有限速率淬火时的缺陷统计。设第 \(N\) 层 FIB 原子关系给出有限图 \(G_N=(V_N,E_N)\)，闭合路径选集记为外加的 \(\mathscr C_N\)。FIB 只提供组合对象及层级映射，不自动给出物理距离、嵌入维数、面元、相位、玻色子算符或时间演化。
+
+给定外加边权 \(J_{uv}>0\)、规范边相位 \(A_{uv}=-A_{vu}\)、局部质量项 \(r_N(t)\) 和相互作用 \(g_N>0\)，在图上定义复场 \(\psi_u=\sqrt{\rho_u}e^{{\rm i}\theta_u}\) 的能量
+
+$$
+H_N(t,\psi)=\sum_{(u,v)\in E_N}J_{uv}
+\left|\psi_v-e^{{\rm i}A_{uv}}\psi_u\right|^2
++\sum_{u\in V_N}\left(r_N(t)|\psi_u|^2+\frac{g_N}{2}|\psi_u|^4\right).
+\tag{244.1}
+$$
+
+可以选择耗散随机动力学
+
+$$
+\partial_t\psi_u=-(\gamma+{\rm i})\frac{\partial H_N}{\partial\overline\psi_u}+\eta_u(t),
+\tag{244.2}
+$$
+
+也可以选择守恒或近似哈密顿动力学；\(\gamma\)、噪声协方差及粒子数约束均属外加数据。令临界窗口内 \(\epsilon(t)=(r_N(t)-r_c)/r_0=t/\tau_Q\)，并假定外加连续极限具有
+
+$$
+\xi(\epsilon)\asymp \xi_0|\epsilon|^{-\nu},
+\qquad
+\tau_{\rm rel}(\epsilon)\asymp \tau_0|\epsilon|^{-\nu z},
+\tag{244.3}
+$$
+
+其中 \(\nu,z>0\) 是动力学普适类的指数，不是 FIB 递归的结论。绝热—非绝热交界由
+
+$$
+\tau_{\rm rel}(\hat\epsilon)=\tau_Q|\hat\epsilon|
+\tag{244.4}
+$$
+
+给出，从而
+
+$$
+|\hat\epsilon|\asymp \tau_Q^{-1/(1+\nu z)},
+\qquad
+\hat\xi\asymp \tau_Q^{\nu/(1+\nu z)}.
+\tag{244.5}
+$$
+
+现在才引入图的外加几何。若物理球满足 \(\operatorname{Vol}_N(B(u,\ell))\asymp c(u)\ell^d\)，且 \(\hat\xi\) 位于该尺度区间，则在有限程混合模型中
+
+$$
+\mathbb E[n_{\rm def}]\asymp C_{\rm def}\hat\xi^{-d}
+\asymp C_{\rm def}\tau_Q^{-d\nu/(1+\nu z)}.
+\tag{244.6}
+$$
+
+若球增长是一般函数 \(V_u(\ell)\)，正确的组合表达应为
+
+$$
+\mathbb E N_{\rm def}\asymp\sum_{c\in\mathcal D_N}\kappa_c/V_c(\hat\xi),
+\tag{244.7}
+$$
+
+而不是强行使用幂律；例如指数球增长会给出不同于幂律的淬火律。FIB 只给出 \(V_N,E_N\) 及递归关系，不能保证连续体积增长或混合条件。
+
+对有定向的闭合 FIB 路径 \(C=(u_0,\ldots,u_m=u_0)\)，取
+
+$$
+\delta_{uv}=\operatorname{Arg}\!\left(e^{{\rm i}(\theta_v-\theta_u-A_{uv})}\right)\in(-\pi,\pi].
+$$
+
+在没有相位幅度零点且规范通量外加给定时，绕数为
+
+$$
+q_C=\frac1{2\pi}\left(\sum_{j=0}^{m-1}\delta_{u_ju_{j+1}}+\Phi_C\right)\in\mathbb Z,
+\qquad
+\Phi_C=\sum_{j=0}^{m-1}A_{u_ju_{j+1}}.
+\tag{244.8}
+$$
+
+这里整数性、规范通量、路径是否代表物理小面以及零幅度核心的定义均来自外加相位场和嵌入。若某层 FIB 关系图是树或闭路选集为空，内部没有非平凡闭路，必须另加周期识别、面元嵌入或边界闭合后才可谈涡旋数。
+
+淬火冻结时，相邻域的相位在各自相关域内近似一致，而域间相位由外加初态和噪声抽样。因此，对电荷 \(q\) 的期望数为
+
+$$
+\mathbb E N_q=\sum_{C\in\mathscr C_N}\Pr(q_C=q),
+\tag{244.9}
+$$
+
+其概率由相位分布、规范通量和域间联合律决定，不能从 FIB 路径数单独推出。若变量在距离 \(O(\hat\xi)\) 后混合，则可能有 \(\mathbb E N_q/|V_N|\sim\kappa_q\hat\xi^{-d}\) 和相应中心极限定性，但这仍是外加随机动力学的结果。
+
+若外加区域无边界、规范通量总和为零且相位全局单值，离散 Stokes 关系给出总涡旋电荷为零；开放边界或非零通量会改变这一约束。若 \(\hat\xi\) 大于图的物理直径，独立域数至多为常数；若小于边长或噪声相关长度，连续 Kibble–Zurek 近似失效。非均匀图必须使用局部冻结尺度和局部球体积。
+
+若外加相变是二维 XY 型的 BKT 转变，相关长度可具有
+
+$$
+\xi(\epsilon)\asymp\xi_0\exp\!\left(\frac b{\sqrt{|\epsilon|}}\right),
+\qquad
+\tau_0\xi(\hat\epsilon)^z=\tau_Q|\hat\epsilon|,
+\tag{244.10}
+$$
+
+此时冻结尺度含对数修正，不能照搬式 (244.6) 的幂指数。因而在给定临界标度、淬火协议、物理度量和相位随机过程后，FIB 只把邻接与闭路交给外加模型，外加动力学给出 \(\hat\xi\)，外加几何把它转为域体积，外加相位接缝再转为绕数统计；凝聚温度、临界指数、涡旋概率、中和律和普适类仍不由 FIB 单独决定。
+

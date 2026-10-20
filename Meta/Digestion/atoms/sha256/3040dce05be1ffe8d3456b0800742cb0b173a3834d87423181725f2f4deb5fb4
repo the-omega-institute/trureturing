@@ -1,0 +1,14 @@
+## 4. The identified set is a projection
+
+Let `\mathcal F` be the set of admissible response-type laws and let `Q` be the causal query. The identified set is
+
+\[
+\mathcal I_Q
+=
+\{Q(\pi):\pi\in\mathcal F\}.
+\]
+
+For a scalar query, partial identification asks for this set. Reporting only two valid inequalities is logically weaker than identifying the set.
+
+Four notions should be distinguished.
+

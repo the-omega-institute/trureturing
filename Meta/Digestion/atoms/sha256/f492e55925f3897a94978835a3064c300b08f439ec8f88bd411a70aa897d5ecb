@@ -1,0 +1,7 @@
+不同观察者可以：
+
+* 具有不同切向射线；
+* 具有不同 prime-word history；
+* 具有不同 Schur phase；
+* 却在 scalar completion 后得到相同 \(\zeta\)。
+

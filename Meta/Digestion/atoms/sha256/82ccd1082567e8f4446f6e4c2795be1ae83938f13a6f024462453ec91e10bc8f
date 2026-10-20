@@ -1,0 +1,25 @@
+## 定理 250.2（open-loop 有限状态完成）
+
+设：
+
+1. \(X\) 有限；
+2. 每个坐标上两局部 laws 互相绝对连续；
+3. 对每个 \(x\neq y\)：
+   \[
+   \mathcal H_\infty^{x,y}
+   =
+   \infty.
+   \]
+
+则各状态的无限 transcript laws 成对互奇；因此存在共同零错误分类器。对任意全支撑先验，在通常 posterior consistency 版本下：
+
+\[
+\pi_t(x_{\mathrm{true}})
+\to1
+\quad\text{a.s.}
+\]
+
+### 证明
+
+对每一状态对应用第 222 节 Hellinger 能量判据，再用第 227 节有限状态同时分类定理。 \(\square\)
+

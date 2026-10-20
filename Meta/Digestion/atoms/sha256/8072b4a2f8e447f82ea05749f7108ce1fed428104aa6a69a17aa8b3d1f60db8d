@@ -1,0 +1,22 @@
+**Definition 113.1 (source, scale and descendant cylinders).** Retain the
+entire free ordered algebra $\mathcal T$, the actual substitution $\rho$,
+four-valued Reads and complete INITIAL rows of Definition 112.1 and
+Contract 112.1a. Write $a(u),b(u)$ for the original alpha/beta leaf counts,
+$\ell(u)=a(u)+b(u)$ and
+
+$$
+W(u)=a(u)+\varphi b(u),\qquad \varphi=(1+\sqrt5)/2,
+\qquad T_k=\rho^k\alpha.
+\tag{113.1}
+$$
+
+Thus $W(\alpha)=1$, $W(\beta)=\varphi$ and
+$W(\langle x,y\rangle)=W(x)+W(y)$. Use the address space and
+$s(p)=\#_L(p)+2\#_R(p)$ of (98.1), with $s(\varepsilon)=0$.
+At each $n\ge0$, put mass $1/N_n(u)$ at **every** actual node of
+$\rho^n u$, where $N_n(u)=|V_{\rho^n u}|$. Denote this finite counting
+probability by $\mu_{u,n}$ and its reached-descendant mass by
+$m_{u,n}(p)=\mu_{u,n}\{x:p\preceq x\}$. In particular
+$m_{u,n}(\varepsilon)=1$. These probabilities are on finite addresses;
+the boundary probabilities below are on $\Omega=\{L,R\}^{\mathbb N}$.
+

@@ -1,0 +1,17 @@
+**假设 143.3a（平稳 Parry 来源）。** 以下概率固定为第139节定义139.0的平稳 Parry 律 $\mu_k$，不采用固定后缀初态的根律，也不采用均匀回返块律。其状态 $j\in\{0,\ldots,k-1\}$ 是下一关系位之前连续一的长度。沿用
+$$
+\sum_{t=1}^k\lambda_k^{-t}=1,\qquad
+p=\lambda_k^{-1},\qquad
+h_j=\sum_{a=1}^{k-j}p^a,\qquad
+S=\sum_{j=0}^{k-1}p^jh_j,
+\tag{143.10}
+$$
+以及
+$$
+\pi_j=\frac{p^jh_j}{S},\qquad
+P(j,0)=\frac p{h_j},\qquad
+P(j,j+1)=\frac{ph_{j+1}}{h_j}\quad(j<k-1).
+\tag{143.11}
+$$
+转移归一化与 $\pi$ 平稳性由引理139.1承担。这里 $h_0=1$，$\varphi\le\lambda_k<2$，$S$ 与第139节的归一化常数相同。
+

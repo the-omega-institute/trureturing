@@ -1,0 +1,42 @@
+**Definition 53.1 (the strict saturated comparison).** Fix a controller
+of Definition 51.1 with $K=|Q|\ge2$, all states nonhalting, and
+$O_q=Q$, $\delta_q(o)=o$ for every $q,o\in Q$. Each state retains its
+fixed original instruction $I(q)$ and entire literal payload. Saturation
+concerns the designated typed rows, not the actual support of their replies.
+An installation consists of a nonempty finite set
+
+$$
+W\subseteq L_\ell
+=\{w\in\{0,1\}^\ell:w_jw_{j+1}=0\ (1\le j<\ell)\},
+\qquad \pi:W\twoheadrightarrow Q,\qquad M=|W|,
+$$
+
+where $\ell\ge1$ and $\pi$ is proof-side correspondence only. Every word
+is the entire mutable observer. Its fixed instruction is $I(\pi(w))$.
+A valid fixed static response table is a function
+$R:W\times Q\to W$ satisfying, at every installed word and every typed reply,
+
+$$
+\pi(R(w,o))=o,\qquad d_H(w,R(w,o))\le1.
+\tag{FIB.53.1}
+$$
+
+Unsupported replies and unreachable installed words are included. The
+conditional services are exactly those of Definition 51.1 and continuation
+II, Definition 45.1: the original primitive's transient reply selects hold
+or one legal bit flip immediately and is discarded, without an intervening
+instruction, further source observation or extra apparatus update. No decoded
+label, PC, syndrome, latch, stage or retained record exists outside the word.
+Initialization uses either the same actual common $q_0$ or the same genuinely
+acquired record $i$ and its original $c(i)$, paired with the same source and
+target; choose a word over that state. Such whole-word initialization is a
+separately supplied service, not an acquisition of $i$ or later access to it.
+The original source legality and all-action factorization remain premises.
+Acquisition, source promises, installation, initialization, selection, literal
+delivery, primitive execution and response writing retain their separate
+charges from §§51–52. No count here supplies these services physically.
+
+Write $G_W$ for the induced Hamming-distance-one graph on $W$, and put
+$N_W[w]=\{u\in W:d_H(u,w)\le1\}$. All neighborhoods below are installed
+neighborhoods, including their centers.
+

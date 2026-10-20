@@ -1,0 +1,39 @@
+### 36.1. 固定宽度的正性与临界线之间缺少什么
+
+沿用第35.2节的二次核。对任意复数
+$\rho=1/2+\delta+i\gamma$、$a>0$、$t\in\mathbb R$，记
+$$
+D_a(\rho,t)=a^2-(\rho-(1/2+it))^2,\qquad
+K_a(\rho,t)=\frac{2a}{D_a(\rho,t)}.
+\tag{36.1}
+$$
+令 $y=\gamma-t$。当 $D_a\ne0$ 时，直接乘复共轭给出
+$$
+\Re K_a(\rho,t)=
+\frac{2a(a^2-\delta^2+y^2)}
+{(a^2-\delta^2+y^2)^2+4\delta^2y^2}.
+\tag{36.2}
+$$
+因此 $|\delta|<a$ 足以使每个高度的实部为正，允许非零横向偏移。
+在对准高度 $t=\gamma$ 时，核成为实标量
+$$
+K_a(\rho,\gamma)=\frac{2a}{a^2-\delta^2}.
+\tag{36.3}
+$$
+若 $\delta\ne0$，取 $a=|\delta|/2$，就有
+$$
+D_a(\rho,\gamma)=-\frac34\delta^2<0,\qquad
+\Re K_a(\rho,\gamma)=-\frac4{3|\delta|}<0.
+\tag{36.4}
+$$
+这个负性见证的分母严格非零。由此对每个复数 $\rho$，
+$$
+\Re\rho=\frac12
+\quad\Longleftrightarrow\quad
+\forall a>0\;\forall t\in\mathbb R,
+\quad D_a(\rho,t)\ne0\Longrightarrow\Re K_a(\rho,t)>0.
+\tag{36.5}
+$$
+正向因 $\delta=0$ 时分母为 $a^2+y^2>0$；反向由式(36.4)。
+关键的新条件是允许宽度任意小，固定一次宽度上的正性没有消除横向偏移。
+

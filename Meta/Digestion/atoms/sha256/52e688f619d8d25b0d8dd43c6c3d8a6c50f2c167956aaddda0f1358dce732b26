@@ -1,0 +1,19 @@
+### 证明第四步：完整真实整数纤维
+
+对 \(z^\sigma\le n\le z^{\sigma+V}\)，置
+\(a_n=\log(n/z^\sigma)/L\)。在整个 \(s\in[n,n+1]\) 上，
+
+\[
+0\le\frac{\log(s/z^\sigma)}L-a_n
+\le\frac{\log(1+1/n)}L\le\frac1{nL}\longrightarrow0
+\]
+
+共同成立。用（SL.15）的范围 \([0,V+1]\) 和 \(\Xi_\sigma\) 在其上的一致连续性，可将整个密度纤维共同替换为 \(\Xi_\sigma(a_n)\)。
+（SL.7）的完整端点因子是
+
+\[
+n^2\int_n^{n+1}s^{-2}ds=\frac n{n+1};
+\]
+
+它的差也共同趋于零，因为 \(n\ge z^\sigma\to\infty\)。这证明（SL.3），包括窗口内全部真实整数和首个可能的 \(n=\lceil x\rceil\)，没有逐行另选过滤器。
+

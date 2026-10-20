@@ -1,0 +1,7 @@
+则：
+
+* 增加预算不再改善 floor；
+* contact points 可向 \(1\) 聚集；
+* residual spectrum 可为无限原子；
+* full dual optimizer 可能失去有限接触性。
+

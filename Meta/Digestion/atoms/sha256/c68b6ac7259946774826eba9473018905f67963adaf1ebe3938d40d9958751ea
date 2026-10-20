@@ -1,0 +1,20 @@
+**定义 34.1（原始轮筛与模五提升）。** 取
+$H\in\{H_A,H_B\}$，其中 $H_A=\{0,2,6\}$、$H_B=\{0,4,6\}$。对
+$N\in\{5,210,5040\}$ 定义实际单位指示函数与未归一卷积
+$$
+w_N^H(r)=\mathbf1_{\{\forall h\in H:\gcd(r+h,N)=1\}},\qquad
+(C_N^Hx)(r)=\sum_{s\in\mathbb Z/N\mathbb Z}w_N^H(r-s)x(s),
+\qquad G_N^H=(C_N^H)^*C_N^H.
+\tag{34.1}
+$$
+这里的伴随取计数内积。记
+$$
+L_5=\{y\in\mathbb Z^5:\textstyle\sum_jy_j=0\},\qquad
+A_5^H=G_5^H-I_5,\qquad
+q:\mathbb Z/5040\mathbb Z\longrightarrow\mathbb Z/5\mathbb Z,
+\qquad (\mathcal Jy)(r)=y(q(r)).
+\tag{34.2}
+$$
+用 $F_n$ 表示第33节的 Fibonacci 数，用
+$F=\begin{pmatrix}1&1\\1&0\end{pmatrix}$ 表示转移矩阵。
+

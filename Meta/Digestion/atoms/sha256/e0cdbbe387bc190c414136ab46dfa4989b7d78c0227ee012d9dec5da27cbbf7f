@@ -1,0 +1,171 @@
+**定理 354.2（有限群记录的共同酉正规形）。** 若定义354.1的记录接口有 $d$ 维精确 CPTP 实现，则有 $D\le d$ 维实现，使用一份固定的、允许混合的初态 $\sigma$、每个字母的一份固定酉矩阵 $U_a$、一份固定 POVM $(E_y)$，并在读取后实际重置到 $\sigma$。所有字串与全部有限自适应经典记录都保持。各个 $U_a$ 作用于同一个 $D$ 维空间，但此结论不要求这些矩阵在全部输入上构成 $G$ 的普通表示。
+
+证明。取原实现初态 $\rho$、推进 $\Phi_a$ 和首次读取效应 $F_y$，则对全部字串有
+
+$$
+\operatorname{tr}(F_y\Phi_w(\rho))=p_y(g_w),
+\qquad
+\Phi_w=\Phi_{a_k}\circ\cdots\circ\Phi_{a_1}.
+\tag{354.2}
+$$
+
+原仪器在读取后的行为不进入这条必要条件。
+
+在有限维通道空间与有限群的乘积中取
+
+$$
+\mathscr S=\overline{\{(\Phi_w,g_w):w\in\mathsf A^*\}},
+\qquad
+(T,g)(R,h)=(T\circ R,gh).
+\tag{354.3}
+$$
+
+有限维 CPTP 映射集合紧，复合连续，所以 $\mathscr S$ 是紧半群。第二坐标只标记证明中的通道极限，没有加入物理寄存器。群有限且离散，因此式（354.2）连续延拓为
+
+$$
+\operatorname{tr}(F_yT(\rho))=p_y(g)
+\quad\text{对每个 }(T,g)\in\mathscr S.
+\tag{354.4}
+$$
+
+以下的秩是 $M_d(\mathbb C)$ 上复线性超算子的秩。选 $(T,h)\in\mathscr S$ 使其秩 $r$ 最小。保迹使 $r\ge1$，且 $\operatorname{rank}T^2=r$。于是
+
+$$
+M_d=\operatorname{ran}T\oplus\ker T,
+\qquad T=A_0\oplus0,
+\tag{354.5}
+$$
+
+其中 $A_0$ 在 $\operatorname{ran}T$ 上可逆。令 $m$ 为 $h$ 的阶。由紧性，取相邻间隔至少二的严格递增整数 $n_j$，使 $T^{mn_j}\to L$。所有这些幂的群标签都是 $e$，故 $(L,e)\in\mathscr S$。极限在 $\ker T$ 上为零、像包含于 $\operatorname{ran}T$，最小秩又给 $\operatorname{rank}L=r$，所以 $L=B_0\oplus0$ 且 $B_0$ 可逆。由
+
+$$
+A_0^{m(n_{j+1}-n_j)}
+=A_0^{mn_{j+1}}(A_0^{mn_j})^{-1}\longrightarrow I,
+$$
+
+得到一份共同的 CPTP 幂等映射
+
+$$
+(P,e)\in\mathscr S,\qquad
+P=I_{\operatorname{ran}T}\oplus0,\qquad
+P^2=P,\qquad \operatorname{rank}P=r.
+\tag{354.6}
+$$
+
+这里的投影作用于算子空间，不是原 Hilbert 空间上的正交投影。
+
+记 $V=\operatorname{ran}P$。角半群
+
+$$
+\mathscr C=\{(PTP,g):(T,g)\in\mathscr S\}
+\tag{354.7}
+$$
+
+以 $(P,e)$ 为单位。每个成员的秩既不超过 $r$，又由最小性不小于 $r$，因此在 $V$ 上可逆，并在 $\ker P$ 上为零。限制到 $V$ 将它识别为 $\operatorname{GL}(V)\times G$ 的紧子半群。任意拓扑群的紧子半群都是群：对其中任意 $z$，取 $z^{n_j}\to\ell$ 且相邻间隔至少二，则在环境群中
+
+$$
+z^{n_{j+1}-n_j}\to1,\qquad
+z^{n_{j+1}-n_j-1}\to z^{-1};
+$$
+
+后者都是半群中的非负整数幂，闭性使逆元也在其中。
+
+因而每个压缩推进 $B_a=P\Phi_aP$ 有一份 CPTP 映射 $Q_a=PQ_aP$，满足
+
+$$
+Q_aB_a=B_aQ_a=P.
+\tag{354.8}
+$$
+
+它们在同一个 $V$ 上互逆，不是对各个控制分别选择空间。并且插入的每个 $P$ 标签均为 $e$，式（354.4）给
+
+$$
+\operatorname{tr}\!\left(
+F_yB_{a_k}\cdots B_{a_1}(P(\rho))
+\right)=p_y(g_w).
+\tag{354.9}
+$$
+
+不需要 $P$ 与原 $\Phi_a$ 对易。
+
+对 CPTP 幂等映射 $P$，外围空间恰为 $V$。使用 Wolf–Pérez-García，*The Inverse Eigenvalue Problem for Quantum Channels*，[arXiv:1005.4545v1，定理8(1)、式(22)](https://arxiv.org/html/1005.4545v1#Thmtheorem8)，得到一个共同的正交分解
+
+$$
+\mathbb C^d
+=H_0\oplus\bigoplus_{j=1}^s
+(\mathbb C^{n_j}\otimes\mathbb C^{m_j}),
+\qquad
+V=0\oplus\bigoplus_{j=1}^s(M_{n_j}\otimes\tau_j),
+\tag{354.10}
+$$
+
+其中 $\tau_j>0$ 是迹一矩阵。该文对保迹 Schwarz 映射采用对偶 Schwarz 条件，CPTP 映射满足它。本节只对共同的 $P$ 应用一次该结构定理。
+
+令 $K=\bigoplus_j\mathbb C^{n_j}$、$\mathcal A=\bigoplus_jM_{n_j}\subseteq M_D$，则
+
+$$
+D=\dim K=\sum_jn_j\le\sum_jn_jm_j\le d.
+\tag{354.11}
+$$
+
+所有经典块仍逐块计入维数，只去除固定张量因子 $\tau_j$。定义 CPTP 映射
+
+$$
+\begin{aligned}
+\beta:M_D&\longrightarrow M_d,
+&
+\beta(X)&=0\oplus\bigoplus_jX_{jj}\otimes\tau_j,\\
+\kappa:M_d&\longrightarrow M_D,
+&
+\kappa(Z)&=\bigoplus_j\operatorname{Tr}_{\mathbb C^{m_j}}(\Pi_jZ\Pi_j)
++\operatorname{tr}(\Pi_0Z)\omega,
+\end{aligned}
+\tag{354.12}
+$$
+
+其中 $\Pi_0,\Pi_j$ 为显示块的正交投影，$\omega\in\mathcal A$ 为任意固定密度矩阵。块消相干、偏迹、固定态制备均完全正；按总迹直接核对两映射保迹。它们满足
+
+$$
+\kappa\beta|_{\mathcal A}=\operatorname{id}_{\mathcal A},
+\qquad
+\beta\kappa|_V=\operatorname{id}_V.
+\tag{354.13}
+$$
+
+在同一个 $\mathcal A$ 上，$L_a=\kappa B_a\beta$ 与 $R_a=\kappa Q_a\beta$ 是互逆 CPTP 映射。其迹对偶 $\alpha_a=L_a^\dagger$、$\gamma_a=R_a^\dagger$ 互逆且完全正保单位。Schwarz 不等式及其在逆映射下的对应给
+
+$$
+\alpha_a(x^\dagger x)\ge\alpha_a(x)^\dagger\alpha_a(x),
+\qquad
+\gamma_a(\alpha_a(x)^\dagger\alpha_a(x))\ge x^\dagger x.
+\tag{354.14}
+$$
+
+对第一式施 $\gamma_a$ 给反向不等式，所以两者取等。由 $\gamma_a$ 单射，$\alpha_a$ 在 Schwarz 不等式中取等；极化得到乘法保持。因此 $\alpha_a$ 是有限维 $C^*$-代数自同构。它只能置换同阶简单块，并在块内作酉共轭；该作用保持普通块迹，其迹对偶也为自同构。所以存在 $K$ 上的一份酉矩阵 $U_a$，使
+
+$$
+L_a(X)=U_aXU_a^\dagger
+\quad(X\in\mathcal A).
+\tag{354.15}
+$$
+
+同一块分解适用于全部字母。选择这些实现酉矩阵无需把项目相位或块中心乘子提升为普通群表示。
+
+最后置
+
+$$
+\sigma=\kappa(P(\rho)),\qquad E_y=\beta^\dagger(F_y).
+\tag{354.16}
+$$
+
+$\sigma$ 是 $\mathcal A$ 内的密度矩阵；$\beta^\dagger$ 完全正保单位，故 $E_y\ge0$ 且 $\sum_yE_y=I_D$。对每个字母有 $\beta(U_aXU_a^\dagger)=B_a\beta(X)$，按字串归纳并用式（354.9），得到
+
+$$
+\operatorname{tr}(E_yU_w\sigma U_w^\dagger)=p_y(g_w).
+\tag{354.17}
+$$
+
+定义 $\mathcal J_y(X)=\operatorname{tr}(E_yX)\sigma$。这些分支完全正且总和保迹，每个非零概率分支都实际重置到 $\sigma$。任意有限自适应树的一条结果路径，其条件概率相乘为 $\prod_i p_{y_i}(g_{w_i})$，与目标一致。极限映射与分解只选择固定装置参数，不是运行时需存储时钟或群标签的过程。证毕。
+
+这是一条精确存在性结论，没有给出有效综合成本或近似稳定性。它保留声明的经典记录，不恢复原通道、环境或额外参考接口。第274节的固定因子压缩以及相位边界卷第15—16节的单通道外围投影已有对应工具；这里增加的是由整个通道半群选出一个共同可逆空间，并对全部字串保持响应的连接。
+

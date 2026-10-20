@@ -1,0 +1,29 @@
+**定理 1548.1（平均缺陷的指数尺度）。** 对第 1547 节的核，
+
+$$
+\epsilon_{P_{2m,\kappa}}(F_m\leftarrow E_m;T_m)
+=3\kappa L_m^{-1}.
+$$
+
+最优平均缺陷满足
+
+$$
+(\kappa-\delta_m+\delta_m/L_m)L_m^{-1}
+\le d_{P_{2m,\kappa}}(F_m\leftarrow E_m)
+\le3\kappa L_m^{-1},
+$$
+
+从而它为 $\Theta_\kappa(2^{-m})$。
+
+**证明。** $S_m$ 有 $L_m$ 格，每格联合误差为 $\kappa u_m$，贡献 $\kappa/L_m$；负面区有 $mL_m$ 格，每格联合误差为 $c_m$，贡献 $m\delta_m/L_m=2\kappa/L_m$。其余格误差为零，得准确等式及最优值上界。
+
+对每个核，其实际先验平均误差至少为 $P(S_m)$ 乘以条件先验误差，因为只保留 $S_m$ 上非负项。因子 $P(S_m)$ 与核无关，取下确界后仍有
+
+$$
+d_P(F_m\leftarrow E_m)\ge P(S_m)d_{\lambda_m}(F_m\leftarrow E_m).
+$$
+
+代入 $P(S_m)=(1+\kappa)/L_m$ 及第 1546 节下界即可。证毕。
+
+这不是来源生成不准确造成的误差：所有来源仍准确生成同一目标。差别在于标签实验能提供多少状态信息，以及先验把哪些状态放在主要位置。
+

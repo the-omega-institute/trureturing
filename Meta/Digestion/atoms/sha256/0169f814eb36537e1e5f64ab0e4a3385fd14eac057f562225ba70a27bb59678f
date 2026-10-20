@@ -1,0 +1,40 @@
+**Convention 28.1 (canonical values and synchronization).** Let $Z(n)$ be
+the canonical most-significant-digit Zeckendorf word on weights
+$F_2,F_3,\ldots$, with $Z(0)=\varepsilon$, no leading zero and no adjacent
+ones. Put $\ell(n)=|Z(n)|$. The classical canonical representation theorem
+gives, for $h>0$,
+
+$$
+\ell(h)=m\quad\Longleftrightarrow\quad
+ F_{m+1}\le h<F_{m+2},\qquad
+Z(F_{r+2})=10^r.
+\tag{ABT.105}
+$$
+
+Indeed the least length-$m$ word has only its leading weight $F_{m+1}$.
+For the greatest value $M_m$ using the first $m$ weights, the
+no-adjacent-one constraint gives $M_0=0,M_1=1$ and
+$M_m=F_{m+1}+M_{m-2}=F_{m+2}-1$ for $m\ge2$. Canonical existence and
+uniqueness then give the length interval. This is numeral calibration,
+not a new native source recurrence or an index/value interface.
+
+For the quantitative statement only, align most-significant-digit
+words by *left-zero* padding to their maximum length, with no unnecessary
+common leading-zero column. Denote this convolution by $\otimes_0$.
+For canonical tuples its domain is regular. This convention is also
+available for any fixed count name $c(e)$ over an alphabet containing
+$0$: use exactly $c(e)$ as its unpadded suffix. It depends on $e$ alone,
+not on the subsequently chosen capacity. Extra padding is not a new
+count value.
+
+These regularity conventions match the preceding right-$\#$ convention
+after reversing every canonical word. Reverse the complete left-zero
+convolution; it becomes a right-zero-padded convolution of the reversed
+words. On valid right-$\#$ convolutions replace padding by zero and
+test this reversed language. Reversal, inverse letter homomorphism and
+regular-domain restriction preserve regularity in both directions.
+Common all-zero prefix columns can be added or removed by regular
+saturation and normalization. Existentially projected tracks use this
+normalization as well. These transformations preserve numerical values;
+they need not preserve a deterministic automaton's state count.
+

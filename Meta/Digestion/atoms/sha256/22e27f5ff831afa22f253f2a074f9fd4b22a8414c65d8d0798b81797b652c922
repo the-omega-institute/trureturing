@@ -1,0 +1,57 @@
+**定理 13.2（正预解式与原阶梯时钟的拉普拉斯公式）。** 对固定 $\lambda>0$，定义
+
+$$
+R_j(\lambda)=T_j(I+\lambda T_j)^{-1}
+=(\lambda+H_j)^{-1},\qquad
+\mathcal R_j(\lambda)=J_jR_j(\lambda)P_j,
+\qquad R(\lambda)=(\lambda+H)^{-1}.
+$$
+
+对每个 $1\le p\le\infty$，有
+
+$$
+\|\mathcal R_j(\lambda)-R(\lambda)\|_{p\to p}
+=O(L_j^{-1}).
+$$
+
+原阶梯时钟的精确公式则为
+
+$$
+\gamma_j(\lambda)=\frac{e^{\lambda\epsilon_j}-1}{\epsilon_j},
+\qquad
+\int_0^\infty e^{-\lambda t}S_j(t)\,dt
+=\frac{\gamma_j(\lambda)}{\lambda}
+\mathcal R_j(\gamma_j(\lambda)),
+$$
+
+从而该拉普拉斯算子与 $R(\lambda)$ 的范数差为 $O(L_j^{-1})+O(\epsilon_j)$。此积分按单元函数的核积分理解；$p=\infty$ 时也可逐点使用同一公式。
+
+**证明。** 嵌入的 $J_jT_jP_j=\mathcal T_j$ 正是第10节的积分算子。其核一致误差为 $O(L_j^{-1})$，故在所有上述 $p$ 空间中都有同量级算子误差。$K_j$ 对计数测度对称且为次随机核，连续与离散的被杀死半群在这些空间中均为压缩。因此正预解式满足 $\|\mathcal R_j(\lambda)\|,\|R(\lambda)\|\le1/\lambda$，且
+
+$$
+\|(I+\lambda\mathcal T_j)^{-1}\|,
+\|(I+\lambda\mathcal T)^{-1}\|\le2,
+$$
+
+这里在阶梯子空间之外，前一逆算子为恒等作用。预解式恒等式给出
+
+$$
+\mathcal R_j(\lambda)-R(\lambda)
+=(I+\lambda\mathcal T_j)^{-1}
+(\mathcal T_j-\mathcal T)(I+\lambda\mathcal T)^{-1},
+$$
+
+证明第一项估计。再对每个时钟区间积分并求几何级数，得到
+
+$$
+\begin{aligned}
+\int_0^\infty e^{-\lambda t}S_j(t)\,dt
+&=\frac{1-e^{-\lambda\epsilon_j}}{\lambda}
+J_j(I-e^{-\lambda\epsilon_j}K_j)^{-1}P_j\\
+&=\frac{\gamma_j(\lambda)}{\lambda}
+J_j(H_j+\gamma_j(\lambda))^{-1}P_j.
+\end{aligned}
+$$
+
+固定 $\lambda$ 时，$\gamma_j(\lambda)-\lambda=O(\epsilon_j)$；用正预解式恒等式控制参数误差，即得第二项估计。泊松化算子 $J_je^{-tH_j}P_j$ 的拉普拉斯算子才是 $\mathcal R_j(\lambda)$。泊松化是另一种时钟，不能把它写成原来的 $S_j(t)$。$\square$
+

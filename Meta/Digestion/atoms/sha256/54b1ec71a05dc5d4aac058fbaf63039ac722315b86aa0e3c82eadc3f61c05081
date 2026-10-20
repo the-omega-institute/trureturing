@@ -1,0 +1,36 @@
+### The precise shortcut being tested
+
+Suppose a measurable complex kernel $s(a,b)$, from positive edges $b$
+to negative edges $a$, defines the ordinary integral operator
+
+$$
+(Sf)(a)=\int s(a,b)f(b)\,dK_+(b).
+$$
+
+Let finite strictly positive measurable weights $w_\pm$ and constants
+$a_0,b_0>0$ satisfy
+
+$$
+\begin{aligned}
+\int |s(a,b)|w_+(b)\,dK_+(b)&\le a_0w_-(a)
+ &&(K_-\text{-a.e. }a),\\
+\int |s(a,b)|w_-(a)\,dK_-(a)&\le b_0w_+(b)
+ &&(K_+\text{-a.e. }b),\\
+a_0b_0&\le1.
+\end{aligned} \tag{S3}
+$$
+
+Schur's test gives $\|S\|\le\sqrt{a_0b_0}$. For these two measure
+spaces its usual same-space formulation can be applied to their
+disjoint union, with $S$ as the off-diagonal block. The proposed raw
+reconstruction requirement is
+
+$$
+SC_+h=C_-h
+\quad\text{for every original compact smooth even core test }h. \tag{S4}
+$$
+
+Under the inherited theta premises, (S3) and (S4) cannot both hold.
+This conclusion includes complex signed kernels; it is not a
+positivity-preservation argument.
+

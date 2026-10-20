@@ -1,0 +1,37 @@
+**命题 16.13（任意有限复位日程的闭式）。** 固定各轮共有的 $X,Y,Z$。
+对 $r>0$，令 $D_n=D(p_n\Vert p^\star)$，则
+
+$$
+\begin{gathered}
+\kappa_{n+1}-\kappa^\star
+=(1-r\sin^2u_n)(\kappa_n-\kappa^\star),\\
+\kappa_N-\kappa^\star
+=(\kappa_0-\kappa^\star)\prod_{n=0}^{N-1}(1-r\sin^2u_n),\\
+D_{n+1}\le(1-r\sin^2u_n)D_n.
+\end{gathered}
+$$
+
+$r=0$ 时唯一顶点律恒定，$D_n=0$。全交换轮 $u_n=\pi/2$ 给
+$\kappa_{n+1}=Z\kappa_n+XY$。
+
+证明。16.10 每轮保持同三均值，且
+$p_{n+1}=(1-\lambda_n)p_n+\lambda_n p^\star$，
+$\lambda_n=r\sin^2u_n$，取第 $13$ 坐标再归纳便得乘积式。
+对 $p_s^\star>0$，函数 $t\mapsto t\ln(t/p_s^\star)$
+在 $t>0$ 的二阶导数为 $1/t>0$，连续延拓到 $t=0$ 后仍凸。
+$p_s^\star=0$ 的格在整条纤维上恒零，不参与。
+故对各格应用凸性并求和，得到
+$D((1-\lambda)p+\lambda p^\star\Vert p^\star)
+\le(1-\lambda)D(p\Vert p^\star)$。
+令 $\lambda=r$ 及 $1-r=Z$ 得全交换递推。
+
+对于非平衡初值，收敛到 $\kappa^\star$ 的准确日程条件是
+$\prod_{n\ge0}(1-\lambda_n)=0$。
+若某个 $\lambda_n=1$，它立即成立；否则各因子正，等价于
+$\sum_n-\ln(1-\lambda_n)=+\infty$，由有限乘积取对数后取极限得到。
+所有 $u_n=0$ 即反例，不能删去日程条件。
+当 $0<Z<1$，每轮斜率 $1-r\sin^2u_n\ge Z>0$，
+故各有限轮映射在纤维上到其像为单射，可以在像内代数反演。
+收缩不自动等于数学上的非单射；被舍弃的是所声明任务外的联合相关。
+$Z$ 仅是此全交换复位模型的保留系数，不能称为闭合配对的衰减率。证毕。
+

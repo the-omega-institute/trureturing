@@ -1,0 +1,18 @@
+## 定义 18.1（判别式分裂观察者）
+
+对：
+
+\[
+Q=[A,B,C],
+\qquad
+\Delta(Q)=B^2-4AC,
+\]
+
+定义：
+
+\[
+s_p(Q)
+=
+\left(\frac{\Delta(Q)}p\right).
+\]
+

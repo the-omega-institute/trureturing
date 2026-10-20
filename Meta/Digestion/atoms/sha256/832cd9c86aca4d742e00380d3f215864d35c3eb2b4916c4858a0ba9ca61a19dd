@@ -1,0 +1,47 @@
+**定理 105.3（趋一阶数的穿孔窗口）。** 设固定正紧区间 $A$ 的内部包含一，
+$\eta_Q\downarrow0$ 且 $\sqrt\delta/\eta_Q\to0$。
+则 (105.4) 还对 $\alpha\in A$、$|\alpha-1|\ge\eta_Q$ 一致成立，
+仍保留该阶数的精确有限噪声鞍点。
+
+证明不能只把曲率的一致收敛除以 $\alpha-1$。
+写 $F_{c,u}(t)=C_x(t)+cD_x(t)$，其中
+
+$$
+D_x(t)=t\sum_j\frac{e_j^2}{1-2tv_j/\delta}+\tfrac12ut^2.
+$$
+
+在共同紧域上 $C_x\to K$、$D_x\to0$ 于 $C^4$ 范数成立。
+对精确有限鞍点方程微分得
+
+$$
+\partial_c\tau_c=\frac{V-D_x'(\tau_c)}{s_c},\qquad
+\partial_cs_c=D_x''(\tau_c)+F_{c,u}'''(\tau_c)\partial_c\tau_c.
+\tag{105.20}
+$$
+
+因此 $N_x(c)=c^2/s_c-c/s_1$ 于 $C^1(A)$ 收敛到
+$N(c)=c^2/K''(t_c)-c/\nu$，且两者在一处严格等于零。
+恒等式
+
+$$
+\frac{N_x(c)}{c-1}=\int_0^1N_x'(1+s(c-1))\,ds
+\tag{105.21}
+$$
+
+给相应差商的一致收敛，无需经验环境的收敛速率。
+(105.19) 的余项除以 $\eta_Q$ 后趋零，
+普通鞍点遗漏项至多 $O_{\mathbb P}(Q^{-5}/(\eta_Q\sqrt\delta))\to0$，证毕。
+连续延拓的二次系数为
+
+$$
+\mathcal B(1)=\frac1{2\nu}-\frac{\gamma K'''(0)}{2\nu^3}.
+\tag{105.22}
+$$
+
+例如 $\eta_Q=\delta^{1/4}$ 可用。该窗口不含阶数一，也不含
+$|\alpha-1|=O(\sqrt\delta)$ 的全部序列。
+有限纤维上 Shannon 响应需要
+$H_1(\mathsf P_x^y)-H_1(\mathsf P_x^0)=\ell_1(y)-\partial_c\ell_c(y)|_{c=1}$。
+(105.16) 的一致函数值误差不控制其阶数导数；显式 Gaussian 累积量函数可微
+也不补出实际比较误差的导数界。本章不据此声称 Shannon 响应定理。
+

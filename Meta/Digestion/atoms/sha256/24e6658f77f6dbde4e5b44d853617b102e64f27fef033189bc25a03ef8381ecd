@@ -1,0 +1,25 @@
+**定理 396.1（tester 残余与合法通道切空间）。** 本条替代 §336.2 的相应陈述与证明。
+
+设输入、输出 Hilbert 空间的维数均为正。采用定义 336.1 的未归一化 Choi 约定，合法通道满足 $J\ge0$、$\operatorname{Tr}_B J=I_A$。令
+$$
+\mathcal L_{\mathrm{ch}}=\{D=D^\dagger:\operatorname{Tr}_B D=0\}.
+$$
+两个合法通道 $\mathcal E,\mathcal F$ 对所有允许 tester 给出相同概率，当且仅当
+$$
+\boxed{J_{\mathcal E}-J_{\mathcal F}\in\mathcal V_{\mathfrak T}^{\perp}\cap\mathcal L_{\mathrm{ch}}.}
+
+$$
+在全部同型通道组成的模型类上，tester 概率唯一确定通道，当且仅当 $\mathcal V_{\mathfrak T}^{\perp}\cap\mathcal L_{\mathrm{ch}}=\{0\}$。因此 tester 张成整个 Hermitian 空间是充分条件，但不是必要条件。
+
+**证明。**
+
+令 $D=J_{\mathcal E}-J_{\mathcal F}$。合法通道的差必在 $\mathcal L_{\mathrm{ch}}$ 内；概率差为 $\operatorname{Tr}(TD)$，它对所有 $T\in\mathfrak T$ 为零正好等价于 $D\perp\mathcal V_{\mathfrak T}$。交集为零遂给出唯一性。
+
+反之，若交集中有 $D\ne0$，取完全去极化通道的满秩 Choi 矩阵
+$$
+J_0=I_A\otimes I_B/d_B,\qquad d_B=\dim\mathcal H_B.
+$$
+选 $0<t<1/(d_B\|D\|_\infty)$，则 $J_\pm=J_0\pm tD$ 均正定，且 $\operatorname{Tr}_B J_\pm=I_A$。它们是不同的合法通道，所有允许 tester 概率却相同。只有正交性而没有切空间条件不足以保证这一构造：二比特情形的 $D=Z_A\otimes I_B$ 与 $I_A\otimes I_B$ 正交，但 $\operatorname{Tr}_B D=2Z_A\ne0$，任意非零扰动都违反通道归一化。证毕。
+
+对受限通道子类，须直接检查该子类的可实现差集合；对多时 comb 或其他过程，须先声明其全部仿射归一化约束以及相应可行差方向，不能直接沿任意 Hermitian 正交方向作扰动。
+

@@ -1,0 +1,15 @@
+**定义 302.1（缺陷、切面与联合观察）。** 令 $n\ge2$，$R_n=\mathbb Z/n\mathbb Z$，并令
+
+$$
+\Delta_{n,a}(X)=(X+a)^n-X^n-a,\qquad \Delta_n=\Delta_{n,1}.
+$$
+
+对正次数首一多项式 $P\in R_n[X]$，记 $\pi_P:R_n[X]\to R_n[X]/(P)$ 为商映射，$\operatorname{rem}_P$ 为次数小于 $\deg P$ 的唯一余数代表。定义
+
+$$
+\Phi_k(X)=X^k-\sum_{j=0}^{k-1}X^j,\quad
+O_{k,a}(n)=\operatorname{rem}_{\Phi_k}(\Delta_{n,a}),\quad k\ge2,
+$$
+
+以及 $\mathcal O_K(n)=(O_{2,1}(n),\ldots,O_{K,1}(n))$。不同模数的商环各自依赖 $n$；本定义的判别目标是非零缺陷的检出，不把不同环里的零元相等当作跨模数的环同构。
+

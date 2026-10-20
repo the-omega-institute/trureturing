@@ -1,0 +1,60 @@
+**定理 42.1（保留全部历史的标量提升交）。** 设 $p$ 为素数，整数
+$a,c,\delta$ 均为 $p$ 的单位，整数 $m,r,h$ 满足 $m>0,r\ge0,h\ge1$，且整数 $U,V$ 满足
+
+$$
+a^m=1+p^hU,\qquad ca^r=\delta+p^hV.
+$$
+
+令 $Z\subseteq\mathbb Z_{\ge0}$ 为同时满足全部其它条件的实际指数乘子集合，
+$B=\{z\bmod p:z\in Z\}$，并定义
+
+$$
+A=\{u\in\mathbb F_p:V+\delta Uu=0\}.
+$$
+
+存在 $z\in Z$ 使 $p^{h+1}\mid ca^{r+mz}-\delta$，当且仅当 $B\cap A\ne\varnothing$。
+若 $B\cap A=\varnothing$，则每个 $z\in Z$ 都有
+$v_p(ca^{r+mz}-\delta)=h$。若只知道 $B\subseteq\widetilde B$，则
+$\widetilde B\cap A=\varnothing$ 仍足以得到这个精确估值结论；
+$\widetilde B\cap A\ne\varnothing$ 不保证任何实际指数存在。
+当 $U\equiv0\pmod p$ 时，$A$ 在 $V\equiv0\pmod p$ 时为整个
+$\mathbb F_p$，否则为空集，不可对 $U$ 求逆。
+
+证明。对同一个 $z\ge0$ 展开
+
+$$
+\begin{aligned}
+ca^{r+mz}
+&=(\delta+p^hV)(1+p^hU)^z\\
+&\equiv\delta+p^h(V+\delta Uz)\pmod{p^{h+1}}.
+\end{aligned}
+$$
+
+二次及以上项含 $p^{2h}$，而 $2h\ge h+1$。所以提升条件恰是
+$z\bmod p\in A$。这里 $B$ 是同一实际集合 $Z$ 的像；
+从像中的一个元素可取回 $Z$ 中的见证，才得到存在性的反向推论。
+空交使已含 $p^h$ 的差不再含 $p^{h+1}$；包含关系给出过近似的空交推论。
+零斜率时方程只剩 $V=0$，得到上述两个分支。证毕。
+
+首次返回深度须另按真实返回确定。若 $p$ 为奇素数，$a>1$ 且 $p\nmid a$，
+取 $m=\operatorname{ord}_p(a)$ 和 $h=v_p(a^m-1)$，则
+$U=(a^m-1)/p^h$ 模 $p$ 非零。在这个深度，二项式展开中与 $p$ 互素的
+正乘子保留首项的估值，指数乘以 $p$ 则恰增加一层；迭代给出
+
+$$
+v_p(a^{mk}-1)=h+v_p(k)\qquad(k>0).
+$$
+
+因此对每个 $e\ge1$，模 $p^e$ 的精确返回周期为 $m p^{\max(e-h,0)}$。
+这里不是把 $h$ 固定成 1：底数 2 的控制素数 1093 满足
+$\operatorname{ord}_{1093}(2)=364$、$v_{1093}(2^{364}-1)=2$，
+在深度 1 为平坦分支，在真实深度 2 才有非零首项。
+对一般给定的 $m,h$，定理 42.1 本身仍保留零斜率情形。
+
+共同指数的约束只能在同一 $z$ 上取交。分别存在两个局部指数，不意味着
+一个指数能同时实现两个条件。Fibonacci 理论卷
+《FIBONACCI_ATOMIC_RELATION_GENERATION》§115 的仿射纤维与共同历史条件
+提供了这种关系的类比；其标量迁移使用上面的整数展开。
+整数单位 2 不等于黄金单位，底数 2 的 Wieferich 深度也不是
+Fibonacci 的 Wall–Sun–Sun 条件。
+

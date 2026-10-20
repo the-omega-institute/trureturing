@@ -1,0 +1,45 @@
+### 13.4 从生成层到动态边界
+
+若任务只要求组成及其 Fibonacci 后继，取 $q_{2,3}(a,b)=2a+3b$，并定义两层边界
+
+$$
+\partial_{2,3}(t)
+ =\bigl(q_{2,3}(c(t)),q_{2,3}(M c(t))\bigr).
+$$
+
+由于
+
+$$
+\begin{pmatrix}2&3\\3&5\end{pmatrix}
+$$
+
+行列式为 $1$，有
+
+$$
+\ker\partial_{2,3}=\ker c
+\quad\text{在 }\mathcal T_{\mathrm{Fib}}\text{ 上成立}.
+\tag{RA.1305}
+$$
+
+并且存在边界更新
+
+$$
+U(n,n')=(n',n+n'),
+\qquad
+\partial_{2,3}(\rho t)=U\partial_{2,3}(t).
+\tag{RA.1306}
+$$
+
+所以在“组成—Fibonacci 后继”这个明确任务下，FIB 的两个叶生成层确实产生了一个
+精确动态边界：边界只忘记树的次序和括号，而不忘记该任务要求的全部未来数量响应。
+
+但若任务扩大为完整路径读数，则
+
+$$
+\ker c\supsetneq\sim_{\mathrm{path}};
+$$
+
+例如 $\langle\alpha,\beta\rangle$ 与 $\langle\beta,\alpha\rangle$ 有相同组成，
+却有不同的左叶读数。此时 $\partial_{2,3}$ 仍是组成任务的边界，却不是完整树任务的
+动态充分边界；必须把路径接口或等价的结构记录加入联合状态。
+

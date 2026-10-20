@@ -1,0 +1,20 @@
+### corollary 36.1: 共同可见未来律的完全抵消条件
+
+在同一个 definition 36.3 的观察域内，$\mathcal J_\mu=0$ 当且仅当以下之一成立：$\mu$ 是单点先验；或者 $\mu$ 恰支撑两个不同深度 $i,j$ 并满足 $\lambda\eta=1$。两点情形也有 $J_E^\mu=0\iff\lambda\eta=1$；三个或更多正支撑点时，整个 $\mathcal J_\mu$ 非零，但单个事件 $J_E^\mu=0$ 本身仍不能据此排除。
+
+证明。首先证明 $\mathcal J_\mu=0\iff a_k^\mu=0$ 对每个 $k$ 成立。反向由绝对收敛的曲率式立即得到。正向取共同合法事件 $D_j$：第四段恰发出 $\operatorname{reads}((10)^j0)$ 后进入 pending0，再唯一发出 Stop0 并 delivered。该事件由转录在 $2j+2$ 处的一项决定，质量为 $L_k(D_j)=r_kq_k^j$。原 `native_first_pending` 的假设为活动相位、该 Read 词的真实柱及其 `WordFamily p 0`；它们在此满足。该 Stop 的原输入只取已有 pending 颜色，无额外 Read。
+
+因此 $\mathcal J_\mu=0$ 蕴含 $\sum_ka_k^\mu r_kq_k^j=0$ 对所有 $j\ge0$ 成立。Fibonacci 递推给出 $\mathrm{Fib}_{k+3}=2\mathrm{Fib}_{k+1}+\mathrm{Fib}_k$，故 $0<r_k<1/2$。不同 $k$ 的 $r_k$ 互异：连续 Fibonacci 数互素，因而 $\mathrm{Fib}_{k+1}/\mathrm{Fib}_{k+3}$ 已约分；若两个比值相等，则其分子相等，而 $\mathrm{Fib}_{k+1}$ 在 $k\ge1$ 严格递增。于是 $q_k=r_k(1-r_k)$ 也互异，且位于 $[0,1/4]$。
+
+固定 $k_0$，取多项式 $P_n(x)=(1-16(x-q_{k_0})^2)^n$。在 $[0,1/4]$ 上它介于 $0,1$；在 $q_{k_0}$ 处等于 $1$，在其他 $q_k$ 处趋零。全部矩为零使 $\sum_ka_k^\mu r_kP_n(q_k)=0$。由 $\sum_k|a_k^\mu|r_k<\infty$ 的支配收敛，极限为 $a_{k_0}^\mu r_{k_0}$，故它为零。$r_{k_0}>0$ 给出 $a_{k_0}^\mu=0$。
+
+若 $\mu_k>0$，这个零条件要求
+
+$$
+\frac{t_k^2}{M_2}-\frac{2t_k}{M_1}+\frac1{M_0}=0.
+$$
+
+函数 $t(r)=(1-r)^2/r$ 在 $0<r<1/2$ 的导数为 $1-r^{-2}<0$，所以不同深度的 $t_k$ 互异。此二次多项式首项系数 $1/M_2>0$，至多有两个根，排除三个或更多正支撑点的完全抵消。单点先验下所有 $\nu_w$ 相等，故完全抵消。两点下 $r_i\ne r_j$、$t_i\ne t_j$、$\lambda>0$，proposition 36.2 的非零分母及 $(\eta-1)^2>0$ 给出 $J_E^\mu=0\iff\lambda\eta=1$；此时整个有符号律同时抵消，反之整个律为零必使其在 $E$ 上为零。证毕。
+
+该证明的矩与支配收敛仅用于判断所定义有符号未来律是否为零，不宣告实际接收者取得了全部精确矩或隐藏深度。Fibonacci 互素性取自欧几里得递推：$\gcd(F_{n+1},F_n)=\gcd(F_n,F_{n-1})=\cdots=\gcd(1,0)=1$；$\gcd(F_{k+1},F_{k+3})=\gcd(F_{k+1},F_{k+2})$。严格递增由 $F_{n+1}=F_n+F_{n-1}$ 在 $n\ge2$ 给出。这些是本判据中的经典中间事实，不是单列的新结果。
+

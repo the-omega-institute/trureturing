@@ -1,0 +1,23 @@
+**定义 13.1（单元嵌入、投影与被杀死半群）。** 以下始终使用第12节的固定单位速度模型及暂态子核。令
+
+$$
+(J_jv)(u)=v_i\quad\left(u\in I_{j,i}
+=[i/L_j,(i+1)/L_j)\right),\qquad (J_jv)(1)=0,
+$$
+
+$$
+(P_jf)_i=L_j\int_{I_{j,i}}f(u)\,du,\qquad
+P_jJ_j=I,\qquad
+H_j=\frac{I-K_j}{\epsilon_j},\qquad T_j=H_j^{-1}=\epsilon_jG_j.
+$$
+
+离散向量的 $p$ 范数使用质量 $1/L_j$。于是 $J_j$ 为等距嵌入，$P_j$ 为压缩投影。连续算子为 $H=-D\partial^2$，具有诺伊曼左边界和狄利克雷右边界，其逆为第10节的 $\mathcal T$。记
+
+$$
+S_j(t)=J_jK_j^{\lfloor t/\epsilon_j\rfloor}P_j,
+\qquad S(t)=e^{-tH},\qquad
+C_D=\{f\in C([0,1]):f(1)=0\}.
+$$
+
+$S(t)$ 是反射于 $0$、命中 $1$ 时被杀死的热半群。对 $f\in C_D$，它等于第12节完整吸收过程的期望作用；这里不把完整吸收过程在常数函数上的作用与被杀死半群混用。$S_j$ 是用阶梯时钟采样的算子族，一般不满足所有实数时刻的半群恒等式。
+

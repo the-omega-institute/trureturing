@@ -1,0 +1,53 @@
+**定义 430.1（完备坐标树与加性效果树）。** 固定整数 $k\ge1$、$d_i\ge1$ 以及 $0\le H<\infty$。记
+
+$$
+\mathcal D_d=\{P\in\operatorname{Herm}(\mathbb C^d):P\succeq0,\ \operatorname{tr}P=1\},
+\qquad X_{\mathbf d}=\prod_{i=1}^k\mathcal D_{d_i}.
+$$
+
+以 $A\in X_{\mathbf d}$ 为根的坐标树是逐棵有限的有根树，每个节点 $v$ 带有 $P_v\in X_{\mathbf d}$。每个内部节点选择一个坐标 $i$，并作有限非空分解
+
+$$
+P_{v,i}=\sum_j\lambda_{vj}P_{vj,i},\qquad
+\lambda_{vj}\ge0,\qquad\sum_j\lambda_{vj}=1,
+\qquad P_{vj,h}=P_{v,h}\quad(h\ne i).
+$$
+
+所有子节点（包括零权重子节点）均保留。允许提前终止和单例分解。深度是根到叶最长路径上的内部节点数，单例节点也计数。叶子 $\ell$ 的权重 $w_\ell$ 是沿边权重的乘积。对任意 $g:X_{\mathbf d}\to[0,H]$，置
+
+$$
+\operatorname{val}_g(\mathsf T)=\sum_{\ell\text{ 为叶}}w_\ell g(P_\ell),\qquad
+T_n^g(A)=\sup_{\operatorname{depth}(\mathsf T)\le n}\operatorname{val}_g(\mathsf T),
+$$
+$$
+T_\infty^g(A)=\sup_{n\ge0}T_n^g(A),
+\qquad e_n^g(A)=T_\infty^g(A)-T_n^g(A).
+$$
+
+加性效果树在每个节点带正半定局部因子 $X_{v,i}$，根因子为 $X_{\varnothing,i}=A_i$；$i$-分裂把 $X_{v,i}$ 换成和为它的正半定因子 $X_{vj,i}$，其余坐标保持不变。若叶子所有迹都为正，令
+
+$$
+a_{\ell,i}=\operatorname{tr}X_{\ell,i},\qquad P_{\ell,i}=X_{\ell,i}/a_{\ell,i},
+$$
+
+叶报酬为 $(\prod_i a_{\ell,i})g(P_\ell)$。若有一个迹为零，则该叶报酬定义为零，不对该坐标作除法。这些是效果的数学坐标；其迹权重不必是未知输入下的条件概率。所有终端分支及其精确加性等式都保留，不对成功子树作条件化。
+
+对正整数元组 $\mathbf r=(r_1,\ldots,r_k)$，令
+
+$$
+\Omega_{\mathbf r}=(I_{r_i}/r_i)_i,
+\qquad
+E_n^{\mathrm{USC}}(M;\mathbf r)=
+\sup_{f:X_{\mathbf r}\to[0,M]\ \mathrm{上半连续}}e_n^f(\Omega_{\mathbf r}).
+$$
+
+在 $X_{\mathbf r}$ 上取各坐标算子范数最大值的度量。对任意 $f:X_{\mathbf r}\to[0,M]$，定义
+
+$$
+K_f=\{(z,t):z\in X_{\mathbf r},\ 0\le t\le f(z)\},
+\qquad
+\overline f(z)=\max\{t:(z,t)\in\overline{K_f}\},
+$$
+
+其中闭包取于 $X_{\mathbf r}\times[0,M]$ 的最大积度量。下文证明该纤维最大值存在，且给出 $f$ 的最小上半连续主函数。
+

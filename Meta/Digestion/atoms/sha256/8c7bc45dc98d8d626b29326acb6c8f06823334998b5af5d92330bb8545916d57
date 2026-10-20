@@ -1,0 +1,20 @@
+# 207. 缺陷距离与近似模拟
+
+精确 Blackwell 因子化过强。定义总变差模拟缺陷：
+
+\[
+\boxed{
+\delta(K,L)
+=
+\inf_M
+\sup_{x\in X}
+\operatorname{TV}
+\bigl(
+L(x,\cdot),
+(M\circ K)(x,\cdot)
+\bigr),
+}
+\]
+
+其中下确界遍历所有后处理 kernel \(M\)。
+

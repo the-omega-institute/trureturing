@@ -1,0 +1,31 @@
+**Specification 113.10 (evaluation and retained permission boundary).**
+The representation is an exact mathematical correspondence **on its
+attained image**. Given its genuinely acquired value, an allowed Read
+can be evaluated as the original four-valued readout of the reconstructed
+source. An actual accepted Apply sends $(\nu,w)$ to $(\nu,\varphi w)$;
+an actual refused Apply leaves it fixed. Acceptance is still determined
+by the common $G(\gamma,e,H)$ of Contract 112.1a, with the real accepted
+epoch and complete chronological Read/status history. Those fields and
+absorbing Stop are not replaced by $\nu$ or by $W$. In particular an
+invariant boundary cannot itself simulate arbitrary Reads: the two
+singletons have equal boundary and different root replies, and the two
+branch witnesses in Theorem 113.7 have different child replies.
+Any history-dependent guard using those replies retains them under its
+own contract. Locally computing a reply is not an actual Read event and
+cannot be inserted into the authentic history as one.
+Representation evaluation grants no new Read, equality
+port, reset, backward action, actuator, status oracle or acquisition right.
+
+On an actually supplied boundary value, Theorem 113.7 concerns only
+factorization of the complete INITIAL **value**. It supplies neither a
+native finite-measure oracle nor a certificate of exact measure equality
+from approximations. Returning such a value does not perform its original
+producer, erase accessible acquisition records, or establish a complete
+new access cut. The access isolation and separate handoff remain those of
+Sparse Literal History Transport, Assumptions 59.3 and 74.1, §§74--75,
+and Native Alpha Recut Memory, Definition 4.3 and Theorem 8.2.
+Source preparation, root/epoch authentication, address generation,
+storage, local computation, duration and physical actuation retain the
+unpriced boundaries of §112.5. Neither an unknown $u$, an unknown $W(u)$
+nor its boundary measure is supplied for free.
+

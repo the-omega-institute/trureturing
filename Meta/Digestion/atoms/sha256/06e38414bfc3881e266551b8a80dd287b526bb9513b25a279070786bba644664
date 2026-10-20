@@ -1,0 +1,30 @@
+### 定义 382.1（因果运输边界）
+
+对有限事件任务，定义
+
+$$
+\boxed{
+\eta_{\mathrm{causal}}
+=
+\left(
+\Omega_X,\Omega_Y,
+P,Q,
+\mathcal F,\mathcal G,
+\{c_n\},
+\Gamma_{\mathrm{causal}},
+\mathsf{PrefixKernels},
+\mathsf{Budget},
+\mathsf{Event},
+\mathsf{Stop}
+\right).
+}
+$$
+
+其中：
+
+1. \(\mathcal F,\mathcal G\) 规定双方每一钟步可访问的历史；
+2. \(\Gamma_{\mathrm{causal}}\) 规定允许的因果或双因果耦合；
+3. \(\mathsf{PrefixKernels}\) 保存可执行的非预见核及目标边缘合同；
+4. \(\{c_n\},\mathsf{Budget},\mathsf{Stop}\) 保存成本、预算和停止后继；
+5. \(\mathsf{Event}\) 保存实际事件记录与局部结果接口。
+

@@ -1,0 +1,13 @@
+## 定义 272.1（可运输性余量）
+
+\[
+\boxed{
+\operatorname{TransRes}(E,T)
+=
+\sum_{M,N}
+(E(M)=E(N))
+\times
+(T(M)\neq T(N)).
+}
+\]
+

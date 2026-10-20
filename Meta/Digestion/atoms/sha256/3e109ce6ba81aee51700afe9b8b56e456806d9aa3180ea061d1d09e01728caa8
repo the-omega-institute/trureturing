@@ -1,0 +1,141 @@
+**命题 49.1。** 设 `a!=0`。对任一 canonical 单位射线 `c=z_{l,epsilon}/sqrt(6)`，以及与其不同的、共同无偏于 `(I,H_0*)` 的单位射线 `v`，有：
+
+```math
+\min_{|\lambda|=1}\|v-\lambda c\|_2\ge\frac{|a|}{80}.
+\tag{49.1}
+```
+
+同一结论经公共酉变换 `H_0` 后适用于实际列基对 `(I,H_0)`。常数不声称最优。
+
+一般的非退化相位 Jacobian 所给出的局部唯一性可见 Jaming–Matolcsi–Móra–Szöllősi–Weiner，[arXiv:0902.0882v2，Theorem 4.1 与 Corollary 4.2](https://arxiv.org/abs/0902.0882v2)。这里计算该实参数支的实际 Jacobian，并直接给出式 (49.1) 的统一定量半径。
+
+**证明。** 固定 `l,epsilon`，简记 `g=g_{l,epsilon}`，定义实际残差映射：
+
+```math
+R(\theta)=\left|H_0\bigl(z_{l,\varepsilon}\odot e^{i\theta}\bigr)\right|^2-\mathbf1,
+\qquad \theta\in\mathbb R^6.
+```
+
+绝对值、平方和指数均逐项作用。每个实相位 channel 都唯一写为：
+
+```math
+\theta_x(j)=t_x+\xi\omega^j+\overline\xi\omega^{-j},\qquad
+\theta_y(j)=t_y+\eta\omega^j+\overline\eta\omega^{-j}.
+```
+
+公共相位不改变 `R`。在均值零的五维子空间中 `t_x+t_y=0`。置 `d=t_y-t_x`、`w=(xi,eta)`，有：
+
+```math
+\|\theta\|_2^2=\frac32d^2+6\|w\|_2^2.
+\tag{49.2}
+```
+
+令 `U=a_l+b_lg`、`V=conjugate(b_l)-conjugate(a_l)g`，则 `|U|²=|V|²=6`。下标按三循环取值，并记 `(a_+,b_+)=(a_{l+1},b_{l+1})`、`(a_-,b_-)=(a_{l-1},b_{l-1})`。两个输出残差中 `omega^j` 的系数，其导数为 `(i/6)Mw`，其中：
+
+```math
+M_{11}=\overline U a_+-U\overline{a_-},\qquad
+M_{12}=\overline U b_+g-U\overline{b_-}\overline g,
+```
+
+```math
+M_{21}=\overline V\overline{b_+}-Vb_-,\qquad
+M_{22}=-\overline V\overline{a_+}g+Va_-\overline g.
+\tag{49.3}
+```
+
+两个零频率导数分别为 `-epsilon k_l d/3` 与其相反数。于是实际 Jacobian `J=DR(0)` 满足：
+
+```math
+\|J\theta\|_2^2=\frac{2k_l^2}{3}d^2+\frac16\|Mw\|_2^2.
+\tag{49.4}
+```
+
+这保留了全部五个去公共相位方向；第六个残差只由总范数守恒消去。
+
+以下给出 `M` 的精确行列式。为展开方便，暂记 `alpha=a_l`、`beta=b_l`、`n=|alpha|²`、`m=|beta|²`、`k=sqrt(nm)`。代入 `g=epsilon i alpha conjugate(beta)/k`，得到 `M=M_0+(epsilon/k)M_1`，其中：
+
+```math
+M_0=\begin{pmatrix}
+\overline\alpha a_+-\alpha\overline{a_-}&\overline\beta b_+-\beta\overline{b_-}\\
+\beta\overline{b_+}-\overline\beta b_-&\alpha\overline{a_+}-\overline\alpha a_-
+\end{pmatrix},
+```
+
+```math
+M_1=\begin{pmatrix}
+-im(\overline\alpha a_++\alpha\overline{a_-})&in(\overline\beta b_++\beta\overline{b_-})\\
+in(\beta\overline{b_+}+\overline\beta b_-)&-im(\alpha\overline{a_+}+\overline\alpha a_-)
+\end{pmatrix}.
+```
+
+在 `det(M_0+(epsilon/k)M_1)` 中，一次交叉项：
+
+```math
+(M_0)_{11}(M_1)_{22}+(M_1)_{11}(M_0)_{22}
+-(M_0)_{12}(M_1)_{21}-(M_1)_{12}(M_0)_{21}
+```
+
+恒为零。将 `p=(a-1+i(h+a/h))/2`、`q=(-a-1+i(h-a/h))/2` 和 `a²=s(3-s)/(1+s)` 代入剩余的 `det M_0+det M_1/(nm)`，化简得：
+
+```math
+l=0:\quad\det M=\frac{72a(s+3)^2}{4s^2-3s+9},
+\qquad
+l=1:\quad\det M=-36a.
+\tag{49.5}
+```
+
+mode `2` 由同步反射 `j -> -j` 得到相同的奇异值。因此去公共相位的实际 Jacobian 恰在 `a!=0` 时可逆；`a=0` 时式 (49.5) 为零。第一分母是 `(1+s)(9-4a²)>0`，而：
+
+```math
+\frac{(s+3)^2}{4s^2-3s+9}\ge1
+```
+
+来自 `3s(3-s)>=0`。所以三个 mode 都有 `|det M|>=36|a|`。
+
+每个 `sqrt(6)H_0` 的 mode coefficient 的模不超过 `sqrt(5)`，故式 (49.3) 的每个矩阵元的模不超过 `2sqrt(30)`。于是：
+
+```math
+\|M\|_{op}\le\|M\|_F\le4\sqrt{30}<24,
+\qquad \sigma_{\min}(M)\ge\frac{36|a|}{24}=\frac32|a|.
+```
+
+均值方向的奇异值为 `2k_l/3>1`；由式 (49.2)–(49.4)，其余四个实方向的最小奇异值为 `sigma_min(M)/6`。因此在均值零子空间上：
+
+```math
+\|J\theta\|_2\ge\frac{|a|}{4}\|\theta\|_2.
+\tag{49.6}
+```
+
+为控制真实非线性残差，令 `Z(t)=H_0(z_{l,epsilon} odot exp(i t theta))`。酉性给出：
+
+```math
+\|Z(t)\|_2=\sqrt6,\quad
+\|Z'(t)\|_2=\|\theta\|_2,\quad
+\|Z''(t)\|_2=\|\theta\odot\theta\|_2\le\|\theta\|_2^2.
+```
+
+逐项平方模的二阶导数是 `2|Z'|²+2 Re(conjugate(Z) odot Z'')`，所以对所有 `t`：
+
+```math
+\left\|\frac{d^2}{dt^2}R(t\theta)\right\|_2
+\le2(1+\sqrt6)\|\theta\|_2^2<8\|\theta\|_2^2.
+```
+
+积分形式的 Taylor 公式遂给出：
+
+```math
+\|R(\theta)-R(0)-J\theta\|_2\le4\|\theta\|_2^2.
+\tag{49.7}
+```
+
+若 `theta` 均值为零、非零且 `R(theta)=R(0)=0`，式 (49.6)–(49.7) 强迫 `||theta||_2>=|a|/16`。
+
+最后令 `z=sqrt(6)v`，选公共相位使 `rho=||z-z_{l,epsilon}||_2` 最小，并取主值相位差 `beta_j in [-pi,pi]`。弧弦不等式给出：
+
+```math
+|\beta_j|\le\frac\pi2|e^{i\beta_j}-1|\le2|e^{i\beta_j}-1|,
+\qquad\|\beta\|_2\le2\rho.
+```
+
+减去 `beta` 的均值所得 `theta` 满足 `||theta||<=||beta||`，且只改变 `z` 的公共相位，故仍有 `R(theta)=0`。因两射线不同，`theta!=0`。因此 `rho>=|a|/32`，除以 `sqrt(6)<5/2` 即得式 (49.1)。证毕。
+

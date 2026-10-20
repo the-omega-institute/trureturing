@@ -1,0 +1,16 @@
+**推论 22.3（两项像测试及其边界）。** 在命题 22.2 的同源承诺下，定义
+
+$$
+I(t,p)=\mathbf1_{\mathcal R}(t|_p),\qquad
+J(t,p)=\mathbf1_{\mathcal R}(C_{t,p}[E]),\qquad
+\eta(t,p)=(I(t,p),J(t,p)).
+\tag{RA.2208}
+$$
+
+所有输出切口恰有下列三类，且 $K(u,p)=1$ 当且仅当 $\eta(t,p)=(1,1)$：
+
+| §22 切口来源 | 完整焦点 $t|_p$ | $I$ | $J$ |
+| --- | --- | --- | --- |
+| 旧节点 $p\in\operatorname{Pos}(u)$ | $\rho(u|_p)$ | 1 | 1 |
+| 新左孩子 $p=rL$，$r\in\mathcal B(u)$ | $\beta$ | 1 | 0 |
+| 新右孩子 $p=rR$，$r\in\mathcal B(u)$ | $\alpha$ | 0 | 1 |

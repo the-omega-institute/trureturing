@@ -1,0 +1,64 @@
+### 28.2 有限标签、完整无条件 instrument 与准确消费增益
+
+令物理标签和理想粗时间标签分别为
+
+$$
+ a(n)=\min\left\{\left\lfloor\frac n r\right\rfloor,J\right\},
+ \qquad
+ b(t)=\min\left\{\left\lfloor\frac t\delta\right\rfloor,J\right\}.
+\tag{28.15}
+$$
+
+对 $0\le a<J$ 置
+
+$$
+ w_a(t)=\sum_{n=ar}^{(a+1)r-1}q_n(t),
+ \qquad
+ w_J(t)=q_K(t).
+\tag{28.16}
+$$
+
+物理停止分支把 $D$ 的所有原始计数值按式(28.15)合并，但不改变 $S\otimes R$ 的停止态，故
+
+$$
+ \mathsf P_a(X_{SR})
+ =\int_0^\infty f(t)w_a(t)V_t(X_{SR})\,dt
+ \quad(0\le a\le J).
+\tag{28.17}
+$$
+
+理想分支直接使用本卷第 3.1.1--3.1.3 节已有的随机时间 Borel instrument
+
+$$
+ \mathfrak J(B)(X_{SR})=\int_B f(t)V_t(X_{SR})\,dt.
+\tag{28.18}
+$$
+
+令 $B_b=[b\delta,(b+1)\delta)$（$b<J$），$B_J=[J\delta,\infty)$，则
+
+$$
+ \mathsf I_b(X_{SR})=\mathfrak J(B_b)(X_{SR})
+ =\int_{B_b}f(t)V_t(X_{SR})\,dt.
+\tag{28.19}
+$$
+
+物理模型和理想模型使用同一个随机停止时间 $\tau$ 以及同一个 $V_\tau$；理想标签只是 Borel instrument 的粗分支，并不表示实验者获得连续 timestamp。两者的完整、无条件、带参考输出可写成
+
+$$
+ \widehat{\mathsf P}(X)=\sum_{a=0}^{J}|a\rangle\langle a|\otimes\mathsf P_a(X),
+ \qquad
+ \widehat{\mathsf I}(X)=\sum_{b=0}^{J}|b\rangle\langle b|\otimes\mathsf I_b(X).
+\tag{28.20}
+$$
+
+由于 $\sum_{a=0}^{J}w_a(t)=1$、$\{B_b\}_{b=0}^{J}$ 分割 $[0,\infty)$，有
+
+$$
+ \sum_{a=0}^{J}\mathsf P_a(X)
+ =\sum_{b=0}^{J}\mathsf I_b(X)
+ =\int_0^\infty f(t)V_t(X)\,dt.
+\tag{28.21}
+$$
+
+所以两份 instrument 都是完整的 trace-preserving 无条件 instrument，并且**丢弃标签后的系统通道完全相等**。这个等式对任意 $X_{SR}$ 成立，因而保留任意参考输入的联合输出；它不是只对无参考系统或对角输入成立。物理分支中的 $w_J=q_K$ 是真实的 counter saturation，未把溢出事件删去，也没有对稀有分支做归一化。 若消费者只观察丢弃标签后的系统通道，这个新增接口的增量严格为零；实际增量是一个有限、内部产生、可与停止后的 $S\otimes R$ 联合使用的标签，而且每个分支保留其原始无条件权重。
+

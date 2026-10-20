@@ -1,0 +1,7 @@
+应从 \(b_n\)、\(G_n\) 或 transfer matrices 中进行：
+
+* 聚类；
+* return-word 抽取；
+* 最小 automaton 重建；
+* incidence matrix 识别。
+

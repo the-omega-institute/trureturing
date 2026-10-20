@@ -1,0 +1,16 @@
+**推论 64.5（共同上十纤维的接受材料）。** $M_D$ 对每个 $\Pi\in\mathscr P_H$ 都由引理64.3的共同有限前缀定义。令 $\mathscr P_H^{(6)}=\{\Pi\in\mathscr P_H:\max_{t\in U_H}N_{\rm calls}(\Pi,t)\le6\}$，则
+
+<a id="TM64-E06"></a>
+$$
+\min_{\Pi\in\mathscr P_H}M_D(\Pi)
+=\min_{\Pi\in\mathscr P_H^{(6)}}M_D(\Pi)
+=\left\lceil\frac{\delta+1}{2}\right\rceil,
+\qquad H=60+\delta.
+\tag{TM.6406}
+$$
+
+四个值依次为 $(1,1,2,2)$；两项最小化中的策略都仍须在整个 $U_H$ 上正确。
+
+证明。共同首替换窗口（TM.6403）给 $V\ge\delta+1$、$V\le2U$，故 $U\ge\lceil(\delta+1)/2\rceil$。定理64.4的同一个完整原策略在 $D$ 上只接受表列的一个上下文，恰有 $U=d=\lceil(\delta+1)/2\rceil$；其全来源调用上界同时为六，故两个最小值均达到。这里的材料仅测共同 $D$，不推出每个来源的正材料下界或全 $U_H$ 的材料最优值。例如真实 $\omega_{1,14}$ 有 $(z,w)=(15,29),i=1$；同一策略的首上下文和 $\rho$ 均拒绝，在首 $\rho$ 以前接受材料为零。$\square$
+
+<a id="TM64-P6"></a>

@@ -1,0 +1,57 @@
+### 命题 39.3（有限数据的精确共同来源相容性）
+
+给定定义 39.1 路径及同一序号时钟上的任意 $L$ 个实数，先用定理 39.2 的前段线性逆得到 $(P,Q,\widehat D)$。这些数据来自定义 39.1 的某个实现，当且仅当以下条件全部成立。
+
+1. $P\not\equiv0$。选取最小的 $r$ 使 $p_r\ne0$，令 $\widehat b=q_r/p_r$，要求多项式恒等式 $Q=\widehat bP$。
+2. 置 $\widehat H=P$、$\widehat u_i=f_i+\widehat b g_i$。取切换后最小的两个非零增益位置 $p<q$，用定理 39.2 的公式，从 $w_j=z_{N+j}-\widehat D(N+j)$ 构造 $\widehat U_0,\widehat U_1$；再令
+
+$$
+\widehat U_j=f_j\widehat U_0+g_j\widehat U_1,\qquad
+\widehat T=\mathcal I(\widehat u_{m-1},\widehat u_m,
+\widehat U_0,\widehat U_1),\qquad
+\widehat R_0=M^{-(m-1)}\widehat T.
+$$
+
+要求 $\widehat R_0$ 四项严格为正且 $\det\widehat R_0=0$。
+
+3. 对每一个实际已读的切换位置，而不只是用于解码的两个位置，要求
+
+$$
+z_{N+j}-\widehat D(N+j)=\widehat H(N+j)\widehat U_j
+\qquad(0\le j\le k+1).
+$$
+
+尤其当 $\widehat H(N+j)=0$ 时，条件就是该位置的实际去漂移残差为零。根处并未被删除、插值替代或用一个没有定义的商代替。 前段的线性表示与条件 1 同样强制每个 $\widehat H(i)=0$、$0\le i<N$ 的实际残差 $z_i-\widehat D(i)$ 为零，特别包括可能的初读零点。
+
+**证明。** 条件中的各个构造在其先前条件成立时都有定义：前段线性逆对任意实数据有定义；$P\not\equiv0$ 保证系数商有非零分母，并由根数界保证切换后至少两个非零增益位置；相应的 $\Delta_{p,q}$ 非零。真实来源必有 $P=H\not\equiv0,Q=bH,\widehat D=D$，定理 39.2 的恢复返回真实关系和切换信号，故三项条件必要。
+
+反向设三项条件成立。定理 4.1 保证构造出的 $\widehat T$ 确实具有所输入的四个迹。令 $\widetilde u_i=\operatorname{tr}(M^i\widehat R_0)$，则
+
+$$
+\widetilde u_{m-1}=\widehat u_{m-1},\qquad
+\widetilde u_m=\widehat u_m.
+$$
+
+两数列都满足 Fibonacci 递推，且可反向使用 $u_i=u_{i+2}-u_{i+1}$。所以它们在 $0,1$ 及所有非负位置相同，特别地
+
+$$
+\operatorname{tr}\widehat R_0=1,\qquad
+\operatorname{tr}(M\widehat R_0)=\widehat b.
+$$
+
+同一个四迹逆还给出
+
+$$
+\operatorname{tr}(JM^m\widehat R_0)=\widehat U_0,\qquad
+\operatorname{tr}(MJM^m\widehat R_0)=\widehat U_1.
+$$
+
+因此该矩阵的全部切换后信号也恰为 $\widehat U_j$。条件 1 使前 $N$ 行的唯一线性表示成为
+
+$$
+f_iP(i)+g_iQ(i)+\widehat D(i)
+=\widehat H(i)\operatorname{tr}(M^i\widehat R_0)+\widehat D(i).
+$$
+
+条件 3 则给出同一关系、同一 $\widehat H,\widehat D$ 在全部已读切换位置的正确读数，包括每个零增益位置。由条件 2，$\widehat R_0$ 非零、严格正且秩一。取 $R=\widehat R_0,G=\widehat H,D=\widehat D$ 就得到一个定义 39.1 的实际实现。没有分别拟合两个来源或两个时钟；相同的矩阵和相同的两个多项式同时实现所有读数。∎
+

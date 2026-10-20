@@ -1,0 +1,6 @@
+### 定理 361.5（任务族的充分边界判据）
+
+固定一个来源类 \(\mathcal S\subseteq C^1\)。若所有声明任务响应 \(R_t\) 都通过 \(\mathcal O_{\mathrm{enh}}\) 因子化，且未来合法性、结果概率和后继边界也只依赖 \(\mathcal O_{\mathrm{enh}}\)，则 \(\mathcal O_{\mathrm{enh}}\) 对任务族 \(\mathcal T\) 是充分边界。
+
+若存在 \(g,g'\in\mathcal S\) 具有相同 \(\mathcal O_{\mathrm{enh}}\) 但某个任务或后继不同，则该观察不是充分边界。
+

@@ -1,0 +1,22 @@
+**推论 1349.1（准确有限维数差距与首项）。** 固定 $0<\kappa<1$、$\alpha>1$，令 $L_\alpha=-\alpha\log(1-\kappa)/(\alpha-1)$。充分大 $N$ 时，
+
+$$
+L_\alpha-G_{\alpha,N}
+=\frac1{\alpha-1}\log\left[
+1+\left(\frac\kappa{1-\kappa}\right)^\alpha
+2^{-(\alpha-1)(N-1)}\right].
+$$
+
+因此
+
+$$
+2^{N(\alpha-1)}[L_\alpha-G_{\alpha,N}]
+\longrightarrow
+\frac{2^{\alpha-1}\kappa^\alpha}
+{(\alpha-1)(1-\kappa)^\alpha}.
+$$
+
+**证明。** 从第 1348 节的幂和提出 $(1-\kappa)^\alpha$，直接相减得到第一式。括号中超出一的项趋零，使用 $\log(1+t)/t\to1$ 得第二式。证毕。
+
+第 1306 节两侧系数界中的较小系数在本节被确定为准确系数。此前的上界仍然有效，准确结算来自主权重与通道的额外稳定性及最终最优者分类，而非仅靠两侧具有相同指数尺度。
+

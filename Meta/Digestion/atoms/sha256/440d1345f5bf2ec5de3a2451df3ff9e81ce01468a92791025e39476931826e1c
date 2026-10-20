@@ -1,0 +1,12 @@
+### 82.6 复用来源、证明范围与观察者边界
+
+通用乘积二分、等价律障碍、可数共同分割及弱信号平方阈值分别由[素数观察卷§§218–223、228、231](FORMAL_PRIME_OBSERVER_DYNAMICS.md)承担；本节增加的是实际 FIB 增长路径上的四格估计、有限批次配置判据和明确二值写入映射的目标恢复结论。波粒子事件卷§371.1使用的 $H^2=1-\mathsf A$ 与该卷§372.3的有限独立亲和度乘法在此直接复用；素数观察卷§222的能量是 $2(1-\mathsf A)$，两者只差因子 $2$，可和性不变。
+
+经典来源为 S. Kakutani, On Equivalence of Infinite Product Measures, Annals of Mathematics (2) 49(1), 214–224 (1948)，DOI [10.2307/1969123](https://doi.org/10.2307/1969123)。此处原论文的可用证据为出版元数据，不以其不可访问的全文作为逐项核对依据；承重定理与证明取自 Durrett 上述教材的 Theorem 4.3.8（Version 5, January 11, 2019），其独立坐标、正密度和双向应用条件已经在定理82.4中对应。
+
+仓内 [FinitePmfLikelihood](../../../D5/S3/Observer/ProductMeasures/FinitePmfLikelihood.lean) 的 productLaw_ac_of_summable 使用 energy $=2H^2$。本节的参数对应为将 $I_r$ 枚举后每坐标的 Output 取 $\mathcal A$、两组 PMF 取该索引的 $P_{m,k},P_{m',k}$；式（82.6）供给局部双向绝对连续，式（82.16）在 $S(r)<\infty$ 时供给其能量可和前件。该声明仅给可和方向的一次绝对连续，交换两律后可得到等价，不能单独给出发散方向。[CountableSingularPartition](../../../D5/S3/Observer/MeasureSeparation/CountableSingularPartition.lean) 的 countable_pairwise_singular_common_partition 与 [EquivalentMeasuresExcludePerfectSeparator](../../../D5/S3/Observer/MeasureSeparation/EquivalentMeasuresExcludePerfectSeparator.lean) 的 equivalent_probability_laws_exclude_perfect_separator 分别供给定理82.5的共同分割与障碍；参数与归一化已在其证明中列明。[WeakPrimeSignalCompletionThreshold](../../../D5/S3/Observer/MeasureSeparation/WeakPrimeSignalCompletionThreshold.lean) 的完成二分显式假设 SignalKakutaniDichotomy，不是本节发散方向的无条件证明。
+
+这些地址是既有结果的复用对应，不是本节精确应用的 Lean 编译或认证。本节是普通 repo-derived 理论综合与普通数学证明，不主张新的通用二分定理、Lean 内核认证或世界原创性。
+
+适用域仅为实际混色族 $m\ge2$、固定来源独立调度及声明的独立生产者随机性。$m=1$ 或坐标轴来源可出现零格，不在上述统一正质量估计内；未知、反馈或来源依赖调度、相关生产者随机性、除式（82.20）外的其他有损写入器、任意树形、物理时空与完整四视图恢复均不由本节结算。结论连接的是增长深度、抽样配置和实际保留的关系记忆，是这个协议的目标边界，不是所有观察者的内在不可能性。
+

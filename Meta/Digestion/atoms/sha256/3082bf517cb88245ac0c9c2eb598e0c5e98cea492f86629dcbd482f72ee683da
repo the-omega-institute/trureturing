@@ -1,0 +1,36 @@
+**命题 71.3（观测推前的后验不可辨识）。** 设观测通道 \(O_T\) 将完整路径律 \(P_\theta\) 推前为 \(P_\theta^O\)。则
+\[
+\operatorname{TV}(P_\theta^O,P_{\theta'}^O)
+\le\operatorname{TV}(P_\theta,P_{\theta'}).
+\]
+若 \(P_\theta^O=P_{\theta'}^O\)，离散先验对两参数均为正，则对几乎所有观测 \(y\)
+\[
+\frac{\Pi(\theta\mid y)}{\Pi(\theta'\mid y)}
+=\frac{\Pi(\theta)}{\Pi(\theta')}.
+\]
+无穷数据也只能识别观测等价类
+\[
+[\theta]=\{\theta':P_{\theta'}^O=P_\theta^O\}.
+\]
+若两观测律的总变差至多为 \(\delta\)，则任意二元测试的两类错误和至少为 \(1-\delta\)；因此小的观测差异不能保证后验把两个参数稳定分开。这一结论是统计不可辨识边界，不是 FIB 递归对参数的否定。
+
+## 72. 外加多粒子平均场、传播混沌与水动力极限
+
+令 \(E_j\) 是第 \(j\) 代 FIB 合法的有限上下文闭包。FIB 只给出 \(E_j\)、标签和组合关系。给定外加核
+\[
+Q_j(x,\mu)\in\mathcal P(E_j),
+\]
+令 \(N\) 个粒子满足
+\[
+\mu_t^{N,j}=\frac1N\sum_{i=1}^N\delta_{X_t^{N,i}},
+\qquad
+\Pr(X_{t+1}^{N,i}=y\mid\mathcal F_t)
+=Q_j(X_t^{N,i},\mu_t^{N,j})(y),
+\]
+其中条件独立只表示给定当前经验测度后的抽样独立；初态、相互作用、边界、时间单位和 \(N\) 均为外加数据。定义
+\[
+\Phi_j(\mu)=\mu Q_{j,\mu},
+\qquad
+\mu_{t+1,j}=\Phi_j(\mu_{t,j}).
+\]
+

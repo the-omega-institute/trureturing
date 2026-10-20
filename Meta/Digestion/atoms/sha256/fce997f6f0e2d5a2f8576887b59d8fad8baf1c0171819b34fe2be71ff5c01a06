@@ -1,0 +1,7 @@
+相应零点线程必须由真实全局解析函数实现，而不只是：
+
+* 有限截断零点；
+* transfer resonance；
+* pseudospectrum；
+* 兼容但未实现的逆极限线程。
+

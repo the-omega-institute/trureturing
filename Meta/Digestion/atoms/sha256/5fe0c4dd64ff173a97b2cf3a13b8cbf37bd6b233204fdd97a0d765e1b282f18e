@@ -1,0 +1,41 @@
+**推论 47.2。** 固定式 (47.1) 的任一参数，令 `y_j` 为命题 47.1 的三个非恒定向量，并置：
+
+```math
+v_j=\frac1{\sqrt6}(\mathbf1,y_j),\qquad
+w_j=\Theta_0v_j=\frac1{\sqrt6}(-\overline{y_j},\mathbf1),
+\qquad \Theta_0(x,y)=(-\overline y,\overline x).
+```
+
+这六条实际共同无偏射线的诱导正交图恰为 `K_{3,3}`。加入六条 canonical mode-local 射线后，十二条射线的诱导正交图恰为不相交并 `K_6 ⊔ K_{3,3}`。
+
+**证明。** 第 35 节的反酉恒等式在此 `I+J` block 形式中为 `H_0 Theta_0=-Theta_0 H_0`，所以 `v_j,w_j` 均共同无偏于实际列基对 `(I,H_0*)`。两个不同位置的 `(1,1,-2)` 型向量内积为 `-3`，故当 `j!=k` 时：
+
+```math
+\langle y_j,y_k\rangle=3|m|^2-3t=3-9t,\qquad
+\langle v_j,v_k\rangle=1-\frac32t=1-a^2>0.
+```
+
+`w_j,w_k` 的内积是其共轭，也非零。又 `sum y_j=3m` 与 `j` 无关，所以所有交叉内积都为零：
+
+```math
+\langle v_j,w_k\rangle
+=\frac{\overline{\sum y_j}-\overline{\sum y_k}}6=0.
+```
+
+这就给出六个不同顶点的 `K_{3,3}`，特别是其中没有正交三角形。
+
+为核对与 canonical 射线的关系，令 `f_l` 为逐项模一的第 `l` 个 Fourier mode，`A_l,B_l` 为归一化 `H_0` 的相应 mode entries，取两个相反相位 `gamma_l^±` 满足 `Re(conjugate(A_l)B_l gamma_l^±)=0`。这里 `A_lB_l!=0`。六条 canonical 射线为：
+
+```math
+c_l^\pm=\frac1{\sqrt6}(f_l,\gamma_l^\pm f_l),\qquad l=0,1,2.
+```
+
+它们在同一 mode 内成正交对，不同 mode 之间也正交，故给出 `K_6`。对 `l=0`：
+
+```math
+\langle v_j,c_0^\pm\rangle=\frac{1+\gamma_0^\pm\overline m}{2},\qquad
+\langle w_j,c_0^\pm\rangle=\frac{\gamma_0^\pm-m}{2},
+```
+
+因 `|m|<1` 均非零。对 `l=1,2`，`v_j` 的第一 channel 与 `f_l` 正交，但第二 channel 的对应 Fourier 分量非零，所以 `v_j` 与 `c_l^±` 不正交；`w_j` 则由共轭 Fourier 分量得到同样结论。因此两个子图之间没有边。证毕。
+

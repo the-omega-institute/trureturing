@@ -1,0 +1,89 @@
+**定理 425.2（完整三矩配对与共同误差）。** 对所有 $u\ge0$，有绝对收敛恒等式
+
+$$
+\boxed{\sum_{d\ge1}\frac{\beta_d}{d}p_B(u+\log d)
+=\frac{u^2}{2}+\gamma_1.}
+\tag{425.4}
+$$
+
+进一步，对全部 $U\ge0$、实数 $x\ge e$ 和正整数 $n\ge x$，若 $u=\log(n/x)\le U$，则
+
+$$
+\boxed{\left|n^2\log x\,J_x^\eta(n)
+-\left(\frac{u^2}{2}+\gamma_1\right)\right|
+\le\frac{\mathsf C_\beta(U)}{\log x}+\frac{\mathsf L_\beta(U)}n.}
+\tag{425.5}
+$$
+
+因此，对任意实数序列 $x_j\to\infty$ 与正整数序列 $n_j\ge x_j$，若 $n_j/x_j\to e^u$（固定 $u\ge0$），则
+
+$$
+n_j^2\log x_j\,J_{x_j}^\eta(n_j)\longrightarrow\frac{u^2}{2}+\gamma_1.
+\tag{425.6}
+$$
+
+**证明。** β 的三条绝对矩为
+
+$$
+\sum_{d\ge1}\frac{\beta_d}{d}=B,\qquad
+\sum_{d\ge1}\frac{\beta_d\log d}{d}=-B',\qquad
+\sum_{d\ge1}\frac{\beta_d(\log d)^2}{d}=B''.
+$$
+
+代入左侧多项式，二次项系数为 $AB/2=1/2$，一次项为 $-AB'+(D-A)B=0$，常数项为
+
+$$
+\frac A2B''-(D-A)B'+c_{\rm diag}B
+=\frac{B''}{2B}-\frac{(B')^2}{B^2}
++\frac{(B')^2}{B^2}-\frac{B''}{2B}+\gamma_1=\gamma_1.
+$$
+
+这证明（425.4），不是对 $\gamma_1$ 符号的假设。
+
+现在固定（425.5）的 x,n,U，记 $\ell=\log x$。§398 的精确参数积分及 §399.2 给
+
+$$
+\mathcal B_{x,d}(n)=\int_{dn}^{d(n+1)}\frac{\mathcal G_x(\log s)}{s^2}\,ds,
+\qquad
+|\ell\mathcal G_x(\ell+v)-p_B(v)|\le C(V)/\ell
+\quad(0\le v\le V).
+$$
+
+当 $s\in[dn,d(n+1)]$ 时，$s\ge dn\ge n\ge x$；因此每个 d 的完整端点都在同一高区间。此时
+
+$$
+u+\log d\le\log(s/x)
+\le u+\log d+\log(1+1/n)\le a_d+\log2.
+$$
+
+对该 d 使用 $V=a_d+\log2$，而不是与 d 无关的固定 U，得到
+
+$$
+\left|n^2\ell\mathcal B_{x,d}(n)
+-n^2\int_{dn}^{d(n+1)}\frac{p_B(\log(s/x))}{s^2}\,ds\right|
+\le\frac{C(a_d+\log2)}{d\ell},
+\tag{425.7}
+$$
+
+因为 $n^2\int_{dn}^{d(n+1)}s^{-2}ds=n/[d(n+1)]\le1/d$。$d=1,n=x$ 的下端点按 §398.5 的右侧连续延拓处理。
+
+令 $v=u+\log d$。区间的对数宽度至多 $1/n$，且 $p_B'(z)=Az+D-A>0$。因此
+
+$$
+|p_B(\log(s/x))-p_B(v)|
+\le\frac{A(a_d+\log2)+D-A}{n},
+\qquad
+|p_B(v)|\le\frac A2a_d^2+(D-A)a_d+|c_{\rm diag}|.
+$$
+
+还必须支付 $n/[d(n+1)]$ 与 $1/d$ 的差，不能用单点轮廓替换积分而删除端点。合并得到
+
+$$
+\left|n^2\int_{dn}^{d(n+1)}\frac{p_B(\log(s/x))}{s^2}\,ds
+-\frac{p_B(v)}d\right|
+\le\frac{\frac A2a_d^2+(D-A)a_d+|c_{\rm diag}|+A(a_d+\log2)+D-A}{dn}.
+\tag{425.8}
+$$
+
+将（425.7）和（425.8）乘 $|\beta_d|$，在全部正 d 上绝对求和，由（425.3）付款；然后使用 §424.4 和（425.4），得到（425.5）。选一个包含最终 $\log(n_j/x_j)$ 的有限 U，（425.5）和多项式连续性给（425.6）。无穷 d 的误差和已经支付，不依赖逐项极限后未经控制的交换。$\square$
+

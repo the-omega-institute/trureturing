@@ -1,0 +1,29 @@
+## 224. FIB 图上的外加随机矩阵、谱统计与局域化
+
+固定 FIB 稀疏支撑图 \(G_j\)，定义自伴随机矩阵
+
+$$
+H_j=\sum_vV_v|v\rangle\langle v|
++\sum_{\{u,v\}\in E_j}
+\bigl(t_{uv}|u\rangle\langle v|+t_{uv}^*|v\rangle\langle u|\bigr).
+\tag{224.1}
+$$
+
+FIB 只决定允许的非零位置；系数分布、实/复/辛对称类、相关性、归一化、边界和极限均外加。经验谱测度
+
+$$
+\mu_j=\frac1{|V_j|}\sum_a\delta_{\lambda_a}
+\tag{224.2}
+$$
+
+只有在声明图列和尺度后才可能收敛到半圆、Kesten–McKay 或其他极限。强混合系综可给 Wigner–Dyson 小间距排斥 \(P(s)\sim s^\beta\)，局域化或近独立团簇可给 Poisson 统计 \(P(s)=e^{-s}\)；单个 FIB 层的间距直方图不能证明任何普适类。
+
+本征向量局域化可用
+
+$$
+{\rm IPR}(\psi_a)=\sum_v|\psi_a(v)|^4
+\tag{224.3}
+$$
+
+随图列大小的缩放判定；迁移边、Thouless 能标和边界低秩扰动都需外加。若系数尾部和谱边缘满足 Wigner 条件，最大本征值可能有 Tracy–Widom 极限；重尾对角势、高度数离群或低秩信号则可进入其他极值域并产生 outlier。不同系数赋值可共享平均谱密度而具有不同局域化、间距和谱边缘，因此 FIB 支撑不决定随机矩阵统计。
+

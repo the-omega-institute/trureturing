@@ -1,0 +1,103 @@
+## 253. FIB 细胞复形上的外加组织形态发生、顶点模型与活性组织流变统计
+
+固定一族 FIB 细胞复形
+
+$$
+\mathcal C_j=(V_j,E_j,F_j;\partial_1,\partial_2),
+\qquad \partial_1\partial_2=0 .
+\tag{253.1}
+$$
+
+FIB ATOM 递归只提供细胞邻接、边界接缝、可拼接路径和层级索引；二维或三维几何嵌入、面积、周长、曲率、材料系数、摩擦、温度、细胞极性、主动驱动、分裂/死亡、噪声联合律、观测尺度及极限协议均须外加。面和边的组合身份不自动给出物理长度、界面能或细胞速度。
+
+给定外加嵌入 \(r=(r_v)_{v\in V_j}\in(\mathbb R^2)^{V_j}\)，每个面才获得面积 \(A_f(r)\)、周长 \(P_f(r)\) 和形状张量。固定拓扑扇区内，一个外加顶点模型能量可写成
+
+$$
+\begin{aligned}
+E_{j,\Theta}(r)={}&\sum_{f\in F_j}\frac{K_{A,f}}2(A_f-A_{0,f})^2
++\sum_{f\in F_j}\frac{K_{P,f}}2(P_f-P_{0,f})^2\\
+&+\sum_{e\in E_j}\gamma_e\ell_e(r)+E_{\rm bend}(r)+E_{\rm adh}(r).
+\end{aligned}
+\tag{253.2}
+$$
+
+面积/周长弹性、边张力、弯曲和黏附参数以及约束集合均为外加量。带主动应力和噪声的过阻尼动力学可写成
+
+$$
+{\rm d}r_v=M_v[-\nabla_{r_v}E_{j,\Theta}+f_v^{\rm act}+f_v^{\rm ext}+\lambda_v],{\rm d}t
++B_v(r)\,{\rm d}W_v(t),
+\tag{253.3}
+$$
+
+其中迁移率、噪声、约束乘子和主动牵引由外加模型规定。只有在噪声满足热平衡关系且没有主动驱动时，才可写平衡测度
+
+$$
+\pi_{j,\Theta}(dr)=Z_{j,\Theta}^{-1}e^{-\beta E_{j,\Theta}(r)}
+\mathbf 1_{\mathcal M_j}(r)\,dr .
+\tag{253.4}
+$$
+
+由此得到的边长、面积和形状涨落依赖 \(K_A,K_P,\gamma,\beta\) 及几何约束，不能由 FIB 的度数频率替代。
+
+当一条界面边低于外加阈值 \(\ell_*\) 时，四个邻近细胞可以通过 T1 过程交换邻接。FIB 复形只能给出局部四元组和候选新接缝；新边方向、耗散、能垒和发生时刻由外加跳变核决定。例如
+
+$$
+\lambda_e(r)=\lambda_0\mathbf 1_{\{\ell_e(r)<\ell_*\}}
+\exp\!\left[-\beta(\Delta E_e-\chi\sigma_e^{\rm act})_+\right].
+\tag{253.5}
+$$
+
+若事件是给定历史下的条件 Poisson 过程，总强度为 \(\Lambda_j(t)=\sum_{e}\lambda_e(t)\)，等待时间尾为
+
+$$
+\Pr(T_1>t\mid\mathcal F_0,\Theta)=\exp\!\left[-\int_0^t\Lambda_j(s){\rm d}s\right].
+\tag{253.6}
+$$
+
+共享极性、应力或噪声会把事件变为 Cox 或一般相关点过程，式 (253.6) 的无条件指数形式随之失效。分裂、凋亡和基底附着还需另给强度与面积演化，FIB 层间映射不能替代这些生物过程。
+
+把每个细胞的极性单位向量记为 \(p_f\)，外加主动应力可写成
+
+$$
+Q_f=p_f\otimes p_f-\frac12I,
+\qquad \sigma_f^{\rm act}=\zeta_fQ_f .
+\tag{253.7}
+$$
+
+极性相关长度、应力符号、旋转动力学及其传给顶点力的离散散度均须外加。组织尺度的质量平衡和过阻尼力平衡可写成
+
+$$
+\partial_t\rho+\nabla\!\cdot(\rho v)=s_{\rm div}-s_{\rm del},
+\tag{253.8}
+$$
+
+$$
+0=\nabla\!\cdot(\sigma^{\rm el}+\sigma^{\rm int}+\sigma^{\rm act}
+-\eta\nabla^{\rm sym}v+\sigma^{\rm noise})-\xi(v-v_{\rm sub})+f^{\rm ext}.
+\tag{253.9}
+$$
+
+黏性、基底摩擦、源项、噪声谱和本构均非 FIB 量。给定剪切扰动后，组织复模量
+
+$$
+G^*(\omega)=\frac{\widehat{\delta\Sigma_{xy}}(\omega)}{\widehat{\delta\gamma}(\omega)}
+=G'(\omega)+{\rm i}G''(\omega)
+\tag{253.10}
+$$
+
+由能量、主动应力、摩擦和重排核共同决定。主动稳态有概率流时，平衡 Green–Kubo 黏度不能直接套用。
+
+形变或 T1 级联的大小 \(S\) 需先规定为耗散能、交换面积或应变增量。在指定外加图列、驱动、混合和边界后，才可检验有限尺寸形式
+
+$$
+\Pr(S>s)\approx s^{-\tau_\Theta}\Phi_\Theta\!\left(s/s_c(j,\Theta)\right),
+\qquad s_c(j,\Theta)\sim L_j^{d_{\rm eff}} .
+\tag{253.11}
+$$
+
+指数、截断和速度相关可能为指数、幂律或平台，取决于嵌入、应力传播、阻尼、驱动速率和重排规则。FIB 路径长度只是组合索引距离，不等于物理相关长度。
+
+同一 FIB 复形在 \(\gamma=0\) 与 \(\gamma\ne0\) 或不同 \(K_A,K_P,\eta,\xi,\zeta\) 下，可具有相同邻接而产生不同的形状分布、主动概率流、T1 首达和流变谱。有限观测还把局部速度、应力和重排投影为带阈值和空间卷积的信号，不能从单帧形状或总应力唯一恢复隐藏参数。
+
+因此，FIB ATOM 递归在组织形态发生问题中只提供组合邻接、候选接缝和层级骨架；嵌入、能量、主动应力、重排核、分裂/死亡、噪声、边界和观测均须外加。形状涨落、T1 等待时间、组织流变、速度相关和级联尾部都是条件模型结论。
+

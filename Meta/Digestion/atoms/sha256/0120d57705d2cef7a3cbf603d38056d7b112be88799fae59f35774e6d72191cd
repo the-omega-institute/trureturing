@@ -1,0 +1,8 @@
+**Definition 136.1 (Closed finite ambient projection).** Let
+$\overline P\subset\mathbb R^6$, in the amplitude-cap coordinate
+order of Definition 133.1, be exactly (134.1), including order, cap
+nonnegativity, normalization, C3 equality, sigma nonnegativity, head
+bound and all five cuts. Let $R_N,R_O$ be the six-coordinate projections
+of feasible original profiles in $\mathcal D_{\rm adj}$, allowing every
+prescribed positive monotone vanishing tail satisfying $a_6\le\varepsilon$.
+

@@ -1,0 +1,9 @@
+**命题 62.4（显式 Moore 约定下的附加输出数）。** 若另按 ContinuationII 定义26.1比较抽象 Moore 控制器，每个状态的指令为 Request 或 $\operatorname{Halt}(T)$，并把最后强制拒绝后的 Halt 指令状态也计入 $K_i^{\rm Moore}$，则
+
+$$
+K_i^{\rm Moore}\ge B_i(H)+n_i.
+\tag{TM.6204}
+$$
+
+证明。定理62.3的所有所选状态都有 Request 指令；每个不同初始目标另需一个具有其字面 $\operatorname{Halt}(T)$ 指令的状态。这些状态彼此不同，且与 Request 状态不相交。该数针对明确的抽象指令约定，不把原装置的实际输出自动视为另一个锁存存储。$\square$
+

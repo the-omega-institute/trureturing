@@ -1,0 +1,126 @@
+## 243. FIB 网络/细胞复形上的外加活性向列相、取向缺陷与拓扑湍流统计
+
+固定一族带面接缝的 FIB 细胞复形 \(C_j=(V_j,E_j,F_j)\)，记定向关联算子为 \(\partial_{1,j}:C_1\to C_0\)、\(\partial_{2,j}:C_2\to C_1\)，于是 \(\partial_{1,j}\partial_{2,j}=0\)。FIB ATOM 递归只给出顶点、边、面之间的组合关系、可行路径、闭合边界与递归层级；节点的连续位置、度量、面积、法向、时间尺度、取向场、流体、材料系数、噪声、边界和极限过程均须外加。不能把 FIB 的边方向直接当作向列分子的物理取向，也不能把面数或回路数直接当作缺陷数。
+
+在外加二维嵌入 \(\iota_j:V_j\to\mathbb R^2\) 上，向列取向是头尾等价的线场
+
+$$
+n(x)\equiv-n(x),\qquad n=(\cos\theta,\sin\theta),qquad \theta\in\mathbb R/\pi\mathbb Z .
+\tag{243.1}
+$$
+
+可用无迹对称张量表示局部取向和标量序参量：
+
+$$
+Q=S\left(nn^{\mathsf T}-\frac12I\right)
+=\frac S2\begin{pmatrix}\cos 2\theta&\sin 2\theta\\
+\sin 2\theta&-\cos 2\theta\end{pmatrix}.
+\tag{243.2}
+$$
+
+把 \(Q\) 放在顶点、面或经外加插值放在连续区域，得到的是不同模型；FIB 复形本身不能选择这一放置规则。一个外加 Landau–de Gennes 型自由能可以写成
+
+$$
+F[Q]=\int_\Omega\left[\frac A2\operatorname{tr}(Q^2)
++\frac C4\bigl(\operatorname{tr}(Q^2)\bigr)^2
++\frac L2\,\partial_kQ_{\alpha\beta}\partial_kQ_{\alpha\beta}\right]{\rm d}^2x
++F_{\rm anch}+F_{\rm core},
+\tag{243.3}
+$$
+
+其中 \(A,C,L\)、边界锚定和缺陷核正则化都是外加参数。图上离散能量例如为
+
+$$
+F_j^{\rm disc}(Q)=\frac12\sum_{e=(u,v)\in E_j}w_e\lVert Q_v-Q_u\rVert_F^2
++\sum_{c\in F_j}a_c f_b(Q_c),
+\tag{243.4}
+$$
+
+但边权 \(w_e\)、胞面面积 \(a_c\)、邻接端点取值和 \(f_b\) 并不由递归关系确定。不同连续嵌入可以把同一 FIB 图实现为各向同性、各向异性或随机弹性介质。
+
+活性向列的流场与取向场通常需要同时指定。一个不可压缩的外加模型可写为
+
+$$
+\rho(\partial_t+u\!\cdot\!\nabla)u
+=-\nabla p+\eta\Delta u-\chi u+\nabla\!\cdot\sigma^{\rm el}
+-\zeta\,\nabla\!\cdot Q+\xi_u,
+\qquad \nabla\!\cdot u=0,
+\tag{243.5}
+$$
+
+$$
+(\partial_t+u\!\cdot\!\nabla)Q-\mathcal S(\nabla u,Q)
+=\Gamma H+\xi_Q,
+\qquad H=-\frac{\delta F}{\delta Q}.
+\tag{243.6}
+$$
+
+黏度 \(\eta\)、基底摩擦 \(\chi\)、转动耗散 \(\Gamma\)、流动取向参数、被动弹性应力和活性应力系数 \(\zeta\) 均须外加；噪声 \(\xi_u,\xi_Q\) 的时空相关也须给定。式 (243.5)–(243.6) 的主变量是头尾对称的取向应力及其与流场的反馈，不能从第219节的极性主动粒子或标量密度方程自动得到。
+
+取向缺陷必须在连续嵌入和线场的头尾等价性确定后才有定义。令 \(\varphi=2\theta\in\mathbb R/2\pi\mathbb Z\)，对不穿过缺陷核的定向边取
+
+$$
+\Delta_e\varphi=\operatorname{Arg}\exp\!\bigl({\rm i}(\varphi_v-\varphi_u)\bigr).
+$$
+
+若面 \(f\) 的边界按一致方向排列，离散绕数和向列电荷为
+
+$$
+w_f=\frac1{2\pi}\sum_{e\in\partial f}\Delta_e\varphi\in\mathbb Z,
+\qquad q_f=\frac{w_f}{2}\in\tfrac12\mathbb Z .
+\tag{243.7}
+$$
+
+在光滑插值和分支选择一致时，\(q_f=+1/2\) 或 \(-1/2\) 是常见的孤立缺陷；这使用的是 \(2\theta\) 的绕数，不能把普通 XY 向量场的整数涡旋电荷直接套用到向列场，也不能把 FIB 面的组合边界本身解释成物理奇点。
+
+对没有孔洞且内部插值正则的区域 \(R\)，拓扑守恒可写成
+
+$$
+\sum_{f\subset R}q_f
+=\frac1{2\pi}\oint_{\partial R}{\rm d}\theta
+=\frac1{4\pi}\oint_{\partial R}{\rm d}\varphi,
+\tag{243.8}
+$$
+
+但边界锚定、非平凡周期、被移除的缺陷核和复形孔洞会增加边界或全局绕数项。周期二维环面通常要求总电荷为零；开放边界时，总电荷由外加锚定条件决定。因此 FIB 闭合回路只能给出可计算的组合边界，不能单独推出净电荷约束或缺陷密度。
+
+在给定核心结构、摩擦和活性应力后，可用缺陷位置 \(R_a\)、电荷 \(q_a\) 以及取向 \(p_a\) 写一个有效随机动力学例子：
+
+$$
+\dot R_a=u(R_a)+\mu_{q_a}F_a
++v_{q_a}^{\rm self}p_a+\sqrt{2D_{q_a}}\,\eta_a(t),
+\qquad F_a=-\nabla_{R_a}F_{\rm def}.
+\tag{243.9}
+$$
+
+在常见的各向同性近似下，\(+1/2\) 缺陷可有彗星轴并被活性应力推进，而 \(-1/2\) 缺陷的最低阶自推进项可能因三重对称性消失；改变边界、极性耦合、外场或近核耗散后该结论会改变。成对产生和湮灭的粗粒记账可写为
+
+$$
+\frac{{\rm d}}{{\rm d}t}\langle n_d\rangle
+=2r_{\rm cr}-2r_{\rm an}-J_{\partial},
+\tag{243.10}
+$$
+
+其中产生率、湮灭率和边界净通量都由外加材料、噪声、核半径、锚定和外部驱动决定，复形中的面数不能替代这些率。
+
+对外加物理距离定义缺陷相关函数和电荷结构因子：
+
+$$
+g_{qq'}(r)=\frac{1}{2\pi r\,n_qn_{q'}}
+\left\langle\sum_{a\ne b}{\mathbf 1}_{\{q_a=q\}}{\mathbf 1}_{\{q_b=q'\}}
+\delta\bigl(r-|R_a-R_b|\bigr)\right\rangle,
+\tag{243.11}
+$$
+
+$$
+S_q(k)=\frac1{A_\Omega}
+\left\langle\left|\sum_a q_a e^{-\mathrm i k\cdot R_a}\right|^2\right\rangle .
+\tag{243.12}
+$$
+
+取向相关可用 \(C_2(r)=\langle\cos 2[\theta(x+r)-\theta(x)]\rangle\) 定义，这里的因子二再次体现向列而非极性序。流场能谱、缺陷间歇性和寿命尾部可能呈指数、拉伸指数、幂律或有限尺寸截断；没有共同的尺度分离和系综假设时，不能把某个谱指数称为 FIB 普适值。
+
+若取一族复形的网格尺度 \(h_j\to0\)，必须同时给出嵌入、度量与面积收敛、边权缩放、缺陷核心半径与 \(h_j\) 的比例、活性系数缩放以及边界和初始条件。先对固定无序图求统计再取极限，与先做 annealed 平均再取极限一般不同。实际图像还要指定平滑尺度、分支解包、核心阈值、时间采样和边界裁剪；单帧取向图不能识别活性应力符号、缺陷产生率和噪声联合实现。
+
+因此，FIB ATOM 递归在活性向列问题中只提供组合邻接、合法路径、面接缝、闭合边界和层级骨架；向列序参量、连续嵌入和度量、弹性、活性应力、流动取向、噪声、缺陷核心、边界锚定、观测协议以及连续或统计极限均须外加。\(\pm1/2\) 缺陷的电荷守恒、成对产生与湮灭、拓扑湍流的速度/取向谱、缺陷相关和寿命尾部，都是这些外加条件明确后的模型统计结论。
+

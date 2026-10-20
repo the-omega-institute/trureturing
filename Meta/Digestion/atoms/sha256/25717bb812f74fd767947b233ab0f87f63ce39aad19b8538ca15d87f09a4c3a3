@@ -1,0 +1,14 @@
+### 定理 375.3（有限 Kantorovich 对偶）
+
+有
+
+$$
+\boxed{
+W_{d_X}(P,Q)
+=
+\max_{\substack{f:X\to\mathbb R\\
+|f(x)-f(y)|\le d_X(x,y)}}
+\sum_xf(x)\bigl(P(x)-Q(x)\bigr).
+}
+$$
+

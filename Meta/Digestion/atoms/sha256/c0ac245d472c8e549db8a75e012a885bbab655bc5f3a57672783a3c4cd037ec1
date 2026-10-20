@@ -1,0 +1,7 @@
+本增订沿用四级真值纪律：
+
+- **定义**：引入保守记号；
+- **本文定理**：给出完整 paper-level 证明，但尚无同名 Lean theorem；
+- **Lean 锚点**：仓库中已有机器核验结果；
+- **研究命题／形式化路线**：依赖尚未建立的统一 carrier、CP instrument、partial trace 或无限维分析接口。
+

@@ -1,0 +1,37 @@
+**定理 418.3（既有无条件 PNT 误差供应器的收缩尺度应用）。** 设 $U(t)$ 最终递增且 $U(t)=o(\log t)$，并有固定 $c,C>0$ 使充分大 $t$ 满足
+
+$$
+|\psi(t)-t|\le Ct\,e^{-cU(t)},
+\qquad U(t)\longrightarrow\infty.
+\tag{418.9}
+$$
+
+则对每个固定 $0<\kappa<c/3$，全部充分大的实际成功包均满足
+
+$$
+\boxed{
+H_{a,b}>\overline g_{a,b}
+\quad\Longrightarrow\quad
+\frac{b-a}{a}<e^{-\kappa U(a)}.
+}
+\tag{418.10}
+$$
+
+证明。直接复用上述存档原稿 Theorem 8.5（源码 `thm:psi-normal-form`，Von Mangoldt normal form）及本卷§111的已有实际层分解：$A(t)-\psi(t)=(\sqrt2-1)\sqrt t+o(\sqrt t)$，端点差可吸收到这一误差。$U=o(\log t)$ 保证 $\sqrt t=o(te^{-cU(t)})$。因此（418.9）给 $A(t)-t=O(te^{-cU(t)})$，进而在同一区间 $a\le t\le2a$ 上一致有
+
+$$
+M_{a,b}\le C_1a e^{-cU(a)}.
+\tag{418.11}
+$$
+
+定理417.2在固定 $d=1$ 时已排除全部充分大 $b\ge2a$ 的成功包。剩余包若满足 $L/a\ge e^{-\kappa U(a)}$，则
+
+$$
+\frac{L^3}{a^2M_{a,b}}
+\ge C_1^{-1}e^{(c-3\kappa)U(a)}\longrightarrow\infty,
+$$
+
+与定理418.2矛盾。$\square$
+
+式（418.9）不是新增素数定理。例如可直接用 [Johnston–Yang, arXiv:2204.01980v2, Theorem 1.1](../../../Library/Weil/johnstonyang2022pnt.md) 的既有误差式，取 $U(t)=\sqrt{\log t}$ 及任意固定 $c<0.8274$ 吸收其对数幂。更近的 [Fiori–Jaskari, arXiv:2609.23222v2, Theorem 1.1 与 Table 1](../../../Library/ArithSums/nicolas2025comparison.md) 提供 $U(t)=(\log t)^{3/5}/(\log\log t)^{1/5}$ 的供应器；按上引文献注所定位原稿的陈述可取其固定正指数常数。这里约束的是同一实际包两矩证书的分辨率，所用 PNT 误差、通用矩界与求积余项均由上述既有来源承担。
+

@@ -1,0 +1,97 @@
+## 109. FIB 图上的外加趋化主动粒子、离散 Keller–Segel 临界性与观测不可识别
+
+固定一个由 FIB 上下文关系给出的有限图 \(G_j=(V_j,E_j)\)，取定向关联矩阵 \(B_j:C^0(V_j)\to C^1(E_j)\)，令 \(L_j=B_j^{\mathsf T}W_jB_j\) 为带边权的非负图拉普拉斯。FIB 只提供顶点、边、标签和词序；顶点质量、边长、体积、方向、扩散常数与观测量都另行外加。令 \(\rho_v(t)\ge0\) 表示粒子密度，\(c_v(t)\) 表示趋化信号，在边上取平均密度 \(\bar\rho_e\)，外加扩散系数 \(D_e>0\) 与敏感度 \(\chi_e\ge0\)。一个保持质量的离散趋化通量可写为
+\[
+J_e=-D_e(B_j\rho)_e+\chi_e\bar\rho_e(B_jc)_e,
+\qquad
+\dot\rho=B_j^{\mathsf T}J,
+\tag{109.1}
+\]
+并配以反应—扩散信号方程
+\[
+\tau_j\dot c=-D_{c,j}L_jc-\alpha_jc+\beta_j\rho.
+\tag{109.2}
+\]
+这里采用 \(\operatorname{div}J=-B_j^{\mathsf T}J\) 的符号约定；无通量边界时
+\(\mathbf1^{\mathsf T}B_j^{\mathsf T}=0\)，所以
+\(M_j=\sum_{v\in V_j}\rho_v(t)\) 保持不变。若使用中心通量，需另加步长、时间步和离散最大值条件才能保持 \(\rho\ge0\)；上风或马尔可夫跳跃通量可直接保证非负性。质量守恒、正性和信号衰减均来自这些外加离散动力学，而非 FIB 递归。
+
+在快信号极限 \(\tau_j\to0\) 且
+\(K_j=(D_{c,j}L_j+\alpha_jI)^{-1}\) 存在时，
+\(c=\beta_jK_j\rho\)，趋化漂移由图上的非局部核 \(K_j\) 决定。若 mobility 选为与对数熵相容的边通量，形式自由能可写成
+\[
+\mathcal F_j(\rho)
+=D_j\sum_v\rho_v(\log\rho_v-1)
+-\frac{\chi_j\beta_j}{2}\langle\rho,K_j\rho\rangle,
+\tag{109.3}
+\]
+其第一变分为
+\(D_j\log\rho-\chi_j\beta_jK_j\rho\)。该表达式显示趋化是熵扩散与信号吸引项之间的竞争；在有限 \(V_j\) 上固定总质量时，所有坐标有界，故不会出现连续 PDE 意义的有限时间密度无穷大。把图列细化并让局部质量集中，是否出现“爆聚”则取决于图的体积缩放、核的奇异性和时间尺度，不能由有限图的 FIB 结构单独决定。
+
+对均匀态 \(\rho_0\)（当 \(\alpha_j>0\) 时
+\(c_0=\beta_j\rho_0/\alpha_j\)）作线性化。若
+\(L_j\varphi_\ell=\lambda_\ell\varphi_\ell\)，\(\lambda_\ell>0\)，则模态满足
+\[
+\dot r_\ell=-D_j\lambda_\ell r_\ell
++\chi_j\rho_0\lambda_\ell q_\ell,
+\qquad
+\tau_j\dot q_\ell
+=-(D_{c,j}\lambda_\ell+\alpha_j)q_\ell+\beta_jr_\ell,
+\tag{109.4}
+\]
+其特征方程为
+\[
+(s+D_j\lambda_\ell)
+(\tau_js+D_{c,j}\lambda_\ell+\alpha_j)
+-\chi_j\beta_j\rho_0\lambda_\ell=0.
+\tag{109.5}
+\]
+因此在此线性系统中，某个模态失稳的条件为
+\[
+\chi_j\beta_j\rho_0
+>D_j(D_{c,j}\lambda_\ell+\alpha_j)
+\tag{109.6}
+\]
+对某个 \(\lambda_\ell>0\) 成立。有限图的首个线性阈值取决于最小非零谱、边权和顶点体积；它只是均匀态的线性起始点，不等同于非线性聚集的普适临界质量。改变同一 FIB 图的 \(W_j,D_j,D_{c,j},\alpha_j,\beta_j\) 或 \(\chi_j\) 可使所有模态稳定，也可使某一低频模态先增长。
+
+在外加欧氏嵌入的二维细化图上，若 \(L_j\)、顶点体积和核归一化收敛到连续拉普拉斯，并取无衰减的快速信号方程
+\[
+-D_c\Delta c=\beta\rho,
+\]
+则形式极限为
+\[
+\partial_t\rho
+=D\Delta\rho-\chi\nabla\!\cdot(\rho\nabla c),
+\qquad
+-D_c\Delta c=\beta\rho.
+\tag{109.7}
+\]
+在二维全平面、牛顿核归一化为 \(-\Delta^{-1}\)、无边界通量并满足所需正则性时，经典 Keller–Segel 结论给出归一化临界质量
+\[
+M_c=\frac{8\pi DD_c}{\chi\beta}.
+\tag{109.8}
+\]
+若把 \(D_c\) 或 \(\beta\) 吸收到信号定义中，则相应常数写法改变。\(M<M_c\)、\(M=M_c\) 与 \(M>M_c\) 的长期行为和爆聚判据还依赖初态、边界、核归一化及解概念；有屏蔽 \(\alpha>0\)、有界域、离散截止或非局部核时，(109.8) 不可直接套用。
+
+趋化方程也可由外加主动粒子模型得到。令 \(p_{v,a}(t)\) 是顶点 \(v\) 上方向或内部状态 \(a\) 的粒子数，\(u_a\) 是外加方向向量，沿 FIB 边按跳跃核 \(T_j\) 运动，并令转向率依赖 \(B_jc\)。在快速转向、弱持久性和扩散缩放下，一阶矩消去可给出
+\[
+J\simeq-D_{\mathrm{eff}}\nabla_j\rho
++\chi_{\mathrm{eff}}\rho\nabla_jc,
+\tag{109.9}
+\]
+从而得到 (109.1)。\(D_{\mathrm{eff}}\)、\(\chi_{\mathrm{eff}}\) 由速度、转向核、持久时间和化学感受函数决定；若转向不够快，极限保留惯性或记忆项，可能是超扩散、趋化波或各向异性张量，而非 Keller–Segel。FIB 图仅规定允许的跳跃和组合路径，不规定粒子是否有真实位置、速度或化学感受器。
+
+观测不可识别是上述模型的结构性边界。设只能观测聚合量 \(y(t)=Q_j\rho(t)\)，其中 \(Q_j\) 是由标签或上下文选择的线性读出。若 \(Q_j\) 湮灭某个拉普拉斯模态，沿该模态的质量重新分配完全不可见；尤其 \(Q_j=\mathbf1^{\mathsf T}\) 时，\(y(t)=M_j\) 对所有无通量模型恒定，不能区分扩散、聚集或爆聚前的局部重排。即使观测完整 \(\rho\)，信号缩放
+\[
+c'=ac,\qquad
+\beta'=a\beta,\qquad
+\chi'=\chi/a
+\tag{109.10}
+\]
+在相应初值和信号方程下保持
+\(\chi'\nabla c'=\chi\nabla c\)，所以单凭 \(\rho\) 轨迹不能分别识别 \(\chi,\beta\)。
+
+本节与第 107 节的 Cahn–Hilliard 模型分工不同：Cahn–Hilliard 直接对守恒场作四阶局部梯度流，化学势含外加自由能和梯度能；(109.1)–(109.2) 是二阶守恒输运加独立信号场，吸引作用经 \(K_j\) 形成非局部核，连续二维极限可有 Keller–Segel 型聚集。它也不同于第 99 节接触过程：接触过程使用离散感染、恢复和吸收态，趋化模型使用可分割质量、连续信号及守恒总量，没有由 \(\rho=0\) 自动形成的感染吸收态。相同 FIB 图可分别承载这些外加模型，因而其阈值、波速和长期统计不能互相推出。
+
+总之，FIB 递归提供趋化模型的图结构、标签和组合路径；粒子质量、嵌入度量、扩散与转向、信号核、边界、噪声、临界缩放和观测通道均必须外加。离散聚集阈值、二维临界质量、主动粒子扩散极限及观测不可识别，都是明确外加条件下的 Keller–Segel 或主动输运结论，而不是 FIB ATOM 递归单独推出的普适物理定律。
+

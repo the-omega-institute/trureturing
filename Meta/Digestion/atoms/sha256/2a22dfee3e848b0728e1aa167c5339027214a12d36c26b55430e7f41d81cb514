@@ -1,0 +1,29 @@
+**定义 403.1（实际全域阻尼）。** 保留 $x>1$、$P_x(m)$、$J_x(m)$、$H_m$、$e_m$ 以及（397.3）的实际非负常数 $a_2,a_1,a_0$。置
+
+$$
+W_x=\frac{1+\log x}{\log^2x},\qquad
+q_k=\frac{a_2(\log k)^2+a_1\log k+a_0}{k^2}\quad(k\ge2),
+\tag{403.1}
+$$
+
+并定义独立于 $x$ 的非负来源账
+
+$$
+\boxed{
+C_*=
+\sum_{k\ge2}q_k
+\left[|H_k|\log k+
+\sum_{1\le m<k}\frac{|H_m|}{m}\right].}
+\tag{403.2}
+$$
+
+对任意 $\varepsilon>0$，令
+
+$$
+I_{\varepsilon}(x)
+=\sum_{n\ge1}e_n n^{-\varepsilon}P_x(n).
+\tag{403.3}
+$$
+
+这里 $q_k$ 是（397.4）的实际上界系数，不是黄金参数 $q=\varphi^{-2}$。$C_*$ 的每个项都由实际 $H$ 和已知核系数独立给出，没有把 Robin 未知差额命名为常数。本节证明其有限，但不给其数值上界。
+

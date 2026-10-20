@@ -1,0 +1,15 @@
+**定义 300.1（束上的鲁棒终端风险）。** 对有限模型束 $\mathcal B$，其中每个元素含后验 $p$，给定有限决策集 $D$ 和损失 $\ell:K\times D\to[0,\infty)$，定义
+
+$$
+\boxed{
+R_{\mathrm{rob}}(\mathcal B)
+=
+\min_{d\in D}
+\max_{(m,p,L)\in\mathcal B}
+\sum_{k\in K}p(k)\ell(k,d).
+}
+\tag{300.1}
+$$
+
+若允许在取得下一个结果后继续决策，则把每个束元素的核 $L$ 与同一模型标签一起带入后继束，并对每个后继使用相同的鲁棒合同。
+

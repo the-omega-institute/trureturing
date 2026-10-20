@@ -1,0 +1,16 @@
+### 定理 359.3（harmonic 空间代表上同调）
+
+映射
+
+$$
+\mathcal H^k\longrightarrow H^k(K;\mathbb R),
+\qquad
+h\longmapsto[h],
+$$
+
+是线性同构。因此
+
+$$
+\boxed{\dim\mathcal H^k=\dim H^k(K;\mathbb R).}
+$$
+

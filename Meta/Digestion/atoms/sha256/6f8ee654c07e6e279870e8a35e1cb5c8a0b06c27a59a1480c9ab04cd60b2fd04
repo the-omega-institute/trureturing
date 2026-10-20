@@ -1,0 +1,7 @@
+但这个双射不保持局部关系：
+
+* binary 位彼此独立；
+* Zeckendorf 位有 nearest-neighbor exclusion；
+* binary shift 对应精确乘 \(2\)；
+* golden shift 对应 Fibonacci digit desubstitution。
+

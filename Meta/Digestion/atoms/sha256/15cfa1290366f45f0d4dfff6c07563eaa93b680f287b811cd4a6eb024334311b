@@ -1,0 +1,16 @@
+**定义 293.1（确定停止与资源停止）。** 对候选类集 $K$ 和干预族 $\mathcal A$，称
+
+$$
+\operatorname{Stop}_{\mathrm{unique}}(K)
+\quad\Longleftrightarrow\quad
+|K/\!\sim_{\mathcal A}|=1.
+$$
+
+若预算 $B$ 不足以执行任何仍能细化反事实商的允许干预，则称
+
+$$
+\operatorname{Stop}_{\mathrm{budget}}(K,B).
+$$
+
+前者是未来任务已确定，后者只是当前资源合同结束。
+

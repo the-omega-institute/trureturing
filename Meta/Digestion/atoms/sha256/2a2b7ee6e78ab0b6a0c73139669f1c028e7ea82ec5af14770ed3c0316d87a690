@@ -1,0 +1,11 @@
+## 定义 19.2（类余量）
+
+\[
+\operatorname{ClassResidual}(R)
+=
+\sum_{Q,Q'}
+R(Q,Q')
+\times
+\neg(Q\simeq_{\mathbb Z}Q').
+\]
+

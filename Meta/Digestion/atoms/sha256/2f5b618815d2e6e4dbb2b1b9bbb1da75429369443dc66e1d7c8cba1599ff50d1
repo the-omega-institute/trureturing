@@ -1,0 +1,15 @@
+### 定义 383.1（过滤可测的因果耦合）
+
+令 \(\mathcal F_n\) 是源路径空间上的有限过滤。称耦合 \(\pi\) 属于
+\(\Gamma^{\mathrm{meas}}_{\mathcal F\to\mathcal G}(P,Q)\)，若对每个 \(n\) 存在一个只依赖源的条件核
+
+$$
+\kappa_n(\,\cdot\mid x)
+\quad\text{满足}\quad
+\kappa_n(\,\cdot\mid x)=\bar\kappa_n(\,\cdot\mid [x]_{\mathcal F_n}),
+$$
+
+其中 \([x]_{\mathcal F_n}\) 表示 \(\mathcal F_n\) 的原子，且这些核联合生成的目标前缀边缘与 \(\pi\) 相同，并满足目标过滤 \(\mathcal G\) 的声明合同。换言之，给定完整源路径后，目标到第 \(n\) 步的条件律是 \(\mathcal F_n\)-可测的。
+
+在自然过滤 \(\mathcal F_n=\sigma(X_{\le n})\) 下，这与定义 379.2 的前缀核条件相同。
+
