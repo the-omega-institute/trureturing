@@ -665,7 +665,7 @@ def singletonLinear (D : LatticeData) (hu : IsUnit D.G.det) (i : Index D) :
     simp only [flatTerm, flatCoefficient]
     split_ifs <;> simp [Module.End.mul_apply]
 
-private theorem polynomialField_monomial (D : LatticeData) (hu : IsUnit D.G.det)
+theorem polynomialField_monomial (D : LatticeData) (hu : IsUnit D.G.det)
     (q : Charge D) (a : Index D →₀ ℕ) :
     polynomialField D hu q (MvPolynomial.monomial a 1) =
       wordField D hu (chargedField D hu q) (occurrences D a) :=

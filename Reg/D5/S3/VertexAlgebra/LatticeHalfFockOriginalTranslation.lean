@@ -23,13 +23,13 @@ open scoped BigOperators TensorProduct
 
 noncomputable section
 
-private def hyperbolic : LatticeData where
+def hyperbolic : LatticeData where
   rank := 2
   G := !![0, 1; 1, 0]
   symmetric := by intro first second; fin_cases first <;> fin_cases second <;> rfl
   even_diagonal := by intro axis; fin_cases axis <;> exact ⟨0, rfl⟩
 
-private theorem hyperbolic_unit : IsUnit hyperbolic.G.det := by
+theorem hyperbolic_unit : IsUnit hyperbolic.G.det := by
   have determinant : hyperbolic.G.det = -1 := by
     change (Matrix.det (!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℤ)) = -1
     norm_num [Matrix.det_fin_two]
@@ -43,10 +43,10 @@ private theorem probeGround_nonzero : probeGround ≠ 0 := by
   have coordinate := congrFun equality (0 : Half (groundRank hyperbolic hyperbolic_unit))
   exact one_ne_zero (show (1 : ℂ) = 0 from coordinate)
 
-private def probeState : ActualTensor hyperbolic hyperbolic_unit :=
+def probeState : ActualTensor hyperbolic hyperbolic_unit :=
   (1 : Oscillator hyperbolic) ⊗ₜ[ℂ] probeGround
 
-private theorem probe_leading :
+theorem probe_leading :
     chargedCoefficient hyperbolic hyperbolic_unit 0 0 probeState ≠ 0 := by
   simpa [probeState, chargeNorm, bilinear] using
     charged_ground_leading hyperbolic hyperbolic_unit 0 probeGround probeGround_nonzero
@@ -57,9 +57,9 @@ private theorem probeState_nonzero : probeState ≠ 0 := by
   rw [zero, map_zero]
 
 
-private def probeSource : Carrier hyperbolic := Finsupp.single 0 1
+def probeSource : Carrier hyperbolic := Finsupp.single 0 1
 
-private theorem probe_polynomial_one :
+theorem probe_polynomial_one :
     polynomialField hyperbolic hyperbolic_unit 0 1 =
       chargedField hyperbolic hyperbolic_unit 0 := by
   have basis := (MvPolynomial.basisMonomials (Index hyperbolic) ℂ).constr_basis ℂ
@@ -75,7 +75,7 @@ private theorem probe_polynomial_one :
   rw [wordField_coefficient]
   exact finsum_unique _
 
-private theorem probe_source_field :
+theorem probe_source_field :
     correctedField hyperbolic hyperbolic_unit probeSource =
       chargedField hyperbolic hyperbolic_unit 0 := by
   have corr : Corr hyperbolic 0 1 = Finsupp.single 0 1 := by
@@ -180,6 +180,79 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   continuation := .unknown
   familyRecord := none
   options := #[{ name := `autoImplicit, value := .bool false }]
+
+namespace ShiftCoefficient
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  ℕ (fun _ => ℤ) (fun _ => ℤ)
+def actual : Realization signature := realize signature
+  (fun _ s e => e + 2 * (s : ℤ)) (fun empty => nomatch empty)
+def rejected : Realization signature := realize signature
+  (fun _ _ e => e) (fun empty => nomatch empty)
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
+    (s : ℕ) (A : NativeField D hu) (e : ℤ),
+    (shiftField D hu s A).coeff e = A.coeff (readout.readout () s e)
+theorem source_bridge : (type_of% (@shiftField_coefficient)) ↔ arena.Law actual := Iff.rfl
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have bad := law hyperbolic hyperbolic_unit 1
+    (chargedField hyperbolic hyperbolic_unit 0) (-2)
+  rw [shiftField_coefficient] at bad
+  have value := LinearMap.congr_fun bad probeState
+  have zero : chargedCoefficient hyperbolic hyperbolic_unit 0 (-2) probeState = 0 := by
+    apply charged_polynomial_lower_bound
+    norm_num [chargeNorm, bilinear, nativeOddWeightedDegree, MvPolynomial.weightedTotalDegree]
+  have reduced : chargedCoefficient hyperbolic hyperbolic_unit 0 0 probeState =
+      chargedCoefficient hyperbolic hyperbolic_unit 0 (-2) probeState := by
+    simpa only [rejected, realize, HVertexOperator.coeff_of_coeff, chargedField,
+      Int.natCast_one, mul_one, neg_add_cancel] using value
+  exact probe_leading (reduced.trans zero)
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨0, 0, 1, ?_⟩
+  norm_num [actual, realize]
+
+def familyRegistration : Registration arena (type_of% (@shiftField_coefficient)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp shiftField_coefficient, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@shiftField_coefficient) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField.shiftField_coefficient "__information_unit"
+  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.ShiftCoefficient.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end ShiftCoefficient
 
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation

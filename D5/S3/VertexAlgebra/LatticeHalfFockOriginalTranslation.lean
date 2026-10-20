@@ -56,7 +56,7 @@ def shiftField (D : LatticeData) (hu : IsUnit D.G.det) (s : ℕ) :
     exact (smul_comm c (HahnSeries.single (-2 * (s : ℤ)) (1 : ℂ)) (A v)).symm
 
 /- Native Hahn monomial action, consumed by shift and evaluator calculus. -/
-private theorem shiftField_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+theorem shiftField_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
     (s : ℕ) (A : NativeField D hu) (e : ℤ) :
     (shiftField D hu s A).coeff e = A.coeff (e + 2 * (s : ℤ)) := by
   apply LinearMap.ext

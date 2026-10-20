@@ -20,7 +20,21 @@ The jet, shift and evaluator calculation is adapted from the preserved OriginalT
 
 The result concerns every algebraic polynomial and tensor state; it does not construct a completion by infinite oscillator series. Twisted locality, Jacobi and Borcherds identities, full VOA and CFT constructions, anomaly and fusion structures, string dynamics, spacetime reconstruction and AdS/CFT remain further mathematical obligations.
 
-**Theorem 1.1 (The exact all-source physical translation identity).**
+**Theorem 1.1 (The exact canonical Hahn shift).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For every D:LatticeData, hu:IsUnit D.G.det, s:Nat, A:NativeField D hu and e:Int, (shiftField D hu s A).coeff e = A.coeff(e+2*s), as endomorphisms of ActualTensor D hu. Hahn monomial multiplication by t^(-2*s) changes the coordinate by exactly -2*s. Physical translation and full-source theta monodromy both use this same shift.
+
+**Theorem 1.2 (The exact all-source physical translation identity).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_translation_physical`
 
@@ -37,5 +51,6 @@ For every D:LatticeData, hu:IsUnit D.G.det, source:Carrier D, e:Int and v:Actual
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_translation_physical`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical](LatticeHalfFockChargedSeedPhysical.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCorrectionTranslation](LatticeHalfFockCorrectionTranslation.md)
