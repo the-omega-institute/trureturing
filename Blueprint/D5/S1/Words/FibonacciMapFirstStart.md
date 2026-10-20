@@ -16,7 +16,19 @@ $$\forall d \in \mathbb{N},\; goldenMAPFirstStart\left(d\right) = sInf\left(\{j 
 
 goldenWord is the zero-indexed fixed point 010010100100101... of 0 -> 01 and 1 -> 0. True represents 0 and false represents 1. goldenMAPMaximum(d) is the supremum of all positive progression lengths over every natural start and both letters. The definition takes the natural infimum of starts attaining that length, without choosing a letter in advance. At the Fibonacci differences below the length set is bounded and its maximum is attained, so the start set is nonempty and its infimum is its least element.
 
-**Theorem 1.2 (Both parity families).**
+**Theorem 1.2 (An orbit confined to an open interval).**
+
+$$\forall lo \in \mathbb{R},\; \forall hi \in \mathbb{R},\; \forall eps \in \mathbb{R},\; \forall x \in \mathbb{N} \to \mathbb{R},\; \forall length \in \mathbb{N},\; \forall forward \in Bool,\; (0 < eps) \Rightarrow ((0 \le lo) \Rightarrow ((hi \le 1) \Rightarrow ((eps \le 1 - (hi - lo)) \Rightarrow ((0 < length) \Rightarrow ((\forall k \in \mathbb{N},\; k < length \Rightarrow (lo < x\left(k\right) \land x\left(k\right) < hi)) \Rightarrow ((\forall k \in \mathbb{N},\; k + 1 < length \Rightarrow x\left(k + 1\right) = \operatorname{Int}.\operatorname{fract}\left(x\left(k\right) + (\operatorname{if} forward \operatorname{then} eps \operatorname{else} -eps)\right)) \Rightarrow ((x\left(length - 1\right) = x\left(0\right) + (\operatorname{if} forward \operatorname{then} (1:\mathbb{R}) \operatorname{else} -1) \cdot (length - 1:\mathbb{N}) \cdot eps \land (length - 1:\mathbb{N}) \cdot eps < hi - lo))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/FibonacciMapFirstStart.open_rotation_run` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let x be a finite orbit of rotation by a positive step eps, forward or backward according to the Boolean forward. If all length points lie in (lo,hi) inside [0,1], and eps is at most the complementary gap, no step wraps around. The last point is therefore the first point plus the signed total displacement, whose magnitude is strictly less than hi-lo. The subtraction length-1 is natural subtraction before coercion to the reals.
+
+**Theorem 1.3 (Both parity families).**
 
 $$\forall n \in \mathbb{N},\; 1 \le n \Rightarrow (goldenMAPFirstStart\left(fib\left(2 \cdot n + 1\right)\right) = fib\left(2 \cdot n + 3\right) - 2 \land goldenMAPFirstStart\left(fib\left(2 \cdot n\right)\right) = fib\left(4 \cdot n\right) - 1)$$
 
@@ -41,6 +53,7 @@ Cassini's integer determinant gives one-sided orbit records: before fib(m+2), th
 ## References
 
 - Truth anchor: `D5/S1/Words/FibonacciMapFirstStart.goldenMAPFirstStart`
+- Truth anchor: `D5/S1/Words/FibonacciMapFirstStart.open_rotation_run`
 - Truth anchor: `D5/S1/Words/FibonacciMapFirstStart.result`
 - Dependency: [D5/S1/Deficit/Displacement/GoldenSubstStartSharpness](../Deficit/Displacement/GoldenSubstStartSharpness.md)
 - Dependency: [D5/S1/Scale/Fibonacci](../Scale/Fibonacci.md)
