@@ -9867,3 +9867,73 @@ The first line follows from W344: every feasible complex source has a real sourc
 Thus W328, W329 and W337 compare one common real/complex value, rather than two unconnected values. The equality holds already at EACH finite source budget, before the cofinal limit. Any uniform complete-energy lower bound proved for all signed real sources at a fixed moment cap therefore holds for all complex sources at exactly that cap, with the same start, count schedule and allowance. A hypothetical complex negative original source similarly yields a real negative source without changing its moment or introducing sites. No separate estimate for each real and imaginary component is needed.
 
 This application removes the scalar-field distinction from the actual constrained problem; it does not restrict the signed real sources to positive coefficients or force any term of W343 to have a favorable sign. The extracted source may change its individual Gamma, primary-prime, higher-power, mean and low-frequency contributions. Their joint COMPLETE sign, nonnegativity of the common $e_K$, W258's vanishing scaled negative allowance, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. The rank-one decomposition is established literature; its same-sites/exact-moment application here is a repository synthesis without a priority claim. This is paper mathematics without scientific execution, a numerical algorithm or Lean/kernel certification.
+
+## Remove the mean by an exact null direction of the actual source form
+
+The rank-one mean in W343 need not be estimated separately. The original odd kernel supplies a fixed zero-energy direction whose ACTUAL arithmetic profile has nonzero mean. Subtracting that direction preserves the complete energy and removes the mean. The auxiliary feature has a controlled finite moment, and no normalization of it is required. The original source's norm, count, window and moment constraints remain the ones being tested.
+
+The classical xi null-vector and mixed-nullity results are already recorded in the [Lagarias account](lagarias2004li.md#mixed-nullity-and-the-theta-weighted-even-weil-interface), together with its full derivative family. They are not new results here. The following uses W255's own physical source map and the oddness in W38 to identify the direction in the DIFFERENT actual form $\mathfrak E$; no identity between that form and the classical full Weil form is assumed. The theta formula and its Fourier normalization are the existing [Romik supplier](../Analytic/romik2021orthogonal.md), equations (1.6)--(1.11). Adding radical vectors to adjust a functional already has a classical precedent in Connes--Consani--Marcolli, [The Weil proof and the geometry of the adeles class space](https://arxiv.org/abs/math/0703392v1), Proposition 6.4 and Lemma 7.3 (pp. 29--30 and 33). Their trace-pairing radical adjusts the degree $\widehat f(1)$ on the space in equation (4.20); this is not an identification with the present physical form or its unweighted mean $\ell(F)$. That degree-adjustment idea is reused as precedent; the bounds below concern the actual physical source and its auxiliary moment.
+
+### Identify the mixed null direction before subtracting it
+
+Let $F_\circ(x)=e^{-x}$ on $x\ge\pi$, and let $\mathfrak E(F,G)$ denote the Hermitian polarization of W317's complete form. Then
+$$
+\begin{aligned}
+F_\circ&\in\mathcal V,\qquad
+\mathfrak E(F_\circ,F)=0\quad(F\in\mathcal V),\\
+g_{F_\circ}(r)&=\frac{\pi^{1/4}}4\Phi(r),\qquad
+m_\circ:=\int_{\mathbb R}g_{F_\circ}(r)dr
+=\frac{\pi^{1/4}}4\xi(1/2)>0.
+\end{aligned}
+\tag{W347}
+$$
+This is mixed nullity, not an inference from a single zero quadratic value. In W255's map the physical source $\delta_0$ has feature $F_\circ$. Since $L_0$ is odd in either argument, $L_0(0,a)=0$ for every real $a$. Polarizing the exact W255 source identity therefore gives $\mathfrak E(F_\circ,F)=0$ for every finite Gaussian source feature. The finite-feature core W326 and continuity of the polarized complete form in $M+\mathcal P$ extend this to all $\mathcal V$. The fixed feature belongs to that domain: its theta image has exponential physical decay, and its logarithmic zero extension has at most one jump, hence Fourier decay $O((1+|\xi|)^{-1})$, integrable against the owned logarithmic multiplier. Equivalently it is the same finite-Gaussian membership argument used in W317.
+
+For its actual profile, $I\mathscr TF_\circ(x)=\sum_{n\ge1}n^2e^{-n^2x}$. Insert this into $B\mathscr TF_\circ$ and set $x=\pi e^{2|r|}$. The original theta series gives exactly $g_{F_\circ}=\pi^{1/4}\Phi/4$, with no Fourier rescaling or missing factor. The existing all-complex transform of $\Phi$ at zero and its positivity give the value and strict sign of $m_\circ$. The point $a=0$ is an auxiliary physical source, not an admitted site added to the original late-window Gaussian source.
+
+### A fixed continuous centering map on the entire original domain
+
+Define the linear functional and map
+$$
+\ell(F)=\int_{\mathbb R}g_F(r)dr,
+\qquad
+RF=F-\frac{\ell(F)}{m_\circ}F_\circ.
+$$
+There is a fixed finite $C_R$, independent of $F$, source count, support and moment-budget size, such that
+$$
+\begin{gathered}
+RF\in\mathcal V,\qquad \ell(RF)=0,\qquad R^2F=RF,\qquad
+\mathfrak E(RF)=\mathfrak E(F),\\
+M(RF)\le C_RM(F),\qquad
+\mathcal P(RF)\le C_R[\mathcal P(F)+M(F)].
+\end{gathered}
+\tag{W348}
+$$
+Indeed the change of variable in the ACTUAL profile gives
+$$
+\ell(F)=\int_\pi^\infty x^{5/4}B\mathscr TF(x)dx,\qquad
+|\ell(F)|\le\sqrt{\frac25}\,\pi^{-5/4}
+\|x^3B\mathscr TF\|_2\le C\sqrt{M(F)}.
+$$
+The last step is W238's cubic $B$ bound and W324's $H_6$ theta bound; no new Hardy or theta theorem is needed. The fixed $M(F_\circ)$ and $\mathcal P(F_\circ)$ now give both bounds in W348 by the triangle inequality in their form norms. Linearity of the actual profile gives $\ell(RF)=0$ and idempotence. W347 eliminates both mixed terms and the diagonal null term in the complete energy. The map preserves real-valued features when $F$ is real; signed coefficients are not restricted.
+
+Neither the $H$ norm nor the auxiliary moment is asserted unchanged. In particular $RF$ can be zero. The argument never divides by $\|RF\|_H$; renormalizing it could destroy uniform control of its moment. W348 is a bounded change of the feature used to evaluate the energy, not an exact-budget replacement of the original source such as W344.
+
+### Consume centering in the full Gamma-relative estimate
+
+For EVERY $F\in\mathcal V$ and each fixed $0<\delta<1$, the SAME complete energy satisfies
+$$
+\begin{aligned}
+\left|\mathfrak E(F)-\mathcal P(RF)+\alpha T_1(g_{RF})\right|
+&\le\delta\mathcal P(RF)+C_\delta S(RF),\\
+\mathfrak E(F)\ge{}&(1-\delta)\mathcal P(RF)-\alpha T_1(g_{RF})
+-C_\delta S(RF)\\
+&+\alpha[\mathcal D_{\rm odd}(g_{RF})+\mathcal J(g_{RF})].
+\end{aligned}
+\tag{W349}
+$$
+Apply the ALREADY established W342--W343 to $RF$ and use W348. This is their actual-source consumer with the mean charge eliminated exactly; their estimates and external logarithmic-derivative supplier are not reproved. Every remaining term belongs to the ONE profile $g_{RF}$. Both folded channels, their full correction, the rank-two cutoff and fixed Gamma shift stay paid as in W340. Constants have the same support/count/budget independence as before and may diverge as $\delta\downarrow0$. The positive form and primary-prime terms now use $RF$, so W349 is not claimed to dominate W343 numerically at every feature or to be a strict numerical improvement.
+
+For an ORIGINAL source with $Q_H=1$, let $\psi=F/\|F\|_H$ be its W257 feature. Evaluate the second line of W349 at $\psi$ and divide its right side by $4\pi^3$ to bound the ORIGINAL $A Q_{\mathcal K_A^g}$. This includes EVERY original source with $Q_{6,A}\le K$ for EVERY fixed $K>1$, at the existing admitted start, with its original count and window. Its auxiliary feature obeys $M(R\psi)\le C_RK$; it is not normalized or passed off as a new source in that window. The two-sided line applies with the same exact W257 factor. It also covers $R\psi=0$, when the complete energy is zero.
+
+Thus the explicit mean term can be removed from the actual all-source lower estimate without a sign assumption or an unpaid energy change. The remaining primary-prime term and low-frequency allowance still require a joint signed bound; their values change under $R$, and neither has been shown favorable. No nonnegativity of the common constrained minima, W258, full RH or strict Robin for EVERY integer $n>5040$ follows. The published theta/null-vector facts and W342--W343 are reused; the additional application is their exact physical null-direction realization, domain-controlled centering and original-source consumer, without a priority claim. This is paper mathematics without scientific execution or Lean/kernel certification.
