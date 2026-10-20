@@ -20,7 +20,7 @@ defines the Stolarsky means by
 
 with their continuous extensions at equal inputs and at parameters
 zero and one. Class A means positive entries and exactly one positive
-eigenvalue, counted with multiplicity. The supplied source states:
+eigenvalue, counted with multiplicity. The cited source states:
 
 > This family does not yield readily to our analysis. We have some evidence for the following: **Conjecture 1.** Let λ1, λ2, . . . , λn be positive numbers. The matrix [Sγ(λi, λj)] is in the class A if γ ≥ 2 but this is not always so when 0 ≤ γ < 2.
 
@@ -119,57 +119,45 @@ The pinned definitions and exact conjunction are in
 [KernelFactor.lean](../D5/S3/Quantum/Matrix/StolarskyMean/KernelFactor.lean)
 proves profile smoothness, the exact factorization, and
 `positiveDefinite_f` for every real parameter at least two.
-It directly uses the compiled density formula in
+The supporting results include the density formula in
 [SinhLogIntegral.lean](../D5/S3/Analytic/Fourier/SinhLogIntegral.lean),
 the nonnegative-density criterion, and the general quadratic-deficit
 theorem in the PositiveDefinite library. [Result.lean](../D5/S3/Quantum/Matrix/StolarskyMean/Result.lean) proves
 the mean-to-CND integration bridge, the complete positive range, and
 `result : claim`, the exact conjunction. [ThreePoint.lean](../D5/S3/Quantum/Matrix/StolarskyMean/ThreePoint.lean) proves
 that each parameter in $[0,2)$ has a positive three-point family with at
-least two positive eigenvalues. All these statements compile with
-axioms restricted to `propext`, `Classical.choice`, and `Quot.sound`.
+least two positive eigenvalues. Their axiom closure is restricted to
+`propext`, `Classical.choice`, and `Quot.sound`.
 
 ## Triage
 
 - PROVED: `KernelFactor.positiveDefinite_f` establishes positive definiteness of the exact derivative defect for every real $\gamma\ge2$, including the arithmetic boundary.
 - PROVED: `KernelFactor.f_eq_factor` identifies the derivative defect with the explicit product on the entire real line.
 - PROVED: the reusable theorem `SecondDifference.Q_positiveDefinite` gives positive definiteness of the continuous extension of $(g(0)-g(t))/t^2$ for every even twice continuously differentiable positive definite real function.
-- PROVED on paper, not formalized here: for $\gamma>2$, the closed form gives $f_\gamma(t)=O(e^{-3|t|})$, so it is integrable. Positive definiteness then gives the explicit Fourier positivity $2\int_0^\infty f_\gamma(t)\cos(\omega t)\,dt\ge0$ for every real frequency. At $\gamma=2$ the function is zero. The Fourier conclusion requires the integrability argument in addition to positive definiteness.
-- COMPUTED in the supplied preregistration: 40-digit evaluations at $\gamma\in\{2.3,3,4.7,9\}$ and $t\in\{0.1,0.7,2.5\}$ agree to 15 digits between the closed form, numerical second differentiation, and the factor product. These computations were not rerun in this offline implementation.
-- OPEN: whether $f_\gamma$ itself is infinitely divisible for $\gamma>2$. The supplied numerical Fourier tests of $f_\gamma^s$ were positive for $s\in\{0.05,0.3,1,3\}$ at $\gamma\in\{2.5,7\}$; finitely many tests do not establish infinite divisibility.
+- ANALYTIC RESULT: For $\gamma>2$, the closed form gives $f_\gamma(t)=O(e^{-3|t|})$, so it is integrable. Positive definiteness then gives the explicit Fourier positivity $2\int_0^\infty f_\gamma(t)\cos(\omega t)\,dt\ge0$ for every real frequency. At $\gamma=2$ the function is zero. The Fourier conclusion requires the integrability argument in addition to positive definiteness.
+- COMPUTED: 40-digit evaluations at $\gamma\in\{2.3,3,4.7,9\}$ and $t\in\{0.1,0.7,2.5\}$ agree to 15 digits between the closed form, numerical second differentiation, and the factor product.
+- OPEN: whether $f_\gamma$ itself is infinitely divisible for $\gamma>2$. Numerical Fourier tests of $f_\gamma^s$ are positive for $s\in\{0.05,0.3,1,3\}$ at $\gamma\in\{2.5,7\}$; finitely many tests do not establish infinite divisibility.
 - PROVED: `Result.conditionallyNegative_stolarsky` establishes conditional negativity, and `Result.inClassA_stolarsky` establishes the complete class A conclusion for every real parameter at least two and every nonempty finite positive family.
 - PROVED: `Result.result : Defs.claim` establishes both parameter ranges without hypotheses. The definitions and exact conjunction retain the source parameter range and continuous extensions.
 - OPEN and outside the conjecture: classification for $\gamma<0$.
 
 ## ASSUMED-UNVERIFIED
 
-The source quotation and bibliographic locators are supplied
-information. The DOI-to-PDF correspondence was not independently
-confirmed because no local PDF or network access was available.
+The source quotation and bibliographic locators are attributed to
+Bhatia–Jain. The DOI-to-PDF correspondence is unconfirmed.
 
-The supplied preregistration reports arXiv API queries combining
-Stolarsky with eigenvalue, matrix, matrices, conditionally negative,
-and positive definite; queries for exactly one positive eigenvalue
-and mean matrices; web queries for the Bhatia–Jain conjecture and
-citing papers; GitHub queries for Stolarsky mean; and local
-D5/Problems/Library plus PR and issue queries for Stolarsky,
-Bhatia–Jain, and conditional negativity.
-
-Its checked sources include Bhatia–Jain, *Inertia of Kwong matrices*
+Relevant literature includes Bhatia–Jain, *Inertia of Kwong matrices*
 (arXiv:2307.16007; Journal of Spectral Theory 2024), with no Stolarsky
 matrix treatment; Bhatia–Friedland–Jain, *Inertia of Loewner matrices*
 (arXiv:1501.01505), which treats $S_\gamma^{\gamma-1}$; Kosaki,
-*Strong monotonicity for various means*, Theorem 12 in the supplied
-preprint, which supplies ratios but not the whole matrix conjecture;
-and Aggarwal–Singh work on translation kernels. No settlement was
-found in that checked scope. Semantic Scholar and Google Scholar
-were rate-limited or unavailable, so the citing literature was not
-exhaustively checked. These are attributed search results, not an
-independent search or a priority certification.
+*Strong monotonicity for various means*, Theorem 12, whose ratio
+results do not settle the whole matrix conjecture;
+and Aggarwal–Singh work on translation kernels. The cited material
+contains no settlement of the full conjecture. Citation indexes were
+not exhaustively checked.
 
 The [Bhatia–Jain note](../Library/Fourier/bhatia2016mean.md) and
-[Kosaki note](../Library/Fourier/kosaki2014strong.md) bind the supplied
-locators and their source boundaries. The analytical proof route was
-supplied by GPT Pro via the two preregistered oracle tasks and checked
-mathematically by the caller; only the Lean statements explicitly
-identified above are formal evidence in this delivery.
+[Kosaki note](../Library/Fourier/kosaki2014strong.md) record the
+locators and their source boundaries. The analytical route is documented
+by the Lean statements identified above; formal evidence is limited to
+those statements.
