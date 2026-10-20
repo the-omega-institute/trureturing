@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known estimates pay the specified pure-sixth-power pieces of a complete all-column positive majorant at all original witness lengths under the stated height reserve, while complementary dual terms and signed restoration remain open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known estimates pay specified all-column pure-power pieces and control an actual Gauss-row correction with its growing-label Gram condition supplied, while the primitive-residue quadratic, complementary operator and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, a squarefree-component consumer covering all original witness lengths under the original height reserve, a weighted powerful-part positive majorant extending that collective pure-power payment to every original column, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, a squarefree-component consumer covering all original witness lengths under the original height reserve, a weighted powerful-part positive majorant extending that collective pure-power payment to every original column, an actual Gauss-row compression with its growing-label Gram condition supplied and coherent correction consumed in every original core packet, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -2366,6 +2366,181 @@ $$
 Indeed $N_b\le N$ and the original pole factor is $U^{5/6}$. F6 then pays the collective specified poles at $(UK)^\varepsilon UK$. Together with the just reused shifted-integral bound and principal diagonal, the complete specified pure-dual-sixth-power pieces of the all-column positive majorant F4 are collectively paid. The original $0\le m\le1/2+O(\text{loss})$ for $N=U^m$ is covered, including the endpoint after allocation of the original arbitrarily small losses, for every permitted $t\in[1,3/2]$ and actually returned $D$. Fixed reserve $h<1/8$ in $H_0\ll U^h$ is sufficient for the original cumulative height requirement.
 
 The majorant F4 still contains the original complementary dual ideals of each squarefree packet and any remaining terms of the source decomposition. They must be estimated with the same positive weights and the same actual profiles and row cutoff. This argument supplies no bound for their total, no estimate for the earlier signed all-column or cross-class pole, and no signed same-integer Robin restoration. It removes the separate nonsquarefree-column pure-power debt along this positive-majorant route; it does not prove a bound for the whole original positive moment or RH. No complete local Lean certification or literature-novelty claim is made.
+
+### Actual Gauss compression on all original column packets
+
+The applications below are conditional on the cited analytical inputs. The input for the actual adjoint is bramble_trace's manuscript [*Primitive sextic Kubota means and a sharp sixth-power-free large sieve*, paper 10/v2](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download), Theorem 1, Corollary 5 and §§7–8. Its §8 leaves the actual Gram condition (8.1) as an explicit hypothesis. The application here supplies that condition on a growing ideal-label family and consumes the resulting correction in F4. It reuses the known character-sum and matrix estimates; no literature-priority or independent analytic Lean-certification claim is made.
+
+#### The actual Gram, including all original zeros
+
+Fix one original finite physical presentation, its row scale $U$, and its fixed smooth nonnegative nonzero annular row majorant $\Omega$. Retain the original fixed finite prime exclusions $S$; here “good” means prime to every finite prime in $S$, for rows and labels. A restricted physical row set is enlarged only inside its positive squared norm. Work in this good sixth-power-free ideal row space, with the original multiplicative primary representatives. For $L\ge1$, let $\mathcal R_L$ consist of distinct sixth-power-free **ideals** $R$ prime to $S$, with $q_R\le L$; unit representatives of the same ideal are not distinct labels. Put
+
+$$
+v_R(z)=U^{-1/2}\sqrt{\Omega(q_z/U)}\,
+\gamma_1(z)\overline{\chi_z(R)}\,\mathbf1_{z\ {\rm squarefree}},
+\qquad V=(v_R)_{R\in\mathcal R_L},\qquad G=V^*V.
+\tag{G1}
+$$
+
+The same $V$ is used for every core packet in this presentation. Its zero extension on nonsquarefree rows embeds the vectors in the original larger row space. This auxiliary label cutoff $L$ is unrelated to the original row-Möbius cutoff $L_j=(b_\Omega U)^{1/6}$, which is unchanged. Since $|\gamma_1(z)|=1$ on squarefree good rows,
+
+$$
+G_{R,T}=U^{-1}\sum_{z\ {\rm good,sf}}
+\Omega(q_z/U)\chi_z(R)\overline{\chi_z(T)}.
+\tag{G2}
+$$
+
+Define
+
+$$
+C_\Omega=
+\frac{\operatorname{Res}_{s=1}\zeta_F(s)}{\zeta_F(2)}
+\int_0^\infty\Omega(y)\,dy
+\prod_{\mathfrak p\in S}(1+q_{\mathfrak p}^{-1})^{-1}>0,
+\qquad
+d_R=C_\Omega\prod_{\mathfrak p\mid R}(1+q_{\mathfrak p}^{-1})^{-1},
+\qquad D_L=\operatorname{diag}(d_R).
+\tag{G3}
+$$
+
+Here $S$ in the product denotes its finite primes. The uniform estimate needed below is
+
+$$
+\boxed{\ \|G-D_L\|\ll_{\varepsilon,\Omega,S}
+(UL)^\varepsilon U^{-1/2}L^{3/2}.\ }
+\tag{G4}
+$$
+
+For its character-sum input, directly reuse [Lemke Oliver–Thorner, Appendix A to Pasten, *Shimura curves and the abc conjecture*, arXiv:1705.09251v4](https://arxiv.org/pdf/1705.09251v4), Lemma A.3. At its parameter $T=1$, over the fixed field $F$, it states for a possibly imprimitive finite Hecke character $\xi$ modulo $\mathfrak q$, with primitive conductor $\mathfrak f$,
+
+$$
+\sum_b\xi(b)\Omega(q_b/Y)
+=\delta(\xi)\operatorname{Res}_{s=1}\zeta_F(s)
+\frac{\varphi_F(\mathfrak q)}{q_{\mathfrak q}}
+Y\int_0^\infty\Omega(y)\,dy
++O_{\varepsilon,\Omega}\!\left(
+q_{\mathfrak f}^{1/4+\varepsilon}q_{\mathfrak q}^{\varepsilon}Y^{1/2}\right).
+\tag{G5}
+$$
+
+A fixed finite partition of the annular profile puts it in that lemma's logarithmic support convention. Its imprimitive character is zero at every prime of $\mathfrak q$, including primes absent from $\mathfrak f$; those zeros are not deleted.
+
+For $R\ne T$, reduce the good-prime exponents of $RT^5$ modulo six. Some exponent is nonzero because the labels are distinct sixth-power-free ideals. The ratio in G2 therefore has a nontrivial tame component at that good prime. Sextic reciprocity gives a finite Hecke character of trivial infinite type, with
+
+$$
+q_{\mathfrak f}\ll_S q_{\operatorname{rad}(RT)}\le L^2,
+\qquad q_{\mathfrak q}\ll_S q_{\operatorname{rad}(RT)}\le L^2.
+$$
+
+The conductor and primary-convention facts are those of [Gao–Zhao, *Moments and One level density of sextic Hecke L-functions*, arXiv:2201.01885v2](https://arxiv.org/pdf/2201.01885v2), §§2.1, 3.1–3.2, including the conductor statement following (3.6). At a good prime the nonzero reduced exponent gives a nonprincipal local character of conductor exponent one. Changing between their multiplicative $E$-primary representatives and the chosen primary representatives contributes only the fixed bad-prime/unit characters. Such factors cannot cancel that good-prime component. Primes at which the exponents agree remain zero-only primes in $\mathfrak q$. Thus $\delta(\xi)=0$ in G5 for this ratio.
+
+Expand $\mu^2(z)=\sum_{d^2\mid z}\mu(d)$, keeping the exact zero-extended character. Apply G5 at $Y=U/q_d^2$ to each inner sum. The error is bounded using $\sum_{q_d\ll\sqrt U}q_d^{-1}\ll\log(2U)$, and hence
+
+$$
+|G_{R,T}|\ll (UL)^\varepsilon U^{-1/2}
+q_{\mathfrak f}^{1/4}
+\ll (UL)^\varepsilon U^{-1/2}L^{1/2}\quad(R\ne T).
+\tag{G6}
+$$
+
+For $R=T$, use the principal character with modulus supported on $SR$ in the same expansion. The main term is $d_R$: its local factor is $(1-q_{\mathfrak p}^{-1})/(1-q_{\mathfrak p}^{-2})$. The truncated main-term tail and G5 give $G_{R,R}=d_R+O((UL)^\varepsilon U^{-1/2})$. All modulus dependence is explicit in G5. There are $O_S(L)$ ideal labels, so the maximum absolute row sum proves G4.
+
+Since $d_R\gg_\varepsilon L^{-\varepsilon}$, for fixed $0<\varkappa<1/3$, $L\le U^{1/3-\varkappa}$ and all sufficiently large $U$,
+
+$$
+G>0,\qquad \|G\|+\|G^{-1}\|\ll_{\varkappa,\varepsilon,\Omega,S}(UL)^\varepsilon.
+\tag{G7}
+$$
+
+Choose the internal epsilon smaller than the fixed $\varkappa$ reserve before absorbing G4 in the smallest diagonal. The threshold depends on these fixed data. No invertibility assertion is made for a possibly empty bounded row annulus. This is a lower spectral estimate for the actual Gram, not an upper sieve bound used as a lower bound.
+
+#### Actual adjoint, projection and coherent coefficients
+
+Let $A_{U,X}$ have the same sixth-power-free rows, squarefree columns $q_n\asymp X$, and entries $\sqrt{\Omega(q_z/U)}\chi_n(z)$. All original finite column twists and the core mask stay in its actual column vector $b$. The negative orientation is treated by conjugating the whole family. The owned optimal sieve gives
+
+$$
+\|A_{U,X}\|^2\ll(UX)^\varepsilon\mathscr F_6(U,X),\qquad
+\mathscr F_6(U,X)=U+X+U^{5/6}X^{1/3}+U^{1/3}X^{5/6}.
+\tag{G8}
+$$
+
+Because $V$ is supported on squarefree rows, $A^*V$ is exactly the manuscript's §7 adjoint. The original fixed exclusions $S$ are covered by its stated fixed-extra-exclusion scope. Write $\rho_{\mathrm{prim},\nu;S}$ for the residue at $u=7/6$ of that primitive Gauss series with these same exclusions, and use the Mellin transform $\widehat\Omega(s)=\int_0^\infty\Omega(y)y^{s-1}\,dy$. Original column twists remain in $b$; they are not inserted as arbitrary row weights in that Gauss series. With precisely the manuscript's own fixed reciprocity section $\nu_{[n]}$, Corollary 5 gives
+
+$$
+\begin{aligned}
+A^*V&=W+E,\\
+W(n,R)&=U^{1/6}\widehat\Omega(2/3)
+\rho_{\mathrm{prim},\nu_{[n]};S}(nR),\\
+\|E\|^2&\le\|E\|_{\rm HS}^2
+\ll(UXL)^\varepsilon X L^{3/2}.
+\end{aligned}
+\tag{G9}
+$$
+
+The sum over labels retains its cost $\sum_{q_R\le L}q_R^{1/2}\ll L^{3/2}$. Repeated factors in $nR$ are allowed by that corollary. No uniformity in a growing extra bad-prime conductor or infinity type is assumed.
+
+By G7, $P=VG^{-1}V^*$ is the actual common row projection. Reuse the manuscript's §8 finite-matrix comparison, now with its Gram hypothesis supplied. With $T=A^*V$, $\|T\|\le\|A\|\sqrt{\|G\|}$ and $W=T-E$, it gives
+
+$$
+\begin{aligned}
+\|A^*PA-WG^{-1}W^*\|
+&\le\|G^{-1}\|(2\|T\|\|E\|+\|E\|^2)\\
+&\ll(UXL)^\varepsilon
+\left\{\sqrt{X\mathscr F_6(U,X)}L^{3/4}+XL^{3/2}\right\}.
+\end{aligned}
+\tag{G10}
+$$
+
+For the actual packet coefficients, define
+
+$$
+Q_P(b)=\|PAb\|^2,\qquad
+Q_\rho(b)=(W^*b)^*G^{-1}(W^*b).
+$$
+
+Thus $|Q_P(b)-Q_\rho(b)|$ is at most the right side of G10 times $\|b\|^2$. Every coefficient and the cross-label couplings through $G^{-1}$ remain. This is a coherent quadratic-form estimate; a positive label average has not replaced a coherent sum. The primitive residues here are those of the manuscript's sextic Gauss series, not the earlier isolated $\zeta_F(6z)$ term in F5–F6.
+
+#### Consumption with the same powerful-core weights
+
+Use F4's actual vectors $b_{j;c,a,\kappa}$ at $X=K_c=K/q_c$, the same projection $P$, the same $\Omega,U$, the original row cutoff and cumulative height allowance. Reuse the already owned coefficient support and D5 critical powerful-core sum:
+
+$$
+\sum_{c,a,\kappa}q_c^{1/2+\eta}\tau(\operatorname{rad}c)
+\|b_{j;c,a,\kappa}\|_2^2
+\ll_\varepsilon K^{1+\varepsilon}\mathcal P^2.
+$$
+
+Indeed each coefficient norm costs $K^\delta K_c^{1+\delta}\mathcal P^2$ and the remaining numerical sum is the same $\sum_c\tau(c)^2q_c^{-1/2+\eta}$ as in F6. F4's $\eta$ and every auxiliary exponent are allocated within the final epsilon; an independently fixed positive $\eta$ is not discarded. Empty ranges vanish; nonempty bounded subunit scales use the existing fixed annular enlargement. No condition $(a,c/a)=1$ is introduced.
+
+The bracket in G10 is nondecreasing in $X$. Multiply its actual-vector consequence by the same F4 weights and sum, obtaining
+
+$$
+\begin{aligned}
+&\sum_{c,a,\kappa}q_c^{1/2+\eta}\tau(\operatorname{rad}c)
+\left|Q_P(b_{j;c,a,\kappa})-Q_\rho(b_{j;c,a,\kappa})\right|\\
+&\qquad\ll(UKL)^\varepsilon K\mathcal P^2
+\left\{\sqrt{K\mathscr F_6(U,K)}L^{3/4}+KL^{3/2}\right\}.
+\end{aligned}
+\tag{G11}
+$$
+
+At $U\asymp K$, $L=K^{1/9-\varkappa}$, $0<\varkappa<1/9$, G7 has a fixed reserve and G11 is
+
+$$
+\ll K^{13/6-3\varkappa/4+\varepsilon}\mathcal P^2.
+\tag{G12}
+$$
+
+Choose the final $\varepsilon<3\varkappa/4$. This saves a fixed power against the generic unnormalized $K^{13/6}$ positive-moment scale. It includes all original columns through F4, independently of the original $D/N$ ratio. It is not an error bound at the stronger $K^2$ consumer scale.
+
+For each packet the exact remaining decomposition is
+
+$$
+\|Ab\|^2=Q_\rho(b)+\bigl(Q_P(b)-Q_\rho(b)\bigr)
++\|(I-P)Ab\|^2.
+$$
+
+The aggregate primitive-residue quadratic and the full orthogonal complement still require coefficient-sensitive upper bounds with the same weights. Positivity supplies no such upper bound. F6 pays a different isolated pure-power contraction and does not automatically pay either term here. This application controls an actual shared-row correction with its Gram hypothesis supplied; it does not bound the full F4 majorant, prove J, restore the signed Robin inequality, or prove RH.
 
 ## The possible FIB interface
 
