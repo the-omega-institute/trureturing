@@ -68,17 +68,28 @@ internal static class DigestionContextDecomposition
                                 ? occurrence.StartByte + before : occurrence.PreviousStartByte,
                             NextStartByte = child.NextStartByte is { } after
                                 ? occurrence.StartByte + after : occurrence.NextStartByte,
-                            GoverningContext = MergeScopes(occurrence.GoverningContext, child.GoverningContext, raw, local.CasObjects),
+                            GoverningContext = MergeScopes(occurrence.GoverningContext, child.GoverningContext,
+                                parentBody, raw, local.CasObjects),
                         };
                         Add(entry.AtomId, composed);
                     }
-                var first = leaves.MinBy(item => item.Occurrence.StartByte);
-                var last = leaves.MaxBy(item => item.Occurrence.EndByte);
+            }
+            var first = leaves.MinBy(item => item.Occurrence.StartByte);
+            var last = leaves.MaxBy(item => item.Occurrence.EndByte);
+            foreach (var occurrence in parentOccurrences)
+            {
                 ReplaceExterior(occurrence.PreviousAtomId, occurrence.PreviousStartByte,
                     first.AtomId, occurrence.StartByte + first.Occurrence.StartByte, next: true);
                 ReplaceExterior(occurrence.NextAtomId, occurrence.NextStartByte,
                     last.AtomId, occurrence.StartByte + last.Occurrence.StartByte, next: false);
             }
+            // All occurrences are composed before splicing. Edges between adjacent
+            // occurrences still name the old parent and must reach its new leaves.
+            foreach (var entry in adjustedEntries)
+                foreach (var occurrence in entry.Occurrences)
+                    RemapParentEdges(entry.AtomId, occurrence);
+            foreach (var (id, occurrences) in changes.ToArray())
+                foreach (var occurrence in occurrences.ToArray()) RemapParentEdges(id, occurrence);
             foreach (var (id, occurrences) in changes)
             {
                 var old = Existing(id);
@@ -110,10 +121,26 @@ internal static class DigestionContextDecomposition
             void ReplaceExterior(string? id, int? start, string replacement, int replacementStart, bool next)
             {
                 if (id is null) return;
-                var exterior = Existing(id).SingleOrDefault(item => item.StartByte == start)
+                var exterior = changes.GetValueOrDefault(id)?.SingleOrDefault(item => item.StartByte == start)
+                    ?? Existing(id).SingleOrDefault(item => item.StartByte == start)
                     ?? throw new FormatException($"CONTEXT_REFERENCE_MISSING atom_id={id}");
                 Add(id, next ? exterior with { NextAtomId = replacement, NextStartByte = replacementStart }
                     : exterior with { PreviousAtomId = replacement, PreviousStartByte = replacementStart });
+            }
+
+            void RemapParentEdges(string id, DigestionContextOccurrence occurrence)
+            {
+                occurrence = changes.GetValueOrDefault(id)?.SingleOrDefault(item => item.StartByte == occurrence.StartByte)
+                    ?? occurrence;
+                var before = parentOccurrences.SingleOrDefault(item => occurrence.PreviousAtomId == parent.AtomId
+                    && item.StartByte == occurrence.PreviousStartByte);
+                var after = parentOccurrences.SingleOrDefault(item => occurrence.NextAtomId == parent.AtomId
+                    && item.StartByte == occurrence.NextStartByte);
+                if (before is not null) occurrence = occurrence with
+                { PreviousAtomId = last.AtomId, PreviousStartByte = before.StartByte + last.Occurrence.StartByte };
+                if (after is not null) occurrence = occurrence with
+                { NextAtomId = first.AtomId, NextStartByte = after.StartByte + first.Occurrence.StartByte };
+                if (before is not null || after is not null) Add(id, occurrence);
             }
         }
         return result;
@@ -121,25 +148,31 @@ internal static class DigestionContextDecomposition
 
     private static ImmutableArray<DigestionContextScopePointer> MergeScopes(
         ImmutableArray<DigestionContextScopePointer> inherited, ImmutableArray<DigestionContextScopePointer> local,
-        RawRepositorySnapshot raw, ImmutableArray<DigestionCasObject> captured)
+        ImmutableArray<byte> parentBody, RawRepositorySnapshot raw, ImmutableArray<DigestionCasObject> captured)
     {
         var levels = local.Where(scope => scope.Relation == "heading").Select(Level).ToArray();
         var minimum = levels.Length == 0 ? int.MaxValue : levels.Min();
         var headings = inherited.Where(scope => scope.Relation == "heading" && Level(scope) < minimum)
             .Concat(local.Where(scope => scope.Relation == "heading"));
-        var scopes = inherited.Where(scope => scope.Relation != "heading")
+        // Structures contained in the parent are re-evaluated by the same local
+        // writer as the children. Only exterior structures remain inherited.
+        var exterior = inherited.Where(scope => scope.Relation != "heading"
+            && parentBody.AsSpan().IndexOf(Bytes(scope).AsSpan()) < 0).ToArray();
+        var scopes = exterior
             .Concat(local.Where(scope => scope.Relation != "heading"
-                && !inherited.Any(outer => outer.Relation == scope.Relation)));
+                && !exterior.Any(outer => outer.Relation == scope.Relation)));
         return headings.Concat(scopes.OrderBy(scope => scope.Relation == "enclosing-scope" ? 1 : 0))
             .Distinct().ToImmutableArray();
 
         int Level(DigestionContextScopePointer scope)
+            => MarkdigBlockAst.ParseOwned(Encoding.UTF8.GetString(Bytes(scope).AsSpan()))
+                .OfType<MarkdownHeading>().Single().Level;
+
+        ImmutableArray<byte> Bytes(DigestionContextScopePointer scope)
         {
             var path = DigestionCasStore.RootPath + scope.AtomId;
-            var bytes = captured.FirstOrDefault(item => item.RelativePath == path)?.Bytes
+            return captured.FirstOrDefault(item => item.RelativePath == path)?.Bytes
                 ?? raw.Entries.Single(item => item.Path == path).Bytes;
-            return MarkdigBlockAst.ParseOwned(Encoding.UTF8.GetString(bytes.AsSpan()))
-                .OfType<MarkdownHeading>().Single().Level;
         }
     }
 

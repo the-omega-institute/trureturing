@@ -3,11 +3,12 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class AtomContextMigrationCommand
+internal static partial class AtomContextMigrationCommand
 {
     // Explicit writer scope: observed source evidence, registered identities and their
     // actual chains. No ingest, status projection or coverage changes occur here.
-    internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadSource(
+    internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document,
+        DigestionContextPointerIndex? SavedIndex) ReadSource(
         IRepositoryGateway repository, string sourceId, RawRepositorySnapshot? overlay = null, string? sourceRevision = null,
         IReadOnlyList<string>? atomIds = null)
     {
@@ -42,7 +43,34 @@ internal static class AtomContextMigrationCommand
         // identities, chains, coverage and FILEMAP retain their validation authority.
         raw = DigestionQuerySelection.Merge(raw, RawRepositorySnapshot.Create(sourceRaw.Entries
             .Where(entry => entry.Path == source.SourcePath)));
-        return DigestionQuerySelection.ReadChains(repository, DigestionQuerySelection.Load(raw));
+        if (atomIds is { Count: > 0 })
+        {
+            var observed = sourceRaw.Entries.Single(entry => entry.Path == source.SourcePath).Bytes;
+            // Discover source roots by immutable bodies, before parsing accounts.
+            // Selection must not collapse an omitted neighboring chain to its root,
+            // while an account absent from this observation is not a dependency.
+            var ownerIds = repository.SearchCurrentPaths([$":(glob){sourceRoot}*/*.yaml"])
+                .Where(BackfillInventoryLoader.IsCanonicalPath).Select(Path.GetFileNameWithoutExtension)
+                .OfType<string>().Distinct(StringComparer.Ordinal).ToArray();
+            var bodies = repository.ReadCurrent(ownerIds.Select(id =>
+                DigestionQuerySelection.Literal(DigestionCasStore.RootPath + id)).ToArray());
+            var saved = TryUseSavedGraph(repository, raw, source, atomIds, observed, bodies);
+            if (saved is { } reused) return reused;
+            var observedIds = bodies.Entries.Where(body => !body.Bytes.IsEmpty
+                    && observed.AsSpan().IndexOf(body.Bytes.AsSpan()) >= 0)
+                .Select(body => Path.GetFileName(body.Path));
+            var fresh = AtomizerRegistry.Require(source.Atomizer).Atomize(observed.AsSpan());
+            var references = DigestionAtomContextProjection.SourceReferenceRootIds(fresh.Claims, observed,
+                System.Text.Encoding.UTF8.GetString(observed.AsSpan()));
+            references.UnionWith(observedIds);
+            var referenced = DigestionQuerySelection.ReadAtoms(repository, references.ToArray());
+            raw = DigestionQuerySelection.Merge(raw, referenced.Raw);
+            loaded = DigestionQuerySelection.Load(raw);
+            raw = DigestionQuerySelection.Merge(raw, repository.ReadCurrent(
+                loaded.Document.RequireDigestionEntries().Select(DigestionQuerySelection.CasPath).ToArray()));
+        }
+        var complete = DigestionQuerySelection.ReadChains(repository, DigestionQuerySelection.Load(raw));
+        return (complete.Raw, complete.Snapshot, complete.Document, null);
     }
 
     internal static CommandResult Run(string root, IRepositoryGateway repository, IReadOnlyList<string> arguments,
@@ -88,7 +116,8 @@ internal static class AtomContextMigrationCommand
                 try
                 {
                     var loaded = ReadSource(repository, sourceId, sourceRevision: sourceRevision, atomIds: atomIds);
-                    var built = DigestionContextIndexBuilder.Build(loaded.Snapshot, loaded.Document, sourceId);
+                    var built = loaded.SavedIndex is { } savedIndex ? new DigestionContextIndexBuild(savedIndex, [])
+                        : DigestionContextIndexBuilder.Build(loaded.Snapshot, loaded.Document, sourceId);
                     built = built with { Index = DigestionContextPointerStore.PreserveSavedGraph(loaded.Raw, built.Index) };
                     var final = DigestionContextPointerStore.Add(loaded.Raw, built.Index);
                     var before = loaded.Raw.Entries.ToDictionary(entry => entry.Path, StringComparer.Ordinal);

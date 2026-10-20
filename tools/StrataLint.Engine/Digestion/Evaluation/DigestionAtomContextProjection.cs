@@ -488,7 +488,7 @@ internal static class DigestionAtomContextProjection
     // Writer reference identities include fresh
     // claims, physical blocks/rows, and the definition/header before a table body.
     // Content identity may assign any of them to a different ledger source.
-    private static HashSet<string> SourceReferenceRootIds(ImmutableArray<DigestionAtom> fresh,
+    internal static HashSet<string> SourceReferenceRootIds(ImmutableArray<DigestionAtom> fresh,
         ImmutableArray<byte> source, string text)
     {
         var ids = fresh.Select(static atom => atom.Fingerprints.RawSha256[7..]).ToHashSet(StringComparer.Ordinal);
