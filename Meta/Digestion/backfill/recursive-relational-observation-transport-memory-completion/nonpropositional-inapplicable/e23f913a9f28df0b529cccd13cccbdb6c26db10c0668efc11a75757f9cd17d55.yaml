@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e23f913a9f28df0b529cccd13cccbdb6c26db10c0668efc11a75757f9cd17d55
+  normalized_sha256: sha256:e23f913a9f28df0b529cccd13cccbdb6c26db10c0668efc11a75757f9cd17d55
+cas_ref: sha256:e23f913a9f28df0b529cccd13cccbdb6c26db10c0668efc11a75757f9cd17d55
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional notation: this atom fixes the four-phase readout assumptions and names Gamma and the background term; it has no mathematical conclusion.'
+    previous_atom_id: 23bb8cc8a96a92f521eeacefa8fcee8df0013a814846a130ecc7d0e0990c43ff
+    next_atom_id: affd8639141d7c41005250ef0f17121c0c7c197c26fc272f652816d992139edd
