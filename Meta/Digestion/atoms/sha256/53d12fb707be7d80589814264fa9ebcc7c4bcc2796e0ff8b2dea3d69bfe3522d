@@ -1,0 +1,13 @@
+固定 FIB 第 \(j\) 代并任选嵌入
+\(\iota_j:E_j\to D_j\subset\mathbb R^d\)。给定外加漂移、噪声和小参数
+\[
+dX_t^{\varepsilon,j}
+=b_j(X_t^{\varepsilon,j})\,dt
++\sqrt{\varepsilon}\,\sigma_j(X_t^{\varepsilon,j})\,dW_t,
+\qquad
+a_j=\sigma_j\sigma_j^{\mathsf T}.
+\]
+反射、吸收或周期边界、初态律和时间单位均需另行指定。若 \(a_j\) 可逆，对绝对连续路径 \(\phi\) 定义
+\[
+I_{j,T}(\phi\mid x_0)
+=

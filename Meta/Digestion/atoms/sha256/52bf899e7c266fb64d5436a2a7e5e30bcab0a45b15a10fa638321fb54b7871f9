@@ -1,0 +1,55 @@
+## 88. FIB 上下文图上的渗流、随机簇与有限尺寸阈值
+
+取 FIB 递归给出的有限上下文图 \(G_j=(V_j,E_j)\)，另行给每条边独立开通状态
+\(\omega_e\sim\operatorname{Bernoulli}(p_e)\)，并令
+\(u\leftrightarrow_\omega v\) 表示存在开通路径。簇为
+\[
+C_\omega(u)=\{v\in V_j:u\leftrightarrow_\omega v\}.
+\]
+边集、重复边处理、开通概率、独立性、边界和图序列均不是 FIB 递归自动确定的。
+
+对均匀 \(p_e=p\) 和边界端集 \(B_j^-,B_j^+\)，跨越概率
+\[
+\Theta_j(p)=\Pr_p(B_j^-\leftrightarrow B_j^+)
+\]
+是 \(p\) 的单调多项式。平均易感度为
+\[
+\chi_j(p)
+=\frac1{|V_j|}\sum_{u,v}\Pr_p(u\leftrightarrow v)
+=\frac1{|V_j|}\sum_u\mathbb E_p|C_\omega(u)|.
+\]
+Russo 公式给出
+\[
+\frac d{dp}\Theta_j(p)
+=\sum_{e\in E_j}
+\Pr_p(e\text{ 对跨越事件为 pivotal}).
+\]
+单个有限图没有无限簇和严格临界点；可由
+\(\Theta_j(p_{j,q})=q\) 定义依赖 \(q\)、边界和尺度的伪阈值。
+
+若图序列在指定根点律下收敛到无限图 \(G\)，才可定义
+\[
+\theta(p)=\Pr_p(|C_\omega(o)|=\infty),
+\qquad
+p_c=\inf\{p:\theta(p)>0\}.
+\]
+若极限图只是无限路径，则 \(p_c=1\)，非平凡内部阈值不存在。若上下文图另加不可约多型 Galton–Watson 树结构，类型均值矩阵为 \(M\)、开边概率为 \(p_{ab}\)，则开簇均值矩阵
+\[
+B_{ab}=M_{ab}p_{ab}
+\]
+在标准二阶矩条件下以 \(\rho(B)=1\) 为生存阈值；普通词替换矩阵只有在确实实现独立树状分枝时才能充当 \(M\)。
+
+若再假设尺度 \(L_j\)、体积 \(|V_j|\asymp L_j^{d_f}\)、相关长度
+\(\xi(p)\asymp|p-p_c|^{-\nu}\)，则可条件性地写
+\[
+\Theta_j(p)
+=\Phi((p-p_c)L_j^{1/\nu})+o(1),
+\]
+\[
+\chi_j(p)\asymp
+L_j^{\gamma/\nu}\Psi((p-p_c)L_j^{1/\nu}),
+\qquad
+\theta(p)\asymp(p-p_c)^\beta.
+\]
+这些是附加标度假设或待检验结果，不能把词长 \(|W_j|\sim\varphi^j\) 直接当图距离。相关开边、长记忆环境和重复边会改变阈值；有限图大簇不等于无限簇，FIB 不自动推出真实物理相变。
+

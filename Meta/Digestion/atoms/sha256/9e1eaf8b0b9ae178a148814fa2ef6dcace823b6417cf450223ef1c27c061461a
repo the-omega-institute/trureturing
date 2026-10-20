@@ -1,0 +1,31 @@
+**Proposition 20.8 (Achieved endpoint costs and the global time boundary).** For the particular uncapped rule of Theorem 20.3, with $M$ fixed by its risk,
+
+$$
+\begin{aligned}
+\mathbb E_{i,q}L
+&=\frac{4MF_i(1)^2}{C_i}\,q^{-2}(1+O_H(q))
+&& (q\downarrow0),\\
+\mathbb E_{i,e^{-s}}L
+&=\frac{20M(9!)^2}{C_i}\,s^{-21}(1+O_H(s))
+&& (s\downarrow0).
+\end{aligned} \tag{20.28}
+$$
+
+The second line is an inefficiency of fixed-small-sum rejection, not an unknown-$q$ optimal-order assertion. No fixed finite deadline, and no uniformly finite mean read count, can support a two-family risk bound $\alpha<1/2$ on the entire open interval.
+
+Proof. Near zero, (20.26) gives
+$\eta_i(q)=(C_i/F_i(1)^2)q^2(1+O_H(q))$. Substitute in (20.9); its initial cost is bounded and gives a smaller relative error. Near one, the monicity and degree nine of both polynomials, with (18.13), give
+
+$$
+\begin{aligned}
+Z_i(e^{-s})&=9!s^{-10}(1+O_H(s)),&
+\mu_i(e^{-s})&=10/s+O_H(1),\\
+\beta_i(e^{-s})&=11/(2s)+O_H(1),&
+\eta_i(e^{-s})&=\frac{C_i}{(9!)^2}s^{20}(1+O_H(s)).
+\end{aligned} \tag{20.29}
+$$
+
+For the waiting mean, the leading numerator in (20.13) is $11!s^{-12}$ and its denominator is $2\cdot10!s^{-11}$. All remaining polynomial terms have at least one lower power, so the remainders stated here follow from the same power-sum bounds. Formula (20.9) proves the second line of (20.28), including every rejected long pair. No sharp near-one composite cost is inferred.
+
+The final paragraph of Theorem 18.4 already proves that, at either endpoint, each fixed-length same-$q$ pair of stationary window laws coalesces in total variation. These pairs lie inside the two composite families. The minimum sum of two errors tends to one, so no fixed deadline can make both errors at most any fixed number below $1/2$. For the mean assertion, suppose a uniformly $\alpha$-correct stopping rule had $B:=\sup_{i,q}\mathbb E_{i,q}L<\infty$. Choose $\alpha<\alpha'<1/2$ and an integer $W>B/(\alpha'-\alpha)$. Truncating that rule at $W$, with a fixed default on timeout, gives both family-wise errors at most $\alpha+B/W<\alpha'$, a contradiction. Independent randomization does not alter either argument. This excludes a uniformly bounded mean, while leaving the pointwise finite mean in (20.9) intact. $\square$
+

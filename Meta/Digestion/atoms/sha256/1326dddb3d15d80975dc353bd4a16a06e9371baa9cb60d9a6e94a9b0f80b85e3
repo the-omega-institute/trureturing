@@ -1,0 +1,178 @@
+**Theorem 110.3 (a root-visible limit at fixed positive time).**
+For every fixed $s>0$,
+
+$$
+\begin{aligned}
+\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nx_n&\longrightarrow D(s),\\
+\mathcal C_{n+1}\mathcal A_nS_n(s)x_n&\longrightarrow0,\\
+\mathcal C_{n+1}\bigl[S_{n+1}(s)\mathcal A_n
+                  -\mathcal A_nS_n(s)\bigr]x_n
+ &\longrightarrow D(s)
+   =-c\sqrt\kappa\,\langle F_s(\Sigma)v,b\rangle.
+\end{aligned}
+\tag{110.9}
+$$
+
+All three convergences are uniform on compact subintervals of
+$(0,\infty)$. Their endpoint, in the stated order of limits, is
+
+$$
+\lim_{s\downarrow0}D(s)
+ =-(c-1/2)\sqrt{2-c}=:-\eta<0.
+\tag{110.10}
+$$
+
+There is an $s_*>0$, independent of $n$, such that
+$D(s)\le-3\eta/4$ for every $0<s\le s_*$. On the fixed closed window
+$[s_*/2,s_*]$, all sufficiently large $n$ have root commutator in
+(110.9) at most $-\eta/2$, uniformly in $s$.
+No value of $s_*$ or bound at $s=1/100$ is asserted.
+For every finite $n$, the commutator at $s=0$ is zero; convergence
+through zero is not uniform.
+
+Proof. Positive-time smoothing is essential because
+$\|\mathcal C_n\|=\sqrt{N_n-1}$ on the centered counting space.
+Let $g_n=P_n\delta_r$ and use $h_n(s)$ of (103.10). Unitarity of
+$U_n$ and (103.11) give the exact bound
+
+$$
+\|\mathcal C_nS_n(s)\|=\|h_n(s)\|
+ \le \frac{V}{\sqrt{2es}}=:B_s,
+\qquad V=\sup_n\|v_n^{\mathrm e}\|<\infty.
+\tag{110.11}
+$$
+
+Indeed $\sup_{x>0}x^{-1/2}e^{-s/x}=(2es)^{-1/2}$, and (98.6)
+bounds the edge vectors. The centered singleton spaces give zero
+on both sides of the norm identity. Thus this is a bound on the
+smoothed root port, not on $\mathcal C_n$ itself.
+
+For the exact smooth root term, denote the path-summation map by
+$\mathscr J_j$ to distinguish it from ancestry. On actual edges,
+(103.3), (103.6) and the polar map give
+
+$$
+U_jP_j\mathscr J_j e
+ =-\sqrt{N_j}\,\Sigma_j^{1/2}e,
+\qquad
+\bigl(S_j(s)P_j\mathscr J_j e\bigr)(r)
+ =-\langle F_s(\Sigma_j)v_j^{\mathrm e},e\rangle.
+\tag{110.12}
+$$
+
+For the first equality use
+$U_j=-K_j^{-1/2}D_j$ and $D_j\mathscr J_j e=e$.
+Pairing it with $h_j(s)=\Sigma_j^{-1/2}F_s(\Sigma_j)v_j^{\mathrm e}$
+proves the second, with inverses restricted to actual edges.
+The omitted coordinates contribute zero. On a singleton the actual
+edge space is zero and the centered equation is also zero.
+
+Here $Z_n=\mathscr J_{n+1}b_n$ exactly: its constants refer to the
+successor's two complete subtrees, not just old vertices. Equation
+(110.12), covariance norm convergence (98.6), vector convergence
+$v_{n+1}^{\mathrm e}\to v$, and $b_n\to b$ imply
+
+$$
+\bigl(S_{n+1}(s)P_{n+1}Z_n\bigr)(r)
+ \longrightarrow-\langle F_s(\Sigma)v,b\rangle.
+\tag{110.13}
+$$
+
+The operator continuity here is the mature continuous functional
+calculus used in Theorem 103.3; its uniformity away from zero is
+already part of that theorem. Spectral and polar calculus are
+`literature-attested` intermediate results; see
+[Teschl, *Mathematical Methods in Quantum Mechanics*, §3.1,
+Theorem 3.7 and Problem 3.11, and §6.2, Theorem 6.6](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+The source-specific copied-charge correspondence (110.6) supplies
+an initial state to this calculus; it does not follow from a scalar
+root resolvent.
+
+Both centering projections are accounted for before using that
+correspondence. If $\bar u_n=N_n^{-1}\sum z_n\chi_n$, then
+$x_n=(z_n\chi_n-\bar u_n\mathbf1)/d_n$.
+Since $J_n\mathbf1=\mathbf1$, the successor projection removes this
+entire old mean exactly. Therefore
+
+$$
+\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nx_n
+ =\frac{\sqrt{N_n}}{d_n}
+ \bigl(S_{n+1}(s)P_{n+1}J_n(z_n\chi_n)\bigr)(r).
+\tag{110.14}
+$$
+
+The successor mean of $Z_n$ is retained by $P_{n+1}$; the constants
+$\alpha_n,\beta_n$ are not presumed to center that successor field.
+For the corrector term in (110.6), self-adjointness, a heat split,
+and $\|L_je^{-N_jsL_j/2}\|\le2/(eN_js)$ give
+
+$$
+\begin{aligned}
+\left|\bigl(S_{n+1}(s)L_{n+1}\widetilde H_n\bigr)(r)\right|
+ &\le\frac{B_{s/2}}{\sqrt{N_{n+1}}}
+       \frac{2\|\widetilde H_n\|}{eN_{n+1}s}
+   =O\left(\frac{nB_{s/2}}{N_{n+1}s}\right),\\
+\left|\bigl(S_{n+1}(s)P_{n+1}R_n^{\mathrm{new}}\bigr)(r)\right|
+ &\le\frac{B_s}{\sqrt{N_{n+1}}}\|R_n^{\mathrm{new}}\|.
+\end{aligned}
+\tag{110.15}
+$$
+
+The Laplacian term already has zero counting mean. Both bounds tend
+to zero, uniformly on every compact positive-time interval.
+Since $\sqrt{N_n}/d_n\to\kappa^{-1/2}$, equations (110.6) and
+(110.13)--(110.15) prove the first line of (110.9), with coefficient
+$\theta/\sqrt\kappa=c\sqrt\kappa$ and the displayed negative sign.
+
+For the other order, (109.9)--(109.10) give, for every $a>0$,
+
+$$
+\|S_n(a)x_n\|
+ =O\left(\frac{n}{N_na}+\frac1{\sqrt{N_n}}\right)\longrightarrow0,
+\tag{110.16}
+$$
+
+uniformly for $a$ in compact positive-time intervals. This uses the
+old closed blocks and their zero seam corrector values. It does not
+assume a uniform spectral gap on arbitrary original sources.
+For every centered old field $u$ and $n\ge2$, the actual root fibre
+has size one. Summing all other fibres through $m_n=\varphi+\chi_n$
+and retaining the successor projection gives exactly
+
+$$
+\mathcal C_{n+1}\mathcal A_nu
+ =\mathcal C_nu-\frac{\sqrt{N_n}}{N_{n+1}}\langle\chi_n,u\rangle.
+\tag{110.17}
+$$
+
+The multiplier
+$\sqrt{N_n}\|\chi_n\|/N_{n+1}$ is bounded, since $|\chi_n|\le2$
+and $N_{n+1}\ge N_n$. With $u=S_n(s)x_n$, its second term tends to
+zero by (110.16). Its first term is bounded by
+$B_{s/2}\|S_n(s/2)x_n\|$ and also tends to zero. This proves the
+second and third lines of (110.9) and their positive-time uniformity.
+For $n=0,1$ the centered input is zero, so the exceptional size-three
+root fibre at the beta singleton adds no omitted term.
+
+Finally, Theorems 99.1 and 103.3 give
+$F_s(\Sigma)v\to P_{(\ker\Sigma)^\perp}v=v-q$ strongly as
+$s\downarrow0$, where $q_p=2^{-|p|}$. The two first-edge coordinates
+of $v-q$ are $c-1/2$ and $c^2-1/2=-(c-1/2)$. Thus
+
+$$
+c\sqrt\kappa\,\langle v-q,b\rangle
+ =c\sqrt\kappa(c-1/2)(\sqrt c+c^{-1/2})
+ =(c-1/2)\sqrt{2-c},
+\tag{110.18}
+$$
+
+using $c(1+c)=1$. Strong spectral continuity and (110.18) prove
+(110.10) and give an $s_*>0$ with
+$|D(s)+\eta|\le\eta/4$ for $0<s\le s_*$. Uniform convergence in
+(110.9) on $[s_*/2,s_*]$ then gives the finite lower discrepancy
+$\eta/2$ for all sufficiently large $n$. This is one fixed window,
+not a sequence $s_n\to0$. At $s=0$ each finite heat operator is the
+identity, so each finite commutator vanishes exactly. In particular,
+there cannot be a common finite threshold in $n$ enforcing a nonzero
+bound all the way down to zero. $\square$
+

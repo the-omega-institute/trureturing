@@ -1,0 +1,10 @@
+## 定义 141.1（有限素数 pinching）
+
+\[
+\boxed{
+\mathcal E_S(\rho)
+=
+\sum_aP_a^S\rho P_a^S.
+}
+\]
+

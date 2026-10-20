@@ -1,0 +1,36 @@
+**推论 46.7（族内尖锐对数率与类的最坏阶）。** 令 $\varphi=(1+\sqrt5)/2$，所有此处对数取自然对数。对（TM.4612）的实际族和最小显示上限有
+
+$$
+ \frac{H_K}{R^2}\longrightarrow12\varphi,\qquad
+ |\mathcal G_K|=R^2=\Theta(H_K),\qquad
+ d_{\min}(\mathcal G_K;H_K)
+ =\frac{\log H_K}{2\log\varphi}+O(1).
+ \tag{TM.4622}
+$$
+
+显示执行器的达到深度 $K+3$ 具有同一个主系数，距离最优至多两次接受替换。更一般地，对每个整数 $H\ge H_0=448$，选最大的 $K$ 使 $H_K\le H$，在该同一 $H$ 合同中仍有实际常量标签族 $\mathcal G_K$，其目标数为 $\Theta(H)$，且
+
+$$
+ d_{\min}(\mathcal G_K;H)
+ =\frac{\log H}{2\log\varphi}+O(1).
+ \tag{TM.4623}
+$$
+
+这里 $O(1)$ 常数统一于所述 $K,H$。若 $D_{\mathrm{ord}}(H)$ 表示定义 46.1 中可恢复常量标签类的最优深度的上确界，则
+
+$$
+ \frac{\log H}{2\log\varphi}-O(1)
+ \le D_{\mathrm{ord}}(H)\le J_H
+ =\frac{\log H}{\log\varphi}+O(1),
+ \qquad D_{\mathrm{ord}}(H)=\Theta(\log H).
+ \tag{TM.4624}
+$$
+
+（TM.4624）没有确定全类的最优主系数；（TM.4622）—（TM.4623）的主系数只对所显示实际族精确。
+
+证明。令 $\psi=(1-\sqrt5)/2=-\varphi^{-1}$。序列 $(\varphi^n-\psi^n)/\sqrt5$ 满足相同递推和初值，所以 $F_n=(\varphi^n-\psi^n)/\sqrt5$。于是 $R=\varphi^{K+5}(1+o(1))/\sqrt5$，$F_{K+6}/R\to\varphi$。由（TM.4612）得到 $H_K/R^2\to12\varphi$ 及 $\log H_K=2K\log\varphi+O(1)$。定理 46.6 的两端相差二，给（TM.4622）。
+
+$H_K$ 严格递增且趋于无穷，$H_{K+1}/H_K\to\varphi^2$；其全部相邻比率有统一有限上界。所选最大 $K$ 满足 $H_K\le H<H_{K+1}$，故 $H/H_K$ 在统一有界区间内，$\log H-\log H_K=O(1)$ 且 $R^2=\Theta(H)$。定理 46.6 已证明扩大上限后同一族的夹界仍成立，给（TM.4623）。最后推论 35.5 的 $J_H$ 对每条合法路径都成立，其 Fibonacci 定义和上述公式给上端；所选实际族给下端。非空可恢复单行类保证该上确界有意义，有限整数界保证它有限。$\square$
+
+这量化了某个可取得目标所需的接受深度，不把它等同于所有物理时间或总来源调用。窗口仍只有单位历史；增长发生在资源投影与真实取得记录。定理 44.5 的稀疏任意精确深度族仍成立，此处补的是目标数线性于上限的密集族及必要深度的对数率，不作另一次无界性发现。
+

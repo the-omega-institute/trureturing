@@ -1,0 +1,41 @@
+### 20.4 尚须控制的量与来源边界
+
+在第 18 节合同下，令
+
+$$
+\mathfrak c_{{\rm exact},S}(f)=\sigma_S(f)-D_{\rm lin}(f)-b_S\|f\|_1^2.
+$$
+
+则有
+
+$$
+Q_{\rm full}(f)=\mathfrak c_{{\rm exact},S}(f)
++\bigl[b_S\|f\|_1^2-N_S(f)\bigr],\qquad
+b_S\|f\|_1^2-N_S(f)\ge0,
+$$
+
+其中 $N_S=D_{\rm corr}-D_{\rm lin}$。因此证书变负仍与实际 $Q_{\rm full}$ 非负相容；被扣预算与实际余项之间的差额正是未被粗界解释的部分。
+
+障碍落在 $b_S\|f\|_1^2$ 这一绝对预算，并未给出 $D_{\rm corr}(f_{\mathcal R})>\sigma_S(f_{\mathcal R})$，也未决定不扣预算时 $L_S(f)-D_{\rm lin}(f)$ 的符号。条件性推导只说明：在同一族上，除去共同因子 $\chi_S$ 后，最有利的正迹与线性补偿上界为 $O(1)+O(\mathcal R)$，而保留预算至少为固定正系数乘 $\mathcal R^4$。
+
+需要研究的实际有符号余项是
+
+$$
+N_S(f)=D_{\rm corr}(f)-D_{\rm lin}(f)
+=2\operatorname{Re}\operatorname{Tr}(C^3RB_f\mathcal F_SQ).
+$$
+
+在极点消去及支撑完整合同下，足够的联合条件为
+
+$$
+N_S(f)\le\sigma_S(f)-D_{\rm lin}(f)
+$$
+
+对全部 constrained 测试成立，并保留低频区、增长的支撑、同一测试的 Euler 相位及所有活跃素幂。这是待证估计，不能把它改名为非负几何量就宣告成立，也不能用 $A_f$ 与 $\mathcal F_S$ 交换代替尚未成立的 $A_f$ 与 $C$ 交换。
+
+文献接口复用 [Burnol math/0208121v1](https://arxiv.org/abs/math/0208121v1) 的固定 cutoff 与实际评价生成元、[Connes–Consani 2006.13771v1](https://arxiv.org/abs/2006.13771v1) 的 archimedean 迹合同及 [Connes–Consani–Moscovici 2310.18423v2](https://arxiv.org/abs/2310.18423v2) 的有限 $S$ 运输。三者不被引用为上述全支撑联合估计。CC 的小支撑 Theorem 6.11 不用于本节扩张测试。支撑增长、完整约束与预算失效的组合是本卷的候选综合推导；限定来源检索未取得足够的统一供应定理，不认证原创性。
+
+FIB 的 $\beta=\rho(\alpha)$、五模式分辨和四相运输仍提供独立的来源—观察几何。它们尚未给出通向这里物理 prime-dilation、实际 Sonin 投影或 $N_S(f)$ 的交织定理。五模式长度守恒不能替代 Robin 的约数倒数预算，也不能替代本节所缺的有符号联合估计。
+
+本文新增桥接未摄入 atom、未 deposit 或 cover，未执行 Lean 构建，未给出实际加权迹数值证书。上述失效结论始终受第 19.1 节明列的纸面合同约束；RH 及其完整 Robin/Weil 判据目标保持未解决。
+

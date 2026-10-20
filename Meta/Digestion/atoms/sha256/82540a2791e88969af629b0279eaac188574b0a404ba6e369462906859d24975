@@ -1,0 +1,2 @@
+**来源 1080.2（项目接口）。** 实际读取并使用的项目源码为 `D5/S3/ConceptDynamics/Attribution/StabilizerSelectorObstruction.lean`、`D5/S3/TotalVariation/Convexity.lean`、`D5/S3/ConceptDynamics/SufficiencyQuotient/MinimalPredictionBeliefState.lean` 与 `D5/S3/ConceptDynamics/Sufficiency/SufficiencyIsTargetRelative.lean`。分别对应稳定子选择障碍、有限全变差混合不等式、指定问题族的预测商及目标与时间范围的充分性边界。所用对象与前提在第 1067–1068、1077–1078 节明确保留；源码阅读没有替代当前 Lean 应用或公理闭包核验。
+

@@ -334,7 +334,7 @@ private theorem pairDerivation_singleton (D : LatticeData) (charge : Charge D)
   simp [singletonPolynomial, Derivation.leibniz, smul_eq_mul,
     pairDerivation, mkDerivation_X, MvPolynomial.derivation_C]
 
-private theorem pairDerivation_variable (D : LatticeData) (index other : Index D) :
+theorem pairDerivation_variable (D : LatticeData) (index other : Index D) :
     pairDerivation D index (X (some other)) = pairPolynomial D index other := by
   simp [pairDerivation, mkDerivation_X]
 

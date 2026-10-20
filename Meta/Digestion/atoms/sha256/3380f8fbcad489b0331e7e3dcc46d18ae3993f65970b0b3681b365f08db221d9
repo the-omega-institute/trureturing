@@ -1,0 +1,30 @@
+### 22.1 保留原测试与物理素数集
+
+继续取第 19.3 节的实偶 bump $\phi$ 及
+
+$$
+f_{\mathcal R}(x)=\mathcal R^{-1/2}
+\left[\phi'-4\mathcal R^{-2}\phi'''\right](x/\mathcal R).
+$$
+
+其实际支撑为 $[-\mathcal R/2,\mathcal R/2]$，自相关支撑为 $[-\mathcal R,\mathcal R]$，且 $\widehat f_{\mathcal R}(0)=\widehat f_{\mathcal R}(i/2)=\widehat f_{\mathcal R}(-i/2)=0$。这些直接复用第 19.3 节，不把约束在数值意义下放松。所有纯素数幂仍出现在第 21.3 节的完整相位导数中。
+
+取有限实际素数集
+
+$$
+\mathcal P_{\mathcal R}^{\rm act}\subseteq\mathcal P
+\subseteq\{p:p\le e^{\mathcal R}\},\qquad
+S=\{\infty\}\cup\mathcal P.
+$$
+
+左侧保证支撑完整；右侧不是支撑完整的必要条件，而是以下把素数相位预算与 $\chi_S$ 比较所用的额外限制。由于活跃素幂满足 $k\log p\le\mathcal R$，最小活跃素数集确实满足右侧。若另加 $p>e^{\mathcal R}$，第 21.3 节的 $\mathfrak d_S$ 上界仍可使用，但以下 $\mathcal R\log\chi_S$ 替换不再由该论证保证。
+
+记 $u,v,M_*,\mathcal R_0,\eta,c_0,b_S,\chi_S$ 为第 19—20 节原量，并定义固定于 $\phi$ 与 Gamma 因子的常数
+
+$$
+E_\phi=\|\phi'''\|_2+4\|\phi^{(5)}\|_2,\qquad
+C_{\phi,\Gamma}=2a_\Gamma M_*
++2b_\Gamma\sqrt{M_*}\,E_\phi,
+\qquad c_{\rm res}=\frac{u^2\eta^3}{c_0}>0.
+$$
+

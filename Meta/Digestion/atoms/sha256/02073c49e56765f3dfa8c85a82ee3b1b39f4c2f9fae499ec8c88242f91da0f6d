@@ -1,0 +1,8 @@
+要重新选择出 Fibonacci–golden factorization，必须额外加入：
+
+* 整数格；
+* 非负性；
+* 原始性；
+* unimodularity；
+* 指定的 base/contact 排序。
+

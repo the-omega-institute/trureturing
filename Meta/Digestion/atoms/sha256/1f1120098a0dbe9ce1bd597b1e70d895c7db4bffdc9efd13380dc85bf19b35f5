@@ -1,0 +1,6 @@
+其观察含义为：
+
+- kernel \(\mathcal O_K^\times\)：素理想赋值看不见的生成元 gauge；
+- image：能够来自全局元素的 principal divisor；
+- cokernel \(\operatorname{Cl}(K)\)：局部整数指数族不能由单个全局元素产生的 principalization 障碍。
+

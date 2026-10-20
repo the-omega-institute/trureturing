@@ -1,0 +1,7 @@
+任取总 Choi 秩至多二的竞争者。分两种情况：
+
+1. 若 $\operatorname{rank}J_1\le1$，已有（218.27），距离至少为 $q$。
+2. 若 $\operatorname{rank}J_1=2$，总秩预算迫使 $J_0=0$。竞争者永不输出结果标签 $0$。取输入 $P$ 并检验输出效果
+   $|0\rangle\langle0|^Q\otimes I_{\mathrm{out}}$：
+   目标概率为 $1-q$，竞争者概率为零，故完整半 diamond 距离至少为 $1-q$。
+

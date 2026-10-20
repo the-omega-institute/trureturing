@@ -2102,3 +2102,557 @@ $kL$ 没有证明在扩大类内可达到，也没有确定该类的精确最小
 依推论 16.2 使用；对任意原生准备器的该成员前提没有新结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 19. Two further state families in the same free-completion graph
+
+**Convention 19.1 (exact class and the credited core).** Fix any integers
+$k,L\ge4$, let $n=k+L-1$ and $u=k+L-6$, and retain the distinct
+positive original positions and costs $c_i=s_i+4$, $W=\sum_i c_i$.
+Throughout Sections 19–22, $P$ is one complete graph in Definition 9.1's
+$\mathcal C_{k,L}$, at both same-input caps $t_P\le n$, $J_P\le W$.
+Its five distinguished labels and the ordering of $U$ are arbitrary.
+All installed running states count, including unused states and states
+used only after certification. Every label and both successors are fixed;
+only the current counted state changes. Total correctness and termination
+are required on the entire Boolean cube. Adaptive orders, repeats,
+sharing, aliases and cycles in the union graph remain allowed.
+
+In particular, the two certificate edges of Definition 9.1 have priority
+even on the last $U$ query. Every other full-$U$ ordered edge has its own
+independent free target, and all four failed-head continuations are free.
+Definition 2.3 is not a necessary decoder, and the superseded necessity
+assertion in Lemma 9.3 is not used.
+
+The corrected suppliers Lemmas 14.1, 15.1, 15.5, 15.6 and Theorem 14.5,
+as assembled in Theorem 16.1, allow the following selection in this same
+physical graph. Choose five heads, all scan roles, exactly seven selected
+tails if $k\ge5$ or six if $k=4$, and the zero-axis states
+$Z_e$, $2\le e\le L-1$. These sets are pairwise disjoint, and their
+union $\mathscr K$ has cardinality
+
+$$
+|\mathscr K|=
+\begin{cases}
+((k-1)L-10)+5+7+(L-2)=kL,&k\ge5,\\
+(3L-9)+5+6+(L-2)=kL,&k=4.
+\end{cases}
+\tag{MSC.60}
+$$
+
+Every selected tail other than $E$ has an actual live arrival of counts
+in $\{(k-2,L-1),(k-1,L-2),(k-1,L-1)\}$. The selected state $E$
+queries $j$ and has terminal successors $(0,1)$. The all-zero arrival
+at $Z_e$ has support $S_e\supseteq\{j,x_1\}$, all assigned zero.
+These facts select only the required physical substructure; they do not
+fix constant tails or identify different free full-$U$ targets.
+
+**Lemma 19.2 (short one chains after a live history).** Let an actual
+live history in $P$ have $h$ ones and $z$ zeros. Its current state cannot
+have a fixed chain of $r$ consecutive one-successor edges ending at
+terminal $1$, where $1\le r<k-h$.
+
+Proof. Attempt that chain from the given actual partial assignment.
+After $a<r$ steps its counts would be $(h+a,z)$, with $h+a<k$ and
+$z<L$. Inductively this is a consistent actual live prefix: every full
+extension of the assigned coordinates follows it. Convention 13.3 forces
+the next queried coordinate to be fresh. An old label would already
+contradict that supplier; otherwise assign its previously unread bit one
+and follow the fixed one edge. Thus the whole chain is realized by a
+consistent partial assignment. Complete every remaining unread bit by
+zero. This actual complete input follows the original history and chain,
+accepts, and has exactly $h+r<k$ ones, contradicting correctness.
+This is Lemma 14.2's actual-prefix mechanism with general $h$; syntactic
+chain realizability is proved during the argument. $\square$
+
+**Lemma 19.3 (the one-hit failure run).** Let $\theta^{j}$ be the
+single actual input with $\theta_j=1$ and every other coordinate zero.
+For every $1\le d\le L-1$, its run has a running state $V_d$ after
+one one and $d$ zeros have been exposed. These states have live counts
+$(1,d)$, supports $T_d\supseteq\{j,y_1\}$, and are pairwise distinct.
+In particular $V_1=F_{10}$.
+
+Proof. The head first queries $j=1,y_1=0$. After root reply one,
+as long as fewer than $L$ zeros have been exposed, the prefix is live:
+one hit is below $k$ and both output values have full completions.
+Correctness forbids a terminal there. Freshness forces the next label
+to be unread, so its actual reply on $\theta^j$ is zero. Induction
+therefore gives all the stated prefixes and their supports. A repeated
+physical state on this one fixed-input run would repeat the identical
+stationary suffix forever, contradicting actual termination. No acyclicity
+condition on the union graph is used. $\square$
+
+**Lemma 19.4 (the one-hit family misses the entire core).** For every
+$1\le d\le L-1$, $V_d\notin\mathscr K$.
+
+Proof. The five heads have actual live counts, in the order
+$R,A,A_2,B,B_2$,
+
+$$
+(0,0),\quad(0,1),\quad(1,1),\quad(1,0),\quad(2,0).
+$$
+
+The unit hit gap in (MSC.44) separates $V_d$ from $R,A,B_2$.
+The remaining heads $A_2,B$ have supports $\{j,x_1\},\{j\}$.
+Both differ from $T_d$, which contains $y_1$. Equal-hit,
+different-support exclusion therefore separates them too. Every zero-axis
+arrival has zero hits, again a unit hit gap from $V_d$.
+
+A selected non-$E$ tail has a live arrival $(g,w)$ with
+$g\ge k-2\ge2$ and $w\ge L-2$. Sharing with $(1,d)$ would
+require $d-w\ge2$ by (MSC.44), whereas $d-w\le1$. The state $E$
+queries the already exposed $j$, so live freshness excludes $V_d=E$.
+This covers every selected tail for either permitted first-variable order
+and for paid constant tails.
+
+It remains to compare $V_d$ with each displayed scan $Q(s,z)$.
+The following three ranges, intersected with $0\le z<L$, exhaust them.
+
+For $z\le L-5$ and $s\ge1$, put $r=k-1-s$. Then
+$1\le r\le k-2$ and
+
+$$
+u-(s+z)-r=L-5-z\ge0.
+\tag{MSC.61}
+$$
+
+The next $r$ one edges in the retained scan end at terminal $1$.
+At equality in (MSC.61) the final edge is exactly the priority
+$s'=k-1$ certificate on the last $U$ query. No free full-$U$ target
+is used. If $V_d=Q(s,z)$ this chain violates Lemma 19.2 with $h=1$.
+For $s=0$ in this range, instead use the scan's low-column arrival
+$(1,2+z)$. It is live, with support
+$\{j,x_1,x_2\}\cup U_{\le z}$, which omits $y_1$. Equal hits and
+different supports exclude sharing with $V_d$.
+
+For $L-4\le z\le L-3$, the low-column arrival $(1+s,2+z)$ is
+live: $1+s\le k-1$, $2+z\le L-1$. When $s=0$, its support again
+omits $y_1$, so the preceding equal-hit argument applies. When $s\ge1$,
+sharing with $V_d$ requires $d-(2+z)\ge2$, but
+
+$$
+d-(2+z)\le L-3-z\le1.
+$$
+
+For $L-2\le z\le L-1$, the strict scan inequality $s+z<u$ implies
+$s\le k-5$. Use the high-column arrival $(3+s,z)$, which is live
+since $3+s\le k-2<k$. Sharing would require $d-z\ge2$, but
+$d-z\le1$. No live exclusion has been applied to a certified low-column
+arrival in this range.
+
+When $L=4$ the first range is empty and the second is $z=0,1$.
+When $k=4$ the third has no roles because it requires $s\le-1$.
+Thus $k=L=4$ is included, as are all clipped and equality boundaries.
+All comparisons concern actual arrivals in the same $P$. $\square$
+
+**Lemma 19.5 (a further two-hit state).** The failed-low-head target
+$F_{11}$ is a running state $T$ outside both $\mathscr K$ and
+$\{V_1,\ldots,V_{L-1}\}$.
+
+Proof. The actual head word $j=0,x_1=1,x_2=1$ reaches $T$ with
+support $A=\{j,x_1,x_2\}$ and counts $(2,1)$. It is live for all
+$k,L\ge4$, so $T$ is running and every completion of this assignment
+follows the prefix. The unit hit gap separates $T$ from every $V_d$
+and from the hit-one heads $A_2,B$. Compared to the hit-zero heads
+$R,A$, (MSC.44) would require their zero counts, zero or one, minus
+the zero count one of $T$ to be at least two. This is impossible.
+$B_2$ has equal hits but support $\{j,y_1\}$ of size two rather
+than three. The equal-hit support exclusion separates it from $T$.
+The selected $E$ queries old $j$, contradicting live freshness at $T$.
+
+Each scan has a live arrival $(g,w)$ with $g\ge1,w\ge2$.
+For $z\le L-3$ choose the low column $(1+s,2+z)$; for
+$z\ge L-2$ choose the high column $(3+s,z)$, using $s\le k-5$
+as in Lemma 19.4. When $g=1$ the hit gap is one. When $g=2$ its
+support has size $g+w\ge4$, different from $A$; equal-hit support
+exclusion applies. When $g>2$, sharing would require $1-w\ge2$,
+again impossible. The same three-case comparison separates $T$ from
+every selected non-$E$ tail, whose live counts have $g\ge2,w\ge2$.
+
+It remains to exclude all $Z_e$, $2\le e\le L-1$. Recall that
+$S_e$ contains $j,x_1$ and all its old replies are zero.
+If $x_2\in S_e$, then $A\subseteq S_e$: equal supports with unequal
+hits, or proper nesting, excludes sharing. If $x_2\notin S_e$ and
+$e=2$, then $S_e=\{j,x_1\}\subsetneq A$, also excluded.
+In the remaining case $e\ge3$, $x_2\notin S_e$, the supports are
+incomparable and
+
+$$
+S_e\cap A=\{j,x_1\},\qquad A\setminus S_e=\{x_2\}.
+\tag{MSC.62}
+$$
+
+Orient the shared-state comparison with the zero-hit history first.
+Every old bit in $S_e\setminus A$ is zero and the sole old bit in
+$A\setminus S_e$ is one. The two-polarity private exchange (MSC.3),
+namely [PE, Theorem 3.1, part 3][PE] after the whole-graph lift, forces
+
+$$
+|S_e\setminus A|=|A\setminus S_e|=1,\qquad
+C_{S_e\setminus A}=c_{x_2}.
+\tag{MSC.63}
+$$
+
+Writing $S_e\setminus A=\{v\}$ gives $v\ne x_2$ and
+$c_v=c_{x_2}$, contrary to distinct original positions. The old replies
+on the intersection need not agree: $x_1$ is zero on the zero axis and
+one at $T$. PE's theorem explicitly allows this; its replay does not
+query that intersection. We have equated two distinct singleton costs,
+not ruled out equal sums of larger subsets. This proves the remaining
+separation, including $e=L-1$ and $k=L=4$. $\square$
+
+## 20. A strict class lower bound and the normalization obstruction
+
+**Theorem 20.1 (the free-completion class costs at least one extra column).**
+For every $k,L\ge4$, every original position vector, every choice of
+the five distinguished labels and ordering of $U$, and every complete
+$P\in\mathcal C_{k,L}$ at the two original caps,
+
+$$
+\boxed{m(P)\ge(k+1)L,\qquad m(P)+2\ge(k+1)L+2.}
+\tag{MSC.64}
+$$
+
+The second count includes the two distinct Boolean terminals. No
+read-once, fixed variable order, leveling, acyclicity, distinct-subset-sums
+or realizability-of-every-syntactic-path hypothesis is added.
+
+Proof. Convention 19.1 selects $kL$ distinct physical states in
+$\mathscr K$. Lemma 19.3 gives $L-1$ distinct states on one
+terminating actual run, and Lemma 19.4 separates all of them from that
+core. Lemma 19.5 supplies one further state $T$ outside their entire
+union. Thus this one installed graph contains the disjoint union
+
+$$
+\mathscr K\ \dot\cup\ \{V_1,\ldots,V_{L-1}\}
+\ \dot\cup\ \{T\},
+\qquad kL+(L-1)+1=(k+1)L.
+\tag{MSC.65}
+$$
+
+Every comparison uses this same complete feasible table. Different
+actual inputs witness disjointness of its installed states; their
+execution prices have never been summed across inputs. Both caps remain
+premises of the actual-history suppliers. The endpoint $k=L=4$ gives
+the same count $16+3+1=20$, with three scan states, five heads, six
+selected tails and two zero-axis states in the core. $\square$
+
+**Corollary 20.2 (no state-nonincreasing normalization into this class).**
+Fix $k,L\ge4$ and any original position vector. No transformation on
+all total original threshold-$k$ graphs at caps $n,W$ can simultaneously
+preserve these two caps, produce a member of Definition 9.1, and never
+increase installed running states. This remains false even if the
+transformation chooses the distinguished labels and $U$ ordering afresh.
+In particular, this class contains no unrestricted installed-state
+minimizer at those caps.
+
+Proof. The ordinary ordered grid supplied by [PCA, Theorem 26.1][PCA],
+equivalently the Boolean grid in the proof of Theorem 5.1, has $kL$
+running states at every original position vector. On each complete
+input it queries each coordinate at most once, hence simultaneously
+satisfies $t\le n,J\le W$. It is a lawful original competitor, not
+an assertion that all competitors can be ordered. Applying the proposed
+transformation to this graph would give a class member with at most
+$kL$ states, contrary to Theorem 20.1's uniform bound $kL+L$.
+
+The unrestricted minimum exists as the least element of a nonempty set
+of finite integer cardinalities, and is at most $kL$ by this grid.
+Every class member has at least $kL+L$, so none is such a minimizer.
+If the class is empty at a particular cost vector, a transformation into
+it is of course also impossible. No existence for every cost vector is
+needed. This excludes this precise same-budget normal form; it proves
+neither the unrestricted grid lower bound nor a strict-subgrid graph.
+$\square$
+
+**Remark 20.3 (the existing nonempty consumer).** No new completion
+table is needed for nonvacuity. At the original positions $s_i=i$,
+Definition 11.1's $P_+$ and Proposition 17.1 supply a complete class
+member, correct and terminating on the whole cube, with both caps on
+each input and one input attaining both. Its installed count satisfies
+
+$$
+M_+=(5k-6)L-5k+8,
+\qquad M_+-(k+1)L=(4k-7)L-5k+8\ge11k-20>0.
+\tag{MSC.66}
+$$
+
+The inequality follows from $L\ge4$ and $4k-7>0$; it includes $k=4$.
+Thus the new lower bound is compatible with the entire existing
+consumer. Neither its upper count nor (MSC.64) determines the exact
+minimum inside the class. Its four complete failed-head grids, paid
+old-coordinate visits and constant tails are the existing construction,
+not additional contributions of Sections 19–22.
+
+## 21. The original full-fiber task and its qualified Native consequence
+
+**Convention 21.1 (unchanged actual source and supplied interfaces).**
+Use precisely Definitions 7.1–7.2 and Assumption 7.3, with their supplier
+[WTF, Sections 1–4][WTF]. The following specifies their correspondence
+to Theorem 20.1; none of the supplied services is constructed by that
+theorem.
+
+The actual source is a finite nonempty ordered $\alpha/\beta$ tree
+$\tau$, with no size, depth or shape restriction. Its update is the
+homomorphism $\rho\alpha=\beta$,
+$\rho\beta=\langle\beta,\alpha\rangle$. The fixed actual register
+through preparation and reading is $\rho\tau$. Every finite absolute
+address is legal, including the empty word and words below a leaf;
+the four replies are alpha, beta, branch, absent. Equal subtree values
+at different addresses retain different occurrences.
+
+The domain is the entire $\mathcal U_*=\{\tau:R_P(\rho\tau)=R_*\}$,
+$P=\{L,R\}^3$. Its complete current row has the ordered depth-three
+exterior and six classes
+$a=\{LLL,LRL\}$, $b_1=\{LLR\}$, $b_2=\{LRR\}$,
+$c=\{RLL,RRL\}$, $b_3=\{RLR\}$, $b_4=\{RRR\}$, with all
+different-class whole-subtree disequalities. The image grammar is the
+beta tree, the special pair $\langle\beta,\alpha\rangle$, and ordered
+pairs of image children. Its inverse $\delta$ constructs actual
+witnesses and is not an apparatus port.
+
+All eleven profiles of Definition 7.1 remain in the domain. On $\Pi_i$,
+$b_i$ is alpha, its repeated left partner is beta and all other class
+roots are branches. On each of the six $Z_d$ only $d$ is beta, and
+on $Z_*$ all class roots are branches. Every allowed branch image and
+every disequality is retained. The complete predecessor output is
+$F(\tau)=R_P(\tau)$, namely $R_0=R_*$ on zero profiles and $R_i$
+on $\Pi_i$. For $(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR)$, $R_i$
+replaces the sibling holes $q_iL,q_iR$ by concrete beta at $q_i$,
+keeps the partner's other occurrence, and canonically restricts the
+remaining partition. The entire ordered exterior, retained occurrences,
+repetitions, surviving disequalities and concrete strict-prefix blocking
+guards are output contents.
+
+For the original positive positions, $w_i=L^{s_i}R$ and
+$a_i=LLLw_i$, of length $c_i=s_i+4$. The actual test bit of a branch
+image $B$ is one exactly when its reply at $w_i$ is branch; alpha,
+beta and absent give zero. Preparation must retain the literal
+$\widehat e_{\sigma_{A,k}(\tau)}$, where $\sigma$ is zero on
+$\Pi_1,\Pi_2$, one on $\Pi_3,\Pi_4$, threshold $k$ of these
+selected bits on $Z_{b_3}$, and zero on every other zero profile.
+An alternative usable encoding or direct output of $F$ is not this task.
+
+[WTF, Supplier 2.1][WTF] supplies one actual $\tau_\theta\in Z_{b_3}$
+for every full Boolean vector. In its repeated $a$ value, replace beta
+at each prefix-free comb position $w_i$ by $\langle\beta,\beta\rangle$
+exactly for one bits. Fixed other class images avoid all these combs
+and each other; applying $\delta$ to the actual filling gives the
+origin. This retains both $a$ occurrences and all disequalities and
+defines every finite-address reply. The cube is a lower-witness family;
+it restricts neither the original domain nor any full-fiber upper proof.
+
+The unchanged reader is the complete table (MSC.38a), with the original
+fixed order $(i_1,i_2)$ of $\{1,2\}$. In alpha, beta, branch, absent
+order, $e_0$ queries $q_{i_1}R$ with successors
+$(H_{i_1},H_0,Q_2,H_0)$; $Q_2$ queries $q_{i_2}R$ with successors
+$(H_{i_2},H_0,H_0,H_0)$; $e_1$ queries $RLR$ with successors
+$(H_3,H_0,H_4,H_0)$. Every $H_i$ stores the whole $R_i$ just specified.
+The three running states and five distinct whole-row halts have separate
+count $K=8$ and fresh caps two calls, six letters. Paid code-only handoff
+enters that same complete $e_\sigma$ on that same register. Both entries
+can output $R_0$ on $Z_{b_3}$; this does not waive the independently
+prescribed code and latch.
+
+The preparer has a single source-independent running start, a fixed
+absolute word and four fixed successors per running state, the two
+original latches and $r\ge0$ additional mandated distinct latches.
+Its current counted state is its whole changing configuration. All
+installed states count. Every visit pays one call and the literal word
+length, including constant, root, absent, repeated and certified visits.
+Correctness and actual termination quantify over every $\tau\in\mathcal U_*$.
+No variable order, syntactic acyclicity or immediate certified stopping
+condition is added.
+
+Origin/update/register binding, lawful acquisition of the authenticated
+same-version row and code arguments, version authentication, pre-cut
+permission, actual same-source export, complete access isolation, paid
+code-only handoff, lawful complete entry, and stationary truthful service
+continuity are separately supplied and priced premises of Assumption 7.3
+and [WTF, Assumption 1.5][WTF]. Address/table representation, installation,
+initialization, reference and record storage, whole-row output contents,
+local acquired-term work, handoff and service storage have separate
+prices. The call and letter caps do not price physical memory,
+elapsed time or energy. No unknown seed, complete response oracle,
+source-dependent initialization, selector, decoder service, old-reply
+cache, callable history archive, source copy, clock, reset, phase, cursor,
+computed address, equality/inverse port or extra work register is supplied.
+
+**Corollary 21.2 (projection-qualified extra-column bound).** Under
+Convention 21.1, let an original preparer be correct and actually
+terminating on the entire $\mathcal U_*$, with $H$ installed preparation
+states including all mandated latches. Suppose both caps
+$q_P(\tau)\le n+1$, $\ell_P(\tau)\le W+3$ hold on each same
+complete source. If its particular complete Boolean projection supplied
+by [WTF, Theorem 4.1][WTF] belongs to Definition 9.1, then
+
+$$
+\boxed{H\ge(k+1)L+4+r.}
+\tag{MSC.67}
+$$
+
+In particular, relative to the existing full-fiber Native grid with
+$H_{\mathrm{grid}}=kL+4+r$ at these caps, any resulting preparer with
+such a projection requires at least $L$ additional installed preparation
+states. This does not assert that a transformation to such a preparer
+exists.
+
+Proof. WTF projects this one original preparer to one total stationary
+Boolean graph $B$, with all realized selected visits retained and
+
+$$
+m(B)\le H-4-r,\qquad
+t_B(\theta)+1\le q_P(\tau_\theta),\qquad
+J_B(\theta)+3\le\ell_P(\tau_\theta).
+\tag{MSC.68}
+$$
+
+Both Boolean bounds hold on each same actual complete input. The
+projection membership premise permits Theorem 20.1, so
+$H-4-r\ge m(B)\ge(k+1)L$. This gives (MSC.67). The grid and its
+full-fiber count are supplied by PCA Theorem 26.1, giving the comparison.
+For an arbitrary preparer the projection count is an inequality, not an
+identity with its old native trace or an assumed exact overhead.
+
+For the scope of the correspondence, WTF's canonical lift installs every
+Boolean state at $a_i$, with four successors
+$(\delta_B(v,0),\delta_B(v,0),\delta_B(v,1),\delta_B(v,0))$,
+replacing terminals by the original latches. Its two added profile states
+are distinct from all lifted Boolean states; their names $D,T$ are those
+of (MSC.38), not the Boolean failure target $T=F_{11}$. Here $D$
+queries $RLR$ with successors
+$(\widehat e_1,\text{Boolean start},T,\widehat e_0)$, and $T$ queries
+$RRR$ with successors
+$(\widehat e_1,\widehat e_0,\widehat e_0,\widehat e_0)$. All four
+edges are installed. It has $m(B)+4+r$ preparation states, and on every
+actual $Z_{b_3}$ source its same run pays $1+t_B(\theta(x_a))$ calls
+and $3+J_B(\theta(x_a))$ letters. The remaining profiles pay at most
+two calls and six letters. The all-address occurrence identity makes
+this valid for arbitrary full-fiber branch images, including leaf and
+absent selected replies; it does not acquire a free vector. Thus the
+lift of the existing $P_+$ remains the complete consumer of Proposition
+17.3, with all services and reader of Convention 21.1 unchanged. This
+is reused transport, not a new construction or a pointwise preservation
+claim about arbitrary old native paths.
+
+The $4+r$ counts two profile states and $2+r$ latches. Boolean terminals
+are replaced, not charged a second time; the separate $K=8$ reader is
+not added to or discounted from $H$. $\square$
+
+## 22. Common-process readings, attribution and remaining recovery gaps
+
+**Convention 22.1 (independent readings and the recovered direction).**
+All four readings refer to the one actual source, fixed register,
+installed tables and legal two-phase execution of Convention 21.1.
+Space exposes ordered occurrences, their literal addresses and lengths;
+equal values do not merge occurrence positions. Time exposes the actual
+ordered calls, replies and fixed successors, together with the declared
+$\tau\mapsto\rho\tau$ relation; there is no available clock. Boundary
+exposes the complete current row with its guards and the current lawful
+continuation or handoff interface. Memory exposes the current counted
+state and, after preparation, the retained original latch. Whole-row
+halt contents and any supplied reference or record have their separate
+storage and access prices. No reading is defined as a desired inverse,
+and no unrestricted copy of history is made available to a view.
+
+The established operational recovery direction remains the supplied one:
+paid observations of the current source compute the prescribed latch;
+paid handoff enters the unchanged callable reader on that source; its
+fresh paid observations return the complete predecessor row $F(\tau)$.
+Proposition 17.3 proves its full-fiber realization for $P_+$, and WTF
+Theorem 4.1 supplies the corresponding lift for any Boolean competitor.
+Theorem 20.1 adds an installed-control obstruction for one exact
+projection class, not a new inverse or acquisition procedure. Specifying
+initialization and the actual reply sequence determines a stationary
+execution, but does not supply that sequence as a retained runtime record.
+
+The constant current row $R_*$ cannot itself determine the prescribed
+code: the actual cube has both code values. Even its complete predecessor
+target is $R_0$ on every cube source while the code varies. These results
+establish no recovery from those rows or latches of an arbitrary hidden
+tree, all address replies, the complete chronology or an arbitrary
+controller cut. Mutual four-view
+recovery, agreement of arbitrary recovery routes, dynamics compatibility
+at arbitrary cuts and a universal alpha/beta reduction remain unproved.
+
+**Convention 22.2 (mathematical dependence and literature scope).** The
+new *repo-derived synthesis* is the disjointness of the mandatory
+one-hit failure run and $F_{11}$ from the corrected core, yielding the
+extra $L$ states and the same-price normalization obstruction. The
+core's $kL$ count is Theorem 16.1; its constant-tail-safe tails, zero axis
+and scan injectivity are Sections 13–15. Live freshness, support
+exclusions, the oriented two-gap condition and private exchange retain
+their SI/PE/PCA/WTF ownership. Lemma 19.2 adapts Lemma 14.2's mechanism
+to the live one-hit consumer. The grid, $P_+$, actual source cube,
+whole-fiber correspondence, exact original code, latches, reader and
+overheads retain their existing suppliers. None is counted as a newly
+proved optimum or a newly implemented service.
+
+Stationary continuation and distinguishing actual completions are mature
+methods. [Wegener's *The Complexity of Boolean Functions*][MSCWEG], Chapter 14,
+Section 4, Theorems 4.1–4.3, treats the BP1 normalization and residual
+count. Its printed page 424 explicitly restricts path realizability to
+BP1 rather than general branching programs. [Bryant's *Graph-Based
+Algorithms for Boolean Function Manipulation*][MSCBRY], Section 2, Definition 1,
+requires strictly increasing variable indices, hence an acyclic graph.
+These are credited structural precedents; neither normalization is a
+transfer of the present paid-repeat, two-budget class. [MeMin, Section
+II.A–C and Theorem 1][MEMIN] supplies successor-closed compatible covers,
+which may overlap, as already credited in Convention 8.2. Its input-word
+model does not replace static-assignment consistency or either price here.
+No external minimization algorithm or executed enumeration is used.
+
+The formalized [NativeLiteralMoore][MSCLIT] and
+[NativeSharedMooreSynthesis][MSCSHARED] results, with their respective
+[literal][MSCLITSCRIBE] and [shared-table][MSCSHAREDSCRIBE] Scribes, allow
+acquired input-dependent initial exports and encoder/table reselection.
+Their same-run contraction and
+resource transfer do not supply fixed-start prescribed-code optimality.
+[NativePredecessorRowRecovery.native_predecessor_row_recovery][MSCPRED],
+with its [owning Scribe][MSCPREDSCRIBE], consumes the old reached set;
+it does not acquire that set at the present price.
+The pinned mathlib state-transition and DFA/Myhill–Nerode interfaces
+supply evaluation, simulation and word-language continuation, without
+the missing static-input charged-state lower bound. These are interface
+distinctions, not absence-of-name arguments for mathematical impossibility.
+
+The positive four-view results in Native Clocked Recovery and Order,
+Native Paid View Conversion, PR57, Process Geometry and the structural
+and callable storage atlases retain their respective clocks, acquired
+seeds, tapes, entrances, rights, serializers and price coordinates.
+The present lower bound neither imports those facilities at the original
+state-only price nor improves their converters. Its precise gain is to
+exclude a proposed parsimonious same-cap normal form for this prescribed
+Native task. Bounded source and primary-literature correspondence gives
+no worldwide originality or exhaustive supplier-absence claim. These are
+ordinary paper proofs, without new Lean/kernel certification, mathematical
+execution, experimental evidence or independent review approval.
+
+**Open problem 22.3 (preserved original obligations).** The unrestricted
+alternative A of Problem 18.2 and [WTF, Corollary 5.1 and Proposition
+11.8][WTF] still asks for a whole-graph $kL$ lower bound at both caps;
+alternative B still asks for one lawful complete strict-subgrid graph.
+Theorem 20.1 settles neither. Corollary 20.2 excludes a specific
+normalization route into Definition 9.1, not all possible normal forms
+or all routes to A. SI.59/SI.83's collective compensation and TC's
+shortage-to-actual-full-run obligation retain their unresolved scopes.
+The class's exact minimum, its feasibility at arbitrary position vectors,
+and the separate optimum without execution budgets are not determined.
+No conclusion is asserted after dropping either cap.
+
+All fixed-$G_{gc}$, original-$Q$, parked-consumer and unchanged-initialization
+settlements keep their original hypotheses; the supplied acquisition,
+authentication, permissions, actual export and continued callable-use
+services are not derived here. No physical or universal impossibility
+follows. The extra-column obstruction and its qualified transport are
+bounded advances and do not complete the sustained four-expression
+objective.
+
+[MSCWEG]: https://eccc.weizmann.ac.il/resources/pdf/cobf.pdf
+[MSCBRY]: https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf
+[MSCLIT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[MSCLITSCRIBE]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.scribe.cs
+[MSCSHARED]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.lean
+[MSCSHAREDSCRIBE]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.scribe.cs
+[MSCPRED]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.lean
+[MSCPREDSCRIBE]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.scribe.cs
+
+## 追加锚（本行以下为增补区）

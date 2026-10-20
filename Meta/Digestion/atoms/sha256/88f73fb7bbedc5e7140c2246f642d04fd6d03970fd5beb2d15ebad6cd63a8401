@@ -1,0 +1,14 @@
+**推论 337.3（闭包单调性）。** 若允许操作族扩大，tester 闭包只会扩大，过程残余空间只会缩小：
+\[
+\mathfrak A\subseteq\mathfrak B
+\Longrightarrow
+\operatorname{Cl}_{\mathfrak A}^{\le m}(\mathcal V)
+\subseteq
+\operatorname{Cl}_{\mathfrak B}^{\le m}(\mathcal V),
+\]
+\[
+\operatorname{Cl}_{\mathfrak B}^{\le m}(\mathcal V)^\perp
+\subseteq
+\operatorname{Cl}_{\mathfrak A}^{\le m}(\mathcal V)^\perp.
+\]
+

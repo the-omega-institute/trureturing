@@ -1,0 +1,33 @@
+**定理 58.1（简单 Perron 根的二阶响应）。** 令 \(K(\eta)\) 是有限状态上的 primitive 子随机核族，
+\[
+K(\eta)=K_0+\sum_{a=1}^{d}\eta_a A_a,
+\]
+并令 \(\rho(\eta)\) 为 Perron 根。取
+\[
+K_0r=\rho_0r,\qquad
+\ell^{\mathsf T}K_0=\rho_0\ell^{\mathsf T},\qquad
+\ell^{\mathsf T}r=1,
+\]
+其中 \(\rho_0=\rho(0)\)。定义 \(P=r\ell^{\mathsf T}\)，并令约化 resolvent \(R\) 满足
+\[
+(\rho_0I-K_0)R=R(\rho_0I-K_0)=I-P,\qquad
+Rr=0,\qquad \ell^{\mathsf T}R=0.
+\]
+则
+\[
+\partial_a\rho(0)=\ell^{\mathsf T}A_ar,
+\]
+且
+\[
+\partial_{ab}\rho(0)
+=\ell^{\mathsf T}
+\bigl(A_aRA_b+A_bRA_a\bigr)r.
+\]
+令 \(\Psi(\eta)=\log\rho(\eta)\)，则
+\[
+\partial_{ab}\Psi(0)
+=\frac{\partial_{ab}\rho(0)}{\rho_0}
+-\frac{\partial_a\rho(0)\,\partial_b\rho(0)}{\rho_0^2}.
+\]
+若 \(K(\eta)\) 还含有非线性项 \(A_{ab}=\partial_{ab}K(0)\)，只需在 \(\partial_{ab}\rho(0)\) 右端加上 \(\ell^{\mathsf T}A_{ab}r\)。
+

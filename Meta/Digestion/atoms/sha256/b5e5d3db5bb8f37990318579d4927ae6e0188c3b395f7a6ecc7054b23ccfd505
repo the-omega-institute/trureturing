@@ -1,0 +1,9 @@
+# 2026-09-07：Gamma 对数抵消、无界形式误差运输与真实 prolate 的完整 Weil 能量
+
+Lean owner：`D5/S3/Weil/ZetaBridge/WeilGammaLogarithmicSeed.lean`，配套同名 Scribe。
+执行源：`research/weil_ground_mode/certify_prime3_prolate_weil_energy.py`。
+结果：`research/weil_ground_mode/prime3_prolate_weil_energy_certificate.json`。
+开发检查：`test_gamma_logarithmic_seed.py` 及其结果 JSON。
+
+本节将上节的实际素数作用接到 Gamma 作用，并计算同一个真正 prolate 模型的完整 Weil Rayleigh 值。关键新增步骤是从已认证的 Legendre L2 误差推出逐段 C1 与跳跃误差，再运输到无界 Gamma 形式。仅有 L2 逼近不能完成这一运输。新 Lean 保存实际截断多项式 seed 的奇积分可积性与有限端点公式；完整 Gamma/Fourier 识别、无限 Jacobi 尾比较及区间结果属于以下纸面与计算机辅助证明。Lean elaboration、Scribe emission 和传递公理审查未运行。
+

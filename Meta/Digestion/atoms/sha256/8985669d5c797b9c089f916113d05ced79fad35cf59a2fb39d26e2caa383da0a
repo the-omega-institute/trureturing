@@ -1,0 +1,9 @@
+优先闭合完全有限或单级数结论：
+
+1. `geometric_entropy_closed_form`；
+2. `truncated_geometric_entropy`；
+3. `truncated_geometric_condEntropy`；
+4. `precision_gain_eq`；
+5. `radical_bit_entropy`；
+6. `negative_binomial_prime_aggregate`。
+

@@ -1,0 +1,47 @@
+**定义 51.1（完整单位族与恢复任务）。** 来源为自由有序非空二叉树
+
+$$
+\mathcal T\ni t::=\alpha\mid\beta\mid\langle t,t\rangle,
+\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{TM.5101}
+$$
+
+原树的相等保留叶序和全部括号。组成为 $c(t)=(a,b)$，叶数为 $\lambda(t)=a+b$。沿用 Clifford 叶积 $E$，其原子像满足 $A^2=1$、$B^2=-1$、$AB+BA=1$；记 $E_i(t)=E(\rho^it)$、$W_3(t)=(E_0,E_1,E_2)$。对公开固定整数 $H\ge1$，声明
+
+$$
+\begin{aligned}
+U_H&=\{t\in\mathcal T:1\le\lambda(t)\le H,\ W_3(t)=(1,1,1)\},\\
+m(t)&=a+b,\qquad n(t)=a+2b,\qquad \lambda_2(t)=m+n,\\
+q_H(t)&=
+\begin{cases}
+(0,E_0,m),&n>H,\\
+(1,c,E_0,E_1),&n\le H<m+n,\\
+(2,c,W_3),&m+n\le H.
+\end{cases}
+\end{aligned}
+\tag{TM.5102}
+$$
+
+（TM.5102）的标签2使用 TM29 联合边界 $\eta=(\mathbf u,c)$ 的等价 $(c,W_3)$ 坐标。由 TM28.1 的唯一正规形，每个单位窗口的正规坐标都是 $(e,k,p)=(0,0,0)$，所以在 $U_H$ 上输出 $(2,c,(1,1,1))$ 可按固定坐标转换写成原 TM30 的 $(2,\eta)$。下文所有输出均指这个同一初始目标；该转换不增加来源观察字段。
+
+这里 $U_H$ 包含满足条件的每个实际叶词的每种有序括号化。成员承诺是共同公开的族限定；每个输入另外供应同一个常量标签 $\star$。控制器共同初始化，只依据公开数据及实际已取得的记录，确定下一动作或停止并输出初始 $q_H(t)$。
+
+在线动作恰为 §30 的三类：当前 `Read` 返回真实 $E$ 且不修改来源；尝试 $\rho$；尝试将一个已知实际非空正上下文 $v$ 接在当前树左侧或右侧。后两类先对整个候选检验叶数 $\le H$，等号接受；接受则更新来源，拒绝则保持来源且不给候选读数。记录包含公共输入、标签、动作及上下文身份、守卫响应和实际读值。任意已取得记录可无限保留，但它不供应额外的来源相关初始字段。没有在线成员测试、原树导航、独立尺寸读、时钟、费用读、变上限、复制、重置、来源逆操作或新鲜未知来源。已知上下文的供应、整候选守卫及实际读的表示均须另付成本。
+
+在 $U_H\ne\varnothing$ 时，令 $\mathfrak P_H$ 为在每个输入上有限停止、正确输出初始 $q_H$ 的上述确定性协议集合。定义
+
+$$
+d_{\min}(U_H;H)=
+\begin{cases}
+\displaystyle\min_{\Pi\in\mathfrak P_H}\max_{t\in U_H}
+\operatorname{dep}_\rho(\Pi,t),&\mathfrak P_H\ne\varnothing,\\
+\infty,&\mathfrak P_H=\varnothing,
+\end{cases}
+\tag{TM.5103}
+$$
+
+其中深度只计真正接受的 $\rho$，所有拒绝和拼接仍分别计来源调用。空族不赋予这个恢复深度。最大值存在：固定 $H$ 的实际树族有限；单位族含 $\beta$，每次接受修改严格增叶，故每条合法路径的接受深度也有有限资源界。
+

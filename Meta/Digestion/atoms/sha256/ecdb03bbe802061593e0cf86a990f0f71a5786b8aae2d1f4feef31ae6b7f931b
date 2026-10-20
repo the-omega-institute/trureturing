@@ -1,0 +1,10 @@
+**Proposition 9.3 (complete image-fiber classification).** Let
+$\mathcal I=\rho[\mathcal T]$, with the exact grammar and inverse $\delta$
+of Transport--Memory Completion §22, (RA.2207). A filling $t=\mathscr S(x)$
+with six pairwise distinct values is in $\mathcal I$ if and only if exactly
+one of the following alternatives holds:
+
+1. All six values belong to $\mathcal I$.
+2. For exactly one $i\in\{1,2,3,4\}$, $x_{b_i}=\alpha$; its left partner
+   is $\beta$; every other class value belongs to $\mathcal I$.
+

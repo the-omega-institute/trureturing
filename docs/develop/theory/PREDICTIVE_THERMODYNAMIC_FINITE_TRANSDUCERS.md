@@ -615,3 +615,239 @@ output. This is the complete deterministic prefix before the physical Ask;
 the response and full trace bounds are those of Theorem 8.1.
 
 ## Append Anchor 9
+
+## 10. Approximate thermodynamic access for the same raw clauses
+
+**Definition 10.1 (Energy reference and approximation interfaces).** Retain
+the explicit universe, raw clauses and physical matrices of Theorem 5.1.
+For a formula $F$ on $n$ declared variables, put
+
+$$
+\begin{aligned}
+E_F(a)&=(n+1)v_F(a),&
+Z_B(F)&=\sum_{a\in\{0,1\}^n}2^{-E_F(a)},\\
+f_B(F)&=-\frac{\ln Z_B(F)}{\ln2},&
+q_F(a)&=\frac{2^{-E_F(a)}}{Z_B(F)}.
+\end{aligned}
+\tag{10.1}
+$$
+
+The zero of energy is the raw sum of violation projectors, including every
+empty clause. It is not quotiented by scalar shifts. For the full visible
+and hidden Hamiltonian, write
+
+$$
+Z_H(F)=\frac32 Z_B(F),\qquad
+c_A=-\log_2(3/2),\qquad f_H(F)=c_A+f_B(F).
+\tag{10.2}
+$$
+
+A free-energy approximation returns an ordinary binary rational estimate
+of $f_B$ or $f_H$ with a declared absolute error. A classical sampling
+interface returns an $n$-bit assignment. A quantum preparation interface
+returns a state on the hidden assignment register, followed by measurement
+in its computational basis. All three interfaces receive the succinct
+local-term description or its source formula, rather than an explicit
+$2^n$-dimensional matrix. Uniform polynomial resource bounds include
+parsing, dense renaming, initialization, training and parameter acquisition,
+preparation, randomness, execution and output on every input, including
+NO instances. The word converters in Sections 7–9 give polynomial-cost
+passage from conventional appearing-name inputs to this explicit universe.
+
+**Theorem 10.2 (Constant absolute free-energy gap).** In the same energy
+reference and at the same inverse temperature $\beta=\ln2$,
+
+$$
+\begin{array}{lll}
+F\text{ satisfiable}:&f_B(F)\le0,&f_H(F)\le c_A,\\
+F\text{ unsatisfiable}:&f_B(F)\ge1,&f_H(F)\ge1+c_A.
+\end{array}
+\tag{10.3}
+$$
+
+A uniform deterministic polynomial-time algorithm with absolute error at
+most $1/4$ for either of these total free energies would decide SAT in
+polynomial time. For $f_B$ use threshold $1/2$; for $f_H$ use threshold
+zero. Consequently either algorithm implies $P=NP$ in the ordinary
+uniform deterministic model.
+
+Proof. The actual diagonal weights in Theorem 5.1 split into
+
+$$
+Z_B(F)=N_F+R_F,\qquad
+0\le R_F\le 2^n2^{-(n+1)}=\frac12,
+\tag{10.4}
+$$
+
+where $N_F$ counts satisfying assignments. Every finite partition is
+strictly positive. If $N_F\ge1$, then $Z_B(F)\ge1$; if $N_F=0$, then
+$Z_B(F)\le1/2$. Monotonicity of the logarithm proves (10.3).
+An estimate of $f_B$ is at most $1/4$ in the first case and at least
+$3/4$ in the second. For the full-system threshold, note
+
+$$
+-\frac34<c_A<-\frac12:
+\qquad (3/2)^4<2^3,\quad (3/2)^2>2.
+\tag{10.5}
+$$
+
+Thus a full-system estimate is strictly negative in the first case and
+strictly positive in the second. The raw descriptor has polynomial length,
+and the converters preserve satisfiability. SAT completeness then gives
+the stated complexity consequence, using the ordinary model in
+[Cook's problem statement](../../../Library/ConceptDynamics/cook2006pversusnp.md).
+The argument separates decision from the exact integer recovery of
+Theorem 3.1: it does not recover $N_F$ by rounding an approximate logarithm.
+$\square$
+
+**Theorem 10.3 (Approximate Gibbs access and verified witnesses).** On every
+satisfiable formula in Definition 10.1,
+
+$$
+q_F(\{a:F(a)=1\})\ge\frac23.
+\tag{10.6}
+$$
+
+If a uniform classical polynomial-time sampler produces a distribution
+$\widetilde q_F$ with total variation distance at most $1/12$ from $q_F$,
+then one sample followed by the ordinary formula verifier accepts every
+YES input with probability at least $7/12$ and never accepts a NO input.
+With the all-input resource bounds of Definition 10.1, this gives
+$\mathrm{SAT}\in RP$ and $NP=RP$.
+
+If instead a uniform polynomial-size quantum preparation produces
+$\widetilde\gamma_F$ such that
+
+$$
+\frac12\|\widetilde\gamma_F-\gamma_F\|_1\le\frac1{12},\qquad
+\gamma_F=\sum_a q_F(a)|a\rangle\langle a|,
+\tag{10.7}
+$$
+
+computational-basis measurement and classical verification give
+$NP\subseteq BQP$. A preparation of the full Gibbs state with this same
+trace-distance tolerance suffices as well, by discarding its visible
+factor. Both statements concern actual sampling or preparation, not only
+the evaluation of an unnormalized weight.
+
+Proof. Every satisfying assignment has unnormalized weight one, so (10.4)
+gives
+
+$$
+q_F(F(a)=1)=\frac{N_F}{N_F+R_F}
+\ge\frac1{1+1/2}=\frac23.
+\tag{10.8}
+$$
+
+Total variation controls the probability of this same success event,
+giving $2/3-1/12=7/12$. On a NO input there is no assignment that passes
+the verifier, whatever the sampler returns. Polynomially many random bits
+and polynomial verification put this algorithm in $RP$. Conversely an
+accepting random tape of an $RP$ machine is an NP witness, so
+$RP\subseteq NP$; SAT completeness gives the reverse inclusion here.
+Trace distance bounds the change of every measurement event probability,
+and is contractive under partial trace. This proves the quantum success
+bound; a constant number of fresh executions raises it above $2/3$.
+Polynomial classical reductions to SAT then give the BQP consequence.
+The hidden marginal is exactly that of the same full Gibbs state by
+Theorem 5.1. $\square$
+
+**Theorem 10.4 (A total variational-error certificate for the sampler).**
+Let $r_F$ be any distribution on the same assignments and define, with
+natural-log entropy,
+
+$$
+\mathcal V_F(r_F)=\mathbb E_{r_F}E_F-\frac{H(r_F)}{\ln2}.
+\tag{10.9}
+$$
+
+If
+
+$$
+0\le\mathcal V_F(r_F)-f_B(F)\le\frac1{72\ln2},
+\tag{10.10}
+$$
+
+then $\|r_F-q_F\|_{\rm TV}\le1/12$. In particular a sampler for $r_F$
+meeting the uniform resource bounds of Definition 10.1 has the verified
+witness guarantee of Theorem 10.3.
+
+Proof. The Gibbs relative-entropy identity, specialized to the actual
+weights (10.1), is
+
+$$
+D(r_F\Vert q_F)
+=(\ln2)[\mathcal V_F(r_F)-f_B(F)].
+\tag{10.11}
+$$
+
+It follows by substituting
+$\ln q_F(a)=-(\ln2)E_F(a)-\ln Z_B(F)$, with $0\ln0=0$.
+This is the finite Gibbs variational identity, as in
+[Watrous's entropy and Gibbs interface](../../../Library/Quantum/watrous2018entropicidentities.md#gibbs-logarithm-and-the-uniform-reference).
+Classical Pinsker gives
+$\|r_F-q_F\|_{\rm TV}\le\sqrt{D(r_F\Vert q_F)/2}$, hence the asserted
+constant. For this finite case its inequality follows by grouping the
+positive difference set into one event and applying the log-sum inequality.
+The resulting binary relative entropy $d(a\Vert b)$ has its minimum zero
+at $a=b$ and second derivative $1/[a(1-a)]\ge4$, so
+$d(a\Vert b)\ge2(a-b)^2$; endpoints follow by continuity.
+This yields $\sqrt{(1/72)/2}=1/12$.
+The bound is on total variational free-energy excess, not excess per
+variable. Its mathematical sufficiency does not give an efficient method
+to certify (10.10) without knowing $f_B(F)$, or to sample a distribution
+specified only implicitly. $\square$
+
+**Theorem 10.5 (The same Gibbs state can hide a free-energy difference).**
+For every $n\ge0$, let $F_\varnothing$ be the empty raw clause list and
+let $F_\bot$ contain one empty clause, both on the same declared universe.
+Their hidden Gibbs states and full Gibbs states agree, respectively, but
+
+$$
+\begin{aligned}
+Z_B(F_\varnothing)&=2^n,& f_B(F_\varnothing)&=-n,\\
+Z_B(F_\bot)&=\frac12,& f_B(F_\bot)&=1.
+\end{aligned}
+\tag{10.12}
+$$
+
+For a fixed visible preparation and the same finite adaptive visible-only
+protocol, all record laws also agree. Such a protocol, without a formula
+descriptor or other hidden-dependent input, cannot distinguish these YES
+and NO instances with success probability greater than $1/2$ on both.
+
+Proof. The empty-clause projector is $I$ by Theorem 5.1. Consequently the
+two hidden Hamiltonians are $0$ and $(n+1)I$. Both normalize to
+$I/2^n$, and their full Gibbs states are both
+$\gamma(P)\otimes I/2^n$. Their partition functions give (10.12).
+The full Hamiltonians differ by $(n+1)I$, so their propagators differ
+only by a scalar phase. Conjugation by them is identical, including at
+history-dependent waiting times. The same visible event maps and the same
+initial joint state therefore give the same branch probabilities at every
+step; induction gives the entire record law, including stopping.
+If an estimator accepts with probability $p$ under this common law, its
+success probabilities on the two instances are $p$ and $1-p$.
+$\square$
+
+**Definition 10.6 (Resource and source scope).** Theorems 10.2–10.5 are
+applications to the same raw-clause matrices and ordinary input conversion
+of Theorems 5.1 and 9.4. The general Boltzmann suppression mechanism is
+standard; [Troyer–Wiese, equation (10) and its following paragraph](../../../Library/Computability/troyerwiese2005complexity.md)
+give a ground-state-to-thermal-estimation example with a growing inverse
+temperature. The constants and visible normalization here follow from
+the actual clause weights (10.4); no external priority claim is made.
+
+The coefficient $n+1$ can be written with polynomially many bits or by
+$n+1$ copies of each unit projector. This gives no fixed geometry or
+bounded total incident interaction. For the Gibbs law it is equivalent
+to unit clause penalties at inverse temperature $(n+1)\ln2$. Dividing
+$f_H$ by the number $n+1$ of sites shrinks the decision gap to
+$1/(n+1)$; fixed absolute density accuracy does not supply Theorem 10.2's
+total-energy accuracy. An additive scalar in the Hamiltonian changes
+the free energy and leaves the normalized Gibbs state unchanged, as
+Theorem 10.5 exhibits. A calibrated energy reference is part of the
+free-energy interface, while Gibbs witness verification also uses the
+formula descriptor. None of the three approximation interfaces is a
+visible-only measurement of the decoupled qubit.
+
+## Append Anchor 10

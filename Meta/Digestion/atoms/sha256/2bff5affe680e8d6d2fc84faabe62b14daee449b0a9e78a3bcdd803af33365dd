@@ -1,0 +1,12 @@
+## 14.1 生产效率
+
+定义
+
+\[
+\operatorname{ProductiveRate}(d)
+=
+\frac{P_\Gamma(d\mid q,T)}{c(d)}.
+\]
+
+它衡量每单位定义复杂度切开多少语言盲残差。
+

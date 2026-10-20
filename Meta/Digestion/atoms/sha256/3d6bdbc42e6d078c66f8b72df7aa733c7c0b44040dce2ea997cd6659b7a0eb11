@@ -1,0 +1,70 @@
+**定义与恒等式 426.1（同一实际数组的完整分解）。**
+
+置 $P=\operatorname{rad}(5040)=210$，并定义
+
+$$
+\begin{aligned}
+\kappa(d)&=\mu(d)\mathbf1_{d\mid P},\qquad
+a_P(r)=\mu(r)\mathbf1_{(r,P)=1},\\
+M_P(y)&=\sum_{1\le r\le y}a_P(r),\qquad
+\theta=\kappa*\beta,\\
+E(s)&=\sum_{d\mid P}\mu(d)d^{-s}
+=\prod_{p\in\{2,3,5,7\}}(1-p^{-s}),\\
+\eta_P(y)&=\sum_{d\mid P}\mu(d)\eta(y/d),\\
+P_x^{\eta_P}(s)&=\int_x^\infty\eta_P(t/s)w(t)\,dt,\qquad
+J_x^{\eta_P}(n)=P_x^{\eta_P}(n)-P_x^{\eta_P}(n+1).
+\end{aligned}
+\tag{426.1}
+$$
+
+所有整数索引均为正；$M_P(y)=0$ 当 $0\le y<1$，这是这份明确有限和的空和定义，不使用 $H_{\rm raw}(0)$。普通 Möbius 的平方自由分解给 $\kappa*a_P=\mu$，所以
+
+$$
+\theta*a_P=e,\qquad
+H_{\rm raw}(m)=\sum_{j\le m}\theta_jM_P(\lfloor m/j\rfloor),
+\qquad M_P(1)=1,\quad\theta_1=\beta_1.
+\tag{426.2}
+$$
+
+对平方自由整数，这是唯一分解 $n=dr$、$d\mid P$、$(r,P)=1$；非平方自由整数两侧都为零。因此没有重复计数，也没有只保留 $7r\leftrightarrow10r$ 后遗漏其他来源。既有 §66 的 $70$ 分解是同类经典操作；本处保留 $P$ 的全部十六个约数及整个互素补集。
+
+§424 的全尺度恒等式在这里给
+
+$$
+\eta_P(y)=\sum_{j\ge1}\theta_jR(y/j),\qquad
+P_x^{\eta_P}(s)=\sum_{d\mid P}\mu(d)P_x^\eta(ds),
+\tag{426.3}
+$$
+
+$$
+\begin{aligned}
+J_x^{\eta_P}(n)
+&=\sum_{d\mid P}\mu(d)
+\sum_{m=dn}^{d(n+1)-1}J_x^\eta(m)\\
+&=\sum_{j\ge1}\theta_j
+\sum_{m=jn}^{j(n+1)-1}J_x(m).
+\end{aligned}
+\tag{426.4}
+$$
+
+这也保持真实非负响应：记 $h_P=\kappa*\log$，则直接对实际 $n$ 的小素数支撑求和，得到
+
+$$
+h_P(n)=
+\begin{cases}
+\log n,&(n,P)=1,\\
+\log p,&\{p\in\{2,3,5,7\}:p\mid n\}=\{p\},\\
+0,&\#\{p\in\{2,3,5,7\}:p\mid n\}\ge2.
+\end{cases}
+\tag{426.5}
+$$
+
+故 $h_P(1)=0$、$0\le h_P(n)\le\log n$。若 $K_P(y)=\sum_{n\le y}h_P(n)$，则全部 $y>0$ 上
+
+$$
+\eta_P(y)=K_P(y)-E(1)y\log y+[E(1)-E'(1)]y.
+\tag{426.6}
+$$
+
+这里 $E'(1)$ 是对 $s$ 的导数，明确满足 $E'(1)=-\sum_{d\mid P}\mu(d)\log d/d>0$；连续项的符号不能反写。
+

@@ -1,0 +1,40 @@
+### 19.2 有利的有符号补偿也保留下来
+
+令 $L_S(f)$ 是任何已经独立得到的正迹下界，满足 $L_S(f)\le\sigma_S(f)$；它可以取实际加权评价下界。定义第 18 节充分证书及其更强版本
+
+$$
+\begin{aligned}
+\mathfrak c_{S,\mathbf N}(f)
+&=L_S(f)-D_{\rm fin}(f)-\|f\|_2^2E_S(r,\mathbf N)-b_S\|f\|_1^2,\\
+\widetilde{\mathfrak c}_{S,\mathbf N}(f)
+&=\sigma_S(f)-D_{\rm fin}(f)-\|f\|_2^2E_S(r,\mathbf N)-b_S\|f\|_1^2.
+\end{aligned}
+$$
+
+在第 18 节源合同、极点消去条件及支撑完整条件下，$\mathfrak c\ge0$ 足以推出 $Q_{\rm full}(f)\ge0$；$\mathfrak c<0$ 不给出 $Q_{\rm full}$ 的符号。更强版本保留精确正迹，故 $\mathfrak c\le\widetilde{\mathfrak c}$。
+
+$\mathcal F_S$ 是酉对合，$C$ 是其压缩，因此
+
+$$
+|D_{\rm lin}(f)|\le2\|B_f\|_1\le2r\|f\|_2^2,\qquad
+D_{\rm fin}(f)+\|f\|_2^2E_S\ge D_{\rm lin}(f).
+$$
+
+没有假设线性核、线性迹或完整校正非负。又因为
+
+$$
+b_S=\frac{2\chi_SJ_S^3}{c_0(2-\delta_S)}\ge\frac{\chi_SJ_S^3}{c_0},
+$$
+
+上述同一测试合同给出条件性上界
+
+$$
+\boxed{
+\frac{\widetilde{\mathfrak c}_{S,\mathbf N}(f)}{\chi_S}
+\le\mathcal T_0(f)+\frac{2r\|f\|_2^2}{\chi_S}
+-\frac{J_S^3}{c_0}\|f\|_1^2.
+}
+$$
+
+这里使用真实截断误差的方向消去尾部；未把各项分别可达的极值当成同一配置。
+

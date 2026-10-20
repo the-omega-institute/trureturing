@@ -1,0 +1,9 @@
+## Marginal Schur certificates also exclude singular raw-edge kernels
+
+This conditional application retains (S1)–(S6), the original even
+minimal form, its critical family and every prime power. Weighted
+Cauchy–Schwarz, Tonelli and the existing theta-jet separation are reused.
+The source-specific step is a radial-invariant set with
+$K_-(Z)>0$ and $K_+(Z)=0$. No new general Schur theorem,
+numerical gap, originality claim or Lean certification is supplied.
+

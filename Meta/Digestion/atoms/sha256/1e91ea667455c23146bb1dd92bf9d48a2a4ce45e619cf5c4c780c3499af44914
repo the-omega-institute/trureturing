@@ -1,0 +1,37 @@
+**定理 406.1（整个右半平面上的实际平移预算）。** 对全部 $z,h\in\mathbb C$，若 $\Re z\ge0$ 且 $\Re(z+h)\ge0$，则
+
+$$
+\begin{aligned}
+|\mathcal B'(z)|&\le K_B,\\
+|\mathcal B(z+h)-\mathcal B(z)|&\le K_B|h|,\\
+\left|\frac{\mathcal B(z+h)}{\mathcal B(z)}-1\right|
+&\le\kappa_*|h|,\qquad
+\left|\frac{\mathcal B(z)}{\mathcal B(z+h)}-1\right|
+\le\kappa_*|h|,\\
+\frac1{1+\kappa_*|h|}
+&\le\left|\frac{\mathcal B(z+h)}{\mathcal B(z)}\right|
+\le1+\kappa_*|h|.
+\end{aligned}
+\tag{406.2}
+$$
+
+证明。§385 已支付整函数的逐项求导。因为 $\log1=0$，由（385.9）、$d^{-\Re z}\le1$ 与 $\log d\le d-1$，
+
+$$
+|\mathcal B'(z)|
+\le\sum_{d\ge2}|\beta_d|\log d
+\le\frac1{1-q}\sum_{d\ge2}(d-1)q^d
+=\frac{q^2}{(1-q)^3}.
+\tag{406.3}
+$$
+
+最后的幂级数等式直接复用几何级数及其导数。右半平面凸，故 $z+th$、$0\le t\le1$ 保持在同一域。线段上的微积分基本定理给
+
+$$
+\mathcal B(z+h)-\mathcal B(z)
+=h\int_0^1\mathcal B'(z+th)dt.
+\tag{406.4}
+$$
+
+这就支付第二行。（385.4）给两端均有 $|\mathcal B|\ge\delta_*>0$；分别除以两端的值，得到两个相对预算。它们各自给比值及逆比值的模长不超过 $1+\kappa_*|h|$，故得到最后的双边界。$\square$
+

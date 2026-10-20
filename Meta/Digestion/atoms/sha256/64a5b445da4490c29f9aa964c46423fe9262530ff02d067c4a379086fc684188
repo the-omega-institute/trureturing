@@ -1,0 +1,108 @@
+**Theorem 134.1 (All-domain stopped construction).** In the closed ambient
+region
+
+$$
+\begin{gathered}
+1\ge a_1\ge a_2\ge a_3\ge a_4\ge a_5\ge\varepsilon\ge0,
+\quad\kappa_3=0,\quad\sigma\ge0,\\
+0\le h\le H_{\rm head},\qquad F_i\ge0\quad(1\le i\le5),
+\end{gathered}
+\tag{134.1}
+$$
+
+one continuous nineteen-weight mixture recovers the entire amplitude-cap
+profile and gives one common-budget kernel obeying all 94 cap rows,
+with $p_{11111}(0)=1-\varepsilon$, $c=H$ and $\beta=1$.
+
+**Proof.** Write $x=a_3-a_4\ge0$, $y=a_4-a_5\ge0$.
+Since $M=3a_5+4y+5x\ge0$, $\delta=0$ and
+$29\sigma=-3M\ge0$ force $a_3=a_4=a_5=0$.
+The hyperplane then gives $\varepsilon=0$, and the head bound gives
+$h=0$. This unique point is $V_{\rm base}$, only auxiliary finite data.
+Otherwise $\delta>0$. The ratio
+$q=(a_3,a_4,a_5)/\delta$ belongs to $P$: its eight inequalities
+are order of the late amplitudes, the five cuts, and $\sigma\ge0$.
+The scale and head conditions are
+$\delta(1+t)\le1$ and $0\le h\le\delta(17-5t+u+v)/29$.
+Use the continuous nodal functions $\mu_j(q)$ of (132.3) and define
+
+$$
+\lambda_j=\delta\mu_j(q)/\delta_j
+         =\delta\mu_j(q)(1+t_j),\qquad
+\lambda_{\rm base}=a_2-a_3.
+\tag{134.2}
+$$
+
+They are nonnegative, and
+
+$$
+\sum_j\lambda_j=\delta+a_3,\quad
+\lambda_{\rm base}+\sum_j\lambda_j=1,\quad
+\sum_j\lambda_j\delta_j=\delta,\quad
+\sum_j\lambda_j(a_3^j,a_4^j,a_5^j)=(a_3,a_4,a_5).
+\tag{134.3}
+$$
+
+The same linear function of these four coordinates recovers
+$\varepsilon$. Together with the base profile and total weight one,
+this also recovers $a_2$. Since $m\le22/3$,
+$H_{\rm head}\ge\delta/3>0$. Set $s=h/H_{\rm head}\in[0,1]$,
+and split the ray weights into
+
+$$
+\lambda_{j,-}=(1-s)\lambda_j,\qquad
+\lambda_{j,+}=s\lambda_j.
+\tag{134.4}
+$$
+
+The identity $\sum_j\lambda_jH_j=H_{\rm head}$ implies the head
+contribution is exactly $sH_{\rm head}=h$; hence these nineteen
+weights recover all six coordinates simultaneously. Every equality
+case is included: zero weights, $a_2=a_3$, and either head endpoint.
+At the base point give it weight one and all other weights zero.
+Because $P$ is compact and $0\le\lambda_j\le\delta(1+t_j)$,
+all ray and split weights tend uniformly to zero as $\delta\to0$.
+Thus this is a continuous origin extension despite the undefined ratio.
+
+Mix all three terminal vectors and pair weights with these same weights,
+so $T_{ij}^{\tau}=\sum_V\lambda_VT_{ij}^{\tau,V}$ and
+$w_{ij}=\sum_V\lambda_Vw_{ij}^V$. The common cell-mass identities
+and $\sum_{i<j}w_{ij}=1$ persist. Equation (133.2) gives
+$p_b=\sum_V\lambda_Vp_b^V$. For any fixed first-zero word,
+
+$$
+(1-a_n)e_0+a_ne_n
+ =\sum_V\lambda_V[(1-a_n^V)e_0+a_n^Ve_n].
+\tag{134.5}
+$$
+
+This uses the same first-zero label even when an endpoint amplitude
+is zero or equals its cap. Each separate row slack in (130.4) is
+therefore the same convex mixture of its endpoint slacks. All 94 rows
+hold at once, with every suffix and the union row preserved.
+At $11111$, $p(0)=\sum_V\lambda_V(1-\varepsilon_V)=1-\varepsilon$.
+No separate mixture is chosen for an amplitude, word, event or row.
+
+For coefficients, the support property in every literal table is stable
+across endpoints: $T_{ij}^{10}$ is supported only at label $j$, whereas
+$T_{ij}^{11}(j)=0$. It persists after mixing. Put
+$A_i=\sum_{j>i}T_{ij}^0$, $B_i=\sum_{j>i}T_{ij}^{10}$.
+The expansion of (133.2) gives
+
+$$
+\begin{aligned}
+c&=\sum_iA_i,&\ell_i&=B_i-A_i,&Q_{ij}&=T_{ij}^{11}-T_{ij}^{10},\\
+(-Q_{ij})_+&=T_{ij}^{10},&V_i&=B_i,&(V_i-\ell_i)_+&=A_i,\\
+H&=\sum_iA_i=c,&
+\mathfrak m(A_i)&=\mathfrak m(B_i)=\sum_{j>i}w_{ij},&\beta&=1.
+\end{aligned}
+\tag{134.6}
+$$
+
+Here $H$ is the vector of Definition 108.2, distinct from $H_{\rm head}$.
+The fixed supports, rather than mere endpointwise disjointness, justify
+the mixed positive-part identity. The kernel has degree at most two
+and lies at the closed boundary $c=H$, $\beta=1$ of $\mathscr C_5$.
+Theorem 109.1 gives its stopped interpretation in its established scope.
+$\square$
+

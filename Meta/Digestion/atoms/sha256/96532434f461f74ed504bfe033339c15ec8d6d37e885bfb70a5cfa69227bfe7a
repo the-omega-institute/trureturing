@@ -1,0 +1,40 @@
+**Proposition 16.10 (The constant endpoint, scaling and the nonnormalizable zero case).** For $d=c>0$ one has $m=0$, $h=1$, $P(k)=ck$ and
+
+$$
+Z=\frac{cq}{(1-q)^2},\qquad
+\gamma_0=0,\qquad \gamma_k=k(1-q)^2q^{k-1}\ (k\ge1),\qquad
+\mu=\frac2{1-q}.
+\tag{16.38}
+$$
+
+In basis $e_0,e_1$ a completed instrument is
+
+$$
+L_A=\sqrt q I_2,\qquad
+L_B=\sqrt{1-q}\,e_0e_1^{\mathsf T},\qquad
+J=\sqrt{1-q}\,e_1e_0^{\mathsf T},\qquad
+\tau=e_1e_1^{\mathsf T},\quad \rho_*=I_2/2.
+\tag{16.39}
+$$
+
+Its dimension two and no-tick Choi rank two are both minimum in the full competitor class. For fixed $q$, positive scaling of any nonzero $d$ leaves the law unchanged; two such polynomials give the same law if and only if they are positive scalar multiples. The zero polynomial gives no normalized law of the form (16.15).
+
+Proof. The unique positively oriented constant pair is $p=\sqrt c,s=0$. Thus the raw matrices are $A=I_2$, $B=\sqrt c\,e_0e_1^{\mathsf T}$. The Gramian terms are $q^k(e_0e_0^{\mathsf T}+kc\,e_1e_1^{\mathsf T})$, giving
+
+$$
+Q=\operatorname{diag}\left(\frac1{1-q},\frac{cq}{(1-q)^2}\right).
+\tag{16.40}
+$$
+
+Here $\sum_{k\ge0}q^k=(1-q)^{-1}$, and multiplying $\sum_{k\ge1}kq^k$ by $1-q$ leaves $\sum_{k\ge1}q^k=q/(1-q)$, proving the stated second sum. Substituting (16.40) into (16.22) gives precisely (16.39). Its effects sum to $qI_2+(1-q)e_1e_1^{\mathsf T}+(1-q)e_0e_0^{\mathsf T}=I_2$. By induction, for $k\ge1$,
+
+$$
+\Phi^k(\tau)=q^ke_1e_1^{\mathsf T}
++k(1-q)q^{k-1}e_0e_0^{\mathsf T}.
+\tag{16.41}
+$$
+
+The step uses $\Phi(e_0e_0^{\mathsf T})=qe_0e_0^{\mathsf T}$ and $\Phi(e_1e_1^{\mathsf T})=qe_1e_1^{\mathsf T}+(1-q)e_0e_0^{\mathsf T}$. Applying the tick gives (16.38). Summing (16.41), together with the $k=0$ term, gives $R_0=I_2/(1-q)$, so its trace is $\mu=2/(1-q)$ and $\rho_*=I_2/2$. The minima and actual global tick reset at minimum follow from Theorem 16.9 with $h=m+1=1$.
+
+For general $d$, multiplication by $c>0$ multiplies its uniquely anchored integral $P$ and normalizer $Z$ by $c$, leaving $\gamma$, its tails, mean and every cylinder unchanged. Conversely, at fixed $q$, equality of the gap laws gives $P_1(k)/Z_1=P_2(k)/Z_2$ at all nonnegative integers. Polynomial identity then gives $P_1=(Z_1/Z_2)P_2$ and, by taking differences, $d_1=(Z_1/Z_2)d_2$, with positive ratio. Equality of stationary cylinders implies equality of these gaps through (16.33), so the same assertion holds for the full laws. Finally for $d=0$ its anchored integral is identically zero, its only anchored pair is $(0,0)$ by Theorem 16.2, and $Z=0$. There is no probability normalization by this zero denominator. $\square$
+

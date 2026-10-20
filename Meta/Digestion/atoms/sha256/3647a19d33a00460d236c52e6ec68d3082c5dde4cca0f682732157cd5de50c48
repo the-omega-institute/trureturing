@@ -1,0 +1,91 @@
+**Theorem 19.1 (Exact visible separation and a finite-record obstruction).** Take the actual rational center $P_c,S_c$ of (12.3), not the limiting root $\theta_*$, and set $H=H_c$. Write $\delta=\delta_9$ from (15.20). Then
+
+$$
+\begin{aligned}
+r_1&=1+\delta,&r_2&=\frac{64000000000054585242730647}{64\cdot10^{24}},\\
+r_1-r_2&=\frac{121392910145961}{64\cdot10^{24}}>0,&
+a_*&=[k^8](H_c-k^9)=\frac{9914818609152}{8\cdot10^{24}}
+=\frac{605152503}{488281250000000000000}.
+\end{aligned} \tag{19.1}
+$$
+
+At every $q\in(0,1)$ the gap-one signal is positive:
+
+$$
+ h_1-p_1=\frac{q(r_1Z_9-Z_H)}{Z_9Z_H}
+ =\frac{\mathsf P_1(101)}{\mathsf P_1(1)}
+  -\frac{\mathsf P_0(101)}{\mathsf P_0(1)}>0.
+\tag{19.2}
+$$
+
+For every $W\ge1$ there is also the information upper bound
+
+$$
+ D(\mathsf P_0^W\Vert\mathsf P_1^W)
+ \le\frac{\delta^2\bigl(Z_8(q)+WZ_7(q)\bigr)}{2\bigl(Z_9(q)+Z_{10}(q)\bigr)}.
+\tag{19.3}
+$$
+
+At $q=1/2$ the exact signal is
+
+$$
+ h_1-p_1=\frac{1040731346079192329}
+ {11162059662694743670610553961701435710}.
+\tag{19.4}
+$$
+
+Any decision from a deterministic record cap with both errors at most $1/4$, including an independently randomized one, must then have
+
+$$
+ W\ge305776485212150493333616781.
+\tag{19.5}
+$$
+
+Proof. The coefficient vector (12.7) and Theorem 15.5 already provide the strictly positive residual and $1\le r_k\le1+\delta/k$, with equality $r_1=1+\delta$. Thus $r_k<r_1$ for every $k\ge2$. The first two evaluations use $H(1)=1+9E_0$ and $H(2)=512+9(e(0)+e(1))$. The top coefficient uses $\Delta(H-k^9)=9e$ and $[t^7]e=9914818609152/(9\cdot10^{24})$, so $8a_*=9[t^7]e$. These give (19.1) by rational arithmetic. Since every $p_k$ is positive, $c=\mathbb E_pr_K<r_1$, proving (19.2). Its cylinder interpretation follows directly from (15.8); it is an identity of model probabilities, not permission to query those probabilities as observations.
+
+For (19.3), $r_k\ge1$ allows the Taylor bound with $\ell=1$. Its gap and initial interval versions give
+
+$$
+ d_0\le\tfrac12\mathbb E_p(r_K-1)^2
+ \le\frac{\delta^2Z_7}{2Z_9},\qquad
+ C_0\le D(\lambda_0\Vert\lambda_1)
+ \le\frac{\delta^2(Z_7+Z_8)}{2(Z_9+Z_{10})}.
+\tag{19.6}
+$$
+
+The first comparison replaces variance by the second moment about one; the second uses the length-biased $K$ marginal $(k+1)k^9q^k/(Z_9+Z_{10})$. Also $\mu_0=(Z_9+Z_{10})/Z_9$. Substitution in (17.10), including its $W-1$ transitions, gives (19.3).
+
+Here is a finite rational way to verify the evaluations without an infinite numerical sum. Polynomial division of $\Delta(H-k^9)=9e$, with $H(0)=0$, gives
+
+$$
+H(k)-k^9=\frac1{35\cdot10^{24}}igl(
+55800726477138k-224986136658885k^2+420664314485485k^3
+-540138133491075k^4+518234977000797k^5
+-254383031435085k^6+77668004560980k^7+43377331415040k^8\bigr).
+\tag{19.7}
+$$
+
+Taking its forward difference and comparing the eight coefficients with $9e$ verifies this polynomial; its constant is zero. For every integer $j\ge0$, the rational functions $Z_j$ can be evaluated by
+
+$$
+ Z_0(q)=\frac q{1-q},\qquad
+ Z_j(q)=\frac q{1-q}\left(1+\sum_{v=0}^{j-1}\binom jv Z_v(q)\right)\quad(j\ge1).
+\tag{19.8}
+$$
+
+Indeed shift $k$ to $k+1$ in the defining series, expand $(k+1)^j$, and move $qZ_j$ to the left. Evaluating (19.7) by these power sums proves (19.4) and gives
+
+$$
+ (Z_7,Z_8,Z_9,Z_{10})(1/2)=(94586,1091670,14174522,204495126).
+\tag{19.9}
+$$
+
+For $\alpha=1/4$, (17.11) gives a required divergence $\tfrac12\log3>1/2$. The last strict inequality follows from $e<3$, for example from the exponential series and $j!\ge2^{j-1}$ for $j\ge1$, with strict inequality for some terms. Hence (19.3) implies
+
+$$
+ W>\frac{218669648/\delta^2-1091670}{94586}.
+\tag{19.10}
+$$
+
+The right side lies strictly between $305776485212150493333616780$ and $305776485212150493333616781$. Multiplication by the positive integer $94586\cdot2749658638697^2$ verifies these two comparisons exactly. Taking the next integer proves (19.5). This is a rigorous necessary bound, not a sharp optimum or an estimate of physical elapsed time. $\square$
+

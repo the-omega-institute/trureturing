@@ -1,0 +1,30 @@
+### 定义 37.1（仿射增益的线性提升）
+
+在已知操作及已记录读数序号的合同中，设 $R\in\operatorname{Mat}_2(\mathbb R)$，$\alpha,\beta,\gamma,\delta\in\mathbb R$，且
+
+$$
+z_i=(\alpha+\beta i)\operatorname{tr}(A_iR)+\gamma+\delta i,
+\qquad
+P=\alpha R,\quad Q=\beta R.
+$$
+
+暂把 $P,Q\in\operatorname{Mat}_2(\mathbb R)$ 视为独立未知量，得到十维线性合同
+
+$$
+z_i=\operatorname{tr}(A_iP)+i\operatorname{tr}(A_iQ)+\gamma+\delta i.
+$$
+
+这里的提升只定义线性参数空间；任意提升参数并不自动来自同一个物理关系 $R$。取一条不可重置的累计路径
+
+$$
+A_i=M^i\quad(0\le i\le5),
+\qquad
+A_i=M^{i-6}JM^5\quad(i\ge6).
+$$
+
+令 $v(A)=(A_{00},A_{10},A_{01},A_{11})$，按 $(P_{00},P_{01},P_{10},P_{11},Q_{00},Q_{01},Q_{10},Q_{11},\gamma,\delta)$ 排列未知量，设计矩阵第 $i$ 行为
+
+$$
+b_i=(v(A_i),\ i\,v(A_i),\ 1,\ i).
+$$
+

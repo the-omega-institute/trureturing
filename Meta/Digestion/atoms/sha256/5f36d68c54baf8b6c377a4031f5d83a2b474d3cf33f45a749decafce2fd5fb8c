@@ -1,0 +1,8 @@
+正确处理应当：
+
+1. 将 prime-power repetitions 组织成完整 Euler histories；
+2. 抽取 primitive local factors；
+3. 对重复闭合历史做 logarithmic/Möbius contraction；
+4. 加入 ζ、Hecke 或 \(q\)-Gamma counterterms；
+5. 对剩余历史做 Mellin/Riemann 积分控制。
+

@@ -1,0 +1,6 @@
+Then H_0^4 <= max(|F|,|G|) <=24 H_0^4. Also gcd(F,G) divides 144:
+
+- A common prime other than 2,3 cannot divide a or b, and a=-b or a=3b would force it to divide 4 or 12.
+- If 3 divides a, then 3 does not divide b and v_3(a^2+3b^2)=1, so v_3(F)=2. If 3 does not divide a, 3 does not divide F.
+- At 2, F is odd unless a,b are both odd. In that case a^2+3b^2=4 mod8, hence v_2(F)=4.
+

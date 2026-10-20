@@ -1,0 +1,32 @@
+**命题 109.1（定理13.1的两个因子化方向）。** 保留式（13.1）的假设
+
+$$
+\ker\Phi_\beta=\ker\beta,\qquad \ker\Phi_r=\ker r.
+$$
+
+则式（13.2）的 $\ker\Phi_J=\ker\Psi=\ker\beta\cap\ker r$ 和式（13.3）的充分性包含均成立。对任意摘要 $q:H\to Q$，全部因子只定义在实际像上，正确方向为
+
+$$
+\begin{aligned}
+\Phi_J=F\circ q
+&\Longleftrightarrow \Psi=G\circ q
+\Longleftrightarrow \ker q\subseteq\ker\Psi,\\
+q=L\circ\Psi
+&\Longleftrightarrow \ker\Psi\subseteq\ker q,
+\end{aligned}
+\tag{109.1}
+$$
+
+其中 $F:q(H)\to\Phi_J(H)$、$G:q(H)\to\Psi(H)$、$L:\Psi(H)\to q(H)$。第一行是充分性；第二行是相对于联合任务的无冗余。在第一行已经成立时，再要求“$\Psi$ 能由 $q$ 因子化”只重复充分性。定理13.1末段的附加文字应为“$q$ 能由 $\Psi$ 因子化”；它对应原文显示的反向包含 $\ker\Psi\subseteq\ker q$。
+
+两项包含同时成立，当且仅当存在唯一尊重同一来源的双射
+
+$$
+R:q(H)\longrightarrow\Psi(H),\qquad R(q(h))=\Psi(h).
+\tag{109.2}
+$$
+
+其逆满足 $R^{-1}(\Psi(h))=q(h)$。这不是任意两个等势集合之间的双射，也不把 $\Psi(H)$ 扩成自由乘积 $\beta(H)\times r(H)$。
+
+**证明。** 有序对的核等于坐标核的交，式（13.1）立即给出式（13.2）。若 $\Phi_J=F\circ q$，同一 $q$ 值必有同一 $\Phi_J$ 值，故由式（13.2）得到式（13.3）。反过来，在 $\ker q\subseteq\ker\Psi$ 下，按代表定义 $G(q(h)):=\Psi(h)$、$F(q(h)):=\Phi_J(h)$；两者均与代表无关。若 $\Psi=G\circ q$，也直接得到该包含。第二行同样按 $L(\Psi(h)):=q(h)$ 验证。这正是命题10.2的实际像因子化。两核相等时 $G$、$L$ 都良定义，且在各自实际像上互为逆；每个像点都有来源代表，所以满足式（109.2）的映射只能是 $G$。反向将双射及其逆分别应用于相等值，得到两项核包含。证毕。
+

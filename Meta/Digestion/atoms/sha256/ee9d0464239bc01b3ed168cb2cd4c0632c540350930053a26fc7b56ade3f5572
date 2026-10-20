@@ -1,0 +1,29 @@
+## 2. 完整对称不推出 RH
+
+令 \(z=s-\frac12\)，并取 \(\delta,\gamma\neq0\)。定义：
+
+\[
+P_{\delta,\gamma}(s)
+=
+\bigl((z-\delta)^2+\gamma^2\bigr)
+\bigl((z+\delta)^2+\gamma^2\bigr).
+\]
+
+其零点恰为：
+
+\[
+\frac12\pm\delta\pm i\gamma.
+\]
+
+同时：
+
+\[
+P_{\delta,\gamma}(1-s)=P_{\delta,\gamma}(s),
+\]
+
+\[
+P_{\delta,\gamma}(\overline s)
+=
+\overline{P_{\delta,\gamma}(s)}.
+\]
+

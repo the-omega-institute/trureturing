@@ -1,0 +1,49 @@
+**条件接口 376.4（局部反应扩散极限）。** 设 \(a_j\downarrow0\) 是外加网格尺度，\(t_j>0\) 是从离散步到连续时间的缩放。要得到区域 \(\Omega\) 上的反应扩散极限，至少需要以下条件。
+
+1. 嵌入和权重具有几何一致性：节点经验测度收敛到 \(\Omega\) 上的参考体积，边界层、节点度和缩放导通率具有统一控制。
+2. 对每个光滑测试函数，缩放后的离散算子满足弱一致性。存在矩阵 \(D(x)\) 或更一般的通量 \(\mathcal J(u,\nabla u,x)\)，使
+\[
+\lim_{j\to\infty}
+\frac1{M_j}\sum_vm_{j,v}\,\psi_{j,v}\,
+t_j(\mathscr D_j\varphi)(x_{j,v})
+ =
+\int_\Omega
+\psi(x)\,\nabla\!\cdot\!\bigl(D(x)\nabla\varphi(x)\bigr)\,dx
+\tag{376.7}
+\]
+对所需的测试函数和有界测试场 \(\psi_{j,v}\) 成立。非对称边权的一级矩留下漂移项；长跳尾部则应改写为非局部或分数阶算子，不能套用局部二阶式。状态依赖的迁移率须先对经验场作局部平衡替换，再把得到的系数写成 \(D(u,x)\) 或通量 \(\mathcal J(u,\nabla u,x)\)。
+3. 反应率有局部平衡替换：对每个反应 \(r\)，存在函数 \(\kappa_r(u,x)\)，使局部平均的
+\(\lambda^j_{v,r}\) 在 \(j\to\infty\) 时由 \(\kappa_r\) 表示。这个替换需要局部平衡、传播混沌、谱隙、熵估计或其他明确机制之一；FIB 接缝本身不提供它。
+4. 初始经验测度在
+\(D([0,T],\mathcal M(\Omega)^q)\) 中紧，初态趋向 \(u_0(x)\,dx\)，并有足够的矩、熵或能量界。
+5. 生成元鞅的二次变差在所选归一化下趋于零，边界条件和极限方程的弱解具有唯一性。
+
+在这些条件下，若 \(\eta^j\) 是生成元（376.1）驱动的同一实际过程，经验场满足
+\[
+\pi_j\bigl(\eta^j_{t_jt}\bigr)
+\Longrightarrow u(t,x)\,dx
+\quad\text{于 }D([0,T],\mathcal M(\Omega)^q),
+\tag{376.8}
+\]
+其中 \(u\) 是弱方程
+\[
+\partial_tu+\nabla\!\cdot\mathcal J(u,\nabla u,x)
+ =R(u,x),\qquad
+R(u,x)=\sum_{r\in\mathcal R}\nu_r\kappa_r(u,x).
+\tag{376.9}
+\]
+在对称短程迁移、\(\mathcal J=-D(u,x)\nabla u\) 时，这就是常见的非线性反应扩散方程。若外加质量作用律为 \(\kappa_r(u,x)=k_r(x)\prod_{a=1}^q u_a^{\alpha_{r,a}}\)，则 \(R\) 是由化学计量决定的多项式非线性；指数、系数和正则性仍属于外加反应模型。式（376.8）是满足上述条件后的水动力结论；FIB 层级增长本身不提供紧性、局部平衡、唯一性或二次变差消失。
+
+对应的鞅写法是
+\[
+\begin{aligned}
+M_{j,t}^{\varphi}
+={}&\langle\pi_j(\eta^j_t),\varphi\rangle
+-\langle\pi_j(\eta^j_0),\varphi\rangle\\
+&-\int_0^t
+\mathcal L_j\langle\pi_j(\eta^j_s),\varphi\rangle\,ds .
+\end{aligned}
+\tag{376.10}
+\]
+若 \(\langle M_j^\varphi\rangle_T\to0\)，则鞅项在有限时间窗内消失；若二次变差按 \(N_j^{-1}\) 仍有非零极限，则极限含随机噪声，必须改写为随机偏微分方程或测度值扩散，不能宣称（376.9）的确定性极限。
+

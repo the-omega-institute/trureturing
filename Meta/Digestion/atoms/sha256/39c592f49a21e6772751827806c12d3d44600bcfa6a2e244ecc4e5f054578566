@@ -1,0 +1,6 @@
+其中：
+
+- $A_{\mathrm{legal}}$ 保证 FIB 合法性；
+- $\Delta_\Gamma$ 是场对这一步转移的代价；
+- $\beta$ 控制权重敏感度。
+

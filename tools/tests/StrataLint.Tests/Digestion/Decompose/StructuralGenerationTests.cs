@@ -75,10 +75,18 @@ public sealed class StructuralGenerationTests
         var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
         Assert.True(result.Success, result.Error);
         Assert.Equal(1, f.Writes);
-        Assert.Equal(2, f.CasWrites.Length);
-        Assert.Equal(3, f.LedgerWrites.Length);
         var parent = f.Document.RequireDigestionEntries().Single(entry => entry.AtomId == f.Parent.AtomId);
         var ids = plan.Children.Select(child => child.Fingerprints.RawSha256[7..]).ToArray();
+        Assert.Equal(ids.Order(), f.CasWrites.Where(item => ids.Contains(item.Reference[7..]))
+            .Select(item => item.Reference[7..]).Order());
+        var scopeIds = ids.SelectMany(id => DigestionContextPointerStore.Load(f.Snapshot, "probe", id)
+                .SelectMany(version => version.Entries[0].Occurrences))
+            .SelectMany(occurrence => occurrence.GoverningContext).Select(scope => scope.AtomId).ToArray();
+        Assert.All(f.CasWrites.Where(item => !ids.Contains(item.Reference[7..])), item =>
+            Assert.Contains(item.Reference[7..], scopeIds));
+        Assert.Equal(3, f.LedgerWrites.Count(item => item.Path.EndsWith(".yaml", StringComparison.Ordinal)));
+        Assert.All(f.LedgerWrites.Where(item => !item.Path.EndsWith(".yaml", StringComparison.Ordinal)), item =>
+            Assert.True(IngestCommand.IsContextIndexPath(item.Path)));
         Assert.Equal(ids, parent.Receipts.ChainAtoms);
         var before = f.Current;
         foreach (var dryRun in new[] { true, false, false })

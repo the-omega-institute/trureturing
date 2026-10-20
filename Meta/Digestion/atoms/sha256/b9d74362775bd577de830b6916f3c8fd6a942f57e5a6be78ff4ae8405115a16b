@@ -1,0 +1,24 @@
+**定理 1031.1（有限正尺度的自由预测风险）。** 在第 1030 节条件下，若 $s=d/\gamma\to s_0\in(0,\infty)$，则
+
+$$
+R\longrightarrow
+F(s_0):=\frac{s_0}{2(1+s_0)^{(1+s_0)/s_0}}.
+$$
+
+一个取得最坏误差的时刻 $n_*$ 满足
+
+$$
+\gamma n_*\longrightarrow\frac{\log(1+s_0)}{s_0}.
+$$
+
+**证明。** 第 1012 节的离散峰值阈值可准确改写为
+
+$$
+\theta=\frac{\log(1+s)}{-\log(1-d/\rho)},\qquad
+n_*=\max\{T,\lceil\theta\rceil\}.
+$$
+
+因为 $d\to0$，$-\log(1-d/\rho)=(d/\rho)(1+O(d))$，所以 $\gamma\theta\to\log(1+s_0)/s_0$。阈值趋于无穷，固定 $T$ 和向上取整不改变缩放极限。
+
+记极限时刻为 $z$，由 $\log\rho=-\gamma+O(\gamma^2)$、$\log\alpha=-(\gamma+d)+O((\gamma+d)^2)$，得到 $\rho^{n_*}\to e^{-z}$、$\alpha^{n_*}\to e^{-(1+s_0)z}$。代入准确风险便得到显示的函数。证明跟踪的是实际离散最大点，因此没有用逐时刻收敛擅自交换无限上确界。
+

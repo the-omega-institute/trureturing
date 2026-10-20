@@ -1,0 +1,47 @@
+### 80.1 有限实际来源与一步联合核
+
+沿用 [FIB 卷第2节的源语法](FIBONACCI_ATOMIC_RELATION_GENERATION.md#2-原始语法与结构解释)，
+令 $\mathcal T$ 是由 $\alpha,\beta,\langle-,-\rangle$ 生成的二叶自由项，
+令 $X_{\mathrm{ord}}\subseteq\mathcal T$ 是同一实际来源上的非空有限普通状态集，
+令 $X_{\mathrm{term}}$ 是有限个带类型终止点，置
+$X=X_{\mathrm{ord}}\sqcup X_{\mathrm{term}}$。可见类型映射 $\tau$ 在普通态取
+$\mathrm{ord}$，在终止态取 $\mathrm{term}(\theta)$，其中 $\theta\in\Theta$ 是其声明的终止类型。
+固定有限的外部可声明且动作标签可见的动作族 $\mathcal A$。对每个 $a\in\mathcal A$，给出
+合法性指标 $L_a:X\to\{0,1\}$、有限可见事件集 $E_a$、有限记录集 $R_a$，置
+$D_a=\{t\in X\mid L_a(t)=1\}$，仅在 $D_a$ 上定义联合核
+
+$$
+J_a(t;\eta,v,r)\ge0,\qquad
+\sum_{\eta\in E_a,\;v\in X,\;r\in R_a}J_a(t;\eta,v,r)=1
+\quad(t\in D_a).
+\tag{80.1}
+$$
+
+这里 $\eta$ 是本步对外事件，$v\in X$ 是同一来源中的后继状态，$r$ 是本步
+实际写入的记录。合法执行的终止或失败结果只能落在 $X_{\mathrm{term}}$ 中，不能伪装成普通的
+零计数项。所有这些对象必须来自一个声明过的实际联合来源。
+给定当前状态和动作，$J_a$ 是本步的完整条件律；影响它的内部记忆须已纳入状态。
+本合同允许观察不合法尝试：为明确字母表边界，置
+$\widetilde E_a:=E_a\sqcup\{\mathrm{illegal}_a\}$ 和
+$\widetilde R_a:=R_a\sqcup\{r_a^{\mathrm{ill}}\}$，其中
+$\mathrm{illegal}_a\notin E_a$、$r_a^{\mathrm{ill}}\notin R_a$ 是新鲜符号。
+合法核 $J_a$ 仍只定义在 $E_a\times X\times R_a$ 上；当 $t\notin D_a$ 时，
+唯一的拒绝输出是 $(\mathrm{illegal}_a,t,r_a^{\mathrm{ill}})$，状态保持 $t$。
+该拒绝分支不是 $J_a$ 的非法状态核行；其他拒绝更新合同须另验其联合下降。
+
+给定摘要 $q$，以下将余域限制为实际像 $Q_0:=q[X]$，即 $q:X\twoheadrightarrow Q_0$。
+要求可见类型有因子化 $\tau=\overline\tau\circ q$，以保留零步普通/终止类型及终止类型标签。
+对 $t\in D_a$、$q'\in Q_0$，定义把内部后继消去后的联合核
+
+$$
+J^{q}_a(t;\eta,q',r)
+ =
+\sum_{\substack{v\in X\\q(v)=q'}}
+J_a(t;\eta,v,r).
+\tag{80.2}
+$$
+
+它保留事件与 writer 记录同后继摘要之间的相关性。只分别比较
+$\sum_{v,r}J_a(t;\eta,v,r)$ 和 $\sum_{\eta,r}J_a(t;\eta,v,r)$，
+不足以保证式（80.2）相同。
+

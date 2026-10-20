@@ -1,0 +1,34 @@
+**候签定理 21.1（完整相位的有符号预算）。** 在第 21.1 节合同下，
+
+$$
+\boxed{
+N_S(f)\le2D(f)+2\|f\|_2\left(
+\|xf\|_2+
+\|(\omega_\infty+\omega_{\mathcal P})\widehat f\|_{L^2(d\mu)}
+\right).
+}
+$$
+
+特别地，得到完全明确的上界
+
+$$
+\boxed{
+\begin{aligned}
+N_S(f)\le{}&2D(f)+2\|f\|_2\|xf\|_2
++2a_\Gamma\|f\|_2^2\\
+&+2b_\Gamma\|f\|_2\|f''\|_2
++4\mathfrak d_S\|f\|_2^2.
+\end{aligned}
+}
+$$
+
+证明。微分 $g_{S,f}=m_S\widehat f(-t)$，利用两种相位导数均为实偶函数及 Plancherel，得到
+
+$$
+\|g_{S,f}'\|_{L^2(d\mu)}
+\le\|xf\|_2+
+\|(\omega_\infty+\omega_{\mathcal P})\widehat f\|_{L^2(d\mu)}.
+$$
+
+代入第 21.2 节的实际 Hankel 矩界和第 21.1 节的谱配对上界，得到第一式。再应用相位上界与 $\|t^2\widehat f\|_{L^2(d\mu)}=\|f''\|_2$，得到第二式。其常数不含 $\|(I-C^2)^{-1}\|$，但仍明确依赖真实素数集的 $\mathfrak d_S$。这不是 $N_S$ 的绝对值界或统一 TC 定理。$\square$
+

@@ -1,0 +1,8 @@
+**注 3.7（模 $\gamma_j$ 的平方关系）。** 由事实 3.2 与 $\det M_j=1$,
+
+$$
+(-1)^L\alpha_j\,p=\alpha_j(\alpha_j+\delta_j-2)=\alpha_j^2+1+\beta_j\gamma_j-2\alpha_j=(\alpha_j-1)^2+\beta_j\gamma_j .
+$$
+
+所以模 $\gamma_j$ 有 $(-1)^L\alpha_jp\equiv(\alpha_j-1)^2$:在 $q_j$ 的根上,$p$ 的消失与 $\alpha_j-1$ 的消失等价,这是定理 3.6 (2) 的另一种读法。该恒等式在后文证明中不被使用。
+

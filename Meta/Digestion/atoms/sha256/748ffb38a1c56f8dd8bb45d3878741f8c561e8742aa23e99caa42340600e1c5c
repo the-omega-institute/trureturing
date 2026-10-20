@@ -1,0 +1,32 @@
+**定理 1146.1（非零弱关联区间）。** 对每个固定 $N\ge3$，存在 $\kappa_0(N)>0$，使所有 $0<\kappa<\kappa_0(N)$ 都满足
+
+$$
+G_N(\kappa)=h_2(\kappa)+(N-1)\kappa\log2.
+$$
+
+**证明。** 对任意来源熵最优表示，第 1109 节给出唯一主权重 $1-\delta$，且 $\delta\ge\kappa$、$\delta/\kappa\to1$，这些极限对任意最优者序列成立。由一阶目标矩为零，$|m_i|\le\delta/(1-\delta)$，故固定 $N$ 时 $A\to0$。第 1144–1145 节适用，并有 $\vartheta=(\delta-\kappa)/\delta\to0$。
+
+取 $\tau=C(N+1)\vartheta/2$。充分小参数下 $\tau<1$，第 1143 节给出 $G(R)\ge D_N-C_N\vartheta^2$，其中 $C_N$ 为只依赖固定维数的有限常数。将真实来源按主标签与余量分组，得到
+
+$$
+\begin{aligned}
+G_N(\kappa)
+&\ge h_2(\delta)+\delta G(R)\\
+&\ge U_N(\kappa)+h_2(\delta)-h_2(\kappa)
++dD_N-C_Nd\vartheta.
+\end{aligned}
+$$
+
+在 $0<\kappa\le\delta<1/2$ 上，熵导数递减，因此
+
+$$
+h_2(\delta)-h_2(\kappa)
+\ge d\log\frac{1-\delta}{\delta}.
+$$
+
+方括号中的单位缺口代价 $\log((1-\delta)/\delta)+D_N-C_N\vartheta$ 趋于正无穷。若任意小正参数仍有最优者满足 $d>0$，选取这样的序列，以上下界最终给 $G_N(\kappa)>U_N(\kappa)$，与明确生成器的上界矛盾。因此存在一个共同的非零区间，其全部最优者均有 $d=0$。
+
+此时第 1144 节给 $m=0$，余量为 $P_1$。所有正权重余量乘积通道只能是正奇偶点质量，来源熵至少为 $D_N$；明确生成器达到它，从而得到准确公式。证毕。
+
+这是固定 $N$ 的存在性结论，没有给出统一的 $\kappa_0$，也没有用数值探查代替区间证明。
+

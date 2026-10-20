@@ -24,6 +24,7 @@ internal interface ICliEnvironment
 
     CommandResult ShowAtom(IReadOnlyList<string> arguments);
     CommandResult AtomContext(IReadOnlyList<string> arguments);
+    CommandResult MigrateAtomContext(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments);
 
@@ -134,6 +135,8 @@ internal static class CliApplication
                 RenderExplicit(environment.DepositHeaderCheck(tail), console),
             ["lean-utility-input"] = static (environment, tail, console) =>
                 RenderExplicit(environment.LeanUtilityInput(tail), console),
+            ["migrate-atom-context"] = static (environment, tail, console) =>
+                RenderCommand(environment.MigrateAtomContext(tail), console),
             ["source-dispatch"] = static (environment, tail, console) =>
                 RenderCommand(environment.SourceDispatch(tail), console),
             ["search-atoms"] = static (environment, tail, console) =>

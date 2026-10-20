@@ -1,0 +1,13 @@
+## 61. 杀死链的极值、首达尾与稀有事件谱律
+
+令 \(S\) 为有限活跃集，\(K\) 为 primitive 子随机核，杀死态记为 \(\partial\)，Perron 根为 \(\rho\)，左右向量 \(r,\ell\) 满足 \(\ell^{\mathsf T}r=1\)。令
+\[
+\widehat K(i,k)=\frac{K(i,k)r(k)}{\rho r(i)}
+\]
+为 Doob 核。给定观测 \(g:S\to\mathbb R\)、阈值 \(u\)，定义
+\[
+A_u=\{i:g(i)>u\},\qquad
+S_u=S\setminus A_u,\qquad
+K_u=K|_{S_u\times S_u}.
+\]
+

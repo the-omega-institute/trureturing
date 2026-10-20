@@ -114,6 +114,8 @@ The Scribe records exactly one `OpenProblemResolutionClaim`, `Refuted`, on
 `result`. Its axiom closure is contained in
 $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$.
 
+The positive-sequence and physical boundary arguments under Triage are prose, with reciprocal completion attributed to Lalín–Smyth Theorem 1. Their corresponding unpublished source has reported Lean 4.33 compilation evidence, but no accepted current native exact-type/axiom report. The kernel-checked result above is the arbitrary-joint-weight refutation; it supplies no physical positive theorem.
+
 Experiment entry:
 [tree Lee–Yang checks at commit 811abbf954710a5a35374d89403c2ea7ce6913eb](https://github.com/the-omega-institute/trureturing-experiments/tree/811abbf954710a5a35374d89403c2ea7ce6913eb/docs/reports/fiol-martinezmontoya-riosfukelman-2020-tree-lee-yang).
 Command within that directory: `python3 check.py`; exit 0; final reading
@@ -190,20 +192,274 @@ has `proof_shape: bind-only`; the module asserts no escape witness.
   incident splits (lines 198–203), so product weights do not subsume them.
 - **Product-weight version, open.** Conjecture 1 for edgewise product
   weights on trees with two or more edges is not settled here.
-- **Physical-weight version, open.** Conjecture 1 restricted to the physical
-  binomial and vertex factors of (2.31) on trees with two or more edges is
-  not settled here and has no numerical reading in the experiment entry.
+- **Physical boundary family, proved in prose below.** At $\tau=-1$,
+  every fixed labelled two-edge pair $a,b\ge2$ with $\min(a,b)=2$ is
+  covered using all three physical vertex factors. This is separate from
+  the kernel-checked arbitrary-weight refutation and from the experiment.
+- **General physical-weight version, open.** Both two-edge totals at least
+  three and the full tree family with the binomial and all-vertex factors
+  of (2.31) remain open. The experiment entry has no physical-weight reading.
 - **Consequences for the source, source reading.** Its fixed-configuration
   result and its one-edge theorem remain outside the refutation. The
   physical planar-free-energy specialization requires its own restricted
   argument; the arbitrary-joint-weight conjecture cannot supply it.
   Conjecture 2 concerns a sum over trees and is not settled by this instance.
 
+### Physical two-edge boundary family, proved in prose
+
+For all fixed labelled totals $a,b\ge2$ with $\min(a,b)=2$, the physical
+two-edge polynomial at $\tau=-1$, including both leaf factors and the
+central vertex factor, has all its complex roots on the unit circle.
+We first give the positive-sequence argument that supplies its
+root-location step, then identify the actual weights, incidence, masses
+and state sum. These are prose arguments, using established reciprocal
+completion, with no literature-priority claim.
+
+**Positive-sequence polynomial.** Let $b\ge2$ and let $v_\ell>0$ for every
+$1\le\ell\le b-1$, without any symmetry assumption. Define
+
+$$
+P_{b,v}(X)=(1-X)\sum_{\ell=1}^{b-1}
+v_\ell(1-X^\ell)(1+X^{b+1-\ell}),\qquad
+h(X)=\sum_{\ell=1}^{b-1}v_\ell\sum_{j=0}^{\ell-1}X^j.
+$$
+
+The seed has real coefficients, degree $d\le b-2$, and
+$h(0)=\sum_\ell v_\ell>0$. The geometric-sum identity gives
+
+$$
+(1-z)h(z)=\sum_\ell v_\ell-\sum_\ell v_\ell z^\ell.
+$$
+
+For $|z|<1$, the interval of indices is nonempty and each $\ell\ge1$, so
+
+$$
+\left|\sum_\ell v_\ell z^\ell\right|
+\le\sum_\ell v_\ell|z|^\ell<\sum_\ell v_\ell.
+$$
+
+Thus $h$ has no zero in the open unit disk. The conclusion depends on this
+strict bound and the completion identity below; positivity of a mixture
+alone would not locate its roots.
+
+The reciprocal-completion result used here is the real special case of
+M. N. Lalín and C. J. Smyth, *Unimodularity of zeros of self-inversive
+polynomials*, [arXiv:1201.0774v1](https://arxiv.org/abs/1201.0774v1),
+Theorem 1, page 3, equation (5)
+([DOI 10.1007/s10474-012-0225-4](https://doi.org/10.1007/s10474-012-0225-4)).
+Its exact forward statement takes a nonzero complex polynomial $g$ of
+degree $n$ whose zeros lie in the closed unit disk, an integer $D>n$,
+and $|\lambda|=1$. It puts every zero of
+$z^{D-n}g(z)+\lambda g^*(z)$ on the unit circle, where
+
+$$
+g^*(z)=z^n\overline{g(1/\bar z)}
+$$
+
+is understood as a polynomial. To match the present hypotheses, set
+$g(z)=z^d h(1/z)$. Since $h(0)\ne0$, this is a nonzero polynomial of
+degree $d$; its zeros are the reciprocals of those of $h$, hence are in
+the closed disk. Its coefficients are real and $g^*=h$. Taking
+$D=b>d$ and $\lambda=1$ yields the completion
+$F(z)=h(z)+z^b h(1/z)$. Constants and zeros on the boundary are allowed
+by the cited theorem.
+
+Here is the corresponding direct argument, including the root-multiplicity
+step. Factor $h(z)=c\prod_{j=1}^d(z-\alpha_j)$ over $\mathbb C$, listing
+roots with multiplicity. Disk stability gives $|\alpha_j|\ge1$.
+For $|z|\le1$,
+
+$$
+|\bar z-\alpha_j|^2-|1-\alpha_j z|^2
+=(|\alpha_j|^2-1)(1-|z|^2)\ge0.
+$$
+
+When $z\ne0$, use
+$|z|\,|z^{-1}-\alpha_j|=|1-\alpha_j z|$, multiply the nonnegative
+factor inequalities, and include $|c|$. Real coefficients give
+$|h(\bar z)|=|h(z)|$, so
+
+$$
+|z|^d|h(1/z)|\le|h(z)|.
+$$
+
+The empty product covers a constant seed. Since $d<b$,
+$z^b h(1/z)$ extends to a polynomial with zero constant coefficient.
+Thus $F(0)=h(0)\ne0$. If $F(z)=0$ with $0<|z|<1$, the preceding
+comparison would give
+
+$$
+0<|h(z)|=|z|^b|h(1/z)|
+\le|z|^{b-d}|h(z)|<|h(z)|,
+$$
+
+a contradiction. For $z\ne0$, the identity
+$F(1/z)=z^{-b}F(z)$ transports any root outside the disk to one
+inside it. Therefore every root of $F$ has modulus one; no
+distinct-root assumption has been used.
+
+To connect $F$ to the stated positive-sequence polynomial, the forward
+and inverse geometric sums give, for each $\ell$ and $z\ne0$,
+
+$$
+\begin{aligned}
+(1-z)^2\left(\sum_{j=0}^{\ell-1}z^j
++z^b\sum_{j=0}^{\ell-1}z^{-j}\right)
+&=(1-z)\bigl((1-z^\ell)-z^{b+1}(1-z^{-\ell})\bigr)\\
+&=(1-z)(1-z^\ell)(1+z^{b+1-\ell}).
+\end{aligned}
+$$
+
+The last equality uses $z^{b+1}z^{-\ell}=z^{b+1-\ell}$.
+Multiply by $v_\ell$ and sum to obtain the polynomial identity
+
+$$
+P_{b,v}(z)=(1-z)^2F(z).
+$$
+
+At zero both sides are $\sum_\ell v_\ell>0$, so the inverse notation
+introduces no exceptional root. The root $z=1$ is already on the
+circle; every other root is a root of $F$. This proves the full
+positive-sequence statement, including asymmetric coefficients and
+repeated roots. At $b=2$, the seed is the positive constant $v_1$,
+and the same argument applies with $d=0$.
+
+**All-vertex physical weights.** In the notation of the source's
+equation (2.15), for positive integer endpoint parts define
+
+$$
+f(t)=\frac{(2t)!}{(t-1)!\,t!},\qquad
+\mathcal V(t_1,\ldots,t_\alpha)
+=\frac{(m-1)!}{(m-\alpha+2)!}\prod_{j=1}^{\alpha}f(t_j),
+\quad m=\sum_j t_j.
+$$
+
+These are real factorial ratios. Every endpoint part is at least one,
+so $m\ge\alpha$ and the factorial arguments are nonnegative.
+The all-vertex reading of (2.31) is used: its printed vertex-product
+upper limit is $m$ for $m$ edges, whereas the explicit construction
+after (2.15) and the products in (2.16)–(2.19) attach factors to all
+$m+1$ vertices. This is an editorial reading of the source, not a
+claim of a published erratum.
+
+Use the native incidence $0\to1\leftarrow2$, with source list $(0,2)$
+and target list $(1,1)$. For totals $(a,b)$ and split $(k,\ell)$, the
+native mass definition assigns $k,\ell$ to the leaves and
+$a-k,b-\ell$ to the centre. The physical weight is therefore exactly
+
+$$
+W_{a,b}(k,\ell)=
+\binom{2a}{2k}\binom{2b}{2\ell}
+\mathcal V(k)\mathcal V(a-k,b-\ell)\mathcal V(\ell).
+$$
+
+It includes all three vertex factors. The paper's arrow convention
+puts $n_i-k_i$ at the origin and $k_i$ at the end; the identical
+endpoint assignment is represented there by reversing both native
+arrows. No split complement at a fixed incidence is assumed to
+preserve the polynomial.
+
+For totals $(2,b)$ the native split set is exactly
+$(k,\ell)=(1,\ell)$ with $1\le\ell\le b-1$. On this whole interval,
+
+$$
+\mathcal V(1)=1,\qquad
+\mathcal V(\ell)=\frac{f(\ell)}{\ell(\ell+1)},\qquad
+\mathcal V(1,b-\ell)=\frac{2f(b-\ell)}{b+1-\ell}.
+$$
+
+The required edge cancellation, with no scalar omitted, is
+
+$$
+\binom{2b}{2\ell}\frac{f(\ell)f(b-\ell)}{\ell(\ell+1)}
+=\binom{2b}{b}\binom b\ell\binom b{\ell+1}.
+$$
+
+Indeed, after cancelling $(2\ell)!$ and $(2b-2\ell)!$, the left
+side has numerator $(2b)!$ and denominator
+$(\ell-1)!\,\ell!\,(b-\ell-1)!\,(b-\ell)!\,\ell(\ell+1)$.
+Using $\ell!=\ell(\ell-1)!$ and
+$(\ell+1)!=(\ell+1)\ell!$ changes that denominator to
+$\ell!(\ell+1)!(b-\ell)!(b-\ell-1)!$, which is also the denominator
+of the product of the three binomial coefficients on the right.
+All cancelled denominators are nonzero, including when a factorial
+argument is zero. The first edge supplies $\binom42=6$, and the
+central vertex supplies the remaining factor $2$. Hence
+
+$$
+W_{2,b}(1,\ell)=
+v_\ell=\frac{12\binom{2b}{b}\binom b\ell\binom b{\ell+1}}{b+1-\ell}>0.
+$$
+
+Here $\ell+1\le b$ makes both smaller binomial coefficients positive
+and $b+1-\ell\ge2$. All subtractions agree with ordinary integer
+subtraction on these actual splits.
+
+**Native state and mass identity.** Write the masses of the three
+vertices as $(r,s,t)$. For up-spin indicators
+$(u_0,u_1,u_2)\in\{0,1\}^3$, the parity of the number of
+opposite-spin edges is $u_0+u_2$ modulo two: each centre indicator
+occurs twice. Thus at $\tau=-1$ the actual eight-state sum is
+
+$$
+\begin{aligned}
+\sum_{u\in\{0,1\}^3}(-1)^{e_\pm(u)}
+X^{u_0r+u_1s+u_2t}
+&=1-X^r+X^s-X^t-X^{r+s}+X^{r+t}-X^{s+t}+X^{r+s+t}\\
+&=(1-X^r)(1+X^s)(1-X^t).
+\end{aligned}
+$$
+
+For the boundary split $(1,\ell)$ the native mass definition gives
+$(r,s,t)=(1,b+1-\ell,\ell)$. The map
+$\ell\mapsto(1,\ell)$ is a bijection from
+$\{1,\ldots,b-1\}$ to the native split set: the total-two edge
+forces its split to be one, and the second coordinate recovers
+$\ell$. Reindexing the split sum in the existing treePoly definition,
+using the exact weight cancellation and the eight-state identity, gives
+
+$$
+\begin{aligned}
+P^{\mathrm{ph}}_{(2,b)}(-1,X)
+&=\sum_{\ell=1}^{b-1}W_{2,b}(1,\ell)
+(1-X)(1+X^{b+1-\ell})(1-X^\ell)\\
+&=P_{b,v}(X).
+\end{aligned}
+$$
+
+This is equality with the actual physical polynomial, with no residual
+normalizing scalar. The positive-sequence argument therefore applies.
+For totals $(a,2)$, the native splits are $(\ell,1)$. Exchanging
+leaves $0$ and $2$ exchanges the edge factors and the two leaf factors,
+while $\mathcal V(a-\ell,1)=\mathcal V(1,a-\ell)$ leaves the centre
+factor unchanged. The masses become $(\ell,a+1-\ell,1)$ and
+commutativity of the three state factors gives the same
+$P_{a,v}$. Since $a,b\ge2$ and $\min(a,b)=2$ imply $a=2$ or $b=2$,
+both orientations of the labelled total pair are covered, including
+$(2,2)$. No sum over assignments of totals to edges has been substituted.
+
+The physical weights on general trees are not subsumed by an edgewise
+product model. Writing a vertex factor as
+$c(m,\alpha)\prod_j f(t_j)$, its residual factor is
+$c(m,\alpha)=(m-1)!/(m-\alpha+2)!$. Vertex degrees one and three
+give a sufficient structural product subclass:
+$c(m,1)=1/(m(m+1))$ and $c(m,3)=1$, so these factors group by edge.
+This is not a necessary condition for factorization at a fixed
+assignment; for example, all totals equal to two give singleton split
+support. A degree-two centre generally contributes the joint factor
+$1/m$, and the boundary proof above uses its exact value rather than
+a general positive-mixture principle.
+
+The physical two-edge case with both totals at least three, the full
+physical-tree and all-stars families, the all-$\tau$ variant, sums over
+edge assignments or total multisets, Conjecture 2's sum over trees, and
+the conditional Wilson-loop assertions remain open. Neither the
+general product-weight question nor these residuals follow from the
+boundary argument or from the arbitrary-joint-weight refutation.
+
 ## ASSUMED-UNVERIFIED
 
 The preregistration's search producer reports its forward-citation screen;
 worldwide priority is unverified. Kernel checking establishes the encoded
 statement and axiom boundary, while correspondence to the source requires
-the stated finite-type and parameter conventions. Product-weight and
-physical-weight generalizations remain open separately; the numerical
-product-weight trials do not prove either generalization.
+the stated finite-type and parameter conventions. The positive-sequence and physical $\min(a,b)=2$ statements are complete prose arguments, not newly kernel-checked public theorems. Product-weight and physical-weight generalizations remain open separately, including both totals at least three, all physical trees and stars, all-$\tau$ and edge-assignment sums, Conjecture 2 and conditional Wilson-loop claims; the numerical product-weight trials do not prove these extensions.

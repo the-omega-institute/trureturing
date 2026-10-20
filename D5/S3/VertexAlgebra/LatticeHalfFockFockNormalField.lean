@@ -6,23 +6,8 @@
    utility: none
    digest: Pointwise finite arbitrary-word normal fields and the actual finite-charge source extension. -/
 
-/- SOURCE-stage history: initially prepared without compilation.
-The D5 mathematical proofs and mirrored Reg typed proof terms have since compiled.
-The completed scoped native report records only Classical.choice, Quot.sound and propext,
-with no sorryAx. All seven source registrations remain declared_unresolved; none is
-declared_validated or has accepted source-binding/certificate evidence. The shared boundary
-is source.dictionary_or_proof_coordinate: hu is selected as lexical proof coordinate 1.
-Existing issue https://github.com/the-omega-institute/trureturing/issues/17623 covers this
-owner/boundary in an older three-target snapshot; this disclosure covers all seven source theorems.
-These checks precede this documentation edit. Current-source rechecks, Scribe compilation/
-emission, freezing, required gates/CI, PR and dev synchronization remain separate.
-Exact accepted supplier extraction, SHA256
-  da8469c7f1a7b7c8b9f6be6c48a7e83f9f5154d57c5309958d9806342273ecea.
-The actual dependent ActualGround/ActualTensor and original jet/mode conventions are retained.
-The preserved support proof is refactored only to share its seed-index estimate;
-pointwise linear coefficients, derived lower truncation, fields and source extension follow below.
-The owning Blueprint Scribe records mathematical provenance and the downstream residual.
-No new mathematical or literature novelty is claimed.
+/- Actual dependent ground and tensor modules use the original jet/mode conventions.
+   Supplier extraction SHA256 da8469c7f1a7b7c8b9f6be6c48a7e83f9f5154d57c5309958d9806342273ecea.
 
 The imported half-Fock current/tensor implementation retains its original notices:
 Copyright (c) 2025 Kalle Kytölä. All rights reserved.
@@ -565,6 +550,160 @@ theorem sourceField_lower_truncation (D : LatticeData) (hu : IsUnit D.G.det)
   change _ • wordCoefficient D hu (chargedField D hu charge)
     (occurrences D monomial) exponent vector = 0
   rw [zero, smul_zero]
+
+private theorem singleton_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i : Index D) (e : ℤ) (v : ActualTensor D hu) :
+    (wordField D hu F [i]).coeff e v =
+      ∑ᶠ m : ℤ, flatTerm D hu F [i] e v (m, ()) := by
+  rw [wordField_coefficient, finsum_curry _ (flatTerm_finite D hu F [i] e v)]
+  apply finsum_congr
+  intro m
+  exact finsum_unique _
+
+private theorem wordField_cons (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i : Index D) (w : List (Index D)) :
+    wordField D hu F (i :: w) = wordField D hu (wordField D hu F w) [i] := by
+  apply HVertexOperator.coeff_inj
+  funext e
+  apply LinearMap.ext
+  intro v
+  rw [wordField_coefficient, singleton_coefficient,
+    finsum_curry _ (flatTerm_finite D hu F (i :: w) e v)]
+  apply finsum_congr
+  intro m
+  by_cases h : m < 0
+  · simp only [flatTerm, flatCoefficient, if_pos h, Module.End.mul_apply]
+    rw [wordField_coefficient, map_finsum _ (flatTerm_finite D hu F w _ v)]
+    rfl
+  · simp only [flatTerm, flatCoefficient, if_neg h, Module.End.mul_apply]
+    exact (wordField_coefficient D hu F w _ (jetCurrent D hu i m v)).symm
+
+private theorem jetCurrent_same_sign (D : LatticeData) (hu : IsUnit D.G.det)
+    (i j : Index D) (l r : ℤ)
+    (h : (l < 0 ∧ r < 0) ∨ (0 ≤ l ∧ 0 ≤ r)) :
+    jetCurrent D hu i l * jetCurrent D hu j r =
+      jetCurrent D hu j r * jetCurrent D hu i l := by
+  apply LinearMap.ext
+  intro v
+  simp only [Module.End.mul_apply, jetCurrent, LinearMap.smul_apply, map_smul]
+  rw [tensor_current_same_sign D hu i.1 j.1 l r h v, smul_comm]
+
+private theorem flatCoefficient_swap (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i j : Index D) (w : List (Index D))
+    (l r : ℤ) (t : ModeTuple D w) (e : ℤ) :
+    flatCoefficient D hu F (i :: j :: w) (l, r, t) e =
+      flatCoefficient D hu F (j :: i :: w) (r, l, t) e := by
+  have shift : e + 2 * l + 2 * i.2 + 3 + 2 * r + 2 * j.2 + 3 =
+      e + 2 * r + 2 * j.2 + 3 + 2 * l + 2 * i.2 + 3 := by ring
+  simp only [flatCoefficient]
+  rw [shift]
+  by_cases hl : l < 0 <;> by_cases hr : r < 0
+  · simp only [if_pos hl, if_pos hr, ← mul_assoc]
+    rw [jetCurrent_same_sign D hu i j l r (Or.inl ⟨hl, hr⟩)]
+  · simp only [if_pos hl, if_neg hr, mul_assoc]
+  · simp only [if_neg hl, if_pos hr, mul_assoc]
+  · simp only [if_neg hl, if_neg hr, mul_assoc]
+    rw [jetCurrent_same_sign D hu j i r l (Or.inr ⟨by omega, by omega⟩)]
+
+private theorem wordField_swap (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i j : Index D) (w : List (Index D)) :
+    wordField D hu F (i :: j :: w) = wordField D hu F (j :: i :: w) := by
+  apply HVertexOperator.coeff_inj
+  funext e
+  apply LinearMap.ext
+  intro v
+  rw [wordField_coefficient, wordField_coefficient]
+  apply finsum_eq_of_bijective (fun m : ℤ × ℤ × ModeTuple D w => (m.2.1, m.1, m.2.2))
+  · constructor
+    · rintro ⟨l, r, t⟩ ⟨l', r', t'⟩ h
+      simpa only [Prod.mk.injEq, and_comm, and_left_comm, and_assoc] using h
+    · rintro ⟨r, l, t⟩
+      exact ⟨(l, r, t), rfl⟩
+  · rintro ⟨l, r, t⟩
+    exact congrArg (fun A : Module.End ℂ (ActualTensor D hu) => A v)
+      (flatCoefficient_swap D hu F i j w l r t e)
+
+private theorem wordField_perm (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (w u : List (Index D)) (h : w.Perm u) :
+    wordField D hu F w = wordField D hu F u := by
+  induction h with
+  | nil => rfl
+  | cons i h ih =>
+    exact (wordField_cons D hu F i _).trans
+      ((congrArg (fun G : NativeField D hu => wordField D hu G [i]) ih).trans
+        (wordField_cons D hu F i _).symm)
+  | swap i j w => exact wordField_swap D hu F j i w
+  | trans h₁ h₂ ih₁ ih₂ => exact ih₁.trans ih₂
+
+/-- The original singleton word field, as a linear operation on its seed. -/
+def singletonLinear (D : LatticeData) (hu : IsUnit D.G.det) (i : Index D) :
+    Module.End ℂ (NativeField D hu) where
+  toFun F := wordField D hu F [i]
+  map_add' F G := by
+    apply HVertexOperator.coeff_inj
+    funext e
+    apply LinearMap.ext
+    intro v
+    simp only [map_add, Pi.add_apply, LinearMap.add_apply]
+    rw [wordField_coefficient, wordField_coefficient, wordField_coefficient,
+      ← finsum_add_distrib (flatTerm_finite D hu F [i] e v)
+        (flatTerm_finite D hu G [i] e v)]
+    apply finsum_congr
+    rintro ⟨m, t⟩
+    simp only [flatTerm, flatCoefficient]
+    split_ifs <;> simp [Module.End.mul_apply]
+  map_smul' c F := by
+    apply HVertexOperator.coeff_inj
+    funext e
+    apply LinearMap.ext
+    intro v
+    simp only [map_smul, RingHom.id_apply, Pi.smul_apply, LinearMap.smul_apply]
+    rw [wordField_coefficient, wordField_coefficient,
+      smul_finsum' c (flatTerm_finite D hu F [i] e v)]
+    apply finsum_congr
+    rintro ⟨m, t⟩
+    simp only [flatTerm, flatCoefficient]
+    split_ifs <;> simp [Module.End.mul_apply]
+
+private theorem polynomialField_monomial (D : LatticeData) (hu : IsUnit D.G.det)
+    (q : Charge D) (a : Index D →₀ ℕ) :
+    polynomialField D hu q (MvPolynomial.monomial a 1) =
+      wordField D hu (chargedField D hu q) (occurrences D a) :=
+  (MvPolynomial.basisMonomials (Index D) ℂ).constr_basis ℂ
+    (fun a => chargedWordField D hu q (occurrences D a)) a
+
+theorem polynomialField_monomial_public (D : LatticeData) (hu : IsUnit D.G.det)
+    (q : Charge D) (a : Index D →₀ ℕ) :
+    polynomialField D hu q (MvPolynomial.monomial a 1) =
+      wordField D hu (chargedField D hu q) (occurrences D a) :=
+  polynomialField_monomial D hu q a
+
+/-- Multiplication of the source by one oscillator is actual singleton insertion.
+The occurrence list is used only up to permutation, with multiplicities retained. -/
+theorem polynomialField_X_mul (D : LatticeData) (hu : IsUnit D.G.det)
+    (q : Charge D) (i : Index D) (p : Oscillator D) :
+    polynomialField D hu q (MvPolynomial.X i * p) =
+      singletonLinear D hu i (polynomialField D hu q p) := by
+  have basis (a : Index D →₀ ℕ) :
+      polynomialField D hu q (MvPolynomial.X i * MvPolynomial.monomial a 1) =
+        singletonLinear D hu i (polynomialField D hu q (MvPolynomial.monomial a 1)) := by
+    have enumeration : (i :: occurrences D a).Perm
+        (occurrences D (Finsupp.single i 1 + a)) := by
+      apply Multiset.coe_eq_coe.mp
+      simp [occurrences, Finsupp.toMultiset_add, Finsupp.toMultiset_single,
+        ← Multiset.cons_coe, Multiset.coe_toList, add_comm]
+    rw [show (MvPolynomial.X i : Oscillator D) * MvPolynomial.monomial a (1 : ℂ) =
+        MvPolynomial.monomial (Finsupp.single i 1 + a) (1 : ℂ) by
+          simp only [MvPolynomial.X, MvPolynomial.monomial_mul_monomial, one_mul],
+      polynomialField_monomial, polynomialField_monomial]
+    rw [← wordField_perm D hu (chargedField D hu q) _ _ enumeration, wordField_cons]
+    rfl
+  have maps : (polynomialField D hu q).comp (LinearMap.mulLeft ℂ (MvPolynomial.X i)) =
+      (singletonLinear D hu i).comp (polynomialField D hu q) := by
+    apply (MvPolynomial.basisMonomials (Index D) ℂ).ext
+    intro a
+    exact basis a
+  exact LinearMap.congr_fun maps p
 
 end
 end D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField

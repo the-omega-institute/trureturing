@@ -1,0 +1,35 @@
+**定义 45.1（实际交换与固定残余）。** 采用定义 44.1 的原全有限树被动只读合同、实际三步像 $\mathcal I_3(n)$、带标签叶地址集 $\Lambda_\alpha,\Lambda_\beta$ 和非冲突关系 $\operatorname{NC}$。未知输入仍为整个非空有限自由有序满二叉树域 $\mathcal T$，原始四值报告、同一不变来源、共同初始化和真实同址缓存的不同地址计费均保持。记号 $E,A,C,T_*$ 保持式（44.1）的原义，另令
+
+$$
+G=\langle A,A\rangle=\rho^3(\langle\alpha,\alpha\rangle),\qquad
+T_G=\langle A,G\rangle
+=\rho^3(\langle\alpha,\langle\alpha,\alpha\rangle\rangle).
+\tag{45.1}
+$$
+
+因此 $n(C)=5,n(G)=6,n(T_*)=8,n(T_G)=9$，其 $\beta$ 数依次为 $3,4,5,6$。这些是完整实际来源，不是组成向量的形式填充。
+
+对整数 $h\ge1$，一个实际像 $h$ 孔上下文，是由 $h$ 个各出现一次的具名孔、保留左右次序的二叉配对和固定的 $\mathcal I_3$ 旁支构成的有限表达式；它是定义 32.1 的双孔对象的同类型扩展。孔地址两两前缀不可比。将固定旁支换成其唯一完整前像，得到前像上下文 $J_0$，故任意正像填充均有实际完整前像。这里的唯一性直接采用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，不把组成观察当作树的单射表示。
+
+固定 $P\in\mathcal I_3(n)$、$Z\subseteq\Lambda_\beta(P)$，令
+
+$$
+D_P=\Lambda_\beta(P)\setminus Z,\qquad
+\mathscr C(P,Z)=\{Q\in\mathcal I_3(n):Q\ne P,\quad
+\operatorname{NC}(P,Q),\ Z\subseteq\Lambda_\beta(Q)\}.
+\tag{45.2}
+$$
+
+对 $Y\in\{C,G\}$，定义 $\mathscr E_Y(P,D_P)$ 为所有有序地址对 $(u,v)$，满足
+
+$$
+\begin{gathered}
+u,v\text{ 前缀不可比},\qquad
+P|_u=C,\qquad P|_v=\langle A,Y\rangle,\\
+\{u\mathtt{RL}\}\sqcup v\mathtt R\Lambda_\beta(Y)\subseteq D_P.
+\end{gathered}
+\tag{45.3}
+$$
+
+记 $P^{Y}_{u,v}$ 为在这同一个完整 $P$ 中，将 $u$ 处的 $C$ 换成 $\langle A,Y\rangle$、将 $v$ 处的 $\langle A,Y\rangle$ 换成 $C$ 所得的树。两处替换不交，其余完整字面子树保持。
+

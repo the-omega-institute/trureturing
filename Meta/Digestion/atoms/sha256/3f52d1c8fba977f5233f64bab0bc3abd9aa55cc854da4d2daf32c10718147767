@@ -1,0 +1,125 @@
+**引理 117.2（倾斜密度比的阶数导数）。** 将高组倾斜能量加原倾斜噪声中心化、方差标准化，得
+
+$$
+Z_\alpha=\sum_{j\in H}a_j(Z_j^2-1)
++\sum_{j\in H}\beta_jZ_j+\beta_GG,
+\quad a_j=\frac{w_j}{\sqrt{W_H}},\quad
+\beta_j=\frac{2m_j\sqrt{w_j}}{\sqrt{W_H}},\quad
+\beta_G=\frac{\sqrt{\delta\sigma^2/\alpha}}{\sqrt{W_H}}.
+\tag{117.18}
+$$
+
+其方差精确为一，$\max a_j\le C\sqrt\delta$，
+$|a'_j|\le Ca_j$、$|\beta'_j|\le C|\beta_j|$、$|\beta'_G|\le C|\beta_G|$。
+零系数处相应导数也为零；核心块有 $N\asymp1/\delta$ 项满足 $a_j^2\asymp\delta$。
+精确特征函数为
+
+$$
+\psi_\alpha(\xi)=e^{-\beta_G^2\xi^2/2}
+\prod_{j\in H}e^{-i\xi a_j}(1-2i\xi a_j)^{-1/2}
+\exp\left(-\frac{\beta_j^2\xi^2}{2(1-2i\xi a_j)}\right).
+\tag{117.19}
+$$
+
+非中心及噪声因子的模不超过一，故
+
+$$
+|\psi_\alpha(\xi)|\le(1+c\delta\xi^2)^{-c'/\delta},\qquad
+|\partial_\alpha\psi_\alpha(\xi)|\le C\xi^2|\psi_\alpha(\xi)|.
+\tag{117.20}
+$$
+
+第二式来自实际求导：中心因子的对数导数至多为 $2\xi^2|a_ja'_j|$；
+非中心因子利用 $|1-2i\xi a_j|\ge1$ 和
+$|\xi a_j|/|1-2i\xi a_j|\le1/2$，至多贡献 $C\xi^2\beta_j^2$。
+将平方系数求和即得该界。
+第一式乘任意固定次 $|\xi|$ 的积分一致有界且尾部一致消失：
+在 $|\xi|\le\delta^{-1/2}$ 用 $e^{-c''\xi^2}$，在外侧令
+$u=\sqrt\delta|\xi|$ 后积分高次幂。
+
+在每个固定频率紧集上直接展开并求导式 (117.19)，
+
+$$
+\log\psi_\alpha(\xi)=-\xi^2/2+O(\sqrt\delta|\xi|^3),\qquad
+\partial_\alpha\log\psi_\alpha(\xi)=O(\sqrt\delta|\xi|^3).
+\tag{117.21}
+$$
+
+二次项导数为零源于每个 $\alpha$ 的精确方差标准化。
+Fourier 反演与 (117.20) 给密度 $q_\alpha$ 的联合结论
+
+$$
+\sup_{\alpha\in[1,2],\ z\in\mathbb R}
+\left(|q_\alpha(z)-\varphi(z)|
++|\partial_zq_\alpha(z)-\varphi'(z)|
++|\partial_\alpha q_\alpha(z)|\right)\longrightarrow0.
+\tag{117.22}
+$$
+
+物理输出的位置 $z_y=(\sqrt\delta y+\varepsilon_H)/\sqrt{W_H}$
+及其 $\alpha$ 导数在 $|y|\le R$ 上一致有界。
+在该紧集上正态密度有正下界，因此链式法则给
+$\log[q_\alpha(z_y)/q_\alpha(z_0)]=-(z_y^2-z_0^2)/2+o(1)$，
+且余项的 $\alpha$ 导数也为 $o(1)$。
+高组 Gaussian 标量密度 $g_\alpha$ 的精确反倾斜公式是
+
+$$
+g_\alpha(y)=\frac{\sqrt\delta}{\sqrt{W_H}}
+e^{K_H(t_\alpha)-t_\alpha(V+\sqrt\delta y)}q_\alpha(z_y).
+$$
+
+在 $y$ 与零处相除，公共前因子与速率项抵消，得到
+
+$$
+D^G_\alpha(y):=-\frac1\alpha\log\frac{g_\alpha(y)}{g_\alpha(0)}
+=b_\alpha y+c_\alpha y^2+r^G_\alpha(y),\qquad
+\sup_{\alpha\in[1,2],|y|\le R}
+(|r^G_\alpha|+|\partial_\alpha r^G_\alpha|)\to0.
+\tag{117.23}
+$$
+
+式 (117.17) 支付高组与完整系数及其导数之差；没有丢弃前因子或高阶累积量的导数。
+
+**同一稀有输出下的联合矩。** 令倾斜前
+$X_j=\sqrt{v_j/\alpha}Z_j-e_j$，并定义
+
+$$
+\mathcal D_G=\sum_{j\in H}(X_j+e_j),\quad
+S_G=\frac12\sum_{j\in H}\frac{(X_j+e_j)^2}{v_j},\quad
+U_y=\frac{\sum_{j\in H}X_j^2-V-\sqrt\delta y}{\sqrt\delta\,\sigma}.
+$$
+
+对权重 $e^{-\alpha U_y^2/2}$ 条件化后的同一律，每个固定正整数 $k$ 满足
+
+$$
+\mathbb E_{\alpha,y}|\mathcal D_G|^{2k}\le C_k,\qquad
+\mathbb E_{\alpha,y}S_G^k\le C_k(1+m_Q)^k,\qquad
+\mathbb E_{\alpha,y}|U_y|^{2k}\le C_k\delta^{-k}.
+\tag{117.24}
+$$
+
+证明把条件事件写成高组能量加独立能量噪声等于 $V+\sqrt\delta y$。
+在完整鞍点做指数倾斜不改变该条件律，其密度分母由 (117.22) 下界为 $c/\sqrt{W_H}$。
+在 Fourier 积分中插入所需多项式；频率 $\xi/\sqrt{W_H}$ 下每个坐标的复协方差、复均值分别为
+$w_j/(1-2i\xi w_j/\sqrt{W_H})$、$m_j/(1-2i\xi w_j/\sqrt{W_H})$。
+它们的模不超过 $w_j,|m_j|$。总偏差的协方差和有界，而复均值之和至多
+$C\sqrt{m_Q}\|e\|=O(\delta^3)$。
+Gaussian 多项式矩公式遂将总偏差插入界为常数乘 (117.20) 的包络。
+
+对 $S_G$，由逐坐标的 $w_j/v_j\le C$ 与 $e_j^2/v_j\le Ce_M^2$，
+展开固定次幂并用同一矩公式得到 $C_k(1+m_Q)^k$ 倍包络，覆盖很小的正方差组。
+倾斜能量噪声的均值为 $t_\alpha\delta\sigma^2/\alpha$，方差为 $\delta\sigma^2/\alpha$。
+除以 $\sqrt\delta\sigma$ 后，复均值模至多
+$C(\sigma/\sqrt\delta+|\xi|\sigma)$，复方差模为 $1/\alpha$。
+其插入至多为 $C_k\delta^{-k}(1+|\xi|^{2k})$ 倍包络。
+积分再除以上述分母即证 (117.24)；混合矩用较高固定阶矩与 Cauchy–Schwarz。
+这一步保留了慢衰减噪声的均值位移。
+
+若 $\sigma'^2/\sigma^2=1+u$ 且 $|u|$ 为多项式乘指数小量，在同一个 $t_\alpha$ 处，
+$K_H,K'_H,K''_H$ 的变化分别为
+$\delta(\sigma'^2-\sigma^2)t_\alpha^2/(2\alpha)$、
+$\delta(\sigma'^2-\sigma^2)t_\alpha/\alpha$、
+$\delta(\sigma'^2-\sigma^2)/\alpha$。
+它们均为多项式乘 $|u|$，故标准化位置仍在紧集，矩界仍成立，
+且相邻噪声密度比有固定正的上下界。以下利用这一带插入的比较，不对噪声夹逼直接求导。
+

@@ -1,0 +1,25 @@
+**推论 61.4（与最小预算渐近的对应）。** 固定非空有限 $J$、任意实延迟 $t_j$、$\sigma>0$ 及 $0<\alpha<1/2$，令 $z_\alpha=\Phi^{-1}(1-\alpha)>0$。达到风险至多 $\alpha$ 的最小预算为
+
+$$
+E_{\min}(\varepsilon,\alpha,\sigma)
+=\frac{4\sigma^2z_\alpha^2}{3l_\varepsilon^2},
+\qquad
+E_{\min}(\varepsilon,\alpha,\sigma)g(\varepsilon)^2
+\longrightarrow3\sigma^2z_\alpha^2.
+$$
+
+所以临界预算尺度为 $g(\varepsilon)^{-2}$：对最终非负的 $b$，若 $b=o(g^{-2})$，风险趋于 $1/2$；若 $b\sim c g^{-2}$，$c>0$，风险趋于 $\Phi(-\sqrt{c/3}/\sigma)$；若 $b/g^{-2}\to+\infty$，风险趋零。常数 $c=3\sigma^2z_\alpha^2$ 恰给极限风险 $\alpha$。对于空 $J$，没有任何有限预算能够达到 $\alpha<1/2$，最小预算若在扩充实数中记值即为 $+\infty$。
+
+**证明。** 由命题 61.2、$\Phi$ 的严格递增及对称性 $\Phi(-z_\alpha)=\alpha$，非空设计下风险至多 $\alpha$ 等价于 $\sqrt{3E_0}\,l_\varepsilon/(2\sigma)\ge z_\alpha$。两端非负且 $l_\varepsilon,\sigma>0$，平方反解给所列最小预算，等号时实际达到。再由定理 53.2 的 $g/l\to3/2$，
+
+$$
+E_{\min}g^2
+=\frac{4\sigma^2z_\alpha^2}{3}
+ \left(\frac{g}{l_\varepsilon}\right)^2
+\longrightarrow3\sigma^2z_\alpha^2.
+$$
+
+这正是定理 54.1 的最小预算渐近，在可花满预算的非空设计上的表达。三个尺度结论分别将 $bg^2$ 的极限零、$c$、无穷大代入定理 61.3；代入临界常数得到 $\Phi(-z_\alpha)=\alpha$。临界尺度只给渐近风险，未单独保证每个正 $\varepsilon$ 都满足目标不等式；逐参数保证仍须满足精确阈值 $b(\varepsilon)\ge E_{\min}(\varepsilon,\alpha,\sigma)$。空设计结论由恒定风险 $1/2$ 得出。证毕。
+
+本节直接应用第 53 节的实际几何增益与稳定秩缺口，以及第 54 节对全部可测判别器的纸面 Gaussian Bayes 风险公式；预算边界修正与临界极限均由这些结果推导，不作优先权主张。固定实际 $E$ 下的延迟与权重分配不变性仅关乎这两个已知候选和固定独立各向同性噪声；本节没有把它扩展为未知连续相位的总体 minimax 恢复定理，也没有扩大到任意光滑传感器类。
+

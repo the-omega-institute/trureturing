@@ -1,0 +1,54 @@
+**命题 22.4（计数、叶序与完整焦点仍可遗漏源节点归属）。** 写 $c(t)=(a,b)$ 为两类叶计数，$q(c(t))=2a+3b$；有序叶序满足 $\operatorname{fr}(\alpha)=\alpha$、$\operatorname{fr}(\beta)=\beta$，配对时依左右顺序拼接。取实际联合域及候选投影
+
+$$
+\begin{gathered}
+\mathcal X=\{(u,p):u\in\mathcal T,\ p\in\operatorname{Pos}(\rho(u))\},\\
+O(u,p)=\bigl(c(t),\operatorname{fr}(t),p,t|_p,|p|,\mathsf{rec}_\rho\bigr),
+\qquad t=\rho(u).
+\end{gathered}
+\tag{RA.2210}
+$$
+
+即使再给源计数和源叶序，也不能从这个投影恢复 $K$。它只是一项声明的候选观察，不限制完整观察者已获档案中的其他证据。
+
+证明。令 $B=\beta$，取
+
+$$
+\begin{aligned}
+U&=\langle\langle\alpha,\beta\rangle,\langle\alpha,\beta\rangle\rangle,&
+V&=\langle\langle\langle\alpha,\beta\rangle,\alpha\rangle,\beta\rangle,\\
+S=\rho(U)&=\langle\langle B,E\rangle,\langle B,E\rangle\rangle,&
+T=\rho(V)&=\langle\langle\langle B,E\rangle,B\rangle,E\rangle,\qquad p=RL.
+\end{aligned}
+\tag{RA.2211}
+$$
+
+每条联合记录都由它自己的同一实际源树经同一个全局 $\rho$ 取得，没有拼接独立边缘。直接按树计算得
+
+$$
+\begin{gathered}
+c(U)=c(V)=(2,2),\qquad
+\operatorname{fr}(U)=\operatorname{fr}(V)=\alpha\beta\alpha\beta,\\
+c(S)=c(T)=(2,4),\qquad q(c(S))=q(c(T))=16,\\
+\operatorname{fr}(S)=\operatorname{fr}(T)=\beta\beta\alpha\beta\beta\alpha,\qquad
+S|_{RL}=T|_{RL}=B,\quad |RL|=2,\\
+O(U,RL)=O(V,RL),\qquad K(U,RL)=1,\quad K(V,RL)=0.
+\end{gathered}
+\tag{RA.2212}
+$$
+
+在 $U$ 中 $RL$ 是右配对的左叶 $\alpha$；在 $V$ 中右孩子只是叶 $\beta$，没有 $RL$ 地址，$T$ 的 $RL$ 是其扩张所新增的左孩子。对应的父子树分别为 $\langle B,E\rangle$ 与 $E$，与主判据相符。残余上下文为
+
+$$
+\begin{aligned}
+C_{S,RL}[z]&=\langle\langle B,E\rangle,\langle z,E\rangle\rangle,\\
+C_{T,RL}[z]&=\langle\langle\langle B,E\rangle,B\rangle,\langle z,\alpha\rangle\rangle.
+\end{aligned}
+\tag{RA.2213}
+$$
+
+共同填入 $E$，第一式等于
+$\rho(\langle\langle\alpha,\beta\rangle,\langle\beta,\beta\rangle\rangle)$，第二式含像外复合块 $\langle E,\alpha\rangle$，不能被祖先吸收。所以两处 $\eta$ 分别为 $(1,1),(1,0)$，外部兄弟谓词分别为零、一。两份填充都仍是合法非空有限树；不同的是额外的像及旧源孔对应性质，不是原始配对合法性。叶序保留了叶标签顺序，却没有保留括号或焦点与父节点的关系。
+
+现直接应用既有 [TargetRecoveryCriterion](../../../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean) 的 `target_recovery_criterion`，取状态域 $\mathcal X$、过程 $O$、目标 $K$；$\mathcal X$ 由 $(\alpha,\varepsilon)$ 居住。上述同纤维异目标对排除了 $K=f\circ O$。若只在实际观察像上表述，则使用 [HistoryPayloadFactorization](../../../D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.lean) 的 `ker_beta_subset_ker_payload_iff_unique_factorization`。这里引用已有恢复判据，不另立一般恢复结果。证毕。
+

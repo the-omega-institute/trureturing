@@ -225,6 +225,7 @@ public sealed class ExplicitDecompositionTests
     {
         var f = new DecomposeFixture(string.Concat(children));
         AddChain(f, children);
+        f.CaptureContext();
         return f;
     }
 

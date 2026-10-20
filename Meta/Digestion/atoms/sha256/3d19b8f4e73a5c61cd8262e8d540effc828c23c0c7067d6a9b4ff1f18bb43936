@@ -1,0 +1,5 @@
+## PM.8 与已知理论的边界
+
+**注。** 有界扰动下的最坏情形系统辨识与信息直径方法，见 B. Kacewicz 与 M. Milanese，*Optimality properties in finite sample l1 identification with bounded noise*，International Journal of Adaptive Control and Signal Processing 9 (1995), 87–96，doi:10.1002/acs.4480090109。内部正性作为辨识侧信息的研究，见 M. Khosravi 与 R. S. Smith，*Regularized Identification with Internal Positivity Side-Information*，SIAM Journal on Control and Optimization 63(1) (2025), 26–56，doi:10.1137/23M1556095。无分离稀疏矩恢复见 AT.3 所引 Fan 与 Li。几何等待时间的生成函数、Lagrange 系数、有限维谱定理与秩一交错均为已知数学工具。
+
+本补编的精确命题量化 PM.1 的观察与损失，证明 PM.5 的全时刻不可区分对及 PM.7 的同分布、同观察正可逆实现。不将某篇文献的其他模型类、统计噪声条件或范数中的结论直接视为本命题，也不从有限范围文献检索推断全球首发。

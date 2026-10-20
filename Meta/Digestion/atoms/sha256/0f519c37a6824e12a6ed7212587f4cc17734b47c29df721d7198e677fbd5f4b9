@@ -1,0 +1,52 @@
+**定理 34.1（最大测试虚增量的奇偶常数）。** 对任意
+$f=(f_i)\in[0,1]^{5n}$，沿用本卷 §§15、17–18 的定义
+
+$$
+\langle f,p\rangle=\sum_i\sum_{\sigma\in\Sigma}f_i(\sigma)p_i(\sigma),
+\qquad
+H_n(f)=\max_{p\in\mathscr C_n}\langle f,p\rangle
+=\max_{u\in B_n^{\mathrm{cyc}}}\sum_i f_i(u_i,u_{i+1},u_{i+2}),
+$$
+
+$$
+H_n^{\mathrm{loc}}(f)=\max_{p\in\mathscr L_n}\langle f,p\rangle.
+\tag{34.1}
+$$
+
+这些最大值由有限维紧性达到，且
+
+$$
+\boxed{
+\max_{f\in[0,1]^{5n}}\bigl[H_n^{\mathrm{loc}}(f)-H_n(f)\bigr]
+=n\mathfrak E_n
+=\begin{cases}2,&n\text{ 为奇数},\\4/3,&n\text{ 为偶数}.
+\end{cases}}
+\tag{34.2}
+$$
+
+证明。给定任意局部族 $p$，定理 32.1 的构造产生同一真实修补
+$\widetilde p$，满足 $\sum_i\operatorname{TV}(p_i,\widetilde p_i)\le n\mathfrak E_n$。
+因此对任意有界测试
+
+$$
+\langle f,p\rangle
+\le\langle f,\widetilde p\rangle+
+\sum_i\operatorname{TV}(p_i,\widetilde p_i)
+\le H_n(f)+n\mathfrak E_n.
+\tag{34.3}
+$$
+
+先对 $p$ 取最大，再对 $f$ 取上确界，得到 (34.2) 的上界。
+奇数时 (30.1) 的测试在交替局部律上得 $n$；因每窗至多一分，
+$H_n^{\mathrm{loc}}(f)=n$，而 (30.4) 给 $H_n(f)=n-2$，差准确为二。
+偶数时 (31.4) 的测试在 (31.1) 上得 $n-2/3$，真实最大为 $n-2$。
+由 (34.3) 它的局部最大又不能大于 $(n-2)+4/3=n-2/3$，
+所以其差准确为 $4/3$。两个显式测试都在允许的闭立方体内，故所写的是
+达到的最大值，不只是上确界。证毕。
+
+本卷定理 19.2 已给更强的逐输入精确对偶
+$n\Delta_n(p)=\max_f[\langle f,p\rangle-H_n(f)]$；
+(34.2) 是计算完最坏修补量后的具体松弛常数，(34.3) 的证明本身只需
+有界测试估计和实际修补。它没有另行发明一般 TV 对偶或极小极大原理。
+总测试虚增量不随 $n$ 增长，平均误差则在除以窗口数后呈 $1/n$。
+

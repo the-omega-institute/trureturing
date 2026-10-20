@@ -1,0 +1,65 @@
+**Theorem 10.2 (Mechanical discrepancy gives a uniform quantity-scaled Green limit).** For every $0\le a\le b\le L_j$,
+$$
+\left|\sum_{k=a}^{b-1}r_{(W_j)_k}-\overline r(b-a)\right|
+\le |r_\alpha-r_\beta|,
+\qquad
+|x_k-\varphi^2k|<1\quad(0\le k\le L_j).
+$$
+The transient Green matrix is exactly
+$$
+G_j(i,m)=\frac1\theta\sum_{k=\max(i,m)}^{L_j-1}r_{(W_j)_k},
+\qquad 0\le i,m<L_j.
+$$
+If $c_j=\epsilon_j\overline rL_j^2/\theta$, then
+$$
+\sup_{u,v\in[0,1]}|\mathcal K_j(u,v)-\mathcal K(u,v)|
+\le |c_j-D^{-1}|+
+\frac{\epsilon_jL_j}{\theta}(\overline r+|r_\alpha-r_\beta|)
+=O(L_j^{-1}).
+$$
+Consequently $\mathcal T_j\to\mathcal T$ in operator norm on bounded measurable functions, and
+$$
+\sup_{0\le k\le L_j}\left|\frac{x_k}{N_j}-\frac{k}{L_j}\right|\longrightarrow0.
+$$
+For continuous $f$, $y=\mathcal T f$ is the solution of
+$$
+-D y''=f,\qquad y'(0)=0,\qquad y(1)=0.
+$$
+Thus the limiting kernel has the reflecting Neumann condition at $0$ and the absorbing Dirichlet condition at $1$.
+
+**Proof.** Put $a_F=\varphi^{-2}$. For $j\ge1$ the nested words $W_j$ are prefixes of the mechanical word of Theorem 3.2 with intercept $a_F$. Its $\alpha$ indicators are
+$$
+C_k=\lfloor(k+2)a_F\rfloor-\lfloor(k+1)a_F\rfloor.
+$$
+For an interval $[a,b)$ its $\alpha$ count $A_{a,b-a}$ differs from $a_F(b-a)$ by less than one. Therefore
+$$
+\sum_{k=a}^{b-1}r_{(W_j)_k}-\overline r(b-a)
+=(r_\alpha-r_\beta)\bigl(A_{a,b-a}-a_F(b-a)\bigr).
+$$
+Also $x_k=3k-A_{0,k}$ and $3-a_F=\varphi^2$, proving both discrepancy estimates for the actual ordered cells, without a random-phase hypothesis. The mechanical-prefix identification is the one in [this volume, Theorems 3.2–3.3](https://github.com/the-omega-institute/trureturing/blob/82197d4bd68d6491767cb20e99d3ed8ceb5520e3/docs/develop/theory/FIB_ATOM_STATISTICAL_LAWS.md); its rotation-coding background is J. Berstel, [*Sturmian and Episturmian Words*](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf), §3.
+
+To check the inverse, give a vector $f$ the absorbing value $f_{L_j}=0$ and define
+$$
+y_i=\frac1\theta\sum_{k=i}^{L_j-1}r_{(W_j)_k}\sum_{m=0}^k f_m,
+\qquad y_{L_j}=0.
+$$
+Then $(\theta/r_{(W_j)_i})(y_i-y_{i+1})=\sum_{m=0}^i f_m$. Taking the difference of consecutive fluxes, with zero left flux at cut $0$, gives $B_jy=f$. Exchanging the two finite sums gives the stated entries of $G_j$.
+
+For $i=\iota_j(u)$ and $m=\iota_j(v)$ with $u,v<1$, the interval bound gives
+$$
+\mathcal K_j(u,v)
+=c_j\left(1-\frac{\max(i,m)}{L_j}\right)+E_j(u,v),\qquad
+|E_j(u,v)|\le\frac{\epsilon_jL_j}{\theta}|r_\alpha-r_\beta|.
+$$
+Replacing $\max(i,m)/L_j$ by $\max(u,v)$ changes the expression by at most $c_j/L_j=\epsilon_j\overline rL_j/\theta$. If either argument is $1$, both kernels vanish. The two-root Fibonacci formula gives
+$$
+N_j=\varphi^2L_j+O(L_j^{-1}),\qquad
+c_j=D^{-1}+O(L_j^{-2}),\qquad \epsilon_jL_j=O(L_j^{-1}),
+$$
+which proves the uniform estimate and hence the operator norm limit. The same quantity discrepancy gives
+$$
+\left|\frac{x_k}{N_j}-\frac{k}{L_j}\right|
+\le\frac1{N_j}+\left|\frac{\varphi^2L_j}{N_j}-1\right|.
+$$
+Finally, differentiating the limiting integral gives $y'(u)=-D^{-1}\int_0^u f(v)\,dv$ and $y''(u)=-f(u)/D$, with the stated boundary values. $\square$
+

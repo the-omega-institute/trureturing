@@ -1,0 +1,23 @@
+**定理 94.1（重尾更新时钟的稳定极限）。** 假设再生块独立同分布，或由具有足够混合和统一尾条件的有限型外加链调制，并且
+\[
+\Pr(W_1>t)\sim c_Wt^{-\alpha}L_W(t),
+\qquad 0<\alpha<1,
+\]
+其中 \(L_W\) 慢变。取正则变换的 \(a_n\) 使得
+\(n\Pr(W_1>a_n)\to1\)。在非晶格及标准域吸引条件下，存在稳定子过程 \(D_\alpha\)，使
+\[
+a_n^{-1}T_{\lfloor nu\rfloor}\Rightarrow D_\alpha(u),
+\qquad
+\mathbb E e^{-\lambda D_\alpha(u)}
+=\exp\{-u\,\kappa_W\lambda^\alpha\}.
+\]
+其逆过程
+\[
+E_\alpha(t)=\inf\{u:D_\alpha(u)>t\}
+\]
+满足
+\[
+\frac{N(a_nt)}n\Rightarrow E_\alpha(t).
+\]
+逆过程的函数空间收敛一般须按 \(M_1\) 拓扑或有限维分布表述；常数 \(\kappa_W\) 和尺度由尾常数及 \(a_n\) 的归一化决定。\(E_\alpha\) 在固定时刻给出 Mittag--Leffler 型随机时钟，因此重尾等待造成的是随机的操作时间变换，而非一个由 FIB 词长直接确定的分数阶时钟。
+

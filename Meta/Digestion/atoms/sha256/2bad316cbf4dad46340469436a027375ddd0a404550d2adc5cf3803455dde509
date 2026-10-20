@@ -1,0 +1,32 @@
+**定理 50.2（准平稳测度的连续极限）。** 在第10.2节 Green 核一致收敛、固定简单模态的谱扰动以及第12.3节路径极限均成立的条件下，对每个固定 \(m\ge0\)（并取 \(j\) 足够大使 \(m<L_j\)），
+\[
+\frac{1-\lambda_{j,m}}{\epsilon_j}
+\longrightarrow
+\kappa_m=D\left(m+\frac12\right)^2\pi^2,
+\]
+若 \(J_j\phi\) 表示在区间 \([i/L_j,(i+1)/L_j)\) 上取值 \(\phi(i)\) 的阶梯嵌入，则归一化特征函数满足
+\[
+\sqrt{L_j}\,J_j\phi_{j,m}\longrightarrow
+e_m(u)=\sqrt2\cos\left((m+\tfrac12)\pi u\right).
+\]
+因此
+\[
+\Pi_j:=\sum_{i=0}^{L_j-1}\pi_j(i)\,\delta_{i/L_j}
+\Rightarrow
+\Pi(du):=\frac\pi2\cos\left(\frac{\pi u}{2}\right)du.
+\]
+声明的数学连续模型是 \(0\) 反射、\(1\) 杀死、扩散系数 \(D\) 的过程。若初态律 \(\nu_0\) 在 \([0,1)\) 上有正质量，则固定 \(\nu_0\) 后令 \(t\to\infty\) 有
+\[
+\mathbb P_{\nu_0}(\tau>t)
+\sim
+\left(\int e_0\,d\nu_0\right)
+\left(\int_0^1e_0(u)\,du\right)e^{-\kappa_0t},
+\qquad
+\kappa_0=\frac{D\pi^2}{4},
+\]
+以及 Yaglom 极限
+\[
+\mathcal L_{\nu_0}(Z_t\mid\tau>t)\Rightarrow\Pi.
+\]
+这里的极限顺序是先固定初态和连续模型，再令 \(t\to\infty\)；它不提供任意 \(t=t_j\) 下的离散—连续联合极限。
+

@@ -1,0 +1,6 @@
+所以：
+
+* \(n\) 偶时整体 orientation 始终保持；
+* \(d\) 偶时一步整体 orientation 也保持；
+* 只有 \(n,d\) 同为奇数时 orientation 反转。
+

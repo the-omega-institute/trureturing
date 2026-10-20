@@ -1,0 +1,27 @@
+## 28. Exact readout kernels, calibrated range and example
+
+The Ramsey amplitude is `(1+exp(i*(phase-theta)))/2`. The two settings theta=0 and theta=pi/2 give `(1+cos phase)/2` and `(1+sin phase)/2`. `quadrature_readout_kernel` identifies their joint kernel exactly with the wrapped complex phase. The zero setting loses orientation, and the two-setting readout still aliases phase zero with phase 2pi.
+
+For every binary word of length n, the oriented-pair identity gives
+
+```text
+abs(m) <= r*z,        4*abs(m) <= n^2.
+```
+
+Thus kappa != 0 and `abs(kappa)*n^2 <= pi` place `2*kappa*m` inside the monotone sine band. The ideal pi/2 fringe then has exactly the same kernel as m. A sufficient explicit choice is
+
+```text
+safeCoupling(n) = pi / (2*(n+1)^2).
+```
+
+For reversal comparison set ab=safeCoupling(n). For endpoint compensation set ab=2*safeCoupling(n). Both realize the same calibrated fringe. The latter still requires counts to construct the compensation, even where the resulting ideal probability identifies counts mathematically. Observation sufficiency does not eliminate state-preparation resources.
+
+At length four, this choice predicts:
+
+| Factor | m | Ideal plus probability |
+|---|---:|---:|
+| SLSL | -2 | 0.37565506 |
+| LSLL | -1 | 0.43733338 |
+| SLLS | 0 | 0.50000000 |
+| LLSL | 1 | 0.56266662 |
+| LSLS | 2 | 0.62434494 |

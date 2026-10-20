@@ -1,0 +1,18 @@
+**命题 281.3（非交换顺序必须进入边界）。** 取
+
+$$
+A=\begin{pmatrix}1&1\\0&1\end{pmatrix},
+\qquad
+B=\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+$$
+
+则 $AB\ne BA$。对初态 $x=(1,0)^{\mathsf T}$，有
+
+$$
+BAx=(1,1)^{\mathsf T},
+\qquad
+ABx=(2,1)^{\mathsf T}.
+$$
+
+所以两个事件具有相同的无序集合，却产生可被终端线性效果区分的不同后继。
+

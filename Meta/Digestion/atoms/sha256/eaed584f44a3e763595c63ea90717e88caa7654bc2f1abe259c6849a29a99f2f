@@ -1,0 +1,42 @@
+## 18. 精化 `[P/L]`
+
+给定：
+
+\[
+q:X\to B,
+\qquad
+q':X\to B',
+\]
+
+\(q'\) 精化 \(q\)，当且仅当存在：
+
+\[
+p:B'\to B
+\]
+
+使：
+
+\[
+q=p\circ q'.
+\]
+
+即：
+
+\[
+\operatorname{Refines}(q',q)
+=
+\sum_{p:B'\to B}
+\prod_{x:X}
+q(x)=p(q'(x)).
+\]
+
+对有效读数，精化等价于反向 kernel 包含：
+
+\[
+q'\text{ 精化 }q
+\quad\Longleftrightarrow\quad
+\ker q'\subseteq\ker q.
+\]
+
+---
+

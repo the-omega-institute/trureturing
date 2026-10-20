@@ -1,0 +1,71 @@
+## 189. FIB 路径上的外加量子热力学、Jarzynski–Crooks 关系与耗散
+
+固定一条 FIB 上下文路径 \(\xi_0,\ldots,\xi_N\)，另选 Hilbert 空间 \(\mathcal H\)、时间网格、参数映射 \(\lambda_k=\Lambda(\xi_k)\) 和自伴哈密顿量 \(H_{\lambda_k}\)。FIB 的词序不是物理时间协议。正向演化可写成
+$$
+U_F=U_{N-1}\cdots U_0,\qquad
+U_k=\mathcal T\exp\!\left(-{\rm i}\int_{t_k}^{t_{k+1}}H_{\lambda(t)}\,{\rm d}t\right).
+\tag{189.1}
+$$
+设初态为 Gibbs 态
+$$
+\rho_0=\frac{e^{-\beta H_{\lambda_0}}}{Z_0},\qquad
+Z_0={\rm tr}\,e^{-\beta H_{\lambda_0}},\qquad
+F_k=-\beta^{-1}\log Z_k .
+\tag{189.2}
+$$
+采用两点能量测量，功 \(W=E_m^\tau-E_n^0\)，其联合概率为
+$$
+p_F(m,n)=\frac{e^{-\beta E_n^0}}{Z_0}
+\left|\langle m,\tau|U_F|n,0\rangle\right|^2 .
+\tag{189.3}
+$$
+第一次测量消除能量基中的相干，所以这一定义依赖测量协议。
+
+若存在反幺正时间反演 \(\Theta\) 和微观可逆条件
+$$
+U_R=\Theta U_F^\dagger\Theta^{-1},
+\qquad
+\Theta H_{\lambda(t)}\Theta^{-1}=H_{\lambda(t)}^{\rm rev},
+\tag{189.4}
+$$
+反向协议从 \(H_{\lambda_N}\) 的 Gibbs 态开始，则
+$$
+\frac{p_F(m,n)}{p_R(n,m)}
+=\exp\!\left[\beta(W-\Delta F)\right],
+\qquad \Delta F=F_N-F_0 .
+\tag{189.5}
+$$
+按功值聚合得到 Crooks 关系
+$$
+\frac{P_F(W=w)}{P_R(W=-w)}
+=e^{\beta(w-\Delta F)},
+\tag{189.6}
+$$
+并进一步得到 Jarzynski 等式
+$$
+\left\langle e^{-\beta W}\right\rangle_F=e^{-\beta\Delta F},
+\qquad
+\langle W\rangle_F-\Delta F=: \langle W_{\rm diss}\rangle\ge0 .
+\tag{189.7}
+$$
+这些结论要求 Gibbs 制备、反向协议、微观可逆性以及一致的时间反演和能量账；FIB 路径的反向词序不足以构成物理时间反演。
+
+在完整跃迁样本空间上，
+$$
+\Sigma(m,n)=\log\frac{p_F(m,n)}{p_R(n,m)}
+=\beta(W-\Delta F),
+\qquad
+\beta\langle W_{\rm diss}\rangle
+=D_{\rm KL}(p_F\Vert p_R^\dagger)\ge0 .
+\tag{189.8}
+$$
+若只记录粗粒结果 \(Y=g(m,n)\)，数据处理不等式给出
+$$
+D_{\rm KL}(P_F^Y\Vert P_R^{Y,\dagger})
+\le\beta\langle W_{\rm diss}\rangle .
+\tag{189.9}
+$$
+隐藏的能级、coin 或 FIB 标签可以携带未观测熵产生；粗粒正反向分布相同只表示该观测通道看不见耗散。强耦合热浴、初始系统—浴相关、非马尔可夫记忆、反馈测量或准概率功定义都需要改写样本空间和自由能，不能直接套用 (189.6)。
+
+同一 FIB 路径可承载恒定哈密顿量的零功协议、非对易淬火的宽功分布、满足详细平衡的经典跳跃或含测量回馈的非平衡协议。故功分布、自由能差、熵产生和耗散率依赖外加哈密顿量、协议、温度、浴、测量和粗粒化，而非由 FIB 标签或递归深度唯一决定。
+

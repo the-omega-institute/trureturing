@@ -1,0 +1,7 @@
+优先复用：
+
+- `Mathlib.RingTheory.ClassGroup.Basic`；
+- `ClassGroup.mk_eq_one_iff`；
+- Dedekind 域非零分式理想可逆性；
+- 局部化为 DVR 的既有接口。
+

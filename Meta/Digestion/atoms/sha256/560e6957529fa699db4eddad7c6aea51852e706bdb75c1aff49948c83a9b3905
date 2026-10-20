@@ -1,0 +1,37 @@
+## 5. 多项式算术窗口的完整有限 Fourier 公式
+
+由 Legendre 提案可精确构造偶多项式
+
+\[
+\widetilde h(t)=\sum_{r=0}^{d-1}A_rt^{2r}.
+\]
+
+定义 s=1/2+iz、t_r=s+2r。每个算术单项的 Fourier 积分为
+
+\[
+4A_rm^{2r}\int_{-a}^{a-\log m}e^{t_rx}dx
+=4A_rm^{2r}\frac{e^{t_r(a-\log m)}-e^{-at_r}}{t_r}.
+\tag{PM10}
+\]
+
+对 Im(z)<1/2，Re(t_r)>0，所有分母均非零。有限求和给出
+
+\[
+\boxed{\widehat p(z)=4\sum_{m=1}^{M}\sum_{r<d}
+A_rm^{2r}\frac{e^{t_r(a-\log m)}-e^{-at_r}}{t_r}.}
+\tag{PM11}
+\]
+
+条件是全部包含的 m 满足 log(m)<=2a。主 Lean 声明 `polynomial_mellin_window_paperFT` 使用原始 `Zeta23.paperFT` 证明 (PM11)。`polynomial_mellin_fourier_integrable` 对全部复 z 先证明实际 integrand 可积；`mellin_monomial_polynomial_value` 证明指数坐标确实等于 exp(x/2)*(m*exp(x))^(2r)。这些结论无需任何未知谱、零点、积分精度或 Fourier 识别假设。
+
+合并 m 项，还可把纸面公式写成一个有限 Dirichlet 字典：
+
+\[
+\widehat p(z)=4\sum_{r<d} A_r
+\frac{e^{at_r}D_M(s)-e^{-at_r}S_M(2r)}{t_r},
+\quad D_M(s)=\sum_{m=1}^Mm^{-s},\quad S_M(2r)=\sum_{m=1}^Mm^{2r}.
+\tag{PM12}
+\]
+
+式 (PM12) 未另设 Lean 公共包装；实际 verifier 使用等价的 (PM11)。它不调用 zeta 值。表观 t_r=0 奇点可去；Lean 定理在所需半平面内直接排除了分母为零，不依赖 totalized division。
+

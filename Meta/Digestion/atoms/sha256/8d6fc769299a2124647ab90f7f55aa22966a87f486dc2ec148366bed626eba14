@@ -1,0 +1,23 @@
+#### 1.2 开放 PR 全量筛选及相关源读取
+
+本次使用无作者过滤的开放 PR 集合，第一页容量 100，第二页返回空集，得到以下 **14 个开放 PR**。全部读取了元数据和正文，并对与图谱直接有关的选定真源作进一步读取；这不是对所有历史 PR、所有文件或所有证明的完整重编译。已经合入的其他作者成果通过当前 dev 接入。表中记录实际 head，避免把正文中的旧 head 当成当前版本。
+
+| PR | 捕获的实际 head | 与本图谱的关系 |
+| --- | --- | --- |
+| [#5236](https://github.com/the-omega-institute/trureturing/pull/5236) | `f65251d3d85ad5fe7f1e254291e3e56bc3b0ec1a` | PrimeGaps186。正文保留实际积分义务；不能用有限算术检查代替解析定理，不作为 RH 等价边。 |
+| [#5284](https://github.com/the-omega-institute/trureturing/pull/5284) | `9adf54557f6ce3aecac3ae09c567e38379e8ca00` | 黄金自动机的有限样本运输。没有加入 RH 数学依赖。 |
+| [#5405](https://github.com/the-omega-institute/trureturing/pull/5405) | `aaee9b75616627192369518e786fde83c06e4dc0` | 黄金四次幂状态下界。有限前缀与全指标结论的区别适用于本图谱，具体定理不构成 RH 判据。 |
+| [#5602](https://github.com/the-omega-institute/trureturing/pull/5602) | `7d01130cfc3ce2d7c3d0c4d99a44843ce70c636f` | 实际 Weil/prolate 模型、完整余项与尺度运输。读取最新 `WeilGroundModeShiftBarrier.lean`，blob `2ab192cdf8db9f892a69606367b3bb986f34b846`；支撑边界及完整形式必须保留。 |
+| [#5895](https://github.com/the-omega-institute/trureturing/pull/5895) | `023e6d1eccb223a563939590d301085a220b38f2` | 偶不变子空间的全尾界与归一化读数。偶扇区阈值不能自动替换全空间阈值。 |
+| [#5897](https://github.com/the-omega-institute/trureturing/pull/5897) | `b6653823add96ea81c6f3c8cec3dd3db47029cd6` | 方格 hard-core 零点自由区域；未把其图递归定理转称 RH 定理。 |
+| [#6029](https://github.com/the-omega-institute/trureturing/pull/6029) | `7e1a8c9b33d28d778d80392da5bb06bdcc966f7f` | 实际相对 Gamma 对角线的正项级数、完整尾界和频率一致窗口修正；对角线正性不足以控制混合项。 |
+| [#6033](https://github.com/the-omega-institute/trureturing/pull/6033) | `d54250a5bd1ae4764dc15d876926e8a28b2a2881` | 因果耦合与最优界。没有加入 RH 数学依赖。 |
+| [#6038](https://github.com/the-omega-institute/trureturing/pull/6038) | `608ebf0929b708832c268e9a5954f58bfb36574a` | 临时 MUB 文本拼接分支，不登记为数学结果。 |
+| [#6114](https://github.com/the-omega-institute/trureturing/pull/6114) | `a65f9130d7f17c3bd6dcf7e450d1d53588ab92d2` | Li 曲率到 Herglotz、负型、Schoenberg 和实际圆周概率半群；读取 `LiCurvatureSchoenbergSemigroup.lean`，blob `d616bc1fc8a8f6176883f942809900136f92d577`。 |
+| [#6143](https://github.com/the-omega-institute/trureturing/pull/6143) | `7abe3cf91cbf071d025c4dedef773e69dfbc6602` | MUB 区间证书与覆盖。没有加入 RH 数学依赖。 |
+| [#6219](https://github.com/the-omega-institute/trureturing/pull/6219) | `8e3982e87642ba3987239f2a4623e6d7ef4b8e55` | 规范 Li 圆盘等价与零点半径增长障碍；读取 `CanonicalLiDiskEquivalence.lean`，blob `251c989b6312a577d24e87950a267cdefcdaae3f`。 |
+| [#6221](https://github.com/the-omega-institute/trureturing/pull/6221) | `b1e737aa90c6a3d0f08e39fe481092b68a0d128a` | Scribe 的真实声明标识输出；有助于定位证明，不充当数学前提。 |
+| [#6254](https://github.com/the-omega-institute/trureturing/pull/6254) | `34a2c0fe82403b5028456d02b99f9b2d3b11e320` | 临时 prolate 理论拼接分支，不重复计为独立成果。 |
+
+#6114、#6219 及相关新谱源保留其候选、未执行编译的状态。#6219 已经使用规范导数系数，通过解析方程 `F'=GF` 的延拓与零点阶数排除，给出全圆盘判据的候选双向证明。它没有借用一个作为参数传入的 Li 判据。这是应保留的实质性进展。
+

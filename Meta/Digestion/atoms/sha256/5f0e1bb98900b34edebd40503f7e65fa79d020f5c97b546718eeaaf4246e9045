@@ -1,0 +1,26 @@
+**Convention 24.1 (same source and numerical coordinates).** Retain
+Definition 18.1's one actual GENERAL/ARC initialization, preparation
+occurrence $\xi$, first Ready $P$, source $\beta$, $H_0=h=K=1$,
+parked original client, occupied verifier and INITIAL consumer. Use only
+finite canonical outer01 source calls with their complete returns as in
+Convention 18.2. The actual source is always source16 under its continuing
+$\phi_K$. Neither a reset nor a fresh per-capacity installation is used.
+All required finite inputs are actually supplied at their original INs;
+reached local computations retain GENERAL Assumption 1.2's termination
+premises. No autonomous infinite supply or uniform completion time is
+assumed.
+
+Write $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$. Here $e$ counts accepted Rho
+calls after $P$; $h$ is the actual semantic guard, and $K$ the actual
+reserve. These are not a primitive clock, a receipt count or physical
+storage support. The supplied atomic recurrence gives
+
+$$
+t_e=\rho^e\beta=T_{e+1},\qquad
+\lambda(t_e)=F_{e+2},\qquad
+\lambda(\rho t_e)=F_{e+3}.
+\tag{ABT.88}
+$$
+
+The use below of this recurrence is not a new leaf-count theorem.
+

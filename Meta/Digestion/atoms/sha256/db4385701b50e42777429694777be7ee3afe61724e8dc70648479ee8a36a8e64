@@ -1,0 +1,37 @@
+**定理 59.5（完整实际族的精确有限一般下界）。** 对 $h\ge2$ 和整数参数
+
+$$
+2\le A\le C\le h+1,\qquad A+C\le K\le2h+1,
+\tag{TM.5909}
+$$
+
+定义 $\mathcal G_h(A,C,K)$ 为所有有限点
+
+$$
+A\le z\le h,\qquad
+\max(C,z+1,h-z+1)\le w\le\min(h,2z-1,K-z)
+\tag{TM.5910}
+$$
+
+以及满足 $z\ge A$、$2z-1>h$、$z+h+1\le K$ 的折叠点 $(z,h+1)$。其精确计数和分母为
+
+$$
+\begin{aligned}
+N_g(h;A,C,K)&=\sum_{z=A}^{h}\left(
+[\min(h,2z-1,K-z)-\max(C,z+1,h-z+1)+1]_+
++\mathbf1_{\{2z-1>h,\ z+h+1\le K\}}\right),\\
+T_g(A,C,K)&=K-A-C+1,\qquad[x]_+=\max(x,0),\\
+\Lambda_g(h)&=\max_{\text{（TM.5909）}}\left\lceil\frac{N_g(h;A,C,K)}{T_g(A,C,K)}\right\rceil.
+\end{aligned}
+\tag{TM.5911}
+$$
+
+全部四个余数及全部原供应／有限自适应协议均满足
+
+$$
+A_U(4h+\delta)\ge\Lambda_g(h).
+\tag{TM.5912}
+$$
+
+证明。有限点的 $r=2z-w$、$s=w-z$ 均正，实际 $\omega_{r,s}$ 的初始资源为 $4z,4w,4(z+w)$。$w\le h$ 保证首替换合法，$z+w\ge h+1$ 保证初始标签1，且 $4(z+w)>4h+\delta$ 对每个余数成立。折叠点可选 $\omega_{1,z-1}$，它的**真实**下一指标为 $2z-1>h$，是标签0；其离线索引才是 $h+1$。每一行的这种目标只计一次，不计成多个隐藏组成。引理59.2 保证所有这些原目标真实且互异，所有索引符合（TM.5906）。将任意完整协议限制到所选实际代表，应用引理59.4 并取整数上整及参数最大，即得结论。没有由这张表生成在线标签、目标或尺寸。$\square$
+

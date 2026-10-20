@@ -1,0 +1,50 @@
+**定理 13.4（允许端点的近负一模态阻止算子范数收敛）。** 取定义5.1允许的参数
+
+$$
+r_\alpha=r_\beta=r>0,\qquad\theta=r/2,
+\qquad D=\frac{\varphi^4}{2\delta}.
+$$
+
+对长度 $L=L_j$，暂态核在 $0$ 的持留概率为 $1/2$，相邻暂态切点间的跳率均为 $1/2$，其余暂态对角元为零。令
+
+$$
+q_L=\frac{2\pi}{2L+1},\qquad
+\lambda_L=-\cos q_L,\qquad
+v_i=(-1)^i\sin\bigl(q_L(i+1/2)\bigr),\quad0\le i<L.
+$$
+
+则 $K_jv=\lambda_Lv$。对每个固定 $t>0$ 及每个 $1\le p\le\infty$，有
+
+$$
+\liminf_{j\to\infty}\|S_j(t)-S(t)\|_{p\to p}
+\ge e^{-D\pi^2t}>0.
+$$
+
+因此原离散时钟下的全空间算子范数收敛失败，甚至固定正时间也失败；这与定理13.3对每个固定初值的强收敛相容。
+
+**证明。** 暂态矩阵的边界可写为虚点条件 $v_{-1}=v_0$、$v_L=0$。所给向量满足
+
+$$
+v_{-1}=\sin(q_L/2)=v_0,\qquad
+v_L=(-1)^L\sin\pi=0,
+$$
+
+且内部恒等式为 $(v_{i-1}+v_{i+1})/2=-\cos(q_L)v_i$，所以左端半系数和右端吸收条件也逐项成立。随着 $L\to\infty$，$\lambda_L\to-1$，并且
+
+$$
+1-|\lambda_L|=\frac{\pi^2}{2L^2}+o(L^{-2}),\qquad
+\epsilon_jL_j^2\longrightarrow\frac1{2D},\qquad
+|\lambda_{L_j}|^{\lfloor t/\epsilon_j\rfloor}
+\longrightarrow e^{-D\pi^2t}.
+$$
+
+把 $J_jv$ 按其 $p$ 范数归一化为 $\widetilde v_j$。有限 $p$ 时归一化前的范数趋于 $(\int_0^1\sin^p(\pi u)\,du)^{1/p}>0$，$p=\infty$ 时趋于 $1$。它是逐单元交替的符号乘以一致趋于 $\sin(\pi u)$ 的振幅。对固定 $t>0$，混合边界热核在闭正方形上连续；配对相邻单元并使用核的一致连续性，得到
+
+$$
+\|S(t)\widetilde v_j\|_\infty\longrightarrow0,
+\qquad S_j(t)\widetilde v_j
+=\lambda_{L_j}^{\lfloor t/\epsilon_j\rfloor}\widetilde v_j.
+$$
+
+由三角不等式即得所述下界。这一初值随 $j$ 改变，所以不反驳固定初值结论。此高频模态在正预解式中的逆特征值仅为 $\epsilon_j/(1-\lambda_{L_j})=O(\epsilon_j)$，说明第10.2节的格林范数收敛与此反例可以同时成立。泊松化对该模态使用 $e^{-t(1-\lambda_{L_j})/\epsilon_j}$，也不同于原离散时钟的交替衰减。$\square$
+

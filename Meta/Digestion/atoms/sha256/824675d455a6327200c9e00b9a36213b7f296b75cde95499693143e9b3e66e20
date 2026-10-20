@@ -1,0 +1,14 @@
+**推论 1546.1（正的最坏状态障碍）。** 对上述来源，
+
+$$
+d_\infty(F_m\leftarrow E_m)
+\ge d_{\lambda_m}(F_m\leftarrow E_m)
+\ge\frac{\kappa-\delta_m+\delta_m/L_m}{1+\kappa}.
+$$
+
+**证明。** 每个核的平均误差不超过其最大状态误差，取下确界保留第一项。对任意从 $E_m$ 到 $F_m$ 的核，第 1464 节给 $\mathcal R_{\lambda_m}(E_m)\le\mathcal R_{\lambda_m}(F_m)+\epsilon_{\lambda_m}(F_m\leftarrow E_m;T)$。代入第 1545 节风险差，再对核取下确界，得到第二项。证毕。
+
+右端趋于 $\kappa/(1+\kappa)>0$，而第 1544 节成本亏损趋零。因此不存在一个对全部此类来源成立、且在零处趋零的函数 $g$，使得 $d_\infty(F\leftarrow E)\le g(e)$。任意维数无关的 $Ce$ 界当然也被排除。
+
+这项否定保持方向：它排除从实际来源标签恢复规范来源全部状态信息的统一结论。它没有同时排除从规范来源模拟实际标签；后一个方向在第 1466 节已有单独的逐状态估计。
+

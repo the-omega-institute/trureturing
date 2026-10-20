@@ -1,0 +1,35 @@
+**定义 50.4（有效单位来源族）。** 对整数 $j\ge2$，置
+
+$$
+Q_j=F_{j+2},\qquad T_j=Q_j^8,\qquad
+M_j=\left\lfloor\frac{Q_j^4}{8}\right\rfloor,\qquad
+H_j=80T_jF_{j+3}.
+\tag{TM.5009}
+$$
+
+以下在固定 $j$ 内简写 $Q,T,M$。对 $0\le k\le j$，令
+
+$$
+A_k=F_{k+1},\quad B_k=F_{k+2},\quad t_k=B_k/A_k,\quad
+n_k(r,s)=A_kr+B_ks,
+\tag{TM.5010}
+$$
+
+并定义实际整数点
+
+$$
+R_k=T+\lfloor Tt_k^2\rfloor,\qquad
+S_k=5T-\lfloor2Tt_k\rfloor.
+\tag{TM.5011}
+$$
+
+对每个 $k$、$0\le v\le M$ 取点 $(R_k+v,S_k)$；另取锚点 $(10T,10T)$。点 $(r,s)$ 的来源为固定左结合有序括号化的正词
+
+$$
+\omega_{r,s}=\alpha^{2r-1}\beta^{2s}\alpha
+\beta^{2s-1}\alpha^{2r}\beta.
+\tag{TM.5012}
+$$
+
+令 $\mathcal F_j$ 为这些具体原树的集合。它在选取历史之前固定，与下文阈值向量无关。在每个 $H\ge H_j$ 使用同一族和常量初始化。
+

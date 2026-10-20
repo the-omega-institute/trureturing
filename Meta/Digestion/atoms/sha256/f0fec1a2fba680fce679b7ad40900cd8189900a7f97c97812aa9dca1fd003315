@@ -1,0 +1,40 @@
+**定理 1387.1（带显式误差的全阶过渡公式）。** 固定 $0<\kappa<1$，令
+
+$$
+\Phi_\kappa(s)=-\frac1s\log(1-\kappa+\kappa2^{-s}),
+\quad \Phi_\kappa(0)=\kappa\log2,
+\quad \Phi_\kappa(+\infty)=0,
+$$
+
+并置 $C_\kappa=\max\{-\log(1-\kappa),|\log(2\kappa)|\}$。当 $(1+\kappa)2^{-N}\le\kappa$ 时，
+
+$$
+\sup_{0\le\alpha\le\infty}
+\left|\frac{G_{\alpha,N}(\kappa)}N
+-\Phi_\kappa\bigl(N(\alpha-1)\bigr)\right|
+\le\frac{C_\kappa+\log(c+1)}{N},
+\qquad
+c=\frac{1+\kappa}{2\kappa}.
+$$
+
+无穷阶的参数按 $N(\infty-1)=+\infty$ 理解。
+
+**证明。** 对第 1386 节的两个坐标，分别与 $0$、$\log2$ 比较，其最大差为 $C_\kappa/N$。由同节的统一敏感度界及 $\Phi_\kappa(s)=L_s(0,\log2)$，得到
+
+$$
+\left|H_\alpha(f)/N-\Phi_\kappa(N(\alpha-1))\right|
+\le C_\kappa/N.
+$$
+
+再用第 1385 节对全部阶同时成立的 $0\le H_\alpha(f)-G_{\alpha,N}\le\log(c+1)$，三角不等式给结论。证毕。
+
+还可保留误差的方向。令 $l_\kappa=\min\{-\log(1-\kappa),-\log(2\kappa)\}$、$u_\kappa=\max\{-\log(1-\kappa),-\log(2\kappa)\}$，同样的单调和平移关系给
+
+$$
+\frac{l_\kappa-\log(c+1)}N
+\le \frac{G_{\alpha,N}}N-\Phi_\kappa(N(\alpha-1))
+\le\frac{u_\kappa}N.
+$$
+
+这里先以 $l_\kappa/N$ 与 $u_\kappa/N$ 夹住实际来源相对过渡曲线的差，再减去 $[0,\log(c+1)/N]$ 内的优化差距。第 1307–1310 节只需有限过渡参数就能取得逐序列极限。本节补入共同细分及幂和比较，因而取得在移动维数下对全部阶同时有效的误差界。该新界仍不包含关联趋于端点时的统一常数，因为 $C_\kappa$ 或 $c$ 会随关联变化。
+

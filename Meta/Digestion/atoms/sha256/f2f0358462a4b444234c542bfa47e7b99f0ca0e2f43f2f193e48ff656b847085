@@ -1,0 +1,10 @@
+**Corollary 22.10 (Per-family optimal mean order near one).** Let
+$\mathfrak M_i(q)$ be the infimum of $\mathbb E_{i,q}L$ over all protocols of Definition 22.8. The q-free observer of Theorem 22.3, with a supplied smaller positive rational allowance when the requested allowance is real, and its resource accounting in Proposition 22.6 give the matching upper order. Therefore
+
+$$
+\mathfrak M_i(e^{-s})=\Theta_{H_c,\alpha}(s^{-3})\qquad(s\downarrow0),
+\tag{22.65}
+$$
+
+for each $i=0,1$. This is an order statement for the per-family infimum. It does not say that every protocol has a cubic upper bound, and it gives no sharp constant or exact optimizer.
+

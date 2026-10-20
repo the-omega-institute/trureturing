@@ -1,0 +1,72 @@
+**数学引文及应用 17.9（两类地址的唯一陪集代表）。**
+定义 17.8 的 $D$ 是 $\mathbb Z^2/\Lambda$ 的完整且无重复代表集，
+$\ell$ 诱导该商与 $\mathbb Z/N\mathbb Z$ 的同构。
+因此两类格子的地址足以唯一识别一个剩余类。
+此处使用经典格基本域方法作为 17.11 的中间步骤；以下保留本区域所需的
+逐点论证。二维大小方块铺平面的经典背景是 Pythagorean tiling，
+参见 Führer [2204.11529v2，Theorem 2 与 Lemma 1][EF-F]。
+其 Theorem 2 要求两边长不等 $q<p$；在本参数中为 $a<b$。
+其 Lemma 1 的代表覆盖是“up to null sets”。
+下述半开边界结论另由给出的证明承担，也包含 $a=b=1$。
+
+证明。先计算
+
+$$
+v_1\cdot v_2=0,\qquad |v_1|^2=|v_2|^2=N,
+\qquad \det(v_1,v_2)=N.
+$$
+
+由 $\gcd(a,b)=1$ 得 $\gcd(b,N)=\gcd(b,a^2)=1$，
+所以 $\ell(x,0)=bx$ 遍历全部剩余类。
+两基向量都被 $\ell$ 送到零，故 $\Lambda\subseteq\ker\ell$。
+反过来，若 $N\mid bx-ay$，则
+
+$$
+b(ax+by)\equiv a(ay)+b^2y=Ny\equiv0\pmod N.
+$$
+
+$b$ 在模 $N$ 下为单位，故 $N\mid ax+by$。
+于是
+
+$$
+u=\frac{ax+by}{N},\qquad v=\frac{-bx+ay}{N}
+$$
+
+都是整数，且 $(x,y)=uv_1+vv_2$。
+因此 $\ker\ell=\Lambda$，并有 $[\mathbb Z^2:\Lambda]=N$。
+
+现证 $\mathcal D$ 内两点若相差格向量，必相同；这个更强的论断
+同时控制随后使用的边界。设 $p,q\in\mathcal D$，
+$z=p-q=uv_1+vv_2$，$u,v\in\mathbb Z$。由区域的半开范围，
+
+$$
+|z_x|<a+b,\qquad |z_y|<b,
+\qquad N(u^2+v^2)=|z|^2<(a+b)^2+b^2<4N.
+$$
+
+最后一个严格不等式来自
+$4N-((a+b)^2+b^2)=3a^2-2ab+2b^2=(a-b)^2+2a^2+b^2>0$。
+若 $(u,v)\ne(0,0)$，整数平方和小于四只可能给
+
+$$
+z\in\{\pm v_1,\ \pm v_2,\ \pm(v_1+v_2),\ \pm(v_1-v_2)\}.
+$$
+
+$\pm v_1$ 的纵差绝对值为 $b$，$\pm(v_1+v_2)$ 的为 $a+b$，
+均与纵差严格小于 $b$ 冲突；
+$\pm(v_1-v_2)$ 的横差绝对值为 $a+b$，也被排除。
+只剩 $\pm v_2$。交换 $p,q$ 后可设 $p=q+(-b,a)$。
+$p_x\ge0$ 强迫 $q_x\ge b$，所以 $q\in S$，从而
+$q_y\ge b-a$，进而 $p_y=q_y+a\ge b$，与 $p\in\mathcal D$ 冲突。
+故 $z=0$。
+
+$D$ 含 $b^2+a^2=N$ 个锚点；刚证它们在商中两两不同，
+而商恰有 $N$ 个元素，故每类恰有一个锚点。
+于是每个 $k\in\mathbb Z^2$ 都唯一写作 $d+\lambda$，
+$d\in D,\lambda\in\Lambda$，亦记 $\mathbb Z^2=D\oplus\Lambda$。
+
+若 $a=b$，互素性强迫 $a=b=1$。上述严格边界证明照常成立；
+此时 $\mathcal D=[0,2)\times[0,1)$，
+$D=\{(0,0),(1,0)\}$，$\ell(x,y)=x-y\pmod2$。
+这也直接给出等边长端点的两个代表，并未套用要求 $q<p$ 的外部定理。证毕。
+

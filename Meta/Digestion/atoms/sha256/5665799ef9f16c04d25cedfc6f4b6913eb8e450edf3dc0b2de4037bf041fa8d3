@@ -1,0 +1,44 @@
+**定理 18.3（固定完整五律的锐范围）。** 对定义 18.1 的全部混态，
+
+$$
+0\le M\le2\sqrt{Z\kappa}\le Z+\kappa\le1.
+$$
+
+给定任意五项概率向量 $p=(p_0,p_1,p_2,p_3,p_4)$，其中 $p_4=p_{13}$，
+固定该对角时的完整可达区间是 $[0,2\sqrt{p_2p_4}]$。
+纯态承诺下则总有 $M=2|c\overline e|=2\sqrt{Z\kappa}$。
+
+证明。令 $s=R_{24}$，正性对主块给
+
+$$
+\begin{pmatrix}Z&s\\\overline s&\kappa\end{pmatrix}\ge0,
+\qquad |s|^2\le Z\kappa.
+$$
+
+配合定理 18.2、$2\sqrt{Z\kappa}\le Z+\kappa$ 及迹一即得界。
+反之，令 $E_{ij}=|e_i\rangle\langle e_j|$，取实际矩阵
+
+$$
+\rho_s=\operatorname{diag}p+sE_{24}+\overline sE_{42},
+\qquad |s|\le\sqrt{p_2p_4}.
+$$
+
+它是三个非负一维旁观块与上述正半定二阶块的直和，且迹一。
+选 $s=(m/2)e^{i\theta}$ 即实现任意 $0\le m\le2\sqrt{p_2p_4}$。
+任取相位都成立，且全部这些态的三个实际成对偏迹完全相同，
+因为显示的三个矩阵不含 $s$。这比只匹配占位均值强。
+
+若 $Z=0$ 或 $\kappa=0$，则 $s=0$，区间退化为单点。
+一般地，任何零对角元都由 $|R_{ij}|^2\le R_{ii}R_{jj}$ 强制整行列为零。
+纯态的 $R_{24}=c\overline e$ 直接给承诺下的公式；
+对角族在旁观质量非零时不必包含纯态，该纯态公式不由此直和构造推出。
+全域 $M=1$ 当且仅当 $Z=\kappa=1/2$、其余三质量零且 $|s|=1/2$：
+这是上述三道不等式同时取等的条件。相应态恰为
+
+$$
+\left|\psi_\theta\right\rangle
+=\frac{|010\rangle+e^{i\theta}|101\rangle}{\sqrt2}
+$$
+
+的密度投影；二阶块秩一，任意 $\theta$ 都取等。证毕。
+

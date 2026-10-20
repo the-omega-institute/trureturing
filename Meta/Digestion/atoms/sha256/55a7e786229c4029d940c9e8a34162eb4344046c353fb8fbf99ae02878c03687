@@ -1,0 +1,140 @@
+**定理 20.2（精确余弦谱与扩散尾律）。** 对 $L=L_j$，令
+
+$$
+q_{L,m}=\frac{(2m+1)\pi}{2L+1},
+\qquad
+\lambda_{L,m}=1-2p+2p\cos q_{L,m},
+\qquad 0\le m<L.
+$$
+
+则暂态核的本征函数与范数为
+
+$$
+\phi_{L,m}(i)=\cos\!\left((i+1/2)q_{L,m}\right),
+\qquad
+\|\phi_{L,m}\|^2=\frac{2L+1}{4}.
+$$
+
+对整数 $n\ge0$，有限链吸收尾满足精确谱式
+
+$$
+\Pr_{\nu_j}(\tau_j>n)
+=\sum_{m=0}^{L-1}a_{L,m}(\nu_j)\lambda_{L,m}^{\,n},
+$$
+
+其中
+
+$$
+a_{L,m}(\nu_j)
+=
+\frac{2(-1)^m}{2L+1}
+\cot\!\left(\frac{q_{L,m}}2\right)
+\sum_{i=0}^{L-1}\nu_{j,i}
+\cos\!\left((i+1/2)q_{L,m}\right).
+$$
+
+若 $t>0$，则
+
+$$
+\Pr_{\nu_j}\!\left(\epsilon_j\tau_j>t\right)
+\longrightarrow
+S_\nu(t):=
+\sum_{m=0}^{\infty}
+\frac{4(-1)^m}{(2m+1)\pi}
+\left[
+\int_{[0,1]}
+\cos\!\left(\frac{(2m+1)\pi x}{2}\right)d\nu(x)
+\right]
+e^{-D\pi^2(2m+1)^2t/4}.
+$$
+
+吸收端的质量自动不贡献尾部，因为各余弦系数在 $x=1$ 为零。若
+
+$$
+b_0(\nu)=\frac4\pi\int_{[0,1]}\cos(\pi x/2)\,d\nu(x)>0,
+$$
+
+则长时间尾满足
+
+$$
+S_\nu(t)\sim b_0(\nu)e^{-D\pi^2t/4}
+\qquad(t\to\infty).
+$$
+
+**证明。** 暂态核是带反射半格点边界与吸收端点的实对称 Jacobi 矩阵。令 $\phi(i)=\cos((i+1/2)q)$，内部递推给出 $\lambda=1-2p+2p\cos q$；反射边界在 $0$ 自动满足，吸收边界要求 $\phi(L)=0$，即 $q=(2m+1)\pi/(2L+1)$。离散余弦正交关系给出范数 $(2L+1)/4$，再将常数函数投影到这些本征函数上即得系数 $a_{L,m}$ 与精确尾式。
+
+由 Fibonacci 比例
+
+$$
+\frac{N_j}{L_j}\longrightarrow\varphi^2,
+\qquad
+\epsilon_jL_j^2\longrightarrow\frac{\delta}{\varphi^4},
+$$
+
+对固定 $m$ 有
+
+$$
+1-\lambda_{L_j,m}
+=\frac{p\pi^2(2m+1)^2}{(2L_j+1)^2}
++O_m(L_j^{-4}),
+$$
+
+从而
+
+$$
+\lambda_{L_j,m}^{\lfloor t/\epsilon_j\rfloor}
+\longrightarrow
+e^{-D\pi^2(2m+1)^2t/4}.
+$$
+
+同样，谱投影系数趋于
+
+$$
+\frac{4(-1)^m}{(2m+1)\pi}
+\int_{[0,1]}\cos\!\left(\frac{(2m+1)\pi x}{2}\right)d\nu(x).
+$$
+
+半格点分母 $(2L_j+1)^2$ 必须保留；将其换成 $4L_j^2$ 会产生 $L_j^{-3}$ 阶修正，不能同时声称余项仍为 $O_m(L_j^{-4})$。
+
+先固定低频截断 $M$，再令 $j\to\infty$。对 $m\le M$ 使用上述逐模态极限。对固定 $t>0$ 及充分大的 $j$，系数式与 $1-\lambda_{L,m}=4p\sin^2(q_{L,m}/2)$ 给出
+
+$$
+|a_{L,m}(\nu_j)|\le\frac{C}{m+1},\qquad
+\lambda_{L,m}^{\lfloor t/\epsilon_j\rfloor}
+\le e^{-c_t(m+1)^2}\quad(\lambda_{L,m}\ge0),
+$$
+
+其中 $C,c_t>0$ 不随 $j,m,\nu_j$ 变化。因此非负谱中 $m>M$ 的尾项由可求和级数控制，并随 $M\to\infty$ 消失。当 $p<1/2$ 时，负本征值的绝对值不超过 $4p-1<1$（$p\le1/4$ 时没有负本征值）；其系数绝对值之和至多为 $O(\log L)$，所以负谱贡献在扩散时标上也趋零。
+
+当 $p=1/2$ 时，$\lambda_{L,m}=\cos q_{L,m}$。对负谱即 $q_{L,m}>\pi/2$，反向编号为
+
+$$
+m=L-1-k,\qquad
+q_{L,L-1-k}=\pi-\frac{2(k+1)\pi}{2L+1},\qquad k\ge0.
+$$
+
+由 $\cot(q/2)=\tan((\pi-q)/2)$ 及起始律总质量不超过一，统一有
+
+$$
+|a_{L,L-1-k}(\nu_j)|\le\frac{C(k+1)}{L^2}.
+$$
+
+所以 $k\ge1$ 时系数为 $O(k/L^2)$；最末模态 $k=0$ 须单列为 $O(L^{-2})$，不能把 $O(k/L^2)$ 写到 $k=0$。若初态为 $0$，额外的余弦因子还给出 $O((k+1)^2/L^3)$。对固定 $t>0$ 及充分大的 $j$，在上述整个负谱范围内，
+
+$$
+|\lambda_{L,L-1-k}|^{\lfloor t/\epsilon_j\rfloor}
+\le \exp\bigl(-c_t(k+1)^2\bigr)
+\le \exp(-c_t k^2).
+$$
+
+这是因为 $|\lambda|=\cos(2(k+1)\pi/(2L+1))$，且 $\epsilon_jL_j^2$ 趋于严格正的常数。于是负谱的标量贡献至多为
+
+$$
+\frac{C}{L^2}\sum_{k\ge0}(k+1)e^{-c_t(k+1)^2}
+\longrightarrow0.
+$$
+
+该可求和控制只用于生存函数的投影，不把靠近 $-1$ 的高频模态升级为全空间算子范数收敛。合并正、负谱后，取 $M\to\infty$ 即得所列级数。首模态与其余模态的指数率严格分离，给出长时间渐近式。$\square$
+
+本节的谱尾律需要固定 $p>0$、$\delta>0$、等阻抗、左反射右吸收和初始律收敛；$p=0$ 时不发生该吸收扩散缩放，$p>1/2$ 时转移核不满足本定义。谱式中的高频系数可带符号，不能把每一项解释为独立概率或几何变量和。递归只提供 $W_j$、$L_j$ 与 $N_j/L_j$ 的比例；阻抗、跳率、时钟、边界和初始律仍是外加动力学。该结论不推出物理热流、量子输运、路径空间收敛或一般速度权重下的同一谱律。
+

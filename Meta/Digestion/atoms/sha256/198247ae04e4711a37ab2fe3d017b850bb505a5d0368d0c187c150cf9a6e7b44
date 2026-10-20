@@ -1,0 +1,17 @@
+### 14.5 剩余投影差额的计算合同
+
+定义 $\sigma_2(g)=\operatorname{Tr}(A_fP_2)$，并记
+
+$$
+D_2(f)=\sigma_2(g)-Q_{\rm full}(f),\qquad
+\delta_2(g)=\sigma_2(g)-\sigma_\infty(g).
+$$
+
+源 archimedean 恒等式写作 $\sigma_\infty=W_\infty+E_\infty$，故同一测试上的差额应满足
+
+$$
+D_2=E_\infty+\delta_2+\mathcal A_2.
+$$
+
+较强的候选充分条件为 $D_2\le0$；完整 Weil 正性实际需要 $D_2\le\sigma_2$。这两种门槛分别等价于 $Q_{\rm full}\ge\sigma_2$ 与 $Q_{\rm full}\ge0$，不可混用。
+

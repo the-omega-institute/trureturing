@@ -1,0 +1,59 @@
+**Theorem 112.10 (full-domain recovery and matching read/address order).**
+For every \(u\in D\) and every \(G\) of Contract 112.1a, the static schedule
+of Definition 112.9 terminates, queries only reached nodes at authentic epoch
+zero, and returns the entire original row (112.2). On the same sources
+\(U_h\), for all \(h\ge0\),
+\[
+S(U_h)=2^{h+2}-1,\qquad \Lambda(U_h)=h\,2^{h+2}+2.
+\tag{112.21}
+\]
+For every controller \(A\) satisfying Theorem 112.8 under that same entry,
+target and contract,
+\[
+\begin{aligned}
+2^{h+1}&\le q_A(U_h),& S(U_h)&<2\cdot2^{h+1},\\
+(h+1)2^{h+1}&\le\ell_A(U_h),&
+\Lambda(U_h)&\le2(h+1)2^{h+1}.
+\end{aligned}
+\tag{112.22}
+\]
+Thus the native upper schedule matches the universal lower orders in the
+post-entry raw-read and literal-address coordinates, respectively
+\(\Theta(2^h)\) and \(\Theta((h+1)2^h)\). No matching assertion is made
+about unpriced coordinates or the supplier's different Boolean task.
+
+**Proof.** Structural induction on a finite tree proves the history-only
+frontier visits root, then the whole left subtree, then the whole right,
+with each node exactly once. Only branches add children, so every queued
+node is reached. The same induction shows that `restore` reads the retained
+leaf labels and pairs the restored children to reconstruct the exact ordered
+syntax. A depth/fuel bound may be calculated from acquired history length
+for this restoration; it is not initial advice. Each node is pushed and
+popped once, giving \(2S\) stack operations in the stated unit. The ordered
+comparator visits each pair at a common relative address at most once,
+stopping at the first label or constructor mismatch. Its visits are at most
+\(\min(|V_{u|_L}|,|V_{u|_R}|)\le S\). Local comparison produces precisely
+the partition, and the two reached holes and numbered exterior are unchanged.
+Since no Apply is issued, the epoch-zero immutable supplier
+and INITIAL native register are the same source throughout, independently
+of any lawful guard. The finite histories give (112.19)--(112.20a).
+
+The perfect tree \(U_h\) has nodes at depths \(0,\ldots,h+1\), hence
+\[
+S(U_h)=\sum_{j=0}^{h+1}2^j=2^{h+2}-1,\qquad
+\Lambda(U_h)=\sum_{j=0}^{h+1}j2^j=h2^{h+2}+2.
+\]
+The depth sum follows by induction, including \(h=0\). The lower sides
+of (112.22) are the same-run law (112.17). The upper Read ratio is
+\(2-2^{-(h+1)}\); the literal ratio is
+\(2h/(h+1)+2/((h+1)2^{h+1})\le2\), including the value one at \(h=0\).
+For that endpoint the lower bill is \((2,2)\), DFS post-entry bill \((3,2)\),
+total raw bill four, phase distinct charge three, and cumulative cached
+charge three with post-entry increment two. The arithmetic compares the
+same original source and preserves each unit separately. \(\square\)
+
+Sourcewise termination is not a uniform finite profile:
+\(\sup_{u\in D}S(u)=\sup_{u\in D}\Lambda(u)=\infty\), as (112.21) shows.
+Neither comparison counts nor post-acquisition syntax grants free entry
+advice or a native heat actuator.
+

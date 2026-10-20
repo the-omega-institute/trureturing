@@ -1,0 +1,16 @@
+## 8. 文献和跨作者对应
+
+本轮重新读取 CCM *Zeta Spectral Triples*, arXiv:2511.22755v1，及 Dusson-Sigal-Stamm *The Feshbach-Schur map and perturbation theory*, arXiv:2105.02058。2026-06-01 的 Li-Shao *Asymptotic Recovery in Fourier Spectral Methods for the Schrodinger Equation with Point Singularities*, arXiv:2606.01718v1，Sections 1、5.2，具体展示保留低维有效算子与恢复高频结构的做法。其 Laplacian/Sobolev 假设不适用于当前 Gamma 算子，本节没有据此输入任何误差阶；这里只借鉴方法，实际 Weil 下界独立推导。经典 Young、Schur、Gershgorin 与端点积分均不作首创声明。
+
+实际代码读取包括 #6029 `WeilBoundaryKernelIntegral.lean`（blob `dd8c742820f623257ed37aa15d868bb2db09301b`），它识别原边界符号与奇核积分，未被重复实现；以及 5040/Robin 线新 #6204 `GronwallUpperEnvelope.lean`（blob `75eb28885ee1250985d9dbd19b73fa76f3502d04`）。后者给出归一化 sigma 比值最终 <=1+epsilon 的上包络，不能转为全称严格 Robin 界或算子正性。本轮没有处理这些 PR 的 CI、冻结或工程门。
+
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 4,8. https://arxiv.org/html/2511.22755v1
+- Dusson, Sigal, Stamm, *The Feshbach-Schur map and perturbation theory*, arXiv:2105.02058. https://arxiv.org/abs/2105.02058
+- Li, Shao, *Asymptotic Recovery in Fourier Spectral Methods for the Schrodinger Equation with Point Singularities*, arXiv:2606.01718v1. https://arxiv.org/html/2606.01718v1
+- Existing owners: `WeilInfiniteComplementLeakage`, `WeilArithmeticCouplingJet`, `WeilEvenDualStencil`; actual #6029 and #6204 sources at the blobs above.
+
+
+---
+

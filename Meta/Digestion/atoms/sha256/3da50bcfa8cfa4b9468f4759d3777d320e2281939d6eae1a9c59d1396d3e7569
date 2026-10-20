@@ -1,0 +1,19 @@
+**数学引文 15.35（本章的准确供应表）。** 下表列出实际消费与适用限制。
+“应用”表示已有工具在本章具体支撑、张量和操作合同中的推导；
+一般工具的归属保留给原供应者，不以改名、编码或参数重写声明发现优先权。
+
+| 供应者及准确条目 | 本章参数和实际消费 | 保留的限制 |
+| --- | --- | --- |
+| 本卷 §2、§4–5；Correlation §23.1–23.2 | $[null],[2],[3],[5],[25]\leftrightarrow0,1,2,3,13$；位序 $(x,z,y)$；$(X,Z,Y,\kappa)$；15.2–15.3、15.12、15.34 | 经典来源与原生历史不自动给张量、相位或量子仪器 |
+| Foundational 定义 9.2、定理 9.3 的有限 KL 证明；本卷 §5；HiddenRelations C-17.6 | 数组指标改为 $I\in\Gamma_n$，$\log p_I^*$ 为常数加占位势；15.15 的实际 Markov 和活动逆式补齐路径域 | 同均值的最大熵选择不认证未知来源；$n=1$ 独立给 Bernoulli 域 |
+| HiddenRelations C-12.1–C-12.3、C-13.1–C-13.3 | 正底面行列相位与 $\Phi=-\chi$；条件纯底面矩阵为 $\begin{pmatrix}a&d\\b&e\end{pmatrix}/\sqrt{1-Z}$ | 条件纯 concurrence 是 $2|\Delta|/(1-Z)$，不充当混合 $\rho_{13}$ 的计算 |
+| Wootters quant-ph/9709029v2，式 (7)、(9)–(13) | $\rho_{ij}=MM^\dagger$，$R=M^{\mathsf T}SM$ 与其 tilde 矩阵共轭；rank 至多二，$C=s_1-s_2$；15.5、15.8 | 全态须纯才能保证本章特定秩和残余桥；供应者的二方公式本身可用于一般二方混态 |
+| Coffman–Kundu–Wootters quant-ph/9907047v2，式 (21)–(24) | 五个非零立方体坐标映为 $a,b,c,d,e$，$d_1=c^2e^2,d_2=d_3=0$；$\tau_3=4Z\kappa$ | 纯三 qubit、二方 tangle 是 concurrence 平方；与 Wootters 的二方来源分开 |
+| Ashtekar–Schilling gr-qc/9706069v1，§II A–B，式 (2.1)、(2.5) | $\psi_s=\sqrt{p_s}e^{-i\theta_s}$；$\omega=\Omega_{\rm AS}/\hbar$ 的固定均值商；$\iota_X\omega=dH$；15.10 | 自选 $h$ 流不等于已证明存在的固定线性 Hamiltonian 或物理时钟 |
+| HiddenRelations C-20.1–C-20.2 与 C-18.5 | $(N,k,w_i)=(n,j,a_i)$；边界零一组和三块质量 $(q_j,q_{j+1},1-q_j-q_{j+1})$；15.17–15.18 | 正权真实连续切口；$\operatorname{tr}$、$\det$ 属 $BB^\dagger$；零组删除、$n=1$ 无切口 |
+| Pérez-García 等 quant-ph/0608197v2，§3.1，Theorem 1 后的 rank 说明 | $N=n,d=2$，每个 $\rho_m$ 是物理访问顺序的前缀约化态；供应最大前缀 rank 的 OBC bond 表示 | 此处不使用周期或平移不变的附加假设 |
+| Schön 等 quant-ph/0501096，式 (1)–(5) | 辅助 $\mathbb C^D$、新位置 $\mathbb C^2$、输入空白、逐步任意等距和末端解耦；15.20、15.32 | 目标参数已知；不重访；命名切口必须对齐实际顺序；不认证受限装置 |
+| Lesanovsky 1010.2349v2，式 (3)–(5)，DOI 10.1103/PhysRevLett.106.025301 | 均匀 $a_i=\xi^2$，基 $(g,r)=(0,1)$，局部 parity 共轭 $W$ 和正尺度 $\xi/\Omega$；15.24 | 精确三体部分；非齐次开放链的零空间由 15.23 证明，唯一性限合法空间 |
+| Hein 等 quant-ph/0602096，式 (131)、Proposition 10、式 (132) | 二部跨侧邻接 $G$；供应者对数 rank $r$ 对应普通 rank $2^r$；左右本侧等距编码和 15.28 的 Gram/陪集谱 | 编码支撑不是全 $\Gamma_n$；零秩、空侧和 $r_0=1$ 保留 |
+| SecondOrder 定义 107.1、定理 108.3、定义 110.1、定理 110.2–110.3 | 中位仪器的 $S=(1,3),E=2$；共同相位、正交结果记录和各制备步骤等距；15.8、15.20–15.21 | 记录 ensemble 不等于无条件约化态；抽象经典分支核不决定相干实现 |
+| Correlation §24 的条件收缩与任务边界 | 15.34 的同经典读数、相位目标不同之类比，原概率/历史对象保持原归属 | 不认作 Schmidt kernel 恒等式，不外推为预测记忆或原生装置认证 |

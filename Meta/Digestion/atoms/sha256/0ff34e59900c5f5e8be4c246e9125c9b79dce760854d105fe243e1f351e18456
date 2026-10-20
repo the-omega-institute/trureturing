@@ -1,0 +1,108 @@
+## 77.2 有限参数域、同源准入与完整目标
+
+固定任意有限整数 $P_{\max}\ge7$。对每个奇整数 $7\le p\le P_{\max}$、每个 $S\in\Lambda^{p-2}$、全部四个有序标签对
+
+$$
+(a,b)\in\{(3,0),(0,5),(5,2),(2,25)\},
+$$
+
+定义长 $p$ 块
+
+$$
+A=Sb5,\qquad D_-=Sa3,\qquad D_+=Sb0.
+$$
+
+只取两种混合顺序
+
+$$
+(J,K)\in\{(D_-,D_+),(D_+,D_-)\}.
+$$
+
+置
+
+$$
+\Pi=JAK,\qquad T=\Pi S,\qquad
+U=\Pi D_-=Ta3,\qquad W=\Pi D_+=Tb0,\qquad m=4,\quad h=4p.
+\tag{77.7}
+$$
+
+这里 $|T|=h-2$，$|U|=|W|=h$。仅量化 $U,W$ 每一步实际合法且第一 guard 从零返回零的状态序列：
+
+$$
+s_0^U=s_0^W=0,\quad
+s_{i+1}^U=\operatorname{out}(U_i),\quad
+s_{i+1}^W=\operatorname{out}(W_i),\quad
+s_h^U=s_h^W=0,
+$$
+
+并逐步保留 (77.2) 的合法输入。两序列在共同链上相同。字面形状本身不供应这些合法性、图成员资格或共同色。
+
+命名位置沿用63.1：共同链为 $i=0,\ldots,h-3$，随后两类分叉位置记为 $\mathsf D_-,\mathsf D_+$ 与 $\mathsf E_-,\mathsf E_+$，以区别于字面块 $D_\pm$。命名相位为
+
+$$
+\operatorname{ph}(i)=i\pmod h,\qquad
+\operatorname{ph}(\mathsf D_\pm)=h-2,\qquad
+\operatorname{ph}(\mathsf E_\pm)=h-1.
+$$
+
+rival 相位取 $r(v)=\operatorname{ph}(v)\pmod p$，第一 guard $s_v$ 取自相应实际路径；$\mathsf D_\pm$ 的第一首标签为 $a,b$，$\mathsf E_\pm$ 的首标签为 $3,0$。共同链末端到两处 $\mathsf D$ 的边保留相同的末个 $T$ 标签。
+
+令 $\xi_-<\xi_+$ 为同一对返回收缩 $f_U,f_W$ 的固定点。其次序和公式在77.4给出。令 $K_0$ 为同一对零到零返回的全部无限 $U,W$ 块拼接在共同基点取得的第一坐标集合。依63.2，所有凸包使用这同一个尾集合：
+
+$$
+\begin{aligned}
+H_0&=[\xi_-,\xi_+]=\operatorname{conv}K_0,\\
+H_i&=f_{T_{<i}}^{-1}(H_0)\quad(0\le i\le h-3),\\
+H_{\mathsf D_-}&=f_af_3(H_0),&
+H_{\mathsf D_+}&=f_bf_0(H_0),\\
+H_{\mathsf E_-}&=f_3(H_0),&
+H_{\mathsf E_+}&=f_0(H_0).
+\end{aligned}
+\tag{77.8}
+$$
+
+空前缀的复合是恒等映射。逆像是同一实际坐标的运输，不改变原边方向。准入后这些拼接都在同一个配对基点进行，第二分量始终是同一份 rival。
+
+对每个共同链及分叉位置 $v$，要求全部原 (63.11)：
+
+$$
+\begin{aligned}
+& H_v\subseteq I_{s_v},
+\quad H_v\text{ 位于其实际首标签的合法根域};\\
+& B\cap\operatorname{int}H_v=\varnothing;\\
+& \exists c_v\in\{0,\ldots,5\},\qquad
+H_v\cup\{y_{r(v)}\}\subseteq E_{c_v}^{\beta}.
+\end{aligned}
+\tag{77.9}
+$$
+
+所有条件在同一个 $\beta,B,G_B,R,S,a,b,p$ 中同时承担。命题63.2供应唯一的非退化整个承载片 $P_v\supseteq H_v$、整片合法根与共同色以及两条实际原配对返回。共同链完整顶点为
+
+$$
+v_i=\bigl((s_i,P_i),(u_{i\bmod p},\{y_{i\bmod p}\})\bigr).
+\tag{77.10}
+$$
+
+原完整最小目标还要求命名集合 $C$ 是整个 SCC，第一投影返回不相干，第二投影为给定相干 rival，非空返回长度 gcd 恰为 $h=4p$，并有 $h+2=4p+2$ 个不同完整配对顶点。根据定理63.3及64.1—64.5，还须按整个原片检查每一条完整原内部边的
+
+$$
+\operatorname{ph}(w)=\operatorname{ph}(v)+1\pmod h,
+\tag{77.11}
+$$
+
+以及完整图的外部条件。令
+
+$$
+X_0=\operatorname{Succ}_{G_B}(C)\setminus C,\qquad
+X_{n+1}=X_n\cup\bigl(\operatorname{Succ}_{G_B}(X_n)\setminus C\bigr).
+$$
+
+则原 (63.15) 要求
+
+$$
+\forall n\ge0,\qquad \operatorname{Succ}_{G_B}(X_n)\cap C=\varnothing.
+\tag{77.12}
+$$
+
+这里允许单向离开 $C$。第60章所有适用的整片条带、后继、实际返回点、点界、宽度及偏移／失配限制也继续在同一实现中承担，各先修的局部预算域分别保留。77.8具体说明其使用范围。全部准入与这个完整目标是不同层次的条件。
+

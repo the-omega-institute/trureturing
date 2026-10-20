@@ -1,0 +1,4 @@
+**命题 8.2（周期不超过 2 的块只给出对称势）。** 设 $r\in\{1,2\}$,$r\mid L$,$L\ge3$,$\tilde u$ 是周期为 $r$ 的势,$w$ 至多在站点 $q$ 处与 $\tilde u$ 不同。则反射 $\rho_q:i\mapsto2q-i$ 是 $w$ 的非平凡二面体对称。因此推论 4.4 在 $r\le2$ 时得到的坏势都与 Laplace 算子共享非平凡对称。
+
+**证明。** $L$ 是 $r$ 的倍数,故 $i\bmod r$ 在 $\mathbb Z/L\mathbb Z$ 上有定义;$2q-i\equiv i\pmod 2$,而 $r\mid2$,故 $\tilde u_{\rho_q(i)}=\tilde u_i$。$\rho_q$ 固定 $q$,故也保持 $w$。因 $L\ge3$,$\rho_q(q+1)=q-1\ne q+1$,$\rho_q$ 不是单位元,其置换矩阵是非平凡共享对称。∎
+

@@ -1,0 +1,7 @@
+但该机器定理同时明确声明：
+
+* 它只是有限阶局部 cancellation certificate；
+* 不声称 all-order extraction；
+* 不声称全局 continuation；
+* 不声称 RH。
+

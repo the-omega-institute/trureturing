@@ -1,0 +1,71 @@
+## 238. FIB 细胞复形上的外加磁性斯格明子、拓扑电荷与热激活漂移统计
+
+固定 FIB 细胞复形 \(K_j=(V_j,E_j,F_j)\)，可把顶点解释为自旋采样点、边解释为相邻耦合支撑、面解释为定向 plaquette。FIB 只提供组合邻接、入射关系和候选路径；自旋的空间嵌入、面定向、晶格尺度、三维法向、交换常数、手性相互作用、磁场、阻尼、载流子、温度、边界、极限和观测均须外加。给每个顶点一个单位磁化向量 \(\mathbf n_v\in S^2\) 后，一个可能的离散能量为
+
+$$
+E_j(\mathbf n)=-J\sum_{\{u,v\}\in E_j}\mathbf n_u\!\cdot\!\mathbf n_v
++D\sum_{\{u,v\}\in E_j}\mathbf e_{uv}\!\cdot\!(\mathbf n_u\!\times\!\mathbf n_v)
++K\sum_{v\in V_j}\bigl(1-(\mathbf n_v\!\cdot\!\hat{\mathbf z})^2\bigr)
+-\mu\sum_v\mathbf B\!\cdot\!\mathbf n_v+E_{\rm demag}+E_{\rm bdry} .
+\tag{238.1}
+$$
+
+其中 \(J,D,K,\mu\)、外场 \(\mathbf B\)、偶极项和边界能都来自外加磁性材料模型；\(\mathbf e_{uv}\) 需要额外的几何嵌入和键方向，不能由无向 FIB 边单独给出。改变交换符号、Dzyaloshinskii–Moriya 项、各向异性或外场，可在同一 FIB 支撑上得到均匀磁态、条纹、畴壁、孤立旋涡或斯格明子晶格。
+
+若三角面 \((v_1,v_2,v_3)\) 的自旋像在球面上不跨越奇异分支，可用有向球面立体角定义离散拓扑荷
+
+$$
+Q_j=\frac1{4\pi}\sum_{f=(v_1,v_2,v_3)\in F_j}
+\Omega(\mathbf n_{v_1},\mathbf n_{v_2},\mathbf n_{v_3}),
+\tag{238.2}
+$$
+
+其中面定向、三角剖分、立体角分支和边界补面均是外加约定。只有在自旋场足够平滑、边界不泄漏且取定连续化方案时，\(Q_j\) 才近似整数；有限网格、奇异核心、开边界或强噪声可让电荷通过边界逸出或在离散重连中改变。因此，FIB 面的存在本身不保证拓扑保护，也不决定斯格明子数。
+
+给定有效场 \(\mathbf H_v^{\rm eff}=-\partial E_j/\partial\mathbf n_v\)，外加随机 Landau–Lifshitz–Gilbert 动力学可写为
+
+$$
+\dot{\mathbf n}_v=-\gamma\,\mathbf n_v\!\times\!(\mathbf H_v^{\rm eff}+\boldsymbol\xi_v)
++\alpha\,\mathbf n_v\!\times\!\dot{\mathbf n}_v
++\boldsymbol\tau_v^{\rm STT},
+\qquad |\mathbf n_v|=1 .
+\tag{238.3}
+$$
+
+陀螺比 \(\gamma\)、阻尼 \(\alpha\)、自旋转移力矩、噪声协方差、温度和电流均须外加；若要求热平衡，还需另加满足涨落—耗散关系的噪声。对足够刚性的孤立纹理，集体坐标近似可能给出 Thiele 方程
+
+$$
+\mathbf G\!\times\!(\mathbf v-\mathbf u)+\alpha\mathsf D\,\mathbf v
+-\beta\mathsf D\,\mathbf u+\nabla U_{\rm pin/bdry}(\mathbf R)
+=\mathbf F_{\rm ext}+\boldsymbol\eta(t),
+\qquad \mathbf G\propto Q_j\hat{\mathbf z},
+\tag{238.4}
+$$
+
+速度 \(\mathbf v\)、漂移方向和所谓 skyrmion Hall 角同时依赖拓扑荷、耗散张量 \(\mathsf D\)、电流漂移 \(\mathbf u\)、钉扎势、边界力和随机力。FIB 路径只能列出纹理可能经过的组合通道；它不提供质量、陀螺系数、势垒、连续坐标或真实几何距离，因而不能单独推出横向漂移或无损传播。
+
+热激活成核、湮灭和拓扑电荷翻转可在给定能量景观后用过渡率表示：
+
+$$
+\Gamma_{a\to b}(T)\simeq \Gamma_0(a,b)
+\exp\!\left[-\frac{\Delta E_{a\to b}(J,D,K,\mathbf B,\text{边界})}{k_{\rm B}T}\right],
+\tag{238.5}
+$$
+
+但前因子、最小鞍点、核心奇异化和边界逃逸路径都需要外加动力学与几何。淬火缺陷、随机各向异性和热噪声会把相同的 FIB 路径集合分成不同寿命与迁移率；先固定无序再取大图极限和先做无序平均再取极限也可能给出不同的纹理密度与电荷涨落。
+
+若形成斯格明子液体或晶格，面密度 \(n_{\rm sk}\)、结构因子和电荷相关函数可写成
+
+$$
+S_Q(\mathbf k)=\frac1{|F_j|}
+\mathbb E\left|\sum_{f\in F_j}q_f e^{-i\mathbf k\cdot\mathbf r_f}\right|^2,
+\qquad q_f=\frac{\Omega_f}{4\pi},
+\tag{238.6}
+$$
+
+其中面坐标、波矢、系综和平均方式均外加。相同组合复形可在不同温度、外场、载流子耦合与边界下表现为稀薄孤子、短程有序、六角晶格、条纹或无拓扑纹理；\(S_Q\) 的峰、关联长度和有限尺寸标度不是 FIB 递归的普适输出。
+
+电子若绝热跟随磁化，可能测得拓扑霍尔项 \(\rho_{xy}^{\rm top}\propto P\,n_{\rm sk}\)，但自旋极化 \(P\)、载流子密度、散射机制、接触几何和普通霍尔背景都须外加。磁光、磁力显微、输运和局部探针把 \(\mathbf n\) 与 \(Q\) 投影到不同观测通道；单一总磁化或单一输运曲线不能唯一恢复隐藏的斯格明子数、核心结构与湮灭路径。
+
+因此，FIB ATOM 递归在此只提供自旋相互作用的组合支撑、细胞接缝和候选迁移路径；几何嵌入、磁性能量、拓扑荷定义、LLG/Thiele 动力学、热噪声、外场、电流、边界、无序、尺度极限和观测协议全部为外加。斯格明子是否存在、拓扑荷是否近似守恒、热激活寿命、漂移/霍尔角、晶格统计与拓扑霍尔响应，都是在这些外加结构被明确后得到的条件结论，不能由 FIB ATOM 关系单独推出普适磁性统计定律。
+

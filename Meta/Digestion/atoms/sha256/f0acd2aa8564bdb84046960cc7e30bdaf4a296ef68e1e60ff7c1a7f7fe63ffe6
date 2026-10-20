@@ -1,0 +1,46 @@
+**Lemma 54.2 (exact columns, rows and second archive load).** For $h\ge2$ define $[x]_+=\max(x,0)$. The original tag-1 column with first replacement coordinate $w\le h$ has the integer interval
+
+$$
+I_w=[a_w,w-1]\cap\mathbb Z,
+\quad a_w=\max(\lfloor w/2\rfloor+1,h-w+1),
+\quad f_w=[w-a_w]_+.
+\tag{TM.5408}
+$$
+
+The tag-1 row with original size coordinate $z$ has degree
+
+$$
+d_z=[\min(2z-1,h)-\max(z,h-z)]_+.
+\qquad
+\epsilon_z=\mathbf1_{\{2z-1>h\}}
+\tag{TM.5409}
+$$
+
+where $\epsilon_z$ counts its single additional tag-0 target. For $h\ge3$ put
+
+$$
+K=\lfloor(h-1)/2\rfloor,\quad
+D=\lfloor(h+1)/6\rfloor,\quad
+b=\lceil(h+2)/3\rceil.
+\tag{TM.5410}
+$$
+
+Then $\max_w f_w=K$, every nonempty tag-1 row has $z\ge b$, and the largest original tag-2 column at second replacement coordinate $p=z+w\le h$ has size $D$. If $D=0$, there are no such targets.
+
+**Proof.** The finite-pair conditions give $z\le w-1$ and $z\ge\lfloor w/2\rfloor+1$; tag 1 additionally requires $z\ge h-w+1$. This gives (TM.5408), including empty intervals. The row has
+
+$$
+\max(z+1,h-z+1)\le w\le\min(2z-1,h),
+$$
+
+which gives (TM.5409). The composition with largest possible $w$ at row $z$ has $w=2z-1$, proving the tag-0 indicator. The inequality $f_w\le w-1-\lfloor w/2\rfloor\le K$ is attained at $w=h$. For tag 1, $h+1\le z+w\le3z-1$, hence $z\ge b$.
+
+For tag 2 at $p=z+w$, positive $r=3z-p$ and $s=p-2z$ are equivalent to
+
+$$
+\lfloor p/3\rfloor+1\le z\le\lfloor(p-1)/2\rfloor.
+\tag{TM.5411}
+$$
+
+For $p\ge5$ its length is $\lfloor(p-1)/2\rfloor-\lfloor p/3\rfloor$. At $p=6k+a$, $a=0,1,2,3,4,5$, these lengths are respectively $k-1,k,k,k,k,k+1$. At $p<5$ the interval is empty. They are all at most $\lfloor(p+1)/6\rfloor$, and $p=6D-1\le h$ realizes $D$ when $D\ge1$. This proves the exact maximum and the empty case. Each counted point has the simultaneous actual witness (TM.5406). $\square$
+

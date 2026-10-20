@@ -1,0 +1,15 @@
+当前二阶 Magnus 层具有三个不同强度的结论：
+
+1. pointwise boundedness：
+   \[
+   0\le E^{(2)}(t_1,t_2)\le4E_{\mathrm{hol}};
+   \]
+2. adaptive identifiability：
+   \[
+   E_{\mathrm{cal}}=4E_{\mathrm{hol}};
+   \]
+3. common-window observability coefficient：
+   \[
+   \mathcal A_g(T)=T^2-2(1-\cos(gT))/g^2.
+   \]
+

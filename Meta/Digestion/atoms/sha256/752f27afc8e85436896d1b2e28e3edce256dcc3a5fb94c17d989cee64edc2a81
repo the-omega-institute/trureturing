@@ -1,0 +1,125 @@
+**定理 37.2（四种退出的同组成完整前像与全部子集复形）。** 对每个整数 $k\ge1$，定义 37.1 的每棵原型有唯一完整三步前像，分别记为 $Q_0,Q_j^{\mathrm{abs}},Q_j^Y,Q_j^K,Q_j^Z$。记它们的集合为 $\mathcal Q_k$，则
+
+$$
+\begin{gathered}
+\rho^3(Q_0)=P_0,\qquad
+\rho^3(Q_j^\eta)=P_j^\eta
+\quad(1\le j\le k,\ \eta\in\{\mathrm{abs},Y,K,Z\}),\\
+F_k\subseteq\mathcal I_3(n_k),\qquad |F_k|=4k+1,\\
+\forall Q\in\mathcal Q_k,\quad c(Q)=\binom{k+2}{k+2},\qquad
+\forall P\in F_k,\quad c(P)=\binom{3k+6}{5k+10},\\
+\forall P,Q\in F_k,\quad
+P\ne Q\Longrightarrow\operatorname{NC}(P,Q),\qquad
+K(F_k)=K_\circ(F_k).
+\end{gathered}
+\tag{37.5}
+$$
+
+最后一个等式确定每个 $S\subseteq F_k$ 的共同个体最优取得性。
+
+**证明。** [母卷定义 3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的实际 $\rho$ 保留每个有序二叉构造。令
+
+$$
+\begin{gathered}
+a=\alpha,\qquad c_\beta=\beta,\qquad
+b=\langle\beta,\alpha\rangle,\qquad t=\langle\alpha,\beta\rangle,\\
+w=\langle b,\beta\rangle,\qquad h=\langle w,\alpha\rangle,\qquad
+z=\langle\beta,b\rangle,\qquad q=\langle t,\alpha\rangle,\\
+r_0=\langle t,b\rangle,\qquad r_{\mathrm{abs}}=\langle t,z\rangle.
+\end{gathered}
+\tag{37.6}
+$$
+
+$c_\beta$ 是树名，$c(\cdot)$ 仍是组成观察。原子规则和二叉同态性逐项给出完整字面等式
+
+$$
+\begin{array}{c|cccccccccc}
+Q&a&c_\beta&b&t&w&h&z&q&r_0&r_{\mathrm{abs}}\\ \hline
+\rho^3(Q)&A&C&B&T&W_1&Y&Z&K_T&R_0&R_{\mathrm{abs}}
+\end{array}
+\tag{37.7}
+$$
+
+其中 $\rho^3(\alpha)=A$、$\rho^3(\beta)=C$ 直接取[母卷定义 3.1、定理 3.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)及既有式（30.2）；其余各列把两片已确定子树的第三步像按原括号配对即可。因而全部完整前像明确为
+
+$$
+\begin{aligned}
+Q_0&=B_{k+1}(\underbrace{b,\ldots,b}_{k\text{ 个}},r_0),\\
+Q_j^{\mathrm{abs}}&=B_{k+1}(\underbrace{b,\ldots,b}_{j-1\text{ 个}},a,
+                    \underbrace{b,\ldots,b}_{k-j\text{ 个}},r_{\mathrm{abs}}),\\
+Q_j^Y&=B_{k+1}(\underbrace{b,\ldots,b}_{j-1\text{ 个}},h,
+                    \underbrace{b,\ldots,b}_{k-j\text{ 个}},b),\\
+Q_j^K&=B_{k+1}(\underbrace{b,\ldots,b}_{j-1\text{ 个}},q,
+                    \underbrace{b,\ldots,b}_{k-j\text{ 个}},z),\\
+Q_j^Z&=B_{k+1}(\underbrace{b,\ldots,b}_{j-1\text{ 个}},z,
+                    \underbrace{b,\ldots,b}_{k-j\text{ 个}},q).
+\end{aligned}
+\tag{37.8}
+$$
+
+这些是有限原始树的全部括号和标签，不是组成可行性断言。逐槽应用式（37.7）得到第三步像等式。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树替换单射性复合三次，供应每个完整前像的唯一性；该命题中的原子 $A,B$ 在此对应 $\alpha,\beta$，不对应本章的块 $A,B$。
+
+由[母卷定义 3.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的组成加法，
+
+$$
+\begin{gathered}
+c(b)=\binom11,\quad c(a)=\binom10,\quad c(h)=\binom22,
+\quad c(q)=\binom21,\quad c(z)=\binom12,\\
+c(r_0)=\binom22,\qquad c(r_{\mathrm{abs}})=\binom23,\\
+c(b)+c(r_0)=c(a)+c(r_{\mathrm{abs}})
+=c(h)+c(b)=c(q)+c(z)=c(z)+c(q)=\binom33.
+\end{gathered}
+\tag{37.9}
+$$
+
+每棵非基准原型的异常活动槽与补偿槽采用这些配对之一；基准树可取任意活动槽与补偿槽配对。其余 $k-1$ 个前像槽都是 $b$，所以每个完整前像的组成为 $(k-1)(1,1)^{\mathsf T}+(3,3)^{\mathsf T}=(k+2,k+2)^{\mathsf T}$。直接应用[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)，得到
+
+$$
+c(\rho^3(Q))=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{k+2}{k+2}
+=\binom{3k+6}{5k+10},\qquad
+n(\rho^3(Q))=8k+16\quad(Q\in\mathcal Q_k).
+\tag{37.10}
+$$
+
+活动块 $B,A,Y,K_T,Z$ 的叶数依次为 $8,3,16,11,13$，两两不同。基准树的每个活动槽都是 $B$，其余各树在唯一异常槽的类型和位置不同；共同上下文的同一槽子树不同就使完整树不同。因此恰有 $4k+1$ 棵不同原型。$k=1$ 时两个槽根为 $\mathtt L,\mathtt R$，五棵原型分别为 $\langle B,R_0\rangle$、$\langle A,R_{\mathrm{abs}}\rangle$、$\langle Y,B\rangle$、$\langle K_T,Z\rangle$、$\langle Z,K_T\rangle$，均为二十四叶；式（37.8）分别给 $\langle b,r_0\rangle$、$\langle a,r_{\mathrm{abs}}\rangle$、$\langle h,b\rangle$、$\langle q,z\rangle$、$\langle z,q\rangle$。
+
+对于两个根均为分支的树，左右地址前缀不交，故它们非冲突恰当且仅当相应两对孩子都非冲突；这是定义 30.1 的叶地址条件在二叉构造下的直接分解。相同树当然非冲突。[引理 30.2](#30-实际三步像的分歧前沿七叶分离与有限容量)给 $\operatorname{NC}(A,\langle X,Y'\rangle)\Longleftrightarrow X\ne A$（$X,Y'\in\mathcal I_3$）。$B,Y,K_T,Z$ 的左孩子分别为 $C,W_1,T,C$，全不等于 $A$，所以 $A$ 与其余四个活动块均非冲突。
+
+直接复用[式（36.10）](#36-任意规模的二重条件退出共同补偿与一次超额增长)的完整带标签前沿：$C,T$ 恰共享左侧的 $A$ 前沿，$T,W_1$ 恰共享右侧的 $C$ 前沿，$C,W_1$ 没有共享叶。这三对均非冲突。活动块中余下六对的孩子比较恰为
+
+$$
+\begin{array}{c|c|c}
+\text{活动块对}&\text{左孩子对}&\text{右孩子对}\\ \hline
+(B,Y)&(C,W_1)&(A,A)\\
+(B,K_T)&(C,T)&(A,A)\\
+(B,Z)&(C,C)&(A,B)\\
+(Y,K_T)&(W_1,T)&(A,A)\\
+(Y,Z)&(W_1,C)&(A,B)\\
+(K_T,Z)&(T,C)&(A,B)
+\end{array}
+\tag{37.11}
+$$
+
+左右两列均由刚引用的局部事实或相同块给非冲突，故这六对也非冲突。连同 $A$ 的四对，穷尽了五个活动块的十个不同无序对。
+
+再看同一个补偿槽的全部可能块。$A,B,Z$ 两两非冲突：$A,B$ 与 $A,Z$ 已由引理 30.2 给出，$B,Z$ 已在式（37.11）核对。五个补偿块的左右孩子分别为
+
+$$
+\begin{array}{c|cc}
+\text{补偿块}&\text{左孩子}&\text{右孩子}\\ \hline
+R_0&T&B\\
+R_{\mathrm{abs}}&T&Z\\
+B&C&A\\
+Z&C&B\\
+K_T&T&A
+\end{array}
+\tag{37.12}
+$$
+
+任意两行的左孩子属于非冲突对 $\{C,T\}$，右孩子属于非冲突三元组 $\{A,B,Z\}$；孩子相同时也非冲突。二叉叶地址分解因此给出五个补偿块的全部十个不同无序对均非冲突，而非只比较每个补偿块与基准块。
+
+最后应用[引理 26.2 证明首段的全孔路径分解](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)：前缀自由槽根和没有槽外字面叶的上下文，使任意共享全局叶在两棵原型中都位于同一个槽。该分解只依赖上下文，各槽内在此填入的仍为完整树。活动槽和补偿槽的全部比较遂保证任意两棵不同原型的所有共享叶标签一致，故 $F_k$ 两两非冲突。
+
+对每个 $S\subseteq F_k$ 直接使用[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)。$|S|\ge2$ 时选其中两个不同成员 $P,Q$；非冲突使 $\Delta(\{P,Q\})=\varnothing$，所以原遗传判据在 $S$ 的这个二元素子集处失败，$S\notin K(F_k)$。空集和所有单元素子集的遗传要求为空，原定理及既有单原型取得供应它们的相容性。因此全部子集恰按 $K_\circ(F_k)$ 分类。个体最优仍取[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)的 $d=3=3\cdot1$ 范围，固定策略空间中的个体最优集合仍为[定义 26.5](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)的 $\mathcal O(P)$；这些应用不改变未知输入域或策略合同。证毕。
+

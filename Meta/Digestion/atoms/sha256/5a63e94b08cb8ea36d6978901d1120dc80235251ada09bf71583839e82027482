@@ -1,0 +1,65 @@
+**定理 16.14（复位边缘的尺度极限）。** 固定 $r\in[0,1]$、
+有限实数 $g$、$\nu>0$ 及 $\tau\ge0$。每个整数 $n\ge1$ 取
+$h=\tau/n$，在同一网格的 $n$ 轮使用同一碰撞参数 $u_h$。
+复位递推的乘数有
+
+$$
+\begin{array}{ll}
+u_h=gh:& (1-r\sin^2(gh))^n\longrightarrow1,\\
+u_h=\sqrt{\nu h}:&
+(1-r\sin^2\sqrt{\nu h})^n\longrightarrow e^{-\nu r\tau}.
+\end{array}
+$$
+
+第二种极限边缘保持三均值，且满足
+
+$$
+\dot\kappa=-\nu(r\kappa-XY),\qquad
+\kappa(\tau)=\kappa^\star+(\kappa(0)-\kappa^\star)e^{-\nu r\tau}
+\quad(r>0).
+$$
+
+$r=0$ 时唯一顶点律保持不变，不使用 $XY/r$。
+
+证明。$\tau=0$ 或 $r=0$ 时所有乘数直接为一。
+以下 $\tau>0$，对每个固定参数组，充分大 $n$ 时
+$x_n=r\sin^2u_h\in[0,1/2]$，所以 $1-x_n>0$ 可取实对数。
+当 $x=0$ 时 $\ln(1-x)=0$；整个区间内
+
+$$
+\ln(1-x)=-x+O(x^2),\qquad
+\sin^2 t=t^2+O(t^4)\quad(t\to0).
+$$
+
+第一条的余项也可由
+$\ln(1-x)+x=-\int_0^x t/(1-t)\,dt$
+绝对值至多 $x^2$ 得到，故没有在可能为零的有限轮因子上取对数。
+若 $u_h=gh$，则
+
+$$
+n\ln(1-x_n)=-nr g^2h^2+O(nh^4)
+=-rg^2\tau h+O(\tau h^3)\longrightarrow0.
+$$
+
+$g=0$ 时直接恒为零。若 $u_h=\sqrt{\nu h}$，则
+
+$$
+x_n=r\nu h+O(h^2),\qquad
+n\ln(1-x_n)=-r\nu\tau+O(\tau h)\longrightarrow-r\nu\tau.
+$$
+
+指数连续性及 16.13 给两种极限，再将仿射概率逆式逐坐标代入。
+对得到的极限函数求导即给 ODE，并在 $r=0$ 使用 $X=Y=0$。
+因此这是每个固定 $\tau$ 的整数网格复位边缘极限；
+没有构造或断言所有轮次的完整联合量子态有同一极限。
+
+若一轮历时 $h>0$ 且写成 Hamiltonian 强度 $g_hK$，
+则 $g_h=u_h/h$。第二种尺度要求 $g_h=\sqrt{\nu/h}$ 发散，
+第一种则保持有限 $g$，其弛豫消失。
+时间网格变细本身不选择非零弛豫率。
+[Ciccarello、Lorenzo、Giovannetti、Palma][PM-CM] 的
+*Quantum collision models: open system dynamics from repeated interactions*，
+§5.6、§5.8 区分粗粒化与发散耦合的严格连续极限；
+其一般主方程还有第一阶 Hamiltonian 等条件。
+此处极限由准确标量递推证明，未借该综述省略模型条件。证毕。
+

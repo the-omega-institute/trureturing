@@ -1,0 +1,6 @@
+**定理 3.6（持续节点分支的单值刻画）。** 设 $v\in\mathbb R^L$,$L\ge3$,$j$ 是站点,$M_j$ 如定义 3.1。
+
+1. 对任一含 $\mathbb R$ 的域 $K$ 与任一 $(\lambda_0,t_0)\in K^2$,下列三条等价:(a) 存在 $z\in K^L\setminus\{0\}$ 使 $H_{t_0}z=\lambda_0z$ 且 $z_j=0$;(b) $\gamma_j(\lambda_0,t_0)=0$ 且 $\alpha_j(\lambda_0,t_0)=1$;(c) $M_j(\lambda_0,t_0)e_1=e_1$。此时 $\delta_j(\lambda_0,t_0)=1$,即 $M_j(\lambda_0,t_0)$ 是对角元为 $1$ 的上三角矩阵;满足 (a) 的 $z$ 在相差非零倍数的意义下唯一,且 $z_{j+1}\ne0$。
+2. $\mathbb R(t)[\lambda]$ 中的首一不可约多项式 $\pi$ 同时整除 $p$ 与 $q_j$,当且仅当它同时整除 $\gamma_j$ 与 $\alpha_j-1$。因此节点因子 $g_j$ 与 $\gcd(\gamma_j,\alpha_j-1)$ 有相同的首一不可约因子;$v$ 在 $j$ 处有持续节点分支,当且仅当 $\gamma_j$ 与 $\alpha_j-1$ 在 $\mathbb R(t)[\lambda]$ 中有正次数的公因子。
+3. $v$ 是坏势,当且仅当存在站点 $j$ 使 $\operatorname{Res}_\lambda(\gamma_j,\alpha_j-1)=0$ 于 $\mathbb R[t]$。
+

@@ -1,0 +1,104 @@
+### 119.6 The new centered conditional-score estimate
+
+Set S_j(n)=-log(q_j(n)/max_k q_j(k)) for the exact binomial count mass q_j, and S_Q=sum S_j. Let
+$$
+ \lambda_y(n)=(T_x(n)-y)^2/(2\sigma^2),\qquad
+ A_y(n)=S_Q(n)+\lambda_y(n),\qquad
+ M_Q=1+m_Q+\delta^{-2}.
+\tag{119.30}
+$$
+In the next estimates expectation mu_{alpha,y} denotes the SAME product-count escort with the SAME output weight:
+mu_{alpha,y}(n) proportional to exp(-alpha A_y(n)).
+
+We prove the quantitative actual-count bridge
+$$
+ \mathbb E_{\mu_{\alpha,y}}
+       |A_y-\mathbb E_{\mu_{\alpha,y}}A_y|^4\le C M_Q^2,
+\qquad
+ \operatorname{Var}_{\mu_{\alpha,y}}A_y\le C M_Q,
+$$
+$$
+ \mathbb E_{\mu_{\alpha,y}}
+ [(1+\mathcal D^2)(A_y-\mathbb E_{\mu_{\alpha,y}}A_y)^2]
+                        \le C M_Q.
+\tag{119.31}
+$$
+All are uniform1<=alpha<=2, |y|<=R. This is stronger than the uncentered polynomial score estimates of Chapter 117.
+
+First establish the centered high Gaussian estimate. Under the high Gaussian law before output conditioning, X_j=sqrt(v_j/alpha)Z_j-e_j. Write
+$$
+ S_G=\frac12\sum_{j\in H}(X_j+e_j)^2/v_j,\qquad
+ s_H=\frac12\sum_{j\in H}[w_j+(m_j+e_j)^2]/v_j.
+\tag{119.32}
+$$
+The number s_H is the expectation under the full-saddle tilted high normals, before conditioning their energy plus noise. We need not assert it is the conditional expectation.
+
+Condition on total energy plus Gaussian energy noise equal to h_y=V+sqrt(delta)y. Tilting at t_alpha does not change this conditional law. The scalar density denominator is q_alpha(z_y)/sqrt(W_H)>=c_R/sqrt(W_H). At Fourier frequency u=xi/sqrt(W_H), normalized polynomial insertion is evaluated under complex independent Gaussian coordinates with
+$$
+ \widehat w_j=\frac{w_j}{1-2iu w_j},\qquad
+ \widehat m_j=\frac{m_j}{1-2iu w_j}.
+\tag{119.33}
+$$
+This is an analytic Gaussian integral, not a claim that the conditioned coordinates are independent.
+
+For the complex mean of S_G minus s_H, elementary subtraction gives
+$$
+ |d(\xi)|\le C|u|
+ \left[\sum_{j\in H}\frac{w_j^2}{v_j}
+       +\sum_{j\in H}\frac{w_j|m_j|(|m_j|+|e_j|)}{v_j}\right]
+                  \le C|\xi|/\sqrt\delta.
+\tag{119.34}
+$$
+Indeed |hat w-w|<=2|u|w^2 and |hat m-m|<=2|u|w|m|. Use w_j comparable to v_j, |m_j|<=C|e_j|, sum v_j bounded, and(119.9). Keeping the real center s_H removes the order-m_Q mean; the residual frequency-dependent shift has only order delta^(-1/2).
+
+For completeness, a complex Gaussian Y of mean M and covariance w has the exact cumulants of cY^2
+$$
+ \kappa_r(cY^2)
+ =2^{r-1}(r-1)!c^r w^r
+       +2^{r-1}r!c^r M^2w^{r-1}.
+\tag{119.35}
+$$
+It follows by expanding -.5 log(1-2zcw)+zcM^2/(1-2zcw), so remains valid for the complex parameters in(119.33). Here c=1/(2v_j), M=hat m_j+e_j. By(119.9),(119.19), |hat w_j|/v_j<=C and |M|^2/v_j<=C e_M^2. Thus the cumulants kappa_r of S_G under this complex insertion obey |kappa_r|<=C_r m_Q for r=2,3,4.
+
+The fourth moment about s_H is exactly
+$$
+ \kappa_4+4d\kappa_3+3\kappa_2^2+6d^2\kappa_2+d^4.
+\tag{119.36}
+$$
+Using(119.34) bounds its absolute value by
+C(1+m_Q^2+delta^(-2))(1+|xi|^4).
+The actual inserted Fourier integrand has this multiplier times psi_alpha(xi). Integrate with(119.24), divide by the lower scalar density, and obtain
+$$
+ \mathbb E_{\alpha,y}^G|S_G-s_H|^4
+                    \le C(1+m_Q^2+\delta^{-2}).
+\tag{119.37}
+$$
+This is a centered conditional bound; integrating uncentered S_G^4 would instead cost m_Q^4.
+
+The likelihood part must also be retained. In the same conditioned Gaussian representation, U_y=(E_H-h_y)/(sqrt(delta)sigma) is minus the energy-noise variable divided by sqrt(delta)sigma. After tilting, that noise has mean t_alpha delta sigma^2/alpha and variance delta sigma^2/alpha. In its Fourier polynomial insertion the normalized complex mean is bounded by
+C(sigma/sqrt(delta)+|xi|sigma).
+Consequently integration against(119.24) gives
+$$
+ \mathbb E_{\alpha,y}^G\lambda_y^4
+      =2^{-4}\mathbb E_{\alpha,y}^G U_y^8\le C\delta^{-4}.
+\tag{119.38}
+$$
+No rate assumption makes that shifted noise mean small. This coarse bound explicitly pays it.
+
+For low groups, Chapter 117's uniform binomial-surprise estimates give every fixed moment of S_j bounded under its one-group escort, for1<=alpha<=2 and p_j in[1/4,3/4]. They follow from c z^2-C<=S_j<=C(1+z^2) and a partition sum comparable to sqrt(C_j+1). Under the independent low escort, putting s_L=E S_low,
+$$
+ \mathbb E|S_{\mathrm{low}}-s_L|^4
+  =\sum_j\mathbb E(S_j-\mathbb E S_j)^4
+       +6\sum_{i<j}\operatorname{Var}S_i\operatorname{Var}S_j
+                 \le C(1+m_Q^2).
+\tag{119.39}
+$$
+In the Gaussian-high/low comparator the output depends only on the high variables, so this low law remains exactly independent of the output. Equations(119.37)–(119.39) and |u+v+w|^4<=27(|u|^4+|v|^4+|w|^4) imply
+$$
+ \mathbb E_{\mathrm{comparator},\alpha,y}
+ |S_G+S_{\mathrm{low}}+\lambda_y-(s_H+s_L)|^4
+                          \le C M_Q^2.
+\tag{119.40}
+$$
+The center s_H+s_L is O(1+m_Q). It is only a convenient finite center at each order; it is not differentiated to evaluate the original partition.
+

@@ -1,0 +1,26 @@
+**定义 96.1（同一后验的中心信息与局部矩）。** 保持定义 94.1 的原完整组计数后验、
+精确标量 $T$、测量 $Y=T+\sigma_MG$ 和全部原取整，要求
+
+$$
+L_M=\ln(1/\sigma_M)\longrightarrow\infty,
+\qquad \limsup_M L_M/Q^3<c_q/2.
+\tag{96.1}
+$$
+
+信息量均用自然对数。记 $S_x(n)=-\ln P_x(n)$、$h_x=\mathbb E_xS_x(R)$，
+$H_x(y)$ 为精确输出后验熵；它们不是主项近似。
+使用原轮廓 $\rho(t)=c_0e^{-\kappa t^2/2}$，其中
+$c_0=(4\pi\sqrt{ab})^{-1}$、$\kappa=1/a+\alpha^2/b$，置
+
+$$
+\gamma=\int\rho,\quad g_0=\int\rho^2,\quad g_3=\int\rho^3,\quad
+\nu=2g_0,\qquad
+A_M^\sigma=\frac{\gamma}{\sqrt\delta(\nu+\sigma_M^2)},
+\quad b_S=\frac{1-2/\sqrt3}{\nu},
+\quad b_H=\frac{1/2-2/\sqrt3}{\nu}.
+\tag{96.2}
+$$
+
+此处 $b_S$ 仅为熵响应系数，不是站点漂移函数。
+以下条件期望由正的有限 Gaussian 混合后验定义于每个实输出。
+
