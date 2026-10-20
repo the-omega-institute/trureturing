@@ -35,7 +35,9 @@ internal sealed class StrongAbsorptionMomentsDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorptionMoments.result"),
                 H("result"), StatementSource.FromAuthor(Disp(Statement4())),
                 AssessedProvenance.FromRepo(Note()),
-                Blocks(Paragraph(Text("Both moment expansions hold for every positive channel count and order."))), DescribeRole.Theorem)
+                Blocks(Paragraph(Text("Both moment expansions hold for every positive channel count and order."))), DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("novaes-2023-strong-absorption-spectral-moments"),
+                    ResolutionKind.Proved))
         )));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

@@ -60,6 +60,10 @@ $$((\forall M : (\mathbb{N}) , ((1 \le M) \to (\forall n : (\mathbb{N}) , ((1 \l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Transport/StrongAbsorptionMoments.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/novaes-2023-strong-absorption-spectral-moments` (proved) by `D5/S3/Quantum/Transport/StrongAbsorptionMoments.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"novaes-2023-strong-absorption-spectral-moments","declaration_gid":"D5/S3/Quantum/Transport/StrongAbsorptionMoments.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Novaes (2023). *Time delay statistics for chaotic cavities with absorption*. DOI: [10.1007/s10955-023-03183-7](https://doi.org/10.1007/s10955-023-03183-7). URL: <https://arxiv.org/abs/2305.18235v1>.
