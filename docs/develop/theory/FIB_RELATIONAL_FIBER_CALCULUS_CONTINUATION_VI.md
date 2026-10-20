@@ -407,6 +407,16 @@ and hence \(\neg L_1(S,(H_4,M,p_J,M,v_\star))\) for every support \(S\) in
 this child. The final-\(J\) pair is real, while no final-\(M\) collision pair
 exists in this exact four-world support.
 
+The current `dev` geometry also supplies an exact off-\(24\) collision in
+the full complete-world domain: two distinct regular worlds realize the same
+three-response tuple \((p_\ast,u_\ast,m_\ast)\), with
+\(p_\ast\in(2,3)\) and unequal analytical ratios. This is a rational
+contraction certificate for the response map, not a \(p_J\) result. The
+analytical ratio is only a separating coordinate in that construction; it is
+not an acquired response. Consequently, any global claim that collisions are
+confined to the \(p=24\) mirror sector is false, while the exact-\(p_J\) joint
+witness question below remains unchanged.
+
 Second, Theorem 31.1 gives a finite necessary response reduction. If one
 child contains both a distinct final-\(J\) collision pair and a distinct
 final-\(M\) collision pair, then
