@@ -20,18 +20,10 @@ noncomputable section
 
 universe t s o
 
-structure Systems where
-  A : Type
-  B : Type
-  fA : Fintype A
-  fB : Fintype B
-  dA : DecidableEq A
-  dB : DecidableEq B
-attribute [instance] Systems.fA Systems.fB Systems.dA Systems.dB
+/-- The exact packed source coordinates A and B; dictionaries stay in each Law. -/
+abbrev Params : Type 1 := Sigma (fun _ : Type => Type)
 
-def system (A B : Type) [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B] :
-    Systems := ⟨A, B, inferInstance, inferInstance, inferInstance, inferInstance⟩
-abbrev Mat (p : Systems) := Matrix (p.A × p.B) (p.A × p.B) ℂ
+abbrev Mat (p : Params) := Matrix (p.1 × p.2) (p.1 × p.2) ℂ
 
 abbrev owningSignature (P : Type t) (X : P → Type s) (Y : P → Type o) : Signature where
   Params := P
@@ -44,7 +36,7 @@ abbrev owningSignature (P : Type t) (X : P → Type s) (Y : P → Type o) : Sign
   finiteAnchor := inferInstance
 
 abbrev matrixSignature : Signature :=
-  owningSignature Systems (fun p => Mat p) (fun p => Mat p)
+  owningSignature Params Mat Mat
 
 private theorem owningSensitivity {P : Type t} {X : P → Type s} {Y : P → Type o}
     (law : Realization (owningSignature P X Y) → Prop)
@@ -60,83 +52,52 @@ private theorem owningSensitivity {P : Type t} {X : P → Type s} {Y : P → Typ
   · intro e
     exact nomatch e
 
+/-- A concrete carrier for existential audit witnesses. -/
+private abbrev WitnessMat := Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ
+
 namespace Identity
+/-- The RHS operand already present in the original identity is dictionary independent. -/
 def actual : Realization matrixSignature :=
-  realize matrixSignature (fun _ _ X => krausSum X) (fun e => nomatch e)
+  realize matrixSignature (fun _ _ X => firstTranspose X) (fun e => nomatch e)
 def bad : Realization matrixSignature :=
   realize matrixSignature (fun _ _ _ => 0) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := matrixSignature
   Law O := ∀ {A B : Type} [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B]
-    (X : Mat (system A B)),
-    O.readout () (system A B) X =
-      ((Fintype.card A : ℂ)-1) • 1 + (2 : ℂ) • firstTranspose X
+    (X : Matrix (A × B) (A × B) ℂ),
+    krausSum X = ((Fintype.card A : ℂ)-1) • 1 +
+      (2 : ℂ) • O.readout () ⟨A, B⟩ X
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
-  have he := congrFun (congrFun
-    (h (A := Fin 2) (B := Fin 1)
-      (0 : Mat (system (Fin 2) (Fin 1))))
-    ((0, 0) : Fin 2 × Fin 1)) ((0, 0) : Fin 2 × Fin 1)
-  have hz : (partialTranspose
-      (0 : Mat (system (Fin 2) (Fin 1)))).transpose = 0 := by
-    ext p q
-    rfl
-  simp only [firstTranspose] at he
-  rw [hz] at he
-  simp only [bad, realize, system] at he
-  let M : Mat (system (Fin 2) (Fin 1)) := 0
-  let i : Fin 2 × Fin 1 := (0, 0)
-  have hzero : M i i = 0 := by simp [M, i]
-  have hconst : ((1 : ℂ) • (1 : Mat (system (Fin 2) (Fin 1))) +
-      (2 : ℂ) • M) i i = 1 := by
-    simp [M, i, Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply]
-  rw [hzero, hconst] at he
-  norm_num at he
+  have he : krausSum (1 : WitnessMat) =
+      ((Fintype.card (Fin 1) : ℂ)-1) • (1 : WitnessMat) +
+        (2 : ℂ) • (0 : WitnessMat) :=
+    h (A := Fin 1) (B := Fin 1) (1 : WitnessMat)
+  rw [kraus_identity] at he
+  have he' := congrArg (fun Z : WitnessMat =>
+    Z ((0, 0) : Fin 1 × Fin 1) ((0, 0) : Fin 1 × Fin 1)) he
+  norm_num [firstTranspose, partialTranspose, Matrix.transpose_apply,
+    Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply] at he'
 private theorem dependence : ObservationalDependence matrixSignature actual := by
   intro i
-  refine ⟨system (Fin 1) (Fin 1), 0, 1, ?_⟩
-  change krausSum (0 : Mat (system (Fin 1) (Fin 1))) ≠
-    krausSum (1 : Mat (system (Fin 1) (Fin 1)))
-  rw [kraus_identity, kraus_identity]
+  refine ⟨⟨Fin 1, Fin 1⟩, (0 : WitnessMat), (1 : WitnessMat), ?_⟩
   intro h
-  have he := congrFun (congrFun h ((0, 0) : Fin 1 × Fin 1))
-    ((0, 0) : Fin 1 × Fin 1)
-  have hz : (partialTranspose
-      (0 : Mat (system (Fin 1) (Fin 1)))).transpose = 0 := by
-    ext p q
-    rfl
-  have ho : (partialTranspose
-      (1 : Mat (system (Fin 1) (Fin 1)))).transpose = 1 := by
-    ext p q
-    by_cases hpq : p = q
-    · subst q
-      simp [partialTranspose, Matrix.one_apply]
-    · have hcoords : ¬ (q.1 = p.1 ∧ p.2 = q.2) := by
-        intro h
-        exact hpq (Prod.ext h.1.symm h.2.symm)
-      simp [partialTranspose, Matrix.one_apply, hpq, hcoords]
-  simp only [firstTranspose] at he
-  rw [hz, ho] at he
-  let M : Mat (system (Fin 1) (Fin 1)) := 0
-  let N : Mat (system (Fin 1) (Fin 1)) := 1
-  let i : Fin 1 × Fin 1 := (0, 0)
-  have hL : (((Fintype.card (Fin 1) : ℂ) - 1) •
-      (1 : Mat (system (Fin 1) (Fin 1))) + (2 : ℂ) • M) i i = 0 := by
-    simp [M, i, Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply]
-  have hR : (((Fintype.card (Fin 1) : ℂ) - 1) •
-      (1 : Mat (system (Fin 1) (Fin 1))) + (2 : ℂ) • N) i i = 2 := by
-    simp [N, i, Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply]
-  rw [hL, hR] at he
-  norm_num at he
+  change firstTranspose (0 : WitnessMat) = firstTranspose (1 : WitnessMat) at h
+  have he := congrArg (fun Z : WitnessMat =>
+    Z ((0, 0) : Fin 1 × Fin 1) ((0, 0) : Fin 1 × Fin 1)) h
+  norm_num [firstTranspose, partialTranspose, Matrix.transpose_apply,
+    Matrix.one_apply] at he
 def family : Registration arena (type_of% @kraus_identity) where
   actual := actual
-  bridge := Iff.rfl
+  bridge := ⟨fun h => h, fun h => h⟩
   variation := ⟨@kraus_identity, bad, bad_law⟩
   sensitivity := owningSensitivity arena.Law actual bad bad_law
   dependence := dependence
 def audit : Contract.Registration (@kraus_identity) (Realization matrixSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Identity.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Identity.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Identity.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Identity.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -146,12 +107,23 @@ def audit : Contract.Registration (@kraus_identity) (Realization matrixSignature
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize matrixSignature (fun _ _ X => krausSum X) (fun e => nomatch e))
+  readout := some (realize matrixSignature
+    (fun _ _ X => firstTranspose X) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment, definition := none, coordinates := #[0,1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "body", "arg", "arg", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -160,52 +132,43 @@ end Identity
 namespace Positivity
 def actual : Realization matrixSignature :=
   realize matrixSignature (fun _ _ X => partialTranspose X) (fun e => nomatch e)
+/-- A constant negative entry needs no equality or finiteness dictionary. -/
 def bad : Realization matrixSignature :=
-  realize matrixSignature (fun _ _ _ => -1) (fun e => nomatch e)
+  realize matrixSignature (fun _ _ _ => fun _ _ => (-1 : ℂ)) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := matrixSignature
   Law O := ∀ {A B : Type} [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B]
-    (X : Mat (system A B)), X.PosSemidef → (1-X).PosSemidef →
-    (((Fintype.card A : ℂ)-1) • 1 + (2 : ℂ) • O.readout () (system A B) X).PosSemidef
+    (X : Matrix (A × B) (A × B) ℂ), X.PosSemidef → (1-X).PosSemidef →
+    (((Fintype.card A : ℂ)-1) • 1 + (2 : ℂ) • O.readout () ⟨A, B⟩ X).PosSemidef
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
-  have hp := h (A := Fin 1) (B := Fin 1)
-    (0 : Mat (system (Fin 1) (Fin 1))) Matrix.PosSemidef.zero
-    (by simpa using (Matrix.PosSemidef.one :
-      (1 : Mat (system (Fin 1) (Fin 1))).PosSemidef))
-  have hd := hp.diag_nonneg (i := ((0,0) : Fin 1 × Fin 1))
+  have hp : (((Fintype.card (Fin 1) : ℂ)-1) • (1 : WitnessMat) +
+      (2 : ℂ) • (fun _ _ => (-1 : ℂ) : WitnessMat)).PosSemidef :=
+    h (A := Fin 1) (B := Fin 1) (0 : WitnessMat) Matrix.PosSemidef.zero
+      (by simpa only [sub_zero] using
+        (Matrix.PosSemidef.one : (1 : WitnessMat).PosSemidef))
+  have hd := hp.diag_nonneg (i := ((0, 0) : Fin 1 × Fin 1))
   have hr := (Complex.nonneg_iff.mp hd).1
-  simp only [bad, realize] at hr
-  let M : Mat (system (Fin 1) (Fin 1)) := 1
-  let i : Fin 1 × Fin 1 := (0, 0)
-  have hneg : (-(2 : ℂ) • M) i i = -2 := by
-    simp [M, i, Matrix.smul_apply, Matrix.one_apply]
-  rw [hneg] at hr
-  norm_num at hr
+  norm_num [Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply] at hr
 private theorem dependence : ObservationalDependence matrixSignature actual := by
   intro i
-  refine ⟨system (Fin 1) (Fin 1), 0, 1, ?_⟩
+  refine ⟨⟨Fin 1, Fin 1⟩, (0 : WitnessMat), (1 : WitnessMat), ?_⟩
   intro h
-  let M : Mat (system (Fin 1) (Fin 1)) := 0
-  let N : Mat (system (Fin 1) (Fin 1)) := 1
-  have h' : partialTranspose M = partialTranspose N := by
-    simpa [actual, realize, M, N] using h
-  have he := congrArg (fun Z : Mat (system (Fin 1) (Fin 1)) =>
-      Z ((0, 0) : Fin 1 × Fin 1) ((0, 0) : Fin 1 × Fin 1)) h'
-  have hz : partialTranspose M (0, 0) (0, 0) = 0 := by rfl
-  have ho : partialTranspose N (0, 0) (0, 0) = 1 := by
-    simp [partialTranspose, N, Matrix.one_apply]
-  rw [hz, ho] at he
-  norm_num at he
+  change partialTranspose (0 : WitnessMat) = partialTranspose (1 : WitnessMat) at h
+  have he := congrArg (fun Z : WitnessMat =>
+    Z ((0, 0) : Fin 1 × Fin 1) ((0, 0) : Fin 1 × Fin 1)) h
+  norm_num [partialTranspose, Matrix.one_apply] at he
 def family : Registration arena (type_of% @partial_transpose_posSemidef) where
   actual := actual
-  bridge := Iff.rfl
+  bridge := ⟨fun h => h, fun h => h⟩
   variation := ⟨@partial_transpose_posSemidef, bad, bad_law⟩
   sensitivity := owningSensitivity arena.Law actual bad bad_law
   dependence := dependence
 def audit : Contract.Registration (@partial_transpose_posSemidef) (Realization matrixSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Positivity.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Positivity.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Positivity.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Positivity.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -215,12 +178,23 @@ def audit : Contract.Registration (@partial_transpose_posSemidef) (Realization m
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize matrixSignature (fun _ _ X => partialTranspose X) (fun e => nomatch e))
+  readout := some (realize matrixSignature
+    (fun _ _ X => partialTranspose X) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment, definition := none, coordinates := #[0,1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "arg", "arg", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -230,50 +204,48 @@ namespace Absolute
 def actual : Realization matrixSignature :=
   realize matrixSignature (fun _ _ X => X) (fun e => nomatch e)
 def bad : Realization matrixSignature :=
-  realize matrixSignature (fun _ _ _ => -1) (fun e => nomatch e)
+  realize matrixSignature (fun _ _ _ => fun _ _ => (-1 : ℂ)) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := matrixSignature
   Law O := ∀ {A B : Type} [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B]
-    (X : Mat (system A B)), X.PosSemidef → (1-X).PosSemidef →
-    APPT (((Fintype.card A : ℂ)-1) • 1 + (2 : ℂ) • O.readout () (system A B) X)
+    (X : Matrix (A × B) (A × B) ℂ), X.PosSemidef → (1-X).PosSemidef →
+    APPT (((Fintype.card A : ℂ)-1) • 1 + (2 : ℂ) • O.readout () ⟨A, B⟩ X)
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
-  have hp := h (A := Fin 1) (B := Fin 1)
-    (0 : Mat (system (Fin 1) (Fin 1))) Matrix.PosSemidef.zero
-    (by simpa using (Matrix.PosSemidef.one :
-      (1 : Mat (system (Fin 1) (Fin 1))).PosSemidef))
-    (1 : unitaryGroup (Fin 1 × Fin 1) ℂ)
-  have hd := hp.diag_nonneg (i := ((0,0) : Fin 1 × Fin 1))
+  have hp : APPT (((Fintype.card (Fin 1) : ℂ)-1) • (1 : WitnessMat) +
+      (2 : ℂ) • (fun _ _ => (-1 : ℂ) : WitnessMat)) :=
+    h (A := Fin 1) (B := Fin 1) (0 : WitnessMat) Matrix.PosSemidef.zero
+      (by simpa only [sub_zero] using
+        (Matrix.PosSemidef.one : (1 : WitnessMat).PosSemidef))
+  have hp1 : (partialTranspose ((1 : WitnessMat) *
+      (((Fintype.card (Fin 1) : ℂ)-1) • (1 : WitnessMat) +
+        (2 : ℂ) • (fun _ _ => (-1 : ℂ) : WitnessMat)) *
+      (1 : WitnessMat)ᴴ)).PosSemidef :=
+    hp (1 : unitaryGroup (Fin 1 × Fin 1) ℂ)
+  simp only [one_mul, Matrix.conjTranspose_one, mul_one] at hp1
+  have hd := hp1.diag_nonneg (i := ((0, 0) : Fin 1 × Fin 1))
   have hr := (Complex.nonneg_iff.mp hd).1
-  simp only [bad, realize, system] at hr
-  let M : Mat (system (Fin 1) (Fin 1)) := 1
-  let i : Fin 1 × Fin 1 := (0, 0)
-  have hneg : (1 * (0 • (1 : Mat (system (Fin 1) (Fin 1))) +
-      (2 : ℂ) • (-M)) * 1) i i = -2 := by
-    simp [M, i, Matrix.mul_apply, Matrix.smul_apply, Matrix.add_apply,
-      Matrix.one_apply, Fintype.sum_unique]
-  rw [hneg] at hr
-  norm_num at hr
+  norm_num [partialTranspose, Matrix.add_apply, Matrix.smul_apply,
+    Matrix.one_apply] at hr
 private theorem dependence : ObservationalDependence matrixSignature actual := by
   intro i
-  refine ⟨system (Fin 1) (Fin 1), 0, 1, ?_⟩
+  refine ⟨⟨Fin 1, Fin 1⟩, (0 : WitnessMat), (1 : WitnessMat), ?_⟩
   intro h
-  let M : Mat (system (Fin 1) (Fin 1)) := 0
-  let N : Mat (system (Fin 1) (Fin 1)) := 1
-  have h' : M = N := by simpa [actual, realize, M, N] using h
-  have he := congrArg (fun Z : Mat (system (Fin 1) (Fin 1)) =>
-      Z ((0, 0) : Fin 1 × Fin 1) ((0, 0) : Fin 1 × Fin 1)) h'
-  change (0 : ℂ) = 1 at he
-  norm_num at he
+  change (0 : WitnessMat) = (1 : WitnessMat) at h
+  have he := congrArg (fun Z : WitnessMat =>
+    Z ((0, 0) : Fin 1 × Fin 1) ((0, 0) : Fin 1 × Fin 1)) h
+  norm_num [Matrix.one_apply] at he
 def family : Registration arena (type_of% @contraction_appt) where
   actual := actual
-  bridge := Iff.rfl
+  bridge := ⟨fun h => h, fun h => h⟩
   variation := ⟨@contraction_appt, bad, bad_law⟩
   sensitivity := owningSensitivity arena.Law actual bad bad_law
   dependence := dependence
 def audit : Contract.Registration (@contraction_appt) (Realization matrixSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Absolute.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Absolute.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Absolute.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Absolute.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -283,12 +255,23 @@ def audit : Contract.Registration (@contraction_appt) (Realization matrixSignatu
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize matrixSignature (fun _ _ X => X) (fun e => nomatch e))
+  readout := some (realize matrixSignature
+    (fun _ _ X => X) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment, definition := none, coordinates := #[0,1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "arg", "arg", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
