@@ -16,7 +16,7 @@ public sealed class AtomPointerReadTests
         var f = Create(ListClaims, expand: true);
         var raw = RawRepositorySnapshot.Create(f.RawSnapshot().Entries.Where(file => file.Path != SourcePath)
             .Concat(change == "delete" ? [] : new[] { RawRepositoryEntry.FromText(
-                change == "move" ? "docs/moved.md" : SourcePath, "Unrelated replacement.\n") }));
+                change == "move" ? "docs/moved.md" : SourcePath, "## Replacement scope\n\nUnrelated replacement.\n") }));
         var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
         var id = Id(f.Atomized.ClausePlans.Single().Children[1]);
         for (var i = 0; i < 2; i++)
