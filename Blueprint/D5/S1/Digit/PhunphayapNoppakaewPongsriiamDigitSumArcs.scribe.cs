@@ -51,7 +51,10 @@ internal sealed class PhunphayapNoppakaewPongsriiamDigitSumArcsDocument : IScrib
                     + "progression gives infinitely many such elements not divisible by that "
                     + "digit sum; if they are equal, none exists. The count of multiples differs "
                     + "from the count of Out in [1,x] by a bounded amount, giving density 1/d."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("phunphayap-noppakaew-pongsriiam-2023-digit-sum-arcs"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
