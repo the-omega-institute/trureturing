@@ -503,3 +503,814 @@ they give neither physical realization, a full joint memory law nor a
 sharp first-saving asymptotic.
 
 ## 追加锚（本行以下为增补区）
+
+## 51. Actual close pairs and one complete recovery controller
+
+**Definition 51.1 (Pair law and controller variance).** Retain the
+instrument, embedding $\iota:M_3\to\mathcal B(H)$, $H=\mathbb C^5$,
+and controller permissions of [Recovery, Definitions 2.1–2.4](AURIC_FIB_APPROXIMATE_ONLINE_RECOVERY_MEMORY.md).
+The acquired labels are independent fair bits. A chronological word
+$h=(h_1,\ldots,h_n)$ has matrices
+
+$$
+Q_h=V_{h_n}\cdots V_{h_1},\qquad
+G_h=g_{h_n}\cdots g_{h_1},\qquad F_h=\lambda^{-n}G_h,
+\qquad \lambda=e^{i\pi/6}.
+$$
+
+In the orthonormal basis $S_0=[\xi,f_1,f_2]$ of Recovery §2,
+$Q_h=\lambda^n S_0(1\oplus F_h)S_0^\dagger$.
+Let $\mathsf H,\mathsf G$ be independent uniform length-$n$ words.
+For $r\ge0$ define the actual ordered-pair probability
+
+$$
+E_n(r)=\Pr(\|F_{\mathsf H}-F_{\mathsf G}\|_F\le r)
+=4^{-n}\sum_{h,g\in\{0,1\}^n}
+ {\bf1}_{\{\|F_h-F_g\|_F\le r\}}.
+\tag{51.1}
+$$
+
+The norm is the unnormalized Frobenius norm. All words, their
+multiplicities and the diagonal pairs occur in this sum. In particular
+$E_0(r)=1$ for $r\ge0$, and injectivity from Recovery Theorem 5.1 gives
+$E_n(0)=2^{-n}$. Balls throughout these sections are closed.
+
+For one permitted complete causal stochastic controller $\mathcal C$,
+let $S$ be its independent finite or standard-Borel shared seed, and
+$p_s(r\mid h)$ its actual terminal-record kernel. The initial law and
+all fresh discarded randomness are included in this kernel; every
+persistent random or history-dependent variable is included in the
+counted record. A peak-width bound $W\ge1$ permits padding all its
+state sets to $W$ on one common full-measure seed set. Put
+
+$$
+\begin{aligned}
+m_s(r)&=2^{-n}\sum_h p_s(r\mid h),\\
+\overline F_{s,r}&=\frac{2^{-n}\sum_h p_s(r\mid h)F_h}{m_s(r)}
+                       &&(m_s(r)>0),\\
+D_s&=2^{-n}\sum_{h,r}p_s(r\mid h)
+                   \|F_h-\overline F_{s,r}\|_F^2,\qquad
+D(\mathcal C)=\mathbb E_S D_S.
+\end{aligned}
+\tag{51.2}
+$$
+
+Set the center to zero on zero-mass cells, which contribute zero.
+These are measurable finite ratios and sums. This $D(\mathcal C)$ is
+exactly $\mathcal D_n(\mathcal C)$ in Recovery (41.1), for this
+controller, rather than an optimized distortion or a single-column
+variance. The terminal decoder is one arbitrary full-$H$ CPTP family
+$D^H_{r,s}$. Its success premise is
+
+$$
+\left\|\mathbb E_S2^{-n}\sum_{h,r}p_S(r\mid h)
+ D^H_{r,S}\circ\iota\circ\operatorname{Ad}_{Q_h}-\iota
+\right\|_\diamond\le\varepsilon.
+\tag{51.3}
+$$
+
+The diamond norm is unhalved, with every finite untouched reference;
+the decoder has no reference access. There is a single quantum
+correction at the terminal horizon, no intermediate quantum operation,
+postselection or retained environment. The premise concerns the averaged
+channel, with no seedwise or historywise success requirement.
+
+**Theorem 51.2 (Same-controller collision converse).** For every $n\ge0$,
+every such width-$W$ controller and every $t>0$,
+
+$$
+W E_n(2t)\ge\left(1-\frac{D(\mathcal C)}{t^2}\right)_+^2.
+\tag{51.4}
+$$
+
+If (51.3) holds at $0<\varepsilon<1/4$, then
+
+$$
+D(\mathcal C)\le\frac92\varepsilon,\qquad
+W\ge\frac1{4E_n(6\sqrt\varepsilon)},\qquad
+W_n(\varepsilon)\ge\frac1{4E_n(6\sqrt\varepsilon)}.
+\tag{51.5}
+$$
+
+Proof. First fix the correspondence to the recovery necessity, without
+changing the controller. In a positive-mass $(s,r)$ cell, draw two words
+independently from its actual posterior
+$2^{-n}p_s(r\mid h)/m_s(r)$. Write
+$z=\operatorname{Tr}(F_g^\dagger F_h)$ and
+$\ell(h,g)=1-|\operatorname{Tr}(Q_g^\dagger Q_h)|^2/9$.
+The fixed qutrit line gives
+
+$$
+\|F_h-F_g\|_F^2=4-2\operatorname{Re}z,\qquad
+9\ell(h,g)-\|F_h-F_g\|_F^2=4-|z|^2\ge0,
+\tag{51.6}
+$$
+
+since $|z|\le2$. The conditional ordered-pair squared distance is
+twice the conditional matrix variance. The conditional mean of $\ell$
+is $1-\operatorname{Tr}\kappa_{n,r,s}^2$, where $\kappa$ is the
+inverse-branch Choi posterior of Recovery (38.1). Multiplying by the
+same $m_s(r)$, summing and integrating therefore gives
+$2D(\mathcal C)\le9\bar v_n(\mathcal C)$.
+
+The necessary part of Recovery Theorem 40.1 gives
+$\bar v_n(\mathcal C)\le\varepsilon-\varepsilon^2/4\le\varepsilon$.
+Its full-$H$ permission is material: the CPTP retraction of Recovery
+Theorem 3.2 compresses any full decoder without increasing error.
+On the averaged corrected channel, one maximally entangled qutrit
+witness and its target projection have probability
+$f\le\sqrt{1-\bar v_n}$ and unhalved error at least $2(1-f)$.
+Here the cell bound is
+$f_{s,r}\le\lambda_{\max}(\kappa_{n,r,s})
+\le\sqrt{\operatorname{Tr}\kappa_{n,r,s}^2}$;
+Cauchy–Schwarz is on the single probability measure
+$m_s(r)d\nu(s)$. Thus the necessity averages seeds before concluding
+and does not grant the decoder reference access. This is the cited
+necessity applied to the identical posterior in (51.2), and proves
+$D(\mathcal C)\le9\varepsilon/2$.
+
+For the purely probabilistic inequality, define
+
+$$
+a_s(r)=2^{-n}\sum_h p_s(r\mid h)
+ {\bf1}_{\{\|F_h-\overline F_{s,r}\|_F\le t\}},\qquad
+A_s=\sum_r a_s(r).
+$$
+
+Conditioned on $s$, take two independent copies of the entire
+history/controller experiment, including independently resampled initial
+states and all fresh controller randomness. Their history marginals
+are independent fair words; only $s$ is shared. The probability that
+both copies are good and finish at the same record is
+$\sum_r a_s(r)^2$. On this event their two matrices are within $2t$
+by the triangle inequality. Hence
+
+$$
+\sum_r a_s(r)^2\le E_n(2t),\qquad A_s^2\le W E_n(2t).
+$$
+
+This use of the whole experiment differs from selecting a record and
+resampling its posterior: the latter would not by itself preserve the
+unconditional fair-word marginal. Markov's inequality on the complement
+of the closed good event gives $A_s\ge1-D_s/t^2$, and $A_s\ge0$.
+Average first, then apply Jensen:
+
+$$
+\left(1-\frac{D(\mathcal C)}{t^2}\right)_+^2
+\le(\mathbb E_S A_S)^2
+\le\mathbb E_S A_S^2\le W E_n(2t).
+$$
+
+This proves (51.4) without selecting a seed. Set $t=3\sqrt\varepsilon$;
+the positive part is at least $1/2$, and its square at least $1/4$.
+The diagonal pairs ensure $E_n(6\sqrt\varepsilon)>0$, so division is
+legitimate. Since every successful controller satisfies the inequality,
+its minimum peak width does too. No common minimizer of distortion,
+purity and decoder error is required. $\square$
+
+**Proposition 51.3 (Endpoints and the averaged concentration target).**
+At exact recovery, (51.4) and the same necessity imply $W\ge2^n$.
+For $r\ge0$ let
+
+$$
+B_n^{\rm act}(r)=\max_g\Pr(\|F_{\mathsf H}-F_g\|_F\le r),\qquad
+B_n^{\rm all}(r)=\sup_{Z\in M_2(\mathbb C)}
+                  \Pr(\|F_{\mathsf H}-Z\|_F\le r).
+$$
+
+Then
+
+$$
+E_n(r)\le B_n^{\rm act}(r)\le B_n^{\rm all}(r),\qquad
+(B_n^{\rm all}(r))^2\le E_n(2r).
+\tag{51.7}
+$$
+
+Proof. At error zero the necessity forces $D(\mathcal C)=0$.
+Let $t\downarrow0$ in (51.4); the finite word set gives
+$W E_n(0)\ge1$. Exact history attains width $2^n$, including $n=0$.
+The first comparison in (51.7) averages the actual-center probabilities.
+For any fixed center $Z$, the event that both independent words lie
+within $r$ of $Z$ has probability equal to the square of that ball's
+mass and forces pair distance at most $2r$. Taking the supremum proves
+the second comparison. Thus an actual pair bound suffices for (51.5)
+and only supplies square-root worst-center control in the reverse
+direction. This does not construct a controller from a terminal
+quantizer. $\square$
+
+## 52. The exact left-reflection law at each chronological step
+
+**Theorem 52.1 (Actual reflected-prefix recurrence).** Write
+$f_j=\lambda^{-1}g_j$, so $f_1=f_0J$ and
+
+$$
+f_0=\begin{pmatrix}
+(1-i\sqrt3)/4&\sqrt3/2\\
+(\sqrt3-3i)/4&-1/2
+\end{pmatrix},\qquad
+J=\operatorname{diag}(-1,1),\qquad
+\omega=(-1+i\sqrt3)/2.
+\tag{52.1}
+$$
+
+For independent actual chronological length-$(n-1)$ matrices $U,V$,
+put $C_{n-1}(r)=\Pr(\|U-JV\|_F\le r)$. For every $n\ge1$ and
+$r\ge0$,
+
+$$
+E_n(r)=\tfrac12 E_{n-1}(r)+\tfrac12 C_{n-1}(r).
+\tag{52.2}
+$$
+
+The determinant phases are
+$\det f_0=\omega$, $\det f_1=-\omega$ and
+$\det F_h=\omega^n(-1)^{\sum_k h_k}$.
+
+Proof. The source relation $g_1=g_0J$ gives (52.1) and its determinants
+by direct multiplication. Appending final fair labels $j,k$ gives
+$f_jU,f_kV$. If $j=k$, unitary left invariance gives distance
+$\|U-V\|_F$. If $(j,k)=(0,1)$ the distance is $\|U-JV\|_F$.
+For $(j,k)=(1,0)$ it is $\|JU-V\|_F=\|U-JV\|_F$, by left
+multiplication with $J$. Each ordered pair of final labels has
+probability $1/4$, proving (52.2), including all equality boundaries.
+Multiplicativity proves the determinant formula. At $n=1$, $U=V=I$,
+$\|I-J\|_F=2$, and therefore $E_1(r)=1/2$ for $0\le r<2$ and
+$E_1(r)=1$ for $r\ge2$. In particular the reflected term cannot
+be replaced by $E_0(r)=1$ at small radii. At later horizons it remains
+an additional reflected correlation: (52.2) is not a closed recursion
+in $E$ alone. The reflection acts on the left of the second prefix;
+no individual word phase is removed. $\square$
+
+## 53. The chronological compact-group law and its precise suppliers
+
+**Definition 53.1 (Group, translations and separation).** Work with the
+actual matrices $G_h$, rather than rephasing them word by word. Set
+
+$$
+A=g_0=\frac14\begin{pmatrix}
+\sqrt3-i&3+i\sqrt3\\3-i\sqrt3&-\sqrt3-i
+\end{pmatrix},\quad g_1=AJ,\quad
+K=\{U\in U(2):\det U\in\{1,-1\}\}
+=SU(2)\sqcup SU(2)J.
+\tag{53.1}
+$$
+
+Use normalized Haar measure $m_K$ and the bi-invariant metric
+$d(x,y)=\|x-y\|_F$. Haar gives mass $1/2$ to each component.
+For finite measures $\eta$ define
+
+$$
+T_\eta f(x)=\int_K f(g^{-1}x)d\eta(g),\qquad
+T_\alpha T_\beta=T_{\alpha*\beta},\qquad
+\check\eta(E)=\eta(E^{-1}),\qquad
+\mu=\tfrac12(\delta_A+\delta_{AJ}).
+\tag{53.2}
+$$
+
+Write $T_g=T_{\delta_g}$ and $P=T_\mu=T_A(I+T_J)/2$.
+Since $G_{hj}=g_jG_h$, the exact length-$n$ word law is $\mu^{*n}$,
+with its chronological left multiplication. The adjoint is
+$T_\eta^*=T_{\check\eta}$ for real measures. The operator $P$ is
+an average of unitaries and need not be normal; no one-step singular
+gap is assumed. At each fixed length,
+
+$$
+\|F_h-F_g\|_F=\|G_h-G_g\|_F,
+\tag{53.3}
+$$
+
+because $\lambda^{-n}$ is a single common unit scalar. This equality
+does not discard determinant signs or other word-dependent phases.
+In general $F_h$ itself need not lie in $K$.
+
+For $s>0$, let $B_s(x)=\{y\in K:d(x,y)\le s\}$,
+$V(s)=m_K(B_s(I))$ and $b_s={\bf1}_{B_s(I)}/V(s)$.
+Define
+
+$$
+\Delta_0=+\infty,\qquad
+\Delta_m=\min_{h\ne g\in\{0,1\}^m}\|G_h-G_g\|_F
+\quad(m\ge1).
+\tag{53.4}
+$$
+
+Use the supplied actual same-length injection and separation of Recovery
+Theorem 5.1, which imply $\Delta_m\ge2^{-m}$. Proposition 46.2 gives
+a stronger separation, but the weaker bound suffices below. This
+supplier concerns every actual word pair; it is not a reachability
+statement for a norm shell.
+
+**Definition 53.2 (The specified top gap).** Put
+
+$$
+J_k=A^{-k}JA^k,\qquad C_1=J_0J_1,\qquad C_2=J_1J_2,\qquad
+\sigma=\tfrac14(\delta_{C_1}+\delta_{C_1^{-1}}
+                    +\delta_{C_2}+\delta_{C_2^{-1}}).
+\tag{53.5}
+$$
+
+The algebraicity, density and positive-gap supplier is Recovery
+Definition 22.1 and Proposition 24.1. More explicitly, its
+$\mathcal A=\omega f_0=iA$ differs from $A$ only by a scalar, so its
+$C_1=J\mathcal A^{-1}J\mathcal A$ and
+$C_2=\mathcal A^{-1}C_1\mathcal A$ are exactly (53.5).
+Equation (24.4) identifies them as $R_1$ and $R_1^{-1}R_2$.
+Their entries in (24.2) are algebraic, they belong to $SU(2)$,
+and they generate the dense subgroup established there. The invoked
+external result is Bourgain–Gamburd, *A spectral gap theorem in SU(d)*,
+JEMS **14**(5), 1455–1511, publisher final,
+[Theorem 1 and density footnote, p. 1455; normalization (0.1), p. 1457](https://doi.org/10.4171/JEMS/337).
+With $d=2,k=2$, its Hecke sum is normalized by division by four,
+giving $\sigma$. Only this supplied positive top gap is used.
+
+On the full unit-vector sphere $S^3\subset\mathbb C^2$, with normalized
+uniform measure, let $\mathsf U_g v(z)=v(g^{-1}z)$ and define exactly
+
+$$
+\gamma_{22}=\min\left\{1,
+\inf_{0\ne v\perp1}
+\frac{\langle v,(I-\mathsf U_\sigma)v\rangle}{\|v\|_2^2}
+\right\},\qquad
+\mathsf U_\sigma=\tfrac14\sum_{c\in(C_1,C_1^{-1},C_2,C_2^{-1})}
+\mathsf U_c.
+\tag{53.6}
+$$
+
+Thus $\gamma_{22}$ is the $\gamma$ of Recovery (22.2), with
+$0<\gamma_{22}\le1$. It is not identified with the different
+$R_1,R_2$ gap in Recovery (6.2). Set
+
+$$
+q=1-\gamma_{22}/16,\qquad \xi=-\tfrac13\ln q,\qquad h_*=\ln2.
+\tag{53.7}
+$$
+
+No numerical value for $\gamma_{22}$ is assumed.
+
+## 54. Three actual letters, component means and the forward contraction
+
+**Theorem 54.1 (Actual remaining-block contraction).** For every
+$L\ge0$ and every globally zero-mean $f\in L^2(K,m_K)$,
+
+$$
+\|P^Lf\|_2^2\le q^{\lfloor L/3\rfloor}\|f\|_2^2.
+\tag{54.1}
+$$
+
+Proof. All three words below are chronological words, so
+
+$$
+G_{100}=A^3J_0,\qquad G_{010}=A^3J_1,\qquad G_{001}=A^3J_2.
+$$
+
+Their ordered differences $G_{100}^{-1}G_{010}$ and
+$G_{010}^{-1}G_{001}$ are $C_1,C_2$. Their reverses give the inverses.
+Each specified ordered word pair has probability $1/64$ under
+
+$$
+\nu=\check{(\mu^{*3})}*\mu^{*3},\qquad
+T_\nu=(P^3)^*P^3.
+$$
+
+Each of the four listed atoms of $\sigma/16$ also has listed mass
+$1/64$. The four selected ordered pairs are distinct; even if matrix
+atoms coincide their listed masses add. Other word differences have
+nonnegative mass. Consequently $\nu\ge\sigma/16$ as measures.
+This compares actual three-letter products: $(P^3)^*P^3$ is not
+replaced by $(P^*P)^3$.
+
+Let $\chi(x)=\det x\in\{1,-1\}$. There is an orthogonal decomposition
+
+$$
+L^2(K)=\operatorname{span}\{1\}\ \mathbin{\oplus}\
+       \operatorname{span}\{\chi\}\ \mathbin{\oplus}\ \mathcal H_c,
+\tag{54.2}
+$$
+
+where $\mathcal H_c$ consists of functions having integral zero on
+each determinant component separately. Each summand is preserved by
+$P$ and $P^*$: left multiplication permutes the two components and
+preserves their Haar measures. On either component write $x=u$ or
+$x=uJ$ with $u\in SU(2)$. Left $SU(2)$ translation then acts as its
+regular representation on $u$. The map
+
+$$
+(z_1,z_2)\longmapsto
+\begin{pmatrix}z_1&-\overline z_2\\z_2&\overline z_1\end{pmatrix}
+\tag{54.3}
+$$
+
+is the unique $SU(2)$ matrix with the prescribed first unit column.
+It identifies normalized Haar with uniform measure on the full $S^3$
+and intertwines the left actions. Apply the supplied gap (53.6) to
+the two component restrictions, using their factor-$1/2$ Haar weights.
+For $f\in\mathcal H_c$ this gives the lower inequality
+
+$$
+\langle f,(I-T_\sigma)f\rangle
+\ge\gamma_{22}\|f\|_2^2.
+\tag{54.4}
+$$
+
+The gap is a lower bound for all these Rayleigh quotients, not an
+eigenvalue identity for every $f$.
+
+For a symmetric probability measure $\eta$, unitarity and expansion
+of the square give its Dirichlet identity
+$\langle f,(I-T_\eta)f\rangle
+=\frac12\int\|f-T_gf\|_2^2d\eta(g)$.
+Both $\nu$ and $\sigma$ are symmetric. Their measure comparison and
+(54.4) imply
+
+$$
+\begin{aligned}
+\|f\|_2^2-\|P^3f\|_2^2
+&=\langle f,(I-T_\nu)f\rangle\\
+&\ge\tfrac1{16}\langle f,(I-T_\sigma)f\rangle
+\ge\tfrac{\gamma_{22}}{16}\|f\|_2^2
+\qquad(f\in\mathcal H_c).
+\end{aligned}
+\tag{54.5}
+$$
+
+The determinant mode must be handled separately: since
+$\det A=-1$ and $\det AJ=1$,
+$P\chi=\tfrac12(-1+1)\chi=0$.
+If $f\perp1$, write $f=a\chi+f_c$. Equation (54.5), the killed
+$\chi$ mode and orthogonality give
+$\|P^3f\|_2^2\le q\|f_c\|_2^2\le q\|f\|_2^2$.
+Iterate this estimate on the globally zero-mean subspace. For
+$L=3k+s$, $0\le s<3$, the remaining $P^s$ has norm at most one
+and preserves that subspace, proving (54.1). At $L=0,1,2$ the bound
+is simply $\|P^Lf\|_2\le\|f\|_2$; no contraction factor smaller
+than one is claimed at those lengths. $\square$
+
+## 55. Disjoint initial smoothing and exact actual-word overlaps
+
+**Theorem 55.1 (Separated initial block and finite pair bound).** For
+all integers $n\ge0$, $0\le m\le n$, and all $0<r\le1/4$ such that
+$4r<\Delta_m$, let $k=\lfloor(n-m)/3\rfloor$. Then
+
+$$
+\begin{aligned}
+E_n(r)
+&\le\frac{V(2r)^2}{V(r)}
+ \left[1+q^k\left(\frac{2^{-m}}{V(2r)}-1\right)\right]\\
+&\le16\left(r^3+2^{-m}q^k\right).
+\end{aligned}
+\tag{55.1}
+$$
+
+The $m=0$ case uses $\Delta_0=+\infty$ and imposes no separation
+condition on a nonempty pair set.
+
+Proof. For every $j\ge0$ define the analytic density
+
+$$
+f_{j,r}=P^j b_{2r}
+=2^{-j}\sum_{h\in\{0,1\}^j}
+          \frac{{\bf1}_{B_{2r}(G_h)}}{V(2r)}.
+\tag{55.2}
+$$
+
+It has integral one. This identity follows from the actual forward
+convolution in (53.2); it does not replace the finite word law by Haar.
+At length $m$, if balls belonging to different words intersected, their
+centers would be at distance at most $4r$, contradicting the strict
+hypothesis. Consequently
+
+$$
+\|f_{m,r}\|_2^2=\frac{2^{-m}}{V(2r)},\qquad
+\|f_{m,r}-1\|_2^2=\frac{2^{-m}}{V(2r)}-1\ge0.
+\tag{55.3}
+$$
+
+This includes $m=0$, with a single ball. By the exact semigroup law,
+$f_{n,r}=P^{n-m}f_{m,r}$. The remaining $n-m$ letters are the actual
+forward letters, so (54.1) gives
+
+$$
+\|f_{n,r}\|_2^2
+\le1+q^k\left(\frac{2^{-m}}{V(2r)}-1\right).
+\tag{55.4}
+$$
+
+Expansion of the squared norm, without combining or dropping any word
+multiplicity, gives the exact overlap identity
+
+$$
+\|f_{n,r}\|_2^2
+=4^{-n}\sum_{h,g}
+\frac{m_K(B_{2r}(G_h)\cap B_{2r}(G_g))}{V(2r)^2}.
+\tag{55.5}
+$$
+
+If $d(G_h,G_g)\le r$, then every point of $B_r(G_h)$ belongs to both
+$2r$ balls, including their boundaries, by the triangle inequality.
+Its Haar mass is $V(r)>0$. Keep these ordered pairs in (55.5) and
+use (53.3):
+
+$$
+E_n(r)\le\frac{V(2r)^2}{V(r)}\|f_{n,r}\|_2^2.
+\tag{55.6}
+$$
+
+Together with (55.4) this proves the first inequality.
+
+For the volume estimates, if $x\in K$ has determinant $-1$, its
+unitary eigenvalues are $z,-\overline z$ for $|z|=1$. Thus
+$\operatorname{Re}\operatorname{Tr}x=0$ and $\|I-x\|_F^2=4$.
+Every opposite-component distance equals two by bi-invariance. For
+$0<s<2$ the ball at $I$ therefore lies in $SU(2)$. Write the
+$SU(2)$ eigenvalues as $e^{\pm i\theta}$, $0\le\theta\le\pi$.
+The chord distance is $t=2\sqrt2\sin(\theta/2)$ and the normalized
+$SU(2)$ radial measure is $(2/\pi)\sin^2\theta\,d\theta$.
+Including the component weight $1/2$ and changing variable gives
+
+$$
+V(s)=\frac1{2\sqrt2\pi}\int_0^s t^2\sqrt{1-t^2/8}\,dt
+\qquad(0<s<2).
+\tag{55.7}
+$$
+
+For $0<s\le1/2$, bound the square root between $1/2$ and one:
+
+$$
+\frac{s^3}{12\sqrt2\pi}\le V(s)\le\frac{s^3}{6\sqrt2\pi}.
+\tag{55.8}
+$$
+
+Therefore, for $r\le1/4$,
+$V(2r)/V(r)\le16$ and
+$V(2r)\le[8/(6\sqrt2\pi)]r^3<r^3$.
+Rewrite the first line of (55.1) as
+
+$$
+\frac{V(2r)}{V(r)}
+\left[V(2r)(1-q^k)+2^{-m}q^k\right].
+$$
+
+Since $0<q\le1$ and $k\ge0$, both terms are nonnegative. The two
+volume bounds prove the second inequality, also when $k=0$.
+At $m=n$ there is no remaining contraction; at $n=m=0$ the exact
+initial energy and overlap argument still apply. All densities and
+Haar integrations in this proof are analysis tools. No smoothing or
+correction is executed between instrument steps, and none is a stored
+physical or classical register. $\square$
+
+## 56. The separated-block choice, floors and exponential scales
+
+**Theorem 56.1 (Optimized exponent from the supplied separation).** For
+$0<r\le1/64$ and $n\ge0$, the integer choice
+
+$$
+m(n,r)=\min\left\{n,
+ \left\lfloor\frac{\ln(1/(8r))}{h_*}\right\rfloor\right\}
+\tag{56.1}
+$$
+
+satisfies the hypotheses of Theorem 55.1. For fixed $a,c>0$,
+$r_n=c\exp(-an)$, or more generally $r_n=\exp(-an+o(n))$,
+
+$$
+E_n(r_n)\le\exp(-b(a)n+o(n)),\qquad
+b(a)=\begin{cases}
+\min\{3a,\ a+\xi(1-a/h_*)\},&0<a<h_*,\\
+h_*,&a\ge h_*.
+\end{cases}
+\tag{56.2}
+$$
+
+Proof. The floor in (56.1) is at least three. If $m\ge1$, its definition
+gives $8r\le2^{-m}$, and hence
+$4r<2^{-m}\le\Delta_m$; if $m=0$ the separation convention suffices.
+Always $0\le m\le n$ and $r\le1/4$.
+For the stated radii these conditions hold eventually, and
+
+$$
+\frac{m(n,r_n)}n\longrightarrow\theta=\min\{a/h_*,1\}.
+$$
+
+With $L=n-m$, the floor cost is exactly controlled by
+
+$$
+e^{-\xi L}\le q^{\lfloor L/3\rfloor}
+\le q^{-1}e^{-\xi L}.
+\tag{56.3}
+$$
+
+Thus
+$\ln(2^{-m}q^{\lfloor(n-m)/3\rfloor})
+=-[h_*\theta+\xi(1-\theta)]n+o(n)$.
+For $r_n=c e^{-an}$ this error is $O(1)$; arbitrary sublinear errors
+in $\ln r_n$ give $o(n)$. The other term in (55.1) has exponent $3a$.
+The sum therefore has the smaller exponent. If $a<h_*$ this is the
+first case of (56.2); if $a\ge h_*$ it is $h_*$, including equality
+$a=h_*$. In particular, at the boundary $a=h_*$ an arbitrary $o(n)$
+perturbation can leave $n-m=o(n)$ instead of zero, which has the same
+exponent. No eventual strict scale inequality beyond (56.1) is assumed.
+
+Within (55.1) and the certified condition $4r<2^{-m}$, this block
+choice attains the best leading exponent of its second term:
+$0<\xi<h_*$, so $h_*m+\xi(n-m)$ increases with $m$, and the
+largest certified $m$ is at most $\min\{n,(a/h_*)n+o(n)\}$.
+The constant safety factor eight and integer floors change no leading
+exponent. This optimization is only of this separation-based estimate;
+it asserts no optimal controller or optimal actual-word energy.
+$\square$
+
+## 57. Strict improvement of the complete exponential-rate bracket
+
+**Theorem 57.1 (Improved rate and extended matched ranges).** For every
+$\beta>0$ and $\varepsilon_n=\exp(-\beta n+o(n))>0$, define
+
+$$
+B(\beta)=b(\beta/2)=\begin{cases}
+\min\{3\beta/2,\ \beta/2+\xi(1-\beta/(2h_*))\},
+                                      &0<\beta<2h_*,\\
+h_*,&\beta\ge2h_*.
+\end{cases}
+\tag{57.1}
+$$
+
+With the same actual controller and recovery permissions,
+
+$$
+B(\beta)\le\liminf_n\frac{\ln W_n(\varepsilon_n)}n
+\le\limsup_n\frac{\ln W_n(\varepsilon_n)}n
+\le\min\{3\beta/2,h_*\}.
+\tag{57.2}
+$$
+
+Compared with the whole lower bracket of Recovery (44.1),
+
+$$
+L_{44}(\beta)=\max\{\min(\gamma_{22}/64,3\beta/2),
+                         \min(h_*,\beta/2)\},
+\tag{57.3}
+$$
+
+one has $B(\beta)>L_{44}(\beta)$ at every
+$\gamma_{22}/96<\beta<2h_*$. Equality with that old bracket holds
+at $0<\beta\le\gamma_{22}/96$ and $\beta\ge2h_*$.
+Let
+
+$$
+\beta_*=\frac{2\xi}{2+\xi/h_*}.
+\tag{57.4}
+$$
+
+Then
+
+$$
+\frac{\gamma_{22}}{72}<\beta_*<\frac{2h_*}{3},\qquad
+\lim_n\frac{\ln W_n(\varepsilon_n)}n
+=\min\{3\beta/2,h_*\}
+\quad\text{if }0<\beta\le\beta_*\text{ or }\beta\ge2h_*.
+\tag{57.5}
+$$
+
+Proof. Apply (51.5) at radius $6\sqrt{\varepsilon_n}
+=\exp(-\beta n/2+o(n))$ and then (56.2). The constants four and six
+contribute only $o(n)$ after division by $n$. The upper bound is the
+legal causal rounding construction and exact-history construction of
+Recovery Theorem 8.4 and Theorem 44.1. It requires no operational
+interpretation of the smoothed density.
+
+For the comparison, put $a=\beta/2$. Since $0<\gamma_{22}\le1$,
+
+$$
+\frac{\gamma_{22}}{48}<\xi
+\le-\tfrac13\ln(15/16)<h_*.
+\tag{57.6}
+$$
+
+The strict first inequality is $-\ln(1-x)>x$ at
+$x=\gamma_{22}/16$; the last follows from $16/15<2$.
+For $\gamma_{22}/192<a<h_*$, (57.3) equals
+$\max\{\gamma_{22}/64,a\}$. Both branches $3a$ and
+$a+\xi(1-a/h_*)$ exceed $a$. The first also exceeds
+$\gamma_{22}/64$, and the second is at least
+$\xi>\gamma_{22}/48>\gamma_{22}/64$, since its slope
+$1-\xi/h_*$ is positive. Their minimum therefore strictly exceeds
+the whole old maximum.
+
+If $0<a\le\gamma_{22}/192$, the second branch is at least
+$\xi>\gamma_{22}/48>3a$, so $b(a)=3a$, equal to the old bracket.
+If $a\ge h_*$, both brackets equal $h_*$. This proves the full
+comparison, including its endpoints.
+
+The two new branches cross exactly when
+$3a=a+\xi(1-a/h_*)$, or $a=\xi/(2+\xi/h_*)$.
+Thus $B(\beta)=3\beta/2$ up to and including (57.4), yielding the
+small-$\beta$ equality in (57.5). Since $0<\xi/h_*<1$,
+
+$$
+\beta_*>\tfrac23\xi>\gamma_{22}/72>\gamma_{22}/96.
+$$
+
+Also $\beta_*<2h_*/3$, because this inequality is equivalent to
+$\xi<h_*$. For $\beta\ge2h_*$ both sides of (57.2) equal $h_*$.
+In the remaining interval $\beta_*<\beta<2h_*$, the lower exponent
+is $\beta/2+\xi(1-\beta/(2h_*))$. It is strictly below the stated
+upper exponent: below $2h_*/3$ the two-branch crossing proves this;
+at and above $2h_*/3$ it is strictly below $h_*$ until $\beta=2h_*$.
+Consequently this interval remains unmatched by these estimates.
+$\square$
+
+## 58. The entropy-optimal pair-energy target and the joint-law boundary
+
+**Definition 58.1 (The remaining actual pair-energy estimate).** The
+stronger target, for every fixed $a,c>0$, is
+
+$$
+E_n(c e^{-an})\le e^{o(n)}(e^{-3an}+2^{-n}).
+\tag{58.1}
+$$
+
+No such estimate at all $a>0$ is assumed or established here.
+An equivalent sufficient smoothing target, at all those exponential
+scales $r_n=c e^{-an}$, is
+
+$$
+\|f_{n,r_n}\|_2^2
+\le e^{o(n)}\left(1+\frac{2^{-n}}{V(2r_n)}\right).
+\tag{58.2}
+$$
+
+The word law, phase and multiplicities in $f_{n,r}$ are exactly (55.2).
+
+**Proposition 58.2 (Energy correspondence and conditional rate).**
+At the family of scales quantified in Definition 58.1, (58.1) and
+(58.2) imply one another up to fixed radius factors and subexponential
+factors. Either would give the logarithmic operational rate
+$\min\{3\beta/2,\ln2\}$ for every $\beta>0$. This implication
+does not give the full joint finite-$(n,\varepsilon)$ recovery law.
+
+Proof. By (55.6), (55.8), and $V(2r)/V(r)\le16$, (58.2) gives
+$E_n(r_n)\le e^{o(n)}(r_n^3+2^{-n})$, which is (58.1) for fixed $c$.
+Conversely any intersection in (55.5) has mass at most $V(2r)$ and
+is empty if its center distance exceeds $4r$. Thus
+
+$$
+\|f_{n,r}\|_2^2\le\frac{E_n(4r)}{V(2r)}.
+\tag{58.3}
+$$
+
+Apply (58.1) with $4c$ and use $V(2r)\asymp r^3$ from (55.8) to
+obtain (58.2). These are estimates for the whole scale family; a bound
+at only one fixed radius sequence is not silently transferred to all
+others. For errors $e^{-\beta n}$, substitute $a=\beta/2,c=6$ into
+(51.5) to obtain the desired lower rate, and use the existing causal
+upper bound. For $\varepsilon_n=e^{-\beta n+o(n)}$, choose any fixed
+$0<a<\beta/2$. Eventually $6\sqrt{\varepsilon_n}\le e^{-an}$,
+so monotonicity of $E_n$ gives lower exponent
+$\min\{3a,\ln2\}$. Let $a\uparrow\beta/2$. No uniformity of the
+$o(n)$ term in $a$ is required.
+
+The present separated-block proof supplies only
+$m\sim\min\{a/\ln2,1\}n$ before disjointness is guaranteed by
+its separation supplier. Its remaining energy decays with
+$\xi<\ln2$, producing the second branch of (56.2), rather than the
+entropy-optimal exponent $\min\{3a,\ln2\}$. Actual overlap information
+beyond that separation and coarse gap is the missing input to (58.2).
+The reflected correlation in (52.2) is likewise not controlled at this
+sharper scale by the identity alone.
+
+Even the conditional rate concerns only leading logarithms. It does
+not establish a uniform finite-$(n,\varepsilon)$ estimate, critical
+constants, subexponential factors, exact positive-error plateau onset,
+sharp first-saving errors or optimal static-table and inverse-control
+precision. Recovery Question 32.2 and Definition 44.3 retain those
+joint-law obligations, including compatibility with delayed causal
+controllers and $W_n(0)=2^n$. No simultaneous optimal controller for
+the separate distortion, purity and decoder-error criteria is inferred.
+Failure of the sufficient pair estimate would not itself refute the
+operational rate: rare close-pair clusters and feasible causal posterior
+laws impose different constraints. $\square$
+
+**Definition 58.3 (Attribution and scope of the composition).** The
+instrument and reference permissions are those of Recovery §2 and its
+Convention 1.2. The same-controller purity necessity and pair/variance
+comparison are Recovery Theorems 40.1 and 41.2. The separation is the
+actual-word supplier in Recovery Theorem 5.1 and Proposition 46.2;
+the algebraic-density and gap supplier is Recovery §24, with exactly
+(22.2) and the cited Bourgain–Gamburd normalization. Sections 51–57
+apply these results to the actual posterior collision event and to a
+separated initial block followed by the remaining chronological word
+law. Conditional variance, Cauchy–Schwarz, Markov, Jensen, convolution,
+Dirichlet comparison and sphere-volume formulas are standard tools
+inside those model-specific deductions. They are not claimed as new
+generic mathematics or as literature-priority results.
+
+The Haar measure in the energy proof measures intersections of analytic
+balls. It never replaces the finite actual word law, which stays
+$2^{-n}$ per history at every finite horizon. Equal-length common phase
+invariance (53.3) does not permit projectivizing individual words.
+The terminal full-$H$ CPTP recovery and inaccessible-reference model
+are retained throughout. The analysis gives no additional physical
+register, executed intermediate correction or physical realization of
+the model, and the unresolved original joint memory problem remains
+the one in Definition 50.1 and Recovery Question 32.2.
+
+## 追加锚（本行以下为增补区）
