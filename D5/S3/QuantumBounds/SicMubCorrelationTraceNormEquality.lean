@@ -121,14 +121,11 @@ private theorem trace_pairing_ext {d : ℕ} {ι : Type*}
     (hP : Submodule.span ℂ (Set.range P) = ⊤)
     {X Y : Matrix (Fin d) (Fin d) ℂ}
     (h : ∀ i, (X * P i).trace = (Y * P i).trace) : X = Y := by
-  apply Matrix.ext_iff_trace_mul_right.mpr
-  intro Z
-  have hZ : Z ∈ Submodule.span ℂ (Set.range P) := by rw [hP]; trivial
-  induction hZ using Submodule.span_induction with
-  | mem Z hZ => obtain ⟨i, rfl⟩ := hZ; exact h i
-  | zero => simp only [Matrix.mul_zero]
-  | add A B _ _ hA hB => simp only [Matrix.mul_add, Matrix.trace_add, hA, hB]
-  | smul c A _ hA => simp only [Matrix.mul_smul, Matrix.trace_smul, hA]
+  let K : LinearMap.BilinForm ℂ (Matrix (Fin d) (Fin d) ℂ) :=
+    LinearMap.compr₂ (LinearMap.mul ℂ (Matrix (Fin d) (Fin d) ℂ))
+      (Matrix.traceLinearMap (Fin d) ℂ ℂ)
+  have heq : K X = K Y := LinearMap.ext_on_range hP h
+  exact Matrix.ext_iff_trace_mul_right.mpr (fun Z => LinearMap.congr_fun heq Z)
 
 private theorem sicProjector_sum {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
     ∑ i, sicProjector S i = (d : ℂ) • 1 := by
