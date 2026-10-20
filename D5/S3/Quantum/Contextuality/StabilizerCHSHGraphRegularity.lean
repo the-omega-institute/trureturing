@@ -144,9 +144,9 @@ private theorem twisted_eigenProj (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
       intro m hm
       rw [hcast m]
     rw [hsum]
+    rw [(ZMod.finEquiv p).toEquiv.sum_comp (fun m =>
+      ZMod.stdAddChar (-m * a) * (if x = y + m then u x * star (u y) else 0))]
     simp_rw [mul_ite, mul_zero]
-    rw [(ZMod.finEquiv p).toEquiv.sum_comp (fun m => if x = y + m then
-      ZMod.stdAddChar (-m * a) * (u x * star (u y)) else 0)]
     have he (m : ZMod p) : x = y + m ↔ m = x - y := by
       constructor <;> intro h <;> linear_combination -h
     simp_rw [he]
@@ -381,7 +381,7 @@ private theorem alice_unit (p : ℕ) [Fact p.Prime] (j a x : ZMod p) :
   by_cases hp : p = 2
   · subst p
     unfold aliceVec
-    simp only [ite_true, star_mul]
+    rw [if_pos rfl, star_mul]
     have hx : (if j = 0 then 1 else Complex.I ^ x.val) *
         star (if j = 0 then 1 else Complex.I ^ x.val) = 1 := by
       split_ifs
