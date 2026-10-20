@@ -9798,3 +9798,72 @@ On the compact physical core the actual even test is in $H^1$ and compactly supp
 For an ORIGINAL finite Gaussian source normalized by $Q_H(\sigma)=1$, W257 again applies once: evaluate the right side of W343 at its actual $\psi=F/\|F\|_H$ and divide by $4\pi^3$ to bound $A Q_{\mathcal K_A^g}$ from below. This includes EVERY fixed $K>1$ and every original source with $Q_{6,A}\le K$ at its admitted start.
 
 The additional application is the infinitesimal FULL-Gamma expense of the centered higher-power term and its two-sided, actual-source consumer W342, with W343 retaining any fixed fraction $1-\delta$. W338's half-line interface, the pole-continuum pairing, the classical scalar estimate and the existing core are reused. This is a repository synthesis without a priority claim. The low-frequency allowance $C_\delta S$ and the SAME-source primary-prime/mean terms still need joint signed control; W342 does not make either constrained minimum nonnegative. Full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without numerical/scientific execution or Lean/kernel certification.
+
+## Extract real sources without changing the original moment budget
+
+The real and complex problems in W328--W329 and W337 have so far been kept separate. A classical rank-one decomposition identifies their values, even at each fixed original source count and window. It suffices to preserve the moment and improve the COMPLETE energy; there is no need to preserve each prime, Gamma or folded contribution separately.
+
+The supplier is Sturm--Zhang, *On Cones of Nonnegative Quadratic Functions*, [Mathematics of Operations Research 28 (2003), 246--267, DOI 10.1287/moor.28.2.246.14485](https://doi.org/10.1287/moor.28.2.246.14485). The exact statement used here is Proposition 4, section 5.2, printed p.18 of the [author working paper, CentER Discussion Paper 2001-26](https://pure.uvt.nl/ws/portalfiles/portal/538603/26.pdf). It says that, for a real positive semidefinite matrix $X$ of rank $r$ and a real symmetric matrix $Q$, $Q\mathbin\bullet X=0$ is equivalent to a decomposition $X=\sum_{j=1}^r z_jz_j^T$ with $z_j^TQz_j=0$ for every $j$. Here $Q\mathbin\bullet X=\operatorname{tr}(QX)$. This result is reused, not reproved; the proposition number refers to the specified working-paper version.
+
+### Balance the actual moment before choosing a real component
+
+Fix ANY admitted $A$, $w>0$, and finite list of distinct physical sites in $[A,A+w)$. In their original coefficient coordinates write the three actual quadratic forms as
+$$
+Q_H(\sigma_c)=c^*\mathbf Hc,\qquad
+Q_{6,A}(\sigma_c)=c^*\mathbf Mc,\qquad
+A Q_{\mathcal K_A^g}(\sigma_c)=c^*\mathbf Lc.
+$$
+The matrices are real symmetric: the original Gaussian weights and kernels are real, as is the physical feature map in W257. The last matrix is the COMPLETE actual kernel, including both folded channels and their correction; it is not a selected prime or model form. Also $\mathbf H\succeq0$. If a real coefficient vector has zero $\mathbf H$ form, W257 makes its actual physical feature zero in $L^2(\pi,\infty)$, so its moment and complete energy are both zero. This handles any null directions without a strict-positive-definiteness assumption.
+
+For EVERY complex source $\sigma_c$ on these sites with $Q_H(\sigma_c)=1$, there is a real source $\sigma_d$ using only the SAME sites such that
+$$
+\begin{aligned}
+Q_H(\sigma_d)&=1,\\
+Q_{6,A}(\sigma_d)&=Q_{6,A}(\sigma_c),\\
+A Q_{\mathcal K_A^g}(\sigma_d)&\le A Q_{\mathcal K_A^g}(\sigma_c).
+\end{aligned}
+\tag{W344}
+$$
+Zero coefficients may be removed, so the active count cannot increase. Arbitrary positive and negative real coefficients remain allowed. Neither a coefficient bound nor a stable numerical extraction is asserted.
+
+To apply the supplier, put $c=x+iy$, $X=xx^T+yy^T$, and $m=c^*\mathbf Mc$. Every real symmetric matrix $D$ satisfies $D\mathbin\bullet X=c^*Dc$. Hence
+$$
+\mathbf H\mathbin\bullet X=1,\qquad
+(\mathbf M-m\mathbf H)\mathbin\bullet X=0.
+$$
+Apply the cited proposition with $Q=\mathbf M-m\mathbf H$. It gives at most two vectors $z_j$, since $\operatorname{rank}X\le2$. Set $t_j=z_j^T\mathbf Hz_j\ge0$, so $\sum_jt_j=1$. Terms with $t_j=0$ have zero moment and complete energy by the actual feature factorization just stated and can be discarded. For every remaining term let $d_j=z_j/\sqrt{t_j}$. Its original norm is one and its moment is EXACTLY $m$. Moreover
+$$
+c^*\mathbf Lc=\sum_{j:t_j>0}t_j\,d_j^T\mathbf Ld_j.
+$$
+Choose a term whose energy is no larger than this average. This proves W344 on the original sites, with no extra site, support enlargement, moment slack or approximation. Taking the real or imaginary part alone would not justify this step: its normalized moment need not satisfy the original cap. The balanced decomposition is the reused input that keeps that constraint.
+
+### The same extraction applies to the completed physical vectors
+
+All three forms $\|F\|_H^2$, $M(F)$ and $\mathfrak E(F)$ on W317's domain are invariant under complex conjugation. For the Gamma part this uses the EVEN real multiplier $p(\xi)$ and the real theta map. The moment and all complete debit kernels are real. Consequently $\mathcal V_{\mathbb C}$ is closed under taking real and imaginary parts, and these forms split as the sum of their values on those two parts.
+
+For EVERY $F\in\mathcal V_{\mathbb C}$ with $\|F\|_H=1$, there is
+$G\in\operatorname{span}_{\mathbb R}\{\Re F,\Im F\}\subset\mathcal V_{\mathbb R}$ such that
+$$
+\|G\|_H=1,\qquad M(G)=M(F),\qquad
+\mathfrak E(G)\le\mathfrak E(F).
+\tag{W345}
+$$
+Indeed choose a real $H$-orthonormal basis of that span, whose dimension is one or two. Restrict the moment and complete energy to it and apply the SAME cited finite-dimensional decomposition with $\mathbf H=I$ and $Q=\mathbf M-M(F)I$. All restricted entries are finite because the span lies in $\mathcal V$. The preceding weighted-average argument gives W345. No theorem for bounded operators on the whole Hilbert space, extra dimension, closure of a joint numerical range or interchange of extrema is required.
+
+### Consume the extraction in every fixed source problem
+
+Use $m_{A,w,N}^{\mathbb F}(K)$ from W328, allowing any positive integer count cap $N$, and $r_{A,w,N}^{\mathbb F}(\lambda)$ from W329 with that same cap. For EVERY admitted fixed $A,w,N$, EVERY $K>1$, and EVERY $\lambda>0$,
+$$
+\begin{aligned}
+m_{A,w,N}^{\mathbb R}(K)&=m_{A,w,N}^{\mathbb C}(K),&
+r_{A,w,N}^{\mathbb R}(\lambda)&=r_{A,w,N}^{\mathbb C}(\lambda),\\
+e_K^{\mathbb R}&=e_K^{\mathbb C},&
+\lambda_0^{\mathbb R}(\lambda)&=\lambda_0^{\mathbb C}(\lambda).
+\end{aligned}
+\tag{W346}
+$$
+The first line follows from W344: every feasible complex source has a real source on a subset of its original sites with the SAME moment and no larger complete energy. The penalized objective also cannot increase because its moment term is unchanged. Real sources are a subset of complex sources, proving the reverse infimum inequalities. Empty normalized feasible classes match, with infimum $+\infty$; no finite-source attainment is inferred. The second line follows identically from W345 and the already existing completed minima W321--W322. In particular a real completed minimizer can be chosen with the same moment as any given complex minimizer.
+
+Thus W328, W329 and W337 compare one common real/complex value, rather than two unconnected values. The equality holds already at EACH finite source budget, before the cofinal limit. Any uniform complete-energy lower bound proved for all signed real sources at a fixed moment cap therefore holds for all complex sources at exactly that cap, with the same start, count schedule and allowance. A hypothetical complex negative original source similarly yields a real negative source without changing its moment or introducing sites. No separate estimate for each real and imaginary component is needed.
+
+This application removes the scalar-field distinction from the actual constrained problem; it does not restrict the signed real sources to positive coefficients or force any term of W343 to have a favorable sign. The extracted source may change its individual Gamma, primary-prime, higher-power, mean and low-frequency contributions. Their joint COMPLETE sign, nonnegativity of the common $e_K$, W258's vanishing scaled negative allowance, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. The rank-one decomposition is established literature; its same-sites/exact-moment application here is a repository synthesis without a priority claim. This is paper mathematics without scientific execution, a numerical algorithm or Lean/kernel certification.
