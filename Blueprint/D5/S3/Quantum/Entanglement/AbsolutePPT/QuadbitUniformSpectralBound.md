@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBo
 
 *Commentary.*
 
-For N>=16, every real gap vector g:Fin N to Real and k with 5<=k.val<N-10, A times boundaryPacked(g) equals boundaryGapRows(g). The three rows remain exactly bottom-six minus top-three, bottom-ten minus top-six, and bottom-three minus the largest coordinate of fullSynth(g). The middle step has the same row image at every allowed position, so concentrating the middle gaps preserves all three row values. The equality holds for arbitrary real gaps without a nonnegativity premise.
+For N>=16, every real gap vector g:Fin N to Real and k with 5<=k.val<N-10, A times boundaryPacked(g) equals boundaryGapRows(g). Writing l=fullSynth(g), the three rows are exactly the sum of the last six indexed coordinates minus the sum of the first three indexed coordinates, the sum of the last ten indexed coordinates minus the sum of the first six indexed coordinates, and the sum of the last three indexed coordinates minus the first indexed coordinate l[0]. The middle step has the same row image at every allowed position, so concentrating the middle gaps preserves all three row values. The equality holds for arbitrary real gaps without a nonnegativity premise.
 
 **Theorem 1.5 (Arbitrary-dimension squared-mass estimate).**
 
