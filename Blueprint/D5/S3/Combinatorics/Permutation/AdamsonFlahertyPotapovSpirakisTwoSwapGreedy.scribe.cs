@@ -44,7 +44,10 @@ internal sealed class AdamsonFlahertyPotapovSpirakisTwoSwapGreedyDocument : IScr
                 StatementSource.FromAuthor(F.Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For each k≥2, take w=0ᵏ1ᵏ and v=1·0ᵏ⁻¹·1ᵏ⁻¹·0. Each letter occurs k times in both words. Exchanging positions 0 and 2k−1 turns w into v, so their distance is one. Pairing the zero occurrences moves every occurrence, and pairing the one occurrences also moves every occurrence: either permitted binary order therefore generates k nontrivial pairs. This proves failure throughout an unbounded family; k=2 contradicts the quantified proposition. The argument determines neither a shortest-path algorithm for unrestricted alphabets nor its complexity."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("adamson-flaherty-potapov-spirakis-2023-two-swap-greedy"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
