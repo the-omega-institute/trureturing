@@ -71,8 +71,10 @@ private partial def visit (base : Environment) (additions : Array (Expr × Expr)
     shared := s.shared.insert key id
     graph := {s.graph with vertices := s.graph.vertices ++ [vertex]}}
   let addEdge (premises : List Nat) (head : Option Expr := none)
-      (authorData : Array (Option Expr) := #[]) : ExtractM Unit :=
-    modify fun s => {s with graph := {s.graph with edges := s.graph.edges ++ [{conclusion := id, premises, head, source := head.bind Expr.constName?, authorData}]}}
+      (authorData : Array (Option Expr) := #[]) : ExtractM Unit := do
+    let source := head.bind Expr.constName?
+    let head ← head.mapM (mkLambdaFVars scope ·)
+    modify fun s => {s with graph := {s.graph with edges := s.graph.edges ++ [{conclusion := id, premises, head, source, authorData}]}}
   match proof with
   | .fvar _ =>
     modify fun s => {s with graph := {s.graph with vertices := s.graph.vertices.map (fun v => if v.id == id then {v with seed := true} else v)}}
@@ -116,6 +118,17 @@ private partial def visit (base : Environment) (additions : Array (Expr × Expr)
           else
             data := data.push (some (← mkLambdaFVars scope arg))
         addEdge premises (some head) data
+    else if head.isFVar then
+      let mut premises := []
+      let mut data := #[]
+      for h : i in [:args.size] do
+        let arg := args[i]
+        if ← isProp (← inferType arg) then
+          premises := premises ++ [← visit base additions arg (position ++ [i]) unfolding]
+          data := data.push none
+        else
+          data := data.push (some (← mkLambdaFVars scope arg))
+      addEdge premises (some head) data
     else
       incomplete s!"graph.unsupported_application_head:{head.ctorName}"
   | .mdata _ _ => incomplete "graph.unexpected_mdata"
@@ -153,7 +166,9 @@ def hideData (head : Expr) (arity : Nat) (visible : Array (Option Expr) := #[])
   let mut result : HiddenExpr := {skeleton := head}
   for i in [:arity] do
     let type ← whnf (← inferType result.skeleton)
-    let .forallE _ domain _ kind := type | throwError "graph.spine_arity"
+    let .forallE _ domain _ kind := type
+      | if type.hasMVar then throwError "graph.hidden_spine_blocked"
+        else throwError "graph.spine_arity"
     let prop ← isProp domain
     let value ← if let some (some data) := visible[i]? then pure data
       else mkFreshExprMVar domain
@@ -168,7 +183,15 @@ def hideData (head : Expr) (arity : Nat) (visible : Array (Option Expr) := #[])
 private partial def replayPlan (plan : SpinePlan) (scope : Array Expr)
     (visible : Bool) (expected : Expr) : MetaM HiddenExpr := do
   let .app head data children := plan
-  let authorData := data.map (·.map (fun closed => (mkAppN closed scope).headBeta))
+  let instantiateScope (closed : Expr) : Expr := Id.run do
+    let mut body := closed
+    let mut count := 0
+    while body.isLambda do
+      count := count + 1
+      body := body.bindingBody!
+    return (mkAppN closed (scope.extract 0 count)).headBeta
+  let head := instantiateScope head
+  let authorData := data.map (·.map instantiateScope)
   let result ← hideData head data.size (if visible then authorData else #[]) authorData
   unless ← withReducible <| isDefEq (← inferType result.skeleton) expected do
     throwError "graph.replay_head_result_mismatch"
@@ -363,7 +386,7 @@ partial def localRebuild (target : Expr) (head : Option Expr)
         let targetGoal ← mkFreshExprMVar target
         let mut goal := targetGoal.mvarId!
         let mut scope := #[]
-        while (← withReducible <| whnf (← goal.getType)).isForall do
+        while (← goal.withContext <| withReducible <| whnf (← goal.getType)).isForall do
           let (fvar, next) ← goal.intro1
           seeds := seeds.push (mkFVar fvar)
           scope := scope.push (mkFVar fvar)
@@ -460,6 +483,10 @@ partial def localRebuild (target : Expr) (head : Option Expr)
   catch ex =>
     original.restore
     let detail ← ex.toMessageData.toString
+    if detail == "graph.hidden_spine_blocked" then
+      let alternate ← localRebuild target none #[] seedTypes residualTypes visible
+      if alternate.cost != .one then return alternate
+      return {cost := .one, detail := "unresolved-hidden-telescope"}
     if detail == "graph.replay_head_result_mismatch" || detail == "graph.frontier_interface_mismatch" then
       return ← localRebuild target none #[] seedTypes residualTypes visible
     return {cost := .unknown, detail :=

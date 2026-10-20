@@ -2,6 +2,8 @@ import Lean
 
 namespace LeanInformationAudit.Tests.SearchReduction.GraphCandidates
 
+theorem scopedApply (p q : Prop) (f : p → q) (h : p) : q := f h
+
 theorem squareFact : (42 : Nat) * 42 = 1764 := rfl
 
 theorem trueFact : True := True.intro

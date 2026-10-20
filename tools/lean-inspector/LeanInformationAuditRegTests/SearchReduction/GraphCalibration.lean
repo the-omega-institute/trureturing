@@ -20,6 +20,16 @@ run_cmd do
   let base ← importModules #[{module := `Lean}] {} 0 (leakEnv := true) (loadExts := true)
   liftTermElabM do
     let source ← getEnv
+    let scopedInfo ← getConstInfo ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.scopedApply
+    let scopedGraph ← extractGraph base scopedInfo.type (scopedInfo.value? (allowOpaque := true)).get!.headBeta
+    let scopedReading ← withEnv base <| evaluateGraph scopedGraph
+    for edge in scopedReading.graph.edges do
+      logInfo m!"scoped edge {edge.conclusion}: {reprStr edge.cost} {edge.detail}"
+    logInfo m!"scoped interval {reprStr scopedReading.baseline}"
+    unless scopedGraph.complete && scopedReading.baseline == ⟨.finite 0, .finite 0⟩ &&
+        scopedReading.graph.edges.all (·.cost != .unknown) do
+      throwError "scoped function application reconstruction failed: {scopedGraph.issues}"
+    logInfo "local-calibration scoped application: complete, kernel-checked zero"
     let squareFact ← getConstInfo ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareFact
     let added := #[(squareFact.type, mkConst squareFact.name)]
     for name in #[

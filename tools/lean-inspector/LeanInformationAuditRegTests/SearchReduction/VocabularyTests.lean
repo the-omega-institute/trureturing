@@ -44,6 +44,7 @@ run_meta do
   unless rejectedInstance do throwError "author instance computation was replaced"
   discard <| check ``VocabularyCandidates.ForwardLaw
   discard <| check ``VocabularyCandidates.nestedBox
+  discard <| check ``VocabularyCandidates.continuousBox
   let first ← check ``VocabularyCandidates.easyBox
   let second ← check ``VocabularyCandidates.easyBoxOther
   let firstInfo := (first.find? ``VocabularyCandidates.easyBox).get!

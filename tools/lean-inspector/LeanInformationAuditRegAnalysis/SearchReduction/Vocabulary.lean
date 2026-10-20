@@ -267,7 +267,19 @@ mutual
         if closed.getUsedConstants.any ctx.bound.contains then
           throwError "search.vocabulary_obligation_unclosed: {owner}: group-local type {closed}"
         let started ← IO.getNumHeartbeats
-        let rebuilt ← localRebuild closed none #[] [] []
+        -- Only the author's application head is supplied. Its arguments are
+        -- abstracted by the same hidden-data reconstructor as graph edges.
+        let author := part.consumeMData
+        let head := author.getAppFn
+        let usable := head.isFVar || (head.constName?.any (← getEnv).contains)
+        let (head?, data) ← if usable then do
+            let head ← mkLambdaFVars xs head
+            let data ← author.getAppArgs.mapM fun arg => do
+              if ← withEnv ctx.source (isProof arg) then return none
+              return some (← mkLambdaFVars xs arg)
+            pure (some head, data)
+          else pure (none, #[])
+        let rebuilt ← localRebuild closed head? data [] []
         let outcome := match rebuilt.cost with
           | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
         let used := (← IO.getNumHeartbeats) - started
