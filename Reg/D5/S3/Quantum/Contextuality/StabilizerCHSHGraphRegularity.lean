@@ -44,7 +44,7 @@ abbrev arena : Arena where
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  have : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   have hbad := (law 2).2.2 (0, 0, 0)
   have hdegree := (result 2).2.2 (0, 0, 0)
   change (Finset.univ.filter
