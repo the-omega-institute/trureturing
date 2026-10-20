@@ -1027,3 +1027,241 @@ $$
 
 Skipping the first two arrows would again confuse a mathematical response
 table with a protocol that an observer can actually run.
+
+## 七十三、取得前沿、重放纤维与历史时序纤维
+
+最新 dev 的 [Native acquired input, the unfinished-request frontier, and actual replay](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md)
+把上一节的“控制记忆”再分成三个不同问题：什么已经被实际取得，当前请求做到哪一步，以及从当前材料还能否唯一重放后续行动。三者都可以写成纤维，但它们不是同一个观察器。
+
+### 定义 73.1：取得前沿
+
+设 \(h\) 是一条实际执行到原子操作切点的有限历史。记：
+
+$$
+I(h)=\text{外部输入已经实际被 IN 消费的有序词},
+$$
+
+$$
+\lambda(h)=\text{仍停留在输入 latch 中的已消费材料},
+\qquad
+\phi(h)=\text{请求、写入、响应、封存或交付阶段},
+$$
+
+并把权限、pending event、部分 frame、计数器、head、PC 和 owner 绑定一并记入
+
+$$
+\operatorname{AF}(h)=\bigl(I(h),\lambda(h),\phi(h),\operatorname{perm}(h),\operatorname{pending}(h),\operatorname{ctr}(h),\operatorname{owner}(h)\bigr).
+$$
+
+这里的 \(\operatorname{AF}\) 是**取得前沿**。若一个 bit 已被实际 IN 消费，即使它尚未 WR 到 tape，它已经属于 \(I(h)\) 和当前 latch 前沿；它不能在重放时被当作“未来输入”重新索取。
+
+因此有严格的切面次序：
+
+$$
+\text{acquire}\;\to\;\text{latch}\;\to\;\text{write}\;\to\;\text{request complete}\;\to\;\text{seal}\;\to\;\text{deliver}.
+$$
+
+这些切面可以具有相同的最终数值，却具有不同的后继权限和不同的合法动作域。
+
+### 定理 73.2：预测记忆必须同时分解读出和更新
+
+设 \(m\) 是历史到记忆值的压缩，\(a\) 是允许动作。要使 \(m\) 成为下一步预测与控制的安全商，必须存在 \(\bar D_a,\bar r_a,\bar U_a\)，使得在实际历史域上：
+
+$$
+h\in D_a\iff m(h)\in\bar D_a,
+$$
+
+$$
+r_a(h)=\bar r_a(m(h)),\qquad
+m(h\cdot a)=\bar U_a(m(h),r_a(h)).
+$$
+
+只证明读出 \(r_a\) 可以由 \(m\) 计算，而没有证明合法域和更新也下降到 \(m\)，不能得到预测充分性。
+
+证明是直接的：第一式保证同一记忆值不会把合法动作和非法动作混合；第二式保证同一记忆值给出相同响应；第三式保证响应之后仍落在同一个记忆系统中。反过来，若未来任务的 enabledness、response 或 successor 在同一 \(m\)-纤维上不同，则存在一对历史见证，说明该压缩不是安全控制商。
+
+这把前一节的控制相容性判据推进了一步：
+
+$$
+\boxed{
+\text{保存答案的读出}
+\neq
+\text{保存选择动作的记忆}
+\neq
+\text{保存更新后继续工作的记忆}.
+}
+$$
+
+### 定义 73.3：取得键与重放键
+
+在 dev 文档的 \(\Omega^+\) 合法历史域上，设 \(u\) 是实际安装的 source code，\(n\) 是 P owner 的实际 receipt 计数，\(I\) 是实际消费的 source-frame 输入，\(\kappa\) 是 Capture 读取的 P 切点，\(m\) 是 Capture 后 C owner 的实际进度；未 Capture 时取 \(\kappa=\bot,m=0\)。定义：
+
+$$
+K(h)=\bigl(\operatorname{code}(u),I(h),n(h),\kappa(h),m(h)\bigr).
+$$
+
+这不是一个免费安装的寄存器，而是从真实达到的 raw state 中提取的数学键。它只能在声明的实际历史像上使用。
+
+### 定理 73.4：当前行动的精确重放纤维
+
+在上述合法域上，dev 的精确 endpoint 纤维给出：
+
+$$
+X(h)=X(h')\iff K(h)=K(h').
+$$
+
+并且当前允许的有限实验映射相同，当且仅当这些键相同：
+
+$$
+h\equiv_{\mathrm{now}}h'\iff K(h)=K(h').
+$$
+
+所以 \(K\) 保留了当前动作所需的 source provenance、已消费输入、计数、Capture 读取切点和 C 进度；它不需要保存每一条过去的 P/C 交错历史。
+
+### 证明
+
+同一 \(K\) 时，固定 startup、实际输入前缀和 owner-local 进度确定正常重放代表；P 与 C 的后续行在 Capture 后满足完整 diamond，交换相邻的合法 owner 行不改变完整 endpoint。因此得到相同 raw state、同样的动作域、响应和 successor。
+
+反向地，若当前实验映射相同，选择一个合法的下一 P 行。它的响应和完整 successor 相同，故 \(n\) 或 \(I\) 的更新相同；逐步取消这次更新得到前一键相同。Capture 的存在及其 \(\kappa\)，以及 C 的 \(m\)，由同样的 successor 递归恢复。于是 \(K(h)=K(h')\)。
+
+这里的关键不是“保存一个摘要就能重放”，而是该摘要已经被证明同时决定合法域、响应和更新；没有这三个交换式，\((\operatorname{code}(u),I,n)\) 的短元组只是候选摘要。
+
+### 定理 73.5：重放纤维不等于历史纤维
+
+对一个已 Capture 的键，令
+
+$$
+p=n-\kappa,\qquad q=m-1.
+$$
+
+则同一 raw endpoint 的实际历史数为：
+
+$$
+L(K)=\binom{p+q}{p}=\binom{n-\kappa+m-1}{n-\kappa}.
+$$
+
+Armed 情形 \(m=0,\kappa=\bot\) 的纤维为单点；已 Capture 且 \(p,q>0\) 时，历史纤维通常含多个不同的 P/C 交错。
+
+因此：
+
+$$
+\boxed{
+\text{当前 continuation 可以被精确重放}
+\quad\not\Rightarrow\quad
+\text{完整过去 chronology 可以被恢复}.
+}
+$$
+
+同一 endpoint、同一当前 storage、同一当前 boundary 和同一已取得 C backing，仍可能对应不同的总历史。若目标是 \(T_{\mathrm{exact}}\)，必须加入能够区分这些线性扩展的历史记录；若目标只是当前 continuation，则 \(K\) 已足够。
+
+这解释了上一节中的“双不动点”为什么还不完整：
+
+$$
+\begin{aligned}
+\nu\Psi&=\text{对允许动作保持不变的安全行为商},\\
+\mu\Phi&=\text{有限目标的可取得域},\\
+\operatorname{ReplayFib}&=\text{同一当前行动语义的最粗实际纤维},\\
+\operatorname{ChronFib}&=\text{同一 endpoint 下仍未被恢复的历史线性扩展}.
+\end{aligned}
+$$
+
+其中 \(\operatorname{ReplayFib}\) 可以安全合并历史，\(\operatorname{ChronFib}\) 则说明这种合并具体遗忘了什么。
+
+## 七十四、取得前沿向可执行协议的提升
+
+### 定义 74.1：FIB 取得—重放提升
+
+设语义来源纤维由 \(\eta_{\mathrm{sem}}\) 给出，实际输入取得映射为 \(A\)，控制记忆为 \(m\)。称一个目标在该合同下被**可执行提升**，如果满足：
+
+1. \(A\) 沿一条实际 owner 历史取得了目标所需的输入，而不是由数学模型事后填入；
+2. \(m\) 对每个允许动作同时因子化合法域、响应和 successor；
+3. \(m\) 的后继具有有限下降秩，或落入已知的有限取得层 \(\mathcal W_n\)；
+4. 所有输入、封存、交付、重放和控制更新都计入实际成本。
+
+这一定义把“语义纤维有限”与“观察者能执行”分开。
+
+### 定理 74.2：有限语义纤维的提升判据
+
+若 \(\eta_{\mathrm{sem}}\) 的目标纤维有限，但缺少第 74.1 条的实际取得或 successor 因子化条件，则不能推出存在有限协议。
+
+若第 74.1 条全部成立，并且取得键 \(m_0\) 属于 \(\mathcal W_n\)，则从该实际历史开始可以提取一个至多 \(n\) 次语义操作的 FIB 控制协议；其控制状态至少保存 \(m\) 所区分的历史类，并沿每个实际响应更新到下一个键。
+
+### 证明
+
+前一方向由破坏性读出反例直接给出：潜在响应联合可以单射，而一次实际读出把不同目标压到同一终止状态，故没有有限协议。
+
+后一方向先用实际取得映射把来源推进到 \(m_0\)，再用有限取得层的递归提取动作。读出、更新因子化保证每个动作在原合同中可执行，秩下降保证有限终止；FIB 无损编码只负责保存控制状态和证书，不增加隐藏观察能力。
+
+### 定理 74.3：dev 的两 owner 采集桥是一个条件性提升
+
+最新 dev 的 §12 在新增的、与原 apparatus 分离的 \(A_R\) 上，给出一个明确的提升实例：在每个实际到达的 pre-Pin Armed collector 状态，两个同时绑定的 meter endpoint、已取得的 source/code capsule、以及对已达到输入前缀的逐 bit demand，足以构造
+
+$$
+K_R(x)=K(\pi(x))
+$$
+
+并在真实付费 startup、word/effect interpreter、copy、seal、ACK 和调用 token 返回之后，得到完整状态重建
+
+$$
+\mathcal L_R(K_R(x))=x.
+$$
+
+这不是原 apparatus 的免费逆，也不是“两个 meter 数值就足够”。成立条件包括：新增 disjoint scaffold、实际 Pin、owner 权限、canonical code/seed loader、已有输入前缀的合法 demand、完整十五 slot successor、以及每个调用阶段的 progress 条件。
+
+### 推论 74.4：采集边界可以小于完整快照，但不能小于实际控制边界
+
+在 \(A_R\) 的声明域内，完整 raw snapshot 可以被压缩成两个 endpoint 绑定、source/code provenance、实际输入前缀、计数与 Capture 状态，再通过付费重放恢复；但删除其中任何一个会产生具体风险：
+
+$$
+\begin{array}{c|c}
+\text{删除项}&\text{失去的性质}\\ \hline
+\text{实际输入前缀}&\text{无法重放 source IN 的真实 successor}\\
+\text{latch/partial-frame frontier}&\text{把已消费但未 WR 的 bit 错当成未来输入}\\
+\text{Capture 切点}&\text{不同 meter root 的后续输出被错误合并}\\
+\text{owner/permission}&\text{数学内容存在但当前调用未授权}\\
+\text{完整 successor 更新}&\text{读出可算而控制器不能继续闭环}\\
+\text{实际费用与进度}&\text{有限代码被误报为统一有限成本}
+\end{array}
+$$
+
+因此，FIB 的最小充分边界现在应写成：
+
+$$
+\boxed{
+\text{语义读出}
+\subseteq
+\text{取得前沿}
+\subseteq
+\text{当前重放键}
+\subseteq
+\text{完整历史记录}.
+}
+$$
+
+每一步都是相对于任务的偏序：恢复当前动作时可以停在重放键，恢复完整 chronology 时必须继续保留历史 supplement。
+
+## 七十五、结合最新 dev 后的剩余边界
+
+现在可以把项目的新进展准确放回 FIB 理论：
+
+1. Native acquired input 解决了“输入何时成为观察者已有信息”的接口问题：答案是实际 IN 的 acquired cut，而不是 WR、seal 或事后 replay 的时刻。
+2. Exact joint endpoint fibres 解决了“什么可以被当前动作安全遗忘”的问题：在声明的 \(\Omega^+\) 域，\(K=(\operatorname{code}(u),I,n,\kappa,m)\) 是当前 continuation 的精确键。
+3. Chronological ambiguity 解决了“精确重放是否等于精确历史恢复”的问题：不是；其剩余歧义由 \(\binom{n-\kappa+m-1}{n-\kappa}\) 明确计数。
+4. Paid two-meter acquisition 解决了“语义键能否成为实际可调用记录”的一个条件实例：能，但需要新增 apparatus、真实输入、权限、loader、successor 和费用合同。
+5. Growing \(\xi\) 的最新算术校准目前仍属于成本模型支线。只有建立其非线性 price 与 FIB 协议的实际动作/资源坐标映射后，才能把它纳入上述提升定理；当前不能把该校准当成 FIB 几何或控制记忆的新增闭合结果。
+
+所以目前最强的统一结论是：
+
+$$
+\boxed{
+\begin{gathered}
+\text{有限语义纤维给出候选世界；}\\
+\text{取得前沿给出观察者实际拥有的输入；}\\
+\text{重放键给出当前可继续行动的最小充分边界；}\\
+\text{历史纤维说明被压缩掉的 chronology；}\\
+\text{付费采集桥把该键提升为可调用协议，但只在声明 apparatus 上成立。}
+\end{gathered}
+}
+$$
+
+仍然开放的不是“有没有更多符号可以编码”，而是更具体的合同问题：原固定 apparatus 是否存在同样的全域采集桥；任意 busy cut 是否有统一的 acquired-input frontier；完整 \(T_{\mathrm{exact}}\) 在不增加历史 supplement 时能否恢复；以及在给定误差、费用和控制状态预算下的全局最小控制器是什么。最新 dev 把这些问题的边界写得更细，但没有把条件性桥梁升级成这些全域结论。
