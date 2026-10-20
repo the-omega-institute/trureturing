@@ -6,9 +6,9 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/QutritOverlapBoundNonOptimality.claim; result=D5/S3/Quantum/Information/QutritOverlapBoundNonOptimality.result; claim=D5/S3/Quantum/Information/QutritOverlapBoundNonOptimality.claim
    digest: The overlap entropy bound is unattainable for qutrits at interior overlaps. -/
 
+import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 import D5.S3.Quantum.Foundation.FiniteDensityPurification
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
-import D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation
 
 /-! The Tsallis order-two overlap bound and its qutrit equality obstruction. -/
 
@@ -18,8 +18,6 @@ open Matrix Complex
 open scoped BigOperators ComplexConjugate ComplexOrder InnerProductSpace
 
 namespace D5.S3.Quantum.Information.QutritOverlapBoundNonOptimality
-
-open D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation (residual_norm)
 
 /-- Tsallis entropy of order two. -/
 def tsallisTwo (p : Fin 3 → ℝ) : ℝ := 1 - ∑ i, p i ^ 2
@@ -82,15 +80,6 @@ private lemma boundD_formula {c θ : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c �
   rw [show 4 * θ = 2 * (2 * θ) by ring, Real.cos_two_mul, Real.cos_two_mul]
   ring
 
-private lemma bound_pair_identity (γ θ : ℝ) :
-    (1 - Real.cos (4 * θ)) / 4 + (1 - Real.cos (4 * (γ - θ))) / 4 =
-      (1 - Real.cos (2 * γ) * Real.cos (4 * θ - 2 * γ)) / 2 := by
-  have h := Real.cos_add_cos (4 * θ) (4 * (γ - θ))
-  have h1 : (4 * θ + 4 * (γ - θ)) / 2 = 2 * γ := by ring
-  have h2 : (4 * θ - 4 * (γ - θ)) / 2 = 4 * θ - 2 * γ := by ring
-  rw [h1, h2] at h
-  linarith
-
 private lemma overlapBound_eq {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c ≤ 1) :
     overlapBound c = 1 - c ^ 2 := by
   obtain ⟨hc0, hc2, _⟩ := threshold_facts hc
@@ -102,7 +91,11 @@ private lemma overlapBound_eq {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c ≤ 
       boundD θ + boundD (γ - θ) =
         (1 - (2 * c ^ 2 - 1) * Real.cos (4 * θ - 2 * γ)) / 2 := by
     rw [boundD_formula hc hc1 hθ, boundD_formula hc hc1 ⟨by linarith [hθ.2],
-      by linarith [hθ.1]⟩, bound_pair_identity, hcos]
+      by linarith [hθ.1]⟩]
+    have h := Real.cos_add_cos (4 * θ) (4 * (γ - θ))
+    rw [show (4 * θ + 4 * (γ - θ)) / 2 = 2 * γ by ring,
+      show (4 * θ - 4 * (γ - θ)) / 2 = 4 * θ - 2 * γ by ring, hcos] at h
+    nlinarith only [h]
   apply IsLeast.csInf_eq
   constructor
   · refine ⟨γ / 2, ⟨by linarith, by linarith⟩, ?_⟩
@@ -114,13 +107,6 @@ private lemma overlapBound_eq {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c ≤ 
     change 1 - c ^ 2 ≤ boundD θ + boundD (γ - θ)
     rw [hpair θ hθ]
     nlinarith [Real.cos_le_one (4 * θ - 2 * γ)]
-
-private lemma entropy_nonneg (p : Fin 3 → ℝ) (hp : ∀ i, 0 ≤ p i)
-    (hs : ∑ i, p i = 1) : 0 ≤ tsallisTwo p := by
-  have h := Finset.sum_sq_le_sq_sum_of_nonneg (s := Finset.univ) (fun i _ => hp i)
-  rw [hs] at h
-  unfold tsallisTwo
-  nlinarith
 
 private lemma entropy_small (p : Fin 3 → ℝ) (hp : ∀ i, 0 ≤ p i)
     (hs : ∑ i, p i = 1) (hm : ∀ i, p i ≤ 1 / 2) : 1 / 2 ≤ tsallisTwo p := by
@@ -236,9 +222,18 @@ private lemma overlap_ellipse (x a b : EuclideanSpace ℂ (Fin 3))
       hxx, ← inner_conj_symm a x]
     change τ - conj α * β - β * (conj α - conj α * 1) = τ - conj α * β
     ring
+  have hresidual (v : EuclideanSpace ℂ (Fin 3)) (hv : ‖v‖ = 1) :
+      ‖v - ⟪x, v⟫_ℂ • x‖ ^ 2 = 1 - ‖⟪x, v⟫_ℂ‖ ^ 2 := by
+    have h := Submodule.norm_sq_eq_add_norm_sq_starProjection v (ℂ ∙ x)
+    rw [Submodule.starProjection_orthogonal_val, Submodule.starProjection_singleton] at h
+    rw [hx, hv, one_pow] at h
+    change 1 = ‖(⟪x, v⟫_ℂ / (1 : ℂ)) • x‖ ^ 2 +
+      ‖v - (⟪x, v⟫_ℂ / (1 : ℂ)) • x‖ ^ 2 at h
+    rw [div_one, norm_smul, hx, mul_one] at h
+    linarith
   have hcs := norm_inner_le_norm (𝕜 := ℂ) (a - α • x) (b - β • x)
   have hcs2 := (sq_le_sq₀ (norm_nonneg _) (mul_nonneg (norm_nonneg _) (norm_nonneg _))).mpr hcs
-  rw [hi, mul_pow, residual_norm x a hx ha, residual_norm x b hx hb] at hcs2
+  rw [hi, mul_pow, hresidual a ha, hresidual b hb] at hcs2
   rw [← Complex.normSq_eq_norm_sq, Complex.normSq_sub, Complex.normSq_mul,
     Complex.normSq_conj, Complex.normSq_eq_norm_sq, Complex.normSq_eq_norm_sq,
     Complex.normSq_eq_norm_sq] at hcs2
@@ -362,12 +357,20 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
   obtain ⟨hc0, hc2, _⟩ := threshold_facts hc
   by_cases hpSmall : ∀ i, p i ≤ 1 / 2
   · have hsmall := entropy_small p hp0 hψ hpSmall
-    have hnonneg := entropy_nonneg q hq0 hq
+    have hnonneg : 0 ≤ tsallisTwo q := by
+      have hs := Finset.sum_sq_le_sq_sum_of_nonneg (s := Finset.univ) (fun j _ => hq0 j)
+      rw [hq] at hs
+      unfold tsallisTwo
+      nlinarith
     change 1 - c ^ 2 < tsallisTwo p + tsallisTwo q
     linarith
   by_cases hqSmall : ∀ j, q j ≤ 1 / 2
   · have hsmall := entropy_small q hq0 hq hqSmall
-    have hnonneg := entropy_nonneg p hp0 hψ
+    have hnonneg : 0 ≤ tsallisTwo p := by
+      have hs := Finset.sum_sq_le_sq_sum_of_nonneg (s := Finset.univ) (fun i _ => hp0 i)
+      rw [hψ] at hs
+      unfold tsallisTwo
+      nlinarith
     change 1 - c ^ 2 < tsallisTwo p + tsallisTwo q
     linarith
   push Not at hpSmall hqSmall
@@ -459,20 +462,6 @@ private lemma entropy_mixture (w : Fin 3 → ℝ) (hw : ∀ k, 0 ≤ w k)
   unfold tsallisTwo
   linarith
 
-private lemma spectral_diagonal (W : Matrix (Fin 3) (Fin 3) ℂ) (wgt : Fin 3 → ℝ)
-    (i : Fin 3) :
-    ((W * Matrix.diagonal (fun k => (wgt k : ℂ)) * Wᴴ) i i).re =
-      ∑ k, wgt k * ‖W i k‖ ^ 2 := by
-  rw [Matrix.mul_apply]
-  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply, Complex.star_def, Complex.re_sum]
-  apply Finset.sum_congr rfl
-  intro k _
-  have he : W i k * (wgt k : ℂ) * conj (W i k) = (wgt k : ℂ) * (W i k * conj (W i k)) := by
-    ring
-  rw [he, Complex.mul_conj]
-  simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero,
-    Complex.normSq_eq_norm_sq]
-
 private lemma strict_overlap_bound {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
     (T : Matrix (Fin 3) (Fin 3) ℂ) (hT : T ∈ Matrix.unitaryGroup (Fin 3) ℂ)
     (hTc : ∀ i j, ‖T i j‖ ≤ c) (ρ : Matrix (Fin 3) (Fin 3) ℂ)
@@ -504,14 +493,28 @@ private lemma strict_overlap_bound {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c
           Matrix.diagonal (fun k => (wgt k : ℂ)) * (T * (U : Matrix (Fin 3) (Fin 3) ℂ))ᴴ
         rw [Matrix.conjTranspose_mul]
         simp only [Matrix.mul_assoc]
+  have hdiagonal (W : Matrix.unitaryGroup (Fin 3) ℂ) (i : Fin 3) :
+      (((W : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.diagonal (fun k => (wgt k : ℂ)) *
+        (W : Matrix (Fin 3) (Fin 3) ℂ)ᴴ) i i).re = ∑ k, wgt k * ‖W i k‖ ^ 2 := by
+    have h := D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.projected_dynamics_is_unistochastic
+      (W : Matrix (Fin 3) (Fin 3) ℂ) wgt W.prop
+    have hr := congrFun (h.2.2.2 0) i
+    simpa only [D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.projectedWeights,
+      D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.projectedOrbit,
+      D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.projectedStep,
+      D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.projectiveReadout,
+      D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.unitaryEvolution,
+      D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.diagonalState,
+      Matrix.diagonal_apply_eq, Matrix.diag_apply, Matrix.mulVec, dotProduct,
+      Complex.ofReal_re, Matrix.star_eq_conjTranspose, h.2.1, mul_comm] using hr
   have hpA : probA ρ = fun i => ∑ k, wgt k * ‖U i k‖ ^ 2 := by
     funext i
     exact (congrArg (fun A : Matrix (Fin 3) (Fin 3) ℂ => (A i i).re) hdec).trans
-      (spectral_diagonal _ _ i)
+      (hdiagonal U i)
   have hpB : probB T ρ = fun j => ∑ k, wgt k * ‖V j k‖ ^ 2 := by
     funext j
     exact (congrArg (fun A : Matrix (Fin 3) (Fin 3) ℂ => (A j j).re) hdecB).trans
-      (spectral_diagonal _ _ j)
+      (hdiagonal V j)
   have hp := entropy_mixture wgt hwgt hsum (fun k i => ‖U i k‖ ^ 2)
   have hq := entropy_mixture wgt hwgt hsum (fun k j => ‖V j k‖ ^ 2)
   have hall (k : Fin 3) : 1 - c ^ 2 <
