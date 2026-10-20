@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Quantum.Matrix.StolarskyMean.Result
 
+/-! Mean matrix source families and the full conjecture. -/
+
 noncomputable section
 open _root_.D5.S3.Quantum.Matrix.StolarskyMean.Defs
 open _root_.D5.S3.Quantum.Matrix.StolarskyMean.Spectral
@@ -158,5 +160,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end ClassA
+
 
 end Reg.D5.S3.Quantum.Matrix.StolarskyMean.Result

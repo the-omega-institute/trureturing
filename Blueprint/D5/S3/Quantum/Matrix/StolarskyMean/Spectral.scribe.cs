@@ -18,7 +18,7 @@ internal sealed class SpectralDocument : IScribeDocumentDefinition
             Theorem("two_le_numPosEig_of_posDefOn", "Two positive directions force two positive eigenvalues", "For a real symmetric matrix, a subspace of dimension at least two on which the quadratic form is strictly positive away from zero forces at least two strictly positive eigenvalues. This is the positive-subspace dimension bound from Sylvester inertia theory."))));
 
     private static DocumentBlock Theorem(string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create("stolarsky-spectral-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("stolarsky-spectral-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 }

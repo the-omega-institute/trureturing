@@ -4,7 +4,31 @@
 
 Logarithmic cosine integrals for normalized hyperbolic sine.
 
-**Theorem 1.1 (Comparison across scales).**
+**Theorem 1.1 (Positive density).**
+
+Lean statement: `D5/S3/Analytic/Fourier/SinhLogIntegral.h_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Fourier/SinhLogIntegral.h_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At positive scale and positive frequency the exponential denominator is strictly positive, so the density is strictly positive.
+
+**Theorem 1.2 (Positive normalized profile).**
+
+Lean statement: `D5/S3/Analytic/Fourier/SinhLogIntegral.E_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Fourier/SinhLogIntegral.E_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At positive scale the normalized hyperbolic sine is positive at every real argument, including zero. Away from zero numerator and denominator have the same sign.
+
+**Theorem 1.3 (Comparison across scales).**
 
 Lean statement: `D5/S3/Analytic/Fourier/SinhLogIntegral.h_scale_le`
 
@@ -16,7 +40,7 @@ Lean statement: `D5/S3/Analytic/Fourier/SinhLogIntegral.h_scale_le`
 
 For positive a and s and b at least a, define h(a,s)=1/(exp(pi s/a)-1). Then h(b,s) is at least (b/a) h(a,s). Convexity of the real exponential between zero and pi s/a gives the denominator comparison; all denominators are strictly positive.
 
-**Theorem 1.2 (Integrability of the weighted density).**
+**Theorem 1.4 (Integrability of the weighted density).**
 
 Lean statement: `D5/S3/Analytic/Fourier/SinhLogIntegral.integrable_levyWeight`
 
@@ -28,7 +52,7 @@ Lean statement: `D5/S3/Analytic/Fourier/SinhLogIntegral.integrable_levyWeight`
 
 For every positive a, the function min(1,s squared) h(a,s)/s is integrable on the positive half-line. The estimate exp(x)-1 at least x bounds the integrand near zero by a/pi. Beyond one the density is bounded by a constant times exp(-pi s/a), which is integrable.
 
-**Theorem 1.3 (Absolute integrability of cosine deficits).**
+**Theorem 1.5 (Absolute integrability of cosine deficits).**
 
 Lean statement: `D5/S3/Analytic/Fourier/SinhLogIntegral.integrable_logIntegrand`
 
@@ -40,7 +64,7 @@ Lean statement: `D5/S3/Analytic/Fourier/SinhLogIntegral.integrable_logIntegrand`
 
 For positive a and every real t, (1-cos(ts)) h(a,s)/s is integrable on the positive half-line. The cosine deficit is nonnegative and bounded by (t squared plus two) times min(1,s squared). This supplies the absolute integrability needed for linear combinations of the logarithmic densities.
 
-**Theorem 1.4 (The logarithmic integral formula).**
+**Theorem 1.6 (The logarithmic integral formula).**
 
 Lean statement: `D5/S3/Analytic/Fourier/SinhLogIntegral.log_E_eq_integral`
 
@@ -56,6 +80,8 @@ The complex Euler sine product on the imaginary axis gives the product of 1+(at)
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/Fourier/SinhLogIntegral.E_pos`
+- Truth anchor: `D5/S3/Analytic/Fourier/SinhLogIntegral.h_pos`
 - Truth anchor: `D5/S3/Analytic/Fourier/SinhLogIntegral.h_scale_le`
 - Truth anchor: `D5/S3/Analytic/Fourier/SinhLogIntegral.integrable_levyWeight`
 - Truth anchor: `D5/S3/Analytic/Fourier/SinhLogIntegral.integrable_logIntegrand`

@@ -18,5 +18,6 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
     private static DocumentBlock Definition(string name, string title, string text) =>
         Describe.Lean(DescribeId.Create("stolarsky-defs-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
+            name == "numPosEig" ? AssessedProvenance.FromRepo() :
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/bhatia2016mean")), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 }

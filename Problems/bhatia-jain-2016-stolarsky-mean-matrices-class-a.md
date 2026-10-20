@@ -51,8 +51,8 @@ Put $\psi_\gamma(t)=S_\gamma(e^{-t},e^t)$ and
 $f_\gamma=\psi_\gamma''-\psi_\gamma$. The needed analytic bridge is
 positive definiteness of $f_\gamma$, followed by the mixed-derivative
 integration from this one-dimensional statement to conditional
-negativity of the mean kernel. The formal curvature theorem and the integration bridge are
-complete. The final conjunction still requires repairs to the counterexample module.
+negativity of the mean kernel. The formal curvature theorem, integration bridge,
+three-point counterexamples, and exact conjunction are complete.
 
 ## Route
 
@@ -98,8 +98,9 @@ Integrating this positive kernel twice against the cumulative
 coefficients of a zero-sum vector gives conditional negativity.
 For parameters below two, the three positive nodes
 $(e^{-2z},1,e^{2z})$ supply a two-dimensional positive subspace at
-suitable spacing. The integration and spectral steps compile. The counterexample module
-requires repairs before the exact formal conjunction can be integrated.
+suitable spacing. The formal proof uses the large-spacing normalized profile
+limit and a positive two-dimensional plane in the weighted Toeplitz matrix.
+The logarithmic and identric parameters are treated separately.
 
 ## Falsifier
 
@@ -122,8 +123,11 @@ It directly uses the compiled density formula in
 [SinhLogIntegral.lean](../D5/S3/Analytic/Fourier/SinhLogIntegral.lean),
 the nonnegative-density criterion, and the general quadratic-deficit
 theorem in the PositiveDefinite library. [Result.lean](../D5/S3/Quantum/Matrix/StolarskyMean/Result.lean) proves
-the mean-to-CND integration bridge and the complete positive range.
-The ThreePoint source is not claimed as compiled here.
+the mean-to-CND integration bridge, the complete positive range, and
+`result : claim`, the exact conjunction. [ThreePoint.lean](../D5/S3/Quantum/Matrix/StolarskyMean/ThreePoint.lean) proves
+that each parameter in $[0,2)$ has a positive three-point family with at
+least two positive eigenvalues. All these statements compile with
+axioms restricted to `propext`, `Classical.choice`, and `Quot.sound`.
 
 ## Triage
 
@@ -134,7 +138,7 @@ The ThreePoint source is not claimed as compiled here.
 - COMPUTED in the supplied preregistration: 40-digit evaluations at $\gamma\in\{2.3,3,4.7,9\}$ and $t\in\{0.1,0.7,2.5\}$ agree to 15 digits between the closed form, numerical second differentiation, and the factor product. These computations were not rerun in this offline implementation.
 - OPEN: whether $f_\gamma$ itself is infinitely divisible for $\gamma>2$. The supplied numerical Fourier tests of $f_\gamma^s$ were positive for $s\in\{0.05,0.3,1,3\}$ at $\gamma\in\{2.5,7\}$; finitely many tests do not establish infinite divisibility.
 - PROVED: `Result.conditionallyNegative_stolarsky` establishes conditional negativity, and `Result.inClassA_stolarsky` establishes the complete class A conclusion for every real parameter at least two and every nonempty finite positive family.
-- OPEN: the canonical `result : claim` integration; the counterexample module requires repairs. The positive-range proof is compiled independently of that module.
+- PROVED: `Result.result : Defs.claim` establishes both parameter ranges without hypotheses. The definitions and exact conjunction retain the source parameter range and continuous extensions.
 - OPEN and outside the conjecture: classification for $\gamma<0$.
 
 ## ASSUMED-UNVERIFIED

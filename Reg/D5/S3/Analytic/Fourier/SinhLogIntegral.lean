@@ -285,4 +285,111 @@ def logAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 #print axioms logAudit
 
+
+
+namespace DensityPositive
+abbrev arena : Arena where
+  signature := scalarSignature
+  Law R := ∀ {a s : ℝ}, 0 < a → 0 < s → 0 < R.readout () a s
+private theorem rejected_law : ¬ arena.Law zeroReadout := by
+  intro H
+  have hn := @H 1 1 (by norm_num) (by norm_num)
+  exact (lt_irrefl (0 : ℝ)) hn
+def family : Registration arena (type_of% @h_pos) where
+  actual := scaleActual
+  bridge := Iff.rfl
+  variation := ⟨@h_pos, zeroReadout, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law scaleActual zeroReadout rejected_law
+  dependence := scale_dependence
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@h_pos) (Realization scalarSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.Fourier.SinhLogIntegral.DensityPositive.unit
+  realizationName := `Reg.D5.S3.Analytic.Fourier.SinhLogIntegral.DensityPositive.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ a t => h a t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Fourier.SinhLogIntegral
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end DensityPositive
+
+def profileActual : Realization scalarSignature :=
+  realize scalarSignature (fun _ a t => E a t) (fun e => nomatch e)
+private theorem profile_dependence : ObservationalDependence scalarSignature profileActual := by
+  intro i
+  refine ⟨1, 0, 1, ?_⟩
+  have hp : 1 < E 1 1 := by
+    simpa [E] using Real.self_lt_sinh_iff.mpr (show (0 : ℝ) < 1 by norm_num)
+  simpa [profileActual, realize, E] using ne_of_lt hp
+
+namespace ProfilePositive
+abbrev arena : Arena where
+  signature := scalarSignature
+  Law R := ∀ {a : ℝ}, 0 < a → ∀ t : ℝ, 0 < R.readout () a t
+private theorem rejected_law : ¬ arena.Law zeroReadout := by
+  intro H
+  have hn := @H 1 (by norm_num) 0
+  exact (lt_irrefl (0 : ℝ)) hn
+def family : Registration arena (type_of% @E_pos) where
+  actual := profileActual
+  bridge := Iff.rfl
+  variation := ⟨@E_pos, zeroReadout, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law profileActual zeroReadout rejected_law
+  dependence := profile_dependence
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@E_pos) (Realization scalarSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.Fourier.SinhLogIntegral.ProfilePositive.unit
+  realizationName := `Reg.D5.S3.Analytic.Fourier.SinhLogIntegral.ProfilePositive.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ a t => E a t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Fourier.SinhLogIntegral
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end ProfilePositive
+
 end Reg.D5.S3.Analytic.Fourier.SinhLogIntegral

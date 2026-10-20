@@ -2,7 +2,10 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Quantum.Matrix.StolarskyMean.Spectral
 
+/-! Spectral source families with matrix observations. -/
+
 noncomputable section
+open scoped ComplexOrder
 open _root_.D5.S3.Quantum.Matrix.StolarskyMean.Defs
 open _root_.D5.S3.Quantum.Matrix.StolarskyMean.Spectral
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

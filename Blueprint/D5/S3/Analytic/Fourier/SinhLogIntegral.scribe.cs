@@ -7,6 +7,18 @@ internal sealed class SinhLogIntegralDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Logarithmic cosine integrals for normalized hyperbolic sine.",
         H("The hyperbolic sine density"), Blocks(
+            Describe.Lean(DescribeId.Create("sinh-density-positive"),
+                DeclarationHandle.Create("D5/S3/Analytic/Fourier/SinhLogIntegral.h_pos"),
+                H("Positive density"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At positive scale and positive frequency the exponential denominator is strictly positive, so the density is strictly positive."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("sinh-profile-positive"),
+                DeclarationHandle.Create("D5/S3/Analytic/Fourier/SinhLogIntegral.E_pos"),
+                H("Positive normalized profile"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At positive scale the normalized hyperbolic sine is positive at every real argument, including zero. Away from zero numerator and denominator have the same sign."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("sinh-density-scale-comparison"),
                 DeclarationHandle.Create("D5/S3/Analytic/Fourier/SinhLogIntegral.h_scale_le"),
                 H("Comparison across scales"), StatementSource.WithoutFormula(),

@@ -90,7 +90,9 @@ private theorem eventually_positive_determinant {ψ : ℝ → ℝ} {C : ℝ}
   have ht : Tendsto
       (fun z : ℝ => Real.exp (-(2 * z)) + Real.exp (-(2 * z)) * ψ (2 * z) -
         2 * (Real.exp (-z) * ψ z) ^ 2) atTop (𝓝 (C - 2 * C ^ 2)) := by
-    convert (he.add htwice).sub (tendsto_const_nhds.mul (hψ.pow 2)) using 1 <;> simp
+    have hpow : Tendsto (fun z : ℝ => 2 * (Real.exp (-z) * ψ z) ^ 2)
+        atTop (𝓝 (2 * C ^ 2)) := tendsto_const_nhds.mul (hψ.pow 2)
+    simpa only [Function.comp_def, zero_add] using (he.add htwice).sub hpow
   have hlim : 0 < C - 2 * C ^ 2 := by nlinarith
   filter_upwards [tendsto_const_nhds.eventually_lt ht hlim] with z hz
   have hexp : Real.exp (-(2 * z)) = Real.exp (-z) ^ 2 := by
@@ -121,7 +123,7 @@ private theorem exp_neg_mul_tendsto {c : ℝ} (hc : 0 < c) :
 private theorem power_coefficient_lt_half {γ : ℝ}
     (hγ : 0 < γ) (hγ2 : γ < 2) (hγ1 : γ ≠ 1) :
     (1 / γ : ℝ) ^ (1 / (γ - 1)) < 1 / 2 := by
-  have hsec := Real.strictConcaveOn_log_Ioi.secant_strict_mono
+  have hsec := (strictConcaveOn_log_Ioi).secant_strict_mono
     (show (0 : ℝ) < 1 by norm_num) hγ (show (0 : ℝ) < 2 by norm_num)
     hγ1 (by norm_num : (2 : ℝ) ≠ 1) hγ2
   simp only [Real.log_one, sub_zero] at hsec
@@ -131,7 +133,7 @@ private theorem power_coefficient_lt_half {γ : ℝ}
   apply Real.exp_lt_exp.mpr
   rw [Real.log_div one_ne_zero hγ.ne', Real.log_one,
     Real.log_div one_ne_zero (by norm_num : (2 : ℝ) ≠ 0), Real.log_one]
-  nlinarith
+  simpa only [div_eq_mul_inv, one_mul, zero_sub, neg_mul] using neg_lt_neg hsec
 
 private theorem normalized_ratio_limit {γ : ℝ} (hγ : 0 < γ) :
     Tendsto (fun z : ℝ =>
@@ -143,8 +145,8 @@ private theorem normalized_ratio_limit {γ : ℝ} (hγ : 0 < γ) :
       (1 - Real.exp (-(2 * γ * z))) / (γ * (1 - Real.exp (-(2 * z)))))
       atTop (𝓝 (1 / γ)) := by
     convert (tendsto_const_nhds.sub h1).div
-      (tendsto_const_nhds.mul (tendsto_const_nhds.sub h2)) (by simpa using hγ.ne') using 1
-    <;> simp
+      (tendsto_const_nhds.mul (tendsto_const_nhds.sub h2))
+      (show γ * (1 - 0) ≠ 0 by simpa using hγ.ne') using 1 <;> (try simp)
   exact hratio.rpow_const (Or.inl (one_div_ne_zero hγ.ne'))
 
 private theorem normalized_profile_eq {γ z : ℝ}
@@ -171,10 +173,11 @@ private theorem normalized_profile_eq {γ z : ℝ}
   have he2 : Real.exp (-z) = 1 / E := by rw [Real.exp_neg]; simp [one_div, E]
   have he3 : Real.exp (-(2 * γ * z)) = 1 / F ^ 2 := by
     rw [show -(2 * γ * z) = -(2 * (z * γ)) by ring, Real.exp_neg,
-      Real.exp_nat_mul (z * γ) 2]
-    simp [one_div, F]
+      show 2 * (z * γ) = (z * γ) + (z * γ) by ring, Real.exp_add]
+    simp [one_div, F, pow_two]
   have he4 : Real.exp (-(2 * z)) = 1 / E ^ 2 := by
-    rw [Real.exp_neg, Real.exp_nat_mul z 2]; simp [one_div, E]
+    rw [Real.exp_neg, show (2 : ℝ) * z = z + z by ring, Real.exp_add]
+    simp [one_div, E, pow_two]
   rw [he1, he2, he3, he4]
   change 1 / E * ((1 / F - F) / (γ * (1 / E - E))) ^ (1 / (γ - 1)) =
     ((1 - 1 / F ^ 2) / (γ * (1 - 1 / E ^ 2))) ^ (1 / (γ - 1))
@@ -198,7 +201,12 @@ private theorem normalized_profile_eq {γ z : ℝ}
       linarith
     field_simp [hE.ne', hF.ne', hγ0, hEn, hden, sub_ne_zero.mpr (Ne.symm hEn), sub_ne_zero.mpr (ne_of_lt hE1)]
     <;> ring
-  rw [← hefac, ← Real.mul_rpow (div_pos hE hF).le hQ.le, hrat]
+  calc
+    _ = (E / F) ^ (1 / (γ - 1)) *
+        ((1 / F - F) / (γ * (1 / E - E))) ^ (1 / (γ - 1)) := by
+      rw [hefac]
+    _ = _ := by
+      rw [← Real.mul_rpow (div_pos hE hF).le hQ.le, hrat]
 
 private theorem normalized_profile_limit {γ : ℝ} (hγ : 0 < γ) (hγ1 : γ ≠ 1) :
     Tendsto (fun z : ℝ => Real.exp (-z) * psi γ z) atTop
@@ -222,7 +230,7 @@ private theorem stolarskyMatrix_threePoint (γ z : ℝ) :
   have hpp : Real.exp z * Real.exp z = Real.exp (2 * z) := by
     rw [← Real.exp_add]; congr 1; ring
   rw [he, hmm] at hm
-  rw [he, hpp] at hp
+  rw [show Real.exp z * Real.exp (-z) = 1 by rw [mul_comm]; exact he, hpp] at hp
   have hcross (x : ℝ) : Real.exp (-z) * x * Real.exp z = x := by
     calc
       _ = (Real.exp (-z) * Real.exp z) * x := by ring
@@ -231,20 +239,23 @@ private theorem stolarskyMatrix_threePoint (γ z : ℝ) :
   fin_cases i <;> fin_cases j <;>
     simp only [stolarskyMatrix, weightedToeplitz, Matrix.of_apply,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one,
-      Matrix.cons_val_two, Fin.reduceFinMk, mul_one, one_mul]
+      Matrix.cons_val_two, Matrix.cons_val, Matrix.head_cons, Matrix.tail_cons,
+      Fin.reduceFinMk, mul_one, one_mul]
   · simp [stolarsky, hmm]
-  · exact hm
+  · simpa only [psi, mul_comm] using hm
   · dsimp [psi]
     rw [show -(2 * z) = -2 * z by ring]
-    exact (hcross _).symm
-  · rw [stolarsky_symm]; exact hm
+    simpa only [mul_comm, mul_left_comm, mul_assoc] using
+      (hcross (stolarsky γ (Real.exp (-2 * z)) (Real.exp (2 * z)))).symm
+  · rw [stolarsky_symm]; simpa only [psi, mul_comm] using hm
   · simp [stolarsky]
-  · exact hp
+  · simpa only [psi, mul_comm] using hp
   · rw [stolarsky_symm]
     dsimp [psi]
     rw [show -(2 * z) = -2 * z by ring]
-    exact (hcross _).symm
-  · rw [stolarsky_symm]; exact hp
+    simpa only [mul_comm, mul_left_comm, mul_assoc] using
+      (hcross (stolarsky γ (Real.exp (-2 * z)) (Real.exp (2 * z)))).symm
+  · rw [stolarsky_symm]; simpa only [psi, mul_comm] using hp
   · simp [stolarsky, hpp]
 
 /-- Every parameter strictly between zero and two, other than the identric
@@ -271,7 +282,7 @@ private theorem psi_zero_of_pos {z : ℝ} (hz : 0 < z) :
     intro h
     have := Real.exp_injective h
     linarith
-  simp only [psi, stolarsky, if_neg hab, if_pos rfl, Real.log_exp, Real.sinh_eq]
+  simp [psi, stolarsky, hab, Real.log_exp, Real.sinh_eq]
   field_simp
   <;> ring
 
@@ -311,7 +322,7 @@ private theorem normalized_profile_one_eq {z : ℝ} (hz : 0 < z) :
     simp [Real.exp_neg, E, show (2 : ℝ) * z = z + z by ring, Real.exp_add, pow_two, one_div]
   rw [he1, he2]
   change -z + ((1 / E * -z - E * z) / (1 / E - E) - 1) = 2 * z * (1 / E ^ 2) / (1 - 1 / E ^ 2) - 1
-  field_simp [hE.ne', hEn, hden, hden2]; <;> ring
+  field_simp [hE.ne', hEn, hden, hden2] <;> ring
 
 private theorem normalized_profile_one_limit :
     Tendsto (fun z : ℝ => Real.exp (-z) * psi 1 z) atTop (𝓝 (Real.exp (-1))) := by

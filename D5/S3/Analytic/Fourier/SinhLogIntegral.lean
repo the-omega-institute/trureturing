@@ -29,7 +29,7 @@ def E (a t : ℝ) : ℝ := if t = 0 then 1 else Real.sinh (a * t) / (a * t)
 /-- The positive half-line density in the logarithmic representation. -/
 def h (a s : ℝ) : ℝ := 1 / (Real.exp (Real.pi * s / a) - 1)
 
-private lemma h_pos {a s : ℝ} (ha : 0 < a) (hs : 0 < s) : 0 < h a s := by
+lemma h_pos {a s : ℝ} (ha : 0 < a) (hs : 0 < s) : 0 < h a s := by
   exact one_div_pos.mpr (sub_pos.mpr (Real.one_lt_exp_iff.mpr
     (div_pos (mul_pos Real.pi_pos hs) ha)))
 
@@ -59,7 +59,7 @@ theorem h_scale_le {a b s : ℝ} (ha : 0 < a) (hab : a ≤ b) (hs : 0 < s) :
   field_simp
   nlinarith
 
-private lemma E_pos {a : ℝ} (ha : 0 < a) (t : ℝ) : 0 < E a t := by
+lemma E_pos {a : ℝ} (ha : 0 < a) (t : ℝ) : 0 < E a t := by
   unfold E
   split_ifs with ht
   · norm_num

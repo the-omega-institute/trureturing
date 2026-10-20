@@ -64,6 +64,24 @@ Lean statement: `D5/S3/Quantum/Matrix/StolarskyMean/Result.inClassA_stolarsky`
 
 For every real parameter at least two and every nonempty finite positive family, the Stolarsky mean matrix has positive entries and exactly one strictly positive eigenvalue, counted with multiplicity. Symmetry and positivity come from the scalar mean. Conditional negativity limits the positive spectral subspace to dimension at most one, while a positive diagonal entry supplies a positive direction.
 
+**Theorem 1.6 (The Stolarsky matrix conjecture).**
+
+Lean statement: `D5/S3/Quantum/Matrix/StolarskyMean/Result.result`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/StolarskyMean/Result.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/bhatia-jain-2016-stolarsky-mean-matrices-class-a` (proved) by `D5/S3/Quantum/Matrix/StolarskyMean/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bhatia-jain-2016-stolarsky-mean-matrices-class-a","declaration_gid":"D5/S3/Quantum/Matrix/StolarskyMean/Result.result","resolution_kind":"proved"} -->
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. Bhatia and T. Jain (2016). *Mean matrices and conditional negativity*. DOI: [10.13001/1081-3810.3082](https://doi.org/10.13001/1081-3810.3082). URL: <https://journals.uwyo.edu/index.php/ela/article/view/1495>.
+
+*Commentary.*
+
+Every real parameter at least two gives a class A Stolarsky matrix for every nonempty finite positive family. Every parameter from zero inclusive to two exclusive admits a positive three-point family whose mean matrix has at least two positive eigenvalues. The first conclusion follows from positive profile curvature, Hilbert feature integration and the spectral bound. The second uses the ThreePoint theorem. The definitions and the conjecture are those of Bhatia and Jain; the proofs are formal derivations in this repository.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Matrix/StolarskyMean/Result.conditionallyNegative_logKernel`
@@ -71,4 +89,6 @@ For every real parameter at least two and every nonempty finite positive family,
 - Truth anchor: `D5/S3/Quantum/Matrix/StolarskyMean/Result.conditionallyNegative_stolarsky`
 - Truth anchor: `D5/S3/Quantum/Matrix/StolarskyMean/Result.inClassA_stolarsky`
 - Truth anchor: `D5/S3/Quantum/Matrix/StolarskyMean/Result.logKernel`
+- Truth anchor: `D5/S3/Quantum/Matrix/StolarskyMean/Result.result`
 - Dependency: [D5/S3/Quantum/Matrix/StolarskyMean/KernelFactor](KernelFactor.md)
+- Dependency: [D5/S3/Quantum/Matrix/StolarskyMean/ThreePoint](ThreePoint.md)

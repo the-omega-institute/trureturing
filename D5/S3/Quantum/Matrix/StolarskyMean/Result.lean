@@ -7,6 +7,7 @@
    digest: Integrating positive mixed curvature gives conditional negativity of Stolarsky matrices. -/
 
 import D5.S3.Quantum.Matrix.StolarskyMean.KernelFactor
+import D5.S3.Quantum.Matrix.StolarskyMean.ThreePoint
 import Mathlib.Analysis.InnerProductSpace.Reproducing
 import Mathlib.Analysis.InnerProductSpace.Calculus
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
@@ -260,5 +261,19 @@ theorem inClassA_stolarsky {γ : ℝ} (hγ : 2 ≤ γ)
     simpa [stolarskyMatrix] using stolarsky_symm γ (a j) (a i)
   · exact fun i j => stolarsky_pos hγ (ha i) (ha j)
   · exact conditionallyNegative_stolarsky hγ a ha
+
+/-- The two parameter ranges in the Stolarsky class A conjecture. -/
+theorem result : claim := by
+  constructor
+  · intro γ hγ n a ha
+    exact inClassA_stolarsky hγ a ha
+  · intro γ hγ hγ2
+    obtain ⟨z, hz, hcount⟩ := ThreePoint.exists_threePoint hγ hγ2
+    refine ⟨3, ![Real.exp (-2 * z), 1, Real.exp (2 * z)], ?_, ?_⟩
+    · intro i
+      fin_cases i <;> simp [Real.exp_pos]
+    · intro hA
+      rw [hA.2] at hcount
+      omega
 
 end D5.S3.Quantum.Matrix.StolarskyMean.Result

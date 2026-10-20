@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Analytic.IsolatedZeros, mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Deriv, mathlib/module/Mathlib.Analysis.SpecialFunctions.Sqrt, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp]
    utility: none
-   digest: Stolarsky profiles and logarithmic positive kernel pullbacks. -/
+   digest: Positive homogeneous Stolarsky profiles and logarithmic reconstruction. -/
 
 import D5.S3.Quantum.Matrix.StolarskyMean.Spectral
 import D5.S3.Weil.ZetaLinear.FiniteInversePoissonCriterion
@@ -100,40 +100,7 @@ theorem stolarsky_pos {γ a b : ℝ} (hγ : 2 ≤ γ) (ha : 0 < a) (hb : 0 < b) 
   have hγ0 : γ ≠ 0 := by linarith
   have hγ1 : γ ≠ 1 := by linarith
   simp only [stolarsky, if_neg hab, if_neg hγ0, if_neg hγ1]
-  apply Real.rpow_pos_of_pos
-  rcases lt_or_gt_of_ne hab with hab | hba
-  · exact div_pos_of_neg_of_neg (sub_neg.mpr (Real.rpow_lt_rpow ha.le hab (by linarith)))
-      (mul_neg_of_pos_of_neg (by linarith) (sub_neg.mpr hab))
-  · exact div_pos (sub_pos.mpr (Real.rpow_lt_rpow hb.le hba (by linarith)))
-      (mul_pos (by linarith) (sub_pos.mpr hba))
-
-theorem stolarsky_two (a b : ℝ) : stolarsky 2 a b = (a + b) / 2 := by
-  by_cases hab : a = b
-  · subst b; simp [stolarsky]
-  simp only [stolarsky, if_neg hab]
-  norm_num only [OfNat.ofNat_ne_zero, OfNat.ofNat_ne_one, ↓reduceIte, Real.rpow_two,
-    sub_self, sub_zero, one_div_one, Real.rpow_one]
-  field_simp [sub_ne_zero.mpr hab]
-  ring
-
-theorem conditionallyNegative_two {n : ℕ} (l : Fin n → ℝ) :
-    Spectral.ConditionallyNegative (stolarskyMatrix 2 l) := by
-  intro c hc
-  change (∑ i, c i * ∑ j, stolarsky 2 (l i) (l j) * c j) ≤ 0
-  have he (i j : Fin n) : c i * (((l i + l j) / 2) * c j) =
-      (c i * l i / 2) * c j + c i * (c j * l j / 2) := by ring
-  simp_rw [stolarsky_two, Finset.mul_sum, he, Finset.sum_add_distrib,
-    ← Finset.mul_sum, ← Finset.sum_mul, hc, mul_zero, zero_mul, add_zero]
-  exact le_rfl
-
-theorem inClassA_two {n : ℕ} (l : Fin (n + 1) → ℝ) (hl : ∀ i, 0 < l i) :
-    InClassA (stolarskyMatrix 2 l) := by
-  apply Spectral.inClassA_of_conditionallyNegative
-  · apply Matrix.IsHermitian.ext
-    intro i j
-    simpa only [star_trivial, stolarskyMatrix] using stolarsky_symm 2 (l j) (l i)
-  · exact fun i j => stolarsky_pos (by norm_num) (hl i) (hl j)
-  · exact conditionallyNegative_two l
+  exact Real.rpow_pos_of_pos (powerDividedDifference_pos hγ0 ha hb hab) _
 
 def profileKernel (g : ℝ → ℝ) (a b : ℝ) : ℝ :=
   Real.sqrt a * Real.sqrt b * g ((Real.log b - Real.log a) / 2)
@@ -160,28 +127,5 @@ theorem stolarsky_eq_profileKernel (γ : ℝ) {a b : ℝ}
   have h := stolarsky_homogeneous γ (Real.exp_pos (-t)) (Real.exp_pos t) (Real.exp_pos m)
   rw [hea, heb, hec] at h
   exact h
-
-/-- Positive definiteness survives logarithmic coordinates and the diagonal
-weight needed by the negative mixed derivative. -/
-theorem logarithmic_pullback_nonneg {g : ℝ → ℝ}
-    (hg : D5.S3.Weil.ZetaLinear.FiniteInversePoissonCriterion.PositiveDefinite
-      (fun t => (g t : ℂ))) {n : ℕ} (a c : Fin n → ℝ) :
-    0 ≤ ∑ i, ∑ j, c i * c j *
-      (g ((Real.log (a i) - Real.log (a j)) / 2) /
-        (4 * Real.sqrt (a i) * Real.sqrt (a j))) := by
-  have h := (hg n (fun i => -Real.log (a i) / 2)).re_dotProduct_nonneg
-    (fun i => ((c i / (2 * Real.sqrt (a i)) : ℝ) : ℂ))
-  change 0 ≤ Complex.re _ at h
-  simp only [dotProduct, Matrix.mulVec, Pi.star_apply, Complex.star_def,
-    Complex.conj_ofReal, Finset.mul_sum, Complex.re_sum, Complex.mul_re,
-    Complex.ofReal_re, Complex.ofReal_im, zero_mul, mul_zero, sub_zero] at h
-  convert h using 1
-  apply Finset.sum_congr rfl
-  intro i hi
-  apply Finset.sum_congr rfl
-  intro j hj
-  rw [show -Real.log (a j) / 2 - -Real.log (a i) / 2 =
-      (Real.log (a i) - Real.log (a j)) / 2 by ring]
-  ring
 
 end D5.S3.Quantum.Matrix.StolarskyMean.Reduction

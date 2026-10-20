@@ -24,12 +24,6 @@ namespace D5.S3.Quantum.Matrix.StolarskyMean.KernelFactor
 
 open SinhLogIntegral
 
-private theorem density_nonneg {a s : ℝ} (ha : 0 < a) (hs : 0 < s) :
-    0 ≤ h a s := by
-  unfold h
-  exact (one_div_pos.mpr (sub_pos.mpr
-    (Real.one_lt_exp_iff.mpr (by positivity)))).le
-
 private theorem density_continuous {a : ℝ} (ha : 0 < a) :
     ContinuousOn (fun s => h a s / s) (Ioi 0) := by
   unfold h
@@ -42,14 +36,6 @@ private theorem density_continuous {a : ℝ} (ha : 0 < a) :
   · exact continuousOn_id
   · intro s hs
     exact ne_of_gt hs
-
-private theorem E_positive {a : ℝ} (ha : 0 < a) (t : ℝ) : 0 < E a t := by
-  by_cases ht : t = 0
-  · simp [E, ht]
-  · have hx := mul_ne_zero ha.ne' ht
-    rcases lt_or_gt_of_ne hx with hx | hx
-    · simpa [E, ht] using div_pos_of_neg_of_neg (Real.sinh_neg_iff.mpr hx) hx
-    · simpa [E, ht] using div_pos (Real.sinh_pos_iff.mpr hx) hx
 
 private theorem E_even (a : ℝ) : Function.Even (E a) := by
   intro t
@@ -167,8 +153,8 @@ private theorem rho_pd {p : ℝ} (hp : 1 ≤ p) :
       have halg : (2 - 1 / p) * ((p + 1) / p) - 2 = (p - 1) / p ^ 2 := by
         field_simp
         <;> ring
-      have hd := density_nonneg hp0 hx
-      have hd1 := density_nonneg (by norm_num : (0 : ℝ) < 1) hx
+      have hd := (h_pos hp0 hx).le
+      have hd1 := (h_pos (by norm_num : (0 : ℝ) < 1) hx).le
       have hrem : 0 ≤ ((2 - 1 / p) * ((p + 1) / p) - 2) * h p x := by
         rw [halg]
         exact mul_nonneg (div_nonneg (by linarith) (sq_nonneg _)) hd
@@ -184,12 +170,12 @@ private theorem reciprocal_pd :
     (by intros; norm_num) (by
       intro x hx
       simpa using mul_nonneg (by norm_num : (0 : ℝ) ≤ 2)
-        (density_nonneg (by norm_num : (0 : ℝ) < 1) hx))
+        ((h_pos (by norm_num : (0 : ℝ) < 1) hx).le))
   convert H using 1
   funext t
   simp only [Finset.univ_unique, Finset.sum_singleton]
   rw [show -(2 * Real.log (E 1 t)) = -(Real.log (E 1 t)) + -(Real.log (E 1 t)) by ring,
-    Real.exp_add, Real.exp_neg, Real.exp_log (E_positive (by norm_num) t)]
+    Real.exp_add, Real.exp_neg, Real.exp_log (E_pos (by norm_num) t)]
   simp [pow_two]
 
 private theorem phi_pd {p : ℝ} (hp : 1 ≤ p) :
@@ -201,7 +187,7 @@ private theorem phi_pd {p : ℝ} (hp : 1 ≤ p) :
       intro x hx
       simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one]
       have hh := h_scale_le (by norm_num : (0 : ℝ) < 1) hp hx
-      have hd := density_nonneg (by norm_num : (0 : ℝ) < 1) hx
+      have hd := (h_pos (by norm_num : (0 : ℝ) < 1) hx).le
       simp only [div_one] at hh
       nlinarith)
   convert H using 1
@@ -210,8 +196,8 @@ private theorem phi_pd {p : ℝ} (hp : 1 ≤ p) :
   rw [show -(2 * Real.log (E p t) + -2 * Real.log (E 1 t)) =
     (Real.log (E 1 t) - Real.log (E p t)) +
       (Real.log (E 1 t) - Real.log (E p t)) by ring,
-    Real.exp_add, Real.exp_sub, Real.exp_log (E_positive (by norm_num) t),
-    Real.exp_log (E_positive hp0 t)]
+    Real.exp_add, Real.exp_sub, Real.exp_log (E_pos (by norm_num) t),
+    Real.exp_log (E_pos hp0 t)]
   simp [phi, pow_two]
 
 /-- The positive definite product appearing in the curvature factorization. -/
@@ -227,7 +213,7 @@ theorem factor_positiveDefinite {p : ℝ} (hp : 1 ≤ p) :
     simp only [phi, E_even 1 t, E_even p t]
   have hc : ContDiff ℝ 2 (phi p) :=
     ((E_smooth (by norm_num)).div (E_smooth hp0)
-      (fun t => (E_positive hp0 t).ne')).pow 2
+      (fun t => (E_pos hp0 t).ne')).pow 2
   simpa only [factor, Complex.ofReal_mul, Complex.ofReal_pow, Complex.ofReal_inv,
     Complex.ofReal_div, Complex.ofReal_one] using
     Closure.mul (Closure.mul (Closure.smul (rho_pd hp)
@@ -258,17 +244,17 @@ theorem psi_contDiff {n : ℕ∞ω} {γ : ℝ} (hγ : 2 ≤ γ) :
     ContDiff ℝ n (Reduction.psi γ) := by
   rw [psi_E hγ]
   exact ((E_smooth (by linarith)).div (E_smooth (by norm_num))
-    (fun t => (E_positive (by norm_num) t).ne')).rpow_const_of_ne
-      (fun t => (div_pos (E_positive (by linarith) t)
-        (E_positive (by norm_num) t)).ne')
+    (fun t => (E_pos (by norm_num) t).ne')).rpow_const_of_ne
+      (fun t => (div_pos (E_pos (by linarith) t)
+        (E_pos (by norm_num) t)).ne')
 
 private theorem rho_eq_profile {p : ℝ} (hp : 1 ≤ p) (t : ℝ) :
     rho p t = Reduction.psi (p + 1) t * (E p t / E (p + 1) t) ^ 2 := by
   have hp0 : 0 < p := by linarith
   have hγ : 2 ≤ p + 1 := by linarith
-  have he0 := E_positive (by norm_num : (0 : ℝ) < 1) t
-  have hep := E_positive hp0 t
-  have heγ := E_positive (by linarith : 0 < p + 1) t
+  have he0 := E_pos (by norm_num : (0 : ℝ) < 1) t
+  have hep := E_pos hp0 t
+  have heγ := E_pos (by linarith : 0 < p + 1) t
   rw [psi_E hγ]
   apply Real.log_injOn_pos (Real.exp_pos _)
     (mul_pos (Real.rpow_pos_of_pos (div_pos heγ he0) _)
@@ -303,10 +289,10 @@ private theorem psi_exp {γ t : ℝ} (hγ : 2 ≤ γ) (ht : t ≠ 0) :
   rw [psi_E hγ]
   dsimp only
   rw [Real.rpow_def_of_pos
-    (div_pos (E_positive (by linarith) t) (E_positive (by norm_num) t))]
+    (div_pos (E_pos (by linarith) t) (E_pos (by norm_num) t))]
   congr 1
-  rw [Real.log_div (E_positive (by linarith) t).ne'
-    (E_positive (by norm_num) t).ne']
+  rw [Real.log_div (E_pos (by linarith) t).ne'
+    (E_pos (by norm_num) t).ne']
   simp only [E, if_neg ht, one_mul]
   rw [Real.log_div hsg (mul_ne_zero hγ0 ht), Real.log_div hst ht,
     Real.log_mul hγ0 ht]
@@ -401,7 +387,7 @@ private theorem factor_continuous {p : ℝ} (hp : 1 ≤ p) : Continuous (factor 
   have hp0 : 0 < p := by linarith
   have hc : ContDiff ℝ 2 (phi p) :=
     ((E_smooth (by norm_num)).div (E_smooth hp0)
-      (fun t => (E_positive hp0 t).ne')).pow 2
+      (fun t => (E_pos hp0 t).ne')).pow 2
   have he : Function.Even (phi p) := by
     intro t
     simp only [phi, E_even 1 t, E_even p t]
@@ -419,15 +405,15 @@ private theorem factor_continuous {p : ℝ} (hp : 1 ≤ p) : Continuous (factor 
     unfold rho
     apply Real.continuous_exp.comp
     exact ((continuous_const.mul ((E_smooth (n := 2) hp0).continuous.log
-      (fun t => (E_positive hp0 t).ne'))).sub
+      (fun t => (E_pos hp0 t).ne'))).sub
       (continuous_const.mul ((E_smooth (n := 2) (by linarith)).continuous.log
-        (fun t => (E_positive (by linarith) t).ne')))).sub
+        (fun t => (E_pos (by linarith) t).ne')))).sub
       (((E_smooth (n := 2) (by norm_num)).continuous.log
-        (fun t => (E_positive (by norm_num) t).ne')).div_const p)
+        (fun t => (E_pos (by norm_num) t).ne')).div_const p)
   unfold factor
   exact ((continuous_const.mul hr).mul
     (((E_smooth (n := 2) (by norm_num)).continuous.inv₀
-      (fun t => (E_positive (by norm_num) t).ne')).pow 2)).mul hq
+      (fun t => (E_pos (by norm_num) t).ne')).pow 2)).mul hq
 
 /-- The derivative defect equals the density-balanced quadratic-deficit product,
 including its continuous value at zero. -/
