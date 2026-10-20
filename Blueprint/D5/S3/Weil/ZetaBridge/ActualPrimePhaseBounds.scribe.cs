@@ -59,7 +59,7 @@ internal sealed class ActualPrimePhaseBoundsDocument : IScribeDocumentDefinition
                     DeclarationHandle.Create(Owner + "firstMoment_le"),
                     H("The actual first moment"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastThree", c), Rightarrow,
-                        Call("primeFirstMoment", c), Leq,
+                        Call("primeFirstMoment", c), Leq, Sp,
                         c, Sp, Call("sqrt", c), Sp, L, Caret, Grp(D(2))))),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
@@ -74,7 +74,7 @@ internal sealed class ActualPrimePhaseBoundsDocument : IScribeDocumentDefinition
                     DeclarationHandle.Create(Owner + "offset_le"),
                     H("The centered second-moment offset with ordered resonances"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastThree", c), Rightarrow,
-                        Call("offset", c), Leq,
+                        Call("offset", c), Leq, Sp,
                         c, Sp, Grp(D(2), Sp, c, Plus, D(1)), Sp, L, Caret, Grp(D(3))))),
                     AssessedProvenance.FromRepo(),
                     Blocks(

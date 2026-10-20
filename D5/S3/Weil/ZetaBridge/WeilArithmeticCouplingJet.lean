@@ -339,19 +339,17 @@ def smoothEnvelope (c m : ℕ) : ℝ :=
   min (2 + poleCoefficient c / (m : ℝ))
     (Real.pi / 4 + (poleCoefficient c + 3 / (4 * modeScale c)) / (m : ℝ))
 
-/-- Exactly -H_m/m^2, where the actual symbol is A_m=H_m-S_m. -/
+/-- Exactly H_m/m^2 for the positive mass H_m; the actual symbol is A_m=-H_m-S_m. -/
 def smoothWeight (c m : ℕ) : ℝ :=
   (poleSine (logLength c) (frequency c (m : ℤ)) +
     ∑' j : ℕ, gammaSineTerm (logLength c) (frequency c (m : ℤ)) j) / (m : ℝ) ^ 2
 
-private theorem modeScale_pos {c : ℕ} (hc : 2 ≤ c) : 0 < modeScale c := by
-  have hc1 : (1 : ℝ) < c := by
-    exact_mod_cast (lt_of_lt_of_le (by decide : 1 < 2) hc)
-  exact div_pos (by positivity) (Real.log_pos hc1)
-
 private theorem owner_log_pos {c : ℕ} (hc : 2 ≤ c) : 0 < logLength c := by
   apply Real.log_pos
   exact_mod_cast (lt_of_lt_of_le (by decide : 1 < 2) hc)
+
+private theorem modeScale_pos {c : ℕ} (hc : 2 ≤ c) : 0 < modeScale c :=
+  div_pos (by positivity) (owner_log_pos hc)
 
 private theorem frequency_nat (c m : ℕ) :
     frequency c (m : ℤ) = modeScale c * (m : ℝ) := by
@@ -676,7 +674,7 @@ theorem smooth_weight_nonneg {c m : ℕ} (hc : 2 ≤ c) (hm : 0 < m) :
       (sub_nonneg.mpr (Real.one_le_cosh _))) (by positivity)
   · exact tsum_nonneg (fun j => div_nonneg (gamma_positive_nonneg hc m j) (sq_nonneg _))
 
-/-- Monotonicity belongs to -H_m/m^2, with the convergent Gamma sums retained. -/
+/-- Monotonicity belongs to H_m/m^2, with the convergent Gamma sums retained. -/
 theorem smooth_weight_antitone {c n m : ℕ} (hc : 2 ≤ c)
     (hn : 0 < n) (hnm : n ≤ m) : smoothWeight c m ≤ smoothWeight c n := by
   have hm : 0 < m := lt_of_lt_of_le hn hnm
@@ -710,18 +708,21 @@ private theorem pole_positive_bound {c m : ℕ} (hc : 2 ≤ c) (hm : 0 < m) :
       field_simp [ha.ne', hmR.ne']
       <;> ring
 
+private theorem smooth_mass_eq {c m : ℕ} (hm : 0 < m) :
+    (m : ℝ) ^ 2 * smoothWeight c m =
+      poleSine (logLength c) (frequency c (m : ℤ)) +
+      ∑' j : ℕ, gammaSineTerm (logLength c) (frequency c (m : ℤ)) j := by
+  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
+  unfold smoothWeight
+  field_simp [hmR.ne']
+
 private theorem smooth_mass_bounds {c m : ℕ} (hc : 2 ≤ c) (hm : 0 < m) :
     (m : ℝ) ^ 2 * smoothWeight c m ≤ 2 + poleCoefficient c / (m : ℝ) ∧
     (m : ℝ) ^ 2 * smoothWeight c m ≤
       Real.pi / 4 + (poleCoefficient c + 3 / (4 * modeScale c)) / (m : ℝ) := by
   have hmR : (0 : ℝ) < m := by exact_mod_cast hm
   have ha := modeScale_pos hc
-  have heq : (m : ℝ) ^ 2 * smoothWeight c m =
-      poleSine (logLength c) (frequency c (m : ℤ)) +
-      ∑' j : ℕ, gammaSineTerm (logLength c) (frequency c (m : ℤ)) j := by
-    unfold smoothWeight
-    field_simp [hmR.ne']
-  rw [heq]
+  rw [smooth_mass_eq hm]
   have hp := pole_positive_bound hc hm
   have hg := gamma_sine_abs_le_two (owner_log_pos hc).le (frequency c (m : ℤ))
   have hgr := gamma_positive_refined (owner_log_pos hc).le (mul_pos ha hmR)
@@ -760,15 +761,13 @@ theorem smooth_weight_envelope {c n m : ℕ} (hc : 2 ≤ c)
           (show 0 ≤ poleCoefficient c + 3 / (4 * modeScale c) from
             add_nonneg hU (by positivity)) hnR hnmR))
 
-/-- Exact A=H-S split using only owner definitions. The downstream module
+/-- Exact A=-H-S split using only owner definitions. The downstream module
 identifies this finite sum with T2.primeSymbol without creating an import cycle. -/
 theorem arithmetic_symbol_smooth_split (c : ℕ) {m : ℕ} (hm : 0 < m) :
     arithmeticBoundarySymbol c (m : ℤ) = -(m : ℝ) ^ 2 * smoothWeight c m -
       ∑ q ∈ Finset.range c, primeWeight q * Real.sin (frequency c (m : ℤ) * Real.log q) := by
-  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
-  unfold arithmeticBoundarySymbol smoothWeight
-  field_simp [hmR.ne']
-  <;> ring
+  rw [neg_mul, smooth_mass_eq hm, arithmeticBoundarySymbol]
+  ring
 
 /- SOURCE_ONLY_UNCOMPILED.
 Splice inside the existing Jet namespace and noncomputable section, after
@@ -777,9 +776,9 @@ arithmetic_symbol_smooth_split and before the final two ends. Header additions:
   import Mathlib.Algebra.Order.Archimedean.Real.Basic
 All private operands remain in their original physical source owner.
 
-Sign convention here: H_m = m^2 * smoothWeight c m is the POSITIVE smooth
-mass, and the actual arithmetic symbol is A_m = -H_m - S_m. Some older owner
-comments use the negative H convention; no such convention is used below.
+Sign convention throughout: H_m = m^2 * smoothWeight c m is the POSITIVE smooth
+mass, and the actual arithmetic symbol is A_m = -H_m - S_m. The floor below
+and the asymptotic specification use this same convention.
 -/
 
 /-- An explicit positive finite-block floor for the actual smooth mass. -/
@@ -867,79 +866,11 @@ theorem smooth_weight_floor {c m : ℕ} (hc : 2 ≤ c) (hm : 0 < m)
     exact div_nonneg
       (mul_nonneg (mul_nonneg (by norm_num) hw0)
         (sub_nonneg.mpr (Real.one_le_cosh _))) (by positivity)
-  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
-  -- The same cancellation pattern as the existing smooth_mass_bounds.
-  have heq : (m : ℝ) ^ 2 * smoothWeight c m =
-      poleSine (logLength c) (frequency c (m : ℤ)) +
-      ∑' j : ℕ, gammaSineTerm (logLength c) (frequency c (m : ℤ)) j := by
-    unfold smoothWeight
-    field_simp [hmR.ne']
   refine ⟨hpositive, ?_⟩
-  rw [heq]
+  -- Reuse the exact mass identity with the native pole retained.
+  rw [smooth_mass_eq hm]
   linarith
 
-
-/-- For every fixed natural cutoff c>=2 the actual smooth mass approaches pi/4
-with an O(1/m) error, at every positive natural mode. The constant is chosen
-before m; no frequency threshold, cutoff restriction, or tail/RH claim enters. -/
-theorem smooth_weight_actual_asymptotic (c : ℕ) (hc : 2 ≤ c) :
-    ∃ K : ℝ, 0 < K ∧ ∀ m : ℕ, 0 < m →
-      |(m : ℝ) ^ 2 * smoothWeight c m - Real.pi / 4| ≤ K / (m : ℝ) := by
-  let C : ℝ := Real.exp (-logLength c / 2) /
-    (1 - Real.exp (-2 * logLength c))
-  let K : ℝ := poleCoefficient c + (1 + C) / modeScale c
-  have hL := owner_log_pos hc
-  have ha := modeScale_pos hc
-  have hden : 0 < 1 - Real.exp (-2 * logLength c) :=
-    sub_pos.mpr (Real.exp_lt_one_iff.mpr (by nlinarith))
-  have hC : 0 ≤ C := (div_pos (Real.exp_pos _) hden).le
-  have hU : 0 ≤ poleCoefficient c :=
-    div_nonneg (mul_nonneg (by norm_num)
-      (sub_nonneg.mpr (Real.one_le_cosh _))) ha.le
-  have hK : 0 < K :=
-    add_pos_of_nonneg_of_pos hU (div_pos (by linarith) ha)
-  have hupper_constant : poleCoefficient c + 3 / (4 * modeScale c) ≤ K := by
-    have h := div_le_div_of_nonneg_right
-      (show (3 / 4 : ℝ) ≤ 1 + C by linarith) ha.le
-    have he : (3 / 4 : ℝ) / modeScale c = 3 / (4 * modeScale c) := by ring
-    rw [he] at h
-    dsimp [K]
-    linarith
-  have hlower_constant : (1 / 4 + C) / modeScale c ≤ K := by
-    have h := div_le_div_of_nonneg_right
-      (show (1 / 4 : ℝ) + C ≤ 1 + C by linarith) ha.le
-    dsimp [K]
-    linarith
-  refine ⟨K, hK, ?_⟩
-  intro m hm
-  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
-  have hw : 0 < frequency c (m : ℤ) := by
-    rw [frequency_nat]
-    exact mul_pos ha hmR
-  have hgamma := gamma_positive_lower hL hw
-  change Real.pi / 4 - (1 / 4 + C) / frequency c (m : ℤ) ≤ _ at hgamma
-  have hscale : (1 / 4 + C) / frequency c (m : ℤ) =
-      ((1 / 4 + C) / modeScale c) / (m : ℝ) := by
-    simp only [frequency_nat, div_mul_eq_div_div]
-  rw [hscale] at hgamma
-  have hpole : 0 ≤ poleSine (logLength c) (frequency c (m : ℤ)) := by
-    unfold poleSine
-    exact div_nonneg
-      (mul_nonneg (mul_nonneg (by norm_num) hw.le)
-        (sub_nonneg.mpr (Real.one_le_cosh _))) (by positivity)
-  have hmass : (m : ℝ) ^ 2 * smoothWeight c m =
-      poleSine (logLength c) (frequency c (m : ℤ)) +
-      ∑' j : ℕ, gammaSineTerm (logLength c) (frequency c (m : ℤ)) j := by
-    unfold smoothWeight
-    field_simp [hmR.ne']
-  apply abs_le.mpr
-  constructor
-  · have h := div_le_div_of_nonneg_right hlower_constant hmR.le
-    rw [hmass]
-    linarith
-  · have hmass_upper := (smooth_mass_bounds hc hm).2
-    have h := div_le_div_of_nonneg_right hupper_constant hmR.le
-    linarith
 
 /-- The actual complete Gamma/pole witness, before any mode is chosen. -/
 def explicitSmoothK (c : ℕ) : ℝ :=
@@ -999,20 +930,23 @@ theorem explicitSmoothK_spec (c : ℕ) (hc : 2 ≤ c) :
     exact div_nonneg
       (mul_nonneg (mul_nonneg (by norm_num) hw.le)
         (sub_nonneg.mpr (Real.one_le_cosh _))) (by positivity)
-  have hmass : (m : ℝ) ^ 2 * smoothWeight c m =
-      poleSine (logLength c) (frequency c (m : ℤ)) +
-      ∑' j : ℕ, gammaSineTerm (logLength c) (frequency c (m : ℤ)) j := by
-    unfold smoothWeight
-    field_simp [hmR.ne']
   apply abs_le.mpr
   constructor
   · have h := div_le_div_of_nonneg_right hlower_constant hmR.le
-    rw [hmass]
+    rw [smooth_mass_eq hm]
     linarith
   · have hmass_upper := (smooth_mass_bounds hc hm).2
     have h := div_le_div_of_nonneg_right hupper_constant hmR.le
     linarith
 
+
+/-- For every fixed natural cutoff c>=2 the actual smooth mass approaches pi/4
+with an O(1/m) error, at every positive natural mode. The constant is chosen
+before m; no frequency threshold, cutoff restriction, or tail/RH claim enters. -/
+theorem smooth_weight_actual_asymptotic (c : ℕ) (hc : 2 ≤ c) :
+    ∃ K : ℝ, 0 < K ∧ ∀ m : ℕ, 0 < m →
+      |(m : ℝ) ^ 2 * smoothWeight c m - Real.pi / 4| ≤ K / (m : ℝ) := by
+  exact ⟨explicitSmoothK c, explicitSmoothK_spec c hc⟩
 
 /-- The same witness has the required cutoff bound. -/
 theorem explicitSmoothK_le {c : ℕ} (hc : 3 ≤ c) :

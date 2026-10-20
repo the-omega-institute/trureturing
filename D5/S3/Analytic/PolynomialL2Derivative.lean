@@ -1,13 +1,10 @@
 /- GID: D5/S3/Analytic/PolynomialL2Derivative
    generality: G
-   mirror-B: none(waiver:native-proof-stage-scribe-pending)
+   mirror-B: D5/B/S3/Analytic/PolynomialL2Derivative
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.ShiftedLegendre,
-     mathlib/module/Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts,
-     mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Beta]
+   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.ShiftedLegendre, mathlib/module/Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Beta]
    utility: none
-   digest: The derivative L2 energy of a complex polynomial on [0,1] is bounded
-     by d^4 times its L2 energy when its degree is below d. -/
+   digest: The derivative L2 energy of a complex polynomial on [0,1] is bounded by d^4 times its L2 energy when its degree is below d. -/
 
 import Mathlib.RingTheory.Polynomial.ShiftedLegendre
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
