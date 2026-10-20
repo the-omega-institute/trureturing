@@ -55,10 +55,13 @@ def pauli : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
 def totalSpinSq (m : ℕ) : Matrix (Sys m) (Sys m) ℂ :=
   ∑ l : Fin 3, (∑ k : Fin (2 * m), siteOp m k (pauli l)) ^ 2
 
+private def gradientWeight (m : ℕ) (k : Fin (2 * m)) : ℂ :=
+  (((2 * (k.val + 1) : ℝ) - 2 * m - 1 : ℝ) : ℂ)
+
 /-- Squared gradient spin with the one-based weights 2k - N - 1. -/
 def gradientSq (m : ℕ) : Matrix (Sys m) (Sys m) ℂ :=
   ∑ l : Fin 3, (∑ k : Fin (2 * m),
-    (((2 * (k.val + 1) : ℝ) - 2 * m - 1 : ℝ) : ℂ) • siteOp m k (pauli l)) ^ 2
+    gradientWeight m k • siteOp m k (pauli l)) ^ 2
 
 /-- The balanced-cut gradient inequality for every even number of at least four qubits. -/
 def claim : Prop :=
@@ -189,7 +192,8 @@ private lemma half_gradient_second (c : ℝ) (l : Fin 3) :
     norm_num [dotProduct, half_sum, halfGradient, Matrix.mulVec, localOp, tensorOp,
       pauli, pauliMatrix, qubitX, qubitZ, chi, singletVector, finTwoEquiv,
       Fin.sum_univ_succ, Fin.prod_univ_succ, Function.update_apply, Matrix.one_apply,
-      Matrix.mul_apply, halfEquiv, map_ofNat]
+      Matrix.mul_apply, halfEquiv, map_ofNat] <;>
+      ring_nf <;> norm_num [Complex.I_sq]
 
 private lemma half_spin_mean (l : Fin 3) : (halfDensity * halfSpin l).trace = 0 := by
   rw [half_expectation, half_spin_annihilates, dotProduct_zero]
@@ -218,13 +222,12 @@ private lemma total_spin_split (l : Fin 3) :
   abel
 
 private lemma gradient_split (l : Fin 3) :
-    (∑ k : Fin (2 * 4),
-      (2 * (k.val + 1) - 8 - 1 : ℂ) • siteOp 4 k (pauli l)) =
+    (∑ k : Fin (2 * 4), gradientWeight 4 k • siteOp 4 k (pauli l)) =
         halfGradient (-7) l ⊗ₖ 1 + 1 ⊗ₖ halfGradient 1 l := by
-  norm_num [Fin.sum_univ_succ, siteOp, halfGradient, add_kronecker, kronecker_add,
-    smul_kronecker, kronecker_smul]
-  try simp only [smul_kronecker, kronecker_smul]
-  abel
+  ext x y
+  norm_num [Fin.sum_univ_succ, siteOp, halfGradient, gradientWeight,
+    Matrix.kronecker_apply, Matrix.smul_apply, smul_eq_mul]
+  ring
 
 private lemma total_spin_value : (rho * totalSpinSq 4).trace = 0 := by
   simp only [totalSpinSq, Matrix.mul_sum, trace_sum, total_spin_split,
@@ -232,8 +235,7 @@ private lemma total_spin_value : (rho * totalSpinSq 4).trace = 0 := by
   norm_num
 
 private lemma gradient_value : (rho * gradientSq 4).trace = 240 := by
-  simp only [gradientSq, Complex.ofReal_sub, Complex.ofReal_mul, Complex.ofReal_add,
-    Complex.ofReal_natCast, Complex.ofReal_ofNat, Matrix.mul_sum, trace_sum, gradient_split,
+  simp only [gradientSq, Matrix.mul_sum, trace_sum, gradient_split,
     product_second, half_gradient_mean, half_gradient_second]
   norm_num
 
