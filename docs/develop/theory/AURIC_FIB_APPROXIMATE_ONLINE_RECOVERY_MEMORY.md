@@ -3926,12 +3926,33 @@ $$
 \ge d_n\left(1-\frac{W}{N}\right).
 $$
 
-For the maximally entangled input, trace distance from the target pure
-state is at least twice its entanglement infidelity.  Therefore the
-conditional diamond error is at least twice the last display.  Integrate
-over the independent seed \(s\); the same bound survives averaging and is
-exactly \(33.4\).  The argument uses the actual \(1/N\) history weights and
-one common decoder per record. \(\square\)
+Fix the same maximally entangled input
+\(\Phi=|\Omega_3\rangle\langle\Omega_3|\), where
+\(|\Omega_3\rangle=3^{-1/2}\sum_{j=0}^2|j\rangle\otimes|j\rangle\),
+and the same target projection \(\Phi\), for every seed.  Let
+\(\mathcal F_s=N^{-1}\sum_{h,r}p_s(r\mid h)
+D_{r,s}\circ\operatorname{Ad}_{Q_h}\), and put
+\(\overline{\mathcal F}=\mathbb E_S\mathcal F_S=C\mathcal E_n\).
+Linearity of this fixed projection probability gives
+
+$$
+\operatorname{Tr}\!\left[\Phi
+ (\overline{\mathcal F}\otimes\operatorname{id}_3)(\Phi)\right]
+=\mathbb E_S\frac1N\sum_{h,r}p_S(r\mid h)f_{h,r,S}
+\le1-d_n\left(1-\frac WN\right).
+$$
+
+For the averaged output state \(\rho=(\overline{\mathcal F}\otimes
+\operatorname{id}_3)(\Phi)\), the two-outcome test
+\(\{\Phi,I-\Phi\}\) gives
+\(\|\rho-\Phi\|_1\ge2(1-\operatorname{Tr}(\Phi\rho))\).
+Consequently
+\(\varepsilon\ge\|\mathcal E_n-\iota\|_\diamond
+\ge\|\overline{\mathcal F}-\operatorname{id}_3\|_\diamond
+\ge2d_n(1-W/N)\), proving \(33.4\).
+The fidelity is averaged before applying this one fixed test to the
+averaged channel.  The argument uses the actual \(1/N\) history weights
+and one common decoder per record. \(\square\)
 
 ## 34. The actual parity lattice and the exact positive-error plateau
 
@@ -3989,10 +4010,10 @@ W_n(\varepsilon)=2^n .
 \tag{34.4}
 $$
 
-The endpoint \(W_0(\varepsilon)=1\) is separate, and the exact endpoint
-\(W_n(0)=2^n\), and the counterexample to a uniform capped law in §31;
-threshold in \(34.4\) is a sufficient conservative plateau threshold; no
-optimality of that threshold is claimed.
+The endpoint \(W_0(\varepsilon)=1\) is separate.  The exact endpoint
+\(W_n(0)=2^n\) and the counterexample to a uniform capped law in §31
+remain in force.  The threshold in \(34.4\) is a sufficient conservative
+plateau threshold; no optimality of that threshold is claimed.
 
 **Proof.** If \(W_n(\varepsilon)\ge N\), (34.3) is immediate.  Otherwise
 apply Theorem 33.4 and \(34.2\):
@@ -4016,10 +4037,12 @@ $$
 \tag{35.1}
 $$
 
-where \(\varepsilon_{\rm op}\) is the attained operational minimum of
-Definition 18.1 with exactly the original permissions.  Thus \(\eta_n\) is
-the least averaged full-reference diamond error attainable while the peak
-width is strictly below the exact-history width.  The minimum is attained:
+where \(\varepsilon_{\rm op}\in[0,2]\) is the attained, threshold-free
+operational minimum of Definition 18.1 with exactly the original
+permissions.  Thus \(\eta_n\in[0,2]\) is the least averaged full-reference
+diamond error attainable while the peak width is strictly below the
+exact-history width; it is not restricted to \(0<\varepsilon<1/4\).
+The minimum is attained:
 there are finitely many widths and each fixed-width operational infimum is
 attained by Theorem 18.2.
 
@@ -4045,19 +4068,60 @@ one unitary channel, whose diamond distance from the identity is at most
 one.  The pair has total actual weight \(2/N\), while all other histories
 are corrected exactly, giving \(2/N\).
 
-For the second estimate, write \(R=Q_h^\dagger Q_k\).  Choose an explicit
-spectral square root on the two-dimensional \(T\)-block: diagonalize
-\(R|_T=U\operatorname{diag}(e^{i\theta_1},e^{i\theta_2})U^\dagger\) with
-\(\theta_j\in(-\pi,\pi]\), choose \(e^{i\theta_j/2}\), and at the
-\(-1\) eigenspace choose either sign \(+i\) or \(-i\).  Extend it by \(1\)
-on \(\xi\), obtaining \(S^2=R\).  The two-dimensional eigenvalue cases
-\(\det R=\pm1\), using the sign just specified at the branch boundary,
-give the elementary bound
+For the second estimate, write
+\(R=Q_h^\dagger Q_k=1\oplus R_T\), where
+\(R_T=G_h^\dagger G_k\) and \(\det R_T=\pm1\).
+The common phase \(\lambda^n\) cancels on the fixed line, so
+\(\operatorname{tr}R=1+\operatorname{tr}R_T\) and
+\(d_n=1-|\operatorname{tr}R|/3\) for this maximizing pair.
+Diagonalize the \(T\)-block and take the spectral roots
+\(e^{i\theta_j/2}\) for eigenangles \(\theta_j\in(-\pi,\pi)\).
+At an eigenvalue \(-1\), use either angle \(\pi\) or \(-\pi\), giving
+the explicit root \(+i\) or \(-i\).  Extend by exactly \(1\) on \(\xi\).
+This defines a unitary \(S\) with \(S^2=R\).  We claim
 
 $$
-\|S-I_3\|_{\rm op}^2\le3\left(1-\frac{|\operatorname{tr}R+1|}{3}\right)=3d_n.
+\|S-I_3\|_{\rm op}^2\le3-|\operatorname{tr}R|
+=3-|1+\operatorname{tr}R_T|=3d_n.
 \tag{35.3}
 $$
+
+If \(\det R_T=1\), its eigenvalues are \(e^{i\theta},e^{-i\theta}\)
+for \(0\le\theta\le\pi\).  The chosen roots have squared distance
+\(2-2\cos(\theta/2)\) from \(1\); at \(\theta=\pi\), either sign
+of \(i\) gives the same value \(2\).  Put \(t=\cos\theta\).
+For \(t\ge-1/2\), \(3-|1+2t|=2-2t\), and
+\(\cos(\theta/2)\ge\cos\theta=t\) proves the bound.  For
+\(t<-1/2\), \(3-|1+2t|=4+2t\ge2\), whereas
+\(2-2\cos(\theta/2)\le2\).  This proves \(35.3\) in both trace cases.
+
+If \(\det R_T=-1\), relabel its eigenvalues so their angles are
+\(\sigma\alpha\) and \(\sigma(\pi-\alpha)\), where
+\(0\le\alpha\le\pi/2\) and \(\sigma\in\{1,-1\}\).
+Indeed their product is \(-1\), so if one is \(e^{i\theta}\),
+the other is \(-e^{-i\theta}\); their imaginary parts agree, and
+the smaller absolute angle is \(\alpha\).  When \(\alpha=0\), the
+eigenvalues are \(1,-1\), and either \(\sigma\) selects one of the
+two allowed roots at \(-1\).  When \(\alpha=\pi/2\), the eigenvalues
+coincide at \(\sigma i\), with the same chosen root on that eigenspace.
+For these roots, put \(x=\sin(\alpha/2)\in[0,1/\sqrt2]\).  Then
+
+$$
+\|S-I_3\|_{\rm op}^2=2-2x,\qquad
+|\operatorname{tr}R|=|1+2\sigma i\sin\alpha|
+=\sqrt{1+16x^2(1-x^2)}.
+$$
+
+Both sides of the comparison
+\(\sqrt{1+16x^2(1-x^2)}\le1+2x\) are nonnegative, and
+
+$$
+(1+2x)^2-\bigl(1+16x^2(1-x^2)\bigr)
+=4x(x+1)(2x-1)^2\ge0.
+$$
+
+Squaring is therefore reversible and proves \(35.3\) also for
+\(\det R_T=-1\), including every branch endpoint.
 
 The common terminal unitary is the full-\(H\) extension of
 \(S^\dagger Q_h^\dagger\).  The two corrected qutrit unitaries are \(S^\dagger\)
@@ -4082,11 +4146,13 @@ unitary is a non-scalar reflection, and the average of the identity and
 its conjugation has diamond distance exactly one from the identity.
 Thus \(\eta_1=1\). \(\square\)
 
-The square-root estimate in \(35.3\) is a finite \(2\times2\) spectral
-calculation, not an appeal to an analytic principal-root convention.  In
-particular the \(-1\) eigenvalue is assigned an explicit \(i\) or \(-i\)
-branch before the norm estimate; no branch discontinuity is hidden in the
-controller.
+For the actual \(n=1\) pair, \(R=V_0^\dagger V_1=W\) is a full qutrit
+reflection with eigenvalues \(1,1,-1\).  Hence
+\(\operatorname{tr}R=1\), \(d_1=2/3\), and the specified square root
+has \(\|S-I_3\|_{\rm op}^2=2=3d_1\), for either sign at \(-1\).
+The normalization \(3-|\operatorname{tr}R+1|\) would instead give
+\(1\), violating the bound.  The fixed-line contribution is counted
+once, and the spectral proof above makes each branch choice explicit.
 
 ## 36. Same-determinant-coset packing and the remaining first-saving gap
 
