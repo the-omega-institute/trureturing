@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d5dc14eb859a5889385876025c8865654a10ec0060da7e11d26f2fdfbaaae9a6
+  normalized_sha256: sha256:d5dc14eb859a5889385876025c8865654a10ec0060da7e11d26f2fdfbaaae9a6
+cas_ref: sha256:d5dc14eb859a5889385876025c8865654a10ec0060da7e11d26f2fdfbaaae9a6
+coverage_gids:
+  - gid: D5/S3/Fourier/FullBispectrumStability.unit_mul_conj
+    target_statement_id: sha256:c294b57855b1480c8089551bdebd391d65a8fb4ecdb0a654ab50158add006b8c
+  - gid: D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.fourier_phase_character_laws
+    target_statement_id: sha256:02823f254b402c74572c51a80be747cc216a299828612a45227575f01d264a95
+receipts:
+  unresolved_subitems: []
