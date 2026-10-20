@@ -3320,6 +3320,38 @@ Thus the entire optimization values coincide, and Theorem 69.1
 transfers. This says nothing about identity recovery on arbitrary
 unencoded $\mathbb C^5$ inputs.
 
+**Corollary 78.1 (A legal peak-six online application).** For the actual
+fair horizon-three instrument and the original averaged encoded-input
+recovery convention,
+
+$$
+\varepsilon_{\rm op}(6,3)
+\le\varepsilon_{\mathcal P}
+=\frac{793-88\sqrt{13}}{1508}.
+\tag{78.1}
+$$
+
+**Application of Recovery Theorem 43.2.** Here $n=3$, $N=2^3=8$ and
+the width $W=6$ satisfies $W\ge N/2=4$. Thus the online peak-six and
+offline terminal-six feasible averaged full-$H$ channel sets coincide
+by [Recovery, Theorem 43.2](AURIC_FIB_APPROXIMATE_ONLINE_RECOVERY_MEMORY.md#43-near-full-matching-and-simultaneous-legal-pair-merges).
+Apply it to the partition (69.1) and decoders (71.3), extended to
+full-$H$ decoders by the encoded-input transfer above.
+
+Concretely, let $f(h)$ be the cell of (69.1) containing $h$. Retain
+the exact acquired prefix through time two, with layer counts $1,2,4$.
+At time three, from prefix $h_1h_2$ and the acquired label $h_3$,
+transition directly to $f(h_1h_2h_3)$ in the six-cell terminal alphabet.
+The resulting layer counts are $1,2,4,6$; no eight-state layer is
+created. These deterministic updates and a constant independent
+shared seed are permitted by Recovery Definition 2.3. The complete
+persistent state is the prefix or terminal cell; the known horizon
+and static decoder tables use that definition's separate resource
+convention. The averaged full-$H$ channel is exactly the transferred
+channel already constructed above, with target $\iota$ and the same
+unhalved diamond error for every finite untouched reference.
+Theorem 69.1 therefore gives (78.1). $\square$
+
 **Mathematical and literature status.** The explicit composite
 primal/dual certificate of §§69–77 is a repo-derived ordinary
 finite-dimensional mathematical proof. The actual letters,
@@ -3329,6 +3361,8 @@ binary errors are supplied by Theorem 59.2 and Proposition 63.2.
 The proof above supplies the new joint optimum through the explicit
 Kraus, trace and positive-semidefinite calculations; it does not
 require a numerical SDP optimum or a new external recovery theorem.
+Corollary 78.1 separately applies the existing Recovery Theorem 43.2
+to that certificate; the new joint-certificate content is in §§69–77.
 
 The primary references already scoped in the owning volume retain
 those scopes. Watrous, *The Theory of Quantum Information*, Chapter 2,
@@ -3350,19 +3384,24 @@ horizon, the fair input-independent history law, the partition and
 the permission of one arbitrary system-only CPTP decoder per terminal
 record. It gives no optimization over record partitions, causal
 controllers, shared seeds, input-dependent Born-weight instruments,
-or physical implementations. The full finite $(n,\varepsilon)$
-joint recovery/memory law, including its online compatibility and
+or physical implementations. Corollary 78.1 gives an attainable
+online error bound, without asserting a global minimum over
+partitions, stochastic controllers or shared seeds. Beyond this
+concrete application, the full finite $(n,\varepsilon)$ joint
+recovery/memory law, including general online compatibility and
 optimal peak memory requirements, remains open. The critical-energy
 estimate remains open as well; no energy estimate follows from
 the terminal channel identity or from these Choi witnesses.
 
-Six terminal records alone do not prove a causal controller realizing
-them at a specified intermediate width, and do not establish a saving
-in fixed-length bits: both six and eight possible outcomes require
-three bits, since $\lceil\log_2 6\rceil=\lceil\log_2 8\rceil=3$.
-The unresolved causal, resource and physical questions remain part
-of the AURIC FIB quantum recovery/memory objective. Theorem 69.1
+A terminal alphabet alone does not generally determine the required
+intermediate width; Corollary 78.1 supplies the legal peak-six
+realization for (69.1). This establishes no saving in fixed-length
+bits: both six and eight possible outcomes require three bits,
+since $\lceil\log_2 6\rceil=\lceil\log_2 8\rceil=3$.
+The remaining general causal, resource and physical questions are
+part of the AURIC FIB quantum recovery/memory objective. Theorem 69.1
 settles exactly the finite terminal-channel optimization stated
-there, with all decoder and reference permissions retained.
+there, with all decoder and reference permissions retained, and
+Corollary 78.1 supplies its concrete online application.
 
 ## 追加锚（本行以下为增补区）
