@@ -43,7 +43,10 @@ internal sealed class LouvetSymmetricAbsolutelyPPTDocument : IScribeDocumentDefi
             Describe.Lean(DescribeId.Create("lsappt-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("Conjecture 1 holds"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The permutation symmetrizer retains a positive floor after partial transposition. A positive residual contributes at least minus half its trace on the local symmetric subspace. The spectral parameters and the central binomial coefficient make their sum positive for every bipartition."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The permutation symmetrizer retains a positive floor after partial transposition. A positive residual contributes at least minus half its trace on the local symmetric subspace. The spectral parameters and the central binomial coefficient make their sum positive for every bipartition."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("louvet-2025-symmetric-absolutely-ppt"),
+                    ResolutionKind.Proved)))));
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Q(params string[] names) => Seq(Operatorname,
