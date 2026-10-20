@@ -2042,3 +2042,418 @@ is precisely $r\ne s$ by Theorem 19.2. The entire-child bijection
 of Theorem 19.4 therefore leaves exactly (20.16) as the terminal-M
 part of (19.6), with its original same-$v$ terminal-J requirement
 unchanged. No source coordinate has been bounded or omitted. ∎
+
+## 21. A nonlinear order on the entire lower source branch
+
+**Definition 21.1 (Bounded source coordinate and nonlinear response).**
+Retain the interval $K=[p_c-10^{-40},p_c+10^{-40}]$ of (14.1),
+the complete worlds of Definition 19.1 and their actual responses
+$u_i(r,p),m_i(r,p)$ of (20.1). Set
+
+$$
+\begin{gathered}
+q=r(1-r),\qquad z=b/q,\qquad b=qz,\qquad c=1/z,\\
+J_0=1+qz^2,\qquad N_0=J_0+rz,\qquad
+j=J_0/z,\quad n=N_0/z,\quad T=1+qz,\quad U=1+2qz,\quad V=U+n,\\
+B=6/T-2/U,\qquad \Lambda=1+6/T+1/U-4/j-4/n,\\
+A_5=1+V(4-15/j+20/T-10/n),\qquad
+K_5=96(b-1/8)V/T,\\
+\alpha=-(24/5)(b-1/8)B,\qquad
+\beta=p-24-K_5,\qquad E=\alpha A_5-\beta\Lambda,\\
+P_*(w)=\frac{13w}{2}+\frac{21(w-144)^2}{1600}
+                  -\frac{31(w-144)^3}{48000},\\
+H_-(r,p)=m_-(r,p)-P_*(u_-(r,p)).
+\end{gathered}
+\tag{21.1}
+$$
+
+All expressions on the first four lines extend rationally to
+$0\le r\le1$, $z>0$. Polynomial quotients below are cancelled
+before evaluation at $r=0$ or $r=1$. Write
+
+$$
+\widetilde A(r,z,p)=\frac{\mathsf A(r,qz,p)}{q^3}.
+\tag{21.2}
+$$
+
+This is a polynomial of coordinate degrees $(8,7,1)$. Direct
+substitution in (14.2) gives the identity
+
+$$
+E=-\frac{2\widetilde A}{5zTUJ_0N_0}.
+\tag{21.3}
+$$
+
+In particular, on $0<r<1$, $z>0$, its zeros are exactly the
+original source zeros. The lower label is characterized by
+$4qz^2<1$, using Theorem 18.4. The zero-safe parent equations
+are $\epsilon\Lambda=\alpha$ and $\epsilon A_5=\beta$.
+
+**Definition 21.2 (Two polynomial response charts).** For the first
+chart put
+
+$$
+n_0=\frac{N_u(r,qz)}{q^3},\qquad
+m_0=\frac{N_m(r,qz)}{q^3},\qquad
+d_0=\frac{D_m(r,qz)}{q^3}
+   =\frac52zTUJ_0N_0\Lambda.
+\tag{21.4}
+$$
+
+Here $N_u,N_m,D_m$ are exactly those of Section 14. All three
+quotients in (21.4) are polynomials. For the second chart put
+
+$$
+\begin{aligned}
+G_5&=(4T+20)J_0N_0-zT(15N_0+10J_0),\\
+G_6&=(10T+45)J_0N_0-zT(36N_0+20J_0),\\
+G_7&=(20T+84)J_0N_0-zT(70N_0+35J_0),\\
+C&=zTJ_0N_0+(Uz+N_0)G_5=zTJ_0N_0A_5,\\
+B_5&=zT(p-24)-96(b-1/8)(Uz+N_0),\qquad d_1=zC,\\
+n_1&=\frac{\{24zT+(2Uz+N_0)(240T-243)\}C
+        +\{zTJ_0N_0+(2Uz+N_0)G_6\}B_5}{T},\\
+m_1&=\frac{\{24zT+(3Uz+2N_0)(480T-2268/5)\}C
+        +\{zTJ_0N_0+(3Uz+2N_0)G_7\}B_5}{T}.
+\end{aligned}
+\tag{21.5}
+$$
+
+The two divisions by $T$ are exact in $\mathbb Q[r,z,p]$.
+On an actual source with $d_k\ne0$ the corresponding responses
+are $u=n_k/d_k$, $m=m_k/d_k$. For $k=0$ this is the regular
+chart of Section 14. For $k=1$, substitute
+$\epsilon=\beta/A_5=B_5J_0N_0/C$ in (20.5) and (19.3).
+Thus this second chart is valid also at $\Lambda=0$ whenever
+$A_5\ne0$.
+
+For polynomials $f,d$ define
+
+$$
+\begin{aligned}
+\mathcal L(f,d)
+ &= (f_rd-fd_r)\widetilde A_z
+       -(f_zd-fd_z)\widetilde A_r,\\
+\mathcal R(n,m,d)
+ &=16000d^2\mathcal L(m,d)\\
+ &\quad-\{104000d^2+420(n-144d)d-31(n-144d)^2\}
+                      \mathcal L(n,d),\\
+G^{(0)}&=-\frac{\mathcal R(n_0,m_0,d_0)}{15z},\qquad
+G^{(1)}=-\frac{\mathcal R(n_1,m_1,d_1)}{z}.
+\end{aligned}
+\tag{21.6}
+$$
+
+Both last quotients are integer polynomials. Their coordinate
+degrees in $(r,z,p)$ are respectively $(38,32,1)$ and $(38,36,4)$.
+Equations (21.2), (21.4)–(21.6) specify every coefficient, including
+the normalization of these two polynomials.
+
+**Definition 21.3 (Finite rational inclusions).** Use interval
+addition, negation, multiplication and reciprocal with outward
+rounding to the grid $Q^{-1}\mathbb Z$, where
+
+$$
+Q=2^{220},\qquad N=4096,\qquad h=\frac1{2N},\qquad
+\rho=\frac{256}{N^2},\qquad r_j=\frac{2j+1}{2N}
+\quad(0\le j<N).
+\tag{21.7}
+$$
+
+Thus a rational $a$ is enclosed by
+$[\lfloor Qa\rfloor,\lceil Qa\rceil]/Q$. On intervals with
+integer endpoints $[a,b]/Q$, $[c,d]/Q$, multiplication has endpoints
+
+$$
+\frac1Q\left[
+ \left\lfloor\frac{\min(ac,ad,bc,bd)}Q\right\rfloor,
+ \left\lceil\frac{\max(ac,ad,bc,bd)}Q\right\rceil\right].
+\tag{21.8}
+$$
+
+For an interval not containing zero, reciprocal has endpoints
+$[\lfloor Q^2/b\rfloor,\lceil Q^2/a\rceil]/Q$.
+Apply the ordinary product and reciprocal differentiation rules
+to (21.1) for first and second derivative intervals of $E$.
+For example, with $w=1/v$,
+
+$$
+(vt)_{ab}=v_{ab}t+v_at_b+v_bt_a+vt_{ab},\qquad
+w_a=-w^2v_a,\qquad
+w_{ab}=2w^3v_av_b-w^2v_{ab}.
+\tag{21.9}
+$$
+
+The derivatives in (21.9) are with respect to $r,z$, with $p$
+held fixed. All rational expressions use the parentheses of
+(21.1); unparenthesized sums and products are taken from left
+to right.
+
+The following recursion specifies rational centres and slopes.
+Start $t_{0,0}=1$ and, for $j>0$, $t_{j,0}=t_{j-1,3}$.
+For $\ell=0,1,2$ let $V_{j\ell},Z_{j\ell}$ be the value and
+$z$-derivative interval of $E(r_j,t_{j,\ell},p_c)$ and put
+
+$$
+\begin{gathered}
+I_{j\ell}=[t_{j,\ell},t_{j,\ell}]-V_{j\ell}/Z_{j\ell},\qquad
+t_{j,\ell+1}=2^{-40}\left\lfloor
+                       2^{40}\inf I_{j\ell}\right\rfloor,\\
+z_j=t_{j,3},\qquad
+S_j=-[E_r](r_j,z_j,p_c)/[E_z](r_j,z_j,p_c),\qquad
+s_j=2^{-24}\left\lfloor2^{24}\inf S_j\right\rfloor.
+\end{gathered}
+\tag{21.10}
+$$
+
+Square brackets on a rational function or derivative denote its
+interval extension just specified. Define the closed intervals
+and affine tubes
+
+$$
+\begin{gathered}
+R_j=[r_j-h,r_j+h],\qquad
+Z_j=[z_j-|s_j|h-\rho,z_j+|s_j|h+\rho],\\
+\mathcal V_j=\{(r,z):r\in R_j,
+                 \ |z-z_j-s_j(r-r_j)|\le\rho\},\\
+D_j=[E_{rr}](R_j,Z_j,K)+2s_j[E_{rz}](R_j,Z_j,K)
+                         +s_j^2[E_{zz}](R_j,Z_j,K),\\
+M_j^\pm=[E](r_j,z_j\pm\rho,K)
+       +\bigl([E_r](r_j,z_j\pm\rho,K)
+                     +s_j[E_z](r_j,z_j\pm\rho,K)\bigr)[-h,h]
+       +\tfrac12D_j[0,h^2].
+\end{gathered}
+\tag{21.11}
+$$
+
+For the polynomial inclusion use chart $k_j=1$ for
+$j\le613$ or $j\ge3645$, and $k_j=0$ otherwise. If $j<2048$ set
+$x=r$, $x_j=r_j$, $\tau_j=s_j$ and $F_j(x,z,p)=G^{(k_j)}(x,z,p)$.
+Otherwise set $x=1-r$, $x_j=1-r_j$, $\tau_j=-s_j$ and
+$F_j(x,z,p)=G^{(k_j)}(1-x,z,p)$.
+Expand $F_j$ exactly as a polynomial before taking intervals.
+Its interval extension and those of its derivatives use nested
+Horner evaluation, in descending powers: first $p$ in each
+coefficient, then $z$, then $x$.
+
+For $a+b\le4$ put
+
+$$
+V_{ab,j}=\begin{cases}
+ [\partial_x^a\partial_z^bF_j](x_j,z_j,K),&a+b<4,\\
+ [\partial_x^a\partial_z^bF_j]
+       ([x_j-h,x_j+h],Z_j,K),&a+b=4,
+\end{cases}
+\qquad
+C_{ab,j}=\sum_{t=0}^a\binom at\tau_j^t V_{a-t,b+t,j}.
+\tag{21.12}
+$$
+
+For $d>0$ write $I_d(H)=[0,H^d]$ when $d$ is even and
+$I_d(H)=[-H^d,H^d]$ when $d$ is odd; put $I_0(H)=[1,1]$.
+The polynomial inclusion is
+
+$$
+T_j=\sum_{a=0}^4\sum_{b=0}^{4-a}
+ \frac{C_{ab,j}}{a!b!}\,I_a(h)I_b(\rho).
+\tag{21.13}
+$$
+
+Finite sums in (21.12)–(21.13) use increasing indices. These
+inclusions are the interval and derivative operations of $O$,
+Definition 7.2, with a binary grid, together with Taylor's formula.
+The interval inclusion property and derivative arithmetic are
+standard; see S. M. Rump,
+[*Verification methods: Rigorous results using floating-point
+arithmetic*](https://doi.org/10.1017/S096249291000005X),
+Sections 5.1, 5.5 and 11. The specific polynomials, recursion and
+inequalities below concern the original source of this volume.
+
+**Lemma 21.4 (A full-domain lower-branch sign).** For every $p\in K$
+and $0<r<1$, the lower source point $(r,b_-(r,p)/q)$ belongs to
+some $\mathcal V_j$. On that tube its selected response denominator
+$d_{k_j}$ is nonzero and $G^{(k_j)}>0$.
+
+**Proof.** The finite rational quantities (21.7)–(21.13) satisfy
+the following bounds. In every row, every integer $j$ in the
+stated range is included. The denominator column concerns
+$-[A_5](R_j,Z_j,K)$ when $k_j=1$, and
+$[\Lambda](R_j,Z_j,K)$ when $k_j=0$; $D_*$ is a lower bound
+for its lower endpoint.
+
+| $j$ | $k_j$ | $D_*$ | $-N^2\sup M_j^-$ exceeds | $N^2\inf M_j^+$ exceeds | $\inf V_{00,j}$ exceeds |
+| --- | --- | --- | --- | --- | --- |
+| $0,\ldots,613$ | $1$ | $1/3$ | $4000$ | $4000$ | $10^7$ |
+| $614,\ldots,2047$ | $0$ | $3/50$ | $3000$ | $3000$ | $50000$ |
+| $2048,\ldots,3644$ | $0$ | $1/5$ | $5000$ | $5000$ | $6\cdot10^8$ |
+| $3645,\ldots,4095$ | $1$ | $5/2$ | $5000$ | $5000$ | $5\cdot10^{12}$ |
+
+In all four rows the further inequalities are
+
+$$
+\begin{gathered}
+\inf Z_{j\ell}>12\quad(\ell=0,1,2),\qquad
+\frac35<\inf Z_j\le\sup Z_j<\frac74,\qquad |s_j|<6,\\
+\sup\{4[R_j](1-[R_j])[Z_j]^2\}<\frac{24}{25},\qquad
+\inf T_j>\frac9{10}\sup V_{00,j}>0.
+\end{gathered}
+\tag{21.14}
+$$
+
+Here $Z_{j\ell}$ is the derivative interval of (21.10), whereas
+$Z_j$ is the coordinate interval of (21.11). The braces in the
+second line mean interval arithmetic, rather than a selection of
+source points. The table and (21.14) are finite rational
+inequalities: substitute the polynomial definitions (21.2),
+(21.4)–(21.6) into the coefficient operation (21.12), and use
+(21.8)–(21.10) for the centres and derivatives. All endpoints are
+integer multiples of $2^{-220}$; the displayed rational bounds
+follow by integer cross multiplication. This specifies all
+$4096$ tubes, both polynomial normalizations, every subdivision
+and every arithmetic precision in the inequalities.
+
+The derivative bounds in (21.14) justify every reciprocal in
+(21.10). The other reciprocals used in (21.1) have positive
+source denominators throughout the indicated boxes. The table's
+$D_*$ bounds give $A_5<0$ on each chart-1 box and
+$\Lambda>0$ on each chart-0 box. In particular the corresponding
+$d_1=z^2TJ_0N_0A_5$ or
+$d_0=(5/2)zTUJ_0N_0\Lambda$ never vanishes there.
+
+Fix $p\in K$. Taylor's formula in the single variable $r$,
+along $z=z_j+s_j(r-r_j)\pm\rho$, gives
+
+$$
+E(r,z_j+s_j(r-r_j)\pm\rho,p)\in M_j^\pm
+\qquad(r\in R_j).
+\tag{21.15}
+$$
+
+The two signs in the table are strict. For each
+$r\in R_j\cap(0,1)$, the intermediate value theorem therefore
+gives an $E$ zero between these two faces. Equations (21.3) and
+(21.14) put that zero at a positive source satisfying
+$4qz^2<1$. Theorem 18.4 identifies it with the unique lower
+source root. This proves the asserted tube inclusion. The closed
+cells $R_j$ cover $[0,1]$, so no strict source coordinate is lost.
+
+For completeness, (21.13) encloses $F_j$ on its entire affine
+tube, not just at its centre. Apply the one-variable Taylor
+formula through degree three to
+
+$$
+t\longmapsto F_j(x_j+t\delta,
+               z_j+t(\tau_j\delta+y),p),\qquad
+|\delta|\le h,\quad |y|\le\rho.
+\tag{21.16}
+$$
+
+The multinomial expansion of its derivatives gives the terms
+$C_{ab,j}\delta^a y^b/(a!b!)$. For $a+b<4$ the derivatives
+are evaluated at the centre. For total degree four the integral
+remainder averages derivatives on the segment, which lies in
+$[x_j-h,x_j+h]\times Z_j$. Those averages belong to the
+intervals on the second line of (21.12). Parity gives
+$\delta^a\in I_a(h)$ and $y^b\in I_b(\rho)$.
+The interval inclusion property proves (21.13) for every such
+point and every $p\in K$. Its strictly positive lower endpoint
+in (21.14) proves $G^{(k_j)}>0$ on the full tube. This also
+proves positivity at any source with $\Lambda=0$, since such a
+source cannot belong to a chart-0 box and the chart-1 formula
+uses $A_5$ instead. ∎
+
+**Theorem 21.5 (Strict nonlinear order and lower-branch joint injectivity).**
+For every real $p\in K$ and every $0<r<1$,
+
+$$
+\frac{\partial H_-}{\partial r}(r,p)>0.
+\tag{21.17}
+$$
+
+Consequently, for every $r,s\in(0,1)$,
+
+$$
+u_-(r,p)=u_-(s,p),\quad m_-(r,p)=m_-(s,p)
+\quad\Longrightarrow\quad r=s.
+\tag{21.18}
+$$
+
+**Proof.** The lower root of $\mathsf A$ is simple and crosses
+from positive to negative as $b$ increases, by Theorem 18.4.
+It therefore has $\mathsf A_b<0$. Since $q>0$, (21.2) gives
+
+$$
+\widetilde A_z=q^{-2}\mathsf A_b<0.
+\tag{21.19}
+$$
+
+Choose a cell containing the given $r$. Lemma 21.4 supplies its
+nonzero chart denominator and the positive polynomial
+$G^{(k_j)}$ at the actual lower root. In this chart,
+implicit differentiation of $\widetilde A=0$ and ordinary
+quotient differentiation give
+
+$$
+\frac{d}{dr}\{m-P_*(u)\}
+ =\frac{\mathcal R(n_{k_j},m_{k_j},d_{k_j})}
+              {16000d_{k_j}^4\widetilde A_z}
+ =\begin{cases}
+ \displaystyle\frac{-15zG^{(0)}}{16000d_0^4\widetilde A_z},&k_j=0,\\
+ \displaystyle\frac{-zG^{(1)}}{16000d_1^4\widetilde A_z},&k_j=1.
+ \end{cases}
+\tag{21.20}
+$$
+
+Indeed
+$16000P_*'(n/d)=104000+420(n-144d)/d-31(n-144d)^2/d^2$,
+which is exactly the factor in (21.6). Each expression in
+(21.20) is strictly positive by $z>0$, (21.19) and Lemma 21.4.
+Both charts describe the same actual responses, so their overlap
+introduces no new response or gain choice. Smoothness at every
+strict source, including $\Lambda=0$, is supplied by Theorem
+19.2. This proves (21.17) everywhere on the entire lower branch.
+
+For $r<s$, the mean value theorem on $[r,s]\subset(0,1)$ gives
+$H_-(r,p)<H_-(s,p)$. Equality of both actual responses would
+give equality of their $H_-$ values and contradict this strict
+inequality. This proves (21.18).
+
+The interval $K$ is used uniformly in Lemma 21.4; $p_c$ enters
+only the rational tube recursion. The particular polynomial
+identities and lower-branch order are repo-derived. The Taylor
+and interval tools cited after Definition 21.3 are intermediate
+results, applied here to the original full source branches. ∎
+
+**Corollary 21.6 (Only upper-branch terminal-M pairs can remain).**
+At the original exact algebraic $p_J$, no entire child
+$\mathcal C_v$ contains a distinct terminal-M pair from the lower
+branch. The original joint predicate (19.6) is equivalent to the
+existence of $v\in\mathbb R$, $r,s\in(0,1)$ and
+$x,y\in\mathcal D_v$ such that
+
+$$
+\begin{gathered}
+r\ne s,\qquad x\ne y,\\
+\mathcal U(+,r)=\mathcal U(+,s)=v,\qquad
+\mathcal M(+,r)=\mathcal M(+,s),\qquad
+\mathcal J(x)=\mathcal J(y).
+\end{gathered}
+\tag{21.21}
+$$
+
+The terminal-J pair in this formula is taken in the entire
+$\mathcal D_v$ and may use either label or overlap the terminal-M
+pair.
+
+**Proof.** The original $p_J$ belongs to $K$ by Definition 14.1.
+Theorem 21.5 excludes same-label lower-branch terminal-M pairs
+in every acquired fibre. Corollary 20.5 excludes opposite-label
+terminal-M pairs. Thus a distinct terminal-M pair must consist
+of two different upper-branch parameters, giving (21.21).
+Conversely any points in (21.21) supply both distinct pairs in
+(19.6), and Theorem 19.4 transports them to that one entire
+actual child. The inherited complete-world correspondence retains
+lower gain degrees, sampled zeros, repeated gain roots and zero
+drift. No additional observation or restriction on the gain,
+drift or source has entered this equivalence. ∎
+
+## 追加锚（本行以下为增补区）
