@@ -3813,3 +3813,378 @@ control, calibration, acquisition and communication costs also remain
 outside these width results.
 
 ## 追加锚（本行以下为增补区）
+
+## 33. A common-decoder separation converse for the actual word law
+
+**Definition 33.1 \(Actual terminal cells\).** Fix \(n\ge1\), put
+\(N=2^n\), and let \(p_s(r\mid h)\) be the terminal-state law of a
+legal controller at seed \(s\).  The actual word law is uniform:
+\(h\in\{0,1\}^n\) has probability \(1/N\), independently of \(s\), and
+the same decoder \(D^H_{r,s}\) is used for every word reaching the record
+\(r\).  Write
+
+$$
+c_n=\max_{h\ne k}\frac{|\operatorname{tr}(Q_h^\dagger Q_k)|}{3},
+\qquad d_n=1-c_n .
+\tag{33.1}
+$$
+
+The maximum is over the actual length-\(n\) words, including words with
+different determinant parity.  The arithmetic separation in Theorem 5.1
+and the argument in §34 below show \(d_n>0\).
+
+**Lemma 33.2 \(Two inputs and one decoder\).** Let \(Q,Q'\in U(3)\), let
+\(D:M_3\to M_3\) be CPTP, and put
+
+$$
+f_Q(D)=F_{\rm e}(D\circ\operatorname{Ad}_Q,\operatorname{id}_3).
+$$
+
+If \(c=|\operatorname{tr}(Q^\dagger Q')|/3\), then
+
+$$
+f_Q(D)+f_{Q'}(D)\le 1+c.
+\tag{33.2}
+$$
+
+**Proof.** Choose Kraus operators \(A_\ell\) for \(D\).  The entanglement
+fidelity formula is
+
+$$
+f_Q(D)=\frac1{9}\sum_\ell|\operatorname{tr}(A_\ell Q)|^2,\qquad
+\sum_\ell A_\ell^\dagger A_\ell=I_3 .
+$$
+
+In Hilbert--Schmidt space, the two unit vectors \(Q/\sqrt3\) and
+\(Q'/\sqrt3\) have overlap of modulus \(c\).  The largest eigenvalue of
+their two-vector Gram operator is \(1+c\).  Hence, for every \(\ell\),
+
+$$
+|\operatorname{tr}(A_\ell Q)|^2+|\operatorname{tr}(A_\ell Q')|^2
+\le 3(1+c)\|A_\ell\|_{\rm HS}^2 .
+$$
+
+Summing and using \(\sum_\ell\|A_\ell\|_{\rm HS}^2=3\) proves \(33.2\).
+\(\square\)
+
+**Lemma 33.3 \(Finite-cell weighted Gram bound\).** Let \(Q_1,\ldots,Q_m\in U(3)\) have pairwise normalized trace overlap at most \(c\), and let \(D\)
+be CPTP.  Then
+
+$$
+\sum_{i=1}^m F_{\rm e}(D\circ\operatorname{Ad}_{Q_i},\operatorname{id}_3)
+\le 1+c(m-1).
+\tag{33.3}
+$$
+
+**Proof.** For one Kraus operator \(A\), the Gram matrix of the vectors
+\(Q_i/\sqrt3\) has diagonal \(1\) and off-diagonal entries of modulus at
+most $c$.  It is Hermitian, so Gershgorin’s bound gives
+\(\lambda_{\max}(G)\le1+c(m-1)\).  Therefore the sum of the $m$
+squared Hilbert--Schmidt projections of \(A\) is at most
+\(3(1+c(m-1))\|A\|_{\rm HS}^2\).  Sum over Kraus operators and use
+\(\sum_\ell\|A_\ell\|_{\rm HS}^2=3\), with the $1/9$ fidelity
+normalization, to obtain (33.3). \(\square\)
+
+**Theorem 33.4 \(Common-decoder separation\).** Every successful legal
+controller of peak width \(W\le N\) satisfies
+
+$$
+\varepsilon\ge 2d_n\left(1-\frac{W}{N}\right).
+\tag{33.4}
+$$
+
+This includes arbitrary changing many-to-one and stochastic updates,
+independent standard-Borel shared seeds, and arbitrary terminal full-\(H\)
+CPTP decoders.  It is an averaged statement; no individual seed,
+history, or branch is required to have error at most \(\varepsilon\).
+
+**Proof.** Apply the retraction of Lemma 3.1 to reduce each full decoder
+to a qutrit decoder.  For fixed \(s,r\), write
+
+$$
+f_{h,r,s}=F_{\rm e}(D_{r,s}\circ\operatorname{Ad}_{Q_h},\operatorname{id}_3),
+\qquad a_{h,r,s}=p_s(r\mid h).
+$$
+
+First suppose the terminal assignment is deterministic.  If its occupied
+cells have sizes \(m_r\), Lemma 33.3 gives
+
+$$
+\sum_{h,r}f_{h,r,s}\le\sum_r[1+c_n(m_r-1)]
+\le c_nN+(1-c_n)W.
+$$
+
+An arbitrary stochastic terminal assignment is a convex combination of
+these deterministic assignments: for a function \(\phi:\{0,1\}^n\to[W]\),
+use the weight \(\alpha_s(\phi)=\prod_h p_s(\phi(h)\mid h)\).  The weights
+sum to one and have the required marginals, so the same inequality holds
+with \(f_{h,\phi(h),s}\) replaced by \(\sum_r p_s(r\mid h)f_{h,r,s}\).
+Thus
+
+$$
+\frac1N\sum_{h,r}p_s(r\mid h)(1-f_{h,r,s})
+\ge d_n\left(1-\frac{W}{N}\right).
+$$
+
+For the maximally entangled input, trace distance from the target pure
+state is at least twice its entanglement infidelity.  Therefore the
+conditional diamond error is at least twice the last display.  Integrate
+over the independent seed \(s\); the same bound survives averaging and is
+exactly \(33.4\).  The argument uses the actual \(1/N\) history weights and
+one common decoder per record. \(\square\)
+
+## 34. The actual parity lattice and the exact positive-error plateau
+
+**Lemma 34.1 \(Entry lattice and trace separation\).** For distinct actual
+words \(h,k\) of length \(n\),
+
+$$
+\|Q_h-Q_k\|_{\rm op}\ge2^{-n}.
+\tag{34.1}
+$$
+
+Moreover, with \(R=G_h^\dagger G_k\),
+
+$$
+1-\frac{|1+\operatorname{tr}R|}{3}\ge\frac{4^{-n}}{18}.
+\tag{34.2}
+$$
+
+**Proof.** The actual letters have the integral form
+
+$$
+V_0=(i/2)(\eta U_0+U_1),\qquad
+V_1=(i/2)(U_0+\eta U_1),\qquad \eta=-i\sqrt3 .
+$$
+
+Consequently every length-\(n\) entry lies in
+\((i/2)^n\mathbb Z[\eta]\).  The residue map used in Theorem 5.1 proves
+same-length word injectivity, so a nonzero entry difference has squared
+absolute value at least \(4^{-n}\).  Since both words have the same fixed
+\(\xi\)-eigenvalue \(\lambda^n\), the difference restricts to \(T\), and
+\(34.1\) follows.
+
+If \(\det R=1\), then \(R+R^\dagger=(\operatorname{tr}R)I_2\) and
+\(\|I-R\|_{\rm op}^2=2-\operatorname{tr}R\).  The two scalar cases
+\(\operatorname{tr}R\ge-1\) and \(\operatorname{tr}R<-1\) give
+\(1-|1+\operatorname{tr}R|/3\ge\|I-R\|_{\rm op}^2/6\).  If
+\(\det R=-1\), the trace is purely imaginary; writing the two eigenvalues
+as \(e^{i\theta}\) and \(-e^{-i\theta}\) gives directly
+\(1-|1+\operatorname{tr}R|/3\ge\|I-R\|_{\rm op}^2/18\).  Combining
+with \(34.1\) gives \(34.2\). \(\square\)
+
+**Corollary 34.2 \(Near-exact plateau\).** For every \(n\ge1\) and every
+\(0<\varepsilon<1/4\),
+
+$$
+W_n(\varepsilon)\ge N-9\varepsilon N^3,\qquad N=2^n .
+\tag{34.3}
+$$
+
+In particular,
+
+$$
+0\le\varepsilon<\frac1{9\,8^n}\quad\Longrightarrow\quad
+W_n(\varepsilon)=2^n .
+\tag{34.4}
+$$
+
+The endpoint \(W_0(\varepsilon)=1\) is separate, and the exact endpoint
+\(W_n(0)=2^n\), and the counterexample to a uniform capped law in §31;
+threshold in \(34.4\) is a sufficient conservative plateau threshold; no
+optimality of that threshold is claimed.
+
+**Proof.** If \(W_n(\varepsilon)\ge N\), (34.3) is immediate.  Otherwise
+apply Theorem 33.4 and \(34.2\):
+
+$$
+\varepsilon\ge\frac{2}{18N^2}\frac{N-W_n(\varepsilon)}N
+=\frac{N-W_n(\varepsilon)}{9N^3}.
+$$
+
+This proves \(34.3\).  Under the strict inequality in \(34.4\), its right
+side is greater than \(N-1\); the width is an integer and hence equals
+\(N\).  The \(n=0\) and \(\varepsilon=0\) conventions are not obtained by
+substituting into a positive-error formula. \(\square\)
+
+## 35. The first saving below the exact-history width
+
+**Definition 35.1 \(First-saving error\).** For \(n\ge1\), let
+
+$$
+\eta_n=\min_{1\le W\le 2^n-1}\varepsilon_{\rm op}(W,n),\qquad N=2^n,
+\tag{35.1}
+$$
+
+where \(\varepsilon_{\rm op}\) is the attained operational minimum of
+Definition 18.1 with exactly the original permissions.  Thus \(\eta_n\) is
+the least averaged full-reference diamond error attainable while the peak
+width is strictly below the exact-history width.  The minimum is attained:
+there are finitely many widths and each fixed-width operational infimum is
+attained by Theorem 18.2.
+
+**Theorem 35.2 \(First-saving bounds\).** For every \(n\ge1\),
+
+$$
+\frac{2d_n}{N}\le\eta_n\le
+\min\left\{\frac2N,\frac{12d_n}{N}\right\}.
+\tag{35.2}
+$$
+
+For \(n=1\), the actual value is \(\eta_1=1\).
+
+**Proof.** The lower bound is Theorem 33.4 with \(W\le N-1\).  Choose a
+pair \(h\ne k\) attaining \(c_n\).  Store every history exactly through
+time \(n-1\), and at the last transition merge only this pair; all other
+terminal histories receive distinct records.  The peak is at most \(N-1\),
+and the complete prefix is counted at every earlier layer.
+
+For the first upper estimate, decode the merged pair by the inverse of
+one member.  Its conditional channel is the average of the identity and
+one unitary channel, whose diamond distance from the identity is at most
+one.  The pair has total actual weight \(2/N\), while all other histories
+are corrected exactly, giving \(2/N\).
+
+For the second estimate, write \(R=Q_h^\dagger Q_k\).  Choose an explicit
+spectral square root on the two-dimensional \(T\)-block: diagonalize
+\(R|_T=U\operatorname{diag}(e^{i\theta_1},e^{i\theta_2})U^\dagger\) with
+\(\theta_j\in(-\pi,\pi]\), choose \(e^{i\theta_j/2}\), and at the
+\(-1\) eigenspace choose either sign \(+i\) or \(-i\).  Extend it by \(1\)
+on \(\xi\), obtaining \(S^2=R\).  The two-dimensional eigenvalue cases
+\(\det R=\pm1\), using the sign just specified at the branch boundary,
+give the elementary bound
+
+$$
+\|S-I_3\|_{\rm op}^2\le3\left(1-\frac{|\operatorname{tr}R+1|}{3}\right)=3d_n.
+\tag{35.3}
+$$
+
+The common terminal unitary is the full-\(H\) extension of
+\(S^\dagger Q_h^\dagger\).  The two corrected qutrit unitaries are \(S^\dagger\)
+and \(S\).  For \(K=S-I\), unitarity gives
+\(K+K^\dagger=-K^\dagger K\), and direct expansion on every reference
+shows
+
+$$
+\left\|\tfrac12(\operatorname{Ad}_S+\operatorname{Ad}_{S^\dagger})-\operatorname{id}_3\right\|_\diamond
+\le2\|S-I\|_{\rm op}^2\le6d_n.
+\tag{35.4}
+$$
+
+Multiplying by the pair probability \(2/N\) gives \(12d_n/N\).  The
+terminal table is a legal static table; no intermediate quantum operation
+or history-dependent decoder is used.
+
+For \(n=1\), the sole width-one state leaves the coherence witness of
+Proposition 12.4 untouched by every decoder, so \(\eta_1\ge1\).  Decode
+the two branches with the inverse of the first branch.  Their relative
+unitary is a non-scalar reflection, and the average of the identity and
+its conjugation has diamond distance exactly one from the identity.
+Thus \(\eta_1=1\). \(\square\)
+
+The square-root estimate in \(35.3\) is a finite \(2\times2\) spectral
+calculation, not an appeal to an analytic principal-root convention.  In
+particular the \(-1\) eigenvalue is assigned an explicit \(i\) or \(-i\)
+branch before the norm estimate; no branch discontinuity is hidden in the
+controller.
+
+## 36. Same-determinant-coset packing and the remaining first-saving gap
+
+**Lemma 36.1 \(A spherical packing estimate\).** If \(M\ge2\) points lie
+on the unit \(3\)-sphere, two have Euclidean distance at most
+
+$$
+\left(\frac{3\pi^3}{M}\right)^{1/3}.
+\tag{36.1}
+$$
+
+**Proof.** If the minimum geodesic separation is \(\theta\), the geodesic
+balls of radius \(\theta/2\) are disjoint.  For \(0\le r\le\pi/2\),
+\(\sin t\ge2t/\pi\) gives
+
+$$
+\operatorname{vol}B(r)=4\pi\int_0^r\sin^2t\,dt\ge\frac{16r^3}{3\pi}.
+$$
+
+Since \(\operatorname{vol}S^3=2\pi^2\), disjointness gives
+\(\theta^3\le3\pi^3/M\).  Chord distance is at most geodesic distance,
+which proves \(36.1\). \(\square\)
+
+**Proposition 36.2 \(Actual \(S^3\) packing\).** For \(n\ge2\), the
+same-determinant words contain a pair with
+
+$$
+d_n\le C_pN^{-2/3},\qquad
+C_p=\pi^2\left(\frac43\right)^{1/3}.
+\tag{36.2}
+$$
+
+Consequently,
+
+$$
+\frac1{9N^3}\le\eta_n\le
+\min\left\{\frac2N,\;12C_pN^{-5/3}\right\}.
+\tag{36.3}
+$$
+
+**Proof.** Exactly \(M=N/2\) words have each determinant parity.  After
+the fixed scalar normalization that puts one parity coset in \(SU(2)\),
+these words are \(M\) points of \(S^3\).  They are distinct by the
+same-length residue invariant.  Lemma 36.1 supplies a pair with chord
+distance \(\delta\) satisfying \(\delta^2\le(3\pi^3/M)^{2/3}\).  If
+\(R\in SU(2)\) is their relative matrix, then
+
+$$
+1-\frac{|1+\operatorname{tr}R|}{3}\le\frac{\|I-R\|_{\rm HS}^2}{6}
+\le\frac{\delta^2}{3}.
+$$
+
+The first inequality is valid on both sides of
+\(\operatorname{tr}R=-1\) by the two scalar cases; the second uses the
+quaternion/SU\(2\) chord identity.  With \(M=N/2\),
+
+$$
+\frac13\left(\frac{3\pi^3}{M}\right)^{2/3}
+=\pi^2\left(\frac43\right)^{1/3}N^{-2/3}=C_pN^{-2/3},
+$$
+
+which proves \(36.2\).  The lower bound in \(36.3\) is \(35.2\) together with
+\(34.2\).  The upper bound follows from \(35.2\) and \(36.2\). \(\square\)
+
+**Convention 36.3 \(What remains open\).** The estimates above identify a
+near-exact plateau and pin the first saving to \(2d_n/N\) up to the
+explicit factor-six construction.  They do not determine the sharp
+asymptotic of \(d_n\), nor do they solve the common-decoder geometry for
+several merged cells with causal prefix compatibility.  In particular,
+the same-coset packing is a terminal existence argument; it is not a
+globally optimal controller and it does not settle the full joint law of
+\(W_n(\varepsilon)\) at exponentially small positive error.  The delayed
+controller and the separate endpoints in §§30--32 remain in force.
+
+## 37. Source-relative status and unresolved joint precision
+
+The actual fixed-\(\pi/6\) instrument, its full complex qutrit embedding,
+the fair word law, the common fixed-line phase, and the exact-history
+endpoint are supplied by [OWN][OWN] and [FIVE][FIVE] at the fixed revision
+of Convention 1.2.  The residue calculation is the actual-word lattice
+argument already used in Theorem 5.1.  Sections 33--36 add the
+common-decoder Gram estimate, its stochastic-cell integration, the
+phase-sensitive square-root merge, and the \(S^3\) packing deduction.
+The numerical finite-word checks that motivated the constants are
+diagnostics only; the displayed statements use the all-word proofs.
+The organization is source-relative synthesis and does not assert task
+equivalence with any other development, including a stopped common-decoder
+supplier.
+
+The sharp remaining problem is to determine \(W_n(\varepsilon)\) when
+\(\ln(1/\varepsilon)\) is comparable to or larger than \(n\).  A complete
+answer needs an accuracy-dependent converse for the actual joint
+history/record law and arbitrary changing stochastic controllers, while
+respecting full-reference diamond error, independent seeds, phase
+coherences, and the legal delayed controller.  The bounds here preserve
+the fixed-error and subexponential regimes, the exact endpoint
+\(W_n(0)=2^n\), and the counterexample to a uniform capped law in §31;
+they do not claim a globally optimal controller or a sharp exponential
+precision transition.
+
+## 追加锚（本行以下为增补区）
