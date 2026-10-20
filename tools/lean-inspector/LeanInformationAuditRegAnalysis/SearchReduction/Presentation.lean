@@ -4,7 +4,7 @@ import LeanInformationAuditRegAnalysis.SearchReduction.PresentationSyntax
 induction, unbounded theorem search or submitted equivalence certificate is consulted. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta Elab Tactic
-open LeanInformationAudit.Tests.SearchReduction (Run Failure)
+open LeanInformationAudit.SearchReduction (Run Failure)
 
 /-- Logical introduction/projection and the pinned `omega` procedure are the
 finite presentation rules. Opaque arithmetic subterms remain atoms. -/

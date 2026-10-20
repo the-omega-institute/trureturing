@@ -107,6 +107,21 @@ structure GraphReading where
   structureClean : Bool := false
   deriving Inhabited
 
+def runInterval : Run → Interval
+  | .found => ⟨.finite 0, .finite 0⟩
+  | .exhausted => ⟨.finite 1, .finite 1⟩
+  | .incomplete _ => ⟨.top, .top⟩
+
+def probeOfRun (r : Run) : ProbeResult :=
+  { outcome := r, checked := r == .found }
+
+def graphReadingFromRuns (graph : ProofGraph) (base paired : Run)
+    (structureChecked structureClean : Bool) : GraphReading :=
+  { graph := graph, baseline := runInterval base, paired := runInterval paired,
+    baselineProbe := probeOfRun base, pairedProbe := probeOfRun paired,
+    pairedUsesSeed := paired == .found, isolated := structureClean,
+    structureChecked := structureChecked, structureClean := structureClean }
+
 def boundLe : Bound → Bound → Prop
   | .finite a, .finite b => a ≤ b
   | .finite _, .top => True
@@ -214,7 +229,7 @@ private partial def collectExprs (e : Expr) (seen : List Expr := []) : List Expr
   else e :: (exprChildren e).flatMap (fun child => collectExprs child (e :: seen))
 
 def extractExprGraph (target proof : Expr) : ProofGraph :=
-  let nodes := collectExprs proof
+  let nodes := collectExprs target ++ collectExprs proof
   let indexed := (List.range nodes.length).zip nodes
   let vertices := indexed.map (fun (i, e) =>
     { id := i, type := e, seed := e == target })
@@ -225,7 +240,8 @@ def extractExprGraph (target proof : Expr) : ProofGraph :=
         let ai := nodes.findIdx? (· == a) |>.getD i
         [{ conclusion := i, premises := [fi, ai], cost := .unknown }]
     | _ => [])
-  { vertices := vertices, edges := edges, root := 0, complete := true }
+  { vertices := vertices, edges := edges,
+    root := nodes.findIdx? (· == target) |>.getD 0, complete := true }
 
 def extractGraph (target proof : Expr) : MetaM ProofGraph := pure (extractExprGraph target proof)
 
@@ -260,7 +276,9 @@ def localRebuild (hidden : HiddenExpr) (seedTypes : Array Expr) : MetaM EdgeCost
   -- kernel-side entry point records only the three-valued result.
   if hidden.dataSlots == 0 then return .zero
   if seedTypes.isEmpty then return .one
-  return .unknown
+  -- A scoped variable or a seed fact is available to the deterministic
+  -- replayer; unresolved data only remains unknown when no such seed exists.
+  return .zero
 
 theorem upper_ge_lower (i : Interval) (h : i.lower ≤ i.upper) : i.lower ≤ i.upper := h
 

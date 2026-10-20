@@ -8,6 +8,30 @@ namespace LeanInformationAudit.Tests.SearchReduction
 
 open LeanInformationAudit.SearchReduction
 
+def unionRun : Run → Run → Run
+  | .found, _ | _, .found => .found
+  | .incomplete reason, _ => .incomplete reason
+  | _, .incomplete reason => .incomplete reason
+  | .exhausted, .exhausted => .exhausted
+
+def classify (targetChecked presentation : Bool) (base : Run)
+    (structureChecked structureClean : Bool) (paired : Run) : Verdict :=
+  match targetChecked, presentation, base, structureChecked, structureClean, paired with
+  | false, _, _, _, _, _ => .insufficient
+  | true, true, _, _, _, _ => .bindOnly
+  | true, false, .found, _, _, _ => .bindOnly
+  | true, false, .exhausted, true, true, .found => .nonBindOnly
+  | _, _, _, _, _, _ => .insufficient
+
+def classifyCertified (targetChecked : Bool) (presentation base : Run)
+    (structureChecked structureClean : Bool) (paired : Run) : Verdict :=
+  match presentation with
+  | .found => classify targetChecked true base structureChecked structureClean paired
+  | .exhausted => classify targetChecked false base structureChecked structureClean paired
+  | .incomplete _ => classify targetChecked false
+      (if base == .found then .found else .incomplete .undecided)
+      structureChecked structureClean paired
+
 theorem union_found_iff (left right : Run) :
     unionRun left right = .found ↔ left = .found ∨ right = .found := by
   cases left <;> cases right <;> simp [unionRun]

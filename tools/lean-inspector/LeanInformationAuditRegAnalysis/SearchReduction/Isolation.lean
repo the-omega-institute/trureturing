@@ -5,7 +5,7 @@ import LeanInformationAuditRegAnalysis.SearchReduction.Catalog
 
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
-open LeanInformationAudit.Tests.SearchReduction (classifyCertified Failure)
+open LeanInformationAudit.SearchReduction (classifyCertified Failure)
 
 /-- The source environment is used only to recover types and check compiled
 values. Probe environments start from independent baseline imports. -/
@@ -264,7 +264,7 @@ def checkBaseline (request : Request) (base : Environment) : IO (Except String U
   return .ok ()
 
 private unsafe def runCore (source : Environment) (request : Request) : IO Observation := do
-  let unknown (reason : String) (failure := LeanInformationAudit.Tests.SearchReduction.Failure.isolation) : Observation := {
+  let unknown (reason : String) (failure := LeanInformationAudit.SearchReduction.Failure.isolation) : Observation := {
     target := request.target, base := .incomplete failure,
     paired := .incomplete failure, verdict := .insufficient, reason }
   try
