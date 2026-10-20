@@ -45,27 +45,6 @@ theorem coefficientConvolution_expansion {Ring : Type*} [CommRing Ring]
           (∑ degree ∈ polynomial.support, Polynomial.monomial degree (polynomial.coeff degree)) = _
         simp only [map_sum, coefficientConvolution_monomial]
 
-theorem coefficientConvolution_C_mul {Ring : Type*} [CommRing Ring]
-    (creation : ℤ → Ring) (shift : ℤ) (coefficient : Ring) (polynomial : Polynomial Ring) :
-    coefficientConvolution creation shift (Polynomial.C coefficient * polynomial) =
-      coefficient * coefficientConvolution creation shift polynomial := by
-  rw [← Polynomial.smul_eq_C_mul]
-  exact map_smul _ _ _
-
-theorem coefficientConvolution_X_pow {Ring : Type*} [CommRing Ring]
-    (creation : ℤ → Ring) (shift : ℤ) (degree : ℕ) (polynomial : Polynomial Ring) :
-    coefficientConvolution creation shift (Polynomial.X ^ degree * polynomial) =
-      coefficientConvolution creation (shift + degree) polynomial := by
-  induction polynomial using Polynomial.induction_on' with
-  | add first second firstProof secondProof =>
-    simp only [mul_add, map_add, firstProof, secondProof]
-  | monomial exponent coefficient =>
-    rw [Polynomial.X_pow_mul_monomial, coefficientConvolution_monomial,
-      coefficientConvolution_monomial]
-    congr 2
-    push_cast
-    omega
-
 def bivariateCoefficientConvolution {Ring : Type*} [CommRing Ring]
     (left right : ℤ → Ring) (first second : ℤ) :
     MvPolynomial (Fin 2) Ring →ₗ[Ring] Ring :=

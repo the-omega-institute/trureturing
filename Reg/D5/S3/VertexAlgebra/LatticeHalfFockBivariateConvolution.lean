@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.VertexAlgebra.LatticeHalfFockBivariateConvolution
 
-/- Faithful source-scope attempts retain each original public theorem telescope. -/
+/- Exact source-type mirrors retain each original public theorem telescope; they are not registrations. -/
 set_option autoImplicit false
 namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockBivariateConvolution
 open _root_.D5.S3.VertexAlgebra.LatticeActualProductKernel
@@ -16,14 +16,6 @@ theorem source_actual_coefficientConvolution_monomial {Ring : Type u} [CommRing 
 theorem source_actual_coefficientConvolution_expansion {Ring : Type u} [CommRing Ring]
     (creation : ℤ → Ring) (shift : ℤ) (polynomial : Polynomial Ring) : type_of% (@_root_.D5.S3.VertexAlgebra.LatticeActualProductKernel.coefficientConvolution_expansion Ring _ creation shift polynomial) := by
   exact @_root_.D5.S3.VertexAlgebra.LatticeActualProductKernel.coefficientConvolution_expansion Ring _ creation shift polynomial
-
-theorem source_actual_coefficientConvolution_C_mul {Ring : Type u} [CommRing Ring]
-    (creation : ℤ → Ring) (shift : ℤ) (coefficient : Ring) (polynomial : Polynomial Ring) : type_of% (@_root_.D5.S3.VertexAlgebra.LatticeActualProductKernel.coefficientConvolution_C_mul Ring _ creation shift coefficient polynomial) := by
-  exact @_root_.D5.S3.VertexAlgebra.LatticeActualProductKernel.coefficientConvolution_C_mul Ring _ creation shift coefficient polynomial
-
-theorem source_actual_coefficientConvolution_X_pow {Ring : Type u} [CommRing Ring]
-    (creation : ℤ → Ring) (shift : ℤ) (degree : ℕ) (polynomial : Polynomial Ring) : type_of% (@_root_.D5.S3.VertexAlgebra.LatticeActualProductKernel.coefficientConvolution_X_pow Ring _ creation shift degree polynomial) := by
-  exact @_root_.D5.S3.VertexAlgebra.LatticeActualProductKernel.coefficientConvolution_X_pow Ring _ creation shift degree polynomial
 
 theorem source_actual_bivariateCoefficientConvolution_monomial {Ring : Type u} [CommRing Ring]
     (left right : ℤ → Ring) (first second : ℤ) (exponent : Fin 2 →₀ ℕ) (coefficient : Ring) : type_of% (@_root_.D5.S3.VertexAlgebra.LatticeActualProductKernel.bivariateCoefficientConvolution_monomial Ring _ left right first second exponent coefficient) := by

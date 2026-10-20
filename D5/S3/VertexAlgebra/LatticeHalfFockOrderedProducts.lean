@@ -8,7 +8,6 @@
 
 
 import D5.S3.VertexAlgebra.LatticeHalfFockProductKernel
-import D5.S3.VertexAlgebra.LatticeHalfFockGroundProducts
 import Mathlib.Algebra.BigOperators.Finprod
 import Mathlib.Algebra.FiniteSupport.Basic
 
@@ -21,7 +20,6 @@ namespace D5.S3.VertexAlgebra.LatticeHalfFockOrderedProducts
 
 open LatticeGeneratingFieldLocality LatticeHalfFockChargedCoefficients
 open LatticeHalfFockChargedTensorCoefficients LatticeHalfFockProductKernel
-open LatticeHalfFockGroundProducts
 open LatticeActualProductKernel MvPolynomial
 open scoped BigOperators TensorProduct
 
@@ -56,23 +54,6 @@ private theorem oscillator_constant (D : LatticeData) (charge : Charge D)
   change coefficientConvolution (halfCreationCoeff D charge) exponent
     (Polynomial.monomial 0 (C scalar)) = _
   simpa using coefficientConvolution_monomial (halfCreationCoeff D charge) exponent 0 (C scalar)
-
-private theorem oscillator_creator (D : LatticeData) (charge : Charge D)
-    (exponent : ℤ) (polynomial : Oscillator D) (index : Index D) :
-    oscillatorCoefficient D charge (exponent - chargeNorm D charge) (X index * polynomial) =
-      X index * oscillatorCoefficient D charge (exponent - chargeNorm D charge) polynomial -
-        (bilinear D charge (unitCharge D index.1) : ℂ) •
-          oscillatorCoefficient D charge (exponent + omega D index - chargeNorm D charge)
-            polynomial := by
-  rw [oscillator_convolution, oscillator_convolution, oscillator_convolution]
-  have translation : halfTranslatedPolynomial D charge (X index * polynomial) =
-      halfTranslationVariable D charge index * halfTranslatedPolynomial D charge polynomial := by
-    simp [halfTranslatedPolynomial]
-  rw [translation]
-  simp only [halfTranslationVariable, sub_mul, map_sub, mul_assoc]
-  rw [coefficientConvolution_C_mul, coefficientConvolution_C_mul,
-    coefficientConvolution_X_pow]
-  simp only [smul_mul_assoc, one_mul]
 
 private def orderedTerm (D : LatticeData) (left right : Charge D) (first second : ℤ)
     (polynomial : Oscillator D) (degree : ℕ) : Oscillator D :=
@@ -264,178 +245,13 @@ theorem native_ordered_product (D : LatticeData) (left right : Charge D)
     simp only [map_add, firstProof, secondProof]
   | mul_X polynomial index inductionProof =>
     simp only [mul_comm polynomial (X index)]
-    rw [oscillator_creator, map_sub, map_smul, oscillator_creator]
+    rw [oscillator_coefficient_X_mul, map_sub, map_smul, oscillator_coefficient_X_mul]
+    rw [show second - chargeNorm D right + omega D index =
+      second + omega D index - chargeNorm D right by omega,
+      show first - chargeNorm D left + omega D index =
+        first + omega D index - chargeNorm D left by omega]
     rw [inductionProof, inductionProof, inductionProof]
     exact (expansion_creator D left right first second polynomial index).symm
-
-theorem native_reverse_ordered_product (D : LatticeData) (left right : Charge D)
-    (first second : ℤ) (polynomial : Oscillator D) :
-    oscillatorCoefficient D right (second - chargeNorm D right)
-      (oscillatorCoefficient D left (first - chargeNorm D left) polynomial) =
-        ∑ᶠ degree : ℕ, (PowerSeries.coeff degree (halfContraction D left right)) •
-          commonKernel D left right (first - degree) (second + degree) polynomial := by
-  rw [native_ordered_product]
-  apply finsum_congr
-  intro degree
-  rw [common_kernel_branch_exchange]
-  rw [show halfContraction D right left = halfContraction D left right by
-    simp only [halfContraction, LatticeFiniteNegativeGeneration.bilinear_symmetric D right left]]
-
-def tensorCommonKernel (D : LatticeData) (hu : IsUnit D.G.det) (left right : Charge D)
-    (first second : ℤ) : Module.End ℂ (ActualTensor D hu) :=
-  TensorProduct.map (commonKernel D left right first second)
-    (groundAction D hu left * groundAction D hu right)
-
-theorem tensor_kernel_bounds (D : LatticeData) (hu : IsUnit D.G.det)
-    (left right : Charge D) (state : ActualTensor D hu) :
-    ∃ firstBound secondBound : ℤ, ∀ first second : ℤ,
-      first < firstBound ∨ second < secondBound →
-        tensorCommonKernel D hu left right first second state = 0 := by
-  induction state using TensorProduct.induction_on with
-  | zero => exact ⟨0, 0, by intros; simp⟩
-  | tmul polynomial vector =>
-    obtain ⟨firstBound, secondBound, bound⟩ :=
-      common_kernel_rectangular_support D left right polynomial
-    refine ⟨firstBound, secondBound, ?_⟩
-    intro first second outside
-    simp [tensorCommonKernel, TensorProduct.map_tmul, bound first second outside]
-  | add firstState secondState firstProof secondProof =>
-    obtain ⟨firstLower, firstUpper, firstProof⟩ := firstProof
-    obtain ⟨secondLower, secondUpper, secondProof⟩ := secondProof
-    refine ⟨min firstLower secondLower, min firstUpper secondUpper, ?_⟩
-    intro first second outside
-    have firstOutside : first < firstLower ∨ second < firstUpper := by
-      rcases outside with outside | outside
-      · exact Or.inl (lt_of_lt_of_le outside (min_le_left _ _))
-      · exact Or.inr (lt_of_lt_of_le outside (min_le_left _ _))
-    have secondOutside : first < secondLower ∨ second < secondUpper := by
-      rcases outside with outside | outside
-      · exact Or.inl (lt_of_lt_of_le outside (min_le_right _ _))
-      · exact Or.inr (lt_of_lt_of_le outside (min_le_right _ _))
-    simp [firstProof first second firstOutside, secondProof first second secondOutside]
-
-private def tensorOrderedTerm (D : LatticeData) (hu : IsUnit D.G.det)
-    (left right : Charge D) (first second : ℤ) (state : ActualTensor D hu)
-    (degree : ℕ) : ActualTensor D hu :=
-  (PowerSeries.coeff degree (halfContraction D left right)) •
-    tensorCommonKernel D hu left right (first + degree) (second - degree) state
-
-private theorem tensor_ordered_finite (D : LatticeData) (hu : IsUnit D.G.det)
-    (left right : Charge D) (first second : ℤ) (state : ActualTensor D hu) :
-    Function.HasFiniteSupport (tensorOrderedTerm D hu left right first second state) := by
-  obtain ⟨firstBound, secondBound, bound⟩ := tensor_kernel_bounds D hu left right state
-  apply BddAbove.finite
-  refine bddAbove_def.mpr ⟨(second - secondBound).toNat, ?_⟩
-  intro degree supported
-  by_contra outside
-  have zero := bound (first + degree) (second - degree) (Or.inr (by omega))
-  exact supported (by simp [tensorOrderedTerm, zero])
-
-private def tensorOrderedExpansion (D : LatticeData) (hu : IsUnit D.G.det)
-    (left right : Charge D) (first second : ℤ) : Module.End ℂ (ActualTensor D hu) where
-  toFun state := ∑ᶠ degree : ℕ, tensorOrderedTerm D hu left right first second state degree
-  map_add' firstState secondState := by
-    have terms : tensorOrderedTerm D hu left right first second (firstState + secondState) =
-        fun degree => tensorOrderedTerm D hu left right first second firstState degree +
-          tensorOrderedTerm D hu left right first second secondState degree := by
-      funext degree
-      simp only [tensorOrderedTerm, map_add, smul_add]
-    rw [terms]
-    exact finsum_add_distrib (tensor_ordered_finite D hu left right first second firstState)
-      (tensor_ordered_finite D hu left right first second secondState)
-  map_smul' scalar state := by
-    have terms : tensorOrderedTerm D hu left right first second (scalar • state) =
-        fun degree => scalar • tensorOrderedTerm D hu left right first second state degree := by
-      funext degree
-      change (PowerSeries.coeff degree (halfContraction D left right)) •
-        tensorCommonKernel D hu left right (first + degree) (second - degree) (scalar • state) =
-          scalar • ((PowerSeries.coeff degree (halfContraction D left right)) •
-            tensorCommonKernel D hu left right (first + degree) (second - degree) state)
-      rw [map_smul]
-      exact smul_comm _ _ _
-    rw [terms]
-    exact (smul_finsum' scalar (tensor_ordered_finite D hu left right first second state)).symm
-
-private theorem ground_product_vector (D : LatticeData) (hu : IsUnit D.G.det)
-    (left right : Charge D) (vector : ActualGround D hu) :
-    groundAction D hu left (groundAction D hu right vector) =
-      epsilon D left right • groundAction D hu (left + right) vector := by
-  simpa only [Module.End.mul_apply, LinearMap.smul_apply] using
-    congrArg (fun operator : Module.End ℂ (ActualGround D hu) => operator vector)
-      (ground_action_product D hu left right)
-
-private theorem tensor_ordered_term_pure (D : LatticeData) (hu : IsUnit D.G.det)
-    (left right : Charge D) (first second : ℤ) (polynomial : Oscillator D)
-    (vector : ActualGround D hu) (degree : ℕ) :
-    tensorOrderedTerm D hu left right first second (polynomial ⊗ₜ[ℂ] vector) degree =
-      orderedTerm D left right first second polynomial degree ⊗ₜ[ℂ]
-        (epsilon D left right • groundAction D hu (left + right) vector) := by
-  simp only [tensorOrderedTerm, tensorCommonKernel, TensorProduct.map_tmul,
-    Module.End.mul_apply]
-  rw [ground_product_vector]
-  rfl
-
-theorem tensor_expansion_pure (D : LatticeData) (hu : IsUnit D.G.det)
-    (left right : Charge D) (first second : ℤ) (polynomial : Oscillator D)
-    (vector : ActualGround D hu) :
-    tensorOrderedExpansion D hu left right first second (polynomial ⊗ₜ[ℂ] vector) =
-      orderedExpansion D left right first second polynomial ⊗ₜ[ℂ]
-        groundAction D hu left (groundAction D hu right vector) := by
-  have groundProduct := ground_product_vector D hu left right vector
-  let tensorMap : Oscillator D →ₗ[ℂ] ActualTensor D hu :=
-    (TensorProduct.mk ℂ (Oscillator D) (ActualGround D hu)).flip
-    (epsilon D left right • groundAction D hu (left + right) vector)
-  have mapped := tensorMap.toAddMonoidHom.map_finsum
-    (ordered_finite D left right first second polynomial)
-  change (∑ᶠ degree : ℕ,
-    tensorOrderedTerm D hu left right first second (polynomial ⊗ₜ[ℂ] vector) degree) = _
-  calc
-    _ = ∑ᶠ degree : ℕ, tensorMap (orderedTerm D left right first second polynomial degree) :=
-      finsum_congr (tensor_ordered_term_pure D hu left right first second polynomial vector)
-    _ = tensorMap (∑ᶠ degree : ℕ, orderedTerm D left right first second polynomial degree) :=
-      mapped.symm
-    _ = _ := by
-      rw [groundProduct]
-      rfl
-
-theorem charged_tensor_ordered_product (D : LatticeData) (hu : IsUnit D.G.det)
-    (left right : Charge D) (first second : ℤ) (state : ActualTensor D hu) :
-    chargedCoefficient D hu left first (chargedCoefficient D hu right second state) =
-      (chargeScalar D left * chargeScalar D right) •
-        ∑ᶠ degree : ℕ, (PowerSeries.coeff degree (halfContraction D left right)) •
-          tensorCommonKernel D hu left right (first + chargeNorm D left + degree)
-            (second + chargeNorm D right - degree) state := by
-  change _ = (chargeScalar D left * chargeScalar D right) •
-    tensorOrderedExpansion D hu left right (first + chargeNorm D left)
-      (second + chargeNorm D right) state
-  induction state using TensorProduct.induction_on with
-  | zero => simp
-  | add firstState secondState firstProof secondProof =>
-    simp only [map_add, smul_add, firstProof, secondProof]
-  | tmul polynomial vector =>
-    rw [tensor_expansion_pure]
-    have oscillator := native_ordered_product D left right (first + chargeNorm D left)
-      (second + chargeNorm D right) polynomial
-    simp only [add_sub_cancel_right] at oscillator
-    change oscillatorCoefficient D left first (oscillatorCoefficient D right second polynomial) =
-      orderedExpansion D left right (first + chargeNorm D left)
-        (second + chargeNorm D right) polynomial at oscillator
-    simp only [chargedCoefficient, LinearMap.smul_apply, TensorProduct.map_tmul,
-      map_smul, smul_smul, oscillator] <;> module
-
-theorem charged_tensor_reverse_ordered_product (D : LatticeData) (hu : IsUnit D.G.det)
-    (left right : Charge D) (first second : ℤ) (state : ActualTensor D hu) :
-    chargedCoefficient D hu right second (chargedCoefficient D hu left first state) =
-      (chargeScalar D left * chargeScalar D right) •
-        ∑ᶠ degree : ℕ, (PowerSeries.coeff degree (halfContraction D left right)) •
-          tensorCommonKernel D hu right left (second + chargeNorm D right + degree)
-            (first + chargeNorm D left - degree) state := by
-  rw [charged_tensor_ordered_product, mul_comm (chargeScalar D right)]
-  congr 1
-  apply finsum_congr
-  intro degree
-  rw [show halfContraction D right left = halfContraction D left right by
-    simp only [halfContraction, LatticeFiniteNegativeGeneration.bilinear_symmetric D right left]]
 
 end
 end D5.S3.VertexAlgebra.LatticeHalfFockOrderedProducts

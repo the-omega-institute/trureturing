@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Native odd-frequency bivariate creation kernels have rectangular support. -/
+   digest: Native odd-frequency bivariate creation kernels have rectangular lower support bounds. -/
 
 
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients

@@ -7,7 +7,7 @@ namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockGroundProducts
 open _root_.D5.S3.VertexAlgebra.LatticeHalfFockGroundProducts
 open _root_.D5.S3.ConceptDynamics.InformationEscape
 
-/- Faithful source-scope attempts retain each original public theorem telescope. -/
+/- Exact source-type mirrors retain each original public theorem telescope; they are not registrations. -/
 abbrev sourceScope_ground_action_product := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockGroundProducts.ground_action_product)
 theorem source_actual_ground_action_product : sourceScope_ground_action_product := @_root_.D5.S3.VertexAlgebra.LatticeHalfFockGroundProducts.ground_action_product
 

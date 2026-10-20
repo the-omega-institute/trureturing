@@ -8,6 +8,7 @@
 
 
 import D5.S3.VertexAlgebra.LatticeHalfFockOrderedProducts
+import D5.S3.VertexAlgebra.LatticeHalfFockGroundProducts
 import D5.S3.VertexAlgebra.LatticeHalfFockClearedKernel
 
 set_option autoImplicit false

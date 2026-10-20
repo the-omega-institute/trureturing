@@ -543,3 +543,13 @@ end TensorCurrentWard
 end
 
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+
+namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+
+/- Exact source-type evidence; the four-slot audit is unfinished. -/
+abbrev sourceScope_oscillator_coefficient_X_mul :=
+  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients.oscillator_coefficient_X_mul)
+theorem source_actual_oscillator_coefficient_X_mul : sourceScope_oscillator_coefficient_X_mul :=
+  @_root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients.oscillator_coefficient_X_mul
+
+end Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients

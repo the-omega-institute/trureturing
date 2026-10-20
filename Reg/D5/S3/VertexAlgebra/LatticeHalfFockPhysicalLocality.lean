@@ -7,7 +7,7 @@ namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockPhysicalLocality
 open _root_.D5.S3.VertexAlgebra.LatticeHalfFockPhysicalLocality
 open _root_.D5.S3.ConceptDynamics.InformationEscape
 
-/- Faithful source-scope attempts retain each original public theorem telescope. -/
+/- Exact source-type mirrors retain each original public theorem telescope; they are not registrations. -/
 abbrev sourceScope_iterate_products_pure := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockPhysicalLocality.iterate_products_pure)
 theorem source_actual_iterate_products_pure : sourceScope_iterate_products_pure := @_root_.D5.S3.VertexAlgebra.LatticeHalfFockPhysicalLocality.iterate_products_pure
 

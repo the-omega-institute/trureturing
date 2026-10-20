@@ -7,7 +7,7 @@ namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockProductKernel
 open _root_.D5.S3.VertexAlgebra.LatticeHalfFockProductKernel
 open _root_.D5.S3.ConceptDynamics.InformationEscape
 
-/- Faithful source-scope attempts retain each original public theorem telescope. -/
+/- Exact source-type mirrors retain each original public theorem telescope; they are not registrations. -/
 abbrev sourceScope_pair_translation_composition := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockProductKernel.pair_translation_composition)
 theorem source_actual_pair_translation_composition : sourceScope_pair_translation_composition := @_root_.D5.S3.VertexAlgebra.LatticeHalfFockProductKernel.pair_translation_composition
 

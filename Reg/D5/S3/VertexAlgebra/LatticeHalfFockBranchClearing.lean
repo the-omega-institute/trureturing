@@ -7,7 +7,7 @@ namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockBranchClearing
 open _root_.D5.S3.VertexAlgebra.LatticeHalfFockBranchClearing
 open _root_.D5.S3.ConceptDynamics.InformationEscape
 
-/- Faithful source-scope attempts retain each original public theorem telescope. -/
+/- Exact source-type mirrors retain each original public theorem telescope; they are not registrations. -/
 abbrev sourceScope_half_contraction_two_branch_clearing := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockBranchClearing.half_contraction_two_branch_clearing)
 theorem source_actual_half_contraction_two_branch_clearing : sourceScope_half_contraction_two_branch_clearing := @_root_.D5.S3.VertexAlgebra.LatticeHalfFockBranchClearing.half_contraction_two_branch_clearing
 

@@ -17,7 +17,9 @@ internal sealed class LatticeHalfFockPhysicalLocalityDocument : IScribeDocumentD
                 + "uses the physical shifts first-2*(N-offset) and second-2*offset and is independent of the "
                 + "exponent pair and target state.")),
             Paragraph(Text("The proof expands both ordered products through one bivariate polynomial kernel with "
-                + "rectangular finite support, clears both half-contraction branches by (1-t^2)^N, uses the "
+                + "rectangular lower support bounds and finite ordered-diagonal sums after fixing the polynomial. "
+                + "The bivariate kernel can have infinite support. The proof clears both half-contraction branches "
+                + "by (1-t^2)^N, uses the "
                 + "actual cocycle product and exchange including its normalization, and identifies the resulting "
                 + "finite signed binomial sum with the iterated doubled-shift difference. The pure tensor result "
                 + "is lifted to every ActualTensor vector by TensorProduct induction.")),
@@ -26,7 +28,7 @@ internal sealed class LatticeHalfFockPhysicalLocalityDocument : IScribeDocumentD
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockPhysicalLocality.charged_coefficient_physical_locality"),
                 H("Uniform two-sheet locality of charged coefficients"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("For every D, hu, left, right, first, second and state in the original telescope, "
                         + "the displayed sum over Finset.range (N+1), with coefficient ((-1)^offset)*choose(N,offset), "
@@ -34,9 +36,13 @@ internal sealed class LatticeHalfFockPhysicalLocalityDocument : IScribeDocumentD
                         + "first, second and state. No positivity, rank, homogeneity, branch, eigenstate or locality "
                         + "hypothesis is added."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("Bakalov–Kac, arXiv:math/0402315, section 4.1, supplies the two opposite cover branches "
-                + "and the ordered-product mechanism. The actual quotient ground representation and the native "
-                + "half-creation transport are used directly from the canonical library.")),
+            Paragraph(Text("Bakalov–Kac, arXiv:math/0402315v1, section 4.1, equation (4.14), gives the untwisted "
+                + "ordered-product factor. The twisted root-of-unity branch product is in section 4.2, Lemma 4.2, "
+                + "equations (4.33)-(4.35). With cover order 2, sigma=-1, z=u^2 and w=v^2, equation (4.34) "
+                + "gives (u-v)^g*(u+v)^(-g), where g is the integral lattice pairing. These inspected formulas "
+                + "supply the classical mechanism; the exact arbitrary-D/hu coefficient theorem on the chosen "
+                + "quotient representation is repository-derived using canonical half-creation transport. "
+                + "The FLM reference is background; its full text was not inspected.")),
             Paragraph(Text("This result is algebraic and kernel-checked. Corrected normal-word locality, source-product "
                 + "compatibility, twisted Jacobi, analytic CFT completion, fusion and anomaly data, Moonshine, string "
                 + "theory and AdS/CFT remain separate obligations.")))));
