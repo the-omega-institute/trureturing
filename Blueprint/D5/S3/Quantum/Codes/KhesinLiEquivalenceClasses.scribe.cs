@@ -37,13 +37,16 @@ internal sealed class KhesinLiEquivalenceClassesDocument : IScribeDocumentDefini
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Divisibility by 3^k", Disp(ClaimBody()),
                 "For each input u and its matched pivot p, complement first at u and then at p. On their free-output adjacency rows this sends (b,c) to (c,b xor c), an order-three rotation. Local complementations at different pairs commute because the corresponding vertices are nonadjacent. If both rows vanished, u and p would form an isolated component; connectedness and k < n exclude this. Every nonidentity coordinate rotation therefore moves each class member. The free action of the product of k cyclic groups of order three partitions the class into equal orbits of size 3^k. The orbit decomposition in Mathlib gives the divisibility.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("khesin-li-2024-equivalence-class-sizes"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("khesinli-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(X(name)));

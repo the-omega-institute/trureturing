@@ -94,6 +94,10 @@ $$\forall k \in \mathbb{N},\; \forall n \in \mathbb{N},\; (0 < k) \Rightarrow ((
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Codes/KhesinLiEquivalenceClasses.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/khesin-li-2024-equivalence-class-sizes` (proved) by `D5/S3/Quantum/Codes/KhesinLiEquivalenceClasses.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"khesin-li-2024-equivalence-class-sizes","declaration_gid":"D5/S3/Quantum/Codes/KhesinLiEquivalenceClasses.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Andrey Boris Khesin, Alexander M. Li (2024). *Equivalence Classes of Quantum Error-Correcting Codes*. DOI: [10.48550/arXiv.2406.12083](https://doi.org/10.48550/arXiv.2406.12083). URL: <https://arxiv.org/abs/2406.12083v1>.
