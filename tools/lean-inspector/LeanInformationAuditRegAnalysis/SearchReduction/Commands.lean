@@ -5,7 +5,7 @@ import LeanInformationAuditRegAnalysis.SearchReduction.Isolation
 
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta Elab Command Tactic
-open LeanInformationAudit.Tests.SearchReduction (Run Verdict)
+open LeanInformationAudit.SearchReduction (Run Verdict)
 
 -- Checked declarations may retain expressions from these small probe regions.
 -- Their lifetime is the outer compiler process; no imported extension is read.
@@ -54,13 +54,13 @@ private def runExpr : Run → Expr
   | .exhausted => mkConst ``Run.exhausted
   | .incomplete failure => mkApp (mkConst ``Run.incomplete)
       (mkConst <| match failure with
-        | .missing => ``LeanInformationAudit.Tests.SearchReduction.Failure.missing
-        | .isolation => ``LeanInformationAudit.Tests.SearchReduction.Failure.isolation
-        | .execution => ``LeanInformationAudit.Tests.SearchReduction.Failure.execution
-        | .heartbeat => ``LeanInformationAudit.Tests.SearchReduction.Failure.heartbeat
-        | .timeout => ``LeanInformationAudit.Tests.SearchReduction.Failure.timeout
-        | .cancelled => ``LeanInformationAudit.Tests.SearchReduction.Failure.cancelled
-        | .undecided => ``LeanInformationAudit.Tests.SearchReduction.Failure.undecided)
+        | .missing => ``LeanInformationAudit.SearchReduction.Failure.missing
+        | .isolation => ``LeanInformationAudit.SearchReduction.Failure.isolation
+        | .execution => ``LeanInformationAudit.SearchReduction.Failure.execution
+        | .heartbeat => ``LeanInformationAudit.SearchReduction.Failure.heartbeat
+        | .timeout => ``LeanInformationAudit.SearchReduction.Failure.timeout
+        | .cancelled => ``LeanInformationAudit.SearchReduction.Failure.cancelled
+        | .undecided => ``LeanInformationAudit.SearchReduction.Failure.undecided)
 
 /-- Only dependencies of checked witness terms are exported, after searching.
 Candidate initializers and environment extensions are never executed. -/
@@ -119,7 +119,7 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
     discard <| checkProof (name ++ `presentationConversion) info.levelParams
       evidence.conversionType evidence.conversion
     discard <| checkProof (name ++ `presentationProof) info.levelParams info.type evidence.proof
-  let value ← mkAppM ``LeanInformationAudit.Tests.SearchReduction.classifyCertified #[
+  let value ← mkAppM ``LeanInformationAudit.SearchReduction.classifyCertified #[
     toExpr r.targetChecked, mkConst (name ++ `presentation), mkConst baseName,
     toExpr r.structureChecked, toExpr r.structureClean, mkConst pairName]
   addAndCompile (.defnDecl {

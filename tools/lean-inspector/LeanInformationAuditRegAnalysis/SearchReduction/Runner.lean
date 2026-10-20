@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-import LeanInformationAuditRegTests.SearchReduction.Model
+import LeanInformationAuditRegAnalysis.SearchReduction.Graph
 
 /-! Lean-native, Observe-only reference search. Imported candidate extensions
 are never copied into either probe environment. Proof terms, not JSON, carry
@@ -7,7 +7,7 @@ success; a completed list of unsuccessful attempts carries exhaustion. -/
 
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta Elab Tactic Command
-open LeanInformationAudit.Tests.SearchReduction (Run Failure Verdict classify unionRun)
+open LeanInformationAudit.SearchReduction
 
 abbrev budget : Nat := 200000
 abbrev mathlibRevision : String := "56a005855ea17e0b0958f73ec801ae140b0a1679"

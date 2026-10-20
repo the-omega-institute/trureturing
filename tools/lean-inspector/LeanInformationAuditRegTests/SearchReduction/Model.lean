@@ -1,4 +1,4 @@
-import Mathlib.Tactic
+import LeanInformationAuditRegAnalysis.SearchReduction.Graph
 
 /-! Executable evidence model for the search-reduction contract. These inputs
 record certified observations; this model does not implement or certify Lean's
@@ -6,25 +6,7 @@ tactic runner. In particular, `exhausted` is not a resource exception. -/
 
 namespace LeanInformationAudit.Tests.SearchReduction
 
-inductive Failure where
-  | missing | isolation | execution | heartbeat | timeout | cancelled | undecided
-  deriving DecidableEq, Repr
-
-inductive Run where
-  | found | exhausted | incomplete (reason : Failure)
-  deriving DecidableEq, Repr
-
-inductive Verdict where
-  | bindOnly | nonBindOnly | insufficient
-  deriving DecidableEq, Repr
-
-/-- Independent attempts combine by success union. Incomplete evidence prevents
-a negative conclusion, but never invalidates a checked successful proof. -/
-def unionRun : Run → Run → Run
-  | .found, _ | _, .found => .found
-  | .incomplete reason, _ => .incomplete reason
-  | _, .incomplete reason => .incomplete reason
-  | .exhausted, .exhausted => .exhausted
+open LeanInformationAudit.SearchReduction
 
 theorem union_found_iff (left right : Run) :
     unionRun left right = .found ↔ left = .found ∨ right = .found := by
@@ -33,28 +15,6 @@ theorem union_found_iff (left right : Run) :
 theorem union_exhausted_iff (left right : Run) :
     unionRun left right = .exhausted ↔ left = .exhausted ∧ right = .exhausted := by
   cases left <;> cases right <;> simp [unionRun]
-
-/-- Presentation certificates refer to actual baseline statements. Structure
-checks include target and alias exclusion and the compiled dependency closure. -/
-def classify (targetChecked presentation : Bool) (base : Run)
-    (structureChecked structureClean : Bool) (paired : Run) : Verdict :=
-  match targetChecked, presentation, base, structureChecked, structureClean, paired with
-  | false, _, _, _, _, _ => .insufficient
-  | true, true, _, _, _, _ => .bindOnly
-  | true, false, .found, _, _, _ => .bindOnly
-  | true, false, .exhausted, true, true, .found => .nonBindOnly
-  | _, _, _, _, _, _ => .insufficient
-
-/-- A production presentation scan must complete before its absence can be
-used for content. An independent successful search still establishes bind-only. -/
-def classifyCertified (targetChecked : Bool) (presentation base : Run)
-    (structureChecked structureClean : Bool) (paired : Run) : Verdict :=
-  match presentation with
-  | .found => classify targetChecked true base structureChecked structureClean paired
-  | .exhausted => classify targetChecked false base structureChecked structureClean paired
-  | .incomplete _ => classify targetChecked false
-      (if base == .found then .found else .incomplete .undecided)
-      structureChecked structureClean paired
 
 theorem certified_restatement_bind_only (base paired : Run) (checkedS cleanS : Bool) :
     classifyCertified true .found base checkedS cleanS paired = .bindOnly := rfl
