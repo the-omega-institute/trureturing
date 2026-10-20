@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, a classwise all-column pure-dual-power application under a specified length condition, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, a classwise all-column pure-dual-power application under a specified length condition, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, a tame growing-ray application improving the complete classwise pole on an unbalanced length range, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -1496,6 +1496,254 @@ At $D=N=R$ and fixed height the exponent is $3/2+\varepsilon$, compared with the
 A common norm modulation of size $H$ still costs $1+H$ through $\mathcal N_\delta$. At balance a power improvement over the height-free cubic comparison requires $H\ll R^h$ with $h<1/6$, leaving positive room for the $\varepsilon$ losses. The original cumulative height allowance and actual witness lengths must satisfy these conditions.
 
 This is a source-conditional application of the existing analytical methods, without complete local Lean certification or a claim of literature novelty. It estimates the original coprime squarefree packet with its actual outer phase. Shared primes, nonsquarefree columns, other dual terms, the full actual-order-six contraction and the signed same-integer Robin remainder remain separate obligations.
+
+### A tame growing-ray application to the complete classwise pole
+
+The fixed-presentation constant in (A1) cannot be reused as a constant uniform in the powerful cores. The local conductor formulas of [Szpruch, *On Shahidi local coefficients matrix*, arXiv:1609.08122v4](https://arxiv.org/pdf/1609.08122v4), Lemma 4.15 and Proposition 4.17, and [Szpruch, *A p-adic analog of Hasse-Davenport product relation involving epsilon-factors*, arXiv:2306.10928v2](https://arxiv.org/pdf/2306.10928v2), Proposition 1, equations (16)–(18) and Lemma 17, supply the required tame factors, including ramified quadratic characters on the cubic cover. The following application matches these factors to (A2), retains the pole's noncharacter weight, and consumes the estimate in the original complete classwise all-column contraction. The local formulas, DDDS method and existing core decomposition are reused results.
+
+#### Extra finite data and its conductor cost
+
+Let $S_0$ be the complete original fixed bad set, containing the primes over $2,3$ and the original modulus. In this subsection $f$ denotes an extra good squarefree modulus, containing all additional deleted primes and finite character conductors; it is distinct from the primitive pair conductor $\mathfrak f_{h,k}$. At each $\mathfrak p\mid f$, the character on local units has order dividing six and conductor at most one. Its unramified values may be arbitrary unitary phases. Keep infinity type $\ell=\pm1$ and write
+
+$$
+F=q_f,\qquad E=q_e,\qquad r=hen,\qquad h=-3,
+$$
+
+where $e,n$ are good squarefree ideals with $(e,nf)=(n,f)=1$. Delete $S_0f$ in the raw series and its completion:
+
+$$
+\mathcal Z_\chi(r,z)=L^{S_0f}(3z-2,\chi^3)\Psi_\chi(r,z).
+$$
+
+The local cube quotient at a good prime has at most nine elements. Cube-class indicators and their unit-character Fourier expansions have uniformly bounded coefficient norms. Including the inverse character and all cubic twists therefore costs $C^{\omega(f)}\ll_\eta F^\eta$, for every fixed $\eta>0$. The original $S_0$ space remains fixed. No implied constant below is allowed to depend on $f$.
+
+For the normalized local principal-series parameter in Szpruch's formula, put $u=z-1$: the inducing rule in (A2) is $\chi(b)|b|^z$, while the Borel half-density is $|b|$. At a new good prime, $r$ is a unit and the additive character has conductor zero. Normalize $\operatorname{vol}(\mathcal O_{\mathfrak p})=1$. Resolving (A2) into cube classes reduces its scalar entries to annular integrals of
+
+$$
+|y|^{z-2}\omega(y)\psi(ry)\,dy.
+$$
+
+For tame unit characters, valuations below $-1$ give zero. Valuation $-1$ contributes at most $q_{\mathfrak p}^{\sigma-3/2}$, by the finite Gauss sum. At nonnegative valuation $k$, only the trivial unit character survives, contributing $(1-q_{\mathfrak p}^{-1})q_{\mathfrak p}^{k(1-z)}$. A cube-class restriction fixes $k$ modulo three, so its tail has the form
+
+$$
+\frac{q_{\mathfrak p}^{j(1-z)}}{1-a_{\mathfrak p}q_{\mathfrak p}^{3-3z}},
+\qquad j=0,1,2,\qquad |a_{\mathfrak p}|=1.
+$$
+
+If $\chi_{\mathfrak p}^3$ is ramified, it has conductor one and every cubic twist remains ramified, by Szpruch's Lemma 4.15. There are no nonnegative tails. Reflection of the coroot factor from $3z-3$ to $4-3z$ has conductor multiplier $q_{\mathfrak p}^{7/2-3\sigma}$. Together with the Jacquet factor $q_{\mathfrak p}^{\sigma-3/2}$, its cost is $q_{\mathfrak p}^{2-2\sigma}$. Equivalently the local epsilon factors have powers $q_{\mathfrak p}^{u-1/2}$ and $q_{\mathfrak p}^{1/2-3u}$.
+
+If $\chi_{\mathfrak p}^3$ is unramified, Brubaker–Bump's deleted-factor bookkeeping gives
+
+$$
+\frac{1-a_{\mathfrak p}q_{\mathfrak p}^{3-3z}}
+{1-\overline{a_{\mathfrak p}}q_{\mathfrak p}^{3z-4}}.
+$$
+
+On a fixed line $\sigma<1$, the denominator inverse is uniformly bounded. The numerator cancels the geometric tails, leaving at most $q_{\mathfrak p}^{2(1-\sigma)}$. Its product with a valuation $-1$ Gauss term costs at most $Cq_{\mathfrak p}^{3/2-2\sigma}$, which is smaller. This covers purely cubic ramification and primes deleted solely to preserve the original zeros. Hilbert factors and unit rescalings are unimodular.
+
+Thus each new local matrix costs at most $C_\sigma q_{\mathfrak p}^{2(1-\sigma)}$. Combining with the already matched archimedean factor in (A3), for the finite closed branch vector one obtains
+
+$$
+\sum_j|\mathcal Z_j(hen,z)|^2
+\ll_{\sigma,\eta}
+(FEq_n)^\eta F^{4-4\sigma}(Eq_n)^{2-2\sigma}
+(1+|t|)^{8-8\sigma}
+\sum_j|\mathcal Z_j(hen,2-z)|^2.
+\tag{B1}
+$$
+
+The required left lines are fixed $\sigma=2-\sigma_0$ with $3/2<\sigma_0<11/6$, and $3/4\le\sigma<1$. Numerator variation at $f$ changes only phases and cube classes. The multiplier $e$ remains a numerator shift.
+
+#### The mean square with its original restrictions
+
+For each fixed $f$, the existing theta argument and (A6) apply to the squarefree index $en$. All required branch completions are entire and have finite exponential growth in strips. Those fixed-$f$ constants need not be uniform: they establish finiteness of the DDDS supremum. The uniform final estimate comes from (B1) and the right-line and short-sum bounds.
+
+Reuse the DDDS short-sum estimate for the squarefree numerator family $q_n\le M$, $(n,ef)=1$:
+
+$$
+S_2\ll(FEMX)^\eta
+\left(M+M^{1/3}X^{3-2\sigma}
++M^{2/3}X^{8/3-2\sigma}\right).
+$$
+
+The extra unitary character coefficients are independent of the numerator variable in the Gauss split. The finite expansion costs $F^\eta$, and the numerator multiplier costs $E^\eta$. Equation (B1) bounds the remainder by
+
+$$
+S_3\ll(FEM)^\eta
+\left(\frac{F^2EM(1+|t|)^4}{X^2}\right)^{2(\sigma-1)}
+\int_{\mathbb R}\mathfrak Z_M(\sigma-it-iy)e^{-|y|/2}\,dy.
+$$
+
+In the existing finite-supremum absorption take
+
+$$
+X=C_{\sigma,\eta}F\sqrt{EM}\,
+(FEM)^{\eta/[4(\sigma-1)]}(1+|t|)^2.
+$$
+
+Choose $\eta$ sufficiently small relative to the final $\varepsilon(\sigma-1)$. The extra powers fit the final epsilon losses. Substitution in $S_2$ bounds the powers of $F,E,M$ by $1,1/2,1$, respectively, and the height power by two, up to these losses. Removing the absolutely bounded inverse normalizer gives
+
+$$
+\sum_{\substack{q_n\le M,\ n\ {\rm good\ sf}\\(n,ef)=1}}
+|\Psi_{\chi,en}(hen,\sigma+it)|^2
+\ll_{\sigma,\varepsilon}
+(FEM)^\varepsilon F E^{1/2}M^{1+\varepsilon}(1+|t|)^2,
+\qquad 1<\sigma\le5/4.
+\tag{B2}
+$$
+
+First obtain the unfiltered statement. To impose $(c,en)=1$, apply (A5) with squarefree $en$ and split its divisor as $d=d_ed_n$. The resulting sums have exponents $5/2-4\sigma+\varepsilon$ on $d_e\mid e$, and $2-4\sigma+\varepsilon$ on $d_n$. Both converge uniformly for sufficiently small $\varepsilon$. This proves the displayed version without adding $e$ to $f$.
+
+The actual pole scalar also contains $\vartheta(z)$, which is not a character. For squarefree coprime $z=ed'n'$, separate its three factors. The outer and fixed factors have modulus at most one. In the inner variable expand
+
+$$
+\vartheta(d')=\sum_{v\mid d'}\frac{\mu(v)}{q_v}.
+$$
+
+Writing $d'=vc$, normalized cubic Gauss CRT and reciprocity give the numerator shift $v$: the cross factor $\kappa_v(c)\kappa_c(v)$ is $\kappa_c(v)^2$, hence the same as the shift from $g_3(r,c)$ to $g_3(rv,c)$, up to the retained class phase. Conjugate the entire identity for the actual conjugate family. The remaining normalized Gauss factor at $v$ has modulus one and can stay in the outer coefficient. The shifted numerator is $hevn'$ and the denominator excludes $evn'f$. Mellin inversion and Minkowski pay
+
+$$
+\sum_v q_v^{-1}(D'/q_v)^{1/2}(Eq_v)^{1/4}
+=D'^{1/2}E^{1/4}\sum_v q_v^{-5/4}<\infty.
+$$
+
+Different $v$ may have different outer phases; the Minkowski estimate does not identify their vectors. Put
+
+$$
+\mathcal P=\|W_M\|_\infty\|W_S\|_\infty,
+\qquad
+\mathcal B=\|W_S\|_\infty\mathcal N_\delta(W_M),
+$$
+
+with the same original seminorm and fixed sufficiently small $\delta>0$ as in (A8). For bulk lengths $D',N'$, the resulting weighted scalar obeys
+
+$$
+|Q_{\rm weighted}(D',N';e,f)|^2
+\ll K^\varepsilon F E^{1/2}D'(N')^2\mathcal B^2.
+\tag{B3}
+$$
+
+Every original class restriction, multiplicative twist, zero mask and orientation remains in the corresponding coefficient. Divisor bounds cost epsilon only.
+
+#### Consumption with opposite-core-dependent coefficients
+
+Keep the earlier all-column decomposition $h=gx,k=gy$, $x=cs_0z,y=c't_0w$, and its exact CRT and Möbius extension. For an original factorization $dn=mz$, $m=gcs_0=ab$, reuse
+
+$$
+a=a_ga_c,\quad b=b_gb_cs_0,\quad
+a_g=(a,\operatorname{rad}g),\quad b_g=g/a_g,\quad
+a_c\mid\operatorname{rad}c,\quad b_c=c/a_c.
+$$
+
+Because $c$ is powerful and $a_c$ is squarefree, $\operatorname{rad}c\mid b_c$. Nonempty original ranges impose $q_b\ll N$, so $q_{\operatorname{rad}c}\le q_{b_c}\ll N$. The same holds for $c'$. All new finite weights and exclusions are supported on $\operatorname{rad}(gcc')\ell$; the divisor $r\mid R$ introduces no other prime. A common conductor envelope for both sides is therefore
+
+$$
+F\ll q_g N^2q_\ell.
+\tag{B4}
+$$
+
+It is independent of both opposite cores. The fixed coefficient vectors can still differ between separate core-pair applications.
+
+Distribute $e=e_de_n$ between the actual factors, writing $d=ae_dd'$, $n=be_nn'$. The interaction of $e$ with the moving squarefree Gauss factor is cubic, by the already retained reciprocity formula, and is the numerator shift $e$ in (B3). It is not a growing quadratic modulus. The bulk lengths satisfy
+
+$$
+D'=\frac D{q_aq_{e_d}},\qquad
+N'=\frac N{q_bq_{e_n}},\qquad
+D'N'=X/q_e,\qquad X=K/q_m.
+$$
+
+Including the original $q_z^{-1/3}$ weight, (B3) gives
+
+$$
+|H_{m,e}^{a,b}|^2
+\ll K^\varepsilon F X^{1/3}\frac N{q_b}
+q_e^{-1/2}q_{e_n}^{-1}\mathcal B^2.
+$$
+
+The sum over $e_d$ costs $(D/q_a)^{1/2}$ and the $e_n^{-3/2}$ sum converges. Hence
+
+$$
+\sum_e|H_{m,e}^{a,b}|^2
+\ll K^\varepsilon F X^{1/3}\frac N{q_b}
+\left(\frac D{q_a}\right)^{1/2}\mathcal B^2.
+\tag{B5}
+$$
+
+For the new part, sum square roots using the positive core moment
+
+$$
+\sum_{\substack{c\ {\rm powerful}\\a_c\mid\operatorname{rad}c}}
+w(c)q_{a_c}^{-5/12}q_{b_c}^{-2/3}<\infty.
+$$
+
+A prime exponent $r\ge2$ and choice $\delta=0,1$ have local exponent $2r/3-\delta/4+1/3$ if $6\nmid r$, and $2r/3-\delta/4$ otherwise. The minima are $5/3$ and $17/12$ at $r=2$; exponents divisible by six give at least $15/4$. Dropping negative $s_0$ factors is used only in positive upper bounds, and its choices cost $q_g^\varepsilon$.
+
+After (B4) and the core sum, the square root of (B5) is bounded by
+
+$$
+K^\varepsilon q_\ell^{1/2}K^{1/6}D^{1/4}N^{3/2}
+q_{a_g}^{1/12}q_{b_g}^{-1/6}\mathcal B.
+$$
+
+First apply Cauchy in $e$ to each fixed pair of scalar vectors. Then take absolute values and sum the core pairs using these uniform square-root envelopes. Cauchy over $a_g\mid\operatorname{rad}g$ costs $q_g^\varepsilon$ and replaces the two possibly different distribution indices by one sum of squared envelopes. Only now split this positive sum at $q_{a_g}=A$. This retains the low–high cross terms without equating opposite-core-dependent vectors.
+
+For $q_{a_g}\le A$, the sums of $q_{a_g}^{1/6}$ and $q_{b_g}^{-1/3}$ cost $A^{7/6}$ and $N^{2/3}$. The low part is
+
+$$
+\ll K^\varepsilon D^{5/6}N^4A^{7/6}\mathcal B^2.
+\tag{B6}
+$$
+
+The extra $q_\ell$ is paid by the original $q_\ell^{-5}$ sum, now $q_\ell^{-4}$; the $r$ divisor sum still costs epsilon. For $q_{a_g}>A$, reuse the earlier coefficient-uniform cubic/core estimate. Its $D$ term has tail $\sum_{q_{a_g}>A}q_{a_g}^{-4/3}\ll A^{-1/3}$; its other terms retain their original bounds. Thus the high part is
+
+$$
+\ll K^\varepsilon
+\left\{K(1+N^{1/3})+D^{4/3}NA^{-1/3}\right\}\mathcal P^2.
+\tag{B7}
+$$
+
+The actual $z=w=1$ sector and its algebraically added counterpart retain their $O(K^{1+\varepsilon})$ bound. For $1\le A\le D$, the complete classwise pole therefore satisfies
+
+$$
+\boxed{
+|\mathcal C^{a,\rm all}_{6,L}[c_j]|
+\ll K^\varepsilon
+\left\{
+K(1+N^{1/3})\mathcal P^2
++D^{4/3}NA^{-1/3}\mathcal P^2
++D^{5/6}N^4A^{7/6}\mathcal B^2
+\right\}.
+}
+\tag{B8}
+$$
+
+This is uniform in $L$ and retains squarefree, nonsquarefree and mixed columns and every common gcd.
+
+#### Improvement range and unpaid target
+
+For $\mathcal B\le C H_0\mathcal P$, $H_0\ge1$, take $A=D^{1/3}N^{-2}H_0^{-4/3}$ when this is at least one. It is at most $D$. Then
+
+$$
+\boxed{
+|\mathcal C^{a,\rm all}_{6,L}[c_j]|
+\ll K^\varepsilon\mathcal P^2
+\left\{K(1+N^{1/3})
++D^{11/9}N^{5/3}H_0^{4/9}\right\}.
+}
+\tag{B9}
+$$
+
+With fixed power room, $D>N^6H_0^4$ makes this smaller than the earlier $D$-dominant $KD^{1/3}$ estimate and the absolute $K^{4/3}$ estimate. Outside this range keep the existing bound. A common norm modulation $H$ costs $H_0\asymp1+H$ for fixed unmodulated profiles; its budget has not been reset.
+
+These are permitted, not guaranteed, original witness sectors: with $D=U^r$, $N=U^m$, $H_0\ll U^h$, the improvement requires $r>6m+4h$, subject to the original $r\le t$, $r+m\ge t$ and $0\le m\le1/2$, with their small losses. It is not a uniform detector improvement.
+
+In particular (B9) alone does not pay the pole budget. Its new term would require
+
+$$
+U\ge D^{4/3}N^4H_0^{8/3}
+$$
+
+to make $U^{5/6}\mathcal C$ bounded by $UK$, up to epsilon losses. But the original $r+m\ge t\ge1$ implies $4r/3+4m\ge4/3$ before the small losses, already exceeding one at $H_0=1$. The application supplies only the stated all-column upper-bound improvement. Other dual terms, coverage of the actual witnesses, the earlier cross-class signed contraction and signed Robin restoration remain open. It has no complete local Lean certification and makes no literature-novelty claim.
 
 ## The possible FIB interface
 
