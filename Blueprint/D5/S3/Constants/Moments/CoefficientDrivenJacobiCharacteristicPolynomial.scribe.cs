@@ -44,7 +44,33 @@ internal sealed class CoefficientDrivenJacobiCharacteristicPolynomialDocument
                     "This declaration stops at the coefficient-driven Jacobi construction. It "
                         + "does not perform Cholesky factorization, construct chain weights, or "
                         + "identify the final chain polynomial."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("coefficient-multiplication-matrix-charpoly"),
+                DeclarationHandle.Create(
+                    "D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.multiplication_matrix_charpoly"),
+                H("The coefficient multiplication matrix has characteristic polynomial q"),
+                StatementSource.FromAuthor(CompanionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every monic real polynomial q, the characteristic polynomial of "
+                    + "coefficientMultiplicationMatrix q is q. The power basis of the quotient "
+                    + "by q identifies this matrix with multiplication by the root."))),
+                DescribeRole.Theorem))));
+
+    private static Formula CompanionFormula()
+    {
+        Formula q = F.Id("q");
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("q"),
+            Call("Polynomial", Call("Real")),
+            new Formula.Logic(Apply(Qualified("Polynomial", "Monic"), q), FormulaLogicOperator.Implies,
+                new Formula.Relation(
+                    Apply(Qualified("Matrix", "charpoly"), Call("coefficientMultiplicationMatrix", q)),
+                    FormulaRelationOperator.Equal, q))));
+    }
+
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
 
     private static Formula Apply(Formula function, params Formula[] arguments) =>
         new Formula.Apply(function, [.. arguments]);
