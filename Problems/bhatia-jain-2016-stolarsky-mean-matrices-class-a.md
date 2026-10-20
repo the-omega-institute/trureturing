@@ -129,7 +129,7 @@ that each parameter in $[0,2)$ has a positive three-point family with at
 least two positive eigenvalues. Their axiom closure is restricted to
 `propext`, `Classical.choice`, and `Quot.sound`.
 
-The analytic route — the positive-definiteness factorization of the derivative defect and the three-point inertia family — was derived with the assistance of the ChatGPT Pro model and checked by hand before formalization.
+The analytic route — the positive-definiteness factorization of the derivative defect and the three-point inertia family — was derived with the assistance of the ChatGPT Pro model.
 
 ## Triage
 
