@@ -520,4 +520,3 @@ theorem correctedField_translation_physical (D : LatticeData) (hu : IsUnit D.G.d
 
 end D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
 end
-
