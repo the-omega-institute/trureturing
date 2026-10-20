@@ -809,3 +809,489 @@ three and one fixed drift per world retained, and with no common
 gain or drift condition between different worlds.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Rational tubes for the positive roots on an equal-source-coordinate chart
+
+**Definition 14.1 (The parameter and the source polynomials).** Retain
+exactly the complete-world domain, original $H_4$, clocks and actual
+responses of Section 1 and $O$, Definitions 1.1–1.3. Put
+
+$$
+\begin{gathered}
+p_c=\frac{2744214237392974691433531179656369993836520133001835}{10^{50}},
+\qquad h=10^{-40},\qquad K=[p_c-h,p_c+h],\\
+a=\frac{6618}{10000},\qquad w=\frac1{10000},\qquad
+R_{\rm loc}=[a,a+w].
+\end{gathered}
+\tag{14.1}
+$$
+
+Here $R_{\rm loc}$ is an interval, distinct from the resultant
+$R_{18}$. The parameter $p_J$ is still the value at the unique zero
+of the original $F_J$ in its original box $\mathcal B_J$, supplied
+by $O$, Theorem 8.1 and (8.4). For that same zero, $O$,
+Theorem 26.2, gives $p_J\in K$.
+
+Use exactly $D=D_\Lambda,H,X,N,T,U,K_\Lambda,N_u$ from Section 2,
+with $N_u=\mathsf N_u$, and $D_m=5bD$. In particular
+
+$$
+\mathsf A(r,b,p)=5b(p-24)D+3(8b-1)H
+                 =\mathsf S_p(r,b)/2.
+\tag{14.2}
+$$
+
+The terminal numerator is exactly $O$ (27.1):
+
+$$
+\begin{gathered}
+Z_7=2N+3bU,\qquad
+G_7=(20T+84)XN-bT(70N+35X),\\
+N_m=\frac{120bTD+12Z_7D(200b+11)
+ -3K_\Lambda(bTXN+Z_7G_7)}{T}.
+\end{gathered}
+\tag{14.3}
+$$
+
+The divisions by $T=1+b$ defining $N_u,N_m$ are exact polynomial
+divisions before any coefficient operation. Thus all the polynomials
+used below are specified by Section 2 and (14.2)–(14.3), without
+using a projected root chart or an eliminant root as a source.
+
+**Definition 14.2 (Finite rational coefficient operation).** For
+$F\in\mathbb Q[x_1,\ldots,x_d]$ of coordinate degrees at most
+$n=(n_1,\ldots,n_d)$, write $F=\sum_\alpha f_\alpha x^\alpha$
+and define, for $0\le j_k\le n_k$,
+
+$$
+\beta_j^n(F)=\sum_{\alpha\le j} f_\alpha
+ \prod_{k=1}^d\frac{\binom{j_k}{\alpha_k}}{\binom{n_k}{\alpha_k}},
+\qquad
+\mathcal I_n(F)=
+ [\min_j\beta_j^n(F),\max_j\beta_j^n(F)].
+\tag{14.4}
+$$
+
+Missing coefficients are zero. The degrees $n$ in each use below
+are fixed, including zero padding. All sums in (14.4) are finite
+rational sums. On $[0,1]^d$, $F$ lies in $\mathcal I_n(F)$:
+the identity
+
+$$
+x^\alpha=\sum_{j\ge\alpha}
+ \left(\prod_k\frac{\binom{j_k}{\alpha_k}}{\binom{n_k}{\alpha_k}}\right)
+ \prod_k\binom{n_k}{j_k}x_k^{j_k}(1-x_k)^{n_k-j_k}
+\tag{14.5}
+$$
+
+expresses $F$ in a nonnegative basis whose sum is one. This is the
+usual Bernstein convex-hull argument; (14.4) fixes its exact rational
+form here.
+
+Set $r(x)=a+wx$ and $p(z)=p_c+h(2z-1)$. Write
+$\mathsf A=\sum_{k=0}^7 a_k(r,p)b^k$. Define two affine tubes by
+
+$$
+\begin{gathered}
+L_i(r)=q_i+\ell_i(r-a),\qquad
+\mathcal U_i=\{(r,b):r\in R_{\rm loc},\ |b-L_i(r)|\le e_i\},\\
+F_{i,\sigma}(x,z)=
+ \mathsf A(r(x),L_i(r(x))+\sigma e_i,p(z)),\quad \sigma\in\{-1,1\},\\
+\widehat C_i(x,y)=C(r(x),L_i(r(x))+e_i(2y-1))
+\end{gathered}
+\tag{14.6}
+$$
+
+for each $C\in\mathbb Q[r,b]$. The tube constants are
+
+| $i$ | $q_i$ | $\ell_i$ | $e_i$ |
+| --- | --- | --- | --- |
+| $0$ | $1550663131844/10^{13}$ | $-561077/10^8$ | $10^{-9}$ |
+| $1$ | $3795203448211/10^{13}$ | $-1714782/10^7$ | $10^{-8}$ |
+
+**Proposition 14.3 (Source-specific rational certificate).** Every
+Bernstein coefficient of the indicated polynomial satisfies the
+following strict bounds. For $a_k(r(x),p(z))$, use degree $(6,1)$:
+
+| $k$ | Lower bound | Upper bound |
+| --- | --- | --- |
+| $0$ | $1$ | $2$ |
+| $1$ | $1$ | $2$ |
+| $2$ | $-47$ | $-46$ |
+| $3$ | $-72$ | $-71$ |
+| $4$ | $119$ | $120$ |
+| $5$ | $370$ | $371$ |
+| $6$ | $1089$ | $1090$ |
+| $7$ | $353$ | $354$ |
+
+For $F_{i,\sigma}$ use degree $(7,1)$. The next bounds are for
+$10^{10}\beta_j^{(7,1)}(F_{i,\sigma})$:
+
+| $i$ | $\sigma$ | Lower bound | Upper bound |
+| --- | --- | --- | --- |
+| $0$ | $-1$ | $148$ | $158$ |
+| $0$ | $1$ | $-149$ | $-140$ |
+| $1$ | $-1$ | $-8851$ | $-5851$ |
+| $1$ | $1$ | $2851$ | $5853$ |
+
+Put $s_0=1$, $s_1=-1$ and
+
+$$
+(m_0^-,m_0^+)=(7058/10,7059/10),\qquad
+(m_1^-,m_1^+)=(673,6731/10),\qquad
+(v^-,v^+)=(15145/100,15147/100).
+\tag{14.7}
+$$
+
+For the following rows use degree $(7,7)$ and the transform
+$\widehat C_i$ of (14.6). Each row means
+$L<10^d\beta_j^{(7,7)}(\widehat C_i)<U$ for every $j$:
+
+| $i$ | $C$ | $d$ | $L$ | $U$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $D_m$ | $4$ | $1368$ | $1369$ |
+| $1$ | $D_m$ | $4$ | $-3468$ | $-3467$ |
+| $0$ | $s_0(N_m-m_0^-D_m)$ | $6$ | $115$ | $2237$ |
+| $0$ | $s_0(m_0^+D_m-N_m)$ | $6$ | $11450$ | $13568$ |
+| $1$ | $s_1(N_m-m_1^-D_m)$ | $6$ | $12515$ | $19154$ |
+| $1$ | $s_1(m_1^+D_m-N_m)$ | $6$ | $15521$ | $22164$ |
+| $0$ | $s_0(N_u-v^-D_m)$ | $6$ | $553$ | $878$ |
+| $0$ | $s_0(v^+D_m-N_u)$ | $6$ | $1860$ | $2183$ |
+| $1$ | $s_1(N_u-v^-D_m)$ | $6$ | $1033$ | $2503$ |
+| $1$ | $s_1(v^+D_m-N_u)$ | $6$ | $4432$ | $5903$ |
+
+Proof. Expand the exact polynomials (14.2)–(14.3) and $N_u,D_m$
+from Section 2, performing the two exact divisions by $1+b$ first.
+Their total source degrees are at most seven, and
+$[b^7]\mathsf A=5p+216$. Substitution in the coefficient rows gives
+degrees at most $(6,1)$; substitution in the faces gives degrees at
+most $(7,1)$; the tube transforms have degrees at most $(7,7)$.
+Apply (14.4) with precisely these padded degrees.
+
+More explicitly, each table row with scale $10^d$ is the finite
+set of rational inequalities
+
+$$
+L<10^d\sum_{\alpha\le j}
+ [x^\alpha]F\prod_k
+ \frac{\binom{j_k}{\alpha_k}}{\binom{n_k}{\alpha_k}}<U,
+\qquad 0\le j_k\le n_k,
+\tag{14.8}
+$$
+
+where $F,n,L,U,d$ are fixed by that row and (14.1)–(14.7), and
+$d=0$ for the first table. Substitution of the displayed rational
+constants gives the listed bounds by integer cross multiplication.
+Thus the first table consists of $8\cdot14$ coefficient bounds,
+the face table of $4\cdot16$, and the tube table of $10\cdot64$.
+Equation (14.8), the fixed degree bounds and the rational affine
+substitutions specify every coefficient and comparison; no numerical
+root locations or unlisted cell choices enter the certificate. ∎
+
+## 15. Exhaustion, continuity and complete original-world lifts
+
+**Theorem 15.1 (Exactly two positive simple roots).** For every real
+$p\in K$ and $r\in R_{\rm loc}$, $\mathsf A(r,b,p)$ has exactly
+two positive real roots, counted with multiplicity. They are simple
+and can be labelled
+
+$$
+b_0(r,p)<b_1(r,p),\qquad
+|b_i(r,p)-L_i(r)|<e_i.
+\tag{15.1}
+$$
+
+Both functions are continuous on $R_{\rm loc}\times K$ and locally
+are restrictions of continuously differentiable functions on open
+neighbourhoods in $(r,p)$.
+
+Proof. The first table of Proposition 14.3 and (14.5) give the
+ascending coefficient sign word $(+,+,-,-,+,+,+,+)$ for every
+$(r,p)$ in the stated rectangle. Its descending word has exactly
+two variations. Descartes' rule of signs therefore gives at most
+two positive roots, counting multiplicity. In particular the
+leading coefficient never vanishes.
+
+The tube sections are disjoint and positive: the first lies in
+$(15/100,16/100)$ and the second in $(37/100,39/100)$, directly
+from (14.6). The face table gives signs $(+,-)$ on the first
+section and $(-,+)$ on the second, uniformly in $r,p$.
+The intermediate value theorem supplies a root in the interior of
+each section. These two roots use the entire Descartes multiplicity
+budget. Hence they are all positive roots, each simple; this also
+excludes any positive root outside the two sections.
+
+At either root $\partial_b\mathsf A\ne0$. The ordinary implicit
+function theorem gives a local continuously differentiable root
+function. Its positive lower or upper label is unique by the root
+count, so these local functions agree wherever their domains meet
+the rectangle. They give the functions (15.1), including continuity
+at its boundary. ∎
+
+**Theorem 15.2 (Whole-world lift and separated actual images).**
+For each $(r,p)\in R_{\rm loc}\times K$, the complete worlds in
+$\mathcal F(H_4,M,p)$ with source coordinate $r$ are exactly two
+worlds $W_i(r,p)$, with sources $(r,b_i(r,p))$. Both are regular,
+and their actual responses satisfy
+
+$$
+\begin{gathered}
+7058/10<f_{MM}(W_0(r,p))<7059/10,\\
+673<f_{MM}(W_1(r,p))<6731/10,\\
+15145/100<u_M(W_i(r,p))<15147/100\qquad(i=0,1).
+\end{gathered}
+\tag{15.2}
+$$
+
+Proof. On the two full tubes the denominator rows of Proposition
+14.3 and (14.5) give, respectively,
+
+$$
+\frac{1368}{10000}<D_m<\frac{1369}{10000},\qquad
+-\frac{3468}{10000}<D_m<-\frac{3467}{10000}.
+\tag{15.3}
+$$
+
+At a strict source $j=X/b$, $n=N/b$, and $b,T,U,X,N$ are
+positive. The actual identity from $O$ (20.8) is
+
+$$
+\Lambda=\frac{2D}{TUXN}.
+\tag{15.4}
+$$
+
+Thus $D_m=5bD\ne0$ implies regularity. Since
+$\mathsf S_p=2\mathsf A=0$, the hypotheses of $O$, Theorem 12.3,
+hold: the source is strict and satisfies its zero-safe scalar
+criterion. That theorem supplies a unique complete world at each
+source. Explicitly the regular version of its lift is
+
+$$
+\begin{gathered}
+\epsilon=-\frac{3K_\Lambda XN}{5D},\qquad d=24+\epsilon,\\
+(q_0,q_1,q_2,q_3)=
+ \left(-24-\epsilon,-\epsilon/j,(27/5-\epsilon)/T,-\epsilon/n\right),\\
+g(s)=\sum_{k=0}^3q_k
+ \prod_{\substack{0\le j\le3\\j\ne k}}\frac{s-j}{k-j},\qquad
+P=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix}.
+\end{gathered}
+\tag{15.5}
+$$
+
+This is one entire polynomial and one fixed drift in each world.
+The polynomial is nonzero because the original responses at clocks
+zero and one are $0$ and $24$. The converse in $O$, Theorem 12.3,
+puts every complete world at this $r,p$ among the positive roots of
+$\mathsf A$; Theorem 15.1 exhausts those roots. Fixed-source
+uniqueness then gives exactly the two worlds claimed.
+
+For these regular strict lifts, $O$ (20.9), $O$, Theorem 27.2,
+and equivalently $E$, Lemma 3.3, give the actual identities
+$u_M=N_u/D_m$ and $f_{MM}=N_m/D_m$. The positive rows of the
+tube table have the form
+
+$$
+s_i(N_m-m_i^-D_m)>0,\quad s_i(m_i^+D_m-N_m)>0,
+\quad s_i(N_u-v^-D_m)>0,\quad s_i(v^+D_m-N_u)>0.
+\tag{15.6}
+$$
+
+Since $s_iD_m>0$, division gives (15.2). These divisions use no
+gain sample, gain leading coefficient, gain-root difference or
+drift. Lower degrees, sampled zeros, repeated gain roots and zero
+drift retain their original admissibility. The two worlds need not
+have the same gains or drifts. The bounds on the tubes locate the
+roots of the unchanged unbounded source domain; no upper source
+bound is imposed on that domain. ∎
+
+## 16. An actual acquired-response crossing at the original parameter
+
+**Definition 16.1 (Endpoint source brackets).** Put
+
+$$
+r_0=\frac{8273}{12500},\qquad r_1=\frac{13237}{20000},
+\qquad a<r_0<r_1<a+w.
+\tag{16.1}
+$$
+
+For $t,i\in\{0,1\}$ let $J_{ti}=[B^-_{ti}/d_{ti},B^+_{ti}/d_{ti}]$
+with the following integer data:
+
+| $t$ | $i$ | $B^-_{ti}$ | $B^+_{ti}$ | $d_{ti}$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $0$ | $15506608880$ | $15506608882$ | $10^{11}$ |
+| $0$ | $1$ | $37951348998$ | $37951349001$ | $10^{11}$ |
+| $1$ | $0$ | $15506603269$ | $15506603271$ | $10^{11}$ |
+| $1$ | $1$ | $3795117753$ | $3795117755$ | $10^{10}$ |
+
+**Lemma 16.2 (Uniform endpoint signs and acquired-response differences).**
+For every $p\in K$, $b_i(r_t,p)$ lies in the interior of
+$J_{ti}$. Define
+
+$$
+\delta(r,p)=u_M(W_0(r,p))-u_M(W_1(r,p)).
+\tag{16.2}
+$$
+
+Then, uniformly for $p\in K$,
+
+$$
+-\frac{5454}{10^8}<\delta(r_0,p)<-\frac{5430}{10^8}<0,
+\qquad
+0<\frac{13103}{10^8}<\delta(r_1,p)<\frac{13238}{10^8}.
+\tag{16.3}
+$$
+
+Proof. Each $J_{ti}$ lies strictly inside the section of
+$\mathcal U_i$ at $r_t$, by its rational endpoints. For
+$e\in\{-,+\}$ form
+
+$$
+H_{ti}^e(z)=\mathsf A(r_t,B^e_{ti}/d_{ti},p(z)).
+\tag{16.4}
+$$
+
+Every degree-one Bernstein coefficient of $10^{12}H_{ti}^e$ lies
+strictly within the indicated interval:
+
+| $t$ | $i$ | For $e=-$ | For $e=+$ |
+| --- | --- | --- | --- |
+| $0$ | $0$ | $(24,25)$ | $(-273,-272)$ |
+| $0$ | $1$ | $(-1100,-1099)$ | $(656,657)$ |
+| $1$ | $0$ | $(88,89)$ | $(-209,-208)$ |
+| $1$ | $1$ | $(-5641,-5640)$ | $(6062,6063)$ |
+
+These are rational evaluations of (14.2), using $n=1$ in
+(14.4); the two coefficients are exactly the evaluations at
+$p_c-h$ and $p_c+h$. Opposite signs and Theorem 15.1 identify
+the unique root inside each bracket.
+
+For $C=N_u,D_m$ form the one-variable polynomial
+
+$$
+C_{ti}(y)=C\left(r_t,
+ \frac{B^-_{ti}+(B^+_{ti}-B^-_{ti})y}{d_{ti}}\right),
+\qquad I^C_{ti}=\mathcal I_7(C_{ti}).
+\tag{16.5}
+$$
+
+All endpoints of $I^{D_m}_{t0}$ lie strictly between
+$1368/10000$ and $1369/10000$, and those of $I^{D_m}_{t1}$
+lie strictly between $-3468/10000$ and $-3467/10000$.
+The exact interval quotient is the interval whose endpoints are
+the minimum and maximum of the four endpoint ratios of
+$I^{N_u}_{ti}$ and $I^{D_m}_{ti}$. Formula (14.4), with
+$n=7$, gives the following strict enclosing intervals for that
+quotient; all numerators in the last two columns have denominator
+$10^{11}$:
+
+| $t$ | $i$ | Lower numerator | Upper numerator |
+| --- | --- | --- | --- |
+| $0$ | $0$ | $15145546534847$ | $15145546537429$ |
+| $0$ | $1$ | $15145551968255$ | $15145551987988$ |
+| $1$ | $0$ | $15145522920408$ | $15145522922990$ |
+| $1$ | $1$ | $15145509685267$ | $15145509816817$ |
+
+For reproducibility, (16.5) requires eight Bernstein coefficients
+per polynomial, with the explicit sum
+$\beta_j^7(C_{ti})=\sum_{k=0}^j[y^k]C_{ti}\binom jk/\binom7k$.
+All denominator guards and quotient comparisons above are strict
+rational comparisons of these sums and their four endpoint ratios.
+Thus (16.4)–(16.5), the displayed integer brackets and (14.4)
+specify every finite arithmetic assertion in these tables.
+
+The root in $J_{ti}$ has its actual $u_M$ in this quotient by
+Theorem 15.2. Subtract the upper-branch interval from the
+lower-branch interval, using lower minus upper for the lower
+endpoint and upper minus lower for the upper endpoint. The first
+pair of rows lies strictly between $-5454/10^8$ and
+$-5430/10^8$; the second lies strictly between $13103/10^8$ and
+$13238/10^8$. This proves (16.3) over the full $K$, rather than
+only at its rational centre. ∎
+
+**Theorem 16.3 (Same acquired child, different terminal-M values).**
+At the original exact algebraic $p_J$ there exist
+$r_*\in(r_0,r_1)$, a real $v_{\rm loc}$ and distinct complete
+regular original worlds $W_0,W_1$ such that
+
+$$
+\begin{gathered}
+W_i=W_i(r_*,p_J)\in\mathcal F(H_4,M,p_J,M,v_{\rm loc}),\\
+r(W_0)=r(W_1)=r_*,\qquad b(W_0)\ne b(W_1),\\
+\frac{15145}{100}<v_{\rm loc}<\frac{15147}{100},\qquad
+f_{MM}(W_0)\ne f_{MM}(W_1).
+\end{gathered}
+\tag{16.6}
+$$
+
+The response $v_{\rm loc}$ lies outside $[125,126]$, $[142,150]$
+and both singular responses $s_-(p_J),s_+(p_J)$.
+
+Proof. Keep $p=p_J$ fixed, using $p_J\in K$ from Definition
+14.1. Theorem 15.1 and (15.3) make both rational acquired-response
+functions continuous on $R_{\rm loc}$. Thus $\delta(r,p_J)$ is
+continuous. Lemma 16.2 gives its opposite signs at $r_0,r_1$.
+The intermediate value theorem gives an $r_*$ in their open
+interval with $\delta(r_*,p_J)=0$. Its common actual value is
+$v_{\rm loc}$. Theorem 15.2 gives both complete legal lifts and
+the bound on this response. Their disjoint positive source tubes
+make the worlds distinct, while their disjoint terminal-M ranges
+in (15.2) give the last inequality in (16.6).
+
+The response interval in (16.6) is disjoint from both displayed
+strips. For the singular responses use $O$, Theorem 29.2, and
+$S$, Lemma 2.4: at this same $p_J\in K$, the exhaustive singular
+responses lie in the rational boxes $V_-,V_+$ of $S$ (2.1),
+respectively contained in $(119,120)$ and $(138,139)$. These
+are also disjoint from (16.6). The argument varies only $r$;
+it never replaces $p_J$ by $p_c$. ∎
+
+## 17. The local reduction of the original distinct-pair locus
+
+**Corollary 17.1 (Exclusion of the equal-$r$ chart).** At the original
+$p_J$, no pair in $\mathcal T_M^{\rm ord}$ of (12.1) has
+$r(W)=r(W')\in R_{\rm loc}$. Equivalently, the strict real part
+of the distinct-pair locus (11.2) has no point with
+$r=r'\in R_{\rm loc}$ and $b,b'>0$.
+
+Proof. Fixed-source uniqueness in Theorem 15.2 means that distinct
+worlds at one such $r$ must be its lower and upper positive-root
+lifts. Their actual terminal-M images lie in the disjoint
+intervals (15.2), so equality is impossible, irrespective of
+whether their acquired responses agree. This applies in particular
+to every pair in (12.1). The actual response correspondence in
+Definition 11.1 proves the equivalent source-locus formulation. ∎
+
+**Definition 17.2 (The residual simultaneous-pair obligation).** The
+predicate remains exactly (13.1), on the entire actual child
+$\mathcal C_v=\mathcal F(H_4,M,p_J,M,v)$. Its terminal-M pair
+may be restricted, by Corollary 17.1, to
+
+$$
+r(W_{M0})\ne r(W_{M1})
+\quad\text{or}\quad
+r(W_{M0})=r(W_{M1})\in(0,1)\setminus R_{\rm loc}.
+\tag{17.1}
+$$
+
+This leaves all unequal-$r$ charts and all equal-$r$ charts outside
+$R_{\rm loc}$. In particular (16.6) identifies two members of an
+actual child, not that entire child: other-$r$ pairs at
+$v_{\rm loc}$ remain subject to the original terminal-M test,
+and the terminal-J pair required by (13.1) is still required in
+that same entire child. No terminal-J equality is supplied by
+(16.6), and its displayed pair has unequal terminal-M values.
+
+The full-strip exclusions are those already supplied by $E$,
+Theorems 1.3 and 12.1, and the two entire singular-child exclusions
+are supplied by $S$, Theorem 8.1 and Corollary 9.1. The designated
+roots of $Q$ in $E$, Theorem 8.2 and Section 13, are projection
+artifacts for the joint test, as their entire children are excluded
+there. The condition $Q(p_J,v)=0$ from Theorem 11.2 remains only
+necessary for a regular terminal-M pair. Corollary 17.1 removes a
+source-pair chart, not a response candidate; it excludes no further
+root of $Q$. At every remaining candidate response, both distinct
+pairs of (13.1), with overlap between the pairs permitted, retain
+their full original obligations.
+
+## 追加锚（本行以下为增补区）
