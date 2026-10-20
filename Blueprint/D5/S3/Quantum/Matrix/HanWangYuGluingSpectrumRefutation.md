@@ -46,6 +46,10 @@ $$\neg (\forall (k: \mathbb{N}), (\forall (M: (Fin\left(k\right)) \to (RootedCha
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/HanWangYuGluingSpectrumRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/han-wang-yu-gluing-spectrum` (refuted) by `D5/S3/Quantum/Matrix/HanWangYuGluingSpectrumRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"han-wang-yu-gluing-spectrum","declaration_gid":"D5/S3/Quantum/Matrix/HanWangYuGluingSpectrumRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* X. B. Han; S. Wang; C. Yu (2025). *PageRank of Gluing Networks and Corresponding Markov Chains*. DOI: [10.3390/math13132080](https://doi.org/10.3390/math13132080). URL: <https://www.mdpi.com/2227-7390/13/13/2080>.
