@@ -1,0 +1,6 @@
+对每个离轴有理矩形 $R$，一个完整 finite certificate 可由下列数据组成：
+
+1. 一个有限维 holomorphic transfer $T_N(s)$；
+2. 一个无零 analytic unit $U_N(s)$；
+3. scalar approximant：
+

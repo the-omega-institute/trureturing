@@ -1,0 +1,6 @@
+真正可用于 completed 极限的结论是：若 $N_L\to\infty$ 时仍有零点停留在一个与等模集合正距离分离的紧集内，那么至少有下列一项失效：
+
+1. bulk singular-value gap 没有保持统一正下界；
+2. boundary coefficient ratio 不是次指数的，或 dominant coupling 以指数速度消失；
+3. two-channel 近似、determinant 表示或 completion error 在该极限中不可忽略。
+

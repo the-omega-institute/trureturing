@@ -44,11 +44,11 @@ internal static class DigestionContextPointerStore
             RejectDuplicateProperties(json.RootElement);
             var versions = json.RootElement.EnumerateArray().Select(item =>
                 Parse([.. System.Text.Encoding.UTF8.GetBytes(item.GetRawText())])).ToImmutableArray();
-            if (versions.IsEmpty || !versions.Select(index => index.SourceSha256).SequenceEqual(
-                    versions.Select(index => index.SourceSha256).Order(StringComparer.Ordinal))
+            if (versions.IsEmpty || !versions.Select(index => index.VersionKey).SequenceEqual(
+                    versions.Select(index => index.VersionKey).Order(StringComparer.Ordinal))
                 || versions.Any(index => index.SourceId != sourceId
                     || index.Entries.Length != 1 || index.Entries[0].AtomId != atomId)
-                || versions.Select(index => index.SourceSha256).Distinct(StringComparer.Ordinal).Count() != versions.Length)
+                || versions.Select(index => index.VersionKey).Distinct(StringComparer.Ordinal).Count() != versions.Length)
                 throw new FormatException("context versions identity mismatch or ambiguity");
             return versions;
         }
@@ -76,7 +76,7 @@ internal static class DigestionContextPointerStore
         var id = next ? occurrence.NextAtomId : occurrence.PreviousAtomId;
         var start = next ? occurrence.NextStartByte : occurrence.PreviousStartByte;
         if (id is null) return null;
-        var version = Load(snapshot, index.SourceId, id).SingleOrDefault(item => item.SourceSha256 == index.SourceSha256)
+        var version = Load(snapshot, index.SourceId, id).SingleOrDefault(item => item.VersionKey == index.VersionKey)
             ?? throw new FormatException($"CONTEXT_VERSION_MISSING atom_id={id}");
         return version.Entries[0].Occurrences.SingleOrDefault(item => item.StartByte == start)
             ?? throw new FormatException($"CONTEXT_REFERENCE_MISSING atom_id={id}");
@@ -84,9 +84,29 @@ internal static class DigestionContextPointerStore
 
     internal static ImmutableArray<byte> WriteVersions(IEnumerable<DigestionContextPointerIndex> versions)
     {
-        var text = "[" + string.Join(",", versions.OrderBy(index => index.SourceSha256, StringComparer.Ordinal)
+        var text = "[" + string.Join(",", versions.OrderBy(index => index.VersionKey, StringComparer.Ordinal)
             .Select(index => System.Text.Encoding.UTF8.GetString(Write(index).AsSpan()).TrimEnd())) + "]\n";
         return [.. System.Text.Encoding.UTF8.GetBytes(text)];
+    }
+
+    // The graph key identifies the writer's observation of the actual child chains.
+    // It keeps two graph observations over identical prose from sharing pointers.
+    internal static DigestionContextPointerIndex PreserveSavedGraph(RawRepositorySnapshot raw, DigestionContextPointerIndex index)
+    {
+        if (index.GraphSha256 is not null) return index;
+        var files = raw.Entries.ToDictionary(file => file.Path, StringComparer.Ordinal);
+        var different = false;
+        foreach (var entry in index.Entries)
+        {
+            if (!files.TryGetValue(DigestionContextPointerIndex.RelativePath(index.SourceId, entry.AtomId), out var file)) continue;
+            var saved = ParseVersions(file.Bytes, index.SourceId, entry.AtomId)
+                .SingleOrDefault(version => version.SourceSha256 == index.SourceSha256 && version.GraphSha256 is null);
+            if (saved is null) continue;
+            if (saved.SourcePath != index.SourcePath || saved.Atomizer != index.Atomizer)
+                throw new FormatException($"CONTEXT_VERSION_CONFLICT source_id={index.SourceId} atom_id={entry.AtomId}");
+            different |= !Write(saved).AsSpan().SequenceEqual(Write(index with { Entries = [entry] }).AsSpan());
+        }
+        return different ? index with { GraphSha256 = DigestionFingerprint.ComputeOpaque(Write(index).AsSpan()).RawSha256 } : index;
     }
 
     internal static RawRepositorySnapshot Add(RawRepositorySnapshot raw, DigestionContextPointerIndex index)
@@ -98,7 +118,7 @@ internal static class DigestionContextPointerStore
             var versions = files.TryGetValue(path, out var old)
                 ? ParseVersions(old.Bytes, index.SourceId, entry.AtomId) : [];
             files[path] = new RawRepositoryEntry(path, WriteVersions(versions
-                .Where(version => version.SourceSha256 != index.SourceSha256)
+                .Where(version => version.VersionKey != index.VersionKey)
                 .Append(index with { Entries = [entry] })));
         }
         return RawRepositorySnapshot.Create(files.Values);
@@ -109,7 +129,7 @@ internal static class DigestionContextPointerStore
         ArgumentNullException.ThrowIfNull(index);
         Validate(index);
         var dto = new ContextIndexDto(
-            DigestionContextPointerIndex.SchemaVersion,
+            index.GraphSha256 is null ? DigestionContextPointerIndex.SchemaVersion : 2,
             index.SourceId,
             index.SourcePath,
             index.Atomizer,
@@ -127,7 +147,8 @@ internal static class DigestionContextPointerStore
                     occurrence.PreviousStartByte,
                     occurrence.NextStartByte,
                     occurrence.GoverningContext.Select(static scope =>
-                        new ContextScopeDto(scope.Relation, scope.AtomId)).ToArray())).ToArray())).ToArray());
+                        new ContextScopeDto(scope.Relation, scope.AtomId)).ToArray())).ToArray())).ToArray())
+        { GraphSha256 = index.GraphSha256 };
         return [.. JsonSerializer.SerializeToUtf8Bytes(dto, JsonOptions), (byte)'\n'];
     }
 
@@ -139,8 +160,11 @@ internal static class DigestionContextPointerStore
             RejectDuplicateProperties(json.RootElement);
             var dto = JsonSerializer.Deserialize<ContextIndexDto>(bytes.AsSpan(), JsonOptions)
                 ?? throw new FormatException("context index is empty");
-            if (dto.SchemaVersion != DigestionContextPointerIndex.SchemaVersion)
+            if (dto.SchemaVersion is not (1 or 2))
                 throw new FormatException("unsupported context index schema_version");
+            if (dto.SchemaVersion == 1 && json.RootElement.TryGetProperty("GraphSha256", out _)
+                || dto.SchemaVersion == 2 && dto.GraphSha256 is null)
+                throw new FormatException("context graph identity does not match schema_version");
             var entries = dto.Entries.Select(entry => new DigestionContextPointerEntry(
                 entry.AtomId,
                 entry.Occurrences.Select(occurrence => new DigestionContextOccurrence(
@@ -157,7 +181,7 @@ internal static class DigestionContextPointerStore
                         new DigestionContextScopePointer(scope.Relation, scope.AtomId)).ToImmutableArray())).ToImmutableArray()))
                 .ToImmutableArray();
             var index = new DigestionContextPointerIndex(
-                dto.SourceId, dto.SourcePath, dto.Atomizer, dto.SourceSha256, entries);
+                dto.SourceId, dto.SourcePath, dto.Atomizer, dto.SourceSha256, entries) { GraphSha256 = dto.GraphSha256 };
             Validate(index);
             return index;
         }
@@ -172,7 +196,8 @@ internal static class DigestionContextPointerStore
         if (string.IsNullOrWhiteSpace(index.SourceId)
             || string.IsNullOrWhiteSpace(index.SourcePath)
             || string.IsNullOrWhiteSpace(index.Atomizer)
-            || !DigestionFingerprint.IsCanonicalSha256(index.SourceSha256))
+            || !DigestionFingerprint.IsCanonicalSha256(index.SourceSha256)
+            || index.GraphSha256 is not null && !DigestionFingerprint.IsCanonicalSha256(index.GraphSha256))
             throw new FormatException("context index has invalid source identity");
 
         var ordered = index.Entries.OrderBy(static entry => entry.AtomId, StringComparer.Ordinal).ToImmutableArray();
@@ -214,7 +239,11 @@ internal static class DigestionContextPointerStore
         string SourcePath,
         string Atomizer,
         string SourceSha256,
-        ContextEntryDto[] Entries);
+        ContextEntryDto[] Entries)
+    {
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? GraphSha256 { get; init; }
+    }
 
     private sealed record ContextEntryDto(string AtomId, ContextOccurrenceDto[] Occurrences);
 

@@ -8,10 +8,23 @@ internal static class AtomContextMigrationCommand
     // Explicit writer scope: observed source evidence, registered identities and their
     // actual chains. No ingest, status projection or coverage changes occur here.
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadSource(
-        IRepositoryGateway repository, string sourceId, RawRepositorySnapshot? overlay = null, string? sourceRevision = null)
+        IRepositoryGateway repository, string sourceId, RawRepositorySnapshot? overlay = null, string? sourceRevision = null,
+        IReadOnlyList<string>? atomIds = null)
     {
-        var raw = repository.ReadCurrent([DigestionQuerySelection.Literal(BackfillInventoryLoader.RootPath + sourceId),
+        var sourceRoot = BackfillInventoryLoader.RootPath + sourceId + "/";
+        var raw = repository.ReadCurrent([.. atomIds is { Count: > 0 }
+                ? new[] { DigestionQuerySelection.Literal(sourceRoot + "source.toml"), DigestionQuerySelection.Literal(sourceRoot + "context") }
+                : new[] { DigestionQuerySelection.Literal(sourceRoot.TrimEnd('/')) },
             DigestionQuerySelection.Literal(FileMapLoader.RelativePath), ":(glob)Meta/FILEMAP.*.toml"]);
+        if (atomIds is { Count: > 0 })
+        {
+            var selected = DigestionQuerySelection.ReadAtoms(repository, atomIds, [sourceId]);
+            var entries = selected.Document.RequireDigestionEntries();
+            foreach (var id in atomIds)
+                if (entries.Count(entry => entry.AtomId == id && entry.SourceId == sourceId) != 1)
+                    throw new FormatException($"selected atom_id={id} is absent or ambiguous in source_id={sourceId}");
+            raw = DigestionQuerySelection.Merge(raw, selected.Raw);
+        }
         if (overlay is not null)
         {
             var files = raw.Entries.ToDictionary(entry => entry.Path, StringComparer.Ordinal);
@@ -38,6 +51,7 @@ internal static class AtomContextMigrationCommand
         try
         {
             var selectors = new List<string>();
+            var atomIds = new List<string>();
             string? sourceRevision = null;
             var write = false;
             var all = false;
@@ -45,6 +59,11 @@ internal static class AtomContextMigrationCommand
                 switch (arguments[i])
                 {
                     case "--source" when i + 1 < arguments.Count: selectors.Add(arguments[++i]); break;
+                    case "--atom-id" when i + 1 < arguments.Count:
+                        var atomId = arguments[++i];
+                        if (!DigestionNonpropositional.IsAtomId(atomId)) throw new FormatException("invalid atom_id");
+                        atomIds.Add(atomId);
+                        break;
                     case "--source-revision" when sourceRevision is null && i + 1 < arguments.Count:
                         sourceRevision = arguments[++i];
                         if (sourceRevision.Length != 40 || sourceRevision.Any(character =>
@@ -53,12 +72,14 @@ internal static class AtomContextMigrationCommand
                         break;
                     case "--all" when !all: all = true; break;
                     case "--write" when !write: write = true; break;
-                    default: throw new FormatException("USAGE: migrate-atom-context (--all | --source SOURCE ...) [--source-revision COMMIT_SHA] [--write]");
+                    default: throw new FormatException("USAGE: migrate-atom-context (--all | --source SOURCE ...) [--atom-id ID ...] [--source-revision COMMIT_SHA] [--write]");
                 }
             if (all == (selectors.Count > 0)) throw new FormatException("select --all or --source");
             var ids = all ? repository.SearchCurrentPaths([$":(glob){BackfillInventoryLoader.RootPath}*/source.toml"])
                 .Select(DigestionQuerySelection.SourceId).Order(StringComparer.Ordinal).ToArray()
                 : DigestionQuerySelection.ResolveSources(repository, selectors);
+            if (atomIds.Count > 0 && (all || ids.Length != 1))
+                throw new FormatException("--atom-id requires exactly one selected source");
             var output = new System.Text.StringBuilder();
             var unresolvedAtoms = 0;
             var failedSources = 0;
@@ -66,15 +87,17 @@ internal static class AtomContextMigrationCommand
             {
                 try
                 {
-                    var loaded = ReadSource(repository, sourceId, sourceRevision: sourceRevision);
+                    var loaded = ReadSource(repository, sourceId, sourceRevision: sourceRevision, atomIds: atomIds);
                     var built = DigestionContextIndexBuilder.Build(loaded.Snapshot, loaded.Document, sourceId);
+                    built = built with { Index = DigestionContextPointerStore.PreserveSavedGraph(loaded.Raw, built.Index) };
                     var final = DigestionContextPointerStore.Add(loaded.Raw, built.Index);
                     var before = loaded.Raw.Entries.ToDictionary(entry => entry.Path, StringComparer.Ordinal);
                     var updates = final.Entries.Where(entry => !before.TryGetValue(entry.Path, out var old)
                             || !old.Bytes.AsSpan().SequenceEqual(entry.Bytes.AsSpan()))
                         .Select(entry => new IngestCommand.LedgerUpdate(entry.Path, entry.Bytes)).ToImmutableArray();
                     var saved = final.Entries.ToDictionary(entry => entry.Path, StringComparer.Ordinal);
-                    var owners = loaded.Document.RequireDigestionEntries().Where(entry => entry.SourceId == sourceId).ToArray();
+                    var owners = loaded.Document.RequireDigestionEntries().Where(entry => entry.SourceId == sourceId
+                        && (atomIds.Count == 0 || atomIds.Contains(entry.AtomId, StringComparer.Ordinal))).ToArray();
                     var missing = owners.Where(entry => !HasSaved(entry.AtomId))
                         .Select(entry => entry.AtomId).Order(StringComparer.Ordinal).ToArray();
                     var resolved = owners.Length - missing.Length;

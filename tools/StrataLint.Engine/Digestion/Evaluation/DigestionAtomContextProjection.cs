@@ -32,6 +32,7 @@ internal sealed record DigestionAtomContext(
     string Atomizer)
 {
     internal string? SourceSha256 { get; init; }
+    internal string? GraphSha256 { get; init; }
     internal int StartByte { get; init; }
     internal int EndByte { get; init; }
     internal int? PreviousStartByte { get; init; }
@@ -116,6 +117,7 @@ internal static class DigestionAtomContextProjection
             {
                 GoverningContext = governing,
                 SourceSha256 = pointers.SourceSha256,
+                GraphSha256 = pointers.GraphSha256,
                 StartByte = occurrence.StartByte, EndByte = occurrence.EndByte,
                 PreviousStartByte = occurrence.PreviousStartByte, NextStartByte = occurrence.NextStartByte,
             });

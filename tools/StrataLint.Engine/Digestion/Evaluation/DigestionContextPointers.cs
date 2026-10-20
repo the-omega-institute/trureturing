@@ -14,6 +14,8 @@ internal sealed record DigestionContextPointerIndex(
     string SourceSha256,
     ImmutableArray<DigestionContextPointerEntry> Entries)
 {
+    internal string? GraphSha256 { get; init; }
+    internal string VersionKey => SourceSha256 + "/" + GraphSha256;
     internal const int SchemaVersion = 1;
     internal static string RelativePath(string sourceId, string atomId) =>
         BackfillInventoryLoader.RootPath + sourceId + "/context/" + atomId + ".json";
