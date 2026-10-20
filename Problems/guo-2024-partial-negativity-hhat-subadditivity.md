@@ -30,9 +30,6 @@ density matrix.
 | subadditivity inequality (24) | `claim` concludes `hHat ρ ≤ hHat ρ.traceRight + hHat (partialTraceFirst ρ)` |
 | refutation | `result : ¬ claim` |
 
-The public result is the designated refutation result (`basis=refutes`) and is
-exempt from four-slot escape registration (CLAUDE.md §3.9).
-
 ## Motivation
 
 Equation (24) is used as an assumption for later constructions in the source.
@@ -86,9 +83,15 @@ conjecture; eight accessible citing works do not settle it. The erratum's
 abstract concerns equations (36), (37), (39), (41), and (43), while v3 retains
 (24). Literature completeness is `ASSUMED-UNVERIFIED`.
 
-The unfinished escape audit for the non-result declarations is tracked in
-[issue #19585](https://github.com/the-omega-institute/trureturing/issues/19585).
-No `declared_validated` registration is asserted here.
+The source's line-6 utility record is:
+
+```text
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/PartialNegativity/GuoHatSubadditivityRefutation.claim; result=D5/S3/Quantum/Entanglement/PartialNegativity/GuoHatSubadditivityRefutation.result; claim=D5/S3/Quantum/Entanglement/PartialNegativity/GuoHatSubadditivityRefutation.claim
+```
+
+This record designates `result`, which CLAUDE.md §3.9 exempts from four-slot
+escape registration. The module's public definitions are `hHat` and `claim`,
+and `result` is its only public theorem; it adds no other public theorem.
 
 ## Triage
 
