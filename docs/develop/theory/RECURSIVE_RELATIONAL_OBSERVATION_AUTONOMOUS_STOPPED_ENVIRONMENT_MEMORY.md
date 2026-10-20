@@ -1546,3 +1546,100 @@ inverse or universal physical theorem among these correspondences.
 [PG-AS]: https://github.com/the-omega-institute/trureturing/blob/723bf800aacca69c5a52d77c503d455c09014122/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Information-theoretic history queries after STOP
+
+**Definition 13.1 (Complete stopped record and admissible history query).** Let $W$ be the actual stopped word with countable support, probabilities $p_w>0$ and $\sum_wp_w=1$. Let $C=c(W)$ be the complete classical record retained at the STOP cut, including every classical carrier available to the installed controller and decoder. Let $g:W\mapsto Z$ be a countable-valued history query. The retained quantum carrier is the actual $H$ specimen; the reference is inaccessible. After STOP, a decoder may apply any record-controlled channel, measure or consume the retained quantum carrier, and use fixed independent ancillas, but has no additional history port, unrecorded clock, acquisition call, or post-STOP label.
+
+Assume that for every $c$ and every nonempty record/query fibre the maximum below is attained. This holds in particular for finite fibres and for the geometric first-STOP fibres in Definition 8.2. Define the optimal uniform success guarantee
+
+$$
+P^*(g\mid C,H)
+=\sup_{\mathcal D}\ \inf_{\rho}
+\Pr_{W,\rho}\{\widehat g=g(W)\},
+\tag{13.1}
+$$
+
+where $\mathcal D$ ranges over the admissible record-controlled channels and the infimum ranges over the allowed unknown input states, with any inaccessible reference included in the input domain.
+
+**Theorem 13.2 (Exact worst-input success for a stopped history query).** Under Definition 13.1,
+
+$$
+\boxed{
+P^*(g\mid C,H)
+=\sum_c\max_z
+\sum_{\substack{w:c(w)=c\\g(w)=z}}p_w.
+}
+\tag{13.2}
+$$
+
+The sum is over records with positive mass; an empty inner class contributes zero. Exact recovery of $g$ is possible if and only if
+
+$$
+\boxed{
+c(w)=c(v)\Longrightarrow g(w)=g(v)\quad\text{for all }w,v\text{ in the support}.
+}
+\tag{13.3}
+$$
+
+Proof. Use the allowed maximally mixed qutrit input $\rho_*=I_3/3$. Since each $Q_w$ is unitary, the retained state after the stopped word is
+
+$$
+\iota(Q_w\rho_*Q_w^\dagger)=P_R/3,
+$$
+
+independent of $w$. A channel selected by a fixed record $c$ therefore has the same output distribution for every $w$ in that record fibre, even when it measures or consumes $H$ and even when an inaccessible reference is allowed in the surrounding task. Write $a_c(z)$ for this common decoder output distribution. Its success probability on the witness input is
+
+$$
+\sum_{c,z}a_c(z)
+\sum_{\substack{w:c(w)=c\\g(w)=z}}p_w
+\le
+\sum_c\max_z
+\sum_{\substack{w:c(w)=c\\g(w)=z}}p_w.
+\tag{13.4}
+$$
+
+Thus no admissible decoder has a larger worst-input guarantee. Conversely, for each $c$ choose an attained maximizer $z_c$ and output $z_c$ from the classical record alone. Its success probability is exactly the right-hand side for every unknown input, so (13.2) follows. The right-hand side equals one precisely when each record fibre has one $g$-value, which is (13.3). This information-theoretic optimum does not assert that the MAP table $c\mapsto z_c$ is computable from a finite controller; computability of that table is a separate acquisition problem. $\square$
+
+**Corollary 13.3 (The first-$1$ residue controller).** In Definition 8.2 let the source modulus be the even integer $L\ge2$, and write
+
+$$
+W=0^{LM+r}1,
+\qquad 0\le r<L,
+$$
+
+with the complete stopped record retaining only $r$. The source law in (8.4) gives
+
+$$
+\Pr(M=j,r)=2^{-Lj-r-1}.
+\tag{13.5}
+$$
+
+For each residue $r$, the maximum mass in its record fibre is attained at $j=0$. Consequently
+
+$$
+\boxed{
+P^*(W\mid C,H)
+=\sum_{r=0}^{L-1}\max_{j\ge0}2^{-Lj-r-1}
+=\sum_{r=0}^{L-1}2^{-r-1}
+=1-2^{-L}.
+}
+\tag{13.6}
+$$
+
+The first-STOP count $T=LM+r+1$ is mutually determined with $W$, so
+
+$$
+\boxed{P^*(T\mid C,H)=1-2^{-L}.}
+\tag{13.7}
+$$
+
+An optimal decoder outputs $0^r1$ and $r+1$, respectively. For $L=2$ both guarantees are $3/4$.
+
+Proof. For fixed $r$, (13.5) is a geometric sequence in $j$ with ratio $2^{-L}<1$, so its largest term is $2^{-r-1}$ at $j=0$. Apply (13.2) and sum over the $L$ records. The map $(M,r)\mapsto W\mapsto T$ is bijective on the support, so the same calculation applies to $T$. The exact-recovery regime of Theorem 4.1 retains a complete acquired-prefix tree and its full classical state; the residue-only record in this corollary deliberately merges the words $0^r1$ and $0^{L+r}1$, so (13.6) is a best uniform success probability rather than exact recovery. $\square$
+
+**Proposition 13.4 (Scope of the memory conclusion).** A stopped record can be sufficient for the future continuation task of §§8–12 while failing to support a different history query. In particular, $r$ is sufficient for the installed residue-controlled correction, but (13.3) fails for the full word and count whenever the record fibre contains two values of $M$.
+
+Proof. The installed correction in (8.6) is selected by $r$ and acts on the retained $H$; it therefore uses only the declared continuation interface. For the full word or $T$, fixed $r$ has positive-mass words for every $M\ge0$, with different answers. Equation (13.3) fails, and Theorem 13.2 gives the exact success value. No additional history port has been introduced. $\square$
+
+## 追加锚（本行以下为增补区）
