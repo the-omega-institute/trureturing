@@ -36,6 +36,10 @@ $$\neg (\forall (\alpha: \mathbb{R}), (Irrational\left(\alpha\right)) \Rightarro
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/SturmianMapCumulativeRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/joshi-2025-sturmian-map-cumulative-bound` (refuted) by `D5/S1/Words/SturmianMapCumulativeRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"joshi-2025-sturmian-map-cumulative-bound","declaration_gid":"D5/S1/Words/SturmianMapCumulativeRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gandhar Joshi (2025). *Automatic sequences from algebraic, dynamical, and computational perspectives*. DOI: [10.21954/ou.ro.00106631](https://doi.org/10.21954/ou.ro.00106631). URL: <https://oro.open.ac.uk/106631/>.
