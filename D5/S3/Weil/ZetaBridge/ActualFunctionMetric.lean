@@ -32,14 +32,6 @@ private lemma mu0_lower : (1:ℝ)/16 ≤ mu0 := by
   nlinarith only [hlog,sq_nonneg (Real.log (2:ℝ)-(1:ℝ)/2)]
 
 private lemma mu0_pos : 0 < mu0 := lt_of_lt_of_le (by norm_num) mu0_lower
-lemma kappa0_gt : (1:ℝ)/33 < kappa0 := by
-  have hg : 0 < gamma := by unfold gamma; positivity
-  have hg1 : gamma < 1 := by unfold gamma; nlinarith only [Real.pi_lt_four]
-  have hden : 0 < 1+gamma^2+mu0 := by nlinarith [sq_nonneg gamma, mu0_pos]
-  unfold kappa0
-  apply (lt_div_iff₀ hden).2
-  nlinarith only [mu0_lower,mul_pos (sub_pos.mpr hg1) (show 0 < 1+gamma by positivity)]
-
 /-- A two by two function metric bound, proved by an exact sum of squares. -/
 private lemma metric_point {c : ℕ} (hc : 3 ≤ c) (a b : ℂ) :
     kappa0*(‖a‖^2+‖b‖^2) ≤ ‖a+(gamma:ℂ)*b‖^2+mean c*‖b‖^2 := by

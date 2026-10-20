@@ -4,7 +4,7 @@
 
 Actual Paired Function Metric
 
-Put mu0=log(2)^2/4, gamma=pi/4 and kappa0=mu0/(1+gamma^2+mu0). Then kappa0>1/33. An exact two-by-two sum of squares proves the pointwise function estimate using the actual mean lower bound.
+Put mu0=log(2)^2/4, gamma=pi/4 and kappa0=mu0/(1+gamma^2+mu0). An exact two-by-two sum of squares proves the pointwise function estimate using the actual mean lower bound.
 
 For every c>=3 and arbitrary complex polynomials A,B, kappa0 times the integral on [-1,1] of norm(A(t))^2+norm(B(t))^2 is at most pairedEnergy(c,A,B). Reflection joins the two halves of the integral. This is an integral function metric estimate; it uses no monomial/Hilbert coefficient conversion and has no nonzero-vector premise.
 
@@ -44,19 +44,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualFunctionMetric.kappa0`
 
 Lean defining declaration: def kappa0 : ℝ := mu0/(1+gamma^2+mu0).
 
-**Theorem 1.4 (kappa0 gt).**
-
-Lean statement: `D5/S3/Weil/ZetaBridge/ActualFunctionMetric.kappa0_gt`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/ActualFunctionMetric.kappa0_gt` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Complete Lean telescope and conclusion: lemma kappa0_gt : (1:ℝ)/33 < kappa0.
-
-**Theorem 1.5 (actual paired function metric).**
+**Theorem 1.4 (actual paired function metric).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualFunctionMetric.actual_paired_function_metric`
 
@@ -73,6 +61,5 @@ Complete Lean telescope and conclusion: theorem actual_paired_function_metric {c
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualFunctionMetric.actual_paired_function_metric`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualFunctionMetric.gamma`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualFunctionMetric.kappa0`
-- Truth anchor: `D5/S3/Weil/ZetaBridge/ActualFunctionMetric.kappa0_gt`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualFunctionMetric.mu0`
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualPairedReciprocal](ActualPairedReciprocal.md)

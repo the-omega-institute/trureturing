@@ -7,7 +7,7 @@ internal sealed class ActualFunctionMetricDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual Paired Function Metric", H("Actual Paired Function Metric"),
         Blocks(
-            Paragraph(Text("Put mu0=log(2)^2/4, gamma=pi/4 and kappa0=mu0/(1+gamma^2+mu0). Then kappa0>1/33. An exact two-by-two sum of squares proves the pointwise function estimate using the actual mean lower bound.")),
+            Paragraph(Text("Put mu0=log(2)^2/4, gamma=pi/4 and kappa0=mu0/(1+gamma^2+mu0). An exact two-by-two sum of squares proves the pointwise function estimate using the actual mean lower bound.")),
             Paragraph(Text("For every c>=3 and arbitrary complex polynomials A,B, kappa0 times the integral on [-1,1] of norm(A(t))^2+norm(B(t))^2 is at most pairedEnergy(c,A,B). Reflection joins the two halves of the integral. This is an integral function metric estimate; it uses no monomial/Hilbert coefficient conversion and has no nonzero-vector premise.")),
             Describe.Lean(DescribeId.Create("mu0"),
                 DeclarationHandle.Create("D5/S3/Weil/ZetaBridge/ActualFunctionMetric.mu0"),
@@ -27,12 +27,6 @@ internal sealed class ActualFunctionMetricDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Lean defining declaration: def kappa0 : ℝ := mu0/(1+gamma^2+mu0)."))),
                 DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("kappa0-gt"),
-                DeclarationHandle.Create("D5/S3/Weil/ZetaBridge/ActualFunctionMetric.kappa0_gt"),
-                H("kappa0 gt"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean telescope and conclusion: lemma kappa0_gt : (1:ℝ)/33 < kappa0."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-paired-function-metric"),
                 DeclarationHandle.Create("D5/S3/Weil/ZetaBridge/ActualFunctionMetric.actual_paired_function_metric"),
                 H("actual paired function metric"), StatementSource.WithoutFormula(),
