@@ -1,0 +1,18 @@
+**定义 23.3（闭前缀及有限右边界时钟）。** $P_r(v)$ 给出每个相对地址 $a$、$|a|\le r$ 的标签，值域为 $\{\alpha,\beta,\mathsf{pair},\mathsf{absent}\}$；深度 $r$ 的标签本身可见，叶下面全部为不存在。对有限树定义
+
+$$
+\kappa(\alpha)=0,\qquad\kappa(\beta)=1,\qquad
+\kappa(\langle x,y\rangle)=2+\kappa(y).
+\tag{RA.2304}
+$$
+
+它等于右端叶深度的两倍，再在该叶为 $\beta$ 时加一。对合法非根查询，$q=p^-$ 是实际配对节点，声明较小观察
+
+$$
+O_{n,r}(u,p)=(n,p,P_r(t_n|_q)),\qquad
+s(u,n,p)=\min(n+2,\kappa(t_n|_q)).
+\tag{RA.2305}
+$$
+
+完整已获档案是另一个仍保留的参数，含全部已取得的出生、祖先和来源证据；这里的 $O_{n,r}$ 是用于比较的投影，不是完整状态的定义。
+

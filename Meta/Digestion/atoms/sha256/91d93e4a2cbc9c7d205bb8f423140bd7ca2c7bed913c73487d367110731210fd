@@ -1,0 +1,40 @@
+## 4. 直接 jet 的积分误差
+
+以下使用外部 Lemma 3.1 的独立输入
+
+\[
+0<\gamma(t)\le\log t-\frac85\qquad(t\ge7).
+\]
+
+本轮没有重新运行该文用于检查 `gamma(7)>0` 的 Arb 区间程序，也没有把该输入写成新公理。它不属于本轮 Lean 主声明的前提或结论。
+
+取 `T>=7`、`T>b`，记 `theta=b/T<1`。定义
+
+\[
+v^*E_T^{[m]}v=\int_T^\infty w_L(t)|P_{m,v}(t)|^2\,dt.
+\]
+
+逐频率界和
+
+\[
+\int_T^\infty t^{-p-2}\left(\log t-\frac85\right)dt
+=T^{-p-1}\left(\frac{\log T-8/5}{p+1}+\frac1{(p+1)^2}\right)
+\]
+
+给出纸面结论
+
+\[
+\boxed{
+\|E_T-E_T^{[m]}\|\le\varepsilon_m,
+}
+\]
+
+\[
+\varepsilon_m=
+\frac{4\rho(2N+1)}{\pi^2}
+\frac{\theta^{2m}}{(1-\theta^2)^2T}
+\left(\frac{\log T-8/5}{2m+1}+\frac1{(2m+1)^2}\right).
+\]
+
+积分式与算子范数运输尚未写入本轮 Lean。
+

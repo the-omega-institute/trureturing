@@ -1,0 +1,8 @@
+#### F12. Farey 分数的偏差（A052–A053）
+
+Farey 阶数为整数 \(N\)，列出分母不超过 \(N\) 的既约分数 \(0<r_1<\cdots<r_{m_N}=1\)，其中 \(m_N=\sum_{q=1}^N\varphi(q)\)。令 \(\delta_j=r_j-j/m_N\)。
+
+| ID | 类别 | 精确目标 |
+| --- | --- | --- |
+| A052 | C | 对每个 \(\varepsilon>0\)，\(\sum_{j=1}^{m_N}\delta_j^2=O_\varepsilon(N^{-1+\varepsilon})\)。 |
+| A053 | C | 对每个 \(\varepsilon>0\)，\(\sum_{j=1}^{m_N}\vert \delta_j\vert =O_\varepsilon(N^{1/2+\varepsilon})\)。 |

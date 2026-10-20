@@ -1,0 +1,35 @@
+### 14.4 单时刻的线性误差与尾质量界
+
+**定理。** 设 $r>0$，选择
+
+\[
+t_*=\frac{\log2}{r}.
+\]
+
+则 $e^{-rt_*}=1/2$，$e^{-2rt_*}=1/4$。如果参考质量 $M$、误差预算 $\varepsilon$ 和带外缺失预算 $\tau$ 满足
+
+\[
+M_\mu(2r)\geq M-\tau,\qquad
+C_\mu(t_*)\leq M/4+\varepsilon,
+\]
+
+就有
+
+\[
+\boxed{M_\mu(r)\leq4\varepsilon+\tau.}
+\tag{14.4}
+\]
+
+**证明。** 在式 (14.1) 取 $R=2r,t=t_*$，得到
+
+\[
+C_\mu(t_*)\geq\frac{M_\mu(r)+M_\mu(2r)}4
+\geq\frac{M_\mu(r)+M-\tau}4.
+\]
+
+与观测上界比较即得式 (14.4)。时间定义及核值由 `halfBandTime`、`halfBandTime_spec` 承载，质量界由 `calibrated_half_band_bound` 承载。
+
+对概率测度取 $M=1$。如果其高能尾质量 $\mu((2r,\infty))\leq\tau$，则较大带质量条件成立。该条件是额外校准，普通量子哈密顿量不能被无条件假定有有限能量截断。式 (14.4) 对参考质量之外的有限正测度也成立，只要实际较大带质量满足所写不等式。
+
+测量读数为 $y$、绝对误差为 $\delta$ 时，应先用 $C_\mu(t_*)\leq y+\delta$。此时认证界为 $M_\mu(r)\leq4(y+\delta-M/4)+\tau$，不需要拟合整条指数曲线。若时间窗未包含 $t_*$，则必须使用窗口中真实可用时刻的式 (14.1)。
+

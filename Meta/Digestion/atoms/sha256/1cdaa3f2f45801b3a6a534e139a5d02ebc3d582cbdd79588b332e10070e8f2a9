@@ -1,0 +1,74 @@
+## 4. 四、Transfer matrix 的秩：隐藏相关何时能被未来恢复
+
+将边界状态顺序固定为：
+
+$$
+(00,10,01).
+$$
+
+由三元组概率构造 transfer matrix：
+
+$$
+T(\kappa)=
+\begin{pmatrix}
+p_0&0&p_3\\
+p_1&0&p_{13}\\
+0&p_2&0
+\end{pmatrix}.
+$$
+
+其中：
+
+- 第 $i$ 行是左边界状态；
+- 第 $j$ 列是右边界状态；
+- 每个非零元素是一条局部合法转移的质量。
+
+将 $\kappa$ 的变化写成矩阵变化：
+
+$$
+T(\kappa)=T(0)+\kappa H,
+$$
+
+其中：
+
+$$
+H=
+\begin{pmatrix}
+1&0&-1\\
+-1&0&1\\
+0&0&0
+\end{pmatrix}.
+$$
+
+它可以写成秩一形式：
+
+$$
+H=uv^{\mathsf T},
+$$
+
+其中：
+
+$$
+u=
+\begin{pmatrix}
+1\\-1\\0
+\end{pmatrix},
+\qquad
+v=
+\begin{pmatrix}
+1\\0\\-1
+\end{pmatrix}.
+$$
+
+并且：
+
+$$
+H\mathbf 1=0,
+\qquad
+\mathbf 1^{\mathsf T}H=0.
+$$
+
+这说明改变 $\kappa$ 不改变左右边界总流。
+
+---
+

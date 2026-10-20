@@ -1,0 +1,6 @@
+## 44. 非 Fourier 双循环边上的完整低 affinity 反例
+
+第 18 节以整个 completion fibre 定义 `alpha_min(T)`，没有附加相位判别式非零的条件。下面给出一个非 Fourier 双循环边及其完整 completion，满足 `alpha_S=2/9`。因此，该边所在的闭分支不能使用“所有 completions 均有 `alpha_S>=1`”作为统一目标。第 18 节的条件蕴含仍然正确；本节修正的是下界目标的适用域。
+
+本例处于一个相位判别式为零的边界，不否定非零判别式内域的下界。所得 completion 本身又属于 Fourier 等价类，故第 11 节的文献排除仍可将其从假想 quartet 中移除。Diţă 六阶矩阵存在多个 completions 已是已知事实，见 Brierley–Weigert，*Constructing Mutually Unbiased Bases in Dimension Six*，[arXiv:0901.4051，§4.1](https://arxiv.org/abs/0901.4051)。本节不把 completion 的存在重新列为新结果，而给出当前三循环下的精确 affinity 及其对本卷目标的限制。
+

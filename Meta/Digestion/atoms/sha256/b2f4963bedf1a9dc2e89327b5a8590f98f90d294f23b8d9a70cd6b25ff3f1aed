@@ -1,0 +1,6 @@
+当前仓库中的 `AURIC_FIB_ATOM_ANCESTRY_CUBE_AND_ACQUISITION_COST.md` 把这一层写成开放 Claim，而不是已完成 Lean 定理。其候选结构是：
+
+- $T_n$ 中有 $K_n=F_{n-2}$ 个相互独立的括号地址；
+- 每个地址可以进行两种局部来源选择；
+- 同一叶词可能对应最多：
+

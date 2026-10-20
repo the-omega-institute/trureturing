@@ -1,0 +1,9 @@
+**命题 2.4（逐分支下降条件）。** 若保留中途结果并依结果选择后续动作，只看未读结果时的平均通道就不够。固定有限结果集的量子仪器 $\{\Phi_y\}_y$，每个 $\Phi_y$ 完全正、迹不增，且 $\sum_y\Phi_y$ 保迹。对未归一化矩阵同样使用 $q=P_H$。使分支观察量只依赖原观察量的一项精确代数条件是
+$$
+P_H\Phi_y=P_H\Phi_yP_H\quad\forall y,\qquad
+\overline\Phi_y(q)=P_H\Phi_y(q)\quad(q\in\operatorname{im}P_H).
+\tag{TM.122}
+$$
+
+于是 $P_H\Phi_y(\rho)=\overline\Phi_y(P_H\rho)$，概率为 $p_y=\operatorname{Tr}\overline\Phi_y(P_H\rho)$；当 $p_y>0$ 时，更新后的摘要为 $\overline\Phi_y(P_H\rho)/p_y$。这是分支归一化的完整下降规则；概率为零的分支无须定义条件态。若实际条件更强，$P_H\Phi_y=\Phi_yP_H$，则式(TM.122)由 $P_H^2=P_H$ 立即成立。式(TM.121)的两个平方根 Kraus 算子都与 $H$ 交换，逐块计算即给这个更强条件。
+

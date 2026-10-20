@@ -1,0 +1,17 @@
+## 40. CUT 缺陷
+
+给定目标 \(T:X\to Z\)：
+
+\[
+\boxed{
+D_{\mathsf C}(q,T)
+=
+\{(x,y):
+q(x)=q(y)
+\land
+T(x)\ne T(y)\}.
+}
+\]
+
+---
+

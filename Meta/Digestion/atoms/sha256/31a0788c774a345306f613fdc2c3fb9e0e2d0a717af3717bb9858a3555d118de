@@ -1,0 +1,10 @@
+考虑动作族 $\mathcal A=\{\mathrm{read},\mathrm{rho}\}$ 的**计数盲**有限合同，明确要求：
+
+1. read 在普通态总合法，只均匀抽取一个叶出现并报告 $\alpha$ 或 $\beta$ 标签；给定正概率标签 $\eta$，后继 $q_c(v)$ 的条件律只依赖 $c(t)$ 和 $\eta$，在计数纤维上不变。
+2. rho 在普通态的合法性及 replacement/cutoff 决策（含 cutoff 类型）只依赖 $c(t)$；合法 replacement 分支的后继为 $\rho t\in X_{\mathrm{ord}}$，要求这项替换闭合；cutoff 分支进入指定类型的 $X_{\mathrm{term}}$。终止态上 read/rho 均不合法，后续尝试按第80.1节的固定拒绝合同保持原终止态，故同终止类型的后续行为相同。除此之外，$\rho$ 的完整事件—后继摘要—writer 记录联合核 $J_\rho^{q_c}(t;\eta,q',r)$ 也必须只依赖 $c(t)$：对同一计数纤维中的共同合法普通态，对全部 $(\eta,q',r)\in E_\rho\times q_c[X]\times R_\rho$ 都相等，包括概率为零的三元组。若合同把 $\rho$ 限定为确定事件，则等价地要求该确定的 $(\eta,q_c(v),r)$ 三元组在每个计数纤维上恒定。
+3. 时钟增量和 writer 记录是已报事件与后继可见类型的固定函数，并共同纳入 $r$。
+4. 若使用定理80.1意义下的外显 memoryless selector，其在全部 $\mathcal A$ 上的分布只读取
+$q_c(t)$（包括终止类型，并保留零概率项），不读取已见轨迹。若允许历史依赖，须改用
+第80.2节所述的逐前缀 $\pi_{t,h},\overline\pi_h$ 合同，不能直接套用定理80.1的静态
+$\overline\pi$ 结论。
+

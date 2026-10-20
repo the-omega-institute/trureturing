@@ -1,0 +1,51 @@
+### 临界判据与有限尺寸窗口
+
+令
+
+$$
+ k_{\mathrm{eff},j}=\rho(M_j),
+$$
+
+其中 (\rho) 是谱半径。若 (M_j) 不可约且二阶矩有限，则 (k_{\mathrm{eff},j}<1) 给出次临界平均衰减，(k_{\mathrm{eff},j}>1) 给出超临界平均增长，(k_{\mathrm{eff},j}=1) 是临界面。对有源但有限的系统，(q_j) 为每代外源，期望总裂变向量为
+
+$$
+ h_j=(I-M_j)^{-1}q_j
+$$
+
+（仅在 (\rho(M_j)<1) 时有限）。若 (\rho(M_j)=1-\Delta_j) 且 (0<\Delta_j\ll1)，则主模态的衰减时间为 (\Delta_j^{-1})；当 (n\Delta_j\ll1) 时观测呈临界样涨落，当 (n\Delta_j\gg1) 时转入次临界指数尾。若 (L_j=|V_j|) 且外加参数调成 (\Delta_j\asymp cL_j^{-\alpha})，临界窗口的代数尺度为 (n\asymp L_j^{\alpha}/c)。指数 (\alpha) 不是 FIB 递归给出的量，而是泄漏、截面和源边界共同决定的调参结果。
+
+若以 (r_j,l_j) 归一化为
+
+$$
+M_jr_j=r_j,
+\qquad
+l_j^{\mathsf T}M_j=l_j^{\mathsf T},
+\qquad
+l_j^{\mathsf T}r_j=1,
+$$
+
+并把裂变向量的条件协方差投影到 Perron 模态，记所得有效二阶系数为 (\sigma_{\mathrm{eff},j}^2>0)，则有限类型临界分枝过程的标准临界标度为
+
+$$
+\Pr_x(Z_n\ne0)\sim\frac{c_x}{n},
+\qquad
+\mathcal L\!\left(\frac{l_j^{\mathsf T}Z_n}{n}\,\middle|\,Z_n\ne0\right)
+\Longrightarrow \operatorname{Exp}(\theta_j).
+$$
+
+常数 (c_x) 与 (\theta_j) 由初始类型、左右 Perron 向量及 (\sigma_{\mathrm{eff},j}^2) 决定。对有限方差、非退化、不可约且非周期的单一临界分支，累计裂变数
+
+$$
+T=\sum_{n\ge0}\langle\mathbf 1,Z_n\rangle
+$$
+
+具有
+
+$$
+\Pr(T>t)\asymp t^{-1/2},
+\qquad
+\Pr(T=t)\asymp t^{-3/2},
+$$
+
+其截断、指数因子和常数在多类型、泄漏或能量依赖情形中由相应的二阶矩和主模态修正。因而临界涨落的幂指数来自分枝极限条件，而不是来自“Fibonacci”这一名称本身。
+

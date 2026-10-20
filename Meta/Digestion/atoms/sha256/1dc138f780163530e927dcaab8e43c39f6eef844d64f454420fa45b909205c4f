@@ -1,0 +1,92 @@
+### proposition 36.1: 实际第三完成的停止、选择与保留返回律
+
+在 definition 36.1 的原运行中，$\tau_3$ 是 $\mathcal F_n$ 的停止时刻且 $\mathbb P_\mu(\tau_3<\infty)=1$。每个有限切面均满足
+
+$$
+\begin{aligned}
+c_3&=\operatorname{reconstruct}(\mathrm{nf}),\qquad
+c_3.\mathrm{control}=\mathrm{fourth}(\mathrm{active}\ p),\\
+\operatorname{recoverMarkers}(c_3.\mathrm{finiteFields})&=b,\qquad
+c_3.\mathrm{payloadReturns}=J,\\
+A&=4-w+2n_0+J,\qquad B=1+2w+2n_1+J,\\
+T_3=\tau_3=A+B&=5+w+2(n_0+n_1+J).
+\end{aligned}
+$$
+
+对指定 $\rho,b,a,(j_0,j_1,j_2)$，实际前缀柱的联合深度质量恰为 $\mu_k r_k^A s_k^B$。对所有实际重试求和后，指定种子的深度条件质量为 $1/2$，且
+
+$$
+\begin{aligned}
+\mathbb P_\mu(K=k,\rho,b)&=\frac{\mu_k}{2}m_w(k),
+&m_w(k)&=u_k^{3-w}v_k^w,\\
+\mathbb P_\mu(K=k,\rho,b,J=\ell)
+&=\frac{\mu_k}{2}\binom{\ell+2}{2}
+q_k^\ell r_k^{3-w}s_k^{2w}.
+\end{aligned}
+$$
+
+两式同时适用于全部八个三位词，包括 $w=3$ 的排除词。定义
+
+$$
+M_w=\sum_{k\ge1}\mu_k m_w(k),\qquad
+C=M_0+3M_1+M_2.
+$$
+
+则 $M_w>0$，$M_0+3M_1+3M_2+M_3=1$，$0<C<1$，且 $\mathbb P_\mu(\mathsf S)=C$。在选择后的无计数记录上，当前实际模式—深度联合律为
+
+$$
+\pi^{\mathsf S}_\mu(M,k)=\frac{\mu_k m_{w(M)}(k)}{C},\qquad
+p^{\mathsf S}_\mu=\frac{(M_0,M_1,M_1,M_2,M_1)}{C}
+$$
+
+（模式次序为 zero、low、middle、ends、high），给定模式的深度律为
+
+$$
+\nu_w(k)=\frac{\mu_k m_w(k)}{M_w}.
+$$
+
+若仍保留指定种子，联合单元多出因子 $1/2$，$\nu_w$ 不变。精确保留 $J=\ell$ 时的深度后验则为
+
+$$
+\nu_{w,\ell}(k)=
+\frac{\mu_k q_k^\ell r_k^{3-w}s_k^{2w}}
+{\sum_h\mu_h q_h^\ell r_h^{3-w}s_h^{2w}},
+$$
+
+它与无计数的 $\nu_w$ 有不同的条件事件。
+
+证明。达到第三完成只检查已发出的有限 Read，故 $\{\tau_3\le n\}\in\mathcal F_n$。原 seed 表使相等对成为重试，首个不等对取得 $\rho$；原 payload 表使每段从 $p$ 出发经历零个或多个 $10$ 返回后，恰由 $0$ 或 $11$ 完成。第三段之前每次完成重置下一段为 $p$。因此每个首次第三完成前缀有且仅有 definition 36.1 的形式，其此前任何真前缀完成数小于 $3$。反向按原部分事务逐字运行该形式，第三次写入恰在最后一字完成，故该形式没有附加的未来接受条件。
+
+原重构定理的 `PrefixFacts` 取 $t=3$、`pendingExponent=0`，给出 $A,B,J$ 和恢复式；`completionControl 2 b₂=payloadControl 3 p` 给出活动第四段。计数相加给出 $T_3$。原 [NativeAcquiredPrefixCylinder](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixCylinder.lean) 的 `native_acquired_prefix_cylinder` 以 `run h₃=some c₃` 为条件，将该实际发出事件识别为完整 Read 词的柱，而不是任意编造的历史。因此指定有序重试及返回分配的质量为 $\mu_k r_k^A s_k^B$。
+
+在固定 $k$，指定种子的每个成功提种对质量为 $r_ks_k$。有 $n$ 个拒绝对时，所有有序拒绝词的质量和为 $(r_k^2+s_k^2)^n$，从而
+
+$$
+\sum_{n\ge0}r_ks_k(r_k^2+s_k^2)^n
+=\frac{r_ks_k}{1-r_k^2-s_k^2}=\frac12.
+$$
+
+这里只在完成数切面求和；从零付费计数仍含每个拒绝对。固定 $n_0,n_1$ 但忘记拒绝次序时有 $\binom{n_0+n_1}{n_0}$ 个有序重试词，故其质量为
+
+$$
+\mu_k\binom{n_0+n_1}{n_0}
+r_k^{4-w+2n_0+J}s_k^{1+2w+2n_1+J}.
+$$
+
+对指定的三段返回分配，载荷质量为 $q_k^J r_k^{3-w}s_k^{2w}$；求和 $j_0,j_1,j_2$ 得
+
+$$
+r_k^{3-w}s_k^{2w}\left(\sum_{j\ge0}q_k^j\right)^3
+=\frac{r_k^{3-w}s_k^{2w}}{d_k^3}=m_w(k).
+$$
+
+原 [FourthSegmentStoppedLaw](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.lean) 的 `actual_fourth_segment_stopped_word_law` 在活动 $p$ 的 Read 表上供应单段权重 $r_kq_k^j$、$s_k^2q_k^j$；前三段在完成时重置而不 Stop，使用的是同一 Read 表和未读尾的柱分解，不是执行第四段的 Stop。恰有 $\binom{\ell+2}{2}$ 个三元非负分配满足 $J=\ell$，得到保留返回质量。
+
+对任意正深度，$0<r_k,s_k<1$、$r_k^2+s_k^2<1$、$q_k\le1/4<1$。无限提种重试的质量被 $(r_k^2+s_k^2)^n$ 控制并趋零；任一载荷段的无限返回质量被 $q_k^n$ 控制并趋零。把先前完成的可数前缀柱分解后，三段中任一不完成仍为零质量；再按 $\mu$ 求和保持零。此证明只要求每个深度的有限完成，不要求有限深度支持或有限均值。每个 $\rho,b$ 切面原像都是可数个互不相交的前缀柱，因而可测；完成原像的补集给出 $\dagger$ 的可测原像，且其质量为零。
+
+由 $u_k+v_k=1$，八个词的质量和为 $(u_k+v_k)^3=1$。三个排除词的质量为 $2M_2+M_3>0$，每个选中词也严格为正；因 $\mu$ 至少有一个正支撑点，得到 $M_w>0$、$0<C<1$。按这些互不相交的选中单元归一化，得到 $\pi^{\mathsf S}_\mu$、$p^{\mathsf S}_\mu$、$\nu_w$ 及 $\nu_{w,\ell}$。给定 $k,b$ 的返回数分布是 $\binom{\ell+2}{2}d_k^3q_k^\ell$；对 $\ell$ 求和恰为 $1$，再次恢复 $m_w(k)$。证毕。
+
+附属数学引文：[Hendriksen–de Heide–Grünwald，Optional Stopping with Bayes Factors，§2.1](https://arxiv.org/abs/1807.09077) 的精确停止数据推导使用已观察完整词逻辑蕴含其停止时刻。本命题的精确前缀也有此性质；遗忘重试、返回和时刻后的 $m_w$ 则须对其整个原像求和，不能保留一个代表词的单项似然。这里 $m_w(k)$ 是 $P_k(b\text{ 在实际停止切面})$，是生成模式的联合单元似然；它不是另设独立模式先验后某记录的模式条件似然。§§30、35 的乘积模式—深度模型仍只作其各自条件背景。
+
+附属供应对应：[Boundary Dynamics，propositions 97.2、97.4、100.2](https://github.com/the-omega-institute/trureturing/blob/e1b1da7803107ff92a5591cf36652ef15daeec05/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md) 分别供应同一深度的段乘积、返回分配计数及实际重试求和后的种子独立性。取 $n=3$、其合并摘要 $(S,B)=(J,w)$；保留指定标记词时不再乘标记位置数 $\binom3w$，而返回分配数仍为 $\binom{J+2}{2}$。[Future Response Sufficiency，§13 的 proposition 13.2 及其指定种子1、标记100条件式](https://github.com/the-omega-institute/trureturing/blob/e1b1da7803107ff92a5591cf36652ef15daeec05/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md) 已给同一书签长度生成函数及该单元的粗化权重；其 $a_k$ 对应这里 $q_k$，其标记100权重 $u_k$ 对应这里 $m_1(k)$，并非这里的单段 $u_k$。本命题在原重构切面同时保留八个词、原生 $J$ 及选中五单元的同一归一化；这些供应不作为单独新增的一般几何级数或充分统计结果。
+

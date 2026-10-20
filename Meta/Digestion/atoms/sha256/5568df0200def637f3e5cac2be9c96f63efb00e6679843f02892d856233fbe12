@@ -1,0 +1,20 @@
+The following actual sources were read, including both authors' work:
+
+* loning, PR #5326, head `3beb435bf9ca8aa35aa6079ea4033a9c2e6c9007`,
+  `RH_OFFLINE_ZERO_LEE_YANG_INSTANTANEOUS_PHASE_TRANSITION_THEORY.md`,
+  Sections C14-C15: a Schur floor incurs a dimension-dependent determinant
+  floor. Its canonical determinant identity and boundary approximation
+  remain independent obligations. This motivates controlling the scalar
+  Fourier output directly rather than introducing another determinant.
+* AlyciaBHZ, PR #5580, head `e1699ed18ff0e8145870c2d44374193d83766851`,
+  `OrderedStableBalancedTruncation.lean`: stability and an output error
+  bound concern the same constructed reduced system. Its discrete Stein
+  hypotheses are not hypotheses of the unbounded Weil operator; no direct
+  application of that theorem is asserted here.
+* AlyciaBHZ, PR #5562, branch `work/prime-weil-foundations-probe-20260905`,
+  `ScaledComplexQuadraticRowBound.lean`, blob
+  `1b94a72bebdf5128d020fe755b285099a35b70a1`: complex coefficients, individual
+  energy weights, and absolute series budgets are already supported.
+  Its scaled-row assumptions are not automatically true for our arithmetic
+  matrix. No duplicate general row-bound owner is added.
+

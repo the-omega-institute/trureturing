@@ -1,0 +1,9 @@
+若所有活动相同，即 \(\theta_v=\log\lambda\)，并取 \(h_v=1\)，则
+\[
+\lambda\,\frac{d}{d\lambda}
+ \mathbb E_{V,\lambda}|S|
+ =
+\operatorname{Var}_{V,\lambda}(|S|),
+\]
+这是有限 Gibbs 场中活动导数—方差恒等式的顶点分辨率形式。
+

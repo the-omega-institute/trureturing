@@ -1,0 +1,18 @@
+## 定理 213.1（重复 kernel 不变）
+
+\[
+\boxed{
+K_x^{\otimes n}
+=
+K_y^{\otimes n}
+\iff
+K_x=K_y
+}
+\qquad
+(n\ge1).
+\]
+
+### 证明
+
+反向显然。正向对乘积 law 取任意一个坐标边缘，即恢复原 law。 \(\square\)
+

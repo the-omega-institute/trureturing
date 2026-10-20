@@ -1,0 +1,9 @@
+\frac12\int_0^T
+(\dot\phi_t-b_j(\phi_t))^{\mathsf T}
+a_j(\phi_t)^{-1}
+(\dot\phi_t-b_j(\phi_t))\,dt
+\]
+（\(\phi(0)=x_0\)，否则为 \(+\infty\)）。退化时使用控制形式
+\[
+I_{j,T}(\phi\mid x_0)
+=

@@ -1,0 +1,36 @@
+**定理 52.3（任意占用泛函的 Green–Doob 分解）。** 令 \(P\) 为包括吸收点 \(L\) 的完整核，并将 \(h_f(L)=0\)。对
+\[
+S_f(i)=\sum_{k=0}^{i}f(k),\qquad
+h_f(i)=\frac1\theta\sum_{a=i}^{L-1}r_aS_f(a),
+\]
+有 \((I-P)h_f=f\)（在暂态点上）。于是
+\[
+A_N^f:=\sum_{n<N\wedge\tau}f(X_n)
+=M_N^f+h_f(X_0)-h_f(X_{N\wedge\tau}),
+\]
+其中
+\[
+M_N^f=\sum_{n<N\wedge\tau}
+\bigl(h_f(X_{n+1})-(Ph_f)(X_n)\bigr)
+\]
+是鞅。对两个探针 \(f,g\)，令
+\[
+\Gamma_{fg}(k)=P(h_fh_g)(k)-(Ph_f)(k)(Ph_g)(k).
+\]
+固定初态 \(X_0=0\) 且在 \(\tau\) 停止时，\(h_f(X_\tau)=0\)，所以
+\[
+\mathbb E_0A_\tau^f=h_f(0),\qquad
+\operatorname{Cov}_0(A_\tau^f,A_\tau^g)
+=\sum_{k=0}^{L-1}\mathcal G(k)\Gamma_{fg}(k).
+\]
+若初态为随机律，需另加终端校正项 \(h_f(X_0),h_g(X_0)\) 的协方差及其与鞅项的相应交叉项。
+
+逐步至多跨一条边还给出
+\[
+M_N^f=\sum_{i=0}^{L-1}
+\bigl(h_f(i+1)-h_f(i)\bigr)M_N^i,
+\]
+所以任意占用泛函的条件协方差可以由同一边流矩阵 \(\Gamma^{\mathrm{edge}}\) 组合得到。若另行给出 \(L\to\infty\) 的局部跳率、宏观时钟和预测二次变差收敛，离散鞅 FCLT 才能把该分解接到连续扩散的 Itô 鞅；这些收敛条件不由 \(\rho\) 自动提供。
+
+“电流”“电阻”“扩散”在这里是有限链的关系名称。\(r_i,\theta,\delta\) 是外加核参数，FIB 递归不选择它们，也不由上述鞅恒等式推出物理电流、耗散或热流。
+

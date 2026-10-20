@@ -1,0 +1,17 @@
+## 1. 文献接口与保留的对象
+
+Connes–Consani–Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1，第 7 节和 Lemma 7.3 已给出明确 prolate 模型的 Xi 极限，第 8 节保留真实最低模态识别与单纯偶性。Connes–van Suijlekom, arXiv:2511.23257v1，提供精确分布与算子定义域条件下的实零点定理。
+
+Suzuki, *Weil's quadratic form via the screw function*, arXiv:2606.09096v1，Theorem 1.1 识别同一 Weil 形式的 Friedrichs 实现，并建立相关对数型形式域的紧嵌入。因此本节不将紧 resolvent 或抽象高谱发散登记为新发现。Groskin, *A finite Guinand–Weil dictionary and archimedean tail order for the truncated Weil quadratic form*, arXiv:2607.02828v1，Theorem 3.2 处理有限 Galerkin Gamma 尾项。本节使用同一 Fourier 约定，但补空间没有有限上截止。
+
+仓库中直接可复用的 Gamma 真源为 `Zeta23.MuFields.mu_monotoneOn`、`mu_zero_le`、`neg_one_lt_mu_zero` 和 `Zeta23.mu_even`。本文 gamma=2*pi*mu，即既有 `Zeta23.EF.gammaBracket`。平移项和极点项仍来自 `literatureRHS(weilTest f f)`。未通过零点位置、RH 或目标正性构造输入。
+
+参考：
+
+- https://arxiv.org/html/2511.22755v1
+- https://arxiv.org/html/2511.23257v1
+- https://arxiv.org/html/2606.09096v1
+- https://arxiv.org/html/2607.02828v1
+
+本节矩阵元采用内积对第二变量线性的约定；相关函数与 Fourier 约定保持不变。
+

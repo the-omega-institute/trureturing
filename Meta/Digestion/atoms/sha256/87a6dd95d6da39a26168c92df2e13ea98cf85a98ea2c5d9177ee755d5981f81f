@@ -1,0 +1,34 @@
+则：
+
+1. $\dim\mathcal B=4$；
+2. $\mathcal B^\perp=\operatorname{span}\{d\}$；
+3. 对任意 $f:S\to\mathbb R$，定义
+
+   $$
+   J_f=
+   f(F[1,3])
+   -
+   f(F[1])
+   -
+   f(F[3])
+   +
+   f(F[\mathrm{null}]).
+   $$
+
+   则
+
+   $$
+   \mathbb E_{p_{\kappa+t}}[f]=
+   \mathbb E_{p_\kappa}[f]
+   +
+   tJ_f.
+   $$
+
+4. 因而
+
+   $$
+   f\in\mathcal B
+   \quad\Longleftrightarrow\quad
+   J_f=0.
+   $$
+

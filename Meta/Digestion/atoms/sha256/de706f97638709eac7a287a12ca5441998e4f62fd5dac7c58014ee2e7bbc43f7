@@ -1,0 +1,18 @@
+### 78.10 纸面结论、完整依赖与真实未决义务
+
+本章的数学来源均指[固定斐波那契来源卷][78源全文]中的编号及完整所供先修。定义14.5—定理14.7、定义17.1—定理17.2承担实际地址和根域；定义31.1—定理31.4承担有限原片及联合路径提升；定理36.22、命题39.6.1和63.1—63.4承担相干 rival、同源凸包、全部准入和完整目标；64.1—64.5、定义45.1及引理45.2保留实际类型、实预算与给定有限图的区别。系数复用(66.4)、(66.5)，原闭路及 gcd 接口复用68—71；二元等外块直接应用66.4.1。第60章及65—77完整范围承担78.8的旧域扣除；第54章的最小结构只通过其54.100更正接口按原范围使用。
+
+特别区分两个地址：**定理31.4**是本章使用的整条实际来源路径提升；**第31.4节**的定义31.5、定理31.6是无额外侧条件、剪除后具有非空初始条件的全无限路径极值。这里的 $H_v$ 仅是指定两返回拼接的同源凸包，不是完整 $G_B$ 全路径极值。辅助 $z,\mathcal J,w$ 只承担系数、包络或内部相交，无须作为实际取得点，也没有借定理31.6为它们取得身份。
+
+定理78.3.1对全部偶 $m\ge2$、奇 $p>1$ 成立；二元补充和三元推论只保留每个固定有限 $P_{\max}$ 内奇 $7\le p\le P_{\max}$、$m=4$ 的域。三者均是给定完整原图、实际合法返回和全部原准入下的纸面条件性障碍，没有供应任何共同 $\beta,B,R,S$ 使准入成立，也没有证明(78.30)的差域非空。候选路线未在本章完成。
+
+对于这些词域之外的任何正实现，仍须在同一个 $\beta,B,G_B,R,T,a,b,p,h$ 中共同供应：实际共享来源、两侧实际 guard、合法预算和根域、全部整个原片与原共同闭色、固定原端点归属及全部原边；逐位置证明全部(63.11)，给出 $h+2$ 个不同完整配对顶点，按整个承载片检查每条完整内部边的(63.13)，并对所有 $n\ge0$ 证明完整图的(63.15)。第60章全部适用联合限制及各先修原局部预算域继续承担。端点全未命中、容量通过、独立点可达、rival 单独存在或两返回本身均不能替代这些义务。
+
+所得 gcd 只整除所列长度；没有精确 gcd 结论，没有独立认证全部内部边或外部不返程，单向外出继续允许。条件排除不否定这些返回处于其他规模或其他 gcd 的 SCC，也不分类任意 $T$、任意奇 rival 或共同三元域之外的数据。没有初始可达、任意端点归属下的实际噪声取得、物理识别、外部原创性或 Lean／kernel 核验结论。来源散文和本章纸面证明都不冒充形式系统的真值状态。
+
+[78源全文]: https://github.com/the-omega-institute/trureturing/blob/75a6d4daae0c4c8894da2f3c1bbd15a8dda74857/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md
+[78源运输]: https://github.com/the-omega-institute/trureturing/blob/5fdd8790cd62b62cbad1406f27cb040595ef15ad/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[78源观察]: https://github.com/the-omega-institute/trureturing/blob/5fdd8790cd62b62cbad1406f27cb040595ef15ad/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md
+[78源树]: https://github.com/the-omega-institute/trureturing/blob/5fdd8790cd62b62cbad1406f27cb040595ef15ad/D5/S3/Arith/Congruence/ConditionalComparison/CommonTreeEmbedding.lean
+[78源同调]: https://github.com/the-omega-institute/trureturing/blob/5fdd8790cd62b62cbad1406f27cb040595ef15ad/D5/S3/HomologicalAlgebra/GraphCycleModuleCat.lean
+

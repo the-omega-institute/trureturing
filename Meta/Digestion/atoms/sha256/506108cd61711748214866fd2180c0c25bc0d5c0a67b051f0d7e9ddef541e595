@@ -1,0 +1,49 @@
+**命题 12.6（Euclidean投影的最小分母四十五）。**
+
+The Euclidean cut projection is $P_V=D^{\mathsf T}L^{-1}D$; indeed it is symmetric, its square is itself, its image is the cut space and $DP_V=D$. For integer $w$, the primitive-lattice equalities in 命题12.5的格接口 give
+$$
+P_Vw\in\mathbb Z^{21}\iff w\in H_{\mathbb Z}+V_{\mathbb Z}.
+$$
+The forward implication puts $P_Vw$ in the full integer cut lattice and $w-P_Vw$ in the integer flow lattice; the reverse follows by projecting their sum. Consequently, for every positive integer $n$,
+$$
+nP_V\text{ has integer entries}\iff
+n\text{ annihilates }\mathbb Z^{21}/(H_{\mathbb Z}+V_{\mathbb Z}).
+$$
+Thus the least clearing denominator is the group exponent, 45. This proves that all entries clear with 45, without assuming any computed projection matrix.
+
+To calculate the $OO,OO$ diagonal entry, solve a unit injection at $O_\ell$ and extraction at $O_r$, fixing $O_r$ potential zero. By permutation symmetry, let the $O_\ell$ potential be $a$, other universal left potentials $b$, partial left $c$, other universal right $d$, and both partial right $e$. The equations are
+$$
+5a-2d-2e=1,\quad5b-2d-2e=0,\quad3c-2d=0,
+\quad5d-(a+2b+2c)=0,\quad3e-(a+2b)=0,
+\quad a+2b+2c=1.
+$$
+They give $d=1/5$, $c=2/15$, $a+2b=11/15$, $e=11/45$, $a-b=1/5$, and therefore $b=8/45$, $a=17/45$. Substitution also verifies the first equation. Potential uniqueness follows from connectedness modulo an additive constant.
+
+The injection is $-\partial E_{OO}$, consistent with our conventional left-to-right boundary. In the actual deleted-$J_r$ coordinates, subtract $11/45$ from all these potentials. In the vertex order of 定义12.4 this gives
+$h=(6,-5,-3,-3,-5,-11,-2,-2,0)/45$.
+Then $Lh=-DE_{OO}$, so
+$(P_V)_{OO,OO}=(DE_{OO})^{\mathsf T}(-h)=17/45$.
+Since 17 is coprime to 45, this entry separately proves the denominator cannot be smaller. Changing the deleted row changes the potential coordinates; reversing an edge changes the corresponding signs of off-diagonal projection entries. The quotient and denominator for the same graph and metric are invariant. The number 45 is an arithmetic modulus of this projection, not an energy unit or a universal constant.
+
+二十二记录的投影与商类应用。平方最优值与整数支撑线复用《[隐藏关系统计、相位与接缝](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)》C-55.1、C-55.2；参数对应是定义12.4的同一二十一格支撑、相同模式次序与下列完整边缘。
+
+Use exactly the legal support and row/column order of 定义12.4. Fix margins $r=(6,3,5,5,3)$, $s=(6,5,5,3,3)$, with common total 22. The integer table and real candidate are
+$$
+W_0=\begin{pmatrix}2&1&1&1&1\\1&1&1&0&0\\1&1&1&1&1\\1&1&1&1&1\\1&1&1&0&0\end{pmatrix},
+\qquad
+W^*=\frac1{45}\begin{pmatrix}62&53&53&51&51\\51&42&42&0&0\\53&44&44&42&42\\53&44&44&42&42\\51&42&42&0&0\end{pmatrix}.
+$$
+The numerator row sums of $`W^*`$ are $(270,135,225,225,135)$; its column sums are $(270,225,225,135,135)$, proving the fixed margins. Every legal entry is strictly positive and exactly the four illegal entries are zero.
+
+令 $\mathbf1_E$ 为每个合法位置取一的数组。它由整数行势一、列势零产生，所以 $\mathbf1_E\in\operatorname{im}D^{\mathsf T}$；并且 $W_0=\mathbf1_E+E_{OO}$。下列实际投影把商群与既有最优值连接：
+
+$$
+P_VW_0=W^*,\qquad [DW_0]=[DE_{OO}]\in\mathbb Z^9/L\mathbb Z^9.
+$$
+
+证明。每个合法位置满足 $45W^*_{ij}=a_i+b_j$，其中 $a=(62,51,53,53,51)$、$b=(0,-9,-9,-11,-11)$。所以 $W^*\in\operatorname{im}_{\mathbb R}D^{\mathsf T}$；已检查的同边缘关系给出 $D(W_0-W^*)=0$，正交分解的唯一性即给投影式。整数全一数组属于整数割格，因而商类式成立。由命题12.6，45倍投影为整数；该投影保持边界，而约化生成树上的整数势差恢复全部约化顶点势，故45倍 $L^{-1}D$ 为整数。于是45杀死该商类。反过来，若整数 $m>0$ 杀死 $[DE_{OO}]$，则 $mE_{OO}$ 的割投影为整数；其 $OO$ 坐标为 $17m/45$，由互素性得 $45\mid m$。因此这份二十二记录的商类阶恰为45。证毕。
+
+C-55.1 与 C-55.2 对相同边缘、相同单位事件度量给出 $\|W^*\|^2=1052/45$、整数最小值24。故本投影纤维的最近整数平方距离为 $24-1052/45=28/45$；同一目标 $F(W)=45\|W\|^2-1066$ 的连续与整数最小值分别为 $-14,14$。这些最优值采用所引条目的完整证明，不另立同义定理。商类阶45与距离28/45是不同量，不能只由前者推断后者。
+
+$W^*/22$ 是合法概率律，但不是这22条记录的经验律；$45W^*$ 则有990条记录。改变总量、目标、边缘或度量后，须重新给出所需距离。作为此投影应用的中间估计，须固定同一实际可行整数域 $\mathcal I$、目标 $F$ 与度量，并证明对所有 $w\in\mathcal I$ 有 $F(w)\ge F_{\rm cont}+\mu\|w-w^*\|^2-\varepsilon$，其中 $\mu>0$，$\varepsilon$ 是已论证的余项上界；还须独立认证 $\operatorname{dist}(w^*,\mathcal I)\ge\delta\ge0$。此时才能得到 $F(w)\ge F_{\rm cont}+\mu\delta^2-\varepsilon$。严格正性还要求 $F_{\rm cont}+\mu\delta^2-\varepsilon>0$；整数性本身不提供统一正距离。此例对应 $F_{\rm cont}=-14$、$\mu=45$、$\delta^2=28/45$、$\varepsilon=0$。它不量化所有概率律、物理来源或任意Robin目标。
+

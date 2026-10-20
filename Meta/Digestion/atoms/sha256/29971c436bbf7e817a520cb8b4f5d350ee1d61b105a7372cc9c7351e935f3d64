@@ -1,0 +1,122 @@
+### 定理 39.2（任意有限次共同增益的统一采集）
+
+在定义 39.1 的合同中，固定的 $L=3k+d+5$ 个读数 $z_0,\ldots,z_{L-1}$ 唯一确定完整目标 $(R_0,H,D)$。其中前 $N$ 个读数唯一给出三个多项式 $P,Q,\widehat D$，满足
+
+$$
+\deg P,\deg Q\le k,\qquad \deg\widehat D\le d,\qquad
+z_i=f_iP(i)+g_iQ(i)+\widehat D(i)\quad(0\le i<N).
+$$
+
+真实模型必有
+
+$$
+P=H\not\equiv0,\qquad Q=bH,\qquad\widehat D=D.
+$$
+
+取 $P$ 的任一非零系数即可恢复 $b$；在 $k+2$ 个切换后位置中取任意两个增益非零的位置即可恢复两个切换信号坐标，再调用定理 4.1 恢复全部 $R_0$。选择解码位置不改变采集路径或读数数目。
+
+这个数目只是本固定方案的充分上界，不是所有固定或自适应协议的最少读数。$k=1$ 时的 $d+8$ 与 §38 的无切换零点限制数目一致，但本节不要求初读增益为正；§37 的较大仿射提升已经包含初读增益为零的情形。本节的新增结论是任意已知有限次数下同一共同增益、同一完整关系与同一时钟的统一采集及其规范不变量，不把初读零点的仿射情形视为此前全未覆盖。
+
+**证明。** 首先建立前 $N$ 行的线性逆，而不预先除以任何增益值。由 $M^2=M+I$ 及 $\operatorname{tr}R_0=1$，纯 $M$ 信号为
+
+$$
+u_i=\operatorname{tr}(M^iR_0)=f_i+bg_i.
+$$
+
+令 $s=2(k+1)$。考虑固定的 $s$ 个数列 $i^rf_i,i^rg_i$，$0\le r\le k$，以及它们在连续行 $i=0,\ldots,s-1$ 上的评价矩阵 $X_0$。其可逆性可具体由合流 Vandermonde 结构读出。设
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\psi=\frac{1-\sqrt5}{2},\qquad
+f_i=\frac{\phi\psi^i-\psi\phi^i}{\phi-\psi},\qquad
+g_i=\frac{\phi^i-\psi^i}{\phi-\psi}.
+$$
+
+两节点 $\phi,\psi$ 互异、非零，且 $\phi-\psi=\sqrt5\ne0$。对每个 $r$，上述两列与 $i^r\phi^i,i^r\psi^i$ 之间的二阶变换可逆。对任一节点 $\lambda\ne0$，用下降阶乘 $(i)_r=i(i-1)\cdots(i-r+1)$、$(i)_0=1$，各列 $i^r\lambda^i$ 又通过三角可逆变换变成 $(i)_r\lambda^{i-r}$：普通幂到下降阶乘的基底变换对角线为 $1$，而节点幂缩放的对角线为非零的 $\lambda^r$。
+
+因此 $X_0$ 与节点重数均为 $k+1$、连续行 $0,\ldots,s-1$ 的合流 Vandermonde 矩阵只差可逆列变换。所用矩阵及行列式是 Batenkov–Yomdin, “On the Accuracy of Solving Confluent Prony Systems”, §2B, Definitions 2.3–2.4、式 (2.2)–(2.4), [arXiv:1106.1137v3](https://arxiv.org/abs/1106.1137v3), [DOI:10.1137/110836584](https://doi.org/10.1137/110836584) 中的已知中间工具；在这里具体为
+
+$$
+\det U=(\psi-\phi)^{(k+1)^2}
+\left(\prod_{r=0}^{k}r!\right)^2\ne0.
+$$
+
+这里只使用固定已知节点的线性评价逆，不使用需要最高模态系数非零的未知节点 Prony 识别结论。矩阵与未知系数无关，所以最高系数消失、实际次数较低、某个模态振幅为零均不改变其可逆性。连续行假设正是在这里使用；并未把这个结论推广为任意缺行的合流评价矩阵都可逆。
+
+令 $E$ 为前移算子。对次数不超过 $k$ 的多项式 $p$，
+
+$$
+(E-\lambda)\bigl(\lambda^ip(i)\bigr)
+=\lambda^{i+1}\bigl(p(i+1)-p(i)\bigr),
+$$
+
+故上述 $s$ 个数列都被
+
+$$
+\mathcal Q(E)=(E^2-E-I)^{k+1}
+$$
+
+消去，且 $\mathcal Q$ 首一、次数为 $s$、$\mathcal Q(1)=(-1)^{k+1}$。现在直接应用定理 35.2，取其 $h=0,r=s=2(k+1)$，就得到 $s+d+1=N$ 行的信号—漂移逆。其前提 $X_0$ 可逆已由上式核实，$\mathcal Q(1)$ 在实数中是单位。该逆把次数不超过 $d$ 的漂移写在二项式基底上；由于实数中的 $j!$ 非零，这与普通多项式合同相同。因此任意前 $N$ 个实读数均有唯一的 $(P,Q,\widehat D)$。对真实来源，$H(i)u_i=f_iH(i)+g_i(bH(i))$ 正是该表示，唯一性给出 $P=H,Q=bH,\widehat D=D$。
+
+写 $P(t)=\sum_{r=0}^kp_rt^r$、$Q(t)=\sum_{r=0}^kq_rt^r$。因 $a>0$ 且 $G\not\equiv0$，$P=H\not\equiv0$。选取任一 $p_r\ne0$，便有
+
+$$
+b=q_r/p_r.
+$$
+
+这个除法的分母是已恢复且已判非零的系数，既不要求 $H(0)\ne0$，也不要求任一预定读数的增益非零。真实共同来源还给出所有系数恒等式 $q_r=bp_r$。
+
+接着令
+
+$$
+U_j=\operatorname{tr}(M^jJM^mR_0),\qquad
+w_j=z_{N+j}-D(N+j)=H(N+j)U_j.
+$$
+
+序列 $U$ 满足 $U_{j+2}=U_{j+1}+U_j$。非零且次数至多 $k$ 的实多项式在互异实数上至多有 $k$ 个零点：每个不同零点贡献一个一次因子，逐次应用因子定理即得；重根不会增加不同零点的数目。所以 $k+2$ 个互异位置 $N,\ldots,N+k+1$ 中至少有两个非零增益。任取其局部序号 $0\le p<q\le k+1$，只在已知 $H(N+p)H(N+q)\ne0$ 的域上定义
+
+$$
+V_p=\frac{w_p}{H(N+p)},\qquad
+V_q=\frac{w_q}{H(N+q)}.
+$$
+
+不需要这两个位置相邻。矩阵
+
+$$
+C_{p,q}=\begin{pmatrix}f_p&g_p\\f_q&g_q\end{pmatrix}
+$$
+
+满足
+
+$$
+\Delta_{p,q}:=\det C_{p,q}=(-1)^pF_{q-p}\ne0.
+$$
+
+为核对这个任意间距恒等式，记 $v_j=(f_j,g_j)$，则 $v_{j+2}=v_{j+1}+v_j$，$\det(v_0,v_1)=1$，且 $\det(v_{j+1},v_{j+2})=-\det(v_j,v_{j+1})$。对 $h\ge1$，递推给出 $v_{p+h}=F_{h-1}v_p+F_hv_{p+1}$，从而所列行列式为 $F_{q-p}(-1)^p$；$F_h>0$ 对每个整数 $h\ge1$ 成立。于是全部解码除法都有非零分母，并得到
+
+$$
+U_0=\frac{g_qV_p-g_pV_q}{\Delta_{p,q}},\qquad
+U_1=\frac{f_pV_q-f_qV_p}{\Delta_{p,q}},\qquad
+U_j=f_jU_0+g_jU_1.
+$$
+
+最后由 $u_0=1,u_1=b$ 递推得到 $u_{m-1},u_m$。令 $\mathcal I$ 表示定理 4.1 已有的四迹逆，构造
+
+$$
+T=\mathcal I(u_{m-1},u_m,U_0,U_1),\qquad
+R_0=M^{-(m-1)}T.
+$$
+
+该调用合法，因为真实 $T=M^{m-1}R_0$ 的四个输入恰是
+
+$$
+\operatorname{tr}T=u_{m-1},\qquad
+\operatorname{tr}(MT)=u_m,\qquad
+\operatorname{tr}(JMT)=U_0,\qquad
+\operatorname{tr}(MJMT)=U_1.
+$$
+
+这里 $m=N-1\ge2$，且 $\det M=-1$，所以所需矩阵逆始终存在。这个 $T$ 只是同一固定关系的代数坐标；没有从另一条重置历史借入任何迹。
+
+任意两个真实实现若有相同的 $L$ 个读数，前段线性逆先使其 $H,D,b$ 相同；它们因此有相同的非零增益位置、相同的 $V_p,V_q$ 及 $U_0,U_1$，继而由定理 4.1 有相同的 $T,R_0$。所以恢复的是完整矩阵，不只是纯 $M$ 的两个坐标。计数为 $N+(k+2)=3k+d+5$。这个共同增益采集是由本卷四迹逆、漂移分离与上述已知合流评价工具组合得到的 repo-derived 结论，不作文献优先权主张。∎
+

@@ -1,0 +1,44 @@
+## 15. 精确实例、来源归属与适用边界
+
+以下有限实例均在固定原禁词、低位先读、全历史及吸收拒绝的合同内。全余数表的 $N_0,N_1,N_2$ 对应长度至多预算，包含空词；最后一列为全部未来的状态数。$a$ 表示单探针阶，$(3,5)$ 表示同一实际词的双探针库。
+
+| 原阶 $k$ | 探针 | 模数 $d$ | 实际 $M$ | 相位阶 $L$ | $N_0$ | $N_1$ | $N_2$ | 完整状态数 |
+|---|---|---|---|---|---|---|---|---|
+| 2 | $a=2$ | 2 | 4 | 3 | 5 | 17 | 25 | 25 |
+| 3 | $a=2$ | 4 | 16 | 6 | 17 | 113 | 289 | 289 |
+| 5 | $a=2$ | 6 | 36 | 24 | 37 | 901 | 2593 | 4321 |
+| 2 | $(3,5)$ | 2 | 128 | 12 | 129 | 1665 | 3073 | 3073 |
+| 3 | $a=3$ | 2 | 8 | 4 | 9 | 41 | 97 | 97 |
+| 5 | $a=5$ | 2 | 32 | 6 | 33 | 225 | 577 | 961 |
+
+双探针一行有 $\Phi_3=(X+1)^3$、$\Phi_5=(X+1)(X^2+X+1)^2$，在 $\mathbb F_2[X]$ 中的 gcd 是 $X+1$，首一 lcm 次数为七。由供应卷共同像的域上理想交接口，$M=2^7=128$，小于边缘像乘积 $2^3\cdot2^5=256$。两个投影中 $x$ 的阶分别为四、六，故共同 $L=12$。这些是共同多项式像的算术；同一个原 $k=2$ 下的实际词实现另由定理 9.1 保证。不能只把边缘像相乘。
+
+下面是原阶数值标量合同的有限实例，$T=L_k$，$C_h$ 由 (26) 给出。
+
+| 原阶 $k$ | 模数 $d$ | $L_k$ | $\sigma$ | $C_0$ | $C_1$ | $C_2$ | 完整状态数 | 完整视界 |
+|---|---|---|---|---|---|---|---|---|
+| 2 | 2 | 3 | 2 | 3 | 7 | 11 | 13 | 3 |
+| 2 | 4 | 6 | 2 | 5 | 21 | 41 | 49 | 3 |
+| 3 | 2 | 4 | 2 | 3 | 7 | 21 | 25 | 3 |
+| 3 | 6 | 52 | 3 | 7 | 43 | 421 | 937 | 4 |
+| 5 | 2 | 6 | 4 | 3 | 7 | 21 | 61 | 5 |
+| 5 | 4 | 12 | 4 | 5 | 21 | 81 | 241 | 5 |
+| 5 | 6 | 312 | 5 | 7 | 43 | 469 | 9361 | 6 |
+
+一个非满射读出例取原 $k=5$、探针 $a=2$、$d=4$，以 $\lambda(v_0+v_1x)=2v_0\pmod4$ 为输出。其陪域有四个元素，实际 $U=\{0,2\}$ 只有两个；$L=6$，观察权重最小周期 $T=3$，循环为 $(2,0,2)$，$r_0,r_1,r_2$ 为 $1,2,3$。所以完整状态数为 $31$，$C_0,\ldots,C_4$ 为 $3,7,17,25,31$，完整视界为四。这个例子同时展示陪域大小和完整算术相位都不必全部进入最小记忆。
+
+| 来源 | 直接复用的范围 | 本文补足的接口 |
+|---|---|---|
+| [实际取得几何，固定版本](https://github.com/the-omega-institute/trureturing/blob/dc3fa13ad47f1171fbc8dac1306273339091cd43/docs/develop/theory/KBONACCI_ACTUAL_ACQUISITION_GEOMETRY.md) 定义 2.2、定理 3.1、命题 4.1–4.3 | 规范 $\Phi_a$ 的实际合法词饱和、精确尾像、声明相位取得；不用于 $\Psi_a$ | 用一个 $v01^s$ 将指定余数、相位与尾接到同一实际历史；随后证明观察器下界 |
+| [自校准边界，固定版本](https://github.com/the-omega-institute/trureturing/blob/0331a9437150b88f77bd393d43755c727b6a14cc/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md) §3、§6、§9 | 有限合法性商及自主闭包差别、共同像／理想交、原阶泛函 | 不重命名上述结果；分类带当前算术输出的相位／尾商及受限加性输出 |
+| [RRO，固定版本](https://github.com/the-omega-institute/trureturing/blob/f6a4a894f2377f2a529748b9729b0637bd0ae006/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md) §1.2.1–1.2.2、§1.2.6 | 整数权重、合法词值双射、实际权重轨道 | 用整数 Hankel 单位行列式证明任意合数模数的观察相位忠实性 |
+| [FIB 延拓几何，固定版本](https://github.com/the-omega-institute/trureturing/blob/f6a4a894f2377f2a529748b9729b0637bd0ae006/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 定义 3.2–3.3、4.1 | 实际行为商、更新纤维判据、有限未来核 | 使用这些既有框架；新接口是 (17)、(25) 的可达源精确分区和尖锐视界 |
+| [观察边界代数，固定版本](https://github.com/the-omega-institute/trureturing/blob/f6a4a894f2377f2a529748b9729b0637bd0ae006/docs/develop/theory/OBSERVATION_BOUNDARY_ALGEBRA_MINIMAL_REALIZATION.md) 定理 17、推论 20.1 | 后续响应的最小充分类及外置读取位置 | 区分内置自主相位、外置免费时钟和固定长度层，不重证一般最小边界原理 |
+| [Erickson, Models of Computation, Lecture 3](https://jeffe.cs.illinois.edu/teaching/algorithms/models/03-automata.pdf) §3.8–3.9；[Nerode, Linear automaton transformations, 1958, pp. 541–544](https://doi.org/10.1090/S0002-9939-1958-0135681-9) | 区分后缀及经典 Myhill–Nerode 背景 | 历史归属，不作为本文参数化算术公式的来源 |
+
+仓内公开的 `minimal_predictive_completion_quotient`、`future_readout_quotient_is_coarsest_with_unique_dynamics`、`future_kernel_is_maximal_invariant`，以及 `FiniteTimeTomographySaturation` 中私有的 `all_future_kernel_eq_finrank_kernel` 已提供相应一般商或域上线性有限核背景。它们的假设与第 12–13 节的有限阿贝尔群、可能非域的 $\mathbb Z/d\mathbb Z$ 不同；本文不将这些源码的存在当作本卷 Lean 认证，也不重复交付其通用结论。第 9–14 节的合同专属组合与计算是仓内普通理论推导，未作穷尽文献检索或文献优先权判断。
+
+有限域边界另须声明。若探针放在扩张域 $\mathbb F_q$、$q=p^e$ 中，实际二进制词的系数仍只在素子域 $\mathbb F_p$。所以本卷实际像应取 $H_p=\mathcal O(\mathbb F_p[X])$，嵌在扩张域坐标积中；首一除法与域嵌入使这个素子域像保持可辨。可对 $H_p$ 使用相应的 $d=p$ 合同，不能把像无条件扩成 $\mathcal O(\mathbb F_q[X])$ 或把状态数中的 $M$ 写成 $q$ 的环境维数幂。整数、有理系数来源也不是有限模词来源，不由 (11) 获得相同实现结论。
+
+本卷没有分类任意探针库的预饱和固定长度成员、每个目标的最短合法取得费用、全阶 Smith 不变量、矩阵词最优分类或任意非线性读出。也没有把固定 $k$ 的有限状态结果运输到增长 $k,n$ 的概率极限；这类极限须另固定 iid 公平位来源、尺度与误差方向。这里的自校准只指在已声明的来源和输出下，以可达见证和区分后缀确定真正未来可见的记录；它不改变原禁词、删去拒绝、恢复原词或宣称整个研究目标完成。
+

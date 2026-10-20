@@ -1,0 +1,11 @@
+### 证明
+
+将 Fisher 定义代入二次型即得第一式。由于每个 \(p_a(x\mid\theta)>0\)，非负平方和为零当且仅当每一项都为零，所以 \(1\Leftrightarrow2\)。而
+
+$$
+D_vp_a(x\mid\theta)
+=v^{\mathsf T}\nabla p_a(x\mid\theta),
+$$
+
+故 \(2\Leftrightarrow3\)。证毕。
+

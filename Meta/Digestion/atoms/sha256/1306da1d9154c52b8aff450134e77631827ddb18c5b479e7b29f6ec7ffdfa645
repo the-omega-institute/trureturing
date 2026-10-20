@@ -1,0 +1,6 @@
+因此，有限多尺度问题不再需要：
+
+* 多个独立 Toeplitz 矩阵；
+* 任意补充的 cross-block 变量；
+* 彼此分开的 Loewner 与 Crofoot 检查。
+

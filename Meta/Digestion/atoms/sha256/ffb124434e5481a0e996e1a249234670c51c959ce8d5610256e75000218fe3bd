@@ -1,0 +1,9 @@
+**候签定理 14.1（实际 cross-cutoff 修正）。** 在本章共同来源、投影识别与 trace-class 合同全部成立时，若 $H_f$ 实且偶，设 $B_f=QA_fW$，则候选公式为
+
+$$
+D_2(f)=2\operatorname{Re}\operatorname{Tr}_{QH}
+\bigl[C_2R_2B_f\mathcal F_2Q\bigr].
+$$
+
+推导纲要：在 $C_2$ 的本征向量 $\xi$ 上写 $\mathcal F_2\xi=\lambda\xi+\sqrt{1-\lambda^2}\,\zeta$，其中 $\zeta\in WH$。利用 $[A_f,\mathcal F_2]=0$，对应二维对的迹贡献化为 $2\lambda\operatorname{Re}\langle\xi,A_f\zeta\rangle/\sqrt{1-\lambda^2}$。还需验证完整谱分解、收敛与源算术识别，才可把这个逐对计算提升为实际迹恒等式。
+

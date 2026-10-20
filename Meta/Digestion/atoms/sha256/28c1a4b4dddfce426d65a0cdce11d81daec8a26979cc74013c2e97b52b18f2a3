@@ -1,0 +1,6 @@
+Three local processes ran distinct exact-integer checks concurrently before the remote write:
+
+1. 327,680 golden windows, lengths 1-80 with 4,096 starts each, checked the parity classification prediction and representation identities.
+2. All 8,191 binary words of lengths 0-12 checked the generic reversal/pair identities.
+3. Exact pair-collision calculations for the observed complete factor collections at lengths 1-6 checked the proposed finite rates and redundant-peer behavior.
+

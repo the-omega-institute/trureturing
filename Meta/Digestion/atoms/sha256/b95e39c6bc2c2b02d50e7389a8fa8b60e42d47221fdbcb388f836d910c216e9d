@@ -1,0 +1,69 @@
+**命题 100.6（根数加权的实际接受律与条件误差）。** 固定 $\ell\ge2$。在任一实际 $k$ 或任一固定共同深度先验下，条件于 $Q_{2\ell}=q_0$，写
+
+$$
+\begin{aligned}
+p=p_\ell&=P(A=1\mid Q_{2\ell}=q_0)
+=\frac{2^\ell}{\binom{2\ell}{\ell}},\\
+t(w)&=\frac{|\{x\in\mathbb F_q:D_b(x)=0\}|}{q},\\
+\beta_{\ell,q}
+&=P(\widetilde A=1\mid Q_{2\ell}=q_0,A=0).
+\end{aligned}
+\tag{100.15}
+$$
+
+有 $0<p<1$。若 $\beta=\beta_{\ell,q}>0$，令
+
+$$
+\mu=P(W\in\cdot\mid Q_{2\ell}=q_0,A=1),\qquad
+\nu_{\rm false}=P(W\in\cdot\mid Q_{2\ell}=q_0,A=0,\widetilde A=1).
+\tag{100.16}
+$$
+
+则实际载荷的接受条件律为
+
+$$
+\widetilde\mu
+:=
+P(W\in\cdot\mid Q_{2\ell}=q_0,\widetilde A=1)
+=\frac{p}{p+(1-p)\beta}\mu
++\frac{(1-p)\beta}{p+(1-p)\beta}\nu_{\rm false},
+\tag{100.17}
+$$
+
+而其相对于精确档案纤维的 TV 恰为
+
+$$
+\Delta_{\ell,q}
+:=
+\operatorname{TV}(\widetilde\mu,\mu)
+=\frac{(1-p)\beta}{p+(1-p)\beta}.
+\tag{100.18}
+$$
+
+TV 是实际 $W$ 质量差绝对值之和的一半，种子 $R$ 已边缘化；它不是给定某个固定种子后的误差。$\beta=0$ 时直接有 $\widetilde\mu=\mu$ 和 $\Delta_{\ell,q}=0$。
+
+证明。复用命题99.2：$q_0$ 纤维含 $C=\binom{2\ell}{\ell}$ 个完整记录，均有 $j_i=0$，其中真档案有 $2^\ell$ 个。每个 $w$ 在固定 $k$ 下都有质量 $r_k^\ell(1-r_k)^{2\ell}$；对共同 $K$ 混合仍给所有这些记录同一个严格正质量。因此给定 $q_0$，它们均匀且该律与 $k,\pi$ 无关。真档案非空；假档案也非空：取标记 $b_1=b_{\ell+1}=0$、$b_2=b_{\ell+2}=1$，其余每对各放一个1，仍有总标记数 $\ell$，但前两对违反匹配。这同时证明 $0<p<1$。
+
+命题100.2使给定 $q_0$ 和任何记录后种子仍均匀。在这个实际联合律中，
+
+$$
+P(W=w,\widetilde A=1\mid Q_{2\ell}=q_0)=\frac{t(w)}{C},\qquad
+\beta=\frac{1}{C-2^\ell}
+\sum_{\substack{Q_{2\ell}(w)=q_0\\A(w)=0}}t(w).
+\tag{100.19}
+$$
+
+真档案的 $t(w)=1$。对真、假两部分分别求和，接受总质量恰为 $Z=p+(1-p)\beta>0$；真部分归一化后仍为 $\mu$，假部分归一化后是 $\nu_{\rm false}$，给（100.17）。具体地，
+
+$$
+\widetilde\mu(w)=\frac{t(w)}{CZ}
+\quad\bigl(Q_{2\ell}(w)=q_0\bigr).
+\tag{100.20}
+$$
+
+所以接受载荷按根数加权，不能仅凭哪些记录可接受就把它们均匀化。选择 $\widetilde A=1$ 后，种子和载荷也不再由（100.3）保证独立。
+
+令 $\lambda=(1-p)\beta/Z$。$\mu$ 全支撑在 $A=1$ 上，$\nu_{\rm false}$ 全支撑在 $A=0$ 上，两支撑不交；（100.17）给 $\widetilde\mu-\mu=\lambda(\nu_{\rm false}-\mu)$。两概率律在各自支撑上各有总质量1，故差的绝对质量和为 $2\lambda$，TV 恰为 $\lambda$，证明（100.18）。$\beta=0$ 时假部分无质量，无须定义一个不存在的假条件行。证毕。
+
+这一步比较的是同一实际 $W$ 上的精确和随机核验条件，而非把各段分别取最优律后拼接。种子前奏不改载荷词律，所有权重都来自真正执行的 $(R,W)$ 联合律。
+

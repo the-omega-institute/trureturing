@@ -1,0 +1,90 @@
+### 定理：全参数曲率逼近与中心化二阶误差
+
+令
+
+\[
+C_2=2K+3C,\qquad
+g_z(v)=\log F_z(v)-\log\varphi(v),\qquad
+\delta_z=s_z-1.
+\]
+
+则全部 \(z\ge2,v\ge0\) 满足
+
+\[
+\boxed{|T_z(v)-j(v)|\le C_2/L,}
+\tag{SC.6}
+\]
+
+\[
+\boxed{|g_z(v)-\delta_zv|\le C_2v^2/(2L).}
+\tag{SC.7}
+\]
+
+特别地，\(|T_z(0)-1/2|\le C_2/L\)，不需另以二阶素数矩渐近作为输入。
+
+**证明。** 在 \([0,1]\) 上取有限正测度
+
+\[
+\mu_z=\frac1L\sum_{p\le z}\frac{\log p}{p}\,
+\delta_{\log p/L},\qquad
+\mathscr E_z(b)=\mu_z([0,b])-b=\frac{A(e^{Lb})}{L}-b.
+\]
+
+第一 Mertens 界给 \(\mathscr E_z(0)=0\)、\(|\mathscr E_z(b)|\le K/L\)。对 \(f_v(b)=be^{-vb}\) 作保留端点的 Abel 求和，得
+
+\[
+\int_{[0,1]}f_v\,d\mu_z-\int_0^1f_v(b)\,db
+=f_v(1)\mathscr E_z(1)-\int_0^1f_v'(b)\mathscr E_z(b)\,db.
+\tag{SC.8}
+\]
+
+\(f_v(0)=0\) 支付左端；右端使用 \(\mu_z([0,1])\)，因此当 \(z\) 本身为素数时，\(b=1\) 的原子也保留。由于 \(f_v\) 从零开始，非负且先增后减，其全部变差给
+
+\[
+f_v(1)+\int_0^1|f_v'(b)|\,db
+=2\max_{0\le b\le1}f_v(b)
+=\begin{cases}2e^{-v},&0\le v\le1,\\2/(ev),&v\ge1,
+\end{cases}
+\le2.
+\tag{SC.9}
+\]
+
+在 \(v=1\) 两式一致，\(v=0\) 的预算为二。于是，令
+
+\[
+H_z(v)=\frac1{L^2}\sum_{p\le z}\frac{(\log p)^2}{p}
+e^{-v\log p/L},
+\]
+
+可得共同于全部 \(v\ge0\) 的
+
+\[
+|H_z(v)-j(v)|\le2K/L.
+\tag{SC.10}
+\]
+
+再对同一个实际素数与 \(q=p^{1+v/L}\) 使用精确纠正
+
+\[
+\frac q{(q-1)^2}-\frac1q
+=\frac{2+1/(q-1)}{q(q-1)},\qquad
+0\le\frac q{(q-1)^2}-\frac1q\le\frac3{p(p-1)}.
+\]
+
+实际支持 \(\log p\le L\) 支付第二个对数因子，故
+
+\[
+0\le T_z(v)-H_z(v)
+\le\frac3L\sum_{p\le z}\frac{\log p}{p(p-1)}\le3C/L.
+\tag{SC.11}
+\]
+
+结合（SC.10）得（SC.6），没有新增无穷平方对数和。又因
+\(g_z'=S_z-r\)、\((S_z-r)'=j-T_z\)、\(g_z(0)=0\)，两次从零积分得
+
+\[
+g_z(v)-\delta_zv=\int_0^v(v-w)[j(w)-T_z(w)]\,dw,
+\]
+
+即（SC.7）。该二次界只控制中心化误差；全尾指数仍由（SC.4）的一次界支付。证毕。
+

@@ -1,0 +1,119 @@
+### 40.3 一个固定的六周期来源邻域
+
+固定第36.1节的六格仪器。为避免预算符号与切点混淆，记
+
+$$
+a=-t^2-\lambda,\qquad c_-=g-3\lambda,\qquad
+c_+=t-5\lambda,\qquad c_3=2t-7\lambda,\qquad c_4=2t+\lambda.
+$$
+
+实际格 $C_i$ 的切点归属固定，其闭包为
+
+$$
+\begin{gathered}
+J_0=[-1,a],\quad J_1=[a,c_-],\quad J_2=[c_-,c_+],\\
+J_3=[c_+,c_3],\quad J_4=[c_3,c_4],\quad J_5=[c_4,\phi].
+\end{gathered}
+$$
+
+各格均有正长度；闭扩张记作 $E_i^b=(J_i+[-b,b])\cap X$。实际取得仍按同一个 $Q$ 和裁剪到 $X$ 的含噪坐标定义。
+
+置
+
+$$
+\rho=\frac{239g-44}{380},\qquad
+A=(3,3,5,0,3,0),\qquad
+B=(0,3,0,3,3,5),\qquad
+\mathbf d=(1,0,2,1,0,2),
+$$
+
+$$
+\alpha=-\frac{33+6g}{76},\qquad
+\beta=\frac{8+15g}{76}.
+$$
+
+这两个词在[引理36.10](https://github.com/the-omega-institute/trureturing/blob/b7e6d6b26598bea84f42ed06e830a11bd5cff1ea/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11215)中使用，其周期坐标及成本见[定理36.11的证明](https://github.com/the-omega-institute/trureturing/blob/b7e6d6b26598bea84f42ed06e830a11bd5cff1ea/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11299)。其 guard 链为
+
+$$
+0\xrightarrow{3}0\xrightarrow{3}0\xrightarrow{5}1
+\xrightarrow{0}0\xrightarrow{3}0\xrightarrow{0}0,
+$$
+
+$$
+1\xrightarrow{0}0\xrightarrow{3}0\xrightarrow{0}0
+\xrightarrow{3}0\xrightarrow{3}0\xrightarrow{5}1.
+$$
+
+$A$ 是 guard 零返回词，$B$ 是 guard 一返回词；$B$ 首标签为空，亦可从 guard 零起始，并在首步之后进入同一 guard 链。
+
+以下表列出 $A^\infty$ 的实际周期坐标及其所需闭格距离。
+
+| 40 周期相位 | 标签 | 坐标 $z_r$ | 颜色 $\mathbf d_r$ | 到所需闭格的距离 |
+| --- | --- | --- | --- | --- |
+| 40相位0 | $3$ | $-(33+6g)/76=\alpha$ | $1$ | $\rho$ |
+| 40相位1 | $3$ | $-(52+5g)/76$ | $0$ | $0$ |
+| 40相位2 | $5$ | $(23+14g)/76$ | $2$ | $0$ |
+| 40相位3 | $0$ | $(8+15g)/76=\beta$ | $1$ | $(97-362g)/380$ |
+| 40相位4 | $3$ | $-(47+8g)/76$ | $0$ | $0$ |
+| 40相位5 | $0$ | $(6+9g)/76$ | $2$ | $(392g-87)/380$ |
+
+用 $g^2+4g=1$、$t=(1+g)/2$，这六个坐标逐项满足 $z_r=f_{A_r}(z_{r+1})$，下标模六。例如
+
+$$
+f_3(z_1)=\frac{-38-38g+52g+5g^2}{76}
+=-\frac{33+6g}{76}=z_0,
+\qquad
+f_0(z_0)=\frac{33g+6g^2}{76}
+=\frac{6+9g}{76}=z_5.
+$$
+
+其余四个递推为
+
+$$
+\begin{aligned}
+f_3(z_2)&=\frac{-38-38g-23g-14g^2}{76}
+=-\frac{52+5g}{76}=z_1,\\
+f_5(z_3)&=\frac{38-38g-8g-15g^2}{76}
+=\frac{23+14g}{76}=z_2,\\
+f_0(z_4)&=\frac{47g+8g^2}{76}
+=\frac{8+15g}{76}=z_3,\\
+f_3(z_5)&=\frac{-38-38g-6g-9g^2}{76}
+=-\frac{47+8g}{76}=z_4.
+\end{aligned}
+$$
+
+因此这是同一条实际周期来源的六坐标。$B$ 是 $A$ 的三位循环移位，故 $B^\infty$ 的坐标为 $z_{r+3}$；颜色词周期为三，移位后仍为 $\mathbf d$。六次复合的斜率为 $g^6$，周期固定点唯一，故
+
+$$
+f_A(x)=\alpha+g^6(x-\alpha),\qquad
+f_B(y)=\beta+g^6(y-\beta).
+$$
+
+闭成本也可逐项核对。正根 $g$ 满足 $4/17<g<17/72<1/4$；这是将 $x^2+4x-1$ 代入两端并用正轴单调性所得的有理括界。它给出
+
+$$
+\begin{gathered}
+-1<z_1<z_4<a,\qquad c_-<z_2<c_+,\qquad
+a-z_0=\rho,\\
+0<z_3-c_- =\frac{97-362g}{380}<\rho,\qquad
+0<c_--z_5=\frac{392g-87}{380}<\rho.
+\end{gathered}
+$$
+
+其中两个严格上界的差恰为
+
+$$
+\rho-(z_3-c_-)=\frac{601g-141}{380}>0,\qquad
+\rho-(c_--z_5)=\frac{43-153g}{380}>0.
+$$
+
+还可直接检查
+
+$$
+a-z_4=\frac{26+249g}{380}>0,\qquad
+z_2-c_- =\frac{172-367g}{380}>0,\qquad
+c_+-z_2=\frac{43g-4}{76}>0,
+$$
+
+以及 $\lambda-\rho=(63-258g)/380>0$。表中两条周期来源到各自所需闭格的最大距离因而恰为 $\rho$。这些坐标来自固定来源，未把不同来源的逐坐标可行性拼成一条轨迹。
+

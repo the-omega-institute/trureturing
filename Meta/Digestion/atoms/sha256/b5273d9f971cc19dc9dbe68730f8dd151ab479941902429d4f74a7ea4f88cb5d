@@ -1,0 +1,16 @@
+### 24.5 两个必要反例
+
+第一，若替换后只更新焦点子树而保留旧父上下文，取 \(u=\langle\alpha,\alpha\rangle\)，焦点在左叶。把焦点从 \(\alpha\) 改成 \(\beta\) 而不更新右兄弟，会读出虚假的父 \(\langle\beta,\alpha\rangle\)；真实父是 \(\langle\beta,\beta\rangle\)。历史版本仍可作为历史数据，但不能冒充当前上下文。
+
+第二，语义地址存活不保证句柄存活。取 \(u=\alpha\)，根在一次 \(\rho\) 后成为 \(\beta\)。若根引用只在纪元零有效，纪元一用该引用读取就不合法；同地址出生公式没有替代真实的刷新或重新取得权限。
+
+第三，端点语义状态不恢复 writer 顺序。若两种操作序列都在同一持久根合同下到达纪元一根位置，
+
+$$
+\mathsf{ReadTag};\mathsf{ApplyRho}
+\qquad\text{与}\qquad
+\mathsf{ApplyRho};\mathsf{ReadTag}
+$$
+
+可以有相同的来源、纪元和焦点，却分别留下不同的事件词。完整档案必须保留顺序；端点相等不能推出 writer 相等。
+

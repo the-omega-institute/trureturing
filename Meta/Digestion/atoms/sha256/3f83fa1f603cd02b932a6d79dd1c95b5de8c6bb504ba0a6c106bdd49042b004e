@@ -1,0 +1,7 @@
+在有限 Boolean 模型上可以构造：
+
+1. 相同 FLOW、ADMIT、ANCHOR，但 CUT 不同；
+2. 相同 CUT、ADMIT、ANCHOR，但 FLOW 不同；
+3. 相同 CUT、FLOW、ANCHOR，但 ADMIT 不同且均接纳锚点；
+4. 相同 CUT、FLOW、ADMIT，但 ANCHOR 不同。
+

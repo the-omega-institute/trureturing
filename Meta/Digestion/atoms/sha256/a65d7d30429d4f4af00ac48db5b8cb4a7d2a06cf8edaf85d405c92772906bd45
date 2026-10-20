@@ -1,0 +1,25 @@
+## 1938.1 两种共同核心
+
+| 系统                  | 共同可见量                     | 隐藏部分                                  |
+| ------------------- | ------------------------- | ------------------------------------- |
+| Universal Solenoid  | \(\pi(\theta)=m\theta_m\) | \(\ker\pi\) 中的兼容 torsion 历史           |
+| Rational Gram       | \(\alpha_*B\)             | \(G-\alpha_*B\) 的结构 residual          |
+| Hardy factorization | boundary outer modulus    | inner/model-space fibre               |
+| Riemann completion  | scalar \(\xi\) 与反射轨道      | causal orientation 与 off-line divisor |
+
+它们不是同一个对象。
+
+但都重复：
+
+$$
+\boxed{
+\text{共同影像}
++
+\text{未被该影像穷尽的纤维}.
+}
+$$
+
+这才是“分形”的更严格含义：重复的是**投影—纤维结构**，而不是外形。
+
+---
+

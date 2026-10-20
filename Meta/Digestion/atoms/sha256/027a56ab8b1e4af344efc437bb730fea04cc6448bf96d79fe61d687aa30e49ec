@@ -1,0 +1,89 @@
+**定理 337.4（阈值处不可微与附加代价的线性消失阶）。** 记 $f_a(q)=\widehat G_a^{\rm EB}(q\eta)$。该函数在 $q_c$ 连续，右导数为
+
+$$
+f'_{a,+}(q_c)=\frac{\sqrt2-2}{4}E_0.
+\tag{337.13}
+$$
+
+左侧割线斜率满足
+
+$$
+-\frac{4+\sqrt2}{4}E_0
+\le\liminf_{h\downarrow0}\frac{f_a(q_c)-f_a(q_c-h)}h
+\le\limsup_{h\downarrow0}\frac{f_a(q_c)-f_a(q_c-h)}h
+\le-E_0.
+\tag{337.14}
+$$
+
+因而 $f_a$ 在 $q_c$ 不可微。进一步，
+
+$$
+\frac{2+\sqrt2}{4}E_0
+\le\liminf_{h\downarrow0}\frac{\Delta_a(q_c-h)}h
+\le\limsup_{h\downarrow0}\frac{\Delta_a(q_c-h)}h
+\le\frac{1+\sqrt2}{2}E_0.
+\tag{337.15}
+$$
+
+所以该正代价从左侧以线性阶消失。式（337.14）、（337.15）是上下界，不宣称左导数存在，也不宣称已求出精确线性系数。
+
+证明。除了第336节的左侧下界，还需要一个在阈值取等的左侧可行族。固定平衡单位向量 $n$，对 $0<q\le q_c$ 定义
+
+$$
+U_{q,n}=\sqrt q\,(I-nn^{\mathsf T})+qnn^{\mathsf T}.
+\tag{337.16}
+$$
+
+其特征值 $\sqrt q,\sqrt q,q$ 满足乘积边界 $(\sqrt q)^2=q$，且标准 Pauli 概率非负。因此它微分可分，事实上是单个有限齐次幺元生成元的指数：两个相同衰减率为 $-\tfrac12\log q$，第三个为 $-\log q$，恰满足生成元三角边界。又因为 $2\sqrt q+q\le1$ 等价于 $q\le q_c$，它在当前区间纠缠破坏。由平衡最小轴及第281节的同一方案实现，它的实际残差为 $q\eta$，误差为
+
+$$
+u_a(q)=\frac{a}{2\sqrt3}
+\sqrt{2(1-\sqrt q)^2+(1-q)^2}.
+\tag{337.17}
+$$
+
+置 $b_a(q)$ 为式（337.2）在 $[0,1/3]$ 的解析表达，则对 $0<q<q_c$ 有
+
+$$
+E_0(1-q)<f_a(q)\le u_a(q),
+\qquad
+f_a(q_c)=b_a(q_c)=E_0(1-q_c)=u_a(q_c).
+\tag{337.18}
+$$
+
+夹逼先给出左连续性；第336节的精确右分支给出右连续性。直接微分两个显示的解析函数，并使用 $\sqrt{q_c}=\sqrt2-1$，得到
+
+$$
+b_a'(q_c)=\frac{\sqrt2-2}{4}E_0,
+\qquad
+u_a'(q_c)=-\frac{4+\sqrt2}{4}E_0.
+\tag{337.19}
+$$
+
+第一式同时是 $f_a$ 的右导数。将式（337.18）的上下界分别从共同阈值值中减去，再除以正数 $h=q_c-q$，不等号方向给出
+
+$$
+\frac{u_a(q_c)-u_a(q_c-h)}h
+\le\frac{f_a(q_c)-f_a(q_c-h)}h
+<-E_0.
+\tag{337.20}
+$$
+
+取上下极限即得式（337.14）。右导数严格大于 $-E_0$，不可能等于任何可能存在的左导数，因此不可微；这个判断不依赖左导数存在。
+
+最后，由 $b_a(q_c)=f_a(q_c)$，将式（337.18）改写为对 $f_a(q_c-h)-b_a(q_c-h)$ 的上下界。两端分别有展开
+
+$$
+\begin{aligned}
+E_0(1-q_c+h)-b_a(q_c-h)
+&=\bigl(E_0+b_a'(q_c)\bigr)h+O(h^2),\\
+u_a(q_c-h)-b_a(q_c-h)
+&=\bigl(b_a'(q_c)-u_a'(q_c)\bigr)h+O(h^2).
+\end{aligned}
+\tag{337.21}
+$$
+
+代入式（337.19）并除以 $h$，便得到式（337.15）。上下系数都严格正且有限，所以这确实给出线性消失阶，而非仅给一个线性上界。证毕。
+
+本节复用 Ruskai，*Qubit Entanglement Breaking Channels*，[定理1、4](https://arxiv.org/abs/quant-ph/0302032v3)，以及 Wolf–Cirac，*Dividing Quantum Channels*，[定理24](https://arxiv.org/abs/math-ph/0611057v3)的既有通道分类。新增比较保持同一六态、二维实际因子与同一残差预算，区分了“通道破坏纠缠”和“通道可连续细分”对任务最优值的影响。它没有求出 $0<q<q_c$ 的联合限制完整曲线，没有证明其中只有一次最优形状转变，也不把式（337.14）的割线界解释成已知的唯一左斜率。
+

@@ -1,0 +1,14 @@
+## 定理 9A.5（联合忠实性消去隐藏 holonomy）
+
+若联合读出 $A(q,s)$ 单射，则
+
+$$
+q(F_wx)=q(x)
+\ \land\ 
+s(F_wx)=s(x)
+\Longrightarrow
+F_wx=x.
+$$
+
+所以 holonomy 的“隐藏性”总是相对于指定读出而言。没有基点回返条件时，只能称为 memory transport；没有路径或行动词数据时，也不能把任意自映射自动命名为 holonomy。
+

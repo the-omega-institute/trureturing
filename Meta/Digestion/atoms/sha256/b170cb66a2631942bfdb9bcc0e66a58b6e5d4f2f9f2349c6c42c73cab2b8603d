@@ -1,0 +1,9 @@
+若：
+
+1. \(\mathscr R[F]=\mathscr R[G]\)；
+2. \(F/G\) 在右移时满足：
+
+   $$
+   \lim_{n\to\infty}\frac{F(z+n)}{G(z+n)}=1;
+   $$
+

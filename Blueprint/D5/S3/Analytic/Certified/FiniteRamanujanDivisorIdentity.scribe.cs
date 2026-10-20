@@ -15,6 +15,9 @@ internal sealed class FiniteRamanujanDivisorIdentityDocument
             + "is the indicator that d divides n.",
         H("Finite Ramanujan Divisor Identity"),
         Blocks(
+            Describe.Lean(DescribeId.Create("ramanujan-divisor-sum"), DeclarationHandle.Create(Prefix + "sum_ramanujanSum_divisors"),
+                H("The sum over all divisor moduli"), StatementSource.FromAuthor(UnnormalizedFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For positive d and natural n, the sum of ramanujanSum q n over all divisors q of d is d when d divides n and zero otherwise."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-ramanujan-sum"),
                 DeclarationHandle.Create(Prefix + "ramanujanSum"),
@@ -52,6 +55,17 @@ internal sealed class FiniteRamanujanDivisorIdentityDocument
                             + "from tau. Those remain separate obligations."))),
                 DescribeRole.Theorem))));
 
+    private static Formula UnnormalizedFormula()
+    {
+        Formula d = F.Id("d"), n = F.Id("n"), q = F.Id("q");
+        Formula divides = new Formula.Relation(d, FormulaRelationOperator.Divides, n);
+        Formula sum = Seq(Sum, Underscore, Grp(Seq(q, Sp, InMacro, Sp, new Formula.Apply(Seq(Operatorname, Grp(F.Id("Nat")), Dot, Operatorname, Grp(F.Id("divisors"))), [d]))), Sp, Call("ramanujanSum", q, n));
+        Formula rhs = Seq(Operatorname, Grp(F.Id("if")), Sp, divides, Sp, Operatorname, Grp(F.Id("then")), Sp,
+            Parenthesized(Seq(d, Sp, Colon, Sp, Mathbb, Grp(F.Id("C")))), Sp, Operatorname, Grp(F.Id("else")), Sp, D(0));
+        return Disp(Seq(Forall, Sp, d, Comma, Sp, n, Sp, InMacro, Sp, Naturals(), Comma, Sp,
+            D(0), Sp, Lt, Sp, d, Sp, Rightarrow, Sp, sum, Sp, Eq, Sp, rhs));
+    }
+
     private static Formula RamanujanSumFormula()
     {
         Formula q = F.Id("q"), n = F.Id("n"), a = F.Id("a");
@@ -87,5 +101,6 @@ internal sealed class FiniteRamanujanDivisorIdentityDocument
             indicator, Sp, Eq, Sp, normalized, Dot));
     }
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
 }

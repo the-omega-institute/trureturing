@@ -1,0 +1,67 @@
+**定理 38.4（测试亏缺的平方根认证，repo-derived）。** 固定满支撑最小点 $p$，令 $a=\min_s p_s>0$、$\eta=q-f_p(\mathcal F)\ge0$。则
+
+$$
+\boxed{\quad
+\|\mathcal F-\mathcal F_K\|_\diamond
+\le\min\left\{2,\frac{2+\sqrt{2N}}a\sqrt\eta\right\}.
+\quad}
+$$
+
+若仅已知 $\|\mathcal F-\mathcal T\|_\diamond\le\delta_*+\epsilon$，其中 $\epsilon\ge0$，则 $\eta\le\epsilon/2$，从而
+
+$$
+\|\mathcal F-\mathcal F_K\|_\diamond
+\le\min\left\{2,\frac{\sqrt2+\sqrt N}a\sqrt\epsilon\right\}.
+$$
+
+此外，第 $s$ 个基输出的目标失败概率 $l_s$ 满足
+
+$$
+\sum_s p_s^2l_s\le\eta,\qquad
+l_s\le\frac{\eta}{p_s^2}.
+$$
+
+任一正权重分量的对应失败概率满足 $l_{zs}\le\eta/(w_zp_s^2)$。结论依赖指定局部操作类和已知模型；这不是对未知全局操作的设备无关认证。
+
+**证明。** 令 $C=\sum_z w_zC^z$、$D_{st}=K_{st}-\operatorname{Re}C_{st}$。上一定理的恒等式给出
+
+$$
+D_{st}\ge0,\qquad
+\sum_{s,t}p_sp_tD_{st}=\eta,\qquad |C_{st}|\le K_{st}.
+$$
+
+对角项就是 $D_{ss}=1-\langle T_s|\mathcal F(|s\rangle\langle s|)|T_s\rangle=l_s$。取非负和的对角子和得 $\sum_sp_s^2l_s\le\eta$，所以 $\sum_s l_s\le\eta/a^2$。对分量不先求和即得 $w_zp_s^2l_{zs}\le\eta$。
+
+将各分量扩张输出放入带正交标记的环境直和，得到编码后信道的一个等距 $V$，以及
+
+$$
+\zeta_s=\bigoplus_z\sqrt{w_z}\zeta_{zs},
+\qquad W|s\rangle=T_s\otimes\zeta_s.
+$$
+
+目标向量正交，且 $\|\zeta_s\|\le1$，故 $\|W\|\le1$。$V-W$ 第 $s$ 列的范数平方为 $l_s$，于是
+
+$$
+\|V-W\|^2\le\sum_s l_s\le\eta/a^2.
+$$
+
+记 $W$ 给出的完全正、迹不增映射为 $\mathcal F_C(X)=J_d(C\circ X)J_d^*$。展开 $VXV^*-WXW^*$ 为两项并使用迹范数的理想性质，得到
+
+$$
+\|\mathcal F-\mathcal F_C\|_\diamond
+\le(\|V\|+\|W\|)\|V-W\|
+\le 2\sqrt\eta/a.
+$$
+
+这里偏迹对任意算子的迹范数收缩可直接由对偶性核对：对任意酉 $U$，$|\operatorname{Tr}(U\operatorname{Tr}_E Y)|=|\operatorname{Tr}((U\otimes I_E)Y)|\le\|Y\|_1$。同一论证保留任意参考因子，不把迹不增的 $W$ 映射冒作信道。
+
+另一方面，$|C_{st}|\le K_{st}\le1$ 给出
+
+$$
+|C_{st}-K_{st}|^2\le2K_{st}D_{st}\le2D_{st}.
+$$
+
+置 $H=D_{\sqrt p}(C-K)D_{\sqrt p}$，其 Hilbert–Schmidt 范数满足 $\|H\|_{\rm HS}^2\le2\eta$，故 $\|H\|_1\le\sqrt{2N\eta}$。任一归一化纯参考输入可写成 $\sum_s|s\rangle|u_s\rangle$。定义 $B|s\rangle=T_s\otimes u_s/\sqrt{p_s}$；其列因 $T_s$ 正交而正交，所以 $\|B\|^2\le1/a$。这两个 Schur 映射在该输入上的输出差是 $BHB^*$，因而其迹范数不超过 $\sqrt{2N\eta}/a$。
+
+混合密度输入由凸性处理。为覆盖钻石范数中的任意算子，先将 Hermitian 输入作正负谱分解；再对任意 $X$ 添加一个参考二能级系统，使用 Hermitian 块矩阵 $\frac12\left(\begin{smallmatrix}0&X\\X^*&0\end{smallmatrix}\right)$。它的迹范数为 $\|X\|_1$；保 Hermitian 映射后的同形块矩阵具有对应输出的迹范数。这说明上述密度输入界也适用于 $\mathcal F_C-\mathcal F_K$，即使 $\mathcal F_C$ 未必保迹。三角不等式给出所列常数，两个信道的距离另有上界二。最后二元测试界给 $2(1-f_p)\le2(1-q)+\epsilon$，故 $\eta\le\epsilon/2$。证毕。
+

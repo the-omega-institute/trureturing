@@ -1,0 +1,52 @@
+**Theorem 121.2 (Full sharp-five-face classification).** Under
+(121.1)--(121.2), the following four assertions are equivalent:
+
+$$
+\begin{aligned}
+&\exists N\in\mathcal N_2:\ e_a(N)\le\varepsilon;\\
+&\exists O\in\mathcal O_2:\ e_a(O)\le\varepsilon;\\
+&\mathcal F_N(a,\varepsilon)\cap\mathscr C_5\ne\varnothing;\\
+&a_1-a_2\le\frac\delta3,\quad
+ a_3\ge\varepsilon+\frac{4\delta}3,\quad
+ a_4\ge\varepsilon+\delta,\quad
+ a_5\ge\varepsilon+\frac\delta3.
+\end{aligned}
+\tag{121.3}
+$$
+
+Whenever these conditions hold, there are original $O,N$ using
+the same source-independent seed and having the same selected
+output law at every source, with uniform error exactly
+$\varepsilon$. The constructed $O$ actually makes one or two
+requests, and the constructed $N$ actually makes two. Both hand
+off finitely for every source and seed. Every prescribed positive
+nonincreasing vanishing tail with $a_6\le\varepsilon$, including
+$a_6=\varepsilon$, is retained. No equality among $a_3,a_4,a_5$
+is assumed. Replacement concerns existence of a whole different
+law at the same cap, rather than preservation of a given $N$ law.
+
+**Proof.** Theorem 110.2 reduces an arbitrary original cap-feasible
+$N$ to one common finite kernel in $\mathcal F_N$ on all 32
+words, without imposing bounded addresses or mark support on
+that competitor. Theorem 113.2 supplies the first cut in (121.3);
+the three unrestricted finite-$N$ certificates of Section 122
+supply the other cuts. Sections 123--126 construct a stopped
+kernel for every real profile satisfying the cuts. Its all-word
+cap and its membership in $\mathscr C_5$ follow there from
+explicit cone coverage, jointly normalized endpoint laws and
+the reused coefficient criterion 109.1. Theorem 110.2 realizes
+that kernel on the original source; Section 127 gives the same
+seed, actual counts, finite handoff and exact retained-tail error.
+Conversely an original $O$ gives an original $N$ by Acquisition
+Resources, Proposition 90.2, completing its entire schedule and
+counting even ignored replies. Membership in the intersection
+also gives an original $O$ by 110.2. This proves every direction.
+$\square$
+
+Theorem 117.2 supplies the second-head supporting inequality;
+Theorems 118.1 and 119.3 supply, respectively, an earlier attained
+parameter family and an exact finite system on this face.
+Theorem 121.2 resolves the whole projected inclusion (120.1),
+rather than just that parameter family. Its additional necessity
+and its complete constructive projection are given below.
+

@@ -1,0 +1,25 @@
+**定义 72.2（实际标记词和完整 $c,u,v$）。** 沿用28.1的唯一正规形 $N(\varepsilon,k,p)=(-1)^\varepsilon S^kA^p$，$S=BA$；其乘法为
+
+$$
+N(\varepsilon,k,p)N(\varphi,l,q)
+=N(\varepsilon+\varphi+pl\bmod2,\ k+(-1)^pl,\ p+q\bmod2).
+\tag{TM.7203}
+$$
+
+这只是当次完整真实 Clifford 响应的无损写法。$v$ 按完整元素相等直接取固定后继，既不只读轮廓，也不附赠在线正规化装置。以下每个正词固定其左结合实际树；幂记号表示正次数重复，词的顺序保留。置 $W_d=(\beta\alpha)^{d/2}$，$d\in\{4,8,16,32\}$，其叶数为 $d$、当前乘积为 $S^{d/2}$。表中的 $g,f,r,j,g_0$ 既命名实际树，也在乘积式中表示其真实 $E$；$g_0$ 仅在 $H=63$ 使用。
+
+| 72实际词上限 | $v_2$ | $v_3$ | $v_4$ | $g$ | $f$ | $r$ | $j$ | $g_0$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 72词60 | $\alpha^{17}$ | $\alpha\beta\alpha^9$ | $\alpha\beta$ | $\beta^2$ | $\alpha^8(\alpha\beta)^4$ | $\alpha^5(\beta\alpha)^4$ | $\alpha\beta\alpha\beta\alpha$ | 不使用 |
+| 72词61 | $\alpha\beta\alpha^{16}$ | $\alpha^{13}$ | $\alpha\beta\alpha$ | $\beta^2$ | $\alpha^{15}\beta$ | $\alpha^6\beta\alpha\beta\alpha\beta\alpha\beta$ | $\alpha\beta\alpha\beta\beta$ | 不使用 |
+| 72词62 | $\alpha^{19}$ | $\beta\alpha^{11}$ | $\beta\alpha^2$ | $\beta^2\alpha^2$ | $\alpha^{12}(\alpha\beta)^2$ | $\alpha^{12}\beta^2$ | $\alpha^5\beta$ | 不使用 |
+| 72词63 | $\beta\alpha^{19}$ | $(\alpha\beta)^2\alpha^9$ | $\alpha\beta\alpha^3$ | $\beta\alpha\beta\alpha\beta\alpha\beta$ | $\alpha^8(\alpha\beta)^4$ | $(\alpha\beta)^6\alpha$ | $\alpha\beta\alpha\beta\alpha$ | $\beta^2\alpha^2$ |
+
+记 $d_i=|v_i|$、$e_i=|\rho(v_i)|$、$h_i=E(v_i)$、$h'_i=E(\rho(v_i))$。全部真实配对数据为
+
+| 72配对上限 | $(d_2,e_2;h_2,h'_2)$ | $(d_3,e_3;h_3,h'_3)$ | $(d_4,e_4;h_4,h'_4)$ |
+| --- | --- | --- | --- |
+| 72配对60 | $(17,17;A,B)$ | $(11,12;-S^{-1}A,S^{-1})$ | $(2,3;-S^{-1},-A)$ |
+| 72配对61 | $(18,19;-S^{-1},-A)$ | $(13,13;A,B)$ | $(3,4;-S^{-1}A,S^{-1})$ |
+| 72配对62 | $(19,19;A,-B)$ | $(12,13;S,-S^2A)$ | $(3,4;B,-S)$ |
+| 72配对63 | $(20,21;S,-S^2A)$ | $(13,15;S^{-2}A,B)$ | $(5,6;-S^{-1}A,-S^{-1})$ |

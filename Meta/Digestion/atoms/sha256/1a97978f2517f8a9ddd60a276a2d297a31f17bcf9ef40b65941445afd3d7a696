@@ -1,0 +1,81 @@
+**Proposition 54.1 (precise closure refinement).** The averaged quadratic
+phase operator $\sum_{ij}(M_\kappa)_{ij}\partial_i\partial_j$ predicts
+the infinitesimal stationary compressed generator and the Gaussian
+infrared covariance. Its full finite-time compressed response is a
+Markov convolution semigroup only on the projections of Theorem 50.1.
+Off those projections the exact response requires the height-return
+term (49.3), or retention of the original height state. Its first
+stationary departure from the Gaussian is (52.1)–(52.2), with the
+coefficient-sensitive exceptions in §53.
+
+These statements concern the specified compression and source law.
+They neither replace the full point heat/Green kernel nor transfer
+unchanged to a fixed initial height, a different raw source, or a
+terminal survival-conditioned law. The exact weights are (48.5)–(48.7)
+and (37.5). They give no observer an operation preparing $\pi$,
+conditioning on future survival, acquiring windings, resetting height,
+or changing the native clock. A torus character is a well-defined
+mathematical function on the original phase torus; its existence
+alone is not acquisition of that function from a chosen current-ray
+readout. A complete continuous wrapped path with an initial lift and
+a single wrapped endpoint retain their distinct meanings in §40.
+
+The instantaneous phase symbol is still rank one and the full
+same-clock symbol is still rank two. The resolved infrared rank is
+three, while the genuine zero leaf has only two moving phases.
+Complementary height modes are spectral modes of one bounded height
+variable, not additional spatial axes, and their elimination proves
+no minimum nonlinear observer dimension or impossibility of retaining
+height. There is no physical rotation symmetry, universal choice of
+three physical spatial dimensions, empirical realization, finite
+bit/shot/CPU cost, new observation service, attraction, or binding
+assertion in these conclusions. All Green, circle, source-charge,
+zero-leaf and attraction statements of §§41–47 and their G/C/O/F/N
+suppliers retain their original domains and meanings.
+
+Proof. Differentiating (48.3) at zero time gives multiplier
+$-\eta^{\mathsf T}M_\kappa\eta$, but the strict defect (50.3) shows
+why this derivative alone cannot determine the complete response.
+The exact elimination restores its missing return, and (51.4),
+(51.6) and (52.2) relate that return to the first nonGaussian term
+without a global polynomial-generator assertion. The exhaustive
+projection classification includes both zero and nonzero error-free
+cases; §53 supplies the uniform vanishing estimates at their boundary.
+Equations (48.5)–(48.7) prove the source distinctions, not merely an
+asymptotic qualification. The raw coordinate and period maps in
+Theorems 48.2 and 50.1 preserve the preceding circle and leaf meanings.
+The rank and observation restrictions are exactly (40.1) and its
+same-clock factor argument. None of the new operators contains an
+attractive potential, so none changes the earlier attraction domains
+or conclusions. $\square$
+
+**Mathematical correspondence 54.2 (scope of the ordinary proof).**
+The generic Gaussian-mixture mechanism also belongs to Chechkin et al.,
+[*Brownian yet non-Gaussian diffusion: from superstatistics to
+subordination of diffusing diffusivities*, arXiv:1611.06202v2](https://arxiv.org/html/1611.06202v2).
+The inverse-height cumulant and formal Gaussian correction overlap
+with the explicitly credited supplement of Alexandre et al.; they
+are not claimed as new generic results. The source-specific additions
+are the exhaustive rational and integer-lattice converse, its exact
+zero-leaf distinction, the native coefficient and vanishing locus,
+and the controlled uniform and degenerating-direction conclusions.
+The domain elimination is included only to fix their original-law
+meaning and their all-real-frequency response.
+
+Hervé–Pène,
+[*The Nagaev–Guivarc'h method via the Keller–Liverani theorem*,
+arXiv:0901.4617v3, §8](https://arxiv.org/html/0901.4617v3),
+and Ferré–Hervé–Ledoux,
+[*Limit theorems for stationary Markov processes with $L^2$-spectral
+gap*, arXiv:1201.4579v1](https://arxiv.org/html/1201.4579v1),
+provide different Markov additive/Edgeworth frameworks, including their
+moment and nonlattice hypotheses. Their one-dimensional first-order
+Edgeworth theorems are not silently substituted for the present
+stationary even-cumulant, weighted-variation expansion. Here the
+remainder follows directly from the exact conditional Gaussian law,
+the fixed height gap, and the global Gaussian Taylor estimate (52.8).
+These comparisons confer no worldwide originality certificate.
+All statements in §§48–54 are ordinary mathematical arguments under
+the stated native premises, not Lean-kernel certificates or empirical
+claims about a physical system.
+

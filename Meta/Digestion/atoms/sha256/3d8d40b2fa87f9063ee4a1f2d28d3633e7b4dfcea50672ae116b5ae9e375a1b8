@@ -1,0 +1,73 @@
+**Theorem 58.3 (uniform wrapped-sample upper bound).**
+There are constants $C_\tau<\infty$ and $n_0$, independent of
+$\kappa\in\mathcal K$, such that
+
+$$
+R_{n,\kappa}\le C_\tau n^{-1/2}\qquad(n\ge n_0).
+\tag{58.5}
+$$
+
+Proof. Let $m=\lceil\sqrt n\rceil$, $h=m\Delta$, and use the final
+$m$ increments. For an initial bound pretend they are unwrapped and
+put $S=(m\Delta)^{-1}\sum_{j=n-m+1}^n(\Delta_jv)^2$.
+Conditional on height,
+
+$$
+\mathbf E[S\mid K]=\frac1h\int_{\tau-h}^\tau a_\kappa(K_s)ds,
+\qquad
+\operatorname{Var}(S\mid K)=\frac{2\sum V_j^2}{(m\Delta)^2}
+ \le\frac{2a_+^2}{m}.
+\tag{58.6}
+$$
+
+The actual stationary height drift is
+$\mu(k)=2\varepsilon^2\phi'(k)/\phi(k)$. Its squared stationary
+moment is finite, explicitly
+
+$$
+\mathbf E_\pi\mu(K)^2=4\varepsilon^4\int_I\phi'(k)^2dk<\infty.
+\tag{58.7}
+$$
+
+The height SDE, Cauchy–Schwarz and stationarity therefore imply, for
+$0\le u-s\le\tau$,
+
+$$
+\mathbf E|K_u-K_s|^2
+ \le2\sigma^2(u-s)+2(u-s)^2\mathbf E_\pi\mu^2
+ \le C_\tau(u-s).
+\tag{58.8}
+$$
+
+Uniform boundedness of $a_\kappa'$ and Jensen's inequality give
+
+$$
+\mathbf E\left|
+ \frac1h\int_{\tau-h}^\tau a_\kappa(K_s)ds-a_\kappa(K_\tau)
+ \right|^2\le C_\tau h.
+\tag{58.9}
+$$
+
+Clip $S$ to $[a_\kappa(l),a_\kappa(u)]$ and apply the inverse
+$a_\kappa^{-1}$. Clipping cannot increase its distance from
+$a_\kappa(K_\tau)$, and (55.3) makes this inverse uniformly Lipschitz.
+Equations (58.6)–(58.9) bound its height risk by $C_\tau(m^{-1}+h)$.
+
+For the actual estimator replace each increment by the principal
+argument of its observed circle increment, then use the same clipping
+and inverse. It agrees with the preceding estimator whenever all
+of the final $m$ real increments have absolute value less than $\pi$.
+The exact conditional normal law and (58.2) imply
+
+$$
+\mathbf Q_\kappa(\text{one of these increments wraps})
+ \le2m\exp\left(-\frac{\pi^2}{2a_+\Delta}\right).
+\tag{58.10}
+$$
+
+Both height estimates lie in $[l,u]$. The wrapped estimator's risk
+is therefore at most the unwrapped estimator's risk plus
+$2(u-l)^2m\exp[-\pi^2/(2a_+\Delta)]$. With the chosen $m$ this
+proves (58.5). No assumption about a Brownian interpolation of the
+data has entered the estimator. $\square$
+

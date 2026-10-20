@@ -1,0 +1,42 @@
+**定义 327.1（直接修复与预算匹配修复）。** 固定第325节的 $0<a<1$、非零零和向量 $u$，令 $a_i(\varepsilon)=a/(1+\varepsilon u_i)$。在该节的共同邻域内取正角点规范下的实际最优矩阵
+
+$$
+T_G(\varepsilon,\delta)=e^{-\delta M_G(\varepsilon,\delta)},
+\qquad T_H(\varepsilon,\delta)=e^{-\delta M_H(\varepsilon,\delta)}.
+$$
+
+记目标预算为 $R_{\varepsilon,\delta}=\eta(\varepsilon)(1-\delta)$，并置
+
+$$
+G(\varepsilon,\delta)=\widehat G_{a(\varepsilon)}(R_{\varepsilon,\delta}),
+\quad H(\varepsilon,\delta)=\widehat H_{a(\varepsilon)}(R_{\varepsilon,\delta}),
+\quad K_u=\frac{a\|u\|_2^2}{3456\sqrt2}>0.
+\tag{327.1}
+$$
+
+使用第324节的解析函数 $q_\delta(M)$，定义
+
+$$
+\alpha(\varepsilon,\delta)=\delta q_\delta(M_G(\varepsilon,\delta)),
+\qquad T_{\rm raw}(\varepsilon,\delta)
+=e^{-\alpha(\varepsilon,\delta)}T_G(\varepsilon,\delta).
+\tag{327.2}
+$$
+
+对充分小的正 $\delta$，令 $\theta=\theta(\varepsilon,\delta)$ 为下列预算方程在零点附近的解：
+
+$$
+(1-\theta)e^{-\alpha(\varepsilon,\theta)}=1-\delta.
+\tag{327.3}
+$$
+
+预算匹配修复定义为
+
+$$
+T_{\rm match}(\varepsilon,\delta)
+=e^{-\alpha(\varepsilon,\theta)}T_G(\varepsilon,\theta).
+\tag{327.4}
+$$
+
+以下定理同时证明这些定义中的非负性、局部唯一性及实际可实现性。误差 $e_\varepsilon(T)$ 始终使用当前半径 $a_i(\varepsilon)$。
+

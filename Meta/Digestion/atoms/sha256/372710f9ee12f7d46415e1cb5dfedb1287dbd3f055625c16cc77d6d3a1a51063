@@ -1,0 +1,7 @@
+进入临界带以后，该绝对正尾量不再可直接使用，这正是必须引入：
+
+* 解析延拓；
+* signed counterterm；
+* Weil test；
+* Gram positivity；
+

@@ -1,0 +1,50 @@
+**假设 430.2（原五射线恢复接口）。** 物理推论完全采用五射线操作约定。已知 $r>0$ 且 $1/2<r^2<2$，令
+
+$$
+\omega=e^{2\pi i/3},\quad s_1=|0\rangle,\quad s_2=|1\rangle,\quad
+s_{3+j}=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}\ (j=0,1,2),
+$$
+$$
+q_i=s_i\otimes s_i,\qquad J|i\rangle=|i\rangle\otimes q_i.
+$$
+
+系统为 $S=\mathbb C^5$，原始记录因子为 $R_A=R_B=\mathbb C^2$。每个允许协议是有限深度的、逐棵有限的局部完全正仪器树：工作空间有限维，分支迹不增加，每个仪器各分支之和保迹；允许任意有限局部量子和经典记忆、非零有限维输出、与输入及参考独立的乘积辅助态、局部丢弃、粗粒完全正结果、后来遗忘的真实历史、任一方的重复操作、双向经典通信、零分支、单例通道、提前停止和不等叶深。下一操作只能使用当时实际可用的信息，局部量子控制包含在行动方的完全正映射内。禁止共享纠缠、量子通信及终端反馈前对 $S$ 的操作。仪器在原始完整记录空间上完备，不预设向对称子空间的物理压缩。
+
+路径深度是路径上局部仪器节点数的最大值，单例通道也计数。纯经典消息和记账以及 $S$ 的终端酉反馈不计数；记账伴随的实际局部量子操作计入。每个真实历史 $\ell$ 有最终实际标签 $y(\ell)$。被遗忘历史可以为求和保留，却不能重新成为控制；隐藏 Kraus 指标不是实际结果。含全部剩余记忆的记录分支 $\mathcal I_\ell$ 的输出空间记为 $O_\ell$，并定义
+
+$$
+\mathcal M_\ell(X)=\operatorname{Tr}_{O_\ell}
+[(\operatorname{id}_S\otimes\mathcal I_\ell)(JXJ^\dagger)],
+\qquad
+\mathcal M_y=\sum_{\ell:y(\ell)=y}\mathcal M_\ell.
+$$
+
+固定一组被接受的实际标签，并为每个标签指定一个作用在整个 $S$ 上的酉 $U_y$。存在同一 $p\in[0,1]$ 使
+
+$$
+\mathcal T(X)=\sum_{y\ \mathrm{accepted}}U_y\mathcal M_y(X)U_y^\dagger=pX
+\quad(X\in\mathcal L(S)),
+$$
+$$
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})=pX_{FS}
+$$
+
+对每个有限维未操作参考 $F$ 及所有 $X_{FS}$ 成立。同一实际标签下的所有历史和隐藏项共用一个 $U_y$。控制与反馈可依赖已知 $r$，不可依赖未知输入或参考。所有失败历史保留在完整仪器内。记深度至多 $n$ 的成功概率上确界为 $p_n(r)$，逐棵有限协议的上确界为 $\eta_{\mathrm{fin}}(r)$。
+
+定义
+
+$$
+\kappa(r)=\frac{\sqrt{4+2(r^2+r^{-2})}}3,\qquad
+h(r)=\frac1{3(1+\kappa(r))},\qquad H_0=\frac1{3+2\sqrt2},
+$$
+$$
+\mathcal S_r=\{(P_x,P_y):\|x\|=\|y\|=1,\quad
+\langle q_i|P_x\otimes P_y|q_i\rangle=h(r)\ (1\le i\le5)\},
+$$
+$$
+V_{0,r}=h(r)\mathbf1_{\mathcal S_r}
+\quad\text{定义在 }\mathcal D_2\times\mathcal D_2\text{ 上}.
+$$
+
+这里的坐标是归一化的累计输入效果，而不是后测量条件态。
+

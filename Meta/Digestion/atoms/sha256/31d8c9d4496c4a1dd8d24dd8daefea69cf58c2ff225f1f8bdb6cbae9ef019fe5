@@ -1,0 +1,48 @@
+## 140. FIB 合法图上的外加 Anderson 局域化与输运衰减
+
+FIB 接缝首先确定允许路径；单条合法无限链、全部合法前缀树和有限状态图是不同空间模型。选定无向图 \(X\) 后，外加紧束缚算子为
+$$
+(H_\omega\psi)(x)=
+\sum_{y\sim x}t_{xy}\psi(y)
++[v(x)+\lambda\omega_x]\psi(x),
+\qquad t_{yx}=\overline{t_{xy}}.
+\tag{140.1}
+$$
+随机位势的独立性或准周期性必须分别声明。
+
+谱集合、谱型和传输是不同对象。有限样本中的集中本征向量不能单独证明无限系统的 Anderson 局域化。对恒定跃迁的一维链，
+$$
+\binom{\psi_{n+1}}{\psi_n}
+=
+\begin{pmatrix}
+(E-V_n)/t&-1\\1&0
+\end{pmatrix}
+\binom{\psi_n}{\psi_{n-1}},
+$$
+在平稳遍历和对数可积条件下，Lyapunov 指数为
+$$
+\gamma(E)=\lim_{N\to\infty}
+\frac1N\log\|A_N(E)\cdots A_1(E)\|.
+\tag{140.2}
+$$
+在非退化接触下，典型透射满足
+\(\mathcal T_N(E)=e^{-2\gamma(E)N+o(N)}\)；平均透射还可能受到稀有共振影响。禁带中的 \(\gamma>0\) 是倏逝衰减，不能单独判定 Anderson 局域化。
+
+标准一维独立非退化无序通常产生正 Lyapunov 指数和指数局域化。相反，沿合法序列嵌入的 Fibonacci 准周期势可以具有零 Lebesgue 测度的奇异连续谱与临界输运；\(\gamma=0\) 既不等于指数局域化，也不自动等于弹道传播。两者的差异来自势的联合律与空间组织，而非来自是否使用同一组窗口标签。
+
+全部合法前缀树的分支矩阵可取
+$$
+B=\begin{pmatrix}3&2\\2&1\end{pmatrix},
+\qquad \rho(B)=2+\sqrt5=\varphi^3.
+\tag{140.3}
+$$
+树上单射线的衰减必须与壳层顶点数共同比较。对有界独立无序，若分数矩估计给出
+$$
+\mathbb E|G_\omega(x,y;E+i\eta)|^s
+\le Cq_s^{d(x,y)},\qquad q_s\rho(B)<1,
+\tag{140.4}
+$$
+则强无序下的指数衰减能够压过分支增长，构成纯点谱和指数局域化的充分条件；这不是精确临界强度。
+
+本节结论是：FIB 决定允许路径和分支几何，Lyapunov 指数、谱型和输运衰减由外加跃迁、势的概率律及空间图决定。
+

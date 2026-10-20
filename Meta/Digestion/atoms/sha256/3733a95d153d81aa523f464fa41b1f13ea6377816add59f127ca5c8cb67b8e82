@@ -1,0 +1,104 @@
+# 10. 严格非主张
+
+本轮不主张：
+
+- 已定义完整连续傅立叶变换；
+- 已证明傅立叶反演或 Plancherel；
+- 频率排列本身产生时间；
+- 已得到时间方向或不可逆性；
+- zeta 虚部已经等同于物理时间；
+- 相位扭曲 holonomy 已经支配零点能量；
+- 已定位任何 zeta 零点；
+- 已证明 RH。
+
+本轮机器真源是
+
+\[
+\boxed{
+\text{Fourier character time flow}
++
+\text{scalar order collapse}
++
+\text{finite synthesis laws}.
+}
+
+---
+
+## [PR #4222] PHASE_TWISTED_HOLONOMY_AND_RELATIVE_PRIME_TIME
+
+# 相位扭曲 holonomy 与相对素数时间
+## 把傅立叶谱时间写入记忆通道后的第一条定量真源
+
+**文档地位。** 本文解释 Lean 节点
+
+`D5/S3/Observer/AgencyHolonomy/PhaseTwistedStableSwapCurvature`
+
+及其主要声明：
+
+- `phase_twisted_channel_norm`；
+- `relative_phase_reconstruction`；
+- `relative_log_address_phase_reconstruction`；
+- `phase_twisted_curvature_zero_time`；
+- `phase_twisted_stable_swap_curvature_bound`；
+- `phase_twisted_finite_holonomy_energy_bound`。
+
+机器事实以 Lean 声明为准。本文说明傅立叶参数时间如何进入非交换观察历时，并区分已经证明的统一能量界与尚未证明的同步、耗散和 prime-zero 桥。
+
+---
+
+# 1. 从频率角色到时间依赖记忆注入
+
+前一节点定义
+
+\[
+\chi_\omega(t)=e^{-it\omega}.
+\]
+
+现在给每个通道 \(p\) 配置频率 \(\omega_p\) 和记忆向量 \(v_p\)，定义相位扭曲通道
+
+\[
+\boxed{
+\widetilde v_p(t)
+=
+\chi_{\omega_p}(t)v_p
+=
+e^{-it\omega_p}v_p.
+}
+\]
+
+若 residual 为 \(r_p\)，相应记忆注入变成
+
+\[
+\boxed{
+\widetilde b_p(t)
+=
+r_p\widetilde v_p(t)
+=
+r_pe^{-it\omega_p}v_p.
+}
+\]
+
+稳定通道 swap curvature 因此成为
+
+\[
+\boxed{
+\widetilde C_{p,q}(t)
+=
+\bigl(a-(1+r_q)\bigr)r_p e^{-it\omega_p}v_p
+-
+\bigl(a-(1+r_p)\bigr)r_q e^{-it\omega_q}v_q.
+}
+\]
+
+这里的 \(t\) 是傅立叶角色的一参数群坐标。通道经过观察器的先后顺序仍由记忆更新的乘法次序表达。两个结构在该定义中第一次同时出现：
+
+\[
+\boxed{
+\text{spectral time phase}
++
+\text{memory-order curvature}.
+}
+\]
+
+---
+

@@ -1,0 +1,11 @@
+### 48.1 非零单模 channel 的刚性
+
+沿用第 46–47 节的实参数 `-1<a<1`、`p,q,H,H_0`，其中 `H_0=diag(S²,S)H`。写 `p+q=-1+ih`、`s=h²`，并记 `P=p-1`、`Q=q-1`。则：
+
+```math
+1<s\le3,\qquad a^2=\frac{s(3-s)}{1+s},\qquad
+P=\frac{a-3+i(h+a/h)}2,\quad Q=\frac{-a-3+i(h-a/h)}2.
+```
+
+令 `omega=exp(2 pi i/3)`、`f_l=(1,omega^l,omega^{2l})`。单位相位向量 `x,y` 的酉 Fourier 坐标分别记为 `u,z`，即 `x=sum_l u_l f_l/sqrt(3)`，`y=sum_l z_l f_l/sqrt(3)`。本节继续采用 Szöllősi 的 paired-circulant construction；所分类的是该实参数支的实际共同平坦方程。
+

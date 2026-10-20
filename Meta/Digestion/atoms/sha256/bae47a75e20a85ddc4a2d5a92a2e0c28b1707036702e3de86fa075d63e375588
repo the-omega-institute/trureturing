@@ -1,0 +1,47 @@
+### 44.1 固定边、三循环与 conference 规范
+
+使用一基索引，固定
+
+```math
+P=\begin{pmatrix}0&1&0\\0&0&1\\1&0&0\end{pmatrix},
+\qquad S=\operatorname{diag}(P,P).
+```
+
+取
+
+```math
+A=\begin{pmatrix}1&-1&1\\1&1&-1\\-1&1&1\end{pmatrix},\qquad
+B=\begin{pmatrix}1&1&i\\i&1&1\\1&i&1\end{pmatrix},
+\qquad H=\begin{pmatrix}A&B\\B^\dagger&-A^\dagger\end{pmatrix},
+\qquad T=H/\sqrt6.
+```
+
+两条首行的自相关分别为 `-1,1`，Fourier 能量谱分别为 `(1,4,4)` 和 `(5,2,2)`。这是第 43 节 `delta=kappa g` 且 `g>0` 的实际相位等号例。第一行的循环相位比为 `(-1,-1,1)`，故其判别式为零；所有 Fourier 系数仍然非零。
+
+令
+
+```math
+R=\operatorname{diag}(-i,-i,-i,i,i,i),\qquad
+K=(e_6\ e_4\ e_5\ e_2\ e_3\ e_1),
+```
+
+以及
+
+```math
+C=\begin{pmatrix}I_3-J_3&2I_3-J_3\\2I_3-J_3&J_3-I_3\end{pmatrix}.
+```
+
+直接相乘得到
+
+```math
+RHK=I+iC,\qquad C=C^T,\qquad C^2=5I_6.
+```
+
+最后一个恒等式由 `J3²=3J3` 得到。因此
+
+```math
+T_c=RTK=(I+iC)/\sqrt6
+```
+
+是 flat unitary，原固定边 `T` 亦然。`R,K` 都与 `S` 交换。
+

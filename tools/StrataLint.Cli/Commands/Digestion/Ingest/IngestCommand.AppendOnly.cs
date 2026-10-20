@@ -31,56 +31,18 @@ internal static partial class IngestCommand
         }
     }
 
-    private static ImmutableArray<LedgerUpdate> LedgerAdditions(
-        RawRepositorySnapshot currentRaw,
-        RawRepositorySnapshot finalRaw,
-        ReportFreeDigestionIngestPlan plan)
+    private static void RequireReportFreeInputs(string root, RawRepositorySnapshot current, ImmutableArray<LedgerUpdate> updates)
     {
-        var currentPaths = currentRaw.Entries.Select(static entry => entry.Path)
-            .ToHashSet(StringComparer.Ordinal);
-        var ranks = LedgerDurabilityRanks(plan.Document.RequireDigestionEntries()
-            .Where(entry => plan.AddedAtomIds.Contains(entry.AtomId)));
-        return finalRaw.Entries
-            .Where(entry => BackfillInventoryLoader.IsCanonicalPath(entry.Path)
-                && !currentPaths.Contains(entry.Path))
-            .Select(entry => new LedgerUpdate(entry.Path, entry.Bytes, ranks.GetValueOrDefault(entry.Path)))
-            .OrderBy(static update => update.DurabilityOrder)
-            .ThenBy(static update => update.Path, StringComparer.Ordinal)
-            .ToImmutableArray();
-    }
-
-    private static void ApplyLedgerAdditionsAtomically(
-        string repositoryRoot,
-        ImmutableArray<LedgerUpdate> updates,
-        Action<string, string>? commit = null)
-    {
-        var pending = updates.Select(update => (Update: update,
-            FullPath: Path.Combine(repositoryRoot, update.Path.Replace('/', Path.DirectorySeparatorChar))))
-            .ToArray();
-        foreach (var (update, fullPath) in pending)
+        var before = current.Entries.ToDictionary(entry => entry.Path, StringComparer.Ordinal);
+        foreach (var update in updates)
         {
-            if (update.Bytes is null || File.Exists(fullPath) || Directory.Exists(fullPath))
-                throw WriteSetError(update.Path);
-        }
-
-        var created = new List<string>();
-        try
-        {
-            foreach (var (update, fullPath) in pending)
+            var path = Path.Combine(root, update.Path);
+            if (IsContextIndexPath(update.Path) && before.TryGetValue(update.Path, out var old))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
-                // This fault seam runs inside the commit lock; never synchronously reenter ingest here.
-                ReplaceLedgerAtomically(fullPath, update.Bytes!.Value.AsSpan(),
-                    commit ?? (static (source, destination) => File.Move(source, destination, overwrite: false)));
-                created.Add(update.Path);
+                if (!File.Exists(path) || !File.ReadAllBytes(path).AsSpan().SequenceEqual(old.Bytes.AsSpan()))
+                    throw new IOException($"ledger changed under us: {update.Path}");
             }
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            var originals = created.ToDictionary(static path => path,
-                static _ => (ImmutableArray<byte>?)null, StringComparer.Ordinal);
-            RollbackLedgerUpdates(repositoryRoot, created, originals, exception);
-            throw;
+            else if (File.Exists(path) || Directory.Exists(path)) throw WriteSetError(update.Path);
         }
     }
 
@@ -137,6 +99,18 @@ internal static partial class IngestCommand
 
         foreach (var update in ledgerUpdates)
         {
+            if (IsContextIndexPath(update.Path))
+            {
+                if (update.Bytes is null)
+                    throw WriteSetError(update.Path);
+                var contextSource = update.Path[BackfillInventoryLoader.RootPath.Length..].Split('/')[0];
+                if (sourceIds is not null && !sourceIds.Contains(contextSource))
+                    throw WriteSetError(update.Path);
+                _ = DigestionContextPointerStore.ParseVersions(update.Bytes.Value, contextSource,
+                    Path.GetFileNameWithoutExtension(update.Path));
+                continue;
+            }
+
             if (update.Bytes is null || currentPaths.Contains(update.Path))
                 throw WriteSetError(update.Path);
 

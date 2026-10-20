@@ -1,0 +1,28 @@
+### 40.3 命题：对原统一界的严格改进
+
+定义
+
+```math
+A_* =\min(2,\|E_0\|_{\rm op}+R),\qquad
+Q_{\rm src}=R^2\left(1+\frac{A_*^2+6}{4-v}\right),\qquad
+Q_{\rm new}=R^2\lambda(v).
+```
+
+若 `R>0`，则 `Q_new<Q_src`；若 `R=0`，二者均为零。
+
+证明。直接计算
+
+```math
+\det K(v)=\frac{30}{16-v^2}>0,\qquad
+\operatorname{tr}K(v)=1+\frac2{4-v}+\frac{24}{(4-v)(4+v)}.
+```
+
+因 `K11>0`，矩阵 `K(v)` 正定，故 `λ(v)<tr K(v)`。同时
+
+```math
+\operatorname{tr}K(v)\le1+\frac8{4-v}
+\le1+\frac{A_*^2+6}{4-v},
+```
+
+其中末步使用 `||E_0||op=√(2+|1+a_0|)≥√2`，所以 `A_*≥√2`。乘以 `R²` 即得结论。
+

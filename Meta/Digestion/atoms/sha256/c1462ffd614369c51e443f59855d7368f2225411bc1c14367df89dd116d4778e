@@ -1,0 +1,23 @@
+### 证明
+
+若 \(\mathcal O_Nu=0\)，对每个输出坐标和每个 \(n\) 有
+
+$$
+0=CA_\tau^nu
+=\sum_{j=1}^r\zeta_j^n C Q_ju.
+$$
+
+取 \(n=0,\ldots,r-1\)，系数矩阵是
+
+$$
+V=(\zeta_j^n)_{0\le n<r,\ 1\le j\le r}.
+$$
+
+因为 \(\zeta_j\) 两两不同，Vandermonde 行列式
+
+$$
+\det V=\prod_{j<\ell}(\zeta_\ell-\zeta_j)
+$$
+
+非零。故 \(CQ_ju=0\) 对所有 \(j\)。每个限制 \(C|_{Q_j\mathcal C^k}\) 单射，得到 \(Q_ju=0\)，于是 \(u=0\)。证毕。
+

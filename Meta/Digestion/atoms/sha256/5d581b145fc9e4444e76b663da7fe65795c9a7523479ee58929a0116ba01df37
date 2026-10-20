@@ -1,0 +1,6 @@
+以下等价：
+
+1. 存在 $\bar K:\operatorname{im}H\to\mathcal K$ 使 $K=\bar K\circ H$；
+2. $\ker H\subseteq\ker K$；
+3. $\mathsf{CovertThroat}=0$。
+

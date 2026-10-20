@@ -1,0 +1,24 @@
+### 定理：固定总指数的完整对角双根分类
+
+对每个先固定的 \(s>1\)，恰存在两个数
+
+\[
+0<\beta_-(s)<s-1<\beta_+(s)<s
+\]
+
+使得对全部 \(0<\sigma\le s\)，
+
+\[
+\begin{cases}
+\Xi_\sigma(s-\sigma)>0,
+&0<\sigma<\beta_-(s)\ \text{或}\ \beta_+(s)<\sigma\le s,\\
+\Xi_\sigma(s-\sigma)=0,
+&\sigma=\beta_-(s)\ \text{或}\ \sigma=\beta_+(s),\\
+\Xi_\sigma(s-\sigma)<0,
+&\beta_-(s)<\sigma<\beta_+(s).
+\end{cases}
+\tag{ST.12}
+\]
+
+这两根属于固定 \(s=\sigma+a\) 的源参数轴，与 §433 固定 \(\sigma\) 后在 \(a\) 轴上的两根是两个不同的切片。
+

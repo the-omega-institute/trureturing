@@ -1,0 +1,11 @@
+## 定义 44.2（局部假阳性余量）
+
+\[
+\operatorname{HasseDefect}^{+}(P,L)
+=
+\sum_{x:X}
+\left(\prod_iL_i(x)\right)
+\times
+\neg P(x).
+\]
+

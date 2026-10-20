@@ -1,0 +1,5 @@
+这也覆盖任一像空间为零、奇异矩阵及两端口维数不同的情形。
+
+4. 对任意 $M\in\mathcal M_2$，写 $C=\sum_\mu\mu\Pi_\mu$，令 $J(a,s,b)=J_Aa+J_Ss+J_Bb$，则 $W_\mu=J^*\Pi_\mu J\succeq0$。引理15.2迫使可见局部系数等于给定值。若 $\mu\notin\Lambda$，$W_\mu$ 的三个对角块均为零，所以 $\|\Pi_\mu J_i u\|^2=0$ 对各 $i,u$ 成立；于是所有交叉块也为零。故额外不可见率不能只贡献 $AB$ 项。对 $\lambda\in\Lambda$，前面三步给式（15.8）的必要性。
+
+5. 反向，对任意 $T\in\mathbb B$，前面三步使对应的每个 $W_\lambda\succeq0$。取

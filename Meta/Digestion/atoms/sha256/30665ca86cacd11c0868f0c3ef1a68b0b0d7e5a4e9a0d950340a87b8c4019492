@@ -1,0 +1,18 @@
+### 定义 355.5（表面 holonomy 与填充差异）
+
+对定向二维链 \(S=\sum_f n_ff\)，定义阿贝尔表面 holonomy
+
+$$
+\mathsf H_F(S)=\langle F,S\rangle.
+$$
+
+若 \(S\) 与 \(S'\) 具有相同边界，则
+
+$$
+\mathsf H_F(S)-\mathsf H_F(S')
+=
+\mathsf H_F(S-S').
+$$
+
+当 \(S-S'=\partial V\) 且 \(F\) 满足 Bianchi 恒等式时，两种填充给出相同结果；若 \(S-S'\) 是非平凡二循环，则差异由其二维同调类承载。
+

@@ -1,0 +1,14 @@
+**定理 44.1（多层平均的精确合成）。** 对有限阿贝尔群 $A$ 的子群 $K_1,\ldots,K_m$，令 $\mathcal D_K$ 如定理 43.1。则
+$$
+\mathcal D_{K_m}\circ\cdots\circ\mathcal D_{K_1}
+=\mathcal D_{K_1+\cdots+K_m}.
+$$
+在角色矩阵单位上，合成乘子为
+$$
+\prod_{j=1}^m m_{K_j}(\eta)
+=\mathbf 1_{(K_1+\cdots+K_m)^\perp}(\eta).
+$$
+因此残余特征集合为 $(K_1+\cdots+K_m)^\perp=\bigcap_jK_j^\perp$，随层数增加单调缩小；当且仅当 $K_1+\cdots+K_m=A$ 时，合成等于理想全群平均 $\mathcal D_A$。
+
+**证明。** 对 $E_{\chi,\psi}$，定理 43.1 给出每层乘子 $m_{K_j}(\chi\psi^{-1})$。角色在 $K_j$ 上的均匀平均是 $1$（当且仅当 $\chi\psi^{-1}\in K_j^\perp$）或 $0$，故乘积是交集指标。有限阿贝尔群对偶性给出 $(\sum_jK_j)^\perp=\cap_jK_j^\perp$；矩阵单位构成全矩阵代数基，遂得通道恒等式。
+

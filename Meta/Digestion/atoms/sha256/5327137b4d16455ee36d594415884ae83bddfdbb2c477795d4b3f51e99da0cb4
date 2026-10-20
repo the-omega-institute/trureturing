@@ -1,0 +1,20 @@
+**假设 23.1（固定有限素数集的实际评价密度）。** 采用 $d\mu(t)=dt/(2\pi)$，令 $k_t$ 为 archimedean Sonin 空间的物理评价向量，$d(t)=\|k_t\|^2$。对于每个固定有限 $S=\{\infty\}\cup\mathcal P$，设实际普通度量满足
+
+$$
+\begin{aligned}
+\sigma_S(f)&=\int_{\mathbb R}|\widehat f(t)|^2d_S(t)\,d\mu(t),\\
+d_S(t)&=w_S(t)\langle k_t,K_S^{-1}k_t\rangle,\qquad
+w_S(t)=\left|\prod_{p\in\mathcal P}(1-p^{-1/2-it})\right|^2.
+\end{aligned}
+$$
+
+$K_S$ 是第 18 节的普通 Sonin 度量压缩，其逆没有被删除。进一步假定 $d\ge0$ 局部有界，且
+
+$$
+\frac{d(t)}{\log|t|}\longrightarrow1,\qquad
+\frac{d_S(t)}{d(t)}\longrightarrow1\quad(|t|\to\infty),\qquad
+0\le d_S(t)\le\chi_Sd(t),\qquad \chi_S<\infty.
+$$
+
+后两个式子的量词是固定 $S$；没有假设关于增长 $S$ 的统一阈值。Burnol, arXiv:math/0208121v1, Theorems 4、8、9 提供 archimedean 投影与评价的来源接口；本假设所需的半局部密度渐近是额外条件。
+

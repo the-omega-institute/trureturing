@@ -1,0 +1,22 @@
+**定理 1424.1（允许生成误差的常数包络）。** 在第 1422 节条件下，令
+
+$$
+c_\delta=\frac{1+\kappa}{2\mu}.
+$$
+
+则所有熵阶同时满足
+
+$$
+0\le H_\alpha(f_\delta)
+-\widetilde G_{\alpha,N}(\kappa,\delta)
+\le\log(1+c_\delta).
+$$
+
+**证明。** 令 $a=1-\mu$、$t=\mu/M$。有 $b=c_\delta t$；若写 $R=rt$，则 $0\le r<c_\delta$、$M=qc_\delta+r$。于是两张比较向量正具有第 1385 节幂和证明所需的关系：首格分别为 $a+c_\delta t$ 与 $a$，其余质量以 $c_\delta t$ 和 $t$ 分配。
+
+具体地，当 $0<\alpha<1$，加权凹性给 $a^\alpha+c_\delta t^\alpha\le(1+c_\delta)^{1-\alpha}(a+c_\delta t)^\alpha$，并对 $x\in[0,c_\delta]$ 给 $x\le(1+c_\delta)^{1-\alpha}x^\alpha$。将后一式用于 $q-1$ 个 $c_\delta$ 和余数 $r$，求和即得幂和比界。$\alpha>1$ 用凸性给反向幂和比界；两者取对数后的熵差均至多为 $\log(1+c_\delta)$。
+
+阶一由固定有限向量的连续性得到，阶零用支撑数比至多为 $1+c_\delta$，无穷阶用 $a+c_\delta t\le(1+c_\delta)\max(a,t)$。这套代数不要求 $c_\delta=(1+\mu)/(2\mu)$；保留 $b=c_\delta t$、质量等式和余数范围已经足够。最后接第 1422–1423 节的上下界。证毕。
+
+固定目标和固定低于阈值的误差后，包络宽度不随维数或熵阶增加。它仍没有识别全部有限参数的最优来源，也没有把格谱松弛的全部边界都判为可以同时达到。
+

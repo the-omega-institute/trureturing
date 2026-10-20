@@ -6,6 +6,11 @@
    utility: none
    digest: Finite bilateral windows and integral contraction prove Hanna's product family. -/
 
+/-
+ofSeries_inverse: proof_shape: bind-only; consumer: HannaBilateralReversionParity.coe_inverse
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19114
+-/
+
 import Mathlib.RingTheory.LaurentSeries
 import Mathlib.RingTheory.PowerSeries.WellKnown
 
@@ -390,7 +395,7 @@ theorem generating_equation (c : ℕ) (hc : 2 ≤ c) :
     ((C (1 / 2) : PowerSeries ℚ) : LaurentSeries ℚ).coeff (N : ℤ)
   rw [LaurentSeries.coeff_coe_powerSeries, coeff_C]
 
-private theorem ofSeries_inverse (B : PowerSeries ℚ) (hB : constantCoeff B ≠ 0) :
+theorem ofSeries_inverse (B : PowerSeries ℚ) (hB : constantCoeff B ≠ 0) :
     HahnSeries.ofPowerSeries ℤ ℚ (B⁻¹) = (HahnSeries.ofPowerSeries ℤ ℚ B)⁻¹ := by
   apply Eq.symm
   apply inv_eq_of_mul_eq_one_left
@@ -484,17 +489,5 @@ theorem hanna_conjecture_a381362 (n : ℕ) (hn : 0 < n) : a 2 n % 4 = 2 :=
 theorem hanna_conjecture_a381363 (n : ℕ) (hn : 0 < n) : a 3 n % 4 = 2 :=
   hanna_conjecture_general 3 (by omega) n hn
 
-#print axioms laurentTerm
-#print axioms generating_equation
-#print axioms hanna_conjecture_general
-#print axioms hanna_conjecture_a381362
-#print axioms hanna_conjecture_a381363
-#print axioms bilateralTerm
-#print axioms nonzeroSum
-#print axioms finite_window
-#print axioms a
-#print axioms generatingSeries
-#print axioms polynomial_form
-#print axioms generating_unique
 
 end D5.S1.Recurrence.Bilateral.BilateralProductModFour

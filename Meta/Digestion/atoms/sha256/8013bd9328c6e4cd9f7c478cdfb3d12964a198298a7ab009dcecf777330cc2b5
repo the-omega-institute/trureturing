@@ -1,0 +1,115 @@
+## 256. FIB 网络上的外加介观单电子输运、库仑阻塞与全计数统计
+
+固定一族 FIB 图或细胞复形的组合支撑 \(G_j=(V_j,E_j)\)，把若干顶点或胞腔外加为量子点/金属岛，把边或接缝外加为隧穿结，把其余边界外加为电极与热库。FIB ATOM 递归只给出可拼接的支撑、邻接、路径、端口与层级索引；岛的电容矩阵、隧穿振幅、能级、库仑相互作用、引线化学势、温度、环境阻抗、初态、时间单位和探测器响应均须外加。
+
+令 \(\mathbf n=(n_v)_{v\in V_j}\in\mathbb Z^{V_j}\) 为岛上的整数电子数，\(C_j\) 为包含互电容、对地电容和电极电容的正定约化电容矩阵，\(q_g\) 为栅极诱导电荷。一个外加静电能为
+
+$$
+E_j(\mathbf n)=\frac12(e\mathbf n-\mathbf q_g)^{\mathsf T}C_j^{-1}(e\mathbf n-\mathbf q_g)+E_j^{\rm sp}(\mathbf n).
+\tag{256.1}
+$$
+
+给定隧穿结或电极 \(\alpha\) 的事件 \(r=(\alpha,\sigma)\)，\(\sigma=+1\) 表示电子从电极进入岛，\(\sigma=-1\) 表示相反方向。对电极费米函数
+
+$$
+f_\alpha(\varepsilon)=\frac1{e^{\beta_\alpha(\varepsilon-\mu_\alpha)}+1},
+\tag{256.2}
+$$
+
+在顺序隧穿近似中，一种速率约定为
+
+$$
+W_{\alpha,+}(\mathbf n)=\Gamma_{\alpha,+}(\mathbf n)f_\alpha(\Delta_{\alpha,+}E(\mathbf n)),
+\qquad
+W_{\alpha,-}(\mathbf n)=\Gamma_{\alpha,-}(\mathbf n)[1-f_\alpha(\Delta_{\alpha,-}E(\mathbf n))].
+\tag{256.3}
+$$
+
+隧穿矩阵元、态密度、透明度和自由能差的符号约定均为外加。电荷概率满足
+
+$$
+\dot p_{\mathbf n}=\sum_r\left[W_r(\mathbf n-\nu_r)p_{\mathbf n-\nu_r}-W_r(\mathbf n)p_{\mathbf n}\right],
+\tag{256.4}
+$$
+
+其中 \(\nu_r\in\mathbb Z^{V_j}\) 是事件的电荷转移向量，求和只保留相应电荷态存在的事件。FIB 邻接至多限制非零转移的候选支撑，不决定速率。
+
+库仑阻塞发生在外加条件
+
+$$
+\max_\alpha\{e|V_\alpha|,k_BT_\alpha,\hbar\Gamma_\alpha\}\ll E_C,
+\qquad E_C\sim\frac{e^2}{2C_\Sigma}
+\tag{256.5}
+$$
+
+下；\(E_C\) 由电容和材料决定。阻塞平台、热激活泄漏、多态通道和共隧穿区域都依赖外加能级、温度、环境 \(P(E)\) 和偏压，不能从路径数推出。
+
+为同时记录粒子和能量，在事件上附加粒子增量 \(q_r\) 与能量 \(\varepsilon_r\)。倾斜生成元的非对角元为
+
+$$
+[\mathcal W_{\boldsymbol\chi,\boldsymbol\xi}]_{\mathbf n',\mathbf n}
+=\sum_{r:\,\mathbf n'=\mathbf n+\nu_r}W_r(\mathbf n)
+ e^{{\rm i}\chi_{\alpha(r)}q_r+{\rm i}\xi_{\alpha(r)}\varepsilon_r}.
+\tag{256.6}
+$$
+
+若长时极限存在，累积生成率为
+
+$$
+\Theta(\boldsymbol\chi,\boldsymbol\xi)=\lim_{t\to\infty}\frac1t
+\log\left[\mathbf1^{\mathsf T}e^{\mathcal W_{\boldsymbol\chi,\boldsymbol\xi}t}p(0)\right],
+\tag{256.7}
+$$
+
+其一阶、二阶和更高导数分别给出平均流、shot noise 和高阶计数累积量；平均电流或零频噪声不能唯一确定完整计数律。
+
+状态 \(\mathbf n\) 的逃逸率为 \(R(\mathbf n)=\sum_rW_r(\mathbf n)\)，无事件存活概率和下一事件条件密度为
+
+$$
+\Psi_{\mathbf n}(\tau)=e^{-R(\mathbf n)\tau},
+\qquad
+\psi(r,\tau\mid\mathbf n)=W_r(\mathbf n)e^{-R(\mathbf n)\tau}.
+\tag{256.8}
+$$
+
+隐藏电荷态被消去后，观测等待时间分布通常是多个指数的混合，慢环境还可产生非指数尾。两结单能级、零温、单向偏压的特例给出
+
+$$
+I=e\frac{\Gamma_L\Gamma_R}{\Gamma_L+\Gamma_R},
+\qquad
+F=\frac{\Gamma_L^2+\Gamma_R^2}{(\Gamma_L+\Gamma_R)^2},
+\tag{256.9}
+$$
+
+但陷阱、热回流、动态阻塞和共同环境会改变 \(F\) 与等待时间尾；同一低阶 \((I,F)\) 可以对应不同高阶计数统计。
+
+热电输运需同时计数粒子和热量。在线性响应与微观可逆条件下，可写
+
+$$
+\begin{pmatrix}I/e\\ J^Q\end{pmatrix}
+=\begin{pmatrix}L_{11}&L_{12}\\L_{21}&L_{22}\end{pmatrix}
+\begin{pmatrix}\Delta(\mu/T)\\\Delta(1/T)\end{pmatrix},
+\qquad L_{12}=L_{21}
+\tag{256.10}
+$$
+
+Onsager 对称性还需注明磁场反演；热电系数依赖能级、隧穿率、温度和电容耦合，而非 FIB 路径数。
+
+若每个反向事件满足局部详细平衡，正反轨迹的熵产生比满足
+
+$$
+\log\frac{\mathbb P[\omega]}{\mathbb P^\dagger[\widetilde\omega]}=\Delta S_{\rm tot}[\omega].
+\tag{256.11}
+$$
+
+在稳态初态、反向协议、微观可逆和完整记录条件下，熵产生的 SCGF 才可能满足 Gallavotti–Cohen 对称；磁场、非热储库、反馈、隐藏态或只记录部分电极时必须改写，不能把粒子计数对称直接当作热熵定律。
+
+实际读数是隐藏电荷态和热流的投影：
+
+$$
+Y_a(t)=\int_0^th_a(t-s)\left[\sum_\alpha c_{a\alpha}\,dN_\alpha(s)+\sum_\alpha d_{a\alpha}\,dQ_\alpha(s)\right]+\eta_a(t).
+\tag{256.12}
+$$
+
+有限带宽、未分辨热流和电子噪声使不同电容、隧穿率和环境阻抗可有相同低阶读数而有不同等待时间、高阶累积量和熵产生。因此，FIB ATOM 递归在介观单电子问题中只提供量子岛、隧穿结、端口、路径、接缝和层级骨架；电容、离散电荷、能级、隧穿率、储库、计数协议、热流定义、可逆性、极限和探测器响应均须外加。
+

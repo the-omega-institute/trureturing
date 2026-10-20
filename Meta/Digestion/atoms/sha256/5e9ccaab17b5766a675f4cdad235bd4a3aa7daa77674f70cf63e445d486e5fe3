@@ -1,0 +1,8 @@
+## 1. 文献和当前库中的承重位置
+
+Connes 的 2026 年综述 *The Riemann Hypothesis: Past, Present and a Letter Through Time*, arXiv:2602.04022，Sections 6.4-6.6，仍明确区分 prolate 模型的 Xi 极限与真实最低 Weil 模态的充分精确逼近。其 Section 6.4 解释 E 映射、Poisson 关系和近 radical 的来源。这与 Connes-Consani-Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1，Section 8 的两个缺口一致。因此本节研究实际算术作用与 E 的相容性，未将两种算子的自伴性或相似谱图当作模型识别。
+
+本轮读取 loning 的 #5326 实际正文 C13.1-C13.3：固定矩形零点计数需要真实的边界逼近误差与非零下界，局部收敛不能由单个有限深度覆盖所有高度。还读取 AlyciaBHZ 的 #5895 新真源 `NormalizedReadoutDisk.lean`，固定在 `04eaf09b47c39f7688a8df498c4fe30e0663dcbd`：它已保留归一化分子、分母共享误差的协方差。因此本节不重复编写射影、误差球或 Rouché 包装，而补入这些消费者之前的实际 prime/model 算术。
+
+Mathlib 固定版本 `db584cd6d46c92f209a44c0f1c829460d327499d` 已有 `ArithmeticFunction.vonMangoldt_sum`。新证明直接复用它，并复用 `WeilPolynomialMellinWindow.mellin_monomial_polynomial_value` 证明与原多项式模型的逐点一致性。
+

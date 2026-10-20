@@ -1,0 +1,3 @@
+## 13.6 检索收据(述而不作)
+
+- **本仓 D5(先库后证)**:`git grep -n -i -E "^(theorem|def|structure) [A-Za-z_.]*(honest|balanced|beauty|aesthetic|survivor)" -- 'D5/**/*.lean'`——命中仅 `D5/S0/Tower/Champions/*` 的 `golden_*survivor*` 族(动力系统幸存管,与本卷无关);无既有「账本/主张/账平/美序」声明。`git grep -l -E "ClosureOperator|OrderHom\.gfp|OrderHom\.lfp" -- 'D5/**/*.lean'`——命中 5 模块(`S0/Diagonal/Lawvere/TheoryIsConsequenceFixedPoint`、`S1/Dynamics/KnasterTarski`、`S1/FixedPoints/MaximalForwardInvariantSubkernel`、`S3/ConceptDynamics/Closure/DefinitionClosureOperator`、`S3/ConceptDynamics/Closure/SourceClosureLaws`),X-C、X-I 须先复用。

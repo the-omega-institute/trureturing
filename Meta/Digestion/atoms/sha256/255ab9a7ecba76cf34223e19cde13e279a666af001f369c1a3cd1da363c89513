@@ -1,0 +1,7 @@
+abstracts the exact content of odd breaking and even completion. If each update applies an involution to a chosen readout, then:
+
+- every odd iterate places that readout on its flipped sheet;
+- every even iterate restores the original readout;
+- if the initial readout is not fixed by the involution, every odd iterate is visibly different;
+- restoration of the readout does not imply return of the full hidden state.
+

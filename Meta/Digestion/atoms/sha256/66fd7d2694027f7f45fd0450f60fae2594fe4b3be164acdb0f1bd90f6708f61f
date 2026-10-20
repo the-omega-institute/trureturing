@@ -1,0 +1,97 @@
+**Theorem 54.1 (the saturated three-state frontier).** Keep Definition 53.1
+unchanged, including all installed words, all typed replies, unsupported rows,
+unreachable rows, the onto map, the complete original instruction and literal
+at every word, and the immediate hold-or-one-bit response rule. For $K=3$ the
+coordinatewise common least attainable pair is
+
+$$
+(\ell_*,M_*)=(4,6).
+\tag{FIB.54.1}
+$$
+
+The lower statements already proved in §§53.3--53.6 give
+$\ell\ge4$, $M\ge5$, and the attainable upper pair $(5,6)$. It remains to
+exclude $M=5$ and to exhibit one width-four table.
+
+**Five-word obstruction.** Let $G_W$ be the induced Hamming graph of a
+hypothetical valid $W$ with $|W|=5$. Proposition 53.2 is used first, not
+replaced: every closed installed neighborhood contains all three labels, so
+$|N_W[w]|\ge3$ and every vertex of $G_W$ has degree at least two. The graph is
+bipartite, since Hamming-one edges change word parity. Every component of a
+finite bipartite graph of minimum degree two contains a cycle of length at least
+four; with five vertices this forces one connected component. Neither bipartition side can have size one, because vertices on the other
+side would then have degree at most one. Its bipartition therefore has parts
+of sizes two and three. The three-vertex side contributes at least
+six incident edges, while at most $2\cdot3=6$ bipartite edges are possible.
+Thus $G_W$ would have to be $K_{2,3}$.
+
+This cannot be an induced subgraph of a Boolean cube. Two distinct cube
+vertices that have a common neighbor differ in exactly two coordinates, and
+then they have exactly two common neighbors (flip either differing coordinate).
+The two vertices in the size-two side of $K_{2,3}$ would have three common
+neighbors. Hence no valid installation has five words, and therefore
+$M\ge6$. The closed-neighborhood hypothesis is essential: degree two by
+itself does not provide the three labels, as Proposition 53.5 already shows
+for its four-word square.
+
+**Width-four witness.** Put
+
+$$
+W=\{0000,0001,0100,0101,1000,1001\}\subset L_4,
+$$
+
+and define the onto correspondence
+
+$$
+\pi(0000)=\pi(0001)=0,\qquad
+\pi(0100)=\pi(1001)=1,\qquad
+\pi(0101)=\pi(1000)=2.
+$$
+
+The following is one fixed table; the three response columns are in the order
+$o=0,1,2$.
+
+| $w$ | $\pi(w)$ | $N_W[w]$ | $R(w,0)$ | $R(w,1)$ | $R(w,2)$ |
+|---|---:|---|---|---|---|
+| $0000$ | 0 | $\{0000,0001,0100,1000\}$ | $0000$ | $0100$ | $1000$ |
+| $0001$ | 0 | $\{0000,0001,0101,1001\}$ | $0001$ | $1001$ | $0101$ |
+| $0100$ | 1 | $\{0000,0100,0101\}$ | $0000$ | $0100$ | $0101$ |
+| $0101$ | 2 | $\{0001,0100,0101\}$ | $0001$ | $0100$ | $0101$ |
+| $1000$ | 2 | $\{0000,1000,1001\}$ | $0000$ | $1001$ | $1000$ |
+| $1001$ | 1 | $\{0001,1000,1001\}$ | $0001$ | $1001$ | $1000$ |
+
+Every displayed word has no adjacent ones. Each response is the center or a
+Hamming-one neighbor, and its image under $\pi$ is exactly $o$. Each displayed
+closed neighborhood contains all of $\{0,1,2\}$, so Proposition 53.2 certifies
+all eighteen typed rows, including rows with no actual support. At each word
+install the original instruction $I(\pi(w))$ with its entire literal payload.
+For a common initial state, choose one of $0000,0100,0101$ according to its
+label; for an acquired $c(i)$ choose the corresponding listed word, using only
+the original acquisition. Thus the original
+source/target pairing, all-action factorization, undefined-action boundary,
+and same-source event-prefix correspondence from §§46 and 51 remain intact.
+No decoded label, PC, syndrome, phase, latch, controller field, or retained
+record is added outside the whole word.
+
+The lower bounds and this witness prove (FIB.54.1) in the product order. The
+classical suppliers used by the preceding bounds are Simon's cube lemma and
+gap theorem (Ambainis--Vihrovs, ECCC 2014/077 revision 2, Theorem 1,
+Corollary 1 and Theorem 3, pp. 4--5) and the closed-neighborhood/domatic
+formulation (Zelinka, *Domatic numbers of cube graphs*, pp. 117--119), as
+already cited in §§53.3--53.4. The five-word obstruction and the table above
+are the present controller application; they add no coding, graph-classification,
+or optimizer theorem. CEK Proposition 3.1 and the MIT Matrix Hamming §§9.1--9.3
+supply the existing $(5,6)$ construction in §51; they are not needed to
+justify the new width-four witness.
+
+A bounded fresh-source comparison at dev pin
+$d2488e18542d1070abf4b7173900b88ecc32112f$ covers distinct
+stationary-law, serial-paid-local, and sparse/halting contracts, with no matching
+Definition 53.1 saturated $K=3$ frontier. This is overlap evidence within the
+checked sources, not an exhaustive corpus or novelty claim. The IV file at that
+pin lacks §§51--53; this records absence at that pin and does not assert that
+unmerged IV text was deleted. Initialization, acquisition, source promises,
+installation, selection, literal delivery, primitive execution, response
+writing, and output remain separately supplied and charged. No physical-service,
+termination, latency, total-cost, or kernel-validation conclusion follows.
+

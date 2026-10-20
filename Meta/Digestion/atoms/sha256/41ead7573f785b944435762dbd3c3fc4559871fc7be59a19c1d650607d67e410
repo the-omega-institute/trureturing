@@ -1,0 +1,53 @@
+### 二次主项与 Dickman 联系
+
+从（SL.1）的零处展开得
+
+\[
+\varphi(v)=1+v+\tfrac14v^2+O(v^3).
+\]
+
+故对每个固定有限 \(V\)，共同于 \(a\in[0,V]\)，当 \(\sigma\to\infty\) 时
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma(a)=\frac{c_*}{\sigma}
+\left(\frac{a^2}{2}-a+\frac14\right)
++O_V(\sigma^{-2}).}
+\tag{SL.20}
+\]
+
+证明只需将分子写成
+\([a^2/2-a+1/4]v^2+O_V(v^3)\) 于 \(0\le v\le1\)，在无穷端用 \(\varphi(v)\le e^v\)，再分别积分。它恢复（CP.13）在源指数较大时的二次主项，但（SL.2）保留任意先固定 \(\sigma>1\) 的非二次修正，并用有符号整体付款控制实际核。
+由于两根分别限制在 \((0,1)\) 和 \((1,2)\)，（SL.20）的紧区间一致收敛也给
+
+\[
+\alpha_\pm(\sigma)\longrightarrow1\pm1/\sqrt2
+\qquad(\sigma\to\infty).
+\]
+
+若用经典 Dickman 函数 \(\rho\) 的 Laplace 变换
+\(\widehat\rho(v)=\int_0^\infty\rho(t)e^{-vt}dt\)，其普通恒等式为
+
+\[
+\widehat\rho(v)=\frac{e^{\gamma_E}}{\varphi(v)}.
+\tag{SL.21}
+\]
+
+这条经典身份可由 \(t\rho'(t)=-\rho(t-1)\)、\(\rho=1\) 于 \([0,1]\) 直接核对：分部积分给
+\(v\widehat\rho'(v)=(e^{-v}-1)\widehat\rho(v)\)，所以
+\(\widehat\rho(v)\varphi(v)\) 为常数；再用
+\(\widehat\rho(v)\sim1/v\)、
+\(\log\varphi(v)=\log v+\gamma_E+\int_v^\infty e^{-t}dt/t\)
+确定常数为 \(e^{\gamma_E}\)。该 Dickman 变换为经典来源，并不作为本稿新增定理。
+
+因而新轮廓的严格正曲率可写成
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma''(a)=\int_0^\infty
+\frac{e^{-(\sigma+a)v}}{\widehat\rho(v)}\,dv>0.}
+\tag{SL.22}
+\]
+
+这是同筛实际核与 Dickman 机制的明确关系；它不是把粗糙前缀 \(M_{P_z}(n)\) 直接换成 \(\rho'(\log n/L)\)，也未使用 Alladi 隐藏常数的增长参数统一性。
+

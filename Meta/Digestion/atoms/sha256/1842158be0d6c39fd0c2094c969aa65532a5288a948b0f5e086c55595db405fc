@@ -1,0 +1,7 @@
+要求：
+
+1. $\ell,m\in\Lambda$ 都从初始 guard 零合法出发，$\ell\ne m$，下一 guard 为 $s_1,s_2$，前缀颜色 $c\in\mathcal C$；
+2. $U_i$ 是从 $s_1$ 回到 $s_1$ 的合法来源词，$V_i$ 是从 $s_2$ 回到 $s_2$ 的合法来源词，四者长度均为 $L$；
+3. $W_i\in\mathcal C^L$；
+4. $U_0\ne U_1$。
+

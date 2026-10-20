@@ -1,0 +1,22 @@
+**定义 304.1（共享值与神谕值）。** 设有限模型族为 $\mathfrak M$，有限共享策略集为 $\Pi$。固定策略 $\pi$ 在模型 $m$ 下的终端期望损失记为 $L_m(\pi)\ge0$。定义
+
+$$
+\boxed{
+V_{\mathrm{shared}}
+=
+\min_{\pi\in\Pi}\max_{m\in\mathfrak M}L_m(\pi),
+}
+\tag{304.1}
+$$
+
+以及允许先知道模型标签再选策略的神谕值
+
+$$
+\boxed{
+V_{\mathrm{oracle}}
+=
+\max_{m\in\mathfrak M}\min_{\pi\in\Pi}L_m(\pi).
+}
+\tag{304.2}
+$$
+

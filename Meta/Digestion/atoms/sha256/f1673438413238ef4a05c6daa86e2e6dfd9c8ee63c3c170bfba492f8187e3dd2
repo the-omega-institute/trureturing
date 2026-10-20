@@ -1,0 +1,7 @@
+Casimir–Hausdorff 路线与它的关系是：
+
+* Weil separator 在频谱函数空间中寻找负方向；
+* Hausdorff criterion 在 \(q\)-moment 网格中寻找负有限差分；
+* 两者都把离线零点转化成有限负证书；
+* 两者的真正困难都是其他全部零点的全局控制。
+

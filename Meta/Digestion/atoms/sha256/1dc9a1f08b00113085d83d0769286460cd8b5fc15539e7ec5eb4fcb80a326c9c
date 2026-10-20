@@ -1,0 +1,50 @@
+**Corollary 14.5 (compatible resource alternatives and original boundaries).**
+For each positive regime of Definition 14.1, one explicit controller
+simultaneously witnesses the width, complete table, initialization and
+same-source event resources above. The two supplied realizations of the
+same intermediate table have these different upper resource points:
+
+| Realization | Complete word length | Installed words | Bound on actual native calls |
+| --- | --- | --- | --- |
+| Construction 11.6 with paid routing | $4k+15$ | $2^{2k+8}$ | $(2k+7)H$ |
+| Theorem 14.2 preserving the intermediate trace | $2^{k+1}-3$ | $2^{2^k-1}$ | $H$ |
+
+The second row has static $Q=O(h(T+1))$ and active
+$Q+U=O(T+h^2)$ under the displayed native-call bounds. Its width is
+exponential in $k$ and its installed-state count is doubly exponential
+in $k$. For active finite-$T$ entry, $e=\lambda(2h)$, so these two
+counts depend on $h$ alone, whereas the installed literal payload and
+source-growth bounds still depend on $T$. There is no assertion of a
+single installation for all lags.
+
+Proof. All coordinates in each row come from that row's one complete
+controller and its own execution proof. Construction 11.6 pays for added
+source-preserving root Reads. Theorem 14.2 preserves every call of
+Construction 11.5, so it has none of that routing overhead and bears the
+new alias/table bill instead. The formulas for $H$, together with
+$B=2\lceil(T+2h)/2\rceil$, give the two stated call orders. They do not
+compare physical selection tariffs or prove any lower bound on calls,
+width, installation or their joint cost.
+
+The successful-family quantifier remains (SLHC.11.17): for each finite
+$T$ in a positive regime there is a controller working on the whole
+unknown-shape original family. The odd-$h$, positive-lag collision
+obstruction and the unbounded-lag fixed-literal obstruction remain
+exactly those of §11.7 and §9.7. Redundant aliases provide neither a new
+source port nor an infinite literal menu, so they do not evade either
+supplier's hypotheses. The fixed public skeleton of §12 is absent here;
+its supplied-shape width minima are not substituted for this family's
+width or installation count. $\square$
+
+For fixed $h,T$ the original family is finite, so FIB II Corollary 47.2
+already gives an actual-history existence realization. The resource point
+here uses FIB IV's different bound in terms of the entire installed
+intermediate table and its all-typed-row correspondence. The parity
+algorithm, image licensing, alignment and source growth remain those of
+§11; the Hamming and zero-interleaving ingredients have the literature
+attribution in FIB IV Theorem 51.2. No Pareto or total
+physical-cost optimum, and no synthesis from a merely closed candidate
+family, follows from this construction.
+
+[SLHC14-LIFT]: FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#51-redundant-complete-words-with-the-original-call-trace
+

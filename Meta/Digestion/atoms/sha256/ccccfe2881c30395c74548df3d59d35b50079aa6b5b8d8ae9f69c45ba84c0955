@@ -1,0 +1,24 @@
+**定义 18.1（原子嫁接合同）。** 固定素数 $p$，取有限非空有序二叉树 $t::=\alpha\mid\beta\mid\langle t,t\rangle$；
+叶替换为 $\rho(\alpha)=\beta$、$\rho(\beta)=\langle\beta,\alpha\rangle$，并在配对上分配。
+组成满足 $c(\alpha)=(1,0)$、$c(\beta)=(0,1)$、$c(\langle s,t\rangle)=c(s)+c(t)$。
+任务态仅为 $x=c(t)\bmod p\in V=\mathbb F_p^2$，不要求恢复树形或整数叶数。于是
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+q(a,b)=2a+3b,\qquad G(x)=x+\alpha,
+\quad \alpha=(1,0),\ \beta=(0,1).
+$$
+
+这里 $G$ 由实际操作 $g_\alpha(t)=\langle t,\alpha\rangle$ 实现。每个 $V$ 中的态都有实际非空树代表：取非负剩余代表的叶数并任意配对；零对可用 $p$ 个 $\alpha$ 叶实现。
+初态域是整个 $V$，不是仅有 $\{M^n\alpha:n\ge0\}$ 的轨道。
+
+记录为确定函数 $r:V\to R=r[V]$，要求存在固定函数 $u,v:R\to R$，使
+
+$$
+(q,r)\text{ 单射},\qquad r(Mx)=u(r(x)),\qquad r(Gx)=v(r(x)).
+\tag{RA.1801}
+$$
+
+解码器可以读取当前 $q$，两个自主更新器只能读取 $r$；操作名称已声明，时刻、旧读数、额外控制状态均不是免费输入。
+记录值数的最小化不预先赠送初始 $r(x)$；实际取得在 §18.7 另述。
+

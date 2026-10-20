@@ -1,0 +1,20 @@
+## 4.1 色散给频率差
+
+prime channels 的频率为：
+
+\[
+\omega_p=\log p.
+\]
+
+两个通道之间的自然频率差为：
+
+\[
+\boxed{
+\Delta\omega_{p,q}
+=
+\log p-\log q
+=
+\log\frac pq.
+}
+\]
+

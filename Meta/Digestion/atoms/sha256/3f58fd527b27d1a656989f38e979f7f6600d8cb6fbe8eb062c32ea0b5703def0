@@ -1,0 +1,52 @@
+## 6. 保留完整混合项的函数范数与实际校准
+
+在 c=3 处，m=3 只贡献一个端点，Lebesgue 积分为零。令 b=a-log2<0。实际 p_tilde^+ 的解析表达只在 -a、b、-b、a 处切换。每段是有限个 exp(plus-or-minus(2r+1/2)*x) 的线性组合。
+
+平方后先合并所有指数及其完整系数，包括全部交叉项；对每个精确有理指数 t 使用
+
+\[
+\int_l^r e^{tx}dx=(e^{tr}-e^{tl})/t\quad(t\ne0),\qquad
+\int_l^r1\,dx=r-l.
+\]
+
+这给出 ||p_tilde^+|| 的定向区间，无求积误差。固定候选 k 的余弦系数使用已有相位约定；其与 p_tilde^+ 的内积通过 (PM11) 的 65 个实际余弦频率值精确计算。所有有限和先在同一函数中形成，平方时没有舍弃混合项。
+
+本次显示值为
+
+\[
+\|p_{\widetilde h}^+\|=2.90193861714445\ldots,
+\qquad
+\left\langle k,\frac{p_{\widetilde h}^+}{\|p_{\widetilde h}^+\|}\right\rangle
+=-0.999999377793547947\ldots.
+\]
+
+这里的原始范数采用 (PM3) 的整体标度，不是此前文献校准常数下的范数。单位直线与该常数无关。实符号对齐后的多项式模型距离平方为
+
+\[
+2-2|\langle k,p_{\widetilde h}^+/\|p_{\widetilde h}^+\|\rangle|
+\in[1.24441290410519742709\ldots,1.24441290410519742710\ldots]10^{-6}
+< (112/100000)^2.
+\]
+
+(PM9) 的真实 prolate/多项式模型误差小于 3.376e-24。因此对真正的偶化 prolate 模型，执行器证明
+
+\[
+\boxed{\inf_{\sigma\in\{-1,1\}}
+\left\|k-\sigma\frac{p_{h_\lambda}^+}{\|p_{h_\lambda}^+\|}\right\|
+<\frac{113}{100000}=0.00113,
+\qquad \lambda=\sqrt3.}
+\tag{PM13}
+\]
+
+结合本卷已有、记录在组合 Neumann-even/log-weighted-odd 证书中的实际 Weil 结论 ||u/<k,u>-k||<1/100，三角不等式给出
+
+\[
+\boxed{\inf_{\sigma\in\{-1,1\}}
+\left\|\frac{u}{\langle k,u\rangle}-
+\sigma\frac{p_{h_\lambda}^+}{\|p_{h_\lambda}^+\|}\right\|
+<\frac{1113}{100000}=0.01113.}
+\tag{PM14}
+\]
+
+新程序独立运行的是 (PM13)；(PM14) 继承此前真实 Weil 形式及无限耦合证书的纸面/区间范围。这里未重新运行整个 Weil LDL 程序，也未把其域接口变为 Lean 公理。
+

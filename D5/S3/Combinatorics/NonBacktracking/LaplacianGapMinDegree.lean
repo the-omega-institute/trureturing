@@ -516,7 +516,7 @@ set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.Combinatorics.NonBacktracking.LaplacianGapMinDegree
 variable {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
 
-private theorem eigenpair_mem_spectrum {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem eigenpair_mem_spectrum {ι : Type*} [Fintype ι] [DecidableEq ι]
     (A : Matrix ι ι ℂ) (r : ℂ) (x : ι → ℂ) (hx : x ≠ 0) (he : A *ᵥ x = r • x) :
     r ∈ spectrum ℂ A := by
   rw [← Matrix.spectrum_toLin']
@@ -648,7 +648,4 @@ theorem result : claim := by
     rw [hnorm] at hg
     exact hg.trans hb
 
-#print claim
-#check result
-#print axioms result
 end D5.S3.Combinatorics.NonBacktracking.LaplacianGapMinDegree

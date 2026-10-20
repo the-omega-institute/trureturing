@@ -1,0 +1,62 @@
+**定义 14.1（固定标号环上的五模式与两种可行集）。** 固定整数 $n\ge5$，
+位置属于 $\mathbb Z_n=\mathbb Z/n\mathbb Z$。三位窗的印刷顺序始终是
+$(U_i,U_{i+1},U_{i+2})$，合法模式按
+
+$$
+\Sigma=(000,100,010,001,101)
+\tag{14.1}
+$$
+
+排列，分别对应 $F[\mathrm{null}],F[1],F[2],F[3],F[1,3]$。
+这里的 $1,2,3$ 是窗口内的相对位置；原 FIB 输出名称分别为
+$\mathrm{null},[2],[3],[5],[2,5]$，数值名称不是位置标号。
+给每个 $i$ 一份概率律 $p_i:\Sigma\to[0,1]$，在其余三位字上延为零。
+任意这类概率族组成
+
+$$
+\mathscr P_n=\prod_{i\in\mathbb Z_n}\operatorname{Prob}(\Sigma).
+$$
+
+完整重叠相容性指对每个 $i$ 和每个 $(b,c)\in\{0,1\}^2$，
+
+$$
+\sum_{a\in\{0,1\}}p_i(abc)
+=\sum_{d\in\{0,1\}}p_{i+1}(bcd).
+\tag{14.2}
+$$
+
+$bc=11$ 时两边都是零；另外三个等式匹配完整二位律。
+满足 (14.2) 的族组成局部相容多面体 $\mathscr L_n$。
+真实原周期来源的样本空间是
+
+$$
+B_n^{\mathrm{cyc}}
+=\{u\in\{0,1\}^{\mathbb Z_n}:u_iu_{i+1}=0\text{ 对所有 }i\}.
+\tag{14.3}
+$$
+
+写 $v(u)_{i,\sigma}=\mathbf1\{(u_i,u_{i+1},u_{i+2})=\sigma\}$，定义
+
+$$
+\mathscr C_n=\operatorname{conv}\{v(u):u\in B_n^{\mathrm{cyc}}\}.
+\tag{14.4}
+$$
+
+等价地，$p\in\mathscr C_n$ 指存在同一概率律 $P$ 于 (14.3)，逐位置实现
+全部 $p_i$。允许任意实概率，不预设旋转不变、平稳 Markov 结构或最小周期。
+“原周期”只固定来源有 $n$ 个标号位置，字的最小周期可以整除 $n$。
+全局边缘当然满足 (14.2)，所以 $\mathscr C_n\subseteq\mathscr L_n$。
+
+本卷 §7 的全局耦合对象在这里明确写成
+
+$$
+\Gamma_n(p)=\left\{(P(u))_{u\in B_n^{\mathrm{cyc}}}:
+P(u)\ge0,\ \sum_uP(u)=1,\
+\sum_uv(u)_{i,\sigma}P(u)=p_i(\sigma)\quad\forall i,\sigma\right\}.
+\tag{14.5}
+$$
+
+因此 $\Gamma_n(p)\ne\varnothing$ 与 $p\in\mathscr C_n$ 是同一个问题。
+本节以后的小写 $q_i$ 专指一个位点的占据率，不沿用 §7 将整份窗口律
+记成 $q_i$ 的记号。
+

@@ -1,0 +1,44 @@
+**Proposition 11.3 (two zero targets with opposite beta placements).**
+Keep $A,C,D_1,\ldots,D_4$ from (NBP.9.6), all distinct branch images.
+Let
+
+$$
+Z=\{0_a,0_c,1,2,3,4\},\qquad
+G_a=\{0_a,1,2\},\qquad G_c=\{0_c,3,4\}.
+\tag{NBP.11.4}
+$$
+
+Define six finite tuples by
+
+$$
+\begin{aligned}
+x_a^{(z)}&=
+ \begin{cases}\beta,&z\in G_a,\\ A,&z\in G_c,\end{cases}\\
+x_c^{(z)}&=
+ \begin{cases}C,&z\in G_a,\\ \beta,&z\in G_c,\end{cases}\\
+x_{b_j}^{(z)}&=
+ \begin{cases}\alpha,&z=j,\\D_j,&z\ne j,\end{cases}
+ \qquad(1\le j\le4).
+\end{aligned}
+\tag{NBP.11.5}
+$$
+
+Then $t_z=\mathscr S(x^{(z)})$ is an actual current image and
+$u_z=\delta(t_z)$ belongs to the full original $\mathcal U_*$. Their
+required outputs are
+
+$$
+F(u_{0_a})=F(u_{0_c})=R_0,\qquad F(u_j)=R_j\quad(1\le j\le4).
+\tag{NBP.11.6}
+$$
+
+On these six simultaneous fixed actual sources, every finite address
+has either constant reply, two replies partitioning $G_a\mid G_c$, or
+two replies isolating exactly one $j\in\{1,2,3,4\}$. More precisely:
+
+| Address location | Possible nonconstant reply partition on $Z$ |
+| --- | --- |
+| At length less than three | None |
+| In either occurrence cone of $a$ | $G_a\mid G_c$ |
+| In either occurrence cone of $c$ | $G_a\mid G_c$ |
+| In the occurrence cone of $b_j$ | $\{j\}\mid(Z\setminus\{j\})$ |

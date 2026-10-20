@@ -1,0 +1,13 @@
+## 定理 24A.1（合取即交）
+
+对两个规范化条件与两个缺陷：
+
+$$
+\operatorname{Comp}
+\bigl(N_1\cap N_2,(d_1,d_2),(0_1,0_2)\bigr)
+=
+\operatorname{Comp}(N_1,d_1,0_1)
+\cap
+\operatorname{Comp}(N_2,d_2,0_2).
+$$
+

@@ -1,0 +1,18 @@
+**约定 23.2（同次运行的材料与费用）。** 每条实际前缀 $z$ 的账目沿用
+GENERAL 定义 8.5 与 (ABT.70)。为区别叶数及 $A_N$，记原生行数为
+$\nu_{\rm phys}(z)$，非 meter 构造 cell 数为 $A_{\rm phys}(z)$，则
+
+$$
+\operatorname{Bill}(z)=\bigl(\nu_{\rm phys}(z),\ 2\nu_{\rm phys}(z),
+S_{\rm irreducible}+b_{\rm ctl}(z)+8A_{\rm phys}(z)+8\nu_{\rm phys}(z)\bigr).
+\tag{ABT.87}
+$$
+
+实际连接的两切口之间逐坐标取差；原生行、收据和非 meter 材料均包括
+准备、输入、Base、Resolve、代码/门生成、guard/MUX、已执行拒绝、
+counter/fence/封口、行和依赖副本、检查、ACK、token、捕获及返回。
+Reserve 的 backing 和退役材料也一直在实际存储中。编码入口的两次维护及
+$N$ 次完整 Rho，即使维护 unchanged，仍须支付各自实际工作。
+这些计价约定不从语义 counter、候选叶数或同形状推出跨路径的行数、完整
+收据、总费用或物理视图相等。没有由区间非空推出取得/编码/执行的免费性。
+

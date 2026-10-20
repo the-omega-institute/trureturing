@@ -1,0 +1,8 @@
+At the time of this writeback:
+
+- Both Lean sources and both authored Scribe documents have been pushed to the existing PR #5029 branch.
+- No Lean compiler or Lake executable was available in the local runtime. No local Lean build, `#print axioms` output, Scribe rendering, or information-theory seal was obtained. The new scripts therefore remain unverified formal proof candidates until a pinned build accepts them.
+- Supplementary exact `fractions.Fraction` regression checks passed 18,225 interval-product cases, 59,049 four-marginal attaining-law cases, 59,049 binary covariance cases, and the explicit shared-root counterexample. These are finite arithmetic checks, not proofs or admission certificates.
+- The initial remote PR snapshot was open, draft, and unmergeable. A passing protected workflow for the new head has not been established. The convenience workflow lookup restricted to `pull_request` cannot adjudicate this repository's `pull_request_target` workflow.
+- No merge, auto-merge, workflow bypass, or modification of protected admission machinery was performed.
+

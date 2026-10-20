@@ -1,0 +1,31 @@
+# 209. 四种成对证据几何
+
+对有限输出概率质量函数 \(P,Q\)，定义：
+
+\[
+\operatorname{TV}(P,Q)
+=
+\frac12\sum_o|P(o)-Q(o)|,
+\]
+
+\[
+\rho(P,Q)
+=
+\sum_o\sqrt{P(o)Q(o)},
+\]
+
+\[
+H^2(P,Q)
+=
+\sum_o
+\bigl(\sqrt{P(o)}-\sqrt{Q(o)}\bigr)^2
+=
+2(1-\rho(P,Q)),
+\]
+
+\[
+D(P\|Q)
+=
+\sum_oP(o)\log\frac{P(o)}{Q(o)}.
+\]
+

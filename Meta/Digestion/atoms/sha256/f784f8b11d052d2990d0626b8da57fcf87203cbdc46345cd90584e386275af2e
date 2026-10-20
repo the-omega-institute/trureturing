@@ -1,0 +1,6 @@
+**定义 324.3（\(\varepsilon\)-安全压缩）。** 历史分区 \(\mathcal P\) 称为 horizon-\(T\) 的 \(\varepsilon\)-安全压缩，若每个分区块 \(B\in\mathcal P\) 满足
+\[
+\operatorname{diam}_{d_T}(B)=\sup_{h,h'\in B}d_T(h,h')\le\varepsilon.
+\]
+压缩后的摘要只保留历史所在的块标签。
+

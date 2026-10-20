@@ -1,0 +1,8 @@
+相应地，零点侧可能表现为：
+
+* separator 范数爆炸；
+* 目标 orbit 与其他 orbit 难以独立赋值；
+* odd response 很小；
+* finite-window Gram 矩阵接近奇异；
+* 每个有限观察都可分离，但分离成本随高度发散。
+

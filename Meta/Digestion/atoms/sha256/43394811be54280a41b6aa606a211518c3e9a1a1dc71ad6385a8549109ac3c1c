@@ -1,0 +1,44 @@
+## 3.6 两事件交换恢复 prime curvature
+
+对两个 timed events \(p,q\)，候选 Lean 定理证明：
+
+\[
+\Lambda(pq)=\Lambda(qp),
+\]
+
+并证明任意初始状态上的记忆差为：
+
+\[
+\boxed{
+\pi_1U_{pq}(m,z)
+-
+\pi_1U_{qp}(m,z)
+=
+C_{p,q}^{\mathrm{time}}z,
+}
+\]
+
+其中：
+
+\[
+\boxed{
+C_{p,q}^{\mathrm{time}}
+=
+(a-\lambda_q)\beta_p
+-
+(a-\lambda_p)\beta_q.
+}
+\]
+
+在 cocycle 层：
+
+\[
+\boxed{
+M_a(pq)-M_a(qp)
+=
+C_{p,q}^{\mathrm{time}}.
+}
+\]
+
+所以原有 `PrimeSwapCurvature` 不再只是一个局部代数差。它现在被识别为两个 chronology words 的精确 memory holonomy。
+

@@ -1,0 +1,16 @@
+### 395.2 实际 Fibonacci 残差的同源代入
+
+沿用 §387 的实际 $K(y)$、$A=1/\mathcal B(1)>0$、$D=1/\mathcal B(1)+\mathcal B'(1)/\mathcal B(1)^2$ 与真实 $\delta>0$，令 $\mu_0=1/\delta$。这里 $\mu_0$ 是实常数，区别于 Möbius 函数。取全部正数上的同一个实际残差
+
+$$
+R(y)=K(y)-Ay\log y+Dy.
+$$
+
+式（387.17）给 $|R(y)|\le\mu_0(1+\log y)$ 对 $y\ge1$；当 $0<y<1$，$K(y)=0$，所以
+
+$$
+R(y)=Dy-Ay\log y,\qquad
+|R(y)|\le y(|D|+A\log(1/y)).
+\tag{395.9}
+$$
+

@@ -1,0 +1,39 @@
+# 第一千七百四十七部　phase、递归时间与 shifted 深度是三个不同参数
+
+此前多个图景容易把三种“时间”混合。
+
+| 参数                | 含义                        | 主要不变量                                  |
+| ----------------- | ------------------------- | -------------------------------------- |
+| \(\alpha\in S^1\) | phase observer            | Clark basis、monodromy                  |
+| \(n\in\mathbb N\) | Cuntz branch recursion    | word length、branch algebra             |
+| \(q>0\)           | shifted observation depth | persistence death time \(\delta_\rho\) |
+
+它们的作用完全不同。
+
+沿 \(\alpha\) 运动：
+
+* 改变 Clark 基；
+* 不改变 \(K_B\) 维数；
+* 不改变 \(\Lambda_B\)。
+
+沿 \(n\) 运动：
+
+* 递归生成 branch history；
+* 自由情形增长 \(m^n\)；
+* golden grammar 情形增长 \(\varphi^n\)。
+
+沿 \(q\) 运动：
+
+* 离线通道在 \(q=\delta_\rho\) 死亡；
+* 改变模型空间维数；
+* 形成 persistence barcode。
+
+因此黄金比例可以进入：
+
+* \(n\) 方向的 grammar；
+* \(q\) 方向的采样调度；
+
+但它并不天然属于 \(\alpha\) 方向的 Clark fibre。
+
+---
+

@@ -1,0 +1,4 @@
+**命题 4.9（$\Psi_m(\sigma_u)$ 无平方因子并整除节点因子）。** 在定理 4.3 的条件下,$\Psi_m(\sigma_u)$ 在 $\mathbb R(t)[\lambda]$ 中无平方因子,并且 $(-1)^{r\lfloor(m-1)/2\rfloor}\Psi_m(\sigma_u)$(关于 $\lambda$ 首一)在 $\mathbb R[t][\lambda]$ 中整除 $w$ 在 $q$ 处的节点因子 $g_q$。
+
+**证明。** 记 $N=r\lfloor(m-1)/2\rfloor$,$F=\Psi_m(\sigma_u)$;由定理 4.3 (1),$(-1)^NF$ 是 $\mathbb R[t][\lambda]$ 中关于 $\lambda$ 首一的多项式。取 $t_0=0$。$F(\cdot,0)=\prod_{0<k<m/2}(\sigma_u(\cdot,0)-2\cos(2\pi k/m))$;由事实 4.8,每个因子只有单根;不同 $k$ 的因子没有公共根,因为在公共根处 $\sigma_u$ 会取两个不同的值。故 $F(\cdot,0)$ 无重根。若 $h^2\mid F$,$h\in\mathbb R(t)[\lambda]$ 首一不可约,则 $h$ 与余因子都在 $\mathbb R[t][\lambda]$ 中($\mathbb R[t]$ 整闭,母卷定理 3.2 证明中的同一论证),代入 $t=0$ 后 $h(\cdot,0)$ 首一、次数为正,其平方整除 $F(\cdot,0)$,矛盾。所以 $F$ 的首一不可约因子两两不同;由定理 4.3 (3) 每个都整除 $g_q$,$\mathbb R(t)[\lambda]$ 是唯一分解整环,故 $(-1)^NF\mid g_q$;两者首一且系数在 $\mathbb R[t]$ 中,商也在 $\mathbb R[t][\lambda]$ 中。∎
+

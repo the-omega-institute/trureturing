@@ -1,0 +1,14 @@
+**命题 35.2（此可见像的两项辛实现限制）。** 在 $\mathcal P$ 的三维内部不存在非退化二形式。若要求一个紧致、连通、光滑、实六维的辛流形，配以有效 Hamilton $T^3$ 作用，则它的矩多面体不能是 $\mathcal P$。第二项不禁止局部的三组均值—角坐标，也不禁止非紧、奇异或更高维的实现。
+
+证明。辛形式是闭且逐点非退化的二形式；Darboux 定理在实维 $2N$ 的局部坐标中将它写成 $\sum_{j=1}^N dq_j\wedge dp_j$。这些是经典中间工具，见 Cannas da Silva《Lectures on Symplectic Geometry》§§1、8。三维点上的二形式矩阵 $K$ 满足 $K^{\mathsf T}=-K$，故
+
+$$
+\det K=\det(-K^{\mathsf T})=(-1)^3\det K=-\det K=0.
+$$
+
+非退化性已不可能，是否闭不能弥补它。给内部另加三个角，确可局部取 $\sum d\vartheta_j\wedge db_j$，但这是六维新载体。
+
+对所述紧致六维有效 $T^3$ Hamilton 系统，Delzant 分类要求矩多面体简单、整有理且在顶点满足整光滑条件；此处只需简单性这一必要条件。经典出处是 [Delzant《Hamiltoniens périodiques et images convexes de l’application moment》](https://www.numdam.org/articles/10.24033/bsmf.2100/)，亦见 Cannas da Silva 定义 28.1、定理 28.2。三维简单多面体的每个顶点恰接三条棱。本章顶点 $v_2=(0,0,1)$ 分别连接底面四角 $v_0,v_1,v_3,v_{13}$，接四条不同棱，因而非简单。局部三组配对、共六个实坐标，不能推出上述全局紧致光滑 toric 完成。证毕。
+
+这项障碍适用于三维可见像的半维环面作用。下一节的八维完成仍有一个 $T^3$ 可见作用，但该作用不再半维，所以不受这项六维 toric 排除的结论限制。
+

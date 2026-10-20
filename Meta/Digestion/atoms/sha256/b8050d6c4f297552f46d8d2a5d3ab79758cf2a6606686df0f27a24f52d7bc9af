@@ -1,0 +1,8 @@
+源码位于 `D5/S3/Observer/Hankel/`：
+
+- `FiniteHoKalmanBlocks.lean`：有限索引、四块分解、精确恢复与阶数下界。
+- `ExecutableHoKalman.lean`：有理数枚举、接受与拒绝、实际输出及无噪声正确性。
+- `HoKalmanPerturbation.lean`：范数预算、真实非奇异性和后验线性方程误差。
+- `NoisyHoKalmanRecovery.lean`：有理数到实数语义、噪声恢复与兼容系统维数下界。
+- `HoKalmanPredictionBudget.lean`：可计算预测预算及每个时刻的终点误差定理。
+

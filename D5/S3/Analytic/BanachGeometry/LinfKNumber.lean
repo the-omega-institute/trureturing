@@ -32,7 +32,8 @@
      vertex_zero_BJ: bind-only; consumers=preserving_injective, image_vertex,
        inverse_sign
      not_BJ_self: bind-only; consumer=preserving_injective
-     active_not_BJ: content; consumers=image_vertex, inverse_sign
+     active_not_BJ: content; consumers=image_vertex, inverse_sign,
+       PolyhedralBJRefutation.product_of_bj
      preserving_injective: content; consumer=spanning_KSet
      image_vertex: content; consumers=column_sparse, spanning_KSet
      inverse_sign: content; consumer=column_sparse
@@ -124,8 +125,10 @@ private lemma not_BJ_self {w : Fin n → ℝ} (hw : w ≠ 0) : ¬ BJOrth w w := 
   simp only [neg_one_smul, add_neg_cancel, norm_zero] at this
   exact hw (norm_eq_zero.mp (le_antisymm this (norm_nonneg w)))
 
-private lemma active_not_BJ {w z : Fin n → ℝ} (hw : w ≠ 0)
-    (hz : ∀ i, |w i| = ‖w‖ → 0 < z i * w i) : ¬ BJOrth w z := by
+/-- Strictly positive slopes at every active coordinate rule out Birkhoff–James orthogonality. -/
+lemma active_not_BJ {w z : Fin n → ℝ} (hw : w ≠ 0)
+    (hz : ∀ i, |w i| = ‖w‖ → 0 < z i * w i) :
+    ¬ ∀ t : ℝ, ‖w‖ ≤ ‖w + t • z‖ := by
   classical
   have hr : 0 < ‖w‖ := norm_pos_iff.mpr hw
   have local_bound (i : Fin n) : ∃ e : ℝ, 0 < e ∧

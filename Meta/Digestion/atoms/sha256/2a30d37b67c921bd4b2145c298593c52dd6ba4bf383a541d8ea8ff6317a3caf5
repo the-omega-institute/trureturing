@@ -1,0 +1,69 @@
+# 三十二、项目接口、追加核验与下一项证明责任
+
+本轮只读核对了仓库快照：
+
+```text
+c2ac139a260c576df2372799ad42c4547528913c
+```
+
+其中：
+
+`ZetaPrimeProductCommonBoundary.lean` 包装了 \(s=1\) 的共同收敛边界；它没有自动完成本轮的跳跃耦合与全路径估计。
+
+`TermBoundDoesNotBoundFamilySum.lean` 则明确证明：不断增长的项族，即使每个成员都越来越小，总和也未必随之消失。本轮使用 \(B\) 的 \(L^1\) 界和完整的积分估计，正是为了避免这种错误推理。
+
+当前追加形成了四层清楚分开的结论：
+
+| 层次     | 本轮得到的内容                                     | 是否使用 RH                  |                                   |   |
+| ------ | ------------------------------------------- | ------------------------ | --------------------------------- | - |
+| 算术边界层  | \(B\)、精确跳跃、式（78）、\(C_{\mathrm{ar}}<\infty\) | 否                        |                                   |   |
+| 整段路径比较 | (\mathbb E\sup                              | Y_\varepsilon-\mathcal G | \le T\varepsilon C_{\mathrm{ar}}) | 否 |
+| 同步精化   | 扩大时间窗，同时缩小临界参数与截断误差                         | 否                        |                                   |   |
+| 尖锐指数边界 | 全部 \(a<1/2\) 的 \(\mathcal C(a)\) 有限         | 与 RH 等价，尚未证明             |                                   |   |
+
+**前三层已经通过本轮的纸面推导建立；第四层仍然是需要新估计的核心命题。**
+
+本轮实际有限核验包括：1280个素数幂跳跃权重、300组有限正测度的逆尾面积恒等式、7500项有限标记路径的累计三角不等式，以及 \(C_{\mathrm{ar}}\) 下界表达式和5040分解的严格有理区间。另有60位数值脚本用于有限边界积分和固定参数交叉检查，不把它们当成无限尾部或 RH 的计算证明。
+
+原归档中的12个已有条目全部保持字节不变；新累计文档以原第十二至二十二节文件为完整前缀。本轮没有修改 GitHub，也没有运行新增 Lean 内核证明。
+
+[下载保留旧文件的累计理论与核验包](sandbox:/mnt/data/causal_consistency_5040_appended_23_32.zip)
+
+[单独查看第二十三至三十二节追加稿](sandbox:/mnt/data/causal_consistency_appendix_23_32.md)
+
+---
+
+这一轮最重要的推进是：
+
+$$
+\boxed{
+\text{宏观 Gamma 极限与原算术过程之间，}
+\quad
+\text{已经有无条件的整段时间误差界。}
+}
+$$
+
+而原先被宏观极限压缩掉的信息，被集中到：
+
+$$
+\boxed{
+B(u)=\gamma+\ln u-\sum_{p^k\le e^u}\frac1{kp^k}
+}
+$$
+
+这一明确对象中。
+
+它的每个跳跃对应一个素数幂；有符号面积给出 \(-\gamma\)；绝对面积控制路径耦合；指数放大后的可积性则直接连接 RH。
+
+**所以，接下来最有内容的问题已经不是“是否能得到一个平滑极限”，而是：当我们重新放大被平滑过程隐藏的算术残差时，哪些尺度仍然能被统一控制，临界指数为什么恰好停在 \(1/2\)，以及怎样从离散结构直接证明所有亚临界放大预算有限。**
+
+[1]: https://www.vmsta.org/journal/VMSTA/article/275/text "https://www.vmsta.org/journal/VMSTA/article/275/text"
+[2]: https://dlmf.nist.gov/25.2 "DLMF: §25.2 Definition and Expansions ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[3]: https://arxiv.org/html/2204.01980v2 "Some explicit estimates for the error term in the prime number theorem"
+[4]: https://arxiv.org/html/1704.06100v1 "https://arxiv.org/html/1704.06100v1"
+[5]: https://arxiv.org/html/2505.11295v1 "Prime Number Error Terms"
+[6]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[7]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"
+
+---
+

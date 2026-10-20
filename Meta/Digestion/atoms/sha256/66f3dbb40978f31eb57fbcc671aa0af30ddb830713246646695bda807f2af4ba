@@ -1,0 +1,51 @@
+**命题 15.13（完整对列关系在合法链上的实际消费）。** 上述零缺陷等价于存在
+$z_1,\ldots,z_n\in\mathbb C\setminus\{0\}$ 和整体相位 $\gamma$，使
+
+$$
+\psi_I=\frac{e^{i\gamma}}{\sqrt{\mathcal Z}}
+\prod_{i\in I}z_i,\qquad
+\mathcal Z=\sum_{I\in\Gamma_n}\prod_{i\in I}|z_i|^2.
+$$
+
+其张量表达式是投影乘积
+
+$$
+|\psi\rangle=
+\frac{e^{i\gamma}}{\sqrt{\mathcal Z}}\,
+\Pi_{\Gamma_n}\bigotimes_{i=1}^n(|0\rangle+z_i|1\rangle),
+$$
+
+而非未投影的张量乘积。
+
+证明。对非空合法 $I$ 和任意 $i\in I$，
+$I\setminus\{i\}$、$\{i\}$、$\varnothing$ 全部合法，且实际列向量有
+
+$$
+\mathbf1_I+\mathbf1_\varnothing
+=\mathbf1_{I\setminus\{i\}}+\mathbf1_{\{i\}}.
+$$
+
+因此零缺陷给
+$\psi_I\psi_\varnothing=\psi_{I\setminus\{i\}}\psi_{\{i\}}$。
+全支持允许除 $\psi_\varnothing$，置
+$z_i=\psi_{\{i\}}/\psi_\varnothing\ne0$；
+对 $|I|$ 归纳，得到
+$\psi_I=\psi_\varnothing\prod_{i\in I}z_i$。
+归一化给 $|\psi_\varnothing|^2\mathcal Z=1$，写其相位为 $\gamma$。
+
+反过来，这一乘积式使两对振幅都等于
+$e^{2i\gamma}\mathcal Z^{-1}\prod_i z_i^{u_i+v_i}$，
+所以所有整数对列等式成立。最后展开未归一化张量乘积；
+$\Pi_{\Gamma_n}$ 删除所有含相邻 $11$ 的基振幅，余下各项恰为显示的合法振幅。
+$n=1$ 时完整对列条件不另加约束，任何两个非零振幅都由
+$z_1=\psi_{\{1\}}/\psi_\varnothing$ 表示。
+
+这个具体删除递归就是从全合法域回接完整对列条件的证明，
+不依赖额外 Hibi 或 Stanley 结论。
+[HiddenRelations C-20.1][PE-H] 已拥有正权平方根相干链；
+这里的递归说明何时一般非零复振幅确实属于其局部相位轨道。
+缺全支持时不能照用除法，稀疏编码族也不因此取得该判据。
+非法振幅置零正是投影的效果，它可以产生纠缠；
+例如 $n=2,z_1=z_2=1$ 的系数矩阵
+$\begin{pmatrix}1&1\\1&0\end{pmatrix}/\sqrt3$ 行列式为 $-1/3$。证毕。
+

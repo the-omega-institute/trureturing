@@ -1,0 +1,10 @@
+# 24A. Structural completion locus 演算
+
+为避免与行为 reflector 混同，记
+
+$$
+\operatorname{Comp}(N,d,0_D)
+=
+\{a:a\in N,\ d(a)=0_D\}.
+$$
+

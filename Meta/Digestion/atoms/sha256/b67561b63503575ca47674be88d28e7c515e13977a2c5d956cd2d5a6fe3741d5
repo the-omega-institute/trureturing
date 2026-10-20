@@ -1,0 +1,33 @@
+# 148. v1.2 证明状态矩阵
+
+| 结论 | 状态 | 主要锚点／外部基础 |
+|---|---|---|
+| 单素指数几何尾与点质量 | Lean anchor | `PrimeExponentLaw` |
+| 全素指数相互独立 | Lean anchor | `ZetaPrimeIndependence` |
+| zeta 熵有限与 Gibbs 恒等式 | Lean anchor | `ZetaEntropy` |
+| 素数倒数边界发散 | Lean anchor | `PrimeSpectrumBoundaryDivergent` / Mathlib |
+| 观察 \(\sigma\)-代数与条件风险 | Classical/Paper | conditional expectation |
+| 精化平方风险勾股律 | Classical/Paper | Hilbert projection |
+| 概率胶合质量 | Definition/Paper | standard Borel image |
+| 同语言随机重复不跨 kernel | Paper | kernel factorization |
+| product-geometric 测度 \(\Gamma_s\) | Classical/Paper | countable product measure |
+| 有限支撑阈值 \(s=1\) | Paper | Borel–Cantelli + prime reciprocal divergence |
+| 独立几何指数全局可实现 iff \(s>1\) | Paper | threshold + UFD |
+| zeta law 的唯一性刻画 | Paper + anchors | independence + profile bijection |
+| finite-prime posterior factorization | Paper + anchored independence | conditional product law |
+| 单素数几何熵闭式 | Paper | geometric series |
+| 全局熵素数求和 | Paper | `ZetaEntropy` + integrable projective limit |
+| 截断指数熵／残余收缩 | Paper | geometric memorylessness |
+| 最优 unit precision allocation | Paper finite optimization | decreasing marginal gains |
+| radical 重数余量 | Paper | Bernoulli support + memorylessness |
+| KL 素数分解 | Paper | product law |
+| Hellinger 闭式 | Paper | direct zeta summation |
+| Fisher 素数分解 | Paper | derivative/interchange audit |
+| 多样本乘积最小充分 | Paper | factorization criterion |
+| 算术 Fock 基等价 | Paper | UFD basis equivalence |
+| zeta Gibbs restricted product state | Paper/Open Lean bridge | infinite tensor/Fock |
+| finite prime pinching | Anchored specialization target | `Quantum/Conditioning` |
+| prime-diagonal 相位盲区 | Paper finite countermodel | two-state calculation |
+
+---
+

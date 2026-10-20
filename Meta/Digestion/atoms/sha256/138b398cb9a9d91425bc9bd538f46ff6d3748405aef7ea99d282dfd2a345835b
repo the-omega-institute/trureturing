@@ -1,0 +1,40 @@
+**候签引理 30.1（正尺度平均的实频率下界）。** 对原实偶非负 bump，设 $0<a_1<b_1$，$\Delta=b_1-a_1$。若可积权重 $w$ 在整个积分域非负，并在 $[a_1,b_1]$ 上几乎处处满足 $w\ge w_0>0$，则对每个实数 $r>0$，
+
+$$
+\int w(u)\Phi(ur)^2\,du
+\ge w_0M^2\Delta
+\exp\!\left(-\frac{\pi b_1^2r}{2\Delta}\right).
+$$
+
+证明。直接应用经典有界解析函数的 Poisson–Jensen 对数主控。置
+
+$$
+B(z)=e^{iz/2}\Phi(z)/M,
+\qquad \ell(t)=-\log|\Phi(t)/M|\ge0.
+$$
+
+在上半平面，$B$ 是非零的有界全纯函数且 $|B|\le1$：将它写成 $M^{-1}\int\phi(x)e^{iz(1/2-x)}dx$，指数中的 $1/2-x$ 属于 $[0,1]$。偶性与非负性又给出 $B(iy)\ge e^{-y/2}$，$y>0$。经典对数主控的准确方向是
+
+$$
+\frac y\pi\int_{\mathbb R}\frac{\ell(t)}{t^2+y^2}\,dt
+\le-\log|B(iy)|\le\frac y2.
+$$
+
+不需要 $B$ 无零点或为外函数。内零点及奇异内因子的损耗非负，不能把这个不等式错误地替换为无损耗等式。令 $y\downarrow0$ 并用非负函数单调收敛，再用偶性，得到
+
+$$
+\int_0^\infty\frac{\ell(t)}{t^2}\,dt\le\frac\pi4.
+$$
+
+$\Phi(0)=M$，且偶解析性给出 $\ell(t)=O(t^2)$；实零点处的对数按局部可积函数解释。故
+
+$$
+\int_{a_1}^{b_1}\ell(ur)\,du
+=\frac1r\int_{a_1r}^{b_1r}\ell(t)\,dt
+\le\frac{\pi b_1^2r}{4}.
+$$
+
+原 $\Phi$ 在实轴为实数。对 $e^{-2\ell}$ 用凸 Jensen 不等式，并保留整个积分域上的 $w\ge0$，即得陈述。$\square$
+
+该对数主控是经典 Jensen 公式／Hardy 内外因子分解的直接应用，可直接核对 [Khabibullin, arXiv:2005.00408v1](https://arxiv.org/html/2005.00408v1), §1.1、式 (1.1) 所重述的经典 Poisson–Jensen 公式。对本章有界解析函数作圆盘映射，再用 Jensen 与 Fatou 取得所需方向；不是建立新的 Hardy 理论。Ahlfors, *Complex Analysis*, §5.3.1 与 Rudin, *Real and Complex Analysis*, Theorem 17.17 是标准书籍来源，其原书原页未独立复核。
+

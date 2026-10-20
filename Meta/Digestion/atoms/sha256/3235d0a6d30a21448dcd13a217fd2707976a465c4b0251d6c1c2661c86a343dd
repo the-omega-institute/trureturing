@@ -1,0 +1,18 @@
+**命题 399.5（完整分布决定局部与全局信息几何）。** 本条替代 §374.1 的相应陈述与证明。
+
+Fisher 公式采用 §§367、371 的可微及正概率合同；亲和度与 Hellinger 的有限和也允许零概率。对固定参数坐标，Fisher、亲和度与 Hellinger 几何量由完整分布逐项确定：
+
+$$
+\mathsf I_\theta
+=\sum_z \mathsf P_\theta(z)\,\nabla_\theta\log\mathsf P_\theta(z)\,
+\nabla_\theta\log\mathsf P_\theta(z)^{\mathsf T},
+$$
+
+$$
+\mathsf A(\theta,\theta')=\sum_z\sqrt{\mathsf P_\theta(z)\mathsf P_{\theta'}(z)},
+\qquad
+\mathsf H^2(\theta,\theta')=1-\mathsf A(\theta,\theta').
+$$
+
+所以在 $\mathsf P_\theta$ 保留时，$\mathsf I_\theta,\mathsf H,\mathsf A$ 是可重算缓存。
+

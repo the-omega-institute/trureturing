@@ -1,0 +1,29 @@
+# 72. 证明状态矩阵
+
+| 结论 | 状态 | 主要现有锚点 |
+|---|---|---|
+| 联合核是局部核交 | Paper | ConceptJoinUniversal |
+| 索引增加产生精化 | Paper | Concept refinement machinery |
+| 有限局部完备抽取 | Paper | finite pair selection |
+| 有界整数 CRT 判据 \(M\ge N\) | Paper | WindowRegisterCRT / CRT |
+| 输出容量下界 | Paper | finite cardinality |
+| 分离等价于 set cover | Paper | finite definitions |
+| 动态等价是 congruence kernel | Paper + anchored | CongruenceKernel |
+| 有限素数—时间层析 | Paper | ItineraryCompletion pattern |
+| 行为商规范最小 | Anchored specialization | ControlledBehaviorUniversality |
+| 三环画像模六十因子化 | Paper + anchors | Golden / Eisenstein / Gaussian |
+| 三环画像每纤维大小二 | Paper finite certificate | same |
+| 加定向位后双射 | Paper | CRT |
+| 判别式负二十分裂盲区 | Paper countermodel | form definitions |
+| crossing 相位每步降二 | Lean anchor | ExactPropagation |
+| 模十二最小六周期 | Lean anchor | SandwichPhasePeriod |
+| 一般模 \(m\) 周期公式 | Paper | modular arithmetic |
+| \(p\)-进首次分歧距离 | Paper | Mathlib target |
+| 素数幂全矩阵张量塔 | Lean anchor | PrimePowerTensorTower |
+| solenoid 同余核正合 | Lean anchor | ExactSequence |
+| prime-adic 隐路径常值 | Lean anchor | HiddenMotionRigidity |
+| genus / class residual 精确分类 | Open | future bridge |
+| 有效最小 witness prime 上界 | Open | effective number theory |
+
+---
+

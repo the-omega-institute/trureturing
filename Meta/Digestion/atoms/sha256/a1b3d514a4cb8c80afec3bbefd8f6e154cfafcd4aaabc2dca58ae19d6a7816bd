@@ -1,0 +1,24 @@
+**定义 413.1（同源边界权重与固定频率函数）。** 沿用 §§403–411 的实际来源、中心化和 $g_0$。对每个固定 $x>1$，置 $\ell=\log x$、$v(u)=(u+1)/u^2$。对 $\tau\ne0$ 定义单侧振荡权重
+
+$$
+\begin{aligned}
+W_x^\partial(\tau)
+&=\lim_{T\to\infty}\int_\ell^T e^{i\tau u}v(u)du\\
+&=\frac{e^{i\tau\ell}v(\ell)}{-i\tau}
++\frac1{-i\tau}\int_\ell^\infty e^{i\tau u}v'(u)du.
+\end{aligned}
+\tag{413.1}
+$$
+
+第二行采用经典分部积分；$v(T)\to0$ 且 $v'\in L^1([\ell,\infty))$，所以该定义存在。它不是把零频处发散的权重单独视为可积函数。定义
+
+$$
+k(\tau)=\frac{g_0(1+i\tau)}{-i\tau}\quad(\tau\ne0),
+\qquad k(0)=-g_0'(1),
+\qquad
+h(u)=\frac1{2\pi}\int_{\mathbb R}k(\tau)e^{i\tau u}d\tau.
+\tag{413.2}
+$$
+
+这里 $k\in L^1(\mathbb R)$ 直接由（411.4）的可积性取得；零点值是既有可去延拓，不影响积分。经典 Fourier 连续性、Riemann–Lebesgue 引理及共轭对称性给 $h$ 实值连续、两端趋零。这些是已有 Fourier 结论的直接应用，不另列为新的衰减定理。
+

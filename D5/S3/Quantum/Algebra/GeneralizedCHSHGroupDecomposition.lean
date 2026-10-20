@@ -117,6 +117,7 @@ result (theorem): proof_shape: content; escape_witness: none; consumers: none.
 Module admission_basis: open-problem-resolution (#16204; Proved).
 Direct frozen dependencies: none (pinned Mathlib only).
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16351.
+Escape audit for cyclicHom_int unfinished: https://github.com/the-omega-institute/trureturing/issues/19215.
 The utility is none: this is a uniform structural theorem, not a finite computation.
 The cyclic and product maps use ZMod.lift, zmultiplesHom, noncommCoprod and
 noncommPiCoprod; homomorphism extensionality uses the upstream generator theorem.
@@ -150,7 +151,7 @@ noncomputable def cyclicHom {H : Type*} [Group H] (n : ℕ) (a : H) (ha : a ^ n 
       change a ^ (n : ℤ) = 1
       simpa only [zpow_natCast] using ha⟩)
 
-@[simp] private theorem cyclicHom_int {H : Type*} [Group H] (n : ℕ) (a : H) (ha)
+@[simp] theorem cyclicHom_int {H : Type*} [Group H] (n : ℕ) (a : H) (ha)
     (i : ℤ) : cyclicHom n a ha (ofAdd (i : ZMod n)) = a ^ i := by
   unfold cyclicHom
   change Additive.toMul ((ZMod.lift n _) (i : ZMod n)) = _

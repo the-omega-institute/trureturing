@@ -1,0 +1,5 @@
+也就是说，素数观察增益只随候选维数的对数增长，所以强制更多素数幸存，需要指数级候选预算。页文本与定理上下文已经抽取到：
+
+* [论文逐页文本](sandbox:/mnt/data/short_gaps_abridged_cot_extracted.txt)
+* [关键定理与公式抽取](sandbox:/mnt/data/short_gaps_key_extracts.md)
+

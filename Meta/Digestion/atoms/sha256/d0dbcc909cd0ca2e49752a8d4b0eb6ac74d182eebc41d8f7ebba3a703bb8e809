@@ -1,0 +1,18 @@
+# 第一千三百二十一部　概念动力学的最终分层
+
+|  层 | 数学对象                                      | 概念意义        |
+| -: | ----------------------------------------- | ----------- |
+|  0 | \(\Theta_0=1\)                            | 无基线自同一，完全失明 |
+|  1 | \(\pm\omega\) shifted pair                | 第一次观察分裂     |
+|  2 | \(p_\omega,q_\omega\)                     | 同一对象的双层像    |
+|  3 | \(\omega/\delta\)                         | 解析视差        |
+|  4 | \(d_{\mathbb H}(p,q)\)                    | 图像间双曲距离     |
+|  5 | \(\mathfrak H_\omega\)                    | 负时间泄漏       |
+|  6 | \(\operatorname{rank}\mathfrak H_\omega\) | 缺陷整数存在量     |
+|  7 | \(\sigma_j(\mathfrak H_\omega)\)          | 缺陷可见强度      |
+|  8 | \(\zeta_\perp(s)\)                        | 全部横向深度矩     |
+|  9 | 黄金首穿越                                     | 统一非退化观测     |
+| 10 | Kalman 最小化                                | 删除合法内部抵消历史  |
+| 11 | endpoint denominator                      | 真正离线障碍      |
+| 12 | Hardy minimum phase                       | 正现实选择       |
+| 13 | Prime–Archimedean generator               | 算术证明入口      |

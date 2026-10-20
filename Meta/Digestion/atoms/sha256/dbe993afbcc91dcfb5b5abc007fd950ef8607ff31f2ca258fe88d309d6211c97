@@ -1,0 +1,120 @@
+**Theorem 122.2 (All-schedule bounds and the four necessary cuts).**
+For every finite preselected two-request kernel on $B_5$,
+
+$$
+S_3(p)\le15,\qquad S_4(p)\le27,\qquad S_5(p)\le12.
+\tag{122.1}
+$$
+
+If it is cap feasible on every word, then
+
+$$
+\begin{aligned}
+29\varepsilon&\ge2a_2+4a_3+5a_4+5a_5-2,\\
+52\varepsilon&\ge4a_2+9a_3+7a_4+9a_5-4,\\
+22\varepsilon&\ge2a_2+4a_3+4a_4+2a_5-2.
+\end{aligned}
+\tag{122.2}
+$$
+
+Together with the accepted residual bound 113.2, these imply all
+four cuts of (121.3) on the face (121.2), for every original
+$\mathcal N_2$ competitor and hence every original
+$\mathcal O_2$ competitor.
+
+**Proof.** Fix one seed of a finite preselected rule. It determines
+one schedule and a label constant on each of its acquired cells.
+For a distinct pair $i<j$, the exact maximum contribution of
+cell $uv$ to certificate $C_k$ is
+
+$$
+M_{k,ij}^{uv}=\max_{r\in J_5}
+ \sum_{(b,E,m)\in C_k:\ (b_i,b_j)=(u,v)}
+                        m\mathbf1_{r\in E}.
+\tag{122.3}
+$$
+
+This is a finite maximum of six explicit integer sums. Reading
+Definition 122.1 gives the following complete table, with each
+quadruple ordered as $00,01,10,11$:
+
+| Pair $(i,j)$ | C3 cell maxima | C4 cell maxima | C5 cell maxima |
+| --- | --- | --- | --- |
+| (1,2) | (2,3,5,5) | (4,5,9,9) | (2,2,4,4) |
+| (1,3) | (2,3,5,5) | (5,4,9,9) | (2,2,4,4) |
+| (1,4) | (3,2,5,5) | (6,3,8,10) | (4,0,4,4) |
+| (1,5) | (5,0,5,4) | (8,1,9,9) | (3,1,2,5) |
+| (2,3) | (2,3,5,5) | (5,4,9,9) | (2,2,4,4) |
+| (2,4) | (3,2,5,5) | (6,3,8,10) | (4,0,4,4) |
+| (2,5) | (5,0,5,4) | (8,1,9,9) | (3,2,2,5) |
+| (3,4) | (3,2,5,5) | (6,4,8,9) | (4,0,4,4) |
+| (3,5) | (5,0,5,4) | (8,2,9,8) | (2,2,2,4) |
+| (4,5) | (6,0,5,4) | (8,2,9,8) | (4,2,2,4) |
+
+For example, in $C_3$ at pair $(4,5)$, cell $00$ has
+label-zero weight six from the union rows at $00100,01000,01100$,
+$10000,10100,11000$; its maximum is six. Cell $01$ has no rows,
+cell $10$ has label-five weight five from $11110$, and cell
+$11$ has label-zero weight four. The resulting
+sum is fifteen. Formula (122.3) verifies every other entry by
+the same six-label finite sums, without any terminal-support
+restriction. The sums of the quadruples are at most $15,27,12$.
+
+For the empty schedule the exact maxima are $13,23,10$.
+For each singleton coordinate $i=1,\ldots,5$, summing its two
+cell maxima again gives $13,23,10$, respectively. A repeated
+pair $(i,i)$ has just those singleton cells because replies are
+static. Reversing a distinct pair only interchanges $01,10$.
+Thus this table and the short-schedule values cover all
+$1+5+25=31$ ordered schedules of length at most two. An output
+label outside the event sets scores zero. Integrating under the
+one seed distribution proves (122.1); the proof never chooses
+a separate output label or seed distribution for each source.
+
+For a cap-feasible kernel, TV gives
+$p_b(E)\ge\eta_b(E)-\varepsilon$ for each literal row. The
+three total event weights and exact target scores are
+
+$$
+\begin{array}{c|c|l}
+ &\sum m&\sum m\eta_b(E)\\\hline
+C_3&29&13+2a_2+4a_3+5a_4+5a_5\\
+C_4&52&23+4a_2+9a_3+7a_4+9a_5\\
+C_5&22&10+2a_2+4a_3+4a_4+2a_5
+\end{array}
+\tag{122.4}
+$$
+
+Subtracting the event-weight times $\varepsilon$ and applying
+(122.1) yields (122.2). Union rows retain their own TV constraint;
+coincident words have not been collapsed.
+
+Put $S=a_3+a_4+a_5$. Equation (121.2) is
+$S=6\varepsilon+2\delta/3$. Theorem 113.2 gives
+$S-3\varepsilon\le3\varepsilon+1-a_1$, and therefore
+$a_1-a_2\le\delta/3$. The score slacks on this face are exactly
+
+$$
+\begin{aligned}
+29\varepsilon-[2a_2+4a_3+5a_4+5a_5-2]
+ &=a_3-\varepsilon-4\delta/3,\\
+52\varepsilon-[4a_2+9a_3+7a_4+9a_5-4]
+ &=2(a_4-\varepsilon-\delta),\\
+22\varepsilon-[2a_2+4a_3+4a_4+2a_5-2]
+ &=2(a_5-\varepsilon-\delta/3).
+\end{aligned}
+\tag{122.5}
+$$
+
+Equivalently the three inequalities become
+$15a_3-3a_4-3a_5\ge22\delta$,
+$15a_4-3a_3-3a_5\ge16\delta$, and
+$15a_5-3a_3-3a_4\ge4\delta$.
+These are precisely the remaining cuts. For an original competitor
+use Theorem 110.2 at active length five first: projection,
+common-seed truncation and compactness supply one representative
+at the exact closed cap. We reuse that transport, including its
+full-carrier and arbitrary-address scope; the finite certificate
+does not restrict the original schedule to these ten pairs.
+$\square$
+

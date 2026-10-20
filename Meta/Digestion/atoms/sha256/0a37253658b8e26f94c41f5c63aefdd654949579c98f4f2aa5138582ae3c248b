@@ -1,0 +1,50 @@
+**命题 404.2（同一实际来源的全域变换）。** 在上述条带中，三个积分均绝对存在，且
+
+$$
+\boxed{
+\widehat R(z)=-\frac{\zeta'(z)}{z\mathcal B(z)},\qquad
+\widetilde P_x(z)=-\frac{\zeta'(z)}{z\mathcal B(z)}\widetilde w_x(z).}
+\tag{404.3}
+$$
+
+令 $\ell=\log x>0$，对 $\Re a>0$ 采用标准 $E_1(a)=\int_1^\infty e^{-av}dv/v$，则
+
+$$
+\boxed{
+\widetilde w_x(z)=\frac{x^{z-1}}{\log x}
++zE_1((1-z)\log x).}
+\tag{404.4}
+$$
+
+证明。先在高商积分 $\int_1^\infty R(y)y^{-z-1}dy$ 上复用（398.17）。§395 的高商包络保证该积分在 $\Re z>0$ 上解析；右侧在 $z=1$ 的两项主部由实际 $A,D$ 消去，$\mathcal B$ 在右半平面无零点。恒等定理将原有 $\Re z>1$ 身份接到 $0<\Re z<1$，并给
+
+$$
+\int_1^\infty R(y)y^{-z-1}dy
+=-\frac{\zeta'(z)}{z\mathcal B(z)}
+-\frac A{(z-1)^2}+\frac D{z-1}.
+\tag{404.5}
+$$
+
+真实低商 $R(y)=Dy-Ay\log y$ 给
+
+$$
+\int_0^1R(y)y^{-z-1}dy
+=\frac D{1-z}+\frac A{(1-z)^2}.
+\tag{404.6}
+$$
+
+两份来自同一个 $R$ 的主部恰好抵消，得第一式（404.3）。不能只保留（404.5）而丢失（404.6）。
+
+对第二式，非负 Tonelli 和正尺度换元 $y=t/s$ 给完整绝对预算
+
+$$
+\begin{aligned}
+&\int_0^\infty\int_x^\infty
+|R(t/s)|w(t)s^{\sigma-1}dt\,ds\\
+&\quad=M_\sigma(R)\int_x^\infty t^\sigma w(t)dt<\infty.
+\end{aligned}
+\tag{404.7}
+$$
+
+经典绝对 Fubini 遂给变换乘积。再令 $u=\log t$，并对 $e^{-(1-z)u}/u$ 作一次分部积分：无穷端点为零，有限端点保留 $e^{-(1-z)\ell}/\ell$，得到（404.4）。参数 $(1-z)\ell$ 的实部为正，不涉及 $E_1$ 的割线。$\square$
+
