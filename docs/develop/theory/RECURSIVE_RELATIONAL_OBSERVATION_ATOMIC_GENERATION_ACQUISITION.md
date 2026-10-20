@@ -3551,3 +3551,842 @@ Neither the selected task, this bounded obstruction/repair nor its
 publication completes that programme or the original full-recall task.
 
 ## 追加锚（本行以下为增补区）
+
+## 36. Source-legal residual control for the complete selected task
+
+The domain throughout §§36–40 is the known-seed LAB installation of
+§§30–33. The source, acquired local marks, selected side tapes, literal
+selected identities, seven requests, current authority and completed-return
+cuts retain their meanings there. The question is whether two attained
+selection states can be identified while retaining that entire task.
+The finite presentation in §37 gives an effective answer for every finite
+current LAB source. Section 39 gives a different answer for general total
+address programs, on the same source and request task.
+
+**Definition 36.1 (legal residual of a selector).** Write
+$C(q,e)=(\delta(q,e),\lambda(q,e))$. For a finite current source $t$,
+let $\operatorname{Cont}(t)$ be all finite successful event words executable
+from that very $t$, including the empty word. This domain is independent
+of selection state: LAB guards inspect the current source, and the selector
+only records a bit after a successful event. For any $q\in Q$, let
+$\operatorname{bits}_C(q,z)$ be the successive selection bits obtained
+by feeding $z$ to $C$ from $q$. Define
+
+$$
+q\equiv_t r
+\quad\Longleftrightarrow\quad
+\forall z\in\operatorname{Cont}(t),\quad
+\operatorname{bits}_C(q,z)=\operatorname{bits}_C(r,z).
+\tag{AA.110}
+$$
+
+This definition permits hypothetical starting controls solely to compute
+a relation on the finite set $Q$. The task comparison itself is restricted
+to actual images $K_C(w)=(t,\nu_C(w),q_C(w))$ from the same initialized
+$C,q_0$. No proposed arbitrary mark/tape/control tuple is thereby admitted.
+Binding and authority roles are fixed as in Definition 33.1, with fresh
+names compared by their rooted contents and binding relations.
+
+For an enabled event $e$ at $t$, equality in (AA.110) has the derivative
+consequence
+
+$$
+\lambda(q,e)=\lambda(r,e),\qquad
+\delta(q,e)\equiv_{t\cdot e}\delta(r,e).
+\tag{AA.111}
+$$
+
+Indeed the first equation uses the one-event word, and the second uses
+all words $ez$ with $z\in\operatorname{Cont}(t\cdot e)$. This is the
+usual continuation argument of PG §32 and the controlled-behavior
+suppliers; the restriction to actual LAB continuations is essential.
+In particular $\equiv_t$ is an equivalence relation, but is not in general
+one fixed equivalence relation on $Q$ independent of $t$.
+
+**Proposition 36.2 (the actual seven-request criterion).** For two actually
+attained MarkedReady cuts of this fixed installation, with semantic data
+$(t,\nu,q)$ and $(u,\xi,r)$, equality of all legal future $Q_C$ behavior
+is equivalent to
+
+$$
+t=u,\qquad \nu=\xi,\qquad q\equiv_t r.
+\tag{AA.112}
+$$
+
+Here behavior retains legality, every complete literal reply, and the
+related settled successor at every step. In particular NextSelected
+retains its old-event identity, its actual new growth identity and its
+operation on the current bound source. Raw $q$ is not an extra public
+readout of this task.
+
+Proof. The source and selected-word necessities are the actual Tag and
+FetchSelected separations already proved in Theorem 33.2. Suppose they
+are equal but (AA.110) fails. Choose a legal finite event word witnessing
+failure and stop at its first unequal selection bit. Supply exactly its
+addressed $P/S$ frames to the two installations. They execute the same
+actual source edits and have equal selected words until that last event.
+At that event one appends its literal identity and the other does not.
+If the previously common word has length $m$, a subsequent
+FetchSelected$(m+1)$ returns that identity in one run and OutOfRange
+in the other. Thus it is a difference in the declared complete task,
+although the preceding ordinary Growth replies need not reveal the bit.
+All supplied frames are legal on the common source. The maintained marks
+and tapes represent the respective new words by Theorem 32.3.
+
+Conversely suppose (AA.112). Tag, HasPromotion, HasSplit and the guards
+for addressed growth see the same source. Refusals, ordinary queries,
+BadFrame and out-of-range selected calls leave the semantic data
+unchanged and give the same replies. An enabled addressed growth uses
+the same identity $e$ in both runs. Equation (AA.111) gives equal new
+membership bits and related new controls on $t\cdot e$. Appending that
+same literal identity when selected gives equal new selected words;
+Theorem 31.2 gives their equal mark/tape contents.
+
+FetchSelected reads the same literal identity from those actual records.
+At an in-range NextSelected call, its retained old identity therefore has
+the same address in both runs. The current sources are equal; navigation
+and current left descent consequently reach the same current leaf and
+execute the same genuinely enabled $P/S$ event $e$. Apply (AA.111) to
+this actual event, not to the recalled old event. Its membership, complete
+two-identity reply and successor again agree. The two executions keep
+their actual source bindings and grants. These cases exhaust the seven
+requests and the unused tag. Induction on the finite request sequence
+proves full behavior equality with related successors. The same induction
+applies to adaptive requests whenever their next frame is a deterministic
+function of the already equal replies.
+
+The finite-return and framing assertions used here are those of §§20
+and 32 under their stated material, acknowledgement and authority
+premises. A missing input suffix is not treated as a completed request,
+and no equality of primitive durations or intermediate pending fields
+is inferred. $\square$
+
+Equation (AA.112) is an exact source-relative interpretation of the
+unsettled raw-control coordinate in Theorem 33.2. By itself (AA.110)
+is only a semantic condition. It gives no terminating equality test.
+The next section supplies finite data and an algorithm that decide it;
+they do not follow from the fact that $Q$ alone is finite.
+
+## 37. A supplied address presentation and exact frontier thresholds
+
+**Definition 37.1 (finite presentation and current leaf counts).**
+A supplied presentation consists of a finite nonempty address-state set
+$H$, an initial address state $h_0$, two total tables
+$\ell,\varrho:H\to H$, and the selector table
+
+$$
+(\delta,\lambda):Q\times\{P,S\}\times H
+                    \longrightarrow Q\times\{0,1\}.
+\tag{AA.113}
+$$
+
+Put $d(\varepsilon)=h_0$, $d(pL)=\ell(d(p))$ and
+$d(pR)=\varrho(d(p))$. The selector is exactly
+$C(q,(k,p))=(\delta(q,k,d(p)),\lambda(q,k,d(p)))$ on every event input.
+Both tables and this correspondence are premises, not a certificate
+extracted from an arbitrary total program. All their domains are supplied
+finite sets with explicit enumerations. Regular address predicates and
+finite combinations of them fit this presentation by their product
+classifier. No finite bound on address length or tree size is imposed.
+
+For a finite LAB source $t$, define $m(t)\in\mathbb N^{H\times\{\alpha,\beta\}}$
+by counting its current logical leaves of each address state and type.
+Material unary markers are excluded. Let $a_h,b_h$ denote the unit
+vectors for $(h,\alpha),(h,\beta)$. An event type $(P,h)$ has input and
+output vectors $a_h,b_h$; type $(S,h)$ has input and output vectors
+$b_h,b_{\ell(h)}+a_{\varrho(h)}$. Denote them by
+$i_{k,h},o_{k,h}$. Thus a successful event at address $p$ changes counts by
+
+$$
+m(t\cdot(k,p))=m(t)-i_{k,d(p)}+o_{k,d(p)},
+\qquad m(t)\ge i_{k,d(p)}.
+\tag{AA.114}
+$$
+
+Coincident classifier states cause ordinary addition of token counts;
+no distinctness of $h,\ell(h),\varrho(h)$ is assumed. Counts can be computed
+by a finite source traversal carrying the classifier along logical edges.
+They are an abstraction for the following decision, not a replacement for
+the actual source, its literal addresses or its selected records.
+
+To compare controls $q,r$, use a common counter vector $m$ and paired
+control $(q,r)$. At type $(k,h)$ with $m\ge i_{k,h}$, compare the two
+bits. If they differ, enter a designated error control. If they agree,
+move to $(\delta(q,k,h),\delta(r,k,h))$ and replace $m$ by
+$m-i_{k,h}+o_{k,h}$. Error means an unequal selection bit, not a source
+refusal or a hardware failure. This is a finite-control multiset system.
+It is an ordinary finite-place Petri net after adding one control place
+per pair and one error place: each transition consumes the current
+control token and the stated input leaf token, and produces the next
+control or error token and the stated output leaf tokens. Its initial
+marking has exactly one control token. There are no zero tests, resets,
+inhibitor arcs, source-size guards or final exact-marking constraints.
+
+**Lemma 37.2 (actual-source lifting, including all prefixes).** Starting
+with any finite current LAB source $t$ and any $q,r\in Q$, this paired
+counter system reaches error if and only if some actual source-legal
+finite event continuation from $t$ has different bit words from $q,r$.
+Every error-free finite counter path lifts to a legal addressed LAB
+path from that particular $t$, with the stated paired controls and
+counts at every prefix. Conversely every such addressed path projects
+to its counter path until the first unequal bit.
+
+Proof. The forward projection is (AA.114), because promotion changes
+one current alpha leaf into beta and a split replaces one current beta
+leaf by precisely its left beta and right alpha children. Deterministic
+address classification gives their indicated states. The table supplies
+the paired controls and bits exactly.
+
+For the reverse direction maintain the actual finite source and the
+counter equality after each lifted prefix. An enabled counter transition
+has a token in its specified leaf place. By the equality with $m$,
+there is an actual current logical leaf $p$ of exactly that type and
+classifier state. Choose, for example, the first one in current source
+preorder. Its indicated promotion or split is genuinely enabled. Execute
+it at that address on the same source. Its children, if any, have the
+classifier states prescribed by the tables, so (AA.114) restores the
+counter equality. The selector sees this actual $(k,p)$ and hence the
+same table entry as the counter transition. Induction gives the lift
+of every prefix, including a transition producing error.
+
+Two different leaves may have the same classifier state. Exchanging
+which available one is used changes literal addresses but not availability
+of the next abstract transition: the resulting source again has precisely
+the required counts. There is no demand to reuse an already consumed
+identity. The construction always chooses a current leaf; newly produced
+tokens are realized by actually created children. This establishes the
+existential lifting needed here, rather than assuming that any word
+over the finite event types is source-legal. It does not reconstruct
+a unique addressed history from a counter path, or give the source from
+its counts. $\square$
+
+**Theorem 37.3 (effective finite thresholds for every current source).**
+From the finite data (AA.113) one can compute, for each $(q,r)\in Q^2$,
+a finite set $B_{q,r}\subseteq\mathbb N^{H\times\{\alpha,\beta\}}$ such that,
+for every finite LAB source $t$,
+
+$$
+q\not\equiv_t r
+\quad\Longleftrightarrow\quad
+\exists v\in B_{q,r}:v\le m(t).
+\tag{AA.115}
+$$
+
+The computation terminates without a bound on the number of future
+events, leaves, addresses or selected entries. Consequently equality
+of all legal future $Q_C$ behavior of any two actually attained cuts
+is decidable: compare their finite sources and selected identity words,
+then apply (AA.115) to their actual current controls. The same finite
+threshold family works for all current finite sources of the declared
+presentation, rather than being a set of finite-depth observations.
+
+Proof. Apply the standard backward coverability construction to the
+paired system of Definition 37.1. Here is its complete finite-data form,
+so that the decision is specified independently of a symbolic quotient.
+For a nonnegative vector $v$ and event type $(k,h)$ put
+
+$$
+\operatorname{pre}_{k,h}(v)
+       =i_{k,h}+(v-o_{k,h})^+,
+\tag{AA.116}
+$$
+
+where positive part and order are componentwise. This is exactly the
+usual covering-predecessor formula: the event is enabled at $m$ and
+its successor covers $v$ if and only if
+$m\ge\operatorname{pre}_{k,h}(v)$. Use the finite antichain
+of minimal elements whenever representing an upward-closed set.
+
+Initially set $B^0_{q,r}$ to the minimal elements of
+
+$$
+\{i_{k,h}:\lambda(q,k,h)\ne\lambda(r,k,h)\}.
+$$
+
+These are precisely the counters allowing an immediate unequal bit.
+Given all $B^n$, form $B^{n+1}_{q,r}$ as the minimal elements of the union
+of $B^n_{q,r}$ with
+
+$$
+\bigcup_{\substack{k\in\{P,S\},\ h\in H\\
+                  \lambda(q,k,h)=\lambda(r,k,h)}}
+\{\operatorname{pre}_{k,h}(v):
+ v\in B^n_{\delta(q,k,h),\delta(r,k,h)}\}.
+\tag{AA.117}
+$$
+
+An empty union is allowed. Each step consists of finite table lookups,
+natural-number operations and componentwise comparisons. Stop when every
+antichain is unchanged. This is the ordinary finite-basis backward
+algorithm, with no pruning invariant beyond the whole counter space.
+The Petri-net coverability supplier in §40 gives its termination: finite
+control with equality times componentwise order on a fixed finite
+power of $\mathbb N$ is well quasi ordered; the ascending upward-closed
+predecessor sets stabilize. Equivalently one may encode the finite control
+by the one-hot control places already specified and use that supplier's
+finite-place algorithm. The construction does not assume that a bounded
+forward state space has been explored.
+
+By the covering-predecessor equation, $\uparrow B^n_{q,r}$ is exactly the
+set of counters from which an unequal bit can first be reached within
+at most $n+1$ events. This induction uses good-bit transitions in (AA.117)
+and the immediate bad-bit transitions in the seed. At stabilization the
+union therefore contains exactly the counters permitting some finite
+first disagreement. Conversely every member of a computed predecessor
+set has such a finite path; no limit configuration or infinite accepting
+run is added. Taking the stable antichains as $B_{q,r}$ and using
+Lemma 37.2 proves (AA.115) on every actual $t$.
+
+For two attained cuts, finite traversal compares their full source terms.
+Theorem 31.2 gives finite decoding and equality comparison of their
+acquired selected words; one may instead compare their source-indexed
+marks and tapes at equal source. A source or word inequality is already
+a distinguishing request by Proposition 36.2. At equality, (AA.115)
+and that proposition decide exactly the remaining condition. The
+antichains are computable once from $C,d$ before any source schedule;
+this last equality test only traverses the present finite data and
+compares finite vectors. $\square$
+
+The finite-basis algorithm, its termination and Petri coverability are
+credited suppliers, not additional numbered discoveries here. The
+source-specific deduction is that this particular counter abstraction
+has the exact actual-source lifting of Lemma 37.2 and the full-task
+interpretation of Proposition 36.2. Keeping only a finite alphabet of
+event classes without the leaf counters would admit impossible receipts.
+Keeping only the counters as service memory would erase source addresses,
+Tag replies, selected identity and the operands consumed by NextSelected.
+Neither replacement is used in (AA.115).
+
+## 38. Acquired residual control and continued marked service
+
+**Definition 38.1 (source-indexed normalization).** Fix an enumeration
+of $Q$ and write
+
+$$
+\begin{aligned}
+\rho_t(q)&=\min\{r\in Q:r\equiv_t q\},\\
+\overline K_C(w)&=(t,\nu_C(w),\rho_t(q_C(w))),\\
+\overline{\mathcal R}_C(w)
+ &=\bigl(t,(\mu_P,\mu_S),(V^C_v)_{v\in I(t)},\rho_t(q_C(w))\bigr).
+\end{aligned}
+\tag{AA.118}
+$$
+
+The minimum uses the supplied enumeration. It exists since $q$ itself
+belongs to its class, and is computable by (AA.115). The normalized
+label is a name for a source-relative class; it need not be a control
+attained from $q_0$ at that same endpoint. Its role is to replace one
+continuation input, not to fabricate a different actual past.
+
+The marked source data in (AA.118) keep exactly their independent meanings
+from §33: source support or terminal antichain with the unary beta marker,
+actual local membership, and actual selected order projected at branches.
+The time expression keeps the causal order and literal selected chain.
+In each of the four views replace only the raw selection-state annotation
+by $\rho_t(q)$. No full-source or selected-identity field is replaced by
+a threshold, and no raw control state is promised recoverable from its
+class name.
+
+**Theorem 38.2 (actual acquired correspondence and full task preservation).**
+For every supplied presentation of Definition 37.1, the reduced views
+of Definition 38.1 have exactly the complete $Q_C$ behavior kernel on
+actually attained completed cuts. They recover one another by finite
+mathematical maps on those images, with route agreement. There is also
+a source-independent reduced driver, installed from the same known
+seed under Assumption 32.1, which actually acquires
+$\overline{\mathcal R}_C(w)$ for its own word $w$ and serves the unchanged
+seven-request grammar. It preserves all legality, complete replies,
+actual source actions and corresponding reduced successors for every
+finite request sequence. Its persistent selection coordinate need not
+contain $q_C(w)$.
+
+The additional implementation premises are actual readable finite
+presentations and their finite computed antichains, installed evaluation
+and normalization code, backing for its source scans and counters, and
+current rights to the source and mark/tape/control fields. Antichain
+construction and every normalization operation are paid computations.
+They are not a new oracle primitive or a new source readout for $C$.
+
+Proof. At equal source and selected word, normalized labels are equal
+exactly when controls are related by $\equiv_t$. Proposition 36.2
+therefore identifies equality of $\overline K_C$ with behavior equality.
+Theorem 31.2 recovers the unique marks and selected tapes from $(t,\nu)$
+and conversely; the support/boundary and causal-source conversions of
+Theorem 33.2 leave the normalized label untouched. These supplier maps
+thus give both round trips for the reduced descriptions on their actual
+images. All routes reconstruct the same $\overline K_C$. They do not
+recover the original raw $q$ or arbitrary busy-state descriptions.
+
+For the actual reduced installation, compute the finite antichains from
+the supplied tables before the arbitrary schedule is received. This
+preparation depends only on the installed selector, not on a future
+source or hidden history. Allocate and bind the known alpha root and
+initialize empty marks and tapes as in §32. Initialize the retained
+selection label to $r=\rho_\alpha(q_0)$ using the same normalization
+procedure. Throughout a run, use the original fold from $q_0$ only as a
+proof-side definition of $q_C(w)$; that fold is not a retained journal
+or a second run available to the driver.
+
+Maintain the invariant that the actual source and selected records are
+exactly those of its actual word $w$, and
+$r=\rho_t(q_C(w))$. All parsers, source guards, frame backing, pending
+old identity, source navigation and selected decoding remain the actual
+handlers of Definition 32.2. On a successful event $e=(k,p)$, retain
+old $r$ and its actual acquired identity through Evaluate. Scan this
+finite address through the classifier and use the table entry
+
+$$
+C(r,e)=(s,b).
+$$
+
+Since $r\equiv_t q_C(w)$, (AA.111) says that $b$ is precisely the
+original selector's bit and that $s\equiv_{t\cdot e}q_C(we)$. Write that
+actual event's bit and perform exactly the selected ancestor appends of
+§32. After the source edit, obtain $m(t\cdot e)$ by traversing this same
+finite source with the classifier; compute the finite comparisons
+(AA.115) and normalize to
+
+$$
+r'=\rho_{t\cdot e}(s)=\rho_{t\cdot e}(q_C(we)).
+\tag{AA.119}
+$$
+
+The invariant is restored. No reevaluation on $r'$ counts as a new event
+receipt. A split still creates its two actual logical children, zero
+marks and bound empty descriptor, even if that split is unselected.
+The original raw state is never needed to decide this new bit or label.
+Recomputing counts from the source permits them to be temporary rather
+than an additional persistent coordinate.
+
+During normalization the source remains exclusively held, with no
+interleaved request. The actual edited source, unfinished records,
+old label, temporary table result, counters, traversal stack and pending
+reply all have backing. Commit installs $r'$ only after normalization
+and all source/record maintenance finish. Finite tables, stable finite
+antichains and a finite source make this a finite computation on each
+such operation. Print, End, supplied local acknowledgement, root Return
+and scratch clearing/reuse then restore the reduced completed phase.
+The precomputation terminates by Theorem 37.3. Its finite program and
+stored constants are part of installation cost; finite completion is
+conditional on the sufficient material already required by Assumption
+32.1, including this workspace. No uniform bound over all presentations
+or all finite source sizes is claimed.
+
+A query, refusal or BadFrame does not feed $C$ or change $r$. Selected
+fetch decodes the identical acquired word. NextSelected retains the
+same fetched literal identity and uses its actual current address and
+left descent, reaching the same leaf as the original driver on that
+same request history. It executes one actual enabled event, to which
+the preceding argument applies; its complete reply contains the same
+old and new identities, including when their kinds or selection bits
+differ. OutOfRange causes no growth in either driver. Current grants,
+logical-arity tests and completed-phase guards are unchanged, so
+legality is preserved as well as replies. Induction gives the acquired
+invariant, output, return and related successors for every finite
+request sequence. Each lawful addressed generation word remains
+admissible, as in Theorem 32.3. Proper frame prefixes retain their own
+backing and wait; a supplied finite completion suffices.
+
+For comparison of arbitrary attained cuts, the reduced value is obtained
+by finite normalization of their actual raw state and readable records.
+An operational late conversion additionally requires the owner's actual
+permission and binding to install the reduced entry; the mathematical
+map does not grant it. The from-seed construction above supplies actual
+acquisition without that extra late-conversion assumption. No raw-$q$
+reconstruction is used to continue the reduced service. $\square$
+
+**Proposition 38.3 (strict source-dependent merging at attained cuts).**
+Use two states $0,1$, initial state $0$. On $P_\varepsilon$ keep the state
+and output its old value. On $S_L$ set state $0$ with bit zero; on $P_R$
+set state $1$ with bit zero; all other events keep the state with bit zero.
+A finite address classifier distinguishing exactly $\varepsilon,L,R$
+and all other addresses supplies Definition 37.1's presentation.
+There are two attained cuts with distinct raw controls but the same
+source and reduced record.
+
+**Proof.** The two legal words (AA.75), respectively ending with $P_R$ and $S_L$,
+reach the same $t'=\langle\langle\beta,\alpha\rangle,\beta\rangle$,
+the same empty selected word and the two distinct controls $1,0$.
+All acquired membership bits and selected tapes agree. The sole event
+that can select differently is $P_\varepsilon$, already consumed at both
+cuts. It cannot occur again on any LAB continuation. Thus $0\equiv_{t'}1$
+and both normalize to $0$. The stand-alone event transducer distinguishes
+these states on the input $P_\varepsilon$. Minimizing that stand-alone
+machine would retain a distinction that the actual current source has
+made unusable. The common reduced record cannot determine which of the
+two old raw states occurred, yet Theorem 38.2 continues the entire task. $\square$
+
+**Definition 38.4 (conditional size and same-run costs).** For fixed
+actually attainable $(t,\nu)$ let
+$A_{t,\nu}=\{q_C(w):w\in\mathcal H(t),\ \nu_C(w)=\nu\}$.
+The attained normalized labels have exactly
+$|A_{t,\nu}/{\equiv_t}|$ values. The usual distinguishing-continuation
+argument, already supplied by PG §32 and the predictive-memory results,
+forces any exact deterministic summary retaining that same $(t,\nu)$
+to distinguish these classes. This is conditional control-value
+minimality on that actual fibre. It is not a minimum of total memory,
+a fixed optimal bit layout across changing sources, or a smaller total
+implementation. Even the normalized label may still use the original
+$Q$-valued field.
+
+Finite threshold constants, classifier and selector tables, their
+installation and precomputation, each full-source scan, finite arithmetic,
+normalization comparisons, temporary counts and traversal storage all
+have separate costs. So do the still-retained source, unary markers,
+local marks, descriptor bindings, side cells, live grants, received
+frames, pending identities, source edits, ancestor maintenance, outputs,
+End, acknowledgement, return and cleanup of §34. None is paid by a claim
+that the class name has fewer possible values. Record and reference
+widths retain their actual backing costs. If an old raw state remains
+accessible in an archive or scratch, it remains memory and is not claimed
+forgotten. The from-seed reduced driver clears its obsolete temporary
+control operands on completed return and never maintains a second raw
+selector-state journal. Finite descriptions do not bound growing source,
+records or normalization workspace.
+
+## 39. One fixed total selector with undecidable attained-cut equality
+
+The finite presentation hypothesis has mathematical force. This section
+keeps the same LAB source, known seed, actual acquisition, selected
+identity and seven requests. It replaces (AA.113) by the general total
+address-program hypothesis of Definition 30.1. No termination decision
+for an arbitrary supplied program is needed in the construction below:
+its one fixed evaluator is total by bounded simulation.
+
+**Definition 39.1 (one two-state evaluator and its actual cut pair).**
+Fix an effective numbering $M_j$ of finite machines on blank input for
+which eventual halting is undecidable. Let $H(j,n)$ be the decidable
+predicate that $M_j$ halts within its first $n$ simulated steps, including
+an initial-halting check when $n=0$. All simulations in this definition
+are bounded; $H$ is not an eventual-halting input port.
+
+The single selector $C^\dagger$ has states $0,1$, initial state $0$.
+The following disjoint cases give its complete transition/output table
+as a finite program. In the last two columns $q$ is its old state.
+
+| Actual event input | Next state | Selection bit |
+| --- | --- | --- |
+| $P_\varepsilon$ | $q$ | $1$ |
+| $P_{L^jRR}$ for $j\ge0$ | $1$ | $0$ |
+| $S_{L^j}$, $S_{L^jR}$ or $S_{L^jRL}$ for $j\ge0$ | $0$ | $0$ |
+| $P_{L^jRL^{n+2}R}$ for $j,n\ge0$ | $q$ | $q\,\mathbf1_{H(j,n)}$ |
+| Every other event | $q$ | $0$ |
+
+Scanning a finite address decides its case and, in a test case, its
+unique $j,n$. The first $R$ fixes $j$ and the following run of at least
+two $L$'s fixes $n$. These cases do not overlap the $RR$ setting events
+or any split case. The bounded simulation then terminates on every
+finite input. This is one fixed two-state selector for all $j,n$;
+its evaluator and workspace are not counted as two states of total
+apparatus. The reset and setting cases both make formerly different
+controls equal, to $0$ or $1$ respectively.
+
+For each $e\ge0$, put $r_e=L^eR$ and define the following actual words:
+
+$$
+\begin{aligned}
+u_e&=P_\varepsilon\,S_\varepsilon S_L\cdots S_{L^e}
+                     \,P_{r_e}S_{r_e},\\
+a_e&=P_{r_eR},\qquad b_e=S_{r_eL},\\
+w_e^0&=u_ea_eb_e,\qquad w_e^1=u_eb_ea_e.
+\end{aligned}
+\tag{AA.120}
+$$
+
+The split list in the first line contains exactly $e+1$ entries; for
+$e=0$ it is just $S_\varepsilon$. Let $t_e$ be their common endpoint.
+These words and their finite acquired records are effectively
+constructible from $e$, without simulating $M_e$ to completion.
+
+The root is first promoted and then split. Each successive pure-left
+spine leaf is born beta, so each indicated spine split is enabled.
+The right leaf $r_e$ is born alpha; its promotion and split create the
+incomparable leaves $r_eL$ of type beta and $r_eR$ of type alpha. Thus
+$a_e,b_e$ are both enabled and can occur in either order without
+interference. All prefixes are actual legal source executions, also
+by Theorem 17.2. Their common endpoint has all pure-left spine splits
+through $L^e$, and exactly the additional splits at $r_e$ and $r_eL$.
+For $j<e$ each right offshoot $L^jR$ is still alpha, and the next
+pure-left spine leaf $L^{e+1}$ is beta.
+
+The setup ends with control $0$. The $a_e$ event sets $1$ and $b_e$
+resets $0$. Consequently the two completed acquired cuts satisfy
+
+$$
+K_{C^\dagger}(w_e^0)=(t_e,P_\varepsilon,0),\qquad
+K_{C^\dagger}(w_e^1)=(t_e,P_\varepsilon,1).
+\tag{AA.121}
+$$
+
+Their complete source-indexed selected records agree: only the root
+promotion mark is one, every other local mark is zero and every selected
+side tape is empty. The shared selected identity is the literal
+$P_\varepsilon$, not an unspecified output bit. Theorem 32.3 gives
+these actual retained objects and current callable entries under
+Assumption 32.1. They are alternative executions of the same installed
+seed service, with equal binding roles, not independently assigned
+record tuples or imported histories.
+
+**Theorem 39.2 (exact source-relative obstruction at acquired cuts).**
+For this one fixed total $C^\dagger$ and every $e\ge0$,
+
+$$
+K_{C^\dagger}(w_e^0)\sim_{Q_{C^\dagger}}K_{C^\dagger}(w_e^1)
+\quad\Longleftrightarrow\quad
+M_e\text{ never halts on blank input}.
+\tag{AA.122}
+$$
+
+In the halting case a finite common legal addressed-growth continuation
+followed by FetchSelected$(2)$ distinguishes the literal selected
+identity. NextSelected$(2)$ on the same two continued cuts actually
+consumes that recorded identity and grows its current source in one
+run, while the other returns OutOfRange without growth. Thus
+undecidability concerns the complete acquired-source task itself.
+
+Proof. First suppose $M_e$ never halts. Consider any common legal event
+continuation from $t_e$, with the two controls initially $0,1$. If a
+reset or setting event occurs, both next controls are equal. Thereafter
+the deterministic selector gives equal bits on every common event,
+regardless of what machine indices later addresses encode. It suffices
+to consider the prefix before the first such event.
+
+Root promotion has already occurred and cannot recur. Before a reset or
+setting event, every possible test event must have first index $j=e$.
+For $j<e$, the cone $L^jR$ is still an alpha leaf at the cut; reaching
+any strict-descendant test address in that cone requires its split
+$S_{L^jR}$, a reset. For $j>e$, reaching that cone requires the as-yet
+unperformed pure-spine split $S_{L^{e+1}}$, also a reset. This covers all
+$j\ne e$ and uses actual creation prerequisites, not a promise restricting
+the client's future requests. Promotions or arbitrary work elsewhere do
+not bypass the creating splits. The common source can grow arbitrarily
+elsewhere, but any path to such a test has already made the controls equal.
+
+The tests remaining in the active cone have the form
+$P_{r_eL^{n+2}R}$. Before synchronization their bits are nevertheless zero
+in both states because $H(e,n)$ is false for every finite $n$. All other
+nonsynchronizing future events have bit zero. The original root selected
+identity is preserved. Thus the bit words are equal for every actual
+legal continuation, whether synchronization eventually occurs or not.
+There is no requirement to decide whether it will occur. We have
+$0\equiv_{t_e}1$; Proposition 36.2 proves equality for the entire request
+task, including arbitrary selected-consumer interleavings.
+
+Now suppose $M_e$ halts within $n$ steps, choosing any sufficiently large
+finite $n\ge0$. At $t_e$, the address $r_eLL$ is a beta leaf, created by
+$b_e$. Execute the splits
+
+$$
+S_{r_eL^2},\ S_{r_eL^3},\ \ldots,\ S_{r_eL^{n+2}}
+\quad\text{followed by}\quad
+c_{e,n}=P_{r_eL^{n+2}R}.
+\tag{AA.123}
+$$
+
+For $n=0$ this split list has one entry. Each split acts on the current
+left beta descendant produced by the preceding one. The last split
+creates precisely the right alpha leaf promoted by $c_{e,n}$. Hence
+this is a legal finite continuation from both current sources. None of
+these splits is pure-left, at an offshoot root $L^jR$, or at the one-left
+gate $L^jRL$: their first $R$ is the one in $r_e$, followed by at least
+two $L$'s. Nor is any a setting promotion. They preserve the controls
+$0,1$ and select nothing. The final promotion is exactly the test for
+$(e,n)$, selecting zero in state $0$ and one in state $1$.
+
+Let $p=r_eL^{n+2}R$. The new selected words are, respectively,
+$P_\varepsilon$ and $P_\varepsilon P_p$. Their actual local records are
+acquired by §32 at these same events, including the mark at $p$ and its
+proper-ancestor side appends. FetchSelected$(2)$ thus returns OutOfRange
+in the first run and the literal $P_p$ in the second. It preserves those
+records and makes no source change. Now NextSelected$(2)$ in the second
+run calls that actual acquired decoder, retains $P_p$ and its address,
+and navigates to the current beta leaf $p$. The left descent there is
+empty, so it executes the genuinely enabled $S_p$ on the bound source,
+returning both $P_p$ and $S_p$. This split is unselected, because $p$
+ends in $R$ after an internal $R$ and is in none of the reset-split
+classes, and all remaining split cases select zero. Its maintenance
+still creates the new empty descriptor and logical child marks.
+The first run instead returns OutOfRange, performs no growth and keeps
+its source. The returned full words and actual source successors differ.
+This is not a guessed old identity or a free response oracle used to
+manufacture a separation. It proves failure of (AA.112), completing
+both directions of (AA.122). $\square$
+
+**Corollary 39.3 (no uniform exact effective reduction for total evaluators).**
+No terminating procedure decides complete future $Q_C$ equality on all
+actually attained finite cuts for the general total-selector class of
+Definition 30.1. This remains so with the selector fixed to $C^\dagger$,
+with both histories explicitly supplied, with equal source and all
+selected records supplied, and with both cuts acquired from the known
+seed under current service rights. There is also no uniform
+computable assignment of finite codes to these cuts whose decidable
+code equality is exactly their full task equivalence. The same
+obstruction applies to a uniform procedure returning the exact finite
+partition of attainable controls at supplied $(t,\nu)$.
+
+Proof. Construct the actual pair (AA.120) from $e$ and use such a procedure
+on its returned cuts. By (AA.122) its answer decides nonhalting, hence
+also halting. A finite-code reduction with exact decidable equality would
+give that procedure by computing and comparing the two codes. An exact
+partition would decide whether the two displayed attainable controls
+belong to one class. The standard printing/halting impossibility is the
+supplier; the content of this reduction is (AA.120)–(AA.123) with the
+source prerequisites, selected identity, acquisition and actual consumer
+correspondence. $\square$
+
+For any fixed total evaluator and supplied finite semantic cuts,
+inequivalence is semidecidable: a finite source or selected-word
+inequality is decidable, and otherwise enumerate finite addressed
+continuations, check their LAB guards and compute the finitely many
+selector steps, looking for the first bit difference. Effective
+enumeration and totality ensure every fixed finite candidate finishes;
+no finite source-growth continuation that could distinguish is lost.
+The witness is converted into a complete-request distinction by
+Proposition 36.2. Thus for fixed $C^\dagger$ equality on supplied legal
+histories has a co-c.e. upper description, and (AA.122) supplies the
+matching nonhalting hardness. This statement is about the explicitly
+total fixed syntax here. It does not declare totality of arbitrary
+program indices decidable.
+
+The obstruction is not lack of a sufficient continuing representation:
+raw $q$, the actual source and selected records already supply one by
+Theorem 32.3. Nor is it lack of an abstract quotient, or proof that no
+individual pair can be settled. It excludes a uniform exact effective
+identification of all behaviorally redundant controls. In particular
+$C^\dagger$ cannot have an effective finite address presentation satisfying
+(AA.113): even the existence of one fixed such table would contradict
+Theorem 37.3 and (AA.122). No algorithm extracting an unknown presentation
+is a premise of the positive theorem.
+
+## 40. Supplier correspondence and the exact effective boundary
+
+**Mathematical citation 40.1 (source-specific content and suppliers).**
+The source-to-counter lifting and threshold interpretation of §37, the
+acquired source-indexed update (AA.119), and the fixed-selector attained-cut
+construction (AA.120)–(AA.123) are `repo-derived` ordinary mathematical
+synthesis. General continuation kernels, minimization, multiset
+abstraction, backward coverability, finite-basis termination and halting
+undecidability are suppliers. Their use here is as follows.
+
+| Supplier with its retained hypothesis | Role here and the missing correspondence it does not supply |
+| --- | --- |
+| This volume, §§17,19–22,30–35 | LAB birth types, persistent identities, exact legal execution, selected marks/tapes, owned initialization, framed seven-request service, current left descent and settled four-view recovery are reused. The new control equality is the effective actual-source condition (AA.115), with the concrete continuing implementation (AA.119); Theorem 33.2 alone asserts only sufficiency of raw $q$. |
+| [PG §32.1–32.4](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md#32-依赖类型生成器与可达行为核心) and §§19–20 | Full responses, legality, action descent, actual reachable domains and behavior-quotient minimality are already supplied. Finiteness of a selector's state is not finiteness of LAB source/record configurations. These sections supply neither the exact leaf-count lifting nor an effective stopping criterion for this infinite family of continuations. |
+| [ControlledBehaviorUniversality](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean) and [owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.scribe.cs) | `runWord`, `controlledBehavior`, private `run_word_intertwines` and the public universal property supply ordinary word iteration and commuting realizations. The public cardinal theorem assumes finite source and realization carriers. The Scribe already explains the arbitrary-output all-word quotient without that finite-cardinality conclusion. Neither is newly asserted here; Lemma 37.2 supplies the source-legal domain they leave unspecified. |
+| [PredictiveMemoryMinimalQuotient](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean) and [owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.scribe.cs) | `predictive_memory_minimal_quotient` requires separate `readout_factors` and `update_factors`. Equations (AA.111),(AA.119) and the actual request proof supply those operational obligations here; that abstract result is not an algorithm for computing (AA.110). |
+| [TypedFiniteViewKernel](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean) and [owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.scribe.cs) | `response` retains partial legality, ordered complete labels and terminal readout; `typed_finite_view_kernel` identifies finite views and the full intersection, and proves permanence if a plateau is supplied. It does not guarantee a computable plateau for an arbitrary infinite source carrier. The finite-basis computation in (AA.116)–(AA.117) is an additional effective route for the declared presentation. |
+| [DFAOStateLowerBound](../../../D5/S0/Automata/DFAOStateLowerBound.lean) and [owning Scribe](../../../Blueprint/D5/S0/Automata/DFAOStateLowerBound.scribe.cs) | `state_lower_bound_of_distinguishing_family` credits the standard pairwise legal-continuation injection argument used for conditional size in Definition 38.4. It does not identify the legal continuations of a growing LAB source. No new abstract state-count theorem is asserted. |
+| [EnabledPathSwapConnectivity](../../../D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.lean) and [owning Scribe](../../../Blueprint/D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.scribe.cs) | `Enabled`, `Exec`, `ExtensionList`, `result` and the proof's lower-set/extension/swap helpers supply finite-poset execution and legal exchanges. The source interpretation is Theorem 17.2; (AA.120)'s two actually enabled incomparable operations instantiate it. It does not supply the address gates excluding other machine indices. |
+| [ClosureUndecidable](../../../D5/S0/Computability/ClosureUndecidable.lean) and [owning Scribe](../../../Blueprint/D5/S0/Computability/ClosureUndecidable.scribe.cs) | `closure_reading_unreachable` applies upstream Rice to a nontrivial extensional predicate on partial-recursive codes. General nondecidability is credited. Section 39 instead holds one total selector fixed, varies actual finite LAB cuts and proves their exact full-service equivalence, including a real selected consumer. Those source and operation premises are not supplied by an extensional-code theorem. |
+| [EffectiveImageKernelCriterion](../../../D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean) and [owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.scribe.cs) | `refinement_iff_kernel_inclusion_on_effective_images` gives a unique range-to-range factor under kernel inclusion. Its `Set.rangeSplitting` choice is a mathematical representative, not an effective selector minimizer or an acquired accessible object. The finite algorithm and actual backing are supplied separately in §§37–38. |
+
+At mathlib pin `56a005855ea17e0b0958f73ec801ae140b0a1679`,
+[`Computability/DFA`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/DFA.lean)
+defines `DFA.step`, `evalFrom` by `List.foldl`,
+`evalFrom_of_append` and `evalFrom_append_singleton`.
+[`Computability/MyhillNerode`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/MyhillNerode.lean)
+supplies `Language.toDFA`, `IsRegular.finite_range_leftQuotient` and
+`isRegular_iff_finite_range_leftQuotient`. These are state-iteration
+and regular-language quotient suppliers, without the LAB acquisition
+or finite-source future-availability correspondence.
+[`Computability/Halting`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/Halting.lean)
+supplies `ComputablePred.rice₂`, `halting_problem`,
+`halting_problem_re` and `halting_problem_not_re` with their partial-code
+hypotheses. None is an assertion that the totality promise on arbitrary
+program indices is decidable.
+
+The primary literature contributes the following exact ingredients.
+
+| Primary source | Premise actually used or comparison retained |
+| --- | --- |
+| Geffroy, Leroux and Sutre, [*Occam's Razor Applied to the Petri Net Coverability Problem*, arXiv:1607.05956v1](https://arxiv.org/html/1607.05956v1), §§2–4, Lemmas 1–4 and Theorem 4.1 | Ordinary finite-place nonnegative-token firing, upward-closed error coverability, finite minimal bases, the covering predecessor $i+(v-o)^+$, termination and correctness of backward analysis. Take the full counter space as the downward-closed invariant; no approximate continuous-net decision or experimental runtime premise is used. Definition 37.1's one-hot paired control and two birth-typed leaf places per classifier state meet precisely these ordinary-net conditions. |
+| Abdulla, Delzanno and Montali, [*Well Structured Transition Systems with History*, arXiv:1509.07203v1](https://arxiv.org/html/1509.07203v1), Definitions 2.2–2.3, 3.1 and Proposition 3.7 | Well quasi order and an effective predecessor basis are separate hypotheses. Their history-coverability results use monotone history orders, including subword or multiset orders under their stated alphabet conditions. Here only the finite-counter error problem is used. Literal selected-history equality is not replaced by subword coverability, and actual selected records remain retained. The presence of histories in that paper does not by itself establish Lemma 37.2 or NextSelected preservation. |
+| Kozen, [*On the Myhill–Nerode Theorem for Trees*](https://www.cs.cornell.edu/~kozen/Papers/mn.pdf), opening string formulation, Definitions and the tree theorem/proof on pp. 3–5 of the note | Right-continuation equivalence on strings and context congruence/finite-index characterization for bottom-up ranked-tree recognition are classical. LAB continuation instead edits currently enabled leaves and emits selected literal event identities; an arbitrary tree context or string of event classes is not an available source request. No generic Myhill–Nerode result is renumbered as the effective LAB criterion. |
+| Veanes, [*Minimization of Symbolic Automata*, MSR-TR-2013-48](https://www.microsoft.com/en-us/research/wp-content/uploads/2013/04/MSR-TR-2013-48.pdf), §2, Theorems 1–2 and §3 | Symbolic alphabets allow infinite character domains; effective Boolean operations do not alone make predicate satisfiability decidable. The stated minimization steps require satisfiability tests, and deterministic complete symbolic automata have their classical minimal-language quotient. This is not a permission to treat arbitrary total address tests as a decidable alphabet theory. Even a supplied finite event alphabet does not encode LAB's unbounded current-leaf availability without the additional source abstraction. |
+| Turing, [*On Computable Numbers, with an Application to the Entscheidungsproblem*](https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf), §8, especially p. 248 | No machine decides whether arbitrary supplied code ever prints a designated symbol. Convert a printing machine into a blank-input machine halting at its first such print, and a halting machine into one printing that symbol upon halting. These effective finite transformations give the halting endpoint used in Corollary 39.3; circle-freeness is not identified with halting. |
+
+**Definition 40.2 (adjacent source comparisons).** [NASF §§1,6,9](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ADAPTIVE_SELECTION_FIBERS.md)
+concerns an unknown invocation tree, an independent writer's global
+$\rho$, Read/Return histories and possible-source fibres after cleanup.
+Its fixed total producer and its source/count characterization already
+give a concrete undecidability result in that model. Its Problem 9.3
+leaves restricted selectors open in that source/task domain. The present
+finite classifier governs event *addresses*, not a bottom-up predicate
+on an acquired Native tree. LAB has a known seed, local owned $P/S$,
+no independent writer, retained selected identities and NextSelected.
+No source/operation/initialization/task isomorphism between these
+installations is supplied or assumed, so this appendix does not settle
+NASF Problem 9.3.
+
+[PCA Theorem 15.2 and §§19–20](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRESCRIBED_CODE_ACQUISITION.md)
+already distinguish supplied finite determining data from its extraction
+from a total program. They prove no uniform extractor even with finite
+preparability promised, and give stronger index classifications for their
+explicit code syntax. Those are suppliers for the general distinction,
+not newly claimed impossibilities here. Their prescribed complete reader
+entries and stationary unknown-source native menus are different from
+the same-current-source LAB residual task. Section 39 keeps its evaluator
+fixed and encodes the machine in the attained cut's source prerequisites;
+its reset gates are what exclude every unrelated future test before the
+control difference can be observed. Removing that argument would leave
+only a halting wrapper and would not prove (AA.122).
+
+[Native regular-frontier selection, Definitions 1.1–1.3 and Theorem 2.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REGULAR_FRONTIER_SELECTION.md)
+uses a bottom-up finite tree automaton to choose the first accepting
+subtrees and characterizes its complete-row fillings and original-source
+fibres under global substitution. Its finite state interface supplies
+neither (AA.114)'s local birth-typed leaf transitions nor LAB selected
+receipts. [Native mixed-screen completion, §§1–7](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_MIXED_SCREEN_COMPLETION.md)
+concerns the original prescribed stationary paid Boolean reader graph,
+its actually retained fragment, arbitrary complete extensions and the
+whole original consumer. Its state/fragment bounds are not a minimization
+of a LAB selector and are not transported to (AA.118).
+
+The separately published [*Adaptive Selected Retrieval*, fixed revision
+`fcfbfe128d98e94c79e9c318aa36ce10b8fb96ac`](https://github.com/the-omega-institute/trureturing/blob/fcfbfe128d98e94c79e9c318aa36ce10b8fb96ac/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_SELECTED_RETRIEVAL.md),
+uses this volume's same LAB but one fixed identity predicate
+$\chi(P,p)=0$, $\chi(S,p)=\mathbf1_{p\in L^*R}$ and the endpoint family
+of §25. Its common baseline star, exact adaptive whole-old-coordinate
+query count $n+1$, zero-error expectation bound and bounded-error
+$(1-2\epsilon)(n+1)$ tradeoff retain their own query model. Its §§7–8
+already connect exact retrieval to an acquired selected handoff and
+real NextSelected successors. Those acquisition and consumption methods
+are credited through §§20,26,32 here. The new result does not reassert
+a query lower bound or a new journal capability. That retrieval source
+has no varying residual $q$ and no criterion for its source-legal future
+reduction; its random passive-word error allowance is not adopted by
+the exact seven-request task in this appendix.
+
+**Definition 40.3 (preserved obligations).** The positive theorem requires
+an explicitly supplied finite address presentation with its exact
+selector correspondence. It neither discovers such a presentation from
+arbitrary total code nor replaces that code by a convenient restriction.
+The negative theorem concerns general total address evaluation and holds
+for one specified total two-state evaluator on actually acquired cuts.
+It does not negate the supplied-presentation theorem, the existence of
+sufficient raw-state memory or the abstract quotient.
+
+Four-view correspondence remains limited to completed marked service
+cuts with current binding, authority, actual retained records and
+sufficient finite material. The threshold abstraction is used to decide
+one residual-control relation; independently meaningful source geometry,
+boundary, causal order and literal selected memory remain in the common
+process. Neither bare geometry nor a finite vector of leaf counts is
+asserted to recover its selected past. No busy-phase inverse, full
+controller chronology, raw-control inverse after forgetting, uniformly
+bounded memory, total-memory minimum, cheaper total implementation or
+physical realization follows. Unknown-seed or unknown-history acquisition,
+revocation, concurrent writers, interrupts and observable allocation
+failure require their own full legality/reply/successor contracts.
+
+All earlier fixed-$G_{\rm gc}$, original-$Q$, parked-consumer,
+unchanged-initialization, terminal and final-no-Ready obligations retain
+their original scopes, as do §§1–16's KBonacci source and INITIAL task.
+The original Native-source obligations and the full unselected-recall
+task have not been changed into this selected LAB task. This source-relative
+effective boundary closes the raw-$q$ sufficiency/nonminimality gap of
+AA §33.2 for the declared presentation class and identifies an exact
+obstruction for general total address programs. It does not complete
+the broader common-process, mutual-recovery and parsimony programme.
+
+## 追加锚（本行以下为增补区）
