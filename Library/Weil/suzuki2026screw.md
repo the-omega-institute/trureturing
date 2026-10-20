@@ -9718,3 +9718,83 @@ For general $F\in\mathcal V$, use W324's existing joint full-Gamma/moment core. 
 For an original finite Gaussian source normalized by $Q_H(\sigma)=1$, use W257 once: with $\psi=F/\|F\|_H$, the right side of W339 evaluated at $\psi$, divided by $4\pi^3$, bounds its original $A Q_{\mathcal K_A^g}$ from below. EVERY fixed $K>1$ and every such source with $Q_{6,A}\le K$ are included at W257's admitted start; no condition on the remaining primary-prime/mean term is added.
 
 The Gamma fraction is the existing Stechkin supplier's fraction. The additional content is the actual half-line $B$/even-extension comparison with a bounded error independent of support, and its complete-source consumer W339. W317's complete-debit bound remains independently available. The primary-prime and mean terms have not been controlled against the retained reserve, and neither constrained optimum is shown nonnegative. Full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without numerical/scientific execution, Lean/kernel certification, exhaustive bibliography or a worldwide-priority claim.
+
+## An arbitrarily large Gamma reserve after centering higher prime powers
+
+The fixed Stechkin reserve in W339 can be strengthened by reusing an existing unconditional one-line estimate. [Hiary--Leong--Yang, *Explicit bounds for the Riemann zeta-function on the 1-line*, arXiv:2306.13289v3, Theorem 2](https://arxiv.org/html/2306.13289v3#Thmtheorem2), at $\sigma=1$, gives
+$$
+\left|\frac{\zeta'}{\zeta}(1+it)\right|
+\le154.5\,\frac{\log t}{\log\log t}\qquad(t\ge500).
+$$
+Only its consequence $\zeta'/\zeta(1+it)=o(\log|t|)$ is used; negative heights follow by conjugation. This classical supplier is cited rather than reproved. [Leong, arXiv:2405.04869v5, introduction and the paragraph before Lemma 3](https://arxiv.org/html/2405.04869v5), identifies two gaps in older Trudgian estimates: a factor $1/c$ and an equal-log-exponent restriction. In the selected supplier, the local proof locators are §6, Lemma 4, footnote 7, which explicitly uses equal logarithmic exponents, and §6.1, the displayed choices of $A_2$ and $\lambda_2$, which retain the full $1/d$ term. No older erroneous constant is imported here. The published theorem is an external input; its complete proof and numerical constants are not independently certified.
+
+Keep the angular Fourier convention and every definition of the [existing higher-power account](broadbent2026mertens.md#the-actual-even-power-boundary-pairing). To avoid confusing its regular zeta function with a physical feature, denote it here by
+$$
+F_{\rm reg}(s)=-\frac{\zeta'}{\zeta}(s)-\frac1{s-1},\qquad
+F_{\rm reg}(1)=-\gamma.
+$$
+In particular the pole has already contributed the separate rank-one term $\tfrac12|\int g|^2$ in that account; it is not part of the multiplier below. For $g\in C_c^\infty(\mathbb R;\mathbb C)$ put
+$$
+\epsilon(g)=T_{\ge2}(g)-\frac12\left|\int g\right|^2
+-2\kappa_0\|g\|_2^2,\qquad \kappa_0=-\gamma+C_{\rm odd}.
+$$
+For EVERY $0<\delta<1$ there is a finite $C_\delta$, independent of $g$, its support, mean and coefficients, such that
+$$
+\begin{aligned}
+|\epsilon(g)|&\le\delta E_*(g)+C_\delta\|g\|_2^2,\\
+\mathcal Z(g)&\ge(1-\delta)E_*(g)-C_\delta\|g\|_2^2.
+\end{aligned}
+\tag{W341}
+$$
+Here $\mathcal Z$, $\mathcal D_{\rm odd}$ and $\mathcal J$ are the SAME nonnegative forms as equation (8) of the cited account, and $\mathcal J$ is still distinct from the complete debit $\mathfrak J$.
+
+Indeed its exact multiplier formula (7) is
+$$
+m_\epsilon(\tau)=2\Re F_{\rm reg}(1+2i\tau)
++2\Re O(\tau)-2\kappa_0.
+$$
+For $\tau\ne0$, $1/(2i\tau)$ has zero real part. The supplier therefore gives $\Re F_{\rm reg}(1+2i\tau)=o(\log|\tau|)$ at infinity. The function $F_{\rm reg}$ is continuous at one and on the zero-free line, so this real multiplier is bounded on every compact frequency interval. The absolutely convergent odd-power series $O$ is bounded. By the already used digamma asymptotic,
+$$
+a_*(\tau)=\Re\operatorname{digamma}(5/4+i\tau/2)
+-\operatorname{digamma}(5/4)\sim\log|\tau|.
+$$
+Thus for each fixed $\delta$ a single compact-frequency split gives
+$|m_\epsilon(\tau)|\le\delta a_*(\tau)+C_\delta$ at EVERY real frequency. Pair it with $|\widehat g|^2d\tau/(2\pi)$ to obtain the first line of W341. Equation (8), namely
+$\mathcal Z=E_*-\epsilon+d_\xi\|g\|_2^2-\mathcal D_{\rm odd}-\mathcal J$, gives its second line because both subtracted energies are bounded by $C\|g\|_2^2$. Using that second line back in the SAME exact identity preserves the useful upper estimate
+$$
+\epsilon(g)\le\delta E_*(g)+C_\delta\|g\|_2^2
+-\mathcal D_{\rm odd}(g)-\mathcal J(g).
+$$
+These are applications of the existing scalar supplier and residual identity, not new zero-free-region or logarithmic-derivative results.
+
+### Consume the small relative expense in the entire actual form
+
+Use the actual $u_F$, $b=Bu_F$, $g_F(r)=b(2|r|)$, $S(F)$ and $\alpha=2/\sqrt\pi$ of W338--W340. Their bounded-error Gamma comparison is reused without modification. EVERY $F\in\mathcal V$ satisfies, for the SAME $g_F$ and each fixed $0<\delta<1$,
+$$
+\left|\mathfrak E(F)-\mathcal P(F)+\alpha T_1(g_F)
++\frac\alpha2\left|\int g_F\right|^2\right|
+\le\delta\mathcal P(F)+C_\delta S(F).
+\tag{W342}
+$$
+The complete lower estimate can retain both independently nonnegative energies:
+$$
+\begin{aligned}
+\mathfrak E(F)\ge{}&(1-\delta)\mathcal P(F)-\alpha T_1(g_F)
+-\frac\alpha2\left|\int g_F\right|^2-C_\delta S(F)\\
+&+\alpha\bigl[\mathcal D_{\rm odd}(g_F)+\mathcal J(g_F)\bigr].
+\end{aligned}
+\tag{W343}
+$$
+The constants do not depend on support, coefficients, source count or moment-budget size. They may grow as $\delta\downarrow0$. No claim with $\delta=0$ or a uniform $C_\delta$ is made.
+
+For the proof, W340 gives the exact centered difference in W342 as
+$$
+-\alpha\epsilon(g_F)-2\alpha\kappa_0\|g_F\|_2^2-\mathcal B_0(F).
+$$
+Apply W341 and the UPPER side of W338, with $\|g_F\|_2^2\le S(F)$ and $|\mathcal B_0(F)|\le CS(F)$. This proves W342. Use instead the refined upper estimate for $\epsilon$ to obtain W343. In particular BOTH folded-model channels, the rank-two cutoff and fixed Gamma shift remain paid in $\mathcal B_0$; none is dropped or counted as a positive reserve. The primary-prime and mean terms remain the original ones on the SAME actual test.
+
+On the compact physical core the actual even test is in $H^1$ and compactly supported, so the same smoothing passage already used for W339 applies. For all of $\mathcal V$, reuse W324's joint full-Gamma/moment core and the continuity arguments after W340. W338 on differences gives shifted-energy convergence; the mean, both arithmetic subsums, the complete form and the two bounded nonnegative energies pass under that SAME approximation. This establishes W342--W343 on the entire domain without an extra sign, parity, frequency, support or budget restriction.
+
+For an ORIGINAL finite Gaussian source normalized by $Q_H(\sigma)=1$, W257 again applies once: evaluate the right side of W343 at its actual $\psi=F/\|F\|_H$ and divide by $4\pi^3$ to bound $A Q_{\mathcal K_A^g}$ from below. This includes EVERY fixed $K>1$ and every original source with $Q_{6,A}\le K$ at its admitted start.
+
+The additional application is the infinitesimal FULL-Gamma expense of the centered higher-power term and its two-sided, actual-source consumer W342, with W343 retaining any fixed fraction $1-\delta$. W338's half-line interface, the pole-continuum pairing, the classical scalar estimate and the existing core are reused. This is a repository synthesis without a priority claim. The low-frequency allowance $C_\delta S$ and the SAME-source primary-prime/mean terms still need joint signed control; W342 does not make either constrained minimum nonnegative. Full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without numerical/scientific execution or Lean/kernel certification.
