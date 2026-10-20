@@ -3995,14 +3995,16 @@ map does not grant it. The from-seed construction above supplies actual
 acquisition without that extra late-conversion assumption. No raw-$q$
 reconstruction is used to continue the reduced service. $\square$
 
-**Example 38.3 (strict source-dependent merging at attained cuts).**
+**Proposition 38.3 (strict source-dependent merging at attained cuts).**
 Use two states $0,1$, initial state $0$. On $P_\varepsilon$ keep the state
 and output its old value. On $S_L$ set state $0$ with bit zero; on $P_R$
 set state $1$ with bit zero; all other events keep the state with bit zero.
 A finite address classifier distinguishing exactly $\varepsilon,L,R$
 and all other addresses supplies Definition 37.1's presentation.
+There are two attained cuts with distinct raw controls but the same
+source and reduced record.
 
-The two legal words (AA.75), respectively ending with $P_R$ and $S_L$,
+**Proof.** The two legal words (AA.75), respectively ending with $P_R$ and $S_L$,
 reach the same $t'=\langle\langle\beta,\alpha\rangle,\beta\rangle$,
 the same empty selected word and the two distinct controls $1,0$.
 All acquired membership bits and selected tapes agree. The sole event
@@ -4012,7 +4014,7 @@ and both normalize to $0$. The stand-alone event transducer distinguishes
 these states on the input $P_\varepsilon$. Minimizing that stand-alone
 machine would retain a distinction that the actual current source has
 made unusable. The common reduced record cannot determine which of the
-two old raw states occurred, yet Theorem 38.2 continues the entire task.
+two old raw states occurred, yet Theorem 38.2 continues the entire task. $\square$
 
 **Definition 38.4 (conditional size and same-run costs).** For fixed
 actually attainable $(t,\nu)$ let
