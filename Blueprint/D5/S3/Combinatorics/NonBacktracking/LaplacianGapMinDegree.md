@@ -54,7 +54,21 @@ $$\forall n \in \mathrm{Nat},\; \forall G \in \operatorname{SimpleGraph}\left(\o
 
 The source states verbatim on printed page 16: “If G is not the cycle graph, then ε ≤ 1/(δ−1).” The encoding quantifies over finite simple graphs of positive order with minimum degree at least two, excludes graph isomorphism with the cycle graph, and uses nbGap G for ε.
 
-**Theorem 1.5 (The non-backtracking gap bound).**
+**Theorem 1.5 (A nonzero eigenvector gives a spectral value).**
+
+$$\forall iota \in \operatorname{Type}*,\; [\operatorname{Fintype}\left(iota\right)] [\operatorname{DecidableEq}\left(iota\right)] \forall A \in \operatorname{Matrix}\left(iota, iota, \mathrm{Complex}\right),\; \forall r \in \mathrm{Complex},\; \forall x \in iota \to \mathrm{Complex},\; \left(\neg x = 0\right) \Rightarrow \left(\operatorname{Matrix}.\operatorname{mulVec}\left(A, x\right) = \operatorname{HSMul}.\operatorname{hSMul}\left(r, x\right) \Rightarrow r \in \operatorname{spectrum}\left(\mathrm{Complex}, A\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/NonBacktracking/LaplacianGapMinDegree.eigenpair_mem_spectrum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. Mulas; D. Zhang; G. Zucal (2024). *There is no going back: Properties of the non-backtracking Laplacian*. DOI: [10.1016/j.laa.2023.10.014](https://doi.org/10.1016/j.laa.2023.10.014). URL: <https://arxiv.org/abs/2303.00373v2>.
+
+*Commentary.*
+
+For any finite index type with decidable equality, a complex square matrix A, scalar r and nonzero vector x satisfying Matrix.mulVec A x = r • x, the scalar r belongs to spectrum ℂ A. The bound nbGap_le_norm_eigenpair uses this implication for the non-backtracking transition matrix.
+
+**Theorem 1.6 (The non-backtracking gap bound).**
 
 $$\forall n \in \mathrm{Nat},\; \forall G \in \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right),\; [\operatorname{DecidableRel}\left(\operatorname{SimpleGraph}.\operatorname{Adj}\left(G\right)\right)] 0 < n \Rightarrow \left(\operatorname{SimpleGraph}.\operatorname{minDegree}\left(G\right) \ge 2 \Rightarrow \left(\left(\neg \operatorname{Nonempty}\left(\operatorname{SimpleGraph}.\operatorname{Iso}\left(G, \operatorname{SimpleGraph}.\operatorname{cycleGraph}\left(n\right)\right)\right)\right) \Rightarrow \operatorname{nbGap}\left(G\right) \le \frac{1}{(\operatorname{Nat}.\operatorname{cast}\left(\operatorname{SimpleGraph}.\operatorname{minDegree}\left(G\right)\right) : \mathrm{Real}) - 1}\right)\right)$$
 
@@ -76,6 +90,7 @@ The result proves the quoted Conjecture 5.3. For minimum degree two, the all-one
 
 - Truth anchor: `D5/S3/Combinatorics/NonBacktracking/LaplacianGapMinDegree.Arc`
 - Truth anchor: `D5/S3/Combinatorics/NonBacktracking/LaplacianGapMinDegree.claim`
+- Truth anchor: `D5/S3/Combinatorics/NonBacktracking/LaplacianGapMinDegree.eigenpair_mem_spectrum`
 - Truth anchor: `D5/S3/Combinatorics/NonBacktracking/LaplacianGapMinDegree.nbGap`
 - Truth anchor: `D5/S3/Combinatorics/NonBacktracking/LaplacianGapMinDegree.nbTransition`
 - Truth anchor: `D5/S3/Combinatorics/NonBacktracking/LaplacianGapMinDegree.result`
