@@ -65,6 +65,7 @@ Two polar gauges make two cross products positive. An eigenbasis of the remainin
 - Dependency: [D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy](SupportAwareRelativeEntropy.md)
 - Dependency: [D5/S3/Quantum/Divergence/ThreeByThreeModulusEntropy](ThreeByThreeModulusEntropy.md)
 - Dependency: [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity](../Dynamics/EntropyProductionCoherenceDeletionIdentity.md)
+- Dependency: [D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction](../Entanglement/ChoiKiemKye/ConstructionReduction.md)
 - Dependency: [D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth](../Entanglement/UniversalReplacementCapacityGrowth.md)
 - Dependency: [D5/S3/Quantum/FixedAlgebra/RecordFixedAlgebraDecomposition](../FixedAlgebra/RecordFixedAlgebraDecomposition.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)

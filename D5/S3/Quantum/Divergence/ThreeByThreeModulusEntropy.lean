@@ -225,9 +225,7 @@ def entryModulus (G : Matrix (Fin 3) (Fin 3) ℂ) : Matrix (Fin 3) (Fin 3) ℂ :
 
 private theorem entryModulus_hermitian {G : Matrix (Fin 3) (Fin 3) ℂ} (hG : G.IsHermitian) :
     (entryModulus G).IsHermitian := by
-  ext i j
-  simp only [entryModulus, Matrix.map_apply, Matrix.conjTranspose_apply, Complex.star_def, Complex.conj_ofReal]
-  rw [← hG.apply i j, norm_star]
+  exact hG.map (fun z => (‖z‖ : ℂ)) (fun z => by simp)
 
 theorem entryModulus_diag {G : Matrix (Fin 3) (Fin 3) ℂ} (hG : G.PosSemidef)
     (i : Fin 3) : entryModulus G i i = G i i := by

@@ -19,6 +19,9 @@ Support inclusion is inlined as nullspace containment; matrix_log_sum translates
 SupportAwareRelativeEntropy.SupportContained through CStarMatrix.ofMatrix.
 The block algebra map composes RecordFixedAlgebraDecomposition.blockDiagonalAlgHom with
 Matrix.reindexAlgEquiv, and coordinate erasure uses a row submatrix of the identity.
+The block-vector helper consumes the published
+D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Blocks.mulVec_block owner;
+its publication audit is recorded in this settling module and its delivery dossier.
 Direct frozen dependency keys (declaration statement_id):
 F1: D5/S3/Quantum/Divergence/CanonicalChannelDPI + D5.S3.Quantum.Divergence.CanonicalChannelDPI.extended_quantum_relative_entropy_channel_dpi sha256:f6c41775b192518669e4da2a9dc6fbdfb3eeb83a300658a0e7df0b78458fc002
 F2: D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy + D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy.SupportContained sha256:b7c0cb7fe96f9bae139d3f9496d053261accc08f53f14fb5cf103b0472265047
@@ -130,6 +133,7 @@ import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation
 import D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation
+import D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
 import D5.S3.Quantum.Divergence.CanonicalChannelDPI
 import D5.S3.Quantum.Divergence.CanonicalRelativeModularModel
 import D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
@@ -565,7 +569,20 @@ private theorem blockDiagonal_posSemidef (A : ι → Matrix n n ℂ)
 
 private theorem blockDiagonal_mulVec (A : ι → Matrix n n ℂ) (x : n × ι → ℂ) (i : n) (a : ι) :
     (Matrix.blockDiagonal A*ᵥx) (i,a) = (A a*ᵥ(fun j => x (j,a))) i := by
-  simp [Matrix.mulVec,dotProduct,Fintype.sum_prod_type,Matrix.blockDiagonal_apply]
+  have h :=
+    D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Blocks.mulVec_block
+      (κ := fun _ : ι => n) A (fun y => x (y.2, y.1)) a i
+  convert h using 1
+  simp only [Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fintype.sum_sigma]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro b _
+  apply Finset.sum_congr rfl
+  intro j _
+  by_cases hb : a = b
+  · subst b
+    simp only [Matrix.blockDiagonal_apply_eq, Matrix.blockDiagonal'_apply_eq]
+  · simp [Matrix.blockDiagonal_apply_ne, Matrix.blockDiagonal'_apply_ne, hb, Ne.symm hb]
 
 private theorem supported_blockDiagonal (A B : ι → Matrix n n ℂ)
     (hs : ∀ a, (∀ x, (B a) *ᵥ x = 0 → (A a) *ᵥ x = 0)) :

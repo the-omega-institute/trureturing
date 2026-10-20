@@ -348,7 +348,7 @@ open scoped ComplexOrder MatrixOrder
 namespace Blocks
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 variable {κ : ι → Type*} [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]
-private theorem mulVec_block (M : ∀ i, Matrix (κ i) (κ i) ℂ) (v : (Σ i,κ i) → ℂ) (i : ι) (j : κ i) : (Matrix.blockDiagonal' M).mulVec v ⟨i,j⟩ = (M i).mulVec (fun k => v ⟨i,k⟩) j := by { simp only [Matrix.mulVec,dotProduct,Fintype.sum_sigma]; rw [Finset.sum_eq_single i]; · { simp only [Matrix.blockDiagonal'_apply_eq] }; · { intro k hk hki; apply Finset.sum_eq_zero; intro l hl; rw [Matrix.blockDiagonal'_apply_ne _ _ _ (Ne.symm hki),zero_mul] }; · { simp } }
+theorem mulVec_block (M : ∀ i, Matrix (κ i) (κ i) ℂ) (v : (Σ i,κ i) → ℂ) (i : ι) (j : κ i) : (Matrix.blockDiagonal' M).mulVec v ⟨i,j⟩ = (M i).mulVec (fun k => v ⟨i,k⟩) j := by { simp only [Matrix.mulVec,dotProduct,Fintype.sum_sigma]; rw [Finset.sum_eq_single i]; · { simp only [Matrix.blockDiagonal'_apply_eq] }; · { intro k hk hki; apply Finset.sum_eq_zero; intro l hl; rw [Matrix.blockDiagonal'_apply_ne _ _ _ (Ne.symm hki),zero_mul] }; · { simp } }
 private theorem range_block (M : ∀ i, Matrix (κ i) (κ i) ℂ) (v : (Σ i,κ i) → ℂ) : v ∈ LinearMap.range (Matrix.blockDiagonal' M).mulVecLin ↔ ∀ i, (fun k => v ⟨i,k⟩) ∈ LinearMap.range (M i).mulVecLin := by {
   constructor; · { rintro ⟨x,hx⟩ i; refine ⟨fun k=>x ⟨i,k⟩,?_⟩; funext j; simpa only [Matrix.mulVecLin_apply,mulVec_block] using congrFun hx ⟨i,j⟩ };
   · { intro h; choose x hx using h; refine ⟨fun ij => x ij.1 ij.2,?_⟩; funext ⟨i,j⟩; simpa only [Matrix.mulVecLin_apply,mulVec_block] using congrFun (hx i) j } }
