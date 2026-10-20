@@ -97,7 +97,10 @@ internal sealed class StabilizerCHSHGraphRegularityDocument : IScribeDocumentDef
                         + "idempotence. Since p is at least two, this forces both settings "
                         + "and Alice's outcome to agree, and hence the labels are identical. "
                         + "The graph thus has p cubed distinct vertices and the asserted degree."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("howard-brennan-vala-2013-chsh-graph-regularity"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
