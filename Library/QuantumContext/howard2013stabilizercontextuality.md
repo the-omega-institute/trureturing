@@ -53,8 +53,8 @@ The qudit CHSH operators (Section 5):
 > \begin{align}
 > A_j=\omega^{j(j+1)}XZ^j,\ B_k=\omega^{(2^{-1})^2(k^2+2k)}XZ^{2^{-1}k}
 > \end{align}
-> 
-> 
+>
+>
 
 > For $d=3$ \emph{i.e}., qutrits we have
 > \begin{align}
