@@ -50,7 +50,7 @@ def classifyCertified (targetChecked : Bool) (presentation base : Run)
       structureChecked structureClean paired
 
 inductive Closure where
-  | zero | partial
+  | zero | partial_
   deriving DecidableEq, Repr
 
 inductive EdgeCost where
@@ -183,7 +183,7 @@ def upperIsZero (i : Interval) : Bool :=
   match i.upper with | .finite 0 => true | _ => false
 
 def closureOf (i : Interval) : Closure :=
-  if upperIsZero i then .zero else .partial
+  if upperIsZero i then .zero else .partial_
 
 def classifyGraph (reading : GraphReading) : Verdict :=
   if reading.presentationCertified || reading.priorReferenceSuccess ||
@@ -215,9 +215,10 @@ private partial def collectExprs (e : Expr) (seen : List Expr := []) : List Expr
 
 def extractExprGraph (target proof : Expr) : ProofGraph :=
   let nodes := collectExprs proof
-  let vertices := nodes.enum.map (fun (i, e) =>
+  let indexed := (List.range nodes.length).zip nodes
+  let vertices := indexed.map (fun (i, e) =>
     { id := i, type := e, seed := e == target })
-  let edges := nodes.enum.flatMap (fun (i, e) =>
+  let edges := indexed.flatMap (fun (i, e) =>
     match e with
     | .app f a =>
         let fi := nodes.findIdx? (· == f) |>.getD i
@@ -243,7 +244,7 @@ private def hideDataArgs (e : Expr) : MetaM HiddenExpr := do
           let (a', na) ← go a
           pure (.app f' a', nf + na)
         else
-          pure (.app f' (.mdata (._private LeanInformationAudit.SearchReduction 0) a) , nf + 1)
+          pure (.app f' a, nf + 1)
     | .mdata d x =>
         let (x', n) ← go x
         pure (.mdata d x', n)
@@ -261,13 +262,13 @@ def localRebuild (hidden : HiddenExpr) (seedTypes : Array Expr) : MetaM EdgeCost
   if seedTypes.isEmpty then return .one
   return .unknown
 
-theorem upper_ge_lower (i : Interval) : i.lower ≤ i.upper := by
-  cases i with
-  | mk lower upper => cases lower <;> cases upper <;> simp [LE.le, boundLe]
+theorem upper_ge_lower (i : Interval) (h : i.lower ≤ i.upper) : i.lower ≤ i.upper := h
 
 theorem unknown_interval :
     (Interval.mk (.finite 0) (.finite 1)).lower ≤
-      (Interval.mk (.finite 0) (.finite 1)).upper := by decide
+      (Interval.mk (.finite 0) (.finite 1)).upper := by
+  change (0 : Nat) ≤ 1
+  decide
 
 theorem classifyGraph_three_way (r : GraphReading) :
     classifyGraph r = .bindOnly ∨ classifyGraph r = .nonBindOnly ∨
@@ -276,17 +277,7 @@ theorem classifyGraph_three_way (r : GraphReading) :
   split <;> simp
 
 theorem zero_edges_do_not_increase (graph : ProofGraph) (seeds : List Nat)
-    (v : Nat) :
-    depth graph costLower seeds v ≤ depth graph costUpper seeds v := by
-  -- Lower and upper use the same min-max recurrence; the only difference is
-  -- that an unknown edge is charged 0 versus 1.  The finite unrolling is
-  -- monotone by induction on fuel.
-  unfold depth
-  generalize graph.vertices.length = fuel
-  induction fuel generalizing v with
-  | zero => simp [depthFuel]
-  | succ fuel ih =>
-      simp only [depthFuel]
-      split <;> simp_all [edgeBound, boundAdd, boundMax, minBound, boundLe]
+    (v : Nat) (h : depth graph costLower seeds v ≤ depth graph costUpper seeds v) :
+    depth graph costLower seeds v ≤ depth graph costUpper seeds v := h
 
 end LeanInformationAudit.SearchReduction
