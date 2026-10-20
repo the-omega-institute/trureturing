@@ -84,6 +84,7 @@ Definition rows classify unfolding; they assert no proposition and supply no esc
 Utility: none; finite-dimensional symbolic mathematics for arbitrary parameters.
 The Gram construction is Matrix.gram; state columns have no forwarding definition.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+Kernel lemma escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19372.
 DTR reading: DTR-Unregistered for the public theorem targets in this module.
 Registration gap: exact dependent source-family reconstruction, lawful template readout,
 selection coordinates, whole-family variation, slot sensitivity and observational dependence
@@ -92,6 +93,7 @@ are not all established by the retained registration evidence.
 
 import Mathlib.Analysis.InnerProductSpace.GramMatrix
 import D5.S3.Observer.Hilbert.FiniteMoorePenroseInverse
+import D5.S3.Weil.ZetaLinear.PosIndex
 import D5.S3.Weil.ZetaLinear.Sylvester
 
 open Matrix Finset Filter Unitary
@@ -139,7 +141,7 @@ end
 section
 variable {n d : ℕ}
 
-private theorem psd_summand_kills_kernel (F : Fin n → Matrix (Fin n) (Fin n) ℂ)
+theorem psd_summand_kills_kernel (F : Fin n → Matrix (Fin n) (Fin n) ℂ)
     (hF : ∀ i, (F i).PosSemidef) (x : Fin n → ℂ)
     (hx : (∑ i, F i) *ᵥ x = 0) (i : Fin n) : F i *ᵥ x = 0 := by
   have hs : (∑ j, (star x ⬝ᵥ (F j *ᵥ x)).re) = 0 := by
