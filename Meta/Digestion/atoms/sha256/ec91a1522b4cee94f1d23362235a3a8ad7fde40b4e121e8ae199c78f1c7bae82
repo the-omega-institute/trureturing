@@ -1,0 +1,14 @@
+现在用源范数 $\tfrac12\|\cdot\|_1$，并在行剩余量空间 $\mathbb R^{\mathcal I}$ 使用 $\ell^\infty$ 范数。向量 $w$ 到非负正交锥的 $\ell^\infty$ 距离为 $\|(-w)_+\|_\infty$：逐坐标将负值截断为零即可达到，任意非负候选在相应坐标上的误差又至少为该负值的绝对值。因此，所引命题5取等式矩阵为空时的剩余距离，正好是 $\|(\widetilde A q-b_r)_+\|_\infty$。对任意 $q\in\Delta_A$，它进一步满足
+$$
+\begin{aligned}
+\|(\widetilde A q-b_r)_+\|_\infty
+&=\max_{(e,s)\in\mathcal I}
+\left(\tfrac12s^{\mathsf T}(M_eq-r_e)-\alpha_r\right)_+\\
+&=\bigl(\delta_r(q)-\alpha_r\bigr)_+
+=\delta_r(q)-\alpha_r.
+\end{aligned}
+\tag{TM.81}
+$$
+
+最后一步使用 $q$ 属于同一可行来源集，故其目标值不小于最优值。这也是为什么不能把任意有符号输入代入该式最后一行。
+

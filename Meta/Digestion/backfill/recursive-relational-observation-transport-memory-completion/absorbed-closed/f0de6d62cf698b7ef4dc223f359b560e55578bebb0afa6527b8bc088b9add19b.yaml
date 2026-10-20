@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:f0de6d62cf698b7ef4dc223f359b560e55578bebb0afa6527b8bc088b9add19b
+  normalized_sha256: sha256:f0de6d62cf698b7ef4dc223f359b560e55578bebb0afa6527b8bc088b9add19b
+cas_ref: sha256:f0de6d62cf698b7ef4dc223f359b560e55578bebb0afa6527b8bc088b9add19b
+coverage_gids:
+  - gid: D5/S3/Analytic/Convexity/FarkasAlternative.almost_farkas_bartl
+    target_statement_id: sha256:fb437640f16e98ef07c75475721d6e7aeb8e21da4a562690fff74c26d770f57c
+  - gid: D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.Circuit
+    target_statement_id: sha256:a620cdf30043430332342edeb1772a371b46075de7fffb10e0b735de72c18a59
+  - gid: D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.InKernel
+    target_statement_id: sha256:ebe6d7577dfd94f1244ca7fdb3cc6f0f186fa3cb89f993b8ce758c763a5d2e0a
+  - gid: D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.circuit_deleted_cols_linearIndependent
+    target_statement_id: sha256:6c928a61c1df7e85498d247b1ac0b943c6978cfea491c35d24558c81e9e7025e
+  - gid: D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.nonnegKernel_mem_hull_circuit
+    target_statement_id: sha256:6fb6310bfaa955bc4febf7c407e04aee70c191bac12d51623231298d8d3a55e5
+  - gid: D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.nzSupport
+    target_statement_id: sha256:a6d1ef2466b69eec978067c0c73422e3e918a448dc981832d690a6bb96af8b94
+receipts:
+  unresolved_subitems: []
