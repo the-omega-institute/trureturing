@@ -425,3 +425,81 @@ $$
 成功判据是：同一具体有限实例同时给出行为响应表、失败超图、更新转移表和一份分离证书；失败判据是：只能得到同义的标量容量或重复已有 future quotient。
 
 ## 追加锚（本行以下为增补区）
+
+## 9. 固定目标的证书因子化与外部读出
+
+### 命题 9.1（固定目标下的行为充分性；更正命题 1.3）
+
+在定义 1.1—1.2 下，对任意 $s,s'\in S$，有
+
+$$
+s\equiv_{\mathrm{beh}}s'
+\Longrightarrow F(s)=F(s')
+\Longleftrightarrow s\equiv_{\mathrm{cert}}^0s'.
+$$
+
+令 $q_{\mathrm{beh}}:S\to S/{\equiv_{\mathrm{beh}}}$ 为行为商映射，则存在唯一映射
+
+$$
+\overline F:S/{\equiv_{\mathrm{beh}}}\to 2^D,
+\qquad
+\overline F([s]_{\mathrm{beh}})=F(s),
+\qquad
+F=\overline F\circ q_{\mathrm{beh}}.
+$$
+
+更一般地，保持定义 1.2 所比较的响应族 $Y$ 不变，对任意两状态共同使用的固定目标 $u:D\to O$，记
+
+$$
+F_u(s)=\{d\in D:Y(s,\varepsilon,\varepsilon,d)\ne u(d)\}.
+$$
+
+则 $s\equiv_{\mathrm{beh}}s'$ 仍推出 $F_u(s)=F_u(s')$；原失败边 $F$ 即 $F_t$。命题 1.3 在定义 1.1—1.2 下的非蕴含断言由本命题的蕴含替代；仅换成另一个共同固定目标不能产生分离。
+
+**证明。** 在行为关系的全称量词中取 $\alpha=w=\varepsilon$，得到对每个 $d\in D$，
+
+$$
+Y(s,\varepsilon,\varepsilon,d)=Y(s',\varepsilon,\varepsilon,d).
+$$
+
+两边与同一个 $u(d)$ 比较，不等于 $u(d)$ 的真假相同，故 $d\in F_u(s)$ 当且仅当 $d\in F_u(s')$。逐点即得集合相等；取 $u=t$ 得到原证书关系。由此 $\ker q_{\mathrm{beh}}\subseteq\equiv_{\mathrm{cert}}^0$，定理 2.2 直接给出上述唯一因子化，无须将 $F$ 另列为行为响应。证毕。
+
+### 定义 9.2（行为响应族之外的证书合同）
+
+在定义 1.1—1.2 的数据之外，另给有限观察集 $E$、输出集 $B$、确定性读出 $C:S\times E\to B$ 和共同固定目标 $c:E\to B$，定义
+
+$$
+H(s)=\{e\in E:C(s,e)\ne c(e)\},
+\qquad
+s\equiv_{\mathrm{ext}}s'
+\Longleftrightarrow H(s)=H(s').
+$$
+
+行为关系仍只比较原响应族 $Y$，不包含对 $C$ 的比较；$H$ 是新增的外部失败读出，定义 1.1 的 $F$ 和 $t$ 保持原义。这里不假设 $C$ 或 $H$ 由 $Y$ 决定。
+
+### 命题 9.3（外部证书的有限分离）
+
+定义 9.2 的合同允许 $s\equiv_{\mathrm{beh}}s'$ 而 $s\not\equiv_{\mathrm{ext}}s'$。具体取
+
+$$
+S=\{x,y\},\quad A=\{a\},\quad D=\{d\},\quad O=\{0,1\},
+\qquad U_a=\operatorname{id}_S.
+$$
+
+对每个状态 $s$、每个动作词 $\alpha$ 和每个观察词 $w$，令 $Y(s,\alpha,w,d)=0$，并取 $t(d)=0$。外部数据取
+
+$$
+E=\{e\},\quad B=\{0,1\},\quad c(e)=0,
+\qquad C(x,e)=0,\quad C(y,e)=1.
+$$
+
+于是
+
+$$
+x\equiv_{\mathrm{beh}}y,\qquad F(x)=F(y)=\varnothing,
+\qquad H(x)=\varnothing,\quad H(y)=\{e\}.
+$$
+
+**证明。** 所有被比较的 $Y$ 响应都为零，故两状态行为等价；它们的当前响应均等于 $t(d)$，所以原失败边均为空。外部读出在 $x$ 处等于 $c(e)$、在 $y$ 处不等于 $c(e)$，得到所列两个不同的 $H$ 值。因此 $H$ 不能经只有一个类的行为商因子化。这分离的是行为关系与外部证书关系，并不反驳命题 9.1 对原 $F$ 的结论。证毕。
+
+## 追加锚（本行以下为增补区）
