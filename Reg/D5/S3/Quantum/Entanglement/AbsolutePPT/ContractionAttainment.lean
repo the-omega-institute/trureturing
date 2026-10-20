@@ -150,7 +150,10 @@ private theorem bad_law : ¬ arena.Law bad := by
         (Matrix.PosSemidef.one : (1 : WitnessMat).PosSemidef))
   have hd := hp.diag_nonneg (i := ((0, 0) : Fin 1 × Fin 1))
   have hr := (Complex.nonneg_iff.mp hd).1
-  norm_num [N, Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply] at hr
+  change 0 ≤
+    (((Fintype.card (Fin 1) : ℂ) - 1) * (1 : ℂ) +
+      (2 : ℂ) * (-1 : ℂ)).re at hr
+  norm_num [Complex.mul_re] at hr
 private theorem dependence : ObservationalDependence matrixSignature actual := by
   intro i
   refine ⟨⟨Fin 1, Fin 1⟩, (0 : WitnessMat), (1 : WitnessMat), ?_⟩
@@ -227,8 +230,10 @@ private theorem bad_law : ¬ arena.Law bad := by
   simp only [one_mul, Matrix.conjTranspose_one, mul_one] at hp1
   have hd := hp1.diag_nonneg (i := ((0, 0) : Fin 1 × Fin 1))
   have hr := (Complex.nonneg_iff.mp hd).1
-  norm_num [N, partialTranspose, Matrix.add_apply, Matrix.smul_apply,
-    Matrix.one_apply] at hr
+  change 0 ≤
+    (((Fintype.card (Fin 1) : ℂ) - 1) * (1 : ℂ) +
+      (2 : ℂ) * (-1 : ℂ)).re at hr
+  norm_num [Complex.mul_re] at hr
 private theorem dependence : ObservationalDependence matrixSignature actual := by
   intro i
   refine ⟨⟨Fin 1, Fin 1⟩, (0 : WitnessMat), (1 : WitnessMat), ?_⟩
