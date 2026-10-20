@@ -6,7 +6,7 @@ namespace LeanInformationAudit.SearchReduction
 open Lean Meta Elab Tactic
 
 abbrev localBudget : Nat := 200000
-abbrev graphCapacity : Nat := 4096
+abbrev graphCapacity : Nat := 262144
 
 private def standardClosure (xs : Array Name) : Bool :=
   xs.all (#[`propext, `Classical.choice, `Quot.sound].contains ·)
@@ -27,6 +27,8 @@ def checkLocalProof (type proof : Expr) : MetaM Unit := do
 
 structure ExtractionState where
   graph : ProofGraph := {}
+  vertices : Array GraphVertex := #[]
+  edges : Array GraphEdge := #[]
   shared : Std.HashMap (Expr × List FVarId) Nat := {}
 
 abbrev ExtractM := StateRefT ExtractionState MetaM
@@ -49,8 +51,9 @@ private partial def visit (base : Environment) (additions : Array (Expr × Expr)
   let scope ← scopeVariables
   let key := (proof, scope.toList.map Expr.fvarId!)
   if let some id := (← get).shared[key]? then return id
-  if (← get).graph.vertices.length ≥ graphCapacity then
-    incomplete "graph.capacity"
+  if (← get).vertices.size ≥ graphCapacity then
+    if !(← get).graph.issues.any (·.startsWith "graph.capacity:") then
+      incomplete s!"graph.capacity:limit={graphCapacity},position={position}"
     return 0
   let type ← inferType proof
   let closed ← mkForallFVars scope type
@@ -63,21 +66,21 @@ private partial def visit (base : Environment) (additions : Array (Expr × Expr)
     if equal then
       structureSeed := true
       structureProof? := some added.2
-  let id := (← get).graph.vertices.length
+  let id := (← get).vertices.size
   let vertex : GraphVertex := {
     id, type := closed, origin := proof, scope, lctx := ← getLCtx,
     instances := ← getLocalInstances, position, structureSeed, structureProof?}
   modify fun s => {s with
     shared := s.shared.insert key id
-    graph := {s.graph with vertices := s.graph.vertices ++ [vertex]}}
+    vertices := s.vertices.push vertex}
   let addEdge (premises : List Nat) (head : Option Expr := none)
       (authorData : Array (Option Expr) := #[]) : ExtractM Unit := do
     let source := head.bind Expr.constName?
     let head ← head.mapM (mkLambdaFVars scope ·)
-    modify fun s => {s with graph := {s.graph with edges := s.graph.edges ++ [{conclusion := id, premises, head, source, authorData}]}}
+    modify fun s => {s with edges := s.edges.push {conclusion := id, premises, head, source, authorData}}
   match proof with
   | .fvar _ =>
-    modify fun s => {s with graph := {s.graph with vertices := s.graph.vertices.map (fun v => if v.id == id then {v with seed := true} else v)}}
+    modify fun s => {s with vertices := s.vertices.modify id (fun v => {v with seed := true})}
   | .lam name domain body info =>
     let child ← withLocalDecl name info domain fun x =>
       visit base additions (body.instantiate1 x) (position ++ [0]) unfolding
@@ -94,7 +97,7 @@ private partial def visit (base : Environment) (additions : Array (Expr × Expr)
     else if let .const name levels := head then
       let info ← getConstInfo name
       if base.contains name && info.isTheorem && args.isEmpty then
-        modify fun s => {s with graph := {s.graph with vertices := s.graph.vertices.map (fun v => if v.id == id then {v with seed := true} else v)}}
+        modify fun s => {s with vertices := s.vertices.modify id (fun v => {v with seed := true})}
       else if !base.contains name && (← isProp info.type) then
         if unfolding.contains name then
           incomplete s!"graph.recursive_helper:{name}"
@@ -145,9 +148,10 @@ def extractGraph (base : Environment) (target proof : Expr)
       let root ← visit base additions proof []
       for (_, added) in additions do discard <| visit base additions added [graphCapacity]
       pure (root, ())).run {}
+    let graph := {state.graph with vertices := state.vertices.toList, edges := state.edges.toList, root}
     unless ← isDefEq (← inferType proof) target do
-      return {state.graph with root, complete := false, issues := ["graph.target_type_mismatch"]}
-    return {state.graph with root}
+      return {graph with complete := false, issues := ["graph.target_type_mismatch"]}
+    return graph
   catch ex =>
     return {complete := false, issues := [s!"graph.extraction_exception:{← ex.toMessageData.toString}"]}
 
@@ -568,9 +572,8 @@ def assembleZero (graph : ProofGraph) (paired := false) : MetaM (Option Expr) :=
 visible-data ablation, and perform the two independent checked root probes. -/
 def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
   let cuts := k2Frontier raw
-  let graph := if raw.edges.length + cuts.length > graphCapacity then
-    {raw with complete := false, issues := "graph.frontier_capacity" :: raw.issues}
-    else {raw with edges := raw.edges ++ cuts}
+  -- The deterministic frontier contributes at most one edge per author edge.
+  let graph := {raw with edges := raw.edges ++ cuts}
   let graph ← priceGraph graph
   let graph ← priceGraph graph true
   let graph ← priceGraph graph false true
