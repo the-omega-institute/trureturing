@@ -225,6 +225,7 @@ theorem dpTable_eq_depthFuel (graph : ProofGraph) (weight : EdgeCost → Nat)
     (v : Nat) (hv : v < graph.vertices.length) :
     ((dpTable graph weight seeds)[v]?.getD {}).distance =
       depthFuel graph weight seeds graph.vertices.length v := by
+  rw [dpTable_eq_dpRounds]
   apply bound_ext
   intro n
   exact (dpRounds_le_iff_derivable graph weight seeds indexed premisesBounded

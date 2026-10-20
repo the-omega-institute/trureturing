@@ -98,7 +98,8 @@ private partial def visit (base : Environment) (additions : Array (Expr × Expr)
       let info ← getConstInfo name
       if base.contains name && info.isTheorem && args.isEmpty then
         modify fun s => {s with vertices := s.vertices.modify id (fun v => {v with seed := true})}
-      else if !base.contains name && (← isProp info.type) then
+      else if !base.contains name && (match info with
+          | .ctorInfo _ | .recInfo _ => false | _ => true) && (← isProp info.type) then
         if unfolding.contains name then
           incomplete s!"graph.recursive_helper:{name}"
         else if let some value := info.value? (allowOpaque := true) then
@@ -517,6 +518,7 @@ private def vertex (graph : ProofGraph) (id : Nat) : GraphVertex :=
 def priceGraph (graph : ProofGraph) (paired := false) (visible := false) : MetaM ProofGraph := do
   let mut edges := []
   for edge in graph.edges do
+    checkSystem "graph edge pricing"
     let mut seeds := []
     let mut residuals := []
     for id in edge.premises do

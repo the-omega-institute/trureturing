@@ -296,7 +296,24 @@ mutual
         -- abstracted by the same hidden-data reconstructor as graph edges.
         let clean ← getEnv
         let (head?, data) ← withEnv ctx.source <| vocabularySpine ctx.source clean part
-        let rebuilt ← localRebuild closed head? data [] []
+        let mut rebuilt ← localRebuild closed head? data [] []
+        if rebuilt.cost == .one then
+          -- The obligation can need direct proof premises of its author edge.
+          -- Price those premises through the same hidden-data graph backend;
+          -- only a zero path assembled from clean leaves is admitted.
+          rebuilt ← withTheReader Core.Context (fun reader => {reader with
+              initHeartbeats := started, maxHeartbeats := localBudget * 1000}) do
+            let mut rebuilt := rebuilt
+            let sourceProof ← withEnv ctx.source <| mkLambdaFVars xs part
+            let raw ← withEnv ctx.source <| extractGraph clean closed sourceProof
+            if raw.complete then
+              let reading ← evaluateGraph raw
+              if let some proof ← assembleZero reading.graph then
+                rebuilt := {cost := .zero, proof? := some proof, detail := "kernel-checked-author-graph"}
+              else
+                rebuilt := {rebuilt with detail := s!"{rebuilt.detail};author-graph:{reprStr reading.baseline}"}
+            checkSystem "vocabulary author graph"
+            return rebuilt
         let outcome := match rebuilt.cost with
           | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
         let used := (← IO.getNumHeartbeats) - started

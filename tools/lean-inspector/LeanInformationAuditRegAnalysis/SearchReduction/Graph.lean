@@ -200,7 +200,7 @@ def depthFuel (graph : ProofGraph) (weight : EdgeCost → Nat)
 structure DPCell where
   distance : Bound := .top
   edge? : Option Nat := none
-  deriving Inhabited
+  deriving Inhabited, DecidableEq
 
 def better (a b : Bound) : Bool :=
   match a, b with
@@ -229,9 +229,58 @@ def dpRounds (graph : ProofGraph) (weight : EdgeCost → Nat)
   | fuel + 1 => graph.edges.zipIdx.foldl
       (relaxEdge weight (dpRounds graph weight seeds fuel)) (initialTable graph seeds)
 
+private def dpStep (graph : ProofGraph) (weight : EdgeCost → Nat)
+    (seeds : List Nat) (previous : Array DPCell) : Array DPCell :=
+  graph.edges.zipIdx.foldl (relaxEdge weight previous) (initialTable graph seeds)
+
+/-- Once a complete synchronous table repeats, all remaining rounds repeat it.
+The same finite-round semantics therefore needs no redundant stable rounds. -/
+def dpUntilStable (graph : ProofGraph) (weight : EdgeCost → Nat)
+    (seeds : List Nat) : Nat → Array DPCell → Array DPCell
+  | 0, previous => previous
+  | fuel + 1, previous =>
+      let next := dpStep graph weight seeds previous
+      if next = previous then previous else dpUntilStable graph weight seeds fuel next
+
+private theorem dpRounds_fixed (graph : ProofGraph) (weight : EdgeCost → Nat)
+    (seeds : List Nat) (start : Nat)
+    (fixed : dpRounds graph weight seeds (start + 1) = dpRounds graph weight seeds start)
+    (fuel : Nat) :
+    dpRounds graph weight seeds (start + fuel) = dpRounds graph weight seeds start := by
+  induction fuel with
+  | zero => simp
+  | succ fuel ih =>
+    have h : start + (fuel + 1) = (start + fuel) + 1 := by omega
+    rw [h, dpRounds, ih]
+    exact fixed
+
+theorem dpUntilStable_eq_dpRounds (graph : ProofGraph) (weight : EdgeCost → Nat)
+    (seeds : List Nat) (fuel start : Nat) :
+    dpUntilStable graph weight seeds fuel (dpRounds graph weight seeds start) =
+      dpRounds graph weight seeds (start + fuel) := by
+  induction fuel generalizing start with
+  | zero => simp [dpUntilStable]
+  | succ fuel ih =>
+    simp only [dpUntilStable]
+    change (if dpRounds graph weight seeds (start + 1) = dpRounds graph weight seeds start
+      then dpRounds graph weight seeds start
+      else dpUntilStable graph weight seeds fuel (dpRounds graph weight seeds (start + 1))) = _
+    split
+    · rename_i fixed
+      exact (dpRounds_fixed graph weight seeds start fixed (fuel + 1)).symm
+    · rw [ih]
+      congr 1
+      omega
+
 def dpTable (graph : ProofGraph) (weight : EdgeCost → Nat)
     (seeds : List Nat) : Array DPCell :=
-  dpRounds graph weight seeds graph.vertices.length
+  dpUntilStable graph weight seeds graph.vertices.length (initialTable graph seeds)
+
+theorem dpTable_eq_dpRounds (graph : ProofGraph) (weight : EdgeCost → Nat)
+    (seeds : List Nat) :
+    dpTable graph weight seeds = dpRounds graph weight seeds graph.vertices.length := by
+  simpa only [dpTable, dpRounds, Nat.zero_add] using
+    (dpUntilStable_eq_dpRounds graph weight seeds graph.vertices.length 0)
 
 def depth (graph : ProofGraph) (weight : EdgeCost → Nat) (seeds : List Nat) : Nat → Bound :=
   let table := dpTable graph weight seeds
