@@ -136,6 +136,10 @@ $$
 \operatorname{map}\left(\operatorname{smul}\left(\operatorname{inv}\left(c3\right), rawNativeMeasure\right), coordinatesEquiv\right) = \operatorname{withDensity}\left(coordinateHaar, heightDensity\right)
 $$
 
+Natural-dimension application of the same local-distortion and squeeze argument. For every natural d, let Hcoord_d and Hnative_d be raw Hausdorff d-measure in the unchanged Euclidean coordinate and native H3 metrics. Then map(Hnative_d,coordinatesEquiv)=withDensity(Hcoord_d,x |-> ofReal(height(x)^(-d))). In the local Hausdorff image inequalities, use the original ball_distortion with powers d; on a ball of radius epsilon*height(p), the common density distortion factor is ((1+2*epsilon)/(1-epsilon))^d. The same countable Borel partition and extended-real squeeze prove the equality, including d=0 and sets of infinite measure.
+
+For d=2 this identifies the native H3 surface-dimension measure with height^(-2) times ambient Euclidean-coordinate Hausdorff two-measure. Ambient three-dimensional Hausdorff two-measure is not assumed sigma-finite: the argument evaluates withDensity only on Borel sets, uses countable additivity with values in the extended nonnegative reals, and cancels only finite positive local distortion scalars. This application does not replace that coordinate two-measure by three-dimensional volume, or identify it with dxdy on a specified plane. A plane-area formula still needs the actual Euclidean embedding, an independent dimension-two Euclidean calibration and isometric measure transport; the c3 normalization above supplies none of those identifications.
+
 The density identity concerns measures on the whole upper half-space. It gives no Gram-map Jacobian, frame-independence statement, finite positive mass for a specified geometric body, Schlaefli variation formula or strictly positive flat-boundary limit.
 
 ## References
