@@ -14851,3 +14851,279 @@ complementary signed term. Discarding this tail in a lower bound is
 justified after the complete signed average, not kernel by kernel.
 No positivity of the complete defect, new total Robin upper or RH
 proof follows.
+
+## Growing source moments move the paid first-prime boundary
+
+This application extends JPT's actual first-layer lower bound to a
+moving cutoff whose logarithm is asymptotic to $\log A$. It keeps the
+same KTO observer and degree. GPC's source moments, xi reflection,
+positive-real Stirling, JPT's actual activation calculation and the
+standard effective unconditional PNT are reused. The retained
+application is the additional signed arithmetic band lower and its
+same-integer consumer; the intermediate moment and Gamma estimates
+are not separate new results. No literature priority, numerical
+common threshold, Lean certification or RH/Robin proof is claimed.
+
+### Uniform growing moments of the unchanged source
+
+Keep $A=\log n$, $L=\log A$, $T_A=\sqrt A L$ and
+$k=\max\{1,\lfloor\epsilon\log L\rfloor\}$ from KTO. Its original
+source has
+
+$$
+h(s)=2m^{1-s}\xi(s),\qquad m=\pi/3,\qquad
+Q(z)=(1-z)(1-z/m),\qquad H_k(s)=1-Q(h(s))^k.
+$$
+
+The clamped and calibrated source and its transported observer remain
+$\eta_A=(\chi_A)_\#\nu_k-2\delta_A(\delta_1-\delta_2)$ and
+$\omega_A=\int\kappa_{A,c}\,d\eta_A(c)$, with
+$|\delta_A|=O(A^{-3}L^{1/4})$. Exact mass and price mean are still
+$\int d\omega_A=1$ and
+$\int\lambda(Av)\,d\omega_A(v)=\lambda(A)$.
+All Mellin identities below belong to $\nu_k$.
+
+GPC2 gives, for every real $t$ and integer $k\ge1$,
+$M_t(k)=\int c^t\,d|\nu_k|(c)\le1+R_t^k$, where
+$R_t=(1+b_t)(1+b_t/m)$ and $b_t=h(1+t)$.
+For $t\ge2$, xi reflection gives
+$b_t=2m^{-t}\xi(1+t)$ and $b_{-t}=2m^t\xi(t)$.
+Use the standard positive-real log-Gamma Stirling expansion
+([DLMF 5.11.1](https://dlmf.nist.gov/5.11.E1)) in
+$\xi(s)=s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)/2$, for real
+$s\ge2$, together with $\zeta(s)\le\zeta(2)$.
+There is a fixed $C_m\ge1$ such that
+
+$$
+\log R_t,\ \log R_{-t}\le C_mt\log(t+2),\qquad
+M_t(k)+M_{-t}(k)\le4e^{C_mkt\log(t+2)}
+\quad(t\ge2,\ k\ge1).
+\tag{GMW1}
+$$
+
+The constant is uniform in growing real $t$ and growing degree $k$.
+No fixed-$t$ implicit constant or bounded-strip vertical Stirling
+estimate is substituted at a growing real argument.
+
+### A logarithmic clock window and its relative tail budget
+
+For sufficiently large $A$, put
+
+$$
+t_A=\log L\ge4,\qquad
+\ell_A=4(C_m+1)k\log(t_A+2),\qquad
+\mathcal C'_A=[e^{-\ell_A},e^{\ell_A}],
+$$
+
+$$
+P_A=Ae^{2\ell_A},\qquad Z_A=\log P_A=L+2\ell_A,\qquad
+\widetilde H_A=\frac{\beta_1^k(k-1)!}{L^k}.
+\tag{GMW2}
+$$
+
+Here $\beta_1>0$ is the same node-$1$ slope as in ACP3 and JPT2.
+Retain JPT2's fixed $0<u_0\le1/16$ and
+$w(u)=Q(h(1+u))=\beta_1u\exp(O(u))>0$ on $(0,u_0]$.
+Since $k=O(t_A)$,
+$\ell_A=O(t_A\log(t_A+2))=o(L)$ and $k\ell_A/L\to0$.
+The clamp level $\tau=e/A$ is below $e^{-\ell_A}$ eventually, and
+the correction atoms $1,2$ lie inside $\mathcal C'_A$.
+In particular
+
+$$
+\frac{\log P_A}{\log A}\longrightarrow1,\qquad
+P_A=A\exp\!\bigl(O(\log\log A\,\log\log\log A)\bigr)
+ < A^{16}\quad\text{eventually}.
+$$
+
+This does not assert $P_A/A\to1$.
+For $t=t_A\ge4$ and real $z$,
+$(1+z^2)e^{u_0|z|}\le Ce^{t|z|/2}$ with an absolute constant
+independent of $t$. On $|z|>\ell_A$, this is at most
+$Ce^{-t\ell_A/2}e^{t|z|}$.
+Integrating $c^t+c^{-t}$ with GMW1 gives
+
+$$
+\int_{|\log c|>\ell_A}(1+\log^2c)e^{u_0|\log c|}
+       \,d|\nu_k|(c)
+\le C\exp\!\bigl(-(C_m+2)kt_A\log(t_A+2)\bigr)
+=:E_A^{\mathrm{clock}}.
+\tag{GMW3}
+$$
+
+Stirling at the actual slow degree yields
+$\log\widetilde H_A=-\epsilon(\log L)^2+
+O(\log L\log\log L)$, whence
+$(1+t_A)E_A^{\mathrm{clock}}=o(\widetilde H_A)$.
+This is a relative error statement; these growing-window errors are
+not asserted to be $o(1/T_A)$.
+
+### The actual complete prime tail at the moving cutoff
+
+Keep JPT's $r_p=\log(1+1/p)/\log p$ and the actual activation
+$\lambda(x_p)=r_p$, with $x_p>p$ and $x_p=p+O(1)$. Define
+
+$$
+F_{P_A}(q)=\sum_{p>P_A}\log p\,(r_p-q)_+,\qquad
+U'_A=\int F_{P_A}(\lambda(Av))\,d\omega_A(v).
+\tag{GMW4}
+$$
+
+JPT3's global bound, valid at every cutoff because $F_{P_A}\le M$,
+gives
+
+$$
+\int F_{P_A}(\lambda(Av))\,d|\kappa_{A,c}|(v)
+\le C(1+\log L)[1+(\log_+c)^2].
+$$
+
+Thus absolute kernel/source integration retains the complete infinite
+prime tail. GMW3 pays both excluded clock sets. Clamping only
+decreases the low-clock logarithmic weight and keeps excluded low
+clocks below $e^{-\ell_A}$; moreover
+$|\chi_\#\nu_k|\le\chi_\#|\nu_k|$. On high clocks
+$\eta_A=\nu_k$, and both correction atoms are inside the window.
+Their replacement cost is
+$O(|\delta_A|(1+\log L))=o(\widetilde H_A)$.
+With $G'_A(c)=\int F_{P_A}(\lambda(Av))\,d\kappa_{A,c}(v)$,
+
+$$
+U'_A=\int_{\mathcal C'_A}G'_A(c)\,d\nu_k(c)
+       +o(\widetilde H_A).
+\tag{GMW5}
+$$
+
+The new tail budget is $O((1+t_A)E_A^{\mathrm{clock}})$; JPT4's
+polynomial-window root-error assertion is not used outside its range.
+
+For $c\in\mathcal C'_A$ and $p>P_A$, one has
+$x_p/A>e^{2\ell_A}>c$, so the actual activation lies beyond the
+kernel atom, as required in JPT5. Also
+$|\log c|/\log p\le\ell_A/(L+2\ell_A)<1/2$.
+These verified domain conditions permit JPT5's same finite-endpoint
+calculation and JPT6's actual-activation replacement and effective-PNT
+partial summation. They give, uniformly on the new window,
+
+$$
+G'_A(c)=\log(1-\log c/Z_A)
+ +O\!\left(|\log c|e^{-a_1\sqrt{Z_A}}
+          +\frac{|\log c|}{P_A\log P_A}\right),
+\tag{GMW6}
+$$
+
+for a fixed $a_1>0$. The exact nonhomogeneous kernel, its atom,
+actual prime thresholds and infinite tail are unchanged.
+By KTO2, $\int|\log c|\,d|\nu_k|\le CL^{1/4}$.
+Since $Z_A\sim L$ and $\sqrt L$ dominates $(\log L)^2$, the
+source-integrated error in GMW6 is $o(\widetilde H_A)$, without a
+root-smallness claim.
+
+### Source cancellation and the moving Gamma comparison
+
+On the new window set $z=\log c$ and use
+
+$$
+\log(1-z/Z_A)=-\int_0^\infty e^{-Z_Au}(e^{zu}-1)\,\frac{du}{u}.
+$$
+
+Only the finite interval $[0,u_0]$ is interchanged with the source.
+The removed $u\ge u_0$ tail is at most
+$Ce^{-u_0(Z_A-\max(z,0))}\le Ce^{-u_0(L+\ell_A)}$;
+its source cost, including total variation $O(L^{1/4})$, is
+$o(\widetilde H_A)$.
+On the retained interval,
+$|(c^u-1)/u|\le|\log c|(1+c^{u_0})$.
+GMW3 therefore pays extension of this truncated expression to all
+of $\nu_k$ with cost $O(E_A^{\mathrm{clock}})$.
+Keep $c^u-1$ intact before Fubini; no divergent $1/u$ pieces are
+separated. Exact source mass and its Mellin identity then give
+
+$$
+\int_{\mathcal C'_A}\log(1-\log c/Z_A)\,d\nu_k(c)
+=\int_0^{u_0}e^{-Z_Au}Q(h(1+u))^k\,\frac{du}{u}
+ +o(\widetilde H_A).
+\tag{GMW7}
+$$
+
+Reuse the standard Gamma comparison of ACP4--ACP5 and JPT8 with
+rates $Z_A\pm Dk$, where JPT2 supplies fixed $D$.
+Here $k^2/Z_A\to0$ and $k\log Z_A=o(Z_A)$, so the integral is
+$\beta_1^k\Gamma(k)Z_A^{-k}(1+o(1))$.
+Moreover
+$(L/Z_A)^k=\exp[-k\log(1+2\ell_A/L)]=1+o(1)$ because
+$k\ell_A/L\to0$. Combining the actual tail, clock and source
+errors proves
+
+$$
+U'_A=\widetilde H_A(1+o(1))>0,\qquad
+T_A\widetilde H_A\longrightarrow\infty.
+\tag{GMW8}
+$$
+
+### The additional paid band of the same original integer
+
+For the same observer, $A$ and $k$, JPT9 gives the old actual tail
+$U_A^{(16)}=16^{-k}\widetilde H_A(1+o(1))$ beyond $A^{16}$.
+Since $k\to\infty$ and $P_A<A^{16}$ eventually, the actual
+intervening band satisfies
+
+$$
+U_A^{\mathrm{band}}:=U'_A-U_A^{(16)}
+=\int\sum_{P_A<p\le A^{16}}\log p\,(r_p-\lambda(Av))_+
+            \,d\omega_A(v)
+=\widetilde H_A(1+o(1))>0.
+\tag{GMW9}
+$$
+
+Both terms use one realization and one clock; no separately optimized
+sources are combined. For the same original integer $n$ at its own
+$A=\log n$, let $D_A^{\mathrm{band}}(n)$ be the signed observer
+average of the complete first-layer defect in $P_A<p\le A^{16}$:
+absent primes contribute $\log p\,(r_p-\lambda(Av))_+$ and
+occupied primes contribute $\log p\,(\lambda(Av)-r_p)_+$.
+The scalar hinge identity, exact mass and exact price mean give
+
+$$
+D_A^{\mathrm{band}}(n)
+=U_A^{\mathrm{band}}
+ +\sum_{\substack{P_A<p\le A^{16}\\p\mid n}}
+       (\lambda(A)-r_p)\log p
+\ge U_A^{\mathrm{band}}
+\ge\widetilde H_A/2>0\quad\text{eventually}.
+\tag{GMW10}
+$$
+
+The occupied-prime correction is nonnegative because $p>P_A>A$.
+This lower bound holds uniformly for every original integer at its
+own clock. It pays an actual band previously inside JPT's
+complementary defect, with no CA/GA assumption, prime-support bound
+or optimizer substitution. The complete new far-first-layer sector
+$p>P_A$ likewise has its nonnegative occupation correction and a
+lower bound $\widetilde H_A/2$ eventually. These positive lower
+bounds depend on $A$; they are not fixed positive constants.
+
+Let $E'_A(n)$ average the exact remaining defect: all first layers
+$p\le P_A$ and every higher exponent layer at every prime.
+Writing $D_{\mathrm{far},A}^{(16)}(n)$ for the old JPT far sector,
+the disjoint account is
+
+$$
+D_A(n)=E'_A(n)+D_A^{\mathrm{band}}(n)
+                +D_{\mathrm{far},A}^{(16)}(n).
+\tag{GMW11}
+$$
+
+One may instead combine the last two terms into the new far sector;
+that overlapping sector is not counted again. KTO12's original
+Robin margin remains
+
+$$
+T_A\Delta(n)=T_AE'_A(n)+T_AD_A^{\mathrm{band}}(n)
+                 +T_AD_{\mathrm{far},A}^{(16)}(n)+c_R+o(1).
+\tag{GMW12}
+$$
+
+No sufficient lower bound for $E'_A(n)$ is supplied. Its integrand is
+pointwise nonnegative but its observer average is signed. The new
+first-layer boundary and positive band do not prove complete-defect
+positivity, RH or strict Robin for every $n>5040$.
