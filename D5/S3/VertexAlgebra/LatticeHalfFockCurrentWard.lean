@@ -31,18 +31,6 @@ noncomputable section
 
 namespace D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField
 
-private theorem shiftField_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
-    (s : ℕ) (A : NativeField D hu) (e : ℤ) :
-    (shiftField D hu s A).coeff e = A.coeff (e + 2 * (s : ℤ)) := by
-  apply LinearMap.ext
-  intro v
-  change ((HahnModule.of ℂ).symm
-    ((HahnSeries.single (-2 * (s : ℤ)) (1 : ℂ)) • A v)).coeff e = _
-  have h := HahnModule.coeff_single_smul_vadd
-    (r := (1 : ℂ)) (x := A v) (a := e + 2 * (s : ℤ)) (b := -2 * (s : ℤ))
-  simpa only [HVertexOperator.coeff_apply_apply, vadd_eq_add, neg_add_cancel_left, one_smul,
-    show -2 * (s : ℤ) + (e + 2 * (s : ℤ)) = e by ring] using h
-
 private theorem prod_shift (a : ℂ) (order : ℕ) :
     a * ∏ offset ∈ Finset.range order, (a - 1 - (offset : ℂ)) =
       ∏ offset ∈ Finset.range (order + 1), (a - (offset : ℂ)) := by
@@ -917,8 +905,8 @@ private theorem correctedPolynomial_current_ward
                 (e - (2*q + 1) + 2*(n : ℤ)) x := by
     have hp := polynomial_current_ward D hu i charge
       (Corr D charge polynomial s) q (e + 2*(s : ℤ)) x
-    simp only [shiftField_coefficient]
-    simpa [shiftField_coefficient, polynomialWardTerm, sub_eq_add_neg, add_comm, add_left_comm,
+    simp only [shiftField_coefficient_public]
+    simpa [shiftField_coefficient_public, polynomialWardTerm, sub_eq_add_neg, add_comm, add_left_comm,
       add_assoc] using hp
   simp only [correctedPolynomial, correctedSum, LinearMap.comp_apply,
     Finsupp.lsum_apply, Finsupp.sum, Finsupp.sum_apply]
