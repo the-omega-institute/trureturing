@@ -21,12 +21,14 @@ internal sealed class LogNegativityCapacityResourceDependenceDocument : IScribeD
                 "Section I, Eq. (2), p. 2, verbatim: “However, when prior entanglement is available, the maximum increase of entanglement is:” The formula is Eᴰ(Λ) = sup{E(Λ(σ)) − E(σ)|σ ∈ D}. Both logarithms have base two. No restriction to positive partial transpose is imposed on these inputs.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Campbell)),
             Node("claim", "The all-CPTP resource-independence question", ClaimFormula(),
                 "Section VII, p. 7, verbatim: “The most obvious open question is whether log-negativity EC is resource independent for all unitaries, or indeed all CPTP maps, or whether this is a singular feature of 2-qubit gates.” The assertion here is its all-CPTP clause. The dimensions dA and dB and the finite Kraus count r range over natural numbers. Completeness of the Kraus family states trace preservation. The two capacities include every finite local ancillary system.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Campbell)),
+            Node("separable_ppt", "Separable states have positive partial transpose", SeparablePptFormula(),
+                "For arbitrary finite types A and B, a finite convex mixture of product density matrices remains positive semidefinite after transposing the B indices. The matrix entry at (a,b),(c,d) is sigma((a,d),(c,b)). Positivity follows by applying partial transpose to each product and adding the nonnegative weighted terms.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("result", "A CPTP separation", Seq(Neg, Sp, Parenthesized(ClaimBody())),
                 "The Tiles complementary projector Q is positive under partial transpose. The input Q/4 therefore has zero log-negativity and gives output partial-transpose trace norm two. For a separable input with arbitrary finite local ancillas, the conditional ancillary matrices are positive under partial transpose; a rational product-overlap estimate bounds the output norm by 2 minus 1/6561. The assisted capacity is at least one, whereas the separable-input capacity is at most log base two of 2 minus 1/6561, strictly less than one. This does not decide the question for unitary channels.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Campbell, Tiles),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("campbell-2010-log-negativity-resource-independence"), ResolutionKind.Refuted)))));
     private static DocumentBlock Node(string n, string title, Formula f, string prose, DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("cam-" + n.ToLowerInvariant()), DeclarationHandle.Create(Owner + n), H(title),
+        Describe.Lean(DescribeId.Create("cam-" + n.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Owner + n), H(title),
             StatementSource.FromAuthor(Disp(f)), provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula V(string n) => F.Id(n);
     private static Formula Call(string n, params Formula[] a) => new Formula.FunctionCall(FormulaIdentifier.Create(n), [.. a]);
@@ -79,6 +81,18 @@ internal sealed class LogNegativityCapacityResourceDependenceDocument : IScribeD
             V("MatrixMap"), Dot, V("of")), Underscore, Grp(V("kraus")));
         return ChannelInputs(All("a", N, All("b", N, All("rho", Sq(InputType),
             Eq(Call("extend", k, rho), At(At(owner, family, family), rho))))));
+    }
+    private static Formula SeparablePptFormula()
+    {
+        Formula a = V("A"), b = V("B"), sigma = V("sigma");
+        Formula pair = ProdType(a, b);
+        Formula entry = Lam("i", pair, Lam("j", pair,
+            At(sigma, Parenthesized(Seq(Call("fst", V("i")), Comma, Sp, Call("snd", V("j")))),
+                Parenthesized(Seq(Call("fst", V("j")), Comma, Sp, Call("snd", V("i")))))));
+        return All("A", V("Type"), All("B", V("Type"),
+            All("finiteA", Call("Fintype", a), All("finiteB", Call("Fintype", b),
+            All("eqA", Call("DecidableEq", a), All("eqB", Call("DecidableEq", b),
+            All("sigma", Sq(pair), Imp(Call("IsSeparable", sigma), Call("PosSemidef", entry)))))))));
     }
     private static Formula ClaimFormula() => IffOf(V("claim"), ClaimBody());
     private static Formula ClaimBody()

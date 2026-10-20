@@ -4728,3 +4728,272 @@ memory properties of §§18–21, with full transient inputs included.
 [HALF39]: AURIC_FIB_FIVE_WINDOW_HALF_GRAM_CLASSIFICATION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 40. Exact biased-population recovery with one terminal permutation correction
+
+**Assumption 40.1 (Measured task and resources).** Fix a known population $0<\eta<1$, write $r=1-\eta$, and use $u_\eta,v_\eta,z,R_\eta$ of (24.1). Write $e_i$ for the five original basis vectors, $B=(u_\eta,v_\eta,z):\mathbb C^3\to H$, and $\iota_\eta(X)=BXB^\dagger$. The qutrit indices below are $0,1,2$; $B^\dagger B=I_3$. Repeat the fixed unrotated instrument of Definition 40.2 with a fresh pure environment at each step, measuring and supplying its actual binary label before discarding that environment. Between steps only a classical controller may change. At a known horizon $n\ge0$ apply one full-$H$ terminal unitary. The target is $\iota_\eta$ on the entire complex qutrit algebra and all untouched references, rather than identity on arbitrary $H$ inputs.
+
+For the comparison class, allow the complete actual history $h$, independent classical coins, and any terminal CPTP map $\mathcal R_h:M_5\to M_5$. There is no intermediate quantum control, retained environment, reference access, input-dependent side information, or postselection. A stochastic summary and its decoder induce a CPTP $\mathcal R_h$ for each $h$, so are included. The counted persistent run-dependent state of the attaining controller has at most six values. Known fixed $\eta,n$, deterministic clocks, calibration, exact static control descriptions or tables, and label acquisition and communication are separate resources, as in [Environment Record Memory, Definition 1.5][ERM40]. All norms are unhalved as in (17.1), with input algebra $M_3$ and output algebra $M_5$ where appropriate. Here $\eta$ is not the measurement angle $\theta$ of that companion volume.
+
+**Definition 40.2 (Actual unrotated branches).** Put $q=1/\sqrt2$ and specify
+
+$$
+A_0=|u_\eta\rangle\langle e_0|+q|v_\eta\rangle\langle e_2|+|z\rangle\langle e_4|,
+\qquad A_1=|u_\eta\rangle\langle e_1|+q|v_\eta\rangle\langle e_2|+|z\rangle\langle e_3|.
+\tag{40.1}
+$$
+
+The dilation is $\mathcal Vx=A_0x\otimes f_0+A_1x\otimes f_1$, with actual measurement in $(f_0,f_1)$. Indeed $A_0^\dagger A_0=\operatorname{diag}(1,0,1/2,0,1)$ and $A_1^\dagger A_1=\operatorname{diag}(0,1,1/2,1,0)$, so $\mathcal V$ is isometric and admits a unitary completion from a pure ready environment by completion of orthonormal bases. On all $H$, $(L_{\eta,0},L_{\eta,1})=((A_0+A_1)/\sqrt2,(A_0-A_1)/\sqrt2)$ in (24.2). Thus the averaged channel is exactly $\mathcal B_\eta$, and its full-input population law is already (24.4). This equality does not change the measured labels to the Hadamard-rotated ones. Direct restriction gives $A_jB=BL_j$, where
+
+$$
+\begin{gathered}
+L_0=\begin{pmatrix}\sqrt r&0&0\\0&0&q\\0&\sqrt\eta&0\end{pmatrix}=U_0D_0,
+\quad L_1=\begin{pmatrix}0&\sqrt r&0\\0&0&q\\\sqrt\eta&0&0\end{pmatrix}=U_1D_1,\\
+U_0=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\quad
+U_1=\begin{pmatrix}0&1&0\\0&0&1\\1&0&0\end{pmatrix},\quad
+D_0=\operatorname{diag}(\sqrt r,\sqrt\eta,q),\quad D_1=\operatorname{diag}(\sqrt\eta,\sqrt r,q).
+\end{gathered}
+\tag{40.2}
+$$
+
+For a premeasurement qutrit density $\tau$, the actual Born probabilities are $p_0=r\tau_{00}+\eta\tau_{11}+\tau_{22}/2$ and $p_1=1-p_0$. They depend on the input unless $\eta=1/2$.
+
+**Theorem 40.3 (Polar frame and a sufficient six-state controller).** For a chronological history $h=(j_1,\ldots,j_k)$ put $M_h=L_{j_k}\cdots L_{j_1}$ and $P_h=U_{j_k}\cdots U_{j_1}$. Then $M_h=P_hF_h$ with $F_h=|M_h|$ nonnegative diagonal. The homogeneous controller $P\leftarrow U_jP$, initialized at $I_3$, followed only at termination by
+
+$$
+W_P=BP^\dagger B^\dagger+I_5-BB^\dagger
+\tag{40.3}
+$$
+
+attains the corrected channel $\iota_\eta\mathcal E_n$, where $\mathcal E_n(X)=\sum_{|h|=n}F_hXF_h$. It preserves the complex matrix-unit phases under the stated error channel, including their correlations with any untouched reference.
+
+Proof. Starting with $F_\varnothing=I_3$, appending $j$ gives
+
+$$
+F_{hj}=P_h^\dagger D_jP_hF_h=:K_{j,P_h}F_h,\qquad P_{hj}=U_jP_h.
+\tag{40.4}
+$$
+
+Both factors on the right are nonnegative diagonal, hence their product is positive and $M_{hj}=P_{hj}F_{hj}$ is its polar decomposition. Induction proves the claim without inverting a filter. The permutations $a=U_0=(12)$ and $b=U_1=(021)$ generate $S_3$, with $a^2=b^3=I$ and $aba=b^2$. For completeness the entire state transition function is
+
+| Current $P$ | Label $0$ | Label $1$ |
+| --- | --- | --- |
+| $I$ | $a$ | $b$ |
+| $b$ | $b^2a$ | $b^2$ |
+| $b^2$ | $ba$ | $I$ |
+| $a$ | $I$ | $ba$ |
+| $ba$ | $b^2$ | $b^2a$ |
+| $b^2a$ | $b$ | $a$ |
+
+This is the permutation accumulator of [Environment Record Memory, Theorem 5.1][ERM40]; the extension here is that the positive factors need not be scalar. Equation (40.3) acts by $P^\dagger$ on $R_\eta$ and by identity on its orthogonal complement, so $W_P^\dagger W_P=W_PW_P^\dagger=I_5$. Since $W_{P_h}BM_h=BF_h$, summing actual branches gives the asserted channel. For a referenced density $\rho$, the probability of $h$ is $\operatorname{Tr}[(F_h^2\otimes I)\rho]$; the probability of $hj$ is $\operatorname{Tr}[(F_hK_{j,P_h}^2F_h\otimes I)\rho]$. Dividing these gives the conditional Born law whenever the denominator is nonzero. No fair-history measure or independence of frame and state is used. All identities hold on complex matrices before amplification, hence preserve relative phases and references with exactly the coherence attenuation computed below. $\square$
+
+**Theorem 40.4 (The actual finite-horizon Schur recurrence).** Write
+
+$$
+a=2\sqrt{\eta r},\qquad \alpha=\sqrt{r/2},\qquad \gamma=\sqrt{\eta/2},\qquad
+b=\alpha+\gamma=\sqrt{(1+a)/2}.
+\tag{40.5}
+$$
+
+Then $\mathcal E_n(X)=C_n\circ X$, with entrywise multiplication and
+
+$$
+C_n=\begin{pmatrix}1&A_n&B_n\\A_n&1&B_n\\B_n&B_n&1\end{pmatrix},\qquad
+A_0=B_0=1,\quad A_{n+1}=aB_n,\quad B_{n+1}=\alpha A_n+\gamma B_n.
+\tag{40.6}
+$$
+
+In particular $C_n$ is positive semidefinite, $0\le A_n,B_n\le1$, and $\mathcal E_n$ is CPTP.
+
+Proof. Put $f_{h,i}=(F_h)_{ii}$. The exact history sum is $C_{n,ik}=\sum_h f_{h,i}f_{h,k}$. Since $\sum_hM_h^\dagger M_h=I_3$, its diagonal is one; it is a Gram matrix of nonnegative unit vectors, giving all the assertions except the recurrence. To derive that recurrence, split a length-$n+1$ history at its first label $j$, followed by a length-$n$ tail $t$. Then
+
+$$
+M_tL_j=(P_tU_j)(U_j^\dagger F_tU_jD_j),\qquad
+C_{n+1,ik}=\sum_{j=0}^1d_{j,i}d_{j,k}C_{n,U_j(i),U_j(k)},\quad d_{j,i}=(D_j)_{ii}.
+\tag{40.7}
+$$
+
+The second factor in the first equality is nonnegative diagonal and is therefore the actual polar modulus. Substitution of the two permutations in (40.2) sends pair $01$ to $02,02$, pair $02$ to $01,12$, and pair $12$ to $12,01$. The coefficients are respectively $\sqrt{r\eta},\sqrt{r\eta}$; $\alpha,\gamma$; and $\gamma,\alpha$. Starting from the all-ones $C_0$ proves (40.6) by induction. This first-label decomposition and the last-label controller update (40.4) describe the same histories in different orders of summation. Generally $\mathcal E_n\ne\Phi_\eta^n$, where $\Phi_\eta(X)=\sum_jD_jXD_j$ is the one-step corrected map: at $n=2$, $A_2=ab$, whereas that power predicts $a^2$, unequal for every interior $\eta\ne1/2$. $\square$
+
+**Theorem 40.5 (Sharp error against all-history terminal CPTP recovery).** Define
+
+$$
+\mathcal T_{\mathcal R,n}(X)=\sum_{|h|=n}\mathcal R_h(BM_hXM_h^\dagger B^\dagger),\qquad
+\varepsilon_\eta(n)=\inf_{\{\mathcal R_h\}}\|\mathcal T_{\mathcal R,n}-\iota_\eta\|_\diamond.
+\tag{40.8}
+$$
+
+The infimum includes the full comparison class of Assumption 40.1. With $x_n=1-A_n$, $y_n=1-B_n$, it is attained by (40.3), and equals
+
+$$
+\varepsilon_\eta(n)=\|\mathcal E_n-\operatorname{id}\|_\diamond
+=\begin{cases}
+x_n,&x_n\ge2y_n,\\
+\displaystyle\frac{4y_n^2}{4y_n-x_n},&x_n<2y_n.
+\end{cases}
+\tag{40.9}
+$$
+
+The first branch includes $x_n=y_n=0$, so no $0/0$ convention is needed. This is error optimality and six-state attainment, with no assertion of six-state minimality at biased $\eta$.
+
+Proof. The norm calculation specializes the nonnegative Gram argument of [Arithmetic Holographic RT, §36.1, (36.8)–(36.9)][RT40]; the full specialization and complex-input step are given here. Suppress $n$, put $J=\mathbf1\mathbf1^{\mathsf T}$ and $D=J-C$. Every referenced unit vector has the form $\psi=\sum_i\sqrt{p_i}|i\rangle v_i$, with $p$ a probability vector and each nonzero $v_i$ unit. The vectors $|i\rangle v_i$ are orthonormal even if the $v_i$ are not. Thus the output of $\operatorname{id}-\mathcal E$ on $P_\psi$ is an isometric embedding of
+
+$$
+T_p=\operatorname{diag}(\sqrt p)D\operatorname{diag}(\sqrt p).
+\tag{40.10}
+$$
+
+Convexity bounds every mixed input by $\max_p\|T_p\|_1$. To cover arbitrary complex $X$ on qutrit and reference, use $H_X=\tfrac12\left(\begin{smallmatrix}0&X\\X^\dagger&0\end{smallmatrix}\right)$, doubling only the untouched reference. Both its input norm and, by Hermitian preservation, its output norm equal those of $X$ and its output. The positive and negative Jordan parts of $H_X$, normalized to densities when nonzero, extend the same bound to $X$. Conversely each $p$ occurs already without a reference, using $\sum_i\sqrt{p_i}|i\rangle$. Hence the diamond norm equals $\max_p\|T_p\|_1$ for all finite references.
+
+On the subspace orthogonal to $\sqrt p$, the quadratic form of $T_p$ is nonpositive because $C\ge0$. Thus $T_p$ has at most one positive eigenvalue and trace zero, giving $\|T_p\|_1=2\lambda_{\max}(T_p)$, also when it is zero. Since $D$ has nonnegative entries, replacing a Rayleigh vector by its coordinatewise absolute values cannot decrease its Rayleigh quotient. For such a nonnegative unit vector $u$ set $v_i=\sqrt{p_i}u_i$; Cauchy–Schwarz gives $t=\sum_i v_i\le1$. When $t>0$, $w=v/t$ is a probability vector and
+
+$$
+u^{\mathsf T}T_pu=2\sum_{i<k}D_{ik}v_iv_k
+\le2\max_{w\in\Delta_3}\sum_{i<k}D_{ik}w_iw_k.
+\tag{40.11}
+$$
+
+When $t=0$ the left side is zero. Conversely choose $p=w$, $u_i=\sqrt{w_i}$ to attain this Rayleigh value. Therefore the exact norm is $4\max_w\sum_{i<k}D_{ik}w_iw_k$. For $q_0=w_0+w_1$, nonnegative $x$ makes $w_0w_1\le q_0^2/4$ optimal at $w_0=w_1=q_0/2$. The remaining maximum is
+
+$$
+\max_{0\le q_0\le1}\{4yq_0-(4y-x)q_0^2\}.
+\tag{40.12}
+$$
+
+If $x\ge2y$, its maximum is $x$ at $q_0=1$: for $4y-x>0$ the vertex is at least one, and for $4y-x\le0$ the convex or linear function is maximized at an endpoint, with $x\ge0$. If $x<2y$, then $y>0$, $4y-x>0$, and the vertex $q_0=2y/(4y-x)\in(0,1)$ gives $4y^2/(4y-x)$. This proves (40.9) for the attaining Schur channel. The isometry $B\otimes I$ preserves every singular value and hence every amplified trace norm, so its embedding has the same error.
+
+For the universal lower bound, fix any $w\in\Delta_3$ and use the admissible input $\sum_i\sqrt{w_i}|i\rangle|i\rangle_Z$, whose ideal output is $\Psi_w=\sum_i\sqrt{w_i}B|i\rangle|i\rangle_Z$. Write the full-$H$ Kraus operators of an arbitrary terminal $\mathcal R_h$ as $T_{h,\ell}$, with $\sum_\ell T_{h,\ell}^\dagger T_{h,\ell}=I_5$. Set $z_{i,\ell}=\langle Bi,T_{h,\ell}BP_hi\rangle$. Projection onto $Bi$ and TP give $\sum_\ell|z_{i,\ell}|^2\le\sum_\ell\|T_{h,\ell}BP_hi\|^2=1$. The unnormalized branch contribution to overlap with $\Psi_w$ is consequently
+
+$$
+\sum_\ell\left|\sum_iw_if_{h,i}z_{i,\ell}\right|^2
+\le\left(\sum_iw_if_{h,i}\right)^2,
+\tag{40.13}
+$$
+
+by the triangle inequality in the Kraus-index Euclidean space. Summing gives total overlap $F\le w^{\mathsf T}C_nw$. Actual probabilities are already in the amplitudes $f_{h,i}$; none are replaced by equal weights or optimized separately. The recovered output has trace one by branch completeness and TP. The two-outcome test $\{P_{\Psi_w},I-P_{\Psi_w}\}$ has ideal probabilities $(1,0)$ and actual probabilities $(F,1-F)$, so complete trace-norm contraction gives distance at least $2(1-F)\ge4\sum_{i<k}(1-C_{n,ik})w_iw_k$. The test is used only to lower-bound error, with no reference operation available to the decoder. Maximizing $w$ matches (40.11)–(40.12). Independent coins and stochastic record processing merely mix TP maps for each fixed actual $h$, so the bound survives all such averaging. This proves the infimum and its stated attainment. $\square$
+
+**Theorem 40.6 (Same-history cq recursion and the local error bound).** For every complex referenced operator $X$, define unnormalized blocks
+
+$$
+\sigma_{k,P}(X)=\sum_{|h|=k,\ P_h=P}(F_h\otimes I)X(F_h\otimes I),\qquad
+\sigma_{0,I}(X)=X,\quad \sigma_{0,P}(X)=0\ (P\ne I).
+\tag{40.14}
+$$
+
+Writing $\Phi_\eta(X)=\sum_jD_jXD_j$, $\Phi_P=\operatorname{Ad}_{P^\dagger}\Phi_\eta\operatorname{Ad}_P$, the exact recursion and increment are
+
+$$
+\begin{aligned}
+\sigma_{k+1,Q}&=\sum_{P,j:U_jP=Q}\operatorname{Ad}_{K_{j,P}\otimes I}(\sigma_{k,P}),\\
+((\mathcal E_{k+1}-\mathcal E_k)\otimes\operatorname{id})(X)
+ &=\sum_P((\Phi_P-\operatorname{id})\otimes\operatorname{id})(\sigma_{k,P}(X)).
+\end{aligned}
+\tag{40.15}
+$$
+
+In particular, with $s=\eta-1/2$,
+
+$$
+e_\eta:=\|\Phi_\eta-\operatorname{id}\|_\diamond=1-2\sqrt{\eta(1-\eta)},\qquad
+\varepsilon_\eta(n)\le\min\{2,ne_\eta\}\le\min\{2,4ns^2\},\quad
+ e_\eta=\frac{4s^2}{1+\sqrt{1-4s^2}}=2s^2+O(s^4).
+\tag{40.16}
+$$
+
+Proof. Equation (40.4) gives the first line of (40.15) on the same actual histories. The cq Kraus operators $|U_jP\rangle\langle P|\otimes K_{j,P}$ satisfy completeness, since $\sum_jK_{j,P}^2=I_3$. Their composition from the initial frame is CPTP; Lemma 22.1's amplified adjoint argument therefore gives $\sum_P\|\sigma_{k,P}(X)\|_1\le\|X\|_1$, including non-Hermitian $X$. For positive inputs block traces are actual frame probabilities. Summing the recursion and subtracting $\sum_P\sigma_{k,P}=(\mathcal E_k\otimes\operatorname{id})(X)$ proves the second line. Unitary conjugation gives $\|\Phi_P-\operatorname{id}\|_\diamond=e_\eta$, hence $\|\mathcal E_{k+1}-\mathcal E_k\|_\diamond\le e_\eta$. Telescope and use channel norm one for the independent bound two.
+
+For the exact local value use (40.9) at $n=1$: $x=1-a$, $y=1-b$, and $x=2(1-b)(1+b)\ge2y$. Thus $e_\eta=x$. Rationalizing $1-\sqrt{1-4s^2}$ gives (40.16). The coefficient $4$ is a sharp global quadratic upper coefficient on $|s|<1/2$, because $e_\eta/s^2\to4$ at either endpoint; its limit at half is $2$. For comparison the first-step label laws of basis inputs $0,1$ are $(r,\eta)$ and $(\eta,r)$, with total-variation distance $2|s|$. Their square-root overlap is $a=\sqrt{1-4s^2}$, while either law's overlap with the fair law of basis input $2$ is $b$. This relates first-order label distinguishability to quadratic local coherence loss without asserting a Shannon-information rate. $\square$
+
+**Proposition 40.7 (Limits, asymmetry, and retained classical correlations).** At $n=0$ the error is zero for every interior $\eta$. At $\eta=1/2$ it is zero for every $n$, whereas for each fixed interior $\eta\ne1/2$ it is positive for all $n\ge1$, and
+
+$$
+\mathcal E_n\longrightarrow\Delta_3\text{ in diamond norm},\qquad
+\lim_{n\to\infty}\varepsilon_\eta(n)=\frac43,
+\tag{40.17}
+$$
+
+where $\Delta_3$ deletes qutrit off-diagonals. For each finite $n$, $\varepsilon_\eta(n)\to0$ as $\eta\to1/2$, but the iterated limits are
+
+$$
+\lim_{\substack{\eta\to1/2\\\eta\ne1/2}}\lim_{n\to\infty}\varepsilon_\eta(n)=\frac43,
+\qquad \lim_{n\to\infty}\lim_{\eta\to1/2}\varepsilon_\eta(n)=0.
+\tag{40.18}
+$$
+
+For every $n$ the corrected channel exactly preserves all encoded qutrit diagonal states and their diagonal correlations with untouched references. Reflection $\eta\leftrightarrow1-\eta$ preserves the one-step error but generally fails at longer horizons. Fixed-finite-horizon endpoint limits exist and are obtained by continuous extension of (40.6) and (40.9).
+
+Proof. At half, $D_0=D_1=qI_3$ and $F_h=2^{-n/2}I_3$; at zero horizon $F_\varnothing=I_3$. Away from half, $A_n\le a<1$ for $n\ge1$, giving positive error. The transfer matrix in (40.6) has polynomial $t^2-\gamma t-a\alpha$. Under the exact parameter correspondence $(\alpha,\gamma,a)=(a_{24},c_{24},b_{24})$, $a\alpha=2r\gamma$, its roots are precisely the existing $\mu_\pm$ of (24.6). The inequalities (24.13)–(24.14) give $|\mu_-|<\mu_+<1$ at every fixed biased interior parameter. Thus $A_n,B_n\to0$, and finite-dimensional norm equivalence gives complete convergence to $\Delta_3$. Substituting $x=y=1$ in (40.9) gives $4/3$, attained in the norm calculation at $w=(1/3,1/3,1/3)$. Continuity of each finite recurrence, or (40.16), gives (40.18). More uniformly, for every $n\ge1$, $\sup_{0<\eta<1,\ \eta\ne1/2}|\varepsilon_\eta(n)-4/3|\ge4/3$; hence the biased long-horizon limit is not uniform near half. The quadratic spectral gap (24.16) is reused, not a new operational error formula: the corrected channel and the discarded-label $\mathcal B_\eta^n$ are distinct maps even though this transfer shares its two coherence roots. The population powers remain the independent supplier (29.2).
+
+For endpoint limits and $n\ge1$, at $\eta\downarrow0$ the recurrence gives $(A_1,B_1)\to(0,2^{-1/2})$ and $(A_n,B_n)\to(0,0)$ for each $n\ge2$; at $\eta\uparrow1$ it gives $(A_n,B_n)\to(0,2^{-n/2})$. The endpoint one-step error is $1$. From $n=2$ onward the zero-endpoint error is $4/3$; the one-endpoint error is $1$ at $n=2$ and tends to $4/3$ with $n$. These are limits of this instrument and target, not identifications with all endpoint models in §15. At $n=2$, $A_2=ab$ is symmetric but $B_2(\eta)-B_2(1-\eta)=(\alpha-\gamma)(a-b)$; in particular the errors at $\eta=1/5$ and $4/5$ are approximately $0.2814470761$ and $0.2491426151$. Every nonzero conditional branch on basis input $i$ returns $Bi$ after correction because $F_h|i\rangle=f_{h,i}|i\rangle$. Completeness gives $\sum_h f_{h,i}^2=1$, so $\sum_i\iota_\eta(E_{ii})\otimes X_i$ is fixed for any reference operators $X_i$. This is an encoded classical trit and its correlations; it makes no identity claim on all five original basis projectors. $\square$
+
+**Convention 40.8 (Suppliers and boundaries).** The population family, spectral roots, decay inequalities and quadratic gap are owned by §§24 and 27–31, specifically (24.4), (24.6), (24.13)–(24.16), and (29.2). The half-parameter permutation controller is owned by [Environment Record Memory, Theorem 5.1][ERM40]. The nonnegative Gram norm and reference-projector method in [Arithmetic Holographic RT, §36.1][RT40] are reused inside Theorem 40.5; that source's local-product physical-operation model is not substituted for the terminal-decoder comparison here. The actual-history recurrence, its finite-horizon piecewise minimax curve, and the biased six-state attainment are model-specific ordinary deductions. Generic polar correction and Schur norm facts are literature-attested ingredients:
+
+| Primary version | Exact interface and boundary |
+| --- | --- |
+| M. Gregoratti and R. F. Werner, *Quantum Lost and Found*, [quant-ph/0209025v1][GW40] | Proposition 2, pp.4–5: exact fine-branch correction requires $t_j^\dagger t_j=c_jI$. Proposition 8, pp.11–12, (16)–(20): polar correction attains the specified channel-fidelity optimum. It supplies neither the weighted-reference minimax proof nor (40.9) by itself. |
+| M. Gregoratti and R. F. Werner, *On quantum error-correction by classical feedback in discrete time*, [quant-ph/0403092v1][GWF40] | §II, (6)–(7), Figure 1(c): chronological Kraus products, actual Born history law, and correction deferred to the end. Proposition 2, (10)–(12), concerns perfect correction with scalar-unitary branches; its independent-outcome law cannot be imposed on the present biased filters. |
+| N. Yu, R. Duan and Q. Xu, *Bounds on the distance between a unital quantum channel and the convex hull of unitary channels*, [1201.1172v1][YDX40] | §II, Propositions 2–3: PSD unit-diagonal matrices give Schur channels; ancillary systems do not increase the norm of a Schur multiplier. Theorem 40.5 includes the specialized norm proof; arbitrary competitors still require its reference lower bound. |
+| J. Watrous, *Simpler semidefinite programs for completely bounded norms*, [1207.5726v2][WN40] | Theorem 6, p.10: arbitrary finite-dimensional linear maps, Choi matrices and two density matrices characterize the completely bounded trace norm. This is a general norm supplier, not a certificate for this particular minimax value. |
+
+The optimum permits exactly the stated fixed measured instrument and terminal resources. The no-record mixing statements of §§30, 36–37 and the fourteen-step discarded-label result in [Explicit Switching Erasure Horizon, Theorems 1.3–1.4][ERASE40] have different permissions: they sum branches before any conditional correction and do not contradict the preserved encoded classical trit. These results make no six-state record-minimality claim away from half and do not settle the fixed-$\pi/6$ logarithmic memory gap in [Approximate Online Recovery Memory, §21][APPROX40]. They are ordinary mathematics without Lean/kernel, physical-realization, or global literature-priority certification.
+
+[ERM40]: AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md
+[RT40]: ARITHMETIC_HOLOGRAPHIC_RT.md
+[ERASE40]: AURIC_FIB_EXPLICIT_SWITCHING_ERASURE_HORIZON.md
+[APPROX40]: AURIC_FIB_APPROXIMATE_ONLINE_RECOVERY_MEMORY.md
+[GW40]: https://arxiv.org/pdf/quant-ph/0209025v1
+[GWF40]: https://arxiv.org/pdf/quant-ph/0403092v1
+[YDX40]: https://arxiv.org/pdf/1201.1172v1
+[WN40]: https://arxiv.org/pdf/1207.5726v2
+
+## 追加锚（本行以下为增补区）
+
+## 41. Exact classical information for attaining the biased recovery optimum
+
+**Assumption 41.1 (Actual instrument and complete visible information).** Fix $0<\eta<1$ and a finite known horizon $n\ge0$ under Assumption 40.1. The measured branches are exactly (40.1), with the unrotated environment basis, the encoding $B:\mathbb C^3\to H=\mathbb C^5$, and the restricted matrices $L_j=U_jD_j$ in (40.2). Write $\mathscr H_n=\{0,1\}^n$, $M_h=L_{j_n}\cdots L_{j_1}=P_hF_h$, $P_h=U_{j_n}\cdots U_{j_1}$, $F_h=\operatorname{diag}(f_{h,0},f_{h,1},f_{h,2})$, and $b_i=B|i\rangle$. The empty product is $I_3$. The polar recursion (40.4) makes every $f_{h,i}$ strictly positive, including at $\eta=1/2$. Consequently $p_h(\rho)=\operatorname{Tr}[(F_h^2\otimes I_Z)\rho]>0$ for every encoded density $\rho$ with any untouched finite reference $Z$. These are the actual, generally input-dependent Born probabilities. The source remains the fixed finite-activity phase of §3, with $\lambda=\eta/(1-\eta)^2$; the classical source specifies neither the quantum dilation nor a different measured instrument.
+
+Let $S$ have an arbitrary probability law $\mu$ on a standard Borel space, be independent of the input and of the instrument's acquired labels, and be explicitly supplied to the controller and decoder without charge. A terminal summary is a measurable kernel $q_s(dy\mid h)$ on a standard Borel space $\mathcal Y$, with measurable full-$H$ CPTP decoders $\mathcal D_{s,y}:M_5\to M_5$. Its complete visible information is $(S,Y)$. All other decoder-visible history-dependent control choices, archives, buffers and metadata belong to $Y$; discarded private randomness is integrated into the kernel or decoder. A history-correlated seed is counted in $Y$, rather than granted the independence permission. Conditional terminal alphabet at most $W$ means that, outside a seed null set, there is a measurable common labeling by $\{1,\ldots,W\}$ containing the values used by every $q_s(\cdot\mid h)$. It is a conditional cardinality bound, not an entropy or average-length bound. For online peak width the same bound holds on the complete persistent classical state at every prefix, with an essential supremum over $s$; a declared deterministic clock, fixed descriptions, known $\eta,n$, label acquisitions and communication remain separate resources as in [Environment Record Memory, Definition 1.5][ERM40]. No quantum operation is inserted before termination, no environment is retained, no reference is read, and no postselection or extra input-dependent side information is allowed.
+
+The averaged recovered channel is $\Lambda(X)=\int\sum_{h\in\mathscr H_n}\int\mathcal D_{s,y}(BP_hF_hXF_hP_h^\dagger B^\dagger)\,q_s(dy\mid h)\,\mu(ds)$, with error $\|\Lambda-\iota_\eta\|_\diamond$ in the unhalved convention of (17.1). There is no additional fair-history factor: $F_h$ already contains the actual branch amplitudes. This formula is a linear map on all complex qutrit matrices and is amplified by the identity on each reference. It is CPTP because each decoder is TP, each kernel is normalized, and $\sum_hF_h^2=I_3$. Its target is the encoded qutrit, not identity on every full-$H$ input. Terminal kernels may use arbitrary intermediate classical memory; online controllers form a subclass. Denote the all-history optimum of Theorem 40.5 by $e_*:=\varepsilon_\eta(n)$ and the number of reachable actual permutations by $m_n:=|\{P_h:h\in\mathscr H_n\}|$.
+
+**Theorem 41.2 (Optimum-admitting summaries).** A supplied summary kernel under Assumption 41.1 admits terminal CPTP decoders with averaged error exactly $e_*$ if and only if there exists a measurable $g(s,y)\in S_3$ and a single seed set $S_0$ with $\mu(S_0)=1$ such that $q_s(\{y:g(s,y)=P_h\}\mid h)=1$ for every $s\in S_0$ and every $h\in\mathscr H_n$. Thus every attaining protocol makes the complete visible pair $(S,Y)$ determine the accumulated permutation, simultaneously for all inputs and untouched references. For finite conditional alphabets, equivalently, for almost every seed no used value $y$ has positive kernel weight from histories with distinct $P_h$. Splitting histories of one permutation class among several values is permitted. The sufficiency assertion is existence of a suitable decoder for that kernel; it does not assert optimality of arbitrary decoders assigned to a determining view.
+
+Proof. Reuse the optimum and its witness formulation from Theorem 40.5: $e_*=4\max_{w\in\Delta_3}\sum_{i<j}(1-C_{n,ij})w_iw_j$, where $C_{n,ij}=\sum_hf_{h,i}f_{h,j}$. Fix one maximizing $w$ with at least two positive coordinates and set $I=\{i:w_i>0\}$. Such a choice always exists. Indeed, for $\eta\ne1/2$ and $n\ge1$, (40.6) gives $A_n\le2\sqrt{\eta(1-\eta)}<1$, so the objective is positive at $(1/2,1/2,0)$ whereas it vanishes at every vertex; hence every maximizer then has support at least two. At $n=0$, or at $\eta=1/2$, Proposition 40.7 gives $C_n=\mathbf1\mathbf1^{\mathsf T}$ and $e_*=0$, and one may choose $w=(1/2,1/2,0)$. This is an existence choice; not every maximizing witness at zero error has that support. Put $a_{h,i}=w_if_{h,i}$ and $s_h=\sum_i a_{h,i}>0$. For each $i\in I$, $a_{h,i}>0$ for every history. The fixed input witness is $\omega_w=|\psi_w\rangle\langle\psi_w|$, where $\psi_w=\sum_i\sqrt{w_i}|i\rangle\otimes|i\rangle_Z$; its ideal output vector is $\Psi_w=(B\otimes I_Z)\psi_w$. The reference is solely an error witness and is untouched by the protocol.
+
+For a full-$H$ decoder $\mathcal D$, choose a Stinespring isometry $V:H\to H\otimes E$ with $\mathcal D(T)=\operatorname{Tr}_E(VTV^\dagger)$. The finite-dimensional isometric representation is the Stinespring supplier [STI], with the Schrödinger convention explicitly stated in [Kretschmann–Schlingemann–Werner, §III.A, (10)–(11)][KSW41]. No restriction to a qutrit-output decoder is made. For a fixed history define $z_{h,i}=(\langle b_i|\otimes I_E)VBP_h|i\rangle$. These vectors satisfy $\|z_{h,i}\|\le1$. Projecting the decoded, unnormalized branch-reference state onto $\Psi_w$ gives exactly $G_h(\mathcal D)=\|\sum_i a_{h,i}z_{h,i}\|^2$. In particular this quantity is intrinsic to the channel and continuous in its Choi matrix, although this representation uses a dilation. Define $\delta_h(\mathcal D)=s_h^2-G_h(\mathcal D)$. Expansion of the squared norm gives the exact identity
+
+$$
+\delta_h(\mathcal D)=s_h\sum_i a_{h,i}(1-\|z_{h,i}\|^2)+\sum_{i<j}a_{h,i}a_{h,j}\|z_{h,i}-z_{h,j}\|^2\ \ge0.
+$$
+
+To check the identity, expand the pair sum as $s_h\sum_i a_{h,i}\|z_{h,i}\|^2-\|\sum_i a_{h,i}z_{h,i}\|^2$ and add the first sum. Thus no phases, complex cross terms or unequal positive filter weights are omitted. If $\delta_h(\mathcal D)=0$, nonnegativity and positivity of every active coefficient force $\|z_{h,i}\|=1$ and $z_{h,i}=z_{h,j}$ for all $i,j\in I$. Call the common unit vector $v_h$. The projection of the unit vector $VBP_h|i\rangle$ onto $b_i\otimes E$ already has norm one, so its orthogonal component is zero. Therefore $VBP_h|i\rangle=b_i\otimes v_h$ for every $i\in I$, and linearity yields $VBP_hx=Bx\otimes v_h$ for the entire active span $\operatorname{span}\{|i\rangle:i\in I\}$. This is coherent inversion of the permutation on that span by an arbitrary full-$H$ CPTP decoder. A common phase may be absorbed into $v_h$; different phases on active coordinates incur a positive pair deficit. Nothing in this reasoning inverts $F_h$, or constrains unused input directions or the full complement of the code.
+
+Let $T_w=\sum_hs_h^2=w^{\mathsf T}C_nw=1-e_*/2$ and let $F_w=\langle\Psi_w|(\Lambda\otimes\operatorname{id}_Z)(\omega_w)|\Psi_w\rangle$. Kernel normalization and the actual branch formula give $\Delta:=T_w-F_w=\int\sum_h\int\delta_h(\mathcal D_{s,y})q_s(dy\mid h)\mu(ds)\ge0$. The recovered witness output has trace one. The two-outcome projector test onto $\Psi_w$ has ideal probabilities $(1,0)$ and actual probabilities $(F_w,1-F_w)$; trace-norm contraction under that measurement gives $\|\Lambda-\iota_\eta\|_\diamond\ge2(1-F_w)=e_*+2\Delta$. Averaged error $e_*$ consequently forces $\Delta=0$. This conclusion is obtained by averaging nonnegative fidelity deficits. It makes no inference that each seed's diamond error is $e_*$, and does not select a successful seed.
+
+For the precise common-null-set argument, define finite measures $\nu_h(ds,dy)=\mu(ds)q_s(dy\mid h)$, $\nu=\sum_h\nu_h$, and measurable Radon–Nikodym densities $t_h=d\nu_h/d\nu$. Then $\sum_ht_h=1$ almost everywhere and $\Delta=\int\sum_ht_h(s,y)\delta_h(\mathcal D_{s,y})\,d\nu$. At $\Delta=0$, outside one $\nu$-null set every history with $t_h(s,y)>0$ saturates its deficit. This follows from nonnegativity and the finiteness of $\mathscr H_n$. These intrinsic deficits are measurable; dilations are chosen pointwise only after the exceptional set is removed, so no measurable selection of dilations is required. For finite conditional alphabets the same assertion reads $q_s(y\mid h)>0\Rightarrow\delta_h(\mathcal D_{s,y})=0$, for every history and used value outside one seed null set, obtained by integrating the nonnegative finite sums. The measure formulation is needed for continuous views: individual points having probability zero does not make such a view a finite alphabet.
+
+At one remaining view shared by histories $h,k$, take one isometry $V$ for their common decoder. The coherent actions above and preservation of complex inner products give $\langle i|P_h^\dagger P_k|j\rangle=\langle b_i\otimes v_h,b_j\otimes v_k\rangle=\delta_{ij}\langle v_h,v_k\rangle$ for all $i,j\in I$. Hence the principal compression of the actual permutation $Q=P_h^\dagger P_k$ to the active span is $cI$, with $c=\langle v_h,v_k\rangle$ initially allowed to be any complex number. Choose two distinct active indices. A scalar two-by-two principal compression of a three-by-three permutation matrix has $c=0$ or $1$ by its zero-one diagonal. If $c=1$, those two indices are fixed, and the third is fixed as well. If $c=0$, both columns indexed by the pair would have to map outside the pair, because every entry in that two-by-two block vanishes; a permutation cannot send two distinct coordinates into the sole remaining coordinate. Thus only $Q=I_3$ is possible and $P_h=P_k$. This is the scalar-compression obstruction familiar from [Knill–Laflamme, Theorem 3.2, (19)–(20)][KL], here applied after optimality has forced coherent inversion. Applying exact correction directly to the unequal biased filters would not justify this step. Distinct environment vectors, nonunitary decoders, full-$H$ output leakage and complex relative phases are all included in the inner-product calculation.
+
+Order the finite histories and, at a good view, let $g(s,y)$ be the permutation of the first history with $t_h(s,y)>0$; give it an arbitrary fixed value elsewhere. This is measurable, and the preceding obstruction makes it agree with every history of positive density at that view. For each $h$ the mismatch set has $\nu_h$-measure zero. Integrating its indicator against $q_s(\cdot\mid h)$ and taking the finite union of exceptional seed sets gives one $S_0$ on which every history has mismatch probability zero, as asserted. This set is independent of the input: for any density $\rho$ the actual joint law is $\sum_hp_h(\rho)\nu_h$, and every $p_h(\rho)>0$, so it has exactly the same null sets as $\nu$. The argument holds for every reference as well, since the probabilities depend on the reduced qutrit density. Conversely, if the stated $g,S_0$ exist, assign the unitary $W_{g(s,y)}$ of (40.3) to each view. For every history outside the common exceptional set it sends $BP_hF_h$ to $BF_h$. Integration over the normalized kernels and seed gives exactly $\iota_\eta\mathcal E_n$. Theorems 40.3 and 40.5 supply its error $e_*$ and full-reference action. This proves sufficiency without duplicating the optimum curve. $\square$
+
+**Theorem 41.3 (Conditional terminal alphabet and known-horizon online peak).** Under Assumption 41.1, the smallest essential conditional terminal alphabet admitting attainment of $e_*$, and the smallest online peak width attaining it, both equal $m_0=1$, $m_1=2$, $m_2=4$, and $m_n=6$ for every $n\ge3$. These statements include arbitrary independent standard Borel shared seeds, stochastic summaries and terminal CPTP decoders on all of $H$; they include $\eta=1/2$.
+
+Proof. Fix a seed in Theorem 41.2's common full-measure set and suppose its alphabet is finite. Kernel normalization assigns a nonempty set of used values to each history, and different permutation classes have disjoint such sets. All histories have positive actual probability for every input by Assumption 41.1. Choosing one history in each of the $m_n$ classes therefore requires at least $m_n$ values at that seed. The same argument applies to every conditionally finite alphabet, and hence to its essential cardinality and to the terminal part of any online peak. A continuous-valued view is not an exception to this cardinality statement. No lower bound on Shannon entropy is inferred.
+
+The reached permutation sets and their counts are precisely those of [Environment Record Memory, Theorem 5.1][ERM40], since the $U_0,U_1$ in (40.2) are unchanged when $\eta$ varies. In the source's zero-based coordinates, $a=U_0=(12)$ and $b=U_1=(021)$ give $\{I\}$, $\{a,b\}$, $\{I,ba,ab,b^2\}$ at lengths $0,1,2$, and $S_3$ at length three. Left multiplication by either generator is a bijection of $S_3$, so all later reached sets are $S_3$ as well. Reuse the accumulator of Theorem 40.3 and that source's Theorem 5.1, followed by its single terminal inverse; it attains $e_*$ for the present biased filters. For the exact known-horizon peak at $n=0,1,2$, use the prefix construction of that source's Theorem 4.1: the injection $P\mapsto U_0^{\,n-t}P$ sends every reached prefix set at time $t\le n$ into the final reached set. Thus its size is at most $m_n$. Choose fixed injections $\ell_t$ of these sets into $\{1,\ldots,m_n\}$; initialize at $\ell_0(I)$ and update $\ell_t(P)$ on label $j$ to $\ell_{t+1}(U_jP)$. The declared deterministic clock chooses this fixed table, and the terminal table assigns $W_P$ to $\ell_n(P)$. No extra run-dependent state is introduced. This proves online peak at most $m_n$, matching terminal necessity. At zero horizon the unique empty history needs one state and the identity terminal map; from horizon three onward one homogeneous six-value accumulator suffices. The reachable-set and prefix facts are reused source results; the biased optimality lower bound is Theorem 41.2. $\square$
+
+**Theorem 41.4 (Strict excess error at fixed insufficient alphabet).** Fix $\eta\in(0,1)$, finite $n$, and an integer $1\le W<m_n$. There is a number $d_{\eta,n,W}>0$ such that every protocol of Assumption 41.1 with conditional terminal alphabet at most $W$ has averaged unhalved diamond error at least $e_*+2d_{\eta,n,W}$. The same bound holds under online peak width at most $W$. No explicit value or uniform lower bound as $\eta$ or $n$ varies is asserted.
+
+Proof. Relax all online constraints and pad the terminal alphabet to $\{1,\ldots,W\}$. A seedless relaxed protocol is specified by a probability vector $(q(y\mid h))_{y=1}^W$ for each of the finitely many histories and by $W$ full-$H$ CPTP decoder Choi matrices. Their parameter set $K$ is the product of finitely many closed probability simplices and CPTP Choi sets. In the output-first convention, each such Choi set is $\{J\ge0:\operatorname{Tr}_{\mathrm{out}}J=I_5\}$: it is closed and its fixed trace five bounds its norm, so it is compact. This uses the Choi supplier [CHOI] and the compact decoder method of [Approximate Online Recovery Memory, Theorem 18.2][APPROX40], with the present actual finite histories. The induced map $\Lambda_k$ is continuous in $k\in K$, since its matrix entries are finite sums of products of kernel and decoder entries. For the fixed witness in Theorem 41.2, $d(k):=T_w-\langle\Psi_w|(\Lambda_k\otimes\operatorname{id}_Z)(\omega_w)|\Psi_w\rangle$ is a continuous nonnegative function. If $d(k)=0$, every positively weighted history/decoder saturates the exact deficit identity; the same scalar-compression and disjoint-class counting argument would force $W\ge m_n$. Thus $d(k)>0$ at every point, including boundary kernels and nonunitary decoders. Compactness now gives $d_{\eta,n,W}:=\min_{k\in K}d(k)>0$.
+
+For any measurable seed family $k_s\in K$, linearity of the target overlap gives $T_w-F_w(\int\Lambda_{k_s}\mu(ds))=\int d(k_s)\mu(ds)\ge d_{\eta,n,W}$. The witness lower bound $e_*+2\Delta$ proves the assertion for every permitted seed law, including nonatomic laws; a negligible exceptional seed set is immaterial. Equivalently the seedless channel image is compact in the finite-dimensional real space of Hermiticity-preserving maps, and its convex hull is compact by the finite-dimensional Carathéodory theorem. All seed barycenters lie in that closed convex hull, on which the same affine witness deficit is bounded below by $d_{\eta,n,W}$. Thus seed mixtures have no limiting escape from the compact obstruction; no per-seed diamond optimality was assumed. The terminal relaxation includes all online protocols, proving their bound too. At $n=0$ there is no positive integer $W<m_0$. Strict positivity is only at each fixed triple $(\eta,n,W)$, with no endpoint, unbounded-horizon, or quantitative uniform-gap consequence. $\square$
+
+**Proposition 41.5 (The seed and zero-error qualifications are necessary).** Determination by $(S,Y)$ in Theorem 41.2 cannot be replaced by determination by $Y$ alone. Also, the statement that every maximizing optimum witness has at least two active coordinates is false at the zero-error parameters. Proof. At $n=1$, take an independent fair bit $S$ and set $Y=S\mathbin{\mathrm{XOR}}j_1$. For either actual label, $Y$ has the fair conditional law. Both labels have strictly positive Born probability on every encoded input, and their permutations $U_0,U_1$ differ, so $Y$ alone does not determine the permutation. But the decoder reads $j_1=S\mathbin{\mathrm{XOR}}Y$ and applies $W_{U_{j_1}}$, producing exactly the polar-corrected channel and attaining $e_*$ with two conditional values. This holds for every interior $\eta$, without imposing fairness on $j_1$. At $n=0$ for every $\eta$, and at $\eta=1/2$ for every finite $n$, all entries of $C_n$ are one. The witness objective is identically zero on $\Delta_3$; a vertex such as $(1,0,0)$ maximizes it. Choosing the two-coordinate witness as in Theorem 41.2 supplies the required constraint. A one-coordinate compression by itself would not separate permutations: $U_0$ fixes coordinate $0$ and hence has scalar compression $1$ on that line despite being nonidentity. $\square$
+
+**Convention 41.6 (Suppliers and exact mathematical boundary).** Theorems 40.3–40.5 own polar sufficiency, the actual-history Gram recurrence and the optimum curve; [Environment Record Memory, Theorems 3.3, 4.1, 5.1, 16.1 and Convention 3.4][ERM40] supply the exact-half summary interfaces, independent-seed convention, reached permutations and prefix construction. The compact Choi method is reused from [Approximate Online Recovery Memory, Theorem 18.2][APPROX40]. Generic polar fidelity optimality and its equality principle are due to Gregoratti–Werner, [Quantum Lost and Found, Proposition 8, (16)–(21), pp.11–12][GW40]; that channel-fidelity result alone is not a weighted-reference diamond optimum or a biased memory lower bound. Stinespring's isometric representation [STI] is used with full input and output $H$, in the explicit finite-dimensional formulation [Kretschmann–Schlingemann–Werner, §III.A, (10)–(11)][KSW41]; no continuity estimate from that paper is needed. The scalar cross-compression criterion is the standard Knill–Laflamme interface [KL, Theorem 3.2, (19)–(20), p.13][KL]. The positive unequal-filter equality bridge, its common finite-history seed null set, and its consequence for exact attainment in this particular instrument are source-relative mathematical synthesis. These attributions do not assert exhaustive search or literature priority.
+
+The results concern exactly the fixed measured unrotated instrument, finite horizons, the encoded qutrit, arbitrary full-$H$ terminal CPTP maps and unchanged references. At $\eta=1/2$ they agree with the existing exact-recovery permutation theorem. Endpoints $\eta=0,1$ are excluded: some filter entries vanish, so the positive active coefficients forcing coherent inversion need not remain positive; continuity of the optimum error does not prove endpoint necessity. The results give neither a classification of decoders on unused directions nor an entropy lower bound, a generic prescribed-error width law, or the fixed-$\pi/6$ asymptotic logarithmic memory gap in [Approximate Online Recovery Memory, §21][APPROX40]. They do not extend to all lifts with the same population law, a Kraus-rotated measured instrument, intermediate quantum control or hidden history resources. These are ordinary mathematical arguments, without Lean/kernel certification, a physical or QFT realization, or a global-priority assertion.
+
+[KSW41]: https://arxiv.org/pdf/quant-ph/0605009v1
+
+## 追加锚（本行以下为增补区）
