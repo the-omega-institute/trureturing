@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known estimates pay its classwise all-column pure-sixth-power pole at specified lengths and its classwise squarefree pure-power subterm at all original witness lengths under the stated height reserve, while other dual terms and signed restoration remain open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known estimates pay the specified pure-sixth-power pieces of a complete all-column positive majorant at all original witness lengths under the stated height reserve, while complementary dual terms and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, a squarefree-component consumer covering all original witness lengths under the original height reserve, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, a squarefree-component consumer covering all original witness lengths under the original height reserve, a weighted powerful-part positive majorant extending that collective pure-power payment to every original column, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -2242,6 +2242,130 @@ $$
 They give $N^{1/3},H_0^{4/3}\le U^{1/6}$. The original witness theorem already has $N=U^m$ with $0\le m\le1/2+O(\text{loss})$, for every permitted $t\in[1,3/2]$ and the actually returned $D$. Thus every original witness LENGTH is covered, including $m=1/2$, at $(UK)^\epsilon UK$ after assigning the original arbitrarily small losses relative to final epsilon. For height retain the original common cumulative allowance: fixed reserve $h<1/8$ in $H_0\ll U^h$ is sufficient. This does not claim coverage at arbitrary heights or give each polynomial a new height budget.
 
 Reuse the owned unrestricted shifted-integral estimate, which also applies to this classwise squarefree component. Its sum with E5 pays the complete specified squarefree pure-dual-sixth-power subterm at all original witness lengths under E6 and its stated epsilon/height convention. It does not pay the nonsquarefree component or the complementary dual ideals, estimate the earlier cross-class signed pole, or restore the signed same-integer Robin target. The full RH and Robin objectives remain unchanged and unproved; no Lean certification or literature-novelty claim is made.
+
+### A weighted powerful-part majorant for all original columns
+
+This is a source-conditional application to the original complete positive moment, using the already owned E1-E6 consumer and unrestricted shifted integral. It is not a bound for the earlier signed all-column pole, a new sieve theorem, or a claim of literature priority. RH and strict Robin remain unproved. The point is to include all original nonsquarefree columns in a positive majorant whose specified pure-power pieces can collectively be paid at every original witness length.
+
+Related prior work is [Xu–Sang, *A sharp lower bound for the sextic large sieve*, arXiv:2610.17675v1](https://arxiv.org/html/2610.17675v1), Lemma 4.1 and §5, equations (5.3)–(5.7). It controls moving exclusions and powerful components in the squarefree projection of a Gauss-sum witness for a lower operator bound. Its projected residual modulus is not required to be squarefree, and its specified Gauss coefficients differ from the Möbius-annular convolution below. Those statements are not substituted for this consumer. The already recorded [Liu source](liu2026quasirh.md), [v2, Lemma 9.1 and equations (9.1)–(9.2)](https://arxiv.org/html/2610.12234v2#S9.SS1), explicitly reuses the original source's Möbius moment: its auxiliary factors have prime supports, coefficients independent of the outer variable, and fixed positive length gaps. No identification of that family with an arbitrary two-factor convolution is assumed here.
+
+#### Partition before Poisson, retaining the actual convolution
+
+Use the same $T_j$, $U=U_j\ge1$, $K=DN$, original nonnegative row weight, good sixth-power-free physical rows, multiplicative column twists, zero extensions, finite labels, annular profiles and common cumulative height allowance. The original finite exceptional rows retain their existing treatment. Every column has the unique decomposition
+
+$$
+h=cx,\quad c\text{ powerful},\quad x\text{ squarefree},\quad(c,x)=1,
+\qquad q_c\le C K.
+\tag{F1}
+$$
+
+A powerful ideal has only prime exponents zero or at least two, including the unit. This is a decomposition of the columns before taking the squared norm, not of the primitive ratio after forming a pair.
+
+For an actual original factorization $dn=cx$, the squarefreeness of $d$ gives uniquely
+
+$$
+a\mid\operatorname{rad}c,\quad b=c/a,\quad d=ad',\quad n=bn',
+\qquad d'n'=x,\quad(d'n',c)=1.
+$$
+
+No coprimality of $a$ and $b$ is imposed: when $a$ contains a prime of $c$, that prime is still present in $b$. Set
+
+$$
+D_a=D/q_a,\quad N_b=N/q_b,\quad K_c=K/q_c,
+\qquad D_aN_b=K_c.
+\tag{F2}
+$$
+
+Multiplicativity gives $\mu(ad')=\mu(a)\mu(d')$ on this exact support. Thus, writing $\omega_j$ for the original fixed multiplicative column twist, the coefficients are exactly
+
+$$
+\begin{aligned}
+c_j(cx)&=\omega_j(c)\sum_{a\mid\operatorname{rad}c}\mu(a)b_{j;c,a}(x),\\
+b_{j;c,a}(x)&=\omega_j(x)\mathbf1_{x\ {\rm sf},\,(x,c)=1}
+\sum_{d'n'=x}\mu(d')W_M(q_{d'}/D_a)W_S(q_{n'}/N_b).
+\end{aligned}
+\tag{F3}
+$$
+
+Use the already fixed finite-character expansion for any original finite labels; its number and constants are independent of $c$. At fixed $c$, a class condition on $cx$ is the corresponding transported class condition on $x$. Empty original ranges contribute zero. In every nonempty packet, the reduced lengths are bounded below by fixed positive annular constants; the existing estimates apply after fixed annular enlargement when a length is below one. In particular $K_c\gg1$ on these packets. No original witness has been shortened or reselected.
+
+#### A positive majorant with no coupled core conductor
+
+Choose $s=1/2+\eta$, $\eta>0$, depending only on the final error exponent. Reuse the powerful-ideal Rankin bound:
+
+$$
+Z_s=\sum_{c\ {\rm powerful}}q_c^{-s}<\infty.
+$$
+
+Weighted Cauchy in the column-core variable gives a factor $Z_s$ and weights $q_c^s$. The exact zero-extended multiplicativity $\chi_{cx}^{\rm raw}(v)=\chi_c^{\rm raw}(v)\chi_x^{\rm raw}(v)$ holds also on rows meeting $c$. For fixed $c$, $\chi_c^{\rm raw}(v)$ is common to every term. Its zero support is a row restriction. Remove it only by enlarging this positive row norm, using $|\chi_c^{\rm raw}(v)|\le1$. Do not delete a factor from an absolute Dirichlet-series value.
+
+Next use finite Cauchy over $a\mid\operatorname{rad}c$ and over the original finite primary classes $\kappa\in\mathcal T$. Let $\widetilde T^{\rm sf}_{j;c,a,\kappa}$ be the resulting actual squarefree-column moment with coefficients $b_{j;c,a}$, class $\kappa$, the same physical rows and row cutoff, and the retained column mask $(x,c)=1$. These steps give
+
+$$
+T_j\ll Z_s|\mathcal T|
+\sum_{\substack{c\ {\rm powerful}\\q_c\le CK}}
+q_c^s\tau(\operatorname{rad}c)
+\sum_{a\mid\operatorname{rad}c}\sum_{\kappa\in\mathcal T}
+\widetilde T^{\rm sf}_{j;c,a,\kappa}.
+\tag{F4}
+$$
+
+The fixed bound for $\omega_j(c)$ is absorbed in the original arithmetic datum; if its original divisor-bounded form is used instead, its arbitrarily small $q_c$ power is allocated to the final epsilon. All cross terms are retained by this positive inequality. No inequality between the original signed pole and the poles of the packets is asserted.
+
+After this positive enlargement the common $c$ is absent from the character family. The sole moving-column restriction it leaves is $(x,c)=1$, a zero-only mask. Formula C1 handles this mask at $q_c^\delta$ cost for arbitrarily small $\delta>0$. It introduces no genuine character conductor or extra $N$ factor. Its total epsilon factor is bounded using the original $K$, since $q_c\le CK$; no uniformity in $c$ is inferred from a fixed-modulus constant. For squarefree packet pairs the primitive ratio conductor is still the product of the two coprime cofactors; it is not replaced by one.
+
+#### Summing the specified pure-power terms over every core
+
+Apply E1-E5 to each actual packet with lengths $(D_a,N_b)$, retaining its zero-only mask, class, common gcds, Gauss phases and every original coefficient. The scalar vectors are exactly those for that packet; no coherent vector across different $(c,a)$ is assumed. With the original uniform profile norms $\mathcal P,\mathcal B$, the specified pole contraction satisfies
+
+$$
+|\mathcal C^{\rm sf,\kappa}_{6,L}[b_{j;c,a}]|
+\ll K^\delta K_c^{1+\delta}
+\left\{(1+N_b^{1/3})\mathcal P^2
++\mathcal B^{4/3}\mathcal P^{2/3}\right\}.
+\tag{F5}
+$$
+
+The auxiliary $\delta>0$ is chosen sufficiently small relative to the final epsilon. The global $K^\delta$ includes the zero-only $c$-mask and all original divisor multiplicities; constants have no further dependence on $c,a$ or $L$. The reduced profiles have the same normalized shape and derivatives as the originals. Original norm modulations contribute only unit-modulus fixed factors at $a,b$, so their heights and cumulative allowance are not renewed.
+
+Because $N_b\le N$ and $\#\{a:a\mid\operatorname{rad}c\}=\tau(\operatorname{rad}c)$, the weighted sum of F5 has, apart from its displayed norms, the numerical upper bound
+
+$$
+\begin{aligned}
+K^{1+2\delta}
+\sum_{\substack{c\ {\rm powerful}\\q_c\le CK}}
+\tau(c)^2q_c^{-1/2+\eta}
+&\ll_{\eta,\delta,\delta'}K^{1+2\delta+\eta+\delta'}.
+\end{aligned}
+$$
+
+Here the owned critical powerful-core estimate D5 is used with its divisor-bounded multiplicity; factor $q_c^\eta\le(CK)^\eta$ only in this positive upper bound. Allocate $\eta,\delta,\delta'$ relative to one final epsilon. The factor $Z_s$ may grow as epsilon tends to zero; it is a scale-independent constant, and no uniformity in epsilon is asserted. Consequently the weighted absolute sum of the specified pole contractions in the positive majorant F4 is
+
+$$
+\boxed{
+\ll_\varepsilon K^{1+\varepsilon}
+\left\{(1+N^{1/3})\mathcal P^2
++\mathcal B^{4/3}\mathcal P^{2/3}\right\}.
+}
+\tag{F6}
+$$
+
+This includes every original column, with no upper restriction on $D$. In particular it does not drop the nonsquarefree columns. The apparent loss from the number of powerful packets is absorbed at the critical half-norm exponent; counting packets without their $K_c$ scale would not give F6.
+
+The actual principal diagonal of a squarefree packet costs $\ll U K^\delta K_c^{1+\delta}\mathcal P^2$ by the original row and divisor counts, so its weighted aggregate is $\ll(UK)^\varepsilon UK\mathcal P^2$ by the same sum. The algebraically added unit-bulk diagonals are already included in E5 and are not charged twice. The unrestricted pure-power shifted-integral bound applies to each packet at the same original $L_j$, uniformly at every $U,K_c\gg1$. Its $\ll(U K_c)^\delta U K_c$ bound sums by the same critical-core estimate to $\ll(UK)^\varepsilon UK$, with the original profile and cumulative-height costs. No new integral estimate is needed.
+
+#### Original witness coverage and the remaining actual dual terms
+
+For bounded original $\mathcal P$, $\mathcal B\le C H_0\mathcal P$ and $H_0\ge1$, the sufficient conditions remain
+
+$$
+\boxed{N^2\le U,\qquad H_0^8\le U.}
+\tag{F7}
+$$
+
+Indeed $N_b\le N$ and the original pole factor is $U^{5/6}$. F6 then pays the collective specified poles at $(UK)^\varepsilon UK$. Together with the just reused shifted-integral bound and principal diagonal, the complete specified pure-dual-sixth-power pieces of the all-column positive majorant F4 are collectively paid. The original $0\le m\le1/2+O(\text{loss})$ for $N=U^m$ is covered, including the endpoint after allocation of the original arbitrarily small losses, for every permitted $t\in[1,3/2]$ and actually returned $D$. Fixed reserve $h<1/8$ in $H_0\ll U^h$ is sufficient for the original cumulative height requirement.
+
+The majorant F4 still contains the original complementary dual ideals of each squarefree packet and any remaining terms of the source decomposition. They must be estimated with the same positive weights and the same actual profiles and row cutoff. This argument supplies no bound for their total, no estimate for the earlier signed all-column or cross-class pole, and no signed same-integer Robin restoration. It removes the separate nonsquarefree-column pure-power debt along this positive-majorant route; it does not prove a bound for the whole original positive moment or RH. No complete local Lean certification or literature-novelty claim is made.
 
 ## The possible FIB interface
 
