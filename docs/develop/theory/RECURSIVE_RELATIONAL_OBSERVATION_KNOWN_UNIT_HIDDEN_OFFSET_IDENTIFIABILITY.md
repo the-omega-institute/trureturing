@@ -787,3 +787,61 @@ The result is an ordinary conditional mathematical synthesis relative to the sta
 The original exact-$p_J$/all-$v$ FIB collision task, actual-joint/common-parent obligations, global 8-versus-9 and 9-sufficiency tasks retain their full original scopes. So do the fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization, full-original-response and arbitrary interior-cut obligations identified in Section 12 and PAID Definition 41.3. No bridge from (45) to their completion is supplied. The present result concerns the stated original owned entrance and a primitive Reference-completion resource; it supplies no general inverse of private history, exact calibration, source provisioning, infinite raw data, physical space/time/boundary/memory, or a universal work/storage/latency optimum.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Finite calibration-only advice values and countable-height sufficiency
+
+**Definition 18.1 (advice values on the original Extent-only domain).** Fix the public rational data $q_0>0$, $0\le u<v$ and $B=\mathbb Q\cap[u,v]$ of (8)–(9). Use the original Step/Extent observation of Sections 1–2, restricted to genuinely initialized proper death handoffs, with all finite precisions and the fixed backend
+
+$$
+F_b(d,n)=\lfloor2^n(b+q_0\alpha^d)\rfloor.
+$$
+
+Add just one truthful initial value $\lambda(b)\in L$, depending only on the calibration offset. The rule and finite descriptions of its values are public. It supplies no raw history, old count, timing information or Reference service. There is no computability assumption on a finite partition $\lambda$; proving impossibility for all such partitions includes the computable ones. The receiver's initial state is otherwise source independent, and all excluded channels of Section 2 remain excluded.
+
+The advice-value set is the complete set $\lambda(B)$, not the alphabet used to encode its elements. In particular finite binary messages of arbitrary finite length have a countable set of possible complete values even though their symbol alphabet has two elements. No uniform message-length, query, Step or runtime bound is imposed.
+
+**Theorem 18.2 (the minimal possible advice-value cardinality).** For every fixed public $q_0,u,v$ as above and every finite-valued $\lambda$, no deterministic causal receiver is finite and correct on every proper death world for the original owned boundary, or, separately for each fixed $m\ge1$, for the first $m$ original unread bits. A calibration-only positive-integer height value suffices for both tasks. Thus the least possible cardinality of the complete advice-value set is $\aleph_0$.
+
+Proof. For the negative assertion write the nonempty finite value set as $\{a_1,\ldots,a_k\}$ and $S_j=\lambda^{-1}(a_j)\subset B$. The finite union of their closures in $[u,v]$ contains the dense set $B$, hence equals $[u,v]$. The classical finite-union nowhere-dense argument implies one closure contains a nondegenerate open interval $I\subset(u,v)$. Indeed, if each closed set had empty relative interior, starting from an open interval in $(u,v)$ one could successively choose a smaller nonempty open subinterval disjoint from each closed set; after finitely many choices it would avoid their union. This contradicts the covering. Hence $S_j$ is dense in some such $I$. This elementary finite argument uses no countable-category or regularity assumption on the partition.
+
+Choose $b_{\rm ref}\in S_j\cap I$. Since $\alpha^h\to0$, there is an integer $h\ge1$ such that
+
+$$
+z_{\rm ref}=b_{\rm ref}+q_0\alpha^h\in I.
+$$
+
+The zero source at its attained depth-$h$ death is a legal reference world by Lemma 4.1. Conjugation sends $\alpha$ to $-\phi$, so $\alpha^h$ is irrational for $h\ge1$; thus $z_{\rm ref}$ is irrational. Fix a receiver alleged total and correct for one of the stated tasks. On this reference with advice $a_j$, totality forces after finitely many local actions either a completed answer before any Step or its first Step. Let $F$ be the finite set of precisions actually queried before that decision, including the possibility $F=\varnothing$.
+
+Every queried dyadic floor cell has $z_{\rm ref}$ strictly in its interior. Choose an open interval $J=(L_0,U_0)$ containing $z_{\rm ref}$ inside $I$ and inside all those interiors; for empty $F$, only containment in $I$ is needed. Density gives $b_*\in S_j\cap J$. Choose $d\ge1$ large enough that
+
+$$
+L_0<b_*<b_*+q_0\alpha^{d+1}
+<b_*+q_0\alpha^d<U_0.
+$$
+
+Install this one rational $b_*$ before both initializations of the depth-$d$ pair of Lemmas 4.1–4.4. Both advice values are $a_j$, and every selected pre-Step floor reply equals the reference's full integer. Causal induction therefore copies the reference's entire finite action prefix, including adaptive requests, repetitions, framing, local records and output fragments. This is equality at the actually queried precisions, not at every initial precision.
+
+The two final worlds have different original boundaries and opposite initial unread first bits by Lemma 4.2. A completed no-Step answer is the same in both, contradicting either task. If the first Step is issued, Lemmas 4.3–4.4 give the common actual Emit and the common returned depth, boundary and zero tail, followed by equality of all future finite-precision replies and permitted events. Their one fixed offset and advice value remain common. The full causal induction of Sections 6–7 then forces the same finite answer, again contradicting either target. An answer during a Step has the same delivered event prefix; failure to complete contradicts totality. The choice of $b_*,d$ depends on this receiver and on $\lambda$. This proves $\forall\lambda\text{ finite-valued}\ \forall D\ \exists(W_A,W_B)$, not a fixed initial all-precision collision against all receivers.
+
+For sufficiency write $q_0=A_0/B_0$ and $b=C_b/F_b$ in reduced nonnegative form with positive denominators, using $0/1$ for zero. Define the calibration-only value
+
+$$
+\lambda_H(b)=\min\{H\in\mathbb N_{\ge1}:
+ A_0,B_0,C_b,F_b\le2^H\}.
+$$
+
+Each rational $b$ has a finite such value. It meets exactly the height contract (45) of [Finite affine calibration advice, Section 12](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_AFFINE_CALIBRATION_ADVICE.md#12-仅公开有理高度的-proper-交接). Invoke that supplier's Theorem 17.1, or its query-sparse composition Corollary 17.8, with $q=q_0$ and the disclosed $H$. Its hypotheses include all proper cuts, hence our death cuts; its closed-error reply class contains the present exact floors. The supplier obtains the original owned boundary and, separately for each $m$, the fixed original raw prefix, retaining the actual producer and continuing Step right. It requires no Reference service or offset disclosure.
+
+This reuse does not infer unique calibration from a stationary scalar when the unit is unknown. The supplier's Theorem 16.2 retains all equal-scalar height-legal representations, and its joint two-value Lemma 3.2 identifies the true tuple at the first actual depth change. In the present fixed-$q_0$ specialization even stationary $(b,d)$ uniqueness can be justified: with $F_0=0,F_1=1$ the ordinary Fibonacci numbers,
+
+$$
+\alpha^d=(-1)^dF_{d-1}+(-1)^{d-1}F_d\alpha\quad(d\ge1).
+$$
+
+Induction from $\alpha^2=1-\alpha$ proves this identity. Equality $b+q_0\alpha^d=c+q_0\alpha^e$ for rational $b,c$ forces equality of the irrational coefficients $(-1)^{d-1}F_d=(-1)^{e-1}F_e$. These signed coefficients are injective for positive indices: the only repeated positive Fibonacci magnitude is $F_1=F_2=1$, whose signs here are opposite, and subsequent magnitudes strictly increase. Thus $d=e$ and $b=c$. This algebraic uniqueness is not itself a finite acquisition algorithm; the cited height routine supplies the required acquisition and first-update boundary recovery.
+
+The values of $\lambda_H$ form an infinite subset of the positive integers: a bounded $H$ permits only finitely many reduced rational offsets, whereas $B$ is infinite. They are therefore countably infinite and can be encoded by finite binary messages. The finite-value impossibility and this countable sufficiency give the stated minimum. $\square$
+
+The finite-closure and rational-density steps are classical intermediates; the new application is their combination with the attained death pair in this volume. The height positive is wholly credited to the cited supplier, not a new reconstruction theorem. Only cardinality of complete advice values is settled: there is no fixed finite bit bound, no per-instance linear bit lower bound, no uniform runtime bound and no assertion of a polynomial total source-time cost. All statements retain the positive-width rational interval, rational public unit, proper-domain promise, stationary exact floors, actual serial continuation and the original targets. Disclosure of the exact offset, an added Reference service, timing, raw counts or private history belongs to a different interface.
+
+## 追加锚（本行以下为增补区）
