@@ -1,0 +1,10 @@
+### 接口 E：开放路径接口
+
+证明：
+
+$$
+\text{separator marginals 一致}
+\Longrightarrow
+\text{存在全局路径律}.
+$$
+

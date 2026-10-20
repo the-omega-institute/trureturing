@@ -92,6 +92,7 @@ public sealed class HistoricalSettlementCompositionTests
             var cut = first.IndexOf("First", StringComparison.Ordinal);
             AddChain(f, DecomposeFixture.Entry(first, AtomizerRegistry.GenericId), [first[..cut], first[cut..]]);
         }
+        f.CaptureContext();
         var before = f.Current;
         var replay = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
         Assert.True(replay.Success, replay.Error);

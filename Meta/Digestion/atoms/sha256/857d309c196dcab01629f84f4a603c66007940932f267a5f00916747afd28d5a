@@ -1,0 +1,8 @@
+要读取纤维信息，必须在投影之前保留：
+
+* lift；
+* connection；
+* probe；
+* transition map；
+* holonomy。
+

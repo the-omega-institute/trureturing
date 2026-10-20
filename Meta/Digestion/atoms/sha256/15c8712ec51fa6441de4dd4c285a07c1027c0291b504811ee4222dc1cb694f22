@@ -1,0 +1,29 @@
+**Theorem 111.7 (the cylinder cross term excludes that direct local class).**
+No realization of Definition 111.6 exists. More generally, the same
+obstruction holds for an isometric form-preserving identification
+whose two images have domain and supports to which the stated locality
+axiom applies, even without an onto measure-space isomorphism.
+
+**Proof.**
+The domain and support premises allow locality to be applied to the
+two specified images, giving
+$\mathcal E_X(UF_L,UF_R)=0$. Form preservation and (111.17) give
+instead $\mathcal E_X(UF_L,UF_R)=-1/4$. This contradiction proves
+the claim. If only same-clock semigroup intertwining is used to
+express form preservation, isometry and (111.24) give the identical
+cross-energy contradiction on those domain vectors. The nonzero
+small-time transfer in (111.19) is the corresponding propagation
+witness, after the actual source limit.
+
+This obstruction does not apply when cylinder images have touching
+supports, when their indicators are outside a proposed local form
+domain, or when extra interior states or occupation-time changes
+produce a nonlocal boundary trace. In particular an infinite tree
+interior with the free-root energy is already used in (111.2) to
+define the boundary trace; it is not a direct local form on the
+boundary carrier. A local cable or spatial interior with such a
+trace would require its own carrier, measure, trace, operation and
+clock correspondence. The occupation trace in §108 concerns a
+specified finite successor/old-set pair, with its own clock, and
+does not supply that spatial correspondence. $\square$
+

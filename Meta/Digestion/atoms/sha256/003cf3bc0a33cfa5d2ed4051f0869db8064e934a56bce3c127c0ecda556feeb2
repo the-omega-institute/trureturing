@@ -1,0 +1,58 @@
+### 13.1 两个叶生成元与独立的组合原语
+
+FIB 卷所用的源签名可以写成
+
+$$
+\Sigma_{\mathrm{Fib}}
+ =\bigl\{\alpha,\beta,\langle-,-\rangle,\rho\bigr\},
+$$
+
+其中
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle .
+\tag{RA.1301}
+$$
+
+在这个签名中，$\alpha,\beta$ 是两类叶生成元：它们没有由语法给出的子项。
+二元构造 $\langle s,t\rangle$ 却不是第三个叶原子，而是把已有项组成新项的独立
+原语；它有序、非交换、非结合，除非另加关系，不能把
+$\langle\alpha,\beta\rangle$ 化成任何一个叶，也不能把左右次序抹掉。
+
+因此，“底层只有两个不可约关系”只有在把“关系”限定为**叶标签**时才准确。
+若“关系”指产生后继或组合的操作，则至少还要保留二元组合和替换：
+
+$$
+\rho(\alpha)=\beta,
+\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle .
+\tag{RA.1302}
+$$
+
+这里 $\rho$ 是动力学，$\langle-,-\rangle$ 是构造，$\alpha,\beta$ 是源标签；
+不能把三者压成同一种对象。
+
+更严格地说，忽略 $\rho$ 后的源层是函子
+
+$$
+X\longmapsto \{\alpha,\beta\}+X\times X
+$$
+
+的初始代数。给定任意载体 $X$、两个解释 $a_X,b_X\in X$ 和二元运算
+$\mu:X\times X\to X$，存在唯一解释
+
+$$
+\operatorname{Eval}(\alpha)=a_X,
+\qquad
+\operatorname{Eval}(\beta)=b_X,
+\qquad
+\operatorname{Eval}(\langle s,t\rangle)
+ =\mu(\operatorname{Eval}(s),\operatorname{Eval}(t)).
+\tag{RA.1302a}
+$$
+
+因此它是一个可递归解释的生成语法，而不是已经选定的一种数值模型。数值、矩阵、
+关系档案和程序都只是对同一自由项的不同解释；解释值相同不能反推源项相同。
+

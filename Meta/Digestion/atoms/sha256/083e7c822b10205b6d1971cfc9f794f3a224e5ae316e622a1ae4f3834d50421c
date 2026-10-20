@@ -1,0 +1,4 @@
+**来源 1140.2（项目与原典）。** 项目核读 `D5/S3/Entropy/EntropyDivergenceIdentity.lean` 与 `D5/S3/Entropy/Fusion/GroupQuotientInformationLoss.lean`，具体使用前提与结论见第 1135 节。它们提供有限熵、均匀散度与轨道商的关系，没有自动给出本批的新极限估计。
+
+库萨采用 Cusanus-Portal 授权的 Jasper Hopkins 英译 *The Vision of God / De Visione Dei*。通读第十一章，从 [第 700 页](https://cusanus-portal.de/pdf/englisch/vd/vd_700.pdf) 第十一章标题至 [第 701 页](https://cusanus-portal.de/pdf/englisch/vd/vd_701.pdf) 第十二章标题；并通读第十二章，从该标题经 [第 702 页](https://cusanus-portal.de/pdf/englisch/vd/vd_702.pdf) 至 [第 703 页](https://cusanus-portal.de/pdf/englisch/vd/vd_703.pdf) 第十三章标题之前。没有第十三章通读、全书通读或拉丁文校勘声明。
+

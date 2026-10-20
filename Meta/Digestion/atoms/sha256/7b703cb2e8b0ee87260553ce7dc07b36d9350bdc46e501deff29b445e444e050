@@ -1,0 +1,71 @@
+## 190. FIB 网络上的外加湍流间歇性、多重分形与粗粒化闭合
+
+固定 FIB 图 \(G_j=(V_j,E_j)\)，并另选速度或通量场 \(u_j(t)\)、质量内积、外部尺度、时间、非线性算子、噪声和边界。外加动力学可写成
+$$
+\dot u_j=\mathcal N_j(u_j)-\nu_jA_ju_j+f_j .
+\tag{190.1}
+$$
+取粗粒投影 \(P_{j,\ell}\)，令 \(u_{j,\ell}=P_{j,\ell}u_j\)，则精确投影满足
+$$
+\dot u_{j,\ell}
+=\mathcal N_{j,\ell}(u_{j,\ell})-\nu_jA_{j,\ell}u_{j,\ell}+f_{j,\ell}
++\tau_{j,\ell}-\nu_jR_{j,\ell},
+\tag{190.2}
+$$
+其中
+$$
+\tau_{j,\ell}=P_{j,\ell}\mathcal N_j(u_j)-\mathcal N_{j,\ell}(u_{j,\ell}),
+\qquad
+R_{j,\ell}=P_{j,\ell}A_ju_j-A_{j,\ell}u_{j,\ell}.
+\tag{190.3}
+$$
+这两个项是未解析尺度的精确残差，不由 FIB 接缝直接给出。若粗粒非线性在所选内积下反对称，粗粒能量的通量项可写为
+$$
+\Pi_{j,\ell}=-\langle u_{j,\ell},\tau_{j,\ell}\rangle .
+\tag{190.4}
+$$
+非零平均通量还需要外加源、汇、尺度局部性和统计稳态；有限图能量守恒本身不产生惯性区。
+
+给定外部嵌入和尺度边集 \(\mathcal E_{j,\ell}\)，定义结构函数
+$$
+S_{j,p}(\ell)=\frac1{|\mathcal E_{j,\ell}|}
+\sum_{e\in\mathcal E_{j,\ell}}\mathbb E|(\mathrm B_ju_j)_e|^p .
+\tag{190.5}
+$$
+只有在共同图极限和幂律窗口已被外加规定时，才可写 \(S_{j,p}(\ell)\asymp\ell^{\zeta_p}\)。平坦度
+$$
+F_j(\ell)=\frac{S_{j,4}(\ell)}{S_{j,2}(\ell)^2}
+\tag{190.6}
+$$
+随尺度增加可作为间歇性候选，但有限图回归不能证明幂律。若另加连续嵌入和多重分形谱 \(\mathcal D(h)\)，可提出
+$$
+\zeta_p=\inf_h\{ph+d-\mathcal D(h)\},
+\tag{190.7}
+$$
+其中 \(d\) 和 \(\mathcal D\) 都是外加几何假设；图谱维不能自动替代 \(d\)。
+
+闭合可用条件期望表示：
+$$
+\overline\tau_{j,\ell}(v)
+=\mathbb E[\tau_{j,\ell}\mid u_{j,\ell}=v],
+\qquad
+\xi_{j,\ell}=\tau_{j,\ell}-\overline\tau_{j,\ell}(u_{j,\ell}),
+\qquad
+\mathbb E[\xi_{j,\ell}\mid u_{j,\ell}]=0 .
+\tag{190.8}
+$$
+零条件均值不表示白噪声或无记忆。细尺度长相关时，精确消元可出现
+$$
+\dot u_{j,\ell}(t)=F_{j,\ell}(u_{j,\ell}(t))
++\int_0^tK_{j,\ell}(t-s,u_{j,\ell}(s))\,{\rm d}s+\eta_{j,\ell}(t),
+\tag{190.9}
+$$
+记忆核和噪声由全状态律及初始分布决定。细尺度混合快且存在严格时间尺度分离时，才可近似局部 Markov 闭合和白噪声。
+
+同一 FIB 层级可外加高斯 Ornstein–Uhlenbeck 场，也可外加乘法级联 \(g_{\ell/b}=W_\ell g_\ell\)，后者给出
+$$
+\zeta_p=-\log_b\mathbb E(W^p)
+\tag{190.10}
+$$
+并可产生非线性标度。两种实现可共享低阶统计却有不同通量尾部和记忆。先固定图再平均的 quenched 统计与先平均图族的 annealed 统计也不必相同。因此能谱、间歇指数和闭合律均依赖外加动力学、过滤器、随机律、源汇和物理尺度，不能归因于 FIB 递归本身。
+

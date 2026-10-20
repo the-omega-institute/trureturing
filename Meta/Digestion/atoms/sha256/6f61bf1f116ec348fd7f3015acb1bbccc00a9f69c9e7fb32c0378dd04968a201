@@ -1,0 +1,17 @@
+### 72.4 结论范围与保留义务
+
+定理72.2.1是给定有限完整原图中的纸面条件性排除，范围恰为每个固定有限 $K\ge0$ 的 $0\le\ell\le K$、$p=2\ell+7$、$m=4$，全部旋转、全部四对标签及全部实际合法的 $T$。预算包括 $\beta=0$；实际来源、两侧实际guard、合法根域、同一个 $B$、全部原片、原端点归属、整片共同原闭色和全部原边始终保留。没有增加其他竞争词族、其他乘数范围或无界 $\ell$ 定理。
+
+本章的局部矛盾否定的是完整最小目标。它没有把全部准入当作足够前提去调用65.2.1，没有决定两返回是否能存在于更大或其他周期的 SCC 中，没有给出新的精确gcd，也没有独立判定真实外部不返程(63.15)。单向离开继续允许，不能因有外出边就否定整个 SCC。
+
+对本域之外的任何正实现，仍须在同一个 $\beta,B,G_B,R$ 中联合供应实际来源、两个实际guard、合法预算和根域、整个原片及其共同闭色，逐位置证明全部(63.11)，给出 $h+2$ 个不同完整paired-vertex，按整个原承载片检查所有完整原内部边的(63.13)，并对所有 $n\ge0$ 证明完整图的(63.15)。第60章适用联合限制和各先修原局部预算域继续承担。端点全未命中、容量通过、独立点可达或两条长 $h$ 返回本身不能供应这些义务。
+
+本章不供应任何满足完整合同的正实例，不声称完整准入前件非空，不构造任意实预算下的有限图，不主张全局分类、更大 SCC 排除、初始可达、任意端点规则下的噪声取得或物理识别。证明为仓内既有纸面结果的限定组合与后继关系推导；未提供Lean／kernel形式化核验或外部原创性证据。
+
+[72源原图]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L8290
+[72源60]: https://github.com/the-omega-institute/trureturing/blob/13df04d071579e5a6abf554a61fd828f08648f48/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L25176
+[72源63]: https://github.com/the-omega-institute/trureturing/blob/13df04d071579e5a6abf554a61fd828f08648f48/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26396
+[72源64]: https://github.com/the-omega-institute/trureturing/blob/13df04d071579e5a6abf554a61fd828f08648f48/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26748
+[72源6566]: https://github.com/the-omega-institute/trureturing/blob/13df04d071579e5a6abf554a61fd828f08648f48/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26893
+[72源全文]: https://github.com/the-omega-institute/trureturing/blob/13df04d071579e5a6abf554a61fd828f08648f48/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md
+

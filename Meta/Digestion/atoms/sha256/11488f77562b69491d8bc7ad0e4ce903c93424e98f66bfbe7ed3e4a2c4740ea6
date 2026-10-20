@@ -1,0 +1,39 @@
+### 31.4 ingest 与固定检查点的 git 读数
+
+本次 fix pass 3 在合并 dev、完成重编号并删除旧摄入清单后，实际运行下列命令（2026-09-10）。摄入基线固定为 `a1bcdde34d41cde0c9d77af53de7f2a5088e98a7`；执行前的已提交输入为 `3b08ee811c46e22b65518b43441e328dce5434c8`：
+
+```sh
+BASE=a1bcdde34d41cde0c9d77af53de7f2a5088e98a7 make ingest SOURCE="contextual-spacetime-arithmetic docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md"
+```
+
+退出码 **0**，stderr 为空；调用前后新增 **93 个 atom、93 个 residual-open backfill**（186 个文件，路径集合实测、两侧 atom_id 成对）。stdout 原文：
+
+```text
+INGEST residual_open_added=93 skipped_existing=144 coarse_fallbacks=0 open_genres=0 cas_objects_written=93 ledger_changed=true
+```
+
+新增 atom 已逐项检出 §27–§31、定义 25、命题 42–47、反例 D6–D10，以及附录的 D6／D7／D8／D10 注释。本次产物提交为 `52ad2ab16eeca9462f2b32c291b6f119bb386ea9`；下列 git 读数以该提交为固定检查点，范围截至本节改写之前：
+
+| 读数口径 | 实测值 |
+| --- | --- |
+| 摄入基线本卷行数 | 2552 |
+| 上述执行输入及摄入检查点本卷行数 | 3378 |
+| 本节更新后的本卷行数（下一次摄入的输入） | 3251 |
+| 相对实际合入 dev `692c7efed4e50c2262984cd4e0aa0e6776cdedc3` 的本卷增删行 | +826／−0 |
+| 同一 git 比较范围的新增 atom／backfill | 93／93 |
+| 检查点 `git status --porcelain=v1` | 退出 0，stdout 为空 |
+
+`git diff --shortstat 692c7efed4e50c2262984cd4e0aa0e6776cdedc3..52ad2ab16eeca9462f2b32c291b6f119bb386ea9` 实跑退出 0，stdout 原文：
+
+```text
+ 187 files changed, 4126 insertions(+)
+```
+
+摄入比较基线与 git 范围分别固定：fetch 时 dev 已从 `a1bcdde34d` 前进到 `692c7efed4`，两版本卷相同，后者包含的其他 dev 改动不计作 PR3 产物。旧摄入删除严格使用 brief 指定的 `4ac806a62d274a48550978b827a4bf546a8c898e..d2c713228e74cd2fbe20a31e2c400c8face7389d` 新增路径清单：95 对、190 个文件；#6684 的 35 对及更早产物不在删除集合。重摄入可按内容地址重新生成其中字节未变的 atom。
+
+合并的字节核对保留了附录 PR3 插入：该段为 314 行代码及一行前导空行。含此插入的原始前缀与 dev 全文直接 `cmp` 退出 **1**，差异从附录 PR3 插入处开始；只剔除此已知插入后的前缀与 dev 全文 `cmp` 退出 **0**、stdout 为空。dev 的 §24–§26 共 416 行、27967 字节原样在前，PR3 的 §27–§31 紧随其后；原始前缀完全相同与保留附录插入不能同时成立，不将前者报告为通过。
+
+本节改写后再以同一摄入基线运行 canonical writer，使本次产地与收据文字也进入消化账。该补充摄入及最终累计 atom／backfill 数、附录原始 stdout、git 差分目录集、提交、推送与干净状态，由本次 runner 的 `result.json` 和所引日志记录；本节上述 93／93 明确只指固定检查点，不冒充最终累计数。
+
+<a id="pr4-temporal-causal"></a>
+

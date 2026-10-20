@@ -1,0 +1,25 @@
+**Definition 29.1 (unchanged native block and automatic scalar envelope).**
+Retain Definition 25.2's finite syntax and [NCE, Definition 10.1][ABT-NCE]:
+finite alpha/beta ordered trees, literal equalities/disequalities,
+fixed regular native-tree memberships, and interpreted powers of $\rho$
+with specified integer-affine exponents in one finite natural tuple
+$(e,h,\mathbf s)$. All those exponents have explicit nonnegativity
+guards. All native variables in a block are jointly existential, and
+every repeated name denotes the same entire tree throughout that block.
+
+Enlarge the scalar conditions to any fixed Fibonacci-automatic relations
+and first-order scalar arithmetic over them, in particular
+$\operatorname{FO}(\mathbb N,+,V_\varphi)$. As in Definition 25.2,
+allow finitely many existential scalar auxiliaries, finite Boolean
+branches and the designated finite or in-language accept-label projection.
+One may also take first-order scalar combinations of **already eliminated**
+whole-block support predicates. This last closure does not move scalar
+quantifiers through a native witness that has to be shared.
+
+There is no native quantifier alternation, free unknown tree advice,
+variable formula length, parameter-dependent membership automaton,
+numerical leaf-count operator or arbitrary supplied homomorphism.
+Linked native atoms must be eliminated jointly; separate feasibility
+tests cannot replace a shared witness. No broader alternating
+scalar/native synthesis language is asserted to be covered.
+

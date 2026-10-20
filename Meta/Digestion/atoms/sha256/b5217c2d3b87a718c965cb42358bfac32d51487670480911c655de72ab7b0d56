@@ -1,0 +1,24 @@
+### 定理 372.2（连续记录通道的 Hellinger 收缩）
+
+有
+
+$$
+\boxed{
+\mathsf H(R_0,R_1)
+\le
+\mathsf H(P_0,P_1),
+}
+$$
+
+以及
+
+$$
+\boxed{
+\mathsf H(\widetilde R_0,\widetilde R_1)
+\le
+\mathsf H(R_0,R_1).
+}
+$$
+
+若 \(LKP_0=LKP_1\) 而 \(P_0\ne P_1\)，则原始关系存在可区分方向，但最终记录完全丢失该方向。
+

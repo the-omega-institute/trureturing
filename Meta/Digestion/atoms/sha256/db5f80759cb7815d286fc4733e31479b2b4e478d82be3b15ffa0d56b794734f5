@@ -1,0 +1,26 @@
+## 2. 已提交的方向性残差障碍
+
+当 `Bk` 和 `B^2k` 都是同一窗口算子的合法测试函数时，令
+
+\[
+\mu=\langle k,A_ak\rangle,\qquad R=(A_a-\mu)k,\qquad r=\|R\|_2.
+\]
+
+则
+
+\[
+q_a(Bk)-\mu\|Bk\|_2^2=\Re\langle R,B^2k\rangle.
+\]
+
+结合该方向的强制性与残差配对上界，Lean 证明脚本给出
+
+\[
+\boxed{\delta^2\|Bk\|_2^2\le3(2+\alpha^2)r^2.}
+\]
+
+它没有证明算术强制性本身。利用 `|alpha|<=2`，可读出
+
+\[
+\boxed{r/\delta\ge\|Bk\|_2/\sqrt{18}.}
+\]
+

@@ -1,0 +1,66 @@
+**定理 119.1（紧输出上的后验信息方差响应）。**
+
+Fix the original beta and amplitude and a finite R. Keep the original legal Q_n, lambda=Q^3, all original M,q/support/count floors, complete score groups, calibrated centers and the same uniform-size-q-support prior. Let
+$$
+ \delta=Q^{-1/2},\qquad L=\log(1/\sigma),\qquad
+ L\to\infty,\qquad \limsup L/Q^3<c_q/2,\qquad
+ c_q=\phi(1-\beta)/\beta.
+\tag{119.1}
+$$
+There is no additional rate restriction on sigma->0. The noise is positive at every finite level.
+
+On an actual data fiber x, let P_x be the original full count-vector posterior before the noisy scalar, and P_x^y the exact positive posterior after T_x+sigma G=y. Define
+$$
+ \mathcal V_x(y)=\operatorname{Var}_{P_x^y}[-\log P_x^y(N)].
+\tag{119.2}
+$$
+This is variance within the fixed posterior, measured in nats squared. It is not variance over raw-data environments or over outputs.
+
+Use the exact original quantities
+$$
+ B^2=q/Q^{5/2},\quad v_j=C_jp_j(1-p_j)/B^2,\quad
+ v_*=\max_jv_j,\quad V=\sum_jv_j,\quad
+ e_j=(\mu_j-C_jp_j)/B,
+$$
+$$
+ E(n)=\sum_j((n_j-\mu_j)/B)^2,\qquad
+ T_x(n)=(E(n)-V)/\sqrt\delta.
+\tag{119.3}
+$$
+Every sum includes the full original window. Empty groups have v_j=e_j=0. As in Chapter 117, set
+$$
+ K_\alpha(t)=-\frac12\sum_j\log(1-2tv_j/\alpha)
+       +\sum_j\frac{te_j^2}{1-2tv_j/\alpha}
+       +\frac{\delta\sigma^2t^2}{2\alpha},\quad
+ t<\frac{\alpha}{2v_*},
+$$
+$$
+ K_\alpha'(t_\alpha)=V,\qquad
+ W_\alpha=K_\alpha''(t_\alpha),\qquad
+ b_\alpha=\frac{\sqrt\delta\,t_\alpha}{\alpha},\qquad
+ c_\alpha=\frac{\delta}{2\alpha W_\alpha}.
+\tag{119.4}
+$$
+The root is the unique real root, including a possibly negative t_1. All derivatives in this chapter hold x, mu, V, sigma, counts, group set and floors fixed.
+
+The conclusion, separately for the actual pair and path experiments, is
+$$
+ \sup_{|y|\le R}\left|
+ \mathcal V_x(y)-\mathcal V_x(0)
+ +(2b'_1+b''_1)y+(2c'_1+c''_1)y^2
+ \right|\ \longrightarrow\ 0
+\tag{119.5}
+$$
+in actual raw-data probability, uniformly over all deterministic supports of size q. Thus for every eta>0 the supremum over these supports of the probability that the displayed quantity exceeds eta tends to zero. The same actual data and posterior are used at every output and throughout every comparison.
+
+The finite coefficients can equivalently be written without the quotient-rule cancellations:
+$$
+ \mathcal V_x(y)-\mathcal V_x(0)
+ =-\sqrt\delta\,t''_1y
+ +\frac{\delta}{2}
+       \left(\frac{W''_1}{W_1^2}-\frac{2(W'_1)^2}{W_1^3}\right)y^2
+ +o_{\mathbb P}(1),
+\tag{119.6}
+$$
+uniformly on the same compact. Formula(119.6) is exactly the same finite coefficient as(119.5), not an asymptotic replacement.
+

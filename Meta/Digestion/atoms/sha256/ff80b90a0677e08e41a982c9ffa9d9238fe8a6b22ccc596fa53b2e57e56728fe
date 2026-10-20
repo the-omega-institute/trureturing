@@ -1,0 +1,26 @@
+# 第一千六百零六部　理论深度审计
+
+| 本轮结论                                                   | 当前地位     |
+| ------------------------------------------------------ | -------- |
+| Zeckendorf hard-core sum 等于 reduced cyclic determinant | 本轮核心精确定理 |
+| 深度 \(N\) 与谱宽 \(F_{N+1}-1\) 的交换                         | 精确       |
+| 黄金为时间深度到谱宽度的渐近汇率                                       | 精确       |
+| centered finite prime factor 全部零点位于虚轴                  | 精确       |
+| local prime 自对偶轴是 \(0\)，不是全局 \(1/2\)                   | 关键校正     |
+| 正系数、正 transfer 不推出 PF\(_\infty\)                       | 显式反例     |
+| reduced cyclic unitary 的 Cayley 生成元自伴                  | 精确       |
+| \(H_K^2=4\Delta_K^{-1}-I\)                             | 精确       |
+| local observer squared-gap determinant 为正外幂完成          | 精确       |
+| cyclic phase 经 Cayley 极限为 Cauchy 测度                    | 本轮核心精确定理 |
+| golden depth 控制 Cauchy 离散逼近速率                          | 精确       |
+| Cauchy 母形并非离线零点独有                                      | 科学校正     |
+| universal cover 与 Cayley 是两种不同去紧化                      | 精确几何区分   |
+| Fibonacci phase grids 本身不是标准逆系统                        | 关键校正     |
+| golden second-shadow split 是 Parry 最大熵转移               | 精确       |
+| signed connected terms可来自 trivial-mode reduction       | 精确       |
+| 有限 local criticality 自动推出 global RH                    | 不成立      |
+| 稳定 locally-uniform prime–Gamma approximants 推出 RH      | 条件精确定理   |
+| Arithmetic Hodge／CP transport                          | 核心未闭合桥   |
+
+---
+

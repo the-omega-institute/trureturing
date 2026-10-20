@@ -1,0 +1,244 @@
+**Theorem 108.2 (uniform source-size clock fidelity and the uniform golden ratio).**
+Put $`\varphi=(1+\sqrt5)/2`$, $`c=\varphi^{-1}`$ and
+$`D_n=2F_{n+1}-1`$. Then
+
+```math
+\sup_{t\in\mathcal T}|r(t,n)-\varphi|
+\le e_n:=\frac{c+2c^{n+1}}{D_n}\longrightarrow0.
+\tag{108.3}
+```
+
+For every finite $`S\ge0`$ and every $`\varepsilon>0`$,
+
+```math
+\lim_{n\to\infty}\sup_{t\in\mathcal T}\sup_{x\in V(t,n)}
+\mathbb P_x\!\left\{
+\sup_{0\le u\le S}\left|
+\frac{A(t,n)(N(t,n)u)}{N(t,n)}-r(t,n)u
+\right|>\varepsilon\right\}=0.
+\tag{108.4}
+```
+
+The same conclusion holds for every initial probability on the old set,
+including probabilities depending on $`t,n`$. More explicitly, for $`n\ge2`$
+and $`\eta>0`$, set
+
+```math
+d_n(S)=\frac{c+4(n+1)}{D_n}+2Sc^{n+1}+Se_n,
+\qquad m_n=\lfloor n/2\rfloor.
+\tag{108.5}
+```
+
+The probability in (108.4), with threshold $`d_n(S)+2\eta`$, is at most
+
+```math
+\frac{128S}{\eta^2D_n}
++\frac{c}{\eta}\left(\frac1{D_n}+S2^{-m_n}\right).
+\tag{108.6}
+```
+
+Replacing the inverse in (108.2) by $`\inf\{b:B(b)\ge a\}`$, with value
+zero at zero, preserves (108.4). The two conventions differ only by
+complete excursion lengths at their corresponding plateau values.
+
+**Proof.**
+The literal birth identity is the same source identity used in
+[Continuation I, §58.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md).
+Its grounded Hamiltonian and missing-child diagonals are not used here.
+In the present closed operator, if $`\mathcal B`$ is the old beta-leaf set,
+$`H_{\mathcal B}`$ its coordinate projection and $`C`$ has one column
+$`\delta_p`$ for each of the two children born at each $`p\in\mathcal B`$,
+the actual old/new blocks are
+
+```math
+L(t,n+1)=
+\begin{pmatrix}L(t,n)+2H_{\mathcal B}&-C\\-C^*&I\end{pmatrix},
+\qquad CC^*=2H_{\mathcal B}.
+\tag{108.7}
+```
+
+The zero-parameter Schur complement is exactly $`L(t,n)`$. Equivalently,
+every deleted excursion returns to its very own beta parent, so deletion
+adds no old-to-old transition. This is the standard reversible trace
+construction: Beltrán–Landim,
+[*Tunneling and Metastability of Continuous Time Markov Chains*,
+§6.1, Propositions 6.1 and 6.3](https://arxiv.org/abs/0910.4088).
+Their nonempty-support, irreducibility and recurrence hypotheses hold
+on each finite successor, with time-change weight $`\mathbf1_{V(t,n)}`$.
+The inverse convention is theirs. A singleton old set has no off-diagonal
+trace rate and is included directly. Counting measure on the successor
+restricts to counting measure on the trace. The use of conductance rates
+with counting mass is also precisely the fluid model in
+[Aldous–Fill, Chapter 3, §2, (3.16)](https://www.stat.berkeley.edu/~aldous/RWG/Book_Ralph/Ch3.S2.html).
+
+In trace time, each beta parent has two excursion clocks of rate one.
+Their independent marks $`E_i`$ are the new-child holding times, each with
+law $`\operatorname{Exp}(1)`$, mean one and second moment two. Old-edge
+clocks and the excursion clocks can be constructed independently while
+the chain is at each old vertex. Consequently, with $`\theta_i`$ the
+excursion times on the trace clock,
+
+```math
+\begin{aligned}
+A(t,n)(a)&=a+\sum_{\theta_i\le a}E_i,\\ {}
+M^{\rm exc}_a
+&=\sum_{\theta_i\le a}E_i
+  -\int_0^a2\mathbf1_{\mathcal B}(Y_v)\,dv,\\ {}
+\langle M^{\rm exc}\rangle_a
+&=\int_0^a4\mathbf1_{\mathcal B}(Y_v)\,dv\le4a.
+\end{aligned}
+\tag{108.8}
+```
+
+The formula includes the entire terminal excursion when $`a`$ is a
+plateau value. It is a marked-clock representation of this exact
+successor chain, not an additional law imposed on a source action.
+
+It remains to control the beta occupation uniformly without assuming
+uniform mixing of arbitrary source skeletons. Let $`a_0,b_0`$ be the
+numbers of original alpha and beta leaves and $`\ell=a_0+b_0\ge1`$.
+The original skeleton has $`\ell-1`$ internal vertices. Each original alpha
+leaf carries its literal $`T_n`$ block after expansion, and each original
+beta leaf its literal $`T_{n+1}`$ block. The source recurrence of
+Definition 92.2 therefore gives
+
+```math
+\begin{aligned}
+N:=N(t,n)&=2(a_0F_{n+1}+b_0F_{n+2})-1\ge D_n\ell,\\ {}
+|\mathcal B|&=a_0F_n+b_0F_{n+1}.
+\end{aligned}
+\tag{108.9}
+```
+
+These formulas include $`n=0`$ and both singleton labels. On $`T_k`$, set
+$`f_k=2\mathbf1_{\{\text{beta leaf}\}}-c`$. Its total charge is
+
+```math
+q_k:=\sum_{T_k}f_k
+=2F_k-c(2F_{k+1}-1)
+=c-2c(-c)^k=:c+\delta_k,
+\qquad |q_k|\le2,\quad |\delta_k|=2c^{k+1}.
+\tag{108.10}
+```
+
+The last equality is the exact Fibonacci identity
+$`F_k-cF_{k+1}=-c(-c)^k`$, obtained from (92.12).
+Summing $`f=2\mathbf1_{\mathcal B}-c`$ on the whole old source, including
+its internal original skeleton, yields
+
+```math
+\sum_{V(t,n)}f=c+a_0\delta_n+b_0\delta_{n+1},\qquad
+r(t,n)-\varphi=\frac{c+a_0\delta_n+b_0\delta_{n+1}}N.
+\tag{108.11}
+```
+
+Equations (108.9)–(108.11) prove (108.3) for the whole source domain,
+not only for the orbit $`T_n`$.
+
+Construct a corrector $`h`$ on this same old tree. At each original
+skeleton vertex $`p`$, including its original leaves, set $`h(p)=c|p|`$.
+Within a block rooted at an original leaf, set its root value by this
+rule and give each downward edge increment the total $`f`$-charge of
+its actual below-edge subtree. That subtree is some $`T_k`$, so the
+increment is exactly $`q_k`$ from (108.10). The elementary tree Poisson
+flux calculation already used in (92.9) then gives, on a block rooted
+at $`p`$, $`L_{\rm block}h=f-q_k\delta_p`$.
+An original nonroot block root receives the additional parent-edge
+contribution $`c`$; an original internal nonroot skeleton vertex has
+$`Lh=-c=f`$; the original root, when internal, has $`Lh=-2c=f-c`$.
+For a singleton original skeleton the block root has no parent edge.
+Thus all cases give the single identity
+
+```math
+f=L(t,n)h+c\delta_r+e,\qquad
+e=\sum_{p\text{ original alpha leaf}}\delta_n\delta_p
+  +\sum_{p\text{ original beta leaf}}\delta_{n+1}\delta_p,
+\quad \|e\|_\infty\le2c^{n+1}.
+\tag{108.12}
+```
+
+Every edge increment of $`h`$ has modulus at most two. Every block has
+height at most $`n+1`$, while the maximum original depth is at most
+$`\ell-1`$. Therefore
+
+```math
+\frac{\operatorname{osc}h}{N}
+\le\frac{c(\ell-1)+4(n+1)}N
+\le\frac{c+4(n+1)}{D_n},\qquad
+\sum_{y\sim x}|h(y)-h(x)|^2\le12.
+\tag{108.13}
+```
+
+Large or highly unbalanced original skeletons are retained in these
+bounds. Their depth is divided by their actual expanded size, rather
+than bounded by the orbit depth.
+
+For the trace generator $`Q=-L(t,n)`$, the finite-chain Dynkin martingale is
+
+```math
+M^h_a=h(Y_a)-h(x)+\int_0^a L(t,n)h(Y_v)\,dv,
+\qquad \langle M^h\rangle_a\le12a.
+\tag{108.14}
+```
+
+The bracket follows by summing rate times squared jump increment.
+The usual $`L^2`$ maximal inequality gives
+$`\mathbb E_x\sup_{v\le a}|M^h_v|^2\le48a`$ and, from (108.8),
+$`\mathbb E_x\sup_{v\le a}|M^{\rm exc}_v|^2\le16a`$.
+For reference, the discrete-time inequality is Durrett,
+[*Probability: Theory and Examples*, fifth edition, Theorem 4.4.4](https://sites.math.duke.edu/~rtd/PTE/PTE5_011119.pdf).
+Apply it on successively finer deterministic time grids to these
+square-integrable càdlàg martingales and use monotone convergence to
+obtain the stated continuous-time bounds. No stationary initial law
+is needed.
+
+The root term in (108.12) also admits a source-uniform bound.
+The minimum leaf depth of $`T_k`$ is $`\lfloor k/2\rfloor`$, directly by
+the literal recursion. Every old source therefore contains the entire
+binary tree through depth $`m=m_n`$. Put
+$`b_m(p)=2^{-\min(|p|,m)}`$. At the actual root, internal vertices and
+depth-$`m`$ vertices, respectively, direct application of the closed
+Laplacian gives
+
+```math
+L(t,n)b_m=\delta_r-2^{-m}\mathbf1_{\{|p|=m\}}.
+\tag{108.15}
+```
+
+Below depth $`m`$ it is zero. Since $`0\le b_m\le1`$, Dynkin's identity,
+from every starting vertex, implies
+
+```math
+\mathbb E_x\int_0^{NS}\mathbf1_{\{r\}}(Y_v)\,dv
+\le1+NS2^{-m}.
+\tag{108.16}
+```
+
+Combine (108.8), (108.12) and (108.14), and use $`\varphi=1+c`$:
+
+```math
+\begin{aligned}
+\sup_{0\le a\le NS}\frac{|A(t,n)(a)-\varphi a|}{N}
+\le {}&\frac{\operatorname{osc}h}{N}+2Sc^{n+1}
+ +\frac{\sup_{a\le NS}|M^h_a+M^{\rm exc}_a|}{N}\\ {}
+&+\frac cN\int_0^{NS}\mathbf1_{\{r\}}(Y_v)\,dv.
+\end{aligned}
+\tag{108.17}
+```
+
+The two separate maximal bounds and $`|u+v|^2\le2|u|^2+2|v|^2`$
+give expectation at most $`128NS`$ for the squared martingale supremum.
+Chebyshev's inequality, (108.16), Markov's inequality and $`N\ge D_n`$
+give (108.6), after adding $`S|r(t,n)-\varphi|\le Se_n`$.
+Every displayed bound is independent of $`t,x`$. For $`S>0`$, choose
+$`\eta=\varepsilon/3`$ and then $`n`$ with $`d_n(S)\le\varepsilon/3`$;
+the right side of (108.6) tends to zero. For $`S=0`$ the claim is immediate.
+Mixtures over starting vertices preserve the same bounds.
+
+Finally, the two inverse conventions differ by at most the largest
+excursion mark with $`\theta_i\le NS`$. The compensator in (108.8) is
+continuous, so each mark is a jump of $`M^{\rm exc}`$ and is at most
+$`2\sup_{a\le NS}|M^{\rm exc}_a|`$. Its size divided by $`N`$ tends to zero
+uniformly in probability by the same maximal bound. This proves the
+endpoint assertion. $`\square`$
+

@@ -1,0 +1,150 @@
+**候签定理 33.1（统一横向区域内的加权实部正性）。** 若固定 $\eta_0>0$ 满足
+
+$$
+\eta_0<c,\qquad
+b\eta_0<\sqrt{2b}+c-\sqrt2,\qquad
+\eta_0\sqrt{b/2}<\pi/2,
+\tag{33.2}
+$$
+
+则存在仅依赖 $\eta_0$ 和原固定 bump 的有限 $T_0$，使所有 $\gamma>0$、$R>0$、$\delta\in\mathbb R$ 同时满足 $T=R\gamma\ge T_0$ 和 $|\eta|\le\eta_0$ 时，
+
+$$
+\Re\bigl(p(z)A_R(z)\bigr)>0.
+\tag{33.3}
+$$
+
+这里没有要求 $z$ 来自零点，也没有声称单个复数项本身为正。阈值是存在性阈值，未给出数值认证。
+
+证明。先取 $0\le\eta\le\eta_0$，负参数由复共轭处理。由于 $\delta/\gamma=\eta/\sqrt T$，原多项式有精确比值
+
+$$
+\frac{p(z)}{p(\gamma)}
+=(1-i\eta/\sqrt T)^2
+\left(\frac{1+4\gamma^2(1-i\eta/\sqrt T)^2}
+{1+4\gamma^2}\right)^2
+=1+O_{\eta_0}(T^{-1/2}).
+\tag{33.4}
+$$
+
+其均匀性来自 $4\gamma^2/(1+4\gamma^2)\in(0,1)$，特别有 $|p(z)|\le C p(\gamma)$，不让常数依赖任意大的或任意小的 $\gamma$。
+
+对全部实数 $u\in[1,b]$ 使用 (32.4)。主根给出
+
+$$
+\sqrt x+\sqrt{-x}
+=\sqrt{2T}-i\eta/\sqrt2+O_{\eta_0}(T^{-1/2}),
+$$
+
+而 $x^{-3/4}(-x)^{-3/4}=T^{-3/2}(1+O_{\eta_0}(T^{-1/2}))$。于是 (33.4) 支付
+
+$$
+p(z)Q_-(ux)Q_+(-ux)
+=p(\gamma)C_0^2u^{-3/2}T^{-3/2}e^{-\sqrt{2uT}}
+\bigl(e^{i\eta\sqrt{u/2}}+O_{\eta_0}(T^{-1/2})\bigr).
+\tag{33.5}
+$$
+
+第三个严格条件给出全实区间上的统一正余弦余量 $\cos(\eta_0\sqrt{b/2})>0$。因此充分大 $T$ 时，交叉项被积函数的加权实部在整个区间内非负，且大于正主包络的固定倍数。
+
+为取得不依赖外层鞍点展开的下界，仅保留 $u=1+t$、$T^{-1/4}\le t\le2T^{-1/4}$。当 $2T^{-1/4}<d/2$ 时，
+
+$$
+w(1+t)\ge(dM)^{-1}e^{-aT^{1/4}-1/2},
+\qquad
+\sqrt{2uT}\le\sqrt{2T}+\sqrt2\,T^{1/4}.
+$$
+
+其长度为 $T^{-1/4}$，故存在统一 $C_1>0$ 使
+
+$$
+\Re\bigl(p(z)C(x)\bigr)
+\ge C_1p(\gamma)T^{-7/4}
+ e^{-\sqrt{2T}-(a+\sqrt2)T^{1/4}}.
+\tag{33.6}
+$$
+
+下面估计完整的 $p(z)S_\pm(x)$，包括精确射线函数中的全部余项；不在原实区间上积分内层误差的绝对值。
+
+固定 $\ell=1/8$。把 $S_+$ 的外层路径变形为上半平面的有限多边形
+
+$$
+1\ \longrightarrow\ 1+\ell e^{i\pi/4}
+\ \longrightarrow\ b-\ell e^{-i\pi/4}
+\ \longrightarrow\ b,
+\tag{33.7}
+$$
+
+把 $S_-$ 的路径变形为其下半平面共轭路径。中段是高度 $\pm\ell/\sqrt2$ 的有限水平线段。其内部与原区间之间没有奇点；在截去端点的小弧之后使用 Cauchy 定理。端点坐标 $u-1$ 或 $b-u$ 的幅角均介于 $0$ 与 $\pm\pi/4$ 之间，因而 $e^{-a/(u-1)}$ 或 $e^{-a/(b-u)}$ 给出 $O(\varepsilon e^{-a/(\sqrt2\varepsilon)})$ 的消失弧界。其余因子对固定 $x$ 在该端点附近有界。
+
+整个有限路径上 $\Re u\ge1$、$|\arg u|<\pi/12$；当 $T$ 充分大，$\arg x$ 任意接近 $\pi/2$，因此 $ux$ 始终落在 (32.4) 的共同闭扇区内，$-ux$ 落在对应下扇区内。没有跨越 $u=0$ 或主根分支，也没有将外层轮廓延伸到无限射线。
+
+在任一端点 $r\in\{1,b\}$ 的长度参数 $0<t\le\ell$ 上，(32.4) 及固定紧路径上的平方根 Lipschitz 界给出
+
+$$
+|Q_-(ux)|^2\le C T^{-3/2}
+ e^{-\sqrt{2rT}+C\sqrt T\,t},
+\tag{33.8}
+$$
+
+$Q_+(-ux)$ 也满足同一界。这里 $\eta$ 对端点主根的修正为 $O(1)$，已吸收于固定 $C$。
+
+在匹配的上、下路径上，大线性相位的模长衰减至少为
+
+$$
+e^{\pm r\eta\sqrt T-(T-\eta_0\sqrt T)t/\sqrt2}.
+$$
+
+该端点的奇异权重为 $e^{-a/(\sqrt2t)}$，另一端点权重在该有限短射线上有界。结合 (33.4)、(33.8)，带 $p(z)$ 的端点积分被
+
+$$
+C p(\gamma)T^{-3/2}
+ e^{(\pm r\eta-\sqrt{2r})\sqrt T}
+ \int_0^\infty e^{-A_Tt-B/t}\,dt,
+\quad
+A_T=T/\sqrt2-C_2\sqrt T,\quad B=a/\sqrt2
+\tag{33.9}
+$$
+
+控制，充分大 $T$ 时 $A_T>0$。这里的无限正实积分只是一份非负上界，不是外层复轮廓的无限延伸。已有 Bessel 核身份及其大正实参数界给出
+
+$$
+\begin{aligned}
+\int_0^\infty e^{-A_Tt-B/t}\,dt
+&=2\sqrt{B/A_T}\,K_1(2\sqrt{A_TB})\\
+&\le C_3T^{-3/4}e^{-c\sqrt T},
+\end{aligned}
+\tag{33.10}
+$$
+
+因为 $2\sqrt{A_TB}=c\sqrt T+O(1)$。有限中段的模长则不超过
+
+$$
+C p(\gamma)T^{-3/2}
+ e^{-\ell T/\sqrt2+b\eta_0\sqrt T};
+$$
+
+权重在该段有界，内层主根的正实部允许丢弃其额外衰减。合并四个端点和两个中段，得到完整加权界
+
+$$
+\begin{aligned}
+|p(z)S_+(x)|+|p(z)S_-(x)|
+\le{}& C_4p(\gamma)T^{-9/4}
+ \sum_{\substack{r\in\{1,b\}\\\varepsilon\in\{-1,1\}}}
+ e^{(\varepsilon r\eta-\sqrt{2r}-c)\sqrt T}\\
+&+C_5p(\gamma)T^{-3/2}
+ e^{-\ell T/\sqrt2+b\eta_0\sqrt T}.
+\end{aligned}
+\tag{33.11}
+$$
+
+前两个严格条件给出固定 $g>0$，使四个端点指数均不超过 $-(\sqrt2+g)\sqrt T$。因此 (33.11) 与 (33.6) 之比由
+
+$$
+C T^{-1/2}e^{-g\sqrt T+(a+\sqrt2)T^{1/4}}
++ C T^{1/4}e^{-\ell T/\sqrt2+(b\eta_0+\sqrt2)\sqrt T+(a+\sqrt2)T^{1/4}}
+\longrightarrow0
+$$
+
+统一控制。充分大 $T$ 时，同端点项无法抵消交叉项的正实部，证明 (33.3)。由于 $\phi$ 实且偶、$p$ 有实系数，负 $\delta$ 的完整项是正 $\delta$ 项的共轭，故同一结论适用于 $|\eta|\le\eta_0$。$\square$
+

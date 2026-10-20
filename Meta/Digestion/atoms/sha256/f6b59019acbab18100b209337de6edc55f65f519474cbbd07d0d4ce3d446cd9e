@@ -1,0 +1,9 @@
+# 第一千七百四十七部　phase、递归时间与 shifted 深度是三个不同参数
+
+此前多个图景容易把三种“时间”混合。
+
+| 参数                | 含义                        | 主要不变量                                  |
+| ----------------- | ------------------------- | -------------------------------------- |
+| \(\alpha\in S^1\) | phase observer            | Clark basis、monodromy                  |
+| \(n\in\mathbb N\) | Cuntz branch recursion    | word length、branch algebra             |
+| \(q>0\)           | shifted observation depth | persistence death time \(\delta_\rho\) |

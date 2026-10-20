@@ -1,0 +1,7 @@
+# Weil 最低模态路线中的内部平移障碍与算术边界项
+
+对应真源：`D5/S3/Weil/ZetaBridge/WeilGroundModeShiftBarrier.lean`。
+配套 Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilGroundModeShiftBarrier.scribe.cs`。
+
+本节补入前一轮已提交 Lean 的理论推导。有限平移恒等式、紧支撑非消失性和平方残差下界已有 Lean 证明脚本，尚未经本环境编译。尺度族推论及算术边界展开是纸面推导。没有证明完整算术强制性、最低模态单纯偶性或 RH。
+

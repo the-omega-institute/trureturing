@@ -1,0 +1,34 @@
+### 定义 366.1（谱—事件全息边界）
+
+固定有限 Hodge 空间、合法动力学和有限事件策略。定义
+
+$$
+\boxed{
+\eta_{\mathrm{spec\text{-}event}}
+=
+\left(
+\Delta,
+A_\tau,
+\tau,
+\{Q_j,\zeta_j\},
+\{C_a\},
+\mathcal O_N^\pi,
+W_N^\pi,
+\mathsf{Clock},
+\mathsf{Event},
+\mathsf{Err},
+\mathsf{Stop}
+\right).
+}
+$$
+
+各字段分别保存：
+
+1. Hodge Laplacian 与动力学 \(A_\tau\)；
+2. 内部钟步长 \(\tau\) 及其标定合同；
+3. 离散谱投影、采样相位和可能的混叠分区；
+4. 每个合法动作 \(a\) 的接口 \(C_a\)；
+5. 有限策略的观察算子与 Gramian；
+6. 事件仪器的概率、结果后继和记录同步；
+7. 噪声、最小特征值、预算和停止后继。
+

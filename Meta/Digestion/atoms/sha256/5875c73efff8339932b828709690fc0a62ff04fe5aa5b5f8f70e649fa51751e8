@@ -1,0 +1,9 @@
+干预可以包括：
+
+* shifted 深度；
+* 边界位置；
+* kernel feature；
+* prime window；
+* Hardy 输入；
+* Poisson 尺度。
+

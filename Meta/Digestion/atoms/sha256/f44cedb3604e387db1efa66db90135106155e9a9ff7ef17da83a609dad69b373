@@ -1,0 +1,5 @@
+一个 policy \(\Pi\) 在每个 belief \(\pi\) 选择：
+
+1. 停止并输出行动；或
+2. 调用某个实验 \(i\in\mathcal I\)。
+

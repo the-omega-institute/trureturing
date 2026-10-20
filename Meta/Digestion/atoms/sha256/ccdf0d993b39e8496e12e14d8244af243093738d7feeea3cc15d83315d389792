@@ -1,0 +1,25 @@
+**定义 373.1（场配置、能量与归一化）。** 从 $T_{n+2}=\langle T_{n+1},T_n\rangle$ 选取有限节点支撑 $V_n$。展开树中同形子树的不同出现是不同节点；共享节点商图须另给变量识别规则，不能沿用展开树的配置数。外加有限自旋集合 $\mathcal S$，配置为 $\sigma\in\mathcal S^{V_n}$；这里的自旋只是状态变量，不自动表示量子角动量。
+
+给出节点势 $U_v$、相互作用指标集 $\mathcal I_n$、有限支撑 $A_i$、势 $\Phi_i$ 和边界配置 $\eta$，写
+
+$$
+H_n^\eta(\sigma;\theta)
+=\sum_{v\in V_n}U_v(\sigma_v;\theta)
++\sum_{i\in\mathcal I_n}\Phi_i((\sigma\eta)_{A_i};\theta).
+\tag{373.1}
+$$
+
+边界作用必须入和，每项计一次。支撑可取合法边端点或路径节点集合，但路径出现次数、次序和作用距离须明确；路径超边并不自动局域。外加硬约束给出非空允许集 $\mathcal A_n^\eta$。以计数测度为参考，对有限 $\beta\ge0$ 定义
+
+$$
+\begin{aligned}
+w_n^\eta(\sigma)&=\mathbf1_{\{\sigma\in\mathcal A_n^\eta\}}e^{-\beta H_n^\eta(\sigma)},\\
+Z_n^\eta&=\sum_{\sigma\in\mathcal S^{V_n}}w_n^\eta(\sigma),
+\qquad
+\mu_n^\eta(\sigma)=w_n^\eta(\sigma)/Z_n^\eta.
+\end{aligned}
+\tag{373.2}
+$$
+
+允许配置能量均有限时，$0<Z_n^\eta<\infty$。更换参考权重会更换统计律；违反自旋禁配也不等于原生路径非法。只有另给能量单位、热平衡实现和温度标定后，$\beta$ 才能解释为 $1/(k_{\mathrm B}T)$。
+

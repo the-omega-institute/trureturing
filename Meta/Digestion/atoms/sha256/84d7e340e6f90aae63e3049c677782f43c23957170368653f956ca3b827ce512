@@ -1,0 +1,59 @@
+### 19.3 显式实测试与三个精确约束
+
+固定实偶 bump
+
+$$
+\phi(x)=
+\begin{cases}
+\exp\!\bigl(-1/(1-4x^2)\bigr),&|x|<1/2,\\
+0,&|x|\ge1/2.
+\end{cases}
+$$
+
+定义
+
+$$
+F_{\mathcal R}(y)=\phi'(y)-4\mathcal R^{-2}\phi'''(y),\qquad
+f_{\mathcal R}(x)=\mathcal R^{-1/2}F_{\mathcal R}(x/\mathcal R).
+$$
+
+这给出实奇 $C_c^\infty$ 函数，支撑于 $[-\mathcal R/2,\mathcal R/2]$。其自相关实且偶，支撑于 $[-\mathcal R,\mathcal R]$。采用 $\widehat f(z)=\int f(x)e^{-izx}dx$，分部积分与变量替换给出整函数身份
+
+$$
+\widehat f_{\mathcal R}(z)=i\mathcal R^{3/2}z(1+4z^2)\widehat\phi(\mathcal Rz).
+$$
+
+因此 $\widehat f_{\mathcal R}(0)=\widehat f_{\mathcal R}(i/2)=\widehat f_{\mathcal R}(-i/2)=0$ 精确成立，不依赖数值近似或复调制。
+
+记 $u=\|\phi'\|_1>0$、$v=\|\phi'\|_2>0$，并取
+
+$$
+\begin{aligned}
+\mathcal R_0&=\max\left\{1,\sqrt{8\|\phi'''\|_1/u},\sqrt{8\|\phi'''\|_2/v}\right\},\\
+a_*&=u^2/4,\qquad M_*=9v^2/4,\\
+D_*&=\|\phi''\|_2+4\|\phi''''\|_2,\qquad
+B_*=C_d(M_*+D_*^2).
+\end{aligned}
+$$
+
+对 $\mathcal R\ge\mathcal R_0$，三角不等式与缩放给出
+
+$$
+\begin{aligned}
+\|f_{\mathcal R}\|_1^2&\ge a_*\mathcal R,\\
+v^2/4\le\|f_{\mathcal R}\|_2^2&\le M_*,\qquad
+\|f_{\mathcal R}'\|_2^2\le D_*^2/\mathcal R^2,\\
+\mathcal T_0(f_{\mathcal R})&\le
+C_d\bigl(\|f_{\mathcal R}\|_2^2+\|f_{\mathcal R}'\|_2^2\bigr)\le B_*.
+\end{aligned}
+$$
+
+最后一步仅用明确的对角假设与 Plancherel。对每个固定 $\varepsilon>0$，同一 Plancherel 身份还给出
+
+$$
+\int_{|t|>\varepsilon}|\widehat f_{\mathcal R}(t)|^2d\mu(t)
+\le\frac{D_*^2}{\varepsilon^2\mathcal R^2}.
+$$
+
+总能量下界为 $v^2/4$，故这是实质的低频集中族；在频率零点恰为零不妨碍能量集中到其越来越小的邻域。
+

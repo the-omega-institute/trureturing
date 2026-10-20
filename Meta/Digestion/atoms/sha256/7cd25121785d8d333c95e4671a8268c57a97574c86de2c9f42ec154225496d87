@@ -1,0 +1,12 @@
+### 89.3 来源与适用边界
+
+（89.9）使用经典独立有界变量浓缩：见 [Vershynin《High-Dimensional Probability》第一版 Theorem 2.2.6](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf)，印刷页17、PDF页25。该定理是单侧界，对 $X_i$ 与 $-X_i$ 各用一次得到这里的两侧界；第83节的已知深度尺度估计使用同一供应方法，但没有给出本节未知交接深度的成本。
+
+[Kaufmann–Cappé–Garivier《On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models》](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf) 的 Lemma 1（页7）及 Appendix A.1（页25）提供序贯换测度的方法背景，其每个臂供应固定分布的 iid 样本。本节的输出核随增长状态变化，因此不直接套用该固定臂引理；（89.17）—（89.23）在共同实际前缀上给出所需的有限链式展开和极限，不使用无界可选停止。
+
+钉版 mathlib 的 [ChainRule](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean) 中 `klDiv_compProd_eq_add`、`integral_llr_compProd_eq_add` 以及 [DataProcessing](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/DataProcessing.lean) 中 `klDiv_map_le` 对应组合乘积链式法则、可积对数似然和可测映射的数据处理；ChainRule 的条件 KL 积分形式仍列为 TODO。这些声明只是方法供应的对应，不构成本节有状态自适应期望界的精确形式化证明。本节给出普通数学推导，不主张 Lean 核验或原创性。
+
+$T=0$ 时交接深度恒为零，直接输出零，成本为零。若另要求 $\varepsilon=0$，实际深度像含至少两个值时，第88.1推论仍排除共同几乎必然有限停止的零误差恢复；增加未达到的输出标签不能避开该停止标签事件论证。深度像为单点时常标签成本为零。
+
+（89.7）的常数刻意保守，不是尖锐样本常数。它表明在本合同的最坏旧实验中，PairRead 和未来增长不改变取得成本阶；它不排除较小实际深度像或其他固定先验更容易，也不把后验混合的 PairRead 记录称为 iid。成本只计新宏调用数，未给出物理时间、位存储、计算量、硬件或端口实现成本界。所恢复的是当前组成保留的交接深度关系，不是完整旧路径、旧读取顺序、空间形状或被擦除档案。
+

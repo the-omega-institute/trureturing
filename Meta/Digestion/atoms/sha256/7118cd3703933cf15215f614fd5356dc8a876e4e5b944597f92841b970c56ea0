@@ -1,0 +1,7 @@
+有如下奇偶律：
+
+1. 两个 flip 观察量的 XOR invariant；
+2. 两个 flip 观察量的等价关系 invariant；
+3. 一个 flip 与一个 invariant 的 XOR 仍 flip；
+4. 在非空空间中，同一观察量不能同时 flip 与 invariant。
+

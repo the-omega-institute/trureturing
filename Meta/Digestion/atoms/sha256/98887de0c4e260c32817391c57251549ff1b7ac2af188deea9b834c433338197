@@ -1,0 +1,40 @@
+### 15.3 保留变动端点的直接对数估计
+
+对非零 $z\to0$，按 $2^k|z|\le1$ 与补段分开，低尺度有 $\operatorname{sinc}(2^kz)=1+O(4^kz^2)$，累计误差有界；高尺度用几何尾和控制绝对值。因此
+
+$$
+\sum_{k\ge0}\operatorname{sinc}(2^kz)
+=\frac1\ell\log(1/|z|)+O(1).
+$$
+
+在 $t$ 接近 $\ell$ 时，$x\in[e^{-t},1]$ 一致远离零。将该估计用于 $\mathcal L$ 的精确积分，并保留变动端点，得到
+
+$$
+\begin{aligned}
+\mathcal L(t)
+&=\frac{e^{t/2}-e^{-t/2}}{\ell}\log\frac1{|2-e^t|}+O(1),\\
+\mathcal L(\ell+s)
+&=\frac1{\sqrt2\,\ell}\log(1/|s|)+O(1),\qquad s\ne0.
+\end{aligned}
+$$
+
+第二式使用 $e^{\ell/2}-e^{-\ell/2}=1/\sqrt2$；系数随 $s$ 的变化乘对数仍有界。该计算不先把积分端点冻结到 $1/2$。
+
+设 $r(v)=\int\beta(u)\beta(u-v)\,du$。在隔离的共振脉冲上，即 $|v|\le2$，有 $H_\epsilon(\ell+\epsilon v)=2c\,r(v)$。这个等式不对全部实 $v$ 成立；其他脉冲的正 lag 中心为 $0,a-b,2b,2a$，均与 $\ell$ 分离。由于
+
+$$
+\int r(v)\,dv=\beta_0^2,\qquad
+\int|r(v)\log|v||\,dv<\infty,\qquad
+\|H_\epsilon\|_1\le\|f_\epsilon\|_1^2=O_\beta(\epsilon),
+$$
+
+其余脉冲及连续核的贡献为 $O_\beta(\epsilon)$；共振脉冲贡献为
+
+$$
+2c\epsilon\int r(v)\mathcal L(\ell+\epsilon v)\,dv
+=\frac{\sqrt2c}{\ell}\beta_0^2\epsilon\log(1/\epsilon)
++O_\beta(\epsilon).
+$$
+
+这条直接标量估计承担非零均值情形的主项推导。所有 $O_\beta$ 都固定 $a,b,c$ 和 $\beta$；不声称对退化中心距离或变动脉冲形状统一。
+

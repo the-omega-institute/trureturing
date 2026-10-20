@@ -1,0 +1,30 @@
+**定义 31.1（按实际高度切开的完整余项）。** 假设 $T\ge5$ 以下的全部实际非平凡零点均在临界线上。对第 30 节的同一 $w$，按实际解析重数置
+
+$$
+\bar q(R)=P_T(R)+\mathcal R_T(R),
+$$
+
+$$
+\mathcal R_T(R)=2\sum_{\gamma>T}m_\rho p(z_\rho)
+\int_1^bw(u)\Phi(uRz_\rho)^2\,du,
+\qquad z_\rho=\gamma-i(\beta-1/2).
+$$
+
+$P_T$ 包含所有 $0<\gamma\le T$ 的零点；尾部包含所有更高零点，不把实际 $\beta$ 设成 $1/2$。实尺度上的完整和及余项均为实数，估计其绝对值时仍先保留解析平方再用三角不等式。
+
+令 $N_+(Y)$ 按重数计数 $0<\gamma\le Y$ 的全部零点。直接供应者是 [Trudgian, arXiv:1208.5846v2](https://arxiv.org/pdf/1208.5846v2), Corollary 1，PDF p.2：对 $Y\ge Y_0\ge e$，
+
+$$
+\left|N(Y)-\frac Y{2\pi}\log\frac Y{2\pi e}-\frac78\right|
+\le0.111\log Y+0.275\log\log Y+2.450+\frac{0.2}{Y_0}.
+$$
+
+取 $Y_0=e$，用 $\log\log Y\le\log Y$ 与 $\pi>3$，在 $Y\ge5$ 上粗化为
+
+$$
+N_+(Y)\le\left(\frac Y6+4\right)\log Y
+\le Y\log Y.
+$$
+
+原文对 $0<\gamma<Y$ 计数；从非零点高度取右极限即可保留含端点的约定。该作者稿的定理与量词已核读，不重新证明计数界，也不宣称它与出版版逐字一致。更尖锐的计数常数不是这份宽包络所需的新输入。
+

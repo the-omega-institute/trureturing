@@ -1,0 +1,26 @@
+**约定 23.2（位置报告与已有矩坐标）。** 令 $n\ge0,r\ge0$ 为整数，将 [HiddenRelations C-28.1.2、C-28.2.1][H49] 的 $N,\Sigma_N,b_i,A$ 分别记作 $n,\Gamma_n,u_i,T'$：
+
+$$
+\Gamma_n=\{I\subseteq[n]:I\text{ 不含相邻位置}\},\qquad
+u_i(I)=\mathbf1_{i\in I},\qquad
+m_{T'}(I)=\mathbf1_{T'\subseteq I}=\prod_{i\in T'}u_i(I).
+$$
+
+空积 $m_\varnothing=1$；$\Gamma_0=\{\varnothing\}$。来源律满足 $p_I\ge0,\sum_Ip_I=1$，$\mu_{T'}=\mathbb E_p m_{T'}$，特别 $\mu_\varnothing=1$。非法位置集合的共同占位恒零。阶数报告为
+
+$$
+\mathcal O_r(p)=(\mu_{T'}:T'\in\Gamma_n, |T'|\le r).
+$$
+
+它包括质量，等价于每组至多 $r$ 个位置的完整联合律：精确零一元组的事件指示按所选零位展开补事件，得到所含各阶 $m_{T'}$；反向从这些联合律取全一事件即可。非法的全一事件概率为零，并未添加非法来源。
+
+对 $n=3L$，低到高分块为 $\{1,2,3\},\ldots,\{3L-2,3L-1,3L\}$；实际时间按相反块序输入。[HiddenRelations C-28.1.4][H49] 与 [关系延拓几何定理 7.2][N49] 已证明它与定义 8.1 的零初始化、自由末接缝合法 $L$ 窗词域 $\Omega_L$ 双射。其参数是
+
+$$
+u_{3(L-j)+1}=x(\sigma_j),\quad
+u_{3(L-j)+2}=z(\sigma_j),\quad
+u_{3(L-j)+3}=y(\sigma_j),\qquad 1\le j\le L.
+$$
+
+印刷位序没有改成时间顺序。$n$ 不被三整除时，$\Gamma_n$ 仍是合法位置域，但不据此声称具有整数个完整原生窗口。
+

@@ -29,7 +29,7 @@ public sealed partial class IngestScopeTests
         var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
         Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
         var updates = IngestCommand.LedgerUpdates(before, after);
-        Assert.Equal(2, updates.Length);
+        Assert.Equal(2, updates.Count(item => !DigestionContextPointerStore.IsCanonicalPath(item.Path)));
         Assert.All(updates, static item => Assert.StartsWith(SourcePrefix("beta"), item.Path, StringComparison.Ordinal));
         var entries = BackfillInventoryLoader.Load(Decode(after)).RequireDigestionEntries();
         var parent = entries.Single(entry => entry.AtomId == betaAtom.Fingerprints.RawSha256[7..]);
@@ -38,7 +38,9 @@ public sealed partial class IngestScopeTests
         var newCasPaths = after.Entries.Where(static item => DigestionCasStore.IsCanonicalPath(item.Path))
             .Select(static item => item.Path).Except(before.Entries.Select(static item => item.Path), StringComparer.Ordinal)
             .Order(StringComparer.Ordinal).ToArray();
-        Assert.Equal(new[] { DigestionCasStore.Capture(betaAtom.RawBytes.AsSpan()).RelativePath,
-            DigestionCasStore.Capture(clausePlan.Children[0].RawBytes.AsSpan()).RelativePath }.Order().ToArray(), newCasPaths);
+        var atomCas = new[] { DigestionCasStore.Capture(betaAtom.RawBytes.AsSpan()).RelativePath,
+            DigestionCasStore.Capture(clausePlan.Children[0].RawBytes.AsSpan()).RelativePath };
+        foreach (var path in atomCas) Assert.Contains(path, newCasPaths);
+        DirectoryLedgerTestSupport.AssertContextCasReferenced(after, newCasPaths.Except(atomCas));
     }
 }

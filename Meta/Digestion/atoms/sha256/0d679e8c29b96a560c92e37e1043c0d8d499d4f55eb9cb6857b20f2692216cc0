@@ -1,0 +1,98 @@
+## 270. FIB 复形上的外加光声/热弹耦合、脉冲响应与能量涨落统计
+
+取第 (j) 层 FIB 复形 (K_j)。节点、胞腔、入射关系、接缝、端口和父子递归只给出组合支撑；嵌入空间、度量、时间、材料系数、边界和观测协议均另行外加。令 (I(x,t)) 为光能通量，(\vartheta(x,t)) 为温升，(u(x,t)) 为位移，(\varepsilon(u)) 为小应变。吸收系数 (\mu_a)、密度 (\rho)、比热 (c)、热导率 (\kappa)、弹性张量 (\mathsf C)、热膨胀张量 (\boldsymbol\alpha)、阻尼和接触参数都不是 FIB 递归的内生量。
+
+在线性小应变近似下，可取外加热弹系统
+
+$$
+\rho c\,\partial_t\vartheta
+=\nabla\!\cdot(\kappa\nabla\vartheta)+\mu_a I-h_b(\vartheta-\vartheta_b)+\xi_T,
+\qquad
+\rho\,\partial_t^2u+\mathsf D\partial_tu
+-\nabla\!\cdot\!\left[\mathsf C:\bigl(\varepsilon(u)-\boldsymbol\alpha\vartheta\bigr)\right]
+=f+\xi_u .
+\tag{270.1}
+$$
+
+若以声压 (p) 观测，快速吸收的光声源可写为
+
+$$
+\mathcal L_a p=\partial_t\!\left(\Gamma\mu_a I\right)+\xi_a,
+\tag{270.2}
+$$
+
+其中波速、衰减、色散和辐射边界包含在外加算子 (\mathcal L_a) 中。FIB 只能为离散化提供组合节点、邻接块、候选路径与端口编号，不能决定上述算子。
+
+把温度、位移和速度并入状态 (z)，给定材料和边界后写成
+
+$$
+\dot z=\mathsf A z+\mathsf Bq+\xi,
+\qquad
+ y_r=\mathsf C_rz+\eta_r .
+\tag{270.3}
+$$
+
+端口 (\ell) 到观测端口 (r) 的因果脉冲响应为
+
+$$
+ h_{r\ell}(t)=\mathbf 1_{t\ge0}\,\mathsf C_r e^{t\mathsf A}\mathsf B_\ell,
+ \qquad H_{r\ell}(\omega)=\mathsf C_r(i\omega-\mathsf A)^{-1}\mathsf B_\ell .
+\tag{270.4}
+$$
+
+因此存在一条 FIB 组合路径只表示可能的连接；非零声压、到达时间、共振峰和衰减率还需要 (\mathsf A,\mathsf B,\mathsf C) 及边界共同决定。相同组合图赋予不同材料或边界即可得到不同的传递核。
+
+吸收和热弹能量可记为
+
+$$
+E_{\mathrm{abs}}=\int\!\!\int\mu_a(x)I(x,t)\,dx\,dt,
+\qquad
+E_{\mathrm{th}}=\int\rho c\,\vartheta\,dx,
+\tag{270.5}
+$$
+
+$$
+E_{\mathrm{mech}}(t)=\frac12\int\rho|\partial_tu|^2dx
++\frac12\int\bigl(\varepsilon(u)-\boldsymbol\alpha\vartheta\bigr):\mathsf C:
+\bigl(\varepsilon(u)-\boldsymbol\alpha\vartheta\bigr)dx .
+\tag{270.6}
+$$
+
+能量交换和耗散还取决于边界通量、接触功、阻尼与本构；FIB 节点数、递归深度和路径数不能给出能量分配比例。脉冲宽度 (\tau_p)、热扩散时标 (\tau_{\mathrm{th}}=L^2\rho c/\kappa) 与弹性时标 (\tau_{\mathrm{el}}=L/c_s) 的相对次序决定冲激、准静态或中间响应；长度 (L) 和声速 (c_s) 也是外加量。
+
+若冲激事件在端口 (\ell) 带随机能量 (Q_\ell)，则单次读数满足
+
+$$
+Y_r(t)=\sum_\ell h_{r\ell}(t)Q_\ell+\eta_r(t),
+$$
+
+$$
+\mathbb E Y_r(t)=\sum_\ell h_{r\ell}(t)\mathbb E Q_\ell,
+\qquad
+\operatorname{Cov}(Y_r(t),Y_s(t'))
+=\sum_{\ell,m}h_{r\ell}(t)h_{sm}(t')\operatorname{Cov}(Q_\ell,Q_m)
++\operatorname{Cov}(\eta_r(t),\eta_s(t')).
+\tag{270.8}
+$$
+
+独立复合 Poisson 事件、单事件向量 (Q) 和强度 (\Lambda) 给出
+
+$$
+K_Y(\boldsymbol s;t)
+=\Lambda\left[\mathbb E\exp\!\left(\sum_r s_r\sum_\ell h_{r\ell}(t)Q_\ell\right)-1\right]+K_\eta(\boldsymbol s;t).
+\tag{270.9}
+$$
+
+随机强度导致 Cox 混合，脉冲间共享热源或机械模态则破坏独立复合形式。只有在线性、平衡、被动阻尼和给定温度下，才可使用外加涨落耗散关系，例如
+
+$$
+\mathbb E[\xi(t)\xi(t')^{\mathsf T}]=2k_{\mathrm B}T\,\mathsf D\,\delta(t-t').
+\tag{270.10}
+$$
+
+非平衡泵浦、温度梯度和记忆耗散不满足这一白噪声式。峰值、首达时间和极值还依赖振铃、脉冲重叠、带宽、饱和与死时间；同一沉积过程经不同探测协议可产生不同尾部。
+
+有限端口传递矩阵一般只识别输入输出等价类。不可观测或不可控的内部热弹模态可以改变材料参数而保持测量频带内的 (H(\omega)) 不变，所以端口脉冲不能唯一反演内部吸收分布或本构。取 (j\to\infty) 时还须共同指定嵌入、系数收敛、端口缩放、噪声和边界；有限方差独立脉冲可能给出中心极限，长程相关或重尾能量则可能给出非高斯稳定极限。
+
+因此，光声脉冲、热弹能量分配、涨落耗散、协方差、复合 Poisson 或稳定极限都依赖外加吸收、扩散、弹性、阻尼、边界、噪声、源统计、探测器和尺度条件。FIB ATOM 递归只提供组合节点、邻接、接缝、候选路径、端口和层级骨架，不能单独推出任何上述物理统计律。
+

@@ -1,0 +1,11 @@
+### 推论 371.4（局部盲方向也是全局距离的二阶盲方向）
+
+若 \(v\in\ker I(\theta)\)，则
+
+$$
+\mathsf H(p_\theta,p_{\theta+\varepsilon v})
+=o(|\varepsilon|).
+$$
+
+若 \(I(\theta)\) 在某邻域正定，则 Fisher 给出该概率族的局部 Riemann 度量；若有零方向，Hellinger 几何在该方向上退化，需扩大事件接口或改变来源参数化。
+

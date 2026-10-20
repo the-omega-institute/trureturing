@@ -1,0 +1,7 @@
+\{\phi\in\mathfrak T:
+A\,I\,\phi\text{ 对所有 }A\in\mathcal A\},
+\]
+对任务族 \(\Phi\subseteq\mathfrak T\) 定义共同充分访问导出
+\[
+\Phi'
+=

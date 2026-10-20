@@ -1,0 +1,30 @@
+**边界 372.4（淬火、退火与有限窗口）。** 固定环境中的条件路径律为 $P^\omega$，在该律下的极限称为淬火极限；对实际初始环境律平均的 $\overline P=\int P^\omega\Pi(d\omega)$ 称为退火律。平均必须保留整条轨迹使用同一环境，不能替换为每跳重新抽环境或先平均传播核。二阶矩有限时，
+
+$$
+\operatorname{Cov}_{\overline P}(X(t))
+=\mathbb E_\Pi\operatorname{Cov}_{P^\omega}(X(t))
++\operatorname{Cov}_\Pi\!\left(\mathbb E_{P^\omega}X(t)\right).
+\tag{372.6}
+$$
+
+平稳联合律下的式（372.4）不自动给出 $\Pi$ 几乎处处的淬火结论。一个充分接口是对几乎每个环境构造
+
+$$
+\sum_{k=0}^{n-1}\zeta_k=M_n^\omega+A_n^\omega,
+$$
+
+其中 $M_n^\omega$ 为条件鞅，并对每个有限 $T$ 验证
+
+$$
+\sup_{k\le\lfloor nT\rfloor}\frac{\|A_k^\omega\|}{\sqrt n}
+\xrightarrow{P^\omega}0,
+\qquad
+\frac{\langle M^\omega\rangle_{\lfloor nt\rfloor}}n
+\xrightarrow{P^\omega}t\Gamma_\zeta,
+\tag{372.7}
+$$
+
+同时具备条件林德伯格条件、相应时钟大数律和未完成等待的可忽略性。确定极限律的淬火弱收敛可对有界连续测试函数平均得到退火弱收敛；反向推断不成立，二阶矩收敛还需一致可积性。
+
+固定有限支撑上，有界坐标的位移始终有界。用递归层的有限窗口逼近无穷输运时，必须给出窗口、空间与时间缩放的共同次序，并控制触及人工边界的概率。有限窗口中的均方位移拟合不能替代尺度极限。
+

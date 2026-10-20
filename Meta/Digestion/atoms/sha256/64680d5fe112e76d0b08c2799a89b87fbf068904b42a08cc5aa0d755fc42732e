@@ -1,0 +1,61 @@
+## 2. 已提交的二阶算术 jet 与实际反射奇性
+
+沿用本卷 (AC1) 的真实算术符号 s_c(n)，以及
+
+\[
+A_{nm}=\frac{s_c(n)-s_c(m)}{\pi(m-n)}\quad(n\ne m),\qquad |s_c(n)|\le B_c.
+\]
+
+从
+
+\[
+\frac1{m-n}=\frac1m+\frac n{m^2}+\frac{n^2}{m^2(m-n)}
+\]
+
+得到已有 `WeilArithmeticCouplingSecondJet` 主定理：对任意复系数及 |m|>N，
+
+\[
+|d_m(v)-J_m(v)|\le
+\frac{2B_cN^2}{\pi|m|^2(|m|-N)}\sum_{|n|\le N}|v_n|,
+\tag{PJ1}
+\]
+
+其中
+
+\[
+J_m(v)=\frac{B_0-s_c(m)A_0}{\pi m}
++\frac{B_1-s_c(m)A_1}{\pi m^2},
+\]
+
+\[
+A_0=\sum v_n,\quad B_0=\sum s_c(n)v_n,\quad
+A_1=\sum nv_n,\quad B_1=\sum n s_c(n)v_n.
+\]
+
+没有将任何边界矩设为零。新增 `WeilArithmeticCouplingParityGram.arithmetic_boundary_symbol_neg` 从实际 pole、Gamma 级数和有限 von Mangoldt 正弦项逐项推出
+
+\[
+s_c(-m)=-s_c(m).
+\tag{PJ2}
+\]
+
+在 c>=2 的算术范围，Gamma 级数的绝对收敛已由前置真源独立证明。
+
+令
+
+\[
+X_m=-s_c(m)A_0+B_1/m,\qquad Y_m=B_0-s_c(m)A_1/m.
+\]
+
+则 J_m=(X_m+Y_m)/(pi*m)、J_-m=(X_m-Y_m)/(pi*m)。新增 Lean 主定理 `arithmetic_second_jet_pair_energy` 对任意复向量证明
+
+\[
+\boxed{
+|J_m|^2+|J_{-m}|^2
+=\frac2{\pi^2m^2}(|X_m|^2+|Y_m|^2).
+}
+\tag{PJ3}
+\]
+
+这是复内积空间 parallelogram identity 在既有真实算术 jet 上的应用。系数无需为偶或实，有限索引集无需反射闭合。
+

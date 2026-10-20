@@ -1,0 +1,10 @@
+也就是说：
+
+* Solenoid 位于紧致的“相位—隐藏地址”一侧；
+* 黄金锥位于其角色群经过实嵌入后的“扩张—收缩”一侧；
+* 二者中间真正的变换是：
+
+  $$
+  \text{Pontryagin duality}+\text{Minkowski embedding}.
+  $$
+

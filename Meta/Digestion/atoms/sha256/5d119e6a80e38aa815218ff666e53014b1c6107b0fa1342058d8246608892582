@@ -1,0 +1,41 @@
+**Definition 51.1 (explicit native coefficient).** Let $\mathcal L$ be
+the positive height Q operator on $L^2(\pi)$, unitarily equivalent to
+$A$ under $f\mapsto\phi f$. Thus
+
+$$
+\mathcal L f=-\frac{\varepsilon^2}{\phi^2}(\phi^2f')',\qquad
+D(\mathcal L)=\{f:\phi f\in H^2(I)\cap H_0^1(I)\}.
+\tag{51.1}
+$$
+
+Use this unitary domain, not a new reflecting boundary for the original
+killed process. On centered functions its inverse
+$\mathcal R=(\mathcal L|_{1^\perp})^{-1}$ has norm at most $1/\gamma$.
+For every real vector $e$ set
+
+$$
+\begin{aligned}
+a_e(k)&=
+\frac{(k-2\kappa)[e_1(s_\kappa-k)-e_2 k]
+                   +2e_3(s_\kappa-k)}{2H(k-\alpha_\kappa)},\\
+m_e&=\int_I a_e^2\,d\pi,
+& f_e&=a_e^2-m_e,\\
+F_e(k)&=\int_l^k \phi(y)^2f_e(y)dy,
+& \mathcal B_\kappa(e)&=
+ \frac1{\varepsilon^2}\int_l^u\frac{F_e(k)^2}{\phi(k)^2}dk.
+\end{aligned}
+\tag{51.2}
+$$
+
+This is an explicit scalar quadrature in the original rational
+coefficients and the fixed sine weight, with no unknown corrector.
+It is homogeneous of degree four in $e$. Generic diffusivity-covariance,
+inverse-generator and quadrature formulas, and formal Gaussian
+corrections, are already present in Alexandre et al.,
+[*Non-Gaussian diffusion near surfaces*, arXiv:2207.01880v3,
+Supplement S1–S16 and S25–S39](https://arxiv.org/html/2207.01880v3).
+Their transverse equilibrium model is a comparison, not an identification
+of its boundary law with the original two-Dirichlet source. The native
+coefficient, exhaustive vanishing set and uniform estimates below use
+precisely (51.1)–(51.2).
+

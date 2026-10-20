@@ -1,0 +1,166 @@
+**Theorem 56.1 (the rational classification, including folded failures).**
+Fix a resolved real frequency $\eta=(p,q,r)$ and put
+$f(k)=\eta\cdot c_\kappa(k)$. There are unique real numbers
+$A_\eta,D_\eta,C_\eta$ such that
+
+$$
+f(k)=A_\eta(k-\alpha_\kappa)+D_\eta
+                      +\frac{C_\eta}{k-\alpha_\kappa},
+\qquad A_\eta=-\frac{p+q}{2H},
+\tag{56.1}
+$$
+
+and the residue is
+
+$$
+C_\eta=\frac{(H+\kappa)(H-\kappa)}{2H^3}
+ \bigl(2Hr-\kappa(H-\kappa)p+\kappa^2q\bigr).
+\tag{56.2}
+$$
+
+Under the actual unknown-height source (55.1), the complete real path
+of $Y=\eta\cdot q$ identifies height at every positive time, in the
+sense of Theorem 55.2, exactly in the following cases:
+
+- $C_\eta\ne0$;
+- $C_\eta=0$, $p+q\ne0$, and
+  $r_*:=\kappa+Hp/(p+q)\notin I$.
+
+The other cases have positive endpoint conditional uncertainty at
+every fixed $t>0$:
+
+$$
+\mathbf E_{\mathbf Q_\kappa}
+   \operatorname{Var}(K_t\mid\mathcal H_t^\eta)>0.
+\tag{56.3}
+$$
+
+More precisely, $C_\eta=0$, $p+q=0$ is exactly the autonomous line
+(50.1), on which the entire height and observation paths are
+independent. If $C_\eta=0$, $p+q\ne0$ and $r_*\in I$, the coefficient
+is a nonconstant multiple of $k-r_*$; it has an actual reflection
+ambiguity, even with continuous observation. The boundary cases
+$r_*=l,u$ identify height. The classification holds for both signs
+and for the resolved comparison at $\kappa=0$.
+
+Proof. Division of (50.4) gives (56.1)–(56.2). On the residue-zero
+plane it simplifies further to
+
+$$
+f(k)=\frac{p(H+\kappa)+\kappa q-(p+q)k}{2H}.
+\tag{56.4}
+$$
+
+If $p+q=0$, the residue equation forces $r=\kappa p/2$ and
+$f=p/2$. This is precisely (50.1). Otherwise (56.4) is
+$-(p+q)(k-r_*)/(2H)$. Its square is one-to-one on $I$ exactly when
+$r_*\notin I$. The left derivative of $[Y]/2$ then recovers $f(K)^2$
+and its inverse recovers height, including when the zero is an endpoint.
+
+It remains to prove identification for every nonzero residue, rather
+than assume that the first covariance is injective. Put
+$g=f^2$. The path $Y$ gives the continuous path $g(K)$ at all positive
+times by the same left derivative. Its value at zero is a limit from
+positive times on any nontrivial prefix. Itô's formula on compact
+height intervals and the constant height diffusion coefficient give
+
+$$
+[g(K)]_t=\sigma^2\int_0^t g'(K_s)^2ds.
+\tag{56.5}
+$$
+
+Thus nested variation gives the pair $(g(K_s),g'(K_s)^2)$ causally
+at every $s>0$. The height drift, although unbounded at the two
+endpoints, is bounded on every compact interval visited up to a
+finite time, so the localization used for (56.5) is legitimate.
+
+For this native rational function the pair is injective except at
+finitely many heights. Here is an explicit algebraic proof. Write
+$y=k-\alpha>0$ and $f=Ay+D+C/y$, with $C\ne0$. Exclude the finitely
+many zeros of $f$. Equality of the two pairs at $y,z$ implies
+$f(y)=\pm f(z)$ and $f'(y)=\pm f'(z)$. Equal derivatives force $y=z$,
+since $f'(y)=A-C/y^2$. Opposite derivatives give
+
+$$
+2A=C(y^{-2}+z^{-2}).
+\tag{56.6}
+$$
+
+If in addition $f(y)=f(z)$ and $y\ne z$, subtraction gives
+$A=C/(yz)$, which combined with (56.6) gives $(y-z)^2=0$,
+a contradiction. In the remaining case $f(y)=-f(z)$, put
+$U=1/y,V=1/z,S=U+V$. Equation (56.6) says
+$U^2+V^2=2A/C$. Multiplying the equation for opposite values by
+$UV$ and substituting $UV=(S^2-2A/C)/2$ gives
+
+$$
+\frac C2 S^3+D(S^2-2A/C)=0.
+\tag{56.7}
+$$
+
+This is a nonzero cubic, and each of its finitely many roots fixes
+$UV$ and hence an unordered pair $U,V$. If (56.6) has no positive
+solutions there are no such pairs. Consequently the exceptional
+heights form a finite set $E$. Outside $E$ the pair has a Borel
+inverse, obtained, for example, by selecting the unique solution
+of its rational equations on $I\setminus E$.
+
+For each positive rational $s$, stationarity gives
+$\mathbf Q_\kappa(K_s\in E)=0$. On the complement of one null set,
+all positive rational heights are therefore recovered by this inverse.
+Their limits along rationals below $t$ recover $K_t$ simultaneously
+for every $t>0$ by continuity; rational limits towards zero recover
+$K_0$ from any positive prefix. This uses no future derivative at $t$.
+It also proves why noninjectivity of the first covariance alone would
+not establish a negative case.
+
+For the negative folded case take $r=r_*\in I$ and a closed symmetric
+interval $J=[r-\delta,r+\delta]\Subset I$. Reflect a height prefix by
+$\mathcal R K_s=2r-K_s$ and replace $W^2$ by $-W^2$. Since
+$f(2r-k)=-f(k)$, this transformation leaves the entire observed
+$Y$ prefix unchanged, including its known initial value.
+
+This is an ambiguity in the actual source, not in an enlarged model.
+Indeed on paths staying in $J$ the stationary Q height law has density
+
+$$
+e^{\lambda t}\phi(K_0)\phi(K_t)
+\tag{56.8}
+$$
+
+relative to $\int_J dk\,\mathbb P_k^{\rm BM}$ restricted to those
+paths, where the Brownian variance rate is $\sigma^2$.
+Formula (56.8) is exactly $\pi(dk)$ times the Doob factor (37.2).
+The reference measure is reflection invariant. The density ratio
+of the reflected Q restriction to the original one is therefore
+
+$$
+\frac{\phi(2r-K_0)\phi(2r-K_t)}
+     {\phi(K_0)\phi(K_t)},
+\tag{56.9}
+$$
+
+which is bounded above and below by positive constants on $J$.
+The independent Brownian phase driver is invariant under sign reversal.
+Choose a terminal subinterval $J_+\Subset(r,r+\delta)$ and its
+reflection $J_-$. The event that the height stays in $J$ and ends in
+$J_+$ has positive probability, by the positive killed Brownian
+kernel inside $J$ and (56.8). Its reflected counterpart ends in
+$J_-$, has the identical observation under the transformation, and
+has an equivalent observation measure by (56.9).
+
+Disintegrating these two subprobabilities with respect to the full
+observation prefix shows that, on a set of observation values of
+positive probability, the actual posterior puts positive mass on
+both $J_+$ and $J_-$. Indeed let $\nu_\pm$ be the observation
+submeasures of the two events and let $\nu_Y$ be the full observation
+probability. Equivalence gives a positive-$\nu_Y$ set on which both
+$w_\pm=d\nu_\pm/d\nu_Y$ are positive. The actual posterior masses
+of $J_\pm$ are at least $w_\pm$. If $d>0$ is their separation,
+the posterior-independent-copy formula for variance gives
+$\operatorname{Var}(K_t\mid\mathcal H_t^\eta)\ge d^2w_+w_->0$
+on that set. Integration proves (56.3).
+If $f$ is constant, the observation is a multiple of the independent
+$W^2$ and the posterior is exactly $\pi$; this includes the
+identically zero observation. These cases exhaust (56.1). $\square$
+

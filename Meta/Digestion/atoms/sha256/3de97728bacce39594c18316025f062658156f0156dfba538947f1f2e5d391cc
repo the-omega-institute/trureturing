@@ -1,0 +1,9 @@
+**Definition 39.1 (Uniform conditional error).** Retain the source, advice, common tape, finite records and events of Definition 38.1. Fix one $\delta\in[0,1]$ and replace (38.2) by
+
+$$
+e_y\le\delta h_y\qquad(y\in X).
+\tag{39.1}
+$$
+
+Here $h_y=\mu(H_y)$ and $e_y=\mu(F_y)$. This is the sourcewise conditional false-output bound $\mu(F_y\mid H_y)\le\delta$ whenever $h_y>0$, with the zero-proposal case read as $e_y=0$ and no conditional probability assigned. Put $d_y=\mu(D_y)$ for literal nontermination. Unknown, abort and $+\infty$ remain finite terminal outcomes outside $H_y$ and are not counted as $D_y$. Conditioning an error guarantee on selection is standard; see [Fithian, Sun and Taylor, *Optimal Inference After Model Selection*, arXiv:1410.2597v4, §§2.2 and 2.4, equations (9) and (14)](https://arxiv.org/html/1410.2597v4). Here the selected event is finite output in Definition 38.1; no statistical sampling model from that reference is assumed.
+

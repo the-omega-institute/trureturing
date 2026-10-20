@@ -1,0 +1,71 @@
+### 55.2 Minimal incompatible target fibers wholly inside the unit history
+
+<a id="TM55-T2"></a>
+**Theorem TM55.2 (unit target-fiber minimal obstructions).** For every integer $k\ge2$, every $H$ with $h\ge4k$, and every cap residue, set
+
+$$
+a=h-2k,\qquad b=h-k,\qquad
+S_{k,h}=\{(a+i,a+i+1),(a+i,b+i):0\le i<k\},
+\tag{TM.5508}
+$$
+
+and let $\mathcal F_{k,H}$ be the full preimage in $U_H$ of the $2k$ targets $\tau_h(z,w)$ indexed by $S_{k,h}$. All are distinct genuine original tag-1 targets in the same unit-window fiber. No common-label controller recovers them under arbitrary original finite protocols. Every nonempty proper target subfamily, including the entire actual fibers of its selected targets, has a literal effective one-label controller. Moreover
+
+$$
+A(\mathcal F_{k,H};H)=2.
+\tag{TM.5509}
+$$
+
+Minimality means deletion of an entire target fiber. Deleting one tree while leaving another realization of its target does not remove this obstruction.
+
+**Proof.** First verify actual membership. We have $a\ge2k\ge4$, $a\ge h/2$, and $a\le z\le b-1$. The listed next coordinates obey
+
+$$
+z+1\le w\le h-1,\qquad w\le2z-1,\qquad z+w\ge2a+1>h.
+\tag{TM.5510}
+$$
+
+For the high point in row $i$, the inequality $w\le2z-1$ follows from $2z-w=h-3k+i\ge k+i\ge2$; for the low point it is immediate. Thus $r=2z-w\ge1$, $s=w-z\ge1$, and the witness (TM.5505) belongs to $U_H$ and has $n\le H<m+n$ for every $\delta$. The two points in each row have different $w$ since $k\ge2$, and different rows have different $z$. All $2k$ original targets are distinct.
+
+Suppose a successful deterministic controller is initialized with one common label. Choose any one actual realization of every listed target. Follow the two row-0 sources $(a,a+1)$ and $(a,b)$. Before the first $\rho$ attempt their current sizes are both $4a$ plus the same accepted contribution, and their initial $E_0$ is 1. A context on either side has the same whole guard on both; reads give the same ordered $L_0\,1\,R_0$. Induction over actions gives equal complete records, including rejected macros, every read and every context identity. They cannot stop during this prefix with two different correct outputs. Pointwise finite stopping rules out a path that never reaches a first $\rho$. Hence a finite common first-$\rho$ prefix exists.
+
+Let $U,V$ be its final accepted contributions and define the mathematical cutoff
+
+$$
+c_*=(H-V)/4.
+\tag{TM.5511}
+$$
+
+It need not be an integer and is not a consumer observation. If $c_*<a+1$, both row-0 first replacements reject. They have equal past records and current sizes $4a+U$, equal current reads, and both are currently tag 0 since their next candidates exceed $H$. TM30.2/TM38.1 then gives a permanent collision of different original targets. Successful recovery consequently requires $c_*\ge a+1$.
+
+We need the same actual prefix on later rows, rather than separately feasible prefixes. Every listed source with $a\le z\le c_*$ follows this complete prefix. Prove this by induction over its actions. Assuming the preceding records agree, deterministic control chooses the same action and context. For any context accepted on row 0, let $U'$ be the cumulative current contribution after that acceptance. Positivity and $d_0\le d_1$ give $U'\le V$, so its candidate on the later source satisfies
+
+$$
+4z+U'\le4c_*+V=H.
+\tag{TM.5512}
+$$
+
+It accepts there too. Any context rejected on row 0 has candidate size $4a$ plus the same previous contribution and the same context length greater than $H$; replacing $a$ by $z\ge a$ preserves rejection. Reads agree as $L_0\,1\,R_0$, with the actual left and right order. Read does not change source or contributions. This completes the induction, covering arbitrary positive mixed contexts on either side and every intervening read or rejected attempt. It uses no restriction on future accepted depth or memory.
+
+Now if $c_*\ge a+i$, both sources in row $i$ reach this same first replacement instruction. Their next coordinates are $a+i+1$ and $b+i$, with the first smaller than the second. If $c_*<a+i+1$ they both reject, giving the same row collision as above. Starting with $c_*\ge a+1$ and applying this implication through rows $1,\ldots,k-1$ forces
+
+$$
+c_*\ge a+k=b.
+\tag{TM.5513}
+$$
+
+The high point $(a,b)$ and the last low point $(b-1,b)$ therefore follow the same complete prefix and both accept the first $\rho$. Their new current sizes are both $4b+V$, and their new reads are both $L_1\,1\,R_1$, because both original $E_1$ values are 1. Their next sizes are $4(z+b)+U+V>H$ by original tag 1. They have equal current tag-0 $q_H$ and equal acquired records, but different original targets. The same permanent-collision lemma excludes every continuation. This contradiction proves the arbitrary-policy impossibility.
+
+For minimality, delete either target in a public row $j$, $0\le j<k$, and set
+
+$$
+c_j=a+j,\qquad P_j=H-4c_j>0.
+\tag{TM.5514}
+$$
+
+There is now one survivor in row $j$. Attempt the whole right macro $\alpha^{P_j}$, with a fixed ordered bracketing. It accepts exactly when $z\le c_j$, that is, $i\le j$. On acceptance attempt one $\rho$: its guard is $4w+P_j\le H$, exactly $w\le c_j$. This selects precisely the low points in rows $i<j$, whose $w=a+i+1$ are all distinct. The rejecting portion contains the high point in each earlier row and the unique survivor in row $j$, one target in each distinct $z$ row. In either portion apply $\operatorname{Size}_H$ to the actual entry source. On replacement acceptance it returns $M=4w+P_j$; on rejection it returns $M=4z+P_j$. Recover the indicated coordinate by subtracting the known $P_j$ and dividing by four, then output the corresponding original target from the public deletion dictionary. These dictionaries are injective in the acquired coordinate within each actual guard branch.
+
+On initial macro rejection the original source is unchanged, with $i>j$. Attempt $\rho$, which accepts since every original point has $w\le h$. The only repeated column in the full set is $b$, shared by $(a,b)$ and $(b-1,b)$; row 0 is absent from this tail. All tail columns are therefore distinct. Terminal acquisition returns $4w$ and the tail dictionary gives the original target. Every terminal entry is an actual accepted current source of size in $[1,H]$. Equalities accept, rejected whole macros insert no material, and the protocol has no `Read`, at most one accepted replacement and at most $\lceil\log_2H\rceil+3$ source calls including terminal rejection. Restricting one such controller proves recovery of every smaller nonempty proper target subfamily.
+
+For two labels on the full family, give label 1 exactly to the fiber of $(a,b)$ and output that public original target directly. Give label 2 to every other target fiber. Their columns are distinct, so immediate $\rho$ followed by $\operatorname{Size}_H$ returns $4w$ and identifies their original target. This supplier is uniformly computable from authentic original-target information; it is a conditional supply assertion. The one-label impossibility proves necessity of two. The witnesses cover each target, and the labels and decoders agree on its entire original-target fiber. TM47.2 with TM30.2 therefore lifts every sufficient controller to every qualifying word and ordered bracketing; the impossible representative selection could also have been any such realization. $\square$
+

@@ -1,0 +1,14 @@
+## Lean 锚点 10.1
+
+仓库已有有限预测完成、未来 congruence、最小可观测代数等定理。本文把它们统一解释为：
+
+\[
+\boxed{
+\text{memory}
+=
+\text{the coarsest refinement that kills all future carry}.
+}
+\]
+
+---
+

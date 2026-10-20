@@ -1,0 +1,36 @@
+**命题 18.14（明确参考与明确效应的两正交分量）。** 另供独立参考
+
+$$
+r_1=\frac{f_0+f_1}{\sqrt2},\quad\zeta_1=|r_1\rangle\langle r_1|,
+\qquad
+\chi_\phi=\frac{e_2\otimes f_1+e^{i\phi}e_4\otimes f_0}{\sqrt2},
+\quad E_\phi=|\chi_\phi\rangle\langle\chi_\phi|.
+$$
+
+则 $E_\phi$ 是守恒效应，对同一系统态和该参考的精确概率为
+
+$$
+p_\phi=\operatorname{tr}[E_\phi(\rho_s\otimes\zeta_1)]
+=\frac{Z+\kappa+2\operatorname{Re}(e^{i\phi}s)}4.
+$$
+
+证明。$\chi_\phi$ 的两分量正交且总电荷同为二，故范数一、投影正且不超过恒等，
+并与总电荷对易。两个对角贡献是 $Z/4,\kappa/4$；交叉贡献是
+$e^{i\phi}s/4$ 和 $e^{-i\phi}\overline s/4$，相加即得公式。
+例如固定 $p_j=1/5$，同一 $\zeta_1,E_0$ 在 $\rho_0,\rho_{1/10}$ 上给
+$1/10,3/20$；同一 $\zeta_1,E_{\pi/2}$ 在 $\rho_0,\rho_{i/10}$ 上给
+$1/10,1/20$。这些比较的态均由定理 18.3 实现。
+它们是不同统计概率，不是单次必然区分。证毕。
+
+一个固定 $\phi$ 只读出一条实线性分量。
+若另外供应已知 $Z,\kappa$、两个校准相位 $0,\pi/2$、新鲜系统副本、
+各次独立准备的参考和足够重复试次，则总体概率可条件性反解
+
+$$
+\operatorname{Re}s=2p_0-\frac{Z+\kappa}2,\qquad
+\operatorname{Im}s=\frac{Z+\kappa}2-2p_{\pi/2},\qquad M=2|s|.
+$$
+
+有限试次只给统计估计，不保证未知连续参数的精确取得。
+这些等式也不把非线性模 $|s|$ 变成固定效应的单次输出，不提供全态层析或纯度认证。
+

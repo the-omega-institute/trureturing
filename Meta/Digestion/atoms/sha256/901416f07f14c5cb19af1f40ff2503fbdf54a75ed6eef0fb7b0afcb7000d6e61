@@ -1,0 +1,101 @@
+## 245. FIB 网络上的外加 DNA/高分子拓扑、超螺旋松弛与随机构象统计
+
+固定一族 FIB 图 \(G_j=(V_j,E_j)\)。顶点和边可承载一条有序 DNA 链的序列位置、接头或粗粒化路径；FIB 递归只给出组合支撑、邻接、路径和层级。把抽象路径变成有厚度的三维链还需要外加嵌入
+
+$$
+\iota_j:|G_j|\longrightarrow\mathbb R^3,
+\qquad \mathbf r:[0,L_j]\longrightarrow\mathbb R^3,
+\tag{245.1}
+$$
+
+以及边长、节点体积、链的闭合/开口边界、双链材料标架、自避让规则、溶剂、盐浓度、温度和外力。递归层数或路径长度本身不定义欧氏距离、曲率、扭转、交叉的上/下关系，也不决定一条闭合路径属于哪个结或链环拓扑扇区。
+
+对闭合双链，令 \(\mathbf d_1,\mathbf d_2,\mathbf d_3=\mathbf t\) 为材料标架，\(\boldsymbol\Omega=(\Omega_1,\Omega_2,\Omega_3)\) 为 Darboux 应变。拓扑扇区可记为 \(\mathcal T=(K,Lk,\text{边界配对})\)，其中 \(K\) 是结型或链环型，\(Lk\) 是链接数。扭转数和弯曲绕数满足
+
+$$
+\operatorname{Tw}=\frac1{2\pi}\int_0^{L_j}\Omega_3(s)\,\mathrm ds,
+\qquad
+Lk=\operatorname{Tw}+\operatorname{Wr}(\mathbf r).
+\tag{245.2}
+$$
+
+无链穿越的连续变形保持 \(K\) 与 \(Lk\)；固定 \(Lk\) 时扭转可以转化为弯曲绕数，因而机械超螺旋能够松弛而拓扑整数不变。端点可旋转的线性链没有给定的 \(Lk\)，必须另加端点约束或参考帧。FIB 抽象边不声明自交是否允许，故既不能推出拓扑整数守恒，也不能推出链穿越必然发生。
+
+在给定拓扑扇区内，一个外加粗粒化弹性能量可以写成
+
+$$
+E_{j,\mathcal T}[\mathbf r,\boldsymbol\Omega]
+=\frac12\int_0^{L_j}\mathbf u(s)^{\mathsf T}\mathsf K_j(s)\mathbf u(s)\,\mathrm ds
++E_{\rm ev}+E_{\rm el}+E_{\rm conf},
+\qquad
+\mathbf u=(\Omega_1,\Omega_2,\Omega_3-\Omega_0)^{\mathsf T}.
+\tag{245.3}
+$$
+
+为显出扭转—弯曲耦合，可在各向同性近似下取
+
+$$
+E_{\rm tb}=\frac12\int_0^{L_j}
+\left[A(\Omega_1^2+\Omega_2^2)+C\,\delta\Omega_3^2
++2G\,\Omega_2\delta\Omega_3\right]\mathrm ds,
+\qquad \delta\Omega_3=\Omega_3-\Omega_0.
+\tag{245.4}
+$$
+
+若 \(A,C>0\) 且 \(AC>G^2\)，消去弯曲变量得到有效扭转刚度 \(C_{\rm eff}=C-G^2/A\)。各向异性、非均匀序列、接触和有限边界会使这一消元变成非局部响应，不能把 \(C_{\rm eff}\) 当作 FIB 递归的普适常数。
+
+在外加温度、轴向力 \(\mathbf F\) 和扭矩 \(\tau\) 下，固定扇区的配分函数为
+
+$$
+Z_{j,\mathcal T}(\beta,\mathbf F,\tau)
+=\int_{\mathcal C_{j,\mathcal T}}\!\mathcal Dq\,
+\exp\!\left[-\beta\left(E_{j,\mathcal T}[q]
+-\mathbf F\!\cdot\!\mathbf R[q]-2\pi\tau Lk[q]\right)\right],
+\qquad \beta=(k_{\rm B}T)^{-1}.
+\tag{245.5}
+$$
+
+闭环固定 \(Lk\) 时应在单一拓扑扇区内取条件配分；允许链环交换或拓扑酶作用时，才可对不同 \(Lk\) 求和。超螺旋密度 \(\sigma=(Lk-Lk_0)/Lk_0\) 需要外加参考数 \(Lk_0\)。plectoneme、扭矩平台或屈曲转变取决于刚度、力、盐、链长、排斥势及扇区熵的联合竞争。
+
+拓扑保持的过阻尼构象动力学可抽象为
+
+$$
+\mathrm dq_t=\left[-\mathsf M(q_t)\nabla E_{j,\mathcal T}(q_t)
++k_{\rm B}T\,\nabla\!\cdot\!\mathsf M(q_t)\right]\mathrm dt
++\sqrt{2k_{\rm B}T\mathsf M(q_t)}\,\mathrm dW_t,
+\tag{245.6}
+$$
+
+其中摩擦/水动力迁移率、噪声解释和碰撞反射规则须外加；该扩散只能在同一 \(\mathcal T\) 内移动。若拓扑酶或受控断链允许链穿越，则扇区概率满足
+
+$$
+\dot p_{\mathcal T}=\sum_{\mathcal T'}\left(\lambda_{\mathcal T'\to\mathcal T}p_{\mathcal T'}
+-\lambda_{\mathcal T\to\mathcal T'}p_{\mathcal T}\right).
+\tag{245.7}
+$$
+
+在给定扭矩且满足详细平衡时，跃迁率还需满足
+
+$$
+\frac{\lambda_{\mathcal T\to\mathcal T'}}{\lambda_{\mathcal T'\to\mathcal T}}
+=\exp\!\left[-\beta\left(\Delta E-2\pi\tau\Delta Lk\right)\right],
+\tag{245.8}
+$$
+
+但势垒、催化位点、断链重接顺序和速率前因子均不由该比值或 FIB 图确定。扭矩释放后的松弛既可能是固定 \(Lk\) 下 \(\operatorname{Tw}\) 与 \(\operatorname{Wr}\) 的连续重分配，也可能是拓扑酶导致的离散跳跃。松弛时间的分布依赖水动力阻力、构象能垒、扇区速率、初始扇区及观测时间窗。
+
+若 \(O(q)\) 是端到端距离、回转半径、延伸量、绕数、结型或接触数，则在外加扇区权重 \(w_{j,\mathcal T}\) 下
+
+$$
+\Pr_j\{O\in B\}
+=\frac{\displaystyle\sum_{\mathcal T}w_{j,\mathcal T}
+\int_{\mathcal C_{j,\mathcal T}}\!\mathbf 1_{\{O(q)\in B\}}
+ e^{-\beta E_{j,\mathcal T}[q]}\,\mathcal Dq}
+{\displaystyle\sum_{\mathcal T}w_{j,\mathcal T}Z_{j,\mathcal T}}.
+\tag{245.9}
+$$
+
+同一 \(Lk\) 可对应多种 \(K\)、\(\operatorname{Tw}\) 与 \(\operatorname{Wr}\) 分配，同一延伸量也可来自不同结型和扭曲链。若只记录二维投影、总延伸和单个扭矩读数，隐藏的过/下关系与材料扭转会被观测映射合并；不同三维嵌入、刚度和扇区权重可以给出相同边缘分布而具有不同结型和链穿越率。
+
+因此，FIB ATOM 递归在 DNA/高分子拓扑问题中只提供组合骨架、合法路径、接缝和层级候选；三维嵌入、闭合与端点边界、自避让和链穿越规则、材料刚度、扭转—弯曲耦合、温度、盐、力矩、水动力、拓扑酶速率、初态、系综、观测投影和极限次序均须外加。链接数守恒、扭转—绕数转换、超螺旋松弛时间、结型概率、plectoneme 统计和随机形态联合律，只有在这些外加条件明确后才是模型结论。
+

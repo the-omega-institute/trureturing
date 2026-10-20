@@ -100,7 +100,7 @@ public sealed partial class IngestRobustTests
             sourceScoped ? Arguments("alpha") : Arguments("alpha", "beta"));
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        DirectoryLedgerTestSupport.AssertContextOnlyAdditions(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         AssertSummary(
             result,
             residualOpenAdded: 0,
@@ -142,7 +142,7 @@ public sealed partial class IngestRobustTests
             sourceScoped ? Arguments("alpha") : Arguments("alpha", "beta"));
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        DirectoryLedgerTestSupport.AssertContextOnlyAdditions(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         AssertSummary(result, residualOpenAdded: 0, skippedExisting: sourceScoped ? 1 : 2);
     }
 
@@ -162,7 +162,7 @@ public sealed partial class IngestRobustTests
             sourceScoped ? Arguments("alpha") : Arguments("alpha", "beta"));
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        DirectoryLedgerTestSupport.AssertContextOnlyAdditions(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         var source = BackfillInventoryLoader.LoadRoot(temporary.Path)
             .RequireDigestionSources()
             .Single(static candidate => candidate.SourceId == "alpha");

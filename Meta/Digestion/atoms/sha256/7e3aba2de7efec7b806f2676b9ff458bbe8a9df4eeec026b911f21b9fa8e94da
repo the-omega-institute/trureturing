@@ -1,0 +1,49 @@
+**定理 42.2（加权预解式与广义谱）。** \(\mathsf T_v\) 是 \(L^2(v\,dy)\) 上的紧正自伴算子。其逆算子在相应定义域上为
+\[
+A_v=-D\,v^{-1}\frac{d^2}{dx^2},
+\qquad
+f'(0)=0,\quad f(1)=0.
+\]
+因此存在简单离散谱
+\[
+0<\lambda_0(v)<\lambda_1(v)<\cdots,\qquad
+\lambda_n(v)\to\infty,
+\]
+其特征函数满足
+\[
+-D\psi_n''=\lambda_n(v)v\psi_n,\qquad
+\psi_n'(0)=0,\quad \psi_n(1)=0,
+\]
+并在 \(L^2(v\,dx)\) 中构成完备系。对任意 \(s\ge0\)，函数
+\[
+h_{v,s}(x)=\frac{c_v(s,x)}{c_v(s,1)}
+\]
+是方程
+\[
+D c_v''=s\,v\,c_v,\qquad c_v(s,0)=1,\quad
+\partial_xc_v(s,0)=0
+\]
+所确定的唯一解，并满足
+\[
+h_{v,s}+s\mathsf T_vh_{v,s}=1,\qquad
+D h_{v,s}''=s\,v\,h_{v,s},\quad
+h_{v,s}'(0)=0,\quad h_{v,s}(1)=1.
+\]
+当 \(v\equiv1\) 时，\(\lambda_n(v)=D(n+\tfrac12)^2\pi^2\)，且
+\(h_{v,s}(x)=\cosh(x\sqrt{s/D})/\cosh\sqrt{s/D}\)。
+
+**证明。** 对 \(f,g\in H^1([0,1])\) 且 \(f(1)=g(1)=0\)，闭二次型
+\[
+\mathfrak a(f,g)=D\int_0^1 f'(x)g'(x)\,dx
+\]
+在 \(L^2(v\,dx)\) 上给出正自伴算子；一维分离边界条件使特征值简单，紧嵌入给出离散谱。对 \(u=\mathsf T_vf\)，核的二阶分布导数满足
+\[
+-Du''=vf,\qquad u'(0)=0,\quad u(1)=0,
+\]
+所以 \(A_v\mathsf T_v=I\) 且 \(\mathsf T_vA_v=I\) 在相应定义域上成立。有限链的 Feynman–Kac 首步方程在缩放后为
+\[
+h_{j,v,s}+\gamma_j(s)T_{j,v}h_{j,v,s}=1,\qquad
+\gamma_j(s)=\frac{e^{s\epsilon_j}-1}{\epsilon_j}.
+\]
+离散核的一致收敛和 \(v\) 的一致连续性给出 \(T_{j,v}\to \mathsf T_v\)，从而得到积分方程和其等价的边值问题。初值与边界条件唯一确定 \(c_v\)，故整列收敛到 \(h_{v,s}\)。恒等速度时直接解常系数方程即得余弦谱和双曲余弦核。$\square$
+

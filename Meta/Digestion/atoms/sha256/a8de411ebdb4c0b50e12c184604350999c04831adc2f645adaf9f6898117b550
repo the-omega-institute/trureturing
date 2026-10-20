@@ -1,0 +1,20 @@
+**定义 48.7（固定目标编码）。** 对 §30 的初始 $q_H$ 使用向量
+
+$$
+\operatorname{enc}(\tau)=
+(t,m,a,b,\kappa_0,\kappa_1,\kappa_2,
+ \epsilon_0,\epsilon_1,\epsilon_2,\gamma_0,\gamma_1,\gamma_2)
+ \in\mathbb Z^{13}.
+\tag{TM.4809}
+$$
+
+标签 $t=0$ 只保留 $t,m,\kappa_0,\epsilon_0,\gamma_0$，其他槽置零；$t=1$ 保留 $t,a,b$ 及窗 $0,1$ 的三种字段，其他槽置零；$t=2$ 保留 $t,a,b$ 和全部三窗，$m$ 槽置零。这里 $m=a+b$。编码对实际 $q_H$ 单射，零槽只是遗忘字段的规范占位，不是额外的来源信息。在每个引理 48.2 的初始标签／模二片上它是整系数仿射映射。令
+
+$$
+Z_\omega=
+\{\operatorname{enc}(q_H(t)):t\in\mathcal F_\Phi
+                    \text{ 产生 }\omega\},
+\qquad D_\omega=|Z_\omega|.
+\tag{TM.4810}
+$$
+

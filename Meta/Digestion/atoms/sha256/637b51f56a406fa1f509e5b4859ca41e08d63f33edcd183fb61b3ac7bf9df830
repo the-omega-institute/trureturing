@@ -1,0 +1,16 @@
+## 4. 共同闭形式域与实际 Friedrichs 实现
+
+定义正参考形式
+
+\[
+\mathcal H(f)=\frac1{2\pi}\int_\mathbb R W(\xi)|\widehat f(\xi)|^2d\xi,
+\qquad V=\{f\in H:\mathcal H(f)<\infty\}.
+\tag{SC6}
+\]
+
+W>=1，所以 H 范数由该形式范数控制。加权 L2 的完备性与支撑子空间的闭性证明 V 完备。由 (SC5)，各 gamma(xi/a) 与 gamma(xi) 只差一个有界乘子；prime 与 pole 也是有界扰动，因此所有 qtilde_a 的闭形式域均为 V。
+
+还须识别原先的核心。对任意 f∈V，先作空间收缩 f_r(x)=r^-1/2 f(x/r)，r<1。其支撑进入 [-r,r]，且在参考形式范数中趋于 f：在全线加权 Fourier 空间，伸缩在紧频率光滑函数上强连续，(SC5) 又给出 r 接近 1 时统一的算子范数界，故由稠密性推广到所有加权 L2 函数。随后用支撑半径小于 1-r 的光滑 mollifier 卷积，保持支撑在 (-1,1)；Fourier 乘子有统一界且逐点趋于 1，支配收敛给出参考形式范数逼近。于是 C_c^infinity(-1,1) 在 V 稠密，各形式正是原测试形式的 Friedrichs 闭包。未改选别的自伴延拓或周期边界。
+
+(SC3) 还证明 V 到 H 紧嵌入：参考形式单位球的 |xi|>2J Fourier 质量至多为 1/(1+H_J/2)，而支撑窗口到固定有界频带的 Fourier 积分算子是 Hilbert-Schmidt。有限频带近似配合趋零尾部给出紧性。故每个实际闭形式的 resolvent 紧。
+

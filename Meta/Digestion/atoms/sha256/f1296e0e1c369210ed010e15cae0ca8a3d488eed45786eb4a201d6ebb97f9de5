@@ -1,0 +1,37 @@
+**Corollary 15.6 (root codes, target codes and genuine value dependence).**
+For a prescribed code determined by the class roots, Theorem 15.5 is
+a finite structural classification: use its constant value on each
+$Z_d,\Pi_j,Z_*$ in (NBP.15.8). For a prescribed binary function of the
+whole target alone, compatibility is equivalent to the block containing
+$R_0$ containing at most two of $R_1,\ldots,R_4$.
+
+Compatible prescribed codes need not be functions of the root profile.
+For example, let $E=\langle\beta,\alpha\rangle$ and prescribe
+
+$$
+\sigma(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+\mathbf1_{\{x_a=E\}},&u\in Z_{b_3},\\
+0,&u\in Z_a\cup Z_c\cup Z_*\cup Z_{b_1}\cup Z_{b_2}\cup Z_{b_4}.
+\end{cases}
+\tag{NBP.15.11}
+$$
+
+This code is compatible, and takes both values within the same whole
+root fiber $Z_{b_3}$.
+
+Proof. In the root-code specialization the quantities in Theorem 15.5
+are exactly those constant profile values; no representative selection
+is used. A target code has the same value $z$ on every zero profile,
+so $W=\varnothing$, and the only additional restriction is $s\le2$.
+For (NBP.15.11), $z=0$, $S=\{1,2\}$, $T=\{3,4\}$ and $W=\{3\}$.
+Both values on $Z_{b_3}$ are attained: set $x_{b_3}=\beta$ and take
+$x_a=E$ or a different branch image, filling the other classes by
+distinct branch images avoiding these values. Proposition 9.3 gives
+actual origins with these same roots. Equality with $E$ is a finite
+comparison on an acquired term, not an extra query service. Thus the
+code is lawful under the stated acquisition premise and satisfies
+(NBP.15.9). The theorem supplies its full-fiber upper. $\square$
+

@@ -1,0 +1,3 @@
+**假设 1.3(核可靠)**。若 $\mathrm{Proved}_{\mathfrak A}(P)$,则 $P$ 在 $\mathfrak A$ 的每个模型中成立:$\forall\mathfrak M\models\mathfrak A,\ \mathfrak M\models P$。
+*读法*。这是整座塔的信任根(母仓第 7.12 条 $\tau=0$):本卷不证明它,只把它写成前件。它就是「相信 Lean kernel」这件事的精确内容——它不是 Lean 公理,是关于核的元假设。
+

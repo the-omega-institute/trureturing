@@ -1,0 +1,63 @@
+**Theorem 36.1 (The index-fibre criterion and finite completion of probes).** Let $\alpha:\mathbb P\to A$ be any index-side observation, let $S\subset\mathbb P$ be finite, and put
+
+$$
+\begin{aligned}
+o_{\alpha,S}(r,g)&=(\alpha(r),d_S(N(r,g))),\\
+C_{a,b}&=\{(r,g)\in X:\alpha(r)=a,\ d_S(N(r,g))=b\},\\
+P_a&=\{r\in\mathbb P:\alpha(r)=a,\ I_r\ne\varnothing\},\\
+P_{a,b}&=\{r\in P_a:\exists g\in I_r,\ d_S(N(r,g))=b\}.
+\end{aligned}
+\tag{36.5}
+$$
+
+Here $P_a$ is compatible with the side information, while $P_{a,b}$ is compatible with the entire observed record. For every occupied $C_{a,b}$,
+
+$$
+\begin{aligned}
+U_{o_{\alpha,S}}(a,b)<\infty
+&\ \Longleftrightarrow\ P_a\text{ is bounded}
+\ \Longleftrightarrow\ P_a\text{ is finite}\\
+&\ \Longleftrightarrow\ P_{a,b}\text{ is bounded}
+\ \Longleftrightarrow\ P_{a,b}\text{ is finite}.
+\end{aligned}
+\tag{36.6}
+$$
+
+If $P_a$ is finite, it is nonempty under this occupancy assumption, and
+
+$$
+B_a=\max_{r\in P_a}(1+F_rU_r),\qquad
+U_{o_{\alpha,S}}(a,b)\le\lfloor\log_2 B_a\rfloor<\infty.
+\tag{36.7}
+$$
+
+Given an explicit valid integer bound $B\ge B_a$, a finite additional set of prime queries recovers $\Omega$ exactly: with $Q_B=\{p\in\mathbb P:p\le B\}$,
+
+$$
+\Omega(x)=\sum_{p\in Q_B}\mathbf1_{p\mid N(x)}
+\qquad(x=(r,g)\in X,\ \alpha(r)=a).
+\tag{36.8}
+$$
+
+The added queries are only those in $Q_B\setminus S$. Exact recovery from $(a,b)$ itself, without these additional answers, still requires a singleton $\Omega$ fibre, or $L_{o_{\alpha,S}}(a,b)=U_{o_{\alpha,S}}(a,b)$.
+
+**Proof.** A subset of the positive integers is bounded if and only if it is finite. If $P_a$ is finite, its finitely many windows contain finitely many labeled sources, and every one has $1\le N(r,g)\le B_a$. The product of the distinct prime divisors of any positive integer $n$ divides $n$ and is at least $2^{\omega(n)}$. Therefore $2^{\Omega(r,g)}\le N(r,g)\le B_a$, giving (36.7). Every prime divisor is at most $N(r,g)\le B$, which proves (36.8).
+
+Conversely, suppose $P_a$ is unbounded. Fix any $b\in\{0,1\}^{S}$ and any integer $K\ge1$. Choose $r\in P_a$ with $r\ge R(S,K)$, where $R(S,K)$ is the threshold of Theorem 35.2. That theorem applies to this chosen prime index, however sparse $P_a$ is, and supplies $g\in I_r$ with
+
+$$
+d_S(N(r,g))=b,\qquad
+\Omega(r,g)=\rho_S(N(r,g))+\sum_{p\in S}b_p
+\ge K+\sum_{p\in S}b_p.
+\tag{36.9}
+$$
+
+Thus every pattern has an occupied cell and both its residual support and its total support are unbounded. This proves the reverse implication for $P_a$. In addition, Theorem 35.2 with $K=1$ gives
+
+$$
+P_a\setminus P_{a,b}\subseteq\{r\in\mathbb P:r<R(S,1)\}.
+\tag{36.10}
+$$
+
+Only finitely many indices can be lost when the bits are imposed. Since $P_{a,b}\subseteq P_a$, their boundedness and finiteness are equivalent, proving (36.6). This does not assert that every small window realizes every pattern: empty windows have already been removed, and primes dividing $F_r$ can force zero bits in the remaining small windows. The exactness assertion is the fibre criterion in (36.2), not a consequence of finiteness alone.
+

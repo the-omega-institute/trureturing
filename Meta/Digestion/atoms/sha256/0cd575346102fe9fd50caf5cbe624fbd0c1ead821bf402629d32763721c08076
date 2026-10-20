@@ -1,0 +1,22 @@
+### 35.2. 真实零点的两点消去与正二次核
+
+令 $\xi$ 为整个完成 ζ 函数，$\mathcal Z$ 为真实非平凡零点集合，各点带
+真实重数 $m_\rho$。对实数 $t$，设
+$$
+s_+=\frac32+it,\qquad s_-=-\frac12+it,\qquad
+z_\rho=\rho-\left(\frac12+it\right).
+$$
+完成函数的全局归一化对数导数展开在两点相减时，公共常数和每项的
+$1/\rho$ 同时消去。零点带 $0<\Re\rho<1$ 保证两点避开零点，而
+$$
+\frac1{s_+-\rho}-\frac1{s_--\rho}=\frac2{1-z_\rho^2}.
+\tag{35.5}
+$$
+所以两点展开的绝对收敛差给出
+$$
+\sum_{\rho\in\mathcal Z}m_\rho\frac2{1-z_\rho^2}
+=\frac{\xi'}{\xi}(s_+)-\frac{\xi'}{\xi}(s_-).
+\tag{35.6}
+$$
+归一化基点从这个有限差分中消失。
+

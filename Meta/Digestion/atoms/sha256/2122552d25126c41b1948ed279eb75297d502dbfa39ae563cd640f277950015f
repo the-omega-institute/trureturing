@@ -1,0 +1,24 @@
+## 6. 直接得到范数 resolvent 控制和局部简单偶性
+
+选共同实移位
+
+\[
+C\ge1-\gamma_0+6\max(|\log m|,|\log A|)+2\sum_{n=2}^{P}w_n+4A\cosh A.
+\tag{SC10}
+\]
+
+则 b_a(f)=qtilde_a(f)+C||f||^2>=H(f)>=||f||^2。令 R_a=(Atilde_a+C)^-1。由 (SC7) 的 Hermitian polarization，差形式满足 |(b_a-b_b)(f,g)|<=epsilon sqrt(H(f)H(g))。具体可先选相位使交叉项为实，用 f+g、f-g 的对角界，再对两个向量作互反缩放，得到恰为 epsilon 的常数。
+
+变分表示给出 H(R_a x)<=b_a(R_a x)=Re<x,R_a x><=||x||^2，因为 ||R_a||<=1。对 R_b x、R_a y 用差形式 resolvent identity，得到
+
+\[
+\boxed{\|R_a-R_b\|\le\varepsilon_J(a,b).}
+\tag{SC11}
+\]
+
+这一步只用前面实际形式域和移位估计，没有假设未移位算子差在普通范数中趋零。由 (SC9)，a->R_a 在整个 (0,infinity) 上范数连续，包含全部素数幂阈值。
+
+如果在 a0 已有真实简单最低值 lambda0<=U<T<=lambda1，则 R_a0 的最大特征值间隔至少为 g=1/(C+U)-1/(C+T)>0。当 (SC11) 的上界 eta<g/4 时，min-max 给出邻近 R_a 最大间隔 >=g-2eta；最大特征向量与旧向量的相位对齐距离 <=sqrt(2)eta/(g-eta)，由旧正交补上的谱投影估计得到。实际反射与所有算子交换，新简单特征向量具有确定奇偶性；它若为奇函数就与旧偶向量正交，和上述距离矛盾。因此简单偶最低线局部保持。
+
+若原点 Fourier 值已认证非零，局部归一化也合法。在共同空间中其比值为 integral g_a(y)exp(i*a*z*y)dy / integral g_a(y)dy，sqrt(a) 消去。模态 L2 连续性和有限窗口上的指数核界给出复紧集上的局部一致连续性。这里没有把局部连续性变成 a->infinity 的 Xi 极限，也不排除更远尺度发生谱线碰撞。
+

@@ -1,0 +1,30 @@
+# 增订二·17　信息逃逸与不可替代结论表
+
+| 命题 | 地位 |
+|---|---|
+| $T(z)$ 的谱覆盖为 $y^2=1+4z$ | 直接有限代数 |
+| $z=-1/4$ 是解析分歧／metric 退化点 | 直接有限代数 |
+| $z=1$ 的判别式为 $5$，通道为 $\varphi,-\varphi^{-1}$ | 直接有限代数 |
+| 奇素数 $p\ne5$ 的 split/inert 由 $(p/5)$ 控制 | 直接有限域代数 |
+| 惰性 Frobenius 与解析 monodromy 执行同一 deck swap | 直接推论 |
+| 项目 golden character 等于 local channel Weyl sign | 与仓库定义相容的精确识别 |
+| character parity 恢复完整 ordered holonomy | 不成立 |
+| $T(z)^TJ_zT(z)=-zJ_z$ | 直接矩阵恒等式 |
+| hard-core edge 是 Lorentz signature transition | 直接分类推论 |
+| $\det(I+4zJ_N^2)=H_{N-1}(z)^2$ | 本增订有限定理 |
+| 最近 hard-core zero 为 $-1/(4F_N^*)$ | 本增订直接推论 |
+| reference fidelity tax 精确决定 edge zero displacement | 本增订直接推论 |
+| 正 determinant 机制定位 hard-core roots 到负实轴 | 有限谱推论 |
+| 该负实轴定位等于 RH 单位圆定位 | 不成立 |
+| hard-core 协方差为 $\frac15(-\varphi^{-2})^n$ | 本增订有限 Markov 推论 |
+| hard-core susceptibility 为 $1/(5\sqrt5)$ | 本增订直接推论 |
+| exterior energy 与 reflected fidelity 有精确换算 | 本增订有限定理 |
+| exterior energy、最小 singular gap、$-\log$ fidelity 同阶 | 本增订局部定理 |
+| dominated splitting 单独排除 matrix-coefficient zeros | 不成立；还需 boundary transversality |
+| Zeckendorf--prime tangent energy 是张量 differential norm | 本增订有限 operator identity |
+| prime relation differential 已与 zero odd differential intertwine | 尚未建立 |
+| canonical completed golden-discriminant cocycle 已存在 | 尚未建立 |
+| 本增订证明 RH | 不成立 |
+
+---
+

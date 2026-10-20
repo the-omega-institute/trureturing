@@ -1,0 +1,24 @@
+## 定理 17.1（三环画像的单比特完成）
+
+\[
+\boxed{
+\Theta_{60}(r)
+=
+\bigl(\bar\Sigma_3(r),\omega_5(r)\bigr)
+}
+\]
+
+给出双射：
+
+\[
+(\mathbb Z/60\mathbb Z)^\times
+\simeq
+\{\mathrm S,\mathrm I\}^3\times\{0,1\}.
+\]
+
+### 证明
+
+Gaussian 位确定模四坐标，Eisenstein 位确定模三坐标。Golden 位把模五单位分成 \(\{\pm1\}\) 与 \(\{\pm2\}\)，定向位在每对中选择具体符号。CRT 唯一恢复模六十单位类。\(\square\)
+
+---
+

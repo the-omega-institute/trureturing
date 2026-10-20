@@ -1,0 +1,40 @@
+**Theorem 16.2 (Closure at real roots, with constants and the zero boundary).** Every $d$ of Definition 16.1 has a positively oriented anchored pair. For every degree-bounded anchored pair,
+
+$$
+\begin{aligned}
+\deg p&=m,\qquad ([t^m]p)^2=\delta,\\
+\Delta P&=d,\qquad P(0)=0,\qquad
+\deg P=2m+1,\qquad [t^{2m+1}]P=\frac{\delta}{2m+1},\\
+P(k)&=s(k)^2+\sum_{j=0}^{k-1}p(j)^2
+=\sum_{j=0}^{k-1}d(j)\quad(k\ge0).
+\end{aligned}
+\tag{16.3}
+$$
+
+The identity at $k$ is for every nonnegative integer $k$. Here $P$ is the unique polynomial with the displayed difference and anchor. For a positive constant $d=c$, the degree-bounded pairs are exactly $(\sqrt c,0)$ and $(-\sqrt c,0)$; positive orientation selects the first. For $d=0$, the only polynomial pair with $s(0)=0$ and $p^2+\Delta(s^2)=0$, even without a prescribed degree bound, is $(0,0)$.
+
+Proof. The polynomials $\binom{t}{j}$ form a basis in each finite degree, since their leading coefficients are $1/j!$. The identity $\Delta\binom{t}{j+1}=\binom{t}{j}$ follows by subtracting the falling-factorial products, or by the binomial identity on infinitely many nonnegative integers. Successive differences at zero therefore recover the Newton coefficients: $d(t)=\sum_{j=0}^{2m}\Delta^j d(0)\binom{t}{j}$. This proves $\Delta P=d$ and $P(0)=0$. A nonconstant polynomial of degree $r$ and leading coefficient $a$ has forward difference of degree $r-1$ and leading coefficient $ra$; hence a polynomial with zero difference is constant. This proves uniqueness and the exact degree and leading coefficient in (16.3). Telescoping identifies its integer values with the sum of $d(j)$, which is nonnegative and nondecreasing in $k$.
+
+For $m\ge1$, set $d_n=d+1/n$ for integers $n\ge1$. It is strictly positive on the entire real line, has degree $2m$ and retains leading coefficient $\delta$. Theorem 10.1 supplies real pairs $p_n,s_n$ of degrees at most $m$, with $s_n(0)=0$ and $d_n=p_n^2+\Delta(s_n^2)$. Replacing $p_n$ by its negative when necessary makes its leading coefficient exactly $\sqrt\delta$. Summation gives the exact nonnegative identity
+
+$$
+P(k)+\frac{k}{n}=s_n(k)^2+\sum_{j=0}^{k-1}p_n(j)^2\qquad(k\ge0).
+\tag{16.4}
+$$
+
+Let $M=\sqrt{P(m+1)+m+1}$. Taking $k=m+1$ bounds every $|p_n(j)|$ for $0\le j\le m$ by $M$. Taking $k=j$ and using $P(j)\le P(m+1)$ bounds every $|s_n(j)|$ at the same nodes by $M$. These bounds are simultaneous in $n$ and in the two polynomials. Explicitly, the fixed Lagrange polynomials
+
+$$
+\ell_j(t)=\prod_{\substack{0\le i\le m\\i\ne j}}\frac{t-i}{j-i}
+\quad(0\le j\le m)
+\tag{16.5}
+$$
+
+satisfy $v(t)=\sum_{j=0}^m v(j)\ell_j(t)$ for every polynomial of degree at most $m$. Thus each coefficient of either $p_n$ or $s_n$ has absolute value at most $M\sum_{j=0}^m|[t^r]\ell_j|$. The combined coefficient sequence lies in a bounded subset of $\mathbb R^{2m+2}$. Finite-dimensional compactness gives one subsequence along which both polynomials converge coefficientwise, to $p,s$.
+
+Polynomial multiplication, translation and coefficient extraction are continuous in these finite-dimensional spaces. Passing along that common subsequence gives $d=p^2+\Delta(s^2)$, $s(0)=0$, $\deg s\le m$ and $[t^m]p=\sqrt\delta$. In particular $\deg p=m$. For any other degree-bounded pair, $\Delta(s^2)$ has degree at most $2m-1$ when nonzero, so comparison of degree $2m$ forces the same squared leading coefficient. Telescoping (16.1) proves the remaining identity in (16.3).
+
+For $m=0$, the anchor forces the constant $s$ to vanish, and $p^2=c$ gives exactly the two stated pairs; (16.2) is $P(t)=ct$. For $d=0$ and arbitrary polynomial degrees, telescoping gives $0=s(k)^2+\sum_{j<k}p(j)^2$ for every $k\ge0$. Every summand is nonnegative, so $s$ and $p$ each vanish at every nonnegative integer and are zero polynomials.
+
+No separation of the real zeros of $d$ was used, so repeated real zeros are included. This compactness proof supplies existence, not a continuous selection of pairs, uniqueness for general $d$, or convergence of a coefficient algorithm. The input Theorem 10.1 uses the scalar ingredient of [Ephremidze, *An Elementary Proof of the Polynomial Matrix Spectral Factorization Theorem*, arXiv:1011.3777v1, Theorem 2](https://arxiv.org/pdf/1011.3777v1): a polynomial matrix positive definite almost everywhere on the real line admits a polynomial factor nonsingular in the open upper half-plane, unique up to a constant right unitary multiplier. That result supplies neither the telescoping anchor nor a continuously chosen anchored pair at real roots. The argument here takes limits of the already anchored strictly positive pairs instead. $\square$
+

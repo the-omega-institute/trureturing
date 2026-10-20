@@ -1,0 +1,36 @@
+### 43.3 谱端点附近的显式位置控制
+
+令 `A=sqrt(C)`、`b=sqrt(C/3)`，并从四个定向等号点中选择与 `x,y` 同号的点。恒等式
+
+```math
+ y^2-C/3=g-\delta
+```
+
+及 `kappa>2` 给出
+
+```math
+\left||x|-A\right|\le\frac{g}{A},\qquad
+\left||y|-b\right|\le\frac{(\kappa-1)g}{b}.
+```
+
+因此到四个等号点的欧氏距离至多为
+
+```math
+\frac{g}{A}\sqrt{1+3(\kappa-1)^2}.
+```
+
+对于靠近下端点的模式零能量 `E0=gamma+epsilon`，若 `0<=epsilon<=2A`，则
+
+```math
+x=-A+\varepsilon/2,\qquad
+ g=A\varepsilon-\varepsilon^2/4\le A\varepsilon.
+```
+
+故到对应下端点等号点的距离至多为
+
+```math
+\varepsilon\sqrt{1+3(\kappa-1)^2}.
+```
+
+同时循环调制两行可将任意模式化为模式零；交换两行则将上端点化为另一行的下端点。因此同样适用于任一能量端点。本结论控制的是实际互补相位行的谱与自相关，不把它自动提升为共同无偏 completion 的 symmetry-affinity 下界；后者仍需保留完整共享相位和正交约束。
+

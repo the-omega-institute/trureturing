@@ -1,0 +1,19 @@
+**定义 17.8（两方块地址域）。** 暂取互素正整数 $1\le a\le b$，令
+
+$$
+\begin{gathered}
+N=a^2+b^2\ge2,\qquad v_1=(a,b),\quad v_2=(-b,a),\qquad
+\Lambda=\mathbb Zv_1+\mathbb Zv_2,\\
+B=[0,b)\times[0,b),\quad
+S=[b,b+a)\times[b-a,b),\quad
+\mathcal D=B\sqcup S,\quad D=\mathcal D\cap\mathbb Z^2,\\
+\ell:\mathbb Z^2\longrightarrow\mathbb Z/N\mathbb Z,
+\qquad \ell(x,y)=bx-ay\pmod N.
+\end{gathered}
+$$
+
+区域 $B,S$ 的面积分别为 $b^2,a^2$，其中每个整数锚点
+$d\in D$ 对应单位格 $d+[0,1)^2$。
+后续以 $(a,b)=(F_m,F_{m+1})$ 把“不穿缝、穿缝”两类铺法
+分别放到这两个方块的格子上。
+

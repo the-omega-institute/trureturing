@@ -1,0 +1,9 @@
+**定义 79.6（必须检查的一致性端口）。** 固定 $H\subseteq A$。除全部 $F$ 响应外，要求接口能对任意 $z\in X_H$ 判断 $a|_H=z$。定义实际像
+
+$$
+\zeta_{A;H}(a)=(a|_H,R_A(a)),\qquad
+P_{A;H}=\zeta_{A;H}[X_A],\qquad
+\tau_{A;H}=|P_{A;H}|.
+\tag{79.4}
+$$
+

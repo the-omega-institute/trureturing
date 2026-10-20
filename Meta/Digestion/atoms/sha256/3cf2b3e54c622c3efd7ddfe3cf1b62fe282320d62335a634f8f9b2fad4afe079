@@ -1,0 +1,53 @@
+### 35.10 原生守卫、固定仿射分支与反辛符号
+
+数学引文（原生更新的准确范围）。[《基础公式》数学引文 1.2、定义 11.6](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)及关联卷约定 23.1 供应
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+S=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad
+C'=SC+\delta_\sigma.
+$$
+
+此处把组成位移记为 $\delta_\sigma$，以免与概率回路向量 $d$ 混同；按本章模式次序，它依次为
+
+$$
+\delta_0=(0,0)^{\mathsf T},\quad
+\delta_1=(1,0)^{\mathsf T},\quad
+\delta_2=(0,1)^{\mathsf T},\quad
+\delta_3=(1,1)^{\mathsf T},\quad
+\delta_{13}=(2,1)^{\mathsf T}.
+$$
+
+实际 HIGH-to-LOW 读者的状态为 $(s,C)$，$s\in\{0,1\}$、$C=(U,V)^{\mathsf T}\in\mathbb N_0^2$。合法条件和接缝更新是
+
+$$
+s\,y(\sigma)=0,\qquad s'=x(\sigma).
+$$
+
+非法输入进入并保持吸收错误态 $\bot$，不同于合法数量零；不能删去接缝、拒绝质量或中间回复，继续称作同一个读者。空窗口总合法，并执行 $C'=SC,s'=0$，不是恒等操作或停止。
+
+另将组成扩展到 $C\in\mathbb R^2$，人为选择
+
+$$
+\omega_C=dU\wedge dV,\qquad
+J=\begin{pmatrix}0&1\\-1&0\end{pmatrix}.
+$$
+
+二维矩阵恒等式 $L^{\mathsf T}JL=(\det L)J$ 与 $M^{\mathsf T}JM=-J$、两步保持，已有所有者是 [FibonacciAtomicRelationGeneration §296、式 (296.3)](FIBONACCI_ATOMIC_RELATION_GENERATION.md#296-fib-atom-与哈密顿结构离散作用量及因果响应)。以 $L=S=M^3$ 消费该结论，得
+
+$$
+\det M=\det S=-1,\qquad
+M^*\omega_C=S^*\omega_C=-\omega_C,
+\qquad (M^2)^*\omega_C=(S^2)^*\omega_C=\omega_C.
+$$
+
+固定 $\delta_\sigma$ 不改变微分，因此每个固定实仿射分支 $C\mapsto SC+\delta_\sigma$ 仍反辛。两个固定、实际可接受分支的组成在实扩展上为
+
+$$
+C\longmapsto S^2C+S\delta_{\sigma_1}+\delta_{\sigma_2},
+$$
+
+其线性部分保持 $\omega_C$。这只对应已固定分支的组成变换，既不将整数读者变成光滑流形，也不证明分支选择、拒绝或接缝遗忘可逆。
+
+单步保绝对面积，但反转辛形式；绝对面积保持与辛保持有区别。Hamilton 流满足 $\mathcal L_{X_H}\omega=d(\iota_{X_H}\omega)=d^2H=0$，所以同一个 $\omega_C$ 下，单步 $M$ 或 $S$ 都不能是 Hamilton 流的时间一映射。此既有符号边界是下一节选择两次空窗口的必要条件。
+

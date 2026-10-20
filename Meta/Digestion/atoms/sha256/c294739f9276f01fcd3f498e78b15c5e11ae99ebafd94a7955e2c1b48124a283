@@ -1,0 +1,93 @@
+**Proposition 53.2 (explicit native degeneration and scaling limits).**
+The fixed original projection $2\theta-2v$, with no $D$ term, has
+height coefficient $1-\kappa b_\kappa(k)$. Its quartic coefficient is
+
+$$
+\mathcal B_\kappa(2,-2,0)
+ =4\kappa^2\left\langle b_0-\pi(b_0),
+                 \mathcal R(b_0-\pi(b_0))\right\rangle_\pi
+   +O(|\kappa|^3),\qquad b_0(k)=\frac1k-\frac1H.
+\tag{53.7}
+$$
+
+The leading constant is strictly positive. The projected bounded-test
+error therefore has order $\kappa^2/T$ uniformly for small nonzero
+$\kappa$ and large $T$, and is exactly zero at the actual zero leaf.
+This is an original-model counterexample to a direction-uniform positive
+$c/T$ lower bound near autonomy.
+
+For arbitrary nonzero real projections, the scale-invariant coefficient
+is $\mathcal B_\kappa(e)/m_e^2$. After standardizing the scalar phase
+by its standard deviation $\sqrt{2m_eT}$, its correction to the standard
+normal density $g$ is
+
+$$
+\frac{\mathcal B_\kappa(e)}{4m_e^2T}\,\partial_z^4g.
+\tag{53.8}
+$$
+
+The bounds in (53.2)–(53.3) have the corresponding scale-invariant
+form, with $B_e$ replaced by $\mathcal B_\kappa(e)/m_e^2$ and adjusted
+universal constants. They follow by normalizing $e$ and dilating the
+scalar variable. The zero projection is deterministic and is treated
+separately.
+
+For $\kappa\ne0$, pushing the full law and its signed correction
+forward by $J_\kappa$ preserves unweighted variation exactly.
+Thus (52.2) and (52.4) hold in original lifted coordinates, comparing
+with the Gaussian of covariance $2J_\kappa M_\kappa J_\kappa^{\mathsf T}$,
+for arbitrary nonzero sequences approaching either side of zero.
+The lower bound allows parameter-dependent bounded tests; for example
+the resolved test $\cos z_3$ becomes $\cos(y_3/\kappa)$ in the
+$\sqrt T$-scaled original coordinates. It is not a uniform bound for
+fixed-Lipschitz-constant tests on those collapsing coordinates.
+For the pure original $D$ projection, the variance collapses like
+$\kappa^2$ while the standardized nonGaussian coefficient need not
+vanish. Small unstandardized coefficients alone do not imply a smaller
+scale-invariant bounded-test distance. At exact zero $D$ is frozen,
+so the pure $D$ law is a point mass, not that standardized limit.
+
+On the genuine zero leaf, all of (51.2)–(53.3) have a separate
+ two-dimensional version with $c$ replaced by $(A_0,B_0)$ and $M$
+by $N_0$. Its full two-phase correction is nonzero and its bounded-test
+Gaussian error is of order $1/T$, while its autonomous primitive
+$\theta-v$ is exactly Gaussian at every time. There is no third moving
+coordinate in that statement.
+
+Proof. The native constant relation gives the coefficient in the first
+sentence. Center its square to obtain
+$-2\kappa(b_\kappa-\pi(b_\kappa))+
+\kappa^2(b_\kappa^2-\pi(b_\kappa^2))$.
+The coefficients depend smoothly on $\kappa$ on the fixed compact
+height interval. Substitution in the positive quadratic form
+$\langle f,\mathcal R f\rangle$ proves (53.7), with a uniform cubic
+error. Strict monotonicity of $b_0$ proves positivity. The proof of
+Theorem 53.1 applies unchanged to this fixed nonunit vector, whose
+variance coefficient tends to one; equivalently normalize and dilate.
+This proves the stated joint small-parameter, large-time order.
+
+Homogeneity gives $m_{ae}=a^2m_e$ and
+$\mathcal B_\kappa(ae)=a^4\mathcal B_\kappa(e)$.
+Scalar dilation of four derivatives gives the factor $1/(2m_e)^2$
+in (53.8). Normalized vectors have uniformly positive $m_e$, proving
+the scale-invariant estimates. Invertible measurable pushforward
+preserves variation by its dual characterization in bounded tests;
+the signed Jacobian is handled by its absolute value as in (39.1).
+The weighted remainder remains uniform because $|J_\kappa z|\le C|z|$
+on the fixed parameter interval; no uniform inverse-Jacobian estimate
+is required for that upper bound.
+For a fixed original projection vector $a$, its resolved vector is
+$J_\kappa^{\mathsf T}a$. The pure $D$ case is $\kappa e_3$, which
+explains both the collapsing variance and unchanged standardized
+coefficient for nonzero $\kappa$.
+
+Finally the actual zero-leaf coefficient vector is exactly
+$(A_0,B_0)$, with positive tensor $N_0$ by Theorem 39.2. Its entries
+are bounded, its centered products are still members of the rational
+family in (51.9), and the identical height operator has the same gap.
+Every covariance and Taylor argument restricts to indices $1,2$.
+For a strict lower bound choose the second moving phase: $B_0^2$
+is nonconstant on $I$, so its coefficient is positive. The autonomous
+line is exactly the two-phase line already proved in Theorem 50.1.
+This proves the separate leaf conclusions. $\square$
+

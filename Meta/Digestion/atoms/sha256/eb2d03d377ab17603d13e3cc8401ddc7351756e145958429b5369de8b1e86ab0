@@ -1,0 +1,8 @@
+\sum_{x\in X}
+\langle x|\rho|x\rangle\,|x\rangle\langle x|.
+\]
+给定允许控制族 \(\mathcal U\) 和终端效果族 \(\mathcal E\)，定义未来拉回效果空间
+\[
+\boxed{
+\mathcal V_{\mathcal U,\mathcal E}
+=

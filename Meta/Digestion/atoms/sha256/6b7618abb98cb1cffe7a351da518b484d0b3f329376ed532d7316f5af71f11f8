@@ -1,0 +1,41 @@
+## 8. 从具体证书得到全形式域上的余维一强制性
+
+对任意 f 属于 Dom(q_a) 且 f 与 k 正交，分解 f=x+y，其中 x=P_Nf、y=Q_Nf，则 x 与 v 正交。(AC8) 给出
+
+\[
+q_a(x)-\tau\|x\|^2\ge\frac{\|C_Nx\|^2}{1-\tau}.
+\]
+
+上一节已证明 q_a(y)>=||y||^2。因 x 属于算子域，完整混合配对是 <A_ax,y>，故配方得到
+
+\[
+\begin{aligned}
+q_a(f)-\tau\|f\|^2
+&\ge\frac{\|C_Nx\|^2}{1-\tau}+2\Re\langle C_Nx,y\rangle
++(1-\tau)\|y\|^2\\
+&=(1-\tau)\left\|y+\frac{C_Nx}{1-\tau}\right\|^2\ge0.
+\end{aligned}
+\]
+
+因此本轮纸面与区间认证共同给出固定尺度结论
+
+\[
+\boxed{
+a=\tfrac12\log3,\quad f\perp k
+\quad\Longrightarrow\quad
+q_a(f)\ge10^{-6}\|f\|^2
+\quad(f\in\operatorname{Dom}(q_a)).
+}
+\tag{AC9}
+\]
+
+结合 mu<10^-7，可取 delta=tau-mu>9*10^-7。紧 resolvent 与变分原理于是给出
+
+\[
+\lambda_0\le\mu<10^{-7},\qquad
+\lambda_1\ge10^{-6},\qquad
+\lambda_1-\lambda_0>9\,10^{-7}.
+\]
+
+最低特征值因此单纯、孤立。算子保反射，候选 k 为偶；若该唯一最低模态为奇，则它属于 k 的正交补，违背上述严格能量分离。因此最低模态为偶函数。这是完整算子的固定窗口结论，已经计入所有无限耦合方向。
+

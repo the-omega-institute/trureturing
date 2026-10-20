@@ -1,0 +1,40 @@
+**Definition 111.1 (the all-node fields and the free-root trace energy).**
+Retain the literal ordered $T_n$, all occurrence vertices, the counts
+$N_n$, and the closed unit-edge counting operators $L_n$ of §§92 and 103.
+In this section $J_n$ and $J$ always denote the path-summation maps of
+§98, not the ancestry pullback of §§109–110. Retain the actual law
+
+$$
+\Omega=\{L,R\}^{\mathbb N},\qquad
+M([p])=\varphi^{-\#_L(p)-2\#_R(p)},\qquad
+\mu_n=N_n^{-1}\sum_{x\in V_{T_n}}\delta_x,
+\qquad S_n(s)=e^{-N_nsL_n}.
+\tag{111.1}
+$$
+
+Thus $\mu_n$ includes the root, every interior occurrence and every leaf.
+The variable $s$ is the comparison time in (110.1). Set
+$\mathscr G=L^2(\Omega,M)$, $\Pi F=F-\int F\,dM$,
+$C=\Pi J$, and $\mathscr K=(\ker\Sigma)^\perp$. Then
+$C^*C=\Sigma$ by (98.13). Define
+
+$$
+\begin{aligned}
+\mathcal D&=\{F\in\mathscr G:F=c\mathbf1+Jz
+                  \text{ for some }c\in\mathbb R,\ z\in\mathscr H\},\\
+\mathcal E(F)&=\inf\{\|z\|^2:F=c\mathbf1+Jz,
+                                      \ c\in\mathbb R,\ z\in\mathscr H\}.
+\end{aligned}
+\tag{111.2}
+$$
+
+A pair $(c,z)$ specifies the finite-energy extension
+$u(\varnothing)=c$ and
+$u(p)=c+\sum_{\varnothing\ne q\preceq p}z_q$ on the complete binary
+address tree. Its unit-edge energy is $\|z\|^2$ and its trace is
+$c\mathbf1+Jz$ in the specified $L^2(M)$ sense. The root value is free
+in (111.2); there is no root killing term. The infimum varies extensions
+of the same trace, never the original $T_n$, its labels or its measure.
+Let $\mathcal A$ be the real algebra of finite cylinder functions on
+$\Omega$, with its product topology.
+

@@ -1,0 +1,28 @@
+**定义 439.1（固定尺度的有限素数核）。** 固定实数 \(L>0\)，令
+\(\mathcal P\) 为有限素数集，允许空集。定义
+
+\[
+E_{\mathcal P}(s)=\prod_{p\in\mathcal P}(1-p^{-s}),\qquad
+F_{\mathcal P,L}(v)=\frac{E_{\mathcal P}(1+v/L)}{E_{\mathcal P}(1)},\qquad
+s_{\mathcal P,L}=\frac1L\sum_{p\in\mathcal P}\frac{\log p}{p-1}.
+\tag{PI.1}
+\]
+
+对 \(a\ge0\)、\(\sigma>0\)，置
+
+\[
+B_{\mathcal P,L,a}(v)=e^{-av}F_{\mathcal P,L}(v)-1
+ +(a-s_{\mathcal P,L})v,
+\qquad
+\mathcal I_{\mathcal P,L}(\sigma,a)
+ =\int_0^\infty e^{-\sigma v}
+   \frac{B_{\mathcal P,L,a}(v)}{v^2}\,dv.
+\tag{PI.2}
+\]
+
+有限 Euler 乘积给 \(F(0)=1\)、\(F'(0)=s_{\mathcal P,L}\)，所以
+\(B(0)=B'(0)=0\)。函数光滑，零端的商有有限极限。对 \(v\ge0\)，
+\(1\le F_{\mathcal P,L}(v)\le E_{\mathcal P}(1)^{-1}\)，故
+\(B(v)=O_{\mathcal P,L,a}(1+v)\)。因此（PI.2）对每个指定的正阻尼
+绝对收敛。以下插入素数时保持同一个 \(L\)；若改变尺度，不能直接使用这里的更新式。
+

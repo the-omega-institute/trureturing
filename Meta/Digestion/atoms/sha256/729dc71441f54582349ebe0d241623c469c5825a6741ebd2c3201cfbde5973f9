@@ -1,0 +1,158 @@
+**命题 432.3（范数紧的无限维反例）。** 在实 Hilbert 空间 $\ell^2$ 中，令 $e_m$ 为第 $m$ 个标准基向量，并取
+
+$$
+C=\left\{x=(x_m)_{m\ge1}\in\ell^2:
+\sum_{m=1}^\infty m|x_m|\le1\right\},\qquad a=0,
+$$
+
+$$
+D=\left\{x\in\ell^2:\sum_{m=1}^\infty m|x_m|<\infty\right\},
+\qquad L(x)=\sum_{m=1}^\infty mx_m\quad(x\in D).
+$$
+
+则 $C$ 是非空、凸、对称、范数紧且仿射维数无限的集合，$\operatorname{aff}C=D$。按定义432.1的线段公式，根面为 $F(0)=C$，但 $0\notin\operatorname{ri}C$，其中相对内部使用 $D$ 上继承的 $\ell^2$ 范数拓扑。对任意 $H>0$，令
+
+$$
+f(x)=H\mathbf1_{\{L(x)=1\}}\quad(x\in C),\qquad
+\bar f(x)=\inf_{\delta>0}\sup\{f(y):y\in C,\ \|y-x\|_2<\delta\}.
+$$
+
+在这个单因子上使用定义432.1的完整有限树与深度约定，只把有限维环境换成 $\ell^2$。则
+
+$$
+\boxed{
+T_0^f(0;C)=0,\qquad
+T_n^f(0;C)=\frac H2\quad(n\ge1),\qquad
+T_\infty^f(0;C)=\frac H2,
+}
+$$
+
+$$
+\boxed{
+T_n^{\bar f}(0;C)=H\quad(n\ge0),\qquad
+T_\infty^{\bar f}(0;C)=H.
+}
+$$
+
+所以，纵使单个非单点根面范数紧，所有有限位移的上界及全体有限树的包络等式仍可同时失败。
+
+**证明。** 首先 $0\in C$，且 $x\in C$ 蕴含 $-x\in C$。对 $x,y\in C$、$t\in[0,1]$，由三角不等式及非负级数的部分和极限，
+
+$$
+\sum_{m=1}^\infty m|tx_m+(1-t)y_m|
+\le t\sum_{m=1}^\infty m|x_m|
+ +(1-t)\sum_{m=1}^\infty m|y_m|\le1,
+$$
+
+故 $C$ 凸。每个有限部分和 $x\mapsto\sum_{m=1}^N m|x_m|$ 在 $\ell^2$ 上连续，且
+
+$$
+C=\bigcap_{N\ge1}\left\{x\in\ell^2:
+\sum_{m=1}^N m|x_m|\le1\right\},
+$$
+
+所以 $C$ 范数闭。设 $P_Nx=\sum_{m=1}^N x_me_m$。对每个 $x\in C$，
+
+$$
+\|x-P_Nx\|_2
+\le\sum_{m>N}|x_m|
+\le\frac1{N+1}\sum_{m>N}m|x_m|
+\le\frac1{N+1}.
+$$
+
+第一不等式可先对有限尾和平方，利用 $\sum |x_m|^2\le(\sum|x_m|)^2$，再取递增部分和极限得到。给定 $\varepsilon>0$，选 $N$ 使 $1/(N+1)<\varepsilon/2$。$P_NC$ 位于有限维空间 $\operatorname{span}\{e_1,\ldots,e_N\}$，并因 $\|P_Nx\|_2\le\sum_{m\le N}|x_m|\le1$ 而有界，所以可由有限个半径 $\varepsilon/2$ 的球覆盖，球心可取在 $P_NC$ 中。又 $P_NC\subset C$，结合一致尾界，这些球心给出 $C$ 的有限 $\varepsilon$ 网。因此 $C$ 全有界。
+
+$C$ 是完备空间 $\ell^2$ 的闭子集，故完备。具体地，对 $C$ 中任意序列，逐次使用有限的 $2^{-j}$ 网，嵌套选取落入同一网球的无限子序列，再作对角选择，得到 Cauchy 子序列；完备性使其收敛于 $C$ 中。因此 $C$ 序列紧，按度量空间中紧性与序列紧性的等价，$C$ 范数紧。向量 $e_m/m\in C$ 且线性无关，故 $C$ 仿射维数无限。
+
+由加权绝对值的三角不等式，$D$ 是实线性子空间，且 $C\subset D$，从而 $\operatorname{span}C\subset D$。反过来，若 $x\in D\setminus\{0\}$，则实数
+
+$$
+b_x=\sum_{m=1}^\infty m|x_m|
+$$
+
+严格为正且有限，而 $x/b_x\in C$，故 $x\in\operatorname{span}C$；零点同样包含。因此 $D=\operatorname{span}C$。又因 $0\in C$，任何线性组合都可通过添加零点的系数改写成系数和为一的仿射组合，所以
+
+$$
+\operatorname{aff}C=\operatorname{span}C=D.
+$$
+
+这个代数仿射包不是整个 $\ell^2$；例如 $(1/m^2)_{m\ge1}\in\ell^2$，而其加权绝对和是发散的调和级数，故不在 $D$ 中。
+
+对每个 $x\in C$，有 $0=\tfrac12x+\tfrac12(-x)$，所以线段公式给出 $F(0)=C$；定理432.2证明第一步的代数论证在此仍适用，因而它确是最小面。此处单个因子非单点，按同样的计数有 $s=1$。然而，对任意 $\rho>0$，选 $m$ 使 $2/m<\rho$，则
+
+$$
+y=\frac{2e_m}{m}\in D,\qquad
+\|y\|_2=\frac2m<\rho,\qquad
+\sum_{j=1}^\infty j|y_j|=2>1.
+$$
+
+所以 $y\notin C$。根在仿射包 $D$ 的相对范数拓扑中没有任何内球，即 $0\notin\operatorname{ri}C$；范数紧性没有消除这个障碍。
+
+对每个 $x\in D$，定义 $L(x)$ 的级数绝对收敛。若 $u,v\in D$、$\alpha,\beta\in\mathbb R$，则
+
+$$
+\sum_m m|\alpha u_m+\beta v_m|
+\le |\alpha|\sum_m m|u_m|+|\beta|\sum_m m|v_m|<\infty.
+$$
+
+有限部分和线性，令部分和长度趋于无穷，由各级数收敛可得
+
+$$
+L(\alpha u+\beta v)=\alpha L(u)+\beta L(v).
+$$
+
+故 $L$ 是 $D$ 上处处有定义的实线性泛函。它在 $C$ 上满足 $|L(x)|\le\sum_m m|x_m|\le1$，但
+
+$$
+u_m=\frac{e_m}{m}\longrightarrow0\quad\text{于 }\ell^2,
+\qquad L(u_m)=1,\qquad L(0)=0.
+$$
+
+所以 $L$ 在根处对相对范数拓扑不连续。对上述收益，$f(0)=0$，$f(u_m)=H$，而每个根邻域包含充分大的 $u_m$，故
+
+$$
+\bar f(0)=H,\qquad 0\le\bar f\le H.
+$$
+
+现取任意以零为根的完整有限树。每个节点的全部标签都在 $C\subset D$，故可对其有限凸分解应用 $L$ 的线性，得到
+
+$$
+L(z_v)=\sum_j\lambda_{vj}L(z_{vj}).
+$$
+
+这里子项数有限，也可先交换有限子项和有限部分和，再对绝对收敛级数取极限；不使用 $L$ 的连续性。乘上 $q_v$，从叶向根有限次代入，可得
+
+$$
+\sum_{\ell\in\operatorname{Leaf}(\mathsf T)}q_\ell L(z_\ell)
+=L(0)=0,\qquad
+\sum_{\ell\in\operatorname{Leaf}(\mathsf T)}q_\ell=1.
+$$
+
+零权叶仍在这些有限和中。对每个 $x\in C$，若 $L(x)=1$，则 $f(x)=H$；若 $L(x)\ne1$，则 $f(x)=0$ 且 $L(x)\ge-1$。因而逐点成立
+
+$$
+f(x)\le\frac H2\bigl(1+L(x)\bigr).
+$$
+
+于是每棵完整有限树的收益均满足
+
+$$
+\operatorname{val}_f(\mathsf T)
+\le\frac H2\sum_\ell q_\ell\bigl(1+L(z_\ell)\bigr)
+=\frac H2.
+$$
+
+一次等权分裂
+
+$$
+0=\tfrac12e_1+\tfrac12(-e_1)
+$$
+
+的两个叶都在 $C$ 内，其收益分别为 $H$ 与 $0$，故该深度一树的值为 $H/2$。允许提前停止使同一棵树可用于每个深度上界 $n\ge1$，从而 $T_n^f(0;C)=H/2$。深度零时只有根叶，故 $T_0^f(0;C)=0$；对有限深度取上确界得到 $T_\infty^f(0;C)=H/2$。
+
+对包络收益，由 $\bar f(0)=H$，根停止树在每个深度上界下都给出值 $H$；又全部叶收益至多 $H$、叶概率和为一，故 $T_n^{\bar f}(0;C)=H$ 对每个 $n\ge0$ 成立，其全有限上确界也为 $H$。于是任意有限整数 $k\ge0$ 都不能使 $T_0^{\bar f}(0;C)\le T_k^f(0;C)$ 成立，连两个 $T_\infty$ 也不相等。
+
+这个反例同时保有完整有限树、范数紧性和整个根最小面，失去的是与包络拓扑相容的根相对范数内球。它证明在所声明的无条件凸域类别中不能直接删除有限维假设，不断言每个无限维凸域都失败。$\square$
+
+相对内点的几何边界可参见 Lu Yu，*Notions of Relative Interior for Compact Convex Sets*，Journal of Convex Analysis 33 (2026), 197–206，[原文](https://journalofconvexanalysis.com/articles/jca33013/jca33013.pdf)，[doi:10.68381/jca33013](https://doi.org/10.68381/jca33013)。其定义2.2在代数仿射包上取相对拓扑；命题2.3（第198页）给出相对内部为空的紧 Hilbert 立方体；引理3.1和推论3.5（第199页）说明相对内点与紧集维数的几何限制。这些事实支持相对内点的背景，不承担定理432.2的树位移结论或命题432.3的具体收益计算。
+

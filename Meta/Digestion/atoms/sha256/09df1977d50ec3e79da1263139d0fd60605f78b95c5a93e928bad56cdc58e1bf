@@ -1,0 +1,32 @@
+**命题 60.3（两种 annealed 操作不可混同）。** 真正静态环境的 annealed 占用均值是 \(\mathbb E_\omega G_j^\omega\)，而
+\[
+G(\mathbb E_\omega K_j^\omega)
+\]
+是先平均一步核后再求 Green 的另一模型；一般
+\[
+\mathbb E_\omega(I-K_j^\omega)^{-1}
+\ne (I-\mathbb E_\omega K_j^\omega)^{-1}.
+\]
+若各边环境独立同分布，令
+\[
+\widetilde r_\ell
+=\left(\mathbb E[(r_\ell+\xi_0)^{-1}]\right)^{-1},
+\qquad
+\bar r_{\mathrm{harm}}
+=\varphi^{-2}\widetilde r_\alpha
++\varphi^{-1}\widetilde r_\beta.
+\]
+则 \(\mathbb E_\omega K_j^\omega\) 对应于阻抗 \(\widetilde r_{(W_j)_k}\) 的确定性切链，其缩放极限为
+\[
+\mathcal K_{\mathrm{harm}}(u,v)
+=\frac{\delta\bar r_{\mathrm{harm}}}{\theta\varphi^4}
+\bigl(1-\max(u,v)\bigr).
+\]
+由 Jensen，
+\[
+\widetilde r_\ell\le\mathbb E(r_\ell+\xi_0)=r_\ell,
+\]
+严格非退化噪声时至少一项严格，故 harmonic 模型与 arithmetic 静态平均模型在内点不同。静态环境先抽取一次再对路径积分的真正 annealed 路径一般不是 Markov；\(G(\mathbb E_\omega K_j^\omega)\) 对应的是逐步重抽或平均一步的替代模型，只有在额外重抽协议下才具有该含义。
+
+若扰动具有长程相关或重尾，误差率和极限可能改变；若 \(\mathbb E\xi_0\ne0\) 或均值依赖字母，也必须相应修改 \(\bar r\)。Green 极限、\(D\) 及其扩散类比均属于声明模型，不推出真实物理热流、温度或普适定律。
+

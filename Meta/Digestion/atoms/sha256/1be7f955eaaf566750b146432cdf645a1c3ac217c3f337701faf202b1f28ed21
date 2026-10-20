@@ -1,0 +1,10 @@
+唯一 `sorry` 是 `o5_independence`，其命题要求存在 $Z_{\rm qc}$，满足：
+
+1. $Z_{\rm qc}$ 在 $\Re s>0$ 上亚纯；
+2. 当 $\Re s>1/\phi^2$ 时，$Z_{\rm qc}(s)=\texttt{eulerGerm}(s)$；
+3. 若
+   $1/(2\phi^3)<\Re s<1/\phi^2$，
+   且 $Z_{\rm qc}$ 在 $s$ 解析并且 $Z_{\rm qc}(s)=0$，
+   则
+   $\Re s=1/(2\phi^2)$。
+

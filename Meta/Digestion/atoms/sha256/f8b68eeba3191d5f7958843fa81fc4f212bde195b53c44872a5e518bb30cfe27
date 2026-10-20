@@ -1,0 +1,79 @@
+**命题 433.4（与指定外部范数的精确比较）。** 对定义433.1的一个坐标，省略下标，在 $L$ 上另外指定一个范数 $\|\cdot\|$。令 $\tau_p$ 为 $p$ 的伪度量拓扑，$\tau_{\|\cdot\|}$ 为该范数拓扑。则
+
+$$
+\begin{aligned}
+&\exists\delta>0,\ \{v\in L:\|v\|<\delta\}\subseteq B
+\quad\Longleftrightarrow\quad
+\exists M>0,\ \forall v\in L,\ p(v)\le M\|v\|,\\
+&\exists R>0,\ \forall b\in B,\ \|b\|\le R
+\quad\Longleftrightarrow\quad
+\exists R>0,\ \forall v\in L,\ \|v\|\le Rp(v).
+\end{aligned}
+$$
+
+因此 $\tau_p=\tau_{\|\cdot\|}$ 当且仅当 $B$ 同时包含一个以零为心的外部范数开球并且外部范数有界。若 $L$ 有限维，包含范数球自动成立，且
+
+$$
+\tau_p=\tau_{\|\cdot\|}
+\quad\Longleftrightarrow\quad B\text{ 范数有界}
+\quad\Longleftrightarrow\quad\ker p=\{0\}.
+$$
+
+这里不要求 $F$ 有界。一般情形的拓扑等价是在整个 $L$ 上陈述的；它蕴含 $F\subset a+L$ 上两个相对拓扑相同。在有限维情形，$F$ 上的相对拓扑相同也蕴含上述等价条件。
+
+再对有限个坐标分别指定 $L_i$ 上的范数 $\|\cdot\|_i$，在 $X$ 上定义
+
+$$
+d_{\mathrm{ext}}(z,w)=\max\bigl(\{\|z_i-w_i\|_i:i\in I\}\cup\{0\}\bigr),
+\qquad
+\bar f_{\mathrm{ext}}(z)=\inf_{\eta>0}\sup_{\substack{y\in X\\d_{\mathrm{ext}}(y,z)<\eta}}f(y).
+$$
+
+若每个 $B_i$ 都包含一个相应范数开球，则对所有 $f:Y\to[0,H]$、$n\in\mathbb N_0$，
+
+$$
+g\le\bar f_{\mathrm{ext}}\le\bar f_p,
+\qquad
+T_n^f(a;Y)\le T_n^{\bar f_{\mathrm{ext}}}(a;X)
+\le T_{n+s}^f(a;Y),
+$$
+
+$$
+T_{\mathrm{fin}}^f(a;Y)=T_{\mathrm{fin}}^{\bar f_{\mathrm{ext}}}(a;X).
+$$
+
+若每个 $B_i$ 还范数有界，则 $\bar f_{\mathrm{ext}}=\bar f_p$。若只知每个 $B_i$ 范数有界，则可断言的包络方向为 $\bar f_p\le\bar f_{\mathrm{ext}}$，不由此得到外部包络的树值上界。两种条件均未知时，本命题不给包络排序。
+
+**证明。** 若半径 $\delta$ 的范数球包含于 $B$，则对每个 $v\in L$ 和每个 $t>\|v\|/\delta$，有 $v/t\in B$，所以 $p(v)\le\|v\|/\delta$。反之，若 $p\le M\|\cdot\|$，则 $\|v\|<1/M$ 蕴含 $p(v)<1$，由引理433.2得 $v\in B$。
+
+若 $\|b\|\le R$ 对所有 $b\in B$ 成立，对任意 $t>p(v)$，引理433.2的证明给出 $v\in tB$，故 $\|v\|\le Rt$。令 $t\downarrow p(v)$ 得 $\|v\|\le Rp(v)$。反之，该不等式用于 $b\in B$，结合 $p(b)\le1$ 就得 $\|b\|\le R$。
+
+两侧比较常数给出两个恒等映射的连续性，故两个拓扑相同。反过来，若两个拓扑相同，则从范数拓扑到 $p$ 拓扑的零点连续性给出某个 $\delta>0$，使 $\|v\|<\delta$ 蕴含 $p(v)<1$，进而给出 $B$ 中的范数球。另一方向连续性给出某个 $\varepsilon>0$，使 $p(v)<\varepsilon$ 蕴含 $\|v\|<1$。任取 $t>p(v)/\varepsilon$，用于 $v/t$ 后有 $\|v\|<t$，令 $t\downarrow p(v)/\varepsilon$ 得
+
+$$
+\|v\|\le p(v)/\varepsilon.
+$$
+
+这包含 $p(v)=0$ 的情况，并给出 $B$ 有界。零空间 $L=\{0\}$ 时所有条件均成立，可任取正的比较常数。
+
+设 $L$ 非零且有限维，取一组基 $e_1,\ldots,e_d$。半范数给出
+
+$$
+p\left(\sum_{j=1}^d t_je_j\right)
+\le\sum_{j=1}^d|t_j|p(e_j).
+$$
+
+在 $\sum_j|t_j|=1$ 的有限维紧集上，函数 $t\mapsto\|\sum_jt_je_j\|$ 连续且处处正，故有正最小值 $\beta$。齐次性得 $\sum_j|t_j|\le\beta^{-1}\|\sum_jt_je_j\|$，从而 $p\le M\|\cdot\|$ 对某个 $M>0$ 成立。于是范数球条件自动成立，且 $|p(v)-p(w)|\le M\|v-w\|$，故 $p$ 范数连续。
+
+若 $\ker p=\{0\}$，则在外部范数单位球面上 $p$ 连续且处处正；该球面有限维紧，故 $p$ 有正最小值 $\mu$。齐次性给出 $\|v\|\le p(v)/\mu$，所以 $B$ 有界且拓扑相同。反之 $B$ 有界给出的反向不等式迫使核为零。这证明有限维的全部等价。若 $k\ne0$ 属于核，引理433.2还给出 $a+k\in F$，它与 $a$ 不同却距离零，故 $F$ 的 $p$ 相对拓扑不是 Hausdorff，不能等于外部范数相对拓扑；这证明有限维相对拓扑的反向断言。
+
+对于有限乘积，范数球条件给出 $d_p\le M d_{\mathrm{ext}}$，其中 $M>0$ 可取全部坐标常数及 $1$ 的最大值。故 $p$ 拓扑较粗，$p$ 上半连续函数也是外部上半连续函数。定理433.3关于最小上界的证明同样适用于 $d_{\mathrm{ext}}$，所以
+
+$$
+g\le\bar f_{\mathrm{ext}}\le\bar f_p.
+$$
+
+逐叶比较及定理433.3给出所述树值不等式；对有限深度取上确界，得到全有限等式。若各 $B_i$ 有界，则有 $d_{\mathrm{ext}}\le R d_p$，相同论证反向给出 $\bar f_p\le\bar f_{\mathrm{ext}}$。两个条件同时成立时拓扑及包络相同。空乘积时两种距离都为零，这些断言仍成立。$\square$
+
+当各 $L_i$ 有限维时，命题433.4的范数球条件自动满足，故其外部包络位移结论直接恢复定理432.2的比较；不需要再重复一次有限维树证明。对于第431节的密度根面，它们有界，因而 $B_i$ 也有界，两种包络相同。有限维但无界的根面则不保证包络函数相同，下一命题给出反例。
+

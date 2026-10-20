@@ -1,0 +1,11 @@
+### 87.7 来源边界与方法范围
+
+本节的有限桥只承担 FIB 特有的 Fibonacci 比例、Contract B 的有序无放回律、(87.4) 的 Möbius 变换、次数界和正平方和。
+式（86.12）承担局部 $E$ 更新，第52.12–52.13节承担条件后续响应的顺序闭合；本节不重证这些局部更新或一般预测商。
+
+[Littman、Sutton、Singh 的 Predictive Representations of State](https://papers.neurips.cc/paper/1983-predictive-representations-of-state.pdf) 提供有限过程的预测表示背景，但不提供这里的可数离散尺度、共同 handoff 或有界历史有理后验桥。
+[Karlsson、Lindquist、Ringh](https://arxiv.org/html/1504.03626v4) 的 Theorem 3.4 与 Corollary 3.5 使用固定正分子和锥边界条件；它们说明相关的有理矩分离背景，却不直接覆盖本节分子与分母同时变化、先验为离散支撑的情形。
+
+因此本节结论的量词始终限于 $H_{\mathrm{port}}$、同一 $(\pi,\nu,T)$、同一 Contract B、共同先验和持久实际来源。
+一般旧历史依赖的选择器、不同权限、终止状态、物理形状、经过成本和旧档案恢复，仍由第79–80节及过程几何第39–42节的实际纤维条件另行决定。
+

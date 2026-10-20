@@ -1,0 +1,31 @@
+**Proposition 49.2 (the finite-frequency return uses tilted dynamics).**
+The kernel in (49.1) is identically zero precisely when $v$ is
+constant. Otherwise $K_\kappa(t,\eta)>0$ for every finite $t\ge0$.
+It cannot be replaced by the untilted height covariance at a general
+finite frequency. For example, with $v=(\eta\cdot c_\kappa)^2$ and
+$w=(v-a)\phi$, the derivative difference at zero is
+
+$$
+\left.\frac d{dt}\right|_{t=0}
+\left[\langle w,e^{-tB}w\rangle-
+      \langle w,e^{-tA|_{\phi^\perp}}w\rangle\right]
+ =-\int_I v(v-a)^2\,d\pi<0
+\tag{49.6}
+$$
+
+whenever $v$ is nonconstant. Other initial height vectors also add a
+source term: if the initial vector is $u_0\phi+h_0$ with
+$h_0\perp\phi$, (49.3) has the additional forcing
+$-\langle w,e^{-tB}h_0\rangle$ and initial value $u_0$.
+
+Proof. The spectral measure in $w$ of $B$ is nonnegative and has
+strictly positive Laplace transform unless $w=0$. Smoothness of $v$
+and its boundary-vanishing product with $\phi$ put $w$ in $D(H_I)$,
+so both derivatives in (49.6) exist. Their difference is
+$-\langle w,P^\perp vP^\perp w\rangle$, the displayed integral.
+If this integral were zero, continuity would force $v(v-a)^2=0$
+on $I$. A nonconstant nonnegative continuous $v$ takes an interval
+of values, contradicting that identity. This supplies an original-model
+falsifier of untilted finite-frequency replacement. The same variation
+of constants with $h(0)=h_0$ gives the forcing term. $\square$
+

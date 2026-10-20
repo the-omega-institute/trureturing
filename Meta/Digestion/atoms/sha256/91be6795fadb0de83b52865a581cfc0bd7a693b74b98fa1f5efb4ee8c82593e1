@@ -1,0 +1,24 @@
+### 定理 365.2（Gramian 的核与有限可见性）
+
+对任意 \(u\)，有
+
+$$
+\boxed{
+\langle u,W_N^\pi u\rangle
+=
+\|\mathcal O_N^\pi u\|^2
+=
+\sum_{n=0}^{N-1}\|C_nA^nu\|^2.
+}
+$$
+
+因此
+
+$$
+\ker W_N^\pi
+=
+\ker\mathcal O_N^\pi.
+$$
+
+若 \(W_N^\pi\) 正定，则 horizon \(N\) 内的所有状态方向都可由该策略观察；若 \(W_N^\pi\) 有非零核，则这些方向在该策略下完全不可见。
+

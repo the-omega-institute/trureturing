@@ -1,0 +1,11 @@
+## 定理 269.1（观测 law 乘积分解）
+
+\[
+\boxed{
+P_M(X_V)
+=
+\bigotimes_{i\in I}
+P_{M_i}(X_{V_i}).
+}
+\]
+

@@ -1,0 +1,40 @@
+**定义 292.1（候选纤维的规划值）。** 对非空有限候选类集 $K$，令 $\mathcal A(K)$ 为当前仍允许的干预。每个 $a$ 有成本 $c(a)>0$ 和分支集 $K_{a,y}$。在平均目标中，先验写成定义域为 $K$ 且满足 $\sum_{k\in K}p(k)=1$ 的函数 $p$；对 $P_{a,p}(y)>0$，置
+
+$$
+P_{a,p}(y)=\sum_{k\in K_{a,y}}p(k),
+\qquad
+p_{a,y}(k)=\frac{p(k)}{P_{a,p}(y)}\quad(k\in K_{a,y}).
+$$
+
+这里 $p_{a,y}$ 是确定性响应取得结果 $y$ 后的条件先验。若 $|K|=1$，置
+
+$$
+V_{\max}(K)=V_{\mathrm{avg}}(K,p)=0.
+$$
+
+对 $|K|>1$，定义最坏代价递推
+
+$$
+\boxed{
+V_{\max}(K)
+=
+\min_{a\in\mathcal A(K)}
+\left[c(a)+\max_{y:K_{a,y}\ne\varnothing}V_{\max}(K_{a,y})\right],
+}
+\tag{292.1}
+$$
+
+并在给定先验 $p$ 下定义平均代价递推
+
+$$
+\boxed{
+V_{\mathrm{avg}}(K,p)
+=
+\min_{a\in\mathcal A(K)}
+\left[c(a)+\sum_{y:P_{a,p}(y)>0}P_{a,p}(y)V_{\mathrm{avg}}(K_{a,y},p_{a,y})\right].
+}
+\tag{292.2}
+$$
+
+若某分支没有允许干预或预算不足，则该分支的值置为 $+\infty$。
+

@@ -1,0 +1,12 @@
+\|F-\Delta_Z^*(F)\|_\infty.
+}
+\tag{332.1}
+\]
+对效果族取
+\[
+\chi_Z(\mathcal V)
+=
+\sup_{F\in\mathcal V}\chi_Z(F).
+\]
+这里的范数是算子范数；若效果已归一化，残差至多为一。
+

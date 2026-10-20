@@ -1,0 +1,71 @@
+**定理 435.1（同一有限筛的完整前缀与正核）。** 任取先固定的
+\(1\le\lambda<\Lambda<\infty\)，定义全部真实整数窗口
+
+\[
+\mathcal W_z(x)=\{n\in\mathbb N_{>0}:\lambda x\le n\le\Lambda x\}.
+\tag{CW.3}
+\]
+
+则当 \(z\to\infty\) 时，该窗口的全部整数共同满足
+
+\[
+\boxed{\displaystyle
+\frac LxM_z(n)=1-\frac nx+o(1),\qquad
+n^2J_x^{\eta_z}(n)=c_0+o(1).}
+\tag{CW.4}
+\]
+
+共同误差的量词是：任意 \(\varepsilon>0\) 都有有限 \(Z\)，使全部 \(z\ge Z\) 和全部 \(n\in\mathcal W_z(x(z))\) 的两份误差绝对值小于 \(\varepsilon\)。两份 \(o(1)\) 允许依赖所选源函数和固定 \(\lambda,\Lambda\)，不依赖该窗口中的行。
+
+因而核在整个窗口最终严格为正；若 \(\lambda>1\)，实际粗糙前缀在整个窗口最终严格为负。\(\lambda=1\) 时不对边界每行的前缀宣称严格负性。
+
+证明。首先 \(x/z\to1\) 给 \(\Lambda x<z^2\) 对全部充分大 \(z\) 成立。在 \(1\le n<z^2\) 内，每个非单位且全部素因子大于 \(z\) 的整数必为一个素数：若它含至少两个素因子，连同重数，其值严格大于 \(z^2\)。故对所有这样的 \(n\)，包括 \(n<z\)，有精确身份
+
+\[
+\boxed{M_z(n)=1-\max\{\pi(n)-\pi(z),0\}.}
+\tag{CW.5}
+\]
+
+其中 \(\pi(t)\) 计数 \(p\le t\)。它保留 \(P^-(r)>z\) 的严格 cutoff，以及原单位项。\(n\ge z\) 时是 \(1-\pi(n)+\pi(z)\)；\(n<z\) 时右侧仍是精确的单位一。
+
+经典 PNT \(\pi(t)=t/\log t\,[1+o(1)]\) 在
+\(t=n\in[\lambda x,\Lambda x]\) 上共同有效，因为这整个范围的下端趋于无穷。又 \(n/z\) 在固定正紧区间内，故 \(L/\log n\to1\) 共同成立，而
+
+\[
+\frac Lx\pi(z)\longrightarrow1,\qquad
+\frac Lx\pi(n)=\frac nx+o(1)
+\]
+
+于整个窗口共同成立。因此
+
+\[
+\frac Lx[\pi(n)-\pi(z)]=\frac nx-1+o(1).
+\]
+
+正部函数是一 Lipschitz 函数，且 \(n/x\ge\lambda\ge1\)，于是
+
+\[
+\max\left\{\frac Lx[\pi(n)-\pi(z)],0\right\}
+=\frac nx-1+o(1).
+\]
+
+（CW.5）与 \(L/x\to0\) 给第一份（CW.4）。这同时支付 \(\lambda=1\)、\(x<z\) 时的窄端区间，没有把 \(n<z\) 的单位项误写为素数差。
+
+为证明第二份，取实际源指数
+
+\[
+\sigma_z=\frac{\log x}L
+=1+\frac{\log(x/z)}L\longrightarrow1,
+\quad x=z^{\sigma_z},\qquad
+a_{z,n}=\frac{\log(n/x)}L.
+\]
+
+对全部窗口行，\(0\le a_{z,n}\le\log\Lambda/L\to0\) 共同成立。充分大 \(z\) 时 \(\sigma_z\in[1/2,3/2]\)；§434 的正指数紧区间共同极限可取 \(V=1\)，因为 \(\Lambda x\le xz\) 最终成立。它给
+
+\[
+n^2J_x^{\eta_z}(n)=\Xi_{\sigma_z}(a_{z,n})+o(1)
+\]
+
+共同于全部窗口整数。轮廓在正参数矩形上联合连续，故右侧共同趋于 \(\Xi_1(0)=c_0\)。
+这是完整整数纤维结论，使用原积分端点而非逐行密度猜测。最后取共同误差小于 \(c_0/2\) 可得核严格正；\(\lambda>1\) 时再取前缀误差小于 \((\lambda-1)/2\)，可得全部前缀严格负。
+

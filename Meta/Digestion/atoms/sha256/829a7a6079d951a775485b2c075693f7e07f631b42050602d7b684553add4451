@@ -1,0 +1,57 @@
+### 定理 38.2（$d+7$ 与 $d+8$ 次固定路径充分性）
+
+在定义 38.1 的合同中，若 $g_Ng_{N+1}\ne0$，则前 $d+7$ 次读数 $z_0,\ldots,z_{N+1}$ 唯一确定全部 $S,\kappa,D$。不限制增益零交叉时，前 $d+8$ 次读数 $z_0,\ldots,z_{N+2}$ 仍唯一确定全部 $S,\kappa,D$。两种结论使用同一条预先固定路径，后一种只是多读一个连续位置。
+
+特别地，$d=1$ 时分别为八次和九次，在此共同增益子模型上比第 37 节的十读数充分方案分别减少两次和一次；恢复目标是 $S,\kappa,D$。这里不主张跨所有路径的全局最少读数，也不提供自适应协议的下界。
+
+**证明。** 写 $a=\operatorname{tr}S>0$、$b=\operatorname{tr}(MS)$，沿纯 $M$ 的信号为
+
+$$
+u_i=\operatorname{tr}(M^iS)=f_i a+g_i^{\mathrm F}b,
+$$
+
+其中 $f_i,g_i^{\mathrm F}$ 是定理 37.2 中初值分别为 $(1,0),(0,1)$ 的 Fibonacci 数列；上标 $\mathrm F$ 将它与增益 $g_i$ 区分。因 $\binom tj$ 的次数为 $j$、首项系数为 $1/j!$，它们在实数上组成次数不超过 $d$ 的多项式基底；把 $D(i)$ 唯一写为 $\sum_{j=0}^d\delta_j\binom ij$，则切换前
+
+$$
+z_i=f_i a+g_i^{\mathrm F}b+i f_i c+i g_i^{\mathrm F}e+D(i),
+\qquad c=\kappa a,\quad e=\kappa b.
+$$
+
+先只把 $(a,b,c,e)$ 当作线性未知量。由定理 37.2 证明中的 $L^2$ 消去恒等式及 $\det H=5$，定理 35.2 以 $h=0,r=s=4,Q_*(1)=1$ 给出：前 $d+5=N$ 个纯 $M$ 读数唯一恢复 $(a,b,c,e,\delta_0,\ldots,\delta_d)$，其设计行列式对每个 $d$ 都为 $5$。因真实来源 $a>0$，
+
+$$
+\kappa=c/a
+$$
+
+唯一确定；共同增益还要求 $e=\kappa b$。在此已恢复的是纯 $M$ 的两个有效关系坐标与增益斜率，并未把四个提升坐标当作四个独立物理来源。
+
+记 $m=N-1=d+4$，切换后信号为
+
+$$
+U_j=\operatorname{tr}(M^jJM^mS),\qquad U_2=U_1+U_0,
+\qquad w_j=z_{N+j}-D(N+j)=g_{N+j}U_j.
+$$
+
+若 $g_Ng_{N+1}\ne0$，直接由 $U_j=w_j/g_{N+j}$ 取得 $U_0,U_1$。若容许零交叉，则非恒零的仿射函数 $g_i=1+\kappa i$ 在三个互异位置至多为零一次。取其中两个非零增益读出相应 $U_j$：若为 $(U_0,U_2)$，令 $U_1=U_2-U_0$；若为 $(U_1,U_2)$，令 $U_0=U_2-U_1$。这同样取得 $U_0,U_1$，无需更改采集路径。
+
+为复用第 4 节的完整关系逆，令 $T=M^{m-1}S$。从已恢复的 $a,b$ 递推取得 $u_{m-1},u_m$，则
+
+$$
+\operatorname{tr}T=u_{m-1},\quad
+\operatorname{tr}(MT)=u_m,\quad
+\operatorname{tr}(JMT)=U_0,\quad
+\operatorname{tr}(MJMT)=U_1.
+$$
+
+定理 4.1 因而唯一给出
+
+$$
+T=\begin{pmatrix}
+u_{m-1}+u_m-U_1&u_{m-1}+2u_m-U_0-U_1\\
+U_0-u_{m-1}&U_1-u_m
+\end{pmatrix},
+\qquad S=M^{-(m-1)}T.
+$$
+
+这里 $\det M=-1$，故逆存在。全过程只从同一累计历史提取信号；$T$ 是恢复中的代数坐标，不是另一次重置实验的未知来源。任意两个实现若有相同所述有限读数，先由线性逆有相同 $a,b,c,e,D$，再有相同 $\kappa,U_0,U_1,T,S$，故唯一性成立。∎
+

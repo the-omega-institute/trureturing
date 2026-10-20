@@ -1,0 +1,10 @@
+**Proposition 15.2 (whole root fibers and movable six-source families).**
+Put $\mathcal B=\{x\in\mathcal I:r_x(\varepsilon)=\mathsf{branch}\}$,
+where $\mathcal I=\rho[\mathcal T]$. The following are nonempty,
+pairwise disjoint subsets whose union is the entire $\mathcal U_*$:
+
+- $\Pi_j$, for $j\in J$: $x_{b_j}=\alpha$, its partner is $\beta$,
+  and all other class roots are branches;
+- $Z_d$, for $d\in D$: $x_d=\beta$ and all other class roots are branches;
+- $Z_*$: all six class roots are branches.
+

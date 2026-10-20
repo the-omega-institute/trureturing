@@ -1,0 +1,48 @@
+## 198. FIB 网络上的外加颗粒气体、非弹性碰撞、Haff 冷却与团簇不稳定
+
+固定 FIB 关系给出的有限接触骨架 \(G_j=(V_j,E_j)\)，另指定粒子质量、位置、速度、有效截面、接触法向和边界。对接触边 \(e=(a,b)\)，法向相对速度为 \(g_n=(v_a-v_b)\cdot n_e\)，恢复系数为 \(e_e\in[0,1]\)。无切向摩擦的碰撞规则可写成
+$$
+v_a'=v_a-\frac{m_b}{m_a+m_b}(1+e_e)g_nn_e,\qquad
+v_b'=v_b+\frac{m_a}{m_a+m_b}(1+e_e)g_nn_e,
+\tag{198.1}
+$$
+其动能损失为
+$$
+\Delta E_e=-\frac12\frac{m_am_b}{m_a+m_b}(1-e_e^2)g_n^2.
+\tag{198.2}
+$$
+接触边、法向、恢复系数和碰撞率全是外加规则，FIB 不提供物理接触或耗散。
+
+稀薄图索引动力学可抽象为
+$$
+\partial_tf_v+\operatorname{div}_j\mathcal F_j[f]_v
+=\sum_{e\ni v}\gamma_eQ_e^{(e_e)}(f_v,f_{v_e})
++\mathcal T_vf_v+\mathcal S_v .
+\tag{198.3}
+$$
+Boltzmann 近似要求分子混沌；有限密度、重复邻接和图环路造成的关联需 Enskog 或更高阶闭合。对速度分布取矩后，连续嵌入下的密度、动量和温度方程含压力、黏性、热流、拖曳、驱动和冷却率；这些量没有边长和权重就没有确定物理量纲。
+
+自由冷却、均匀密度、无驱动、无拖曳和常数 \(e<1\) 的自相似近似给出
+$$
+\frac{{\rm d}T}{{\rm d}t}=-\Lambda_eT^{3/2},
+\qquad
+T(t)=T_0\left(1+\frac t{t_H}\right)^{-2}.
+\tag{198.4}
+$$
+\(\Lambda_e\) 依赖密度、截面、质量和 \(1-e^2\)；速度相关恢复系数、摩擦、有限密度和边界散热会改变 Haff 指数或前因子。若以外加赋权拉普拉斯 \(L_j\) 分解图模态，线性化扰动可写成
+$$
+\partial_\tau\widehat z_\ell
+=\mathsf M_{0,j}\widehat z_\ell-\lambda_{\ell,j}\mathsf M_{1,j}\widehat z_\ell .
+\tag{198.5}
+$$
+某模态矩阵有正实部时会形成密度团簇或剪切结构；判据依赖碰撞、压力和输运闭合，不能用图度数或递归深度代替。
+
+驱动系统的能量账式还需外加注入、恒温器、振动边界或剪切：
+$$
+\frac{{\rm d}}{{\rm d}t}\left(\frac d2\sum_vn_vT_v\right)
+=\mathcal P_{\rm in}-\sum_vn_v\zeta_vT_v-\mathcal D_{\rm drag}
++\mathcal F_{\rm bdry}.
+\tag{198.6}
+$$
+自由冷却、稀薄 Boltzmann 和驱动稳态不是同一极限；非弹性颗粒气体也不自动等同沙堆、堵塞或弹性网络。只测全图平均温度通常只能识别冷却系数的组合，不能分离密度、截面、恢复系数和图结构。因此 Haff 冷却、团簇不稳定和非平衡速度统计都是外加碰撞与驱动模型的条件结论。
+

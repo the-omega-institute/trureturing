@@ -1,0 +1,15 @@
+首先应证明或检查：
+
+1. ValidTrace 把每个已记录角色事件绑定到自身事件号处的 filtration，且所有消费者要求该证明，故错配账本不能靠静默过滤事件而通过；AppendOnlyExtension 绑定旧 K 的 decisionEvent，并要求尾部事件号均大于该点，故 InAdjudicationPrefix 的事件号、轮次和时间前缀及其消费者在旧轮逐项不变；
+2. 依赖闭包污染下裁决准入反单调，ReuseDepth 只计裁决前缀内触及闭包的 Generate/Tune/Select；
+3. NonAnticipating 同时要求裁决点已见、冻结点未见且无依赖污染，故从未观察的 Z 不能取得 ScientificGain；查表复制器零回顾损失与非预见失败可同时成立；
+4. CommitInterface 的输出 Seal 以整个 K、冻结事件号与依赖闭包为摘要输入并逐项保存，且 committedArtifacts 是输入 CandidateBundle 的有限子集并进入依赖闭包；
+5. protectedCoordinates 是 ProspectiveCommitment 的直接投影，单改 Condition 必使坐标差成立；RegradeReport 对以新坐标评价旧证据的实际 verdict 等式给出证明，TargetLaundering 合取该等式；
+6. ValidTransportCert 的收据绑定 claim 内容地址，新域差上预测有定义且存在失败见证；Overreach 只能由该谓词的存在闭包解除；
+7. \(J\subseteq J'\) 时 \(\ker P_{J'}\subseteq\ker P_J\)；
+8. 在限制律成立时，扩域逃逸为空当且仅当两域预测核相同；
+9. 五个异型坐标各自为预序时，公共绝对坐标诱导的 Pareto 弱支配在行动上为预序；各坐标为偏序时，按同向量等价取商后为偏序；
+10. 五个异型坐标各自为加法群时，gainDifference 满足自差为零与三点 cocycle；无来源权重时 NoDominatingCandidate 不能推出 Stop；
+11. DecisionSet 允许空候选束、空可行集与空 current；OrientedStop 才要求 current 为某个可行行动，并只消费 K.decision 与声明范围内的外生 OrientationSpec；Revise 只产生下一轮承诺候选时旧轮结算保持不变；
+12. 时域逃逸是 ExpansionEscape 的实例。
+

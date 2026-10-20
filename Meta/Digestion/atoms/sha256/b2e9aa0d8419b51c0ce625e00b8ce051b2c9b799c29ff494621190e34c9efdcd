@@ -1,0 +1,16 @@
+### 50.4 对实际 completion 的约束
+
+若非 canonical completion 包含两条 canonical 射线，其余每条都正交于这两条，因而也必 canonical，矛盾。所以它至多含一条 canonical 射线。
+
+除第 47、48 节的两个参数 `a=±sqrt((37-sqrt(73))/72)` 外，`Delta=0` 射线恰是 canonical 六条，故任一非 canonical completion 至少含五条 `Delta!=0` 射线。在例外参数处，若它含一条 canonical 射线，其他五条也均有 `Delta!=0`，因为例外射线与 canonical 射线之间没有正交边；若它不含 canonical 射线，其 `Delta=0` 部分位于 `K3,3`，最多只能取两条，故至少四条满足 `Delta!=0`。命题得证。
+
+此外，结合第 49 节已证的逐射线距离，对任一非 canonical completion `C`，至多一列为 canonical，故至少五列与任意 canonical 射线的 projective 距离不小于 `|a|/80`。因此，在全部列相位与排列构成的单项式酉矩阵 `M` 上，
+
+```math
+\inf_M\|C-C_{\mathrm{can}}M\|_F\ge\frac{\sqrt5\,|a|}{80}.
+```
+
+若含例外射线，第 49 节的 `sqrt(6)|a|/80` 下界仍然成立。
+
+本节没有排除只含一条 canonical 射线的混合正交三元组，也没有排除三条 `Delta!=0` 射线的正交兼容性；没有由这些计数推出 affinity 下界或 quartet 排除。
+

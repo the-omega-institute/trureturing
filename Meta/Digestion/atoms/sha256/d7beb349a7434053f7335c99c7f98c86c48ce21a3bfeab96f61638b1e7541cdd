@@ -1,0 +1,32 @@
+### 13.6 已知总质量仍无法消除绝对噪声下的分类障碍
+
+**定理。** 设 $0\leq\ell\leq r<h$、$0<\eta\leq1$。取概率测度
+
+\[
+\mu_0=\delta_h,\qquad
+\mu_1=\eta\delta_\ell+(1-\eta)\delta_h.
+\tag{13.8}
+\]
+
+则 $M_{\mu_0}(r)=0$、$M_{\mu_1}(r)=\eta$，且
+
+\[
+0\leq C_{\mu_1}(t)-C_{\mu_0}(t)
+=\eta(e^{-\ell t}-e^{-ht})\leq\eta\qquad(t\geq0).
+\tag{13.9}
+\]
+
+**证明。** 两个指数均在 $(0,1]$，且 $\ell<h$ 保证其顺序。低能质量由原子所在区间直接计算。源码 `SpectralObservationCoverage.normalized_hidden_atom` 复用 Mathlib 的 `ProbabilityTheory.bernoulliMeasure`，从既有积分及概率实例推出式 (13.9)，没有另外发明一个概率分布接口。[13-B]
+
+**定理。** 即使算法得到所有非负时间的观测值，也不存在对所有概率测度都正确的判据，能在统一绝对误差 $\eta/2$ 下决定 $\mu([0,r])=0$。
+
+**证明。** 令
+
+\[
+y(t)=\frac{C_{\mu_0}(t)+C_{\mu_1}(t)}2.
+\]
+
+式 (13.9) 保证它与两种真实关联函数的误差均不超过 $\eta/2$。同一个输入 $y$ 在第一种模型中要求回答零质量，在第二种模型中要求回答非零质量，矛盾。公开定理 `SpectralObservationCoverage.no_uniform_noisy_gap_classifier` 对任意函数型谓词量化，不限制算法的连续性、计算能力或模型类别。
+
+这个结论针对给定阈值以下的质量是否严格为零。它不否定有额外先验时的定量估计，也不宣称每个谱模型都无法认证。对任何给定正误差预算 $\delta$，可选 $0<\eta\leq\min\{1,2\delta\}$，因此障碍适用于任意正的统一绝对误差。使用相对误差、非消失的低能权重下界或额外干预观察，会改变问题。
+

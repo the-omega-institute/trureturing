@@ -1,0 +1,14 @@
+### 定义 385.1（下降类的原始值）
+
+在定义 383.4 的下降条件下，置
+
+$$
+W^{\downarrow}_r(P,Q)
+=
+\inf_{\substack{\pi\in\Gamma^{\mathrm{meas}}_{\mathcal F\to\mathcal G}(P,Q)\\
+\pi\ \text{沿 }r\text{ 下降}}}
+\mathbb E_\pi\!\left[\sum_n c_n(X_n,Y_n)\right],
+$$
+
+并令 \(\widehat W^{\downarrow}_r\) 为这些下降耦合推前后的压缩成本下确界。
+

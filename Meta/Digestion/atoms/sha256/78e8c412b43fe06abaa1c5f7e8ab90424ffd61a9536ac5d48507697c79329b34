@@ -1,0 +1,17 @@
+**推论 17.3（连续探针的均值、协方差与通过时间核对）。** 对连续 $f,g$，
+
+$$
+\mathbb E\langle f,\mu\rangle
+=\int_0^1 f(u)\kappa(u)\,du,
+$$
+
+$$
+\operatorname{Cov}\bigl(\langle f,\mu\rangle,\langle g,\mu\rangle\bigr)
+=\int_0^1\int_0^1
+f(u)g(v)C(u,v)^2\,du\,dv.
+$$
+
+取 $f=g=1$，得到 $\operatorname{Var}(\mu([0,1]))=1/(6D^2)$，与定理 15.3 及定理 10.3 的通过时间方差一致。 对常数探针 $f\equiv s$，Fredholm 行列式满足 $\det_F(I+s\mathsf C)=\cosh\sqrt{s/D}$，其逆为 $\operatorname{sech}\sqrt{s/D}$，恢复定理 10.3 的通过时间变换。
+
+本节的随机测度收敛只覆盖连续测试函数的占用积分。它不推出 $\ell_j(\cdot)$ 在 $C([0,1])$ 中一致收敛、不推出 $m=m(j)$ 的逐点行列式律、不指定跨 $j$ 的样本耦合，也不延伸到第 11、14 节的速度权重扩展或物理热流、温度与经验普适性。
+

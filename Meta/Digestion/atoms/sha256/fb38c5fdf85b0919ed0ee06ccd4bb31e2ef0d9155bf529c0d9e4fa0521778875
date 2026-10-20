@@ -1,0 +1,51 @@
+**定理 33.1（逐模态投影与标量生存函数的统一接口）。** 记 $k_m=(m+\tfrac12)\pi$。假设对每个固定 $m$，当 $j\to\infty$ 时有
+
+$$
+a_{j,m}(\nu_j)\longrightarrow b_m(\nu),
+\qquad
+\lambda_{j,m}>0\ \text{最终成立},
+\qquad
+-\epsilon_j^{-1}\log\lambda_{j,m}\longrightarrow Dk_m^2,
+$$
+
+其中
+
+$$
+b_m(\nu)=\frac{2(-1)^m}{k_m}
+\int_{[0,1]}\cos(k_mx)\,d\nu(x).
+$$
+
+若对任意 $0<t_0<T<\infty$ 还有标量高频尾条件
+
+$$
+\lim_{M\to\infty}\limsup_{j\to\infty}
+\sup_{t\in[t_0,T]}
+\sum_{m>M}|a_{j,m}(\nu_j)|
+|\lambda_{j,m}|^{\lfloor t/\epsilon_j\rfloor}=0,
+$$
+
+则
+
+$$
+S_{j,\nu_j}(t):=\Pr_{\nu_j}(\epsilon_j\tau_j>t)
+\longrightarrow
+S_\nu(t):=\sum_{m\ge0}b_m(\nu)e^{-Dk_m^2t}
+$$
+
+在每个紧区间 $[t_0,T]$ 上一致成立。这里的级数只对 $t>0$ 作解释；在 $t=0$ 不要求绝对收敛。
+
+**证明。** 固定 $M$ 时，有限个模态的假设给出
+
+$$
+\lambda_{j,m}^{\lfloor t/\epsilon_j\rfloor}
+\longrightarrow e^{-Dk_m^2t}
+$$
+
+并且在 $[t_0,T]$ 上一致。将有限和与 $m>M$ 的尾部分开，有限和先取 $j\to\infty$，两侧尾项再由假设控制。连续级数的尾部由 $|b_m(\nu)|\le 2/k_m$ 及
+
+$$
+\sum_{m>M}\frac{2}{k_m}e^{-Dk_m^2t_0}\longrightarrow0
+$$
+
+控制，故得到一致收敛。该论证只涉及标量生存函数；它不推出转移算子或全空间范数的收敛。$\square$
+

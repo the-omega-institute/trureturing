@@ -1,0 +1,17 @@
+**定理 68.5（精确线性响应）。** 设 \(Q_\theta\) 与平稳律 \(\pi_\theta\) 在 \(\theta=0\) 附近可微，支持不变，并令
+\[
+s_0(i)=\left.\partial_\theta\log\pi_\theta(i)\right|_0,
+\qquad
+s(i,j)=\left.\partial_\theta\log Q_\theta(i,j)\right|_0.
+\]
+对任意有限路径泛函 \(F(X_0,\ldots,X_T)\)，路径得分
+\[
+S_T=s_0(X_0)+\sum_{t=0}^{T-1}s(X_t,X_{t+1})
+\]
+满足 \(\mathbb E_0S_T=0\) 与
+\[
+\left.\partial_\theta\mathbb E_\theta F\right|_0
+=\operatorname{Cov}_0(F,S_T).
+\]
+取 \(F=J_T\) 并除以 \(T\)，在几何混合与可积条件下可得到稳态电流的响应率；没有额外假设时，响应由该 score 协方差决定，不能直接等同于同一电流的自相关。
+

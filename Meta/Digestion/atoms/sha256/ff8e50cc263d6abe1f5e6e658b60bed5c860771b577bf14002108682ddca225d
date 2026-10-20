@@ -1,0 +1,186 @@
+**Theorem 215.2 (One coupling and one signed stock allocation).**
+First let U be any full score on $m\ge3$ old coordinates, terminal
+mass t and anchor W. Insert finitely many coordinates after coordinate
+two, interspersed arbitrarily among the others while preserving old
+order. Extend old nonterminal words by ones at the inserted coordinates.
+For numbers $a_j\ge0$ with $D=\sum a_j\le t$, replace terminal
+mass D by A-only mass $a_j$ with first zero j and all old bits one;
+later inserted bits may be jointly coupled arbitrarily. Retain $T=t-D$.
+Define, using every legal label,
+
+$$
+\begin{aligned}
+S_0&=\max_{\ell\ge1}\sum_w g_U(w,\ell),\\
+S_i&=\max_{\ell\ge0}\sum_{w_i=0}g_U(w,\ell)
+       +\max_{\ell\ge1}\sum_{w_i=1}g_U(w,\ell),\qquad S=\max_iS_i.
+\end{aligned}
+$$
+
+Let $a_{(1)}\ge a_{(2)}$ be the largest two inserted masses, padded
+by zeros. The simultaneous coupling minima are
+
+$$
+\min B_{\mathcal C}
+ =\max\{B_{\mathcal C}(U),a_{(1)}+S,a_{(1)}+a_{(2)}+S_0\},
+ \qquad\mathcal C=N,O.
+\tag{215.7}
+$$
+
+One coupling attains both: each inserted A atom has sole zero j.
+K and W are unchanged; the new quotient coordinates are $-a_j$.
+
+Now let $q=(\beta,K)$ have $K\ge\sum|\beta_j|$ and at least two
+positive late coordinates. Put
+
+$$
+B=K-\sum_j|\beta_j|,\quad
+D_e=(-\beta_1)_++(-\beta_2)_+,\quad D_l=\sum_{j\ge3}(-\beta_j)_+,
+$$
+
+and let $\mu\ge\eta$ be the two largest positive late totals. Their
+locations and all negative locations are arbitrary; positive early
+totals are unrestricted. On
+
+$$
+B\ge4\mu,\qquad B+D_l\ge5\mu
+\tag{215.8}
+$$
+
+the unrestricted minima are $M_N(q)=M_O(q)=D_e$, attained by one score.
+More generally if $B\ge2\eta$, set
+
+$$
+R=\min\{B/4,(B+D_l)/5,B+D_l-2\eta\}.
+\tag{215.9}
+$$
+
+There is one full exact-Q score with both costs at most
+$D_e+(\mu-R)_+$. If both early coordinates are nonpositive, the
+constructed score has both costs exactly that bound. Outside (215.8)
+this is a sufficient construction bound, not an unrestricted minimum.
+
+**Proof.** For (215.7), two old queries project exactly to U. Let
+$z_j$ be inserted A mass whose bit j is zero. An old query i and
+inserted query j, in either order and either catalog, have support
+
+$$
+\max\{B^{(i)}(U),z_j+S_i\}.
+$$
+
+Indeed all old nonterminal rows have inserted bit one, every inserted
+row has old bit one, and the inserted-zero branch carries only base
+reward. If j precedes i its stopped-zero cell is this pure base cell;
+if i precedes j its stopped-zero cell is the old zero cell. For two
+inserted queries, with $z_{jk}$ the mass of their zero-event union,
+the support is
+
+$$
+\max\{\text{total base reward of }U,z_{jk}+S_0\}.
+$$
+
+All non-11 cells are pure base cells. An inserted singleton has the
+same expression with $z_j$. Disjoint first-zero classes force
+$z_j\ge a_j$, $z_{jk}\ge a_j+a_k$. Also $S\ge S_0$ by splitting
+each numerical-label total on an old bit. The sole-zero coupling
+makes all these inequalities equalities at once. This exhausts both
+catalogs, including empty/singleton information and repetitions.
+Within precisely this coupling class, cost at most d is therefore
+equivalent to the three terms in (215.7) being at most $W+d$ and
+$D\le t$. The proof is not an unrestricted fiber lower bound.
+
+For the signed construction choose $k\in[\eta,B/2]$, set
+$T=B-2k$ and $\tau=T+D_l$. On the compressed ordered positive late
+coordinates use the fair-suffix score of
+[Theorem 203.6](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md):
+each early P class has mass k and fair independent positive bits;
+each positive C class has its prescribed total and fair later bits;
+the terminal has mass $\tau$. Its hypotheses hold because $k\ge\eta$.
+It has $W_0=2k+\tau$ and exact excess
+
+$$
+d_0=\max(0,\mu-k/2,\mu-\tau)
+\tag{215.10}
+$$
+
+in both catalogs. For this donor $S_0=v_0=\max(k,\mu)$ and
+$S=k+v_0$. Early singleton queries attain S. A late singleton i has
+its two relevant maxima
+
+$$
+\max(k,\gamma_i,\tfrac12\max_{n<i}\gamma_n),\qquad
+\max(k/2,\max_{n>i}\gamma_n,\tfrac12\max_{n<i}\gamma_n).
+$$
+
+Their sum is at most $k+v_0$: when $\mu>k$ at most one total exceeds
+k, and its position before, at, or after i gives the three cases;
+when $\mu\le k$ both maxima are at most k.
+
+Insert every negative or zero late coordinate in its original position,
+using $a_j=(-\beta_j)_+$ and the sole-zero coupling. Since
+$D_l\le\tau$, (215.7) applies. Its additional terms are at most
+$W_0+d_0$, because $a_{(1)},a_{(1)}+a_{(2)}\le\tau$ and
+$v_0-k\le d_0$. Thus both supports and excesses remain exactly those
+of the donor, with actual terminal T. All inserted negatives share
+this one reservoir.
+
+Add an A atom of mass $-\beta_j$ at the sole-zero word of each
+negative early coordinate. This increases excess by at most $D_e$.
+Add a C atom of mass $\beta_j$ at each positive early sole-zero word;
+every table gains at most that mass and the anchor gains exactly it,
+so excess cannot increase. The resulting Q is q and
+
+$$
+W=B+D_l+(\beta_1)_++(\beta_2)_+.
+$$
+
+When both early coordinates are nonpositive, the modified anchor with
+early outputs zero attains $D_e$. For a maximal positive class $j_*$,
+$(1,2;0,0,j_*)$ attains $D_e+\mu-\tau$, and
+$(1,j_*;0,j_*,0)$ attains $D_e+\mu-k/2$, collecting all sole-zero
+A atoms. These match (215.10) and prove exact evaluation of this score.
+
+Optimizing this one construction amounts to
+
+$$
+\max_{\eta\le k\le B/2}\min(k/2,B+D_l-2k)=R.
+$$
+
+The three upper bounds in (215.9) follow directly. Their minimum is
+attained by $k=\max(\eta,2R)$, since $B\ge2k$ and
+$B+D_l\ge2k+R$. Equivalently, for a desired $d\ge D_e$, put
+$r=(\mu-(d-D_e))_+$ and $k=\max(\eta,2r)$; the sufficient tests are
+
+$$
+B\ge2k,\qquad B+D_l\ge2k+r.
+\tag{215.11}
+$$
+
+At the plateau choose $k=2\mu$. Then T is nonnegative and
+$\tau\ge\mu$, so $d_0=0$. Against every unrestricted competitor,
+modify the ordinary anchor by outputting zero on an early zero exactly
+when that early beta is negative. It gains $D_e$ over the anchor;
+pair rewards are unchanged. Hence $\Delta_O\ge D_e$, proving both
+unrestricted minima. All zeros, ties, $B=2\eta$, $r=0$, T=0 and
+exhausted reservoirs are included. $\square$
+
+For example take $L=7$, $\beta=(-1,0,2,-1,2,-1,1)$, $K=16$.
+Here $B=8,D_e=1,D_l=2,\mu=\eta=2,k=4,T=0$. The full score is
+
+$$
+\begin{gathered}
+P_{01z_3 1z_5 1z_7}=P_{10z_3 1z_5 1z_7}=1/2
+                      \quad(z_3,z_5,z_7\in\{0,1\}),\\
+C_{1101z_5 1z_7}=1/2,\quad C_{11110 1z_7}=1,\quad C_{1111110}=1,\\
+A_{0111111}=A_{1110111}=A_{1111101}=1.
+\end{gathered}
+$$
+
+It has $W=10$, both supports 11 and both costs one. Removing only
+$A_{0111111}$ gives K=15 and a nonzero zero-cost core with both
+supports 10. For any actual unit-O input on the plateau, the full
+lower bound forces $D_e\le1$ and gives a certificate. Away from it,
+(215.11) with $d\le1$ is sufficient; unit-O feasibility alone does
+not establish that test. Positive early credit is allowed but not
+optimized by the broader bound. Fewer than two positive late totals
+belong to Theorem 214.2.
+

@@ -1,0 +1,25 @@
+**引理 1482.1（最近乘积距离的精确分解）。** 令乘积律 $Q$ 的坐标均值为 $m_i\in[-1,1]$，并记
+
+$$
+L(x)=\prod_i(1+m_ix_i),\qquad
+z(x)=\chi(x)(L(x)-1),\qquad p=\prod_i m_i.
+$$
+
+在公平律 $U$ 下，有
+
+$$
+\frac\kappa2-\operatorname{TV}(P_{N,\kappa},Q)
+=\frac p2-\mathbb E_U(z-\kappa)_+.
+$$
+
+**证明。** 因 $Q(x)=2^{-N}L(x)$，有
+
+$$
+\operatorname{TV}(P_{N,\kappa},Q)
+=\frac12\mathbb E_U|\kappa-z|.
+$$
+
+均匀律下 $\mathbb E_U\chi=0$，而乘积律的完整奇偶矩为 $p$，故 $\mathbb E_Uz=p$。使用 $|\kappa-z|=\kappa-z+2(z-\kappa)_+$ 即得。证毕。
+
+若 $p\le0$，右边不大于零，故这类乘积律不能比公平律更接近目标。若 $p>0$，可作偶数次坐标符号翻转，使全部 $m_i>0$；这种翻转保留 $\chi$ 与目标律。于是可以在非负偏置区域求最优，而无需假定最优者一开始就对称。
+

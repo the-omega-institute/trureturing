@@ -1,0 +1,4 @@
+## 414. Fibonacci 可逆约数变换保留对数衰减类
+
+本节继续使用 §§384–385 的实际系数 $\beta_d=\log(1-(-q)^d)$、$q=\varphi^{-2}$，及其 Dirichlet 卷积逆 $\gamma$。已付事实为 $\sum_{d\ge1}|\beta_d|<\infty$、$\sum_{d\ge1}|\gamma_d|\le1/\delta$、$\delta=\beta_1-\sum_{d\ge2}|\beta_d|>0$，以及 $e=\mu*\beta$。这里复用已有逆核与来源身份；以下是纸面推导，尚未形成新的 Lean 供应。
+

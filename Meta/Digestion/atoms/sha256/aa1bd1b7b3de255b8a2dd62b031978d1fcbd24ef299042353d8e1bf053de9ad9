@@ -1,0 +1,26 @@
+### 51.1 参数、轨道与命题
+
+取 \(-1<a<1\)，令 \(p,q\) 为虚部为正的单位复数，满足
+\[
+\Re p=(a-1)/2,\qquad \Re q=(-a-1)/2.
+\]
+写 \(p+q=-1+ih\)、\(s=h^2\)，则
+\[
+h>0,\quad 1<s\le3,\quad a^2=\frac{s(3-s)}{1+s},
+\quad p=\frac{a-1+i(h+a/h)}2,\quad
+q=\frac{-a-1+i(h-a/h)}2.
+\]
+本节允许 \(a=0\)。定义
+\[
+C=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\quad
+D=\begin{pmatrix}p&q\\\bar q&-\bar p\end{pmatrix},\quad
+N=D-C,\quad T_0=\frac{D+2C}{\sqrt6},\quad T_1=T_2=\frac N{\sqrt6}.
+\]
+它们是实际矩阵
+\[
+H_0=\frac1{\sqrt6}
+\begin{pmatrix}J+(p-1)I&J+(q-1)I\\
+J+(\bar q-1)I&-J-(\bar p-1)I\end{pmatrix}
+\]
+的 Fourier mode 块，其中 \(J\) 为三阶全一矩阵。各 \(T_\ell\) 酉且行列式为 \(-1\)，并有 \(C^*C=D^*D=2I\)、\(N^*N=6I\)。同步置换同时作用于两个 channel 的三个坐标，与 \(H_0\) 交换；记三循环为 \(S\)。
+

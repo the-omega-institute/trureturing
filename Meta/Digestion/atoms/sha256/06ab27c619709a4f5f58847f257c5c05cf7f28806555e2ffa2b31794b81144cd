@@ -1,0 +1,8 @@
+## 定义 184.1（前 \(n\) 阶谱画像）
+
+\[
+\operatorname{SpecTr}_n(A)
+=
+(s_1(A),\ldots,s_n(A)).
+\]
+

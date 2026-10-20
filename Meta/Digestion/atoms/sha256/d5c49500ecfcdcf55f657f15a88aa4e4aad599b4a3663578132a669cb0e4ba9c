@@ -1,0 +1,26 @@
+对每条边 \(e=(a,b)\) 设外加单位方向
+\(\hat n_e=(x_b-x_a)/|x_b-x_a|\)，并令 \(B\) 为带方向的图关联矩阵。在线性化位移 \(u=(u_v)_{v\in V_j}\) 下，一维轴向伸长的线性算子可写为
+\[
+R u=\bigl(\hat n_e\cdot(u_b-u_a)\bigr)_{e\in E_j},
+\qquad
+K=R^{\mathsf T}W R,
+\qquad
+W=\operatorname{diag}(k_e).
+\]
+若保留横向位移、弯曲或超边相互作用，则 \(R\) 和 \(W\) 要按外加几何与本构律扩展；不能把简单图拉普拉斯自动当作物理刚度。在线性弹性范围内，势能为
+\[
+E(u)=\frac12u^{\mathsf T}Ku-f^{\mathsf T}u,
+\tag{98.1}
+\]
+其中 \(f\) 是外加节点力。固定边界或刚性约束由矩阵 \(Cu=b\) 给出；自由平衡满足
+\[
+Ku-f+C^{\mathsf T}\lambda=0,
+\qquad
+Cu=b.
+\tag{98.2}
+\]
+等价的 KKT 系统为
+\[
+\begin{pmatrix}K&C^{\mathsf T}\\ C&0\end{pmatrix}
+\begin{pmatrix}u\\\lambda\end{pmatrix}
+=

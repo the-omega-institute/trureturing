@@ -1,0 +1,71 @@
+**定理 393.4（实际混合素子和的统一下界）。** 对全部奇素数 $p$，
+
+$$
+e_{4p}=-\log(1+q^2)+\log(1+q^{2p})<0,
+\qquad |e_{4p}|\ge\delta_4.
+\tag{393.10}
+$$
+
+对每个整数 $k\ge441$，
+
+$$
+\boxed{
+A_4(k)>\frac{9\delta_4}{512\sqrt k\log k},
+\qquad c_k^e=-A_4(k)+R_4(k).}
+\tag{393.11}
+$$
+
+因此对任意固定 $0<\varepsilon<1/4$，$A_4(k)$ 不是 $O(k^{-3/4+\varepsilon})$；完整绝对项和 $\sum_n|e_n|n^{-2}(1-n^{-2})^k$ 也不是该阶。若实际完整有符号系数满足（393.5），则必有同源联合抵消
+
+$$
+\boxed{
+\frac{R_4(k)}{A_4(k)}
+=1+O\!\left(k^{-1/4+\varepsilon}\log k\right)
+\longrightarrow1.}
+\tag{393.12}
+$$
+
+**证明。** 在既有（382.8）中取 $a_{\rm bin}=2$、奇核 $R=p$、$h=1$，即得（393.10）的精确公式。因 $0<q<1$、$2p\ge6$，有 $q^{2p}\le q^6<q^2$，故符号和下界成立。这些指标的素指数为 $(2,1)$，属于 $\mathcal X$，不属于 $\mathcal P$ 或 $\mathcal S$。
+
+直接使用 [Rosser–Schoenfeld 原文](../../../Library/Arith/rosser1962approximate.md) Corollary 3，式（3.8）：
+
+$$
+\#\{p:x<p\le2x\}=\pi(2x)-\pi(x)
+>\frac{3x}{5\log x}\qquad(x\ge41/2).
+\tag{393.13}
+$$
+
+这是无 RH 前提的文献输入，不重新推导，也不用只保证一枚素数的 Bertrand 存在式替代其计数。取 $x=\sqrt k\ge21$，对同一区间中的每个素数 $p$，有
+
+$$
+\frac1{16p^2}\ge\frac1{64k},
+\qquad
+\frac{k}{16p^2}\le\frac1{16},
+\qquad
+(1-(16p^2)^{-1})^k
+\ge1-\frac{k}{16p^2}\ge\frac{15}{16}.
+\tag{393.14}
+$$
+
+最后一式是经典 Bernoulli 不等式。只保留这些非负项，在同一指标区间组合（393.10）、（393.13）、（393.14），得到
+
+$$
+A_4(k)
+>\frac{3\sqrt k}{5\log\sqrt k}
+\frac{\delta_4}{64k}\frac{15}{16}
+=\frac{9\delta_4}{512\sqrt k\log k}.
+\tag{393.15}
+$$
+
+所有 $e_{4p}$ 均为负，绝对收敛允许将完整级数准确分成 $-A_4+R_4$。又 $k^{1/4-\varepsilon}/\log k\to\infty$，所以这一子和及其支配的完整绝对项和不能满足所述临界幂界。若完整有符号和满足（393.5），则由精确分解和（393.11）得
+
+$$
+\left|\frac{R_4(k)}{A_4(k)}-1\right|
+=\frac{|c_k^e|}{A_4(k)}
+\le\frac{512}{9\delta_4}\sqrt k\log k\,|c_k^e|
+=O(k^{-1/4+\varepsilon}\log k),
+\tag{393.16}
+$$
+
+证明了（393.12）。子和的下界没有被用于下界完整有符号和；$R_4$ 仍可补偿 $-A_4$。$\square$
+

@@ -1,0 +1,8 @@
+一旦这一完全正输运存在：
+
+* normal jets 自动成为外幂正迹；
+* connected moments 自动成为 Schatten traces；
+* Hankel matrices 自动成为 Gram；
+* Toeplitz minors 自动 total positive；
+* Riemann 零点自动位于临界线。
+

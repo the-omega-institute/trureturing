@@ -1,0 +1,97 @@
+### 56.4 Ten complete fibers and an adaptive second context
+
+<a id="TM56-T3"></a>
+**Theorem TM56.3 (ten-fiber separation).** For each $H=36+\delta$, $0\le\delta\le3$, let
+
+<a id="TM56-E16"></a>
+$$
+\begin{aligned}
+S_9=\{&(3,4),(3,5),(4,6),(5,6),(5,7),\\
+&(5,9),(6,8),(6,9),(7,9),(8,9)\},\\
+\mathcal F_{9,H}
+&=\{t\in U_H:q_H(t)\in\{\tau_9(z,w):(z,w)\in S_9\}\}.
+\end{aligned}
+\tag{TM.5616}
+$$
+
+One common supplied symbol admits a same-source controller recovering the initial target on every complete fiber in $\mathcal F_{9,H}$, with no Reads, at most two context attempts before the first $\rho$, at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+4$ whole source calls. Conversely, for every fixed actual nonempty positive context on either fixed side, every one-symbol controller with that CPF prefix fails on $\mathcal F_{9,H}$, even with harmless Reads, arbitrary acquired records and arbitrary ambient continuation after the first $\rho$.
+
+**Proof of membership and construction.** The first two points are initial tag 2 and the other eight are initial tag 1. The genuine witnesses from (TM.5604) are:
+
+| Initial $(z,w)$ | $(r,s)$ | Actual witness | Initial band |
+|---|---|---|---|
+| $(3,4)$ | $(2,1)$ | $\omega_{2,1}$ | 2 |
+| $(3,5)$ | $(1,2)$ | $\omega_{1,2}$ | 2 |
+| $(4,6)$ | $(2,2)$ | $\omega_{2,2}$ | 1 |
+| $(5,6)$ | $(4,1)$ | $\omega_{4,1}$ | 1 |
+| $(5,7)$ | $(3,2)$ | $\omega_{3,2}$ | 1 |
+| $(5,9)$ | $(1,4)$ | $\omega_{1,4}$ | 1 |
+| $(6,8)$ | $(4,2)$ | $\omega_{4,2}$ | 1 |
+| $(6,9)$ | $(3,3)$ | $\omega_{3,3}$ | 1 |
+| $(7,9)$ | $(5,2)$ | $\omega_{5,2}$ | 1 |
+| $(8,9)$ | $(7,1)$ | $\omega_{7,1}$ | 1 |
+
+For example $\omega_{2,1}=\alpha^3\beta^2\alpha\beta\alpha^4\beta$ realizes $(3,4)$. The genuine source $\omega_{1,7}$ instead has $(z,w)=(8,15)$ and initial target $(0,1,32)$; it witnesses the tag-0 row 8 in $U_H$, outside this ten-fiber class. The finite point $(8,9)$ is realized by $\omega_{7,1}$. Every witness permits any ordered bracketing, and (TM.5616) retains the entire actual fibers.
+
+Supply $\star$ to every input. First attempt the actual right context
+
+<a id="TM56-E17"></a>
+$$
+\alpha^{H-19}=\alpha^{17+\delta}.
+\tag{TM.5617}
+$$
+
+Its guard is $4z+(H-19)\le H$, exactly $z\le4$. On acceptance attempt $\rho$, whose guard is $4w+(H-19)\le H$, exactly $w\le4$. Only $(3,4)$ accepts that replacement. The two rejecting points $(3,5)$ and $(4,6)$ enter `Size_H` at $M=4z+(H-19)$, with distinct rows 3 and 4. All guard equalities are included.
+
+On first-context rejection the complete original source is unchanged. Attempt the actual right context
+
+<a id="TM56-E18"></a>
+$$
+K(d,e)=\alpha^{2d-e}\beta^{e-d},
+\qquad
+(d,e)=
+\begin{cases}
+(1,1),&\delta=0,\\
+(\delta,\delta+1),&\delta=1,2,3.
+\end{cases}
+\tag{TM.5618}
+$$
+
+Zero exponents denote absence of that letter, not an empty context. The four actual nonempty words are $\alpha,\beta,\alpha\beta,\alpha^2\beta$, with increments $(1,1),(1,2),(2,3),(3,4)$. Each accepts on every remaining input: the largest row is $z=8$ and $4z+d\le H$ in all residues. Now attempt $\rho$. Its exact guard is
+
+<a id="TM56-E19"></a>
+$$
+4w+e\le H\quad\Longleftrightarrow\quad w\le8.
+\tag{TM.5619}
+$$
+
+The accepting points have distinct columns $w=6,7,8$, and the four rejecting points at $w=9$ have distinct rows $z=5,6,7,8$. Their `Size_H` entry sizes are respectively $4w+e$ and $4z+d$. A public decoder for the actual acquired record is:
+
+| First context | First $\rho$ | Retained terminal entry | Initial output |
+|---|---|---|---|
+| accepts | accepts | $M=16+(H-19)$ | $\tau_9(3,4)$ |
+| accepts | rejects | $z=(M-(H-19))/4\in\{3,4\}$ | $\tau_9(3,5)$ if $z=3$; $\tau_9(4,6)$ if $z=4$ |
+| rejects; second context accepts | accepts | $w=(M-e)/4\in\{6,7,8\}$ | $\tau_9(5,6)$, $\tau_9(5,7)$, $\tau_9(6,8)$, respectively |
+| rejects; second context accepts | rejects | $z=(M-d)/4\in\{5,6,7,8\}$ | $\tau_9(z,9)$ |
+
+The first branch may also run `Size_H` in its accepting case, as in this uniform dictionary. Each entry is an actual size in $[1,H]$, so TM51.5 supplies finite terminal acquisition with no Read or replacement and at most $\lceil\log_2H\rceil+1$ calls, including final rejection. There are two prior source calls on the first-context-accepted branch and three on the second-context branch. Hence their whole-call bounds are $\lceil\log_2H\rceil+3$ and $\lceil\log_2H\rceil+4$. Only the single first $\rho$ attempt can be an accepted replacement. These alphabet, depth and call bounds hold simultaneously on the same running-source execution. TM30.2 and TM47.2 lift the dictionary to every actual word and bracketing in each complete fiber. No reset, copy, private row or replacement by a witness occurs.
+
+**Proof of impossibility for every fixed first context.** Fix any actual nonempty positive context with increments $(d,e)$, $d>0$, $d\le e\le2d$, and either fixed side. Give all sources the same symbol and public initialization. Put
+
+<a id="TM56-E20"></a>
+$$
+t=\left\lfloor\frac{H-d}{4}\right\rfloor,
+\qquad u=\left\lfloor\frac{H-e}{4}\right\rfloor.
+\tag{TM.5620}
+$$
+
+If $t\le6$, the actual witnesses for $(7,9)$ and $(8,9)$ both reject the context. Their unchanged first $\rho$ attempts accept at current size $4w=36\le H$. Their next sizes are $4(7+9)$ and $4(8+9)$, both above $H$. Thus their current targets are both $(0,1,36)$ and their complete records agree, including any harmless Reads. Their different initial targets form a permanent collision. Success would therefore require $t\ge7$.
+
+With $t\ge7$, the context accepts the row-5 points $(5,6),(5,7),(5,9)$ and the column-6 points $(4,6),(5,6)$. If $u\le6$, the row points $(5,7)$ and $(5,9)$ both reject $\rho$: their next sizes $4w+e$ exceed $H$, their current sizes are both $20+d$ and their current reads are both $E_0(v)$. They have the same current target $(0,E_0(v),20+d)$ and equal complete records. Avoiding this permanent collision requires $u\ge7$.
+
+If $u\ge6$, both column-6 points accept $\rho$. Their current sizes are both $24+e\le H$, and their next sizes are $4(4+6)+d+e$ and $4(5+6)+d+e$. Both exceed $H$ already at their original $40$ and $44$, since $H\le39$. Their current reads are both $E_1(v)$, so both current targets are $(0,E_1(v),24+e)$ and their complete records agree. Avoiding this collision requires $u<6$, contradicting $u\ge7$.
+
+The witness argument uses equal complete records and current $q_H$, so TM38.1 excludes every ambient continuation, with arbitrary retained memory and finite accepted depth. Harmless Reads cannot break these equalities and add no modifying action before first $\rho$. An earlier stop with the one common symbol and unit Reads likewise cannot distinguish the initial targets. The impossibility is for a common symbol; arbitrary distinct advice symbols can distinguish the targets and are not excluded by this theorem. $\square$
+
+A common physical context can produce different subsequent numeric cutoffs on its accepted and rejected branches: its contributions are present on acceptance and absent on rejection. In Theorem TM56.3 a second actual context is issued on the rejection branch. That extra modifying attempt places its successful one-symbol controller outside CPF.
+

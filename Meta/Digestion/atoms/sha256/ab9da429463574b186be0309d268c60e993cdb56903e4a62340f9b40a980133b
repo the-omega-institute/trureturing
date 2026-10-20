@@ -1,0 +1,40 @@
+**候签定理 31.3（原族平均在有限实尺度带上的正性）。** 采用已发表的实际零点资料：所有 $0<\gamma\le H$ 的零点在临界线上，其中
+
+$$
+H=3\,000\,175\,332\,800,
+$$
+
+且有一个实际临界零点 $\gamma_0\in[14,15]$。则第 30 节的同一平均对所有实数 $1\le R\le H/250000$ 满足纸面估计
+
+$$
+\boxed{\bar q(R)\ge\frac12e^{-120R}>0,}
+\qquad
+\bar{\mathcal W}(R)\ge\frac{R^3}{2}e^{-120R}.
+$$
+
+上端点是 $12\,000\,701.3312$；不只是在这个区间中抽取整数或样本尺度。
+
+所用验证高度直接来自 [Platt–Trudgian, arXiv:2004.09765v1](https://arxiv.org/html/2004.09765v1), Theorem 1。这是该文以区间算术和零点总数核对取得的有限验证；本章复用其结论，没有重跑计算。[Odlyzko 的公开零点表](https://www-users.cse.umn.edu/~odlyzko/zeta_tables/) 的 `zeros1` 首项为 $14.134725142$，表索引说明误差不超过 $3\cdot10^{-9}$，因此供应所需宽区间 $[14,15]$；其 [MathWorld 表项](https://mathworld.wolfram.com/RiemannZetaFunctionZeros.html) 给出相同首项。这里只复用既有资料，不新增首零点认证。
+
+证明。候签推论 30.2 及候签命题 31.2 对同一谱分解给出
+
+$$
+\bar q(R)\ge e^{-120R}-A_H
+\exp\!\left(\frac{bR}{2}-\frac{\sqrt{RH}}3\right),
+\qquad A_H=6000H^7\log H.
+$$
+
+无需扫描尺度即可支付剩余常数：$H<e^{30}$、$\log6000<9$、$\log\log H<4$ 给出 $\log A_H<230$，同时 $\sqrt H/12>100000$、$b<5$。若 $1\le R\le H/250000$，则 $\sqrt{RH}\ge500R$，且 $X\ge28$。拆开 $1/3=1/4+1/12$，尾界与正下界之比的对数满足
+
+$$
+\begin{aligned}
+\log\frac{A_He^{bR/2-\sqrt{RH}/3}}{e^{-120R}}
+&=\log A_H+\left(120+\frac b2\right)R
+-\frac{\sqrt{RH}}4-\frac{\sqrt{RH}}{12}\\
+&<230+\frac{245}{2}R-125R-100000\\
+&<-\log2.
+\end{aligned}
+$$
+
+所以完整未知余项的绝对值小于正下界的一半，得到陈述。$\square$
+

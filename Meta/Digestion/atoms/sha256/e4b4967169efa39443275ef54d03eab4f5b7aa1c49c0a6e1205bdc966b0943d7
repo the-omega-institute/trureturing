@@ -1,0 +1,11 @@
+**定义 313.1（带环境的擦除等距）。** 令记录空间 $R$ 具有正交基 $\{|r_x\rangle\}_{x\in X}$，环境初态为 $|e_0\rangle$，空白记录为 $|r_\varnothing\rangle$。设等距映射 $V$ 满足
+
+$$
+V\bigl(|r_x\rangle\otimes|e_0\rangle\bigr)
+=
+|r_\varnothing\rangle\otimes|e_x\rangle
+\qquad(x\in X).
+$$
+
+称 $V$ 实现了记录擦除；环境 $E$ 是否可访问是边界合同的一部分。
+

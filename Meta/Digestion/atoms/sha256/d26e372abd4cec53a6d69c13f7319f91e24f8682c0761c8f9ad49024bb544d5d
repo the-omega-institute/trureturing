@@ -1,0 +1,113 @@
+**Theorem 12.2 (Quantitative localization and nonsingularity throughout the box).** There is exactly one zero $\theta_*$ of $E$ in $\mathcal B_9$. It lies in its interior, and $DE(\theta)$ is invertible at every point of that box.
+
+Proof. The Jacobian has columns in the coordinate order of Definition 12.1 and coefficient rows in increasing degree $j=0,\ldots,7$. Extending $P_i$ by zero outside $0\le i\le4$, the Jacobian entries are
+
+$$
+\begin{aligned}
+\frac{\partial E_j}{\partial a_r}&=2P_{j-r} &&(0\le r\le3),\\
+\frac{\partial E_j}{\partial b_r}
+&=2\sum_{\substack{1\le s\le4\\r+s>j}}\binom{r+s}{j}S_s
+&&(1\le r\le4).
+\end{aligned} \tag{12.4}
+$$
+
+The only nonzero Hessian entries are
+
+$$
+\frac{\partial^2 E_j}{\partial a_r\partial a_s}
+=2\mathbf1_{\{r+s=j\}},\qquad
+\frac{\partial^2 E_j}{\partial b_r\partial b_s}
+=2\mathbf1_{\{r+s>j\}}\binom{r+s}{j};\qquad
+\frac{\partial^2 E_j}{\partial a_r\partial b_s}=0. \tag{12.5}
+$$
+
+Here each $a$ index ranges over $0,\ldots,3$ and each $b$ index over $1,\ldots,4$. Let $J_0=DE(c)$, $M=10^{12}J_0$, and $H_\ell=DE(e_\ell)-DE(0)$ for the $\ell$th coordinate unit vector, $1\le\ell\le8$. Thus $M$ and every $H_\ell$ are integer matrices defined entry by entry by (12.3)–(12.5). Exact elimination gives
+
+$$
+\begin{aligned}
+D:=\det M
+&=1609746256772333630243120555818415603867799240610475316946905877536454627003261283417598578868092928,\\
+\det J_0&=\frac{D}{10^{96}},\qquad 1609<\det J_0<1610,\\
+C&=J_0^{-1}=\frac{10^{12}}D\operatorname{adj}(M).
+\end{aligned} \tag{12.6}
+$$
+
+This defines $C$ exactly over $\mathbb Q$, without a rounded inverse. The center residual is
+
+$$
+E(c)=\frac{R}{9\cdot10^{24}},\qquad
+R=\begin{pmatrix}
+2749658638697\\
+17343986166144\\
+63810337611240\\
+88047066463386\\
+129434936347566\\
+72396013326066\\
+50235466044228\\
+9914818609152
+\end{pmatrix}. \tag{12.7}
+$$
+
+For the derivative tensor, put
+$\beta_i=\sum_{k=1}^8\sum_{\ell=1}^8|(CH_\ell)_{ik}|$.
+The following strict rational bounds specify all rows, not sampled values on the box:
+
+| Coordinate $i$ | $u_i$ with $\lvert(CE(c))_i\rvert<u_i/10^{15}$ | $v_i$ with $\beta_i<v_i$ |
+| --- | --- | --- |
+| $1$ | $268$ | $30$ |
+| $2$ | $202$ | $307$ |
+| $3$ | $398$ | $212$ |
+| $4$ | $336$ | $333$ |
+| $5$ | $73$ | $213$ |
+| $6$ | $214$ | $343$ |
+| $7$ | $18$ | $212$ |
+| $8$ | $132$ | $50$ |
+
+Here is an integer-arithmetic form of the certificate, including how to reproduce the inequalities. Compute $M$ from (12.4), its adjugate $A_M=\operatorname{adj}(M)$ by signed minors, and $H_\ell$ from (12.5). Substitution of the eight integers in (12.3) into (12.2) gives (12.7). The determinant and the table amount precisely to
+
+$$
+\begin{aligned}
+1609\cdot10^{96}&<D<1610\cdot10^{96},\\
+1000\,|(A_MR)_i|&<9D\,u_i,\\
+10^{12}\sum_{k=1}^8\sum_{\ell=1}^8|(A_MH_\ell)_{ik}|&<D\,v_i
+\qquad(1\le i\le8).
+\end{aligned} \tag{12.8}
+$$
+
+These finite integer inequalities follow by multiplication and comparison of the specified integers. For an elimination alternative to signed-minor expansion, start with $M$, previous pivot $d=1$, and update the lower-right submatrix at pivot $a=M_{kk}$ by
+$M_{ij}\leftarrow(aM_{ij}-M_{ik}M_{kj})/d$ for $i,j>k$, then set $d=a$ and eliminate the entries below that pivot. All divisions are exact; a row interchange changes the determinant sign. The final entry gives $D$. Rational Gauss–Jordan elimination of $[M\mid I_8]$ gives $M^{-1}$, and $A_M=DM^{-1}$ gives the same integer comparisons (12.8). Thus the certificate is reproducible from a fully specified coefficient map by finite exact arithmetic.
+
+In the vector maximum norm and its induced matrix norm, these comparisons give
+
+$$
+\begin{aligned}
+\alpha&:=\|CE(c)\|_\infty<\bar\alpha:=\frac{398}{10^{15}},\\
+\beta&:=\max_i\beta_i<343,\qquad
+L:=343r=\frac{343}{10^8}<1.
+\end{aligned} \tag{12.9}
+$$
+
+Since $E$ is quadratic, its derivative has the exact affine expansion
+$DE(c+h)=J_0+\sum_{\ell=1}^8h_\ell H_\ell$.
+Consequently for $\|h\|_\infty\le r$,
+
+$$
+\|I_8-CDE(c+h)\|_\infty
+\le\beta\|h\|_\infty\le L.
+\tag{12.10}
+$$
+
+Let $T(\theta)=\theta-CE(\theta)$. The segment integral of its derivative makes $T$ Lipschitz on the convex closed box with constant at most $L$. Its image lies strictly inside the box, since
+
+$$
+\begin{aligned}
+\|T(\theta)-c\|_\infty
+&\le\alpha+L\|\theta-c\|_\infty
+<\bar\alpha+Lr
+=\frac{4323}{10^{16}}<r,\\
+\frac{\bar\alpha}{1-L}&<\frac4{10^{13}}.
+\end{aligned} \tag{12.11}
+$$
+
+Banach's contraction theorem on this complete box gives a unique fixed point in its interior. Invertibility of $C$ makes the fixed points exactly the zeros of $E$. Moreover (12.10) makes $CDE(\theta)$ invertible by the Neumann series at every point of the box, so $DE(\theta)$ is invertible there. Uniqueness outside this box is not asserted. The fixed-point principle used here is the classical one of S. Banach, “Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales,” *Fundamenta Mathematicae* **3**, 133–181, [doi:10.4064/fm-3-1-133-181](https://doi.org/10.4064/fm-3-1-133-181); the particular coefficient map, box and rational inequalities are the certificate for this degree. $\square$
+

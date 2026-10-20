@@ -1,0 +1,16 @@
+**Lemma 3.2 (uniform coordinate partitions).** Each $\pi_j$ and
+$\sigma_j$ in Definition 2.1 is a permutation of $\mathbb Z_n$.
+
+Proof. For an even coordinate $x$, take its half-index $x/2$ modulo
+$2k$; for an odd coordinate take $(x-1)/2$ modulo $2k$. First use
+shift $s=0$. Write $C_r,S_r$ for the bulk column and symbol images
+of class $r$. Their half-index images, together with their complements,
+are the following consecutive interval partitions. Each interval includes
+both endpoints, and $[u,u-1]$ is empty.
+
+| Coordinate parity | First cap block | First bulk block | Second cap block | Second bulk block |
+| --- | --- | --- | --- | --- |
+| Even columns | $[7,14]$ | $C_1:[15,k+5]$ | $[k+6,k+15]$ | $C_0:[k+16,2k+6]$ |
+| Odd columns | $[0,9]$ | $C_3:[10,k]$ | $[k+1,k+8]$ | $C_2:[k+9,2k-1]$ |
+| Even symbols | $[4,7]$ | $S_2:[8,k-2]$ | $[k-1,k+12]$ | $S_1:[k+13,2k+3]$ |
+| Odd symbols | $[0,13]$ | $S_0:[14,k+4]$ | $[k+5,k+8]$ | $S_3:[k+9,2k-1]$ |

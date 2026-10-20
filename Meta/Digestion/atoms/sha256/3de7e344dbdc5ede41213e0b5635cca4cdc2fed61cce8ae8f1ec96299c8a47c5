@@ -1,0 +1,39 @@
+### 434.3 临界筛尺度的两根与全部整数三符号窗口
+
+对于每个 \(\sigma>0\)，上一节的严格比较
+\(1+v<\varphi(v)<e^v\)、\(v>0\)，仍给
+
+\[
+\Xi_\sigma(0)>0,\qquad\Xi_\sigma(1)<0,\qquad\Xi_\sigma(2)>0.
+\]
+
+由（GE.3）可在任何正 \(\sigma\) 范围两次微分，并得
+
+\[
+\Xi_\sigma''(a)=e^{-\gamma_E}\int_0^\infty
+e^{-(\sigma+a)v}\varphi(v)dv>0.
+\tag{GE.10}
+\]
+
+所以轮廓仍严格凸，恰有两根
+\(0<\alpha_-(\sigma)<1<\alpha_+(\sigma)<2\)。若使用经典 Dickman Laplace 身份
+\(\widehat\rho_D(v)=e^{\gamma_E}/\varphi(v)\)，同一曲率也写成
+\(\int_0^\infty e^{-(\sigma+a)v}/\widehat\rho_D(v)dv\)；本节没有改变该经典变换的归属。
+
+特别在 \(\sigma=1\) 的同一实际筛尺度 \(x=z\)，存在固定
+\(\varepsilon_1\in(0,1/4)\) 和有限 \(Z_1\ge2\)，使全部 \(z\ge Z_1\) 的同一过滤器满足
+
+\[
+\begin{array}{c|c}
+\text{全部正整数 }n\text{ 的范围}&J_z^{\eta_z}(n)\text{ 的符号}\\ \hline
+z\le n\le z^{1+\varepsilon_1}&>0\\
+z^{2-\varepsilon_1}\le n\le z^{2+\varepsilon_1}&<0\\
+z^{3-\varepsilon_1}\le n\le z^{3+\varepsilon_1}&>0.
+\end{array}
+\tag{GE.11}
+\]
+
+证明是选择三个轮廓严格符号邻域，再将（GE.6）的共同误差界于其最小绝对幅度之下。
+更强地，对任意先固定的正指数紧区间 \([\sigma_0,\sigma_1]\)，联合连续性和紧性可选择同一个 \(\varepsilon\in(0,1/4)\) 及同一个 \(Z\)，使对应的三个 \(a\) 窗口对其全部 \(\sigma\) 同时有效。
+根的唯一性属于极限轮廓；未断言每个有限筛的全部实际核只有两次变号。
+
