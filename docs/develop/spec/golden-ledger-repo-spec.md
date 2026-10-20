@@ -1002,7 +1002,7 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 **局部写入。**拆分只加载目标、生成子项的既有命中、实际子链以及包含目标的各 source 保存关系以更新受影响的序号和计数；结算只加载目标与所需的真实邻居、后代收据及其覆盖依据；cover 与 cover-batch 只加载请求目标和实际后代账目，同时保留当前 Lean 报告、冻结成员与声明绑定校验。无关账目不参与当前操作，也不因无关记录的格式或覆盖偏差阻断它。批量命令保留自己的成功写入供后续项使用；实际引用的缺失、冲突或坏 CAS 仍须拒绝，原子写入和失败回滚继续适用。
 
-`migrate-atom-context --source SOURCE --atom-id ID ...`（make 单项为 `SOURCE=… ATOM_ID=…`）可显式选择同一 source 的已登记 atom，只读取所选身份与实际 chain 闭包，并从观察到的源建立关系。所选身份、实际引用及 CAS 仍经相同 strict loader 与计划验证；无关无效账目不进入该操作。该模式不替代全 source 迁移的完整性判词；缺失或歧义目标直接拒绝，同 source hash 的路径或 atomizer 不相容时报 `CONTEXT_VERSION_CONFLICT`；实际链图改变时追加独立 graph，不覆盖原图。
+`migrate-atom-context --source SOURCE --atom-id ID ...`（make 单项为 `SOURCE=… ATOM_ID=…`）可显式选择同一 source 的已登记 atom。writer 按所选 source 的 owner 路径与 CAS 出现发现观察根，保留真实邻根的 chain 语义，不因缩小 owner 选择把已分解邻根改成整块叶项。已有同正文观察时，先以所选子树及其相关根、邻居的实际 chain 核对局部边；一致则直接保留该保存图和序号，不重建远处根。否则从观察根及实际引用闭包建立关系。所选身份、实际引用及 CAS 仍经相同 strict loader 与计划验证；未参与该操作的无效账目不进入核对。该模式不替代全 source 迁移的完整性判词；缺失或歧义目标直接拒绝，同 source hash 的路径或 atomizer 不相容时报 `CONTEXT_VERSION_CONFLICT`；实际链图改变时追加独立 graph，不覆盖原图。
 
 历史治理字段按既有 schema 读取，不新增 quarantine 管理命令。
 
