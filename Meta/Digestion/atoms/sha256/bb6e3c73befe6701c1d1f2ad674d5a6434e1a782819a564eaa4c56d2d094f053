@@ -1,0 +1,14 @@
+### 14.7 可继续形式化的定量观察覆盖
+
+**普通定理。** 设有限维实或复 Hilbert 空间上 $A\geq0$ 自伴，观测向量 $v_j$ 组成具有已知下界 $\alpha>0$ 的 frame，即
+
+\[
+\sum_j|\langle x,v_j\rangle|^2\geq\alpha\|x\|^2.
+\]
+
+对 $A$ 的一组正交本征基 $e_i$，定义真实权重 $w_i=\sum_j|\langle e_i,v_j\rangle|^2$。则 $w_i\geq\alpha$，而聚合关联函数是测度 $\nu=\sum_iw_i\delta_{\lambda_i}$ 的 Laplace 积分。若 $\nu([0,2r])\geq M-\tau$、$C_\nu(t_*)\leq M/4+\varepsilon$ 且 $4\varepsilon+\tau<\alpha$，则 $\operatorname{spec}(A)\cap[0,r]=\varnothing$。
+
+**证明。** 式 (14.4) 给出 $\nu([0,r])\leq4\varepsilon+\tau$。若低能本征向量存在，其权重至少为 $\alpha$，矛盾。权重与聚合关联函数的识别来自有限正交谱展开。单位正交基对应 $w_i=1$，解释了完整迹为什么能排除任意小的隐藏观察权重。
+
+这条一般 frame 定理、本征基变换及加权测度的算子识别目前只有上述普通证明。当前 Lean 完成的是实际对角矩阵与完整迹的情形。下一步应形式化真实自伴矩阵的谱展开和 frame 下界，而不是只向既有定理添加名为物理识别的前提。
+

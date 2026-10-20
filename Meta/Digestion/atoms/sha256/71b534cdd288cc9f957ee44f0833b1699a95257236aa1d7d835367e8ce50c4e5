@@ -1,0 +1,34 @@
+### Norm attainment forces the ordinary kernel into a null fiber
+
+By (S2), boundedness of $S$ and actual core density extend (S4) to
+$\mathcal F$, including every $v_k$. Put $f_k=C_+v_k$ and $g_k=C_-v_k$.
+Then $Sf_k=g_k$ and $\|Sf_k\|=\|f_k\|$. If $a_0b_0<1$, all these
+vectors vanish. This is impossible: $K_-$ is a nonzero finite
+absolutely continuous measure, it gives zero mass to $|x|=|y|$, and
+the jet separation above makes the countable critical vector nonzero
+at every other edge. Hence $a_0b_0=1$.
+
+Equality now holds throughout the classical row/column Schur bound for
+each $f_k$. In particular, row Cauchy–Schwarz is equality almost
+everywhere. With
+$m(a)=\int|s(a,b)|w_+(b)dK_+(b)$, its equality condition and (S4) give
+
+$$
+f_k(b)=w_+(b)e^{-i\arg s(a,b)}\frac{g_k(a)}{m(a)} \tag{S6}
+$$
+
+for $|s(a,\cdot)|dK_+$-almost every $b$ in any such row with $m(a)>0$.
+The row and column certificates justify these integrals by
+Cauchy–Schwarz and Tonelli. Only countably many $k$ occur, so one may
+choose a conull set of rows and, inside each row, a common conull set
+for all components. There is no uncountable intersection assertion.
+
+At almost every negative edge $a$, some $g_k(a)$ is nonzero, which
+forces $m(a)>0$. Equation(S6) makes the complete critical increment
+vector at $b$ proportional to the vector at $a$. Equation(S5) confines
+that row to the finite fiber with the same unordered radial endpoints.
+But $K_+$ gives every point mass zero: its continuous part is a density,
+and each prime graph is parametrized by continuous $dx$. Atomic jump
+lengths are not point atoms in this edge-pair measure. Therefore the
+finite fiber has zero $K_+$-mass, forcing $m(a)=0$, a contradiction.
+

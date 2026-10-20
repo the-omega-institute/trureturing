@@ -1,0 +1,5 @@
+参考入口：
+- https://arxiv.org/abs/2306.08317
+- https://arxiv.org/abs/2606.09096
+- Mathlib pin: `Mathlib/MeasureTheory/Measure/Prokhorov.lean`, `ProbabilityMeasure.lean`, `Group/Convolution.lean`, `Integral/Prod.lean`。
+

@@ -1,0 +1,52 @@
+**定义 38.1（嵌套活动子树与固定右根补偿族）。** 沿用[定义 23.1、30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的非空有限自由有序满二叉树域 $\mathcal T$、实际替换 $\rho$、三步像 $\mathcal I_3=\rho^3(\mathcal T)$、等叶数像集 $\mathcal I_3(n)$、叶地址集 $L$、叶标签 $\lambda$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$、确定性共同费用 $D$ 与容量 $\mathsf{Cap}$。所有树相等均保留原始括号、左右次序和 $\alpha/\beta$ 标签。替换深度固定为 $d=3$；以下整数 $k\ge1$ 是族参数，与深度无关。
+
+未知输入仍为任意 $U\in\mathcal T$，任务仍为 $\iota_3(U)=\mathbf1_{\{U\in\mathcal I_3\}}$。策略属于 $\mathfrak D_3$ 的条件是对全部 $\mathcal T$ 正确且有限终止。每个固定 $k$ 的共同完整初始化与实际输入无关，不含输入的组成、叶数、大小、高度、正性或候选身份承诺。任意有限左右地址，包括空地址 $\varepsilon$，均合法且可直接请求；报告仅为同一不变输入的 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。费用只计真实缓存后不同的实际请求地址，地址长度、定位与内部计算不收费，未有限终止费用为 $+\infty$。
+
+直接使用[式（30.2）](#30-实际三步像的分歧前沿七叶分离与有限容量)的字面块，并记其指定前像为 $b$：
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta),\qquad
+b=\langle\beta,\alpha\rangle,\qquad B=\langle C,A\rangle=\rho^3(b).
+\tag{38.1}
+$$
+
+对每个整数 $r\ge0$，递归定义完整树
+
+$$
+\begin{aligned}
+h_0&=\beta,&h_{r+1}&=\langle\alpha,h_r\rangle,\\
+H_0&=C,&H_{r+1}&=\langle A,H_r\rangle,\\
+N_r&=\langle H_r,A\rangle.&&
+\end{aligned}
+\tag{38.2}
+$$
+
+因此 $N_0=B$。右梳全孔上下文 $B_s$ 只取[定义 26.1 的式（26.5）](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)。对固定 $k\ge1$、$1\le j\le k$，定义
+
+$$
+\begin{aligned}
+g_{k,j}&=B_{k+1}(\underbrace{\alpha,\ldots,\alpha}_{j-1\text{ 个}},b,
+                    \underbrace{\alpha,\ldots,\alpha}_{k-j\text{ 个}},\beta),\\
+G_{k,j}&=B_{k+1}(\underbrace{A,\ldots,A}_{j-1\text{ 个}},B,
+                    \underbrace{A,\ldots,A}_{k-j\text{ 个}},C).
+\end{aligned}
+\tag{38.3}
+$$
+
+零个条目表示空列表，$B_1(X)=X$。下面的 $P_0,X_j,Y_i,F_k,n_k$ 均为本章局部记号，定义全部完整评价来源为
+
+$$
+\begin{aligned}
+P_0&=\langle H_k,B\rangle,\\
+X_j&=\langle G_{k,j},A\rangle\quad(1\le j\le k),\\
+Y_i&=\langle H_i,N_{k-i}\rangle\quad(0\le i<k),\\
+F_k&=\{P_0\}\cup\{X_j:1\le j\le k\}\cup\{Y_i:0\le i<k\},
+\qquad n_k=3k+13.
+\end{aligned}
+\tag{38.4}
+$$
+
+活动子树始终位于根的左孩子，补偿子树始终位于根的右孩子。不同 $Y_i$ 的左侧右梳终点位于不同深度，其补偿树仍在同一个完整地址 $\mathtt R$；不把这些终点当作共同上下文中的独立固定槽。
+

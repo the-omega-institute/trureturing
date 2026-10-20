@@ -1,0 +1,62 @@
+**命题 15.32（编码相位任务的锐秩—近似界）。** 若该切口 rank 不超过 $D$，则
+
+$$
+F_{\rm sq}(\Phi,\Psi_G)\le\min(1,D/2^r).
+$$
+
+此界在该命名切口由
+$m=\min(D,2^r)$ 个 Schmidt 项的归一化截断达到。
+因此对 $0\le\varepsilon<1$，
+若要求 $F_{\rm sq}\ge1-\varepsilon$，必要条件为
+
+$$
+D\ge\left\lceil(1-\varepsilon)2^r\right\rceil.
+$$
+
+若 $\Phi$ 在定义 15.19 的单遍、不重访、空白独立、最终解耦合同下生成，
+且该命名切口是实际访问顺序的前缀—后缀，
+同式也是辅助维数的必要条件。
+
+证明。取 $\Phi$ 的左 Schmidt 支撑正交投影 $P$，
+$\operatorname{rank}P=d\le D$，则
+$(P\otimes I)|\Phi\rangle=|\Phi\rangle$。由 Cauchy–Schwarz，
+
+$$
+|\langle\Phi|\Psi_G\rangle|^2
+=|\langle\Phi|(P\otimes I)|\Psi_G\rangle|^2
+\le\|(P\otimes I)|\Psi_G\rangle\|^2
+=\operatorname{tr}(P\rho_A).
+$$
+
+15.28 的完整平坦谱给 $\rho_A=2^{-r}Q$，
+$Q$ 为 rank $2^r$ 的谱支撑投影。
+所以
+$\operatorname{tr}(P\rho_A)=2^{-r}\operatorname{tr}(PQ)
+\le d/2^r\le D/2^r$，同时任何两个单位向量平方重叠至多一。
+这是 Schmidt 支撑投影中间工具在本编码态上的直接应用。
+
+写目标 Schmidt 分解为
+
+$$
+|\Psi_G\rangle=2^{-r/2}\sum_{\ell=1}^{2^r}
+|L_\ell\rangle|R_\ell\rangle.
+$$
+
+取
+
+$$
+|\Phi_m\rangle=m^{-1/2}\sum_{\ell=1}^{m}
+|L_\ell\rangle|R_\ell\rangle.
+$$
+
+左右向量各自正交，故截断态归一化、命名切口 rank 为 $m$，
+其平方重叠为
+$(m\,2^{-r/2}m^{-1/2})^2=m/2^r$；
+$D\ge2^r$ 时取完整目标，证明锐性。
+必要保真度给 $D\ge(1-\varepsilon)2^r$，
+结合正整数域得到上取整。
+最后 15.20 的实际前缀 rank 至多辅助维数，
+映到这里的 $P$ rank 限制，就给相同辅助下界。
+$r=0$ 时界为一，$\varepsilon<1$ 时必要 $D\ge1$，
+与乘积目标一致。证毕。
+

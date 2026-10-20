@@ -1,0 +1,22 @@
+**定义 395.1（残差的 Mellin 绝对矩与尺度积分）。** 固定 $x>1$、$0<\alpha<1$，令 $L=\log x$、$b=1-\alpha$，并定义
+
+$$
+w(t)=\frac{\log t+1}{t^2\log^2t},\qquad
+h_1=1+\frac1L,\qquad h_2=1+\frac2L+\frac2{L^2}.
+$$
+
+取正半轴上的可测实函数 $R$，假设非负被积函数的真实 Lebesgue 积分有限：
+
+$$
+M_\alpha(R)=\int_0^\infty |R(y)|y^{-\alpha-1}\,dy<\infty.
+\tag{395.1}
+$$
+
+对 $s>0$ 记
+
+$$
+P_x(s)=\int_x^\infty R(t/s)w(t)\,dt,
+\qquad J_x(m)=P_x(m)-P_x(m+1)\quad(m\ge1).
+\tag{395.2}
+$$
+

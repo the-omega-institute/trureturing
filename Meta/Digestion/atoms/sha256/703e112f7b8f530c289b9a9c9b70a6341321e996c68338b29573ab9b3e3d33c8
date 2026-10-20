@@ -1,0 +1,43 @@
+**定理 1328.1（小预算节省的双侧尺度）。** 固定 $0<\kappa<1$。若 $\eta_N>0$、$\eta_N\to0$ 且 $\log(1/\eta_N)=o(N)$，则
+
+$$
+\frac{1-\kappa}{T(\kappa)}
+\le\liminf_{N\to\infty}
+\frac{D_N-F_N(\kappa,\eta_N)}{\eta_ND_N}
+\le\limsup_{N\to\infty}
+\frac{D_N-F_N(\kappa,\eta_N)}{\eta_ND_N}
+\le\frac1{\gamma_\kappa}.
+$$
+
+对 $F^I_N$ 替代 $F_N$ 后，同一双侧结论也成立。
+
+**证明。** 下界的来源构造取
+
+$$
+\ell_N=\left\lceil\log_2\frac{T(\kappa)}{\eta_N}\right\rceil
++\lceil\sqrt N\rceil,
+\quad
+r_N=\left\lfloor2^{\ell_N}\frac{\eta_N}{T(\kappa)}\right\rfloor,
+\quad \rho_N=r_N2^{-\ell_N}.
+$$
+
+充分大 $N$ 时，$0\le\ell_N\le N-2$，$1\le r_N\le2^{\ell_N}$。舍入误差相对于 $\eta_N/T(\kappa)$ 至多为 $2^{-\lceil\sqrt N\rceil}$，故
+
+$$
+\rho_N\sim\eta_N/T(\kappa),\qquad
+m_N=N-\ell_N\sim N.
+$$
+
+第 1327 节构造满足后验 $\rho_NT(\kappa)\le\eta_N$，所以
+
+$$
+D_N-F_N\ge
+\rho_N[(1-\kappa)D_{m_N}-h_2(\kappa)].
+$$
+
+除以 $\eta_ND_N$，即给第一个常数。上界由第 1325 节的较简界得到 $D_N-F_N\le(M^{-1}+E_{\eta_N})D_N$。次指数条件保证 $M^{-1}/\eta_N\to0$，且最终 $E_{\eta_N}=\eta_N/\gamma_\kappa$，得到最后一个常数。
+
+对互信息，同一构造的节省比 Shannon 节省多 $\rho_NT(\kappa)$，其除以 $\eta_ND_N$ 后趋零。另一方面 $F^I_N\ge F_N-\eta_N$，使上界只增加 $1/D_N$。两者合并得相同极限界。证毕。
+
+因此，所述范围内节省为 $\Theta_\kappa(\eta_ND_N)$。这没有给出两侧常数之间的准确极限，也没有把某张局部来源的达到常数判为全局最优系数。若预算指数级或更快趋零，前缀长度会占据非忽略维数，本节的主阶比例条件便不再成立。
+

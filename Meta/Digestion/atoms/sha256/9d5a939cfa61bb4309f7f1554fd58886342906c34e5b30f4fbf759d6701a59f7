@@ -1,0 +1,56 @@
+**Convention 15.9 (attribution and limits).** Definitions 1.1--1.2,
+Definition 9.1 and Proposition 9.3 supply the original trees, update,
+full actual inverse fiber and all five complete canonical targets.
+Their project-source interfaces are
+[NativeClassRootImage](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootImage.lean),
+[NativePredecessorRowRecovery](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.lean)
+and [NativeWholeRowPlan](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowPlan.lean).
+The chart, whole-target and representative-read bridges of §§10--12
+are credited suppliers, including their all-source quantifiers.
+Proposition 11.3 and
+[NativeSixSourceCones](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSixSourceCones.lean)
+supply the fixed six-source occurrence geometry; Proposition 15.2
+proves the additional freedom to replace its six branch values.
+
+Proposition 11.2's reachable-graph count and its mature spanning-forest
+argument are reused in (NBP.15.4). The new deductions are the equality
+forest and different queried classes, the single-slot comparison
+(NBP.15.5)--(NBP.15.6), and the resulting fixed-code all-fiber criterion.
+Proposition 11.5 supplies the right-test chain bodies used for the
+nine-state upper, while the universal eight-state exclusion for the
+prescribed partner bit is the additional lower conclusion here.
+
+The jointly optimized frontier of Theorem 11.6 and
+[NativeRepeatedPartnerFrontier](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeRepeatedPartnerFrontier.lean)
+permits reselection of encoder and controller. The existing
+[NativeFiniteRootMinimax](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.lean)
+and Theorem 12.3 do not preserve an arbitrary supplied encoder:
+(NBP.12.7) chooses the code of a representative. They are not used to
+assert the prescribed-code upper here. Theorem 15.4 instead preserves
+one successful table's original code and initialization on every source.
+Its comparison uses the exact eight-slot saturation; with spare states,
+more code values or different call budgets the different-class argument
+and single remaining slot need not hold. No general prescribed-code
+frontier is obtained.
+
+The classification is a statement about entire actual source fibers,
+not an effective decision method for an arbitrary supplied computation
+$\kappa$. Establishing its universal constancy and existence conditions
+for such a computation is a separate task. The natural root-code and
+target-code families in Corollary 15.6 are consequences, not restrictions
+silently imposed on Theorem 15.5. General code-preserving deep padding
+remains unavailable, as Proposition 15.8 shows.
+
+These are repository-derived ordinary mathematical deductions relative
+to the cited suppliers. Decision-support graph counting and finite
+case analysis are elementary intermediates; no external asymptotic
+bound or numerical frontier is imported. The different late-target
+native pressure/template results, binary-XOR problems, K-bonacci
+problems, graph problems and quantum problems supply no numerical
+premise here. No worldwide-priority or current kernel-verification
+claim is made. The budgets count actual reader calls and all installed
+abstract states. Acquisition, acquired-term computation, representation
+of addresses and tables, fixed whole-output storage, export, lawful
+entry, isolation, authentication and physical realization retain their
+separate conditions and prices.
+

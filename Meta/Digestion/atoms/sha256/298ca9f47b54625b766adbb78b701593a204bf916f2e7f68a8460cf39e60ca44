@@ -1,0 +1,18 @@
+## 定理 28.3（CRT 周期合成）
+
+若：
+
+\[
+m=\prod_{p^k\parallel m}p^k,
+\]
+
+则：
+
+\[
+\boxed{
+T(m)
+=
+\operatorname{lcm}_{p^k\parallel m}T(p^k).
+}
+\]
+

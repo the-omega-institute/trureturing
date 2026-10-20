@@ -1,0 +1,12 @@
+## 定理 24A.2（任意参数映射下的拉回）
+
+对 $\alpha:A'\to A$：
+
+$$
+\operatorname{Comp}(\alpha^{-1}N,d\circ\alpha,0_D)
+=
+\alpha^{-1}\operatorname{Comp}(N,d,0_D).
+$$
+
+该命题只需要函数，不需要 $\alpha$ 可逆。若 $\alpha$ 是等价并同时运输 normalization 与 zero-defect 谓词，则进一步得到 completion-point carriers 的等价，这正是 covariance 版本。
+

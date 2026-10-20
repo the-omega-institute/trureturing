@@ -1,0 +1,91 @@
+**Theorem 15.5 (The rational ninth-degree center and every certified iterate are actual-output consumers).** For the center $c$ of (12.3), use $P=P_c,S=S_c$ from (12.1) and the actual instrument of Theorem 15.2. Define the exact rational number
+
+$$
+\delta_9=\frac{2749658638697}{10^{24}}.
+\tag{15.20}
+$$
+
+For every integer $k\ge1$,
+
+$$
+1\le\frac{H_c(k)}{k^9}\le1+\frac{\delta_9}{k}\le1+\delta_9.
+\tag{15.21}
+$$
+
+The constant endpoints $1$ and $1+\delta_9$ are optimal for this center over all positive integers: the lower endpoint is an infimum and the upper endpoint is attained at $k=1$. For all $0<q<1$ the center therefore produces a real complete $D=6$ instrument with the full resource contract, its own exact gap law $H_c(k)q^k/Z_{H_c}(q)$ and a faithful actual stationary initialization. Its stationary finite-window error is bounded by
+
+$$
+\begin{aligned}
+c_9&=\frac{\sqrt{1+\delta_9}-1}{\sqrt{1+\delta_9}+1}
+=\frac{\delta_9}{(\sqrt{1+\delta_9}+1)^2}
+<\frac{2749658638697}{4\cdot10^{24}},\\
+d_{\rm TV}(\mathsf P_{H_c,W},\mathsf P_{9,W})
+&\le1-(1-c_9)^{B_W}
+\le1-\left(1-\frac{2749658638697}{4\cdot10^{24}}\right)^{B_W}\\
+&\le\min\left\{1,\frac{2749658638697 B_W}{4\cdot10^{24}}\right\},
+\qquad B_W=\lceil W/2\rceil.
+\end{aligned} \tag{15.22}
+$$
+
+These are exact rational upper certificates as well as an exact radical bound. The same $c_9$ controls the gap, stationary length-biased interval, and initial-wait distances in (15.10). The center's actual law is distinct from the exact monomial law for every $0<q<1$.
+
+For the rational iterates $\theta^{(N)}$ of Theorem 12.3, retain its coefficient bound $\varepsilon_N=\bar\alpha L^N/(1-L)$ and set
+
+$$
+a_N=612\varepsilon_N
+=\frac{612\cdot398}{10^{15}(1-343/10^8)}
+\left(\frac{343}{10^8}\right)^N
+<\frac{2448}{10^{13}}\left(\frac{343}{10^8}\right)^N<1.
+\tag{15.23}
+$$
+
+Each finite iterate is a valid input to Theorem 15.2 and satisfies
+
+$$
+\begin{aligned}
+\left|\frac{H_N(k)}{k^9}-1\right|&\le\frac{a_N}{k}\quad(k\ge1),\\
+d_{\rm TV}(\mathsf P_{H_N,W},\mathsf P_{9,W})
+&\le1-\left(1-\frac{a_N}{1+\sqrt{1-a_N^2}}\right)^{B_W}
+\le\min\{1,612B_W\varepsilon_N\}.
+\end{aligned} \tag{15.24}
+$$
+
+Thus for any fixed finite $W$ and rational tolerance $\eta>0$, choosing the first $N\ge0$ with $612B_W\varepsilon_N\le\eta$ gives a terminating rational selection rule for an actual stationary window within $\eta$, simultaneously for every $0<q<1$. The empty window already has error zero.
+
+Proof. The coefficient formula (12.2) evaluated at the eight rational center entries gives (12.7). All eight displayed numerators $R_j$ there are strictly positive. The two certificates (15.15) evaluate exactly to
+
+$$
+\epsilon_{\rm sum}(c)
+=\frac{7075065748837739}{7\cdot10^{25}},\qquad
+\epsilon_{\rm bin}(c)
+=\frac1{10^{24}}\max_{0\le j\le7}\frac{R_j}{\binom8j}
+=\delta_9.
+\tag{15.25}
+$$
+
+For a fully integer comparison proving the last maximum, the nonnegative slack vector is
+
+$$
+\left(\binom8jR_0-R_j\right)_{j=0}^7
+=\begin{pmatrix}
+0\\4653282943432\\13180104272276\\65933817303646\\63041168361224\\81584870440966\\26754975839288\\12082450500424
+\end{pmatrix}.
+\tag{15.26}
+$$
+
+The first expression of (15.25) is the rational sum $10^{-24}\sum_{j=0}^7R_j/(j+1)$; it exceeds $\delta_9$ since all terms are positive and its first term is already $\delta_9$. Theorem 15.4 proves (15.21). At $k=1$, (15.1) gives $H_c(1)=1+9E_0(c)=1+\delta_9$. As $k\to\infty$, (15.16) gives $H_c(k)/k^9\to1$. These prove the two optimal endpoints. Theorem 15.3 now gives (15.22); the rational bound follows from $(\sqrt{1+\delta_9}+1)^2>4$ and the union bound. A normalized monomial gap law would require $H_c(k)/k^9$ to be constant for all $k\ge1$, because every $q^k$ is positive. Its different value at one and limiting value at infinity exclude this.
+
+For completeness the iterate transfer uses the entire box, not a statement that a finite iterate solves the polynomial identity. Throughout $\mathcal B_9$ all eight free coefficients have absolute value less than two; the fixed leading coefficient of $P$ is one. The Jacobian formula (12.4) therefore gives, for $0\le j\le7$,
+
+$$
+\sum_{i=1}^8\left|\frac{\partial E_j}{\partial\theta_i}(\theta)\right|
+\le68\binom8j\quad(\theta\in\mathcal B_9).
+\tag{15.27}
+$$
+
+Indeed the four $a$ columns contribute at most four when $j=0$ and at most sixteen otherwise, always at most $4\binom8j$. The four $b$ columns contain at most sixteen summands in total, each bounded by $4\binom8j$: for $r,s\in\{1,2,3,4\}$ with $r+s>j$, one has $\binom{r+s}{j}\le\binom8j$. Their total is at most $64\binom8j$. Integrating the derivative along the segment from $\theta_*$ to $\theta^{(N)}$, which stays in the convex box, and using $E(\theta_*)=0$ gives
+$|E_j(\theta^{(N)})|\le68\binom8j\varepsilon_N$.
+Thus $\epsilon_{\rm bin}(\theta^{(N)})\le9\cdot68\varepsilon_N=a_N$. Equations (15.16), (15.19) and (15.10) prove (15.24), and $L<1$ proves termination of the selection rule.
+
+The monic and anchored conditions are exact for the center, for every iterate, and for the limiting root. Their scaled Newton data have $p=3P$, $s=3S$, $u_4=0$, $v_4=72$, so the structural completion of Theorem 15.2 applies at each finite stage. At the limiting root, Theorem 12.3 gives $e=0$ and Theorems 11.2–11.5 supply the already established exact monomial instrument. At a finite stage only its explicitly computed residual determines whether the law is exact; neither coefficient convergence nor (15.24) asserts finite-stage residual vanishing. $\square$
+

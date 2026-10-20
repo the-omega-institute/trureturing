@@ -1,0 +1,23 @@
+\frac{\sum_{S\in\mathcal I_G(V)}
+ F(S)e^{\sum_{v\in S}\theta_v}
+ e^{\varepsilon N_h(S)}}
+ {\sum_{S\in\mathcal I_G(V)}
+ e^{\sum_{v\in S}\theta_v}
+ e^{\varepsilon N_h(S)}}.
+\]
+有限和逐项可导，且
+\[
+\left.\frac{d}{d\varepsilon}
+e^{\varepsilon N_h(S)}\right|_{\varepsilon=0}
+=N_h(S).
+\]
+商法则给出
+\[
+\mathcal R^{\mathrm{stat}}_{F,h}
+ =
+\langle FN_h\rangle_\theta
+ -\langle F\rangle_\theta\langle N_h\rangle_\theta.
+\]
+对 \(F=\eta_v\) 得顶点公式；对
+\(\partial_{\theta_u}\partial_{\theta_v}\log Z\) 作同样计算得到协方差 Hessian。证毕。
+

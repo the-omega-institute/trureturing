@@ -1,0 +1,12 @@
+### 66.5 两种机制的范围与剩余联合条件
+
+定理66.2.1保留固定 $P,M$ 内全部奇 $7\le p\le P$、偶 $2\le m\le M$ 及四对 $(a,b)$，额外条件是 (66.3) 的重复奇块形状。严格平移交错使两个凸包共享内部点，整片标量相等后，完整原图供应附加内部边和长 $p$ 返回。定理66.4.1则只处理 $m=4$ 且一条返回具有长 $2p$ 半块平方的域；它使用偶数次端点载体侧别翻转，直接识别完整 typed 顶点。两证明不互相代替，也不从奇斜率自动推导侧别交换。
+
+本章只断言足以排除所需周期的 gcd 整除 $p$ 或 $2p$，不要求也不宣称 gcd 恰等于这些数。它没有排除两条词在其他周期或其他规模的 SCC 内存在，没有解决平方条件之外的 $m=4$ 或重复块条件之外的其他 $T$，也没有给全局 SCC 分类。
+
+每个正实现仍须在同一个完整 $G_B$ 中联合供应合法预算、实际来源、两个实际 guard、原根域、原片与原共同闭色，逐位置证明 (63.11)，保留 $h+2$ 个不同完整配对顶点，按整个承载片检查每条完整原内部边的 (63.13)，并证明完整图中 (63.15) 的真实外部不返程。端点未命中、容量通过、独立点的可达性或两个长 $h$ 返回本身均不能完成这些义务。单向外出始终允许；本章没有声称初始可达、任意端点规则下的噪声取得或物理结论。
+
+[66源原图]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L8290
+[66源63]: https://github.com/the-omega-institute/trureturing/blob/2c9fec822e934ea32e630cc82611e160c48a49a7/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26396
+[66源64]: https://github.com/the-omega-institute/trureturing/blob/3ad8668d7caadf586f2814f72aa8f8ac7e4594e9/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26748
+

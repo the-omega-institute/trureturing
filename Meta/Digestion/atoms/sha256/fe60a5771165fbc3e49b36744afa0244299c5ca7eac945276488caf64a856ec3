@@ -1,0 +1,37 @@
+**命题38.2（显式碰撞序列与没有统一下界）。** 对上述每个固定 $\rho$，置
+$$
+x_0(n)=0,\qquad x_1(n)=\frac1{n+2},\qquad x_2(n)=n+2,
+\qquad G_n=G_\rho(x(n)),\qquad n\ge0.
+\tag{38.3}
+$$
+每个 $n$ 的节点都互异，$G_n$ 都严格正定；其全部九个矩阵元却收敛到
+式(38.2)的 $U_1$。因此不存在一个 $\varepsilon>0$，使这个序列中的全部
+$G_n$ 都满足 $v^*G_nv\ge\varepsilon\|v\|_2^2$ 对所有复向量 $v$ 成立。
+
+证明。$0<1/(n+2)\le1/2<n+2$ 给互异性，命题38.1给严格正定。
+$L^1$ Fourier 变换连续，$K_\rho(0)=1$；Riemann–Lebesgue 引理给
+$K_\rho(t)\to0$ 当 $|t|\to\infty$。三个非对角差的绝对值分别为
+$$
+\frac1{n+2}\longrightarrow0,\qquad n+2\longrightarrow\infty,
+\qquad n+2-\frac1{n+2}\longrightarrow\infty.
+\tag{38.4}
+$$
+相反方向的矩阵元由 $K_\rho(-t)=\overline{K_\rho(t)}$ 给相应极限，
+每个对角元恒为一。九个极限正好组成 $U_1$。
+
+取单位向量 $q=(1,-1,0)^\mathsf T/\sqrt2$。同一个实际相关对给
+$$
+0<q^*G_nq=1-\Re K_\rho\!\left(\frac1{n+2}\right)
+\longrightarrow0.
+\tag{38.5}
+$$
+若有上述统一 $\varepsilon$，左侧便始终至少为 $\varepsilon$，矛盾。∎
+
+这是第18.2–18.3节之间准确的量词关系：每个配置各自严格为正，
+并不支付跨所有配置的同一个正余量。式(38.5)保持密度不变，趋零来自
+两个节点的碰撞；它没有靠不断换密度来产生失稳。第18.2节额外的
+密度区间下界和节点间距承担定量余量，式(38.3)恰不保留正的统一间距。
+这里的极限陈述保留全部九项。把它消费到第18.2节的定量距离时，
+还要在同一个矩阵上使用诱导 Euclidean $2$ 范数与 Frobenius 范数，
+不能以默认矩阵范数的名字替代它们。
+

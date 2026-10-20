@@ -21,6 +21,10 @@ internal sealed class LogNegativityCapacityResourceDependenceDocument : IScribeD
                 "Section I, Eq. (2), p. 2, verbatim: “However, when prior entanglement is available, the maximum increase of entanglement is:” The formula is Eᴰ(Λ) = sup{E(Λ(σ)) − E(σ)|σ ∈ D}. Both logarithms have base two. No restriction to positive partial transpose is imposed on these inputs.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Campbell)),
             Node("claim", "The all-CPTP resource-independence question", ClaimFormula(),
                 "Section VII, p. 7, verbatim: “The most obvious open question is whether log-negativity EC is resource independent for all unitaries, or indeed all CPTP maps, or whether this is a singular feature of 2-qubit gates.” The assertion here is its all-CPTP clause. The dimensions dA and dB and the finite Kraus count r range over natural numbers. Completeness of the Kraus family states trace preservation. The two capacities include every finite local ancillary system.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Campbell)),
+            Node("symKet", "The symmetric Bell vector", BellKetFormula(false),
+                "The unnormalized vector has amplitude one at (0,1) and (1,0), and zero elsewhere in the two-qutrit space. Pi.single denotes a function supported at one index.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("antiKet", "The antisymmetric Bell vector", BellKetFormula(true),
+                "The unnormalized vector has amplitude one at (0,1), minus one at (1,0), and zero elsewhere in the two-qutrit space. The two Bell vectors give the off-diagonal terms in the positive and negative parts of the Bell state's partial transpose.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("separable_ppt", "Separable states have positive partial transpose", SeparablePptFormula(),
                 "For arbitrary finite types A and B, a finite convex mixture of product density matrices remains positive semidefinite after transposing the B indices. The matrix entry at (a,b),(c,d) is sigma((a,d),(c,b)). Positivity follows by applying partial transpose to each product and adding the nonnegative weighted terms.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("result", "A CPTP separation", Seq(Neg, Sp, Parenthesized(ClaimBody())),
@@ -60,6 +64,15 @@ internal sealed class LogNegativityCapacityResourceDependenceDocument : IScribeD
     private static Formula ChannelInputs(Formula b) => All("dA", N, All("dB", N, All("r", N, All("K", KrausType, b))));
     private static Formula LogNeg(Formula x) => Call("logb", D(2), Call("traceNorm", Call("partialTranspose", x)));
     private static Formula SupOver(string n, Formula t, Formula b) => Seq(Seq(Operatorname, Grp(V("iSup"))), Underscore, Grp(Seq(V(n), Sp, Colon, Sp, t)), Sp, Parenthesized(b));
+    private static Formula BellKetFormula(bool antisymmetric)
+    {
+        Formula pair = ProdType(Fin(D(3)), Fin(D(3)));
+        Formula first = Call("single", Cast(Parenthesized(Seq(D(0), Comma, Sp, D(1))), pair), Cast(D(1), C));
+        Formula second = Call("single", Cast(Parenthesized(Seq(D(1), Comma, Sp, D(0))), pair), Cast(D(1), C));
+        Formula body = new Formula.Binary(first,
+            antisymmetric ? FormulaBinaryOperator.Subtract : FormulaBinaryOperator.Add, second);
+        return Eq(Cast(V(antisymmetric ? "antiKet" : "symKet"), Arrow(pair, C)), body);
+    }
     private static Formula CapacityFormula(bool assisted)
     {
         Formula k = V("K"), rho = V("rho");

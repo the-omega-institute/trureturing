@@ -1,0 +1,6 @@
+**命题 50.1。** 对这个实参数支，若单位相位输入 `(x,y)` 与 `H0(x,y)` 都逐项有模一，且其射线正交于两条不同的 canonical 输入射线，则该射线本身是 canonical。因而：
+
+1. 含两条 canonical 射线的实际共同无偏正交三元组全部由 canonical 射线组成。
+2. 任一非 canonical 六元正交 completion 至多包含一条 canonical 射线。
+3. 在第 47、48 节的两个例外参数之外，任一非 canonical completion 至少包含五条 `Delta!=0` 的射线；在整个 `a!=0` 实支上，至少包含四条。
+

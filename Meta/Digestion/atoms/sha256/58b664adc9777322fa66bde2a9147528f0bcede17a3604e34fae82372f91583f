@@ -1,0 +1,32 @@
+**定理 1329.1（高阶成本的另一种联合极限）。** 固定 $0<\kappa<1$ 和 $1<\alpha\le\infty$。若 $\eta_N>0$、$\eta_N\to0$ 且 $\log(1/\eta_N)=o(N)$，则
+
+$$
+\frac{F_{\alpha,N}(\kappa,\eta_N)}{D_N}\longrightarrow0.
+$$
+
+这里后验约束仍是 Shannon 条件熵，目标才是 $\alpha$ 阶来源熵。
+
+**证明。** 在第 1327 节只选一个前缀格，并取
+
+$$
+\ell_N=\left\lceil\log_2\frac{T(\kappa)}{\eta_N}\right\rceil,
+\qquad \rho_N=2^{-\ell_N}.
+$$
+
+充分大时 $\ell_N\le N-2$，且
+
+$$
+\frac{\eta_N}{2T(\kappa)}<\rho_N\le
+\frac{\eta_N}{T(\kappa)}.
+$$
+
+所构造来源后验至多为 $\eta_N$，并含一个权重 $p_N=\rho_N(1-\kappa)$ 的局部公平通道。故 $H_\infty(Z)\le\log(1/p_N)$。对固定有限 $\alpha>1$，幂和至少为 $p_N^\alpha$，负系数给
+
+$$
+H_\alpha(Z)\le\frac\alpha{\alpha-1}\log(1/p_N).
+$$
+
+两种上界均为 $O_{\alpha,\kappa}(1+\log(1/\eta_N))=o(N)$，结合成本非负即得。证毕。
+
+这一结论与第 1326 节同时成立：同一预算趋零方式，在不高于一阶的目标下保留完整的线性主阶，在固定高于一阶的目标下可以降至次线性。一个仍很小、却比单格概率大得多的标签，对高阶目标具有不同的权重效应。
+

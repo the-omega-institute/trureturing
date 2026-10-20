@@ -1,0 +1,39 @@
+**定理 1028.1（准确系数控制的夹界）。** 沿用第 1013 节
+
+$$
+D_T=\max_{1\le j\le T}j\rho^{j-1},\qquad
+M_T=\max_{n\ge T}n\rho^{n-1},\qquad C_T=M_T/D_T.
+$$
+
+令 $j_0$、$n_0$ 分别为取得这两个最大值的整数。所有 $\eta\ge0$ 都有
+
+$$
+R\le\min\left\{\frac{\rho^T}{2},\ \eta C_T\right\}.
+$$
+
+若 $0<2\eta<\rho$，则 $0<\alpha<\rho$，并有
+
+$$
+\eta C_T\left(\frac\alpha\rho\right)^{n_0-1}\le R\le\eta C_T.
+$$
+
+**证明。** 上界第一项来自未来端点差不超过 $\rho^T$。对第二项，把 $x^n$ 看作 $x^{j_0}$ 的函数。由于 $n\ge T\ge j_0$，其导数不超过 $(n/j_0)\rho^{n-j_0}$，于是
+
+$$
+\rho^n-\alpha^n
+\le\frac n{j_0}\rho^{n-j_0}(\rho^{j_0}-\alpha^{j_0})
+\le2\eta\frac{n\rho^{n-1}}{D_T}.
+$$
+
+对未来时刻取上确界再除二即得结论。
+
+在下界条件下，某个观测约束取得 $\rho^j-\alpha^j=2\eta$，而每个 $j\le T$ 在 $[\alpha,\rho]$ 上的导数不超过 $D_T$，所以 $\rho-\alpha\ge2\eta/D_T$。在未来时刻 $n_0$ 积分则给出
+
+$$
+\rho^{n_0}-\alpha^{n_0}
+\ge n_0\alpha^{n_0-1}(\rho-\alpha)
+\ge2\eta C_T(\alpha/\rho)^{n_0-1},
+$$
+
+完成证明。下界条件确保存在正的活动端点，不把饱和噪声的退化分支混入这一步。
+

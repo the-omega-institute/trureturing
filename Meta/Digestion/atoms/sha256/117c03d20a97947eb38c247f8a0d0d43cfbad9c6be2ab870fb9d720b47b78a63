@@ -1,0 +1,12 @@
+### 48.9 来源、重用关系与未决边界
+
+固定维整数可行性引用 Lenstra，*Integer programming with a fixed number of variables*，*Mathematics of Operations Research* 8(4)，538–548，[DOI:10.1287/moor.8.4.538](https://doi.org/10.1287/moor.8.4.538)：固定的是整数变量数，不是不等式数或二进系数。去重投影、固定数目集合并及正则特化引用 Barvinok–Woods，*Short Rational Generating Functions for Lattice Point Problems*，[arXiv:math/0211146v1](https://arxiv.org/pdf/math/0211146v1)，定理 1.7、推论 3.7、定理 2.6 及其正则点注记。源多面体有界、整数像映射、片数和分母界固定是本章逐项满足的条件；计数不靠向分式逐项代入其极点。
+
+实际来源归原子卷 §§359–360，群算术、窗口及资源归 §§28–30，历史与原始配对归 §§38、45，规划与深度归 §47。§§29–30 的增长、已有枚举／Euler 像、通用纤维编码及目标充分性均作为重用。仓内 [TargetRecoveryCriterion](../../../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)、[IndexedTargetSufficiency](../../../D5/S3/ConceptDynamics/Restoration/IndexedTargetSufficiency.lean) 与 [FiberBinaryIdentification](../../../D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.lean) 提供一般恢复／静态编码的既有接口；引用不声称其当前重新编译。新供应是明确实际正源域上的五维共同历史归约、去重初始目标投影、十维永久合并查询和付费系数适配的组合，不是新通用 solver、Euler 定理、行为商或文献原创性结论。
+
+固定状态词的计数像与语言编译是成熟研究背景，可参见 To，*Parikh Images of Regular Languages: Complexity and Applications*，[arXiv:1002.1464v2](https://arxiv.org/abs/1002.1464v2)，以及 Esparza–Ganty–Kiefer–Luttenberger，*Parikh's Theorem: A simple and direct automaton construction*，[arXiv:1006.3825v3](https://arxiv.org/abs/1006.3825v3)。这里不借用未核对的增长界替代原子卷连接证书或当前源合同；表中八边图的紧凑编译也不成为新观察端口。初态识别与破坏性合并的文献背景继续取 §§31、46–47 的区分序列及带输入输出状态识别来源，不移入 reset、已知实际行或外部测试输入。
+
+[OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md §§52–57](OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md) 分别以其标量迹／正树来源研究近似目标、源绑定校准和消费者／时限合同。本章既不把那里的模三、剥离、几何或校准端口移给 TM，也不从模型函数的精确性推出物理 $E$ 仪器已符合合同。树地址读出、随机组成树律、同源概率核与这里的确定性目标集合计数也各守原域；目标系数一不意味着实际来源概率均匀。
+
+共同初始源参数连接空间侧资源 $\lambda_j+U,\lambda_{j+1}+V$、时间侧真实接受次序 $j$、边界侧拒绝／真实读约束和记忆侧初始目标剩余。在原合同与有效族条件下，它们由同一关系恢复所需目标；这不恢复原括号、叶地址、未记录过去或物理空间时间。任意族的有效翻译、一般 Boolean 家族的紧凑投影界、全族更锐利补充容量、合法非恒定标签生产、全局高效策略搜索、实际求解后端的认证与性能、仪器符合性和共同物理费用／校准仍需各自供应。局部理论接口是长期关系恢复目标的条件推进，不是整个目标的完成。
+

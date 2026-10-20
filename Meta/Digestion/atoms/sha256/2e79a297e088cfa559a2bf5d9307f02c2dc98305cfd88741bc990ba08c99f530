@@ -1,0 +1,22 @@
+## 9. 来源、文献状态与核验边界
+
+**文献表态(CLAUDE.md 第 3.7 条,每条命题只取一个值)。**
+
+| 来源 | 精确范围与使用边界 |
+| --- | --- |
+| O. Lindblad, E. Guerrero, *Simple Eigenvalues and Non-vanishing Eigenvectors of the Anderson Model*, arXiv:2512.00278v1,§1(算子与定义 1.1、定理 1.3 之后的逆问题)、命题 2.3、引理 3.2、命题 4.1 | `literature-attested`:算子 $H_t=\Delta+tV$、好势与坏势的定义与二分(经母卷推论 3.3 使用)、逆问题的提法,以及命题 4.1:$d=1$ 且 $L$ 为素数时,势(对实值势陈述)是坏势当且仅当它关于某个顶点反射对称;后者用于定理 7.6 的素数长度部分。核对 v1 的 HTML 全文:该文不讨论合数长度,不使用转移矩阵或单点缺陷,也未给出无对称坏势。 |
+| 母卷 `docs/develop/theory/CYCLE_ANDERSON_PERSISTENT_NODAL_BRANCHES.md`:约定 2.1–2.5、定理 3.2、推论 3.3、例 4.1、定义 4.2、引理 4.3、定理 4.4、4.6 | 本仓既有卷,作为输入引用,不在本卷重新表态;其各条的文献表态见母卷第 8 章。 |
+| G. Teschl, *Jacobi Operators and Completely Integrable Nonlinear Lattices*, Math. Surveys Monogr. 72, AMS 2000,第 7 章(周期 Jacobi 算子、Floquet 判别式、Bloch 解) | `literature-attested`:事实 3.2 (2) 与 $p=(-1)^L(\operatorname{tr}M_j-2)$ 是 Floquet 判别式的有限圈形式;注 4.5 所说周期算子在 Bloch 相位 $2\pi k/m$($0<k<m/2$)处的二重简并;事实 4.8 是「Floquet 判别式在带内的根都是单根」的有限形式。式号定位未核;本卷对事实 3.2 写出了完整证明,不依赖该书。 |
+| R. L. Graham, D. E. Knuth, O. Patashnik, *Concrete Mathematics*, 2nd ed., Addison-Wesley 1994,§6.7(continuants) | `literature-attested`:事实 3.2 (1) 的连分式行列式递推与 $2\times2$ 矩阵积表示。 |
+| J. C. Mason, D. C. Handscomb, *Chebyshev Polynomials*, Chapman & Hall/CRC 2003,第 1 章 | `literature-attested`:$S_n(2\cos\theta)\sin\theta=\sin((n+1)\theta)$(第二类 Chebyshev 多项式的变量缩放),用于命题 4.2 与约定 2.4;事实 4.1 的幂公式是 Cayley–Hamilton 定理的标准推论,小节定位未核。 |
+| A. E. Brouwer, W. H. Haemers, *Spectra of Graphs*, Springer 2012,§1.4(路的谱) | `literature-attested`:路 $J_\ell$ 的谱为 $2\cos(\pi k/(\ell+1))$,即引理 5.2 的第一句;小节定位未核。引理 5.2 的互素判据是本卷的初等推论。 |
+| S. Lang, *Algebra*, rev. 3rd ed., Springer 2002,第 IV 章 §2(Gauss 引理)与 §8(结式) | `literature-attested`:Gauss 引理与首一多项式结式的取值交换性,用于命题 4.2 (1)、定理 6.5、引理 7.1。 |
+| S. Roy, *A spectral viewpoint on the single defect tight-binding chain*, arXiv:2607.29467 | `literature-attested`(同类结果):均匀最近邻紧束缚链上单个在位缺陷的「暗子空间」,即在缺陷站点振幅为零、因而不受缺陷影响的本征态。定理 4.3 在 $r=1$(常数块、单点缺陷)时的特例是同一机制在圈上的形式:本征值 $2+tu_0-2\cos(2\pi k/m)$ 的、在缺陷站点为零的本征向量与缺陷强度 $w_q$ 无关;本卷只把它作为中间步骤与先例。只核对到摘要:该文对链陈述,圈上的对应与「对任意缺陷强度」的逐字陈述未核全文。 |
+| — | `literature-attested`:事实 3.2、注 3.3、事实 4.1、事实 4.8。这三条事实是已知结果,只作后文证明的中间步骤,不作为本卷新增的定理;写出证明只为自足。 |
+| — | `repo-derived`:定义 3.1、引理 3.4(母卷节点步在任意域上的形式)、定理 3.6、注 3.5、注 3.7、命题 4.2、推论 4.4、注 4.5、注 4.7、命题 4.9、引理 5.1、引理 5.2(其首句路的谱是 `literature-attested` 的中间步骤,见 Brouwer–Haemers 行;互素判据为本卷推论)、引理 5.3、定理 5.4、命题 5.5、注 5.6、定义 6.1、引理 6.3、定理 6.5、注 6.6、命题 6.7、注 6.8、命题 6.9、引理 7.1、命题 7.2、命题 7.3、命题 7.5、命题 8.1–8.4。 |
+| — | `suspected-novel`:定理 4.3(单点缺陷原理;承重部分是一般实块 $u\in\mathbb R^r$、一切耦合 $t$,以及 $\Psi_m(\sigma_u)$ 的每个首一不可约因子整除节点因子,与命题 4.9 合起来即无平方因子的 $\pm\Psi_m(\sigma_u)$ 整除节点因子;$r=1$ 特例是 Roy 行所列的 `literature-attested` 中间步骤)、定理 4.6(同余站点上的多点缺陷)、定理 6.2(族 $U_{r,m}$)、定理 6.4(既非素数也非素数两倍的长度)、命题 7.4、定理 7.6。检索范围:arXiv:2512.00278v1 的 HTML 全文;母卷第 8 章所列检索;以「bad potential」「Anderson model」「cycle」「symmetry」「converse」「composite length」组合的网络检索;latent symmetry 与 cospectral vertices 文献,包括 D. Smith, B. Webb, *Hidden symmetries in real and theoretical networks*, Physica A 514 (2019) 855–867(arXiv:1803.02328)、M. Röntgen 等, *Latent symmetry induced degeneracies*, Phys. Rev. Lett. 126 (2021) 180601(arXiv:2011.13404)、M. Kempton, J. Sinkovic, D. Smith, B. Webb, *Characterizing cospectral vertices via isospectral reduction*, Linear Algebra Appl. 594 (2020) 226–248(仅核到书目信息)。这些文献讨论固定矩阵的隐藏对称与本征向量分量的消失,检索范围内未见对单参数族 $\Delta+tV$ 的持续节点分支、周期势单点缺陷或合数长度逆问题的处理。这不确立检索范围之外的优先权。 |
+
+**核验边界。** 第 10 章的代码是本卷唯一的代码块,输入固定,只做两件事:(i) 对 $L\in\{4,6,10,14\}$,枚举 $\{-1,1\}^L$ 在二面体作用与变号下的轨道代表,对稳定子平凡的每个代表,在正整数 $t_0\le29$ 中寻找一个对全部站点 $j$ 同时使 $p(\cdot,t_0)$ 与 $q_j(\cdot,t_0)$ 在 $\mathbb Q[\lambda]$ 中互素的证书(比命题 7.4 证明所需的逐站点证书更强,并蕴含后者),并断言全部找到;对 $L\in\{6,10,14\}$ 的每个代表,第一个尝试值 $t_0=1$ 即是证书,所用的 $t_0$ 不在打印输出中;它打印各长度的轨道总数与稳定子平凡的轨道数,读数为 $L=4$:$4$ 与 $0$;$L=6$:$8$ 与 $1$;$L=10$:$44$ 与 $18$;$L=14$:$362$ 与 $261$。(ii) 对 $3\le r\le8$、$3\le m\le12$,在 $t=1/3$ 处计算 $U_{r,m}$ 的 $p$ 与 $q_{q_{r,m}}$ 的最大公因式次数,断言等于 $r\lfloor(m-1)/2\rfloor$;同时断言 $\Psi_m(\sigma_r(\cdot,1/3))$ 与其导数互素,这一项只是命题 4.9 在 $t=1/3$ 处的一致性核对,不被任何证明使用。全部算术用 Python 标准库的有理数,末行打印哨兵 `ALL_FINITE_CHECKS_PASSED`。
+
+依赖该代码的命题恰为:命题 7.4、命题 7.5、定理 7.6 中 $L\in\{6,10,14\}$ 的部分、命题 8.1 中好势的部分。第 3–6 章(含命题 6.7 的逐站点核对)与命题 7.2、7.3 不依赖任何计算。代码不覆盖:$L\ge22$ 的长度(特别是 $L=2p$,$p\ge11$);$r\ge9$ 或 $m\ge13$ 时 $U_{r,m}$ 节点因子的精确形。有限运行不证明任何关于一般 $L$ 或一般 $m$ 的全称命题。
+

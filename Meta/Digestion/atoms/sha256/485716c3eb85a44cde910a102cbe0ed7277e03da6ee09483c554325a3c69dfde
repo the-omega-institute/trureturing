@@ -1,0 +1,7 @@
+目标是：
+
+* 得到匹配 \(\lambda_{\mathrm{full}}(L)\) 的 primal 证书；
+* 分析 atomic residual；
+* 证明 completion tower 紧性；
+* 解释地态零点收敛。
+

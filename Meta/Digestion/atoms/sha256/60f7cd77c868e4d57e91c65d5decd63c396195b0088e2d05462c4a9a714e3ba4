@@ -1,0 +1,63 @@
+### 15.2 组成商是 FIB 源的一个同态边界
+
+在只观察组成及其 $\rho$ 后继的任务中，令
+
+$$
+c(\alpha)=(1,0),\qquad c(\beta)=(0,1),\qquad
+c(\langle s,t\rangle)=c(s)+c(t),
+$$
+
+并记 $B_c=c[\mathcal T]\subseteq\mathbb N^2$。则 $B_c$ 对加法和
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}
+$$
+
+作用封闭，并满足
+
+$$
+c(\langle s,t\rangle)=c(s)+c(t),
+\qquad
+c(\rho s)=Mc(s).
+\tag{RA.1504}
+$$
+
+因此 $c$ 在该任务下诱导
+
+$$
+\bar\mu_c(x,y)=x+y,
+\qquad
+\bar\rho_c(x)=Mx.
+\tag{RA.1505}
+$$
+
+FIB 卷的两层数量读数定理给出：对只读取组成和全部 $\rho$ 后继的观察族，
+$c(s)=c(t)$ 当且仅当两项具有相同的任务行为。因此 $B_c$ 是该任务行为商的
+一个实际同构编码；它忘记次序和括号，但不忘记该任务要求的组合与后继。
+
+相反，单个数量读数通常不是动态边界。取
+
+$$
+t=\langle\alpha,\langle\alpha,\alpha\rangle\rangle,
+\qquad
+u=\langle\beta,\beta\rangle,
+$$
+
+则 $c(t)=(3,0)$、$c(u)=(0,2)$。对 $\ell(a,b)=2a+3b$ 有
+
+$$
+\ell(c(t))=\ell(c(u))=6,
+$$
+但
+
+$$
+\ell(c(\rho t))=9,
+\qquad
+\ell(c(\rho u))=10.
+\tag{RA.1506}
+$$
+
+所以不存在 $\bar\rho:\ell[B_c]\to\ell[B_c]$ 使
+$\ell c\rho=\bar\rho\ell c$。一个当前标量可以是合法读数，却不是可递归运输的
+边界；两层读数或等价的联合关系才闭合。
+

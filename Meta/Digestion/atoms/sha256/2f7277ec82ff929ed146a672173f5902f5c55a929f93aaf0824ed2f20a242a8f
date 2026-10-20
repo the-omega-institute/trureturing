@@ -1,0 +1,31 @@
+## 经典定理 179.1（有理数乘积公式）
+
+对任意：
+
+\[
+x\in\mathbb Q^\times,
+\]
+
+有：
+
+\[
+\boxed{
+|x|_\infty
+\prod_p|x|_p
+=1.
+}
+\]
+
+取对数：
+
+\[
+\boxed{
+\log|x|_\infty
+-
+\sum_pv_p(x)\log p
+=0.
+}
+\]
+
+该和实际为有限和。
+

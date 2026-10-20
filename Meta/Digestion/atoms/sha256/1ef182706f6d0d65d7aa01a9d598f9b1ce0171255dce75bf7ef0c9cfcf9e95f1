@@ -1,0 +1,17 @@
+### Effective-image 纪律
+
+任意读出 $q:X\to B$ 的 canonical codomain 是其有效像
+
+$$
+\operatorname{Im}(q).
+$$
+
+所有“唯一 factor”“最小实现”“反射单位”均在有效像上陈述。若把 factor 任意延伸到整个环境 codomain $B$，像外取值通常不唯一，因此不得把有效像上的唯一性外推为环境空间上的唯一性。
+
+这条纪律同时适用于：
+
+1. 一般接口的 refinement factor；
+2. 线性读出 $C:V\to Y$ 的诱导动力学；
+3. 行为实现的 reachable part；
+4. completion-point 参数化中的 gauge-fixed carrier。
+

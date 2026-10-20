@@ -1,0 +1,38 @@
+**定理 46.2（离散 Feynman–Kac 组合的连续极限）。** 在定义12.1的单位速度、时钟和初态收敛假设下，令
+\[
+n_{j,r}=\left\lfloor\frac{t_r}{\epsilon_j}\right\rfloor
+-\left\lfloor\frac{t_{r-1}}{\epsilon_j}\right\rfloor,\qquad
+D_{j,r}=\operatorname{diag}\!\left(
+e^{-\epsilon_jf_r(i/L_j)}\right),
+\]
+以及 \(Q_{j,r}=D_{j,r}K_j\)，其中吸收后的转移仍由杀死核 \(K_j\) 给出。若 \(i_j/L_j\to x\)，且 \(g_j\) 是 \(g\) 的格点嵌入，则
+\[
+\begin{aligned}
+&\mathbb E_{i_j}\!\left[
+\exp\!\left\{-\sum_{r=1}^m\epsilon_j
+\sum_{n=n_{j,1}+\cdots+n_{j,r-1}}^{n_{j,1}+\cdots+n_{j,r}-1}
+f_r(X_n/L_j)\right\}
+g_j(X_{\lfloor T/\epsilon_j\rfloor})
+\right]\\
+&\hspace{2cm}=
+\bigl[Q_{j,1}^{\,n_{j,1}}\cdots
+Q_{j,m}^{\,n_{j,m}}g_j\bigr](i_j)\\
+&\hspace{2cm}\longrightarrow
+\bigl[S_{f_1}(\Delta t_1)\cdots
+S_{f_m}(\Delta t_m)g\bigr](x).
+\end{aligned}
+\tag{46.1}
+\]
+算子乘积按时间从左到右排列；一般 \(S_{f_r}\) 不交换，因此分段势不能被替换成只依赖各段无序集合的表达式。
+
+**证明。** 每个 \(Q_{j,r}\) 在一步转移前乘上当前格点的势因子，逐步条件期望给出离散 Feynman–Kac 等式。将杀死核 \(K_j\) 扩充为命中 \(1\) 后保持在 \(1\) 的完整核 \(\widehat K_j\)；由于 \(f_r(1)=g(1)=0\)，完整路径与杀死路径在该表达式上的取值一致。定理12.3和定理12.4给出
+\[
+Z_j\Longrightarrow Z
+\]
+于连续路径拓扑，并且阶梯路径的分段求和与对应时间积分之差由连续性模和 \(\epsilon_j\) 的端点误差控制而趋于零。于是
+\[
+\omega\longmapsto
+\exp\!\left(-\sum_{r=1}^m\int_{t_{r-1}}^{t_r}f_r(\omega(s))\,ds\right)g(\omega(T))
+\]
+是有界连续路径泛函，连续映射定理给出 (46.1) 的极限。极限的 Markov 性把该泛函写成有序半群乘积。这里段数 \(m\) 固定；不允许 \(m=m(j)\) 随链长增长。$\square$
+

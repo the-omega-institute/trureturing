@@ -1,0 +1,38 @@
+**定义 15.1（固定单位速度模型与同轨占用量）。** 始终使用定义5.1与定义10.1的模型：固定 $r_\alpha,r_\beta>0$、$0<\theta\le\min(r_\alpha,r_\beta)/2$ 与 $\delta>0$，取逐字源
+
+$$
+W_0=\alpha,\qquad W_1=\beta,\qquad W_{j+2}=W_{j+1}W_j,
+\qquad j\ge0,
+$$
+
+对 $j\ge1$ 保留
+
+$$
+\begin{aligned}
+L_j&=F_{j+1},& N_j&=F_{j+3},& \epsilon_j&=\frac{\delta}{N_j^2},\\
+\overline r&=\varphi^{-2}r_\alpha+\varphi^{-1}r_\beta,
+&D&=\frac{\theta\varphi^4}{\delta\overline r},
+&h_j&=\epsilon_jL_j.
+\end{aligned}
+$$
+
+在切点 $0,\ldots,L_j$ 上，每个暂态切点的速度权重恒为一。内部从 $i$ 向右跨边的概率为 $\theta/r_{(W_j)_i}$，向左跨边的概率为 $\theta/r_{(W_j)_{i-1}}$，其余概率持留；$0$ 只有右跳而反射，$L_j$ 吸收。初态固定为 $X_0=0$，令 $\tau_j=\inf\{n\ge0:X_n=L_j\}$。以下所有联合量都由这条链的同一次随机历史读取，期望与协方差均取其初态为 $0$ 的概率律。
+
+固定 $j$ 时暂记 $L=L_j$、$\tau=\tau_j$，对 $0\le a<L$ 定义
+
+$$
+V_a=\sum_{0\le n<\tau}{\bf1}_{\{X_n=a\}},\qquad
+q_a=\frac1\theta\sum_{k=a}^{L-1}r_{(W_j)_k}.
+$$
+
+同时规定 $V_L=q_L=0$。占用计数包含 $n=0$，排除吸收步 $n=\tau$。沿用 $K_j$、$B_j=I-K_j$、$G_j=B_j^{-1}$，以及定义10.1的映射
+
+$$
+\iota_j(u)=\begin{cases}\lfloor L_j u\rfloor,&0\le u<1,\\L_j,&u=1,\end{cases}
+\qquad
+\ell_j(u)=h_jV_{\iota_j(u)},\qquad
+\kappa(u)=\frac{1-u}{D}\quad(0\le u\le1).
+$$
+
+$u$ 是归一化切点坐标；数量缩放通过 $N_j$ 与 $\epsilon_j$ 实现，和数量位置 $x_k/N_j$ 的对应由定理10.2给出。
+

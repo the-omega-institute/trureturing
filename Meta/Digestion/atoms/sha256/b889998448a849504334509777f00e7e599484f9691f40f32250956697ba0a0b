@@ -1,0 +1,6 @@
+\operatorname{Tr}_{\mathcal E}(V_i\rho V_i^\dagger).
+\]
+若控制系统 \(C\) 允许相干选择，定义受控实现
+\[
+W
+=

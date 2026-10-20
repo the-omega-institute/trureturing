@@ -1,0 +1,24 @@
+**定义 1444.1（同模态标签的凸性差距）。** 对正奇偶顶点 $x$ 记 $p_x=\nu(x)$，并定义
+
+$$
+\Gamma=\sum_x\left[p_x^\alpha-
+\sum_{\substack{j\in\mathcal H\\x_j=x}}w_j^\alpha\right]\ge0.
+$$
+
+同一格的标签质量相加后，严格凸的幂函数区分一个主要标签与多个分裂标签。$\Gamma$ 因而保留了只读 $p_x$ 时被合并的区别。
+
+在第 1345 节的局部残差界下，正奇偶格满足 $R(x)\le p+B\delta2^{-N}$。高矩标签又有 $q_j(x_j)\ge1/2$，所以
+
+$$
+p_x\le2R(x)\le2p\left(1+\frac{B\delta}{2\kappa}\right).
+$$
+
+最终 $\delta\le\kappa/B$，从而 $p_x\le3p$。由幂函数在 $[0,3p]$ 上的导数界和第 1443 节，有
+
+$$
+\left|\sum_xp_x^\alpha-\tau_N\right|
+\le\alpha(3p)^\beta C_\nu\delta.
+$$
+
+这一步同时比较全部模态格，使用总质量误差；它没有假定每个格都已经单独接近 $p$。少数格偏离较大，正是后续需要计数控制的部分。
+

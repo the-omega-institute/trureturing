@@ -1,0 +1,27 @@
+**推论 1448.1（误差随尾尺度适应）。** 存在只依赖 $\kappa,\alpha$ 的常数 $C_*>0$，使第 1447 节的异常比例对所有 $0<\varepsilon<1/2$ 同时至多为
+
+$$
+C_*\frac{e_N}{\varepsilon\tau_N}.
+$$
+
+若 $r_N=e_N/\tau_N\to0$ 且 $r_N>0$，最终可取 $\varepsilon_N=\sqrt{r_N}$，使异常比例至多为 $C_*\sqrt{r_N}$，其余顶点的相对权重误差至多为 $2\sqrt{r_N}$、通道总变差至多为 $\sqrt{r_N}$。
+
+**证明。** 对 $0<\varepsilon<1/2$，微积分给
+
+$$
+1-(1-\varepsilon)^\beta
+=\int_0^\varepsilon\beta(1-t)^{\beta-1}\,dt
+\ge\beta\min\{1,2^{1-\beta}\}\varepsilon.
+$$
+
+又有 $(1-\varepsilon)^\alpha\ge2^{-\alpha}$，故 $c_\varepsilon\ge d_\alpha\varepsilon$，其中 $d_\alpha=\beta\min(1,2^{1-\beta})2^{-\alpha}>0$。同时 $(1-\varepsilon)^{-2}\le4$，于是可以取
+
+$$
+C_*=\frac{C_\nu C_w+8C_w}{\kappa}
++\frac{C_\Gamma}{d_\alpha}.
+$$
+
+将这些界代入第 1447 节，即得到共同常数；其适用维数条件不依赖 $\varepsilon$。代入 $\varepsilon_N=\sqrt{r_N}<1/2$ 完成证明。$e_N=0$ 的维数直接使用准确最优分类处理。证毕。
+
+这条界使“多数”和“接近”具有可以同时变化的尺度，而非先固定一个任意精度后才作存在判断。平方根率由当前的质量计数与精度平衡取得，没有声称它是所有允许来源中的最优稳定率。
+

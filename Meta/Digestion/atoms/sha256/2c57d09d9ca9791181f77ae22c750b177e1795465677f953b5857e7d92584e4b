@@ -1,0 +1,35 @@
+# 第一千二百七十部　概念对偶的最终新表
+
+| bulk 概念                  | boundary 对偶                          | 正核图表                     | 整数不变量 |
+| ------------------------ | ------------------------------------ | ------------------------ | ----: |
+| 离线零点 \((\delta,\gamma)\) | 穿越事件 \((\omega,t)=(\delta,-\gamma)\) | 负 kernel state           | \(m\) |
+| 零点重数                     | 边界 spectral flow                     | confluent 负 Jet 维数       | \(m\) |
+| Chern 单极子                | Poisson 相位脉冲                         | Blaschke model space     | \(m\) |
+| 横向距离 \(\delta\)          | 出生时间                                 | 首次负层                     |  壳层编号 |
+| 高度 \(\gamma\)            | 脉冲中心 \(-\gamma\)                     | 评价点实部                    |     — |
+| bulk hyperbolic 模式       | boundary massless Poisson 场          | generalized Schur kernel |   负指标 |
+| 无离线点                     | 无源 Poisson 方程                        | 普通 Schur／Hilbert 空间      | \(0\) |
+| 黄金比例                     | Gauss 面比例 \(\varphi^{-2}\)           | 共尾观察调度                   | 不承担电荷 |
+
+这张表中最重要的一对是：
+
+$$
+\boxed{
+\text{bulk point charge}
+\quad\longleftrightarrow\quad
+\text{boundary index flow}.
+}
+$$
+
+离线零点的对偶不再需要猜测为另一个抽象哲学概念。
+
+它已经被定位为：
+
+$$
+\boxed{
+\textbf{完成边界上一个带整数荷的负平方出生事件。}
+}
+$$
+
+---
+

@@ -1,0 +1,22 @@
+分四种实际的子空间位置，不作坐标上的额外假定：
+
+1. 若 $`k\notin H`$ 且 $`k\notin G`$，则（25.14）右侧为六。
+   因为 $`\dim L_3=4`$，$`p,q`$ 在商空间 $`K/L_3`$ 中线性独立。
+   两个向量 $`cs+br,a^2t+bj`$ 在 $`L_3`$ 内线性独立，故
+   $`\dim A_1=4`$。但 $`\dim A_0=3`$，与（25.13）及 $`D\le6`$ 矛盾。
+
+2. 若 $`k\in G\setminus H`$，由 $`k1\in G\otimes1`$ 和（25.7）可得 $`q\in R`$。
+   此时（25.14）为五，故 $`p\notin L_3`$。两个向量
+   $`cs+br,a^2t+bj`$ 在 $`S`$ 上的投影分别为 $`cs,a^2t`$，线性独立；
+   因此加上非零的 $`q\in R`$ 后仍线性独立。
+   再加 $`p\notin L_3`$ 得 $`\dim A_1=4`$，而 $`\dim A_0=3`$，仍矛盾。
+
+3. 若 $`k\in H\setminus G`$，同理有 $`p\in S`$，且由（25.14）得 $`q\notin L_3`$。
+   这时 $`A_0=H`$、$`B_0=L`$，而 $`B_1=S`$，所以（25.13）给 $`S\perp L`$。
+   特别地 $`s,t\perp H`$。又因 $`cs+br,a^2t+bj\in A_1\perp H`$，
+   且 $`a,b\ne0`$，有 $`r,j\perp H`$，从而 $`L_3\subset H^\perp`$。
+   同时 $`q\in A_1\subset H^\perp`$ 且 $`q\notin L_3`$，于是
+   $`\dim H^\perp\ge5`$，即 $`D\ge7`$，矛盾。
+
+4. 唯一剩余是 $`k\in H\cap G=\operatorname{span}\{w\}`$。
+

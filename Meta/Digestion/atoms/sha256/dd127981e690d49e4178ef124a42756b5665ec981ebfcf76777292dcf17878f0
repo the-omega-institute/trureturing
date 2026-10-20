@@ -1,0 +1,26 @@
+### 定义与适用范围
+
+沿用 §§433–435 的实际 primorial 核及其完整极限轮廓。记
+
+\[
+c_*=e^{-\gamma_E}>0,\qquad
+\varphi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vb}}b\,db\right),
+\]
+
+\[
+\Xi_\sigma(a)=c_*\int_0^\infty e^{-\sigma v}
+\frac{e^{-av}\varphi(v)-1+(a-1)v}{v^2}\,dv,
+\qquad \sigma>0,\quad a\ge0.
+\tag{ST.1}
+\]
+
+已有的零端展开与全尾包络为
+
+\[
+\varphi(v)=1+v+\tfrac14v^2+O(v^3)\quad(v\downarrow0),
+\qquad 0<\varphi(v)\le e(1+v)\quad(v\ge0).
+\tag{ST.2}
+\]
+
+本节的承重结论是这个实际轮廓的源参数变换律及其对角符号分类。下列 Frullani 积分与补偿后的指数积分是经典分析恒等式，仅作为该变换律的中间供应；它们不作为新的独立数论结论。
+

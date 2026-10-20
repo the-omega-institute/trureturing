@@ -1,0 +1,26 @@
+**命题 46.1。** 若 `H(x,y)^T` 的六个分量也都具有模一，则：
+
+```math
+\left(\prod_{k=0}^2u_kz_k\ne0\right)
+\quad\Longrightarrow\quad \Delta(x,y)\ne0.
+```
+
+等价地，在这些实际共同平坦向量上，`Delta(x,y)=0` 必迫使 `x,y` 至少有一个是单一 Fourier mode。该命题适用于整个所述实参数区间。
+
+**证明。** 首先，`AA*+BB*=6I`，因为其非对角相关系数为 `2+2 Re(p+q)=0`；circulant 矩阵交换又给出其余 block Gram 恒等式。因此 `H` 确为平坦酉矩阵。
+
+反设 `u,z` 都有满支撑而 `Delta=0`。单位相位条件给出 `sum c_k=sum d_k=0`。两非零向量 `c,d` 位于二维零和子空间，退化行列式使它们成比例，故可写 `d=eta c`。令 `z_k=lambda_k u_k`，则：
+
+```math
+\overline{\lambda_k}\lambda_{k+1}=\eta.
+```
+
+三个相邻模长乘积相等，故三个 `|lambda_k|` 相等。由 `||u||²=||z||²=3`，公共模长是一。因此 `eta³=1`，存在同一个单位相位 `gamma` 及 `m in {0,1,2}`，使：
+
+```math
+z_k=\gamma\omega^{mk}u_k,\qquad y=\gamma S^m x.
+\tag{46.1}
+```
+
+以下分别排除三种位移，始终保留同一相位 `gamma`。
+

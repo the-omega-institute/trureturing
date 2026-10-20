@@ -1,0 +1,13 @@
+**定理 1529.1（阶零边界层）。** 固定 $\kappa$，令 $\delta_n\uparrow s$、$\lambda_n=\lambda_{\delta_n}$、$L_n=\log(1/\lambda_n)\to\infty$。若 $\alpha_n\ge0$、$\alpha_n\to0$ 且 $\alpha_nL_n\to t\in[0,\infty]$，则
+
+$$
+\widetilde G_{\alpha_n,2}(\kappa,\delta_n)
+\longrightarrow\log(1+e^{-t}),
+$$
+
+其中 $e^{-\infty}=0$。
+
+**证明。** 二点公式中 $(1-\lambda_n)^{\alpha_n}\to1$，$\lambda_n^{\alpha_n}=\exp(-\alpha_nL_n)\to e^{-t}$，且 $1-\alpha_n\to1$，直接代入有限阶熵式。$\alpha_n=0$ 的项使用两项正权重的支撑熵 $\log2$，与同一式一致。证毕。
+
+固定任意正阶再趋近单来源边界，成本趋零；先把阶取成零，边界前始终为 $\log2$。上式给二者之间的具体过渡，不把不交换的极限压成一个无条件结论。
+

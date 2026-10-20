@@ -1,0 +1,29 @@
+**命题 38.6（无满支撑最小点时的非唯一最优信道，repo-derived）。** 第 36.1 节的允许模型中存在三个扇区、每个目标秩为一的实例，具有两个不同的最优编码后信道。
+
+**证明。** 取排序的平方根谱
+
+$$
+v_1=(1,0),\quad v_2=(1/\sqrt2,1/\sqrt2),\quad
+v_3=(\cos(\pi/8),\sin(\pi/8)).
+$$
+
+令 $k=1/\sqrt2$、$c=\cos(\pi/8)$、$q=(1+k)/2=c^2$。于是
+
+$$
+K=\begin{pmatrix}1&k&c\\k&1&c\\c&c&1\end{pmatrix},
+\qquad p=(1/2,1/2,0),\qquad Kp=(q,q,c)^{\mathsf T}.
+$$
+
+$K\succeq0$ 且 $c>q$，所以单纯形最优性条件证明 $p$ 最小、值为 $q$。对任一概率 $x$，二次型展开中的线性项为 $2(c-q)x_3$，余项非负，因此任何最小点必须有 $x_3=0$；余下两标签二次型的唯一最小点是等质量。故不存在满支撑最小点。
+
+共同拆分给出 $\mathcal F_K$。再在一侧对第三输出旗标施加退相干，使第三标签与前两者的相干乘以 $c$，前两者间相干不变。这是一个 CPTP Schur 映射：其核是两个相同单位向量和另一个与它们重叠为 $c$ 的单位向量之 Gram 矩阵。所得乘积协议的核为
+
+$$
+C=\begin{pmatrix}1&k&q\\k&1&q\\q&q&1\end{pmatrix},
+\qquad Cp=q\mathbf1.
+$$
+
+$C$ 是两个正半定核的 Schur 乘积，正半定且对角为一，所有元素属于 $[0,1]$。对任一概率 $x$，$x^{\mathsf T}Cx=q+(x-p)^{\mathsf T}C(x-p)\ge q$。第 36.1 节的 Schur 范数推导适用于此核，故 $\|\mathcal F_C-\mathcal T\|_\diamond=2(1-q)$。然而 $C_{13}=q<c=K_{13}$，所以两个编码后信道不同。它们在活跃标签 $\{1,2\}$ 上完全相同，保留定理 38.2 的精确范围。证毕。
+
+**来源与适用范围。** 本节复用第 36.1 节的全操作最优值、共同拆分及投影环境界，以及第 34.1 节的正平衡概率；这些前置不作为新增结果。新增的等号分类、完整编码后信道的测试认证、指数最优性和满支撑边界属于本仓推导。Stinespring 表示、完全有界迹范数和一般通道优化的对偶条件属于已有量子信息理论；比较文献为 Watrous, *The Theory of Quantum Information* (2018)，以及 Coutts–Girard–Watrous, *Certifying optimality for convex quantum channel optimization problems*, Quantum 5, 448 (2021), [arXiv:1810.13295](https://arxiv.org/abs/1810.13295)。后者的全信道最优性条件不替代本节局部乘积混合类的投影环境界。本节不分类局部信道在未使用物理输入上的自由度，不包括通信、共享纠缠或任意全局操作，也不建立连续 CFT 与引力 RT 的实现字典。
+

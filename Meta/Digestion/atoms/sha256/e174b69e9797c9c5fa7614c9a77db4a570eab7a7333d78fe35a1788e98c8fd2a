@@ -1,0 +1,26 @@
+**Definition 113.3 (boundary value without description syntax).** Reuse
+the Bernoulli probability $M$ of (98.3), so $M([p])=\varphi^{-s(p)}$.
+Let $\mathcal L(u)$ be the original terminal-address antichain, and
+$j(q)\in\{0,1\}$ its terminal label as above. Define
+
+$$
+\nu_u=\sum_{q\in\mathcal L(u)}
+ \frac{\varphi^{j(q)}}{W(u)}(\omega\mapsto q\omega)_*M,
+\qquad
+f_u=\frac{d\nu_u}{dM}
+ =\frac{\varphi^{s(q)+j(q)}}{W(u)}\quad\text{on }[q].
+\tag{113.7}
+$$
+
+The original leaves partition $\Omega$; their weights sum to $W(u)$.
+Thus this is a probability and a positive finite cylinder density.
+Above original leaves its cylinder masses sum the weights of that
+original subtree; below one leaf they multiply by $M([r])$. These are
+exactly (113.3)--(113.4). The retained object is the **measure value**,
+or equivalently the density modulo $M$-almost-everywhere equality.
+An unreduced list of original leaf cylinders is not additional retained
+information. If a finite density description is used, identify equal
+functions: two sibling cylinders with the same constant may merge,
+recursively. The resulting maximal constant cylinders are unique, since
+every cylinder has positive $M$ mass and the original density is finite.
+

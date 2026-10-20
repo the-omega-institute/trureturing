@@ -1,0 +1,16 @@
+**定理 345.3（树覆盖的误差传播界）。** 设覆盖神经是一棵树，根边界估计误差为 \(\delta_0\)，第 \(e\) 条限制传播在总变差距离上增加至多 \(\delta_e\)。沿根到节点 \(v\) 的唯一路径 \(P(v)\)，拼接估计满足
+\[
+\boxed{
+\delta(v)\le\delta_0+\sum_{e\in P(v)}\delta_e.
+}
+\tag{345.2}
+\]
+若每条传播是收缩因子 \(L_e\) 的线性响应，则对应加权形式为
+\[
+\delta(v)\le
+\delta_0\prod_{e\in P(v)}L_e
++
+\sum_{e\in P(v)}
+\delta_e\prod_{f\succ e}L_f.
+\]
+

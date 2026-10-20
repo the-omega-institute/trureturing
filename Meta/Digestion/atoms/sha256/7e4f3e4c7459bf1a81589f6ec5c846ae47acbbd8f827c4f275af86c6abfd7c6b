@@ -1,0 +1,35 @@
+### 27.1 类型化未来行为与最小预测商
+
+令 \(H\) 是同一个实际来源合同下的历史集合。历史可以包含来源、端口、档案、参考、权限、事件和工作记忆；它不是把分别可达的边缘状态任意拼起来的笛卡尔积。令 \(\mathcal V\) 是前缀闭合的有限类型化动作词族。一个词 \(v\) 只有在其前缀的输出接口与下一动作的输入接口相容时才属于 \(\mathcal V\)。
+
+把一项未来实验的全部指定结果记为
+
+$$
+\operatorname{Resp}:\{(h,v):h\in H, v\in\mathcal V\}
+\longrightarrow \mathcal O_v .
+$$
+
+\(\mathcal O_v\) 的标签必须保留当前任务要求区分的合法性、失败、读数、事件、writer、记录和终止信息；概率模型中把单个结果换成相应的结果分布。定义完整未来行为等价
+
+$$
+ h\mathrel{\sim_{\mathcal V}}h'
+ \quad\Longleftrightarrow\quad
+ \forall v\in\mathcal V,
+ \quad
+ \operatorname{Resp}(h,v)=\operatorname{Resp}(h',v).
+ \tag{TM.2701}
+$$
+
+若比较的输出带有后继边界，则等式按相同类型的后继行为理解；若动作失败，则失败标签本身也是响应的一部分，不能静默删去。反身性、对称性和传递性逐词成立，所以可以定义最小预测商
+
+$$
+ C_{\mathcal V}=H/{\sim_{\mathcal V}},
+ \qquad
+ q_{\mathcal V}:H\to C_{\mathcal V},
+ \qquad
+ q_{\mathcal V}(h)=[h].
+ \tag{TM.2702}
+$$
+
+“最小”在这里是划分意义下的最小，而不是先验地声称商有限、容易计算或实际可取得。它只合并在全部声明续接中都没有可见差别的历史。
+

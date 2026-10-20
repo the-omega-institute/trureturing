@@ -1,0 +1,144 @@
+## 262. FIB 光子晶格与腔量子电动力学上的外加 Purcell 辐射、光子输运及计数统计
+
+固定一族 FIB 图或细胞复形 \(G_j=(V_j,E_j)\)，在顶点、胞腔或端口附加光学模式，并在若干位置放置两能级发射体。FIB ATOM 递归只给出组合支撑、邻接、缺陷接缝、传播路径、输入输出端口和层级索引；介电函数、磁导率、空间嵌入、晶格尺度、边界、偶极矩、失谐、泵浦、损耗和探测器响应均须外加。
+
+离散光子模式的二次 Hamiltonian 可写为
+
+$$
+H_{\rm ph}=\hbar\sum_{u\in V_j}\omega_u a_u^\dagger a_u
++\hbar\sum_{(u,v)\in E_j}
+\left(J_{uv}a_u^\dagger a_v+J_{uv}^*a_v^\dagger a_u\right).
+\tag{262.1}
+$$
+
+FIB 邻接至多约束 (J) 的非零支撑；(omega_u)、(J_{uv}) 的数值和相位由材料、偏振、几何与边界决定。连续模型还需解外加 Maxwell 本征问题
+
+$$
+\nabla\times\mu^{-1}(\mathbf r)\nabla\times\mathbf E_\nu(\mathbf r)
+=\frac{\omega_\nu^2}{c^2}\varepsilon(\mathbf r)\mathbf E_\nu(\mathbf r).
+\tag{262.2}
+$$
+
+因此节点度、递归深度和路径条数不能单独决定带隙、群速度、模体积或腔品质因数。
+
+开放光子网络的推迟 Green 函数与端口衰减矩阵可写成
+
+$$
+G_j^R(\omega)=\left[(\omega+{\rm i}0^+)I-h_j-sum_\alpha\Sigma_\alpha^R(\omega)\right]^{-1},
+\qquad
+\Gamma_\alpha={\rm i}(\Sigma_\alpha^R-\Sigma_\alpha^A).
+\tag{262.3}
+$$
+
+局域态密度和弱耦合电偶极辐射率为
+
+$$
+\rho(\mathbf r,\omega)=-\frac1\pi\operatorname{Im}\operatorname{Tr}G^R(\mathbf r,\mathbf r;\omega),
+\tag{262.4}
+$$
+
+$$
+\Gamma_e=\frac{2\omega_e^2}{\hbar\varepsilon_0c^2}
+\mathbf d_e^*\!\cdot\operatorname{Im}G^R(\mathbf r_e,\mathbf r_e;\omega_e)\!\cdot\mathbf d_e,
+\qquad F_P=\Gamma_e/\Gamma_{\rm hom}.
+\tag{262.5}
+$$
+
+\(F_P\) 由 Green 函数谱密度、偶极方向、失谐、模体积和参考介质共同决定；FIB 回路数不提供这些量。带边、缺陷腔和高品质因数可使态密度尖峰、辐射抑制或长记忆同时出现。
+
+单发射体与缺陷腔在截断近似下满足 Jaynes--Cummings Hamiltonian
+
+$$
+H_{\rm JC}=\hbar\omega_c a^\dagger a+\hbar\omega_e\sigma^+\sigma^-
++\hbar g(a^\dagger\sigma^-+a\sigma^+),
+\qquad g=-\frac{\mathbf d_e\cdot\mathbf E_c(\mathbf r_e)}\hbar.
+\tag{262.6}
+$$
+
+若腔泄漏、辐射和纯退相干率为 \(\kappa,\gamma,\gamma_\phi\)，一个外加主方程为
+
+$$
+\dot\rho=-\frac{{\rm i}}\hbar[H_{\rm JC}+H_{\rm drv},\rho]
++\kappa\mathcal D[a]\rho+\gamma\mathcal D[\sigma^-]\rho
++\gamma_\phi\mathcal D[\sigma^+\sigma^-]\rho+\mathcal L_{\rm pump}\rho.
+\tag{262.7}
+$$
+
+弱耦合、近共振且腔线宽主导时可出现 \(\Gamma_{\rm cav}\) 与 \(g^2/\kappa\) 同阶的 Purcell 增强；强耦合时则可能出现真空 Rabi 分裂。交叉位置和谱峰可分辨性依赖 \(g,\kappa,\gamma,\gamma_\phi\)、失谐及探测带宽。
+
+多发射体的环境介导集体衰减矩阵为
+
+$$
+\Gamma_{mn}=\frac{2\omega_e^2}{\hbar\varepsilon_0c^2}
+\mathbf d_m^*\!\cdot\operatorname{Im}G^R(\mathbf r_m,\mathbf r_n;\omega_e)\!\cdot\mathbf d_n.
+\tag{262.8}
+$$
+
+其本征组合给出超辐射和亚辐射模。相同 FIB 邻接可以因相对位置、传播相位、偶极取向、无序和端口边界不同而产生亮模、暗模或近简并峰。
+
+端口输入输出关系和散射矩阵可写成
+
+$$
+ b_{\alpha,\rm out}=b_{\alpha,\rm in}+\sqrt{\kappa_\alpha}a_\alpha,
+\qquad
+ S_{\alpha\beta}(\omega)=\delta_{\alpha\beta}
+-{
+m i}\sqrt{\kappa_\alpha\kappa_\beta}[G^R(\omega)]_{\alpha\beta}.
+\tag{262.9}
+$$
+
+存在一条 FIB 路径只表示候选支撑，不保证非零透射、共振增强或特定群延迟；边界截断和端口自能还会反向改变腔线宽与 Purcell 因子。
+
+若 (N_\alpha(t)) 记录端口光子数，倾斜 Liouvillian 的计数项可写为
+
+$$
+\mathcal L_{\boldsymbol\chi}\rho=\cdots+\sum_\alpha\kappa_\alpha
+\left(e^{{\rm i}\chi_\alpha}a_\alpha\rho a_\alpha^\dagger
+-\frac12\{a_\alpha^\dagger a_\alpha,\rho\}\right),
+\tag{262.10}
+$$
+
+并定义
+
+$$
+\theta(\boldsymbol\chi)=\lim_{t\to\infty}\frac1t
+\log\operatorname{Tr}\rho_{\boldsymbol\chi}(t),
+\qquad
+\frac{C_{\alpha_1\cdots\alpha_k}}t
+=\left.\partial_{i\chi_{\alpha_1}}\cdots\partial_{i\chi_{\alpha_k}}\theta\right|_{\boldsymbol\chi=0}.
+\tag{262.11}
+$$
+
+这些导数给出平均计数、shot noise 和高阶累积量；平均光强不能确定完整计数律。二阶相关函数
+
+$$
+ g_\alpha^{(2)}(\tau)=
+\frac{\langle b_{\alpha,\rm out}^\dagger(0)b_{\alpha,\rm out}^\dagger(\tau)
+ b_{\alpha,\rm out}(\tau)b_{\alpha,\rm out}(0)\rangle}
+{\langle I_\alpha\rangle^2}
+\tag{262.12}
+$$
+
+可呈现 Poisson、反聚束或聚束，但类别取决于驱动、饱和、损耗、退相干、泵浦噪声和初态。
+
+在带边、带隙或高品质因数腔附近，发射体振幅满足外加记忆方程
+
+$$
+\dot c_e(t)=-{\rm i}\omega_e c_e(t)-\int_0^tK(t-s)c_e(s)\,\mathrm ds,
+\qquad K(\tau)=\int_0^\infty J(\omega)e^{-{
+m i}\omega\tau}\,\mathrm d\omega.
+\tag{262.13}
+$$
+
+平坦谱密度可给出 Markov 指数衰减；带隙、van Hove 奇点或高 \(Q\) 腔可能产生束缚态、部分剩余激发和非指数尾。有限 FIB 图的谱峰不自动等于无限周期光子晶体的带边指数，图族、边界与极限次序必须另行声明。
+
+实际计数是内部跳跃经过滤波后的投影：
+
+$$
+Y_\alpha(t)=\int h_\alpha(t-s)\,dN_\alpha(s)+\eta_\alpha(t),
+\tag{262.14}
+$$
+
+其中 \(h_\alpha\) 包含滤波、死时间、时间抖动和收集效率。不同内部腔耦合与闪烁机制可在有限带宽下给出相同平均计数和二阶相关；探测端口又通过 \(\Sigma_\alpha\) 改变系统线宽。因此，Purcell 增强、非 Markov 衰减、超/亚辐射、光子反聚束和全计数统计均须在外加材料、动力学、端口和观测协议明确后解释。
+
+因此，FIB ATOM 递归在光子晶格与腔量子电动力学中只提供光学自由度的组合支撑、候选路径、缺陷接缝、输入输出端口和层级骨架；Maxwell 参数、嵌入尺度、边界、模体积、品质因数、偶极与失谐、耦合与退相干、泵浦储库、Green 函数、计数协议及图族极限均须外加。不存在由 FIB 递归单独决定的普适光子辐射或计数定律。

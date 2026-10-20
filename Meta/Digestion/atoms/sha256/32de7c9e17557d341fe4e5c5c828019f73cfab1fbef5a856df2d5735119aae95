@@ -1,0 +1,26 @@
+## 229. FIB 网络上的外加 Boltzmann 方程、碰撞积分与流体极限
+
+固定 FIB 碰撞/迁移图，并另定义速度空间、位置嵌入、粒子分布、截面、外力、边界和尺度。含图迁移的动力学可写成
+
+$$
+\partial_tf_v+\boldsymbol c\cdot\nabla_xf_v
+=Q_v[f]+\sum_uK_{uv}f_u-\sum_uK_{vu}f_v.
+\tag{229.1}
+$$
+
+弹性二体碰撞积分 \(Q\) 的散射核、角分布和碰撞后速度决定质量、动量与能量是否守恒；它们不由 FIB 接续标签给出。微观可逆时，熵泛函可能单调下降并趋向外加 Maxwellian；主动、非弹性或多热浴碰撞则可产生冷却和非平衡熵流。
+
+Knudsen 缩放
+
+$$
+\varepsilon(\partial_tf_\varepsilon+\boldsymbol c\cdot\nabla_xf_\varepsilon)
+=Q(f_\varepsilon,f_\varepsilon)
+\tag{229.2}
+$$
+
+在碰撞核有局部平衡、谱隙、相容初态和边界层条件时，可能给出 Euler 极限；保留一阶修正则得到 Navier–Stokes–Fourier 结构，黏度、热导率和扩散系数由碰撞算子线性化的逆决定。各向同性高频散射还可给出图上的扩散方程，而重尾自由程、长记忆或无有限二阶矩会产生莱维或分数输运。
+
+镜面、漫反射、吸收、注入和图边界节点对应不同边界层与通量条件；\(\varepsilon\to0\) 与图体积极限的次序也可能不交换。BGK、离散速度和格子 Boltzmann 是外加闭合，不等于识别了真实截面。宏观密度、速度和应力只约束碰撞核的少数矩，不能恢复隐藏速度分布。
+
+因此，FIB 只提供碰撞和迁移关系的组合载体；速度空间、截面、温度、外力、Knudsen 缩放、边界与观测均须外加。Boltzmann/主方程、熵耗散、Euler/Navier–Stokes 或扩散极限都是条件模型结论。
+

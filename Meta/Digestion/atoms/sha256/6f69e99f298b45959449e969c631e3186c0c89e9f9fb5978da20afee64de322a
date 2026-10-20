@@ -1,0 +1,7 @@
+formalizes a carrier `Local x Layer`. It proves:
+
+- a fixed local fiber and fixed layer fiber meet in one state;
+- a local-only move commutes with a layer-only move;
+- each coordinate observer is blind to motion in the other coordinate;
+- the paired observer is faithful.
+

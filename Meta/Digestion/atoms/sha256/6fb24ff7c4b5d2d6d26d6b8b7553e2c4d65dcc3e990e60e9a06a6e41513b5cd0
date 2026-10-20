@@ -1,0 +1,17 @@
+# 第一千三百零一部　理论深度审计
+
+| 本轮结果                                            | 地位                     |
+| ----------------------------------------------- | ---------------------- |
+| 完整 \(L^2\) 酉性与 Hardy 因果性分离                      | 精确                     |
+| 单 Blaschke／inverse Blaschke 的正负时间脉冲             | 精确 Fourier 公式          |
+| \(K_B=\operatorname{coker}T_B=\ker T_{B^{-1}}\) | 精确                     |
+| inverse Blaschke Hankel rank \(=\deg B\)        | 精确                     |
+| 负平方可转化为正 anti-causal leakage energy             | 精确                     |
+| RH 等价于全部 shifted anti-causal Hankel 块为零         | 标准 shifted-inner 条件下精确 |
+| 黄金层上的共尾 Hardy 判据                                | 精确推论                   |
+| 离线点变成黄金单位盘原子                                    | 精确                     |
+| 有限离线族变成 Prony 递归                                | 精确                     |
+| Hankel rank 恢复互异 defect 数                       | 精确，需处理 alias           |
+| Poisson 光影 Fourier 样本等于 Prony moments           | 精确                     |
+| Prime bilateral unitarity已经机器化                  | 仓库锚点                   |
+| Prime Hardy triangularity                       | RH 中心未闭合桥              |

@@ -1,0 +1,7 @@
+设：
+
+- \(\Omega\) 是状态空间；
+- \(T_a:\Omega\to\Omega\) 是动作 \(a\) 产生的状态转移；
+- \(U_a f=f\circ T_a\) 是作用在函数上的拉回；
+- \(V\subseteq\mathbb R^\Omega\) 是当前能够观测或记录的函数空间。
+

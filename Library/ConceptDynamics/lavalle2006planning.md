@@ -125,3 +125,83 @@ The positive exact-unlocking construction uses a height-bounded paid calibration
 [RISK]: ../../docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_REFERENCE_RISK.md
 
 ## 追加锚（本行以下为增补区）
+
+## 3. Finite query menus and weighted randomized certificates
+
+**Definition 4 (Finite query menu).** Let $\mathcal X$ be a finite nonempty input set, let $J$ be a finite set of query coordinates, let $W_r(x)$ be the complete reply at coordinate $r\in J$, and let $F:\mathcal X\to\Theta$ be the target. For $x,y\in\mathcal X$ put
+
+$$
+D(x,y)=\{r\in J:W_r(x)\ne W_r(y)\}.
+\tag{8}
+$$
+
+Require the complete menu to jointly determine $F$: for all $x,y\in\mathcal X$, equality $W_r(x)=W_r(y)$ for every $r\in J$ implies $F(x)=F(y)$. For a fixed $x$, write $\mathcal Y_x=\{y:F(y)\ne F(x)\}$. Thus $D(x,y)\ne\varnothing$ for every $y\in\mathcal Y_x$. A queried set $S\subseteq J$ certifies $F(x)$ exactly when
+
+$$
+S\cap D(x,y)\ne\varnothing
+\qquad\text{for every }y\in\mathcal Y_x.
+\tag{9}
+$$
+
+Fix finite nonnegative coordinate prices $c_r$. Define the fractional certificate price
+
+$$
+\tau_c^*(x)=
+\min\left\{
+\sum_{r\in J}c_rz_r:
+z_r\ge0,
+\sum_{r\in D(x,y)}z_r\ge1
+\text{ for every }y\in\mathcal Y_x
+\right\}.
+\tag{10}
+$$
+
+The minimum is finite and attained: the all-ones vector is feasible, and replacing each coordinate of any feasible vector by $\min(z_r,1)$ preserves feasibility and cannot increase its nonnegative price. The feasible set intersected with $[0,1]^J$ is nonempty and compact, so the continuous objective attains its minimum there. If $\mathcal Y_x=\varnothing$, the zero vector is feasible and $\tau_c^*(x)=0$.
+
+**Proposition 7 (Certificate criterion).** Equation (9) is necessary and sufficient for exact certification on $x$.
+
+Proof. If (9) fails, choose $y\in\mathcal Y_x$ with $S\cap D(x,y)=\varnothing$. The two inputs have different targets and identical replies at every queried coordinate, so a decoder receiving only those replies cannot be correct on both. Conversely, if (9) holds, every target-different candidate is excluded by at least one read coordinate; the common target among the remaining candidates is $F(x)$. The required joint determinacy in Definition 4 makes every difference set in (10) nonempty; its compact restriction described there proves finite attainment. Zero-price coordinates and the no-opposite-target case cause no exception. $\square$
+
+**Theorem 8 (Weighted per-input randomized lower bound).** Use the finite menu of Definition 4, including the requirement that its complete replies jointly determine $F$, and finite nonnegative prices. Let a randomized adaptive algorithm use a seed independent of the unknown input. Assume it stops almost surely on every $x\in\mathcal X$ and has error probability at most $0\le\epsilon\le1/2$ on every input. Repeated and irrelevant queries are allowed and are charged at their coordinate prices. If $C_c(x)$ is its total price, then
+
+$$
+\boxed{
+\mathbb E C_c(x)\ge(1-2\epsilon)\tau_c^*(x).
+}
+\tag{11}
+$$
+
+Proof. Fix $y\in\mathcal Y_x$ and couple the two executions with one seed. Let $H_{x,y}$ be the event that the run on $x$ queries at least one coordinate in $D(x,y)$. On the event $H_{x,y}^c$ where the run on $x$ is finite, induction over its complete adaptive transcript gives identical replies, subsequent queries, stopping point and output in the run on $y$: every queried coordinate has the same reply. Since $F(x)\ne F(y)$, at least one of the two finite runs is wrong. Almost-sure termination therefore gives
+
+$$
+\Pr(H_{x,y})\ge1-2\epsilon.
+\tag{12}
+$$
+
+Let $p_r(x)$ be the probability that the run on $x$ queries $r$ at least once. The union bound and (12) give
+
+$$
+\sum_{r\in D(x,y)}p_r(x)\ge1-2\epsilon
+\qquad(y\in\mathcal Y_x).
+\tag{13}
+$$
+
+For $\epsilon<1/2$, set $z_r=p_r(x)/(1-2\epsilon)$. These $z_r$ satisfy every constraint in (10), so
+
+$$
+\sum_rc_rp_r(x)\ge(1-2\epsilon)\tau_c^*(x).
+\tag{14}
+$$
+
+The actual number of reads dominates its at-least-once indicator, hence
+
+$$
+\mathbb E C_c(x)
+\ge\sum_rc_rp_r(x),
+$$
+
+which proves (11). If $\epsilon=1/2$, the finite value $\tau_c^*(x)$ makes the right-hand side zero, and nonnegativity of the price proves the same statement. If $\mathcal Y_x$ is empty, only the right-hand side is forced to be zero by Definition 4; unnecessary paid reads may still give positive actual cost, and nonnegativity again proves (11). The proof uses one fixed pair $(x,y)$ at a time and does not assume independent query outcomes or a distribution on inputs. $\square$
+
+**Convention 9 (What the primary methods supply).** Tal, *Properties and Applications of Boolean Function Composition*, ECCC Report TR12-163, §5.1 and Definition 5.3, supplies the fractional certificate/fractionally disjoint-block linear constraints in its Boolean-function setting. Ben-David and Kothari, *Randomized query complexity of sabotaged and composed functions*, arXiv:1605.09071v2, Lemma 8, supplies the disagreement-hit probability $1-2\epsilon$ used in the same-seed argument; Corollary 20 and Theorem 21 give the related direct-sum and composition results. The weighted per-input statement (11) is the finite-menu priced extension proved above; it is not attributed verbatim to either source. LaValle, *Planning Algorithms*, Chapter 11, supplies the information-state and recursive contingent-planning setting used by Definitions 1–3. $\square$
+
+## 追加锚（本行以下为增补区）

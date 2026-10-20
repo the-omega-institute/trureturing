@@ -1,0 +1,23 @@
+**条件接口 375.5（干预响应与归一化 score）。** 因果响应须由指定受控核下的干预路径律定义，不能把被环境混淆的观测相关当作控制效果。令固定观测 $O$ 的路径密度 $p_\varepsilon$ 相对于同一参考测度归一化，所有参数共享支撑，并满足允许微分与积分交换的支配条件。对 $s=\left.\partial_\varepsilon\log p_\varepsilon\right|_0$，有
+
+$$
+\mathbb E_0s=0,
+\qquad
+\left.\frac{d}{d\varepsilon}\mathbb E_\varepsilon O\right|_0
+=\mathbb E_0[Os]=\operatorname{Cov}_0(O,s).
+\tag{375.9}
+$$
+
+若观测自身依赖参数，还需加入其直接导数。使用未归一化路径权重时，必须减去配分函数的对数导数，形成中心化 score。
+
+若另给连续物理时钟，且响应算子具有因果积分核表示，才可写
+
+$$
+\delta\mathbb E[O(T)]
+=\int_0^T\mathcal R_O(T,t)\,\delta u(t)\,dt,
+\qquad\mathcal R_O(T,t)=0\quad(t>T).
+\tag{375.10}
+$$
+
+这里的零未来响应来自非预知动力学及不改变过去路径律的干预规则。FIB 顺序可限制传播位置，不能决定响应幅值、符号、延迟、耗散或温度；含瞬时或奇异响应时还须相应扩展积分核的定义。
+

@@ -1,0 +1,6 @@
+For $D=[b]_d$, the following are equivalent:
+
+1. $E\cap D\ne\varnothing$.
+2. No included $C_h$ with $h\le d$ contains $D$.
+3. $\mu(E\cap D)\ge\delta_d$.
+

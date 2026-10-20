@@ -1,0 +1,24 @@
+### AHH 360.6（重建的三步合同）
+
+完整边界的重建不应把所有读数混成一张位置图，而应按三步进行：
+
+$$
+\boxed{
+\text{曲率读数}
+\longrightarrow
+\text{coexact 响应};
+\qquad
+\text{周期读数}
+\longrightarrow
+\text{harmonic 记忆};
+\qquad
+\text{规范选择}
+\longrightarrow
+\text{exact 表示}.
+}
+$$
+
+这说明“全息恢复”有不同强度：只给 \(F\) 只能恢复 coexact 部分；给 \(F\) 加上足够周期才恢复规范等价类；给出具体规范还需要额外的表示约定。
+
+---
+

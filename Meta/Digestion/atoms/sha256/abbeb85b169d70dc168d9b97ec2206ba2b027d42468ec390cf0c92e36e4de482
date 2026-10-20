@@ -1,0 +1,15 @@
+## 2. 统一到固定空间，保持所有算术项
+
+令 a>0，并用酉伸缩 J_a:L2([-a,a])->H=L2([-1,1])，(J_a f)(y)=sqrt(a)f(ay)。记 Atilde_a=J_a A_a J_a^-1。全部 Fourier 积分对 H 中函数的零延拓进行，仍采用 paperFT 正号和 (2*pi)^-1 的 Plancherel 因子。
+
+记 gamma(t)=Re psi(1/4+it/2)-log pi，gamma0=gamma(0)。在共同空间中，Gamma 乘子是 gamma(xi/a)，pole 积分核是 2a*cosh(a(x-y)/2)，无符号素数块是
+
+\[
+S_a=\sum_{2\le n\le P}w_n(T_{\log(n)/a}+T_{\log(n)/a}^*),
+\quad w_n=\Lambda(n)/\sqrt n,
+\quad T_s f(x)=1_{[-1,1]}(x)\widetilde f(x+s).
+\tag{SC1}
+\]
+
+在固定参数区间 0<m<=a<=A 中，P=floor(exp(2A)) 足够。这个共同索引集合包括所有素数幂。若 log(n)/a>=2，对应压缩平移为零；等号只剩零测端点。因此在阈值两侧使用同一有限求和，不删除刚进入的项。实际形式是 qtilde_a=qGamma_a+qpole_a-qS_a。
+

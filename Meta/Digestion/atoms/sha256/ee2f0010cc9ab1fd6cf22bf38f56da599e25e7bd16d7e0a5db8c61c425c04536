@@ -1,0 +1,7 @@
+为冻结全部非投影实参，按原接口定义四个 \(\operatorname{SameOut}\) 关系：
+
+- \(\operatorname{SameOut}_{\mathrm{NA}}\) 固定 \(n\)、类型与序结构、同一证据 \(z\)；谓词为 \(\operatorname{NonAnticipating}(K.\operatorname{adjudication},z)\)。
+- \(\operatorname{SameOut}_{\mathrm{AJ}}\) 另固定同一 \(r\)；两侧证明分别具有 \(\operatorname{ValidTrace}(\mathcal L,K.\operatorname{adjudication})\) 的真类型，不要求证明项字面相等；谓词为 \(\operatorname{AdmissibleJudge}(\mathcal L,K.\operatorname{adjudication},v_K,r)\)。
+- \(\operatorname{SameOut}_{\mathrm{TL}}\) 固定同一 \(\operatorname{evaluate}\)、同一 \(z\) 与同一 \(\operatorname{report}\) 对象；对 old/new commitments 分别逐字段固定 adjudication 之外的 \(\operatorname{targetChain}/\operatorname{domain}/\operatorname{epsilon}/\operatorname{conditions}/\operatorname{comparator}/\operatorname{testPlan}/\operatorname{baseline}/\operatorname{weightSpec}/\operatorname{decision}/\operatorname{committedArtifacts}/\operatorname{baselineArtifacts}\)，包含 \(\operatorname{protectedCoordinates}\) 的全部字段。包含律证明只须分别具有正确类型，不要求证明项字面相等。谓词为 \(\operatorname{TargetLaundering}(\operatorname{evaluate},\operatorname{oldK},\operatorname{newK},z,\operatorname{report})\)；report.original/revised/evidence/regradedVerdict/attributedTo/occurredAt 的身份检查仍由原谓词执行，不预先冻结其真值。
+- \(\operatorname{SameOut}_{\mathrm{SG}}\) 固定同一 \(\operatorname{evaluate}\)、行动身份 \(a,b\)，并逐字段固定 adjudication 之外的同一组 commitment 字段，特别是 \(K.\operatorname{committedArtifacts}\)、\(K.\operatorname{baselineArtifacts}\) 与 \(K.\operatorname{comparator}\)；谓词为 \(\operatorname{ScientificGain}(\operatorname{evaluate},K,z,a,b)\)。
+

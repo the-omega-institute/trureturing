@@ -1,0 +1,14 @@
+**Proposition 20.5 (Finite controller and separate arithmetic resources).** The uncapped rule requires only a first-tick flag, pair phase, the first gap's category in $\{1,2,3,\ge4\}$, a current zero count saturated at four, an accepted-pair count and a mark count, together with the precomputed integers $M$ and the threshold (20.7). It uses $O(\log(M+2))$ online control bits in addition to the fixed model and risk descriptions. A capped rule adds $O(\log(W_{a,b}+2))$ bits. With binary arithmetic, conservative online operation bounds are
+
+$$
+O\bigl(L\log(M+2)\bigr)\quad\hbox{and}\quad
+O\bigl(W_{a,b}\log((M+2)(W_{a,b}+2))\bigr),
+\tag{20.14}
+$$
+
+respectively. These are attainable upper bounds, not optimal storage or computation claims.
+
+Proof. Before the first one only the flag and, if present, the read counter are updated. Thereafter each zero updates the saturated counter. A tick closes a gap, saves its category or completes the current pair, and resets the zero counter. Exactly $(1,3),(2,2),(3,1)$ trigger acceptance; only $(2,2)$ increments the mark count. Pair phase advances after every completed pair, including rejected ones. Even when a category already forces rejection, the controller continues reading through both closing ticks before starting the next pair. No unbounded gap counter or trial-count register is needed. The accepted-pair and mark counts are at most $M$, and the final decision is an integer comparison. The uncapped rule stops only at the designated closing tick; the capped rule additionally stops after the actual read counter reaches its deadline, using the ordinary decision if that very read completes it and the default otherwise. These updates give the storage and operation bounds.
+
+The constants in (20.2), (20.6), (20.7) and, when needed, (20.12) are preprocessed from finite binary numerator-denominator descriptions. All rational operand lengths, preprocessing workspace and operations, and the stored integers are charged separately. Positivity of $\Delta$ proves termination of this exact preprocessing without any approximation to a source probability or to $\log q$. No efficient bound uniform in the risk or band inputs is asserted. The rules require no independent random seed and retain no raw record. The generating instruments' existing complex dimension $D=6$ is a separate resource coordinate; it is not the observer's control storage or a physical running-time estimate. $\square$
+

@@ -1,0 +1,83 @@
+### 119.5 C2 local ratio for the tilted Gaussian array
+
+The standardized high tilted energy including its noise is
+$$
+ Z_\alpha=\sum_{j\in H}a_j(Z_j^2-1)
+       +\sum_{j\in H}\beta_jZ_j+\beta_GG,\quad
+ a_j=w_j/\sqrt{W_H},\quad
+ \beta_j=2m_j\sqrt{w_j}/\sqrt{W_H},\quad
+ \beta_G=\sqrt{\delta\sigma^2/\alpha}/\sqrt{W_H}.
+\tag{119.21}
+$$
+Its variance is1 exactly. Equations(119.19) imply, for k=1,2,
+$$
+ \max_j a_j\le C\sqrt\delta,\quad
+ |a_j^{(k)}|\le Ca_j,\quad
+ |\beta_j^{(k)}|\le C|\beta_j|,\quad
+ |\beta_G^{(k)}|\le C|\beta_G|.
+\tag{119.22}
+$$
+On a core block of order1/delta, a_j^2 is comparable to delta.
+
+Its exact characteristic function is
+$$
+ \psi_\alpha(\xi)=e^{-\beta_G^2\xi^2/2}
+ \prod_{j\in H}e^{-i\xi a_j}(1-2i\xi a_j)^{-1/2}
+       \exp\!\left[-\frac{\beta_j^2\xi^2}{2(1-2i\xi a_j)}\right].
+\tag{119.23}
+$$
+The block gives
+$$
+ |\psi_\alpha(\xi)|\le E_Q(\xi):=(1+c\delta\xi^2)^{-c'/\delta}.
+\tag{119.24}
+$$
+All fixed polynomial moments of this envelope are integrable uniformly, and their tails tend uniformly to zero: below delta^(-1/2) use a Gaussian bound; above it rescale u=sqrt(delta)|xi| and integrate the power with exponent of order1/delta.
+
+Differentiate(119.23) twice. For a central log factor, all terms in its first two derivatives are bounded by Cxi^2 a_j^2, since |a_j^(k)|<=Ca_j and |xi a_j|/|1-2i xi a_j|<=1/2. The linear-noncentral factors obey the analogous bound Cxi^2 beta_j^2, as does the noise term. Consequently
+$$
+ |\partial_\alpha\psi_\alpha|\le C\xi^2 E_Q,\qquad
+ |\partial_\alpha^2\psi_\alpha|
+                         \le C(\xi^2+\xi^4)E_Q.
+\tag{119.25}
+$$
+The squared first log derivative is included in the second inequality.
+
+On a fixed frequency compact, expansion of the exact log transform and its first two derivatives gives
+$$
+ \log\psi_\alpha(\xi)=-\xi^2/2+O(\sqrt\delta|\xi|^3),\qquad
+ \partial_\alpha^k\log\psi_\alpha(\xi)
+                =O(\sqrt\delta|\xi|^3)\quad(k=1,2).
+\tag{119.26}
+$$
+Both derivatives of the quadratic term vanish because the variance in(119.21) is identically1. The remainder bounds use(119.22) and the squared coefficient sums; no derivative is inferred from a C0 or C1 asymptotic.
+
+Fourier inversion with(119.24)–(119.26), including factors xi and xi^2 for spatial derivatives, proves for the density q_alpha
+$$
+ \partial_z^l q_\alpha\to\partial_z^l\varphi\quad(l=0,1,2),
+ \qquad
+ \partial_\alpha q_\alpha,\qquad
+ \partial_\alpha\partial_zq_\alpha,\qquad
+ \partial_\alpha^2q_\alpha\to0
+\tag{119.27}
+$$
+uniformly over alpha in[1,2] and real z. Differentiability itself follows from the same integrable bounds.
+
+The standardized physical location is z_y=(sqrt(delta)y+epsilon_H)/sqrt(W_H). It and its first two alpha derivatives stay in a fixed compact for |y|<=R. Thus q_alpha(z_y) is bounded below, and the twice differentiated chain rule in(119.27) yields
+$$
+ \log\{q_\alpha(z_y)/q_\alpha(z_0)\}
+                =-(z_y^2-z_0^2)/2+o_{C^2_\alpha}(1).
+\tag{119.28}
+$$
+Exact un-tilting of the physical high Gaussian density g_alpha gives
+$$
+ g_\alpha(y)=\frac{\sqrt\delta}{\sqrt{W_H}}\,
+ e^{K_H(t_\alpha)-t_\alpha(V+\sqrt\delta y)}q_\alpha(z_y).
+$$
+Its output-independent rate and prefactor cancel in the ratio. The full/high differences and their two derivatives were paid in(119.20). Hence
+$$
+ D_\alpha^G(y):=-\alpha^{-1}\log\{g_\alpha(y)/g_\alpha(0)\}
+       =b_\alpha y+c_\alpha y^2+o_{C^2_\alpha}(1)
+\tag{119.29}
+$$
+uniformly on the compact output interval. The full finite coefficients remain in this formula.
+

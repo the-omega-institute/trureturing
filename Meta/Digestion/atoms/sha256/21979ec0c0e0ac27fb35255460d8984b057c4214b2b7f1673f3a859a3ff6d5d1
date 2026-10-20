@@ -1,0 +1,17 @@
+**定义 404.1（完整变换及其已支付条带）。** 保持实际 $R(y)=K(y)-Ay\log y+Dy$、$P_x(s)=\int_x^\infty R(t/s)w(t)dt$、$e=\mu*\beta$ 与 $\mathcal C=\mathcal B/\zeta$。对 $x>1$、$z=\sigma+i\tau$、$0<\sigma<1$ 定义
+
+$$
+\widehat R(z)=\int_0^\infty R(y)y^{-z-1}dy,\qquad
+\widetilde P_x(z)=\int_0^\infty P_x(s)s^{z-1}ds,
+\tag{404.1}
+$$
+
+以及
+
+$$
+\widetilde w_x(z)=\int_x^\infty t^zw(t)dt.
+\tag{404.2}
+$$
+
+这里采用正实数上的实对数定义复幂。§395 已支付 $M_\sigma(R)<\infty$。这是一个充分的绝对收敛条带；不在此宣称其下边界必要。另一方面，§398 的固定 $x$ 渐近给 $P_x(s)\sim A\log s\log\log s/s$，所以（404.1）的 $P_x$ 变换在 $\sigma\ge1$ 不绝对收敛。有限裁剪的反演不能仅因裁剪上端趋于无穷，就沿原来的 $\sigma>1$ 直线换成完整反演。
+

@@ -1,0 +1,90 @@
+**Theorem 53.1 (coefficient-sensitive projection error).** For a unit
+resolved vector $e$, let $\mu_{\kappa,e,T}$ be the stationary Q law of
+$e\cdot(q_T-q_0)/\sqrt T$, and let
+
+$$
+G_{m_e}(z)=\frac{1}{\sqrt{4\pi m_e}}e^{-z^2/(4m_e)},
+\qquad B_e=\mathcal B_\kappa(e).
+\tag{53.1}
+$$
+
+There is one constant $C$ such that, uniformly for $\kappa\in\mathcal K$,
+all unit $e$ and $T\ge1$,
+
+$$
+\left\|\mu_{\kappa,e,T}-
+ [G_{m_e}+T^{-1}B_e\partial_z^4G_{m_e}]dz
+\right\|_{{\rm var},1}
+ \le C\left(\frac{B_e}{T^2}+
+                 \frac{B_e^{3/2}}{T^{3/2}}\right).
+\tag{53.2}
+$$
+
+For one common $T_0,c,C>0$,
+
+$$
+ c\frac{B_e}{T}\le
+ \|\mu_{\kappa,e,T}-G_{m_e}dz\|_{\rm var}
+ \le C\frac{B_e}{T},\qquad T\ge T_0.
+\tag{53.3}
+$$
+
+At $B_e=0$ the equality with the Gaussian is exact for every time,
+and both sides are zero. The constants do not assert a positive
+lower bound independent of $B_e$. In fact, uniformly on unit vectors,
+
+$$
+ c\operatorname{dist}(e,\mathcal A_\kappa)^2
+ \le\mathcal B_\kappa(e)\le
+ C\operatorname{dist}(e,\mathcal A_\kappa)^2.
+\tag{53.4}
+$$
+
+Consequently arbitrary directions approaching autonomy have the
+coefficient-sensitive order $\mathcal B_\kappa(e)/T$, including
+sequences with arbitrarily rapid approach and exact autonomous terms.
+
+Proof. Apply the scalar version of (52.8) to
+$D_T=(2/T)\int_0^T f_e(K_r)dr$ and $B=2m_e$.
+For unit vectors $m_e$ stays between the fixed positive bounds in
+(36.1). The spectral identity sharpens (52.6) to
+
+$$
+\mathbb ED_T^2=\frac8T B_e
+ -\frac8{T^2}\langle f_e,\mathcal R^2
+                   (1-e^{-T\mathcal L})f_e\rangle_\pi.
+\tag{53.5}
+$$
+
+The last inner product is between zero and $B_e/\gamma$.
+The variance is at most $8B_e/T$. By (51.9), (52.7) gives
+$\mathbb ED_T^4\le C B_e^2/T^2$, and hence
+$\mathbb E|D_T|^3\le C B_e^{3/2}/T^{3/2}$.
+There is no division by $B_e$ in these estimates. Mixing the scalar
+Taylor formula proves (53.2). The Fourier test $\cos z$ has leading
+difference $B_e e^{-m_e}/T$. Its error relative to $B_e/T$, when
+$B_e>0$, is at most $C(T^{-1}+\sqrt{B_e/T})$. The coefficients $B_e$
+are uniformly bounded, so one common $T_0$ gives the lower bound.
+The derivative $\partial_z^4G_{m_e}$ has a common finite $L^1$ bound,
+giving the upper. If $B_e=0$, the constant-diffusivity path in
+Theorem 50.1 proves exact equality, not only an asymptotic bound.
+
+For (53.4), put $r_\kappa=(2,-2,\kappa)$ and decompose the unit vector
+as $e=t r_\kappa+h$ with $h\perp r_\kappa$. Then
+
+$$
+f_e=2t\,h\cdot(c_\kappa-\pi(c_\kappa))+
+       (h\cdot c_\kappa)^2-\pi((h\cdot c_\kappa)^2).
+\tag{53.6}
+$$
+
+The inverse-height energy norm of the last term is at most $C|h|^2$.
+The linear map $h\mapsto h\cdot(c_\kappa-\pi(c_\kappa))$ has kernel
+exactly $\mathcal A_\kappa$, by (50.4)–(50.5). On its perpendicular
+unit sphere its energy norm has a positive common minimum by
+compactness and continuity. For small $|h|$, $|t|$ has a common
+positive lower bound, so (53.6) gives lower and upper energy norms
+comparable to $|h|$. Away from that neighborhood, compactness and
+the exact zero set give the same quadratic comparison after adjusting
+constants. Squaring the energy norm proves (53.4). $\square$
+

@@ -1,0 +1,41 @@
+## 6. Fix the Mellin normalization before identifying Xi
+
+Use the exact standard definition Xi(z)=xi(1/2+iz),
+xi(s)=s*(s-1)*pi^(-s/2)*Gamma(s/2)*zeta(s)/2, and dx=du/u.
+CCM (7.1)-(7.2) write
+
+\[
+h(u)=\frac\pi2u^2(2\pi u^2-3)e^{-\pi u^2},\qquad
+\mathcal E h(u)=u^{1/2}\sum_{m\ge1}h(mu).
+\]
+
+For our chosen Haar and Fourier normalization, the exact scalar is checked
+by a Mellin calculation, not inferred from a zero plot:
+
+\[
+\int_0^\infty h(t)t^{s-1}dt
+=\frac{s(s-1)}8\pi^{-s/2}\Gamma(s/2).
+\tag{CO14}
+\]
+
+For Re s>1 the absolute sum-integral interchange gives
+
+\[
+\int_0^\infty\mathcal E h(u)u^{s-1/2}\frac{du}{u}=\xi(s)/4.
+\]
+
+The written h is self-Fourier, has h(0)=0 and integral zero. Poisson
+summation gives E h(u)=E h(1/u), and its Gaussian tail gives entire Mellin
+continuation. Hence the inverse Fourier kernel for our Xi is
+
+\[
+\Phi(x)=4\mathcal E h(e^x),\qquad\widehat\Phi=\Xi.
+\tag{CO15}
+\]
+
+This agrees with the theta kernel already written in this volume. The
+factor 4 corrects a scalar mismatch when importing the literal h in CCM;
+it does not alter zeros or invalidate a statement made only up to a scalar.
+A numerical check at z=0 gave the ratio 1/4 for the unscaled transform;
+that check is a diagnostic, while (CO14) supplies the proof.
+

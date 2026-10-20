@@ -1,0 +1,29 @@
+**数学引文与范围 18.2。** 守恒流按简单圈扣除的经典方法见
+Goldstein–Kuna–Lebowitz–Speer，*Translation invariant extensions of finite
+volume measures*，[arXiv:1508.04448v2，§4.1 Theorem 6](https://arxiv.org/pdf/1508.04448v2)。
+其中 $X_k$ 是 $k+1$ 位二进制块，de Bruijn 图有 $2^k$ 个状态，讨论单个
+局部平移一致律；§4.2 Theorem 8 给其通用环长
+$\operatorname{lcm}\{1,\ldots,2^k\}$，$k=2$ 为 $12$。
+这里有 no11 限制和指定位置层，简单圈的每层访问数至多三由 (18.2)–(18.3)
+另行推导，不能把该文的通用长度结论直接当作原 $n$ 位实现。
+
+Karp 的原报告 *A Characterization of the Minimum Cycle Mean in a Digraph*，
+[UCB/ERL M77/47，Theorem 1](https://www2.eecs.berkeley.edu/Pubs/TechRpts/1977/Archive/ERL-m-77-47.pdf)，
+对强连通有向图、实边权 $w$，令 $N$ 为顶点数、$D_k(v)$ 为从固定起点到
+$v$ 的恰长 $k$ 路径的最小权，证明最小平均圈权为
+
+$$
+\mu_{\min}=\min_{v:D_N(v)<\infty}\ 
+\max_{0\le k<N}\frac{D_N(v)-D_k(v)}{N-k}.
+\tag{18.4}
+$$
+
+不可达 $D_k(v)=+\infty$ 的相应比值按 $-\infty$ 处理；
+一般图按含圈的强连通分量处理。最大平均圈由边权取负得到。
+该报告给 $O(N|E|)$ 次算术操作的递推算法，不是概率转移矩阵的普通乘法。
+本图的 $H_n^{\mathrm{loc}}$ 是每基础圈的分数，等于每条边最大平均权的
+$n$ 倍；(18.1) 还利用三状态和分层结构得到了更具体的短公式。
+这些是经典最大平均圈方法的应用，原长度的 $H_n$ 则只允许恰走 $n$ 步闭合。
+若某一个 $f$ 恰有 $H_n^{\mathrm{loc}}(f)=H_n(f)$，只说明该方向的支撑值相同；
+例如零测试总相等，它不证明任意指定 $p$ 属于 $\mathscr C_n$。
+

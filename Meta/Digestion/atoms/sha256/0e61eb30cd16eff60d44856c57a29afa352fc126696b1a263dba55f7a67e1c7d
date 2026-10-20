@@ -1,0 +1,5 @@
+必须区分：
+
+1. 动力学不交换导致的 word-order residual；
+2. 局部 closure 的 transition／gluing 不兼容。
+

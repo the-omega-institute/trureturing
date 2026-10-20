@@ -1,0 +1,31 @@
+**定义 113.2（字典、容量与完整整数码域）。** 对合法裸格 $b$，令 $U_b$ 为满足其重量和指纹的全部长度 $c$ 前缀。令 $A_i^\rho(\beta,h,\kappa)$ 数尚未在更早位置选择、且在当前位置决定前具有这些字段和控制的前缀；不因重量过大、补全数为0或拒绝而删去。定义 $W_b$ 为当前位置决定后仍活动的前缀，$\mathcal S_b$ 为恰在当前位置首次选中的前缀。二者分别是 $A$ 的 $\chi_c=0$、$\chi_c=1$ 控制纤维的并。令 $N_b$ 为满足全字重量 $\ell$、最终指纹0的数学后缀数；它不执行未来选择决定，也不读实际未来。置
+
+$$
+\begin{aligned}
+\mathcal S_n^{\rho,a}&=\{u\in\mathcal S_{(\rho,n,\ell,0)}:u_n=a\},\\
+D_\rho&=\max\bigl(\{0\}\cup\{|\mathcal S_b|:c<n,N_b>0\}
+\cup\{|\mathcal S_n^{\rho,0}|,|\mathcal S_n^{\rho,1}|\}\bigr),\\
+D&=\max(D_0,D_1),\\
+K&=\max\bigl(\{1,D\}\cup\{|W_b|:c<n,N_b>1,\ \rho\in\{0,1\}\}\bigr),\\
+H&=K+1,\qquad b_K=\lceil\log_2(K+2)\rceil,\qquad
+ g=\lceil\log_2K\rceil,\qquad G=\frac{(n+1)(n+2)}2.
+\end{aligned}
+\tag{113.5}
+$$
+
+后文在资源下标中简写 $b=b_K$。根的选择或继续均只有空字。直接沿用引理111.4的实际根计数：种子1为 $\binom{2\ell}{\ell}$，种子0为 $2\binom{2\ell-2}{\ell-1}$，包括 $\ell=1$ 时均至少2。每个种子有接受字，故 $D_\rho\ge1$。终端按实际末位的两个块分别计量。直接复用定理110.3、111.7、111.10–111.11在本共同映射子类上的结论：
+
+$$
+\begin{aligned}
+D=D_{\rm read}\le D_{\rm blind}\le K
+&\le\min\{F(n,D),\lceil D(\sqrt{2n}+2)\rceil\},\qquad K\le2^n,\\
+F(n,D)&=\max\left\{D,\max_{c<n}
+\min\left(\binom c{\lfloor c/2\rfloor},D(n-c)\right)\right\}.
+\end{aligned}
+\tag{113.6}
+$$
+
+这些是已有容量与宽度结论，本节不给它们另取新成果名义。
+
+固定定理110.3的原共同规范接收函数 $\mathscr D_\pi$ 及其既定默认输出 $\Delta$。其原接口检查、等待实际后缀与 Stop 的规则均保留。对检查通过的非终端冻结裸格，它按整个 $\mathcal S_b$ 的零起 colex 秩反索引：整数 $r$ 有效当且仅当 $0\le r<|\mathcal S_b|$，与 $N_b$ 是否为0、是否在 $[K]$ 无关。对原合法接受终端字段 $(n,\ell,0)$，等实际 $\mathrm{Stop}_a$ 交付后，在 $\mathcal S_n^{\rho,a}$ 内反索引；不在另一末位块加偏移。其他原无效整数或接口返回原 $\Delta$。Colex 是从最后坐标向前比较、0在1前。以下计算只替换这个有限函数的求值方式，不添加 $N_b>0$ 检查、后缀一致性检查、$r<K$ 限制、新默认或新接收者。拒绝路径上的总定义不要求恢复它们的真实过去。
+

@@ -1,0 +1,6 @@
+以下等价：
+
+1. \(Q\) 单射；
+2. 对所有 \(x,y\)，若对全部 \(i\) 有 \(q_i(x)=q_i(y)\)，则 \(x=y\)；
+3. \(\bigcap_i\ker(q_i)=\operatorname{Eq}_X\)。
+

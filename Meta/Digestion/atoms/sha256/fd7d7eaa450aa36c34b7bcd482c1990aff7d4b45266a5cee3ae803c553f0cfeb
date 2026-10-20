@@ -1,0 +1,67 @@
+**Theorem 14.4 (Faithful mixed stationary initialization and every cylinder).** With the instrument of Theorem 14.3, define
+
+$$
+R_0=\sum_{a\ge0}\Phi^a(\tau),\qquad
+\rho_* = R_0/\mu.
+\tag{14.13}
+$$
+
+Then $\rho_*$ is a real faithful mixed invariant density, its tick rate is $1/\mu$, and its actual output cylinders equal (14.2) for every finite binary word. The process is the proper stationary renewal law of (14.1), without an additional all-zero component.
+
+Proof. Stability makes the operator series converge in norm. By (14.10) and nonnegative summation,
+
+$$
+\operatorname{Tr}R_0=\sum_{a\ge0}S_a
+=\sum_{j\ge0}(j+1)\gamma_j=\mu<\infty.
+\tag{14.14}
+$$
+
+Thus $\rho_*$ is a density. The reset identity and gap normalization give
+
+$$
+\Phi(R_0)=R_0-\tau,\qquad
+\Psi(R_0)=\sum_{a\ge0}\gamma_a\tau=\tau.
+\tag{14.15}
+$$
+
+These prove invariance and tick rate $1/\mu$. For a raw word $w$ in $A,B$, the corresponding completed word obeys
+
+$$
+L_w\xi=\frac{q^{|w|/2}Gwx}{\sqrt z}.
+\tag{14.16}
+$$
+
+The full raw reachability in Theorem 14.2 therefore persists under completion. For any complex $y$, expansion of the positive series gives $y^\dagger R_0y=\sum_{a\ge0}\sum_{|w|=a}|y^\dagger L_w\xi|^2$. Its vanishing forces $y$ orthogonal to that full reachable span, hence $y=0$. This proves faithfulness. Every summand is real symmetric, and $D=m+2\ge3$ makes the rank-$D$ density mixed, whereas $\tau$ is pure.
+
+After an initial run of $a$ zeros and the first tick, the actual unnormalized memory is
+
+$$
+\Psi\Phi^a(\rho_*)
+=\frac1\mu\sum_{c\ge0}\Psi\Phi^{a+c}(\tau)
+=\frac{S_a}{\mu}\tau.
+\tag{14.17}
+$$
+
+For a word with $r\ge1$ ticks, each internal gap $g_i$ followed by its tick multiplies this state by $\gamma_{g_i}$ and resets to $\tau$. The final $b$ zeros have survival probability $S_b$. Taking the trace gives exactly the first formula of (14.2), including the empty internal product when $r=1$. For a word with no ticks,
+
+$$
+\operatorname{Tr}\Phi^N(\rho_*)
+=\frac1\mu\sum_{a\ge0}S_{N+a}
+=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j.
+\tag{14.18}
+$$
+
+At $N=0$, (14.14) makes this one. These two cases exhaust all finite words. Trace preservation gives consistency on summing the last symbol; invariance of $\rho_*$ gives consistency on summing the first symbol. Thus these are stationary cylinder probabilities. Conditioned on any positive-probability tick history, the memory is exactly $\tau$. Repeated use of $\Psi\Phi^k(\tau)=\gamma_k\tau$ gives the product of the $\gamma$ values for any finite sequence of following complete gaps; $\sum_k\gamma_k=1$ gives a proper next gap each time. This proves the renewal assertion from the actual conditioned states.
+
+Moreover
+
+$$
+0\le\mathbb P_{m,q}(0^N)
+\le\frac1\mu\sum_{j\ge N}(j+1)\gamma_j\longrightarrow0.
+\tag{14.19}
+$$
+
+The decreasing events of having no tick in the first $N$ steps therefore have an intersection of probability zero. In particular no positive all-zero stationary component remains. Also $\operatorname{Tr}\Psi(\tau)=\gamma_0=0$, whereas $\operatorname{Tr}\Psi(\rho_*)=1/\mu>0$, so the stationary initialization and the post-tick state are distinct.
+
+The invariant-state and ordered-cylinder convention agrees with [Alex Monras, Almut Beige and Karoline Wiesner, *Hidden Quantum Markov Models and non-adaptive read-out of many-body states*, arXiv:1002.2337v2, p. 12, equations (25)–(27)](https://arxiv.org/pdf/1002.2337v2). The summation mechanism is the one used in Section 5, but Theorem 5.1 and the application in Section 11 specify the monomial law. Equations (14.14)–(14.19) provide the stationary derivation for the distinct law (14.1) with its own tails and mean. $\square$
+

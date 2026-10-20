@@ -1,0 +1,48 @@
+## 86. 随机导通率图的 quenched/annealed 热核同质化
+
+令 \(V_j\) 是 FIB 上下文图的有限顶点集。边集、质量 \(m_u\) 和导通率环境 \(\omega\) 均外加；给定
+\[
+c_{uv}(\omega)=c_{vu}(\omega)\ge0,
+\qquad
+(L_j^\omega f)(u)
+=\frac1{m_u}\sum_{v}c_{uv}(\omega)[f(u)-f(v)].
+\]
+对固定环境得到 quenched 热核
+\(H_t^\omega=e^{-tL_j^\omega}\)；对环境平均得到
+\[
+\overline H_t=\mathbb E_\omega H_t^\omega.
+\]
+一般
+\[
+\mathbb E_\omega e^{-tL_j^\omega}
+\ne e^{-t\mathbb E_\omega L_j^\omega},
+\]
+因为矩阵指数和环境平均不交换。只有环境在时间上快速独立切换，并满足相应谱隙和有界性时，才可在有限时间窗得到平均生成器的极限。
+
+若 \(c_{uv}(\omega)\) 是平稳遍历随机场，且存在统一椭圆性
+\[
+0<c_-\le c_{uv}(\omega)\le c_+<\infty
+\]
+及尺度均匀的连通性，则在图序列的共同嵌入和紧性条件下，根点热核可有 quenched 同质化极限
+\[
+p_{j,t}^\omega(u_j,v_j)
+\longrightarrow p_t^{\mathrm{eff}}(x,y)
+\]
+或相应的弱半群极限。有效导通率由环境的联合结构决定，通常不是边导通率的逐边算术平均；一维串联的有效系数呈调和平均，而并联结构呈算术型组合。若环境相关长度随 \(j\) 增长、统一椭圆性失效或图不具共同嵌入，只能给子列或有限窗结论。
+
+随机热迹的涨落可写成
+\[
+\Theta_j^\omega(t)
+=\sum_k e^{-t\lambda_{j,k}^\omega}.
+\]
+在环境混合且单边热迹方差可和时，中心化热迹可能满足
+\[
+\frac{\Theta_j^\omega(t)-\mathbb E\Theta_j^\omega(t)}
+{\sqrt{|V_j|}}
+\Longrightarrow\mathcal N(0,\sigma_\Theta^2(t)).
+\]
+若低能谱满足 quenched/annealed 两个不同的正则变分律，则其 Tauberian 热核幂律也可能不同；不能把一个平均谱密度自动当作典型环境的局部谱。
+
+若把 \(m_u\) 与 \(c_{uv}\) 外加解释成质量和弹簧刚度，则每个环境给出不同正常模
+\(\omega_k^\omega=\sqrt{\lambda_k^\omega}\)。只有另加周期或随机晶格的谱极限定理，才能讨论声子带、局域化或有效声速。FIB 递归只给候选顶点和组合关系，不决定随机导通率、有效介质、局域化长度或真实材料热传导。
+

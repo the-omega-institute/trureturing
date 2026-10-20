@@ -1,0 +1,71 @@
+**定理 77.1（可逆图的 Arrhenius 势垒）。** 另加可逆结构
+\[
+\pi_\varepsilon(x)=Z_\varepsilon^{-1}e^{-U(x)/\varepsilon},
+\qquad
+c_\varepsilon(x,y)
+=\pi_\varepsilon(x)r_\varepsilon(x,y)
+=Z_\varepsilon^{-1}a(x,y)e^{-H(x,y)/\varepsilon},
+\]
+其中 \(a(x,y)=a(y,x)\) 有统一正下上界，\(H(x,y)=H(y,x)\)，且图上 \(A\) 至 \(B\) 连通。定义
+\[
+\Phi(A,B)
+=\min_{\gamma:A\leadsto B}
+\max_{(x,y)\in\gamma}H(x,y),
+\qquad
+U_A=\min_{x\in A}U(x),
+\qquad
+\Gamma(A,B)=\Phi(A,B)-U_A.
+\]
+容量为
+\[
+\operatorname{cap}_\varepsilon(A,B)
+=\inf_{h|_A=1,\ h|_B=0}
+\frac12\sum_{x,y}c_\varepsilon(x,y)[h(y)-h(x)]^2.
+\]
+若井内混合时间为 \(e^{o(1/\varepsilon)}\)，且容量渐近确实由最小通信高度给出，则
+\[
+\lim_{\varepsilon\downarrow0}
+\varepsilon\log\mathbb E_{\nu^A_\varepsilon}\tau_B
+=\Gamma(A,B),
+\qquad
+\lim_{\varepsilon\downarrow0}
+[-\varepsilon\log\lambda_\varepsilon]
+=\Gamma(A,B).
+\]
+若还存在正的门 prefactor \(C_A,C_{\mathrm{cap}}\) 使
+\[
+\pi_\varepsilon(A)
+=C_Ae^{-(U_A-U_\ast)/\varepsilon}(1+o(1)),
+\qquad
+\operatorname{cap}_\varepsilon(A,B)
+=C_{\mathrm{cap}}
+e^{-(\Phi(A,B)-U_\ast)/\varepsilon}(1+o(1)),
+\]
+则
+\[
+\lambda_\varepsilon
+=\frac{C_{\mathrm{cap}}}{C_A}
+e^{-\Gamma(A,B)/\varepsilon}(1+o(1)),
+\qquad
+\mathbb E\tau_B
+=\frac{C_A}{C_{\mathrm{cap}}}
+e^{\Gamma(A,B)/\varepsilon}(1+o(1)).
+\]
+有限图只给出门边缘和局部速率决定的 prefactor；经典 Hessian 版 Eyring–Kramers 公式还需要外加的小噪声扩散、非退化极小点和鞍点，不能由 FIB 图自动推出。
+
+对固定 \(\varepsilon\) 的有限不可约链，连续时间经验测度
+\[
+\widehat\mu_T=\frac1T\int_0^T\delta_{X_s}\,ds
+\]
+满足 Donsker–Varadhan 形式
+\[
+I_\varepsilon(\mu)
+=\sup_{g>0}
+-\sum_x\mu(x)\frac{(\mathcal L_\varepsilon g)(x)}{g(x)},
+\qquad
+\Pr(\widehat\mu_T\approx\mu)\asymp e^{-TI_\varepsilon(\mu)}.
+\]
+只有另给 \(\varepsilon\downarrow0\) 的容量、谱或速率估计，才能从 \(I_\varepsilon\) 提取 \(\Gamma\)；大偏差符号本身不是势垒证明。
+
+同一 \(E_j\) 可取所有跨井速率为 \(1\)，也可取跨割速率 \(e^{-c/\varepsilon}\)，从而产生完全不同的寿命指数。FIB 递归只给 \(E_j\)、词序和标签；连续时间速率、\(\varepsilon\)、井与目标、势函数、边界、时间单位和初态均为外加条件。若杀死核不可约性失败，准平稳分布可能不唯一；多门等高时 prefactor 需相加；非可逆链不能直接使用上述容量势垒。有限 \(j\)、固定 \(\varepsilon\) 无真正相变，且 \(j\to\infty\)、\(\varepsilon\to0\)、\(t\to\infty\) 的次序必须显式声明。因此这些是指定连续时间模型中的亚稳态结论，不是 FIB 自动给出的物理激活能。
+

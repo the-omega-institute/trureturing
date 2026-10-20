@@ -1,0 +1,30 @@
+### 定义 361.1（曲率与事件观察）
+
+定义局部曲率观察
+
+$$
+\mathcal O_{\mathrm{curv}}(g)=d_1g.
+$$
+
+给定周期映射 \(\Pi\)，定义增强观察
+
+$$
+\mathcal O_{\mathrm{enh}}(g)
+=
+\bigl(d_1g,\Pi(P_{\mathcal H^1}g)\bigr),
+$$
+
+其中 \(P_{\mathcal H^1}\) 是 Hodge 正交投影。
+
+对有限事件族 \(\mathcal T\)，若每个事件 \(t\) 的记录核可以写成
+
+$$
+R_t(g)
+=
+\Phi_t\!\left(
+d_1g,\Pi(P_{\mathcal H^1}g)
+\right),
+$$
+
+则称 \(\mathcal T\) **通过增强边界因子化**。这里 \(\Phi_t\) 可以包含记录概率、后继状态和停止条件；因子化是模型的声明合同。
+

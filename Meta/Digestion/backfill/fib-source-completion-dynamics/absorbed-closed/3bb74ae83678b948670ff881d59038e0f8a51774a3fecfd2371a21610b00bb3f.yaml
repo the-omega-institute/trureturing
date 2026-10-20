@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:3bb74ae83678b948670ff881d59038e0f8a51774a3fecfd2371a21610b00bb3f
+  normalized_sha256: sha256:3bb74ae83678b948670ff881d59038e0f8a51774a3fecfd2371a21610b00bb3f
+cas_ref: sha256:3bb74ae83678b948670ff881d59038e0f8a51774a3fecfd2371a21610b00bb3f
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/ClosedObservationCommonTailWidthModel.fiveLabel
+    target_statement_id: sha256:65a9630198da578ff0ba4991469b1e19e525ca773530061df005e88b6a7e3c2c
+  - gid: D5/S1/Digit/Infinite/ClosedObservationCommonTailWidthModel.lawful
+    target_statement_id: sha256:d4a2a24d89ddb802d9229fbc73c740ff0dc704f0c88a7c38dbf927fe6135cc65
+  - gid: D5/S1/Digit/Infinite/ClosedObservationCommonTailWidthModel.outgoing
+    target_statement_id: sha256:3d946ef13309b68af36e2063d95db2105c22c7bf054f8d9bfdf34aa84b3a4985
+  - gid: D5/S1/Digit/Infinite/ClosedObservationCommonTailWidthModel.twoLabel
+    target_statement_id: sha256:602ff6168c0cb6977a5f47ea1b49cf9fa2fab6792744ccdc2d25f2126cf4ac6b
+  - gid: D5/S3/ConceptDynamics/Coding/DecoderOperationTrace.nextGuard
+    target_statement_id: sha256:c54e582a485ed12527a34bdb682b40f9fb0dc02cd392aa49bdb1a5898e26f622
+receipts:
+  unresolved_subitems: []

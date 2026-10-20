@@ -1,0 +1,29 @@
+**定理 57.4（速度族的联合灵敏度公式）。** 在第54节的有限 FIB 切链中，先固定单位速度核与阻抗，令 \(q_i=G(0,i)\)、\(Q=\operatorname{diag}(q_i)\)。允许局部速度
+\[
+v(\eta)=v^0+\Phi\eta,\qquad \eta\in\mathbb R^d,
+\]
+并以行缩放得到 \(G^{(v)}=GV\)。在反射—吸收最近邻链的共同历史下，
+\[
+\mu_F(\eta)=FQv(\eta),
+\]
+且
+\[
+C^{(v)}_{ik}
+=q_{\max(i,k)}^2v_iv_k-\mathbf1_{\{i=k\}}q_iv_i.
+\]
+对任意速度方向 \(z\in\mathbb R^L\)，
+\[
+\dot C^{(v)}[z]_{ik}
+=q_{\max(i,k)}^2(z_iv_k+v_iz_k)
+-\mathbf1_{\{i=k\}}q_iz_i.
+\]
+所以联合响应的参数 Jacobian 为
+\[
+J_{F,v}=
+\begin{bmatrix}
+FQ\Phi\\
+\operatorname{vech}\!\left(F\dot C^{(v)}[\Phi]F^{\mathsf T}\right)
+\end{bmatrix}.
+\]
+速度族在该点由一阶均值和协方差局部识别，当且仅当 \(\operatorname{rank}J_{F,v}=d\)。该式来自行缩放 Green 矩阵和共同历史的二阶占用公式。
+

@@ -1,0 +1,57 @@
+**定理 398.5（同源 Mellin 矩与共同尺度的极限）。** 对实际 $R$，有
+
+$$
+\boxed{\mathcal M_R=D+c_{\mathrm{diag}},\qquad
+\lim_{m\to\infty}m^2\log m\,J_m(m)=c_{\mathrm{diag}}.}
+\tag{398.15}
+$$
+
+第二个极限沿正整数 $m$，且观察阈值与相邻尺度同时取 $x=m$；它与（398.6）中固定 $x$ 的极限不同。如果 $c_{\mathrm{diag}}<0$，则 $J_m(m)<0$ 对全部足够大的 $m$ 成立，所以不存在一个只要求 $m\ge x$ 就保证真实尾核为正的全称原则。
+
+证明。首先（398.8）保证 $\mathcal M_R$ 绝对存在。对实数 $s>1$，直接复用（386.7）的实际 Dirichlet 级数及经典部分求和，得到
+
+$$
+\int_1^\infty K(y)y^{-s-1}dy
+=-\frac{\zeta'(s)}{s\mathcal B(s)}.
+\tag{398.16}
+$$
+
+$K(1)=0$，且 $K(y)=O(y\log y)$，因此两个积分端点合法。对连续主项直接使用经典幂—对数积分，便有
+
+$$
+\int_1^\infty R(y)y^{-s-1}dy
+=-\frac{\zeta'(s)}{s\mathcal B(s)}
+-\frac A{(s-1)^2}+\frac D{s-1}.
+\tag{398.17}
+$$
+
+各项先在 $s>1$ 的同一收敛域相减；不分别在 $s=1$ 代入发散的 $K$ 与连续主项。使用 [DLMF §25.2.4](https://dlmf.nist.gov/25.2.E4) 的已知 Laurent 展开与实际整个函数 $\mathcal B$ 的 Taylor 展开，右侧在 $s\downarrow1$ 时的有限常数为
+
+$$
+A+\frac{B'}{B^2}+\frac{(B')^2}{B^3}
+-\frac{B''}{2B^2}+\frac{\gamma_1}B
+=D+c_{\mathrm{diag}}.
+$$
+
+左侧由（398.8）的包络支配收敛到 $\mathcal M_R$，得到第一式。这里仅复用 Laurent 展开；新增的对应是它与同一个实际高商余核矩的连接。
+
+再对 $\mathcal Z_R$ 使用支配收敛：对 $u=\log y\ge0$、$r\ge1$，
+
+$$
+rh(r+u)\le1+2/r+2/r^2\le5,
+\qquad rh(r+u)\longrightarrow1.
+$$
+
+于是 $r\mathcal Z_R(r)\to\mathcal M_R$。当 $x=m$、$\ell=\log m$ 时，（398.1）在 $r=\ell$ 的值是
+
+$$
+\mathcal V_m(\ell)=-\frac D\ell-\frac D{\ell^2}.
+\tag{398.18}
+$$
+
+在 $m\le s\le m+1$ 上有 $0\le\log s-\ell\le1/m$。直接微分（398.1）可见，$\mathcal V_m'(r)$ 在 $\ell\le r\le\ell+1/m$、$\ell\ge1$ 的范围有与 $m$ 无关的有限包络：$\log(r/\ell)\le1/(m\ell)$，而 $1/\ell$、$1/r$ 及 $\ell/r$ 都一致有界。因此 $\ell[\mathcal V_m(\log s)-\mathcal V_m(\ell)]\to0$ 一致成立。（398.18）给 $\ell\mathcal V_m(\log s)\to-D$；另有 $\ell/\log s\to1$，所以 $\ell\mathcal Z_R(\log s)\to\mathcal M_R$ 也一致成立。
+
+将这两项代入（398.5）的同一相邻尺度积分，并使用 $m^2/s^2\to1$，即得第二式。若 $c_{\mathrm{diag}}<0$，普通极限的定义给最终负号；这不涉及任何 $H$ 的未知增长或符号。$\square$
+
+（398.11）允许继续估计同一实际 $S_M^{\mathrm{low}}(x)$，而不重复支付高商修正的较粗预算；（398.15）则明确规定了尺度同变时必须保留的符号。即使已知固定阈值后的核最终为正，$\sum H_mL_x(m)$ 的符号仍需针对实际 $e=\mu*\beta$ 证明。这些身份与核符号不决定完整 Robin 余量或黎曼猜想。
+

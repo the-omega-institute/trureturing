@@ -1,0 +1,72 @@
+## 23. 有限循环模型中的精确多谱恒等式
+
+在有限循环群 \(\mathbb Z/M\mathbb Z\) 上，令：
+
+\[
+a(n)=\Lambda(n)-\text{baseline}.
+\]
+
+定义 \(k\)-点平移相关：
+
+\[
+C_k(h_1,\ldots,h_{k-1})
+=
+\frac1M
+\sum_n
+a(n)
+a(n+h_1)\cdots
+a(n+h_{k-1}).
+\]
+
+令：
+
+\[
+A(\theta)
+=
+\sum_n a(n)e^{-in\theta}.
+\]
+
+则：
+
+- \(k=2\) 的 Fourier 变换是 power spectrum：
+  \[
+  |A(\theta)|^2;
+  \]
+- \(k=3\) 的 Fourier 变换是 bispectrum：
+  \[
+  A(\theta_1)A(\theta_2)
+  A(-\theta_1-\theta_2);
+  \]
+- \(k=4\) 给出 trispectrum；
+- 一般 \(k\) 给出满足总频率守恒的 polyspectrum。
+
+因此：
+
+\[
+\boxed{
+\text{prime constellation}
+=
+\text{additive shift domain 中的系数},
+}
+\]
+
+\[
+\boxed{
+\text{correlation spectrum}
+=
+\text{其多维 Fourier 编码}.
+}
+\]
+
+具体地：
+
+\[
+\begin{aligned}
+\text{twin } \{0,2\}&\leftrightarrow C_2(2),\\
+\text{triplet } \{0,2,6\}&\leftrightarrow C_3(2,6),\\
+\text{quadruplet } \{0,2,6,8\}&\leftrightarrow C_4(2,6,8).
+\end{aligned}
+\]
+
+---
+

@@ -1,0 +1,16 @@
+**命题 52.13（独立有限 corroboration 的确切范围）。** 在精确有理矩阵模型
+
+$$
+A=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+B=\begin{pmatrix}1/2&1\\-5/4&-1/2\end{pmatrix}
+\tag{TM.5216}
+$$
+
+中，基 $1,A,B,AB$ 的坐标矩阵行列式为 $-5\ne0$；该模型在四维 Clifford 张成空间忠实。以下有限断言已经用独立编写、无仓库/前阶段程序导入的精确整数与有理算术核对：$H=1,\ldots,12$ 全部正叶词运行，$H\le6$ 全部括号树运行，$H\le5$ 全部实际上下文至 $H+1$ 叶的两侧拼接，以及 H9 见证和固定 E 原 Read 续接。它们仅 corroborate 所述有限样本，不证明所有 H、所有历史或完整 lower emitter 的符合性。
+
+**证明与有限范围说明。** 矩阵直接满足 $A^2=1,B^2=-1,AB+BA=1$，四基 determinant 非零使有限等式不因表示坍缩而伪真。一个独立枚举用实际树的递归生成、实际 $\rho$ 与整候选拼接；另一路逐词使用整数正规坐标乘法与精确矩阵叶积交叉比较，未调用任何 producer/reviewer。执行前固定失败条件：编码非单射或长度非 $2m-1$；相同 q 有不同准备写入迹；已取得 m 加真实 Gamma 不回到初始 q；guard/Read/successor 不符、reject 改源或给候选 E；H9 计数/窗口/merger 错误；隐藏初始真值 checker 能被误当作 record-only；固定 E 不能被 $\mathrm{Read}^{E+1}$ 反驳。任一断言失败须停止并否定相应有限结论，不能把失败重新归类为无限范围免责。
+
+实际退出码为 0，核对的 $H$–word 运行数为 16,356（允许同一词在不同 H 上分别运行）；三个数学窗口的整数/矩阵比较为 49,068；初始标签零/一/二分别为 14,788、1,399、169 次。全部括号树的 $H$–tree 运行数为 3,920，每次检查解析逆、$2m-1$ 长度、同 q 准备迹及初始解码。$H\le5$、上下文 $\le H+1$ 的实际 tree/context 对为 1,839,388，两侧 graft 为 3,678,776 次，其中 accept 1,344、reject 3,677,432；另有 1,364 次 Read/$\rho$。按相同 current q、请求及实际上下文分组的响应/successor 类为 239,692，均未见不一致。H9 的全部一至四叶实际上下文两侧 merger 共 204 次。共同 Read–$\rho$–Read 记录的有界左结合候选中有四词，含 $X,Y$；在声明 $\mathcal F=\mathcal T_9$、$f=q_9$ 的实例中，record-only checker 拒绝把 $q_9(X)$ 作为唯一初始目标提案。$H=1,E=0,\ldots,8$ 的九个原 $\mathrm{Read}^{E+1}$ 续接均合法，固定 cap 的末端 EXHAUSTED 与原响应不同。准备/address/tick/fee/phase/stop/availability/copy 的八种人为不同标签作为负控确被视图相等检查识别；这些是局部 label 反例 fixture，不是某个真实 emitter 的 all-path 运行认证。矩阵 rank/determinant 另以独立短计算核对，退出码亦为 0。
+
+有限程序的范围是算术、实际有限树动作和所声明的反例记录，不是假设 52.6 的已实例化实现。一般 code-length、同核分离、全族取得与双向 correspondence 依靠前述普通证明及列明供应，不能由这些有限计数推成全称定理。普通证明与有限精确核对均不计为 Lean verification。$\square$
+

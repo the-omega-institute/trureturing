@@ -1,0 +1,35 @@
+## 完整供文
+
+这一轮不再重复方锥本身的基本证明，而是继续向更深一层推进：
+
+> AURIC FIB ATOM 金字塔的真正本体不是一个三维图形，而是一个由“局部运输图”产生的纤维化对象。  
+>   
+> 金字塔坐标描述可见的一阶边界；$\kappa$ 描述内部运输图中的环路流；$\Delta$ 描述该环路流是否破坏条件独立；transfer matrix 的秩描述这些隐藏关系是否还能被未来延拓恢复；开放路径可以缝合，闭环还必须通过 holonomy 检验。
+
+这会把几件此前分开的事情统一起来：
+
+$$
+\boxed{
+\text{AURIC 金字塔}=
+\text{边界投影}
++
+\text{运输纤维}
++
+\text{环路闭合}.
+}
+$$
+
+当前项目的 `dev` 分支在上一轮的 `b40c4b1` 之后已经继续合并了 #15044，最新相关提交的主题是“用有限共同生成器实现相容的 complete-law flows”。 这与下面的结构高度对应：项目正在从单个局部律、单个预测器，推进到带有共同边界、共同流和有限实现的整体系统。
+
+相关源文件：
+
+- [AURIC FIB ATOM foundational formulas](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)
+- [AURIC FIB ATOM correlation and native continuation](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)
+- [AURIC FIB ATOM hidden relations, statistics, phase and seams](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)
+- [AURIC FIB ATOM dynamic future quotient](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)
+- [latest merged compatible-flow commit](https://github.com/the-omega-institute/trureturing/commit/6ebcd08fd122ed8c588c56090d0c07a8046e1685)
+
+项目 README 仍然把“定义、假设、证明依赖和观察边界”视为核心方法，并明确区分局部一致与全局可延拓，强调树状覆盖与带环覆盖必须分开处理。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com)
+
+---
+

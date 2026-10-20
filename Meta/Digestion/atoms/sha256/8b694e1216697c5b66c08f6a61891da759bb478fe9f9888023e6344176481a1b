@@ -1,0 +1,45 @@
+**References 32.1 (mathematical ownership and literature correspondence).**
+The new source-specific synthesis is Theorem 27.4 and its completed-
+response consequence, the direct quantitative bound of Theorem 28.2,
+the exact automatic-scalar/NCE consequences, and the independently proved
+fixed-matrix threshold exclusion. These are `repo-derived` ordinary
+deductions. The attained family and admission/label map in §24, the
+least-tail extraction in §25, NCE's native elimination, canonical
+numeration, first-order automata closure and finite-fiber pumping are
+suppliers, not new foundational results here.
+
+| Supplier | Exact role and limitation |
+| --- | --- |
+| Khoussainov–Nies–Rubin–Stephan, *Automatic Structures: Richness and Limitations*, [arXiv cs/0703064v2][ABT-KNRS], Definitions 2.2–2.3, Theorem 1, Proposition 2 and Lemma 3 | Right-padded synchronous relations, first-order closure, finite-fiber length control and logarithmic automatic-monoid product growth. Theorem 27.4 needs only the two stated unary affine count graphs and proves their logarithmic consequence directly. Proposition 2 also supplies the unary countercheck in Proposition 30.2. These results do not identify words with physical memory or turn an automatic transition graph into an automatic completion relation. |
+| Hieronymi–Terry, *Ostrowski numeration systems, addition and finite automata*, [arXiv 1407.7000v2][ABT-HT], Theorems A–B and Definitions 3.2–3.3 | For a fixed quadratic irrational, first-order $(\mathbb N,+,V_a)$ definability equals recognizability, and addition is recognizable. The paper's parameter-free statement extends to fixed numerical parameters by regular singleton codes. Convention 28.1 supplies the padding conversion; $V_a$ selects a denominator value, not its ordinal index. No ordinary count-to-denominator graph is imported. |
+| Du–Mousavi–Schaeffer–Shallit, *Decision Algorithms for Fibonacci-Automatic Words, with Applications to Pattern Avoidance*, [arXiv 1406.0670v4][ABT-DMSS], §2, Procedure 3, §8 and Theorem 56 | Canonical weights $F_2$ onward, empty zero, synchronous tuples and first-order arithmetic using supplied fixed DFAOs; separately, fixed nonnegative finite matrix representations for Fibonacci-regular counts. Their matrix contract is used literally in Theorem 30.1, with a separate norm proof. A supplied counting representation is not an automatic comparison or a G_gc acquisition service. |
+| NCE Theorem 10.2 and §§11–14 | Elimination of the entire joint native block at the identical scalar tuple, fixed regular memberships and fixed-numeral original-label supports. Corollary 29.2 changes scalar expressivity, not NCE's native witness, quantifier or acquisition scope. |
+| The present volume §§24–26; CAP/ARC/GENERAL; AIF/SOURCECALL | Same actual beta initialization, attained capacities/counts, original admission and included label, full paid returns and the original complete-successor contract. The new theorem does not repeat their source construction, recurrence, source-only history inverses or earlier meter/payload families as a new contribution. |
+
+The pinned mathlib canonical representation source
+`Mathlib/Data/Nat/Fib/Zeckendorf.lean` at revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679` supplies
+`Nat.zeckendorfEquiv`, `Nat.sum_zeckendorf_fib` and
+`Nat.zeckendorf_sum_fib`. The repository's
+`GoldenZeckendorfLanguage.zeckendorfMSDWord_noAdjacentOnes` and its
+owning Scribe concern canonical digit execution.
+`GoldenGapZeckendorf.wdigits_fib_add`, including its actual
+`CloitreActualSpineCarry` consumer, is a separated digit/value identity.
+Neither supplies an automatic ordinary-index/value graph.
+`DFAOStateLowerBound` and its Scribe use the classical reached-state and
+common-continuation principle. Theorem 28.2 uses that principle in a
+source-specific padded-prefix proof; it is not a compiled specialization
+of the module.
+
+`NativePresburgerDescriptorObstruction.result` and its owning Scribe
+concern all native trees and physical addresses with finite-dimensional
+Presburger descriptors, rather than the attained two-sort completed-
+response interface here. `NativeSourceSelectorCode.selector_code_correct`
+and `realization` have the real
+`NativeSerialEffective.original_code_service_simulation` consumer;
+that consumer preserves external reads and terminal observation after
+erasing evaluator steps. It is not a G_gc current-authority or literal
+complete-successor identification. These existing results are neither
+absent capabilities nor new accomplishments of this representation
+boundary. No worldwide novelty or new Lean certificate is asserted.
+

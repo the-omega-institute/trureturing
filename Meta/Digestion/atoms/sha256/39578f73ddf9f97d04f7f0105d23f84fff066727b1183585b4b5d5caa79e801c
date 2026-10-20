@@ -1,0 +1,7 @@
+在 Weil/Toeplitz 侧，项目已经机器闭合：
+
+* 正半定截断 Hermitian Toeplitz moments 存在有限单位圆表示；
+* 截断最大 Haar floor 精确等于最小 Toeplitz 特征值；
+* active floor 的 residual support 被限制在有限 contact polynomial 零点上，并产生有限原子表示；
+* 固定深度 Li–Clark moment 的指数恢复可以传递到 Toeplitz operator norm 和最小特征值。
+

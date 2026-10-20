@@ -1,0 +1,20 @@
+**命题 1207.1（其他固定阶及靠近零阶的尺度）。** 对固定 $\alpha>1$，当 $\kappa\downarrow0$ 时，同一来源比较满足
+
+$$
+H_\alpha(p)-H_\alpha(q)
+\sim-\frac\alpha{\alpha-1}\kappa.
+$$
+
+一阶时其差为 $-\kappa\log(1/\kappa)+O(\kappa)$；无穷阶时其差为 $-\log(1-\kappa)-2\log(1+\kappa)\sim-\kappa$。零阶时，对于每个 $0<\kappa<1$，其差却恒为 $\log5-\log4>0$。
+
+若同时 $\alpha\downarrow0$、$\kappa\downarrow0$，且 $\alpha\log(1/\kappa)\to\tau\in[0,\infty)$，则
+
+$$
+H_\alpha(p)\longrightarrow\log(1+4e^{-\tau}),
+\qquad H_\alpha(q)\longrightarrow\log(1+3e^{-\tau}).
+$$
+
+**证明。** 固定 $\alpha>1$ 时尾幂 $\kappa^\alpha=o(\kappa)$，两个幂和为 $1-\alpha\kappa+o(\kappa)$ 与 $1-2\alpha\kappa+o(\kappa)$，得到第一式。一阶尾部总质量分别为 $\kappa+O(\kappa^2)$ 与 $2\kappa+O(\kappa^2)$，其熵首项给所示差。无穷阶直接比较最大权重，零阶直接数正标签。联合尺度中 $\kappa^\alpha\to e^{-\tau}$、$4^{1-\alpha}\to4$、$2^{1-\alpha}\to2$，两个幂和分别趋向 $1+4e^{-\tau}$ 与 $1+3e^{-\tau}$，且 $1-\alpha\to1$。证毕。
+
+在 $\kappa=0$ 时，两张向量都只剩一个正标签；而任意正参数仍分别有五个与四个。支持数量的跳变，正是零阶与弱参数极限需要另行处理的原因。
+

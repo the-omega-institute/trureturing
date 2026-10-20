@@ -1,0 +1,31 @@
+**定义 98.1（精确先验与输出信息方差）。** 保持定义 96.1 的完整计数后验、
+原精确标量 $T$、同一测量 $Y=T+\sigma_MG$、固定幅度及全部原取整。
+仍要求
+
+$$
+L_M=\ln(1/\sigma_M)\longrightarrow\infty,\qquad
+\limsup_M L_M/Q^3<c_q/2.
+\tag{98.1}
+$$
+
+用自然对数记
+
+$$
+S_x(n)=-\ln P_x(n),\qquad h_x=\mathbb E_xS_x(R),\qquad
+V_{{\rm prior},x}=\operatorname{Var}_xS_x(R),
+$$
+
+$$
+J_{x,y}(n)=-\ln P_x(n\mid Y=y),\qquad
+V_{{\rm post},x}(y)=\operatorname{Var}_x(J_{x,y}(R)\mid Y=y).
+\tag{98.2}
+$$
+
+这些都是精确有限纤维量。沿用 (96.2) 的 $\gamma,g_0,g_3,\nu=2g_0$，
+置
+
+$$
+c_V=\frac{2\gamma}{\nu}\left(\frac2{\sqrt3}-1\right)>0.
+\tag{98.3}
+$$
+

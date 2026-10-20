@@ -1,0 +1,71 @@
+**定理 24.2（Exact three/four-block phase and value-phase prices）。** Under the entire contract of Definition 24.1, separately for either original alphabet, let
+
+$$
+f_{\rm phase}(v,\theta,s)=\theta,\qquad
+f_{\rm pair}(v,\theta,s)=(v,\theta),
+\tag{24.5}
+$$
+
+with an arbitrary fixed bottom label for each target, allowed to coincide with a live label. For either target,
+
+$$
+\boxed{C_{\rm ad}=3,\qquad C_{\rm pre}=4.}
+\tag{24.6}
+$$
+
+Thus the exact worst actually emitted bit fees are respectively $12$ and $16$. The same conclusions hold for an injective relabeling of either live target: $f(v,\theta,s)=H(\theta)$ with $H:\mathbb Z/7\mathbb Z\to Y$ injective, or $f(v,\theta,s)=F(v,\theta)$ with $F:\mathbb F_2\times\mathbb Z/7\mathbb Z\to Y$ injective, again with any fixed bottom label.
+
+Proof. All words below are written in actual read order. For a live execution, let $y_t$ be its observed value after $t$ blocks, with $y_0=v$, and use the endpoint increments $d_t=y_{t+1}\oplus y_t$. Put $j=-\theta_{\rm INITIAL}\bmod7$ with representative $0\le j\le6$. For an arbitrary literal word $B=abcd$, define its charge row at a local negative phase $\ell$ by
+
+$$
+\begin{array}{c|ccccccc}
+\ell&0&1&2&3&4&5&6\\ \hline
+R_\ell(B)&a&a\oplus b&b\oplus c&c\oplus d&d&0&0.
+\end{array}
+\tag{24.7}
+$$
+
+Indeed the only possibly charged offsets are $\ell-1,\ell\pmod7$, and only offsets $0,1,2,3$ belong to this complete block. At actual block index $t$, starting from zero, the local coordinate is $\ell=j-4t\pmod7$. On a successful action,
+
+$$
+d_t=R_{j-4t}(B),\qquad
+\bigoplus_{\ell=0}^6R_\ell(B)=0.
+\tag{24.8}
+$$
+
+The parity identity holds for every four-bit word, with no restriction to a chosen safe subalphabet. It is a coefficient identity; it is not an extra observation available to a controller.
+
+For adaptive attainment, issue root $0101$. On $d_0=1$, issue $1111$, then $0110$. On $d_0=0$, issue $0100$; stop if $d_1=0$, and otherwise issue $0001$. The full endpoint decoder is
+
+| INITIAL coordinate $j$ | Actually emitted adaptive words | Increment code | Stop after blocks |
+| --- | --- | --- | --- |
+| $0$ | $0101\mid0100$ | $00$ | $2$ |
+| $1$ | $0101\mid1111\mid0110$ | $110$ | $3$ |
+| $2$ | $0101\mid1111\mid0110$ | $101$ | $3$ |
+| $3$ | $0101\mid1111\mid0110$ | $100$ | $3$ |
+| $4$ | $0101\mid1111\mid0110$ | $111$ | $3$ |
+| $5$ | $0101\mid0100\mid0001$ | $011$ | $3$ |
+| $6$ | $0101\mid0100\mid0001$ | $010$ | $3$ |
+
+These rows follow by applying (24.7) at the actual displacements $0,4,8\equiv1\pmod7$. The root has positive set $\{1,2,3,4\}$ and zero set $\{0,5,6\}$. On the latter set $0100$ singles out $j=0$ by zero response; $0001$ then has response one at $j=5$ and zero at $j=6$. On the former set the two further increments are respectively $10,01,00,11$. Thus every stopping code determines $j$.
+
+The first actual root zero safely clears every inherited legal tail during a paid block, losing no distinction for these tail-independent targets. Root $0101$ ends in tail one. The only consecutive all-one action is the second word $1111$, so that seam gives a run of exactly five, below $k=6$. The following $0110$ begins zero and ends zero. The other second word $0100$ begins and ends zero, and its possible successor $0001$ is also safe. No legal INITIAL source rejects. Return $-j\bmod7$ for phase, $(y_0,-j\bmod7)$ for pair, or the specified injective relabeling; $y_0$ is the remembered INITIAL value. Initial bottom returns its own label freely. Both free-value fibres use this same rule on their own increments. Every bit of each emitted word is paid, and actual sources with $j\ne0$ pay three blocks. Hence $C_{\rm ad}\le3$.
+
+For GLOBAL attainment, preselect the one literal stream
+
+$$
+0101\mid1001\mid0110\mid1000,
+\tag{24.9}
+$$
+
+with any fixed all-zero extension after it. The archive decoder and actual stops are
+
+| INITIAL coordinate $j$ | Increment code acquired before stopping | Stop after blocks |
+| --- | --- | --- |
+| $0$ | $0100$ | $4$ |
+| $1$ | $110$ | $3$ |
+| $2$ | $101$ | $3$ |
+| $3$ | $100$ | $3$ |
+| $4$ | $111$ | $3$ |
+| $5$ | $0101$ | $4$ |
+| $6$ | $00$ | $2$ |

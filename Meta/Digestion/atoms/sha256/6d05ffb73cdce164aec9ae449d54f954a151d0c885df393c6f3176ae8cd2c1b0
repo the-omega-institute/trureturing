@@ -1,0 +1,8 @@
+**定理211.1（局部精确最优秩切换）。**
+存在固定 $0<\eta<h_b$、$\epsilon_0>0$ 及实解析函数 $h_b(\epsilon)$，
+$h_b(0)=h_b$，使对 $0<\epsilon<\epsilon_0$、$|h-h_b|<\eta$：
+
+1. 精确最优的对称化两结果 Choi 对唯一；
+2. 若 $h<h_b(\epsilon)$，其 Choi 秩模式为 $(1,2)$；
+3. 若 $h\ge h_b(\epsilon)$，其 Choi 秩模式为 $(1,1)$。
+

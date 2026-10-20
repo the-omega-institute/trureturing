@@ -1,0 +1,18 @@
+## 33. 有限链初态混合的谱投影接口
+
+令 $\nu_j$ 是 $\{0,1,\ldots,L_j\}$ 上的初态律，$\nu_j^{\mathrm{tr}}$ 为其在暂态集合 $\{0,\ldots,L_j-1\}$ 上的限制，并令
+
+$$
+\widehat\nu_j=\sum_{i=0}^{L_j}\nu_j(i)\,\delta_{i/L_j}.
+$$
+
+设 $\widehat\nu_j\Rightarrow\nu$ 于 $[0,1]$，并把有限链的生存谱写成
+
+$$
+\Pr_i(\tau_j>n)=\sum_m a_{j,m}(i)\lambda_{j,m}^{\,n},
+\qquad
+a_{j,m}(\nu_j)=\sum_{i<L_j}\nu_j(i)a_{j,m}(i).
+$$
+
+吸收端的质量不进入 $a_{j,m}(\nu_j)$；它只在连续坐标中对应 $x=1$。
+

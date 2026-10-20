@@ -1,0 +1,45 @@
+**定理 1131.1（联合尺度的准确主阶）。** 在第 1129 节的条件下，
+
+$$
+G_N(\varepsilon_N)=h_2(\varepsilon_N)
++N\varepsilon_N\log2+O(\varepsilon_N),
+$$
+
+$$
+C_N(\varepsilon_N)=N\varepsilon_N\log2+o(\varepsilon_N).
+$$
+
+因此
+
+$$
+\frac{G_N(\varepsilon_N)}{N\varepsilon_N}\to\alpha+\log2,
+\qquad
+\frac{G_N(\varepsilon_N)}{C_N(\varepsilon_N)}\to1+\frac\alpha{\log2}.
+$$
+
+**证明。** 第 1106 节推导的乘积来源熵界，对任意观察律 $R$ 都适用：只要其完整矩为 $t$，每个来源表示都有 $H(X\mid Z)\le N\log2-\ell_N(t)$，从而
+
+$$
+C(R)\ge H(R)-N\log2+\ell_N(t).
+$$
+
+本式不要求 $R$ 的真子集矩为零。来源标签按主标签与余量分组，余量标签的条件熵至少为 $G(R)\ge C(R)$。使用第 1130 节及 $\ell_N(t)\ge L_N|t|$，得到
+
+$$
+G_N(\varepsilon)\ge h_2(\delta)+\delta L_N|t|
+-\delta\log(4+2\eta_N).
+$$
+
+完整矩恒等式为 $\delta t=\varepsilon-(1-\delta)\prod_i m_i$。故中间项至少为 $\varepsilon L_N-(1-\delta)L_N\prod_i m_i$。$|m_i|\le M=O(\varepsilon)$、$L_N=O(N)$，且 $\log(1/\varepsilon)\sim\alpha N$，保证 $NM^N=o(\varepsilon)$。又因 $\delta=O(\varepsilon)$、$\eta_N\to0$，最后一项为 $O(\varepsilon)$。充分大时 $\varepsilon\le\delta<1/2$，二元熵单调性给 $h_2(\delta)\ge h_2(\varepsilon)$。因此
+
+$$
+G_N(\varepsilon)\ge h_2(\varepsilon)+\varepsilon L_N-O(\varepsilon)
+=h_2(\varepsilon)+N\varepsilon\log2-O(\varepsilon).
+$$
+
+公平通道加奇偶点来源的上界为 $h_2(\varepsilon)+N\varepsilon\log2-\varepsilon\log2$，上下合并得到第一式。
+
+因 $\varepsilon_N\to0$ 而 $\kappa_N\to1$，最终处于弱分支，故 $C_N=\varepsilon_NL_N-K(\varepsilon_N)$。第 1125 节及 $K(\varepsilon_N)=O(\varepsilon_N^2)$ 得第二式。最后 $h_2(\varepsilon_N)/(N\varepsilon_N)\to\alpha$，除法给出所示极限。证毕。
+
+这些余量常数可以依赖于 $\log(1/\varepsilon_N)/N$ 的固定正上下界，没有给出覆盖 $\alpha=0$ 或 $\alpha=\infty$ 的一致展开。固定维数的二项系数也没有被移作本定理的一致常数项。
+

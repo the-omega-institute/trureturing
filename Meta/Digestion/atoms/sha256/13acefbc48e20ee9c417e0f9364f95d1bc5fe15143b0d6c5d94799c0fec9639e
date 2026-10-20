@@ -1,0 +1,36 @@
+## 3. 新 Lean 给出实际零 trace 偶模板的全尺度算术尾
+
+用既有 `arithmeticBoundarySymbol c n` 记 s^(c)_n。新源从其完整 finite-prime、pole 和 infinite-Gamma 定义证明
+
+\[
+s^{(c)}_{-n}=-s^{(c)}_n,\qquad s^{(c)}_0=0.
+\]
+
+Gamma 级数的绝对收敛及原始 B_c 包络沿用 `WeilArithmeticCouplingJet`。私有 real-frequency 写法只是该表达式的 definitional presentation，没有第二个公开算术 owner。
+
+独立定义 `zeroTraceColumn` 为原 `couplingColumn` 在 {n,-n,0} 上、系数 1,1,-2 的作用。对整数 n>0、|m|>n，展开原矩阵列并检查分母，证明
+
+\[
+\boxed{a_{mn}+a_{m,-n}-2a_{m0}
+=\frac{2n(ms^{(c)}_n-ns^{(c)}_m)}{\pi m(m^2-n^2)}.}
+\tag{AD5}
+\]
+
+这里 a_mn=(s_n-s_m)/(pi*(m-n)) 是原 Weil Fourier 非对角项，符号和所有 prime powers 不变。由已证明的 |s_j|<=B_c，当 |m|>=2n 时，
+
+\[
+\boxed{|a_{mn}+a_{m,-n}-2a_{m0}|
+\le\frac{4B_c n}{\pi |m|^2}.}
+\tag{AD6}
+\]
+
+证明先把分子界为 2n B_c(|m|+n)，与 m^2-n^2=(|m|-n)(|m|+n) 中的正因子抵消，再用 |m|-n>=|m|/2。两个方向的 m 均被覆盖。有限复合成得
+
+\[
+\boxed{|(Av)_m|\le\frac{4B_c}{\pi |m|^2}
+\sum_{n=1}^{N}n|t_n|,\qquad |m|\ge2N.}
+\tag{AD7}
+\]
+
+新 Lean 保存 (AD5)-(AD7)，没有接收“两个边界矩恰为零”的额外假设。正负模板与 trace 的实际系数组合已经消去了第一阶项。无限平方尾的求和及物理 Fourier 识别继续由下面的纸面桥承接。六个公开定义/定理有六个 matching FromLean Scribe handles，未声称已编译。
+

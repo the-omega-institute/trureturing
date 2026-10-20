@@ -1,0 +1,55 @@
+## 199. FIB 路径上的外加 Dicke 超辐射、集体自发辐射与光子统计
+
+固定 FIB 上下文路径，并将每个选定上下文映射为外加二能级发射体。FIB 只给接续或耦合骨架；位置、偶极矩、能级、腔模、真空谱密度、初态、耗散和探测通道均外加。闭合发射体模型可写为
+$$
+H_S=\frac12\sum_i\omega_i\sigma_i^z
++\sum_{i\ne j}J_{ij}\sigma_i^+\sigma_j^-
++\sum_{i,\mu}(g_{i\mu}a_\mu\sigma_i^+
++g_{i\mu}^*a_\mu^\dagger\sigma_i^-).
+\tag{199.1}
+$$
+在 Born–Markov、旋波和外加真空浴近似下，
+$$
+\dot\rho=-{\rm i}[H_{\rm eff},\rho]
++\sum_{i,j}\Gamma_{ij}\left(
+\sigma_j^-\rho\sigma_i^+
+-\frac12\{\sigma_i^+\sigma_j^-,\rho\}\right),
+\tag{199.2}
+$$
+其中 \(\Gamma\) 必须半正定，其非对角元由外加 Green 函数、偶极矩和空间相位决定。辐射强度为
+$$
+I(t)=\sum_{i,j}\Gamma_{ij}
+\langle\sigma_i^+\sigma_j^-\rangle_t .
+\tag{199.3}
+$$
+若 \(\Gamma_{ij}=\gamma\)，唯一亮跳跃算子为
+$$
+L=\sqrt\gamma\,J^-,
+\qquad J^-=\sum_i\sigma_i^-,
+\tag{199.4}
+$$
+对称初态和公共浴下 \(I(t)=\gamma\langle J^+J^-\rangle\) 可在脉冲中段达到 \(O(N^2)\)，而独立辐射为 \(O(N)\)。失谐、位置无序、去相干和边界会削弱增强。
+
+一般有限图给出
+$$
+\Gamma=\sum_\alpha\gamma_\alpha v_\alpha v_\alpha^\dagger,\qquad
+L_\alpha=\sqrt{\gamma_\alpha}\sum_i(v_\alpha)_i\sigma_i^- .
+\tag{199.5}
+$$
+大 \(\gamma_\alpha\) 是亮模，小或零本征值对应亚辐射或暗模；其寿命和权重由初态重叠及外加浴决定。保留单个腔模时，Tavis–Cummings 哈密顿量和腔损耗可产生 Rabi 分裂，但 \(\omega_c,g,\kappa_c\) 仍是外加量。
+
+光子计数需要倾斜 Liouvillian
+$$
+\mathcal L_s=\mathcal L_0+(e^s-1)\mathcal J_d,\qquad
+Z(s,T)={\rm tr}\,e^{T\mathcal L_s}\rho_0,
+\tag{199.6}
+$$
+二阶相关可写为
+$$
+g^{(2)}(\tau)=
+\frac{{\rm tr}[\mathcal J_d e^{\tau\mathcal L}\mathcal J_d\rho_{\rm ss}]}
+{({\rm tr}\mathcal J_d\rho_{\rm ss})^2}.
+\tag{199.7}
+$$
+超辐射脉冲、单体反聚束、暗态长尾和腔反馈会产生不同 Fano 因子与相关函数；探测孔径、偏振、背景和时间窗也会改变观测。只测总强度不能分别恢复 \(\Gamma\)、偶极矩和暗模。故独立辐射、超辐射与亚辐射均是外加量子光学和探测条件下的结论，不是 FIB 接续关系自身的定律。
+

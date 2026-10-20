@@ -1,0 +1,13 @@
+### 定义 376.1（Lipschitz 结果映射）
+
+令 \(f:(X,d_X)\to(Y,d_Y)\) 满足
+
+$$
+d_Y(f(x),f(x'))
+\le
+L\,d_X(x,x')
+\quad\text{对所有 }x,x'\in X.
+$$
+
+记推前分布为 \(f_\#P\)。
+

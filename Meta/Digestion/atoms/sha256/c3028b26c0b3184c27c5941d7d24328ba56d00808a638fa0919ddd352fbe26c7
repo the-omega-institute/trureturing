@@ -1,0 +1,5 @@
+两者都可能对边界振幅不可见，但：
+
+* 前者是合法 lift；
+* 后者使正 Hardy／Hilbert realization 失败。
+

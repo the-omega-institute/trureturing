@@ -1,0 +1,49 @@
+**命题 61.2（空设计修正与精确受限最优值）。** 在定义 61.1 的所有前件下，下确界均能达到，而且
+
+$$
+\boxed{
+\mathcal P_{J,t}(E_0,\varepsilon,\sigma)=
+\begin{cases}
+\displaystyle
+\Phi\!\left(-\frac{\sqrt{3E_0}\,l_\varepsilon}{2\sigma}\right),
+   & J\ne\varnothing,\\[4pt]
+\displaystyle \frac12, & J=\varnothing,
+\end{cases}
+\qquad
+l_\varepsilon=\sqrt{\frac{2\varepsilon}{9+20\varepsilon}}>0.
+}
+$$
+
+当且仅当 $J\ne\varnothing$ 或 $E_0=0$ 时，存在权重使 $E(w)=E_0$。因此，定理 54.1 证明末段的“若约束 $\sum_jw_j^2\le E_0$，用满预算时最优值为上式的 $E_0$ 版本”，作为约束最优值的断言，应加上预算可花满的条件 $J\ne\varnothing$ 或 $E_0=0$。若 $J=\varnothing$ 且 $E_0>0$，正确的最优值是 $1/2$，而非严格小于 $1/2$ 的 $E_0$ 曲线值。定理 54.1 以实际 $E=\sum_jw_j^2$ 表述的风险公式仍适用。
+
+**证明。** 先设 $J\ne\varnothing$。复用定理 54.1 对全部可测判别器的纸面 Bayes 最优风险公式：对于每个固定 $w,t$，堆叠均值 $\mu_0,\mu_1$ 满足
+
+$$
+\|\mu_1-\mu_0\|^2
+=\sum_{j\in J}w_j^2
+  \|H_\varepsilon(2\pi/3-t_j)-H_\varepsilon(-t_j)\|^2
+=3E(w)l_\varepsilon^2,
+$$
+
+且共同噪声协方差为 $\sigma^2 I_{6|J|}$。此式对任意实延迟和任意符号的权重成立，因为共同延迟只对各谐波平面作旋转，权重在平方范数中以 $w_j^2$ 出现。为明确所复用的最优性范围，若 $f_0,f_1$ 是这两个 Gaussian 法则的密度，则任意可测 $\delta$ 都满足
+
+$$
+\mathcal R_\varepsilon(w,t,\delta)
+=\frac12\int
+ \bigl(\mathbf 1_{\{\delta=1\}}f_0
+       +\mathbf 1_{\{\delta=0\}}f_1\bigr)\,dy
+\ \ge\ \frac12\int\min\{f_0,f_1\}\,dy.
+$$
+
+取 $\delta=1$ 当且仅当 $f_1\ge f_0$ 即逐点达到下界；该集合可测。若 $d=\mu_1-\mu_0\ne0$，密度比较等价于 $\langle d,y-(\mu_0+\mu_1)/2\rangle\ge0$，其在两个假设下的均值分别为 $-\|d\|^2/2$、$\|d\|^2/2$，方差均为 $\sigma^2\|d\|^2$。故各自的错误率都是 $\Phi(-\|d\|/(2\sigma))$。若 $d=0$，两法则相同，任意判别器的等先验风险都是 $1/2=\Phi(0)$。由此得到定理 54.1 的同一公式，并且阈值规则的最优性是对全部可测规则比较所得。
+
+因 $l_\varepsilon>0$、$\sigma>0$，函数 $E\mapsto\Phi(-\sqrt{3E}\,l_\varepsilon/(2\sigma))$ 在 $E\ge0$ 上递减，所以 $E(w)\le E_0$ 给出所列 $E_0$ 曲线作为风险下界。任选 $j_0\in J$，取
+
+$$
+w_{j_0}=\sqrt{E_0},\qquad w_j=0\quad(j\ne j_0).
+$$
+
+则 $E(w)=E_0$，配以上述 Bayes 判别器达到下界。这一构造包括 $E_0=0$，不需要改变已给延迟，也不要求原来的允许权重全部非负。
+
+若 $J=\varnothing$，权重族唯一，空和 $E(w)=0$，观测空间 $(\mathbb R^6)^\varnothing$ 是单点。两个假设的观测法则都是该点的单位质量，任意判别器均有风险 $1/2$。即便允许独立随机化，在该点以概率 $r$ 输出标签一，其风险仍为 $(r+(1-r))/2=1/2$。只有 $E_0=0$ 能在空设计上花满预算。对于任意 $J$，$E_0=0$ 迫使每个权重为零，两观测法则相同，故此时两分支都等于 $1/2$。最后，在空设计且 $E_0>0$ 时，$\sqrt{3E_0}\,l_\varepsilon/(2\sigma)>0$，而 $\Phi$ 严格递增，故形式上的 $E_0$ 曲线值确实严格小于可达风险。证毕。
+

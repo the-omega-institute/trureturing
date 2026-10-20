@@ -1,0 +1,17 @@
+### 定义 373.1（二元记录任务）
+
+给定两个共同来源假设 \(P_0,P_1\)，等先验二元任务的最优成功概率为
+
+$$
+\mathsf P_{\mathrm{succ}}(P_0,P_1)
+=
+\frac12\bigl(1+\mathsf{TV}(P_0,P_1)\bigr),
+$$
+
+其中
+
+$$
+\mathsf{TV}(P,Q)
+=\frac12\sum_x|P(x)-Q(x)|.
+$$
+

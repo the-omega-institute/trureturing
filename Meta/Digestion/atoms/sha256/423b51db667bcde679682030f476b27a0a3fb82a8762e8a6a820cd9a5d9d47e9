@@ -1,0 +1,30 @@
+## 12.4 成熟锚(逐条状态,不冒领)
+
+| 锚 | 用于 | 状态 |
+|---|---|---|
+| Gödel 1931,*Monatshefte f. Math. u. Phys.* 38:173–198(DOI 10.1007/BF01700692) | 定理 2.2(ii)、10.1 | `literature-attested`(本会话联网核对) |
+| Tarski 1944,*Philos. Phenomenol. Res.* 4(3):341–376 | 定义 2.1 模型真的语义观 | `literature-attested`(本会话联网核对) |
+| Hume 1739,*Treatise* III.i.1 | 评注 4.2 | `literature-attested`(本会话联网核对) |
+| Moore 1903,*Principia Ethica* §13 | 评注 4.2 | `literature-attested`(本会话联网核对) |
+| Popper 1934/1959,*Logik der Forschung*(Springer,Wien)/ *The Logic of Scientific Discovery*(Hutchinson,London) | 定理 3.9 | `literature-attested`(本会话联网核对) |
+| Poincaré 1908,*Science et méthode*「有用的组合恰恰是最美的」 | 假设 A.33 | `literature-attested`(本会话联网核对) |
+| Hardy 1940,*A Mathematician's Apology*「丑陋的数学没有永久的位置」 | 假设 A.33 | `literature-attested`(本会话联网核对) |
+| Schmidhuber 2009,*J. SICE* 48(1):21–32;arXiv:0812.4360 | 假设 A.33 | `literature-attested`(本会话联网核对) |
+| Solomonoff 1964,*Information and Control* 7(1):1–22 与 7(2):224–254 | 假设 A.33 | `literature-attested`(本会话联网核对) |
+| Tarski 1955,*Pacific J. Math.* 5:285–309 | 定理 5.7 | `literature-attested`(本会话联网核对);mathlib `OrderHom.gfp` 本机 grep 命中 |
+| Knaster 1928,*Ann. Soc. Polon. Math.* 6:133–134「Un théorème sur les fonctions d'ensembles」 | 定理 5.7 | `ASSUMED-UNVERIFIED`(作品名按记忆;评审席访问 EuDML 被拒,未核原刊) |
+| Pacioli 1494,*Summa de arithmetica*(复式记账) | 假设 4.3 | `ASSUMED-UNVERIFIED`(按记忆) |
+| Kant 1785,*Grundlegung* Ak. 4:421 | 假设 4.4 | `ASSUMED-UNVERIFIED`(经 OSUV 转引,本会话未核) |
+| 《论语·卫灵公》「己所不欲,勿施于人」 | 假设 4.4 | `ASSUMED-UNVERIFIED`(经 OSUV 主表 #1 转引) |
+| 《左传·襄公二十四年》三不朽 | 评注 A.34 | `ASSUMED-UNVERIFIED`(按记忆) |
+| GICT 定理 7.3、7.5 | 定理 1.15、评注 8.7 | `repo-derived`(provenance 注记) |
+| FCD 定义 19.1、§51、§94、§173、66.6、定义 41.2 | 第二、五、八、十二部 | `repo-derived` |
+| OSUV 定义 4.7、命题 4.5、评注 2.3、4.6 | 假设 4.4、定理 4.12、定义 8.6 | `repo-derived` |
+| OTT 律 T1、骨架 T-A、T-F、T-G;v1.0.1 勘误 | 推论 A.25、定理 A.10、评注 A.1 | `repo-derived` |
+| GFPT 三纪律 | 评注 8.9 | `repo-derived` |
+| DECT 第 14.3 节 ProofGain | 定义 A.28 | `repo-derived` |
+| PZG「永恒主题」四句;观察 6.67 | 定理 4.9、5.2、5.5、5.7 | `repo-derived` |
+| 八条冻结裁决定理(GID 见各处) | 附录 A.4–A.10;A.4.1 | **kernel 冻结**(状态片存在,本会话 `ls Golden/Frozen/state/…` 核对) |
+
+**本卷自认的增量(`suspected-novel`,检索见 13.6)**:(i) 把「真 = 容许变换的不动点」精确为 $\mathrm{Fix}(L)=\mathrm{Frozen}(L)\cup\{\neg\mathrm{Proved}\}$(定理 1.15);(ii) 从「账平」单一律推出保守、不冒领、勘误留痕与「真是善的不动点」(定理 4.6–4.11;「不静默」与「检测不降级」**不**由它推出,分别是应用规范与附录 A.11 的约定推论);(iii) 把「美是罗盘」写成选择函数不经状态函数因子化的定理(5.6;其思想谱系是 Poincaré 的「精细的筛」,已 `literature-attested`,只有不可因子化的形式陈述算增量),把「美是幸存下来的形状」写成审计算子的最大不动点(5.7;固定单轮特例已由本仓 `ResearchPromotionLoop` 冻结);(iv) 「自由与不完备同源」(定理 6.2)。这些是否已见于文献,本会话只以英文关键词检索了组合形(见 12.6),未逐一检索哲学期刊;故标 `suspected-novel` 而非 `novel`。
+

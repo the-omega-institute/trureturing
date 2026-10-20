@@ -1,0 +1,27 @@
+**定理 60.1（quenched 极限与高概率误差）。** 独立有界扰动满足区间形式的强大数律
+\[
+\frac{M_L}{L}\longrightarrow0\qquad\text{几乎处处}.
+\]
+故对几乎所有静态环境，
+\[
+\mathcal K_j^\omega\longrightarrow
+\mathcal K_{\mathrm{ar}}(u,v)
+=\frac{1-\max(u,v)}{D},
+\qquad
+D=\frac{\theta\varphi^4}{\delta\bar r},
+\qquad
+\bar r=\varphi^{-2}r_\alpha+\varphi^{-1}r_\beta,
+\]
+在 \([0,1]^2\) 一致成立。若用 Hoeffding 不等式并对至多 \(L^2\) 个区间并合，则
+\[
+\mathbb P(M_L\ge t)
+\le2L^2\exp\left(-\frac{t^2}{2L\eta^2}\right).
+\]
+因而以概率至少 \(1-2e^{-x}\)，随机同质化误差的环境部分为
+\[
+\sup|\mathcal K_j^\omega-\mathcal K_j^0|
+\le c_j\eta
+\sqrt{2L_j\bigl(\log(2L_j^2)+x\bigr)}.
+\]
+这给出 \(O(\sqrt{(\log L_j+x)/L_j})\) 的高概率量级；仅有遍历性而无区间函数极限定理的环境仍可给极限，但不自动给此速率或高斯涨落。
+

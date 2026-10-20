@@ -1,0 +1,6 @@
+**命题 929.1（三循环移动每一个最佳解释）。** 坐标置换按 $\sigma U_j=U_{\sigma(j)}$、$\sigma V_l=V_{\sigma(l)}$ 作用于 $\mathcal K_r$。三循环 $g=(123)$ 固定目标 $P_r$，却不固定 $\mathcal K_r$ 中任何一点。因此，在包含该目标的问题域上，不存在处处选取最近二态观察律且对坐标置换等变的确定性选择器。
+
+证明。端点的删除位置被三循环移动，故端点不固定。内部点的唯一标签 $(j,l,t)$ 被送到 $(g(j),g(l),t)$，第一、第二个标签都改变，由第 925 节的唯一性仍是不同点。若选择器在不变目标上等变，就必须输出被 $g$ 固定的最佳点，矛盾。
+
+项目 `D5/S3/ConceptDynamics/Attribution/FixedSymmetrySelectorObstruction.lean` 的 `no_equivariant_selector_of_common_fixed_symmetry` 正好具有这组关系：群作用于目标及动作，某个群元素固定目标并移动它的每个准许动作。此处“准许动作”具体取最近二态观察律；准许集合的连通性不是该接口的假设，也不能补出缺失的不动点。
+

@@ -1,0 +1,56 @@
+**定理 1106.1（纯整体关系的多观察共同信息）。** 设 $N\ge3$，沿用第 1085 节 $K(u)=\log2-h_2((1-u)/2)$。存在唯一 $u_N\in(0,1)$ 满足
+
+$$
+u_N\operatorname{atanh}u_N=NK(u_N).
+$$
+
+令 $\kappa_N=u_N^N$、$L_N=NK(u_N)/u_N^N$，并定义
+
+$$
+\ell_N(s)=
+\begin{cases}
+L_N|s|,&|s|\le\kappa_N,\\
+NK(|s|^{1/N}),&|s|\ge\kappa_N.
+\end{cases}
+$$
+
+则
+
+$$
+C_N(\kappa)=-K(|\kappa|)+\ell_N(\kappa),\qquad -1\le\kappa\le1.
+$$
+
+**证明。** 第 1085 节的严格凹函数 $f(a)=h_2((1-e^a)/2)$ 对任意 $N$ 项应用 Jensen，得到一个乘积来源在完整均值乘积 $s$ 固定时的熵界
+
+$$
+H(q)\le N\log2-\phi_N(|s|),\qquad \phi_N(t)=NK(t^{1/N}).
+$$
+
+非零乘积的等号要求所有绝对均值相等；零乘积的等号只在全部公平时达到。
+
+写 $J_N(u)=u\operatorname{atanh}u-NK(u)$，则
+
+$$
+J_N'(u)=B_N(u)=\frac u{1-u^2}-(N-1)\operatorname{atanh}u,
+\qquad B_N'(u)=\frac{2-N+Nu^2}{(1-u^2)^2}.
+$$
+
+对 $N\ge3$，$B_N$ 从零先降后升至正无穷，只在内部过零一次；$J_N$ 也从零先降后升至正无穷，因而具有唯一内部零点 $u_N$，且该点之后 $B_N>0$。又有
+
+$$
+\frac{d}{du}\frac{NK(u)}{u^N}=\frac{N J_N(u)}{u^{N+1}},\qquad
+\phi_N''(s)=\frac{B_N(u)}{N u^{2N-1}},\quad u=s^{1/N}.
+$$
+
+所以 $\phi_N(t)/t$ 在 $t=\kappa_N$ 唯一最小，支持直线斜率为 $L_N$，此点后的原函数严格凸。按第 1087 节的线段接合论证，$\ell_N$ 是偶函数 $\phi_N(|s|)$ 的最大凸下界。任何来源表示的完整矩满足 $\mathbb E s_Z=\kappa$，于是
+
+$$
+H(X\mid Z)\le N\log2-\ell_N(\kappa).
+$$
+
+观察熵为 $N\log2-K(|\kappa|)$，两式之差给出互信息下界。
+
+为达到它，若 $\kappa\ge\kappa_N$，在 $v\in E_N$ 上均匀使用均值为 $\kappa^{1/N}v$ 的乘积通道。每个非空真子集字符在 $E_N$ 上的平均为零：选择该子集内外各一个坐标同时翻转，奇偶保持而字符反号。因此混合恰为 $P_{N,\kappa}$，并达到曲线部分。
+
+若 $0<\kappa<\kappa_N$，给上述幅度固定为 $u_N$ 的奇偶通道族总权重 $w=\kappa/\kappa_N$，另给公平乘积通道权重 $1-w$。所成律是 $wP_{N,\kappa_N}+(1-w)P_{N,0}=P_{N,\kappa}$，平均熵达到直线部分。零参数用公平来源，负参数翻转一个坐标。证毕。
+

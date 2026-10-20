@@ -1,0 +1,6 @@
+在 Yu Deng 的语言中：
+
+* \(\Lambda\)：跨所有环面历史稳定存在的 primitive core；
+* \(\Lambda(s,\chi_D)\)：依赖环面选择的 child history；
+* 取全部 \(D\) 的共同核：收缩全部 twist-specific child，留下 base primitive。
+

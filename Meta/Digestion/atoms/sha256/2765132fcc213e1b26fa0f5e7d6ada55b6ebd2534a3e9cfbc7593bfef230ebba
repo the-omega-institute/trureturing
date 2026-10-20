@@ -1,0 +1,5 @@
+它包含于六维乘积生成空间 $\widehat R=(Q\otimes F)\oplus M$，故可写为 $E=\ker\lambda$，其中 $\lambda$ 是 $\widehat R$ 上的非零线性泛函。按第111节定义 $B_\lambda:F\to Q^*$，$(B_\lambda z)(q)=\lambda(q\otimes z)$；该节排除秩二，并使当前同一个实际 $E$ 只剩以下两类。
+
+- 秩零：$E=(Q\otimes F)\oplus\mathbb C(r\otimes\zeta)$，其中 $0\ne r\in S$，$[\zeta]\in\{[z_1],[z_2]\}$。完整 $E$ 纤维在 $\zeta$ 上三维，其余恰为二维 $Q$。
+- 秩一：四个实际后继恰使用 $z_1,z_2$ 两条方向，完整 $E$ 纤维尺寸分别为三和二；其他方向的完整 $E$ 纤维只有一维。其两个允许后继必须正是 $M$ 的两个支持，因为第111节的核方向必须与其中一个重合。
+

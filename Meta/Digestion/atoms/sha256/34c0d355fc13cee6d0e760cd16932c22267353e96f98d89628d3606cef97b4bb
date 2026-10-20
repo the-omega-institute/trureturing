@@ -1,0 +1,19 @@
+**命题 21.4（形状像域前提不能由紧接受删去）。** 在同一个 $P$ 之后完整
+返回于 Reserve(5)、Raise(5)、Left(alpha)、Rho，再取下一 Rho 的上述
+体入口，则
+
+$$
+t=\langle\beta,\langle\beta,\alpha\rangle\rangle\in\mathcal I_1,
+\qquad n=3,\quad c=1,\quad h=5=2n-c.
+\tag{ABT.79}
+$$
+
+下一 Rho 接受，但 $t\notin\mathcal I_2$。
+
+证明。Left 的整候选 $\langle\alpha,\beta\rangle$ 有两叶，随后 Rho
+得到显示的三叶源，下一 Rho 有五叶；这些都在实际守卫 5 内。CAP 的完整
+返回路径与命题 21.3 相同。两步像若来自叶 alpha，其根有两个叶孩子；若来自
+叶 beta，其根左为 branch、右为叶；若来自配对，其两个孩子都是 branch。
+显示的源根左为叶、右为 branch，不属这三种情况。因此紧接受恢复它的
+饱和标签，却不能在任意形状上认证二步祖先。证毕。
+

@@ -6,6 +6,11 @@
    utility: none
    digest: Integral dyadic reversion and characteristic-four perturbation prove Hanna A389537. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19133 -/
+/- four_zero: proof_shape: bind-only;
+   consumer: HannaSquareCompositionModFour.doubleLift_annihilate;
+   escape_witness: none. -/
+
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.LinearCombination
@@ -161,7 +166,7 @@ private theorem dyadic_equation : dyadic = X ^ 3 + dyadic.subst (X ^ 2) := by
     rw [support_halve n hn]
     by_cases hd : 2 ∣ n <;> simp [hd]
 
-private theorem four_zero : (4 : PowerSeries (ZMod 4)) = 0 := by
+theorem four_zero : (4 : PowerSeries (ZMod 4)) = 0 := by
   rw [← map_ofNat C 4, show (4 : ZMod 4) = 0 by decide, map_zero]
 
 -- Squaring erases a perturbation divisible by two in characteristic four.
@@ -270,8 +275,4 @@ theorem hanna_conjecture (n : ℕ) (hn : 2 < n) :
     have ha : a n % 4 = 0 := (ZMod.intCast_eq_intCast_iff' (a n) 0 4).mp hc
     simp [ha, hp]
 
-#print axioms inverse_equation
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms hanna_conjecture
 end D5.S1.Recurrence.Invariants.AlternatingDyadicReversionModFour

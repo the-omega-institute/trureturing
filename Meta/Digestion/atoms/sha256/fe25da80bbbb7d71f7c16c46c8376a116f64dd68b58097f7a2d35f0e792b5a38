@@ -1,0 +1,24 @@
+# 137. 当前 Lean 锚点与新桥状态
+
+| 统一结构 | 当前仓库锚点 | 本增订状态 |
+|---|---|---|
+| finite prime-time separation | `D5/S3/Observer/Refinement/FinitePrimeTimeTomography` | Lean closed；索引是一般 `Nat` |
+| prime-power full matrix tensor factorization | `D5/S3/ObserverMemory/PrimePowerTensorTower` | Lean closed |
+| Frobenius observer infinite fiber | `D5/S3/Factorization/Galois/GaloisPrimeObserver` | Lean closed |
+| Galois restriction fiber-product compatibility | `D5/S3/Factorization/Galois/GaloisFusion` | Lean closed |
+| three-ring quadratic-character redundancy | `D5/S3/PrimeForms/Splitting/QuadraticCharacterProfileRedundancy` | Lean closed |
+| prime precision entropy contraction | `D5/S3/Analytic/PrimeProducts/PrimePrecisionEntropyContraction` | Lean closed |
+| static quantum visible-space theory | 本文件 81–88 | paper-level unified layer |
+| Heisenberg finite-horizon theory | 本文件 89–94 | paper-level unified layer |
+| local reduced-state boundary | 本文件 99 | paper-level theorem |
+| deterministic prime observer → commuting PVM | 本增订 114 | paper-level direct proof |
+| quantum prime local-global residual | 本增订 118–120 | paper-level direct proof |
+| finite-dimensional quantum prime-time certificate | 本增订 123 | paper-level direct proof |
+| zeta-weighted prime-time Gramian | 本增订 124–125 | paper-level / Lean target |
+| Frobenius quantum postprocessing no-recovery | 本增订 126 | paper-level factorization theorem |
+| completion noncommutation defect | 本增订 135 | definition / research bridge |
+
+已有 Lean 文件只锚定各自实际声明；本表不得解释为新增 prime-quantum 总理论已经全部通过 kernel。
+
+---
+

@@ -121,7 +121,8 @@ private theorem squared_norm_pos {q : Real[X]}
   rw [squaredNorm, real_inner_self_pos]
   exact (orthogonalPowerBasis power).ne_zero i
 
-private theorem multiplication_matrix_charpoly (q : Real[X]) (hq : q.Monic) :
+/-- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19385. -/
+theorem multiplication_matrix_charpoly (q : Real[X]) (hq : q.Monic) :
     (coefficientMultiplicationMatrix q).charpoly = q := by
   let pb := AdjoinRoot.powerBasis hq.ne_zero
   have hminpolyGen : pb.minpolyGen = q := by
@@ -364,6 +365,5 @@ theorem coefficient_driven_jacobi_characteristic_polynomial
       Matrix.charpoly_toLin]
     exact multiplication_matrix_charpoly q hq
 
-#print axioms coefficient_driven_jacobi_characteristic_polynomial
 
 end D5.S3.Constants.Moments.CoefficientDrivenJacobiCharacteristicPolynomial

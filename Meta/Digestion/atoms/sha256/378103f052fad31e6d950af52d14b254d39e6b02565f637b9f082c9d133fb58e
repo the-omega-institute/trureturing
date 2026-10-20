@@ -1,0 +1,20 @@
+**定理 3.6（持续节点分支的单值刻画）。** 设 $v\in\mathbb R^L$,$L\ge3$,$j$ 是站点,$M_j$ 如定义 3.1。
+
+1. 对任一含 $\mathbb R$ 的域 $K$ 与任一 $(\lambda_0,t_0)\in K^2$,下列三条等价:(a) 存在 $z\in K^L\setminus\{0\}$ 使 $H_{t_0}z=\lambda_0z$ 且 $z_j=0$;(b) $\gamma_j(\lambda_0,t_0)=0$ 且 $\alpha_j(\lambda_0,t_0)=1$;(c) $M_j(\lambda_0,t_0)e_1=e_1$。此时 $\delta_j(\lambda_0,t_0)=1$,即 $M_j(\lambda_0,t_0)$ 是对角元为 $1$ 的上三角矩阵;满足 (a) 的 $z$ 在相差非零倍数的意义下唯一,且 $z_{j+1}\ne0$。
+2. $\mathbb R(t)[\lambda]$ 中的首一不可约多项式 $\pi$ 同时整除 $p$ 与 $q_j$,当且仅当它同时整除 $\gamma_j$ 与 $\alpha_j-1$。因此节点因子 $g_j$ 与 $\gcd(\gamma_j,\alpha_j-1)$ 有相同的首一不可约因子;$v$ 在 $j$ 处有持续节点分支,当且仅当 $\gamma_j$ 与 $\alpha_j-1$ 在 $\mathbb R(t)[\lambda]$ 中有正次数的公因子。
+3. $v$ 是坏势,当且仅当存在站点 $j$ 使 $\operatorname{Res}_\lambda(\gamma_j,\alpha_j-1)=0$ 于 $\mathbb R[t]$。
+
+**证明。** (1) 先证 (a)⇒(c)。把 $z$ 按周期延拓到 $\mathbb Z$,本征方程对一切 $i\in\mathbb Z$ 成立,于是 $Z_{i+1}=T(d_i)Z_i$。若 $z_{j+1}=0$,则 $Z_{j+1}=0$,而每个 $T(d_i)$ 可逆,故一切 $Z_i=0$,与 $z\ne0$ 矛盾。把 $z$ 放缩使 $z_{j+1}=1$,则 $Z_{j+1}=e_1$,且
+
+$$
+e_1=Z_{j+1+L}=T(d_{j+L})\cdots T(d_{j+1})\,Z_{j+1}=M_j(\lambda_0,t_0)\,e_1 .
+$$
+
+再证 (c)⇒(a)。令 $Z_{j+1}=e_1$,对 $i=j+1,\dots,j+L$ 递推 $Z_{i+1}=T(d_i)Z_i$。由于 $T(d)(x,y)^{\top}=(dx-y,x)^{\top}$,$Z_{i+1}$ 的第二个坐标等于 $Z_i$ 的第一个坐标,故存在唯一的 $z_j,z_{j+1},\dots,z_{j+L+1}$ 使 $Z_i=(z_i,z_{i-1})^{\top}$,并且站点 $i=j+1,\dots,j+L$ 处的方程 $d_iz_i-z_{i-1}-z_{i+1}=0$ 成立。条件 $M_je_1=e_1$ 即 $Z_{j+L+1}=Z_{j+1}$,即 $z_{j+L+1}=z_{j+1}=1$,$z_{j+L}=z_j=0$。于是 $z_{j+1},\dots,z_{j+L}$ 定义了 $\mathbb Z/L\mathbb Z$ 上的向量,它在 $j\equiv j+L$ 处为 $0$,在 $j+1$ 处为 $1$;站点 $j+1,\dots,j+L-1$ 处的方程已成立,站点 $j\equiv j+L$ 处的方程由 $z_{j+L+1}=z_{j+1}$ 化为已成立的那一条。故 (a) 成立。
+
+(b)⇔(c):$M_je_1=(\alpha_j,\gamma_j)^{\top}$。若 (b) 成立,$\det M_j=\alpha_j\delta_j-\beta_j\gamma_j=1$ 给出 $\delta_j=1$。唯一性:满足 (a) 的 $z$ 都有 $z_{j+1}\ne0$,而 $(z_j,z_{j+1})=(0,z_{j+1})$ 通过递推决定整个 $z$,故这样的 $z$ 构成一维空间去掉零向量。
+
+(2) 取 $\mathbb R(t)$ 的代数闭包 $F$ 与 $\pi$ 在 $F$ 中的一个根 $`\lambda_*`$。$\pi$ 是 $`\lambda_*`$ 在 $\mathbb R(t)$ 上的极小多项式,故对 $f\in\mathbb R(t)[\lambda]$ 有 $`\pi\mid f\iff f(\lambda_*)=0`$。把 $H_t$ 看作 $F$ 上的对称矩阵,其特征多项式与 $j$ 处主子式多项式分别是 $p$ 与 $q_j$。由引理 3.4($K=F$),$`p(\lambda_*)=q_j(\lambda_*)=0`$ 当且仅当 (a) 对 $`(\lambda_*,t)`$ 成立;由 (1),这当且仅当 $`\gamma_j(\lambda_*,t)=0`$ 且 $`\alpha_j(\lambda_*,t)=1`$。两端各自等价于 $\pi$ 的整除条件。于是 $g_j=\gcd(p,q_j)$ 与 $\gcd(\gamma_j,\alpha_j-1)$ 的首一不可约因子相同,其中一个次数为正当且仅当另一个次数为正;由母卷定理 3.2 的 (1),前者次数为正就是持续节点分支。
+
+(3) 由事实 3.2 (1),$\gamma_j=K_{L-1}(d_{j+1},\dots,d_{j+L-1})$ 的 $\lambda$-首项是 $(-\lambda)^{L-1}$,$\alpha_j=K_L(d_{j+1},\dots,d_{j+L})$ 的 $\lambda$-首项是 $(-\lambda)^L$;两者首项系数都是 $\pm1$。故在域 $\mathbb R(t)$ 上,$\operatorname{Res}_\lambda(\gamma_j,\alpha_j-1)=0$ 当且仅当两者有正次数公因子,由 (2) 当且仅当 $j$ 处有持续节点分支。母卷推论 3.3 说 $v$ 坏当且仅当某个站点有持续节点分支。∎
+

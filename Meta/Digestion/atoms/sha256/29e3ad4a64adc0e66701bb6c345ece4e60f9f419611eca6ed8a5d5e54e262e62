@@ -1,0 +1,8 @@
+规范见证必须逐字段构造，不使用任意选择：
+
+- `predecessor := oldEntry.key`；
+- `newEntry.logicalId := oldEntry.logicalId`；
+- `newEntry.bytes := TailBytes newDocument start`；
+- `newActive := Function.update active ...`；
+- `newSettlement := settlement`。
+

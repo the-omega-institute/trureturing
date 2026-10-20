@@ -1,0 +1,4 @@
+## 42. PR7 产地与核验收据
+
+本批产地三项为：`skill=consensus-rnd:sshx`；思考六席载体见 caller 的 rotation 记录；实施席为 `codex-cli`。评审三席由 caller 另记，本席未代报其判词。形态为 `ingest`；不报告冻结或 absorbed 状态。因 `origin/dev` 在开工后已追加 §§38–40，本批按“当前 dev 最大编号续接”落在 §41–§42；brief 所称 §38–§39 内容对应本批的 §41–§42。
+

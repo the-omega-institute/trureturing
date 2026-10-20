@@ -1,0 +1,5 @@
+替代等长 Haar 通道：
+
+* \(P_+\) 是 Perron low-pass；
+* \(P_-\) 是符号翻转的 golden detail。
+

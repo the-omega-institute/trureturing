@@ -1,0 +1,5 @@
+所以 \(\Theta_\omega\) 是一个真正的环面输入—输出 transfer ratio：
+
+* \(E_+\)：右移、较稳定的 carrier-normalized input；
+* \(E_-\)：左移、较接近临界带的 output。
+

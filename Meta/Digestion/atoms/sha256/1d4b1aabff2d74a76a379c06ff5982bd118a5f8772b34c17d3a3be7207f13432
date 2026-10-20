@@ -1,0 +1,6 @@
+# 2026-09-06：真实 prolate 模型的可认证构造及其与算术最低模态的首次本线定量对接
+
+本节的“首次”仅指本 PR 的交付顺序，不是数学优先权声明。此前已认证的 129 维 dyadic 候选记为 k。它与文献 prolate 模型是不同对象。本节给出后者的独立谱认证、有限多项式 Fourier 端点公式以及实际的 L2 比较，避免在这两个对象之间省略识别误差。
+
+新增 Lean owner 为 `D5/S3/Weil/ZetaBridge/WeilPolynomialMellinWindow.lean`，有同名 Scribe。实际执行源为 `research/weil_ground_mode/certify_prime3_prolate_model.py`，输入 `prime3_prolate_proposal.json`，输出 `prime3_prolate_model_certificate.json`。Lean 保存实际 `Zeta23.paperFT` 的多项式算术窗口公式与可积性；prolate 自伴实现、无限 Legendre 尾、谱投影运输及完整数值结论仍属于下面的纸面与区间证明。Lean/Scribe 编译及传递公理审查未运行。
+

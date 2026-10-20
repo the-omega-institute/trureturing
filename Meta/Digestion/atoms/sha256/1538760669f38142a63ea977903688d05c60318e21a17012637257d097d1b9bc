@@ -1,0 +1,218 @@
+**定理 283.1（保留精确总长度条件的联合远频尾界）。** 存在绝对常数 $C<\infty$，使全部整数 $k\ge64$、$M\ge3(k+1)$ 和全部实数 $R\ge1$ 同时满足
+$$
+\frac{k^{3/2}}{\delta_g}
+\int_{\mathbb T^3\setminus U_R}|\chi(t,x,y)|\,dt\,dx\,dy
+\le C(1+R)^{-2}.
+\tag{283.1}
+$$
+因此对于每条 $k\to\infty$、$k/(k+M)\to0$ 的原稀疏序列，归一化远频积分的上极限再随 $R\to\infty$ 趋于零。这里的有限参数阈值和二阶尾幂都是方便的充分条件，不声称必要性、尖锐性或最优性。
+
+**证明。** 先精确回接实际来源。由定理 2.2，每个组成 $(a,b)$ 的叶词有同一个 Catalan 括号数 $C_{a+b-1}$；只有推到叶词之后，$U(a,b)$ 才成为全部 $\binom{a+b}{a}$ 个该组成词的均匀律。以少数字母作分隔符，两个方向的词分别唯一写成
+$$
+b^{r_0}a b^{r_1}a\cdots a b^{r_k}\quad(a=k,b=M),
+\qquad
+a^{r_0}b a^{r_1}b\cdots b a^{r_k}\quad(b=k,a=M).
+$$
+零间隔合法，来源非空，且 $\sum r_i=M$。每个这样的弱组成在辅助层都有相同概率
+$\delta_g^d(1-\delta_g)^M$。故条件于 $L=M$ 后，恰得原均匀弱组成及原实际叶词律，不是另一种平稳 Markov 律或独立边缘乘积。
+
+在未条件化层写 $r_i=2T_i+\xi_i$，其中 $\xi_i\in\{0,1\}$。直接由几何质量函数分解得
+$$
+\mathbb P(T_i=m)=\gamma(1-\gamma)^m,\qquad
+\mathbb P(\xi_i=1)=\nu:=\frac{1-\delta_g}{2-\delta_g},\qquad
+\mathbb P(\xi_i=0)=\frac1{2-\delta_g}.
+$$
+所有 $T_i$、$\xi_i$ 在这一层相互独立；因为 $1-\gamma=(1-\delta_g)^2$，两质量函数的乘积正好等于 $\mathbb P(r_i=2m+\xi_i)$。条件于 $L=M$ 后不再使用这种独立性。
+
+保留总长度、两个奇偶占据量 和奇间隔长度的完整四维特征函数为
+$$
+F(s,t,x,y)=\mathbb E e^{i(sL+tH+xO+yE)}.
+$$
+置
+$$
+N_e=\lfloor k/2\rfloor+1,\qquad N_o=\lceil k/2\rceil,
+\qquad a_\gamma(z)=\frac\gamma{1-(1-\gamma)e^{iz}},
+\qquad
+\lambda_i=\begin{cases}s&i\text{ 偶},\\s+t&i\text{ 奇}.
+\end{cases}
+$$
+独立分解给出精确等式
+$$
+F(s,t,x,y)=a_\gamma(2s)^{N_e}
+a_\gamma(2(s+t))^{N_o}K(s,t,x,y),
+\qquad
+K=\mathbb E e^{i(\sum_{i=0}^k\lambda_i\xi_i+xO+yE)}.
+\tag{283.2}
+$$
+这里 $\xi_i=\varepsilon_i+\varepsilon_{i+1}\pmod2$，末端 $\xi_k$ 和 $\varepsilon_{k+1}$ 均保留。
+
+在各长度角上选圆周分支
+$$
+s=\pi h_e+u_e,\qquad s+t=\pi h_o+u_o,
+\qquad h_e,h_o\in\{0,1\},\quad |u_e|,|u_o|\le\pi/2,
+\qquad j=h_e+h_o\pmod2.
+\tag{283.3}
+$$
+分支边界的重叠是零测集。由于 $\delta_g\le1/4$，$\nu\in[3/7,1/2]$，$\varepsilon$ 链的每个转移概率都在 $[1/3,2/3]$。固定全部偶位置状态及端点 $\varepsilon_0,\varepsilon_{k+1}$ 后，内部奇位置状态条件独立；固定另一种奇偶位置 时同理。这是链路径质量按相邻边乘积的直接分解：每个待积分状态只连接两个已固定邻居，其两种未归一化权重各在 $[1/9,4/9]$，故条件二点参数 $w$ 在 $[1/5,4/5]$。
+
+翻转内部 $\varepsilon_l$ 从零到一，其相位差为
+$$
+\Delta_l=\theta_l+(1-2\varepsilon_{l-1})\lambda_{l-1}
++(1-2\varepsilon_{l+1})\lambda_l,
+\qquad
+\theta_l=\begin{cases}x&l\text{ 奇},\\y&l\text{ 偶}.
+\end{cases}
+$$
+相邻两条边一种为偶、一种为奇，故按 (283.3)
+$$
+\Delta_l=\theta_l+j\pi+v_l\pmod{2\pi},\qquad
+|v_l|\le|u_e|+|u_o|.
+$$
+对 $w\in[1/5,4/5]$，直接取模平方并用 $\sqrt{1-z}\le e^{-z/2}$ 得
+$$
+|1-w+we^{i\Delta}|
+\le\exp\{-2w(1-w)\sin^2(\Delta/2)\},\qquad
+w(1-w)\ge\frac4{25}.
+$$
+由正弦的 Lipschitz 界和 $(a+b)^2\le2a^2+2b^2$，
+$$
+\sin^2\frac{\theta+j\pi+v}{2}
+\ge\frac12\sin^2\frac{\theta+j\pi}{2}-\frac{v^2}{4}
+\ge\frac12\sin^2\frac{\theta+j\pi}{2}
+-\frac{u_e^2+u_o^2}{2}.
+$$
+若 $n_o=\lceil k/2\rceil$、$n_e=\lfloor k/2\rfloor$ 是内部奇、偶状态数，先对奇状态积分再取剩余期望的模，得到
+$$
+|K|\le\exp\left\{-\frac{4n_o}{25}\sin^2\frac{x+j\pi}{2}
++\frac{4n_o}{25}(u_e^2+u_o^2)\right\}.
+$$
+偶状态给对应的 $y,n_e$ 上界。对这两个上界取几何平均，使用 $n_o,n_e\ge k/3$、$n_o+n_e=k$，便得全域估计
+$$
+|K|\le\exp\left\{-\frac{2k}{75}
+\left(\sin^2\frac{x+j\pi}{2}+\sin^2\frac{y+j\pi}{2}\right)
++\frac{2k}{25}(u_e^2+u_o^2)\right\}.
+\tag{283.4}
+$$
+此处固定另一奇偶位置 的条件积分完全发生在未条件化辅助层；没有把 $L=M$ 后的 $O,E,H$ 当成独立变量。
+
+现在在全频域吸收正相位误差。精确几何模长为
+$$
+|a_\gamma(2u)|=(1+A_\gamma\sin^2u)^{-1/2},\qquad
+A_\gamma=\frac{4(1-\gamma)}{\gamma^2}.
+$$
+$\gamma\le7/16$ 给 $A_\gamma\ge576/49$。对 $|u|\le\pi/2$，利用
+$\sin^2u\ge4u^2/\pi^2$ 及对数凹性
+$\log(1+Av)\ge v\log(1+A)$（$0\le v\le1$），得
+$$
+\log(1+A_\gamma\sin^2u)
+\ge\frac{4u^2}{\pi^2}\log\frac{625}{49}
+\ge\frac45u^2.
+\tag{283.5}
+$$
+最后一步只需 $\pi^2<10$ 和 $\log(625/49)>2$；后者由 $e<3$、$9<625/49$ 得到。
+每个几何因子的一半指数因 $N_e,N_o\ge k/2$ 至少提供 $ku^2/10$，足以吸收 (283.4) 的 $2ku^2/25$。由 (283.2) 得
+$$
+|F|\le
+\exp\left\{-\frac{2k}{75}
+\left(\sin^2\frac{x+j\pi}{2}+\sin^2\frac{y+j\pi}{2}\right)\right\}
+(1+A_\gamma\sin^2u_e)^{-N_e/4}
+(1+A_\gamma\sin^2u_o)^{-N_o/4}.
+\tag{283.6}
+$$
+
+环面变换 $(s,t)\mapsto(s,s+t)$ 是行列式为一的整数幺模变换，保持未归一化测度。两个新长度角分别分为零、$\pi$ 分支，四个分支全部保留。在每个分支取
+$$
+z_e=\frac{\sqrt k\,u_e}{\gamma},\qquad
+z_o=\frac{\sqrt k\,u_o}{\gamma},\qquad
+z_x=\sqrt k\,\operatorname{rep}_{\mathbb T}(x-j\pi),\qquad
+z_y=\sqrt k\,\operatorname{rep}_{\mathbb T}(y-j\pi),
+$$
+其中 $\operatorname{rep}_{\mathbb T}\in[-\pi,\pi]$，端点任取；局部 Jacobian 为 $\gamma^2/k^2$。
+由 $1-\gamma\ge9/16$、$\pi^2<10$，
+$$
+A_\gamma\sin^2u\ge\frac{9u^2}{10\gamma^2}.
+$$
+对每个 $A\ge0$，函数 $v\log(1+A/v)$ 随 $v>0$ 递增，因为其导数
+$\log(1+A/v)-(A/v)/(1+A/v)$ 非负。因此 $k\ge64$ 时
+$$
+(1+A_\gamma\sin^2u)^{-N/4}
+\le\left(1+\frac{9z^2}{10k}\right)^{-k/8}
+\le\left(1+\frac{9z^2}{640}\right)^{-8}
+\quad(N\ge k/2).
+$$
+同时 $\sin^2(\theta/2)\ge\theta^2/\pi^2\ge\theta^2/10$（$|\theta|\le\pi$）。于是 (283.6) 的固定可积包络为
+$$
+|F|\le f(z_e)f(z_o)g(z_x)g(z_y),\qquad
+f(z)=\left(1+\frac{9z^2}{640}\right)^{-8},\qquad
+g(z)=e^{-z^2/375}.
+\tag{283.7}
+$$
+$f,g$ 的零阶及二阶绝对矩有限，且与 $k,M$ 无关。
+
+若 $|u_e|,|u_o|\le R\delta_g/(2\sqrt k)$，且两个奇偶占据量 角到 $j\pi$ 的圆周距离均不超过 $R/\sqrt k$，则
+$t=j\pi+u_o-u_e\pmod{2\pi}$，所以 $(t,x,y)\in U_R$。
+又 $\gamma\le2\delta_g$，故 $U_R$ 外至少发生
+$$
+|z_e|>R/4,\quad |z_o|>R/4,\quad |z_x|>R,\quad |z_y|>R
+$$
+四件事之一。对每件事用 $\int_{|z|>h}f(z)\,dz\le h^{-2}\int z^2f(z)\,dz$ 或相应的 $g$ 界，再将另外三个变量在实线上积分。合并四个分支及四种事件，$R\ge1$ 时得到
+$$
+\int_{\substack{s\in\mathbb T\\(t,x,y)\notin U_R}}|F(s,t,x,y)|\,ds\,dt\,dx\,dy
+\le C_1\frac{\gamma^2}{k^2}(1+R)^{-2}
+\le4C_1\frac{\delta_g^2}{k^2}(1+R)^{-2}.
+\tag{283.8}
+$$
+两个长度尺度的体积在此保留，未用一个仅随 $k$ 衰减的常数取代几何平滑。
+
+条件事件的分母是精确负二项质量。令 $N=M+d$，则
+$$
+p_{k,M}:=\mathbb P(L=M)
+=\binom{M+k}{k}\delta_g^d(1-\delta_g)^M
+=\delta_g\,\mathbb P\{\operatorname{Bin}(N,\delta_g)=d\}.
+\tag{283.9}
+$$
+直接复用钉版 mathlib 的 [Stirling 源码](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Stirling.lean)：
+`Stirling.le_factorial_stirling` 给全局阶乘下界；`Stirling.stirlingSeq'_antitone` 和 `Stirling.stirlingSeq_one` 给正整数序列的全局上界。按其定义，这些已知结果供给全部正整数 $m$ 上的
+$$
+c\sqrt m\,(m/e)^m\le m!\le C_{\mathrm{St}}\sqrt m\,(m/e)^m
+$$
+及绝对常数 $c,C_{\mathrm{St}}>0$。在 $\delta_g=d/N$ 下将这些界代入
+$$
+\frac{N!}{d!M!}\left(\frac dN\right)^d\left(\frac MN\right)^M
+$$
+时，全部幂和指数项恰好相消，因为 $N=d+M$。因此
+$$
+\mathbb P\{\operatorname{Bin}(N,\delta_g)=d\}
+\ge c_0\sqrt{\frac{N}{dM}}\ge\frac{c_0}{\sqrt d},
+\qquad
+p_{k,M}\ge c_1\frac{\delta_g}{\sqrt k},
+\tag{283.10}
+$$
+其中用 $d=k+1\le(65/64)k$。该界对全部有限参数一致，不调用固定成功概率的二项局部极限。
+
+整数总长度的精确 Fourier 提取为
+$$
+\chi(t,x,y)=\frac1{2\pi p_{k,M}}
+\int_{\mathbb T}e^{-isM}F(s,t,x,y)\,ds.
+\tag{283.11}
+$$
+这是 $\mathbf1_{\{L=M\}}=(2\pi)^{-1}\int_{\mathbb T}e^{is(L-M)}ds$ 的直接应用；被积函数有界，交换期望与有限测度积分合法。由三角不等式、(283.8) 和 (283.10)，
+$$
+\int_{\mathbb T^3\setminus U_R}|\chi|
+\le C_2\frac{\sqrt k}{\delta_g}\frac{\delta_g^2}{k^2}(1+R)^{-2}
+=C_2\frac{\delta_g}{k^{3/2}}(1+R)^{-2},
+$$
+即 (283.1)。下面将同一结论的来源、格和精确协方差消费者写全。
+
+母卷引理 359.2 的全部八条增量为
+
+| 起点 | 字母 | 终点 | $(\Delta u,\Delta v,\Delta w)$ |
+|---|---|---|---|
+| $00$ | $a$ | $10$ | $(0,0,0)$ |
+| $00$ | $b$ | $01$ | $(0,0,0)$ |
+| $10$ | $a$ | $00$ | $(0,0,1)$ |
+| $10$ | $b$ | $11$ | $(0,0,0)$ |
+| $01$ | $a$ | $11$ | $(1,1,-1)$ |
+| $01$ | $b$ | $00$ | $(0,1,0)$ |
+| $11$ | $a$ | $01$ | $(-1,-1,0)$ |
+| $11$ | $b$ | $10$ | $(0,-1,0)$ |

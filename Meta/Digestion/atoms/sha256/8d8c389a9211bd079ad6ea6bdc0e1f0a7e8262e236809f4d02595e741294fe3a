@@ -1,0 +1,70 @@
+## 173. FIB 图上的外加自旋系统、Gibbs 测度与相变
+
+将 FIB 图记为
+$$
+G_{\rm FIB}=(V,E_{\rm FIB}).
+$$
+FIB 邻接只规定组合关系；自旋相互作用、温度、外场、边界和热力学极限均需外加。可选物理耦合图 \(G_J\) 与对称耦合
+$$
+J_{ij}=J_{ji},\qquad J_{ii}=0,
+$$
+即使取 \(J_{ij}=J_0\mathbf1_{\{\{i,j\}\in E_{\rm FIB}\}}\)，也仍是一项模型假设。行归一化、度归一化和原始边权对应不同 Hamiltonian，不能在未固定归一化时比较临界温度。
+
+有限区域 \(\Lambda\) 上的 Ising Hamiltonian 为
+$$
+H_\Lambda^\tau(s)
+=-\sum_{\substack{\{i,j\}\in E_J\\i,j\in\Lambda}}J_{ij}s_is_j
+-\sum_{\substack{i\in\Lambda,j\notin\Lambda\\\{i,j\}\in E_J}}
+J_{ij}s_i\tau_j
+-\sum_{i\in\Lambda}h_is_i,
+\qquad s_i\in\{-1,+1\}.
+\tag{173.1}
+$$
+配分函数与 Gibbs 测度为
+$$
+Z_\Lambda^\tau
+=\sum_s e^{-\beta H_\Lambda^\tau(s)},
+\qquad
+\mu_\Lambda^\tau(s)=\frac{e^{-\beta H_\Lambda^\tau(s)}}{Z_\Lambda^\tau},
+\qquad
+\beta=(k_BT)^{-1}.
+\tag{173.2}
+$$
+Potts 模型只需把 \(s_i\) 换成 \(q\) 种颜色并将耦合项换成 \(\mathbf1_{\{\sigma_i=\sigma_j\}}\)，但 \(q=2\) 时的耦合归一化与 Ising 约定仍须区分。
+
+磁化与连通相关为
+$$
+m_i=\langle s_i\rangle,\qquad
+C_{ij}=\langle s_is_j\rangle-\langle s_i\rangle\langle s_j\rangle.
+$$
+有限体积恒等式
+$$
+\frac{\partial\log Z_\Lambda}{\partial h_i}=\beta m_i,
+\qquad
+\frac{\partial m_i}{\partial h_j}=\beta C_{ij}
+\tag{173.3}
+$$
+把静态响应与平衡涨落联系起来。单位顶点磁化率为
+$$
+\chi_\Lambda=\frac{\beta}{|\Lambda|}
+\sum_{i,j\in\Lambda}C_{ij}.
+\tag{173.4}
+$$
+它不决定自旋翻转动力学或弛豫时间；后者还需指定 Glauber、Metropolis 或其他更新核。
+
+相变须先规定系统增长：固定无限 FIB 图上的 \(\Lambda_n\uparrow V\)，或一列有限 FIB 图 \(G_n\) 及其局部极限、边界和耦合缩放。无限体积 Gibbs 测度应满足 DLR 条件，而不是把有限配分函数直接外推到无限图。跨边界耦合量
+$$
+B_J(\Lambda)
+=\sum_{\substack{i\in\Lambda\\j\notin\Lambda}}|J_{ij}|
+$$
+若满足 \(B_J(\Lambda_n)/|\Lambda_n|\to0\)，则不同边界对单位体积自由能的影响可消失，但仍可能存在多个 Gibbs 态、边界依赖的磁化和自发对称性破缺。
+
+平均场近似可由耦合矩阵最大特征值给出候选阈值。例如在均匀 Ising 线性化中，若 \(J\) 为对称耦合矩阵，则无外场高温态的候选失稳满足
+$$
+\beta_c\,\lambda_{\max}(J)\approx1.
+\tag{173.5}
+$$
+这只是平均场或高连通近似；短环、低维涨落、无序和 FIB 接缝可能改变真实临界行为。有限图上的磁化尖峰、基态交叉或稳定有限尺寸相关长度不能单独证明无限体积相变。
+
+本节结论是：FIB 提供自旋相互作用的组合候选图；Gibbs 测度、相关函数、相变阈值、临界指数和边界依赖由 Hamiltonian、温度、更新核及热力学极限共同决定。
+

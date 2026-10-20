@@ -1,0 +1,6 @@
+第三，phase faithfulness 存在一条此前未显化的深度—宽度对偶：
+
+- 一个固定素数的全部 power levels 可以无歧义恢复 $t$；
+- 任意有限 levels 只在有限高度窗内忠实，并在全轴上保留周期 alias；
+- 两个带标签的不同素数在 level one 已足以全局恢复 $t$，因为 $\log p/\log q$ 不可能为有理数。
+

@@ -1,0 +1,58 @@
+**Definition 52.2 (an explicit finite table representation).** Suppose
+the old fixed instructions, including their response types, literal lengths
+and complete halt outputs, have supplied finite binary records. Let $b_I$
+be a common padded record width, and fix the response order for each such
+record. Put
+
+$$
+t_* =\max\bigl(\{0\}\cup\{|O_q|:q\text{ nonhalt}\}\bigr),\qquad
+\beta=\lceil\log_2(\ell+1)\rceil.
+$$
+
+One explicit rectangular representation stores, for each of the $Kf$ words,
+its full $\ell$-bit key, its $b_I$-bit instruction record and $t_*$ response
+slots of $\beta$ bits each. Zero means hold; $j\in\{1,\ldots,\ell\}$
+means flip physical bit $j$. Unused slots are fixed zero padding, not typed
+response entries. Its exact record-array length is
+
+$$
+S_{\rm rows}=Kf(\ell+b_I+t_*\beta).
+\tag{FIB.52.2}
+$$
+
+The supplied format, record interpretation and any extra framing, dictionary,
+index or selection apparatus are charged in addition when present. The
+literal and halt payloads already included in $b_I$ must not be charged
+a second time as extra row-array bits. If output objects have no supplied
+binary representation, Corollary 52.1 counts their copies but assigns no
+finite bit-length to them by fiat.
+
+A stored common initial word adds $\ell$ immutable bits. For acquired-input
+initialization, an explicit section table for (FIB.51.8) instead adds
+$K\ell$ word bits in the original fixed state order, plus its framing and
+the original realization of $c(i)$. The acquisition and selection of $i$
+and the physical initialization service retain their original permissions
+and separate prices. Existence of this finite section does not realize an
+arbitrary unsupplied map $c$ on an infinite input domain.
+
+For a matched finite run, use the cost vector
+
+$$
+\begin{aligned}
+C={}&C_{\rm acquire}+C_{\rm promise/source}
+ +C_{\rm compile/install}+C_{\rm init}(i)\\
+ &+\sum_{j=0}^{n-1}\bigl(
+ C_{\rm select}(w_j)+C_{\rm deliver}(I(q_j))
+ +C_{\rm primitive}(I(q_j),s_j)
+ +C_{\rm response}(w_j,o_j)\bigr)\\
+ &+C_{\rm select}(w_n)+C_{\rm output}(Y_{q_n}).
+\end{aligned}
+\tag{FIB.52.3}
+$$
+
+Terms charge the services actually supplied and do not assume zero tariffs.
+Compilation and installation have finite combinatorial descriptions here;
+their physical time, workspace and energy are not inferred from
+(FIB.52.2). The trace equality does not identify new selection or output
+tariffs with the old ones.
+

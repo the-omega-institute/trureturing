@@ -1,0 +1,19 @@
+## 推论 261.1（最小成本因果实验设计）
+
+给每个干预成本 \(c_a\ge0\)，最小目标充分设计为：
+
+\[
+\boxed{
+\min_{J}
+\sum_{a\in J}c_a
+\quad
+\text{s.t.}
+\quad
+\bigcup_{a\in J}D_a
+=
+\mathcal U_T.
+}
+\]
+
+这是 target-relative weighted set cover。
+

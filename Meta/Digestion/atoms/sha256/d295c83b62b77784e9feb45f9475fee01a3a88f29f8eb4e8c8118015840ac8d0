@@ -1,0 +1,29 @@
+**Proposition 38.3 (Sharpness, coverage and termination).** Write $h_x=\mu(H_x)$, $e_x=\mu(F_x)$ and $s_x=\mu(S_x)$. Under (38.2), at every $x\in B_\beta$,
+
+$$
+0\le s_x=h_x-e_x\le\delta-e_x,\qquad
+\mu(\Theta\setminus S_x)=1-h_x+e_x\ge1-\delta+e_x.
+\tag{38.7}
+$$
+
+When $h_x>0$, coverage conditional on a finite proposal is
+
+$$
+\mu(S_x\mid H_x)=1-\frac{e_x}{h_x}.
+\tag{38.8}
+$$
+
+The unconditional error guarantee $e_x\le\delta$ alone does not give conditional coverage $1-\delta$. The bound $h_x\le\delta$ is sharp; for $0<\delta<1$, conditional coverage can be either zero or one within the same admissible procedure. Moreover (38.3) gives no lower bound $1-\delta$ on literal nontermination unless every allowed terminal outcome is a finite upper proposal.
+
+**Proof.** Equations (38.7)–(38.8) follow from the disjoint decomposition $H_x=S_x\sqcup F_x$. For the assertions of attainability, take constant $\beta$, so $B_\beta=X$ by (37.1). Use a Bernoulli tape of success probability $\delta$: on success output the upper proposal $1$ without queries, and otherwise halt with unknown. Then for every $x$,
+
+$$
+h_x=\delta,\qquad
+e_x=\delta\,\mathbf1_{\{\Omega(x)>1\}},\qquad
+s_x=\delta\,\mathbf1_{\{\Omega(x)\le1\}},\qquad
+\mu(D_x)=0.
+\tag{38.9}
+$$
+
+The labeled sources $(7,2)$ and $(13,26)$ have target values $1$ and $2$, respectively, as supplied by Proposition 37.4. For $\delta>0$ their conditional coverages are one and zero. Thus all probabilities in (38.9) meet the common error budget, attain $h_x=\delta$, and separate conditional coverage from unconditional successful-output probability. For $\delta=0$ the finite-proposal probability is zero and conditional coverage is undefined. If every halt must instead be a finite upper proposal, then $L_x=H_x$, hence $D_x=U_x$ and (38.3) does yield $\mu(D_x)\ge1-\delta$.
+

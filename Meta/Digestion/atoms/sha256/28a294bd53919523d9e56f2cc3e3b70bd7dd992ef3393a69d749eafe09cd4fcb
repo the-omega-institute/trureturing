@@ -1,0 +1,27 @@
+## 33. 二级：跨轨道 connected entanglement
+
+设零点镜像轨道集合为 \(\mathscr O_T\)。
+
+定义一个 joint generating functional：
+
+\[
+\mathcal Z_T(\mathbf u)
+=
+\mathbb E
+\exp
+\left(
+\sum_{a\in\mathscr O_T}u_aX_a
+\right).
+\]
+
+定义 connected orbit cumulants：
+
+\[
+K_T(a_1,\ldots,a_r)
+=
+\left.
+\partial_{u_{a_1}}\cdots\partial_{u_{a_r}}
+\log\mathcal Z_T(\mathbf u)
+\right|_{\mathbf u=0}.
+\]
+

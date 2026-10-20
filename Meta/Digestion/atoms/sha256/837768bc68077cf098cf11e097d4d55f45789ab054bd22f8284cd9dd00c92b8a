@@ -1,0 +1,14 @@
+**定义 341.1（阈值 incidence）。** 固定损失合同、策略族和访问成本。对 \(\varepsilon\ge0\)，定义
+\[
+A\,I_\varepsilon\,\phi
+\quad\Longleftrightarrow\quad
+\delta_A(\phi)\le\varepsilon,
+\]
+其中 \(\delta_A\) 是访问 \(A\) 上的最小任务风险。由访问细化单调性，若 \(A\subseteq B\)，则
+\[
+A\,I_\varepsilon\,\phi
+\Longrightarrow
+B\,I_\varepsilon\,\phi.
+\]
+用 \(I_\varepsilon\) 替代 \(I\) 定义导出符号 \((\cdot)'_\varepsilon\) 与闭包 \((\cdot)''_\varepsilon\)。
+
