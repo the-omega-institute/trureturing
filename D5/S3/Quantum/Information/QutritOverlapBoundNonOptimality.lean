@@ -8,7 +8,7 @@
 
 import D5.S3.Quantum.Foundation.FiniteDensityPurification
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+import D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation
 
 /-! The Tsallis order-two overlap bound and its qutrit equality obstruction. -/
 
@@ -18,6 +18,8 @@ open Matrix Complex
 open scoped BigOperators ComplexConjugate ComplexOrder InnerProductSpace
 
 namespace D5.S3.Quantum.Information.QutritOverlapBoundNonOptimality
+
+open D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation (residual_norm)
 
 /-- Tsallis entropy of order two. -/
 def tsallisTwo (p : Fin 3 → ℝ) : ℝ := 1 - ∑ i, p i ^ 2
@@ -138,10 +140,6 @@ private lemma entropy_maximum (p : Fin 3 → ℝ) (hp : ∀ i, 0 ≤ p i)
   have h1 := hp 1
   have h2 := hp 2
   rw [Fin.sum_univ_three] at hs
-  have hs2 := congrArg (fun t : ℝ => t ^ 2) hs
-  have hm0 := congrArg (fun t : ℝ => p 0 * t) hs
-  have hm1 := congrArg (fun t : ℝ => p 1 * t) hs
-  have hm2 := congrArg (fun t : ℝ => p 2 * t) hs
   unfold tsallisTwo
   rw [Fin.sum_univ_three]
   fin_cases i <;> dsimp only
@@ -222,15 +220,6 @@ private lemma ellipse_bound {P Q t c : ℝ} (hP : 1 / 2 < P) (hQ : 1 / 2 < Q)
         nlinarith [sq_nonneg (P - Q)]
       constructor <;> nlinarith
 
-private lemma projection_norm (x a : EuclideanSpace ℂ (Fin 3))
-    (hx : ‖x‖ = 1) (ha : ‖a‖ = 1) :
-    ‖a - ⟪x, a⟫_ℂ • x‖ ^ 2 = 1 - ‖⟪x, a⟫_ℂ‖ ^ 2 := by
-  rw [norm_sub_sq (𝕜 := ℂ), ha, norm_smul, hx, mul_one, inner_smul_right,
-    ← inner_conj_symm a x, Complex.mul_conj]
-  change 1 ^ 2 - 2 * (Complex.normSq ⟪x, a⟫_ℂ) + ‖⟪x, a⟫_ℂ‖ ^ 2 = _
-  rw [Complex.normSq_eq_norm_sq]
-  ring
-
 private lemma overlap_ellipse (x a b : EuclideanSpace ℂ (Fin 3))
     (hx : ‖x‖ = 1) (ha : ‖a‖ = 1) (hb : ‖b‖ = 1)
     (hP : 1 / 2 < ‖⟪x, a⟫_ℂ‖ ^ 2) (hQ : 1 / 2 < ‖⟪x, b⟫_ℂ‖ ^ 2) :
@@ -249,7 +238,7 @@ private lemma overlap_ellipse (x a b : EuclideanSpace ℂ (Fin 3))
     ring
   have hcs := norm_inner_le_norm (𝕜 := ℂ) (a - α • x) (b - β • x)
   have hcs2 := (sq_le_sq₀ (norm_nonneg _) (mul_nonneg (norm_nonneg _) (norm_nonneg _))).mpr hcs
-  rw [hi, mul_pow, projection_norm x a hx ha, projection_norm x b hx hb] at hcs2
+  rw [hi, mul_pow, residual_norm x a hx ha, residual_norm x b hx hb] at hcs2
   rw [← Complex.normSq_eq_norm_sq, Complex.normSq_sub, Complex.normSq_mul,
     Complex.normSq_conj, Complex.normSq_eq_norm_sq, Complex.normSq_eq_norm_sq,
     Complex.normSq_eq_norm_sq] at hcs2
@@ -280,7 +269,6 @@ private lemma saturation_vector (x a b : EuclideanSpace ℂ (Fin 3))
     have hm := mul_le_mul_of_nonneg_left hab (mul_nonneg (norm_nonneg u) (norm_nonneg v))
     rw [← hnorm] at hn hm
     nlinarith
-  have hxx : ⟪x, x⟫_ℂ = 1 := by rw [inner_self_eq_norm_sq_to_K, hx]; norm_num
   have hinner : ⟪x, u • a + v • b⟫_ℂ = ((1 + c : ℝ) : ℂ) := by
     rw [inner_add_right, inner_smul_right, inner_smul_right,
       ← inner_conj_symm x a, ← inner_conj_symm x b]
@@ -324,7 +312,7 @@ private lemma zero_corner (T : Matrix (Fin 3) (Fin 3) ℂ)
   have hk := Matrix.unitaryGroup_row_norm U k
   change ∑ s, ‖T s i‖ ^ 2 = 1 at hi
   change ∑ s, ‖T s k‖ ^ 2 = 1 at hk
-  rw [qutrit_sum _ hjl hr.1.symm hr.2.symm, hli, norm_zero, zero_pow (by decide),
+  rw [qutrit_sum _ hjl (Ne.symm hr.1) (Ne.symm hr.2), hli, norm_zero, zero_pow (by decide),
     add_zero] at hi
   have hri : T r i ≠ 0 := by
     intro hz
@@ -332,10 +320,16 @@ private lemma zero_corner (T : Matrix (Fin 3) (Fin 3) ℂ)
     nlinarith [hTc j i, norm_nonneg (T j i)]
   have hor := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M i k) hT.1
   change ∑ s, conj (T s i) * T s k = (1 : Matrix (Fin 3) (Fin 3) ℂ) i k at hor
-  rw [Matrix.one_apply_ne hik, qutrit_sum _ hjl hr.1.symm hr.2.symm,
+  rw [Matrix.one_apply_ne hik, qutrit_sum _ hjl (Ne.symm hr.1) (Ne.symm hr.2),
     hjk, hli, map_zero, mul_zero, zero_mul, zero_add] at hor
-  have hrk : T r k = 0 := (mul_eq_zero.mp hor).resolve_left (by simpa using hri)
-  rw [qutrit_sum _ hjl hr.1.symm hr.2.symm, hjk, hrk, norm_zero,
+  simp only [zero_add] at hor
+  have hric : conj (T r i) ≠ 0 := by
+    intro hz
+    apply hri
+    have he := congrArg conj hz
+    simpa only [map_zero, starRingEnd_self_apply] using he
+  have hrk : T r k = 0 := (mul_eq_zero.mp hor).resolve_left hric
+  rw [qutrit_sum _ hjl (Ne.symm hr.1) (Ne.symm hr.2), hjk, hrk, norm_zero,
     zero_pow (by decide), zero_add, add_zero] at hk
   nlinarith [hTc l k, norm_nonneg (T l k)]
 
@@ -352,12 +346,13 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
     have hs : ‖x‖ ^ 2 = 1 := by rw [EuclideanSpace.norm_sq_eq]; exact hψ
     nlinarith [norm_nonneg x]
   have hy : ‖y‖ = 1 := by
+    have hu : Tᴴ * T = 1 := hT.1
     have hi : ⟪y, y⟫_ℂ = ⟪x, x⟫_ℂ := by
-      rw [D5.S3.Quantum.Foundation.FiniteTraceDistance.inner_A_mulVec_eq, hT.1,
+      rw [D5.S3.Quantum.Foundation.FiniteTraceDistance.inner_A_mulVec_eq, hu,
         Matrix.one_mulVec, EuclideanSpace.inner_eq_star_dotProduct]
       exact dotProduct_comm _ _
     rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K] at hi
-    have hs := Complex.ofReal_injective hi
+    have hs : ‖y‖ ^ 2 = ‖x‖ ^ 2 := by exact_mod_cast hi
     nlinarith [norm_nonneg y]
   have hq : ∑ j, q j = 1 := by
     rw [← EuclideanSpace.norm_sq_eq y, hy]
@@ -375,7 +370,7 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
     have hnonneg := entropy_nonneg p hp0 hψ
     change 1 - c ^ 2 < tsallisTwo p + tsallisTwo q
     linarith
-  push_neg at hpSmall hqSmall
+  push Not at hpSmall hqSmall
   obtain ⟨i, hP⟩ := hpSmall
   obtain ⟨j, hQ⟩ := hqSmall
   let a := EuclideanSpace.basisFun (Fin 3) ℂ i
@@ -387,14 +382,14 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
       rw [EuclideanSpace.norm_sq_eq]
       exact Matrix.unitaryGroup_row_norm (star U) j
     nlinarith [norm_nonneg b]
-  have hax : ⟪a, x⟫_ℂ = ψ i := EuclideanSpace.basisFun_inner x i
+  have hax : ⟪a, x⟫_ℂ = ψ i := EuclideanSpace.basisFun_inner (𝕜 := ℂ) (ι := Fin 3) x i
   have hbx : ⟪b, x⟫_ℂ = (T *ᵥ ψ) j := by
     simp [b, x, EuclideanSpace.inner_toLp_toLp, dotProduct, Matrix.mulVec, mul_comm]
   have hab : ‖⟪a, b⟫_ℂ‖ = ‖T j i‖ := by
-    rw [EuclideanSpace.basisFun_inner b i]
+    rw [EuclideanSpace.basisFun_inner (𝕜 := ℂ) (ι := Fin 3) b i]
     exact norm_conj _
-  have hxp : ‖⟪x, a⟫_ℂ‖ ^ 2 = p i := by rw [norm_inner_symm, hax]; rfl
-  have hxq : ‖⟪x, b⟫_ℂ‖ ^ 2 = q j := by rw [norm_inner_symm, hbx]; rfl
+  have hxp : ‖⟪x, a⟫_ℂ‖ ^ 2 = p i := by rw [norm_inner_symm, hax]
+  have hxq : ‖⟪x, b⟫_ℂ‖ ^ 2 = q j := by rw [norm_inner_symm, hbx]
   have he := overlap_ellipse x a b hx ha hb (hxp ▸ hP) (hxq ▸ hQ)
   rw [hxp, hxq, hab] at he
   obtain ⟨hbound, hequal⟩ := ellipse_bound hP hQ (norm_nonneg _) (hTc j i) hc2 hc1 he
@@ -409,9 +404,14 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
   obtain ⟨l, hlj, hql⟩ := hqZero (by linarith)
   have hψk : ψ k = 0 := norm_eq_zero.mp (sq_eq_zero_iff.mp hpk)
   have hψl : (T *ᵥ ψ) l = 0 := norm_eq_zero.mp (sq_eq_zero_iff.mp hql)
-  have hψi : ψ i ≠ 0 := by intro hz; simp only [p, hz, norm_zero, zero_pow] at hP; norm_num at hP
+  have hψi : ψ i ≠ 0 := by
+    intro hz
+    simp only [p, hz, norm_zero] at hP
+    norm_num at hP
   have hψj : (T *ᵥ ψ) j ≠ 0 := by
-    intro hz; simp only [q, hz, norm_zero, zero_pow] at hQ; norm_num at hQ
+    intro hz
+    simp only [q, hz, norm_zero] at hQ
+    norm_num at hQ
   have hv := saturation_vector x a b hx ha hb hc0 (hab ▸ hTc j i)
     (by rw [hax]; exact hPi) (by rw [hbx]; exact hQj)
   rw [hax, hbx] at hv
@@ -423,11 +423,14 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
     simpa only [map_eq_zero] using this
   have hraw : ((1 + c : ℝ) : ℂ) • ψ =
       ψ i • Pi.single i 1 + (T *ᵥ ψ) j • (fun k => conj (T j k)) := by
-    exact congrArg WithLp.ofLp hv
+    have ht := congrArg (fun z : EuclideanSpace ℂ (Fin 3) => WithLp.ofLp z) hv
+    simpa only [WithLp.ofLp_smul, WithLp.ofLp_add, a, EuclideanSpace.basisFun_apply,
+      PiLp.ofLp_single] using ht
   have hrow : T *ᵥ (fun k => conj (T j k)) = Pi.single j 1 := by
     ext r
     have hr := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M r j) hT.2
-    simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, Pi.single_apply, eq_comm] using hr
+    simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, Pi.single_apply, Matrix.one_apply,
+      eq_comm] using hr
   have ht := congrArg (Matrix.mulVec T) hraw
   rw [Matrix.mulVec_smul, Matrix.mulVec_add, Matrix.mulVec_smul,
     Matrix.mulVec_smul, Matrix.mulVec_single_one, hrow] at ht
@@ -439,13 +442,96 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
   exact zero_corner T hT (fun r s => lt_of_le_of_lt (hTc r s) hc1)
     hlj.symm hki.symm hjk hli
 
+private lemma entropy_mixture (w : Fin 3 → ℝ) (hw : ∀ k, 0 ≤ w k)
+    (hs : ∑ k, w k = 1) (p : Fin 3 → Fin 3 → ℝ) :
+    ∑ k, w k * tsallisTwo (p k) ≤ tsallisTwo (fun i => ∑ k, w k * p k i) := by
+  have hj (i : Fin 3) : (∑ k, w k * p k i) ^ 2 ≤ ∑ k, w k * p k i ^ 2 := by
+    have h := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul Finset.univ
+      (r := fun k => w k * p k i) (f := w) (g := fun k => w k * p k i ^ 2)
+      (fun k _ => hw k) (fun k _ => mul_nonneg (hw k) (sq_nonneg _))
+      (fun k _ => le_of_eq (by ring))
+    rwa [hs, one_mul] at h
+  have hsum := Finset.sum_le_sum (s := Finset.univ) (fun i _ => hj i)
+  have he : (∑ k, w k * tsallisTwo (p k)) = 1 - ∑ i, ∑ k, w k * p k i ^ 2 := by
+    simp only [tsallisTwo, mul_sub, mul_one, Finset.sum_sub_distrib, Finset.mul_sum, hs]
+    rw [Finset.sum_comm]
+  rw [he]
+  unfold tsallisTwo
+  linarith
+
+private lemma spectral_diagonal (W : Matrix (Fin 3) (Fin 3) ℂ) (wgt : Fin 3 → ℝ)
+    (i : Fin 3) :
+    ((W * Matrix.diagonal (fun k => (wgt k : ℂ)) * Wᴴ) i i).re =
+      ∑ k, wgt k * ‖W i k‖ ^ 2 := by
+  rw [Matrix.mul_apply]
+  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply, Complex.star_def, Complex.re_sum]
+  apply Finset.sum_congr rfl
+  intro k _
+  have he : W i k * (wgt k : ℂ) * conj (W i k) = (wgt k : ℂ) * (W i k * conj (W i k)) := by
+    ring
+  rw [he, Complex.mul_conj]
+  simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero,
+    Complex.normSq_eq_norm_sq]
+
 private lemma strict_overlap_bound {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
     (T : Matrix (Fin 3) (Fin 3) ℂ) (hT : T ∈ Matrix.unitaryGroup (Fin 3) ℂ)
     (hTc : ∀ i j, ‖T i j‖ ≤ c) (ρ : Matrix (Fin 3) (Fin 3) ℂ)
     (hρ : ρ.PosSemidef) (htrace : ρ.trace = 1) :
     overlapBound c < tsallisTwo (probA ρ) + tsallisTwo (probB T ρ) := by
   rw [overlapBound_eq hc hc1.le]
-  sorry
+  let U := hρ.1.eigenvectorUnitary
+  let wgt := hρ.1.eigenvalues
+  let V : Matrix.unitaryGroup (Fin 3) ℂ := (⟨T, hT⟩ : Matrix.unitaryGroup (Fin 3) ℂ) * U
+  have hwgt (k : Fin 3) : 0 ≤ wgt k := hρ.eigenvalues_nonneg k
+  have hsum : ∑ k, wgt k = 1 := by
+    have ht := hρ.1.trace_eq_sum_eigenvalues
+    rw [htrace] at ht
+    have hs : ((∑ k, wgt k : ℝ) : ℂ) = 1 := by
+      rw [Complex.ofReal_sum]
+      exact ht.symm
+    exact Complex.ofReal_injective hs
+  have hdec : ρ = (U : Matrix (Fin 3) (Fin 3) ℂ) *
+      Matrix.diagonal (fun k => (wgt k : ℂ)) * (U : Matrix (Fin 3) (Fin 3) ℂ)ᴴ :=
+    hρ.1.spectral_theorem
+  have hdecB : T * ρ * Tᴴ = (V : Matrix (Fin 3) (Fin 3) ℂ) *
+      Matrix.diagonal (fun k => (wgt k : ℂ)) * (V : Matrix (Fin 3) (Fin 3) ℂ)ᴴ := by
+    calc
+      T * ρ * Tᴴ = T * ((U : Matrix (Fin 3) (Fin 3) ℂ) *
+          Matrix.diagonal (fun k => (wgt k : ℂ)) * (U : Matrix (Fin 3) (Fin 3) ℂ)ᴴ) * Tᴴ :=
+        congrArg (fun A => T * A * Tᴴ) hdec
+      _ = _ := by
+        change _ = (T * (U : Matrix (Fin 3) (Fin 3) ℂ)) *
+          Matrix.diagonal (fun k => (wgt k : ℂ)) * (T * (U : Matrix (Fin 3) (Fin 3) ℂ))ᴴ
+        rw [Matrix.conjTranspose_mul]
+        simp only [Matrix.mul_assoc]
+  have hpA : probA ρ = fun i => ∑ k, wgt k * ‖U i k‖ ^ 2 := by
+    funext i
+    exact (congrArg (fun A : Matrix (Fin 3) (Fin 3) ℂ => (A i i).re) hdec).trans
+      (spectral_diagonal _ _ i)
+  have hpB : probB T ρ = fun j => ∑ k, wgt k * ‖V j k‖ ^ 2 := by
+    funext j
+    exact (congrArg (fun A : Matrix (Fin 3) (Fin 3) ℂ => (A j j).re) hdecB).trans
+      (spectral_diagonal _ _ j)
+  have hp := entropy_mixture wgt hwgt hsum (fun k i => ‖U i k‖ ^ 2)
+  have hq := entropy_mixture wgt hwgt hsum (fun k j => ‖V j k‖ ^ 2)
+  have hall (k : Fin 3) : 1 - c ^ 2 <
+      tsallisTwo (fun i => ‖U i k‖ ^ 2) + tsallisTwo (fun j => ‖V j k‖ ^ 2) := by
+    have h := pure_strict hc hc1 T hT hTc (fun i => U i k)
+      (Matrix.unitaryGroup_row_norm U k)
+    exact h
+  obtain ⟨k, _, hk⟩ := (Finset.sum_pos_iff_of_nonneg (fun k _ => hwgt k)).mp
+    (show 0 < ∑ k, wgt k by rw [hsum]; norm_num)
+  have hstrict : (∑ k, wgt k * (1 - c ^ 2)) <
+      ∑ k, wgt k * (tsallisTwo (fun i => ‖U i k‖ ^ 2) +
+        tsallisTwo (fun j => ‖V j k‖ ^ 2)) := by
+    apply Finset.sum_lt_sum
+    · intro k _
+      exact mul_le_mul_of_nonneg_left (hall k).le (hwgt k)
+    · exact ⟨k, Finset.mem_univ _, mul_lt_mul_of_pos_left (hall k) hk⟩
+  rw [← Finset.sum_mul, hsum, one_mul] at hstrict
+  simp only [mul_add, Finset.sum_add_distrib] at hstrict
+  rw [hpA, hpB]
+  linarith
 
 theorem result : ¬ claim := by
   intro h

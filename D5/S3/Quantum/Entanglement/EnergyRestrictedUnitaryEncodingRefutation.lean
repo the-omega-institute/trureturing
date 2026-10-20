@@ -231,7 +231,7 @@ private theorem protocol_value :
   simp_rw [coefficients.eq_1]
   simp [hp]
 
-private theorem residual_norm {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+theorem residual_norm {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     (g v : H) (hg : ‖g‖ = 1) (hv : ‖v‖ = 1) :
     ‖v - ⟪g, v⟫_ℂ • g‖ ^ 2 = 1 - ‖⟪g, v⟫_ℂ‖ ^ 2 := by
   rw [norm_sub_sq (𝕜 := ℂ), hv, norm_smul, hg, inner_smul_right, ← inner_conj_symm v g]
