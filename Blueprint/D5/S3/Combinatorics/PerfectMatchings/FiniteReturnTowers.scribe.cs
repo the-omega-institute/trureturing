@@ -19,13 +19,13 @@ internal sealed class FiniteReturnTowersDocument : IScribeDocumentDefinition
                 + "Its explicit successor preserves the original step on untouched points, increments k below the roof, "
                 + "and sends (x,l(x)-1) to (H(x),0).")),
             Describe.Lean(DescribeId.Create("temporal-split"),
-                DeclarationHandle.Create(Prefix + "ReturnData.temporal_decomposition"),
+                DeclarationHandle.Create(Prefix + "temporal_decomposition"),
                 H("Each Time Has One Completed-Return Count and Offset"),
                 StatementSource.FromAuthor(Context(All("x", V("S"), All("k", V("Natural"),
                     new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("p"),
                         Call("Product", V("Natural"), V("Natural")),
                         Both(Split(V("p")), All("t", Call("Product", V("Natural"), V("Natural")),
-                            Imp(Split(V("t")), Equal(V("t"), V("p"))))))))),
+                            Imp(Split(V("t")), Equal(V("t"), V("p")))))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every natural time k there is exactly one pair (n,d) with k=T_x(n)+d and "
@@ -34,16 +34,17 @@ internal sealed class FiniteReturnTowersDocument : IScribeDocumentDefinition
                     + "Thus n records the full elapsed history even after an induced cycle repeats. "
                     + "Uniqueness of this temporal pair and uniqueness of the spatial tower coordinate both hold."))),
                 DescribeRole.Theorem),
-            Node("tower", "Every Original Point Has One Tower Coordinate", "ReturnData.tower_decomposition",
+            Node("tower", "Every Original Point Has One Tower Coordinate", "tower_decomposition",
                 Context(Call("ConstructedTowerEquivalence", V("R"), V("f"))),
                 "The encoding sends an untouched point to itself and (x,k) to f^k(x). "
                 + "First-visit minimality proves that different segments cannot overlap. "
                 + "A greedy decomposition of every natural iterate into complete return segments and one interior offset proves surjectivity. "
                 + "The encoding intertwines the explicit tower successor with f. No orbit partition is assumed."),
-            Node("period", "Least Period Is the Sum of Actual Segment Lengths", "ReturnData.least_period_sum",
+            Node("period", "Least Period Is the Sum of Actual Segment Lengths", "least_period_sum",
                 Context(All("x", V("S"), All("N", V("Natural"),
-                    Imp(Call("LeastPositivePeriod", V("H"), V("x"), V("N")),
-                        Call("LeastPositivePeriod", V("f"), V("x"), Call("T", V("x"), V("N"))))))),
+                    Imp(Call("LeastPositivePeriod", Call("Next", V("R")), V("x"), V("N")),
+                        Call("LeastPositivePeriod", V("f"), V("x"),
+                            Call("Elapsed", V("R"), V("x"), V("N"))))))),
                 "The cumulative return time T_x(N) returns to x. If a shorter positive original time returned to x, "
                 + "its greedy interior offset would have to be zero by first-visit minimality. "
                 + "The remaining induced return count would contradict the least positive H-period. "
@@ -52,7 +53,7 @@ internal sealed class FiniteReturnTowersDocument : IScribeDocumentDefinition
                 + "Write L(x)=sum_{i<p_H(x)} l(H^i(x)). The full cycle inventory is the rational polynomial "
                 + "I_f(Z)=sum_z Z^p_f(z)/p_f(z). Each cycle contributes exactly one monomial, including fixed points. "
                 + "This is an additive encoding of the complete cycle multiset, not the conventional multiplicative cycle-index polynomial.")),
-            Node("inventory", "Every Additive Orbit-Length Statistic", "ReturnData.weighted_inventory",
+            Node("inventory", "Every Additive Orbit-Length Statistic", "weighted_inventory",
                 Context(All("A", V("AdditiveCommutativeMonoid"),
                     All("Phi", Call("Function", V("Natural"), V("A")),
                         Equal(Call("RootSum", V("f"), V("Phi")),
@@ -61,7 +62,7 @@ internal sealed class FiniteReturnTowersDocument : IScribeDocumentDefinition
                 "For every additive observable Phi, sum_z Phi(p_f(z)) equals the untouched-root sum "
                 + "plus sum_x l(x) times Phi(L(x)). The constructive tower bijection supplies the change of variables, "
                 + "and the least-period theorem supplies the weight of each tower. Taking length indicators recovers every root multiplicity."),
-            Node("cycle-inventory", "The Complete Weighted Cycle Inventory", "ReturnData.weighted_cycle_inventory",
+            Node("cycle-inventory", "The Complete Weighted Cycle Inventory", "weighted_cycle_inventory",
                 Context(Equal(Call("CycleInventory", V("f")),
                     Call("Add", Call("UntouchedInventory", V("R")), Call("WeightedInventory", V("R"))))),
                 "Apply the preceding inventory theorem to Phi(n)=Z^n/n over rational polynomials. "

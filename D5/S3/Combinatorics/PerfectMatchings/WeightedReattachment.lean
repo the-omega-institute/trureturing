@@ -116,11 +116,21 @@ theorem reattachment_weighted_cycle_inventory [Fintype X]
   · intro x
     exact (endpoint_pairing_reattach_return_data s r hs hr J x).choose_spec.1
   · intro z
-    simpa only [ReturnData.Untouched, Set.mem_setOf_eq, mul_assoc] using
-      untouched_reattach_iff (s * r) {z | r z = z} J z
+    change (∀ x : {z // r z = z}, ¬ (s * (r * J.ofSubtype)).SameCycle x z) ↔ _
+    constructor
+    · intro hz
+      apply (untouched_reattach_iff (s * r) {z | r z = z} J z).mp
+      intro x hc
+      exact hz x (by simpa only [mul_assoc] using hc)
+    · intro hz x hc
+      have hn := (untouched_reattach_iff (s * r) {z | r z = z} J z).mpr hz
+      exact hn x (by simpa only [mul_assoc] using hc)
   · intro z n
+    have hz0 : ∀ x : {z // r z = z}, ¬ (s * (r * J.ofSubtype)).SameCycle x z :=
+      z.property
     have hz : ∀ x : {z // r z = z}, ¬ ((s * r) * J.ofSubtype).SameCycle x z := by
-      simpa only [mul_assoc] using z.property
+      intro x hc
+      exact hz0 x (by simpa only [mul_assoc] using hc)
     have ha := (untouched_iff_avoids ((s * r) * J.ofSubtype) {z | r z = z} z).mp hz
     simpa only [mul_assoc] using
       powers_eq_of_reattached_avoids (s * r) {z | r z = z} J z ha n
@@ -128,8 +138,11 @@ theorem reattachment_weighted_cycle_inventory [Fintype X]
     congr 1
     apply Finset.sum_congr rfl
     intro z _
+    have hz0 : ∀ x : {z // r z = z}, ¬ (s * (r * J.ofSubtype)).SameCycle x z :=
+      z.property
     have hz : ∀ x : {z // r z = z}, ¬ ((s * r) * J.ofSubtype).SameCycle x z := by
-      simpa only [mul_assoc] using z.property
+      intro x hc
+      exact hz0 x (by simpa only [mul_assoc] using hc)
     have hp := untouched_period (s * r) {z | r z = z} J z hz
     simpa only [mul_assoc] using congrArg
       (fun n : ℕ => Polynomial.monomial n (1 / (n : ℚ))) hp
