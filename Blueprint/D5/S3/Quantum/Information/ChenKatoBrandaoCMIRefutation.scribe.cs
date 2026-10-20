@@ -20,6 +20,13 @@ internal sealed class ChenKatoBrandaoCMIRefutationDocument : IScribeDocumentDefi
             Node("entropy", "Eigenvalue entropy, including zero eigenvalues", EntropyFormula(),
                 "Section I, PDF p. 3, equation (1): “where S(A)_ρ = -tr ρ_A log₂ ρ_A is the von Neumann entropy of the reduced state on A.” The eigenvalue expression is the finite spectral form of this definition. Real.negMulLog(t) is -t log(t), including value zero at t = 0. The definition extends by zero off Hermitian matrices; density matrices and their marginals use only its Hermitian branch. All logarithms in the encoding are natural. Changing from the source's base two divides all four entropy terms by the same positive log(2), so preserves the equality and every proposed contraction inequality.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(DescribeId.Create("ckb-entropy-diagonal"),
+                DeclarationHandle.Create(Prefix + "entropy_diagonal"),
+                H("Entropy of an arbitrary real diagonal matrix"),
+                StatementSource.FromAuthor(EntropyDiagonalFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every real diagonal, including negative and zero entries, the totalized spectral entropy is the sum of Real.negMulLog over its entries."))),
+                DescribeRole.Theorem),
             Node("cmi", "Literal conditional mutual information", CmiFormula(),
                 "Section I, PDF p. 3, equation (1), verbatim: “The CMI I(A:C|B)_ρ is a function defined for a tripartite state ρ_ABC as I(A:C|B)_ρ = S(AB)_ρ + S(BC)_ρ - S(B)_ρ - S(ABC)_ρ.” The input order is (A times B) times C. The local let-bound map R only reassociates indices; N is the literal submatrix with R in both positions. partialTraceRight traces the right factor and partialTraceLeft the left factor. Thus the displayed four terms are precisely the AB, BC, B and ABC entropies, with no rank assumption.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -46,10 +53,7 @@ internal sealed class ChenKatoBrandaoCMIRefutationDocument : IScribeDocumentDefi
                 DescribeRole.Theorem),
             Node("result", "A four-dimensional channel refutes the conjecture", Disp(new Formula.Not(F.Id("claim"))),
                 "For 0 < p < 1, take Kraus matrices K_(j,false) = sqrt(1-p) Matrix.single(j,j,1) and K_(j,true) = sqrt(p) Matrix.single(j+1,j,1), with cyclic Fin(n) addition. Their adjoint products include nonzero multiples of every diagonal matrix unit, forcing a commuting matrix to be diagonal. The adjacent cross-products force consecutive diagonal entries to agree; induction makes the whole matrix scalar. Specialize to n = 4 and p = 1/2. With dA = 2 and dB = 1, the input diagonal has weight 1/2 at ((0,0),0) and ((1,0),2), and zero elsewhere. The output has weight 1/4 at ((0,0),0), ((0,0),1), ((1,0),2) and ((1,0),3). The two conditional mutual informations are exactly log(2) > 0. Substitution into the asserted inequality gives log(2) <= eta log(2), contradicting eta < 1. The bit survives because the two selected inputs have disjoint output supports, although all globally correctable observables are scalar.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("chen-kato-brandao-2020-completely-contractive-cmi"),
-                    ResolutionKind.Refuted))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
@@ -134,6 +138,14 @@ internal sealed class ChenKatoBrandaoCMIRefutationDocument : IScribeDocumentDefi
             Sp, Named("else"), Sp, D(0));
         return Disp(All("a", Named("Type"), Instances(All("M", MatrixOf(a, a),
             Equal(Call("entropy", m), value)), a)));
+    }
+
+    private static Formula EntropyDiagonalFormula()
+    {
+        Formula a = F.Id("a"), d = F.Id("d"), i = F.Id("i");
+        Formula diagonal = Call("Matrix.diagonal", LambdaOf(i, a, Call("Complex.ofReal", Apply(d, i))));
+        return Disp(All("a", Named("Type"), Instances(All("d", new Formula.TypeArrow(a, Reals),
+            Equal(Call("entropy", diagonal), SumOver(i, a, Call("Real.negMulLog", Apply(d, i))))), a)));
     }
 
     private static Formula CmiFormula()

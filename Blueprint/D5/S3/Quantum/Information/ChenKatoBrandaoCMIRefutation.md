@@ -28,7 +28,21 @@ $$\forall a \in \operatorname{Type},\; [\operatorname{Fintype}\left(a\right)] [\
 
 Section I, PDF p. 3, equation (1): “where S(A)_ρ = -tr ρ_A log₂ ρ_A is the von Neumann entropy of the reduced state on A.” The eigenvalue expression is the finite spectral form of this definition. Real.negMulLog(t) is -t log(t), including value zero at t = 0. The definition extends by zero off Hermitian matrices; density matrices and their marginals use only its Hermitian branch. All logarithms in the encoding are natural. Changing from the source's base two divides all four entropy terms by the same positive log(2), so preserves the equality and every proposed contraction inequality.
 
-**Definition 1.3 (Literal conditional mutual information).**
+**Theorem 1.3 (Entropy of an arbitrary real diagonal matrix).**
+
+$$\forall a \in \operatorname{Type},\; [\operatorname{Fintype}\left(a\right)] [\operatorname{DecidableEq}\left(a\right)] \forall d \in a \to \mathbb{R},\; \operatorname{entropy}\left(\operatorname{Matrix.diagonal}\left(\operatorname{fun} (i:a) \mapsto \operatorname{Complex.ofReal}\left(d\left(i\right)\right)\right)\right) = \sum_{i:a} (\operatorname{Real.negMulLog}\left(d\left(i\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.entropy_diagonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Chi-Fang Chen, Kohtaro Kato and Fernando G. S. L. Brandão (2020). *Matrix Product Density Operators: when do they have a local parent Hamiltonian?*. URL: <https://arxiv.org/abs/2010.14682v3>.
+
+*Commentary.*
+
+For every real diagonal, including negative and zero entries, the totalized spectral entropy is the sum of Real.negMulLog over its entries.
+
+**Definition 1.4 (Literal conditional mutual information).**
 
 $$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; \forall C \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] [\operatorname{Fintype}\left(C\right)] [\operatorname{DecidableEq}\left(C\right)] \forall M \in \operatorname{Matrix}\left(((A \times B) \times C), ((A \times B) \times C), \mathbb{C}\right),\; \operatorname{let} R:(A \times (B \times C)) \to ((A \times B) \times C) := \operatorname{fun} (x:(A \times (B \times C))) \mapsto ((\operatorname{Prod.fst}\left(x\right), \operatorname{Prod.fst}\left(\operatorname{Prod.snd}\left(x\right)\right)), \operatorname{Prod.snd}\left(\operatorname{Prod.snd}\left(x\right)\right)), \operatorname{let} N:\operatorname{Matrix}\left((A \times (B \times C)), (A \times (B \times C)), \mathbb{C}\right) := \operatorname{Matrix.submatrix}\left(M, R, R\right), \operatorname{cmi}\left(M\right) = \operatorname{entropy}\left(\operatorname{partialTraceRight}\left(M\right)\right) + \operatorname{entropy}\left(\operatorname{partialTraceLeft}\left(N\right)\right) - \operatorname{entropy}\left(\operatorname{partialTraceRight}\left(\operatorname{partialTraceLeft}\left(N\right)\right)\right) - \operatorname{entropy}\left(M\right)$$
 
@@ -40,7 +54,7 @@ $$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; \for
 
 Section I, PDF p. 3, equation (1), verbatim: “The CMI I(A:C|B)_ρ is a function defined for a tripartite state ρ_ABC as I(A:C|B)_ρ = S(AB)_ρ + S(BC)_ρ - S(B)_ρ - S(ABC)_ρ.” The input order is (A times B) times C. The local let-bound map R only reassociates indices; N is the literal submatrix with R in both positions. partialTraceRight traces the right factor and partialTraceLeft the left factor. Thus the displayed four terms are precisely the AB, BC, B and ABC entropies, with no rank assumption.
 
-**Definition 1.4 (Chen–Kato–Brandão Conjecture III.1).**
+**Definition 1.5 (Chen–Kato–Brandão Conjecture III.1).**
 
 $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall nPrime \in \mathbb{N},\; \forall iota \in \operatorname{Type},\; [\operatorname{Fintype}\left(iota\right)] \forall K \in iota \to \operatorname{Matrix}\left(\operatorname{Fin}\left(nPrime\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right),\; (\sum_{i:iota} (\operatorname{conjTranspose}\left(K\left(i\right)\right) \cdot K\left(i\right)) = 1) \Rightarrow ((\operatorname{correctable}\left(K\right) = \perp) \Rightarrow (\exists eta \in \mathbb{R},\; (eta < 1) \land (\forall dA \in \mathbb{N},\; \forall dB \in \mathbb{N},\; \forall rho \in \operatorname{DensityState}\left(((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right))\right),\; \operatorname{let} L:iota \to \operatorname{Matrix}\left(((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(nPrime\right)), ((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right)), \mathbb{C}\right) := \operatorname{fun} (i:iota) \mapsto \operatorname{Matrix.kronecker}\left((1:\operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right)), K\left(i\right)\right), \operatorname{cmi}\left(\operatorname{ofKraus}\left(L, L, \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rho\right)\right)\right)\right) \le eta \cdot \operatorname{cmi}\left(\operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rho\right)\right)\right)))))$$
 
@@ -52,7 +66,7 @@ $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall nPrime \in \mathbb{
 
 Section III.C, PDF p. 16, Conjecture III.1, verbatim: “For any channel ℰ: C → C′ with trivial correctable algebra 𝒜(ℰ) = ℂ I, there exists a constant η < 1 such that for any tripartite system ABC and any state ρ_ABC, it holds that I(A:C′|B)_ℰ(ρ) ≤ η I(A:C|B)_ρ.” The dimensions n, nPrime, dA and dB range over all natural numbers; Fin gives zero-based coordinates. The finite Kraus index type iota and family K are arbitrary. Normalization is the literal sum of K adjoint times K. DensityState is the existing carrier of positive semidefinite trace-one matrices and permits singular states. The let-bound L is I_AB kronecker K. ofKraus is the landed spelling for FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus: ofKraus(L,L,X) is literally the sum of L_i X L_i adjoint. CStarMatrix.ofMatrix.symm(val(rho)) exposes the same density matrix in Matrix coordinates. The strict upper bound eta < 1 is uniform over all ancillary dimensions and states for the fixed channel.
 
-**Theorem 1.5 (Tracing the right factor of a real diagonal matrix).**
+**Theorem 1.6 (Tracing the right factor of a real diagonal matrix).**
 
 $$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall r \in (A \times B) \to \mathbb{R},\; \operatorname{PartialTraceMutualInformation.partialTraceRight}\left(\operatorname{Matrix.diagonal}\left(\operatorname{fun} (x:(A \times B)) \mapsto (r\left(x\right): \mathbb{C})\right)\right) = \operatorname{Matrix.diagonal}\left(\operatorname{fun} (a:A) \mapsto ((\sum_{b:B} (r\left((a, b)\right)): \mathbb{R}): \mathbb{C})\right)$$
 
@@ -66,7 +80,7 @@ $$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\op
 
 For arbitrary finite index types A and B and any real function r on A × B, tracing out B sums the diagonal weights over B. The real weights and their real sums are embedded in ℂ. No sign or normalization condition is imposed on r.
 
-**Theorem 1.6 (Tracing the left factor of a real diagonal matrix).**
+**Theorem 1.7 (Tracing the left factor of a real diagonal matrix).**
 
 $$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall r \in (A \times B) \to \mathbb{R},\; \operatorname{PartialTraceMutualInformation.partialTraceLeft}\left(\operatorname{Matrix.diagonal}\left(\operatorname{fun} (x:(A \times B)) \mapsto (r\left(x\right): \mathbb{C})\right)\right) = \operatorname{Matrix.diagonal}\left(\operatorname{fun} (b:B) \mapsto ((\sum_{a:A} (r\left((a, b)\right)): \mathbb{R}): \mathbb{C})\right)$$
 
@@ -80,15 +94,11 @@ $$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\op
 
 For arbitrary finite index types A and B and any real function r on A × B, tracing out A sums the diagonal weights over A. The remaining matrix is diagonal on B, with the real marginal sums embedded in ℂ. The weights may be negative.
 
-**Theorem 1.7 (A four-dimensional channel refutes the conjecture).**
+**Theorem 1.8 (A four-dimensional channel refutes the conjecture).**
 
 $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.result` (`✓ std3`). ∎
-
-*Resolves.* `Problems/chen-kato-brandao-2020-completely-contractive-cmi` (refuted) by `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chen-kato-brandao-2020-completely-contractive-cmi","declaration_gid":"D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
@@ -104,8 +114,10 @@ For 0 < p < 1, take Kraus matrices K_(j,false) = sqrt(1-p) Matrix.single(j,j,1) 
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.cmi`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.correctable`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.entropy`
+- Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.entropy_diagonal`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.partialTraceLeft_diagonal`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.partialTraceRight_diagonal`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.result`
+- Dependency: [D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition](../Divergence/QuantumRelativeEntropyDefectComposition.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](PartialTraceMutualInformation.md)
