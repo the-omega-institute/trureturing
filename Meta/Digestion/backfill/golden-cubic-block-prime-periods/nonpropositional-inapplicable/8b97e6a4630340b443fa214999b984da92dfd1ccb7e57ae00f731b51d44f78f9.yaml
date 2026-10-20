@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8b97e6a4630340b443fa214999b984da92dfd1ccb7e57ae00f731b51d44f78f9
+  normalized_sha256: sha256:8b97e6a4630340b443fa214999b984da92dfd1ccb7e57ae00f731b51d44f78f9
+cas_ref: sha256:8b97e6a4630340b443fa214999b984da92dfd1ccb7e57ae00f731b51d44f78f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and retained block notation; stipulates entry-rank notation and that subsequent valuations refer to the original sequence. No rank value or valuation identity is asserted.
+    previous_atom_id: 89bc057a893ec0fcfe934dbb7a820c2ce48f96bbdc783c83d3bd5b74f5bf5626
+    next_atom_id: 5c776ab79957e0cf305e9ce147c24f84ea6a45832d64e181eaecb69df7e512e0

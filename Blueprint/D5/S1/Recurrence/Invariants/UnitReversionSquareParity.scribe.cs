@@ -42,6 +42,10 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
             Node("subst_outer_agree", "Subst outer agree",
                 Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("d"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("g"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("u"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Parenthesized(Call("Agree", F.Id("d"), F.Id("f"), F.Id("g"))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(new Formula.Power(Parenthesized(F.Id("X")), D(2)), Sp, Mid, Sp, F.Id("u"))), Sp, Implies, Sp, Parenthesized(Call("Agree", new Formula.Binary(Parenthesized(D(2)), FormulaBinaryOperator.Multiply, Parenthesized(F.Id("d"))), Call("subst", F.Id("f"), F.Id("u")), Call("subst", F.Id("g"), F.Id("u")))))))))))))),
                 "Substitution by a series divisible by X squared doubles outer coefficient agreement.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("subst_inner_agree", "Agreement of inner substitutions", PublishedInnerAgreementFormula(),
+                "In this formula subst(u,f) means f(u). Substitution into the same outer series preserves agreement of zero-constant inner series."),
+            Node("subst_constant", "Constant coefficient of a composition", PublishedConstantFormula(),
+                "In this formula subst(u,f) means f(u). Composing with a zero-constant series preserves the outer series' constant coefficient."),
             Node("generatingSeries", "Construction of the integer series", GeneratingFormula(),
                 "Write A=X*B. The equation B=r(B)^2*subst(B,q(B)) contracts agreement "
                 + "by one degree for series of constant coefficient 1. The inverse r(B) "
@@ -197,6 +201,25 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
             Bound("u", PublishedSeries()), Bound("v", PublishedSeries()),
             Implication(Call("Agree", d, f, g), Implication(Call("Agree", d, u, v),
                 Call("Agree", d, Mul(f, u), Mul(g, v))))));
+    }
+
+    private static Formula PublishedInnerAgreementFormula()
+    {
+        Formula d = F.Id("d"), u = F.Id("u"), v = F.Id("v"), f = F.Id("f");
+        return Disp(Seq(PublishedBinders(), Bound("d", Naturals()),
+            Bound("u", PublishedSeries()), Bound("v", PublishedSeries()),
+            Implication(Call("Agree", d, u, v), Parenthesized(Seq(Bound("f", PublishedSeries()),
+                Implication(Equal(Call("constantCoeff", u), D(0)),
+                    Implication(Equal(Call("constantCoeff", v), D(0)),
+                        Call("Agree", d, Call("subst", u, f), Call("subst", v, f)))))))));
+    }
+
+    private static Formula PublishedConstantFormula()
+    {
+        Formula f = F.Id("f"), u = F.Id("u");
+        return Disp(Seq(PublishedBinders(), Bound("f", PublishedSeries()), Bound("u", PublishedSeries()),
+            Implication(Equal(Call("constantCoeff", u), D(0)),
+                Equal(Call("constantCoeff", Call("subst", u, f)), Call("constantCoeff", f)))));
     }
 
 }

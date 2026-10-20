@@ -357,7 +357,7 @@ private theorem assembly_from_replacement
     obtain ⟨Ψ', hΨ', hdist⟩ := replacement d Φ hΦ Ψ hΨ
     exact (csInf_le (distance_image_bdd_below Φ _) ⟨Ψ', hΨ', rfl⟩).trans hdist
 
-private def referenceChannel {r a b : Type}
+def referenceChannel {r a b : Type}
     [Fintype r] [DecidableEq r] [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (T : QuantumChannel a b) :
     QuantumChannel (r × a) (r × b) := by
@@ -383,7 +383,7 @@ private def referenceChannel {r a b : Type}
     exact Finset.sum_congr rfl (fun i _ =>
       T.trace_preserving (CStarMatrix.ofMatrix fun x y => X (i,x) (i,y)))
 
-private theorem trace_contract_rectangular {a b : Type} [Fintype a] [DecidableEq a]
+theorem trace_contract_rectangular {a b : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (T : QuantumChannel a b)
     (ρ σ : DensityState a) :
     traceDistance (T.mapState ρ) (T.mapState σ) ≤ traceDistance ρ σ := by
@@ -488,7 +488,7 @@ private def reindexChannel {a b : Type} [Fintype a] [DecidableEq a]
     change (∑ i : b, X (e.symm i) (e.symm i)) = ∑ i : a, X i i
     exact e.symm.sum_comp (fun i : a => X i i)
 
-private def leftChannel {a b r : Type} [Fintype a] [DecidableEq a]
+def leftChannel {a b r : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] [Fintype r] [DecidableEq r]
     (T : QuantumChannel a b) : QuantumChannel (a × r) (b × r) :=
   (reindexChannel (Equiv.prodComm r b)).comp

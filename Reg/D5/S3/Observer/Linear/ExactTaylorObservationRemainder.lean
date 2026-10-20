@@ -22,6 +22,84 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+namespace Tail
+
+def actual : Realization signature :=
+  realize signature (fun _ _ t => Real.exp t) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+
+def theoremLaw (R : Realization signature) : Prop := ∀ {𝕜 : Type u} {A : Type v}
+    [RCLike 𝕜] [NormedRing A] [NormedAlgebra 𝕜 A]
+    [CompleteSpace A] [NormOneClass A]
+    (z : A) (r : ℝ) (n : ℕ) (_hr : 0 ≤ r) (_hz : ‖z‖ ≤ r),
+    ‖NormedSpace.exp z - ∑ k ∈ range n, ((k.factorial : 𝕜)⁻¹) • z ^ k‖ ≤
+      r ^ n / (n.factorial : ℝ) * R.readout () () r
+
+def arena : Arena where
+  signature := signature
+  Law := theoremLaw.{u,v}
+
+private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  letI : Algebra (ULift.{u} ℝ) (ULift.{v} ℝ) := ULift.algebra' ℝ (ULift.{v} ℝ)
+  letI : NormedAlgebra (ULift.{u} ℝ) (ULift.{v} ℝ) := {
+    norm_smul_le := by
+      intro r x
+      change ‖r.down * x.down‖ ≤ ‖r.down‖ * ‖x.down‖
+      exact (norm_mul _ _).le }
+  have hh := h (𝕜 := ULift.{u} ℝ) (A := ULift.{v} ℝ)
+    0 1 0 zero_le_one (by simp)
+  norm_num [rejected, realize] at hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨(), 0, 1, ?_⟩
+  exact ne_of_lt (Real.exp_lt_exp.mpr zero_lt_one)
+
+def family : Registration arena (type_of% @exp_tail_le.{u,v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨exp_tail_le, rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j hj => (hj (@Subsingleton.elim Unit _ j i)).elim, rfl, rejected_law⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@exp_tail_le.{u,v})
+    (type_of% (realize signature (fun _ _ t => Real.exp t) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Observer.Linear.ExactTaylorObservationRemainder.exp_tail_le.__information_unit
+  realizationName := `Reg.D5.S3.Observer.Linear.ExactTaylorObservationRemainder.Tail.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ t => Real.exp t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.Linear.ExactTaylorObservationRemainder
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end Tail
+
 namespace Pointwise
 
 def actual : Realization signature :=

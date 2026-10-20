@@ -9,6 +9,12 @@
 import D5.S1.Words.FibonacciMapBound
 import D5.S1.Scale.Fibonacci
 import D5.S1.Deficit.Displacement.GoldenSubstStartSharpness
+import D5.S1.Dynamics.GoldenFractionalPart
+import D5.S1.Phase.ThreeGap.Returns
+import D5.S1.Words.GoldenMechanicalWord
+import D5.S1.Words.GoldenWord
+import D5.S1.Words.Mechanical.MechanicalBalance
+import D5.S1.Words.Mechanical.MechanicalGoldenBridge
 
 namespace D5.S1.Words.FibonacciMapFirstStart
 
@@ -182,7 +188,7 @@ private theorem fibonacci_one_sided_records (m : ℕ) (hm : 2 ≤ m) :
       linear_combination e * hdetR
 
 /-- Open symbol endpoints permit equality in the gap bound in either direction. -/
-private theorem open_rotation_run {lo hi eps : ℝ} {x : ℕ → ℝ} {length : ℕ}
+theorem open_rotation_run {lo hi eps : ℝ} {x : ℕ → ℝ} {length : ℕ}
     (forward : Bool) (heps : 0 < eps) (hlo : 0 ≤ lo) (hhi : hi ≤ 1)
     (hgap : eps ≤ 1 - (hi - lo)) (hpos : 0 < length)
     (hmem : ∀ k < length, lo < x k ∧ x k < hi)
@@ -666,9 +672,5 @@ example : goldenMAPFirstStart 2 = 3 ∧ goldenMAPFirstStart 1 = 2 := by
   norm_num [Nat.fib_add_two] at h
   exact h
 
-#print axioms fibonacci_one_sided_records
-#print axioms open_rotation_run
-#print axioms maximum_of_window
-#print axioms result
 
 end D5.S1.Words.FibonacciMapFirstStart

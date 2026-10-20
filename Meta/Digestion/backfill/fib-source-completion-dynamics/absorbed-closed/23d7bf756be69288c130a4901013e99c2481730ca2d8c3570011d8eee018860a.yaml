@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:23d7bf756be69288c130a4901013e99c2481730ca2d8c3570011d8eee018860a
+  normalized_sha256: sha256:23d7bf756be69288c130a4901013e99c2481730ca2d8c3570011d8eee018860a
+cas_ref: sha256:23d7bf756be69288c130a4901013e99c2481730ca2d8c3570011d8eee018860a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ActualCountRateBridge.original_actual_count_rate_bridge
+    target_statement_id: sha256:9b043cfd243794d0c94d0ba2c8544ea5c8e3fe57d76221849f3806df5da96913
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ActualCountRateBridge.same_reset_count_comparison
+    target_statement_id: sha256:315e3b0336903bd7a143ef21ce1d647990f2f7cdbf7b2f2aaf1d8e7c4286387e
+receipts:
+  unresolved_subitems: []
