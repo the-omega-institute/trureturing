@@ -4843,7 +4843,13 @@ C_n^{-1}\,
 \tag{93.1}
 $$
 
-令 $\mathcal A_n^\ast$ 表示这些带有 $A$ 标签的点，而不是只把它们写成一个未标记集合。一个固定三维的统一双 Lipschitz 桥，是一族映射
+令
+
+$$
+\mathcal A_n^\ast:=\{A\mid A\subseteq P_n\}
+$$
+
+把每个子集 $A$ 作为对应归一化面积点的标签。一个固定三维的统一双 Lipschitz 桥，是一族映射
 
 $$
 \Phi_n:\mathcal A_n^\ast\longrightarrow\mathbb R^3
