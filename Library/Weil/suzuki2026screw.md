@@ -9937,3 +9937,113 @@ Apply the ALREADY established W342--W343 to $RF$ and use W348. This is their act
 For an ORIGINAL source with $Q_H=1$, let $\psi=F/\|F\|_H$ be its W257 feature. Evaluate the second line of W349 at $\psi$ and divide its right side by $4\pi^3$ to bound the ORIGINAL $A Q_{\mathcal K_A^g}$. This includes EVERY original source with $Q_{6,A}\le K$ for EVERY fixed $K>1$, at the existing admitted start, with its original count and window. Its auxiliary feature obeys $M(R\psi)\le C_RK$; it is not normalized or passed off as a new source in that window. The two-sided line applies with the same exact W257 factor. It also covers $R\psi=0$, when the complete energy is zero.
 
 Thus the explicit mean term can be removed from the actual all-source lower estimate without a sign assumption or an unpaid energy change. The remaining primary-prime term and low-frequency allowance still require a joint signed bound; their values change under $R$, and neither has been shown favorable. No nonnegativity of the common constrained minima, W258, full RH or strict Robin for EVERY integer $n>5040$ follows. The published theta/null-vector facts and W342--W343 are reused; the additional application is their exact physical null-direction realization, domain-controlled centering and original-source consumer, without a priority claim. This is paper mathematics without scientific execution or Lean/kernel certification.
+
+## One fixed sixth-moment cap controls the entire signed source class
+
+The previous source budgets ranged over every $K>1$. The actual mixed null direction W347 and the already established equal-moment extraction W345 give a quantitative reduction to the ONE fixed cap $4$, without losing any negative direction. The reduction is consumed below by a complete-energy bound for every original budget and by W330's original-source recovery. It does not assume the sign still sought in W349.
+
+The quadratic mixing is classical; the rank-one extraction is the Sturm--Zhang supplier already cited in W344--W346 and is not reproved. The radical-adjustment precedent and its distinct adelic functional are recorded before W347. The application here uses the actual $e^{-x}$ direction, its actual sixth moment, and the already paid return to original Gaussian sources. No generic mixing theorem, new null-vector theorem or literature-priority claim is made.
+
+### The fixed actual null vector fits below cap four
+
+Retain exactly $H$, $M$, $\mathcal V$ and the COMPLETE $\mathfrak E$ of W317. Normalize the known null direction by
+$$
+z_\circ=\frac{e^{-x}}{\|e^{-x}\|_H}.
+$$
+Its moment and one convenient positive lower allowance are
+$$
+\begin{gathered}
+\kappa_\circ:=M(z_\circ)
+=\sum_{j=0}^6\binom6j\frac{j!}{(2\pi)^j}
+<\frac{1223}{324}<4,\qquad c_*:=\frac{73}{324}<4-\kappa_\circ,\\
+e_4:=\min_{\substack{F\in\mathcal V,\ \|F\|_H=1\\M(F)\le4}}
+\mathfrak E(F)\le0.
+\end{gathered}
+\tag{W350}
+$$
+For the moment formula, substitute $x=\pi+y$ in the normalized exponential integral and integrate its degree-six polynomial expansion. Using $\pi>3$ bounds their sum by
+$1+1+5/6+5/9+5/18+5/54+5/324=1223/324$.
+The minimum is finite and attained by W321, agrees in both fields by W346, and is nonpositive because $z_\circ$ is feasible and has complete energy zero by W347. No nonnegative lower bound for it has been established.
+
+### Compress an arbitrary signed feature and quantify its full energy
+
+Define, for $m>1$,
+$$
+\theta_4(m)=
+\begin{cases}
+1,&m\le4,\\
+(4-\kappa_\circ)/(m-\kappa_\circ),&m>4.
+\end{cases}
+$$
+For EVERY $F\in\mathcal V_{\mathbb C}$ with $\|F\|_H=1$, writing $m=M(F)$, there is a REAL $G\in\mathcal V$ such that
+$$
+\|G\|_H=1,\qquad M(G)=\min(m,4),\qquad
+\mathfrak E(G)\le\theta_4(m)\mathfrak E(F).
+\tag{W351}
+$$
+First apply W345 to obtain a real unit $v$ with moment $m$ and complete energy no larger than that of $F$. If $m\le4$, take $G=v$. Otherwise set
+$$
+t^2=\frac{m-4}{4-\kappa_\circ},\qquad
+Y=\frac{v+it z_\circ}{\sqrt{1+t^2}}.
+$$
+Since $v$ and $z_\circ$ are real, their cross terms in both the $H$ norm and moment vanish in this complex combination. W347 gives
+$$
+\|Y\|_H=1,\qquad M(Y)=4,\qquad
+\mathfrak E(Y)=\frac{\mathfrak E(v)}{1+t^2}
+\le\theta_4(m)\mathfrak E(F).
+$$
+Reuse W345 on $Y$ to extract the required real $G$ with the SAME moment and no larger COMPLETE energy. Thus complex mixing creates no restriction to complex final sources. Individual Gamma, prime and folded contributions are not asserted unchanged.
+
+In particular, if $\mathfrak E(F)\le-\Delta<0$, put $d=\theta_4(m)\Delta$. Then
+$\mathfrak E(G)\le-d$ and $d\ge c_*\Delta/m>0$.
+The retained margin depends on the original feature; no universal negative margin or efficient extraction algorithm is claimed.
+
+### Consume the reduction in every original budget
+
+For $K>1$ set
+$$
+D_4(K)=\max\left(1,\frac{K-\kappa_\circ}{4-\kappa_\circ}\right).
+$$
+The SAME existing completed minima satisfy
+$$
+\begin{gathered}
+e_K\ge D_4(K)e_4\quad(K>1),\qquad
+e_K\le e_4\quad(K\ge4),\\
+\mathfrak E(F)\ge\frac{e_4}{c_*}M(F)\quad(F\in\mathcal V).
+\end{gathered}
+\tag{W352}
+$$
+Indeed W351 makes $G$ feasible for $e_4$, so
+$\mathfrak E(F)\ge e_4/\theta_4(m)$ for every unit $F$. For $m\le K$, the reciprocal is at most $D_4(K)$; since $e_4\le0$, this gives the first lower bound. Set inclusion gives the upper bound for $K\ge4$. Also $1/\theta_4(m)\le m/c_*$ for every $m>1$. Homogeneity now gives the global moment bound, including the zero feature.
+
+This has a SAME-original-source consumer through W257. For every admitted original normalized source with $Q_H=1$ and $Q_{6,A}\le K$,
+$$
+4\pi^3 A Q_{\mathcal K_A^g}\ge D_4(K)e_4.
+$$
+Without normalization, every admitted finite original source obeys
+$$
+A Q_{\mathcal K_A^g}\ge\frac{e_4}{4\pi^3c_*}Q_{6,A}.
+$$
+These include arbitrary real or complex coefficients, counts and widths, with the ENTIRE kernel retained. The new coefficient is an unevaluated actual minimum, not a certified favorable number or a numerical improvement over earlier constants. A finite-source trial value supplies an upper bound on $e_4$; it cannot be inserted as its lower certificate.
+
+### Return every compressed negative direction to legal original sources
+
+The auxiliary $z_\circ$ is not a new site inserted in the original late window. Apply the existing recovery W330 to W351's completed $G$, at the exact budget $K=4$ and $B=0$. With
+$$
+\eta=\min(1,d/2),\qquad L=19/3+\eta^{-1},
+$$
+there is the SAME universal recovery constant $C$ such that EVERY $A\ge CL^{100}$ and EVERY $w>0$ admit a real ORIGINAL source satisfying
+$$
+\begin{gathered}
+\operatorname{supp}\sigma\subset[A,A+w),\qquad
+\#\operatorname{supp}\sigma\le\left\lceil e^{CL^{100}}e^{2A}\right\rceil,\\
+Q_H(\sigma)=1,\qquad Q_{6,A}(\sigma)\le4,\qquad
+A Q_{\mathcal K_A^g}(\sigma)\le-\frac{d}{8\pi^3}<0.
+\end{gathered}
+\tag{W353}
+$$
+W330 pays its own strict-slack step even when $M(G)=4$, and gives $\mathfrak E(\psi)\le\mathfrak E(G)+\eta\le-d/2$ for the recovered normalized feature. W257 supplies the displayed original factor. No original count, sites, gap or coefficient bound is asserted preserved by this recovery.
+
+Consequently the conditional negative witnesses of W254, if any exist, can ALL be chosen inside the fixed original cap $4$ rather than a seed-dependent moment cap. This captures every possible negative direction; it does not replace the original goal by a positive subclass. W328/W337 already identify and approximate precisely this $e_4$ by actual cap-four source extrema. A vanishing lower allowance at that single cap would therefore pay all the other budgets through W352; such an allowance remains unproved.
+
+The current W349 estimate can likewise be tested only on the normalized cap-four class when trying to exclude arbitrary negative features: W351 would move any negative feature into that class. Its centered auxiliary test then has $M(RG)\le4C_R$ and the SAME energy, by W348, and is still never renormalized. Every Gamma, primary-prime, low-frequency and folded term must remain on that one centered profile. Their required joint sign, the sign $e_4=0$ versus $e_4<0$, full RH and strict Robin for EVERY integer $n>5040$ remain unresolved. This is a paper application of the existing null direction, classical rank-one extraction and owned source recovery, without scientific execution or Lean/kernel certification.
