@@ -1,0 +1,60 @@
+PLAYBOOK_STEP command=deposit-uncovered detail=lean-report-scoped
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=ensure status=started
+LEAN_INSPECTOR_PHASE phase=ensure status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=report status=started
+LEAN_INSPECTOR_PHASE phase=report status=completed exit=0
+LEAN_INSPECTOR_AGGREGATE modules=21 declarations=1630
+LEAN_INSPECTOR_SCOPED_WORK {"compiled_module_names": [], "compiled_modules": 0, "extracted_module_names": [], "extracted_modules": 0, "selected_modules": 21}
+SCOPED_LEAN_REPORT path=/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/build/stratalint/delivery-lean-report.json sha256=de3d8d167705568342e720adf24a6bd6a06feb2351aa1b4eb329baf8c0a807b1
+RESOURCE_OBSERVATION stage=report-supervisor-lean-producer disk_free_kb=101302848 fd_soft_limit=4096 fd_peak=253 rss_peak_kb=1761472
+PLAYBOOK_STEP command=deposit-uncovered detail=deposit-header-check
+DEPOSIT_HEADER_CHECKED SL-012 D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean
+PLAYBOOK_STEP command=deposit-uncovered detail=emit
+
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:00.80
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=ensure status=started
+LEAN_INSPECTOR_PHASE phase=ensure status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=report status=started
+LEAN_INSPECTOR_PHASE phase=report status=completed exit=0
+LEAN_INSPECTOR_AGGREGATE modules=21 declarations=1630
+LEAN_INSPECTOR_SCOPED_WORK {"compiled_module_names": [], "compiled_modules": 0, "extracted_module_names": [], "extracted_modules": 0, "selected_modules": 21}
+SCOPED_LEAN_REPORT path=/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/build/stratalint/scoped-lean-report.json sha256=de3d8d167705568342e720adf24a6bd6a06feb2351aa1b4eb329baf8c0a807b1
+RESOURCE_OBSERVATION stage=report-supervisor-lean-producer disk_free_kb=101150992 fd_soft_limit=4096 fd_peak=251 rss_peak_kb=1759024
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=ensure status=started
+LEAN_INSPECTOR_PHASE phase=ensure status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+SCOPED_LEAN_REPORT_VERIFIED path=/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.current-residue/tmp/stratalint-report-consumer.KlXuWq2d/scoped-lean-report.json
+document graph: receipt-free=1 receipt-bound=0 wired=1 truth-anchor=3 dependency=2 narrative=0
+emitted: 0 changed blueprint(s)
+RESOURCE_OBSERVATION stage=report-supervisor-scribe-consumer disk_free_kb=101095140 fd_soft_limit=4096 fd_peak=512 rss_peak_kb=5120912
+checked: Evidence/D5/values.json
+PLAYBOOK_STEP command=deposit-uncovered detail=ledger-align --add D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean
+LEDGER_ALIGN selectors_considered=1 changed=0 added=1 unchanged=0 conflicts=0
+PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED gid=D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.singleton_negative_current_residue reason=NO_ATOM

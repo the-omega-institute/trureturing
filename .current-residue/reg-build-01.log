@@ -1,0 +1,136 @@
+LEAN_CACHE {"status":"present","worktree":"/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020","donor":null,"method":"none","reason":null,"stamp_miss":null,"pin_sha256":"sha256:6e263543ee0c576b796667fc05a69ec232d3f1236a2ab6a8be8e3e1976459fb8","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":0,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"linked worktree: release archive disabled","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
+omega-gate: waiting (native process observation incomplete: unresolved process lifetime pid=94159)
+Build completed successfully (3246 jobs).
+LEAN_CACHE {"status":"present","worktree":"/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020","donor":null,"method":"none","reason":null,"stamp_miss":null,"pin_sha256":"sha256:6e263543ee0c576b796667fc05a69ec232d3f1236a2ab6a8be8e3e1976459fb8","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":0,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"linked worktree: release archive disabled","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
+✖ [3303/3303] Building Reg.D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue (36s)
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean: imports `Mathlib.RingTheory.Flat.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+trace: .> LEAN_PATH=/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/packages/Cli/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/packages/batteries/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/packages/Qq/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/packages/aesop/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/packages/importGraph/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/packages/plausible/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/packages/mathlib/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/tools/lean-inspector-interface/../../.lake/build/lean-inspector/interface/lib/lean:/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/Reg/../.lake/build/reg/lib/lean /Users/macstudio/.elan/toolchains/leanprover--lean4---v4.35.0/bin/lean -j1 /Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/Reg/../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean -o /Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/Reg/../.lake/build/reg/lib/lean/Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.olean -i /Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/Reg/../.lake/build/reg/lib/lean/Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.ilean -c /Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/Reg/../.lake/build/reg/ir/Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.c --setup /Users/macstudio/omega/trureturing-01a124be-current-residue-20261020/Reg/../.lake/build/reg/ir/Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.setup.json --json
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:6:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:8:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:69:6: failed to synthesize instance of type class
+  OfNat (Fin hyperbolic.rank) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin hyperbolic.rank
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:82:6: failed to synthesize instance of type class
+  OfNat (Fin hyperbolic.rank) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin hyperbolic.rank
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:90:6: failed to synthesize instance of type class
+  OfNat (Fin hyperbolic.rank) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin hyperbolic.rank
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:96:6: failed to synthesize instance of type class
+  OfNat (Fin hyperbolic.rank) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin hyperbolic.rank
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:96:53: unsolved goals
+⊢ ↑(hyperbolic.G (sorry ()) 1) • 1 ⊗ₜ[ℂ] probeGround = 1 ⊗ₜ[ℂ] probeGround
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:105:6: failed to synthesize instance of type class
+  OfNat (Fin hyperbolic.rank) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin hyperbolic.rank
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:173:36: failed to synthesize instance of type class
+  OfNat (Fin hyperbolic.rank) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin hyperbolic.rank
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:177:40: failed to synthesize instance of type class
+  OfNat (Fin hyperbolic.rank) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin hyperbolic.rank
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:189:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:194:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:196:100: This line exceeds the 100 character limit, please shorten it!
+You can use "string gaps" to format long strings: within a string quotation, using a '\' at the end of a line allows you to continue the string on the following line, removing all intervening whitespace.
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:256:36: failed to synthesize instance of type class
+  OfNat (Fin hyperbolic.rank) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin hyperbolic.rank
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:260:40: failed to synthesize instance of type class
+  OfNat (Fin hyperbolic.rank) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin hyperbolic.rank
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:268:6: failed to synthesize instance of type class
+  OfNat (Fin hyperbolic.rank) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin hyperbolic.rank
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:276:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:281:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:283:100: This line exceeds the 100 character limit, please shorten it!
+You can use "string gaps" to format long strings: within a string quotation, using a '\' at the end of a line allows you to continue the string on the following line, removing all intervening whitespace.
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+error: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:358:31: Type mismatch: After simplification, term
+  bad
+ has type
+  @Eq (ActualTensor hyperbolic hyperbolic_unit) probeState ((0 (-2 * 0 - 0 - 3)) probeState)
+but is expected to have type
+  @Eq (ActualTensor hyperbolic hyperbolic_unit) probeState 0
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:360:16: declaration uses `sorry`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:374:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:379:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:381:100: This line exceeds the 100 character limit, please shorten it!
+You can use "string gaps" to format long strings: within a string quotation, using a '\' at the end of a line allows you to continue the string on the following line, removing all intervening whitespace.
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+Some required targets logged failures:
+- Reg.D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue
+error: build failed
+make: *** [lean] Error 1

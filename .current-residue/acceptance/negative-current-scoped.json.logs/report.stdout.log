@@ -1,0 +1,3007 @@
+LEAN_CACHE {"status":"present","worktree":"/Users/macstudio/omega/trureturing-01a124be-current-residue-20261020","donor":null,"method":"none","reason":null,"stamp_miss":null,"pin_sha256":"sha256:6e263543ee0c576b796667fc05a69ec232d3f1236a2ab6a8be8e3e1976459fb8","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":0,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"linked worktree: release archive disabled","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
+✔ [400/409] Built LeanInformationAudit.Contract.SourceAudit:c.o (755ms)
+✔ [401/409] Built LeanInformationAudit.Contract.InputDiscovery:c.o (202ms)
+⚠ [404/417] Replayed D5.S0.Rewriting.Quotients.AnswerabilityCriterion
+warning: D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean: imports `Mathlib.Logic.Function.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean: imports `Mathlib.Data.Set.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean:23:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `namespace D5.S0.Rewriting.Quotients.AnswerabilityCriterion`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean:42:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+info: D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean:77:0: 'D5.S0.Rewriting.Quotients.AnswerabilityCriterion.answerability_criterion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ℹ [405/417] Built inputDiscovery:exe (1.4s)
+info: stderr:
+ld64.lld: warning: directory not found for option -L/usr/local/lib
+ℹ [406/417] Replayed trureturing/D5.S0.Rewriting.Quotients.AnswerabilityCriterion:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S0.Rewriting.Quotients.AnswerabilityCriterion inputs=0
+✔ [440/498] Built LeanInformationAudit.CompiledMetadata:c.o (227ms)
+✔ [441/498] Built LeanInformationAudit.RawArtifacts:c.o (398ms)
+✔ [442/498] Built LeanInformationAudit.CompiledAxioms:c.o (179ms)
+✔ [443/498] Built LeanInformationAudit.Sha256:c.o (193ms)
+✔ [444/498] Built LeanInformationAudit.Contract.CompiledExpressions:c.o (1.5s)
+✔ [445/498] Built LeanInformationAudit.SourceSelection:c.o (146ms)
+✔ [446/498] Built LeanInformationAudit.InputTypes:c.o (115ms)
+✔ [447/498] Built LeanInformationAudit.EscapeEvidence:c.o (97ms)
+✔ [448/498] Built LeanInformationAudit.BindingRecords:c.o (86ms)
+✔ [449/498] Built LeanInformationAudit.CatalogData:c.o (91ms)
+✔ [450/498] Built LeanInformationAudit.TemplateData:c.o (700ms)
+✔ [451/498] Built LeanInformationAudit.SnapshotTypes:c.o (106ms)
+✔ [452/498] Built LeanInformationAudit.RegistrationData:c.o (107ms)
+✔ [453/498] Built LeanInformationAudit.Registry.Repository:c.o (87ms)
+✔ [454/498] Built LeanInformationAudit.Registry.ArenaProvenance:c.o (72ms)
+✔ [455/498] Built LeanInformationAudit.RegistrationRelations:c.o (310ms)
+✔ [456/498] Built LeanInformationAuditInterface.Contract.Core:c.o (110ms)
+✔ [457/498] Built LeanInformationAudit.Contract.Literal:c.o (565ms)
+✔ [458/498] Built LeanInformationAudit.Contract.Decoder:c.o (907ms)
+✔ [459/498] Built LeanInformationAudit.TemplateWire:c.o (945ms)
+✔ [460/498] Built LeanInformationAudit.ReadoutProvenance.View:c.o (100ms)
+✔ [461/498] Built LeanInformationAudit.ReadoutProvenance.Family:c.o (501ms)
+✔ [462/498] Built LeanInformationAudit.ReadoutProvenance.State:c.o (1.4s)
+✔ [463/498] Built LeanInformationAudit.ReadoutProvenance.Carriers:c.o (1.2s)
+✔ [464/498] Built LeanInformationAudit.ReadoutProvenance.Types:c.o (1.7s)
+✔ [465/498] Built LeanInformationAudit.ReadoutProvenance:c.o (1.3s)
+✔ [466/498] Built LeanInformationAudit.TemplateEnrollment:c.o (3.9s)
+✔ [467/498] Built LeanInformationAudit.Registry.SourceBinder:c.o (250ms)
+✔ [468/498] Built LeanInformationAudit.CompiledEvidence:c.o (926ms)
+✔ [469/498] Built LeanInformationAudit.CompiledSourceScope:c.o (2.7s)
+✔ [470/498] Built LeanInformationAudit.Contract.RootStructure:c.o (156ms)
+✔ [471/498] Built LeanInformationAudit.Contract.Discovery:c.o (221ms)
+✔ [474/498] Built LeanInformationAudit.CompiledSnapshots:c.o (148ms)
+✔ [475/498] Built LeanInformationAudit.Contract.FibSource:c.o (651ms)
+✔ [478/498] Built LeanInformationAudit.CompiledSourceOperands:c.o (648ms)
+✔ [479/498] Built LeanInformationAudit.Contract.FibFinite:c.o (753ms)
+✔ [482/498] Built LeanInformationAudit.CompiledSourceContract:c.o (1.1s)
+✔ [483/498] Built LeanInformationAudit.Contract.FibApplications:c.o (703ms)
+✔ [485/498] Built LeanInformationAudit.CompiledAssessment:c.o (1.6s)
+✔ [487/498] Built LeanInformationAudit.BindingWire:c.o (183ms)
+✔ [489/498] Built LeanInformationAudit.CompiledRegistration:c.o (308ms)
+✔ [491/500] Built LeanInformationAudit.ArtifactRegistration:c.o (526ms)
+✔ [493/503] Built LeanInformationAudit.CompiledSeal:c.o (479ms)
+✔ [497/504] Built LeanInformationAudit.ArtifactAssessment:c.o (123ms)
+✔ [499/505] Built Inspector:c.o (933ms)
+ℹ [501/506] Built reportInspector:exe (1.8s)
+info: stderr:
+ld64.lld: warning: directory not found for option -L/usr/local/lib
+⚠ [586/612] Replayed D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
+warning: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean: imports `Mathlib.Data.Set.Lattice` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean: imports `Mathlib.Tactic.TFAE` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean:8:0: 'Mathlib.Data.Set.Lattice' has been deprecated: please replace this import by
+
+import Mathlib.Data.Set.Lattice.Bounded
+import Mathlib.Data.Set.Lattice.Disjoint
+import Mathlib.Data.Set.Lattice.Image
+import Mathlib.Data.Set.Lattice.Indexed
+import Mathlib.Data.Set.Lattice.Order
+warning: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean:25:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean:73:6: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+info: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean:126:0: 'D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion.joint_faithfulness_tfae' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+⚠ [589/612] Replayed D5.S3.ConceptDynamics.CIRPT.PrimitiveKernel
+warning: D5/S3/ConceptDynamics/CIRPT/PrimitiveKernel.lean: imports `Mathlib.Data.Setoid.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/CIRPT/PrimitiveKernel.lean:9:0: 'Mathlib.Data.Setoid.Basic' has been deprecated: please replace this import by
+
+import Mathlib.Order.Setoid.Basic
+warning: D5/S3/ConceptDynamics/CIRPT/PrimitiveKernel.lean:22:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/CIRPT/PrimitiveKernel.lean:6:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [590/612] Replayed D5.S3.ConceptDynamics.CIRPT.QuotientCutNormalForm
+warning: D5/S3/ConceptDynamics/CIRPT/QuotientCutNormalForm.lean: imports `Mathlib.Data.Quot` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/CIRPT/QuotientCutNormalForm.lean:23:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+⚠ [806/827] Replayed D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle
+warning: D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.lean: imports `Mathlib.Data.Fintype.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.lean: imports `Mathlib.Data.Finset.Fold` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.lean:24:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+ℹ [807/827] Replayed trureturing/D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle inputs=0
+ℹ [808/827] Replayed trureturing/D5.S3.ConceptDynamics.CIRPT.PrimitiveKernel:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.CIRPT.PrimitiveKernel inputs=0
+ℹ [809/827] Replayed trureturing/D5.S3.ConceptDynamics.CIRPT.QuotientCutNormalForm:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.CIRPT.QuotientCutNormalForm inputs=0
+⚠ [810/827] Replayed D5.S3.ConceptDynamics.Postprocessing.PostprocessingKernelMonotonicity
+warning: D5/S3/ConceptDynamics/Postprocessing/PostprocessingKernelMonotonicity.lean: imports `Mathlib.Data.Setoid.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/Postprocessing/PostprocessingKernelMonotonicity.lean:8:0: 'Mathlib.Data.Setoid.Basic' has been deprecated: please replace this import by
+
+import Mathlib.Order.Setoid.Basic
+warning: D5/S3/ConceptDynamics/Postprocessing/PostprocessingKernelMonotonicity.lean:21:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/Postprocessing/PostprocessingKernelMonotonicity.lean:52:0: 'D5.S3.ConceptDynamics.Postprocessing.PostprocessingKernelMonotonicity.postprocessing_kernel_mono' does not depend on any axioms
+⚠ [811/827] Replayed D5.S3.ConceptDynamics.ConceptFiberDecomposition
+warning: D5/S3/ConceptDynamics/ConceptFiberDecomposition.lean: imports `Mathlib.Logic.Equiv.Sum` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/ConceptFiberDecomposition.lean:21:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/ConceptFiberDecomposition.lean:45:0: 'D5.S3.ConceptDynamics.ConceptFiberDecomposition.concept_fiber_decomposition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+⚠ [812/827] Replayed D5.S3.ConceptDynamics.ConceptJoinUniversal
+warning: D5/S3/ConceptDynamics/ConceptJoinUniversal.lean:20:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/ConceptJoinUniversal.lean:61:0: 'D5.S3.ConceptDynamics.ConceptJoinUniversal.concept_join_universal' depends on axioms: [Quot.sound]
+⚠ [1101/1130] Replayed D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
+warning: D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff.lean: imports `Mathlib.Data.Set.Card` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff.lean: imports `Mathlib.Data.Set.Image` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff.lean:24:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff.lean:111:0: 'D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff.refinement_reduces_target_risk_and_raises_cost' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+⚠ [1102/1130] Replayed D5.S3.ConceptDynamics.CIRPT.UnifiedResidual
+warning: D5/S3/ConceptDynamics/CIRPT/UnifiedResidual.lean:26:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/CIRPT/UnifiedResidual.lean:189:0: 'D5.S3.ConceptDynamics.CIRPT.residual_joint_target_eq_iUnion' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [1103/1130] Replayed D5.S3.ConceptDynamics.CIRPT.RoleSignature
+warning: D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean: imports `Mathlib.Algebra.BigOperators.Group.Finset.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean: imports `Mathlib.Data.Fintype.Pi` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean: imports `Mathlib.Data.Fintype.Prod` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean:25:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean:309:0: 'D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.bundle_signature_partition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean:310:0: 'D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.bundle_signature_histogram_axis_count' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean:311:0: 'D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.four_role_signature_partition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean:312:0: 'D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.mem_roleDefectPairs_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean:313:0: 'D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.residual_signature_histogram_role_count' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean:314:0: 'D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.mem_kernelResidual_iff_residualRoleSignature_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ℹ [1104/1130] Replayed trureturing/D5.S3.ConceptDynamics.ConceptFiberDecomposition:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.ConceptFiberDecomposition inputs=0
+ℹ [1105/1130] Replayed trureturing/D5.S3.ConceptDynamics.ConceptJoinUniversal:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.ConceptJoinUniversal inputs=0
+⚠ [1106/1130] Replayed D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion
+warning: D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean:25:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean:95:0: 'D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion.target_recovery_criterion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+⚠ [1107/1130] Replayed D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
+warning: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelObstruction.lean:37:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelObstruction.lean:126:61: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelObstruction.lean:134:10: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelObstruction.lean:165:8: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelObstruction.lean:227:59: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+info: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelObstruction.lean:282:0: 'D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction.blind_kernel_obstruction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+⚠ [1108/1130] Replayed D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
+warning: D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.lean:35:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.lean:84:0: 'D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw.residual_join_law' depends on axioms: [propext, Quot.sound]
+ℹ [1109/1130] Replayed trureturing/D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion inputs=0
+⚠ [1110/1130] Replayed D5.S3.ConceptDynamics.InformationEscape.Arena
+warning: D5/S3/ConceptDynamics/InformationEscape/Arena.lean: imports `Mathlib.Data.Fintype.EquivFin` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscape/Arena.lean:19:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/InformationEscape/Arena.lean:51:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ℹ [1111/1130] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.Arena:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.Arena inputs=0
+⚠ [1112/1130] Replayed D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+warning: D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean: imports `Mathlib.Data.Fintype.Prod` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean: imports `Mathlib.Data.Fintype.Sum` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean:24:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean:190:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean:191:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean:199:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean:200:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [1113/1130] Replayed D5.S3.ConceptDynamics.InformationEscape.CatalogKernel
+warning: D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.lean: imports `Mathlib.Data.Finset.Fold` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.lean:29:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.lean:67:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.lean:202:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ℹ [1114/1130] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.CatalogKernel:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.CatalogKernel inputs=0
+⚠ [1115/1130] Replayed D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralArena
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralArena.lean:22:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+⚠ [1116/1130] Replayed D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:11:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `namespace
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:25:40: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a})'
+should be written as
+  'Signature.{t, s, r,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:25:42: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a})'
+should be written as
+  's, r, o,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:25:44: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a})'
+should be written as
+  'r, o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:25:46: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a}) where'
+should be written as
+  'o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:30:30: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a})'
+should be written as
+  'Signature.{t, s, r,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:30:32: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a})'
+should be written as
+  's, r, o,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:30:34: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a})'
+should be written as
+  'r, o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:30:36: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a})
+'
+should be written as
+  'o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:39:28: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a})'
+should be written as
+  'Arena.{t, s, r,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:39:30: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a})'
+should be written as
+  's, r, o,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:39:32: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a})'
+should be written as
+  'r, o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:39:34: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a}) (actual'
+should be written as
+  'o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:43:30: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a})'
+should be written as
+  'Arena.{t, s, r,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:43:32: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a})'
+should be written as
+  's, r, o,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:43:34: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a})'
+should be written as
+  'r, o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:43:36: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a}) (actual'
+should be written as
+  'o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:52:46: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a})'
+should be written as
+  'Signature.{t, s, r,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:52:48: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a})'
+should be written as
+  's, r, o,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:52:50: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a})'
+should be written as
+  'r, o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:52:52: missing space in the source
+
+This part of the code
+  'Signature.{t,s,r,o,a}) (actual'
+should be written as
+  'o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:57:37: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a})'
+should be written as
+  'Arena.{t, s, r,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:57:39: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a})'
+should be written as
+  's, r, o,'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:57:41: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a})'
+should be written as
+  'r, o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean:57:43: missing space in the source
+
+This part of the code
+  'Arena.{t,s,r,o,a}) (statement'
+should be written as
+  'o, a})'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+ℹ [1117/1130] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.DependentFamily:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.DependentFamily inputs=0
+ℹ [1118/1146] Replayed trureturing/D5.S3.ConceptDynamics.CIRPT.RoleSignature:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.CIRPT.RoleSignature inputs=0
+ℹ [1119/1146] Replayed trureturing/D5.S3.ConceptDynamics.CIRPT.UnifiedResidual:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.CIRPT.UnifiedResidual inputs=0
+ℹ [1120/1146] Replayed trureturing/D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction inputs=0
+⚠ [1121/1146] Replayed D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois
+warning: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:21:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:158:59: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:163:6: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:231:35: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:256:61: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:295:59: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+info: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:306:0: 'D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois.definition_relation_galois' does not depend on any axioms
+info: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:307:0: 'D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois.definitionClosure_idempotent' depends on axioms: [propext,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:308:0: 'D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois.mem_semanticClosure_iff_factors' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:309:0: 'D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois.productiveSeparation_implies_primitiveEscape' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean:310:0: 'D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois.languageExtension_defect_eq_blindResidual' depends on axioms: [propext,
+ Quot.sound]
+ℹ [1122/1146] Replayed trureturing/D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois inputs=0
+ℹ [1123/1146] Replayed trureturing/D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw inputs=0
+⚠ [1124/1146] Replayed D5.S3.ConceptDynamics.DefinitionEscapeLaws.SemanticClosureZeroGainCriterion
+warning: D5/S3/ConceptDynamics/DefinitionEscapeLaws/SemanticClosureZeroGainCriterion.lean:19:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/DefinitionEscapeLaws/SemanticClosureZeroGainCriterion.lean:82:0: 'D5.S3.ConceptDynamics.DefinitionEscapeLaws.SemanticClosureZeroGainCriterion.semantic_closure_zero_gain_criterion' depends on axioms: [propext,
+ Quot.sound]
+ℹ [1125/1146] Replayed trureturing/D5.S3.ConceptDynamics.DefinitionEscapeLaws.SemanticClosureZeroGainCriterion:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.DefinitionEscapeLaws.SemanticClosureZeroGainCriterion inputs=0
+⚠ [1126/1146] Replayed D5.S3.ConceptDynamics.DefinitionEscapeLaws.StrictKernelNoveltyCriterion
+warning: D5/S3/ConceptDynamics/DefinitionEscapeLaws/StrictKernelNoveltyCriterion.lean:22:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/DefinitionEscapeLaws/StrictKernelNoveltyCriterion.lean:76:0: 'D5.S3.ConceptDynamics.DefinitionEscapeLaws.StrictKernelNoveltyCriterion.strict_kernel_novelty_criterion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ℹ [1127/1146] Replayed trureturing/D5.S3.ConceptDynamics.DefinitionEscapeLaws.StrictKernelNoveltyCriterion:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.DefinitionEscapeLaws.StrictKernelNoveltyCriterion inputs=0
+⚠ [1128/1146] Replayed D5.S3.ConceptDynamics.InformationEscape.EscapePairs
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean: imports `Mathlib.Data.Finset.SDiff` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:23:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:57:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:58:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:70:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:71:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:72:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:73:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:103:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:104:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:117:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:118:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:119:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:131:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean:132:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ℹ [1129/1146] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.EscapePairs:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.EscapePairs inputs=0
+⚠ [1174/1202] Replayed D5.S3.ConceptDynamics.InformationEscape.ExactRate
+warning: D5/S3/ConceptDynamics/InformationEscape/ExactRate.lean: imports `Mathlib.Algebra.BigOperators.Group.Finset.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscape/ExactRate.lean: imports `Mathlib.Data.Rat.Cast.Order` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscape/ExactRate.lean:25:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+⚠ [1177/1202] Replayed D5.S3.ConceptDynamics.InformationEscapeHierarchy.GeneratedKernel
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean: imports `Mathlib.Data.Fintype.Lattice` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:23:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:151:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:152:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:224:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:225:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:264:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:389:9: Variable name `first` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _first
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:429:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:557:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:558:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:571:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean:572:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [1216/1248] Replayed D5.S3.ConceptDynamics.InformationEscapeHierarchy.KernelChain
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean: imports `Mathlib.Algebra.BigOperators.Field` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean: imports `Mathlib.Algebra.BigOperators.Fin` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean: imports `Mathlib.Order.Fin.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:25:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:166:35: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:166:59: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:166:77: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:169:33: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:169:57: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:169:75: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:171:35: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:171:59: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:171:77: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:166:35: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:166:59: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:166:77: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:169:33: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:169:57: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:169:75: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:171:35: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:171:59: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:171:77: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:302:16: `exists_membership_boundary` does not use the following hypothesis in its type:
+  • [DecidableEq alpha] (#4)
+
+Consider removing this hypothesis and using `classical` in the proof instead. For terms, consider using `open scoped Classical in` at the term level (not the command level).
+
+Note: This linter can be disabled with `set_option linter.unusedDecidableInType false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:325:10: Unused tactic linter: `change element ∈ sets r.succ.castSucc` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:329:10: Unused tactic linter: `change element ∉ sets r.succ.succ` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:341:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:342:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:546:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean:547:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [1217/1248] Replayed D5.S3.ConceptDynamics.InformationEscape.Laws
+warning: D5/S3/ConceptDynamics/InformationEscape/Laws.lean:19:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+⚠ [1218/1248] Replayed D5.S3.ConceptDynamics.InformationEscape.RoleHistogram
+warning: D5/S3/ConceptDynamics/InformationEscape/RoleHistogram.lean:20:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+⚠ [1219/1248] Replayed D5.S3.ConceptDynamics.InformationEscapeHierarchy.AnalysisLaws
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean: imports `Mathlib.Algebra.BigOperators.Ring.Finset` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean: imports `Mathlib.Data.Finset.Card` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:29:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:176:4: This simp argument is unused:
+  Finset.mem_univ
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [InformationEscape.Catalog.uniqueCapturePairs, Finset.mem_filter,
+    InformationEscape.Catalog.escapePairs, Catalog.indistinguishable_iff_forall, true_and, Catalog.mem_without_iff]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:176:21: This simp argument is unused:
+  true_and
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [InformationEscape.Catalog.uniqueCapturePairs, Finset.mem_filter,
+    InformationEscape.Catalog.escapePairs, Catalog.indistinguishable_iff_forall, Finset.mem_univ,
+    Catalog.mem_without_iff]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:343:2: `simp [redundantIndices]` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:344:2: `exact forall_congr' fun _ => by omega`
+modifies the current goal, which was modified by the flexible tactic `simp` on line 343!
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:353:67: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:376:32: This simp argument is unused:
+  Fin.zero_eta
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.mem_filter, Fin.ext_iff, captureMultiplicityFin]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:379:32: This simp argument is unused:
+  Finset.mem_univ
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.mem_filter, true_and]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:379:49: This simp argument is unused:
+  true_and
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.mem_filter, Finset.mem_univ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:615:44: This simp argument is unused:
+  and_assoc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [captured, pairCaptured]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean:623:26: This simp argument is unused:
+  Finset.sum_const_nat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [captured]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [1220/1248] Replayed D5.S3.ConceptDynamics.InformationEscapeHierarchy.LayeredCapture
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.lean: imports `Mathlib.Algebra.Order.Ring.Rat` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.lean: imports `Mathlib.Data.Finset.SDiff` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.lean: imports `Mathlib.Order.Fin.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.lean:27:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+ℹ [1221/1248] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.ExactRate:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.ExactRate inputs=0
+ℹ [1222/1248] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.Laws:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.Laws inputs=0
+⚠ [1223/1248] Replayed D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+warning: D5/S3/ConceptDynamics/InformationEscape/ObjectDomainArena.lean:11:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/InformationEscape/ObjectDomainArena.lean:7:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+ℹ [1224/1248] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena inputs=0
+ℹ [1225/1248] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.RoleHistogram:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.RoleHistogram inputs=0
+⚠ [1226/1248] Replayed D5.S3.ConceptDynamics.InformationEscape.StructuralNovelty
+warning: D5/S3/ConceptDynamics/InformationEscape/StructuralNovelty.lean:28:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+ℹ [1227/1248] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.StructuralNovelty:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.StructuralNovelty inputs=0
+ℹ [1228/1248] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.TheoremUnit:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.TheoremUnit inputs=0
+⚠ [1229/1248] Replayed D5.S3.ConceptDynamics.InformationEscapeCounting.Fused
+warning: D5/S3/ConceptDynamics/InformationEscapeCounting/Fused.lean:14:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+ℹ [1230/1248] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscapeCounting.Fused:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscapeCounting.Fused inputs=0
+⚠ [1232/1248] Replayed D5.S3.ConceptDynamics.InformationEscapeCounting.FusedCorrectness
+warning: D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.lean: imports `Mathlib.Tactic.FinCases` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.lean:15:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.lean:693:0: 'D5.S3.ConceptDynamics.InformationEscape.Catalog.fusedPairClassification' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.lean:694:0: 'D5.S3.ConceptDynamics.InformationEscape.Catalog.fusedFull_eq_escapeNumerator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.lean:695:0: 'D5.S3.ConceptDynamics.InformationEscape.Catalog.fusedUnique_eq_uniqueCaptureCount' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.lean:696:0: 'D5.S3.ConceptDynamics.InformationEscape.Catalog.fusedWithout_eq_escapeNumerator_without' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.lean:697:0: 'D5.S3.ConceptDynamics.InformationEscape.Catalog.fusedRoleBins_eq_roleHistogram' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.lean:698:0: 'D5.S3.ConceptDynamics.InformationEscape.Catalog.fusedRoleBins_sum_eq_unique' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.lean:699:0: 'D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount_pos_of_fused' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ℹ [1233/1248] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscapeHierarchy.AnalysisLaws:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscapeHierarchy.AnalysisLaws inputs=0
+ℹ [1234/1248] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscapeHierarchy.GeneratedKernel:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscapeHierarchy.GeneratedKernel inputs=0
+ℹ [1235/1248] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralArena:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralArena inputs=0
+⚠ [1236/1248] Replayed D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
+warning: D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.lean:23:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+ℹ [1237/1248] Replayed trureturing/D5.S3.ConceptDynamics.Postprocessing.PostprocessingKernelMonotonicity:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.Postprocessing.PostprocessingKernelMonotonicity inputs=0
+⚠ [1238/1263] Replayed D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapeRecord.lean:12:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/ConceptDynamics/InformationEscape/EscapeRecord.lean:54:2: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp at this
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+info: D5/S3/ConceptDynamics/InformationEscape/EscapeRecord.lean:56:0: 'D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.escapeResidualEmpty_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/ConceptDynamics/InformationEscape/EscapeRecord.lean:57:0: 'D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.escapeResidualEmpty_no_witness' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ℹ [1239/1263] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscape.EscapeRecord:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscape.EscapeRecord inputs=0
+ℹ [1240/1263] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscapeCounting.FusedCorrectness:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscapeCounting.FusedCorrectness inputs=0
+ℹ [1241/1263] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscapeHierarchy.KernelChain:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscapeHierarchy.KernelChain inputs=0
+ℹ [1242/1263] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscapeHierarchy.LayeredCapture:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscapeHierarchy.LayeredCapture inputs=0
+ℹ [1243/1263] Replayed trureturing/D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog inputs=0
+⚠ [1244/1263] Replayed D5.S3.ConceptDynamics.RegistrationWitnesses
+warning: D5/S3/ConceptDynamics/RegistrationWitnesses.lean:11:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `namespace LeanInformationAudit`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+ℹ [1245/1263] Replayed trureturing/D5.S3.ConceptDynamics.RegistrationWitnesses:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.RegistrationWitnesses inputs=0
+ℹ [1246/1263] Replayed trureturing/D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion inputs=0
+ℹ [1247/1263] Replayed trureturing/D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff inputs=0
+⚠ [1894/1911] Replayed D5.S3.QuadraticForms.SymplecticBasis
+warning: D5/S3/QuadraticForms/SymplecticBasis.lean: imports `Mathlib.LinearAlgebra.BilinearForm.Orthogonal` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/QuadraticForms/SymplecticBasis.lean: imports `Mathlib.LinearAlgebra.Basis.Prod` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/QuadraticForms/SymplecticBasis.lean: imports `Mathlib.LinearAlgebra.Projection` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/QuadraticForms/SymplecticBasis.lean: imports `Mathlib.LinearAlgebra.Dimension.Finite` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/QuadraticForms/SymplecticBasis.lean:32:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: D5/S3/QuadraticForms/SymplecticBasis.lean:227:0: 'D5.S3.QuadraticForms.SymplecticBasis.exists_isSymplecticBasis' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ℹ [1895/1911] Replayed trureturing/D5.S3.QuadraticForms.SymplecticBasis:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.QuadraticForms.SymplecticBasis inputs=0
+⚠ [1909/1911] Replayed D5.S3.Quantum.Algebra.PolynomialTangentDescent
+warning: D5/S3/Quantum/Algebra/PolynomialTangentDescent.lean: imports `Mathlib.Algebra.MvPolynomial.PDeriv` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/Quantum/Algebra/PolynomialTangentDescent.lean: imports `Mathlib.Algebra.MvPolynomial.Variables` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/Quantum/Algebra/PolynomialTangentDescent.lean: imports `Mathlib.Tactic.Abel` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/Quantum/Algebra/PolynomialTangentDescent.lean: imports `Mathlib.Tactic.Ring` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/Quantum/Algebra/PolynomialTangentDescent.lean:14:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/Quantum/Algebra/PolynomialTangentDescent.lean:38:60: `MvPolynomial.coeff_zero` has been deprecated: Use `AddMonoidAlgebra.coeff_zero` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} {M : Type u_4} [inst : Semiring R], AddMonoidAlgebra.coeff 0 = 0
+instead of
+  ∀ {R : Type u} {σ : Type u_1} [inst : CommSemiring R], AddMonoidAlgebra.coeff 0 = 0
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.coeff_zero` to `AddMonoidAlgebra.coeff_zero x`).
+warning: D5/S3/Quantum/Algebra/PolynomialTangentDescent.lean:7:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [1986/2009] Replayed D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity
+warning: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.lean: imports `Mathlib.RingTheory.MvPowerSeries.Derivative` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.lean: imports `Mathlib.Algebra.MvPolynomial.CommRing` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.lean: imports `Mathlib.RingTheory.Derivation.Lie` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.lean: imports `Mathlib.LinearAlgebra.FiniteDimensional.Lemmas` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.lean: imports `Mathlib.RingTheory.Adjoin.Polynomial.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.lean: imports `Mathlib.Data.Nat.Find` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.lean:17:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+ℹ [1987/2009] Replayed trureturing/D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity inputs=0
+ℹ [1988/2009] Replayed trureturing/D5.S3.Quantum.Algebra.PolynomialTangentDescent:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.Quantum.Algebra.PolynomialTangentDescent inputs=0
+⚠ [3364/3397] Replayed D5.S3.VertexAlgebra.FieldNormalProduct
+warning: D5/S3/VertexAlgebra/FieldNormalProduct.lean: imports `Mathlib.Algebra.Vertex.VertexOperator` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/FieldNormalProduct.lean: imports `Mathlib.RingTheory.LaurentSeries` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/FieldNormalProduct.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/FieldNormalProduct.lean:27:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+ℹ [3365/3397] Replayed trureturing/D5.S3.VertexAlgebra.FieldNormalProduct:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.FieldNormalProduct inputs=0
+⚠ [3396/3437] Replayed D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean: imports `Mathlib.Algebra.Vertex.VertexOperator` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean: imports `Mathlib.Algebra.MvPolynomial.Eval` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean: imports `Mathlib.RingTheory.PowerSeries.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean: imports `Mathlib.RingTheory.PowerSeries.Exp` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean: imports `Mathlib.RingTheory.PowerSeries.Substitution` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean: imports `Mathlib.Algebra.Polynomial.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean: imports `Mathlib.RingTheory.PowerSeries.Binomial` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean: imports `Mathlib.RingTheory.MvPolynomial.WeightedHomogeneous` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:27:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:173:27: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:289:58: `MvPolynomial.eval₂AlgHom` has been deprecated: Use `MvPolynomial.aeval` instead
+
+Hint: Replace the deprecated name:
+  M̵v̵P̵o̵l̵y̵n̵o̵m̵i̵a̵l̵.̵e̵v̵a̵l̵₂̵A̵l̵g̵H̵o̵m̵a̲e̲v̲a̲l̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:322:25: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:344:28: `MvPolynomial.eval₂AlgHom_X` has been deprecated: Use `MvPolynomial.aeval_X` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u} {S₁ : Type v} {σ : Type u_1} [inst : CommSemiring R] [inst_1 : CommSemiring S₁] [inst_2 : Algebra R S₁]
+    (f : σ → S₁) (s : σ), (aeval f) (X s) = f s
+instead of
+  ∀ {R : Type u} {S₁ : Type v} {σ : Type u_1} [inst : CommSemiring R] [inst_1 : CommSemiring S₁] [inst_2 : Algebra R S₁]
+    (g : σ → S₁) (i : σ), (eval₂AlgHom R g) (X i) = g i
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:372:26: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:545:8: `MvPolynomial.eval₂AlgHom` has been deprecated: Use `MvPolynomial.aeval` instead
+
+Hint: Replace the deprecated name:
+  M̵v̵P̵o̵l̵y̵n̵o̵m̵i̵a̵l̵.̵e̵v̵a̵l̵₂̵A̵l̵g̵H̵o̵m̵a̲e̲v̲a̲l̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:563:53: `MvPolynomial.eval₂AlgHom` has been deprecated: Use `MvPolynomial.aeval` instead
+
+Hint: Replace the deprecated name:
+  M̵v̵P̵o̵l̵y̵n̵o̵m̵i̵a̵l̵.̵e̵v̵a̵l̵₂̵A̵l̵g̵H̵o̵m̵a̲e̲v̲a̲l̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:601:25: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:603:25: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:608:32: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:608:44: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:610:25: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:612:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:612:46: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:615:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:615:46: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:272:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:433:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:486:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeGeneratingFieldLocality.lean:490:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [3404/3437] Replayed D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration
+warning: D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.lean: imports `Mathlib.LinearAlgebra.Matrix.PosDef` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.lean: imports `Mathlib.Algebra.MvPolynomial.PDeriv` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.lean: imports `Mathlib.Data.Fintype.Pi` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.lean:33:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration.lean:267:23: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [3405/3437] Replayed D5.S3.VertexAlgebra.LatticeSugawaraCurrents
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:46:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:119:22: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [pderiv_X, Prod.mk.injEq, hab, Ne.symm hab]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:120:26: This simp argument is unused:
+  mul_smul_comm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Finset.mul_sum]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:133:4: This simp argument is unused:
+  show -(-(a : ℤ) - 1) - 1 = (a : ℤ) by omega
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [neutralPolynomialMode, show -(a : ℤ) - 1 < 0 by omega]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:192:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:213:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:230:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:230:30: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:234:18: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:234:30: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:239:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:152:10: This simp argument is unused:
+  map_smul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:162:10: This simp argument is unused:
+  map_smul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:177:25: This simp argument is unused:
+  mul_smul_comm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [h, smul_add, smul_smul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:178:15: This simp argument is unused:
+  mul_smul_comm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:391:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:396:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:450:23: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:452:23: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:503:16: This simp argument is unused:
+  hk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hmk, hkm, x]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:503:20: This simp argument is unused:
+  hmk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hk, hkm, x]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:508:16: This simp argument is unused:
+  hk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hkq, hmq, y]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:508:25: This simp argument is unused:
+  hmq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hk, hkq, y]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraCurrents.lean:7:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [3406/3437] Replayed D5.S3.VertexAlgebra.LatticeSugawaraVirasoro
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean: imports `Mathlib.RingTheory.Derivation.Lie` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:43:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:186:29: This simp argument is unused:
+  pderiv_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [weightedPartial]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:228:10: This simp argument is unused:
+  mul_smul_comm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:264:58: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Derivation.commutator_apply, oscillatorEuler]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:268:58: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Derivation.commutator_apply, oscillatorEuler, hx]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:264:6: `simp [Derivation.commutator_apply, oscillatorEuler, Pi.single_apply]` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:264:6: Try this:
+  [apply] simp only [neg_add_rev, Derivation.coe_smul, Pi.smul_apply, pderiv_X, Pi.single_eq_same]
+info: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:265:6: `rw [← neg_smul]`
+modifies the current goal, which was modified by the flexible tactic `simp` on line 264!
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:312:65: This simp argument is unused:
+  mul_assoc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [oscillatorEuler, smul_eq_mul, mul_comm, mul_left_comm, add_comm, Int.cast_sub, Int.cast_neg,
+    Int.cast_natCast, smul_eq_C_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:350:23: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:352:23: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:487:23: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:502:23: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:548:23: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:550:22: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:550:34: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:554:23: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:561:28: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:561:37: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:568:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:574:32: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:574:44: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:550:53: This simp argument is unused:
+  mul_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Int.cast_zero, Int.cast_neg, neg_zero, neg_neg, zero_smul, add_zero, add_neg_cancel, if_neg hna,
+    if_true, zero_add, zero_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:561:49: This simp argument is unused:
+  zero_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [add_neg_cancel, sub_self, Int.cast_neg, neg_neg, Int.cast_zero, mul_zero, add_zero, if_true,
+    if_neg hk0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:655:55: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:654:60: This simp argument is unused:
+  Int.natCast_nonneg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Finset.sum_ite_eq', Finset.mem_Icc, le_refl, neg_nonpos.mpr (Int.natCast_nonneg a), and_self,
+    if_true]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:716:2: `simp [centralDefect_single_sector, Finsupp.smul_single] at hc` is a flexible tactic modifying `hc`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:721:2: `rw [centralDefect_sector_scalar D H hHG hGH, hc]`
+uses `hc`, which was modified by the flexible tactic `simp` on line 716!
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:769:32: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:770:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.lean:7:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [3409/3437] Replayed D5.S3.VertexAlgebra.LatticeSugawaraConformal
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean: imports `Mathlib.RingTheory.Derivation.MapCoeffs` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean: imports `Mathlib.RingTheory.MvPolynomial.WeightedHomogeneous` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:47:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:331:23: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:331:50: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:332:31: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:421:4: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:596:38: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:596:49: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:608:40: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:608:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:615:10: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:618:38: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:632:59: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:634:19: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:635:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:732:58: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:733:34: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:781:10: This simp argument is unused:
+  LinearMap.zero_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [A, LinearMap.sub_apply, Module.End.mul_apply, map_sub]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:844:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:7:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeSugawaraConformal.lean:32:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [3410/3437] Replayed D5.S3.VertexAlgebra.LatticeAllStateField
+warning: D5/S3/VertexAlgebra/LatticeAllStateField.lean: imports `Mathlib.Data.Finsupp.Multiset` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeAllStateField.lean: imports `Mathlib.Data.Multiset.Sort` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeAllStateField.lean: imports `Mathlib.RingTheory.MvPolynomial.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeAllStateField.lean:31:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeAllStateField.lean:416:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [3417/3437] Replayed D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean: imports `Mathlib.Data.ZMod.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean: imports `Mathlib.Algebra.CharP.Two` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean: imports `Mathlib.GroupTheory.QuotientGroup.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean: imports `Mathlib.LinearAlgebra.Matrix.BilinearForm` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean: imports `Mathlib.RepresentationTheory.Irreducible` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean: imports `Mathlib.LinearAlgebra.Dimension.Constructions` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean: imports `Mathlib.Data.Sum.Order` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:17:0: 'Mathlib.Data.Sum.Order' has been deprecated: please replace this import by
+
+import Mathlib.Order.Sum.Order
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:19:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:293:47: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:293:57: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:482:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:482:29: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:482:52: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:485:46: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:487:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:487:29: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:487:52: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:744:19: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:748:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:749:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:754:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.lean:755:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+ℹ [3418/3437] Replayed trureturing/D5.S3.VertexAlgebra.LatticeAllStateField:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeAllStateField inputs=0
+ℹ [3419/3437] Replayed trureturing/D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration inputs=0
+ℹ [3420/3437] Replayed trureturing/D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality inputs=0
+⚠ [3421/3437] Replayed D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean: imports `Mathlib.Algebra.MvPolynomial.Equiv` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean: imports `Mathlib.Algebra.MvPolynomial.Derivation` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean: imports `Mathlib.RingTheory.Binomial` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:14:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:15:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:284:45: This simp argument is unused:
+  Finset.mul_sum
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [secondAxis, mul_zero, add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:358:64: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Derivation.leibniz, smul_eq_mul, map_add, pairDerivation_variable, pairDerivation_pair, mul_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:386:6: Unused tactic linter: `exact insertion_commute D charge first second (correctionWord D charge tail)` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:386:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:432:35: This simp argument is unused:
+  zero_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [insertion, LinearMap.add_apply, LinearMap.mulLeft_apply, Derivation.coeFn_coe, Derivation.leibniz,
+    smul_eq_mul, pairDerivation_pair, mul_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:535:11: Variable name `first` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _first
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:535:17: Variable name `second` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _second
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:536:12: Variable name `scalar` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _scalar
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:536:19: Variable name `polynomial` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _polynomial
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:613:0: 'D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.insertion_commute' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:614:0: 'D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.correctionWord_permutation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:615:0: 'D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.pairDerivation_matching' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:616:0: 'D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.correctionWord_matching' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:617:0: 'D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.correctionWord_shift_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:618:0: 'D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.Corr_monomial_enumeration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:619:0: 'D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.Corr_shift_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:621:0: 'D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.half_successor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.lean:622:0: 'D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.pairScalar_reflection' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+⚠ [3422/3446] Replayed D5.S3.VertexAlgebra.LatticeActualProductKernel
+warning: D5/S3/VertexAlgebra/LatticeActualProductKernel.lean:18:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeActualProductKernel.lean:47:4: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/VertexAlgebra/LatticeActualProductKernel.lean:47:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/VertexAlgebra/LatticeActualProductKernel.lean:56:4: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/VertexAlgebra/LatticeActualProductKernel.lean:56:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: D5/S3/VertexAlgebra/LatticeActualProductKernel.lean:62:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeActualProductKernel.lean:161:40: `MvPolynomial.monomial_mul` has been deprecated: Use `MvPolynomial.monomial_mul_monomial` instead
+
+Hint: Replace the deprecated name:
+  M̵v̵P̵o̵l̵y̵n̵o̵m̵i̵a̵l̵.̵m̵o̵n̵o̵m̵i̵a̵l̵_̵m̵u̵l̵m̲o̲n̲o̲m̲i̲a̲l̲_̲m̲u̲l̲_̲m̲o̲n̲o̲m̲i̲a̲l̲
+warning: D5/S3/VertexAlgebra/LatticeActualProductKernel.lean:177:40: `MvPolynomial.monomial_mul` has been deprecated: Use `MvPolynomial.monomial_mul_monomial` instead
+
+Hint: Replace the deprecated name:
+  M̵v̵P̵o̵l̵y̵n̵o̵m̵i̵a̵l̵.̵m̵o̵n̵o̵m̵i̵a̵l̵_̵m̵u̵l̵m̲o̲n̲o̲m̲i̲a̲l̲_̲m̲u̲l̲_̲m̲o̲n̲o̲m̲i̲a̲l̲
+warning: D5/S3/VertexAlgebra/LatticeActualProductKernel.lean:214:4: This simp argument is unused:
+  show (-(-(x.2 : ℤ) - 1) - 1).toNat = x.2 by omega
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [creator, neutralMode, neutralPolynomialMode, show -(x.2 : ℤ) - 1 < 0 by omega]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeActualProductKernel.lean:7:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [3423/3446] Replayed D5.S3.VertexAlgebra.LatticeActualAnnihilation
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean: imports `Mathlib.Algebra.Polynomial.Derivation` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:19:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:93:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:88:4: Unused tactic linter: `change _ = (seriesDerivation D d E - E * seriesDerivation D d S) * A` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:130:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:153:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:185:16: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:186:16: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:205:15: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:220:51: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:226:17: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:251:22: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:252:6: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:253:22: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:255:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:255:33: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:257:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:257:33: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:303:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:299:65: This simp argument is unused:
+  zero_smul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [translationVariable, map_sub, Derivation.leibniz, polynomialDerivation_C, hc,
+    polynomialDerivation_X, Derivation.leibniz_pow, smul_zero, add_zero, zero_add, map_zero, sub_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:300:15: This simp argument is unused:
+  zero_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [translationVariable, map_sub, Derivation.leibniz, polynomialDerivation_C, hc,
+    polynomialDerivation_X, Derivation.leibniz_pow, smul_zero, zero_smul, add_zero, map_zero, sub_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeActualAnnihilation.lean:307:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+ℹ [3425/3446] Replayed trureturing/D5.S3.VertexAlgebra.LatticeActualAnnihilation:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeActualAnnihilation inputs=0
+ℹ [3426/3446] Replayed trureturing/D5.S3.VertexAlgebra.LatticeActualProductKernel:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeActualProductKernel inputs=0
+⚠ [3427/3446] Replayed D5.S3.VertexAlgebra.LatticeHalfFockCurrentNormal
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean: imports `Mathlib.LinearAlgebra.TensorProduct.Map` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:25:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:26:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:53:4: This simp argument is unused:
+  show -(-(k : ℤ) - 1) - 1 = (k : ℤ) by omega
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [current, show -(k : ℤ) - 1 < 0 by omega]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:60:41: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:60:51: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:78:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:80:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:83:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:84:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:88:34: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:92:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:172:20: missing space in the source
+
+This part of the code
+  '(m-bound'
+should be written as
+  '(m - bound'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:172:56: missing space in the source
+
+This part of the code
+  'ℤ)-1 ≤ b)'
+should be written as
+  'ℤ) - 1'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:203:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:204:22: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:194:40: missing space in the source
+
+This part of the code
+  '2*(bound'
+should be written as
+  '2 * (bound'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:209:11: missing space in the source
+
+This part of the code
+  '2*(bound'
+should be written as
+  '2 * (bound'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:240:29: This simp argument is unused:
+  show -(m - j - 1) - 1 = j - m by omega
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [normalPair, hjneg, current, hkneg, Module.End.mul_apply, LinearMap.mulLeft_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:253:11: missing space in the source
+
+This part of the code
+  '2*(bound'
+should be written as
+  '2 * (bound'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:282:90: This simp argument is unused:
+  map_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [LinearMap.sub_apply, LinearMap.add_apply, Module.End.mul_apply, map_sub]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:294:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:296:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:340:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:340:59: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:346:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:353:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal.lean:354:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+ℹ [3428/3446] Built trureturing/D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection:judgeInputs (2.5s)
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection inputs=0
+ℹ [3429/3446] Replayed trureturing/D5.S3.VertexAlgebra.LatticeSugawaraConformal:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeSugawaraConformal inputs=0
+ℹ [3430/3446] Replayed trureturing/D5.S3.VertexAlgebra.LatticeSugawaraCurrents:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeSugawaraCurrents inputs=0
+ℹ [3431/3446] Replayed trureturing/D5.S3.VertexAlgebra.LatticeSugawaraVirasoro:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeSugawaraVirasoro inputs=0
+ℹ [3432/3446] Replayed trureturing/D5.S3.VertexAlgebra.LatticeTwistedGroundRealization:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeTwistedGroundRealization inputs=0
+⚠ [3433/3451] Replayed D5.S3.VertexAlgebra.LatticeHalfFockChargedCoefficients
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:11:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:13:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:48:2: `MvPolynomial.eval₂AlgHom` has been deprecated: Use `MvPolynomial.aeval` instead
+
+Hint: Replace the deprecated name:
+  M̵v̵P̵o̵l̵y̵n̵o̵m̵i̵a̵l̵.̵e̵v̵a̵l̵₂̵A̵l̵g̵H̵o̵m̵a̲e̲v̲a̲l̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:88:57: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:88:70: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:292:27: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:294:27: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:344:4: `MvPolynomial.eval₂AlgHom` has been deprecated: Use `MvPolynomial.aeval` instead
+
+Hint: Replace the deprecated name:
+  M̵v̵P̵o̵l̵y̵n̵o̵m̵i̵a̵l̵.̵e̵v̵a̵l̵₂̵A̵l̵g̵H̵o̵m̵a̲e̲v̲a̲l̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:363:45: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:388:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:398:40: `MvPolynomial.eval₂AlgHom_X` has been deprecated: Use `MvPolynomial.aeval_X` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u} {S₁ : Type v} {σ : Type u_1} [inst : CommSemiring R] [inst_1 : CommSemiring S₁] [inst_2 : Algebra R S₁]
+    (f : σ → S₁) (s : σ), (aeval f) (X s) = f s
+instead of
+  ∀ {R : Type u} {S₁ : Type v} {σ : Type u_1} [inst : CommSemiring R] [inst_1 : CommSemiring S₁] [inst_2 : Algebra R S₁]
+    (g : σ → S₁) (i : σ), (eval₂AlgHom R g) (X i) = g i
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:420:73: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:421:58: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:529:29: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:402:23: This simp argument is unused:
+  smul_mul_assoc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [smul_smul, ← constant_smul, coverVariable]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:402:39: This simp argument is unused:
+  ← constant_smul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [smul_smul, smul_mul_assoc, coverVariable]
+
+Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:466:43: This simp argument is unused:
+  one_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [PowerSeries.coeff_mul, Finset.Nat.antidiagonal_zero, Finset.sum_singleton, PowerSeries.coeff_map,
+    exponential_constant, map_one, PowerSeries.coeff_rescale, pow_zero, PowerSeries.binomialSeries_coeff,
+    Ring.choose_zero_right, one_smul, mul_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:457:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:559:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:564:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:565:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:565:17: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, Nat.cast_one, ite_true, smul_smul, mul_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:568:25: This simp argument is unused:
+  Ne.symm index
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [same, index]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:570:22: This simp argument is unused:
+  Ne.symm index
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [odd, index]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:626:27: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:627:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:628:27: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:630:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:630:45: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:632:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:632:45: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:651:41: `MvPolynomial.eval₂AlgHom_X` has been deprecated: Use `MvPolynomial.aeval_X` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u} {S₁ : Type v} {σ : Type u_1} [inst : CommSemiring R] [inst_1 : CommSemiring S₁] [inst_2 : Algebra R S₁]
+    (f : σ → S₁) (s : σ), (aeval f) (X s) = f s
+instead of
+  ∀ {R : Type u} {S₁ : Type v} {σ : Type u_1} [inst : CommSemiring R] [inst_1 : CommSemiring S₁] [inst_2 : Algebra R S₁]
+    (g : σ → S₁) (i : σ), (eval₂AlgHom R g) (X i) = g i
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:658:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:654:6: This simp argument is unused:
+  zero_smul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [halfTranslatedPolynomial, MvPolynomial.eval₂AlgHom_X, halfTranslationVariable, map_sub,
+    Derivation.leibniz, polynomialDerivation_C, constant_law, polynomialDerivation_X, Derivation.leibniz_pow, smul_zero,
+    add_zero, zero_add, map_zero, sub_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:654:27: This simp argument is unused:
+  zero_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [halfTranslatedPolynomial, MvPolynomial.eval₂AlgHom_X, halfTranslationVariable, map_sub,
+    Derivation.leibniz, polynomialDerivation_C, constant_law, polynomialDerivation_X, Derivation.leibniz_pow, smul_zero,
+    zero_smul, add_zero, map_zero, sub_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients.lean:645:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+ℹ [3434/3451] Replayed trureturing/D5.S3.VertexAlgebra.LatticeHalfFockChargedCoefficients:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeHalfFockChargedCoefficients inputs=0
+⚠ [3435/3451] Replayed D5.S3.VertexAlgebra.LatticeHalfFockVirasoroSpectrum
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean: imports `Mathlib.Data.Finsupp.Weight` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:24:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:25:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:93:25: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:93:57: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:109:25: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:109:55: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:159:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:179:88: This simp argument is unused:
+  map_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [LinearMap.sub_apply, LinearMap.add_apply, Module.End.mul_apply, map_sub]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:213:28: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:283:20: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:286:20: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:308:18: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:285:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:355:20: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:375:52: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:401:18: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:412:29: missing space in the source
+
+This part of the code
+  '(2*h) •'
+should be written as
+  '(2 * h)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:427:2: `simp [energy, Finsupp.weight_apply, Finsupp.sum, nsmul_eq_mul]` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:427:2: Try this:
+  [apply] simp only [one_div]
+info: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:428:2: `apply Finset.sum_congr rfl`
+modifies the current goal, which was modified by the flexible tactic `simp` on line 427!
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:427:2: `simp [energy, Finsupp.weight_apply, Finsupp.sum, nsmul_eq_mul]` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:427:2: Try this:
+  [apply] simp only [one_div]
+info: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:429:2: `intro x hx`
+modifies the current goal, which was modified by the flexible tactic `simp` on line 427!
+warning: D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.lean:476:29: `MvPolynomial.monomial_mul` has been deprecated: Use `MvPolynomial.monomial_mul_monomial` instead
+
+Hint: Replace the deprecated name:
+  monomial_mul_̲m̲o̲n̲o̲m̲i̲a̲l̲
+⚠ [3436/3451] Replayed D5.S3.VertexAlgebra.LatticeHalfFockTensorFields
+warning: D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.lean:23:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.lean:24:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.lean:48:20: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.lean:174:20: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+⚠ [3437/3451] Replayed D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean: imports `Mathlib.LinearAlgebra.TensorProduct.Basis` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:14:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:16:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:116:54: This simp argument is unused:
+  smul_mul_assoc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [oscillatorTerm, halfTranslatedPolynomial]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:148:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:169:24: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:173:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:198:25: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:214:13: `MvPolynomial.eval₂AlgHom` has been deprecated: Use `MvPolynomial.aeval` instead
+
+Hint: Replace the deprecated name:
+  M̵v̵P̵o̵l̵y̵n̵o̵m̵i̵a̵l̵.̵e̵v̵a̵l̵₂̵A̵l̵g̵H̵o̵m̵M̲v̲P̲o̲l̲y̲n̲o̲m̲i̲a̲l̲.̲a̲e̲v̲a̲l̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:229:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:322:50: `MvPolynomial.eval₂AlgHom_X` has been deprecated: Use `MvPolynomial.aeval_X` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u} {S₁ : Type v} {σ : Type u_1} [inst : CommSemiring R] [inst_1 : CommSemiring S₁] [inst_2 : Algebra R S₁]
+    (f : σ → S₁) (s : σ), (MvPolynomial.aeval f) (MvPolynomial.X s) = f s
+instead of
+  ∀ {R : Type u} {S₁ : Type v} {σ : Type u_1} [inst : CommSemiring R] [inst_1 : CommSemiring S₁] [inst_2 : Algebra R S₁]
+    (g : σ → S₁) (i : σ), (MvPolynomial.eval₂AlgHom R g) (MvPolynomial.X i) = g i
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:331:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:372:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:409:40: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.lean:432:40: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+ℹ [3438/3451] Replayed trureturing/D5.S3.VertexAlgebra.LatticeHalfFockCurrentNormal:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeHalfFockCurrentNormal inputs=0
+⚠ [3439/3451] Replayed D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean: imports `Mathlib.Data.Finsupp.Multiset` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean: imports `Mathlib.Data.Multiset.Sort` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean: imports `Mathlib.RingTheory.MvPolynomial.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:29:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:30:0: Unscoped option maxHeartbeats is not allowed:
+Please scope this to individual declarations, as in
+```
+set_option maxHeartbeats in
+-- comment explaining why this is necessary
+example : ... := ...
+```
+
+Note: This linter can be disabled with `set_option linter.style.setOption false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:62:25: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:96:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:102:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:138:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:145:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:146:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:179:44: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:184:47: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:177:6: The following tactic starts with 2 goals and ends with 2 goals, 1 of which is not operated on.
+  intro zero
+Please focus on the current goal, for instance using `·` (typed as "\.").
+
+Note: This linter can be disabled with `set_option linter.style.multiGoal false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:178:6: The following tactic starts with 2 goals and ends with 2 goals, 1 of which is not operated on.
+  apply nonzero
+Please focus on the current goal, for instance using `·` (typed as "\.").
+
+Note: This linter can be disabled with `set_option linter.style.multiGoal false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:179:6: The following tactic starts with 2 goals and ends with 2 goals, 1 of which is not operated on.
+  simp only [flatTerm, flatCoefficient, if_pos negative, Module.End.mul_apply]
+Please focus on the current goal, for instance using `·` (typed as "\.").
+
+Note: This linter can be disabled with `set_option linter.style.multiGoal false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:180:6: The following tactic starts with 2 goals and ends with 2 goals, 1 of which is not operated on.
+  change jetCurrent D hu index modes.1 (flatTerm D hu field tail _ vector modes.2) = 0
+Please focus on the current goal, for instance using `·` (typed as "\.").
+
+Note: This linter can be disabled with `set_option linter.style.multiGoal false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:183:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:185:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:326:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:575:42: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:578:42: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:601:15: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:601:26: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:603:15: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:603:26: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:604:15: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:604:26: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:605:15: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:605:26: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.lean:7:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+ℹ [3440/3451] Replayed trureturing/D5.S3.VertexAlgebra.LatticeHalfFockTensorFields:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeHalfFockTensorFields inputs=0
+ℹ [3441/3451] Replayed trureturing/D5.S3.VertexAlgebra.LatticeHalfFockVirasoroSpectrum:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeHalfFockVirasoroSpectrum inputs=0
+ℹ [3445/3451] Built trureturing/D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients:judgeInputs (58ms)
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients inputs=0
+⚠ [3446/3451] Replayed D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue
+warning: D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:119:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:305:42: This simp argument is unused:
+  ite_eq_left neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [flatTerm, flatCoefficient, jetCurrent, Module.End.mul_apply, LinearMap.smul_apply, K, normalKernel,
+    ite_eq_left neg, exponent]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:308:42: This simp argument is unused:
+  ite_eq_right neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [flatTerm, flatCoefficient, jetCurrent, Module.End.mul_apply, LinearMap.smul_apply, map_smul, K,
+    normalKernel, ite_eq_right neg, exponent]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:244:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [3447/3451] Replayed Reg.Support.DependentFamily
+warning: ../Reg/Support/DependentFamily.lean:7:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `open
+  _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: ../Reg/Support/DependentFamily.lean:10:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/Support/DependentFamily.lean:11:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/Support/DependentFamily.lean:12:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+ℹ [3449/3527] Built trureturing/D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField:judgeInputs (62ms)
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField inputs=0
+ℹ [3450/3527] Built trureturing/D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue:judgeInputs (54ms)
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue inputs=0
+⚠ [3451/3527] Replayed Reg.Support.SingleDependentReadout
+warning: ../Reg/Support/SingleDependentReadout.lean:3:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `namespace Reg.Support.SingleDependentReadout`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+⚠ [3461/3527] Replayed Reg.D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean: imports `Mathlib.RingTheory.Flat.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:192:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:197:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:199:100: This line exceeds the 100 character limit, please shorten it!
+You can use "string gaps" to format long strings: within a string quotation, using a '\' at the end of a line allows you to continue the string on the following line, removing all intervening whitespace.
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:279:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:284:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:286:100: This line exceeds the 100 character limit, please shorten it!
+You can use "string gaps" to format long strings: within a string quotation, using a '\' at the end of a line allows you to continue the string on the following line, removing all intervening whitespace.
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:377:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:382:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: ../Reg/D5/S3/VertexAlgebra/LatticeHalfFockNegativeCurrentResidue.lean:384:100: This line exceeds the 100 character limit, please shorten it!
+You can use "string gaps" to format long strings: within a string quotation, using a '\' at the end of a line allows you to continue the string on the following line, removing all intervening whitespace.
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+ℹ [3462/3527] Replayed reg/Reg.Support.DependentFamily:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=Reg.Support.DependentFamily inputs=1
+ℹ [3463/3527] Replayed reg/Reg.Support.SingleDependentReadout:judgeInputs
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=Reg.Support.SingleDependentReadout inputs=0
+ℹ [3464/3528] Built reg/Reg.D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue:judgeInputs (50ms)
+info: stdout:
+LEAN_INSPECTOR_DISCOVER module=Reg.D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue inputs=3
+ℹ [3466/3528] Replayed Inspector native production batch
+info: LEAN_REPORT_MATERIALS declarations=61 unique_bytes=542268625 report_bytes=37420
+LEAN_REPORT_MATERIALS declarations=125 unique_bytes=1126175 report_bytes=71925
+LEAN_REPORT_MATERIALS declarations=169 unique_bytes=43129619 report_bytes=91110
+LEAN_REPORT_MATERIALS declarations=40 unique_bytes=11149429 report_bytes=24732
+LEAN_INSPECTOR_EXTRACT module=D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+LEAN_INSPECTOR_EXTRACT module=D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+LEAN_INSPECTOR_EXTRACT module=D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
+LEAN_INSPECTOR_EXTRACT module=D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue
+LEAN_INSPECTOR_EXTRACT modules=4 declarations=395
+LEAN_REPORT_MATERIALS declarations=131 unique_bytes=85287698 report_bytes=90401
+LEAN_INSPECTOR_EXTRACT module=Reg.D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue
+LEAN_INSPECTOR_ASSESS module=Reg.D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue
+LEAN_INSPECTOR_EXTRACT modules=1 declarations=131
+
+✔ [3467/3528] Built D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue:report (internal native artifact) (2ms)
+✔ [3468/3528] Built Reg.D5.S3.VertexAlgebra.LatticeHalfFockNegativeCurrentResidue:report (internal native artifact) (2ms)
+✔ [3517/3528] Built D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients:report (internal native artifact) (55ms)
+✔ [3519/3528] Built D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection:report (internal native artifact) (16ms)
+✔ [3520/3528] Built D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField:report (internal native artifact) (3ms)
+Build completed successfully (3528 jobs).
