@@ -25,13 +25,17 @@ internal sealed class JeanSeoCubicErrorDetectingCodeDocument : IScribeDocumentDe
                 "Page 9, Section 4.2.2: \"Conjecture 1. For a cubic graph G, DET:IC%(G) ≥ 3/4.\" Page 3 states \"Note that density is also defined for finite graphs.\" The finite assertion says that every error-detecting identifying code has cardinality divided by graph order at least three quarters. Graphs are simple and cubic means degree three at every vertex. Connectedness restricts the domain; a connected counterexample also disproves the assertion without that restriction. All displayed quotients are rational."),
             Node("result", "The conjectured lower bound fails", DescribeRole.Theorem,
                 new Formula.Not(Parenthesized(ClaimBody())), AssessedProvenance.FromRepo(Source),
-                "The vertices 0 through 49 form a connected cubic graph. Vertices 14 through 49 are detectors, giving cardinality 36 and density 36/50=18/25<3/4. The eight A and six B vertices are outside the code; the twelve vertices of each of the P, Q and R types belong to it. Their closed detector neighborhoods have sizes 3, 2, 2, 4 and 3 respectively. Explicit finite neighborhood tables verify two-domination and directed separation, and a spanning tree verifies connectedness. This finite counterexample disproves the lower bound; it asserts neither minimality of this code nor optimality of 18/25 over cubic graphs. The source's examples at densities 3/4 and 7/8 remain compatible with this counterexample."))));
+                "The vertices 0 through 49 form a connected cubic graph. Vertices 14 through 49 are detectors, giving cardinality 36 and density 36/50=18/25<3/4. The eight A and six B vertices are outside the code; the twelve vertices of each of the P, Q and R types belong to it. Their closed detector neighborhoods have sizes 3, 2, 2, 4 and 3 respectively. Explicit finite neighborhood tables verify two-domination and directed separation, and a spanning tree verifies connectedness. This finite counterexample disproves the lower bound; it asserts neither minimality of this code nor optimality of 18/25 over cubic graphs. The source's examples at densities 3/4 and 7/8 remain compatible with this counterexample.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("jean-seo-2022-cubic-error-detecting-identifying-code-density"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string selector, string title, DescribeRole role,
-        Formula formula, AssessedProvenance provenance, string prose) =>
+        Formula formula, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("jeanseo-" + selector.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ClosedDominatorsBody()
     {

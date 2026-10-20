@@ -46,6 +46,10 @@ $$\neg (\forall (V : Type), ([\operatorname{Fintype}\left(V\right)] [\operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/JeanSeoCubicErrorDetectingCode.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jean-seo-2022-cubic-error-detecting-identifying-code-density` (refuted) by `D5/S3/Combinatorics/Graph/Domination/JeanSeoCubicErrorDetectingCode.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jean-seo-2022-cubic-error-detecting-identifying-code-density","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/JeanSeoCubicErrorDetectingCode.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Devin C. Jean; Suk J. Seo (2022). *Optimal Error-detection system for Identifying Codes*. DOI: [10.48550/arXiv.2208.06052](https://doi.org/10.48550/arXiv.2208.06052). URL: <https://arxiv.org/abs/2208.06052v1>.
