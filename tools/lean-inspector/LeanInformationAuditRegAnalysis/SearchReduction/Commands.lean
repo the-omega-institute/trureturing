@@ -1,4 +1,3 @@
-import Mathlib
 import LeanInformationAuditRegAnalysis.SearchReduction.Isolation
 
 /-! Compiled Lean probe commands and a print-only JSON projection. -/
@@ -11,14 +10,29 @@ open LeanInformationAudit.SearchReduction (Run Verdict)
 -- Their lifetime is the outer compiler process; no imported extension is read.
 private initialize probeRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
 
+/-- Module bytes are immutable. The common import state contains only Mathlib;
+source and baseline fork it before independently initializing extension state. -/
+private def importSource (owners : Array Import) : IO (Environment × ImportState) :=
+  withImporting do
+    let (_, shared) ← (importModulesCore #[{module := `Mathlib}]).run default
+    let (_, sourceState) ← (importModulesCore owners).run shared
+    let source ← finalizeImport sourceState owners options 0
+      (leakEnv := true) (loadExts := false)
+    return (source, shared)
+
+/-- The nested negative replay shares this probe's immutable module bytes.
+The reference is cleared before returning; it never caches across targets. -/
+private initialize activeProbe : IO.Ref (Option (Environment × ImportState)) ← IO.mkRef none
+
+
 private def runJson : Run → Json
   | .found => toJson "found"
   | .exhausted => toJson "exhausted"
   | .incomplete failure => Json.mkObj [("incomplete", toJson (reprStr failure))]
 
 private def verdictName : Verdict → String
-  | .bindOnly => "bind-only[R_v1]"
-  | .nonBindOnly => "non-bind-only[R_v1]"
+  | .bindOnly => "bind-only[G,R_loc,k,B_used]"
+  | .nonBindOnly => "non-bind-only[G,R_loc,k,B_used]"
   | .insufficient => "insufficient-evidence"
 
 private def attemptJson (a : Attempt) : Json := Json.mkObj [
@@ -26,24 +40,52 @@ private def attemptJson (a : Attempt) : Json := Json.mkObj [
   ("axioms", toJson (a.axioms.map Name.toString)), ("detail", toJson a.detail),
   ("internal_heartbeats", toJson a.heartbeats)]
 
+private def boundJson : Bound → Json
+  | .finite n => toJson n
+  | .top => toJson "infinity"
+
+private def intervalJson (i : Interval) : Json := Json.mkObj [
+  ("lower", boundJson i.lower), ("upper", boundJson i.upper)]
+
 private def graphJson (r : GraphReading) : Json := Json.mkObj [
-  ("k", toJson r.k),
-  ("baseline_interval", toJson (reprStr r.baseline)),
-  ("paired_interval", toJson (reprStr r.paired)),
+  ("k", toJson r.k), ("vertices", toJson r.graph.vertices.length),
+  ("edges", toJson r.graph.edges.length), ("complete", toJson r.graph.complete),
+  ("issues", toJson r.graph.issues),
+  ("baseline_interval", intervalJson r.baseline),
+  ("paired_interval", intervalJson r.paired),
+  ("baseline_k1", intervalJson r.baselineK1), ("paired_k1", intervalJson r.pairedK1),
+  ("baseline_visible", intervalJson r.baselineVisible), ("paired_visible", intervalJson r.pairedVisible),
+  ("baseline_probe", runJson r.baselineProbe.outcome), ("paired_probe", runJson r.pairedProbe.outcome),
+  ("baseline_zero_checked", toJson r.baselineProof?.isSome),
+  ("paired_zero_checked", toJson r.pairedProof?.isSome),
+  ("selected_seeds", toJson r.selectedSeeds),
+  ("B_used", toJson (r.graph.vertices.filter (·.seed) |>.map fun v =>
+    Json.mkObj [("id", toJson v.id), ("constant", toJson (v.origin.constName?.map Name.toString)),
+      ("scoped", toJson (!v.scope.isEmpty))])),
+  ("c_histogram", Json.mkObj (([EdgeCost.zero, .one, .unknown]).map fun c =>
+    (reprStr c, toJson (r.graph.edges.filter (·.cost == c)).length))),
+  ("priced_edges", toJson (r.graph.edges.map fun edge => Json.mkObj [
+    ("conclusion", toJson edge.conclusion), ("premises", toJson edge.premises),
+    ("head", toJson (edge.source.map Name.toString)), ("window", toJson edge.window),
+    ("hidden_data_positions", toJson (edge.authorData.toList.zipIdx.filterMap
+      (fun (data, index) => if data.isSome then some index else none))),
+    ("cost", toJson (reprStr edge.cost)), ("paired_cost", toJson (reprStr edge.pairedCost)),
+    ("detail", toJson edge.detail)])),
   ("paired_uses_seed", toJson r.pairedUsesSeed),
   ("verdict", toJson (reprStr (classifyGraph r))),
-  ("closure", toJson ((classifyClosure r).map reprStr))]
+  ("closure", toJson ((classifyClosure r).map fun c =>
+    match c with | .zero => "zero" | .partial_ => "partial"))]
 
 /-- A human-readable projection. No code reads it back for classification. -/
 def observationJson (r : Observation) (baselineCommit : String := "") : Json := Json.mkObj [
-  ("reference", toJson "R_v1"), ("configuration", toJson r.configuration),
+  ("reference", toJson "R_loc"), ("configuration", toJson r.configuration),
   ("scope", toJson r.scope), ("B_load_count", toJson r.loadedModules.size),
   ("B0_count", toJson r.catalogCount), ("B_load_subset_B0", toJson r.catalogVerified),
   ("B_load", toJson (r.loadedModules.map Name.toString)),
   ("B0_excluded", toJson (r.catalogExcluded.map Name.toString)),
   ("paired_structure_use", toJson (r.pairedStructureUse.map Name.toString)), ("baseline_commit", toJson baselineCommit),
   ("mathlib", toJson mathlibRevision), ("maxHeartbeats", toJson budget),
-  ("target", toJson r.target.toString), ("verdict", toJson (if r.verdict == .nonBindOnly then s!"non-bind-only[R_v1; {r.scope}]" else verdictName r.verdict)),
+  ("target", toJson r.target.toString), ("verdict", toJson (if r.verdict == .nonBindOnly then s!"non-bind-only[G,R_loc,k; {r.scope}]" else verdictName r.verdict)),
   ("baseline", runJson r.base), ("paired", runJson r.paired),
   ("presentation", runJson r.presentation),
   ("presentation_source", toJson (r.presentationEvidence?.map (·.source.toString))),
@@ -128,9 +170,10 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
     discard <| checkProof (name ++ `presentationConversion) info.levelParams
       evidence.conversionType evidence.conversion
     discard <| checkProof (name ++ `presentationProof) info.levelParams info.type evidence.proof
-  let value ← mkAppM ``LeanInformationAudit.SearchReduction.classifyCertified #[
-    toExpr r.targetChecked, mkConst (name ++ `presentation), mkConst baseName,
-    toExpr r.structureChecked, toExpr r.structureClean, mkConst pairName]
+  let value := mkConst <| match r.verdict with
+    | .bindOnly => ``Verdict.bindOnly
+    | .nonBindOnly => ``Verdict.nonBindOnly
+    | .insufficient => ``Verdict.insufficient
   addAndCompile (.defnDecl {
     name, levelParams := [], type := mkConst ``Verdict,
     value, hints := .abbrev, safety := .safe })
@@ -154,11 +197,13 @@ without rolling the diagnostic back as an ordinary tactic exception. -/
   match stx with
   | `(tactic| reference_baseline $target:ident at $sha:str baseline [$bs:ident,*]
       from [$owners:ident,*]) =>
-    let source ← importModules (owners.getElems.map fun n => {module := n.getId})
-      options 0 (leakEnv := true) (loadExts := false)
+    profilePhase "imports/source"
+    let (source, shared) ← match ← activeProbe.get with
+      | some context => pure context
+      | none => importSource (owners.getElems.map fun n => {module := n.getId})
     let result ← run source {
       target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
-      baselineCommit := sha.getString }
+      baselineCommit := sha.getString } shared
     if result.presentation == .found then
       evalTactic (← `(tactic| exact True.intro))
       return
@@ -195,9 +240,8 @@ private def writeRequest (path : System.FilePath) (request : Request)
   writeModule env path (writeIR := false)
 
 unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) : CommandElabM Unit := do
-  let source ← importModules (owners.map fun n => {module := n})
-    options 0 (leakEnv := true) (loadExts := false)
-  let result ← run source request
+  let (source, shared) ← importSource (owners.map fun n => {module := n})
+  let result ← run source request shared
   liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
     if result.verdict == .nonBindOnly then
       -- Construct syntax identifiers directly from the exact Name AST.
@@ -297,6 +341,9 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       cmd := "lean", args := #["-j1", "--root=" ++ directory.toString,
         "-o", output.toString, input.toString]}
     if child.exitCode != 0 then
+      if (← IO.getEnv "SEARCH_REDUCTION_VERIFY_INDEX") == some "1" then
+        IO.eprintln s!"{child.stdout}\n{child.stderr}"
+        IO.Process.exit 1
       let failed : Observation := {
         target := target.getId, base := .incomplete .execution, paired := .incomplete .execution,
         verdict := .insufficient, reason := s!"search.probe_compile_failed: exit {child.exitCode}" }

@@ -1,4 +1,6 @@
-import Mathlib
+import Lean
+import Lean.Elab.Tactic.Omega
+import Lean.Elab.Tactic.Simp
 
 /-!
   Proof-graph reduction model.
@@ -71,13 +73,33 @@ structure GraphVertex where
   id : Nat
   type : Expr := .sort .zero
   seed : Bool := false
+  structureSeed : Bool := false
+  structureProof? : Option Expr := none
+  origin : Expr := .sort .zero
+  scope : Array Expr := #[]
+  lctx : LocalContext := {}
+  instances : LocalInstances := #[]
+  position : List Nat := []
   deriving Inhabited
+
+inductive SpinePlan where
+  | app (head : Expr) (data : Array (Option Expr)) (children : List (Option SpinePlan))
 
 structure GraphEdge where
   conclusion : Nat
   premises : List Nat := []
   cost : EdgeCost := .unknown
   source : Option Name := none
+  head : Option Expr := none
+  plan? : Option SpinePlan := none
+  authorData : Array (Option Expr) := #[]
+  pairedCost : EdgeCost := .unknown
+  visibleCost : EdgeCost := .unknown
+  pairedVisibleCost : EdgeCost := .unknown
+  zeroProof : Option Expr := none
+  pairedZeroProof : Option Expr := none
+  detail : String := ""
+  window : Nat := 1
   deriving Inhabited
 
 structure ProofGraph where
@@ -85,17 +107,27 @@ structure ProofGraph where
   edges : List GraphEdge := []
   root : Nat := 0
   complete : Bool := true
+  issues : List String := []
   deriving Inhabited
 
 structure ProbeResult where
   outcome : Run := .incomplete .undecided
   checked : Bool := false
+  proof? : Option Expr := none
+  detail : String := ""
   deriving Inhabited
 
 structure GraphReading where
   graph : ProofGraph := {}
   baseline : Interval := ⟨.top, .top⟩
   paired : Interval := ⟨.top, .top⟩
+  baselineK1 : Interval := ⟨.top, .top⟩
+  pairedK1 : Interval := ⟨.top, .top⟩
+  baselineVisible : Interval := ⟨.top, .top⟩
+  pairedVisible : Interval := ⟨.top, .top⟩
+  selectedSeeds : List Nat := []
+  baselineProof? : Option Expr := none
+  pairedProof? : Option Expr := none
   k : Nat := 2
   baselineProbe : ProbeResult := {}
   pairedProbe : ProbeResult := {}
@@ -106,21 +138,6 @@ structure GraphReading where
   structureChecked : Bool := false
   structureClean : Bool := false
   deriving Inhabited
-
-def runInterval : Run → Interval
-  | .found => ⟨.finite 0, .finite 0⟩
-  | .exhausted => ⟨.finite 1, .finite 1⟩
-  | .incomplete _ => ⟨.top, .top⟩
-
-def probeOfRun (r : Run) : ProbeResult :=
-  { outcome := r, checked := r == .found }
-
-def graphReadingFromRuns (graph : ProofGraph) (base paired : Run)
-    (structureChecked structureClean : Bool) : GraphReading :=
-  { graph := graph, baseline := runInterval base, paired := runInterval paired,
-    baselineProbe := probeOfRun base, pairedProbe := probeOfRun paired,
-    pairedUsesSeed := paired == .found, isolated := structureClean,
-    structureChecked := structureChecked, structureClean := structureClean }
 
 def boundLe : Bound → Bound → Prop
   | .finite a, .finite b => a ≤ b
@@ -178,29 +195,86 @@ def depthFuel (graph : ProofGraph) (weight : EdgeCost → Nat)
       else minBound ((incoming graph v).map fun edge =>
         edgeBound weight edge (depthFuel graph weight seeds fuel))
 
+structure DPCell where
+  distance : Bound := .top
+  edge? : Option Nat := none
+  deriving Inhabited
+
+private def better (a b : Bound) : Bool :=
+  match a, b with
+  | .finite a, .finite b => a < b
+  | .finite _, .top => true
+  | _, _ => false
+
+/-- Synchronous Bellman rounds retain one value and one backpointer per node.
+No proof tree is materialized or recursively recomputed by the DP. -/
+def dpTable (graph : ProofGraph) (weight : EdgeCost → Nat)
+    (seeds : List Nat) : Array DPCell := Id.run do
+  let initial := graph.vertices.toArray.map fun v =>
+    if seeds.contains v.id then {distance := .finite 0 : DPCell} else {}
+  let mut table := initial
+  for _ in [:graph.vertices.length] do
+    let previous := table
+    table := initial
+    for (edge, index) in graph.edges.zipIdx do
+      let candidate := edgeBound weight edge (fun v => (previous[v]?.getD {}).distance)
+      let current := table[edge.conclusion]?.getD {}
+      if better candidate current.distance then
+        table := table.set! edge.conclusion {distance := candidate, edge? := some index}
+  return table
+
 def depth (graph : ProofGraph) (weight : EdgeCost → Nat) (seeds : List Nat) : Nat → Bound :=
-  depthFuel graph weight seeds graph.vertices.length
+  let table := dpTable graph weight seeds
+  fun v => (table[v]?.getD {}).distance
+
+/-- Follow the selected AND edges, retaining shared premises once. -/
+def optimalSeeds (graph : ProofGraph) (weight : EdgeCost → Nat)
+    (seeds : List Nat) : List Nat := Id.run do
+  let table := dpTable graph weight seeds
+  let mut pending := [graph.root]
+  let mut seen := []
+  let mut used := []
+  for _ in [:graph.vertices.length + graph.edges.length + 1] do
+    match pending with
+    | [] => break
+    | v :: rest =>
+      pending := rest
+      if seen.contains v then continue
+      seen := v :: seen
+      if seeds.contains v then used := v :: used
+      else if let some index := (table[v]?.getD {}).edge? then
+        if let some edge := graph.edges[index]? then
+          pending := edge.premises ++ pending
+  return used
 
 def intervalDP (graph : ProofGraph) (seeds : List Nat) : Nat → Interval := fun v =>
   ⟨depth graph costLower seeds v, depth graph costUpper seeds v⟩
 
-def frontier (graph : ProofGraph) (k : Nat) : List GraphEdge :=
-  if k == 0 then [] else graph.edges
-
-def k2Frontier (graph : ProofGraph) : List GraphEdge := frontier graph 2
-
-def rootProbe (graph : ProofGraph) (seeds : List Nat) : ProbeResult :=
-  let reading := graphInterval graph seeds
-  { outcome := match reading.upper with
-      | .finite _ => .found
-      | .top => .incomplete .undecided,
-    checked := finite reading.upper }
-
-def baselineRootProbe (graph : ProofGraph) (seeds : List Nat) : ProbeResult :=
-  rootProbe graph seeds
-
-def pairedRootProbe (graph : ProofGraph) (seeds : List Nat) : ProbeResult :=
-  rootProbe graph seeds
+/-- One deterministic two-layer cut per author edge; added cuts are not expanded. -/
+def k2Frontier (graph : ProofGraph) : List GraphEdge :=
+  graph.edges.filterMap fun edge => Id.run do
+    let mut frontier := []
+    let mut children := []
+    let proofs := edge.authorData.toList.countP Option.isNone
+    let headLeaves := edge.premises.take (edge.premises.length - proofs)
+    frontier := headLeaves
+    for p in edge.premises.drop headLeaves.length do
+      match (incoming graph p).head? with
+      | some parent =>
+        if let some head := parent.head then
+          frontier := frontier ++ parent.premises
+          children := children ++ [some (.app head parent.authorData [])]
+        else
+          frontier := frontier ++ [p]
+          children := children ++ [none]
+      | none =>
+        frontier := frontier ++ [p]
+        children := children ++ [none]
+    if frontier == edge.premises then return none
+    let plan? := edge.head.map (fun head => SpinePlan.app head edge.authorData children)
+    return some {
+      conclusion := edge.conclusion, premises := frontier, plan?, window := 2,
+      detail := "two-layer-frontier"}
 
 def graphInterval (graph : ProofGraph) (seeds : List Nat) : Interval :=
   intervalDP graph seeds graph.root
@@ -221,7 +295,8 @@ def closureOf (i : Interval) : Closure :=
 def classifyGraph (reading : GraphReading) : Verdict :=
   if reading.presentationCertified || reading.priorReferenceSuccess ||
       upperIsZero reading.baseline then .bindOnly
-  else if reading.graph.complete && reading.isolated && reading.structureChecked &&
+  else if reading.graph.complete &&
+      reading.graph.edges.all (fun e => e.cost != .unknown && e.pairedCost != .unknown) && reading.isolated && reading.structureChecked &&
       reading.structureClean && finite reading.baseline.lower &&
       finite reading.baseline.upper && finite reading.paired.lower &&
       finite reading.paired.upper && strictDrop reading.baseline reading.paired &&
@@ -230,90 +305,5 @@ def classifyGraph (reading : GraphReading) : Verdict :=
 
 def classifyClosure (reading : GraphReading) : Option Closure :=
   if classifyGraph reading == .nonBindOnly then some (closureOf reading.paired) else none
-
-/- A small structural extraction.  It records applications and their direct
-  argument positions without inspecting proof values.  The local reconstructor
-  later decides which non-Prop arguments become hidden data slots. -/
-private partial def exprChildren : Expr → List Expr
-  | .app f a => [f, a]
-  | .lam _ d b _ | .forallE _ d b _ => [d, b]
-  | .letE _ d v b _ => [d, v, b]
-  | .mdata _ e => [e]
-  | .proj _ _ e => [e]
-  | _ => []
-
-private partial def collectExprs (e : Expr) (seen : List Expr := []) : List Expr :=
-  if seen.any (· == e) then []
-  else e :: (exprChildren e).flatMap (fun child => collectExprs child (e :: seen))
-
-def extractExprGraph (target proof : Expr) : ProofGraph :=
-  let nodes := collectExprs target ++ collectExprs proof
-  let indexed := (List.range nodes.length).zip nodes
-  let vertices := indexed.map (fun (i, e) =>
-    { id := i, type := e, seed := e == target })
-  let edges := indexed.flatMap (fun (i, e) =>
-    match e with
-    | .app f a =>
-        let fi := nodes.findIdx? (· == f) |>.getD i
-        let ai := nodes.findIdx? (· == a) |>.getD i
-        [{ conclusion := i, premises := [fi, ai], cost := .unknown }]
-    | _ => [])
-  { vertices := vertices, edges := edges,
-    root := nodes.findIdx? (· == target) |>.getD 0, complete := true }
-
-def extractGraph (target proof : Expr) : MetaM ProofGraph := pure (extractExprGraph target proof)
-
-structure HiddenExpr where
-  skeleton : Expr
-  dataSlots : Nat
-  deriving Inhabited
-
-private def hideDataArgs (e : Expr) : MetaM HiddenExpr := do
-  let rec go (e : Expr) : MetaM (Expr × Nat) := do
-    match e with
-    | .app f a =>
-        let (f', nf) ← go f
-        let ty ← inferType a
-        if ← isProp ty then
-          let (a', na) ← go a
-          pure (.app f' a', nf + na)
-        else
-          pure (.app f' a, nf + 1)
-    | .mdata d x =>
-        let (x', n) ← go x
-        pure (.mdata d x', n)
-    | _ => pure (e, 0)
-  let (skeleton, slots) ← go e
-  pure { skeleton, dataSlots := slots }
-
-def hideData (e : Expr) : MetaM HiddenExpr := hideDataArgs e
-
-def localRebuild (hidden : HiddenExpr) (seedTypes : Array Expr) : MetaM EdgeCost := do
-  -- The production reconstructor intentionally has a closed, deterministic
-  -- contract.  Its full tactic implementation lives in the probe runner; this
-  -- kernel-side entry point records only the three-valued result.
-  if hidden.dataSlots == 0 then return .zero
-  if seedTypes.isEmpty then return .one
-  -- A scoped variable or a seed fact is available to the deterministic
-  -- replayer; unresolved data only remains unknown when no such seed exists.
-  return .zero
-
-theorem upper_ge_lower (i : Interval) (h : i.lower ≤ i.upper) : i.lower ≤ i.upper := h
-
-theorem unknown_interval :
-    (Interval.mk (.finite 0) (.finite 1)).lower ≤
-      (Interval.mk (.finite 0) (.finite 1)).upper := by
-  change (0 : Nat) ≤ 1
-  decide
-
-theorem classifyGraph_three_way (r : GraphReading) :
-    classifyGraph r = .bindOnly ∨ classifyGraph r = .nonBindOnly ∨
-      classifyGraph r = .insufficient := by
-  dsimp [classifyGraph]
-  split <;> simp
-
-theorem zero_edges_do_not_increase (graph : ProofGraph) (seeds : List Nat)
-    (v : Nat) (h : depth graph costLower seeds v ≤ depth graph costUpper seeds v) :
-    depth graph costLower seeds v ≤ depth graph costUpper seeds v := h
 
 end LeanInformationAudit.SearchReduction

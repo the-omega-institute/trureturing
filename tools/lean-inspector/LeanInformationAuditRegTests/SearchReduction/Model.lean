@@ -1,3 +1,4 @@
+import Mathlib
 import LeanInformationAuditRegAnalysis.SearchReduction.Graph
 
 /-! Executable evidence model for the search-reduction contract. These inputs
@@ -20,9 +21,9 @@ theorem chain_dp_is_min_max :
       ⟨.finite 2, .finite 2⟩ := by native_decide
 
 theorem graph_verdicts_are_nonempty :
-    classifyGraph (graphReadingFromRuns chainGraph .found .exhausted true true) = .bindOnly ∧
-    classifyGraph (graphReadingFromRuns chainGraph .exhausted .found true true) = .nonBindOnly ∧
-    classifyGraph (graphReadingFromRuns chainGraph (.incomplete .heartbeat) .found true true) =
+    classifyGraph (({baseline := ⟨.finite 0, .finite 0⟩} : GraphReading)) = .bindOnly ∧
+    classifyGraph (({baseline := ⟨.finite 1, .finite 1⟩, paired := ⟨.finite 0, .finite 0⟩, pairedUsesSeed := true, isolated := true, structureChecked := true, structureClean := true} : GraphReading)) = .nonBindOnly ∧
+    classifyGraph (({} : GraphReading)) =
       .insufficient := by native_decide
 
 def unionRun : Run → Run → Run

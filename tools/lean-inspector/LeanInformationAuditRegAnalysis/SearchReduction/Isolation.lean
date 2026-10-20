@@ -263,108 +263,105 @@ def checkBaseline (request : Request) (base : Environment) : IO (Except String U
         return .error s!"search.baseline_source_mismatch: {module}"
   return .ok ()
 
-private unsafe def runCore (source : Environment) (request : Request) : IO Observation := do
-  let unknown (reason : String) (failure := LeanInformationAudit.SearchReduction.Failure.isolation) : Observation := {
+private def intervalRun (graph : ProofGraph) (interval : Interval) : Run :=
+  if upperIsZero interval then .found
+  else if graph.complete && graph.edges.all (fun e => e.cost != .unknown) &&
+      finite interval.lower && finite interval.upper then .exhausted
+  else .incomplete .undecided
+
+private unsafe def runCore (source base : Environment) (request : Request) : IO Observation := do
+  let unknown (reason : String) (failure := Failure.isolation) : Observation := {
     target := request.target, base := .incomplete failure,
-    paired := .incomplete failure, verdict := .insufficient, reason }
+    paired := .incomplete failure, verdict := .insufficient, reason}
   try
-    unless source.contains request.target do
-      return unknown "search.missing_target" .missing
-    -- Attributes, instances, macros, simp sets and theorem indexes all come
-    -- from B. No extension state from source is merged into these imports.
-    enableInitializersExecution
-    let hints ← referenceHints
-    enableInitializersExecution
-    let base ← importModules (#[{module := `Mathlib}] ++
-      request.baseline.map (fun n => {module := n})) options 0
-      (leakEnv := true) (loadExts := true)
+    unless source.contains request.target do return unknown "search.missing_target" .missing
     if let .error reason ← checkBaseline request base then return unknown reason
-    if hints.isEmpty then return unknown "search.missing_registered_strategies"
     let prepared ← prepare source base request false
-    let .ok (clean, target, vocabularyTarget) := prepared
+    let .ok (clean, target, _) := prepared
       | let (failure, reason) := match prepared with
           | .error failure => failure | _ => (.isolation, "search.isolation_failed")
         return unknown reason failure
     if clean.contains request.target then return unknown "search.target_already_in_baseline"
-    let (searched, searchedAttempts, index?) ← searchIndexed clean target.levelParams target.type #[] hints
-    let baseRun := if vocabularyTarget.isSome then .found else searched
-    let attempts := searchedAttempts ++ vocabularyTarget.toArray
-    let baseGraph? : Option ProofGraph := match searchedAttempts.find? (fun row => row.proof?.isSome) with
-      | some row => row.proof?.map (extractExprGraph target.type)
-      | none => none
     let (presentation, presentationEvidence?, presentationDetail) ←
-      baselinePresentation clean target.levelParams target.type index?
-    let observed : Observation := {
-      target := request.target, base := baseRun, paired := .incomplete .undecided,
-      verdict := classifyCertified true presentation baseRun false false (.incomplete .undecided),
-      attempts, targetChecked := true, presentation, presentationEvidence?, presentationDetail,
-      graph? := baseGraph?.map (fun graph => graphReadingFromRuns graph baseRun (.incomplete .undecided)
-        false false) }
-    if observed.verdict == .bindOnly then return observed
-    if let .incomplete _ := presentation then
-      return {observed with reason := "search.presentation_incomplete"}
-    if request.additions.isEmpty then
+      baselinePresentation clean target.levelParams target.type none
+    let mut pairedEnv := clean
+    let mut structureChecked := false
+    let mut structureReason := ""
+    if !request.additions.isEmpty then
+      match ← prepare source clean request true with
+      | .ok (env, _, _) => pairedEnv := env; structureChecked := true
+      | .error (_, reason) => structureReason := reason
+    let work : CoreM Observation := MetaM.run' do
+      let some proof := target.value? (allowOpaque := true)
+        | return unknown "graph.missing_target_body" .missing
+      let mut added := #[]
+      if structureChecked then
+        for name in request.additions do
+          let info ← sourceInfo source name
+          added := added.push (info.type, mkConst name (info.levelParams.map Level.param))
+      let graph ← withEnv source <| extractGraph base target.type proof added
+      let reading ← withEnv clean <| evaluateGraph graph
+      let baselineProof? ← if upperIsZero reading.baseline then
+        withEnv clean <| assembleZero reading.graph else pure none
+      let pairedProof? ← if upperIsZero reading.paired then
+        withEnv pairedEnv <| assembleZero reading.graph true else pure none
+      let reading := {reading with
+        baseline := if upperIsZero reading.baseline && baselineProof?.isNone then
+          {reading.baseline with upper := .top} else reading.baseline
+        paired := if upperIsZero reading.paired && pairedProof?.isNone then
+          {reading.paired with upper := .top} else reading.paired
+        baselineProof?, pairedProof?, isolated := true, structureChecked,
+        structureClean := structureChecked, presentationCertified := presentation == .found}
+      let baseRun := intervalRun reading.graph reading.baseline
+      let pairedGraph := {reading.graph with edges := reading.graph.edges.map (fun edge => {edge with cost := edge.pairedCost})}
+      let pairRun := intervalRun pairedGraph reading.paired
+      let attempts := baselineProof?.toArray.map fun proof =>
+        {strategy := "graph/assembled-zero", outcome := .found, proof? := some proof : Attempt}
+      let pairAttempts := pairedProof?.toArray.map fun proof =>
+        {strategy := "graph/assembled-zero", outcome := .found, proof? := some proof : Attempt}
       return {
-        target := request.target, base := baseRun, paired := .incomplete .missing,
-        verdict := .insufficient, attempts, targetChecked := true,
-        presentation, presentationEvidence?, presentationDetail, reason := "search.empty_structure" }
-    for n in request.additions do
-      unless source.contains n do
-        return { (unknown s!"search.missing_structure: {n}" .missing) with
-          base := baseRun, attempts, targetChecked := true,
-          presentation, presentationEvidence?, presentationDetail }
-    let preparedS ← prepare source clean request true
-    let .ok (pairedEnv, _, _) := preparedS
-      | let (failure, reason) := match preparedS with
-          | .error failure => failure | _ => (.isolation, "search.structure_isolation_failed")
-        return { (unknown reason failure) with
-          base := baseRun, attempts, targetChecked := true,
-          presentation, presentationEvidence?, presentationDetail }
-    let (pairRun, pairAttempts) ← search pairedEnv target.levelParams target.type request.additions hints
-    let graph? : Option ProofGraph := match pairAttempts.find? (fun row => row.proof?.isSome) with
-      | some row => row.proof?.map (extractExprGraph target.type)
-      | none => none
-    return {
-      target := request.target, base := baseRun, paired := pairRun,
-      verdict := classifyCertified true presentation baseRun true true pairRun, attempts, pairAttempts,
-      targetChecked := true, structureChecked := true, structureClean := true,
-      presentation, presentationEvidence?, presentationDetail,
-      graph? := graph?.map (fun graph => graphReadingFromRuns graph baseRun pairRun true true),
-      reason := if pairRun == .exhausted then "search.structure_insufficient_to_close" else ""}
-  catch ex => return unknown s!"search.execution: {ex}" .execution
+        target := request.target, base := baseRun, paired := pairRun,
+        verdict := classifyGraph reading, attempts, pairAttempts,
+        targetChecked := true, structureChecked, structureClean := structureChecked,
+        presentation, presentationEvidence?, presentationDetail, graph? := some reading,
+        reason := structureReason}
+    let context : Core.Context := {
+      fileName := "<proof graph>", fileMap := default,
+      options := options.set `maxHeartbeats 0,
+      initHeartbeats := ← IO.getNumHeartbeats, maxHeartbeats := 0}
+    match ← (work.run context {env := clean}).toIO' with
+    | .ok (result, state) =>
+      if state.messages.hasErrors then return unknown "graph.elaboration_errors" .execution
+      return result
+    | .error ex => return unknown (← ex.toMessageData.toString) .execution
+  catch ex => return unknown s!"search.execution:{ex}" .execution
 
-/-- Every actual reading carries a mechanically checked load/catalog scope.
-A certificate from a sub-base is valid over B0; finite misses remain local. -/
-unsafe def run (source : Environment) (request : Request) : IO Observation := do
+/-- Fork only immutable module storage. Candidate extensions are never merged
+into the baseline environment used for local reconstruction. -/
+unsafe def run (source : Environment) (request : Request)
+    (sharedImports : ImportState := default) : IO Observation := do
   try
     enableInitializersExecution
-    let base ← importModules (#[{module := `Mathlib}] ++
-      request.baseline.map (fun n => {module := n})) options 0
-      (leakEnv := true) (loadExts := true)
+    let imports : Array Import := #[{module := `Mathlib}] ++
+      request.baseline.map (fun n => {module := n})
+    let base ← withImporting do
+      let (_, state) ← (importModulesCore imports).run sharedImports
+      finalizeImport state imports options 0 (leakEnv := true) (loadExts := true)
     let mut delivery := #[]
     for n in #[request.target] ++ request.additions do
       if let some index := source.getModuleIdxFor? n then
         delivery := delivery.push source.header.moduleNames[index.toNat]!
     let catalog ← baselineCatalog request.baselineCommit delivery base
-    let result ← runCore source request
-    let mut used := #[]
-    for row in result.pairAttempts do
-      if let some proof := row.proof? then
-        used := request.additions.filter (proof.getUsedConstants.contains ·)
-    if result.verdict == .nonBindOnly && used.isEmpty then
-      return {result with
-        verdict := .insufficient, paired := .incomplete .isolation,
-        reason := "search.paired_proof_does_not_use_structure", catalogCount := catalog.eligible.size,
-        loadedModules := catalog.loaded, catalogExcluded := catalog.excluded,
-        scope := catalog.scope, catalogVerified := true}
+    let result ← runCore source base request
+    let used := if result.graph?.any (·.pairedUsesSeed) then request.additions else #[]
     return {result with
       catalogCount := catalog.eligible.size, loadedModules := catalog.loaded,
-      catalogExcluded := catalog.excluded, scope := catalog.scope, catalogVerified := true,
-      pairedStructureUse := used}
+      catalogExcluded := catalog.excluded, scope := "B_used/" ++ catalog.scope,
+      catalogVerified := true, pairedStructureUse := used}
   catch ex =>
     return {
       target := request.target, verdict := .insufficient, base := .incomplete .isolation,
       paired := .incomplete .isolation, presentation := .incomplete .isolation,
-      presentationEvidence? := none, reason := s!"search.catalog_incomplete: {ex}"}
+      reason := s!"search.catalog_incomplete:{ex}"}
 
 end LeanInformationAudit.SearchReduction

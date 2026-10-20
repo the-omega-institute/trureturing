@@ -1,5 +1,5 @@
-import Mathlib.Tactic
-import LeanInformationAuditRegAnalysis.SearchReduction.Graph
+import LeanInformationAuditRegAnalysis.SearchReduction.Index
+import LeanInformationAuditRegAnalysis.SearchReduction.Local
 
 /-! Lean-native, Observe-only reference search. Imported candidate extensions
 are never copied into either probe environment. Proof terms, not JSON, carry
@@ -43,7 +43,7 @@ structure Observation where
   presentationEvidence? : Option PresentationEvidence := none
   presentationDetail : String := ""
   reason : String := ""
-  configuration : String := "R_v1/prefix-reconstruction-independent-units-v1/200000"
+  configuration : String := "R_loc/hidden-data-k2/200000"
   catalogCount : Nat := 0
   loadedModules : Array Name := #[]
   catalogExcluded : Array Name := #[]
@@ -102,116 +102,6 @@ partial def components (fact : Expr) : MetaM (Array Expr) := do
     return #[fact, ← mkAppM ``Iff.mp #[fact], ← mkAppM ``Iff.mpr #[fact]]
   return #[fact]
 
-/-- A discrimination index contains only compiled statement shapes. It is
-rebuilt from the isolated environment, not a process-global search cache. -/
-abbrev Fact := Name × List Name
-structure FactIndex where
-  statements : Std.HashMap UInt64 (Array Name) := {}
-  statementHeads : Std.HashMap (List Name) (Array Name) := {}
-  matcherConstants : Array (Name × ConstantInfo) := #[]
-  matcherIndexed : Bool := false
-  projections : LazyDiscrTree Fact := {}
-
-private partial def indexType (index : LazyDiscrTree.PreDiscrTree Fact)
-    (name : Name) (path : List Name) (type : Expr) :
-    MetaM (LazyDiscrTree.PreDiscrTree Fact) := do
-  let entry ← LazyDiscrTree.InitEntry.fromExpr type (name, path)
-  let mut index := index.push entry.key entry.entry
-  let reduced ← whnf type
-  if reduced != type then
-    let entry ← LazyDiscrTree.InitEntry.fromExpr reduced (name, path)
-    index := index.push entry.key entry.entry
-  let type := reduced
-  if type.isAppOfArity ``And 2 then
-    index ← indexType index name (path ++ [``And.left]) type.appFn!.appArg!
-    index ← indexType index name (path ++ [``And.right]) type.appArg!
-  if type.isAppOfArity ``Iff 2 then
-    let forward ← LazyDiscrTree.InitEntry.fromExpr
-      (← mkArrow type.appFn!.appArg! type.appArg!) (name, path ++ [``Iff.mp])
-    index := index.push forward.key forward.entry
-    let backward ← LazyDiscrTree.InitEntry.fromExpr
-      (← mkArrow type.appArg! type.appFn!.appArg!) (name, path ++ [``Iff.mpr])
-    index := index.push backward.key backward.entry
-  return index
-
-private partial def telescopeBody : Expr → Expr
-  | .forallE _ _ body _ => telescopeBody body
-  | .mdata _ body => telescopeBody body
-  | e => e
-
-/-- A coarse retrieval key keeps definitionally equal full statements in reach
-when their nested compiler-generated matchers have different constant names.
-The key is never evidence of equality: each hit still requires `isDefEq`. -/
-private def expressionHead (e : Expr) : Name :=
-  e.consumeMData.getAppFn.constName?.getD .anonymous
-
-private partial def statementHead : Expr → List Name
-  | .forallE _ domain body _ => expressionHead domain :: statementHead body
-  | .mdata _ body => statementHead body
-  | e => [expressionHead e]
-
-/-- Only compiler matcher names may differ in this full-statement fallback.
-The marker is a retrieval key, never a term submitted to the kernel. -/
-private def matcherShape (type : Expr) : Expr :=
-  type.replace fun expression =>
-    match expression with
-    | .const (.str _ part) levels =>
-      if part.startsWith "match_" then
-        some (.const `_searchReduction.matcherShape levels)
-      else none
-    | _ => none
-
-/-- A cheap syntactic prefilter avoids normalizing arbitrary mathematical
-predicates merely to discover that they contain no logical pair. -/
-private partial def pairHead (env : Environment) (expression : Expr)
-    (seen : NameSet := {}) : Bool :=
-  match expression with
-  | .lam _ _ body _ | .forallE _ _ body _ | .mdata _ body => pairHead env body seen
-  | .letE _ _ value body _ => pairHead env (body.instantiate1 value) seen
-  | expression =>
-    match expression.getAppFn with
-    | .const name _ =>
-      if name == ``And || name == ``Iff then true
-      else if seen.contains name then false
-      else match env.find? name with
-        | some (.defnInfo value) => pairHead env value.value (seen.insert name)
-        | _ => false
-    | _ => false
-
-def factIndex : MetaM FactIndex := do
-  let mut index : LazyDiscrTree.PreDiscrTree Fact := {}
-  let mut statements : Std.HashMap UInt64 (Array Name) := {}
-  let env ← getEnv
-  let names := env.constants.toList.toArray.qsort (fun a b => Name.quickLt a.1 b.1)
-  for (name, info) in names do
-    if info.isUnsafe then continue
-    if name.isInternalDetail && !isPrivateName name then continue
-    let key := info.type.hash
-    statements := statements.insert key ((statements[key]?.getD #[]).push name)
-    unless pairHead env (telescopeBody info.type) do continue
-    let initial ← get
-    index ← forallTelescopeReducing info.type fun _ body => do
-      let body ← whnf body
-      if body.isAppOfArity ``And 2 || body.isAppOfArity ``Iff 2 then
-        indexType index name [] body
-      else pure index
-    set initial
-  return {statements, matcherConstants := names, projections := index.toLazy}
-
-/-- Build the identical matcher retrieval index only when a goal uses it.
-The already sorted constants preserve candidate order and avoid another sort. -/
-private def ensureMatcherIndex : StateRefT FactIndex MetaM Unit := do
-  if (← get).matcherIndexed then return
-  let mut heads : Std.HashMap (List Name) (Array Name) := {}
-  for (name, info) in (← get).matcherConstants do
-    if info.isUnsafe then continue
-    if name.isInternalDetail && !isPrivateName name then continue
-    let head := statementHead info.type
-    unless (head.getLast!).isAnonymous do
-      heads := heads.insert head ((heads[head]?.getD #[]).push name)
-  modify fun index =>
-    {index with statementHeads := heads, matcherConstants := #[], matcherIndexed := true}
-
 private def factExpr (fact : Fact) : MetaM Expr := do
   let mut e ← mkConstWithFreshMVarLevels fact.1
   for projection in fact.2 do
@@ -226,7 +116,7 @@ partial def structural (goal : MVarId) (extra : Array Name) :
   let original ← instantiateMVars (← goal.getType)
   let type ← withTransparency .reducible <| whnf original
   for key in #[original.hash, type.hash] do
-    for name in (← get).statements[key]?.getD #[] do
+    for name in (← statementCandidates key) do
       let before ← (saveState : MetaM Meta.SavedState)
       let value ← mkConstWithFreshMVarLevels name
       if ← isDefEq (← inferType value) original then
@@ -243,9 +133,8 @@ partial def structural (goal : MVarId) (extra : Array Name) :
     else #[originalHead, reducedHead]
   let shape := matcherShape original
   if shape != original then
-    ensureMatcherIndex
     for key in heads do
-      for name in (← get).statementHeads[key]?.getD #[] do
+      for name in (← matcherCandidates key) do
         let info ← getConstInfo name
         unless matcherShape info.type == shape do continue
         let before ← (saveState : MetaM Meta.SavedState)
@@ -267,9 +156,8 @@ partial def structural (goal : MVarId) (extra : Array Name) :
   for n in extra do
     facts := facts ++ (← components (← mkConstWithFreshMVarLevels n))
   if ← presentation goal facts then return #[]
-  let (hits, index) ← (← get).projections.getMatch type
-  modify fun state => {state with projections := index}
-  for f in hits.appendResults #[] do facts := facts.push (← factExpr f)
+  let hits ← projectionCandidates type
+  for f in hits do facts := facts.push (← factExpr f)
   if ← presentation goal facts then return #[]
   let mut next := goal
   for n in extra do
@@ -302,6 +190,7 @@ def inlineGenerated (env : Environment) (proof : Expr) : MetaM Expr :=
 origin. Exceptions are caught outside that state, including resource failures. -/
 def attempt (env : Environment) (levels : List Name) (type : Expr)
     (strategy : String) (action : MVarId → MetaM Bool) : IO Attempt := do
+  profilePhase s!"attempt {strategy}"
   let work : CoreM Attempt := MetaM.run' do
     let goal ← mkFreshExprMVar type
     let ok ← action goal.mvarId!
@@ -355,10 +244,7 @@ private def makePlan (type : Expr) (index : FactIndex) (extra : Array Name) :
       parameters := parameters.push decl.toExpr
       unless decl.isLet do arguments := arguments.push decl.toExpr
     return { goal, closedType := ← mkForallFVars parameters (← goal.getType), arguments : Leaf }
-  -- Matching only expands immutable baseline index entries. Preserve the full
-  -- declaration enumeration even if matcher retrieval consumed its input list.
-  return ({root, leaves, state := ← get},
-    {warmed with matcherConstants := index.matcherConstants})
+  return ({root, leaves, state := ← get}, warmed)
 
 private def introAll (goal : MVarId) : MetaM MVarId := do
   let mut goal := goal
@@ -373,10 +259,13 @@ def searchIndexed (env : Environment) (levels : List Name) (type : Expr)
     (extra : Array Name) (hints : Array (Nat × TSyntax `tactic)) : IO (Run × Array Attempt × Option FactIndex) := do
   let context : Core.Context := {fileName := "<R_v1 structure>", fileMap := default, options := options}
   let planResult ← ((MetaM.run' do
+    profilePhase "structure/index"
     let index ← factIndex
     let used := ((← IO.getNumHeartbeats) - (← readThe Core.Context).initHeartbeats) / 1000
     IO.eprintln s!"R_v1 structural index heartbeats: {used}"
+    profilePhase "structure/plan"
     let (plan, index) ← makePlan type index extra
+    profilePhase "structure/ready"
     return (index, plan)).run
     {context with initHeartbeats := ← IO.getNumHeartbeats} {env}).toIO'
   let (index, plan) ← match planResult with

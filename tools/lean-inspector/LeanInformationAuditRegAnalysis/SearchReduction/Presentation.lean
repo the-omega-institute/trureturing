@@ -166,12 +166,13 @@ an unmatched source. Every failure remains incomplete unless a proof is found. -
 def baselinePresentation (env : Environment) (levels : List Name) (target : Expr)
     (index? : Option FactIndex) :
     IO (Run × Option PresentationEvidence × String) := do
+  profilePhase "presentation/start"
   let some index := index?
     | return (.incomplete .execution, none, "search.presentation_index_unavailable")
   let start ← IO.getNumHeartbeats
   let unitLimit := budget * 1000
-  let priorBound := (4 + 5 * index.matcherConstants.size) * unitLimit
-  IO.eprintln s!"presentation budget: independent_units, enumeration={index.matcherConstants.size}, unit_limit={unitLimit}, prior_heartbeats_bound={priorBound}"
+  let priorBound := (4 + 5 * index.enumerationSize) * unitLimit
+  IO.eprintln s!"presentation budget: independent_units, enumeration={index.enumerationSize}, unit_limit={unitLimit}, prior_heartbeats_bound={priorBound}"
   let targetAtoms ← match normalizedAtoms env target with
     | .ok atoms => pure atoms
     | .error err => return (.incomplete .execution, none,
@@ -181,15 +182,16 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
     return (.incomplete .heartbeat, none, "search.presentation_target_normalization_budget")
   let needsOrigins := targetAtoms.any (fun key =>
     !key.scope.isEmpty || key.constants.any (originAnchor env))
-  let mut memo := {}
   let mut eligible := #[]
   let mut enumerated := 0
   let domainStart ← IO.getNumHeartbeats
-  let domain := productionDomain index.matcherConstants
+  let domainSize := env.constants.fold (fun n name info =>
+    if productionAllowed name info then n + 1 else n) 0
   if (← IO.getNumHeartbeats) - domainStart > unitLimit then
     return (.incomplete .heartbeat, none, "search.presentation_domain_budget")
   let rawStart ← IO.getNumHeartbeats
-  for (name, info) in domain do
+  for (name, info) in env.constants do
+    unless productionAllowed name info do continue
     let scopeStart ← IO.getNumHeartbeats
     let scopeMatches := sourceScopeNecessary env info.type targetAtoms
     if (← IO.getNumHeartbeats) - scopeStart > unitLimit then
@@ -197,9 +199,8 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
     unless scopeMatches do continue
     enumerated := enumerated + 1
     let unitStart ← IO.getNumHeartbeats
-    let (bound, nextMemo) := if needsOrigins then (rawOrigins env info.type).run memo
-      else ({unknown := true}, memo)
-    memo := nextMemo
+    let bound := if needsOrigins then (rawOrigins env info.type).run' {}
+      else {unknown := true}
     if rawNecessary env targetAtoms bound then
       eligible := eligible.push (name, info.type, bound)
     if (← IO.getNumHeartbeats) - unitStart > unitLimit then
@@ -207,10 +208,12 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
         s!"search.presentation_raw_index_budget: raw_sources={enumerated}, " ++
           s!"necessary_hits={eligible.size}, " ++
           s!"raw_index_heartbeats={(← IO.getNumHeartbeats)-start}")
-  if (← IO.getNumHeartbeats) - rawStart > (1 + 2 * domain.size) * unitLimit then
+  if (← IO.getNumHeartbeats) - rawStart > (1 + 2 * domainSize) * unitLimit then
     return (.incomplete .heartbeat, none, "search.presentation_enumeration_budget")
+  profilePhase "presentation/filtered"
   let rawBuilt ← IO.getNumHeartbeats
   let orderingStart ← IO.getNumHeartbeats
+  eligible := eligible.qsort (fun a b => Name.quickLt a.1 b.1)
   if targetAtoms.all (·.isScope) then eligible := neutralFirst target eligible
   if (← IO.getNumHeartbeats) - orderingStart > unitLimit then
     return (.incomplete .heartbeat, none, "search.presentation_ordering_budget")
@@ -226,7 +229,7 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
   let mut failure := none
   let detail := fun normalized hits checked normalizationCost queryCost
       conversionCost verificationCost =>
-    s!"heartbeat_unit=internal, certificate_kind={certificateKind}, budget_semantics=independent_units, enumeration_sources={index.matcherConstants.size}, domain_sources={domain.size}, " ++
+    s!"heartbeat_unit=internal, certificate_kind={certificateKind}, budget_semantics=independent_units, enumeration_sources={index.enumerationSize}, domain_sources={domainSize}, " ++
     s!"unit_limit={unitLimit}, prior_heartbeats_bound={priorBound}, raw_sources={enumerated}, necessary_hits={eligible.size}, " ++
     s!"normalized_sources={normalized}, " ++
     s!"candidates={hits}, checked_presentations={checked}, " ++
