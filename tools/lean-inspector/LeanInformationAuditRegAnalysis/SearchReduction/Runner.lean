@@ -1,5 +1,6 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Index
 import LeanInformationAuditRegAnalysis.SearchReduction.Local
+import LeanInformationAuditRegAnalysis.SearchReduction.InformationFace
 
 /-! Lean-native, Observe-only reference search. Imported candidate extensions
 are never copied into either probe environment. Proof terms, not JSON, carry
@@ -54,6 +55,20 @@ structure Observation where
   structureChecked : Bool := false
   structureClean : Bool := false
   graph? : Option GraphReading := none
+  information : InformationReading := {}
+
+def withInformation (r : Observation) (information : InformationReading) : Observation :=
+  {r with information}
+
+def informationTag (verdict : Verdict) (face : InformationFace) : Option String :=
+  if face != .strictBound then none else
+  match verdict with
+  | .nonBindOnly => some "both"
+  | .insufficient => some "information-only"
+  | .bindOnly => some "conflict:strict-vs-bind-only"
+
+theorem verdict_parallel (r : Observation) (information : InformationReading) :
+    (withInformation r information).verdict = r.verdict := rfl
 
 def standardAxioms (xs : Array Name) : Bool :=
   xs.all fun n => #[`propext, `Classical.choice, `Quot.sound].contains n

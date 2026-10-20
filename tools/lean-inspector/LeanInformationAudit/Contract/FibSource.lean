@@ -350,6 +350,32 @@ private def usesTarget (target : Name) (proof : Expr) : FibSource.M Bool := do
         pending := (← bodyNames body).toList ++ pending
   return false
 
+/-- Typed optional-face projection of the same compiled LawFact acquisition.
+No serialization is read back to decide a status. -/
+def informationFacts (target : Name) (value : Expr) : FibSource.M (Bool × Bool × Bool) := do
+  let mut separated := false
+  let mut identifiable := false
+  let mut submittedSeparated := false
+  let mut submittedIdentifiable := false
+  for term in ← list value do
+    let term ← constructorHead term
+    let head := term.getAppFn.constName?.getD .anonymous
+    unless ["deltaSign", "positiveWidth", "identifiable", "separated"].any
+        (fun name => head == (base ++ `LawFact).str name) do
+      fail "fib.law_fact_outside_allowlist"
+    let values ← fields head term
+    let independent := !(← usesTarget target values.back!)
+    if head == base ++ `LawFact.separated then
+      submittedSeparated := true
+      separated := separated || independent
+    if head == base ++ `LawFact.identifiable then
+      submittedIdentifiable := true
+      identifiable := identifiable || independent
+  if submittedSeparated && submittedIdentifiable then fail "fib.law_inconsistent_capture_evidence"
+  let clean := if submittedSeparated then separated
+    else if submittedIdentifiable then identifiable else true
+  return (separated, identifiable, clean)
+
 private def facts (target : Name) (value : Expr) : FibSource.M (Json × AuricFib.Capture) := do
   let mut separated := false
   let mut identifiable := false

@@ -1,5 +1,6 @@
 import Mathlib.Util.SynthesizeUsing
 import LeanInformationAuditRegAnalysis.SearchReduction.Isolation
+import LeanInformationAuditRegAnalysis.SearchReduction.Information
 
 /-! Compiled Lean probe commands and a print-only JSON projection. -/
 
@@ -119,7 +120,7 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
     match c with | .zero => "zero" | .partial_ => "partial"))]
 
 /-- A human-readable projection. No code reads it back for classification. -/
-def observationJson (r : Observation) (baselineCommit : String := "") : Json := Json.mkObj [
+def computationalJson (r : Observation) (baselineCommit : String := "") : Json := Json.mkObj [
   ("reference", toJson "R_loc-decl"), ("configuration", toJson r.configuration),
   ("scope", toJson r.scope), ("B_load_count", toJson r.loadedModules.size),
   ("B0_count", toJson r.catalogCount), ("B_load_subset_B0", toJson r.catalogVerified),
@@ -141,6 +142,20 @@ def observationJson (r : Observation) (baselineCommit : String := "") : Json := 
   ("attempts", Json.arr (r.attempts.map attemptJson)),
   ("paired_attempts", Json.arr (r.pairAttempts.map attemptJson)), ("reason", toJson r.reason),
   ("graph", toJson (r.graph?.map graphJson))]
+
+theorem report_computational_unchanged (r : Observation) (information : InformationReading)
+    (baselineCommit : String) :
+    computationalJson (withInformation r information) baselineCommit =
+      computationalJson r baselineCommit := rfl
+
+def observationJson (r : Observation) (baselineCommit : String := "") : Json :=
+  let fields := (computationalJson r baselineCommit).getObj?.toOption.get!.toArray.toList
+  Json.mkObj (fields ++ [
+    ("information_face", toJson r.information.face.label),
+    ("information_tag", toJson (informationTag r.verdict r.information.face)),
+    ("information_application", toJson (r.information.application.map Name.toString)),
+    ("information_registration", toJson (r.information.registration.map Name.toString)),
+    ("information_ordinary_records", Json.arr r.information.ordinaryRecords)])
 
 private def runExpr : Run → Expr
   | .found => mkConst ``Run.found
@@ -281,6 +296,7 @@ private def writeRequest (path : System.FilePath) (request : Request)
   let env ← liftTermElabM <| withEnv (env.setMainModule `SearchReductionRequest) do
     for (name, value) in #[(`target, toExpr request.target),
         (`baseline, toExpr request.baseline), (`additions, toExpr request.additions),
+        (`informationApplication, toExpr request.informationApplication),
         (`owners, toExpr owners), (`result, toExpr result), (`commit, toExpr request.baselineCommit)] do
       let type ← inferType value
       addDecl (.defnDecl {
@@ -294,7 +310,9 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
   -- Exported proof expressions retain source module storage; transient
   -- environment maps and extension states need not be made persistent.
   probeRegions.modify (· ++ source.header.regions)
-  let result ← run source request shared
+  let computational ← run source request shared
+  let information ← acquireInformation source request.target request.additions request.informationApplication
+  let result := withInformation computational information
   let guardProof? ← if result.verdict == .nonBindOnly then
     liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
       -- Replay precedes publication, so author extension initializers cannot
@@ -334,11 +352,19 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
       (← getValue `baseline)
     let additions ← evalExpr (Array Name) (mkApp (mkConst ``Array [.zero]) (mkConst ``Name))
       (← getValue `additions)
+    let informationApplication ← evalExpr (Option Name)
+      (mkApp (mkConst ``Option [.zero]) (mkConst ``Name)) (← getValue `informationApplication)
     let owners ← evalExpr (Array Name) (mkApp (mkConst ``Array [.zero]) (mkConst ``Name))
       (← getValue `owners)
     let name ← evalExpr Name (mkConst ``Name) (← getValue `result)
     let commit ← evalExpr String (mkConst ``String) (← getValue `commit)
-    pure ({target, «baseline» := bs, additions, baselineCommit := commit : Request}, owners, name)
+    let request : Request := {
+      target := target
+      «baseline» := bs
+      additions := additions
+      baselineCommit := commit
+      informationApplication := informationApplication }
+    pure (request, owners, name)
   executeProbe requestData.1 requestData.2.1 requestData.2.2
 
 @[command_elab searchReductionProbeCmd] unsafe def elabSearchReductionProbe : CommandElab := fun stx => do
@@ -352,13 +378,15 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
   | _ => throwUnsupportedSyntax
 
 syntax (name := searchReductionCmd) "#search_reduction " ident " at " str
-  " baseline " "[" ident,* "]" " using " "[" ident,* "]" " as " ident : command
+  " baseline " "[" ident,* "]" " using " "[" ident,* "]"
+  (" information " ident)? " as " ident : command
 
 /-- Separate compiler processes also isolate Mathlib's process-global lazy
 indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
 @[command_elab searchReductionCmd] unsafe def elabSearchReduction : CommandElab := fun stx => do
   match stx with
-  | `(#search_reduction $target:ident at $sha:str baseline [$bs:ident,*] using [$ss:ident,*] as $name:ident) =>
+  | `(#search_reduction $target:ident at $sha:str baseline [$bs:ident,*] using [$ss:ident,*]
+      $[information $app:ident]? as $name:ident) =>
     let source ← getEnv
     for module in bs.getElems do
       unless source.header.moduleNames.contains module.getId do
@@ -370,7 +398,8 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
         return
     let mut modules := #[`LeanInformationAuditRegAnalysis.SearchReduction.Commands] ++
       bs.getElems.map (fun x => x.getId)
-    for n in #[target.getId] ++ ss.getElems.map (fun x => x.getId) do
+    for n in #[target.getId] ++ ss.getElems.map (fun x => x.getId) ++
+        (app.toArray.map (·.getId)) do
       if n != target.getId && (source.getModuleIdxFor? n).isNone then continue
       let some idx := source.getModuleIdxFor? n
         | let failed : Observation := {
@@ -395,7 +424,8 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let payload := directory / "request.olean"
     writeRequest payload {
       target := target.getId, «baseline» := bs.getElems.map (·.getId),
-      additions := ss.getElems.map (·.getId), baselineCommit := sha.getString} modules name.getId
+      additions := ss.getElems.map (·.getId), baselineCommit := sha.getString,
+      informationApplication := app.map (·.getId)} modules name.getId
     let command := s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr payload.toString}\n"
     IO.FS.writeFile input (imports ++ command)
     let child ← IO.Process.output {

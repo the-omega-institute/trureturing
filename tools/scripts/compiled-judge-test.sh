@@ -8,7 +8,7 @@ search_reduction_modules=(
   GraphCandidates GraphModel GraphCalibration Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
   FaultPaths SingleSourceModel PresentationCoverage RawOriginsTests SingleSourceTests
   Calibration Faults RealNegative
-  VocabularyCandidates VocabularyModel VocabularyTransport VocabularyTests
+  VocabularyCandidates VocabularyModel VocabularyTransport VocabularyTests InformationTests
 )
 for module in "${search_reduction_modules[@]}"; do
   make -C "$ROOT" lean \

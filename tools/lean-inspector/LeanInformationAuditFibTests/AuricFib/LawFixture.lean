@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.AuricFib
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
+import LeanInformationAuditInterface.Contract.Registration
+import Reg.Support.DependentFamily
 
 /-! Typed law-family fixtures and kernel rejection boundaries. -/
 
@@ -183,13 +185,15 @@ noncomputable abbrev family : LawFamily client where
   domain _ := True
   nonnegative := by intro θ _ w; cases θ <;> cases w <;> norm_num [law]
   normalized := by intro θ _; cases θ <;> norm_num [law]
+theorem separated : ∃ θ φ, family.domain θ ∧ family.domain φ ∧
+    Pyramid.CoarseEq (family.law θ) (family.law φ) ∧
+    Pyramid.delta (family.law θ) ≠ Pyramid.delta (family.law φ) := by
+  refine ⟨false, true, trivial, trivial, ?_, ?_⟩
+  · norm_num [Pyramid.CoarseEq, Pyramid.X, Pyramid.Y, Pyramid.Z, law]
+  · norm_num [DeltaSign.Holds, Pyramid.delta, Pyramid.r, Pyramid.kappa,
+      Pyramid.X, Pyramid.Y, Pyramid.Z, law]
 noncomputable def strict : Application.{0,0,0,0,0,0} target where
-  evidence := .law client family none
-    [.separated (by
-      refine ⟨false, true, trivial, trivial, ?_, ?_⟩
-      · norm_num [Pyramid.CoarseEq, Pyramid.X, Pyramid.Y, Pyramid.Z, law]
-      · norm_num [DeltaSign.Holds, Pyramid.delta, Pyramid.r, Pyramid.kappa,
-         Pyramid.X, Pyramid.Y, Pyramid.Z, law])]
+  evidence := .law client family none [.separated separated]
     (some ⟨0, 0, 0, 1, 0, 1, by decide⟩)
 end Separation
 
@@ -327,6 +331,105 @@ noncomputable def analysis : Application.{0,0,0,0,0,0} target where
   evidence := .law client family (some point) [] none
 
 end Star
+
+namespace RegisteredPos
+open LeanInformationAudit
+open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+/-- A genuine constraint on the selected readout, falsified by a constant two. -/
+theorem target : ∀ θ w, Separation.law θ w ≤ 1 := by
+  intro θ w
+  cases θ <;> cases w <;> norm_num [Separation.law]
+
+abbrev signature := Separation.signature
+noncomputable def actual : Realization signature := Separation.actual
+def fullLaw (r : Realization signature) : Prop := ∀ θ w, r.readout () θ w ≤ 1
+abbrev arena : DependentFamily.Arena := ⟨signature, fullLaw⟩
+noncomputable def bad : Realization signature where
+  readout _ _ _ := 2
+  anchor e := nomatch e
+
+theorem bad_fails : ¬ fullLaw bad := by
+  intro h
+  have := h false .zero
+  norm_num [bad] at this
+
+noncomputable def registration : Registration arena (∀ θ w, Separation.law θ w ≤ 1) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨target, bad, bad_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad, ?_, rfl, bad_fails⟩
+      intro j h
+      cases i
+      cases j
+      exact False.elim (h rfl)
+    · intro i
+      exact nomatch i
+  dependence := by
+    intro i
+    refine ⟨false, .zero, .middle, ?_⟩
+    change (1 / 2 : ℝ) ≠ 0
+    norm_num
+
+def selection : LeanInformationAudit.Contract.SourceSelection := {
+  owner := `LeanInformationAuditFibTests.AuricFib.LawFixture
+  definition := none
+  coordinates := #[0]
+  readouts := #[{
+    path := #["body", "body", "fn", "arg"]
+    stateBinder := 1
+    functionOperand := false
+    stateOperand := none
+    booleanPredicate := false }] }
+
+noncomputable def registrationSlots :
+    LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0} target
+    (type_of% (realize signature (fun _ => Separation.law) (fun e => nomatch e))) Unit Unit := {
+  unitName := `LeanInformationAuditFibTests.AuricFib.LawFixture.RegisteredPos.unit
+  realizationName := `LeanInformationAuditFibTests.AuricFib.LawFixture.RegisteredPos.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ => Separation.law) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some selection
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+noncomputable def source : Source target :=
+  Source.ofRegistration target registration .exact selection
+noncomputable abbrev client : Client.{0,0,0,0,0,0,0} target where
+  source := source
+  plan := { task := (), initial := [], additions := [[()]] }
+  acquisition := .unavailable "Boolean law family; optional numerical acquisition absent"
+noncomputable abbrev family : LawFamily client := {
+  Separation.family with
+  state_eq := fun _ => rfl
+  role := ()
+  output_eq := fun _ => rfl
+  law_eq := fun _ _ => rfl }
+noncomputable def strict : Application.{0,0,0,0,0,0} target where
+  evidence := .law client family none
+    [.separated (by
+      refine ⟨false, true, trivial, trivial, ?_, ?_⟩
+      · norm_num [Pyramid.CoarseEq, Pyramid.X, Pyramid.Y, Pyramid.Z,
+          family, Separation.family, Separation.law]
+      · norm_num [Pyramid.delta, Pyramid.r, Pyramid.kappa, Pyramid.X, Pyramid.Y, Pyramid.Z,
+          family, Separation.family, Separation.law])] none
+end RegisteredPos
 
 /-- A constant identification cannot acquire the required bijection. -/
 theorem rejectsNonbijectiveIdentification : True := by

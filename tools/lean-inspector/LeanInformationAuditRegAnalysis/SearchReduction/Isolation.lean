@@ -14,6 +14,7 @@ structure Request where
   baseline : Array Name
   additions : Array Name := #[]
   baselineCommit : String
+  informationApplication : Option Name := none
   deriving Inhabited
 
 private def sourceInfo (source : Environment) (n : Name) : MetaM ConstantInfo :=
