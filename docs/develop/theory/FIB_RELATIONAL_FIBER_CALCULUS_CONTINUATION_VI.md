@@ -565,11 +565,16 @@ single balanced family of channels attains it. The improvement comes from a
 joint witness, not from adding independently optimal recordwise decoders.
 
 The same fixed partition has a legal peak-six online realization at horizon
-three. This establishes an attainable finite protocol under its declared
-permissions, but it does not determine the minimum over all partitions,
-causal controllers, shared seeds, physical registers, or arbitrary horizons.
-In particular, six terminal cells and eight raw histories both still require
-three bits under a fixed-length binary register.
+three. The latest finite recovery continuation now extends this comparison to
+all complete six-cell partitions and independent seed mixtures: under its
+declared encoded-qutrit, system-only, horizon-three contract, the global
+peak-six optimum is the exact value \(E^*\) stated in Section 70. Thus the
+finite horizon-three threshold is global over the allowed partitions and
+controllers, although it does not determine the unbounded joint memory law,
+physical register cost or arbitrary horizons. In particular, six terminal
+cells and eight raw histories both still require three bits under a
+fixed-length binary register, but that bit count does not determine the
+diamond-error threshold.
 
 These results sharpen the promotion rule of Section 65:
 
@@ -749,3 +754,61 @@ The LAB theorem closes the acquisition-to-execution bridge for its declared
 actual-image contract. It does not establish a universal finite controller,
 state-minimality, total-cost optimality, unknown-seed acquisition or recovery
 of all unselected chronology.
+
+## 70. Exact finite horizon-three memory threshold
+
+The newest approximate-online recovery volume closes a different part of the
+controller problem: a finite, fully specified quantum contract with an encoded
+qutrit input, three acquired labels, peak classical width at most six,
+system-only terminal CPTP decoders, an input-independent shared seed, and no
+intermediate quantum feedback or reference access. Let \(W_3(\varepsilon)\)
+denote the least peak width if it exists under that contract. Put
+
+$$
+\tau=\frac{3\sqrt3}{8},\qquad
+c=\frac{\sqrt{13}}4,\qquad
+r=\sqrt{1+\tau},
+$$
+
+$$
+E^*
+=1-\left[
+\frac{r-c}{r-1+\sqrt2(1-c)}
+\right]^2.
+$$
+
+The complete partition reduction, common tester and matching online channel
+give
+
+$$
+\varepsilon_{\mathrm{op}}(6,3)=E^*,
+$$
+
+and, in the stated range \(0<\varepsilon<1/4\),
+
+$$
+\varepsilon\ge E^*
+\Longleftrightarrow
+W_3(\varepsilon)\le6,
+\qquad
+0<\varepsilon<E^*
+\Longrightarrow
+W_3(\varepsilon)\ge7.
+$$
+
+This is a global finite result: the lower certificate covers all 266 complete
+partitions after convexifying independent seed programs, while the upper
+certificate is an actually legal online protocol. It therefore upgrades the
+fixed-partition witness of Section 67 to a statement about the entire
+declared peak-six controller class. The proof also shows why terminal alphabet
+size alone is insufficient: online feasibility depends on the complete
+prefix transition layers and on the joint Choi geometry of all collision
+cells.
+
+The threshold is task- and contract-relative. It does not determine the full
+width curve \(W_3\), any horizon-uniform \(W_n\) law, the critical pair-energy
+limit, physical implementation cost, or Lean/kernel certification. It also
+does not turn an averaged-channel optimum into a single seed that succeeds on
+every history. The finite result belongs after the acquisition and
+branch-complete conditions above; it cannot be used as a universal memory
+bound for other FIB contracts.
