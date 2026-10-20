@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:b237ec0fedc3fea7c0fe07c2645409f3949a0eb5a40ad808a5f1e4b136283748
+  normalized_sha256: sha256:b237ec0fedc3fea7c0fe07c2645409f3949a0eb5a40ad808a5f1e4b136283748
+cas_ref: sha256:b237ec0fedc3fea7c0fe07c2645409f3949a0eb5a40ad808a5f1e4b136283748
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.AuxiliaryLanguage
+    target_statement_id: sha256:545e6e899d6d74eb19893ed7f462d438eff3ed1b325897592c4bd78bc31897a7
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.bilateral_past_state
+    target_statement_id: sha256:3c463864a7afdca00e72ac91f429fab2c1112a81fb77dde15ce64835e453683a
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.letterMap
+    target_statement_id: sha256:484e0b4491ea15bf838c0fb524d5209da2453ed82188e118e0dd850aaf4668b1
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/InteriorRoot.original_memory_envelopes
+    target_statement_id: sha256:d657e8c70005cac923c9a96c859715b24590e050634d06ee6b44dc2afd446cf4
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry.tail_arithmetic
+    target_statement_id: sha256:68b5e06cdd380759fe4c1e7f52e9d3882155f52797632c170c981eab44823de2
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - e52c568f0e1c29db9612ebc86a8d601b9ac02c01a982ea8d9d788a490bcd1fcf
+    - e7d2d221145fe0404b92418598e4b05968968f708a1927cf6102f3883fe4d1f3

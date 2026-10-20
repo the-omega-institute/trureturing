@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ad6ac3ba3a9a1aaeb7e0c47ab78c4ea6b6a3ce9e87ae2bd9eebb378c84821bf9
   normalized_sha256: sha256:ad6ac3ba3a9a1aaeb7e0c47ab78c4ea6b6a3ce9e87ae2bd9eebb378c84821bf9
 cas_ref: sha256:ad6ac3ba3a9a1aaeb7e0c47ab78c4ea6b6a3ce9e87ae2bd9eebb378c84821bf9
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/DecoderPeak.peak_monotone
+    target_statement_id: sha256:34b8a2f557549c9f523dbf30c68d0d82992024048f8cd47726cc42ed8efb7028
 receipts:
   unresolved_subitems: []
