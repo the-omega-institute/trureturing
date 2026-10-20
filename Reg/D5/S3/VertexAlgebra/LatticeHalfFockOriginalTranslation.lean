@@ -256,3 +256,140 @@ end ShiftCoefficient
 
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+
+namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.NegativeInsertion
+open _root_.D5.S3.VertexAlgebra
+open LatticeGeneratingFieldLocality LatticeHalfFockChargedCoefficients
+open LatticeHalfFockChargedTensorCoefficients LatticeHalfFockFockNormalField
+open LatticeHalfFockCorrectedField LatticeHalfFockFiniteCorrection
+open LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+open scoped BigOperators
+noncomputable section
+
+abbrev Parameter := Σ data : BoundData, Index data.val
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Parameter (fun p => Carrier p.1.val) (fun p => NativeField p.1.val p.1.property)
+
+def actual : Realization signature := realize signature
+  (fun _ p b => correctedField p.1.val p.1.property b) (fun empty => nomatch empty)
+
+def rejected : Realization signature := realize signature
+  (fun _ p b => if b = Finsupp.single 0 (MvPolynomial.X p.2)
+    then chargedField p.1.val p.1.property 0 else 0) (fun empty => nomatch empty)
+
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
+      (index : Index D) (b : Carrier D),
+    let m : ℕ := sourceWeight D index
+    let N : ℕ := vectorFrequencyBound D b + 1
+    readout.readout () ⟨⟨D, hu⟩, index⟩ (neutralMode D index.1 (-(m : ℤ)) b) =
+      singletonLinear D hu index (readout.readout () ⟨⟨D, hu⟩, index⟩ b) +
+        ∑ n ∈ Finset.range N,
+          (((m : ℂ) * halfBinomial m * halfBinomial n) / ((m : ℂ) + (n : ℂ))) •
+            shiftField D hu (m + n)
+              (readout.readout () ⟨⟨D, hu⟩, index⟩ (neutralMode D index.1 (n : ℤ) b))
+
+theorem source_bridge :
+    (type_of% (@correctedField_negative_current_insertion)) ↔ arena.Law actual := Iff.rfl
+
+private def probeIndex : Index hyperbolic := (⟨0, by decide⟩, 0)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  classical
+  intro law
+  have bad := law hyperbolic hyperbolic_unit probeIndex probeSource
+  have distinct : (probeSource : Carrier hyperbolic) ≠
+      Finsupp.single 0 (MvPolynomial.X probeIndex) := by
+    intro h
+    have value := DFunLike.congr_fun h 0
+    have one_eq : (1 : Oscillator hyperbolic) = MvPolynomial.X probeIndex := by
+      simpa [probeSource] using value
+    exact (one_ne_zero : (1 : ℂ) ≠ 0) (by
+      simpa using congrArg MvPolynomial.constantCoeff one_eq)
+  have distinct_zero : (0 : Carrier hyperbolic) ≠
+      Finsupp.single 0 (MvPolynomial.X probeIndex) := by
+    intro h
+    have value := DFunLike.congr_fun h 0
+    exact MvPolynomial.X_ne_zero (R := ℂ) probeIndex (by simpa using value.symm)
+  have negative : neutralMode hyperbolic probeIndex.1 (-1) probeSource =
+      Finsupp.single 0 (MvPolynomial.X probeIndex) := by
+    rw [probeSource, neutralMode_single]
+    simp [neutralPolynomialMode, probeIndex]
+  have bound : vectorFrequencyBound hyperbolic probeSource = 0 := by
+    simp [vectorFrequencyBound, polynomialFrequencyBound, probeSource]
+  have zero_mode : neutralMode hyperbolic probeIndex.1 0 probeSource = 0 := by
+    simp [probeSource, neutralMode_single, neutralPolynomialMode,
+      LatticeGeneratingFieldLocality.bilinear]
+  have field_zero : chargedField hyperbolic hyperbolic_unit 0 = 0 := by
+    have weight : sourceWeight hyperbolic probeIndex = 1 := rfl
+    dsimp only at bad
+    simp only [weight, bound, zero_add, Nat.cast_one, Nat.cast_zero,
+      Finset.range_one, Finset.sum_singleton] at bad
+    rw [negative, zero_mode] at bad
+    simpa [rejected, realize, distinct, distinct_zero] using bad
+  apply probe_leading
+  have value := congrArg (fun F : NativeField hyperbolic hyperbolic_unit =>
+    F.coeff 0 probeState) field_zero
+  simpa only [map_zero, chargedField, HVertexOperator.coeff_of_coeff, Pi.zero_apply, LinearMap.zero_apply] using value
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨⟨⟨hyperbolic, hyperbolic_unit⟩, probeIndex⟩, 0, probeSource, ?_⟩
+  intro equality
+  have value := congrArg (fun F : NativeField hyperbolic hyperbolic_unit =>
+    F.coeff 0 probeState) equality
+  change (correctedField hyperbolic hyperbolic_unit 0).coeff 0 probeState =
+    (correctedField hyperbolic hyperbolic_unit probeSource).coeff 0 probeState at value
+  rw [map_zero, probe_source_field] at value
+  exact probe_leading (by simpa only [map_zero, chargedField, HVertexOperator.coeff_of_coeff, Pi.zero_apply, LinearMap.zero_apply] using value.symm)
+
+def familyRegistration :
+    Registration arena (type_of% (@correctedField_negative_current_insertion)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp correctedField_negative_current_insertion, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@correctedField_negative_current_insertion)
+    (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str
+    `D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField.correctedField_negative_current_insertion
+    "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.NegativeInsertion.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+    definition := none
+    coordinates := #[0, 1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "arg", "fn", "arg", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end
+end Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.NegativeInsertion
