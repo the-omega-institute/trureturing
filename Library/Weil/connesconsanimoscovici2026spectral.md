@@ -11512,3 +11512,1289 @@ prove those identities. No particular rational eta below one, matching
 positive downstream budget, new Lean theorem or official kernel acceptance
 is supplied here. Neither cofinal Weil positivity, the strict Robin
 inequality for every integer above5040, nor RH follows from this count.
+
+### A high-complement norm improves the complete inverse allowance
+
+Keep the SAME actual $c=27$ exterior, $N=1280$, complete $T=\Lambda+B_{\rm GP}$, original support trial $Y$, residual $R$, all nineteen channels, far allowance and source/error premises of the whole-inverse comparison. Reuse its actual surplus $H_{\rm ext}\succeq T+(9/25)I$. The following is a paper application of the existing actual high-mode Gamma estimates and discrete Hilbert bound, not a new Hilbert-transform theorem, numerical execution or retained-sign certificate.
+
+The old $M_T$ uses uncompressed Gamma and pole bounds. The actual exterior contains only Fourier modes $|n|\ge n_0=N+1$. Put $d=\log27<4$, $\omega_n=2\pi n/d$, and $b_j=2j+1/2$. Reuse `arithmetic_archimedean_high_mode_bounds` from [the actual high-mode source](../../D5/S3/Weil/ZetaBridge/WeilArchimedeanHighModeBounds.lean), the [existing full-form high-mode application](../../docs/develop/theory/RH_RESEARCH_LANE_THEORY.md#5-整个高补空间的统一下界), and G1--G3's same physical Fourier realization. In particular
+
+$$
+|s_\Gamma(n)|\le1+|\omega_n|^{-1}.
+$$
+
+For the Gamma boundary $B_\Gamma=Q_\Gamma-q_{D_L}$, its off-diagonal entry is the already identified divided difference
+$(s_\Gamma(n)-s_\Gamma(m))/(\pi(m-n))$, up to the common phase unitary. Its diagonal correction is
+
+$$
+\delta_n=\frac2d\sum_{j\ge0}
+\frac{(1-e^{-b_jd})(b_j^2-\omega_n^2)}{(b_j^2+\omega_n^2)^2},
+\qquad
+|\delta_n|\le\frac1{\pi|n|}+\frac d{2\pi^2n^2}.
+$$
+
+The displayed sum is the existing absolutely convergent correction series; its bound uses the same $1+|\omega|^{-1}$ majorant. The two-sided discrete Hilbert matrix $1/(\pi(m-n))$, with zero diagonal, has norm one. Compress it to $|n|\ge n_0$ before taking its commutator with the bounded diagonal $s_\Gamma$. Adding the diagonal correction gives on the actual high Fourier space
+
+$$
+\|P_{>N}B_\Gamma P_{>N}\|
+\le2+\frac{d+1}{\pi n_0}+\frac d{2\pi^2n_0^2}
+<\frac{1001}{500}.
+\tag{HCN1}
+$$
+
+Here $n_0=1281$, $d<4$ and $\pi>3$ give the final rational bound. This norm estimate restricts to the complex even exterior. It is an operator bound, not a diagonal-only comparison, and includes every Gamma rate. The common closed-form extension is exactly G1--G3's existing bounded-correction extension.
+
+The full even pole is $2|\langle\cosh(x/2),f\rangle|^2$. In the same normalized exterior cosine basis its compressed norm is
+
+$$
+\|P_{>N}P_{\rm even}P_{>N}\|
+=\frac{4\sinh^2(d/4)}d
+ \sum_{n>N}\frac1{(\omega_n^2+1/4)^2}
+\le\frac{d^3\sinh^2(d/4)}{12\pi^4N^3}
+<\frac1{1000}.
+\tag{HCN2}
+$$
+
+This follows directly from the already retained pole moments, or from the singleton channel in the pole update. Use $\sum_{n>N}n^{-4}\le1/(3N^3)$, $d<4$, $\sinh(d/4)<3/2$ and $\pi>3$. Both pole evaluations are retained; positivity here uses the even sector.
+
+The accepted whole-exterior reciprocal bound gives $\Lambda\preceq(331/100)I$, including the far constant. HCN1--HCN2 therefore give the SAME complete operator a smaller norm bound
+
+$$
+0<T\preceq\left(\frac{331}{100}+\frac{1001}{500}
+                       +\frac1{1000}\right)I
+\prec\frac{16}{3}I.
+\tag{HCN3}
+$$
+
+No old weight, retained direction or arithmetic input is changed. In particular no prime term has been dropped from $H_{\rm ext}\succeq T+(9/25)I$; its prime debt was paid by the already accepted propagated-row surplus.
+
+Reuse the same whole-inverse functional calculus and the SAME residual-range majorant $\overline W$. With $M_T^\sharp=16/3$ and $g_0=9/25$, the exact contraction coefficient is
+
+$$
+c_\sharp=\frac{M_T^\sharp}{M_T^\sharp+g_0}=\frac{400}{427},
+\qquad
+H_{\rm ext}^{-1}\preceq c_\sharp T^{-1}
+\preceq c_\sharp\overline W
+\quad\text{on the original residual range}.
+$$
+
+Consequently the complete retained Schur form has the coefficient-uniform lower comparison
+
+$$
+\boxed{S_N\succeq\mathcal L_\sharp
+:=\frac{400}{427}L_*+\frac{27}{427}Q.}
+\tag{HCN4}
+$$
+
+All original far payments remain in $L_*$. Since $Q-L_*\succeq R^*\overline W R\succeq0$, this target dominates the old whole-norm target, whose supplied contraction coefficient exceeded $400/427$. The earlier negative check for that old target remains valid for that old target; it is not a negative check for HCN4.
+
+On the SAME saved exact256-bit full1281-coordinate direction $v$, reuse only the already accepted coarse rational consequences
+
+$$
+q=Q(v)>\frac{297}{100}10^{-30},\qquad
+\ell=v^*L_*v>-\frac{118}{100}10^{-31}.
+$$
+
+Ordinary rational arithmetic in the proof, without a new scientific execution, gives
+
+$$
+v^*\mathcal L_\sharp v
+=\frac{27q+400\ell}{427}
+>\frac{3299}{4270}10^{-31}
+>7\cdot10^{-32}>0.
+\tag{HCN5}
+$$
+
+Thus the old whole-norm route's necessary direction screen is now paid by an actual compressed-operator estimate. HCN5 is not a positivity test for the complete1281-dimensional target. The missing full initial-trial matrix is not reconstructed from $q$.
+
+This gain acts on residual directions beyond the nineteen observed channels. To distinguish it from the already paid nineteen-channel projection, reuse the [existing finite-head faithfulness and positive full-tail metric](../Fourier/montgomery1978largesieve.md#a-cancellation-uniform-metric-for-the-complete-finite-head-tail). At $c=27$, the actual far coupling $C_{\mathcal F}$ is injective on the1281-dimensional retained even space. The same finite support trial has range dimension at most768. Hence
+
+$$
+\operatorname{rank}R_{\mathcal F}
+=\operatorname{rank}(C_{\mathcal F}-(H_{\rm ext}Y)_{\mathcal F})
+\ge1281-768=513.
+$$
+
+Since $\beta$ has only19 rows, $R_{\mathcal F}$ restricted to $\ker\beta$ has rank at least494. On this kernel the old nineteen-channel update equals $L_*$, whereas HCN4 adds $(27/427)(Q-L_*)$, strictly positive on every vector with nonzero residual. This is a source-specific nonredundancy statement, not global domination of the nineteen-channel target. The two gains both consume the same inverse surplus and must not be added without a common paid comparison.
+
+The complete target sign, good-block/border payment and cofinal positivity remain unresolved. This does not revive the separately excluded rank-one endpoint family or alter any old certificate. No new source action, matrix, inverse, solve, determinant, Gram, numerical sign run, parameter scan, Lean proof or literature-priority claim is supplied.
+
+### The finite channel majorant pays a stronger complete contraction
+
+Keep the SAME actual $c=27$ exterior, $N=1280$, original trial $Y$, residual $R$, nineteen Gamma bins, $\rho=1/32$, far payments and common-form/source premises. Reuse the whole-space Young majorant $\mathcal V$ and its already paid comparison
+
+$$
+H_{\rm ext}\succeq\mathcal V^{-1}+g_0I,
+\qquad g_0=9/25.
+$$
+
+The inverse of this particular majorant retains only the original nineteen finite aggregate columns. Its norm need not pay the entire infinite Gamma boundary or pole. The following estimates apply the existing finite-bin Cauchy--Schwarz and positive-operator calculus to those exact columns; they assert no new general theorem or literature priority.
+
+Put $d=\log27$, $b_j=2j+1/2$ and
+
+$$
+h_{j,n}=\frac{2b_j(-1)^n}
+ {\sqrt d\,[b_j^2+(2\pi n/d)^2]},\qquad n>N.
+$$
+
+The nineteen original bins partition $0\le j<K$, where $K=6765$. For a bin $[a,b)$ the column is $U_{[a,b)}=\sqrt{c_a/(b-a)}\sum_{j=a}^{b-1}h_j$, with $0<c_a=1-e^{-b_ad}<1$. Thus
+
+$$
+\|U\|_{\rm HS}^2
+ =\sum_{[a,b)}\|U_{[a,b)}\|^2
+ \le\sum_{j=0}^{K-1}\|h_j\|^2.
+\tag{FCM1}
+$$
+
+Every norm here uses the actual normalized even exterior cosine basis. The sum over $n>N$ retains the selected support and the complete infinite far tail. Since the summand decreases with positive $n$, integration gives two bounds for the SAME column:
+
+$$
+\begin{aligned}
+\|h_j\|^2
+&=\frac{4b_j^2}{d}
+  \sum_{n>N}\frac1{[b_j^2+(2\pi n/d)^2]^2}\\
+&\le\frac{d^3b_j^2}{12\pi^4N^3},
+\qquad
+\|h_j\|^2\le\frac1{2b_j}.
+\end{aligned}
+\tag{FCM2}
+$$
+
+The first inequality uses $\sum_{n>N}n^{-4}\le1/(3N^3)$; the second enlarges the integral to $[0,\infty)$. Split the finite rate sum at $j=N$. Since $\sum_{j=0}^{N-1}(2j+1/2)^2<4N^3/3$, the first part is less than $d^3/(9\pi^4)$. The remaining part is bounded by
+
+$$
+\frac14\sum_{j=N}^{K-1}\frac1{j+1/4}
+\le\frac14\log\frac{K-3/4}{N-3/4}
+=\frac14\log\frac{27057}{5117}
+<\frac7{16}.
+$$
+
+For the last inequality, $27057/5117<11/2<e^{7/4}$; the exponential's degree-four positive Taylor sum already exceeds $11/2$. Also $d<10/3$, as certified by the degree-seven positive Taylor sum for $e^{10/3}>27$, and $\pi>3$. Consequently
+
+$$
+\boxed{
+\|U\|_{\rm HS}^2
+<\frac{1000}{19683}+\frac7{16}<\frac12.}
+\tag{FCM3}
+$$
+
+This is an analytic bound on the complete nineteen-column operator, with no rate truncation beyond the original fixed bins and no finite-mode replacement of its infinite support.
+
+Reuse the original full-space identity, with $J_0=\{1281,\ldots,32768\}$, $\mathcal F=\{32769,\ldots\}$ and $s=1+33\delta_{\rm ch}\ge1$:
+
+$$
+B:=\mathcal V^{-1}
+=\left[\Lambda_{J_0}+s^{-1}U_{J_0}U_{J_0}^*\right]
+ \oplus\frac{\Lambda_{\mathcal F}}{1+\rho}.
+$$
+
+The accepted complete reciprocal bound $\Lambda\preceq(331/100)I$, including the far constant, and FCM3 imply
+
+$$
+0<B\prec\frac{381}{100}I,
+\qquad
+H_{\rm ext}^{-1}
+\preceq(B+g_0I)^{-1}
+\preceq\frac{127}{139}\,\mathcal V.
+\tag{FCM4}
+$$
+
+Apply the SAME whole-inverse functional calculus to $B$, rather than paying the norm of the larger $T=\Lambda+B_{\rm GP}$. No Gamma or pole term has been removed from the actual $H_{\rm ext}$; the lower comparison with $B+g_0I$ was already proved by the whole-space Young argument and paid prime surplus.
+
+Retain the original complete far allowance
+
+$$
+L_*=Q-R^*\mathcal VR-\mathcal E_{\mathcal F},
+\qquad\mathcal E_{\mathcal F}\succeq0.
+$$
+
+Then $S_N=Q-R^*H_{\rm ext}^{-1}R$ satisfies
+
+$$
+\boxed{
+S_N\succeq\mathcal L_{\rm fin}
+:=\frac{127}{139}L_*+\frac{12}{139}Q,\qquad
+\mathcal L_{\rm fin}-\mathcal L_\sharp
+=\frac{1371}{59353}(Q-L_*)\succeq0.}
+\tag{FCM5}
+$$
+
+Indeed the discarded term in the first comparison is $(127/139)\mathcal E_{\mathcal F}\succeq0$. All original far charges therefore remain paid. The second comparison uses HCN4 exactly as published. It is strict as a quadratic inequality on every vector with nonzero residual, since $Q-L_*=R^*\mathcal VR+\mathcal E_{\mathcal F}$. In particular the previously established nonzero residual directions in $\ker\beta$ receive a strictly larger gain than HCN4; their rank argument is reused without repetition.
+
+This pays a strictly stronger complete inverse allowance and a globally stronger sufficient retained target than HCN4. It does not add a second copy of the same surplus to the nineteen-channel projection, and asserts no global ordering with $\mathcal L_g^{(19)}$. The complete matrix $Q$ is still not supplied by a cached scalar. The full retained/border sign, cofinal Weil positivity, the original all-integer strict Robin inequality and RH remain open. These are conditional paper applications under the inherited source, form/domain and sound-cache premises; no new scientific execution, Lean build or kernel certification is supplied.
+
+### A trace-class Hilbert model for the complete Gamma boundary
+
+Reuse G1--G3's actual physical Fourier realization and the complete positive even Gamma series used by the original nineteen channels. Let $c\ge2$, $d=\log c$, and let the integer $N\ge\max(1,d)$. On the actual even exterior with normalized cosine indices $n>N$, write
+
+$$
+h(b)_n=\frac{2b(-1)^n}{\sqrt d\,[b^2+(2\pi n/d)^2]},
+\qquad b_j=2j+1/2,
+\qquad
+B_{\Gamma,N}=\sum_{j\ge0}(1-e^{-b_jd})|h(b_j)\rangle\langle h(b_j)|.
+$$
+
+The complete series has the inherited bounded positive form interpretation. Define the explicit positive Hilbert matrix
+
+$$
+\mathcal C_N(n,m)=\frac{(-1)^{n+m}}{2(n+m)},\qquad n,m>N.
+$$
+
+The classical Hilbert inequality gives $0\preceq\mathcal C_N\preceq(\pi/2)I\prec2I$. Its Gram representation and this norm estimate are reused classical facts; the [existing Schur criterion](../Fourier/teschl2009mathematical.md#schur-criterion-for-the-local-frequency-kernel) with weight $n^{-1/2}$ also supplies the bound. The following is an application to the SAME complete Gamma columns, with no numerical execution or priority claim.
+
+#### Pay the complete sum-to-integral error in trace norm
+
+Set $F(b)=|h(b)\rangle\langle h(b)|$. The same column integrals used in FCM2 give
+
+$$
+\|h(b)\|^2\le\min\left\{
+\frac{d^3b^2}{12\pi^4N^3},\frac1{2b}\right\},
+\qquad \|h'(b)\|\le\frac{\|h(b)\|}{b}.
+$$
+
+Consequently $F'(b)$ is trace class and
+
+$$
+\|F'(b)\|_1\le2\|h(b)\|\|h'(b)\|
+\le\min\left\{\frac{d^3b}{6\pi^4N^3},\frac1{b^2}\right\},
+\quad
+\int_0^\infty\|F'(b)\|_1db
+\le\frac dN\left(\frac1{3\pi^2}+\frac1{2\pi}\right).
+\tag{GHC1}
+$$
+
+For the integral bound split at $b=2\pi N/d$. On each interval $[2j,2j+2]$, compare its sample $F(2j+1/2)$ with half the integral. The trace norm of that difference is at most $\int_{2j}^{2j+2}\|F'(b)\|_1db$. Thus the sum of the cell errors converges in trace norm. Separately,
+
+$$
+\frac12\int_0^\infty F(b)\,db=\mathcal C_N,
+\qquad
+\sum_{j\ge0}b_j^2e^{-b_jd}\le\frac{113}{27}<5.
+$$
+
+The first identity follows entrywise from $\int_0^\infty b^2/[(b^2+a^2)(b^2+q^2)]\,db=\pi/[2(a+q)]$. Both positive operator integrals and the unweighted column sums are taken in their strong limits. Their individual trace integrals need not converge; only their difference is summed in trace norm. The exponentially weighted column sum is trace class, with trace at most $5d^3/(12\pi^4N^3)$. Therefore
+
+$$
+\boxed{\begin{aligned}
+\|B_{\Gamma,N}-\mathcal C_N\|_1
+&\le\frac dN\left(\frac1{3\pi^2}+\frac1{2\pi}\right)
+       +\frac{5d^3}{12\pi^4N^3}\\
+&<\frac d{4N}.
+\end{aligned}}
+\tag{GHC2}
+$$
+
+Indeed $\pi>3$ and $d/N\le1$ bound the coefficient by $11/54+5/972=203/972<1/4$. Every Gamma rate, the selected support and the infinite exterior tail remain. In particular the operator norm has the SAME bound. On the existing cofinal FIB schedule $c_r=3^{F_{r+1}}$, $N_r=\lceil e^{c_r}\rceil$, this actual Gamma replacement has trace-norm error less than $(\log c_r)e^{-c_r}/4$. It is uniform over the complete exterior, without a finite retained dimension or sign-complexity restriction.
+
+#### Retain all arithmetic terms in a full inverse comparison
+
+At the SAME actual $c=27$, $N=1280$, reuse the paid full-source order
+
+$$
+H_{\rm ext}\succeq\Lambda+B_{\Gamma,N}+P_{\rm even}+g_0I,
+\qquad g_0=9/25,
+\qquad 0<\Lambda\preceq(331/100)I.
+$$
+
+FCM's elementary $d<10/3$ and GHC2 give $\|B_{\Gamma,N}-\mathcal C_N\|_1<\varepsilon_0:=1/1536$. Replace only that Gamma boundary in the actual full operator:
+
+$$
+\widetilde H_{\rm ext}
+=H_{\rm ext}-B_{\Gamma,N}+\mathcal C_N.
+$$
+
+All prime powers, the full even pole and the physical form domain remain in this model. Both operators are at least $g_0I$. The existing bounded-perturbation and resolvent identities therefore give
+
+$$
+\boxed{
+\|H_{\rm ext}^{-1}-\widetilde H_{\rm ext}^{-1}\|_1
+\le\frac{\varepsilon_0}{g_0^2}
+=\frac{625}{124416}.}
+\tag{GHC3}
+$$
+
+For the original exact residual map $R$, congruence gives trace-norm error at most $(625/124416)\|R\|^2$ in the corresponding retained inverse quadratic. This does not supply an unsaved numerical value of $\|R\|$ or the full initial-trial matrix $Q$.
+
+There is also an explicit full-space inverse upper requiring no inversion of the Hilbert model. Put
+
+$$
+\alpha=g_0-\varepsilon_0=\frac{13799}{38400}>0,
+\qquad D_0=\Lambda+\alpha I,
+\qquad\theta=\frac{\alpha}{\alpha+2}=\frac{13799}{90599}.
+$$
+
+GHC2 pays $H_{\rm ext}\succeq D_0+\mathcal C_N$. Since $\|D_0^{-1/2}\mathcal C_ND_0^{-1/2}\|\le2/\alpha$, apply the existing scalar secant inequality for $(1+x)^{-1}$ by functional calculus to obtain
+
+$$
+\boxed{
+H_{\rm ext}^{-1}\preceq
+\mathsf W_{\rm H}:=
+D_0^{-1}-\theta D_0^{-1}\mathcal C_ND_0^{-1}.}
+\tag{GHC4}
+$$
+
+The positive Hilbert correction retains an infinite collection of coupled modes. It is not added to a separate copy of the nineteen-channel or FCM surplus. The original Schur identity consequently gives $S_N\succeq Q-R^*\mathsf W_{\rm H}R$. This quadratic retains all near/far Hilbert cross terms. Contracting it with the actual residual and supplying any numerical tail payments is a separate unpaid task; the old diagonal far allowance must not be substituted for those cross terms.
+
+#### A quantitative consumer on actual exterior states
+
+Reuse the constant far reciprocal $\Lambda_{\mathcal F}=\lambda_{\mathcal F}I$, $0<\lambda_{\mathcal F}\le331/100$, beyond $32768$. For any integer $L\ge32769$ take the normalized actual exterior Fourier polynomial with coefficient vector
+
+$$
+u_L(n)=\frac{(-1)^n}{\sqrt L}\mathbf1_{\{L\le n<2L\}}.
+$$
+
+These are valid even physical states, not asserted to belong to the saved finite-dimensional residual range. Directly $\langle u_L,\mathcal C_Nu_L\rangle>1/8$. Write $a=\lambda_{\mathcal F}+\alpha<4$ and reuse the raw shifted-diagonal upper $\mathsf W_0=(\Lambda+g_0I)^{-1}$. Then
+
+$$
+\boxed{\begin{aligned}
+\langle u_L,(\mathsf W_0-\mathsf W_{\rm H})u_L\rangle
+&>\frac{\theta/8-\varepsilon_0}{a^2}\\
+&>\frac1{16}\left(\frac1{56}-\frac1{1536}\right)
+>\frac1{1000}.
+\end{aligned}}
+\tag{GHC5}
+$$
+
+Here $\theta>1/7$. On these same far-supported vectors, $\mathsf W_0\prec(127/139)\mathcal V$ follows from the accepted far block $\mathcal V_{\mathcal F}=(33/32)\lambda_{\mathcal F}^{-1}I$ and $\lambda_{\mathcal F}\le331/100$. The nineteen observations have no far component. GHC5 thus supplies a strict quantitative upper-budget gain on arbitrarily remote, actual Fourier bands. It does not assert global ordering of $\mathsf W_{\rm H}$ with FCM4 or the nineteen-channel inverse, or a gain on an unmeasured saved residual direction.
+
+#### A cofinal full-arithmetic inverse trace bound
+
+The same model comparison also consumes the existing even exterior floor at growing supports. Keep the actual complete operator $H_{\rm ext}(c,N)$ and replace only $B_{\Gamma,N}$ by $\mathcal C_N$ as above. With G1--G4's original diagonal symbol $A(t)$, put
+
+$$
+\mathfrak a(c,N)=
+A\!\left(\frac{2\pi(N+1)}{\log c}\right)
+-2\sum_{2\le n<c}\frac{\Lambda(n)}{\sqrt n}.
+$$
+
+The original complex even Gamma boundary and pole are positive. Their Hilbert replacements are positive as well. The existing diagonal monotonicity and full prime-translation norm bound therefore give BOTH $H_{\rm ext}(c,N)\succeq\mathfrak a(c,N)I$ and $\widetilde H_{\rm ext}(c,N)\succeq\mathfrak a(c,N)I$. The sum retains every proper prime power; the shift at $n=c$, when present, is zero almost everywhere. Whenever $\mathfrak a(c,N)>0$, GHC2 and the SAME resolvent identity imply
+
+$$
+\|H_{\rm ext}(c,N)^{-1}
+ -\widetilde H_{\rm ext}(c,N)^{-1}\|_1
+<\frac{\log c}{4N\mathfrak a(c,N)^2}.
+$$
+
+Reuse the cited classical $A(t)=\log t+O(1)$ and the elementary complete bound $\sum_{n<c}\Lambda(n)/\sqrt n=O(\sqrt c\log c)$. At $N(c)=\lceil e^c\rceil$, these give $\mathfrak a(c,N(c))/c\to1$, hence $\mathfrak a(c,N(c))\ge c/2$ for all sufficiently large $c$. Thus
+
+$$
+\boxed{
+\|H_{\rm ext}(c,N(c))^{-1}
+ -\widetilde H_{\rm ext}(c,N(c))^{-1}\|_1
+<\frac{\log c}{c^2N(c)}
+\le\frac{\log c}{c^2}e^{-c}.}
+\tag{GHC6}
+$$
+
+In particular GHC6 holds at every sufficiently large level of the original cofinal FIB support schedule. It is a complete actual exterior inverse comparison, including all prime powers and the full pole; it imposes no retained dimension bound. Applying it to a retained residual still multiplies the bound by that residual map's squared operator norm. No unmeasured residual bound, finite retained sign or convergence of a complete regularized determinant follows from GHC6 alone.
+
+GHC2 pays a complete source-specific trace-class replacement, GHC3 consumes it with the actual full arithmetic operator, and GHC4--GHC5 supply an explicit infinite-rank inverse-budget consumer. GHC6 pays the complete exterior inverse trace error along the cofinal support schedule. No scientific producer, matrix, solve, determinant or direction screen is executed. These are conditional paper applications under the inherited form/source premises, without Lean/kernel certification. The complete retained/border sign, cofinal Weil positivity, original same-source Robin upper and RH remain unresolved.
+
+### Transport the complete physical Schur block with the Gamma model
+
+Keep GHC1--GHC6's actual complex even Weil operator, its original support and Fourier split. Put $L=(\log c)/2$, let $P_N$ retain the modes $0,\ldots,N$, and write $P_N^\perp=I-P_N$. Reuse G1--G4's SAME decomposition $\mathscr H_c=D_L+V_L$, with $\|V_L\|\le K_L$. The physical retained block and full coupling are
+
+$$
+A_{c,N}=P_N\mathscr H_cP_N,\qquad
+\mathscr B_{c,N}=P_N^\perp V_LP_N.
+$$
+
+The diagonal $D_L$ commutes with $P_N$, so $\mathscr B_{c,N}=P_N^\perp\mathscr H_cP_N$ on the finite Fourier space and $\|\mathscr B_{c,N}\|\le K_L$. This is the original complete physical coupling, including every prime power, both pole evaluations and the Gamma boundary. Finite Fourier vectors belong to the operator domain of $D_L+V_L$; the full exterior retains the common form domain used in GHC6.
+
+Let $H_{\rm ext}$ be that exterior and $\widetilde H_{\rm ext}=H_{\rm ext}+\mathscr E$ its accepted Gamma model, where $\mathscr E=\mathcal C_N-B_{\Gamma,N}$. Define the two exact physical Schur blocks using the SAME retained block and coupling:
+
+$$
+S_{c,N}=A_{c,N}-\mathscr B_{c,N}^*H_{\rm ext}^{-1}\mathscr B_{c,N},
+\qquad
+\widetilde S_{c,N}=A_{c,N}-\mathscr B_{c,N}^*\widetilde H_{\rm ext}^{-1}\mathscr B_{c,N}.
+$$
+
+Both inverses exist whenever GHC6's $\mathfrak a(c,N)>0$. The classical two-sided trace-ideal estimate, reused rather than reproved, now consumes G4's actual coupling bound and GHC6:
+
+$$
+\boxed{
+\|S_{c,N}-\widetilde S_{c,N}\|_1
+<\frac{K_L^2\log c}{4N\mathfrak a(c,N)^2}.}
+\tag{GHC7}
+$$
+
+The norm is the ordinary trace norm on the original $(N+1)$-dimensional orthonormal retained space. There is no multiplying rank or unsupplied residual norm. In particular, reuse G4's explicit full arithmetic budget
+
+$$
+K_{(\log c)/2}
+=C_\Gamma(\log c)+4\sinh((\log c)/2)
+ +2\sum_{2\le n<c}\frac{\Lambda(n)}{\sqrt n}
+=O(\sqrt c\log c).
+$$
+
+Here $C_\Gamma(\log c)=O(1)$ by G2, the pole budget is $O(\sqrt c)$, and GHC6 already uses the stated complete prime bound. Thus at $N(c)=\lceil e^c\rceil$, for all sufficiently large $c$,
+
+$$
+\boxed{
+\|S_{c,N(c)}-\widetilde S_{c,N(c)}\|_1
+<\frac{K_{(\log c)/2}^{\,2}\log c}{c^2N(c)}
+=O\!\left(\frac{(\log c)^3}{c}e^{-c}\right).}
+\tag{GHC8}
+$$
+
+This controls the entire physical retained block at every sufficiently large original FIB support level, even though its dimension is $\lceil e^c\rceil+1$. The same bound also controls its operator norm and hence the difference of the two least eigenvalues. It gives an absolute model error, not a sign for either Schur block or a relative error at a vanishing eigenvalue.
+
+#### Transport the original trial and its initial quadratic together
+
+The full physical comparison does not require changing the original legal finite-rank trial $Y$. In the earlier notation, let
+
+$$
+Q=A_{c,N}-\mathscr B_{c,N}^*Y-Y^*\mathscr B_{c,N}
+       +Y^*H_{\rm ext}Y,\qquad
+R=\mathscr B_{c,N}-H_{\rm ext}Y.
+$$
+
+Its correctly transported model terms are
+
+$$
+\widetilde Q=Q+Y^*\mathscr E Y,\qquad
+\widetilde R=R-\mathscr E Y.
+$$
+
+The existing exact inverse-residual identity, applied with this SAME $Y$ to each operator, gives
+
+$$
+Q-R^*H_{\rm ext}^{-1}R=S_{c,N},\qquad
+\widetilde Q-\widetilde R^*\widetilde H_{\rm ext}^{-1}\widetilde R
+=\widetilde S_{c,N}.
+$$
+
+Consequently GHC7--GHC8 control the fully transported trial expression too. Holding $Q$ and $R$ fixed while replacing only their inverse still gives GHC3/GHC6's separate $\|R\|^2$ allowance. The physical comparison here transports the initial quadratic and residual from their common actual coupling; it does not infer an unsaved value of $\|R\|$, construct a new trial or add a second surplus credit.
+
+This `repo-derived` application reuses the existing trace ideal, bounded perturbation and Schur/residual identities. Its additional paid quantity is the dimension-independent absolute error of the SAME complete physical Schur block under the Gamma model. It supplies no finite target matrix, actual retained or border sign, normalized ground-state approximation, complete regularized determinant limit or original same-source Robin upper. The inherited source/form identification remains conditional paper mathematics without Lean/kernel certification, and RH and strict Robin for every integer above5040 remain unresolved. No literature priority is asserted.
+
+### A signed Gamma model for the complete complex Fourier exterior
+
+Keep G1--G4's periodic Fourier diagonal and actual full complex Weil form on $I=(-d/2,d/2)$, with $c\ge2$, $d=\log c$, and integer $N\ge\max(1,d)$. The even exterior uses the normalized cosines from GHC1--GHC8. On the odd exterior use $s_n(x)=\sqrt{2/d}\sin(2\pi nx/d)$, $n>N$, and put $\omega_n=2\pi n/d$. Reflection splits the complete Gamma boundary into these two invariant sectors.
+
+The SAME image kernel already displayed after G6 is
+
+$$
+B_L(x,y)=\sum_{j\ge0}\frac{2\cosh(b_j(x-y))}{e^{b_jd}-1},
+\qquad b_j=2j+1/2.
+$$
+
+Its hyperbolic decomposition retains a positive cosh square and a negative sinh square. Thus the odd compression has the exact bounded-form series
+
+$$
+B_{\Gamma,N}^{\rm odd}
+=-\sum_{j\ge0}(1-e^{-b_jd})|k(b_j)\rangle\langle k(b_j)|,
+\qquad
+k(b)_n=\frac{2\omega_n(-1)^n}{\sqrt d\,(b^2+\omega_n^2)}.
+$$
+
+Indeed integrating $\sinh(bx)$ against $s_n$ gives $-2\sqrt{2/d}\,\omega_n(-1)^n\sinh(bd/2)/(b^2+\omega_n^2)$, which yields the displayed coefficient and sign. The source's full periodic Gamma correction is therefore not positive on both parities. The positive all-parity Neumann-resolvent completion uses a different odd reference; it is not substituted for this periodic decomposition.
+
+#### Pay the complete odd sum-to-integral error
+
+Reuse GHC1--GHC2's trace-class cell quadrature, with $F_{\rm o}(b)=|k(b)\rangle\langle k(b)|$. Directly from $\sum_{n>N}n^{-2}\le1/N$ and the decreasing resolvent summand,
+
+$$
+\|k(b)\|^2\le\min\left\{\frac d{\pi^2N},\frac1b\right\},
+\qquad
+\|k'(b)\|\le
+\min\left\{\frac{2b}{(2\pi N/d)^2},\frac2b\right\}\|k(b)\|.
+$$
+
+For the second norm bound enlarge $\sum_{n>N}(b^2+\omega_n^2)^{-1}$ to its integral on $(0,\infty)$; the first uses the full tail. Hence
+
+$$
+\|F_{\rm o}'(b)\|_1
+\le\min\left\{\frac{d^3b}{\pi^4N^3},\frac4{b^2}\right\},
+\qquad
+\int_0^\infty\|F_{\rm o}'(b)\|_1db
+\le\frac dN\left(\frac2{\pi^2}+\frac2\pi\right).
+$$
+
+Split this integral at $b=2\pi N/d$. The classical rational integral gives, with the SAME $\mathcal C_N(n,m)=(-1)^{n+m}/[2(n+m)]$,
+
+$$
+\frac12\int_0^\infty F_{\rm o}(b)\,db=\mathcal C_N.
+$$
+
+The positive bodies use strong limits, while the differences of each sample and its half-cell integral sum in trace norm as in GHC2. Separately, $d\ge\log2$ gives
+
+$$
+\sum_{j\ge0}e^{-b_jd}
+=\frac{e^{-d/2}}{1-e^{-2d}}\le\frac4{3\sqrt2}<1,
+\qquad
+\sum_{j\ge0}e^{-b_jd}\|k(b_j)\|^2<\frac d{\pi^2N}.
+$$
+
+Thus, using $\pi>3$,
+
+$$
+\boxed{
+\|B_{\Gamma,N}^{\rm odd}+\mathcal C_N\|_1
+<\frac dN\left(\frac3{\pi^2}+\frac2\pi\right)
+<\frac dN.}
+\tag{GHC9}
+$$
+
+Every Gamma rate remains. No individual positive body's trace integral is assumed finite. GHC9 is an application to the actual odd sine columns; the classical Hilbert Gram and trace-ideal tools are reused.
+
+#### Consume both signs in the full arithmetic operator
+
+Let $B_{\Gamma,N}^{\rm all}=B_{\Gamma,N}^{\rm even}\oplus B_{\Gamma,N}^{\rm odd}$ and define
+
+$$
+\mathcal C_N^{\rm signed}=\mathcal C_N\oplus(-\mathcal C_N).
+$$
+
+GHC2 and GHC9 give the complete complex-exterior comparison
+
+$$
+\boxed{
+\|B_{\Gamma,N}^{\rm all}-\mathcal C_N^{\rm signed}\|_1
+<\frac{5d}{4N},\qquad
+\|B_{\Gamma,N}^{\rm all}-\mathcal C_N^{\rm signed}\|<\frac dN.}
+\tag{GHC10}
+$$
+
+The operator-norm bound uses the maximum of the two parity blocks. Replace only this exterior Gamma boundary in the actual full complex operator, keeping the full pole and all prime-power terms. In particular the odd pole is $-2|\langle\sinh(x/2),f\rangle|^2$ and remains in the operator; no positive odd-pole or odd-Gamma assumption is used.
+
+Write $H_{\rm ext}^{\rm all}$ and $\widetilde H_{\rm ext}^{\rm all}$ for the actual and signed-model exteriors. G4's complete bounded perturbation and GHC10 give both the SAME floor
+
+$$
+\mathfrak b(c,N)=A\!\left(\frac{2\pi(N+1)}{\log c}\right)
+-K_{(\log c)/2}-\frac{\log c}{N}.
+$$
+
+Whenever $\mathfrak b>0$, the already used resolvent and trace-ideal inequalities apply with trace allowance $5d/(4N)$ and inverse norm $1/\mathfrak b$. At $N(c)=\lceil e^c\rceil$, the owned asymptotics give $\mathfrak b/c\to1$, so $\mathfrak b\ge c/2$ eventually. On all sufficiently large original FIB support levels,
+
+$$
+\boxed{\begin{aligned}
+\|(H_{\rm ext}^{\rm all})^{-1}-(\widetilde H_{\rm ext}^{\rm all})^{-1}\|_1
+&<\frac{5\log c}{c^2N(c)},\\
+\|S_{c,N(c)}^{\rm all}-\widetilde S_{c,N(c)}^{\rm all}\|_1
+&<\frac{5K_{(\log c)/2}^{\,2}\log c}{c^2N(c)}
+=O\!\left(\frac{(\log c)^3}{c}e^{-c}\right).
+\end{aligned}}
+\tag{GHC11}
+$$
+
+Here the physical Schur blocks retain all complex modes $-N,\ldots,N$, equivalently $N+1$ even and $N$ odd coordinates. Their SAME full coupling is $P_N^\perp V_LP_N$ with norm at most $K_L$, exactly as in GHC7. Both pole evaluations, every prime power, the original domain and every Gamma rate remain. The trace bound covers all $2N(c)+1$ coordinates without a rank factor. The original legal-trial transport from GHC7--GHC8 applies with the full signed exterior change; it introduces no reselected trial, separate surplus credit or inferred residual norm.
+
+This `repo-derived` application extends the quantitative model from the complex even sector to the entire complex physical form, with the negative odd boundary and pole explicitly retained. It does not establish positivity of either Schur block, a favorable joint prime discrepancy, the complete determinant limit, the original Robin strict upper or RH. The inherited source/form identification and these deductions remain paper mathematics without Lean/kernel certification. No literature priority is asserted.
+
+### A cubic complete Gamma remainder retains the signed odd endpoint
+
+Keep exactly GHC1--GHC11's full complex exterior, $c\ge2$, $d=\log c$, integer $N\ge\max(1,d)$, rates $b_j=2(j+1/4)$ and columns $h(b),k(b)$. The Hilbert matrix and both complete Gamma series are reused. The extra source-specific input is the fixed quarter-lattice endpoint and the evenness of both column products in $b$; the first-derivative quadrature bound did not use these cancellations. Classical Euler--Maclaurin summation and its periodic Bernoulli remainder are reused, as in [DLMF 2.10(i)](https://dlmf.nist.gov/2.10.i). No new general summation theorem, numerical certificate, literature priority or Lean/kernel verification is asserted.
+
+Put
+$$
+ \ell_N=k(0),\qquad
+ (\ell_N)_n=\frac{\sqrt d\,(-1)^n}{\pi n},\qquad
+ \tau_d=\frac{e^{-d/2}}{1-e^{-2d}}-\frac14,
+$$
+and define the explicit signed model
+$$
+ \boxed{\mathcal C_N^{[3]}=
+ \mathcal C_N\oplus\bigl(-\mathcal C_N+
+               \tau_d|\ell_N\rangle\langle\ell_N|\bigr).}
+ \tag{GHC12}
+$$
+The correction is negative for $c\ge25$: $4/\sqrt c\le4/5<1-c^{-2}$. It stays in the odd model with this sign. Also
+$\|\ell_N\|^2\le d/(\pi^2N)$, so it is an actual bounded rank-one operator on the entire odd exterior.
+
+#### Use the actual lattice before taking a trace norm
+
+For $F_{\rm e}(b)=|h(b)\rangle\langle h(b)|$ and
+$F_{\rm o}(b)=|k(b)\rangle\langle k(b)|$, both $F$ are even and $F'(0)=0$. Apply shifted Euler--Maclaurin first to $0\le b\le2J$ with samples $2j+1/2$, $0\le j<J$, in trace-class pairings. Here
+$B_1(1/4)=-1/4$, $B_3(1/4)=3/64$ and
+$|B_3(x)|=|x(x-1/2)(x-1)|\le1/8$ on $[0,1]$.
+The upper-endpoint terms tend to zero in trace norm. The third-order integral remainder therefore gives
+$$
+ \boxed{\left\|\mathcal E(F)\right\|_1
+ \le\frac1{32}\|F''(0)\|_1+
+          \frac1{12}\int_0^\infty\|F'''(b)\|_1\,db,}
+ \qquad
+ \mathcal E(F)=\sum_{j\ge0}F(b_j)
+           -\frac12\int_0^\infty F(b)\,db-\frac14F(0).
+ \tag{GHC13}
+$$
+The displayed difference means the limit of those finite-cutoff differences. Neither positive body is asserted trace class. The inherited strong sums and integrals identify the two bodies after the difference has converged in trace norm.
+
+Here all the trace-class differentiability and endpoint conditions can be paid explicitly. Set $\Omega=2\pi N/d$ and let $u$ denote either $h$ or $k$. Partial fractions give, for $0\le r\le3$,
+$$
+ |u_n^{(r)}(b)|
+ \le\frac{2r!}{\sqrt d\,(b^2+\omega_n^2)^{(r+1)/2}}.
+$$
+If $U_r$ is the $\ell^2$ norm of this majorant, decreasing-sum integrals give
+$$
+ U_r(b)^2\le
+ \frac{2(r!)^2}{\pi(2r+1)}\Omega^{-2r-1},\qquad
+ U_r(b)^2\le
+ \frac{2(r!)^2}{\pi}b^{-2r-1}
+       \int_0^\infty(1+t^2)^{-r-1}\,dt\quad(b>0).
+$$
+The four integrals in the second bound are
+$\pi/2,\pi/4,3\pi/16,5\pi/32$. Since
+$\|F'''\|_1\le2U_0U_3+6U_1U_2$, these imply respectively
+$\|F'''(b)\|_1\le6\Omega^{-4}$ for $b\le\Omega$ and
+$\|F'''(b)\|_1\le12b^{-4}$ for $b\ge\Omega$. Thus, for either product,
+$$
+ \boxed{\int_0^\infty\|F'''(b)\|_1\,db
+             \le10\Omega^{-3},\qquad
+ \|F_{\rm e}''(0)\|_1\le\frac{d^3}{6\pi^4N^3},\qquad
+ \|F_{\rm o}''(0)\|_1\le\frac{d^3}{\pi^4N^3}.}
+ \tag{GHC14}
+$$
+For example, the even endpoint is $2|h'(0)\rangle\langle h'(0)|$.
+For the odd endpoint, use $k'(0)=0$,
+$k''(0)_n=-2(\ell_N)_n/\omega_n^2$ and
+$\|\ell_N\|^2\le d/(\pi^2N)$. The same derivative bounds show that
+$F,F',F''$ tend to zero in trace norm at infinity, justifying the cutoff passage in GHC13. All derivatives are taken in trace norm on each finite interval.
+
+#### Retain the exponentially weighted body in the same cancellation
+
+Reuse GHC2's entire-rate bound $\sum_jb_j^2e^{-db_j}<5$.
+Since $h(0)=0$ and
+$\|h(b)\|^2\le b^2d^3/(12\pi^4N^3)$,
+$$
+ \left\|\sum_{j\ge0}e^{-db_j}F_{\rm e}(b_j)\right\|_1
+       \le\frac{5d^3}{12\pi^4N^3}.
+$$
+For the odd body,
+$\|k(b)-\ell_N\|\le(b/\Omega)^2\|\ell_N\|$ and
+$\|k(b)\|\le\|\ell_N\|$, hence
+$$
+ \left\|\sum_{j\ge0}e^{-db_j}
+          [F_{\rm o}(b_j)-F_{\rm o}(0)]\right\|_1
+       \le\frac{5d^3}{2\pi^4N^3}.
+$$
+Its omitted constant is exactly
+$\sum_je^{-db_j}F_{\rm o}(0)$, already retained in $\tau_d$.
+The actual identities are therefore
+$$
+ B_{\Gamma,N}^{\rm even}-\mathcal C_N
+   =\mathcal E(F_{\rm e})-\sum_je^{-db_j}F_{\rm e}(b_j),
+$$
+$$
+ B_{\Gamma,N}^{\rm odd}+\mathcal C_N
+       -\tau_d|\ell_N\rangle\langle\ell_N|
+   =-\mathcal E(F_{\rm o})
+       +\sum_je^{-db_j}[F_{\rm o}(b_j)-F_{\rm o}(0)].
+$$
+Every Gamma rate and each parity sign remains. GHC13--GHC14 now give
+$$
+ \boxed{\begin{aligned}
+ \|B_{\Gamma,N}^{\rm even}-\mathcal C_N\|_1
+ &\le\left(\frac{27}{64\pi^4}+\frac5{48\pi^3}\right)
+                   \frac{d^3}{N^3}<\frac{d^3}{100N^3},\\
+ \|B_{\Gamma,N}^{\rm odd}+\mathcal C_N
+        -\tau_d|\ell_N\rangle\langle\ell_N|\|_1
+ &\le\left(\frac{81}{32\pi^4}+\frac5{48\pi^3}\right)
+                   \frac{d^3}{N^3}<\frac{d^3}{25N^3},\\
+ \|B_{\Gamma,N}^{\rm all}-\mathcal C_N^{[3]}\|_1
+ &<\frac{d^3}{20N^3}.
+ \end{aligned}}
+ \tag{GHC15}
+$$
+The strict constants follow already from $\pi>3$:
+$1/192+5/1296<1/100$ and $1/32+5/1296<1/25$.
+The full-space bound sums the two trace norms. It has no finite exterior dimension, coefficient or rank restriction.
+
+At the original $c=27$, $N=1280$, the EVEN Hilbert model is unchanged. GHC3's actual full-arithmetic operators still both exceed $g_0I$, so the same resolvent identity directly improves its allowance to
+$$
+ \boxed{\|H_{\rm ext}^{-1}-\widetilde H_{\rm ext}^{-1}\|_1
+       <\frac{d^3}{100N^3g_0^2}
+       <\frac{6250}{2187\cdot1280^3}<10^{-8}.}
+ \tag{GHC16}
+$$
+This is an exact paper bound, without a numerical solve or an inferred saved-residual norm. Congruence with the original residual still carries its squared norm as in GHC3.
+
+#### The same full physical Schur block has a cubic-rate model error
+
+For the entire complex physical operator, replace only the exterior Gamma boundary by $\mathcal C_N^{[3]}$. Call the resulting exterior $\widehat H_{\rm ext}^{\rm all}$ and its physical retained Schur block $\widehat S_{c,N}^{\rm all}$. The actual complete coupling $\mathscr B=P_N^\perp V_LP_N$ is unchanged, with $\|\mathscr B\|\le K_{d/2}$ as in GHC7--GHC11. Every prime power, both pole evaluations, the negative odd pole and the original common form domain remain.
+
+GHC15 gives the common sufficient floor
+$$
+ \mathfrak b_3(c,N)=
+ A\!\left(\frac{2\pi(N+1)}d\right)-K_{d/2}
+          -\frac{d^3}{20N^3}.
+$$
+Whenever $\mathfrak b_3>0$, the existing resolvent and two-sided trace-ideal inequalities apply. At the SAME $N(c)=\lceil e^c\rceil$, $\mathfrak b_3/c\to1$ and hence $\mathfrak b_3\ge c/2$ eventually. Consequently
+$$
+ \boxed{\begin{aligned}
+ \|(H_{\rm ext}^{\rm all})^{-1}
+        -(\widehat H_{\rm ext}^{\rm all})^{-1}\|_1
+ &<\frac{(\log c)^3}{5c^2N(c)^3},\\
+ \|S_{c,N(c)}^{\rm all}-\widehat S_{c,N(c)}^{\rm all}\|_1
+ &<\frac{K_{(\log c)/2}^{\,2}(\log c)^3}
+                   {5c^2N(c)^3}
+ =O\!\left(\frac{(\log c)^5}{c}e^{-3c}\right).
+ \end{aligned}}
+ \tag{GHC17}
+$$
+The last step reuses GHC8's $K_{(\log c)/2}^2=O(c(\log c)^2)$. This controls all $2N(c)+1$ actual retained coordinates without a dimension factor, also on the original cofinal FIB supports. The legal-trial transport of GHC7--GHC8 applies with this same exterior change; its initial quadratic and residual must still be transported together.
+
+The gain is the actual cubic complete-source error and its explicit signed odd endpoint, rather than a new determinant or positivity criterion. Absolute accuracy still gives no sign for a vanishing Schur minimum, no relative control at that minimum, no complete determinant limit and no favorable joint prime discrepancy. The original same-source Robin strict upper, all-integer Robin above 5040 and RH remain unresolved. These deductions retain the inherited paper source/form premises and are not Lean/kernel-certified.
+
+### The signed odd endpoint has a nonzero complete physical Schur contribution
+
+Keep GHC10--GHC17's SAME full complex physical operator, retained block and complete coupling $\mathscr B=P_N^\perp V_{d/2}P_N$, now along integer $c\to\infty$, $d=\log c$ and $N=\lceil e^c\rceil$. Let $\widetilde H,\widetilde S$ denote the original uncorrected signed-Hilbert exterior and its Schur block, and $\widehat H,\widehat S$ the endpoint-corrected versions from GHC12--GHC17. The original exterior and Schur block are $H,S$. All these symbols retain the original support, domain, prime powers, both poles and physical orthonormal Fourier coordinates.
+
+The added estimate evaluates the strength of the actual coupled endpoint. Classical partial summation, bounded-discrepancy summation and the rank-one resolvent formula are reused inside this source calculation. No general perturbation criterion, literature-priority claim, numerical execution or Lean/kernel verification is asserted.
+
+#### The existing full prime counts fix the source scales
+
+Reuse the classical unconditional PNT input already used in the [Robin source](../ArithSums/nicolas2025comparison.md), and the exact folded prime variance and consecutive-block discrepancies in [the complete-tail source, (2), (39), (48)](../Fourier/montgomery1978largesieve.md). Partial summation gives
+$$
+ W_c:=\sum_{2\le j<c}\frac{\Lambda(j)}{\sqrt j}=O(\sqrt c),
+ \qquad
+ \sum_{2\le j<c}\frac{\Lambda(j)^2}{j}
+       \sim\frac12(\log c)^2.
+$$
+For the second application the proper-power part is $O(1)$, since
+$\sum_p(\log p)^2/[p^2(1-1/p)]<\infty$; partial summation with
+$\vartheta(x)\sim x$ supplies the prime part. The ordered resonance numerator
+$\sum_{ab=c}\Lambda(a)\Lambda(b)$ is $O(d^2)$: it is zero for three or more distinct prime factors, has only the two ordered factors for two distinct prime bases, and equals $(k-1)(\log p)^2$ for $c=p^k$. Thus the SAME exact variance, including all resonances, satisfies
+$$
+ \boxed{K_{d/2}=O(\sqrt c),\qquad
+ \mu_c=\frac12\left[
+   \sum_{j<c}\frac{\Lambda(j)^2}{j}
+   -\frac1{\sqrt c}\sum_{ab=c}\Lambda(a)\Lambda(b)\right]
+       \sim\frac{d^2}{4}.}
+ \tag{GHC18}
+$$
+The $K$ bound applies directly to G4's complete budget, with its full pole and bounded Gamma part. It does not replace that budget by the prime variance.
+
+The existing actual symbol is
+$s_c(n)=-\kappa-P_c(n)+h_c(n)$ for $n>0$, with
+$\kappa=\pi/4$, $|h_c(n)|\le G_c/n$ and $G_c=O(\sqrt c\,d)$.
+Its proved full-symbol budget gives $\sup_n|s_c(n)|=O(\sqrt c)$.
+The already owned discrepancies are
+$$
+ \left|\sum_{n\in J}P_c(n)\right|\le D_cW_c,\qquad
+ \left|\sum_{n\in J}(P_c(n)^2-\mu_c)\right|\le D_cW_c^2,
+ \qquad D_c=(c+1)d,
+$$
+on every consecutive integer block $J$. These are polynomial in $c$; every alias remains in $\mu_c$.
+
+#### Evaluate the same complete boundary-to-retained vector
+
+Embed $\ell_N$ from GHC12 in the odd exterior and put
+$r_{c,N}=\mathscr B^*\ell_N$. Reflection makes its even retained coordinates zero. Reuse the actual phase-adjusted physical entry
+$(s_c(n)-s_c(m))/[\pi(m-n)]$ from the [existing Fourier identification](../../D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.lean). In the normalized physical sine basis its odd folding is
+$$
+ Q^{\rm o}_{mn}=\frac2\pi(-1)^{m+n}
+       \frac{m s_c(n)-n s_c(m)}{m^2-n^2}\qquad(m\ne n).
+$$
+Consequently every retained odd coordinate, including those next to $N$, has the exact absolutely convergent formula
+$$
+ \boxed{\begin{aligned}
+ (r_{c,N})_m&=\frac{2\sqrt d}{\pi^2}(-1)^m
+       [s_c(m)T_1(m)-mT_2(m)],\qquad 1\le m\le N,\\
+ T_1(m)&=\sum_{n>N}\frac1{n^2-m^2},\\
+ T_2(m)&=\sum_{n>N}\frac{s_c(n)}{n(n^2-m^2)}.
+ \end{aligned}}
+ \tag{GHC19}
+$$
+This is a calculation in the already identified physical coupling, not an asserted new Lean identification.
+
+Set
+$$
+ \mathcal A(t)=\frac{\operatorname{arctanh}t}{t},\qquad
+ G(t)=\frac{\log(1+t)}t,\qquad 0<t<1,
+$$
+with their continuous values at zero. Let $\delta=c^{-8}$ and first take $\delta N\le m\le(1-\delta)N$, $t=m/N$.
+Decreasing-sum integration gives
+$T_1(m)=\mathcal A(t)/N+O(N^{-2}\delta^{-1})$ and
+$$
+ m\sum_{n>N}\frac1{n(n^2-m^2)}
+ =-\frac{\log(1-t^2)}{2Nt}+O(N^{-2}\delta^{-1}).
+$$
+Partial summation with the SAME $P_c$ discrepancy bounds its tail contribution to $mT_2$ by $O(D_cW_c/(N^2\delta))$. The full $h_c$ contribution is bounded using $G_c/n$, also at all exterior indices. Inserting $s_c(m)$ in GHC19 and using
+$\mathcal A(t)+\log(1-t^2)/(2t)=G(t)$ therefore gives uniformly on this bulk
+$$
+ (r_{c,N})_m
+ =-\frac{2\sqrt d\,(-1)^m}{\pi^2N}
+       [\mathcal A(t)P_c(m)+\kappa G(t)]+O(c^{12}/N^2).
+$$
+For clarity, before the harmless polynomial majorization the error is bounded by
+$$
+ \frac{C\sqrt d}{N^2\delta}
+ \left[\sup_n|s_c(n)|+1+D_cW_c
+             +G_c(1+\log(2/\delta))\right].
+$$
+No cancellation of separately chosen extremizers is used.
+
+All remaining rows are paid. For every $1\le m\le N$,
+$T_1(m)\le C(1+\log N)/N$, and $m/n\le1$ in $T_2$.
+Thus their complete contribution to $\|r_{c,N}\|^2$ is at most
+$$
+ C\,dc(1+\log N)^2
+       \left(\frac{\delta}{N}+\frac1{N^2}\right)
+       =o(d/N).
+$$
+This includes the last rows where $\mathcal A(m/N)$ would be singular; they are not omitted from the actual vector.
+
+On the bulk, the supremum plus total variation of each weight
+$\mathcal A^2,\mathcal A G,G^2$ is $O(d^2)$: $\mathcal A$ is increasing and $G$ decreasing.
+The existing consecutive-block discrepancies and ordinary bounded-variation quadrature therefore replace $P_c^2$ by its SAME $\mu_c$ and $P_c$ by zero, with errors polynomial in $c$ divided by $N$. The squared bulk approximation error and its cross with the main profile contribute $o(d/N)$ as well. Finally
+$\int_{[0,\delta]\cup[1-\delta,1]} \mathcal A(t)^2dt
+=O(\delta\log^2(2/\delta))$.
+These bounds establish the complete norm asymptotic
+$$
+ \boxed{\begin{aligned}
+ \frac{\pi^4N}{4d}\|r_{c,N}\|^2
+ &=\frac{\pi^2}{6}\mu_c+
+      \kappa^2\left(\frac{\pi^2}{6}-2\log^22\right)+o(1),\\
+ \|r_{c,N}\|^2&\sim\frac{d^3}{6\pi^2N}.
+ \end{aligned}}
+ \tag{GHC20}
+$$
+The integrals used here are
+$\int_0^1 \mathcal A^2=\pi^2/6$ and
+$\int_0^1 G^2=\pi^2/6-2\log^22$.
+For the first, $t=\tanh u$ gives
+$\int_0^\infty u^2/\sinh^2u\,du=\sum_{j\ge1}j^{-2}$.
+The second follows by integration by parts and
+$\int_0^1\log(1+t)/t\,dt=\pi^2/12$.
+All source parameters grow together as specified; this is not a fixed-$c$ asymptotic with an unspecified $c$-dependent cutoff.
+
+#### Transport the actual endpoint through the complete exterior inverse
+
+Let
+$$
+ a_{c,N}=\langle\ell_N,\widetilde H^{-1}\ell_N\rangle,\qquad
+ q_{c,N}=\mathscr B^*\widetilde H^{-1}\ell_N.
+$$
+These use the original uncorrected full-arithmetic model. Its floor is at least $c/2$ eventually. On the exterior the original Fourier diagonal has
+$D_n=A(2\pi n/d)=\log(n/d)+O(d^2/n^2)$.
+The vector $\ell_N$ belongs to this diagonal's operator domain, and
+$$
+ \|(D-c)\ell_N\|\le C(1+\log d)\|\ell_N\|,
+ \qquad
+ \|\ell_N\|^2\sim\frac d{\pi^2N}.
+$$
+The first inequality follows by summing
+$n^{-2}(1+\log^2(n/N)+\log^2d)$; no uniform approximation of the unbounded diagonal by $cI$ is asserted.
+GHC18 and the existing resolvent identity now yield
+$\|\widetilde H^{-1}\ell_N-\ell_N/c\|
+=O(c^{-3/2})\|\ell_N\|$. Multiplication by the SAME
+$\|\mathscr B\|\le K_{d/2}=O(\sqrt c)$ gives
+$$
+ \boxed{\begin{aligned}
+ a_{c,N}&\sim\frac d{\pi^2cN},\\
+ \|q_{c,N}-r_{c,N}/c\|&=O(\|\ell_N\|/c),\\
+ \|q_{c,N}\|^2&\sim\frac{d^3}{6\pi^2c^2N}.
+ \end{aligned}}
+ \tag{GHC21}
+$$
+The last relative conclusion uses the paid norm GHC20:
+$\|r_{c,N}\|\sim(d/\sqrt6)\|\ell_N\|$. The coupling's global norm alone would not supply this conclusion.
+
+Since $\widehat H=\widetilde H+\tau_d|\ell_N\rangle\langle\ell_N|$, the classical rank-one inverse formula gives the exact signed comparison
+$$
+ \boxed{\widehat S-\widetilde S=
+    \frac{\tau_d}{1+\tau_da_{c,N}}
+       |q_{c,N}\rangle\langle q_{c,N}|,\qquad
+ \|S-\widehat S\|_1=O\!\left(\frac{d^3}{cN^3}\right).}
+ \tag{GHC22}
+$$
+The denominator is positive eventually and tends to one; $\tau_d\to-1/4$. The second line is GHC17 with GHC18's sharper bound for the SAME $K$. Thus every complete arithmetic and pole contribution remains in $a,q,r$ and in the paid remainder.
+
+In particular, with $e_c=r_{c,N}/\|r_{c,N}\|$ (nonzero eventually), the full retained matrices satisfy
+$$
+ \boxed{\begin{aligned}
+ \left\|\frac{c^2N}{d^3}(S-\widetilde S)
+       +\frac1{24\pi^2}|e_c\rangle\langle e_c|\right\|_1
+       &\longrightarrow0,\\
+ \operatorname{Tr}(S-\widetilde S)
+       &\sim-\frac{d^3}{24\pi^2c^2N}.
+ \end{aligned}}
+ \tag{GHC23}
+$$
+Indeed
+$\|\,|q\rangle\langle q|-|r/c\rangle\langle r/c|\,\|_1
+\le(\|q\|+\|r/c\|)\|q-r/c\|=O(d^2/(c^2N))$,
+and the cubic remainder is smaller than $d^3/(c^2N)$.
+The positive-part trace of $S-\widetilde S$ is
+$o(d^3/(c^2N))$, whereas its negative-part trace is
+asymptotic to $d^3/(24\pi^2c^2N)$.
+These norms compare matrices in the same physical retained space at each $c$; no fixed limiting vector or identification of different finite spaces is assumed.
+
+GHC23 pays a nonzero signed contribution to the ACTUAL model discrepancy, including its complete source strength and direction. It does not assert that the original Schur block is negative or positive. A positivity certificate for the uncorrected Hilbert model must still pay this negative endpoint, and a certificate for the corrected model must still pay its cubic remainder and establish its own sign. No retained/cofinal Weil positivity, dense fixed-window theta positivity, original same-source Robin strict upper, determinant limit or RH follows. The inherited source/form premises and paper-only status remain.
+
+### The complete prime--pole perturbation has sharp square-root spectral edges
+
+Keep the full complex physical form and G1--G4's exact decomposition
+$Q_L=q_{D_L}+\langle\cdot,V_L\cdot\rangle$ on its original form domain.
+Let $c\to\infty$ through integers, $d=\log c$, $L=d/2$ and $a=e^L=\sqrt c$.
+Write $I=(-L,L)$ and extend functions by zero. Put
+$$
+ u(x)=e^{x/2},\qquad v(x)=e^{-x/2},\qquad
+ b=2\sinh L=a-a^{-1}.
+$$
+The paired prime and true two-pole operators are
+$$
+ \begin{aligned}
+ (\mathsf P_Lf)(x)
+ &=\sum_{2\le n<c}\frac{\Lambda(n)}{\sqrt n}
+       [f(x+\log n)+f(x-\log n)],\\
+ \mathsf R_L&=|u\rangle\langle v|+|v\rangle\langle u|,\\
+ V_L&=\mathsf R_L-\mathsf P_L+B_L .
+ \end{aligned}
+ \tag{JPP1}
+$$
+These are G4's actual terms, with every prime power, both orientations and both poles retained.
+The prime operator preserves nonnegative functions; it is not asserted to be positive semidefinite.
+The periodic Gamma boundary correction is the SAME $B_L$ from G1, with
+$\|B_L\|\le C_\Gamma(d)=O(1)$ from G2.
+
+This application reuses the classical unconditional PNT already consumed in GHC18, the weighted Schur test, finite-rank block estimates, Riemann--Lebesgue and finite-torus recurrence.
+The recurrence is already owned by
+[PrimeOnlyNoGap.exists_pos_nsmul_mem](../../D5/S3/Weil/PrimeOnly/PrimeOnlyNoGap.lean)
+and the [Kronecker source](../Fourier/onishchik2020kronecker.md); no new general recurrence theorem is proposed.
+The added calculation concerns the sharp complete source norm and its finite-complement spectral edges, not a new PNT or abstract perturbation theorem.
+No literature-priority or Lean/kernel claim is made.
+
+#### Pay the prime norm and its two actual pole directions together
+
+For $t\ge1$, use the strict-endpoint sums
+$$
+ \Psi(t)=\sum_{2\le n<t}\Lambda(n),\qquad
+ M(t)=\sum_{2\le n<t}\frac{\Lambda(n)}n .
+$$
+PNT gives $\Psi(t)=t+o(t)$ and the reused Chebyshev/partial-summation bound gives
+$M(t)=O(1+\log t)$.
+The actual zero-extended translations have the following almost-everywhere actions:
+$$
+ \begin{aligned}
+ \mathsf P_Lu(x)&=u(x)[\Psi(e^{L-x})+M(e^{L+x})],\\
+ \mathsf P_Lv(x)&=v(x)[M(e^{L-x})+\Psi(e^{L+x})].
+ \end{aligned}
+$$
+Let $h=u+v>0$. For every fixed $\varepsilon>0$,
+$\Psi(t)\le(1+\varepsilon)t+C_\varepsilon$ for all $t\ge1$.
+Consequently
+$$
+ \mathsf P_Lh
+ \le[(1+\varepsilon)a+O_\varepsilon(1+d)]h.
+$$
+Apply the classical weighted Schur inequality to this SAME positive-kernel finite translation sum.
+Equivalently, use $2|f(x)f(y)|\le
+|f(x)|^2h(y)/h(x)+|f(y)|^2h(x)/h(y)$ separately on each actual shift and then change variables.
+Selfadjointness yields
+$\|\mathsf P_L\|\le a(1+o(1))$.
+No continuum approximation of the prime operator in operator norm has been made.
+
+There is also an actual two-direction approximation, which must be paid before subtracting the pole.
+Put $E(t)=\Psi(t)-t$. A change of variables gives
+$$
+ \|u(x)E(e^{L-x})\|_2^2
+   =a\int_1^c\frac{|E(t)|^2}{t^2}\,dt
+   =o(a^3).
+$$
+Here the last equality follows directly from $E(t)/t\to0$ by splitting at a fixed threshold; it is uniform in the growing upper endpoint.
+The $M$ term is $O(d)\|u\|_2$, and $\|u\|_2^2=\|v\|_2^2=b\sim a$.
+The reflected estimate holds for $v$.
+On the SAME vectors
+$$
+ \mathsf R_Lu=d\,u+b\,v,\qquad
+ \mathsf R_Lv=b\,u+d\,v .
+$$
+Thus, for the orthonormal vectors
+$$
+ e_+=\frac{u+v}{\sqrt{2(b+d)}},\qquad
+ e_-=\frac{u-v}{\sqrt{2(b-d)}},
+$$
+one obtains
+$$
+ \boxed{\begin{aligned}
+ \mathsf P_Le_+&=a e_++o(a),&
+ \mathsf P_Le_-&=-a e_-+o(a),\\
+ \|\mathsf P_L\|&\sim a,&
+ \|(\mathsf P_L-\mathsf R_L)\mathsf E_L\|&=o(a),
+ \end{aligned}}
+ \qquad
+ \mathsf E_L=|e_+\rangle\langle e_+|+|e_-\rangle\langle e_-|.
+ \tag{JPP2}
+$$
+All vector errors are in $L^2(I)$; the last is an operator-norm estimate on this actual rank-two space.
+
+The pole vanishes on $\mathsf E_L^\perp$.
+The $\mathsf E_L$ block and its cross blocks of
+$\mathsf R_L-\mathsf P_L$ are $o(a)$ by JPP2 and selfadjointness.
+Its remaining block is
+$-(I-\mathsf E_L)\mathsf P_L(I-\mathsf E_L)$, of norm at most $a(1+o(1))$.
+Therefore
+$$
+ \boxed{\|\mathsf R_L-\mathsf P_L\|\le a(1+o(1)),
+ \qquad \|V_L\|\le a(1+o(1)).}
+ \tag{JPP3}
+$$
+This uses the common pole/prime alignment.
+Adding separately optimized norms would give no such estimate.
+
+#### The sharp signed edges survive every finite-dimensional removal
+
+Fix $c$ temporarily.
+Finite-torus recurrence supplies an unbounded sequence $t_j$ such that
+$e^{it_j\log n}\to1$ for every contributing $n<c$.
+It needs no rational independence.
+For $U_tf=e^{itx}f$ the finite actual sum then satisfies
+$$
+ \|U_{t_j}^*\mathsf P_LU_{t_j}-\mathsf P_L\|\longrightarrow0 .
+$$
+Riemann--Lebesgue gives $U_{t_j}e_\pm\rightharpoonup0$.
+The true pole is finite rank, so
+$\|\mathsf R_LU_{t_j}e_\pm\|\to0$, while the SAME Gamma contribution remains bounded by $C_\Gamma(d)$.
+It follows that the negative Rayleigh edge of $V_L$ is at most
+$-\langle e_+,\mathsf P_Le_+\rangle+C_\Gamma(d)$,
+and its positive edge is at least
+$-\langle e_-,\mathsf P_Le_-\rangle-C_\Gamma(d)$.
+
+More strongly, let $\mathsf F_c$ be ANY finite-rank orthogonal projection at each $c$.
+Its rank, choice of vectors and dependence on $c$ are unrestricted.
+For fixed $c$,
+$\|\mathsf F_cU_{t_j}e_\pm\|\to0$.
+Project these vectors into $\mathsf F_c^\perp$ and normalize; their bounded-operator Rayleigh values change by $o_j(1)$.
+Writing $\lambda_-(c,\mathsf F_c)$ and $\lambda_+(c,\mathsf F_c)$ for the infimum and supremum of the compression's Rayleigh quotients on that complement, JPP2--JPP3 give
+$$
+ \boxed{\begin{aligned}
+ \lambda_-(c,\mathsf F_c)/\sqrt c&\longrightarrow-1,\\
+ \lambda_+(c,\mathsf F_c)/\sqrt c&\longrightarrow 1,\\
+ \|V_L\|/\sqrt c&\longrightarrow1 .
+ \end{aligned}}
+ \tag{JPP4}
+$$
+The errors in the first two limits can be chosen independently of the finite projection.
+The order of choices is essential: for each $c$ and its given finite projection, arbitrarily high recurrence times are allowed; no effective uniform recurrence time or bounded-frequency trial is asserted.
+This is a statement about the bounded perturbation $V_L$.
+Its modulated vectors pay an unbounded diagonal Gamma energy in the FULL form, so the negative edge proves no negativity of $Q_L$.
+
+#### Consume the joint norm in a smaller complete exterior section
+
+Let $\alpha>1$ be fixed and use the same physical Fourier projections at
+$$
+ N_\alpha(c)=\left\lceil e^{\alpha\sqrt c}\right\rceil .
+$$
+This changes only the finite section, with the original support and full operator unchanged.
+Since $A(2\pi n/d)=\log(n/d)+O(d^2/n^2)$ on the exterior, JPP3--JPP4 give the actual full-complex exterior floor
+$$
+ A(2\pi(N_\alpha+1)/d)-\|V_L\|
+     =(\alpha-1+o(1))\sqrt c.
+$$
+In particular the true exterior $H$ is eventually positive.
+Let $\widehat H$ be GHC12--GHC17's corrected signed-Hilbert Gamma model on this SAME exterior.
+Reuse their complete estimate
+$\|H-\widehat H\|_1<d^3/(20N_\alpha^3)$.
+Both floors are eventually at least $(\alpha-1)\sqrt c/2$, so the inherited inverse and trace-ideal estimates, with the SAME complete coupling
+$\mathscr B=P_{N_\alpha}^\perp V_LP_{N_\alpha}$, give
+$$
+ \boxed{\begin{aligned}
+ H,\widehat H&\succeq
+       \frac{\alpha-1}{2}\sqrt c\,I,\\
+ \|H^{-1}-\widehat H^{-1}\|_1
+   &\le\frac{d^3}{5(\alpha-1)^2cN_\alpha^3},\\
+ \|S-\widehat S\|_1
+   &=O_\alpha\!\left(\frac{d^3}{N_\alpha^3}\right).
+ \end{aligned}}
+ \tag{JPP5}
+$$
+These estimates cover all $2N_\alpha+1$ retained coordinates and every actual source term, with no retained-rank factor.
+They apply along any of the original unbounded integer FIB support schedules as well.
+The finite section is defined anew at this cutoff; no old finite matrix, trial or cache is identified with it.
+GHC20--GHC23's inverse asymptotic at $N=\lceil e^c\rceil$ is not asserted at the new cutoff.
+
+JPP3--JPP5 give a sharp leading complete perturbation budget, its two signed finite-complement edges, and an actual exterior/model comparison at the smaller cutoff.
+G4's separate allowance is asymptotic to $6\sqrt c$; no $o(\sqrt c)$ complete-complement norm allowance is possible, despite the pole cancellation on its own two directions.
+This last boundary concerns a norm-only method, not the attainable positivity threshold of the full form with its frequency-dependent diagonal.
+No finite retained Schur sign, cofinal Weil positivity, original same-source strict Robin upper, determinant limit or RH is established.
+The original source/form premises and paper-only status remain.
+
+### The complete odd endpoint has a smaller error at the Schur minimum
+
+Keep GHC18--GHC23's SAME complete physical operator, exterior models and coupling, with integer $c\to\infty$, $d=\log c$ and
+$N=\lceil e^c\rceil$.
+This subsection uses that original cutoff; it does not transport the inverse asymptotic to JPP5's smaller section.
+All vectors and Schur matrices use the inherited physical orthonormal coordinates.
+The added source input is the WHOLE action on $\ell_N$, including its exterior component, rather than only the already owned retained vector
+$r=\mathscr B^*\ell_N$.
+
+#### Pay every zero-extended prime translate of the boundary vector
+
+In the normalized odd sine basis, GHC12's vector has coefficients
+$\sqrt d(-1)^n/(\pi n)$ for $n>N$.
+Writing $z=x+d/2\in(0,d)$, its actual physical function is
+$$
+ g_N(z)=\frac{\sqrt2}{\pi}
+       \sum_{n>N}\frac{\sin(2\pi nz/d)}n,\qquad
+ \|\ell_N\|^2=\frac d{\pi^2}\sum_{n>N}\frac1{n^2}
+       \sim\frac d{\pi^2N}.
+$$
+Let $\delta=d/N$.
+The classical sawtooth Fourier series and Dirichlet summation give, almost everywhere,
+$$
+ |g_N(z)|\le C\min\!\left(1,
+       \frac{\delta}{\operatorname{dist}(z,\{0,d\})}\right).
+ \tag{JLS1}
+$$
+Indeed, away from the endpoints summation by parts bounds the tail by
+$C/[N|\sin(\pi z/d)|]$.
+Within distance $\delta$, the full sawtooth is bounded and
+$\sum_{n\le N}|\sin(2\pi nz/d)|/n\le2\pi$ after reflection to the nearer endpoint.
+This is an estimate for the actual Fourier tail, not a replacement profile.
+
+Reuse JPP1's complete prime operator $\mathsf P_L$ and weights
+$w_n=\Lambda(n)/\sqrt n$.
+Each of its two zero-extended translates has one internal peak, centered at
+$\log n$ or $d-\log n$.
+Its other endpoint lies outside $(0,d)$ by at least $\log2$, and contributes a pointwise envelope at most $C\delta$.
+Coincident internal centers are grouped before estimating.
+Each group has multiplicity at most two; the coincidences include every actual ordered resonance $nm=c$.
+Distinct grouped centers are separated by at least $1/(2c)$, since either their distance is a nonzero $\log(n/m)$ or a nonzero $\log(nm/c)$ with integer numerator data.
+
+For $a_\xi(z)=\min(1,\delta/|z-\xi|)$, the elementary overlap bounds on $(0,d)$ are
+$$
+ \int a_\xi^2\le C\delta,\qquad
+ \int a_\xi a_\eta
+   \le\frac{C\delta^2}{|\xi-\eta|}(1+\log N)
+       \quad(\xi\ne\eta).
+$$
+For the second, partition according to the nearer center; the other factor is at most
+$2\delta/|\xi-\eta|$, and $\int a_\xi\le C\delta(1+\log N)$.
+The sum of squared grouped weights is at most
+$4\sum_{n<c}w_n^2$, and their total weight is at most $2W_c$.
+The outside-endpoint envelopes have squared integral at most
+$Cd\delta^2W_c^2$.
+Thus, retaining all groups, cross terms and outside endpoints, the WHOLE prime action satisfies
+$$
+ \|\mathsf P_L\ell_N\|^2
+ \le C\left[
+   \delta\sum_{n<c}\frac{\Lambda(n)^2}{n}
+       +\delta^2c(1+\log N)W_c^2\right].
+$$
+Here $d\le c(1+\log N)$ absorbs the outside-endpoint term.
+The original cutoff has $\delta\ll1/c$.
+GHC18's existing full prime-power sums give
+$W_c^2=O(c)$ and $\sum_{n<c}\Lambda(n)^2/n=O(d^2)$.
+Consequently
+$\|\mathsf P_L\ell_N\|=O(d)\|\ell_N\|$.
+No independence or favorable cancellation of distinct prime translates has been assumed.
+
+The other actual source terms are also paid.
+For JPP2's normalized odd pole direction $e_-$, direct integration against the physical sine basis gives
+$|\langle\phi_n^{\rm o},e_-\rangle|\le C\sqrt d/n$ for large $c$ and $n>N$.
+Since $\mathsf R_Le_-=(d-b)e_-$ and $\ell_N$ is odd,
+$$
+ \|\mathsf R_L\ell_N\|\le C\sqrt c\,d/N .
+$$
+The SAME Gamma boundary term has norm $O(1)$ by G2.
+It follows that
+$$
+ \boxed{\|V_L\ell_N\|=O(d)\|\ell_N\|.}
+ \tag{JLS2}
+$$
+This improves the global $\sqrt c$ source budget on this particular actual vector and includes the exterior-to-exterior response.
+The recurrence vectors of JPP4 do not give a contrary bound on this fixed vector.
+
+#### Transport the vector and its frequency weight together
+
+Let $\widetilde H,\widetilde S$ be GHC21's original uncorrected signed-Hilbert model and let
+$q=\mathscr B^*\widetilde H^{-1}\ell_N$.
+The diagonal-domain estimate
+$\|(D-c)\ell_N\|=O(1+\log d)\|\ell_N\|$
+and the exterior floor $\widetilde H\succeq(c/2)I$ are already owned.
+The difference between the original and uncorrected exterior has operator norm $O(d/N)$:
+its endpoint is rank one of norm $O(\|\ell_N\|^2)$ and its remaining Gamma error is cubic.
+Thus JLS2 and the SAME vector resolvent identity give
+$$
+ \boxed{\begin{aligned}
+ \|\widetilde H^{-1}\ell_N-\ell_N/c\|
+     &=O(d/c^2)\|\ell_N\|,\\
+ \|q-r/c\|&=O(d/c^{3/2})\|\ell_N\|,\\
+ \|q\|&\sim\frac d{\sqrt6\,c}\|\ell_N\|.
+ \end{aligned}}
+ \tag{JLS3}
+$$
+The second line uses the complete coupling norm $O(\sqrt c)$.
+The last norm is reused from GHC20--GHC21, not recalculated from a generic bound.
+
+The retained diagonal must also be paid on the actual $r$.
+Reuse GHC20's complete bulk formula with $\delta_0=c^{-8}$ and its actual profiles
+$\mathcal A(t)=\operatorname{arctanh}(t)/t$ and
+$G(t)=\log(1+t)/t$.
+The additional weights are controlled because
+$$
+ \int_0^1[\mathcal A(t)^2+G(t)^2]\log^2t\,dt<\infty.
+$$
+On $\delta_0\le t\le1-\delta_0$ their weighted variations have polynomial bounds in $c$, so the SAME full prime discrepancies give polynomial-in-$c$ errors divided by $N$.
+The actual bulk approximation error remains negligible after multiplication by $O(c)$.
+Every excluded row is still included: GHC20's bound for its unweighted squared norm is
+$O(dc(1+\log N)^2(\delta_0/N+N^{-2}))$.
+Multiplying it by $O(c^2)$ gives $o(d^3/N)$.
+Thus with $D_N=P_ND_LP_N$ on the full retained space,
+$$
+ \|(D_N-c)r\|\le C(1+\log d)\|r\|.
+$$
+This is a new weighted consumption of the existing actual profile, not a fixed-head limit or a deletion of the cutoff rows.
+
+On the retained space $\|D_N-c\|=O(c)$.
+Also
+$\|\widetilde S-D_N\|\le\|V_L\|+
+\|\mathscr B\|^2\|\widetilde H^{-1}\|=O(\sqrt c)$.
+Combining these bounds with JLS3, the normalized actual endpoint
+$\nu_c=q/\|q\|$ satisfies
+$$
+ \boxed{\|(\widetilde S-cI)\nu_c\|=O(\sqrt c).}
+ \tag{JLS4}
+$$
+It is concentrated near the high Schur energy $c$; no assertion about a full-form eigenfunction or a simple minimum is used.
+
+#### Pay the negative endpoint at the lowest Schur value
+
+Reuse GHC22's exact signed formula. For sufficiently large $c$, put
+$$
+ \varepsilon_c=
+ -\frac{\tau_d}{1+\tau_d a_{c,N}}\|q\|^2
+ \sim\frac{d^3}{24\pi^2c^2N}>0 .
+$$
+Then
+$\widehat S=\widetilde S-\varepsilon_c|\nu_c\rangle\langle\nu_c|$.
+JLS4 applies to $\widehat S$ as well, since $\varepsilon_c=o(1)$.
+The classical spectral theorem therefore gives the whole low-energy projection bound
+$$
+ \left\|
+ \mathbf1_{(-\infty,c/2]}(\widehat S)\nu_c
+ \right\|^2=O(1/c).
+$$
+The uncorrected Schur minimum is at most
+$A_0+\|V_L\|=O(\sqrt c)$ by the retained constant vector and the negative Schur charge.
+Thus a unit minimizing vector $w$ for $\widehat S$ lies in this low-energy space.
+For any such vector, with no simplicity assumption,
+$|\langle\nu_c,w\rangle|^2=O(1/c)$.
+The variational principle yields
+$$
+ \boxed{0\le
+ \lambda_{\min}(\widetilde S)-\lambda_{\min}(\widehat S)
+       \le C\varepsilon_c/c
+       =O\!\left(\frac{d^3}{c^3N}\right).}
+ \tag{JLS5}
+$$
+This uses the evaluated complete source vector and its frequency weight.
+The total trace charge from GHC23 alone would give only the larger scale $\varepsilon_c$.
+
+Finally let
+$\rho_c=\|S-\widehat S\|\le\|S-\widehat S\|_1
+=O(d^3/(cN^3))$, the already paid complete cubic Gamma remainder.
+For the ORIGINAL physical Schur matrix,
+$$
+ \boxed{
+ -C\varepsilon_c/c-\rho_c
+ \le\lambda_{\min}(S)-\lambda_{\min}(\widetilde S)
+ \le\rho_c.}
+ \tag{JLS6}
+$$
+All minima are those of the same finite physical Schur space at the original cutoff; they are not identified with the full operator's ground-state value.
+This reduces the asymptotic endpoint allowance needed at the Schur minimum by a factor $c$, while retaining its negative sign and all source terms.
+It does not evaluate the remaining model minimum or give its positive margin.
+No new sign certificate at $c=27,N=1280$, retained/cofinal Weil positivity, original same-source strict Robin upper, determinant limit or RH follows.
+All statements remain paper applications under the inherited source/form premises, without Lean/kernel certification or a literature-priority claim.

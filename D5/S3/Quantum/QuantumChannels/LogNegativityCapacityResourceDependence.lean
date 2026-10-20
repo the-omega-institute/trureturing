@@ -222,7 +222,7 @@ private theorem conditional_positive (M : Matrix (A × B) (A × B) ℂ)
     (hM : M.PosSemidef) (hσ : σ.PosSemidef) : (conditional M σ).PosSemidef := by
   rw [conditional_reindex]
   exact conditionalNatural_positive M _ hM (hσ.submatrix _)
-private theorem separable_ppt (σ : Matrix (A×B) (A×B) ℂ) (hσ : IsSeparable σ) :
+theorem separable_ppt (σ : Matrix (A×B) (A×B) ℂ) (hσ : IsSeparable σ) :
     Matrix.PosSemidef (fun i j : A × B => σ (i.1,j.2) (j.1,i.2)) := by
   let a := (Fintype.equivFin A).symm
   let b := (Fintype.equivFin B).symm

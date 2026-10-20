@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ee049981d88836ea54b5fddc6faa0fd776a92bd1e263f31979a694fe7dab0fd
+  normalized_sha256: sha256:6ee049981d88836ea54b5fddc6faa0fd776a92bd1e263f31979a694fe7dab0fd
+cas_ref: sha256:6ee049981d88836ea54b5fddc6faa0fd776a92bd1e263f31979a694fe7dab0fd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional fragment: Heading and domain preamble only; the actual assertion is the next atom 14e7a05d.'
+    previous_atom_id: 2176b18c254f0f7140b048ea55d85028faf01ab2a082800203235a7bfbc98f8d
+    next_atom_id: 14e7a05d598f1d4efe56cb11e4d44b09276d77057842b8766ef34a7b1c1f78f5
