@@ -354,6 +354,10 @@ private unsafe def runCore (source base : Environment) (request : Request) : IO 
 into the baseline environment used for local reconstruction. -/
 unsafe def run (source : Environment) (request : Request)
     (sharedImports : ImportState := default) : IO Observation := do
+  unless source.contains request.target do
+    return {
+      target := request.target, verdict := .insufficient, base := .incomplete .missing,
+      paired := .incomplete .missing, reason := "search.missing_target"}
   try
     enableInitializersExecution
     let imports : Array Import := #[{module := `Mathlib}] ++

@@ -29,6 +29,17 @@ private unsafe def importSource (owners : Array Import) : IO (Environment × Imp
 The reference is cleared before returning; it never caches across targets. -/
 private initialize activeProbe : IO.Ref (Option (Environment × ImportState)) ← IO.mkRef none
 
+/-- Replays use an already loaded source snapshot and restore an enclosing
+probe context even when the negative guard raises an exception. -/
+def withReferenceProbeContext {m : Type → Type} [Monad m]
+    [MonadLiftT (ST IO.RealWorld) m]
+    [MonadFinally m] {α : Type} (source : Environment) (shared : ImportState)
+    (action : m α) : m α := do
+  let previous ← activeProbe.get
+  activeProbe.set (some (source, shared))
+  try action
+  finally activeProbe.set previous
+
 
 private def runJson : Run → Json
   | .found => toJson "found"
@@ -292,14 +303,11 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
       let sha := Syntax.mkStrLit request.baselineCommit
       let bs := request.baseline.map mkIdent
       let os := owners.map mkIdent
-      activeProbe.set (some (source, shared))
-      try
+      withReferenceProbeContext source shared do
         return some (← synthesizeUsingTactic' (u := .zero) (mkConst ``True)
           (← `(tactic|
             (fail_if_success (reference_baseline $target at $sha baseline [$bs,*] from [$os,*]))
             <;> exact True.intro)))
-      finally
-        activeProbe.set none
     else pure none
   -- Source metadata belongs to its own environment. R has already used a
   -- separately imported baseline, without source attributes or instances.
