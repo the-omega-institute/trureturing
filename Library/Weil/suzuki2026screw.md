@@ -10157,3 +10157,136 @@ $$
 This includes every admitted original source at every fixed budget $K>1$, with its original window and count constraints. The auxiliary null vectors are not inserted as original late-window sites. At W351's universal cap $4$, the same estimate uses only $M(G)\le4C_\diamond$ and still covers every possible negative direction. No auxiliary renormalization is used, including when $G=0$.
 
 The new interface removes both explicit moments and retains a nonnegative primary-continuum reserve in the actual all-source estimate. It does not give a favorable bound for the signed discrepancy $\mathcal D_\vartheta$ and the low-frequency allowance jointly against the remaining Gamma and positive energies. The change of auxiliary profile also supplies no pointwise numerical dominance over W349. The sign of $e_4$, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is an actual-source paper application of existing classical derivative/null and pole-completion results, without scientific execution, Lean/kernel certification or a literature-priority claim.
+
+## Identify the actual complete energy and retain an exact signed arithmetic budget
+
+The estimates W338--W358 compared the actual half-line Gamma form with an even classical test up to bounded terms. The actual form can instead be identified exactly on that test. This pays the folded and cutoff terms jointly and permits an exact signed budget with an explicit scalar allowance, rather than an unspecified $C_\delta S$ error. The signed primary-prime discrepancy remains uncontrolled.
+
+Reuse the actual Fourier identity W39, the classical paired Hadamard product and zero counting already supplied in the [Lagarias and logarithmic-derivative account](broadbent2026mertens.md#an-upper-budget-in-the-actual-logarithmic-gamma-energy), and the classical Weil explicit formula. In the inspected [Suzuki v3 primary](https://arxiv.org/pdf/2606.09096v3), printed p.13, equation (3.1), the frequency zeros may be nonreal and carry their actual multiplicities; printed p.14, Lemma 3.1, also treats the compact $H^1_0$ domain. No RH premise or new Hadamard, explicit-formula or general de Branges criterion is used below. The application concerns the actual source map and its full-domain energy, without identifying Hilbert-space completions.
+
+### Fix the classical normalization on the actual test
+
+Retain $g_F$ from W338 and $c_\Phi=\pi^{1/4}/4$. For an even test $g$ in the displayed range, write $s(g)=\|g\|_2^2$ and use the unitary Fourier transform. Define its complete arithmetic Weil value by
+$$
+\begin{aligned}
+\mathcal Q_W(g)={}&\int_{\mathbb R}
+\left[\Re\operatorname{digamma}(1/4+i\tau/2)-\log\pi\right]
+|\widehat g(\tau)|^2d\tau\\
+&-T_1(g)-T_{\ge2}(g)
++2\left|\int_{\mathbb R}\cosh(r/2)g(r)dr\right|^2.
+\end{aligned}
+$$
+The prime terms and pole moment are exactly those used in W338--W356, and retain every prime power. The signed Gamma integral is finite by W338 and the bounded rational digamma shift. The exponential weighted estimate before W355 makes both arithmetic sums and the pole moment finite. Thus this is the classical arithmetic form on the ACTUAL range, rather than a new completion chosen to enforce an identity.
+
+For EVERY $F\in\mathcal V$, including signed real and complex features,
+$$
+\mathfrak E(F)=\alpha\mathcal Q_W(g_F),\qquad
+\alpha=\frac2{\sqrt\pi}.
+\tag{W359}
+$$
+Here $\mathfrak E$ is the ENTIRE actual form W317, including both folded channels, the rank-two cutoff and the fixed Gamma shift. They have not been independently dropped or assigned favorable signs.
+
+### Verify the source-specific identity through the actual signed zero sum
+
+Let $\mathcal F(z)=\int\Phi(t)e^{izt}dt$ be W7's actual entire function and write $\mathcal F(z)=\mathcal H(z^2)$ as in W39. Let $\Gamma$ be its complete zero set, with multiplicities $m_\gamma$. The actual xi normalization gives $|\Im\gamma|<1/2$, $0\notin\Gamma$, and invariance under sign and conjugation. No inclusion $\Gamma\subset\mathbb R$ is assumed.
+
+For the physical Gaussian $f_a$ of W255 put
+$$
+g_a(t)=g_{f_a}(t)=c_\Phi\Phi(a+|t|),\qquad
+v_a(z)=\int_{\mathbb R}g_a(t)e^{izt}dt.
+$$
+The transform in this definition is ordinary, without the unitary factor. At every $\gamma\in\Gamma$,
+$$
+v_{-a}(\gamma)=-v_a(\gamma),\qquad
+\mathcal Q_W(g_a,g_b)
+=\sum_{\gamma\in\Gamma}m_\gamma
+ v_a(\gamma)\overline{v_b(\overline\gamma)}.
+\tag{W360}
+$$
+The first equality follows from
+$g_a(t)+g_{-a}(t)=c_\Phi[\Phi(t+a)+\Phi(t-a)]$ and $\mathcal F(\gamma)=0$. The second is the reused signed Weil explicit formula; conjugating the zero as displayed is essential.
+
+The noncompact and summation interfaces in W360 can be paid explicitly. For $a\ge0$, twice integrating $2c_\Phi\int_0^\infty\Phi(a+t)\cos(\gamma t)dt$ gives
+$|v_a(\gamma)|\le A(a)/(1+|\gamma|^2)$, where $A(a)$ is bounded by a fixed multiple of
+$|\Phi'(a)|+\int_0^\infty(|\Phi|+|\Phi''|)(a+t)e^{t/2}dt$.
+The existing full theta derivative bounds make $A(a)$ superexponentially decreasing at infinity. The first identity extends this bound to $A(|a|)$ for all real $a$. Zero counting gives $\sum_\gamma m_\gamma(1+|\gamma|^2)^{-2}<\infty$. Compact even cutoffs and smoothing of $g_a$ converge in weighted $H^1$; their second distributional derivatives have uniformly bounded weighted total variation, including the derivative jump at zero. They consequently retain a common $O((1+|\gamma|^2)^{-1})$ transform bound in the zero strip. Dominated convergence passes the classical compact explicit formula to W360. The prime correlations converge by the same exponential weighted bound used in W356, and the Gamma integral converges in its full logarithmic form norm.
+
+For $\Im z,\Im w<-1/2$, absolute integration gives
+$$
+\int_{\mathbb R}v_a(\gamma)e^{iza}da
+=-\frac{2ic_\Phi z\mathcal F(z)}{z^2-\gamma^2}.
+$$
+The zero sum and both source integrals may be interchanged by the preceding $A(|a|)A(|b|)$ majorant. Reuse the classical paired product for $\mathcal H$, with one root $\gamma^2$ per sign pair. Its logarithmic derivative gives
+$$
+\sum_{\gamma\in\Gamma}
+\frac{m_\gamma}{(z^2-\gamma^2)(\overline w^2-\gamma^2)}
+=\frac{2\mathcal D_{\mathcal H}(w^2,z^2)}
+ {\mathcal F(z)\overline{\mathcal F(w)}}.
+$$
+The factor two counts the two frequency roots in each sign pair, with their multiplicities. Hence the double source Fourier transform of $\mathcal Q_W(g_a,g_b)$ is
+$8c_\Phi^2z\overline w\mathcal D_{\mathcal H}(w^2,z^2)$.
+The EXISTING W39 says that the transform of $L_0(a,b)$ is exactly
+$z\overline w\mathcal D_{\mathcal H}(w^2,z^2)$. Weighted Fourier uniqueness and continuity therefore give
+$$
+\mathcal Q_W(g_a,g_b)=8c_\Phi^2L_0(a,b)
+=\frac{\sqrt\pi}{2}L_0(a,b).
+\tag{W361}
+$$
+There is no positive-zero-sum substitution in this argument: both nonreal conjugate zeros and the displayed signed pairing remain present.
+
+Polarizing the existing W255 Gaussian identity proves W359 on every finite complex Gaussian feature. W326 is a core in the ACTUAL $M+\mathcal P$ norm. The classical arithmetic pairing above is continuous in that norm on its range: W338 controls its whole logarithmic Gamma pairing, the exponential weighted bound controls the complete prime and pole pairings, and the original actual form is continuous there by W317. Passage through that core proves W359 for all $F\in\mathcal V$. No global equality of operator domains or equality of unrelated completed norms is inferred.
+
+### Consume the exact identification without an unspecified bounded remainder
+
+Use precisely $\mathcal Z$, $\mathcal D_{\rm odd}$, $\mathcal J$, $\kappa$ and $d_\xi$ of equation (8) in the [owned higher-power account](broadbent2026mertens.md#an-upper-budget-in-the-actual-logarithmic-gamma-energy). With unitary Fourier normalization,
+$$
+\mathcal Z(g)=\int_{\mathbb R}
+2\Re\frac{\xi'}{\xi}(1+2i\tau)|\widehat g(\tau)|^2d\tau\ge0,
+\qquad
+C_{\rm odd}=\sum_p\frac{\log p}{\sqrt p(p-1)},\qquad
+c_{\rm a}=\log2+2C_{\rm odd}>0.
+$$
+The positivity is the existing unconditional right-boundary resolvent theorem, not a critical-line or RH assertion. All zeros in that supplier have their actual multiplicities; no zero-height truncation is made. The other two energies are nonnegative as before.
+
+For EVERY $F\in\mathcal V$, with $g=g_F$, the complete form has the EXACT signed decomposition
+$$
+\frac{\mathfrak E(F)}\alpha
+=\mathcal Z(g)+\mathcal D_{\rm odd}(g)+\mathcal J(g)
+-\mathcal D_\vartheta(g)-c_{\rm a}s(g)
+-\frac12|\ell_0(F)|^2.
+\tag{W362}
+$$
+To consume the suppliers, first insert W356 in W359. Its two pole squares cancel exactly. The retained Green multiplier advances the quarter-Gamma argument to $5/4$ by the owned digamma recurrence. Thus
+$\mathcal Q_W(g)=E_*(g)+[\operatorname{digamma}(5/4)-\log\pi]s(g)-\mathcal D_\vartheta(g)-T_{\ge2}(g)$.
+The existing definitions give
+$T_{\ge2}=|\int g|^2/2+2\kappa s+\epsilon$ and
+$E_*-\epsilon+d_\xi s=\mathcal Z+\mathcal D_{\rm odd}+\mathcal J$.
+Finally the classical quarter-value normalization yields
+$$
+\operatorname{digamma}(5/4)-\log\pi-2\kappa-d_\xi
+=-\log2-2C_{\rm odd}.
+$$
+This fixes the scalar in W362; it is not absorbed into a newly chosen constant. The existing W342 logarithmic boundary estimate bounds the $\mathcal Z$ multiplier by $C(1+\log(2+|\tau|))$. Together with W338 it passes the exact supplier identity from the joint core to every actual profile, keeping its full frequency contribution. The odd and rational energies are bounded in $L^2$, and W356 pays the discrepancy and moments. Thus this consumption applies on the whole specified domain, without substituting a derivative norm for Gamma.
+
+For an ORIGINAL source with $Q_H=1$, $Q_{6,A}\le K$, use its W257 unit feature $\psi$ and the EXISTING mean-centering $G=R\psi$ from W348. With $g=g_G$, the same original complete form satisfies
+$$
+4\pi^3 A Q_{\mathcal K_A^g}(\sigma)
+=\alpha\left[
+\mathcal Z(g)+\mathcal D_{\rm odd}(g)+\mathcal J(g)
+-\mathcal D_\vartheta(g)-c_{\rm a}s(g)\right],
+\qquad M(G)\le C_RK.
+\tag{W363}
+$$
+The double-centering $R_\diamond$ may also be used, with its corresponding bound, but is not needed for cancellation of the explicit pole square in the exact identity. Neither auxiliary feature is renormalized. All original counts, windows, coefficients and prime powers remain in scope. W351 again permits the search for a negative direction to be restricted to the ONE full original cap $4$, with no positive-subclass replacement.
+
+The already owned Stechkin comparison, equation (15) of the higher-power account, also gives a concrete LOWER estimate from this exact identity. With $\kappa_S=1/\sqrt5$, EVERY $F\in\mathcal V$ satisfies
+$$
+\frac{\mathfrak E(F)}\alpha\ge
+\kappa_SE_*(g_F)-\mathcal D_\vartheta(g_F)
+-(c_{\rm a}+2)s(g_F)-\frac12|\ell_0(F)|^2
++\mathcal D_{\rm odd}(g_F)+\mathcal J(g_F).
+\tag{W364}
+$$
+Indeed insert that supplier's upper bound for $T_{\ge2}$ into the exact expression for $\mathcal Q_W$ above and use the displayed scalar identity. The full $E_*$ logarithmic Gamma energy is retained with its fixed fraction; the scalar debit is explicitly $2+\log2+2C_{\rm odd}$. No boundary-comparison constant is left unpaid. On the ORIGINAL source in W363, the same lower bound multiplied by $\alpha$ applies to $4\pi^3 A Q_{\mathcal K_A^g}$ with $g=g_{R\psi}$ and no mean-square term. It covers every original budget and coefficient with the already stated auxiliary moment control.
+
+W362--W364 replace the previously unspecified low-frequency comparison loss by the explicit scalar $c_{\rm a}s(g)$ and preserve the entire nonnegative resolvent, odd and rational energies on the SAME actual profile. The remaining task is a signed bound for $\mathcal D_\vartheta(g)+c_{\rm a}s(g)$ against their joint sum, on the full allowed class. No favorable sign, numerical dominance over every earlier estimate, all-source positivity, sign of $e_4$, full RH or strict Robin for EVERY integer $n>5040$ follows yet. Classical Hadamard, Weil and higher-power results are reused; the actual exact interface and its all-source signed consumer are paper mathematics without scientific execution, Lean/kernel certification or a priority claim.
