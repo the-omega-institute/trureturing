@@ -4,6 +4,11 @@ namespace LeanInformationAudit.Tests.SearchReduction.GraphCandidates
 
 theorem scopedApply (p q : Prop) (f : p → q) (h : p) : q := f h
 
+private theorem parametricHelper (x : Nat) : x = x := rfl
+
+theorem helperApplications (a b : Nat) : a = a ∧ b = b :=
+  ⟨parametricHelper a, parametricHelper b⟩
+
 theorem squareFact : (42 : Nat) * 42 = 1764 := rfl
 
 theorem trueFact : True := True.intro

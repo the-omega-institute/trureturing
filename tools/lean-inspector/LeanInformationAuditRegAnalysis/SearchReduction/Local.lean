@@ -74,8 +74,8 @@ private partial def visit (base : Environment) (additions : Array (Expr × Expr)
     shared := s.shared.insert key id
     vertices := s.vertices.push vertex}
   let addEdge (premises : List Nat) (head : Option Expr := none)
-      (authorData : Array (Option Expr) := #[]) : ExtractM Unit := do
-    let source := head.bind Expr.constName?
+      (authorData : Array (Option Expr) := #[]) (sourceName : Option Name := none) : ExtractM Unit := do
+    let source := sourceName.orElse (fun _ => head.bind Expr.constName?)
     let head ← head.mapM (mkLambdaFVars scope ·)
     modify fun s => {s with edges := s.edges.push {conclusion := id, premises, head, source, authorData}}
   match proof with
@@ -103,9 +103,21 @@ private partial def visit (base : Environment) (additions : Array (Expr × Expr)
           incomplete s!"graph.recursive_helper:{name}"
         else if let some value := info.value? (allowOpaque := true) then
           let value := value.instantiateLevelParams info.levelParams levels
-          let child ← visit base additions (mkAppN value args).headBeta
-            (position ++ [0]) (unfolding.insert name)
-          addEdge [child]
+          -- A helper's generic proof is shared across all call sites. Its
+          -- application still hides data and depends on that proof vertex.
+          let child ← withLCtx {} #[] <| visit base additions value
+            (position ++ [args.size]) (unfolding.insert name)
+          let helperType := info.type.instantiateLevelParams info.levelParams levels
+          let applicationHead := mkApp (mkConst ``id [.zero]) helperType
+          let mut premises := [child]
+          let mut data := #[none]
+          for h : i in [:args.size] do
+            let arg := args[i]
+            if ← isProp (← inferType arg) then
+              premises := premises ++ [← visit base additions arg (position ++ [i]) unfolding]
+              data := data.push none
+            else data := data.push (some (← mkLambdaFVars scope arg))
+          addEdge premises (some applicationHead) data (some name)
         else incomplete s!"graph.missing_body:{name}"
       else
         let mut premises := []

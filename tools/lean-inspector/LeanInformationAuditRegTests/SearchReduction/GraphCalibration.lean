@@ -30,6 +30,17 @@ run_cmd do
         scopedReading.graph.edges.all (·.cost != .unknown) do
       throwError "scoped function application reconstruction failed: {scopedGraph.issues}"
     logInfo "local-calibration scoped application: complete, kernel-checked zero"
+    let helperInfo ← getConstInfo ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.helperApplications
+    let helperGraph ← extractGraph base helperInfo.type (helperInfo.value? (allowOpaque := true)).get!
+    let helperEdges := helperGraph.edges.filter fun edge =>
+      edge.source.any (fun name => name.getString! == "parametricHelper")
+    unless helperEdges.length == 2 && helperEdges.all (fun edge =>
+        edge.premises.head? == helperEdges.head!.premises.head?) do
+      throwError "generic helper proof was duplicated across applications"
+    let helperReading ← withEnv base <| evaluateGraph helperGraph
+    unless helperReading.baseline == ⟨.finite 0, .finite 0⟩ do
+      throwError "shared helper application reconstruction failed"
+    logInfo "local-calibration generic helper: one shared proof, two checked calls"
     let squareFact ← getConstInfo ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareFact
     let added := #[(squareFact.type, mkConst squareFact.name)]
     for name in #[
