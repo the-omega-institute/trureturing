@@ -2285,3 +2285,730 @@ and terminal permissions of (105.1).
 [JC-COMP]: https://arxiv.org/abs/1512.07016 "Jenčová, arXiv:1512.07016"
 
 ## 追加锚（本行以下为增补区）
+
+## 112. The complete uniform-modulus phase orbit
+
+**Definition 112.1 (Orbit and simultaneous approximation).** In the
+ordered basis (93.1), let
+
+$$
+|z_{\theta,\varphi}\rangle
+ =\frac{|0\rangle+e^{i\theta}|1\rangle+e^{i\varphi}|2\rangle}{\sqrt3},
+\qquad
+P_{\theta,\varphi}=|z_{\theta,\varphi}\rangle
+                         \langle z_{\theta,\varphi}|,
+\qquad
+\mathcal O=\{P_{\theta,\varphi}:\theta,\varphi\in\mathbb R\}.
+\tag{112.1}
+$$
+
+Thus $\mathcal O$ is the whole two-phase orbit, including every relative
+complex phase. For each physical $s\in[-1/2,1]$ put
+
+$$
+h_s(\mathcal R)=\max_{P\in\mathcal O}
+ d(\mathcal R\Phi_s(P),P),\qquad
+\nu(s)=\min_{\mathcal R\ {\rm CPTP}}h_s(\mathcal R),\qquad
+q=|s|.
+\tag{112.2}
+$$
+
+The decoder is one common terminal CPTP map, with exactly the permissions
+in Definition 105.1. Compactness of $\mathcal O$ and of the decoder Choi
+set gives attainment, by the same continuity argument as Lemma 105.2.
+The full-input objective remains $e_s$ in (105.2), so
+$h_s(\mathcal R)\le e_s(\mathcal R)$ and $\nu(s)\le\mu(s)$.
+
+These objectives are simultaneous approximation problems for quantum
+statistical experiments. In [Keiji Matsumoto, §5, Theorem 5][MAT-EXP],
+take the source experiment to be $\rho_\alpha=\Phi_s(P_\alpha)$, the
+target experiment to be $\sigma_\alpha=P_\alpha$, and the common map to
+be $\mathcal R$. Its unhalved trace-norm tolerance $e_\alpha=2\epsilon$
+then expresses $h_s(\mathcal R)\le\epsilon$. The same substitution in
+[Anna Jenčová, §4, Theorem 4][JC-EXP] uses its tolerance $2\epsilon$.
+For the full objective, instead index both experiments by all
+$\rho\in\mathsf D(\mathbb C^3)$, with source $\Phi_s(\rho)$ and target
+$\rho$; feasibility is exactly $e_s(\mathcal R)\le\epsilon$.
+Auxiliary systems in decision tests do not enter $\mathcal R$'s input.
+This correspondence uses the density-input half trace distance, not the
+diamond objective (93.8) or an induced norm over arbitrary matrices.
+
+**Lemma 112.2 (Averaging arbitrary decoders over phases).** For every
+CPTP $\mathcal R$, its normalized Haar average over diagonal unitaries
+
+$$
+\overline{\mathcal R}
+ =\int\operatorname{Ad}_{T^\dagger}\circ\mathcal R
+                          \circ\operatorname{Ad}_T\,dT
+\tag{112.3}
+$$
+
+is CPTP and diagonal covariant, and satisfies
+
+$$
+h_s(\overline{\mathcal R})\le h_s(\mathcal R),\qquad
+e_s(\overline{\mathcal R})\le e_s(\mathcal R).
+\tag{112.4}
+$$
+
+Every diagonal-covariant decoder has the representation
+
+$$
+\overline{\mathcal R}(E_{jj})=\sum_i c_{ij}E_{ii},\qquad
+\overline{\mathcal R}(E_{ij})=\xi_{ij}E_{ij}\quad(i\ne j),
+\qquad
+B_{ii}=c_{ii},\quad B_{ij}=\xi_{ij}\quad(i\ne j),
+\tag{112.5}
+$$
+
+where $C=(c_{ij})$ is entrywise nonnegative and column stochastic and
+$B\succeq0$. In particular,
+
+$$
+|\xi_{01}|^2\le c_{00}c_{11},\qquad 0\le c_{jj}\le1.
+\tag{112.6}
+$$
+
+*Proof.* Equation (95.12) gives covariance of $\Phi_s$ under every
+diagonal unitary $T$. For every density input $\rho$,
+
+$$
+\overline{\mathcal R}\Phi_s(\rho)-\rho
+ =\int T^\dagger\bigl[\mathcal R\Phi_s(T\rho T^\dagger)
+                                      -T\rho T^\dagger\bigr]T\,dT.
+\tag{112.7}
+$$
+
+Convexity and unitary invariance of the trace norm give (112.4), because
+both the full density set and $\mathcal O$ are invariant under these
+conjugations. Averaging preserves complete positivity and trace
+preservation. Invariance of Haar measure gives covariance of the average.
+This proves the inequalities for a decoder that was arbitrary before
+averaging.
+
+The diagonal matrices are the fixed subspace of diagonal conjugation,
+and each off-diagonal matrix unit spans a distinct character space.
+Covariance therefore gives (112.5). In the output-first convention,
+its Choi matrix is
+
+$$
+J(\overline{\mathcal R})
+ =\sum_{i\ne j}c_{ij}|ij\rangle\langle ij|
+   +\sum_{i,j}B_{ij}|ii\rangle\langle jj|.
+\tag{112.8}
+$$
+
+Its orthogonal blocks show that complete positivity is equivalent to
+$c_{ij}\ge0$ and $B\succeq0$, while trace preservation is equivalent to
+the column sums of $C$ being one. These are precisely the CDUC
+population and coherence parameters of [Singh–Nechita, Definition 6.3,
+(37), Lemmas 6.11 and 6.13, and Proposition 4.1][SN]: their population
+matrix $A$ is $C$, their coherence matrix is $B$, and their covariance
+is $\mathcal R(TXT^\dagger)=T\mathcal R(X)T^\dagger$.
+The $01$ principal minor gives (112.6). $\square$
+
+**Lemma 112.3 (Swap contraction at the uniform probe).** Put
+$P=P_{0,0}$ and let $S$ swap $|0\rangle$ and $|1\rangle$ while fixing
+$|2\rangle$. Given $\overline{\mathcal R}$ as above, define
+
+$$
+\mathcal R^\#=\frac12\left(\overline{\mathcal R}
+       +\operatorname{Ad}_S\circ\overline{\mathcal R}
+                                  \circ\operatorname{Ad}_S\right).
+\tag{112.9}
+$$
+
+This map is CPTP and diagonal covariant. Its parameters satisfy
+$c_{00}=c_{11}$, $\xi_{01}\in\mathbb R$, and equal row sums in rows zero
+and one. If $u$ is that common row sum, put
+$\varepsilon=\operatorname{sign}s$ for $s\ne0$ and $\varepsilon=1$ at
+zero, and set $x=\varepsilon\xi_{01}$. Then
+
+$$
+u\ge c_{00}\ge|x|,\qquad |x|\le1,
+\tag{112.10}
+$$
+
+and
+
+$$
+\begin{aligned}
+D(u,x)&=P-\mathcal R^\#\Phi_s(P)\\
+&=\frac13\begin{pmatrix}
+1-u&1-qx&1\\
+1-qx&1-u&1\\
+1&1&2u-2
+\end{pmatrix},\\
+d(\mathcal R^\#\Phi_s(P),P)
+&\le d(\overline{\mathcal R}\Phi_s(P),P)
+ =h_s(\overline{\mathcal R})\le h_s(\mathcal R).
+\end{aligned}
+\tag{112.11}
+$$
+
+*Proof.* The swap normalizes the diagonal-unitary group, so both terms
+of (112.9) are diagonal covariant. Swap invariance of the average gives
+the stated equalities of its population parameters, and replaces the
+$01$ coherence by its real part. Choi positivity now gives
+$|x|\le c_{00}\le1$; the common row sum $u$ is at least $c_{00}$.
+
+At this particular probe,
+
+$$
+SPS=P,\qquad
+\Phi_s(P)=\frac13\begin{pmatrix}1&s&0\\s&1&0\\0&0&1\end{pmatrix},
+\qquad S\Phi_s(P)S=\Phi_s(P).
+\tag{112.12}
+$$
+
+Consequently the output of (112.9) at $\Phi_s(P)$ is the average of
+$\overline{\mathcal R}\Phi_s(P)$ and its conjugate by $S$. The first
+inequality in (112.11) follows from trace-norm convexity. Diagonal
+covariance makes the error of $\overline{\mathcal R}$ constant on
+$\mathcal O$, proving the equality there. Finally the three row sums
+of $C$ are $u,u,3-2u$, and its only coherence contributing to this
+output is $s\xi_{01}=qx$. Subtraction gives $D(u,x)$.
+Only the two probe invariances in (112.12) are used for this swap
+contraction; no swap covariance of $\Phi_s$ on other inputs is needed.
+$\square$
+
+## 113. Exact minimax on the complete phase orbit
+
+**Theorem 113.1 (Orbit value and matching decoder).** For every physical
+$s\in[-1/2,1]$, with $q=|s|$,
+
+$$
+\boxed{\displaystyle
+\nu(s)=F(q)=\frac{1-q+\sqrt{(1-q)^2+8}}6.}
+\tag{113.1}
+$$
+
+A matching CPTP decoder is
+
+$$
+\mathcal A_\varepsilon(X)
+ =K_0XK_0^\dagger+K_1XK_1^\dagger,\qquad
+K_0=E_{00}+\varepsilon E_{11},\quad K_1=E_{22},
+\tag{113.2}
+$$
+
+where $\varepsilon$ is as in Lemma 112.3. It has population matrix
+$C=I$, coherence $\xi_{01}=\varepsilon$, and all other off-diagonal
+coherence coefficients zero.
+
+*Proof.* Write
+
+$$
+r=\frac{\sqrt{(1-q)^2+8}-(1-q)}2,\qquad
+w=(1,1,r)^{\mathsf T},\qquad D_*=D(1,1).
+\tag{113.3}
+$$
+
+Because $0\le q\le1$, the positive root $r$ satisfies
+
+$$
+1\le r\le\sqrt2,\qquad r^2+(1-q)r=2,\qquad
+D_*w=F(q)w.
+\tag{113.4}
+$$
+
+For example the polynomial $r^2+(1-q)r-2$ is increasing on the
+positive axis and has opposite weak signs at $1$ and $\sqrt2$.
+For every $D(u,x)$ obtained in Lemma 112.3, its Rayleigh value differs
+from the one at $D_*$ by
+
+$$
+\frac{w^\dagger[D(u,x)-D_*]w}{w^\dagger w}
+ =\frac{2\bigl[(r^2-1)(u-1)+q(1-x)\bigr]}{3(2+r^2)}.
+\tag{113.5}
+$$
+
+If $u\ge1$, both terms in the numerator are nonnegative. If $u\le1$,
+then $x\le u$, so
+
+$$
+\begin{aligned}
+(r^2-1)(u-1)+q(1-x)
+&\ge\bigl[q-(r^2-1)\bigr](1-u)\\
+&=(1-q)(r-1)(1-u)\ge0.
+\end{aligned}
+\tag{113.6}
+$$
+
+Here the last equality follows from the root identity in (113.4).
+Thus $\lambda_{\max}(D(u,x))\ge F(q)$. Since $D(u,x)$ is Hermitian
+and traceless, its half trace norm is at least its largest eigenvalue.
+Equation (112.11) therefore yields, for every original CPTP decoder,
+
+$$
+h_s(\mathcal R)\ge\frac12\|D(u,x)\|_1\ge F(q).
+\tag{113.7}
+$$
+
+For the reverse bound, the adjoint products of the two Kraus operators
+in (113.2) sum to $I$. Equivalently, its only nonzero Choi block is
+on $|00\rangle,|11\rangle,|22\rangle$ and is
+
+$$
+\begin{pmatrix}1&\varepsilon&0\\
+                \varepsilon&1&0\\0&0&1\end{pmatrix}.
+\tag{113.8}
+$$
+
+The full Choi matrix has eigenvalues $2,1$ and seven zeros, and output
+partial trace $I$, so this is a full-qutrit CPTP decoder. At $P$ its
+target-minus-output matrix is $D_*$. The eigenvalues of $D_*$ are
+
+$$
+F(q),\qquad \frac{q-1}{3},\qquad
+\frac{1-q-\sqrt{(1-q)^2+8}}6.
+\tag{113.9}
+$$
+
+Only the first is positive. Hence $\|D_*\|_1/2=F(q)$. Both
+$\Phi_s$ and $\mathcal A_\varepsilon$ are diagonal covariant, so every
+$P\in\mathcal O$ gives a diagonal-unitary conjugate of this difference
+matrix. Thus $h_s(\mathcal A_\varepsilon)=F(q)$ on the whole orbit,
+matching (113.7). $\square$
+
+## 114. Strict full-input lower bounds and finite intervals
+
+**Corollary 114.1 (Full-input bound and strict Fourier improvement).**
+For every physical $s$, writing $q=|s|$,
+
+$$
+\boxed{\displaystyle
+\mu(s)\ge\max\left\{\frac12,F(q)\right\}.}
+\tag{114.1}
+$$
+
+For $L(q)=2/3-2q/9$, the exact difference is
+
+$$
+F(q)-L(q)
+ =\frac{4q^2}
+ {27\bigl(\sqrt{(1-q)^2+8}+3-q/3\bigr)}.
+\tag{114.2}
+$$
+
+In particular $\mu(s)>L(|s|)$ at every nonzero physical parameter.
+At zero, $F(0)=L(0)=\mu(0)=2/3$.
+
+*Proof.* The orbit is a subset of the full input set, so Theorem 113.1
+gives $\mu(s)\ge F(q)$. The lost orthogonal pair (106.11) gives the
+other lower bound $1/2$ for every decoder. To obtain (114.2), subtract
+$L(q)$ from (113.1) and rationalize
+$\sqrt{(1-q)^2+8}-(3-q/3)$. The difference of the two squares is
+$8q^2/9$, and the displayed denominator is positive on $[0,1]$.
+Strictness follows for $q>0$. The zero value is (107.4). $\square$
+
+**Corollary 114.2 (Actual finite intervals of positive width).** With
+$q_n=2^{1-n}$,
+
+$$
+\begin{aligned}
+F(q_n)\le\mu_n\le\frac23
+ &&(n\ge2\text{ even}),\\
+F(q_n)\le\mu_n\le\frac23-\frac{q_n}{6}
+ &&(n\ge3\text{ odd}).
+\end{aligned}
+\tag{114.3}
+$$
+
+In particular,
+
+$$
+\boxed{\displaystyle
+\mu_2\in\left[\frac{1+\sqrt{33}}{12},\frac23\right],\qquad
+\mu_3\in\left[\frac{3+\sqrt{137}}{24},\frac58\right].}
+\tag{114.4}
+$$
+
+The widths of these two intervals are respectively
+
+$$
+\frac{7-\sqrt{33}}{12}>0,\qquad
+\frac{12-\sqrt{137}}{24}>0.
+\tag{114.5}
+$$
+
+*Proof.* Apply (114.1) through the unchanged transport (105.3), and
+use the replacer and positive-branch upper bounds of §107. Here
+$0<q_n\le1/2$, so $F(q_n)>L(q_n)\ge5/9>1/2$.
+Substitution gives (114.4). More generally the widths in (114.3) are
+
+$$
+\frac{3+q-\sqrt{(1-q)^2+8}}6
+\quad\text{and}\quad
+\frac{3-\sqrt{(1-q)^2+8}}6,
+\qquad 0<q\le\frac12.
+\tag{114.6}
+$$
+
+The first is positive because
+$(3+q)^2-[(1-q)^2+8]=8q>0$; the second is positive because
+$9-[(1-q)^2+8]=q(2-q)>0$. In particular $33<49$ and $137<144$
+give the signs in (114.5). $\square$
+
+**Proposition 114.3 (An orbit attainer can fail the full-input problem).**
+At $s=-1/2$, the decoder $\mathcal A_{-1}$ in (113.2) has error $3/4$
+on the allowed input $E_{11}$. It is therefore not a full-input minimizer
+at that parameter.
+
+*Proof.* The channel and the decoder give
+
+$$
+\Phi_{-1/2}(E_{11})=\operatorname{diag}(0,1/4,3/4),\qquad
+\mathcal A_{-1}\Phi_{-1/2}(E_{11})
+ =\operatorname{diag}(0,1/4,3/4).
+\tag{114.7}
+$$
+
+Subtracting $E_{11}$ gives eigenvalues $0,-3/4,3/4$, hence half trace
+distance $3/4$. The legal replacer has full-input error $2/3$.
+Thus exact attainment of (113.1) does not solve the full-input
+optimization, even though (114.1) remains a lower bound for it.
+$\square$
+
+## 115. The unrestricted zero-parameter optimizer set
+
+**Theorem 115.1 (All zero-parameter optimizers).** Among all CPTP maps
+$\mathcal R:M_3\to M_3$, without a covariance restriction,
+
+$$
+\boxed{\begin{aligned}
+\mathcal Z_0
+&:=\operatorname*{argmin}_{\mathcal R\ {\rm CPTP}}e_0(\mathcal R)\\
+&=\left\{\mathcal R\ {\rm CPTP}:\quad
+\mathcal R(I)=I,\quad
+\mathcal R(E_{00})=
+ \operatorname{diag}\!\left(v,\frac{1-v}{2},\frac{1-v}{2}\right),
+\quad\frac13\le v\le1\right\}.
+\end{aligned}}
+\tag{115.1}
+$$
+
+Equivalently, $e_0(\mathcal R)=2/3$ holds exactly under the conditions
+on the right. For each such map put $k=(3v-1)/2$. If $v=1/3$, then
+$\mathcal R\Phi_0$ is the constant $I/3$ channel and every pure input
+maximizes its error. If $v>1/3$, its pure maximizing inputs are exactly
+
+$$
+P_z=|z\rangle\langle z|,\qquad
+\|z\|=1,\quad |z_0|^2=\frac13,
+\tag{115.2}
+$$
+
+with arbitrary complex phases and arbitrary lower-coordinate direction.
+
+*Proof.* The common minimum $\mu(0)=2/3$ is (107.4). Suppose first that
+an arbitrary CPTP $\mathcal R$ satisfies $e_0(\mathcal R)\le2/3$.
+For the three complex Fourier states $P_j$ of (106.1),
+$\Phi_0(P_j)=I/3$. Put $\tau=\mathcal R(I/3)$. The effect bound gives
+
+$$
+1-\langle\psi_j|\tau|\psi_j\rangle
+ \le d(P_j,\tau)\le\frac23.
+\tag{115.3}
+$$
+
+The three expectations sum to $\operatorname{Tr}\tau=1$, so each equals
+$1/3$. The Hermitian matrix $A_j=P_j-\tau$ has largest eigenvalue at
+most $2/3$, while its Rayleigh value on $\psi_j$ is $2/3$. Equality in
+the Rayleigh bound forces
+
+$$
+A_j\psi_j=\frac23\psi_j,\qquad
+\tau\psi_j=\frac13\psi_j.
+\tag{115.4}
+$$
+
+Because the Fourier vectors form a basis, $\tau=I/3$ and
+$\mathcal R(I)=I$. This conclusion concerns the original untwirled map.
+
+Write $\sigma=\mathcal R(E_{00})$ and $H=(3\sigma-I)/2$. For a pure
+input $z$ with $t=|z_0|^2$, unitality alone gives
+
+$$
+\begin{aligned}
+h(t):=\mathcal R\Phi_0(P_z)
+ &=t\sigma+\frac{1-t}{2}(I-\sigma)\\
+ &=\frac I3+\left(t-\frac13\right)H.
+\end{aligned}
+\tag{115.5}
+$$
+
+For every complex unit $u\in\operatorname{span}\{|1\rangle,|2\rangle\}$,
+consider the analytic path near $t_0=1/3$
+
+$$
+z(t)=\sqrt t\,|0\rangle+\sqrt{1-t}\,u,\qquad
+A(t)=P_{z(t)}-h(t).
+\tag{115.6}
+$$
+
+At $t_0$, $A(t_0)=P_{z(t_0)}-I/3$ has simple largest eigenvalue $2/3$
+and normalized eigenvector $z(t_0)$. The simple-eigenvalue derivative
+formula of [Greenbaum–Li–Overton, Assumption 1 and Theorem 1][GLO-EIG]
+applies to this analytic Hermitian path. Its largest eigenvalue is at
+most the input error and hence at most $2/3$ for every nearby $t$.
+It therefore has derivative zero at the interior point $t_0$. Since
+normalization gives
+$\langle z(t_0)|P'_{z(t_0)}|z(t_0)\rangle=0$, the formula yields
+
+$$
+0=-\langle z(t_0)|H|z(t_0)\rangle.
+\tag{115.7}
+$$
+
+Let $H_L$ denote the lower $2\times2$ block. Expanding this identity
+for every complex unit $u$ gives
+
+$$
+H_{00}+2\langle u|H_L|u\rangle
+       +2\sqrt2\operatorname{Re}\langle0|H|u\rangle=0.
+\tag{115.8}
+$$
+
+Replacing $u$ by $e^{i\alpha}u$ for every real $\alpha$ forces
+$\langle0|H|u\rangle=0$. Thus both cross blocks of $H$ vanish.
+The remaining identity says that $\langle u|H_L|u\rangle=-H_{00}/2$
+for every complex unit $u$. It forces $H_L=-H_{00}I_2/2$: the choices
+$u=|1\rangle,|2\rangle$ fix its diagonal, and
+$u=(|1\rangle+|2\rangle)/\sqrt2$ and
+$u=(|1\rangle+i|2\rangle)/\sqrt2$ fix both parts of its off-diagonal
+entry. Hence
+
+$$
+H=\operatorname{diag}(k,-k/2,-k/2),\qquad
+\sigma=\operatorname{diag}\!\left(v,\frac{1-v}{2},\frac{1-v}{2}\right),
+\qquad k=\frac{3v-1}{2}.
+\tag{115.9}
+$$
+
+Positivity of the state $\sigma$ initially gives $0\le v\le1$, or
+$-1/2\le k\le1$. No phase covariance has been imposed on $\mathcal R$.
+
+It remains to find the exact permitted range and prove sufficiency.
+For any unital CPTP map with (115.9), set
+$t=|z_0|^2$ and $\delta=t-1/3$. Equation (115.5) becomes
+
+$$
+h(t)=\operatorname{diag}\!\left(
+\frac13+k\delta,\frac13-\frac{k\delta}{2},
+                         \frac13-\frac{k\delta}{2}\right).
+\tag{115.10}
+$$
+
+The Hermitian matrix $A=P_z-h(t)$ is traceless and has at most one
+positive eigenvalue. Indeed its quadratic form on $z^\perp$ is
+$-\langle y|h(t)|y\rangle\le0$, so a positive eigenspace cannot have
+dimension two. Consequently
+
+$$
+d(P_z,h(t))=\lambda_{\max}(P_z-h(t)).
+\tag{115.11}
+$$
+
+This pure-versus-diagonal spectral reduction is also the one in
+[Chen–Grogan–Johnston–Li–Plosker, Proposition 2][CGJLP-COH]; its
+unhalved trace norm is twice the distance $d$ here. The quadratic-form
+argument includes the diagonal and boundary inputs as well.
+
+Put $B=h(t)+(2/3)I$. Its diagonal entries are
+$1+k\delta,1-k\delta/2,1-k\delta/2$. Since
+$-1/2\le k\le1$ and $-1/3\le\delta\le2/3$, each is at least $2/3$.
+Thus $B$ is positive definite, including when $h(t)$ is singular.
+The exact rank-one congruence gives
+
+$$
+\begin{aligned}
+\lambda_{\max}(P_z-h(t))\le\frac23
+&\iff B-P_z\succeq0\\
+&\iff I-|B^{-1/2}z\rangle\langle B^{-1/2}z|\succeq0\\
+&\iff f_k(t):=\frac{t}{1+k\delta}
+                  +\frac{1-t}{1-k\delta/2}\le1.
+\end{aligned}
+\tag{115.12}
+$$
+
+Putting the fractions over their common denominator yields
+
+$$
+\boxed{\displaystyle
+1-f_k(t)=
+\frac{k(3-k)\delta^2}
+ {2(1+k\delta)(1-k\delta/2)}.}
+\tag{115.13}
+$$
+
+If $k<0$, the right side is negative for every $t\ne1/3$, so the error
+exceeds $2/3$ at every such pure input. Necessity therefore requires
+$k\ge0$, equivalently $v\ge1/3$.
+
+Conversely, if $0\le k\le1$, the right side of (115.13) is nonnegative
+for every $t$. Equations (115.11)–(115.12) bound every complex pure input
+error by $2/3$, and convexity bounds every mixed input error by $2/3$.
+At $t=1/3$ the output is $I/3$, so equality is attained. This proves
+(115.1).
+
+For $k=0$, (115.5) gives $\mathcal R\Phi_0(X)=\operatorname{Tr}(X)I/3$
+on every matrix, and every pure input has error $2/3$. For $k>0$,
+(115.13) is strictly positive when $t\ne1/3$. Then $f_k(t)<1$, so the
+congruent matrix in (115.12) is positive definite and
+$\lambda_{\max}(P_z-h(t))<2/3$. When $t=1/3$, equality holds as above.
+This proves the complete pure maximizing set (115.2). $\square$
+
+## 116. Examples and the geometry of the zero optimizer set
+
+**Proposition 116.1 (Every parameter occurs).** Every $v\in[1/3,1]$
+in (115.1) is realized by a CPTP decoder. In the diagonal-covariant
+class, the complete zero-parameter condition is that $C$ be doubly
+stochastic with column zero
+$(v,(1-v)/2,(1-v)/2)^{\mathsf T}$, $1/3\le v\le1$; the coherence
+parameters are constrained only by complete positivity.
+
+*Proof.* Let
+
+$$
+\sigma_v=\operatorname{diag}\!\left(v,\frac{1-v}{2},\frac{1-v}{2}\right),
+\qquad \beta_v=\frac{I-\sigma_v}{2},\qquad
+\mathcal R_v(X)=x_{00}\sigma_v+(x_{11}+x_{22})\beta_v.
+\tag{116.1}
+$$
+
+Both $\sigma_v$ and $\beta_v$ are states. The output-first Choi matrix
+is
+
+$$
+J(\mathcal R_v)=\sigma_v\otimes E_{00}
+                  +\beta_v\otimes(E_{11}+E_{22})\succeq0,
+\qquad \operatorname{Tr}_{\rm out}J(\mathcal R_v)=I.
+\tag{116.2}
+$$
+
+Thus the map is CPTP, with $\mathcal R_v(I)=\sigma_v+2\beta_v=I$ and
+$\mathcal R_v(E_{00})=\sigma_v$. Theorem 115.1 applies.
+For a diagonal-covariant map (112.5), unitality is exactly the additional
+row-sum condition on $C$, and its column zero is
+$\mathcal R(E_{00})$. Since $\Phi_0$ deletes every off-diagonal input
+matrix unit, no further restriction on the coherence parameters enters
+the zero objective. $\square$
+
+**Proposition 116.2 (Cancelling lower coherences are allowed).** The
+conditions in (115.1) do not require $\mathcal R(E_{11})$ and
+$\mathcal R(E_{22})$ to be individually diagonal.
+
+*Proof.* Let $\mathcal R=\operatorname{Ad}_V$, where
+
+$$
+V=1\oplus\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+\tag{116.3}
+$$
+
+This unitary channel is unital and fixes $E_{00}$, so it belongs to
+$\mathcal Z_0$ with $v=1$. Nevertheless
+
+$$
+\begin{aligned}
+\mathcal R(E_{11})&=\tfrac12(E_{11}+E_{22}+E_{12}+E_{21}),\\
+\mathcal R(E_{22})&=\tfrac12(E_{11}+E_{22}-E_{12}-E_{21}).
+\end{aligned}
+\tag{116.4}
+$$
+
+The coherences cancel in their sum. In general (115.1) specifies only
+that sum, $\mathcal R(E_{11})+\mathcal R(E_{22})=I-\sigma_v$,
+in addition to $\mathcal R(E_{00})=\sigma_v$ and the CPTP conditions.
+$\square$
+
+**Proposition 116.3 (The optimizer set is not a face of the CPTP set).**
+The set $\mathcal Z_0$ in (115.1) is convex but is not a face of the
+convex set of all qutrit CPTP maps.
+
+*Proof.* Convexity follows because $e_0$ is a maximum of convex functions
+of the decoder and $\mathcal Z_0$ is its minimum set. For the face
+claim, consider the two CPTP replacers
+
+$$
+\mathcal T_\pm(X)=\operatorname{Tr}(X)\tau_\pm,\qquad
+\tau_+=\operatorname{diag}(1/2,1/6,1/3),\qquad
+\tau_-=\operatorname{diag}(1/6,1/2,1/3).
+\tag{116.5}
+$$
+
+Neither is unital, so neither lies in $\mathcal Z_0$. Their average is
+the $I/3$ replacer, which belongs to $\mathcal Z_0$. This contradicts
+the defining implication for a face. $\square$
+
+## 117. Necessary accumulation of finite minimizers
+
+**Theorem 117.1 (Every zero-limit minimizer accumulation is optimal at
+zero).** Let $s_j\in[-1/2,1]$ tend to zero, and for each $j$ choose any
+full-input minimizer $\mathcal R_j$ of $e_{s_j}$. Every accumulation
+point of these decoders, in Choi-matrix topology, belongs to
+$\mathcal Z_0$.
+
+*Proof.* The uniform estimate (105.5) holds for every CPTP decoder.
+Since $e_{s_j}(\mathcal R_j)=\mu(s_j)$ and $\mu(0)=2/3$, it gives
+
+$$
+\frac23\le e_0(\mathcal R_j)
+ \le\mu(s_j)+|s_j|
+ \le\frac23+2|s_j|.
+\tag{117.1}
+$$
+
+The compact CPTP Choi set supplies convergent subsequences. If
+$\mathcal R_{j_\ell}\to\mathcal R_*$, continuity of $e_0$ in the decoder,
+as in Lemma 105.2, and (117.1) imply $e_0(\mathcal R_*)=2/3$.
+Theorem 115.1 gives exactly
+
+$$
+\mathcal R_*(I)=I,\qquad
+\mathcal R_*(E_{00})=
+ \operatorname{diag}\!\left(v,\frac{1-v}{2},\frac{1-v}{2}\right),
+\qquad\frac13\le v\le1.
+\tag{117.2}
+$$
+
+This proves the assertion for every accumulation point, without any
+assumption of covariance or unitality of the finite minimizers.
+$\square$
+
+**Corollary 117.2 (Actual terminal decoder limits).** If $n_j\to\infty$
+and $D_j$ is any minimizer in (105.1) at horizon $n_j$, every
+accumulation point $D_*$ satisfies the same conditions (117.2) with
+$D_*$ in place of $\mathcal R_*$.
+
+*Proof.* The transport (105.3) gives
+$\mathcal R_j=D_j\circ\operatorname{Ad}_{U_0}$, which minimizes
+$e_{s_{n_j}}$, and $s_{n_j}\to0$. Composition with this fixed unitary
+channel is a homeomorphism of the CPTP set, with inverse
+$D=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger}$. Moreover
+$U_0|0\rangle=|0\rangle$, so
+$\mathcal R_j(I)=D_j(I)$ and
+$\mathcal R_j(E_{00})=D_j(E_{00})$, also at every limit. Apply
+Theorem 117.1. The limiting channel is $\mathcal N_\infty=\Phi_0$;
+the empty-horizon identity $\mathcal N_0$ remains a different channel.
+$\square$
+
+**Definition 117.3 (Remaining full finite optimization).** The exact
+finite target is still (111.1), with every complex density input, the
+original identity target and an unrestricted terminal CPTP decoder.
+Theorem 113.1 evaluates the complete-orbit auxiliary problem, and
+Theorem 115.1 characterizes the full-input optimizer set at parameter
+zero. The positive-width intervals (114.4) leave the exact values
+$\mu(-1/2)$ and $\mu(1/4)$ undetermined, as well as the general actual
+finite values and their minimizing decoders. Theorem 117.1 is a necessary
+accumulation implication; it does not establish that every element of
+$\mathcal Z_0$ occurs as a limit of nonzero-parameter minimizers.
+Neither an exact full finite minimax nor a minimax asymptotic equality
+is asserted by the orbit value or the zero-parameter characterization.
+
+[MAT-EXP]: https://arxiv.org/pdf/1012.2650v7 "Keiji Matsumoto, A quantum version of randomization criterion, Section 5, Theorem 5"
+[JC-EXP]: https://arxiv.org/pdf/1512.07016v2 "Anna Jenčová, Comparison of quantum channels and statistical experiments, Section 4, Theorem 4"
+[CGJLP-COH]: https://arxiv.org/pdf/1601.06269v2 "Jianxin Chen, Shane Grogan, Nathaniel Johnston, Chi-Kwong Li and Sarah Plosker, Quantifying the coherence of pure quantum states, Proposition 2"
+[GLO-EIG]: https://arxiv.org/pdf/1903.00785v2 "Anne Greenbaum, Ren-Cang Li and Michael L. Overton, First-order Perturbation Theory for Eigenvalues and Eigenvectors, Assumption 1 and Theorem 1"
+
+## 追加锚（本行以下为增补区）
