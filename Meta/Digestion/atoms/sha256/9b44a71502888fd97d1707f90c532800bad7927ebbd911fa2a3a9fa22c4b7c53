@@ -1,0 +1,21 @@
+**References 8.1 (fixed ordinary suppliers).** All repository suppliers in
+this table are used in their versions at
+`09c4a550a9434737bc0f9ff08fd4a3e2322c5be3`. The links name their owning
+sources; the fixed revision determines the supplied mathematical text.
+
+| Owning source | Exact use and limit |
+| --- | --- |
+| [SFS, §§1–5, Definition 3.4, Theorems 4.1 and 5.4][SFS] | Complete input, automatic exact Cartesian charts, exhaustive scalar branches, symbolic finite rigidity, whole negative projection and joint cofinal support. Its fixed final orientation has the boundary proved in Proposition 6.4. |
+| [FJC, Definitions 2.3–2.4 and Theorem 3.1][FJC] | Both completed relation directions, root-link normalization, arbitrary-free-value guarded extension and prefix construction. A new reduction still needs its own equivalence proof. |
+| [ABC, Theorems 2.2–2.3][ABC]; [URR, §§2–3][URR] | Normal-code mutual inverse, actual image rank subtraction, native mass and clock, and simultaneous finite negative separation. These finite interfaces are reused, not new claims of this volume. |
+| [PAC, Lemma 3.2][PAC] | Finite symbolic descriptions, exact finite preimage guards and affine arithmetic. This alone does not test images of arbitrary non-rational recursive outputs. |
+| [NIC, Lemma 3.1, Theorems 3.2–3.3 and 4.3][NIC] | Entire same-original source images and literal signed pullback with the Cartesian pre-negative domain. Selected support sections never replace its images. |
+| [SLP, Lemma 2.1][SLP] | One simultaneous finite filling of every infinite original-coordinate prefix with the entire negative list at fixed ranks and finite coordinates. No constrained shifted-state domain is substituted for its Cartesian hypothesis. |
+| [ARH, §§1–2 and Lemma 19.2][ARH] | Reached signed guards, same-source paid producer, complete accessible-state factoring and authentic-epoch operational bridge. Physical factoring remains a premise. Its finite inverse interfaces do not assert unrestricted inversion. |
+| [SPC, §§3–4][SPC]; [FJC, Theorem 3.1][FJC] | The already owned guarded non-rational continuation mechanism used for $K$ and (NIS.28). No new fixed-point theorem or non-rational contact mechanism is claimed. |
+| [FFM, Definitions 3.2–3.4 and Theorem 4.2][FFM] | Both fixed generated frame admissions and their rational canonical contacts; these delimit Proposition 6.4. |
+| [NSF, Lemma 5.1 and Theorems 5.2 and 6.1][NSF]; [NPL, Theorem 5.3][NPL] | Exact supplied-depth whole-source queries and exact finite whole-row image. Neither alone settles all depths. |
+| [AAB, §§2–4][AAB]; [PAC, Assumption 2.1][PAC]; [SJM, Theorem 2.2][SJM] | Entire atomic-output anchor boundary and conditional-field consumer, used only at the stated scope. |
+| [SourceTransportCentralizer][CENTRALIZER] | Public source_transport_centralizer and its local hinj, no_alpha, orbit_injective and classify: finite native injectivity, atomic classification and inverse-on-image boundary. The completion extension comes from SFS, not from silently enlarging this finite theorem. |
+| [NativeDepthPatterns][DEPTH]; [NativeCutFibers][CUT] | Public original_present_transport, original_prefix_locality, rowFiberEquiv and legal_values_row; private fill_decompose, decompose_fill, recover_fill and fill_injective: original reached transport and exact full old-row reconstruction. |
+| [DelayedOriginalReadout][READOUT] | Public original_decoder_correct and original_decoder_service with private present_label_decode and original_query_bounds: paid actual current-register reply recovery, including absence. |

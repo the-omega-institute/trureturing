@@ -1,0 +1,32 @@
+**定义 296.1（实验与随机退化）。** 对固定候选集 $K$，一个有限实验 $E$ 具有结果集 $Z$ 和核
+
+$$
+E(z\mid k),
+\qquad
+\sum_zE(z\mid k)=1.
+$$
+
+另一个实验 $F$ 具有结果集 $W$。若存在与 $k$ 无关的随机核 $T(w\mid z)$，使
+
+$$
+\boxed{
+F(w\mid k)=\sum_{z\in Z}T(w\mid z)E(z\mid k),
+}
+\tag{296.1}
+$$
+
+则称 $F$ 是 $E$ 的随机退化，记作 $E\succeq F$。
+
+给定先验 $p$、有限决策集 $D$ 和损失 $\ell:K\times D\to[0,\infty)$，定义实验 $E$ 的 Bayes 风险
+
+$$
+\boxed{
+\mathcal R_E(p)
+=
+\sum_{z\in Z}
+\min_{d\in D}
+\sum_{k\in K}p(k)E(z\mid k)\ell(k,d).
+}
+\tag{296.2}
+$$
+

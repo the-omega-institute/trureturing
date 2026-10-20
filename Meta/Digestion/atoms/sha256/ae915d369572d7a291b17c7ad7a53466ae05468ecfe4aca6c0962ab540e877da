@@ -1,0 +1,60 @@
+**命题 103.5（固定参考的实数容量与取整位宽）。** 固定实际有限参考 $\rho$，因而固定其次数 $e$。当公开长度 $\ell\to\infty$ 时，若 $\rho\ne1$，
+
+$$
+\begin{aligned}
+T_\ell(\rho)&\sim\frac{4^\ell}{2^e\sqrt{\pi\ell}},\\
+\log_2T_\ell(\rho)
+&=2\ell-e-\tfrac12\log_2(\pi\ell)+O_\rho(1/\ell).
+\end{aligned}
+\tag{103.10}
+$$
+
+$\rho=1$ 时同样成立但去掉 $2^e$ 因子及 $-e$ 项。最少定长补充数据位为 $b_\ell(\rho)=\lceil\log_2T_\ell(\rho)\rceil$，所以其相应展开只有 $O_\rho(1)$ 的加性取整误差。
+
+证明。直接应用 [Robbins, *A Remark on Stirling's Formula*, *The American Mathematical Monthly* 62(1), 26–29 (1955)](https://dornsife.usc.edu/sergey-lototsky/wp-content/uploads/sites/211/2024/02/Stirling-Robbins.pdf) 印刷页26的 Eq. (1)–(2)：对正整数 $n$，
+
+$$
+n!=\sqrt{2\pi}\,n^{n+1/2}\exp(-n)\exp(a_n),\qquad
+\frac1{12n+1}<a_n<\frac1{12n}.
+$$
+
+这里只有 $n=\ell,2\ell>0$ 的两次应用。约分得
+
+$$
+\begin{aligned}
+B_\ell&=\frac{4^\ell}{\sqrt{\pi\ell}}\exp(\varepsilon_\ell),
+&\varepsilon_\ell&=a_{2\ell}-2a_\ell,\\
+\frac1{24\ell+1}-\frac1{6\ell}
+&<\varepsilon_\ell
+<\frac1{24\ell}-\frac2{12\ell+1}.
+\end{aligned}
+\tag{103.11}
+$$
+
+因而 $\varepsilon_\ell=O(1/\ell)$，并且 $\log_2B_\ell=2\ell-\frac12\log_2(\pi\ell)+\varepsilon_\ell/\ln2$。对于固定 $\rho\ne1$，由（103.8）写 $T_\ell=2^{-e}B_\ell(1+u_\ell)$，其中 $0\le u_\ell\le(2^e-1)/(2\ell-1)$。固定 $e$ 给 $u_\ell=O_\rho(1/\ell)$，且 $0\le\ln(1+u_\ell)\le u_\ell$，得到（103.10）两式。$\rho=1$ 时直接用 $T=B$。最后 $0\le\lceil x\rceil-x<1$，故对位宽只能保留 $O(1)$，不能把实数对数余项误报为取整后的 $O(1/\ell)$。证毕。
+
+实数对数容量相对于未按综合征拆分的平衡基准 $B_\ell$ 的下降为
+
+$$
+\log_2B_\ell-\log_2T_\ell(\rho)
+=e-\log_2(1+u_\ell)\longrightarrow e
+\quad(\rho\ne1),
+\tag{103.12}
+$$
+
+而 $\rho=1$ 时处处为0。这里 $B_\ell$ 是平衡完整标记字的未分割字母表；它不是在同一已供给 $(\ell,\rho,c,\beta,h)$ 接口下删去接受要求所得的最小补充容量，后者已经由命题102.7证明仍为 $T_\ell$，包含拒绝路径。上述下降也不自动成为实际定长位宽的同值下降：$\rho=0,\ell=5$ 时 $B_5=252$、$T_5(0)=140$，但两者的最少定长位数都是8。
+
+真互补档案的终端完整载荷有 $2^\ell$ 种，其字母表对数为 $\ell$。所以固定 $\rho\ne1$ 时相对它的实数容量差为
+
+$$
+\log_2T_\ell(\rho)-\ell
+=\ell-e-\tfrac12\log_2(\pi\ell)+O_\rho(1/\ell),
+\tag{103.13}
+$$
+
+定长位数差有相应 $O_\rho(1)$ 误差；$\rho=1$ 则去掉 $-e$。有限参考压缩的是关系类的一个固定次数主项，仍留下随载荷长度增长的精确过去区别。
+
+固定参考条件不能推广为次数随 $\ell$ 变化的统一展开。任取一个 $e=\ell$ 的参考，前 $\ell$ 个幂线性独立，所有半字的综合征都不同，由（103.1）只有零关系，精确有 $T_\ell=2^\ell$。这样的参考沿任意趋于无穷的素数长度 $\ell$ 存在：取 $\mathbb F_{2^\ell}$ 中 $\rho\notin\mathbb F_2$，中间域 $\mathbb F_2[\rho]$ 的次数 $e$ 由扩张塔整除素数 $\ell$，且 $e\ne1$，故 $e=\ell$。若把（103.10）误当统一式，其主项会变成 $2^\ell/\sqrt{\pi\ell}$，与精确值之比发散。这里变化的是公开有限实验族的参考，不是一个固定有限观察器获得无限过去的证明。
+
+全路径补充容量由§102的因果完整秩达到；它不含也不免除域表示及运算、付费种子前奏、$(\rho,c,\beta,h)$ 与幂系数、计数表、程序描述、解析器与平衡和循环监视、算术与解码工作区、载荷输出及原 Stop 成本。表的保存或重算仍按§102.5收费。这些字母表和对数比较不推出总内存、物理熵或时间净收益，也没有增添来源端口。
+

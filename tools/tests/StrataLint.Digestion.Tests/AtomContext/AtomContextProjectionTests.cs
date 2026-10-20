@@ -35,24 +35,36 @@ public sealed class AtomContextProjectionTests
             Atomizer = "none",
             Entries = [.. source.Entries.Select(entry => entry with { Atomizer = "none" })],
         }]) };
-        AssertCode("ATOMIZER_UNSUPPORTED", () => Resolve(fixture, Id(fixture.Atomized.Claims[1])));
+        AssertCode("ATOMIZER_UNSUPPORTED", () => DigestionAtomContextProjection.MaterializeSource(fixture.Snapshot(), fixture.Ledger, "source"));
     }
 
     [Fact]
-    public void AtomContextFailsClosedOnMissingSource()
+    public void AtomContextFailsClosedWithoutSavedRelations()
     {
-        var fixture = Create();
-        AssertCode("SOURCE_MISSING", () => DigestionAtomContextProjection.Resolve(
+        var fixture = Create() with { ContextIndex = null };
+        AssertCode("OCCURRENCE_MISSING", () => DigestionAtomContextProjection.Resolve(
             fixture.Snapshot(includeSource: false), fixture.Ledger, Id(fixture.Atomized.Claims[1])));
     }
 
     [Fact]
-    public void AtomContextFailsClosedOnMissingOccurrence()
+    public void AtomContextUsesSavedPointersWhenSourceIsAbsent()
+    {
+        var fixture = Create();
+        var result = DigestionAtomContextProjection.Resolve(
+            fixture.Snapshot(includeSource: false), fixture.Ledger, Id(fixture.Atomized.Claims[1]));
+
+        Assert.Equal(Id(fixture.Atomized.Claims[0]), result.Previous!.Value.AtomId);
+        Assert.Equal(Id(fixture.Atomized.Claims[2]), result.Next!.Value.AtomId);
+        Assert.Equal(fixture.Atomized.Claims[1].RawBytes.ToArray(), result.Current.RawBytes.ToArray());
+    }
+
+    [Fact]
+    public void AtomContextKeepsSavedOccurrenceAfterSourceEdit()
     {
         var fixture = Create();
         var target = Id(fixture.Atomized.Claims[1]);
         fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes("## Changed\n\nOther.\n") };
-        AssertCode("OCCURRENCE_MISSING", () => Resolve(fixture, target));
+        Assert.Equal(target, Resolve(fixture, target).Current.AtomId);
     }
 
     [Fact]
@@ -60,7 +72,7 @@ public sealed class AtomContextProjectionTests
     {
         var fixture = Create();
         var target = Id(fixture.Atomized.Claims[1]);
-        fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes(ThreeClaims + ThreeClaims) };
+        fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes(ThreeClaims + ThreeClaims), ContextIndex = null };
         var results = DigestionAtomContextProjection.ResolveOccurrences(fixture.Snapshot(), fixture.Ledger, target);
         Assert.Equal(2, results.Length);
         Assert.Equal((2, 6), (results[0].Index, results[0].Count));
@@ -131,6 +143,11 @@ public sealed class AtomContextProjectionTests
         fixture = fixture.WithEntries(entries.Values);
         var raw = RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Concat(
             materialized.CasObjects.Select(item => new RawRepositoryEntry(item.RelativePath, item.Bytes))));
+        var initial = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
+        var built = DigestionContextIndexBuilder.Build(initial, fixture.Ledger, "source");
+        raw = DigestionContextPointerStore.Add(RawRepositorySnapshot.Create(raw.Entries.Concat(built.CasObjects
+            .Where(item => !raw.Entries.Any(file => file.Path == item.RelativePath))
+            .Select(item => new RawRepositoryEntry(item.RelativePath, item.Bytes)))), built.Index);
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
         var result = DigestionAtomContextProjection.Resolve(snapshot, fixture.Ledger, Id(suffix));
         Assert.Equal(Id(prefix), result.Previous!.Value.AtomId);

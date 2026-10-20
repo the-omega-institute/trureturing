@@ -1,0 +1,74 @@
+### 定理 37.2（十维提升的十读数逆与未来关系）
+
+令 $B$ 的行依次为 $b_0,\ldots,b_9$。则 $\det B=25$，故在实数上十次读数唯一恢复 $P,Q,\gamma,\delta$。沿同一路径再执行一次 $M$，有
+
+$$
+\boxed{
+z_{10}=-5z_0-4z_1+17z_2+4z_3-17z_4+6z_5-z_6-2z_7+z_8+2z_9.
+}
+$$
+
+**证明。** 令 $f_i,g_i$ 满足 Fibonacci 递推，初值分别为 $(1,0)$ 和 $(0,1)$。对任意满足该递推的 $u_i$，记 $L=E^2-E-I$，有
+
+$$
+L(iu_i)=2u_i+u_{i+1},\qquad L^2(iu_i)=0.
+$$
+
+因此四个数列 $f_i,g_i,if_i,ig_i$ 均被 $L^2$ 消去，首四行矩阵为
+
+$$
+H=\begin{pmatrix}
+1&0&0&0\\0&1&0&1\\1&1&2&2\\1&2&3&6
+\end{pmatrix},\qquad \det H=\det\begin{pmatrix}2&1\\3&4\end{pmatrix}=5.
+$$
+
+最后一个等式由第三行减去前两行、第四行减第一行及两倍第二行得到。重复根的指数多项式与合流 Vandermonde 表示可参见 Batenkov–Yomdin, “On the accuracy of solving confluent Prony systems”, §2B, Definition 4 的合流 Vandermonde 矩阵式 (8), [arXiv:1106.1137v3](https://arxiv.org/abs/1106.1137v3), [DOI:10.1137/110836584](https://doi.org/10.1137/110836584)；此处的具体行列式由上式直接确定。
+
+为计算 $B$ 的符号，定义
+
+$$
+a=\operatorname{tr}P,\ b=\operatorname{tr}(MP),\ p=P_{00},\ r=P_{10},
+\qquad
+c=\operatorname{tr}Q,\ e=\operatorname{tr}(MQ),\ u=Q_{00},\ w=Q_{10}.
+$$
+
+从 $(a,b,p,r)$ 到 $v(P^{\mathsf T})=(P_{00},P_{01},P_{10},P_{11})$ 的整数变换为
+
+$$
+P=\begin{pmatrix}p&b-a+p-r\\r&a-p\end{pmatrix},
+\qquad
+T=\begin{pmatrix}0&0&1&0\\-1&1&1&-1\\0&0&0&1\\1&0&-1&0\end{pmatrix},
+\quad \det T=1.
+$$
+
+$Q$ 同理。把新坐标排列为 $(a,b,c,e,\gamma,\delta,p,r,u,w)$，两个 $T$ 与该偶排列合成的列变换行列式为 $1$。前六个纯 $M$ 行对最后四个坐标为零，左上六阶块是四个数列 $f,g,if,ig$ 加一次漂移的设计矩阵。对 $Q_*(X)=(X^2-X-1)^2$，有 $Q_*(1)=1$；定理 35.2 以 $h=0,r=s=4,d=1$ 给出该块行列式为 $5$。
+
+设
+
+$$
+H_p=\begin{pmatrix}1&1\\0&-1\end{pmatrix},\qquad
+H_r=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+$$
+
+后四行对 $(p,r,u,w)$ 的系数为 $(h_j,(6+j)h_j)$，其中
+
+$$
+h_j=\bigl(\operatorname{tr}(M^jJM^5H_p),\operatorname{tr}(M^jJM^5H_r)\bigr),
+\quad
+\begin{pmatrix}h_0\\h_1\\h_2\\h_3\end{pmatrix}
+=\begin{pmatrix}3&5\\-2&-3\\1&2\\-1&-1\end{pmatrix}.
+$$
+
+后三、四列分别减去前一、二列的六倍后，该块的行变为 $(h_j,jh_j)$。因 $h_j=f_jh_0+g_jh_1$ 且 $\det(\begin{smallmatrix}3&5\\-2&-3\end{smallmatrix})=1$，它由 $H$ 右乘两个相同的二阶块得到，行列式仍为 $5$。整个矩阵为左下块可非零、右上块为零的块三角矩阵，故 $\det B=5\cdot5=25$。这个逆使用实数中的 $1/25$，不蕴含任意特征下的无除法恢复。
+
+为证明未来关系，令 $(c_0,\ldots,c_9)=(-5,-4,17,4,-17,6,-1,-2,1,2)$。由 $M^2=M+I$ 展开得到
+
+$$
+A_{10}=\begin{pmatrix}19&31\\30&49\end{pmatrix},\qquad
+\sum_{i=0}^9c_iA_i=A_{10},\quad
+\sum_{i=0}^9ic_iA_i=10A_{10},\quad
+\sum_{i=0}^9c_i=1,\quad \sum_{i=0}^9ic_i=10.
+$$
+
+这四个整数恒等式逐块给出 $\sum c_ib_i=b_{10}$，代入线性合同即得公式。∎
+

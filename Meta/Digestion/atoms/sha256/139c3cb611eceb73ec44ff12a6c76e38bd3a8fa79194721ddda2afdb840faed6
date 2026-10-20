@@ -1,0 +1,26 @@
+**定义 301.1（全局与逐分支鲁棒值）。** 设一次固定协议产生有限结果集 $Y$。每个全局模型 $m\in\mathfrak M$ 给出结果概率 $q_m(y)$ 和非负终端损失 $g_m(y)$。全局共同来源的最坏期望损失为
+
+$$
+\boxed{
+J_{\mathrm{global}}(\mathfrak M)
+=
+\max_{m\in\mathfrak M}
+\sum_{y\in Y}q_m(y)g_m(y).
+}
+\tag{301.1}
+$$
+
+允许每个结果分支独立选取一个模型 $m_y\in\mathfrak M$ 的逐分支矩形化值为
+
+$$
+\boxed{
+J_{\mathrm{rect}}(\mathfrak M)
+=
+\sum_{y\in Y}
+\max_{m\in\mathfrak M}q_m(y)g_m(y).
+}
+\tag{301.2}
+$$
+
+（301.2）是把同一模型身份在各分支之间的耦合删去后的上界；它不自动代表任何真实全局来源。
+

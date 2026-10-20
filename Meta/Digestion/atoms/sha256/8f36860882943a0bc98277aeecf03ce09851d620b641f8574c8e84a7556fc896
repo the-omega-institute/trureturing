@@ -1,0 +1,21 @@
+**Theorem 7 (prime-modulus census).** For every prime $p$, the same
+unordered, coordinate-distinct, zero-determinant triples satisfy
+
+\[
+  A(p)=p(p-1)\binom p3.
+\]
+
+**Proof.** In the field $\mathbb Z/p\mathbb Z$, choose two points of an
+admissible triple. Their distinct first coordinates determine a unique
+affine line $y=ax+b$. The zero-determinant condition places its third
+point on this line, and distinct second coordinates imply $a\ne0$.
+Conversely, a nonzero slope $a$, an intercept $b$, and an unordered
+three-element set $X$ of first coordinates determine exactly the
+admissible triple $\{(x,ax+b):x\in X\}$. These constructions are inverse.
+There are $p-1$ choices for $a$, $p$ for $b$, and $\binom p3$ for $X$.
+The argument includes $p=2$, when there is no such $X$, and $p=3$.
+
+Translation by $(h,k)$ sends the parameters $(a,b,X)$ to
+$(a,b+k-ah,h+X)$: the slope is invariant, the intercept shifts by
+$k-ah$, and the first-coordinate set shifts by $h$. $\square$
+

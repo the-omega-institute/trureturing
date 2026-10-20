@@ -1,0 +1,9 @@
+**定义 309.1（独立关系与 trace 等价）。** 令 $E$ 为带结果事件类型集，给定对称且反自反的关系 $I\subseteq E\times E$。若 $(e,f)\in I$，要求其分支映射交换、资源消耗可加且记录权限不区分两种排列。对事件词定义 trace 等价 $\equiv_I$ 为由局部变换
+
+$$
+u\,e\,f\,v\longleftrightarrow u\,f\,e\,v
+\qquad ((e,f)\in I)
+$$
+
+生成的最小等价关系。
+

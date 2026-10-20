@@ -1,0 +1,5 @@
+给定定义 39.1 路径及同一序号时钟上的任意 $L$ 个实数，先用定理 39.2 的前段线性逆得到 $(P,Q,\widehat D)$。这些数据来自定义 39.1 的某个实现，当且仅当以下条件全部成立。
+
+1. $P\not\equiv0$。选取最小的 $r$ 使 $p_r\ne0$，令 $\widehat b=q_r/p_r$，要求多项式恒等式 $Q=\widehat bP$。
+2. 置 $\widehat H=P$、$\widehat u_i=f_i+\widehat b g_i$。取切换后最小的两个非零增益位置 $p<q$，用定理 39.2 的公式，从 $w_j=z_{N+j}-\widehat D(N+j)$ 构造 $\widehat U_0,\widehat U_1$；再令
+

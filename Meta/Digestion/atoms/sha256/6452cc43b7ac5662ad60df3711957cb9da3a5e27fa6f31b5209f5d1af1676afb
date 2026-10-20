@@ -1,0 +1,31 @@
+**定理 23.4（父边界恢复绝对出生）。** 对每个 $(u,n,p)\in\mathcal X$ 的非根 $p$，
+
+$$
+\boxed{\ b_u(p)=\max(0,n+2-\kappa(t_n|_{p^-}))=n+2-s(u,n,p).\ }
+\tag{RA.2306}
+$$
+
+根的出生恒为零。给定这个出生，所有历史准入 $Q_k$ 由（RA.2302）恢复。
+
+证明。先对有限树作结构归纳。叶 $\alpha$ 的时钟由零变一；叶 $\beta$ 的像是 $E$，时钟由一变二。配对情形使用右子树归纳假设：
+
+$$
+\kappa(\rho(\langle x,y\rangle))
+=2+\kappa(\rho(y))=2+\kappa(y)+1.
+\tag{RA.2307}
+$$
+
+所以对所有有限 $v$、$m\ge0$，$\kappa(\rho^m(v))=\kappa(v)+m$，后式由 $m$ 归纳。
+
+若 $b_u(p)=0$，父地址 $q$ 初态就是配对。由（RA.2206）沿同地址迭代，$t_n|_q=\rho^n(u|_q)$，故其时钟至少为 $n+2$，右侧为零。若 $j=b_u(p)>0$，在 $j-1$ 时 $p$ 不在，在 $j$ 时出现；（RA.2205）使它恰为某旧 $\beta$ 叶的左或右新孩子，因此其直接父 $q$ 在 $j$ 时恰为 $E$。此后父地址保持，同地址运输给
+
+$$
+t_n|_q=\rho^{n-j}(E),\qquad
+\kappa(t_n|_q)=2+n-j.
+\tag{RA.2308}
+$$
+
+代入得到 $j$。两种情况穷尽合法查询，包括在当前时刻刚出生的节点。$n=0$ 时所有合法地址都是初始地址，无需读取父边界即可答零；根没有父地址，单独答零。父节点对合法非根查询确为配对，因而时钟至少二且结果在 $0..n$。若 $p$ 当前不存在，查询应返回不存在；本式不延伸到它，尤其不补造一个缺失的父子树。证毕。
+
+在固定 $n,p$ 的实际像上，$s=n+2-b$ 与 $b=n+2-s$ 互相决定。这是这项任务的信息等价，不是通用表示最小性。对带正确来源、根、绝对纪元、地址及完整支持记录的实际查询载体，公式给出观察到出生的纤维恒定性；直接复用 [HistoryPayloadFactorization](../../../D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.lean) 的 `ker_beta_subset_ker_payload_iff_unique_factorization`。它允许空载体并只在实际观察像给唯一因子；不把因子方向反转为出生恢复档案。完整查询域由 $(\alpha,0,\varepsilon)$ 居住，固定 $n\ge1$ 的非根域由 $(\beta,n,L)$ 居住，故需要全观察值域上的存在版本时也满足 [TargetRecoveryCriterion](../../../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean) 的 `target_recovery_criterion` 的居住前提。
+

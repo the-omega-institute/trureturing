@@ -144,7 +144,7 @@ def extend (C : GroupMat H n n) (h : H) (hj : 0 < j)
   ⟨extension C h hj p, extension_twist C h hj p⟩
 
 omit [Fintype H] in
-private theorem signed_recovery (C : GroupMat H n n) (h : H)
+theorem signed_recovery (C : GroupMat H n n) (h : H)
     (x : TwistedPeriod C h j) (q t : ℤ) :
     x.val.val (t + q * (j : ℤ)) =
       ((x.val.val t).1, h^q * (x.val.val t).2) := by

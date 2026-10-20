@@ -1,0 +1,8 @@
+**约定 2.4（Chebyshev 多项式与 $\Psi_m$）。** 令 $S_{-2}=-1$,$S_{-1}=0$,$S_0=1$,并对 $n\ge0$ 令 $S_{n+1}(x)=xS_n(x)-S_{n-1}(x)$;于是 $S_n(2\cos\theta)\sin\theta=\sin((n+1)\theta)$。对整数 $m\ge1$ 令
+
+$$
+\Psi_m(x)=\prod_{0<k<m/2}\bigl(x-2\cos(2\pi k/m)\bigr)\in\mathbb R[x],
+$$
+
+空积为 $1$。$\Psi_m$ 首一,次数为 $\lfloor(m-1)/2\rfloor$,根两两不同且都在开区间 $(-2,2)$ 内;例如 $\Psi_3=x+1$,$\Psi_4=x$,$\Psi_5=x^2+x-1$,$\Psi_6=x^2-1$。
+

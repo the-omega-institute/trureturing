@@ -1,0 +1,73 @@
+**命题 351.5（一个生成残余的有界多项式平均仍可趋零）。** 对 $n\ge2$，令 $\mathcal H=\mathbb C^n\otimes\mathbb C^n$、$V=\operatorname{Herm}(\mathcal H)$、$W=M_{n^2}$、$A=M_n\otimes I_n$，并置
+
+$$
+\Omega=\frac1{\sqrt n}\sum_i e_i\otimes e_i,
+\quad p=|\Omega\rangle\langle\Omega|,
+\quad t=n^{-2},
+\quad a=\frac{p-tI}{1-t},
+\quad q_n=\frac{1+t}{1-t}.
+$$
+
+记 $\tau_m=\operatorname{Tr}/m$ 为归一化迹。则 $\eta=\nu(A,W)=0$，$\|a\|=1$，$E_A(a)=E_{A'}(a)=0$，$\operatorname{dist}(a,A)\ge1/2$，而 $C^*(A,a)=W$。定义
+
+$$
+R=E_{A'}(\operatorname{Id}-E_A)
+=E_{A'}-\tau_{n^2}(\,\cdot\,)I.
+$$
+
+对所有有限和
+
+$$
+z=\sum_j\lambda_j u_{j,0}a u_{j,1}\cdots a u_{j,k_j},
+\qquad
+u_{j,l}\in A_1,\quad k_j\le K,\quad
+\sum_j|\lambda_j|\le L,
+$$
+
+都有
+
+$$
+\|R(z)\|\le\frac{2L}{n^2}q_n^K.
+\tag{351.11}
+$$
+
+若 $y=(\operatorname{Id}-E_A)z$ 还满足 $\|y\|\ge c>0$，则
+
+$$
+\left\|E_{A'}\!\left(\frac{y}{\|y\|}\right)\right\|
+\le\frac{2L}{cn^2}q_n^K.
+\tag{351.12}
+$$
+
+因此，对不随 $n$ 改变的 $K,L,c$，这类构造无法统一保证定理351.2所需的 $1/2$ 门槛。
+
+证明。$p$ 的两个归一化偏迹均为 $I/n^2$；$a$ 的特征值为 $1$ 及 $-1/(n^2-1)$，从而得到所列范数与平均恒等式。对任意 $b\in A$，条件期望的收缩性给出 $\|b\|=\|E_A(b-a)\|\le\|b-a\|$，故 $1=\|a\|\le\|a-b\|+\|b\|\le2\|a-b\|$，证明所列距离下界。对任意收缩 $b,c\in M_n$，矩阵单位展开给出
+
+$$
+\begin{aligned}
+p(b\otimes I)p&=\tau_n(b)p,\\
+E_{A'}((b\otimes I)p(c\otimes I))
+&=\frac1{n^2}I\otimes(cb)^{\mathsf T},\\
+\|R((b\otimes I)p(c\otimes I))\|
+&=\frac1{n^2}\|(cb)^{\mathsf T}-\tau_n(cb)I\|
+\le\frac2{n^2}.
+\end{aligned}
+$$
+
+含至少一个 $p$ 的乘积因此缩成模长不超过一的标量乘以 $(b\otimes I)p(c\otimes I)$；不含 $p$ 的乘积属于 $A$，被 $R$ 消去。将一个含 $k$ 次 $a$ 的词按 $a=(p-tI)/(1-t)$ 展开，其绝对系数总和不超过
+
+$$
+(1-t)^{-k}\sum_{l=0}^k\binom kl t^{k-l}=q_n^k.
+$$
+
+三角不等式证明式(351.11)，归一化即得式(351.12)。这些估计也适用于保持相同次数及总变差预算的范数极限和平均。
+
+另一方面，$p=(1-t)a+tI$，且
+
+$$
+(E_{ij}\otimes I)p(E_{kl}\otimes I)
+=\frac1n|i,j\rangle\langle l,k|.
+$$
+
+这些元素张成全部矩阵单位，故 $C^*(A,a)=M_{n^2}$。恢复归一化矩阵单位时出现的系数 $n$，说明精确生成与固定系数预算没有矛盾。证毕。
+

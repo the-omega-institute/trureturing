@@ -1,0 +1,63 @@
+**Theorem 66.1 (either other original phase is sufficient and minimal).**
+Among augmentations of the stipulated $v$ record by subsets of the
+other original continuous wrapped coordinate records $\theta,D$,
+the two inclusion-minimal sufficient choices are $\{\theta\}$ and
+$\{D\}$. Each recovers the signed parameter and whole height prefix
+at every positive time by one parameter-independent causal Borel
+construction, with one lawwise null set for all positive times.
+The assertion includes actual zero with frozen $D$.
+
+Proof. Lift each supplied circle path causally using its known initial
+phase. Use polarization of the dyadic variation sums for cross
+variations. Theorem 63.1 first gives $r,U$. At a positive time put
+$c=U+r^2/H=K-\kappa$. By the original probability margins,
+
+$$
+H-c=H+\kappa-K>0,\qquad
+c^2-r^2=K(K-2\kappa)>0.
+\tag{66.1}
+$$
+
+From $v,\theta$ compute
+
+$$
+q_\theta=\frac{\partial_-[\theta,v]}{\partial_-[v]}
+        =\frac{A_\kappa(K)}{B_\kappa(K)},\qquad
+R=1-q_\theta=\frac{H+\kappa}{K}.
+\tag{66.2}
+$$
+
+Here $\partial_-[v]>0$ and $R-1=(H-c)/K>0$. Since
+$R(c+\kappa)=H+\kappa$, the signed recovery formula is
+
+$$
+\kappa=\frac{H-Rc}{R-1},\qquad K=c+\kappa.
+\tag{66.3}
+$$
+
+It works also at zero. Alternatively, from $v,D$ compute
+
+$$
+q_D=\frac{\partial_-[D,v]}{\partial_-[v]}
+   =\frac{\kappa b_\kappa(K)}{B_\kappa(K)}
+   =-\frac{2\kappa(H-c)}{c^2-r^2}.
+\tag{66.4}
+$$
+
+Both factors in (66.1) are strictly positive. Hence for $r>0$,
+$\kappa=-r\operatorname{sign}(q_D)$; for $r=0$, set $\kappa=0$.
+Then $K=U+\kappa+r^2/H$. At zero (66.4) is exactly zero because
+the actual $D$ is frozen; it is not an observation of comparison $x$.
+All cross variations and left derivatives are available from the
+supplied prefixes, and the single-null-set localization argument of
+Theorem 63.1 applies to these finitely many additional operations.
+Continuity recovers the entire prefix, including $K_0$.
+
+The empty augmentation is insufficient by Theorem 65.1 under the
+explicit paired actual-source prior. Both singleton augmentations
+are sufficient by the formulas just proved, and the pair
+$\{\theta,D\}$ contains either sufficient singleton. These exhaust
+the four stipulated subsets and prove minimality in that comparison.
+No assertion about arbitrary sensors or a minimum nonlinear observer
+state dimension is used. $\square$
+

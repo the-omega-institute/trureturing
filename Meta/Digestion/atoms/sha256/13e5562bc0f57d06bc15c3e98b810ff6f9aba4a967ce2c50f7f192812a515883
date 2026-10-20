@@ -1,0 +1,9 @@
+项目已经机器化：
+
+- finite escape pairs；
+- leave-one-out unique capture pairs；
+- exact escape rate；
+- 结构 kernel 严格缩小；
+- semantic closure；
+- “降低逃逸率”等价于 canonical quotient CUT 的严格 kernel novelty。
+

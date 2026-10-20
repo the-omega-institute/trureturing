@@ -1,0 +1,31 @@
+**定义 371.2（充分上下文与联合奖励核）。** 对另行指定的可无限延长合法路径，取共同历史 $\mathscr F_n$、上下文 $X_n$ 和第 $n+1$ 步奖励 $\xi_{n+1}$。只有当 $X_n$ 足以决定下一上下文与奖励的联合条件律时，才可声明时间齐次核
+
+$$
+\Pr(X_{n+1}=b,\,\xi_{n+1}\in dx\mid\mathscr F_n)
+=K_{X_nb}(dx),
+\qquad
+\sum_bK_{ab}(\mathbb R)=1,
+\qquad
+S_n=\sum_{k=1}^n\xi_k.
+\tag{371.4}
+$$
+
+上下文可包含端口、路径方向、接缝变量和环境；所有正概率上下文路径都必须能提升为同一实际实现中的合法 FIB 路径。有限类型图的循环不等于原始展开树的回路，合并同名端口也不能代替充分性证明。
+
+令 $F_n^{ab}(ds)=\Pr_a(S_n\in ds,X_n=b)$，卷积作用于实值奖励坐标。对所有 $n\ge0$，联合更新方程和倾斜算子为
+
+$$
+F_0^{ab}=\mathbf1_{\{a=b\}}\delta_0,
+\qquad
+F_{n+1}^{ab}=\sum_cK_{ac}*F_n^{cb},
+$$
+
+$$
+(K_\theta f)(a)=\sum_b\int e^{\theta x}f(b)K_{ab}(dx),
+\qquad
+\mathbb E_a e^{\theta S_n}=(K_\theta^n\mathbf1)(a).
+\tag{371.5}
+$$
+
+在有限上下文集上，折扣更新测度 $U_z=\sum_{n\ge0}z^nF_n$ 对 $0\le z<1$ 有有限行总质量，并满足 $U_z=I\delta_0+zK*U_z$。当各指数矩有限且 $|z|\rho(K_\theta)<1$ 时，其奖励变换为 $(I-zK_\theta)^{-1}$。去掉折扣后还须检查更新测度的局部有限性，不能默认存在有限预解式。
+

@@ -1,0 +1,28 @@
+# 第一千八百二十二部　理论深度审计
+
+| 结论                                                               | 当前地位              |            |          |
+| ---------------------------------------------------------------- | ----------------- | ---------- | -------- |
+| Li 二阶曲率 Carathéodory 生成函数等于 normalized \(\xi'/\xi\)              | 本轮核心精确恒等式         |            |          |
+| 单位圆盘对应 \(\Re s>1/2\)                                             | 精确                |            |          |
+| RH 等价于 \(\Re(\xi'/\xi)>0\) 于整个右半平面                               | 精确                |            |          |
+| square／positive-real／Carathéodory 三重等价                           | 精确                |            |          |
+| Li 权重等于半尺度 Cayley 相位 Jacobian                                    | 本轮核心精确恒等式         |            |          |
+| Li phase measure 是 arithmetic Schur 的 \(\alpha=1\) Clark measure | 精确                |            |          |
+| Clark atom质量恢复零点重数和 (                                            | \rho              | ^{-2})     | 精确       |
+| 离线零点映成圆盘内部的 \(\mathfrak s_\xi=1\) 接触                             | 精确                |            |          |
+| 任一离线零点产生固定 determinant \(-1\) 的二点 Pick 块                         | 本轮核心定理            |            |          |
+| 非 RH 存在 Gaussian-rational 二点负证书                                  | 精确连续性推论           |            |          |
+| Riemann–Schwarz 单点不等式等价 RH                                       | 在标准亚纯延拓约定下精确      |            |          |
+| Schwarz–Pick 给出 ((2\sigma-1)                                     | L'                | \le2\Re L) | 精确 RH 推论 |
+| Nevanlinna kernel 在 RH 下有零点 resolvent Gram 分解                    | 精确                |            |          |
+| 离线偏移产生系数 \(1-2\Re\rho\) 的 signed kernel correction               | 精确                |            |          |
+| prime powers 在 Li 圆盘中形成 singular-inner semigroup                 | 精确于 Euler 区       |            |          |
+| Euler 区仅对应 tangent horodisk                                      | 精确                |            |          |
+| 局部 Euler determinants 能恢复 cross-prime frame                      | 不成立；仓库已有反例        |            |          |
+| Cayley–Nevanlinna 与 de Branges kernel PSD 等价                     | 仓库最新机器闭合          |            |          |
+| one-observer PF\(_\infty\) 逻辑闭合                                  | 仓库最新机器闭合，但解析桥仍是假设 |            |          |
+| strict threshold shrinking 自动给出临界线 descent                       | 不成立；仓库最新机器反例      |            |          |
+| RH 下 Li phase process 为纯点 almost-periodic dynamics               | 精确                |            |          |
+| Li phase state 本身是热混合连续谱                                         | 不成立               |            |          |
+| 黄金比例是 RH 判据的必要常数                                                 | 不成立               |            |          |
+| Prime–Gamma arithmetic Nevanlinna Gram                           | 当前最短未闭合桥          |            |          |

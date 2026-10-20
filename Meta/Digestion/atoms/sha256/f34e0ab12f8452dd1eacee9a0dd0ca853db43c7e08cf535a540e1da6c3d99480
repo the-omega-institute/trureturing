@@ -1,0 +1,135 @@
+**定理 397.2（实际阶跃与连续主项共同支付积分前预算）。** 对每个 $x>1$，所有 $Q_x(m)$ 有限，并有
+
+$$
+Q_x(1)\le W_xc_1,
+\qquad
+\boxed{Q_x(m)\le\frac{W_x}{m^2}
+\left[a_2(\log m)^2+a_1\log m+a_0\right]}
+\quad(m\ge2).
+\tag{397.4}
+$$
+
+存在有限常数 $C_H$ 使 $|H_m|\le C_Hm/(\log m)^4$ 对全部整数 $m\ge2$ 成立。对任何这样的常数，以及每个整数 $M\ge2$，
+
+$$
+\boxed{
+\sum_{m>M}|H_m|Q_x(m)
+\le C_HW_x\left[
+\frac{a_2}{\log M}
++\frac{a_1}{2(\log M)^2}
++\frac{a_0}{3(\log M)^3}\right].}
+\tag{397.5}
+$$
+
+特别地，完整实际序列满足积分前的绝对条件
+
+$$
+\sum_{m\ge1}\int_x^\infty
+\left|H_m[R(t/m)-R(t/(m+1))]\right|w(t)\,dt<\infty.
+\tag{397.6}
+$$
+
+**证明。** 直接复用（386.4）、（387.17）及（390.5）的实际应用。因为 $\beta_1-E\ge\delta>0$，有
+
+$$
+0\le k(d)\le\mu_0\log d\quad(d\ge1),\qquad
+|R(y)|\le\mu_0(1+\log y)\quad(y\ge1).
+\tag{397.7}
+$$
+
+第一式包括 $k(1)=0$。§390 已给对每个固定正数 $r$ 的 $H_m=O_r(m/(\log m)^r)$；取 $r=4$ 并扩大常数以包含有限初段，得到上述 $C_H$。这里不重证定量 PNT 或这份实际卷积增长界。
+
+当 $t\ge x$ 时，$w(t)\le W_xt^{-2}$。对 $m\ge2$，令 $c=m/(m+1)$，正尺度换元给
+
+$$
+Q_x(m)\le\frac{W_x}{m}
+\int_{x/m}^\infty|R(y)-R(cy)|\frac{dy}{y^2}.
+\tag{397.8}
+$$
+
+先处理 $y\le m$ 的部分；若其下端超过 $m$，该部分为空。其积分域包含在 $[1/m,m]$ 中，且
+
+$$
+|R(y)-R(cy)|
+\le K(y)-K(cy)+|G(y)-G(cy)|.
+\tag{397.9}
+$$
+
+阶跃项非负。整数 $d$ 对这个阶跃差的贡献恰好出现在 $d\le y<d/c$；与当前积分域相交时必有 $d\le m$。有限求和与积分交换后，
+
+$$
+\begin{aligned}
+\int_{x/m}^{m}[K(y)-K(cy)]\frac{dy}{y^2}
+&\le(1-c)\sum_{d\le m}\frac{k(d)}d\\
+&\le\frac{\mu_0}{m+1}\log m(1+\log m).
+\end{aligned}
+\tag{397.10}
+$$
+
+若下端超过上端，该式的左侧按空域积分取零。每个完整阶跃区间的积分是 $(1-c)/d$；接缝裁切只减小这个非负积分。最后使用经典调和和上界 $\sum_{d\le m}d^{-1}\le1+\log m$。
+
+连续主项在正半轴可微，且 $G'(u)=A(1+\log u)-D$。对 $cy\le u\le y$，$|\log u|\le|\log y|+\log2$，故微积分基本定理给
+
+$$
+|G(y)-G(cy)|
+\le\frac{y}{m+1}
+\left[A(1+\log2+|\log y|)+|D|\right].
+\tag{397.11}
+$$
+
+这同时包括 $y<1$，没有删除低商连续尾。经典幂—对数积分给
+
+$$
+\int_{1/m}^{m}\frac{dy}{y}=2\log m,
+\qquad
+\int_{1/m}^{m}\frac{|\log y|}{y}\,dy=(\log m)^2.
+\tag{397.12}
+$$
+
+因此连续项的低域积分至多
+
+$$
+\frac{A(\log m)^2+2[A(1+\log2)+|D|]\log m}{m+1}.
+\tag{397.13}
+$$
+
+再处理 $y\ge m$ 的部分。$m\ge2$ 保证 $cy\ge m^2/(m+1)>1$，两份读数都在（397.7）的实际余项包络内。于是
+
+$$
+\int_m^\infty|R(y)-R(cy)|\frac{dy}{y^2}
+\le2\mu_0\int_m^\infty\frac{1+\log y}{y^2}\,dy
+=\frac{2\mu_0(\log m+2)}m.
+\tag{397.14}
+$$
+
+如果原下端 $x/m>m$，扩大到 $[m,\infty)$ 仍是合法上界。在（397.8）中合并（397.10）、（397.13）、（397.14），并使用 $1/[m(m+1)]\le m^{-2}$，即得（397.4）的 $m\ge2$ 子句。这里在低域使用真实阶跃区间，在高域使用已经中心化的 $R$ 包络；没有把 $K$ 和 $G$ 在无穷高域的绝对质量分别求和。
+
+$m=1$ 时，在 $1<t<2$ 使用 $|R(t)|\le\mu_0(1+\log2)$ 及低商式 $|R(t/2)|\le|D|+A\log2$。在 $t\ge2$ 使用 $|R(t)-R(t/2)|\le2\mu_0(1+\log t)$。将 $[x,\infty)$ 分别扩大到这两个正域，并用
+
+$$
+\int_1^2t^{-2}dt\le1,\qquad
+\int_2^\infty(1+\log t)t^{-2}dt=\frac{\log2+2}{2},
+$$
+
+得到 $Q_x(1)\le W_xc_1$。所有被积函数可测：$K$ 是局部有限阶跃函数，$G$ 连续，尺度换元和取绝对值保持可测性；上述有限上界同时证明各积分存在。
+
+最后将（397.4）乘以实际 $|H_m|$。对 $m\ge2$，它被
+
+$$
+C_HW_x\left[
+\frac{a_2}{m(\log m)^2}
++\frac{a_1}{m(\log m)^3}
++\frac{a_0}{m(\log m)^4}\right]
+\tag{397.15}
+$$
+
+控制。三个经典正项级数都收敛；其项在 $m>1$ 递减，积分比较给
+
+$$
+\sum_{m>M}\frac1{m(\log m)^j}
+\le\frac1{(j-1)(\log M)^{j-1}}\quad(j=2,3,4).
+\tag{397.16}
+$$
+
+这证明（397.5）。首项由 $|H_1|Q_x(1)<\infty$ 支付，故（397.6）成立。$\square$
+

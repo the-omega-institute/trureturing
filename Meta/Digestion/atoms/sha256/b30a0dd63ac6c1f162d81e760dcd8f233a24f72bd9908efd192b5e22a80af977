@@ -1,0 +1,12 @@
+## 26. 精确最小活跃素数集上的正角预算障碍
+
+本章沿用第 18—21 节的实际物理投影、完整迹与普通加权评价合同，并保留 archimedean 对角输入
+
+$$
+\sigma_{\{\infty\}}(f)=\mathcal T_0(f)
+=\int_{\mathbb R}|\widehat f(t)|^2d(t)\,d\mu(t),\qquad
+0\le d(t),\qquad \frac{d(t)}{\log|t|}\longrightarrow1,
+$$
+
+其中 $d$ 局部有界。只使用这一 archimedean 对角输入及 $d_S\le\chi_Sd$，不要求变动 $S$ 的密度渐近式。实际普通投影始终是 $P_S=TPK_S^{-1}PT^*$；所有算术响应均按全部纯素数幂计数。
+

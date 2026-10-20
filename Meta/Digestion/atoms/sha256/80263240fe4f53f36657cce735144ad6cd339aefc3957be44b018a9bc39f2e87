@@ -1,0 +1,9 @@
+黄金恒等式（TM.439）已有精确仓内 owner，按不可变项目快照
+19a8543ea50538700a993a51989d9cbc7b5bf4fd：
+
+- D5/S1/Scale/FibonacciErrorRatio.lean:21，
+  D5.S1.Scale.fibonacci_golden_residual，逐字给
+  $(F_N:\mathbb R)\phi-F_{N+1}=-(-1/\phi)^N$。
+- D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn.lean:113，
+  fibonacci_near_return，已组织黄金圆周旋转的 Fibonacci 近回返、交替缺陷及衰减。其回返步长为 $1/\phi$，本文时钟比为 $\phi$；二者模整数关系一致，但不把该声明直接冒充本文的量子通道距离定理。
+

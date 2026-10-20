@@ -1,0 +1,103 @@
+**定理 16.20（保持低阶总矩的精确多副本预算）。**
+取 16.18 的 $n,q,\mathcal F$ 及任意 $p\in\mathcal F$，
+令 $m\ge1$ 为整数。输入为独立同分布的
+$\rho_p^{\otimes m}$，$\rho_p=\sum_I p_I|I\rangle\langle I|$。
+在完整空间 $\mathcal H_n^{\otimes m}$ 上取酉算子 $V$，假设它与
+每个副本置换 $W_\pi$ 及全部低阶总荷对易：
+
+$$
+[V,W_\pi]=0\quad(\pi\in\mathfrak S_m),\qquad
+[V,Q_T]=0,\qquad Q_T=\sum_{a=1}^m F_T^{(a)},
+\quad 0<|T|\le q.
+$$
+
+输出 $\sigma=V\rho_p^{\otimes m}V^\dagger$ 的每个边缘是同一个对角态
+$\rho_{p'}$，$p'\in\mathcal F$。以 16.19 的同纤维最大者为基准，
+
+$$
+\begin{gathered}
+\mathsf I_m(\sigma):=\sum_{a=1}^m S(\sigma_a)-S(\sigma)
+=D\left(\sigma\,\middle\Vert\,\bigotimes_{a=1}^m\sigma_a\right)\ge0,\\
+\boxed{\quad
+\mathsf I_m(\mathrm{out})=m[H(p')-H(p)]
+=m[D(p\Vert p^\star)-D(p'\Vert p^\star)].\quad}
+\end{gathered}
+$$
+
+该结论允许输入在任意可行支撑上、输出含任意满足条件的联合相干，
+不假设输出仍是乘积。
+
+证明。输入的每一因子相同，故对每个置换 $W_\pi$ 不变；
+$V$ 对易使输出同样不变。任意两位置由一个置换互换，
+所以其完整边缘矩阵相同。
+
+现在证明完整边缘对角，不能只以共同均值或活动块计算代替。
+因为 $q\ge1$，所有单点 $T=\{i\}$ 的总占位荷都在对易假设内。
+对任意 $\boldsymbol t\in\mathbb R^n$，定义单副本相位群
+
+$$
+D(\boldsymbol t)=\exp\left(i\sum_{i=1}^n t_i F_{\{i\}}\right),\qquad
+D(\boldsymbol t)^{\otimes m}
+=\exp\left(i\sum_i t_i Q_{\{i\}}\right).
+$$
+
+对角输入与这个总相位群对易，$V$ 也与之对易，所以
+$D(\boldsymbol t)^{\otimes m}\sigma D(\boldsymbol t)^{\dagger\otimes m}=\sigma$。
+对其他 $m-1$ 因子偏迹；它们上的酉共轭不改变偏迹，得到
+
+$$
+D(\boldsymbol t)\sigma_aD(\boldsymbol t)^\dagger=\sigma_a.
+$$
+
+若 $I\ne J$ 是两合法模式，其占位向量不同，选一个
+$i\in I\mathbin\triangle J$，仅令 $t_i=\pi$，其余为零。
+矩阵元 $\langle I|\sigma_a|J\rangle$ 在这个共轭下乘 $-1$，
+又必须保持不变，故等于零。此论证覆盖所有模式对与全部相干来源，
+包括非活动部分、稀疏输入及多维总荷简并空间。
+$n=0$ 时只有一个模式，不存在非对角元；$m=1$ 时同一论证仍成立。
+于是每个边缘都是共同对角概率 $p'$。
+
+总荷守恒给
+
+$$
+m\mu_T(p')=\operatorname{Tr}(\sigma Q_T)
+=\operatorname{Tr}(\rho_p^{\otimes m}Q_T)=m\mu_T(p).
+$$
+
+$m>0$，故所有固定矩相同；归一化由密度矩阵的偏迹保证，
+从而 $p'\in\mathcal F$。这也使边界情况下 $p'$ 的支撑包含于
+16.19 的同一 $\mathcal J$。
+
+互信息的支撑论证同样覆盖所有副本。对每个 $a$，
+令 $R_a$ 为 $\ker\sigma_a$ 的投影，则
+$\operatorname{Tr}(\sigma R_a^{(a)})=0$，
+$\|R_a^{(a)}\sigma^{1/2}\|_{\rm HS}=0$。
+因此 $\operatorname{supp}\sigma$ 同时位于所有
+$\operatorname{supp}\sigma_a$ 对应的子空间中，交集恰为
+$\bigotimes_a\operatorname{supp}\sigma_a$。
+在此乘积支撑上谱分解给
+
+$$
+\ln\left(\bigotimes_a\sigma_a\right)
+=\sum_a (\ln\sigma_a)^{(a)}.
+$$
+
+取 $\sigma$ 的期望及偏迹就得 $\mathsf I_m=D$；
+16.8 的一般相对熵非负证明适用于这里的有限维配对
+$(\sigma,\bigotimes_a\sigma_a)$，无须所有 $\sigma_a$ 满秩。
+酉保持联合谱，输入独立使
+$S(\sigma)=mH(p)$；相同对角边缘给
+$\sum_aS(\sigma_a)=mH(p')$。
+最后对同纤维两律应用 16.19 的缺口式，便得完整预算。
+$m=1$ 时 $\mathsf I_1=0$，预算仍为零；
+$q$ 足以固定全部合法矩时已有逆式令纤维为点，也与公式相容。证毕。
+
+上述置换与总荷条件是充分条件，不是所有可能操作的必要分类。
+总荷简并空间中的联合相干可以存在；被相位群排除的是单副本的非对角元。
+$\mathsf I_m$ 是全部副本的总相关，不等于把所有两两互信息相加。
+对于五模式取 $n=3,q=1,m=2$，
+$F_{\{1\}},F_{\{2\}},F_{\{3\}}=(N_x,N_z,N_y)$，
+$V=U(u)$；16.2 核验所需的置换和总荷对易，
+16.19 的最大者在本纤维就是 16.9 的 $p^\star$。
+因此此一般预算确实接回 16.10 的同一实际五模式转移。
+

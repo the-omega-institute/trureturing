@@ -1,0 +1,39 @@
+**定义 425.1（原轮廓与完整纤维）。** 记 $B=\mathcal B(1)>0$、$B'=\mathcal B'(1)$、$B''=\mathcal B''(1)$，保留
+
+$$
+A=B^{-1},\quad D=A+B'/B^2,\quad
+c_{\rm diag}=\frac{(B')^2}{B^3}-\frac{B''}{2B^2}+\frac{\gamma_1}{B},
+\quad p_B(v)=\frac A2v^2+(D-A)v+c_{\rm diag}.
+\tag{425.1}
+$$
+
+这里保留 §398 的 $c_{\rm diag}$；$\gamma_1$ 使用 $\zeta(1+z)=z^{-1}+\gamma-\gamma_1z+O(z^2)$ 的原约定。实际参数满足 $D>A>0$。对每个 $d,n\ge1$，置
+
+$$
+\mathcal B_{x,d}(n)=\sum_{m=dn}^{d(n+1)-1}J_x(m)
+=P_x(dn)-P_x(d(n+1)).
+\tag{425.2}
+$$
+
+全部首尾端点均保留。§424.4 给 $J_x^\eta(n)=\sum_{d\ge1}\beta_d\mathcal B_{x,d}(n)$。
+
+使用 §399 的同一误差多项式
+
+$$
+C(V)=\frac A6V^3+\frac D2V^2+(2D-A)V+D+\mu_0(2V+11),
+\qquad \mu_0=1/\delta.
+$$
+
+固定 $U\ge0$，令 $a_d=U+\log d$，并定义
+
+$$
+\begin{aligned}
+\mathsf C_\beta(U)&=\sum_{d\ge1}\frac{|\beta_d|}{d}C(a_d+\log2),\\
+\mathsf L_\beta(U)&=\sum_{d\ge1}\frac{|\beta_d|}{d}
+\left[\frac A2a_d^2+(D-A)a_d+|c_{\rm diag}|+A(a_d+\log2)+D-A\right].
+\end{aligned}
+\tag{425.3}
+$$
+
+两个常数有限：§385 的 β 指数尾支付 $(\log d)^3/d$ 的绝对加权和。
+

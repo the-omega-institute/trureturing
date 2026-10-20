@@ -1,0 +1,13 @@
+\left\langle
+ \mathscr G_zF,\widetilde N_h
+\right\rangle_\theta.
+\]
+若半群满足详细平衡
+\[
+p_\theta(x)P_t(x,y)=p_\theta(y)P_t(y,x),
+\]
+则 \(\mathscr G_z\) 在该内积下自伴，从而
+\[
+\boxed{
+\int_0^\infty e^{-zt}\mathcal R_{F,h}(t)\,dt
+ =

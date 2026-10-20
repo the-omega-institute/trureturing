@@ -1,0 +1,14 @@
+**定义 43.1（三个完整来源类）。** 对每个整数 $m\ge3$，定义
+
+$$
+\begin{aligned}
+H_0(m)&=\{\langle P,\langle C,C\rangle\rangle:P\in\mathcal F[m-1,3]\},\\
+H_b(m)&=\{\langle P,\langle W_1,C\rangle\rangle:P\in\mathcal F[m-2,2]\},\\
+H_a(m)&=\{\langle P,A\rangle:P\in\mathcal F[m+3,2]\},\\
+H(m)&=H_0(m)\cup H_b(m)\cup H_a(m),\qquad n_m=3m+30.
+\end{aligned}
+\tag{43.5}
+$$
+
+对 $m\in\{0,1,2\}$，只定义 $H_a(m)$ 为式（43.5）的第三类，并令 $H(m)=H_a(m)$、$n_m=3m+30$。其载荷参数 $m+3$ 为正，不使用零参数或负参数的来源族。每个元素都保留全部括号、左右次序及叶标签；$H(m)$ 是费用评价族，不是未知输入域。
+

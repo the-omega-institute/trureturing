@@ -1,0 +1,12 @@
+### 47.1 常值第一 channel 的精确分类
+
+沿用第 46 节的 `a,p,q,H,S`，令 `L=diag(S²,S)`、`H_0=LH`，并记 `P=p-1`、`Q=q-1`、`A_0=2+p`、`B_0=2+q`。于是：
+
+```math
+\sqrt6 H_0=\begin{pmatrix}
+J+PI&J+QI\\J+\overline QI&-J-\overline PI
+\end{pmatrix}.
+```
+
+这里仍使用第 46 节所引的 Szöllősi block construction；本节分类其实际共同平坦方程中第一 channel 为常值的纤维。
+

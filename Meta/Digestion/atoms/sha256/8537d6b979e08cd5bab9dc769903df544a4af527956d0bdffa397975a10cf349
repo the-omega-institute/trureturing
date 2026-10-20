@@ -1,0 +1,197 @@
+**引理 117.3（原计数与完整选择的可微回接）。** 对二项计数质量 $q_j(n)$ 取非负模态惊讶
+
+$$
+S_j(n)=-\log\frac{q_j(n)}{\max_kq_j(k)},\qquad S_Q=\sum_jS_j.
+\tag{117.25}
+$$
+
+这里包含二项系数。若 $p\in[1/4,3/4]$、$N\ge1$，
+$z=(n-Np)/\sqrt{Np(1-p)}$，则
+$cz^2-C\le S_j(n)\le C(1+z^2)$。
+在 $n/N\in[1/8,7/8]$ 内，Stirling 双边界和二元相对熵的二次界给该结论，模态前因子比有界；
+在外侧 $z^2\ge cN$，熵成本与对数前因子可一并控制，有限小 $N$ 吸入常数。
+由此，$\sum_ne^{-\alpha S_j(n)}\asymp\sqrt{N+1}$，且
+
+$$
+\mathbb E_{Q_{\alpha,j}}S_j^k\le C_k,\qquad
+\mathbb E_{Q_{\alpha,\mathrm{low}}}S_{\mathrm{low}}^k\le C_k(1+m_Q)^k,
+\qquad 1\le\alpha\le2.
+\tag{117.26}
+$$
+
+下界只需模态附近 $\sqrt N$ 个格点；空组贡献零。低组无须 Gaussian 化。
+在高组中心盒 $|n_j-C_jp_j|/\sqrt{C_jp_j(1-p_j)}\le Q^2$ 上，
+Stirling 的三次余项与模态减除给
+
+$$
+|S_{\mathrm{high}}(n)-S_G(X)|\le\operatorname{poly}(Q)e^{-\zeta Q^3/2},
+\qquad X_j=(n_j-\mu_j)/\mathcal B.
+\tag{117.27}
+$$
+
+逐项余量为 $C(1+Q^6)/\sqrt{C_j}$；对 $m_Q\le CQ^2$ 项求和即可。
+模态距 $C_jp_j$ 有界，其势能常数及格元内的势能变化也服从该指数界。
+把高组 Gaussian 坐标舍入，并接上任意原低组元组，物理标量变化至多
+
+$$
+\Delta_Q\le\operatorname{poly}(Q)
+ [\mathcal B^{-1}+\mathcal B^{-2}e^{2\zeta Q^3}],\qquad
+\eta_Q:=\Delta_Q/\sigma\le\operatorname{poly}(Q)e^{-bQ^3}
+\tag{117.28}
+$$
+
+其中 $b>0$，来自 (117.1) 与 $2\zeta<c_q-l$。
+令 $\lambda_y(n)=(T_x(n)-y)^2/(2\sigma^2)$、
+$u=(T_G-y)/\sigma$、$d=(T_x-T_G)/\sigma$，则
+
+$$
+|\lambda_y-u^2/2|\le\eta_Q|u|+\eta_Q^2/2,
+\qquad
+\left|e^{-\alpha[(u+d)^2-u^2]/2}-1\right|
+\le C\eta_Q(1+|u|)e^{C\eta_Q|u|}.
+\tag{117.29}
+$$
+
+由 $C\eta_Q|u|\le\eta_Qu^2+C^2\eta_Q/4$，额外指数由刚证明的相邻噪声比较支付。
+考虑未归一化配分函数
+
+$$
+J_Q(\alpha,y)=\sum_ne^{-\alpha(S_Q(n)+\lambda_y(n))},\quad
+J_G(\alpha,y)=\int e^{-\alpha(S_G(X)+(T_G(X)-y)^2/(2\sigma^2))}\,dX,
+$$
+
+$$
+Z_{\mathrm{low}}(\alpha)=\sum_{n_{\mathrm{low}}}e^{-\alpha S_{\mathrm{low}}}.
+\tag{117.30}
+$$
+
+式 (117.24)、(117.26)–(117.29) 比较 $J_Q$ 与
+$\mathcal B^{|H|}Z_{\mathrm{low}}J_G$。
+误差及插入一次 $S_Q+\lambda_y$ 或 $S_G+u^2/2$ 后的误差，都不超过后者乘
+$\operatorname{poly}(Q)e^{-b'Q^3}$：高组势能误差用 (117.27)，核误差及其势能插入用 (117.29)，
+混合多项式用同一条件律的矩界。低组归一化因子的导数由其惊讶矩支付。
+这是对实际导数求和项的估计。
+
+中心盒之外的幂律二项尾部及 Gaussian 尾部至多为
+$\operatorname{poly}(Q)e^{-cQ^4}$。原计数盒上
+$S_Q\le CN_J$、$|\mathcal D|\le C\mathcal B$，最大似然惊讶至多为
+$e^{CQ^3+2L}$；固定次插入仍只有 $Q^3+L$ 级指数成本。
+Gaussian 尾部的固定次似然插入至多另付 $\sigma^{-2k}$。
+由精确反倾斜和紧集正密度下界，归一化后的 Gaussian 核积分至少为
+$c\sigma e^{-C/\delta}$。除以稀有输出分母仍不抵消 $Q^4$ 尾指数。
+所以整个配分函数满足
+
+$$
+A_Q(\alpha,y):=\log\frac{J_Q(\alpha,y)}
+{\mathcal B^{|H|}Z_{\mathrm{low}}(\alpha)J_G(\alpha,y)},\qquad
+\sup_{\alpha\in[1,2],|y|\le R}
+(|A_Q|+|\partial_\alpha A_Q|)\to0.
+\tag{117.31}
+$$
+
+在 $y$ 与零相除时，模态常数、格体积、低组及 Gaussian 归一化、噪声前因子精确抵消。
+因此，定义幂律 $Q_\alpha(n)\propto Q_x(n)^\alpha$ 后，
+
+$$
+D^Q_\alpha(y):=-\frac1\alpha
+\log\frac{f_{Q_\alpha,\sigma/\sqrt\alpha}(y)}{f_{Q_\alpha,\sigma/\sqrt\alpha}(0)}
+=D^G_\alpha(y)+r^{QG}_\alpha(y),\qquad
+\|r^{QG}\|_{C^1_\alpha,\infty}\to0.
+\tag{117.32}
+$$
+
+同一格元比较也可插入总偏差和惊讶，得到原乘积计数幂律在同一输出下的矩界
+
+$$
+\mathbb E_{Q_\alpha,y}|\mathcal D|^{2k}\le C_k,\quad
+\mathbb E_{Q_\alpha,y}S_Q^k\le C_k(1+m_Q)^k,\quad
+\mathbb E_{Q_\alpha,y}\lambda_y^k\le C_k\delta^{-k}.
+\tag{117.33}
+$$
+
+总偏差的舍入与低组误差至多为
+$m_Q/(2\mathcal B)+m_Qe^{\zeta Q^3}/\mathcal B$，指数小；
+其余插入分别用 (117.27)、(117.26)、(117.29) 和已支付的尾部。
+
+最后回到原 $P_x$。在同一个 $Q_\alpha$ 输出条件律下令
+$Z(\alpha,y)=\mathbb E_{Q_\alpha,y}e^{\alpha\ell}$、$A_y=-(S_Q+\lambda_y)$。
+精确有限和求导给
+
+$$
+\partial_\alpha\log Z
+=\frac{\mathbb E(\ell e^{\alpha\ell})
++\operatorname{Cov}(e^{\alpha\ell},A_y)}{\mathbb E e^{\alpha\ell}}.
+\tag{117.34}
+$$
+
+由 (117.10)，$|e^{\alpha\ell}-1|+|\ell|e^{\alpha\ell}
+\le C\delta^5(1+\mathcal D^2)$，分母最终至少为 $1/2$。
+用 (117.33) 的同一条件矩与 Cauchy–Schwarz，
+
+$$
+\mathbb E[(1+\mathcal D^2)(S_Q+\lambda_y)]
+\le C(1+m_Q+\delta^{-1}),
+$$
+
+$$
+|\log Z|\le C\delta^5,\qquad
+|\partial_\alpha\log Z|
+\le C\delta^5(1+m_Q+\delta^{-1})=O(\delta).
+\tag{117.35}
+$$
+
+协方差第一变量可减去一，故该估计确实支付选择惊讶与似然惊讶的联合项。
+对 $P_\alpha\propto P_x^\alpha$，两个输出密度比之比精确为
+$Z(\alpha,y)/Z(\alpha,0)$，未条件化的幂律归一化相消。
+结合 (117.23)、(117.32)、(117.35)，得到实际模型的可微桥梁
+
+$$
+D^P_\alpha(y):=-\frac1\alpha
+\log\frac{f_{P_\alpha,\sigma/\sqrt\alpha}(y)}{f_{P_\alpha,\sigma/\sqrt\alpha}(0)}
+=b_\alpha y+c_\alpha y^2+r_\alpha(y),\qquad
+\sup_{\alpha\in[1,2],|y|\le R}(|r_\alpha|+|\partial_\alpha r_\alpha|)\to0.
+\tag{117.36}
+$$
+
+**完成闭区间。** 对任意有限正计数律，Gaussian 似然的有限和代数给
+
+$$
+H_\alpha(P_x^y)-H_\alpha(P_x^0)
+=\frac{\alpha}{\alpha-1}[D^P_\alpha(y)-D^P_1(y)],\quad\alpha>1,
+$$
+
+$$
+H_1(P_x^y)-H_1(P_x^0)=\partial_\alpha D^P_\alpha(y)\big|_{\alpha=1}.
+\tag{117.37}
+$$
+
+先消去原幂律归一化与原熵，再近似；$\alpha=1$ 的恒等式只涉及有限和求导。
+把 (117.36) 代入，对于 $1<\alpha\le2$，余项为
+
+$$
+\frac{\alpha}{\alpha-1}[r_\alpha(y)-r_1(y)]
+=\frac{\alpha}{\alpha-1}\int_1^\alpha r'_u(y)\,du,
+$$
+
+其模至多为 $2\sup|r'_u|\to0$。在一阶直接用 (117.37)，
+从而覆盖以任意速度趋近一的阶数序列。
+对 $\alpha\ge2$，第 115 章取固定间隔 $\epsilon=1$；其结论与 (117.5) 的差至多
+$2R|b_1|+2R^2|c_1-1/(2\nu)|\to0$。
+无穷阶的同一界取前因子一。第 115 章的大阶数连接仍使用原计数有限支撑：
+平滑比较只到 $Q^6$，再由 $\log\#\operatorname{supp}P_x\le CQ^5$ 与
+$0\le H_\alpha-H_\infty\le\log\#\operatorname{supp}P_x/(\alpha-1)$ 接上，
+不把 Gaussian 比较延伸到任意小的 $\sigma/\sqrt\alpha$。
+
+共同好事件、原支撑置换等变性及实际行估计恢复 (117.6) 的一致概率量词。
+有限阶数及输出连续、实根光滑、Shannon 的有限和延拓和无穷阶极限，
+允许用可数稠密参数集表示上确界，故可测性也保留。
+这里的新增桥梁是 (117.36) 的原模型一阶导数控制。
+第 115 章的零阶密度近似本身不能除以 $\alpha-1$ 得到本章结论。
+
+有限幂律代数、指数倾斜、Gaussian 多项式矩、Stirling、Fourier 反演和均值定理均为经典工具。
+Goodman 的可微鞍点误差提供方法来源，其固定 iid 条件不直接覆盖本章数组；
+对应关系及适用边界见 Library 的本章条目。
+结论限于 $\alpha\ge1$、紧物理输出、严格半指数范围和完整计数熵；
+不声称一阶以下、无界输出、有限规模零噪声、半指数等号、输出平均熵或 Arimoto/Sibson 条件熵。
+未作 Lean 核验或全局原创性认证。
+

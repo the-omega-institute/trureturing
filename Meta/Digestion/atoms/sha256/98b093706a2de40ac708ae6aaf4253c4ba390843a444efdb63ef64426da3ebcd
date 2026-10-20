@@ -1,0 +1,33 @@
+### 定义 39.1（次数合同与不依赖初读增益的目标）
+
+固定已知整数 $k,d\ge0$。令 $R\in\operatorname{Mat}_2(\mathbb R)$ 的四项严格为正且秩为一，$G\in\mathbb R[t]\setminus\{0\}$、$\deg G\le k$，$D\in\mathbb R[t]$、$\deg D\le d$，其中零漂移也允许。所有读数由同一个固定关系、同一个增益多项式和同一个漂移多项式产生：
+
+$$
+z_i=G(i)\operatorname{tr}(A_iR)+D(i).
+$$
+
+操作 $M,J$ 是第 2、3 节的已知矩阵；$i$ 是从零开始记录的连续整数读数序号，每个位置读取一次，不是待估计的物理时间。设
+
+$$
+a=\operatorname{tr}R>0,\qquad
+R_0=R/a,\qquad H=aG,\qquad
+b=\operatorname{tr}(MR_0).
+$$
+
+恢复目标为 $(R_0,H,D)$，于是 $\operatorname{tr}R_0=1$、$H\not\equiv0$，且 $z_i=H(i)\operatorname{tr}(A_iR_0)+D(i)$。这里不要求 $G(0)$ 或任何指定位置的 $G(i)$ 非零，也不要求增益为正、实际次数等于上界、根为单根或两个 Fibonacci 模态都出现。
+
+令
+
+$$
+N=2k+d+3,\qquad m=N-1,\qquad L=N+k+2=3k+d+5.
+$$
+
+预先固定一条不可重置的累计路径：
+
+$$
+A_i=M^i\quad(0\le i<N),\qquad
+A_{N+j}=M^jJM^m\quad(0\le j\le k+1).
+$$
+
+因此先从 $I$ 连续执行 $m$ 次 $M$，下一步执行一次 $J$，以后只执行 $M$。切换不重启关系、增益、漂移或读数时钟。记 $f_i,g_i$ 为 Fibonacci 递推的两个解，初值分别为 $(f_0,f_1)=(1,0)$、$(g_0,g_1)=(0,1)$。另记普通 Fibonacci 数为 $F_0=0,F_1=1$；则 $g_i=F_i$，而 $f_i=F_{i-1}$ 对 $i\ge1$ 成立。
+

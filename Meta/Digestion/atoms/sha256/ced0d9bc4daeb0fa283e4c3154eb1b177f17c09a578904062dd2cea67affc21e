@@ -1,0 +1,42 @@
+**约定 22.1（有序树、出现地址与已记录的一步）。** $\mathcal T$ 是全部非空有限有序二叉树，两个叶标签不同，配对全定义，左右顺序与括号不取商：
+
+$$
+\begin{gathered}
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\qquad
+E=\langle\beta,\alpha\rangle,\\
+\rho(\alpha)=\beta,\qquad \rho(\beta)=E,\qquad
+\rho(\langle x,y\rangle)=\langle\rho(x),\rho(y)\rangle.
+\end{gathered}
+\tag{RA.2201}
+$$
+
+固定同一实际来源 $u$ 及当前树 $t=\rho(u)$。历史解释另以正确保留的记录 $\mathsf{rec}_\rho$ 为前提：最后实际动作确是对该 $u$ 施加一次全局 $\rho$。该记录在下述候选观察中只表示动作及此承诺，不含完整源树、外部上下文或更早历史。
+
+节点是有限 $L/R$ 字的实际出现，根为 $\varepsilon$。不同地址即使标签相同也不合并。写 $t|_p$ 为地址 $p$ 的完整子树，$|p|$ 为字长；非根地址 $p=qL$ 或 $qR$ 的父地址为 $p^-=q$。递归定义
+
+$$
+\begin{aligned}
+\operatorname{Pos}(\alpha)=\operatorname{Pos}(\beta)&=\{\varepsilon\},\\
+\operatorname{Pos}(\langle x,y\rangle)
+&=\{\varepsilon\}\sqcup L\operatorname{Pos}(x)\sqcup R\operatorname{Pos}(y),\\
+\mathcal B(u)&=\{r\in\operatorname{Pos}(u):u|_r=\beta\},\qquad
+K(u,p)=\mathbf1_{\{p\in\operatorname{Pos}(u)\}}\quad(p\in\operatorname{Pos}(t)).
+\end{aligned}
+\tag{RA.2202}
+$$
+
+这里 $L\operatorname{Pos}(x)=\{Lq:q\in\operatorname{Pos}(x)\}$，右侧同理。称 $K=1$ 的切口为旧切口，含义是同一地址已在该源树中出现。
+
+纯配对单孔上下文由 $H::=\square\mid\langle H,w\rangle\mid\langle w,H\rangle$、$w\in\mathcal T$ 形成，保留每条实际旁支。对 $p\in\operatorname{Pos}(t)$，删去且只删去 $t|_p$ 得 $C_{t,p}$，其填充满足
+
+$$
+\begin{aligned}
+C_{t,\varepsilon}[v]&=v,\\
+C_{\langle x,y\rangle,Lq}[v]&=\langle C_{x,q}[v],y\rangle,\\
+C_{\langle x,y\rangle,Rq}[v]&=\langle x,C_{y,q}[v]\rangle.
+\end{aligned}
+\tag{RA.2203}
+$$
+
+令 $\widehat\rho(H)$ 固定唯一孔并将每条旁支 $w$ 换成 $\rho(w)$。这些上下文的组合语义复用 [StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean) 的 `Generator`、`contextDenote` 和 `forall_contexts_iff_words`：取二元操作为 $\operatorname{some}(\langle x,y\rangle)$，固定参数就是实际旁支。其一般强同余结论 `contextual_equivalence_is_greatest` 不另证明；像成员测试是成功后的布尔读数，假读数不等于配对失败。
+

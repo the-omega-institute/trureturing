@@ -1,0 +1,43 @@
+**Proposition 6.3 (the exact twenty-one-row frontier).** For $d=12$ in
+(AOF.16), the complete Pareto basis and two same-run prices are
+
+$$
+\operatorname{Min}\mathcal F=\{(3,0,29),(4,0,27)\},\qquad
+W_{(1,0,1)}^*=31,\qquad W_{(3,0,1)}^*=38.
+\tag{AOF.21}
+$$
+
+Removing only the negative record gives twenty-three rows and minimum
+raw count four instead of three.
+
+Proof. The preceding theorem gives the exact interval $[4,24]$ of target
+labels and its physical threshold costs. The following table gives the
+first-action values in (AOF.20). Column $L_3$ uses at most two further
+reads; column $L$ uses $E_\infty$ on the two children; columns $S_1,S_3$
+use $V_{1,1},V_{3,1}$. Thus a row is obtained by adding $C(t)$, or
+$x+C(t)$, to the maximum of its two strictly shorter child values and zero.
+These equations and the singleton bases specify all entries exactly.
+
+| $t$ | $L_3$ | $L$ | $S_1$ | $S_3$ |
+| --- | --- | --- | --- | --- |
+| 3 | $\infty$ | 29 | 34 | 43 |
+| 4 | $\infty$ | 30 | 35 | 44 |
+| 5 | $\infty$ | 30 | 35 | 44 |
+| 6 | $\infty$ | 31 | 36 | 45 |
+| 7 | $\infty$ | 30 | 34 | 42 |
+| 8 | $\infty$ | 31 | 35 | 43 |
+| 9 | $\infty$ | 31 | 35 | 43 |
+| 10 | $\infty$ | 32 | 36 | 44 |
+| 11 | $\infty$ | 32 | 36 | 44 |
+| 12 | $\infty$ | 33 | 37 | 45 |
+| 13 | 29 | 29 | 32 | 38 |
+| 14 | 30 | 30 | 33 | 39 |
+| 15 | $\infty$ | 30 | 33 | 39 |
+| 16 | $\infty$ | 31 | 34 | 40 |
+| 17 | $\infty$ | 31 | 34 | 40 |
+| 18 | $\infty$ | 32 | 35 | 41 |
+| 19 | $\infty$ | 27 | 31 | 39 |
+| 20 | $\infty$ | 30 | 34 | 42 |
+| 21 | $\infty$ | 31 | 35 | 45 |
+| 22 | $\infty$ | 34 | 39 | 49 |
+| 23 | $\infty$ | 35 | 40 | 50 |

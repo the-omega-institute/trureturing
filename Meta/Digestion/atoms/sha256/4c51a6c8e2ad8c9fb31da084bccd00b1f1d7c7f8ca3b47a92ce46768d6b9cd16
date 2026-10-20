@@ -1,0 +1,36 @@
+**命题 29.6（叶数不足以闭合替换；固定活上限粗化行为划分）。** 对以下正叶词取固定括号的原树
+
+$$
+P=\alpha\alpha\alpha\beta\alpha\alpha,
+\qquad Q=\beta\beta\alpha\beta\beta\beta.
+$$
+
+它们满足
+
+$$
+\begin{aligned}
+\mathbf u(P)=\mathbf u(Q)
+ &=\bigl((1,-1,0),(1,0,1),(0,3,1)\bigr),\\
+c(P)&=(5,1),\qquad c(Q)=(1,5),\\
+\lambda(P)=\lambda(Q)&=6,\qquad
+\lambda(\rho P)=7,\quad \lambda(\rho Q)=11.
+\end{aligned}
+$$
+
+因此 $(\mathbf u,\lambda)$ 不能决定替换后的叶数。若合同只允许读取 $E$、读取固定 $P_6$，以及附固定上限 $6$ 的替换和非空左右拼接，则 $P,Q$ 的所有有限完整记录相同，尽管 $\eta(P)\ne\eta(Q)$。在这一受限合同下，$\eta$ 充分但不是最小行为商。
+
+证明。令 $S=BA$，逐叶使用（28.3），或等价地使用 $A^2=1,B^2=-1,AS^m=(-1)^mS^{-m}A$，得到
+
+$$
+\begin{aligned}
+E(P)&=A^3BA^2=AB=-S^{-1},
+&E(Q)&=B^2AB^3=AB,\\
+E(\rho P)&=B^3SB^2=-A,
+&E(\rho Q)&=S^2BS^3=-A,\\
+E(\rho^2P)&=S^3(S^2A)S^2=S^3A,
+&E(\rho^2Q)&=(S^2A)^2S(S^2A)^3=S^3A.
+\end{aligned}
+$$
+
+这给出所列三个正规坐标。组成由叶词直接计数，后继叶数是 $a+2b$。固定上限 $6$ 时，任何非空拼接都有至少 $7$ 片叶，两棵树的替换也都超限，故所有修改指令都拒绝且保持各自初态。两初态的 $E$ 和 $P_6$ 相同；对记录归纳，每个依赖记录的有限控制都得到相同记录。定义 29.2 的无界阈值合同则可在替换后以 $P_8$ 分离二者，不能把两个合同的最小性结论混用。$\square$
+

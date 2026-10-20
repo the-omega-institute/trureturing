@@ -1,0 +1,29 @@
+### 21.1 同一实际来源、可见输入与恢复关系
+
+沿用 §19–20 的非空有序二叉树 $\mathcal T$、叶计数 $c$ 和操作 $M(a,b)=(b,a+b)$、$G(a,b)=(a+1,b)$。给定整数 $N\ge1$，定义
+
+$$
+C_N=\{(a,b)\in\mathbb N_0^2:1\le a+b\le N\},\qquad
+\mathcal T_N=c^{-1}(C_N),\qquad
+K_N=|C_N|=\sum_{\ell=1}^N(\ell+1)=\frac{N(N+3)}2.
+\tag{RA.2101}
+$$
+
+固定一棵未知但实际的 $t\in\mathcal T_N$，记 $x=c(t)$。$N$ 的有效性是供应的来源承诺，不从记录推断。参数还包括已认证的 split 素数 $p\ne5$、$f(z)=z^2-z-1$ 的指定简单根，以及 §19 的唯一相容提升 $\lambda_{j+1}\equiv\lambda_j\pmod{p^j}$。有限解码输入为 $N,p,h\ge1$、该分支的有限根 $0\le\lambda_h<m=p^h$ 和精确同源标准剩余 $0\le s<m$，其中
+
+$$
+e_h(a,b)=b-\lambda_ha\pmod m,\qquad o_h=e_h\circ c,\qquad s=o_h(t).
+\tag{RA.2102}
+$$
+
+根可由已认证的 $\lambda_1$ 另行准备；若供应 $\lambda_h$，其根身份及分支相容性也须供应或另行验证。统一精度证书是下文有限判据通过，或严格充分界成立。当前数量 $q$、树语法、历史、时钟及重置权限均不是这个标量解码器的隐含输入。
+
+每个 $C_N$ 中的对都有非空树代表（§20.5）。故 $e_h|C_N$ 单射当且仅当上述树观察核等于计数核；成立时，实际像上有唯一 $d_{N,h}:e_h(C_N)\to C_N$ 满足 $d_{N,h}(o_h(t))=c(t)$。这是 [RRO 卷定理 2.2](RECURSIVE_RELATIONAL_OBSERVATION.md) 的实际像纤维因子化直接代入。对任何另外声明的集合 $Y$ 与计数任务 $F:C_N\to Y$，
+
+$$
+F(c(t))=(F\circ d_{N,h})(o_h(t)),\qquad t\in\mathcal T_N.
+\tag{RA.2103}
+$$
+
+这里恢复的是计数商，包括 $F(a,b)=2a+3b$；不要求从标量生成某个原始树代表，更不把任意代表当作原树。
+

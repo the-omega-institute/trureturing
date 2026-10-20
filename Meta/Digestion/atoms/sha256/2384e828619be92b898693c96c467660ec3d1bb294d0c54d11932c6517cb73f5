@@ -1,0 +1,26 @@
+**定义 392.1（实际 Newton 读数与来源伸缩）。** 保留 §385 的实际参数与系数
+
+$$
+q=\varphi^{-2},\qquad
+\beta_d=\log(1-(-q)^d),\qquad
+e=\mu*\beta,\qquad \gamma*\beta=\beta*\gamma=\mathbf1.
+\tag{392.1}
+$$
+
+本节所有来源指标 $d,n,m$ 均为正整数，Newton 指标 $k,j$ 可为零。对实际序列 $a=\mu$ 或 $a=e$，定义
+
+$$
+c_k^a=\sum_{n\ge1}\frac{a_n}{n^2}(1-n^{-2})^k.
+\tag{392.2}
+$$
+
+其中 $c_k^\mu$ 是原始 Báez-Duarte 系数，不改变其规范化，也不删去 $n=1$ 或 $k=0$。对任意序列 $c$，定义有限来源伸缩
+
+$$
+(P_dc)_k=d^{-2}\sum_{j=0}^k
+\binom kj(d^{-2})^j(1-d^{-2})^{k-j}c_j.
+\tag{392.3}
+$$
+
+二项变换是已有工具：Coffey 的[系数推广](../../../Library/Analytic/coffey2006baezduarteextensions.md)讨论其生成函数形式；[二项逆矩文献](../../../Library/Analytic/znidaric2005inversemoments.md)讨论带平移的逆矩。下面的对象是这些工具与实际 $e=\mu*\beta$ 的共同来源接口，不把推广系数的记号或一般二项公式作为本节新增定理。
+

@@ -1,0 +1,39 @@
+### 证明
+
+策略 transcript 的对数概率可写成
+
+$$
+\log P_\theta(T_N)
+=
+\sum_n\log q_n(A_n\mid H_n)
++\sum_n\log p_n(X_n\mid A_n,H_n,\theta).
+$$
+
+第一项与 \(\theta\) 无关，所以总 score 是 \(S_N=\sum_ns_n\)。由条件归一化，
+
+$$
+\mathbb E_\theta[s_n\mid H_n,A_n]=0.
+$$
+
+若 \(m<n\)，则 \(s_m\) 是 \(H_n\) 可测，故
+
+$$
+\mathbb E[s_ms_n^{\mathsf T}]
+=
+\mathbb E\!\left[
+s_m\,
+\mathbb E[s_n^{\mathsf T}\mid H_n,A_n]
+\right]
+=0.
+$$
+
+于是
+
+$$
+\mathbb E[S_NS_N^{\mathsf T}]
+=\sum_n\mathbb E[s_ns_n^{\mathsf T}]
+=\sum_n\mathbb E[J_n].
+$$
+
+每项 \(J_n\) 正半定，增加一轮只能增加正半定信息。证毕。
+

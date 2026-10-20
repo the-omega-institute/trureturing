@@ -1,0 +1,31 @@
+**命题 102.7（所有切面和拒绝路径的共同精确字母表）。** 固定 $\ell,\rho$，令 $M_t(g)$ 为§101.3中长度 $\ell$ 半字的重量—综合征计数，在 $t\notin\{0,\ldots,\ell\}$ 时为零。对所有整数 $\beta$、域元素 $h$，
+
+$$
+\begin{aligned}
+P_{2\ell}(\beta,h)
+&=\sum_{t\in\mathbb Z,\ g\in\mathbb F_q}
+M_t(g)M_{t+\ell-\beta}(g+h),\\
+T:=P_{2\ell}(\ell,0)
+&=N_0(\ell,C_\rho)=\sum_{t,g}M_t(g)^2,\\
+\max_{0\le c\le2\ell,\ \beta\in\mathbb Z,\ h\in\mathbb F_q}P_c(\beta,h)&=T.
+\end{aligned}
+\tag{102.9}
+$$
+
+沿任意实际标记路径，$P_c(\beta,h)$ 不减。若解码输入固定为已供给的 $(\ell,\rho,c,\beta,h)$，一个所有切面共用的补充字母表实现全部过去精确恢复的最小大小是 $T$；即使精确性只要求在 $E_\rho$ 接受历史上，最小大小仍为 $T$。这只比较补充标签，不是总内存最优性。
+
+证明。把完整标记字写成 $(x,y)$，并置 $y=1-z$。若 $|x|=t$、$\sigma_\rho(x)=g$，则 $|z|=t+\ell-\beta$，且由 $h=C_\rho+\sigma_\rho(x)+\sigma_\rho(y)$、$\sigma_\rho(y)=C_\rho+\sigma_\rho(z)$ 得 $\sigma_\rho(z)=g+h$。$x,z$ 的两组选择独立计数，且补位可逆，给第一式；取 $(\beta,h)=(\ell,0)$ 得平方和。这个格也恰是从空前缀满足 $F_0(\ell,C_\rho)$ 的全部接受字，给 $N_0$ 等式。
+
+设 $s=\ell-\beta$。映射 $(t,g)\mapsto(t+s,g+h)$ 置换 $\mathbb Z\times\mathbb F_q$，所有非零项的和有限。对每项用 $2ab\le a^2+b^2$ 并求和，
+
+$$
+2P_{2\ell}(\beta,h)
+\le\sum_{t,g}M_t(g)^2+\sum_{t,g}M_{t+s}(g+h)^2=2T.
+$$
+
+向任意 $c$ 位前缀追加 $2\ell-c$ 个0，在同一 $(\beta,h)$ 下单射进入终端格，不要求这个终端格接受，故 $P_c(\beta,h)\le P_{2\ell}(\beta,h)\le T$。终端接受格达到 $T$，证明全体最大值，尤其涵盖 $\beta>\ell$ 和其他拒绝格。固定新标记 $a$ 的映射 $u\mapsto ua$ 也单射进其后继格，证明逐路径不减。
+
+完整秩总在 $\{0,\ldots,T-1\}$ 内，所以它用一个固定的 $T$ 值字母表达到全部恢复。反向在终端接受格，边界固定为 $(2\ell,\ell,0)$，未来为空，而 $T$ 个实际完整载荷两两不同且正质量；标签须区分全部这些字，故至少 $T$ 个值。只要求接受历史精确时，这个格仍迫使同一下界。对固定切面仅要求接受正格精确时，最大纤维原理给最小补充容量 $\max_{\beta,h:P_cN_c>0}P_c(\beta,h)$，由秩达到；这一步复用《[运输与记忆补全](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)》§16.1的共用界面容量，不另增加一般容量定理。证毕。
+
+一个给定非空格的最少定长补充数据位为 $\lceil\log_2P_c(\beta,h)\rceil$，全路径共用字母表为 $\lceil\log_2T\rceil$ 位。$D=T$ 的模寄存器等于完整秩，但只能在从公开 $\ell$ 及已付费取得的可见 $\rho$ 计算出 $T$ 后选定此 $D$；计数动态规划须收费。所有解码可见的边界寄存器均须实际供给并计费。若另外给解码器末位、原终止阶段或其他依赖历史的读数，它们须计入补充标签或重新计算观察纤维，不能仍把 $T$ 当作该扩展接口的补充下界。
+

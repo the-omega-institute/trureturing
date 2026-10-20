@@ -1,0 +1,7 @@
+此时：
+
+* \(p\)-方向用 Euler/Hecke primitive decomposition；
+* \(m\)-方向用调节子 Fourier 分解；
+* \(t\)-方向用 Mellin/Riemann 积分；
+* \(\alpha\)-方向用七状态有限 Fourier 矩阵；
+

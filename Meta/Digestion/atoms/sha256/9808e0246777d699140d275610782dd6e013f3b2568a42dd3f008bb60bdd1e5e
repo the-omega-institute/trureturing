@@ -1,0 +1,55 @@
+## 7. 固定窗口的真实最低模态 Fourier 变换只有实零点
+
+本节补上一条纸面文献桥，使固定窗口结论真正到达实零点对象。它不直接把自伴性代入 Connes-van Suijlekom 的 Theorem 6.1。该定理的精确陈述要求规定的分布二次型及三角多项式域上的本质自伴性。以下使用他们的有限维 Theorem 5.6，并显式通过同一 Weil 形式的 form core 取极限。
+
+令 P_JH 为 |n|<=J 的完整奇偶 Fourier 空间，J>=64，A_J 为真实 q 在其上的矩阵。由 PC4，任意 J>=64 都有
+
+\[
+\lambda_{0,J}\le mu<T,\qquad\lambda_{1,J}\ge T.
+\]
+
+因此其最低特征值单纯，且由同一偶候选排除奇性。矩阵
+
+\[
+Q_J=A_J-\lambda_{0,J}I
+\]
+
+正半定并有一维偶核。其对角值为偶序列，非对角值精确为
+
+\[
+(Q_J)_{nm}=\frac{b_n-b_m}{n-m},\qquad b_n=-s_c(n)/\pi,
+\quad b_{-n}=-b_n.
+\]
+
+这正是 Connes-van Suijlekom (11) 的矩阵类；减去实标量对角不改变该结构。Theorem 5.6(ii) 应用于这个实际矩阵，给出对应三角函数的 Fourier 变换只有实零点。其 [0,1] 坐标经 y=x/L+1/2 变为本卷的 e_n=(-1)^n*L^-1/2*exp(2*pi*i*n*x/L)；平移只乘无零点指数，实尺度变换及 Fourier 正负号变换保持实零点性。
+
+实际 Weil 形式的三角多项式 form-core 性由 Connes-Consani, Spectral triples and zeta-cycles, arXiv:2106.01715v1, Lemma 2.2 及 Proposition 2.3 给出；Suzuki, arXiv:2606.09096v1, Lemma 3.1 的证明及 Section 3.2 明确复述并用于同一个 Q_W^a。故 Rayleigh-Ritz 最低值满足
+
+\[
+\lambda_{0,J}\downarrow\lambda_0.
+\]
+
+设 u_J 为相位与 u 对齐的归一化有限最低模态，分解 u_J=alpha_J*u+w_J，w_J 与 u 正交。完整算子谱间隔给出
+
+\[
+\|w_J\|^2\le
+\frac{\lambda_{0,J}-\lambda_0}{T-\lambda_0}\longrightarrow0,
+\]
+
+从而 u_J->u in L2。同一固定支撑 [-a,a] 上，
+
+\[
+\sup_{z\in K}|\widehat u_J(z)-\widehat u(z)|
+\le\sqrt{2a}\,e^{a\sup_K|\Im z|}\|u_J-u\|_2\longrightarrow0
+\]
+
+对每个复紧集 K 成立。u 非零，Fourier 唯一性保证 hat(u) 非恒零。分别在上、下半平面应用 Hurwitz，得到
+
+\[
+\boxed{\widehat u(z)=0\Longrightarrow z\in\mathbb R
+\quad\text{在本次 }a=\tfrac12\log3\text{ 的固定窗口}.}
+\tag{RZ1}
+\]
+
+这里的无限极限是 J->infinity 且 a 固定；它没有证明 a->infinity 时 hat(u_a) 的归一化极限是 Xi。RZ1 是文献有限维定理、既有 form-core 性与本次完整算术证书的纸面推论，尚未接成 Lean 的解析零点定理。
+

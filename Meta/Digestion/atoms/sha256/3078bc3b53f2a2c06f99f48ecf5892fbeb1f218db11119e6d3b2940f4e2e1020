@@ -1,0 +1,38 @@
+### 14.6 从可观测低能质量到实际有限矩阵谱
+
+取非负能量 $\lambda_i$，其中 $i$ 遍历一个有 $d$ 个元素的有限指标集，构造实际实矩阵
+
+\[
+A=\operatorname{diag}(\lambda_i),\qquad
+Z_A(t)=\operatorname{tr}(\exp(-tA)).
+\]
+
+源码使用 `Matrix.trace` 和 `NormedSpace.exp` 定义 $Z_A$，先由 Mathlib 的 `Matrix.exp_diagonal` 和实指数识别定理证明
+
+\[
+Z_A(t)=\sum_i e^{-t\lambda_i}.
+\tag{14.8}
+\]
+
+谱结论使用 Mathlib 的 `spectrum`，由 `spectrum_diagonal` 识别为实际矩阵的对角元集合。[14-B] 这里同时完成了观察算子与谱对象的识别，没有把两个独立命题作合取来代替推导。
+
+**定理。** 若 $0\leq\lambda_i\leq2r$、$r>0$，且单次完整热迹观测满足
+
+\[
+|y-Z_A(t_*)|\leq\delta,\qquad
+ y+\delta<\frac{d+1}4,
+\]
+
+则
+
+\[
+\boxed{\operatorname{spec}_{\mathbb R}(A)\subset(r,\infty).}
+\tag{14.9}
+\]
+
+**证明。** 每个模式至少贡献 $e^{-2rt_*}=1/4$。如果某个模式满足 $\lambda_i\leq r$，它至少贡献 $1/2$，因此完整迹至少为 $(d+1)/4$，与观测上界矛盾。形式证明用每个非负剩余项 $e^{-t_*\lambda_i}-1/4$ 的有限和比较，覆盖任意有限维数和重复本征值。
+
+对应声明为 `CalibratedDiagonalHeatTrace.diagonalHeatTrace`、`diagonalHeatTrace_eq` 和 `calibrated_diagonal_spectrum_exclusion`。当一个能量恰为 $r$、其余能量都为 $2r$ 时，迹恰为 $(d+1)/4$，而低能谱仍非空，所以严格不等号必要。这一边界例在普通数学中直接计算；未另建一个形式化特例。
+
+式 (14.9) 使用完整迹。若只给一个可能与低能方向几乎正交的向量关联函数，单个低能方向的权重可以任意小，第 13 节障碍仍适用。对归一化迹 $Z_A/d$，认证阈值是 $1/4+1/(4d)$，相应绝对误差尺度必须随维数考虑；不能声称该归一化认证精度与维数无关。空指标集的谱为空，形式陈述仍有效。
+

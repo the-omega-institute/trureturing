@@ -1,0 +1,66 @@
+## 438. 实际 primorial 支持曲率、零端集中与补偿轮廓的定量误差
+
+沿用 §§433–434 的同一连续 primorial 及原始积分轮廓
+
+\[
+L=\log z,\qquad E_z(s)=\prod_{p\le z}(1-p^{-s}),\qquad
+F_z(v)=\frac{E_z(1+v/L)}{E_z(1)},\qquad z\ge2,
+\]
+
+\[
+\varphi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vb}}b\,db\right),\qquad
+r(v)=\int_0^1e^{-vb}\,db,\qquad
+j(v)=\int_0^1b e^{-vb}\,db.
+\]
+
+这里以自变量 \(v\) 记归一化后的实际有限和
+
+\[
+S_z(v)=\frac1L\sum_{p\le z}\frac{\log p}{p^{1+v/L}-1},\qquad
+T_z(v)=\frac1{L^2}\sum_{p\le z}
+\frac{p^{1+v/L}(\log p)^2}{(p^{1+v/L}-1)^2},\qquad s_z=S_z(0).
+\tag{SC.1}
+\]
+
+已有有限乘积微分及紧区间参数积分给
+
+\[
+F_z'=F_zS_z,\quad S_z'=-T_z,\quad
+\varphi'=\varphi r,\quad r'=-j,
+\quad F_z(0)=\varphi(0)=r(0)=1,
+\]
+
+\[
+0\le r(v)\le1,\qquad0\le j(v)\le\tfrac12\qquad(v\ge0).
+\tag{SC.2}
+\]
+
+保持既有第一 Mertens 供应
+
+\[
+A(t)=\sum_{p\le t}\frac{\log p}{p},\qquad
+|A(t)-\log t|\le K\quad(t\ge1),\qquad K=\log4+4.
+\]
+
+记已知收敛的素数纠正预算为
+
+\[
+C=\sum_p\frac{\log p}{p(p-1)},\qquad D=K+C.
+\tag{SC.3}
+\]
+
+\(C\) 是素数和，区别于 §434 中对全部整数求和的 \(R_1\)。经典第一 Mertens、Abel 求和及原始轮廓表示在这里均为已有供应。特别地，§434 的全参数误差证明以素数纠正预算 \(C\) 替代其较大的 \(R_1\) 后给
+
+\[
+|S_z(v)-r(v)|\le D/L,\qquad
+|\log F_z(v)-\log\varphi(v)|\le Dv/L,
+\]
+
+\[
+F_z(v)\le e^{Dv/L}\varphi(v),\qquad
+\varphi(v)\le e(1+v),\qquad v\ge0.
+\tag{SC.4}
+\]
+
+以下新增结论保留每个有限筛的实际初始斜率 \(s_z\)，不以极限值一替换其零端补偿。
+

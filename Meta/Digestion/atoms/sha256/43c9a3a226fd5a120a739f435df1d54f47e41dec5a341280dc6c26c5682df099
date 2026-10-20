@@ -1,0 +1,110 @@
+**命题 24.6（剩余模式及最终中窗任务的丢键损失）。** 在定义 24.4 的同一实际律下，取确定性 $R=f(A)$，令
+
+$$
+\eta_i=\mathbb E[\chi_{P_i}(A)\mid R].
+$$
+
+对剩余模式词的向量 Brier 损失，规定
+
+$$
+\mathcal L(R)=\mathbb E\sum_{b\in\{0,1\}^m}
+\bigl(\mathbf1_{B=b}-p(b\mid R)\bigr)^2.
+\tag{24.25}
+$$
+
+它与保留完整过去的损失之差准确为
+
+$$
+\mathcal L(R)-\mathcal L(A)
+=2^{-m}\sum_{i=1}^r\theta_i^2
+\mathbb E\operatorname{Var}(\chi_{P_i}(A)\mid R).
+\tag{24.26}
+$$
+
+因此遗忘过去键造成的损失由丢失的独立未来字符分量逐项给出；不同关系阶数或相同接缝不足以替代该分量信息。
+
+专取式 (24.13) 的奇偶来源，在全部 $k-1$ 个此前参与位之后预测最后位 $Y=A_k$。任一确定性过去记录 $R=f(A_{1:k-1})$，记 $\eta=\mathbb E[\chi(A_{1:k-1})\mid R]$，标量平方损失为
+
+$$
+\mathcal E(R)=\mathbb E\bigl(Y-\Pr(Y=1\mid R)\bigr)^2
+=\frac14\bigl(1-\theta^2\mathbb E\eta^2\bigr).
+\tag{24.27}
+$$
+
+保留充分奇偶键时 $\mathcal E=(1-\theta^2)/4$，完全忘记此前记录时 $\mathcal E=1/4$。$|\theta|=1$ 时充分奇偶键精确预测最后位。对实际剩余数量 $W_{k-1,h}=F_{3h+4}Y$，最佳标量平方损失为 $F_{3h+4}^2\mathcal E(R)$。
+
+证明。由式 (24.22) 与条件期望塔式，
+
+$$
+p(b\mid R)=2^{-m}
+\left[1+\sum_i\theta_i\eta_i\chi_{T_i}(b)\right].
+\tag{24.28}
+$$
+
+消费 [记录单纯形卷 §9][R24] 的条件均值投影：写 $Z_b=\mathbf1_{B=b}$，$p_A(b)=\mathbb E[Z_b\mid A]$，$p_R(b)=\mathbb E[Z_b\mid R]$。分解
+
+$$
+Z_b-p_R(b)=(Z_b-p_A(b))+(p_A(b)-p_R(b)).
+$$
+
+交叉项期望为零，因为第二项是过去的函数，而 $\mathbb E[Z_b-p_A(b)\mid A]=0$。故
+
+$$
+\mathcal L(R)-\mathcal L(A)
+=\mathbb E\sum_b\bigl(p_A(b)-p_R(b)\bigr)^2.
+$$
+
+代入式 (24.22)、(24.28)，用式 (24.23) 的未来字符正交，平方和中的非对角项全消去，得到
+
+$$
+\sum_b\bigl(p_A(b)-p_R(b)\bigr)^2
+=2^{-m}\sum_i\theta_i^2
+\bigl(\chi_{P_i}(A)-\eta_i\bigr)^2.
+$$
+
+再次条件在 $R$ 上，每项成为相应条件方差，证明式 (24.26)。字符的两两不同供给该对角和；若未来支持重复，损失中须保留合并系数的交叉项。条件均值投影和字符正交仍是原拥有者的经典工具，式 (24.26) 是它们在这份合法原生未来来源上的消费。
+
+最后位任务中，式 (24.15) 经塔式给 $\Pr(Y=1\mid R)=(1-\theta\eta)/2$。Bernoulli 变量的条件平方损失为其条件方差，因而
+
+$$
+\operatorname{Var}(Y\mid R)
+=\frac{1-\theta^2\eta^2}{4}.
+$$
+
+取期望即得式 (24.27)。充分奇偶记录有 $\eta^2=1$，空记录有 $\eta=\mathbb E\chi(A_{1:k-1})=0$，因为这份真前缀均匀。对 $|\theta|=1$，后验概率只取零或一。若尚未读完此前 $k-1$ 个参与位而剩余至少两位，下一位仍公平，不能提前套用最后位式来声称其已被奇偶确定。
+
+式 (24.25) 的二分类向量损失在 $m=1$ 时是两个指示坐标的平方损失之和，等于式 (24.27) 的两倍；特别其 excess 为 $\theta^2\mathbb E\operatorname{Var}(\chi\mid R)/2$，标量 excess 为同一量的 $1/4$ 系数。两种损失不能混用。$W_{k-1,h}$ 是正确定倍的 $Y$，故其最佳预测值及误差都按该实际权重缩放，平方风险乘权重平方。若改为绝对 $Q_{k+h}$，这份缩放还要求实际基线可用，定理 24.5 已给不保留基线时的反例。
+
+还可在这份同源最后中窗任务中消费独立 Boolean 噪声的字符计算。令此前 $t=k-1$ 位通过
+
+$$
+\widetilde A_j=A_j\mathbin\oplus E_j,\qquad
+\Pr(E_j=1)=\varepsilon_j\in[0,1]
+\tag{24.29}
+$$
+
+取得记录 $R=(\widetilde A_1,\ldots,\widetilde A_t)$；各 $E_j$ 相互独立，并与整个实际来源 $(A,Y)$ 独立。均匀前缀的独立坐标以及这个逐坐标通道使后验仍按坐标分解。对一个坐标，已知 $\widetilde A_j$ 后 $E_j$ 的概率不变，因为
+
+$$
+\Pr(E_j=e,\widetilde A_j=u)=\Pr(E_j=e)/2.
+$$
+
+于是 $(-1)^{A_j}=(-1)^{\widetilde A_j}(-1)^{E_j}$ 给
+
+$$
+\begin{aligned}
+\eta
+&=\mathbb E[\chi(A)\mid\widetilde A]
+=\chi(\widetilde A)\prod_{j=1}^t(1-2\varepsilon_j),\\
+\Pr(Y=1\mid\widetilde A)
+&=\frac{1-\theta\eta}{2},\\
+\mathcal E(\widetilde A)
+&=\frac14\left[1-\theta^2\prod_{j=1}^t(1-2\varepsilon_j)^2\right].
+\end{aligned}
+\tag{24.30}
+$$
+
+共同噪声参数的字符乘子归于 [O'Donnell 字符工具][F24] 所引原书 §2.4、命题 2.47；式 (24.30) 对不同翻转率的乘积由上述逐坐标计算给出，不另列为新的一般 Fourier 定理。此时 $R$ 虽含独立随机误差而不再是确定性 $f(A)$，来源独立噪声保证 $Y$ 与 $R$ 在给定 $A$ 后条件独立，故式 (24.28) 的塔式及式 (24.27) 的最后位条件律仍成立。若误差可读取来源未来，单凭边缘误差率就不能使用此推导。
+
+一个 $\varepsilon_j=1/2$ 使这份逐位记录的乘积为零，最后位风险回到 $1/4$。一个完全未保留的公平键位也如此：在其余逐位记录上求该独立均匀位的字符期望即为零。但若另有单独保存的充分奇偶或其他来源侧记录，必须按全部实际记录重新计算 $\eta$，不能把这个逐位编码的丢位结论套到不同编码。特别直接保存充分奇偶与保存所有易丢失的原始键位是不同记忆方式。$\varepsilon_j=0$ 或 1 是已知的确定变换，其因子平方为一，不损失该位的奇偶信息。证毕。
+

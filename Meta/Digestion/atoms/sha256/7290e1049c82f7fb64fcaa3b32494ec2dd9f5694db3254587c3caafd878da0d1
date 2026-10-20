@@ -1,0 +1,8 @@
+令：
+
+- $\Omega$ 为有限状态；
+- $\mathcal A$ 为动作集合；
+- $\delta(s,a)$ 为转移；
+- $o(s)$ 为观测；
+- $K\subseteq\Omega$ 为安全集合。
+

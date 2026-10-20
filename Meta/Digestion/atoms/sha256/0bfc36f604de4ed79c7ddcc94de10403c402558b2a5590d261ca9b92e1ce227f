@@ -1,0 +1,51 @@
+**定义 45.2（历史的源向表示及更新）。** 固定定义 45.1 的静态供应 $H,\mathcal F,h,\ell$。历史的可更新字段为
+
+$$
+\mathsf B_\omega=
+(j,U,V,P,Q,I,(z_i)_{i\in I},r_0,\ldots,r_{j+1}),
+\qquad I\subseteq\{0,1,2\}.
+\tag{TM.4506}
+$$
+
+$z_i$ 只记录由实际当前读规范化取得的初始 $E_i$。初始化为 $j=U=V=0$、$P=Q=(1,1,1)$、$I=\varnothing$、$r_0=r_1=0$。下界字段统一取非负整数；一个尚无非平凡拒绝条件的方向取零。该字段定义的初始来源集合为
+
+$$
+\begin{aligned}
+\mathcal A(\mathsf B)=\{t\in\mathcal F:\;&h(t)=\ell,\quad
+ E_i(t)=z_i\ (i\in I),\\
+ &\lambda_j(t)\le H-U,\quad
+ \lambda_k(t)>r_k\ (0\le k\le j+1)\}.
+\end{aligned}
+\tag{TM.4507}
+$$
+
+以下更新始终使用动作前的字段，除非明确写为更新后的值。
+
+1. 实际读返回 $e_\mathrm{obs}$ 时，先作已知单位算术
+   $$
+   y=P_0^{-1}e_\mathrm{obs}Q_0^{-1},\qquad
+   j=3q+r,\quad z_r=J^q(y).
+   \tag{TM.4508}
+   $$
+   将 $r$ 加入 $I$；若已经存有 $z_r$，实际读必须与之相同。其余字段不变。这里的逆只消去已知单位，不对未知实际来源作逆动作。
+2. 任一侧的正上下文 $v$ 被拒绝时，不改变 $j,U,V,P,Q,I$，只置
+   $$
+   r_j\longleftarrow\max(r_j,0,H-U-d).
+   \tag{TM.4509}
+   $$
+   若接受，则置 $(U,V)\leftarrow(U+d,V+e)$。右侧接受置 $Q\leftarrow Q\odot W_3(v)$；左侧接受置 $P\leftarrow W_3(v)\odot P$。保留全部读字段和下界。
+3. $\rho$ 被拒绝时，不改变来源运输和读字段，只置
+   $$
+   r_{j+1}\longleftarrow\max(r_{j+1},0,H-V).
+   \tag{TM.4510}
+   $$
+   若接受，则置
+   $$
+   (j,U,V,P,Q)\longleftarrow
+   (j+1,V,U+V,F(P),F(Q)),
+   \tag{TM.4511}
+   $$
+   保留已有下界，并为新末方向附加一个零下界。$j$ 是完整接受次数，不按三或六取模。
+
+接受后要求一次当前读，就先作接受更新，再用真实读作第 1 项更新。被拒动作没有候选读供第 1 项使用；拒绝之后另发出的读只读取未改变的当前源。停机本身不改变来源集合，正确输出条件另由初始目标恒定性决定。
+

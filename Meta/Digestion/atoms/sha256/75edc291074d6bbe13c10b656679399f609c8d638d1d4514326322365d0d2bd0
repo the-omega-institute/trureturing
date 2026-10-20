@@ -1,0 +1,32 @@
+**定义 90.1（精确熵中心与最小覆盖数）。** 保持定义 87.1 的原固定幅度、
+固定 $\beta\in(1/2,1)$、全部取整、完整得分组、均匀支持先验后验及同一个
+$Y=T+\sigma_MG$，仍假定
+$L_M=\ln(1/\sigma_M)\to\infty$、$L_M=o(Q^3)$。
+沿用第 68 章的完整率域 $\mathcal I$、率函数 $I$、$c_q=\phi(1-\beta)/\beta$，
+并置
+
+$$
+\ell_*=\operatorname{Leb}\{u\in\mathcal I:I(u)<c_q\},
+\qquad v=\ell_*/2>0.
+\tag{90.1}
+$$
+
+$v$ 是自然单位信息方差的首阶系数，与能量极限方差 $\nu=2g_0$ 不同。
+对每个有限数据纤维，写
+
+$$
+\begin{aligned}
+f_x(y)&=\sum_rP_x(r)\varphi_{\sigma_M}(y-t_x(r)),\\
+p_x(r\mid y)&=\frac{P_x(r)\varphi_{\sigma_M}(y-t_x(r))}{f_x(y)},\\
+J_y(r)&=-\ln p_x(r\mid y),\qquad
+H_x(y)=\sum_rp_x(r\mid y)J_y(r),\\
+N_\varepsilon(x,y)&=
+\min\{|A|:\sum_{r\in A}p_x(r\mid y)\ge1-\varepsilon\}.
+\end{aligned}
+\tag{90.2}
+$$
+
+以下 $\varepsilon\in(0,1)$ 固定，$z=\Phi^{-1}(1-\varepsilon)$，
+$\varphi$ 是标准正态密度。所有信息量使用自然对数。
+$H_x(y)$ 始终是同一输出处的精确条件熵。
+

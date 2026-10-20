@@ -1,0 +1,64 @@
+## 122. FIB 类型骨架上的外加分枝随机游走、极值前沿与 KPP 接口
+
+FIB 替换给出两类祖先—后裔骨架：\(\alpha\) 产生一个 \(\beta\)，\(\beta\) 产生一个 \(\beta\) 和一个 \(\alpha\)，其计数矩阵为
+\[
+A=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\tag{122.1}
+\]
+这里的世代是替换次数，不等同于叶词位置或物理时间。另给类型边 \(i\to j\) 的独立位移律 \(K_{ij}\)，根位置为零，粒子 \(u\) 的位置为路径位移和 \(S(u)\)，第 \(n\) 代最大值为 \(R_n=\max_{|u|=n}S(u)\)。位移概率与祖先树独立性均为外加合同。
+
+令 \(H_{n,i}(x)=\Pr_i(R_n\le x)\)。在分开子树独立时，
+\[
+\begin{aligned}
+H_{n+1,\alpha}(x)
+&=\int H_{n,\beta}(x-y)K_{\alpha\beta}(\mathrm dy),\\
+H_{n+1,\beta}(x)
+&=\left[\int H_{n,\beta}(x-y)K_{\beta\beta}(\mathrm dy)\right]
+\left[\int H_{n,\alpha}(x-y)K_{\beta\alpha}(\mathrm dy)\right].
+\end{aligned}
+\tag{122.2}
+\]
+同胞位移相关时必须改用联合律，不能用两个边缘卷积相乘。若边指数矩
+\[
+m_{ij}(\theta)=\int e^{\theta y}K_{ij}(\mathrm dy),
+\qquad
+B(\theta)=
+\begin{pmatrix}
+0&m_{\alpha\beta}(\theta)\\
+m_{\beta\alpha}(\theta)&m_{\beta\beta}(\theta)
+\end{pmatrix},
+\qquad
+\kappa(\theta)=\log\rho(B(\theta)),
+\tag{122.3}
+\]
+则指数矩估计给出
+\[
+\Pr_i(R_n\ge cn)
+\le e^{-\theta cn}[B(\theta)^n\mathbf1]_i,
+\qquad
+\limsup_{n\to\infty}\frac{R_n}{n}
+\le \inf_{\theta>0}\frac{\kappa(\theta)}{\theta}.
+\tag{122.4}
+\]
+把上界提升为精确速度需要多类型分枝随机游走定理、不可约性、非格点性和可积条件。若全部位移独立且服从 \(N(\mu,\sigma^2)\)，则候选线性速度为
+\[
+c_*=\mu+\sigma\sqrt{2\log\varphi},
+\qquad
+\varphi=\frac{1+\sqrt5}{2},
+\tag{122.5}
+\]
+但这仍需相应极值定理核验。
+
+在适用的轻尾、非格点临界条件下，最大值中心可具有
+\[
+a_n=c_*n-\frac{3}{2\theta_*}\log n,
+\qquad
+\Pr_i(R_n-a_n\le x)
+\to
+\mathbb E_i\!\left[
+e^{-C_iD_{\infty,i}e^{-\theta_*x}}
+\right],
+\tag{122.6}
+\]
+其中 \(D_{\infty,i}\) 是需单独证明收敛的临界导数鞅极限。有限容量的分枝—选择会删除领先以外的后裔，速度一般低于无选择过程；连续 Brownian 位移和指数分枝时，还可在额外合作型条件下得到两类型 Fisher–KPP 前沿。所有位移、时钟、容量、选择和连续极限均为外加，FIB 递归本身只给出类型骨架与计数关系。
+

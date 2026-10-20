@@ -1,0 +1,12 @@
+### 证明
+
+由定义 313.1，左侧整体算子为
+
+$$
+|r_\varnothing\rangle\langle r_\varnothing|
+\otimes
+|e_x\rangle\langle e_y|.
+$$
+
+对环境取迹得到系数 $\langle e_y|e_x\rangle=\delta_{xy}$，即所示公式。证毕。
+

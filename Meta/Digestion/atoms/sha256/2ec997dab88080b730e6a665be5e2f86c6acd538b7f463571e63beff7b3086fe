@@ -1,0 +1,13 @@
+## 定义 5.3（局部—全局余量型）
+
+\[
+\boxed{
+\operatorname{LGRes}(q)
+=
+\sum_{x,y:X}
+(x\neq y)
+\times
+(x\sim_{\mathrm{loc}}y).
+}
+\]
+

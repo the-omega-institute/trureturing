@@ -1,0 +1,4 @@
+**定义 980.1（数学和项目来源）。** 本批延续第 894.1 条的对称二态同通道表示及第 941—960 节的三观察符号约定。非负秩二的背景为 Allman、Rhodes、Sturmfels 与 Zwiernik，[Tensors of Nonnegative Rank Two](https://arxiv.org/abs/1305.0539v1)。全部合法对称距离、唯一性、阈值、导数、近优集中与稳定性均由正文的普通解析推导承担，未将文献中的成员判据当作距离计算。
+
+项目对应为 `ClosedConvexDistanceWitnessDuality.lean` 的紧凸支持见证接口，以及 `TotalVariation` 下 `Metric.lean`、`Convexity.lean`、`ProductSubadditive.lean` 的事件差、三角、联合凸性与乘积估计。本文明确给出有限载体、半一范数、紧凸模型像和非负归一化因子的对应。经典凸性、支持多项式、Cauchy–Schwarz 与有限混合工具不作原创申报；综合推导亦不据此取得研究优先权。
+

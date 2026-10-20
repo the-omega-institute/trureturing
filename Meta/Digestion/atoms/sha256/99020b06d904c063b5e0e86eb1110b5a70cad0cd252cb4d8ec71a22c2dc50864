@@ -1,0 +1,18 @@
+**定义 68.2（边电流与压力）。** 令 \(j_{ij}=-j_{ji}\) 为有向边电流，在 \(Q_{ij}>0\) 的边上定义。置
+\[
+Y_t=j_{X_tX_{t+1}},\qquad
+J_n=\sum_{t=0}^{n-1}Y_t,\qquad
+\bar j=\sum_{ij}\pi_iQ_{ij}j_{ij}.
+\]
+对实 \(\chi\) 定义倾斜矩阵
+\[
+Q_\chi(i,j)=Q_{ij}e^{\chi j_{ij}},\qquad
+\Lambda(\chi)=\log\rho(Q_\chi).
+\]
+primitive 假设下，
+\[
+\lim_{n\to\infty}\frac1n\log\mathbb E_\pi e^{\chi J_n}
+=\Lambda(\chi),
+\]
+且 \(\Lambda\) 在零点邻域解析。
+

@@ -1,0 +1,10 @@
+**定义 1.5(真值账本)**。一个账本是四元组
+
+$$
+L=(N,\ E,\ w,\ O)
+$$
+
+其中:$N\subseteq\mathcal P$ 有限,称**冻结集**;$E\subseteq N\times N$ 是无环关系,$(u,v)\in E$ 读作「$v$ 依赖 $u$」;$w:N\to\Pi$ 是见证,满足 $\forall v\in N,\ K(w(v),v)=\mathsf{acc}\wedge\mathrm{ax}(w(v))\subseteq\mathfrak A$,且 $w(v)$ 所引用的每个命题都在 $\mathrm{pred}_E(v)$ 中(**边覆盖依赖**);$O\subseteq\mathcal P\setminus N$ 是**登记前沿**——被显式标为 `open` 的命题集。
+
+记 $\mathrm{Frozen}(L)=N$,$\mathrm{Anc}_L(v)$ 为 $v$ 在 $E$ 下的祖先集(不含 $v$),$\mathrm{Desc}_L(v)$ 为后代集(不含 $v$)。
+

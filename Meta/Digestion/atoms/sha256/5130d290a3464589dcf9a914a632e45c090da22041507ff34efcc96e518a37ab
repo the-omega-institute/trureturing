@@ -1,0 +1,8 @@
+**约定 2.3（块、块转移矩阵与块迹）。** 块是有限实序列 $u=(u_0,\dots,u_{r-1})$,$r\ge1$。记 $d(x)=2+tx-\lambda$,
+
+$$
+B_u=T(d(u_{r-1}))\cdots T(d(u_1))\,T(d(u_0)),\qquad \sigma_u=\operatorname{tr}B_u\in\mathbb R[\lambda,t].
+$$
+
+$\pm1$ 块也写成 $\{+,-\}$ 上的字,例如 $u=-++$ 表示 $(-1,1,1)$,此时 $B_u=T(a)T(a)T(b)$。$u^k$ 表示 $k$ 个 $u$ 的串接;圈 $C_L$ 上的势写成循环字 $v_0v_1\cdots v_{L-1}$。由块 $u$ 生成的 $C_{rm}$ 上的周期势记作 $\tilde u$,$\tilde u_i=u_{i\bmod r}$。
+

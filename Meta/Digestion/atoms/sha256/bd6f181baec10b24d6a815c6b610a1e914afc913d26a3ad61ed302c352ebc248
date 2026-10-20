@@ -1,0 +1,13 @@
+### 92.3 增长计数器的直接复用
+
+对任意要求的正误差 $\varepsilon$，选择公开整数 $\ell\ge2$ 使 $2^{-\ell}\le\varepsilon$，直接运行定理91.2的同一共同 Read 程序，停止时输出 $\widehat b=\widehat k\bmod2$。奇偶错误包含于深度错误，故对每个实际 $h$
+
+$$
+P_h^\sigma(\widehat b\ne k(h)\bmod2)\le2^{-\ell}\le\varepsilon,
+\qquad P_h^\sigma(\tau<\infty)=1,
+\qquad \mathbb E_h^\sigma\tau<\infty.
+\tag{92.7}
+$$
+
+这里复用已有估计器，没有另造解码方法。阶段、样本计数及有理计算的可区分状态可以增长，所以它不属于固定有限 $Q$ 的类；逐点有限期望也不提供关于全部历史的统一均值界或有界记忆保证。
+

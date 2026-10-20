@@ -1,0 +1,5 @@
+未知假设 $j\in\{*,h\}$ 以等先验选定，此后提供 $m$ 份同一来源的独立副本。两种接口分别开放：
+
+- 重置前的全部联合来源 $\Omega_j^{\otimes m}$。
+- 固定仪器逐份独立作用后的完整输出 $\sigma_j^{\otimes m}$，其中 $\sigma_j=(\mathcal S_p\otimes\operatorname{id}_E)(\Omega_j)$。
+

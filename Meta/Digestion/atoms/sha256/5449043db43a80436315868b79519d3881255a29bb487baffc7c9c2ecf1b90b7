@@ -1,0 +1,7 @@
+它用于：
+
+* 消去低阶 exact mode；
+* inclusion–exclusion；
+* 提高 residual exponent floor；
+* 使余项进入可和区域。
+

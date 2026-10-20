@@ -1,0 +1,25 @@
+**Proposition 10.4 (why the reverse and effective directions remain open).**
+The converse from $\forall h\,J_B(h)$ to a datum satisfying (NIS.38) is not
+established by Theorem 9.2 or by a rowwise saturation. A proof must supply all
+of the following in one combined construction:
+
+1. a finite positive presentation containing every row's $E^+$, the shared
+   contact variable $W$, every cross-row contact equation, and the full
+   original-coordinate reconstruction (NIS.38r);
+2. a simultaneous completion theorem proving that $\forall h\,J_B(h)$
+   supplies a datum with (NIS.38). It must preserve the full positive solution
+   relation, repeated names, image/rank guards and signed finite neighborhoods,
+   including a full graph valuation and one common $W$;
+3. a computably supplied finite slot/obligation closure and scheduling theorem
+   of the precise scope in Definition 9.4, together with a represented
+   finite-prefix interface for guarded constructor cycles such as (NIS.36).
+   Its correctness must be proved on the reconstructed native values;
+4. a proof that the finite witnesses remain actual members of the complete
+   charts on the same paid acquisition cut at the authentic epoch;
+5. a total global decision on the finite input description, sound and complete
+   for nonempty joint signed support after all scalar parameters, completed
+   free-state values, full graph extensions and the common contact have been
+   existentially quantified; and
+6. a total, sound and complete fixed-depth decision with finite witnesses on a
+   positive outcome and finite exclusion certificates on a negative outcome.
+

@@ -1,0 +1,7 @@
+如果仍强行进行 formal continued-fraction synthesis，则某一层最终必须出现：
+
+* 负质量；
+* 负长度；
+* 非实参数；
+* 或 Hankel 行列式失去正性。
+

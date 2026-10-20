@@ -1,0 +1,7 @@
+这给出一个精确的“偶完成、奇破缺”谱判据：
+
+* \(x<0\)：even channel 已经为负；
+* \(0<x<1\)：两通道均正；
+* \(x>1\)：odd channel 为负；
+* \(x\notin\mathbb R\)：不存在这一实 Hermitian 完成。
+

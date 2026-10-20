@@ -1,0 +1,12 @@
+#### 3.6.3 同一个修复来源律控制全部有界读数和随机后处理
+
+选定上述某个最近修复律 $p_*$ 后，对任意 $f:A\to[0,1]$，都有
+$$
+\left|\mathbb E_{p_*}f-\mathbb E_qf\right|
+\le\operatorname{TV}(p_*,q)
+\le\min\{1,H_A\delta(q,y)\}.
+\tag{TM.71}
+$$
+
+证明如下。令 $v=p_*-q$，则 $\sum_av(a)=0$。正部与负部的总质量相等，均为 $\tfrac12\sum_a|v(a)|=\operatorname{TV}(p_*,q)$。由 $0\le f\le1$，$\sum_af(a)v(a)$ 的上下界分别由正部与负部质量控制，得到式(TM.71)。这对全部 $f$ 同时成立，使用的是已经选定的同一个 $p_*$，无需为不同任务分别换来源。
+

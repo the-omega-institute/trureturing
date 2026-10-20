@@ -6,7 +6,31 @@ Ordered defects and bulk subtraction for the full three-row spectral cone.
 
 These statements concern real scalar spectra and ordered step synthesis. Connecting the boundary inequalities to a physical APPT model, constructing an attaining state, and determining a purity supremum require additional results.
 
-**Theorem 1.1 (Unconditional fixed-cone estimate).**
+**Theorem 1.1 (Mass identity for disjoint boundary blocks).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_mass`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N>=16, 6<=j<=N-10 and arbitrary real x:Fin 16 to Real, sum_k synth(positions N j,x)_k equals low(x)N+x5*j+H(head x)-D(tail x). This identity does not require feasibility or nonnegativity. It follows from mass_synth and finite-coordinate normalization. The actual_mass theorem applies it for N>=56; normalized_endpoint52_good, half_jump_endpoint52_good and bulk_endpoint52_good use it to express endpoint mass in boundary coordinates.
+
+**Theorem 1.2 (Square identity for disjoint boundary blocks).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_square`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_square` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the same N,j and arbitrary x, write S=low(x)N+x5*j+H-D. Then sum_k synth(positions N j,x)_k^2=(2 low(x)+x5)S-low(x)(low(x)+x5)N+E(x5,head x,tail x). It includes negative and infeasible x. The derivation uses square_synth, strict ordering of all sixteen slot positions and polynomial normalization. The actual_square theorem applies it for N>=56; normalized_endpoint52_good, half_jump_endpoint52_good and bulk_endpoint52_good use it to express endpoint energy in boundary coordinates.
+
+**Theorem 1.3 (Unconditional fixed-cone estimate).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.structural_fixed_good`
 
@@ -18,7 +42,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/Structura
 
 For all natural N at least 67, natural j from 6 to N-10, and arbitrary real x on sixteen slots with x nonnegative and all three actual A rows nonnegative, the synthesized spectrum has Euclidean norm at most sqrt(target N) times its mass. The positions are 1,2,3,4,5,j,N-9 through N. The target uses the natural integer t=(3*N+4)/8. There is no additional cone or certificate success assumption.
 
-**Theorem 1.2 (Quadratic endpoint control).**
+**Theorem 1.4 (Quadratic endpoint control).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.quadratic_interval_le_fun`
 
@@ -30,7 +54,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/Structura
 
 For any real function f and real a,b,c,l,r,x,M, assume f(y)=a y^2+b y+c for every real y, a is nonnegative, l≤x≤r, and f(l)≤M and f(r)≤M. Then f(x)≤M. This original helper applies Mathlib convex interval control to the quadratic and is consumed by the structural cone estimates and the actual-PSD moment proof.
 
-**Theorem 1.3 (Energy of two ordered blocks).**
+**Theorem 1.5 (Energy of two ordered blocks).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.ordered_block_energy`
 
@@ -234,12 +258,15 @@ If j<t, integrality gives j≤t-1 and the product is positive; if j>t, j≥t+1 a
 
 Section 7 now proves the unconditional fixed-cone statement in Section 1. Applying it through the **existing** full compression/convex-mixture bridge gives the asserted inequality for every original l. That bridge preserves the original full three rows, nonnegativity, antitonicity and mass; no truncated rows or extra hypothesis have been substituted. With sum l_i=1, the homogeneous bound is exactly sum l_i²≤T_N.
 
-The analytic argument uses ordered nonnegative block energies, Mathlib convex and concave interval endpoint principles, the existing scalar envelope comparisons and exact integer optimizer, and the shared Euclidean norm-to-mass closure lemmas. The structural derivation was written independently before the external rectangular theorem was inspected; no external code is transplanted. The exact external theorem APPTReview.appt_rectangular_maximum_formula in mxym/math at immutable commit 479acd5d6269faf94433ad6b694c5b7979027c69, formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean:78 (https://github.com/mxym/math/blob/479acd5d6269faf94433ad6b694c5b7979027c69/formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean#L78), states the rounded plateau physical maximum for m at least 3 and n at least m^3-m-2, hence for four rows n at least 58. Its single four-row cut differs from the jointly imposed rank-two, rank-three and rank-four inequalities used here. The full leading asymptotic does not give the exact finite target. This historical N>=67 three-row scalar theorem is unchanged. Its complete n>=17 physical application has historical compilation and accepted scoped closure evidence, as explained in the owning QuadbitQuintitMaximumPurity application narrative. The current n>=14 route instead uses actual_k1_l4_purity_bound in ContinuousSpectrumAssembly at N=4n>=56, the same actual APPT diagonal, its literal K1 and rank-four necessary row, and an explicit coordinate-projector attaining density. Official CI has compiled that complete application, while its current full axiom/report closure, supplier registrations and final official acceptance remain pending. Relative to the prior m=4,n>=58 result, the candidate universal upper-bound extension is now14 through57; the earlier17 through57 wording describes the historical route. The inner-polytope formulas, attainers and transition are published by Ahiable–Kothakonda–Winter. Neither scalar theorem alone constructs a physical density or proves an attained supremum; the complete application is explained in its existing owner. Further literature checks and global uniqueness remain pending.
+The analytic argument uses ordered nonnegative block energies, Mathlib convex and concave interval endpoint principles, the scalar envelope comparisons and exact integer optimizer, and the Euclidean norm-to-mass closure lemmas. The external theorem APPTReview.appt_rectangular_maximum_formula in mxym/math at immutable commit 479acd5d6269faf94433ad6b694c5b7979027c69, formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean:78 (https://github.com/mxym/math/blob/479acd5d6269faf94433ad6b694c5b7979027c69/formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean#L78), states the rounded plateau physical maximum for m at least 3 and n at least m^3-m-2, hence for four rows n at least 58. Its single four-row cut differs from the jointly imposed rank-two, rank-three and rank-four inequalities used here. The leading asymptotic does not give the exact finite target. At N=4n, the N>=67 three-row scalar estimate applies for n>=17. The n>=14 route uses actual_k1_l4_purity_bound in ContinuousSpectrumAssembly at N=4n>=56, with the actual APPT diagonal, its literal K1 and rank-four necessary row. A physical maximum also requires an attaining density, supplied by the coordinate-projector construction described in QuadbitQuintitMaximumPurity. The inner-polytope formulas, attainers and transition are published by Ahiable–Kothakonda–Winter. Neither scalar theorem alone constructs a physical density or proves an attained supremum. The dimension range 14 through 57 lies below the cited external theorem's four-row threshold; this comparison alone establishes no literature priority or global uniqueness.
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_mass`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_square`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.ordered_block_energy`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.quadratic_interval_le_fun`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.structural_fixed_good`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/HalfspaceConeTransfer](../HalfspaceConeTransfer.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/DefectScalarBounds](DefectScalarBounds.md)
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ScalarEnvelopes](ScalarEnvelopes.md)

@@ -1,0 +1,48 @@
+**Theorem 44.2 (positive logarithmic infrared tail and its normalization).**
+For each fixed nonzero $\kappa$, each fixed pair of heights and phases,
+
+$$
+F^L_\kappa(t;k,k';w,x)
+=\frac{A_\kappa(k,k')}{t}+O(t^{-2}),\qquad
+A_\kappa(k,k')=\frac{p}{4\pi L\sqrt{\det N_\kappa}}>0.
+\tag{44.3}
+$$
+
+The remainder is locally uniform in points, including distinct heights
+at coincident phases; fixed-parameter constants are allowed here.
+Consequently $\mathcal G^L_{\kappa,0}=+\infty$ at every point.
+There is no finite nonnegative threshold Green on this cylinder.
+At distinct full points the precisely normalized subtraction is
+
+$$
+\begin{aligned}
+\mathcal G^L_{\kappa,m}-A_\kappa\log(1/m)&\longrightarrow
+\mathfrak F^L_\kappa,\qquad m\downarrow0,\\
+\mathfrak F^L_\kappa
+&=\int_0^1F^L_\kappa(t)dt
+ +\int_1^\infty[F^L_\kappa(t)-A_\kappa/t]dt
+ -\gamma A_\kappa,
+\end{aligned}
+\tag{44.4}
+$$
+
+where $\gamma=-\lim_{m\downarrow0}
+ [\int_1^\infty e^{-mt}dt/t+\log m]$ is Euler's constant.
+The finite part may have either sign and is not a nonnegative Green.
+For original raw $D$ measure the logarithmic coefficient is
+$p/(8\pi^2\sqrt{\det N_\kappa})$.
+
+Proof. In (43.4) the zero hidden mode is
+$(4\pi L t\sqrt{\det N_\kappa})^{-1}e^{-b^2/(4t)}$;
+all other modes have exponential suppression for fixed $L$.
+The periodized band error is $O(p[t^{-5/2}+L^{-1}t^{-2}])$.
+This proves (44.3) directly for the native kernel with no marginalization.
+Its positive leading coefficient proves divergence, independently of the
+small-time behavior. Subtract $A_\kappa/t$ only on $t\ge1$;
+the remaining integrals are absolutely convergent off the full source.
+The elementary exponential-integral identity defining $\gamma$ proves
+(44.4) by dominated convergence. Finally divide by $a$ and use $aL=2\pi$.
+The logarithm uses the fixed mass unit of (41.1); replacing that unit changes
+the finite part by the corresponding explicit multiple of $A_\kappa$.
+$\square$
+

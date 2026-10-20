@@ -639,3 +639,476 @@ count. Assumption 1.3's separate services and prices remain required.
 [BRY]: https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Total-entry exclusion and paid-root live amplification
+
+**Definition 7.1 (total starts in one stationary table).**
+On a full $d$-coordinate cube write
+$f_s(x)=\mathbf1_{\{|x|\ge s\}}$, $1\le s\le d$.
+In one finite stationary table with running set $Q$, fixed coordinate
+labels, fixed successors and the same two terminals, a state $a_s$
+is a total threshold-$s$ start if every input, started at $a_s$,
+actually terminates with output $f_s$. For a chosen such start $a_t$,
+let $Q_{\rm live}(t;a_t)$ be the union of states reached immediately
+before queries at actual prefixes from $a_t$ with exposed counts
+$h<t\le d-z$. The support and counts index actual histories;
+they are not runtime records. A state live on one input can be used
+after certification on another.
+
+Several total starts here are properties of already installed states
+on the same complete input cube. This definition provides no selector,
+additional initialization rule or callable entry to a running apparatus.
+Neither a variable order nor union-graph acyclicity is required.
+
+**Lemma 7.2 (a different total threshold entry is never live).**
+If $a_s,a_t$ are total starts in Definition 7.1 and $s\ne t$, then
+
+$$
+a_s\notin Q_{\rm live}(t;a_t).
+\tag{CP.29}
+$$
+
+Consequently, if one table has total starts for $r_0$ distinct
+nonconstant thresholds, then for each chosen threshold $t$ among them,
+
+$$
+|Q|\ge |Q_{\rm live}(t;a_t)|+r_0-1.
+\tag{CP.30}
+$$
+
+No query or letter bound is needed for this lemma.
+
+**Proof.** A live prefix from $a_t$, with $h$ ones and $z$ zeros,
+has completions of both weights $t-1$ and $t$: its unread count is
+$d-h-z$, and $h\le t-1<t\le d-z$. Every completion of its
+exposed assignment follows that same prefix, by determinism, even
+if some previous coordinates were repeated.
+
+Suppose its current state were $a_s$. If $s<t$, choose a completion
+of weight $t-1$. Correctness from $a_t$ requires output zero, but
+totality from $a_s$ requires one on this identical full input. If
+$s>t$, choose weight $t$, reversing the two required outputs.
+Stationarity makes the suffix from the identical current state on
+that identical input the same in either interpretation. Both cases
+are contradictions. Distinct threshold functions also require distinct
+total start states. All other $r_0-1$ starts therefore lie outside
+the chosen live set and give (CP.30). $\square$
+
+**Theorem 7.3 (one-variable amplification from a uniform live bound).**
+Fix integers $N\ge2$, $2\le k\le N$, $q\in\{k-1,k\}$ and
+$B\ge0$. Assume the following uniform premise: for every original
+position vector of length $N$, and every complete correct
+threshold-$q$ graph on its full cube with both same-run caps
+$N,\sum_i c_i$, at least $B$ states are live from its declared
+source-independent start. Then every complete original
+$(N+1)$-coordinate threshold-$k$ graph at both caps
+$N+1,\sum_i c_i$ has
+
+$$
+m\ge B+2.
+\tag{CP.31}
+$$
+
+Here, at both dimensions, the positions are arbitrary distinct
+positive integers and $c_i=s_i+4$. The stationary Boolean table
+definition is used at these displayed dimensions, including $N=2$;
+the numerical range of Definition 1.1 is not needed for this theorem.
+More generally the premise need
+only cover every length-$N$ vector obtained by removing any one
+coordinate from every target vector under consideration, reindexed
+in original increasing order. A premise only for consecutive
+positions, or for deletion of one preselected coordinate, does not
+give the stated all-position conclusion.
+
+**Proof: the paid root and its two cases.**
+Fix one target graph, let $a$ be its running start, and let $j=i(a)$.
+Put $R=[N+1]\setminus\{j\}$ and
+$C_R=\sum_{i\in R}c_i$. The two actual root replies leave
+thresholds $k$ and $k-1$ on the full same $R$ cube. Both are
+nonconstant because $2\le k\le N$. The original root query costs
+one call and $c_j$ on each complete input, so its actual suffix
+has both caps $N,C_R$. Let $m_j$ count every installed state of
+label $j$, including unused and certified-only states.
+
+**Proof: $m_j\ge2$.**
+Choose $b=k-q\in\{0,1\}$ and follow the actual paid root reply
+$j=b$. Every assignment on $R$ completes this prefix. Fix $j=b$
+only in a proof graph, retaining the $R$-labelled states occurring
+after this prefix on at least one completion. Suppress intervening
+$j$-labelled chains along their fixed $b$ successors, as in the
+restriction proof of Theorem 5.1.
+
+For clarity, that construction does not need Theorem 5.1's numerical
+residual range. Its initial fixed-$j$ chain is finite by termination
+on every completion. A retained-state edge realized on some
+completion likewise has a finite ensuing fixed-$j$ chain, reaching
+a retained state or an original terminal. Nonconstant threshold $q$
+ensures that the initial chain reaches a running retained state:
+a terminal reached along that input-independent chain would give
+one constant output on all $R$ inputs. An edge realized by no
+completion can be redirected to either original terminal. Induction
+on each fixed $R$ input follows exactly its old subsequence of
+$R$-labelled states, so every edge used by the induction was
+realized by that same input. No redirected impossible edge becomes
+actual. This proves full-cube correctness and termination even when
+unrealizable union paths cycle.
+
+No state is copied. The restricted graph has at most $m(R)$
+running states, where $m(R)$ counts all original $R$ labels.
+On each input its two charges are at most the actual suffix charges,
+hence at most $N,C_R$ together. The original paid root and any
+later certified $j$ visits are still charged in the original run;
+only this proof restriction suppresses them. Its unchanged residual
+cost vector is in the premise domain. Therefore it has at least
+$B$ live states, giving $m(R)\ge B$. Since $m_j\ge2$,
+$m=m(R)+m_j\ge B+2$.
+
+**Proof: $m_j=1$.**
+The root $a$ is the only installed state with label $j$. A terminating
+stationary run on one fixed input cannot revisit a state: its reply
+and entire subsequent suffix would repeat indefinitely. Thus no actual
+suffix after either root reply returns to $a$.
+
+Let $a_0=\delta(a,0)$ and $a_1=\delta(a,1)$. Each is running,
+since an immediate terminal would make one of the nonconstant
+residual thresholds constant on all of $R$. Delete only $a$ in a
+proof table and redirect every incoming edge to $a$ to an arbitrary
+original terminal. All remaining running labels lie in $R$.
+For every $R$ input $y$ and $b\in\{0,1\}$, its original
+extension $x$ with $x_j=b$ reaches $a_b$ after the paid root.
+Its suffix never visits $a$. Until a first changed edge, the proof
+table follows that suffix exactly; such a first edge would be an
+old edge into $a$, which the original suffix never takes. Thus no
+changed edge is used. The same residual table consequently has
+two existing total starts $a_0,a_1$ computing $f_k,f_{k-1}$ on
+the full same $R$ cube. Both terminate and obey $N,C_R$ on
+every input, with all other repeated and certified visits retained.
+
+Choose $a_b$ with $k-b=q$. The uniform premise gives at least
+$B$ live states from that start. Lemma 7.2 puts the other total
+start outside this live set, and the distinct functions make the
+two starts distinct. Hence the residual table, with all its
+$m-1$ installed states, has at least $B+1$ states. Restoring the
+original paid root gives $m\ge B+2$.
+
+The two residual starts are not separately optimized graphs and
+their costs are not added. Each run uses one consistent static
+input. The proof studies both original root successors in one
+table, without giving an apparatus contradictory root replies,
+a free selector, a reset or a new initial state. Both cases retain
+every installed original state in the final count. $\square$
+
+**Corollary 7.4 (conditional unrestricted nine-input lower twenty-two).**
+Assume exactly [Critical Eight, Convention 11.1][CECP] and its
+displayed SI interfaces for all original eight-position vectors,
+as in its Theorem 12.2 and complemented Corollary 12.3.
+For every original nine-position vector, the original execution minima
+of Definition 4.1 satisfy
+
+$$
+\begin{array}{c|c|c|c}
+k&\text{residual }q&\text{root reply }b&m_{\rm exec}(c,k)\\ \hline
+4&4&0&[22,24]\\
+5&4\ \text{or}\ 5&1\ \text{or}\ 0&[22,25]\\
+6&5&1&[22,24].
+\end{array}
+\tag{CP.32}
+$$
+
+An interval in the last column means containment of the minimum,
+not realization of every integer in that interval. Both caps remain
+$9,W$ on every same complete input. No exact nine-input optimum
+is asserted.
+
+**Proof.** The critical live bounds are $B=20$ for thresholds four
+and five on eight coordinates. Removing any paid-root coordinate
+leaves eight distinct positive original positions with their exact
+costs $s_i+4$, covered by the uniform premise. Apply Theorem 7.3
+with $N=8$ and the displayed choices. The other residual starts
+have thresholds among three, four, five and six, all nonconstant.
+The upper endpoints are the existing full-domain ordered grids of
+PCA Theorem 26.1, with $k(10-k)$ running states. Each queries
+distinct coordinates until certification, so each same run obeys
+both $9,W$. These are credited uppers, not new constructions.
+$\square$
+
+**Proposition 7.5 (the stronger supplier-reuse baseline).**
+Under the conditional eight-input interfaces, the installed bound
+twenty of Critical Eight Corollary 11.5, its ordinary complemented
+threshold-five bound, and Theorem 5.1 alone already imply
+$m_{\rm exec}(c,k)\ge21$ for $n=9,k=4,5,6$.
+
+**Proof.** At any paid root use the reply in (CP.32) to restrict to
+eight coordinates. Theorem 5.1's restriction proof retains at most
+$m(R)$ states and both residual caps. The existing critical
+installed lower bound, complemented when needed, gives
+$m(R)\ge20$. The original root contributes $m_j\ge1$, giving
+twenty-one. No live bound or total-entry exclusion is needed for
+this deduction. $\square$
+
+Thus the new numerical gain in (CP.32) is one state beyond
+twenty-one. Theorem 3.3 by itself gives the weaker lower endpoints
+$20,19,20$ on these three slices. The live refinement and the
+two-entry residual argument, rather than a comparison only to those
+weaker numbers, supply the additional state.
+
+## 8. The unchanged full-fiber Native consumer and four readings
+
+**Convention 8.1 (actual source and supplied operational map).**
+Use exactly Definitions 1.1–1.2 and Assumption 1.3, with the
+full-source suppliers of WTF Sections 1–4. The map here fixes the
+interpretation of (CP.32); it supplies no additional acquisition
+or action service. In particular one actual origin $u\in\mathcal U_*$
+and its actual current register $\rho u$ serve both preparation and
+the complete reader. The update is precisely (CP.1), with no size,
+depth or shape bound on allowed finite origins. Every finite absolute
+address, including the empty address and below-leaf addresses, is
+legal; replies are alpha, beta, branch and absent. Equal values at
+different occurrences remain distinct occurrences. The six classes,
+both repetitions and every different-class whole-subtree disequality
+are exactly (CP.2).
+
+The image grammar is beta, $\langle\beta,\alpha\rangle$, or
+an ordered pair of image children. Its inverse $\delta$ is used
+to construct actual witnesses, not as an available port. The four
+profiles $\Pi_i$ have $b_i$ alpha, its repeated left partner beta,
+and all other class roots branches. The six $Z_d$ have only
+class $d$ beta, and $Z_*$ has every root branch. All allowed
+branch images and disequalities remain in scope. On the zero
+profiles the whole output is $R_0=R_*$; on $\Pi_i$ it is $R_i$.
+Writing $(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR)$, $R_i$ replaces
+the two sibling holes $q_iL,q_iR$ by concrete beta at $q_i$,
+keeps the other repeated-partner occurrence, restricts the equality
+partition canonically and retains all surviving disequalities and
+strict-prefix blocking guards.
+
+The fixed literals are $w_i=L^{s_i}R$, $a_i=LLLw_i$ of length
+$c_i=s_i+4$. Branch at $w_i$ contributes one to $\theta_i$;
+alpha, beta and absent contribute zero separately. The prescribed
+code remains (CP.4): zero on $\Pi_1,\Pi_2$, one on
+$\Pi_3,\Pi_4$, threshold $k$ on $Z_{b_3}$, zero on the
+other zero profiles. Preparation must retain the literal original
+latch $\widehat e_\sigma$ from one source-independent running
+start. Returning the row directly, changing the code, giving the
+preparer acquired class values, or choosing a source-dependent
+initial state would change this task.
+
+WTF Supplier 2.1 supplies an actual origin $u_\theta\in Z_{b_3}$
+for every Boolean vector, all with whole target $R_0$. In its
+finite left comb the selected $w_i$ are prefix-free; replacing beta
+there by $\langle\beta,\beta\rangle$ for one bits and fixing
+other distinct class images outside the resulting finite comb family
+preserves the two repetitions and all disequalities. Applying
+$\delta$ to that actual six-class filling supplies the origin and
+interprets every finite address. This is the credited simultaneous
+lower-witness family. It is no promise that arbitrary full-fiber
+sources are combs, and no upper-domain restriction.
+
+Source/update/register binding, source-independent initialization,
+authenticated acquisition of the same-version row, pre-cut permission,
+actual export, complete access isolation, paid code-only handoff,
+lawful complete entry and truthful stationary service remain the
+separately supplied and priced premises of WTF Assumption 1.5.
+The current register stays fixed in both phases. Table and address
+representation, installation, entry and whole-output contents,
+acquired-term work, reference and record storage, elapsed time,
+physical memory and energy have separate prices. No free source
+copy, inverse, selected-coordinate port, old-reply cache, callable
+history archive, counter, phase, cursor, clock, reset, selector or
+decoder is inferred from a finite graph or a symbolic restriction.
+
+**Corollary 8.2 (conditional Native nine-coordinate intervals).**
+Under Convention 8.1's original source and service assumptions and
+exactly WTF Theorem 4.1's supplied equivalence, for $n=9$, both
+Native preparation caps $10,W+3$, every $r\ge0$ and every original
+position vector, (CP.32) gives
+
+$$
+\begin{array}{c|c}
+k&H_{\rm exec}(A,k;r)\\ \hline
+4&[26+r,28+r]\\
+5&[26+r,29+r]\\
+6&[26+r,28+r].
+\end{array}
+\tag{CP.33}
+$$
+
+The lower endpoints also retain exactly Corollary 7.4's conditional
+critical-eight SI interfaces. The complete reader has its unchanged
+separate $K=8$, with fresh bounds two calls and six letters.
+
+**Proof and supplied complete consumer.**
+WTF Theorem 4.1 gives
+
+$$
+\mathsf N_{A,k,r}(H,p,\ell)
+\ \Longleftrightarrow\
+\mathsf B_{c,k}(H-4-r,p-1,\ell-3).
+\tag{CP.34}
+$$
+
+An arbitrary preparer projects to a single complete Boolean graph
+with $m\le H_P-4-r$ and, on every actual cube witness,
+$q_B(\theta)+1\le q_P(u_\theta)$ and
+$J_B(\theta)+3\le\ell_P(u_\theta)$, retaining repeated selected
+visits. Thus its caps imply $9,W$, and Corollary 7.4 gives
+$H_P\ge26+r$. The projection is not assumed to have all of the
+old preparer's states or to preserve every old Native path pointwise.
+
+For the uppers reuse the same supplied full-fiber lift of each grid.
+Every Boolean running state querying $i$ is installed at the fixed
+literal $a_i$, with four separately installed successors in
+alpha, beta, branch, absent order
+
+$$
+(\delta(v,0),\delta(v,0),\delta(v,1),\delta(v,0)).
+\tag{CP.35}
+$$
+
+Replace Boolean terminals by the original latches and add the
+unchanged profile rows: the sole start $D$ queries $RLR$ with
+successors $(\widehat e_1,\text{Boolean start},T,\widehat e_0)$;
+$T$ queries $RRR$ with successors
+$(\widehat e_1,\widehat e_0,\widehat e_0,\widehat e_0)$.
+Install all $r$ further prescribed latches. There are $m+4+r$
+preparation states: $m$ Boolean running states, two profile states
+and $2+r$ latches. The Boolean terminals are replaced and are
+not counted twice.
+
+For arbitrary $Z_{b_3}$ sources the actual branch indicators give
+the Boolean vector on that same register, including arbitrary
+noncomb interiors and absent selected nodes. The selected route
+pays exactly $1+q_B$ calls and $3+J_B$ letters. The other ten
+profiles use at most two calls and six letters. Thus all sources
+obey both $10,W+3$; one actual cube source attaining the grid's
+nine queries also attains its full $W$ letters, so the lifted maxima
+are simultaneous. This is the existing upper construction.
+
+For completeness the unchanged reader keeps the fixed order
+$(i_1,i_2)$ of $\{1,2\}$. In the same four-reply order, its
+three running rows are
+
+| Reader state | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $e_0$ | $q_{i_1}R$ | $H_{i_1}$ | $H_0$ | $Q_2$ | $H_0$ |
+| $Q_2$ | $q_{i_2}R$ | $H_{i_2}$ | $H_0$ | $H_0$ | $H_0$ |
+| $e_1$ | $RLR$ | $H_3$ | $H_0$ | $H_4$ | $H_0$ |
+
+Each $H_i$ stores the entire $R_i$, with ordered exterior,
+occurrences, repetitions, canonical partition, disequalities and
+blocking guards. The three running states and five distinct whole-row
+halts give the separate $K=8$; the fresh reader costs are at most
+two calls and six letters. Paid code-only handoff enters literally
+the same complete $e_\sigma$ on the same actual register. On
+$Z_{b_3}$ both reader entries may return $R_0$, but this does not
+waive the independently prescribed code obligation. The same-run
+resource transfer concerns installed preparation control and actual
+invocations and letters, not the separate service or physical prices.
+$\square$
+
+**Definition 8.3 (independent readings and the recovered direction).**
+In this one common process, space exposes ordered occurrences,
+literal addresses and their lengths. Time exposes the actual ordered
+calls, replies and successors, together with the declared transition
+$u\mapsto\rho u$; there is no supplied clock. Boundary exposes
+the complete current row, its concrete guards, current legal actions
+and the lawful continuation/handoff interface. Memory exposes the
+counted current preparation state and retained original latch; whole-row
+halt contents and separately supplied references and records keep
+their separate prices. These readings do not give each observer
+an unrestricted copy of the source or history.
+
+The reused recovery direction is paid current-source observation to
+the prescribed retained latch, then the unchanged callable reader on
+the same source to the complete predecessor row $F$. Initialization
+and the actual reply sequence determine execution by stationary
+induction, but that sequence is not thereby a retained or callable
+history. The present lower bound constrains the installed memory
+of that recovery procedure; it constructs no new inverse or
+acquisition service. The current row is constant, and the whole
+target is $R_0$ on every cube witness while the prescribed bit
+varies. Thus neither row supplies that code. Nor does the row or
+latch recover arbitrary hidden source, all address replies, complete
+chronology or an arbitrary controller cut. Four-way recovery, route
+agreement at arbitrary cuts, dynamic compatibility of all four views
+and universal alpha/beta reduction remain unproved.
+
+## 9. Supplier correspondence and remaining unrestricted gap
+
+**Attribution 9.1 (repo-derived live amplification).**
+Critical Eight Sections 7–11 own the sharing geometry, axis forks,
+local support lemmas, endpoint partition and installed exact twenty.
+Its Section 12 gives the arbitrary-never-live live bound consumed
+here. Theorem 5.1 owns actual-prefix contraction; Theorem 7.3
+reuses its construction and verifies it at the root without extending
+its numerical residual range by assertion. WTF Theorem 4.1 owns
+the exact Native feasibility correspondence and full-fiber lift.
+Total-start distinguishability and fixed-successor contraction are
+mature stationary-continuation methods. The live-scope extraction
+and its two-entry paid-root consumer are the additional repo-derived
+synthesis, with one new numerical state beyond Proposition 7.5.
+
+The D5 supplier `NativeLiteralMoore.literal_moore_feasibility`, its
+private `contract_run` and `filtered_resources` proofs, and its
+owning Blueprint Scribe supply static forced-successor contraction
+and same-run resource control in their own acquired-code model.
+`NativeSharedMooreSynthesis` and its Scribe also permit an acquired
+input-dependent initial code and reselection of encoder and table.
+Those feasibility results do not acquire the original fixed-start
+prescribed code at the present price. `NativePredecessorRowRecovery`
+and its Scribe recover a complete old row from a current row and
+the supplied old reached set; they do not acquire that set or prove
+the present preparation bound. `NativeFiniteBudgetClassification`
+and its Scribe concern full-fiber perturbation and finite observation,
+not this fixed-start live-state inequality. Their existing conclusions
+are retained without a new compilation or certification claim.
+
+Wegener's *The Complexity of Boolean Functions*, Chapter 14 §4,
+Theorems 4.1 and 4.3 [WBP], supplies normalization and residual
+counting for BP1. The proof on printed page 424 expressly distinguishes
+realizability of every BP1 path from general branching programs.
+Bryant's *Graph-Based Algorithms for Boolean Function Manipulation*,
+§2 Definition 1 [BRY], imposes increasing coordinate indices and
+hence acyclicity. Neither restriction is added here. Pinned mathlib
+`Computability.StateTransition`, `Computability.DFA` and
+`Computability.MyhillNerode` supply evaluation, simulation and
+word-language continuation tools, without a transfer of the present
+static-input consistency and two charges. No exhaustive literature
+absence, global priority or obstruction from missing API names is
+asserted.
+
+**Boundary 9.2 (preserved obligations).**
+The competitors remain arbitrary original complete stationary graphs:
+adaptive orders, paid repeats and certified traffic, sharing, unused
+states and union cycles with actual termination are allowed. No
+syntactic-path realization, read-once, fixed-order, acyclic or restricted
+source condition is assumed. Every cost assertion is on one complete
+actual input; distinct inputs only witness properties of the same
+installed table. The two residual starts coexist in one table, with
+neither separate optimization nor summation of cross-input charges.
+
+The intervals (CP.32)–(CP.33) refine the nine-input lower endpoints
+only under the displayed critical-eight interfaces. The exact
+nine-input optima, a general $k(n-k+1)$ lower bound, a lawful
+full strict-subgrid counterexample, a universal shortage-to-actual-full-run
+obstruction and the all-size collective compensation obligations of
+SI and Common Live Cones remain unresolved. The earlier exact
+eight-input twenty and conditional Native $24+r$ conclusions stand.
+Neither the unrestricted-budget minimum nor original-Q, fixed-$G_{gc}$,
+parked-consumer or unchanged-initialization obligations is settled.
+
+NCR's clocked controller, paid acquisition, tapes, receipts and
+seed/replay records, PVC's installed converter on a fixed-$H$
+acquired entrance, PR57's primitive/tape/ownership model and
+PG/Atlas's joint-image, kernel and callable-inverse conditions keep
+their own assumptions and prices. None supplies a free clock,
+seed, record, serializer or acquisition bridge to this state-only
+contract. These theorems improve an original-task installed-control
+lower bound; they establish neither a physical optimum nor universal
+impossibility, and do not complete the four-expression programme.
+All mathematics here is ordinary conditional paper deduction, with
+no new Lean certification or independent review approval claimed.
+
+[CECP]: RECURSIVE_RELATIONAL_OBSERVATION_CRITICAL_EIGHT_INPUT_LOWER_BOUND.md
+
+## 追加锚（本行以下为增补区）

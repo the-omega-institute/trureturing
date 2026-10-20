@@ -1,0 +1,64 @@
+**Theorem 12.2 (Quantitative localization and nonsingularity throughout the box).** There is exactly one zero $\theta_*$ of $E$ in $\mathcal B_9$. It lies in its interior, and $DE(\theta)$ is invertible at every point of that box.
+
+Proof. The Jacobian has columns in the coordinate order of Definition 12.1 and coefficient rows in increasing degree $j=0,\ldots,7$. Extending $P_i$ by zero outside $0\le i\le4$, the Jacobian entries are
+
+$$
+\begin{aligned}
+\frac{\partial E_j}{\partial a_r}&=2P_{j-r} &&(0\le r\le3),\\
+\frac{\partial E_j}{\partial b_r}
+&=2\sum_{\substack{1\le s\le4\\r+s>j}}\binom{r+s}{j}S_s
+&&(1\le r\le4).
+\end{aligned} \tag{12.4}
+$$
+
+The only nonzero Hessian entries are
+
+$$
+\frac{\partial^2 E_j}{\partial a_r\partial a_s}
+=2\mathbf1_{\{r+s=j\}},\qquad
+\frac{\partial^2 E_j}{\partial b_r\partial b_s}
+=2\mathbf1_{\{r+s>j\}}\binom{r+s}{j};\qquad
+\frac{\partial^2 E_j}{\partial a_r\partial b_s}=0. \tag{12.5}
+$$
+
+Here each $a$ index ranges over $0,\ldots,3$ and each $b$ index over $1,\ldots,4$. Let $J_0=DE(c)$, $M=10^{12}J_0$, and $H_\ell=DE(e_\ell)-DE(0)$ for the $\ell$th coordinate unit vector, $1\le\ell\le8$. Thus $M$ and every $H_\ell$ are integer matrices defined entry by entry by (12.3)–(12.5). Exact elimination gives
+
+$$
+\begin{aligned}
+D:=\det M
+&=1609746256772333630243120555818415603867799240610475316946905877536454627003261283417598578868092928,\\
+\det J_0&=\frac{D}{10^{96}},\qquad 1609<\det J_0<1610,\\
+C&=J_0^{-1}=\frac{10^{12}}D\operatorname{adj}(M).
+\end{aligned} \tag{12.6}
+$$
+
+This defines $C$ exactly over $\mathbb Q$, without a rounded inverse. The center residual is
+
+$$
+E(c)=\frac{R}{9\cdot10^{24}},\qquad
+R=\begin{pmatrix}
+2749658638697\\
+17343986166144\\
+63810337611240\\
+88047066463386\\
+129434936347566\\
+72396013326066\\
+50235466044228\\
+9914818609152
+\end{pmatrix}. \tag{12.7}
+$$
+
+For the derivative tensor, put
+$\beta_i=\sum_{k=1}^8\sum_{\ell=1}^8|(CH_\ell)_{ik}|$.
+The following strict rational bounds specify all rows, not sampled values on the box:
+
+| Coordinate $i$ | $u_i$ with $\lvert(CE(c))_i\rvert<u_i/10^{15}$ | $v_i$ with $\beta_i<v_i$ |
+| --- | --- | --- |
+| $1$ | $268$ | $30$ |
+| $2$ | $202$ | $307$ |
+| $3$ | $398$ | $212$ |
+| $4$ | $336$ | $333$ |
+| $5$ | $73$ | $213$ |
+| $6$ | $214$ | $343$ |
+| $7$ | $18$ | $212$ |
+| $8$ | $132$ | $50$ |

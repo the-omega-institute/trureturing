@@ -1,0 +1,10 @@
+### 勘正 24.1
+
+上述存在性与最小性不要求各 $C_i$ 保持有向 join。保持有向 join 的额外条件只用于降低 closure ordinal：若联合推进 $T$ 保持该迭代链的 $\omega$-join，则
+
+$$
+x_\omega=\bigvee_{n<\omega}T^n(x)
+$$
+
+已经是固定点。
+

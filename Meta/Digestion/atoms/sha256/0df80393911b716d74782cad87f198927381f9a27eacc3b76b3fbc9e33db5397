@@ -1,0 +1,4 @@
+# 2026-09-06：完整正下包络、射影模态误差与固定窗口的实零点极限
+
+本节补齐上一轮 `WeilRayleighEnclosureModeCapture` 与 `WeilArithmeticCouplingSecondJet` 的理论说明，并记录本轮 `WeilArithmeticCouplingParityGram`、`certify_prime3_refined.py` 和实际输出 `prime3_refined_certificate.json`。三个 Lean owner 均有对应 Scribe。Lean elaboration、`#print axioms` 和 Scribe compiler 未在本环境执行；下面明确区分源码中的证明脚本、纸面推导和已执行的区间计算。
+

@@ -1,0 +1,4 @@
+**来源 1480.1（项目接口及本卷推导）。** 本批结合项目 `D5/S3/Estimation/SequentialDecisionRisk/PredictiveRiskOptimizerHierarchy.lean`、`DistinctRiskSharedOptimizer.lean`、`FiniteDeficiencyRiskTransfer.lean` 与 `D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.lean` 的实际定义和量词，区分完整规律、风险、行动集合、平均模拟及最坏状态模拟。源码阅读不是当前 kernel、axiom 或构建核验。
+
+第 1461–1464 节写出随机标签细分与给定先验下的有界损失转移。第 1465–1467 节在第 1441–1443 节同一来源的局部估计上构造两向模拟器，得到全部有界任务在实际观察先验下的双向风险稳定性，并在规范到实际标签的方向取得任意共同先验下的风险界。该结论不需要 $e_N=o(\tau_N)$，也没有取得主要尾标签的一一对应。第 1468–1469 节分别给先验改变的上界与一般统计实验反例，未宣称已求出乘积来源类的最坏先验准确边界。
+

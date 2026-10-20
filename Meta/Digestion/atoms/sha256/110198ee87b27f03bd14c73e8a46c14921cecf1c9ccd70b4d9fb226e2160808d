@@ -1,0 +1,67 @@
+## 197. FIB 关系网络上的外加电化学离子输运、Nernst–Planck/Poisson、Butler–Volmer 与阻抗统计
+
+固定 FIB 孔道—接触骨架 \(G_j=(V_j,E_j)\)，另指定顶点体积、边长、孔隙截面和电极。FIB 不给浓度、扩散系数、迁移率、介电常数、价态、温度、反应或电势单位。离散电化学势和通量可取
+$$
+\mu_{\alpha,v}=k_BT\log c_{\alpha,v}+z_\alpha F\phi_v+\mu_{\alpha,v}^{\rm ext},
+\tag{197.1}
+$$
+$$
+J_{\alpha,e}=-M_{\alpha,e}\bar c_{\alpha,e}(B\mu_\alpha)_e,
+\qquad
+\dot c_\alpha=B^{\mathsf T}J_\alpha+S_\alpha .
+\tag{197.2}
+$$
+取 \(M_{\alpha,e}=D_{\alpha,e}/(k_BT)\) 得离散 Nernst–Planck 形式
+$$
+J_{\alpha,e}=-D_{\alpha,e}(Bc_\alpha)_e
+-\frac{z_\alpha FD_{\alpha,e}}{k_BT}\bar c_{\alpha,e}(B\phi)_e .
+\tag{197.3}
+$$
+空间电荷模型还需离散 Poisson 方程
+$$
+L_j^\varepsilon\phi=B^{\mathsf T}W_j^\varepsilon B\phi
+=\rho_{\rm ch},\qquad
+\rho_{{\rm ch},v}=F\sum_\alpha z_\alpha c_{\alpha,v}+\rho_v^{\rm fixed}.
+\tag{197.4}
+$$
+当 Debye 长度与孔道尺度之比 \(\lambda_D/L\to0\) 时可外加电中性约束
+$$
+F\sum_\alpha z_\alpha c_\alpha+\rho^{\rm fixed}=0,
+\tag{197.5}
+$$
+而 \(\lambda_D/L=O(1)\) 时双电层、空间电荷和浓差极化不可忽略。
+
+反应接触上的 Butler–Volmer 关系为
+$$
+j_r=j_{0,r}\left[
+\exp\!\left(\frac{\alpha_{a,r}F\eta_r}{RT}\right)
+-\exp\!\left(-\frac{\alpha_{c,r}F\eta_r}{RT}\right)
+\right],
+\tag{197.6}
+$$
+$$
+E_r^{\rm eq}=E_r^\circ+\frac{RT}{n_rF}\log\frac{a_{\rm ox}}{a_{\rm red}},
+\qquad
+\eta_r=\Delta\phi_r-E_r^{\rm eq}.
+\tag{197.7}
+$$
+交换电流、转移系数、活度、化学计量和接触面积均外加。双电层与外部电路可加入
+$$
+i_r=C_{{\rm dl},r}\dot\eta_r+A_rj_r+i_r^{\rm ext}.
+\tag{197.8}
+$$
+热噪声解释还需要温度和涨落—耗散关系。
+
+对稳态作线性化，端电流的频域导纳和阻抗可写成
+$$
+\mathsf Y_j(\omega)
+=\mathsf Y_{\infty,j}
++\mathsf C_j({\rm i}\omega I-\mathsf A_j)^{-1}\mathsf B_j,
+\qquad
+\mathsf Z_j(\omega)=\mathsf Y_j(\omega)^{-1}.
+\tag{197.9}
+$$
+半无限连续孔道、特定谱密度和扩散边界下才出现 Warburg 型 \(\omega^{-1/2}\)；有限图、空间电荷和反应边界会产生多个时间常数或不同幂律。电中性、空间电荷和电极反应极限由 \(\lambda_D/L\)、Damköhler 数及取极限次序决定。只测总电流时，内部浓度极化和电势模态可能完全不可见；不同参数也可保持 \(L^2/D\)、\(\lambda_D/L\) 或 \(R_{\rm ct}C_{\rm dl}\) 等组合不变而产生相同有限频带阻抗。
+
+因此 FIB 只提供孔道与接触的组合骨架。Nernst–Planck/Poisson、Butler–Volmer、电中性或空间电荷极限以及阻抗谱均依赖浓度、迁移率、介电权重、反应化学计量、温度、边界、噪声和连续极限等外加结构；同一 FIB 网络可在这些结构变化下呈现欧姆输运、空间电荷限制、反应极化或不同阻抗统计，不存在由 FIB ATOM 递归单独确定的普适电化学定律。
+

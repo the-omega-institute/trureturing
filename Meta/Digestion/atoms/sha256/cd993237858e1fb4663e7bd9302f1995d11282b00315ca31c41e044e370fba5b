@@ -1,0 +1,17 @@
+那么：
+
+- 所有长度小于 $\rho_{\mathcal M}(d)$ 的记录都看不见 $\kappa$；
+- 长度等于 $\rho_{\mathcal M}(d)$ 时，至少有一个记录事件对 $\kappa$ 敏感；
+- 对任意记录事件 $E=(\omega,g)$，其概率为
+
+  $$
+  \Pr_{p_\kappa}(E)=
+  A_E+\kappa B_E,
+  $$
+
+  其中
+
+  $$
+  B_E=dM_\omega g.
+  $$
+

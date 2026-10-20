@@ -1,0 +1,8 @@
+要产生非整数有效维数，必须再加入：
+
+* transition grammar；
+* fusion rule；
+* weighted correspondence；
+* Perron–Frobenius completion；
+* 或子因子结构。
+

@@ -1,0 +1,17 @@
+## 复用归属、文献与未证桥梁
+
+本卷新增的参考对象是三部完整供应文本及其源特定的记号、关系商和物理候选桥接。复述、综合、普通代数展开及重新命名不取得新研究资格。下表列出直接匹配的既有归属；引用既有 Lean 源码只定位其对象和合同，本卷不据此宣告新的编译、覆盖或证明结果。
+
+| 既有归属 | 本卷使用范围与边界 |
+| --- | --- |
+| [基础公式与原子关系](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)，§§1–7、42–44 | 生成、五态、纤维、闭包、同源谱矩和有限轮筛原料；第一部保留为来源综合，不成为独立新发现 |
+| [观察者与算术关系](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md)，§§1–2 | 固定索引、纯模式精确量与均值的类型区分 |
+| [边界演算](AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md)，§§4–5、7 | 概率反解、Fréchet 区间、两种扫描与整词方向对应；读口“边界”不同于凸体拓扑边界 |
+| [行列式与原生守卫接续](AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md)，§§10.4–10.6 | 指定奇偶档案后的实际继续表和正分母条件；不是自由获取未知联合律的仪器 |
+| [隐藏关系、统计、相位与接缝](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)，§§7–8、28.1–28.3、28.11 | 原生接缝、合法事件基、维数与更新后拉回的闭包合同 |
+| [观察更新与返回预测](AURIC_FIB_ATOM_OBSERVATION_UPDATE_AND_RETURN_PREDICTION.md)，定理 10.1 | 所有未来的充分性需要每个结果更新的伴随闭包，不由单步 $J=0$ 自动推出 |
+| [祖先立方体与取得代价](AURIC_FIB_ATOM_ANCESTRY_CUBE_AND_ACQUISITION_COST.md)，§3 | 明确独立替换子族及地址任务；不是完整同叶词纤维的计数 |
+| [响应三角形与内部记忆](AURIC_FIB_ATOM_RESPONSE_TRIANGLE_AND_INTERNAL_MEMORY.md)，§9 | 另加正参数的松弛状态和输入；不是二进制占位的原生演化 |
+| [NativeContinuation/JointLaw.lean](../../../D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.lean) | `Source`、`actual_quantity`、`actual_null_reply`、`native_reply_injective`、`native_probability_separation` 的固定长度合法历史／完整回复律合同；不推出任意原树的单射性 |
+| [ActualCoarseReadoutHistory.lean](../../../D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutHistory.lean)、[ActualCoarseReadoutCompletion.lean](../../../D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.lean) | 实际取得的共同历史和补充读数；不把存在可分读口当作已经取得读数 |
+| [PathStableSetPolytope.lean](../../../D5/S1/Words/AdmissibleWords/PathStableSetPolytope.lean) | 既有路径占位凸体对象；不替代第一部一般商代数同构的全部义务 |

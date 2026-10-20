@@ -1,0 +1,41 @@
+### 55.4 One actual cutoff and one residue supplier on the complete family
+
+<a id="TM55-P5"></a>
+**Proposition TM55.5 (one-cutoff residue certificate).** Suppose $h\ge2$ and integers $L,c$ satisfy
+
+$$
+L\ge2,\qquad 1\le c<h,\qquad c\le2L+2,\qquad h-c\le L-1.
+\tag{TM.5518}
+$$
+
+With $H,L,c$ public, $L$ conditional supplied symbols suffice for original-target recovery on the complete $U_H$. One uniform supplier/controller uses no `Read`, at most one accepted $\rho$, and at most $\lceil\log_2H\rceil+3$ source calls. Its executor is independent of the supplied label; the label is retained for original-target decoding.
+
+**Proof.** Let the Euclidean residue representative and the whole padding length be
+
+$$
+\operatorname{rep}_L(x)=1+((x-1)\bmod L)\in\{1,\ldots,L\},
+\qquad P=H-4c>0.
+\tag{TM.5519}
+$$
+
+In particular $\operatorname{rep}_L(0)=L$. Supply
+
+$$
+\ell_H(t)=\begin{cases}
+\operatorname{rep}_L(w-z),&w\le h,\\
+\operatorname{rep}_L(c-z),&w>h\text{ and }z\le c,\\
+1,&w>h\text{ and }z>c.
+\end{cases}
+\tag{TM.5520}
+$$
+
+For a finite original target, $(z,w)$ is recoverable from its retained composition. For a tag-0 target, the rule uses only its original $z$; its hidden $w$ is unused. Thus the supplier is a function of the original target on all three original bands, and hence is uniformly computable from authentic original-target information or a certified same-tree archive. This sufficiency factorization is proved for this construction only; it is not an optimization restriction.
+
+On the running original source first attempt the whole right context $\alpha^P$, then attempt $\rho$ exactly once whether padding accepted or rejected. Apply $\operatorname{Size}_H$ to the resulting actual source. Let $M$ be the acquired entry size of this terminal procedure, and let $A,R$ denote the two actual response bits. The actual histories are
+
+| Padding / replacement | Exact original-source condition | Terminal entry $M$ |
+|---|---|---|
+| $AA$ | $z\le c$, $w\le c$ | $4w+P$ |
+| $AR$ | $z\le c$, $w>c$ | $4z+P$ |
+| $RA$ | $z>c$, $w\le h$ | $4w$ |
+| $RR$ | $z>c$, $w>h$ | $4z$ |

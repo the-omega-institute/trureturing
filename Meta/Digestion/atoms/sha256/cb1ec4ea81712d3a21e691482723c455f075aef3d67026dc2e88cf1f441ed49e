@@ -1,0 +1,10 @@
+### 14.9 来源
+
+[14-A] Dimitris Bertsimas and Ioana Popescu. *Optimal Inequalities in Probability Theory: A Convex Optimization Approach*. SIAM Journal on Optimization 15(3), 780--804, 2005. DOI: 10.1137/S1052623401399903. https://epubs.siam.org/doi/10.1137/S1052623401399903 . 使用其极值概率与矩约束框架作为背景；本节具体常数和双原子证明独立列出，不声称该文逐字包含此命题。
+
+[14-B] Mathlib 4, commit `db584cd6d46c92f209a44c0f1c829460d327499d`. `MeasureTheory/Integral/Bochner/Set.lean`, `Probability/Distributions/Bernoulli.lean`, `Analysis/Normed/Algebra/MatrixExponential.lean`, `Analysis/Normed/Algebra/Exponential.lean`, `Analysis/SpecialFunctions/Exponential.lean`, `LinearAlgebra/Eigenspace/Matrix.lean`. https://github.com/leanprover-community/mathlib4/tree/db584cd6d46c92f209a44c0f1c829460d327499d . 固定版本中实际调用的形式化基础，特别是矩阵指数和真实谱的识别。
+
+[14-C] Charles L. Epstein and John Schotland. *The Bad Truth about Laplace's Transform*. SIAM Review 50(3), 504--520, 2008. DOI: 10.1137/060657273. https://epubs.siam.org/doi/10.1137/060657273 . 指数不适定性的背景；本节校准条件缩小了模型类，不宣称一般 Laplace 反演已经变成稳定问题。
+
+[14-D] Angelo Lucia, David Pérez-García, Antonio Pérez-Hernández. *Spectral Gap Bounds for Quantum Markov Semigroups via Correlation Decay*. arXiv:2505.08991, 2025. https://arxiv.org/abs/2505.08991 . 作为需要具体算子构造与混合条件的相关路线，不用其空间关联结果替代本节的时间积分和矩阵推导。
+

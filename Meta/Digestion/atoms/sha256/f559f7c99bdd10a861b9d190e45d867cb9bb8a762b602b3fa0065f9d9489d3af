@@ -1,0 +1,63 @@
+**命题 35.4（本五模式的完整周期坐标与矩映射）。** 在全正概率图中定义
+
+$$
+\vartheta_X=\theta_1-\theta_0,\qquad
+\vartheta_Y=\theta_3-\theta_0,\qquad
+\vartheta_Z=\theta_2-\theta_0,\qquad
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}.
+$$
+
+这些角与共同角 $\theta_0$ 给完整整周期变换。模去共同相位后，$\omega$ 为
+
+$$
+\omega=d\vartheta_X\wedge dX+d\vartheta_Y\wedge dY
++d\vartheta_Z\wedge dZ+d\chi\wedge d\kappa.
+$$
+
+可见占位作用 $T^3$ 是有效 Hamilton 作用，其矩映射为 $\mu=(X,Y,Z)$，像为 $\mathcal P$。
+
+证明。整数逆变换为
+
+$$
+\theta_1=\theta_0+\vartheta_X,\quad
+\theta_3=\theta_0+\vartheta_Y,\quad
+\theta_2=\theta_0+\vartheta_Z,\quad
+\theta_{13}=\theta_0+\vartheta_X+\vartheta_Y+\chi.
+$$
+
+正逆变换均为整数矩阵，因而在全部 $2\pi$ 周期环面上互逆，没有仅对无穷小角成立的限制。代入本节的局部归一化势得到
+
+$$
+\lambda=d\theta_0+X\,d\vartheta_X+Y\,d\vartheta_Y
++Z\,d\vartheta_Z+\kappa\,d\chi.
+$$
+
+取 $-d$ 即得所述二形式，亦显示同一关系向量 $d$ 同时决定概率核与隐藏角。本式的 $d\theta_0$ 属于局部共同相位截面，不能据此将 $\lambda$ 宣称为全局原始形式。
+
+具体作用为
+
+$$
+\theta_s\longmapsto\theta_s+x_st_X+y_st_Y+z_st_Z,
+\qquad (t_X,t_Y,t_Z)\in(\mathbb R/2\pi\mathbb Z)^3.
+$$
+
+在新坐标中它分别平移三个 $\vartheta$，保持 $\chi$。若它在全部射影状态上恒等，模式 $0$ 固定共同相位，而模式 $1,3,2$ 分别强制 $t_X,t_Y,t_Z=0\bmod2\pi$，故作用有效。收缩公式
+
+$$
+\iota_{\partial_{\vartheta_X}}\omega=dX,\qquad
+\iota_{\partial_{\vartheta_Y}}\omega=dY,\qquad
+\iota_{\partial_{\vartheta_Z}}\omega=dZ
+$$
+
+给出所选 Hamilton 符号下的矩映射。它的像是全部五权重的凸组合，恰为 §35.1 消费的 $\mathcal P$。证毕。
+
+这里的完整相位商已有所有者：[HiddenRelations C-13.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#13-固定均值的五态相位商与复关系坐标)。其振幅约定为 $c_s=\sqrt{p_s}e^{i\theta_s^{\rm old}}$，同一物理振幅的精确对应是
+
+$$
+\theta_s^{\rm old}=-\theta_s,\qquad
+\Phi_{\rm old}=\theta_0^{\rm old}+\theta_{13}^{\rm old}
+-\theta_1^{\rm old}-\theta_3^{\rm old}=-\chi.
+$$
+
+该条目已给整周期唯一余角及无剩余有限规范类；本命题消费该结论，并将它与本章的概率配对及矩映射连接。
+

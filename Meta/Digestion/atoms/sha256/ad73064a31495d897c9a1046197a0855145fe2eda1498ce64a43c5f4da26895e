@@ -1,0 +1,8 @@
+**命题54.8（八行必要偏移与失配）。** 令 $R_{\mathcal D},R_{\mathcal E}$ 为这两个实际rival标签。$R_{\mathcal E}=3$ 时 $y_{\mathcal E}$ 必在 $[\alpha+\delta,-u-\delta]$，$R_{\mathcal E}=0$ 时必在 $[\chi+\delta,\zeta-\delta]$。局部必要标签为
+
+| $(a,b)$ | $\mathcal D$共同色 | $R_{\mathcal E}=3$ 时 $R_{\mathcal D}$ | $R_{\mathcal E}=0$ 时 $R_{\mathcal D}$ |
+| --- | --- | --- | --- |
+| $(3,0)$ | $1$ | $0$ | $0$ |
+| $(0,5)$ | $2$ | $0$ | $5$ |
+| $(5,2)$ | $3$ | $5$ | $2$ |
+| $(2,25)$ | $4$ | $2$ | $2$ |

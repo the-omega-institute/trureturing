@@ -1,0 +1,8 @@
+下一步可以不再每次从积分定义重算，而建立关于 \(N\) 的：
+
+* \(L^2\) 质量递推；
+* pole channel 递推；
+* prime translation energy 递推；
+* Archimedean jump energy 递推；
+* sticky projection递推。
+

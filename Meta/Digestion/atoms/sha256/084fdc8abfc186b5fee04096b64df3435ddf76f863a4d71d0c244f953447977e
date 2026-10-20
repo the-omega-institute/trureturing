@@ -1,0 +1,6 @@
+最后，仓库当前的 scattering 路线已经能够：
+
+* 将 prime-power histories 重求和成 unitary Poisson resolvent；
+* 由 shifted scattering ratios telescoping 重建 \(\zeta\)；
+* 证明 regular nowhere-vanishing quotient 的唯一性。
+

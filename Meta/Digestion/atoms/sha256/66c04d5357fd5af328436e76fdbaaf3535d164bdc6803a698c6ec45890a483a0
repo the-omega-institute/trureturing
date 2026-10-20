@@ -1,0 +1,36 @@
+### 定义 363.1（Hodge 动力学）
+
+令
+
+$$
+\mathcal C^k=C^k(K;\mathbb R)\otimes_{\mathbb R}\mathbb C
+$$
+
+并把 \(\Delta_k\) 延拓为复 Hilbert 空间上的自伴算子。定义
+
+$$
+U_t=e^{-it\Delta_k},
+\qquad
+S_t=e^{-t\Delta_k},
+\qquad
+t\ge0.
+$$
+
+\(U_t\) 是相位保持的 Hodge 运输，\(S_t\) 是正半群式的耗散运输。若
+
+$$
+\Delta_k\phi_j=\lambda_j\phi_j,
+\qquad
+\lambda_j\ge0,
+$$
+
+并令 \(P_j\) 为相应谱投影，则
+
+$$
+U_t=\sum_j e^{-it\lambda_j}P_j,
+\qquad
+S_t=\sum_j e^{-t\lambda_j}P_j.
+$$
+
+零特征值空间正是复化后的 harmonic 空间。
+

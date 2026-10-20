@@ -1,0 +1,18 @@
+**定义 415.1（逐尺度有理扣除合同）。** 令 $\ell=\log x$、$\varepsilon_x>0$，满足（411.1），并置 $\alpha_x=\varepsilon_x/2$、$\sigma_x=1-\alpha_x$。每个充分大的 $x$ 可独立选择一个有限有理函数 $T_x$，要求：
+
+1. $T_x(z)=O(1/z)$（$z\to\infty$），常数不要求对 $x$ 一致；
+2. 全部极点严格位于实际直线的右侧：$\Re p>\sigma_x$。
+
+记全部这些有理函数为 $\mathcal R_x$；它非空，因为 $Q_{\varepsilon_x}\in\mathcal R_x$。不要求在 $1$ 作局部匹配，因此该类也包含 §412 的中心化家族。令 $U_x=T_x-Q_{\varepsilon_x}$；$Q_{\varepsilon_x}$ 的极点 $1,2$ 同样在实际直线右侧。$U_x(z)/(1-z)$ 在无穷远为 $O(z^{-2})$，其全部极点仍在 $\Re z>\sigma_x$；分母可能增加的极点 $1$ 也在这一侧。
+
+直接消费 [DLMF 表1.14.4](https://dlmf.nist.gov/1.14#T4)的单侧 Laplace 变换对与 [§1.14 的既有反演](https://dlmf.nist.gov/1.14#iii)。对部分分式 $(p-z)^{-m}$，参数为 $a=p-\sigma_x$、Laplace 参数 $s=-i\tau$、$n=m-1$；$\Re a>0$。采用本卷的正号逆 Fourier 约定，这一表对给非正时间支撑。因此对每个 $u>0$，
+
+$$
+\frac1{2\pi}\int_{\mathbb R}
+\frac{U_x(\sigma_x+i\tau)}{1-\sigma_x-i\tau}
+e^{i\tau u}d\tau=0.
+\tag{415.1}
+$$
+
+这里先将有限部分分式相加；整体的 $O(z^{-2})$ 保证积分绝对收敛，即使单独的简单极点项不属于 $L^1$。极点在竖线右侧，对应非正时间支撑；不是把一次零加权积分提升成所有正时间都为零。每个 $x$ 先单独使用该精确身份，之后才取 $x\to\infty$，故没有使用共同次数、极点距离或系数界。
+

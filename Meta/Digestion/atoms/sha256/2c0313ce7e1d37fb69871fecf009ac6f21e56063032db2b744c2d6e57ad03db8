@@ -1,0 +1,9 @@
+**命题 319.5（精确任务的自适应支持判据）。** 固定策略 $\pi$ 对任务 $\phi:S\to V$ 可精确恢复，当且仅当任意两个状态 $s,s'$ 满足 $\phi(s)\ne\phi(s')$ 时，它们的 transcript 支持不相交：
+
+$$
+\operatorname{supp}C_\pi(\cdot\mid s)
+\cap
+\operatorname{supp}C_\pi(\cdot\mid s')
+=\varnothing.
+$$
+

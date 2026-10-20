@@ -1,0 +1,24 @@
+**定义 305.1（策略风险向量与随机化闭包）。** 对有限确定策略集 $\Pi=\{\pi_1,\ldots,\pi_s\}$，定义模型风险向量
+
+$$
+v(\pi_i)=\bigl(L_m(\pi_i)\bigr)_{m\in\mathfrak M}
+\in\mathbb R^{|\mathfrak M|}.
+$$
+
+随机化策略由概率向量 $\lambda\in\Delta_s$ 给出，先按 $\lambda$ 选取一个确定策略，并将该随机选择独立于隐藏模型。其风险向量为
+
+$$
+v(\lambda)=\sum_{i=1}^{s}\lambda_i v(\pi_i).
+$$
+
+定义确定值与随机值
+
+$$
+V_{\mathrm{det}}=\min_i\max_m v(\pi_i)_m,
+\qquad
+\boxed{
+V_{\mathrm{rand}}=\min_{\lambda\in\Delta_s}\max_m v(\lambda)_m.
+}
+\tag{305.1}
+$$
+

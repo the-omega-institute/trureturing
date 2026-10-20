@@ -1,0 +1,58 @@
+**定义 429.1（同一源规模的高带）。** 记
+
+$$
+\ell=\log x,\qquad L=\log2,\qquad
+F(a)=(1+a)\log(1+a)-a,\qquad a>0.
+$$
+
+固定正平方自由整数 $P$，并置
+
+$$
+z=x^a,\qquad Q_z=\prod_{z<p\le2z}p,\qquad
+H_x=P Q_z,\qquad E_P=\prod_{p\mid P}(1-1/p)>0.
+\tag{429.1}
+$$
+
+当 $z>P$ 时 $(P,Q_z)=1$，故 $H_x$ 平方自由。所有整数指标均为正。$P,a$ 固定；$Q_z,H_x$ 随 $x$ 改变，但在每个 $x$ 的全部行中使用同一 $H_x$。高素数带过滤不同于排除全部 $p\le z$ 的最小素因子筛。
+
+**复用公式（阶乘核的全高商包络）。** 对 $y\ge1$，经典对数阶乘积分夹逼给 $|\eta(y)|\le1+\log y$。令
+
+$$
+Z_\eta(r)=\int_1^\infty\frac{\eta(y)}{y^2}h(r+\log y)\,dy,
+\qquad h(r)=r^{-1}+2r^{-2}+2r^{-3}.
+$$
+
+在 §398 的精确低商—高商分解中取低商参数 $A=D=1$。对 $s\ge x\ge e$、$r=\log s=\ell+v$、$v\ge0$，得到
+
+$$
+\begin{aligned}
+-\frac{d}{ds}P_x^\eta(s)&=\frac{G_{\eta,x}(\log s)}{s^2},\\
+G_{\eta,x}(\ell+v)
+&=\ell F(v/\ell)+\frac v\ell-\log(1+v/\ell)
+-\frac1{\ell+v}-\frac1{(\ell+v)^2}+Z_\eta(\ell+v),\\
+|Z_\eta(r)|&\le2h(r).
+\end{aligned}
+\tag{429.2}
+$$
+
+导数在 $s>x$ 上使用；$s=x$ 按 §398 的右侧连续延拓。因 $0\le F(t)\le t^2/2$、$0\le t-\log(1+t)\le t$，全部高商满足
+
+$$
+|\ell G_{\eta,x}(\ell+v)|\le v^2/2+v+12.
+\tag{429.3}
+$$
+
+对于任意固定 $a>0$ 和有限 $B\ge0$，还满足
+
+$$
+G_{\eta,x}(\ell+a\ell+b)=\ell F(a)+O_{a,B}(1)
+\qquad(0\le b\le B).
+\tag{429.4}
+$$
+
+证明。设 $m=\lfloor y\rfloor\ge1$。经典夹逼
+$m\log m-m+1\le\log(m!)\le m\log m-m+1+\log m$，
+以及 $0\le\int_m^y\log t\,dt\le\log y$，给
+$1-\log y\le\eta(y)\le1+\log y$。
+因此 $\int_1^\infty|\eta(y)|y^{-2}dy\le2$，而 $h$ 递减，支付（429.2）的高商预算。低商 $\eta(y)=y(1-\log y)$ 正好符合 §398 的精确公式；代入并整理得到（429.2），没有使用固定比例的 Taylor 余项。（429.3）中 $\ell/ r+\ell/r^2\le2$，且 $2\ell h(r)\le10$。最后 $F'=\log(1+a)$ 在固定紧邻域有界，故 $\ell[F(a+b/\ell)-F(a)]=O_{a,B}(1)$，其余项共同有界，得到（429.4）。$\square$
+

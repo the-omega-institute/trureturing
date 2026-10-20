@@ -1,0 +1,20 @@
+令有限行指标集为 $\mathcal I=\{(e,s):e\in E,\ s\in\{-1,1\}^{B_e}\}$。对任意实向量 $z$，每个坐标选择其符号即得 $\sum_b|z_b|=\max_s\sum_bs_bz_b$。因此可定义与 $r$ 无关的固定矩阵 $\widetilde A$，以及依赖 $r$ 的右端 $b_r$：
+$$
+\begin{aligned}
+\delta_r(q)
+&=\max_{(e,s)\in\mathcal I}\tfrac12s^{\mathsf T}(M_eq-r_e),\\
+\widetilde A_{(e,s)}&=\tfrac12s^{\mathsf T}M_e,\qquad
+(b_r)_{(e,s)}=\alpha_r+\tfrac12s^{\mathsf T}r_e.
+\end{aligned}
+\tag{TM.79}
+$$
+
+矩阵有 $\sum_e2^{|B_e|}$ 行；这里用有限符号展开证明多面体性，不附带有效率的计算保证。由式(TM.79)，全部行不等式等价于 $\delta_r(p)\le\alpha_r$；对 $p\in\Delta_A$，最优值的定义又给反向不等式，故
+$$
+\operatorname{Opt}_r
+=\{p\in\Delta_A:\widetilde A p\le b_r\}.
+\tag{TM.80}
+$$
+
+这一多面体非空已有紧性保证，所以 $b_r$ 是固定系统 $\widetilde A p\le b$、$p\in\Delta_A$ 的可行右端。
+

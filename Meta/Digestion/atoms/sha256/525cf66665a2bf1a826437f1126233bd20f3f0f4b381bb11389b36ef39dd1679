@@ -1,0 +1,34 @@
+### 42.1 精确参数分支与结论
+
+令
+
+```math
+\delta=2^{-24},\qquad
+\mathcal P=\{\alpha=a+ib:\ |a+1/5|\le\delta,\ |b|\le\delta\},
+\qquad c(t)=\frac{1+it}{1-it}.
+```
+
+对
+
+```math
+p_\alpha(t)=(1+a)t^3+bt^2+(a-3)t+b,
+```
+
+将三个实根从小到大排列后按 `(最小,最大,中间)` 取序；对 `p_{-alpha}` 同样将三个实根从小到大排列后按 `(最小,最大,中间)` 取序。它们的 Cayley 像分别记为 `r0,r1,r2` 与 `s0,s1,s2`。定义
+
+```math
+A=\operatorname{circ}(r_0r_1,r_1,1),\quad
+B=\operatorname{circ}(s_0s_1,s_1,1),\quad
+H=\begin{pmatrix}A&B\\B^*&-A^*\end{pmatrix},\quad H_0=LH,
+```
+
+其中 `L` 将行按零起始索引 `(2,0,1,4,5,3)` 排列。中心参数 `alpha=-1/5` 给出
+
+```math
+r_1=(-3+4i)/5,\qquad s_1=(-2+i\sqrt{21})/5,
+```
+
+因此 `H0` 正是第 35、36 节的对称块种子。以下只讨论这个固定构造分支，不把其他根的排列或其他 Hadamard 参数默认为同一分支。
+
+令 `S` 在两个坐标三元组内分别作循环位移，`E0,E1,E2` 为其秩二谱投影。
+

@@ -1,0 +1,34 @@
+**Proposition 68.2 (compatibility with memory and effective phase rank).**
+The family quotient above refines the observation question without
+altering Theorems 49.1, 50.1, 54.1 or 60.1. In particular it implies
+no physical spatial dimension, physical $SO(3)$ symmetry or acquisition
+service. The instantaneous native phase rank, effective long-time
+phase rank and current-state manifold dimension remain different
+quantities.
+
+Proof. At each fixed parameter the same height source, coefficient
+functions and original clock are used. Thus the compression defect
+of F Proposition 5.1 and its native consequences (49.3), (50.1)–(50.2)
+are unchanged. Pathwise height recovery at known calibration was already
+compatible with nonzero eliminated-height memory in Proposition 60.1.
+With unknown calibration (63.1) initially leaves the two translated
+possibilities, and (64.3) explains their finite-prefix overlap without
+making $v$ autonomous. At a resolved sign, the old known-parameter
+inverse (55.4) and the new reconstruction agree on the actual height.
+At actual zero they both give $K=Z$ and frozen $D$.
+
+Theorem 40.1 still gives instantaneous phase rank one and full symbol
+rank two, whereas the temporal covariance averages have effective
+phase rank three at fixed nonzero parameter and rank two on the actual
+zero leaf. The state-manifold and current-ray counts in §§39–40 have
+their own definitions; a statistical parameter is not another moving
+spatial coordinate. N Theorem 10.5 still obstructs a smooth same-clock
+elliptic three-dimensional factor. Neither recovery of a parameter
+nor adding an observed original phase changes that symbol. Therefore
+no implication to physical three-space, a minimum nonlinear state
+count, finite bit/shot/CPU resources or an empirical realization follows.
+The native physical-observation bridge remains unspecified. The risk
+and posterior assertions here concern conservative stationary Q only;
+Proposition 60.2 retains its distinct raw and terminal-survivor weights,
+and no unchanged risk is inferred for those laws. $\square$
+

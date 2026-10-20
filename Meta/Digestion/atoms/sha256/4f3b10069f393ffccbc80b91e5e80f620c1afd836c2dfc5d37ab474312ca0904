@@ -1,0 +1,21 @@
+### 70.4 条件结论与保留的完整图义务
+
+定理70.2.1是给定有限完整原 $G_B$ 中的有界条件性排除，保留全部奇 $7\le p\le P_{\max}$、$m=4$、四对标签和实预算 $0\le\beta<\lambda$，包括 $\beta=0$。同一个实际来源合同、同一条已给 typed rival、两侧实际 incoming guard、合法根域、全部原规范片、原端点归属、共同原闭色和全部原边均保留。一般实预算下的有限图仍为前提；31.2不被扩大为任意实预算的有限图存在定理。
+
+所用定理31.4是整条实际路径提升，与31.4节中定理31.6的全路径极值取得不同。辅助 $z,w$ 只承担仿射计算、同源凸包内部交点及原片识别，不声称为独立取得的来源或全路径极值；其严格交错来自 (70.19)，不由奇斜率删除平移项后推断。
+
+本章只得到 $k_{\mathcal K}\mid p$，没有得到 $k_{\mathcal K}=p$。长 $p$ 后缀是同一个原图中已有的完整配对返回；原目标保持 $h=4p$。是否有某个共同输入使全部 (63.11) 同时成立仍未证明，条件性排除不承担这一存在问题。结论不排除这些词在其他规模或其他 gcd 的 SCC 中存在。
+
+域外的任何正实现，仍须在同一个 $\beta,B,G_B,R,T,a,b,p,h$ 中联合供应实际共享来源、两侧实际 guard、合法预算与根域、整个原片及其共同闭色，逐位置满足全部 (63.11)，给出 $h+2$ 个不同完整配对顶点，按整个原承载片验证全部原内部边的 (63.13)，并对所有 $n\ge0$ 证明完整图中的 (63.15)。第60章适用联合限制与先修原局部预算域继续承担。强制端点全未命中、容量通过、独立点可达或两条长 $h$ 返回本身均不能替代这些义务。
+
+本章不判定外部不返程通过或失败；全部外部原片与边保留，单向外出始终允许。原边继续取整个 $Q\subseteq F_\ell(P)$，不能改为相交测试或反向包含。结论不涉及全部剩余 $T$ 或奇周期 rival 的分类、更大 SCC 排除、全局非存在、初始可达、任意端点规则下的实际噪声取得或物理结论。
+
+[70源原图]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L8290
+[70源60]: https://github.com/the-omega-institute/trureturing/blob/91749bbbe15242e56bbea106192488db38fff7a7/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L25176
+[70源63]: https://github.com/the-omega-institute/trureturing/blob/2c9fec822e934ea32e630cc82611e160c48a49a7/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26396
+[70源64]: https://github.com/the-omega-institute/trureturing/blob/3ad8668d7caadf586f2814f72aa8f8ac7e4594e9/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26748
+[70源6566]: https://github.com/the-omega-institute/trureturing/blob/ceb6bc81bfba02827ac7e3dd85c2e0197159a6c8/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26893
+[70源67]: https://github.com/the-omega-institute/trureturing/blob/ceb6bc81bfba02827ac7e3dd85c2e0197159a6c8/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L27488
+[70源68]: https://github.com/the-omega-institute/trureturing/blob/ceb6bc81bfba02827ac7e3dd85c2e0197159a6c8/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L27738
+[70源69]: https://github.com/the-omega-institute/trureturing/blob/ceb6bc81bfba02827ac7e3dd85c2e0197159a6c8/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L28130
+

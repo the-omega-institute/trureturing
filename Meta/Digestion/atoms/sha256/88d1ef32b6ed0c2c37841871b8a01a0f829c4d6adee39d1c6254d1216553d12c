@@ -1,0 +1,13 @@
+**定义 418.1（同包局部负载误差）。** 沿用定义417.1的实际根对 $a<b$、同价层完整测度 $\mu_{a,b}$、宽度 $L=b-a$ 及（417.2）的两矩表达式 $H_{a,b}$。记
+
+$$
+\begin{aligned}
+M_{a,b}&=\sup_{a\le t\le b}|A^+(t)-t|,\\
+K(t)&=-g'(t)=\frac1{t^2}\left(\frac1{\log t}+\frac1{\log^2t}\right),\\
+B(t)&=g''(t)=\frac1{t^3}\left(\frac2{\log t}+\frac3{\log^2t}+\frac2{\log^3t}\right).
+\end{aligned}
+\tag{418.1}
+$$
+
+此处 $A=A^+$ 为包含全部同价层的右连续规模；上确界有限，不要求跳前极值取得。全部误差和矩均取自同一实际包；$M_{a,b}$ 不表示独立可调的松弛参数。
+

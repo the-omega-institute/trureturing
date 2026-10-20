@@ -1,0 +1,6 @@
+研究目标不再是直接控制完整素数和，而是寻找 \(R_0(L)\)，使：
+
+1. \(m_{R_0}\) 的危险空间足够小；
+2. 高层 discrepancy 可由 PNT error、Slepian 浓缩或 Feshbach self-energy 控制；
+3. 该控制在 \(L\to\infty\) 时仍可迭代。
+

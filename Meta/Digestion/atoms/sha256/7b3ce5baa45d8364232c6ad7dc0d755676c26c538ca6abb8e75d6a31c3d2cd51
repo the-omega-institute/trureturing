@@ -1,0 +1,81 @@
+**定义 21.10（原生历史接口与共同来源合同）。** 若未来目标改为
+[动态未来商卷第一部分定理 1、推论 1](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)
+的原生剩余转录律，历史域必须是该卷 Q1–Q4 指定的第三标记写入并锁存后、
+正概率第四段活动历史。一个固定有限或可数正整数深度先验至少有两个正支持
+深度；$K$ 一次抽取，并由全部条件独立付费 Read 共享。
+其条件字母概率为
+$r_k=\mathrm{Fib}_{k+1}/\mathrm{Fib}_{k+3}$、
+$s_k=\mathrm{Fib}_{k+2}/\mathrm{Fib}_{k+3}$，满足 $r_k+s_k=1$。
+$a(h)\in\{p,\beta\}$ 与从首次付费 Read 开始的计数 $A_h,B_h$
+保留原 parser、控制、记录、renderer 和 Read／Stop 权限，
+计数包含拒绝、重试、合法返回和部分解析，不以未来接受条件化。
+在这些原条件下，所引定理的准确对应为
+
+$$
+\sigma(h)=(a(h),A_h,B_h),\qquad
+\mathscr L_h=\mathscr L_{h'}
+\ \Longleftrightarrow\ \sigma(h)=\sigma(h').
+$$
+
+其正向推导是同一先验的 Bayes 权重
+$\mu(k)r_k^{A_h}s_k^{B_h}$、共同后验和相同活动相位；
+反向使用该来源的完整未来律可识别性及 Fibonacci 整数比率分离，
+不是一般混合模型的推论。其推论 1 对任何未来充分摘要 $S$ 给
+$S(h)=S(h')\Rightarrow\sigma(h)=\sigma(h')$。
+实际可达摘要不被假设填满任意计数格。
+pending$_0$、pending$_1$ 保留各自原强制 Stop 且禁止 Read，
+delivered 未来为空；活动定理不能继续用于这些边界。
+式（21.8）的有限隐藏平稳词未来和这个原生未来有不同来源与菜单，
+二者没有被识别为同一律。
+
+把静态颜色接到任一未来模型时，须给同一实际历史上的条件模式律 $p_h$，
+以及同一个未来事件空间 $\mathcal Y$ 上固定的模式条件响应核
+$L_s\in\mathcal P(\mathcal Y)$，并验证
+$\mathscr L_h=\sum_s p_h(s)L_s$。
+若核另依赖深度或历史，则须保留那个联合律与其条件核；
+只保留两个边缘不确定它们的耦合，具体障碍采用
+[局部钟场卷 Q9](AURIC_FIB_ATOM_LOCAL_CLOCK_CAUSAL_FIELD_AND_FIBER_DYNAMICS.md)。
+在确有固定五个 $L_s$ 的合同内，
+[联合投影卷 theorem 27.1 及 corollary 29.1](AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md)
+直接以同一有符号测度空间给出
+
+$$
+\begin{aligned}
+J_L&=L_J-L_L-L_R+L_O,\\
+\mathscr L(p)&=L_O+(L_L-L_O)X+(L_R-L_O)Y+(L_T-L_O)Z+J_L\kappa.
+\end{aligned}
+$$
+
+固定 $m$ 的非退化纤维上，$J_L\ne0$ 才使该完整响应分离 $\kappa$；
+$J_L=0$ 时其恒定。颜色系数 $j$ 与测度系数 $J_L$ 仍是不同类型。
+有 $j\ne0$ 时 $Q(p_h)$ 确定当前 $p_h$；只有已经验证这个固定核分解，
+才进一步确定目标未来律。命题 21.9 展示缺少该分解时，
+同一完整三位律也不能替代历史或更长窗口关系。
+
+本应用中的统一对象可写为
+$\mathfrak A=(\Sigma,\mathcal A,\mathcal P,\mathcal F_\kappa,
+C,\{T_e,\eta_e\},\mathscr L)$，其中 $\mathcal A$ 是定义 21.1 引用的
+五态函数代数，$\mathcal P$ 是位置均值体，
+$\mathcal F_\kappa(m)$ 是命题 20.3 的实际概率区间，
+$C$ 是固定模式颜色读口，边运输使用定义 21.3 的节点颜色纤维，
+$\mathscr L$ 使用已选来源的条件未来。
+这个结构集合不自动证明各部分能共同实现。
+四角顶点关系经概率配对给 $d$，
+$p_J$ 给 $\kappa$；固定 $m$ 且 $r>0$ 才有
+$\Delta\leftrightarrow\kappa$，$j\ne0$ 才从联合颜色报告恢复非退化隐藏方向；
+静态颜色梯度不等于供应仿射运输；到未来还需上述共同来源和响应核合同。
+同样，
+[响应对比与长窗口卷 §9、Q3](AURIC_FIB_ATOM_RESPONSE_CONTRAST_HIGHER_BLOCK_CYCLES_AND_FUTURE_VISIBILITY.md)
+的质量矩阵
+
+$$
+\mathsf T(p)=
+\begin{pmatrix}p_O&0&p_R\\p_L&0&p_J\\0&p_T&0\end{pmatrix},
+\qquad \det\mathsf T=-Z\Delta
+$$
+
+只在 $Z>0$ 时给线性可逆性等价于 $\Delta\ne0$；
+$Z=0$ 时仍奇异。它的符号采用此处 $(O,L,T,R,J)$ 字典，
+不是定义 21.3 的三维颜色边同构 $T_e$，
+也不是概率保持的逆更新或原生物理反演。
+

@@ -1,0 +1,40 @@
+**定义 49.1（原树纤维与初始饱和族）。** 对公开整数 $H\ge1$，令
+
+$$
+\begin{aligned}
+\mathcal T&:\quad t::=\alpha\mid\beta\mid\langle s,u\rangle,\qquad s,u\in\mathcal T,\\
+\mathcal T_H&=\{t\in\mathcal T:1\le\lambda(t)\le H\},\\
+c(t)&=(a,b),\qquad m=a+b,\qquad n=a+2b,\\
+E_i(t)&=E(\rho^it),\qquad W_3(t)=(E_0(t),E_1(t),E_2(t)),\\
+\mathcal S_H&=\{t\in\mathcal T_H:m=H,\ b\ge1\},\\
+\mathcal F_H(\tau)&=\{t\in\mathcal T_H:q_H(t)=\tau\},\qquad
+R(H)=\max_{\tau\in q_H(\mathcal T_H)}|\mathcal F_H(\tau)|.
+\end{aligned}
+\tag{TM.4901}
+$$
+
+这里 $s,u$ 均为实际非空树，且
+
+$$
+\begin{aligned}
+\rho(\alpha)&=\beta,&\rho(\beta)&=\langle\beta,\alpha\rangle,&
+\rho\langle s,u\rangle&=\langle\rho s,\rho u\rangle,\\
+q_H(t)&=
+\begin{cases}
+(0,E_0(t),m),&n>H,\\
+(1,(a,b),E_0(t),E_1(t)),&n\le H<m+n,\\
+(2,(W_3(t),(a,b))),&m+n\le H.
+\end{cases}
+\end{aligned}
+\tag{TM.4902}
+$$
+
+标签二只是将 §29 的 $\eta$ 写成三窗与组成；没有更换其相等关系。$R(H)$ 数原始有序树，既不是不同 $q_H$ 的数目，也不是不同叶词、当前来源或任意选定代表的数目。每个固定的 $m$ 叶词有
+
+$$
+K_m=\operatorname{Cat}_{m-1}=\frac1m\binom{2m-2}{m-1}
+\tag{TM.4903}
+$$
+
+种有序满二叉括号化。此经典计数沿用统计卷定理 2.2；原子卷推论 360.3 保证在本来源中这些括号全部保留，没有额外的括号合法性筛选。
+

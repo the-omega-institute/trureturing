@@ -1,0 +1,4 @@
+1. **空档案分支：** $W=Z=0$，$m=+\infty$，$M=s=-\infty$。
+2. **非空档案、空当前区域分支：** $W=Z=0$，$m,M\in\mathbb Z$，$m\le M$，$s=-\infty$。
+3. **非空当前区域分支：** $W,Z\in\mathcal L$，$m,s,M\in\mathbb Z$，并且
+

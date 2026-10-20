@@ -66,3 +66,43 @@ interpretation depends on 5.4(a). This refutation alone does not settle
 
 - DOI: https://doi.org/10.48550/arXiv.2506.04002
 - Source: https://arxiv.org/abs/2506.04002v1
+
+
+## Conjecture 5.8 and the preregistered literature screen
+
+Conjecture 5.8 in the same v1 source (original TeX lines 2144–2149) states
+that for every partition lambda of every positive k, the characteristic
+map intertwines the sum J_1+...+J_k with D(b). Issue #17676 preregistered
+the full class-constant C1 and same-coefficient normalized C2 statement
+on 2026-10-16, as tier 1 with admission basis open-problem-resolution.
+The 5.4(a) refutation above supplies the original operator definitions,
+and supplies no conclusion about 5.8 by itself.
+
+The issue's 2026-10-16 screen reports searches for b-Weingarten,
+b-monotone, b-deformed Jucys, Jucys–Murphy with Jack, and Laplace–Beltrami
+with pair partitions in the arXiv API, plus extended web searches and
+Semantic Scholar/OpenAlex citation lists. It found no resolution of 5.8.
+Fesler–Hahn–Karev–Markwig, arXiv:2508.06188v1, concerns different refined
+operators; its specialization of a differential operator does not identify
+the original charge-weighted native action. The screen also listed the
+background papers arXiv:2109.01499 and arXiv:2004.07824. This paragraph
+attributes the archived preregistration readings, and does not claim a
+fresh or exhaustive priority search. Journal versions and the original
+SageMath code were not located/read in that screen; completeness remains
+ASSUMED-UNVERIFIED. The corresponding independent problem dossier is
+Problems/coulter-do-2025-conjecture-5-8.md.
+
+The reduced CD58 delivery retains one claim on the existing joint theorem.
+Its normalization still uses exactly (1+b)^length times the original
+positive-part multiplicity product; the shifted variable i represents part
+i+1. Its differential operator is the linear extension of actual monomial
+derivatives on the infinite polynomial algebra, with the literal bound k on
+weight k and vanishing higher derivative terms. Complete coset type retains
+singleton identity edges. The full rotation-orbit multiset is twice that
+type: the frozen InvolutionOrbitSplit.component_split and
+component_orbit_classes give two nonempty sheets exchanged by the identity
+matching, with one endpoint of each identity edge on each sheet. A singleton
+edge therefore contributes two fixed singleton orbits. These are mathematical
+source correspondences and reused consequences, not newly claimed independent
+endpoints. Complete earlier companion proofs remain in the immutable candidate
+archive; their retirement changes packaging rather than Conjecture 5.8.

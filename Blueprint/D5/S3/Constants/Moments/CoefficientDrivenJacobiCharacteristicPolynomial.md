@@ -22,6 +22,19 @@ For every positive index j, the subdiagonal entry is one and the opposite entry 
 
 This declaration stops at the coefficient-driven Jacobi construction. It does not perform Cholesky factorization, construct chain weights, or identify the final chain polynomial.
 
+**Theorem 1.2 (The coefficient multiplication matrix has characteristic polynomial q).**
+
+$$\forall q \in \operatorname{Polynomial}\left(\operatorname{Real}\left(\right)\right),\; \operatorname{Polynomial}.\operatorname{Monic}\left(q\right) \Rightarrow \operatorname{Matrix}.\operatorname{charpoly}\left(\operatorname{coefficientMultiplicationMatrix}\left(q\right)\right) = q$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.multiplication_matrix_charpoly` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every monic real polynomial q, the characteristic polynomial of coefficientMultiplicationMatrix q is q. The power basis of the quotient by q identifies this matrix with multiplication by the root.
+
 ## References
 
 - Truth anchor: `D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.coefficient_driven_jacobi_characteristic_polynomial`
+- Truth anchor: `D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.multiplication_matrix_charpoly`

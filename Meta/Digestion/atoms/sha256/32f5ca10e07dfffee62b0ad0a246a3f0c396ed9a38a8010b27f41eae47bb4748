@@ -1,0 +1,21 @@
+**Proposition 113.8 (births, equality and operations do not change the target).**
+For $u=\langle\beta,\alpha\rangle$ and $Q=\{LL,LR,R\}$, the INITIAL
+reached list is $(R)$, the exterior is $\langle\beta,\square_1\rangle$
+and its partition has one class. The successor has reached list
+$(LL,LR,R)$, exterior $\langle\langle\square_1,\square_2\rangle,
+\square_3\rangle$, and partition $\{\{1,3\},\{2\}\}$.
+These sources have equal boundary measures and different complete rows.
+For $Q=\{L,R\}$ on a branch, every actual accepted update preserves
+the reached list, exterior and whole-subtree equality partition.
+
+Proof. The actual successor is
+$\rho u=\langle\langle\beta,\alpha\rangle,\beta\rangle$.
+Its born children give exactly the displayed lists and values;
+absence at INITIAL $LL,LR$ creates no INITIAL holes. An accepted
+update transports both original child subtrees by the same $\rho$;
+its injectivity from Theorem 113.5 preserves equality and disequality.
+The root remains branch and both original children remain reached.
+Refusal changes neither source nor row; Stop permits no suffix.
+These facts use precisely Contract 112.1a. They do not turn a successor
+row into an INITIAL row at a changed cut. $\square$
+

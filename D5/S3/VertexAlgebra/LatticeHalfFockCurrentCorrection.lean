@@ -97,7 +97,7 @@ private theorem partial_insertion (D : LatticeData) (charge : Charge D)
     partial_pairDerivation, pderiv_X, Pi.single_apply, Option.some.injEq]
   split_ifs <;> ring
 
-private theorem correctionLift_C (D : LatticeData) (charge : Charge D) (scalar : ℂ) :
+theorem correctionLift_C (D : LatticeData) (charge : Charge D) (scalar : ℂ) :
     correctionLift D charge (C scalar) = C scalar := by
   rw [show C scalar = scalar • monomial (0 : Index D →₀ ℕ) 1 by
       simpa using (C_eq_smul_one (σ := Index D) (a := scalar)),

@@ -1,0 +1,70 @@
+**命题 16.15（同纤维上的耗散链）。** 在四个底格都正的部分，令
+
+$$
+a_+=p_0p_{13},\quad a_-=p_1p_3,\quad
+\mathcal A=\ln(a_+/a_-),\quad
+\mathcal I_F=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+$$
+
+[HiddenRelations C-4.6][PM-H] 已供应自然对数下
+$H'=-\vartheta$、$\vartheta'=\mathcal I_F$ 及 Fisher 线元；
+[Symplectic §35.7][PM-S] 采用同一负相位约定。
+精确映射为供应者的 $\vartheta\mapsto\mathcal A$、
+$\mathcal I\mapsto\mathcal I_F$、纤维变量仍为 $\kappa$。
+消费该曲率及 16.9，当前缺口有
+
+$$
+\partial_\kappa D=\mathcal A,\qquad
+\partial_\kappa^2D=\mathcal I_F.
+$$
+
+于是 16.14 的流在该域满足
+
+$$
+\frac{dD}{d\tau}
+=-\nu(a_+-a_-)\ln(a_+/a_-)\le0.
+$$
+
+更一般地，令 $\nu(\tau)\ge0$ 在时间域每个紧区间上可积，
+$\Lambda(\tau)=\int_0^\tau\nu(t)\,dt$，则 $r>0$ 时绝对连续的唯一解为
+
+$$
+\kappa(\tau)-\kappa^\star
+=(\kappa(0)-\kappa^\star)e^{-r\Lambda(\tau)}.
+$$
+
+证明。$H(p^\star)$ 在固定纤维上为常数，故已有 $H'$ 和 $H''$
+直接给 $D$ 的两个导数。新动力学链使用
+$r\kappa-XY=a_+-a_-$，将 ODE 代入
+$\frac{dD}{d\tau}=\partial_\kappa D\,\dot\kappa$。
+对正 $a_+,a_-$，$\ln$ 单调使
+$(a_+-a_-)(\ln a_+-\ln a_-)\ge0$，得到符号。
+这并不要求 $Z>0$，只要求四个实际底格为正。
+
+可变率方程写成 $y'=-r\nu y$，$y=\kappa-\kappa^\star$。
+绝对连续积分因子 $e^{r\Lambda}$ 给 $(e^{r\Lambda}y)'=0$ 几乎处处，
+所以显示的解存在且唯一；任意两解之差用同一等式即为零。
+它还给
+
+$$
+p(\tau)=e^{-r\Lambda(\tau)}p(0)
++(1-e^{-r\Lambda(\tau)})p^\star.
+$$
+
+因指数介于零、一，整个闭纤维保持可行。
+对于 $0<X,Y<r$，$p^\star$ 四底格正；
+即使初态在端点，只要 $\Lambda(\tau)>0$，就已进入正底面。
+在 $\Lambda=0$ 的初段边界律保持原样；熵缺口用有限和的连续延拓定义，
+不将 $0\cdot\ln0$ 型的速率乘积擅自算作有限导数。
+如需要起点斜率，应取实际曲线的单侧差商，允许其为无穷；
+耗散恒等式只在正底面几乎处处使用。
+任意两时刻之间的凸组合及 16.13 的凸性证明仍给闭域上 $D$ 不增。
+若 $X$ 或 $Y$ 等于零或 $r$，纤维为点，$D=0$，
+缺失底格的亲和力不定义；$r=0$ 的顶点同理。
+
+[Rao–Esposito][PM-RE] 的 *Nonequilibrium Thermodynamics of Chemical Reaction Networks:
+Wisdom from Stochastic Thermodynamics*，§III.E.2、式 (74)–(77)，
+在质量作用、闭合详细平衡网络中给自由能差与广义相对熵的 Lyapunov 关系。
+此处标量通量 $a_+-a_-$ 与对数亲和力的非负乘积使用同一熵方法，
+但概率始终归一化，证明直接如上；没有从该化学模型输入温度、热、功或物理实现。证毕。
+

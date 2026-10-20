@@ -1,0 +1,36 @@
+## 6. 三值符号与零点反码
+
+定义：
+
+\[
+\operatorname{tsign}(x)
+=
+\begin{cases}
+-1,&x<0,\\
+0,&x=0,\\
++1,&x>0.
+\end{cases}
+\]
+
+对零点
+
+\[
+\rho=\frac12+\delta+i\gamma
+\]
+
+定义第 \(N\) 层轨道码：
+
+\[
+\operatorname{ZOC}_N(\rho)
+=
+\Bigl(
+\operatorname{tsign}(\delta),
+\mathsf Z_N(|\delta|),
+\operatorname{tsign}(\gamma),
+\mathsf Z_N(|\gamma|),
+\operatorname{wdigits}(m_\rho)
+\Bigr).
+\]
+
+这里 `ZOC` 表示 **Zeckendorf Orbit Code**。
+

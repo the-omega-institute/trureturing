@@ -1,0 +1,22 @@
+## 2. 同一窗口、原始系数与明确模型
+
+令 a>=0、lambda=exp(a)，取自然数 M>=exp(2a)。通常采用整数 c=lambda^2=M。设 h: R->C 在 t>lambda 时为零。定义
+
+\[
+E_{a,M}h(x)=1_{[-a,a]}(x)\,4e^{x/2}
+\sum_{m=1}^{M}h(me^x).
+\tag{MP1}
+\]
+
+h 的上部支撑使所有不满足 me^x<=lambda 的项自动为零。任意更大的 M 给出同一个窗口模型。定义原始单向 prime block
+
+\[
+B_+f(x)=1_{[-a,a]}(x)
+\sum_{n=1}^{M}\frac{\Lambda(n)}{\sqrt n}f(x+\log n).
+\tag{MP2}
+\]
+
+对窗口内零延拓的函数，B_- = B_+^* 是反向平移，S=B_++B_- 是无符号素数块；实际 Weil 算子中的素数贡献是 -S。Lambda(1)=0，所以 n=1 不增加项。对窗口支撑的输入，n>exp(2a) 的平移为零；等于 exp(2a) 的项至多改变端点，L2 算子不变。这一支撑结论不用于任意未截断的输入函数。
+
+为使反射逐点成立，这里使用闭区间。原 `polynomialMellinWindow` 使用左开右闭区间。新 Lean `polynomial_window_agreement` 对截断偶多项式 seed 证明两者在 x!=-a 处逐点相等，因此代表同一个 L2 函数。它不引入第二套 Fourier 定义。一般超额 M 的旧端点求积公式仍须先删除空支撑项；当 M=exp(2a) 为整数时，旧公式的全部 cutoff 条件直接满足。
+

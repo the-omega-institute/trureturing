@@ -1,0 +1,44 @@
+# 第一千三百九十二部　黑洞“无毛”现在分成四个层次
+
+| 观察层               | 被保留的数据                                    |   是否可能完全失明 |
+| ----------------- | ----------------------------------------- | ---------: |
+| scalar zero mode  | 总平均、总曲率质量                                 |          是 |
+| Bode/area         | \(\sum m_j\delta_j^2\)                    |   只保留二阶深度矩 |
+| topological index | \(\sum m_j\)                              | 不保留位置与可见强度 |
+| phase holonomy    | \((\gamma_i-\gamma_j,\delta_i+\delta_j)\) |     保留相对关系 |
+
+所以：
+
+$$
+\boxed{
+\text{无 scalar hair}
+\not\Rightarrow
+\text{无 topological hair}
+\not\Rightarrow
+\text{无 relational hair}.
+}
+$$
+
+离线曲率偶极满足：
+
+$$
+\int\mathscr C=0,
+$$
+
+但它仍然具有：
+
+* 非零 Bode area；
+* 非零 Chern/Blaschke degree；
+* 非零 wavelet ridge；
+* 非零 pairwise phase holonomy。
+
+因此“黑洞吞噬一切”的正确数学版本不是信息消失，而是：
+
+$$
+\boxed{
+\text{不同观察接口保留不同阶数、不同关系类型的信息。}
+}
+$$
+
+---
+

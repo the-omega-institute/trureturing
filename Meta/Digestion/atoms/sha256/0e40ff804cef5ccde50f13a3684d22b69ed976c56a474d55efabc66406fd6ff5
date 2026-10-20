@@ -1,0 +1,10 @@
+## 定义 3.2（全未来核）
+
+\[
+K_\infty
+:=
+\bigcap_{n\ge0}K_n
+=
+\{(x,y):\forall n,\ q(F^nx)=q(F^ny)\}.
+\]
+

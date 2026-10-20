@@ -1,0 +1,241 @@
+**Theorem 118.1 (An explicit stopped attainer on the second-head
+boundary).** Choose parameters satisfying
+
+$$
+\begin{gathered}
+0<\delta\le\frac9{31},\qquad
+0\le\alpha\le\frac\delta3,\qquad
+\frac{22\delta}9\le t\le1-\delta,\\
+u\ge v\ge0,\qquad u+v\le\frac{4\delta}9,\qquad
+t+u\le1-\delta.
+\end{gathered}
+\tag{118.1}
+$$
+
+Put
+
+$$
+\begin{aligned}
+e&=\frac t2-\frac\delta9,\\
+a_1&=1-\delta+\alpha,&a_2&=1-\delta,\\
+a_3&=t+u,&a_4&=t+v,&a_5&=t-u-v.
+\end{aligned}
+\tag{118.2}
+$$
+
+Retain any original positive nonincreasing vanishing tail with
+$a_6\le e$. For the resulting full sequence,
+
+$$
+E_{\mathcal N}(2;a)=E_{\mathcal O}(2;a)=e,
+\qquad
+\mathcal F_N(a,e)\cap\mathscr C_5\ne\varnothing.
+\tag{118.3}
+$$
+
+Both infima are attained on the original source by acquisitions
+using the same common seed. The active length at this closed cap
+is five. Feasibility holds at every cap at least $e$ and fails
+below $e$. These are feasible amplitude families, not separators.
+
+**Proof.** Define
+
+$$
+z=\frac\delta3,\qquad x=\frac{4\delta}9,\qquad
+y=\frac t2-\frac{5\delta}9,\qquad
+w=1-\frac t2-\frac{4\delta}3.
+\tag{118.4}
+$$
+
+Use the following seven increasing schedules. Each vector in the
+last three columns is an unnormalized terminal mass; its coordinate
+mass is the schedule's weight. Cell $0$ contains both acquired
+cells $00,01$, while $10,11$ are the two cells reached after a
+positive first reply.
+
+$$
+\begin{array}{c|c|l|l|l}
+\text{schedule}&\text{weight}&0&10&11\\\hline
+(1,2)&w&we_1&we_2&
+ (w-5\delta/9)e_0+(\delta/9+u)e_3+ve_4+(4\delta/9-u-v)e_5\\
+(1,3)&x&xe_1&xe_3&ze_0+(x-z)e_5\\
+(1,4)&z&ze_1&ze_4&ze_0\\
+(2,3)&x&ze_0+(x-z)e_2&xe_3&ze_0+(x-z)e_5\\
+(2,4)&z&ze_2&ze_4&ze_0\\
+(3,4)&y&ze_0+(y-z)e_3&ye_4&ze_0+(y-z)e_5\\
+(4,5)&z&ze_0&ze_5&ze_0
+\end{array}
+\tag{118.5}
+$$
+
+Normalization follows from $w+2x+y+3z=1$. Every column has its
+stated common mass. Nonnegativity uses
+
+$$
+x-z=\frac\delta9,\qquad
+y-z=\frac t2-\frac{8\delta}9\ge\frac\delta3,\qquad
+w-\frac{5\delta}9
+ \ge\frac12-\frac{25\delta}{18}\ge\frac3{31},
+\tag{118.6}
+$$
+
+and $4\delta/9-u-v\ge0$. The amplitude order follows from
+$t+u\le1-\delta$ and $u\ge v\ge0$. Moreover
+
+$$
+e\ge\frac{10\delta}9>0,\qquad
+a_5-e\ge\frac t2-\frac\delta3\ge\frac{8\delta}9>0.
+\tag{118.7}
+$$
+
+Thus every original amplitude is positive, the sequence has the
+required order, and $a_6\le e<a_5$, giving active length five.
+
+We verify all word laws directly. For a word with first zero $n$,
+let $p_b$ be the mixture (118.5). The correct-mark probability
+is constant throughout each first-zero class, and the base
+probability is as follows; all unspecified suffix bits are free:
+
+$$
+\begin{array}{c|l|l}
+n&p_b(n)&p_b(0)\\\hline
+1&w+x+z&
+ z\bigl[3-b_2(1-b_3)-b_3(1-b_4)-b_4(1-b_5)+b_2b_4\bigr]\\
+2&w+x&z\bigl[3+b_3b_4+b_4b_5\bigr]\\
+3&t/2+\delta/9+u&
+ 1-t/2-11\delta/9+zb_4(1+b_5)\\
+4&t/2+\delta/9+v&1-t/2-8\delta/9\\
+5&t/2+\delta/9-u-v&1-t/2-2\delta/9
+\end{array}
+\tag{118.8}
+$$
+
+For example, at first zero one the four schedules not starting
+at one contribute base masses
+$z[1-b_2(1-b_3)]$, $zb_2b_4$,
+$z[1-b_3(1-b_4)]$, $z[1-b_4(1-b_5)]$.
+The remaining three schedules always emit label one there.
+This proves the first row. Substituting $b_1=1,b_2=0$ in the
+same seven columns gives the second row, and the remaining rows
+follow by substituting $110b_4b_5$, $1110b_5$, $11110$.
+The $u,v$ transfer occurs only in the $(1,2)$ exhaustion cell.
+It leaves every first-zero-one or first-zero-two law unchanged,
+and adds $ue_3+ve_4-(u+v)e_5$ to every first-zero-three,
+four or five law and to $11111$.
+
+The first base bracket is at least two. Indeed the number of
+positive-to-zero transitions in the four-bit suffix is at most
+two; if it is two, then $b_2=b_4=1$ and the extra $b_2b_4$
+adds one. The second bracket is at least three. Hence the base
+minima in (118.8) are attained respectively at $01000,10000,
+11000,11100,11110$. Since each correct probability is fixed
+within its class, these words attain the pair minima as well.
+It follows that the actual class minima of the three independent
+TV-row slacks
+
+$$
+p_b(0)-(1-a_n-e),\qquad
+p_b(n)-(a_n-e),\qquad
+p_b(0)+p_b(n)-(1-e)
+\tag{118.9}
+$$
+
+are
+
+$$
+\begin{array}{c|c|c|c}
+n&\text{base slack}&\text{correct slack}&\text{pair slack}\\\hline
+1&e-\delta/3+\alpha&\delta/3-\alpha&0\\
+2&e&0&0\\
+3&t-4\delta/3+u&0&e-10\delta/9+u\\
+4&t-\delta+v&0&e-7\delta/9+v\\
+5&t-\delta/3-u-v&0&e-\delta/9-u-v
+\end{array}
+\tag{118.10}
+$$
+
+All entries are nonnegative under (118.1). In the last row,
+$t-\delta/3-u-v\ge t-7\delta/9\ge15\delta/9$ and
+$e-\delta/9-u-v\ge e-5\delta/9\ge5\delta/9$.
+The other late base entries use $t\ge22\delta/9$, and the
+late pair entries use $e\ge10\delta/9$. The head entries use
+$0\le\alpha\le\delta/3$. Thus (110.6) holds on every one of
+the 31 words containing a zero, with each pair row checked
+independently. No chain-word restriction has been used.
+
+The all-positive law is
+
+$$
+p_{11111}=(1-e)e_0+(\delta/9+u)e_3+ve_4
+                  +(t/2-2\delta/9-u-v)e_5.
+\tag{118.11}
+$$
+
+It has nonbase mass exactly $e$ and satisfies the all-positive
+base row at equality. Theorem 110.2 and (110.9) give, at every
+actual source with first absence $n>5$,
+
+$$
+\operatorname{TV}(p_{11111},\lambda_x^a)
+          =\max\{e,a_n\}=e.
+\tag{118.12}
+$$
+
+This retains every actual positive tail amplitude, including
+$a_6=e$, and every later multiple-zero answer pattern.
+
+For explicit same-seed realization, partition a source-independent
+uniform $U\in[0,1)$ into the seven schedule intervals of the
+listed weights. Within each positive-weight interval, rescale
+$U$ to $[0,1)$ and predeclare a partition for each of the three
+terminal cells according to that cell's normalized vector. All
+three choices are fixed simultaneously by $U$; independence
+between their partitions is unnecessary. Use half-open intervals
+and omit zero-weight intervals. The stopped acquisition queries
+the selected increasing pair until its first queried zero or
+exhaustion, then hands off the selected original mark $\theta_j$.
+With the identical $U$ and schedule, the preselected acquisition
+obtains both static replies, reconstructs the same stopped cell
+and hands off the same mark. Its second request is counted even
+when its reply is ignored. These are measurable acquisitions
+with zero advice, at most two actual requests and finite handoff
+at every actual source and seed. The original source, full
+carrier, consumer and nonatomic targets are unchanged.
+
+The $10$ and $11$ vectors have disjoint supports for each
+schedule. In (109.4)--(109.5) there is no empty or singleton
+branch, so $v_{ij}=u_{ij}^{10}$, $V_i=B_i$ and
+$h_i=(B_i-(B_i-A_i))_+=A_i$. Consequently
+
+$$
+\begin{aligned}
+c=H={}&\delta e_0+(1-t/2-5\delta/9)e_1
+            +(4\delta/9)e_2+(t/2-8\delta/9)e_3,\\
+\beta&=1.
+\end{aligned}
+\tag{118.13}
+$$
+
+Theorem 109.1 therefore places this same finite kernel in
+$\mathscr C_5$; its coefficient criterion is reused.
+
+Finally the amplitudes satisfy
+
+$$
+2a_2+3(a_3+a_4+a_5)-2=18e,\qquad
+D_3(a,e)=3e+\frac{2\delta}3>3e.
+\tag{118.14}
+$$
+
+The $m=5$ case of Theorem 117.2 lower-bounds the error of every
+original $\mathcal N_2$ competitor by $e$, including arbitrary
+addresses and full-carrier outputs. Containment gives the same
+lower bound for $\mathcal O_2$. The common-seed table attains
+that bound, proving (118.3). Monotonicity in the allowed cap
+proves feasibility above $e$ and impossibility below it.
+All displayed non-strict parameter endpoints are included:
+$\alpha=0,\delta/3$, compatible endpoints of $\delta,t$,
+$u=v$, $v=0$, $u+v=4\delta/9$, $t+u=1-\delta$,
+zero terminal masses and $a_6=e$. None requires a limit sampler.
+$\square$
+

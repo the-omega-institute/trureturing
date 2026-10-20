@@ -1,0 +1,104 @@
+**引理 102.2（对实中心一致的二项二次相位界）。** 若
+$K\sim\operatorname{Bin}(n,p)$、$p\in[1/4,3/4]$、$d=np(1-p)\ge1$，则
+对任意实数 $\mu$ 和 $0<|a|\le1$，
+
+$$
+\left|\mathbb E e^{ia(K-\mu)^2}\right|
+\le\min\{1,C[\sqrt{|a|}+(d|a|)^{-1/2}]\}.
+\tag{102.4}
+$$
+
+**证明。** 经典 van der Corput 二阶导数估计对任意长度不超过 $N$ 的整数区间给
+
+$$
+\left|\sum e^{ia(k-\mu)^2}\right|
+\le C(N\sqrt{|a|}+|a|^{-1/2}).
+\tag{102.5}
+$$
+
+二阶导数不依赖实中心；负 $a$ 用共轭处理，$2\pi$ 归入常数。
+将二项质量 $b(k)$ 在整数轴补零，分成长度 $N=\lceil\sqrt d\rceil$ 的块。
+其质量比随 $k$ 递减，故单峰；最大质量至多 $C/\sqrt d$，
+总变差至多最大质量的两倍。记各块最大值为 $M_I$，则
+
+$$
+M_I\le N^{-1}\sum_Ib(k)+\operatorname{Var}_I(b),\qquad
+\sum_IM_I\le N^{-1}+2\max b\le C/\sqrt d.
+$$
+
+Abel 求和将每块加权和界为 (102.5) 乘端点质量与块内变差之和，
+该和至多 $3M_I$。对全部块求和即得 (102.4)。
+这里未丢弃二项尾部，也没有待乘逆噪声的小概率余项。证毕。
+
+**实际尺度与共同实现。** 仍记
+$\lambda=Q^3,\delta=Q^{-1/2},B^2=q/Q^{5/2}$，置
+
+$$
+\mathcal B=B^2\sqrt\delta=q/Q^{11/4},\qquad
+\ln\mathcal B=c_q\lambda+O(\ln Q),\qquad
+T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V/\sqrt\delta.
+\tag{102.6}
+$$
+
+这只是原二次整数相位的精确系数，未断言存在共同格距。
+在原一致良好数据事件上，校准乘积律给独立
+$R_j\sim\operatorname{Bin}(C_j,p_j)$。写
+
+$$
+d_j=C_jp_j(1-p_j),\quad v_j=d_j/B^2,\quad
+e_j=(\mu_j-C_jp_j)/B,\quad w_j=v_j/\sqrt\delta.
+$$
+
+第 98、101 章使用的同一固定对数核心 $H$ 满足
+
+$$
+|H|=O(Q^{1/2}\sqrt{\ln Q}),\quad
+\min_Hd_j\ge e^{c_q\lambda}Q^{-C_D},\quad
+V_O\le Q^{-200},\quad \|e\|\le a_x\sqrt V,
+\quad a_x=O_{\mathbb P}(Q^{-5/2}).
+\tag{102.7}
+$$
+
+其中 $C_D$ 固定。原紧区域的正 Gaussian 剖面还给至少 $c/\delta$ 个中心坐标满足
+$c\delta\le v_j\le C\delta$。
+这些条件由实际一、二行 PGF、统一占据方差及紧区域 Stirling 剖面得到，
+与噪声选择无关；没有增加新的系数假设或假定实际路径行独立。
+
+在第 98 章的同一个单调分位数耦合上，以独立 $Z_j$ 替换核心标准化计数，
+外部计数仍保留原实现。令
+
+$$
+s_j=-\ln b_j(R_j)-\mathbb E_Q[-\ln b_j(R_j)],\quad
+s_Q=\sum_js_j,\quad s_O=\sum_{H^c}s_j,\quad
+S_H=\tfrac12\sum_H(Z_j^2-1),
+$$
+
+$$
+U=s_Q+G^2/2,\quad U'=S_H+s_O+G^2/2,
+$$
+
+$$
+T'=\delta^{-1/2}\left[
+\sum_H(\sqrt{v_j}Z_j-e_j)^2+
+\sum_{H^c}((R_j-C_jp_j)/B-e_j)^2-V\right],\quad Y'=T'+\sigma_MG.
+\tag{102.8}
+$$
+
+两边使用同一个 $G$，外部信息量与外部能量的相关性完整保留。
+紧参数二项量化耦合有任意固定阶 $L^p$ 误差 $C_pd_j^{-1/2}$。
+中心信息量的 Stirling 估计给
+$\|\sum_Hs_j-S_H\|_2\le C|H|(\min_Hd_j)^{-1/36}$：
+在 $|K-np|\le n^{5/8}$ 用带余项 Stirling，补事件用高阶 Bernoulli 矩与
+二次信息量界，中心化后得到这一较弱但足够的指数。
+因式分解平方差并保留实中心修正，得
+
+$$
+\|U-U'\|_2+\|Y-Y'\|_2
+\le Q^{C_D'}e^{-c_q\lambda/36}=:\eta_Q,
+\quad \|U\|_4+\|U'\|_4\le CQ,
+\quad \mathbb E|Y|^4+\mathbb E|Y'|^4\le C.
+\tag{102.9}
+$$
+
+矩界由同一独立和的展开及原中心界直接得到，未从 TV 传递无界矩。
+

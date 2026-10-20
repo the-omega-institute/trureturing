@@ -1,0 +1,26 @@
+# 第两千零十部　理论深度审计
+
+| 结论                                                   | 当前地位                            |
+| ---------------------------------------------------- | ------------------------------- |
+| 全部素数集合没有内禀有限奇偶                                       | 精确定理                            |
+| 有限素数子集严格分为偶、奇两类                                      | 精确                              |
+| squarefree 偶、奇 sector 的和为 \(\zeta/\zeta(2s)\)        | 精确                              |
+| squarefree 偶、奇 sector 的差为 \(1/\zeta\)                | 精确                              |
+| 全整数 \(\Omega(n)\) 偶、奇 sector 的和为 \(\zeta\)           | 精确                              |
+| 其差为 \(\zeta(2s)/\zeta(s)\)                           | 精确                              |
+| Möbius 是唯一 Dirichlet inversion observer              | 精确                              |
+| prime-permutation-invariant 非平凡字符唯一                  | 精确                              |
+| 素数宇称传输是二态 Hadamard 系统                                | 精确                              |
+| 奇观察通道是有限正传输的最小本征通道                                   | 精确                              |
+| 两种微观 lift 具有共同 polarization \(\zeta(2s)/\zeta(s)^2\) | 本轮核心恒等式                         |
+| RH 等价于 parity observer 在 \(\Re s>1/2\) 无内部极点         | 精确                              |
+| 右侧离线零点使偶、奇 sector 产生相反 principal parts               | 精确                              |
+| global zero 与 parity observer blow-up 是同一零点的双通道读法    | 精确解释                            |
+| RH 使 normal parity 塌缩，只保留 time parity                | 精确轨道重写                          |
+| prime parity rank 必然在 completion 中守恒                 | 尚未证明                            |
+| 观察者唯一性本身已证明 RH                                       | 不成立，缺 grading-preserving bridge |
+| 奇偶本身强迫黄金比例                                           | 不成立                             |
+| 黄金是 normalized Pick parity failure 的谱                | 精确                              |
+| supplied nonreal off-line zero 产生负 full Weil square  | 项目机器闭合                          |
+| actual canonical \(\xi\) Weil distribution 已完全接通     | 尚未闭合                            |
+| Prime–Gamma parity-to-normal intertwiner             | 当前新核心桥                          |

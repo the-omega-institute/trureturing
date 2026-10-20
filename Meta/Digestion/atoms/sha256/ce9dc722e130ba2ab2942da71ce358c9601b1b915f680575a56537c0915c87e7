@@ -1,0 +1,22 @@
+### 证明
+
+取（ST.3）中的参考源 \(\tau=s\)，参考位移为 \(0\)，得到
+
+\[
+Y_s(\sigma)=\Xi_s(0)
++c_*\left[(\sigma-s)-(s-1)\log\frac\sigma s\right].
+\tag{ST.13}
+\]
+
+因此
+
+\[
+Y_s'(\sigma)=c_*\left(1-\frac{s-1}\sigma\right),
+\qquad Y_s''(\sigma)=\frac{c_*(s-1)}{\sigma^2}>0.
+\]
+
+它在 \((0,s-1)\) 严格下降，在 \((s-1,s]\) 严格上升，唯一最小点为 \(\sigma=s-1\)。该点对应 \(a=1\)，§434 的严格符号给
+\(Y_s(s-1)=\Xi_{s-1}(1)<0\)。右端
+\(Y_s(s)=\Xi_s(0)>0\)，左端由（ST.13）满足
+\(Y_s(\sigma)\to+\infty\) 当 \(\sigma\downarrow0\)。连续性及两段严格单调性分别给且仅给一根，得到（ST.12）。这也覆盖 \(1<s\le2\)，不要求较小源指数大于 \(1\)。证毕。
+

@@ -1,0 +1,18 @@
+### 46.9 分离计费、供应归属与未决范围
+
+定义 46.3 的计划有 $O(k)$ 个阶段记录，全部退出字典共至多 $N$ 个目标关联，另有公共实际表与共同窗口。阶段整数需 $O(\log(H+1))$ 位；按既有紧凑整数／窗口接口，阶段计划为 $O(k\log(H+1))$ 位。在线只需阶段号、已知贡献和终端取得计数，终端字典、程序描述、静态表、全部记录与输出另计。此界没有删除原始目标关联，没有对任意既定控制器宣称总记忆上界，也不证明最小描述、最小状态或最优证书搜索复杂度。
+
+定理 46.4 的单叶填充执行器每个非终端阶段至多一次前缀宏、一次共同宏、一次替换尝试，最后仅一个支路填充；来源调用保守上界为 $3k+H$，没有初读。终端填充也可直接换为（TM.4620）的已有二分宏：取得终端入口尺寸 $M$ 后，F 支路计算 $m_j=M-(H-p_j)$，R 拒绝支路计算 $m_j=M-d_j$，末阶段计算 $m_k=M$。这些支路的行单射已由证书验证，替换该终端算法不引入新碰撞。于是同一深度的来源调用上界可取 $3k+\lceil\log_2H\rceil+1$；若另作初读，加一。宏中途不读出任何尺寸，最后拒绝始终计费。这只是显示算法的界，不是最少调用定理。
+
+在定理 46.6 中，标签字母表恰为一，生产者返回常量，不访问来源；类别成员认证、实际正词生产和原始目标输出是独立费用。每个初始词恰含 $4(r+s)$ 片叶，介于 $16R$ 与 $24R-8$；这不是零材料来源。显示协议替换恰 $K+3$ 次，二分取得没有额外替换。终端纯 $\alpha$ 上下文的实际接受总叶数恰为 $U=H-N_{\mathrm{term}}\le H-1$，每次尝试宏至多 $H$ 叶，尝试总叶长保守地至多 $H\lceil\log_2H\rceil+1$，包括被拒宏和最后单叶。原子一次调用不等于一次单叶生产或单位物理时间；替换展开、上下文生成／传输和守卫实现仍各自计费。
+
+若终端改用单叶填充，实际成功数 $f=H-N_{\mathrm{term}}$，无初读的来源调用恰为 $K+3+f+1$；在 $H=H_K$ 时 $0\le f\le4(R-1)F_{K+6}$。这是同一深度但不同调用与材料安排，不能混报为二分调用界。二分记录仅须保留实际累计 $U$ 与公共常量即可用（TM.4621）解码；在给定公共 Fibonacci 数及逆 $u_a$、学校式整数算术下，常数个 $O(\log(H+1))$ 位整数寄存器足够，区间控制与解码位运算保守上界为 $O((\log(H+1))^2)$。生成公共 Fibonacci 常数、求逆、认证来源与解码器、字面记录存储及输出分别另计；这是足够工作空间与算术界，不是物理总记忆最优。只存生成公式可节省字面族表，但须承担其计算与认证费用。
+
+数学供应归属：实际正词、共同三窗及八边 Euler 认证归[原子卷 §§359–360](FIBONACCI_ATOMIC_RELATION_GENERATION.md)；来源动作与永久碰撞归引理 30.1、定理 30.2、命题 38.1；整个无替换阶段压缩、准确双增量与非交换因子运输归引理 35.1—35.2、定理 35.4；仿射次序贡献归命题 39.8；无统一常数的必要深度与原子二分终端取得归定理 44.5；任意实际历史的完整过滤与源—目标后继归定理 45.3、命题 45.4。这里的新增综合结论为资源序条件下的分支消去、深度保持的单线充要证书、投影释放计数和实际密集族的定量对数率，不将已有单位词、静态恢复或无界深度列作新供应。
+
+仓内 [TargetRecoveryCriterion](../../../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean) 的 `target_recovery_criterion` 和 [IndexedTargetSufficiency](../../../D5/S3/ConceptDynamics/Restoration/IndexedTargetSufficiency.lean) 的 `indexed_target_sufficiency` 供应既有的目标在实际读出纤维上恒定与因子分解接口；它们不供应此处的取得前缀。[SafeActionRefinementMonotonicity](../../../D5/S3/ConceptDynamics/Decision/SafeActionRefinementMonotonicity.lean) 的 `safe_action_refinement_monotonicity` 是纤维上动作合法性的包含，不保证合法动作保护初始目标。[ReachableBehaviorMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.lean) 的 `finite_state_minimality` 有给定单子作用、可达性和同外部未来行为前提，不将初态区别自动交给受守卫协议。另有 [BinaryProtocolDepthLowerBound](../../../D5/S3/ConceptDynamics/Coding/BinaryProtocolDepthLowerBound.lean) 的 `adaptive_binary_protocol_depth_lower_bound` 和 [FiberBinaryIdentification](../../../D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.lean) 的 `arbitrary_binary_questions_identify_target`：它们计二进制问题深度并容许给定或任意二值问题，不等于这里只计接受 $\rho$、且尺寸探测会改源的动作合同。上述源码接口不构成当前编译证据，不代替本章的普通源特定证明。
+
+初态识别、区分与最终状态定位的成熟背景仍取 §31 已列 Panteleev，*Preset Distinguishing Sequences and Diameter of Transformation Semigroups*，arXiv:1412.0034v1，及 van den Bos–Vaandrager，*State Identification for Labeled Transition Systems with Inputs and Outputs*，arXiv:1907.11034v2。没有移用其长度界、自动机模型或搜索接口来证明本章的正资源结论。全部新增论证是既有供应上的 repo-derived 普通数学综合，不主张全库无重叠、文献优先权或 Lean 核验。
+
+若共同完整窗口或（TM.4602）缺失，读可以分叉，混合上下文接受也未必终端化；定理 46.4 与推论 46.5 不分类那些族。证书的有限枚举不解决一般混合窗口／资源族的紧凑全局策略或高效搜索。显示网格族的最优深度仍在（TM.4614）两步区间内，全有序类的最优主系数只受（TM.4624）夹界；全族 $M_A(H)$、节省缺口、最少调用、标签与表的取得认证最优、总记忆和完整长期关系恢复目标均未由本章完成。输出始终为初始 $q_H$，不恢复原括号、叶路径、原树过去、物理空间或物理时间；重算一个规范来源也不等于找回本人原树。
+

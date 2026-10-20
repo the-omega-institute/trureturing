@@ -1,0 +1,6 @@
+但当：
+
+* moment order \(N\to\infty\)；
+* scale bank 稠密；
+* transport errors \(\to0\)；
+

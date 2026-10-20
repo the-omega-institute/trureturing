@@ -1,0 +1,37 @@
+**定义 52.1（加权证书菜单）。** 沿用定义 51.1 的
+$\Omega,\overline C_K,X_t,\mathcal Q_t,B_t,R_t$ 及 all-or-none 更新。
+每批 $\mathscr L_t$ 是去重的有限层身份集合；每个
+$K\in\mathscr L_t$ 带一个正整数成本
+$$
+c_t(K)\in\{1,\ldots,2^{b_t}\}.
+$$
+同一层在不同批次的成本可以不同，历史层的成本视为已经支付。
+若 $R_t=\varnothing$，令
+$\sigma_t^c:=0$、$d_t:=0$，不追加。否则定义加权覆盖基准
+$$
+\sigma_t^c:=
+\min\left\{
+\sum_{K\in\mathcal R}c_t(K):
+\mathcal R\subseteq\mathscr L_t,\
+R_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K
+\right\},
+$$
+无覆盖时置 $\sigma_t^c:=\infty$，并令
+$$
+d_t:=\max_{K\in\mathscr L_t}
+|\overline C_K\cap R_t|,
+\qquad
+\max\varnothing:=0,\quad H_0:=0.
+$$
+在 $\sigma_t^c<\infty$ 的非空批次上，贪心每轮选择尚未选取且使
+$\lvert\overline C_K\cap U\rvert/c_t(K)$ 最大的层；达到覆盖后停止。
+记追加序列为 $\mathcal S_t$、其加权成本为
+$$
+w_t:=\sum_{K\in\mathcal S_t}c_t(K).
+$$
+若 $\sigma_t^c=\infty$，保持 §51 的 all-or-none 规则，不追加并保留
+$B_t=R_t$。令
+$$
+G_c:=\{t:R_t\ne\varnothing,\ \sigma_t^c<\infty\}.
+$$
+

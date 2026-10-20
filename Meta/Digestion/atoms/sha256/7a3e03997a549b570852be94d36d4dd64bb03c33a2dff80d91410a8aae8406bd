@@ -1,0 +1,7 @@
+两者的分工是：
+
+- `PrefixExtension`：证明新源字节以旧源字节为前缀；
+- `append_only_old_settlement_unchanged`：证明追加事件不改旧结算；
+- `LegalTailRekey`：把前缀漂移转换为唯一活动地址迁移；
+- `ConservativeChannel`：允许这一迁移类通过，而不放宽其他动作。
+

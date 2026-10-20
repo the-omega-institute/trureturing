@@ -1,0 +1,65 @@
+## 78. FIB 上下文图的外加拉普拉斯、热核与谱维数
+
+取 FIB 递归产生的有限上下文集 \(V_j\)，另行指定无向边集、对称导通率 \(c_{uv}=c_{vu}\ge0\)、质量 \(m_u>0\) 和可选杀死率 \(\kappa_u\ge0\)。定义
+\[
+(L_jf)(u)
+=\frac1{m_u}\left[
+\sum_{v\ne u}c_{uv}(f(u)-f(v))+\kappa_uf(u)
+\right].
+\]
+在
+\(\langle f,g\rangle_m=\sum_um_u\overline{f(u)}g(u)\) 下，
+\[
+\langle f,L_jf\rangle_m
+=\frac12\sum_{u,v}c_{uv}|f(u)-f(v)|^2
++\sum_u\kappa_u|f(u)|^2\ge0.
+\]
+导通率、质量、边界和杀死率均为外加模型；FIB 只提供候选顶点、标签和可能的邻接顺序。
+
+若
+\(L_j\phi_{j,k}=\lambda_{j,k}\phi_{j,k}\)，取 \(m\)-正交归一基，令 \(H_t=e^{-tL_j}\)，则
+\[
+(H_tf)(u)=\sum_vp_{j,t}(u,v)m_vf(v),
+\]
+\[
+p_{j,t}(u,v)
+=\sum_ke^{-\lambda_{j,k}t}
+\phi_{j,k}(u)\overline{\phi_{j,k}(v)}.
+\]
+热迹与根点局部谱测度分别为
+\[
+\Theta_j(t)=\sum_um_up_{j,t}(u,u)=\sum_ke^{-\lambda_{j,k}t},
+\]
+\[
+\rho_{j,u}
+=\sum_km_u|\phi_{j,k}(u)|^2\delta_{\lambda_{j,k}},
+\qquad
+m_up_{j,t}(u,u)
+=\int e^{-t\lambda}\,d\rho_{j,u}(\lambda).
+\]
+当 \(\kappa=0\) 且图连通时，常数函数是唯一零模；有杀死或 Dirichlet 边界时零模可消失。
+
+对图序列取归一化谱计数
+\[
+\nu_j=|V_j|^{-1}\sum_k\delta_{\lambda_{j,k}}.
+\]
+只有在指定根点或热力学极限并证明 \(\nu_j\Rightarrow\nu\) 后，才定义积分谱密度 \(N(E)=\nu([0,E])\)。若
+\[
+N(E)\sim CE^{d_s/2}\qquad(E\downarrow0),
+\]
+并满足相应 Tauberian 条件，则热迹低能端具有
+\[
+\Theta(t)/|V_j|\sim C't^{-d_s/2}.
+\]
+单个有限连通图在长时间趋向有限尺寸平台，不能直接由此定义非零扩散维数。若另加体积 \(|V_j|\asymp a^j\)、低模尺度 \(\lambda_{j+1}\asymp s^{-2}\lambda_j\) 及边界误差控制，则
+\[
+d_s=\frac{\log a}{\log s}.
+\]
+这需要外加图重整化，FIB 长度增长本身不提供 \(a,s\)。
+
+若再把 \(m_u\) 解释为质量、\(c_{uv}\) 解释为弹簧刚度，则外加机械模型
+\[
+M\ddot q+Cq=0,\qquad L=M^{-1}C
+\]
+的正常模满足 \(\omega_{j,k}=\sqrt{\lambda_{j,k}}\)。只有平移不变局部图另有 Bloch 参数并满足 \(\lambda(k)\sim c^2|k|^2\) 时，才可称低频模为声学支；非周期 FIB 图必须使用谱测度，不能预设 Bloch 波矢。故本节不推出真实材料声子、热扩散、Weyl 普适律或物理维数。
+

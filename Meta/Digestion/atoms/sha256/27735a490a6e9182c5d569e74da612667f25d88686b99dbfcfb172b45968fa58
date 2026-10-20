@@ -1,0 +1,29 @@
+### 23.6 固定有限阶报告的适用边界
+
+**固定阶报告应用（定理23.2在任意有限长度的后果）。** 给任意整数 $r\ge1$，取 $k=r+1$。存在两份同一零初始化、实际合法、全零接缝的 $k$ 窗有限来源律，使每组至多 $r$ 个窗口的完整联合报告相同，且
+
+$$
+\mathbb E_{\rm even}Q_h^m=\mathbb E_{\rm odd}Q_h^m
+\quad\text{对所有 }h\ge0,\ 0\le m\le r,
+$$
+
+但每个 $h$ 的完整数量律不同，其总变差为一。因此在允许任意历史长度及任意合法有限来源律的类上，固定阶窗口联合报告连同全部这些实际空窗矩，不能统一恢复完整未来数量律。
+
+证明。采用定理 23.2 的 $k=r+1$ 来源，至多 $r$ 窗的组都是真子组，所需 $m$ 都小于 $k$，而每个 $h$ 的数量像仍为不交的奇偶两类。同样任取 $k>r$ 都成立，故固定 $r$ 时反例长度可以任意大。若坚持全支撑，可用该定理的共同正背景混合，所有相等保留，总变差改为任意所选 $\lambda\in(0,1)$。$r=0$ 的质量报告也不能恢复完整律，例如同一 $k=2$ 的两个端点；这不要求把定理23.2的主参数范围改为 $k=1$。证毕。
+
+本结论区分了三个目标：数量均值的充分性、有限窗口组的完整联合律、全部历史或未来数量律。定理 23.1 的均值闭包仍成立；有限阶组成层析也仍成立，其目标是有限阶矩。若已知来源只可能是定理 23.2 的两个纯端点，并实际取得一次精确 $Q_h$，不交支撑立即识别该次来源类别。因此这里不是计算、测量或有限样本取得的下界，也未证明需要无限多基本模式。
+
+这里每个 $r$ 分别给一对普通有限来源。删去奇偶律的一位后，余下位为均匀律，故非零奇偶偏好的各长度族并不自动成为同一无限过程的相容边缘；这一范围与 [HiddenRelations C-21.2][H49]、本卷命题 13.5 及 [JointProjection §20][P49] 的原量词一致。本章也不把 $\Omega_k$ 的经典律识别成原树、物理时空、量子态或任何零点与约数不等式目标。
+
+**数学引文（本应用的经典歧义与情境拼接）。** 上述两份不同共同经典律都已经存在，且产生同一所保留报告；这是一份报告的非唯一提升。Abramsky–Brandenburger，*The Sheaf-Theoretic Structure Of Non-Locality and Contextuality*，[arXiv:1102.0264v7](https://arxiv.org/html/1102.0264v7)，§§2.4–2.5、3、Theorem 8.1，处理给定测量覆盖及在交叠上相容的各情境概率律：在普通非负概率情形，全局分布须同时限制为全部情境律；其不存在才是该框架的非情境拼接障碍。Theorem 8.1 的隐变量分布独立于情境，各隐变量的单测量边缘相容且情境响应因子化；Bell 情形另有各方测量选择的覆盖结构。定理 23.2 的已有两份全局律各自提供全局提升，因而其局部不充分并不建立这种不存在性。
+
+Werner，*Quantum states with Einstein-Podolsky-Rosen correlations admitting a hidden-variable model*，Physical Review A 40, 4277，[DOI 10.1103/PhysRevA.40.4277](https://journals.aps.org/pra/abstract/10.1103/PhysRevA.40.4277)，摘要给非经典相关态仍可有隐变量模型的反例。其指定投影测量类的局域模型条件在这里仅列为有范围的待核引文，不作为本章证明前提，也不扩为全部 POVM。经典联合律不等于乘积律，不意味着量子纠缠，更不推出 Bell 违反。这些文献只限定本原生应用的解释范围，不另列一般量子定理。
+
+[H49]: AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md
+[N49]: FIB_RELATIONAL_CONTINUATION_GEOMETRY.md
+[R49]: AURIC_FIB_ATOM_RESPONSE_CONTRAST_HIGHER_BLOCK_CYCLES_AND_FUTURE_VISIBILITY.md
+[P49]: AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md
+[V49]: ../../../D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography.lean
+[J49]: ../../../D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.lean
+[Z49]: ../../../D5/S3/Arith/FibonacciAtomic/NativeContinuation/NullReplyFiber.lean
+

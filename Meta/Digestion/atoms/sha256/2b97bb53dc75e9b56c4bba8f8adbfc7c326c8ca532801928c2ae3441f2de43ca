@@ -1,0 +1,16 @@
+**定理 332.2（去相干模拟误差的精确值）。** 对任意 Hermitian \(F\)，
+\[
+\boxed{
+\sup_{\rho}
+\left|
+\operatorname{Tr}(F\rho)
+-
+\operatorname{Tr}(F\Delta_Z(\rho))
+\right|
+=
+\chi_Z(F).
+}
+\tag{332.2}
+\]
+因此，对于未来效果空间 \(\mathcal V_{\mathcal U,\mathcal E}\)，所有任务的统一经典模拟误差恰为 \(\chi_Z(\mathcal V_{\mathcal U,\mathcal E})\)。
+

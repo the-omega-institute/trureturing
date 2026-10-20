@@ -1,0 +1,6 @@
+最小的有限反例已经存在于二点载体：
+
+* 恒等读出满足 $\operatorname{IdComp}$，但“任意代表都合法”的关系不满足 $\operatorname{NormComp}$；
+* 对象等于代表的关系满足 $\operatorname{NormComp}$，但常值读出不满足 $\operatorname{IdComp}$；
+* 常值未来目标与常值读出满足 $\operatorname{BehComp}$，但读出仍不能区分两个当前身份。
+

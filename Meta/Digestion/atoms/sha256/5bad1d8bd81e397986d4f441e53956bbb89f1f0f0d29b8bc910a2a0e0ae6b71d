@@ -1,0 +1,48 @@
+## 143. FIB 上下文图上的外加 Kramers 逃逸与亚稳态
+
+固定长度 \(r\) 的 FIB 上下文图只给出允许接续。若另行授权双向操作，在无向连通图上附加势 \(U_i\)、对称边势垒 \(H_{ij}=H_{ji}\)、权重 \(m_i>0\) 和噪声尺度 \(\varepsilon\)，定义
+$$
+q_{ij}^{\varepsilon}
+=\frac{a_{ij}}{m_i}
+e^{-(H_{ij}-U_i)/\varepsilon},
+\qquad
+(L_\varepsilon f)_i
+=\sum_{j\ne i}q_{ij}^{\varepsilon}(f_j-f_i).
+\tag{143.1}
+$$
+其平稳分布与边电导为
+$$
+\pi_i^\varepsilon=Z_\varepsilon^{-1}m_i e^{-U_i/\varepsilon},
+\qquad
+c_{ij}^\varepsilon
+=Z_\varepsilon^{-1}a_{ij}e^{-H_{ij}/\varepsilon}.
+\tag{143.2}
+$$
+原始有向 FIB 图不能直接套用此详细平衡模型；未授权边的速率必须为零。
+
+对候选势阱 \(W\)，杀死生成元的主特征对满足
+$$
+\alpha_WQ_W=-\lambda_W\alpha_W,
+\qquad
+\Pr_{\alpha_W}(\tau_W>t)=e^{-\lambda_Wt}.
+\tag{143.3}
+$$
+因此从准稳分布出发的离井时间是指数律，平均寿命为 \(1/\lambda_W\)。亚稳态要求井内松弛远快于逃逸；准稳分布一般不等于 Gibbs 分布在井内的简单条件化。
+
+定义从 \(a\) 到目标集合 \(B\) 的通达高度
+$$
+\Phi(a,B)=\min_{\gamma:a\leadsto B}\max_{e\in\gamma}H_e.
+\tag{143.4}
+$$
+在固定有限图、容量前因子不具指数贡献及其他陷阱已控制的条件下，
+$$
+\varepsilon\log\mathbb E_a\tau_B
+\longrightarrow\Phi(a,B)-U_a.
+\tag{143.5}
+$$
+这说明逃逸由势阱质量和出口瓶颈共同决定，不能只比较起点与终点势差。若空间极限另行校准为梯度扩散、井极小点和鞍点非退化且主出口唯一，才可得到 Eyring–Kramers 型前因子；多出口、退化鞍点和非梯度漂移须重新分析。
+
+固定正噪声的有限不可约图只有一个平稳分布，亚稳态只是长寿命暂态。图规模与 \(\varepsilon\to0\) 的联合极限可能让通道数和权重贡献指数阶，不能先用固定图公式再无条件取极限。静态随机势垒还须先固定实现；对实现平均后的存活率一般是多个指数的混合，而非单指数。
+
+本节结论是：FIB 提供可行跃迁图，势垒、噪声、时间尺度和准稳统计均由外加随机动力学决定。
+

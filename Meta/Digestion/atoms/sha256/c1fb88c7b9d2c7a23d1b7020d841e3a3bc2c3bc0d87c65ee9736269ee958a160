@@ -1,0 +1,36 @@
+## 2. 同一 Gamma 乘子及其平移形式
+
+保持 L=2a、正号 Fourier 核，以及实际
+
+\[
+\gamma(t)=\Re\psi(1/4+it/2)-\log\pi,
+\qquad \gamma_0=\gamma(0).
+\]
+
+DLMF 5.7.6 的部分分式逐项相减给出
+
+\[
+\gamma(t)-\gamma_0=\sum_{j\ge0}\frac{2t^2}{b_j(b_j^2+t^2)},
+\qquad b_j=2j+1/2.
+\tag{GE1}
+\]
+
+每项非负。对零延拓的分段 C1 紧支撑函数，先用有限 j 的 resolvent 核，再由正形式单调收敛，得到
+
+\[
+A_\Gamma f=\gamma_0f+D_+f+D_-f,
+\quad D_\pm f(x)=\int_0^\infty K(v)(f(x)-f(x\pm v))\,dv,
+\quad K(v)=\frac{e^{-v/2}}{1-e^{-2v}}.
+\tag{GE2}
+\]
+
+作用等式在非跳跃点成立，随后给出同一 L2 表示向量。对应的正形式为
+
+\[
+\boxed{\mathcal G(f):=q_\Gamma(f)-\gamma_0\|f\|^2
+=\int_0^\infty K(v)\|f-\tau_vf\|_2^2\,dv\ge0.}
+\tag{GE3}
+\]
+
+常数中没有遗漏 2*pi：q_Gamma 使用 (2*pi)^-1 的 Fourier 积分，而单个 exp(-b|x|) 的 Fourier 乘子是 2b/(b^2+t^2)。每个有限 resolvent 因而正好产生 (GE1) 的一项。
+

@@ -1,0 +1,19 @@
+### definition 36.3: 共同合法残余转录及四角响应
+
+令 $\mathcal T$ 为原 `Control.Transcript=ℕ→Visible` 的共同可测域，其中 `Visible` 为 `Option (List Operation × NativeControl)`，取乘积 $\sigma$ 代数。对切面完整 state $c$ 和未读流 $\omega'$，定义
+
+$$
+V_c(\omega')(n)=\operatorname{visible}(\operatorname{nativeDrive}(c,\omega',n)).
+$$
+
+只观察从切面起的原合法操作及 control；不把完整前史或寄存器加入 $\mathcal T$。所有切面 control 均为 `fourth(active p)`，故原 `drive_control` 使此函数与所取切面 state 的其余字段无关。记其固定深度律为 $L_k$。具体事件 $E\subset\mathcal T$ 是第一项发出 Read0 并进入 pending0 的事件；在每个切面都合法。它不读取 pending 后的字母，也不包括提前 Stop。
+
+定义当前无计数模式条件未来律及有符号四角差
+
+$$
+\mathscr L_w^\mu=\sum_k\nu_w(k)L_k,\qquad
+\mathcal J_\mu=\mathscr L_2^\mu-2\mathscr L_1^\mu+\mathscr L_0^\mu.
+$$
+
+三种单点模式的核相等；故此差与 §§27、29 的 ends−low−high+zero 相同，中位模式在该差中的系数为零。$\mathcal J_\mu$ 属于共同域 $\mathcal T$ 上有限有符号测度空间，定义不含任意模式单纯形干预。
+

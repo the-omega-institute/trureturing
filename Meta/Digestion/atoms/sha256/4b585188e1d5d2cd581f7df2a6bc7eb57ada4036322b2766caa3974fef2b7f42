@@ -1,0 +1,17 @@
+Proof of sufficiency. Fix an effective enumerator of $A$. Let $E(q)$
+be the finite list of completed tree encodings emitted in its first $q$
+machine steps. This is a total finite simulation; an unfinished encoding
+is not an emitted tree. No decision procedure for $A$ is assumed.
+Construct this one finite observer:
+
+1. Use RA$\ell$ with empty cut to acquire a full description $t=U_v$.
+   Keep $t$ across the next capture.
+2. Use RA$\ell$ with root cut to acquire its row and $k=\ell(U_w)$
+   at a later validation $w$.
+3. Simulate the enumerator for exactly $k$ steps. Select tag `yes` iff
+   $t$ equals a tree in $E(k)$; otherwise select `no`. Accompany either
+   tag by the acquired root row of $U_w$.
+4. Retain only the tag, root cut, constant row and canonical common
+   state. Clear and retract $t$, $k$, enumerator tape, guards, counters,
+   reply latches and all remaining nonoutput regions before Return.
+

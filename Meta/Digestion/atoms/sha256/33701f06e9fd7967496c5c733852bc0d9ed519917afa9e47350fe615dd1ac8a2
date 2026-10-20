@@ -1,0 +1,6 @@
+**定义 970.2（与项目支持见证接口的对应）。** 项目 `D5/S3/Observer/MetricGeometryLaws/ClosedConvexDistanceWitnessDuality.lean` 中的 `closed_convex_distance_witness_duality`，将实赋范空间中到非空紧凸集的距离表示为单位对偶范数线性见证的最大违约上确界。这里可取八格实向量空间，范数为半个一范数，模型像为 $\mathcal C$；第 962 节的 $Q\mapsto\frac12\sum_x f_xQ(x)$ 在 $|f_x|\le1$ 下具有算子范数至多一。
+
+该一般接口说明为什么有界线性读数是合适的距离下界。当前三次多项式另外完成了几项一般接口本身没有替此例做的工作：找到实际见证，算出它的全部最大点，构造达到的混合，并用未饱和系数证明唯一性。此处为源码与普通解析推导的对应，未编译本批的新应用。
+
+项目 `D5/S3/TotalVariation/Convexity.lean` 的 `total_variation_joint_convex` 还给出全变差的联合凸性。结合 $\mathcal C$ 的凸性和 $P_{r,k}$ 对 $k$ 的仿射依赖，可得固定 $r$ 的对称值函数为凸函数：混合两个目标的各自最佳者给出中间目标的合法候选，距离不超过端点距离的同权平均。第 969 节的增加斜率、向上折角与最后恒定斜率准确符合这项独立结构要求。
+

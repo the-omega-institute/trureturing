@@ -1,0 +1,35 @@
+### 80.2 动态 FIB-下降条件
+
+称 $q$ 对动作族 $\mathcal A$ 是联合动态可下降的，如果对任意
+$q(t)=q(u)$、任意 $a\in\mathcal A$，都有：
+
+$$
+\begin{aligned}
+L_a(t)&=L_a(u),\\
+J^{q}_a(t;\eta,q',r)&=J^{q}_a(u;\eta,q',r)
+\quad
+(\eta,q',r\text{ 任意，且 }L_a(t)=L_a(u)=1).
+\end{aligned}
+\tag{80.3}
+$$
+
+若这些外显动作由内部 **memoryless selector** 选择（给定当前完整状态 $t$
+即确定分布，不读取已见前缀），取其在整个声明动作集上的概率分布
+$\pi_t\in\Delta(\mathcal A)$，还要有选择器因子化：
+
+$$
+\pi_t(a)=\pi_u(a)
+\quad(q(t)=q(u),\ a\in\mathcal A).
+\tag{80.4}
+$$
+
+等式（80.4）对固定的整个声明动作集要求，包括概率为零的动作，不扩及合同外的动作。
+定理80.1中的外显 selector 专指上述 memoryless 情形。若 selector 读取可见前缀
+$h$，应改用逐前缀的 $\pi_{t,h}$ 与 $\overline\pi_h:Q_0\to\Delta(\mathcal A)$，并逐前缀要求
+$\pi_{t,h}(a)=\pi_{u,h}(a)$（$q(t)=q(u)$、$a\in\mathcal A$）；该历史依赖版本不纳入
+下文静态唯一性结论。
+仅由一个固定 selector 的运行轨迹，不能推出它从未选择的动作核行下降；本节逐动作的必要性使用
+全部声明动作均可被外部 probe 的合同。若动作选择隐藏且不可外部 probe，需改为
+要求 selector 加权的混合联合核（含拒绝分支）下降；这种合同不推出 selector 或
+各个隐藏动作核行下降，不属于以下外显动作定理。
+

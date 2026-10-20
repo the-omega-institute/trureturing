@@ -1,0 +1,24 @@
+由（48.2）
+\[
+A_{\mathrm c}^{\,d}m_d=\frac{1-\rho}{\rho}.
+\]
+结合（48.47）得到
+\[
+\boxed{
+A_{\mathrm c}^{\,d}h_d
+\sim\frac{A_{\mathrm c}}{\sqrt{4\pi\rho d}},
+\qquad
+\lim_{d\to\infty}h_d^{1/d}
+=\frac{\rho}{(1-\rho)^2}
+=A_{\mathrm c}^{-1}.
+}
+\tag{48.48}
+\]
+所以以原点为中心的 Banach 值齐次级数
+\(\sum_{d\ge1}H_d(a)\) 具有精确半径 \(A_{\mathrm c}\)：
+
+- 若 \(r<A_{\mathrm c}\)，由（48.48）及根值判别，
+  \(\sum_d h_dr^d<\infty\)，故在 \(\|a\|_\infty\le r\) 上一致绝对范数收敛。
+- 若 \(r>A_{\mathrm c}\)，同一个输入 \(a=-r\mathbf1\) 对所有次数同时饱和，
+  \(\|H_d(a)\|_\rho=r^dh_d\not\to0\)，故级数在该输入处不收敛。
+

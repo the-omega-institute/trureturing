@@ -1,0 +1,68 @@
+**Theorem 10.3 (Passage-law and fixed-moment continuation of the native mean law).** For initial cuts $0\le i_j\le L_j$ with $i_j/L_j\to x\in[0,1]$, and every fixed $s\ge0$,
+$$
+\mathbb E_{i_j}\exp(-s\epsilon_j\tau_j)
+\longrightarrow
+\frac{\cosh(x\sqrt{s/D})}{\cosh(\sqrt{s/D})}.
+$$
+In particular the transform at the reflecting cut is $\operatorname{sech}(\sqrt{s/D})$. The nonnegative passage times converge in distribution to the law specified by this transform. For each fixed integer $p\ge1$ their moments converge to
+$$
+M_p(x)=p!\,(\mathcal T^p\mathbf1)(x),\qquad M_0(x)=1.
+$$
+Equivalently, for $p\ge1$,
+$$
+-D M_p''=pM_{p-1},\qquad M_p'(0)=0,\qquad M_p(1)=0.
+$$
+In particular,
+$$
+M_1(x)=\frac{1-x^2}{2D},\qquad
+M_2(x)=\frac{5-6x^2+x^4}{12D^2},
+$$
+and at $x=0$ the limiting mean, second moment and variance are
+$$
+\frac1{2D},\qquad \frac5{12D^2},\qquad \frac1{6D^2}.
+$$
+These are passage-time and Green-operator limits for the fixed-unit-speed cut chain. They specify no spatial path topology, physical heat flow or physical realization, and retain the qualification of Theorem 8.1.
+
+**Proof.** Let $h_{j,i}(s)=\mathbb E_i e^{-s\epsilon_j\tau_j}$ and set $h_{j,L_j}=1$. The discrete first-step equation gives exactly
+$$
+\bigl(B_j+(e^{s\epsilon_j}-1)I\bigr)h_j=B_j\mathbf1.
+$$
+Writing
+$$
+\gamma_j(s)=\frac{e^{s\epsilon_j}-1}{\epsilon_j}\longrightarrow s,
+$$
+its embedded version is
+$$
+h_j+\gamma_j(s)\mathcal T_jh_j=\mathbf1.
+$$
+This uses the discrete clock itself. Since $0\le h_j\le1$, Theorem 10.2 shows that $h_j$ is uniformly close to $1-\gamma_j(s)\mathcal T h_j$. The latter functions are uniformly bounded and have a common Lipschitz bound for fixed $s$, because $| (\mathcal T h_j)' |\le D^{-1}$. They therefore have uniformly convergent subsequences. Every subsequential limit satisfies
+$$
+h+s\mathcal T h=1.
+$$
+It is continuous, and differentiating twice gives
+$$
+D h''=s h,\qquad h'(0)=0,\qquad h(1)=1.
+$$
+The unique solution is the displayed hyperbolic-cosine ratio, including $h\equiv1$ at $s=0$. Uniqueness proves uniform convergence of the embedded transforms and hence convergence at the moving cuts. The bounded scaled first moments proved below give tightness. Every weak subsequential limit has this Laplace transform; uniqueness of a nonnegative law from its Laplace transform proves convergence in distribution.
+
+For the moment calculation, write $M_{j,p}(i)=\mathbb E_i[(\epsilon_j\tau_j)^p]$ with $M_{j,p}(L_j)=0$ for $p\ge1$. Its first-step equation, separating the constant term from lower positive moments, is
+$$
+B_jM_{j,p}=\epsilon_j^p\mathbf1+
+\sum_{k=1}^{p-1}\binom pk\epsilon_j^{p-k}K_jM_{j,k}.
+$$
+Since $G_jK_j=G_j-I$, on embedded transient vectors this becomes
+$$
+M_{j,p}=\epsilon_j^{p-1}\mathcal T_j\mathbf1+
+\sum_{k=1}^{p-1}\binom pk\epsilon_j^{p-k-1}
+(\mathcal T_j-\epsilon_j I)M_{j,k}.
+$$
+For $p=1$ this says $M_{j,1}=\mathcal T_j\mathbf1$. The operator norms are uniformly bounded. Induction therefore gives a uniform bound for each fixed moment, and all terms other than $k=p-1$ vanish in the limit for $p\ge2$. Applying the operator norm convergence and the induction hypothesis gives uniformly
+$$
+M_{j,p}\longrightarrow p\mathcal T M_{p-1}=p!\mathcal T^p\mathbf1.
+$$
+The next-moment bound also gives uniform integrability, so these functions are the moments of the limiting passage law. In particular the exact discrete second-moment identity is
+$$
+M_{j,2}=2\mathcal T_j^2\mathbf1-\epsilon_j\mathcal T_j\mathbf1;
+$$
+the discrete correction vanishes but has not been omitted before taking the limit. Differentiating $p\mathcal T M_{p-1}$ proves the boundary recurrence. Solving it for $p=1,2$ gives the two polynomials and the variance. The value $D=\theta\varphi^4/(\delta\overline r)$ is precisely the coefficient of [this volume, Theorem 5.3](https://github.com/the-omega-institute/trureturing/blob/82197d4bd68d6491767cb20e99d3ed8ceb5520e3/docs/develop/theory/FIB_ATOM_STATISTICAL_LAWS.md); here it controls the full passage transform and every fixed moment under the same hypotheses. The general scale-and-speed framework is classical, as in C. Stone, [*Limit theorems for random walks, birth and death processes, and diffusion processes*](https://doi.org/10.1215/ijm/1255645101). The literal-prefix estimates and quantity-scaled passage calculation above provide the required source-specific bridge directly, without invoking a path-process limit from that framework. $\square$
+

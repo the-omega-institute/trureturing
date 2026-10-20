@@ -1,0 +1,19 @@
+在 \(\nu\ll\widetilde\nu\)、\(Q(i,\cdot)\ll\widetilde Q(i,\cdot)\) 时，路径相对熵满足链式公式
+\[
+D_{\mathrm{KL}}(P_T^{\nu,Q}\|P_T^{\widetilde\nu,\widetilde Q})
+=
+D_{\mathrm{KL}}(\nu\|\widetilde\nu)
++\sum_{t=0}^{T-1}
+\mathbb E_{\nu,Q}
+D_{\mathrm{KL}}(Q(X_t,\cdot)\|
+\widetilde Q(X_t,\cdot)).
+\]
+Pinsker 不等式给出
+\[
+\operatorname{TV}(P_T^{\nu,Q},P_T^{\widetilde\nu,\widetilde Q})
+\le
+\sqrt{\tfrac12D_{\mathrm{KL}}(P_T^{\nu,Q}\|
+P_T^{\widetilde\nu,\widetilde Q})}.
+\]
+支撑不包含时相对熵为无穷，不能套用该界。
+

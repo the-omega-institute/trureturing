@@ -69,7 +69,7 @@ public sealed class AtomContextCommandTests
     {
         var fixture = Create();
         var target = Id(fixture.Atomized.Claims[1]);
-        fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes(ThreeClaims + ThreeClaims) };
+        fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes(ThreeClaims + ThreeClaims), ContextIndex = null };
         var result = fixture.Environment().AtomContext(["--atom-id", target]);
         Assert.True(result.Success, result.Error);
         Assert.Contains("occurrences=2\n", result.Output, StringComparison.Ordinal);

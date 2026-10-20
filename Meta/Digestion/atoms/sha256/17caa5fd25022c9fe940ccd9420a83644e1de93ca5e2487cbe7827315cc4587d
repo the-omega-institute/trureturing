@@ -1,0 +1,98 @@
+**定理 61.3（可选预算的临界风险极限）。** 令
+
+$$
+g(\varepsilon)=2-R_{H_\varepsilon},\qquad 0<\varepsilon\le1/2,
+$$
+
+其中 $R_{H_\varepsilon}$ 仍是定义 52.1 中、固定二延迟间隔 $\pi/6$ 的实际稳定秩；$l_\varepsilon$ 仍是定义 53.1 对全部不同物理圆周状态所取的下弦增益。固定任意非空有限 $J$、任意实延迟 $t_j$ 和 $\sigma>0$。对于每个函数 $b:(0,1/2]\to\mathbb R$，只要求它最终非负，即存在 $\varepsilon_b>0$ 使 $0<\varepsilon<\varepsilon_b$ 时 $b(\varepsilon)\ge0$；不要求 $b$ 连续或可测。$g(\varepsilon)$ 在充分小的正 $\varepsilon$ 上严格为正。以下均沿 $\varepsilon\to0^+$ 取极限，预算风险只需在 $b\ge0$ 的这一尾段定义。
+
+对于任意有限 $L\in[0,\infty)$，有
+
+$$
+\boxed{
+b(\varepsilon)g(\varepsilon)^2\longrightarrow L
+\quad\Longrightarrow\quad
+\mathcal P_{J,t}(b(\varepsilon),\varepsilon,\sigma)
+\longrightarrow
+\Phi\!\left(-\frac{\sqrt{L/3}}{\sigma}\right).
+}
+$$
+
+特别地，$L=0$ 给风险极限 $1/2$，而 $0<L<\infty$ 给严格介于零与 $1/2$ 之间的极限。此外，
+
+$$
+\boxed{
+b(\varepsilon)g(\varepsilon)^2\longrightarrow+\infty
+\quad\Longrightarrow\quad
+\mathcal P_{J,t}(b(\varepsilon),\varepsilon,\sigma)
+\longrightarrow0.
+}
+$$
+
+如果改为 $J=\varnothing$，则无论预算如何变化，只要最终非负，风险都恒为 $1/2$；上述有限 $L>0$ 或无穷大时的改善结论不适用于空设计。
+
+**证明。** 定理 53.2 给出
+
+$$
+l_\varepsilon^2=\frac{2\varepsilon}{9+20\varepsilon}>0,
+\qquad
+\frac{g(\varepsilon)}{l_\varepsilon}\longrightarrow\frac32.
+$$
+
+每个物理弦长比非负，故其下确界 $l_\varepsilon\ge0$；结合严格正的平方得到 $l_\varepsilon>0$ 及上述正平方根表示。置 $a(\varepsilon)=g(\varepsilon)/l_\varepsilon$。由 $a\to3/2$，最终有 $1<a(\varepsilon)<2$，因此 $g(\varepsilon)=a(\varepsilon)l_\varepsilon>0$。又 $l_\varepsilon\to0$，故 $g(\varepsilon)\to0$。在这一正尾段可以取倒数，并且
+
+$$
+\left|\frac{l_\varepsilon}{g(\varepsilon)}-\frac23\right|
+=\frac{2}{3a(\varepsilon)}
+  \left|a(\varepsilon)-\frac32\right|
+\le\frac23\left|a(\varepsilon)-\frac32\right|
+\longrightarrow0.
+$$
+
+这显式地从原定理的 $g/l\to3/2$ 推出同一实际下弦增益的 $l/g\to2/3$，并给出所有分母的正性；因而 $(l_\varepsilon/g(\varepsilon))^2\to4/9$。
+
+对于有限 $L\ge0$，由假设和乘积极限律，
+
+$$
+b(\varepsilon)l_\varepsilon^2
+=\bigl(b(\varepsilon)g(\varepsilon)^2\bigr)
+ \left(\frac{l_\varepsilon}{g(\varepsilon)}\right)^2
+\longrightarrow\frac{4L}{9}.
+$$
+
+在 $b\ge0$ 的尾段定义非负信噪比
+
+$$
+s(\varepsilon)=\frac{\sqrt{3b(\varepsilon)}\,l_\varepsilon}{2\sigma}.
+$$
+
+其平方趋于 $L/(3\sigma^2)$，故由平方根在整个 $[0,\infty)$ 上的连续性，包括零点，
+
+$$
+s(\varepsilon)\longrightarrow\frac{\sqrt{L/3}}{\sigma}.
+$$
+
+命题 61.2 对每个参数值都给出可达的风险 $\Phi(-s(\varepsilon))$；再用 $\Phi$ 的连续性即得有限 $L$ 的结论。这里既未除以 $b$ 或 $L$，也未要求它们严格为正，特别在 $L=0$ 时，$b$ 可在趋零的任意多个参数值上等于零，仍无需额外条件。$L>0$ 时极限自变量是有限负数，正态密度处处正给出所述严格风险区间。
+
+对于发散情形，$l_\varepsilon/g(\varepsilon)\to2/3$ 意味着它最终至少为 $1/3$，于是
+
+$$
+s(\varepsilon)^2
+=\frac{3}{4\sigma^2}
+  b(\varepsilon)g(\varepsilon)^2
+  \left(\frac{l_\varepsilon}{g(\varepsilon)}\right)^2
+\ge\frac{b(\varepsilon)g(\varepsilon)^2}{12\sigma^2}
+\longrightarrow+\infty.
+$$
+
+因此 $s(\varepsilon)\to+\infty$。对任意 $s>0$，
+
+$$
+0\le\Phi(-s)
+=\frac1{\sqrt{2\pi}}\int_s^\infty e^{-u^2/2}\,du
+\le\frac1{s\sqrt{2\pi}}\int_s^\infty u e^{-u^2/2}\,du
+=\frac{e^{-s^2/2}}{s\sqrt{2\pi}},
+$$
+
+故风险趋零。整个推导只使用函数在各参数值的等式、不等式及已有极限；对每个 $\varepsilon$ 单独选择一个权重为 $\sqrt{b(\varepsilon)}$ 即可达到相应最优值，不涉及跨参数的随机化或积分，因而不需要预算函数或参数化选择的连续性、可测性。空指标集的结论直接由命题 61.2。证毕。
+
