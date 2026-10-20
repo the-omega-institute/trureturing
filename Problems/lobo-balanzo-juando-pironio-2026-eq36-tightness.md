@@ -20,7 +20,7 @@ axes are separated by an angle $\theta\in[0,\pi/2]$, and $G=(\{+,-\},\emptyset)$
 §IV.B), the paper proves $G$-joint measurability for $\eta\le 2/(2+\sin\theta)$ (Eq. (36)) and
 reports that "up to machine precision, this bound is tight", from numerical solutions of the
 $G$-JM semidefinite program. The verbatim statements are in
-[the literature note](../Library/QuantumChannels/lobo2026generalized.md).
+[the literature note](../Library/QuantumContext/lobo2026generalized.md).
 
 Issue [#15638](https://github.com/the-omega-institute/trureturing/issues/15638) fixes the
 reading: for all unit Bloch vectors $r_1,r_2$ and every $\eta\in[0,1]$, $G$-joint measurability

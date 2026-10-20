@@ -22,7 +22,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
 /-- A positive matrix is bounded above by its trace times the identity. -/
-private theorem trace_identity_sub_posSemidef {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem trace_identity_sub_posSemidef {ι : Type*} [Fintype ι] [DecidableEq ι]
     (A : Matrix ι ι ℂ) (hA : A.PosSemidef) :
     (((A.trace.re : ℂ) • (1 : Matrix ι ι ℂ)) - A).PosSemidef := by
   classical
@@ -67,7 +67,7 @@ private theorem gram_trace_correction {ι κ : Type*} [Fintype ι] [Fintype κ]
   ring
 
 /-- The row Gram counterpart of the discrepancy is positive. -/
-private theorem row_gram_sum_comparison {ι κ : Type*} [Fintype ι] [Fintype κ]
+theorem row_gram_sum_comparison {ι κ : Type*} [Fintype ι] [Fintype κ]
     [DecidableEq ι] [DecidableEq κ] (U V : Matrix ι κ ℂ) :
     (((2 : ℂ) • (U * Uᴴ + V * Vᴴ)) - (U + V) * (U + V)ᴴ).PosSemidef := by
   convert posSemidef_self_mul_conjTranspose (U - V) using 1
@@ -134,7 +134,7 @@ private theorem eigenvalues_zero_padding {n : ℕ} (A : Matrix (Fin n) (Fin n) �
   have hbig : j.val < n + n := by omega
   simpa [hsmall, hbig, List.getElem?_append, List.length_ofFn] using hj
 
-private theorem eigenvalues_zero_eq_of_charpoly {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem eigenvalues_zero_eq_of_charpoly {ι : Type*} [Fintype ι] [DecidableEq ι]
     {A B : Matrix ι ι ℂ} (hA : A.IsHermitian) (hB : B.IsHermitian)
     (h : A.charpoly = B.charpoly) (j : Fin (Fintype.card ι)) :
     hA.eigenvalues₀ j = hB.eigenvalues₀ j := by
@@ -143,7 +143,7 @@ private theorem eigenvalues_zero_eq_of_charpoly {ι : Type*} [Fintype ι] [Decid
   simpa only [IsHermitian.eigenvalues, Equiv.symm_apply_apply] using hj
 
 /-- The leading ordered eigenvalues of the two rectangular Grams agree, including zeros. -/
-private theorem rectangular_gram_eigenvalues {n : ℕ}
+theorem rectangular_gram_eigenvalues {n : ℕ}
     (T : Matrix (Fin n) (Fin n ⊕ Fin n) ℂ)
     (j : Fin (Fintype.card (Fin n))) :
     (isHermitian_conjTranspose_mul_self T).eigenvalues₀
@@ -176,7 +176,7 @@ private theorem eigenvalues_zero_reindex {ι κ : Type*} [Fintype ι] [Fintype �
   have hk : j.val < Fintype.card κ := by rw [← Fintype.card_congr e]; exact j.isLt
   simpa [j.isLt, hk] using hj.symm
 
-private theorem eigenvalues_zero_mono_finite {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem eigenvalues_zero_mono_finite {ι : Type*} [Fintype ι] [DecidableEq ι]
     {A B : Matrix ι ι ℂ} (hA : A.IsHermitian) (hB : B.IsHermitian)
     (h : (B - A).PosSemidef) (j : Fin (Fintype.card ι)) :
     hA.eigenvalues₀ j ≤ hB.eigenvalues₀ j := by
@@ -189,7 +189,7 @@ private theorem eigenvalues_zero_mono_finite {ι : Type*} [Fintype ι] [Decidabl
   have hiB := eigenvalues_zero_reindex B hB e j
   exact hiA.symm.le.trans (hh.trans hiB.le)
 
-private theorem eigenvalues_zero_smul_finite {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem eigenvalues_zero_smul_finite {ι : Type*} [Fintype ι] [DecidableEq ι]
     (A : Matrix ι ι ℂ) (hA : A.IsHermitian) (r : ℝ) (hr : 0 ≤ r)
     (hB : ((r : ℂ) • A).IsHermitian) (j : Fin (Fintype.card ι)) :
     hB.eigenvalues₀ j = r * hA.eigenvalues₀ j := by
@@ -205,7 +205,7 @@ private theorem eigenvalues_zero_smul_finite {ι : Type*} [Fintype ι] [Decidabl
   have hiA := eigenvalues_zero_reindex A hA e j
   exact hi'.symm.trans (hh.trans (congrArg (fun x => r * x) hiA))
 
-private theorem eigenvalues_zero_add_scalar_finite {ι : Type*} [Fintype ι]
+theorem eigenvalues_zero_add_scalar_finite {ι : Type*} [Fintype ι]
     [DecidableEq ι] (A : Matrix ι ι ℂ) (hA : A.IsHermitian) (r : ℝ)
     (hB : (A + (r : ℂ) • 1).IsHermitian) (j : Fin (Fintype.card ι)) :
     hB.eigenvalues₀ j = hA.eigenvalues₀ j + r := by
@@ -264,7 +264,7 @@ private theorem dilation_charpoly {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ) :
       simp [Matrix.fromBlocks, Matrix.smul_apply, hXr, hXar] <;> ring
   rw [heq, charpoly_mul_comm, ← Matrix.mul_assoc, hi, Matrix.one_mul]
 
-private theorem dilation_eigenvalues {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ)
+theorem dilation_eigenvalues {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ)
     (hD : (fromBlocks 0 X Xᴴ (0 : Matrix (Fin n) (Fin n) ℂ)).IsHermitian)
     (j : Fin (Fintype.card (Fin n))) :
     hD.eigenvalues₀
