@@ -17,8 +17,9 @@ certificate.
 
 ### Definition 60.1 (finite target-state contract)
 
-Let \(Z\) be a finite target set and \(S\) a finite complete device-state set.
-An admissible action \(a\) has a domain \(D_a\subseteq S\), a response map
+Let \(Z\), \(S\), and \(O\) be finite target, complete device-state, and
+response sets. An admissible action \(a\) has a domain \(D_a\subseteq S\), a
+response map
 
 $$
 r_a:D_a\longrightarrow O,
@@ -174,7 +175,18 @@ B_i=\{(0,s_{i,0}),(1,s_{i,1})\}.
 $$
 
 The class labels may themselves be represented by any three distinct legal FIB
-words; their names are not available to the controller after they are erased.
+words. The example distinguishes retaining a history label from erasing it:
+when a label is retained, the initialization map \(c\) may use that label;
+when all three labels are erased, the initial candidate relation is their
+union and \(c\) must be constant on the erased fiber.
+
+For any nonempty candidate relation, write
+
+$$
+D(B)=\min\{n\in\mathbb N:B\in\mathcal W_n\},
+$$
+
+with \(D(B)=+\infty\) when the set on the right is empty.
 
 ### Theorem 61.2 (pairwise controllability without joint controllability)
 
@@ -201,7 +213,8 @@ recover \(z\). \(\square\)
 
 ### Theorem 61.3 (two labels but four controller states)
 
-For the reader in Definition 61.1 and any \(n\ge1\),
+For the reader in Definition 61.1, assuming the retained history class is
+available to the initialization map \(c\), and any \(n\ge1\),
 
 $$
 \kappa_n^{\mathrm{hist}}=2,
@@ -216,7 +229,8 @@ There is no unique coarsest safe partition of the three histories.
 \(\{1,3\}\mid\{2\}\) is also safe. Any partition coarser than both merges all
 three classes and is unsafe, so no common coarsest safe partition exists.
 
-For the upper bound, use running states \(k_b,k_a\), with initial classes
+For the upper bound, use running states \(k_b,k_a\), with the retained initial
+classes
 \(\{1,2\}\) and \(\{3\}\) sent to them. Execute \(b\) or \(a\), respectively;
 response \(0\) enters a halt state \(h_0\), and response \(1\) enters \(h_1\).
 This is a four-state controller.
@@ -246,10 +260,18 @@ paying the physical action cost remain separate contracts.
 
 ### Definition 62.1 (controller support and rank)
 
-A deterministic controller has a finite state set \(K\), initialization
-\(c:I\to K\), action/output map \(u\), and response update \(v\). A support
-\(C_k\subseteq Z\times S\) records the candidates compatible with controller
-state \(k\). A rank is a map
+Fix finite sets \(I,Z,S,K,A,O\), initial candidate relations
+\(B_i\subseteq Z\times S\), and a deterministic controller with initialization
+\(c:I\to K\), action/output map
+
+$$
+u:K\longrightarrow A\sqcup\operatorname{Halt}(Z),
+$$
+
+and response update \(v:K\times O\to K\). If \(u(k)=a\in A\), \(k\) is a
+running state; if \(u(k)=\operatorname{Halt}(\widehat z)\), it is a halt state.
+A support \(C_k\subseteq Z\times S\) records the candidates compatible with
+controller state \(k\). A rank is a map
 
 $$
 \rho:\{(z,s,k):(z,s)\in C_k\}\longrightarrow\mathbb N.
@@ -257,23 +279,32 @@ $$
 
 ### Theorem 62.2 (sound and complete finite closed-loop certificate)
 
-Suppose initial candidates lie in \(C_{c(i)}\). Every selected action is jointly
-legal on its support, every response successor lies in the support selected by
-\(v\), and every non-halt successor satisfies
+Suppose \(B_i\subseteq C_{c(i)}\) for every \(i\in I\). Whenever
+\(u(k)=a\in A\), the action is jointly legal on \(C_k\), every response
+successor lies in the support selected by \(v\), and every non-halt successor
+satisfies
 
 $$
 \rho(z,T_a(s),v(k,r_a(s)))<\rho(z,s,k).
 $$
 
-Every halt output is constant on its support. Then the controller is legal,
-terminates, and returns the target correctly. Conversely, for a finite
+For every halt state \(k\), with \(u(k)=\operatorname{Halt}(\widehat z)\), every
+\((z,s)\in C_k\)
+satisfies
+
+$$
+z=\widehat z.
+$$
+
+Then the controller is legal, terminates, and returns the target correctly.
+Conversely, for a finite
 deterministic controller that succeeds and terminates on all allowed sources,
 reachable supports and remaining execution lengths supply such \(C_k\) and
 \(\rho\).
 
 **Proof.** The support conditions give induction along every actual response
 history. The rank cannot decrease indefinitely in \(\mathbb N\), so execution
-terminates. Constancy on a halt support gives correctness. Conversely, take
+terminates. The halt condition gives correctness. Conversely, take
 the exact reachable support at each controller state and define the rank to be
 the maximum remaining number of actions. Termination excludes a reachable
 non-halt cycle, so this rank strictly decreases. \(\square\)
@@ -284,11 +315,23 @@ an input available to the controller.
 
 ## 63. Relation to current FIB boundaries
 
+There are two distinct uses of a retained summary. A **full-behavior
+predictive quotient** requires, for every permitted action (including silent,
+illegal, and undefined outcomes), summary-factorized legality, response,
+successor, status, resource labels, stop behavior, and source-independent
+memory update. This is the all-action factorization contract of
+[Continuation IV](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md), not a
+controller synthesis result. A **task-specific controller certificate** is
+relative to one chosen action at each reachable support: it requires only
+joint legality there, response-indexed successor closure, the target equality
+at halt, and a decreasing rank. Unchosen actions need not descend through the
+summary, and a task certificate does not establish a universal behavioral
+quotient.
+
 The dynamic summary conditions in [Continuation V](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_V.md)
-remain necessary: legality, full response, successor, resource labels, and
-updates must factor through the retained summary. The present results add the
-task condition that one retained memory value must support a common protocol
-for the union of all histories in that memory fiber.
+remain necessary for the first contract. The present results add the task
+condition for the second contract: one retained memory value must support a
+common protocol for the union of all histories in that memory fiber.
 
 The actual-word results on dev show the same boundary in another form. A
 tree endpoint may have two parity lifts, so a vertex-only summary is adequate
@@ -304,3 +347,103 @@ acquisition. A typed source map preserving domains, responses, updates,
 permissions, targets, and costs is still required.
 
 ## 追加锚（本行以下为增补区）
+
+## 64. The exact \(p_J\) acquired-\(M\) child as an action-labelled support
+
+Let \(\mathscr W_{H_4}^{\mathrm{comp}}\) denote the complete-world domain of
+the common-parent source at the fixed parent \(H_4\). Here \(H_4\) is the
+parent object, \(p_J\) is the exact algebraic parameter inherited from
+Theorem 8.1, and \(u_M(W)\) is the sixth-\(M\) response function. For a
+scalar response \(v\), put
+
+$$
+\mathcal C_v=\{W\in\mathscr W_{H_4}^{\mathrm{comp}}:
+                 p(W)=p_J,\ u_M(W)=v\}.
+$$
+
+Thus \(v\) is a candidate sixth-\(M\) response label here; this definition
+does not by itself assert that a live reader has acquired it. The complete
+worlds and terminal maps are taken from
+[FIB common-parent geometry, §§18--23](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md);
+the source notation \(\mathcal F(H_4,M,p_J,M,v)\) is the same set.
+
+For the two terminal actions \(a_J,a_M\), define the pre-contract
+action/response relation
+
+$$
+\mathcal R_v\subseteq\{J,M\}\times
+    \mathscr W_{H_4}^{\mathrm{comp}}\times\mathbb R
+$$
+
+by
+
+$$
+\mathcal R_v
+ =\{(F,W,y):W\in\mathcal C_v,\ F\in\{J,M\},\ y=f_{MF}(W)\},
+$$
+
+where \(f_{MJ}\) and \(f_{MM}\) are respectively the final-\(J\) and final-\(M\)
+response functions, \(f_{MF}=f_{MJ}\) for \(F=J\), and
+\(f_{MF}=f_{MM}\) for \(F=M\). The guard \(L_1\) is the recursive guard from
+the same source, not an additional response coordinate. The action \(a_F\)
+carries response \(y\). This relation is not yet a
+candidate relation \(B\subseteq Z\times S\) of Definition 60.1: it has no
+declared target/state encoding. It supplies neither a successor map, an
+action domain, a permission contract, nor a live acquisition step; those
+fields must be added before this source-specific relation can enter
+Definition 60.1 or Theorem 62.2.
+
+The source-specific results give two exact boundaries. First, at the response
+\(v_\star\) of Theorem 18.2, with the response enclosure and terminal
+separation supplied by Theorem 19.1, Theorem 23.1 states
+
+$$
+\mathcal C_{v_\star}=\{A,B,C,D\},
+\qquad f_{MJ}(A)=f_{MJ}(B),
+\qquad f_{MM}\ \text{is injective on }\mathcal C_{v_\star},
+$$
+
+and hence \(\neg L_1(S,(H_4,M,p_J,M,v_\star))\) for every support \(S\) in
+this child. The final-\(J\) pair is real, while no final-\(M\) collision pair
+exists in this exact four-world support.
+
+Second, Theorem 31.1 gives a finite necessary response reduction. If one
+child contains both a distinct final-\(J\) collision pair and a distinct
+final-\(M\) collision pair, then
+
+$$
+Q(p_J,v)=0\quad\text{or}\quad v=s_-(p_J)\quad\text{or}\quad v=s_+(p_J),
+$$
+
+so at most \(74937\) scalar responses can support that joint collision
+pattern. This is a response/action-support restriction, not an acquisition
+protocol and not a finite-controller construction.
+
+The remaining joint witness system is the one in Definition 32.1 and its
+equation (32.1): for
+\(F\in\{J,M\}\) and \(a\in\{0,1\}\), choose legal reconstructed worlds
+\(W_{Fa}\) with
+
+$$
+0<r_{Fa}<1,\quad b_{Fa}>0,\quad
+\mathsf S_{p_J}(r_{Fa},b_{Fa})=0,\quad
+p(W_{Fa})=p_J,\quad u_M(W_{Fa})=v,
+$$
+
+and require simultaneously
+
+$$
+f_{MJ}(W_{J0})=f_{MJ}(W_{J1}),\quad W_{J0}\ne W_{J1},\qquad
+f_{MM}(W_{M0})=f_{MM}(W_{M1}),\quad W_{M0}\ne W_{M1}.
+$$
+
+Elimination roots may be extraneous; neither feasibility nor a common legal
+child follows from the scalar projections. Existence of such a witness at
+one of the at most \(74937\) responses, together with the inherited
+sixth-\(J\) \(L_1\) child of Theorem 8.1, would establish the local fifth-\(M\)
+\(L_2\) route through Theorem 17.1. Exclusion at every candidate would
+exclude every sixth-\(M\) \(L_1\) at \(p_J\). Theorem 31.1 retains singular
+and degree-drop cases in the necessary candidate reduction; their
+realizability or exclusion remains open. Other fifth responses, terminal
+components, replacement worlds, unrestricted adaptive readers, and the
+native acquisition/controller bridge also remain open.
