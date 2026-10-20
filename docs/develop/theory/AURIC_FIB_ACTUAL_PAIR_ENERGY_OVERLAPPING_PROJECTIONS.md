@@ -2121,3 +2121,160 @@ $\log\mathcal S_n=o(n)$，原球向量在 (20.8) 中的范数估计，以及更�
 或物理实现与资源结论；它们仍需各自的数学和实现条件。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 23. 原临界配对量的有限精度碰撞熵
+
+**定义 23.1（实际历史的分辨地址）。** 对 $n\ge18$，仍取
+$\delta_n=2^{-n/3}$ 和原实际律 $\nu_n=\mu^{*n}$。在完整 $K$ 上取第 14 节
+证明中的极大 $\delta_n/2$-分离网，按同一确定性平局规则得到 Voronoi 分割
+$K=\bigsqcup_i A_i$。令 $Z_n(h)=i$ 当且仅当 $G_h\in A_i$，并置
+
+$$
+p_i=2^{-n}|\{h:Z_n(h)=i\}|,\qquad
+C_n=\sum_i p_i^2,\qquad
+H_{\mathrm{col}}(Z_n)=-\log_2 C_n.
+\tag{23.1}
+$$
+
+这是分辨地址的二阶 Rényi 熵，使用
+[Hirche §III、式 (8)](../../../Library/Entropy/hirche2020renyibounds.md#unconditional-collision-entropy)
+的标准定义。地址由公平历史确定；分割的选择不宣称可由
+多项式成本生成，也不提供因果更新程序。共同相位仅通过 (1.5) 消去。
+
+**定理 23.2（原自旋目标的碰撞熵等价式）。** 对定义 23.1 的每个分割，
+
+$$
+C_n\le E_n(\delta_n)\le1458C_n,
+\tag{23.2}
+$$
+
+且
+
+$$
+n-\log_2Q_n\le H_{\mathrm{col}}(Z_n)
+\le n-\log_2Q_n+\log_2 1458,\qquad
+H_{\mathrm{col}}(Z_n)\le H_{\mathrm{Sh}}(Z_n)\le n.
+\tag{23.3}
+$$
+
+因此，第 19 节的原有限和满足
+
+$$
+\log\mathcal S_n=o(n)
+\quad\Longleftrightarrow\quad
+H_{\mathrm{col}}(Z_n)=n-o(n).
+\tag{23.4}
+$$
+
+证明。直接复用第 14 节的同单元与对称邻居比较 (14.3)–(14.4)，只将
+$r=\delta=\delta_n$ 代入并保留第 5 节的常数。相邻中心距离至多
+$2\delta_n$，其开 $\delta_n/4$ 球互不相交且包含于
+$B_{9\delta_n/4}(x_i)$。所有半径均不超过 $1/2$；(5.10) 的体积界
+给出最大邻居数
+
+$$
+\frac{(9\delta_n/4)^3/(6\sqrt2\pi)}
+{(\delta_n/4)^3/(12\sqrt2\pi)}=1458.
+\tag{23.5}
+$$
+
+球边界的 Haar 质量为零，由第 5 节的连续径向体积公式可知，因此开球的
+打包与闭配对事件相容。(14.3) 和有序邻居求和遂给出 (23.2)。代入
+$E_n(\delta_n)=2^{-n}Q_n$ 并取负的二进制对数即得 (23.3) 的前两界。
+对正质量地址按 Jensen 不等式，
+$-\log_2\sum_i p_i^2\le-\sum_i p_i\log_2p_i$；后者不超过公平输入历史
+的熵 $n$，因为地址是其确定函数。最后，定理 19.1 给出
+$\mathcal S_n\asymp Q_n$，而对角历史对给出 $Q_n\ge1$，故
+$\log\mathcal S_n=o(n)$ 等价于 $\log_2Q_n=o(n)$。再用 (23.3) 得到
+(23.4)。这是同一实际律的等价表述，未证明等价式任一侧的开放增长条件。
+$\square$
+
+**定理 23.3（同尺度的原恢复记忆必要性）。** 在第 1 节的原恢复权限与
+宽度定义下，置 $\varepsilon_n=2^{-2n/3}/36$。则
+
+$$
+W_n(\varepsilon_n)\ge\frac{2^n}{4Q_n},\qquad
+\log_2W_n(\varepsilon_n)\ge n-\log_2Q_n-2
+\ge H_{\mathrm{col}}(Z_n)-\log_2 1458-2.
+\tag{23.6}
+$$
+
+若 (23.4) 的开放条件成立，便有
+$\log_2W_n(\varepsilon_n)\ge n-o(n)$。
+
+证明。$6\sqrt{\varepsilon_n}=\delta_n$，将其代入原控制器必要条件
+(7.3)，得到 $W_n\ge[4E_n(\delta_n)]^{-1}$。对角项使分母严格为正。
+剩余各式来自 (23.3)。这里所数的是原恢复模型的峰值状态及其固定长度
+比特编码；没有得到 SAT 时间下界，也没有把指数个状态误计为指数个比特。
+$\square$
+
+## 24. 原相位保持压缩的窗口耗散条件
+
+**定理 24.1（实际压缩幂的累计缺陷）。** 保持第 20 节完整复空间及其
+算子 $E_C,\mathsf S,T_D,\mathsf B$。对 $v\in\mathcal H_J$ 和整数 $t\ge1$，
+
+$$
+\begin{aligned}
+\|\mathsf Bv\|_2^2
+&=\|v\|_2^2-\frac34\|(I-E_C)v\|_2^2,\\
+\|\mathsf B^tv\|_2^2
+&=\|v\|_2^2-\frac34\sum_{j=0}^{t-1}
+\|(I-E_C)\mathsf B^jv\|_2^2.
+\end{aligned}
+\tag{24.1}
+$$
+
+证明。$E_C$ 为正交投影，故
+$\mathsf Sv=E_Cv-\frac12(I-E_C)v$ 的两项正交。$T_D$ 酉，所以
+$\|\mathsf Bv\|^2=\|E_Cv\|^2+\frac14\|(I-E_C)v\|^2$。
+这给出第一式；沿同一个向量轨道逐步相加得到第二式。
+$\mathcal H_J$ 的不变性已经由 (20.3)–(20.5) 给出。
+$\square$
+
+**定理 24.2（窗口条件及原目标所需的速率）。** 令
+$\mathcal H=\mathcal H_{J,\Pi}$，其中 $\Pi$ 是 (20.7) 的完整有限等型投影。
+若存在固定整数 $r\ge1$ 和固定 $0<c<4/3$，使每个 $v\in\mathcal H$ 满足
+
+$$
+\sum_{j=0}^{r-1}\|(I-E_C)\mathsf B^jv\|_2^2\ge c\|v\|_2^2,
+\qquad a=1-3c/4\in(0,1),
+\tag{24.2}
+$$
+
+则对每个整数 $t\ge0$，
+
+$$
+\|\mathsf B^t|_{\mathcal H}\|_{2\to2}^2
+\le a^{\lfloor t/r\rfloor}.
+\tag{24.3}
+$$
+
+若 $\Pi$ 还满足 (16.1) 的有限异常空间要求，且
+
+$$
+a\le2^{-r},\qquad\text{即}\qquad
+c\ge\frac43(1-2^{-r}),
+\tag{24.4}
+$$
+
+则 (20.9) 成立，可以取固定的 $s_n=2/a$；从而原临界条件 (23.4) 成立。
+
+证明。将 (24.2) 代入 (24.1) 的 $t=r$ 情形，得到
+$\|\mathsf B^rv\|^2\le a\|v\|^2$。空间 $\mathcal H$ 不变，故逐窗口迭代，
+末段使用收缩性，得到 (24.3)。由
+$\lfloor t/r\rfloor\ge t/r-1$，在 (24.4) 下有
+$a^{\lfloor t/r\rfloor}\le a^{-1}2^{-t}$；取 $t=n-1$ 正是 (20.9)。
+再应用第 20 节到 (16.1) 的既有充分接口及 (19.28)。
+零子空间的算子范数为零，也满足全部结论。$\square$
+
+(24.2) 是同一实际算子轨道的观测 Gramian 下界：在有限等型截断上，其
+矩阵为 $\sum_{j<r}(\mathsf B^*)^j(I-E_C)\mathsf B^j$，限制到
+$\mathcal H$ 后解释。离散线性观测与 Gramian 方法为标准工具，参见
+[Oymak–Ozay §5.1](../../../Library/Dynamics/oymakozay2019lti.md) 的有限观测矩阵接口；这里
+$3/4$ 的缺陷系数和 (24.4) 的速率来自原实际压缩。
+只有某个 $c>0$ 供应的指数收缩不足以推出所需的 $2^{-n}$ 平方范数速率；
+随表示频率改变的 $r,c$ 也不能当作固定统一常数。本节没有建立 (24.2)
+或 (24.4) 的实际供应。范数属于平均律的分析空间，各实际历史仍为幺正门乘积。
+
+## 追加锚（本行以下为增补区）
