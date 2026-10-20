@@ -29,7 +29,7 @@ internal static class DigestionContextDecomposition
             var savedEntries = result.Entries.Where(file => file.Path.StartsWith(
                     BackfillInventoryLoader.RootPath + version.SourceId + "/context/", StringComparison.Ordinal))
                 .Select(file => DigestionContextPointerStore.ParseVersions(file.Bytes, version.SourceId,
-                    Path.GetFileNameWithoutExtension(file.Path)).SingleOrDefault(item => item.SourceSha256 == version.SourceSha256))
+                    Path.GetFileNameWithoutExtension(file.Path)).SingleOrDefault(item => item.VersionKey == version.VersionKey))
                 .OfType<DigestionContextPointerIndex>().Select(item => item.Entries[0]).ToArray();
             var oldCount = savedEntries.SelectMany(entry => entry.Occurrences).Max(item => item.StreamCount);
             var deltas = parentOccurrences.Select(item => (Occurrence: item,
@@ -104,7 +104,7 @@ internal static class DigestionContextDecomposition
                 var path = DigestionContextPointerIndex.RelativePath(version.SourceId, id);
                 var file = result.Entries.SingleOrDefault(file => file.Path == path);
                 return file is null ? [] : DigestionContextPointerStore.ParseVersions(file.Bytes, version.SourceId, id)
-                    .SingleOrDefault(item => item.SourceSha256 == version.SourceSha256)?.Entries[0].Occurrences ?? [];
+                    .SingleOrDefault(item => item.VersionKey == version.VersionKey)?.Entries[0].Occurrences ?? [];
             }
 
             void ReplaceExterior(string? id, int? start, string replacement, int replacementStart, bool next)

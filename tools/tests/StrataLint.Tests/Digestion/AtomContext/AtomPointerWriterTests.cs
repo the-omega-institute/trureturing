@@ -6,6 +6,130 @@ namespace StrataLint.Tests;
 
 public sealed class AtomPointerWriterTests
 {
+    [Fact]
+    public void MigrationKeepsSavedGraphBytesWhenTheSameProseGetsNewChildChains()
+    {
+        const string prose = "First claim. Second claim.\n";
+        var f = new DecomposeFixture(prose);
+        var sourceText = "## Before\n\nBefore.\n\n" + prose + "## After\n\nAfter.\n";
+        ParentSettlementTests.ReplaceFile(f, "docs/probe.md", sourceText);
+        f.CaptureContext();
+        var before = f.Current.Entries.Where(file => file.Path.Contains("/context/", StringComparison.Ordinal))
+            .ToDictionary(file => file.Path, file => Encoding.UTF8.GetString(file.Bytes.AsSpan()).Trim()[1..^1]);
+        var plan = DigestionDecomposition.Plan(f.Parent, DecomposeFixture.Atom(prose).RawBytes,
+            AtomizerRegistry.Require(f.Parent.Atomizer).Atomize, f.Snapshot, [13]);
+        foreach (var child in plan.Children)
+        {
+            var text = Encoding.UTF8.GetString(child.RawBytes.AsSpan());
+            f.Add(DecomposeFixture.Entry(text), text);
+        }
+        f.Replace(f.Parent with { Receipts = f.Parent.Receipts with { ChainAtoms = [.. plan.Children.Select(child => child.Fingerprints.RawSha256[7..])] } });
+        var migrated = AtomContextMigrationCommand.Run("fixture", f.Gateway, ["--source", "probe", "--write"], f.Apply);
+        Assert.True(migrated.Success, migrated.Output + migrated.Error);
+        foreach (var (path, bytes) in before)
+            Assert.Contains(bytes, Encoding.UTF8.GetString(f.Current.Entries.Single(file => file.Path == path).Bytes.AsSpan()), StringComparison.Ordinal);
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(file => file.Path != "docs/probe.md"));
+        foreach (var child in plan.Children)
+        {
+            var id = child.Fingerprints.RawSha256[7..];
+            var result = AtomContextCommand.Run(f.Gateway, ["--atom-id", id]);
+            Assert.True(result.Success, result.Error);
+            var context = DigestionQuerySelection.ReadContext(f.Gateway, id);
+            Assert.NotEmpty(DigestionAtomContextProjection.ResolveOccurrences(context.Snapshot, context.Document, id));
+        }
+        var repeatedBefore = f.Current;
+        ParentSettlementTests.ReplaceFile(f, "docs/probe.md", sourceText);
+        var repeated = AtomContextMigrationCommand.Run("fixture", f.Gateway, ["--source", "probe", "--write"], f.Apply);
+        Assert.True(repeated.Success, repeated.Output + repeated.Error);
+        Assert.Contains("changed=0", repeated.Output, StringComparison.Ordinal);
+        Assert.Equal(repeatedBefore.Entries.Select(file => (file.Path, Convert.ToHexString(file.Bytes.AsSpan()))),
+            f.Current.Entries.Where(file => file.Path != "docs/probe.md").Select(file => (file.Path, Convert.ToHexString(file.Bytes.AsSpan()))));
+        var childId = plan.Children[0].Fingerprints.RawSha256[7..];
+        var childVersion = DigestionContextPointerStore.Load(f.Snapshot, "probe", childId).Single();
+        Assert.NotNull(childVersion.GraphSha256);
+        var neighborId = childVersion.Entries[0].Occurrences[0].PreviousAtomId!;
+        var neighborPath = DigestionContextPointerIndex.RelativePath("probe", neighborId);
+        var neighborVersions = DigestionContextPointerStore.Load(f.Snapshot, "probe", neighborId);
+        Assert.Contains(neighborVersions, version => version.GraphSha256 is null);
+        var oldOnly = DigestionContextPointerStore.WriteVersions(neighborVersions.Where(version => version.GraphSha256 is null));
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(file => file.Path != neighborPath)
+            .Append(new RawRepositoryEntry(neighborPath, oldOnly)));
+        var missingGraph = AtomContextCommand.Run(f.Gateway, ["--atom-id", childId]);
+        Assert.False(missingGraph.Success);
+        Assert.Contains("CONTEXT_VERSION_MISSING", missingGraph.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TargetedMigrationExcludesUnrelatedInvalidAccounts()
+    {
+        var f = new DecomposeFixture();
+        var invalid = AddInvalidAccount(f);
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(file => !file.Path.Contains("/context/", StringComparison.Ordinal)));
+        var before = f.Current.Entries.Single(file => file.Path == DecomposeFixture.PathFor(invalid));
+        var result = AtomContextMigrationCommand.Run("fixture", f.Gateway,
+            ["--source", "probe", "--atom-id", f.Parent.AtomId, "--write"], f.Apply);
+        Assert.True(result.Success, result.Output + result.Error);
+        Assert.DoesNotContain(f.Gateway.ScopedCurrentReads.SelectMany(paths => paths),
+            path => path == DigestionQuerySelection.Literal(DecomposeFixture.PathFor(invalid)));
+        Assert.Equal(before.Bytes.ToArray(), f.Current.Entries.Single(file => file.Path == before.Path).Bytes.ToArray());
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(file => file.Path != "docs/probe.md"));
+        Assert.True(AtomContextCommand.Run(f.Gateway, ["--atom-id", f.Parent.AtomId]).Success);
+        var split = DecomposeAtomCommand.Run("fixture", f.Gateway, f.Args(), f.Apply);
+        Assert.True(split.Success, split.Error);
+        Assert.False(AtomContextCommand.Run(f.Gateway, ["--atom-id", invalid.AtomId]).Success);
+        Assert.Throws<FormatException>(() => BackfillInventoryLoader.LoadForDigestion(f.Snapshot));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void TargetedMigrationStillRejectsAnInvalidTargetOrActualChain(bool chain)
+    {
+        var f = new DecomposeFixture();
+        var invalid = AddInvalidAccount(f);
+        if (chain) f.Replace(f.Parent with { Receipts = f.Parent.Receipts with { ChainAtoms = [invalid.AtomId] } });
+        var result = AtomContextMigrationCommand.Run("fixture", f.Gateway,
+            ["--source", "probe", "--atom-id", chain ? f.Parent.AtomId : invalid.AtomId, "--write"], f.Apply);
+        Assert.False(result.Success);
+        Assert.Contains("cannot be quarantined because coverage", result.Output + result.Error, StringComparison.Ordinal);
+        Assert.Equal(0, f.Writes);
+    }
+
+    [Fact]
+    public void TargetedMigrationPreservesSavedGraphsAndRejectsAnIncompatibleVersion()
+    {
+        var f = new DecomposeFixture();
+        var saved = f.Current.Entries.Where(file => file.Path.Contains("/context/", StringComparison.Ordinal)).ToArray();
+        var same = AtomContextMigrationCommand.Run("fixture", f.Gateway,
+            ["--source", "probe", "--atom-id", f.Parent.AtomId, "--write"], f.Apply);
+        Assert.True(same.Success, same.Output + same.Error);
+        Assert.Contains("changed=0", same.Output, StringComparison.Ordinal);
+        var first = saved[0];
+        var versions = DigestionContextPointerStore.ParseVersions(first.Bytes, "probe", Path.GetFileNameWithoutExtension(first.Path));
+        var incompatible = versions[0] with { SourcePath = "docs/other.md" };
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(file => file.Path != first.Path)
+            .Append(new RawRepositoryEntry(first.Path, DigestionContextPointerStore.WriteVersions([incompatible]))));
+        var result = AtomContextMigrationCommand.Run("fixture", f.Gateway,
+            ["--source", "probe", "--atom-id", f.Parent.AtomId, "--write"], f.Apply);
+        Assert.False(result.Success);
+        Assert.Contains("CONTEXT_VERSION_CONFLICT", result.Output + result.Error, StringComparison.Ordinal);
+        Assert.Equal(1, f.Writes);
+        Assert.Equal(DigestionContextPointerStore.WriteVersions([incompatible]).ToArray(),
+            f.Current.Entries.Single(file => file.Path == first.Path).Bytes.ToArray());
+    }
+
+    private static DigestionLedgerEntry AddInvalidAccount(DecomposeFixture f)
+    {
+        const string body = "Unrelated historical claim.\n";
+        var invalid = DecomposeFixture.Entry(body) with
+        {
+            Coverage = [new("D5/S1/Solenoid/RealFlowInjectivity.realFlow_injective", "sha256:" + new string('a', 64))],
+            Receipts = new([], [], null, new("blocked", "supply witness", "multi-clause-guard")),
+        };
+        f.Add(invalid, body);
+        return invalid;
+    }
+
     [Theory]
     [InlineData("duplicate")]
     [InlineData("unknown")]

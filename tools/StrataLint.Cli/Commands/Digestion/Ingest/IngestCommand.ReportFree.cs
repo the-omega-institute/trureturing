@@ -151,7 +151,7 @@ internal static partial class IngestCommand
         RawRepositorySnapshot snapshot,
         IEnumerable<DigestionContextPointerIndex> indexes)
     {
-        foreach (var index in indexes) snapshot = DigestionContextPointerStore.Add(snapshot, index);
+        foreach (var index in indexes) snapshot = DigestionContextPointerStore.Add(snapshot, DigestionContextPointerStore.PreserveSavedGraph(snapshot, index));
         return snapshot;
     }
 
