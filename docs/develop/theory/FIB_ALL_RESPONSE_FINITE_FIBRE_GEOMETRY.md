@@ -1698,3 +1698,347 @@ The global representation (19.5) supplies neither an enumeration
 of terminal-M pairs nor an additional excluded root of $Q$,
 and does not decide compatibility of the two distinct pairs
 inside one entire $\mathcal C_v$.
+
+## 20. Global affine separation of the actual terminal-M branches
+
+**Definition 20.1 (Separator and its polynomial identities).** For the
+complete world $W_i(r,p)$ of Definition 19.1, with $i\in\{-,+\}$,
+$0<r<1$ and $p\in I$, write
+
+$$
+u_i(r,p)=d+(2U+n)g_i(6;r,p),\qquad
+m_i(r,p)=d+(3U+2n)g_i(7;r,p),\qquad
+F_i(r,p)=m_i(r,p)-6u_i(r,p)+216.
+\tag{20.1}
+$$
+
+At $p=p_J$, these are exactly $\mathcal U(i,r)$ and
+$\mathcal M(i,r)$ of (19.3). Retain the rational functions
+$A_5,K_5,\Lambda$ of (19.1), with $j=X/b$, $n=N/b$, and put
+
+$$
+\begin{aligned}
+L_6&=10-36/j+45/T-20/n,\\
+L_7&=20-70/j+84/T-35/n,\\
+F_0&=96+(3U+2n)\left(480-\frac{2268}{5T}\right)
+       -6(2U+n)\left(240-\frac{243}{T}\right),\\
+F_1&=-5+(3U+2n)L_7-6(2U+n)L_6,\\
+C_5&=bTXNA_5,\\
+Q_{\rm sep}&=5b^2TXN\{A_5F_0+F_1(p-24-K_5)\},\\
+P_{\rm sep}&=\frac{N_m-6N_u+216D_m}{3}.
+\end{aligned}
+\tag{20.2}
+$$
+
+Here $N_u,N_m,D_m$ are exactly those of Section 14.
+The last three expressions are integer polynomials, of coordinate
+degrees at most $(6,7)$, $(8,8,1)$ and $(6,7)$ in $(r,b)$,
+$(r,b,p)$ and $(r,b)$, respectively. In particular
+
+$$
+\begin{aligned}
+P_{\rm sep}={}&1522b^7+(10063-7900r)b^6
+ +(6956r^2-6049r+2591)b^5\\
+&+(11704r^3-19624r^2+9588r-694)b^4\\
+&+(-9500r^4+21057r^3-14714r^2+2813r)b^3\\
+&+(-2364r^5+3105r^4+256r^3-303r^2-694r)b^2\\
+&+(1182r^6-3090r^5+3116r^4-1690r^3+482r^2)b
+ +228r^3(1-r)^3.
+\end{aligned}
+\tag{20.3}
+$$
+
+For a closed rational box $B$, write $\underline\beta_{n,B}(G)$
+for the minimum of the degree-$n$ tensor Bernstein coefficients of
+$G$ after mapping $[0,1]^d$ affinely onto $B$, using exactly (14.4).
+The degrees, including zero padding, are part of each use below.
+This is the coefficient operation of Section 14, not a new sign
+criterion; its convex-hull implication is (14.5).
+
+**Lemma 20.2 (A source-specific restriction on a separator zero).**
+Let
+
+$$
+\begin{gathered}
+E_2(r)=4r^2-2r-1,\qquad
+E_4(r)=625r^4-1000r^3+50r^2+260r+36,\\
+\Phi(r)=438272r^4-931328r^3+540800r^2-50728r-853,\\
+J_1=[1348,1349]/10^4,\quad J_2=[8090,8091]/10^4,\\
+J_3=[8500,8600]/10^4,\quad J_4=[8685,8686]/10^4,\quad
+J_5=[9024,9025]/10^4.
+\end{gathered}
+\tag{20.4}
+$$
+
+For every $p\in I$, if an actual complete world $W_i(r,p)$ has
+$F_i(r,p)=0$, then $r\in\bigcup_{k=1}^5J_k$.
+
+**Proof.** The four samples in (19.1), evaluated by the weights in
+$O$ (18.4), give
+
+$$
+g(6)=240-243/T+\epsilon L_6,\qquad
+g(7)=480-2268/(5T)+\epsilon L_7.
+\tag{20.5}
+$$
+
+Consequently its actual separator is $F=F_0+\epsilon F_1$.
+The zero-safe parent equations $O$ (12.7) give
+$\epsilon\Lambda=-(24/5)(b-1/8)B_{\rm coef}$.
+Substituting (20.2), or expanding (20.3), gives the rational identity
+
+$$
+\Lambda F=
+\Lambda F_0-\frac{24}{5}(b-1/8)B_{\rm coef}F_1
+ =\frac{6P_{\rm sep}}{5bTUXN}.
+\tag{20.6}
+$$
+
+All factors in the displayed denominator are positive at every
+strict source. Thus $F=0$ implies $P_{\rm sep}=0$, including when
+$\Lambda=0$. The same source satisfies $\mathsf A(r,b,p)=0$ by
+Theorem 19.2.
+
+Take the ordinary Sylvester resultant in $b$, with the coefficient
+rows of $\mathsf A$ followed by those of $P_{\rm sep}$. Expansion
+gives the exact polynomial identity
+
+$$
+\operatorname{Res}_b(\mathsf A,P_{\rm sep})
+ =3456r^{11}(1-r)^9E_2(r)E_4(r)\Phi(r)R_{\rm sep}(r,p),
+\tag{20.7}
+$$
+
+where $R_{\rm sep}\in\mathbb Z[r,p]$ has coordinate degrees $(18,7)$.
+Equation (20.7) specifies it uniquely: divide the determinant by
+all the displayed factors, including the positive constant $3456$.
+Both inputs are fixed by (14.2) and (20.3); the determinant has
+fourteen rows. Polynomial division has zero remainder. For the
+signs of this particular quotient, put
+
+$$
+R_*(r,z)=100^7R_{\rm sep}\left(r,\frac{2744+z}{100}\right).
+\tag{20.8}
+$$
+
+This is an integer polynomial. The following are lower bounds for
+$10^{-32}\underline\beta_{(18,7),B}(\delta R_*)$, where
+$B=[\alpha,\beta]\times[0,1]$.
+
+| $[\alpha,\beta]$ | $\delta$ | Lower bound |
+| --- | --- | --- |
+| $[0,1/8]$ | $-1$ | $60608$ |
+| $[1/8,1/4]$ | $-1$ | $9297$ |
+| $[1/4,3/8]$ | $-1$ | $54870$ |
+| $[3/8,1/2]$ | $-1$ | $320984$ |
+| $[1/2,3/4]$ | $-1$ | $13777$ |
+| $[3/4,17/20]$ | $-1$ | $7$ |
+| $[43/50,1]$ | $1$ | $3$ |
+
+These are finite rational coefficient inequalities. Explicitly,
+for each row form
+
+$$
+H(x,z)=\delta\,100^7R_{\rm sep}
+ \left(\alpha+(\beta-\alpha)x,\frac{2744+z}{100}\right).
+$$
+
+The 152 coefficients whose minimum is bounded are
+
+$$
+\sum_{a=0}^{j}\sum_{c=0}^{k}
+ [x^az^c]H(x,z)
+ \frac{\binom ja}{\binom{18}a}
+ \frac{\binom kc}{\binom7c},
+\quad 0\le j\le18,\quad0\le k\le7.
+\tag{20.9}
+$$
+
+Substitution of the determinant quotient (20.7) gives the table.
+Thus (20.7)–(20.9), the seven cells and the fixed degrees specify
+all the coefficient inequalities without a root approximation.
+By (14.5), $R_{\rm sep}(r,p)$ is strictly negative on
+$[0,17/20]\times I$ and strictly positive on $[43/50,1]\times I$.
+Any zero with $0<r<1$ and $p\in I$ therefore has $r\in J_3$.
+
+For the other factors, the coefficient vectors in increasing powers
+of $t$ of $(1+t)^dh(t/(1+t))$, with $d=\deg h$, are
+
+$$
+\begin{array}{c|l}
+h&\text{coefficient vector}\\ \hline
+E_2&(-1,-4,1)\\
+E_4&(36,404,1046,24,-29)\\
+\Phi&(-853,-54140,383498,-5324,-3837).
+\end{array}
+\tag{20.10}
+$$
+
+Descartes' rule, as used in Theorem 18.4, bounds their numbers of
+roots in $(0,1)$ by one, one and two, respectively. The following
+endpoint numerators give the corresponding sign changes. If
+$J=[a,b]/10^4$, the two entries are exactly
+$10^{4d}h(a/10^4)$ and $10^{4d}h(b/10^4)$.
+
+| $h$ | $J$ | Left numerator | Right numerator |
+| --- | --- | --- | --- |
+| $E_2$ | $J_2$ | $-7600$ | $37124$ |
+| $E_4$ | $J_4$ | $197923812890625$ | $-80318567990000$ |
+| $\Phi$ | $J_1$ | $-7715213314818048$ | $40902172379369472$ |
+| $\Phi$ | $J_5$ | $30626258854019072$ | $-31010500800000000$ |
+
+The intermediate value theorem attains each of the bounds, so these
+intervals contain every strict root of the corresponding factors.
+Since a common finite $b$ root makes the Sylvester determinant zero,
+(20.7), $0<r<1$ and the preceding bounds prove the assertion.
+Only necessity of the resultant condition has been used. In
+particular, (20.6) has not been divided by $\Lambda$. ∎
+
+**Lemma 20.3 (Actual separator signs over the exceptional projections).**
+For every $p\in I$ and $r\in\bigcup_{k=1}^5J_k$,
+
+$$
+F_-(r,p)>0,\qquad F_+(r,p)<0.
+\tag{20.11}
+$$
+
+**Proof.** For the row labelled $(k,i)$ below, set
+$B_{ki}=[\ell,h]/10^4$ and use the displayed sign $\chi$.
+The roots $b_i(r,p)$ lie strictly in $B_{ki}$ for every
+$(r,p)\in J_k\times I$. The four last columns are positive lower
+bounds, in units of $10^{-6}$, for the following Bernstein minima:
+
+$$
+\begin{array}{c|c|c}
+\text{column}&\text{polynomial and box}&\text{degrees}\\ \hline
+a_\ell&\theta_i\mathsf A(r,\ell/10^4,p),\quad J_k\times I&(6,1)\\
+a_h&-\theta_i\mathsf A(r,h/10^4,p),\quad J_k\times I&(6,1)\\
+c&\chi C_5(r,b),\quad J_k\times B_{ki}&(6,7)\\
+q&\theta_i\chi Q_{\rm sep}(r,b,p),\quad J_k\times B_{ki}\times I&(8,8,1),
+\end{array}
+\qquad \theta_-=1,\quad\theta_+=-1.
+\tag{20.12}
+$$
+
+| $k$ | $i$ | $\ell$ | $h$ | $\chi$ | $a_\ell$ | $a_h$ | $c$ | $q$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $1$ | $-$ | $1249$ | $1251$ | $-1$ | $136$ | $54$ | $2346$ | $11591$ |
+| $1$ | $+$ | $1859$ | $1863$ | $-1$ | $216$ | $369$ | $104809$ | $1088563$ |
+| $2$ | $-$ | $1513$ | $1516$ | $1$ | $538$ | $962$ | $116104$ | $835618$ |
+| $2$ | $+$ | $3113$ | $3117$ | $-1$ | $1695$ | $2713$ | $869515$ | $12702390$ |
+| $3$ | $-$ | $1435$ | $1462$ | $1$ | $670$ | $788$ | $16582$ | $87556$ |
+| $3$ | $+$ | $2689$ | $2781$ | $-1$ | $2102$ | $2532$ | $583642$ | $4334862$ |
+| $4$ | $-$ | $1411$ | $1414$ | $1$ | $354$ | $486$ | $9114$ | $51412$ |
+| $4$ | $+$ | $2615$ | $2621$ | $-1$ | $1826$ | $1471$ | $586149$ | $4081916$ |
+| $5$ | $-$ | $1249$ | $1251$ | $-1$ | $148$ | $149$ | $16247$ | $82453$ |
+| $5$ | $+$ | $2349$ | $2355$ | $-1$ | $1025$ | $980$ | $470037$ | $2115789$ |
+
+All entries follow by substitution in (20.2), (14.2) and (14.4).
+For example the first row asserts
+$\underline\beta_{(6,1),J_1\times I}
+(\mathsf A(r,1249/10^4,p))\ge136/10^6$ and
+$\underline\beta_{(8,8,1),J_1\times B_{1-}\times I}
+(-Q_{\rm sep})\ge11591/10^6$.
+Thus (20.12) fixes every coefficient, box and degree used in the
+table. There are no parameter subdivisions beyond the displayed
+$J_k$, $B_{ki}$ and the whole $I$.
+
+The first two columns of bounds and (14.5) give opposite strict
+signs of $\mathsf A$ at the two $b$ endpoints. For each row with
+$i=-$, direct rational comparison gives
+$4(h/10^4)^2<r(1-r)$ on $J_k$; for each row with $i=+$ it gives
+$4(\ell/10^4)^2>r(1-r)$ there. The intermediate value theorem
+therefore gives a root in the indicated tube on the required side
+of $\sigma(r)$. Theorem 18.4 identifies it with the unique
+$b_i(r,p)$ on that side. This proves the tube assertions for both
+branches on all five cells.
+
+The column $c$ proves that $C_5$ has sign $\chi$ throughout that
+tube. In particular $C_5\ne0$ and hence $A_5\ne0$ there, since
+$bTXN>0$. The other zero-safe parent equation, $O$ (12.7), is
+$\epsilon A_5=p-24-K_5$. It and (20.2), (20.5) give the actual
+response identity
+
+$$
+F=F_0+\epsilon F_1
+ =\frac{Q_{\rm sep}}{5bC_5}.
+\tag{20.13}
+$$
+
+This division is justified by the strict column-$c$ bounds; it
+requires neither $\Lambda\ne0$ nor a nonzero gain sample or drift.
+The column $q$ says that $Q_{\rm sep}$ has sign $\theta_i\chi$.
+As $b>0$, (20.13) has sign $\theta_i$, proving (20.11).
+In particular this establishes actual nonzero separator values
+also over the two $\Phi$ intervals, where (20.6) alone could have
+a zero right side without a zero actual response. ∎
+
+**Theorem 20.4 (Uniform affine separation on the full source branches).**
+For every $p\in I$ and $0<r<1$,
+
+$$
+m_-(r,p)>6u_-(r,p)-216,\qquad
+m_+(r,p)<6u_+(r,p)-216.
+\tag{20.14}
+$$
+
+**Proof.** If either branch had a zero separator, Lemma 20.2 would
+put its $r$ in one of the five cells, contradicting Lemma 20.3.
+Thus neither separator vanishes anywhere on its entire stated
+domain. Fix any $p\in I$. By Theorem 19.2 and the actual response
+definitions, $F_i(r,p)$ is continuous for all $0<r<1$, including
+singular sources. Lemma 20.3 supplies its positive sign on $J_1$
+for $i=-$ and its negative sign there for $i=+$. The intermediate
+value theorem on the connected interval $(0,1)$ keeps each sign
+unchanged throughout that interval. This proves (20.14) for the
+arbitrary fixed $p$, and hence on all of $I$.
+
+The Bernstein convex-hull identity, Descartes' rule and the
+common-root implication for a Sylvester determinant are the
+standard supplier steps already used in Sections 6, 14 and 18.
+The polynomial identity (20.7), its coefficient bounds, the actual
+response bounds in Lemma 20.3 and their full-branch consequence
+(20.14) concern the particular source and responses of this volume.
+No restriction on a gain sample, gain degree, gain roots or drift
+has entered the argument. ∎
+
+**Corollary 20.5 (Strict opposite-branch order and the remaining joint equations).**
+At the original exact algebraic $p_J$, for every $r,s\in(0,1)$,
+
+$$
+\mathcal U(-,r)=\mathcal U(+,s)
+ \quad\Longrightarrow\quad
+\mathcal M(-,r)>\mathcal M(+,s).
+\tag{20.15}
+$$
+
+Consequently every distinct terminal-M pair in (19.6), in every
+entire actual child $\mathcal C_v$, must have the form
+$(i,r),(i,s)$ with the same $i$ and $r\ne s$. The remaining
+terminal-M equations are exactly
+
+$$
+\mathcal U(i,r)=\mathcal U(i,s)=v,\qquad
+\mathcal M(i,r)=\mathcal M(i,s),\qquad r\ne s.
+\tag{20.16}
+$$
+
+The original joint predicate still additionally requires two
+distinct points $x_{J0},x_{J1}$ in that same entire $\mathcal D_v$
+with $\mathcal J(x_{J0})=\mathcal J(x_{J1})$. This corollary does
+not decide either (20.16) or that compatibility condition.
+
+**Proof.** The original $p_J$ belongs to $I$ by Definition 18.1.
+For a common acquired response $v$, Theorem 20.4 gives
+
+$$
+\mathcal M(-,r)>6v-216>\mathcal M(+,s),
+$$
+
+which proves (20.15), including $r=s$. If a terminal-M collision
+used opposite labels, reversing their order if necessary would
+contradict this strict inequality. For equal labels, distinctness
+is precisely $r\ne s$ by Theorem 19.2. The entire-child bijection
+of Theorem 19.4 therefore leaves exactly (20.16) as the terminal-M
+part of (19.6), with its original same-$v$ terminal-J requirement
+unchanged. No source coordinate has been bounded or omitted. ∎
