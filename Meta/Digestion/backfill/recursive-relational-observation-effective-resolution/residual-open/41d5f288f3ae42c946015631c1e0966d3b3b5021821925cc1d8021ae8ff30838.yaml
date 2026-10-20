@@ -2,8 +2,6 @@ fingerprints:
   raw_sha256: sha256:41d5f288f3ae42c946015631c1e0966d3b3b5021821925cc1d8021ae8ff30838
   normalized_sha256: sha256:41d5f288f3ae42c946015631c1e0966d3b3b5021821925cc1d8021ae8ff30838
 cas_ref: sha256:41d5f288f3ae42c946015631c1e0966d3b3b5021821925cc1d8021ae8ff30838
-coverage_gids:
-  - gid: D5/S0/Computability/Coding/PrefixFreeCode.isPrefixFree_first_codeword
-    target_statement_id: sha256:b7d55653d49a815a1f75807bc7e0a47cc8a26e40f5ac2daa352ca4db2161ca84
+coverage_gids: []
 receipts:
   unresolved_subitems: []
