@@ -51,7 +51,7 @@ The proof would not settle the conjecture if the module's objects were narrower 
 
 ## Evidence
 
-The canonical source is `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.lean` (488 lines).
+The canonical source is `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.lean` (489 lines).
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Registration.** The §3.9 registration is `Reg/D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.lean`.
