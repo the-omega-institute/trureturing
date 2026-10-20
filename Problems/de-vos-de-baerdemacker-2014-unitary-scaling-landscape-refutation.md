@@ -22,7 +22,7 @@ Issue [#19521](https://github.com/the-omega-institute/trureturing/issues/19521) 
 
 ## Motivation
 
-The landscape governs the authors' iterative algorithm for scaling a unitary matrix to one with all line sums 1, which yields a decomposition of U(n) into diagonal and doubly stochastic unitary factors. If every local minimum were global, descent on Ψ could not get stuck.
+The landscape governs the authors' iterative algorithm for scaling a unitary matrix to one with all line sums 1, which yields a decomposition of U(n) into diagonal unitary factors and unitary factors whose rows and columns all sum to 1. If every local minimum were global, no local minimum of Ψ would lie above the global minimum value.
 
 ## Gap
 
@@ -75,11 +75,11 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 **Computed, not formalized** (orchestrator, numpy, recorded in #19521):
 - the Hessian at 0 has eigenvalues 0, 0, 0.2076, 4.408, 4.408 and 12.21, the two zeros being the phase gauge directions;
-- a global search from other starting points reaches Ψ ≈ 4·10⁻¹³, so a scaling of A exists, as Idel–Wolf predict.
+- a global search from other starting points reaches Ψ ≈ 4·10⁻¹³, a numerical approximation to a scaling of A. The exact existence of a scaling of A is the Idel–Wolf theorem (arXiv:1408.5728), not a consequence of this computation.
 
 **Argued, not formalized.**
 - *Mechanism.* At ρ = 0 the row sums of A are real and positive (23/17, 13/17, 13/17), so the three row contributions to sum(B) are aligned. The radial certificate shows that no nearby column phases increase the total of the row moduli. The phase directions that keep Ψ constant are the two gauge directions.
-- *Consequence for descent.* Started at 0, a method that only accepts decreases of Ψ cannot move, although Ψ = 0 is attainable elsewhere. So descent on the landscape does not reach a scaling from every starting point.
+- *Consequence for descent.* No point (λ, ρ) with |ρ₂ − ρ₃| < 1/50 has Ψ below its value at 0, while Ψ is smaller at the comparison point. A descent method started at 0 whose steps stay in that neighbourhood therefore finds no strict decrease. Whether a given algorithm stalls at 0 depends on its update rule and step size, which this result does not fix.
 - *Scope.* The conjectured trichotomy fails in its third class: some stationary points with 0 < Ψ < n² are local minima, not saddles.
 
 **Effect on the paper.** The conjecture that no local minima exist is false. The existence of a scaling, the second sentence, is unaffected.
