@@ -73,7 +73,10 @@ internal sealed class TemporalHardySpinAttainmentDocument : IScribeDocumentDefin
                             + "⟨ψ|Q(I − Q)Q|ψ⟩ all vanish, whereas ⟨ψ|QPQ|ψ⟩ = 1/4. "
                             + "This realizes the spin-measurement attainability conjecture "
                             + "stated in the conclusion and Appendix B."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("choudhary-goyal-konrad-ghosh-2013-temporal-hardy-spin-attainment"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
