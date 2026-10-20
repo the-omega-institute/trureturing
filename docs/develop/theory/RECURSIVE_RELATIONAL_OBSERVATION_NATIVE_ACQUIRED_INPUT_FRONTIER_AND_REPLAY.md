@@ -3242,7 +3242,7 @@ complete actual-identity decoder of Theorem 11.9 and Corollary 11.10. Its coordi
 $$
 \mathcal K=(\operatorname{code}(u),I,n,\kappa,m),
 \qquad m=N_C-c_F(u).
-\tag{AIF.37}
+\tag{AIF.41}
 $$
 
 The old seed, source binding and fixed public preparation have their
@@ -3268,7 +3268,7 @@ Every vertex has these **fifteen** slots:
 
 $$
 P,L,R,O_0,H_0,O_1,H_1,O_2,H_2,O_3,H_3,O_4,H_4,O_5,H_5.
-\tag{AIF.38}
+\tag{AIF.42}
 $$
 
 There is a fixed reciprocal bridge between
@@ -3431,21 +3431,21 @@ $G_R$. Then apply the stated serializer to $\Delta(G_R)$ to obtain
 $E(G_R)$. The source-independent capsule is the following fixed tuple:
 
 $$
-Q_R=[\Delta(G_R),E(G_R),\Delta(A^+),B,\Lambda,H,\xi].
-\tag{AIF.39}
+\mathsf{Caps}_R=[\Delta(G_R),E(G_R),\Delta(A^+),B,\Lambda,H,\xi].
+\tag{AIF.43}
 $$
 
 Here $\Lambda$ is the fixed layout and entrance table: the two scaffolds,
 owner/arena/constructor naming, static routes, port numbers, effect
 schemas and the canonical boot recipes. $\Delta(A^+)$ includes its
 source-independent bootstrap and all row/effect variants, not merely
-$\Delta(D_0)$. No field of $Q_R$ contains $u$, a later input, a target
+$\Delta(D_0)$. No field of $\mathsf{Caps}_R$ contains $u$, a later input, a target
 ordinal, a target state or a history. $B$ and $\Lambda$ describe generic
-finite constructors with a packet operand; they do not contain $Q_R$
+finite constructors with a packet operand; they do not contain $\mathsf{Caps}_R$
 as a literal subword.
 
 The canonical installation source supplies the bits of this particular
-$Q_R$ and $E(G_R)$, bit by bit, to $B$. This is an explicit added supply
+$\mathsf{Caps}_R$ and $E(G_R)$, bit by bit, to $B$. This is an explicit added supply
 of matching code, not a promise about arbitrary externally provided
 programs. A finite source-independent source emits any fixed word by
 its finite chain of literal writes. Each such write, construction, move,
@@ -3566,7 +3566,7 @@ loader or retaining another host would be another apparatus.
 For every valid finite seed $u$, Definition 12.6 terminates at $F$.
 Its projected old startup is exactly $\sigma_u$, with the same
 $c_F(u)$ and actual old sender binding. There is a finite word procedure
-$\operatorname{Start}_R(Q_R,u)$ which reconstructs the complete reached
+$\operatorname{Start}_R(\mathsf{Caps}_R,u)$ which reconstructs the complete reached
 fifteen-slot state at $F$, including all R backing, marks, latches,
 active/raw code, grants, tokens, retired records and receipts.
 
@@ -3575,7 +3575,7 @@ constructor list. In B's loader loop, after $j$ consumed counter marks
 the main raw store is exactly $E(G_R)[0:j]$ with its actual next write
 location; induction on the read/write/advance rows proves this invariant.
 At the counter's 0 the whole image has been installed. The capsule-copy
-loop has the identical bit-prefix invariant for $Q_R$. Thus DONE enables
+loop has the identical bit-prefix invariant for $\mathsf{Caps}_R$. Thus DONE enables
 precisely the table whose description is actually retained in the capsule,
 without a reflective read or a parser-based inference of matching. Both
 constant loops terminate on their constructed counters.
@@ -3594,7 +3594,7 @@ C or P receipt. The final R field change is not an R receipt.
 
 For reconstruction, initialize the explicit finite carrier from
 $\Lambda$ and run the constructor, loader and startup rows just specified,
-using $Q_R$ as source-independent data and the original canonical boot
+using $\mathsf{Caps}_R$ as source-independent data and the original canonical boot
 reservoir generated from $u$ and the old entrance parameters. That
 reservoir is the existing canonical-startup supplier, not a history input.
 At each represented native row the adapter of §12.6 below updates every
@@ -3638,7 +3638,7 @@ state has exactly one Armed lift for its actual seed. In particular,
 
 $$
 \pi(\delta^{R}_{e}(x))=\delta^+_e(\pi(x))
-\tag{AIF.40}
+\tag{AIF.44}
 $$
 
 for every old lawful action $e$ at $x\in\mathcal D_R$.
@@ -3933,7 +3933,7 @@ $x\in\mathcal D_R$,
 
 $$
 \mathcal L_R(\mathcal K(\pi(x)))=x.
-\tag{AIF.41}
+\tag{AIF.45}
 $$
 
 The evaluator terminates and reconstructs actual R code/startup backing,
@@ -4055,7 +4055,7 @@ round trip give both identities
 $$
 \mathcal L_R K_R=\mathrm{id}_{\mathcal D_R},\qquad
 K_R\mathcal L_R=\mathrm{id}_{K_R(\mathcal D_R)}.
-\tag{AIF.42}
+\tag{AIF.46}
 $$
 
 These equations concern authentic attained keys, not all syntactically
@@ -4084,7 +4084,7 @@ $$
 Q_R(x)=Q_R(y)
 \quad\Longleftrightarrow\quad K_R(x)=K_R(y)
 \quad\Longleftrightarrow\quad x=y.
-\tag{AIF.43}
+\tag{AIF.47}
 $$
 
 For every old lawful action $e$, decoding and executing its unique
@@ -4093,14 +4093,14 @@ All routes preserve actual identity, guards, outputs and complete future
 successors; future fifteen-slot charges are evaluated on that successor
 route. Pin exits the domain and is not an Armed key-only update.
 
-**Proof.** Equal keys reconstruct equal complete states by AIF.42.
+**Proof.** Equal keys reconstruct equal complete states by AIF.46.
 Identical actual states have identical partial future experiment maps,
 including labels, enabledness, raw exits and future tariffs. Conversely
 Pin is enabled at every compared state. Equality of the one-Pin audit
 response implies equality of its old projected successor. Pin changes
 no old eleven-slot field, old receipt or old controller, so that
 projection is exactly $\pi(x)$, respectively $\pi(y)$. Equal old states
-give equal old keys; AIF.42 gives $x=y$. This cancellation does not
+give equal old keys; AIF.46 gives $x=y$. This cancellation does not
 interpret Pin's own receipt as an old receipt and does not expose an
 audit response to an acquiring controller.
 
@@ -4113,13 +4113,13 @@ executed enlarged endpoint. Evaluating that same concrete row gives
 the same new tariff. Disabled trials do not change either side; raw
 noncanonical IN successors obey the projection equation but leave the
 lawful domain. Pin's successor includes new R receipts and acquisition
-phases, so AIF.42 is not applied to it. $\square$
+phases, so AIF.46 is not applied to it. $\square$
 
 The target returned by CallR is historical. Its old tokens, heads,
 permissions and grants are represented as they were at Pin. Printing
 them does not reinstate a live right. Nor does CallR invert its own
 later acquired backing or recover the joint state at its return.
-The pre-Pin inclusion of R in AIF.41 does not change this domain limit.
+The pre-Pin inclusion of R in AIF.45 does not change this domain limit.
 
 ### 12.9. Independently meaningful space, time, boundary and memory
 
@@ -4173,7 +4173,7 @@ to and from the current endpoint.
 slot labels to obtain the same complete occurrence record list, and
 conversely construct that storage from the list, using the actual names.
 This is the SSA representation supplier componentwise, not a new
-acquisition theorem. Compose with AIF.42 to obtain both $S_R/K_R$
+acquisition theorem. Compose with AIF.46 to obtain both $S_R/K_R$
 directions. The physical $M_R$ invocation assertion is Theorem 12.21.
 Every displayed target view is a deterministic readout of the very
 same recovered complete state; the old partial-time view is obtained
@@ -4191,7 +4191,7 @@ endpoint. Its old shuffle cardinality remains
 
 $$
 \binom{n-\kappa+m-1}{n-\kappa}\qquad(m>0),
-\tag{AIF.44}
+\tag{AIF.48}
 $$
 
 with the original domain and empty-chain conventions. Fixing the added
@@ -4228,7 +4228,7 @@ $$
 W_{15}(E)=\sum_{e\in E}(1+p(e)+a(e)+\nu(e)),
 \qquad
 V(E)=V_{\rm found}+\sum_{e\in E_{\rm tail}}\nu(e).
-\tag{AIF.45}
+\tag{AIF.49}
 $$
 
 The foundation term includes both primary scaffolds, all finite
@@ -4277,7 +4277,7 @@ subtotal is
 
 $$
 N_{\rm pin+direct}=5(n+c)+5r+26+d(5\kappa+10).
-\tag{AIF.46}
+\tag{AIF.50}
 $$
 
 It excludes every word/helper operation, setup, package and delivery
@@ -4302,11 +4302,11 @@ The demand J scan uses PlaceL once, then Next, ReadJ and the three-row
 Append(bit) for each of $r$ bits, and Append(sep), Seal on exit. This
 is $1+5r+4=5r+5$. These rows are disjoint from the count and Pin rows;
 word operations that decide to demand or continue do not occur in either
-subsequence. Adding gives AIF.46. Any final ClearCursor row is additional.
+subsequence. Adding gives AIF.50. Any final ClearCursor row is additional.
 The formulas include every terminating TestEnd; no changing receipt byte
 is tested in place of endpoint identity. $\square$
 
-AIF.46 excludes: both foundations; code/source literal emission and
+AIF.50 excludes: both foundations; code/source literal emission and
 installation; loader state and capsule import; the actual manifest and
 seed copy; empty-bank construction; $c_F$ evaluation, subtraction and
 branching; all spool imports and word assignments; every represented
@@ -4314,7 +4314,7 @@ row/record/effect lookup; package metadata and seals; whole-target and
 self-startup evaluation; serialization; Base/Allocate, zero filling and
 descriptors; both copies and renewed positioning; OUT, ACK, completion,
 mailbox/invocation TOK and Ready; all old P/C work. Every one of these
-is included in AIF.45 and the successor-dependent recurrence. The
+is included in AIF.49 and the successor-dependent recurrence. The
 channel's $12l+6$ two-copy-body subtotal, where applicable to its payload
 length $l$, retains RCA's exclusions and is not substituted for the
 full return price. This section asserts no additional closed polynomial
@@ -4333,7 +4333,7 @@ Definition 12.20's channel loops have their real finite counters and
 positioned heads. Finitely many prescribed R rows, each preceded by
 finitely many joint rows, give a finite actual prefix. Every structural
 row has a bounded pattern in this fixed installed apparatus; its finite
-number of probes, assignments and births is evaluated by AIF.45.
+number of probes, assignments and births is evaluated by AIF.49.
 Retained space counts all those births, including unused and retired
 material. As target counts and repeated-call arenas grow, neither this
 argument nor finite control bounds their number. Arbitrarily long finite
@@ -4357,8 +4357,8 @@ state, with arbitrary advertised old P/C phases, is physically captured
 by two simultaneous meter incidences, acquired with the paid startup
 and cursor/word program, reconstructed in its entirety and available for
 actual finite callable copying/printing/return. The actual-image inverse
-and old-action routes are AIF.42–43. All setup, retained backing and
-same-run costs have the definitions and exclusions in AIF.45–46.
+and old-action routes are AIF.46–47. All setup, retained backing and
+same-run costs have the definitions and exclusions in AIF.49–50.
 
 **Proof.** Lemma 12.9 supplies coverage of the full old domain rather
 than a Ready projection. Lemmas 12.10–12.14 supply the stable common
