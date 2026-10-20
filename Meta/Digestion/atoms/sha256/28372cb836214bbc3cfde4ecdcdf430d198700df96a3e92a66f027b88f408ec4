@@ -1,0 +1,8 @@
+# 2026-09-07：实际算术对偶试探、完整无限尾与真模态/prolate 的复圆盘误差
+
+Lean：`D5/S3/Weil/ZetaBridge/WeilEvenDualStencil.lean`，配套同名 Scribe。
+执行源：`research/weil_ground_mode/certify_prime3_energy_dual.py`，固定输入 `prime3_energy_dual_trial.json`，输出 `prime3_energy_dual_certificate.json`。
+独立公式诊断：`test_even_dual_stencil.py` 与 `even_dual_stencil_regression.json`。其中“独立”仅指另一份组装表达；作者仍为同一助手。
+
+本节将 #5882 已有的全残差能量对偶原理实例化到实际 prime/pole/Gamma 算子。中心 20+i/4 的平方读出预算较同一偶代表元的零试探预算改善超过 450 倍；同一个精确试探函数控制半径 1/1000 的整个复圆盘，并接到真正 prolate 模型的同相位比较。旧完整谱/强制性证书被明确继承，没有在本轮重新运行。新数值证书重放真正 prolate 模型认证，重新计算实际矩阵、试探函数、完整残差和 Fourier 值。Lean/Scribe 编译及传递公理审查未运行。
+

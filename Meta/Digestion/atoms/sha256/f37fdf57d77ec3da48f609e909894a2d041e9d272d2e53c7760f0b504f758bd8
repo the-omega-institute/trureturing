@@ -1,0 +1,21 @@
+#### 扩展 F02：完整实参数族
+
+固定 \(a\in\mathbb R\setminus\{1/2\}\)，使用实际非平凡零点及解析重数定义
+
+\[
+S_n(a)=\lim_{T\to\infty}\sum_{|\Im\rho|\le T}m_\rho
+\left[1-\left(\frac{\rho-a}{\rho+a-1}\right)^n\right],\quad
+D_n(a)=\left.\frac1{(n-1)!}\frac{d^n}{ds^n}
+\bigl((s-a)^{n-1}\log\xi(s)\bigr)\right|_{s=1-a}.
+\]
+
+对称极限、实值性和局部对数先证明合法。每个固定许可参数下，以下三条各自与 RH 等价。[E04, Theorems 1、2、5]
+
+| ID | 精确陈述 |
+| --- | --- |
+| A071 | 对所有 \(n\ge1\)，\(S_n(a)\ge0\)。 |
+| A072 | 对所有 \(n\ge1\)，\((1-2a)D_n(a)\ge0\)，保留左右参数区域的相反符号。 |
+| A073 | 对每个 \(\epsilon>0\)，存在 \(C_{a,\epsilon}\ge0\)，使所有 \(n\ge1\) 满足 \(S_n(a)\ge-C_{a,\epsilon}e^{\epsilon n}\)。 |
+
+原 Li 系数的特例身份要与已有导数定义证明一致。一个固定指数下界或有限前缀不能代替 A073 的全部 epsilon。
+

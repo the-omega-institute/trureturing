@@ -1,0 +1,31 @@
+## 2. 新素数作用在低频块中的真实形状
+
+本节的物理激活比较取 0<h<1。前节已证明此时新素数的对称压缩平移 B=w(T_(2-h)+T_(2-h)^*) 的普通范数为 w。对固定的光滑低频向量，其作用仍可以很小。取共同区间 [-1,1] 的实偶基 phi_0=1/sqrt2、phi_n=(-1)^n cos(pi*n*x)，n>=1。令 b_0=1/sqrt2，b_n=1。由实际两端重叠区间积分，
+
+\[
+\langle\phi_m,B\phi_n\rangle
+=2w b_m b_n\int_0^h\cos(\pi m t)\cos(\pi n(h-t))dt.
+\]
+
+新 Lean `cosine_prime_edge_remainder` 对任意实 u,v 和 h>=0 证明
+
+\[
+\boxed{\left|\int_0^h\cos(ut)\cos(v(h-t))dt-h\right|
+\le (u^2+v^2)h^3/6.}
+\tag{US4}
+\]
+
+证明使用实际 cos 缺陷、连续 integrand 和精确二次多项式积分。因此该素数在有限偶块中的首项是 2wh*bb^*，并有逐项三次误差；实际 Weil 素数项带负号。这个首项保留非零端点，不能在一般最低模态上删除。
+
+对已经拥有的零 trace 偶 Fourier 模板，定义其具体边界表达 g(t)=sum_(n∈S)v_n(cos(pi*n*t)-1)，并令 K=sum |v_n|(pi*n)^2。其物理模板在共同区间的值是 sqrt2*g(t)。新 `even_stencil_edge_fifth_order` 推导可积性和
+
+\[
+\boxed{\int_0^h|g(t)|^2dt\le K^2h^5/20,\qquad
+\left|\int_0^h\overline{g(t)}g(h-t)dt\right|\le K^2h^5/120.}
+\tag{US5}
+\]
+
+全部复系数先在同一函数中相加；没有漏掉交叉项。由 |cos x-1|<=x^2/2 得到二阶端点消失，再积分 t^4 与 t^2(h-t)^2；后者的实际积分是 h^5/30。若将 sqrt2 因子计回物理函数，prime 二次型模长至多为 wK^2h^5/30，完整 prime 作用的范数平方至多为 w^2K^2h^5/5。因而，在另外具备独立正高块下界时，它的 Schur 修正具有相应的第五阶预算。
+
+(US5) 只用于这种明确的零 trace 试探子空间。新数值证书中的原始候选没有被强行设置零端点；其全部边界矩保留。当前区间扩展的实际计算改进主要来自下一节的方向性 Gram 预算，并非把 (US5) 偷渡为真实候选的性质。
+

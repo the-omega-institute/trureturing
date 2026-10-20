@@ -1,0 +1,8 @@
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 4,8. https://arxiv.org/html/2511.22755v1
+- Dusson, Sigal, Stamm, *The Feshbach-Schur map and perturbation theory*, arXiv:2105.02058. https://arxiv.org/abs/2105.02058
+- Li, Shao, *Asymptotic Recovery in Fourier Spectral Methods for the Schrodinger Equation with Point Singularities*, arXiv:2606.01718v1. https://arxiv.org/html/2606.01718v1
+- Existing owners: `WeilInfiniteComplementLeakage`, `WeilArithmeticCouplingJet`, `WeilEvenDualStencil`; actual #6029 and #6204 sources at the blobs above.
+
+

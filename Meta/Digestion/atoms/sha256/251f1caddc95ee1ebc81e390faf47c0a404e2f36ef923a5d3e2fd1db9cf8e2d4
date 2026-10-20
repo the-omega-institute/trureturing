@@ -1,0 +1,36 @@
+**定义 35.1（固定小角度与无界横向伸缩）。** 保留第 32—34 节的原函数、主分支、$H$、$a=d/4$ 与 $C_0=\sqrt{\pi/2}e^{-1/4}$。令
+
+$$
+T>0,\qquad |\tau|\le\frac1{2H},\qquad
+k=1-i\tau,\qquad x=iTk,\qquad
+c=\sqrt{2T}\,k^{1/2},\qquad \kappa=c/2.
+$$
+
+对实际参数，$\tau=\delta/\gamma$、$T=R\gamma$，而 $\eta=\tau\sqrt T$。这里的小角度条件不限制 $\eta$；特别是固定非零 $\tau$ 时，$|\eta|\to\infty$。
+
+以 $S_{+1}=S_+$、$S_{-1}=S_-$ 记 (33.1) 的两项。对 $\varepsilon\in\{1,-1\}$，置 $y_\varepsilon=\varepsilon x$，并定义
+
+$$
+\begin{aligned}
+B&=\frac{C_0^2\sqrt\pi\,a^{1/4}}{dM},\\
+L_\varepsilon(T,\tau)
+&=B e^{-1/4}y_\varepsilon^{-3/2}(-y_\varepsilon)^{-3/4}
+\exp\!\left(
+y_\varepsilon-2\sqrt{y_\varepsilon}
+-2\sqrt{-ay_\varepsilon}-i\varepsilon\sqrt a
+\right),\\
+U_\varepsilon(T,\tau)
+&=B e^{-1/4}b^{-3/2}y_\varepsilon^{-9/4}
+\exp\!\left(
+by_\varepsilon-2\sqrt{by_\varepsilon}
+-2\sqrt{ay_\varepsilon}+\sqrt{a/b}
+\right),\\
+X(T,\tau)
+&=2B e^{-1/4+a/4}T^{-3/2}k^{-3/2}\kappa^{-3/4}
+\exp\!\left(-c-2\sqrt{a\kappa}\right).
+\end{aligned}
+\tag{35.1}
+$$
+
+这些主项均非零；其模长只作为独立的正误差包络使用。$L_\varepsilon$ 和 $U_\varepsilon$ 分别来自 $u=1$ 和 $u=b$，$X$ 来自交叉项在 $u=1$ 的外层边界尺度。
+

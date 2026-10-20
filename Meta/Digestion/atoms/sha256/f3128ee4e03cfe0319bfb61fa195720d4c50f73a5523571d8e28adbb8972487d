@@ -1,0 +1,16 @@
+### 42.3 ingest 收据
+
+首次摄入命令（合并后 dev 的当时 SHA）为：
+
+```sh
+BASE=17dcccc461dd1f0ebb584bdfce578c0c3525f25c make ingest SOURCE="contextual-spacetime-arithmetic docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md"
+```
+
+退出码为 **0**，计数为 `residual_open_added=49 skipped_existing=306 coarse_fallbacks=0 open_genres=0 cas_objects_written=49 ledger_changed=true`，并由提交 `5d3b1ab09d` 入账。§42 写入后的最终摄入命令为：
+
+```sh
+BASE=a3da3ff01faf5dc562f119227f53e17a668b1f55 make ingest SOURCE="contextual-spacetime-arithmetic docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md"
+```
+
+该命令退出码为 **0**，计数为 `residual_open_added=6 skipped_existing=322 coarse_fallbacks=0 open_genres=0 cas_objects_written=6 ledger_changed=true`。在 §41 的 D17 细节补充后，按要求再次执行同一命令，退出码为 **0**，计数为 `residual_open_added=0 skipped_existing=328 coarse_fallbacks=0 open_genres=0 cas_objects_written=0 ledger_changed=false`；该次执行是 D17 修改后的最终检查点。
+

@@ -5,10 +5,10 @@ namespace StrataLint.Cli;
 
 internal static class AtomContextMigrationCommand
 {
-    // Explicit writer scope: current source evidence, registered identities and their
+    // Explicit writer scope: observed source evidence, registered identities and their
     // actual chains. No ingest, status projection or coverage changes occur here.
     internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadSource(
-        IRepositoryGateway repository, string sourceId, RawRepositorySnapshot? overlay = null)
+        IRepositoryGateway repository, string sourceId, RawRepositorySnapshot? overlay = null, string? sourceRevision = null)
     {
         var raw = repository.ReadCurrent([DigestionQuerySelection.Literal(BackfillInventoryLoader.RootPath + sourceId),
             DigestionQuerySelection.Literal(FileMapLoader.RelativePath), ":(glob)Meta/FILEMAP.*.toml"]);
@@ -20,9 +20,15 @@ internal static class AtomContextMigrationCommand
         }
         var loaded = DigestionQuerySelection.Load(raw);
         var source = loaded.Document.RequireDigestionSources().Single(source => source.SourceId == sourceId);
-        raw = DigestionQuerySelection.Merge(raw, repository.ReadCurrent([
-            DigestionQuerySelection.Literal(source.SourcePath),
-            .. loaded.Document.RequireDigestionEntries().Select(DigestionQuerySelection.CasPath)]));
+        raw = DigestionQuerySelection.Merge(raw, repository.ReadCurrent(
+            loaded.Document.RequireDigestionEntries().Select(DigestionQuerySelection.CasPath).ToArray()));
+        var sourceRaw = sourceRevision is null
+            ? repository.ReadCurrent([DigestionQuerySelection.Literal(source.SourcePath)])
+            : repository.ReadRevision(sourceRevision, [DigestionQuerySelection.Literal(source.SourcePath)]);
+        // The immutable revision supplies only the observed prose. Current metadata,
+        // identities, chains, coverage and FILEMAP retain their validation authority.
+        raw = DigestionQuerySelection.Merge(raw, RawRepositorySnapshot.Create(sourceRaw.Entries
+            .Where(entry => entry.Path == source.SourcePath)));
         return DigestionQuerySelection.ReadChains(repository, DigestionQuerySelection.Load(raw));
     }
 
@@ -32,15 +38,22 @@ internal static class AtomContextMigrationCommand
         try
         {
             var selectors = new List<string>();
+            string? sourceRevision = null;
             var write = false;
             var all = false;
             for (var i = 0; i < arguments.Count; i++)
                 switch (arguments[i])
                 {
                     case "--source" when i + 1 < arguments.Count: selectors.Add(arguments[++i]); break;
+                    case "--source-revision" when sourceRevision is null && i + 1 < arguments.Count:
+                        sourceRevision = arguments[++i];
+                        if (sourceRevision.Length != 40 || sourceRevision.Any(character =>
+                            character is not (>= '0' and <= '9') and not (>= 'a' and <= 'f')))
+                            throw new FormatException("source revision must be an immutable 40-digit commit SHA");
+                        break;
                     case "--all" when !all: all = true; break;
                     case "--write" when !write: write = true; break;
-                    default: throw new FormatException("USAGE: migrate-atom-context (--all | --source SOURCE ...) [--write]");
+                    default: throw new FormatException("USAGE: migrate-atom-context (--all | --source SOURCE ...) [--source-revision COMMIT_SHA] [--write]");
                 }
             if (all == (selectors.Count > 0)) throw new FormatException("select --all or --source");
             var ids = all ? repository.SearchCurrentPaths([$":(glob){BackfillInventoryLoader.RootPath}*/source.toml"])
@@ -53,19 +66,29 @@ internal static class AtomContextMigrationCommand
             {
                 try
                 {
-                    var loaded = ReadSource(repository, sourceId);
+                    var loaded = ReadSource(repository, sourceId, sourceRevision: sourceRevision);
                     var built = DigestionContextIndexBuilder.Build(loaded.Snapshot, loaded.Document, sourceId);
                     var final = DigestionContextPointerStore.Add(loaded.Raw, built.Index);
                     var before = loaded.Raw.Entries.ToDictionary(entry => entry.Path, StringComparer.Ordinal);
                     var updates = final.Entries.Where(entry => !before.TryGetValue(entry.Path, out var old)
                             || !old.Bytes.AsSpan().SequenceEqual(entry.Bytes.AsSpan()))
                         .Select(entry => new IngestCommand.LedgerUpdate(entry.Path, entry.Bytes)).ToImmutableArray();
-                    var resolved = built.Index.Entries.Select(entry => entry.AtomId).ToHashSet(StringComparer.Ordinal);
-                    var missing = loaded.Document.RequireDigestionEntries().Where(entry => entry.SourceId == sourceId
-                        && !resolved.Contains(entry.AtomId)).Select(entry => entry.AtomId).Order(StringComparer.Ordinal).ToArray();
+                    var saved = final.Entries.ToDictionary(entry => entry.Path, StringComparer.Ordinal);
+                    var owners = loaded.Document.RequireDigestionEntries().Where(entry => entry.SourceId == sourceId).ToArray();
+                    var missing = owners.Where(entry => !HasSaved(entry.AtomId))
+                        .Select(entry => entry.AtomId).Order(StringComparer.Ordinal).ToArray();
+                    var resolved = owners.Length - missing.Length;
+                    bool HasSaved(string atomId) => saved.TryGetValue(
+                        DigestionContextPointerIndex.RelativePath(sourceId, atomId), out var file)
+                        && !DigestionContextPointerStore.ParseVersions(file.Bytes, sourceId, atomId).IsEmpty;
                     unresolvedAtoms += missing.Length;
-                    if (write) (apply ?? IngestCommand.ApplyDecompositionAtomically)(root, loaded.Raw, built.CasObjects, updates);
-                    output.AppendLine($"ATOM_CONTEXT_MIGRATION source_id={sourceId} version={built.Index.SourceSha256} resolved={resolved.Count} unresolved={missing.Length} changed={updates.Length} write={write.ToString().ToLowerInvariant()}");
+                    if (write)
+                    {
+                        var expected = sourceRevision is null ? loaded.Raw : RawRepositorySnapshot.Create(
+                            loaded.Raw.Entries.Where(entry => entry.Path != built.Index.SourcePath));
+                        (apply ?? IngestCommand.ApplyDecompositionAtomically)(root, expected, built.CasObjects, updates);
+                    }
+                    output.AppendLine($"ATOM_CONTEXT_MIGRATION source_id={sourceId} version={built.Index.SourceSha256} resolved={resolved} unresolved={missing.Length} changed={updates.Length} write={write.ToString().ToLowerInvariant()}");
                     foreach (var id in missing) output.AppendLine($"ATOM_CONTEXT_UNRESOLVED source_id={sourceId} atom_id={id} reason=no-supported-occurrence-in-observed-version");
                 }
                 catch (Exception error) when (error is not OutOfMemoryException)

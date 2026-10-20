@@ -1,0 +1,28 @@
+**定义 35.2（同一实际剩余和的显式误差成本）。** 对第 33 节的 $\mathcal U_H(R)$，从每份正纵坐标水平反射对中取 $\delta_\rho=\beta-1/2>0$ 的代表，保留实际重数 $m_\rho$，代表集记为 $\mathcal U_H^+(R)$。当 $R\ge\max(1,T_1/H)$ 时，每个代表满足定义 35.1 的小角度条件。置
+
+$$
+\begin{aligned}
+\mathcal A_\rho(R)
+&=X(T_\rho,\tau_\rho)+
+\sum_{\varepsilon=\pm1}(L_\varepsilon(T_\rho,\tau_\rho)+U_\varepsilon(T_\rho,\tau_\rho)),\\
+\mathcal G_\rho(R)
+&=T_\rho^{-1/4}|X|+
+T_\rho^{-1/2}\sum_{\varepsilon=\pm1}(|L_\varepsilon|+|U_\varepsilon|),
+\end{aligned}
+$$
+
+其中 $T_\rho=R\gamma$、$\tau_\rho=\delta_\rho/\gamma$，第二行所有项在同一参数处取值。实际有限和满足
+
+$$
+\left|
+E_{\rm newrem}(R)-
+4\sum_{\rho\in\mathcal U_H^+(R)}m_\rho
+\Re\bigl(p(z_\rho)\mathcal A_\rho(R)\bigr)
+\right|
+\le4K\sum_{\rho\in\mathcal U_H^+(R)}
+m_\rho|p(z_\rho)|\mathcal G_\rho(R).
+\tag{35.9}
+$$
+
+这是 (35.3) 在实际重数及反射约定下的直接应用，未用其他零点配置替代实际联合实现。要通过这份误差成本支付 (33.15)，仍需将同一主项总和的下界与右端总成本、$P_H(R)$ 作联合比较，覆盖每个充分大实数 $R$。逐项误差趋零没有证明右端为 $o(P_H)$，所保留主项的实部也没有统一符号。本节没有供应这份实际联合比较，未得到 RH、Robin 的全称结论或 FIB 与实际素数作用的算术运输。
+

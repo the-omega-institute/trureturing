@@ -1,0 +1,16 @@
+#### F09. Riesz 与离散 Báez-Duarte 变换（A048–A049）
+
+定义
+
+\[
+R(x)=x\sum_{j\ge0}\frac{(-1)^jx^j}{j!\zeta(2j+2)},\qquad
+b_k=\sum_{j=0}^k(-1)^j\binom kj\frac1{\zeta(2j+2)}.
+\]
+
+| ID | 类别 | 精确目标 |
+| --- | --- | --- |
+| A048 | C | 对每个 \(\varepsilon>0\)，\(R(x)=O_\varepsilon(x^{1/4+\varepsilon})\)，\(x\to+\infty\)。 |
+| A049 | C | 对每个 \(\varepsilon>0\)，\(b_k=O_\varepsilon(k^{-3/4+\varepsilon})\)，整数 \(k\to\infty\)。 |
+
+这里 \(b_k\) 与 Li 曲率 \(c_k\) 是不同对象。不得把 \(\varepsilon=0\) 的更强界当作等价式。[L11]。第 8 节给出精确变换与误差义务。
+

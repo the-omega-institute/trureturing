@@ -998,7 +998,7 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 
 关系由正常 ingest（含复用 ID）、decompose 及显式 `migrate-atom-context` writer 与 CAS/账本事务维护。新摄入保存当前源中有证据的关系，保留其他版本；分解从 immutable parent CAS 与已保存的 parent occurrence 组合子关系，更新所有已保存 source 绑定中的外侧叶指针及受影响的序号、计数，不依赖现行原文。原文改写、移动或删除不破坏既存 atom，也不触发 raw-mismatch corruption。没有保存关系时返回 `OCCURRENCE_MISSING CONTEXT_UNAVAILABLE`，要求显式迁移；没有旧格式运行时回退。
 
-`make migrate-atom-context [SOURCE=<id-or-path>] [WRITE=1]` 是已有账目的显式迁移门，省略 SOURCE 选择全部已登记 source，省略 WRITE 只预览。它读取登记身份、实际 chain_atoms、CAS 及观察到的源，验证原有计划后保存能由该证据建立的关系，不摄入新 atom、不改变状态、收据、coverage 或 Lean 冻结。缺失源、缺失/歧义引用、不相容历史切分或无匹配出现逐项报告 unresolved，并以非零退出表达未完成；不虚构历史前后关系。可恢复的 source 独立原子写入，不将部分迁移报成全量完成。重复同证据迁移为 byte no-op。
+`make migrate-atom-context [SOURCE=<id-or-path>] [WRITE=1]` 是已有账目的显式迁移门，省略 SOURCE 选择全部已登记 source，省略 WRITE 只预览。它读取登记身份、实际 chain_atoms、CAS 及观察到的源，验证原有计划后保存能由该证据建立的关系，不摄入新 atom、不改变状态、收据、coverage 或 Lean 冻结。缺失源、缺失/歧义引用、不相容历史切分或无匹配出现逐项报告 unresolved，并以非零退出表达未完成；不虚构历史前后关系。可恢复的 source 独立原子写入，不将部分迁移报成全量完成。重复同证据迁移为 byte no-op。make 可加 `SOURCE_REVISION=<40位commit-SHA>`（CLI 为 `--source-revision <40位commit-SHA>`），仅从该不可变修订读取当前登记路径的正文；登记身份、atomizer、chains、coverage 与 FILEMAP 仍取现行受验证输入。该参数不声称恢复原摄入版本，也不扫描 Git 历史或尝试旧路径。已有保存版本计入已恢复关系；当前观察中缺失不抹去它们。独立历史根交叉且无共同 ancestry 时，该区域以观察版本的 atomizer 建立叶流，旧跨度仅在端点兼容时保存，否则保持 unresolved，不让交叉切分阻断其他受支持的出现。
 
 **局部写入。**拆分只加载目标、生成子项的既有命中、实际子链以及包含目标的各 source 保存关系以更新受影响的序号和计数；结算只加载目标与所需的真实邻居、后代收据及其覆盖依据；cover 与 cover-batch 只加载请求目标和实际后代账目，同时保留当前 Lean 报告、冻结成员与声明绑定校验。无关账目不参与当前操作，也不因无关记录的格式或覆盖偏差阻断它。批量命令保留自己的成功写入供后续项使用；实际引用的缺失、冲突或坏 CAS 仍须拒绝，原子写入和失败回滚继续适用。
 
