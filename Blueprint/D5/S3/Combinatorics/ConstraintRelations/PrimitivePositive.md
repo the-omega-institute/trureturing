@@ -10,7 +10,7 @@ $$\forall S \in \mathrm{Type},\; \forall q \in (S) \to \mathrm{Nat},\; \forall n
 
 *Formalization.* `D5/S3/Combinatorics/ConstraintRelations/PrimitivePositive.Atom` (`✓ std3`).
 
-*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p8.xhtml>.
+*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p08.xhtml>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\forall D \in \mathrm{Type},\; \forall S \in \mathrm{Type},\; \forall q \in (S
 
 *Formalization.* `D5/S3/Combinatorics/ConstraintRelations/PrimitivePositive.Holds` (`✓ std3`).
 
-*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p8.xhtml>.
+*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p08.xhtml>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\forall D \in \mathrm{Type},\; \forall S \in \mathrm{Type},\; \forall q \in (S
 
 *Formalization.* `D5/S3/Combinatorics/ConstraintRelations/PrimitivePositive.HoldsAll` (`✓ std3`).
 
-*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p8.xhtml>.
+*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p08.xhtml>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ $$\forall D \in \mathrm{Type},\; \forall S \in \mathrm{Type},\; \forall q \in (S
 
 *Formalization.* `D5/S3/Combinatorics/ConstraintRelations/PrimitivePositive.Defines` (`✓ std3`).
 
-*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p8.xhtml>.
+*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p08.xhtml>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ $$\forall D \in \mathrm{Type},\; \forall k \in \mathrm{Nat},\; \forall n \in \ma
 
 *Formalization.* `D5/S3/Combinatorics/ConstraintRelations/PrimitivePositive.Preserves` (`✓ std3`).
 
-*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p8.xhtml>.
+*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p08.xhtml>.
 
 *Commentary.*
 
@@ -70,7 +70,7 @@ $$\forall D \in \mathrm{Type},\; \forall S \in \mathrm{Type},\; \forall q \in (S
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/ConstraintRelations/PrimitivePositive.polymorphism_preserves_pp` (`✓ std3`). ∎
 
-*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p8.xhtml>.
+*Citation.* David Geiger (1968). *Closed systems of functions and predicates*. DOI: [10.2140/pjm.1968.27.95](https://doi.org/10.2140/pjm.1968.27.95). URL: <https://msp.org/pjm/1968/27-1/p08.xhtml>.
 
 *Commentary.*
 
