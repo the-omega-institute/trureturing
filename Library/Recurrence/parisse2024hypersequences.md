@@ -9,6 +9,7 @@ claim: "Section 4 states two conjectures: the alternating factorial-Stirling wei
 strata_touched:
   - D5/S3/Combinatorics/ParisseStirlingFibonacciAlternatingSum
   - D5/S3/Combinatorics/BinomialBases/SecondOrderStirlingTransform
+  - D5/S3/Combinatorics/BinomialBases/MonicAnnihilatorStirlingTransform
 license: citation-only
 triage: anchor
 ---
@@ -141,3 +142,32 @@ For `n≥1`, `F_n=Q_n` and the symmetry of `F_n/X` yields
 `X Q_n(-1-X)=(-1)^n(1+X)Q_n(X)`.
 The printed real-variable symmetry extends by polynomial identity to complex evaluation.
 The restriction `n≥1` is essential: `Q_0=1` and `Q_0/X` is not a polynomial.
+
+## Generalized Newton connections
+
+Robert S. Maier, “Triangular recurrences, generalized Eulerian numbers, and related
+number triangles,” *Advances in Applied Mathematics* **146** (2023), 102485.
+DOI: 10.1016/j.aam.2023.102485.
+URL: https://arxiv.org/abs/2207.10224v2.
+The original PDF SHA256 is `25ce9559eb27caa6c6e3eb7a7faf808e67f2bffb18925578102119531b6b3433`.
+Definition 4.4 defines S(n,k;a,b;r). Theorem 4.5(ii), equation (4.8), gives
+the connection from falling step-a factorials to falling step-b factorials
+based at r. Its parameters (a,b;r) correspond to (alpha,b;a) in
+`MonicAnnihilatorStirlingTransform`. Equation (4.4) gives the factorial-weighted
+row exponential generating function when alpha and b are nonzero. The monic
+polynomial convention retains coincident nodes and the all-zero triple.
+The full actual-sequence monic-annihilator transform is a polynomial application
+of this connection and its row reflection; no priority claim is made for it.
+
+Toufik Mansour, Matthias Schork and Mark Shattuck, “The Generalized Stirling and
+Bell Numbers Revisited,” *Journal of Integer Sequences* **15** (2012), Article 12.8.3.
+Primary TeX: https://cs.uwaterloo.ca/journals/JIS/VOL15/Schork/schork2.tex.
+Its SHA256 is `f3006b7ef496c012bfca9644eaec996857fb2b465fcb0f7de1a9807e3eb1d659`.
+Section 2, equations labelled `hsushuie1`, `hsushuie2`, `hsuort` and `hsurec`,
+defines S(n,k;alpha,beta,r) by generalized falling-factorial connections and gives
+the inverse pair. The recurrence is
+`S(n+1,k)=S(n,k-1)+(k beta-n alpha+r)S(n,k)`, with
+`S(n,0)=(r|alpha)_n`. Their convention excludes (alpha,beta,r)=(0,0,0).
+The monic Newton polynomial convention includes that triple without division by
+a step size. These public antecedents establish the coefficient conventions;
+they are not citations for the full sequence-annihilator theorem.
