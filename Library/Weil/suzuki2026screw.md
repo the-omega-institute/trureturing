@@ -10047,3 +10047,113 @@ W330 pays its own strict-slack step even when $M(G)=4$, and gives $\mathfrak E(\
 Consequently the conditional negative witnesses of W254, if any exist, can ALL be chosen inside the fixed original cap $4$ rather than a seed-dependent moment cap. This captures every possible negative direction; it does not replace the original goal by a positive subclass. W328/W337 already identify and approximate precisely this $e_4$ by actual cap-four source extrema. A vanishing lower allowance at that single cap would therefore pay all the other budgets through W352; such an allowance remains unproved.
 
 The current W349 estimate can likewise be tested only on the normalized cap-four class when trying to exclude arbitrary negative features: W351 would move any negative feature into that class. Its centered auxiliary test then has $M(RG)\le4C_R$ and the SAME energy, by W348, and is still never renormalized. Every Gamma, primary-prime, low-frequency and folded term must remain on that one centered profile. Their required joint sign, the sign $e_4=0$ versus $e_4<0$, full RH and strict Robin for EVERY integer $n>5040$ remain unresolved. This is a paper application of the existing null direction, classical rank-one extraction and owned source recovery, without scientific execution or Lean/kernel certification.
+
+## Center both moments in the actual primary-prime discrepancy estimate
+
+The mean-centering in W348 removes the higher-power mean charge. A second actual mixed-null direction removes the exponential pole moment at the same time. On the resulting ONE profile, the primary-prime term is the signed discrepancy of $\vartheta(x)$ from $x$, minus a nonnegative Green energy. Consuming this identity in W349 gives an all-source lower bound with that Green reserve retained. The discrepancy still needs a joint estimate against the full Gamma energy.
+
+The classical xi derivative-null family is already recorded in the [Lagarias account](lagarias2004li.md#the-full-derivative-family-and-the-remaining-estimate). The pole-continuum identity is already owned by [`pole_continuum_completion`](../../D5/S3/Weil/ZetaGamma/PoleContinuumCompletion.lean), with its Green multiplier and digamma recurrence. These facts are reused, not reproved as new theorems. The additional interface below is their realization in the ACTUAL physical form W317 and their bounded simultaneous centering on its entire domain. The radical degree-adjustment precedent remains the one cited before W347.
+
+### Realize the second mixed-null direction in the actual physical domain
+
+Put $c_\Phi=\pi^{1/4}/4$, retain $z_0(x)=e^{-x}$, and define
+$$
+z_2(x)=\left(4x^2-22x+\frac{81}{4}\right)e^{-x},\qquad
+\ell_0(F)=\int_{\mathbb R}g_F(r)dr,\qquad
+\ell_1(F)=\int_{\mathbb R}\cosh(r/2)g_F(r)dr.
+$$
+All profiles here are W338's ACTUAL $g_F(r)=b_F(2|r|)$, with $b_F$ formed from $B\mathscr TF$. Then
+$$
+\begin{gathered}
+z_2\in\mathcal V,\qquad
+\mathfrak E(z_2,F)=0\quad(F\in\mathcal V),\qquad
+g_{z_2}=c_\Phi\Phi'',\\
+\ell_0(z_0)=c_\Phi\xi(1/2)>0,\quad
+\ell_1(z_0)=c_\Phi/2,\quad
+\ell_0(z_2)=0,\quad \ell_1(z_2)=c_\Phi/8.
+\end{gathered}
+\tag{W354}
+$$
+To check the actual-form interface, use W255's physical feature
+$f_a(x)=e^{9a/2}e^{-e^{2a}x}$. Its second parameter derivative at zero is precisely $z_2$. The map $a\mapsto f_a$ is twice differentiable in the owned $X$ norm on a neighborhood of zero: its derivatives are fixed-degree polynomials in $x$ times an exponential with a uniformly positive decay rate. W325 transfers that convergence to $\mathcal V$. Differentiate the actual mixed identity $\mathfrak E(f_a,f_b)=L_0(a,b)$ twice at $a=0$. Oddness of $L_0$ in its first argument makes the result zero. W326's existing finite-Gaussian core and continuity of the mixed form extend this to every $F\in\mathcal V$. Thus mixed nullity belongs to the actual form, without identifying it with the classical full Weil form.
+
+The same theta-series calculation used in W347 gives $g_{f_a}(r)=c_\Phi\Phi(a+|r|)$. Taking its second derivative yields $g_{z_2}=c_\Phi\Phi''$, since $\Phi''$ is even. The already owned transform values are $\int\Phi=\xi(1/2)$ and $\int\cosh(r/2)\Phi=\xi(1)=1/2$. Twice integrating the second derivative against these two weights gives the last line of W354. The theta decay pays every endpoint. This uses the existing derivative-null mechanism and transform normalization, rather than a new assertion about a different xi convention.
+
+Both functionals are continuous in the actual sixth-moment norm. In fact the existing $H_6$ bounds for $B$ and $\mathscr T$, with $x=\pi e^{2|r|}$, give
+$$
+\|e^{5|r|/2}g_F\|_2^2
+=\pi^{-5/2}\int_\pi^\infty x^6|B\mathscr TF(x)|^2dx
+\le C M(F).
+$$
+Cauchy--Schwarz now bounds $|\ell_0(F)|+|\ell_1(F)|$ by $C\sqrt{M(F)}$. This is a moment estimate on the same actual source, not a pointwise bound on its Fourier transform.
+
+### Remove both moments without changing the complete energy
+
+Use the existing $R$ of W348, so $RF=F-\ell_0(F)z_0/\ell_0(z_0)$, and put
+$$
+R_\diamond F=RF-\frac{8\ell_1(RF)}{c_\Phi}z_2.
+$$
+There is a fixed finite $C_\diamond$, independent of support, source count, scalar field and moment-budget size, such that for EVERY $F\in\mathcal V$,
+$$
+\begin{gathered}
+G:=R_\diamond F\in\mathcal V,\qquad
+\ell_0(G)=\ell_1(G)=0,\qquad R_\diamond^2F=R_\diamond F,\\
+\mathfrak E(G)=\mathfrak E(F),\qquad
+M(G)\le C_\diamond M(F),\qquad
+\mathcal P(G)\le C_\diamond[\mathcal P(F)+M(F)].
+\end{gathered}
+\tag{W355}
+$$
+The functional values in W354 give the two cancellations and idempotence. W347 and W354 eliminate every mixed and diagonal null contribution to the COMPLETE energy. The continuous functional bounds and the fixed $M+\mathcal P$ norms of $z_0,z_2$ give the two form-norm estimates. The map preserves reality and commutes with complex conjugation. It can give $G=0$ and is never followed by division by $\|G\|_H$. Neither its auxiliary norm nor its moment is claimed equal to the original one.
+
+### Reuse the pole-continuum identity on this exact profile
+
+For an even actual profile $g$, retain its real autocorrelation $R_g$ and primary-prime term $T_1(g)$ from W338. Define
+$$
+\begin{aligned}
+\vartheta(x)&=\sum_{p\le x}\log p,\\
+\mathcal D_\vartheta(g)&=2\int_{[1,\infty)}x^{-1/2}R_g(\log x)\,d(\vartheta(x)-x),\\
+\mathcal G(g)&=\int_{\mathbb R}\frac{|\widehat g(\tau)|^2}{\tau^2+1/4}\,d\tau\ge0,
+\end{aligned}
+$$
+where the Fourier transform is unitary, as in W231. The existing pole-continuum identity gives exactly
+$$
+T_1(g)=\mathcal D_\vartheta(g)
++2\left|\int_{\mathbb R}\cosh(r/2)g(r)dr\right|^2-\mathcal G(g).
+\tag{W356}
+$$
+In particular $T_1(g_G)=\mathcal D_\vartheta(g_G)-\mathcal G(g_G)$ for $G=R_\diamond F$.
+
+Here is the domain check for this reuse. If $D=\|e^{5|r|/2}g\|_2^2<\infty$, Cauchy--Schwarz and $|r|+|r-s|\ge|s|$ give $|R_g(s)|\le D e^{-5|s|/2}$. The primary-prime sum and continuous integral in W356 consequently converge absolutely, bounded respectively by $2D\sum_p(\log p)p^{-3}$ and $2D\int_0^\infty e^{-2s}ds$. The Green form is bounded by $4\|g\|_2^2$. Even smooth compact approximations converge in this weighted $L^2$ norm; the same bounds applied to the mixed differences pass the already owned compact-test pole-continuum identity to $g$. Its pole term is $2|\ell_1|^2$, its growing integral is $2\int_0^\infty e^{s/2}R_g(s)ds$, and its decaying Green multiplier is $(\tau^2+1/4)^{-1}$. In particular the growing integral alone is not the pole square: their difference is the Green form, with the sign in W356. No prime distribution error estimate is assumed by defining the Stieltjes discrepancy.
+
+### Consume both cancellations in the full all-source inequality
+
+For EVERY $F\in\mathcal V$ and each fixed $0<\delta<1$, put $G=R_\diamond F$ and $g=g_G$. W349 applied to this same $G$, followed by W355--W356, gives
+$$
+\begin{aligned}
+\left|\mathfrak E(F)-\mathcal P(G)
++\alpha[\mathcal D_\vartheta(g)-\mathcal G(g)]\right|
+&\le\delta\mathcal P(G)+C_\delta S(G),\\
+\mathfrak E(F)\ge{}&(1-\delta)\mathcal P(G)
+-\alpha\mathcal D_\vartheta(g)-C_\delta S(G)\\
+&+\alpha[\mathcal D_{\rm odd}(g)+\mathcal J(g)+\mathcal G(g)],
+\qquad \alpha=2/\sqrt\pi.
+\end{aligned}
+\tag{W357}
+$$
+The Green reserve is distinct from the supplier's bounded rational-frequency energy $\mathcal J$. Every term belongs to ONE centered actual profile; all primary primes, higher powers, folded channels, cutoff and fixed Gamma shift remain accounted for as in W349. The whole logarithmic Gamma form is retained. No separately favorable signs of correlations or coefficients, support restriction or new test criterion is imposed.
+
+For an ORIGINAL normalized source with $Q_H=1$ and $Q_{6,A}\le K$, take its W257 feature $\psi$ with $\|\psi\|_H=1$ and put $G=R_\diamond\psi$. The same source therefore obeys
+$$
+\begin{aligned}
+4\pi^3 A Q_{\mathcal K_A^g}(\sigma)
+\ge{}&(1-\delta)\mathcal P(G)-\alpha\mathcal D_\vartheta(g_G)
+-C_\delta S(G)\\
+&+\alpha[\mathcal D_{\rm odd}(g_G)+\mathcal J(g_G)+\mathcal G(g_G)],
+\qquad M(G)\le C_\diamond K.
+\end{aligned}
+\tag{W358}
+$$
+This includes every admitted original source at every fixed budget $K>1$, with its original window and count constraints. The auxiliary null vectors are not inserted as original late-window sites. At W351's universal cap $4$, the same estimate uses only $M(G)\le4C_\diamond$ and still covers every possible negative direction. No auxiliary renormalization is used, including when $G=0$.
+
+The new interface removes both explicit moments and retains a nonnegative primary-continuum reserve in the actual all-source estimate. It does not give a favorable bound for the signed discrepancy $\mathcal D_\vartheta$ and the low-frequency allowance jointly against the remaining Gamma and positive energies. The change of auxiliary profile also supplies no pointwise numerical dominance over W349. The sign of $e_4$, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is an actual-source paper application of existing classical derivative/null and pole-completion results, without scientific execution, Lean/kernel certification or a literature-priority claim.
