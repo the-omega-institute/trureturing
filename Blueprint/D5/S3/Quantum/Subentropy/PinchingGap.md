@@ -30,7 +30,7 @@ The diagonal matrix U_s multiplies every coordinate (x,b) by the sign assigned t
 
 **Theorem 1.3 (Unitary sign action).**
 
-Lean statement: `D5/S3/Quantum/Subentropy/PinchingGap.sign_unitary`
+$$\forall X \in \operatorname{Type},\; [\operatorname{Fintype}\left(X\right)] [\operatorname{DecidableEq}\left(X\right)] \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall s \in (X \to \operatorname{Bool}),\; ((\operatorname{Matrix.conjTranspose}\left((\operatorname{signUnitary}\left(s\right): \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right))\right)) * ((\operatorname{signUnitary}\left(s\right): \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right))) = (1: \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right))) \land (((\operatorname{signUnitary}\left(s\right): \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right))) * (\operatorname{Matrix.conjTranspose}\left((\operatorname{signUnitary}\left(s\right): \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right))\right)) = (1: \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Subentropy/PinchingGap.sign_unitary` (`✓ std3`). ∎
 
@@ -56,7 +56,7 @@ For entries in the same block the product of the signs is one. For entries in di
 
 **Theorem 1.5 (The sign twirl equals block pinching).**
 
-Lean statement: `D5/S3/Quantum/Subentropy/PinchingGap.signTwirl_eq_blockPinch`
+$$\forall X \in \operatorname{Type},\; [\operatorname{Fintype}\left(X\right)] [\operatorname{DecidableEq}\left(X\right)] \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall A \in \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right),\; \operatorname{signTwirl}\left(A\right) = \operatorname{D5.S3.Quantum.Subentropy.ClassicalQuantumGram.blockPinch}\left(A\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Subentropy/PinchingGap.signTwirl_eq_blockPinch` (`✓ std3`). ∎
 

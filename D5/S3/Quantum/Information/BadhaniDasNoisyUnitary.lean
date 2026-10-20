@@ -43,9 +43,9 @@ real_cast_adjoint: proof_shape: bind-only; consumers: real_cast_unitary, real_sp
 real_cast_mul: proof_shape: bind-only; consumers: real_cast_unitary, real_spectral_basis.
 real_cast_unitary: proof_shape: bind-only; consumers: maximally_entangled_eigenbasis.
 real_spectral_basis: proof_shape: bind-only; consumers: maximally_entangled_eigenbasis.
-sign_star: proof_shape: bind-only; consumers: signDiagonal_unitary.
-sign_sq: proof_shape: bind-only; consumers: signDiagonal_unitary, signReal_sq.
-signDiagonal_unitary: proof_shape: bind-only; consumers: signConjugate_unitary.
+sign_star: proof_shape: bind-only; consumers: sign_sq.
+sign_sq: proof_shape: bind-only; consumers: signReal_sq.
+signDiagonal_unitary: proof_shape: bind-only; consumers: sign_sq, signConjugate_unitary.
 diagonal_twirl: proof_shape: bind-only; consumers: basis_twirl.
 signConjugate_unitary: proof_shape: bind-only; consumers: sign_symmetry_of_eigenbasis.
 basis_twirl: proof_shape: bind-only; consumers: symmetry_pinching_feasible.
@@ -299,8 +299,6 @@ private lemma signReal_cast (s : ((Bool × Bool) × (Bool × Bool))) (i : Fin 4)
 private lemma sign_star (s : ((Bool × Bool) × (Bool × Bool))) (i : Fin 4) : star (sign s i) = sign s i := by
   rw [← signReal_cast s i]
   exact RCLike.conj_ofReal (signReal s i)
-private lemma sign_sq (s : ((Bool × Bool) × (Bool × Bool))) (i : Fin 4) : sign s i * sign s i = 1 := by
-  fin_cases i <;> simp [sign] <;> split_ifs <;> norm_num
 private def signEquiv : ((Bool × Bool) × (Bool × Bool)) ≃ (Fin 4 → Bool) where
   toFun s := ![!s.1.1, !s.1.2, !s.2.1, !s.2.2]
   invFun f := ((!f 0, !f 1), (!f 2, !f 3))
@@ -324,7 +322,7 @@ private lemma signDiagonal_unitary (s : ((Bool × Bool) × (Bool × Bool))) : ((
       _ = Matrix.reindex e e (V.conjTranspose * V) := by
         exact Matrix.reindexLinearEquiv_mul (R := ℂ) (A := ℂ) e e e V.conjTranspose V
       _ = Matrix.reindex e e 1 := by rw [hV.1]
-      _ = 1 := by ext i j; simp [Matrix.reindex_apply, Matrix.one_apply]
+      _ = 1 := by exact Matrix.reindexLinearEquiv_one ℂ ℂ e
   have hdiag : U = Matrix.diagonal (sign s) := by
     ext i j
     fin_cases i <;> fin_cases j <;>
@@ -334,6 +332,8 @@ private lemma signDiagonal_unitary (s : ((Bool × Bool) × (Bool × Bool))) : ((
         Equiv.prodUnique_apply, Equiv.prodUnique_symm_apply, hbool]
   rw [← hdiag]
   exact hU
+private lemma sign_sq (s : ((Bool × Bool) × (Bool × Bool))) (i : Fin 4) : sign s i * sign s i = 1 := by
+  simpa only [Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal, Matrix.diagonal_apply_eq, Pi.mul_apply, Pi.star_apply, sign_star, Matrix.one_apply_eq] using congrArg (fun M : Matrix (Fin 4) (Fin 4) ℂ => M i i) (signDiagonal_unitary s)
 private lemma diagonal_twirl (M : Matrix (Fin 4) (Fin 4) ℂ) : (1/16 : ℝ) • (∑ s : ((Bool × Bool) × (Bool × Bool)), (Matrix.diagonal (sign s)) * M * ((Matrix.diagonal (sign s))).conjTranspose) = Matrix.diagonal (fun i => M i i) := by
   have hbool (b : Bool) : (if b = false then (-1 : ℂ) else 1) = if b = true then 1 else -1 := by
     cases b <;> norm_num
@@ -351,11 +351,8 @@ private lemma diagonal_twirl (M : Matrix (Fin 4) (Fin 4) ℂ) : (1/16 : ℝ) •
     fin_cases k <;> simp [signEquiv, sign,
       D5.S3.Quantum.Subentropy.PinchingGap.blockSign, hbool]
   have hdiag_s (s : (Bool × Bool) × (Bool × Bool)) : Matrix.diagonal (fun k : Fin 4 × Unit => D5.S3.Quantum.Subentropy.PinchingGap.blockSign (signEquiv s) k.1) = (Matrix.diagonal (sign s)).submatrix e e := by
-    ext x y
-    by_cases hxy : x = y
-    · subst y
-      simp [Matrix.diagonal_apply, hsign, e]
-    · simp [Matrix.diagonal_apply_ne _ hxy, hxy]
+    simpa only [Matrix.submatrix_diagonal_equiv, Function.comp_def, e,
+      Equiv.prodUnique_apply, hsign]
   have hprod (s : (Bool × Bool) × (Bool × Bool)) : Matrix.diagonal (fun k : Fin 4 × Unit => D5.S3.Quantum.Subentropy.PinchingGap.blockSign (signEquiv s) k.1) * A * (Matrix.diagonal (fun k : Fin 4 × Unit => D5.S3.Quantum.Subentropy.PinchingGap.blockSign (signEquiv s) k.1)).conjTranspose = ((Matrix.diagonal (sign s)) * M * (Matrix.diagonal (sign s)).conjTranspose).submatrix e e := by
     change Matrix.diagonal (fun k : Fin 4 × Unit => D5.S3.Quantum.Subentropy.PinchingGap.blockSign (signEquiv s) k.1) * M.submatrix e e * (Matrix.diagonal (fun k : Fin 4 × Unit => D5.S3.Quantum.Subentropy.PinchingGap.blockSign (signEquiv s) k.1)).conjTranspose = _
     rw [hdiag_s, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv, Matrix.submatrix_mul_equiv]
