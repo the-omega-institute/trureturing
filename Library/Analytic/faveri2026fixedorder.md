@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, a classwise all-column pure-dual-power application under a specified length condition, a complementary fixed-ray angular theta application on the coprime squarefree packet, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, a classwise all-column pure-dual-power application under a specified length condition, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -1180,7 +1180,7 @@ $$
 
 For divisor-bounded outer coefficients, their additional $N^\varepsilon$ cost can be absorbed by choosing the supplier's exponents smaller initially. This is a bound for the original restricted pairing with its actual outer phase; it does not choose a new outer vector, normalize the pairing by a fictitious row count, or supply a mean-square estimate for all mixed columns.
 
-Both the cubic large sieve and the angular supplier apply to these fixed profiles, so the available estimate is
+The cubic large sieve and the pointwise angular supplier give
 
 $$
 |Q_{\rm sf}(D,N)|\ll (DN)^\varepsilon\|W_S\|_\infty
@@ -1197,6 +1197,305 @@ The height cost can erase the unbalanced gain. If the common Mellin/norm modulat
 The estimate is asymmetric. Interchanging $d,n$ in the exact original pairing and converting $\gamma_1(n)$ by the signal identity puts an extra $\mu(n)$ inside the prospective theta sum. That coefficient is not a fixed ray weight. Thus the pointwise angular bound cannot be invoked in the swapped direction without an additional supplier. The cubic operator bound remains available in either direction with the actual coefficient vectors.
 
 This closes a source-conditional fixed-ray angular interface on the coprime squarefree packet and supplies a useful unbalanced consumer. Nonsquarefree indices, shared primes, the actual-order-six full coefficient contraction, and restoration of the original signed Robin expression are separate obligations. In particular it does not prove $[-I_\psi(A)]_+=o(A^{-\eta_R})$ on the actual unbounded $N=C_A$, or replace the signed target by $Q_{\rm sf}$.
+
+### A fixed angular second moment for the same packet
+
+The fixed-ray theta completion also supplies the analytic growth needed to apply the DDDS second-moment argument to the actual angular family. The functional-equation interface uses [Kazhdan–Patterson, *Metaplectic forms*, §§I.6 and II.1](https://www.numdam.org/item/PMIHES_1984__59__35_0.pdf) and the finite Jacquet calculation of [Brubaker–Bump, *On Kubota's Dirichlet Series*, DOI 10.1515/CRELLE.2006.073](https://doi.org/10.1515/CRELLE.2006.073), available in the [public author preprint](https://web.archive.org/web/20210120224343id_/http://sporadic.stanford.edu/bump/kubota.pdf). Their general machinery and the DDDS moment method are reused; the application below matches their characters and coefficients to the original $Q_{\rm sf}$.
+
+Fix the complete original presentation, its excluded primes $S$, and one multiplicative member of its finite ray expansion. For $\ell=\pm1$, put $\chi(c)=\xi(c)\alpha(c)^\ell$ on primary generators. With all original exclusions retained, define initially for $\Re z>3/2$
+
+$$
+\begin{aligned}
+\Psi_{\chi,a}(r,z)
+&=\sum_{\substack{c\equiv1\ (3)\\(c,aS)=1}}
+\chi(c)g_3(r,c)q_c^{-z},&
+\Psi_\chi&=\Psi_{\chi,1},\\
+L_\chi(w)&=L^S(w,\chi^3),&
+\mathcal Z_\chi(r,z)&=L_\chi(3z-2)\Psi_\chi(r,z).
+\end{aligned}
+$$
+
+Here $h$ is fixed and supported at $S$, while $n$ is good, primary and squarefree. The actual consumer has $h=-3$. The full conjugate family is obtained by conjugating its Gauss sums, character, coefficients and spectral variable together.
+
+For every fixed $1<\sigma\le5/4$ and $\varepsilon>0$, the resulting estimate is
+
+$$
+\sum_{\substack{n\ {\rm good,\ primary,\ squarefree}\\q_n\le M}}
+\left|\Psi_{\chi,n}(hn,\sigma+it)\right|^2
+\ll_{\sigma,\varepsilon,\text{fixed presentation}}
+M^{1+\varepsilon}(1+|t|)^2.
+\tag{A1}
+$$
+
+The same estimate holds for $\Psi_\chi(hn,\sigma+it)$ without the growing coprimality filter. There is no uniformity as $\sigma\downarrow1$ or the original ray modulus grows. In particular, the modulus of $n$ is not included in the fixed implied constant.
+
+#### The character and finite Jacquet coefficients
+
+Brubaker–Bump's stated Theorem 1 does not directly supply this angular family. Its $M(\Omega)$ consists of finite-place test data; Proposition 6 explicitly observes that its $\Psi$ depends only on $c_{\rm fin}$, and its archimedean vector is spherical. An angular factor cannot be inserted into that test space without changing the inducing character.
+
+The primary-generator rule defines a unitary Hecke character away from the fixed $S$. Include $3$ and the original ray modulus in its finite modulus and choose the finite unit component cancelling
+
+$$
+\chi_\infty(z)=(z/|z|)^{-\ell}.
+$$
+
+Then $\chi_S(u)=1$ on $S$-units and $\chi^S(c)=\chi_S(c)^{-1}$ for a good principal generator. Write $u=z/2$ for Brubaker–Bump's spectral parameter. In the twisted induced space use
+
+$$
+f\!\left(\begin{pmatrix}b&*\\0&b^{-1}\end{pmatrix}g\right)
+=\chi_S(b)|b|_S^{2u}f(g),
+\qquad b\in\Omega=\mathcal O_S^\times(F_S^\times)^3,
+$$
+
+with the original genuine cubic multiplier. Kazhdan–Patterson allows this inducing quasicharacter. After extracting $\chi_{\rm fin}(c)^{-1}$, the finite coefficient space is Brubaker–Bump's finite-dimensional $M(\Omega)$.
+
+In their notation $w_c=\left(\begin{smallmatrix}0&-c^{-1}\\c&0\end{smallmatrix}\right)$, normalize the finite coefficient by
+
+$$
+\Psi_{f,\chi,r,u}(c)
+=\chi_{\rm fin}(c)|c|_{\rm fin}^{2u}
+\int f_{\rm fin}(w_c n(x))\psi_{\rm fin}(rx)\,dx.
+$$
+
+The same small-support vector makes this equal to the prescribed $\Psi(c)$. Unfolding gives the denominator coefficient $\chi^S(c)\Psi(c)g_3(r,c)q_c^{-z}$.
+
+The Weyl intertwiner changes $\chi$ to $\chi^{-1}$. Keeping the character factors in Brubaker–Bump's Proposition 7 and making its change $y\mapsto c^{-2}y^{-1}$ gives the finite Jacquet integral
+
+$$
+J_{\chi,\Psi}(r,c)
+=\int
+(y,c)_S|y|_{\rm fin}^{z-2}\chi_{\rm fin}(y)
+\Psi(c^{-1}y^{-1})\psi_{\rm fin}(ry)\,dy.
+\tag{A2}
+$$
+
+Indeed, the output coefficient normalization contributes $\chi_{\rm fin}(c)^{-1}$ and the input vector contributes $\chi_{\rm fin}(cy)^{-1}$; after that substitution their product is $\chi_{\rm fin}(y)$. This is the character modification of the finite calculation.
+
+Splitting into $y\in\eta(F_S^\times)^3$ retains the same finite transformed functions
+
+$$
+\widetilde\Psi_\eta(c)=(\eta,c)_S\Psi(c^{-1}\eta^{-1}).
+$$
+
+Only their scalar integrals change. On sufficiently small unit groups the fixed character is trivial. The resulting geometric tails have factors
+
+$$
+1-\chi_v(\varpi_v)^3q_v^{-3(z-1)}
+$$
+
+in their denominators when $\chi_v^3$ is unramified; a nontrivial unit average gives zero instead. The remaining annuli are finite. The substitution $y\mapsto r^{-1}y$ multiplies a scalar integral by
+
+$$
+\chi_{\rm fin}(r)^{-1}|r|_{\rm fin}^{1-z}
+$$
+
+and permutes its cube class. For $r=hn$ all $S$-valuations are fixed, and the remaining dependence is through fixed finite unit quotients. Including the fixed local Hecke factors, the coefficient matrices are bounded uniformly in $n,t$ on each fixed line $3/4\le\Re z<1$, and on a fixed line $2-\sigma_0$ with $3/2<\sigma_0<11/6$.
+
+The transformed finite functions expand into fixed cubic ray characters. Their cubes are trivial, so the branch family closes among $\chi$ times these characters and their inverses, with cube normalizers $L_\chi$ and its conjugate. All deleted Euler factors remain deleted. No growing ray conductor is introduced by this finite closure.
+
+#### The archimedean scalar and numerator norm
+
+At the complex place the cover splits. For $|\ell|=1$, use the two-dimensional minimal $\mathrm{SU}(2)$ type. Its Jacquet components at $w n(v)$ are proportional, for one sign, to
+
+$$
+\bar v(1+|v|^2)^{-(z+1/2)},
+\qquad
+-(1+|v|^2)^{-(z+1/2)},
+$$
+
+with conjugate coordinates for the other sign. The complex radial Fourier integral and its first Wirtinger derivative have the common scalar denominator $\Gamma(z+1/2)$, numerator $|r|^{z-1/2}$, and Bessel orders $z-3/2$ and $z-1/2$. The reflected character at $2-z$ exchanges the two components. Its Bessel orders are their negatives, so $K_\nu=K_{-\nu}$ matches them with one common scalar. The ratio of the numerator powers has magnitude $q_r^{1-\Re z}$; the remaining angular factors are unitary.
+
+The cubic coroot character is
+
+$$
+\omega_\alpha=\chi^3\|\cdot\|^{3(z-1)}.
+$$
+
+Thus the root normalizer is $L^S(3z-2,\chi^3)$. Its infinity factor has gamma argument $3z-2+3/2=3z-1/2$. The scalar quotient is
+
+$$
+\frac{\Gamma(3z-\tfrac12)}{\Gamma(z+\tfrac12)}
+=3\frac{\Gamma(3z-\tfrac32)}{\Gamma(z-\tfrac12)}.
+$$
+
+Gauss multiplication expresses this, up to fixed nonzero constants and a fixed positive real power to $z$, as
+
+$$
+\mathcal G_1(z)
+=c_0c_1^z\Gamma(z-\tfrac16)\Gamma(z+\tfrac16),
+\qquad c_1>0.
+$$
+
+It agrees with the theta Mellin factor above under $s_{\rm theta}=z-1/2$. Consequently the global Weyl equation and (A2) give a finite closed vector of the form
+
+$$
+\mathcal G_1(z)\mathcal Z_j(hn,z)
+=q_{hn}^{1-z}
+\sum_k P_{jk}(n,z)\mathcal G_1(2-z)\mathcal Z_k(hn,2-z),
+\tag{A3}
+$$
+
+where fixed positive powers and unitary phases are included in $P_{jk}$. Fixed ramified scalings of $h$ may be included among the finite branches. On the left lines specified above, these matrices are bounded independently of good squarefree $n$ and $t$. Stirling's formula gives
+
+$$
+\sum_j|\mathcal Z_j(hn,z)|^2
+\ll
+q_n^{2-2\Re z}(1+|\Im z|)^{8-8\Re z}
+\sum_j|\mathcal Z_j(hn,2-z)|^2.
+\tag{A4}
+$$
+
+The passage from the general Eisenstein equation to (A3) uses the displayed coefficient and scalar identifications, rather than an angular specialization of the stated spherical theorem.
+
+#### Coprimality, poles and growth
+
+In the local identities of DDDS Lemma 6.1, the exponent-one term gains $\chi(\pi)$ and the exponent-two term gains $\chi(\pi)^2$. The same two-by-two elimination and divisor induction therefore give
+
+$$
+\begin{aligned}
+\Delta_{\chi,n}(z)\Psi_{\chi,n}(hn,z)
+&=\sum_{d\mid n}\mu(d)\chi(d)^2q_d^{1-2z}
+\overline{g_3(hn/d,d)}\Psi_\chi(hn/d,z),\\
+\Delta_{\chi,n}(z)
+&=\prod_{\pi\mid n}\left(1-\chi(\pi)^3q_\pi^{2-3z}\right).
+\end{aligned}
+\tag{A5}
+$$
+
+Here $(n,h)=1$ and $n$ is good and squarefree. Full conjugation changes the Gauss conjugations accordingly.
+
+The existing theta supplier pays the pole and growth question for the required family. In fact,
+
+$$
+\mathcal C_{\chi,n}(z)
+=L^{Sn}(3z-2,\chi^3)\Psi_{\chi,n}(hn,z)
+$$
+
+is its entire angular numerator after $s_{\rm theta}=z-1/2$. The fixed $h$ contributes a fixed supplementary cubic ray character, whose cube is trivial. This matches every fixed branch, with full conjugation where required. Each numerator has finite exponential growth in vertical strips.
+
+Since $L^{Sn}(3z-2,\chi^3)=L_\chi(3z-2)\Delta_{\chi,n}(z)$, equation (A5) becomes
+
+$$
+\mathcal C_{\chi,n}(z)
+=\sum_{d\mid n}\mu(d)\chi(d)^2q_d^{1-2z}
+\overline{g_3(hn/d,d)}\mathcal Z_\chi(hn/d,z).
+\tag{A6}
+$$
+
+The $d=1$ term is $\mathcal Z_\chi(hn,z)$. Induction over divisors, starting at $n=1$, proves that every required completed $\mathcal Z_\chi(hn,z)$ is entire and has finite exponential growth in strips. In particular the DDDS residue term is absent for this family. No absence of raw-series poles at zeros of its Hecke normalizer is used.
+
+Absolute convergence on $\Re z=\sigma_0>3/2$, equation (A4) on $2-\sigma_0$, and the same strip Phragmén–Lindelöf argument used by DDDS give
+
+$$
+\mathcal Z_\chi(hn,\sigma+it)
+\ll
+q_n^{(\sigma_0-\sigma)/2}
+(1+|t|)^{2(\sigma_0-\sigma)}.
+\tag{A7}
+$$
+
+Choose $\sigma_0$ sufficiently close to $3/2$ for the fixed $\sigma>1$. The finite exponential growth obtained from (A6) supplies the interpolation hypothesis. The finite-$M$ squared supremum divided by $(1+|t|)^2$ used in DDDS's absorption is therefore finite, with its ratio tending to zero at infinity.
+
+#### Reusing the second-moment argument
+
+For each fixed branch the completed convolution is
+
+$$
+\mathcal Z_\chi(r,z)
+=\sum_{c,b}
+\frac{\chi(c)\chi(b)^3g_3(r,c)q_b^2}{q_{cb^3}^{z}},
+$$
+
+with the fixed primary and $S$ restrictions. In the Gauss split $c=wv$, the extra $\chi(v)$ is a unit-modulus column coefficient, independent of the numerator variable. The fixed finite branch functions have the same property after their character expansion. Thus the technical Gauss-splitting and cubic-sieve estimates in DDDS's Lemma 6.6 proof apply with the same magnitudes.
+
+Let $\mathfrak Z_M(z)$ sum the squared completed branches over the good squarefree $n$ with $q_n\le M$. The source's short-sum term is
+
+$$
+S_2\ll(MX)^\varepsilon
+\left(M+M^{1/3}X^{3-2\sigma}
++M^{2/3}X^{8/3-2\sigma}\right),
+$$
+
+and its functional-equation remainder, using (A4), satisfies
+
+$$
+S_3\ll
+\left(\frac{M(1+|t|)^4}{X^2}\right)^{2(\sigma-1)}
+\int_{\mathbb R}\mathfrak Z_M(\sigma-it-iy)e^{-|y|/2}\,dy.
+$$
+
+The positive short-sum estimate permits restriction to squarefree numerator indices; (A3) and (A6) preserve that same numerator family. There is no residue term. Taking $X=C_\sigma\sqrt M(1+|t|)^2$ and using DDDS's finite-supremum absorption gives
+
+$$
+\mathfrak Z_M(\sigma+it)\ll M^{1+\varepsilon}(1+|t|)^2.
+$$
+
+The inverse $L_\chi(3z-2)$ is absolutely bounded on $\sigma>1$, proving the unfiltered version of (A1).
+
+For the actual growing coprimality restriction, (A5), $|g_3(hn/d,d)|=\sqrt{q_d}$ and
+
+$$
+|\Delta_{\chi,n}(\sigma+it)|^{-1}
+\le\zeta_F(3\sigma-2)
+$$
+
+give
+
+$$
+|\Psi_{\chi,n}(hn,z)|^2
+\ll q_n^\varepsilon
+\sum_{d\mid n}q_d^{3-4\sigma}|\Psi_\chi(hn/d,z)|^2.
+$$
+
+Sum $n=dm$, enlarge the positive sums and apply the unfiltered estimate. The result is bounded by
+
+$$
+M^{1+2\varepsilon}(1+|t|)^2
+\sum_d q_d^{2-4\sigma-\varepsilon}.
+$$
+
+The final sum converges for $\sigma>1$. Renaming $\varepsilon$ proves (A1) with the original coprimality restriction. This step does not invoke a theorem uniform in a growing ray modulus.
+
+#### Consumption by the original coefficient vector
+
+Mellin inversion on $\Re w=1/2+\delta$ and Minkowski's inequality now give
+
+$$
+\sum_{\substack{n\ {\rm good,\ squarefree}\\q_n\asymp N}}
+|T_{n,\xi}(D)|^2
+\ll
+D^{1+2\delta}N^{1+\varepsilon}\mathcal N_\delta(W_M)^2.
+$$
+
+The unchanged outer vector $b_n=\nu(n)W_S(q_n/N)\gamma_1(n)$ has squared norm $\ll N\|W_S\|_\infty^2$. Cauchy–Schwarz therefore yields
+
+$$
+\boxed{
+|Q_{\rm sf}(D,N)|
+\ll (DN)^\varepsilon D^{1/2}N
+\|W_S\|_\infty\mathcal N_\delta(W_M).
+}
+\tag{A8}
+$$
+
+Here $\delta>0$ is fixed sufficiently small in terms of $\varepsilon$, and every original finite filter is retained in its fixed expansion. Divisor-bounded outer weights incur the same absorbable $N^\varepsilon$ loss as above.
+
+For the same fixed profiles this replaces the angular $D^{1/2}N^{5/4}$ term by $D^{1/2}N$, with the same profile norm. Combining with the cubic bound gives
+
+$$
+|Q_{\rm sf}(D,N)|\ll
+(DN)^\varepsilon\|W_S\|_\infty
+\min\left\{
+(DN)^{1/2}\left(D+N+(DN)^{2/3}\right)^{1/2}\|W_M\|_\infty,\;
+D^{1/2}N\mathcal N_\delta(W_M)
+\right\}.
+$$
+
+At $D=N=R$ and fixed height the exponent is $3/2+\varepsilon$, compared with the cubic $5/3+\varepsilon$. For $D=N^a$ and bounded fixed profiles, the angular second-moment exponent is $a/2+1$. It equals the cubic exponent for $a\le1/2$ and improves it for $a>1/2$. The exponent margin is $(2a-1)/6$ for $1/2<a\le2$ and $(a-1)/2$ for $a\ge2$.
+
+A common norm modulation of size $H$ still costs $1+H$ through $\mathcal N_\delta$. At balance a power improvement over the height-free cubic comparison requires $H\ll R^h$ with $h<1/6$, leaving positive room for the $\varepsilon$ losses. The original cumulative height allowance and actual witness lengths must satisfy these conditions.
+
+This is a source-conditional application of the existing analytical methods, without complete local Lean certification or a claim of literature novelty. It estimates the original coprime squarefree packet with its actual outer phase. Shared primes, nonsquarefree columns, other dual terms, the full actual-order-six contraction and the signed same-integer Robin remainder remain separate obligations.
 
 ## The possible FIB interface
 

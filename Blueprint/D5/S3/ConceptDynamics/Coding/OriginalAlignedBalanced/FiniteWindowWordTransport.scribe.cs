@@ -1,0 +1,15 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.OriginalAlignedBalanced;
+internal sealed class FiniteWindowWordTransportDocument : IScribeDocumentDefinition
+{
+ public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+ "Exact state histories and words of canonical numbered windows.", H("Numbered finite-window transport"), Blocks(
+ Describe.Lean(DescribeId.Create("original-full62-history-trace"), DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/FiniteWindowWordTransport.history_trace"), H("Realization on the exact canonical window"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+ Paragraph(Text("For an incoming lift L, a bilateral numbered path x and a compatible state history r, lifting the canonical length-d window ending at r(i+d) returns r(i), for every natural d including zero and every signed i. The endpoint is the source of x(i+d).")),
+ Paragraph(Text("The successor proof applies the canonical tail relation, identifies the intermediate state subtype by Subtype.ext, transports the actual first edge along adjacency, and applies the supplied one-edge compatibility. This identifies realization on the exact canonical dependent window, rather than on an unspecified path with the same length or endpoints."))), DescribeRole.Theorem),
+ Describe.Lean(DescribeId.Create("original-full62-window-word"), DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/FiniteWindowWordTransport.window_word"), H("Exact numbered window tabulation"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+ Paragraph(Text("The word of window(x,d,i) is List.ofFn(j : Fin d => x(i+j)). Zero gives the empty word. In the successor step equality elimination recovers the actual first edge including its number; the tail relation and List.ofFn_succ identify the complete shifted word. Endpoints, length and lift action alone do not determine these numbered coordinates."))), DescribeRole.Theorem),
+ Describe.Lean(DescribeId.Create("original-full62-reverse-word"), DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/FiniteWindowWordTransport.reverse_word"), H("Dependent reversal preserves the exact reversed word"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+ Paragraph(Text("For every endpoint-indexed finite path alpha, pathWord(reverseFinitePath alpha) is reverse(pathWord alpha) mapped by endpoint reversal, retaining every parallel-edge number. The successor applies the original word_appendPath relation, the arbitrary-tail reversal relation and the list reversal laws.")),
+ Paragraph(Text("Combining this reversal relation with canonical window tabulation gives the signed past word reverse(List.ofFn(j : Fin d => x(i-j-1))). The canonical history relation supplies the state identifications in Full62.certificate_formulas; the future and past word relations supply the exact words in Full62.whole_certificate. All relations include d=0 and arbitrary signed i."))), DescribeRole.Theorem))));
+}
