@@ -1,0 +1,35 @@
+fingerprints:
+  raw_sha256: sha256:7048689cc56264b9dbd9eb6ea2848a9d3433f7a398988a1d1bcf358233dbff96
+  normalized_sha256: sha256:7048689cc56264b9dbd9eb6ea2848a9d3433f7a398988a1d1bcf358233dbff96
+cas_ref: sha256:7048689cc56264b9dbd9eb6ea2848a9d3433f7a398988a1d1bcf358233dbff96
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/ResetCodebookGrowth.C_cost
+    target_statement_id: sha256:31c58bdfdd459edd717c75141e1f65df0873388937f304873b27d90040861698
+  - gid: D5/S1/Digit/Infinite/ResetCodebookGrowth.U_cost
+    target_statement_id: sha256:764b4f7b48fb0493db4c75497f65a1f93f6bb22a2668c7af29e582871fe13906
+  - gid: D5/S1/Digit/Infinite/ResetCodebookGrowth.V_cost
+    target_statement_id: sha256:f393d8fd962a9c617556a85d12433f096bd73a308fbdf575f5a58cb9c2de76d0
+  - gid: D5/S3/ConceptDynamics/Coding/DecoderOperationTrace.literal_source_geometry
+    target_statement_id: sha256:dda1b853c309cf77151327a6d1a4f077234856c1fc9df29b6cd3b79295a0c8e5
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ActualCountRateBridge.completedList
+    target_statement_id: sha256:f6e68c8b972248f7e7f4f31e71ce38b2344ea612d374b5cf0a79b31e49413021
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ActualCountRateBridge.same_reset_completion
+    target_statement_id: sha256:64e3dec0ad27843beac538a1ebc834745ec0dbab302ef8df2b18c610bf4bf198
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.executionWord
+    target_statement_id: sha256:45e7355c04aa04add63287823a34a4f7d502828865c4d2ee77d072f94fdbb4f5
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.listWeight
+    target_statement_id: sha256:8a172615dcb36dbf8ad4f520fd34797622bd4109f46ba253a651459239853390
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ClosedSupply.actual_reset_first_return
+    target_statement_id: sha256:c9e0b00e2e0b5185acfb6502c1e812fab5b96ae3fed245a8fff24aa4ff953a51
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciFactorCompletion.actual_automatic_cost_envelope
+    target_statement_id: sha256:fbe1801b96152e43c0a20f246debdf69a7fbaa145f27bf28fb483eae3374bfe8
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ResetCodebook.execute_seed_difference
+    target_statement_id: sha256:670cf72bd3d9297f8b1f6191b25c9f1b73709cd2a0208c494096e03f7c61798b
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply.actual_complete_boundary_geometry
+    target_statement_id: sha256:259f9cbe6f3129f1ee9106697d887572d4870e4efd15b19864a60cb3319f1327
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply.actual_strict_cost_supply
+    target_statement_id: sha256:6ff84c7457d8418c8a873c63acd4fbef86acb93609eb8cc72977efceb03e08bb
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry.tail_arithmetic
+    target_statement_id: sha256:68b5e06cdd380759fe4c1e7f52e9d3882155f52797632c170c981eab44823de2
+receipts:
+  unresolved_subitems: []

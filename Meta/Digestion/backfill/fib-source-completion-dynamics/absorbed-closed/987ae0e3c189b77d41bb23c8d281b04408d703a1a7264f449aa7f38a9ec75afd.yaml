@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:987ae0e3c189b77d41bb23c8d281b04408d703a1a7264f449aa7f38a9ec75afd
+  normalized_sha256: sha256:987ae0e3c189b77d41bb23c8d281b04408d703a1a7264f449aa7f38a9ec75afd
+cas_ref: sha256:987ae0e3c189b77d41bb23c8d281b04408d703a1a7264f449aa7f38a9ec75afd
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/DecoderOperationTrace.literal_source_geometry
+    target_statement_id: sha256:dda1b853c309cf77151327a6d1a4f077234856c1fc9df29b6cd3b79295a0c8e5
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/OriginalPieces.OriginalPiecePath
+    target_statement_id: sha256:53c54b9180e96a6601451ea2ffa408722700a340e4f8cc9c5ba89f0937667b52
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry.tail_arithmetic
+    target_statement_id: sha256:68b5e06cdd380759fe4c1e7f52e9d3882155f52797632c170c981eab44823de2
+receipts:
+  unresolved_subitems: []
