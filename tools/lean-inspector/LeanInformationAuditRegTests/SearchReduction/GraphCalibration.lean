@@ -79,6 +79,14 @@ run_cmd do
         let predicted := reading.baseline == ⟨.finite 1, .finite 1⟩ &&
           reading.paired == ⟨.finite 0, .finite 0⟩ && classifyClosure certified == some .zero
         logInfo s!"DECL_PREDICTION squareVia {predicted}"
+        unless predicted do throwError "squareVia prediction failed"
+        unless reading.graph.vertices.any (fun v =>
+            v.origin.constName? == some square && !v.targetPart) do
+          throwError "independently routine squareFact excluded as target-part"
+      if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.twoLayerVia then
+        let predicted := reading.baseline == ⟨.finite 2, .finite 2⟩ &&
+          reading.paired == ⟨.finite 1, .finite 1⟩ && classifyClosure certified == some .partial_
+        logInfo s!"DECL_PREDICTION twoLayerVia {predicted}"
       if name == ``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContent then
         doubled := some reading
         let predicted := (reading.baseline == ⟨.finite 1, .finite 1⟩ ||

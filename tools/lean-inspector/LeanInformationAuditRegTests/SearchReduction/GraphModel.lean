@@ -560,6 +560,26 @@ noncomputable def semanticDepth (graph : ProofGraph) (price : GraphEdge → Nat)
     (seeds : List Nat) (v : Nat) : WithTop Nat :=
   sInf ((fun n : Nat => (n : WithTop Nat)) '' {n | Reachable graph price seeds v n})
 
+theorem semanticDepth_eq_zero_iff (graph : ProofGraph) (price : GraphEdge → Nat)
+    (seeds : List Nat) (v : Nat) :
+    semanticDepth graph price seeds v = 0 ↔ Reachable graph price seeds v 0 := by
+  constructor
+  · intro zero
+    by_contra missing
+    have lower : (1 : WithTop Nat) ≤ semanticDepth graph price seeds v := by
+      apply le_sInf
+      rintro x ⟨n, hn, rfl⟩
+      have positive : 1 ≤ n := by
+        by_contra h
+        have : n = 0 := by omega
+        exact missing (this ▸ hn)
+      exact WithTop.coe_le_coe.mpr positive
+    simpa [zero] using lower
+  · intro reachable
+    apply le_antisymm
+    · exact sInf_le ⟨0, reachable, rfl⟩
+    · exact bot_le
+
 /-- The full least min-max distance is unchanged by adding a zero-cost seed,
 with fixed local prices. -/
 theorem zero_seed_depth_eq (graph : ProofGraph) (price : GraphEdge → Nat)
@@ -569,6 +589,69 @@ theorem zero_seed_depth_eq (graph : ProofGraph) (price : GraphEdge → Nat)
   congr 2
   ext n
   exact zero_seed_redundant graph price seeds a zero w n
+
+/-- A deterministic statement reconstructor may return both a price and its
+actual premises. No author proof is an input. -/
+def statementReconstruction (graph : ProofGraph) (seeds : List Nat)
+    (rebuild : GraphEdge → List Nat → GraphEdge) : ProofGraph :=
+  {graph with edges := graph.edges.map fun e => rebuild e (statementPremises e seeds)}
+
+/-- Analytic premises are already visible before they become seeds. -/
+theorem analytic_seed_visibility (edge : GraphEdge) (seeds : List Nat) (a : Nat)
+    (analytic : a ∈ edge.premises → a ∈ edge.analytic) :
+    statementPremises edge (a :: seeds) = statementPremises edge seeds := by
+  apply List.filter_congr
+  intro p hp
+  by_cases h : p = a
+  · subst p
+    simp [statementPremises, analytic hp]
+  · simp [List.contains_cons, h, Ne.symm h]
+
+theorem analytic_seed_reconstruction_eq (graph : ProofGraph) (seeds : List Nat) (a : Nat)
+    (rebuild : GraphEdge → List Nat → GraphEdge)
+    (analytic : ∀ e ∈ graph.edges, a ∈ e.premises → a ∈ e.analytic) :
+    statementReconstruction graph (a :: seeds) rebuild =
+      statementReconstruction graph seeds rebuild := by
+  unfold statementReconstruction
+  congr 1
+  apply List.map_congr_left
+  intro e he
+  rw [analytic_seed_visibility e seeds a (analytic e he)]
+
+/-- A zero-depth fact analytic for every consumer changes neither local
+reconstruction (including actual premises) nor any least min-max distance. -/
+theorem analytic_zero_seed_depth_eq (graph : ProofGraph) (seeds : List Nat) (a : Nat)
+    (rebuild : GraphEdge → List Nat → GraphEdge) (price : GraphEdge → Nat)
+    (analytic : ∀ e ∈ graph.edges, a ∈ e.premises → a ∈ e.analytic)
+    (zero : semanticDepth (statementReconstruction graph seeds rebuild) price seeds a = 0)
+    (w : Nat) :
+    semanticDepth (statementReconstruction graph (a :: seeds) rebuild) price (a :: seeds) w =
+      semanticDepth (statementReconstruction graph seeds rebuild) price seeds w := by
+  rw [analytic_seed_reconstruction_eq graph seeds a rebuild analytic]
+  exact zero_seed_depth_eq _ price seeds a
+    ((semanticDepth_eq_zero_iff _ price seeds a).mp zero) w
+
+/-- Adding an existing seed changes no visible premise list or derivation. -/
+theorem existing_seed_depth_eq (graph : ProofGraph) (seeds : List Nat) (a : Nat)
+    (rebuild : GraphEdge → List Nat → GraphEdge) (price : GraphEdge → Nat)
+    (member : a ∈ seeds) (w : Nat) :
+    semanticDepth (statementReconstruction graph (a :: seeds) rebuild) price (a :: seeds) w =
+      semanticDepth (statementReconstruction graph seeds rebuild) price seeds w := by
+  have same : statementReconstruction graph (a :: seeds) rebuild =
+      statementReconstruction graph seeds rebuild := by
+    unfold statementReconstruction
+    congr 1
+    apply List.map_congr_left
+    intro e he
+    congr 1
+    unfold statementPremises
+    apply List.filter_congr
+    intro p hp
+    by_cases h : p = a
+    · subst p; simp [member]
+    · simp [List.contains_cons, h, Ne.symm h]
+  rw [same]
+  exact zero_seed_depth_eq _ price seeds a ⟨0, member⟩ w
 
 /-- If the strongest R closes every local declaration, every reachable vertex
 has zero depth. Unreachable vertices stay top instead of becoming false facts. -/
@@ -897,6 +980,11 @@ theorem two_point_strict_family :
 #print axioms zero_baseline_monotone
 #print axioms off_path_invariance
 #print axioms zero_seed_depth_eq
+#print axioms semanticDepth_eq_zero_iff
+#print axioms analytic_seed_visibility
+#print axioms analytic_seed_reconstruction_eq
+#print axioms analytic_zero_seed_depth_eq
+#print axioms existing_seed_depth_eq
 #print axioms top_reference_zero
 #print axioms bottom_reference_positive
 #print axioms dpTable_eq_depthFuel

@@ -254,7 +254,8 @@ private partial def structuralLocal (goal : MVarId) (facts : Array Expr)
   if let some ctor := ctor? then
     try
       let goals ← goal.apply (← mkConstWithFreshMVarLevels ctor)
-      if ← goals.allM (fun g => structuralLocal g facts (fuel - 1)) then
+      let obligations ← goals.filterM fun g => g.withContext do isProp (← g.getType)
+      if ← obligations.allM (fun g => structuralLocal g facts (fuel - 1)) then
         let proof ← instantiateMVars (mkMVar goal)
         unless proof.hasMVar do return true
     catch ex => if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
@@ -384,15 +385,11 @@ private def annotateGraph (graph : ProofGraph) : MetaM ProofGraph := do
 /-- Same price function in each arm; only the seed flag changes. -/
 def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false) : MetaM ProofGraph := do
   let mut edges := []
+  let seeds := (graph.vertices.filter (fun v =>
+    v.seed || (paired && v.structureSeed && !v.targetPart))).map (·.id)
   for edge in graph.edges do
-    let mut available := []
-    let mut analytic := []
-    for id in edge.premises do
-      let v := vertex graph id
-      let isAnalytic := edge.analytic.contains id
-      if isAnalytic then analytic := analytic ++ [id]
-      if allGiven || v.seed || (paired && v.structureSeed && !v.targetPart) || isAnalytic then
-        available := available ++ [id]
+    let available := if allGiven then edge.premises else statementPremises edge seeds
+    let analytic := edge.analytic
     let result ← localRebuild (vertex graph edge.conclusion).type (available.map (vertex graph · |>.type))
     let used := result.used.map (available[·]!)
     let edge := if allGiven then
@@ -467,10 +464,12 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
     let mut v := v
     if v.structureSeed then
       let reverse ← localRebuild v.type (rootType :: baseTypes)
-      if reverse.cost == .unknown then targetPartComplete := false
+      let independent ← localRebuild v.type baseTypes
+      if reverse.cost == .unknown || independent.cost == .unknown then targetPartComplete := false
       let part ← analyticPremise v.type rootType
       let inverse ← analyticPremise rootType v.type
-      v := {v with targetPart := part || inverse || reverse.cost == .zero}
+      v := {v with targetPart := part || inverse ||
+        (reverse.cost == .zero && independent.cost == .one)}
     vertices := vertices ++ [v]
   raw := {raw with vertices}
   let graph ← annotateGraph {raw with edges := raw.edges ++ k2Frontier raw}

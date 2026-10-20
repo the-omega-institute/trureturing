@@ -100,6 +100,11 @@ structure GraphEdge where
   sharedData? : Option Bool := none
   deriving Inhabited
 
+/-- Statement visibility depends only on seed membership and the analytic
+relation, preserving the author's premise order. -/
+def statementPremises (edge : GraphEdge) (seeds : List Nat) : List Nat :=
+  edge.premises.filter fun p => seeds.contains p || edge.analytic.contains p
+
 structure ProofGraph where
   vertices : List GraphVertex := []
   edges : List GraphEdge := []
