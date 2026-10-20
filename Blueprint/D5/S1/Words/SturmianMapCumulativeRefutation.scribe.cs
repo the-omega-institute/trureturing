@@ -93,7 +93,7 @@ internal sealed class SturmianMapCumulativeRefutationDocument : IScribeDocumentD
             Parenthesized(samples));
         var body = Sup(Seq(i, Colon, Naturals), Sup(Seq(a, Colon, F.Id("Bool")),
             Sup(Seq(Ell, Colon, Naturals), Sup(Parenthesized(condition),
-                Parenthesized(Seq(Ell, Colon, new Formula.Power(Naturals, Infty)))))));
+                Parenthesized(Seq(Ell, Colon, ENat()))))));
         return Disp(All(Alpha, Reals, All(d, Naturals,
             Equal(Call("mapLength", Alpha, d), Parenthesized(body)))));
     }
@@ -114,6 +114,8 @@ internal sealed class SturmianMapCumulativeRefutationDocument : IScribeDocumentD
     }
 
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula ENat() =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id("WithTop"))), [Naturals]);
     private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);

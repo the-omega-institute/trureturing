@@ -6,7 +6,7 @@ Refute the cumulative Sturmian bound at slope two minus square root three.
 
 **Definition 1.1 (The maximum progression length).**
 
-$$\forall (\alpha: \mathbb{R}), \forall (d: \mathbb{N}), mapLength\left(\alpha, d\right) = (\operatorname{iSup}_{i:\mathbb{N}} \operatorname{iSup}_{a:Bool} \operatorname{iSup}_{\ell:\mathbb{N}} \operatorname{iSup}_{(0 < \ell \land (\forall (k: \mathbb{N}), (k < \ell) \Rightarrow (lowerMechanicalWord\left(\alpha, \alpha, i + k \cdot d\right) = a)))} (\ell:\mathbb{N}^{\infty}))$$
+$$\forall (\alpha: \mathbb{R}), \forall (d: \mathbb{N}), mapLength\left(\alpha, d\right) = (\operatorname{iSup}_{i:\mathbb{N}} \operatorname{iSup}_{a:Bool} \operatorname{iSup}_{\ell:\mathbb{N}} \operatorname{iSup}_{(0 < \ell \land (\forall (k: \mathbb{N}), (k < \ell) \Rightarrow (lowerMechanicalWord\left(\alpha, \alpha, i + k \cdot d\right) = a)))} (\ell:\operatorname{WithTop}\left(\mathbb{N}\right)))$$
 
 *Formalization.* `D5/S1/Words/SturmianMapCumulativeRefutation.mapLength` (`✓ std3`).
 
