@@ -9,6 +9,8 @@
 import Mathlib.Algebra.Field.GeomSum
 import Mathlib.RingTheory.RootsOfUnity.Complex
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19204. -/
+
 /- Library-search audit trail (2026-09-06):
    * Repository and pinned-Mathlib searches found no `ramanujanSum`, finite
      Ramanujan expansion, or phase-coefficient declaration.
@@ -124,7 +126,7 @@ private theorem sum_nthRootsFinset_pow (d n : ℕ) (hd : 0 < d) :
       rw [← pow_mul, mul_comm, pow_mul, hzeta.pow_eq_one, one_pow]
     rw [htop, sub_self, zero_div]
 
-private theorem sum_ramanujanSum_divisors (d n : ℕ) (hd : 0 < d) :
+theorem sum_ramanujanSum_divisors (d n : ℕ) (hd : 0 < d) :
     ∑ q ∈ d.divisors, ramanujanSum q n =
       if d ∣ n then (d : ℂ) else 0 := by
   rw [← sum_nthRootsFinset_pow d n hd,
