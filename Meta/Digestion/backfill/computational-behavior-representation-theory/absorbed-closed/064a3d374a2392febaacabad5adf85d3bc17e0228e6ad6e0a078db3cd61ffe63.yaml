@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:064a3d374a2392febaacabad5adf85d3bc17e0228e6ad6e0a078db3cd61ffe63
+  normalized_sha256: sha256:064a3d374a2392febaacabad5adf85d3bc17e0228e6ad6e0a078db3cd61ffe63
+cas_ref: sha256:064a3d374a2392febaacabad5adf85d3bc17e0228e6ad6e0a078db3cd61ffe63
+coverage_gids:
+  - gid: D5/S3/Entropy/EntropyDivergenceIdentity.kl_divergence_uniform_eq
+    target_statement_id: sha256:3c546b4c945b28206ddd0b420c45a064fbfd38418faf62f2f4319e5667ea38ff
+receipts:
+  unresolved_subitems: []
