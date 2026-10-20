@@ -3,6 +3,7 @@ bibkey: aaronson2005postselection
 authors: Scott Aaronson
 year: 2005
 title: Quantum Computing, Postselection, and Probabilistic Polynomial-Time
+doi: null
 url: https://arxiv.org/abs/quant-ph/0412187
 claim: Uniform polynomial quantum computation with postselection on a nonzero-probability measurement event has complexity class PostBQP equal to PP.
 strata_touched: []
