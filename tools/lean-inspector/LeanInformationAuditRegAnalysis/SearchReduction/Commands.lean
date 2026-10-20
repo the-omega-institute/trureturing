@@ -11,6 +11,10 @@ open LeanInformationAudit.SearchReduction (Run Verdict)
 -- Their lifetime is the outer compiler process; no imported extension is read.
 private initialize probeRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
 
+/-- Request payloads share one immutable Lean import. Target declarations and
+result values are added only to a fresh persistent-environment fork. -/
+private initialize requestEnvironment : IO.Ref (Option Environment) ← IO.mkRef none
+
 /-- Module bytes are immutable. The common import state contains only Mathlib;
 source and baseline fork it before independently initializing extension state. -/
 private def importSource (owners : Array Import) : IO (Environment × ImportState) :=
@@ -52,6 +56,7 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
   ("k", toJson r.k), ("vertices", toJson r.graph.vertices.length),
   ("edges", toJson r.graph.edges.length), ("complete", toJson r.graph.complete),
   ("issues", toJson r.graph.issues),
+  ("presentation_complete", toJson r.presentationComplete),
   ("baseline_interval", intervalJson r.baseline),
   ("paired_interval", intervalJson r.paired),
   ("baseline_k1", intervalJson r.baselineK1), ("paired_k1", intervalJson r.pairedK1),
@@ -229,8 +234,13 @@ syntax (name := searchReductionProbeCmd) "#search_reduction_probe " ident " at "
 payload. Numeric segments never pass through identifier syntax or text parsing. -/
 private def writeRequest (path : System.FilePath) (request : Request)
     (owners : Array Name) (result : Name) : CommandElabM Unit := do
-  let env ← importModules #[{module := `Lean}] options 0
-    (leakEnv := true) (loadExts := false)
+  let env ← match ← requestEnvironment.get with
+    | some env => pure env
+    | none => do
+      let env ← importModules #[{module := `Lean}] options 0
+        (leakEnv := true) (loadExts := false)
+      requestEnvironment.set (some env)
+      pure env
   let env ← liftTermElabM <| withEnv (env.setMainModule `SearchReductionRequest) do
     for (name, value) in #[(`target, toExpr request.target),
         (`baseline, toExpr request.baseline), (`additions, toExpr request.additions),

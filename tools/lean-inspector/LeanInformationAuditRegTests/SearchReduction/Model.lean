@@ -22,7 +22,7 @@ theorem chain_dp_is_min_max :
 
 theorem graph_verdicts_are_nonempty :
     classifyGraph (({baseline := ⟨.finite 0, .finite 0⟩} : GraphReading)) = .bindOnly ∧
-    classifyGraph (({baseline := ⟨.finite 1, .finite 1⟩, paired := ⟨.finite 0, .finite 0⟩, pairedUsesSeed := true, isolated := true, structureChecked := true, structureClean := true} : GraphReading)) = .nonBindOnly ∧
+    classifyGraph (({baseline := ⟨.finite 1, .finite 1⟩, paired := ⟨.finite 0, .finite 0⟩, pairedUsesSeed := true, isolated := true, structureChecked := true, structureClean := true, presentationComplete := true} : GraphReading)) = .nonBindOnly ∧
     classifyGraph (({} : GraphReading)) =
       .insufficient := by native_decide
 

@@ -134,6 +134,7 @@ structure GraphReading where
   pairedProbe : ProbeResult := {}
   pairedUsesSeed : Bool := false
   presentationCertified : Bool := false
+  presentationComplete : Bool := false
   priorReferenceSuccess : Bool := false
   isolated : Bool := false
   structureChecked : Bool := false
@@ -297,7 +298,7 @@ def classifyGraph (reading : GraphReading) : Verdict :=
   if reading.presentationCertified || reading.priorReferenceSuccess ||
       upperIsZero reading.baseline then .bindOnly
   else if reading.graph.complete &&
-      reading.graph.edges.all (fun e => e.cost != .unknown && e.pairedCost != .unknown) && reading.isolated && reading.structureChecked &&
+      reading.graph.edges.all (fun e => e.cost != .unknown && e.pairedCost != .unknown) && reading.presentationComplete && reading.isolated && reading.structureChecked &&
       reading.structureClean && finite reading.baseline.lower &&
       finite reading.baseline.upper && finite reading.paired.lower &&
       finite reading.paired.upper && strictDrop reading.baseline reading.paired &&

@@ -282,8 +282,11 @@ private unsafe def runCore (source base : Environment) (request : Request) : IO 
           | .error failure => failure | _ => (.isolation, "search.isolation_failed")
         return unknown reason failure
     if clean.contains request.target then return unknown "search.target_already_in_baseline"
+    let presentationIndex : FactIndex := {
+      environment? := some clean
+      enumerationSize := clean.constants.fold (fun count _ _ => count + 1) 0}
     let (presentation, presentationEvidence?, presentationDetail) ←
-      baselinePresentation clean target.levelParams target.type none
+      baselinePresentation clean target.levelParams target.type (some presentationIndex)
     let mut pairedEnv := clean
     let mut structureChecked := false
     let mut structureReason := ""
@@ -311,7 +314,8 @@ private unsafe def runCore (source base : Environment) (request : Request) : IO 
         paired := if upperIsZero reading.paired && pairedProof?.isNone then
           {reading.paired with upper := .top} else reading.paired
         baselineProof?, pairedProof?, isolated := true, structureChecked,
-        structureClean := structureChecked, presentationCertified := presentation == .found}
+        structureClean := structureChecked, presentationCertified := presentation == .found,
+        presentationComplete := match presentation with | .incomplete _ => false | _ => true}
       let baseRun := intervalRun reading.graph reading.baseline
       let pairedGraph := {reading.graph with edges := reading.graph.edges.map (fun edge => {edge with cost := edge.pairedCost})}
       let pairRun := intervalRun pairedGraph reading.paired

@@ -142,10 +142,12 @@ structure HiddenExpr where
   dataSlots : Array Expr := #[]
   proofSlots : Array Expr := #[]
   instances : Array Expr := #[]
+  instanceAuthors : Array (Option Expr) := #[]
 
 /-- Rebuild a maximal application spine from its head telescope. No author
 argument is copied on the hidden-data path. -/
-def hideData (head : Expr) (arity : Nat) (visible : Array (Option Expr) := #[]) :
+def hideData (head : Expr) (arity : Nat) (visible : Array (Option Expr) := #[])
+    (author : Array (Option Expr) := #[]) :
     MetaM HiddenExpr := do
   let mut result : HiddenExpr := {skeleton := head}
   for i in [:arity] do
@@ -157,19 +159,22 @@ def hideData (head : Expr) (arity : Nat) (visible : Array (Option Expr) := #[]) 
     result := {result with skeleton := mkApp result.skeleton value}
     if !prop then result := {result with dataSlots := result.dataSlots.push value}
     else result := {result with proofSlots := result.proofSlots.push value}
-    if kind.isInstImplicit then result := {result with instances := result.instances.push value}
+    if kind.isInstImplicit then result := {result with
+      instances := result.instances.push value
+      instanceAuthors := result.instanceAuthors.push (author[i]?.join)}
   return result
 
 private partial def replayPlan (plan : SpinePlan) (scope : Array Expr)
     (visible : Bool) (expected : Expr) : MetaM HiddenExpr := do
   let .app head data children := plan
-  let visibleData := if visible then data.map (·.map (fun closed => (mkAppN closed scope).headBeta)) else #[]
-  let result ← hideData head data.size (if visible then visibleData else #[])
+  let authorData := data.map (·.map (fun closed => (mkAppN closed scope).headBeta))
+  let result ← hideData head data.size (if visible then authorData else #[]) authorData
   unless ← withReducible <| isDefEq (← inferType result.skeleton) expected do
     throwError "graph.replay_head_result_mismatch"
   let mut allData := result.dataSlots
   let mut allProofs := #[]
   let mut allInstances := result.instances
+  let mut allInstanceAuthors := result.instanceAuthors
   for h : i in [:result.proofSlots.size] do
     let proof := result.proofSlots[i]
     if let some (some child) := children[i]? then
@@ -180,8 +185,13 @@ private partial def replayPlan (plan : SpinePlan) (scope : Array Expr)
       allData := allData ++ child.dataSlots
       allProofs := allProofs ++ child.proofSlots
       allInstances := allInstances ++ child.instances
+      allInstanceAuthors := allInstanceAuthors ++ child.instanceAuthors
     else allProofs := allProofs.push proof
-  return {result with dataSlots := allData, proofSlots := allProofs, instances := allInstances}
+  return {result with
+    dataSlots := allData
+    proofSlots := allProofs
+    instances := allInstances
+    instanceAuthors := allInstanceAuthors}
 
 private def tryAssumptions (goal : MVarId) (facts : Array Expr) : MetaM Bool := do
   for fact in facts do
@@ -389,6 +399,15 @@ partial def localRebuild (target : Expr) (head : Option Expr)
               unless ← tryAssumptions residualGoal.mvarId! (residuals ++ seeds) do
                 return {cost := .one, detail := "residual-interface-mismatch", hiddenSlots := slots.size, sharedData? := some sharedData}
               obligation.assign (← instantiateMVars residualGoal)
+            -- Comparison happens after all data is fixed, so the author
+            -- instance cannot assign a hidden data metavariable.
+            for h : i in [:hidden.instances.size] do
+              if let some author := hidden.instanceAuthors[i]?.join then
+                let instanceValue ← instantiateMVars hidden.instances[i]
+                unless !instanceValue.hasMVar do
+                  return {cost := .unknown, detail := "unresolved-instance"}
+                unless ← withReducible <| isDefEq instanceValue author do
+                  return {cost := .one, detail := "author-instance-mismatch"}
             goal.assign hidden.skeleton
           else
             let mut solved ← solveLocalGoal goal seeds residuals

@@ -216,6 +216,13 @@ theorem unknown_not_nonBindOnly (reading : GraphReading)
       rcases bad with bad | bad <;> simp [bad] at good
     · contradiction
 
+/-- Missing presentation evidence cannot supply the positive graph verdict. -/
+theorem unchecked_presentation_not_nonBindOnly (reading : GraphReading)
+    (unchecked : reading.presentationComplete = false) :
+    classifyGraph reading ≠ .nonBindOnly := by
+  simp [classifyGraph, unchecked]
+  split <;> simp
+
 /-- An incomplete extraction cannot supply the positive graph verdict. -/
 theorem incomplete_not_nonBindOnly (reading : GraphReading)
     (incomplete : reading.graph.complete = false) :
@@ -235,6 +242,7 @@ theorem graph_verdict_partition (reading : GraphReading) :
 #print axioms edge_extension_preserves_derivations
 #print axioms outside_zero_shortcut
 #print axioms unknown_not_nonBindOnly
+#print axioms unchecked_presentation_not_nonBindOnly
 #print axioms depthFuel_monotone
 #print axioms lower_le_upper
 #print axioms depthFuel_le_iff_derivable

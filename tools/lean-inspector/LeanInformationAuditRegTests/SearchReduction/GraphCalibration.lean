@@ -21,8 +21,8 @@ run_cmd do
       let graph ← withEnv source <| extractGraph base info.type value added
       let reading ← withEnv base <| evaluateGraph graph
       let checked? ← withEnv source <| assembleZero reading.graph true
-      logInfo m!"graph-calibration {name}: nodes={reading.graph.vertices.length} edges={reading.graph.edges.length} complete={reading.graph.complete} issues={reading.graph.issues} B={reprStr reading.baseline} BS={reprStr reading.paired} vis={reprStr reading.baselineVisible} k1BS={reprStr reading.pairedK1} probes={reprStr reading.baselineProbe.outcome}/{reprStr reading.pairedProbe.outcome} usesS={reading.pairedUsesSeed} checked={checked?.isSome} verdict={reprStr (classifyGraph {reading with isolated := true, structureChecked := true, structureClean := true})}"
-      let certified := {reading with isolated := true, structureChecked := true, structureClean := true}
+      logInfo m!"graph-calibration {name}: nodes={reading.graph.vertices.length} edges={reading.graph.edges.length} complete={reading.graph.complete} issues={reading.graph.issues} B={reprStr reading.baseline} BS={reprStr reading.paired} vis={reprStr reading.baselineVisible} k1BS={reprStr reading.pairedK1} probes={reprStr reading.baselineProbe.outcome}/{reprStr reading.pairedProbe.outcome} usesS={reading.pairedUsesSeed} checked={checked?.isSome} verdict={reprStr (classifyGraph {reading with isolated := true, structureChecked := true, structureClean := true, presentationComplete := true})}"
+      let certified := {reading with isolated := true, structureChecked := true, structureClean := true, presentationComplete := true}
       unless reading.graph.complete do throwError "unexpected incomplete calibration graph"
       if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.scopedWitness then
         unless reading.baseline == ⟨.finite 0, .finite 0⟩ && classifyGraph certified == .bindOnly && checked?.isSome do
