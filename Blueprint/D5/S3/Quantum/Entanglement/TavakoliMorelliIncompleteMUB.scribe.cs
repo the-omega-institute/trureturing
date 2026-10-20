@@ -27,6 +27,21 @@ internal sealed class TavakoliMorelliIncompleteMUBDocument : IScribeDocumentDefi
                 "The a-th column of the l-th unitary is the underlying vector of this normalized ket. Unitarity supplies its normalization. A ket is determined by its underlying vector, so the displayed coordinate formula specifies it completely.", DescribeRole.Definition),
             Node("MUBFamily.effect", "The local rank-one projectors", EffectFormula(),
                 "The outcome label is a pair consisting of a basis label and a column label. Its effect is the pure projector of that column, with no d/n scaling. The d projectors in each basis sum to the identity.", DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("tavakoli-morelli-mub-context"),
+                DeclarationHandle.Create(Prefix + "context"),
+                H("The rank-one context of a basis"),
+                StatementSource.FromAuthor(Disp(FamilyInputs(
+                    All("l", Fin(X("m")), All("a", Fin(X("d")),
+                        Equal(At(Field(At(Field(X("A"), "context"), X("l")), "projector"),
+                            X("a")), At(Effect(X("A")), Parenthesized(Seq(X("l"), Comma, Sp, X("a")))))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Each basis defines a complete rank-one context whose projectors are its "
+                    + "effects. The context carries their Hermitian, idempotent, trace-one and "
+                    + "rank-one sandwich identities, together with their sum equal to the identity. "
+                    + "These fields hold for every basis of the family."))),
+                DescribeRole.Definition),
             Node("Qm", "The MUB joint-probability table", QmFormula(),
                 "As in Section V B and Born's rule in Eq. (8), Qm is the md by md matrix of joint outcome probabilities from the two independently chosen local families. The correlation definition takes the real part of each trace and embeds it in the complex numbers. The complete collection across m bases is used without averaging over the basis labels.", DescribeRole.Definition),
             Node("claim", "Tavakoli–Morelli Conjecture 3", ClaimFormula(),
