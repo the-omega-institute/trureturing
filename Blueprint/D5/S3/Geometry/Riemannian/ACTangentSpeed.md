@@ -39,3 +39,4 @@ The C2/C3 public result retains the canonicalMetric and canonical_pairwise_local
 ## References
 
 - Truth anchor: `D5/S3/Geometry/Riemannian/ACTangentSpeed.actual_chart_AC_tangent_and_metric_speed`
+- Dependency: [D5/S3/Geometry/Riemannian/ChartComparison](ChartComparison.md)

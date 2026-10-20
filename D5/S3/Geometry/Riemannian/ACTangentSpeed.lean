@@ -1,3 +1,11 @@
+/- GID: D5/S3/Geometry/Riemannian/ACTangentSpeed
+   generality: G
+   mirror-B: D5/B/S3/Geometry/Riemannian/ACTangentSpeed
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Function.AbsolutelyContinuous, mathlib/module/Mathlib.Analysis.BoundedVariation]
+   utility: none
+   digest: Chart absolute continuity, almost-everywhere tangent derivative and intrinsic metric speed. -/
+
 import D5.S3.Geometry.Riemannian.ChartComparison
 import Mathlib.MeasureTheory.Function.AbsolutelyContinuous
 import Mathlib.Analysis.BoundedVariation
@@ -6,7 +14,7 @@ import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Topology.Order.ProjIcc
 import Mathlib.Analysis.SpecificLimits.Basic
 
-/-! Actual chart AC, tangent derivative, and intrinsic metric speed. Transient verification. -/
+/-! Actual chart AC, tangent derivative, and intrinsic metric speed. -/
 
 open Bundle Filter Manifold MeasureTheory Metric Set
 open scoped Bundle Topology ContDiff ENNReal NNReal
