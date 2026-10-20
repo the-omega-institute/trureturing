@@ -3690,3 +3690,367 @@ $(W_0,W_0)$, both endpoints would eventually lie in $\mathcal U$,
 contradicting that classification. ∎
 
 ## 追加锚（本行以下为增补区）
+
+
+## 28. A global order on the external H graph at $p=24$
+
+The next theorem uses the ordinary premises O, Definition 13.1 and
+Theorem 13.2, together with F, Theorem 25.3. O, Theorem 13.2 is used
+with its original positive source domain and its single whole-gain lift;
+F, Theorem 25.3 is used only for a collision having a member with
+$d=24$. No transitive audit of those supplier proofs is intended here.
+
+**Definition 28.1 (The exhaustive proportional chart).** Put
+
+$$
+q=r(1-r),\qquad t=\frac{b}{q},\qquad b=qt,
+$$
+
+on $0<r<1$, $b>0$. Define
+
+$$
+\begin{aligned}
+J_0&=1+qt^2,&N_0&=J_0+rt,&U&=1+2qt,\\
+T&=1+qt,&V_0&=N_0+tU,&Z&=J_0N_0V_0.
+\end{aligned}
+$$
+
+Then
+
+$$
+j=\frac{J_0}{t},\qquad n=\frac{N_0}{t},\qquad V=\frac{V_0}{t}.
+\tag{28.1}
+$$
+
+The change of coordinates is a bijection from the entire strict positive
+source domain to $(r,t)\in(0,1)\times(0,\infty)$; its inverse is
+$b=r(1-r)t$ and $r(1-r)/b=1/t$.
+
+The polynomial equation for the external branch in these coordinates is
+
+$$
+\begin{aligned}
+G(r,t)={}&14q^3t^6+(95-73r)q^2t^5+(47r^2-39r+30)qt^4\\
+&+r(147r^2-232r+105)t^3\\
+&+2(44r^2-55r+15)t^2-64rt-32.
+\end{aligned}
+\tag{28.2}
+$$
+
+Direct expansion gives
+
+$$
+H(r,qt)=q^3G(r,t).
+\tag{28.3}
+$$
+
+For the whole-gain lift set
+
+$$
+\delta=8qt-1,
+$$
+
+and define
+
+$$
+\begin{aligned}
+D={}&20Z+T(4Z-15tN_0V_0-10tJ_0V_0+tJ_0N_0),\\
+A_6={}&4Z-9tN_0V_0+10tJ_0V_0-9tJ_0N_0,\\
+A_7={}&16Z-35tN_0V_0+35tJ_0V_0-21tJ_0N_0,\\
+D_0&=24D-12\delta Z,\\
+G_6&=24D-3\delta A_6,\\
+G_7&=384D-12\delta A_7,\\
+S_6&=2tU+N_0,&S_7&=3tU+2N_0.
+\end{aligned}
+$$
+
+Let $h(s)=\frac85(s-1)(s-3)(s-5)$ and let $v$ be the cubic of O,
+Definition 13.1, with values $(-1,-1/j,-1/n,-1/V)$ at the nodes
+$0,1,3,5$. On every strict zero of $G$ the complete world supplied by
+O, Theorem 13.2, is exactly
+
+$$
+\epsilon=-\frac{12\delta Z}{D},\qquad d=24+\epsilon,\qquad
+g=h+\epsilon v.
+\tag{28.4}
+$$
+
+Indeed, O (13.2) gives $E_2=1+Tv(2)$ and direct substitution gives
+
+$$
+D=20J_0N_0V_0E_2.
+\tag{28.5}
+$$
+
+Thus $D\ne0$ on the strict graph by O, Theorem 13.2. The same
+substitution gives
+
+$$
+v(6)=\frac{A_6}{4Z},\qquad v(7)=\frac{A_7}{5Z},\qquad
+g(6)=\frac{G_6}{D},\qquad g(7)=\frac{G_7}{5D}.
+\tag{28.6}
+$$
+
+The actual sixth-M and seventh-M responses in (25.1)--(25.2) therefore
+are
+
+$$
+u=\frac{tD_0+S_6G_6}{tD},\qquad
+m=\frac{5tD_0+S_7G_7}{5tD}.
+\tag{28.7}
+$$
+
+Define the integer polynomials
+
+$$
+\begin{aligned}
+P={}&2(8N_0-19t)D\\
+&+\delta\{19tZ+6S_6A_6-S_7A_7\},\qquad B=tD.
+\end{aligned}
+\tag{28.8}
+$$
+
+The cleared numerator identity is
+
+$$
+5tD_0+S_7G_7-24(tD_0+S_6G_6)=12P.
+	ag{28.9a}
+$$
+
+so expansion of (28.7) gives the actual-response identity
+
+$$
+m-\frac{24}{5}u=\frac{12}{5}\frac{P}{B}.
+\tag{28.9}
+$$
+
+No gain sample, drift, leading coefficient, gain root, source label or
+unobserved ratio is divided out in (28.4)--(28.9).
+
+**Lemma 28.2 (The graph lies in one derived compact strip).** Every
+strict positive root of $G(r,\cdot)$ satisfies
+
+$$
+1<t<2.
+\tag{28.10}
+$$
+
+Proof. In the degree-six Bernstein basis in $r$ the coefficient vectors
+of $G(r,1)$ and $G(r,2)$ are respectively
+
+$$
+\begin{aligned}
+&(-2,-17/2,-343/15,-459/10,-1024/15,-227/3,-68),\\
+&(88,640/3,5512/15,302,160/3,4/3,32).
+\end{aligned}
+\tag{28.11}
+$$
+
+The Bernstein weights are nonnegative and sum to one on $0\le r\le1$.
+Thus $G(r,1)<0<G(r,2)$ there. O, Theorem 13.2, supplies exactly one
+positive root for every strict $r$, so that root lies in $(1,2)$. ∎
+
+**Definition 28.3 (Derivative numerator).** Set
+
+$$
+\mathcal A(r,t)=
+\frac{(P_rB-PB_r)G_t-(P_tB-PB_t)G_r}{t}.
+\tag{28.12}
+$$
+
+The numerator in (28.12) is divisible by $t$ in $\mathbb Z[r,t]$;
+$\mathcal A$ has bidegree $(19,19)$ and 159 nonzero monomials.
+
+**Lemma 28.4 (Exact tensor-Bernstein certificate).** On the closed
+rectangle $R=[0,1]\times[1,2]$, every zero of $G$ satisfies
+
+$$
+\mathcal A(r,t)>0.
+\tag{28.13}
+$$
+
+Proof. For a polynomial $F$ of coordinate degrees at most $(M,N)$ and
+a cell $[a,a+h]\times[c,c+k]$, write
+
+$$
+F(a+hx,c+ky)=\sum_{i,j}f_{ij}x^iy^j.
+$$
+
+Its degree-$(M,N)$ tensor-Bernstein coefficients are
+
+$$
+\beta_{IJ}(F)=
+\sum_{i\le I,\,j\le J}f_{ij}
+\frac{\binom Ii}{\binom Mi}\frac{\binom Jj}{\binom Nj}.
+\tag{28.14}
+$$
+
+The corresponding tensor Bernstein basis is nonnegative on the cell
+and sums to one. Consequently a strict lower bound on all coefficients
+is a pointwise strict lower bound for $F$.
+
+Encode a cell by $[i,d,j,e,\mathsf A]$ or $[i,d,j,e,\mathsf G]$,
+meaning the closed rectangle
+
+$$
+\left[\frac{i}{2^d},\frac{i+1}{2^d}\right]
+\times
+\left[1+\frac{j}{2^e},1+\frac{j+1}{2^e}\right].
+\tag{28.15}
+$$
+
+The following are the leaves of the alternating bisection of $R$, first
+in $r$ and then in $t$; their interiors are disjoint and their union is
+all of $R$:
+
+$$
+\begin{array}{rrrr|c@{\qquad}rrrr|c}
+0&5&0&5&\mathsf G&0&5&1&5&\mathsf A\\
+1&5&0&5&\mathsf G&1&5&1&5&\mathsf A\\
+0&4&1&4&\mathsf A&1&4&0&4&\mathsf G\\
+1&4&1&4&\mathsf A&0&3&1&3&\mathsf A\\
+2&4&0&4&\mathsf G&4&5&2&5&\mathsf G\\
+4&5&3&5&\mathsf A&5&5&1&4&\mathsf G\\
+3&4&0&3&\mathsf G&1&3&1&3&\mathsf A\\
+0&2&1&2&\mathsf A&2&3&0&3&\mathsf A\\
+2&3&1&3&\mathsf A&3&3&0&2&\mathsf G\\
+1&2&1&2&\mathsf A&0&1&1&1&\mathsf A\\
+2&2&0&2&\mathsf G&2&2&1&2&\mathsf A\\
+3&2&0&1&\mathsf G&1&1&1&1&\mathsf A
+\end{array}
+\tag{28.16}
+$$
+
+On every $\mathsf A$ cell, use $(M,N)=(19,19)$ in (28.14): all 400
+coefficients of $\mathcal A$ are strictly greater than $500$. On every
+$\mathsf G$ cell, use $(M,N)=(6,6)$ for $G$: all 49 coefficients of $G$
+are at most $-49/512$. There are 14 cells of type $\mathsf A$ and 10
+of type $\mathsf G$, hence 5600 and 490 exact rational comparisons.
+The exact minima are
+
+$$
+\min_{\mathsf A}\beta_{IJ}(\mathcal A)=
+\frac{341124130829334753610607074478220625550859}
+{680564733841876926926749214863536422912}>500,
+\qquad
+\min_{\mathsf G}\beta_{IJ}(-G)=\frac{49}{512}.
+\tag{28.17}
+$$
+
+Thus a zero of $G$ cannot lie in a $\mathsf G$ cell and lies in an
+$\mathsf A$ cell, where (28.14) gives $\mathcal A>0$. This proves
+(28.13). ∎
+
+**Theorem 28.5 (Strict order on the whole external H graph).** Let
+$\mathcal H(r)$ be the complete world in O, Theorem 13.2. For
+$0<r<s<1$,
+
+$$
+\left[m-\frac{24}{5}u\right](\mathcal H(r))
+<
+\left[m-\frac{24}{5}u\right](\mathcal H(s)).
+\tag{28.18}
+$$
+
+Proof. Along the strict graph, (28.3) and O, Theorem 13.2 give
+$G_t=H_b/q^2>0$. Implicit differentiation gives
+$t'(r)=-G_r/G_t$. From (28.9) and (28.12),
+
+$$
+\frac{d}{dr}\left(m-\frac{24}{5}u\right)
+=\frac{12}{5}\frac{t\,\mathcal A}{B^2G_t}>0.
+\tag{28.19}
+$$
+
+Here $t>0$, $B=tD\ne0$ by (28.5), and $\mathcal A>0$ by Lemma
+28.4. The mean value theorem on every compact subinterval of $(0,1)$
+proves (28.18). Equality of both actual responses on two H worlds
+therefore forces equal $r$; O, Theorem 13.2 then forces equal $b$ and
+the identical complete gain and drift. ∎
+
+The certificate includes the auxiliary boundaries $r=0$ and $r=1$.
+At them,
+
+$$
+G(0,t)=30t^2-32,\qquad
+G(1,t)=4(5t^3+2t^2-16t-8).
+\tag{28.20}
+$$
+
+The first has its unique root in $[1,2]$ at $4/\sqrt{15}$; the second
+has a unique root there because its derivative is positive on $[1,2]$.
+Consequently every sequence of strict graph points approaching either
+strict source endpoint has $t$ bounded in the same closed interval,
+$b=q t\to0$, and $1/t$ remains finite and positive. These boundary
+points are not admitted as worlds. At either of the two O13.2 K/H
+intersections, $\delta=0$, so (28.4) reduces to the same exact world
+$g=h,d=24$; no intersection is deleted or duplicated.
+
+## 29. The complete original $p=24$ terminal-M classification
+
+**Theorem 29.1 (Joint-response injectivity and the whole-union
+classification).** Let $W,W'$ be complete worlds in the original
+positive domain of Definition 25.1 with the literal history $H_4$ and
+the actual continuation $M,M,M$. Assume both have fifth-M response
+$p=24$. If their actual sixth-M and seventh-M responses agree, then
+either $W=W'$, or
+
+$$
+W=\mathcal K(r),\qquad W'=\mathcal K(s),\qquad
+r+s=\frac98,\qquad \frac18<r,s<1,
+\qquad r\ne s.
+\tag{29.1}
+$$
+
+Conversely every pair in (29.1) has equal $(p,u,m)$. Thus every
+two-world fibre of the original $(p,u,m)$ map at $p=24$ is exactly one
+known legal K mirror pair, and no distinct external H/H pair exists.
+
+Proof. By O, Theorem 13.2, the complete $p=24$ fibre is the set union
+
+$$
+\{\mathcal K(r):0<r<1\}\cup\{\mathcal H(r):0<r<1\},
+\tag{29.2}
+$$
+
+with the two K/H intersections counted once. If neither endpoint of a
+distinct matched pair belongs to $\mathcal K$, both lie on the H graph,
+and Theorem 28.5 makes equality of $(u,m)$ impossible. If one endpoint
+belongs to $\mathcal K$, then its drift is $24$; F, Theorem 25.3,
+classifies the distinct pair as a legal K mirror pair. This proves the
+only-if direction, including the intersections.
+
+For the converse, O, (16.13), equivalently F, (25.13), gives on
+$\mathcal K$
+
+$$
+ p=24,\qquad u=84+24n(r),\qquad
+m=312+\frac{768}{5}n(r),\qquad
+n(r)=\frac18+9r-8r^2,
+\tag{29.3}
+$$
+
+and
+
+$$
+ n(r)-n(s)=(r-s)\{9-8(r+s)\}.
+\tag{29.4}
+$$
+
+For distinct legal parameters, equality of the responses is therefore
+equivalent to $r+s=9/8$. The strict inequalities in (29.1) are exactly
+the original source legality for both reflected parameters, and
+$r=s=9/16$ is removed by distinctness. ∎
+
+The proof retains the full original scope: $g$ is one nonzero real
+polynomial of degree at most three and $d$ is one fixed real drift at
+all original clocks; lower degrees, repeated roots, sampled zeros,
+zero drift and singular parent cases remain included. The only
+divisions made above are by $q,t,Z,D,B,G_t$ on the strict H graph;
+$q,t,Z$ are positive, $D\ne0$ is (28.5), $B\ne0$ follows, and
+$G_t>0$ is O13.2. No endpoint is added. F24, F26 and F27 retain
+their stated exact-$p_J$, equal-$\chi$ and local full-parent scopes;
+Theorem 29.1 adds no conclusion for $p\ne24$ or for the general
+unequal-$\chi$ correspondence away from this fibre.
+
+## 追加锚（本行以下为增补区）
