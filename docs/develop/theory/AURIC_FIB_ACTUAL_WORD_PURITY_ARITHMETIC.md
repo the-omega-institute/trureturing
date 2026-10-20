@@ -3406,9 +3406,548 @@ Corollary 78.1 supplies its concrete online application.
 
 ## 追加锚（本行以下为增补区）
 
-## 79. Task readout on the actual ambiguous records
+## 79. The actual Fibonacci word and its two-dimensional block
 
-**Definition 79.1 (A prescribed binary task).** Retain the qutrit source,
+The following application uses $k$ for Fibonacci recursion depth. The
+symbol $n$ continues to denote the random-history horizon in the recovery
+problem elsewhere in this volume; it is not replaced by $k$ here. Let
+$F_0=0$, $F_1=1$, and
+
+$$
+F_{j+2}=F_{j+1}+F_j.
+$$
+
+Define the binary words
+
+$$
+w_0=0,\qquad w_1=1,\qquad w_{k+2}=w_{k+1}w_k,
+\tag{79.1}
+$$
+
+where juxtaposition is left-to-right concatenation. Put
+
+$$
+N_k=|w_k|=F_{k+1},\qquad
+Z_0=1,\quad Z_1=0,\quad Z_{k+2}=Z_{k+1}+Z_k.
+\tag{79.2}
+$$
+
+Thus $Z_k$ is the number of zero letters in $w_k$ and, for $k\geq1$,
+$Z_k=F_{k-1}$; the number of one letters is $F_k$. The chronological
+word convention is
+
+$$
+Q_{uv}=Q_vQ_u,\qquad Q_{h_1\cdots h_m}=V_{h_m}\cdots V_{h_1}.
+\tag{79.3}
+$$
+
+The two actual qutrit letters are
+
+$$
+V_0=\frac12
+\begin{pmatrix}
+\sqrt3&i&0\\
+0&0&\sqrt3+i\\
+i&\sqrt3&0
+\end{pmatrix},\qquad
+V_1=\frac12
+\begin{pmatrix}
+ i&\sqrt3&0\\
+0&0&\sqrt3+i\\
+\sqrt3&i&0
+\end{pmatrix}.
+\tag{79.4}
+$$
+
+Set $r=\sqrt3$ and use the real orthonormal basis
+
+$$
+\xi=\frac1{\sqrt3}(1,1,1)^{\mathsf T},\qquad
+f_1=\frac1{\sqrt2}(1,-1,0)^{\mathsf T},\qquad
+f_2=\frac1{\sqrt6}(1,1,-2)^{\mathsf T},
+$$
+
+with change-of-basis matrix $\mathbf P=[\xi\ f_1\ f_2]$. Direct multiplication gives
+
+$$
+\mathbf P^\dagger V_0\mathbf P=\lambda\oplus A,\qquad
+\mathbf P^\dagger V_1\mathbf P=\lambda\oplus AJ,
+\tag{79.5}
+$$
+
+where
+
+$$
+\lambda=\frac{r+i}{2}=e^{i\pi/6},\qquad
+A=\frac14
+\begin{pmatrix}
+r-i&3+ir\\
+3-ir&-r-i
+\end{pmatrix},\qquad
+J=\begin{pmatrix}-1&0\\0&1\end{pmatrix}.
+\tag{79.6}
+$$
+
+The spectator line $\mathbb C\xi$ is therefore common to both letters. Define
+
+$$
+ a=iA=\frac14
+\begin{pmatrix}
+1+ir&-r+3i\\
+r+3i&1-ir
+\end{pmatrix},\qquad
+ b=AJ=\frac14
+\begin{pmatrix}
+-r+i&3+ir\\
+-3+ir&-r-i
+\end{pmatrix},
+\tag{79.7}
+$$
+
+and
+
+$$
+S_0=a,\qquad S_1=b,\qquad S_{k+2}=S_kS_{k+1}.
+\tag{79.8}
+$$
+
+The matrices $A$ and $J$ are unitary with determinant $-1$. Hence
+$a=iA$ and $b=AJ$ lie in $SU(2)$, and every $S_k$ lies in $SU(2)$.
+
+**Theorem 79.1 (Exact phase-separated application).** For every $k\geq0$,
+
+$$
+\boxed{
+\mathbf P^\dagger Q_{w_k}\mathbf P
+=\operatorname{diag}\!\left(\lambda^{N_k},\ i^{-Z_k}S_k\right)
+=\lambda^{N_k}\oplus i^{-Z_k}S_k.}
+\tag{79.9}
+$$
+
+The scalar $\lambda^{N_k}$ belongs only to the one-dimensional spectator
+summand. The active $2\times2$ summand is exactly $i^{-Z_k}S_k$.
+
+**Proof.** At a zero letter the active block in (79.5) is
+$A=i^{-1}a$, while at a one letter it is $b$. The chronological rule
+(79.3) and the word recurrence (79.1) give
+
+$$
+Q_{w_{k+2}}=Q_{w_k}Q_{w_{k+1}}.
+$$
+
+The spectator acquires one factor $\lambda$ per letter, hence
+$\lambda^{N_k}$. The active product acquires one factor $i^{-1}$ per
+zero and the ordered product of the corresponding $a,b$ factors is
+$S_k$; (79.8) is exactly the resulting reversed concatenation. The
+initial cases are $w_0=0$ and $w_1=1$, for which the active blocks are
+$i^{-1}S_0=A$ and $S_1=AJ$. This proves (79.9) by induction. \qed
+
+## 80. Chronological trees and exact phase reconstruction
+
+The same recurrence has a tree interpretation. Let
+
+$$
+\mathcal T_0=\alpha,\qquad \mathcal T_1=\beta,\qquad
+\mathcal T_{k+2}=\langle\mathcal T_{k+1},\mathcal T_k\rangle.
+\tag{80.1}
+$$
+
+Flatten leaves by
+
+$$
+\operatorname{flat}(\alpha)=0,\quad
+\operatorname{flat}(\beta)=1,\quad
+\operatorname{flat}(\langle X,Y\rangle)=
+\operatorname{flat}(X)\operatorname{flat}(Y).
+\tag{80.2}
+$$
+
+Then $\operatorname{flat}(\mathcal T_k)=w_k$. Define the interpretation
+
+$$
+E(\alpha)=V_0,\qquad E(\beta)=V_1,\qquad
+\mu(X,Y)=YX.
+\tag{80.3}
+$$
+
+Equation (79.3) gives
+
+$$
+E(\mathcal T_{k+2})
+=\mu(E(\mathcal T_{k+1}),E(\mathcal T_k))
+=E(\mathcal T_k)E(\mathcal T_{k+1})
+=Q_{w_{k+2}}.
+\tag{80.4}
+$$
+
+The selection-calculus supplier for this tree gives $k+1$ distinct rooted
+fringe subtrees for $k\geq2$ and an evaluation schedule using
+$\max\{k-1,0\}$ calls to $\mu$ when the two leaf values are shared. This
+is a count of composition operations in the known deterministic tree. It
+is not an assertion about the bit length of an explicitly emitted matrix,
+a native gate sequence, or a controller that receives an unknown history.
+
+The phases in (79.9) need no large exponentiation. Compute
+$N_k\bmod 12$ and $Z_k\bmod4$ using (79.2). Since $\lambda^{12}=1$ and
+$i^4=1$, the two exact phase factors are then selected from fixed tables of
+roots of unity. This takes $O(k)$ constant-size modular additions. A
+floating evaluation of the full matrices in (79.4), as specified below,
+retains the same phases without separately forming large powers.
+
+## 81. Actual half-traces and the all-depth odd-numerator law
+
+Put
+
+$$
+x_k=\frac12\operatorname{tr}(S_k).
+\tag{81.1}
+$$
+
+The actual seeds in (79.7) give
+
+$$
+\operatorname{tr}(a)=\frac12,\qquad
+\operatorname{tr}(b)=-\frac r2,\qquad
+\operatorname{tr}(ab)=-\frac r4,
+$$
+
+and therefore
+
+$$
+(x_0,x_1,x_2)=\left(\frac14,-\frac r4,-\frac r8\right).
+\tag{81.2}
+$$
+
+For example, direct multiplication gives $ab=iJ+b/2$, which yields the
+third trace in (81.2). The standard $SL_2$ trace-map identity for the
+chronological update, applied to consecutive triples, is
+
+$$
+x_{k+2}=2x_{k+1}x_k-x_{k-1}\qquad(k\geq1).
+\tag{81.3}
+$$
+
+The reversal in (79.3) does not change the trace coordinates because
+$\operatorname{tr}(VU)=\operatorname{tr}(UV)$ and
+$\operatorname{tr}(VUU)=\operatorname{tr}(U^2V)$. Thus the usual trace-map
+supplier applies to the actual matrices here. Its invariant, with the
+half-trace normalization used in (81.1), is
+
+$$
+I=x_{k-1}^2+x_k^2+x_{k+1}^2-2x_{k-1}x_kx_{k+1}-1.
+\tag{81.4}
+$$
+
+Using (81.2), the square sum is $19/64$ and twice the product is $3/64$,
+so $I=-3/4$ for every consecutive triple. The corresponding full-trace
+Fricke identity gives
+
+$$
+\operatorname{tr}(aba^{-1}b^{-1})=4I+2=-1.
+\tag{81.5}
+$$
+
+The factor $4$ and the additive $2$ in (81.5) are part of the conversion
+from half-traces; they are not absorbed into the definition of $I$.
+
+**Theorem 81.1 (Odd numerators at every depth).** Define
+
+$$
+\pi_k=F_k\bmod2\in\{0,1\},\qquad d_k=N_k+1=F_{k+1}+1.
+$$
+
+Then for every $k\geq0$ there is an odd integer $c_k$ such that
+
+$$
+\boxed{
+ x_k=\frac{c_k r^{\pi_k}}{2^{d_k}}.}
+\tag{81.6}
+$$
+
+The initial data are
+
+$$
+(d_0,d_1,d_2)=(2,2,3),\qquad
+(\pi_0,\pi_1,\pi_2)=(0,1,1),\qquad
+(c_0,c_1,c_2)=(1,-1,-1).
+\tag{81.7}
+$$
+
+The first seven numerators are
+
+$$
+1,-1,-1,-1,17,47,3421.
+\tag{81.8}
+$$
+
+**Proof.** The base cases are (81.2), which gives (81.7). Fibonacci parity
+has period three, equivalently
+$\pi_{k+2}=\pi_k+\pi_{k+1}\pmod2$ and
+$\pi_{k-1}=\pi_{k+2}$ for $k\geq1$. Therefore
+
+$$
+ r^{\pi_k+\pi_{k+1}}
+=3^{\pi_k\pi_{k+1}}r^{\pi_{k+2}},
+\tag{81.9}
+$$
+
+where the prefactor is either $1$ or $3$ and is always odd. The length
+recurrence gives
+
+$$
+ d_{k+2}=d_k+d_{k+1}-1,\qquad
+ d_{k+2}-d_{k-1}=N_{k+2}-N_{k-1}=2N_k.
+\tag{81.10}
+$$
+
+Substitute (81.6) for indices $k-1,k,k+1$ into (81.3), use (81.9), and
+put both terms over $2^{d_{k+2}}$. The resulting numerator is
+
+$$
+ c_{k+2}=3^{\pi_k\pi_{k+1}}c_kc_{k+1}
+          -2^{2N_k}c_{k-1}.
+\tag{81.11}
+$$
+
+The first summand in (81.11) is odd. Since $N_k\geq1$ for $k\geq1$, the
+second summand is divisible by $4$. Hence $c_{k+2}$ is odd. Strong
+induction from the three bases proves (81.6) at every depth. In particular
+there is no cancellation of a power of two, and the numerator cannot be
+zero. \qed
+
+## 82. Explicit exact encodings and what their lower bounds mean
+
+The nonzero rational coefficient of $x_k$ in the fixed basis
+$\{1,r\}$ is $c_k/2^{N_k+1}$, with the factor $r^{\pi_k}$ recorded
+separately. Because $c_k$ is odd, this fraction is reduced. Its positive
+binary denominator has $N_k+2$ bits. Since $S_k\in SU(2)$,
+$|x_k|\leq1$, so $|c_k|\leq2^{N_k+1}$ and the numerator has
+$O(N_k+1)$ bits. Consequently an explicitly written reduced numerator and
+denominator for this trace coefficient require $\Theta(N_k+1)$ bits. Since
+$N_k=F_{k+1}$ grows exponentially in $k$, this is exponential in the
+recursion depth.
+
+There is a separate full-matrix statement. Every entry of $Q_{w_k}$ lies
+in $2^{-N_k}\mathbb Z[r,i]$, hence in the coefficient basis
+$\{1,r,i,ir\}$ its rational coordinates have denominators dividing
+$2^{N_k}$. For $N_k\geq2$, take the trace in the adapted basis:
+
+$$
+\operatorname{tr}(Q_{w_k})
+=\lambda^{N_k}+i^{-Z_k}\frac{c_kr^{\pi_k}}{2^{N_k}}.
+\tag{82.1}
+$$
+
+The selected coordinate of the second term has odd numerator over
+$2^{N_k}$. In the same coordinate the spectator term contributes an
+integer multiple of $2^{N_k-1}$ to that numerator, so reduction cannot
+remove the final factor of two. Thus one diagonal entry of the physical
+matrix already has a coordinate with denominator exactly $2^{N_k}$,
+because the trace is a sum of the three diagonal entries. Writing the full
+$3\times3$ matrix coefficient by coefficient in
+$\{1,r,i,ir\}$ therefore has an explicit output requirement
+$\Omega(N_k)$ bits.
+
+The preceding two claims have different scopes: the exact trace coefficient
+has a $\Theta(N_k)$ explicit representation, while the full matrix has an
+$\Omega(N_k)$ explicit-output lower bound. Neither is a lower bound for an
+exponent-coded denominator, an unevaluated recurrence, an arithmetic circuit,
+or a short program containing the fixed seeds. Neither is a lower bound on
+working memory, on an unknown-history memory, on native gate execution, or
+on gate count. In particular, a shared tree value and an emitted matrix are
+different representations of the same known deterministic word.
+
+## 83. A fixed-precision full-matrix algorithm
+
+Fix $0<\varepsilon\leq1$ and let
+
+$$
+t=\left\lceil\log_2(1/\varepsilon)\right\rceil,\qquad
+p=2k+t+7,\qquad q=2^{-p},\qquad \eta=4q.
+\tag{83.1}
+$$
+
+The input parameter is the recursion depth $k$, not its binary length. The
+algorithm below returns all eighteen real coordinates of a complex
+$3\times3$ matrix. Every grid rounding below uses nearest integer quotient;
+exact half-way ties are rounded toward zero, so the procedure is deterministic.
+
+First compute an integer square root
+
+$$
+R=\left\lfloor2^{p+4}\sqrt3\right\rfloor,\qquad
+\widehat r=R/2^{p+4}.
+\tag{83.2}
+$$
+
+An integer-square-root routine gives
+$|\widehat r-r|<2^{-(p+4)}=q/16$. Substitute $\widehat r$ for $r$ in
+both matrices (79.4), and round every real and imaginary coordinate to the
+nearest multiple of $q$. Call the results $\widehat V_0$ and
+$\widehat V_1$. The root substitution changes the operator by less than
+$q/32$, since the difference is a scalar multiple of a fixed permutation
+pattern. Rounding eighteen real coordinates, each by at most $q/2$,
+changes the Frobenius norm by at most $3q/\sqrt2<3q$. Hence
+
+$$
+\|\widehat V_j-V_j\|\leq\eta\qquad(j=0,1).
+\tag{83.3}
+$$
+
+Set $\widehat Q_0=\widehat V_0$ and
+$\widehat Q_1=\widehat V_1$. For $j=0,\ldots,k-2$, multiply the two
+stored dyadic matrices exactly in the order dictated by chronology and
+round every resulting coordinate once to the $q$-grid:
+
+$$
+\widehat Q_{j+2}=\operatorname{Round}_q(\widehat Q_j\widehat Q_{j+1}).
+\tag{83.4}
+$$
+
+The exact products in (83.4) use only dyadic integer arithmetic; the two
+preceding matrices and constant-size temporaries are sufficient. The
+single rounding in each multiplication has operator error below $3q$ and
+therefore below $\eta$.
+
+**Theorem 83.1 (Uniform accumulated-error bound).** Let
+
+$$
+e_j=\|\widehat Q_j-Q_{w_j}\|.
+$$
+
+Then for every $j\leq k$,
+
+$$
+ e_j\leq\eta4^j\leq2^{-t-5}\leq\varepsilon/32.
+\tag{83.5}
+$$
+
+**Proof.** Each exact $Q_{w_j}$ is unitary. Submultiplicativity and (83.4)
+give
+
+$$
+ e_{j+2}
+\leq e_j+e_{j+1}+e_je_{j+1}+\eta.
+\tag{83.6}
+$$
+
+The two seed bounds (83.3) start the induction. The proposed bound at any
+index $j\leq k$ is at most
+$\eta4^k=2^{-t-5}\leq1$, so whenever the preceding bounds have been
+established, (83.6) also gives
+
+$$
+ e_{j+2}\leq2(e_j+e_{j+1})+\eta
+\leq11\eta4^j
+\leq\eta4^{j+2}.
+\tag{83.7}
+$$
+
+This proves (83.5) by induction, and the same envelope justifies the
+assumption $e_j,e_{j+1}\leq1$ at every step. \qed
+
+Finally round each real coordinate of $\widehat Q_k$ to a grid with
+$t+4$ fractional bits. The output rounding contributes at most
+$3\,2^{-(t+4)}\leq3\varepsilon/16$ in operator norm. Combining this with
+(83.5) gives
+
+$$
+\|Q_{w_k}-Q_{\rm out}\|
+\leq\frac{\varepsilon}{32}+\frac{3\varepsilon}{16}
+=\frac{7\varepsilon}{32}<\varepsilon.
+\tag{83.8}
+$$
+
+The output is a numerical matrix approximation and need not be exactly
+unitary. The exact phase labels from (79.2) may be emitted alongside it
+using the constant-size residues $N_k\bmod12$ and $Z_k\bmod4$.
+
+## 84. Bit costs, source mapping and scoped literature
+
+Let $p$ be as in (83.1). Schoolbook multiplication of the constant number
+of dyadic scalars in each fixed-dimensional matrix product costs
+$O(p^2)$ bit operations. A bisection implementation of the integer square
+root in (83.2) costs $O(p^3)$ bit operations, which is sufficient for the
+stated bound. The complete algorithm therefore has the valid polynomial
+bit-time bound
+
+$$
+O\bigl((k+1)p^2+p^3\bigr),\qquad p=O(k+t+1).
+\tag{84.1}
+$$
+
+It is polynomial in $k+t$, and no polynomial bound in
+$\log(k+1)+t$ is asserted. Two preceding matrices, fixed-dimensional
+temporaries and counters use
+
+$$
+O\bigl(p+\log(k+1)\bigr)
+\tag{84.2}
+$$
+
+working bits. The eighteen final real dyadic coordinates have
+$O(t+1)$ bits in total, up to constant-size phase labels, so the explicit
+numeric output cost is $O(t+1)$. These are arithmetic and representation
+costs for known matrices. They do not give a native gate count, a circuit
+synthesis theorem, a physical execution cost, or a memory lower bound for
+recovering an unknown random history.
+
+The source correspondence is as follows. The actual matrices, fair
+history law and chronological qutrit convention are the objects in §§63–68
+of this volume. The fixed partition and legal online application are in
+§§69–78. The tree recurrence, distinct-fringe count and pure interpretation
+call count are supplied by [AURIC FIB atom selection calculus, theorem
+14.2](AURIC_FIB_ATOM_SELECTION_CALCULUS.md).
+The $SL(2)$ trace map and Fricke polynomial are supplied by [CFMP geometric
+realization and observation dynamics, §138](CFMP_GEOMETRIC_REALIZATION_OBSERVATION_DYNAMICS.md),
+and the chronological Fibonacci half-trace recurrence is supplied by
+[FIB atom statistical laws, §159](FIB_ATOM_STATISTICAL_LAWS.md).
+Those generic identities are used here only to connect the actual seeds to
+(81.3)–(81.5); the odd valuation and finite-precision bounds are the
+source-specific results above. The D5 recurrence files
+[`D5/S1/Recurrence/TraceMap.lean`](../../../D5/S1/Recurrence/TraceMap.lean) and
+[`D5/S1/Recurrence/CassiniFricke.lean`](../../../D5/S1/Recurrence/CassiniFricke.lean)
+are related library carriers, but they do not by themselves state this
+qutrit application.
+
+The scoped primary literature is:
+
+- M. Baake, U. Grimm and D. Joseph, [*Trace maps, invariants, and some of their applications*](https://arxiv.org/abs/math-ph/9904025), especially the substitution trace map, Fricke invariant and chronological Fibonacci $SU(2)$ recursion. It does not supply the matrices (79.4), the odd numerator law, or (83.8).
+- W. M. Goldman, [*Trace Coordinates on Fricke spaces of some simple hyperbolic surfaces*](https://arxiv.org/abs/0901.1404), equation (2.2.8), for the full-trace commutator polynomial. It supplies no spectator phase, qutrit seed arithmetic or recovery statement.
+- C. M. Dawson and M. A. Nielsen, [*The Solovay–Kitaev algorithm*](https://arxiv.org/abs/quant-ph/0505030), for the distinction between a finite instruction description and an explicitly emitted sequence. Its arithmetic discussion is not used as a finite-precision proof here, and no native gate set is assumed.
+- D. W. Berry, G. Ahokas, R. Cleve and B. C. Sanders, [*Efficient quantum algorithms for simulating sparse Hamiltonians*](https://arxiv.org/abs/quant-ph/0508139), for a model-dependent linear oracle-query boundary. That growing-dimensional oracle model is not this fixed known qutrit recurrence.
+- Y. Atia and D. Aharonov, [*Fast-forwarding of Hamiltonians and Exponentially Precise Measurements*](https://arxiv.org/abs/1610.09619), for the dependence of fast-forwarding claims on access and computational models. No fast-forwarding conclusion is transferred here.
+
+These references are scoped suppliers, not an exhaustive literature or
+priority survey. The mathematical result remains an ordinary statement
+about a fixed, known deterministic word and its exact or approximate matrix
+representation. It does not solve the original unrestricted random-history
+recovery or memory problem, and it yields no critical-energy conclusion.
+
+## 85. Boundary of the application
+
+The deterministic words $w_k$ are known programs generated by (79.1). The
+algorithm above receives $k$ and the fixed matrices (79.4); it does not infer
+an unknown source history, copy an unknown quantum state, or replace a
+sequence of permitted physical gates at unit cost. The exact-output bounds
+in §82 concern only the declared coefficient-by-coefficient binary
+encoding. The polynomial bound in §84 concerns a classical fixed-precision
+arithmetic procedure and is polynomial in $k+t$, with $k$ itself as the
+depth parameter.
+
+A theorem about arbitrary random histories would additionally require a
+source-to-observation relation, the permitted recovery operations, an
+injectivity or exact-fiber statement, and a separately defined error and
+resource model. None follows from (79.9), (81.6), or (83.8). The finite
+$(n,\varepsilon)$ joint recovery and memory law, including general online
+compatibility and optimal peak memory, remains open. The critical-energy
+goal remains open as well.
+
+## 追加锚（本行以下为增补区）
+
+## 86. Task readout on the actual ambiguous records
+
+**Definition 86.1 (A prescribed binary task).** Retain the qutrit source,
 actual chronological words and terminal partition of Definition 63.1.
 For a prescribed nontrivial projection $E$ on the input qutrit and one
 conditional record channel $\mathcal N_j$, define
@@ -3417,7 +3956,7 @@ $$
 \eta_j(E)=\min_{D\ \mathrm{CPTP}}\sup_{\rho\in\mathsf D(\mathbb C^3)}
 \left|\operatorname{tr}(E D\mathcal N_j(\rho))
                    -\operatorname{tr}(E\rho)\right|.
-\tag{79.1}
+\tag{86.1}
 $$
 
 The record is known to the decoder. This loss asks only for the probability
@@ -3435,10 +3974,10 @@ $$
 E_j=|+_j\rangle\langle+_j|,
 \qquad |\pm_j\rangle=(u_j\pm v_j)/\sqrt2,
 \qquad P=|\xi\rangle\langle\xi|.
-\tag{79.2}
+\tag{86.2}
 $$
 
-**Theorem 79.2 (Exact actual-record task errors and a history-free task).**
+**Theorem 86.2 (Exact actual-record task errors and a history-free task).**
 For the conditional pair records $\{001,111\}$ and $\{000,101\}$,
 respectively,
 
@@ -3446,23 +3985,23 @@ $$
 \eta_1(E_1)=\frac14,
 \qquad \eta_2(E_2)=\frac3{16},
 \qquad \eta_j(P)=0\quad\text{for every record }j.
-\tag{79.3}
+\tag{86.3}
 $$
 
 The $P$ task remains exact after erasing the entire terminal history,
 and indeed for every finite chronological horizon and every
 input-independent distribution of its actual words. In contrast,
 the two conditional full-state diamond recovery errors are $1$ and
-$3/8$ by Proposition 63.2. The first two numbers in (79.3) concern
+$3/8$ by Proposition 63.2. The first two numbers in (86.3) concern
 different prescribed tasks $E_1,E_2$; they are not additive contributions
 to a common-task optimum.
 
-**Proof.** The standard Heisenberg calculation identifies (79.1) with
+**Proof.** The standard Heisenberg calculation identifies (86.1) with
 
 $$
 \min_{0\preceq F\preceq I}
 \|\mathcal N_j^\dagger(F)-E\|_{\mathrm{op}}.
-\tag{79.4}
+\tag{86.4}
 $$
 
 Every decoder supplies the effect $F=D^\dagger(E)$. Conversely, a given
@@ -3482,7 +4021,7 @@ Choose a rank-one effect $F$ in this plane with diagonal entries $1/2$
 and off-diagonal entry $\overline\mu/(2|\mu|)$, and zero on its
 orthogonal complement. If $\mu=0$, any phase is admissible. The pulled
 effect differs from $E_j$ only by an off-diagonal entry of modulus
-$(1-|\mu|)/2$. Hence (79.4) is at most that number. The known first
+$(1-|\mu|)/2$. Hence (86.4) is at most that number. The known first
 unitary merely conjugates this output effect and changes neither bound.
 
 For the matching lower bound, the two actual input states
@@ -3509,15 +4048,15 @@ erasing its record, consequently has Heisenberg image $P$. The identity
 decoder gives zero task error. This argument holds at every finite
 horizon. $\square$
 
-**Definition 79.3 (Simultaneity and resource boundary).** The task effects
-and allowed terminal operations in Definition 79.1 are supplied as part
-of the finite task contract. Theorem 79.2 is a repository-derived
+**Definition 86.3 (Simultaneity and resource boundary).** The task effects
+and allowed terminal operations in Definition 86.1 are supplied as part
+of the finite task contract. Theorem 86.2 is a repository-derived
 application of observable correction and binary-state distinguishability
 to the actual matrices (63.3); it supplies no general synthesis cost
 for eigenvector measurements or online controller. Retaining the
 probability of $P$ needs no history label, whereas preserving arbitrary
 input coherences is the stronger task of §§59–78. For several prescribed
 effects, one common decoder must realize them simultaneously; minimizing
-each expression (79.1) separately does not establish that requirement.
+each expression (86.1) separately does not establish that requirement.
 
 ## 追加锚（本行以下为增补区）

@@ -110,7 +110,7 @@ normalization. Likewise, correction of several future observables by one
 channel is the simultaneous condition of Definition 8.
 
 The actual qutrit application in
-[Purity arithmetic §79](../../docs/develop/theory/AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md#79-task-readout-on-the-actual-ambiguous-records)
+[Purity arithmetic §86](../../docs/develop/theory/AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md#86-task-readout-on-the-actual-ambiguous-records)
 uses these task permissions with the existing chronological word matrices.
 It computes binary-readout errors, rather than the reference-stable
 full-state diamond errors of that volume's §§59–78.
