@@ -4903,3 +4903,170 @@ formal registration or freezing is asserted. No finite result here
 completes the active through-2027 host programme.
 
 ## 113.99 追加锚（本行以下为增补区）
+
+## 114. A finite-depth source-to-carrier certificate and its first failures
+
+The finite occurrence and transport constructions above can be assembled into
+one typed test object. This does not supply a physical realization; it records
+which bridge clauses are already exact on a finite source and which ones fail
+before any continuum interpretation is attempted. The family below includes the
+singleton labels and the branch-root sources to which the native three-port
+contract applies.
+
+**Definition 114.1 (the finite-depth candidate bridge).** Let
+
+$$
+\mathcal S_n=\{\alpha,\beta\}
+  \cup\{t=\langle s,u\rangle:\operatorname{height}(t)\le n\}
+$$
+
+be the finite ordered source family of height at most $n$. For $t\in
+\mathcal S_n$, use its occurrence vertices $V_t$, oriented edge set $E_t$,
+and the closed unit-edge operator $L_t=D_t^*D_t$. Define
+
+$$
+\begin{aligned}
+d_t(x,y)&=\text{the shortest-path length in }(V_t,E_t),\\
+\mu_t(x)&=1,\\
+\widehat\mu_t(x)&=N_t^{-1},\\
+U_t&=-D_tL_t^{+1/2}:P_t\ell^2(V_t)\longrightarrow\ell^2(E_t),
+\end{aligned}
+\tag{114.1}
+$$
+
+where $P_t$ removes constants. The tagged carrier is
+
+$$
+\mathscr C_n
+  =\bigsqcup_{t\in\mathcal S_n}
+     \bigl(\{t\}\times V_t,\{t\}\times E_t,d_t,\mu_t,U_t\bigr).
+\tag{114.2}
+$$
+
+The tag is part of the mathematical carrier in (114.2); it is not declared to
+be a freely available observation. A coarse port projection instead retains
+only the entry data
+
+$$
+\pi^{\rm port}_t
+  =\bigl(N_t,\ |B_t|,\ K_t\bigr),
+\qquad K_t=R_tL_tR_t^*,
+\tag{114.3}
+$$
+
+with the three literal ports $(\varepsilon,L,R)$ whenever they are reached.
+For the port projection and its matrix, restrict to the branch-root subfamily
+where these three ports are present; the full tagged carrier continues to
+include singleton sources and sources with other root labels.
+
+**Proposition 114.2 (finite exactness and the first bridge failures).** The
+candidate (114.1)--(114.3) has the following properties.
+
+1. Every object is finite and typed. For the Fibonacci sources $T_n$, the
+   maps $U_{T_n}$ are the unitaries of Theorem 103.2, including the full
+   root-invisible eigenspaces. Thus a finite occurrence carrier can preserve
+   the complete finite operator, rather than only its root spectral measure.
+
+2. The recursive birth map is pointwise local: under the old/new decomposition,
+
+   $$
+   V_{\rho t}=\iota_t(V_t)\sqcup B_t,
+   \qquad
+   E_{\rho t}=\iota_t^E(E_t)\sqcup
+      \{(p,p\sigma):p\sigma\in B_t\},
+   \tag{114.4}
+   $$
+
+   so every new edge has unit distance from its parent. This is only a local
+   incidence statement. The one-step action changes all beta-parent sites at
+   once and
+
+   $$
+   |B_t|=2|M_t|,
+   \tag{114.5}
+   $$
+
+   so there is no source-independent bound on the number of changed sites.
+
+3. Coarse port data are not action-closed. The two sources
+
+   $$
+   x=\langle\alpha,\beta\rangle,
+   \qquad y=\langle\beta,\alpha\rangle
+   $$
+
+   have the same (114.3) at entry, while the successor port matrices have
+   diagonal entries $(2,1,3)$ and $(2,3,1)$, respectively. Hence no update
+   map on $\pi^{\rm port}_t$ can represent the native Apply operation. This is
+   the B1 failure for the coarse observation, already witnessed by
+   Proposition 112.4a.
+
+4. The literal zero-extension of node states is not operator-compatible. In
+   the decomposition of (114.4), the exact block formula of (112.9) gives
+
+   $$
+   L_{\rho t}J_tf-J_tL_tf
+     =(2H_tf)\oplus(-C_t^*f).
+   \tag{114.6}
+   $$
+
+   If $M_t\ne\varnothing$, choosing $f$ nonzero at a beta parent makes the
+   right-hand side nonzero. Therefore $J_t$ does not intertwine the closed
+   Laplacians or their heat semigroups. The source recursion is exact, but the
+   simplest ancestry extension fails the operator part of B6. This calculation
+   does not by itself settle B7, whose separate requirement is that the graph
+   edges arise from actual source seams and transport relations.
+
+5. The literal unit-edge counting measure is not globally 3-Ahlfors regular on
+   the Fibonacci family. The source height obeys
+
+   $$
+   \operatorname{height}(T_n)=n-1\quad(n\ge1),
+   \qquad N_{T_n}=2F_{n+1}-1.
+   \tag{114.7}
+   $$
+
+   Consequently $B_{d_{T_n}}(r,2n-2)=V_{T_n}$, and
+
+   $$
+   \mu_{T_n}\bigl(B_{d_{T_n}}(r,2n-2)\bigr)=2F_{n+1}-1.
+   \tag{114.8}
+   $$
+
+   A uniform upper bound $\mu(B(r,R))\le CR^3$ for all $n$ and all radii
+   reaching the source diameter would imply
+
+   $$
+   2F_{n+1}-1\le C(2n-2)^3,
+   $$
+
+   which is impossible because $F_{n+1}$ grows exponentially. Thus B5 fails
+   for this literal metric and counting measure at global scales. A bounded
+   small-radius window, a rescaled edge metric, or a different measure remains
+   a separate bridge choice; none is supplied by (114.1).
+
+**Proof.** Items 1--4 are Theorems 103.2 and 112.4 together with the block
+identity (112.9) and the explicit two-source witness of Proposition 112.4a.
+For item 5, the height recurrence follows from
+$T_n=\langle T_{n-1},T_{n-2}\rangle$, with heights $0,0$ at $n=0,1$,
+and the node-count recurrence is Theorem 92.3. The ball of radius $2n-2$
+contains every occurrence because every root-to-node path has length at most
+$n-1$. Finally $F_{n+1}$ dominates a geometric progression along every
+other index, so it cannot be bounded by a cubic polynomial in $n$. $\square$
+
+The certificate separates three different repairs. Preserving the source tag
+or a sufficient history can repair B1; a corrected state-dependent transport,
+if one exists under the declared permissions, is needed for B6, while B7 needs
+separate source-seam provenance; and a scale window or renormalized
+metric/measure is needed before a volume statement can be compared with
+dimension three. The finite unitary $U_t$ alone repairs
+none of these gaps and does not produce a smooth rank-three distribution.
+
+Thus the first finite-depth bridge test has a concrete outcome: the native
+occurrence carrier is an exact finite spectral object, pointwise births are
+local, but coarse action descent, zero-extension heat compatibility and global
+three-dimensional volume growth all fail under the literal choices above. The
+remaining continuum bridge must choose which information and which scale are
+preserved before B2--B7 can be evaluated jointly.
+
+## 114.99 追加锚（本行以下为增补区）
