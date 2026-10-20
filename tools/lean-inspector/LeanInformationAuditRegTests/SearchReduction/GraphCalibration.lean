@@ -31,6 +31,8 @@ run_cmd do
       (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia, #[square]),
       (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.twoLayerVia, #[square]),
       (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.scopedWitness, #[square]),
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squaredWitness,
+        #[``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia]),
       (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.splitHelper, #[square]),
       (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.dead, #[square]),
       (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.routineVia, #[]),
@@ -69,6 +71,7 @@ run_cmd do
       if reading.noAuxiliary then noAuxiliary := noAuxiliary + 1
       opaqueCount := opaqueCount + (reading.graph.vertices.filter (·.opaqueDecl)).length
       for edge in reading.graph.edges do
+        unless edgeActive edge do continue
         match edge.sharedData?, edge.cost with
         | none, _ => missingShared := missingShared + 1
         | _, .unknown => unknownCost := unknownCost + 1
@@ -103,6 +106,12 @@ run_cmd do
         let predicted := reading.baseline == ⟨.finite 2, .finite 2⟩ &&
           reading.paired == ⟨.finite 1, .finite 1⟩ && classifyClosure certified == some .partial_
         logInfo s!"DECL_PREDICTION twoLayerVia {predicted}"
+        unless predicted do throwError "twoLayerVia prediction failed"
+      if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squaredWitness then
+        unless strictDrop reading.baseline reading.paired &&
+            verdict == .nonBindOnly && !reading.proofHardSeeds.isEmpty do
+          throwError "proof_hard reduction prediction failed"
+        logInfo "DECL_PREDICTION proof_hard true"
       if name == ``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContent then
         doubled := some reading
         let predicted := (reading.baseline == ⟨.finite 1, .finite 1⟩ ||

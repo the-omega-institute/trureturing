@@ -256,7 +256,7 @@ def checkBaseline (request : Request) (base : Environment) : IO (Except String U
 
 private def intervalRun (graph : ProofGraph) (interval : Interval) : Run :=
   if upperIsZero interval then .found
-  else if graph.complete && graph.edges.all (fun e => e.cost != .unknown) &&
+  else if graph.complete && graph.edges.all (fun e => e.window != 1 || e.cost != .unknown) &&
       finite interval.lower && finite interval.upper then .exhausted
   else .incomplete .undecided
 

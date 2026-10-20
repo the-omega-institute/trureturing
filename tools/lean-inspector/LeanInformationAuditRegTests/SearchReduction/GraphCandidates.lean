@@ -38,6 +38,12 @@ theorem routineVia (n : Nat) : n < n + 1 := routineHelper n
 
 theorem square : ∃ n : Nat, n * n = 1764 := ⟨42, rfl⟩
 
+/-- The existential auxiliary is hard even though every consumer edge keeps
+its price: seeding it moves an entire declaration step to the boundary. -/
+theorem squaredWitness : ∃ n : Nat, (n*n)*(n*n) = 1764*1764 := by
+  obtain ⟨n, h⟩ := squareVia
+  exact ⟨n, congrArg (fun x : Nat => x*x) h⟩
+
 theorem scopedWitness (x : Nat) (hx : x * x = 1764) : ∃ n : Nat, n * n = 1764 := ⟨x, hx⟩
 
 theorem nested : ∃ n : Nat, n * n = 1764 ∧ ∃ m : Nat, m * m = 1849 :=

@@ -448,7 +448,7 @@ private def armSeeds (graph : ProofGraph) (paired : Bool) : List Nat :=
   (graph.vertices.filter (fun v => v.seed || (paired && v.structureSeed && !v.targetPart))).map (·.id)
 
 private def armGraph (graph : ProofGraph) (paired allGiven : Bool) : ProofGraph :=
-  {graph with edges := graph.edges.map fun edge =>
+  {graph with edges := (graph.edges.filter (fun edge => edgeActive edge paired allGiven)).map fun edge =>
     let cost := if allGiven then (if paired then edge.pairedVisibleCost else edge.visibleCost)
       else if paired then edge.pairedCost else edge.cost
     {edge with cost, premises := if cost == .zero then
@@ -519,6 +519,10 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
   let graph ← priceGraph graph true
   let graph ← priceGraph graph false true
   let graph ← priceGraph graph true true
+  -- Failed optional probes do not become priced shortcuts in either arm.
+  let graph := {graph with edges := graph.edges.filter (fun e =>
+    e.window == 1 || edgeActive e || edgeActive e true ||
+      edgeActive e false true || edgeActive e true true)}
   let baseProbe ← rootProbe graph
   let pairedProbe ← rootProbe graph true
   let mut graph := graph
@@ -528,7 +532,7 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
       let actual := probe.premises
       graph := {graph with edges := graph.edges ++ [{
         conclusion := graph.root, premises := actual, window := 0,
-        cost := if paired then (if baseProbe.outcome == .exhausted then .one else .unknown) else .zero, pairedCost := .zero,
+        cost := if paired then ( .unknown) else .zero, pairedCost := .zero,
         visibleCost := .zero, pairedVisibleCost := .zero,
         usedPremises := if paired then [] else actual, pairedUsedPremises := actual,
         givenUsedPremises := if paired then [] else actual, pairedGivenUsedPremises := actual,
@@ -552,8 +556,11 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
     pairedVisible := graphInterval (armGraph graph true true) pairSeeds,
     baselineProbe := baseProbe, pairedProbe, selectedSeeds, witnessEdges, targetPartComplete,
     noAuxiliary := !(raw.vertices.any (·.structureSeed)),
-    pairedUsesSeed := selectedSeeds.any (fun id =>
-      let v := vertex graph id
-      v.structureSeed && !v.seed && !v.targetPart)}
+    proofHardSeeds := selectedSeeds.filter (fun id =>
+      selectedStructureSeed graph selectedSeeds id &&
+        match depth baselineGraph costLower baseSeeds id with
+        | .finite n => n ≥ 1
+        | .top => false),
+    pairedUsesSeed := selectedSeeds.any (selectedStructureSeed graph selectedSeeds)}
 
 end LeanInformationAudit.SearchReduction

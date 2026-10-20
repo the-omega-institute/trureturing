@@ -78,6 +78,8 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
   ("priced_edges", toJson (r.graph.edges.map fun edge => Json.mkObj [
     ("conclusion", toJson edge.conclusion), ("premises", toJson edge.premises),
     ("head", toJson (edge.source.map Name.toString)), ("window", toJson edge.window),
+    ("baseline_active", toJson (edgeActive edge)),
+    ("paired_active", toJson (edgeActive edge true)),
     ("analytic_premises", toJson edge.analytic),
     ("synthetic_premises", toJson (edge.premises.filter fun p => !edge.analytic.contains p)),
     ("used_premises", toJson edge.usedPremises),
@@ -88,6 +90,8 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
     ("cost", toJson (reprStr edge.cost)), ("paired_cost", toJson (reprStr edge.pairedCost)),
     ("detail", toJson edge.detail)])),
   ("witness_edges", toJson r.witnessEdges),
+  ("witness_kinds", Json.mkObj [
+    ("cut", toJson r.witnessEdges), ("proof_hard", toJson r.proofHardSeeds)]),
   ("no_auxiliary", toJson r.noAuxiliary),
   ("opaque_declarations", toJson (r.graph.vertices.filter (·.opaqueDecl)).length),
   ("target_part_complete", toJson r.targetPartComplete),

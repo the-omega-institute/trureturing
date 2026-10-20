@@ -139,6 +139,7 @@ structure GraphReading where
   presentationCertified : Bool := false
   presentationComplete : Bool := false
   witnessEdges : List Nat := []
+  proofHardSeeds : List Nat := []
   targetPartComplete : Bool := true
   noAuxiliary : Bool := false
   priorReferenceSuccess : Bool := false
@@ -345,6 +346,21 @@ def upperIsZero (i : Interval) : Bool :=
 def closureOf (i : Interval) : Closure :=
   if upperIsZero i then .zero else .partial_
 
+/-- A shortcut exists in an arm only with a checked zero certificate. Author
+edges retain their exhausted or unknown price. -/
+def edgeActive (edge : GraphEdge) (paired := false) (allGiven := false) : Bool :=
+  edge.window == 1 || (if allGiven then
+    (if paired then edge.pairedVisibleCost else edge.visibleCost)
+    else if paired then edge.pairedCost else edge.cost) == .zero
+
+/-- Eligible auxiliary seeds actually reached by the paired backpointers. -/
+def selectedStructureSeed (graph : ProofGraph) (selected : List Nat) (id : Nat) : Bool :=
+  selected.contains id && (graph.vertices.find? (·.id == id)).any (fun v =>
+    v.structureSeed && !v.seed && !v.targetPart)
+
+def usesStructureSeed (reading : GraphReading) : Bool :=
+  reading.selectedSeeds.any (selectedStructureSeed reading.graph reading.selectedSeeds)
+
 /-- An actual price change consumes a selected synthetic structure seed. -/
 def isWitnessEdge (graph : ProofGraph) (selected : List Nat) (edge : GraphEdge) : Bool :=
   edge.cost == .one && edge.pairedCost == .zero &&
@@ -360,12 +376,13 @@ def classifyGraph (reading : GraphReading) : Verdict :=
   if reading.presentationCertified || reading.priorReferenceSuccess ||
       upperIsZero reading.baseline then .bindOnly
   else if reading.graph.complete && reading.targetPartComplete &&
-      !reading.noAuxiliary && hasWitness reading &&
-      reading.graph.edges.all (fun e => e.cost != .unknown && e.pairedCost != .unknown) && reading.presentationComplete && reading.isolated && reading.structureChecked &&
+      !reading.noAuxiliary &&
+      reading.graph.edges.all (fun e => e.window != 1 ||
+        (e.cost != .unknown && e.pairedCost != .unknown)) && reading.presentationComplete && reading.isolated && reading.structureChecked &&
       reading.structureClean && finite reading.baseline.lower &&
       finite reading.baseline.upper && finite reading.paired.lower &&
       finite reading.paired.upper && strictDrop reading.baseline reading.paired &&
-      reading.pairedUsesSeed then .nonBindOnly
+      usesStructureSeed reading then .nonBindOnly
   else .insufficient
 
 def classifyClosure (reading : GraphReading) : Option Closure :=

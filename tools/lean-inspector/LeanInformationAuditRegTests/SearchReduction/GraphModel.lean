@@ -347,7 +347,8 @@ theorem outside_zero_shortcut (graph : ProofGraph) (seeds : List Nat) (fuel : Na
 
 /-- The public positive verdict excludes an actual unknown edge in either arm. -/
 theorem unknown_not_nonBindOnly (reading : GraphReading)
-    (unknown : ∃ edge ∈ reading.graph.edges, edge.cost = .unknown ∨ edge.pairedCost = .unknown) :
+    (unknown : ∃ edge ∈ reading.graph.edges, edge.window = 1 ∧
+      (edge.cost = .unknown ∨ edge.pairedCost = .unknown)) :
     classifyGraph reading ≠ .nonBindOnly := by
   intro h
   unfold classifyGraph at h
@@ -356,12 +357,12 @@ theorem unknown_not_nonBindOnly (reading : GraphReading)
   · split at h
     · rename_i condition
       have allKnown : reading.graph.edges.all
-          (fun e => e.cost != .unknown && e.pairedCost != .unknown) = true := by
+          (fun e => e.window != 1 || (e.cost != .unknown && e.pairedCost != .unknown)) = true := by
         simp only [Bool.and_eq_true] at condition
         tauto
-      obtain ⟨edge, member, bad⟩ := unknown
+      obtain ⟨edge, member, author, bad⟩ := unknown
       have good := List.all_eq_true.mp allKnown edge member
-      rcases bad with bad | bad <;> simp [bad] at good
+      rcases bad with bad | bad <;> simp [author, bad] at good
     · contradiction
 
 /-- Missing presentation evidence cannot supply the positive graph verdict. -/
@@ -730,44 +731,30 @@ theorem target_part_incomplete_not_nonBindOnly (reading : GraphReading)
   simp [classifyGraph, incomplete]
   split <;> simp
 
-/-- Positive classification requires an actual one-to-zero price change,
-consuming a selected synthetic seed on the reported optimal route. -/
-theorem nonBindOnly_has_witness_edge (reading : GraphReading)
+/-- The positive guard requires a selected eligible auxiliary seed; it does
+not require a one-to-zero change of local edge price. -/
+theorem nonBindOnly_uses_seed (reading : GraphReading)
     (positive : classifyGraph reading = .nonBindOnly) :
-    ∃ edge ∈ reading.graph.edges, edge.cost = .one ∧ edge.pairedCost = .zero := by
-  have witness : hasWitness reading = true := by
-    unfold classifyGraph at positive
-    split at positive
+    usesStructureSeed reading = true := by
+  unfold classifyGraph at positive
+  split at positive
+  · contradiction
+  · split at positive
+    · rename_i condition
+      simp only [Bool.and_eq_true] at condition
+      tauto
     · contradiction
-    · split at positive
-      · rename_i condition
-        simp only [Bool.and_eq_true] at condition
-        aesop
-      · contradiction
-  obtain ⟨edge, member, priced⟩ := List.any_eq_true.mp witness
-  simp only [isWitnessEdge, Bool.and_eq_true, beq_iff_eq] at priced
-  exact ⟨edge, member, priced.1.1, priced.1.2⟩
 
 /-- Excluding every auxiliary vertex as target-part eliminates every eligible
-synthetic witness, independently of the supplied numerical intervals. -/
+selected seed, independently of the supplied numerical intervals. -/
 theorem all_target_part_not_nonBindOnly (reading : GraphReading)
     (parts : ∀ v ∈ reading.graph.vertices,
       v.structureSeed = true → v.targetPart = true) :
     classifyGraph reading ≠ .nonBindOnly := by
   intro positive
-  have witness : hasWitness reading = true := by
-    unfold classifyGraph at positive
-    split at positive
-    · contradiction
-    · split at positive
-      · rename_i condition
-        simp only [Bool.and_eq_true] at condition
-        tauto
-      · contradiction
-  obtain ⟨edge, _, priced⟩ := List.any_eq_true.mp witness
-  simp only [isWitnessEdge, Bool.and_eq_true] at priced
-  obtain ⟨p, _, eligible⟩ := List.any_eq_true.mp priced.2
-  cases found : reading.graph.vertices.find? (fun v => v.id == p) with
+  obtain ⟨id, _, eligible⟩ := List.any_eq_true.mp (nonBindOnly_uses_seed reading positive)
+  simp only [selectedStructureSeed, Bool.and_eq_true] at eligible
+  cases found : reading.graph.vertices.find? (fun v => v.id == id) with
   | none => simp [found] at eligible
   | some v =>
     have member := List.mem_of_find?_eq_some found
@@ -965,7 +952,7 @@ theorem two_point_strict_family :
 #print axioms delta_not_monotone
 #print axioms no_auxiliary_not_nonBindOnly
 #print axioms target_part_incomplete_not_nonBindOnly
-#print axioms nonBindOnly_has_witness_edge
+#print axioms nonBindOnly_uses_seed
 #print axioms all_target_part_not_nonBindOnly
 #print axioms graph_nondegeneracy
 #print axioms zero_seed_repricing_counterexample
