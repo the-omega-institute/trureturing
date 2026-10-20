@@ -44,7 +44,19 @@ $$(\operatorname{powerTwoSeries} = X + \operatorname{powerTwoSeries}^{2}) \land 
 
 Frobenius and halving a power-of-two exponent give C = X + C squared. Put t = X cubed + X C cubed. Polynomial algebra shows that C cubed satisfies Y + Y squared = t. Substitution into the quadratic identity shows that C(t) satisfies the same equation. Two solutions u and v with zero constant coefficients satisfy (u-v)(1+u+v)=0. The second factor has constant coefficient one, so absence of zero divisors forces u=v. Here C denotes powerTwoSeries.
 
-**Definition 1.4 (The normalized integer solution).**
+**Theorem 1.4 (The power-of-two series has zero constant coefficient).**
+
+$$\operatorname{constantCoeff}\left(\operatorname{powerTwoSeries}\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.power_two_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Zero is not a power of two, so the constant coefficient of powerTwoSeries vanishes.
+
+**Definition 1.5 (The normalized integer solution).**
 
 $$\operatorname{generatingSeries} = \operatorname{choose}\left(\exists f: \operatorname{PowerSeries}\left(\mathbb{Z}\right), ((\operatorname{constantCoeff}\left(f\right) = 0) \land ((\operatorname{coeff}\left(1, f\right) = 1) \land (f^{3} = \operatorname{subst}\left(f, X^{3} + 15 \cdot X \cdot f^{3}\right))))\right)$$
 
@@ -56,7 +68,7 @@ $$\operatorname{generatingSeries} = \operatorname{choose}\left(\exists f: \opera
 
 Starting from X, correct coefficient n by the negative of the degree-(n+2) residual coefficient divided by three using integer division. Modulo three, Frobenius identifies the cube with substitution of X cubed, and the factor fifteen vanishes. Every residual coefficient is therefore divisible by three. Corrections preserve earlier coefficients and remove the next error; their stabilized coefficients prove the displayed existence proposition.
 
-**Definition 1.5 (The integer coefficient sequence).**
+**Definition 1.6 (The integer coefficient sequence).**
 
 $$\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\left(n, \operatorname{generatingSeries}\right)$$
 
@@ -68,7 +80,7 @@ $$\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\l
 
 The value a(n) is coefficient n of the constructed generating series. Its normalization gives a(0)=0 and a(1)=1.
 
-**Theorem 1.6 (The functional equation and normalization).**
+**Theorem 1.7 (The functional equation and normalization).**
 
 $$(\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\right) = 0) \land ((\operatorname{coeff}\left(1, \operatorname{generatingSeries}\right) = 1) \land (\operatorname{generatingSeries}^{3} = \operatorname{subst}\left(\operatorname{generatingSeries}, X^{3} + 15 \cdot X \cdot \operatorname{generatingSeries}^{3}\right)))$$
 
@@ -80,7 +92,7 @@ $$(\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\right) = 0)
 
 The selected witness satisfies both normalization conditions and the exact cubic functional equation of OEIS A392525. The identity holds at every degree by stabilization of the corrected approximations.
 
-**Theorem 1.7 (Uniqueness of the integer solution).**
+**Theorem 1.8 (Uniqueness of the integer solution).**
 
 $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{constantCoeff}\left(f\right) = 0) \implies (\operatorname{coeff}\left(1, f\right) = 1) \implies (f^{3} = \operatorname{subst}\left(f, X^{3} + 15 \cdot X \cdot f^{3}\right)) \implies f = \operatorname{generatingSeries}$$
 
@@ -92,7 +104,7 @@ $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{c
 
 For normalized series agreeing below n, their cubes differ at degree n+2 by three times their degree-n coefficient difference. Their substituted right sides agree through degree n+2, since the inner series is divisible by X cubed and its change is divisible by X to the power n+3. The first-difference formula and strong induction prove uniqueness over the integers.
 
-**Theorem 1.8 (The A392525 parity conjecture).**
+**Theorem 1.9 (The A392525 parity conjecture).**
 
 $$\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{Odd}\left(\operatorname{a}\left(n\right)\right) \iff (\exists k: \mathbb{N}, n = 2^{k}))$$
 
@@ -116,5 +128,6 @@ Map the proved integer functional equation into ZMod(2), where fifteen equals on
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.generating_unique`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.hanna_conjecture`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.powerTwoSeries`
+- Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.power_two_zero`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.prime_power_subst`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.thue_series_equation`
