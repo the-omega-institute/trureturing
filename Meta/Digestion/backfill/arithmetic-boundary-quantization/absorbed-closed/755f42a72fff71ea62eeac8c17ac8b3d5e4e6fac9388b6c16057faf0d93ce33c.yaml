@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:755f42a72fff71ea62eeac8c17ac8b3d5e4e6fac9388b6c16057faf0d93ce33c
+  normalized_sha256: sha256:755f42a72fff71ea62eeac8c17ac8b3d5e4e6fac9388b6c16057faf0d93ce33c
+cas_ref: sha256:755f42a72fff71ea62eeac8c17ac8b3d5e4e6fac9388b6c16057faf0d93ce33c
+coverage_gids:
+  - gid: D5/S3/Analytic/Knapsack/FractionalKnapsackDual.fractional_knapsack_strong_duality
+    target_statement_id: sha256:361f3d47366cd7af7bb659044bad703949aab6d7607e1a926adcfd382f0b9c43
+receipts:
+  unresolved_subitems: []
