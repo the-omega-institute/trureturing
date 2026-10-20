@@ -3012,3 +3012,430 @@ is asserted by the orbit value or the zero-parameter characterization.
 [GLO-EIG]: https://arxiv.org/pdf/1903.00785v2 "Anne Greenbaum, Ren-Cang Li and Michael L. Overton, First-order Perturbation Theory for Eigenvalues and Eigenvectors, Assumption 1 and Theorem 1"
 
 ## 追加锚（本行以下为增补区）
+
+## 118. A saturated decoder on the entire negative branch
+
+Keep the ordered basis (93.1), the actual powers $F^n$ of (93.3),
+and the reduced channel $\Phi_s$ of (93.5). Throughout §§118–123,
+$e_s(\mathcal R)$ and $\mu(s)$ mean precisely (105.2): one terminal
+CPTP map is chosen before the unknown input, and its error is maximized
+over every complex qutrit density matrix. The identity target and
+terminal permissions of Definition 105.1 are unchanged.
+
+**Lemma 118.1 (A boundary CPTP decoder and its nine matrix-unit images).**
+The single map
+
+$$
+\mathcal R_*:=\mathcal R_{1/2,1/2}=\Phi_{-1/2}
+\tag{118.1}
+$$
+
+is CPTP and is independent of both the input and $q$. For every
+$0\le q\le1/2$ it satisfies the complex-linear channel identity
+
+$$
+\boxed{\mathcal R_*\circ\Phi_{-q}=\Phi_{q/2}\quad\text{on }M_3.}
+\tag{118.2}
+$$
+
+*Proof.* In (108.1), $u=\eta=1/2$ gives
+$\eta^2=(1-u)/2=1/4$. The nonzero specialized Kraus operators in
+(108.4) are
+
+$$
+K_0=\operatorname{diag}(1,-1/2,0),\qquad
+K_1=\tfrac12 E_{22},\qquad
+K_2=\tfrac{\sqrt3}{2}E_{21},\qquad
+K_3=\tfrac{\sqrt3}{2}E_{12}.
+\tag{118.3}
+$$
+
+Their adjoint products sum to
+$E_{00}+(1/4+3/4)E_{11}+(1/4+3/4)E_{22}=I$.
+The additional $E_{11}$ Kraus coefficient in (108.4) is exactly zero.
+Thus complete positivity and trace preservation hold on the saturated
+boundary, without any strict positivity hypothesis. Comparing (108.2)
+with (93.5) gives the equality in (118.1).
+
+Lemma 105.2 supplies CPTP input channels throughout the closed interval
+$0\le q\le1/2$. In its Kraus formula the possibly vanishing squared
+coefficient is
+$((1-q)/2)-q^2=(1+q)(1-2q)/2\ge0$, including $q=1/2$.
+Applying (108.3) at the displayed pair gives all nine images:
+
+$$
+\begin{aligned}
+(\mathcal R_*\Phi_{-q})(E_{00})&=E_{00},\\
+(\mathcal R_*\Phi_{-q})(E_{11})
+ &=\tfrac{2+q}{4}E_{11}+\tfrac{2-q}{4}E_{22},\\
+(\mathcal R_*\Phi_{-q})(E_{22})
+ &=\tfrac{2-q}{4}E_{11}+\tfrac{2+q}{4}E_{22},\\
+(\mathcal R_*\Phi_{-q})(E_{01})&=\tfrac q2 E_{01},\qquad
+(\mathcal R_*\Phi_{-q})(E_{10})=\tfrac q2 E_{10},\\
+(\mathcal R_*\Phi_{-q})(E_{ij})&=0
+ \quad\bigl((i,j)\in\{(0,2),(2,0),(1,2),(2,1)\}\bigr).
+\end{aligned}
+\tag{118.4}
+$$
+
+For the two population columns this is multiplication of the mixing
+matrices with parameters $-1/2$ and $-q$; the surviving coherence
+multipliers also multiply. These are exactly the images of $\Phi_{q/2}$.
+The matrix units form a complex basis of $M_3$, proving (118.2) for all
+complex matrices. $\square$
+
+## 119. The exact all-input error of the fixed decoder
+
+**Theorem 119.1 (Finite fixed-decoder error).** With the full input set
+of Definition 105.1,
+
+$$
+\boxed{\displaystyle
+ e_{-q}(\mathcal R_*)
+ =\max_{\rho\in\mathsf D(\mathbb C^3)}
+   \frac12\|\mathcal R_*\Phi_{-q}(\rho)-\rho\|_1
+ =\frac23-\frac q{12}\qquad(0\le q\le1/2).}
+\tag{119.1}
+$$
+
+The same input $P$ in (107.6) attains this error for every such $q$.
+Consequently
+
+$$
+\mu(-q)\le\frac23-\frac q{12}<\frac23
+\qquad(0<q\le1/2).
+\tag{119.2}
+$$
+
+*Proof.* Put $r=q/2\in[0,1/4]$. The channel identity (118.2) and the
+positive-branch identity-decoder equality (107.5) give
+
+$$
+e_{-q}(\mathcal R_*)=e_r(\operatorname{id})
+ =\frac23-\frac r6=\frac23-\frac q{12}.
+\tag{119.3}
+$$
+
+The reused equality (107.5) bounds every complex density input; its
+pure-input reduction and endpoint calculation are those of Lemma 105.3
+and Proposition 107.2. No restriction to real states or selected probes
+is introduced by this substitution. For the matching input, reuse
+$v=(\sqrt{1/3},\sqrt{1/6},\sqrt{1/2})^{\mathsf T}$ and $P=vv^\dagger$
+of (107.6). The same proposition and (118.2) give
+
+$$
+(\mathcal R_*\Phi_{-q}(P)-P)v
+ =-\left(\frac23-\frac q{12}\right)v.
+\tag{119.4}
+$$
+
+Together with (105.6), this attains the all-input upper bound. Finally,
+$\mathcal R_*$ is one admissible member of the decoder minimum, which
+gives (119.2) in the upper-bound direction. The decoder is fixed before
+both the unknown input and the choice of $q$. $\square$
+
+## 120. Improved even-horizon intervals with the phase-orbit lower bound
+
+**Corollary 120.1 (A single terminal decoder at every even horizon).**
+For every even integer $n\ge2$, put $q_n=2^{1-n}$. The same CPTP map
+
+$$
+D_*:=\mathcal R_*\circ\operatorname{Ad}_{U_0^\dagger}
+\tag{120.1}
+$$
+
+has exact whole-input error $2/3-q_n/12$ at horizon $n$, and
+
+$$
+\boxed{\displaystyle
+F(q_n)=\frac{1-q_n+\sqrt{(1-q_n)^2+8}}6
+ \le\mu_n\le\frac23-\frac{q_n}{12}<\frac23
+ \qquad(n\ge2\text{ even}).}
+\tag{120.2}
+$$
+
+In particular the horizon-two interval is
+
+$$
+\boxed{\displaystyle
+\mu_2\in\left[\frac{1+\sqrt{33}}{12},\frac58\right].}
+\tag{120.3}
+$$
+
+*Proof.* The transport (105.3) and $s_n=-q_n$ give
+$D_*F^n=\mathcal R_*\Phi_{-q_n}$, with $0<q_n\le1/2$.
+This cancels only an output unitary; the target remains the original
+input. Theorem 119.1 gives the error and upper bound. Theorem 113.1
+and Corollary 114.1 give the lower bound
+$\mu(-q_n)\ge\nu(-q_n)=\nu(q_n)=F(q_n)$.
+Here $F(q_n)>2/3-2q_n/9\ge5/9>1/2$, so the orthogonal-pair term in
+(114.1) does not strengthen it. Substituting $q_2=1/2$ proves (120.3).
+The value $5/8$ is the exact error of $D_*$, while (120.3) leaves the
+unrestricted minimum in an interval. $\square$
+
+The new interval has width
+
+$$
+W(q)=\frac{3+q/2-\sqrt{(1-q)^2+8}}6>0
+ \qquad(0<q\le1/2).
+\tag{120.4}
+$$
+
+Indeed $3+q/2>0$ and
+$(3+q/2)^2-[(1-q)^2+8]=q(20-3q)/4>0$.
+At horizon two the width is $(13-2\sqrt{33})/24>0$.
+Relative to the even interval in (114.3), the upper endpoint is reduced
+by $q/12$ while retaining its stronger lower endpoint. By (114.2),
+$W(q)<5q/36$, the width obtained from the earlier linear Fourier lower
+bound and the same upper certificate.
+
+The map $D_*$ acts only on the terminal qutrit and is common to all
+these horizons and all inputs. Its Kraus realization permits the usual
+internal ancilla and discard of a CPTP map. It adds no history or
+reference access, intermediate intervention, postselection or smaller
+input code.
+
+## 121. No-reference power monotonicity and endpoint guards
+
+**Proposition 121.1 (Monotonicity for the full input objective).** For
+every finite integer $n\ge0$,
+
+$$
+\mu_n\le\mu_{n+1}.
+\tag{121.1}
+$$
+
+*Proof.* Fix any terminal CPTP decoder $D$ for horizon $n+1$. The
+composition $D\circ F$ is an admissible terminal CPTP decoder for
+horizon $n$, and the original powers give the identity (110.2),
+$(D\circ F)F^n=DF^{n+1}$. It holds on every input with the same identity
+target. Thus
+
+$$
+\mu_n\le\max_{\rho\in\mathsf D(\mathbb C^3)}
+ d(DF^{n+1}(\rho),\rho).
+\tag{121.2}
+$$
+
+Minimizing over $D$ proves (121.1) directly for (105.1).
+For even $n\ge2$, the next horizon is odd, and (107.5) yields the
+independent derivation
+
+$$
+\mu_n\le\mu_{n+1}
+ \le\frac23-\frac{q_{n+1}}6
+ =\frac23-\frac{q_n}{12}.
+\tag{121.3}
+$$
+
+The channel $F$ here is composed inside the terminal decoder. It does
+not call for an additional observed chronological letter or an
+intermediate correction. $\square$
+
+The exact endpoints and the limit remain (107.4) and (107.9):
+
+$$
+\mu_0=0,\qquad \mu_1=\frac12,\qquad
+\mu_\infty=\mu(0)=\lim_{n\to\infty}\mu_n=\frac23.
+\tag{121.4}
+$$
+
+Horizon zero is the empty identity channel, whereas parameter zero is
+$\Phi_0$. Horizon one has $s_1=1$ and is outside the negative branch.
+At $q=0$, (119.1) equals $2/3$ and strict improvement ends. No finite
+$s_n$ is zero. For odd $n\ge3$, the stronger phase-orbit intervals in
+(114.3)–(114.4) still apply, including
+$\mu_3\in[(3+\sqrt{137})/24,5/8]$.
+
+## 122. Exact global optimization of the displayed family coefficient
+
+**Theorem 122.1 (Unique best coefficient within the two-parameter
+family).** On the parameter domain
+
+$$
+\mathcal D=\{(u,\eta):0<u<1,\ 0<\eta\le h(u)\},\qquad
+h(u)=\sqrt{(1-u)/2},
+\tag{122.1}
+$$
+
+let $\kappa(u,\eta)$ be the fixed-decoder coefficient in
+(108.10)–(109.1). Then
+
+$$
+\boxed{\displaystyle
+\max_{(u,\eta)\in\mathcal D}\kappa(u,\eta)=\frac1{12},\qquad
+\operatorname*{argmax}_{\mathcal D}\kappa
+ =\{(1/2,1/2)\}.}
+\tag{122.2}
+$$
+
+More precisely, put $u_0=(\sqrt{33}-1)/16$. For fixed $u$, the maximum
+$g(u)=\max_{0<\eta\le h(u)}\kappa(u,\eta)$ and its complete equality
+conditions are
+
+$$
+\begin{aligned}
+g(u)&=\begin{cases}
+2u/9,&0<u\le u_0,\\[2pt]
+h(u)(4u-h(u))/(18u),&u_0<u<1,
+\end{cases}\\
+\operatorname*{argmax}_{0<\eta\le h(u)}\kappa(u,\eta)
+ &=\begin{cases}
+[2u,h(u)],&0<u<u_0,\\
+\{2u_0\},&u=u_0,\\
+\{h(u)\},&u_0<u<1.
+\end{cases}
+\end{aligned}
+\tag{122.3}
+$$
+
+This is an optimization of the coefficient of the family (108.2),
+with each pair fixed as $q\downarrow0$. It is not an optimization over
+all CPTP maps.
+
+*Proof.* The interval minimization in (108.9) is obtained by completing
+the square. Its vertex is $x=1/3-\eta/(6u)$, which belongs to
+$[0,2/3]$ exactly when $\eta\le2u$; for $\eta\ge2u$ the minimum is at
+$x=0$. Thus the two branches already computed in (108.11) are
+
+$$
+\kappa(u,\eta)=\begin{cases}
+\eta(4u-\eta)/(18u),&0<\eta\le2u,\\[2pt]
+2u/9,&\eta\ge2u.
+\end{cases}
+\tag{122.4}
+$$
+
+They agree at $\eta=2u$. For fixed $u>0$, the derivative in the first
+branch is $(2u-\eta)/(9u)$: the coefficient is strictly increasing up
+to $2u$ and constant thereafter. Since both sides are nonnegative,
+
+$$
+h(u)\ge2u
+\iff 8u^2+u-1\le0
+\iff 0<u\le u_0.
+\tag{122.5}
+$$
+
+The positive root is $u_0$, and $0<u_0<1/2$. These observations give
+both the formula and all fixed-$u$ equality cases in (122.3).
+In particular a plateau at fixed $u<u_0$ cannot be replaced by a
+claim of a unique maximizing $\eta$ there.
+
+On $(0,u_0]$, $g(u)=2u/9$ is strictly increasing. On $(u_0,1)$,
+$h^2=(1-u)/2$ and $h'=-1/(4h)$ give
+
+$$
+g(u)=\frac{2h(u)}9-\frac{1-u}{36u},\qquad
+g'(u)=\frac{h(u)-2u^2}{36h(u)u^2}.
+\tag{122.6}
+$$
+
+All denominators here are positive. The numerator has the sign of
+$h(u)^2-4u^4$, since $h(u)+2u^2>0$. Its exact factorization is
+
+$$
+h(u)^2-4u^4
+ =\frac{1-u-8u^4}{2}
+ =\frac{(1/2-u)(8u^3+4u^2+2u+2)}2.
+\tag{122.7}
+$$
+
+The cubic factor is positive for $0<u<1$. Consequently $g$ is
+strictly increasing up to $u=1/2$ and strictly decreasing thereafter;
+the two formulas in (122.3) agree at $u_0$. The unique global maximizing
+$u$ is therefore $1/2$. At that point $h(1/2)=1/2<2u$, so its unique
+maximizing $\eta$ is $1/2$, and substitution into (122.4) gives $1/12$.
+
+The open endpoints introduce no additional equality cases. For every
+admissible pair $0<\kappa(u,\eta)\le g(u)$, and
+$g(u)\to0$ both as $u\downarrow0$ and as $u\uparrow1$.
+For an interior fixed $u$, $\kappa(u,\eta)\to0$ as $\eta\downarrow0$.
+If the domain is closed by allowing these boundary parameters, the
+original minimum (108.10), rather than a formula dividing by $u$, is
+well-defined: at $u=0$ it is zero by $x=0$, and at $\eta=0$ it is zero
+by $x=1/3$. At $u=1$ the constraint forces $\eta=0$.
+None of these boundary values is $1/12$. $\square$
+
+The earlier pair in (109.9) is exactly $(u_0,2u_0)$, at the junction of
+the two fixed-$u$ regimes. Its coefficient
+$(\sqrt{33}-1)/72$ is strictly smaller than $1/12$, since
+$\sqrt{33}<7$. Its fixed-decoder expansion and existential threshold
+remain valid. For the unique coefficient-maximizing pair, Theorem 119.1
+strengthens the expansion to an exact error on the full closed interval
+$0\le q\le1/2$. Theorem 122.1 makes no assertion that this pair minimizes
+the finite error even within the family at each nonzero $q$.
+
+## 123. The zero optimizer set and the remaining unrestricted gap
+
+Every member $\mathcal R_{u,\eta}$ of (108.2) is unital and fixes
+$E_{00}$: its lower population matrix is doubly stochastic.
+Thus it belongs to the already characterized set $\mathcal Z_0$ in
+(115.1), in the stratum $v=1$, $k=1$. The maximizing inputs at zero
+are consequently exactly the set (115.2), as used in (108.8).
+The coefficient optimization in §122 selects one decoder inside this
+specified family of zero optimizers. The complete set $\mathcal Z_0$
+also includes every other permitted $v\in[1/3,1]$ and the additional
+CPTP degrees of freedom described in §116.
+
+For $q>0$, Lemma 112.2 permits diagonal averaging of a full-input
+minimizer without increasing its error. At zero, Proposition 116.1
+gives the complete population and coherence constraints for that
+covariant class. For minimizers with $q\downarrow0$, Theorem 117.1
+already places every accumulation point in $\mathcal Z_0$, without
+requiring covariance of the original minimizers. These results do not
+force the limit to lie in (108.2), do not require finite minimizers to
+be unital, and do not identify which zero optimizers arise as limits.
+In particular the $v=1/3$ endpoint has every pure input as a maximizer,
+whereas $v>1/3$ has precisely (115.2); the zero optimizer geometry does
+not itself evaluate a uniform first-order minimax over all decoders.
+
+**Corollary 123.1 (Certified unrestricted coefficient interval).** Set
+$I(q)=2/3-\mu(-q)$ for $0<q\le1/2$. Then
+
+$$
+\frac1{12}\le\frac{I(q)}q
+ \le\frac{2/3-F(q)}q
+ =\frac{4}{3\bigl(3+q+\sqrt{(1-q)^2+8}\bigr)},
+\tag{123.1}
+$$
+
+and therefore
+
+$$
+\boxed{\displaystyle
+\frac1{12}\le\liminf_{q\downarrow0}\frac{I(q)}q
+ \le\limsup_{q\downarrow0}\frac{I(q)}q\le\frac29.}
+\tag{123.2}
+$$
+
+*Proof.* Theorem 119.1 bounds $\mu(-q)$ from above, giving the lower
+bound for $I(q)/q$. Corollary 114.1 bounds it from below by $F(q)$,
+giving the upper bound. To rationalize the latter expression, use
+$(3+q)^2-[(1-q)^2+8]=8q$; division is legal because $q>0$.
+Its limit at zero is $4/(3\cdot6)=2/9$, proving (123.2).
+$\square$
+
+If an expansion $\mu(-q)=2/3-cq+o(q)$ exists, (123.2) implies only
+$1/12\le c\le2/9$. Neither existence of such a coefficient nor equality
+$c=1/12$ follows from the exact fixed-family maximum. Establishing that
+particular unrestricted coefficient would additionally require a
+matching bound on the full-input error for every CPTP decoder, uniform
+also for decoder choices depending on $q$. The phase-orbit bound has
+the different leading coefficient $2/9$ and does not provide this
+matching inequality. The necessary accumulation condition in §117
+does not supply that first-order bound either.
+
+The exact unrestricted finite values (111.1) and their minimizing
+CPTP decoders remain undetermined by these positive-width intervals.
+The results here are deductions from the owning channel, Kraus family,
+positive-branch error, phase-orbit obstruction and zero-optimizer
+structure in §§93 and 105–117; no literature priority or new general
+channel family is asserted. The stabilized reference-input problem,
+the restricted-unital problem and the individual-task common-decoder
+obstruction retain their distinct objectives. No realization bridge
+to the original strict same-child $J/M$ H4 target, global joint
+completion or ancestor claim is supplied; those questions remain
+separate from these terminal-qutrit certificates.
+
+## 追加锚（本行以下为增补区）
