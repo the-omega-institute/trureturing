@@ -3640,3 +3640,650 @@ are mathematical descriptions of possible worlds; the only available
 reads and actions are still those in Definition 1.1.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Singular-line elimination with complete strict-real certificates
+
+**Definition 17.1 (Actual singular-endpoint incidence and its coefficient field).**
+Retain exactly the complete worlds and original-clock child of Definition
+1.1, and write $q=(p,v)$ with $p\ne24$. In particular each world has one
+whole nonzero real polynomial of degree at most three and one fixed real
+drift, including lower degrees, sampled or repeated roots and zero drift.
+Use the actual set $\mathcal B_{\mathcal S,M}$ of Theorem 8.4:
+
+$$
+\mathcal B_{\mathcal S,M}
+=\{q:\exists W\ne W'\in C(q),\quad
+ f_{MM}(W)=f_{MM}(W'),\quad\Lambda(W)\Lambda(W')=0\}.
+$$
+
+Thus membership includes the complete reconstruction equalities and strict
+guards; the unfiltered outer projection in the proof of Theorem 8.4 is a
+different set. Let
+
+$$
+\begin{gathered}
+K=\mathbb Q[\theta]/(\Phi(\theta)),\qquad
+\Phi(X)=438272X^4-931328X^3+540800X^2-50728X-853,\\
+I_-=(134815875067,134815875068)/10^{12},\qquad
+I_+=(902449681772,902449681773)/10^{12}.
+\end{gathered}
+$$
+
+Irreducibility is supplied by the modulo-seven certificate in Theorem
+3.2. The two strict real embeddings $\theta_-,\theta_+$ are its roots in
+$I_-,I_+$; O, Theorems 4.2 and 29.2, exhaust all legal singular sources
+by $(\theta_-,1/8),(\theta_+,1/8)$. Other embeddings are not strict
+singular sources. All field coefficients below are reduced uniquely to
+the power basis $1,\theta,\theta^2,\theta^3$ over $\mathbb Q$.
+
+At the symbolic singular source put
+
+$$
+\begin{gathered}
+b_s=1/8,\quad j_s=1/8+8\theta(1-\theta),\quad n_s=j_s+\theta,\\
+T_s=9/8,\quad U_s=5/4,\quad x_s=n_s/U_s,\\
+A_{5s}=1+(U_s+n_s)(4-15/j_s+20/T_s-10/n_s),\\
+A_{6s}=1+(2U_s+n_s)(10-36/j_s+45/T_s-20/n_s),\\
+A_{7s}=1+(3U_s+2n_s)(20-70/j_s+84/T_s-35/n_s),\\
+K_{6s}=(2U_s+n_s)(240-243/T_s),\qquad
+K_{7s}=(3U_s+2n_s)(480-2268/(5T_s)).
+\end{gathered}
+$$
+
+These are Definition 8.1's coefficients, with $K_{5s}=0$. The full
+singular line is
+
+$$
+p_s(t)=24+A_{5s}t,\qquad
+v_s(t)=24+K_{6s}+A_{6s}t,\qquad
+m_s(t)=24+K_{7s}+A_{7s}t.
+$$
+
+Here $t=d_s-24$ is the singular world's drift coordinate and
+$A_{5s}\ne0$, so $p_s(t)\ne24$ is equivalent to $t\ne0$.
+O's full parent converse supplies one complete singular world for each
+$t$ at either strict embedding. These affine responses belong to that
+same whole polynomial at the original clocks, rather than to independent
+choices of gain samples.
+
+**Definition 17.2 (Unscaled companion polynomials).** For independent
+variables $x,d,t$, substitute $p=p_s(t),v=v_s(t)$ and put
+
+$$
+\begin{gathered}
+D=x(x+1)(x+2),\quad z_3=(24-d)(x+1)(x+2),\quad z_4=(18-d)D,\\
+z_5=(p_s(t)-d)x(x+2),\qquad z_6=(v_s(t)-d)x(x+1),\\
+a_0=20z_3-45z_4+36z_5-10z_6,\\
+a_1=10z_3-20z_4+15z_5-4z_6,\qquad
+a_2=4z_3-6z_4+4z_5-z_6,\\
+a_7=-z_3+4z_4-6z_5+4z_6,\qquad z_*=xa_1-D(24-d),\\
+f=5dDa_2+a_0\bigl((294-10d)D-5a_2\bigr),\\
+\mathscr K=4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1
+ -(a_0+dD)\bigl(dD+(1-2x)a_0\bigr)a_1^2,\\
+h=dD+(2x+3)a_7-m_s(t)D=\ell d+N_0+N_1t,\\
+\ell=-8x^4-29x^3-18x^2+15x+6,\qquad
+N_0=h|_{d=t=0},\quad N_1=[t](h|_{d=0}).
+\end{gathered}
+$$
+
+The symbol $\mathscr K$ is $4k$ in F, Definition 31.1, and is the
+$K$ used in Theorem 8.4; it is not the coefficient field $K$.
+These formulas fix all coefficient normalizations. Every actual world
+in $C(p_s(t),v_s(t))$ with terminal-$M$ response $m_s(t)$ satisfies
+$x>0$ and $f=\mathscr K=h=0$. Indeed $a_i=DH_i$ and $a_7=DH_7$,
+so the terminal equation is exactly $h=0$; the two necessary source
+equations are F, (31.4). No converse from these cleared equations to a
+world is part of this definition.
+
+**Lemma 17.3 (Fixed quadratic–quartic elimination inside the companion
+system).** For coefficients in a commutative ring, write
+
+$$
+F=Ay^2+By+C,\qquad G=G_4y^4+G_3y^3+G_2y^2+G_1y+G_0
+$$
+
+and define the polynomial expressions
+
+$$
+\begin{aligned}
+\alpha&=G_4(-B^3+2ABC)+G_3A(B^2-AC)-G_2A^2B+G_1A^3,\\
+\beta&=G_4(-B^2C+AC^2)+G_3ABC-G_2A^2C+G_0A^3,\\
+Z(F,G)&=A\beta^2-B\alpha\beta+C\alpha^2.
+\end{aligned}
+$$
+
+Then, with the fixed degree-$(2,4)$ Sylvester determinant,
+
+$$
+\begin{gathered}
+A^3G=HF+\alpha y+\beta,\\
+H=A^2G_4y^2+(A^2G_3-ABG_4)y
+  +A^2G_2-ABG_3+(B^2-AC)G_4,\\
+Z(F,G)=A^3\operatorname{Res}_y(F,G).
+\end{gathered}
+$$
+
+In particular every finite common root forces
+$\alpha y+\beta=0$ and $Z(F,G)=0$, including specializations with
+leading-degree drops.
+
+**Proof.** Multiplication of $HF$ gives the first identity coefficient
+by coefficient. The second is the fixed Sylvester determinant identity;
+equivalently it is the quadratic norm of the linear remainder, first
+over the universal coefficient fraction field and hence as a polynomial
+identity over $\mathbb Z$. For a finite common root the evaluation vector
+$(y^5,y^4,\ldots,1)^{\mathsf T}$ is in the kernel of the fixed Sylvester
+matrix, regardless of the leading coefficients. No division by $A$ is
+needed for either implication. This is the classical resultant method
+of Moreno Maza, *The resultant*, Definition 4 and Propositions 5–7,
+[primary text](https://www.csd.uwo.ca/~mmorenom/AM583/Lectures/ResultantGcd.html/node3.html),
+applied here to the specified companion polynomials. ∎
+
+**Lemma 17.4 (The terminal-equation pole and the self label).** At either
+strict embedding there is no finite complex solution of
+$\ell=0$, $h=f=\mathscr K=0$. If an actual companion instead has
+$x=x_s$, it is the singular world itself.
+
+**Proof.** In $L=K[x]/(\ell)$, $N_1$ is a unit. Define
+$t_0=-N_0N_1^{-1}\in L$, with its unique representative of degree less
+than four. Substitute this element into $f,\mathscr K$, reducing each
+coefficient modulo $\ell$, and apply Lemma 17.3 with variable $d$.
+Call its norm expression $Z_\ell\in L$, again represented in degree
+less than four. The following complete modular data use descending
+$x$-coefficient order; quotient-ring representatives have degree at most
+three. Every rational coefficient denominator in these reductions is a
+unit at the indicated prime.
+
+| Object at $113,\theta=77$ | Descending coefficients or residue |
+| --- | --- |
+| $\ell$ | $(105,84,95,15,6)$ |
+| $N_0\bmod\ell$ | $(111,56,99,77)$ |
+| $N_1\bmod\ell$ | $(56,60,53,0)$ |
+| $t_0$ | $(64,109,87,95)$ |
+| $Z_\ell$ | $(64,67,87,21)$ |
+| $\operatorname{Res}_x(\ell,N_1\bmod\ell)$ | $9$ |
+| $\operatorname{Res}_x(\ell,Z_\ell)$ | $76$ |
+| $x_s,\ell(x_s),A_{5s}$ | $91,24,86$ |
+
+Here $\Phi(77)=0$ modulo $113$. The table is obtained by the circuits
+of Definition 17.2, quotient-ring inversion of $N_1$, and Lemma 17.3,
+without changing the scale of any polynomial. Thus the two nonzero
+resultants prove
+
+$$
+\gcd_{K[x]}(\ell,N_1)=1,\qquad
+\gcd_{K[x]}(\ell,Z_\ell)=1.
+$$
+
+The characteristic-zero inference uses a finite localization, not a map
+from the whole field $K$ to $\mathbb F_{113}$. Specifically take the
+subring of $K$ generated by the finitely many reduced power-basis
+coefficients in the displayed calculation, inverting their rational
+denominators. Because those denominators are prime to $113$ and
+$\Phi(77)=0$, evaluation of the power-basis representatives defines the
+required reduction on this subring. Determinants commute with reduction.
+A nonzero reduced determinant cannot come from a zero element of $K$.
+Since $K$ is a field, the two nonzero resultants give the stated gcds
+and hence the units in $L$. Every real embedding is injective, so their
+nonvanishing holds at both strict embeddings. The same argument applies
+to each modular unit certificate below, with its stated prime and all
+its coefficient denominators included in the finite localization.
+
+If $\ell(x)=h(x,d,t)=0$, the first unit forces $t=t_0(x)$.
+A finite common $d$ root of the remaining two polynomials would force
+$Z_\ell(x)=0$ by Lemma 17.3. The second unit excludes this even if a
+quadratic or quartic leading coefficient vanishes. Thus division by
+$\ell$ loses no actual companion. This exclusion uses only necessary
+equations and retains zero drift, lower gain degree, sampled or repeated
+gain roots, and singular companions.
+
+For the self case, exact substitution gives
+$h(x_s,24+t,t)=0$, and $\ell(x_s)\ne0$, also certified by the table.
+Since $h$ is linear in $d$, it fixes $d=24+t$. The singular world and
+any actual companion then have the same $(x,d)$ at the same off-$24$
+base. F, Lemma 30.2, identifies their entire polynomials and sources,
+so they are the same complete world. Finally an actual $x>0$ has
+$D>0$; none of the $D=0$ labels can enter this argument. ∎
+
+**Lemma 17.5 (The exact degree-fifty factorization).** Form the exact
+polynomial quotients in $K[x,t]$
+
+$$
+F_s=\frac{\ell^2 f(x,-(N_0+N_1t)/\ell,t)}{D^2(x-x_s)},\qquad
+G_s=\frac{\ell^4\mathscr K(x,-(N_0+N_1t)/\ell,t)}{D^4(x-x_s)}.
+$$
+
+The arguments $t$ here include the substitutions $p_s(t),v_s(t)$ of
+Definition 17.2. Each displayed division has zero remainder. Their
+$(x,t)$ degrees are $(6,2),(13,4)$. Apply Lemma 17.3 in $t$, writing
+$F_s=At^2+Bt+C$, and denote its linear remainder coefficients by
+$\alpha_t,\beta_t$. Both have $x$-degree $31$. Let
+
+$$
+\begin{gathered}
+P=\operatorname{Res}_t(F_s,G_s)
+ =\frac{A\beta_t^2-B\alpha_t\beta_t+C\alpha_t^2}{A^3},\\
+F_0(x,p_s(t),v_s(t))=F_{00}(x)+F_{01}(x)t,\\
+W_2=\frac{F_{00}N_1-F_{01}N_0}{D(x-x_s)},\qquad
+Q_{14}=\frac{P}{\ell^8W_2^2}.
+\end{gathered}
+$$
+
+All three further divisions are exact polynomial divisions, not rational
+equations restricted by $A\ne0$. They give
+
+$$
+\deg_x P=50,\qquad\deg_x W_2=2,\qquad\deg_x Q_{14}=14,\qquad
+P=\ell^8W_2^2Q_{14},\qquad
+\alpha_tN_0-\beta_tN_1\equiv0\pmod{W_2}.
+$$
+
+No monic, primitive, or nonzero scalar rescaling is made in these
+definitions. Moreover
+
+$$
+\gcd(W_2,\ell)=\gcd(W_2,\alpha_t)=1,\qquad
+\gcd(Q_{14},\alpha_t)=\gcd(Q_{14},\ell)
+ =\gcd(Q_{14},Q_{14}')=1
+$$
+
+in $K[x]$ and at both strict embeddings.
+
+**Proof.** Substitute the four linear sample forms of Definition 17.2,
+multiply by the displayed powers of $\ell$, and divide in $K[x,t]$.
+Reducing every field coefficient modulo $\Phi$ gives zero remainders
+and the stated degrees. The quadratic–quartic expressions of Lemma 17.3
+then give $P$ by exact division by $A^3$. In the same coefficient field,
+division of $F_{00}N_1-F_{01}N_0$ by $D(x-x_s)$ gives $W_2$;
+division of $P$ by $\ell^8W_2^2$ has zero remainder and degree fourteen.
+Division of $\alpha_tN_0-\beta_tN_1$ by $W_2$ also has zero remainder.
+These rational circuits and exact quotient rules specify every
+characteristic-zero coefficient, including the scalar of $Q_{14}$.
+
+For the coprimality assertions the complete descending arrays and fixed
+Sylvester residues are
+
+| Object | Prime and $\theta$ image | Array or residue |
+| --- | --- | --- |
+| $W_2$ | $113,77$ | $(33,32,112)$ |
+| $\operatorname{Res}_x(W_2,\ell)$ | $113,77$ | $14$ |
+| $\operatorname{Res}_x(W_2,\alpha_t)$ | $113,77$ | $95$ |
+| $Q_{14}$ | $101,53$ | $(50,85,48,98,17,48,56,10,64,34,85,17,94,50,54)$ |
+| $\operatorname{Res}_x(Q_{14},\alpha_t)$ | $101,53$ | $53$ |
+| $\operatorname{Res}_x(Q_{14},\ell)$ | $101,53$ | $91$ |
+| $\operatorname{Res}_x(Q_{14},Q_{14}')$ | $101,53$ | $17$ |
+| $P(0),[x^{50}]P$ | $101,53$ | $97,62$ |
+| $x_s,\ell(x_s),A_{5s}$ | $101,53$ | $69,93,13$ |
+
+The $101$ specialization has $\Phi(53)=0$. All rational coefficient
+denominators in each row are units at that row's prime; the $W_2$ and
+$Q_{14}$ leading degrees survive. The localization argument of Lemma
+17.4 therefore proves all five characteristic-zero gcd assertions.
+The residues of $P$ also agree with Theorem 8.4's unscaled normalization.
+These reductions certify nonvanishing, not finite-field worlds. ∎
+
+**Lemma 17.6 (The degree-two factor has an actual exceptional consumer).**
+An actual companion of a singular world at $p\ne24$ with
+$x\ne x_s$ cannot give a distinct terminal-$M$ pair through $W_2(x)=0$.
+
+**Proof.** Lemma 17.4 gives $D\ell\ne0$. At $x\ne x_s$, the
+necessary equations give $F_s=G_s=0$. Lemma 17.3 gives
+$\alpha_tt+\beta_t=0$ even when $A=0$. At a $W_2$ root, Lemma
+17.5 gives $\alpha_t\ne0$, so $t=-\beta_t/\alpha_t$, and its last
+congruence gives
+
+$$
+N_0+N_1t=(\alpha_tN_0-\beta_tN_1)/\alpha_t=0,\qquad d=0.
+$$
+
+For an actual world the clock-zero identity in Theorem 3.2 is
+
+$$
+2F_0=d\bigl(45x^3+89x^2-32x-40+UD\bigr).
+$$
+
+Thus $d=0$ implies $F_0=0$. The companion and the singular endpoint
+are both in the actual exceptional union $E(p,v)$. Theorem 3.2 makes
+$f_{MM}$ injective on that union, excluding their distinctness. This
+uses the full original clock-zero equation of a world; it does not
+assign a world to a root merely because it lies on $W_2$. ∎
+
+**Lemma 17.7 (All roots of the residual factor at both strict embeddings).**
+At each of $\theta_-,\theta_+$ the polynomial $Q_{14}$ has exactly
+one negative real root, five positive real roots and four nonreal
+conjugate pairs. The following rational prescription and inequalities
+are a complete isolation certificate.
+
+Bisect the corresponding sign-changing bracket $I_\pm$ exactly $1050$
+times, always retaining the sign change of $\Phi$. Denote the resulting
+closed interval by $I_\pm^{(1050)}$ and its exact rational midpoint by
+$u_\pm$. For each reduced power-basis coefficient of $Q_{14}$ evaluate
+at $u_\pm$, divide by the leading $x$ coefficient at that midpoint,
+and round each normalized coefficient using
+
+$$
+\operatorname{Round}_{110}(a)=10^{-110}
+ \left\lfloor10^{110}a+\tfrac12\right\rfloor.
+$$
+
+Call this rational monic polynomial $q_\pm^{\rm c}$. The rows below
+are the fourteen exact Gaussian-rational seeds for each embedding;
+all displayed decimals are terminating rational numbers, not root
+definitions by approximation.
+
+| Index | Seed at $\theta_-$: $(\Re,\Im)$ | Seed at $\theta_+$: $(\Re,\Im)$ |
+| --- | --- | --- |
+| $0$ | $(-.30194950,0)$ | $(-.32567481,0)$ |
+| $1$ | $(.34673109,0)$ | $(.34403412,0)$ |
+| $2$ | $(.62452039,0)$ | $(.61875101,0)$ |
+| $3$ | $(3.6743264,0)$ | $(1.3718257,0)$ |
+| $4$ | $(3.7043082,0)$ | $(1.7789920,0)$ |
+| $5$ | $(37.031890,0)$ | $(3.6816386,0)$ |
+| $6$ | $(.83008130,-.42683423)$ | $(.77443115,-.043518373)$ |
+| $7$ | $(.83008130,.42683423)$ | $(.77443115,.043518373)$ |
+| $8$ | $(1.0639158,-.10853218)$ | $(1.1245683,-.14944337)$ |
+| $9$ | $(1.0639158,.10853218)$ | $(1.1245683,.14944337)$ |
+| $10$ | $(1.2936296,-.27470908)$ | $(1.2179597,-.31713858)$ |
+| $11$ | $(1.2936296,.27470908)$ | $(1.2179597,.31713858)$ |
+| $12$ | $(1.3766565,-.35969277)$ | $(1.2660339,-.37047289)$ |
+| $13$ | $(1.3766565,.35969277)$ | $(1.2660339,.37047289)$ |
+
+Starting at each seed perform eight Newton recurrences for
+$q_\pm^{\rm c}$, computing each recurrence over $\mathbb Q(i)$ and
+then applying $\operatorname{Round}_{110}$ separately to its real and
+imaginary components. Let $c_{\pm,i}$ be the resulting centres and
+$\gamma_{\pm,i}=1/(q_\pm^{\rm c})'(c_{\pm,i})$ exactly. Put
+
+$$
+\rho=10^{-65},\qquad
+\mathcal R_{\pm,i}
+=\{z:|\Re(z-c_{\pm,i})|\le\rho,\quad
+        |\Im(z-c_{\pm,i})|\le\rho\}.
+$$
+
+For the true embedded polynomial let
+$q_\pm=Q_{14}/[x^{14}]Q_{14}$. Evaluate its reduced power-basis
+coefficients on $I_\pm^{(1050)}$, normalize by the interval for the
+true leading coefficient, and use descending-power Horner evaluation
+in $\theta$ and $x$. Real interval arithmetic takes the outer minimum
+and maximum of endpoint products and, for division, requires the divisor
+interval to exclude zero. Complex arithmetic uses its real and imaginary
+component intervals. Round each elementary interval endpoint outward to
+a multiple of $10^{-400}$. The leading coefficient intervals exclude
+zero. Every one of the twenty-eight rectangles satisfies the exact
+rational inequalities
+
+$$
+\begin{aligned}
+\sup_{z\in\mathcal R_{\pm,i}}
+\bigl(|\Re(1-\gamma_{\pm,i}q_\pm'(z))|
+     +|\Im(1-\gamma_{\pm,i}q_\pm'(z))|\bigr)&<10^{-50},\\
+\max\bigl(|\Re(\gamma_{\pm,i}q_\pm(c_{\pm,i}))|,
+          |\Im(\gamma_{\pm,i}q_\pm(c_{\pm,i}))|\bigr)&<10^{-100}.
+\end{aligned}
+$$
+
+Uniform upper bounds, written as exact terminating rationals, are
+
+| Embedding | Derivative row-sum bound | Centre displacement bound |
+| --- | --- | --- |
+| $\theta_-$ | $1.786\cdot10^{-57}$ | $8.547\cdot10^{-109}$ |
+| $\theta_+$ | $7.665\cdot10^{-56}$ | $1.768\cdot10^{-106}$ |
+
+The rectangles at each embedding are pairwise disjoint. Rectangles
+$1,\ldots,5$ are strictly to the right of zero, rectangle $0$ is
+strictly to its left, and rectangles $6,\ldots,13$ exclude the real
+axis. The upper-embedding root in rectangle $3$ lies in the rational
+interval
+
+$$
+I_*=(1.3718256939,1.3718256940),
+$$
+
+and no other upper-embedding root lies in that interval.
+
+**Proof.** The coefficient divisions in Lemma 17.5 and the finite
+rational rules just specified give the displayed bounds on every whole
+rectangle. In particular none of the Newton-centre derivative inverses
+is undefined. In the real-imaginary maximum norm the first bound is
+the operator norm of the derivative of
+$z\mapsto z-\gamma_{\pm,i}q_\pm(z)$. The second bounds its displacement
+at the centre, and
+
+$$
+10^{-100}+10^{-50}\rho<\rho.
+$$
+
+Consequently this map contracts the complete closed rectangle strictly
+into itself. Banach's contraction theorem, cited in Section 2, gives
+one root in each rectangle and uniqueness there. Fourteen disjoint
+rectangles exhaust a degree-fourteen polynomial, including complex roots
+and multiplicities. The first six centres are real, so conjugation and
+uniqueness make their roots real. The other eight rectangles exclude the
+real axis. Their signs, disjointness, and the inclusion in $I_*$ follow
+by the same rational endpoint comparisons. Thus the certificate does
+not infer exhaustiveness from a real scan or a list of decimal roots. ∎
+
+**Lemma 17.8 (All positive residual roots with strict source guards).**
+For an actual distinct companion through $Q_{14}(x)=0$, the only
+possible embedding and root are $\theta_+$ and the root $x_*$ in $I_*$.
+At each positive root define necessarily
+
+$$
+\begin{gathered}
+t=-\beta_t/\alpha_t,\qquad
+p=p_s(t),\quad v=v_s(t),\quad m=m_s(t),\quad
+d=-(N_0+N_1t)/\ell,\\
+h_3=(24-d)/x,\quad h_4=18-d,\quad
+h_5=(p-d)/(x+1),\quad h_6=(v-d)/(x+2),\\
+H_0=20h_3-45h_4+36h_5-10h_6,\\
+H_1=10h_3-20h_4+15h_5-4h_6,\qquad
+H_2=4h_3-6h_4+4h_5-h_6,\\
+B_0=294/5-2d-H_2,\quad C_0=d^2+B_0^2,\quad
+U=(-dH_0+B_0H_2)/C_0,\\
+b=(U-1)/2,\qquad j=U(24-d)/H_1,\qquad r=xU-j.
+\end{gathered}
+$$
+
+On the real sections of all ten positive-root boxes
+$\alpha_t,\ell,H_1$ exclude zero,
+$|H_1|>1/10$ and $C_0>3/10$. With the coefficient and interval
+rules of Lemma 17.7 the complete open rational guard enclosures are
+
+| Embedding and root index | Enclosure of $r$ | Enclosure of $b$ | Necessary strict-source outcome |
+| --- | --- | --- | --- |
+| $-,1$ | $(2.0910,2.0911)$ | $(1.0965,1.0967)$ | $r>1$ |
+| $-,2$ | $(-7.7081,-7.7078)$ | $(-13.513,-13.512)$ | $r<0,b<0$ |
+| $-,3$ | $(1.1476,1.1479)$ | $(-.0856,-.0853)$ | $r>1,b<0$ |
+| $-,4$ | $(-.2526,-.2523)$ | $(-.0945,-.0942)$ | $r<0,b<0$ |
+| $-,5$ | $(1.2828,1.2831)$ | $(-.4791,-.4788)$ | $r>1,b<0$ |
+| $+,1$ | $(2.8020,2.8024)$ | $(1.6912,1.6916)$ | $r>1$ |
+| $+,2$ | $(21.835,21.836)$ | $(53.583,53.584)$ | $r>1$ |
+| $+,3$ | $(.8985,.8986)$ | $(.1301,.1303)$ | Only possible strict companion |
+| $+,4$ | $(-.0260,-.0258)$ | $(-.0152,-.0149)$ | $r<0,b<0$ |
+| $+,5$ | $(1.1603,1.1606)$ | $(-.2982,-.2978)$ | $r>1,b<0$ |
+
+**Proof.** Lemma 17.5 makes $\alpha_t$ and $\ell$ nonzero at every
+$Q_{14}$ root. At a common $F_s,G_s$ root their polynomial linear
+remainder fixes $t$, and $h=0$ fixes $d$, giving the displayed formulas
+without any assumption on the leading coefficient $A$. Interpolation
+and the robust formula of F, Lemma 30.2, fix $U,j,r,b$ for every actual
+world. Evaluation on the real sections of the ten rectangles gives the
+listed intervals and nonzero reconstruction denominators. The nine rejected rows contradict
+$b>0$ or $0<r<1$. The negative and nonreal roots of Lemma 17.7 cannot
+be actual $x>0$. The retained row is only a necessary candidate;
+neither $Q_{14}=0$ nor the two inequalities alone assert a complete
+world or its terminal equality. ∎
+
+**Lemma 17.9 (Exact identification with the supplied actual pair).**
+The actual singular/ordinary pair $\{S_1,O_1\}$ in Theorem 8.2 has
+singular embedding $\theta_+$ and companion coordinate $x=x_*$.
+
+**Proof.** Let $(c_\theta,c_r,c_b)$ be exactly the three rational
+centre coordinates with denominator $10^{85}$ in Theorem 8.2, and let
+$\mathcal Z_8$ be their closed box of component radius $10^{-75}$.
+Evaluation on that entire rational box gives
+
+$$
+\theta(\mathcal Z_8)\subset I_+,\qquad
+\frac{b+r(1-r)/b+r}{1+2b}(\mathcal Z_8)
+ \subset(1.3718256939,1.3718256940)=I_*.
+$$
+
+Here $b$ and $1+2b$ exclude zero throughout the box. These inclusions
+are rational interval inclusions for the displayed source expression,
+using outward endpoint rounding to $10^{-400}$ as in Lemma 17.7.
+The supplied pair is actual and distinct, so Lemma 17.4 excludes the
+pole and the self case. Lemma 17.6 excludes $W_2$; Lemma 17.5 then
+places its $x$ on $Q_{14}$. Lemma 17.7's root isolation identifies
+it with $x_*$. Existence, every original-clock equality, the whole
+nonzero gains, strict source guards and within-pair distinctness here
+come from Theorem 8.2's actual construction, not from a converse to a
+projected-root test. ∎
+
+## 18. The unique actual singular-$M$ base and its same-child consumer
+
+**Theorem 18.1 (All off-$24$ terminal-$M$ pairs with a singular endpoint).**
+Use $\theta=\theta_+$, let $x_*$ be the unique $Q_{14}$ root in $I_*$,
+and define the exact algebraic quantities
+
+$$
+t_*=-\frac{\beta_t(x_*)}{\alpha_t(x_*)},\qquad
+q_*=(p_*,v_*)=
+\bigl(24+A_{5s}t_*,\ 24+K_{6s}+A_{6s}t_*\bigr).
+$$
+
+Then $q_*$ is precisely Theorem 8.2's base $(p^*,v^*)$ and
+$t_*\ne0$. For every real $p\ne24,v$ and every distinct pair of
+complete worlds $W,W'\in C(p,v)$,
+
+$$
+\bigl[f_{MM}(W)=f_{MM}(W')\ \text{and}\
+       \Lambda(W)\Lambda(W')=0\bigr]
+\quad\Longleftrightarrow\quad
+\bigl[(p,v)=q_*\ \text{and}\ \{W,W'\}=\{S_1,O_1\}\bigr],
+$$
+
+where $S_1,O_1$ are the exact whole worlds of Theorem 8.2.
+In particular
+
+$$
+\mathcal B_{\mathcal S,M}=\{q_*\}.
+$$
+
+This equality concerns the actual guarded set, with no assertion that
+the unfiltered outer projection of Theorem 8.4 is a singleton.
+
+**Proof.** Choose a singular endpoint of any pair on the left. O,
+Theorem 29.2, and Definition 17.1 put it on exactly one of the two
+strict singular lines, at $t=(p-24)/A_{5s}\ne0$. Any actual companion
+of any source type has finite real $x>0,d$ satisfying the unscaled
+equations of Definition 17.2. Lemma 17.4 excludes $\ell=0$ and
+$x=x_s$ for a distinct pair. At every other actual label
+$D\ell(x-x_s)\ne0$, so $F_s=G_s=0$. Their fixed resultant vanishes,
+and the exact factorization in Lemma 17.5 leaves $W_2=0$ or
+$Q_{14}=0$. Lemma 17.6 excludes the former. Lemmas 17.7–17.8 exhaust
+both strict embeddings and all roots of the latter, leaving exactly
+$\theta_+,x_*$. Their unit certificates make $t=t_*$ and
+$d=-(N_0+N_1t_*)/\ell$ unique, and hence fix the acquired base $q_*$.
+
+Lemma 17.9 identifies Theorem 8.2's actual distinct pair with that
+same root and embedding. The uniquely fixed $t$ identifies its singular
+world by O's singular-line converse; the uniquely fixed companion
+$(x,d)$ identifies its whole world by F, Lemma 30.2. Thus the original
+pair is exactly $\{S_1,O_1\}$ and its base is Theorem 8.2's base.
+That base is off $24$, so $t_*\ne0$. Conversely the supplied pair
+satisfies all the equations and guards and has equal terminal-$M$
+responses, proving the reverse implication and actual nonemptiness.
+
+No gain coefficient, drift, or sampled value has been cancelled.
+Candidate-dependent denominators have each been handled:
+$D>0$ on actual worlds, $\ell=0$ by Lemma 17.4, $x=x_s$ by the self
+case, $\alpha_t\ne0$ on both residual factors by Lemma 17.5, and
+$H_1,C_0\ne0$ on every positive residual box by Lemma 17.8.
+This proves the statement over all real off-$24$ bases, rather than a
+bounded strip or a generic set of bases. ∎
+
+**Corollary 18.2 (Entire-child exclusion of the chosen-$M$ singular sector).**
+There are no real $p\ne24,v$ and four complete labels
+$W_0,W_1,W_2,W_3\in C(p,v)$ satisfying
+
+$$
+\begin{gathered}
+W_0\ne W_1,\qquad f_{MJ}(W_0)=f_{MJ}(W_1),\\
+W_2\ne W_3,\qquad f_{MM}(W_2)=f_{MM}(W_3),\qquad
+\Lambda(W_2)\Lambda(W_3)=0.
+\end{gathered}
+$$
+
+Cross-pair overlaps or disjointness are unrestricted, and the two
+terminal common values are not required to agree.
+
+**Proof.** Theorem 18.1 forces $(p,v)=q_*$ and
+$\{W_2,W_3\}=\{S_1,O_1\}$. Theorem 8.2 makes $f_{MJ}$ injective
+on the entire $C(q_*)$, which has exactly its three supplied worlds.
+It therefore excludes any distinct $J$ pair in that child, not only
+the selected $M$ pair. This contradicts $W_0\ne W_1$ and their
+terminal-$J$ equality, whether the two pairs share labels or are
+disjoint. ∎
+
+**Definition 18.3 (The residual original relation and ancestor conditions).**
+Let $Y=\{(p,v)\in\mathbb R^2:p\ne24\}$ as in Section 16. Restrict
+only the chosen-$M$ pair relation by
+
+$$
+\mathcal P_M^{\rm ns}
+=\{(q,W_2,W_3)\in\mathcal P_M:
+       \Lambda(W_2)\ne0,\ \Lambda(W_3)\ne0\}.
+$$
+
+Corollary 18.2 gives the exact equality of original joint relations
+
+$$
+\mathcal P_J\times_Y\mathcal P_M
+=\mathcal P_J\times_Y\mathcal P_M^{\rm ns}.
+$$
+
+By Theorem 3.2 at least one chosen-$M$ endpoint in this residual
+relation lies outside $E(q)$. The other may still be a nonsingular
+$F_0=0$ world, including a zero-drift world. No restriction is placed
+on singular worlds in the $J$ pair or elsewhere in the entire child.
+Determining whether this residual relation has an actual point over
+all $Y$, or proving it empty, is still the original same-child
+alternative in Definition 1.2, with all original strict guards.
+
+A positive sixth-$M$ joint child would additionally require the
+sixth-$J$ joint child at that same fifth response $p$, the fifth-$J$
+and common-parent conditions, and all eight-slot and ancestor conditions
+of O, Theorem 17.1, for the corresponding fifth-$M$ $L_2$, $H_4$
+$L_3$, root $L_7$ or eight-versus-nine conclusion. None of those
+additional conditions is supplied by the chosen-$M$ singular-sector
+classification.
+
+**Assumption 18.4 (Supplier correspondence and mathematical attribution).**
+Sections 17–18 use the following exact mathematical premises and
+source-specific deductions.
+
+| Premise | Precise use |
+| --- | --- |
+| O, Theorems 2.1–2.2, 4.2 and 29.2 | Complete zero-safe original parent, exactly two strict singular sources, nonzero $A_{5s}$, and their unique whole-world lift for each fifth response. |
+| F, Lemma 30.2 and Definition 31.1 | Injective whole-world reconstruction and the two necessary cleared equations, with $\mathscr K=4k$. Cleared roots alone are not legal worlds. |
+| This volume, Theorem 3.2 | Irreducible coefficient field and terminal-$M$ injectivity on the actual exceptional union; this supplies the consumer excluding $W_2$. |
+| This volume, Definition 8.1 and Theorems 8.2, 8.4 | The unchanged affine clock-response lines, the already supplied actual pair and entire-child $J$ injectivity, and the unscaled degree-fifty elimination framework. |
+| Moreno Maza, Definition 4 and Propositions 5–7, cited in Lemma 17.3 | Classical Sylvester determinant and coprimality method over the indicated coefficient field and finite localizations. |
+| Banach, pp. 133–181, cited in Section 2 | Classical contraction on the specified complete rational rectangles, used internally for the strict-real isolation certificate. |
+| Lemmas 17.4–17.9 and Theorem 18.1 | The pole exclusion, exact $\ell^8W_2^2Q_{14}$ factorization, actual exceptional consumer, both-embedding root and guard exhaustion, and exact identification of the unique actual singular-endpoint pair. |
+
+The source-specific classification extends the finite actual-set
+statement of Theorem 8.4; the actual supplier in Theorem 8.2 and its
+whole-child separation are reused as premises. Resultants and
+contraction are classical internal methods. This attribution is confined
+to these named sources and this classification; it makes no claim of
+worldwide novelty or a global literature classification. The existing
+$p=24$ joint child, exact-$p_J$ exclusions, standalone off-$24$ $M$
+pair, finite-world bound, false lifts, nonclosed collision image and
+boundary results retain their own quantified scopes. All auxiliary
+coordinates remain mathematical descriptions, with only Definition
+1.1's original actions and acquired reads available.
+
+## 追加锚（本行以下为增补区）
