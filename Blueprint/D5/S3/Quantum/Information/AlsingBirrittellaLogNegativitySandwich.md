@@ -94,6 +94,10 @@ $$(\forall d \in \mathbb{N},\; \forall K \in \mathbb{N},\; \forall p \in \operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/AlsingBirrittellaLogNegativitySandwich.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alsing-birrittella-2024-log-negativity-sandwich` (proved) by `D5/S3/Quantum/Information/AlsingBirrittellaLogNegativitySandwich.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alsing-birrittella-2024-log-negativity-sandwich","declaration_gid":"D5/S3/Quantum/Information/AlsingBirrittellaLogNegativitySandwich.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. M. Alsing; R. J. Birrittella (2024). *Numerical Evidence for a Bipartite Pure State Entanglement Witness from Approximate Analytical Diagonalization*. DOI: [10.3390/foundations5020019](https://doi.org/10.3390/foundations5020019). URL: <https://arxiv.org/abs/2404.13725v1>.
