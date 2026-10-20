@@ -1,0 +1,32 @@
+**定理 1347.1（高阶最优者最终达到主权重上限）。** 对每个固定 $0<\kappa<1$ 与固定 $1<\alpha<\infty$，存在 $N_*(\kappa,\alpha)$，使所有 $N\ge N_*$ 的每个来源幂和最优者均有
+
+$$
+w_1=1-\kappa.
+$$
+
+**证明。** 记 $c_0=\alpha(a/2)^\beta>0$。在 $0\le\delta\le a/2$ 上，由导数下界有
+
+$$
+(a-\delta)^\alpha-a^\alpha\le-c_0\delta.
+$$
+
+函数
+
+$$
+F(\delta)=(2\kappa+B\delta)^\beta
+[\kappa+(1+2C_\beta)\delta]
+$$
+
+在该闭区间上连续可微，因为 $\kappa>0$。取有限常数 $L_0=\max_{[0,a/2]}|F'(\delta)|$，便有 $F(\delta)-F(0)\le L_0\delta$，且 $F(0)=\kappa(2\kappa)^\beta$。
+
+公平加点幂和准确等于 $a^\alpha+2^{-N\beta}F(0)$。所以第 1346 节给
+
+$$
+\sum_jw_j^\alpha-S^{\mathrm{fp}}_{\alpha,N}
+\le\delta[-c_0+L_0 2^{-N\beta}+4^\alpha\delta^\beta].
+$$
+
+第 1342 节保证所有最优者的 $\delta=a-w_1$ 一致趋零，因而最终同时满足前几节的范围及 $4^\alpha\delta^\beta\le c_0/3$。再增大维数使 $L_0 2^{-N\beta}\le c_0/3$。若仍有 $\delta>0$，右侧至多为 $-c_0\delta/3<0$，与最优幂和至少达到公平加点值矛盾。因此全部最优者最终必须有 $\delta=0$。证毕。
+
+该维数阈值同时取过最大分量公平分支生效的阈值、通道引理的阈值、全部最优者集中所需阈值及两个小量条件的阈值。它对所有最优来源同时有效，没有计算最小阈值。固定 $\alpha>1$ 是关键条件；若让阶随维数趋于一，两个小量条件并不由本节自动满足。
+

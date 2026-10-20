@@ -1,0 +1,44 @@
+**定义 21.1（固定颜色合同及一阶来源域）。** 沿用定义 20.1 的
+$\Sigma=(O,L,T,R,J)$，以此顺序排列概率和带符号变化；它们对应索引
+$(\mathrm{null},1,2,3,\{1,3\})$，对应数量列表
+$(\mathrm{null},[2],[3],[5],[2,5])$。坐标仍为低—高—中
+$(x,y,z)$，印刷位串仍为低—中—高。固定命题 20.2 的五个实三维颜色、
+$b,A,j$，它们不随参数变化。取全正概率域
+
+$$
+\Delta_4^\circ=\{p\in\mathbb R^5:p_s>0,\ \sum_s p_s=1\},\qquad
+T_0=\{h:\sum_s h_s=0\}.
+$$
+
+一阶来源是 $(p,h)\in\Delta_4^\circ\times T_0$，即一条双侧可微概率曲线的
+当前律与当前速度。以 $m=(X,Y,Z)$、$\kappa=p_J$ 表示 $p$，
+以 $\dot m=(h_L+h_J,h_R+h_J,h_T)$、$\dot\kappa=h_J$ 表示 $h$。
+每个这样的速度都由充分短的曲线 $p+th$ 实现。这里的参数不指定物理时间。
+实际边界曲线的可行条件采用
+[局部源分裂卷定义 3.2、定理 3.3–3.4](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)，
+不把仿射包络中的全部速度授予零概率点。
+
+本合同使用本卷推导 3.2、数学引文 4.1 和
+[基础公式卷数学引文 2.2、4.2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)
+的五函数基、概率逆式和归一化核。具体配对为
+
+$$
+\langle f,h\rangle=\sum_s f_s h_s,\qquad
+d=(1,-1,0,-1,1),\qquad
+\langle f,d\rangle=f_J-f_L-f_R+f_O.
+$$
+
+故函数商
+$\mathbb R^\Sigma/\operatorname{span}\{1,x,y,z\}$
+的一维余类 $[xy]$ 与概率差方向 $\mathbb Rd$ 经这个配对对偶，
+$\langle xy,d\rangle=1$；两者不是同一个空间，也未指定规范正交补。
+全 $\mathbb R^5$ 上的位置核另含空模式质量方向，只有限制到 $T_0$ 才为
+$\mathbb Rd$。联合一阶报告定义为
+
+$$
+\mathcal J_c(p,h)=(m,\bar c,\dot m,\dot{\bar c}),\qquad
+\bar c=b+Am+j\kappa,\quad
+\dot{\bar c}=A\dot m+j\dot\kappa.
+\tag{21.1}
+$$
+

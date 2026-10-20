@@ -1,0 +1,16 @@
+**Definition 20.1 (Two full nuisance families on the original history).** Throughout this section fix $H=H_c$ exactly as in (19.7), and put
+
+$$
+\begin{aligned}
+F_0(k)&=k^9,&F_1(k)&=H(k),&Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,\\
+f_{i,q}(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),&f_{i,q}(0)&=0,\\
+\mu_i(q)&=\mathbb E_{i,q}(K+1),&
+\beta_i(q)&=\frac{\mathbb E_{i,q}[K(K+1)]}{2\mu_i(q)}.
+\end{aligned} \tag{20.1}
+$$
+
+Write $\mathsf P_{i,q}$ for the actual stationary binary law supplied by Theorems 11.5 and 15.3 with these weights. Positivity and the bound
+$1\le r_k:=H(k)/k^9\le1+\delta_9/k$ are supplied by Theorem 15.5. The promise is membership in one of the two families $\{\mathsf P_{0,q}:0<q<1\}$ and $\{\mathsf P_{1,q'}:0<q'<1\}$. The opposing $q'$ is unconstrained by $q$; only an explicitly supplied band below restricts either parameter.
+
+The only source actions remain consecutive read-next-bit and stop, beginning at a stationary time. The observer knows the two fixed rational polynomials and a rational risk allowance $0<\alpha<1/2$, but receives no value, approximation or oracle for the true parameter. Each source has its own stationary initialization. There are no resets, parallel copies, hidden ages, probability queries, skipped zeros or free conditional samples. The initial wait, rejected pairs and any unfinished interval at a deadline all count as reads. Rational allowances suffice for any prescribed positive real risk by choosing a smaller rational allowance. All logarithms below are natural.
+

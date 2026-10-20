@@ -581,3 +581,17 @@ This is neither an arithmetic counterexample nor a refutation of the
 cofinal selected-source obligation in CW5. The application is a paper
 derivation without new Lean declarations; an argument using additional
 same-source arithmetic relations remains outside its scope.
+
+
+## General density also pays the same original mask relative to source height
+
+The [same-source all-zero application](../Estimation/trureturing2026pricegapconvexity.md#the-retained-source-height-pays-every-zero-in-the-same-frequency-mask)
+combines Theorem 1.2's density exponent with the already recorded
+Ingham exponent, the complete original compensated coefficient and
+the original positive source height. For the originally supplied
+$1-\Theta<\eta<9/28$, it pays all zeros in the unchanged SIH1
+real-part and frequency mask, including non-half-isolated zeros at
+$\Theta=1$, relative to the same complete response. It preserves the
+remaining-head lower margin. The application does not improve a density
+theorem, assert an absolute $o(M_XL_X)$ allowance, or supply the
+complementary signed upper estimate, Robin, RH or Lean certification.

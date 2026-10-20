@@ -1,0 +1,8 @@
+它把上一续篇的三层边界和最新 `dev` 的 uniform descriptor boundary 连接成
+一个条件编译链：
+
+- 图表层回答来源和动作是否被完整表示；
+- descriptor 层回答是否存在统一的 finite boundary；
+- controller 层回答是否能在同一历史上执行并终止；
+- 资源层保留 raw、update、epoch 和安装成本的向量区别。
+

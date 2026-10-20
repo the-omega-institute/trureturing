@@ -1,0 +1,13 @@
+**定理 341.2（误差阈值的单调性）。** 若 \(0\le\varepsilon\le\varepsilon'\)，则
+\[
+I_\varepsilon\subseteq I_{\varepsilon'},
+\qquad
+\Phi'_\varepsilon\subseteq\Phi'_{\varepsilon'},
+\qquad
+\mathcal A'_\varepsilon\subseteq\mathcal A'_{\varepsilon'}.
+\]
+任务侧允许误差越大，任务共同充分的访问集合越多；访问侧固定一族访问时，共同可恢复任务越多。
+
+### 证明
+第一项由风险阈值包含。访问导出要求对所有任务成立，关系扩大反而使满足全部任务的访问集合扩大，得到第二项；任务导出要求访问集合中的每个对象都与任务相连，关系扩大使共同任务集合扩大，得到第三项。证毕。
+

@@ -1,0 +1,22 @@
+## 7. 实际验证、研究价值和剩余承重问题
+
+在 110 位和 130 位定向区间精度分别运行同一 verifier，全部八组有限惯性端点检查、两个含完整无限尾的残差检验、分母正性、函数范数和有理误差门均通过。提案生成可使用任意不受信任的数值方法；证书只依赖固定 dyadic 数据、标准区间四则/exp/log/sqrt 和明确的纸面算子界。它依赖 mpmath.iv、Python 与整数实现的正确性，未被 Lean 内核重放。
+
+最终 verifier SHA-256：`42dceb5c81f9aabdc12b51a99d29f0929d81e712f815b49b13bbf9bb5ec56039`。
+提案 SHA-256：`242c9897bbd247ef0485039e6dcde819a351c5900ceac52fecc420934c1896db`。
+固定 Weil 候选依赖 SHA-256：`8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0`。
+
+本轮提供了实际文献模型的严格可执行评价，以及它与已认证算术候选的一条具体误差桥。此前任意 dyadic 候选与 prolate 模型的对应尚未量化；(PM13) 在一个含素数尺度消除了这一缺口。它没有证明该距离为零，也没有把这个固定小数外推成尺度衰减律。
+
+研究主体接下来应对同一 p_(h_lambda)^+ 或其带认证误差的有限多项式版本，计算实际 Weil 形式、完整候选正交补以及目标 Fourier 灵敏度。需要沿明确 lambda_n->infinity 的序列证明真实 ground/model 差的条带紧集一致预算消失，而不能仅凭已知 prolate/Xi 模型极限完成拼接。所有整体归一化因子、偶化、低频候选误差、算术 Schur 松弛和高频尾都必须保持对应。Legendre/Galerkin/Schur/区间工具本身是经典方法，本节不作首次发现声明。
+
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, (7.5)-(7.12), Lemma 7.3, Section 8. https://arxiv.org/html/2511.22755v1
+- NIST DLMF 30.2, 30.3 and 30.8, regular spheroidal differential equation, eigenvalues and Ferrers/Legendre expansions. https://dlmf.nist.gov/30.2 ; https://dlmf.nist.gov/30.3 ; https://dlmf.nist.gov/30.8
+- Mathlib pinned commit `db584cd6d46c92f209a44c0f1c829460d327499d`, `integral_exp_mul_complex` and interval integrability; existing repository `Zeta23.paperFT`.
+- loning #5296, theory source at `9adc8b7e64469344089ce298cb3ab3478aebb21c`, B10.3-B10.4 and B13.4; AlyciaBHZ #5882 and #5895, PR-level scope audit for existing projective/readout formalizations.
+
+
+---
+

@@ -1,0 +1,42 @@
+**命题 260.3（涨落--耗散关系的条件）。** 取外加平衡过阻尼模型
+
+$$
+\dot x(t)=-LKx(t)+Lf(t)+\eta(t),
+\qquad
+\langle\eta(t)\eta(s)^{\mathsf T}\rangle=2k_BT L\,\delta(t-s),
+\tag{260.9}
+$$
+
+其中 \(L=L^{\mathsf T}\succeq0\)、\(K=K^{\mathsf T}\succ0\)，静态能量为 \(H(x)=\tfrac12x^{\mathsf T}Kx-f^{\mathsf T}x\)，且初态为同一温度下的平衡系综。令 \(A=-LK\)，并以 \(f\) 作为与 \(x\) 共轭的外力，则平衡协方差为
+
+$$
+\Sigma=\langle x(0)x(0)^{\mathsf T}\rangle=k_BT K^{-1},
+\tag{260.10}
+$$
+
+响应和自发相关分别为
+
+$$
+R_x(t)=\mathbf 1_{\{t\ge0\}}e^{At}L,
+\qquad
+C_x(t)=\langle x(t)x(0)^{\mathsf T}\rangle=e^{At}\Sigma.
+\tag{260.11}
+$$
+
+因而有矩阵形式的涨落--耗散恒等式
+
+$$
+R_x(t)=-\frac1{k_BT}\,\mathbf 1_{\{t\ge0\}}\frac{{\rm d}}{{\rm d}t}C_x(t).
+\tag{260.12}
+$$
+
+若观测为 \(y=Ox\)，同一外力下
+
+$$
+R_y(t)=-\frac1{k_BT}\mathbf 1_{\{t\ge0\}}
+\frac{{\rm d}}{{\rm d}t}\langle y(t)x(0)^{\mathsf T}\rangle.
+\tag{260.13}
+$$
+
+(260.12)--(260.13) 需要平稳平衡、详细平衡、已知温度、扰动确实以共轭力进入、读出映射已校准以及相同的时间反演约定。若存在主动泵浦、非热储库、反馈、磁场下未作时间反演、隐藏耗散通道或非平衡稳态，协方差一般不能替代响应；必须另外记录相应的耗散或动力学项。FIB 递归没有给出 \(L,K,T\)、系综或共轭耦合，故不能由其自身推出涨落--耗散定律。
+

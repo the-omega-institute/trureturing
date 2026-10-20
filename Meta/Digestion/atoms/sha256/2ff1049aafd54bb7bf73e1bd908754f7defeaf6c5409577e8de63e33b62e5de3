@@ -1,0 +1,46 @@
+## 120. FIB 合法路径上的外加随机定向聚合物、自由能与候选标度
+
+固定 FIB 合法有向图及其长度 \(n\) 的合法路径集合 \(\Omega_n(x,y)\)。随机环境只给合法边加权，不改变路径集合。对路径
+\(\pi=(v_0,e_1,v_1,\ldots,e_n,v_n)\)，定义
+\[
+H_n^\xi(\pi)=\sum_{i=1}^n\xi_i(e_i),
+\qquad
+Z_n^\xi(x,y;\beta)
+=\sum_{\pi\in\Omega_n(x,y)}
+\mu_0(\pi)e^{\beta H_n^\xi(\pi)},
+\qquad
+Z_n^\xi(x;\beta)=\sum_yZ_n^\xi(x,y;\beta).
+\tag{120.1}
+\]
+参考路径权 \(\mu_0\)、逆温 \(\beta\)、随机势的时间相关性和端点坐标均为外加。静态边势与分层独立环境不是同一模型。
+
+在平稳遍历环境和相应指数矩条件下，quenched 与 annealed 自由能分别取为
+\[
+f_{\mathrm q}(\beta)=\lim_{n\to\infty}\frac1n
+\mathbb E_\xi\log Z_n^\xi,
+\qquad
+f_{\mathrm a}(\beta)=\lim_{n\to\infty}\frac1n
+\log\mathbb E_\xi Z_n^\xi,
+\qquad
+f_{\mathrm q}\le f_{\mathrm a}.
+\tag{120.2}
+\]
+若每层环境独立同分布，\(\Lambda(\beta)=\log\mathbb E e^{\beta\xi}\)，并且 \(\mu_0\) 是行随机核，则
+\[
+M_n=e^{-n\Lambda(\beta)}Z_n^\xi
+\]
+是可用于弱无序分析的非负鞅；若路径按计数而非概率核加权，还必须除以合法骨架的 Perron 增长因子。FIB 路径熵与参考核归一化不可混用。
+
+若合法路径具有真实横向坐标、非退化分叉和短程混合随机势，可提出 \(1+1\) 维 KPZ 候选标度
+\[
+\operatorname{Var}(\log Z_n)\asymp n^{2/3},
+\qquad
+\log Z_n-nf_{\mathrm q}=O_{\mathrm{fluc}}(n^{1/3}),
+\qquad
+|X_n-nv|=O_{\mathrm{fluc}}(n^{2/3}).
+\tag{120.3}
+\]
+这些是外加几何和无序满足条件时的候选普适律；有限宽 FIB 自动机的横向尺度有界时，通常应排除 KPZ 横向指数，转而分析随机矩阵乘积的中心涨落和速度型大偏差。第101节讨论的是随机界面生长，不能自动替代本节的路径配分函数。
+
+因此，FIB 只规定可走路径和合法性；随机势、温度、参考权、端点坐标和长度极限决定自由能、无序相及其标度。相同路径骨架可在弱无序、冻结或有限宽度模型中产生不同统计律。
+

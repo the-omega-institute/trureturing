@@ -1,0 +1,46 @@
+**Theorem 137.1 (Unrestricted original necessary cap bounds).** For every
+full sequence $1\ge a_1\ge a_2\ge\cdots>0$ tending to zero, every
+$\varepsilon>0$, and every original $A\in\mathcal N_2$ with
+$e_a(A)\le\varepsilon$, the following five bounds hold:
+
+$$
+\begin{aligned}
+45\varepsilon&\ge2a_2+5a_3+8a_4+8a_5-2,\\
+22\varepsilon&\ge a_2+3a_3+4a_4+3a_5-1,\\
+7\varepsilon&\ge a_3+a_4+a_5,\\
+19\varepsilon&\ge a_2+2a_3+3a_4+4a_5-1,\\
+46\varepsilon&\ge3a_2+7a_3+7a_4+8a_5-3.
+\end{aligned}
+\tag{137.1}
+$$
+
+They also hold for original $\mathcal O_2$ cap attainers. Addresses,
+repetitions, output tapes, actual tails, zero advice, common seed and
+finite handoff have the full original scope of Definition 130.1.
+There is no saturation, support-mask, five-active or tail-cut premise.
+These are necessary conditions, without a sufficiency claim.
+
+**Proof.** First work on full $\mathscr N_5$ with all 32 input words
+and arbitrary six-label terminal tables. Use the literal event rows of
+Definition 131.1, with scores $J_1,J_2,J_3,J_4,K_5=C_3+J_5$.
+Maximize (131.1) over all six labels, with no C3 maximizer restriction.
+The complete 16-schedule maximum-cell table is:
+
+| Schedule | J1 | J2 | J3 | J4 | K5 |
+| --- | --- | --- | --- | --- | --- |
+| empty | (22) | (11) | (4) | (9) | (21) |
+| 1 | (8,14) | (4,7) | (2,2) | (3,6) | (8,13) |
+| 2 | (8,14) | (4,7) | (1,3) | (3,6) | (8,13) |
+| 3 | (8,14) | (5,6) | (2,2) | (3,6) | (9,12) |
+| 4 | (10,12) | (6,5) | (2,2) | (3,6) | (9,12) |
+| 5 | (16,6) | (8,3) | (3,1) | (6,3) | (14,7) |
+| 12 | (2,6,8,8) | (1,3,4,4) | (0,2,1,1) | (1,2,3,4) | (3,5,8,8) |
+| 13 | (3,5,7,9) | (2,2,4,4) | (1,1,1,1) | (1,2,3,4) | (4,4,8,8) |
+| 14 | (4,4,8,8) | (3,1,4,4) | (1,1,1,1) | (1,2,3,4) | (5,3,7,9) |
+| 15 | (8,0,8,6) | (4,0,4,3) | (2,0,1,1) | (3,0,4,3) | (8,0,8,7) |
+| 23 | (3,5,7,9) | (2,2,4,4) | (1,0,1,2) | (1,2,3,4) | (4,4,8,8) |
+| 24 | (4,4,8,8) | (3,1,4,4) | (1,0,1,2) | (1,2,3,4) | (5,3,7,9) |
+| 25 | (8,0,8,6) | (4,0,4,3) | (1,0,2,1) | (3,0,4,3) | (8,0,8,7) |
+| 34 | (4,4,8,8) | (3,2,4,3) | (1,1,1,1) | (1,2,3,4) | (5,4,7,8) |
+| 35 | (8,0,8,6) | (5,0,4,3) | (2,0,1,1) | (3,0,4,3) | (9,0,8,7) |
+| 45 | (10,0,8,6) | (6,0,3,3) | (2,0,1,1) | (3,0,4,3) | (9,0,8,7) |

@@ -1,0 +1,30 @@
+### 定义 364.1（有限采样观察算子）
+
+固定 \(\tau>0\)，令
+
+$$
+A_\tau=U_\tau=e^{-i\tau\Delta_k}.
+$$
+
+设 \(A_\tau\) 的不同特征值为
+
+$$
+\zeta_1,\ldots,\zeta_r,
+$$
+
+相应谱投影为 \(Q_1,\ldots,Q_r\)。注意不同的 \(\Delta_k\) 特征值 \(\lambda,\mu\) 可能给出同一个采样特征值：
+
+$$
+e^{-i\tau\lambda}=e^{-i\tau\mu}
+\quad\Longleftrightarrow\quad
+\tau(\lambda-\mu)\in2\pi\mathbb Z.
+$$
+
+对接口 \(C\) 和 horizon \(N\)，定义
+
+$$
+\mathcal O_Nu
+=
+\bigl(Cu,\,CA_\tau u,\,\ldots,\,CA_\tau^{N-1}u\bigr).
+$$
+

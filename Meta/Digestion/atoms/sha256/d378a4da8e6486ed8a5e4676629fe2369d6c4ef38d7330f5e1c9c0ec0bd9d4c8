@@ -1,0 +1,15 @@
+作如下调度：
+
+- 在 $u_1$ 后先保留长度 $d_\varepsilon$ 的规范分支。
+- 在
+  $$
+  u_1+d_\varepsilon\le u\le u_1+T_\eta\varepsilon^2
+  $$
+  内走完 $\Gamma$，使用两端平坦、近乎匀速的调度
+  $$
+  0\le z'(u)\le
+  \frac{1+o(1)}{T_\eta\varepsilon^2}.
+  $$
+- 在随后的长度 $d_\varepsilon$ 内走半圆（236.20）。
+- 此后在固定的小窗口内沿另一实侧离开，再接到实际第三规范分支。
+

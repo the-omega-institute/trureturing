@@ -1,0 +1,33 @@
+# 109. 与当前 Lean 真值的追加锚定
+
+| 结构 | Lean 锚点 | 本增订中的角色 |
+|---|---|---|
+| Pauli 非交换、Born 权重、无矩阵 character | `D5/S3/Quantum/FiniteDimensional` | 最小有限维量子骨架 |
+| X/Z 无公共本征向量、Bell 非乘积、$c^N$ 阻尼 | `D5/S3/Quantum/QubitWitnesses` | 不兼容、纠缠与相干衰减见证 |
+| 阻尼复合与固定对角代数 | `D5/S3/Quantum/Decoherence` | 退相干半群与固定点 |
+| 环境记录 Gram 通道 | `D5/S3/Quantum/EnvironmentRecords` | 记录重叠到局部退相干 |
+| 坐标运输与 Hadamard 指针基 | `D5/S3/Quantum/PointerBasis` | 环境选择的稳定坐标 |
+| 投影记录、未读态与条件态 | `D5/S3/Observer/Conditioning` | Lüders instrument 的矩阵实例 |
+| 纯态秩一 Born 模平方化简 | `D5/S3/Observer/BornReduction` | state–effect pairing 的纯态证书 |
+| 复制地址记录的环境边缘 | `D5/S3/Observer/MeasurementMarginal` | 非选择性测量的具体 dilation |
+| 完备互补上下文层析 | `D5/S3/Quantum/Tomography/CompleteContextTomography` | $V_{\mathfrak O}=\operatorname{Herm}$ 的实例 |
+| 一维层析与独立布尔逃逸并存 | `D5/S3/Quantum/Tomography/ObserverDiagonalSeparation` | 对角—量子桥的当前严格边界 |
+| 读出—更新协变与交换子 | `D5/S3/Quantum/ObserverAlgebra`, `ObserverCommutator` | 非交换动态读出骨架 |
+| 更新缺陷半范数 | `D5/S3/Observer/ObserverMetric` | update-side geometry |
+| 循环窗口操作中心 | `D5/S3/Observer/CenterOperational` | 更新不变读出的具体中心 |
+| 非平凡窗口无 character | `D5/S3/Observer/WindowCharacter` | 强经典答案表障碍 |
+| Bell 态 CHSH 值 $2\sqrt2$ | `D5/S3/QuantumBounds/CHSHWitness` | 局域经典界之外的量子见证 |
+| 同一答案表的双重排除 | `D5/S3/Observer/ClassicalAnswerTableExclusion` | 非上下文／局域联合边界 |
+| 正迹保持映射存在平稳态 | `D5/S3/Quantum/ChannelFixedState` | 通道长期固定状态存在性 |
+| 双轴不可区分精化 | `D5/S3/Observer/Refinement/BiaxialMonotoneRefinement` | prime-time 单调性 |
+| 有限状态的有限 prime-time 层析 | `D5/S3/Observer/Refinement/FinitePrimeTimeTomography` | 量子有限维压缩的离散前身 |
+| 无限维残差测试量 | `D5/S3/Observer/Completion/ResidualProgressMeasure` | 无限维完成进度 |
+| 常维严格尾链与零终端 | `D5/S3/Observer/Completion/TerminalResidualDimension` | 裸维数失效反例 |
+| 对角通道不能造相干、Hadamard 可以 | `D5/S3/Observer/StateNotPath` | “状态不是经典路径”证书 |
+| GNS 矩阵范数平方恒等式 | `D5/S3/Quantum/GNSMatrix` | 正性配对的 Hilbert 几何 |
+| 通用克隆机约化谱与熵 | `D5/S3/Quantum/CloningMachine` | 近似克隆模型的现有分析 |
+
+本增订中的统一可见空间、物理反例证书、有限效果压缩、顺序 word-effect completion、一般 Gram 记录块、稳健 frame bounds、秩次模预算与局部约化等价尚未以本文同名 theorem 全部 Lean 闭合。
+
+---
+

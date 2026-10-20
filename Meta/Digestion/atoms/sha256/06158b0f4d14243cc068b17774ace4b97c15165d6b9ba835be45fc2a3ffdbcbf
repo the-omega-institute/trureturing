@@ -1,0 +1,132 @@
+### 定理 41.2（反馈不能将统一预算降到四次）
+
+在定义 41.1 的合同中，
+
+$$
+\boxed{n_{\rm det}(0,0)=n_{\rm fix}(0,0)=5.}                 \tag{41.1}
+$$
+
+对每个统一预算至多四次的确定性协议，都有两个合法固定世界，具有不同完整目标，
+却沿该协议产生同一个包含停止及答案的完整历史。
+
+**证明。** 先明确目标与有效来源的对应。置 $X=gR$、$h=\operatorname{tr}X$，则
+
+$$
+h=g\operatorname{tr}R\ne0,\qquad
+T=(X/h,h,\delta),\qquad X=h\,(R/\operatorname{tr}R).
+$$
+
+所以完整目标与 $(X,\delta)$ 一一对应。五次充分性直接复用定理 9.1：沿
+$I,M,JM,MJM,M^2JM$（按时间依次执行 $M,J,M,M$，每步必读），其整数线性逆
+恢复 $(X,\delta)$，再输出 $(X/h,h,\delta)$。该逆在任意实矩阵上成立，故也覆盖
+$g<0$ 时四项均负的 $X$；唯一新增的除法是除以已证非零的 $h$。这同时覆盖任意
+常漂移、零初读和重复读数值，不假定初读可作分母。
+
+下界只需 $g=1$ 的合法子域。预先固定以下七个世界 $W_j$，其中
+$g_j=1$、$\delta_j=-\operatorname{tr}R_j$：
+
+$$
+\begin{array}{c|c|r}
+j&R_j&\delta_j\\ \hline
+1&\left(\begin{smallmatrix}3&4\\3&4\end{smallmatrix}\right)&-7\\
+2&\left(\begin{smallmatrix}4&6\\2&3\end{smallmatrix}\right)&-7\\
+3&\left(\begin{smallmatrix}1&1\\4&4\end{smallmatrix}\right)&-5\\
+4&\left(\begin{smallmatrix}2&2\\4&4\end{smallmatrix}\right)&-6\\
+5&\left(\begin{smallmatrix}1&1\\2&2\end{smallmatrix}\right)&-3\\
+6&\left(\begin{smallmatrix}2&1\\2&1\end{smallmatrix}\right)&-3\\
+7&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&-2
+\end{array}
+$$
+
+每个矩阵四项为正且行列式为零，故秩恰为一。更明确地，对其中任意
+$R=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$，有
+$R=(p,r)^{\mathsf T}(1,q/p)$，因为 $ps=qr$。这给出一个正初始列和一个始终
+固定的正量具行；$M,J$ 都将正列送到正列，所以任意表中路径始终合法。
+七个矩阵两两不同，且在这些世界中 $X_j=R_j$，故完整目标两两不同。
+全部初读都是零。
+
+词 $w=E_1\cdots E_m$ 按时间顺序书写，累计矩阵为
+$A_w=E_m\cdots E_1$，$A_\varepsilon=I$。下表的 $S_w$ 是固定世界的指标集，
+最后一列是其中每个世界在词 $w$ 的全部前缀上产生的读数：
+
+$$
+\begin{array}{c|c|l}
+w&S_w&(z_0,\ldots,z_{|w|})\\ \hline
+\varepsilon&\{1,2,3,4,5,6,7\}&(0)\\
+M&\{1,2,3,4\}&(0,4)\\
+J&\{5,6,7\}&(0,0)\\
+MM&\{1,2\}&(0,4,11)\\
+MJ&\{3,4\}&(0,4,4)\\
+JM&\{5,6,7\}&(0,0,1)\\
+JJ&\{6,7\}&(0,0,0)\\
+MMM&\{1,2\}&(0,4,11,22)\\
+MMJ&\{1,2\}&(0,4,11,10)\\
+MJM&\{3,4\}&(0,4,4,8)\\
+MJJ&\{3,4\}&(0,4,4,4)\\
+JMM&\{5,6\}&(0,0,1,4)\\
+JMJ&\{5,7\}&(0,0,1,1)\\
+JJM&\{6,7\}&(0,0,0,1)\\
+JJJ&\{6,7\}&(0,0,0,0)
+\end{array}                                                   \tag{41.2}
+$$
+
+表中各项由以下同一恒等式直接计算。若
+$A=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$，则在上述世界中
+
+$$
+z_A=ap+br+cq+es-p-s,\qquad
+MA=\begin{pmatrix}c&e\\a+c&b+e\end{pmatrix},\qquad
+JA=\begin{pmatrix}c&e\\a&b\end{pmatrix}.
+$$
+
+从 $A=I$ 迭代这两个乘法式并代入七个矩阵即得 (41.2)；例如 $JM$ 的三世界
+$5,6,7$ 共同给出 $(0,0,1)$，随后 $M$ 保留 $5,6$，而 $J$ 保留 $5,7$。
+此外，每条边都满足 $S_{wE}\subseteq S_w$，每个集合至少含两个指标，且子行
+读数向量的前缀恰为父行读数向量。这些是下一步选择前就成立的共同前缀关系。
+
+现在固定任意声称至多四读数的协议。从初读 $0$ 开始，归纳保持如下不变量：
+当前选中的表行 $w$ 中，每个 $j\in S_w$ 都在该协议下真实产生同一动作／读数
+历史，其读数就是该行的向量。根行满足此性质。若协议在该历史停止，则它在
+全部 $S_w$ 世界中作出同一个停止决定并输出同一个答案。任选其中两个世界，
+其目标不同，故至少一个答案错误。
+
+若协议尚未停止且 $|w|<3$，确定性使全部 $S_w$ 世界选择同一个原子 $E$。
+表中总有子行 $wE$。保留 $S_{wE}$ 后，这些世界已经真实经历父历史，执行的
+又都是该原子，所以下一次实际读数正是子行给出的共同值。不变量因而延续。
+这覆盖两种首动作、四种二动作前缀及全部八种三动作分支。若一直不停，
+$|w|=3$ 时已读四次，统一预算迫使协议停止，仍有该行的两个不同目标。
+拒绝停止则违反所声称预算。
+
+因此每个可能的提前停止位置和第四次读数后的停止都产生失败。最终选择的
+世界对可以依赖整个协议，但二者都来自预先列出的固定世界，且各自真实实现
+整个被选历史；没有在运行中更换 $R,g,\delta$。量词是“对每个协议，存在一对
+世界”，而不是为每条预定词另找一对便宣称自适应下界。故
+$n_{\rm det}(0,0)\ge5$，与上述五读数充分性及定理 40.6 合并得到 (41.1)。∎
+
+数学引文与对应（定理 41.2）。模变换群识别复用 Li–Lee–Bresler,
+*A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with
+Applications to Subspace and Sparsity Models*, Definition 2.7、Theorem 2.8，
+[arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1)：在固定漂移的切片上，
+因素 $(R,g)$ 的正尺度作用为 $(R,g)\mapsto(\lambda R,g/\lambda)$、$\lambda>0$。
+未知加性漂移是另一个仿射坐标，不能不经增广就把整个模型称为该双线性问题。
+任意确定性重构及自适应线性读数的框架见 Krieg–Novak–Ullrich,
+*On the power of adaption and randomization*, §2、§4 Proposition 10 及
+Propositions 9–10 的共同证明，
+[arXiv:2406.07108v2](https://arxiv.org/html/2406.07108v2)。其 §2 不要求确定性
+算法可测，共同证明使用沿实际选择的查询保持不可区分的成熟方法。这里在环境
+坐标 $(X,\delta)$ 上，$L_A(X,\delta)=\operatorname{tr}(AX)+\delta$ 为线性，
+但合法来源受秩一与同号约束，查询受累计 $M/J$ 路径约束；上述证明不调用其
+Bernstein 宽度数值界，也不从维数或固定词非单射推出反馈结论。
+
+本卷 §§11、13、16–17 已使用共同历史论证，§40.6 给出固定路径的五读数界。
+《[Affine-gain erasure, positive secants, and drift-kernel collisions](https://github.com/the-omega-institute/trureturing/blob/b9d2000d39a399ca19ce7fc6b570bab96ab21885/docs/develop/theory/FIB_AFFINE_GAIN_ERASURE_SPAN_AND_POSITIVE_GAIN_COLLISIONS.md)》
+§§2–4 的正割线与固定斜率核判据、§11 的固定历史边界属于不同的读取合同，
+其中允许复合词的中间原子不读。本定理新增的具体推导（repo-derived）是七个
+合法来源在 (41.2) 上的嵌套共同历史及其全部停止分支；一般对手方法和既有
+五读数逆均不是新增定理。不主张外部优先权或七世界证书的最小性。
+
+本定理只确定所述精确常数合同的统一最坏读取数，不要求每个世界都读满五次。
+它不推出随机协议、噪声、较高次数增益或漂移、期望预算、允许省略中间读数的
+复合词合同、最优操作成本或物理实现的结论；$R=0$、零迹、非严格正来源及
+$g=0$ 都不在定义 41.1 的域中，也不分别校准 $g$ 与 $R$ 的绝对尺度。
+

@@ -1,0 +1,25 @@
+**定理 1126.1（固定关联的高维成本）。** 对每个固定 $0<\kappa<1$，
+
+$$
+C_N(\kappa)=\kappa N\log2-K(\kappa)+o(1),
+$$
+
+以及
+
+$$
+\frac{G_N(\kappa)}N\longrightarrow\kappa\log2,
+\qquad
+\frac{G_N(\kappa)}{C_N(\kappa)}\longrightarrow1.
+$$
+
+**证明。** 第 1124 节说明最终 $\kappa<\kappa_N$，所以准确公式为 $C_N=\kappa L_N-K(\kappa)$。第 1125 节代入得到第一式。每个有限来源的互信息不超过来源熵，且公平通道加奇偶点来源给出
+
+$$
+C_N(\kappa)\le G_N(\kappa)
+\le h_2(\kappa)+(N-1)\kappa\log2.
+$$
+
+上下界除以 $N$ 趋于同一正值，得到来源熵的极限及比值结论。证毕。
+
+这不是每个有限 $N$ 上两个最优值相等，也不意味着其最优表示相同。它只是在所给极限中，相对于随 $N$ 线性增长的共同主阶，二者的差距变小。
+

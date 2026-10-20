@@ -1,0 +1,14 @@
+**推论 109.3（乘积比较的紧区间分母）。** 对每个固定 $K$，
+在相同概率范围内，$f_{\mathsf Q},f'$ 在 $[-K,K]$ 上均最终以概率趋一有正下界。
+确实，中央 Gaussian 因子给每个固定 $a\ge0$
+
+$$
+\int |t|^a|\widehat f'(t)|dt
+\le\int |t|^a(1+c\delta t^2)^{-n_Q/4}dt\le C_a.
+\tag{109.23}
+$$
+
+由 $n_Q\delta\asymp1$ 的 Beta 积分得到最后一步。
+已有弱极限与 $a=1$ 的一致 Fourier 尾界给 $\|f'-\varphi_\nu\|_\infty\to0$；
+再用 (109.20) 即得。没有用 TV 将此逐点正下界转移给原选中密度。
+

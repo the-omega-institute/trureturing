@@ -1,0 +1,16 @@
+## 定义 11.2（对数观察成本）
+
+\[
+\operatorname{Cost}(J)
+=
+\sum_{i\in J}\log_2|O_i|.
+\]
+
+若 \(O_{p,k}=\mathbb Z/p^k\mathbb Z\)，则：
+
+\[
+\operatorname{Cost}(J)
+=
+\sum_{(p,k)\in J}k\log_2p.
+\]
+

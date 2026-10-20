@@ -1,0 +1,25 @@
+**命题 305.1（有限 k-bonacci 库的无穷共同漏检）。** 对每个固定 $K\ge2$ 和每个有限素数集合 $S$，存在无穷多个平方自由合数 $n$，其素因子均不在 $S$ 中，并且
+
+$$
+\forall k\in\{2,\ldots,K\}\ \forall a\in\mathbb Z,
+\qquad O_{k,a}(n)=0.
+$$
+
+证明。使用 Grantham 的无条件构造：对固定数域，可以构造无穷多个 Carmichael 数，使每个素因子在该域中完全分裂（[文献说明](../../../Library/PrimeObserver/grantham2010perrin.md)，Theorem 2.1 及 Theorem 5.3 的证明）。下面核对本观察族的适用条件。
+
+每个 $\Phi_k$ 在 $\mathbb Q$ 上无重根。事实上，若 $\alpha$ 是重根，则 $\alpha\ne0,1$，而
+
+$$
+(X-1)\Phi_k=X^{k+1}-2X^k+1
+$$
+
+及其导数给出 $\alpha=2k/(k+1)$。这是首一整系数多项式 $\Phi_k$ 的有理根，必须是整数，但 $1<2k/(k+1)<2$，矛盾。
+
+令 $E$ 为这些多项式的共同分裂域，将 $S$ 扩充为 $S'$，包含 $2$ 及各 $\operatorname{disc}(\Phi_k)$ 的素因子。令
+
+$$
+m=8\prod_{q\in S',\ q\ne2}q,\qquad E'=E(\zeta_m).
+$$
+
+$S'$ 内的素数在这个圆分子域中分歧，故不能在 $E'$ 中完全分裂。把 Grantham 构造用于 $E'$，得到的每个 $n$ 平方自由，且每个 $q\mid n$ 满足 $q-1\mid n-1$；所有 $\Phi_k\bmod q$ 都分裂成互异线性因子。按第 304.2 条同一乘积域论证，各商环的每个元素满足 $z^n=z$，从而全部平移测试通过。固定有限素数排除集不会改变此结论。$\square$
+

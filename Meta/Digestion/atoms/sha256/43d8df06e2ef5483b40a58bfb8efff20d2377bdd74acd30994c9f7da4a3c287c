@@ -1,0 +1,12 @@
+Three existing dev sources provide relevant, distinct structures:
+
+* GoldenEulerStepPhaseLaw proves Euler's sine/cosine expression for the prime
+  step phase, unit norm, the golden long-step factorization using phi^2=phi+1,
+  and the loss of adjacent order when only scalar phases are multiplied.
+* PrimeGoldenComplexMode retains a positive amplitude and a phase separately;
+  its norm recovers the amplitude. Its damping hypotheses matter for recovering
+  the prime label from that amplitude.
+* Quantum/Algebra/WeylDisplacement proves the finite-window shift/clock
+  composition law with its symplectic phase, including a genuine two-address
+  anticommutation example. It is a projective operator representation.
+

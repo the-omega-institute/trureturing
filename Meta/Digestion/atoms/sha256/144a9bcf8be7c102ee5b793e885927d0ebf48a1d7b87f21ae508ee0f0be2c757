@@ -1,0 +1,173 @@
+### 215.7 Original-source correspondence, finite prefixes and remaining limits
+
+The actual source, carrier and targets are precisely those in Definition
+213.22 and §214.5. In particular
+
+$$
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\quad
+N(r,g)=1+F_rg,\quad q_i(x)=\mathbf1_{p_i\mid N(x)},
+$$
+
+with ordinary Fibonacci numbers and increasing primes. Boundaries 35.2
+supplies every finite pattern on arbitrary addresses in this countable
+labeled source. There is no source distribution. The full original
+Borel carrier $\Theta=\bigsqcup B_j\sqcup\bigsqcup P_j$, with each
+block a copy of $(0,1)$, retains its unchanged consumer and the
+nonatomic family $\mu_x$ of 213.22. The distinct measurable marks
+$\theta_j=(B_1,1/(j+2))$ support the separately selected laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                      +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_j\longrightarrow0.
+$$
+
+The marked outputs still make the consumer return unknown and have
+TV distance one from the original nonatomic targets. Selected-law
+approximation is not original-target correctness.
+
+Definition 90.1 retains zero advice, one source-independent common seed,
+actual sourcewise almost-sure finite handoff, and TV uniform over every
+actual source and every Borel event. N obtains its preselected schedule's
+replies; O preselects an increasing schedule and stops at its first
+queried zero or exhaustion. The hard bound counts at most two actual
+requests, including repeated and ignored requests. Arbitrary numerical
+addresses, full-carrier outputs and unqueried output marks remain legal.
+A dual coefficient is neither a request probability nor an additional
+seed or observation. No address, depth, runtime or mean-count surrogate
+replaces the hard count.
+
+The normalized lower bundles in 215.1, 215.3 and 215.4 have direct
+actual realizations: partition one uniform seed into the displayed
+whole-table weights, select schedule and outputs before answers, execute
+the prime queries and return the indicated original mark. An N completion
+obtains both preselected replies and ignores the unused one, as in 90.2.
+All executions hand off finitely. Their full-word calculations include
+multiple zeros and the independent pair row; normalization does not
+claim feasibility at an arbitrary TV cap. The two laws in 215.5 are
+actual cap attainers by their complete rows and actual-tail calculations.
+
+Theorem 109.1 supplies only the stopped criterion $c\ge H$ for an
+actual normalized degree-two probability-vector kernel; its scalar
+mass bound follows from normalization. It is not a criterion on score
+quotients. Theorem 110.2 supplies same-class closed-cap feasibility
+transport for arbitrary-address, full-carrier original competitors.
+Its finite-witness replay uses measurable source-independent schedules,
+source-free readout, local reachable-read discipline, actual low/high
+witness replies, measurable terminal extensions and conull termination,
+and the projected event-TV cap. The common schedule gate gives one
+vanishing error, not one error per word; finite-simplex compactness
+preserves the closed cap. This is the interface also represented in
+the historical OriginalScheduledWitnessTables module and its owning Blueprint Scribe
+at immutable revision `a3906ce6a6d8769a275d4094475f30068a362377`. It does not
+preserve an arbitrary competitor's law or its original schedule
+probabilities after choosing a representative output table. The proof
+of (215.24) instead keeps the original S through the gate argument.
+
+Here is the complete finite-prefix application for the six-coordinate
+scores. For any six actual addresses $3\le j_1<\cdots<j_6$, any
+original cap attainer in either class, and every constructed score of
+215.6, one has
+
+$$
+g\sum_{i=1}^5a_{j_i}+ha_{j_6}
+ \le d+(5g+h+B)\varepsilon.
+\tag{215.37}
+$$
+
+There is no requirement that the selected addresses be active.
+To prove this, use precisely the restriction and extension argument of
+[202.13](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md),
+also used in 137.1 and 207.20. For $0<\varepsilon\le1$ set
+$L_a=\max(\{i:a_i>\varepsilon\}\cup\{0\})$, $J=j_6$.
+Theorem 110.2 yields one complete same-class probability configuration
+at length $L_a$, satisfying every base, correct, independent pair and
+positive row. An original O rule may alternatively use its N completion;
+ignored requests remain counted.
+
+If $L_a\ge J$, restrict the finite inputs to $(w,0,\ldots,0)$,
+$w\in\{0,1\}^J$, and project labels above J to zero. A zero in w
+retains its target. If w is positive and $L_a>J$, its fixed next zero
+is $J+1$, whose target projects to $\delta_0$; at $L_a=J$ use the
+existing positive row. TV contracts. On each seed the high replies
+are constants in this finite representation. Delete their observations
+and substitute their values in the terminal table, leaving at most two
+low preselected queries. In a stopped rule the high addresses follow
+the low ones, so any low zero already stops; otherwise the fixed high
+continuation folds into positive exhaustion. This algebraic restriction
+of a finite representation grants no free original observations.
+It is not asserted to attain the original cap at tails $J<n\le L_a$.
+
+If $L_a<J$, extend that one kernel by ignoring new coordinates and
+keeping labels in $\{0,\ldots,L_a\}$. Words whose first zero is at
+most $L_a$ retain every old row for all later patterns. If
+$L_a<n\le J$, the law is the old positive-word law $p_+$, which
+has no mass at n. Since $a_n\le\varepsilon$ and
+$p_+(0)\ge1-\varepsilon$, the exact identity gives
+
+$$
+\operatorname{TV}(p_+,(1-a_n)e_0+a_ne_n)
+  =\max(1-p_+(0),a_n)\le\varepsilon.
+\tag{215.38}
+$$
+
+The new positive row is unchanged. This includes $L_a=0$, inactive
+selected labels, $a_n=\varepsilon$ and every multiple-zero suffix;
+no positive amplitude is replaced by zero.
+
+At prefix J use the score on its actual six addresses, removing only
+unused all-one padding. It has $W=B$, $K=5g+h+B$, and full support
+$B+d$. Pair it with this single complete probability configuration.
+The event demands give reward at least
+$B+g\sum_{i=1}^5a_{j_i}+ha_{j_6}-K\varepsilon$.
+The independent pair row loses one epsilon, and negative singleton
+demands remain. Comparison with $B+d$ proves (215.37), with no hull
+membership assumption. For $\varepsilon\ge1$, its left side is at
+most $5g+h$ and the right side at least $5g+h$, proving the same
+inequality directly.
+
+The configuration at the original active length, when realized using
+110.2, has exact actual-tail error
+$\max(1-p_{1^{L_a}}(0),a_n)$ for every $n>L_a$, including equality.
+If $L_a<J$, its extension uses the same schedules and seed, and that
+identity also holds for $n>J$. If $L_a>J$, only the finite comparison
+uses the restricted shorter kernel; the original full-tail realization
+is the one at $L_a$. Thus (215.37) is a necessary score inequality,
+not a new cap sufficiency test or unrestricted conversion.
+
+The source and literature correspondences remain bounded. The
+zero-early part of 215.1 is owned by 214.5; 215.2 uses 203.6's
+fair-suffix support with its second-largest-total condition; 215.6
+uses 203.2's joint threshold estimate, 214.11's projection bounds
+and 210.5's two conditional-moment endpoints. Their proofs are reused
+under those hypotheses. Fixed-baseline and fixed-star results 212.3
+and 212.8 impose different retained-data conditions and do not supply
+the unrestricted signed minima here. The projection diagnostics in
+214.13 remain failures of those fixed lifts, not universal obstructions.
+
+Blackwell's *Comparison of Experiments*, §§2–5, and Kaibel's
+*Basic Polyhedral Theory*, Theorems 1(ii), 8 and 10, have the source
+links and context given in 213.21. Finite states, transcript partitions,
+terminal actions and whole-score convex combinations provide the
+correspondence here. General randomization does not preserve increasing
+first-zero schedules or a hard two-request budget; generic polyhedral
+representation does not establish actual Boolean or source realization.
+The literal row and cell arguments supply those obligations. No external
+paper theorem is an additional load-bearing premise, and no exhaustive
+novelty or literary-priority claim is made.
+
+The universal implication of 213.23 remains unresolved. These results
+leave general mixed signs, arbitrary simultaneous positive profiles and
+positions, and low-terminal domains beyond their stated fibers or
+families. In particular 215.2 is only sufficient outside its plateau;
+215.4 retains unresolved sharpness, equality of minima and automatic
+affordability on $c<\min(d,D/H)$; 215.6's necessity excludes arbitrary
+A and late P. A genuine original negative still needs one actual full
+unit-O input y, $b\in H_N$, the same full feasible $\lambda$ of mass
+$M\ge1$, and $F_{Q(y)}(b)>M$, followed by the original arbitrary-address,
+full-carrier transport. None of the sign-flip, representative, nonadjacency,
+fixed-lift or fixed-schedule examples supplies that separator. The ordinary
+proofs above give scoped structural results and do not complete the
+sustained universal goal or constitute Lean-kernel verification.
+

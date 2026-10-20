@@ -1,0 +1,24 @@
+### 10.6 三种协议箭头不可混用
+
+统一记号如下：
+
+| 用途 | 箭头 | 评价方程 |
+| --- | --- | --- |
+| 静态因子或重标记 | $g:P\to P'$ | $E(x,p)=E'(f x,g p)$ |
+| 求值空间回拉 | $G:P'\to P$ | $E'(f x,p')=E(x,G p')$ |
+| 动态协议更新 | $\delta:P\to P$ | $E(Fx,p)=E(x,\delta p)$ |
+
+第一行是正向重标记，第二行是协议反变回拉，第三行是同一动态端点下的协议更新。端同态把两端写成同一个 $P$ 时，方向差异容易被隐藏；涉及不同协议对象时必须保留符号区别。
+
+非满射正向映射 $g:P\to P'$ 即使允许某个目标评价存在，也通常只能确定目标评价在 $\operatorname{im}g$ 上的值；未被覆盖的协议点可以任意延拓，因而不能声称唯一运输。正向下降本身还要求
+
+$$
+ gp=gp'\Longrightarrow
+ \forall x,\ E(x,p)=E(x,p').
+ \tag{10.18}
+$$
+
+否则同一目标协议会要求两个不同的源读数。
+
+本节结论可与 CanonicalRowColumnSeparation、DoubleExtensionalEvaluationDescent、DynamicProfileCausalClosure 和既有协议闭包结果对接；它们提供静态商、剖面更新或闭包的不同支点，未合成一个新的 Lean 定理。本节 Claim status 为 open。
+

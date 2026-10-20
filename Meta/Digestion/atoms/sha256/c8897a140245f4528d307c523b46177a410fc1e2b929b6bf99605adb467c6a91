@@ -1,0 +1,38 @@
+**引理 83.2（完整深度块的尺度估计）。** 对每个固定 $m\ge2$ 和确定的有限块 $B$，若 $E_B>0$，则
+
+$$
+\frac{\mathbb E_mR_B}{E_B}
+=\frac1{E_B}\sum_{k\in B}\frac{r_k}{n_k^2}g_m(k),
+\qquad g_m(k):=\frac{n_k}{mn_k-1},
+\qquad
+0<g_m(k)-\frac1m=\frac1{m(mn_k-1)}\le\frac1{3n_k}.
+\tag{83.8}
+$$
+
+对每个 $\varepsilon>0$，
+
+$$
+\Pr_m\left(\left|x_B-\mathbb E_mx_B\right|\ge\varepsilon\right)
+\le2\exp\left(-\frac{32\varepsilon^2E_B}{81}\right).
+\tag{83.9}
+$$
+
+**证明。** 将式（83.2）的 $q_{m,k}-2v_k=2v_k/(mn_k-1)$ 代入式（83.3），期望贡献为 $r_k/[n_k(mn_k-1)]$，即式（83.8）的加权平均。恒等式由相减得到；$m,n_k\ge2$ 给出 $m(mn_k-1)\ge4n_k-2\ge3n_k$，故偏差为正并满足所列上界。
+
+每个求和项 $(Z_{k,i}-2v_k)/(2v_kn_k)$ 的值域宽度为 $1/(2v_kn_k)\le9/(4n_k)$，所以
+
+$$
+\sum_{k\in B}\sum_{i=1}^{r_k}
+\left(\frac1{2v_kn_k}\right)^2\le\frac{81}{16}E_B.
+\tag{83.10}
+$$
+
+直接应用独立有界、允许不同值域宽度的 Hoeffding 界：若 $X_a\in[A_a,B_a]$ 独立，则
+
+$$
+\Pr\left(\left|\sum_a(X_a-\mathbb EX_a)\right|\ge u\right)
+\le2\exp\left(-\frac{2u^2}{\sum_a(B_a-A_a)^2}\right).
+$$
+
+取 $u=\varepsilon E_B$ 并代入式（83.10）即得式（83.9）。独立性来自同一实际树在调用后恢复、固定配置和跨调用的新随机性；此处没有把跨深度数据当成 iid 样本。上述浓缩是经典 Hoeffding 不等式的应用，异质值域版本见第83.6节的文献。证毕。
+

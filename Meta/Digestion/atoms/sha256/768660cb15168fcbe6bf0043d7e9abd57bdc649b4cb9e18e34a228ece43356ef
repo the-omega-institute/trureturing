@@ -1,0 +1,9 @@
+它至少需要证明：
+
+- finite coefficients 到 `WeilTestFunction` 的构造；
+- support 半径记账；
+- prime-power 权重与 \(\log n\) 频率匹配；
+- Gamma 与 pole 项保留；
+- truncation remainder；
+- holonomy energy 与 fixed-scale Weil form 的等式、下界或带误差比较。
+

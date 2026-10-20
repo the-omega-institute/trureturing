@@ -1,0 +1,31 @@
+### 定理 388.1（匹配注入下的截断界不发散）
+
+对 §256.2 的族
+
+$$
+A_\varepsilon=1-\varepsilon,
+\qquad
+b_\varepsilon=\varepsilon,
+\qquad 0<\varepsilon<1,
+$$
+
+有
+
+$$
+R_\varepsilon=\varepsilon^{-1},
+\qquad
+x^*_\varepsilon=1,
+$$
+
+而定理 255.2 的 \(N\) 阶截断界精确化为
+
+$$
+\boxed{
+\frac{q^{N+1}}{1-q}\,|b_\varepsilon|
+=(1-\varepsilon)^{N+1}
+\le1.
+}
+$$
+
+对固定 \(N\)，当 \(\varepsilon\downarrow0\) 时该界趋于 \(1\)，不是发散。发散的是解析子 \(R_\varepsilon\)；它表示对一个保持固定尺度的外部注入扰动的响应增益。
+

@@ -1,0 +1,9 @@
+该分解允许分别测量：
+
+* Archimedean 正性容量；
+* 每个 prime channel 的危险特征值；
+* 多素数 eigenvector alignment；
+* cutoff 增长时的 sticky depth；
+* Wang gain；
+* Deng cluster rank。
+

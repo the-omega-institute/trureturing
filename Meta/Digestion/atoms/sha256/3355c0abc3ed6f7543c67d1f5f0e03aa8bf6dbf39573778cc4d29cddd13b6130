@@ -1,0 +1,6 @@
+它会同时测量：
+
+- residual 幅度失配；
+- prime-frequency 相位失配；
+- 观察器更新次序失配。
+

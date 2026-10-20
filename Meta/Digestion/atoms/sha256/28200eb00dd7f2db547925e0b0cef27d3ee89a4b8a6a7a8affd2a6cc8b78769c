@@ -1,0 +1,50 @@
+**Contract 112.1a (native actions and observed permissions).** The original
+uncapped native contract, denoted \(G_{\rm nat}\), allows any finite-word
+original-root \(\mathsf{Read}(p)\), serial same-register
+\(\mathsf{Apply}\rho\), and absorbing \(\mathsf{Stop}\). Every Apply is
+accepted and replaces the current register by its actual \(\rho\)-successor.
+The four Read replies are alpha, beta, branch and absent; repeated and absent
+Reads remain actual calls. This is the uncapped service of Native Leaf Depth
+Contact, Definition 1.3, and Acquired Relation History, Assumption 1.3;
+no refusal capability is inferred from that menu.
+
+For a separately declared common guarded extension, fix a total effective
+function
+\[
+G(\gamma,e,H)\in\{\mathsf{accepted},\mathsf{refused}\}.
+\tag{112.2a}
+\]
+Here \(\gamma\) is a common source-independent parameter, \(e\) counts
+actual accepted post-entry updates, and \(H\) is the complete chronological
+native history of action addresses, four-valued replies, Apply statuses and
+Stop. Every Apply attempt evaluates this function, logs its status as an
+observation, and either executes exactly \(\rho\) and increases \(e\) by one,
+or changes no register/epoch on refusal. Reads always return their actual
+reply; Stop logs terminal and no suffix is executed. There are no other
+status bits, source-dependent implementation/timing outputs or unlisted
+scheduler states. In particular equal \((\gamma,e,H)\) entails equal status;
+\(G\) has no access to the source or the mathematical occurrence object.
+The all-accepted function is \(G_{\rm nat}\). A public fixed-cap guard
+\(G_K=\mathsf{accepted}\) iff \(e<K\), including \(K=0\), is one extension;
+it does not impose a cap on the original native contract. A history-dependent
+guard may use already observed replies, and those replies remain observations.
+
+The statements below hold for every fixed \(G\) satisfying this contract,
+and therefore for the full original uncapped menu. They do not cover an
+undisclosed source-dependent permission oracle. No original legal controller
+is removed: a native controller sees acceptance on every actual Apply;
+guarded controllers and their refusal observations have the separate scope
+just declared. Local computation uses only common entry and actual history;
+there is no equality, reset, clone, backward action, source-index, or limit
+Read. The source-bearing occurrence metadata below is not free controller
+advice.
+
+The fixed coarse port set is
+\[
+\mathcal P=\{\varepsilon,L,R\}.
+\tag{112.3}
+\]
+These addresses are reached on all of \(D\) and remain reached. The coarse
+word scope uses exactly these three ports. The native equality controller
+scope allows every finite address, including absent ones.
+

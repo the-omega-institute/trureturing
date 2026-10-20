@@ -1,0 +1,40 @@
+## Lean 锚点 6.1
+
+仓库定理
+
+`D5/S3/Observer/Conditioning/UnreadStateOrthogonalProjection.unread_state_orthogonal_projection`
+
+已经机器证明：
+
+\[
+\mathcal D^2=\mathcal D,
+\]
+
+\[
+\langle\mathcal D(X),Y\rangle_{HS}
+=
+\langle X,\mathcal D(Y)\rangle_{HS},
+\]
+
+\[
+\operatorname{ran}\mathcal D
+=
+\{X:\forall i\neq j,\ P_iXP_j=0\},
+\]
+
+以及
+
+\[
+X=\mathcal D(X)+(I-\mathcal D)(X),
+\]
+
+\[
+\|X\|_{HS}^2
+=
+\|\mathcal D(X)\|_{HS}^2
++
+\|(I-\mathcal D)(X)\|_{HS}^2.
+\]
+
+因此 \(\mathcal D\) 不是“像投影”，而是在 Hilbert–Schmidt 算子空间中真正的正交投影。
+

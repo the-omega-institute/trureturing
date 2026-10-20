@@ -147,19 +147,19 @@ private theorem homogeneous_reflection (n : ℕ) :
     rw [homogenize_X_pow (by simpa using mem_range.mp hm)]
     ring
 
-private noncomputable def pair (u : ℕ → ℂ) (c : ℕ) : Polynomial ℂ →ₗ[ℂ] ℂ :=
+noncomputable def pair (u : ℕ → ℂ) (c : ℕ) : Polynomial ℂ →ₗ[ℂ] ℂ :=
   Polynomial.lsum fun j =>
     { toFun := fun a => a * u (j + c)
       map_add' := by intros; ring
       map_smul' := by intros; simp [mul_assoc] }
 
-private theorem pair_monomial (u : ℕ → ℂ) (c k : ℕ) (a : ℂ) :
+theorem pair_monomial (u : ℕ → ℂ) (c k : ℕ) (a : ℂ) :
     pair u c (C a * X ^ k) = a * u (k + c) := by
   rw [C_mul_X_pow_eq_monomial]
   change (monomial k a).sum (fun j b => b * u (j + c)) = _
   simp
 
-private theorem pair_scalar (u : ℕ → ℂ) (c : ℕ) (a : ℂ) (f : Polynomial ℂ) :
+theorem pair_scalar (u : ℕ → ℂ) (c : ℕ) (a : ℂ) (f : Polynomial ℂ) :
     pair u c (C a * f) = a * pair u c f := by
   rw [C_mul']
   exact (pair u c).map_smul a f

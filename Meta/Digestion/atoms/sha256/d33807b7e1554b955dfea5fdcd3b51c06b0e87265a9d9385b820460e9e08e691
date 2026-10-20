@@ -1,0 +1,45 @@
+**定理 1033.1（受限预测的联合极限）。** 仍固定 $T$ 并令 $\eta,\gamma\downarrow0$。若 $s\to s_0\in(0,\infty)$，令 $q=1+s_0$，并定义
+
+$$
+H(v)=(v-1)v^{-v/(v-1)}\quad(v>1),\qquad H(1)=0.
+$$
+
+第 1024 节最优曲线参数 $c_0$ 满足
+
+$$
+\frac{1-c_0}{\gamma}\longrightarrow\sqrt q,
+\qquad
+R_{\rm curve}\longrightarrow H(\sqrt q)>\frac{H(q)}2=F(s_0).
+$$
+
+此外，$s\to0$ 时 $R_{\rm curve}/R\to1$；$s\to\infty$ 时 $R_{\rm curve}\to1$，而自由风险趋于 $1/2$。
+
+**证明。** 先记录幂差的尺度关系。若 $x=1-\kappa\gamma+o(\gamma)$、$z=1-\lambda\gamma+o(\gamma)$，其中 $0<\lambda<\kappa$，由第 1012 节同一峰值公式可得
+
+$$
+E_T(x,z)\to H(\kappa/\lambda).
+$$
+
+若两系数相等，利用 $E_T(x,z)\le(z-x)\sup_{n\ge T}nz^{n-1}$，以及该导数上确界为 $O(1/(1-z))$，得到极限为零。这也补齐连续端点。
+
+最优参数的缩放余量 $\beta=(1-c_0)/\gamma$ 位于 $[1,1+s]$。对任意收敛子列，其极限 $\beta_0\in[1,q]$ 由两侧平衡满足
+
+$$
+H(q/\beta_0)=H(\beta_0).
+$$
+
+$H$ 严格增加，故唯一可能为 $\beta_0=\sqrt q$。紧性使所有子列共享这一极限，风险极限随之确定。
+
+严格比较来自两个连续幂差的峰值不能在同一时刻取得。令 $v=\sqrt q>1$，则
+
+$$
+e^{-t}-e^{-qt}
+=(e^{-t}-e^{-vt})+(e^{-vt}-e^{-qt}).
+$$
+
+两项最大值均为 $H(v)$，唯一最大时刻分别为 $\log v/(v-1)$ 与 $\log v/[v(v-1)]$，彼此不同。总和最大值取得且严格小于 $2H(v)$，即 $H(q)<2H(\sqrt q)$。
+
+若 $s\to0$，取参数中点 $c=(\alpha+\rho)/2$，两侧误差均不超过 $dM_T/2$；第 1032 节及 $d\sim2\eta/T$ 给出 $R\sim dM_T/2$。结合 $R\le R_{\rm curve}$，比值趋于一。
+
+最后，若两参数 $x<z$ 均趋于一，而 $(1-x)/(1-z)\to\infty$，选择整数时刻 $n=\lceil((1-x)(1-z))^{-1/2}\rceil$，则 $n(1-z)\to0$、$n(1-x)\to\infty$，从而 $z^n\to1$、$x^n\to0$，所以 $E_T(x,z)\to1$。在 $s\to\infty$ 时，对任何中心，其相对于上端的余量比与下端相对于它的余量比之积为 $1+s$，至少一个不小于 $\sqrt{1+s}$。把上述结论用于相应一侧，沿任意子列再分两种情形，便得最优风险下极限至少为一；误差本来不超过一，完成证明。
+

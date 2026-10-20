@@ -1,0 +1,40 @@
+**定理 34.1（连续初态律的变换识别）。** 若两个概率律 $\nu$ 与 $\widetilde\nu$ 满足
+
+$$
+\mathcal L(\nu)(s)=\mathcal L(\widetilde\nu)(s)
+\qquad\text{对所有 }s\ge0,
+$$
+
+则 $\nu=\widetilde\nu$。此外，
+
+$$
+\lim_{s\to\infty}\mathcal L(\nu)(s)=\nu(\{1\}).
+$$
+
+因此完整的连续 Laplace 曲线同时识别吸收端质量和暂态初态律；只给定有限个频率或有限个矩则没有这个识别性。
+
+**证明。** 令 $a=\sqrt{s/D}$ 并置
+
+$$
+G_\nu(a)=\cosh(a)\,\mathcal L(\nu)(Da^2)
+=\int_{[0,1]}\cosh(ax)\,d\nu(x).
+$$
+
+$G_\nu$ 是整函数。若两条 Laplace 曲线在 $s\ge0$ 上相同，则相应的整函数在 $a\ge0$ 上相同，恒等定理给出它们在整个复平面上相同。对 $a=0$ 作偶阶导数，得到
+
+$$
+\int_{[0,1]}x^{2r}\,d\nu(x)
+=\int_{[0,1]}x^{2r}\,d\widetilde\nu(x)
+\qquad(r\ge0).
+$$
+
+映射 $x\mapsto x^2$ 在 $[0,1]$ 上为双射，故两个推前律具有相同的全部幂矩。连续函数可由多项式一致逼近，因而两个推前律在所有连续测试函数上的积分相同，得到 $\nu=\widetilde\nu$。另一方面，$x<1$ 时
+
+$$
+\frac{\cosh(ax)}{\cosh(a)}\longrightarrow0,
+\qquad
+\frac{\cosh(a)}{\cosh(a)}=1,
+$$
+
+并且该比值始终位于 $[0,1]$，由支配收敛定理得到端点质量的极限。最后，固定 $R$ 阶导数只给出 $R+1$ 个偶阶矩。取 $R+2$ 个不同点并对矩阵 $(x_i^{2r})_{0\le r\le R}$ 求非零零空间向量，再对一个在这些点上有正质量的基准概率律作足够小的正负扰动，即得到两个不同概率律而保持这 $R+1$ 个矩不变。$\square$
+

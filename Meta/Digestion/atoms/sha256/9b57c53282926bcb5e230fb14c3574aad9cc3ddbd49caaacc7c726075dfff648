@@ -1,0 +1,9 @@
+\operatorname{Cov}_\theta(F,N_h).
+}
+\]
+特别地，对 \(F=N_f\)，
+\[
+\left.\frac{d}{d\varepsilon}
+ \langle N_f\rangle_{\theta+\varepsilon h}
+\right|_{\varepsilon=0}
+ =

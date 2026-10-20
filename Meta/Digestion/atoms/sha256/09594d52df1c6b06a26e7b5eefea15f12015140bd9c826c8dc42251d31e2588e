@@ -1,0 +1,142 @@
+**命题 47.1。** 固定 `-1<a<1`。对单位相位向量 `x,y`，要求 `x` 为常值且 `H(x,y)^T` 逐项有模一。以公共相位把 `x` 归一为 `(1,1,1)` 后，所有可能的 `y` 恰为：
+
+1. 对每个参数都有的两个常值向量 `y=gamma(1,1,1)`，其中：
+
+   ```math
+   |\gamma|=1,\qquad \operatorname{Re}(\overline{A_0}B_0\gamma)=0.
+   ```
+
+2. 仅在以下两个参数出现的三个额外非恒定向量：
+
+   ```math
+   a=\pm\sqrt{\frac{37-\sqrt{73}}{72}}.
+   \tag{47.1}
+   ```
+
+   此时置：
+
+   ```math
+   s=\frac{11+\sqrt{73}}8,\quad h=\sqrt s,\quad
+   t=\frac{2a^2}{3},\quad
+   \eta=-\frac{a(5s-3)}{6h(2s-3)},
+   ```
+
+   ```math
+   d=\eta h-i\left(\frac{a\eta(s+1)}s+\frac{3t}{2h}\right),\qquad
+   m=d\left(\frac12+i\frac\eta t\right),\qquad
+   \alpha=m+d,\quad\beta=m-2d.
+   \tag{47.2}
+   ```
+
+   三个额外向量是 `(alpha,alpha,beta)` 的三个不同置换。
+
+因此，第一 channel 为常值的 projective 纤维通常恰有两个点，在式 (47.1) 的两个参数处恰有五个点。三个额外点的第二 channel 均有完整的三模 Fourier 支撑。
+
+**证明。** 由于 `L` 只置换行，输出逐项模一对 `H` 与 `H_0` 等价。设 `sigma=sum y_j`，则两个未归一化输出 channel 为：
+
+```math
+(A_0+\sigma)\mathbf1+Qy,\qquad
+(\overline{B_0}-\sigma)\mathbf1-\overline Py.
+```
+
+若 `y` 有三个不同的单位相位，两个输出 channel 各自等模迫使对应实线性泛函为零。`P,Q` 非零，故：
+
+```math
+\sigma=-A_0,\qquad \sigma=\overline{B_0}.
+```
+
+这与 `Re(A_0+conjugate(B_0))=3` 矛盾。若 `y` 为常值，输出条件就是命题第一项；`A_0B_0!=0`，所以恰有两个相反的相位解。
+
+非恒定情形中，`y` 必恰有两个不同分量。`H_0` 与同步坐标置换交换，所以可写：
+
+```math
+y=(m+d,m+d,m-2d),\qquad d\ne0.
+```
+
+记 `t=|d|²`、`eta=Im(m conjugate(d))`。输入分量模一等价于：
+
+```math
+\operatorname{Re}(m\overline d)=t/2,\qquad
+|m|^2+2t=1,\qquad \eta^2=t-\frac94t^2.
+\tag{47.3}
+```
+
+像第 46 节那样写 `p+q=-1+ih`，则：
+
+```math
+1<h\le\sqrt3,\qquad
+p=\frac{a-1+i(h+a/h)}2,\quad
+q=\frac{-a-1+i(h-a/h)}2,\qquad
+ a^2=\frac{h^2(3-h^2)}{1+h^2}.
+\tag{47.4}
+```
+
+两个输出 channel 的等模条件为：
+
+```math
+\operatorname{Re}\bigl(\overline Q(A_0+3m)\overline d\bigr)=0,
+\qquad
+\operatorname{Re}\bigl(P(3m-\overline{B_0})\overline d\bigr)=0.
+\tag{47.5}
+```
+
+写 `d=X+iY`，代入 `m conjugate(d)=t/2+i eta`，解这个实二元线性系统得到：
+
+```math
+X=\eta h,\qquad
+Y=-\frac{a\eta(1+h^2)}{h^2}-\frac{3t}{2h}.
+\tag{47.6}
+```
+
+这里没有除以可能为零的参数：未约分的分母所含因子满足：
+
+```math
+a^2h^2-a^2+h^4-9h^2=-\frac{4h^2(h^2+3)}{1+h^2}<0.
+```
+
+令 `N=A_0+B_0m`，第一输出 channel 的范数条件为 `|N|²+2|Q|²t=6`，亦即：
+
+```math
+\operatorname{Re}(\overline{A_0}B_0m)=-3at.
+\tag{47.7}
+```
+
+把式 (47.6) 代入 `|d|²=t` 和式 (47.7)，再用式 (47.3)–(47.4)，由于 `t>0`，得到：
+
+```math
+9h(1+h^2)t-6a(1+h^2)\eta-2h(h^2+3)=0,
+```
+
+```math
+9a(1+h^2)t-6h^3\eta-a(7h^2+3)=0.
+\tag{47.8}
+```
+
+具体地，`|d|²-t` 的展开余项是第一个左侧乘以 `-t/(2h³)`；式 (47.7) 左侧移项后乘以 `t`，展开余项是第二个左侧乘以 `-t/(2h²)`。
+
+若 `2h²=3`，消去式 (47.8) 中的 `t` 就给出 `a(5h²-3)=0`，与式 (47.4) 矛盾。否则唯一解为：
+
+```math
+\eta=-\frac{a(5h^2-3)}{6h(2h^2-3)},\qquad
+ t=\frac{3h^4-4h^2-3}{3(1+h^2)(2h^2-3)}.
+\tag{47.9}
+```
+
+此时式 (47.3) 中最后一个条件的余项恰为：
+
+```math
+\eta^2-t+\frac94t^2
+=-\frac{h^2(h^2+3)(4h^4-11h^2+3)}{9(1+h^2)^2(2h^2-3)^2}.
+```
+
+故 `4h⁴-11h²+3=0`。二次多项式 `4s²-11s+3` 的两个根中，只有 `s=(11+sqrt(73))/8` 落在 `(1,3]`。式 (47.4) 随即给出式 (47.1)，而 `t=(37-sqrt(73))/108=2a²/3`。式 (47.6) 和 (47.9) 唯一确定 `d`，再由 `m=d(1/2+i eta/t)` 唯一确定 `m`。这证明非恒定解至多是命题中三个置换。
+
+反过来，对式 (47.1) 的任一符号，式 (47.2) 满足：
+
+```math
+4s^2-11s+3=0,\quad 9a^2+s-6=0,\quad
+|d|^2=t,\quad \eta^2=t-\frac94t^2,\quad |m|^2=1-2t.
+```
+
+因此 `|alpha|=|beta|=1`。式 (47.5) 保证两个输出 channel 各自等模；式 (47.7) 保证第一个归一化输出 channel 的平方范数为三，酉性又使第二个的平方范数为三。故两个 channel 均逐项模一，三个置换都可达。由于 `t>0`、`t<1/2`，`d,m` 均非零，故三个置换彼此不同，且其第二 channel 的 Fourier 分量模为 `sqrt(3)|m|,sqrt(3)|d|,sqrt(3)|d|`，全部非零。证毕。
+

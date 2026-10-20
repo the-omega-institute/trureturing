@@ -1,0 +1,29 @@
+**Definition 13.1 (the capped task and its resource coordinates).**
+Retain exactly Definition 10.1's all-shape family $\mathcal G_h$,
+entry $\rho^t u$ with $0\le t\le T$, and original parity $\pi(u)$.
+The literal, response, complete-word and common-initialization contracts
+are those of Definitions 1.1, 1.3 and 11.1. In particular, a query word
+selects a whole installed root-relative literal, and a Halt word selects
+one fixed bit. No source-dependent initial field, old record, origin,
+shape, reference label, epoch or address-generation service is supplied.
+All routing operations below are paid native Reads, with their replies
+immediately discarded after a hold or one bit change.
+
+For a finite installation let $M$ be the number of **distinct** installed
+Read literals, $n_R$ its number of query words, and $W$ its complete
+installed word set. Repeated copies of one literal count once in $M$
+and separately in $n_R$. On one run let $Q,U,A,P_{\rm run}$ respectively
+count actual Reads, genuine post-entry Updates, total submitted address
+letters, and maximum submitted literal length. Let
+$\ell_{\le v}^{\min}(h,T)$ be the minimum complete no-$11$ width among
+correct terminating controllers with $U\le v$ on every promised run,
+where $v$ is a nonnegative integer. Entry lag is not a post-entry Update.
+
+The lower comparison may also contain deterministic source-free internal
+steps: they receive a separate count $I$, have no observation, and keep
+all their mutable state inside the counted word. Each such step may
+change arbitrarily many counted bits. Each Read state still selects one
+fixed literal, and each Halt state one fixed bit. The native upper
+construction has $I=0$ and no internal writes. Thus allowing the larger
+class in a lower bound supplies no free internal work to the upper bound.
+

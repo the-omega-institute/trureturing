@@ -1,0 +1,38 @@
+**命题 23.2（生成泛函的响应—涨落恒等式）。** 对非负连续源 $f$，令
+
+$$
+Z(f)=\mathbb E\exp\left(-\int_0^1f(u)\Lambda(u)\,du\right)
+=\det_F(I+\mathsf C M_f)^{-1}.
+$$
+
+对连续方向 $h,k$，在零源处有
+
+$$
+\left.\frac{d}{dt}\log Z(th)\right|_{t=0}
+=-\int_0^1h(u)C(u,u)\,du,
+$$
+
+以及
+
+$$
+\left.\frac{\partial^2}{\partial s\,\partial t}
+\log Z(sh+tk)\right|_{s=t=0}
+=\int_0^1\int_0^1h(u)k(v)C(u,v)^2\,du\,dv.
+$$
+
+左式给出占用场的均值响应，右式给出两个源方向的联合涨落；它们也分别等于
+
+$$
+\mathbb E\int h\,d\mu,
+\qquad
+\operatorname{Cov}\left(\int h\,d\mu,\int k\,d\mu\right).
+$$
+
+**证明。** 将
+
+$$
+\log Z(f)=-\operatorname{Tr}\log(I+\mathsf C M_f)
+$$
+
+在零源处展开。一次项为 $-\operatorname{Tr}(\mathsf C M_h)$，等于 $-\int h(u)C(u,u)du$；二次混合项由迹的循环不变性合并为 $\operatorname{Tr}(\mathsf C M_h\mathsf C M_k)$，其核为 $h(u)k(v)C(u,v)^2$。这与第17、18节的均值和协方差公式一致。$\square$
+

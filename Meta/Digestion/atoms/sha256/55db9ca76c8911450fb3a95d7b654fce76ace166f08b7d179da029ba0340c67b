@@ -1,0 +1,29 @@
+**Proposition 36.4 (Four sufficient forms of side information).** In the source $X$, each of the following supplied relations gives finite upper calibration on every occupied cell to which the relation applies. The stated decoder uses further prime-divisibility answers; none of these relations alone is asserted to determine $\Omega$.
+
+1. **Exact window label.** A supplied nonempty index $r$ gives $N\le B_r=1+F_rU_r$ and $\Omega\le\lfloor\log_2B_r\rfloor$. Querying all primes at most $B_r$ gives the exact count.
+2. **Bounded index bucket.** A bucket value $a$ supplied with a known positive integer bound $R(a)$ and the promise $r\le R(a)$ gives a finite window union. For an occupied bucket,
+
+   $$
+   N\le M_a=1+F_{R(a)}\lfloor F_{R(a)}/5\rfloor,
+   \qquad \Omega\le\lfloor\log_2M_a\rfloor.
+   \tag{36.13}
+   $$
+
+   Querying all primes at most $M_a$ gives the exact count. For example, the supplied bucket number $j$ with $2^{j-1}<r\le2^j$ has the available bound $R(j)=2^j$.
+3. **Magnitude bound.** A supplied integer $M\ge1$ and the promise $1\le N\le M$ give $\Omega\le\lfloor\log_2M\rfloor$. Querying all primes at most $M$ gives the exact count, without supplying a generating index.
+4. **Certified complete prime-support envelope.** A supplied finite set $T\subset\mathbb P$ and the sound promise
+
+   $$
+   \{p\in\mathbb P:p\mid N(x)\}\subseteq T
+   \tag{36.14}
+   $$
+
+   for every source $x$ compatible with the supplied information give $\Omega\le|T|$. The set may contain primes that do not divide the actual integer; completeness means that no prime divisor lies outside it. For an additional occupied probe record $d_S(N)=b$, set $A_b=\sum_{p\in S}b_p$. Then
+
+   $$
+   A_b\le\Omega\le A_b+|T\setminus S|\le|T|.
+   \tag{36.15}
+   $$
+
+   Querying every prime in $T\setminus S$ gives $\Omega=\sum_{p\in T}\mathbf1_{p\mid N}$ exactly.
+

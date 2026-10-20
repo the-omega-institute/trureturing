@@ -1,0 +1,58 @@
+### 80.3 FIB 计数商何时确实是动态边界
+
+沿用 FIB 卷的
+
+$$
+c(\alpha)=(1,0),\qquad c(\beta)=(0,1),\qquad
+c(\langle s,t\rangle)=c(s)+c(t),
+$$
+
+以及
+
+$$
+c(\rho t)=M c(t),\qquad M(a,b)=(b,a+b).
+\tag{80.6}
+$$
+
+计数 $c$ 只定义在普通项上。定义带类型摘要 $q_c:X\to q_c[X]$：
+
+$$
+q_c(x)=
+\begin{cases}
+(\mathrm{ord},c(x)),&x\in X_{\mathrm{ord}},\\
+(\mathrm{term},\theta(x)),&x\in X_{\mathrm{term}}.
+\end{cases}
+$$
+
+考虑动作族 $\mathcal A=\{\mathrm{read},\mathrm{rho}\}$ 的**计数盲**有限合同，明确要求：
+
+1. read 在普通态总合法，只均匀抽取一个叶出现并报告 $\alpha$ 或 $\beta$ 标签；给定正概率标签 $\eta$，后继 $q_c(v)$ 的条件律只依赖 $c(t)$ 和 $\eta$，在计数纤维上不变。
+2. rho 在普通态的合法性及 replacement/cutoff 决策（含 cutoff 类型）只依赖 $c(t)$；合法 replacement 分支的后继为 $\rho t\in X_{\mathrm{ord}}$，要求这项替换闭合；cutoff 分支进入指定类型的 $X_{\mathrm{term}}$。终止态上 read/rho 均不合法，后续尝试按第80.1节的固定拒绝合同保持原终止态，故同终止类型的后续行为相同。除此之外，$\rho$ 的完整事件—后继摘要—writer 记录联合核 $J_\rho^{q_c}(t;\eta,q',r)$ 也必须只依赖 $c(t)$：对同一计数纤维中的共同合法普通态，对全部 $(\eta,q',r)\in E_\rho\times q_c[X]\times R_\rho$ 都相等，包括概率为零的三元组。若合同把 $\rho$ 限定为确定事件，则等价地要求该确定的 $(\eta,q_c(v),r)$ 三元组在每个计数纤维上恒定。
+3. 时钟增量和 writer 记录是已报事件与后继可见类型的固定函数，并共同纳入 $r$。
+4. 若使用定理80.1意义下的外显 memoryless selector，其在全部 $\mathcal A$ 上的分布只读取
+$q_c(t)$（包括终止类型，并保留零概率项），不读取已见轨迹。若允许历史依赖，须改用
+第80.2节所述的逐前缀 $\pi_{t,h},\overline\pi_h$ 合同，不能直接套用定理80.1的静态
+$\overline\pi$ 结论。
+
+若 $c(t)=(a,b)$、$a+b>0$，则 read 的事件边缘为
+
+$$
+\Pr(\eta=\alpha\mid t)=\frac a{a+b},\qquad
+\Pr(\eta=\beta\mid t)=\frac b{a+b},
+\tag{80.7}
+$$
+
+第一项的条件后继律与（80.7）相乘，第三项再确定记录，故 read 的完整联合核
+在 $q_c$ 纤维上恒定。rho 的 replacement 边界后继为 $(\mathrm{ord},M(a,b))$；
+cutoff 时改为 $(\mathrm{term},\theta)$，第二项保证分支、合法性与终止类型均在
+计数纤维上不变，并保证后继仍在实际状态集内。第二项的完整联合核条件（包括概率为零的
+事件—后继摘要—记录三元组）同时保证 writer 记录在计数纤维上不变。终止态的拒绝分支也由 $q_c$
+确定。因此（80.3）成立，使用外显 selector 时（80.4）也成立，$q_c$ 是该合同的
+动态边界。是否还是**最小**边界，要另证读数和连续 replacement 在该 cutoff
+合同下能否分离不同的 $(a,b)$；这一具体分离测试是独立的合同应用，不能由下降
+本身推出。[过程卷第29节](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md#29-联合标签核的稳定细化与路径恢复的分离)
+提供的是一般联合轨迹与稳定细化材料。
+
+这一定理只说明 $q_c$ 在声明合同下可以运行。它不把数量商提升为原始树的身份
+判定，也不把 $\rho$ 的计数更新推广到带位置、括号、共享来源或根票事件的合同。
+

@@ -1,0 +1,8 @@
+前述全部有限结论只说明：
+
+- 离线时刻具有严格的 radial split；
+- 一阶 reciprocal scalar 会遗失该 split；
+- Mahler／二阶关系读出能够恢复该信息；
+- prime pair 对所有 $\delta\ne0$ 提供严格正法向度量；
+- 离线零点使 scalar-to-relation coercivity 常数闭合。
+

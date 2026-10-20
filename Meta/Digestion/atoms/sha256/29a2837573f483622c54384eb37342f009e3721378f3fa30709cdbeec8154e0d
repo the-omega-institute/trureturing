@@ -1,0 +1,39 @@
+**推论 22.4（Fredholm 行列式与通过时间的回接）。** 对常数探针 $f\equiv s\ge0$，有
+
+$$
+\det_F(I+s\mathsf C)
+=\prod_{m=0}^{\infty}(1+s\rho_m)
+=\cosh\sqrt{\frac{s}{D}}.
+$$
+
+于是极限总占用质量满足
+
+$$
+\mathbb E\exp\left(-s\int_0^1\Lambda(u)\,du\right)
+=\operatorname{sech}\sqrt{\frac{s}{D}}.
+$$
+
+等价地，若 $(E_m)_{m\ge0}$ 是独立均值为 $1$ 的指数变量，则
+
+$$
+\int_0^1\Lambda(u)\,du
+\ \stackrel{d}{=}\ \sum_{m=0}^{\infty}\rho_mE_m,
+\qquad
+\sum_{m\ge0}\rho_m=\frac1{2D},
+\qquad
+\sum_{m\ge0}\rho_m^2=\frac1{6D^2}.
+$$
+
+这同时回接总占用质量的极限均值与方差；它仍是分布等式，不指定不同 $j$ 之间的逐样本耦合。
+
+该表达式与反射—吸收连续扩散从 $0$ 出发的通过时间 Laplace 变换一致，也与第10节和第15节的标量极限相接。
+
+**证明。** 半整数本征值给出 Fredholm 行列式的乘积；Euler 乘积公式
+
+$$
+\cosh z=\prod_{m=0}^{\infty}
+\left(1+\frac{4z^2}{(2m+1)^2\pi^2}\right)
+$$
+
+代入 $z=\sqrt{s/D}$ 即得。指数变量级数的 Laplace 变换是上述乘积的倒数。常数探针的占用质量是通过时间的缩放极限，所以其 Laplace 变换与连续反射—吸收问题的预解式相同。$\square$
+

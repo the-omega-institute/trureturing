@@ -1,0 +1,30 @@
+**定理 43.2（同轨有限多点 PGF 与缩放 Laplace 律）。** 对暂态上互异的 \(a_1<\cdots<a_m\) 及 \(0<z_k\le1\)，令 \(Z=\operatorname{diag}(z_1,\ldots,z_m)\)。同轨占用满足
+\[
+\mathbb E_0\prod_{k=1}^m z_k^{V_{a_k}}
+ =\det\!\left(I_m+Q_j\,\operatorname{diag}(z_1^{-1}-1,\ldots,z_m^{-1}-1)\right)^{-1}
+ =\frac{\det Z}{\det\!\left(Z+Q_j(I_m-Z)\right)}.
+\]
+当某个 \(z_k=0\) 时取右侧的 \(z_k\downarrow0\) 极限；在暂态探针上占用至少一次，故单点极限为零。重复坐标必须先合并其势；吸收点坐标的占用恒为零。令 \(s_k\ge0\)、\(z_k=e^{-h_js_k}\)，则
+\[
+\mathbb E_0e^{-\sum_k s_k\ell_{j,k}}
+ =\det\!\left(I_m+C_j\operatorname{diag}(\gamma_j(s_k))\right)^{-1},
+\quad
+C_j=h_jQ_j,\quad
+\gamma_j(s)=\frac{e^{h_js}-1}{h_j}.
+\]
+由 Green 核的一致收敛，固定 \(m\) 时
+\[
+\mathbb E_0e^{-\sum_k s_k\ell_{j,k}}
+ \longrightarrow
+ \det\!\left(I_m+C\,\operatorname{diag}(s_1,\ldots,s_m)\right)^{-1}.
+\tag{43.1}
+\]
+右侧是同一极限场的联合变换，不能换成各单点变换的乘积。
+
+**证明。** 令 \(d_k=z_k^{-1}-1\)。离散 Feynman–Kac 方程在探针行的消元给出 \(\det(I_m+Q_j\operatorname{diag}d)^{-1}\)；利用
+\[
+\left(Z+Q_j(I_m-Z)\right)Z^{-1}
+=I_m+Q_j(Z^{-1}-I_m)
+\]
+得到等价的第二式。取 \(z_k=e^{-h_js_k}\) 后 \(d_k=e^{h_js_k}-1\)，再用 \(h_jQ_j\to C\)、\(\gamma_j(s)\to s\) 得 (43.1)。对 (43.1) 的矩生成函数在零点邻域展开迹级数，取混合导数即得 (43.2)。$\square$
+

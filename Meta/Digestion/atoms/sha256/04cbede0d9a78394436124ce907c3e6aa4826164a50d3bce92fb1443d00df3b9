@@ -1,0 +1,16 @@
+以下条件等价：
+
+1. 对全部 \(t\in\mathbb R\)，
+
+   $$
+   e^{-itH_G/\hbar}\mathcal E_\nu
+   \subseteq\mathcal E_\nu;
+   $$
+2. $$
+   (I-P)H_GP=0;
+   $$
+3. $$
+   \boxed{[H_G,P]=0.}
+   \tag{111.3}
+   $$
+

@@ -1,0 +1,5 @@
+这一区分对应两个不同概念：
+
+- **law property**：真实概率律满足 $\Delta=0$；
+- **identifiability**：观察记录是否足以确定真实的 $\kappa$。
+

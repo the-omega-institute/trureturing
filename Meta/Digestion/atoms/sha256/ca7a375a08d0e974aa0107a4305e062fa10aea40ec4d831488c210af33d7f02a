@@ -1,0 +1,53 @@
+**数学引文 15.20（在本链上消费 MPS 与顺序生成）。** 消费
+[Pérez-García 等 v2，§3.1，Theorem 1 及其后的三个说明][PE-M]：
+该文 $N=n,d=2$，其
+$\rho_m=\operatorname{Tr}_{m+1,\ldots,n}|\psi\rangle\langle\psi|$
+正是本章按顺序的前缀约化态；
+$\max_m\operatorname{rank}\rho_m\le D$ 供应 open-boundary MPS 的 bond dimension $D$。
+再消费 [Schön 等，式 (1)–(5) 及 SVD 构造][PE-Q]：
+该文辅助 $\mathcal H_A=\mathbb C^D$、
+新位置 $\mathcal H_B=\mathbb C^2$ 与本章 $\mathcal A,\mathbb C^2_i$ 对应，
+其各输入 qubit 的 $|0\rangle$、任意等距、最后一步解耦全部保留。
+该文把基张量打印为 $|i_n,\ldots,i_1\rangle$；
+本章用输出位置编号重排为 $|i_1,\ldots,i_n\rangle$，
+不反转实际生成的步骤。
+
+在 15.17 的正活动全支持链上，每个实际前缀切口 rank 二，
+故这两个供应者合成给辅助维数二充分；
+$n\ge2$ 时二也必要。为明确供应构造的本模型应用，
+取每个后缀的正交 Schmidt 向量
+$R_\alpha^{(i)}$，其数目 $d_i\le2$，且 $d_0=d_n=1$。
+逐步展开
+
+$$
+R_\alpha^{(i-1)}
+=\sum_{b=0}^1\sum_{\beta=1}^{d_i}
+T^{[i]}_{b\beta,\alpha}|b\rangle_i R_\beta^{(i)}.
+$$
+
+右向量的正交性给
+$\sum_{b,\beta}\overline{T^{[i]}_{b\beta,\alpha}}
+T^{[i]}_{b\beta,\alpha'}=\delta_{\alpha\alpha'}$。
+所以在实际可达辅助子空间上
+
+$$
+V_i|\alpha\rangle
+=\sum_{b,\beta}T^{[i]}_{b\beta,\alpha}
+|\beta\rangle_{\mathcal A}|b\rangle_i
+$$
+
+是等距。把未用辅助方向补成正交列，即扩到固定
+$D=2$ 的等距；末端 $d_n=1$ 把所有实际占用振幅放入同一个辅助向量。
+从 $R^{(0)}_1=|\psi\rangle$ 开始迭代，正好生成目标，最终辅助解耦。
+这是 Schön 的 SVD/等距供应在同一已知链参数上的展开，
+不是另外声称更受限装置也能执行它。
+$n=1$ 时 $d_0=d_1=1$，一个单位置准备等距即可，
+一维辅助充分。
+
+必要性在同一合同内也可直接核对。第 $j$ 步后，
+已输出前缀与辅助的 Schmidt rank 至多 $D$，
+未访问位仍为独立空白。后续所有等距只作用于辅助和后缀，
+不改变前缀—其余系统的非零 Schmidt 谱；最终辅助解耦，
+故输出在前缀 $\{1,\ldots,j\}$ 与后缀上的 rank 至多 $D$。
+任一 rank 二的真实前缀切口因此要求 $D\ge2$。
+

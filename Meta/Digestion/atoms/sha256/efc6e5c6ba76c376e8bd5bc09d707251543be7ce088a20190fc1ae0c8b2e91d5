@@ -1,0 +1,8 @@
+所以每一个新定义的真实价值可以被精确测量为：
+
+* 是否降低共同 floor；
+* 降低多少；
+* 通过什么 self-energy 降低；
+* 生成哪个新的 contact function；
+* 消除了多少 GlueDim。
+

@@ -1,0 +1,25 @@
+### 391.3. 对数平滑的有限接口与目标修正
+
+文献 2002 加强式的 Introduction 已讨论 Selberg 对数平滑；这里不证明它的临界收敛性，仅将同一权重运到实际 $e$。为避免与 §386 的 $K$ 或原有 $S=M^3$ 混名，对实数 $t>1$ 定义
+
+$$
+\widetilde E^\mu(t)
+=\chi+\sum_{m\le t}\mu(m)
+\left(1-\frac{\log m}{\log t}\right)\varrho_m,
+\qquad
+\widetilde E^{\rm Fib}(t)
+=\Phi_\beta+\sum_{n\le t}e_n
+\left(1-\frac{\log n}{\log t}\right)\varrho_n.
+\tag{391.10}
+$$
+
+约定 $\widetilde E^\mu(t)=\chi$ 对 $0\le t\le1$ 成立。对整数 $N>1$，令
+
+$$
+a_N(d)=\max\left\{0,1-\frac{\log d}{\log N}\right\},\qquad
+C_N=\sum_{d\ge1}\beta_d(1-a_N(d))U_d\chi,
+\qquad
+L_\beta=\sum_{d\ge1}\frac{|\beta_d|\log d}{\sqrt d}<\infty.
+\tag{391.11}
+$$
+

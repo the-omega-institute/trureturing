@@ -1,0 +1,24 @@
+**定义 22.1（已到达入口与固定守卫的源分量要求）。** 固定同一安装中任一
+实际到达、具有 ARC 定义 5.1 入口关系及 CAP 有效源不变量的规范 Ready
+$p$；不执行 outer00。令其源为 $t$，实际守卫及 reserve 为 $h,K$，并置
+
+$$
+\ell=\lambda(t),\qquad d=h-\ell\ge0.
+$$
+
+取偶数 $N\ge2$，复用定义 19.1 的直接运输和 (ABT.64)、(ABT.66)：
+
+$$
+\widehat t=\mathsf C_Nt,\qquad
+A_N=F_{N+1},\quad B_N=F_{N+2},\qquad
+w=\lambda(\widehat t)=A_Na(t)+B_Nb(t).
+\tag{ABT.80}
+$$
+
+编码端实际守卫 $H$ 在选上下文之前固定，$H\ge\max(h,w)$，其 reserve
+至少为 $H$。每个 Left($v$)、Right($v$) 分别映到同方向的一个完整
+Left($\mathsf C_Nv$)、Right($\mathsf C_Nv$)，$v$ 遍历全部非空有限
+有序带标签树。要求保留的是原始释放的 accept/reject 以及源后继关系
+$\widehat t'=\mathsf C_N(t')$。这两项是原始响应的必要分量；不把它们
+命名为一个替代 $Q$，也不要求或推出完整原始响应相等。
+

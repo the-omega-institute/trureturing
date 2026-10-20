@@ -1,0 +1,47 @@
+**Theorem 13.3 (Saturation from an actual post-tick state forces global reset).** Let $D\ge1$ and let $(\Phi,\Psi)$ be any finite homogeneous binary CP instrument on $M_D(\mathbb C)$, with $\Phi+\Psi$ trace preserving. For a density matrix $\rho_0$, suppose
+
+$$
+\nu=\operatorname{Tr}\Psi(\rho_0)>0,\qquad
+\tau=\frac{\Psi(\rho_0)}\nu,\qquad F=\Psi^*(I_D).
+\tag{13.10}
+$$
+
+Assume the first nonzero value of $\operatorname{Tr}[F\Phi^k(\tau)]$ occurs at $h=D-1$. Then $\operatorname{rank}\tau=\operatorname{rank}F=1$, $R=R^\vee=\mathbb C^D$, and, for every complex matrix $X$,
+
+$$
+\Psi(X)=\tau\operatorname{Tr}(FX).
+\tag{13.11}
+$$
+
+The tick branch has Choi rank one. Every nonzero member of any of its Kraus representations has matrix rank one, and all such members span a single operator direction. If a density $\rho$ is invariant under $\Phi+\Psi$ and has $\operatorname{Tr}\Psi(\rho)=\widetilde\nu>0$, then $\rho$ is faithful. It is mixed when $D>1$.
+
+Proof. Nontrivial detection and (13.4) give $D-1\le D-\max(\operatorname{rank}\tau,\operatorname{rank}F)$. Both ranks are positive, so both equal one. The separate reachable bounds give $D-1\le r-1,r^\vee-1$, hence both reachable spaces have dimension $D$.
+
+Choose a unit vector $\eta$ and $\lambda>0$ with $F=\lambda\eta\eta^\dagger$, and write an arbitrary Kraus representation $\Psi(X)=\sum_iJ_iXJ_i^\dagger$. For $y\perp\eta$,
+
+$$
+0=y^\dagger Fy=\sum_i\|J_iy\|^2.
+\tag{13.12}
+$$
+
+Every $J_i$ therefore vanishes on $\eta^\perp$ and has the form $J_i=v_i\eta^\dagger$. Put $M=\sum_iv_iv_i^\dagger$. Then $\operatorname{Tr}M=\lambda$ and
+
+$$
+\Psi(X)=(\eta^\dagger X\eta)M,\qquad
+\nu=\lambda\eta^\dagger\rho_0\eta>0,\qquad
+\tau=M/\lambda.
+\tag{13.13}
+$$
+
+The last identity uses precisely the actual-output premise (13.10), not an unrelated chosen pure seed. It proves (13.11). Write $\tau=\xi\xi^\dagger$ with $\|\xi\|=1$. Since $M=\lambda\xi\xi^\dagger$, for $y\perp\xi$ the identity $0=y^\dagger My=\sum_i|y^\dagger v_i|^2$ forces every $v_i$ to be parallel to $\xi$. Thus all nonzero $J_i$ are multiples of $\xi\eta^\dagger$, and the map has the single nonzero rank-one representation $J=\sqrt\lambda\xi\eta^\dagger$. Its Choi matrix is the nonzero outer product of the vectorization of $J$ with itself, so its rank is one. Extra proportional or zero Kraus matrices do not create additional directions.
+
+By (13.11), any invariant $\rho$ with positive tick rate satisfies $\rho=\Phi(\rho)+\widetilde\nu\tau$. Iterating $D$ times gives
+
+$$
+\rho=\Phi^D(\rho)+\widetilde\nu\sum_{k=0}^{D-1}\Phi^k(\tau)
+\ \ge\ \widetilde\nu\sum_{k=0}^{D-1}\Phi^k(\tau)>0.
+\tag{13.14}
+$$
+
+The last sum is positive definite by (13.3), since $r=D$ and $u=1$. Hence $\rho$ has rank $D$, and is mixed if $D>1$. When $D=1$ and $h=0$, the same argument holds: the sole density is rank one and faithful, not mixed; the sum in (13.14) is just $\tau$. A zero-dimensional carrier admits no density and is excluded from this theorem. No conclusion about the required number of no-tick Kraus directions is used in this argument. $\square$
+

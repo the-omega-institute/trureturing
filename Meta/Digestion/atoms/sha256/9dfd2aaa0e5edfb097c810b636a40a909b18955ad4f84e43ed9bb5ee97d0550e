@@ -1,0 +1,16 @@
+\left\langle P_tF\right\rangle_{\theta+\varepsilon h}.
+\]
+应用定理44.2，
+\[
+\mathcal R_{F,h}(t)
+ =
+\operatorname{Cov}_\theta(P_tF,N_h)
+ =
+\operatorname{Cov}_\theta(F(X_t),N_h(X_0)).
+\]
+对 \(t\) 积分并使用
+\[
+\mathscr G_zF=\int_0^\infty e^{-zt}P_tF\,dt
+\]
+即得第一种 resolvent 配对。详细平衡使 \(P_t\) 及其积分 \(\mathscr G_z\) 自伴，得到第二种写法。证毕。
+

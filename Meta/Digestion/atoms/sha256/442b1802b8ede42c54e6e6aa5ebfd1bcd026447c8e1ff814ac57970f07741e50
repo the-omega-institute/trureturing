@@ -1,0 +1,22 @@
+**定义 316.1（经典记录通道与恢复器）。** 设隐藏标签集 $X$ 和记录字母表 $Y$ 有限。记录通道为
+
+$$
+C(y\mid x)\ge0,
+\qquad
+\sum_yC(y\mid x)=1.
+$$
+
+恢复器是随机核 $D(\widehat x\mid y)$。定义每个标签的记录支持
+
+$$
+Y_x=\{y\in Y:C(y\mid x)>0\}.
+$$
+
+称 $D$ 完美恢复，若
+
+$$
+\sum_{y,\widehat x}
+\mathbf 1_{\widehat x=x}D(\widehat x\mid y)C(y\mid x)=1
+\qquad\forall x\in X.
+$$
+

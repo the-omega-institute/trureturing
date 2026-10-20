@@ -1,0 +1,34 @@
+**命题 1204.1（固定阶的弱参数比较）。** 继续比较第 1165 节的三维准确生成器 $p(\kappa)$ 与 $q(\kappa)$。对固定 $0<\alpha<1$，令
+
+$$
+A(\alpha)=4^{1-\alpha}-1-2^{1-\alpha}.
+$$
+
+当 $\kappa\downarrow0$，
+
+$$
+H_\alpha(p)-H_\alpha(q)
+=\frac{A(\alpha)}{1-\alpha}\kappa^\alpha+o(\kappa^\alpha).
+$$
+
+**证明。** 两张权重向量的幂和分别为
+
+$$
+S_p=(1-\kappa)^\alpha+4^{1-\alpha}\kappa^\alpha,
+$$
+
+$$
+S_q=(1+\kappa)^{-2\alpha}(1+\kappa^\alpha)
++2^{1-\alpha}\kappa^\alpha(1+\kappa)^{-\alpha}.
+$$
+
+因为 $\kappa=o(\kappa^\alpha)$，二者之差为 $A(\alpha)\kappa^\alpha+o(\kappa^\alpha)$，且都趋于一。对数差除以幂和差趋于一，于是得到结论。证毕。
+
+令 $\varphi=(1+\sqrt5)/2$，则 $A(\alpha)$ 的零点为
+
+$$
+\alpha_c=1-\frac{\log\varphi}{\log2}\in(0,1).
+$$
+
+固定阶低于 $\alpha_c$ 时，充分小参数下 $q$ 的熵更低；固定阶高于 $\alpha_c$ 且仍低于一时，$p$ 的熵更低。这是两张可行来源的比较，尚未把它们宣告为各阶的全局最优者。
+

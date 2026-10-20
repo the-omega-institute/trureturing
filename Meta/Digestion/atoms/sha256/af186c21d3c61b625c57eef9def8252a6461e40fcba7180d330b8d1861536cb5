@@ -1,0 +1,8 @@
+Yu Deng 式程序应当是：
+
+1. 对 Fredholm/Hankel kernel 展开高阶历史；
+2. 将闭合子历史收缩成 counterterms；
+3. 保留 primitive kernel；
+4. 选择随 \(\omega\downarrow0\) 增长的展开阶数；
+5. 证明 remainder 小于已有正性 margin。
+

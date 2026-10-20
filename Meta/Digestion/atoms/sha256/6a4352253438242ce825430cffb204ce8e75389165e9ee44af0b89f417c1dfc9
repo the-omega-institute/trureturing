@@ -1,0 +1,9 @@
+其中：
+
+- $e$ 是控制位置；
+- $j$ 是实际 update epoch；
+- $H\in O^{\le B}$ 是按时间顺序保存的 raw event 记录；
+- $v\in\mathbb N^d$ 是累计资源向量；
+- $Y$ 是完整原目标行；
+- $p$ 标记 pending 或 complete。
+

@@ -1,0 +1,7 @@
+以下实际复用的仓库接口为：
+
+- `Blueprint/D5/S3/Combinatorics/Graph/HypercubeSubQuorum.md`：来源忠实的部分着色及单点/边代表选择。
+- `Blueprint/D5/S3/Fourier/FinitePoisson.md`：有限加法字符、零化子及正交关系。这里用到的是字符的类型，不把 Poisson 求和宣称为新的极值上界。
+- `Blueprint/D5/S3/Observer/Chronology/PrimeGoldenBigradedChronologicalSignature.md`：素数事件数与黄金短步数是两个独立分次；时序反向保持无符号分次而翻转二阶 Magnus 方向。
+- `docs/develop/theory/D-ZCOCT.md`：已明确区分构型、轨道及可见阶数，并使用 Klein 四群轨道。本文的四端口 Klein 四群有自己的作用对象和证明，不把两个不同作用直接等同。
+

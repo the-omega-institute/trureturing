@@ -1,0 +1,157 @@
+**Theorem 52.1 (controlled three-phase correction and attained order).**
+Initialize Q height with $\pi$ and put $X_{\kappa,T}=(q_T-q_0)/\sqrt T$.
+For $i,j\in\{1,2,3\}$ define centered native matrix entries and their
+inverse-height covariance tensor by
+
+$$
+\begin{aligned}
+f_{ij}(k)&=c_{\kappa,i}(k)c_{\kappa,j}(k)-(M_\kappa)_{ij},\\
+\mathcal C_{ij,ab}(\kappa)&=\langle f_{ij},\mathcal R f_{ab}\rangle_\pi,\\
+\mathcal H_\kappa(z)&=
+ \sum_{i,j,a,b=1}^3\mathcal C_{ij,ab}(\kappa)
+ \partial_i\partial_j\partial_a\partial_b\Gamma_\kappa(z).
+\end{aligned}
+\tag{52.1}
+$$
+
+Here $\Gamma_\kappa$ is the raw Gaussian density in (36.2), with
+covariance $2M_\kappa$. The summation uses all ordered index pairs;
+there is no additional tensor-symmetry factor. With
+$\|\sigma\|_{{\rm var},1}=\int(1+|z|)d|\sigma|(z)$, for all $T\ge1$,
+
+$$
+\sup_{\kappa\in\mathcal K}
+\left\|\mathcal L(X_{\kappa,T})-
+ \left[\Gamma_\kappa+T^{-1}\mathcal H_\kappa\right]dz
+\right\|_{{\rm var},1}\le C T^{-3/2}.
+\tag{52.2}
+$$
+
+The correction has zero total mass and Fourier transform
+
+$$
+\widehat{\mathcal H}_\kappa(\xi)
+ =\mathcal B_\kappa(\xi)e^{-\xi^{\mathsf T}M_\kappa\xi}.
+\tag{52.3}
+$$
+
+It is a signed density, not an all-frequency exponential truncation.
+For some $T_0,c,C>0$ independent of $\kappa$,
+
+$$
+\frac cT\le
+\left\|\mathcal L(X_{\kappa,T})-\Gamma_\kappa dz\right\|_{\rm var}
+\le\frac CT,\qquad T\ge T_0.
+\tag{52.4}
+$$
+
+Thus the already owned Q $O(1/T)$ upper is attained in bounded
+measurable tests for the full stationary resolved law, uniformly for
+unrestricted sequences $\kappa(T)\in\mathcal K$. The new assertion
+is the controlled correction and lower order, not that upper estimate
+by itself. An equivalent formulation holds at time $Ts$ with scaling
+$\sqrt T$, uniformly on each $0<a\le s\le b<\infty$, by the exact
+change $T\mapsto Ts$ and spatial dilation by $\sqrt s$.
+
+Proof. Conditional on height, $X_{\kappa,T}$ is Gaussian with random
+covariance
+
+$$
+A_T=\frac2T\int_0^T c_\kappa(K_r)c_\kappa(K_r)^{\mathsf T}dr,
+\qquad B=2M_\kappa,\qquad D_T=A_T-B.
+\tag{52.5}
+$$
+
+This is Q (41.6), with its original factor two. The matrices $A_T$
+are positive semidefinite and uniformly bounded; $B$ has a common
+strictly positive lower bound. Stationarity gives $\mathbb ED_T=0$.
+For each pair of entries, stationarity and selfadjointness give the
+exact covariance identity
+
+$$
+\begin{aligned}
+\mathbb E[(D_T)_{ij}(D_T)_{ab}]
+ &=\frac8{T^2}\int_0^T(T-s)
+       \langle f_{ij},e^{-s\mathcal L}f_{ab}\rangle_\pi ds\\
+ &=\frac8T\mathcal C_{ij,ab}+O(T^{-2}).
+\end{aligned}
+\tag{52.6}
+$$
+
+The error is uniform: on centered functions the semigroup contracts
+by $e^{-\gamma s}$, and the difference of the time integral from
+$T\mathcal C$ is bounded by
+$\int_0^\infty s\|f_{ij}\|_2\|f_{ab}\|_2e^{-\gamma s}ds$.
+In particular $\mathbb E\|D_T\|_F^2\le C/T$.
+
+Here is a fourth-moment bound with no independent-increments assumption
+on height. For any bounded centered real $f$ and ordered times
+$t_1\le t_2\le t_3\le t_4$, reversibility and the Markov property give
+
+$$
+\begin{aligned}
+\big|\mathbb E_\pi\prod_{j=1}^4 f(K_{t_j})\big|
+&=\big|\langle e^{-(t_2-t_1)\mathcal L}f,
+ f e^{-(t_3-t_2)\mathcal L}
+       (f e^{-(t_4-t_3)\mathcal L}f)\rangle_\pi\big|\\
+&\le \|f\|_\infty^2\|f\|_2^2
+ e^{-\gamma[(t_2-t_1)+(t_4-t_3)]}.
+\end{aligned}
+\tag{52.7}
+$$
+
+Integration over the ordered simplex gives
+$\mathbb E(\int_0^T f(K_r)dr)^4\le C\|f\|_\infty^2\|f\|_2^2T^2$
+for $T\ge1$. Apply this to the finitely many entries to obtain
+$\mathbb E\|D_T\|_F^4\le C/T^2$, and hence
+$\mathbb E\|D_T\|_F^3\le C/T^{3/2}$ by Cauchy–Schwarz.
+
+For clarity the needed Gaussian Taylor step extends Q Lemma 46.2
+by one order, with an actual remainder. Write $p_B$ for the centered
+Gaussian density of covariance $B$. In weighted variation, for any
+positive semidefinite bounded $A$ and $D=A-B$,
+
+$$
+\mathcal N_A=p_Bdz+
+ \frac12\sum_{i,j}D_{ij}\partial_i\partial_jp_Bdz+
+ \frac18\sum_{i,j,a,b}D_{ij}D_{ab}
+                   \partial_i\partial_j\partial_a\partial_bp_Bdz
+ +\mathcal E_{A,B},
+\quad \|\mathcal E_{A,B}\|_{{\rm var},1}\le C\|D\|_F^3.
+\tag{52.8}
+$$
+
+To prove it, first suppose $\|D\|_{\rm op}$ is at most half the
+common lower eigenvalue bound for $B$. The entire segment $B+tD$
+is then uniformly positive. Its density derivatives with respect to
+$t$ are $(\tfrac12\sum D_{ij}\partial_i\partial_j)^jp_{B+tD}$.
+For $j\le3$ these have weighted $L^1$ bounds $C\|D\|_F^j$ by
+Gaussian moments of polynomials of degree at most six, with one
+extra moment for the weight. Taylor's integral remainder proves
+(52.8). On the complementary region $\|D\|_F$ is bounded below.
+The weighted variation of $\mathcal N_A$ is uniformly bounded, even
+for singular $A$, and the three displayed Taylor terms have bounds
+$C$, $C\|D\|_F$, $C\|D\|_F^2$. Since $D$ is bounded, their sum is
+at most $C\|D\|_F^3$ on this region. This proves the global assertion,
+without assuming densities for singular conditional covariances.
+
+Mix (52.8) with (52.5). The linear term cancels exactly. Equation
+(52.6) and the factor $1/8$ give precisely $T^{-1}\mathcal H_\kappa$;
+the covariance error contributes $O(T^{-2})$, and (52.7) bounds the
+remaining weighted variation by $O(T^{-3/2})$. Testing signed kernels
+against all functions bounded by $1+|z|$ justifies mixing their
+weighted variations exactly as in Q (46.8)–(46.9). This proves (52.2).
+Fourier transformation of the four derivatives multiplies by
+$\xi_i\xi_j\xi_a\xi_b$; contracting (52.1) gives
+$\langle f_\xi,\mathcal R f_\xi\rangle=\mathcal B_\kappa(\xi)$.
+This proves (52.3) and the zero mass.
+
+For a bounded-test lower bound use $\cos z_3$. Its expectation
+difference from the Gaussian is
+$T^{-1}\mathcal B_\kappa(e_3)e^{-(M_\kappa)_{33}}+O(T^{-3/2})$.
+The leading coefficient has a strictly positive common lower bound
+by Theorem 51.2. This gives the left side of (52.4) for one common
+$T_0$. The right side follows from (52.2), or directly from the owned
+Q endpoint estimate. No fixed relation between $T$ and $\kappa$ has
+entered the proof. $\square$
+

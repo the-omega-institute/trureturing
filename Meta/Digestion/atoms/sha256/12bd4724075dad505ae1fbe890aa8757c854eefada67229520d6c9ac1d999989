@@ -1,0 +1,27 @@
+**定理 1404.1（固定高阶的指数预算相图）。** 对正预算 $\eta_N\to0$，若 $\theta_N\to\theta\in[0,\infty]$，则每个固定 $1<\alpha<\infty$ 满足
+
+$$
+\frac{F_{\alpha,N}(\kappa,\eta_N)}{D_N}
+\longrightarrow
+\min\left\{1,\frac\alpha{\alpha-1}\theta\right\}.
+$$
+
+**证明。** 最终 $A_N=c_N+\eta_N/\gamma_\kappa$，故
+
+$$
+-\frac{\log A_N}{D_N}\longrightarrow\min\{1,\theta\}.
+$$
+
+这是两个非负指数尺度相加的直接结果：两项最大值不超过和，和不超过最大值的两倍；取对数后的常数误差除以 $D_N$ 消失。因 $A_N,c_N\to0$，第 1402 节使尾幂和的负对数率趋于 $\beta=\alpha-1$。首项的负对数率为 $\alpha\min(1,\theta)$，所以总幂和的负对数率为两者的较小值。除以 $\beta$，得到所示下界。
+
+完美匹配来源在全部阶的熵都是 $D_N$，给上界一。若 $\theta<\beta/\alpha$，则特别有 $\theta<1$；取前节的一个前缀格，其长度 $j_N/N\to\theta$，因此剩余维数趋于无穷，构造最终可行。相同主标签界给
+
+$$
+\limsup_N F_{\alpha,N}/D_N
+\le\frac\alpha\beta\theta.
+$$
+
+两项上界与下界一致。在临界点 $\theta=\beta/\alpha$ 及其上方，完美匹配已给所需上界，无需额外断言前缀构造最优。证毕。
+
+临界值取决于所用熵阶。它描述归一化成本，不是说临界处所有最优通道突然具有某个已分类形状。
+

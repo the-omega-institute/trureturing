@@ -1,0 +1,29 @@
+### 46.1 实参数种子与非退化结论
+
+令 `-1<a<1`，并取正平方根：
+
+```math
+p=\frac{a-1}{2}+i\sqrt{1-\frac{(a-1)^2}{4}},\qquad
+q=\frac{-a-1}{2}+i\sqrt{1-\frac{(a+1)^2}{4}}.
+```
+
+于是 `|p|=|q|=1`、`Re(p+q)=-1`。记 `S` 为三循环矩阵，约定其第一行为 `(0,1,0)`，`J` 为三阶全一矩阵，并令：
+
+```math
+A=\operatorname{circ}(1,p,1)=J+(p-1)S,\qquad
+B=\operatorname{circ}(1,q,1)=J+(q-1)S,
+\qquad
+H=\frac1{\sqrt6}\begin{pmatrix}A&B\\B^*&-A^*\end{pmatrix}.
+```
+
+这里 `H` 始终表示归一化矩阵。此 block construction 是 Szöllősi 的已知构造，见 [*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*，§2，式 (1)–(7)](https://arxiv.org/abs/0811.3930)，DOI `10.1090/S0002-9939-09-10102-8`。本节研究的是其实际共同无偏向量上的额外非退化结论。
+
+取 `omega=exp(2 pi i/3)`，按 `S` 的特征值 `1,omega,omega²` 排列酉 Fourier 坐标。对两个三元单位相位向量 `x,y`，记其 Fourier 坐标为 `u,z`，并循环定义：
+
+```math
+c_k=\overline{u_k}u_{k+1},\qquad d_k=\overline{z_k}z_{k+1},\qquad
+\Delta(x,y)=\det\begin{pmatrix}
+c_0&c_1&c_2\\d_0&d_1&d_2\\1&1&1
+\end{pmatrix}.
+```
+

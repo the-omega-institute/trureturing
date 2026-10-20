@@ -1,0 +1,27 @@
+**引理 1442.1（尾标签的矩与模态）。** 令 $z_j=\prod_i\mathbb E_{q_j}X_i$，并将 $j\ge2$ 分成高矩标签 $\mathcal H=\{j:z_j\ge1/2\}$ 和其余标签 $\mathcal L$。在第 1346–1350 节的同一实际来源估计下，
+
+$$
+D_{\rm tail}:=\sum_{j\ge2}w_j(1-z_j)\le2\delta,
+\qquad \sum_{j\in\mathcal L}w_j\le4\delta.
+$$
+
+每个 $j\in\mathcal H$ 都有唯一的坐标模态 $x_j$，它是正奇偶顶点，且
+
+$$
+q_j(x_j)\ge z_j,
+\qquad
+\sum_{j\in\mathcal H}w_j
+\operatorname{TV}(q_j,\delta_{x_j})\le D_{\rm tail}.
+$$
+
+**证明。** 尾矩亏损界使用第 1345 节：同一主标签的局部公平估计给 $w_1|z_1|\le\delta$，而完整矩恒等式使
+
+$$
+D_{\rm tail}=(\kappa+\delta)-(\kappa-w_1z_1)
+=\delta+w_1z_1\le2\delta.
+$$
+
+低矩标签有 $1-z_j>1/2$，故其总权重至多为 $2D_{\rm tail}\le4\delta$。高矩标签的所有坐标均值非零，模态唯一，其奇偶符号等于 $z_j$ 的符号。逐坐标 $|m_i|\le(1+|m_i|)/2$ 给 $z_j\le q_j(x_j)$；概率律与点质量的总变差为 $1-q_j(x_j)$，相加即得。证毕。
+
+这些界都来自同一来源及同一主通道；没有为每个尾标签另选一个有利主来源。正奇偶顶点的选择也由各通道自身决定。
+

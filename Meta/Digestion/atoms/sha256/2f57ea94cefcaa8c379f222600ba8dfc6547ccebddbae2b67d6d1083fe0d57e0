@@ -1,0 +1,25 @@
+**定义 1401.1（固定关联下的两种移动尺度）。** 全批固定 $0<\kappa<1$，使用有限准确乘积来源，并令
+
+$$
+M_N=2^{N-1},\qquad D_N=\log M_N,\qquad c_N=M_N^{-1},
+\qquad a=1-\kappa.
+$$
+
+后验约束始终为同一来源的 Shannon 条件熵 $H(Z\mid X)\le\eta$；目标值 $F_{\alpha,N}(\kappa,\eta)$ 则是该可行族上的 $H_\alpha(Z)$ 下确界。以 $F_N=F_{1,N}$ 记 Shannon 目标。对正预算序列 $\eta_N\to0$，定义
+
+$$
+\ell_N=\log(1/\eta_N),\qquad
+\theta_N=\ell_N/D_N.
+$$
+
+因 $\eta_N\to0$，最终 $\ell_N>0$ 且趋于无穷。这里 $\ell_N$ 是对数预算尺度，不是前缀构造中的整数长度；后者以下记为 $j_N$。
+
+第 1323 节的通道常数记为
+
+$$
+\gamma_\kappa=\frac{1-\kappa}{2}
+\log\frac{1+\kappa}{1-\kappa}>0.
+$$
+
+局部公平加点来源的后验仍为第 1127、1269 节的 $T(\kappa)=B(\kappa)>0$。两项常数分别承担共同下界和实际构造，未假定其相等。
+

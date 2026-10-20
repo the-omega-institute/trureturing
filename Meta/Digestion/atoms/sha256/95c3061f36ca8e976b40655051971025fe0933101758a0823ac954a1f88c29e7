@@ -1,0 +1,26 @@
+**定义 47.1（有限时域正向与反向路径）。** 固定 FIB 词 \(W_j=s_0\cdots s_{L-1}\)，令
+\[
+c_i=\frac{\theta}{r_{s_i}}\in(0,1/2],
+\]
+并取定义5.1的有限状态核 \(K\) 与正向初态 \(\rho_F\)。在时域 \(n\) 内，正向路径 \(\omega=(x_0,\ldots,x_n)\) 的概率为
+\[
+P_F^n(\omega)=\rho_F(x_0)\prod_{k=0}^{n-1}K(x_k,x_{k+1}).
+\]
+取反向初态 \(\rho_R\) 和核 \(R\)。令 \(\Omega_n\) 为正向路径的正质量集合，并要求反向过程在 \(\Omega_n^\leftarrow\) 上有正质量。对 \(\omega^\leftarrow=(x_n,\ldots,x_0)\) 定义
+\[
+P_R^n(\omega^\leftarrow)
+=\rho_R(x_n)\prod_{k=0}^{n-1}R(x_{k+1},x_k),
+\]
+以及路径对数比
+\[
+\Sigma_F(\omega)=
+\log\frac{P_F^n(\omega)}{P_R^n(\omega^\leftarrow)}.
+\tag{47.1}
+\]
+若反向过程在全部路径上还有 \(\Omega_n^\leftarrow\) 之外的质量，则记
+\[
+\chi_n(\omega^\leftarrow)
+={\bf1}_{\Omega_n^\leftarrow}(\omega^\leftarrow).
+\]
+只有在反向过程被限制或条件化到 \(\Omega_n^\leftarrow\) 时，\(\chi_n\) 才恒等于一。
+

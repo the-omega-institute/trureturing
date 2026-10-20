@@ -5,6 +5,8 @@
    anchors: []
    digest: A positive matrix functional has the zero-norm propagation property. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19175 -/
+
 import D5.S3.Quantum.GNSMatrix
 
 namespace D5.S3.QuantumStates.GNSZeroPropagation
@@ -17,7 +19,7 @@ noncomputable def stateFunctional {d : Type*} [Fintype d]
     (rho : Matrix d d ℂ) (a : Matrix d d ℂ) : ℂ :=
   Matrix.trace (rho * a)
 
-private theorem cross_trace_factorization {d : Type*} [Fintype d] [DecidableEq d]
+theorem cross_trace_factorization {d : Type*} [Fintype d] [DecidableEq d]
     (rho h g : Matrix d d ℂ) (hRho : rho.PosSemidef) :
     stateFunctional rho (hᴴ * g) =
       Matrix.trace ((h * CFC.sqrt rho)ᴴ * (g * CFC.sqrt rho)) := by
@@ -57,7 +59,5 @@ theorem gns_zero_norm_propagation {d : Type*} [Fintype d] [DecidableEq d]
   have hProduct : g * CFC.sqrt rho = 0 := norm_eq_zero.mp hNorm
   rw [cross_trace_factorization rho h' g hRho]
   simp [hProduct]
-
-#print axioms gns_zero_norm_propagation
 
 end D5.S3.QuantumStates.GNSZeroPropagation

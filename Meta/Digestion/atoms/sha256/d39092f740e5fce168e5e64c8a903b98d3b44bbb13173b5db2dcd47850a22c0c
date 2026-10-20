@@ -1,0 +1,39 @@
+## 50. FLOW–CUT 曲率
+
+比较：
+
+1. 先对 CUT 做动态闭包，再加入当前目标；
+2. 先加入目标，再对联合 CUT 做动态闭包。
+
+两条路径之差由“当前目标相同但未来目标分叉”的状态对组成。
+
+这就是未来命名曲率：
+
+\[
+\boxed{
+\Omega_F^{\mathrm{future}}(q,T)
+=
+\mathsf B_F(q)
+\cap
+\ker T
+\cap
+\mathsf B_F(T)^c.
+}
+\]
+
+它精确表示：
+
+\[
+\forall w,\ q(F_wx)=q(F_wy),
+\qquad
+T(x)=T(y),
+\]
+
+但：
+
+\[
+\exists w,\ T(F_wx)\ne T(F_wy).
+\]
+
+---
+

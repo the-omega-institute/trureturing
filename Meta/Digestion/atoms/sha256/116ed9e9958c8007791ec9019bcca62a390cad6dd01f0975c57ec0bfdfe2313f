@@ -1,0 +1,6 @@
+这提供了一个直接的 primal 数值审计：
+
+* 最小 Toeplitz 特征值读取 Haar floor；
+* 非平底特征值数量读取 contact atom rank；
+* 对应特征向量读取未被原子谱激活的纯白创新方向。
+

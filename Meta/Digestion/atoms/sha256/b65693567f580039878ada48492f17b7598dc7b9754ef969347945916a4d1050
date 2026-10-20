@@ -1,0 +1,5 @@
+1. Backhoff、Beiglböck、Lin、Zalashko 的 *Causal Transport in Discrete Time and Applications*，DOI `10.1137/16M1080197`，讨论离散时间因果运输；本批 §379 的有限核定义和严格两步反例与其主题相邻，但本批的具体有限概率表和成本计算标为 `repo-derived`。
+2. Acciaio、Backhoff-Veraguas、Zalashko 的 *Causal optimal transport and its links to enlargement of filtrations and continuous-time stochastic optimization*，DOI `10.1016/j.spa.2019.08.009`，讨论过滤与因果最优运输；本批没有使用其连续时间结论。
+3. Pflug、Pichler 的 *A Distance for Multistage Stochastic Optimization Models*，DOI `10.1137/110825054`，以及 *The Nested Distance*，DOI `10.1007/978-3-319-08843-3_2`，提供多阶段/nested distance 的背景；本批的前缀压缩反例和下降核条件是有限模型中的本仓推导。
+4. Bellman 的动态规划工作作为 Bellman 递推的历史背景；本批 §380.4 的递推只在文中声明的有限后继闭合、目标边缘更新和预算状态合同下成立。
+

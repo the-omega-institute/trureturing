@@ -1,0 +1,22 @@
+**条件接口 372.2（共同遍历律与漂移）。** 无界输运需要相容的无穷支撑及明确的平移或重根作用。环境在空间作用下平稳遍历，仍不自动意味着粒子所见环境平稳。另行假设位移与时钟序列在跳步移位下具有不变遍历联合律 $\mathbb Q$，并从该律起始。若
+
+$$
+\mathbb E_{\mathbb Q}\|\xi_0\|<\infty,
+\qquad
+m=\mathbb E_{\mathbb Q}\tau_0\in(0,\infty),
+\qquad
+v=\frac{\mathbb E_{\mathbb Q}\xi_0}{m},
+$$
+
+则遍历与时钟反演接口给出
+
+$$
+\frac{N(t)}t\longrightarrow\frac1m,
+\qquad
+\frac{X(t)}t\longrightarrow v
+\quad\text{几乎必然}.
+\tag{372.2}
+$$
+
+其他初态需补证相同渐近行为。$\mathbb Q$ 的平均不能未经证明替换为空间环境律 $\Pi$ 的平均；平稳遍历本身也不提供 CLT 或正定扩散矩阵。
+

@@ -1,0 +1,12 @@
+### 43.3 ingest 收据
+
+本 fix3 先合并了开工后追加的 `origin/dev=472501832bc5a90ff6d17571582217da5a196ac3`；`git merge-tree --write-tree origin/dev HEAD` 无冲突。清理摄入前按 `BASE=$(git merge-base origin/dev HEAD)` 逐路径比较：本 lane 的旧 PR7 产物只删除不在 dev 的 CAS 与 `residual-open` YAML，若 dev 已有相同 OID 则保留。删除／保留明细与计数由 caller 亲验并写入 result.json。
+
+正文（含本节与 §43.4）最后定稿并提交后，才运行：
+
+```sh
+BASE=$(git merge-base origin/dev HEAD) make ingest SOURCE="contextual-spacetime-arithmetic docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md"
+```
+
+该命令的退出码、`residual_open_added`、`skipped_existing`、`coarse_fallbacks`、`open_genres`、`cas_objects_written`、`ledger_changed`、摄入提交及最终 HEAD 均只在完成运行后写入本轮 runner-owned `result.json`；摄入完成后不回写本文，保持输入源字节稳定。
+

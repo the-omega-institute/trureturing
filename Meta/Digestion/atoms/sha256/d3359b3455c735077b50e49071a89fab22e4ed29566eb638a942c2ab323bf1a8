@@ -1,0 +1,105 @@
+**Theorem 15.3 (Stationary completion and a parameter-uniform finite-window bound).** For the instrument of Theorem 15.2, put
+
+$$
+\widehat S_a=\sum_{k\ge a}\widehat\gamma_k,\qquad
+\widehat\mu=\sum_{k\ge0}(k+1)\widehat\gamma_k,\qquad
+\widehat\rho=\frac1{\widehat\mu}\sum_{a\ge0}\Phi^a(\tau).
+\tag{15.7}
+$$
+
+Then $\widehat\rho$ is a real faithful mixed invariant density, distinct from $\tau$. Every actual stationary cylinder is
+
+$$
+\begin{aligned}
+\mathsf P_H(0^a1\,0^{g_1}1\cdots0^{g_r}1\,0^b)
+&=\frac{\widehat S_a\widehat S_b}{\widehat\mu}
+\prod_{i=1}^r\widehat\gamma_{g_i}\quad(r\ge0),\\
+\mathsf P_H(0^W)&=\frac1{\widehat\mu}
+\sum_{k\ge W}(k-W+1)\widehat\gamma_k\quad(W\ge0).
+\end{aligned} \tag{15.8}
+$$
+
+There is no extra all-zero stationary component. Suppose in addition that explicit constants $0<\ell\le u$ satisfy
+
+$$
+\ell\le r(k):=\frac{H(k)}{k^n}\le u\quad(k\ge1),\qquad
+c_{\ell,u}=\frac{\sqrt u-\sqrt\ell}{\sqrt u+\sqrt\ell}.
+\tag{15.9}
+$$
+
+Let $\mathsf P_{H,W}$ and $\mathsf P_{n,W}$ be the probability distributions on $\{0,1\}^W$ for this actual stationary instrument and the exact reference (1.3), respectively. Total variation means half the $\ell^1$ distance. Uniformly over $0<q<1$,
+
+$$
+\begin{aligned}
+d_{\rm TV}(\widehat\gamma,\gamma)&\le c_{\ell,u},\\
+d_{\rm TV}(\widehat\lambda,\lambda)&\le c_{\ell,u},\qquad
+d_{\rm TV}(\widehat\alpha,\alpha)\le c_{\ell,u},\\
+d_{\rm TV}(\mathsf P_{H,W},\mathsf P_{n,W})
+&\le 1-(1-c_{\ell,u})^{\lceil W/2\rceil}
+\le\min\{1,\lceil W/2\rceil c_{\ell,u}\}\quad(W\ge0).
+\end{aligned} \tag{15.10}
+$$
+
+Here $\lambda$ and $\widehat\lambda$ are the stationary interval-and-position distributions, and $\alpha,\widehat\alpha$ their initial forward-wait marginals, defined explicitly by
+
+$$
+\lambda(k,a)=\frac{\gamma_k}{\mu},\qquad
+\widehat\lambda(k,a)=\frac{\widehat\gamma_k}{\widehat\mu}
+\quad(k\ge1,\ 0\le a\le k),\qquad
+\alpha_a=\frac{S_a}{\mu},\quad
+\widehat\alpha_a=\frac{\widehat S_a}{\widehat\mu}.
+\tag{15.11}
+$$
+
+In particular the length-biased interval marginals $(k+1)\gamma_k/\mu$ and $(k+1)\widehat\gamma_k/\widehat\mu$ also have total variation at most $c_{\ell,u}$. Every binary word, including an all-zero or empty word, has probability error bounded by the last line of (15.10).
+
+Proof. First extend the stationary supplier to its actual finite-mean law. Theorem 5.1 assumes (1.1), so it is not invoked unchanged for $\widehat\gamma$. Instead use its summation mechanism with the hypotheses just proved. By completeness, the survival traces satisfy
+$\operatorname{Tr}\Phi^a(\tau)-\operatorname{Tr}\Phi^{a+1}(\tau)=\widehat\gamma_a$; stability makes the traces tend to zero. Hence $\operatorname{Tr}\Phi^a(\tau)=\widehat S_a$. The norm-convergent positive series $R=\sum_{a\ge0}\Phi^a(\tau)$ therefore obeys
+
+$$
+\operatorname{Tr}R=\sum_{a\ge0}\widehat S_a=\widehat\mu<\infty,
+\qquad \Phi(R)=R-\tau,\qquad \Psi(R)=\tau.
+\tag{15.12}
+$$
+
+Tonelli justifies the trace identity and the finite mean follows from (15.1). Normalizing gives invariance. The Kraus-word expansion $y^*Ry=\sum_w|y^*L_w\xi|^2$, together with full reachability, proves $R>0$ for every nonzero complex $y$. All terms are real symmetric. Thus $\widehat\rho$ is faithful and mixed, and cannot equal the pure $\tau$.
+
+The first tick after $a$ visible zeros has unnormalized state
+$\Psi\Phi^a(\widehat\rho)=\widehat S_a\tau/\widehat\mu$.
+Each subsequent completed gap and tick multiplies by $\widehat\gamma_{g_i}$ and resets to $\tau$; the final zero run contributes $\widehat S_b$. This proves the first line of (15.8). Applying $\Phi^W$ to the defining stationary series proves its second line. At $W=0$ the result is one. Trace completeness and invariance give right and left consistency, so these are a stationary process's actual cylinders. Moreover
+$\mathsf P_H(0^W)\le\widehat\mu^{-1}\sum_{k\ge W}(k+1)\widehat\gamma_k\to0$, excluding an all-zero component. The tick rates at $\tau$ and $\widehat\rho$ are respectively zero and $1/\widehat\mu$.
+
+For the comparison, the following elementary change-of-density estimate is used inside the proof. If a probability measure $\pi$ is tilted by a scalar $r\in[\ell,u]$, with $a=\mathbb E_\pi r$, then for $\ell<u$ the chord bound for $|r-a|$ gives
+
+$$
+\begin{aligned}
+d_{\rm TV}\left(\frac{r\pi}{a},\pi\right)
+&=\frac{\mathbb E_\pi|r-a|}{2a}
+\le\frac{(u-a)(a-\ell)}{a(u-\ell)}\\
+&=\frac{u+\ell-a-u\ell/a}{u-\ell}
+\le\frac{u+\ell-2\sqrt{u\ell}}{u-\ell}
+=c_{\ell,u}.
+\end{aligned} \tag{15.13}
+$$
+
+The penultimate inequality is $a+u\ell/a\ge2\sqrt{u\ell}$. If $\ell=u$, the tilt is constant and the distance is zero. The gap law is precisely such a tilt of $\gamma$, with mean $a=Z_H/Z_n$.
+
+The stationary initialization requires a different normalization. Its interval-position law in (15.11) is normalized because $\sum_k(k+1)\gamma_k=\mu$. Writing $M_H=\sum_{k\ge1}(k+1)H(k)q^k$ and $M_n=\sum_{k\ge1}(k+1)k^nq^k$ gives
+
+$$
+\lambda(k,a)=\frac{k^nq^k}{M_n},\qquad
+\widehat\lambda(k,a)=\frac{H(k)q^k}{M_H}
+=\frac{r(k)}{\mathbb E_\lambda r(K)}\lambda(k,a).
+\tag{15.14}
+$$
+
+Thus the same bound (15.13) applies to the joint length-biased law, with no assumption that $\widehat\mu=\mu$. Its projections to $K$ and to the remaining wait $a$ cannot increase total variation; summing over $k\ge a$ gives exactly (15.11). This establishes both initialization bounds in (15.10), including length bias and all tail contributions.
+
+To pass to a whole window, the actual cylinder formula has the following scalar sampling representation: draw an initial wait $A$ with law $\alpha$, place $A$ zeros before the first one, and then draw independent gaps with law $\gamma$ after each one. The corresponding hatted representation has exactly (15.8). This is a representation of output probabilities; the instrument itself remains (15.6).
+
+For $W\ge1$, at most $B_W=\lceil W/2\rceil$ draws are needed: one initial wait and at most $B_W-1$ subsequent gaps. Indeed every post-tick gap has at least one zero. A gap draw can affect the window only after a tick in a position at most $W-2$; after a tick at position $W-1$ the remaining symbol is forced to be zero. Such draw-triggering ticks are separated by at least two positions and number at most $\lceil(W-2)/2\rceil=B_W-1$ (zero for $W=1,2$). One can therefore pre-draw $B_W-1$ independent gaps and use a deterministic truncation map to the length-$W$ word.
+
+For two countable distributions, match their common masses $\min\{p_i,p'_i\}$ first and couple the remaining masses arbitrarily. This gives a coupling with equality probability $1-d_{\rm TV}$. Apply it to the initial waits and independently to each of those gap pairs. Every pair agrees with probability at least $1-c_{\ell,u}$; consequently all needed draws agree with probability at least $(1-c_{\ell,u})^{B_W}$. Equal draws produce equal words. For any event, the difference of its two probabilities is at most the disagreement probability, which proves (15.10). The empty window is deterministic and has distance zero, as the same formula with exponent zero states. These couplings are a proof of a classical distribution bound, not retained registers, shared physical input, or a proposed simulation controller.
+
+The maximal-coupling and equilibrium-renewal ingredients are classical; see H. Thorisson, *Coupling, Stationarity, and Regeneration*, Springer (2000), [doi:10.1007/978-1-4612-1236-2](https://doi.org/10.1007/978-1-4612-1236-2). The calculations above supply their full specialization, including the two distinct normalizers and the window draw count, for the actual completed instrument. Under (15.9), $\widehat\gamma_0=0$ and every $\widehat\gamma_k$ for $k\ge1$ is positive. Formula (15.8) then gives exactly the no-adjacent-ones visible support, including positive boundary tails. $\square$
+

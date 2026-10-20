@@ -1,0 +1,6 @@
+标量族的成熟归属与记号如下：
+
+- M. N. S. Swamy, “Properties of the Polynomials Defined by Morgan-Voyce,” *The Fibonacci Quarterly* 4(1) (1966), pp.73–81，[原文](https://www.fq.math.ca/Scanned/4-1/swamy.pdf)。印刷第73页式（7）的小写 $b_k$ 满足 $b_0=1,b_1=x+1$ 及 $b_{k+2}=(x+2)b_{k+1}-b_k$，本节 $u_k(A)=A b_k(A)$；印刷第79页式（40）给相同二项式系数。第80页式（42b）为旧缩放 Chebyshev 表示，不能替代当前 $V/W$ 约定。
+- NIST DLMF [18.5.3](https://dlmf.nist.gov/18.5#E3) 的当前第三类记号为 $V_0=1,V_1=2x-1$；该处注明版本1.0.28（2020年9月15日）交换旧 $V/W$ 标签的更正。取 $U_{-1}=0$，有 $u_k(A)=A V_k(1+A/2)=A[U_k(1+A/2)-U_{k-1}(1+A/2)]$。
+- DLMF [18.12.10](https://dlmf.nist.gov/18.12#E10) 给第二类 $U_k$ 的生成式；乘 $(1-z)$ 才得到 $U_k-U_{k-1}$。本模型的解析半径由实际极点证明，不从默认正交区间移植。
+

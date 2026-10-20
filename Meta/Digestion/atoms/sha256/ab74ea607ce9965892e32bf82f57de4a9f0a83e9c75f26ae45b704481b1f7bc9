@@ -1,0 +1,27 @@
+### 定理 360.3（最小范数规范）
+
+在 \(\mathcal S_F\) 中，唯一满足
+
+$$
+g_{\min}\perp\ker d_1
+$$
+
+的解是 \(g_{\mathrm{coex}}\)。它满足
+
+$$
+\boxed{
+\|g_{\min}\|
+\le
+\|g\|
+\quad\text{对所有 }g\in\mathcal S_F.
+}
+$$
+
+若只允许顶点规范变换 \(g\mapsto g+d_0\lambda\)，则 Coulomb 条件
+
+$$
+\delta_1g=0
+$$
+
+可以消去 exact 方向，但不会消去 harmonic 方向。
+

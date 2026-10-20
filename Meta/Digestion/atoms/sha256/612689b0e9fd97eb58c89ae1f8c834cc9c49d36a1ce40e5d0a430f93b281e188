@@ -1,0 +1,165 @@
+**定理 440.2（同一装置的两种误差阶）。** 在定义 440.1 的设置下，令 $\delta=\theta-u$、$x=\sin^2\delta$。对所有 $u,\theta\in I$ 及每个允许的平衡见证，
+
+$$
+\boxed{\quad
+x\le\varepsilon_S(u,\theta)\le4x-x^2\le4\delta^2,\qquad
+\varepsilon_C(u,\theta)\le2\sqrt2\,|\sin\delta|.
+\quad}
+$$
+
+固定 $u=\pi/4$ 时，每个这样的固定装置还满足
+
+$$
+\boxed{\quad
+\liminf_{\substack{\theta\to u\,,\ \theta\ne u\\\theta\in I}}
+ \frac{\varepsilon_C(u,\theta)}{|\theta-u|}
+ \ge\frac12\sqrt{\frac76}>0.
+\quad}
+$$
+
+于是同一实验在该校准点有 $\varepsilon_S=\Theta(\delta^2)$ 与 $\varepsilon_C=\Theta(|\delta|)$。
+
+证明。先对求和后的系统通道取一个数学 Kraus 环境 $E=\mathbb C^3$，写
+
+$$
+V_\theta=\sum_{a=0}^2|a\rangle_E\otimes A_a(\theta):S\longrightarrow E\otimes S,
+\qquad c=\frac{|0\rangle+|1\rangle+|2\rangle}{\sqrt3}.
+$$
+
+完备性给出 $V_\theta^\dagger V_\theta=I_S$。令 $P_{\rm pole}=|1\rangle\langle1|+|2\rangle\langle2|$、$P_{\rm lat}=I_S-P_{\rm pole}$，并取交叠算子 $G=(\langle c|\otimes I_S)V_\theta$。它是对角矩阵，且
+
+$$
+\begin{aligned}
+G_{ii}&=\sum_a\overline{h_{ai}(u)}h_{ai}(\theta)
+       =\langle q_i(u)|q_i(\theta)\rangle,\\
+\langle q_{3+j}(u)|q_{3+j}(\theta)\rangle
+ &=\cos^2u\cos^2\theta+2\sin u\cos u\sin\theta\cos\theta
+   +\sin^2u\sin^2\theta\\
+ &=(\cos u\cos\theta+\sin u\sin\theta)^2=1-x,\\
+G&=P_{\rm pole}+(1-x)P_{\rm lat},\qquad
+\|G\|=1,\quad \|I_S-G\|=x.
+\end{aligned}
+$$
+
+这里 $\|\cdot\|$ 是算子范数。分解 $V_\theta=|c\rangle\otimes G+W$，则 $(\langle c|\otimes I_S)W=0$，从而
+
+$$
+\begin{aligned}
+W^\dagger W&=I_S-G^2=(2x-x^2)P_{\rm lat},\\
+\Phi_{u,\theta}(X)&=GXG+\mathcal R(X),\qquad
+\mathcal R(X)=\operatorname{Tr}_E(WXW^\dagger).
+\end{aligned}
+$$
+
+环境取迹使两个交叉项消失，$\mathcal R$ 完全正。其完整 diamond 范数恰为
+
+$$
+\|\mathcal R\|_\diamond=\|W^\dagger W\|=2x-x^2.
+$$
+
+具体地，对任何有限参考和任意矩阵 $X$，左右乘法的迹范数界给出上界 $\|W\|^2\|X\|_1$；部分迹收缩可直接由对偶式
+$\|\operatorname{Tr}_E Y\|_1=\sup_{\|H\|\le1}|\operatorname{Tr}[(I_E\otimes H)Y]|\le\|Y\|_1$
+得到。取 $W^\dagger W$ 的单位最大特征向量作纯态输入，$\mathcal R$ 输出为正，其迹达到 $\|W^\dagger W\|$，故有等号。这也说明不需要假定 $\mathcal R$ 保迹。
+
+另一方面，恒等式 $GXG-X=(G-I_S)XG+X(G-I_S)$ 在张量任意参考后仍成立，故
+
+$$
+\|\operatorname{Ad}_G-\operatorname{id}_S\|_\diamond\le2x,
+\qquad \operatorname{Ad}_G(X)=GXG.
+$$
+
+加上完全正余项即得 $4x-x^2$ 的上界。两极的校正幅度向量均为 $c$，任一纬线的幅度向量与 $c$ 的交叠为 $1-x$，故极点与纬线之间的相干元被乘以 $1-x$，而其布居保持不变。在输入 $|\psi\rangle=(|1\rangle+|3\rangle)/\sqrt2$ 上，输出误差的非零块为
+
+$$
+\begin{pmatrix}0&-x/2\\-x/2&0\end{pmatrix},
+$$
+
+其迹范数为 $x$，给出下界。这些估计直接控制每个参考扩张，不经过 Choi 保真度推断。对 $E$ 中方向 $c$ 的分解只用于求和通道的证明；数学 Kraus 变换没有产生新的实际标签或控制权限。
+
+保留实际标签的上界也可在相同固定幅度上得到。由于系统基向量彼此正交、各 $U_a(u)$ 的对角元模长为一，且 $\{b_a\}$ 完备，
+
+$$
+\begin{aligned}
+\|V_\theta-V_u\|^2
+ &=\max_i\sum_a|h_{ai}(\theta)-h_{ai}(u)|^2\\
+ &=\max_i\|q_i(\theta)-q_i(u)\|^2=2x.
+\end{aligned}
+$$
+
+在指定基上将 $E$ 去相干并标识为 $C$，$V_\theta X V_\theta^\dagger$ 就变为 $\mathcal Q_{u,\theta}(X)$；在校准点则为 $\lambda_C\otimes X$，其中 $\lambda_C=I_C/3$。对任意参考，展开
+
+$$
+V_\theta X V_\theta^\dagger-V_uXV_u^\dagger
+ =(V_\theta-V_u)XV_\theta^\dagger
+  +V_uX(V_\theta-V_u)^\dagger
+$$
+
+给出迹范数上界 $2\|V_\theta-V_u\|\|X\|_1$。去相干是三个相位酉共轭的平均，故亦收缩迹范数。选取合法的 $\tau=\lambda_C$ 即得 $\varepsilon_C\le2\sqrt2|\sin\delta|$。
+
+现在固定 $u=\pi/4$，并始终保持同一 $b$。完整相位方程变为
+
+$$
+\sqrt2 e^{i(\beta+\gamma)}+\sqrt2 e^{i(2\gamma-\beta)}+1=0.
+$$
+
+前两项之和的平方模为一，所以
+
+$$
+4+4\cos(\gamma-2\beta)=1,
+\qquad \cos(\gamma-2\beta)=-\frac34.
+$$
+
+对纬线 $j$ 和实际标签 $a$，置 $\ell=j-a\pmod3$、$t_\ell=2\pi\ell/3$，其概率为 $p_a(\theta)=|f_{j-a}(\theta)|^2$，其中
+
+$$
+\begin{aligned}
+f_\ell(\theta)
+ &=\frac{\cos^2\theta+\sqrt2\sin\theta\cos\theta\,e^{i\beta}\omega^\ell
+                  +\sin^2\theta\,e^{i\gamma}\omega^{2\ell}}{\sqrt3},\\
+f_\ell(u)&=\frac{1+\sqrt2 e^{i\beta}\omega^\ell+e^{i\gamma}\omega^{2\ell}}{2\sqrt3},
+\qquad
+f'_\ell(u)=\frac{-1+e^{i\gamma}\omega^{2\ell}}{\sqrt3},\\
+v_\ell:=\left.\frac{d}{d\theta}|f_\ell(\theta)|^2\right|_{\theta=u}
+ &=\frac{\sqrt2}{3}
+   \bigl[\cos(\gamma-\beta+t_\ell)-\cos(\beta+t_\ell)\bigr].
+\end{aligned}
+$$
+
+三点 Fourier 正交性给出
+$\sum_\ell\cos(\alpha+t_\ell)=0$ 以及
+$\sum_\ell\cos(\alpha+t_\ell)\cos(\zeta+t_\ell)=\tfrac32\cos(\alpha-\zeta)$，因而
+
+$$
+\sum_\ell v_\ell=0,\qquad
+\sum_\ell v_\ell^2
+ =\frac23[1-\cos(\gamma-2\beta)]=\frac76.
+$$
+
+这个不变量适用于完整相位方程的每个解。设 $\lambda=(1/3,1/3,1/3)$；极点基态对所有 $\theta$ 的实际标签分布都是 $\lambda$，而该纬线基态的分布为
+
+$$
+p(\theta)=\lambda+\delta\,(v_{j-a})_{a=0}^2+O(\delta^2).
+$$
+
+对任意候选 $\tau$，记 $t_a=\langle a|\tau|a\rangle$。分别代入极点和纬线这两个输入，再取系统迹并对 $C$ 去相干，误差不会增大，所以
+
+$$
+\begin{aligned}
+\|\mathcal Q_{u,\theta}-\mathcal T_\tau\|_\diamond
+ &\ge\max\{\|\lambda-t\|_1,\|p(\theta)-t\|_1\}\\
+ &\ge\tfrac12\|p(\theta)-\lambda\|_1.
+\end{aligned}
+$$
+
+该式对每个 $\theta$、每个 $\tau$ 同时成立，故可先取 $\tau$ 的下确界，再除以 $|\delta|$ 并取下极限，得到
+
+$$
+\liminf_{\theta\to u,\,\theta\ne u}
+ \frac{\varepsilon_C(u,\theta)}{|\delta|}
+ \ge\frac12\sum_\ell|v_\ell|
+ \ge\frac12\sqrt{\sum_\ell v_\ell^2}
+ =\frac12\sqrt{\frac76}.
+$$
+
+这里的 $1/2$ 来自两个输入之间的三角不等式，不是范数折半；也没有对最优 $\tau$ 随参数的选择作正则性假设。证毕。
+

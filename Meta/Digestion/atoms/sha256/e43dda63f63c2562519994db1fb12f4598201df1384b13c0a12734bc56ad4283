@@ -1,0 +1,84 @@
+**定理 44.2（所有源谱的完整信道与两坐标满射，repo-derived）。** 在定义 44.1 中，实现统一粗化当且仅当每一对不同扇区的联合同态
+
+$$
+(\pi_s,\pi_t):H\longrightarrow C_{d_s}\times C_{d_t}
+$$
+
+满射。结论对任意固定的正整数 $r_s,d_s$ 成立，包含 $d_s=1$、源尺寸小于目标尺寸、补零及秩一源谱。这里的信道相等也在附加任意有限被动参考后成立。
+
+**证明。** 实际源基上的拆分是
+
+$$
+E|s,i\rangle=|s,i\bmod d_s\rangle
+|\lfloor i/d_s\rfloor\rangle_E.
+$$
+
+两侧环境使用同一组 $j$ 标签，故编码矩阵单位 $|s\rangle\langle t|$ 在拆分并取环境偏迹后恰为 $\sum_j|\psi_{sj}\rangle\langle\psi_{tj}|$。补零不改变这个偏迹，也不添加源空间的基向量。展开 §39 的正交 Fourier 基，得到
+
+$$
+\begin{aligned}
+A_{stkl}&=\sum_{j<M}c_{sjk}\overline{c_{tjl}},\\
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle t|)
+&=\sum_{k\in C_{d_s}}\sum_{l\in C_{d_t}}
+A_{stkl}\,m_{stkl}|T_{sk}\rangle\langle T_{tl}|,\\
+m_{stkl}&=\frac1{|H|}\sum_{h\in H}
+\exp\!\left(-2\pi i\frac{k\pi_s(h)}{d_s}
++2\pi i\frac{l\pi_t(h)}{d_t}\right).
+\end{aligned}
+$$
+
+此式使用 $V_hT_{sk}=\exp(-2\pi i k\pi_s(h)/d_s)T_{sk}$ 的约定。共同环境产生的是逐 $j$ 的乘积之和 $A_{stkl}$，不能把它替换成两个独立环境和的乘积。
+
+为给出与定理 43.1 的确切接口，置 $A=\prod_sC_{d_s}$、$\Pi=(\pi_s)_s$、$K=\Pi(H)$。实际拆分输出支撑于相关子空间
+
+$$
+\mathcal Q=\bigoplus_s\operatorname{span}\{T_{sk}:k\in C_{d_s}\}.
+$$
+
+其中移位权为 $\theta_{sk}(u)=\exp(-2\pi i ku_s/d_s)$，每个权只依赖一个坐标，所有 $\theta_{s0}$ 都是平凡角色；不同扇区的零模是这一角色的不同重数。矩阵单位 $|T_{sk}\rangle\langle T_{tl}|$ 查询的角色恰为 $\theta_{sk}\theta_{tl}^{-1}$，所以
+
+$$
+m_{stkl}=m_K(\theta_{sk}\theta_{tl}^{-1}),\qquad
+|\operatorname{supp}(\theta_{sk}\theta_{tl}^{-1})|\le2.
+$$
+
+这里复用的是定理 43.1 的矩阵单位乘子公式。其完整角色空间 $\ell^2(\widehat A)$ 可以含有别的角色对，而这些角色对的比值未必来自 $\mathcal Q$ 的两个实际权。因而 $K^\perp$ 中一个支撑大于二的角色，本身不给出此编码中的矩阵单位或非零源系数。实际全谱失败必须在上述查询族内找到角色，并连同实际 $A_{stkl}\ne0$ 一起检验；下面的必要性证明正完成这一步。
+
+同态的每个非空纤维都是核的陪集，所以均匀 $h$ 推前为像子群上的均匀分布。这里使用有限角色正交性与真子群的角色分离性，见 Keith Conrad，[*Characters of finite abelian groups*](https://kconrad.math.uconn.edu/blurbs/grouptheory/charthy.pdf)，Theorem 4.1、Corollary 3.7；子群角色和的同一表述见 van de Ven、Di Bucchianico，[*Factorial Designs and Harmonic Analysis on Finite Abelian Groups*](https://www.eurandom.tue.nl/reports/2006/023-report.pdf)，Lemma 5.4。即使 $H$ 非阿贝尔，角色也通过其阿贝尔像计算。
+
+当 $s=t$ 时，边缘满射给出 $m_{sskl}=\delta_{kl}$，因此
+
+$$
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle s|)
+=\sum_k\left(\sum_j|c_{sjk}|^2\right)
+|T_{sk}\rangle\langle T_{sk}|
+=G_{ss}|T_s\rangle\langle T_s|+L_s.
+$$
+
+当 $s\ne t$ 且两坐标满射时，均匀平均给出 $m_{stkl}=\delta_{k0}\delta_{l0}$。留下的系数是 $A_{st00}=G_{st}$，故
+
+$$
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle t|)
+=G_{st}|T_s\rangle\langle T_t|.
+$$
+
+这同时保留理想块和全部对角泄漏，证明充分性。$d_s=1$ 时仅有零 Fourier 模，$L_s=0$，同样成立。
+
+反之，若某一对的像 $K_{st}\subsetneq C_{d_s}\times C_{d_t}$ 为真子群，角色分离性给出非平凡角色
+
+$$
+\chi(x,y)=\exp(-2\pi i kx/d_s+2\pi i ly/d_t)
+$$
+
+在 $K_{st}$ 上恒为一。边缘满射排除仅一个坐标非平凡的角色，因此 $k\ne0$、$l\ne0$。对每个固定的正整数 $r_u$，取允许的非增谱 $\lambda_u=(1,0,\ldots,0)$。它只有 $j=0,a=0$ 的幅度非零，因而对每个 Fourier 指标有
+
+$$
+c_{u0k}=d_u^{-1/2},\qquad c_{ujk}=0\quad(j>0).
+$$
+
+于是 $A_{stkl}=1/\sqrt{d_sd_t}>0$，而 $m_{stkl}=1$。非零项 $|T_{sk}\rangle\langle T_{tl}|$ 留在实际输出中，却不在 $\mathcal F^\lambda_G(|s\rangle\langle t|)$ 中。正交基中的这个矩阵系数不能被其他项抵消，与所有源谱的相等要求矛盾。如果某个尺寸是一，两坐标像在边缘满射下已自动为满像，不出现这个反例情形。
+
+最后，矩阵单位构成逻辑算子空间的一组基。其作用相同就是线性信道相同；与任何参考系统的恒等映射张量后仍相同。参考不引入第三个扇区控制。一个固定特殊谱可以使某些 $A_{stkl}$ 为零，不能以这种相等替代本定理的全谱量词。证毕。
+
+本证明中的均匀两坐标投影与低支撑 Fourier 消去字典，是混合水平正交阵的已有工具：Pistone、Rogantin，[*Indicator function and complex coding for mixed fractional factorial designs*](https://arxiv.org/pdf/math/0703365v1)，Proposition 4(2),(4)。此处的应用将它接到指定的共同环境系数、泄漏信道及固定任意源尺寸的全谱必要性，不要求消去三坐标或更多坐标支撑的角色。
+

@@ -1,0 +1,12 @@
+**事实 4.8（带内块迹的根都是单根）。** 设 $u\in\mathbb R^r$,$r\ge1$,$t_0\in\mathbb R$,$c=2\cos\theta$,$0<\theta<\pi$。则 $\sigma_u(\cdot,t_0)-c$ 的 $r$ 个复根都是实的单根。
+
+**证明。** 记 $\delta_i=2+t_0u_i$。$r=1$ 时 $\sigma_u=\delta_0-\lambda$,结论显然。$r=2$ 时 $\sigma_u-c=(\delta_0-\lambda)(\delta_1-\lambda)-2-c$,其判别式 $(\delta_0-\delta_1)^2+4(2+c)>0$,两根实且不同。
+
+设 $r\ge3$。令 $H_\theta$ 为 $r\times r$ 复矩阵:对角元 $\delta_0,\dots,\delta_{r-1}$,$(i,i+1)$ 与 $(i+1,i)$ 位($0\le i\le r-2$)为 $-1$,角元 $(r-1,0)$ 位为 $-e^{i\theta}$、$(0,r-1)$ 位为 $-e^{-i\theta}$,其余为 $0$。$H_\theta$ 是 Hermite 矩阵。按事实 3.2 (2) 证明中的 Leibniz 展开计算 $\det(H_\theta-\lambda I)$:只由不动点与相邻对换组成的置换给出与那里相同的 $K_r-K_{r-2}$(对换 $(r-1\ 0)$ 的两个角元之积是 $e^{i\theta}e^{-i\theta}=1$);向前旋转的项是 $(-1)^{r-1}\cdot(-1)^{r-1}(-e^{i\theta})=-e^{i\theta}$,向后旋转的项是 $-e^{-i\theta}$。故
+
+$$
+\det(H_\theta-\lambda I)=\sigma_u(\lambda,t_0)-2\cos\theta ,
+$$
+
+于是 $\sigma_u(\cdot,t_0)-c$ 的根(计重数)就是 $H_\theta$ 的本征值(计代数重数),都是实数。设 $\lambda_0$ 是其中之一,$y\in\mathbb C^r$ 是 $H_\theta$ 对 $\lambda_0$ 的本征向量。令 $z_{kr+i}=e^{ik\theta}y_i$($k\in\mathbb Z$,$0\le i<r$),逐行核对 $H_\theta y=\lambda_0y$(第 $0$ 行与第 $r-1$ 行用到角元)可知 $z$ 满足递推 $(2+t_0u_{i\bmod r}-\lambda_0)z_i-z_{i-1}-z_{i+1}=0$($i\in\mathbb Z$)且 $Z_r=e^{i\theta}Z_0$。又 $Z_r=B_u(\lambda_0,t_0)Z_0$,而 $Z_0=(y_0,e^{-i\theta}y_{r-1})^{\top}$ 决定 $z$ 从而决定 $y$。所以 $y\mapsto Z_0$ 是从 $H_\theta$ 的 $\lambda_0$-本征空间到 $B_u(\lambda_0,t_0)$ 的 $e^{i\theta}$-本征空间的单射。$B_u(\lambda_0,t_0)$ 的迹为 $2\cos\theta$、行列式为 $1$,特征值 $e^{\pm i\theta}$ 不同,后一个本征空间是一维的。于是 $\lambda_0$ 的几何重数为 $1$;Hermite 矩阵的几何重数等于代数重数,故 $\lambda_0$ 是单根。∎
+

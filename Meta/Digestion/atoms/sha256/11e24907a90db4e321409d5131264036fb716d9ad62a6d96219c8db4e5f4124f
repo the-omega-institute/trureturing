@@ -1,0 +1,11 @@
+#### 5.2.8 已有数学接口与结论范围
+
+以下源码对应不可变快照 `9d27c77aa30f936d272e367f5e24f9c04fe1fbcb`：
+
+| 已有接口 | 可直接承担的内容 | 本段不据此冒领的内容 |
+|---|---|---|
+| `D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.lean` 中 `finite_horizon_value_factorization` | 共同有限动作、奖励与终值精确下降、转移精确交换时，任意有限时域的值精确下降 | 紧观察塔、近似模型、非连续合法性或一致误差率 |
+| `D5/S3/ConceptDynamics/DecisionValue/FiniteHorizonOptimalActionDescent.lean` 中 `finite_horizon_optimal_actions_descend` | 上述精确条件下，全体最优动作集合精确下降，比单纯值下降更强 | 连续最优选择、近似策略性能或未经保持的状态依赖合法性 |
+| `D5/S3/Observer/Approximation/IntertwiningDefectPropagation.lean` 中 `intertwining_defect_telescope`、`norm_intertwining_defect_le` | 连续线性映射的交换缺陷展开及带算子范数的传播界 | 非线性 Bellman 最大值算子的直接定理；式（TM.460）另外用不扩张性证明 |
+| `D5/S3/Observer/DynamicProgramming/DiscountedBellmanContraction.lean` 中 `discounted_bellman_contraction_and_unique_fixed_point` | 有限离散状态、有限动作、非负归一化转移与 $0<\gamma<1$ 下的折扣收缩及唯一不动点 | 一般紧商空间的函数类、任意选择器的正则性或现成的跨表示缺陷界 |
+| `D5/S1/Dynamics/ProfiniteCharacter.lean` 中 `continuous_character_factors_through_residue` | 相容剩余类整数的连续群特征经一个有限剩余坐标分解 | 任意观察塔的有限标签定理；其目标为圆群，不能借式（TM.451）的有限标签结论省略所用群结构 |

@@ -1,0 +1,37 @@
+**定理 47.2（路径反演恒等式）。** 在有限时域且每条正向支撑路径在反向测度下有正质量的条件下，对任意路径函数 \(F\)，有
+\[
+\mathbb E_F[F(\Sigma_F)]
+=
+\mathbb E_R\!\left[
+e^{-\Sigma_R}\,
+F(-\Sigma_R)\,
+\chi_n
+\right],
+\tag{47.2}
+\]
+其中 \(\Sigma_R(\omega^\leftarrow)=-\Sigma_F(\omega)\) 是同一对路径的反向对数比。若将反向路径测度条件化到 \(\Omega_n^\leftarrow\)，则在 (47.1) 中同步把 \(P_R^n\) 换成
+\[
+P_{R,\mathrm{cond}}^n(\cdot)=P_R^n(\cdot\mid\Omega_n^\leftarrow)
+\]
+并用这个条件测度重新定义 \(\Sigma_F\)；对该重新定义的对数比才有
+\[
+\mathbb E_F e^{-\Sigma_F}=1,
+\qquad
+\mathbb E_F[\Sigma_F]
+ =D_{\mathrm{KL}}\!\left(P_F^n\,\middle\|\,P_{R,\mathrm{cond}}^n\circ\mathrm{rev}\right)\ge0.
+\tag{47.3}
+\]
+未条件化时，正确的积分式为
+\[
+\mathbb E_F e^{-\Sigma_F}
+=P_R^n(\Omega_n^\leftarrow),
+\]
+而不是自动等于一。
+
+**证明。** 对每一条 \(\omega\in\Omega_n\)，(47.1) 给出
+\[
+P_F^n(\omega)
+=e^{\Sigma_F(\omega)}P_R^n(\omega^\leftarrow).
+\]
+将其乘以 \(F(\Sigma_F)e^{-\Sigma_F}\)，对可数路径求和并作双射 \(\omega\leftrightarrow\omega^\leftarrow\)，得到 (47.2)。若反向支撑恰为 \(\Omega_n^\leftarrow\)，指标为一，取 \(F\equiv1\) 得积分式；取对数比的期望即为相对熵，故非负。$\square$
+

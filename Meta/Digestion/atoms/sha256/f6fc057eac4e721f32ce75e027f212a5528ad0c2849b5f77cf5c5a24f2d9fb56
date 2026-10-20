@@ -1,0 +1,44 @@
+### 静态 $\kappa$ 与动态 $(A,B)$ 的关系
+
+因此，完整的观察者状态可能具有分层形式：
+
+$$
+\boxed{
+\text{局部律}=
+(X,Y,Z,\kappa)
+}
+$$
+
+而动态未来状态则近似为：
+
+$$
+\boxed{
+\text{动态律}=
+(X,Y,Z,\kappa,\mathrm{phase},A,B,\mathrm{boundary\ domain}).
+}
+$$
+
+但不能机械地把这些坐标全部拼接为“最小状态”。最小性取决于目标：
+
+- 如果目标只预测平均加法权重，$\kappa$ 可以丢弃；
+- 如果目标预测 $S^2$，$\kappa$ 必须保留；
+- 如果目标预测局部 transfer 的逆向恢复，$\Delta$ 必须保留；
+- 如果目标预测动态 future law，phase、$A$、$B$ 可能也必须保留；
+- 如果处于 pending 或 delivered 边界，允许的未来操作集合本身发生变化。
+
+所以：
+
+$$
+\boxed{
+\text{预测充分性}
+\neq
+\text{状态可维护性}
+\neq
+\text{历史可恢复性}.
+}
+$$
+
+这也是当前项目强调 boundary domain、pending、delivered、return compatibility 的原因。
+
+---
+

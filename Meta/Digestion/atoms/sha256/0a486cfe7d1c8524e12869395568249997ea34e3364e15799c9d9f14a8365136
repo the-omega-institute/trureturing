@@ -1,0 +1,10 @@
+## 定理 9A.4（因子化消去策略 holonomy）
+
+若 $s$ 通过 $q$ 因子化，则每个 $q$-可见环都对策略不可见：
+
+$$
+q(F_wx)=q(x)
+\Longrightarrow
+s(F_wx)=s(x).
+$$
+

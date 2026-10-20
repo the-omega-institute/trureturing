@@ -1,0 +1,73 @@
+# 7. 与前两条 holonomy 真源的连接
+
+上一条真源给出有限交换缺陷能量
+
+\[
+\mathcal E^{\mathrm{hol}}
+=
+\sum_{p,q}\|C_{p,q}\|^2.
+\]
+
+本轮给每个通道加入时间相位
+
+\[
+z_p(t)=e^{-it\omega_p}.
+\]
+
+下一条自然定义是相位扭曲的局部更新
+
+\[
+\boxed{
+\widetilde U_p(t)
+=
+U_p\cdot z_p(t)
+}
+\]
+
+或在记忆注入中写成
+
+\[
+\boxed{
+b_p(t)=z_p(t)b_p.}
+\]
+
+随后定义时间依赖曲率
+
+\[
+\boxed{
+C_{p,q}(t)
+=
+(a-\lambda_q)b_p(t)
+-
+(a-\lambda_p)b_q(t).
+}
+\]
+
+它会同时测量：
+
+- residual 幅度失配；
+- prime-frequency 相位失配；
+- 观察器更新次序失配。
+
+由于 \(|z_p(t)|=1\)，单通道范数不变；曲率能量随 \(t\) 的变化来自通道之间的相对相位。相对频率是
+
+\[
+\omega_p-\omega_q.
+\]
+
+在素数特化下，它成为
+
+\[
+\boxed{
+\log p-\log q
+=
+\log\frac pq.
+}
+\]
+
+因此 pairwise holonomy 的时间振荡自然由素数比值的对数频率控制。
+
+该相位扭曲曲率尚未在本轮 Lean 文件中定义。它应形成下一节点 `PhaseTwistedStableSwapCurvature`。
+
+---
+

@@ -1,0 +1,123 @@
+**Theorem 64.1 (finite-prefix quotient modulo actual-law null sets).**
+Fix $t>0$. For $r\in(0,\delta]$ define
+
+$$
+\alpha_\pm=\pm r+r^2/H,\qquad
+I_\pm=I-\alpha_\pm,\qquad
+E_\pm=\{u\in C([0,t]):u_s\in I_\pm\ \hbox{for all }s\le t\}.
+\tag{64.1}
+$$
+
+The recovered $(r,u)$ has the candidate target set
+
+$$
+\mathcal C_t(r,u)
+ =\{(sr,u+\alpha_s):s\in\{+,-\},\ u\in E_s\}.
+\tag{64.2}
+$$
+
+At $r=0$ it is the singleton $(0,u)$. At $r>0$ it has one or two
+members, always including the actual target. Both sign laws give
+positive mass to $E_+\cap E_-$. Their restrictions there are equivalent,
+with the exact height-path density ratio
+
+$$
+\frac{\phi(u_0+\alpha_+)\phi(u_t+\alpha_+)}
+     {\phi(u_0+\alpha_-)\phi(u_t+\alpha_-)}.
+\tag{64.3}
+$$
+
+The equivalence includes the entire observed wrapped $v$ prefix.
+Outside this overlap the single admissible candidate is recovered.
+Consequently the family has no exact recovery of $T_t$, of its signed
+parameter, or of any one height $K_s$, $0\le s\le t$, at any fixed
+finite positive horizon. On each sign law the singleton event also
+has positive probability. Thus nonrecovery is a local overlap
+obstruction, not equivalence of the two full observation laws.
+
+More completely, let $h(\kappa,k)$ be any Borel target function on
+$\mathcal K_{\rm cal}\times C([0,t],I)$ with values in a standard Borel
+space. It has exact family recovery if and only if, for every
+$r\in(0,\delta]$,
+
+$$
+h(r,u+\alpha_+)=h(-r,u+\alpha_-)
+\quad\hbox{for }\Lambda_t\hbox{-almost every }u\in E_+\cap E_-.
+\tag{64.4}
+$$
+
+Here $\Lambda_t=\int_{\mathbb R}da\,\mathbb P_a^{\sigma\rm BM}$
+is the Brownian-height reference measure, with variance rate
+$\sigma^2$. Thus (63.1), with (64.2) understood, is a complete
+recoverable quotient relative to this target. Equality is required
+modulo the actual common-law null sets, not on every algebraically
+possible continuous path. The observation still contains ancillary
+phase randomness; no equality of its entire sigma-field with the
+quotient sigma-field is asserted.
+
+Proof. The exact stationary Q density of height relative to Brownian
+height on $[0,t]$ is the already proved (56.8). Translating height by
+$\alpha_s$ therefore gives
+
+$$
+f_s(u)=e^{\lambda t}\phi(u_0+\alpha_s)\phi(u_t+\alpha_s)
+             \mathbf1_{E_s}(u)
+\tag{64.5}
+$$
+
+relative to $\Lambda_t$. This is an identity for the actual source:
+its initial density is $\phi(k_0)^2$, its Doob factor is
+$e^{\lambda t}\phi(k_t)/\phi(k_0)$, and translation preserves Brownian
+increments and Lebesgue initial measure. In particular the two laws
+are not obtained by replacing the Q drift with a translation-invariant
+one. Their shifted drifts generally differ.
+
+Conditional on $u$, both sign laws have the identical original phase
+kernel $\Gamma_r(dv\mid u)$: its continuous real increments are
+
+$$
+v_a-v_0=-\frac1{\sqrt2H}\int_0^a F_r(u_s)\,dW_s^2,
+\qquad 0\le a\le t,
+\tag{64.6}
+$$
+
+then wrapped with the prescribed common initial phase. The driver is
+independent of height. On paths outside the two admissible domains
+extend this kernel arbitrarily; the densities (64.5) vanish there.
+The joint densities of $(u,v)$ are exactly $f_s(u)$ with respect to
+$\Lambda_t(du)\Gamma_r(dv\mid u)$. Both are strictly positive on
+the overlap. This proves (64.3), equivalence there and the absence of
+any additional sign information from the conditional phase noise.
+
+The interval $I_+\cap I_-$ has length $w-2r\ge3w/4>0$.
+Brownian height started with Lebesgue measure in a smaller interior
+interval has positive probability of remaining there for any fixed
+finite $t$. The endpoint weights in (64.5) are positive. Hence the
+common overlap has positive probability under both actual laws.
+Conversely, under the plus law $K_0\in(l,l+2r)$ has positive
+probability and implies $u_0\notin I_-$; under the minus law use
+$K_0\in(u-2r,u)$. These are positive-probability singleton events.
+Membership of $E_s$ is Borel: on a compact time interval it is exactly
+the strict lower and upper bounds on the continuous path's extrema.
+Any actual finite Q path belongs to its own $E_s$.
+
+Theorem 63.1 supplies $r,u$ from the observation. If (64.4) holds,
+select the plus candidate when admissible and otherwise the minus
+candidate, and output $h$ of that target. This is Borel, also jointly
+in $r$. For the true minus law its only possible error is the subset
+of the overlap where (64.4) fails. Equation (64.5) makes that subset
+null. The plus and zero laws are handled directly. This proves
+sufficiency with the parameterwise quantifiers in Definition 62.1.
+
+For necessity suppose a common observation decoder recovers $h$ for
+both parameters $r,-r$. Restrict their joint laws to the overlap.
+By their equivalence, both equalities for that same decoder hold
+almost everywhere under the common reference restricted there.
+Their right sides are respectively the two sides of (64.4), functions
+of $u$ alone. Integrating out the probability kernel $\Gamma_r$ forces
+(64.4) for $\Lambda_t$-almost every such $u$. Apply this argument for
+each $r$. The signed targets differ by $2r$ and their heights differ
+by the constant $2r$ at every time, proving all the stated failures.
+This argument is a witness under actual source measures, and not
+merely a collision of (62.3). $\square$
+

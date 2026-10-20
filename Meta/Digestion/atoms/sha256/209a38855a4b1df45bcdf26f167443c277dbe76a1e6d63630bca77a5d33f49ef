@@ -1,0 +1,28 @@
+**证明义务 56.3-C（只消费 \(K.\operatorname{decision}\) 与 \(O\)）。** 对同一轮次、同一承诺类型的任意
+\(K,K'\)
+及同一 OrientationSpec 类型的任意
+\(O,O'\)，若
+
+\[
+K.\operatorname{decision}=K'.\operatorname{decision}
+\quad\wedge\quad
+O=O',
+\]
+
+则机器核验
+
+\[
+\boxed{
+\operatorname{settleStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O,K)
+=
+\operatorname{settleStop}
+(\operatorname{AdmTarget},\operatorname{InScope},O',K').
+}
+\]
+
+`settleStop`
+的函数签名不含裁决记录 \(Z\)；这是“停止分量不消费 \(Z_n\)”的机器可见边界，而不是另加一个带虚假 \(Z\) 实参的恒等式。56.3-C 不取代第 50.3 部及冻结
+`append_only_old_settlement_unchanged`
+对完整旧轮结算的守恒定理。向账本追加事件、产生 \(K_{n+1}\) 或登记新 \(O'\) 时，旧地址 \((K_n,O)\) 的停止分量仍由旧输入重算；新地址的结果不得回写旧地址。
+

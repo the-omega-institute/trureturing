@@ -1,0 +1,7 @@
+对不同状态 \(x\neq y\)，依次区分：
+
+1. **存在分离**：\(\operatorname{Sep}_q(x,y)\neq\varnothing\)；
+2. **无限分离**：\(\operatorname{Sep}_q(x,y)\) 无限；
+3. **余有限分离**：\(\operatorname{Blind}_q(x,y)\) 有限；
+4. **密度分离**：分离素数具有指定自然或 Dirichlet 密度。
+

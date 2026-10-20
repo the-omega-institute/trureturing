@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:35fe557b06e6e57b014af676381ba5a8364808fc39a3879ff470299cc71b4281
+  normalized_sha256: sha256:35fe557b06e6e57b014af676381ba5a8364808fc39a3879ff470299cc71b4281
+cas_ref: sha256:35fe557b06e6e57b014af676381ba5a8364808fc39a3879ff470299cc71b4281
+coverage_gids:
+  - gid: D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.germLocalFactor_prime_scaling
+    target_statement_id: sha256:c0b820dbd0a194af0b288b59b3c5842c764c121aca28d7bb38d851d78865c0ff
+receipts:
+  unresolved_subitems: []

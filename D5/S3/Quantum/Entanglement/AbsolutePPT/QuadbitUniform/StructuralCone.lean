@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: Arbitrary ordered defects and constructive bulk subtraction for the full three-row cone. -/
-/- UNCOMPILED integration changes; original upstream proofs are preserved. -/
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.DefectScalarBounds
 import D5.S3.Quantum.Entanglement.AbsolutePPT.HalfspaceConeTransfer
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
 import Mathlib.Analysis.Convex.Jensen
@@ -121,46 +121,6 @@ theorem ordered_block_energy {ι κ : Type*} [Fintype ι] [Fintype κ]
     _ = (k*m+Z)^2-2*(k-1)*m*Z := by ring
     _ ≤ (k*m+Z)^2 := sub_le_self _ hexcess
     _ = _ := by rw [hsum]
-
-private theorem affine_defect_transport (theta N j w c E : ℝ)
-    (ht : 0 ≤ theta) (hw : 0 ≤ w) (hj : 6 ≤ j)
-    (ha0 : 0 ≤ 2*theta*(N+3+2*w)-(2+w))
-    (ha1 : 2*theta*(N+3+2*w)-(2+w) ≤ 1/4)
-    (hF0 : 0 ≤ theta*(N+3+2*w)^2-(N+11+3*w+w^2))
-    (hE0 : E ≤ 5-4*w-w^2)
-    (hE1 : E ≤ 5-4*w-w^2+(c-(3-4*w))/4) :
-    (2+w)*(N+w*j+c)-(1+w)*N+E ≤ theta*(N+w*j+c)^2 := by
-  let L := N+3+2*w
-  let e := w*(j-6)
-  let a := 2*theta*L-(2+w)
-  have he : 0 ≤ e := mul_nonneg hw (by linarith)
-  have ha : 0 ≤ a := ha0
-  have ha' : 0 ≤ 1/4-a := sub_nonneg.mpr ha1
-  have hF : 0 ≤ theta*L^2-(2+w)*L+(1+w)*N-(5-4*w-w^2) := by
-    dsimp [L]
-    nlinarith only [hF0]
-  by_cases hc : 3-4*w ≤ c
-  · let d := c-(3-4*w)
-    have hd : 0 ≤ d := sub_nonneg.mpr hc
-    have hpos : 0 ≤ theta*(e+d)^2+a*(e+d) :=
-      add_nonneg (mul_nonneg ht (sq_nonneg _))
-        (mul_nonneg ha (add_nonneg he hd))
-    have hid : theta*(N+w*j+c)^2-
-        ((2+w)*(N+w*j+c)-(1+w)*N+(5-4*w-w^2)) =
-        (theta*L^2-(2+w)*L+(1+w)*N-(5-4*w-w^2))+
-        theta*(e+d)^2+a*(e+d) := by dsimp [L,e,d,a]; ring
-    linarith
-  · let d := (3-4*w)-c
-    have hd : 0 ≤ d := by dsimp [d]; linarith
-    have hpos : 0 ≤ theta*(e-d)^2+a*e+(1/4-a)*d :=
-      add_nonneg (add_nonneg (mul_nonneg ht (sq_nonneg _)) (mul_nonneg ha he))
-        (mul_nonneg ha' hd)
-    have hid : theta*(N+w*j+c)^2-
-        ((2+w)*(N+w*j+c)-(1+w)*N+(5-4*w-w^2-d/4)) =
-        (theta*L^2-(2+w)*L+(1+w)*N-(5-4*w-w^2))+
-        theta*(e-d)^2+a*e+(1/4-a)*d := by dsimp [L,e,d,a]; ring
-    have hE : E ≤ 5-4*w-w^2-d/4 := by dsimp [d]; linarith [hE1]
-    linarith
 
 def H (h : Fin 5 → ℝ) : ℝ := ∑ i, h i
 def D (d : Fin 9 → ℝ) : ℝ := ∑ i, d i
@@ -709,7 +669,21 @@ theorem low_smul (a : ℝ) (x : Fin 16 → ℝ) : low (a • x) = a*low x := by
   simp only [low, Pi.smul_apply, smul_eq_mul]
   ring
 
-private theorem slot_bounds (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
+private theorem boundary_positions_literal (N j : ℕ) (hN : 16 ≤ N) :
+    positions N j = ![1,2,3,4,5,j,N-9,N-8,N-7,N-6,N-5,N-4,N-3,N-2,N-1,N] := by
+  funext q
+  fin_cases q <;> simp [positions] <;> omega
+
+private theorem boundary_positions_strict (N j : ℕ) (hN : 16 ≤ N)
+    (hj : 6 ≤ j) (hj' : j ≤ N-10) : StrictMono (positions N j) := by
+  intro q r hqr
+  have hq := q.isLt
+  have hr := r.isLt
+  have hqr' : q.val < r.val := hqr
+  dsimp [positions]
+  split_ifs <;> omega
+
+private theorem slot_bounds (N j : ℕ) (hN : 16 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
     ∀ q, positions N j q ≤ N := by
   intro q
   have hq := q.isLt
@@ -717,12 +691,12 @@ private theorem slot_bounds (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j 
   split_ifs <;> omega
 
 -- Identities for every real x, including infeasible and negative vectors.
-theorem actual_mass (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
+theorem boundary_mass (N j : ℕ) (hN : 16 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
     (x : Fin 16 → ℝ) :
     (∑ k : Fin N, synth (positions N j) x k) =
       low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x) := by
   rw [mass_synth (positions N j) (slot_bounds N j hN hj hj')]
-  rw [positions_literal N j (by omega)]
+  rw [boundary_positions_literal N j (by omega)]
   norm_num [Matrix.cons_val, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero, low, head, tail, H, D]
   try simp (disch := omega) only [Nat.cast_sub]
   norm_num
@@ -730,7 +704,7 @@ theorem actual_mass (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10
 
 set_option maxHeartbeats 2000000 in
 set_option maxRecDepth 8192 in
-theorem actual_square (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
+theorem boundary_square (N j : ℕ) (hN : 16 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
     (x : Fin 16 → ℝ) :
     (∑ k : Fin N, (synth (positions N j) x k)^2) =
       (2*low x+x 5)*(low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x))-
@@ -739,14 +713,27 @@ theorem actual_square (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-
   have hmin (q r : Fin 16) :
       min (positions N j q) (positions N j r) = positions N j (min q r) := by
     rcases le_total q r with hqr | hrq
-    · rw [min_eq_left hqr, min_eq_left ((positions_strict N j (by omega) hj hj').monotone hqr)]
-    · rw [min_eq_right hrq, min_eq_right ((positions_strict N j (by omega) hj hj').monotone hrq)]
+    · rw [min_eq_left hqr, min_eq_left ((boundary_positions_strict N j (by omega) hj hj').monotone hqr)]
+    · rw [min_eq_right hrq, min_eq_right ((boundary_positions_strict N j (by omega) hj hj').monotone hrq)]
   simp_rw [hmin]
-  rw [positions_literal N j (by omega)]
+  rw [boundary_positions_literal N j (by omega)]
   norm_num [Matrix.cons_val, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero, low, head, tail, H, D, H2, D2, E]
   try simp (disch := omega) only [Nat.cast_sub]
   norm_num
   ring
+
+theorem actual_mass (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
+    (x : Fin 16 → ℝ) :
+    (∑ k : Fin N, synth (positions N j) x k) =
+      low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x) := by
+  exact boundary_mass N j (by omega) hj hj' x
+
+theorem actual_square (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
+    (x : Fin 16 → ℝ) :
+    (∑ k : Fin N, (synth (positions N j) x k)^2) =
+      (2*low x+x 5)*(low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x))-
+        low x*(low x+x 5)*(N : ℝ)+E (x 5) (head x) (tail x) := by
+  exact boundary_square N j (by omega) hj hj' x
 
 theorem synth_nonneg (N j : ℕ) (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤ x q) :
     ∀ k : Fin N, 0 ≤ synth (positions N j) x k := by

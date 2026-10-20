@@ -1,0 +1,24 @@
+**定理 1308.1（过渡函数的连续中点）。** 固定 $0<\kappa<1$，若 $\alpha_N>0$ 且 $N(\alpha_N-1)\to0$，则
+
+$$
+\frac{G_{\alpha_N,N}(\kappa)}N\longrightarrow\kappa\log2.
+$$
+
+因此可定义 $\Phi_\kappa(0)=\kappa\log2$，使上一节的结论覆盖所有有限实数过渡参数。
+
+**证明。** 任给 $\delta>0$，充分大的 $N$ 满足
+
+$$
+1-\delta/N\le\alpha_N\le1+\delta/N.
+$$
+
+这些阶最终为正。各阶来源最优熵随阶不增加，所以
+
+$$
+G_{1+\delta/N,N}\le G_{\alpha_N,N}\le G_{1-\delta/N,N}.
+$$
+
+第 1307 节给两端除以 $N$ 后的极限分别为 $\Phi_\kappa(\delta)$ 与 $\Phi_\kappa(-\delta)$。函数 $f(s)=\log(1-\kappa+\kappa2^{-s})$ 满足 $f(0)=0$、$f'(0)=-\kappa\log2$，故 $\Phi_\kappa(\pm\delta)\to\kappa\log2$。令 $\delta\downarrow0$ 得结论。证毕。
+
+这个论证允许阶从一的两侧接近，也允许其中某些项准确等于一。它没有用一个固定阶极限直接替代阶随维数变化的情况。
+

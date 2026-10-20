@@ -1,0 +1,46 @@
+**Theorem 21.8 (Exact limiting memory minimum and the endpoint compression).** Any finite homogeneous binary CP instrument on a complex memory, with any mixed initial density and with every persistent quantum, classical or controller register counted in that memory, that reproduces all stationary cylinders of $\gamma^*$ has dimension at least $h+1$. The instrument in Theorem 21.6 attains this bound and has no-tick Choi rank one and tick Choi rank one. Thus the limiting law has exact memory minimum $h+1$ and no-tick Choi minimum one.
+
+For $\alpha=1$ the law is $\delta_1$; it has the two-dimensional realization
+
+$$
+C=e_1e_0^*,\quad f=e_1,\quad x=e_0,\quad
+L=C,\quad J=e_0e_1^*,\quad \tau=e_0e_0^*,\quad \rho_*=\tfrac12I_2,
+\tag{21.22}
+$$
+
+with both Choi ranks one, and dimension and no-tick Choi rank are minimal.
+
+For the fixed-polynomial family of Definition 21.1, along every joint sequence with $q_n,\varepsilon_n\to0$ and $R_n\to R_0\in[0,\infty]$, the stationary output limit therefore has no-tick Choi minimum one and memory minimum $h+1$ when $R_0>0$, and memory minimum two when $R_0=0$. In contrast, at every finite $0<q<1$ and $\varepsilon>0$ its no-tick Choi minimum is two, as for every polynomial law of Definition 16.5. These minima use the full competitor class of Definition 16.5, with the target cylinders replaced by those of $\gamma^*$ for the limit; all persistent registers and retained records influencing later outputs are counted.
+
+Proof. In a competitor write its branches as $\widehat\Phi,\widehat\Psi$ and initial density $\widehat\rho$. The one-tick probability is $\nu=1/\mu^*>0$. Its actual post-tick state
+$\tau_0=\widehat\Psi(\widehat\rho)/\nu$ is a density, and the stationary cylinders give, without invariance or a reset assumption,
+
+$$
+\operatorname{Tr}\widehat\Phi^k(\tau_0)
+=\frac{\Pr(1,0^k)}{\Pr(1)}=S^*(k).
+\tag{21.23}
+$$
+
+For $0\le\alpha<1$, (21.23) gives positive survival $S^*(h)=\beta$ and extinction $S^*(h+1)=0$ from this actual posterior. The dimension step is the classical finite-termination mechanism: [Yu–Ying, *Reachability and Termination Analysis of Concurrent Quantum Programs*, arXiv:1206.1935v1, Theorem 5, proof (1), pp. 10–11](https://arxiv.org/pdf/1206.1935v1), proves termination within the Hilbert-space dimension, including mixed inputs, for the sequential program $F(X)=\mathcal E(M_1XM_1^*)$. Its program interface uses a CPTP step $\mathcal E$ after a continuation measurement. The following kernel argument supplies the CP statement needed here without requiring the no-tick branch itself to be trace preserving.
+
+Write $\widehat\Phi(X)=\sum_iK_iXK_i^*$ on $M_D(\mathbb C)$, put $H=h+1$, $Y_j=(\widehat\Phi^*)^j(I)$ and $V_j=\ker Y_j$. Positivity gives
+$x\in V_{j+1}$ if and only if every $K_ix$ belongs to $V_j$. Starting from $V_0=\{0\}$, this identity implies $V_j\subseteq V_{j+1}$ by induction, and equality at one step makes the chain constant thereafter. Also
+$\operatorname{Tr}\widehat\Phi^j(\tau_0)=\operatorname{Tr}(Y_j\tau_0)=0$
+is equivalent to $\operatorname{ran}\tau_0\subseteq V_j$: both operators are positive and the trace is $\|Y_j^{1/2}\tau_0^{1/2}\|_{\rm HS}^2$. Thus (21.23) puts the actual posterior support in $V_H$ but not in $V_{H-1}$. No earlier equality is possible, so
+
+$$
+0=\dim V_0<\dim V_1<\cdots<\dim V_H\le D,
+$$
+
+which proves $D\ge h+1$ for arbitrary mixed, noninvariant, nonreset competitors.
+
+The nilpotent-map formulation of this same intermediate step is [Bhat–Mallick, *Nilpotent Completely Positive Maps*, arXiv:1310.0591v1, Proposition 2.2 and Corollary 2.5](https://arxiv.org/pdf/1310.0591v1): a CP map is nilpotent of order at most the Hilbert-space dimension, provided it is nilpotent on the whole space in question. To verify that premise here, let
+$U=\operatorname{span}\{K_w\operatorname{ran}\tau_0: w\text{ a finite no-tick Kraus word}\}$,
+including the empty word. The equality
+$0=\operatorname{Tr}\widehat\Phi^H(\tau_0)=\sum_{|w|=H}\|K_w\tau_0^{1/2}\|_{\rm HS}^2$
+shows that every length-$H$ product kills $\operatorname{ran}\tau_0$, and consequently every longer product does too. Hence $U$ is invariant under all $K_i$, is spanned by words of length less than $H$, and every length-$H$ product kills $U$. The restricted CP map on $M(U)$, with Kraus operators $K_i|_U$, is therefore nilpotent; its order is exactly $H$ because $\widehat\Phi^{H-1}(\tau_0)\ne0$. The cited corollary applies on $U$, giving $H\le\dim U\le D$. The unused ambient no-tick map need not be nilpotent. Neither trace preservation nor a pure posterior is needed for this restriction argument.
+
+Theorem 21.6 gives the upper bound and has one nonzero no-tick Kraus operator and one rank-one globally resetting tick, so both Choi ranks are one. Both branches have positive output probability and therefore cannot have Choi rank zero. For $\alpha=1$, the same kernel argument uses $S^*(1)=1$ and $S^*(2)=0$, with $H=2$, giving dimension at least two. The matrices in (21.22) satisfy $L^*L+J^*J=I_2$, and direct iteration gives the deterministic gap count one, $R_0=I_2$ and the faithful mixed stationary density $\rho_*=I_2/2$. A positive no-tick probability forces Choi rank at least one, so the endpoint minima follow.
+
+Finally, $d_\varepsilon=d_0+\varepsilon d_1$ is a nonzero globally nonnegative polynomial for every $\varepsilon>0$. At each $0<q<1$, Theorem 16.9 applies with exactly the mixed-state competitor interface of Definition 16.5 and gives no-tick Choi minimum two. This reuses that theorem's positive-effect, mixed-seed recurrence parity obstruction, inherited from Theorem 6.3 and [Chapter 29, equations (29.3)–(29.6)](FIB_LEGAL_EDGE_LOAD_PRODUCT_UPPER_EDGE_FIELD_STABILITY_AND_PHASE_CUT_RANK.md#29-the-original-sns-needs-two-unresolved-no-tick-kraus-alternatives), together with the attaining construction of Theorems 16.7–16.8; it also applies to every other polynomial law of Definition 16.5. By Theorem 21.2 the joint output limit has $\alpha=1/(1+R_0)$, interpreted as zero at $R_0=\infty$. Applying the two cases above gives the stated limiting memory minima and no-tick Choi minimum one. The convergence used here is convergence of stationary classical finite-cylinder probabilities; the finite-parameter and limiting instruments are separate realizations of those laws. $\square$
+

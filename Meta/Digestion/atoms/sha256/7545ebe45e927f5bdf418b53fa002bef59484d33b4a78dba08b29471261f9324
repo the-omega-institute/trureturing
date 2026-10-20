@@ -1,0 +1,7 @@
+[
+\boxed{
+\mathbb E[
+\mathbb E[T\mid D]
+\mid C
+]
+=

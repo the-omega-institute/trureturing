@@ -1,0 +1,74 @@
+**Theorem 113.2 (exact finite masses and their pointwise boundary).** For
+every $u\in\mathcal T$ and $n\ge0$, the supplier (108.9) gives
+
+$$
+N_n(u)=2\bigl(a(u)F_{n+1}+b(u)F_{n+2}\bigr)-1.
+\tag{113.2}
+$$
+
+For an originally reached $p$, including any internal node or terminal,
+write $u_p=u|_p$. Then
+
+$$
+m_{u,n}(p)=\frac{2(a(u_p)F_{n+1}+b(u_p)F_{n+2})-1}{N_n(u)},
+\qquad \lim_{n\to\infty}m_{u,n}(p)=\frac{W(u_p)}{W(u)}.
+\tag{113.3}
+$$
+
+If $p$ is originally absent, there is a unique original terminal $q$
+strictly preceding $p$; write $p=qr$ with $r\ne\varepsilon$, and put
+$j=0$ for an alpha at $q$, $j=1$ for a beta there. Define
+$d=n+j-s(r)$. The exact birth/reach rule and mass are
+
+$$
+\begin{aligned}
+p\in V_{\rho^n u}
+&\iff d\ge0\ \text{and}\ n+j-s(r^-)\ge2,\\
+m_{u,n}(p)
+&=\begin{cases}(2F_{d+1}-1)/N_n(u),&p\text{ reached},\\
+0,&p\text{ absent},\end{cases}\\
+\lim_{n\to\infty}m_{u,n}(p)&=\frac{\varphi^{j-s(r)}}{W(u)}.
+\end{aligned}
+\tag{113.4}
+$$
+
+A reached such node is alpha for $d=0$, beta for $d=1$, and internal
+for $d\ge2$. At an original terminal use the same classification with
+$d=n+j$; original internal nodes remain internal. Every reached node,
+including the root and each terminal, has point mass $1/N_n(u)$; absent
+nodes have point mass zero. All fixed-address point masses tend to zero.
+There is a unique boundary probability $\nu_u$ with cylinder masses
+equal to the limits in (113.3)--(113.4), and $\nu_u([\varepsilon])=1$.
+
+Proof. The original $\ell(u)-1$ internal nodes keep their addresses, and
+each original terminal is replaced, at its own address, by $T_{n+j}$.
+This is the original skeleton decomposition used in (108.9), not a
+restriction to the single-leaf orbit. An original subtree is therefore
+exactly $\rho^n u_p$, giving (113.3). Below a terminal the reached
+criterion, residual labels and subtree $T_d$ are precisely Theorem 98.2;
+its last-parent condition includes the asymmetric left/right birth
+endpoints. Its actual subtree size is $2F_{d+1}-1$.
+For a fixed original $u$, Binet's formula gives
+
+$$
+\varphi^{-n}N_n(u)\longrightarrow \frac{2\varphi}{\sqrt5}W(u)>0.
+\tag{113.5}
+$$
+
+Taking ratios proves all displayed limits. This includes both singleton
+sources, $n=0,1$, root mass one, every initially missing address, and the
+first reached alpha/beta endpoints. For every fixed depth $h$,
+
+$$
+\mu_{u,n}\{x:|x|<h\}\le(2^h-1)/N_n(u)\longrightarrow0.
+\tag{113.6}
+$$
+
+At each finite node the exact identity is
+$m_{u,n}(p)=\mu_{u,n}(\{p\})+m_{u,n}(pL)+m_{u,n}(pR)$.
+Consequently the limiting masses have no finite-address remainder.
+The probability explicitly constructed in Definition 113.3 realizes
+them; its values on cylinders determine it uniquely. The calculation
+counts internal and terminal occurrences with the same actual divisor;
+it never substitutes a terminal-only probability. $\square$
+

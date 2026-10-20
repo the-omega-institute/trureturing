@@ -1,0 +1,29 @@
+**定义 75.18（$K_t$ 及其忠实分离表 $J_t$）。** 对每个整数 $t\ge0$，共同初态为 $S$，$\ell=0$。先给 $K_0$ 的全部二十五个读取态及三个绝对数字后继。记 $\langle q,j\rangle$ 为已经收费的单位等待态 $W(q,j)$，不是即时加权跳转。
+
+| 75.读取态 | 数字零 | 数字一 | 数字二 |
+| --- | --- | --- | --- |
+| 75.表S | $\langle Q,3\rangle$ | $\langle Q,6\rangle$ | $\langle O,6\rangle$ |
+| 75.表Q | $\langle T0,3\rangle$ | $\langle T1,6\rangle$ | $\langle T2,6\rangle$ |
+| 75.表T0 | $\langle U,1\rangle$ | $\langle UA,7\rangle$ | $H_{0}$ |
+| 75.表T1 | $H_{0}$ | $\langle U,2\rangle$ | $\langle UB,4\rangle$ |
+| 75.表T2 | $\langle UD,7\rangle$ | $H_{0}$ | $\langle UC,1\rangle$ |
+| 75.表U | $\langle V0,1\rangle$ | $\langle V1,1\rangle$ | $\langle V2,8\rangle$ |
+| 75.表V1 | $H_{0}$ | $H_{2}$ | $H_{6}$ |
+| 75.表V0 | $H_{0}$ | $H_{1}$ | $H_{0}$ |
+| 75.表V2 | $H_{8}$ | $H_{0}$ | $H_{7}$ |
+| 75.表UA | $H_{0}$ | $\langle VA,1\rangle$ | $H_{5}$ |
+| 75.表VA | $H_{0}$ | $H_{3}$ | $H_{4}$ |
+| 75.表UB | $H_{11}$ | $H_{0}$ | $\langle VB,1\rangle$ |
+| 75.表VB | $H_{10}$ | $H_{0}$ | $H_{9}$ |
+| 75.表UC | $H_{14}$ | $H_{0}$ | $\langle VC,1\rangle$ |
+| 75.表VC | $H_{13}$ | $H_{0}$ | $H_{12}$ |
+| 75.表UD | $\langle VD,1\rangle$ | $H_{17}$ | $H_{0}$ |
+| 75.表VD | $H_{15}$ | $H_{16}$ | $H_{0}$ |
+| 75.表O00 | $H_{19}$ | $H_{0}$ | $H_{18}$ |
+| 75.表O0 | $H_{20}$ | $H_{0}$ | $\langle O00,1\rangle$ |
+| 75.表O100 | $H_{21}$ | $H_{22}$ | $H_{0}$ |
+| 75.表O10 | $\langle O100,1\rangle$ | $H_{23}$ | $H_{0}$ |
+| 75.表O110 | $H_{0}$ | $H_{24}$ | $H_{25}$ |
+| 75.表O11 | $H_{0}$ | $\langle O110,1\rangle$ | $H_{26}$ |
+| 75.表O1 | $\langle O10,1\rangle$ | $\langle O11,7\rangle$ | $H_{0}$ |
+| 75.表O | $\langle O1,6\rangle$ | $H_{0}$ | $\langle O0,1\rangle$ |

@@ -1,0 +1,5 @@
+这给后续分析两个分解方向：
+
+1. 固定 residual 深度，研究 \(t\) 上的相位干涉；
+2. 固定谱时间，研究 extraction 深度上 residual envelope 的衰减。
+

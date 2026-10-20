@@ -1,0 +1,243 @@
+**定理 332.2（零预算处的实际最优二阶系数）。** 固定 $0<a\le1$，记 $E_0=a/\sqrt6$、$\eta=a/\sqrt3$、$q=R/\eta$。不限制原编码与解码幺元性的实际最优值满足
+
+$$
+\widehat G_a(q\eta)=G_a(q\eta)
+=E_0\left[1-\frac{\sqrt8}{3}q-\frac13q^2+o(q^2)\right]
+\qquad(q\downarrow0).
+\tag{332.1}
+$$
+
+证明。第293节给出两个实际最优值的等价，第330节已经给出式（332.1）的可达上界。下面对任意最优选择证明匹配下界。置
+
+$$
+\beta=\frac1a\sqrt{\frac83},\qquad t=\beta R=\frac{\sqrt8}{3}q.
+\tag{332.2}
+$$
+
+所有常数均可依赖固定半径 $a$；$O$ 估计在所讨论的充分小邻域取统一常数。沿任意 $t_j\downarrow0$ 取实际最优矩阵 $T_j$。第329节使其到有限个平衡完全退相干投影的距离趋零，并给出 $s_2/t_j,s_3/t_j\to1$。取子列并施加保持六态模型的固定正向符号共轭后，可以令
+
+$$
+T_j\longrightarrow P=uu^{\mathsf T},
+\qquad u=(1,1,1)/\sqrt3,
+\qquad Q=I-P.
+\tag{332.3}
+$$
+
+以下省略序列下标。第315节保证实际最优矩阵可逆且幺元；下面只使用较弱的已知可分不等式 $s_1s_2\le s_3$。写奇异分解的最大方向部分为
+
+$$
+T=\sigma vw^{\mathsf T}+B,
+\quad \sigma=s_1,\quad \rho=s_2,\quad k=s_3/\rho,
+\quad v^{\mathsf T}B=0,\quad Bw=0,
+\tag{332.4}
+$$
+
+其中 $v,w\to u$、$\sigma\le k\le1$、$\rho/t\to1$。选左右方向的共同符号，使它们都趋向 $u$。记
+
+$$
+d=1-\sigma,\qquad h=\|v-w\|_2,
+\qquad z=d+h,
+\qquad l=\|v-u\|_2.
+\tag{332.5}
+$$
+
+首先证明几个定量界。对任一角点 $b=\varepsilon/a$，逆转置范数在右奇异标架中的分解给出
+
+$$
+\rho^2\|T^{-\mathsf T}b\|_2^2
+\le\sigma^{-2}\left[
+\rho^2(w\cdot b)^2+\|(I-ww^{\mathsf T})b\|_2^2
+\right].
+\tag{332.6}
+$$
+
+有限角点上投影平方范数的最大值关于 $w$ 局部 Lipschitz，在 $w=u$ 时等于 $\beta^2$。因此第281节的精确残差公式、$r_*\le t/\beta$ 及 $\rho=O(t)$ 给出
+
+$$
+\rho\le t\left[1+C\bigl(d+\|w-u\|_2+t^2\bigr)\right].
+\tag{332.7}
+$$
+
+另一方面，平衡投影是零预算误差的尖点最小值：存在 $c>0$，使 $v$ 近于 $u$ 时
+
+$$
+e(P_v)-E_0\ge c\|v-u\|_2.
+\tag{332.8}
+$$
+
+为核对此线性下界，令 $\Delta_i=v_i^2-1/3$。这些数之和为零，且在当前正坐标邻域，$\|\Delta\|_2\ge c_1\|v-u\|_2$。零和三元组满足 $\max_i(-\Delta_i)\ge c_2\|\Delta\|_2$，而
+$e(P_v)=(a/2)\sqrt{2/3+\max_i(-\Delta_i)}$。平方根在该正数邻域的斜率有正下界，故式（332.8）成立。
+
+第329节的原列投影估计在此给出
+
+$$
+e(T)\ge(1-\rho)e(P_v)-C\rho h.
+\tag{332.9}
+$$
+
+其中 $x\mapsto(a/2)\sqrt{1-x_i^2}$ 在 $u$ 的邻域 Lipschitz，故方向误差可由 $Ch$ 控制。第330节同时保证实际最优误差满足 $e(T)\le E_0(1-t+Ct^2)$。把式（332.7）至（332.9）组合，并使用 $\|w-u\|\le h+l$，吸收小系数 $Ctl$，得到
+
+$$
+l\le Ct(z+t).
+\tag{332.10}
+$$
+
+式（332.9）及 $e(P_v)\ge E_0$ 还给出 $\rho\ge t-Cth-Ct^2$。结合式（332.7）、（332.10），于是
+
+$$
+\rho=t+O(tz+t^2).
+\tag{332.11}
+$$
+
+再使用 Frobenius 误差下界。因为 $\operatorname{Tr}B\le\rho+k\rho$，且 $2(1-v\cdot w)=h^2$，有
+
+$$
+\begin{aligned}
+\|I-T\|_F^2
+&\ge d^2+(1-\rho)^2+(1-k\rho)^2+\sigma h^2\\
+&\ge2-4\rho+d^2+\sigma h^2.
+\end{aligned}
+\tag{332.12}
+$$
+
+实际最大列误差同时给出
+$\|I-T\|_F^2\le12e(T)^2/a^2\le2-4t+Ct^2$。由于 $\sigma\to1$，将式（332.11）代入便得到 $z^2\le Ctz+Ct^2$。解这个二次不等式，并回代前式，得到
+
+$$
+d+h=O(t),\qquad
+v-u=O(t^2),\qquad w-u=O(t),\qquad
+\rho=t+O(t^2),\qquad 1-k=O(t).
+\tag{332.13}
+$$
+
+这些界来自误差与预算，并非对最优选择添加的光滑性假设。
+
+接下来控制两个横向方向之间尚未消去的转动。取接近恒等的正向旋转 $V_v,V_w$，分别把 $u$ 送到 $v,w$，且只在这两向量张成的平面内转动。由式（332.13），前者偏离恒等为 $O(t^2)$，后者为 $O(t)$。在固定平面 $u^\perp$ 上，把 $B$ 写为
+
+$$
+B=V_v Q C QV_w^{\mathsf T},
+\qquad C=O_\theta H,
+\tag{332.14}
+$$
+
+其中 $H\succ0$ 的两个特征值为 $\rho,k\rho$，故 $H=tI_2+O(t^2)$。由于 $\det T>0$，二维极分解的 $O_\theta$ 是正向旋转。
+
+核范数与迹的差满足
+
+$$
+0\le\sigma+\rho+k\rho-\operatorname{Tr}T=O(t^2).
+\tag{332.15}
+$$
+
+这是式（332.12）的精确 Frobenius 恒等式与式（332.13）、误差上界的直接结果。这个差分为两个非负项：$\sigma(1-v\cdot w)$ 与 $\rho+k\rho-\operatorname{Tr}B$。由于上述最短旋转的一阶变化只有纵横非对角块，
+
+$$
+QV_w^{\mathsf T}V_vQ=I_{u^\perp}+O(t^2),
+\qquad
+\operatorname{Tr}B=\operatorname{tr}C+O(t^3).
+\tag{332.16}
+$$
+
+二维对称矩阵 $H$ 满足 $\operatorname{tr}(O_\theta H)=(\cos\theta)\operatorname{tr}H$。故式（332.15）迫使 $1-\cos\theta=O(t)$，从而 $\sin\theta=O(\sqrt t)$。这里只取得平方根尺度，不把它替换为未经证明的一阶转动。
+
+在固定分解 $\mathbb Ru\oplus u^\perp$ 中，式（332.13）至（332.16）于是给出
+
+$$
+T=
+\begin{pmatrix}
+1-L_t t+O(t^2)&t x_t^{\mathsf T}\\
+t^2y_t&tI_2+t^{3/2}K_t+t^2S_t
+\end{pmatrix},
+\tag{332.17}
+$$
+
+其中 $L_t=d/t\ge0$，$x_t,y_t\in u^\perp$ 有界，$K_t$ 反对称且有界，$S_t$ 对称且有界。右下块的最后两个系数可直接由其反对称部分和对称部分定义，故不需要沿序列可微。为核对有界性，式（332.14）的右下块等于 $C+O(t^3)$；$C$ 的对称部分为 $t(\cos\theta)I_2+O(t^2)$，反对称部分为 $t(\sin\theta)J+O(t^2)$。左下块为 $O(t^2)$，右上块为 $O(t)$，也由式（332.4）、（332.13）直接得到。
+
+对这些有界系数再取子列，设其极限为 $L,x,y,K,S$，并定义有效对称矩阵
+
+$$
+E=S+\frac12K^{\mathsf T}K.
+\tag{332.18}
+$$
+
+两个较小奇异值的二阶项由 $E$ 决定。事实上，$TT^{\mathsf T}$ 的横向主块为
+$t^2I_2+t^3(2S_t+K_tK_t^{\mathsf T})+o(t^3)$，纵横块为 $O(t^2)$。纵向特征值与零保持固定间隔，所以消去该耦合只在 $O(t^4)$ 改变两个小平方特征值。又因反对称 $K$ 满足 $KK^{\mathsf T}=K^{\mathsf T}K$，得到
+
+$$
+s_2=t+\lambda_{\max}(E)t^2+o(t^2),
+\qquad
+s_3=t+\lambda_{\min}(E)t^2+o(t^2).
+\tag{332.19}
+$$
+
+与 $s_1=1-L_t t$ 和可分不等式组合，给出
+$\lambda_{\max}(E)-\lambda_{\min}(E)\le L$。
+
+逆转置展开同样出现 $E$。若 $b$ 的纵向坐标为 $b_\parallel=u\cdot b$、横向向量为 $b_\perp=Qb$，由式（332.17）的块逆公式，沿当前子列有
+
+$$
+\begin{aligned}
+tQT^{-\mathsf T}b
+&=b_\perp+\sqrt t\,K_t b_\perp\\
+&\quad+t\bigl[(K_t^2-S_t)b_\perp-b_\parallel x_t\bigr]+o(t),\\
+t^2\|T^{-\mathsf T}b\|_2^2
+&=\|b_\perp\|_2^2
+-2t\bigl[b_\perp^{\mathsf T}E b_\perp
++b_\parallel x\cdot b_\perp\bigr]+o(t).
+\end{aligned}
+\tag{332.20}
+$$
+
+第一行的平方根交叉项因反对称性为零，而其平方与 $K_t^2$ 项共同给出式（332.18）的修正；纵向分量在乘以 $t$ 后为 $O(t)$，不参与一次项。
+
+令 $q_i=Qe_i$。三个单次变号角点满足
+$b_\parallel=1/(\sqrt3a)$、$b_\perp=-2q_i/a$；全同号角点的缩放平方范数只有 $O(t^2)$。与第331节相同的实际预算方向给出
+
+$$
+\max_i\left(\frac{4x_i}{\sqrt3}-8q_i^{\mathsf T}E q_i\right)\ge0.
+\tag{332.21}
+$$
+
+因此某个同一指标既满足 $q_i^{\mathsf T}Eq_i\le x_i/(2\sqrt3)$，又满足谱宽产生的下界 $(\operatorname{tr}E-L)/3$。于是
+
+$$
+\operatorname{tr}E\le L+\frac{\sqrt3}{2}m,
+\qquad m=\max_i x_i\ge0.
+\tag{332.22}
+$$
+
+现在计算原列误差。式（332.17）中的 $t^{3/2}$ 交叉项也因 $q_i^{\mathsf T}K_tq_i=0$ 消失；其平方到三阶才出现。所以
+
+$$
+\|(I-T)e_i\|_2^2
+=\frac23-\frac43t+c_it^2+o(t^2),
+\qquad
+c_i=\frac23+\left(\frac L{\sqrt3}-x_i\right)^2
+-\frac{2y_i}{\sqrt3}-2q_i^{\mathsf T}S q_i.
+\tag{332.23}
+$$
+
+此处使用 $S$，而预算使用 $E$。它们的差是非负成本，不能将两个矩阵混同。由于 $x,y\perp u$，平均后得到
+
+$$
+\begin{aligned}
+c_{\max}:=\max_i c_i
+&\ge\frac{2+L^2+\|x\|^2-2\operatorname{tr}E+\|K\|_F^2}{3}\\
+&\ge\frac16+\frac{(L-1)^2}{3}
++\frac12\left(m-\frac1{\sqrt3}\right)^2
++\frac{\|K\|_F^2}{3}\ge\frac16.
+\end{aligned}
+\tag{332.24}
+$$
+
+第二步正是式（332.22）及零和坐标的 $\|x\|^2\ge3m^2/2$。有限个原列的最大值和平方根展开给出
+
+$$
+\frac{e(T)}{E_0}
+=1-t+\left(\frac34c_{\max}-\frac12\right)t^2+o(t^2)
+\ge1-t-\frac38t^2+o(t^2).
+\tag{332.25}
+$$
+
+这是沿任意最优序列所取有界系数子列的下界。若实际值的二阶下极限低于 $-3/8$，便可先取一列违反该界的最优矩阵，再作上述紧性与有界系数提取，得到矛盾。因而它给出完整的二阶下极限界。第330节给出二阶上极限至多 $-3/8$，所以实际值二阶系数存在且等于 $-3/8$。代回式（332.2），得到式（332.1）。证明没有在提取系数之前假定它们存在或有界。证毕。
+

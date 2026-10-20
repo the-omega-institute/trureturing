@@ -1,0 +1,6 @@
+Three primary references determine the adopted model and readout:
+
+1. C. Fluehmann and J. P. Home, Direct characteristic-function tomography of quantum states of the trapped-ion motional oscillator, Physical Review Letters 125, 043602 (2020), DOI `10.1103/PhysRevLett.125.043602`, arXiv `1907.06478`. The full PDF and its readout-circuit/equation page were inspected. Spin-dependent displacement followed by phase-selective electronic readout gives real and imaginary characteristic-function components. This is an experimental precedent for the readout mechanism, not an experiment with our golden words.
+2. A. C. Vutha et al., Displacement operators: the classical face of their quantum phase, arXiv `1702.01833`. This supplies classical/quantum displacement-phase context; Weyl composition is not claimed as a discovery of this project.
+3. N. Razian, E.-J. Chang and H.-K. Lau, Discrete-variable assisted error correction of continuous-variable quantum information, arXiv `2604.06565v1`, 8 April 2026. The full HTML, equations (4)-(5), and the coupling/alias discussion were inspected. This is a theoretical preprint using a DV ancilla to read CV displacement information. It does not validate our protocol experimentally or confer its QEC claims on this batch.
+

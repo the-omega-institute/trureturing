@@ -1,0 +1,13 @@
+## 4. 来源、文献状态与边界
+
+**文献表态。** 本卷的有限奇偶核、所有真子坐标的全路径白噪声、临界值
+$c_d$、临界恒信息发散构造，以及 $d=2$ 的完整上边界，均标为
+`suspected-novel`；这是在下列检索范围内未找到逐字相同结果的工作性标记，不是原创性证明。
+检索命中而只承担背景的结果包括：
+
+| 来源 | 精确范围与使用边界 |
+| --- | --- |
+| Qian Zeng and Jin Wang, *Information Landscape and Flux, Mutual Information Rate Decomposition and Entropy Production*, arXiv:1707.01940 | `literature-attested`：互信息率与熵产生的分解背景；不含本卷的奇偶秩一核或 $c_d$ 阈值 |
+| Sheng-Wen Li, *The production rate of the system-bath mutual information*, arXiv:1612.03884；Takahiro Sagawa and Masahito Ueda, *Role of Mutual Information in Entropy Production under Information Exchanges*, arXiv:1307.6092 | `literature-attested`：信息交换与熵产生的热力学关系；不提供本卷的有限观察纤维构造 |
+| Krzysztof Ptaszynski and Massimiliano Esposito, *Ensemble dependence of information-theoretic contributions to the entropy production*, arXiv:2301.13061 | `literature-attested`：熵产生的分解依赖选定系综；不提供本卷的尖锐有限维界 |
+| — | `repo-derived`：本卷定理 2.1、3.2 及定义 3.1 中的阈值、渐近式和严格正发散族 |

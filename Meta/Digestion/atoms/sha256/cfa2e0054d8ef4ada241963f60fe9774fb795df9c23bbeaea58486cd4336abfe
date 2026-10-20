@@ -1,0 +1,31 @@
+**定理 49.4（观测总变差下的两点 minimax 界）。** 令 \(h\) 有界，\(\theta_i=\int h\,d\pi_i\)，\(P_i=\mathsf O_\#\pi_i\)，并设 \(\Delta=|\theta_1-\theta_0|\)。对任意仅依赖完整数量观测的估计量 \(\widehat\theta\)（允许加入在两模型下相同的独立随机化），以
+\[
+R_i=\mathbb E_{\pi_i}|\widehat\theta-\theta_i|
+\]
+记绝对误差风险，则
+\[
+\max\{R_0,R_1\}
+\ge \frac{\Delta}{2}\bigl(1-\operatorname{TV}(P_0,P_1)\bigr).
+\]
+对测试 \(\phi\in[0,1]\)（\(\phi=1\) 选择模型1），有
+\[
+\max\{\mathbb E_{P_0}\phi,\mathbb E_{P_1}(1-\phi)\}
+\ge \frac{1-\operatorname{TV}(P_0,P_1)}2.
+\]
+
+**证明。** 把估计量的共同随机化并入观测空间；这不改变两观测律的总变差距离。对任一观测值，三角不等式给出
+\[
+|\widehat\theta-\theta_0|+|\widehat\theta-\theta_1|\ge\Delta.
+\]
+令 \(\lambda=P_0+P_1\)，\(p_i=dP_i/d\lambda\)。逐点有
+\[
+|\widehat\theta-\theta_0|p_0+|\widehat\theta-\theta_1|p_1
+\ge \Delta\min(p_0,p_1).
+\]
+积分后
+\[
+R_0+R_1\ge \Delta\int\min(p_0,p_1)d\lambda
+=\Delta(1-\operatorname{TV}(P_0,P_1)),
+\]
+从而得到第一式。第二式是二点测试的总变差恒等式：任意 \(\phi\) 的两类错误概率之和至少为 \(1-\operatorname{TV}(P_0,P_1)\)，再取最大值。$\square$
+

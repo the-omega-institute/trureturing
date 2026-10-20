@@ -1,0 +1,33 @@
+### 15.4 可选的正 dyadic 配对
+
+定义
+
+$$
+r(v)=\int_{\mathbb R}\beta(u)\beta(u-v)\,du,
+\qquad
+\Psi_\beta(v)=\int_{\mathbb R}r(u)\operatorname{sinc}(vu)\,du.
+$$
+
+对 $v>0$，复用 Fourier 自相关与区间平均关系，候选读数为
+
+$$
+\Psi_\beta(v)=\frac1{2v}\int_{-v}^{v}|\widehat\beta(\omega)|^2\,d\omega\ge0.
+$$
+
+定义实际尺度上的同一 dyadic 和
+
+$$
+S_\beta(\epsilon)=\sum_{k\ge0}\int_{1/2}^1
+\Psi_\beta(4\pi2^k\epsilon x)\,dx.
+$$
+
+在第 15.3 节隔离的共振脉冲上，另一个候选配对表达式是
+
+$$
+D_2(f_\epsilon)=2\sqrt2\,c\epsilon S_\beta(\epsilon)+O_\beta(\epsilon).
+$$
+
+这一表达式需要比直接对数估计更细的误差控制。对 $s\asymp2^k\epsilon\le1$，每层振幅、参数和端点变化为 $O_\beta(\epsilon)$，共有 $O(\log(1/\epsilon))$ 层。对 $s\ge1$，用 $w=(e^{\epsilon v}-1)/\epsilon$ 换元后的权重与 $r(w)$ 相差 $O_\beta(\epsilon)$，sinc 配对误差为 $O_\beta(\epsilon\log(2+s)/s)$。端点位移为 $O(\epsilon|v|)$，其单独误差为 $O_\beta(\epsilon/s)$。两种高尺度界沿 dyadic 层数可和，恢复外层 $\epsilon$ 后得到 $O_\beta(\epsilon^2(1+\log(1/\epsilon)))$。
+
+逐个固定 $k$ 的 Taylor 展开不足以替代上述统一求和。这条可选估计不再是非零均值主项的必要依赖。
+

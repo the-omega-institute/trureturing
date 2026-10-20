@@ -155,6 +155,7 @@ public sealed partial class IngestRobustTests
         Assert.NotEmpty(added);
         Assert.All(added, static item => Assert.True(
             DigestionCasStore.IsCanonicalPath(item.Path)
+            || DigestionContextPointerStore.IsCanonicalPath(item.Path)
             || item.Path.Contains("/residual-open/", StringComparison.Ordinal),
             $"unexpected report-free path: {item.Path}"));
     }

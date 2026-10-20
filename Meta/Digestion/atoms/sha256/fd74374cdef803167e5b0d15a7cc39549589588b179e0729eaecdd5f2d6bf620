@@ -1,0 +1,10 @@
+因此只要这一个 arithmetic Gram construction 成立：
+
+* \(L_\xi\) 自动 positive-real；
+* \(\mathcal C_\xi\) 自动 Carathéodory；
+* \(\mathfrak s_\xi\) 自动 Schur／inner；
+* Li curvature 自动正定；
+* Clark measure 自动为正；
+* 所有离线内部接触自动被排除；
+* RH 成立。
+

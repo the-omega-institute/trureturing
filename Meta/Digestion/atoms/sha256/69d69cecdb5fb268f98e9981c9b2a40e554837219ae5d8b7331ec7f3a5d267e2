@@ -1,0 +1,8 @@
+所以一个真正可推进的 RH 路线是：
+
+1. 从 \(\xi\) 系数形式化构造 \(p_n\)；
+2. 证明全部 Hausdorff 矩阵正性；
+3. GNS 得到 \(0\le J_\xi\le I\)；
+4. 用 resolvent identity 恢复 \(\mathcal X\)；
+5. 推出全部 \(q\)-零点位于 \([1/4,\infty)\)。
+

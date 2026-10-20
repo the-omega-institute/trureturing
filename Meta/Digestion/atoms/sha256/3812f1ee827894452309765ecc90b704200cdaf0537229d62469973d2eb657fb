@@ -1,0 +1,35 @@
+## 定义 253.1（有限 SCM）
+
+\[
+\boxed{
+M=
+\left(
+G,
+(\mathcal U_v)_v,
+P_U,
+(f_v)_v
+\right),
+}
+\]
+
+其中：
+
+\[
+f_v:
+\mathcal X_{\operatorname{pa}(v)}
+\times
+\mathcal U_v
+\to
+\mathcal X_v.
+\]
+
+结构方程为：
+
+\[
+X_v
+=
+f_v(X_{\operatorname{pa}(v)},U_v).
+\]
+
+DAG 的拓扑顺序保证给定 \(u\) 后，全部内生变量唯一求值。
+

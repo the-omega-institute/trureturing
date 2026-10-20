@@ -1,0 +1,29 @@
+对固定方向 \(v\) 和实数 \(n_v>0\)，以下条件等价：
+
+1. 对全部钟初态，在一个包含零的时间区间中，
+
+   $$
+   \Phi_{v,t}(\rho)
+   =
+   e^{-in_vH_Ct/\hbar}
+   \rho
+   e^{in_vH_Ct/\hbar};
+   $$
+2. $$
+   \boxed{
+   \bigl(\widehat n(v)-n_vI\bigr)\sigma^{1/2}=0;
+   }
+   \tag{102.3}
+   $$
+3. $$
+   \boxed{
+   \widehat n(v)P=n_vP;
+   }
+   \tag{102.4}
+   $$
+4. $$
+   m_1(v)=n_v,
+   \qquad
+   m_2(v)=n_v^2.
+   $$
+

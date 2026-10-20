@@ -1,0 +1,46 @@
+# 第一千四百零七部　新的完整对偶表
+
+|  层 | bulk／完整对象                      | boundary／观察对象                   | 不变量                              |
+| -: | ------------------------------ | ------------------------------- | -------------------------------- |
+|  0 | 离线点 \((\gamma,\delta)\)        | Cauchy 状态 \(p_{\gamma,\delta}\) | 位置与尺度                            |
+|  1 | bulk 深度                        | Fisher 双曲坐标                     | \(ds_F^2\)                       |
+|  2 | shifted 双像 \(\delta\pm\omega\) | 两张 Poisson 状态                   | KL 散度                            |
+|  3 | Rindler rapidity \(r\)         | Hankel visibility \(\tanh r\)   | 双曲距离                             |
+|  4 | negative-time partner          | Bogoliubov occupation           | \(N=\sinh^2r\)                   |
+|  5 | horizon determinant            | 有效观察指数                          | \(\operatorname{Ind}_{\rm hor}\) |
+|  6 | observer inclusion             | Jones index                     | \([M:N]\)                        |
+|  7 | self-observation event         | Jones projection                | \(\tau(e_N)\)                    |
+|  8 | Fibonacci sector               | quantum dimension               | \(\varphi\)                      |
+|  9 | golden index shell             | \(\sigma^2=\varphi^{-1}\)       | \(\varphi^2=1+\varphi\)          |
+| 10 | positive completion            | conditional expectation         | Pimsner–Popa floor               |
+| 11 | RH                             | 所有 shifted kernels PSD          | index defect 为零                  |
+
+最重要的零性链为：
+
+$$
+\boxed{
+\delta=0
+\Longrightarrow
+\sigma=0
+\Longrightarrow
+D_{\mathrm{KL}}=0
+\Longrightarrow
+\operatorname{Ind}_{\mathrm{hor}}=1.
+}
+$$
+
+而离线零点满足：
+
+$$
+\boxed{
+\delta>0
+\Longrightarrow
+\sup_{\omega<\delta}
+\operatorname{Ind}_{\mathrm{hor}}(\omega)
+=
++\infty.
+}
+$$
+
+---
+

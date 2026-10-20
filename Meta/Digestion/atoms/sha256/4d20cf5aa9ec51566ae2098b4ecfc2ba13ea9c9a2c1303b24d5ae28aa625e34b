@@ -1,0 +1,7 @@
+前文使用的 normalized Crofoot–Malmquist 特征与 \(\psi_{\ell,j}\) 只相差已知的非零尺度系数，因此不会改变：
+
+* 线性张成空间；
+* 共同谱可行性；
+* generalized eigenvalues；
+* 原子支撑。
+

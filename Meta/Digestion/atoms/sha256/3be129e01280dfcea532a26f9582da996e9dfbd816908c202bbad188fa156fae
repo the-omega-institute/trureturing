@@ -1,0 +1,95 @@
+**Theorem 65.1 (one explicit paired native experiment).** Fix any
+$r\in(0,\delta]$ and finite $t>0$. Supply exactly the prior
+$\nu_r=(\delta_r+\delta_{-r})/2$, independent of the same stationary
+Q height source, with the same original clock and initial phases.
+For every estimator $(\widehat\kappa,\widehat k)$ based on the complete
+wrapped $v$ prefix, including completed-data or independently randomized
+estimators, there is an explicit $m_{r,t}>0$ such that
+
+$$
+\begin{aligned}
+\mathbf E_{\nu_r}(\widehat\kappa-\kappa)^2&\ge r^2m_{r,t},\\
+\mathbf E_{\nu_r}(\widehat k-K_t)^2&\ge r^2m_{r,t},\\
+\mathbf E_{\nu_r}\bigl[(\widehat\kappa-\kappa)^2+
+                              (\widehat k-K_t)^2\bigr]&\ge2r^2m_{r,t}.
+\end{aligned}
+\tag{65.1}
+$$
+
+For sign classification the error probability is at least
+$m_{r,t}/2$. Each bound also lower-bounds the maximum of the two
+corresponding parameterwise risks. It does not say that every
+estimator has positive parameter risk at each individual parameter:
+a constant correct parameter estimator is the elementary exception.
+No prior is implicit in a parameterwise statement.
+
+Proof. Set $m=(l+u)/2$ and choose the closed common interval
+
+$$
+J=[m-r^2/H-w/8,\ m-r^2/H+w/8],\qquad L=|J|=w/4.
+\tag{65.2}
+$$
+
+For either sign, $J+\alpha_s$ is centered at $m+sr$ and has radius
+$w/8$; since $r\le w/8$, it lies strictly inside $I$. Put
+
+$$
+a_J=\min_{s\in\{+,-\},\ z\in J}\phi(z+\alpha_s)>0,
+\qquad
+m_{r,t}=e^{\lambda t}a_J^2\frac{8L}{\pi^2}
+                   \exp(-\varepsilon^2\pi^2t/L^2)>0.
+\tag{65.3}
+$$
+
+In fact $J+\alpha_s\subset[m-w/4,m+w/4]$, so $a_J^2\ge1/w$
+and $m_{r,t}\ge(2/\pi^2)e^{-15\lambda t}$ throughout this fixed
+nonzero family. The task-risk bound still has the factor $r^2$.
+
+Let $\Lambda_{J,t}$ be Brownian height with Lebesgue initial measure
+on the interior of $J$, restricted to paths staying in that interior
+up to $t$. Define a common submeasure of the two actual joint laws by
+
+$$
+M(du,dv)=e^{\lambda t}
+ \min_{s\in\{+,-\}}\{\phi(u_0+\alpha_s)\phi(u_t+\alpha_s)\}
+ \Lambda_{J,t}(du)\Gamma_r(dv\mid u).
+\tag{65.4}
+$$
+
+This is dominated by each sign's joint law in (64.5)–(64.6), retaining
+its actual target. Its mass is at least $m_{r,t}$: integration of the
+Dirichlet sine kernel over both endpoints of an interval of length $L$
+gives
+
+$$
+\Lambda_{J,t}(1)=\sum_{n\ge1,\ n\ {
+\rm odd}}\frac{8L}{n^2\pi^2}
+                  e^{-\varepsilon^2n^2\pi^2t/L^2},
+\tag{65.5}
+$$
+
+and its first term suffices. This is the same killed Brownian
+calculation as (37.3); it is only a reference submeasure inside the
+unchanged conservative Q experiment, not a new killed observation law.
+
+On this common submeasure put $c=u_t+r^2/H$. The two target pairs
+are $(r,c+r)$ and $(-r,c-r)$. For any real $a,b$,
+
+$$
+\frac{(a-r)^2+(a+r)^2}{2}\ge r^2,\qquad
+\frac{(b-c-r)^2+(b-c+r)^2}{2}\ge r^2.
+\tag{65.6}
+$$
+
+Integrating these inequalities against $M$ proves (65.1), because
+each source risk dominates its $M$ loss and the prior weights are
+$1/2,1/2$. A binary decision is wrong for at least one of the two
+labels at every common data value, giving $M(1)/2$. Adding the same
+independent randomization kernel preserves the argument. Completed
+estimators have Borel versions under the mixture law, whose null sets
+are null under both components. Finally an average of two risks is
+at most their maximum. The lower bound may tend to zero with $r$ or
+with increasing $t$; neither a uniform positive bound near zero nor
+an infinite-window obstruction is claimed. No Q risk is transferred
+to a survivor or raw killed source here. $\square$
+

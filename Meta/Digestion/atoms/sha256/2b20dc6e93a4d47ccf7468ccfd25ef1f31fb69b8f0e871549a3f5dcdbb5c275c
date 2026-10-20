@@ -1,0 +1,16 @@
+### 定理 371.2（Hellinger 距离的基本性质）
+
+对任意有限概率分布 \(P,Q\)，有
+
+$$
+0\le\mathsf H(P,Q)\le1,
+$$
+
+并且 \(\mathsf H\) 是度量。若 \(K\) 是有限随机核，则
+
+$$
+\boxed{
+\mathsf H(KP,KQ)\le\mathsf H(P,Q).
+}
+$$
+

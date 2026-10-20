@@ -1,0 +1,34 @@
+**定理 82.5（完整档案同时几乎处处恢复尺度的充要条件）。** 在共同可测空间 $(\Omega_r,\mathcal F_r)$ 上，存在一个可测函数 $D:\Omega_r\to\{2,3,\ldots\}$，使
+
+$$
+\mu_m^r\{D=m\}=1
+\qquad\text{对每个 }m\ge2\text{ 同时成立},
+\tag{82.17}
+$$
+
+当且仅当 $S(r)=\infty$。
+
+**证明。** 若 $S(r)<\infty$，取不同的 $m,m'$。正确解码要求同一个可测事件 $\{D=m\}$ 在 $\mu_m^r$ 下质量为 $1$、在 $\mu_{m'}^r$ 下为 $0$，与定理82.4的等价性矛盾。这正是[素数观察卷§219](FORMAL_PRIME_OBSERVER_DYNAMICS.md)与既有声明 equivalent_probability_laws_exclude_perfect_separator 的障碍。若另给解码器一个共同、来源独立的种子律 $\nu$，等价性仍传到 $\mu_m^r\otimes\nu$，所以独立随机化也不能消除障碍。
+
+若 $S(r)=\infty$，定理82.4使本可数族两两互奇。沿用[素数观察卷§228](FORMAL_PRIME_OBSERVER_DYNAMICS.md)及既有 countable_pairwise_singular_common_partition：其参数在此为 $\mathrm{probability}(j)=\mu_{j+2}^r$，$\mathrm{weight}(j)=2^{-(j+1)}$，$j\in\mathbb N$。权重严格正且总和为 $1$；在该 Lean 声明的权重类型中取对应的非负扩展实数。所需共同支配混合为
+
+$$
+\lambda=\sum_{j\ge0}2^{-(j+1)}\mu_{j+2}^r.
+\tag{82.18}
+$$
+
+它提供原始共同 $\sigma$-代数中的两两不交可测满测度支撑。本族也可直接把这个已有分割结论写为：对每个 $m<\ell$ 选共同可测的 $E_{m,\ell}$，使 $\mu_m^r(E_{m,\ell})=1$、$\mu_\ell^r(E_{m,\ell})=0$，并令
+
+$$
+B_m
+=
+\left(\bigcap_{\ell>m}E_{m,\ell}\right)
+\cap
+\left(\bigcap_{2\le\ell<m}E_{\ell,m}^{\,c}\right).
+\tag{82.19}
+$$
+
+可数交保持可测，且每个被交集合在 $\mu_m^r$ 下为满测度，故 $\mu_m^r(B_m)=1$。若 $m<\ell$，则 $B_m\subseteq E_{m,\ell}$、$B_\ell\subseteq E_{m,\ell}^c$，所以这些支撑实际不交。在 $B_m$ 上置 $D=m$，剩余集合上默认置 $D=2$，得到共同可测函数和式（82.17）。这只是本族对已有可数分割的应用，不另立一般分割定理。证毕。
+
+即使 $S(r)<\infty$，只要至少有一次读取，式（82.5）的异色格随 $m$ 严格变化，故不同 $m$ 的档案律仍不相等；律不相等不等于存在零误差解码器。全零调度则各律完全相同。式（82.17）允许每个来源自己的零测异常，不保证每条合同相容轨迹都正确，也不保证有限停机、可计算解码或有界记忆。定理81.10仍排除全族共同的几乎必然有限停止零误差规则，包括 $S(r)=\infty$ 的调度。第81节对全部允许策略定义的 $K_B$ 及其计数识别结论不因选择这一固定协议而改变。
+

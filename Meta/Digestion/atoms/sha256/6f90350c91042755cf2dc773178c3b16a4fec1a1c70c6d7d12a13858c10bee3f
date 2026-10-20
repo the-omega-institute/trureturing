@@ -1,0 +1,22 @@
+**定义 100.4（统计实验等价与 FIB 观测压缩）。** 两个实验
+\(\mathsf E=(P_\theta:\theta\in\Theta)\) 和
+\(\mathsf F=(Q_\theta:\theta\in\Theta)\) 的 Le Cam 缺陷定义为
+\[
+\delta(\mathsf E,\mathsf F)
+=\inf_M\sup_{\theta\in\Theta}
+\|MP_\theta-Q_\theta\|_{\rm TV},
+\qquad
+\Delta(\mathsf E,\mathsf F)
+=\max\{\delta(\mathsf E,\mathsf F),\delta(\mathsf F,\mathsf E)\},
+\tag{100.9}
+\]
+其中 \(M\) 遍历参数无关的 Markov 核。若 \(Y=\Phi(C,Z)\) 是从完整 FIB 状态或路径 \(Z\) 的参数无关观测压缩，则由数据处理不等式
+\[
+\mathcal I_Y(\theta)\preceq\mathcal I_Z(\theta),
+\qquad
+\|P^Y_\theta-P^Y_{\theta'}\|_{\rm TV}
+\le\|P^Z_\theta-P^Z_{\theta'}\|_{\rm TV}.
+\tag{100.10}
+\]
+若完整似然比对 \(Y\) 的 sigma 代数可测，即 \(Y\) 是参数族的充分统计量，则压缩不损失信息，\(\delta(\mathsf Z,\mathsf Y)=0\)；若还存在参数无关的恢复核在所有 \(\theta\) 上精确复原完整律，则两实验等价。仅有同一 Fisher 矩阵或同一前两阶矩不推出实验等价。
+

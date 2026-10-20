@@ -1,0 +1,29 @@
+# 第一千五百八十部　prime 侧与 zero 侧的两种费米化
+
+现在可以把两侧放入同一张表。
+
+| 侧                  | 完成对象                      | 微观 lift               | 关系                         |
+| ------------------ | ------------------------- | --------------------- | -------------------------- |
+| prime local        | \((1-p^{-s})^{-1}\)       | binary bits           | 独立                         |
+| prime local        | \((1-p^{-s})^{-1}\)       | Zeckendorf bits       | nearest-neighbor exclusion |
+| zero side under RH | \(Q_t(w)/Q_t(0)\)         | inverse-gap modes     | 独立 Bernoulli／exterior      |
+| off-line zero      | positive-axis zero factor | negative/complex mode | 无正概率实现                     |
+
+所以 prime 侧的“任意重复”可以被 lift 成：
+
+* 自由 binary fermions；
+* 有相互排斥关系的 golden hard-core fermions。
+
+zero 侧在 RH 下则成为自由 exterior modes。
+
+因此真正承重的问题可以重新表述为：
+
+$$
+\boxed{
+\text{Prime–Gamma 完成是否把一个局部 hard-core naming system，
+变换成一个正的 zero-side quasi-free system？}
+}
+$$
+
+---
+

@@ -1,0 +1,97 @@
+**供应及推导 27.1（从守恒流到三种圈长）。** 沿用定义 16.1 和定理 18.1，
+接缝状态按 $\mathcal S=(00,01,10)$ 排列，完整边字典如下。
+
+| 模式 | 名称 | 起状态 | 终状态 |
+| --- | --- | --- | --- |
+| $000$ | $F[\mathrm{null}]$ | $00$ | $00$ |
+| $100$ | $F[1]$ | $10$ | $00$ |
+| $010$ | $F[2]$ | $01$ | $10$ |
+| $001$ | $F[3]$ | $00$ | $01$ |
+| $101$ | $F[1,3]$ | $10$ | $01$ |
+
+将每个接缝加上原位置标签，得到 $3n$ 个顶点 $(i,s)$，边
+$(i,ab)\to(i+1,bc)$ 的质量为 $p_i(abc)$。
+顶点 $(i,bc)$ 的入流是 $\sum_a p_{i-1}(abc)$，出流是
+$\sum_dp_i(bcd)$。所以 (26.2) 正是逐顶点守恒；归一化则是每层边质量一。
+
+本卷 §2 的单窗二部运输图把左、右状态视作不同顶点，固定的是其两端边缘；
+它的四角方向是有符号的零边界差流。此处先把相邻窗口的共同接缝识别，
+再要求非负守恒流，因此不是把那个有符号 incidence 核向量当作一份概率来源。
+整张分层图的边质量总和为 $n$，也不是全图总质量一。
+这些区别决定以下归一化因子。
+
+为完整消费本卷 (18.2)–(18.3) 及
+[接缝供应卷定理 21.4、22.2](AURIC_FIB_SEAMS_CYCLES_ARITHMETIC_BOUNDARY_RECONSTRUCTION.md)，
+给出分解步骤。非零非负守恒流中，从一条正边开始沿正边前进；到达顶点
+有正入流，故必有正出流。有限顶点集使路径重复，首次重复之间是简单有向圈。
+从圈上每条边扣去其当前最小质量 $\alpha>0$，所得流仍非负、守恒，
+并至少少一条正边。有限次后得到
+
+$$
+p=\sum_{\gamma}\alpha_\gamma\mathbf1_\gamma,
+\qquad \alpha_\gamma>0.
+\tag{27.1}
+$$
+
+每走一条边层号增加一，因此简单圈长度是 $m_\gamma n$。
+它在每层出现 $m_\gamma$ 次，而每层只有三个顶点，简单性给
+$m_\gamma\in\{1,2,3\}$。对任何一层求边质量和，得
+
+$$
+\sum_\gamma m_\gamma\alpha_\gamma=1,
+\qquad p^\gamma=\frac{\mathbf1_\gamma}{m_\gamma},
+\qquad \lambda_\gamma=m_\gamma\alpha_\gamma,
+\qquad p=\sum_\gamma\lambda_\gamma p^\gamma.
+\tag{27.2}
+$$
+
+每个 $p^\gamma$ 在每层分别有一、二、三条边，各边质量分别为
+$1,1/2,1/3$。因此概率混合权是 $m_\gamma\alpha_\gamma$，
+不是原始扣流系数 $\alpha_\gamma$；也不是把圈边统一除以圈长
+$m_\gamma n$ 后直接当作每窗概率。
+
+按重叠状态读出圈的周期字 $w$，长度 $m_\gamma n$，使第 $a$ 个位置
+的原层号为 $a\bmod n$。同层相位均匀取样给
+
+$$
+p_i^\gamma(\sigma)=\frac1{m_\gamma}
+\sum_{h=0}^{m_\gamma-1}
+\mathbf1\{(w_{i+hn},w_{i+1+hn},w_{i+2+hn})=\sigma\}.
+\tag{27.3}
+$$
+
+$w$ 的下标按 $m_\gamma n$ 取模；不能将这一同层平均换成任意旋转平均。
+若 $m_\gamma=1$，$w$ 本身就在 $B_n^{\mathrm{cyc}}$ 中，故修补量为零。
+
+对于每个成分，只要构造一份实际 $n$ 位来源 $P^\gamma$，其窗口族为
+$\widetilde p^\gamma$，就可在相同来源域取
+$P=\sum_\gamma\lambda_\gamma P^\gamma$。边缘是相同权重的混合，逐坐标三角不等式给
+
+$$
+\begin{aligned}
+\operatorname{TV}\!\left(\sum_\gamma\lambda_\gamma p_i^\gamma,
+\sum_\gamma\lambda_\gamma\widetilde p_i^\gamma\right)
+&\le\sum_\gamma\lambda_\gamma
+\operatorname{TV}(p_i^\gamma,\widetilde p_i^\gamma),\\
+\Delta_n(p)&\le
+\sum_\gamma\lambda_\gamma\frac1n\sum_i
+\operatorname{TV}(p_i^\gamma,\widetilde p_i^\gamma).
+\end{aligned}
+\tag{27.4}
+$$
+
+所以修补这三类成分足以控制任意局部相容数据，且混合确实由同一份真实
+来源实现。相同论证也给 $\Delta_n$ 的凸性：为各成分选择达到的最近来源
+再混合即可。它没有要求原流的分解唯一，也没有把某次分解出现长圈视为
+原流不可实现的充要判据。
+
+这里使用的是经典非负守恒流圈分解。Goldstein–Kuna–Lebowitz–Speer，
+*Translation invariant extensions of finite volume measures*，
+[arXiv:1508.04448v2，§4.1 Theorem 6](https://arxiv.org/pdf/1508.04448v2)，
+将单个局部平移一致二进制块律与 de Bruijn 图守恒流对应，并证明简单圈的
+归一化律给其极点与凸组合。该文的 $X_k$ 是 $k+1$ 位块，$G_k$ 有 $2^k$
+个状态；其全图概率归一化与 (27.2) 的每层归一化不同。
+§4.2 Theorem 8 的通用环长为 $\operatorname{lcm}\{1,\ldots,2^k\}$，
+$k=2$ 时为 $12$。本题保留 no11 的三状态及位置层，且固定原长度 $n$，
+不以那个通用长度或接缝供应卷的六重提升替代原长度修补。
+

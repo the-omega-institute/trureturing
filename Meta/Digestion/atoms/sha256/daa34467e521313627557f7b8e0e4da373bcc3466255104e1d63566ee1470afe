@@ -1,0 +1,30 @@
+### 定义 371.1（有限分布的 Hellinger 几何）
+
+对有限结果集 \(X\) 上的两个概率分布 \(P,Q\)，定义 Bhattacharyya 亲和度
+
+$$
+\mathsf A(P,Q)
+=
+\sum_{x\in X}\sqrt{P(x)Q(x)},
+$$
+
+以及 Hellinger 距离
+
+$$
+\boxed{
+\mathsf H^2(P,Q)
+=
+\frac12\sum_x
+\bigl(\sqrt{P(x)}-\sqrt{Q(x)}\bigr)^2
+=1-\mathsf A(P,Q).
+}
+$$
+
+将概率分布嵌入平方根球面
+
+$$
+\iota(P)=(\sqrt{P(x)})_{x\in X}
+$$
+
+后，\(\mathsf H(P,Q)=2^{-1/2}\|\iota(P)-\iota(Q)\|_2\)。
+

@@ -1,0 +1,43 @@
+### 15.1 固定的合法测试
+
+取非零、非负、实偶函数 $\beta\in C_c^\infty([-1,1])$，令
+
+$$
+\beta_0=\int_{\mathbb R}\beta(x)\,dx>0,\quad
+m=\|\beta\|_2^2,\quad
+a=\frac{3\ell}{5},\quad b=\frac{2\ell}{5},\quad
+c=\frac{\sinh(a/2)}{\sinh(b/2)}.
+$$
+
+对 $0<\epsilon<\ell/40$，定义
+
+$$
+\begin{aligned}
+\beta_\epsilon(x)&=\epsilon^{-1/2}\beta(x/\epsilon),\\
+f_\epsilon(x)&=\beta_\epsilon(x-a)-\beta_\epsilon(x+a)
+-c\bigl(\beta_\epsilon(x-b)-\beta_\epsilon(x+b)\bigr).
+\end{aligned}
+$$
+
+它是奇的 additive 积分测试，物理载体仍然是偶函数空间 $H$。其 Fourier 表达式为
+
+$$
+\widehat f_\epsilon(t)
+=-2i\sqrt\epsilon\,\widehat\beta(\epsilon t)
+\bigl(\sin(at)-c\sin(bt)\bigr).
+$$
+
+因此三个固定零约束相容。以 $L=a+\epsilon$ 为支撑界，有 $2<e^{2L}<3$，所需 place set 为 $\{\infty,2\}$。同一自相关支撑使 $2^m$ 的 $m\ge2$ 项与所有其他素数项为零。
+
+四个脉冲互不相交，给出
+
+$$
+M=\|f_\epsilon\|_2^2=2(1+c^2)m,
+\qquad
+H_\epsilon(\ell)=2cm,
+\qquad
+\mathcal A_2(f_\epsilon)=2\sqrt2\,c\ell m>0.
+$$
+
+这些是同一 $f_\epsilon$ 的读数，没有独立选取可分别达到的极值。
+

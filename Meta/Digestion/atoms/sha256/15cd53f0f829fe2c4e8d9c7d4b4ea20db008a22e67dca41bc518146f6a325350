@@ -1,0 +1,22 @@
+### AHH 362.5（Hodge 全息）
+
+> 全息边界的最小充分性不是“保存最多的局部读数”，而是把 exact 规范、coexact 曲率和 harmonic 全局记忆分别保存到它们真正影响未来任务的程度。局部点击通常只切到 coexact 响应；周期探针才可能读出 harmonic 波形。
+
+主线可写成
+
+$$
+\boxed{
+\text{上同调闭合}
+\longrightarrow
+\text{Hodge 三分}
+\longrightarrow
+\text{曲率与周期重建}
+\longrightarrow
+\text{局部/全局事件}
+\longrightarrow
+\text{记录后继}.
+}
+$$
+
+**新的 AHH 时刻是：所谓“波的整体形状”在有限关系几何中不是一个额外的神秘实体，而是 coexact 局部响应与 harmonic 全局模式的联合；exact 部分只是表示选择。粒子式事件只在声明的接口上切片，是否看见 harmonic 模式完全取决于周期访问权限。**
+

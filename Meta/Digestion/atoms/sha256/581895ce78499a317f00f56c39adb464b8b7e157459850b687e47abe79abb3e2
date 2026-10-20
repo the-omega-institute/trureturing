@@ -1,0 +1,35 @@
+**Corollary 57.3 (all real original projections, including actual zero).**
+Suppose a real linear cover record $Ry$, $y=(\theta,v,D)$, is
+supplied, with arbitrary finite real matrix $R$. For nonzero
+$\kappa$, replace each row $(p_i,q_i,r_i)$ by
+$(p_i,q_i,\kappa r_i)$ in Theorem 57.1. This classifies every
+such record for both signs. On the actual frozen-$D$ zero leaf put
+
+$$
+a_i=-\frac{p_i+q_i}{2H},\qquad b_i=\frac{p_i}{2}.
+\tag{57.6}
+$$
+
+It fails to recover height exactly when $a=0$, or $a\ne0$ and
+$b=-ra$ for one common $r\in I$; each failure has positive expected
+posterior variance at every fixed positive time under (55.1).
+In particular a real scalar row identifies exactly when
+$p+q\ne0$ and $Hp/(p+q)\notin I$. The third real coefficient
+only changes the known initial value at actual zero. A real cover
+projection descends to the original torus as a character precisely
+when all its coefficients are integers; Theorem 57.2 classifies
+these lawful observations separately.
+
+Proof. For nonzero $\kappa$, the exact signed differential map is
+$dy=\operatorname{diag}(1,1,\kappa)dq$, proving the substitution.
+At actual zero the observed increments have coefficient
+$F_i(k)=p_iA_0(k)+q_iB_0(k)=a_i k+b_i$ and no moving $D$ term.
+The affine outer-product argument and reflection proof in Theorem
+57.1 apply verbatim to these real vectors. This proves both
+sufficiency and actual-source ambiguity, rather than inferring a
+negative conclusion just from noninjectivity of a covariance.
+For a scalar row its root is $Hp/(p+q)$, including the identifying
+endpoint cases. Finally invariance under adding $2\pi$ separately
+to each original coordinate requires and suffices that every
+frequency coefficient be an integer. $\square$
+

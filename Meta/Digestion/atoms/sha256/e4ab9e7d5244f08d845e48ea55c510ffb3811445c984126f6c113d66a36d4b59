@@ -1,0 +1,16 @@
+**定义 297.1（后验风险与置信停止）。** 在零—一损失下，定义后验 Bayes 风险
+
+$$
+ r(p)=1-\max_{k\in K}p(k).
+$$
+
+给定置信阈值 $\varepsilon\in[0,1)$，称历史 $h$ 达到置信停止，若
+
+$$
+\operatorname{Stop}_\varepsilon(h)
+\quad\Longleftrightarrow\quad
+ r(p_h)\le\varepsilon.
+$$
+
+停止时取最大后验类作为决策 $\widehat k(h)$。假定策略在有限资源合同下以概率一停止。
+

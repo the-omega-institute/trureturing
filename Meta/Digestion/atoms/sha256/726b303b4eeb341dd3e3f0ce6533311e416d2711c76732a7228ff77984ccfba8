@@ -1,0 +1,6 @@
+若存在离线零点，则谱完成仍然存在，但对应模式无法下降为：
+
+* causal inner；
+* positive de Branges kernel；
+* uniform retention gap。
+

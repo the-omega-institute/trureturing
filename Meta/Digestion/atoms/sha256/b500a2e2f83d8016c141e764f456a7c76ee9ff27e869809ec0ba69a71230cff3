@@ -1,0 +1,4 @@
+**来源 1120.1（有限生成与熵优化）。** 本批沿用第 1100 节实际核读的 Kumar、Li、El Gamal，[*Exact Common Information*, arXiv:1402.0062v1](https://arxiv.org/abs/1402.0062v1)，以及 Xu、Liu、Chen，[*Wyner's Common Information: Generalizations and A New Lossy Source Coding Interpretation*, arXiv:1301.2237v1](https://arxiv.org/abs/1301.2237v1)。引用范围仍是来源熵与共同信息的定义区别、有限支撑方法、多观察条件独立和相应变分目标，没有把本批的纯整体公式归给文献中不同的共同二元对称通道例子。
+
+第 784–785 节的达到与连续性、第 813–815 节的二维最大质量和来源熵、第 831 节的二维共同信息，以及第 1085–1090 节的三维熵包络与等号条件，均按既有结果复用。第 1102–1112 节在本批给出相应维数推广、逐格最大质量、余量极限与渐近比较的普通解析推导，不作原创申报。
+
