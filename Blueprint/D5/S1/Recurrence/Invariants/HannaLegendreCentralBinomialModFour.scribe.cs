@@ -23,13 +23,16 @@ internal sealed class HannaLegendreCentralBinomialModFourDocument : IScribeDocum
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The conjecture holds", ClaimBody(),
                 "The integer lift allows coefficientwise reduction. The alternating transform plus twice its first moment reduces to powers of two; the first-moment term cancels the degree-two residue.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a246423-legendre-central-binomial"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula X(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(X(name))), [.. args]);

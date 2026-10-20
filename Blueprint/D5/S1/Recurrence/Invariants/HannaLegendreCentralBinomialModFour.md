@@ -46,6 +46,10 @@ $$(\operatorname{PowerSeries}.\operatorname{coeff}\left(0, A\right) = 1) \land (
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialModFour.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a246423-legendre-central-binomial` (proved) by `D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialModFour.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a246423-legendre-central-binomial","declaration_gid":"D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialModFour.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2014). *OEIS A246056 and A246423, two binomial-square generating functions*. URL: <https://oeis.org/A246056>.
