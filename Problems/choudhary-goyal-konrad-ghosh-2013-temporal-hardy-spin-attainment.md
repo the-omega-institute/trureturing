@@ -51,7 +51,7 @@ The proof would not settle the conjecture if the module's observables or probabi
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.lean` (445 lines).
+The canonical source is `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.lean` (443 lines).
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Registration.** The §3.9 registration is `Reg/D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.lean`.
@@ -77,7 +77,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 **Argued, not formalized.**
 - *Mechanism.* The +s eigenvector of the rotated spin component is a spin-coherent state, and its components are binomial. Choosing the rotation angle so that its overlap with |s_z = s⟩ is exactly 1/√2 reproduces the qubit optimum inside the two-dimensional span of e₀ and χ.
-- *Contrast.* Restricting the input to spin eigenstates (arXiv:1007.2374) forces success (1/2)^{4s}; the optimal input here is the spin-coherent state minus its |s_z = s⟩ component, which is not a spin eigenstate.
+- *Contrast.* Restricting the input to spin eigenstates (arXiv:1007.2374) gives at most (1/2)^{4s}. For s = 1/2 this is already 1/4, and indeed ψ = e₁ is a Jz eigenstate. For s ≥ 1 the restricted maximum is below 1/4, so the input ψ = b − e₀ that reaches 1/4 is not a spin eigenstate in that setting.
 - *Scope.* Only two measurement directions in the x–z plane are needed for every s.
 
 **Effect on the paper.** The maximum 1/4 of the temporal Hardy argument is attained by spin measurements for every spin, so the dimension independence of the bound extends to spin observables.

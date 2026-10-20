@@ -83,4 +83,5 @@ Choose A₁ = B₂ = Jz(n), A₂ = B₁ = S, and all four outcomes n/2. Their sp
 - Truth anchor: `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.result`
 - Truth anchor: `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.seqProb`
 - Truth anchor: `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.spinComponent`
+- Dependency: [D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics](../Dynamics/TridiagonalSweeps/FinitePathDynamics.md)
 - Dependency: [D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound](../Entanglement/PrecessionSpinOneSeparableBound.md)
