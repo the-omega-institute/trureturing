@@ -33,9 +33,6 @@ internal sealed class NegativePowerDiagonalModPrimeDocument : IScribeDocumentDef
                 + "as proved for A(p) and assumed for B. Thus the substitution is exactly "
                 + "A(x/A(x)^e), with e=(p-1)(n-1)+1. Integer divisibility is used below; "
                 + "intCast(p) explicitly casts the natural parameter to an integer.")),
-            Node("inverse_difference", "Difference of formal unit inverses", InverseDifferenceFormula(),
-                "For two series with constant coefficient one, the difference of their inverses "
-                + "is the negative product of their inverses times the difference of the series."),
             Node("a", "The triangular coefficient construction", CoefficientDefinition(),
                 "Starting with P(p,0)=1, the update sets the first two coefficients to one "
                 + "and solves every higher diagonal equation for its leading coefficient. "
@@ -153,22 +150,6 @@ internal sealed class NegativePowerDiagonalModPrimeDocument : IScribeDocumentDef
             Seq(Bound("p", Naturals()), Bound("n", Naturals()),
                 Equal(Call("a", P(), N()), Coefficient(N(), Call("P", P(), Add(N(), D(1))))))
         ]));
-    }
-
-    private static Formula InverseDifferenceFormula()
-    {
-        var r = F.Id("R");
-        var a = F.Id("A");
-        var b = F.Id("B");
-        var ia = Call("invOfUnit", a, D(1));
-        var ib = Call("invOfUnit", b, D(1));
-        return Disp(Seq(Bound("R", Named("Type")),
-            OpenBracket, Call("CommRing", r), CloseBracket, Comma, Sp,
-            Bound("A", Call("PowerSeries", r)), Bound("B", Call("PowerSeries", r)),
-            Implication(Equal(Call("constantCoeff", a), D(1)),
-                Implication(Equal(Call("constantCoeff", b), D(1)),
-                    Equal(Subtract(ia, ib),
-                        Mul(Subtract(a, b), Seq(Minus, Parenthesized(Mul(ia, ib)))))))));
     }
 
     private static Formula UniqueFormula()

@@ -27,8 +27,7 @@ Private theorem proof_shape and consumers:
   integral_equation: bind-only; consumers: exists_integral_solution, mod_four_solution.
   rational_integral_iff: bind-only; consumer: exists_integral_solution.
   exists_integral_solution: bind-only; consumer: result.
-  doubling_val: bind-only; consumers: doubleLift_X, doubleLift_subst, doubleLift_even,
-    residue_zero, residue_coefficient.
+  doubling_val: bind-only; consumer: doubleLift_even.
   doubleLift_X: bind-only; consumer: second_digit_equation.
   doubleLift_subst: bind-only; consumer: second_digit_equation.
   doubleLift_even: bind-only; consumer: doubleLift_annihilate.
@@ -39,12 +38,12 @@ Private theorem proof_shape and consumers:
   mod_four_solution: bind-only; consumer: result.
   residue_coefficient: bind-only; consumer: result.
 Direct frozen dependencies:
-  UnitReversionSquareParity: Agree, agree_iff, agree_pow, agree_mul, agree_X,
+  UnitReversionSquareParity: Agree, agree_pow, agree_mul, agree_X,
   subst_inner_agree, subst_outer_agree, subst_constant.
   CubicFifteenSubstitutionParity: powerTwoSeries, prime_power_subst,
   power_two_zero, thue_series_equation.
   AlternatingDyadicReversionModFour: four_zero.
-  NegativePowerDiagonalModPrime: inverse_difference.
+  AbsoluteReciprocalGeometricParity: agree_inv.
   PowerSeriesNormalizedContraction: exists_unique_fixed.
 The rational equation and claim retain the expressions in #18859. The
 coefficient-prefix and power-of-two constructions use their existing owners.
@@ -55,7 +54,7 @@ the coefficient homomorphism uses ZMod.lift.
 The second congruence applies to n > 1, since the source data have a(1) = 1.
 -/
 
-import D5.S1.Recurrence.Residue.NegativePowerDiagonalModPrime
+import D5.S1.Recurrence.Invariants.AbsoluteReciprocalGeometricParity
 import D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity
 import D5.S1.Recurrence.Invariants.AlternatingDyadicReversionModFour
 import D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
@@ -128,19 +127,9 @@ private theorem denominator_agree {d : ℕ} {b c : PowerSeries R}
 private theorem step_agree {d : ℕ} {b c : PowerSeries R}
     (hb : constantCoeff b = 1) (hc : constantCoeff c = 1)
     (hd : 1 ≤ d) (h : Agree d b c) : Agree (d + 1) (step b) (step c) := by
-  apply (agree_iff _ _ _).mpr
-  have hdv := (agree_iff _ _ _).mp (denominator_agree hd h)
-  have he : step b - step c = (denominator c - denominator b) * (step b * step c) := by
-    calc
-      step b - step c = (denominator b - denominator c) * (-(step b * step c)) := by
-        simpa only [step] using
-          D5.S1.Recurrence.Residue.NegativePowerDiagonalModPrime.inverse_difference
-            (denominator b) (denominator c) (denominator_zero hb) (denominator_zero hc)
-      _ = (denominator c - denominator b) * (step b * step c) := by ring
-  rw [he]
-  have hdv' : (X : PowerSeries R) ^ (d + 1) ∣ denominator c - denominator b :=
-    dvd_sub_comm.mp hdv
-  exact dvd_mul_of_dvd_left hdv' _
+  intro n hn
+  exact D5.S1.Recurrence.Invariants.AbsoluteReciprocalGeometricParity.agree_inv
+    (denominator_zero hb) (denominator_zero hc) (denominator_agree hd h) n hn
 
 private theorem normalized_unique {b c : PowerSeries R}
     (hb : constantCoeff b = 1) (hc : constantCoeff c = 1)
@@ -268,13 +257,13 @@ private theorem doubling_val (z : ZMod 2) : doubling z = 2 * (z.val : ZMod 4) :=
 
 private theorem doubleLift_X : (mk ((doubling.compLeft ℕ) (fun n => coeff n (X : PowerSeries (ZMod 2)))) : PowerSeries (ZMod 4)) = 2 * X := by
   ext n
-  simp only [coeff_mk, AddMonoidHom.compLeft_apply, Function.comp_apply, doubling_val, coeff_X, coeff_ofNat_mul]
+  simp only [coeff_mk, AddMonoidHom.compLeft_apply, Function.comp_apply, coeff_X, coeff_ofNat_mul]
   split_ifs <;> decide
 
 private theorem doubleLift_subst (f : PowerSeries (ZMod 2)) :
     (mk ((doubling.compLeft ℕ) (fun n => coeff n (f.subst (X ^ 2)))) : PowerSeries (ZMod 4)) = ((mk ((doubling.compLeft ℕ) (fun n => coeff n f)) : PowerSeries (ZMod 4))).subst (X ^ 2) := by
   ext n
-  simp only [coeff_mk, AddMonoidHom.compLeft_apply, Function.comp_apply, doubling_val, coeff_subst_X_pow (by decide : 2 ≠ 0),
+  simp only [coeff_mk, AddMonoidHom.compLeft_apply, Function.comp_apply, coeff_subst_X_pow (by decide : 2 ≠ 0),
     Algebra.algebraMap_self, RingHom.id_apply]
   split_ifs <;> simp
 
@@ -311,7 +300,7 @@ private theorem second_digit_equation :
 private noncomputable def residueSeries : PowerSeries (ZMod 4) := X * (1 + (mk ((doubling.compLeft ℕ) (fun n => coeff n powerTwoSeries)) : PowerSeries (ZMod 4)))
 
 private theorem residue_zero : constantCoeff ((mk ((doubling.compLeft ℕ) (fun n => coeff n powerTwoSeries)) : PowerSeries (ZMod 4))) = 0 := by
-  rw [← coeff_zero_eq_constantCoeff, coeff_mk, AddMonoidHom.compLeft_apply, Function.comp_apply, doubling_val, coeff_zero_eq_constantCoeff, power_two_zero]
+  rw [← coeff_zero_eq_constantCoeff, coeff_mk, AddMonoidHom.compLeft_apply, Function.comp_apply, coeff_zero_eq_constantCoeff, power_two_zero]
   decide
 
 private theorem residue_equation : IsIntegralGF residueSeries := by
@@ -343,10 +332,10 @@ private theorem mod_four_solution :
 private theorem residue_coefficient (n : ℕ) (hn : 1 < n) :
     coeff n residueSeries = if ∃ k : ℕ, n = 2 ^ k + 1 then 2 else 0 := by
   classical
-  obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
+  obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_zero_of_lt hn)
   have hm : m ≠ 0 := by omega
   rw [residueSeries, coeff_succ_X_mul, map_add, coeff_one, ite_eq_right hm, zero_add,
-    coeff_mk, AddMonoidHom.compLeft_apply, Function.comp_apply, doubling_val]
+    coeff_mk, AddMonoidHom.compLeft_apply, Function.comp_apply]
   simp only [powerTwoSeries, coeff_mk]
   have hh : (∃ k : ℕ, m = 2 ^ k) ↔ ∃ k : ℕ, m + 1 = 2 ^ k + 1 := by
     constructor <;> rintro ⟨k, hk⟩ <;> exact ⟨k, by omega⟩

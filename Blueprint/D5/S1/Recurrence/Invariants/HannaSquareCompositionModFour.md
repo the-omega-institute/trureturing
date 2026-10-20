@@ -49,7 +49,7 @@ Write A=X*B. The cleared equation becomes B*(1-2*X*B)*subst(X squared*B squared,
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaSquareCompositionModFour.IsGF`
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaSquareCompositionModFour.claim`
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaSquareCompositionModFour.result`
+- Dependency: [D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity](AbsoluteReciprocalGeometricParity.md)
 - Dependency: [D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour](AlternatingDyadicReversionModFour.md)
 - Dependency: [D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity](CubicFifteenSubstitutionParity.md)
 - Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](PowerSeriesNormalizedContraction.md)
-- Dependency: [D5/S1/Recurrence/Residue/NegativePowerDiagonalModPrime](../Residue/NegativePowerDiagonalModPrime.md)
