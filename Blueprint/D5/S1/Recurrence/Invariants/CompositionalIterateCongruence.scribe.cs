@@ -67,7 +67,7 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
             Node("geometric_inverse", "The geometric inverse over a commutative ring", GeometricInverseFormula(),
                 "For every commutative ring R and parameter in R, rescaling the series "
                 + "with every coefficient equal to one gives an inverse of the linear "
-                + "denominator. Here denominator(parameter) means 1-C(parameter)X. "
+                + "denominator 1-C(parameter)X. "
                 + "The identity is used by mobius_denominator and by "
                 + "PathCHSNormClosedForm.geometric_mul_linear."),
             Node("mobius_denominator", "The geometric denominator identity", MobiusDenominatorFormula(),
@@ -213,14 +213,11 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
         Equal(Mobius(Ring(), F.Id("parameter")),
             Mul(X(), Call("rescale", F.Id("parameter"), Call("mk", D(1)))))));
 
-    private static Formula GeometricInverseFormula() => Disp(new Formula.Aligned([
-        Seq(Context(), Bound("parameter", Ring())),
+    private static Formula GeometricInverseFormula() => Disp(Seq(
+        Context(), Bound("parameter", Ring()),
         Equal(Mul(Call("rescale", F.Id("parameter"), Call("mk", D(1))),
-            Call("denominator", F.Id("parameter"))), D(1)),
-        Equal(Call("denominator", F.Id("parameter")),
-            new Formula.Binary(D(1), FormulaBinaryOperator.Subtract,
-                Mul(Call("C", F.Id("parameter")), X())))
-    ]));
+            Parenthesized(new Formula.Binary(D(1), FormulaBinaryOperator.Subtract,
+                Mul(Call("C", F.Id("parameter")), X())))), D(1))));
 
     private static Formula MobiusDenominatorFormula() => Disp(Seq(
         Context(), Bound("parameter", Ring()),

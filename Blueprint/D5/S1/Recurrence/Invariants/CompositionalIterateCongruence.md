@@ -130,7 +130,7 @@ This series is X times the geometric series with parameter c, equivalently X/(1-
 
 **Theorem 1.11 (The geometric inverse over a commutative ring).**
 
-$$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R, \\\operatorname{rescale}\left(parameter, \operatorname{mk}\left(1\right)\right) \cdot \operatorname{denominator}\left(parameter\right) = 1\\\operatorname{denominator}\left(parameter\right) = 1 - \operatorname{C}\left(parameter\right) \cdot X\end{aligned}$$
+$$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R, \operatorname{rescale}\left(parameter, \operatorname{mk}\left(1\right)\right) \cdot (1 - \operatorname{C}\left(parameter\right) \cdot X) = 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.geometric_inverse` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ $$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \fora
 
 *Commentary.*
 
-For every commutative ring R and parameter in R, rescaling the series with every coefficient equal to one gives an inverse of the linear denominator. Here denominator(parameter) means 1-C(parameter)X. The identity is used by mobius_denominator and by PathCHSNormClosedForm.geometric_mul_linear.
+For every commutative ring R and parameter in R, rescaling the series with every coefficient equal to one gives an inverse of the linear denominator 1-C(parameter)X. The identity is used by mobius_denominator and by PathCHSNormClosedForm.geometric_mul_linear.
 
 **Theorem 1.12 (The geometric denominator identity).**
 

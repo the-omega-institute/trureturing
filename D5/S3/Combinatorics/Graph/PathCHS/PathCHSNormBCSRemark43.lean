@@ -366,7 +366,7 @@ private theorem bilateral_eq_pathFormula (n m : ℕ) (hn : 1 ≤ n) :
         have hq : m/N < (-j).toNat := Nat.lt_of_succ_le hlarge
         exact (Nat.div_lt_iff_lt_mul hN).mp hq
       have hr : (N : ℤ)*j+m < 0 := by
-        have hmul' : (m : ℤ) < ((-j).toNat : ℤ)*N := by exact_mod_cast hmul
+        have hmul' : (m : ℤ) < ((-j).toNat : ℤ)*N := by exact Int.lt_toNat.mp hmul
         rw [hjr]
         nlinarith
       simp only [f, D5.S0.Conventions.IntegerIndexBinomial.binom,if_pos (show (N : ℤ)*j+m < 0 by omega),
@@ -382,7 +382,7 @@ private theorem bilateral_eq_pathFormula (n m : ℕ) (hn : 1 ≤ n) :
         have hq : m/N < (j-1).toNat := Nat.lt_of_succ_le hlarge
         exact (Nat.div_lt_iff_lt_mul hN).mp hq
       have hr : (L : ℤ) < (N : ℤ)*j+m-1 := by
-        have hmul' : (m : ℤ) < ((j-1).toNat : ℤ)*N := by exact_mod_cast hmul
+        have hmul' : (m : ℤ) < ((j-1).toNat : ℤ)*N := by exact Int.lt_toNat.mp hmul
         rw [hjr,hL]
         nlinarith
       simp only [f, binomZ_zero_of_lt L _ hr,
