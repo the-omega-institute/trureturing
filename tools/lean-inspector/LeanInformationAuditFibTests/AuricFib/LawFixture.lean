@@ -429,6 +429,7 @@ noncomputable def strict : Application.{0,0,0,0,0,0} target where
           family, Separation.family, Separation.law]
       · norm_num [Pyramid.delta, Pyramid.r, Pyramid.kappa, Pyramid.X, Pyramid.Y, Pyramid.Z,
           family, Separation.family, Separation.law])] none
+unsafe def unsafeApplication : Application.{0,0,0,0,0,0} target := unsafeCast (0 : Nat)
 end RegisteredPos
 
 /-- A constant identification cannot acquire the required bijection. -/

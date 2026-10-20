@@ -68,6 +68,8 @@ private def disjoint (terms : Array Expr) (structures : Array Name) : FibSource.
 private def readFace (store : RawArtifacts.Store) (state : ArtifactRegistration.State)
     (target : Name) (structures : Array Name) (application : ConstantInfo) :
     FibSource.M InformationReading := do
+  let .defnInfo definition := application | FibSource.fail "application_not_safe_definition"
+  unless definition.safety == .safe do FibSource.fail "application_not_safe_definition"
   unless application.levelParams.isEmpty && application.type.isAppOfArity
       `LeanInformationAudit.AuricFib.Contract.Application 2 do
     FibSource.fail "application_shape_unknown"
@@ -78,9 +80,8 @@ private def readFace (store : RawArtifacts.Store) (state : ArtifactRegistration.
   unless occurrence.constLevels! == original.levelParams.map Level.param &&
       application.type.getAppArgs[0]!.equal original.type do
     FibSource.fail "target_occurrence_mismatch"
-  let some value := application.value? | FibSource.fail "application_value_missing"
   let applicationFields ← FibSource.fields
-    `LeanInformationAudit.AuricFib.Contract.Application.mk value
+    `LeanInformationAudit.AuricFib.Contract.Application.mk definition.value
   let evidence ← FibSource.constructorHead applicationFields[0]!
   unless evidence.getAppFn.constName? == some
       `LeanInformationAudit.AuricFib.Contract.Evidence.law do
@@ -155,8 +156,10 @@ unsafe def acquireInformation (source : Environment) (target : Name)
     let context ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts store owner
       {} (({} : NameSet).insert target)
     let precheck : FibSource.M Unit := do
-      let some value := info.value? | FibSource.fail "application_value_missing"
-      let app ← FibSource.fields `LeanInformationAudit.AuricFib.Contract.Application.mk value
+      let .defnInfo definition := info | FibSource.fail "application_not_safe_definition"
+      unless definition.safety == .safe do FibSource.fail "application_not_safe_definition"
+      let app ← FibSource.fields
+        `LeanInformationAudit.AuricFib.Contract.Application.mk definition.value
       let evidence ← FibSource.fields `LeanInformationAudit.AuricFib.Contract.Evidence.law app[0]!
       let client ← FibSource.fields `LeanInformationAudit.Analysis.Client.mk evidence[0]!
       discard <| registeredSource client[0]!

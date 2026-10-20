@@ -57,6 +57,10 @@ run_cmd do
   unless positive.face == .strictBound && !positive.ordinaryRecords.isEmpty do
     throwError "positive information binding: {repr positive.face}"
   logInfo s!"information-positive: {positive.face.label}; registration={positive.registration}"
+  let unsafeRoot ← acquireInformation source ``LawFixture.RegisteredPos.target #[]
+    (some ``LawFixture.RegisteredPos.unsafeApplication)
+  unless unsafeRoot.face == .notBound "application_not_safe_definition" do
+    throwError "unsafe Application root accepted: {repr unsafeRoot.face}"
   let polluted ← acquireInformation source ``LawFixture.RegisteredPos.target
     #[``LawFixture.Separation.law] (some ``LawFixture.RegisteredPos.strict)
   unless polluted.face.label.startsWith "not-bound(law_vocabulary_intersects_S:" do
