@@ -3,6 +3,8 @@ fingerprints:
   normalized_sha256: sha256:52c7ee46f5f260cc796401e55f1b4a741b6444800ec4fa80ee1e9677a083a901
 cas_ref: sha256:52c7ee46f5f260cc796401e55f1b4a741b6444800ec4fa80ee1e9677a083a901
 coverage_gids:
+  - gid: D5/S1/Digit/Infinite/ClosedObservationGraphRealization.bitShift_bitShift
+    target_statement_id: sha256:65cd4f8124f7adbdf131d87d6723f21df8ab73607d62e597c898b2cc09402d32
   - gid: D5/S1/Digit/Infinite/ClosedObservationGraphRealization.closed_observation_graph_realization
     target_statement_id: sha256:2216344ecd20f42bcc7521b54cb4dca365bfb86273b26a106a3d68bfd09b4f18
 receipts:
