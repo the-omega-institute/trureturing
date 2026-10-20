@@ -341,7 +341,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let directory ← IO.FS.realPath directory
     let input := directory / (moduleName ++ ".lean")
     let output := directory / (moduleName ++ ".olean")
-    let imports := String.join ((#[`LeanInformationAuditRegAnalysis.SearchReduction.Commands] ++
+    let imports := String.join ((#[`Mathlib, `LeanInformationAuditRegAnalysis.SearchReduction.Commands] ++
       bs.getElems.map (fun n => n.getId)).toList.map fun n => s!"import {n}\n")
     let payload := directory / "request.olean"
     writeRequest payload {
