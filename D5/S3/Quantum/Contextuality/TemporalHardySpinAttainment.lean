@@ -7,6 +7,7 @@
    digest: Temporal Hardy success probability one quarter is attained by every positive spin. -/
 
 import D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound
+import D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics
 
 /-! Spin coherent vectors and temporal Hardy attainment. -/
 
@@ -14,6 +15,7 @@ noncomputable section
 open scoped BigOperators Matrix
 open Matrix
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus Jx Jy Jz spinRad)
+open D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics
 
 namespace D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
 
@@ -229,40 +231,36 @@ private lemma tilt_upper_nonzero (n : ℕ) (r : ℝ) (hr : 0 < r)
 private lemma tilt_first_zero (n : ℕ) (r : ℝ) (hr : 0 < r)
     (v : Fin (n + 1) → ℂ) (eigen : ℂ)
     (hv : tilt n r *ᵥ v = eigen • v) (h0 : v 0 = 0) : v = 0 := by
-  have hprefix : ∀ k : ℕ, ∀ i : Fin (n + 1), i.val ≤ k → v i = 0 := by
-    intro k
-    induction k with
-    | zero =>
-      intro i hi
-      have he : i = 0 := by apply Fin.ext; dsimp; omega
-      subst i
-      exact h0
-    | succ k ih =>
-      intro i hi
-      by_cases hik : i.val ≤ k
-      · exact ih i hik
-      have hiv : i.val = k + 1 := by omega
-      let j : Fin (n + 1) := ⟨k, by have := i.isLt; omega⟩
-      have hjv : v j = 0 := ih j (by rfl)
-      have hrow := congrFun hv j
-      have hsum : (tilt n r *ᵥ v) j = tilt n r j i * v i := by
-        change ∑ l, tilt n r j l * v l = _
-        apply Finset.sum_eq_single i
-        · intro l hl hli
-          by_cases hlk : l.val ≤ k
-          · rw [ih l hlk, mul_zero]
-          · rw [tilt_off_band n r j l (by
-              intro h; have := congrArg Fin.val h; dsimp [j] at this; omega)
-              (by intro h; apply hli; apply Fin.ext; dsimp [j] at h; omega)
-              (by dsimp [j]; omega), zero_mul]
-        · intro h; exact (h (Finset.mem_univ i)).elim
-      rw [hsum] at hrow
-      change tilt n r j i * v i = eigen * v j at hrow
-      rw [hjv, mul_zero] at hrow
-      exact (mul_eq_zero.mp hrow).resolve_left
-        (tilt_upper_nonzero n r hr j i (by dsimp [j]; omega))
-  ext i
-  exact hprefix i.val i le_rfl
+  apply boundary_zero_observability (by omega) v h0
+  intro i hi hprev
+  by_cases hin : i.val < n
+  · let j : Fin (n + 1) := ⟨i.val + 1, by omega⟩
+    have hnext : i.succ.succ = j.castSucc.succ := by apply Fin.ext; rfl
+    rw [hnext, extend_interior]
+    have hrow := congrFun hv i
+    have hsum : (tilt n r *ᵥ v) i = tilt n r i j * v j := by
+      change ∑ l, tilt n r i l * v l = _
+      apply Finset.sum_eq_single j
+      · intro l hl hlj
+        by_cases hli : l = i
+        · subst l; rw [hi, mul_zero]
+        · by_cases hlp : l.val + 1 = i.val
+          · have he : i.castSucc.castSucc = l.castSucc.succ := Fin.ext hlp.symm
+            rw [he, extend_interior] at hprev
+            rw [hprev, mul_zero]
+          · rw [tilt_off_band n r i l (Ne.symm hli)
+              (by intro h; apply hlj; apply Fin.ext; exact h.symm) hlp, zero_mul]
+      · intro h; exact (h (Finset.mem_univ j)).elim
+    rw [hsum] at hrow
+    change tilt n r i j * v j = eigen * v i at hrow
+    rw [hi, mul_zero] at hrow
+    exact (mul_eq_zero.mp hrow).resolve_left (tilt_upper_nonzero n r hr i j rfl)
+  · have he : i.succ.succ = Fin.last (n + 2) := by
+      apply Fin.ext
+      dsimp
+      have := i.isLt
+      omega
+    rw [he, extend_last]
 
 private lemma tilt_eigenspace (n : ℕ) (r : ℝ) (hr : 0 < r)
     (v : Fin (n + 1) → ℂ) :
