@@ -5175,3 +5175,81 @@ physical dimension nor proves that every state-dependent transport fails; it
 only rules out the top-fixed, form-preserving, generator-intertwining choice.
 
 ## 115.99 追加锚（本行以下为增补区）
+
+## 116. Positive-mass no-go for simultaneous form, norm, and generator transport
+
+The parent-copy result leaves one possible repair question: can a positive
+node measure make the same transport both norm-preserving and dynamically
+compatible? The answer is negative if the old coordinates are fixed and the
+clock is unchanged.
+
+**Definition 116.1 (weighted node generators).** Let \(M_e\) and
+\(M_{e+1}\) be positive diagonal mass matrices on \(V_e\) and \(V_{e+1}\).
+Write
+
+$$
+A_e=D_e^*D_e,\qquad
+\mathcal L_e=M_e^{-1}A_e,
+\tag{116.1}
+$$
+
+and similarly for \(e+1\). Consider a top-fixed extension \(S_Q\) from (115.2).
+The three requirements are:
+
+$$
+\begin{array}{ll}
+\text{(F)}&S_Q^*A_{e+1}S_Q=A_e
+     \quad\text{(edge-form preservation)},\\
+\text{(N)}&S_Q^*M_{e+1}S_Q=M_e
+     \quad\text{(node-norm preservation)},\\
+\text{(G)}&\mathcal L_{e+1}S_Q=S_Q\mathcal L_e
+     \quad\text{(same-clock generator intertwining)}.
+\end{array}
+\tag{116.2}
+$$
+
+**Theorem 116.2 (positive-mass obstruction).** Suppose the old tree is
+connected and nontrivial, and \(B_e\ne\varnothing\). There is no top-fixed
+linear extension \(S_Q\) and no positive diagonal \(M_{e+1}\) satisfying
+all three conditions (F), (N), and (G).
+
+**Proof.** Condition (F) and Theorem 115.2 force \(Q=C_e^*\), so
+\(S_Q=T_e\). The block identity (115.4) gives
+
+$$
+A_{e+1}T_e=J_eA_e.
+\tag{116.3}
+$$
+
+Taking the old-coordinate block of (G) yields
+
+$$
+(M_{e+1}^{-1})_{\mathrm{old}}A_e=M_e^{-1}A_e.
+\tag{116.4}
+$$
+
+Every row of \(A_e\) is nonzero in a connected nontrivial tree; applying
+(116.4) to a basis vector at each vertex therefore forces
+\((M_{e+1})_{\mathrm{old}}=M_e\). But then the old/child block decomposition
+of the norm in (N) gives
+
+$$
+T_e^*M_{e+1}T_e
+ =M_e+C_e(M_{e+1})_{\mathrm{child}}C_e^*.
+\tag{116.5}
+$$
+
+The second term is a nonzero positive diagonal matrix whenever
+\(B_e\ne\varnothing\), contradicting (N). \(\square\)
+
+For the witness \(x=\langle\alpha,\beta\rangle\), this contradiction is
+visible without a general argument: the two new child masses add a strictly
+positive contribution to the old beta-parent coordinate after the unique
+form-preserving copy. A time-rescaled condition
+\(\mathcal L_{e+1}S_Q=\lambda_eS_Q\mathcal L_e\), a non-top-fixed transport,
+or a non-diagonal state metric is outside Theorem 116.2 and must be declared
+as a new bridge choice. The theorem therefore closes one exact option while
+leaving those relaxed options open; it does not prove a universal transport
+no-go or select a physical dimension.
+
+## 116.99 追加锚（本行以下为增补区）
