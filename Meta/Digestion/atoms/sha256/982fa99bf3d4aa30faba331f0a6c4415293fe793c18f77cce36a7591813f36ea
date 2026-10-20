@@ -1,0 +1,45 @@
+**候签引理 31.1（原 bump 的全复方向衰减常数）。** 对第 19.3 节的原 $\phi$ 及 Fourier 约定 $\Phi(z)=\int\phi(x)e^{-izx}dx$，所有整数 $n\ge0$ 与所有 $z\in\mathbb C$ 满足
+
+$$
+\|\phi^{(n)}\|_1\le12^n(n!)^2,
+\qquad
+|\Phi(z)|\le4\exp\!\left(\frac{|\Im z|}{2}-\frac{\sqrt{|z|}}6\right).
+$$
+
+证明。在 $|x|<1/2$ 置 $d_x=1/2-|x|$。考虑以 $x$ 为心、半径 $d_x/2$ 的复圆盘。由
+
+$$
+\frac1{1-4\zeta^2}
+=\frac14\left(\frac1{1/2-\zeta}+\frac1{1/2+\zeta}\right),
+$$
+
+以及 $a>r$、$|h|\le r$ 时 $\Re(1/(a+h))\ge1/(a+r)$，离 $x$ 最近的端点贡献至少 $1/(6d_x)$，另一端点项的实部为正。因此
+
+$$
+\Re\frac1{1-4\zeta^2}\ge\frac1{6d_x}.
+$$
+
+圆盘不遇到分母的零点。Cauchy 导数估计给出
+
+$$
+|\phi^{(n)}(x)|\le n!\left(\frac2{d_x}\right)^n e^{-1/(6d_x)}
+\le12^n(n!)^2,
+$$
+
+其中第二步取 $t=1/(6d_x)$ 并用 $t^ne^{-t}\le n!$。第一份界在两个端点趋于零，零延拓平坦；支撑长度为一，所以同样的常数支付 $L^1$ 范数。对 $z\ne0$ 作 $n$ 次 Fourier 分部积分，端点项消失，得到
+
+$$
+|\Phi(z)|\le e^{|\Im z|/2}\frac{12^n(n!)^2}{|z|^n}.
+$$
+
+取 $n=\lfloor\sqrt{|z|/48}\rfloor$。由 $n!\le n^n$，右侧不超过 $e^{|\Im z|/2}4^{-n}$，而
+
+$$
+4^{-n}\le4\exp\!\left(-\frac{\log4}{\sqrt{48}}\sqrt{|z|}\right)
+\le4e^{-\sqrt{|z|}/6}.
+$$
+
+$n=0$ 及 $z=0$ 直接用 $|\Phi(z)|\le Me^{|\Im z|/2}$。$\square$
+
+标准 bump 的实频率鞍点渐近已有 [Johnson, arXiv:1508.04376v1](https://arxiv.org/html/1508.04376v1), §2 的直接分析；[Tlas, arXiv:2003.12364v2](https://arxiv.org/html/2003.12364v2) 的引理与定理还提供相关渐近及另一种具有正、单调 Fourier 变换的紧支撑构造。它们不在所述陈述中直接给出本章原固定 $\Phi$ 的全复方向显式常数；换成 Tlas 的函数会改变指定测试。本章使用标准 Cauchy/Gevrey 方法支付当前需要的常数，不把这些成熟方法当成新理论。在非实方向必须保留 $e^{|\Im z|/2}$；只有实轴衰减不足以支付未验证零点。
+

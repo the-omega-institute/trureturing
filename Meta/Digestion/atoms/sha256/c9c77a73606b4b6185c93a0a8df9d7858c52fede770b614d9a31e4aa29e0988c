@@ -1,0 +1,9 @@
+# 2026-09-06：具体算术耦合与一个含素数窗口的单纯偶最低模态证书
+
+Lean：`D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.lean`。
+Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.scribe.cs`。
+可复验程序：`research/weil_ground_mode/certify_prime3.py`。
+本次实际输出：`research/weil_ground_mode/prime3_certificate.json`。
+
+本节将前面的无限高模态下界接到具体算术耦合，完成一个固定含素数窗口的计算机辅助余维一强制性证明。Lean 保存算术边界符号的绝对收敛、独立统一上界及逐外部模态的耦合余项。完整 Fourier/算子域识别、无限 Gram 尾项求和、区间计算的正确性及变分推论属于以下纸面与计算机辅助证明，尚未组成 Lean 内核定理。Lean 和 Scribe 编译没有在本环境运行。本文不将数值 LDL 的通过等同于 Lean 编译通过。
+

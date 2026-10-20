@@ -1,0 +1,8 @@
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 3-4, 8. https://arxiv.org/html/2511.22755v1
+- NIST DLMF 5.7.6, the actual digamma partial fraction. https://dlmf.nist.gov/5.7.E6
+- Mugnolo, Nittka, Post, *Convergence of sectorial operators on varying Hilbert space*, arXiv:1007.3932v2; abstract read for method context only. https://arxiv.org/abs/1007.3932
+- #6029 actual `WeilBoundaryKernelIntegral.lean`, blob `dd8c742820f623257ed37aa15d868bb2db09301b`; #6171 actual `Mertens/Third.lean`, blob `435484ecbfc11097a057d6b435045728a6e41f01`.
+
+

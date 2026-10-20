@@ -1,0 +1,30 @@
+## 6. 奇扇区的相邻纸面结论
+
+奇基可取 `(-1)^k*sqrt(2/L)*sin(rho*k*x)`，`1<=k<=N`。忽略共同的单位复相位后，其 Fourier 响应为
+
+\[
+R^-_v(t)=\sum_{k=1}^N\sqrt2v_k
+\frac{\rho k/t}{1-(\rho k/t)^2}.
+\]
+
+将矩空间改为
+
+\[
+\operatorname{span}\{t^{-1},t^{-3},\ldots,t^{-(2m-1)}\}
+\]
+
+并重复平方余项证明，得到
+
+\[
+0\preceq E^-_T-E^{-,\mathrm{opt}}_{T,m}\preceq\kappa^-_mI,
+\]
+
+\[
+\kappa^-_m=
+\frac{2\rho(2N)}{\pi^2}
+\frac{\theta^{4m+2}}{(1-\theta^2)^2T}
+\left(\frac{\log T-8/5}{4m+3}+\frac1{(4m+3)^2}\right).
+\]
+
+`N=0` 时奇子空间为零空间。这个相邻结论尚未形式化。它提供奇偶两侧一致的尾项处理方式，没有证明最低模态位于偶扇区。
+

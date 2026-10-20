@@ -439,9 +439,13 @@ internal static class DigestionAtomContextProjection
             other.StartByte <= atom.StartByte && other.EndByte >= atom.EndByte
             && other.RawBytes.Length > atom.RawBytes.Length)).DistinctBy(atom => (atom.StartByte, atom.EndByte))
             .OrderBy(static atom => atom.StartByte).ToArray();
-        for (var index = 1; index < roots.Length; index++)
-            if (roots[index - 1].EndByte > roots[index].StartByte)
-                throw new FormatException("historical source spans overlap without ancestry");
+        // Independent historical cuts need not describe one common stream.
+        // Keep only compatible roots. In crossing regions the observed source's
+        // atomizer supplies the stream; inactive stored spans are captured only
+        // when their endpoints fit that stream, never by inventing ancestry.
+        roots = roots.Where(atom => !roots.Any(other =>
+            other.StartByte != atom.StartByte && other.StartByte < atom.EndByte
+            && atom.StartByte < other.EndByte)).ToArray();
         var tables = blocks.OfType<MarkdownGovernedBlock>()
             .Where(static block => block.Kind == "table")
             .Select(block => (Start: MarkdownAstAtomizer.ByteOffset(sourceText, block.Start),

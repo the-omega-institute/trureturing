@@ -1,0 +1,8 @@
+这个表达把时间、色散和 topology 的职责分开：
+
+- \(k_1,k_2\) 选择黄金尺度圆上的两个 character readouts；
+- \(x,y\) 选择两个乘法尺度通道；
+- 行列式读取两个 readout vectors 张成的有向面积；
+- 交换通道或交换时间槽会翻转 orientation；
+- 两行或两列退化时，二阶核归零。
+

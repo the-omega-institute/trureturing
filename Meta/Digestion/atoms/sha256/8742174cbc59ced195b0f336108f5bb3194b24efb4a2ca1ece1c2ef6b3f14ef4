@@ -1,0 +1,25 @@
+## 4. 对明确 Xi 核截断的应用
+
+令
+
+\[
+\Phi(x)=\sum_{n=1}^\infty
+\left(4\pi^2n^4e^{9x/2}-6\pi n^2e^{5x/2}\right)
+\exp(-\pi n^2e^{2x}).
+\]
+
+此 theta 核为偶函数，满足上述 Fourier 约定下的 `hat Phi=Xi`，并具有双指数衰减。取具有固定内缩余量的偶光滑截断 `chi_a`，令
+
+\[
+k_a=\chi_a\Phi/\|\chi_a\Phi\|_2,
+\qquad c_a=\|\chi_a\Phi\|_2.
+\]
+
+双指数衰减给出 `c_a*hat k_a=hat(chi_a*Phi)` 在复平面紧集上一致收敛到 Xi，并且 `c_a` 趋向非零常数。另一方面，第 3 节说明：若强制性成立，
+
+\[
+|c_a|\sqrt{2a}e^{ba}r_a/\delta_a\longrightarrow0
+\]
+
+甚至在 `b=0` 也不成立。因此固定内缩的 Xi 核截断不能同时实现该强制性与此充分收敛条件。本推导不排除触及边界的 prolate 候选，也不排除直接控制 Fourier 观察误差的较弱机制。
+

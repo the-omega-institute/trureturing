@@ -1,0 +1,126 @@
+# 7. 下一真源. SecondMagnusSwapCurvature
+
+下一节点不应再次定义列表 cocycle。它应建立连续 time-ordering 的二阶核。
+
+对两个 prime-frequency channels：
+
+\[
+\chi_p(t)=e^{-it\omega_p},
+\qquad
+\chi_q(t)=e^{-it\omega_q},
+\]
+
+定义 fixed-slot swap kernel：
+
+\[
+\boxed{
+K_{p,q}(t_1,t_2)
+=
+\chi_p(t_1)\chi_q(t_2)
+-
+\chi_q(t_1)\chi_p(t_2).
+}
+\]
+
+令：
+
+\[
+\bar t=\frac{t_1+t_2}{2},
+\qquad
+\Delta t=t_1-t_2,
+\]
+
+\[
+\bar\omega=\frac{\omega_p+\omega_q}{2},
+\qquad
+\Delta\omega=\omega_p-\omega_q.
+\]
+
+目标精确分解为：
+
+\[
+\boxed{
+K_{p,q}(t_1,t_2)
+=
+-2i
+ e^{-2i\bar t\bar\omega}
+ \sin\left(
+ \frac{\Delta t\,\Delta\omega}{2}
+ \right).
+}
+\]
+
+因此：
+
+\[
+\boxed{
+|K_{p,q}(t_1,t_2)|^2
+=
+4\sin^2\left(
+\frac{\Delta t\,\Delta\omega}{2}
+\right).
+}
+\]
+
+在小尺度下：
+
+\[
+|K_{p,q}|^2
+\sim
+(\Delta t)^2(\Delta\omega)^2.
+\]
+
+prime specialization 给出：
+
+\[
+\boxed{
+|K_{p,q}|^2
+\sim
+(t_1-t_2)^2
+\log^2\frac pq.
+}
+\]
+
+随后定义连续生成元：
+
+\[
+H(t)
+=
+\sum_pA_p\chi_p(t).
+\]
+
+二阶 Magnus 项为：
+
+\[
+\boxed{
+\Omega_2(T)
+=
+\frac12
+\int_{0<t_2<t_1<T}
+[H(t_1),H(t_2)]
+\,dt_2dt_1.
+}
+\]
+
+展开以后，每个 \((p,q)\) 对应：
+
+\[
+K_{p,q}(t_1,t_2)[A_p,A_q].
+\]
+
+该结构同时要求：
+
+\[
+\Delta t\ne0,
+\qquad
+\Delta\omega\ne0,
+\qquad
+[A_p,A_q]\ne0.
+\]
+
+任一因子为零，二阶 order defect 消失。
+
+下一 Lean 节点应先形式化有限两通道代数核和范数恒等式，不应立即承担积分收敛或 prime-zero domination。
+
+---
+

@@ -1,0 +1,49 @@
+## 4. 一个完全显式的模态截止族
+
+以下初等 Gamma 下界避免在本节另用未经运行的区间 digamma 计算。令 z=alpha+ib，alpha,b>0，并设
+
+\[
+f(x)=\frac{x+\alpha}{(x+\alpha)^2+b^2}.
+\]
+
+实 digamma 部分分式级数及 H_M-log M 的极限给出
+
+\[
+\Re\psi_\Gamma(z)=\lim_{M\to\infty}
+\left(\log M-\sum_{n=0}^{M-1}f(n)\right).
+\]
+
+每个单位区间上用导数积分控制左 Riemann 和误差，有
+
+\[
+\left|\sum_{n=0}^{M-1}f(n)-\int_0^Mf(x)dx\right|
+\le\int_0^M|f'(x)|dx\le\frac1b.
+\]
+
+最后一个不等式来自 f 最多先增后减且最大值不超过 1/(2b)。其总变差在 alpha<=b 时等于 1/b-f(0)，在 alpha>b 时等于 f(0)，均不超过 1/b。计算积分并取极限，得到
+
+\[
+\Re\psi_\Gamma(\alpha+ib)\ge\log|\alpha+ib|-1/b\ge\log b-1/b.
+\]
+
+故对 t>0，
+
+\[
+\boxed{\gamma(t)\ge\log\frac t{2\pi}-\frac2t.}
+\tag{IC3}
+\]
+
+本节的 Riemann 和、总变差及 digamma 极限论证是纸面证明，尚未写入 Lean。
+
+令 D_a=2(sinh(a)-a)。对任意实阈值 tau，选自然数 N 满足
+
+\[
+N>\max\left\{1,\frac{8a}{\pi},
+8a\exp\left(1+\frac{\tau+P_a+D_a+2\pi\epsilon_*}{1-\epsilon_*}\right)\right\}.
+\tag{IC4}
+\]
+
+将 (IC3) 代入 (IC2)，直接得到 beta(a,N)>tau。因此每个尺度均有明确有限 cutoff，使其无限补空间高于指定阈值；也可沿任何无界尺度序列使用这一公式。固定 a 时 beta(a,N) 趋向正无穷。
+
+代价必须保留：这里对素数项用了绝对值和，未利用算术抵消。该阈值可能非常大，不能据此声称已经获得可实际组装的低维全空间证书。
+

@@ -94,7 +94,7 @@ mathlib-reanchor:
 mathlib-reanchor: export REANCHOR_OLD_REPORT := $(value OLD_REPORT)
 
 migrate-atom-context:
-	@dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo --verbosity quiet && dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- migrate-atom-context $(if $(SOURCE),--source "$(SOURCE)",--all) $(if $(filter 1,$(WRITE)),--write,)
+	@dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo --verbosity quiet && dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- migrate-atom-context $(if $(SOURCE),--source "$(SOURCE)",--all) $(if $(SOURCE_REVISION),--source-revision "$(SOURCE_REVISION)",) $(if $(filter 1,$(WRITE)),--write,)
 
 source-dispatch:
 	@args=(); for source in $$DISPATCH_SOURCES; do args+=(--source "$$source"); done; test -z "$$DISPATCH_DEFAULT" || args+=(--default "$$DISPATCH_DEFAULT"); dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- source-dispatch "$${args[@]}"

@@ -81,6 +81,74 @@ public sealed class AtomPointerWriterTests
     }
 
     [Fact]
+    public void IncompatibleHistoricalCutsDoNotBlockTheObservedFreshStream()
+    {
+        const string text = "## First\n\nFirst claim.\n\n## Second\n\nSecond claim.\n\n## Third\n\nThird claim.\n";
+        var f = new DecomposeFixture(text);
+        var middle = text.IndexOf("## Second", StringComparison.Ordinal);
+        var third = text.IndexOf("## Third", StringComparison.Ordinal);
+        var leftText = text[..third];
+        var rightText = text[middle..];
+        f.Add(DecomposeFixture.Entry(leftText), leftText);
+        f.Add(DecomposeFixture.Entry(rightText), rightText);
+        // The whole-source parent would contain both cuts; remove it so these
+        // independent maximal historical spans expose the actual crossing.
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(file => file.Path != DecomposeFixture.PathFor(f.Parent)));
+        var claims = GenericAtomizer.Atomize(Encoding.UTF8.GetBytes(text)).Claims;
+        foreach (var atom in claims)
+        {
+            var body = Encoding.UTF8.GetString(atom.RawBytes.AsSpan());
+            f.Add(DecomposeFixture.Entry(body), body);
+        }
+        var result = AtomContextMigrationCommand.Run("fixture", f.Gateway, ["--source", "probe", "--write"], f.Apply);
+        Assert.True(result.Success, result.Output + result.Error);
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(file => file.Path != "docs/probe.md"));
+        foreach (var atom in claims)
+        {
+            var shown = AtomContextCommand.Run(f.Gateway, ["--atom-id", atom.Fingerprints.RawSha256[7..]]);
+            Assert.True(shown.Success, shown.Error);
+        }
+    }
+
+    [Fact]
+    public void ExplicitHistoricalMigrationUsesOnlyTheNamedImmutableSource()
+    {
+        var f = new DecomposeFixture();
+        var historical = f.Current;
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(file => file.Path != "docs/probe.md"
+            && !file.Path.Contains("/context/", StringComparison.Ordinal)));
+        var revision = new string('a', 40);
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), null, historical,
+            currentReader: () => f.Current);
+        var result = AtomContextMigrationCommand.Run("fixture", gateway,
+            ["--source", "probe", "--source-revision", revision, "--write"], f.Apply);
+        Assert.True(result.Success, result.Output + result.Error);
+        Assert.DoesNotContain(gateway.ScopedCurrentReads.SelectMany(paths => paths),
+            path => path == ":(literal)docs/probe.md");
+        Assert.All(gateway.ScopedRevisionReads, read => Assert.Equal(revision, read.Revision));
+        Assert.Single(gateway.ScopedRevisionReads);
+        Assert.True(AtomContextCommand.Run(f.Gateway, ["--atom-id", f.Parent.AtomId]).Success);
+        var before = f.Current;
+        var repeated = AtomContextMigrationCommand.Run("fixture", gateway,
+            ["--source", "probe", "--source-revision", revision, "--write"], f.Apply);
+        Assert.True(repeated.Success, repeated.Error);
+        Assert.Contains("changed=0", repeated.Output, StringComparison.Ordinal);
+        Assert.Equal(before.Entries.Select(file => (file.Path, Convert.ToHexString(file.Bytes.AsSpan()))),
+            f.Current.Entries.Select(file => (file.Path, Convert.ToHexString(file.Bytes.AsSpan()))));
+    }
+
+    [Fact]
+    public void MigrationCountsPreviouslySavedHistoryAsResolved()
+    {
+        var f = new DecomposeFixture();
+        ParentSettlementTests.ReplaceFile(f, "docs/probe.md", "## Replacement\n\nNew claim.\n");
+        var result = AtomContextMigrationCommand.Run("fixture", f.Gateway, ["--source", "probe", "--write"], f.Apply);
+        Assert.True(result.Success, result.Output + result.Error);
+        Assert.Contains("unresolved=0", result.Output, StringComparison.Ordinal);
+        Assert.True(AtomContextCommand.Run(f.Gateway, ["--atom-id", f.Parent.AtomId]).Success);
+    }
+
+    [Fact]
     public void MigrationSeparatesUnresolvedAtomsFromFailedSources()
     {
         var f = new DecomposeFixture();

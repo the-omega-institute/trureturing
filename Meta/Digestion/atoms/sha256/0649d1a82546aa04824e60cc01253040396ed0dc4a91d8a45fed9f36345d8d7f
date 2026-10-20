@@ -1,0 +1,14 @@
+以下义务先于任何证明写下。每条注明:形式化居所、假设的落地形(结构字段或前件)、按母仓第 3.2 条**预判**的判形(`content` / `bind-only`,落地时以实际判形为准,不得事后改标)、以及母仓第 3.3 条的用途依据。建议落点前缀 `D5/S3/ConceptDynamics/FixedPointPhilosophy/`,精确路径由 `route` 命令产出,不在此手写。全部义务须保持标准三公理闭包;假设 1.3、1.4、1.9、1.12、2.9、4.3、4.4、5.5、7.5 一律作为 `structure` 字段或定理前件,**绝不**作 `axiom`。
+
+- **X-A(账本幺半群与不动集刻画;定理 1.13、1.15)**。有限账本作为 `structure`(节点 `Finset`、边关系、见证函数、边覆盖依赖谓词);容许变换为保持包含与限制的映射;证幺半群封闭与 $\mathrm{Fix}(L)=\mathrm{Frozen}(L)\cup\{\neg\mathrm{Proved}\}$。预判 `content`(须构造「追加 $P$」变换作为逃逸见证);用途 `none`。
+- **X-B(撤销闭包;定理 1.14)**。移除集 $S$ 使结果仍为账本 $\Rightarrow$ $S$ 含后代闭包。预判 `content`(路径上「一在一不在的相邻对」引理是拟议逃逸见证)。
+- **X-C(素生成;定理 2.8)**。以 mathlib `ClosureOperator`(`Mathlib/Order/Closure.lean:60`)或本仓 `D5/S3/ConceptDynamics/Closure/DefinitionClosureOperator` 为 $B$,良基归纳证 $\mathrm{Frozen}\subseteq B(\mathrm{Prime})$。**先库后证收据**:D5 内已有 `ClosureOperator` 用例 5 处(含 `Closure/DefinitionClosureOperator.lean`、`Closure/SourceClosureLaws.lean`),须先查其是否已含「闭包下的良基生成」引理,有则直接引用。预判 `content`(归纳步的「非素则在祖先闭包内」)。
+- **X-D(状态函数良定;定理 2.5、推论 2.6)**。以假设 1.4 为前件证互斥与穷尽。预判 `bind-only`(定义展开);只作 X-A 模块的具名伴随,边:X-A → X-D(前置)。
+- **X-E(保守由诚推出;定理 4.6)**。主张记录为 `List`,`AppendOnly` 复用冻结模块 `TargetChangeSettlementConservation` 的同名定义(不重造);证账平 ∧ 冻结节点消失 ⟹ 存在晚于原主张的新主张。预判 `content`(「最新主张」与「账平」的相互作用是拟议见证)。
+- **X-F(伪造与降级是浮账;定理 4.9、4.14)**。预判 `bind-only`(X-E 定义的直接实例化);作 X-E 伴随。
+- **X-G(美不是真的函数;定理 5.6)**。形式:`claim := ∃ f, ∀ ρ₁ ρ₂, (ρ₁ ≽ ρ₂ ↔ f (s ρ₁) (s ρ₂))`,`result : ¬ claim`,以两节点有限见证反驳。用途依据 **`refutes`**(母仓第 3.3 条:反驳保留,`certified-instance` 只可走 `refutes`);预判 `content`。见证的账本侧读数(45%/55%、κ₂)只作叙事锚,形式化只用抽象两节点模型。
+- **X-H(逻辑不能选题;定理 5.7)**。$s$ 在 $F^{+}$ 上常值 ⟹ 非常值选择不经 $s$ 因子化。预判 `bind-only`;作 X-G 伴随,边:X-G → X-H(同一分离主题)。
+- **X-I(幸存者形状;定理 5.8)**。有限情形:收缩序列稳定于最大不动点(`Finset` 上归纳);一般情形包装 mathlib `OrderHom.gfp`(`Mathlib/Order/FixedPoints.lean:54`)或本仓 `D5/S1/Dynamics/KnasterTarski`。预判有限情形 `content`、一般情形 `rule-11-upstream-wrapper`;须引用使包装成为必要的本卷子句(定理 5.8)。
+- **X-J(先立门后补账;定理 8.6)**。有限步递推模型,证 (b) 的单调递减与 (c) 的停摆。预判 `content`。
+- **X-K(翻译定理;12.2 末)**。`open`;第六轮题目,本轮不派。
+
