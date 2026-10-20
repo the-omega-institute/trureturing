@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:b0e7927d730c7528f45e5c963935b0b8e2ccc3ad168335d81134c424c0c9b54a
   normalized_sha256: sha256:b0e7927d730c7528f45e5c963935b0b8e2ccc3ad168335d81134c424c0c9b54a
 cas_ref: sha256:b0e7927d730c7528f45e5c963935b0b8e2ccc3ad168335d81134c424c0c9b54a
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Zeros/Endpoints/BernoulliBridgeVariance.bernoulli_bridge_variance
+    target_statement_id: sha256:acf3515171050627eccee903208eb3f1d603d5d3ff4cc74a94c0c95259871d6f
 receipts:
   unresolved_subitems: []
