@@ -14,11 +14,11 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/-- Observe success probability as the encoding varies, with both settings fixed. -/
+/-- Observe success probability as the assignment of measurement settings varies. -/
 abbrev signature : Signature where
   Params := Σ n : ℕ, Σ d : ℕ,
-    Σ _ : Fin 2 → Matrix (Fin d) (Fin d) ℂ, Fin n → Fin 2
-  State p := (Fin p.1 → Fin p.2.1) → Fin p.2.1 → ℂ
+    Σ _ : (Fin n → Fin d) → Fin d → ℂ, Fin 2 → Matrix (Fin d) (Fin d) ℂ
+  State p := Fin p.1 → Fin 2
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -27,7 +27,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p ψ => quantumValue p.1 p.2.1 ψ p.2.2.1 p.2.2.2)
+  realize signature (fun _ p s => quantumValue p.1 p.2.1 p.2.2.1 p.2.2.2 s)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -41,7 +41,7 @@ abbrev arena : Arena where
       (U : Fin 2 → Matrix (Fin d) (Fin d) ℂ) (s : Fin n → Fin 2),
       (∀ x, star (ψ x) ⬝ᵥ ψ x = 1) ∧
       (∀ i, U i ∈ Matrix.unitaryGroup (Fin d) ℂ) ∧
-      ∀ S : ClassicalStrategy n d, classicalValue S < r.readout () ⟨n, d, U, s⟩ ψ
+      ∀ S : ClassicalStrategy n d, classicalValue S < r.readout () ⟨n, d, ψ, U⟩ s
 
 private def classicalWitness : ClassicalStrategy 2 2 where
   Λ := Unit
@@ -72,10 +72,11 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨2, 2, (fun _ _ _ => 1), (fun _ => 0)⟩,
-    (fun _ _ => 0), (fun _ _ => 1), ?_⟩
-  change quantumValue 2 2 (fun _ _ => 0) (fun _ _ _ => 1) (fun _ => 0) ≠
-    quantumValue 2 2 (fun _ _ => 1) (fun _ _ _ => 1) (fun _ => 0)
+  refine ⟨⟨2, 2, (fun _ _ => 1), (fun t _ _ => if t = 0 then 0 else 1)⟩,
+    (fun _ => 0), (fun _ => 1), ?_⟩
+  change quantumValue 2 2 (fun _ _ => 1) (fun t _ _ => if t = 0 then 0 else 1)
+      (fun _ => 0) ≠
+    quantumValue 2 2 (fun _ _ => 1) (fun t _ _ => if t = 0 then 0 else 1) (fun _ => 1)
   norm_num [quantumValue, dotProduct, Fin.sum_univ_two]
 
 def source_registration : Registration arena claim where
@@ -107,7 +108,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ p ψ => quantumValue p.1 p.2.1 ψ p.2.2.1 p.2.2.2)
+    (realize signature (fun _ p s => quantumValue p.1 p.2.1 p.2.2.1 p.2.2.2 s)
       (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -119,11 +120,11 @@ def registration :
       owner := `D5.S3.Quantum.Information.RandomAccessCodeTwoSettingAdvantage
       name := `D5.S3.Quantum.Information.RandomAccessCodeTwoSettingAdvantage.claim
       path := #[] }
-    coordinates := #[0, 1, 5, 6]
+    coordinates := #[0, 1, 4, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "arg", "body", "arg", "body",
         "arg", "body", "arg", "arg", "body", "arg"]
-      stateBinder := 4
+      stateBinder := 6
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
