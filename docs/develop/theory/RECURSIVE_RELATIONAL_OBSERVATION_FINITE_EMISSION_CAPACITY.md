@@ -723,3 +723,88 @@ $$
 额外原始接口、计时通道、独立物理传感器、噪声／标定桥、非 Advance 源变动、并发或撤权、变化单位以及虚假来源承诺均需独立条件。这里没有所有接口上的下界、概率模型、平均性能、物理本体、文献穷尽或世界优先主张。本文相对于所给数学供给的新增内容集中于式(22)的求值时序、式(26)的闭式计数、式(31)的一致斜率误差及式(36)–(38)的双向分割和精确平台；精确首差、柱限制、尾双射、历史乘积与旧锐恢复长度按其原范围复用。
 
 ## 追加锚（本行以下为增补区）
+
+## 9. A uniform pathwise reading band and logarithmic distinguishability
+
+**Definition 9.1 (three counts on the same continuation).** Fix an attained proper boundary with the parameters $d,\delta$ of (5), and use exactly the Emit-only observation (10). For $h\ge0$ and each original unread tail $t\in K$, let $R_h(t)$ count the actual new raw Read operations in those $h$ complete Next calls, including forced zeros. If $w\in\mathcal F_h$ is its frontier word, Theorem 2.3 gives $R_h(t)=|w|$. Put
+
+$$
+J=C_h(d,\delta)-1,\qquad I_0(h)=\log_2 C_h(d,\delta),\qquad \phi=\alpha^{-1}.
+$$
+
+Here $I_0$ measures the logarithm of the number of attained observation classes. It presupposes neither a source distribution nor a Shannon entropy interpretation.
+
+**Theorem 9.2 (two-digit band and the fixed-boundary logarithmic limit).** If $J=0$, then $R_h(t)=0$ for every $t$. If $J\ge1$, define
+
+$$
+\ell=\max\{e\ge0:G_e\le J\}.
+$$
+
+Every tail then satisfies the simultaneous bounds
+
+$$
+\max(1,\ell)\le R_h(t)\le\ell+2.
+$$
+
+In particular the raw Read counts of any two tails differ by at most two. Uniformly in all allowed $d,\delta,h,t$,
+
+$$
+R_h(t)=\log_\phi(1+\alpha^dh)+O(1),\qquad
+I_0(h)=\log_2(1+\alpha^dh)+O(1).
+$$
+
+For each fixed $d,\delta$, as integer $h\to\infty$,
+
+$$
+I_0(h)=\log_2 h-d\log_2\phi+o(1),\qquad
+\frac{I_0(h)}h\longrightarrow0.
+$$
+
+Proof. Use the exact cylinder/read correspondence of Theorem 2.3, the node index and length ranges of Theorem 4.2, and the completed-split description of Theorem 5.1. When $J=0$, the only frontier word is empty. When $J\ge1$, the root has split and each frontier word $w$ is nonempty, with
+
+$$
+I(\operatorname{parent}(w))\le J<I(w).
+$$
+
+For every complete nonempty word of length $e$, its index lies in $[G_e,G_{e+1}-1]$. If $e<\ell$, then $I(w)\le G_\ell-1<J$, a contradiction. If the parent has length greater than $\ell$, that parent is nonempty and its index is at least $G_{\ell+1}>J$, also a contradiction. Thus the parent has length at most $\ell$; adding one block increases length by either one or two. These facts give the asserted band, including the special case $\ell=0$ when $J=1$. There is no use of a nonempty-word index bound at the empty root.
+
+For completeness, elementary induction in the Fibonacci recurrence gives
+
+$$
+\phi^e\le G_e\le\phi^{e+1}\quad(e\ge0).
+$$
+
+Consequently, for $J\ge1$,
+
+$$
+\ell\le\log_\phi J<\ell+2,
+\qquad |R_h(t)-\log_\phi J|\le2.
+$$
+
+Write $x=\alpha^dh$. Theorem 5.2 gives
+
+$$
+\frac{1+x}{2}\le C_h<(2+\alpha)(1+x).
+$$
+
+Since $J\ge1$ implies $C_h=J+1\le2J$, we have
+
+$$
+\frac{1+x}{4}\le J<(2+\alpha)(1+x)<4(1+x).
+$$
+
+Thus one uniform bound for the first $O(1)$ error is $2+\log_\phi4$. In the remaining case $J=0$, Theorem 5.2 implies $0\le x<C_h=1$, so $R_h=0$ differs from $\log_\phi(1+x)$ by less than $\log_\phi2$. Taking base-two logarithms of the same capacity bounds proves the second uniform estimate.
+
+Finally, keep $d,\delta$ fixed. The sharper supplier estimate $0<C_h-\alpha^dh<2+\alpha$ yields
+
+$$
+C_h=\alpha^dh\bigl(1+O(h^{-1})\bigr).
+$$
+
+Continuity of the logarithm at one gives the stated expansion; division by $h$ gives the limit. Its $o(1)$ assertion does not let $d$ vary with $h$. $\square$
+
+The application is repo-derived from the cited supplier theorems; inversion of Fibonacci growth and elementary logarithmic estimates are classical intermediates. The same $h$ counts actual Next/Emit/Advance/Return transactions, whereas $R_h$ counts acquired bits and $I_0$ counts distinguishable classes on the restricted observation. In particular the pathwise statement does not replace Read counts by an average over tails or reveal those counts through the interface.
+
+If a probability law on tails is separately supplied and $O_h=v_h(t)$, the classical Shannon bound gives $H(O_h)\le\log_2C_h$: for its nonzero class probabilities $p_j$, concavity of $\log_2$ gives $\sum_jp_j\log_2(1/p_j)\le\log_2\sum_jp_j(1/p_j)\le\log_2C_h$. Equality requires uniform attained-class probabilities. No such law is selected here, so $I_0$ is not asserted to equal an actual entropy or to give a probabilistic error rate. The exact recovery horizons and partitions of Section 6 are reused without a new horizon assertion.
+
+## 追加锚（本行以下为增补区）

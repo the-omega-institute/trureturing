@@ -216,7 +216,21 @@ $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{De
 
 Exchanging the two copies commutes with the tensor square of every unitary.
 
-**Theorem 1.18 (The image is in the identity/swap span).**
+**Theorem 1.18 (Replica swap commutes with a tensor square).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall U \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right) \cdot \operatorname{Matrix.kronecker}\left(U, U\right) = \operatorname{Matrix.kronecker}\left(U, U\right) \cdot \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.replicaSwap_commutes` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Belkin, James Allen, Bryan K. Clark (2025). *Apparent Universal Behavior in 2nd Moments of Random Quantum Circuits*. URL: <https://arxiv.org/abs/2510.23726v2>.
+
+*Commentary.*
+
+The replica swap commutes with the tensor square of every complex matrix.
+
+**Theorem 1.19 (The image is in the identity/swap span).**
 
 $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall v \in (((n \times n) \times (n \times n)) \to \mathbb{C}),\; \forall a \in n,\; \forall b \in n,\; (a \ne b) \Rightarrow (\exists x \in \mathbb{C},\; \exists y \in \mathbb{C},\; \operatorname{Matrix.mulVec}\left(\operatorname{haarAverage}\left(n\right), v\right) = (x) \cdot (\operatorname{Matrix.vec}\left((1: \operatorname{Matrix}\left((n \times n), (n \times n), \mathbb{C}\right))\right)) + (y) \cdot (\operatorname{Matrix.vec}\left(\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\right)))$$
 
@@ -230,7 +244,7 @@ $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{De
 
 Two distinct coordinates suffice for the commutant argument. Each averaged vector is a linear combination of the vectorized identity and replica swap.
 
-**Theorem 1.19 (Pairing against a Hermitian fixed vector).**
+**Theorem 1.20 (Pairing against a Hermitian fixed vector).**
 
 $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] \forall P \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; (\operatorname{Matrix.IsHermitian}\left(P\right)) \Rightarrow (\forall u \in (n \to \mathbb{C}),\; \forall v \in (n \to \mathbb{C}),\; (\operatorname{Matrix.mulVec}\left(P, u\right) = u) \Rightarrow (\operatorname{dotProduct}\left(\operatorname{star}\left(u\right), \operatorname{Matrix.mulVec}\left(P, v\right)\right) = \operatorname{dotProduct}\left(\operatorname{star}\left(u\right), v\right)))$$
 
@@ -244,7 +258,7 @@ $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] \forall P \in \op
 
 Moving a Hermitian matrix to the other side of the pairing preserves every fixed vector.
 
-**Theorem 1.20 (Entries of the replica swap).**
+**Theorem 1.21 (Entries of the replica swap).**
 
 $$\forall n \in Type,\; [\operatorname{DecidableEq}\left(n\right)] \forall r \in (n \times n),\; \forall c \in (n \times n),\; \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\left(r, c\right) = \operatorname{ite}\left(\operatorname{Prod.swap}\left(r\right) = c, 1, 0\right)$$
 
@@ -258,7 +272,7 @@ $$\forall n \in Type,\; [\operatorname{DecidableEq}\left(n\right)] \forall r \in
 
 The permutation matrix has entry one exactly when the row with its coordinates exchanged equals the column.
 
-**Theorem 1.21 (The physical two-site Gram matrix).**
+**Theorem 1.22 (The physical two-site Gram matrix).**
 
 $$\forall q \in \mathbb{N},\; (0 < q) \Rightarrow (\forall b \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)),\; \forall c \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)),\; \operatorname{dotProduct}\left(\operatorname{star}\left(\operatorname{localPermutation}\left(q, b\right)\right), \operatorname{localPermutation}\left(q, c\right)\right) = \operatorname{ite}\left(b.1 = c.1, 1, ((q: \mathbb{C}))^{-1}\right) \cdot \operatorname{ite}\left(b.2 = c.2, 1, ((q: \mathbb{C}))^{-1}\right))$$
 
@@ -270,7 +284,7 @@ $$\forall q \in \mathbb{N},\; (0 < q) \Rightarrow (\forall b \in (\operatorname{
 
 The one-site overlap of equal identity/swap choices is one; distinct choices have overlap 1/q. The two-site overlap is the product of the two one-site overlaps.
 
-**Theorem 1.22 (The identity vector is fixed).**
+**Theorem 1.23 (The identity vector is fixed).**
 
 $$\forall q \in \mathbb{N},\; \operatorname{Matrix.mulVec}\left(\operatorname{haarAverage}\left((\operatorname{Fin}\left(q\right) \times \operatorname{Fin}\left(q\right))\right), \operatorname{localPermutation}\left(q, (0, 0)\right)\right) = \operatorname{localPermutation}\left(q, (0, 0)\right)$$
 
@@ -282,7 +296,7 @@ $$\forall q \in \mathbb{N},\; \operatorname{Matrix.mulVec}\left(\operatorname{ha
 
 The identity commutes with the two-copy unitary action, so the Haar expectation fixes it.
 
-**Theorem 1.23 (The swap vector is fixed).**
+**Theorem 1.24 (The swap vector is fixed).**
 
 $$\forall q \in \mathbb{N},\; \operatorname{Matrix.mulVec}\left(\operatorname{haarAverage}\left((\operatorname{Fin}\left(q\right) \times \operatorname{Fin}\left(q\right))\right), \operatorname{localPermutation}\left(q, (1, 1)\right)\right) = \operatorname{localPermutation}\left(q, (1, 1)\right)$$
 
@@ -294,7 +308,7 @@ $$\forall q \in \mathbb{N},\; \operatorname{Matrix.mulVec}\left(\operatorname{ha
 
 The replica swap commutes with the two-copy unitary action, so the Haar expectation fixes it.
 
-**Theorem 1.24 (The exact mixed local rule).**
+**Theorem 1.25 (The exact mixed local rule).**
 
 $$\forall q \in \mathbb{N},\; (2 \le q) \Rightarrow (\forall b \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)),\; (b.1 \ne b.2) \Rightarrow (\operatorname{Matrix.mulVec}\left(\operatorname{haarAverage}\left((\operatorname{Fin}\left(q\right) \times \operatorname{Fin}\left(q\right))\right), \operatorname{localPermutation}\left(q, b\right)\right) = (\frac{(q: \mathbb{C})}{(q: \mathbb{C})^{2} + 1}) \cdot (\operatorname{localPermutation}\left(q, (0, 0)\right) + \operatorname{localPermutation}\left(q, (1, 1)\right))))$$
 
@@ -328,6 +342,7 @@ Quarter phases force the two-copy commutant to have only identity and swap suppo
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.local_swap_fixed`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.permutationUnitary`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.replicaSwap_apply`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.replicaSwap_commutes`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.sitePermutation`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryBorelSpace`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryCompactSpace`

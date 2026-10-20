@@ -240,7 +240,7 @@ private theorem relation_constant (K : LinearMap.BilinForm F S) (P : Fin n → S
   rw [hrel, map_zero, LinearMap.zero_apply] at hi hj
   exact mul_left_cancel₀ (sub_ne_zero.mpr hneq) (add_right_cancel (hi.symm.trans hj))
 
-private theorem independent_nonzero_trace (K : LinearMap.BilinForm F S)
+theorem independent_nonzero_trace (K : LinearMap.BilinForm F S)
     (tau : S →ₗ[F] F) (P : Fin n → S) (a b : F)
     (hgram : ∀ i j, K (P i) (P j) = if i = j then a ^ 2 else b)
     (htrace : ∀ i, tau (P i) = a) (hneq : a ^ 2 ≠ b) (ha : a ≠ 0) :
