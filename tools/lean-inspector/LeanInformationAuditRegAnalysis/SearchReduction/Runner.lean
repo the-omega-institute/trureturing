@@ -43,7 +43,7 @@ structure Observation where
   presentationEvidence? : Option PresentationEvidence := none
   presentationDetail : String := ""
   reason : String := ""
-  configuration : String := "R_loc/hidden-data-k2/200000"
+  configuration : String := localConfiguration
   catalogCount : Nat := 0
   loadedModules : Array Name := #[]
   catalogExcluded : Array Name := #[]

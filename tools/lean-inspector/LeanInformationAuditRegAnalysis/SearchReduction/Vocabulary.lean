@@ -7,11 +7,11 @@ import Lean.Meta.Constructions.BRecOn
 import Lean.Meta.Structure
 import LeanInformationAuditRegAnalysis.SearchReduction.PinnedDeriving
 
-/-! Prefix reconstruction. Author certificate bodies never enter the search environment. -/
+/-! Prefix reconstruction with kernel-checked inline certificate payloads. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev transportVersion : String := "prefix-reconstruction-independent-units-v1"
+abbrev transportVersion : String := "prefix-reconstruction-checked-certificate-copy-v2"
 abbrev reconstructionBudget : Nat := 200000
 
 private initialize referenceEnvironmentCache : IO.Ref (Option Environment) ← IO.mkRef none
@@ -35,12 +35,6 @@ def referenceHints : IO (Array (Nat × TSyntax `tactic)) := do
   referenceHintCache.set (some hints)
   return hints
 
-structure VocabularyCertificate where
-  owner : Name
-  type : Expr
-  proof : Expr
-  axioms : Array Name
-
 structure TransportContext where
   source : Environment
   target : Name := .anonymous
@@ -48,7 +42,6 @@ structure TransportContext where
   forbidden : NameSet := {}
   visiting : NameSet := {}
   bound : NameSet := {}
-  certificates? : Option (IO.Ref (Array VocabularyCertificate)) := none
   budgetStart : Nat := 0
   searchHeartbeats? : Option (IO.Ref Nat) := none
   budgetExcludedStart : Nat := 0
@@ -72,31 +65,6 @@ def projectionShape (info : ConstantInfo) : Option (Name × Nat) := do
   while body.isLambda do body := body.bindingBody!
   let .proj owner index _ := body | none
   return (owner, index)
-
-/-- Inline source-owned helpers to expose the actual author edge. Only its
-head and the data-slot shape cross into R_loc; no source theorem is installed. -/
-private partial def vocabularySpine (source clean : Environment) (proof : Expr)
-    (seen : NameSet := {}) : MetaM (Option Expr × Array (Option Expr)) := do
-  let proof := proof.consumeMData.headBeta
-  if let .lam name domain body kind := proof then
-    return ← withLocalDecl name kind domain fun x =>
-      vocabularySpine source clean (body.instantiate1 x) seen
-  let head := proof.getAppFn
-  if let .const name levels := head then
-    if !clean.contains name then
-      if seen.contains name then return (none, #[])
-      if let some info := (source.setExporting false).find? name then
-        if let some value := info.value? (allowOpaque := true) then
-          return ← vocabularySpine source clean
-            (mkAppN (value.instantiateLevelParams info.levelParams levels) proof.getAppArgs)
-            (seen.insert name)
-      return (none, #[])
-  else if !head.isFVar then return (none, #[])
-  let scope ← localParameters
-  let data ← proof.getAppArgs.mapM fun arg => do
-    if ← isProof arg then return none
-    return some (← mkLambdaFVars scope arg)
-  return (some (← mkLambdaFVars scope head), data)
 
 private def checkReconstructionBudget (ctx : TransportContext) : MetaM Unit := do
   if let some used := ctx.searchHeartbeats? then
@@ -124,16 +92,6 @@ private structure Inventory where
   base : Environment
   seen : IO.Ref NameSet
   obligations : IO.Ref Nat
-  leafBound : IO.Ref Nat
-
-/-- Structural splitting can only discard leaves from this type-only tree. -/
-private partial def potentialLeaves (type : Expr) : MetaM Nat := do
-  let type ← withReducible <| whnf type
-  if type.isForall then
-    return ← forallTelescopeReducing type fun _ body => potentialLeaves body
-  if type.isAppOfArity ``And 2 || type.isAppOfArity ``Iff 2 then
-    return (← potentialLeaves type.appFn!.appArg!) + (← potentialLeaves type.appArg!)
-  return 1
 
 mutual
   private partial def inventoryConstant (plan : Inventory) (n : Name) : MetaM Unit := do
@@ -167,8 +125,6 @@ mutual
         plan.obligations.modify (· + 1)
         let xs ← localParameters
         let closed ← mkForallFVars xs (← inferType part)
-        let leaves ← potentialLeaves closed
-        plan.leafBound.modify (· + leaves)
         inventoryExpression plan closed
         return .done part
       if let .const n _ := part then inventoryConstant plan n
@@ -183,15 +139,14 @@ def vocabularyBudgetPreflight (source : Environment) (roots : Array Name) : Meta
         initHeartbeats := started, maxHeartbeats := reconstructionBudget * 1000}) do
       let plan : Inventory := {
         source, base := (← getEnv), seen := (← IO.mkRef {}),
-        obligations := (← IO.mkRef 0), leafBound := (← IO.mkRef 0)}
+        obligations := (← IO.mkRef 0)}
       withEnv source do
         for root in roots do inventoryConstant plan root
       -- Includes constructor/recursor forwarding units as well as complete groups.
       let groups := (← plan.seen.get).size
       let obligations ← plan.obligations.get
       let units := 1 + groups + obligations
-      let searchUnits := 2 * obligations + (← plan.leafBound.get) * 3
-      IO.eprintln s!"vocabulary prior budget: semantics=independent_units, roots={roots}, declaration_units={groups}, obligation_units={obligations}, unit_limit={reconstructionBudget * 1000}, prior_work_heartbeats_bound={units * reconstructionBudget * 1000}, preflight_internal_heartbeats={(← IO.getNumHeartbeats) - started}; prior_R_command_units_bound={searchUnits}, prior_total_heartbeats_bound={(units + searchUnits) * reconstructionBudget * 1000}"
+      IO.eprintln s!"vocabulary prior budget: semantics=checked_inline_copy, roots={roots}, declaration_units={groups}, certificate_units={obligations}, unit_limit={reconstructionBudget * 1000}, prior_work_heartbeats_bound={units * reconstructionBudget * 1000}, preflight_internal_heartbeats={(← IO.getNumHeartbeats) - started}, R_command_units=0"
       checkSystem "vocabulary preflight"
   catch ex =>
     if ex.isMaxHeartbeat then
@@ -210,12 +165,12 @@ mutual
       budgetStart := (← IO.getNumHeartbeats),
       searchHeartbeats? := some spent, budgetExcludedStart := (← spent.get)}
     try
-      -- R's independent commands retain their own limits. Their allocation is
-      -- excluded from the separate bound on reconstruction work.
+      -- Completed nested declaration work has its own bound and is excluded
+      -- from the current reconstruction unit's heartbeat allocation.
       withTheReader Core.Context (fun reader => {reader with maxHeartbeats := 0}) do
         checkReconstructionBudget ctx
         -- A referenced global definition owns its telescope. Parameters of the
-        -- expression that mentioned it must never enter its proof obligations.
+        -- expression that mentioned it must never enter its certificate telescope.
         withLCtx {} {} <| transportVocabularyCore ctx n
         checkReconstructionBudget ctx
         let total := (← IO.getNumHeartbeats) - ctx.budgetStart
@@ -275,80 +230,47 @@ mutual
       setReducibilityStatus n .reducible
       IO.eprintln s!"vocabulary rebuilt: {n}"
 
+  /-- Copy a side proof without adding its source theorem to the prefix. Its
+  computational dependencies use the same reconstructed vocabulary. -/
+  partial def copyCertificateExpression (ctx : TransportContext) (e : Expr) : MetaM Expr :=
+    Meta.transform e (pre := fun part => do
+      checkReconstructionBudget ctx
+      if let .const n levels := part then
+        if ctx.bound.contains n || (← getEnv).contains n then return .continue
+        if n == ctx.target then
+          throwError "search.target_in_vocabulary_certificate: {n}"
+        if ctx.visiting.contains n then throwError "search.vocabulary_cycle: {n}"
+        let info ← sourceConstant ctx n
+        if ← withEnv ctx.source (isProp info.type) then
+          let some body := info.value? (allowOpaque := true)
+            | throwError "search.vocabulary_certificate_value_missing: {n}"
+          let copied ← copyCertificateExpression
+            {ctx with visiting := ctx.visiting.insert n}
+            (body.instantiateLevelParams info.levelParams levels)
+          return .done copied
+        transportVocabulary ctx n
+      if let .proj n _ _ := part then transportVocabulary ctx n
+      return .continue)
+
   partial def reconstructExpression (ctx : TransportContext) (owner : Name) (e : Expr) : MetaM Expr :=
     Meta.transform e (pre := fun part => do
       checkReconstructionBudget ctx
       if ← withEnv ctx.source (isProof part) then
-        let some spent := ctx.searchHeartbeats? | throwError "search.missing_unit_counter"
-        let proofCtx := {ctx with
-          budgetStart := (← IO.getNumHeartbeats), budgetExcludedStart := (← spent.get)}
         let type ← withEnv ctx.source (inferType part)
         let xs ← localParameters
         let closed ← mkForallFVars xs type
-        -- Reconstruct only the obligation type; the author's term is never
-        -- passed to R. The current group and the complete T/S set stay absent.
-        let closed ← reconstructExpression proofCtx owner closed
-        let levels := (collectLevelParams {} closed).params.toList
+        let closed ← reconstructExpression ctx owner closed
         if closed.getUsedConstants.any ctx.bound.contains then
-          throwError "search.vocabulary_obligation_unclosed: {owner}: group-local type {closed}"
-        let started ← IO.getNumHeartbeats
-        -- Only the author's application head is supplied. Its arguments are
-        -- abstracted by the same hidden-data reconstructor as graph edges.
-        let clean ← getEnv
-        let (head?, data) ← withEnv ctx.source <| vocabularySpine ctx.source clean part
-        let mut rebuilt ← localRebuild closed head? data [] []
-        if rebuilt.cost == .one then
-          -- The obligation can need direct proof premises of its author edge.
-          -- Price those premises through the same hidden-data graph backend;
-          -- only a zero path assembled from clean leaves is admitted.
-          rebuilt ← withTheReader Core.Context (fun reader => {reader with
-              initHeartbeats := started, maxHeartbeats := localBudget * 1000}) do
-            let mut rebuilt := rebuilt
-            let sourceProof ← withEnv ctx.source <| mkLambdaFVars xs part
-            let raw ← withEnv ctx.source <| extractGraph clean closed sourceProof
-            if raw.complete then
-              let reading ← evaluateGraph raw
-              if let some proof ← assembleZero reading.graph then
-                rebuilt := {cost := .zero, proof? := some proof, detail := "kernel-checked-author-graph"}
-              else
-                rebuilt := {rebuilt with detail := s!"{rebuilt.detail};author-graph:{reprStr reading.baseline}"}
-            checkSystem "vocabulary author graph"
-            return rebuilt
-        let outcome := match rebuilt.cost with
-          | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
-        let used := (← IO.getNumHeartbeats) - started
-        if let some spent := ctx.searchHeartbeats? then spent.modify (· + used)
-        checkReconstructionBudget proofCtx
-        IO.eprintln s!"vocabulary obligation: owner={owner}, type={closed}, outcome={reprStr outcome}, detail={rebuilt.detail}, internal_heartbeats={used}"
-        let some proof := rebuilt.proof?
-          | if outcome == .incomplete .heartbeat then
-              throw <| Exception.error (← getRef) <| .tagged `runtime.maxHeartbeats
-                m!"search.vocabulary_obligation_budget: {owner}: {closed}"
-            let isTarget ← try
-              withEnv ctx.source do
-                let defeq := match Kernel.isDefEq ctx.source {} ctx.targetType closed with
-                  | .ok equal => equal
-                  | .error _ => false
-                return defeq || (← singleSourceConversion ctx.targetType closed).isSome ||
-                  (← certifiedRestatement ctx.targetType closed)
-              catch ex =>
-                if ex.isRuntime || ex.isInterrupt then throw ex
-                pure false
-            if isTarget then throwError "search.target_in_vocabulary_certificate: {owner}: {closed}"
-            throwError "search.vocabulary_obligation_unclosed: {owner}: {closed}: {reprStr outcome}"
+          throwError "search.vocabulary_certificate_unclosed: {owner}: group-local type {closed}"
+        let proof ← copyCertificateExpression ctx (← mkLambdaFVars xs part)
+        let levels := (collectLevelParams (collectLevelParams {} closed) proof).params.toList
         let beforeCheck ← getEnv
         let checked ← checkProof (← mkFreshUserName `_prefixCertificate) levels closed proof
         setEnv beforeCheck
-        if let some certificates := ctx.certificates? then
-          certificates.modify (·.push {owner, type := closed, proof, axioms := checked})
-        unless standardAxioms checked do throwError "search.vocabulary_certificate_axioms: {owner}"
-        IO.eprintln s!"vocabulary certificate checked: owner={owner}, strategy={rebuilt.detail}, axioms={checked}"
-        checkReconstructionBudget proofCtx
-        let own := (← IO.getNumHeartbeats) - proofCtx.budgetStart -
-          ((← spent.get) - proofCtx.budgetExcludedStart)
-        spent.modify (· + own)
-        IO.eprintln s!"vocabulary obligation unit: owner={owner}, own_internal_heartbeats={own}, limit={reconstructionBudget * 1000}"
-        -- Inline the result. No certificate constant becomes a searchable fact.
+        unless standardAxioms checked do
+          throwError "search.vocabulary_certificate_axioms: {owner}"
+        IO.eprintln s!"vocabulary certificate checked: owner={owner}, strategy=inline-author-copy, axioms={checked}"
+        -- This proof is payload, never a free premise for a local probe.
         let args ← xs.filterM fun x => return !(← getFVarLocalDecl x).isLet
         return .done (mkAppN proof args)
       if let .const n _ := part then transportVocabulary ctx n
@@ -452,6 +374,37 @@ mutual
     for n in group do mkBRecOn n
     IO.eprintln s!"vocabulary inductive group rebuilt: {group}"
 end
+
+/-- Inspect T's statement, never its proof. A proof field of a batch-local
+vocabulary value must not become a certificate for T merely by transport. -/
+def checkTargetVocabularyProjections (source base : Environment) (target : Expr) : MetaM Unit := do
+  discard <| Meta.transform target (pre := fun part => do
+    let .const owner _ := part.getAppFn | return .continue
+    if base.contains owner then return .continue
+    let some (.defnInfo _) := (source.setExporting false).find? owner
+      | return .continue
+    let type ← withEnv source <| inferType part
+    if ← withEnv source (isProp type) then return .continue
+    let type ← withEnv source <| withReducible <| whnf type
+    let .const structureName _ := type.getAppFn | return .continue
+    let some (.inductInfo structureInfo) := (source.setExporting false).find? structureName
+      | return .continue
+    let [constructor] := structureInfo.ctors | return .continue
+    let some (.ctorInfo constructorInfo) := (source.setExporting false).find? constructor
+      | return .continue
+    for index in [:constructorInfo.numFields] do
+      let field := Expr.proj structureName index part
+      let fieldType ← withEnv source <| inferType field
+      unless ← withEnv source (isProp fieldType) do continue
+      let closed ← mkForallFVars (← localParameters) fieldType
+      let saved ← saveState
+      let direct ← withReducible <| isDefEq target closed
+      let conversion ← singleSourceConversion target closed
+      let converted := direct || conversion.isSome
+      saved.restore
+      if converted then
+        throwError "search.target_in_vocabulary_certificate: {owner}: field {structureName}.{index}: {closed}"
+    return .continue)
 
 /-- The import and witness-export paths use the same reconstruction kernel. -/
 def copyVocabulary (source : Environment) (n : Name) (visiting : NameSet := {}) : MetaM Unit :=

@@ -76,23 +76,18 @@ structure GraphVertex where
   structureSeed : Bool := false
   structureProof? : Option Expr := none
   origin : Expr := .sort .zero
-  scope : Array Expr := #[]
-  lctx : LocalContext := {}
-  instances : LocalInstances := #[]
-  position : List Nat := []
+  opaqueDecl : Bool := false
+  targetPart : Bool := false
   deriving Inhabited
-
-inductive SpinePlan where
-  | app (head : Expr) (data : Array (Option Expr)) (children : List (Option SpinePlan))
 
 structure GraphEdge where
   conclusion : Nat
   premises : List Nat := []
   cost : EdgeCost := .unknown
   source : Option Name := none
-  head : Option Expr := none
-  plan? : Option SpinePlan := none
-  authorData : Array (Option Expr) := #[]
+  analytic : List Nat := []
+  usedPremises : List Nat := []
+  pairedUsedPremises : List Nat := []
   pairedCost : EdgeCost := .unknown
   visibleCost : EdgeCost := .unknown
   pairedVisibleCost : EdgeCost := .unknown
@@ -114,6 +109,7 @@ structure ProofGraph where
 structure ProbeResult where
   outcome : Run := .incomplete .undecided
   checked : Bool := false
+  premises : List Nat := []
   proof? : Option Expr := none
   detail : String := ""
   deriving Inhabited
@@ -135,6 +131,9 @@ structure GraphReading where
   pairedUsesSeed : Bool := false
   presentationCertified : Bool := false
   presentationComplete : Bool := false
+  witnessEdges : List Nat := []
+  targetPartComplete : Bool := true
+  noAuxiliary : Bool := false
   priorReferenceSuccess : Bool := false
   isolated : Bool := false
   structureChecked : Bool := false
@@ -313,27 +312,15 @@ def intervalDP (graph : ProofGraph) (seeds : List Nat) : Nat → Interval := fun
 def k2Frontier (graph : ProofGraph) : List GraphEdge :=
   graph.edges.filterMap fun edge => Id.run do
     let mut frontier := []
-    let mut children := []
-    let proofs := edge.authorData.toList.countP Option.isNone
-    let headLeaves := edge.premises.take (edge.premises.length - proofs)
-    frontier := headLeaves
-    for p in edge.premises.drop headLeaves.length do
+    for p in edge.premises do
       match (incoming graph p).head? with
-      | some parent =>
-        if let some head := parent.head then
-          frontier := frontier ++ parent.premises
-          children := children ++ [some (.app head parent.authorData [])]
-        else
-          frontier := frontier ++ [p]
-          children := children ++ [none]
-      | none =>
-        frontier := frontier ++ [p]
-        children := children ++ [none]
+      | some parent => frontier := frontier ++ parent.premises
+      | none => frontier := frontier ++ [p]
+    frontier := frontier.eraseDups
     if frontier == edge.premises then return none
-    let plan? := edge.head.map (fun head => SpinePlan.app head edge.authorData children)
     return some {
-      conclusion := edge.conclusion, premises := frontier, plan?, window := 2,
-      detail := "two-layer-frontier"}
+      conclusion := edge.conclusion, premises := frontier, window := 2,
+      source := edge.source, detail := "two-layer-declaration-frontier"}
 
 def graphInterval (graph : ProofGraph) (seeds : List Nat) : Interval :=
   intervalDP graph seeds graph.root
@@ -354,7 +341,8 @@ def closureOf (i : Interval) : Closure :=
 def classifyGraph (reading : GraphReading) : Verdict :=
   if reading.presentationCertified || reading.priorReferenceSuccess ||
       upperIsZero reading.baseline then .bindOnly
-  else if reading.graph.complete &&
+  else if reading.graph.complete && reading.targetPartComplete &&
+      !reading.noAuxiliary && !reading.witnessEdges.isEmpty &&
       reading.graph.edges.all (fun e => e.cost != .unknown && e.pairedCost != .unknown) && reading.presentationComplete && reading.isolated && reading.structureChecked &&
       reading.structureClean && finite reading.baseline.lower &&
       finite reading.baseline.upper && finite reading.paired.lower &&

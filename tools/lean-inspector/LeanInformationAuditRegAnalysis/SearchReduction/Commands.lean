@@ -67,17 +67,24 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
   ("selected_seeds", toJson r.selectedSeeds),
   ("B_used", toJson (r.graph.vertices.filter (·.seed) |>.map fun v =>
     Json.mkObj [("id", toJson v.id), ("constant", toJson (v.origin.constName?.map Name.toString)),
-      ("scoped", toJson (!v.scope.isEmpty))])),
+      ("opaque", toJson v.opaqueDecl)])),
   ("c_histogram", Json.mkObj (([EdgeCost.zero, .one, .unknown]).map fun c =>
     (reprStr c, toJson (r.graph.edges.filter (·.cost == c)).length))),
   ("priced_edges", toJson (r.graph.edges.map fun edge => Json.mkObj [
     ("conclusion", toJson edge.conclusion), ("premises", toJson edge.premises),
     ("head", toJson (edge.source.map Name.toString)), ("window", toJson edge.window),
-    ("hidden_data_positions", toJson (edge.authorData.toList.zipIdx.filterMap
-      (fun (data, index) => if data.isSome then some index else none))),
+    ("analytic_premises", toJson edge.analytic),
+    ("synthetic_premises", toJson (edge.premises.filter fun p => !edge.analytic.contains p)),
+    ("used_premises", toJson edge.usedPremises),
+    ("paired_used_premises", toJson edge.pairedUsedPremises),
     ("shared_data", toJson edge.sharedData?),
     ("cost", toJson (reprStr edge.cost)), ("paired_cost", toJson (reprStr edge.pairedCost)),
     ("detail", toJson edge.detail)])),
+  ("witness_edges", toJson r.witnessEdges),
+  ("no_auxiliary", toJson r.noAuxiliary),
+  ("opaque_declarations", toJson (r.graph.vertices.filter (·.opaqueDecl)).length),
+  ("target_part_complete", toJson r.targetPartComplete),
+  ("d_cut", intervalJson r.baseline), ("d_given", intervalJson r.baselineVisible),
   ("paired_uses_seed", toJson r.pairedUsesSeed),
   ("verdict", toJson (reprStr (classifyGraph r))),
   ("closure", toJson ((classifyClosure r).map fun c =>
@@ -85,7 +92,7 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
 
 /-- A human-readable projection. No code reads it back for classification. -/
 def observationJson (r : Observation) (baselineCommit : String := "") : Json := Json.mkObj [
-  ("reference", toJson "R_loc"), ("configuration", toJson r.configuration),
+  ("reference", toJson "R_loc-decl"), ("configuration", toJson r.configuration),
   ("scope", toJson r.scope), ("B_load_count", toJson r.loadedModules.size),
   ("B0_count", toJson r.catalogCount), ("B_load_subset_B0", toJson r.catalogVerified),
   ("B_load", toJson (r.loadedModules.map Name.toString)),
@@ -417,13 +424,13 @@ syntax (name := searchReductionCatalogCmd) "#search_reduction_catalog " str : co
 
 syntax (name := searchReductionConfigCmd) "#search_reduction_config" : command
 @[command_elab searchReductionConfigCmd] unsafe def elabSearchReductionConfig : CommandElab := fun _ => do
-  logInfo (Json.mkObj [("version", toJson "R_loc"), ("maxHeartbeats", toJson localBudget),
+  logInfo (Json.mkObj [("version", toJson "R_loc-decl"), ("maxHeartbeats", toJson localBudget),
     ("transport", toJson transportVersion), ("reconstructionMaxHeartbeats", toJson reconstructionBudget),
     ("reconstructionBudgetSemantics", toJson "independent_units"),
     ("pinnedDeriving", toJson (pinnedDerivingClasses.map Name.toString)),
-    ("configuration", toJson "R_loc/hidden-data-k2/200000"),
+    ("configuration", toJson localConfiguration),
     ("lean", toJson Lean.versionString), ("mathlib", toJson mathlibRevision),
-    ("k", toJson (2 : Nat)), ("graphCapacity", toJson graphCapacity),
-    ("strategies", toJson (["intro", "assumption", "rfl", "And/Iff/Exists/Subtype", "ordered-apply-depth2", "simp-only-direct-eq-iff/no-simprocs", "omega/no-mvars"] : List String))]).compress
+    ("k", toJson (2 : Nat)), ("graphUnit", toJson "live-declaration"),
+    ("strategies", toJson (["intro", "assumption", "rfl", "And/Iff/Exists/Subtype", "ordered-apply-depth2", "simp-only-direct-eq-iff/no-simprocs", "omega/no-mvars", "ring", "ring_nf", "linarith-only-direct", "positivity", "norm_num1", "decide/no-quantifiers"] : List String))]).compress
 
 end LeanInformationAudit.SearchReduction

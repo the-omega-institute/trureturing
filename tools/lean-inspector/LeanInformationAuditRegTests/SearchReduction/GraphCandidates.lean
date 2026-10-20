@@ -1,4 +1,5 @@
 import Lean
+import Lean.Elab.Tactic.Omega
 
 namespace LeanInformationAudit.Tests.SearchReduction.GraphCandidates
 
@@ -14,6 +15,19 @@ theorem squareFact : (42 : Nat) * 42 = 1764 := rfl
 theorem trueFact : True := True.intro
 
 theorem arithmeticFact : (1 : Nat) + 1 = 2 := rfl
+
+theorem squareVia : ∃ n : Nat, n * n = 1764 := ⟨42, squareFact⟩
+
+theorem secondSquareFact : (43 : Nat) * 43 = 1849 := rfl
+
+theorem secondWitness : ∃ m : Nat, m * m = 1849 := ⟨43, secondSquareFact⟩
+
+theorem twoLayerVia : ∃ n : Nat, n * n = 1764 ∧ ∃ m : Nat, m * m = 1849 :=
+  ⟨42, squareFact, secondWitness⟩
+
+theorem routineHelper (n : Nat) : n < n + 1 := by omega
+
+theorem routineVia (n : Nat) : n < n + 1 := routineHelper n
 
 theorem square : ∃ n : Nat, n * n = 1764 := ⟨42, rfl⟩
 

@@ -152,13 +152,12 @@ private def prepare (source base : Environment) (request : Request)
     unless ← withEnv source (isProp target.type) do
       throwError "search.target_not_proposition: {request.target}"
     let forbidden := request.additions.foldl (fun ns n => ns.insert n) (({} : NameSet).insert request.target)
-    let certificates ← IO.mkRef #[]
     let regenerated ← IO.mkRef ({} : NameSet)
     let searchHeartbeats ← IO.mkRef 0
     let budgetStart ← IO.getNumHeartbeats
     let transport : TransportContext := {
       source, target := request.target, targetType := target.type, forbidden,
-      certificates? := some certificates, regenerated? := some regenerated, budgetStart, searchHeartbeats? := some searchHeartbeats}
+      regenerated? := some regenerated, budgetStart, searchHeartbeats? := some searchHeartbeats}
     let mut roots := target.type.getUsedConstants
     for n in request.additions do
       if let some info := (source.setExporting false).find? n then
@@ -171,6 +170,7 @@ private def prepare (source base : Environment) (request : Request)
     for n in request.additions do
       if let some info := (source.setExporting false).find? n then
         for dep in info.type.getUsedConstants do transportVocabulary transport dep
+    checkTargetVocabularyProjections source base target.type
     checkVocabularyClean source base (← regenerated.get)
     let accounted ← searchHeartbeats.get
     let excluded := preflightUsed + accounted
@@ -192,17 +192,7 @@ private def prepare (source base : Environment) (request : Request)
             if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
             for n in request.additions do
               copyStructure source request.target target.type n index
-      let mut targetCertificate := none
-      for certificate in ← certificates.get do
-        if let some conversion ← singleSourceConversion target.type certificate.type then
-          let proof := mkApp conversion certificate.proof
-          let beforeCheck ← getEnv
-          let axioms ← checkProof (← mkFreshUserName `_vocabularyTarget) target.levelParams target.type proof
-          setEnv beforeCheck
-          targetCertificate := some {
-            strategy := "vocabulary/target-certificate",
-            outcome := .found, proof? := some proof, axioms}
-      return (← getEnv, target, targetCertificate)
+      return (← getEnv, target, none)
   try
     let context : Core.Context := {
       fileName := "<R_v1 isolation>", fileMap := default, options := options,
@@ -299,15 +289,12 @@ private unsafe def runCore (source base : Environment) (request : Request) : IO 
         structureReason := reason
         structureFailure := some failure
     let work : CoreM Observation := MetaM.run' do
-      let some proof := target.value? (allowOpaque := true)
-        | return unknown "graph.missing_target_body" .missing
-      let mut added := #[]
-      if structureChecked then
-        for name in request.additions do
-          let info ← sourceInfo source name
-          added := added.push (info.type, mkConst name (info.levelParams.map Level.param))
-      let graph ← withEnv source <| extractGraph base target.type proof added
-      let reading ← withEnv clean <| evaluateGraph graph
+      let added := if structureChecked then request.additions else #[]
+      let graph ← withEnv source <| extractGraph base request.target added
+      for v in graph.vertices do
+        for dep in v.type.getUsedConstants do copyVocabulary source dep
+      let graphEnv ← getEnv
+      let reading ← withEnv graphEnv <| evaluateGraph graph
       let baselineProof? ← if upperIsZero reading.baseline then
         withEnv clean <| assembleZero reading.graph else pure none
       let pairedProof? ← if upperIsZero reading.paired then
