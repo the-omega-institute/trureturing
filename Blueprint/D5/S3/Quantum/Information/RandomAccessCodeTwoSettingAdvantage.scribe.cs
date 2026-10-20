@@ -122,7 +122,10 @@ internal sealed class RandomAccessCodeTwoSettingAdvantageDocument : IScribeDocum
                             + "divided by n d^n, while all other word scores are preserved. "
                             + "The resulting two-setting quantum value exceeds C(n,d) and "
                             + "hence the value of every classical strategy."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ambainis-2024-random-access-code-two-setting-advantage"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula, string prose) =>
