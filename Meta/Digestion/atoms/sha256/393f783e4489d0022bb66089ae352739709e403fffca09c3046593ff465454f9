@@ -1,0 +1,27 @@
+**推论 4.5（阶段参照的严格损失与非恒值窗口）。** 在定义 4.1 的同一初始树域上，若增加实际阶段 $s$ 的观察，则共同预算的无噪首次失效阈值为 $K_{k,\ell}$。隐藏该阶段参照严格降低首次失效预算的充要条件是
+
+$$
+\boxed{\quad G_{k,\ell,d}<K_{k,\ell}
+\quad\Longleftrightarrow\quad\max(k,d)\le\ell+1.\quad}
+\tag{4.20}
+$$
+
+联合目标在 $H<N_k$ 时恒为零，对所有 $E\ge0$ 均可统一恢复；在 $H\ge N_k$ 时非恒值。存在非恒值且可统一无噪恢复的共同预算，当且仅当 $k\le\ell+1$ 且 $d>k$。固定 $\ell,k$ 时，阶段差 $d$ 的完整零噪声窗口为
+
+$$
+\boxed{
+\begin{array}{ll}
+k\le\ell+1,\ 1\le d\le k:
+ &G=N_k,\quad\text{不存在非恒值恢复预算};\\
+k\le\ell+1,\ k<d\le\ell+1:
+ &G=N_d,\quad N_k\le H<N_d;\\
+k\le\ell+1,\ d\ge\ell+2:
+ &G=K_{k,\ell},\quad N_k\le H<K_{k,\ell};\\
+k\ge\ell+2,\ d\ge1:
+ &G=N_k,\quad\text{不存在非恒值恢复预算}.
+\end{array}}
+\tag{4.21}
+$$
+
+因此 $d=1$ 对每个 $k\ge1$ 都使最早许可来源在隐藏阶段下已不能统一判定。$G$ 对固定 $\ell,k$ 随 $d$ 非减；当 $k\le\ell+1$ 时，它在 $d\ge\ell+2$ 达到并保持已知阶段的阈值。这些是替换阶段差的陈述；$d$ 只计 $3d$ 次替换的差，不给物理时钟、实际流逝时间或逆执行解释。
+
