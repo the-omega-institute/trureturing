@@ -110,18 +110,39 @@ private theorem twisted_eigenProj (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
     rw [hroot, ← AddChar.map_nsmul_eq_pow]
     simp
   classical
-  simp only [eigenProj, Matrix.smul_apply, smul_eq_mul, Matrix.sum_apply,
-    twistedShift_pow p u hu, hphase]
+  rw [eigenProj.eq_1]
+  let T : Matrix (ZMod p) (ZMod p) ℂ := twistedShift p u
+  have hT : T = twistedShift p u := rfl
+  rw [← hT]
+  have hpow (m : Fin p) :
+      T ^ m.val = fun i j =>
+        if i = j + (m.val : ZMod p) then u i * star (u j) else 0 := by
+    rw [hT]
+    exact funext (fun i => funext (fun j => twistedShift_pow p u hu m.val i j))
+  simp_rw [hpow]
+  simp only [Matrix.smul_apply, Pi.smul_apply, smul_eq_mul, Matrix.sum_apply]
+  simp only [hphase]
+  change (p : ℂ)⁻¹ * (∑ m : Fin p,
+    ZMod.stdAddChar (-(m.val : ZMod p) * a) *
+      (if x = y + (m.val : ZMod p) then u x * star (u y) else 0)) = _
   have hs :
       (∑ m : Fin p, ZMod.stdAddChar (-(m.val : ZMod p) * a) *
         (if x = y + (m.val : ZMod p) then u x * star (u y) else 0)) =
         ZMod.stdAddChar (-a * (x - y)) * (u x * star (u y)) := by
-    simp_rw [mul_ite, mul_zero]
     have hcast (m : Fin p) : (ZMod.finEquiv p).toEquiv m = (m.val : ZMod p) := by
       cases p with
       | zero => exact Fin.elim0 m
       | succ n => exact (ZMod.natCast_zmod_val (n := n + 1) m).symm
-    simp_rw [← hcast]
+    have hsum :
+        (∑ m : Fin p, ZMod.stdAddChar (-(m.val : ZMod p) * a) *
+          (if x = y + (m.val : ZMod p) then u x * star (u y) else 0)) =
+          ∑ m : Fin p, (fun m : ZMod p => if x = y + m then
+              ZMod.stdAddChar (-m * a) * (u x * star (u y)) else 0)
+            ((ZMod.finEquiv p).toEquiv m) := by
+      apply Finset.sum_congr rfl
+      intro m hm
+      rw [hcast m, mul_ite, mul_zero]
+    rw [hsum]
     rw [(ZMod.finEquiv p).toEquiv.sum_comp (fun m => if x = y + m then
       ZMod.stdAddChar (-m * a) * (u x * star (u y)) else 0)]
     have he (m : ZMod p) : x = y + m ↔ m = x - y := by
@@ -148,7 +169,8 @@ private theorem twisted_eigenProj_pure (p : ℕ) [Fact p.Prime] (u : ZMod p → 
         (by rw [ringChar.eq (ZMod p) p]; exact (Fact.out : p.Prime).pos) t)
   ext x y
   rw [twisted_eigenProj p u hu]
-  simp only [pureProj, rankOneDensity, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
+  rw [pureProj.eq_1]
+  simp only [rankOneDensity, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
     star_mul, hstar, smul_eq_mul]
   rw [show -a * (x - y) = -a * x + -(-a * y) by ring,
     AddChar.map_add_eq_mul]
@@ -157,7 +179,8 @@ private theorem twisted_eigenProj_pure (p : ℕ) [Fact p.Prime] (u : ZMod p → 
 private theorem pure_trace (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
     (hu : ∀ x, u x * star (u x) = 1) : Matrix.trace (pureProj p u) = 1 := by
   have hp : (p : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Fact.out : p.Prime).ne_zero
-  simp only [pureProj, rankOneDensity, Matrix.trace_smul, Matrix.trace_vecMulVec, dotProduct,
+  rw [pureProj.eq_1]
+  simp only [rankOneDensity, Matrix.trace_smul, Matrix.trace_vecMulVec, dotProduct,
     Pi.star_apply, hu, Finset.sum_const, Finset.card_univ, ZMod.card,
     nsmul_eq_mul, mul_one, smul_eq_mul, inv_mul_cancel₀ hp]
 
@@ -167,7 +190,8 @@ private theorem pure_idem (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
   have hn : star u ⬝ᵥ u = (p : ℂ) := by
     simp only [dotProduct, Pi.star_apply, mul_comm, hu, Finset.sum_const,
       Finset.card_univ, ZMod.card, nsmul_eq_mul, mul_one]
-  simp only [pureProj, rankOneDensity, Matrix.smul_mul, Matrix.mul_smul,
+  unfold pureProj
+  simp only [rankOneDensity, Matrix.smul_mul, Matrix.mul_smul,
     Matrix.vecMulVec_mul_vecMulVec, hn, Matrix.vecMulVec_smul, smul_smul]
   congr 1
   field_simp
@@ -175,7 +199,7 @@ private theorem pure_idem (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
 private theorem pure_trace_mul (p : ℕ) [Fact p.Prime] (u v : ZMod p → ℂ) :
     Matrix.trace (pureProj p u * pureProj p v) =
       (p : ℂ)⁻¹ ^ 2 * (star u ⬝ᵥ v) * (star v ⬝ᵥ u) := by
-  rw [pureProj, pureProj, Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul,
+  rw [pureProj.eq_1, pureProj.eq_1, Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul,
     Matrix.trace_smul]
   have hover := D5.S3.Observer.BornReduction.rank_one_pure_state_modulus_square_reduction
     (fun _ : Unit => rankOneDensity u) (rankOneDensity v) () u v rfl rfl
@@ -200,7 +224,8 @@ private theorem pure_mul_zero (p : ℕ) [Fact p.Prime] (u v : ZMod p → ℂ)
     have hz := congrFun h 0
     simp only [Pi.star_apply, Pi.zero_apply] at hz
     simp [hz] at hx
-  simp only [pureProj, rankOneDensity, Matrix.smul_mul, Matrix.mul_smul,
+  unfold pureProj
+  simp only [rankOneDensity, Matrix.smul_mul, Matrix.mul_smul,
     Matrix.vecMulVec_mul_vecMulVec, smul_eq_zero, inv_eq_zero, hp,
     false_or, Matrix.vecMulVec_eq_zero, hun, hvn, or_false]
 
@@ -232,9 +257,10 @@ private theorem weyl_chirp (p : ℕ) [Fact p.Prime] (hp : p ≠ 2) (j c : ZMod p
     exact Ring.two_ne_zero (by simpa only [ZMod.ringChar_zmod_n] using hp)
   have hi : (2 : ZMod p) * (2 : ZMod p)⁻¹ = 1 := mul_inv_cancel₀ htwo
   ext x y
+  unfold twistedShift chirp
   simp only [hclock, Matrix.mul_diagonal, Matrix.smul_apply, smul_eq_mul,
     D5.S3.Observer.WindowRegister.shiftMatrix, Matrix.circulant_apply,
-    hphase, twistedShift, chirp, hstar]
+    hphase, hstar]
   have he : x - y = 1 ↔ x = y + 1 := sub_eq_iff_eq_add'
   simp only [he]
   split_ifs with h
@@ -286,11 +312,13 @@ private theorem chirp_eigenProj (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
     eigenProj p (windowRoot p ^ c.val • (shiftMatrix p * clockMatrix p ^ j.val)) a =
       pureProj p (chirp p j (c - a)) := by
   rw [weyl_chirp p hp, twisted_eigenProj_pure p _ (fun x => by
-    simp only [chirp, ZMod.stdAddChar_apply, Complex.star_def, Complex.mul_conj,
+      unfold chirp
+      simp only [ZMod.stdAddChar_apply, Complex.star_def, Complex.mul_conj,
       Circle.normSq_coe, Complex.ofReal_one])]
   congr 1
   funext x
-  simp only [chirp, ← AddChar.map_add_eq_mul]
+  unfold chirp
+  simp only [← AddChar.map_add_eq_mul]
   congr 1
   ring
 
@@ -305,7 +333,8 @@ private theorem chirp_overlap (p : ℕ) [Fact p.Prime] (j c l d : ZMod p) :
         (by rw [ringChar.eq (ZMod p) p]; exact (Fact.out : p.Prime).pos) t)
   apply Finset.sum_congr rfl
   intro x _
-  simp only [Pi.star_apply, chirp, hstar, ← AddChar.map_add_eq_mul]
+  unfold chirp
+  simp only [Pi.star_apply, hstar, ← AddChar.map_add_eq_mul]
   congr 1
   ring
 
@@ -317,7 +346,8 @@ private theorem chirp_overlap_energy (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
   classical
   by_cases hj : j = l
   · subst l
-    simp only [chirp_overlap, sub_self, zero_mul, sub_zero,
+    rw [chirp_overlap, chirp_overlap]
+    simp only [sub_self, zero_mul, sub_zero,
       zero_add, char_sum, sub_eq_zero, ite_true]
     by_cases hc : c = d
     · simp [hc]; ring
@@ -348,7 +378,9 @@ private theorem alice_unit (p : ℕ) [Fact p.Prime] (j a x : ZMod p) :
     aliceVec p j a x * star (aliceVec p j a x) = 1 := by
   by_cases hp : p = 2
   · subst p
-    simp only [aliceVec, ite_true, star_mul]
+    unfold aliceVec
+    rw [if_pos rfl]
+    simp only [star_mul]
     have hx : (if j = 0 then 1 else Complex.I ^ x.val) *
         star (if j = 0 then 1 else Complex.I ^ x.val) = 1 := by
       split_ifs
@@ -362,15 +394,23 @@ private theorem alice_unit (p : ℕ) [Fact p.Prime] (j a x : ZMod p) :
         rw [hx]
         simp only [ZMod.stdAddChar_apply, Complex.star_def, Complex.mul_conj,
           Circle.normSq_coe, Complex.ofReal_one, mul_one]
-  · simp only [aliceVec, ite_eq_right hp, chirp, ZMod.stdAddChar_apply, Complex.star_def,
-      Complex.mul_conj, Circle.normSq_coe, Complex.ofReal_one]
+  · unfold aliceVec
+    rw [if_neg hp]
+    unfold chirp
+    simp only [ZMod.stdAddChar_apply, Complex.star_def, Complex.mul_conj,
+      Circle.normSq_coe, Complex.ofReal_one]
 
 private theorem bob_unit (p : ℕ) [Fact p.Prime] (k b x : ZMod p) :
     bobVec p k b x * star (bobVec p k b x) = 1 := by
   by_cases hp : p = 2
-  · simpa only [bobVec, ite_eq_left hp] using alice_unit p k b x
-  · simp only [bobVec, ite_eq_right hp, chirp, ZMod.stdAddChar_apply, Complex.star_def,
-      Complex.mul_conj, Circle.normSq_coe, Complex.ofReal_one]
+  · unfold bobVec
+    rw [if_pos hp]
+    exact alice_unit p k b x
+  · unfold bobVec
+    rw [if_neg hp]
+    unfold chirp
+    simp only [ZMod.stdAddChar_apply, Complex.star_def, Complex.mul_conj,
+      Circle.normSq_coe, Complex.ofReal_one]
 
 private theorem alice_pure (p : ℕ) [Fact p.Prime] (j a : ZMod p) :
     eigenProj p (aliceOp p j) a = pureProj p (aliceVec p j a) := by
@@ -393,24 +433,44 @@ private theorem alice_pure (p : ℕ) [Fact p.Prime] (j a : ZMod p) :
           ∀ z : ZMod 2, z = 0 ∨ z = 1) z
       rcases hcases j with rfl | rfl <;>
         rcases hcases x with rfl | rfl <;>
-        rcases hcases y with rfl | rfl <;>
-        norm_num [aliceOp, shiftMatrix, clockMatrix, twistedShift, u,
+        rcases hcases y with rfl | rfl
+      all_goals unfold aliceOp twistedShift
+      all_goals norm_num [shiftMatrix, clockMatrix, u,
           ZMod.val_zero, ZMod.val_one_eq_one_mod,
           show (-1 : ZMod 2) = 1 by rfl, show (2 : ZMod 2) = 0 by rfl,
-          Matrix.circulant_apply, Matrix.mul_diagonal, hroot_two] <;>
-        simp [show (-1 : ZMod 2) = 1 by rfl, show (2 : ZMod 2) = 0 by rfl]
+          Matrix.circulant_apply, Matrix.mul_diagonal, hroot_two]
+      all_goals simp [show (-1 : ZMod 2) = 1 by rfl, show (2 : ZMod 2) = 0 by rfl]
     rw [hm, twisted_eigenProj_pure 2 u hu]
     rfl
-  · simpa only [aliceOp, aliceVec, ite_eq_right hp] using
-      chirp_eigenProj p hp j (j * (j + 1)) a
+  · have hop : aliceOp p j =
+        windowRoot p ^ (j * (j + 1)).val •
+          (shiftMatrix p * clockMatrix p ^ j.val) := by
+      rw [aliceOp.eq_1, if_neg hp]
+    have hvec : aliceVec p j a = chirp p j (j * (j + 1) - a) := by
+      rw [aliceVec.eq_1, if_neg hp]
+    rw [hop, hvec]
+    exact chirp_eigenProj p hp j (j * (j + 1)) a
 
 private theorem bob_pure (p : ℕ) [Fact p.Prime] (k b : ZMod p) :
     eigenProj p (bobOp p k) b = pureProj p (bobVec p k b) := by
   by_cases hp : p = 2
-  · simpa only [bobOp, aliceOp, bobVec, ite_eq_left hp] using alice_pure p k b
-  · simpa only [bobOp, bobVec, ite_eq_right hp] using
-      chirp_eigenProj p hp ((2 : ZMod p)⁻¹ * k)
-        ((2 : ZMod p)⁻¹ ^ 2 * (k ^ 2 + 2 * k)) b
+  · have hop : bobOp p k = aliceOp p k := by
+      rw [bobOp.eq_1, aliceOp.eq_1, if_pos hp, if_pos hp]
+    have hvec : bobVec p k b = aliceVec p k b := by
+      rw [bobVec.eq_1, if_pos hp]
+    rw [hop, hvec]
+    exact alice_pure p k b
+  · have hop : bobOp p k =
+        windowRoot p ^ ((2 : ZMod p)⁻¹ ^ 2 * (k ^ 2 + 2 * k)).val •
+          (shiftMatrix p * clockMatrix p ^ ((2 : ZMod p)⁻¹ * k).val) := by
+      rw [bobOp.eq_1, if_neg hp]
+    have hvec : bobVec p k b =
+        chirp p ((2 : ZMod p)⁻¹ * k)
+          ((2 : ZMod p)⁻¹ ^ 2 * (k ^ 2 + 2 * k) - b) := by
+      rw [bobVec.eq_1, if_neg hp]
+    rw [hop, hvec]
+    exact chirp_eigenProj p hp ((2 : ZMod p)⁻¹ * k)
+      ((2 : ZMod p)⁻¹ ^ 2 * (k ^ 2 + 2 * k)) b
 
 /-- Equal settings give orthogonal outcomes; unequal settings are mutually unbiased. -/
 private theorem alice_energy (p : ℕ) [Fact p.Prime] (j a l b : ZMod p) :
@@ -448,10 +508,14 @@ private theorem alice_energy (p : ℕ) [Fact p.Prime] (j a l b : ZMod p) :
     rcases hcases j with rfl | rfl <;>
       rcases hcases a with rfl | rfl <;>
       rcases hcases l with rfl | rfl <;>
-      rcases hcases b with rfl | rfl <;>
-      norm_num [aliceVec, hchar_two, ZMod.val_zero,
+      rcases hcases b with rfl | rfl
+    all_goals unfold aliceVec
+    all_goals norm_num [hchar_two, ZMod.val_zero,
         ZMod.val_one_eq_one_mod, Pi.star_apply, Complex.star_def] <;> ring_nf <;> norm_num
-  · simp only [aliceVec, ite_eq_right hp]
+  · have hvec : ∀ (j a : ZMod p), aliceVec p j a = chirp p j (j * (j + 1) - a) := by
+      intro j a
+      rw [aliceVec.eq_1, if_neg hp]
+    rw [hvec j a, hvec l b]
     rw [chirp_overlap_energy p hp]
     by_cases hj : j = l
     · subst l
@@ -464,10 +528,19 @@ private theorem bob_energy (p : ℕ) [Fact p.Prime] (k a l b : ZMod p) :
       if k = l then (if a = b then (p : ℂ) ^ 2 else 0) else p := by
   classical
   by_cases hp : p = 2
-  · simpa only [bobVec, ite_eq_left hp] using alice_energy p k a l b
+  · have hvec : ∀ (k b : ZMod p), bobVec p k b = aliceVec p k b := by
+      intro k b
+      rw [bobVec.eq_1, if_pos hp]
+    rw [hvec k a, hvec l b]
+    exact alice_energy p k a l b
   · have htwo : (2 : ZMod p) ≠ 0 :=
       Ring.two_ne_zero (by simpa only [ZMod.ringChar_zmod_n] using hp)
-    simp only [bobVec, ite_eq_right hp]
+    have hvec : ∀ (k b : ZMod p), bobVec p k b =
+        chirp p ((2 : ZMod p)⁻¹ * k)
+          ((2 : ZMod p)⁻¹ ^ 2 * (k ^ 2 + 2 * k) - b) := by
+      intro k b
+      rw [bobVec.eq_1, if_neg hp]
+    rw [hvec k a, hvec l b]
     rw [chirp_overlap_energy p hp]
     have he : (2 : ZMod p)⁻¹ * k = (2 : ZMod p)⁻¹ * l ↔ k = l :=
       ⟨mul_left_cancel₀ (inv_ne_zero htwo), congrArg ((2 : ZMod p)⁻¹ * ·)⟩
@@ -594,7 +667,7 @@ private theorem kronecker_zero (p : ℕ) [Fact p.Prime]
 private theorem vertex_laws (p : ℕ) [Fact p.Prime]
     (v : ZMod p × ZMod p × ZMod p) :
     Matrix.trace (vertexProj p v) = 1 ∧ vertexProj p v * vertexProj p v = vertexProj p v := by
-  simp only [vertexProj, alice_pure, bob_pure]
+  rw [vertexProj.eq_1, alice_pure, bob_pure]
   constructor
   · rw [Matrix.trace_kronecker, pure_trace p _ (alice_unit p _ _),
       pure_trace p _ (bob_unit p _ _), one_mul]
@@ -606,7 +679,7 @@ private theorem vertex_orth (p : ℕ) [Fact p.Prime]
     vertexProj p v * vertexProj p w = 0 ↔
       (w.1 = v.1 ∧ w.2.2 ≠ v.2.2) ∨
       (w.2.1 = v.2.1 ∧ -w.1 * w.2.1 - w.2.2 ≠ -v.1 * v.2.1 - v.2.2) := by
-  rw [vertexProj, vertexProj, ← Matrix.mul_kronecker_mul, kronecker_zero,
+  rw [vertexProj.eq_1, vertexProj.eq_1, ← Matrix.mul_kronecker_mul, kronecker_zero,
     (alice_overlap p _ _ _ _).2, (bob_overlap p _ _ _ _).2]
   simp only [eq_comm, ne_comm]
 
@@ -626,7 +699,7 @@ private theorem vertex_injective (p : ℕ) [Fact p.Prime] :
   intro v w he
   have ht : (1 : ℂ) = Matrix.trace (vertexProj p v * vertexProj p w) := by
     rw [← he, (vertex_laws p v).2, (vertex_laws p v).1]
-  rw [vertexProj, vertexProj, ← Matrix.mul_kronecker_mul, Matrix.trace_kronecker,
+  rw [vertexProj.eq_1, vertexProj.eq_1, ← Matrix.mul_kronecker_mul, Matrix.trace_kronecker,
     (alice_overlap p _ _ _ _).1, (bob_overlap p _ _ _ _).1] at ht
   by_cases hj : v.1 = w.1
   · by_cases ha : v.2.2 = w.2.2
@@ -654,11 +727,13 @@ theorem result : claim := by
   convert neighbor_count p v using 1
   congr 1
   ext w
-  simp only [Finset.mem_filter, Finset.mem_univ, true_and, vertex_orth]
+  rw [Finset.mem_filter, Finset.mem_filter]
   constructor
-  · exact And.right
   · intro h
-    refine ⟨?_, h⟩
+    exact ⟨Finset.mem_univ _, (vertex_orth p v w).mp h.2.2⟩
+  · intro h
+    refine ⟨Finset.mem_univ _, ?_⟩
+    refine ⟨?_, (vertex_orth p v w).mpr h.2⟩
     rintro rfl
     simp at h
 
