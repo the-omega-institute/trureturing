@@ -1,2 +1,0 @@
-SEARCH_ATOMS_INVALID USAGE: StrataLint search-atoms --source SOURCE_ID_OR_PATH [--source ...] [--text LITERAL] [--state STATE ...] [--limit N] [--selection default-dispatch [--atom-id ID ...]]; atom selectors require default-dispatch selection
-make: *** [search-atoms] Error 2
