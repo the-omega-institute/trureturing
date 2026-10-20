@@ -58,6 +58,7 @@ import D5.S1.Recurrence.Invariants.AbsoluteReciprocalGeometricParity
 import D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity
 import D5.S1.Recurrence.Invariants.AlternatingDyadicReversionModFour
 import D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
+import D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 
 set_option autoImplicit false
 
