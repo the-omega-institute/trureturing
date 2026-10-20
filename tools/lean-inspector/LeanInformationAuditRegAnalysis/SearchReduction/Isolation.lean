@@ -353,7 +353,10 @@ unsafe def run (source : Environment) (request : Request)
         delivery := delivery.push source.header.moduleNames[index.toNat]!
     let catalog ← baselineCatalog request.baselineCommit delivery base
     let result ← runCore source base request
-    let used := if result.graph?.any (·.pairedUsesSeed) then request.additions else #[]
+    let used := request.additions.filter fun name =>
+      result.graph?.any fun reading => reading.selectedSeeds.any fun id =>
+        reading.graph.vertices.any fun vertex => vertex.id == id &&
+          vertex.structureProof?.any (fun proof => proof.getUsedConstants.contains name)
     return {result with
       catalogCount := catalog.eligible.size, loadedModules := catalog.loaded,
       catalogExcluded := catalog.excluded, scope := "B_used/" ++ catalog.scope,

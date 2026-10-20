@@ -4,6 +4,7 @@ import D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeFactivity
 
 /-! Existing frozen direct applications and a local conjunction projection.
 The target modules are absent from the independent baseline imports. -/
+open LeanInformationAudit.SearchReduction
 open LeanInformationAudit.Tests.SearchReduction
 
 #search_reduction D5.S0.Tower.NonPisotVerdict.SubstitutionTowerClause.clause_numerator_vanishes_at_golden

@@ -4,6 +4,7 @@ import LeanInformationAuditRegTests.SearchReduction.PresentationCandidates
 
 /-! Executed, kernel-checked negative calibration and a paired induction test.
 Each command emits a standalone Lean probe under .lake/build/search-reduction. -/
+open LeanInformationAudit.SearchReduction
 open LeanInformationAudit.Tests.SearchReduction
 
 #search_reduction_config

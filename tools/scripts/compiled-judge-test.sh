@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 # isolated compiler probes and are the high-memory part of this library, so
 # compile those modules one at a time before the ordinary aggregate build.
 search_reduction_modules=(
-  Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
+  GraphCandidates GraphModel GraphCalibration Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
   FaultPaths SingleSourceModel PresentationCoverage RawOriginsTests SingleSourceTests
   Calibration Faults RealNegative
 )

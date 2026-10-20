@@ -1,4 +1,5 @@
-import Mathlib.Tactic
+import Mathlib.Tactic.Hint
+import Lean.Meta.LazyDiscrTree
 
 /-! Query-local structural retrieval. Only matching entries survive a scan;
 no full-environment enumeration or index is retained by the production runner. -/

@@ -100,6 +100,7 @@ structure GraphEdge where
   pairedZeroProof : Option Expr := none
   detail : String := ""
   window : Nat := 1
+  sharedData? : Option Bool := none
   deriving Inhabited
 
 structure ProofGraph where

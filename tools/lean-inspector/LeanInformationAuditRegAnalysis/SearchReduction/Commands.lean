@@ -1,3 +1,4 @@
+import Mathlib.Util.SynthesizeUsing
 import LeanInformationAuditRegAnalysis.SearchReduction.Isolation
 
 /-! Compiled Lean probe commands and a print-only JSON projection. -/
@@ -69,6 +70,7 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
     ("head", toJson (edge.source.map Name.toString)), ("window", toJson edge.window),
     ("hidden_data_positions", toJson (edge.authorData.toList.zipIdx.filterMap
       (fun (data, index) => if data.isSome then some index else none))),
+    ("shared_data", toJson edge.sharedData?),
     ("cost", toJson (reprStr edge.cost)), ("paired_cost", toJson (reprStr edge.pairedCost)),
     ("detail", toJson edge.detail)])),
   ("paired_uses_seed", toJson r.pairedUsesSeed),

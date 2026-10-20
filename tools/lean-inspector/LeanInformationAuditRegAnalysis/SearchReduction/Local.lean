@@ -163,7 +163,7 @@ def hideData (head : Expr) (arity : Nat) (visible : Array (Option Expr) := #[]) 
 private partial def replayPlan (plan : SpinePlan) (scope : Array Expr)
     (visible : Bool) (expected : Expr) : MetaM HiddenExpr := do
   let .app head data children := plan
-  let visibleData := data.map (·.map (fun closed => (mkAppN closed scope).headBeta))
+  let visibleData := if visible then data.map (·.map (fun closed => (mkAppN closed scope).headBeta)) else #[]
   let result ← hideData head data.size (if visible then visibleData else #[])
   unless ← withReducible <| isDefEq (← inferType result.skeleton) expected do
     throwError "graph.replay_head_result_mismatch"
@@ -202,15 +202,36 @@ private def tryAssumptions (goal : MVarId) (facts : Array Expr) : MetaM Bool := 
     saved.restore
   return false
 
+private def exactLocal (goal : MVarId) (facts : Array Expr) : MetaM Bool := goal.withContext do
+  for fact in facts do
+    let saved ← saveState
+    if ← withReducible <| isDefEq (← inferType fact) (← goal.getType) then
+      goal.assign fact
+      return true
+    saved.restore
+  return false
+
+private def eliminateLocal (facts : Array Expr) : MetaM (Array Expr) := do
+  let mut result := facts
+  for fact in facts do
+    let type ← withReducible <| whnf (← inferType fact)
+    if type.isAppOfArity ``And 2 then
+      for name in #[``And.left, ``And.right] do result := result.push (← mkAppM name #[fact])
+    else if type.isAppOfArity ``Iff 2 then
+      for name in #[``Iff.mp, ``Iff.mpr] do result := result.push (← mkAppM name #[fact])
+    else if type.isAppOfArity ``Subtype 2 then
+      result := result.push (← mkAppM ``Subtype.property #[fact])
+  return result
+
 /-- Fixed deterministic structural introduction, with no witness enumeration. -/
 private partial def structuralLocal (goal : MVarId) (facts : Array Expr)
     (fuel : Nat := 32) : MetaM Bool := goal.withContext do
   if fuel == 0 then return false
-  if ← tryAssumptions goal facts then return true
   let type ← withReducible <| whnf (← goal.getType)
   if type.isForall then
     let (fvar, next) ← goal.intro1
     return ← structuralLocal next (facts.push (mkFVar fvar)) (fuel - 1)
+  if ← exactLocal goal facts then return true
   let saved ← saveState
   try
     goal.refl
@@ -218,6 +239,8 @@ private partial def structuralLocal (goal : MVarId) (facts : Array Expr)
   catch ex =>
     if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
   saved.restore
+  let facts ← eliminateLocal facts
+  if ← exactLocal goal facts then return true
   let ctor? := if type.isAppOfArity ``And 2 then some ``And.intro
     else if type.isAppOfArity ``Iff 2 then some ``Iff.intro
     else if type.isAppOfArity ``Exists 2 then some ``Exists.intro
@@ -238,7 +261,7 @@ private partial def structuralLocal (goal : MVarId) (facts : Array Expr)
     catch ex =>
       if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
     saved.restore
-  return false
+  return ← tryAssumptions goal facts
 
 private def tacticLocal (goal : MVarId) (facts forbidden : Array Expr)
     (useOmega : Bool) : MetaM Bool := do
@@ -283,6 +306,7 @@ structure LocalResult where
   proof? : Option Expr := none
   detail : String := ""
   hiddenSlots : Nat := 0
+  sharedData? : Option Bool := none
 
 private def withFacts {α : Type} (types : List Expr)
     (action : Array Expr → MetaM α) : MetaM α := do
@@ -295,7 +319,7 @@ private def withFacts {α : Type} (types : List Expr)
 /-- R_loc sees only the conclusion, head, scoped variables, and seed premises.
 Nonseed types enter only after all hidden data has been fixed, to discharge
 exact residual obligations and build the kernel-checked edge certificate. -/
-def localRebuild (target : Expr) (head : Option Expr)
+partial def localRebuild (target : Expr) (head : Option Expr)
     (data : Array (Option Expr)) (seedTypes residualTypes : List Expr)
     (visible := false) (plan? : Option SpinePlan := none) : MetaM LocalResult := do
   let original ← saveState
@@ -316,6 +340,7 @@ def localRebuild (target : Expr) (head : Option Expr)
           goal := next
         goal.withContext do
           let mut slots := #[]
+          let mut sharedData := false
           let mut obligations := #[]
           let plan? := plan?.orElse (fun _ => head.map (fun h => SpinePlan.app h data []))
           if let some plan := plan? then
@@ -324,6 +349,13 @@ def localRebuild (target : Expr) (head : Option Expr)
             let hidden ← withLCtx cleanContext localInstances <|
               replayPlan plan scope visible (← goal.getType)
             slots := hidden.dataSlots
+            for slot in slots do
+              for variableId in ← getMVars slot do
+                let mut occurrences := 0
+                for proof in hidden.proofSlots do
+                  if (← getMVars (← inferType proof)).contains variableId then
+                    occurrences := occurrences + 1
+                if occurrences > 1 then sharedData := true
             unless ← withReducible <| isDefEq (← inferType hidden.skeleton) (← goal.getType) do
               return {cost := .one, detail := "head-result-mismatch"}
             for inst in hidden.instances do
@@ -338,13 +370,24 @@ def localRebuild (target : Expr) (head : Option Expr)
                 if !(← solveLocalGoal proof.mvarId! seeds residuals) then saved.restore
                 if !(← proof.mvarId!.isAssigned) then obligations := obligations.push proof.mvarId!
             for slot in slots do
-              if (← instantiateMVars slot).hasMVar then
-                return {cost := .one, detail := "unresolved-hidden-data", hiddenSlots := slots.size}
+              let value ← instantiateMVars slot
+              if value.hasMVar then
+                let variables ← getMVars value
+                let occurs ← obligations.anyM fun obligation => do
+                  let remaining ← getMVars (← instantiateMVars (← obligation.getType))
+                  return variables.any remaining.contains
+                if occurs then
+                  return {cost := .one, detail := "unresolved-hidden-data", hiddenSlots := slots.size, sharedData? := some sharedData}
+                let type ← instantiateMVars (← inferType slot)
+                let defaultInstance ← synthInstance (← mkAppM ``Inhabited #[type])
+                let defaultValue ← mkAppOptM ``default #[some type, some defaultInstance]
+                unless ← isDefEq slot defaultValue do
+                  return {cost := .unknown, detail := "unconstrained-default-unavailable"}
             for obligation in obligations do
               let type ← instantiateMVars (← obligation.getType)
               let residualGoal ← mkFreshExprMVar type
               unless ← tryAssumptions residualGoal.mvarId! (residuals ++ seeds) do
-                return {cost := .one, detail := "residual-interface-mismatch", hiddenSlots := slots.size}
+                return {cost := .one, detail := "residual-interface-mismatch", hiddenSlots := slots.size, sharedData? := some sharedData}
               obligation.assign (← instantiateMVars residualGoal)
             goal.assign hidden.skeleton
           else
@@ -358,14 +401,17 @@ def localRebuild (target : Expr) (head : Option Expr)
           let proof ← mkLambdaFVars allFacts proof
           let certificateType ← mkForallFVars allFacts target
           checkLocalProof certificateType proof
-          return {cost := .zero, proof? := some proof, detail := "kernel-checked", hiddenSlots := slots.size}
+          return {cost := .zero, proof? := some proof, detail := "kernel-checked", hiddenSlots := slots.size, sharedData? := some sharedData}
     original.restore
+    if result.cost == .one && (head.isSome || plan?.isSome) then
+      let alternate ← localRebuild target none #[] seedTypes residualTypes visible
+      if alternate.cost != .one then return alternate
     return result
   catch ex =>
     original.restore
     let detail ← ex.toMessageData.toString
     if detail == "graph.replay_head_result_mismatch" || detail == "graph.frontier_interface_mismatch" then
-      return {cost := .one, detail := "normal-unification-exhaustion"}
+      return ← localRebuild target none #[] seedTypes residualTypes visible
     return {cost := .unknown, detail :=
       if ex.isMaxHeartbeat then "heartbeat"
       else if ex.isInterrupt then "cancelled"
@@ -389,7 +435,7 @@ def priceGraph (graph : ProofGraph) (paired := false) (visible := false) : MetaM
         if paired then {edge with pairedVisibleCost := result.cost}
         else {edge with visibleCost := result.cost}
       else if paired then {edge with pairedCost := result.cost, pairedZeroProof := result.proof?}
-      else {edge with cost := result.cost, zeroProof := result.proof?, detail := result.detail}
+      else {edge with cost := result.cost, zeroProof := result.proof?, detail := result.detail, sharedData? := result.sharedData?}
     edges := edges ++ [edge]
   return {graph with edges}
 
