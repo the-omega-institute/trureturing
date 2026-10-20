@@ -83,7 +83,7 @@ F10: owner GID: D5/S3/Weil/ZetaLinear/Sylvester; declaration: RHLinalg.hermForm
 Definition rows classify unfolding; they assert no proposition and supply no escape witness.
 Utility: none; finite-dimensional symbolic mathematics for arbitrary parameters.
 The Gram construction is Matrix.gram; state columns have no forwarding definition.
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730; https://github.com/the-omega-institute/trureturing/issues/19372 names `psd_summand_kills_kernel`.
 DTR reading: DTR-Unregistered for the public theorem targets in this module.
 Registration gap: exact dependent source-family reconstruction, lawful template readout,
 selection coordinates, whole-family variation, slot sensitivity and observational dependence
