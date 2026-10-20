@@ -1,0 +1,18 @@
+**Definition 81.3 (the §52 exact Markov-factor contract).** Now use the distinct §52.1–§52.4 graph $\Gamma_{52}$: its direct limit retains the finite INITIAL tree $t$, one infinite spine $r_0,r_1,\ldots$, and the finite $T_j$ branches attached along that spine. Use its common infinite operator without finite-domain killing, its unit seam conductances and counting measure. Let
+
+$$
+L_{52}=L_\infty,\qquad P_{52}=I-L_{52}/3,
+\tag{81.5}
+$$
+
+as in (52.3)–(52.4). An exact representative-independent factor consists of a surjection $\pi:\Gamma_{52}\to\mathcal B$ onto a nonempty countable state space and a stochastic kernel $\overline P$ satisfying
+
+$$
+\sum_{\pi(z)=b}P_{52}(x,z)
+ =\overline P(\pi(x),b)
+\qquad(x\in\Gamma_{52},\ b\in\mathcal B),
+\tag{81.6}
+$$
+
+where the right side is independent of the representative $x$ in its fibre. Under (81.6), $Y_n=\pi(X_n)$ is a Markov chain in the same discrete step clock whenever $X_n$ has transition kernel $P_{52}$.
+

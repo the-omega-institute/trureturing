@@ -1093,3 +1093,784 @@ establish a fifth-$M$ $L_2$, an $H_4$ $L_3$, a guarded root $L_7$, an
 eight-versus-nine conclusion or an unrestricted recovery theorem.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Separation of all finite boundary labels
+
+**Definition 12.1 (Augmented maps and auxiliary boundary).** Retain the
+complete worlds, original clocks, acquired child and distinct-pair guards
+of Definitions 1.1–1.2. Write $c=r(1-r)/b$ and
+
+$$
+\tau_J=a,\qquad \tau_M=m,\qquad
+\Psi_E=(p,v,\tau_E),\qquad
+\delta(W)=\min\{r,1-r,b,c\}.
+\tag{12.1}
+$$
+
+Let $\mathcal H=\mathcal F(H_4)$ be the full strict complete parent,
+including its $p=24$ worlds. Its topology uses the source entries, drift
+and four padded polynomial coefficients. The off-$24$ subspace is
+$X=\{W\in\mathcal H:p(W)\ne24\}$. No sample of the gain, drift,
+leading coefficient or discriminant is required to be nonzero.
+
+The finite auxiliary boundary $\partial_f\mathcal H$ consists of the
+following nonnegative source labels with their complete gains and drifts:
+
+| Label | $(r,b,c)$ | $q_i(t)$ | $e_i(t)=d_i(t)-24$ |
+| --- | --- | --- | --- |
+| $C_0(t)$ | $(0,t,0)$ | $t^3-8t-4$ | $-24t(t-1/8)(2+5t)/(5(t^3-8t-4))$ |
+| $C_1(t)$ | $(1,t,0)$ | $(t+1)(t^3-4t-2)$ | $-24t(t-1/8)(2+5t)/(5(t^3-4t-2))$ |
+| $B_0(t)$ | $(0,0,t)$ | $t-1$ | $3t/(10(t-1))$ |
+| $B_1(t)$ | $(1,0,t)$ | $2t^2-1$ | $3t(t+1)/(5(2t^2-1))$ |
+
+Here $t>0$ and $q_i(t)\ne0$. On each open face the single whole gain
+is interpolated from $(-24-e,-e/j,(27/5-e)/T,-e/n)$ at $0,1,2,3$.
+These are precisely the lifts of S, Definition 12.2. The two additional
+corner labels are
+
+| Label | $(r,b,c)$ | $d$ | $(g(0),g(1),g(2),g(3))$ | $(p,v,a,m)$ |
+| --- | --- | --- | --- | --- |
+| $L$ | $(0,0,0)$ | $24$ | $(-24,3/10,27/5,3/10)$ | $(39/2,258/5,819/10,1977/10)$ |
+| $R$ | $(1,0,0)$ | $24$ | $(-24,3/5,27/5,0)$ | $(18,399/5,366,366)$ |
+
+The rational response curves below extend to $t=0$, with identifications
+$C_0(0)=B_0(0)=L$ and $C_1(0)=B_1(0)=R$, as complete tuples.
+These labels describe limits; they are not legal strict worlds.
+
+**Lemma 12.2 (Exact face fractions).** With the respective $q_i$ in
+Definition 12.1, the four responses are as follows.
+
+$$
+\begin{aligned}
+p_{C_0}(t)&=\frac{-3(72t^3+746t^2+465t+130)}{5q_{C_0}}\\
+v_{C_0}(t)&=\frac{-3(375t^3+4431t^2+2486t+344)}{5q_{C_0}}\\
+a_{C_0}(t)&=\frac{-9(136t^3+2062t^2+1163t+182)}{5q_{C_0}}\\
+m_{C_0}(t)&=\frac{-3(1088t^3+16523t^2+9445t+1318)}{5q_{C_0}}.
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+p_{C_1}(t)&=\frac{-6(36t^4+61t^3+221t^2+181t+30)}{5q_{C_1}}\\
+v_{C_1}(t)&=\frac{-3(375t^4+881t^3+2486t^2+1706t+266)}{5q_{C_1}}\\
+a_{C_1}(t)&=\frac{-6(204t^4+869t^3+2469t^2+2981t+610)}{5q_{C_1}}\\
+m_{C_1}(t)&=\frac{-3(1088t^4+3483t^3+9978t^2+7102t+1220)}{5q_{C_1}}.
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+p_{B_0}(t)&=\frac{-3(16t^2-80t+65)}{10q_{B_0}}\\
+v_{B_0}(t)&=\frac{3(45t^2+125t-172)}{10q_{B_0}}\\
+a_{B_0}(t)&=\frac{3(384t^2-113t-273)}{10q_{B_0}}\\
+m_{B_0}(t)&=\frac{3(384t^2+271t-659)}{10q_{B_0}}.
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+p_{B_1}(t)&=\frac{-6(8t^3-24t^2-2t+15)}{5q_{B_1}}\\
+v_{B_1}(t)&=\frac{3(45t^3+215t^2-33t-133)}{5q_{B_1}}\\
+a_{B_1}(t)&=\frac{3(384t^3+1039t^2-232t-610)}{5q_{B_1}}\\
+m_{B_1}(t)&=\frac{3(384t^3+1039t^2-232t-610)}{5q_{B_1}}.
+\end{aligned}
+$$
+
+Proof. Substitute the face source and its $e$ into (2.1), apply the
+three interpolation rows (2.3), and multiply by the traces in (2.2).
+This gives the displayed fractions by rational reduction. In particular
+every row still comes from one polynomial and one fixed drift.
+The $B_0,B_1$ fractions are exactly S, Theorem 13.1, and the face and
+corner lifts are those of S, Definition 12.2. ∎
+
+**Lemma 12.3 (Twenty localized rational certificates).** Order the faces
+as $C_0,C_1,B_0,B_1$. For $i\le j$ and $E\in\{J,M\}$ define
+
+$$
+\begin{aligned}
+A_{ij}&=\operatorname{num}(p_i(t)-p_j(s)),\\
+V_{ij}&=\operatorname{num}(v_i(t)-v_j(s)),\\
+T_{ij,E}&=\operatorname{num}(\tau_{E,i}(t)-\tau_{E,j}(s)).
+\end{aligned}
+\tag{12.2}
+$$
+
+Here $\operatorname{num}$ means the numerator after cancelling the
+polynomial gcd of numerator and denominator over $\mathbb Q$; multiplication
+by a nonzero rational unit is immaterial. When $i=j$, divide each of the
+three displayed numerators by $t-s$, exactly, and use those quotients
+instead. There is no cancellation of a factor $t$ or $s$. In
+$\mathbb Q[w,s,t]$ let
+
+$$
+I_{ij,E}=\langle A_{ij},V_{ij},T_{ij,E},
+                 wq_i(t)q_j(s)-1\rangle.
+\tag{12.3}
+$$
+
+The reduced monic Gröbner bases for lexicographic order $w>s>t$ are:
+
+| $(i,j)$ | $E=J$ | $E=M$ |
+| --- | --- | --- |
+| $(C_0,C_0)$ | $\{1\}$ | $\{1\}$ |
+| $(C_0,C_1)$ | $\{1\}$ | $\{1\}$ |
+| $(C_0,B_0)$ | $\{w-1/4,s,t\}$ | $\{w-1/4,s,t\}$ |
+| $(C_0,B_1)$ | $\{1\}$ | $\{1\}$ |
+| $(C_1,C_1)$ | $\{1\}$ | $\{1\}$ |
+| $(C_1,B_0)$ | $\{1\}$ | $\{1\}$ |
+| $(C_1,B_1)$ | $\{w-1/2,s,t\}$ | $\{w-1/2,s,t\}$ |
+| $(B_0,B_0)$ | $\{1\}$ | $\{1\}$ |
+| $(B_0,B_1)$ | $\{1\}$ | $\{1\}$ |
+| $(B_1,B_1)$ | $\{1\}$ | $\{1\}$ |
+
+Proof. Equations (12.2)–(12.3) and Lemma 12.2 specify every rational
+coefficient of these twenty finite computations. One exact reduction
+rule to reproduce the table is the following. Make each nonzero generator
+monic in the stated lexicographic order. For each pair $f,g$ form
+
+$$
+S(f,g)=\frac{\operatorname{lcm}(\operatorname{LM}f,\operatorname{LM}g)}
+ {\operatorname{LM}f}f-
+\frac{\operatorname{lcm}(\operatorname{LM}f,\operatorname{LM}g)}
+ {\operatorname{LM}g}g.
+\tag{12.4}
+$$
+
+Divide by the current ordered list using exact rational leading-term
+reduction. Append each nonzero monic remainder and include its new pairs;
+continue until all pair remainders are zero. Delete redundant leading
+terms and reduce each remaining polynomial by the others. This gives
+exactly the bases displayed in the table. All operations are over
+$\mathbb Q$; the input fractions, diagonal divisions, localization and
+monomial order are fixed above. The unit rows mean equality to the whole
+polynomial ring. The two nonunit rows mean, respectively, equality to
+$\langle4w-1,s,t\rangle$ and $\langle2w-1,s,t\rangle$.
+Their localizing constants also follow directly from
+$q_{C_0}(0)q_{B_0}(0)=4$ and $q_{C_1}(0)q_{B_1}(0)=2$.
+Thus they represent exactly the two corner identifications. ∎
+
+**Theorem 12.4 (T1: full finite-boundary separation).** For each
+$E\in\{J,M\}$ the augmented map $\Psi_E$ is injective on
+$\partial_f\mathcal H$, with its two corner identifications.
+The assertion includes all nonpole boundary labels with $p=24$.
+
+Proof. Any two nonpole parameters with the same three responses supply a
+common zero of the corresponding localized ideal, by taking
+$w=1/(q_i(t)q_j(s))$. For two distinct parameters on one face, division
+by $t-s$ preserves this implication. Lemma 12.3 excludes every such
+zero except $t=s=0$ in the two identified chart pairs. Every corner is
+represented by a chart at zero, so the same table includes comparisons
+between corners and open faces and between the two corners. The gains
+and drifts at the identified corners agree by Definition 12.1.
+
+For the $B$ faces, S, Theorem 13.1, already proves same-face
+acquired-base injectivity, and S, Proposition 13.3, already excludes
+opposite-face equal-terminal coincidences away from the poles. Those
+comparisons supply the corresponding open-$B$ cases. The remaining
+comparisons in Lemma 12.3 supply the $C/C$, $C/B$ and corner cases.
+No equation here divides by $p-24$. For clarity, the reduced numerators
+of $p_i(t)-24$ are
+
+$$
+\begin{array}{c|l}
+C_0&-3(8t-1)(14t^2+95t+30)\\
+C_1&-6(8t-1)(7t^3+11t^2+19t+10)\\
+B_0&-3(16t^2-15)\\
+B_1&-6(8t^3+16t^2-2t-5).
+\end{array}
+\tag{12.5}
+$$
+
+All allowed zeros of these expressions remain in the assertion. ∎
+
+## 13. Local injectivity on the full parent at finite boundary labels
+
+**Definition 13.1 (Transverse source charts).** Near an open face use
+coordinates $(t,z)$ with the following exact source expressions:
+
+$$
+\begin{array}{c|ccc}
+ &r&b&c\\ \hline
+C_0&z&t&z(1-z)/t\\
+C_1&1-z&t&z(1-z)/t\\
+B_0&tz&z&t-t^2z\\
+B_1&1-tz&z&t-t^2z.
+\end{array}
+\tag{13.1}
+$$
+
+The face is $z=0$, $t>0$. Every row satisfies $bc=r(1-r)$
+identically and is a local chart of that source surface. At an allowed
+face point $j,n,T,U,\Lambda$ are nonzero. Consequently the full
+parent converse gives a unique analytic drift and whole gain in this
+two-dimensional chart, using precisely (2.1)–(2.3).
+
+**Lemma 13.2 (Twelve minors and eight nonzero resultants).** Evaluate at
+$z=0$ the minors
+
+$$
+M_{pv}=p_t v_z-v_t p_z,\qquad
+M_{pE}=p_t\tau_{E,z}-\tau_{E,t}p_z.
+\tag{13.2}
+$$
+
+Let $P_i,N_{i,J},N_{i,M}$ be the positive-leading integer polynomials
+whose complete descending coefficient lists are below. A list
+$(a_d,\ldots,a_0)$ means $\sum_{k=0}^d a_k t^k$.
+
+$$
+\begin{aligned}
+\operatorname{coeff}_{\downarrow}(P^{C_0})&=(155926,-601697,-1542906,-4285783,-4638172,-687942,930652,283120)\\
+\operatorname{coeff}_{\downarrow}(N_{J}^{C_0})&=(21340,157300,599729,1849195,2184931,1104443,271656,28170)\\
+\operatorname{coeff}_{\downarrow}(N_{M}^{C_0})&=(960520,-2391609,-2601574,-2463507,1450942,9415154,6961040,1403320).
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\operatorname{coeff}_{\downarrow}(P^{C_1})&=(77963,-101611,70626,755023,601239,-322676,-493790,-140952,-43178,-59380,-19276)\\
+\operatorname{coeff}_{\downarrow}(N_{J}^{C_1})&=(85360,205720,409436,983356,405462,324593,610101,247856,-106980,-90804,-25716)\\
+\operatorname{coeff}_{\downarrow}(N_{M}^{C_1})&=(960520,-862625,1054299,9415074,7210470,-3592846,-5634854,-2220148,-1159732,-861256,-223968).
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\operatorname{coeff}_{\downarrow}(P^{B_0})&=(25680,-37062,-41788,90489,-37320)\\
+\operatorname{coeff}_{\downarrow}(N_{J}^{B_0})&=(176640,-403664,154720,189841,-117540)\\
+\operatorname{coeff}_{\downarrow}(N_{M}^{B_0})&=(164352,-294544,-96992,412369,-185190).
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\operatorname{coeff}_{\downarrow}(P^{B_1})&=(25680,66742,-29150,-85105,9535,35742,-505,-4819)\\
+\operatorname{coeff}_{\downarrow}(N_{J}^{B_1})&=(76032,169560,-83960,-206086,38555,85392,-8869,-12858)\\
+\operatorname{coeff}_{\downarrow}(N_{M}^{B_1})&=(82176,184888,-95368,-238974,32487,101504,-2495,-13998).
+\end{aligned}
+$$
+
+The superscript on a polynomial names its face. Their precise scalar
+normalizations in (13.2) are:
+
+| Face $i$ | $D_i$ | $M_{pv}$ | $M_{pJ}$ | $M_{pM}$ |
+| --- | --- | --- | --- | --- |
+| $C_0$ | $25t(t^3-8t-4)^3$ | $-9P_i/D_i$ | $-288N_{i,J}/D_i$ | $-9N_{i,M}/D_i$ |
+| $C_1$ | $25t(t+1)^3(t^3-4t-2)^3$ | $18P_i/D_i$ | $72N_{i,J}/D_i$ | $9N_{i,M}/D_i$ |
+| $B_0$ | $200(t-1)^3$ | $-9P_i/D_i$ | $-9N_{i,J}/D_i$ | $-9N_{i,M}/D_i$ |
+| $B_1$ | $25(2t^2-1)^3$ | $-9P_i/D_i$ | $-18N_{i,J}/D_i$ | $-18N_{i,M}/D_i$ |
+
+The degrees and Sylvester determinant residues are:
+
+| Face | $(\deg P_i,\deg N_{i,J},\deg N_{i,M})$ over $\mathbb Q$ and $\mathbb F_{101}$ | $\operatorname{Res}_t(P_i,N_{i,J})\bmod101$ | $\operatorname{Res}_t(P_i,N_{i,M})\bmod101$ |
+| --- | --- | --- | --- |
+| $C_0$ | $(7,7,7)$ | $27$ | $58$ |
+| $C_1$ | $(10,10,10)$ | $78$ | $58$ |
+| $B_0$ | $(4,4,4)$ | $73$ | $18$ |
+| $B_1$ | $(7,7,7)$ | $40$ | $19$ |
+
+Proof. Differentiate the whole-parent circuit (2.1)–(2.3) after
+substitution of (13.1), and then set $z=0$. Reducing each rational
+minor gives exactly the coefficient lists and scalar factors above.
+This calculation differentiates the transverse direction as well as
+the face parameter; differentiating only Lemma 12.2 would not suffice.
+
+For a completely specified resultant convention, if $F,G$ have degrees
+$d,e$, take rows $t^{e-1}F,\ldots,F,t^{d-1}G,\ldots,G$, with columns
+$t^{d+e-1},\ldots,1$. Its determinant, applied to the displayed
+integer lists and reduced modulo $101$, gives the eight entries of the
+table. Their leading coefficients remain nonzero modulo $101$, so
+these are degree-preserving reductions of the integer Sylvester
+matrices. Each integer resultant is nonzero. Thus $P_i$ has no common
+complex zero with either $N_{i,J}$ or $N_{i,M}$. This is the classical
+Sylvester criterion, with the convention of F, Lemma 31.2; see also
+Moreno Maza, *The resultant*, Definition 4 and Propositions 5–7,
+[as cited there](https://www.csd.uwo.ca/~mmorenom/AM583/Lectures/ResultantGcd.html/node3.html).
+All $D_i$ are nonzero on the allowed open face. ∎
+
+**Proposition 13.3 (Full-parent injectivity at every open face).** At
+each allowed open-face label and for either $E$, a neighbourhood in
+complete source/gain/drift coordinates has $\Psi_E$ injective on its
+strict full-parent worlds.
+
+Proof. By Lemma 13.2, $M_{pv}$ and $M_{pE}$ cannot both vanish.
+At least one two-coordinate submap of $\Psi_E$ therefore has an
+invertible differential on the two-dimensional chart (13.1).
+The inverse-function theorem gives a neighbourhood on which that
+submap is injective. The parent lift is unique throughout a smaller
+neighbourhood because $\Lambda\ne0$ there. The source chart and
+whole-world lift identify all nearby strict parent worlds with this
+chart, proving the assertion. No condition on individual gain samples,
+drift or polynomial degree was introduced. ∎
+
+**Lemma 13.4 (One analytic neighbourhood at the lower corner).** Put
+$j=b+c$, $\theta=b/j$ and $u=\theta(1-\theta)$. On the lower
+rank-one branch define
+
+$$
+\begin{gathered}
+r=\frac{2u j^2}{1+\sqrt{1-4u j^2}},\qquad
+\rho=\frac rj=\frac{2u j}{1+\sqrt{1-4u j^2}},\qquad
+T=1+\theta j,\quad U=1+2\theta j,\\
+L_-=j(1+6/T+1/U)-4-4/(1+\rho),\\
+N=-\frac{24}{5}(\theta j-1/8)(6/T-2/U),\qquad h=N/L_-.
+\end{gathered}
+\tag{13.3}
+$$
+
+Use the analytic expressions at $j=0$ in these formulas. The entire
+response circuit extends analytically to one open neighbourhood of
+
+$$
+\mathcal R=\{(j,\theta):|j|\le1/64,\ -1/4\le\theta\le5/4\}.
+\tag{13.4}
+$$
+
+On this rectangle the whole gain samples and drift are
+
+$$
+e=jh,\quad d=24+jh,\qquad
+(g_0,g_1,g_2,g_3)=
+\left(-24-jh,-h,\frac{27/5-jh}{T},-\frac h{1+\rho}\right).
+\tag{13.5}
+$$
+
+Proof. Here $|u|\le1$, $1-4uj^2\ge1-1/1024$,
+$|\rho|<1/32$, $T\ge251/256$, $U\ge123/128$ and
+$|j(1+6/T+1/U)|<1/4$. In particular
+
+$$
+L_-<-4-128/33+1/4<-7.
+\tag{13.6}
+$$
+
+Every square root has positive radicand and every denominator is
+separated from zero on the whole compact rectangle. These strict
+bounds persist on an open neighbourhood of it. Since
+$j\Lambda=L_-$, the parent equation gives $e=jh$, and cancellation
+within these analytic formulas gives exactly (13.5). Interpolation
+and multiplication by the original traces are analytic operations
+there, proving the common extension. ∎
+
+**Lemma 13.5 (Lower-corner jets and uniform first-derivative bounds).**
+Let $\Psi_E(L)$ be the corner triple in Definition 12.1. On the common
+neighbourhood of Lemma 13.4,
+
+$$
+\Psi_E(j,\theta)-\Psi_E(L)
+=j A_E\begin{pmatrix}1\\\theta\\\theta(1-\theta)\end{pmatrix}
++j^2 R_E(j,\theta),
+\tag{13.7}
+$$
+
+where
+
+$$
+A_J=\begin{pmatrix}
+-9/2&141/4&3/4\\
+141/10&1278/5&24/5\\
+579/5&975/4&21/4
+\end{pmatrix},\qquad
+A_M=\begin{pmatrix}
+-9/2&141/4&3/4\\
+141/10&1278/5&24/5\\
+582/5&18099/20&63/4
+\end{pmatrix}.
+\tag{13.8}
+$$
+
+Their determinants are $-136431/40$ and $221589/400$. The first
+two rows of their inverses are, respectively,
+
+$$
+L_J=\begin{pmatrix}
+-764/15159&10/15159&100/15159\\
+-3569/25265&491/15159&-143/15159
+\end{pmatrix},\qquad
+L_M=\begin{pmatrix}
+-4712/8207&1830/8207&-1000/24621\\
+14962/24621&-7030/24621&1430/24621
+\end{pmatrix}.
+\tag{13.9}
+$$
+
+Both $R_E$ and its first derivatives with respect to $j$ and $\theta$
+are uniformly bounded on $\mathcal R$.
+
+Proof. Substitution of (13.3)–(13.5) into the original response circuit
+gives the four coefficients of $j$, in order $p,v,a,m$,
+
+$$
+\begin{pmatrix}
+-9/2+36\theta-3\theta^2/4\\
+141/10+1302\theta/5-24\theta^2/5\\
+579/5+249\theta-21\theta^2/4\\
+582/5+9207\theta/10-63\theta^2/4
+\end{pmatrix}.
+\tag{13.10}
+$$
+
+These are precisely (13.8) applied to
+$(1,\theta,\theta(1-\theta))$. Rational matrix multiplication gives
+$L_E A_E=(I_2\;0)$ and the stated determinants. To justify the
+remainder and its derivatives uniformly, use Taylor's integral formula:
+
+$$
+\begin{aligned}
+R_E(j,\theta)
+ &=\int_0^1(1-s)\,\partial_j^2\Psi_E(sj,\theta)\,ds,\\
+\partial_jR_E(j,\theta)
+ &=\int_0^1s(1-s)\,\partial_j^3\Psi_E(sj,\theta)\,ds,\\
+\partial_\theta R_E(j,\theta)
+ &=\int_0^1(1-s)\,\partial_\theta\partial_j^2
+                      \Psi_E(sj,\theta)\,ds.
+\end{aligned}
+\tag{13.11}
+$$
+
+All displayed derivatives are continuous on the common compact
+rectangle, by Lemma 13.4. Their maxima there bound the three integrals.
+This supplies uniform first-derivative remainder bounds on one
+neighbourhood, rather than only a pointwise quadratic remainder. ∎
+
+**Proposition 13.6 (A lower Lipschitz bound on the lower-corner cone).**
+For both actions $\Psi_E$ is injective on all strict full-parent
+worlds in a sufficiently small neighbourhood of $L$.
+
+Proof. Write $\widetilde R_E=L_ER_E$. Let $M\ge0$ bound, for
+both actions, the Euclidean norms of $\widetilde R_E$,
+$\partial_j\widetilde R_E$ and $\partial_\theta\widetilde R_E$
+on $0\le j\le1/128$, $0\le\theta\le1$. Such a common finite
+$M$ exists by Lemma 13.5. Choose
+
+$$
+\eta=\min\left\{\frac1{128},\frac1{12(M+1)}\right\}.
+\tag{13.12}
+$$
+
+On the convex triangle $\mathcal T_\eta=\{(j,b):0<b<j<\eta\}$,
+the affine response transform is
+
+$$
+G_E(j,b):=L_E(\Psi_E(j,b/j)-\Psi_E(L))
+=(j,b)^{\mathsf T}+H_E(j,b),\qquad
+H_E=j^2\widetilde R_E(j,b/j).
+\tag{13.13}
+$$
+
+At fixed $b$ or fixed $j$, respectively, its error derivative columns are
+
+$$
+\partial_jH_E=2j\widetilde R_E+j^2\partial_j\widetilde R_E
+                   -b\partial_\theta\widetilde R_E,\qquad
+\partial_bH_E=j\partial_\theta\widetilde R_E.
+\tag{13.14}
+$$
+
+The uniform bounds give $\|DH_E\|\le6M\eta<1/2$.
+Integrate on the segment between any $x,y\in\mathcal T_\eta$:
+
+$$
+\|G_E(x)-G_E(y)\|\ge(1-6M\eta)\|x-y\|
+>\tfrac12\|x-y\|.
+\tag{13.15}
+$$
+
+Thus $G_E$, and hence $\Psi_E$, is injective. Every strict source
+sufficiently near $(r,b,c)=(0,0,0)$ has the lower root in (13.3),
+$0<b<j<\eta$ and $j\Lambda=L_-<-7$. Its parent drift and whole
+gain are therefore uniquely (13.5). Consequently this argument covers
+all nearby strict full-parent worlds. ∎
+
+**Proposition 13.7 (The upper-corner chart).** Both augmented maps
+are locally injective on the strict full parent at $R$.
+
+Proof. In ambient coordinates $(j,b)$ put
+
+$$
+r=\frac{1+\sqrt{1-4b(j-b)}}2,\quad c=j-b,\quad n=j+r.
+\tag{13.16}
+$$
+
+Here $n(0,0)=1$ and
+$L_+=j(1+6/T+1/U-4/n)-4$ has value $-4$ at the origin.
+The parent formula consequently makes $e/j$ analytic near the origin.
+The four gain samples, and hence the entire response circuit, are
+analytic there as well. Its full first-order jet is
+
+$$
+\begin{pmatrix}p\\v\\a\\m\end{pmatrix}
+=\begin{pmatrix}18\\399/5\\366\\366\end{pmatrix}
++j\begin{pmatrix}-12/5\\99/5\\696/5\\696/5\end{pmatrix}
++b\begin{pmatrix}57\\1263/5\\2757/5\\4467/5\end{pmatrix}
++O((|j|+|b|)^2),
+\tag{13.17}
+$$
+
+with analytic remainder on this one neighbourhood. In particular
+
+$$
+D_{(j,b)}(p,v)(0,0)=
+\begin{pmatrix}-12/5&57\\99/5&1263/5\end{pmatrix},\qquad
+\det D_{(j,b)}(p,v)(0,0)=-43371/25\ne0.
+\tag{13.18}
+$$
+
+The inverse-function theorem gives local injectivity already for
+$(p,v)$, and therefore for each $\Psi_E$. Every nearby strict source
+lies on the upper branch (13.16) and has the unique regular parent
+lift. ∎
+
+**Theorem 13.8 (T2: full-parent boundary local injectivity).** For
+every $B\in\partial_f\mathcal H$ and $E\in\{J,M\}$ there is a
+neighbourhood $U_B$ in complete source/gain/drift coordinates such that
+$\Psi_E$ is injective on $U_B\cap\mathcal H$.
+
+Proof. Proposition 13.3 treats the four open faces, Proposition 13.6
+treats $L$, and Proposition 13.7 treats $R$. These exhaust
+Definition 12.1. The face and corner proofs do not restrict $p$,
+so the statement includes their $p=24$ labels. ∎
+
+## 14. A uniformly interior endpoint of every bounded-fifth-response pair
+
+**Assumption 14.1 (Exact coercivity suppliers).** The following owning
+results are used with their full complete-world domains:
+
+| Supplier | Exact consequence used here |
+| --- | --- |
+| S, Theorem 7.3 | One finite $B_*>0$ bounds $b$ at both endpoints of every distinct equal-terminal $J$ or $M$ pair at every real off-$24$ acquired base. |
+| S, Theorem 12.1 | With $b\le B_*$ and $|p|\le P$, $c$, drift, all four padded coefficients of the same entire gain and all remaining responses are bounded; $p=24$ and singular sources are included in this coercivity statement. |
+| S, Definition 12.2 and the exhaustion proof of Theorem 12.3 | Every finite nonstrict source limit with bounded drift and gain is one of the four nonpole face lifts or the two complete corner tuples in Definition 12.1. |
+| O, Lemma 12.2 and Theorem 12.3 | $\Lambda^2+A_5^2>0$ at every strict source, including $\Lambda=0$; the fifth response fixes one whole world even at a singular parent source. |
+| F, Lemmas 30.2 and 31.3, as used by S, Theorem 7.3 | Zero-safe faithful reconstruction and leading-drift noncollapse in the uniform $b$-cap proof. |
+
+In particular S, Theorem 7.3, is an all-actual-pair theorem, not a
+regular-source restriction. Its proof combines the injective large-$b$
+parent chart with S, Lemma 7.2: a finite limiting companion would have
+$(x,d)=(1/2,0)$ and $H_0=66/5$, while the original equation
+$dU=-H_0$ forces that companion back to $b\to\infty$.
+The cap is reused with these zero-safe premises; none of the earlier
+high-degree elimination certificates is replaced by the boundary
+calculations in Sections 12–13.
+
+**Lemma 14.2 (Finite exhaustion also when $p$ tends to $24$).** Suppose
+$W_n\in\mathcal H$ have bounded $b_n,p_n$, and
+$\delta(W_n)\to0$. After passage to a subsequence their complete
+tuples converge to a label in $\partial_f\mathcal H$.
+This holds even if $p_n\to24$.
+
+Proof. S, Theorem 12.1, bounds $c_n,d_n$ and every gain coefficient.
+Pass to simultaneous limits in these finite-dimensional coordinates.
+The source equation $bc=r(1-r)$ passes to the limit, and
+$\delta\to0$ forces a nonstrict source. If $j>0$, this is one of
+the four open faces. A zero of $\Lambda$ there has nonzero parent
+right-hand side, so cannot have finite drift. At every other face
+point the parent equation uniquely gives the drift and the four gain
+samples in Definition 12.1.
+
+If $j\to0$ on the lower branch, then
+
+$$
+\frac rj=\frac{bc}{(1-r)(b+c)}\longrightarrow0,\qquad
+\frac nj\longrightarrow1,\qquad
+j\Lambda\longrightarrow-8,\qquad e/j\longrightarrow-3/10.
+\tag{14.1}
+$$
+
+On the upper branch $n\to1$, $j\Lambda\to-4$ and
+$e/j\to-3/5$. The original four samples and traces give exactly
+$L$ or $R$. This is the finite-exhaustion part of S, Theorem 12.3,
+before its intersection with the relative target $Y=\{p\ne24\}$.
+It has made no assumption that the limiting $p$ is off $24$.
+S, Proposition 12.4, explicitly prevents omitting this distinction. ∎
+
+**Theorem 14.3 (T3: selected-pair interior endpoint).** For every
+$P>0$ there is $\varepsilon(P)>0$ such that, for every real
+$p\ne24$ with $|p|\le P$, every real $v$, either $E\in\{J,M\}$,
+and every distinct pair $W,W'\in C(p,v)$ satisfying
+$\tau_E(W)=\tau_E(W')$,
+
+$$
+\max\{\delta(W),\delta(W')\}\ge\varepsilon(P).
+\tag{14.2}
+$$
+
+The same constant works for both actions. No numerical value is asserted.
+
+Proof. Fix $P$ and one action. If no positive constant worked, choose
+actual distinct pairs with $|p_n|\le P$, $p_n\ne24$ and
+$\max\{\delta(W_n),\delta(W'_n)\}\to0$. The common $b$ cap
+of S, Theorem 7.3, and the coercivity of S, Theorem 12.1, give
+simultaneously bounded sources, drifts, whole gain coefficients and
+responses. Extract a convergent subsequence for both endpoints.
+Lemma 14.2 identifies both limiting tuples with finite boundary labels,
+including the possibility $p_n\to24$.
+
+Their equal $(p,v,\tau_E)$ responses pass to the limit. Theorem 12.4
+makes the two limiting boundary labels equal, with the corner
+identifications understood. Theorem 13.8 supplies a common neighbourhood
+where the strict full-parent map is injective. Eventually both endpoints
+are in that neighbourhood and have equal augmented responses, contrary
+to their strict distinctness. Thus there is a positive constant for
+each action; take the smaller of the two. ∎
+
+The maximum in (14.2) selects at least one endpoint of the given pair.
+It does not bound each endpoint separately and does not impose any
+source cutoff on the original world domain.
+
+## 15. Two compact anchors for a joint configuration
+
+**Theorem 15.1 (T4: compact strict anchors).** For every $P>0$ there
+is a compact subset $\mathcal A_P\subset\mathcal H$ with the
+following property. Every original joint configuration
+
+$$
+W_0\ne W_1,\quad W_2\ne W_3,\quad
+W_i\in C(p,v),\quad p\ne24,\quad |p|\le P,\qquad
+a(W_0)=a(W_1),\quad m(W_2)=m(W_3)
+\tag{15.1}
+$$
+
+can be relabelled within its two selected pairs so that
+$W_0,W_2\in\mathcal A_P$ and
+$\delta(W_0),\delta(W_2)\ge\varepsilon(P)$.
+If the common base is restricted to a compact
+$K\subset\{(p,v):p\ne24\}$, the two anchors lie in a compact
+subset $\mathcal A_{P,K}\subset X$.
+
+The anchors may coincide. Cross-pair reuse, different terminal common
+values, all nonanchor endpoints and all unused companions retain the
+guards of Definition 1.2.
+
+Proof. Apply Theorem 14.3 independently to the selected $J$ pair and
+selected $M$ pair. Choose the endpoint with $\delta\ge\varepsilon(P)$
+in each. Assumption 14.1 bounds their $b,c,d$ and every padded gain
+coefficient by a common finite constant, enlarged if necessary.
+In the resulting closed bounded coordinate box impose
+
+$$
+bc=r(1-r),\qquad \delta\ge\varepsilon(P),\qquad |p|\le P,
+\qquad\text{all five original }H_4\text{ reading equations}.
+\tag{15.2}
+$$
+
+This defines a closed bounded set in finite-dimensional real space.
+Its source is strict by the positive $\delta$ bound. Its gain is
+nonzero because a zero gain would make the original readings $0$ and
+$24$ equal to the same drift. It is therefore a compact subset
+$\mathcal A_P$ of the full parent, containing both chosen endpoints.
+It may contain $p=24$ worlds. Intersecting with the closed inverse
+image of $K$ under the continuous acquired-base map gives the compact
+$\mathcal A_{P,K}$ inside $X$. The endpoint choices do not change
+any world, clock, action or acquired observation. ∎
+
+## 16. Off-twenty-four finite-base limits and the remaining joint relation
+
+**Theorem 16.1 (T5: selected-pair finite-base trichotomy).** Let
+$E\in\{J,M\}$ and let $(W_n,W'_n)$ be distinct equal-terminal
+pairs in $C(p_n,v_n)$, where
+
+$$
+(p_n,v_n)\longrightarrow q_*=(p_*,v_*),\qquad p_n\ne24,
+\qquad p_*\ne24.
+\tag{16.1}
+$$
+
+After a subsequence and relabelling within each pair, $W_n$ converges
+to a strict world $W\in C(q_*)$, and exactly one of the following
+holds for the companion limit:
+
+1. $W'_n\to W'\in C(q_*)$ with $W'\ne W$ and
+   $\tau_E(W')=\tau_E(W)$, an actual strict pair.
+2. $W'_n\to W$ and
+   $\operatorname{rank}(d\Psi_E)_W<2$ on the full analytic parent.
+3. $W'_n\to B\in\partial_f\mathcal H$ with
+   $\Psi_E(B)=\Psi_E(W)$, a mixed boundary/interior incidence.
+
+No subsequence of such pairs can have both endpoint limits in
+$\partial_f\mathcal H$. For a joint sequence apply this statement
+to both selected pairs at the same base and on a common subsequence;
+no cross-pair distinctness is added.
+
+Proof. The fifth responses are bounded. By Theorem 14.3 choose an
+anchor in each pair with $\delta\ge\varepsilon(P)$ for one fixed
+$P$ containing the sequence. The cap and coercivity give simultaneous
+convergent subsequences of all source, drift and gain coordinates.
+The anchor limit is strict by its positive $\delta$ bound. The
+original readings pass to the limit, its gain stays nonzero by the
+unequal readings $0,24$, and its acquired base is $q_*$. Thus it is
+an actual world of $C(q_*)$.
+
+If the companion limit is strict, continuity gives another actual
+world of $C(q_*)$ with the same terminal response. If distinct from
+the anchor this is case 1. If equal to it, use the analytic
+complete-parent surface of S, Theorem 14.2. This surface statement
+includes the singular sources: at $\Lambda=0$ one has $b=1/8$,
+$\Lambda_r\ne0$ at the two simple roots of O, Theorem 4.2, and
+$e\ne0$ for $p_*\ne24$ by F, Lemma 30.2. Hence the defining
+parent equation has nonzero $r$ derivative there; elsewhere it solves
+for $e$. If $d\Psi_E$ had rank two at $W$, two of its three
+coordinates would give a locally injective submap by the
+inverse-function theorem. The two convergent endpoints would eventually
+be equal, a contradiction. This proves case 2.
+
+If the companion limit is nonstrict, Lemma 14.2 identifies it with
+one of the finite boundary tuples. Equality of augmented responses
+passes to the limit, giving case 3. The anchor is strict, so these
+three alternatives are exhaustive and disjoint. Theorem 14.3 also
+excludes a limit with both endpoints boundary. There are only four
+selected labels in a joint sequence, so all subsequence extractions
+can be made simultaneously after independently relabelling the two
+pairs. ∎
+
+**Proposition 16.2 (Scope of the boundary support reduction).** On a
+bounded-$p$ region every selected joint configuration has two compact
+strict anchors. At an off-$24$ finite-base limit, each selected pair
+has one of the three alternatives of Theorem 16.1. In particular a
+strict equal-world limit requires criticality of the augmented map
+$\Psi_E$, a stronger necessary condition than criticality of the
+acquired-base projection alone.
+
+Proof. The first assertion is Theorem 15.1. The alternatives and
+augmented criticality are Theorem 16.1. Since $(p,v)$ is a coordinate
+projection of $\Psi_E$, rank two for $d(p,v)$ would imply rank two
+for $d\Psi_E$. The converse implication need not hold. ∎
+
+Case 2 is an equal-world limit of distinct pairs, not itself a strict
+pair. Its criticality is necessary and supplies no sufficient condition
+for a strict pair nearby. Case 3 retains a boundary label only as an
+auxiliary limit, not as a legal endpoint of the original joint relation.
+The trichotomy assumes $p_*\ne24$; Sections 12–14 retain the
+$p\to24$ boundary limits without asserting this trichotomy there.
+
+The original alternative (11.1) remains unresolved. Compact anchors do
+not give a point of $D_J\cap D_M$, an exhaustive exclusion of that
+set, closedness or properness of a collision projection, or a constant
+$\varepsilon$ independent of $P$. Mixed boundary/interior incidence,
+the augmented interior critical loci and their actual strict-pair
+limits, unbounded real $p$, and all exceptional real-lift and
+within-pair-distinctness obligations remain. No singular $J$ endpoint,
+unused singular companion, zero drift, lower degree, sampled or repeated
+root, or nonsingular exceptional reconstruction stratum is removed.
+The same-fifth-response sixth-$J$ child and all ancestor conjunctions
+of O, Theorem 17.1, also remain as stated in Definition 11.2.
+
+**Assumption 16.3 (Classical tools and their exact domains).** The
+inverse-function theorem is used only for an analytic map from a
+specified two-dimensional chart with a displayed nonzero minor:
+(13.1)–(13.2), (13.16)–(13.18), or the strict off-$24$ parent in
+Theorem 16.1. The analytic implicit-function theorem and references
+in Assumption 11.1 supply these classical local tools. Taylor's integral
+formula is used on the single neighbourhood of the compact rectangle
+(13.4), with derivatives justified in (13.11); see the Taylor theorem
+reference in Assumption 11.1. The lower-corner injectivity itself is
+the convex-segment estimate (13.15). Compactness in Sections 14–16
+is closed bounded finite-dimensional compactness, applied to padded
+whole gain coefficients and source entries with all original reading
+equations imposed. The distinction between strict pairs and diagonal
+limits agrees with the multiple-point-space distinction cited in
+Assumption 11.1; no additional holomorphic hypothesis or conclusion
+is transferred. The source-specific fractions, localized ideals,
+transverse minors and corner jets are the explicit calculations above.
+
+## 追加锚（本行以下为增补区）

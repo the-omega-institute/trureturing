@@ -3013,29 +3013,1136 @@ is asserted by the orbit value or the zero-parameter characterization.
 
 ## 追加锚（本行以下为增补区）
 
-## 118. A saturated decoder on the entire negative branch
+## 118. Exact unrestricted recovery at the second horizon
+
+**Definition 118.1 (Objective and coordinate convention).** Work on
+$M_3=\mathcal B(\mathbb C^3)$ in the ordered basis of (93.1). For every
+complex matrix $X=(x_{jk})$, the reduced channel is
+
+$$
+\Phi_s(X)=
+\begin{pmatrix}
+x_{00}&sx_{01}&0\\
+sx_{10}&\frac{1+s}{2}x_{11}+\frac{1-s}{2}x_{22}&0\\
+0&0&\frac{1-s}{2}x_{11}+\frac{1+s}{2}x_{22}
+\end{pmatrix},\qquad -\frac12\le s\le1.
+\tag{118.1}
+$$
+
+Use the original density-input objective
+
+$$
+e_s(\mathcal R)=
+\max_{\rho\succeq0,\ \operatorname{Tr}\rho=1}
+\frac12\|\mathcal R\Phi_s(\rho)-\rho\|_1,
+\qquad
+\mu(s)=\min_{\mathcal R:M_3\to M_3\ {\rm CPTP}}e_s(\mathcal R).
+\tag{118.2}
+$$
+
+There is one common terminal CPTP map, fixed before the unknown input.
+The maximum includes complex pure states and all mixed densities. The
+target is the original input, without a target rotation. Neither the
+input test nor the decoder has a reference or a history register.
+The actual horizons and their decoder transport are
+
+$$
+\begin{aligned}
+s_n&=(-1/2)^{n-1},\qquad
+\mathcal N_n=\operatorname{Ad}_{U_0}\circ\Phi_{s_n}\quad(n\ge1),\\
+\mathcal R&=D\circ\operatorname{Ad}_{U_0},\qquad
+D=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger},\qquad
+\mu_n=\mu(s_n),\\
+U_0&=1\oplus
+\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix}.
+\end{aligned}
+\tag{118.3}
+$$
+
+In particular $n=2$ means $s=-1/2$. The empty identity horizon
+$\mathcal N_0=\operatorname{id}$ is distinct from $s=0$.
+
+**Theorem 118.2 (Exact second-horizon minimax).** Let $L_*$ be the
+$L$-coordinate of the unique real solution specified in §§119–120.
+Then
+
+$$
+\boxed{\mu_2=\mu(-1/2)=L_*},
+\qquad
+0.606446991399069890043817252242
+<L_*<
+0.606446991399069890063817252242.
+\tag{118.4}
+$$
+
+The five-Kraus map $\mathcal R_*$ in §121 attains this value, and
+$D_*=\mathcal R_*\circ\operatorname{Ad}_{U_0^\dagger}$ attains the
+original terminal problem. The upper certificate holds for every
+density input. The matching lower certificate holds for every complex
+CPTP decoder, without covariance, realness or sparsity assumptions.
+Here $L_*$ denotes the isolated root coordinate, not a decimal
+approximation. The proof is given by the root isolation in §120,
+the upper inequality in §122 and the lower inequality in §125.
+
+## 119. Eleven rational polynomials and their exact centre
+
+**Definition 119.1 (Polynomial data).** In this appendix the symbols
+$a,b,c,\eta$ are decoder parameters, independent of the channel
+parameter $s$. Order the eleven real variables as
+
+$$
+\theta=(a,b,c,\eta,L,p_e,p_i,x_i,\alpha,\beta,\tau).
+\tag{119.1}
+$$
+
+For independent population coordinates $p,x$ put
+
+$$
+\begin{aligned}
+y&=1-p-x,& v_1&=(x+3y)/4,&v_2&=(3x+y)/4,\\
+h_0&=ap,&h_1&=bv_1+cv_2,&h_2&=1-h_0-h_1,\\
+d_0&=L+h_0-p,&d_1&=L+h_1-x,&d_2&=L+h_2-y,\\
+\kappa&=1-\eta/2.
+\end{aligned}
+\tag{119.2}
+$$
+
+Define the rational-coefficient polynomial
+
+$$
+N(p,x)=d_0d_1d_2-d_0xy-d_1py-\kappa^2d_2px-2\kappa pxy.
+\tag{119.3}
+$$
+
+A derivative $N_t$ means that $a,b,c,\eta,L,p,x$ are independent
+before differentiation. For example
+$N_{e,a}=N_a(p_e,0)$ and $N_{i,p}=N_p(p_i,x_i)$; the subscripts
+$e,i$ indicate substitution only after differentiation. Set
+$N_e=N(p_e,0)$ and $N_i=N(p_i,x_i)$.
+The eleven polynomials, with zero-based indexing, are
+
+$$
+\begin{aligned}
+F_0&=ab-\eta^2,\\
+F_1&=N_e,&F_2&=N_{e,p},\\
+F_3&=N_i,&F_4&=N_{i,p},&F_5&=N_{i,x},\\
+F_6&=\alpha N_{e,L}+\beta N_{i,L}-1,\\
+F_7&=\alpha N_{e,a}+\beta N_{i,a}+\tau b,\\
+F_8&=\alpha N_{e,b}+\beta N_{i,b}+\tau a,\\
+F_9&=\alpha N_{e,c}+\beta N_{i,c},\\
+F_{10}&=\alpha N_{e,\eta}+\beta N_{i,\eta}-2\tau\eta.
+\end{aligned}
+\tag{119.4}
+$$
+
+These formulas define every coefficient of $F$ over $\mathbb Q$.
+For an explicit population expansion, write
+
+$$
+N(p,x)=\sum_{i+j\le3}n_{ij}p^ix^j,\qquad
+B=a-1,\quad V=(3b+c)/4,\quad D=(c-b)/2-1.
+\tag{119.5}
+$$
+
+All ten coefficients, including the zero cubic coefficient, are
+
+$$
+\begin{aligned}
+n_{00}&=L(L-V)(L+V),\\
+n_{01}&=-L(2DV+1),\\
+n_{02}&=-L(D-1)(D+1),\\
+n_{03}&=0,\\
+n_{10}&=-BLV-BV^2+2LV^2-L-V,\\
+n_{11}&=-BDL-2BDV-B+2DLV-D-L\kappa^2+2L
+          +V\kappa^2+V-2\kappa,\\
+n_{12}&=-BD^2+B+D\kappa^2+D+2\kappa,\\
+n_{20}&=-B^2L-B^2V+BLV+2BV^2-LV^2+L+2V,\\
+n_{21}&=-B^2D+2BDV+B\kappa^2+B+D-V\kappa^2-V+2\kappa,\\
+n_{30}&=V(B^2-BV-1).
+\end{aligned}
+\tag{119.6}
+$$
+
+**Definition 119.2 (Rational isolating box).** Every terminating decimal
+in the following table is an exact rational number. They give the
+centre $\bar\theta$ in the variable order (119.1).
+
+| Coordinate | Exact rational centre |
+| --- | --- |
+| $a$ | $0.937622401511151627969041446134$ |
+| $b$ | $0.337737953327691343771408026078$ |
+| $c$ | $0.443127649705020756905449237135$ |
+| $\eta$ | $0.562734991697309686859337984905$ |
+| $L$ | $0.606446991399069890053817252242$ |
+| $p_e$ | $0.388582338267081579168412985646$ |
+| $p_i$ | $0.284461108116364144368507390598$ |
+| $x_i$ | $0.388490198578206978698502224224$ |
+| $\alpha$ | $0.414839545542267246309701403648$ |
+| $\beta$ | $0.811692993910961133702563979045$ |
+| $\tau$ | $0.067973872064879450850865285313$ |
+
+Let
+
+$$
+r=10^{-20},\qquad
+\mathcal B=\{\theta\in\mathbb R^{11}:\|\theta-\bar\theta\|_\infty\le r\}.
+\tag{119.7}
+$$
+
+The parameters used below are the coordinates of the unique zero
+$\theta_*$ of (119.4) in $\mathcal B$. Existence and uniqueness are
+part of the following lemma.
+
+## 120. Rational isolation and finite arithmetic bounds
+
+**Lemma 120.1 (Unique root and positive domains).** The system
+$F(\theta)=0$ has exactly one real zero in $\mathcal B$. It is in the
+interior of that box and satisfies
+
+$$
+\begin{gathered}
+0<a,b,c,\eta<1,\qquad L,\alpha,\beta,\tau>0,\\
+0<p_e<1,\qquad p_i,x_i>0,\qquad p_i+x_i<1.
+\end{gathered}
+\tag{120.1}
+$$
+
+*Proof.* Here are finite rational formulas for the isolation bounds.
+They also specify how to reproduce the arithmetic without any root
+search. Expand $F_i=\sum_\nu f_{i\nu}\theta^\nu$ using
+(119.2)–(119.6), where $\nu\in\mathbb N^{11}$ and only nonzero
+coefficients are included. The rational Jacobian $J=DF(\bar\theta)$
+has entries
+
+$$
+J_{ij}=\sum_{\nu:\nu_j>0}\nu_j f_{i\nu}
+               \bar\theta^{\nu-e_j}.
+\tag{120.2}
+$$
+
+For a fully integral evaluation of its inverse, let $q$ be the least
+common multiple of the positive reduced denominators of all $J_{ij}$,
+let $H=qJ$, and let
+
+$$
+\begin{aligned}
+d&=\sum_{\pi\in S_{11}}\operatorname{sgn}(\pi)
+                       \prod_{i=0}^{10}H_{i,\pi(i)},\\
+C_{ij}&=(-1)^{i+j}\det H[\widehat i\mid\widehat j].
+\end{aligned}
+\tag{120.3}
+$$
+
+The determinants of the ten-by-ten minors use the same permutation
+formula. Let $m$ be the least common multiple of the positive reduced
+denominators of $F_i(\bar\theta)$ and set $w_i=mF_i(\bar\theta)$.
+Thus $H,C,d,w$ are integers and $q,m$ are positive integers. Direct
+integer substitution gives $d^2\ge1$ and
+
+$$
+\begin{aligned}
+A&=J^{-1}=\frac qd C^{\mathsf T},\qquad AJ=I,\\
+\|A\|_\infty
+ &=\frac q{|d|}\max_i\sum_{j=0}^{10}|C_{ji}|,\\
+\|AF(\bar\theta)\|_\infty
+ &=\frac q{m|d|}\max_i\left|\sum_{j=0}^{10}C_{ji}w_j\right|.
+\end{aligned}
+\tag{120.4}
+$$
+
+In particular the integer inequalities needed below are
+
+$$
+q\max_i\sum_j|C_{ji}|<23|d|,\qquad
+10^{29}q\max_i\left|\sum_j C_{ji}w_j\right|<m|d|.
+\tag{120.5}
+$$
+
+More precise outward rational bounds for these same expressions are
+
+$$
+\begin{aligned}
+22.572405920453996305
+&<\|A\|_\infty<22.572405920453996306<23,\\
+4\cdot10^{-31}
+&<\|AF(\bar\theta)\|_\infty<5\cdot10^{-31}<10^{-29}.
+\end{aligned}
+\tag{120.6}
+$$
+
+Equations (119.2)–(120.4), including the determinant permutation sums,
+are finite formulas for all entries and integers in these inequalities;
+no fitted inverse or floating point tolerance occurs in (120.5).
+
+For the second derivatives use the exact coefficient sums
+
+$$
+H_i=\sum_{|\nu|\ge2}|f_{i\nu}|\,|\nu|(|\nu|-1)2^{|\nu|-2}.
+\tag{120.7}
+$$
+
+In the order $F_0,\ldots,F_{10}$ they are
+
+$$
+(H_i)_{i=0}^{10}=
+(4,2992,2192,8470,4624,2150,2646,10454,10609,4785,1632).
+\tag{120.8}
+$$
+
+Indeed, summing the absolute coefficient bounds for
+$\partial_j\partial_k\theta^\nu$ over $j,k$ gives
+$|\nu|(|\nu|-1)2^{|\nu|-2}$ on the cube $|\theta_j|\le2$.
+Consequently
+
+$$
+\sup_{|\theta_j|\le2}\sum_{j,k}
+|\partial_j\partial_k F_i(\theta)|\le H_i,
+\qquad \max_i H_i=10609.
+\tag{120.9}
+$$
+
+The entire box $\mathcal B$ is in that cube. For
+$G(\theta)=\theta-AF(\theta)$, $DG(\bar\theta)=0$, and the mean-value
+bound along a segment from the centre gives
+
+$$
+\sup_{\mathcal B}\|DG\|_\infty
+\le23\cdot10609\cdot r=244007\cdot10^{-20}<10^{-14}.
+\tag{120.10}
+$$
+
+It follows that for every $\theta\in\mathcal B$,
+
+$$
+\|G(\theta)-\bar\theta\|_\infty
+<10^{-29}+244007\cdot10^{-40}
+=1.00000244007\cdot10^{-29}<r.
+\tag{120.11}
+$$
+
+Thus $G$ maps the closed box strictly into itself and is a contraction.
+The contraction theorem supplies a unique fixed point. Since $A$ is
+invertible, fixed points of $G$ are exactly zeros of $F$.
+
+For clarity, all further interval bounds in this appendix use the
+following rational interval method. Start with the eleven independent
+intervals $[\bar\theta_j-r,\bar\theta_j+r]$. A rational constant is a
+singleton interval. Add and subtract endpoints, multiply by taking the
+minimum and maximum of the four endpoint products, and divide only by
+an interval excluding zero, using its reciprocal interval. Nonnegative
+integer powers can be evaluated by repeated multiplication. Evaluate
+the displayed expressions in their indicated order; repeated variables
+may be treated as independent interval occurrences. Every endpoint
+operation is rational. The decimal endpoints displayed below are
+outward enlargements, so they require no decimal rounding convention
+inside a computation.
+
+For example this method, directly on the initial coordinate intervals,
+gives the strict outer bounds
+
+$$
+\begin{aligned}
+&0.937<a<0.939,\quad 0.337<b<0.339,\quad 0.443<c<0.444,\\
+&0.562<\eta<0.564,\quad 0.606<L<0.607,\\
+&0.388<p_e<0.389,\quad 0.284<p_i<0.285,\quad 0.388<x_i<0.389,\\
+&0.414<\alpha<0.415,\quad 0.811<\beta<0.812,\quad 0.067<\tau<0.069.
+\end{aligned}
+\tag{120.12}
+$$
+
+Hence $p_i+x_i<0.674<1$, and (120.1) follows. Strict interior inclusion
+in (120.11) gives the two strict endpoints in (118.4) by taking the
+$L$-coordinate of (119.7). $\square$
+
+## 121. Legal decoder and the actual composite channel
+
+**Lemma 121.1 (Five-Kraus decoder).** At $\theta_*$ define
+
+$$
+\begin{aligned}
+K_0&=\operatorname{diag}(\sqrt a,-\sqrt b,0),\\
+K_1&=\sqrt{1-a}\,|2\rangle\langle0|,&
+K_2&=\sqrt{1-b}\,|2\rangle\langle1|,\\
+K_3&=\sqrt c\,|1\rangle\langle2|,&
+K_4&=\sqrt{1-c}\,|2\rangle\langle2|,\\
+\mathcal R_*(X)&=\sum_{j=0}^4K_jXK_j^\dagger.
+\end{aligned}
+\tag{121.1}
+$$
+
+This is CPTP, and for arbitrary complex $X$ its action is
+
+$$
+\mathcal R_*(X)=
+\begin{pmatrix}
+ax_{00}&-\eta x_{01}&0\\
+-\eta x_{10}&bx_{11}+cx_{22}&0\\
+0&0&(1-a)x_{00}+(1-b)x_{11}+(1-c)x_{22}
+\end{pmatrix}.
+\tag{121.2}
+$$
+
+*Proof.* All square roots are real by (120.1), and
+
+$$
+\sum_{j=0}^4K_j^\dagger K_j
+=\operatorname{diag}(a+1-a,b+1-b,c+1-c)=I.
+\tag{121.3}
+$$
+
+The equation $F_0=0$ and $\eta>0$ give $\sqrt{ab}=\eta$, proving
+(121.2). At the relevant parameter $\Phi=\Phi_{-1/2}$, a Kraus list is
+
+$$
+\operatorname{diag}(1,-1/2,0),\quad
+\frac{\sqrt3}{2}|2\rangle\langle1|,\quad
+\frac{\sqrt3}{2}|1\rangle\langle2|,\quad
+\frac12|2\rangle\langle2|.
+\tag{121.4}
+$$
+
+Its squared sum is $I$. In particular $\Phi$ and $\mathcal R_*$ both
+preserve density matrices. Their actual composite, on all matrix units
+and hence every complex $X$, is
+
+$$
+\mathcal C_*(X):=\mathcal R_*\Phi(X)=
+\begin{pmatrix}
+ax_{00}&\frac\eta2x_{01}&0\\
+\frac\eta2x_{10}&\frac b4(x_{11}+3x_{22})+\frac c4(3x_{11}+x_{22})&0\\
+0&0&(1-a)x_{00}+\frac{1-b}{4}(x_{11}+3x_{22})
+                     +\frac{1-c}{4}(3x_{11}+x_{22})
+\end{pmatrix}.
+\tag{121.5}
+$$
+
+No change of the target is involved in this composition. $\square$
+
+**Lemma 121.2 (Determinant polynomial).** For $p,x,y\ge0$ with
+$p+x+y=1$, put $z=(\sqrt p,\sqrt x,\sqrt y)^{\mathsf T}$ and
+$P_z=zz^\dagger$. Then
+
+$$
+\sigma:=\mathcal C_*(P_z)=
+\begin{pmatrix}
+h_0&\frac\eta2\sqrt{px}&0\\
+\frac\eta2\sqrt{px}&h_1&0\\
+0&0&h_2
+\end{pmatrix},\qquad
+B(p,x):=LI+\sigma-P_z=
+\begin{pmatrix}
+d_0&-\kappa\sqrt{px}&-\sqrt{py}\\
+-\kappa\sqrt{px}&d_1&-\sqrt{xy}\\
+-\sqrt{py}&-\sqrt{xy}&d_2
+\end{pmatrix}.
+\tag{121.6}
+$$
+
+In particular $\det B(p,x)=N(p,x)$.
+
+*Proof.* Formula (121.5) gives the entries. For a symmetric three-by-three
+matrix with diagonal $d_0,d_1,d_2$ and off-diagonal entries $t_{01}$,
+$t_{02}$, $t_{12}$, its determinant is
+
+$$
+d_0d_1d_2-d_0t_{12}^2-d_1t_{02}^2-d_2t_{01}^2
+                      +2t_{01}t_{02}t_{12}.
+\tag{121.7}
+$$
+
+Substitution gives (119.3), including its negative last term.
+Expansion with $y=1-p-x$ gives all coefficients (119.6). $\square$
+
+## 122. Contact-derived cubic certificate on the whole simplex
+
+**Lemma 122.1 (Cubic identity from five contacts).** At $\theta_*$ let
+
+$$
+\begin{aligned}
+k&=(p_i-p_e)/x_i,\qquad u=p-p_e-kx,\\
+A_0&=n_{20}+3p_en_{30},\quad A_1=n_{30},\quad A_2=3kn_{30}+n_{21},\\
+\delta&=3k^2n_{30}+2kn_{21}+n_{12},\\
+\gamma&=k^3n_{30}+k^2n_{21}+kn_{12}+n_{03},\\
+Q(p,x)&=A_0+A_1(p-p_e)
+       +\left(A_2-kA_1-\frac{\delta^2}{4\gamma}\right)x.
+\end{aligned}
+\tag{122.1}
+$$
+
+Then $x_i,\gamma>0$ and the following polynomial identity holds for all
+real $p,x$:
+
+$$
+\boxed{N(p,x)=Q(p,x)u^2+
+\gamma x\left(x-x_i+\frac{\delta}{2\gamma}u\right)^2.}
+\tag{122.2}
+$$
+
+*Proof.* This identity is a consequence of the five contact equations
+$F_1=\cdots=F_5=0$, and can be derived for a generic cubic with ten
+coefficients. Substitute $p=p_e+kx+u$ and expand in $u$. Its constant
+coefficient $f_0(x)$ has degree at most three, leading coefficient
+$\gamma$, a zero at $x=0$, and a double zero at $x=x_i$:
+
+$$
+f_0(0)=N_e=0,\quad f_0(x_i)=N_i=0,\quad
+f_0'(x_i)=kN_{i,p}+N_{i,x}=0.
+\tag{122.3}
+$$
+
+Because $x_i\ne0$, $f_0(x)=\gamma x(x-x_i)^2$.
+The coefficient $f_1(x)$ of $u$ has degree at most two, leading
+coefficient $\delta$, and
+$f_1(0)=N_{e,p}=0$, $f_1(x_i)=N_{i,p}=0$. Thus
+$f_1(x)=\delta x(x-x_i)$. The remaining terms are
+$(A_0+A_2x)u^2+A_1u^3$, directly from the coefficients of the generic
+cubic. Therefore
+
+$$
+N=\gamma x(x-x_i)^2+\delta x(x-x_i)u
+                    +(A_0+A_1u+A_2x)u^2.
+\tag{122.4}
+$$
+
+Completing the square gives (122.2), since
+$Q=A_0+A_1u+(A_2-\delta^2/(4\gamma))x$.
+This is an exact identity modulo the five contacts; the contacts are
+not approximate zeros.
+
+For the denominator signs and the global inequality, apply the rational
+interval method of §120 to (119.6) and then (122.1), on the whole box
+$\mathcal B$. Coarse outward rational enclosures are
+
+| Expression | Lower endpoint | Upper endpoint |
+| --- | --- | --- |
+| $k$ | $-0.268016$ | $-0.268014$ |
+| $\delta$ | $-0.023055$ | $-0.023052$ |
+| $\gamma$ | $0.000436$ | $0.000437$ |
+| $Q(0,0)$ | $0.944714$ | $0.944715$ |
+| $Q(1,0)$ | $0.590314$ | $0.590315$ |
+| $Q(0,1)$ | $0.720186$ | $0.720187$ |
+
+All entries lie strictly between the stated endpoints. In particular
+
+$$
+\frac1{2500}<\gamma<\frac1{2000},\quad
+Q(0,0)>\frac9{10},\quad Q(1,0)>\frac12,\quad Q(0,1)>\frac12.
+\tag{122.5}
+$$
+
+The bound $x_i>0.388$ in (120.12) justifies division by $x_i$ before
+this evaluation. The positive lower bound for $\gamma$ then justifies
+every division in $Q$ and (122.2). $\square$
+
+**Proposition 122.2 (All-density upper bound and contacts).** The decoder
+$\mathcal R_*$ satisfies $e_{-1/2}(\mathcal R_*)=L$.
+
+*Proof.* Let $p,x,y\ge0$ and $p+x+y=1$. Since $Q$ is affine,
+
+$$
+Q(p,x)=yQ(0,0)+pQ(1,0)+xQ(0,1)>1/2.
+\tag{122.6}
+$$
+
+The identity (122.2), $\gamma>0$ and $x\ge0$ imply $N(p,x)\ge0$ on
+the entire closed simplex. In particular the edge $x=0$ gives
+$N(p,0)=Q(p,0)(p-p_e)^2$. The edges $p=0$ and $y=0$, their vertices,
+and zero amplitudes are included in the same identity. There is no
+division by a variable population.
+
+Write $B_0=LI+\sigma$. This matrix is positive definite because
+$L>0$ and $\sigma\succeq0$. The rank-one determinant formula gives
+
+$$
+N=\det(B_0-P_z)=\det B_0\,(1-z^\dagger B_0^{-1}z).
+\tag{122.7}
+$$
+
+It follows that $\|B_0^{-1/2}z\|^2\le1$. Equivalently
+$I-(B_0^{-1/2}z)(B_0^{-1/2}z)^\dagger\succeq0$, so
+$P_z\preceq B_0$ and $\lambda_{\max}(P_z-\sigma)\le L$.
+
+The trace metric at a pure target requires an inertia argument. On the
+two-dimensional subspace $z^\perp$, the Hermitian matrix
+$H=P_z-\sigma$ has quadratic form $-\langle v,\sigma v\rangle\le0$.
+Thus $H$ has at most one positive eigenvalue: a two-dimensional positive
+spectral subspace would intersect $z^\perp$ nontrivially. Since
+$\operatorname{Tr}H=0$, its positive eigenvalues sum to
+$\frac12\|H\|_1$, and consequently
+
+$$
+\frac12\|P_z-\sigma\|_1=\lambda_{\max}(P_z-\sigma)\le L.
+\tag{122.8}
+$$
+
+If $H$ has no positive eigenvalue, trace zero forces $H=0$, and the
+same equality holds. Trace zero alone, without the pure-target inertia
+property, would not justify (122.8).
+
+For every diagonal unitary $U$, (121.5) directly gives
+$\mathcal C_*(UXU^\dagger)=U\mathcal C_*(X)U^\dagger$.
+Every complex unit vector is $Uz$ for nonnegative populations $z$;
+zero components cause no exception. Unitary invariance of the trace
+norm therefore proves (122.8) for every complex pure state. If
+$\rho=\sum_j t_jP_j$ is a spectral decomposition, linearity and the
+triangle inequality give
+
+$$
+\frac12\|\rho-\mathcal C_*(\rho)\|_1
+\le\sum_j t_j\frac12\|P_j-\mathcal C_*(P_j)\|_1\le L.
+\tag{122.9}
+$$
+
+Hence $e_{-1/2}(\mathcal R_*)\le L$ on all densities.
+
+The strict signs of $Q,\gamma$ in (122.2) show that $N=0$ on the
+simplex exactly when $u=0$ and $x=0$ or $x=x_i$. The two population
+contacts are therefore exactly $(p_e,0)$ and $(p_i,x_i)$.
+At either contact (122.7) is zero, so $B_0-P_z$ has a kernel and
+$P_z-\sigma$ has eigenvalue $L>0$. Thus both contacts attain the
+half trace distance $L$, and arbitrary complex phases give their
+complete pure-state orbits. This proves the asserted equality for this
+decoder, without classifying other minimizing decoders. $\square$
+
+## 123. Twelve physical inputs, adjugate effects and weights
+
+**Definition 123.1 (Contact projectors and legal effects).** Let
+
+$$
+\begin{aligned}
+&(p_r,x_r,y_r)=
+\begin{cases}(p_e,0,1-p_e),&r=e,\\
+(p_i,x_i,1-p_i-x_i),&r=i,
+\end{cases}\\
+&z_r=(\sqrt{p_r},\sqrt{x_r},\sqrt{y_r})^{\mathsf T},\qquad
+P_r=z_rz_r^\dagger,\qquad B_r=B(p_r,x_r).
+\end{aligned}
+\tag{123.1}
+$$
+
+For either contact evaluate the $d_j$ of (119.2) and put
+
+$$
+\begin{aligned}
+m_{0r}&=d_{1r}d_{2r}-x_ry_r,\\
+m_{1r}&=d_{0r}d_{2r}-p_ry_r,\\
+m_{2r}&=d_{0r}d_{1r}-\kappa^2p_rx_r,\\
+A_r:=\operatorname{adj}B_r
+&=\begin{pmatrix}
+m_{0r}&\sqrt{p_rx_r}(y_r+\kappa d_{2r})
+       &\sqrt{p_ry_r}(d_{1r}+\kappa x_r)\\
+\sqrt{p_rx_r}(y_r+\kappa d_{2r})&m_{1r}
+       &\sqrt{x_ry_r}(d_{0r}+\kappa p_r)\\
+\sqrt{p_ry_r}(d_{1r}+\kappa x_r)
+       &\sqrt{x_ry_r}(d_{0r}+\kappa p_r)&m_{2r}
+\end{pmatrix},\\
+T_r&=\frac{A_r}{N_{r,L}},\qquad
+\lambda_e=\alpha N_{e,L},\qquad \lambda_i=\beta N_{i,L}.
+\end{aligned}
+\tag{123.2}
+$$
+
+**Lemma 123.2 (Effects and probability normalization).** Each $T_r$ is
+a rank-one orthogonal projector, $0\preceq T_r\preceq I$, and
+$\lambda_e,\lambda_i>0$, $\lambda_e+\lambda_i=1$. Moreover
+
+$$
+\operatorname{Tr}\bigl[T_r(P_r-\mathcal C_*(P_r))\bigr]=L.
+\tag{123.3}
+$$
+
+*Proof.* By §122, $B_r\succeq0$ and $\det B_r=0$.
+The congruence in (122.7) identifies $B_r$ with a rank-one update
+$I-vv^\dagger$ of the identity, where $\|v\|=1$. It follows that
+$\operatorname{rank}B_r=2$. Thus $A_r\succeq0$ has rank one.
+Differentiating $\det B$ with respect to $L$, since $\partial_LB=I$,
+gives
+
+$$
+N_{r,L}=\operatorname{Tr}A_r=m_{0r}+m_{1r}+m_{2r}>0.
+\tag{123.4}
+$$
+
+Consequently $T_r$ is a rank-one orthogonal projector. The entries in
+(123.2) follow by the six three-by-three cofactors; equivalently
+$B_rA_r=0$ and
+$A_r^2=(\operatorname{Tr}A_r)A_r$ at the contact. Since
+$(P_r-\mathcal C_*(P_r))T_r=LT_r$, (123.3) follows.
+
+Rational interval evaluation of (123.2)–(123.4), on all of
+$\mathcal B$, gives the following strict outward enclosures:
+
+| Expression | Lower endpoint | Upper endpoint |
+| --- | --- | --- |
+| $N_{e,L}$ | $0.821001$ | $0.821002$ |
+| $N_{i,L}$ | $0.812395$ | $0.812397$ |
+| $\lambda_e$ | $0.340583$ | $0.340585$ |
+| $\lambda_i$ | $0.659415$ | $0.659417$ |
+
+In particular every effect denominator is greater than $4/5$.
+The positivity of $\alpha,\beta$ gives positive weights, and $F_6=0$
+is precisely $\lambda_e+\lambda_i=1$. $\square$
+
+**Definition 123.3 (All physical tests).** Let $\omega=e^{2\pi i/3}$
+and $U_{k\ell}=\operatorname{diag}(1,\omega^k,\omega^\ell)$ for
+$k,\ell\in\{0,1,2\}$. The eighteen indexed input/effect pairs are
+
+$$
+P_{r,k\ell}=U_{k\ell}P_rU_{k\ell}^\dagger,\qquad
+T_{r,k\ell}=U_{k\ell}T_rU_{k\ell}^\dagger,
+\qquad w_{r,k\ell}=\lambda_r/9.
+\tag{123.5}
+$$
+
+Here is the full list of twelve distinct physical pure inputs. Each
+ket in the middle column defines its projector; its effect is the
+corresponding conjugate in (123.5). The right column gives its total
+weight after repeated indexed pairs are combined. Write
+$P=p_e$, $Y_e=1-p_e$, and $p=p_i$, $x=x_i$, $y=1-p_i-x_i$
+only in this table.
+
+| Input label | Unit ket | Total weight |
+| --- | --- | --- |
+| $e,0$ | $(\sqrt P,0,\sqrt{Y_e})^{\mathsf T}$ | $\lambda_e/3$ |
+| $e,1$ | $(\sqrt P,0,\omega\sqrt{Y_e})^{\mathsf T}$ | $\lambda_e/3$ |
+| $e,2$ | $(\sqrt P,0,\omega^2\sqrt{Y_e})^{\mathsf T}$ | $\lambda_e/3$ |
+| $i,00$ | $(\sqrt p,\sqrt x,\sqrt y)^{\mathsf T}$ | $\lambda_i/9$ |
+| $i,01$ | $(\sqrt p,\sqrt x,\omega\sqrt y)^{\mathsf T}$ | $\lambda_i/9$ |
+| $i,02$ | $(\sqrt p,\sqrt x,\omega^2\sqrt y)^{\mathsf T}$ | $\lambda_i/9$ |
+| $i,10$ | $(\sqrt p,\omega\sqrt x,\sqrt y)^{\mathsf T}$ | $\lambda_i/9$ |
+| $i,11$ | $(\sqrt p,\omega\sqrt x,\omega\sqrt y)^{\mathsf T}$ | $\lambda_i/9$ |
+| $i,12$ | $(\sqrt p,\omega\sqrt x,\omega^2\sqrt y)^{\mathsf T}$ | $\lambda_i/9$ |
+| $i,20$ | $(\sqrt p,\omega^2\sqrt x,\sqrt y)^{\mathsf T}$ | $\lambda_i/9$ |
+| $i,21$ | $(\sqrt p,\omega^2\sqrt x,\omega\sqrt y)^{\mathsf T}$ | $\lambda_i/9$ |
+| $i,22$ | $(\sqrt p,\omega^2\sqrt x,\omega^2\sqrt y)^{\mathsf T}$ | $\lambda_i/9$ |
+
+The edge ket and effect are independent of $k$: $x_e=0$ makes both
+$01$ and $12$ entries of $A_e$ zero. Each edge pair is repeated for
+$k=0,1,2$. The first component of each ket is positive, fixing its
+global phase; positivity of the other occupied populations proves the
+claimed distinctness. All effects are fixed matrices, and all tests
+are unassisted qutrit inputs.
+
+## 124. Exact phase twirl and explicit Choi matrices
+
+**Definition 124.1 (Output-first convention).** Put $E_{jk}=|j\rangle
+\langle k|$. For any complex linear map $\mathcal R:M_3\to M_3$ use
+
+$$
+J_{\mathcal R}=\sum_{j,k=0}^2\mathcal R(E_{jk})\otimes E_{jk},\qquad
+\operatorname{Tr}[T\mathcal R(Q)]
+=\operatorname{Tr}[(T\otimes Q^{\mathsf T})J_{\mathcal R}].
+\tag{124.1}
+$$
+
+For CPTP maps $J_{\mathcal R}\succeq0$ and
+$\operatorname{Tr}_{\rm out}J_{\mathcal R}=I$.
+The transpose is the ordinary matrix transpose, including for complex
+$Q$; it is essential to the phase cancellation below. Define
+
+$$
+W=\sum_{r=e,i}\sum_{k,\ell=0}^2
+\frac{\lambda_r}{9}\,
+T_{r,k\ell}\otimes\Phi(P_{r,k\ell})^{\mathsf T}.
+\tag{124.2}
+$$
+
+**Lemma 124.2 (All entries of the twirled functional).** Let
+
+$$
+\begin{aligned}
+v_r&=(p_r,(x_r+3y_r)/4,(3x_r+y_r)/4),\\
+\zeta_e&=\alpha,\qquad\zeta_i=\beta,\\
+M_{ij}&=\sum_{r=e,i}\zeta_r m_{ir}v_{jr}\quad(0\le i,j\le2),\\
+g&=\sum_{r=e,i}\zeta_r p_rx_r(y_r+\kappa d_{2r}).
+\end{aligned}
+\tag{124.3}
+$$
+
+In the ordered tensor basis
+$(00,01,02,10,11,12,20,21,22)$, all 81 entries of $W$ are specified by
+
+$$
+W=\begin{pmatrix}
+M_{00}&0&0&0&-g/2&0&0&0&0\\
+0&M_{01}&0&0&0&0&0&0&0\\
+0&0&M_{02}&0&0&0&0&0&0\\
+0&0&0&M_{10}&0&0&0&0&0\\
+-g/2&0&0&0&M_{11}&0&0&0&0\\
+0&0&0&0&0&M_{12}&0&0&0\\
+0&0&0&0&0&0&M_{20}&0&0\\
+0&0&0&0&0&0&0&M_{21}&0\\
+0&0&0&0&0&0&0&0&M_{22}
+\end{pmatrix}.
+\tag{124.4}
+$$
+
+*Proof.* The exact nine-element character average is
+
+$$
+\frac19\sum_{k,\ell=0}^2\omega^{ku+\ell v}
+=\begin{cases}1,&u=v=0\pmod3,\\0,&\text{otherwise}.\end{cases}
+\tag{124.5}
+$$
+
+Set $c_0=(0,0)$, $c_1=(1,0)$, $c_2=(0,1)$ in $\mathbb Z_3^2$.
+The nine matrix-unit characters $c_i-c_{i'}$ are exactly
+
+$$
+\begin{array}{c|ccc}
+i\backslash i'&0&1&2\\\hline
+0&(0,0)&(2,0)&(0,2)\\
+1&(1,0)&(0,0)&(1,2)\\
+2&(0,1)&(2,1)&(0,0)
+\end{array}.
+\tag{124.6}
+$$
+
+The entry $(ii',jj')$ of
+$T_{r,k\ell}\otimes\Phi(P_{r,k\ell})^{\mathsf T}$ has character
+$c_i-c_{i'}+c_{j'}-c_j$. By (124.6) this vanishes only if both factors
+are diagonal, or if $i\ne i'$ and $(j,j')=(i,i')$.
+The channel $\Phi$ has only $01$ and $10$ off-diagonal output entries.
+Consequently only the $00,11$ and $11,00$ off-diagonal tensor entries
+survive. Since $\lambda_rT_r=\zeta_rA_r$, their common value is
+
+$$
+\sum_r\zeta_r\sqrt{p_rx_r}(y_r+\kappa d_{2r})
+                  \left(-\frac12\sqrt{p_rx_r}\right)=-g/2.
+\tag{124.7}
+$$
+
+The diagonal entries are exactly $M_{ij}$ in (124.3). This proves
+every entry in (124.4), including all its zero entries. $\square$
+
+**Lemma 124.3 (Stationarity identities and positive slack).** At the
+isolated root,
+
+$$
+M_{20}-M_{00}=\tau b,\quad
+M_{21}-M_{11}=\tau a,\quad
+M_{12}=M_{22},\quad g=2\tau\eta.
+\tag{124.8}
+$$
+
+Let
+
+$$
+\begin{aligned}
+Y&=\operatorname{diag}(M_{20},M_{21},M_{22}),\qquad
+S=I_{\rm out}\otimes Y-W,\\
+s_{10}&=M_{20}-M_{10},\quad
+s_{01}=M_{21}-M_{01},\quad
+s_{02}=M_{22}-M_{02}.
+\end{aligned}
+\tag{124.9}
+$$
+
+Then $S\succeq0$ and $SJ_*=0$, where $J_*=J_{\mathcal R_*}$.
+
+*Proof.* Differentiating (119.3), or using its adjugate entries, gives
+polynomial identities
+
+$$
+\begin{aligned}
+N_a&=p(m_0-m_2),&
+N_b&=v_1(m_1-m_2),\\
+N_c&=v_2(m_1-m_2),&
+N_\eta&=px(y+\kappa d_2).
+\end{aligned}
+\tag{124.10}
+$$
+
+Here $m_j$ have the same population formulas as in (123.2), before
+contact substitution. Therefore, even before imposing $F=0$,
+
+$$
+\begin{aligned}
+M_{20}-M_{00}-\tau b&=-F_7,\\
+M_{21}-M_{11}-\tau a&=-F_8,\\
+M_{12}-M_{22}&=F_9,\\
+g-2\tau\eta&=F_{10}.
+\end{aligned}
+\tag{124.11}
+$$
+
+This proves (124.8) as exact identities at the root.
+For explicit magnitudes, applying the rational interval operations of
+§120 to (119.2), (123.2) and (124.3) on $\mathcal B$ yields the strict
+entrywise enclosures $M^-<M<M^+$, with
+
+$$
+M^-=\begin{pmatrix}
+0.109494&0.130511&0.093541\\
+0.077977&0.093862&0.102283\\
+0.132451&0.157595&0.102283
+\end{pmatrix},\qquad
+M^+=\begin{pmatrix}
+0.109495&0.130512&0.093542\\
+0.077978&0.093863&0.102284\\
+0.132452&0.157596&0.102284
+\end{pmatrix}.
+\tag{124.12}
+$$
+
+The corresponding strict bounds for $g$ and the slacks are
+
+$$
+\begin{aligned}
+0.076502&<g<0.076503,\\
+0.054474&<s_{10}<0.054475,\\
+0.027084&<s_{01}<0.027085,\\
+0.008742&<s_{02}<0.008743.
+\end{aligned}
+\tag{124.13}
+$$
+
+In particular all three slacks exceed $1/1000$ on the entire root box.
+Their signs do not rely on evaluating only the centre.
+
+All entries of $S$ can now be written as
+
+$$
+\begin{aligned}
+S={}&\tau\bigl(b|00\rangle\langle00|
+ +\eta|00\rangle\langle11|+\eta|11\rangle\langle00|
+ +a|11\rangle\langle11|\bigr)\\
+&+s_{10}|10\rangle\langle10|
+ +s_{01}|01\rangle\langle01|
+ +s_{02}|02\rangle\langle02|.
+\end{aligned}
+\tag{124.14}
+$$
+
+The first block is $\tau\begin{pmatrix}b&\eta\\\eta&a\end{pmatrix}$.
+It is positive semidefinite of rank one since $a,b,\tau>0$ and
+$ab=\eta^2$; it is the outer product with vector
+$\sqrt\tau(\sqrt b,\sqrt a)^{\mathsf T}$. The remaining displayed
+terms are positive, and all unlisted entries vanish. This proves the
+complex-Hermitian matrix inequality $S\succeq0$.
+
+For completeness the entire Choi matrix of the decoder is
+
+$$
+J_*=\begin{pmatrix}
+a&0&0&0&-\eta&0&0&0&0\\
+0&0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0&0\\
+-\eta&0&0&0&b&0&0&0&0\\
+0&0&0&0&0&c&0&0&0\\
+0&0&0&0&0&0&1-a&0&0\\
+0&0&0&0&0&0&0&1-b&0\\
+0&0&0&0&0&0&0&0&1-c
+\end{pmatrix}.
+\tag{124.15}
+$$
+
+Its $00,11$ block is the outer product with
+$(\sqrt a,-\sqrt b)^{\mathsf T}$, and the other nonzero diagonal
+entries are $1-a,1-b,c,1-c>0$. Its partial output trace is
+$\operatorname{diag}(a+1-a,b+1-b,c+1-c)=I$.
+The two blocks multiply to
+
+$$
+\tau\begin{pmatrix}b&\eta\\\eta&a\end{pmatrix}
+\begin{pmatrix}a&-\eta\\-\eta&b\end{pmatrix}
+=\tau(ab-\eta^2)I_2=0.
+\tag{124.16}
+$$
+
+The other support positions of $J_*$ lie at zero entries of $S$.
+Hence $SJ_*=0$ exactly. $\square$
+
+## 125. Matching lower bound for every CPTP decoder
+
+**Theorem 125.1 (Unrestricted lower certificate).** For every complex
+CPTP map $\mathcal R:M_3\to M_3$,
+
+$$
+e_{-1/2}(\mathcal R)\ge L_*.
+\tag{125.1}
+$$
+
+*Proof.* Define the constant
+
+$$
+b_{\rm test}=\sum_{r=e,i}\lambda_r\operatorname{Tr}(T_rP_r).
+\tag{125.2}
+$$
+
+For a trace-zero Hermitian matrix $H$, its positive and negative parts
+have equal trace, and every effect $0\preceq T\preceq I$ satisfies
+$\operatorname{Tr}(TH)\le\operatorname{Tr}(H_+)=\frac12\|H\|_1$.
+Apply this inequality to every legal pair (123.5). Their weights are
+positive and sum to one. The error maximum is at least their weighted
+average, so (124.1)–(124.2) give
+
+$$
+\begin{aligned}
+e_{-1/2}(\mathcal R)
+&\ge\sum_{r,k,\ell}\frac{\lambda_r}{9}
+ \operatorname{Tr}\!\left[T_{r,k\ell}
+ (P_{r,k\ell}-\mathcal R\Phi(P_{r,k\ell}))\right]\\
+&=b_{\rm test}-\operatorname{Tr}(WJ_{\mathcal R}).
+\end{aligned}
+\tag{125.3}
+$$
+
+The first term is $b_{\rm test}$ by unitary invariance of trace.
+Since $S\succeq0$ and $J_{\mathcal R}\succeq0$,
+$\operatorname{Tr}(SJ_{\mathcal R})\ge0$; this follows, for example,
+by tracing $S^{1/2}J_{\mathcal R}S^{1/2}\succeq0$.
+Trace preservation and (124.9) imply
+
+$$
+\operatorname{Tr}(WJ_{\mathcal R})
+\le\operatorname{Tr}[(I_{\rm out}\otimes Y)J_{\mathcal R}]
+=\operatorname{Tr}Y.
+\tag{125.4}
+$$
+
+Thus every complex CPTP map obeys
+$e_{-1/2}(\mathcal R)\ge b_{\rm test}-\operatorname{Tr}Y$.
+This argument has not averaged, restricted or changed $\mathcal R$.
+The phase twirl constructed the fixed supporting functional $W$;
+it imposed no symmetry on the arbitrary decoder in (125.3).
+
+It remains to identify the lower value exactly. Covariance of
+$\mathcal C_*$, (123.3), and $\lambda_e+\lambda_i=1$ give
+
+$$
+b_{\rm test}-\operatorname{Tr}(WJ_*)
+=\sum_{r,k,\ell}\frac{\lambda_r}{9}L=L.
+\tag{125.5}
+$$
+
+Complementarity $SJ_*=0$ and $\operatorname{Tr}_{\rm out}J_*=I$ give
+$\operatorname{Tr}(WJ_*)=\operatorname{Tr}Y$. Consequently
+
+$$
+\boxed{b_{\rm test}-\operatorname{Tr}Y=L.}
+\tag{125.6}
+$$
+
+An additional polynomial form of the matching identity makes its finite
+algebra explicit. Define
+
+$$
+\begin{aligned}
+t_r={}&p_rm_{0r}+x_rm_{1r}+y_rm_{2r}
+ +2p_rx_r(y_r+\kappa d_{2r})\\
+&+2p_ry_r(d_{1r}+\kappa x_r)
+ +2x_ry_r(d_{0r}+\kappa p_r).
+\end{aligned}
+\tag{125.7}
+$$
+
+Then $t_r=\operatorname{Tr}(A_rP_r)$ and
+$b_{\rm test}=\alpha t_e+\beta t_i$ at the root. In fact, before
+imposing the polynomial equations, direct substitution of
+(119.2)–(119.4), (123.2), (124.3) and (125.7) gives the identity
+
+$$
+\begin{aligned}
+\alpha t_e+\beta t_i-\operatorname{Tr}Y-L
+={}&LF_6-3\alpha F_1-3\beta F_3
+ +aF_7+bF_8+cF_9+\eta F_{10}-2\tau F_0.
+\end{aligned}
+\tag{125.8}
+$$
+
+Every term on the right vanishes at $\theta_*$. This also proves
+(125.6) by polynomial arithmetic alone. Outward rational enclosures,
+provided only to locate the constants, are
+
+$$
+\begin{aligned}
+0.998777&<b_{\rm test}<0.998779,\\
+0.392330&<\operatorname{Tr}Y<0.392332.
+\end{aligned}
+\tag{125.9}
+$$
+
+The equality in (125.6) is exact, not obtained by subtracting these
+intervals. Combining it with (125.3)–(125.4) proves (125.1).
+Proposition 122.2 supplies the opposite inequality and its attaining
+map, proving Theorem 118.2. Transport (118.3) proves the assertion for
+the original terminal decoder $D_*$. $\square$
+
+The proof separates two uses of the inputs. The twelve fixed physical
+states support a lower bound for all decoders. The independent
+polynomial identity (122.2) supplies the upper bound for every input
+of the single decoder $\mathcal R_*$. A finite test optimum alone
+would not establish (118.4).
+
+## 126. Mathematical correspondences and scope of the exact value
+
+The Choi supporting inequality and complementarity in §§124–125 are
+of the form treated by [Coutts, Girard and Watrous, Theorem 3][CGW-N2].
+For the linear functional $J\mapsto-\operatorname{Tr}(WJ)$ the domain
+is the full Hermitian matrix space, and the channel Choi set has a
+positive definite relative-interior point $I_9/3$; hence the
+relative-interior hypothesis in that theorem presents no additional
+restriction here. Equations (125.3)–(125.6) give the required weak-duality
+and equality argument directly, so no uncomputed dual optimum is a
+premise of the certificate.
+
+For the statistical experiment indexed by pure qutrit states,
+$\rho_\theta=\Phi(P_\theta)$ and $\sigma_\theta=P_\theta$,
+[Matsumoto, Theorem 5][MAT-EXP] uses a single common CPTP reconstruction
+map and the full trace norm. Its tolerance here is
+$e_\theta=2L_*$. [Jenčová, §4, Theorem 4(iii)][JC-EXP] writes the
+reconstruction inequality as a full-trace bound $2\epsilon$, so the
+corresponding parameter is $\epsilon=L_*$. Decision-space ancillary
+systems in comparison criteria do not supply a reference input or
+history access to the terminal map in (118.2). These correspondences
+identify the objective and its factor of two; the explicit certificates
+above carry the value.
+
+The exact assertion is confined to $s=-1/2$, equivalently the actual
+horizon $n=2$, with the original identity target and unassisted
+half-trace-distance density tests. The defining algebraic object is the
+unique eleven-variable root in (119.7); no minimal polynomial or radical
+formula is needed. The equality-set statement in §122 concerns the pure
+maximizers of the displayed decoder. It gives neither a classification
+of all unrestricted optimal decoders nor a minimum possible size of a
+supporting certificate. Exact values for other finite horizons
+$n\ge3$ are outside this appendix.
+
+[CGW-N2]: https://arxiv.org/pdf/1810.13295v4 "Bryan Coutts, Mark Girard and John Watrous, Certifying optimality for convex quantum channel optimization problems, Theorem 3"
+
+## 追加锚（本行以下为增补区）
+
+## 127. A saturated decoder on the entire negative branch
 
 Keep the ordered basis (93.1), the actual powers $F^n$ of (93.3),
-and the reduced channel $\Phi_s$ of (93.5). Throughout §§118–123,
+and the reduced channel $\Phi_s$ of (93.5). Throughout §§127–132,
 $e_s(\mathcal R)$ and $\mu(s)$ mean precisely (105.2): one terminal
 CPTP map is chosen before the unknown input, and its error is maximized
 over every complex qutrit density matrix. The identity target and
-terminal permissions of Definition 105.1 are unchanged.
+terminal permissions of Definition 105.1 are unchanged. The symbols
+$(u,\eta)$ and $\kappa(u,\eta)$ refer to the family (108.2) and its
+coefficient (108.10), independently of the root coordinates and scalar
+$\kappa$ in §119. The decoder $\mathcal R_{\mathrm{fam}}$ below is
+distinct from the exact horizon-two decoder $\mathcal R_*$ of §121;
+the corresponding terminal maps are $D_{\mathrm{fam}}$ and $D_*$.
+The unrestricted horizon-two value is exactly (118.4).
 
-**Lemma 118.1 (A boundary CPTP decoder and its nine matrix-unit images).**
+**Lemma 127.1 (A boundary CPTP decoder and its nine matrix-unit images).**
 The single map
 
 $$
-\mathcal R_*:=\mathcal R_{1/2,1/2}=\Phi_{-1/2}
-\tag{118.1}
+\mathcal R_{\mathrm{fam}}:=\mathcal R_{1/2,1/2}=\Phi_{-1/2}
+\tag{127.1}
 $$
 
 is CPTP and is independent of both the input and $q$. For every
 $0\le q\le1/2$ it satisfies the complex-linear channel identity
 
 $$
-\boxed{\mathcal R_*\circ\Phi_{-q}=\Phi_{q/2}\quad\text{on }M_3.}
-\tag{118.2}
+\boxed{\mathcal R_{\mathrm{fam}}\circ\Phi_{-q}=\Phi_{q/2}\quad\text{on }M_3.}
+\tag{127.2}
 $$
 
 *Proof.* In (108.1), $u=\eta=1/2$ gives
@@ -3047,7 +4154,7 @@ K_0=\operatorname{diag}(1,-1/2,0),\qquad
 K_1=\tfrac12 E_{22},\qquad
 K_2=\tfrac{\sqrt3}{2}E_{21},\qquad
 K_3=\tfrac{\sqrt3}{2}E_{12}.
-\tag{118.3}
+\tag{127.3}
 $$
 
 Their adjoint products sum to
@@ -3055,7 +4162,7 @@ $E_{00}+(1/4+3/4)E_{11}+(1/4+3/4)E_{22}=I$.
 The additional $E_{11}$ Kraus coefficient in (108.4) is exactly zero.
 Thus complete positivity and trace preservation hold on the saturated
 boundary, without any strict positivity hypothesis. Comparing (108.2)
-with (93.5) gives the equality in (118.1).
+with (93.5) gives the equality in (127.1).
 
 Lemma 105.2 supplies CPTP input channels throughout the closed interval
 $0\le q\le1/2$. In its Kraus formula the possibly vanishing squared
@@ -3065,37 +4172,37 @@ Applying (108.3) at the displayed pair gives all nine images:
 
 $$
 \begin{aligned}
-(\mathcal R_*\Phi_{-q})(E_{00})&=E_{00},\\
-(\mathcal R_*\Phi_{-q})(E_{11})
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{00})&=E_{00},\\
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{11})
  &=\tfrac{2+q}{4}E_{11}+\tfrac{2-q}{4}E_{22},\\
-(\mathcal R_*\Phi_{-q})(E_{22})
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{22})
  &=\tfrac{2-q}{4}E_{11}+\tfrac{2+q}{4}E_{22},\\
-(\mathcal R_*\Phi_{-q})(E_{01})&=\tfrac q2 E_{01},\qquad
-(\mathcal R_*\Phi_{-q})(E_{10})=\tfrac q2 E_{10},\\
-(\mathcal R_*\Phi_{-q})(E_{ij})&=0
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{01})&=\tfrac q2 E_{01},\qquad
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{10})=\tfrac q2 E_{10},\\
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{ij})&=0
  \quad\bigl((i,j)\in\{(0,2),(2,0),(1,2),(2,1)\}\bigr).
 \end{aligned}
-\tag{118.4}
+\tag{127.4}
 $$
 
 For the two population columns this is multiplication of the mixing
 matrices with parameters $-1/2$ and $-q$; the surviving coherence
 multipliers also multiply. These are exactly the images of $\Phi_{q/2}$.
-The matrix units form a complex basis of $M_3$, proving (118.2) for all
+The matrix units form a complex basis of $M_3$, proving (127.2) for all
 complex matrices. $\square$
 
-## 119. The exact all-input error of the fixed decoder
+## 128. The exact all-input error of the fixed decoder
 
-**Theorem 119.1 (Finite fixed-decoder error).** With the full input set
+**Theorem 128.1 (Finite fixed-decoder error).** With the full input set
 of Definition 105.1,
 
 $$
 \boxed{\displaystyle
- e_{-q}(\mathcal R_*)
+ e_{-q}(\mathcal R_{\mathrm{fam}})
  =\max_{\rho\in\mathsf D(\mathbb C^3)}
-   \frac12\|\mathcal R_*\Phi_{-q}(\rho)-\rho\|_1
+   \frac12\|\mathcal R_{\mathrm{fam}}\Phi_{-q}(\rho)-\rho\|_1
  =\frac23-\frac q{12}\qquad(0\le q\le1/2).}
-\tag{119.1}
+\tag{128.1}
 $$
 
 The same input $P$ in (107.6) attains this error for every such $q$.
@@ -3104,16 +4211,16 @@ Consequently
 $$
 \mu(-q)\le\frac23-\frac q{12}<\frac23
 \qquad(0<q\le1/2).
-\tag{119.2}
+\tag{128.2}
 $$
 
-*Proof.* Put $r=q/2\in[0,1/4]$. The channel identity (118.2) and the
+*Proof.* Put $r=q/2\in[0,1/4]$. The channel identity (127.2) and the
 positive-branch identity-decoder equality (107.5) give
 
 $$
-e_{-q}(\mathcal R_*)=e_r(\operatorname{id})
+e_{-q}(\mathcal R_{\mathrm{fam}})=e_r(\operatorname{id})
  =\frac23-\frac r6=\frac23-\frac q{12}.
-\tag{119.3}
+\tag{128.3}
 $$
 
 The reused equality (107.5) bounds every complex density input; its
@@ -3121,27 +4228,27 @@ pure-input reduction and endpoint calculation are those of Lemma 105.3
 and Proposition 107.2. No restriction to real states or selected probes
 is introduced by this substitution. For the matching input, reuse
 $v=(\sqrt{1/3},\sqrt{1/6},\sqrt{1/2})^{\mathsf T}$ and $P=vv^\dagger$
-of (107.6). The same proposition and (118.2) give
+of (107.6). The same proposition and (127.2) give
 
 $$
-(\mathcal R_*\Phi_{-q}(P)-P)v
+(\mathcal R_{\mathrm{fam}}\Phi_{-q}(P)-P)v
  =-\left(\frac23-\frac q{12}\right)v.
-\tag{119.4}
+\tag{128.4}
 $$
 
 Together with (105.6), this attains the all-input upper bound. Finally,
-$\mathcal R_*$ is one admissible member of the decoder minimum, which
-gives (119.2) in the upper-bound direction. The decoder is fixed before
+$\mathcal R_{\mathrm{fam}}$ is one admissible member of the decoder minimum, which
+gives (128.2) in the upper-bound direction. The decoder is fixed before
 both the unknown input and the choice of $q$. $\square$
 
-## 120. Improved even-horizon intervals with the phase-orbit lower bound
+## 129. Improved even-horizon intervals with the phase-orbit lower bound
 
-**Corollary 120.1 (A single terminal decoder at every even horizon).**
+**Corollary 129.1 (A single terminal decoder at every even horizon).**
 For every even integer $n\ge2$, put $q_n=2^{1-n}$. The same CPTP map
 
 $$
-D_*:=\mathcal R_*\circ\operatorname{Ad}_{U_0^\dagger}
-\tag{120.1}
+D_{\mathrm{fam}}:=\mathcal R_{\mathrm{fam}}\circ\operatorname{Ad}_{U_0^\dagger}
+\tag{129.1}
 $$
 
 has exact whole-input error $2/3-q_n/12$ at horizon $n$, and
@@ -3151,34 +4258,37 @@ $$
 F(q_n)=\frac{1-q_n+\sqrt{(1-q_n)^2+8}}6
  \le\mu_n\le\frac23-\frac{q_n}{12}<\frac23
  \qquad(n\ge2\text{ even}).}
-\tag{120.2}
+\tag{129.2}
 $$
 
-In particular the horizon-two interval is
+At horizon two, Theorem 118.2 identifies the value inside this enclosure:
 
 $$
 \boxed{\displaystyle
-\mu_2\in\left[\frac{1+\sqrt{33}}{12},\frac58\right].}
-\tag{120.3}
+\mu_2=L_*\in\left[\frac{1+\sqrt{33}}{12},\frac58\right].}
+\tag{129.3}
 $$
 
 *Proof.* The transport (105.3) and $s_n=-q_n$ give
-$D_*F^n=\mathcal R_*\Phi_{-q_n}$, with $0<q_n\le1/2$.
+$D_{\mathrm{fam}}F^n=\mathcal R_{\mathrm{fam}}\Phi_{-q_n}$, with $0<q_n\le1/2$.
 This cancels only an output unitary; the target remains the original
-input. Theorem 119.1 gives the error and upper bound. Theorem 113.1
+input. Theorem 128.1 gives the error and upper bound. Theorem 113.1
 and Corollary 114.1 give the lower bound
 $\mu(-q_n)\ge\nu(-q_n)=\nu(q_n)=F(q_n)$.
 Here $F(q_n)>2/3-2q_n/9\ge5/9>1/2$, so the orthogonal-pair term in
-(114.1) does not strengthen it. Substituting $q_2=1/2$ proves (120.3).
-The value $5/8$ is the exact error of $D_*$, while (120.3) leaves the
-unrestricted minimum in an interval. $\square$
+(114.1) does not strengthen it. Substituting $q_2=1/2$ proves (129.3).
+The value $5/8$ is the exact error of $D_{\mathrm{fam}}$. Theorem 118.2
+supplies the equality $\mu_2=L_*$, and the strict upper bound in (118.4)
+is less than $5/8$. Thus this decoder is not optimal at horizon two;
+(129.3) is an enclosing inequality, not a sharp minimax certificate.
+$\square$
 
-The new interval has width
+The enclosing interval in (129.2) has width
 
 $$
 W(q)=\frac{3+q/2-\sqrt{(1-q)^2+8}}6>0
  \qquad(0<q\le1/2).
-\tag{120.4}
+\tag{129.4}
 $$
 
 Indeed $3+q/2>0$ and
@@ -3189,20 +4299,20 @@ by $q/12$ while retaining its stronger lower endpoint. By (114.2),
 $W(q)<5q/36$, the width obtained from the earlier linear Fourier lower
 bound and the same upper certificate.
 
-The map $D_*$ acts only on the terminal qutrit and is common to all
+The map $D_{\mathrm{fam}}$ acts only on the terminal qutrit and is common to all
 these horizons and all inputs. Its Kraus realization permits the usual
 internal ancilla and discard of a CPTP map. It adds no history or
 reference access, intermediate intervention, postselection or smaller
 input code.
 
-## 121. No-reference power monotonicity and endpoint guards
+## 130. No-reference power monotonicity and endpoint guards
 
-**Proposition 121.1 (Monotonicity for the full input objective).** For
+**Proposition 130.1 (Monotonicity for the full input objective).** For
 every finite integer $n\ge0$,
 
 $$
 \mu_n\le\mu_{n+1}.
-\tag{121.1}
+\tag{130.1}
 $$
 
 *Proof.* Fix any terminal CPTP decoder $D$ for horizon $n+1$. The
@@ -3214,10 +4324,10 @@ target. Thus
 $$
 \mu_n\le\max_{\rho\in\mathsf D(\mathbb C^3)}
  d(DF^{n+1}(\rho),\rho).
-\tag{121.2}
+\tag{130.2}
 $$
 
-Minimizing over $D$ proves (121.1) directly for (105.1).
+Minimizing over $D$ proves (130.1) directly for (105.1).
 For even $n\ge2$, the next horizon is odd, and (107.5) yields the
 independent derivation
 
@@ -3225,7 +4335,7 @@ $$
 \mu_n\le\mu_{n+1}
  \le\frac23-\frac{q_{n+1}}6
  =\frac23-\frac{q_n}{12}.
-\tag{121.3}
+\tag{130.3}
 $$
 
 The channel $F$ here is composed inside the terminal decoder. It does
@@ -3237,25 +4347,25 @@ The exact endpoints and the limit remain (107.4) and (107.9):
 $$
 \mu_0=0,\qquad \mu_1=\frac12,\qquad
 \mu_\infty=\mu(0)=\lim_{n\to\infty}\mu_n=\frac23.
-\tag{121.4}
+\tag{130.4}
 $$
 
 Horizon zero is the empty identity channel, whereas parameter zero is
 $\Phi_0$. Horizon one has $s_1=1$ and is outside the negative branch.
-At $q=0$, (119.1) equals $2/3$ and strict improvement ends. No finite
+At $q=0$, (128.1) equals $2/3$ and strict improvement ends. No finite
 $s_n$ is zero. For odd $n\ge3$, the stronger phase-orbit intervals in
 (114.3)–(114.4) still apply, including
 $\mu_3\in[(3+\sqrt{137})/24,5/8]$.
 
-## 122. Exact global optimization of the displayed family coefficient
+## 131. Exact global optimization of the displayed family coefficient
 
-**Theorem 122.1 (Unique best coefficient within the two-parameter
+**Theorem 131.1 (Unique best coefficient within the two-parameter
 family).** On the parameter domain
 
 $$
 \mathcal D=\{(u,\eta):0<u<1,\ 0<\eta\le h(u)\},\qquad
 h(u)=\sqrt{(1-u)/2},
-\tag{122.1}
+\tag{131.1}
 $$
 
 let $\kappa(u,\eta)$ be the fixed-decoder coefficient in
@@ -3266,7 +4376,7 @@ $$
 \max_{(u,\eta)\in\mathcal D}\kappa(u,\eta)=\frac1{12},\qquad
 \operatorname*{argmax}_{\mathcal D}\kappa
  =\{(1/2,1/2)\}.}
-\tag{122.2}
+\tag{131.2}
 $$
 
 More precisely, put $u_0=(\sqrt{33}-1)/16$. For fixed $u$, the maximum
@@ -3286,7 +4396,7 @@ h(u)(4u-h(u))/(18u),&u_0<u<1,
 \{h(u)\},&u_0<u<1.
 \end{cases}
 \end{aligned}
-\tag{122.3}
+\tag{131.3}
 $$
 
 This is an optimization of the coefficient of the family (108.2),
@@ -3303,7 +4413,7 @@ $$
 \eta(4u-\eta)/(18u),&0<\eta\le2u,\\[2pt]
 2u/9,&\eta\ge2u.
 \end{cases}
-\tag{122.4}
+\tag{131.4}
 $$
 
 They agree at $\eta=2u$. For fixed $u>0$, the derivative in the first
@@ -3314,11 +4424,11 @@ $$
 h(u)\ge2u
 \iff 8u^2+u-1\le0
 \iff 0<u\le u_0.
-\tag{122.5}
+\tag{131.5}
 $$
 
 The positive root is $u_0$, and $0<u_0<1/2$. These observations give
-both the formula and all fixed-$u$ equality cases in (122.3).
+both the formula and all fixed-$u$ equality cases in (131.3).
 In particular a plateau at fixed $u<u_0$ cannot be replaced by a
 claim of a unique maximizing $\eta$ there.
 
@@ -3328,7 +4438,7 @@ $h^2=(1-u)/2$ and $h'=-1/(4h)$ give
 $$
 g(u)=\frac{2h(u)}9-\frac{1-u}{36u},\qquad
 g'(u)=\frac{h(u)-2u^2}{36h(u)u^2}.
-\tag{122.6}
+\tag{131.6}
 $$
 
 All denominators here are positive. The numerator has the sign of
@@ -3338,14 +4448,14 @@ $$
 h(u)^2-4u^4
  =\frac{1-u-8u^4}{2}
  =\frac{(1/2-u)(8u^3+4u^2+2u+2)}2.
-\tag{122.7}
+\tag{131.7}
 $$
 
 The cubic factor is positive for $0<u<1$. Consequently $g$ is
 strictly increasing up to $u=1/2$ and strictly decreasing thereafter;
-the two formulas in (122.3) agree at $u_0$. The unique global maximizing
+the two formulas in (131.3) agree at $u_0$. The unique global maximizing
 $u$ is therefore $1/2$. At that point $h(1/2)=1/2<2u$, so its unique
-maximizing $\eta$ is $1/2$, and substitution into (122.4) gives $1/12$.
+maximizing $\eta$ is $1/2$, and substitution into (131.4) gives $1/12$.
 
 The open endpoints introduce no additional equality cases. For every
 admissible pair $0<\kappa(u,\eta)\le g(u)$, and
@@ -3361,19 +4471,19 @@ The earlier pair in (109.9) is exactly $(u_0,2u_0)$, at the junction of
 the two fixed-$u$ regimes. Its coefficient
 $(\sqrt{33}-1)/72$ is strictly smaller than $1/12$, since
 $\sqrt{33}<7$. Its fixed-decoder expansion and existential threshold
-remain valid. For the unique coefficient-maximizing pair, Theorem 119.1
+remain valid. For the unique coefficient-maximizing pair, Theorem 128.1
 strengthens the expansion to an exact error on the full closed interval
-$0\le q\le1/2$. Theorem 122.1 makes no assertion that this pair minimizes
+$0\le q\le1/2$. Theorem 131.1 makes no assertion that this pair minimizes
 the finite error even within the family at each nonzero $q$.
 
-## 123. The zero optimizer set and the remaining unrestricted gap
+## 132. The zero optimizer set and the remaining unrestricted gap
 
 Every member $\mathcal R_{u,\eta}$ of (108.2) is unital and fixes
 $E_{00}$: its lower population matrix is doubly stochastic.
 Thus it belongs to the already characterized set $\mathcal Z_0$ in
 (115.1), in the stratum $v=1$, $k=1$. The maximizing inputs at zero
 are consequently exactly the set (115.2), as used in (108.8).
-The coefficient optimization in §122 selects one decoder inside this
+The coefficient optimization in §131 selects one decoder inside this
 specified family of zero optimizers. The complete set $\mathcal Z_0$
 also includes every other permitted $v\in[1/3,1]$ and the additional
 CPTP degrees of freedom described in §116.
@@ -3390,14 +4500,14 @@ In particular the $v=1/3$ endpoint has every pure input as a maximizer,
 whereas $v>1/3$ has precisely (115.2); the zero optimizer geometry does
 not itself evaluate a uniform first-order minimax over all decoders.
 
-**Corollary 123.1 (Certified unrestricted coefficient interval).** Set
+**Corollary 132.1 (Certified unrestricted coefficient interval).** Set
 $I(q)=2/3-\mu(-q)$ for $0<q\le1/2$. Then
 
 $$
 \frac1{12}\le\frac{I(q)}q
  \le\frac{2/3-F(q)}q
  =\frac{4}{3\bigl(3+q+\sqrt{(1-q)^2+8}\bigr)},
-\tag{123.1}
+\tag{132.1}
 $$
 
 and therefore
@@ -3406,17 +4516,17 @@ $$
 \boxed{\displaystyle
 \frac1{12}\le\liminf_{q\downarrow0}\frac{I(q)}q
  \le\limsup_{q\downarrow0}\frac{I(q)}q\le\frac29.}
-\tag{123.2}
+\tag{132.2}
 $$
 
-*Proof.* Theorem 119.1 bounds $\mu(-q)$ from above, giving the lower
+*Proof.* Theorem 128.1 bounds $\mu(-q)$ from above, giving the lower
 bound for $I(q)/q$. Corollary 114.1 bounds it from below by $F(q)$,
 giving the upper bound. To rationalize the latter expression, use
 $(3+q)^2-[(1-q)^2+8]=8q$; division is legal because $q>0$.
-Its limit at zero is $4/(3\cdot6)=2/9$, proving (123.2).
+Its limit at zero is $4/(3\cdot6)=2/9$, proving (132.2).
 $\square$
 
-If an expansion $\mu(-q)=2/3-cq+o(q)$ exists, (123.2) implies only
+If an expansion $\mu(-q)=2/3-cq+o(q)$ exists, (132.2) implies only
 $1/12\le c\le2/9$. Neither existence of such a coefficient nor equality
 $c=1/12$ follows from the exact fixed-family maximum. Establishing that
 particular unrestricted coefficient would additionally require a
@@ -3426,8 +4536,13 @@ the different leading coefficient $2/9$ and does not provide this
 matching inequality. The necessary accumulation condition in §117
 does not supply that first-order bound either.
 
-The exact unrestricted finite values (111.1) and their minimizing
-CPTP decoders remain undetermined by these positive-width intervals.
+For horizons $n\ge3$, the exact unrestricted finite values in (111.1)
+and their minimizing CPTP decoders remain undetermined by these
+intervals and by §§118–126. At $n=2$, Theorem 118.2 gives the exact
+value and an attaining decoder; the positive width in (129.3) is a
+limitation of the displayed family bound, not an unresolved value.
+The single value at $q=1/2$ does not determine the unrestricted
+coefficient as $q\downarrow0$.
 The results here are deductions from the owning channel, Kraus family,
 positive-branch error, phase-orbit obstruction and zero-optimizer
 structure in §§93 and 105–117; no literature priority or new general
@@ -3437,5 +4552,286 @@ obstruction retain their distinct objectives. No realization bridge
 to the original strict same-child $J/M$ H4 target, global joint
 completion or ancestor claim is supplied; those questions remain
 separate from these terminal-qutrit certificates.
+
+## 追加锚（本行以下为增补区）
+
+## 133. The unrestricted first-order coefficient
+
+Throughout this section use the channel and objective in (118.1)--(118.2),
+write $q\in[0,1/2]$ and put $\mu_q=\mu(-q)$. The decoder is one common
+CPTP map chosen before the unknown complex qutrit input; no reference,
+history, postselection, or code restriction is added. Ordinary ancillary
+CPTP implementations remain included.
+
+**Lemma 133.1 (Phase averaging and the finite certificate).** Let
+$T=\operatorname{diag}(t_0,t_1,t_2)$ range over the diagonal unitary torus and
+set
+
+$$
+\overline{\mathcal R}=\int \operatorname{Ad}_{T^\dagger}\circ
+\mathcal R\circ\operatorname{Ad}_{T}\,dT.
+\tag{133.1}
+$$
+
+Then $e_{-q}(\overline{\mathcal R})\le e_{-q}(\mathcal R)$. Moreover
+
+$$
+\overline{\mathcal R}(E_{jj})=\sum_i c_{ij}E_{ii},\qquad
+\overline{\mathcal R}(E_{ij})=\xi_{ij}E_{ij}\ (i\ne j),
+\tag{133.2}
+$$
+
+where $C=(c_{ij})$ is entrywise nonnegative and column-stochastic. The
+coherence Choi block is positive semidefinite, so in particular
+$|\xi_{01}|^2\le c_{00}c_{11}$.
+
+*Proof.* The covariance
+$\Phi_{-q}\operatorname{Ad}_T=\operatorname{Ad}_T\Phi_{-q}$, invariance of
+the full density set, convexity of trace norm, and unitary invariance give
+the stated inequality after integrating the unitary conjugates of each
+error. Twirling separates the characters of the torus, giving (133.2).
+Complete positivity of the diagonal Choi blocks gives $C\ge0$ and positivity
+of the coherence block; trace preservation gives the column sums and its
+$(0,1)$ principal minor gives the last inequality. Put
+
+$$
+a=-\operatorname{Re}\xi_{01},\quad w=C(1,1,1)^{\mathsf T},\quad
+D=C_{\cdot2}-C_{\cdot1},\quad \Delta=D_1-D_2,\quad
+L=2a+\min(0,\Delta).
+\tag{133.3}
+$$
+
+For $-2/3\le r\le2/3$, let
+$p_r=(1/3,1/3+r/2,1/3-r/2)$ and
+$z_r=(\sqrt{p_{r,0}},\sqrt{p_{r,1}},\sqrt{p_{r,2}})^{\mathsf T}$. Direct
+substitution in (118.1) and (133.2) gives
+
+$$
+\langle z_r|\overline{\mathcal R}\Phi_{-q}(|z_r\rangle\langle z_r|)|z_r\rangle
+=\frac13+\frac{2qa}{9}
++\frac r6(w_1-w_2+2qa)+\frac{q\Delta r^2}{4}.
+\tag{133.4}
+$$
+
+Since $d(P,\tau)\ge1-\operatorname{Tr}(P\tau)$ for a pure $P$, the $r=0$
+probe and the average of the two endpoint probes yield, for every CPTP
+$\mathcal R$ and every $0\le q\le1/2$,
+
+$$
+e_{-q}(\mathcal R)\ge e_{-q}(\overline{\mathcal R})
+\ge\frac23-\frac q9L(\overline{\mathcal R}).
+\tag{133.5}
+$$
+
+This is an exact finite inequality and uses no unitality assumption.
+$\square$
+
+**Lemma 133.2 (The certificate on the complete zero-optimizer set).** If
+$\overline{\mathcal R}\in\mathcal Z_0$, then $L(\overline{\mathcal R})\le\sqrt2$.
+
+*Proof.* By Theorem 115.1, unitality and the zero column give
+$C_{\cdot0}=(v,(1-v)/2,(1-v)/2)^{\mathsf T}$ with $1/3\le v\le1$. Write
+$y=c_{11}$ and $z=c_{21}$. Row sums and column zero give
+$\Delta=2(z-y)$, while column one gives $y+z\le1$. Complete positivity gives
+$a\le\sqrt{vy}$. Therefore
+
+$$
+\frac L2\le\sqrt{vy}+\min(0,z-y).
+\tag{133.6}
+$$
+
+For $y\le1/2$ the right side is at most $\sqrt{v/2}$. For $y\ge1/2$ use
+$z\le1-y$; the right side is at most
+$\sqrt{vy}+1-2y$, whose derivative is
+$\sqrt v/(2\sqrt y)-2<0$ on this interval. Thus $L/2\le\sqrt{v/2}$ and
+$L\le\sqrt{2v}\le\sqrt2$, including the endpoint $v=1/3$.
+$\square$
+
+**Lemma 133.3 (Decoder-uniform lower asymptotics).** For every
+$\varepsilon>0$ there is $\delta>0$ such that, simultaneously for every CPTP
+$\mathcal R$ and $0<q<\delta$,
+
+$$
+e_{-q}(\mathcal R)\ge\frac23-\left(\frac{\sqrt2}{9}+\varepsilon\right)q.
+\tag{133.7}
+$$
+
+*Proof.* From (118.1),
+$(\Phi_s-\Phi_t)(\rho)=(s-t)\begin{psmallmatrix}0&\rho_{01}&0\\
+\rho_{10}&h&0\\0&0&-h\end{psmallmatrix}$ with
+$h=(\rho_{11}-\rho_{22})/2$. Positivity gives
+$|\rho_{01}|+|h|\le1$, and CPTP trace-norm contraction gives the uniform
+estimate $|e_s(\mathcal R)-e_t(\mathcal R)|\le|s-t|$.
+If (133.7) failed, choose $q_j\downarrow0$ and decoders violating it, and
+replace each by its phase average. The compact CPTP Choi set supplies a
+convergent subsequence; moreover
+$2/3\le e_0(\overline{\mathcal R}_j)\le
+e_{-q_j}(\overline{\mathcal R}_j)+q_j$, so continuity of $e_0$ puts its
+limit in $\mathcal Z_0$ by Theorem 115.1. But (133.5) and the violation imply
+$L(\overline{\mathcal R}_j)>\sqrt2+9\varepsilon$. Continuity of $L$ in
+Choi entries contradicts Lemma 133.2 at the limit. $\square$
+
+**Lemma 133.4 (A moving nonunital decoder and all nine compositions).** Put
+$h=1/\sqrt2$, $b_q=(1-hq)/2$, and $a_q=\sqrt{b_q}$. Define
+
+$$
+\mathcal R_q(X)=
+\begin{pmatrix}
+x_{00}&-a_qx_{01}&0\\
+-a_qx_{10}&b_q(x_{11}+x_{22})&0\\
+0&0&(1-b_q)(x_{11}+x_{22})
+\end{pmatrix}.
+\tag{133.8}
+$$
+
+It is CPTP for $0\le q\le1/2$, is nonunital for $q>0$, and
+$\Lambda_q=\mathcal R_q\Phi_{-q}$ has the following nine matrix-unit images:
+
+$$
+\begin{array}{c|ccc}
+X&E_{00}&E_{11}&E_{22}\\ \hline
+\Lambda_q(X)&E_{00}&b_qE_{11}+(1-b_q)E_{22}&b_qE_{11}+(1-b_q)E_{22}
+\end{array}
+$$
+
+$$
+\begin{aligned}
+\Lambda_q(E_{01})&=qa_qE_{01},&
+\Lambda_q(E_{10})&=qa_qE_{10},\\
+\Lambda_q(E_{02})&=\Lambda_q(E_{20})=
+\Lambda_q(E_{12})=\Lambda_q(E_{21})=0.
+\end{aligned}
+\tag{133.9}
+$$
+
+Thus (133.9) holds on all complex $M_3$, and
+$\mathcal R_q(I)=\operatorname{diag}(1,1-hq,1+hq)$.
+
+*Proof.* Kraus operators
+
+$$
+E_{00}-a_qE_{11},\quad \sqrt{1-b_q}E_{21},\quad
+\sqrt{b_q}E_{12},\quad \sqrt{1-b_q}E_{22}
+\tag{133.10}
+$$
+
+have adjoint products summing to $I$, proving complete positivity and trace
+preservation. Applying (118.1) to each matrix unit gives (133.9) directly;
+(133.8) also gives the displayed nonunital value. $\square$
+
+**Lemma 133.5 (Uniform input maximum for the moving path).** For the path in
+Lemma 133.4,
+
+$$
+e_{-q}(\mathcal R_q)=\frac23-\frac{\sqrt2}{9}q+o(q).
+\tag{133.11}
+$$
+
+*Proof.* For a pure $P_z=|z\rangle\langle z|$ and any output state $\tau$,
+$P_z-\tau$ has at most one positive eigenvalue, since its quadratic form is
+nonpositive on $z^\perp$. It follows that
+$d(P_z,\tau)=\lambda_{\max}(P_z-\tau)$; convexity reduces the full density
+maximum to the full complex unit sphere. Let
+$F(q,z)=\lambda_{\max}(P_z-\Lambda_q(P_z))$. At $q=0$, the established
+zero analysis in §107 gives $\max F(0,z)=2/3$ and the complete active set
+$A=\{z:\|z\|=1,\ |z_0|^2=1/3\}$. On $A$, the matrix is $P_z-I/3$ with
+simple top eigenvalue $2/3$ and gap one.
+
+Writing $t=|z_0|^2$ and $x=|z_1|^2$, direct differentiation of (133.9) gives
+
+$$
+\langle z|\Lambda'_0(P_z)|z\rangle
+=h\left(\frac{(1-t)^2}{2}+(3t-1)x\right).
+\tag{133.12}
+$$
+
+Hence it equals $2h/9=\sqrt2/9$ on $A$. The simple-eigenvalue derivative
+formula [GLO-EIG] applies there. The gap and compactness of $A$ give a closed
+neighborhood on which the top eigenvalue stays simple and its derivative is
+jointly continuous, so integration gives a uniform first-order expansion
+there. Any sequence of maximizers $z_q$ has accumulation in $A$ (otherwise
+its zero-order value is strictly below $2/3$), and the uniform expansion gives
+$\limsup_{q\downarrow0}(\max_zF(q,z)-2/3)/q\le-\sqrt2/9$.
+A fixed $z\in A$ gives the reverse liminf. This proves (133.11). $\square$
+
+**Theorem 133.6 (Unrestricted first-order minimax coefficient).**
+
+$$
+\boxed{\displaystyle
+\lim_{q\downarrow0}\frac{2/3-\mu(-q)}q=\frac{\sqrt2}{9}},
+\qquad
+\mu(-q)=\frac23-\frac{\sqrt2}{9}q+o(q).
+\tag{133.13}
+$$
+
+*Proof.* Lemma 133.3 supplies the lower bound uniformly over all moving,
+possibly nonunital decoders. Lemmas 133.4--133.5 supply one legal path with
+the matching upper expansion. Taking the decoder infimum proves (133.13).
+$\square$
+
+## 134. The exact complete-$\mathcal Z_0$ restriction
+
+**Theorem 134.1 (Finite minimax on the whole zero-optimizer set).** For every
+$0\le q\le1/2$,
+
+$$
+\boxed{\displaystyle\min_{\mathcal R\in\mathcal Z_0}e_{-q}(\mathcal R)=\frac23-\frac q{12}.}
+\tag{134.1}
+$$
+
+*Proof.* Phase averaging preserves $\mathcal Z_0$ and cannot increase the
+error. For a phase-averaged member, use the notation of Lemma 133.2 and test
+$p=(1/3,x,2/3-x)$. Direct substitution gives the fidelity
+
+$$
+\frac13+qg(x),\qquad
+g(x)=2(z-y)(x-1/3)^2+\frac{2ax}{3}.
+\tag{134.2}
+$$
+
+At $x=1/6$, complete positivity and column stochasticity give
+$a^2\le vy\le y$ and $z-y\le1-2y$, hence
+
+$$
+g(1/6)=\frac{z-y+2a}{18}
+\le\frac{1-2a^2+2a}{18}
+=\frac1{12}-\frac{(a-1/2)^2}{9}\le\frac1{12}.
+\tag{134.3}
+$$
+
+Therefore every member has $e_{-q}\ge2/3-q/12$. The decoder
+$\mathcal R_{\rm fam}=\Phi_{-1/2}$ belongs to $\mathcal Z_0$ and Theorem
+128.1 gives equality for every $q$ in the stated interval. $\square$
+
+**Corollary 134.2 (Three distinct optimizations).** The fixed limiting map
+$\mathcal R_0$ from (133.8) has coefficient zero: for this fixed
+composition only the coherence derivative remains, and on its active set the
+gain is $2h|z_1|^2/3$, whose minimum is zero. The best fixed
+map in $\mathcal Z_0$ has coefficient $1/12$ by Theorem 134.1, whereas the
+unrestricted optimized coefficient is $\sqrt2/9$ by Theorem 133.6. The
+positive-q exact unrestricted value and the optimality of the moving path are
+not determined here.
+
+**Corollary 134.3 (Necessary effective accumulation data).** Let
+$q_j>0$ tend to zero and let $\mathcal R_j$ be exact minimizers of
+$e_{-q_j}$. Every Choi accumulation point of their phase averages
+$\overline{\mathcal R}_j$ has
+
+$$
+C=\begin{pmatrix}1&0&0\\0&1/2&1/2\\0&1/2&1/2\end{pmatrix},
+\qquad \xi_{01}=-\frac1{\sqrt2}.
+\tag{134.4}
+$$
+
+*Proof.* Averaging preserves exact optimality, and Lemma 133.3 plus
+Theorem 133.6 place every limit in $\mathcal Z_0$. From (133.5),
+$L(\overline{\mathcal R}_j)\ge9(2/3-\mu(-q_j))/q_j\to\sqrt2$.
+Lemma 133.2 bounds the limit by $\sqrt2$, so equality holds throughout its
+proof: $v=1$, $y=z=1/2$, and $a=1/\sqrt2$. Row and column sums then give the
+population matrix in (134.4). The principal CP minor and
+$\operatorname{Re}\xi_{01}=-a$ force $\operatorname{Im}\xi_{01}=0$.
+This is necessary effective phase-averaged data only; unused coherences and
+untwirled finite minimizers are not classified. No positive-q finite value,
+finite-path optimality, or H4 bridge is asserted. $\square$
 
 ## 追加锚（本行以下为增补区）
