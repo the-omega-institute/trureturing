@@ -15390,3 +15390,219 @@ layers $p\le P_A$ and their joint compensation with the paid far
 sector. No sufficient lower bound for $N_A(n)$ is supplied.
 Complete-defect positivity, strict Robin for every $n>5040$ and RH
 remain unproved.
+
+## Root-scale localization of the remaining first-prime defect
+
+This application controls the complete low-first-prime defect of the
+same original integer under the unchanged KTO observer. It reuses
+GMW1's uniform real-order source moments, the exact KTO kernel and
+mass/price calibration, GMW's far-first-layer lower and HLD's complete
+higher-layer lower. The new consumer leaves only a moving first-prime
+window unpaid at root scale. The intermediate moment and affine
+identities are supporting steps, not separate new results.
+No literature priority, numerical common threshold, Lean certification
+or RH/Robin proof is claimed.
+
+### Use the same source with a larger negative moment order
+
+Keep $A=\log n$, $L=\log A$, $T_A=\sqrt A L$,
+$k=\max\{1,\lfloor\epsilon\log L\rfloor\}$ and the same
+$\nu_k,\eta_A,\omega_A$ from KTO.
+In particular the clamp is $\chi_A(c)=\max\{c,e/A\}$ and the
+source correction atoms are $1,2$.
+GMW1 has a fixed $C_m\ge1$ valid for every real moment order
+$t\ge2$. For the lower prime cut use $t=L\ge4$ and put
+
+$$
+b_A=4(C_m+1)k\log(L+2),\qquad
+Y_A=Ae^{-2b_A},\qquad a_A^{\mathrm{low}}=2Y_A/A=2e^{-2b_A},
+$$
+
+$$
+\rho_A=4\exp\!\bigl(-(3C_m+4)kL\log(L+2)\bigr).
+\tag{CPW1}
+$$
+
+Since $k=O(\log L)$, one has
+$b_A=O((\log L)^2)=o(L)$.
+Thus $Y_A\to\infty$, $\log Y_A/\log A\to1$,
+$2Y_A<A$ and
+$e/A<a_A^{\mathrm{low}}\le e^{-b_A}<1$ eventually.
+Moreover
+
+$$
+\log(T_A\rho_A)=\log4+L/2+\log L
+                    -(3C_m+4)kL\log(L+2)\longrightarrow-\infty,
+\qquad T_A\rho_A\longrightarrow0.
+\tag{CPW2}
+$$
+
+The changed moment order and buffer specify the lower prime cut;
+the signed source, observer and slow degree remain unchanged.
+
+### The actual low-prime pressure is affine above a common activation
+
+Keep $r_p=\log(1+1/p)/\log p$ and $\beta_p=r_p\log p$.
+For the finite set $p\le Y_A$, write
+$\vartheta_Y=\sum_{p\le Y_A}\log p$ and
+$S_Y=\sum_{p\le Y_A}\beta_p$, and define
+
+$$
+F_Y(q)=\sum_{p\le Y_A}\log p\,(r_p-q)_+,\qquad
+B_Y(q)=\sum_{p\le Y_A}\log p\,(q-r_p)_+.
+$$
+
+The exact finite hinge identity gives
+
+$$
+F_Y(q)=S_Y-q\vartheta_Y+B_Y(q)\qquad(q\ge0).
+\tag{CPW3}
+$$
+
+For every prime $p\le Y_A$, including $2$, the elementary actual
+inequality $\log(1+1/p)>1/(p+1)$ gives
+
+$$
+r_p>\frac1{(p+1)\log p}
+\ge\frac1{(Y_A+1)\log Y_A}
+>\lambda(2Y_A)>\lambda(A)
+\quad\text{eventually}.
+\tag{CPW4}
+$$
+
+Thus $B_Y(\lambda(A))=0$, and
+$B_Y(\lambda(Av))=0$ whenever $v\ge a_A^{\mathrm{low}}$.
+No large-prime approximation to an activation point is applied to
+small primes.
+
+KTO5's entire kernel is supported on $v\ge c$.
+For $c\ge a_A^{\mathrm{low}}$, its $B_Y$ observation is therefore
+exactly zero, including arbitrarily high clocks and the signed
+kernel density. For $e/A\le c<a_A^{\mathrm{low}}<1$, the kernel
+is positive by KTO6. The exact KTO7 price observation yields
+
+$$
+0\le\int B_Y(\lambda(Av))\,d\kappa_{A,c}(v)
+\le\vartheta_Y\int\lambda(Av)\,d\kappa_{A,c}(v)
+=\frac{\vartheta_Y\lambda(A)}c.
+\tag{CPW5}
+$$
+
+Positivity here concerns only these low-$c$ kernels. Neither the
+source nor the final observer is assigned positivity.
+
+### Pay the complete inverse-price-weighted low-clock tail
+
+Put $J_{\mathrm{low}}(A)=
+\int B_Y(\lambda(Av))\,d\omega_A(v)$.
+The two source correction atoms lie outside
+$c<a_A^{\mathrm{low}}$. Total variation decreases under pushforward,
+and the clamp increases $c$, decreasing its inverse weight.
+Using $a_A^{\mathrm{low}}\le e^{-b_A}$ and GMW1 at the actual
+growing order $L$, one obtains
+
+$$
+\begin{aligned}
+|J_{\mathrm{low}}(A)|
+&\le\vartheta_Y\lambda(A)
+       \int_{c<a_A^{\mathrm{low}}}c^{-1}\,d|\eta_A|(c)\\
+&\le\vartheta_Y\lambda(A)
+       \int_{c<a_A^{\mathrm{low}}}c^{-1}\,d|\nu_k|(c)\\
+&\le e^{-2b_A}e^{-(L-1)b_A}M_{-L}(k)\\
+&\le4\exp\!\bigl(-(L+1)b_A+C_mkL\log(L+2)\bigr)\\
+&\le\rho_A=o(1/T_A).
+\end{aligned}
+\tag{CPW6}
+$$
+
+Here $\vartheta_Y\le Y_A\log Y_A$ gives
+$\vartheta_Y\lambda(A)\le e^{-2b_A}$, and on $c<e^{-b_A}$,
+$c^{-1}\le e^{-(L-1)b_A}c^{-L}$.
+This proves absolute kernel/source Fubini as well: the integrand is
+zero on the full support of every $c\ge a_A^{\mathrm{low}}$ kernel,
+and the displayed positive-kernel bound controls all remaining clocks.
+No inverse-price singularity, clamped source contribution or infinite
+kernel tail is dropped. The uniform real-order input is GMW1;
+no fixed-order implicit constant or weaker $u_0$-weighted clock
+estimate is substituted at order $L$.
+
+### Retain the same integer's actual missing low primes
+
+For the original $n$, set
+$W_{\mathrm{low}}(n)=\sum_{p\le Y_A,\ p\mid n}\beta_p$,
+$L_{\mathrm{low}}(n)=\sum_{p\le Y_A,\ p\mid n}\log p$ and
+$d_{\mathrm{low}}(n,q)=F_Y(q)-W_{\mathrm{low}}(n)+qL_{\mathrm{low}}(n)$.
+This is exactly its complete first-layer defect on $p\le Y_A$:
+occupied primes contribute $\log p(q-r_p)_+$ and absent primes
+contribute $\log p(r_p-q)_+$.
+By CPW4 its original-price baseline is
+
+$$
+G_{\mathrm{low},A}(n):=d_{\mathrm{low}}(n,\lambda(A))
+=\sum_{\substack{p\le Y_A\\p\nmid n}}
+             (\beta_p-\lambda(A)\log p)\ge0.
+\tag{CPW7}
+$$
+
+Let $D_{\mathrm{low},A}(n)=
+\int d_{\mathrm{low}}(n,\lambda(Av))\,d\omega_A(v)$.
+Exact mass and exact price mean applied to CPW3 give
+
+$$
+D_{\mathrm{low},A}(n)
+=G_{\mathrm{low},A}(n)+J_{\mathrm{low}}(A)
+\ge G_{\mathrm{low},A}(n)-\rho_A\ge-\rho_A,
+\qquad T_A\rho_A\longrightarrow0.
+\tag{CPW8}
+$$
+
+This is uniform for every original integer at its own $A=\log n$.
+The error depends on $n$ only through $A$; actual low-prime occupancy
+is preserved in $G_{\mathrm{low},A}(n)$.
+The finite prime set and KTO's absolute mass/price bounds give
+absolute defect integration. No other integer, optimizer or
+pointwise positivity transported through a signed measure is used.
+
+### A disjoint central-window consumer
+
+Retain GMW's upper cutoff
+$P_A=Ae^{2\ell_A}$, where
+$\ell_A=4(C_m+1)k\log(\log L+2)$, and its complete actual far-first
+lower $D_{\mathrm{far,new},A}(n)\ge\widetilde H_A/2>0$ eventually.
+Retain HLD's complete actual higher-layer lower
+$D_{2,A}(n)\ge-\varepsilon_A/T_A$, with $\varepsilon_A\to0$.
+All components use the same source, observer, degree and original $n$.
+
+Let $C_A(n)$ average only the complete actual first-layer defect
+on $Y_A<p\le P_A$. The exact disjoint account is
+
+$$
+D_A(n)=D_{\mathrm{low},A}(n)+C_A(n)
+                  +D_{\mathrm{far,new},A}(n)+D_{2,A}(n).
+\tag{CPW9}
+$$
+
+KTO12 and the three lower bounds yield
+
+$$
+\begin{aligned}
+T_A\Delta(n)
+&\ge T_AC_A(n)+T_AG_{\mathrm{low},A}(n)
+ +T_AD_{\mathrm{far,new},A}(n)
+ +c_R-\varepsilon_A-T_A\rho_A+o(1)\\
+&\ge T_AC_A(n)+T_AG_{\mathrm{low},A}(n)
+ +T_A\widetilde H_A/2+c_R-o(1).
+\end{aligned}
+\tag{CPW10}
+$$
+
+No far sector or higher layer is counted twice.
+Both $\log Y_A/\log A$ and $\log P_A/\log A$ tend to one.
+The logarithmic width of the unpaid prime window relative to
+$\log A$ therefore tends to zero; the multiplicative window is not
+claimed to shrink, and neither endpoint divided by $A$ is claimed
+to tend to one.
+No sufficient joint lower for
+$C_A(n)+G_{\mathrm{low},A}(n)+D_{\mathrm{far,new},A}(n)$ is supplied.
+Complete-defect positivity, RH and strict Robin for every $n>5040$
+remain unproved.
