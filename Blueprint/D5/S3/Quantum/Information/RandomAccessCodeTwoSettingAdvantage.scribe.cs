@@ -149,7 +149,8 @@ internal sealed class RandomAccessCodeTwoSettingAdvantageDocument : IScribeDocum
         Seq(new Formula.Subscript(Sum, Seq(variable, Colon, Sp, domain)), Sp, Parenthesized(body));
     private static Formula Conjugate(Formula value) => Seq(Overline, Grp(value));
     private static Formula AverageFactor(Formula n, Formula d) =>
-        new Formula.Fraction(D(1), Parenthesized(Multiply(n, new Formula.Power(d, n))));
+        new Formula.Fraction(D(1), Parenthesized(Multiply(Typed(n, Reals()),
+            new Formula.Power(Typed(d, Reals()), n))));
 
     private static Formula DeterministicFormula()
     {
