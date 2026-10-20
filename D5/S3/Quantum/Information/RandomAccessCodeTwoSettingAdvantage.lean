@@ -6,7 +6,10 @@
    utility: none
    digest: Two settings give a strict quantum advantage in every random access code. -/
 
-import Mathlib
+import Mathlib.Algebra.BigOperators.Field
+import Mathlib.Analysis.Complex.Norm
+import Mathlib.Basic.Complex.BigOperators
+import Mathlib.LinearAlgebra.UnitaryGroup
 
 open scoped BigOperators Matrix
 
@@ -46,23 +49,8 @@ def claim : Prop :=
       (∀ i, U i ∈ Matrix.unitaryGroup (Fin d) ℂ) ∧
       ∀ S : ClassicalStrategy n d, classicalValue S < quantumValue n d ψ U s
 
-private def peak {α : Type*} [Fintype α] (v : α → ℕ) : ℕ :=
-  Finset.univ.sup v
-
-private theorem le_peak {α : Type*} [Fintype α] (v : α → ℕ) (i : α) :
-    v i ≤ peak v := Finset.le_sup (Finset.mem_univ i)
-
-private theorem peak_le {α : Type*} [Fintype α] (v : α → ℕ) (m : ℕ)
-    (h : ∀ i, v i ≤ m) : peak v ≤ m :=
-  Finset.sup_le (fun i _ => h i)
-
-private theorem peak_attained {α : Type*} [Fintype α] [Nonempty α] (v : α → ℕ) :
-    ∃ i, peak v = v i := by
-  obtain ⟨i, _, hi⟩ := Finset.exists_mem_eq_sup Finset.univ Finset.univ_nonempty v
-  exact ⟨i, hi⟩
-
 private def columnScore {d : ℕ} (v : Fin d → ℕ) (c : Fin d → Fin d)
-    (b : Fin d) : ℕ := peak (fun r => v r + if c r = b then 1 else 0)
+    (b : Fin d) : ℕ := Finset.univ.sup (fun r => v r + if c r = b then 1 else 0)
 
 private theorem column_exchange {d : ℕ} (v : Fin d → ℕ) (c : Fin d → Fin d)
     (r b : Fin d) (hb : ∀ i, c i ≠ b) :
@@ -74,44 +62,45 @@ private theorem column_exchange {d : ℕ} (v : Fin d → ℕ) (c : Fin d → Fin
   have same (t : Fin d) (hta : t ≠ a) (htb : t ≠ b) :
       columnScore v c t = columnScore v c' t := by
     unfold columnScore
-    apply congrArg peak
+    apply congrArg Finset.univ.sup
     funext i
     by_cases hi : i = r
     · subst i; simp [c', a, Ne.symm hta, Ne.symm htb]
     · simp [c', Function.update_of_ne hi]
-  have b0 : columnScore v c b = peak v := by
+  have b0 : columnScore v c b = Finset.univ.sup v := by
     simp only [columnScore, if_neg (hb _), add_zero]
   have bmono : columnScore v c b ≤ columnScore v c' b := by
     rw [b0]
-    exact peak_le _ _ (fun i => (Nat.le_add_right _ _).trans
-      (le_peak (fun i => v i + if c' i = b then 1 else 0) i))
+    exact Finset.sup_mono_fun (fun i _ => Nat.le_add_right _ _)
   have apair : columnScore v c a + columnScore v c b ≤
       columnScore v c' a + columnScore v c' b := by
     by_cases ha : columnScore v c a ≤ columnScore v c' a
     · omega
     · have vr : v r ≤ columnScore v c' a := by
         simpa [c', columnScore, hab.symm] using
-          (le_peak (fun i => v i + if c' i = a then 1 else 0) r)
+          (Finset.le_sup (f := fun i => v i + if c' i = a then 1 else 0) (Finset.mem_univ r))
       have aupper : columnScore v c a ≤ v r + 1 := by
         letI : Nonempty (Fin d) := ⟨r⟩
-        obtain ⟨i, hi⟩ := peak_attained (fun i => v i + if c i = a then 1 else 0)
+        obtain ⟨i, _, hi⟩ := Finset.exists_mem_eq_sup Finset.univ Finset.univ_nonempty
+          (fun i => v i + if c i = a then 1 else 0)
         change columnScore v c a = _ at hi
         by_cases hir : i = r
         · subst i; simpa [a] using hi.le
-        · have h := le_peak (fun i => v i + if c' i = a then 1 else 0) i
+        · have h := Finset.le_sup (f := fun i => v i + if c' i = a then 1 else 0)
+            (Finset.mem_univ i)
           change v i + (if c' i = a then 1 else 0) ≤ columnScore v c' a at h
           rw [show c' i = c i from Function.update_of_ne hir _ _] at h
           omega
-      have base : peak v ≤ v r := by
-        apply peak_le
-        intro i
+      have base : Finset.univ.sup v ≤ v r := by
+        apply Finset.sup_le
+        intro i _
         have h : v i ≤ columnScore v c' a :=
           (Nat.le_add_right _ _).trans
-            (le_peak (fun i => v i + if c' i = a then 1 else 0) i)
+            (Finset.le_sup (f := fun i => v i + if c' i = a then 1 else 0) (Finset.mem_univ i))
         omega
       have gain : v r + 1 ≤ columnScore v c' b := by
         simpa [c', columnScore] using
-          (le_peak (fun i => v i + if c' i = b then 1 else 0) r)
+          (Finset.le_sup (f := fun i => v i + if c' i = b then 1 else 0) (Finset.mem_univ r))
       rw [b0] at *
       omega
   have decomp (f : Fin d → ℕ) :
@@ -132,7 +121,7 @@ private def matchCount {n d : ℕ} (D : Fin d → Fin n → Fin d)
   ∑ j, if D r j = x j then 1 else 0
 
 private def optimum {n d : ℕ} (D : Fin d → Fin n → Fin d) : ℕ :=
-  ∑ x, peak (matchCount D x)
+  ∑ x, Finset.univ.sup (matchCount D x)
 
 private def missing {n d : ℕ} (D : Fin d → Fin n → Fin d) : ℕ :=
   ∑ j : Fin n, (d - (Finset.univ.image (fun r => D r j)).card)
@@ -255,23 +244,23 @@ private theorem permute_decoder {n d : ℕ} (D : Fin d → Fin n → Fin d) :
       exact ⟨A, hA, (exchange_optimum D j r b hb).trans hle⟩
 
 private def counts {n d : ℕ} (x : Fin n → Fin d) (r : Fin d) : ℕ :=
-  ∑ j, if x j = r then 1 else 0
+  (Finset.univ.filter (fun j => x j = r)).card
 
 private def C (n d : ℕ) : ℝ :=
-  (1 / ((n : ℝ) * (d : ℝ) ^ n)) * ∑ x : Fin n → Fin d, (peak (counts x) : ℝ)
+  (1 / ((n : ℝ) * (d : ℝ) ^ n)) * ∑ x : Fin n → Fin d, ((Finset.univ.sup (counts x) : ℕ) : ℝ)
 
 private theorem permutation_optimum {n d : ℕ} (D : Fin d → Fin n → Fin d)
     (h : ∀ j, Function.Bijective (fun r => D r j)) :
-    optimum D = ∑ x : Fin n → Fin d, peak (counts x) := by
+    optimum D = ∑ x : Fin n → Fin d, Finset.univ.sup (counts x) := by
   classical
   let e := Equiv.piCongrRight (fun j => Equiv.ofBijective (fun r => D r j) (h j))
   unfold optimum
   rw [← Equiv.sum_comp e]
   apply Finset.sum_congr rfl
   intro x _
-  apply congrArg peak
+  apply congrArg Finset.univ.sup
   funext r
-  unfold matchCount counts
+  simp only [matchCount, counts, Finset.card_filter]
   apply Finset.sum_congr rfl
   intro j _
   change (if D r j = D (x j) j then 1 else 0) = if x j = r then 1 else 0
@@ -284,8 +273,9 @@ private theorem deterministic_bound {n d : ℕ}
   obtain ⟨A, hA, hle⟩ := permute_decoder D
   rw [permutation_optimum A hA] at hle
   have hpoint : (∑ x, ∑ j, if D (E x) j = x j then (1 : ℕ) else 0) ≤
-      ∑ x : Fin n → Fin d, peak (counts x) :=
-    (Finset.sum_le_sum (fun x _ => le_peak (matchCount D x) (E x))).trans hle
+      ∑ x : Fin n → Fin d, Finset.univ.sup (counts x) :=
+    (Finset.sum_le_sum (fun x _ =>
+      Finset.le_sup (f := matchCount D x) (Finset.mem_univ (E x)))).trans hle
   unfold deterministicValue C
   apply mul_le_mul_of_nonneg_left _ (by positivity)
   exact_mod_cast hpoint
@@ -302,7 +292,7 @@ private def payoff {d : ℕ} (N : Fin d → ℕ) (f v : Fin d → ℝ) : ℝ :=
   (∑ i, (N i : ℝ) * v i ^ 2) + (∑ i, f i * v i) ^ 2
 
 private def mass {d : ℕ} (N : Fin d → ℕ) (f : Fin d → ℝ) : ℝ :=
-  ∑ i, if N i = peak N then f i ^ 2 else 0
+  ∑ i, if N i = Finset.univ.sup N then f i ^ 2 else 0
 
 private theorem normalized_square {d : ℕ} (u : Fin d → ℝ) (q : ℝ) (hq : 0 < q)
     (hu : (∑ i, u i ^ 2) = q) :
@@ -312,13 +302,13 @@ private theorem normalized_square {d : ℕ} (u : Fin d → ℝ) (q : ℝ) (hq : 
 private theorem baseline_vector {d : ℕ} [Nonempty (Fin d)]
     (N : Fin d → ℕ) (f : Fin d → ℝ) :
     ∃ v : Fin d → ℝ, (∑ i, v i ^ 2) = 1 ∧
-      payoff N f v = (peak N : ℝ) + mass N f := by
+      payoff N f v = ((Finset.univ.sup N : ℕ) : ℝ) + mass N f := by
   classical
-  have hn (i : Fin d) : 0 ≤ if N i = peak N then f i ^ 2 else 0 := by
+  have hn (i : Fin d) : 0 ≤ if N i = Finset.univ.sup N then f i ^ 2 else 0 := by
     split_ifs <;> positivity
   have hmass : 0 ≤ mass N f := Finset.sum_nonneg (fun i _ => hn i)
   by_cases hz : mass N f = 0
-  · obtain ⟨a, ha⟩ := peak_attained N
+  · obtain ⟨a, _, ha⟩ := Finset.exists_mem_eq_sup Finset.univ Finset.univ_nonempty N
     have hfa : f a = 0 := by
       have h := Finset.single_le_sum (fun i _ => hn i) (Finset.mem_univ a)
       rw [← ha, if_pos rfl] at h
@@ -329,18 +319,18 @@ private theorem baseline_vector {d : ℕ} [Nonempty (Fin d)]
     simp [payoff, ha, hz, hfa, mul_ite]
   · have hp : 0 < mass N f := lt_of_le_of_ne hmass (Ne.symm hz)
     let v : Fin d → ℝ := fun i =>
-      (if N i = peak N then f i else 0) / Real.sqrt (mass N f)
+      (if N i = Finset.univ.sup N then f i else 0) / Real.sqrt (mass N f)
     have hs : Real.sqrt (mass N f) ^ 2 = mass N f := Real.sq_sqrt hmass
     have hv : (∑ i, v i ^ 2) = 1 := by
       apply normalized_square _ _ hp
       apply Finset.sum_congr rfl
       intro i _
       split_ifs <;> simp
-    have hw : (∑ i, (N i : ℝ) * v i ^ 2) = (peak N : ℝ) * ∑ i, v i ^ 2 := by
+    have hw : (∑ i, (N i : ℝ) * v i ^ 2) = ((Finset.univ.sup N : ℕ) : ℝ) * ∑ i, v i ^ 2 := by
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro i _
-      by_cases hi : N i = peak N
+      by_cases hi : N i = Finset.univ.sup N
       · rw [hi]
       · simp [v, hi]
     have hf : (∑ i, f i * v i) = mass N f / Real.sqrt (mass N f) := by
@@ -355,28 +345,28 @@ private theorem baseline_vector {d : ℕ} [Nonempty (Fin d)]
 
 private theorem increment_peak {d : ℕ} [Nonempty (Fin d)]
     (N : Fin d → ℕ) (b : Fin d) :
-    peak (fun i => N i + if i = b then 1 else 0) =
-      peak N + if N b = peak N then 1 else 0 := by
+    Finset.univ.sup (fun i => N i + if i = b then 1 else 0) =
+      Finset.univ.sup N + if N b = Finset.univ.sup N then 1 else 0 := by
   classical
-  have hle (i : Fin d) := le_peak N i
-  by_cases hb : N b = peak N
+  have hle (i : Fin d) := Finset.le_sup (f := N) (Finset.mem_univ i)
+  by_cases hb : N b = Finset.univ.sup N
   · rw [if_pos hb]
     apply le_antisymm
-    · apply peak_le
-      intro i
+    · apply Finset.sup_le
+      intro i _
       have := hle i
       split_ifs <;> omega
-    · have h := le_peak (fun i => N i + if i = b then 1 else 0) b
+    · have h := Finset.le_sup (f := fun i => N i + if i = b then 1 else 0) (Finset.mem_univ b)
       simpa [hb] using h
   · rw [if_neg hb, add_zero]
     apply le_antisymm
-    · apply peak_le
-      intro i
+    · apply Finset.sup_le
+      intro i _
       by_cases hi : i = b
       · subst i; simp only [ite_true]; have := hle b; omega
       · simp only [if_neg hi, add_zero]; exact hle i
-    · obtain ⟨a, ha⟩ := peak_attained N
-      have h := le_peak (fun i => N i + if i = b then 1 else 0) a
+    · obtain ⟨a, _, ha⟩ := Finset.exists_mem_eq_sup Finset.univ Finset.univ_nonempty N
+      have h := Finset.le_sup (f := fun i => N i + if i = b then 1 else 0) (Finset.mem_univ a)
       omega
 
 private def block {d : ℕ} (a b : Fin d) (i j : Fin d) : ℝ :=
@@ -413,8 +403,8 @@ private theorem block_orthogonal {d : ℕ} (a b : Fin d) (hab : a ≠ b) (i j : 
 
 private theorem baseline_sum {d : ℕ} [Nonempty (Fin d)] (N : Fin d → ℕ)
     (a b : Fin d) (hab : a ≠ b) :
-    (∑ t, ((peak N : ℝ) + mass N (fun i => block a b i t))) =
-      ∑ t, (peak (fun i => N i + if i = t then 1 else 0) : ℝ) := by
+    (∑ t, (((Finset.univ.sup N : ℕ) : ℝ) + mass N (fun i => block a b i t))) =
+      ∑ t, ((Finset.univ.sup (fun i => N i + if i = t then 1 else 0) : ℕ) : ℝ) := by
   classical
   simp only [increment_peak, Nat.cast_add, Nat.cast_ite, Nat.cast_one, Nat.cast_zero,
     Finset.sum_add_distrib]
@@ -423,7 +413,7 @@ private theorem baseline_sum {d : ℕ} [Nonempty (Fin d)] (N : Fin d → ℕ)
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro i _
-  by_cases hi : N i = peak N
+  by_cases hi : N i = Finset.univ.sup N
   · simp only [hi, if_pos, ← pow_two, Finset.sum_ite_irrel]
     simpa only [block_symm a b hab, pow_two, ite_true] using block_orthogonal a b hab i i
   · simp [hi]
@@ -435,7 +425,7 @@ private theorem counts_prefix {n d : ℕ} (j : Fin n) (x : Fin n → Fin d) :
     counts x = fun i => prefixCounts j x i + if i = x j then 1 else 0 := by
   classical
   funext i
-  rw [counts, ← Finset.sum_erase_add _ _ (Finset.mem_univ j)]
+  rw [counts, Finset.card_filter, ← Finset.sum_erase_add _ _ (Finset.mem_univ j)]
   simp only [prefixCounts, eq_comm]
 
 private theorem split_sum {n d : ℕ} {R : Type*} [AddCommMonoid R]
@@ -484,14 +474,20 @@ private theorem measurements_unitary {d : ℕ} (a b : Fin d) (hab : a ≠ b) (t 
 private theorem real_born {d : ℕ} (f v : Fin d → ℝ) :
     ‖star (fun i => (f i : ℂ)) ⬝ᵥ (fun i => (v i : ℂ))‖ ^ 2 =
       (∑ i, f i * v i) ^ 2 := by
-  simp only [dotProduct, Pi.star_apply, Complex.star_def, Complex.conj_ofReal,
-    ← Complex.ofReal_mul, ← Complex.ofReal_sum, Complex.norm_real, Real.norm_eq_abs, sq_abs]
+  have hdot : star (fun i => (f i : ℂ)) ⬝ᵥ (fun i => (v i : ℂ)) =
+      ((f ⬝ᵥ v : ℝ) : ℂ) := by
+    simpa only [Function.comp_def, Complex.ofRealHom_eq_coe, Pi.star_def,
+      Complex.star_def, Complex.conj_ofReal] using (Complex.ofRealHom.map_dotProduct f v).symm
+  rw [hdot]
+  simp only [Complex.norm_real, Real.norm_eq_abs, sq_abs, dotProduct]
 
 private theorem real_unit {d : ℕ} (v : Fin d → ℝ) (hv : (∑ i, v i ^ 2) = 1) :
     star (fun i => (v i : ℂ)) ⬝ᵥ (fun i => (v i : ℂ)) = 1 := by
-  simp only [dotProduct, Pi.star_apply, Complex.star_def, Complex.conj_ofReal,
-    ← Complex.ofReal_mul, ← Complex.ofReal_sum]
-  exact_mod_cast (show (∑ i, v i * v i) = 1 by simpa only [pow_two] using hv)
+  calc
+    _ = ((v ⬝ᵥ v : ℝ) : ℂ) := by
+      simpa only [Function.comp_def, Complex.ofRealHom_eq_coe, Pi.star_def,
+        Complex.star_def, Complex.conj_ofReal] using (Complex.ofRealHom.map_dotProduct v v).symm
+    _ = 1 := by simp only [dotProduct, ← pow_two, hv, Complex.ofReal_one]
 
 private theorem quantum_payoff {n d : ℕ} (j : Fin n) (a b : Fin d)
     (x : Fin n → Fin d) (v : Fin d → ℝ) :
@@ -522,9 +518,9 @@ private theorem quantum_payoff {n d : ℕ} (j : Fin n) (a b : Fin d)
 
 private theorem baseline_total {n d : ℕ} [Nonempty (Fin d)] (j : Fin n)
     (a b : Fin d) (hab : a ≠ b) :
-    (∑ x : Fin n → Fin d, ((peak (prefixCounts j x) : ℝ) +
+    (∑ x : Fin n → Fin d, (((Finset.univ.sup (prefixCounts j x) : ℕ) : ℝ) +
       mass (prefixCounts j x) (fun i => block a b i (x j)))) =
-      ∑ x : Fin n → Fin d, (peak (counts x) : ℝ) := by
+      ∑ x : Fin n → Fin d, ((Finset.univ.sup (counts x) : ℕ) : ℝ) := by
   classical
   rw [split_sum j, split_sum j]
   apply Finset.sum_congr rfl
@@ -535,11 +531,11 @@ private theorem baseline_total {n d : ℕ} [Nonempty (Fin d)] (j : Fin n)
   have ht (t : Fin d) : e.symm (t,z) j = t :=
     congrArg Prod.fst (e.apply_symm_apply (t,z))
   calc
-    _ = ∑ t, ((peak N : ℝ) + mass N (fun i => block a b i t)) := by
+    _ = ∑ t, (((Finset.univ.sup N : ℕ) : ℝ) + mass N (fun i => block a b i t)) := by
       apply Finset.sum_congr rfl
       intro t _
       rw [hp, ht]
-    _ = ∑ t, (peak (fun i => N i + if i = t then 1 else 0) : ℝ) :=
+    _ = ∑ t, ((Finset.univ.sup (fun i => N i + if i = t then 1 else 0) : ℕ) : ℝ) :=
       baseline_sum N a b hab
     _ = _ := by
       apply Finset.sum_congr rfl
@@ -549,7 +545,7 @@ private theorem baseline_total {n d : ℕ} [Nonempty (Fin d)] (j : Fin n)
 private theorem constant_improvement {n d : ℕ} (hn : 2 ≤ n) (j : Fin n)
     (a b : Fin d) (hab : a ≠ b) :
     ∃ v : Fin d → ℝ, (∑ i, v i ^ 2) = 1 ∧
-      (peak (prefixCounts j (fun _ => a)) : ℝ) +
+      ((Finset.univ.sup (prefixCounts j (fun _ => a)) : ℕ) : ℝ) +
         mass (prefixCounts j (fun _ => a)) (fun i => block a b i a) <
         payoff (prefixCounts j (fun _ => a)) (fun i => block a b i a) v := by
   classical
@@ -558,13 +554,13 @@ private theorem constant_improvement {n d : ℕ} (hn : 2 ≤ n) (j : Fin n)
     simp [N, prefixCounts, eq_comm, Finset.card_erase_of_mem (Finset.mem_univ j)]
   have hn0 : 1 ≤ n := by omega
   have hnp : 0 < n - 1 := by omega
-  have hm : peak N = n - 1 := by
+  have hm : Finset.univ.sup N = n - 1 := by
     apply le_antisymm
-    · apply peak_le
-      intro i
+    · apply Finset.sup_le
+      intro i _
       rw [hN]
       split_ifs <;> omega
-    · simpa [hN] using le_peak N a
+    · simpa [hN] using Finset.le_sup (f := N) (Finset.mem_univ a)
   have hmass : mass N (fun i => block a b i a) = (3 / 5 : ℝ) ^ 2 := by
     unfold mass
     rw [hm]
@@ -590,7 +586,7 @@ private theorem constant_improvement {n d : ℕ} (hn : 2 ≤ n) (j : Fin n)
     rw [payoff, block_dot]
     simp only [ite_true, hN, Nat.cast_ite, Nat.cast_zero, ite_mul, zero_mul]
     simp [v, u, hab, hab.symm, Nat.cast_sub hn0]
-  change (peak N : ℝ) + mass N (fun i => block a b i a) < _
+  change ((Finset.univ.sup N : ℕ) : ℝ) + mass N (fun i => block a b i a) < _
   rw [hm, hmass, hscore, Nat.cast_sub hn0, Nat.cast_one]
   have hs : Real.sqrt q ^ 2 = q := Real.sq_sqrt hq.le
   have hr : Real.sqrt q ≠ 0 := (Real.sqrt_pos.mpr hq).ne'
@@ -621,7 +617,7 @@ theorem result : claim := by
     by_cases hx : x = x₀
     · subst x; simpa [v'] using hw
     · simpa [v', Function.update_of_ne hx] using hv x
-  have htotal : (∑ x : Fin n → Fin d, ((peak (prefixCounts j x) : ℝ) +
+  have htotal : (∑ x : Fin n → Fin d, (((Finset.univ.sup (prefixCounts j x) : ℕ) : ℝ) +
       mass (prefixCounts j x) (fun i => block a b i (x j)))) <
       ∑ x : Fin n → Fin d, payoff (prefixCounts j x) (fun i => block a b i (x j)) (v' x) := by
     apply Finset.sum_lt_sum
