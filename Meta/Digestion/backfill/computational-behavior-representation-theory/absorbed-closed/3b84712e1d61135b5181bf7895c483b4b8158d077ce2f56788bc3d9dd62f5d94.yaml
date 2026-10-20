@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3b84712e1d61135b5181bf7895c483b4b8158d077ce2f56788bc3d9dd62f5d94
+  normalized_sha256: sha256:3b84712e1d61135b5181bf7895c483b4b8158d077ce2f56788bc3d9dd62f5d94
+cas_ref: sha256:3b84712e1d61135b5181bf7895c483b4b8158d077ce2f56788bc3d9dd62f5d94
+coverage_gids:
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.actual_constant_hidden_drift
+    target_statement_id: sha256:2de6d5f6e6eba134d37cd42c93580fcbb6188f42da5827c9fb6688a2d6e4f052
+receipts:
+  unresolved_subitems: []

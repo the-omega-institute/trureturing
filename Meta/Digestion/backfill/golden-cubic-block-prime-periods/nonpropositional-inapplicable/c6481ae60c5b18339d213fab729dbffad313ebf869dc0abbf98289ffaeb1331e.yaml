@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c6481ae60c5b18339d213fab729dbffad313ebf869dc0abbf98289ffaeb1331e
+  normalized_sha256: sha256:c6481ae60c5b18339d213fab729dbffad313ebf869dc0abbf98289ffaeb1331e
+cas_ref: sha256:c6481ae60c5b18339d213fab729dbffad313ebf869dc0abbf98289ffaeb1331e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading followed only by names assigned to Lucas numbers and their two block expressions. These are notation declarations, with no additional congruence assertion.
+    previous_atom_id: 1770857782d2db19559a6419389c3be4ad15bc209dbae5ba5a3d7a60d76ffbf0
+    next_atom_id: cf79e1477dbd90227db9ccad0b476003b1f10a58cd1d338522eec9a57fa69462

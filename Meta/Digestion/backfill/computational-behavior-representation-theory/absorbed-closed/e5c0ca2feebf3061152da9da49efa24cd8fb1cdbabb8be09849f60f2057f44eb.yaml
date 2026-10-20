@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e5c0ca2feebf3061152da9da49efa24cd8fb1cdbabb8be09849f60f2057f44eb
+  normalized_sha256: sha256:e5c0ca2feebf3061152da9da49efa24cd8fb1cdbabb8be09849f60f2057f44eb
+cas_ref: sha256:e5c0ca2feebf3061152da9da49efa24cd8fb1cdbabb8be09849f60f2057f44eb
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometry/AutonomousPredictionEntropy.autonomous_prediction_entropy
+    target_statement_id: sha256:e6bda2faf8a161c3f8cf5d4aba20458f22817a65db512cf42086694c27d0f636
+receipts:
+  unresolved_subitems: []
