@@ -16,23 +16,23 @@ Lean statement: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/Full62.ful
 
 The theorem retains the complete general actual-edge statement and the original CompatibleCertificate statement. Essential matrices A and B, arbitrary original R and S, and the original positive lag and bijections remain unchanged. No alignment, balance, second long compatibility equation or pre-assumed conjugacy is added.
 
-The square reconstruction uses the original squareCoordinates inverse law and the original phi inverse law. The two square path relations are exported namespace aliases of the exact private squareIncomingLift_path and squareOutgoingLift_path declarations in CompatibleResponseForgettingBound; no forwarding theorem, copied proof, renamed kernel declaration or changed frozen source is introduced.
+The square reconstruction combines the original squareCoordinates inverse law with the original phi inverse law. The incoming and outgoing square-path relations identify the exact square states.
 
 Clause 6.2.1 uses the same actual C=c.squareMatrix and c.squareFiberEquiv. Explicit leftFiber and rightFiber equivalences retain numbered endpoints and readouts, giving the original incoming and outgoing counts. ActualIncoming.iso transports a supplied actual C edge through its unique lift and inverse numbering equations, rather than replacing edges by their counts.
 
 Clause 6.2.2 constructs PA and PB on the same bilateral C space from the existing incoming-lift theorem. Reversal on both ends gives PB on the original B carrier. The homeomorphism is h=PB composed with PA inverse, with inverse PA composed with PB inverse, actual signed shift laws and product/subspace continuity.
 
-Clauses 6.2.3 and 6.2.4 identify the same R-edge state using G1 on the actual finite Edge R histories. The left state is the first R factor of psiA inverse on the future A window. The right state is the second R factor of psiB inverse on the reversed dependent window, on the original B carrier. Square reconstruction then gives phi and inverse phi on the very same square.
+Clauses 6.2.3 and 6.2.4 identify the same R-edge state using the canonical-window history identity on the actual finite Edge R histories. The left state is the first R factor of psiA inverse on the future A window. The right state is the second R factor of psiB inverse on the reversed dependent window, on the original B carrier. Square reconstruction then gives phi and inverse phi on the very same square.
 
-G2 gives the exact future word x(i),...,x(i+m-1). G3 together with G2 gives the original B past word y(i-m),...,y(i-1); the signed formula is reverse(List.ofFn(j : Fin m => y(i-j-1))). Both retain actual numbered edges.
+The canonical-window word identity gives the exact future word x(i),...,x(i+m-1). The reversal and canonical-window word identities give the original B past word y(i-m),...,y(i-1); the signed formula is reverse(List.ofFn(j : Fin m => y(i-j-1))). Both retain actual numbered edges.
 
 Clauses 6.2.5 and 6.2.6 choose least natural forgetting depths with Nat.find, including depth zero, bounded by m. The inverse windows are inclusive [i,i+dL] and [i-dR,i]. For every N including zero, supports [-N,N+dL] and [-N-dR,N] control the centered target interval. Both actual centered escape sets are empty at moduli N+dL and N+dR.
 
-The retained consumers certificate_formulas, whole_certificate and full_original_6_2 have content after all same-delivery helpers are inlined: G1, G2 and G3 remain on their live proof paths. Escape registration for all 31 current public theorem targets remains unfinished under issue 19240, with zero declared_validated; parent 8336 remains open.
+These history and word identities combine in certificate_formulas and whole_certificate to establish both branches of full_original_6_2 on the same actual carriers.
 
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/Full62.full_original_6_2`
 - Dependency: [D5/S3/ConceptDynamics/Coding/CompatibleResponseForgettingBound](../CompatibleResponseForgettingBound.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion](../IncomingLiftAmbiguityCriterion.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced](../OriginalAlignedBalanced.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/FiniteWindowWordTransport](FiniteWindowWordTransport.md)

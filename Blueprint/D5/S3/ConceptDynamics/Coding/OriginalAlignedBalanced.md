@@ -58,52 +58,9 @@ All quantifiers remain over the original finite vertex types and all actual numb
 
 This application establishes the original-input chain-existence consequence only. Uniform essentiality of every intermediate matrix, intermediate dimensions and entries, ordinary exchange-factor and diamond-factor bounds for this very same chain, a sharper Lambda bound and an executable algorithm remain OPEN. The full quantitative SSE objective and parent SFT problem #8336 remain OPEN. These resource and algorithmic claims do not follow merely from the existence and length of the supplied chain.
 
-**Theorem 1.2 (Realization on the exact canonical window).**
-
-Lean statement: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.history_trace`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.history_trace` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For an incoming lift L, a bilateral numbered path x and a compatible state history r, lifting the canonical length-d window ending at r(i+d) returns r(i), for every natural d including zero and every signed i. The endpoint is the source of x(i+d).
-
-The successor proof applies the canonical tail relation, identifies the intermediate state subtype by Subtype.ext, transports the actual first edge along adjacency, and applies the supplied one-edge compatibility. Existing counted-history trace and existential path realization do not specify realization on this exact canonical dependent window. This canonical-window relation is the surviving G1 content.
-
-**Theorem 1.3 (Exact numbered window tabulation).**
-
-Lean statement: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.window_word`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.window_word` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The word of window(x,d,i) is List.ofFn(j : Fin d => x(i+j)). Zero gives the empty word. In the successor step equality elimination recovers the actual first edge including its number; the tail relation and List.ofFn_succ identify the complete shifted word. Endpoints, length and lift action alone do not determine these numbered coordinates. This is G2.
-
-**Theorem 1.4 (Dependent reversal preserves the exact reversed word).**
-
-Lean statement: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.reverse_word`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.reverse_word` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every endpoint-indexed finite path alpha, pathWord(reverseFinitePath alpha) is reverse(pathWord alpha) mapped by endpoint reversal, retaining every parallel-edge number. The successor uses the unchanged original private word_appendPath in this same owner, then the arbitrary-tail reversal relation and existing list laws. No append induction is copied. This is G3.
-
-The live consumers are Full62.certificate_formulas for G1 and Full62.whole_certificate for G2 and G3 through past_word. The full_original_6_2 theorem retains both its actual-edge general branch and its original-certificate branch. Same-delivery helpers are expanded when judging content; early freezing in an unpublished checkpoint supplies no old boundary.
-
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.history_trace`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.originalBDRProposition3_4`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.reverse_word`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.window_word`
 - Dependency: [D5/S3/ConceptDynamics/Coding/CommonNilpotencyForgettingBound](CommonNilpotencyForgettingBound.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting](CompatibleResponseForgetting.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion](IncomingLiftAmbiguityCriterion.md)

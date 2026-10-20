@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: Full original 6.2 on actual numbered square paths, bilateral conjugacy and exact signed windows. -/
-import D5.S3.ConceptDynamics.Coding.OriginalAlignedBalanced
+import D5.S3.ConceptDynamics.Coding.OriginalAlignedBalanced.FiniteWindowWordTransport
 import D5.S3.ConceptDynamics.Coding.IncomingLiftAmbiguityCriterion
 import D5.S3.ConceptDynamics.Coding.CompatibleResponseForgettingBound
 
