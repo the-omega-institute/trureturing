@@ -7,6 +7,7 @@
    digest: Nonstationary two-qutrit dephasing can preserve positive negativity. -/
 
 import D5.S3.QuantumBounds.NegativityReductionInclusionRefutation
+import D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence
 
 /-! A two-qubit corner of the qutrit space supports a nonstationary state whose
 positive negativity remains constant under collective dephasing. -/
@@ -19,12 +20,13 @@ noncomputable section
 
 namespace D5.S3.Quantum.Decoherence.QutritCollectiveDephasingInvariantNegativityRefutation
 
-open Matrix
+open _root_.Matrix
 open scoped BigOperators ComplexOrder MatrixOrder
 open D5.S3.QuantumBounds.NegativityReductionInclusionRefutation (negativity)
 open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm traceNorm_sub_orthogonal)
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence (symKet antiKet)
 
 /-- The damping factor in Ali's collective dephasing channel. -/
 def gammaFactor (Γ t : ℝ) : ℝ := Real.exp (-(Γ * t) / 2)
@@ -60,33 +62,31 @@ def claim : Prop :=
 
 private def uPlus : Fin 3 × Fin 3 → ℂ := Pi.single (0, 0) 1 + Pi.single (1, 1) 1
 private def uMinus : Fin 3 × Fin 3 → ℂ := Pi.single (0, 0) 1 - Pi.single (1, 1) 1
-private def wPlus : Fin 3 × Fin 3 → ℂ := Pi.single (0, 1) 1 + Pi.single (1, 0) 1
-private def wMinus : Fin 3 × Fin 3 → ℂ := Pi.single (0, 1) 1 - Pi.single (1, 0) 1
 
 private def rho : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
-  (3 / 8 : ℝ) • rankOneDensity wPlus + (1 / 8 : ℝ) • rankOneDensity uPlus
+  (3 / 8 : ℝ) • rankOneDensity symKet + (1 / 8 : ℝ) • rankOneDensity uPlus
 
 private def state (g : ℝ) : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
-  (3 / 8 : ℝ) • rankOneDensity wPlus +
+  (3 / 8 : ℝ) • rankOneDensity symKet +
     ((1 + g ^ 4) / 16) • rankOneDensity uPlus +
     ((1 - g ^ 4) / 16) • rankOneDensity uMinus
 
 private def positivePart (g : ℝ) : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
   (1 / 4 : ℝ) • rankOneDensity uPlus +
-    ((3 + g ^ 4) / 16) • rankOneDensity wPlus +
-    ((3 - g ^ 4) / 16) • rankOneDensity wMinus
+    ((3 + g ^ 4) / 16) • rankOneDensity symKet +
+    ((3 - g ^ 4) / 16) • rankOneDensity antiKet
 
 private def negativePart : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
   (1 / 8 : ℝ) • rankOneDensity uMinus
 
 private theorem rho_posSemidef : rho.PosSemidef := by
-  exact ((Matrix.posSemidef_vecMulVec_self_star wPlus).smul (show (0 : ℝ) ≤ 3 / 8 by
+  exact ((Matrix.posSemidef_vecMulVec_self_star symKet).smul (show (0 : ℝ) ≤ 3 / 8 by
     norm_num)).add ((Matrix.posSemidef_vecMulVec_self_star uPlus).smul
       (show (0 : ℝ) ≤ 1 / 8 by norm_num))
 
 private theorem rho_trace : rho.trace = 1 := by
   norm_num [rho, rankOneDensity, Matrix.trace_add, Matrix.trace_smul,
-    Matrix.trace_vecMulVec, dotProduct, wPlus, uPlus, Pi.star_apply,
+    Matrix.trace_vecMulVec, dotProduct, symKet, uPlus, Pi.star_apply,
     Fintype.sum_prod_type, Fin.sum_univ_three, Pi.single_apply]
 
 private theorem state_one : state 1 = rho := by
@@ -134,7 +134,7 @@ private theorem evolve_rho (t : ℝ) (ht : 0 ≤ t) :
   simp only [evolve, kraus1, kraus2, kraus3, Matrix.add_apply,
     Matrix.diagonal_conjTranspose, Matrix.mul_diagonal, Matrix.diagonal_mul, Pi.star_apply]
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-    norm_num [rho, state, rankOneDensity, uPlus, uMinus, wPlus,
+    norm_num [rho, state, rankOneDensity, uPlus, uMinus, symKet,
       Matrix.vecMulVec_apply, Matrix.add_apply, Matrix.smul_apply, Pi.star_apply,
       Pi.single_apply, smul_eq_mul, Complex.ofReal_add, Complex.ofReal_sub,
       Complex.ofReal_div, Complex.ofReal_pow] <;>
@@ -146,9 +146,9 @@ private theorem positivePart_posSemidef (g : ℝ) (hg : 0 ≤ g) (hg1 : g ≤ 1)
   have hg4 : g ^ 4 ≤ 1 := pow_le_one₀ hg hg1
   exact (((Matrix.posSemidef_vecMulVec_self_star uPlus).smul
     (show (0 : ℝ) ≤ 1 / 4 by norm_num)).add
-    ((Matrix.posSemidef_vecMulVec_self_star wPlus).smul
+    ((Matrix.posSemidef_vecMulVec_self_star symKet).smul
       (show 0 ≤ (3 + g ^ 4) / 16 by positivity))).add
-    ((Matrix.posSemidef_vecMulVec_self_star wMinus).smul
+    ((Matrix.posSemidef_vecMulVec_self_star antiKet).smul
       (show 0 ≤ (3 - g ^ 4) / 16 by linarith))
 
 private theorem negativePart_posSemidef : negativePart.PosSemidef := by
@@ -161,7 +161,7 @@ private theorem partialTranspose_state (g : ℝ) :
   ext ⟨i, j⟩ ⟨k, l⟩
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     norm_num [partialTranspose, state, positivePart, negativePart, rankOneDensity,
-      uPlus, uMinus, wPlus, wMinus, Matrix.vecMulVec_apply, Matrix.add_apply,
+      uPlus, uMinus, symKet, antiKet, Matrix.vecMulVec_apply, Matrix.add_apply,
       Matrix.sub_apply, Matrix.smul_apply, Pi.star_apply, Pi.single_apply,
       smul_eq_mul, Complex.ofReal_add, Complex.ofReal_sub, Complex.ofReal_div,
       Complex.ofReal_pow] <;> ring
@@ -170,11 +170,11 @@ private theorem parts_orthogonal (g : ℝ) : positivePart g * negativePart = 0 :
   have hU : star uPlus ⬝ᵥ uMinus = 0 := by
     norm_num [dotProduct, uPlus, uMinus, Pi.star_apply, Pi.single_apply,
       Fintype.sum_prod_type, Fin.sum_univ_three]
-  have hW : star wPlus ⬝ᵥ uMinus = 0 := by
-    norm_num [dotProduct, wPlus, uMinus, Pi.star_apply, Pi.single_apply,
+  have hW : star symKet ⬝ᵥ uMinus = 0 := by
+    norm_num [dotProduct, symKet, uMinus, Pi.star_apply, Pi.single_apply,
       Fintype.sum_prod_type, Fin.sum_univ_three]
-  have hM : star wMinus ⬝ᵥ uMinus = 0 := by
-    norm_num [dotProduct, wMinus, uMinus, Pi.star_apply, Pi.single_apply,
+  have hM : star antiKet ⬝ᵥ uMinus = 0 := by
+    norm_num [dotProduct, antiKet, uMinus, Pi.star_apply, Pi.single_apply,
       Fintype.sum_prod_type, Fin.sum_univ_three]
   simp [positivePart, negativePart, add_mul,
     rankOneDensity, Matrix.vecMulVec_mul_vecMulVec, hU, hW, hM]
@@ -182,7 +182,7 @@ private theorem parts_orthogonal (g : ℝ) : positivePart g * negativePart = 0 :
 private theorem parts_trace (g : ℝ) :
     (positivePart g).trace.re + negativePart.trace.re = 3 / 2 := by
   norm_num [positivePart, negativePart, rankOneDensity, Matrix.trace_add, Matrix.trace_smul,
-    Matrix.trace_vecMulVec, dotProduct, uPlus, uMinus, wPlus, wMinus, Pi.star_apply,
+    Matrix.trace_vecMulVec, dotProduct, uPlus, uMinus, symKet, antiKet, Pi.star_apply,
     Fintype.sum_prod_type, Fin.sum_univ_three, Pi.single_apply, Complex.add_re,
     Complex.real_smul, smul_eq_mul]
   ring
@@ -214,7 +214,7 @@ private theorem evolve_ne : evolve 2 1 rho ≠ rho := by
     apply Real.exp_lt_one_iff.mpr
     norm_num
   have hg4 := pow_lt_one₀ hg0 hg1 (by decide : (4 : ℕ) ≠ 0)
-  norm_num [state, rho, rankOneDensity, uPlus, uMinus, wPlus,
+  norm_num [state, rho, rankOneDensity, uPlus, uMinus, symKet,
     Matrix.vecMulVec_apply, Matrix.add_apply, Matrix.smul_apply, Pi.star_apply,
     Pi.single_apply, smul_eq_mul] at he
   simp only [← Complex.ofReal_pow, Complex.ofReal_re] at he
