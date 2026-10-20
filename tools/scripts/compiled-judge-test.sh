@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+# Lake schedules library modules concurrently. Search-reduction fixtures execute
+# isolated compiler probes and are the high-memory part of this library, so
+# compile those modules one at a time before the ordinary aggregate build.
+search_reduction_modules=(
+  GraphCandidates GraphModel GraphCalibration Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
+  FaultPaths SingleSourceModel PresentationCoverage RawOriginsTests SingleSourceTests
+  Calibration Faults RealNegative
+  VocabularyCandidates VocabularyModel VocabularyTransport VocabularyTests InformationTests
+)
+for module in "${search_reduction_modules[@]}"; do
+  make -C "$ROOT" lean \
+    LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.$module"
+done
 make -C "$ROOT" lean LEAN_TARGETS="regInspector/LeanInformationAuditRegTests regInspector/compiledJudgeTests leanInspector/reportInspector"
 cd "$ROOT"
 compute=()

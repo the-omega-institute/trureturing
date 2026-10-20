@@ -59,10 +59,14 @@ class UniversalProductionTests(unittest.TestCase):
             'LeanInformationAuditFibTests.AuricFib.UniversalFixture', 'AuricFibUniversalProduction')
         generic_fixture = generic_fixture.replace('owner := `AuricFibUniversalProduction',
                                                   'owner := `' + MODULE)
-        imports = [line for text in (native_fixture, generic_fixture) for line in text.splitlines()
+        law_fixture = (fixture_root / 'LawFixture.lean').read_text().replace(
+            'LeanInformationAuditFibTests.AuricFib.LawFixture', 'AuricFibUniversalProduction.Law').replace(
+            'LawFixture.', 'AuricFibUniversalProduction.Law.')
+        law_fixture = law_fixture.replace('owner := `AuricFibUniversalProduction.Law', 'owner := `' + MODULE)
+        imports = [line for text in (native_fixture, generic_fixture, law_fixture) for line in text.splitlines()
                    if line.startswith('import ')]
         bodies = ['\n'.join(line for line in text.splitlines() if not line.startswith('import '))
-                  for text in (native_fixture, generic_fixture)]
+                  for text in (native_fixture, generic_fixture, law_fixture)]
         cls.source.write_text('\n'.join(dict.fromkeys(imports)) + '\n' + '\n'.join(bodies) + '''
 namespace AuricFibUniversalProduction
 open LeanInformationAudit.Analysis LeanInformationAudit.AuricFib.Contract
@@ -190,6 +194,96 @@ end AuricFibUniversalProduction
                 self.assertLessEqual(set(row['request']['binding']['accepted_axioms']),
                                      {'propext', 'Classical.choice', 'Quot.sound'})
 
+    def test_law_family_source_and_golden_point(self):
+        from fractions import Fraction
+        def q(value):
+            return Fraction(int(value['numerator']), int(value['denominator']))
+        row = self.first['Law.star']
+        self.assertIsNotNone(row['request'], row)
+        reading = row['reading']
+        self.assertEqual(row['request']['arena'], 'law-family')
+        self.assertEqual(reading['source_contract']['binding']['occurrence']['source_name'], PREFIX + 'Law.target')
+        self.assertEqual([Fraction(x) for x in row['request']['point']['law']],
+                         [Fraction(n, 8) for n in (4, 1, 1, 1, 1)])
+        for name, value in dict(X=Fraction(1,4), Y=Fraction(1,4), Z=Fraction(1,8), r=Fraction(7,8)).items():
+            self.assertEqual(q(reading['pyramid_coordinates'][name]), value)
+        association = reading['association_coordinate']
+        self.assertEqual(q(association['kappa']), Fraction(1,8))
+        self.assertEqual(q(association['delta']), Fraction(3,64))
+        self.assertEqual(q(association['product_completion'][3]), Fraction(1,14))
+        self.assertEqual(q(reading['residuals']['fiber_width']), Fraction(1,4))
+        self.assertEqual(association['family_capture']['status'], 'unknown')
+        star = self.first['Law.Star.analysis']
+        self.assertIsNotNone(star['request'], star)
+        self.assertEqual(star['request']['point']['law'], row['request']['point']['law'])
+        self.assertEqual(star['reading']['pyramid_coordinates'], reading['pyramid_coordinates'])
+        self.assertEqual(star['reading']['association_coordinate']['delta'], association['delta'])
+        self.assertEqual([p['atom'] for p in star['request']['law_family']['mode_pairing']],
+                         [4, 0, 2, 3, 1])
+        self.assertEqual(self.first['Law.collapsed']['reading']['association_coordinate']['family_capture']['status'], 'collapsed')
+        self.assertFalse(self.first['Law.collapsed']['request']['facts'][0]['uses_target_results'])
+        self.assertTrue(self.first['Law.usesTarget']['request']['facts'][0]['uses_target_results'])
+        self.assertTrue(self.first['Law.usesOpaqueTarget']['request']['facts'][0]['uses_target_results'])
+        for name in ('seam_readout', 'guard', 'reply', 'R_guard', 'native_continuation'):
+            self.assertEqual(reading['disposition']['readings'][name]['kind'], 'not-applicable')
+        self.assertIsNone(reading['seam_readout'])
+        self.assertNotIn('R_guard', reading['residuals'])
+        self.assertNotIn('J_f', reading['residuals'])
+        signed = self.first['Law.taskSigned']
+        self.assertIsNotNone(signed['request'], signed)
+        self.assertEqual(signed['request']['task'], ['-1/2', '2/2', '-3/2', '4/2', '5/2'])
+        self.assertEqual(q(signed['reading']['residuals']['J_f']), 2)
+        zero = self.first['Law.taskZero']['reading']
+        self.assertEqual(q(zero['residuals']['J_f']), 0)
+        self.assertEqual(zero['continuation_target']['family_capture'], 'collapsed')
+        infinite = self.first['Law.infinite']['reading']
+        for name in ('escape_pairs', 'escape_rate', 'unique_capture'):
+            self.assertEqual(infinite['disposition']['readings'][name]['kind'], 'not-applicable')
+        self.assertEqual(infinite['disposition']['readings']['family_capture']['kind'], 'unknown')
+        self.assertEqual(infinite['association_coordinate']['family_capture']['status'], 'unknown')
+        strict = self.first['Law.Separation.strict']['reading']
+        self.assertEqual(strict['association_coordinate']['family_capture']['status'], 'strict')
+        self.assertEqual(strict['continuation_target']['family_capture'], 'strict')
+        self.assertEqual(strict['association_coordinate']['family_capture']['inheritance'], 'unassessed')
+        simplex = self.first['Law.Simplex.strict']['reading']
+        self.assertEqual(simplex['association_coordinate']['family_capture']['inheritance'], 'simplex-inherited')
+        self.assertEqual([f['kind'] for f in self.first['Law.signed']['request']['facts']],
+                         ['deltaSign', 'positiveWidth'])
+        for name in ('Law.signed', 'Law.Separation.strict', 'Law.Simplex.strict'):
+            self.assertTrue(all(not fact['uses_target_results']
+                                for fact in self.first[name]['request']['facts']), name)
+        unavailable = self.first['Law.unavailablePoint']
+        self.assertIsNotNone(unavailable['request'], unavailable)
+        self.assertEqual(unavailable['reading']['disposition']['readings']['pyramid_coordinates']['kind'],
+                         'unavailable')
+        self.assertEqual(unavailable['reading']['association_coordinate']['family_capture']['status'],
+                         'collapsed')
+        self.assertEqual(unavailable['reading']['disposition']['readings']['source_contract']['kind'],
+                         'available')
+        missing = self.first['Law.noPoint']['reading']
+        self.assertIsNone(missing['pyramid_coordinates'])
+        self.assertEqual(missing['association_coordinate']['family_capture']['status'], 'unknown')
+
+    def test_compiled_verdicts_are_lean_projections(self):
+        laws = [row for row in self.first.values()
+                if row['request'] is not None and row['request'].get('arena') == 'law-family']
+        for row in laws:
+            compiled = row['request']['compiled_capture']
+            reading = row['reading']
+            self.assertEqual(reading['association_coordinate']['family_capture'], compiled['family'])
+            self.assertEqual(reading['layered_spectrum']['family_capture'], compiled['family'])
+            if row['request']['task'] is not None:
+                self.assertEqual(reading['continuation_target']['family_capture'], compiled['task'])
+                self.assertEqual(reading['continuation_target']['uses_delta'], compiled['uses_delta'])
+        # Replaying JSON at the public arithmetic entry acquires no theorem.
+        strict = self.first['Law.Separation.strict']['request']
+        result = subprocess.run([str(ROOT / '.lake/build/lean-inspector/reg/bin/auricFibAnalysis')],
+                                input=json.dumps(strict), text=True, capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        public = json.loads(result.stdout)
+        self.assertEqual(public['association_coordinate']['family_capture']['status'], 'unknown')
+        self.assertEqual(public['disposition']['readings']['source_contract']['kind'], 'unavailable')
+
     def test_data_free_ingress(self):
         current = self.first
         for name, target, telescope, levels in (
@@ -246,6 +340,19 @@ end AuricFibUniversalProduction
             bundle.writestr('raw-lean-report.json', json.dumps(dict(schema='unknown', modules=[row])))
         with self.assertRaisesRegex(ValueError, 'fib.previous_module_binding'):
             fib_analysis.produce(row, malformed, '')
+
+    def test_full_and_incremental_law_readings_agree(self):
+        original = json.loads(self.report.read_text())['modules'][0]
+        full = copy.deepcopy(original)
+        stats = fib_analysis.produce(full, self.directory / 'no-prior-artifact.zip',
+            ROOT / '.lake/build/lean-inspector/reg/bin/auricFibAnalysis')
+        self.assertEqual(stats['reused'], 0)
+        self.assertEqual(full['fib_analysis'], original['fib_analysis'])
+        incremental = copy.deepcopy(original)
+        previous = STATE / 'modules' / (MODULE + '.zip')
+        stats = fib_analysis.produce(incremental, previous, '')
+        self.assertEqual(stats['generated'], 0)
+        self.assertEqual(incremental['fib_analysis'], full['fib_analysis'])
 
     def test_report_consumer_compares_complete_inputs_and_runs_once(self):
         original = json.loads(self.report.read_text())['modules'][0]

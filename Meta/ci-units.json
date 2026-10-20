@@ -906,6 +906,7 @@
     "tools/lean-inspector/Inspector.lean",
     "tools/lean-inspector/LeanInformationAudit/ArtifactAssessment.lean",
     "tools/lean-inspector/LeanInformationAudit/ArtifactRegistration.lean",
+    "tools/lean-inspector/LeanInformationAudit/AuricFibCapture.lean",
     "tools/lean-inspector/LeanInformationAudit/BindingRecords.lean",
     "tools/lean-inspector/LeanInformationAudit/BindingWire.lean",
     "tools/lean-inspector/LeanInformationAudit/CatalogData.lean",
