@@ -202,28 +202,36 @@ structure DPCell where
   edge? : Option Nat := none
   deriving Inhabited
 
-private def better (a b : Bound) : Bool :=
+def better (a b : Bound) : Bool :=
   match a, b with
   | .finite a, .finite b => a < b
   | .finite _, .top => true
   | _, _ => false
 
+def initialTable (graph : ProofGraph) (seeds : List Nat) : Array DPCell :=
+  graph.vertices.toArray.map fun v =>
+    if seeds.contains v.id then {distance := .finite 0} else {}
+
+def relaxEdge (weight : EdgeCost → Nat) (previous table : Array DPCell)
+    (entry : GraphEdge × Nat) : Array DPCell :=
+  let (edge, index) := entry
+  let candidate := edgeBound weight edge (fun v => (previous[v]?.getD {}).distance)
+  let current := table[edge.conclusion]?.getD {}
+  if better candidate current.distance then
+    table.set! edge.conclusion {distance := candidate, edge? := some index}
+  else table
+
 /-- Synchronous Bellman rounds retain one value and one backpointer per node.
 No proof tree is materialized or recursively recomputed by the DP. -/
+def dpRounds (graph : ProofGraph) (weight : EdgeCost → Nat)
+    (seeds : List Nat) : Nat → Array DPCell
+  | 0 => initialTable graph seeds
+  | fuel + 1 => graph.edges.zipIdx.foldl
+      (relaxEdge weight (dpRounds graph weight seeds fuel)) (initialTable graph seeds)
+
 def dpTable (graph : ProofGraph) (weight : EdgeCost → Nat)
-    (seeds : List Nat) : Array DPCell := Id.run do
-  let initial := graph.vertices.toArray.map fun v =>
-    if seeds.contains v.id then {distance := .finite 0 : DPCell} else {}
-  let mut table := initial
-  for _ in [:graph.vertices.length] do
-    let previous := table
-    table := initial
-    for (edge, index) in graph.edges.zipIdx do
-      let candidate := edgeBound weight edge (fun v => (previous[v]?.getD {}).distance)
-      let current := table[edge.conclusion]?.getD {}
-      if better candidate current.distance then
-        table := table.set! edge.conclusion {distance := candidate, edge? := some index}
-  return table
+    (seeds : List Nat) : Array DPCell :=
+  dpRounds graph weight seeds graph.vertices.length
 
 def depth (graph : ProofGraph) (weight : EdgeCost → Nat) (seeds : List Nat) : Nat → Bound :=
   let table := dpTable graph weight seeds
@@ -236,7 +244,7 @@ def optimalSeeds (graph : ProofGraph) (weight : EdgeCost → Nat)
   let mut pending := [graph.root]
   let mut seen := []
   let mut used := []
-  for _ in [:graph.vertices.length + graph.edges.length + 1] do
+  for _ in [:graph.vertices.length + (graph.edges.map (·.premises.length)).sum + 1] do
     match pending with
     | [] => break
     | v :: rest =>

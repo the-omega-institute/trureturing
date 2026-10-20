@@ -198,7 +198,7 @@ private def tryAssumptions (goal : MVarId) (facts : Array Expr) : MetaM Bool := 
   for fact in facts do
     let saved ← saveState
     try
-      let goals ← withReducible <| goal.apply fact
+      let goals ← withReducible <| goal.apply fact {approx := false}
       let allClosed ← goals.allM fun remaining => remaining.withContext do
         for available in facts do
           let before ← saveState
@@ -207,7 +207,9 @@ private def tryAssumptions (goal : MVarId) (facts : Array Expr) : MetaM Bool := 
             return true
           before.restore
         return false
-      if allClosed then return true
+      if allClosed then
+        check (← instantiateMVars (mkMVar goal))
+        return true
     catch ex =>
       if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
     saved.restore
@@ -388,9 +390,11 @@ partial def localRebuild (target : Expr) (head : Option Expr)
               return {cost := .one, detail := "head-result-mismatch"}
             for inst in hidden.instances do
               if (← instantiateMVars inst).hasMVar then
-                let synthesized ← synthInstance (← inferType inst)
-                unless ← isDefEq inst synthesized do
-                  return {cost := .one, detail := "instance-mismatch"}
+                let instanceType ← instantiateMVars (← inferType inst)
+                if !instanceType.hasMVar then
+                  let synthesized ← synthInstance instanceType
+                  unless ← isDefEq inst synthesized do
+                    return {cost := .one, detail := "instance-mismatch"}
             for proof in hidden.proofSlots do
               let proof ← instantiateMVars proof
               if proof.isMVar then
@@ -398,6 +402,7 @@ partial def localRebuild (target : Expr) (head : Option Expr)
                 if !(← solveLocalGoal proof.mvarId! seeds residuals) then saved.restore
                 if !(← proof.mvarId!.isAssigned) then obligations := obligations.push proof.mvarId!
             for slot in slots do
+              if hidden.instances.contains slot then continue
               let value ← instantiateMVars slot
               if value.hasMVar then
                 let variables ← getMVars value
@@ -411,6 +416,14 @@ partial def localRebuild (target : Expr) (head : Option Expr)
                 let defaultValue ← mkAppOptM ``default #[some type, some defaultInstance]
                 unless ← isDefEq slot defaultValue do
                   return {cost := .unknown, detail := "unconstrained-default-unavailable"}
+            for inst in hidden.instances do
+              if (← instantiateMVars inst).hasMVar then
+                let instanceType ← instantiateMVars (← inferType inst)
+                if instanceType.hasMVar then
+                  return {cost := .one, detail := "unresolved-instance-data"}
+                let synthesized ← synthInstance instanceType
+                unless ← isDefEq inst synthesized do
+                  return {cost := .one, detail := "instance-mismatch"}
             for obligation in obligations do
               let type ← instantiateMVars (← obligation.getType)
               let residualGoal ← mkFreshExprMVar type

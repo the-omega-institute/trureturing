@@ -84,6 +84,152 @@ theorem depthFuel_le_iff_derivable (graph : ProofGraph) (weight : EdgeCost → N
       rw [minBound_le]
       simp [List.mem_map, edgeBound, boundAdd_le, boundMax_le, ih]
 
+private theorem initial_size (graph : ProofGraph) (seeds : List Nat) :
+    (initialTable graph seeds).size = graph.vertices.length := by simp [initialTable]
+
+private theorem relax_size (weight : EdgeCost → Nat) (previous table : Array DPCell)
+    (entry : GraphEdge × Nat) :
+    (relaxEdge weight previous table entry).size = table.size := by
+  simp only [relaxEdge]
+  split <;> simp
+
+private theorem relax_fold_size (weight : EdgeCost → Nat) (previous table : Array DPCell)
+    (entries : List (GraphEdge × Nat)) :
+    (entries.foldl (relaxEdge weight previous) table).size = table.size := by
+  induction entries generalizing table with
+  | nil => rfl
+  | cons entry entries ih => simp only [List.foldl_cons, ih, relax_size]
+
+private theorem choose_distance (a b : Bound) :
+    (if better a b then a else b) = bmin b a := by
+  cases a with
+  | top => cases b <;> simp [better, bmin]
+  | finite a =>
+    cases b with
+    | top => simp [better, bmin]
+    | finite b =>
+      by_cases h : a < b
+      · simp [better, bmin, h, Nat.min_eq_right (Nat.le_of_lt h)]
+      · simp [better, bmin, h, Nat.min_eq_left (by omega : b ≤ a)]
+
+private theorem relax_distance (weight : EdgeCost → Nat) (previous table : Array DPCell)
+    (entry : GraphEdge × Nat) (v : Nat) (hv : v < table.size) :
+    ((relaxEdge weight previous table entry)[v]?.getD {}).distance =
+      if entry.1.conclusion = v then
+        bmin (table[v]?.getD {}).distance
+          (edgeBound weight entry.1 (fun p => (previous[p]?.getD {}).distance))
+      else (table[v]?.getD {}).distance := by
+  obtain ⟨edge, index⟩ := entry
+  by_cases hc : edge.conclusion = v
+  · simp only [relaxEdge, hc, ↓reduceIte]
+    split
+    · rename_i h
+      simp only [Array.set!_eq_setIfInBounds,
+        Array.getElem?_setIfInBounds_self_of_lt hv, Option.getD_some]
+      simpa only [h, Bool.true_eq, ↓reduceIte] using (choose_distance
+        (edgeBound weight edge (fun p => (previous[p]?.getD {}).distance))
+        (table[v]?.getD {}).distance)
+    · rename_i h
+      have chosen := choose_distance
+        (edgeBound weight edge (fun p => (previous[p]?.getD {}).distance))
+        (table[v]?.getD {}).distance
+      simpa [h] using chosen
+  · simp only [relaxEdge]
+    split <;> simp [hc, Array.getElem?_setIfInBounds_ne]
+
+private theorem relax_fold_le (weight : EdgeCost → Nat) (previous table : Array DPCell)
+    (entries : List (GraphEdge × Nat)) (v n : Nat) (hv : v < table.size) :
+    ((entries.foldl (relaxEdge weight previous) table)[v]?.getD {}).distance ≤ .finite n ↔
+      (table[v]?.getD {}).distance ≤ .finite n ∨ ∃ entry ∈ entries,
+        entry.1.conclusion = v ∧
+        edgeBound weight entry.1 (fun p => (previous[p]?.getD {}).distance) ≤ .finite n := by
+  induction entries generalizing table with
+  | nil => simp
+  | cons entry entries ih =>
+    rw [List.foldl_cons, ih _ (by simpa only [relax_size] using hv),
+      relax_distance weight previous table entry v hv]
+    by_cases hc : entry.1.conclusion = v
+    · simp only [hc, ↓reduceIte, bmin_le, List.mem_cons]
+      aesop
+    · simp only [hc, ↓reduceIte, List.mem_cons]
+      aesop
+
+private theorem initial_le (graph : ProofGraph) (seeds : List Nat) (v n : Nat)
+    (hv : v < graph.vertices.length)
+    (indexed : ∀ i (h : i < graph.vertices.length), (graph.vertices[i]).id = i) :
+    ((initialTable graph seeds)[v]?.getD {}).distance ≤ .finite n ↔ v ∈ seeds := by
+  by_cases hs : v ∈ seeds <;>
+    simp [initialTable, List.getElem?_eq_getElem hv, indexed v hv, hs]
+
+/-- Every production Bellman round computes the independent min-max derivation
+semantics. The hypotheses express array indexing and in-graph premises, not a
+numerical result or the existence of an optimal derivation. Cycles are allowed
+at this bounded stage. -/
+theorem dpRounds_le_iff_derivable (graph : ProofGraph) (weight : EdgeCost → Nat)
+    (seeds : List Nat)
+    (indexed : ∀ i (h : i < graph.vertices.length), (graph.vertices[i]).id = i)
+    (premisesBounded : ∀ edge ∈ graph.edges, ∀ p ∈ edge.premises,
+      p < graph.vertices.length)
+    (fuel v n : Nat) (hv : v < graph.vertices.length) :
+    ((dpRounds graph weight seeds fuel)[v]?.getD {}).distance ≤ .finite n ↔
+      Derivable graph (fun edge => weight edge.cost) seeds fuel v n := by
+  induction fuel generalizing v n with
+  | zero => exact initial_le graph seeds v n hv indexed
+  | succ fuel ih =>
+    rw [dpRounds, relax_fold_le weight _ _ _ v n (by simpa only [initial_size] using hv),
+      initial_le graph seeds v n hv indexed]
+    constructor
+    · rintro (hs | ⟨⟨edge, index⟩, he, hcon, bound⟩)
+      · exact Or.inl hs
+      · have hem := List.fst_mem_of_mem_zipIdx he
+        obtain ⟨hc, hp⟩ := (boundAdd_le _ _ _).mp bound
+        refine Or.inr ⟨edge, List.mem_filter.mpr ⟨hem, by simpa using hcon⟩, hc, ?_⟩
+        intro p hpm
+        apply (ih p _ (premisesBounded edge hem p hpm)).mp
+        exact (boundMax_le _ _).mp hp _ (List.mem_map.mpr ⟨p, hpm, rfl⟩)
+    · rintro (hs | ⟨edge, he, hc, hp⟩)
+      · exact Or.inl hs
+      · have hem := (List.mem_filter.mp he).1
+        have hcon : edge.conclusion = v := by simpa using (List.mem_filter.mp he).2
+        have member : edge ∈ graph.edges.zipIdx.map Prod.fst := by simpa using hem
+        obtain ⟨⟨old, index⟩, hi, equal⟩ := List.mem_map.mp member
+        simp only at equal
+        subst old
+        refine Or.inr ⟨(edge, index), hi, hcon, (boundAdd_le _ _ _).mpr ⟨hc, ?_⟩⟩
+        apply (boundMax_le _ _).mpr
+        intro distance hd
+        obtain ⟨p, hpm, rfl⟩ := List.mem_map.mp hd
+        exact (ih p _ (premisesBounded edge hem p hpm)).mpr (hp p hpm)
+
+private theorem bound_ext (a b : Bound)
+    (same : ∀ n, a ≤ .finite n ↔ b ≤ .finite n) : a = b := by
+  cases a with
+  | top =>
+    cases b with
+    | top => rfl
+    | finite b => exact False.elim ((same b).mpr (Nat.le_refl b))
+  | finite a =>
+    cases b with
+    | top => exact False.elim ((same a).mp (Nat.le_refl a))
+    | finite b =>
+      exact congrArg Bound.finite (Nat.le_antisymm
+        ((same b).mpr (Nat.le_refl b)) ((same a).mp (Nat.le_refl a)))
+
+/-- The production table equals the reference recurrence at the actual number
+of rounds. No acyclicity or optimality conclusion is assumed. -/
+theorem dpTable_eq_depthFuel (graph : ProofGraph) (weight : EdgeCost → Nat)
+    (seeds : List Nat)
+    (indexed : ∀ i (h : i < graph.vertices.length), (graph.vertices[i]).id = i)
+    (premisesBounded : ∀ edge ∈ graph.edges, ∀ p ∈ edge.premises,
+      p < graph.vertices.length)
+    (v : Nat) (hv : v < graph.vertices.length) :
+    ((dpTable graph weight seeds)[v]?.getD {}).distance =
+      depthFuel graph weight seeds graph.vertices.length v := by
+  apply bound_ext
+  intro n
+  exact (dpRounds_le_iff_derivable graph weight seeds indexed premisesBounded
+    graph.vertices.length v n hv).trans (depthFuel_le_iff_derivable _ _ _ _ _ _).symm
+
 /-- Monotonicity permits seed-dependent prices, provided enlarging the seed set
 never makes a local reconstruction cost larger. No property of real budgets
 is silently assumed by the model. -/
@@ -239,6 +385,8 @@ theorem graph_verdict_partition (reading : GraphReading) :
     ¬ (classifyGraph reading = .nonBindOnly ∧ classifyGraph reading = .insufficient) := by
   cases classifyGraph reading <;> simp
 
+#print axioms dpTable_eq_depthFuel
+#print axioms dpRounds_le_iff_derivable
 #print axioms edge_extension_preserves_derivations
 #print axioms outside_zero_shortcut
 #print axioms unknown_not_nonBindOnly

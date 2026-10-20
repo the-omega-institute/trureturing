@@ -351,7 +351,7 @@ unsafe def run (source : Environment) (request : Request)
       request.baseline.map (fun n => {module := n})
     let base ← withImporting do
       let (_, state) ← (importModulesCore imports).run sharedImports
-      finalizeImport state imports options 0 (leakEnv := true) (loadExts := true)
+      finalizeImport state imports options 0 (leakEnv := false) (loadExts := true)
     let mut delivery := #[]
     for n in #[request.target] ++ request.additions do
       if let some index := source.getModuleIdxFor? n then
