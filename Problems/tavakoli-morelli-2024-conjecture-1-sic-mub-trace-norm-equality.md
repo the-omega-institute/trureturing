@@ -77,7 +77,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 **Argued, not formalized.**
 - *Mechanism.* Both a SIC and a complete set of MUBs are complex projective 2-designs. Their frame operators on the operator space are therefore both multiples of Id + |I⟩⟩⟨⟨I|, differing by the factor d(d+1). The correlation matrix of either measurement is the state seen through its frame, so the two tables differ by a scaled isometry on each side, and every singular value scales by K.
-- *Generalization.* The same argument applies to any two weighted 2-designs. The trace norms of their correlation tables are proportional, with the ratio fixed by the frame constants; and every unitarily invariant norm, not only the trace norm, scales by the same factor.
+- *Generalization.* The argument uses only that the two effect frame operators Σ_i |E_i⟩⟩⟨⟨E_i| are multiples of the same operator Id + |I⟩⟩⟨⟨I|. Any two measurements with proportional effect frame operators therefore have correlation tables whose singular values all scale by one factor, for every unitarily invariant norm. Equal-weight rank-one projective 2-designs, such as SICs and complete MUBs, have this property. A weighted 2-design with unequal weights need not: splitting one SIC outcome into two equal effects keeps the design condition but changes the ratio of trace norms.
 - *Effect on Conjecture 3.* For incomplete MUBs (m < d + 1) the frame operator is not of this form. This is why the incomplete case of Conjecture 3 needs a separate argument.
 
 **Effect on the paper.** Conjecture 1 holds without the extra condition of Result 3. The two Schmidt-number criteria are equivalent in every dimension where both measurements exist.
