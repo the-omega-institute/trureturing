@@ -19,9 +19,11 @@ Direct frozen dependencies (declaration statement_id):
   D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.swapHermitian
     sha256:f54d121473ff7089d6a4e4ddb59f07c052a2b01de8dbb2be98989df6087984d7
   D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.swapSquare
-    sha256:e38cf16db43e5fa8076efb0b29d793ec6e2f3c6755db13a2496a370e78352442
+    sha256:e38cf16db43e5fa807ef6b0b29d793ec6e2f3c6755db13a2496a370e78352442
   D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.replicaSwap_commutes
     sha256:4e959fbf6211116c2b2f1192bc6dcc6b24a3bbd20d41e9f98e2cae0823852cc8
+  D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.Commutant.replicaSwap_apply
+    sha256:e3427bb6efbbe3e9b723be03b86574ca66e788ed2d360508fdb706fa7b764080
 Private proof declarations, each with proof_shape: bind-only and escape_witness: none:
   mul_swap; consumers: factorization.
   swap_selfAdjoint; consumers: trace_norm_evaluation.
@@ -45,7 +47,7 @@ Private proof declarations, each with proof_shape: bind-only and escape_witness:
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19279
 The amplitude vector is Function.uncurry C, definitionally the literal entry
 map fun x => C x.1 x.2. The swap is the frozen conical-design swap matrix.
-The two published swap owners are audited in issue #19279: CHaarConcatenationNonmonotone.swapHermitian (statement_id sha256:f54d121473ff7089d6a4e4ddb59f07c052a2b01de8dbb2be98989df6087984d7) and swapSquare (statement_id sha256:e38cf16db43e5fa8076efb0b29d793ec6e2f3c6755db13a2496a370e78352442).
+The published swap owner audits are unfinished under issue #19279: CHaarConcatenationNonmonotone.swapHermitian (statement_id sha256:f54d121473ff7089d6a4e4ddb59f07c052a2b01de8dbb2be98989df6087984d7), CHaarConcatenationNonmonotone.swapSquare (statement_id sha256:e38cf16db43e5fa807ef6b0b29d793ec6e2f3c6755db13a2496a370e78352442), and HaarTwoCopyTwirl.replicaSwap_commutes (statement_id sha256:4e959fbf6211116c2b2f1192bc6dcc6b24a3bbd20d41e9f98e2cae0823852cc8).
 The ordered half-sums and real-amplitude transpose condition are those of #19208.
 -/
 
@@ -130,10 +132,10 @@ private theorem swap_selfAdjoint (d : ℕ) : (D5.S3.Quantum.Entanglement.Conical
   classical
   have hS : D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap d =
       Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) := by
-    ext ⟨a,b⟩ ⟨c,e⟩
+    ext r c
+    rw [D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply]
     simp [D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap,
-      Equiv.Perm.permMatrix, PEquiv.toMatrix, Matrix.one_apply,
-      Prod.ext_iff, and_comm, eq_comm]
+      Matrix.one_apply, Prod.ext_iff, and_comm, eq_comm]
   rw [hS]
   exact D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapHermitian (n := Fin d)
 
@@ -141,10 +143,10 @@ private theorem swap_square (d : ℕ) : D5.S3.Quantum.Entanglement.ConicalDesign
   classical
   have hS : D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap d =
       Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) := by
-    ext ⟨a,b⟩ ⟨c,e⟩
+    ext r c
+    rw [D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply]
     simp [D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap,
-      Equiv.Perm.permMatrix, PEquiv.toMatrix, Matrix.one_apply,
-      Prod.ext_iff, and_comm, eq_comm]
+      Matrix.one_apply, Prod.ext_iff, and_comm, eq_comm]
   rw [hS]
   exact D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapSquare (n := Fin d)
 
@@ -177,10 +179,10 @@ private theorem factor_commutes {d K : ℕ} (p : Fin K → ℝ)
   classical
   have hS : D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap d =
       Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) := by
-    ext ⟨a,b⟩ ⟨c,e⟩
+    ext r c
+    rw [D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply]
     simp [D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap,
-      Equiv.Perm.permMatrix, PEquiv.toMatrix, Matrix.one_apply,
-      Prod.ext_iff, and_comm, eq_comm]
+      Matrix.one_apply, Prod.ext_iff, and_comm, eq_comm]
   unfold positiveFactor
   rw [Finset.sum_mul, Finset.mul_sum]
   apply Finset.sum_congr rfl
