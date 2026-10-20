@@ -14318,3 +14318,536 @@ The comparison of first-prime transport with this same integer's defect
 remains unproved. Exact price calibration and a favorable pressure
 comparison do not by themselves remove the larger averaged benchmark
 shift; no RH or all-integer Robin conclusion follows.
+
+## An observation transport with a root-scale averaged-pressure margin
+
+The following application reuses the whole BPY law, GPC's original
+response estimates, APC's absolute cutoff bounds and the same actual
+reserve. It changes the clock observation by an explicit signed
+Stieltjes kernel. Standard integration by parts supplies the transport;
+the additional application pays its variation and infinite clock tail
+and estimates the resulting actual pressure average. No literature
+priority, numerical common threshold, Lean certification, pressure-order
+inequality or RH/Robin proof is claimed.
+
+### Keep the two response kernels distinct
+
+Retain $K(x)=(1+\log x)/(x^2\log^2x)$,
+$\lambda(x)=1/(x\log x)$ and ACP's
+$B(x)=\gamma+\log\log x-1/\log x$ for $x\ge e$.
+Their derivatives are $\lambda'=-K$ and $B'=xK$. The original response is
+
+$$
+J_c^\psi(A)=-\frac1c\int_A^\infty[\psi(cu)-cu]K(u)\,du.
+$$
+
+In general $I_\psi(Ac)\ne-J_c^\psi(A)$: scaling also changes the
+logarithmic kernel. The construction below transports this observation
+explicitly instead of identifying the two integrals.
+
+The actual pressure still satisfies
+$M(\lambda(x))=B(x)-I_\psi(x)-R(x)$. Directly reuse the expansion of
+this same reserve in
+[FIB §247.3, (247.8)](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#2473-实际双候选储备的二项展开):
+
+$$
+R(x)=\frac{c_R}{\sqrt x\log x}
+ +O\!\left(\frac1{\sqrt x\log^2x}\right),
+\qquad c_R=2(\sqrt2-1)>0.
+\tag{KTO1}
+$$
+
+Its existing proof uses the actual two-candidate reserve and effective
+unconditional PNT. No new reserve or PNT theorem is asserted.
+The existing pressure and tail identities make $R$ and $I_\psi$ bounded
+on $[e,\infty)$, with both tending to zero.
+
+### A slower source and a paid inverse-moment correction
+
+Use $R_t$ and $\nu_j$ from GPC2. Put $L=\log A$, $T_A=\sqrt A L$ and
+
+$$
+\mathcal T=\{0,-4,-3/4,-1/4,1/4\},\qquad
+\epsilon=\frac1{8(1+\max_{t\in\mathcal T}\log R_t)},\qquad
+k=\max\{1,\lfloor\epsilon\log L\rfloor\}.
+$$
+
+This degree differs from APC/ACP's $\lfloor L^{1/3}\rfloor$.
+It depends only on the owned clock moments. GPC2 gives, eventually,
+
+$$
+M_t(k)\le C L^{1/4}\quad(t\in\mathcal T),\qquad
+\int\bigl[|\log c|+c^{-1/2}(1+|\log c|)\bigr]\,d|\nu_k|(c)
+\le C L^{1/4}.
+\tag{KTO2}
+$$
+
+Indeed $\epsilon\log R_t\le1/8$, and neighboring quarter moments
+bound both logarithmic factors. Also $k\to\infty$ and
+$k\le\kappa L$ eventually, within GPC's common response cap.
+
+Let $\tau=e/A$, $\bar\nu=(\chi_A)_\#\nu_k$, and define
+
+$$
+\delta_A=\int c^{-1}\,d\bar\nu(c)-1,\qquad
+\eta_A=\bar\nu-2\delta_A(\delta_1-\delta_2).
+\tag{KTO3}
+$$
+
+Then $\eta_A$ has mass one, inverse clock moment exactly one and support
+$c\ge\tau$ for large $A$. The whole small-clock estimate is
+$|\delta_A|\le2\tau^3M_{-4}(k)=O(A^{-3}L^{1/4})$.
+Clamping decreases the needed negative weighted logarithms; its positive
+quarter-moment change is bounded by $\tau^{1/4}M_0(k)$.
+Thus the selected absolute and logarithmic moments of $\eta_A$ retain
+the bounds KTO2. GPC and APC's absolute cutoff estimates, followed by
+the negligible two-atom correction, give
+
+$$
+T_A\left|\int J_c^\psi(A)\,d\eta_A(c)\right|\longrightarrow0.
+\tag{KTO4}
+$$
+
+The fixed-clock responses at $c=1,2$ are bounded by the existing PNT
+bounds; their correction cost after multiplication by $T_A$ tends to
+zero. All prime powers, zero heights and infinite response tails remain.
+Exact xi zeros and source jets belong to $\nu_k$; cutoff and correction
+errors for $\eta_A$ are paid rather than declared zero.
+
+### A finite-variation observation kernel
+
+For $c\ge\tau$ and $v\ge c$ define
+
+$$
+r_A(v,c)=\frac{c^{-2}K(Av/c)}{K(Av)},\qquad a_A(c)=r_A(c,c),
+$$
+
+$$
+d\kappa_{A,c}(v)=a_A(c)\delta_c(dv)
+ +\mathbf1_{v>c}\,\partial_v r_A(v,c)\,dv.
+\tag{KTO5}
+$$
+
+The cumulative function is zero below $c$ and $r_A(v,c)$ above it.
+Every kernel argument is at least $e$. With $g(z)=(1+z)/z^2$,
+$r_A(v,c)=g(\log(Av)-\log c)/g(\log(Av))$ and
+$a_A(c)=g(L)/g(L+\log c)$. Since
+$g'/g=1/(z+1)-2/z$ is increasing, $r_A$ decreases to one for $c>1$
+and increases to one for $c<1$. Consequently $\kappa_{A,c}$ has mass one;
+it is positive for $c<1$, while for $c>1$ its atom is followed by a
+negative density. Its variation satisfies
+
+$$
+\|\kappa_{A,c}-\delta_c\|_{\rm TV}=2|a_A(c)-1|,
+\quad |a_A(c)-1|\le\frac{2|\log c|}{L},
+\quad \|\kappa_{A,c}\|_{\rm TV}\le C(1+\log_+c/L).
+\tag{KTO6}
+$$
+
+The middle bound uses $g(L)\le2/L$ and the $1$-Lipschitz function
+$z^2/(z+1)$ on $z\ge1$.
+
+At a finite endpoint $V\ge c$, Stieltjes integration by parts gives
+three expressions, respectively:
+
+$$
+\begin{aligned}
+\int_{[c,V]}\lambda(Av)\,d\kappa_{A,c}
+ &=\lambda(AV)r_A(V,c)+\frac1c\int_A^{AV/c}K(u)\,du,\\
+\int_{[c,V]}B(Av)\,d\kappa_{A,c}
+ &=B(AV)r_A(V,c)-B(AV/c)+B(A),\\
+\int_{[c,V]}I_\psi(Av)\,d\kappa_{A,c}
+ &=I_\psi(AV)r_A(V,c)
+   +\frac1c\int_A^{AV/c}[\psi(cu)-cu]K(u)\,du.
+\end{aligned}
+$$
+
+The price and tail boundary terms vanish as $V\to\infty$.
+Moreover $r_A(V,c)-1=O_c(1/\log(AV))$, so the benchmark boundary
+difference also vanishes. Including the atom in KTO5 is essential.
+The resulting exact observations are
+
+$$
+\int\lambda(Av)\,d\kappa_{A,c}=\frac{\lambda(A)}c,
+\qquad \int B(Av)\,d\kappa_{A,c}=B(A),
+\qquad \int I_\psi(Av)\,d\kappa_{A,c}=-J_c^\psi(A).
+\tag{KTO7}
+$$
+
+These integrals are absolute. Price and $I_\psi$ are bounded on
+$[e,\infty)$. For $B$, its lower bound and the positive kernel for
+$c<1$ control the absolute integral by a constant depending on $A$.
+For $c\ge1$, the single-sign density and the benchmark calculation
+bound it by $C_A[1+(\log_+c)^2]$. The moments in KTO2 make all these
+bounds integrable against $|\eta_A|$.
+
+Define the actual signed clock measure by the absolutely integrable kernel
+
+$$
+\omega_A(E)=\int\kappa_{A,c}(E)\,d\eta_A(c).
+$$
+
+It has mass one, support $v\ge\tau$ and
+$\|\omega_A-\eta_A\|_{\rm TV}=O(L^{-3/4})$. Absolute kernel Fubini,
+KTO3 and KTO7 prove
+
+$$
+\int\lambda(Av)\,d\omega_A=\lambda(A),\qquad
+\int B(Av)\,d\omega_A=B(A),\qquad
+\int I_\psi(Av)\,d\omega_A=-\int J_c^\psi(A)\,d\eta_A(c).
+\tag{KTO8}
+$$
+
+Thus the actual shifted-tail average is $o(1/T_A)$ by KTO4.
+Positive power moments and exact Mellin zeros are not assumed for
+$\omega_A$. Its new infinite clock tail has finite variation and the
+absolute observation bounds just proved.
+
+### Transport the same actual reserve at root scale
+
+First KTO1–KTO3 imply
+
+$$
+T_A\int R(Ac)\,d\eta_A(c)=c_RH_k(1/2)+o(1).
+\tag{KTO9}
+$$
+
+For completeness, before the tiny correction the original-source integral
+is $\int R(A\chi_A(c))\,d\nu_k(c)$. Split that source at
+$c<A^{-1/2}$ and retain this clamped integrand on the small-clock set.
+Bounded $R$ and $M_{-4}(k)$ pay its entire contribution
+by $O(L^{5/4}A^{-3/2})$. On the complement, $z=\log c$ and
+$L+z\ge L/2$, so KTO1 gives
+
+$$
+T_A R(Ac)=c^{-1/2}
+ \left[\frac{c_RL}{L+z}+O\!\left(\frac L{(L+z)^2}\right)\right].
+$$
+
+Its difference from $c_Rc^{-1/2}$ is at most
+$(C/L)c^{-1/2}(1+|\log c|)$, costing $O(L^{-3/4})$ by KTO2.
+The missing reference moment is at most $A^{-7/4}M_{-4}(k)$, and
+the tiny KTO3 atoms cost $o(1)$ after root normalization. This uses
+the quantitative reserve remainder, not a bare $o(1)$ multiplied by
+growing signed variation.
+
+For $c\ge A^{-1/2}$, the support of $\kappa_{A,c}$ lies in $v\ge c$,
+and KTO1 bounds the whole later reserve by
+$C/(\sqrt{Ac}\log(Ac))$. KTO6 therefore gives
+
+$$
+T_A\left|\int R(Av)\,d\kappa_{A,c}(v)-R(Ac)\right|
+\le\frac C L c^{-1/2}|\log c|.
+$$
+
+Its $|\eta_A|$ integral is $O(L^{-3/4})$. For
+$\tau\le c<A^{-1/2}$ the kernel is positive of mass one; bounded $R$
+and the complete small-clock mass again cost
+$O(L^{5/4}A^{-3/2})$. Hence
+
+$$
+T_A\int R(Av)\,d\omega_A(v)
+=c_RH_k(1/2)+o(1)\longrightarrow c_R>0.
+\tag{KTO10}
+$$
+
+Here $H_k(1/2)=1-Q(h(1/2))^k\to1$ by XLR2/GPC8.
+No positivity of a general signed average was used, and the kernel's
+entire infinite tail remains.
+
+### Actual pressure and the same integer's remaining defect
+
+The observation bounds establish absolute pressure integrability through
+$M=B-I_\psi-R$. Integrating this exact identity and using KTO4,
+KTO8 and KTO10 yields
+
+$$
+V_A:=\int M(\lambda(Av))\,d\omega_A(v)
+=B(A)-\frac{c_R}{\sqrt A\log A}
+ +o\!\left(\frac1{\sqrt A\log A}\right).
+\tag{KTO11}
+$$
+
+In particular $V_A<B(A)-c_R/(2T_A)$ eventually.
+This is an actual averaged-pressure margin for the transported
+observation; it supplies no ordering of $M(\lambda(A))$ and $V_A$.
+ACP's older two-degree pressure comparison retains its own observation
+and remains unchanged.
+
+For every original integer $n$ with its own $A=\log n$, keep the
+pointwise defect $d_\lambda(n)=M(\lambda)-W(n)+\lambda\log n$ and define
+$D_A(n)=\int d_{\lambda(Av)}(n)\,d\omega_A(v)$.
+Exact mass and price mean give $D_A(n)=V_A-W(n)+1/L$, and therefore
+
+$$
+\Delta(n)=D_A(n)+B(A)-V_A,\qquad
+T_A\Delta(n)=T_AD_A(n)+c_R+o(1).
+\tag{KTO12}
+$$
+
+The same original integer is used throughout. The signed average
+$D_A(n)$ has no proved lower bound sufficient to settle Robin.
+All prime powers occur in the complete $\psi$ response, actual reserve,
+actual pressure and exact account. GPC's original response is used at
+its legitimate source, with the new observation transported by KTO7.
+The compensated defect estimate, RH and strict Robin for all $n>5040$
+remain unproved.
+
+## A joint lower bound for the complete distant first-prime sector
+
+This application combines the whole signed source before estimating a
+prime sector. It reuses KTO's observer, GPC's moments, ACP's node-$1$
+slope and Gamma comparison method, and the standard effective
+unconditional PNT. The new lower bound concerns the actual distant
+first-layer defect of the same original integer, including occupied
+primes. Its complementary signed defect remains uncontrolled. No
+literature priority, numerical common threshold, Lean certification or
+RH/Robin proof is claimed.
+
+### The actual sector and absolute clock budget
+
+Keep KTO's $A=\log n$, $L=\log A$, $T_A=\sqrt A L$ and
+$k=\max\{1,\lfloor\epsilon\log L\rfloor\}$. Put
+
+$$
+P=A^{16},\qquad Z=\log P=16L,\qquad
+\mathcal C_A=[A^{-1/2},A^8],\qquad
+r_p=\frac{\log(1+1/p)}{\log p},
+$$
+
+$$
+F_P(q)=\sum_{p>P}\log p\,(r_p-q)_+,\qquad
+U_A=\int F_P(\lambda(Av))\,d\omega_A(v),\qquad
+H_A=\frac{\beta_1^k(k-1)!}{(16L)^k}.
+\tag{JPT1}
+$$
+
+Here $\beta_1>0$ is ACP3's slope at node $1$. Each $F_P(q)$ is a
+finite nonnegative sum bounded by the actual unrestricted pressure
+$M(q)$. The sum over all $p>P$ after integration will be kept complete.
+The real moments in GPC2 and KTO2, and the other side of ACP3's
+analytic expansion, give
+
+$$
+M_t(k)\le CL^{1/4}\quad(t=0,-4,1/4),\qquad
+\int|\log c|\,d|\nu_k|(c)\le CL^{1/4},
+$$
+
+$$
+w(u):=Q(h(1+u))=\beta_1u\exp(O(u))>0
+\quad(0<u\le u_0),\qquad 0<u_0\le1/16.
+\tag{JPT2}
+$$
+
+Choose fixed $D$ with
+$|\log(w(u)/(\beta_1u))|\le Du$ on that interval. These are
+identities and bounds for the original source $\nu_k$; no Mellin
+identity is assigned to $\eta_A$ or $\omega_A$.
+
+The bounded $I_\psi,R$ in KTO allow a fixed $C_*$ such that
+$0\le M(\lambda(x))\le F(x):=B(x)+C_*$ and $F(x)\ge1$ for $x\ge e$.
+For $c<1$, positivity of $\kappa_{A,c}$ and KTO7 give
+$\int F(Av)\,d|\kappa_{A,c}|=F(A)$. For $c\ge1$, the atom and
+single-sign density give exactly
+
+$$
+\int F(Av)\,d|\kappa_{A,c}|=2a_A(c)F(Ac)-F(A).
+$$
+
+Use $a_A(c)\le1+2\log c/L$ and
+$F(Ac)\le C+\log L+\log c/L$. Consequently
+
+$$
+\int F_P(\lambda(Av))\,d|\kappa_{A,c}|(v)
+\le C(1+\log L)[1+(\log_+c)^2].
+\tag{JPT3}
+$$
+
+This proves absolute kernel/source Fubini and, by Tonelli against
+total variation, absolute interchange of the complete prime sum.
+No positive power moment of $\omega_A$ is used.
+
+Below $c=A^{-1/2}$, the clamped source has mass at most
+$A^{-2}M_{-4}(k)$; the correction atoms $1,2$ are outside this set
+for large $A$. Its full JPT3 cost is
+$O(A^{-2}L^{1/4}(1+\log L))$. Above $c=A^8$, $\eta_A=\nu_k$ and
+
+$$
+1+\log^2c\le Cc^{1/8},\qquad c^{1/8}\le A^{-1}c^{1/4}.
+$$
+
+Thus the complete high-clock cost is
+$O(A^{-1}L^{1/4}(1+\log L))$. On $\mathcal C_A$ the clamp is inactive;
+replacing $\eta_A$ by $\nu_k$ costs
+$O(|\delta_A|(1+\log L))$ at the two correction atoms. With
+$G_A(c)=\int F_P(\lambda(Av))\,d\kappa_{A,c}(v)$, these bounds yield
+
+$$
+U_A=\int_{\mathcal C_A}G_A(c)\,d\nu_k(c)
+ +O(A^{-1}L^{1/4}(1+\log L)).
+\tag{JPT4}
+$$
+
+The displayed error is both $o(H_A)$ and $o(1/T_A)$. The comparison
+with $H_A$ is justified by the moving-degree estimate below.
+
+### Keep the actual activation and the infinite prime tail
+
+Let $x_p$ solve $\lambda(x_p)=r_p$ for large $p$. Elementary logarithm
+expansion and the explicit derivative of $\lambda$ give
+$x_p>p$ and $x_p=p+O(1)$: the price difference at $p$ is
+$O(1/(p^2\log p))$, the solution lies in $[p,2p]$ eventually, and the
+mean-value denominator there is comparable to $1/(p^2\log p)$.
+For $c\in\mathcal C_A$ and $p>P$, $x_p/A>A^{15}>c$, so the kernel
+atom sees zero hinge. Finite-endpoint integration by parts gives
+
+$$
+\int(r_p-\lambda(Av))_+\,d\kappa_{A,c}(v)
+=r_p-\frac1c\lambda(x_p/c)
+=-\frac{\log c}{x_p\log x_p\log(x_p/c)}.
+\tag{JPT5}
+$$
+
+The endpoint at infinity is $r_p$, since the cumulative kernel tends
+to one. All arguments in this calculation exceed $e$. Its sign for
+$c<1$ differs from its sign for $c>1$; neither is separately carried
+through the signed source.
+
+Put $z=\log c$, so $-L/2\le z\le8L$ and $\log p\ge16L$.
+Replacing $x_p$ by $p$ in the $\log p$-weighted sum JPT5 costs at most
+$C|z|\sum_{p>P}1/(p^2\log p)\le C|z|/(P\log P)$.
+The reference summand is $-z/[p(\log p-z)]$.
+Reuse the standard effective unconditional PNT in the form
+$\pi(t)=\operatorname{li}(t)+O(t\exp(-a\sqrt{\log t}))$.
+Partial summation applies uniformly because $|z|/\log t\le1/2$
+for $t\ge P$, and the weight derivative is bounded by
+$C|z|/(t^2\log t)$. The endpoint and complete infinite error tail are
+$O(|z|\exp(-a_1\sqrt Z))$ for some fixed $a_1>0$.
+The continuous integral is exactly
+
+$$
+-z\int_P^\infty\frac{dt}{t\log t(\log t-z)}
+=\log(1-z/Z).
+$$
+
+Therefore, uniformly on $\mathcal C_A$,
+
+$$
+G_A(c)=\log(1-\log c/Z)
+ +O\!\left(|\log c|e^{-a_1\sqrt Z}
+             +\frac{|\log c|}{P\log P}\right).
+\tag{JPT6}
+$$
+
+Its source-integrated error is
+$O(L^{1/4}e^{-a_1\sqrt Z}+L^{1/4}/(P\log P))=o(H_A)$.
+The PNT error is not asserted to be $o(1/T_A)$; relative control is
+sufficient to determine this sector's sign.
+
+### Combine the whole signed source before estimating
+
+On $\mathcal C_A$ use
+
+$$
+\log(1-z/Z)=-\int_0^\infty e^{-Zu}(e^{zu}-1)\,\frac{du}{u}.
+$$
+
+Only $[0,u_0]$ is interchanged with the source. The removed tail is
+bounded by $C\exp[-u_0(Z-\max(z,0))]\le Ce^{-8u_0L}$.
+The bound $|(c^u-1)/u|\le|\log c|(1+c^{u_0})$ supplies absolute
+Fubini. No two divergent $1/u$ terms are separated.
+Extending this truncated expression from $\mathcal C_A$ to the
+whole $\nu_k$ costs $O(A^{-2}LM_{-4}(k))$ below $A^{-1/2}$ and
+$O(A^{-1}M_{1/4}(k))$ above $A^8$. For the former, use the maximum
+of $c^4|\log c|$ on the small-clock set; for the latter use
+$|\log c|(1+c^{u_0})\le Cc^{1/8}$.
+Exact source mass and its Mellin identity now give
+
+$$
+\int_{\mathcal C_A}\log(1-\log c/Z)\,d\nu_k(c)
+=\int_0^{u_0}e^{-Zu}Q(h(1+u))^k\,\frac{du}{u}+o(H_A).
+\tag{JPT7}
+$$
+
+In particular the source factor is evaluated at $1+u$, whereas
+ACP4 used $1-u$. The main integral here is positive for every $k$.
+
+Apply the Gamma comparison method of ACP4–ACP5 with the explicit new
+parameters $Z=16L$ and $k=O(\log L)$. JPT2 bounds the integral between
+truncated Gamma integrals with rates $Z+Dk$ and $Z-Dk$.
+Here $k^2/Z\to0$ and $k\log Z=o(Z)$, so the rate change costs
+$O(k^2/Z)$ relatively, and the removed Gamma tails are exponentially
+smaller. Hence
+
+$$
+\int_0^{u_0}e^{-Zu}w(u)^k\,\frac{du}{u}
+=\frac{\beta_1^k\Gamma(k)}{Z^k}
+ \left(1+O\!\left(\frac{k^2}{Z}\right)\right)
+=H_A(1+o(1)).
+\tag{JPT8}
+$$
+
+Stirling at this actual degree gives
+$\log H_A=-\epsilon(\log L)^2+O(\log L\log\log L)$.
+Thus every error in JPT4, JPT6 and JPT7 is $o(H_A)$, including the
+whole source variation and prime tail. Combining them proves
+
+$$
+U_A=H_A(1+o(1))>0,\qquad T_AH_A\longrightarrow\infty.
+\tag{JPT9}
+$$
+
+### The same integer's occupied and absent first layers
+
+Let $D_{\mathrm{far},A}(n)$ average the complete first-layer defect
+at primes $p>P$, including both occupied and absent primes:
+
+$$
+D_{\mathrm{far},A}(n)=\int\left[
+ \sum_{\substack{p>P\\p\nmid n}}\log p\,(r_p-\lambda(Av))_+
+ +\sum_{\substack{p>P\\p\mid n}}\log p\,(\lambda(Av)-r_p)_+
+ \right]d\omega_A(v).
+$$
+
+This is an actual pointwise part of the same integer's defect; absolute
+integration follows from the complete defect bounds in KTO.
+The scalar hinge identity, exact mass and exact price mean give
+
+$$
+D_{\mathrm{far},A}(n)
+=U_A+\sum_{\substack{p>P\\p\mid n}}
+        (\lambda(A)-r_p)\log p.
+\tag{JPT10}
+$$
+
+Every occupied-prime correction is nonnegative because
+$r_p<\lambda(p)<\lambda(A)$ for $p>P>A$. Consequently, uniformly
+for every original $n$ at its own $A=\log n$,
+
+$$
+D_{\mathrm{far},A}(n)\ge U_A\ge H_A/2>0
+\quad\text{eventually}.
+\tag{JPT11}
+$$
+
+No optimizer, CA/GA hypothesis or bound on the prime support of $n$
+replaces this original integer. Define $E_A(n)$ by averaging the exact
+complementary defect part: every first layer $p\le P$ and every higher
+exponent layer at every prime remains in it. Then
+
+$$
+D_A(n)=D_{\mathrm{far},A}(n)+E_A(n)\ge E_A(n)+H_A/2,
+$$
+
+$$
+T_A\Delta(n)=T_AE_A(n)+T_AD_{\mathrm{far},A}(n)+c_R+o(1).
+\tag{JPT12}
+$$
+
+The complementary signed average $E_A(n)$ has no proved sufficient
+lower bound. Its pointwise nonnegative integrand does not imply that
+its signed average is nonnegative. The positive far-tail credit alone supplies no lower bound for this
+complementary signed term. Discarding this tail in a lower bound is
+justified after the complete signed average, not kernel by kernel.
+No positivity of the complete defect, new total Robin upper or RH
+proof follows.
