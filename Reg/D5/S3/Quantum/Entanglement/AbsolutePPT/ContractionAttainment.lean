@@ -142,14 +142,15 @@ abbrev arena : Arena where
     (((Fintype.card A : ℂ)-1) • 1 + (2 : ℂ) • O.readout () ⟨A, B⟩ X).PosSemidef
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
+  let N : WitnessMat := fun _ _ => (-1 : ℂ)
   have hp : (((Fintype.card (Fin 1) : ℂ)-1) • (1 : WitnessMat) +
-      (2 : ℂ) • (fun _ _ => (-1 : ℂ) : WitnessMat)).PosSemidef :=
+      (2 : ℂ) • N).PosSemidef :=
     h (A := Fin 1) (B := Fin 1) (0 : WitnessMat) Matrix.PosSemidef.zero
       (by simpa only [sub_zero] using
         (Matrix.PosSemidef.one : (1 : WitnessMat).PosSemidef))
   have hd := hp.diag_nonneg (i := ((0, 0) : Fin 1 × Fin 1))
   have hr := (Complex.nonneg_iff.mp hd).1
-  norm_num [Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply] at hr
+  norm_num [N, Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply] at hr
 private theorem dependence : ObservationalDependence matrixSignature actual := by
   intro i
   refine ⟨⟨Fin 1, Fin 1⟩, (0 : WitnessMat), (1 : WitnessMat), ?_⟩
@@ -212,20 +213,21 @@ abbrev arena : Arena where
     APPT (((Fintype.card A : ℂ)-1) • 1 + (2 : ℂ) • O.readout () ⟨A, B⟩ X)
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
+  let N : WitnessMat := fun _ _ => (-1 : ℂ)
   have hp : APPT (((Fintype.card (Fin 1) : ℂ)-1) • (1 : WitnessMat) +
-      (2 : ℂ) • (fun _ _ => (-1 : ℂ) : WitnessMat)) :=
+      (2 : ℂ) • N) :=
     h (A := Fin 1) (B := Fin 1) (0 : WitnessMat) Matrix.PosSemidef.zero
       (by simpa only [sub_zero] using
         (Matrix.PosSemidef.one : (1 : WitnessMat).PosSemidef))
   have hp1 : (partialTranspose ((1 : WitnessMat) *
       (((Fintype.card (Fin 1) : ℂ)-1) • (1 : WitnessMat) +
-        (2 : ℂ) • (fun _ _ => (-1 : ℂ) : WitnessMat)) *
+        (2 : ℂ) • N) *
       (1 : WitnessMat)ᴴ)).PosSemidef :=
     hp (1 : unitaryGroup (Fin 1 × Fin 1) ℂ)
   simp only [one_mul, Matrix.conjTranspose_one, mul_one] at hp1
   have hd := hp1.diag_nonneg (i := ((0, 0) : Fin 1 × Fin 1))
   have hr := (Complex.nonneg_iff.mp hd).1
-  norm_num [partialTranspose, Matrix.add_apply, Matrix.smul_apply,
+  norm_num [N, partialTranspose, Matrix.add_apply, Matrix.smul_apply,
     Matrix.one_apply] at hr
 private theorem dependence : ObservationalDependence matrixSignature actual := by
   intro i
