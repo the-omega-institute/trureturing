@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:120f71ab066f0984ba711d273baa7c346c7f0529ece86c348159ee25eddd8615
   normalized_sha256: sha256:120f71ab066f0984ba711d273baa7c346c7f0529ece86c348159ee25eddd8615
 cas_ref: sha256:120f71ab066f0984ba711d273baa7c346c7f0529ece86c348159ee25eddd8615
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/ExactTaylorObservationRemainder.exp_tail_le
+    target_statement_id: sha256:77b82ff3868d492a6aef83a9dde7495038e36633e9a77962aad012d4fa0d3748
 receipts:
   unresolved_subitems: []
