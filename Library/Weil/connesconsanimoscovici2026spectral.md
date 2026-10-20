@@ -12798,3 +12798,166 @@ This reduces the asymptotic endpoint allowance needed at the Schur minimum by a 
 It does not evaluate the remaining model minimum or give its positive margin.
 No new sign certificate at $c=27,N=1280$, retained/cofinal Weil positivity, original same-source strict Robin upper, determinant limit or RH follows.
 All statements remain paper applications under the inherited source/form premises, without Lean/kernel certification or a literature-priority claim.
+
+
+### A smaller negative-index budget for the complete physical form
+
+Keep JPP1--JPP5's entire complex physical operator, its original form domain and its source/form identification. Let $c\to\infty$ through integers, $d=\log c$, $a=\sqrt c$, and write
+$$
+ \mathcal H_c=D_L+\mathsf R_L-\mathsf P_L+B_L
+ \quad\text{on }L^2((-d/2,d/2)).
+$$
+The Gamma diagonal has compact resolvent and the remaining operator is bounded, so $\mathcal H_c$ is selfadjoint, bounded below and has compact resolvent. Let $n_-(\mathcal H_c)$ count its strictly negative eigenvalues, with multiplicity. Then
+$$
+ \boxed{\limsup_{\substack{c\to\infty\\c\in\mathbb N}}
+ \frac{\log(1+n_-(\mathcal H_c))}{\sqrt c}\le\frac45.}
+ \tag{NPC1}
+$$
+Equivalently, for every fixed $\varepsilon>0$, eventually
+$n_-(\mathcal H_c)\le\exp((4/5+\varepsilon)\sqrt c)$.
+The start can depend on $\varepsilon$. This is an upper bound on possible negative multiplicity, not an assertion that a negative eigenvalue exists.
+
+This source-specific application reuses JPP's complete prime/pole norm and exterior comparison, the classical bounded-variable exponential estimate, finite geometric sums, Hilbert--Schmidt ideal bounds, the min--max principle and the trace inequality of [Junge--LaRacuente, arXiv:2009.11866v2, Theorem 1.2](https://arxiv.org/pdf/2009.11866v2). Independent circle variables below extract finite Laurent coefficients exactly; they are not a probability model for actual prime phases. No new general concentration, trace or spectral-counting theorem, literature-priority claim or Lean/kernel certification is proposed. All proper prime powers, both orientations, both poles and the actual Gamma boundary remain present.
+
+#### Growing moments on the actual Fourier exterior
+
+Fix $0<\kappa<1$, $\tau>1$ and $0<\eta<\kappa/2$. Put
+$$
+ N=\lceil e^{\kappa a}\rceil,\qquad Q=\mathbf1_{\{|m|>N\}},
+ \qquad A=Q\mathsf P_LQ\big|_{\operatorname{ran}Q},
+ \qquad \rho=Qe^{-\tau D_L}Q,\quad Z=\operatorname{Tr}\rho.
+$$
+The projection uses JPP's physical orthonormal Fourier coordinates; it is not a finite band or a periodic replacement of the zero-extended prime translations. The actual Gamma eigenvalues $A_m$ give, with $h_m=e^{-\tau A_m}$,
+$$
+ \log Z=-(\tau-1)\kappa a+o(a),\qquad
+ \frac{h_{N+1}}{Z}=O_\tau(N^{-1}).
+$$
+For sufficiently large $c$, uniformly for integers $1\le r\le\lfloor\eta a/d\rfloor$, there is an absolute $C$ such that
+$$
+ \boxed{\frac{\operatorname{Tr}(\rho A^{2r})}{Z}
+       \le(Crd^2)^r.}
+ \tag{NPC2}
+$$
+The starting scale may depend on the three fixed parameters. Here every intermediate $Q$ in $A^{2r}$ is included.
+
+To pay both arithmetic frequencies and these projections, write $w_n=\Lambda(n)/\sqrt n$, $W=\sum_{2\le n<c}w_n=O(a)$ and $K=\|\mathsf P_L\|\sim a$. Expand $\mathsf P_L^r\phi_m$ into actual signed translation words. A word with partial sums $S_j$ contributes only where $x+S_j\in(-d/2,d/2)$ for every $0\le j\le r$. Group its nonnegative coefficient function by its exact rational endpoint $q=e^{S_r}$, and denote the resulting function by $C_r(q,x)$. Put
+$$
+ E_r=\frac1d\int_{-d/2}^{d/2}\sum_q C_r(q,x)^2\,dx.
+$$
+For each surviving word, its total positive and negative logarithmic increments differ by less than $d$. Counting the two signs therefore bounds both reduced endpoint integers by $H_r=c^{\lceil r/2\rceil}$. If two endpoints are active at the same $x$, their ratio lies strictly between $1/c$ and $c$. Distinct endpoints cannot then alias modulo multiplication by an integral power of $c$. Their active circular Fourier frequencies have separation at least
+$$
+ \delta_r=\frac{\log(1+1/(cH_r^2))}{d},\qquad
+ D_r=\delta_r^{-1}\le2d\,c^{r+2}.
+$$
+For any consecutive integer interval, finite geometric summation bounds the absolute partial sum of
+$\|\mathsf P_L^r\phi_m\|^2-E_r$ by $2D_r(2W)^{2r}$. This follows by summing the absolute cross coefficients at each $x$, whose total is at most $(2W)^{2r}$; disjoint-support aliases contribute zero. Summation by parts with the actual monotone $h_m$ yields
+$$
+ \frac{\operatorname{Tr}(\rho\mathsf P_L^{2r})}{Z}
+ \le E_r+O_\tau\!\left(\frac{D_r(2W)^{2r}}{N}\right).
+ \tag{NPC3}
+$$
+The trace in NPC3 retains all output frequencies. It has not yet replaced the compressed moment in NPC2.
+
+Dropping the surviving-prefix indicators gives nonnegative unrestricted word coefficients $G_r(q)$ and $E_r\le\sum_qG_r(q)^2$. Unique prime factorization identifies the latter sum with the constant coefficient of the $2r$th power of the finite Laurent polynomial for the paired prime-power shifts. Grouping by prime gives independent auxiliary circle polynomials
+$$
+ X_p(\theta_p)=2\log p\sum_{\substack{j\ge1\\p^j<c}}
+                 p^{-j/2}\cos(j\theta_p),\qquad
+ |X_p|\le b_p=\frac{2\log p}{\sqrt p-1},\qquad
+ \sum_{p<c}b_p^2\le C_0d^2.
+$$
+The last estimate is the classical Chebyshev bound with partial summation. Each $X_p$ has mean zero. The classical convexity bound
+$\mathbb E e^{tX_p}\le\cosh(tb_p)\le e^{t^2b_p^2/2}$ gives the even-moment estimate
+$E_r\le(C_1rd^2)^r$. This is exact finite coefficient extraction followed by an auxiliary integral bound; the actual Fourier phases remain accounted for in NPC3. Uniformly on the stated range,
+$$
+ \log\!\left(\frac{D_r(2W)^{2r}}N\right)
+ \le(2\eta-\kappa)a+o(a),
+$$
+so NPC3's absolute error tends to zero.
+
+It remains to pay every intermediate projection. Write $F=I-Q$. The actual Fourier translation overlaps give
+$$
+ |(\mathsf P_L)_{nm}|\le\frac{2W}{\pi|n-m|}\quad(n\ne m),
+ \qquad
+ L_N^2:=\|F\mathsf P_LQ\|_{\rm HS}^2
+       \le C_2W^2(1+\log N).
+$$
+Extend $A$ by zero on $\operatorname{ran}F$. Exact telescoping on exterior inputs gives
+$$
+ (\mathsf P_L^r-A^r)Q
+ =\sum_{j=0}^{r-1}\mathsf P_L^{r-1-j}F\mathsf P_LQ A^jQ.
+$$
+The Hilbert--Schmidt ideal inequality, with the heat factor kept on the right, therefore gives
+$$
+ \frac{\|(\mathsf P_L^r-A^r)\rho^{1/2}\|_{\rm HS}}{\sqrt Z}
+ \le rK^{r-1}L_N\sqrt{h_{N+1}/Z}
+ \le\exp\!\left(\left[\frac{\eta-\kappa}{2}+o(1)\right]a\right).
+$$
+This tends to zero uniformly. The Hilbert--Schmidt triangle inequality and NPC3 prove NPC2 after increasing $C$. No ordering between $(Q\mathsf P_LQ)^{2r}$ and $Q\mathsf P_L^{2r}Q$ is used.
+
+#### Use the heat bound as a count, without asserting positivity
+
+On the same exterior let
+$$
+ H_E=Q\mathcal H_cQ\big|_{\operatorname{ran}Q}
+     =D_E-A+C_E,\qquad C_E=Q(\mathsf R_L+B_L)Q.
+$$
+JPP's actual pole bound
+$\|\mathsf R_LQ\|\le(\sqrt2/\pi)a\sqrt{d/N}$ and $\|B_L\|=O(1)$ give $\|C_E\|=O(1)$. The cited trace inequality, applied with the faithful reference $e^{-\tau D_E}$ and bounded factors $-\tau C_E/2$, $\tau A/2$, gives
+$$
+ \operatorname{Tr}e^{-\tau H_E}
+ \le e^{\tau\|C_E\|}\operatorname{Tr}(\rho e^{\tau A}).
+$$
+Equivalently one may first bound the eigenvalues after replacing $C_E$ by $-\|C_E\|I$ and then use the ordinary Golden--Thompson trace inequality. This is trace monotonicity from min--max, not operator monotonicity of the exponential.
+
+Take $r=\lfloor\eta a/d\rfloor$. For real $|x|\le K$, Taylor's remainder gives
+$$
+ e^{\tau x}\le\sum_{j=0}^{2r-1}\frac{(\tau x)^j}{j!}
+           +e^{\tau K}\frac{x^{2r}}{K^{2r}}.
+$$
+In the positive state $\rho/Z$, NPC2 and scalar Hölder on $A$'s spectral measure bound the polynomial term by
+$\exp(\tau\sqrt{Cr}\,d)=\exp(o(a))$. Its remainder allowance is
+$$
+ e^{\tau K}\left(\frac{Crd^2}{K^2}\right)^r
+ =\exp\!\left(\left[\tau-\frac\eta2+o(1)\right]a\right).
+$$
+Consequently the complete exterior heat trace satisfies
+$$
+ \boxed{\limsup_{c\to\infty}
+ \frac{\log\operatorname{Tr}e^{-\tau H_E}}a
+ \le L(\kappa,\tau,\eta):=
+ \tau-(\tau-1)\kappa-\frac\eta2.}
+ \tag{NPC4}
+$$
+All three parameters stay fixed in this limit. The positive value of $L$ prevents this allowance from certifying exterior positivity; it still supplies a signed spectral count.
+
+Every negative eigenvalue of $H_E$ contributes more than one to its heat trace. Restricting a full negative subspace to the Fourier exterior loses at most $\operatorname{rank}F=2N+1$ dimensions, regardless of its cross blocks. The min--max principle thus gives
+$$
+ \boxed{n_-(\mathcal H_c)
+ \le 2N+1+n_-(H_E)
+ \le2N+1+\operatorname{Tr}e^{-\tau H_E}.}
+ \tag{NPC5}
+$$
+In particular its upper exponential rate is at most $\max(\kappa,L)$. Set
+$\kappa=4/5$, $\tau=1+\delta$, $\eta=2/5-\delta$ for any fixed $0<\delta<2/5$. Then
+$$
+ L=\frac45+\frac7{10}\delta.
+$$
+First take $c\to\infty$ at each fixed $\delta$, then let $\delta\downarrow0$. This proves NPC1 without taking the inadmissible values $\tau=1$ or $\eta=\kappa/2$, and without a uniform starting scale at either endpoint. The norm-only comparison using JPP3 gives an upper rate $1$ instead of $4/5$.
+
+#### Consume the count in the original retained Schur matrix
+
+For every fixed $\alpha>1$, JPP5 supplies the positive complete exterior for all sufficiently large integer $c$; the starting scale may depend on $\alpha$. Use its actual Fourier cutoff $N_\alpha=\lceil e^{\alpha a}\rceil$ and denote that exterior by $H_\alpha$. Let $F_\alpha=I-Q_{N_\alpha}$, $\mathscr B_\alpha=Q_{N_\alpha}(\mathsf R_L-\mathsf P_L+B_L)F_\alpha$, and keep the original finite Schur matrix
+$$
+ S_\alpha=F_\alpha\mathcal H_cF_\alpha
+          -\mathscr B_\alpha^*H_\alpha^{-1}\mathscr B_\alpha.
+$$
+Completion of the square in the full form, using the strictly positive $H_\alpha$, gives the classical exact inertia identity
+$$
+ \boxed{n_-(S_\alpha)=n_-(\mathcal H_c),\qquad
+ \limsup_{c\to\infty}
+ \frac{\log(1+n_-(S_\alpha))}{\sqrt c}\le\frac45.}
+ \tag{NPC6}
+$$
+Thus the bound applies to the same complete retained matrix, including every coupling and every arithmetic, pole and Gamma term. It covers every original source direction; no positive subclass replaces the full form. It also applies along the original unbounded integer FIB support schedules.
+
+NPC1 and NPC6 bound possible negative multiplicity more strongly than the leading norm-only budget. They do not identify a negative eigenspace, provide a computable smaller Fourier section, determine the remaining Schur minimum or prove that its negative index is zero. In particular they give no $\kappa<1$ positive exterior floor, cofinal Weil positivity, original same-source Robin upper or RH proof. The inherited source/form premises and paper-only status remain.
