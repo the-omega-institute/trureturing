@@ -14,7 +14,7 @@ lambda(u)=zeta^f_t(col(u)), Lambda is its actual diagonal matrix, and M=Lambda G
 
 $$\forall data \in \mathrm{OriginalStabilizerData},\; \forall C \in \mathrm{ConnectedComponent}\left(\mathrm{maskedGraph}\left(data\right)\right),\; \forall k \in \mathrm{Nat},\; \forall z \in \mathrm{GraphIso}\left(\mathrm{cycleGraph}\left(\mathrm{mul}\left(2, \mathrm{add}\left(k, 2\right)\right)\right), \mathrm{ComponentGraph}\left(C\right)\right),\; (\mathrm{IsCycle}\left(\mathrm{componentCircuit}\left(data, C, z\right)\right)) \land ((\mathrm{length}\left(\mathrm{componentCircuit}\left(data, C, z\right)\right) = \mathrm{mul}\left(2, \mathrm{add}\left(k, 2\right)\right)) \land (\mathrm{IntRankDifference}\left(\mathrm{MRestricted}\left(data, C\right), \mathrm{MaskRestricted}\left(data, C\right)\right) = \mathrm{If}\left(\mathrm{alpha}\left(\mathrm{edgeWeight}\left(data\right), \mathrm{componentCircuit}\left(data, C, z\right)\right) = 1, 0, 2\right)))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/StabilizerMaskedCycleRank.component_rank_difference_alpha` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/MaskedCycles/StabilizerMaskedCycleRank.component_rank_difference_alpha` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,7 +30,7 @@ The matrix-rank formulas with unit weights are established graph-theoretic resul
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Entanglement/StabilizerMaskedCycleRank.component_rank_difference_alpha`
-- Dependency: [D5/S3/Combinatorics/Graph/Walks/WeightedCycleWalk](../../Combinatorics/Graph/Walks/WeightedCycleWalk.md)
-- Dependency: [D5/S3/Combinatorics/Graph/Walks/WeightedPathCycleRank](../../Combinatorics/Graph/Walks/WeightedPathCycleRank.md)
-- Dependency: [D5/S3/Combinatorics/Graph/Walks/WeightedVertexProducts](../../Combinatorics/Graph/Walks/WeightedVertexProducts.md)
+- Truth anchor: `D5/S3/Quantum/Entanglement/MaskedCycles/StabilizerMaskedCycleRank.component_rank_difference_alpha`
+- Dependency: [D5/S3/Combinatorics/Graph/Walks/WeightedCycleWalk](../../../Combinatorics/Graph/Walks/WeightedCycleWalk.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Walks/WeightedPathCycleRank](../../../Combinatorics/Graph/Walks/WeightedPathCycleRank.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Walks/WeightedVertexProducts](../../../Combinatorics/Graph/Walks/WeightedVertexProducts.md)

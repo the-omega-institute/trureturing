@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Entanglement/StabilizerMaskedCycleRank
+/- GID: D5/S3/Quantum/Entanglement/MaskedCycles/StabilizerMaskedCycleRank
    generality: G
-   mirror-B: D5/B/S3/Quantum/Entanglement/StabilizerMaskedCycleRank
+   mirror-B: D5/B/S3/Quantum/Entanglement/MaskedCycles/StabilizerMaskedCycleRank
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots]
    utility: none
@@ -20,7 +20,7 @@ import D5.S3.Combinatorics.Graph.Walks.WeightedCycleWalk
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency.types false
-namespace D5.S3.Quantum.Entanglement.StabilizerMaskedCycleRank
+namespace D5.S3.Quantum.Entanglement.MaskedCycles.StabilizerMaskedCycleRank
 open scoped BigOperators Classical
 open Matrix SimpleGraph
 open D5.S3.Combinatorics.Graph.Walks
@@ -321,4 +321,4 @@ theorem component_rank_difference_alpha
   exact component_rank_difference_products ζ hζ Γ hs hd col t C e
 
 end
-end D5.S3.Quantum.Entanglement.StabilizerMaskedCycleRank
+end D5.S3.Quantum.Entanglement.MaskedCycles.StabilizerMaskedCycleRank

@@ -1,10 +1,10 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Entanglement.StabilizerMaskedCycleRank
+import D5.S3.Quantum.Entanglement.MaskedCycles.StabilizerMaskedCycleRank
 import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
 import Reg.Support.DependentFamily
 
-namespace Reg.D5.S3.Quantum.Entanglement.StabilizerMaskedCycleRank
-open _root_.D5.S3.Quantum.Entanglement.StabilizerMaskedCycleRank
+namespace Reg.D5.S3.Quantum.Entanglement.MaskedCycles.StabilizerMaskedCycleRank
+open _root_.D5.S3.Quantum.Entanglement.MaskedCycles.StabilizerMaskedCycleRank
 open _root_.D5.S3.Combinatorics.Graph.Walks
 open _root_.D5.S3.Combinatorics.Graph.Walks.WeightedPathCycleRank
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -139,8 +139,8 @@ def source_registration : Registration arena.{u} (type_of% @component_rank_diffe
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@component_rank_difference_alpha.{u}) (Realization signature.{u}) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.StabilizerMaskedCycleRank.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.StabilizerMaskedCycleRank.source_registration
+  unitName := `Reg.D5.S3.Quantum.Entanglement.MaskedCycles.StabilizerMaskedCycleRank.unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.MaskedCycles.StabilizerMaskedCycleRank.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -156,7 +156,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Entanglement.StabilizerMaskedCycleRank
+    owner := `D5.S3.Quantum.Entanglement.MaskedCycles.StabilizerMaskedCycleRank
     definition := none
     coordinates := #[5]
     readouts := #[{
@@ -174,4 +174,4 @@ def registration :
 #print axioms source_registration
 #print axioms registration
 end
-end Reg.D5.S3.Quantum.Entanglement.StabilizerMaskedCycleRank
+end Reg.D5.S3.Quantum.Entanglement.MaskedCycles.StabilizerMaskedCycleRank
