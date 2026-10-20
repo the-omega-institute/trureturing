@@ -3971,14 +3971,14 @@ E_{e+1}=\iota_e^E(E_e)\sqcup\{(p,p\sigma):p\sigma\in B_e\}.
 The old labels are not asserted unchanged: even an old leaf can become a
 branch. Let \(J_e:\ell^2(V_e)\to\ell^2(V_{e+1})\) be zero extension;
 \(J_e^*\) is old-coordinate restriction. Let \(I_e^E\) be old-edge zero
-extension and \(T_e:\ell^2(B_e)\to\ell^2(E_{e+1})\) send a child coordinate
+extension and \(T_e^{E}:\ell^2(B_e)\to\ell^2(E_{e+1})\) send a child coordinate
 to its new parent-child edge. Orient edges away from the root. Let
 \(H_e\) project onto \(M_e\), and
 \(C_e:\ell^2(B_e)\to\ell^2(V_e)\) sum each child's value at its parent.
 Thus \((C_e^*f)(p\sigma)=f(p)\). The typed gradient and adjoint squares are
 \[
-D_{e+1}J_e=I_e^ED_e-T_eC_e^*,\qquad
-J_e^*D_{e+1}^*=D_e^*(I_e^E)^*-C_eT_e^*.
+D_{e+1}J_e=I_e^ED_e-T_e^{E}C_e^*,\qquad
+J_e^*D_{e+1}^*=D_e^*(I_e^E)^*-C_e(T_e^{E})^*.
 \tag{112.8}
 \]
 In the exact orders \(V_e\sqcup B_e\) and \(E_e\sqcup B_e\),
@@ -5183,13 +5183,14 @@ node measure make the same transport both norm-preserving and dynamically
 compatible? The answer is negative if the old coordinates are fixed and the
 clock is unchanged.
 
-**Definition 116.1 (weighted node generators).** Let \(M_e\) and
-\(M_{e+1}\) be positive diagonal mass matrices on \(V_e\) and \(V_{e+1}\).
+**Definition 116.1 (weighted node generators).** Let \(\mathsf G_e\) and
+\(\mathsf G_{e+1}\) be strictly positive diagonal (all diagonal entries \(>0\))
+mass matrices on \(V_e\) and \(V_{e+1}\).
 Write
 
 $$
 A_e=D_e^*D_e,\qquad
-\mathcal L_e=M_e^{-1}A_e,
+\mathcal L_e=\mathsf G_e^{-1}A_e,
 \tag{116.1}
 $$
 
@@ -5200,7 +5201,7 @@ $$
 \begin{array}{ll}
 \text{(F)}&S_Q^*A_{e+1}S_Q=A_e
      \quad\text{(edge-form preservation)},\\
-\text{(N)}&S_Q^*M_{e+1}S_Q=M_e
+\text{(N)}&S_Q^*\mathsf G_{e+1}S_Q=\mathsf G_e
      \quad\text{(node-norm preservation)},\\
 \text{(G)}&\mathcal L_{e+1}S_Q=S_Q\mathcal L_e
      \quad\text{(same-clock generator intertwining)}.
@@ -5210,7 +5211,8 @@ $$
 
 **Theorem 116.2 (positive-mass obstruction).** Suppose the old tree is
 connected and nontrivial, and \(B_e\ne\varnothing\). There is no top-fixed
-linear extension \(S_Q\) and no positive diagonal \(M_{e+1}\) satisfying
+linear extension \(S_Q\) and no strictly positive diagonal \(\mathsf G_{e+1}\)
+satisfying
 all three conditions (F), (N), and (G).
 
 **Proof.** Condition (F) and Theorem 115.2 force \(Q=C_e^*\), so
@@ -5224,18 +5226,18 @@ $$
 Taking the old-coordinate block of (G) yields
 
 $$
-(M_{e+1}^{-1})_{\mathrm{old}}A_e=M_e^{-1}A_e.
+(\mathsf G_{e+1}^{-1})_{\mathrm{old}}A_e=\mathsf G_e^{-1}A_e.
 \tag{116.4}
 $$
 
 Every row of \(A_e\) is nonzero in a connected nontrivial tree; applying
 (116.4) to a basis vector at each vertex therefore forces
-\((M_{e+1})_{\mathrm{old}}=M_e\). But then the old/child block decomposition
+\((\mathsf G_{e+1})_{\mathrm{old}}=\mathsf G_e\). But then the old/child block decomposition
 of the norm in (N) gives
 
 $$
-T_e^*M_{e+1}T_e
- =M_e+C_e(M_{e+1})_{\mathrm{child}}C_e^*.
+T_e^*\mathsf G_{e+1}T_e
+ =\mathsf G_e+C_e(\mathsf G_{e+1})_{\mathrm{child}}C_e^*.
 \tag{116.5}
 $$
 
@@ -5285,17 +5287,18 @@ implies (117.1), because \(J_e^*S_Q=I\). Thus a no-go for (117.1) also
 rules out the full scalar-clock repair.
 
 **Theorem 117.2 (scalar-clock no-go).** Suppose \(B_e\ne\varnothing\),
-\(M_e\) is positive diagonal, and the old tree has at least one vertex
+\(\mathsf G_e\) is strictly positive diagonal, and the old tree has at least one vertex
 outside the beta-parent set \(M_e\). There is no top-fixed linear extension
-\(S_Q\) and no positive diagonal \(M_{e+1}\) satisfying (F), (N), and
+\(S_Q\) and no strictly positive diagonal \(\mathsf G_{e+1}\) satisfying (F), (N), and
 (117.1), for any \(\lambda_e>0\).
 
-**Proof.** By (F), Theorem 115.2 forces \(S_Q=T_e\). Write the positive
-child block of \(M_{e+1}\) as \(M_c\), and its old block as \(M_o\). From
+**Proof.** By (F), Theorem 115.2 forces \(S_Q=T_e\). Write the strictly
+positive child block of \(\mathsf G_{e+1}\) as \(\mathsf G_c\), and its old
+block as \(\mathsf G_o\). From
 \(A_{e+1}T_e=J_eA_e\), the old-coordinate part of (117.1) is
 
 $$
-M_o^{-1}A_e=\lambda_eM_e^{-1}A_e.
+\mathsf G_o^{-1}A_e=\lambda_e\mathsf G_e^{-1}A_e.
 \tag{117.3}
 $$
 
@@ -5303,9 +5306,9 @@ Every row of \(A_e\) is nonzero on a connected nontrivial tree. Since the
 left factor in (117.3) is diagonal, each row therefore gives
 
 $$
-M_o^{-1}=\lambda_eM_e^{-1},
+\mathsf G_o^{-1}=\lambda_e\mathsf G_e^{-1},
 \qquad
-M_o=\lambda_e^{-1}M_e.
+\mathsf G_o=\lambda_e^{-1}\mathsf G_e.
 \tag{117.4}
 $$
 
@@ -5313,21 +5316,21 @@ The norm condition (N), together with \(T_e=(I,C_e^*)^{\mathsf T}\), now
 requires
 
 $$
-C_eM_cC_e^*
-   =(1-\lambda_e^{-1})M_e.
+C_e\mathsf G_cC_e^*
+   =(1-\lambda_e^{-1})\mathsf G_e.
 \tag{117.5}
 $$
 
 The left side is supported on \(M_e\). At a vertex \(r\notin M_e\), its
 \(r,r\) entry is zero, whereas the right side is
-\((1-\lambda_e^{-1})M_e(r,r)\). Positivity of \(M_e(r,r)\) forces
+\((1-\lambda_e^{-1})\mathsf G_e(r,r)\). Strict positivity of \(\mathsf G_e(r,r)\) forces
 \(\lambda_e=1\). Substituting this into (117.5) gives
 
 $$
-C_eM_cC_e^*=0,
+C_e\mathsf G_cC_e^*=0,
 $$
 
-which is impossible: \(B_e\ne\varnothing\), \(M_c>0\), and every born child
+which is impossible: \(B_e\ne\varnothing\), \(\mathsf G_c>0\), and every born child
 contributes its positive mass to its beta parent. Hence no such scalar clock
 exists. \(\square\)
 
@@ -5338,7 +5341,7 @@ thus met in the nontrivial birth steps considered here. The first witness
 ordered old vertices \((\varepsilon,L,R)\),
 
 $$
-C_eM_cC_e^*
+C_e\mathsf G_cC_e^*
    =\operatorname{diag}(0,0,m_{RL}+m_{RR}),
 \qquad m_{RL},m_{RR}>0.
 \tag{117.6}
@@ -5372,8 +5375,9 @@ coordinates. Its exact algebra identifies what a successful bridge would
 have to pay for.
 
 **Definition 118.1 (old-coordinate diagonal clock).** Let
-\(\Lambda_e=\operatorname{diag}(\lambda_e(p))\) be a positive diagonal
-operator on \(\ell^2(V_e)\). Replace the scalar condition (117.1) by
+\(\Lambda_e=\operatorname{diag}(\lambda_e(p))\) be a strictly positive
+diagonal operator (all \(\lambda_e(p)>0\)) on \(\ell^2(V_e)\). Replace the
+scalar condition (117.1) by
 
 $$
 \boxed{
@@ -5388,24 +5392,24 @@ node-dependent intertwining condition would also constrain the child block
 and is strictly stronger.
 
 **Theorem 118.2 (necessary profile for a diagonal clock).** Assume the old
-tree is connected and nontrivial, \(B_e\ne\varnothing\), and \(M_e\) and
-\(M_{e+1}\) are positive diagonal. If (F), (N), and (118.1) hold, then
+tree is connected and nontrivial, \(B_e\ne\varnothing\), and \(\mathsf G_e\) and
+\(\mathsf G_{e+1}\) are strictly positive diagonal. If (F), (N), and (118.1) hold, then
 \(S_Q=T_e\), and, writing
 
 $$
-M_{e+1}=
-\begin{pmatrix}M_o&0\\0&M_c\end{pmatrix},
-\qquad M_c>0,
+\mathsf G_{e+1}=
+\begin{pmatrix}\mathsf G_o&0\\0&\mathsf G_c\end{pmatrix},
+\qquad \mathsf G_c>0,
 $$
 
 one necessarily has
 
 $$
 \boxed{
-M_o=M_e\Lambda_e^{-1},
+\mathsf G_o=\mathsf G_e\Lambda_e^{-1},
 \qquad
-C_eM_cC_e^*
-   =M_e(I-\Lambda_e^{-1}).
+C_e\mathsf G_cC_e^*
+   =\mathsf G_e(I-\Lambda_e^{-1}).
 }
 \tag{118.2}
 $$
@@ -5425,14 +5429,14 @@ Consequently:
    \tag{118.3}
    $$
 
-   where \(m_e(p)=M_e(p,p)\) and
-   \(m_{p\sigma}=M_c(p\sigma,p\sigma)\).
+   where \(m_e(p)=\mathsf G_e(p,p)\) and
+   \(m_{p\sigma}=\mathsf G_c(p\sigma,p\sigma)\).
 
 **Proof.** Condition (F) again forces \(S_Q=T_e\). Using
 \(A_{e+1}T_e=J_eA_e\), the old-coordinate part of (118.1) becomes
 
 $$
-M_o^{-1}A_e=\Lambda_eM_e^{-1}A_e.
+\mathsf G_o^{-1}A_e=\Lambda_e\mathsf G_e^{-1}A_e.
 \tag{118.4}
 $$
 
@@ -5440,21 +5444,21 @@ Every row of \(A_e\) is nonzero, so the diagonal factors in (118.4) agree
 row by row:
 
 $$
-M_o^{-1}=\Lambda_eM_e^{-1},
+\mathsf G_o^{-1}=\Lambda_e\mathsf G_e^{-1},
 \qquad
-M_o=M_e\Lambda_e^{-1}.
+\mathsf G_o=\mathsf G_e\Lambda_e^{-1}.
 \tag{118.5}
 $$
 
 The norm identity (N) is
 
 $$
-M_o+C_eM_cC_e^*=M_e.
+\mathsf G_o+C_e\mathsf G_cC_e^*=\mathsf G_e.
 \tag{118.6}
 $$
 
 Substitution gives the second equation of (118.2). Since
-\(C_eM_cC_e^*\) is supported exactly on beta-parent coordinates and its
+\(C_e\mathsf G_cC_e^*\) is supported exactly on beta-parent coordinates and its
 diagonal entry at \(p\in M_e\) is \(m_{pL}+m_{pR}\), (118.3) follows.
 Positivity of \(\Lambda_e\) requires the denominator in (118.3) to be
 positive. At every \(p\notin M_e\), the left side of the second equation in
@@ -5467,7 +5471,7 @@ without any abstraction. With old order
 beta parent \(R\), and
 
 $$
-C_eM_cC_e^*
+C_e\mathsf G_cC_e^*
    =\operatorname{diag}(0,0,m_{RL}+m_{RR}).
 \tag{118.7}
 $$
@@ -5501,18 +5505,19 @@ does not select a physical dimension.
 
 ## 119. Full child-coordinate target-clock obstruction on the finite raw carrier
 
-Section 118 leaves the child coordinates outside its old-only equation. The
-full equation has a direct finite obstruction once the clock is placed on the
-target side. Use \(\mathbf W_e\) and \(\mathbf W_{e+1}\) for positive diagonal
-node-mass matrices, reserving \(M_e\) for the beta-parent set of (112.6).
+The displayed old-only equation (118.1) leaves the child coordinates outside
+its equation. The full equation has a direct finite obstruction once the clock
+is placed on the target side. Use \(\mathsf G_e\) and \(\mathsf G_{e+1}\) for
+strictly positive diagonal matrices (all node-mass entries \(>0\)), reserving
+\(M_e\) for the beta-parent set of (112.6).
 Write
 
 $$
-\mathcal L_e=\mathbf W_e^{-1}L_e,
+\mathcal L_e=\mathsf G_e^{-1}L_e,
 \qquad
-\mathcal L_{e+1}=\mathbf W_{e+1}^{-1}L_{e+1},
+\mathcal L_{e+1}=\mathsf G_{e+1}^{-1}L_{e+1},
 \qquad
-\mathbf W_{e+1}=\operatorname{diag}(\mathbf W_o,\mathbf W_c).
+\mathsf G_{e+1}=\operatorname{diag}(\mathsf G_o,\mathsf G_c).
 \tag{119.1}
 $$
 
@@ -5524,11 +5529,12 @@ S_Q^*L_{e+1}S_Q=L_e.
 \tag{119.2}
 $$
 
-If \(C_e^*L_e\ne0\), there are no positive diagonal mass matrices in
-(119.1) and no positive diagonal output clock
+If \(C_e^*L_e\ne0\), there are no strictly positive diagonal mass matrices in
+(119.1) and no strictly positive diagonal output clock
 
 $$
-\Lambda_{e+1}=\operatorname{diag}(\Lambda_o,\Lambda_c)
+\Lambda_{e+1}=\operatorname{diag}(\Lambda_o,\Lambda_c),
+\qquad\text{all diagonal entries \(>0\)}
 $$
 
 such that the full target-side equation
@@ -5539,8 +5545,16 @@ $$
 \tag{119.3}
 $$
 
-holds. For the raw unweighted carrier of (112.4), set
-\(\mathbf W_e=\mathbf W_{e+1}=I\); the same requirement is literally
+holds. Here \(\Lambda_{e+1}\) is target-side: equivalently
+\(\Lambda_{e+1}^{-1}\mathcal L_{e+1}S_Q=S_Q\mathcal L_e\).
+A domain-side clock equation such as
+\(\mathcal L_{e+1}S_Q=S_Q\Lambda_e\mathcal L_e\) is a different,
+unanalysed contract. The displayed target clock has strictly positive diagonal
+blocks, so it is invertible. The theorem applies to this block-diagonal class;
+block-mixing, non-diagonal block clocks, or singular clocks and non-diagonal
+state metrics are outside its scope. For the raw unweighted occurrence object
+\(\mathcal O_e\) of (112.4), set
+\(\mathsf G_e=\mathsf G_{e+1}=I\); the same requirement is literally
 
 $$
 \boxed{L_{e+1}S_Q=\Lambda_{e+1}S_QL_e}.
@@ -5567,10 +5581,10 @@ L_{e+1}T_e=J_eL_e.
 $$
 
 Taking the old and child blocks of (119.3), with
-\(\mathbf W_{e+1}=\operatorname{diag}(\mathbf W_o,\mathbf W_c)\), gives
+\(\mathsf G_{e+1}=\operatorname{diag}(\mathsf G_o,\mathsf G_c)\), gives
 
 $$
-\begin{pmatrix}\mathbf W_o^{-1}L_e\\0\end{pmatrix}
+\begin{pmatrix}\mathsf G_o^{-1}L_e\\0\end{pmatrix}
 =
 \begin{pmatrix}
 \Lambda_o\mathcal L_e\\
@@ -5581,7 +5595,7 @@ $$
 
 The child block forces
 \(\Lambda_cC_e^*\mathcal L_e=0\). Positivity makes \(\Lambda_c\) invertible,
-while multiplication by the positive diagonal \(\mathbf W_e^{-1}\) only
+while multiplication by the strictly positive diagonal \(\mathsf G_e^{-1}\) only
 rescales each duplicated parent row. Hence \(C_e^*\mathcal L_e=0\) is
 equivalent to \(C_e^*L_e=0\), contradicting the hypothesis. No node-norm
 condition (N) is used; retaining (N) therefore gives only an a fortiori
@@ -5616,7 +5630,11 @@ already impossible at this finite birth step under Theorem 119.1.
 
 The exact escape boundaries are: the old-only condition (118.1), which does
 not constrain the child block; a transport that is not top-fixed or does not
-preserve the edge form; a non-diagonal or singular clock or state metric; an
-empty birth or \(C_e^*L_e=0\); and a quotient task whose specification omits
-the child response. This finite result does not select a physical dimension
-or assert a physical realization.
+preserve the edge form; a domain-side clock; clocks or state metrics outside
+the strictly positive block-diagonal old/child class (including block-mixing or
+singular cases); an empty birth or \(C_e^*L_e=0\); and a quotient task whose
+specification omits the child-sensitive response. A quotient inherits this
+no-go only when its task preserves that response and the full equation descends
+to the quotient. This finite result only closes the raw full-child target-clock
+branch: it supplies no positive three-dimensional metric, volume, or spectral-
+dimension condition, and does not assert a physical realization.
