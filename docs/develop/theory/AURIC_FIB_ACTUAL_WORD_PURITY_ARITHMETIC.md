@@ -1340,7 +1340,7 @@ fixed before the input and are independent of the input and reference.
 finite $d$, every unitary $U$, and every $p\in[0,1]$,
 
 $$
-\min_{\mathcal R\ {\mathrm{CPTP}}
+\min_{\mathcal R\ {\mathrm{CPTP}}}
 \left\|\mathcal R\mathcal N_{p,U}-\operatorname{id}\right\|_\diamond
 =\delta_p(U)
 :=1-\sqrt{1-4pq\bigl(1-\nu(U)^2\bigr)}.
@@ -1599,11 +1599,8 @@ $\theta\in[0,\pi]$. $\square$
 full-space retraction and terminal permissions are those already published in
 Recovery §§1–3. The actual-word quaternion coordinates and ideal separation are
 this volume's Theorems 45.2 and 46.1; the exact trace bridge is Theorem 48.1.
-Theorem 59.2 is the accepted arbitrary-finite ordinary proof above, and
+Theorem 59.2 is the arbitrary-finite ordinary proof above, and
 Theorems 60.2 and 61.1 are its one-record and actual-history applications.
-The supplier envelopes were read through their complete `.conclusion` fields;
-opaque logs, private checkers and other workers' artifacts are not mathematical
-sources.
 
 **Literature statement.** Bounded primary-source searches inspected
 Shahbeigi–Sadri–Moradi–Zyczkowski–Karimipour, *Quasi-inversion of quantum and
@@ -1621,11 +1618,11 @@ A bounded search did not identify an exact prior theorem, but this is neither a
 novelty claim nor a priority claim. One metadata-only candidate was unavailable
 (HTTP 403), and the search did not establish literature completeness.
 
-**Numerical and exact corroboration.** The accepted supplier checks included
-exact Gram and endpoint identities, exact actual-pair traces, and unrestricted
-finite SDPs with SCS 1.7.5/CVXPY 1.7.5; all reported successful SDP statuses
-for the cases quoted above. Floating-point feasibility residuals are evidence
-only, not proofs. No experiment program or data is added to this repository.
+**Numerical and exact corroboration.** Exact Gram and endpoint identities,
+exact actual-pair traces, and unrestricted finite SDPs using SCS via CVXPY
+1.7.5 provide the quoted corroboration; the reported SDP statuses for the
+cases quoted above are `optimal`. Floating-point feasibility residuals are
+evidence only, not proofs.
 
 **What remains open.** The results above do not optimize over all changing,
 stochastic or shared-seed controllers, several ambiguous records, pair choices,
