@@ -3284,3 +3284,532 @@ The original fixed-zero-error and $n=0$ endpoints retain their separate
 statements in §§11 and 18.
 
 ## 追加锚（本行以下为增补区）
+
+## 28. Joint horizon and accuracy below the deficit cap
+
+**Convention 28.1 (Unchanged operational problem).** Retain Definitions
+2.1–2.4: the actual fixed-$\pi/6$ measured instrument, the full complex
+qutrit embedded in $H=\mathbb C^5$, and fully averaged unhalved diamond
+error on every untouched finite reference. The minimum $W_n(\varepsilon)$
+is over complete persistent peak width at every layer, allowing changing
+many-to-one and stochastic updates, independent finite or standard Borel
+free shared seeds, and arbitrary terminal full-$H$ CPTP decoders. Only one
+terminal quantum correction is allowed. A prefix archive, persistent random
+tape or history-dependent control information is counted memory; there is
+no postselection, retained environment, reference access or intermediate
+quantum control. The deterministic clock, nonuniform exact static tables
+and inverse-control precision have exactly the separate-resource permissions
+of Definition 2.3.
+
+Use the fixed spectral constants of Definition 22.1, in particular
+$\kappa=3\gamma/64$, $C=6+2^{17}/\gamma$,
+$\alpha=\sqrt{31/32}$ and $c_*=1-\alpha$. The proved positivity of
+$\gamma$ is sufficient below; no numerical lower bound for it is supplied.
+All logarithms in §§28–32 are natural unless their base is displayed.
+Define the error deficit
+
+$$
+d(\varepsilon)=1-(1-\varepsilon)^2=2\varepsilon-\varepsilon^2.
+\tag{28.1}
+$$
+
+**Proposition 28.2 (Necessary budget at strictly subcap error).** For
+all integers $n\ge0$ and $W\ge1$, every successful width-$W$ controller
+with $0<\varepsilon<c_*$ satisfies
+
+$$
+\kappa\lfloor n/3\rfloor
+\le\ln W+32768(2\varepsilon-\varepsilon^2)W^{2/3}.
+\tag{28.2}
+$$
+
+Proof. Theorem 4.3 gives $1-\varepsilon\le a_W(n)$. Both sides are
+nonnegative, so squaring and then applying Theorem 22.2 gives
+
+$$
+\min\left\{\frac1{32},
+ \frac{[\kappa\lfloor n/3\rfloor-\ln W]_+}{32768W^{2/3}}\right\}
+=\Delta_W(n)\le d(\varepsilon).
+\tag{28.3}
+$$
+
+On $(0,1)$, $d$ is strictly increasing and $d(c_*)=1/32$.
+Thus $d(\varepsilon)<1/32$, and the second entry in the minimum in
+(28.3) must be at most $d(\varepsilon)$. Its denominator is positive.
+If $\kappa\lfloor n/3\rfloor-\ln W\le0$, (28.2) already holds.
+If that difference is positive, its positive part is the difference
+itself, and multiplication by $32768W^{2/3}$ proves (28.2).
+This is a direct algebraic application of Theorems 4.3 and 22.2,
+including their full-decoder, stochastic and independent-seed scope.
+$\square$
+
+The strict threshold is essential to this deduction. At
+$\varepsilon=c_*$, the inequality
+$\min\{1/32,1/8\}\le d(c_*)$ holds although $1/8>d(c_*)$.
+At larger errors the cap is also below $d(\varepsilon)$, so (28.3)
+does not give an uncapped budget. This does not assert that (28.2)
+is false above the threshold. The block contraction (22.6) remains
+available there. The positive part and the term $\ln W$ also remain
+essential: (28.2) is a necessary condition with startup, not a
+fixed-$n$ lower bound diverging as $\varepsilon\downarrow0$.
+
+## 29. A uniform matched regime including subexponential accuracy
+
+**Theorem 29.1 (Joint bound with instrument-only constants).** Put
+
+$$
+\begin{aligned}
+A&=3500\pi^2,&
+K&=6\left(1+\frac{\ln A}{\kappa}\right),&K_0&=\max\{K,38\},\\
+c_{\rm small}&=\left(\frac{\kappa}{393216}\right)^{3/2},&
+c&=\min\left\{c_{\rm small},
+                 \left(\frac{c_*}{38C}\right)^{3/2}\right\}>0.
+\end{aligned}
+\tag{29.1}
+$$
+
+For every real $0<\varepsilon<1/4$ and every integer $n\ge1$
+satisfying
+
+$$
+n\ge K_0\bigl(\ln n+\ln(1/\varepsilon)+1\bigr),
+\tag{29.2}
+$$
+
+one has
+
+$$
+c(n/\varepsilon)^{3/2}
+\le W_n(\varepsilon)\le A(n/\varepsilon)^{3/2}.
+\tag{29.3}
+$$
+
+The constants $c,A,K_0$ do not depend on $n$ or $\varepsilon$.
+Their dependence on the fixed instrument includes its positive, not
+numerically estimated, spectral gap.
+
+Proof. Write $S=\ln n+\ln(1/\varepsilon)+1$ and
+$W=W_n(\varepsilon)$. The integer minimum is attained as in
+Definition 2.4. Since $x=\sqrt{n/\varepsilon}\ge1$,
+$\lceil4x\rceil\le5x$. Theorem 8.4 therefore gives
+
+$$
+W\le28\pi^2(5\sqrt{n/\varepsilon})^3
+=A(n/\varepsilon)^{3/2},\qquad
+\ln W\le\ln A+\tfrac32(S-1)\le(\ln A)S.
+\tag{29.4}
+$$
+
+The last inequality uses $S\ge1$ and $\ln A>3/2$.
+First let $0<\varepsilon<c_*$. Proposition 28.2 and
+$\lfloor n/3\rfloor\ge n/3-1$ imply
+
+$$
+\begin{aligned}
+32768d(\varepsilon)W^{2/3}
+&\ge\kappa n/3-\kappa-\ln W\\
+&\ge\kappa n/3-(\kappa+\ln A)S\\
+&\ge\kappa n/6.
+\end{aligned}
+\tag{29.5}
+$$
+
+Indeed $n\ge KS=6(\kappa+\ln A)S/\kappa$ proves the final step.
+Since $d(\varepsilon)\le2\varepsilon$, (29.5) yields
+
+$$
+W\ge\left(\frac{\kappa n}{393216\varepsilon}\right)^{3/2}
+=c_{\rm small}(n/\varepsilon)^{3/2}.
+\tag{29.6}
+$$
+
+Now let $c_*\le\varepsilon<1/4$. The exact integer inequality
+$16\cdot31^{19}<9\cdot32^{19}$ gives
+$\alpha^{19}<3/4<1-\varepsilon$. If
+$n\ge19\lceil CW^{2/3}\rceil$, (22.6) and Theorem 4.3 would give
+$1-\varepsilon\le a_W(n)\le\alpha^{19}$, a contradiction.
+Consequently, using $n\ge38$ from (29.2),
+
+$$
+\begin{aligned}
+n&<19\lceil CW^{2/3}\rceil\le19(CW^{2/3}+1),\\
+W&>\left(\frac{n}{38C}\right)^{3/2}
+\ge\left(\frac{c_*}{38C}\right)^{3/2}(n/\varepsilon)^{3/2}.
+\end{aligned}
+\tag{29.7}
+$$
+
+This argument includes $\varepsilon=c_*$ without uncapping (28.3).
+The two ranges and (29.4) prove (29.3). The proof reuses the source
+rounding upper bound and block converse; the result is their quantitative
+joint consequence with explicit uniformity. $\square$
+
+**Corollary 29.2 (Every positive subexponential-error sequence).** For
+every sequence $(\varepsilon_n)_{n\ge1}$ with
+$0<\varepsilon_n<1/4$ and $\ln(1/\varepsilon_n)=o(n)$, there is
+an integer $N$ such that for every $n\ge N$,
+
+$$
+c(n/\varepsilon_n)^{3/2}
+\le W_n(\varepsilon_n)\le A(n/\varepsilon_n)^{3/2}.
+\tag{29.8}
+$$
+
+Here $c,A,K_0$ are the same constants in (29.1); only $N$ may depend
+on the sequence. This includes shrinking errors with subexponential
+inverse accuracy, without restricting them to polynomial shrinkage.
+
+Proof. The assumptions and $\ln n=o(n)$ give
+$K_0(\ln n+\ln(1/\varepsilon_n)+1)/n\to0$. Thus (29.2) holds
+for every sufficiently large $n$, and Theorem 29.1 applies at each
+such $n$. No common $N$ over all these sequences is asserted.
+$\square$
+
+## 30. Exact prefixes followed by a single change to rounded memory
+
+**Definition 30.1 (Delayed controller and its counted state).** Fix
+$n\ge1$, $0<\varepsilon<1/4$ and an integer $0\le k<n$. Put
+
+$$
+L=n-k,\qquad m=\left\lceil4\sqrt{L/\varepsilon}\right\rceil\ge8,
+\qquad N_m=2|\mathcal N_{1/m}|\le28\pi^2m^3.
+\tag{30.1}
+$$
+
+For $0\le t\le k$, the entire persistent state is the exact binary
+prefix $p=(h_1,\ldots,h_t)$, updated by deterministic appending. This
+uses $2^t$ states at layer $t$. For a length-$k$ prefix write
+$G_p=g_{p_k}\cdots g_{p_1}$, with $G_{\varnothing}=I_2$.
+On acquiring label $j$ at step $k+1$, use one stochastic transition
+from $(p,j)$ directly to the shell state $(d',q')$, where
+
+$$
+\begin{aligned}
+Z&=g_jG_p,&
+d'&=\left(\sum_{i=1}^k(1-p_i)+(1-j)\right)\bmod2,\\
+z&=\Phi^{-1}(J^{d'}Z)\in S^3,&
+a&=z+e,\qquad q'=a/\|a\|.
+\end{aligned}
+\tag{30.2}
+$$
+
+Coordinate rounding for $e$ is exactly Definition 8.1 with mesh $1/m$.
+The determinant identity $\det Z=(-1)^{d'}$ makes $J^{d'}Z\in SU(2)$,
+so the target is defined even when $G_p$ is not a shell point. Subsequent
+steps use (8.1) on the shell state and the same mesh. Every rounding draw
+is fresh conditional on the current state and next label, and is then
+discarded. The determinant bit is updated exactly; the full signed
+quaternion is stored, with $q$ and $-q$ distinct.
+
+At the change of state set, there are $2^k$ persistent input states and
+$2^{k+1}$ possible input-label pairs. The latter index rows of a static
+transition kernel, each with at most $16$ nonzero rounded outputs. They
+are not an additional persistent layer. Immediately after this transition,
+the persistent state is only $(d',q')$: the prefix and its product are
+not retained alongside it. Later layers have at most $N_m$ states.
+Padding the time-dependent state sets to one common alphabet and using
+the permitted deterministic schedule gives complete peak width at most
+
+$$
+\max\{2^k,N_m\}\le\max\{2^k,28\pi^2m^3\}.
+\tag{30.3}
+$$
+
+In particular the exact prefix's $k$ bits are counted at every preceding
+layer. The change in classical memory does not apply any quantum
+operation.
+
+**Theorem 30.2 (All-reference error of the delayed controller).** The
+controller in Definition 30.1, with the terminal unitary specified below,
+achieves
+
+$$
+\|\mathcal E_n-\iota\|_\diamond
+\le12L/m^2\le3\varepsilon/4
+\tag{30.4}
+$$
+
+with peak width (30.3). Its only quantum correction is at time $n$.
+At $k=n$, instead retain the full history and recover exactly with
+width $2^n$. At $n=0$ use width one, with error zero.
+
+Proof. For analysis, let $G_t=g_{h_t}\cdots g_{h_1}$ be the actual
+restricted product. Up to time $k$, assign to the counted prefix the
+matrix $Y_t=G_t$. After time $k$, let $Y_t=J^{d_t}\Phi(q_t)$ be the
+matrix represented by the counted shell state. Define
+
+$$
+E_t=1\oplus Y_t^\dagger G_t,\qquad
+\mathcal M_t(r)=\mathbb E[
+ \mathbf1_{\{R_t=r\}}\operatorname{Ad}_{E_t}],\qquad
+\mathcal C_t=\sum_r\mathcal M_t(r).
+\tag{30.5}
+$$
+
+Here $G_t$ and $E_t$ are analytic variables, not additional stored
+registers. At time $k$, $E_k=I_3$ on every prefix and the actual fair
+history law gives the exact initialization
+
+$$
+\mathcal M_k(p)=2^{-k}\operatorname{id}_3,
+\qquad\mathcal C_k=\operatorname{id}_3.
+\tag{30.6}
+$$
+
+For each $k\le t<n$, current counted state $r$ with represented
+matrix $Y$, and next actual label $j$, put
+
+$$
+\mathcal L_{t,r,j}
+=\mathbb E_{\rm fresh}\operatorname{Ad}_{1\oplus Y'^\dagger g_jY}.
+\tag{30.7}
+$$
+
+At $t=k$, $Y=G_p$, and (30.2) rounds the arbitrary target $g_jG_p$
+in its determinant coset. Thus the arbitrary-target clause of Lemma 8.3
+applies at this first step; no shell membership of $G_p$ is required.
+At $t>k$, (30.7) is the ordinary shell update. Uniformly in both cases,
+
+$$
+\|\mathcal L_{t,r,j}-\operatorname{id}_3\|_\diamond\le12/m^2.
+\tag{30.8}
+$$
+
+This local estimate controls every finite reference and all complex
+operators: the proof of Lemma 8.3 expands with
+$B_{\rm err}=Y'^\dagger g_jY-I_2$, extended by zero on $\xi$, and
+bounds left/right multiplication by $\|\mathbb EB_{\rm err}\|\le4/m^2$
+and the quadratic term by $\mathbb E\|B_{\rm err}\|^2\le4/m^2$.
+Tensoring these multipliers with an arbitrary reference identity changes
+neither operator-norm bound. The local bound is averaged over fresh
+rounding, not asserted on each rounded outcome.
+
+Each $E_t$ is unitary. Actual labels are fair independently of the
+input and reference by Theorem 2.2, and classical fresh draws have the
+same independence. Consequently, if $p_t(r)=\Pr(R_t=r)$, then
+
+$$
+\mathcal M_t(r)^\dagger(I_3)=p_t(r)I_3,
+\qquad\|\mathcal M_t(r)\|_\diamond=p_t(r),
+\qquad\sum_rp_t(r)=1.
+\tag{30.9}
+$$
+
+For $p_t(r)>0$, division by that probability makes $\mathcal M_t(r)$
+a convex mixture of unitary channels and hence a channel of diamond norm
+one; when $p_t(r)=0$ it is the zero map. This proves the norm statement
+including unoccupied states.
+
+The exact pathwise identity is
+
+$$
+E_{t+1}=(1\oplus Y'^\dagger g_jY)E_t.
+\tag{30.10}
+$$
+
+Conditional on $(R_t,j)$, fresh rounding is independent of the past
+relative error. The next actual label is independent of that past and
+has probability $1/2$. Summing (30.10) therefore gives
+
+$$
+\mathcal C_{t+1}
+=\frac12\sum_{r,j}\mathcal L_{t,r,j}\circ\mathcal M_t(r).
+\tag{30.11}
+$$
+
+Subtract $\mathcal C_t=(1/2)\sum_{r,j}\mathcal M_t(r)$ and use
+(30.8)–(30.9):
+
+$$
+\begin{aligned}
+\|\mathcal C_{t+1}-\mathcal C_t\|_\diamond
+&\le\frac12\sum_{r,j}\frac{12}{m^2}p_t(r)=12/m^2,\\
+\|\mathcal C_n-\operatorname{id}_3\|_\diamond
+&\le\sum_{t=k}^{n-1}12/m^2=12L/m^2\le3\varepsilon/4.
+\end{aligned}
+\tag{30.12}
+$$
+
+The actual CP probabilities, including the prefix probabilities (30.6),
+are necessary for this normalization. Unweighted sums over states do not
+give (30.12).
+
+At termination let $\widehat Q=\lambda^n\oplus Y_n$ and apply the
+single full-$H$ unitary
+
+$$
+U_{R_n}=B\widehat Q^\dagger B^\dagger+(I_5-P_R).
+\tag{30.13}
+$$
+
+It is unitary by Corollary 3.3. For every actual history and rounding
+trajectory its encoded relative unitary is exactly
+$\widehat Q^\dagger Q_h=1\oplus Y_n^\dagger G_h=E_n$.
+Thus $\mathcal E_n=\iota\circ\mathcal C_n$, and the all-reference
+trace-norm isometry in Lemma 3.1 turns (30.12) into (30.4). The phase
+is $\lambda^n$, not $\lambda^L$: using the latter leaves the relative
+factor $\lambda^k$ on $\xi$, which need not be trivial relative to $T$.
+Likewise the determinant and signed quaternion cannot be discarded as
+projective data, because coherences with $\xi$ belong to the recovery
+target. All $\mathcal C_t$ with $t<n$ are analysis channels; no
+intermediate inverse or quantum correction is executed.
+
+For $k=n$, the exact-prefix construction in Theorem 8.4 applies its
+inverse only at the horizon and has peak $2^n$; it requires no formula
+with $L=0$ or $m=0$. The empty-history case gives the stated $n=0$
+endpoint. These upper constructions use no shared seed, and are legal
+within the larger class allowing arbitrary terminal CPTP decoders and
+independent standard Borel seeds. $\square$
+
+**Convention 30.3 (Static descriptions and precision).** The exact-prefix
+updates are deterministic tables. The change to shell memory has
+$2^{k+1}$ labelled rows, each with at most $16$ nonzero entries. The
+ordinary shell update has at most $2N_m$ labelled rows with the same
+output bound and can be reused for the remaining steps. At the horizon
+there are at most $N_m$ terminal unitary choices for $k<n$, or $2^n$
+for exact history. Products $G_p$, determinant choices, shell indices,
+real probabilities and exact inverse controls in these tables are fixed
+before the run. They contain no additional run-dependent state.
+
+Their description length, preparation time, arithmetic precision and
+control precision can be large. Definition 2.3 separates these resources
+from peak width; (30.3) does not bound them or claim an efficient
+finite-bit implementation. The known deterministic clock supplies only
+the scheduled layer. A hidden prefix archive, free persistent tape or
+history-dependent clock would change the complete-state count and is
+not used by this construction.
+
+## 31. A globally capped joint guess fails at positive exponential accuracy
+
+**Corollary 31.1 (Switching envelope is an upper bound).** For every
+$n\ge1$ and $0<\varepsilon<1/4$,
+
+$$
+W_n(\varepsilon)\le
+\min\left\{2^n,
+ \min_{0\le k<n}
+ \max\left\{2^k,28\pi^2
+  \left\lceil4\sqrt{(n-k)/\varepsilon}\right\rceil^3\right\}\right\}.
+\tag{31.1}
+$$
+
+The inner minimum is over integers. This follows by choosing any one
+of the controllers of Theorem 30.2. The value at $k=0$ is the original
+rounding construction. The minimum, equivalently the infimum over the
+finite switch set, is only an upper bound; no optimality among all
+permitted controllers follows.
+
+**Proposition 31.2 (Explicit failure of a uniform capped law).** For
+all sufficiently large integers $n$, set
+
+$$
+\varepsilon_n=n2^{-2n/3},\qquad
+L_n=\lceil2\log_2n\rceil,\qquad k_n=n-L_n.
+\tag{31.2}
+$$
+
+Then $0<\varepsilon_n<1/4$, $0\le k_n<n$, and
+
+$$
+\frac{W_n(\varepsilon_n)}{2^n}
+\le\max\left\{n^{-2},A(L_n/n)^{3/2}\right\}\longrightarrow0,
+\qquad
+\min\{2^n,(n/\varepsilon_n)^{3/2}\}=2^n.
+\tag{31.3}
+$$
+
+In particular there is no positive constant $b$, independent of $n$
+and $\varepsilon$, for which
+$W_n(\varepsilon)\ge b\min\{2^n,(n/\varepsilon)^{3/2}\}$
+holds for all sufficiently large $n$ and every $0<\varepsilon<1/4$.
+
+Proof. The sequence $\varepsilon_n$ tends to zero and
+$L_n=O(\log n)$, so eventually $1\le L_n<n$. Apply Theorem 30.2
+with $k=k_n$, $L=L_n$ and
+$m_n=\lceil4\sqrt{L_n/\varepsilon_n}\rceil$.
+Since $L_n\ge2\log_2n$,
+
+$$
+2^{k_n}/2^n=2^{-L_n}\le n^{-2}.
+\tag{31.4}
+$$
+
+Eventually $x_n=\sqrt{L_n/\varepsilon_n}\ge1$, so
+$m_n\le5x_n$. The shell part of (30.3) then satisfies
+
+$$
+\frac{28\pi^2m_n^3}{2^n}
+\le\frac{3500\pi^2(L_n/\varepsilon_n)^{3/2}}{2^n}
+=A(L_n/n)^{3/2},
+\tag{31.5}
+$$
+
+because $\varepsilon_n^{-3/2}=n^{-3/2}2^n$.
+Both terms on the right of (31.3) tend to zero. But
+$(n/\varepsilon_n)^{3/2}=(2^{2n/3})^{3/2}=2^n$ exactly.
+Thus any proposed positive uniform lower constant is contradicted by
+(31.3). $\square$
+
+This refutes the uniform global guess
+$W_n(\varepsilon)\asymp\min\{2^n,(n/\varepsilon)^{3/2}\}$
+with constants independent of both variables. It does not refute the
+fixed-$\varepsilon$ theorem (27.2). Indeed
+$\ln(1/\varepsilon_n)=(2\ln2/3)n-\ln n$ is linear in $n$ to
+leading order, so this sequence is outside Corollary 29.2. Nor does
+(31.3) determine the optimal width along this sequence: it is a
+constructive upper bound, without a matching lower bound there.
+
+## 32. Attribution and the unresolved exponential-precision transition
+
+**Convention 32.1 (Sources and status of the deductions).** The actual
+instrument, common eigenphase, full-space embedding and separate exact
+zero-error result are supplied by [OWN][OWN] and [FIVE][FIVE] at the
+fixed revision in Convention 1.2. Bourgain–Gamburd's spectral theorem
+[BG][BG], with the normalization and actual-generator correspondence
+specified in §24, supplies the positive $\gamma$ of Definition 22.1.
+No numerical gap estimate is added.
+
+Proposition 28.2 is the strict-cap algebraic consequence of Theorems
+4.3 and 22.2. Theorem 29.1 and Corollary 29.2 are source-relative
+quantitative consequences of that budget, (22.6) and Theorem 8.4;
+the existing generic estimates are reused. Definition 30.1 supplies the
+counted prefix-to-shell interface. Theorem 30.2 applies the arbitrary-target
+clause of Lemma 8.3 at that interface and the probability-weighted CP
+telescoping of Theorem 8.4 afterwards. Proposition 31.2 combines that
+admissible construction with the explicit sequence (31.2). These are
+ordinary mathematical deductions in the declared resource model, with
+no claim of exhaustive literature novelty, physical or QFT realization,
+or Lean/kernel certification.
+
+**Question 32.2 (Sharp joint law at exponentially small positive error).**
+Determine the optimal joint dependence of $W_n(\varepsilon)$ when
+$\ln(1/\varepsilon)$ is comparable to or larger than $n$, including
+its transition to the separate exact endpoint $W_n(0)=2^n$. A matching
+lower bound for the sequence (31.2), or for the switching envelope
+(31.1), has not been established here. The envelope is not asserted
+to be sharp.
+
+The specific missing estimate is an accuracy-dependent necessary bound
+on averaged full-qutrit recovery for arbitrary complete changing,
+many-to-one and stochastic peak-width controllers, independent standard
+Borel seeds and full-$H$ terminal CPTP decoders, that stays informative
+when $\kappa\lfloor n/3\rfloor\le\ln W$. In that range the positive
+part in (28.3) can vanish and (28.2) need not constrain accuracy.
+The constant-contraction estimate (22.6) alone does not recover the
+missing dependence on exponentially small positive $\varepsilon$.
+A sharp estimate must respect actual joint history/record laws and
+phase-sensitive distinguishability, permit the legal delayed controller,
+and remain compatible with the exact-history upper bound. The vector
+converse is necessary only; the width-one, horizon-one obstruction and
+the separate exact endpoints in §§11 and 18 prevent promoting vector
+survival to same-width operational sufficiency.
+
+Theorem 29.1 settles the stated uniform matched regime, not this full
+joint question. Corollary 27.1 retains its fixed-error quantifiers;
+$W_0(\varepsilon)=1$ and $W_n(0)=2^n$ retain their separate meanings,
+without evaluating a positive-error rounding formula at zero. Numerical
+gap constants, optimal static-table size, finite-precision inverse
+control, calibration, acquisition and communication costs also remain
+outside these width results.
+
+## 追加锚（本行以下为增补区）
