@@ -11,6 +11,21 @@ open LeanInformationAudit.Tests.SearchReduction (Run Verdict)
 -- Their lifetime is the outer compiler process; no imported extension is read.
 private initialize probeRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
 
+/-- Module bytes are immutable. The common import state contains only Mathlib;
+source and baseline fork it before independently initializing extension state. -/
+private def importSource (owners : Array Import) : IO (Environment × ImportState) :=
+  withImporting do
+    let (_, shared) ← (importModulesCore #[{module := `Mathlib}]).run default
+    let (_, sourceState) ← (importModulesCore owners).run shared
+    let source ← finalizeImport sourceState owners options 0
+      (leakEnv := true) (loadExts := false)
+    return (source, shared)
+
+/-- The nested negative replay shares this probe's immutable module bytes.
+The reference is cleared before returning; it never caches across targets. -/
+private initialize activeProbe : IO.Ref (Option (Environment × ImportState)) ← IO.mkRef none
+
+
 private def runJson : Run → Json
   | .found => toJson "found"
   | .exhausted => toJson "exhausted"
@@ -124,11 +139,13 @@ without rolling the diagnostic back as an ordinary tactic exception. -/
   match stx with
   | `(tactic| reference_baseline $target:ident at $sha:str baseline [$bs:ident,*]
       from [$owners:ident,*]) =>
-    let source ← importModules (owners.getElems.map fun n => {module := n.getId})
-      options 0 (leakEnv := true) (loadExts := false)
+    profilePhase "imports/source"
+    let (source, shared) ← match ← activeProbe.get with
+      | some context => pure context
+      | none => importSource (owners.getElems.map fun n => {module := n.getId})
     let result ← run source {
       target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
-      baselineCommit := sha.getString }
+      baselineCommit := sha.getString } shared
     if result.presentation == .found then
       evalTactic (← `(tactic| exact True.intro))
       return
@@ -152,19 +169,22 @@ syntax (name := searchReductionProbeCmd) "#search_reduction_probe " ident " at "
   match stx with
   | `(#search_reduction_probe $target:ident at $sha:str baseline [$bs:ident,*]
       using [$ss:ident,*] from [$owners:ident,*] as $name:ident) =>
-    let source ← importModules (owners.getElems.map fun n => {module := n.getId})
-      options 0 (leakEnv := true) (loadExts := false)
+    profilePhase "imports/source"
+    let (source, shared) ← importSource (owners.getElems.map fun n => {module := n.getId})
     let result ← run source {
       target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
-      additions := ss.getElems.map (fun x => x.getId), baselineCommit := sha.getString}
+      additions := ss.getElems.map (fun x => x.getId), baselineCommit := sha.getString} shared
     liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
       if result.verdict == .nonBindOnly then
         let guardType := mkConst ``True
-        let guardProof ← synthesizeUsingTactic' (u := .zero) guardType (← `(tactic|
-            (fail_if_success (reference_baseline $target at $sha baseline [$bs,*]
-              from [$owners,*]))
-            <;> exact True.intro))
-        discard <| checkProof (name.getId ++ `baselineFailureGuard) [] guardType guardProof
+        activeProbe.set (some (source, shared))
+        try
+          let guardProof ← synthesizeUsingTactic' (u := .zero) guardType (← `(tactic|
+              (fail_if_success (reference_baseline $target at $sha baseline [$bs,*]
+                from [$owners,*]))
+              <;> exact True.intro))
+          discard <| checkProof (name.getId ++ `baselineFailureGuard) [] guardType guardProof
+        finally activeProbe.set none
       publish name.getId result (some source)
     logInfo (observationJson result sha.getString).compress
   | _ => throwUnsupportedSyntax

@@ -219,7 +219,8 @@ def checkBaseline (request : Request) (base : Environment) : IO (Except String U
         return .error s!"search.baseline_source_mismatch: {module}"
   return .ok ()
 
-unsafe def run (source : Environment) (request : Request) : IO Observation := do
+unsafe def run (source : Environment) (request : Request)
+    (sharedImports : ImportState) : IO Observation := do
   let unknown (reason : String) (failure := LeanInformationAudit.Tests.SearchReduction.Failure.isolation) : Observation := {
     target := request.target, base := .incomplete failure,
     paired := .incomplete failure, verdict := .insufficient, reason }
@@ -229,13 +230,19 @@ unsafe def run (source : Environment) (request : Request) : IO Observation := do
     -- Attributes, instances, macros, simp sets and theorem indexes all come
     -- from B. No extension state from source is merged into these imports.
     enableInitializersExecution
-    let mathlib ← importModules #[{module := `Mathlib}] options 0
-      (leakEnv := true) (loadExts := true)
+    profilePhase "imports/mathlib"
+    let mathlib ← withImporting <| finalizeImport sharedImports #[{module := `Mathlib}]
+      options 0 (leakEnv := true) (loadExts := true)
     let hints ← strategies mathlib
     enableInitializersExecution
-    let base ← importModules (#[{module := `Mathlib}] ++
-      request.baseline.map (fun n => {module := n})) options 0
-      (leakEnv := true) (loadExts := true)
+    profilePhase "imports/baseline"
+    let baselineImports : Array Import := #[{module := `Mathlib}] ++
+      request.baseline.map (fun n => {module := n})
+    let base ← withImporting do
+      let (_, baselineState) ← (importModulesCore baselineImports).run sharedImports
+      finalizeImport baselineState baselineImports options 0
+        (leakEnv := true) (loadExts := true)
+    profilePhase "imports/ready"
     if let .error reason ← checkBaseline request base then return unknown reason
     if hints.isEmpty then return unknown "search.missing_registered_strategies"
     let prepared ← prepare source base request false
