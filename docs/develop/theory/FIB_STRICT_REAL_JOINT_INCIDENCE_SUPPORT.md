@@ -2364,3 +2364,1279 @@ supporting results proves $H_4$ $L_3$, root $L_7$, or an eight-versus-nine
 conclusion. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Opposite-offdiagonal escape of the entire acquired child
+
+**Definition 11.1 (The reciprocal opposite-offdiagonal chart).** Retain
+the complete worlds and the literal history of Definition 1.1. Write
+$c=r(1-r)/b$, and, in this section only, put
+
+$$
+t=1/c,\qquad q=r(1-r),\qquad b=qt,\qquad
+j=t^{-1}+qt,\qquad n=t^{-1}+r+qt,\qquad
+T=1+qt,\quad U=1+2qt.
+$$
+
+The legal chart has $t>0$ and $0<r<1$. On it use the parent equation
+$e\Lambda=-(24/5)(b-1/8)\kappa$ and the single interpolant of
+Definition 7.1. The segment $t=0$, $0\le r\le1$ is an auxiliary
+analytic boundary, not a family of legal sources. After clearing the
+$t$ poles, the denominator factors are
+
+$$
+1+qt^2,\quad 1+rt+qt^2,\quad 1+qt,\quad 1+2qt,\quad\Lambda,
+\qquad \Lambda|_{t=0}=8.
+$$
+
+They are units on a neighbourhood of that compact segment. In particular
+the entire gain has a coefficientwise analytic limit
+
+$$
+e\longrightarrow3/10,\qquad d\longrightarrow243/10,\qquad
+g(s)\longrightarrow(s-1)(s-3)(3s/2-81/10).
+$$
+
+The first parent coefficients are
+
+$$
+\Lambda=8-8(q+1)t+O(t^2),\qquad
+e=\frac3{10}+\left(\frac3{10}-\frac94q\right)t+O(t^2).
+$$
+
+Applying the fixed extrapolation rows of Definition 2.1 gives
+
+$$
+\begin{aligned}
+p&=-\frac{24}{5t}-\frac{24}{5}(10r^2-9r-4)+O(t),\\
+v&=\frac{27}{2t}-\frac34(141r^2-159r-68)+O(t),\\
+a=f_{MJ}&=\frac{576}{5t}-\frac3{10}(1296r^2-2064r-271)+O(t),\\
+m=f_{MM}&=\frac{576}{5t}-\frac3{10}(1296r^2-1680r-655)+O(t).
+\end{aligned}
+$$
+
+Every remainder here is uniform with its first derivatives in $r$ on
+$[0,1]$, by the analytic extension and compactness. Thus $p\to-\infty$
+uniformly as $c\to\infty$.
+
+**Theorem 11.2 (Both terminal maps separate the opposite-offdiagonal
+collar).** There is $C_1>0$ such that, for each $E\in\{J,M\}$, the
+map $W\mapsto(p(W),v(W),f_{ME}(W))$ is injective among all complete
+parent worlds with $c>C_1$.
+
+**Proof.** Define the following rational combinations of the indicated
+response functions:
+
+$$
+\begin{gathered}
+h=-\frac{24}{5p},\qquad Y=45p+16v,\\
+Z_J=a+6p-\frac{32}{5}v+\frac{147}{10},\qquad
+Z_M=m+6p-\frac{32}{5}v+\frac{147}{10},\\
+T_M=\frac{Z_M}{h}+\frac{239}{1712}Y.
+\end{gathered}
+$$
+
+These are analytic across $t=0$: $h=t+O(t^2)$, and the identically
+vanishing constant term of $Z_M$ supplies its factor $t$. Exact
+substitution gives
+
+$$
+\begin{gathered}
+Y(0,r)=1680+3852r(1-r),\qquad
+Z_J(0,r)=\frac{576}{5}(r-1),\\
+\left.\frac{Z_M}{t}\right|_{t=0}
+=\frac3{100}(17925r^2-17921r+28),\qquad
+T_M(0,r)=\frac3{25}r+\frac{629622}{2675}.
+\end{gathered}
+$$
+
+Since $h_t(0,r)=1$ uniformly, a common sufficiently small positive
+$h$ interval admits a unique analytic $t=t(h,r)$ for every
+$r\in[0,1]$. This follows either from the implicit-function theorem
+and compactness, or from $h_t>1/2$ on a fixed smaller strip and
+strict monotonicity in $t$. On a still smaller strip,
+
+$$
+\partial_r Z_J(t(h,r),r)>0,\qquad
+\partial_r T_M(t(h,r),r)>0,
+$$
+
+because their limiting derivatives are $576/5$ and $3/25$.
+Equality of $(p,v,a)$ fixes $h,Z_J$; equality of $(p,v,m)$ fixes
+$h,Y,T_M$. In either case monotonicity fixes $r$, and then $t$.
+The sources coincide. Here $\Lambda$ remains near eight, so the
+parent converse fixes the drift and every coefficient of the one whole
+gain as well. No separation from $r=1/2$ or from $r=0,1$ was assumed. ∎
+
+**Theorem 11.3 (Uniform escape of every companion).** For every $K>0$
+there is $L>0$ such that, whenever a complete parent world $W$ has
+$c(W)>L$, its fifth response is off $24$ and
+
+$$
+c(W')>K\qquad\text{for every }W'\in C(p(W),v(W)).
+$$
+
+There is no terminal-equality hypothesis on $W'$.
+
+**Proof.** Suppose the conclusion fails for a fixed $K$. There are
+worlds $W_i$ with $c(W_i)\to\infty$ and companions $W'_i$ in the
+same entire children with $c(W'_i)\le K$. Definition 11.1 gives
+$p_i\to-\infty$ while $Y_i=45p_i+16v_i$ is bounded. The uniform
+large-$b$ limit in Definition 7.1 rules out an unbounded subsequence of
+$b(W'_i)$, since it would instead give $p_i\to-216/5$. The companion
+sources therefore have a convergent subsequence in
+
+$$
+b,c\ge0,\quad0\le r\le1,\quad bc=r(1-r).
+$$
+
+A limit $j=b+c=0$ is impossible. Indeed, for $j\le1/4$,
+
+$$
+j\Lambda=j(1+6/T+1/U)-4-4j/n\le8j-4\le-2.
+$$
+
+The bounded parent numerator then gives $e=O(j)$ and bounded $e/j$,
+$e/n$. All four original samples, and hence $p$, remain bounded.
+Thus the limiting $j,n$ are positive, as is $x=n/U$.
+
+Bounded companion drift would again give bounded original samples and
+bounded $p$. Pass to a subsequence with $|d|\to\infty$. Dividing the
+parent equation by $d$ gives $\Lambda\to0$. The whole normalized
+polynomial $g/d$ tends to the unique cubic $q_s$ with samples
+
+$$
+(-1,-1/j,-1/T,-1/n)\quad\text{at }0,1,2,3.
+$$
+
+Set $A_5=1+(U+n)q_s(5)$ and $A_6=1+(2U+n)q_s(6)$ at the limiting
+source. The common bounded $Y_i$, divided by the diverging drift, gives
+
+$$
+\Lambda=0,\qquad45A_5+16A_6=0,\qquad
+r^2-(1+b)r+b(xU-b)=0.
+$$
+
+This uses neither a terminal equality nor a nonzero limiting $A_5$.
+The following exact finite-source certificate excludes this system even
+on the nonnegative source boundary.
+
+Put
+
+$$
+q_0=xU^2+14xU+x-4U-4,\qquad
+j=\frac{4xU(U+1)}{q_0},\quad r=xU-j,\quad b=\frac{U-1}{2}.
+$$
+
+The first equation $\Lambda=0$ gives the displayed expression for $j$.
+Here $x>0,U\ge1,j>0$, so $q_0>0$. The only divisors in this
+substitution are positive $x,U,U+1,j,q_0$ and rational constants.
+Define the integer polynomials
+
+$$
+\begin{aligned}
+L={}&109U^2x^2+173U^2x-3194Ux^2-2690Ux+2948U\\
+&\quad-1251x^2+341x+2948,\\
+S={}&4q_0^2\{r^2-(1+b)r+b(xU-b)\},
+\end{aligned}
+$$
+
+where the rational $r,b$ just displayed are substituted in $S$.
+All denominators cancel in $S$, whose degrees in $(U,x)$ are $(6,4)$,
+and
+
+$$
+L=4x(U+1)(45A_5+16A_6),\qquad
+\operatorname{Res}_U(L,S)=1179648x^4Q(x).
+$$
+
+The complete descending coefficient vector of $Q$ is
+
+$$
+\begin{gathered}
+(91738605818880000,468000052761600000,-287776045449344000,\\
+-4243016387674451200,-1949152889752436800,14795306352123710480,\\
+10538868307289518842,-27294682116450017650,-18623139293789121581,\\
+30898244403783565513,14466477630213266395,-21723230306826660213,\\
+-3613832109665837004,8083225499684453800,-862616315778108600,\\
+-889489442954112000,198720866364020000).
+\end{gathered}
+$$
+
+To fix the reconstruction normalization, define $A_c,B_c$ by
+
+$$
+A_c(x)U+B_c(x)=\operatorname{rem}_U
+\bigl([x(109x+173)]^5S,L\bigr).
+$$
+
+Both coefficients have degree fourteen and integer content $128$.
+They are the unscaled pseudo-remainder coefficients. The degrees of
+$Q,A_c$ survive modulo $101$, and
+
+$$
+\operatorname{Res}_x(Q,A_c)=97\pmod {101}.
+$$
+
+Equivalently, dividing both coefficients by $128$ gives primitive
+coefficients and resultant residue $36$. Either normalization makes
+$A_c$ a unit at every root of $Q$. For completeness the descending
+vector of $Q$ modulo $101$ is
+
+$$
+(98,88,79,98,14,27,82,85,52,50,29,64,11,64,52,96,69).
+$$
+
+The Sturm sequence $Q,Q',-\operatorname{rem}(Q,Q'),\ldots$ has
+variations $6$ at zero and $2$ at positive infinity. Its four positive
+roots and the necessary $U=-B_c/A_c$ have the following rational
+certificate. The signs are the signs of $Q$ at the left and right
+endpoints.
+
+| $x$ bracket | Endpoint signs | Necessary $U$ interval |
+|---|---|---|
+| $(360774328,360774329)/10^9$ | $+,-$ | $(-19,-18)$ |
+| $(431319435,431319436)/10^9$ | $-,+$ | $(-4,-3)$ |
+| $(1462716433,1462716434)/10^9$ | $+,-$ | $(9/100,1/10)$ |
+| $(1929370586,1929370587)/10^9$ | $-,+$ | $(-2/25,-7/100)$ |
+
+The enclosures have the following entirely rational specification.
+Bisect each bracket two hundred times, retaining the sign-changing
+half; an exact midpoint root is retained as a singleton. Every resulting
+width is below $10^{-65}$. Interval Horner evaluation of $A_c,B_c$
+on these intervals excludes zero from $A_c$ and encloses $-B_c/A_c$
+strictly inside the indicated interval. Products use the minimum and
+maximum of the four endpoint products, and inversion of an interval
+excluding zero uses $[1/u,1/l]$. The four sign changes and the Sturm
+count exhaust all positive roots. Every corresponding $U$ is below one,
+contrary to the necessary $U\ge1$.
+
+The companion sequence is impossible. Uniform $p\to-\infty$ also
+ensures $p\ne24$ after increasing $L$. ∎
+
+**Corollary 11.4 (Whole-child terminal injectivity and bounded companions
+of collision pairs).** There is $C_\infty>0$ such that a complete parent
+world with $c>C_\infty$ acquires an off-$24$ child on which both
+$f_{MJ}$ and $f_{MM}$ are injective. There are finite $B,C>0$ such that
+
+$$
+(p,v)\in D_J\cup D_M\quad\Longrightarrow\quad
+b(W)\le B,\quad c(W)\le C
+\quad\text{for every }W\in C(p,v).
+$$
+
+This includes companions unused by either selected pair.
+
+**Proof.** Choose $K>C_1$ in Theorem 11.3. A sufficiently large-$c$
+world forces every companion into the collar of Theorem 11.2. Each
+terminal map is therefore injective on the entire child. For the bound
+on $b$, Theorem 7.4 says that any child containing a sufficiently
+large-$b$ world is a singleton. A collision child can contain neither
+such a world nor a sufficiently large-$c$ world. Enlarge the two
+existential thresholds to obtain $B,C$. No numerical thresholds are
+part of the assertion. ∎
+
+**Proposition 11.5 (Two large-$c$ worlds at one acquired base).** For
+every sufficiently small $\eta>0$ the exact acquired base
+
+$$
+p=-\frac{24}{5\eta},\qquad
+v=\frac{9609/4-45p}{16}
+$$
+
+has two distinct legal complete worlds with $c\to\infty$ as
+$\eta\downarrow0$. Thus the singleton-child strengthening of
+Corollary 11.4 is false.
+
+**Proof.** In Definition 11.1 solve
+$h(t,r)=\eta$, $Y(t,r)=9609/4$. At $t=0$ the two solutions
+$r=1/4,3/4$ have $h_t=1,h_r=0$ and Jacobian determinants
+
+$$
+3852(1-2r)=1926,\quad-1926,
+$$
+
+respectively. The implicit-function theorem gives two analytic branches
+with $t/\eta\to1$ and these different limiting $r$ values. For small
+positive $\eta$, $t>0$, $0<r<1$, $b=r(1-r)t>0$ and $\Lambda$ is
+near eight. The complete parent converse supplies a single whole gain
+and fixed drift for each branch; unequal original readings make each
+gain nonzero. Both branches have exactly the displayed $p,v$ and are
+distinct. Corollary 11.4 separates their terminal responses for either
+final action. They supply no terminal pair. ∎
+
+## 12. Finite fifth-response coercivity and relative nonproper values
+
+**Theorem 12.1 (Coercivity with a $b$ cap and bounded $p$).** For
+every $L,P>0$ there is $C(L,P)<\infty$ such that every complete
+$H_4$ world with $0<b\le L$ and $|p|\le P$ satisfies
+
+$$
+c\le C(L,P),\qquad |d|\le C(L,P),\qquad
+\max_{0\le k\le3}|[s^k]g|\le C(L,P).
+$$
+
+Its $v,f_{MJ},f_{MM}$ are bounded as well. This statement also allows
+$p=24$ and all the gain and singular-source cases of Definition 1.1.
+
+**Proof.** Write $\Delta=b-1/8$ and $V=U+n$. The parent equation
+and the fixed extrapolation give the identities
+
+$$
+\begin{gathered}
+e\Lambda=-\frac{24}{5}\Delta\kappa,\qquad
+A_5=1+V\left(4-\frac{15}{j}+\frac{20}{T}-\frac{10}{n}\right),\\
+g(5)=\frac{96\Delta}{T}
++e\left(4-\frac{15}{j}+\frac{20}{T}-\frac{10}{n}\right),\qquad
+p=24+\frac{96\Delta V}{T}+eA_5.
+\end{gathered}
+$$
+
+No drift or gain sample has been cancelled. If $c\to\infty$ while
+$b\le L$, then $bc\le1/4$ forces $b\to0$; $j,n\to\infty$,
+$T,U\to1$, $\Lambda\to8$ and $\kappa\to4$. Hence $e\to3/10$
+and the gain samples tend to $(-243/10,0,51/10,0)$. Thus
+$g(5)\to-24/5$ and $p\to-\infty$, a contradiction. The sources
+are consequently bounded in the nonnegative rank-one closure.
+
+Suppose $|e|\to\infty$ along a source-convergent subsequence. A
+limit $j=0$ is impossible by $j\Lambda\le-2$ for $j\le1/4$;
+the parent numerator is bounded there. Thus $j,n$ have positive limits.
+Dividing the parent and fifth-response identities by $e$ forces
+$\Lambda=A_5=0$ at the limit. For a strict source this is excluded by
+O, Lemma 12.2, whose full-source no-common-zero premise includes
+singular sources. At a nonstrict source with $j>0$, the four possible
+faces give the following exact restrictions:
+
+| Limiting $(r,b,c)$ | $\Lambda$ | $A_5$ when $\Lambda=0$ |
+|---|---|---|
+| $(0,t,0)$, $t>0$ | $2(t^3-8t-4)/(tTU)$ | $(2t^2+21t+23)/(t(1+t))>0$ |
+| $(1,t,0)$, $t>0$ | $2(t^3-4t-2)/(tTU)$ | $(6t^2+2t-6)/(t(1+t))>0$ at its positive root, which has $t>2$ |
+| $(0,0,t)$, $t>0$ | $8(t-1)/t$ | $-1$ at $t=1$ |
+| $(1,0,t)$, $t>0$ | $4(2t^2-1)/(t(t+1))$ | $4-8\sqrt2$ at $t=1/\sqrt2$ |
+
+None admits simultaneous vanishing. The rank-one equation
+$bc=r(1-r)$ exhausts the boundary by these faces and the two $j=0$
+corners, so $e$ is bounded.
+
+Finally $j\Lambda\le-2$ for $j\le1/4$ bounds $e/j$ directly from
+the parent equation, and $n\ge j$ also bounds $e/n$. On the remaining
+part $j\ge1/4$ these ratios are bounded by the drift bound. All four
+samples of Definition 7.1 are bounded. Fixed-node interpolation bounds
+every coefficient of the same polynomial $g$, including degree drops.
+Bounded source entries then bound the remaining original-clock traces
+and responses. ∎
+
+**Definition 12.2 (Relative target and boundary lifts).** Let $X$ be the
+complete $H_4$ worlds with $p\ne24$, with their usual topology in
+source entries, four padded gain coefficients and drift. Put
+
+$$
+Y=\{(p,v)\in\mathbb R^2:p\ne24\},\qquad
+\pi:X\longrightarrow Y,\quad\pi(W)=(p(W),v(W)).
+$$
+
+A nonproper value is a limit in $Y$ of bases of a sequence escaping
+every compact subset of $X$. For a nonnegative boundary source with
+$j,n>0$, retain $j=b+c,n=j+r,T=1+b,U=1+2b$ and define its auxiliary
+gain by the four samples in Definition 7.1. The four rational face lifts
+are specified completely by
+
+| Source $(r,b,c)$ | Parameter guard | $e=d-24$ |
+|---|---|---|
+| $(0,t,0)$ | $t>0$, $t^3-8t-4\ne0$ | $-\dfrac{24t(t-1/8)(2+5t)}{5(t^3-8t-4)}$ |
+| $(1,t,0)$ | $t>0$, $t^3-4t-2\ne0$ | $-\dfrac{24t(t-1/8)(2+5t)}{5(t^3-4t-2)}$ |
+| $(0,0,t)$ | $t>0$, $t\ne1$ | $\dfrac{3t}{10(t-1)}$ |
+| $(1,0,t)$ | $t>0$, $2t^2\ne1$ | $\dfrac{3t(t+1)}{5(2t^2-1)}$ |
+
+The auxiliary response vector is obtained from that one interpolant by
+
+$$
+(p,v,a,m)=\bigl(d+(U+n)g(5),\ d+(2U+n)g(6),\
+d+(T+2j+4r)g(7),\ d+(3U+2n)g(7)\bigr).
+$$
+
+This is an explicit rational parametrization, not a declaration that
+the boundary source is legal. The two corner limits are
+
+| Source limit | $d$ | $(g(0),g(1),g(2),g(3))$ | $(p,v,a,m)$ |
+|---|---|---|---|
+| $(0,0,0)$ | $24$ | $(-24,3/10,27/5,3/10)$ | $(39/2,258/5,819/10,1977/10)$ |
+| $(1,0,0)$ | $24$ | $(-24,3/5,27/5,0)$ | $(18,399/5,366,366)$ |
+
+Let $\mathcal B_\partial\subset Y$ be the union of the four face
+images and these two corner bases, retaining only $p\ne24$.
+
+**Theorem 12.3 (All finite nonproper values relative to $Y$).** The
+nonproper-value set of $\pi:X\to Y$ is exactly
+
+$$
+\mathcal B_\partial\ \cup\ \{q_\infty\},\qquad
+q_\infty=(-216/5,-225).
+$$
+
+**Proof.** Let an escaping sequence have a finite base limit in $Y$.
+An unbounded subsequence of $b$ forces that limit to be $q_\infty$
+by Definition 7.1. Otherwise $b$ and $p$ are bounded, so Theorem 12.1
+bounds $c,d$ and all gain coefficients. Extract a convergent tuple.
+A strict limiting source would give all original clock equations by
+continuity. Its gain cannot be zero, since the original readings zero
+and $24$ differ. Its limiting $p$ is off $24$, so it is a point of $X$,
+contrary to escape.
+
+The remaining limiting sources are exactly the four faces and the two
+corners. On an open face a zero of $\Lambda$ has nonzero parent
+numerator $-(24/5)(b-1/8)\kappa$ and hence no finite-drift lift.
+Solving the parent equation at every other face point gives exactly
+the table in Definition 12.2. At the lower corner,
+
+$$
+\frac rj=\frac{bc}{(1-r)(b+c)}\longrightarrow0,\quad
+\frac nj\longrightarrow1,\quad
+j\Lambda\longrightarrow-8,\quad e/j\longrightarrow-3/10.
+$$
+
+At the upper corner $n\to1$, $j\Lambda\to-4$ and
+$e/j\to-3/5$. The four samples and the prescribed traces give precisely
+the two corner vectors. This proves exhaustion.
+
+Conversely, approach a $c=0$ face with fixed $b=t$ and strict $r$
+tending to the indicated endpoint. Approach a $b=0$ face with fixed
+$c=t$, $b\downarrow0$, using the lower or upper root of
+$r(1-r)=bt$. The nonzero $\Lambda$ guards give regular parent lifts
+converging to the table. If the limiting $p$ is off $24$, all nearby
+bases are off $24$. The corners are approached by $b=c\downarrow0$
+on the two rank-one branches. All these sequences leave every compact
+subset of the strict source domain. Finally $r=1/2,b\to\infty$
+supplies $q_\infty$ by Theorem 7.4 and Corollary 7.5. ∎
+
+**Proposition 12.4 (An omitted boundary on the ambient $p=24$ line).**
+The relative target $Y$ in Theorem 12.3 cannot be silently replaced by
+the whole ambient plane while retaining only the restricted set
+$\mathcal B_\partial$. In particular, off-$24$ strict worlds can
+approach the nonstrict lower face point with
+
+$$
+t=\sqrt{15}/4,\qquad
+(p,v)=\left(24,\frac{303}{5}+\frac{231\sqrt{15}}{40}\right).
+$$
+
+**Proof.** Substitute $t=\sqrt{15}/4$ in the lower $b=0$ face.
+Its response functions are $p_L,v_L$ in Theorem 13.1 below and give
+the displayed base. On the exact strict chart $r=\alpha b$ the
+responses extend analytically at $b=0$ near this parameter, and
+
+$$
+p_L'(\alpha)=-24/5+3/(10(\alpha-1)^2)\ne0
+\quad\text{at }\alpha=\sqrt{15}/4.
+$$
+
+The implicit-function theorem therefore supplies $\alpha(b)$ tending
+to this value with $p(\alpha(b),b)=24+b$. For small $b>0$ these are
+strict sources, have nonzero $\Lambda$, and lift to off-$24$ complete
+worlds. Their sources approach $b=0,r=0,c=t$, and their bases have
+the stated ambient limit. Thus an ambient properness assertion must
+also account for the omitted $p=24$ boundary. The assertion of
+Theorem 12.3 is only relative to $Y$. ∎
+
+## 13. Boundary rays, their crossing, and terminal separation
+
+**Theorem 13.1 (Two nondegenerate $b$-to-zero response charts).**
+On a strict source sequence $r=\alpha b$, $b\downarrow0$, with
+fixed $\alpha>0$, bounded $p$ excludes $\alpha=1$. For
+$\alpha\ne1$ its limiting drift offset and response functions are
+
+$$
+\begin{aligned}
+e_L(\alpha)&=\frac{3\alpha}{10(\alpha-1)},\\
+p_L(\alpha)&=-\frac{3(16\alpha^2-80\alpha+65)}{10(\alpha-1)},\\
+v_L(\alpha)&=\frac{3(45\alpha^2+125\alpha-172)}{10(\alpha-1)},\\
+a_L(\alpha)&=\frac{3(384\alpha^2-113\alpha-273)}{10(\alpha-1)},\\
+m_L(\alpha)&=\frac{3(384\alpha^2+271\alpha-659)}{10(\alpha-1)}.
+\end{aligned}
+$$
+
+On $r=1-\alpha b$, $b\downarrow0$, with fixed $\alpha>0$,
+bounded $p$ excludes $2\alpha^2=1$. The corresponding functions are
+
+$$
+\begin{aligned}
+e_R(\alpha)&=\frac{3\alpha(\alpha+1)}{5(2\alpha^2-1)},\\
+p_R(\alpha)&=-\frac{6(8\alpha^3-24\alpha^2-2\alpha+15)}{5(2\alpha^2-1)},\\
+v_R(\alpha)&=\frac{3(45\alpha^3+215\alpha^2-33\alpha-133)}{5(2\alpha^2-1)},\\
+a_R(\alpha)=m_R(\alpha)
+&=\frac{3(384\alpha^3+1039\alpha^2-232\alpha-610)}{5(2\alpha^2-1)}.
+\end{aligned}
+$$
+
+The right formulas extend to $\alpha=0$ as the upper corner vector
+of Definition 12.2; that endpoint is not a strict source ray.
+Each acquired-base map $(p_L,v_L)$ and $(p_R,v_R)$ is injective on
+its indicated nonnegative parameter domain, with its poles removed.
+
+**Proof.** The first source has
+$j=\alpha+(1-\alpha^2)b$ and
+$n=\alpha+(1+\alpha-\alpha^2)b$. Its limiting $\Lambda$ is
+$8(\alpha-1)/\alpha$. The second has $j\to\alpha$,
+$n\to\alpha+1$ and limiting
+$\Lambda=4(2\alpha^2-1)/(\alpha(\alpha+1))$.
+The parent equation gives $e_L,e_R$. Substitution into the four original
+gain samples, followed by the rows $(-4,15,-20,10)$,
+$(-10,36,-45,20)$ and $(-20,70,-84,35)$, gives the displayed
+responses of one whole polynomial.
+
+The excluded poles cannot be reached by bounded-$p$ strict rays. With
+$\mathsf S_p$ the exact source polynomial of O, Definition 12.1,
+its expansions are
+
+$$
+\begin{aligned}
+\mathsf S_p(\alpha b,b)
+&=4\alpha b^3(48\alpha^2+10\alpha p-240\alpha-10p+195)+O(b^4),\\
+\mathsf S_p(1-\alpha b,b)
+&=4b^3(48\alpha^3+10\alpha^2p-144\alpha^2-12\alpha-5p+90)+O(b^4).
+\end{aligned}
+$$
+
+At $\alpha=1$ the first leading coefficient is $12$. At
+$2\alpha^2=1$ the bracket in the second line is $18+12\alpha$.
+Both are nonzero independently of finite $p$. These expansions are
+also uniform for bounded $p$ and $\alpha$ near the indicated pole.
+
+For distinct left parameters $\alpha,\beta$, equal $p$ and equal $v$
+would require
+
+$$
+16\alpha\beta-16\alpha-16\beta+15=0,\qquad
+45\alpha\beta-45\alpha-45\beta+47=0.
+$$
+
+They assign the incompatible values $-15/16$ and $-47/45$ to
+$\alpha\beta-\alpha-\beta$.
+For the right chart the reduced numerators of the two differences
+divided by $\alpha-\beta$ are
+
+$$
+\begin{aligned}
+P_R={}&-12(8\alpha^2\beta^2-4\alpha^2-2\alpha\beta
+                 -3\alpha-4\beta^2-3\beta+1),\\
+V_R={}&9(30\alpha^2\beta^2-15\alpha^2+7\alpha\beta
+                 +17\alpha-15\beta^2+17\beta+11).
+\end{aligned}
+$$
+
+Their exact resultant and linear subresultant are
+
+$$
+\begin{gathered}
+\operatorname{Res}_\beta(P_R,V_R)
+=11664(2\alpha^2-1)^2(11087\alpha^2+377\alpha-4809),\\
+-108(2\alpha^2-1)
+ (58\alpha\beta+113\alpha+113\beta+29).
+\end{gathered}
+$$
+
+Away from the forbidden pole, a common root would have
+$\beta=-(113\alpha+29)/(58\alpha+113)<0$ for $\alpha\ge0$.
+In particular the positive root of the quadratic, in
+$(6418,6419)/10^4$, has its companion in $(-676,-675)/10^3$.
+No two distinct allowed right parameters share a base. ∎
+
+**Theorem 13.2 (A cross-chart acquired-base coincidence with separated
+terminals).** The two charts of Theorem 13.1 have a positive algebraic
+acquired-base crossing that lifts to two strict complete worlds in the
+same $C(p,v)$ for every sufficiently small common $b>0$. These two
+worlds form neither a terminal-$J$ nor a terminal-$M$ pair.
+
+**Proof.** Write $t$ for the left parameter and $s$ for the right
+parameter. Define
+
+$$
+\begin{aligned}
+P={}&32t^2s^2-16t^2-32ts^3-64ts^2+8ts+20t
+       +32s^3+34s^2-8s-5,\\
+V={}&90t^2s^2-45t^2-90ts^3-180ts^2+66ts+141t
+       +90s^3+86s^2-66s-94.
+\end{aligned}
+$$
+
+The response differences are exactly
+
+$$
+p_L(t)-p_R(s)=\frac{-3P}{10(t-1)(2s^2-1)},\qquad
+v_L(t)-v_R(s)=\frac{3V}{10(t-1)(2s^2-1)}.
+$$
+
+Thus the numerator resultant has the fixed normalization
+
+$$
+\operatorname{Res}_s(-3P,3V)=5832(t-1)^3q(t),
+$$
+
+$$
+q(t)=865318176t^4-1266956640t^3-1221999600t^2
+                      +2785386204t-1161858481.
+$$
+
+Equivalently $\operatorname{Res}_s(P,V)=-8(t-1)^3q(t)$.
+There is a unique root $t_*$ in
+
+$$
+I=(1019013955,1019013956)/10^9,
+$$
+
+since $q$ is negative at the left endpoint, positive at the right
+endpoint, and $q'>0$ throughout $I$. The degree-one subresultant gives
+
+$$
+s_*=-\frac{367476t_*^2-708156t_*+338601}
+              {188616t_*^2-272820t_*+83819},\qquad
+\frac{8610543}{10^7}<s_*<\frac{8610545}{10^7}.
+$$
+
+The denominator excludes zero on $I$. Substitution, or division by
+$q$, gives $P(t_*,s_*)=V(t_*,s_*)=0$.
+The Jacobian determinant of the actual difference functions is
+
+$$
+\frac{9\{696t^2s^2+2712t^2s+348t^2-1392ts^2-5424ts-696t
+                 -154s^4+845s^2+2658s+307\}}
+     {50(t-1)^2(2s^2-1)^2}.
+$$
+
+On the isolating box its absolute value is in $(129000,130000)$,
+so it is nonzero. The exact finite-$b$ charts
+$r_L=tb$, $r_R=1-sb$ extend analytically near $(0,t_*,s_*)$;
+their limiting $\Lambda$ values are nonzero. The implicit-function
+theorem supplies $t(b),s(b)$ with identical actual acquired responses
+for small positive $b$. Both sources are strict, they lie near different
+ends of the $r$ interval, and the parent converse supplies their complete
+gains and drifts. The limiting $p$ is in $(-2,-1)$, so the common
+base stays off $24$.
+
+The same rational isolating box gives
+
+$$
+a_L(t_*)\in(167,168),\qquad m_L(t_*)\in(250,251),\qquad
+a_R(s_*)=m_R(s_*)\in(255,256).
+$$
+
+These strict separation margins persist on the lifted branches. Thus
+the crossing is a genuine same-child coincidence of acquired bases,
+but neither terminal equality holds between these two labels. No
+assertion about other labels in that entire child is needed. ∎
+
+**Proposition 13.3 (Exact cross-chart terminal obstruction).** Two valid
+opposite-chart boundary parameters cannot have both the same limiting
+acquired base and equal limiting response for either terminal action.
+Same-chart acquired-base equality forces equal limiting parameters;
+it does not decide tangent lifts of a diagonal limit.
+
+**Proof.** Retain $P,V$ from Theorem 13.2. The vanishing numerators
+for the two cross-chart terminal differences are, up to nonzero rational
+scalars,
+
+$$
+\begin{aligned}
+F_J={}&768t^2s^2-384t^2-768ts^3-2304ts^2+464ts+1333t\\
+&\quad+768s^3+1532s^2-464s-947,\\
+F_M={}&768t^2s^2-384t^2-768ts^3-1536ts^2+464ts+949t\\
+&\quad+768s^3+760s^2-464s-561.
+\end{aligned}
+$$
+
+In the lexicographic order $s>t$ each of the ideals
+$\langle P,V,F_J\rangle$ and $\langle P,V,F_M\rangle$ has
+the Gröbner basis
+
+$$
+\{2s^2-1,\ t-1\}.
+$$
+
+Its only common zeros are forbidden chart poles. The same-chart claim
+is Theorem 13.1. These conclusions concern finite nondegenerate ray
+parameters. Ratios tending to zero or infinity, higher-order diagonal
+lifts, and a boundary endpoint meeting a finite-$b$ world require their
+own conditions; they are not excluded by this calculation. ∎
+
+## 14. Legal analytic sheets over relative regular regions
+
+**Definition 14.1 (Critical values of the complete-world projection).**
+Use $X,Y,\pi$ from Definition 12.2. Let $\Sigma_{\rm crit}\subset Y$
+be the image of points at which the differential of $\pi$ has rank
+less than two on the complete parent surface. This is the differential
+of the actual whole-world projection, not merely of a quotient chart.
+
+**Theorem 14.2 (Regional legal sections and the two pair products).**
+Let $\mathcal U$ be a connected contractible open subset of $Y$ with
+
+$$
+\mathcal U\cap
+(\mathcal B_\partial\cup\{q_\infty\}\cup\Sigma_{\rm crit})
+=\varnothing.
+$$
+
+Then $\pi$ is proper over compact subsets of $\mathcal U$. Its
+entire fibres consist of $N$ distinct legal analytic sections
+$W_1,\ldots,W_N$, with constant $0\le N\le24$. For empty products
+interpreted as one, set
+
+$$
+\Delta_J=\prod_{i<j}(f_{MJ}(W_i)-f_{MJ}(W_j)),\qquad
+\Delta_M=\prod_{i<j}(f_{MM}(W_i)-f_{MM}(W_j)).
+$$
+
+For each $q\in\mathcal U$,
+
+$$
+q\in D_J\cap D_M
+\quad\Longleftrightarrow\quad
+\Delta_J(q)=\Delta_M(q)=0.
+$$
+
+A sequence of distinct same-base pairs coalescing at a strict world
+of $X$ can do so only at a critical point of $\pi$.
+
+**Proof.** The whole parent is a real analytic surface over the strict
+source domain with equation
+
+$$
+e\Lambda+(24/5)(b-1/8)\kappa=0.
+$$
+
+Where $\Lambda\ne0$, it solves analytically for $e$. At a singular
+parent source the exhaustive singular-source theorem gives $b=1/8$
+and a simple strict root of the source polynomial $\Phi$, so
+$\Lambda_r\ne0$. Off $p=24$, one has $e\ne0$ by F, Lemma 30.2;
+the displayed equation consequently has nonzero $r$ derivative there.
+The one-polynomial reconstruction is analytic in these coordinates.
+This establishes the surface also at the singular parent sources.
+
+If an inverse image of a compact subset of $\mathcal U$ were not
+compact, a sequence in it would have a subsequence escaping every
+compact subset of $X$, and a further base-convergent subsequence.
+Its base limit would be a nonproper value in $\mathcal U$, contrary
+to Theorem 12.3. Thus the projection is proper there. Avoidance of
+$\Sigma_{\rm crit}$ makes it a local analytic diffeomorphism.
+F, Theorem 32.1, bounds each entire fibre by $24$.
+
+A proper local diffeomorphism has evenly covered neighbourhoods: take
+the local inverse neighbourhoods of the finitely many points in a fibre;
+properness excludes additional inverse points entering from outside them
+after shrinking the base neighbourhood. Its image is open and closed
+in the connected $\mathcal U$. It is therefore either empty, giving
+$N=0$, or a finite covering of constant degree. Contractibility
+trivializes this covering, and its local analytic inverses give the
+sections. This is the classical covering argument, applied here after
+the explicit source-specific nonproper classification; compare
+Lazard–Rouillier, Theorem 1 and real-case Remark 1, cited in
+Assumption 6.1. Every section is an actual complete world, and they
+exhaust the entire child.
+
+Each product vanishes exactly when its own terminal action has a
+distinct pair among those sections. The two products may vanish through
+overlapping or disjoint pairs, and their common terminal values may
+differ. Thus their simultaneous vanishing is exactly Definition 1.2.
+The sections are mathematical labels, not acquired observations.
+
+For the coalescence assertion, a noncritical $W$ has a neighbourhood
+on which $\pi$ is
+injective by the inverse-function theorem. Both convergent labels are
+eventually in that neighbourhood and have equal acquired base, which
+would make them equal. This contradicts their distinctness. This is a
+necessary boundary condition for pair continuation, not an exclusion of
+critical collisions or a guarantee that distinctness survives limits. ∎
+
+
+## 15. An ordinary small-$b$ collision and its strict two-world limit
+
+**Definition 15.1 (Three regular labels and an exact rational centre).**
+Let $\Psi^\sharp(r,b,j)=(p,v,a,m)$ mean the regular parent lift of
+Definition 7.1 and its four original response functions, with
+$n=j+r,T=1+b,U=1+2b$. Here $j$ may first be an independent chart
+variable; the source identity is imposed on legal labels. Thus the
+one interpolant has samples
+
+$$
+(-24-e,-e/j,(27/5-e)/T,-e/n),\qquad
+ e=-\frac{24(b-1/8)\kappa}{5\Lambda}.
+$$
+
+Define
+
+$$
+\begin{aligned}
+\mathcal N(r,b)&=\Psi^\sharp(r,b,b+r(1-r)/b),\\
+\mathcal A(u,t)&=\Psi^\sharp(1-ut,t,t+u-u^2t).
+\end{aligned}
+$$
+
+For $t>0$, $\mathcal A$ is precisely the original strict-source chart
+when $0<1-ut<1$; the third argument is
+$b+r(1-r)/b=t+u-u^2t$. At $t=0$ it is an auxiliary analytic
+boundary chart with $(r,b,c)=(1,0,u)$.
+For $z=(u,r_B,b_B,r_Q,b_Q)$ write
+
+$$
+A=\mathcal A(u,t),\quad B=\mathcal N(r_B,b_B),\quad
+Q=\mathcal N(r_Q,b_Q),
+$$
+
+and define the five-component rational function
+
+$$
+\mathcal E(z,t)=(p_A-p_B,\ v_A-v_B,\ m_A-m_B,\ p_A-p_Q,\ v_A-v_Q).
+$$
+
+Let $z_c$ have denominator $10^{95}$ and the following five numerators,
+in that coordinate order:
+
+$$
+\begin{gathered}
+100428761387816823696480171765441312044987893072648279126168973533098255816050448537824871433525\\
+70716954727879839279480184367659045851078335574041753095114351262855582985017322755503173275409\\
+30814988061236982635547616875755700750487136119740475471798671699545887071653908946326719388474\\
+6104050961496413159205837486701483942203552259477108118661530488778466938075465071686482585820\\
+5847642733657720862719432264186152695748000961996411761678819588053707155234072033938760516187
+\end{gathered}
+$$
+
+Let $(p_c,v_c)$ have denominator $10^{95}$ and respective numerators
+
+$$
+\begin{gathered}
+367068393378998395246026571982456711245305890922162694264197866224863529619880873392282957453850\\
+5679629840728084907886878607821919633308547340517015332315858757685186396688860630206243979276432
+\end{gathered}
+$$
+
+Define the closed base rectangle and parameter box
+
+$$
+\mathcal B_0=\{(p,v):|p-p_c|\le10^{-65},\ |v-v_c|\le10^{-65}\},
+\qquad
+\mathcal Z=\{z:\|z-z_c\|_\infty\le10^{-70}\}.
+$$
+
+Every base in $\mathcal B_0$ has $3<p<4$ and $56<v<57$.
+
+**Theorem 15.2 (The parameterized exact regular lift).** For every
+$t\in[0,10^{-80}]$ there is a unique $z(t)\in\mathcal Z$ with
+$\mathcal E(z(t),t)=0$. It varies real analytically and has an analytic
+extension near $t=0$. Its common base $q(t)=(p(t),v(t))$ is in the
+interior of $\mathcal B_0$. For positive $t$ the three labels are
+strict complete worlds in one acquired child, with a distinct
+terminal-$M$ pair $\{A(t),B(t)\}$.
+
+**Proof.** The following specifies the rational interval certificate.
+For a real interval, every elementary operation is enclosed outward
+with endpoints in $10^{-300}\mathbb Z$: the lower endpoint is rounded
+by $10^{-300}\lfloor10^{300}y\rfloor$, the upper by
+$10^{-300}\lceil10^{300}y\rceil$. Addition and subtraction use endpoint
+bounds, multiplication takes the extremal four endpoint products, and
+inversion uses $[1/u,1/l]$ only when zero is excluded. Derivatives are
+propagated by
+
+$$
+D(xy)=y\,Dx+x\,Dy,\qquad
+D(x/y)=\{Dx-(x/y)Dy\}/y.
+$$
+
+All centres below, including inverses of centre matrices, are exact
+rationals before these interval enclosures are taken. Put
+
+$$
+C=(\partial_z\mathcal E(z_c,0))^{-1}\in\mathbb Q^{5\times5}.
+$$
+
+The rational Jacobian is invertible, and evaluation on the complete
+box $\mathcal Z\times[0,10^{-80}]$ gives
+
+$$
+\|I-C\partial_z\mathcal E(z,t)\|_\infty<10^{-55},\qquad
+\|C\mathcal E(z_c,t)\|_\infty<10^{-75}.
+$$
+
+All denominators in these evaluations exclude zero. In particular
+
+$$
+10^{-75}+10^{-55}10^{-70}<10^{-70}.
+$$
+
+The map $z\mapsto z-C\mathcal E(z,t)$ is therefore a strict contraction
+of $\mathcal Z$ into itself for every parameter. The contraction theorem
+on a closed complete box gives its unique fixed point, and invertibility
+of $C$ turns that equation into $\mathcal E=0$. Moreover
+
+$$
+\|z(t)-z_c\|_\infty
+\le\frac{10^{-75}}{1-10^{-55}}<2\cdot10^{-75}.
+$$
+
+The same derivative inequality makes the Jacobian invertible at every
+solution. The analytic implicit-function theorem supplies local analytic
+solutions, which coincide by uniqueness. Evaluation of the response
+functions on this smaller solution box, with $0\le t\le10^{-80}$,
+gives $|p(t)-p_c|<10^{-65}$ and $|v(t)-v_c|<10^{-65}$.
+
+Here are the source and response enclosures for the whole parameter
+interval; the $A$ source is strict only for $t>0$.
+
+| Label | Source restrictions | $\Lambda$ | $d$ | $f_{MJ}$ | $f_{MM}$ |
+|---|---|---|---|---|---|
+| $A(t)$ | $b=t$, $r=1-ut$, $1<u<2$ | $(2,3)$ | $(25,26)$ | $(349,352)$ | $(350,351)$ |
+| $B(t)$ | $r\in(707,708)/1000$, $b\in(308,309)/1000$ | $(-1/4,-6/25)$ | $(35,36)$ | $(268,271)$ | $(350,351)$ |
+| $Q(t)$ | $r\in(61,62)/1000$, $b\in(58,59)/1000$ | $(7/100,8/100)$ | $(40,41)$ | $(221,223)$ | $(338,339)$ |
+
+These are rational interval enclosures of the displayed functions, not
+conditions restricting the original source domain. For $A$, $u>1$ and
+$0<t\le10^{-80}$ prove $0<1-ut<1$ symbolically. All $j,n,T,U$
+are positive. The three disjoint source boxes give distinct worlds;
+$B,Q$ remain strict also at $t=0$. The complete parent converse gives
+one fixed drift and one whole degree-at-most-three polynomial for each
+positive-$t$ label. The unequal clock-zero and clock-one readings make
+each polynomial nonzero. The equations $\mathcal E=0$ impose a single
+common acquired $p,v$ on all three and impose $m_A=m_B$.
+
+The same rational enclosures give, for each of these three labels,
+
+$$
+|\Lambda|>1/100,\qquad
+1000<F_0(n/U,p(t),v(t))<10000
+\quad(0\le t\le10^{-80}).
+$$
+
+Thus all three positive-$t$ worlds lie outside the exceptional union of
+Definition 3.1. Their gains use the original interpolation nodes and
+original clocks throughout. ∎
+
+**Theorem 15.3 (A uniform entire-child certificate on $\mathcal B_0$).**
+Every entire original child above a base in $\mathcal B_0$ has at most
+three legal complete worlds, and $f_{MJ}$ is injective on that entire
+child.
+
+**Proof.** Use exactly the $f,K=4k,D,F_0,R,\alpha,\beta$ of Sections
+2 and 7, with the fixed normalization
+
+$$
+\operatorname{Res}_d(f,K)=256D^8F_0^2R.
+$$
+
+Theorem 4.1 puts every legal world on $R=0$, including singular
+sources, zero drift and $F_0=0$. Let $R_0(x)=R(x,p_c,v_c)$. The
+following eighteen Gaussian-rational seeds are exact finite decimals:
+
+$$
+\begin{gathered}
+(-1.85357241,0),\ (-1.71791792,0),\ (-1.71566920,0),\\
+(-1.53914181,0),\ (-1.45573127,0),\ (-1.40341508,0),\\
+(-0.376163194,0),\ (0.334468126,0),\ (0.531281700,0),\\
+(0.683220700,-0.096682450),\ (0.683220700,0.096682450),\\
+(0.984507130,0),\ (1.04394781,0),\ (1.10873466,0),\\
+(1.19546576,0),\ (2.00428761,0),\ (2.13729919,0),\ (5.58085280,0).
+\end{gathered}
+$$
+
+Define $\operatorname{Round}_{100}(y)=
+10^{-100}\lfloor10^{100}y+1/2\rfloor$ on rational real numbers,
+and componentwise on $\mathbb Q(i)$. For each seed $s_i$ define the
+finite rational sequence
+
+$$
+c_{i,0}=s_i,\qquad
+c_{i,k+1}=\operatorname{Round}_{100}
+ \left(c_{i,k}-\frac{R_0(c_{i,k})}{R'_0(c_{i,k})}\right)
+\quad(0\le k<8),
+\qquad c_i=c_{i,8},\quad\gamma_i=1/R'_0(c_i).
+$$
+
+Every indicated denominator is nonzero. Let $\mathcal R_i$ be the
+closed rectangle
+
+$$
+\max\{|\operatorname{Re}(x-c_i)|,
+          |\operatorname{Im}(x-c_i)|\}\le10^{-50}.
+$$
+
+These eighteen rectangles are pairwise disjoint. For complex interval
+evaluation use a pair of real intervals with the outward rounding of
+Theorem 15.2. Multiplication by $a+ib$ has sup-component operator bound
+$|a|+|b|$. The complete uniform root enclosures, for every
+$(p,v)\in\mathcal B_0$ and $x\in\mathcal R_i$, are
+
+$$
+\begin{aligned}
+&|\operatorname{Re}(1-\gamma_iR_x(x,p,v))|
+ +|\operatorname{Im}(1-\gamma_iR_x(x,p,v))|<10^{-35},\\
+&\max\{|\operatorname{Re}(\gamma_iR(c_i,p,v))|,
+          |\operatorname{Im}(\gamma_iR(c_i,p,v))|\}<10^{-55},\\
+&|[x^{18}]R(x,p,v)|>10^{19}.
+\end{aligned}
+$$
+
+The root maps $x\mapsto x-\gamma_iR(x,p,v)$ are contractions of their
+rectangles into themselves because
+
+$$
+10^{-55}+10^{-35}10^{-50}<10^{-50}.
+$$
+
+They give eighteen distinct roots. The leading-coefficient bound makes
+the degree eighteen throughout the base box, so these exhaust all roots
+and every root is simple. The sixteen real-centred rectangles have real
+roots by conjugation and uniqueness. Seven are negative and nine are
+positive. The two other rectangles stay off the real axis.
+
+It remains to filter all roots by necessary whole-world conditions.
+Write $f=a_fd^2+b_fd+c_f$ and
+$K=A_4d^4+A_3d^3+A_2d^2+A_1d+A_0$. The exact forms in Section 2 are
+
+$$
+\begin{aligned}
+\alpha={}&A_4(-b_f^3+2a_fb_fc_f)
+ +A_3a_f(b_f^2-a_fc_f)-A_2a_f^2b_f+A_1a_f^3,\\
+\beta={}&A_4(-b_f^2c_f+a_fc_f^2)
+ +A_3a_fb_fc_f-A_2a_f^2c_f+A_0a_f^3,
+\end{aligned}
+$$
+
+and $f$ divides $a_f^3K-\alpha d-\beta$ as a polynomial. Hence
+$\alpha d+\beta=0$ at every actual common root even when $a_f=0$.
+Put $d^*=-\beta/\alpha$, evaluate the interpolant $H_i$ of
+Definition 1.1 at $d^*$, and put
+
+$$
+\mathfrak B=294/5-2d^*-H_2,\qquad
+C_0=(d^*)^2+\mathfrak B^2,\qquad
+N_0=-d^*H_0+\mathfrak B H_2.
+$$
+
+On every one of the eighteen rectangles, uniformly over
+$\mathcal B_0$, the interval unit bounds are
+
+$$
+|\alpha|>10^{12},\qquad |H_1|>1/10,\qquad |C_0|>1,\qquad |N_0|>1.
+$$
+
+These modulus inequalities include the nonreal rectangles; no ordering
+of their complex values is intended. The denominators $x,x+1,x+2$
+also exclude zero. For an actual world, F, Lemma 30.2, then forces
+
+$$
+U=N_0/C_0,\quad b=(U-1)/2,\quad
+j=U(24-d^*)/H_1,\quad r=xU-j.
+$$
+
+The same interval evaluation gives the following complete filter for
+positive roots. The seed identifies a rectangle, not a legal label.
+
+| Real seed | Necessary exclusion or candidate range | $f_{MJ}$ range when applicable | $f_{MM}$ range when applicable |
+|---|---|---|---|
+| $0.334468126$ | $r>5$ | — | — |
+| $0.531281700$ | $b<-9$ | — | — |
+| $0.984507130$ | $r\in(61,62)/1000$, $b\in(58,59)/1000$ | $(221,223)$ | $(338,339)$ |
+| $1.04394781$ | $r\in(707,708)/1000$, $b\in(308,309)/1000$ | $(268,271)$ | $(350,351)$ |
+| $1.10873466$ | $b<0$ | — | — |
+| $1.19546576$ | $b<0$ | — | — |
+| $2.00428761$ | $r\in(999,1001)/1000$, $b\in(-10^{-40},10^{-40})$ | $(349,352)$ | $(349,352)$ |
+| $2.13729919$ | $b<0$ | — | — |
+| $5.58085280$ | $b<0$ | — | — |
+
+The terminal expressions used in these enclosures are the zero-safe
+original-clock formulas
+
+$$
+\begin{aligned}
+\tau_J&=d^*+
+ \left(4x+\frac12+\frac{C_0}{2N_0}
+                    -\frac{2(24-d^*)}{H_1}\right)H_7,\\
+\tau_M&=d^*+(2x+3)H_7.
+\end{aligned}
+$$
+
+They agree with the actual $f_{MJ},f_{MM}$ by Definition 1.1.
+Every operation in this certificate has nonzero denominator on the stated
+box. It uses no inverse of $H_0,d,F_0,H_7$ or of a leading gain
+coefficient. The $H_1$ inverse has its explicit unit bound, and its
+nonvanishing for actual off-$24$ worlds is also part of the faithful
+reconstruction. Thus no allowed sampled root has been silently deleted.
+
+Negative and nonreal roots cannot be actual $x=n/U>0$. Six of the nine
+positive branches violate strict source guards. On each of the other
+three, $\alpha$ fixes the only possible drift; F, Lemma 30.2, then
+allows at most one complete world. There are at most three legal worlds,
+and their three possible terminal-$J$ intervals are disjoint. This proves
+injectivity on the entire child, including any unused or exceptional
+worlds. A surviving algebraic branch is still not presumed legal. ∎
+
+**Theorem 15.4 (Exactly three worlds, and the algebraic bridge at $t=0$).**
+For $0<t\le10^{-80}$ the entire child at $q(t)$ consists exactly of
+$A(t),B(t),Q(t)$. Its unique unordered terminal-$M$ pair is
+$\{A(t),B(t)\}$, and $f_{MJ}$ is injective. The entire child at
+$q_0=q(0)$ consists exactly of the two strict worlds $B(0),Q(0)$;
+both terminal maps are injective there.
+
+**Proof.** Theorem 15.2 supplies three distinct strict worlds for every
+positive parameter. Theorem 15.3 permits at most three in the entire
+child, so they exhaust it. The common $A,B$ terminal-$M$ value is in
+$(350,351)$, whereas $Q$ has value in $(338,339)$. Thus there is exactly
+one unordered $M$ edge. The three $J$ intervals are pairwise disjoint,
+and the $\Lambda,F_0$ guards show that the entire positive-$t$ child
+avoids $E$.
+
+For the limiting assertion it is essential to identify the algebraic
+boundary branch and then reject its strict source lift. At $t=0$ the
+exact boundary identities of $\mathcal A$ are
+
+$$
+\begin{gathered}
+p_A(u,0)=-\frac{6(8u^3-24u^2-2u+15)}{5(2u^2-1)},\qquad
+v_A(u,0)=\frac{3(45u^3+215u^2-33u-133)}{5(2u^2-1)},\\
+a_A(u,0)=m_A(u,0)
+ =\frac{3(384u^3+1039u^2-232u-610)}{5(2u^2-1)},\\
+d_A(u,0)=\frac{3(81u^2+u-40)}{5(2u^2-1)},\qquad
+\Lambda_A(u,0)=\frac{4(2u^2-1)}{u(u+1)},\qquad x_A(u,0)=u+1.
+\end{gathered}
+$$
+
+Let $u_0$ be the first coordinate of the unique $z(0)$, and let
+$x_0=u_0+1$, $d_0=d_A(u_0,0)$. The positive-$t$ whole polynomials
+have coefficientwise limits; $U_A=1+2t\to1$. Their necessary polynomial
+identities $f=k=0$ therefore give
+
+$$
+f(x_0,d_0,q_0)=k(x_0,d_0,q_0)=0.
+$$
+
+The limiting guard $1000<F_0(x_0,q_0)<10000$ and $D(x_0)>0$,
+together with the fixed determinant factorization, now imply
+$R(x_0,q_0)=0$. This step uses limiting $f=k$ and the nonzero
+$F_0$ factor; it does not merely presume that the boundary chart is a
+world on the carrier.
+
+The rational enclosures put $x_0$ in the rectangle identified by
+$2.00428761$. There is exactly one root there at $q_0$ by Theorem 15.3.
+Its $\alpha$ unit and $\alpha d+\beta=0$ fix its drift as $d_0$.
+Consequently any purported actual world on this remaining candidate
+branch has exactly $(x,d)=(x_0,d_0)$. The four-node interpolant $H$
+is then the limiting $U_Ag_A=g_A$. The limiting original clock-zero
+and clock-two equations give
+
+$$
+-d_0H_0+\mathfrak B H_2
+=d_0^2+\mathfrak B^2=C_0,
+\qquad U=N_0/C_0=1.
+$$
+
+Here $C_0$ is nonzero by the displayed certificate. Reconstruction
+forces $b=0$, and the original source limits give $r=1,j=u_0$.
+It violates the strict guards $U>1$, $b>0$, $r<1$, and contributes
+no legal world. All other excluded roots remain excluded by the same
+uniform filter. The two labels $B(0),Q(0)$ are still strict regular
+worlds, so they exhaust the child. Their $J$ values are separated, and
+so are their $M$ values by $(350,351)$ and $(338,339)$.
+The boundary identity $a_A=m_A$ is an equality for one inadmissible
+label, not a distinct pair or an acquired extra response. ∎
+
+**Corollary 15.5 (Nonclosed terminal-$M$ image and no positive lower
+endpoint bound).** The set $D_M$ is not closed relative to $Y$.
+There is no uniform positive lower bound on $b$ for its collision
+endpoints, even when both endpoints are required to have $b<1$.
+The strict terminal-$M$ pair projection to $Y$ is nonproper.
+Nevertheless $\mathcal B_0\cap D_J=\varnothing$.
+
+**Proof.** Every positive $t$ gives $q(t)\in D_M$ with endpoint
+$b(A(t))=t$, while $q(t)\to q_0\notin D_M$ by Theorem 15.4.
+All bases are in the same off-$24$ rectangle. Both endpoints have
+$b<1$, since $b(B(t))<309/1000$. Thus no positive lower endpoint
+bound exists. In the space
+
+$$
+\mathcal P_M=\{(q,W,W'):q\in Y,\ W,W'\in C(q),\ W\ne W',\
+ f_{MM}(W)=f_{MM}(W')\},
+$$
+
+choose any sequence $t_i\downarrow0$. Its bases and their limit form
+a compact subset of $Y$, but the associated pair sequence has no
+convergent subsequence in $\mathcal P_M$: its $A$ source tends to
+$b=0,r=1$. The inverse image of this compact base set is therefore
+noncompact. The last assertion is whole-child injectivity in Theorem
+15.3. Nothing in this argument asserts nonproperness or existence of
+points of the joint pair correspondence. ∎
+
+## 16. Exact remaining incidence and supplier scope
+
+**Definition 16.1 (The remaining guarded joint problem).** On the
+complete original world space define, for $E\in\{J,M\}$,
+
+$$
+\mathcal P_E=\{(q,W_0,W_1):q\in Y,\ W_0,W_1\in C(q),\
+ W_0\ne W_1,\ f_{ME}(W_0)=f_{ME}(W_1)\}.
+$$
+
+The original joint relation is the fibre product
+$\mathcal P_J\times_Y\mathcal P_M$. Only distinctness within each
+pair is required. Cross-pair reuse and unequal common terminal values
+are allowed. By Corollary 11.4, bounding $b,c$ above for every world
+in a collision child does not change this relation; it retains companions
+unused by either pair. Theorems 12.1–12.3 give finite-$p$ bounds and
+the explicit individual-world nonproper values relative to $Y$, not a
+uniform bound as $|p|\to\infty$. The two-sheet example of Proposition
+11.5 prevents replacing a legal child by a singleton, and Corollary
+15.5 prevents using a positive lower endpoint-$b$ bound for $D_M$.
+
+Theorem 9.10 still places every joint base whose entire child merely
+meets $E$ in the finite outer union $Z_E$ on $Q_{10},S_4,Q_{24}$.
+Every divisor intersection remains included, and its exceptional world
+may be unused by both pairs. This outer restriction does not isolate,
+strictly lift or classify its points. The drift chart on $Q_{24}$ is
+the Chinese-remainder chart of Section 9; the old $\alpha$ inverse is
+not an assumption there. The fixed F31 normalization, in particular
+$S=S_\star$ and the residues $41,46$ used in that section, remains
+unchanged.
+
+For children avoiding $E$, the ordinary common components, isolated
+carrier intersections, strict-real lifts, and relevant $E_0=0$ strata
+outside the covered image curves still require a decision. On a region
+satisfying Theorem 14.2 this decision is exactly the simultaneous zero
+condition for the two products of legal sections. Neither that condition,
+the boundary classification, nor the local $J$ exclusion in
+$\mathcal B_0$ decides its truth on the remaining base domain.
+Source-boundary losses, critical diagonal coalescences and unbounded
+acquired-base limits retain their original strict guards. Boundary sources,
+complex roots and unfiltered interval labels are never legal whole worlds.
+
+The positive criterion remains four complete labels at one common real
+$p\ne24,v$, with the two within-pair squared distances
+$\,(x_0-x_1)^2+(d_0-d_1)^2>0$ and its $M$ analogue. The negative
+criterion remains exclusion of all such labels over the entire $Y$.
+These supporting statements supply neither criterion. Even a positive
+sixth-$M$ child would still leave the sixth-$J$ condition at that same
+fifth response $p$, the fifth-$J$ and common-parent conditions, and the
+ancestor obligations of O, Theorem 17.1. No fifth-$M$ $L_2$, $H_4$
+$L_3$, root $L_7$ or eight-versus-nine conclusion is imposed by these
+reductions.
+
+**Assumption 16.2 (Classical premises and source-specific deductions).**
+The interpolation, contraction, implicit-function, Sturm, resultant and
+covering principles used in Sections 11–15 are standard mathematical
+premises, used inside the displayed source-specific arguments. Their
+scopes are as follows.
+
+| Premise | Use in these arguments |
+|---|---|
+| O, Theorems 2.1–2.2, Lemma 12.2 and Theorem 12.3 | Complete strict parent lift, one whole polynomial and one fixed drift, the full-source $\Lambda,A_5$ obstruction, and uniqueness including singular sources. |
+| F, Lemmas 30.2, 31.2–31.3 and Theorem 32.1; this volume, Theorems 4.1 and 7.4 | Faithful whole-world reconstruction, the fixed $R$ normalization and all-world carrier, and the existing whole-child large-$b$ theorem. The bound $24$ is used without a new proof or optimization. |
+| Berrut–Trefethen, §2, and Banach, pp. 133–181, cited in Sections 1–2 | Distinct-node interpolation and contraction on the specified complete boxes. Neither supplies any FIB collision or strict-source converse. |
+| Lazard–Rouillier, Definition 1, Theorem 1 and real-case Remark 1, [primary report](https://inria.hal.science/inria-00070678/document) | Analytic covering after critical, nonproper and inequation boundaries are treated. Complex exceptional events need not be real events; the specific boundary set here is derived from the parent equations. |
+| Gaillard–Safey El Din, Problem 1 and Theorem 2.4, [primary text](https://arxiv.org/html/2402.07782v2) | Finite-algebra signatures and strict-sign filtering under the stated finite-fibre hypotheses. The parameter classification in Problem 1 has a dense-cover conclusion, not automatic exceptional-inclusive coverage of this joint relation. |
+| Nuno-Ballesteros–Peñafort-Sanchis, Definition 2.1 and Example 2.2, [primary text](https://arxiv.org/html/1509.04990v2) | Distinct multiple points must be separated from their diagonal specializations. No holomorphic stability hypothesis or four-distinct-label condition is transferred to this real pair fibre product. |
+| Sections 11–15 | The particular reciprocal-chart invariants, guarded finite-source slope obstruction, four-face finite-base classification, cross-chart lift and terminal separation, and exact small-$b$ ordinary collision family with its whole-child filter. |
+
+The existing $p=24$ joint child, exact-$p_J$ exclusion and published
+single terminal-$M$ example retain the scopes in Assumption 1.3. No
+result for a different literal history is a premise for this joint
+relation. The analytic sections and all auxiliary algebraic coordinates
+are mathematical descriptions of possible worlds; the only available
+reads and actions are still those in Definition 1.1.
+
+## 追加锚（本行以下为增补区）
