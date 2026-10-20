@@ -79,7 +79,9 @@ internal sealed class CssMonicPushoutLdpcDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The proved LDPC closure"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("Monicity makes each quotient fibre contain at most one basis element from either foot. A column support injects into one input column, while a row support injects into the disjoint union of one row from each foot. Thus the column bound is the maximum of the two input column weights and the row bound is their sum. Applying these bounds pointwise gives the uniform family bound with constant wC + wD; no bound on the apex is required."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("Monicity makes each quotient fibre contain at most one basis element from either foot. A column support injects into one input column, while a row support injects into the disjoint union of one row from each foot. Thus the column bound is the maximum of the two input column weights and the row bound is their sum. Applying these bounds pointwise gives the uniform family bound with constant wC + wD; no bound on the apex is required."))), DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cowtan-burton-2024-css-monic-pushout-ldpc"), ResolutionKind.Proved)))));
 
     private static Formula Id(string name) => F.Id(name);
     private static Formula Nat() => Seq(Mathbb, Grp(Id("N")));
