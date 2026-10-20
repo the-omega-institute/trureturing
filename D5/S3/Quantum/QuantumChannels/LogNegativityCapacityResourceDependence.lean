@@ -788,8 +788,8 @@ private theorem extend_decomposition {a b : ℕ}
 end
 section
 open Matrix D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Norm
-private def symKet : (Fin 3 × Fin 3) → ℂ := (Pi.single (0,1) (1 : ℂ))+(Pi.single (1,0) (1 : ℂ))
-private def antiKet : (Fin 3 × Fin 3) → ℂ := (Pi.single (0,1) (1 : ℂ))-(Pi.single (1,0) (1 : ℂ))
+def symKet : (Fin 3 × Fin 3) → ℂ := (Pi.single (0,1) (1 : ℂ))+(Pi.single (1,0) (1 : ℂ))
+def antiKet : (Fin 3 × Fin 3) → ℂ := (Pi.single (0,1) (1 : ℂ))-(Pi.single (1,0) (1 : ℂ))
 private def ptPlus : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
   (1/2 : ℂ) • vecMulVec ((Pi.single (0,0) (1 : ℂ))) (star ((Pi.single (0,0) (1 : ℂ))))+
   (1/2 : ℂ) • vecMulVec ((Pi.single (1,1) (1 : ℂ))) (star ((Pi.single (1,1) (1 : ℂ))))+

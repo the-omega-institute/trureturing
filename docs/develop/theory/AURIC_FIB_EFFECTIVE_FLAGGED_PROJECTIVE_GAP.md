@@ -802,3 +802,528 @@ Cauchy–Schwarz、正平方根迹微分、本征值极小极大原理、主角�
 **约定 8.3（条件数学与资源边界）。** 结论以所定义的理想精确操作菜单与所供来源为条件，证据层级为可出错的、未执行的符号数学，不是 Lean/kernel 证书。参考纯化、主角分析、CP 松弛、Kraus 环境、复测试的额外参考及范数证明中的偏迹均是分析工具，不扩张实际菜单。本文未给出有限精度、校准、控制取得、物理实现或总成本界，也没有经验机器学习结论、普遍机器学习定理、外部优先权或更大全局目标已经完成的主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 9. 移动右支撑上的正权重与完整亏损
+
+**定义 9.1（参数对应与直接比较的范围）。** 沿用定义 1.1–1.2、2.2、2.4 的全部对象，特别是全复输入 $M_5$、原五维量子输出、二值经典旗标、任意未读取有限参考及不折半菱形范数。记
+
+$$
+C_\star=4\left(\sqrt{\frac25}+\sqrt{\frac{89}{12}}\right),
+\qquad d=65-F(\mathcal T).
+\tag{9.1}
+$$
+
+本节先取 $\mathcal T\in\mathcal K$、$0\le d<1/16$。命题 3.2 强制首次完整 PVM 为秩 $3+2$。以 $E$ 表示该同一 PVM 的秩三投影，$B=I-E$，以 $f_3,f_2$ 表示同一通道在这两个完整分支上的实际分数。引理 4.1 的证明及 (3.5)、(4.2)–(4.3) 给出
+
+$$
+\begin{gathered}
+t=\operatorname{Tr}(BS)\le\frac35d,\qquad
+f_2\le16+10t,\qquad 0\le49-f_3\le7d,\\
+R=P+S,\qquad h=\operatorname{Tr}(EQ)\le3d<\frac3{16},\qquad
+\|E-R\|_{\rm HS}^2=2h,\qquad
+\operatorname{Tr}(BR)=h,\qquad 0\le t\le h.
+\end{gathered}
+\tag{9.2}
+$$
+
+这里的方向选择使用引理 4.1 证明中的同一秩三分支最大点 $p$：当 $p\ge1/2$ 时得到所写的 $R=P+S$；当 $p\le1/2$ 时同时交换 $P,Q$ 和两个旗标，以下所有公式在该交换后的记号中适用，比较端点为 $\mathcal A_-$。在 $p=1/2$ 时可任选所给方向。等式 $\operatorname{Tr}(BR)=h$ 来自 $\operatorname{rank}R=\operatorname{rank}E=3$，而 $S\le R$ 给出 $t\le h$。没有另行选择分支后代或改变通道。
+
+固定上述方向。令 $v=Es$、$\sigma=\|v\|^2=1-t$、$w=8+5t$。将原 Kraus 索引写为 $\ell=(a,j,\nu)$，其中 $a\in\{3,2\}$ 是首次结果的秩，$j$ 是原末端旗标，$\nu$ 是细分索引。定义 2.4 的共同右支撑与完整性保持为
+
+$$
+L_\ell=L_\ell E_a,\qquad E_3=E,\quad E_2=B,
+\qquad \sum_{j,\nu}L_{aj\nu}^\dagger L_{aj\nu}=E_a.
+\tag{9.3}
+$$
+
+这些 CP 后代仍只是 $\mathcal K$ 的外部松弛。以下比较不调用引理 4.2 的投影校正，也不对旋转后的通道重新计算分数。
+
+**引理 9.2（四种旗标系数与逐项非负亏损）。** 在 (9.2)–(9.3) 的同一完整家族上，取支撑内正权重
+
+$$
+\begin{gathered}
+Y_3=14E+7vv^\dagger,
+\qquad Y_3^{-1}=\frac1{14}\left(E-\frac{vv^\dagger}{2+\sigma}\right),\\
+Y_2=wB=(8+5t)B,\qquad Y_2^{-1}=B/w.
+\end{gathered}
+\tag{9.4}
+$$
+
+所有逆均仅在相应的 $EH$ 或 $BH$ 内取。置
+
+$$
+\alpha_{aj}=\operatorname{Tr}(E_aC_j^2E_aY_a^{-1}),\qquad
+u=\operatorname{Tr}(EQEY_3^{-1}),\qquad
+z_\ell=\operatorname{Tr}(C_j^\dagger L_\ell).
+$$
+
+则 $0\le u\le h/14$，四种系数为
+
+$$
+\begin{aligned}
+\alpha_{30}&=1-\frac{2t}{7(3-t)}-4u\le1,\\
+\alpha_{31}&=4u+\frac{9\sigma}{7(2+\sigma)}
+\le\frac37+\frac{2h}{7}<1,\\
+\alpha_{21}&=\frac{8-4h+9t}{w}\le1,\\
+\alpha_{20}&=\frac{4h+5t}{w}\le1.
+\end{aligned}
+\tag{9.5}
+$$
+
+四者均非负，含错误旗标 $(3,1)$、$(2,0)$。对每一个原索引定义
+
+$$
+D_\ell=\operatorname{Tr}(Y_aL_\ell^\dagger L_\ell)-|z_\ell|^2.
+$$
+
+则逐项 $D_\ell\ge0$，且恰有
+
+$$
+\sum_\ell D_\ell=d+3t.
+\tag{9.6}
+$$
+
+证明。(9.4) 的秩一逆公式可直接在 $v$ 方向及其支撑内正交补上相乘核对；$Y_3\ge14E$、$Y_2\ge8B$，故两个支撑内均严格正定，包括 $v=0$ 的代数情形。由 $Y_3^{-1}\le E/14$ 得 $0\le u\le h/14$。将 $C_0^2=4P+9S$、$C_1^2=4Q+9S$ 代入，使用
+
+$$
+\operatorname{Tr}(ESEY_3^{-1})=\frac{\sigma}{7(2+\sigma)},\quad
+\operatorname{Tr}(BQ)=2-h,\quad
+\operatorname{Tr}(BP)=h-t
+$$
+
+即得 (9.5)。其第一行亦可由 $C_0^2=4I-4Q+5S$ 直接计算。所有 $\alpha_{aj}$ 是两个正矩阵乘积的迹，故非负。第一行上界直接成立；第二行用 $\sigma/(2+\sigma)\le1/3$ 和 $h<3/16$；第三行用 $t\le h$，即 $8-4h+9t\le8+5t$；第四行用 $4h<8$。这核对了全部四种情形。
+
+引理 3.1 的右加权不等式 (3.2) 现在直接用于原来的每个 $L_\ell$，给出
+
+$$
+|z_\ell|^2\le\alpha_{aj}\operatorname{Tr}(Y_aL_\ell^\dagger L_\ell)
+\le\operatorname{Tr}(Y_aL_\ell^\dagger L_\ell).
+$$
+
+所以各 $D_\ell\ge0$。再使用 (9.3) 在同一完整后代上求和，得到
+
+$$
+\begin{aligned}
+\sum_\ell D_\ell
+&=\operatorname{Tr}Y_3+\operatorname{Tr}Y_2-F(\mathcal T)\\
+&=(42+7\sigma)+2(8+5t)-(65-d)\\
+&=(49-7t)+(16+10t)-(65-d)=d+3t.
+\end{aligned}
+$$
+
+这里保留所有错误旗标和零分数矩阵，未借助有符号残差之间的抵消。$\square$
+
+**命题 9.3（较小补空间权重的实际反例）。** 把 (9.4) 的 $Y_2$ 换成 $Y'_2=(8+9t/2)B$，不能保证引理 9.2 的逐项非负性；反例已在原实际完整 PVM 和条件幺正菜单内，并可任意接近 $\mathcal A_+$。
+
+证明。取 $0<t<1$，置
+
+$$
+\begin{gathered}
+r_t=\sqrt{1-t}\,s+\sqrt t\,e_1,\qquad
+b_t=\sqrt{1-t}\,e_1-\sqrt t\,s,\\
+E=P+|r_t\rangle\langle r_t|,\qquad
+B=|b_t\rangle\langle b_t|+|e_3\rangle\langle e_3|,\qquad
+n_t=\sqrt{4+5t},\\
+y_t=\frac{2\sqrt{1-t}\,e_1-3\sqrt t\,s}{n_t},\qquad
+\zeta_t=\frac{3\sqrt t\,e_1+2\sqrt{1-t}\,s}{n_t}.
+\end{gathered}
+$$
+
+$(r_t,b_t)$ 与 $(\zeta_t,y_t)$ 分别为同一二维平面的正交归一基，因此 $\{E,B\}$ 是完整秩 $3+2$ PVM。其 $t=\operatorname{Tr}(BS)$ 且 $h=\operatorname{Tr}(EQ)=t$，从而较小权重的正确旗标系数为
+
+$$
+\alpha'_{21}=\frac{8+5t}{8+9t/2}>1.
+$$
+
+指定完整五维幺正
+
+$$
+\begin{aligned}
+U_E&=P+|e_3\rangle\langle e_3|+|s\rangle\langle r_t|
+       +|e_1\rangle\langle b_t|,\\
+U_B&=P+|e_3\rangle\langle e_3|+|y_t\rangle\langle b_t|
+       +|\zeta_t\rangle\langle r_t|.
+\end{aligned}
+$$
+
+它们在完整正交基之间映射，故确为全五维幺正，包含未被相应结果选中的方向。首次结果 $E,B$ 后分别施加 $U_E,U_B$，报告原旗标 $0,1$，不丢弃任何结果。两个末端矩阵为
+
+$$
+L_E=P+|s\rangle\langle r_t|,\qquad
+L_B=|e_3\rangle\langle e_3|+|y_t\rangle\langle b_t|,
+\qquad L_E^\dagger L_E=E,\quad L_B^\dagger L_B=B.
+$$
+
+由于 $C_1b_t=n_ty_t$，补空间 $B$ 分支的分数为 $|\operatorname{Tr}(C_1L_B)|^2=(2+n_t)^2$。该分支仅有这一个 Kraus 矩阵，故它在较小权重下的残差和就是单项残差
+
+$$
+\begin{aligned}
+D'_{L_B}
+&=\operatorname{Tr}(Y'_2B)-(2+n_t)^2\\
+&=16+9t-[2+\sqrt{4+5t}]^2\\
+&=8+4t-4\sqrt{4+5t}<0.
+\end{aligned}
+$$
+
+最后一步因 $(2+t)^2<4+5t$ 对 $0<t<1$ 成立。此负值明确是补空间 $B$ 分支的残差和，不是对两个分支总残差和为负的断言。$t\downarrow0$ 时两末端矩阵趋向 $P+S,Q$，所以这也是近极大区域中的实际反例。正确权重 $8+5t$ 避免了这一逐项正性障碍。$\square$
+
+## 10. 同索引直接残差与整个凸松弛的平方根模量
+
+**引理 10.1（两级同索引残差及比较效应）。** 在定义 9.1 的局部方向中，对正确旗标定义
+
+$$
+K_3=C_0EY_3^{-1},\qquad K_2=C_1B/w,
+\qquad \widetilde L_\ell=z_\ell K_a,
+$$
+
+对错误旗标取 $\widetilde L_\ell=0$，仍保留该索引。再在完全相同的索引上定义
+
+$$
+M_\ell=
+\begin{cases}
+(z_\ell/7)R,&a=3,\ j=0,\\
+(2z_\ell/w)Q,&a=2,\ j=1,\\
+0,&(a,j)=(3,1)\text{ 或 }(2,0).
+\end{cases}
+\tag{10.1}
+$$
+
+则
+
+$$
+\sum_\ell\|L_\ell-\widetilde L_\ell\|_{\rm HS}^2\le\frac25d,
+\qquad
+\sum_\ell\|\widetilde L_\ell-M_\ell\|_{\rm HS}^2\le\frac{89}{12}d.
+\tag{10.2}
+$$
+
+比较家族定义分析用 CP 仪器
+
+$$
+\mathcal B_{\rm app}=(a\operatorname{Ad}_R,b\operatorname{Ad}_Q),
+\qquad 0\le a,b\le1,
+\qquad \mathcal B_{\rm app}^\dagger(I)=aR+bQ\le I.
+\tag{10.3}
+$$
+
+证明。对正确旗标，令 $x=L_\ell Y_a^{1/2}$、$b_j=C_jE_aY_a^{-1/2}$，使用 Hilbert–Schmidt 内积。右支撑和迹循环性给出 $\langle b_j,x\rangle=z_\ell$，且 $\|b_j\|_{\rm HS}^2=\alpha_{aj}\le1$。因而
+
+$$
+\|x-z_\ell b_j\|_{\rm HS}^2
+=\|x\|_{\rm HS}^2-(2-\alpha_{aj})|z_\ell|^2
+\le D_\ell.
+$$
+
+右乘 $Y_a^{-1/2}$，得到正确旗标残差分别至多 $D_\ell/14$、$D_\ell/w\le D_\ell/8$。这里使用向一条直线的压缩，不除以 $\alpha_{aj}$。对秩三的错误旗标，(9.5) 给出
+
+$$
+D_\ell\ge(1-\alpha_{31})\operatorname{Tr}(Y_3L_\ell^\dagger L_\ell)
+\ge(8-4h)\|L_\ell\|_{\rm HS}^2.
+$$
+
+对秩二的错误旗标，$w(1-\alpha_{20})=8-4h$ 给出完全相同的下界。由 $h<3/16$，有 $8-4h>7$。故四类一起满足
+
+$$
+\sum_\ell\|L_\ell-\widetilde L_\ell\|_{\rm HS}^2
+\le\frac17\sum_\ell D_\ell
+=\frac{d+3t}{7}\le\frac25d.
+\tag{10.4}
+$$
+
+第二级比较直接计算原来的移动支撑。由 $C_0=2R+S$、$v=Es$ 和 (9.4)，
+
+$$
+\begin{aligned}
+K_3&=\frac17\left(RE+\frac{RBs\,v^\dagger}{2+\sigma}\right),\\
+K_3-R/7&=\frac17\left(-RB+\frac{RBs\,v^\dagger}{2+\sigma}\right).
+\end{aligned}
+\tag{10.5}
+$$
+
+第二行的两项分别具有正交右支撑 $B,E$，故其 Hilbert–Schmidt 交叉项为零。利用 $\|RB\|_{\rm HS}^2=h$、$\|RBs\|^2\le t$ 及 $\sigma/(2+\sigma)^2\le1/9$，得到
+
+$$
+\|K_3-R/7\|_{\rm HS}^2
+=\frac1{49}\left(h+\frac{\|RBs\|^2\sigma}{(2+\sigma)^2}\right)
+\le\frac{h+t/9}{49}.
+\tag{10.6}
+$$
+
+最后一个标量不等式在 $0\le\sigma\le1$ 上成立，因为 $\sigma/(2+\sigma)^2$ 在此区间递增且在一处取值 $1/9$。另一个分支满足
+
+$$
+K_2-2Q/w=\frac{-2QE+3SB}{w},\qquad
+\|K_2-2Q/w\|_{\rm HS}^2=\frac{4h+9t}{w^2}.
+\tag{10.7}
+$$
+
+这里两项的输出支撑 $Q,S$ 正交，同样没有交叉项。
+
+记实际正确旗标的分数为 $f_{30}=\sum_{\nu}|z_{30\nu}|^2$、$f_{21}=\sum_{\nu}|z_{21\nu}|^2$。引理 9.2 的系数界与原分支完整性给出 $f_{30}\le f_3\le\operatorname{Tr}Y_3\le49$，以及 $f_{21}\le f_2\le\operatorname{Tr}Y_2=2w$。于是
+
+$$
+\begin{aligned}
+\sum_\ell\|\widetilde L_\ell-M_\ell\|_{\rm HS}^2
+&=f_{30}\|K_3-R/7\|_{\rm HS}^2
+ +f_{21}\|K_2-2Q/w\|_{\rm HS}^2\\
+&\le h+t/9+\frac{2(4h+9t)}w\\
+&\le2h+\frac{85}{36}t
+\le\frac{89}{12}d.
+\end{aligned}
+\tag{10.8}
+$$
+
+倒数第二步仅用 $w\ge8$；最后一步用 (9.2)。由 (10.1)，比较效应的系数恰为
+
+$$
+a=\frac{f_{30}}{49}\le1,\qquad
+b=\frac{4f_{21}}{w^2}\le\frac8w\le1.
+$$
+
+两系数非负且 $R+Q=I$，所以得到 (10.3)。$\square$
+
+**定理 10.2（全复参考下的直接平方根稳定性）。** 对每个 $\mathcal T\in\mathcal C$，以同一未缩放亏损 $d=65-F(\mathcal T)$，存在 $\mathcal A\in\mathcal M$ 满足
+
+$$
+\|\mathcal T-\mathcal A\|_\diamond\le C_\star\sqrt d,
+\qquad
+8<C_\star=4\left(\sqrt{\frac25}+\sqrt{\frac{89}{12}}\right)<14.
+\tag{10.9}
+$$
+
+证明。先取定义 9.1 的局部分量。保留首次结果、原旗标和细分索引，堆叠
+
+$$
+Vx=\sum_\ell|j\rangle\otimes L_\ell x\otimes|\ell\rangle,
+\qquad
+Wx=\sum_\ell|j\rangle\otimes M_\ell x\otimes|\ell\rangle.
+$$
+
+环境索引本身包含旗标，故对环境偏迹后正是原经典旗标直和，不产生旗标间相干。完整性与 (10.3) 给出
+
+$$
+V^\dagger V=I,\qquad W^\dagger W=aR+bQ\le I,
+\qquad \|V\|_\infty=1,\quad \|W\|_\infty\le1.
+$$
+
+对同索引矩阵族使用 Hilbert–Schmidt 三角不等式和 (10.2)，得到
+
+$$
+\begin{aligned}
+\|V-W\|_\infty
+&\le\left(\sum_\ell\|L_\ell-M_\ell\|_{\rm HS}^2\right)^{1/2}\\
+&\le\left(\sqrt{\frac25}+\sqrt{\frac{89}{12}}\right)\sqrt d
+=:\varepsilon.
+\end{aligned}
+\tag{10.10}
+$$
+
+对任意有限参考 $Z$、任意复算符 $X\in M_5\otimes\mathcal B(Z)$，将以下恒等式中的堆叠均张量 $I_Z$：
+
+$$
+VXV^\dagger-WXW^\dagger
+=(V-W)XV^\dagger+WX(V-W)^\dagger.
+$$
+
+引理 2.1 中对任意复算符成立的偏迹迹范数压缩及两侧乘法界，给出
+
+$$
+\|\mathcal T-\mathcal B_{\rm app}\|_\diamond\le2\varepsilon.
+$$
+
+另一方面，$\mathcal A_+-\mathcal B_{\rm app}$ 逐旗标为 $(1-a)\operatorname{Ad}_R$、$(1-b)\operatorname{Ad}_Q$，所以是 CP 映射，效应为 $I-W^\dagger W\ge0$。由引理 2.1 的完整 CP 菱形范数恒等式，
+
+$$
+\begin{aligned}
+\|\mathcal A_+-\mathcal B_{\rm app}\|_\diamond
+&=\|I-W^\dagger W\|_\infty\\
+&=\|V^\dagger V-W^\dagger W\|_\infty\\
+&\le(\|V\|_\infty+\|W\|_\infty)\|V-W\|_\infty
+\le2\varepsilon.
+\end{aligned}
+$$
+
+三角不等式于是给出到 $\mathcal A_+$ 的距离至多 $4\varepsilon=C_\star\sqrt d$。这是同索引 Stinespring 比较加 CP 补全的范数论证；环境和 $\mathcal B_{\rm app}$ 均为分析工具，不是协议增加的寄存器或 CP 操作。另一方向同时交换 $P,Q$ 和两个旗标，逐式得到到 $\mathcal A_-$ 的同一界。
+
+局部证明包括 $d=0$：由 (9.2) 有 $t=h=0$，由非负性及 (9.6) 每个 $D_\ell=0$，两个残差均为零，所以分量恰为相应端点。整个论证不除以 $d$、$z_\ell$ 或 $\alpha_{aj}$，零 Kraus 矩阵及零分数均保留。所有逆只对严格正定的支撑内权重取；引理 3.1 已包含奇异压缩与端点最大点，因此不需要 $EC_j^2E$ 可逆。
+
+对任意单个 $\mathcal K$ 分量，若 $d\ge1/16$，任选一个实际端点。引理 2.1 给出通道距离至多二，而 $C_\star\sqrt d\ge C_\star/4>2$，仍满足 (10.9)。若 $d<1/16$，命题 3.2 的 $1/6$ 间隙已穷尽并排除所有非 $3+2$ 首次分拆和无 PVM 情形；余下两方向均已处理。常数比较完全由有理平方完成：$89/12>4$ 给出 $C_\star>8$，而
+
+$$
+\frac25<\frac49,\qquad \frac{89}{12}<\frac{289}{36}
+\quad\Longrightarrow\quad
+C_\star<4\left(\frac23+\frac{17}{6}\right)=14.
+$$
+
+现取有限凸组合 $\mathcal T=\sum_i\lambda_i\mathcal T_i$。为每个分量选取上述端点 $\mathcal A_i$，使用原来的同一组权重，置 $\mathcal A=\sum_i\lambda_i\mathcal A_i\in\mathcal M$。线性分数给出 $d=\sum_i\lambda_i d_i$，凹性给出
+
+$$
+\|\mathcal T-\mathcal A\|_\diamond
+\le C_\star\sum_i\lambda_i\sqrt{d_i}
+\le C_\star\sqrt{\sum_i\lambda_i d_i}=C_\star\sqrt d.
+\tag{10.11}
+$$
+
+这包括两种方向混合、零权及任意输入独立随机性。对这样的凸组合的菱形收敛序列，比较点在紧线段 $\mathcal M$ 中有收敛子列；由命题 2.3 的分数连续性和范数连续性，(10.11) 传至极限。依定义 2.4，极限穷尽 $\mathcal C$，从而证明定理。$\square$
+
+**推论 10.3（与既有估计及极大面的关系）。** 定理 10.2 在同一模型内细化定理 5.1；原四次根估计仍成立，整个支撑极大面仍恰为 $\mathcal M$。
+
+证明。由分数的平方和表达式和命题 3.2，有 $0\le d\le65$。当 $d>0$ 时，$65<3^4$ 与 $C_\star<14$ 给出
+
+$$
+C_\star\sqrt d<42d^{1/4}<64d^{1/4}.
+$$
+
+零亏损时两界均为零。故 (10.9) 给出同一范围内更强的上界，而不撤销任何旧不等式。$d=0$ 时 (10.9) 迫使通道在 $\mathcal M$；反向由两个端点的分数及线性性已知。$\square$
+
+## 11. 实际相位族与整个极大面的最佳幂指数
+
+**命题 11.1（整个面上的平方根下见证）。** 令 $U_\vartheta$ 在 $e_0$ 上乘以 $e^{i\vartheta}$，固定其余四个基向量。对每个实数 $\vartheta$，实际有限深度协议
+
+$$
+\mathcal T_\vartheta=(\operatorname{Ad}_{U_\vartheta(P+S)},\operatorname{Ad}_Q)
+$$
+
+满足
+
+$$
+d_\vartheta=65-F(\mathcal T_\vartheta)=40\sin^2(\vartheta/2),
+\qquad
+\operatorname{dist}_\diamond(\mathcal T_\vartheta,\mathcal M)
+\ge\sqrt{d_\vartheta/10}.
+\tag{11.1}
+$$
+
+因此在同一 $\mathcal C$ 上，甚至仅在实际有限深度子类内，不存在任何有限常数 $K$ 与指数 $\gamma>1/2$，使全部通道统一满足 $\operatorname{dist}_\diamond(\mathcal T,\mathcal M)\le K[65-F(\mathcal T)]^\gamma$。
+
+证明。实施完整 PVM $\{P+S,Q\}$，在第一个结果后施加全五维幺正 $U_\vartheta$，在第二个结果后施加恒等，报告原旗标。这属于定义 1.1 的菜单且保留全部结果。命题 2.3 的分数公式给出
+
+$$
+F(\mathcal T_\vartheta)=|5+2e^{i\vartheta}|^2+16
+=45+20\cos\vartheta,
+$$
+
+所以亏损为 (11.1) 所示。固定单位输入 $\xi=(e_0+e_4)/\sqrt2$。对整个面中的每个 $\mathcal A_t$，输出都是旗标零上的 $|\xi\rangle\langle\xi|$；相位通道则输出 $|U_\vartheta\xi\rangle\langle U_\vartheta\xi|$。两纯态的重叠模平方为 $\cos^2(\vartheta/2)$，故其不折半迹距离为 $2|\sin(\vartheta/2)|$。这是独立于面参数 $t$ 的同一个合法测试，因此
+
+$$
+\inf_{\mathcal A\in\mathcal M}\|\mathcal T_\vartheta-\mathcal A\|_\diamond
+\ge2|\sin(\vartheta/2)|=\sqrt{d_\vartheta/10}.
+$$
+
+当 $\vartheta\to0$ 且 $d_\vartheta>0$ 时，其与 $d_\vartheta^\gamma$ 的比至少为 $d_\vartheta^{1/2-\gamma}/\sqrt{10}\to\infty$，排除所有 $\gamma>1/2$。结合定理 10.2，得到该模型中最佳统一幂指数恰为 $1/2$，从而结算定义 8.2 中这一特定指数问题。这里没有把 (11.1) 声称为该族完整菱形距离的等式，也没有确定最佳常数。参数 $\vartheta$ 是实际协议的相位参数，与定义 7.1 的目标角度 $\theta$ 区别。$\square$
+
+## 12. 同一通道的更强联合间隙与继承接口
+
+**定理 12.1（两个固定输入的平方根联合证书）。** 沿用定义 1.2 的 $N,L,U_0,g=U_0-L>0$，定义
+
+$$
+\begin{gathered}
+\Delta_{\rm env}
+=\frac{8g^2}{N^2\left(\sqrt{C_\star^2+8g/N^2}+C_\star\right)^2},\\
+\Delta_{\rm safe}=\frac{g^2}{392N^2}.
+\end{gathered}
+\tag{12.1}
+$$
+
+则每个 $\mathcal T\in\mathcal C$，以该同一通道的 $d=65-F(\mathcal T)$，满足
+
+$$
+\begin{aligned}
+\|\widehat{\mathcal J}-\mathcal T\|_\diamond
+&\ge\max\left\{L+\frac{2d}{N^2},\ U_0-C_\star\sqrt d\right\}\\
+&\ge L+\Delta_{\rm env}
+\ge L+\frac{g^2}{2C_\star^2N^2}
+>L+\Delta_{\rm safe},\qquad
+\Delta_{\rm safe}>2^{-27}.
+\end{aligned}
+\tag{12.2}
+$$
+
+其中 $\Delta_{\rm env}$ 是所显示双证书包络的精确标量增量，不是完整通道距离问题的最优间隙。
+
+证明。第一个测试固定为定义 2.2 的同一归一化纯化 $\psi_\rho$ 与输出投影 $\Pi$。命题 2.3 给出
+
+$$
+b(\mathcal T)=2\left(1-\frac{65-d}{N^2}\right)
+=L+\frac{2d}{N^2}.
+$$
+
+第二个测试固定为引理 6.2 的 $\psi_\star=(e_0+e_1)/2+s/\sqrt2$。该引理已证明 $h(\mathcal A_t)\ge U_0$ 对整个面成立，且 $h$ 关于菱形距离为一 Lipschitz。定理 10.2 因而给出
+
+$$
+h(\mathcal T)\ge U_0-C_\star\sqrt d.
+$$
+
+两个固定输入可以不同，但都测试同一 $\mathcal T$，并约束同一个完整菱形误差，所以可以取最大值。这不要求两个证书同时取等，也不拼接分别优化的不同通道。
+
+令 $x=\sqrt d$。增函数 $L+2x^2/N^2$ 与减函数 $U_0-C_\star x$ 在唯一正点
+
+$$
+x_0=\frac{2g}{\sqrt{C_\star^2+8g/N^2}+C_\star}
+$$
+
+相交，因为 $2x_0^2/N^2+C_\star x_0=g$。当 $x\ge x_0$ 时第一项至少为交点值；当 $x\le x_0$ 时第二项至少为交点值。因此
+
+$$
+\min_{x\ge0}\max\{L+2x^2/N^2,U_0-C_\star x\}
+=L+2x_0^2/N^2=L+\Delta_{\rm env}.
+$$
+
+这是标量证书函数的精确最小化，没有断言某个通道在 $x_0$ 达到它。另取阈值 $x_1=g/(2C_\star)$：当 $x\ge x_1$ 时支撑证书增量至少为 $g^2/(2C_\star^2N^2)$；当 $x\le x_1$ 时相干证书增量至少为 $g/2$。由 $0<g<1$、$C_\star>8$、$N^2>1$，后者大于前者。对全部 $x\ge0$ 取最小值，便有 $\Delta_{\rm env}\ge g^2/(2C_\star^2N^2)$。再由 $C_\star<14$ 得 (12.2) 的严格比较。
+
+为证明有理安全量级，复用 (1.4) 的精确恒等式，记 $r=\sqrt2$：
+
+$$
+g=\frac{(r-1)(41-24r)}{rN^2}.
+$$
+
+平方比较 $49/25<2<9/4$ 给出 $7/5<r<3/2$，于是
+
+$$
+r-1>\frac25,\quad 41-24r>5,\quad
+N^2<77,\quad rN^2<\frac{231}{2},\quad
+g>\frac4{231}>\frac1{64}.
+$$
+
+故无需小数近似，便有
+
+$$
+\Delta_{\rm safe}
+>\frac1{392\cdot77\cdot4096}
+=\frac1{123633664}
+>\frac1{134217728}=2^{-27}.
+\tag{12.3}
+$$
+
+这也严格加强定理 6.3 的旧增量 $\Delta=g^4/(2^{27}N^2)$：由于 $0<g<1$ 且 $392<2^{27}$，有 $\Delta_{\rm safe}/\Delta=2^{27}/(392g^2)>1$。$\square$
+
+**推论 12.2（所有角度与三个实际类的共同区间）。** 在定义 1.1 的原菜单中，对每个实数 $\theta$，$\mathfrak S_{\rm fin}$、$\mathfrak S_{\rm as}$、$\mathfrak S_{\rm cl}$ 到 $\mathcal J_\theta$ 的共同下确界仍为同一个 $d_\star$，且
+
+$$
+L+\Delta_{\rm env}\le d_\star
+<U_0-\frac1{1000000},
+\qquad \Delta_{\rm env}>\Delta_{\rm safe}>2^{-27}.
+\tag{12.4}
+$$
+
+证明。命题 2.5 及引理 7.3 已证明三个类包含于 $\mathcal C$，并给出有限深度、逐输入几乎必然有限终止及有限深度菱形闭包之间的下确界一致性。该停止接口仅用忠实输入 $I_5/5$ 上的残余效应 $R_n$ 与 $\|\mathcal T-\mathcal T_n\|_\diamond\le2\operatorname{Tr}R_n\to0$，不要求统一停止时限或有限期望，不授予非终止无限操作。定理 12.1 因而约束三个类。
+
+对原始角度目标，使用定义 7.1 及引理 7.2 的同一合法坐标
+
+$$
+\mathcal J_\theta
+=\operatorname{Ad}_{\mathsf W}\circ\widehat{\mathcal J}\circ\operatorname{Ad}_{D_\theta},
+\qquad \mathsf W=\bigoplus_jT_j.
+$$
+
+其初始全五维幺正及末端按经典旗标的全五维幺正和各自逆保持所有有限参考上的复迹范数与停止类型。引理 7.2 已逐式给出支撑纯化、输出投影及相干输入的转移；因此转移后的两个测试仍作用于同一个规范通道，没有角度例外。
+
+严格上界精确复用既有卷《[AURIC FIB 全输入带旗标仪器的精确支撑面、严格距离间隙与倾斜投影上界](AURIC_FIB_FLAGGED_PROJECTIVE_DISTANCE_IMPROVEMENT.md)》定理 7.1 的 (7.2)，参数为 $\tau_0=1/10000$。其定义 4.1、命题 4.2 的完整秩 $3+2$ PVM 与全五维条件幺正给出实际末端矩阵；定义 4.3 只增加输入独立的块幺正混合和同时块、旗标交换。该卷定理 5.1 保证同一实际混合的复线性通道及完整效应归一化；定理 6.2 的 (6.4) 是此显示族在任意未读取有限参考、所有复测试上的完整不折半菱形误差公式，覆盖参数区间端点。其定理 7.1 对该公式给出全区间有限不等式，并在所列 $\tau_0$ 取得严格 $10^{-6}$ 改进。故它是同一实际有限深度菜单中的上界，亦即本卷推论 7.4 所用的上界，无需重新优化或重复其证明。$\square$
+
+**约定 12.3（来源对应与未决范围）。** 本增补的分数归一化、共同右支撑、分支估计、全部秩分拆余量、方向控制、两个固定测试及坐标和停止接口，分别复用本卷定义 2.2、命题 2.3、定义 2.4、引理 3.1、命题 3.2、引理 4.1、引理 6.2、引理 7.2–7.3；与既有卷的对应按约定 8.1。新增推导为移动支撑权重 (9.4)、逐项非负的完整亏损恒等式 (9.6)、同索引两级残差 (10.2) 与效应压缩，从而得到平方根模量、实际整个面上的最佳幂指数及更强联合证书。Hilbert–Schmidt Cauchy–Schwarz、秩一逆公式、迹范数对偶、Stinespring 比较、CP 效应范数、凸凹性与有限维紧性均作为标准工具使用；这些模型内推导不包含外部新颖性或优先权主张。
+
+定义 8.2 所列该 $\mathcal C$ 上的最佳统一幂指数由命题 11.1 与定理 10.2 确定为 $1/2$。最佳稳定常数、显示相位族到整个面的精确菱形距离、精确全局 $d_\star$、匹配的全局最优实际协议、有限深度或几乎必然终止类中的最优距离取到、实际闭包的完整刻画、尖锐全局间隙及倾斜族的最佳参数与全局最优性仍为 OPEN。$\Delta_{\rm env}$ 的精确性仅指 (12.2) 中两个标量证书函数的包络，不等于真实误差或其通道极小值；闭包极小者的抽象存在仍只有推论 7.4 的范围。
+
+全部结论是所声明理想精确模型内的普通数学证明，未附 Lean/kernel 证书。CP 后代、比较 CP 映射、Kraus 环境、参考纯化和偏迹只用于外部松弛及范数证明；实际反例、相位族和引用的倾斜上界均只用原菜单，固定原旗标、原系统输出并保留全部概率质量。不由本模型推出编码 qutrit 因果记忆、有限 qubit 族或物理 QFT 的转移结论，也不提供有限精度控制、经验真实性或资源成本界。
+
+## 追加锚（本行以下为增补区）
