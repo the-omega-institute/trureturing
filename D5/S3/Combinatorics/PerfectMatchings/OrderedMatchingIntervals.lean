@@ -1,7 +1,10 @@
-/- UNCOMPILED source proposal.
-Proposed home: D5/S3/Combinatorics/PerfectMatchings/OrderedMatchingIntervals.
-The compatibility predicate and matching carrier are the unchanged accepted ones.
--/
+/- GID: D5/S3/Combinatorics/PerfectMatchings/OrderedMatchingIntervals
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/OrderedMatchingIntervals
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Label transport across closed matching intervals. -/
 import D5.S3.Combinatorics.PerfectMatchings.OrderedMatchingCore
 
 set_option autoImplicit false

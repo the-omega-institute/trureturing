@@ -1,7 +1,14 @@
-/- UNCOMPILED source proposal. The remaining finite factors are extracted from
-the actual product, then evaluated in the three complete nonclose orders.
--/
+/- GID: D5/S3/Combinatorics/PerfectMatchings/NonclosedCapPotential
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/NonclosedCapPotential
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Exact nonclosed-cap boundary potential. -/
 import D5.S3.Combinatorics.PerfectMatchings.NonclosedCapLabels
+import Mathlib.Tactic.Tauto
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 noncomputable section

@@ -1,7 +1,10 @@
-/- UNCOMPILED source proposal. Closed-interval transport and the exact legal
-singleton fiber for arbitrary nonclosing adjacent caps. No positivity, distinct
-labels, connectivity, or bipartiteness is assumed.
--/
+/- GID: D5/S3/Combinatorics/PerfectMatchings/NonclosedCapLabels
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/NonclosedCapLabels
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: The unique middle label of a reconnected cap. -/
 import D5.S3.Combinatorics.PerfectMatchings.ClosedCapFiber
 
 set_option autoImplicit false

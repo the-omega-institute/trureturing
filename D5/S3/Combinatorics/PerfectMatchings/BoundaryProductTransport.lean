@@ -1,8 +1,12 @@
-/- UNCOMPILED source proposal. Products are the literal opening-endpoint products
-in boundaryPotential; every unaffected endpoint is reindexed explicitly.
-Proposed home: Combinatorics/PerfectMatchings/OrderedMatchingBoundaryPotential.
--/
+/- GID: D5/S3/Combinatorics/PerfectMatchings/BoundaryProductTransport
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/BoundaryProductTransport
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Transport of the unaffected boundary product. -/
 import D5.S3.Combinatorics.PerfectMatchings.DetourLabels
+import Mathlib.Tactic.Tauto
 
 set_option autoImplicit false
 noncomputable section

@@ -1,6 +1,10 @@
-/- UNCOMPILED source proposal. Actual rooted LegalPath bindings of the pure
-ordered-matching surgery. Proposed home: Quantum/Algebra/LegalPathCapFibers.
--/
+/- GID: D5/S3/Quantum/Algebra/Knot/LegalCapFibers
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Algebra/Knot/LegalCapFibers
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Adjacent cap fibers of rooted legal paths. -/
 import D5.S3.Combinatorics.PerfectMatchings.NonclosedCapLabels
 import D5.S3.Quantum.Algebra.Knot.CapFiberContract
 

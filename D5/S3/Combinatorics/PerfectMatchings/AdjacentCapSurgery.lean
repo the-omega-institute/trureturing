@@ -1,8 +1,10 @@
-/- UNCOMPILED source proposal.
-Proposed home: D5/S3/Combinatorics/PerfectMatchings/AdjacentCapSurgery.
-The smaller partner is constructed by swap conjugation and restriction;
-noncrossing is proved separately by finite endpoint-order reasoning.
--/
+/- GID: D5/S3/Combinatorics/PerfectMatchings/AdjacentCapSurgery
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/AdjacentCapSurgery
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Adjacent cap removal in a noncrossing matching. -/
 import D5.S3.Combinatorics.PerfectMatchings.OrderedMatchingIntervals
 
 set_option autoImplicit false
@@ -86,132 +88,164 @@ theorem adjacent_reconnect_no_interleave {a b u v x z : ℕ}
   rcases horder with hclose | hsib | hleftOrder | hrightOrder
   · exact False.elim (hub hclose)
   · rcases hsib with ⟨hsib1, hsib2⟩
+    clear hold hua hvb hub hva huv hxu hxv hzu hzv hxz
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
       have hor : (u < x ∧ x < a ∧ a < z) ∨ (b < x ∧ x < v ∧ v < z) := by
         by_cases hx : x < a
-        · left; constructor <;> omega
-        · right; constructor <;> omega
+        · left; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+        · right; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
       rcases hor with hL | hR
       · exact hl5 hL
       · exact hr1 hR
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
-      exact hr2 ⟨by omega, by omega, by omega⟩
+      have hor : (x < u ∧ u < z ∧ z < a) ∨ (x < b ∧ b < z ∧ z < v) := by
+        by_cases hh : z < a
+        · left; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+        · right; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+      rcases hor with hL | hR
+      · exact hl6 hL
+      · exact hr2 hR
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
       have hor : (u < z ∧ z < a ∧ a < x) ∨ (b < z ∧ z < v ∧ v < x) := by
         by_cases hz : z < a
-        · left; constructor <;> omega
-        · right; constructor <;> omega
+        · left; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+        · right; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
       rcases hor with hL | hR
       · exact hl7 hL
       · exact hr3 hR
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
-      exact hr4 ⟨by omega, by omega, by omega⟩
+      have hor : (z < u ∧ u < x ∧ x < a) ∨ (z < b ∧ b < x ∧ x < v) := by
+        by_cases hh : x < a
+        · left; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+        · right; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+      rcases hor with hL | hR
+      · exact hl8 hL
+      · exact hr4 hR
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
   · rcases hleftOrder with ⟨hleft1, hleft2⟩
+    clear hold hua hvb hub hva huv hxu hxv hzu hzv hxz
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
-      exact hl1 ⟨by omega, by omega, by omega⟩
+      exact hl1 ⟨by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega, by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega, by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega⟩
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
       have hor : (x < a ∧ a < z ∧ z < u) ∨ (b < x ∧ x < v ∧ v < z) := by
         by_cases hx : x < a
-        · left; constructor <;> omega
-        · right; constructor <;> omega
+        · left; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+        · right; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
       rcases hor with hL | hR
       · exact hl2 hL
       · exact hr1 hR
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
-      exact hl3 ⟨by omega, by omega, by omega⟩
+      exact hl3 ⟨by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega, by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega, by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega⟩
     · intro h
       rcases h with ⟨h1, h2, h3⟩
-      exact hl4 ⟨by omega, by omega, by omega⟩
+      have hor : (z < a ∧ a < x ∧ x < u) ∨ (b < z ∧ z < v ∧ v < x) := by
+        by_cases hh : z < a
+        · left; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+        · right; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+      rcases hor with hL | hR
+      · exact hl4 hL
+      · exact hr3 hR
   · rcases hrightOrder with ⟨hright1, hright2⟩
+    clear hold hua hvb hub hva huv hxu hxv hzu hzv hxz
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
+      clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8
       omega
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
       have hor : (x < u ∧ u < z ∧ z < a) ∨ (v < x ∧ x < b ∧ b < z) := by
         by_cases hz : z < a
-        · left; constructor <;> omega
-        · right; constructor <;> omega
+        · left; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+        · right; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
       rcases hor with hL | hR
       · exact hl6 hL
       · exact hr5 hR
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
-      exact hr6 ⟨by omega, by omega, by omega⟩
+      exact hr6 ⟨by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega, by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega, by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega⟩
     constructor
     · intro h
       rcases h with ⟨h1, h2, h3⟩
       have hor : (z < u ∧ u < x ∧ x < a) ∨ (v < z ∧ z < b ∧ b < x) := by
         by_cases hx : x < a
-        · left; constructor <;> omega
-        · right; constructor <;> omega
+        · left; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
+        · right; constructor <;> (clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega)
       rcases hor with hL | hR
       · exact hl8 hL
       · exact hr7 hR
     · intro h
       rcases h with ⟨h1, h2, h3⟩
-      exact hr8 ⟨by omega, by omega, by omega⟩
-
+      exact hr8 ⟨by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega, by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega, by clear hl1 hl2 hl3 hl4 hl5 hl6 hl7 hl8 hr1 hr2 hr3 hr4 hr5 hr6 hr7 hr8; omega⟩
 
 section Skip
 variable {m : ℕ} (j : Fin (m + 1))

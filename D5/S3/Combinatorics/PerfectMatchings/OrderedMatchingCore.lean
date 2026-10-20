@@ -1,12 +1,15 @@
-/- UNCOMPILED source proposal. Pure ordered-matching definitions, extracted
-without changing their bodies from the accepted bridge proposal.
-Proposed home: D5/S3/Combinatorics/PerfectMatchings/OrderedMatchingCore.
--/
+/- GID: D5/S3/Combinatorics/PerfectMatchings/OrderedMatchingCore
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/OrderedMatchingCore
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Ordered noncrossing matchings and boundary labels. -/
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Fintype.Fin
 import Mathlib.Logic.Equiv.Basic
 import Mathlib.GroupTheory.Perm.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic
 
 set_option autoImplicit false
 noncomputable section

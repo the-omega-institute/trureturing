@@ -1,6 +1,10 @@
-/- UNCOMPILED source proposal. Exact dispatch conclusion; source presence is not
-Lean elaboration, kernel checking, official acceptance, or a topology theorem.
--/
+/- GID: D5/S3/Quantum/Algebra/Knot/CapSurgeryLabelFiber
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Algebra/Knot/CapSurgeryLabelFiber
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Arbitrary symmetric-label cap surgery. -/
 import D5.S3.Combinatorics.PerfectMatchings.NonclosedCapPotential
 import D5.S3.Quantum.Algebra.Knot.LegalCapFibers
 
@@ -25,5 +29,7 @@ theorem capSurgery_labelFiber {L : Type*} [Fintype L] [DecidableEq L]
   · intro hn
     exact ⟨nonclose_legal_fiber M j hn R hR s y,
       fun B hB => nonclose_boundaryPotential M j hn q hq y.val B.val hB⟩
+
+#print axioms capSurgery_labelFiber
 
 end CupCapBridgeProposal

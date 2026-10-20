@@ -1,4 +1,10 @@
-/- UNCOMPILED source proposal. Literal detours on the supplier's LegalPath. -/
+/- GID: D5/S3/Combinatorics/PerfectMatchings/DetourLabels
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/DetourLabels
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Insertion of an adjacent labelled detour. -/
 import D5.S3.Combinatorics.PerfectMatchings.AdjacentCapSurgery
 
 set_option autoImplicit false
@@ -43,15 +49,20 @@ theorem detour_skip_left (k : Fin m) :
   split_ifs with h₀ h₁
   · apply congrArg y
     apply Fin.ext
-    simp only [skipPair, insertPort, Fin.val_castSucc, Fin.val_mk] at *
-    split_ifs at hs <;> omega
+    change (skipPair j k).val = k.val
+    change (skipPair j k).val ≤ j.val at h₀
+    rw [hs] at h₀ ⊢
+    split_ifs at * <;> omega
   · exfalso
-    simp only [Fin.val_castSucc] at *
-    split_ifs at hs <;> omega
+    change (skipPair j k).val = j.val + 1 at h₁
+    rw [hs] at h₁
+    split_ifs at h₁ <;> omega
   · apply congrArg y
     apply Fin.ext
-    simp only [skipPair, insertPort, Fin.val_castSucc, Fin.val_mk] at *
-    split_ifs at hs <;> omega
+    change (skipPair j k).val - 2 = k.val
+    change ¬ (skipPair j k).val ≤ j.val at h₀
+    rw [hs] at h₀ ⊢
+    split_ifs at * <;> omega
 
 theorem detour_skip_right (k : Fin m) :
     detourLabels j y B (skipPair j k).succ = y k.succ := by
@@ -60,15 +71,20 @@ theorem detour_skip_right (k : Fin m) :
   split_ifs with h₀ h₁
   · apply congrArg y
     apply Fin.ext
-    simp only [skipPair, insertPort, Fin.val_succ, Fin.val_mk] at *
-    split_ifs at hs <;> omega
+    change (skipPair j k).val + 1 = k.val + 1
+    change (skipPair j k).val + 1 ≤ j.val at h₀
+    rw [hs] at h₀ ⊢
+    split_ifs at * <;> omega
   · exfalso
-    simp only [Fin.val_succ] at *
-    split_ifs at hs <;> omega
+    change (skipPair j k).val + 1 = j.val + 1 at h₁
+    rw [hs] at h₁
+    split_ifs at h₁ <;> omega
   · apply congrArg y
     apply Fin.ext
-    simp only [skipPair, insertPort, Fin.val_succ, Fin.val_mk] at *
-    split_ifs at hs <;> omega
+    change (skipPair j k).val + 1 - 2 = k.val + 1
+    change ¬ (skipPair j k).val + 1 ≤ j.val at h₀
+    rw [hs] at h₀ ⊢
+    split_ifs at * <;> omega
 
 end Labels
 

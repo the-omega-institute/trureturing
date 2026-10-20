@@ -1,7 +1,12 @@
-/- UNCOMPILED source proposal. The complete close branch of the unchanged goal,
-for arbitrary residual frontier size and all other open components present.
--/
+/- GID: D5/S3/Combinatorics/PerfectMatchings/ClosedCapFiber
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/ClosedCapFiber
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Closed-cap compatibility and weight transport. -/
 import D5.S3.Combinatorics.PerfectMatchings.BoundaryProductTransport
+import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 noncomputable section

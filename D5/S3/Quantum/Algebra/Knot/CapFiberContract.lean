@@ -1,6 +1,10 @@
-/- UNCOMPILED source proposal. The exact accepted CapFiberGoal is unchanged.
-Proposed home: D5/S3/Quantum/Algebra/LegalPathCapFiberContract.
--/
+/- GID: D5/S3/Quantum/Algebra/Knot/CapFiberContract
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Algebra/Knot/CapFiberContract
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Legal-path cap fibers. -/
 import D5.S3.Combinatorics.PerfectMatchings.OrderedMatchingCore
 import D5.S3.Quantum.Algebra.WeightedLegalPathTemperleyLieb
 
