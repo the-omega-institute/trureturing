@@ -128,7 +128,19 @@ $$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R
 
 This series is X times the geometric series with parameter c, equivalently X/(1-cX). The denominator has constant term one and is a unit over every commutative ring; no field division is assumed.
 
-**Theorem 1.11 (The geometric denominator identity).**
+**Theorem 1.11 (The geometric inverse over a commutative ring).**
+
+$$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R, \\\operatorname{rescale}\left(parameter, \operatorname{mk}\left(1\right)\right) \cdot \operatorname{denominator}\left(parameter\right) = 1\\\operatorname{denominator}\left(parameter\right) = 1 - \operatorname{C}\left(parameter\right) \cdot X\end{aligned}$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.geometric_inverse` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every commutative ring R and parameter in R, rescaling the series with every coefficient equal to one gives an inverse of the linear denominator. Here denominator(parameter) means 1-C(parameter)X. The identity is used by mobius_denominator and by PathCHSNormClosedForm.geometric_mul_linear.
+
+**Theorem 1.12 (The geometric denominator identity).**
 
 $$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R, \operatorname{mobius}\left(R, parameter\right) \cdot \left(1 - \operatorname{C}\left(parameter\right) \cdot X\right) = X$$
 
@@ -140,7 +152,7 @@ $$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R
 
 Multiplying the geometric family by its linear denominator gives X.
 
-**Theorem 1.12 (The geometric family has zero constant coefficient).**
+**Theorem 1.13 (The geometric family has zero constant coefficient).**
 
 $$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R, \operatorname{constantCoeff}\left(\operatorname{mobius}\left(R, parameter\right)\right) = 0$$
 
@@ -152,7 +164,7 @@ $$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R
 
 Every member of the geometric family has zero constant coefficient.
 
-**Theorem 1.13 (Iterating the geometric family).**
+**Theorem 1.14 (Iterating the geometric family).**
 
 $$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall parameter: R, \forall count: \mathbb{N}, \\\operatorname{iterate}\left(R, \operatorname{mobius}\left(R, parameter\right), count\right) = \operatorname{mobius}\left(R, \operatorname{cast}\left(count, R\right) \cdot parameter\right)\end{aligned}$$
 
@@ -164,7 +176,7 @@ $$\begin{aligned}\forall R: Type, [\operatorname{CommRing}\left(R\right)], \fora
 
 Rescaling Mathlib's geometric-series identity gives the denominator identity. Apply substitution to it and multiply by the inner denominator to prove that composition adds parameters. Induction gives the displayed formula for every parameter and every iteration count.
 
-**Theorem 1.14 (A fixed point modulo ten).**
+**Theorem 1.15 (A fixed point modulo ten).**
 
 $$\operatorname{mobius}\left(\operatorname{ZMod}\left(10\right), 1\right) = X + \operatorname{iterate}\left(\operatorname{ZMod}\left(10\right), \operatorname{mobius}\left(\operatorname{ZMod}\left(10\right), 1\right), 5\right) \cdot \operatorname{iterate}\left(\operatorname{ZMod}\left(10\right), \operatorname{mobius}\left(\operatorname{ZMod}\left(10\right), 1\right), 6\right)$$
 
@@ -176,7 +188,7 @@ $$\operatorname{mobius}\left(\operatorname{ZMod}\left(10\right), 1\right) = X + 
 
 In ZMod(10), the product (1-5X)(1-6X) equals 1-X: the quadratic coefficient 30 vanishes and 11 equals 1. The geometric-family iteration formula and cancellation of the unit denominator prove the fixed-point identity for the entire unbounded series.
 
-**Theorem 1.15 (The A396807 conjecture).**
+**Theorem 1.16 (The A396807 conjecture).**
 
 $$\forall index: \mathbb{N}, (1 \le index) \implies \operatorname{a}\left(index\right) \bmod 10 = 1$$
 
@@ -202,6 +214,7 @@ Map the constructed integer generating equation to ZMod(10). Substitution commut
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.fixed_unique`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.generatingSeries`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.generating_equation`
+- Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.geometric_inverse`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.iterate`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.mobius`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.mobius_denominator`

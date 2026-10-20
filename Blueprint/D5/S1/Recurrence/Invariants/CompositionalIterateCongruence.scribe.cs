@@ -64,6 +64,12 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
                 "This series is X times the geometric series with parameter c, equivalently "
                 + "X/(1-cX). The denominator has constant term one and is a unit over every "
                 + "commutative ring; no field division is assumed.", DescribeRole.Definition),
+            Node("geometric_inverse", "The geometric inverse over a commutative ring", GeometricInverseFormula(),
+                "For every commutative ring R and parameter in R, rescaling the series "
+                + "with every coefficient equal to one gives an inverse of the linear "
+                + "denominator. Here denominator(parameter) means 1-C(parameter)X. "
+                + "The identity is used by mobius_denominator and by "
+                + "PathCHSNormClosedForm.geometric_mul_linear."),
             Node("mobius_denominator", "The geometric denominator identity", MobiusDenominatorFormula(),
                 "Multiplying the geometric family by its linear denominator gives X."),
             Node("mobius_zero", "The geometric family has zero constant coefficient", MobiusZeroFormula(),
@@ -206,6 +212,15 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
     private static Formula MobiusFormula() => Disp(Seq(Context(), Bound("parameter", Ring()),
         Equal(Mobius(Ring(), F.Id("parameter")),
             Mul(X(), Call("rescale", F.Id("parameter"), Call("mk", D(1)))))));
+
+    private static Formula GeometricInverseFormula() => Disp(new Formula.Aligned([
+        Seq(Context(), Bound("parameter", Ring())),
+        Equal(Mul(Call("rescale", F.Id("parameter"), Call("mk", D(1))),
+            Call("denominator", F.Id("parameter"))), D(1)),
+        Equal(Call("denominator", F.Id("parameter")),
+            new Formula.Binary(D(1), FormulaBinaryOperator.Subtract,
+                Mul(Call("C", F.Id("parameter")), X())))
+    ]));
 
     private static Formula MobiusDenominatorFormula() => Disp(Seq(
         Context(), Bound("parameter", Ring()),
