@@ -5070,3 +5070,108 @@ remaining continuum bridge must choose which information and which scale are
 preserved before B2--B7 can be evaluated jointly.
 
 ## 114.99 追加锚（本行以下为增补区）
+
+## 115. Parent-copy form transport and the generator obstruction
+
+The first failure in §114 does not mean that every transport across a birth
+step is impossible. It separates two requirements that are often conflated:
+preserving the edge-energy form and intertwining the node generator. The
+block identities of §112 give an exact finite test of this distinction.
+
+**Definition 115.1 (the parent-copy extension).** In the old/new decomposition
+of (112.7), define
+
+$$
+T_e:\ell^2(V_e)\longrightarrow\ell^2(V_{e+1}),
+\qquad
+T_ef=\begin{pmatrix}f\\ C_e^*f\end{pmatrix},
+\tag{115.1}
+$$
+
+so every newly born child receives the value of its parent. Let $J_e$ retain
+only the old coordinates, as in (112.8). More generally, write a top-fixed
+linear extension as
+
+$$
+S_Qf=\begin{pmatrix}f\\Qf\end{pmatrix},
+\tag{115.2}
+$$
+
+where $Q:\ell^2(V_e)\to\ell^2(B_e)$ is arbitrary.
+
+**Theorem 115.2 (unique form transport, but no generator descent).** For every
+finite source step, the parent-copy map satisfies
+
+$$
+D_{e+1}T_e=
+\begin{pmatrix}D_e\\0\end{pmatrix},
+\qquad
+T_e^*L_{e+1}T_e=L_e,
+\tag{115.3}
+$$
+
+and it is the unique top-fixed linear extension $S_Q$ with
+$S_Q^*L_{e+1}S_Q=L_e$. It also obeys
+
+$$
+L_{e+1}T_e=J_eL_e,
+\qquad
+T_eL_e-L_{e+1}T_e=
+\begin{pmatrix}0\\C_e^*L_e\end{pmatrix}.
+\tag{115.4}
+$$
+
+Consequently, whenever $C_e^*L_e\ne0$, no top-fixed form-preserving
+extension can intertwine the node generators. In the witness source
+$x=\langle\alpha,\beta\rangle$, taking $f=\delta_R$ gives
+$C_e^*L_ef=(1,1)$, so the obstruction is already present at the first
+nontrivial birth step.
+
+The extension is also not an isometry for the counting node inner products:
+
+$$
+\|T_ef\|^2
+=\|f\|^2+\|C_e^*f\|^2
+=\|f\|^2+2\|H_ef\|^2.
+\tag{115.5}
+$$
+
+Thus a parent-copy map preserves the edge form while changing node mass on
+beta-parent coordinates. Positive child weights, a time change, or a different
+state norm would have to be declared before it could represent the same heat
+response.
+
+**Proof.** For an arbitrary $S_Q$, (112.8) gives
+
+$$
+D_{e+1}S_Qf=
+\begin{pmatrix}D_ef\\(Q-C_e^*)f\end{pmatrix}.
+\tag{115.6}
+$$
+
+Therefore
+
+$$
+\langle S_Qf,L_{e+1}S_Qf\rangle
+=\|D_ef\|^2+\|(Q-C_e^*)f\|^2.
+\tag{115.7}
+$$
+
+Equality with the old form for every $f$ forces $Q=C_e^*$, proving
+uniqueness and the first identity in (115.3). Applying the adjoint block in
+(112.9) to (115.3) gives
+$L_{e+1}T_e=(L_ef,0)=J_eL_ef$, and multiplication on the right by $L_e$
+gives the second identity in (115.4). For the witness $x$, the old Laplacian
+sends $\delta_R$ to $(-1,0,1)$, while $C_e^*$ duplicates the value at the
+beta parent $R$, yielding $(1,1)$. Finally
+$C_eC_e^*=2H_e$ proves (115.5). \(\square\)
+
+The result gives a precise B6 split. A form-level recursive carrier can be
+made exact by copying parent values, but the same map does not carry the
+counting-measure heat semigroup forward. A successful continuum bridge must
+therefore choose which response is preserved and supply the corresponding
+measure, clock and boundary readout. This finite obstruction neither selects a
+physical dimension nor proves that every state-dependent transport fails; it
+only rules out the top-fixed, form-preserving, generator-intertwining choice.
+
+## 115.99 追加锚（本行以下为增补区）
