@@ -9,18 +9,17 @@
 import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 import D5.S3.Quantum.Foundation.FiniteDensityPurification
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
+import D5.S3.Quantum.Tomography.MUB.MUBModeSymmetryBudget
 
 /-! The Tsallis order-two overlap bound and its qutrit equality obstruction. -/
 
 noncomputable section
 
 open Matrix Complex
+open D5.S3.Quantum.Tomography.MUB
 open scoped BigOperators ComplexConjugate ComplexOrder InnerProductSpace
 
 namespace D5.S3.Quantum.Information.QutritOverlapBoundNonOptimality
-
-/-- Tsallis entropy of order two. -/
-def tsallisTwo (p : Fin 3 → ℝ) : ℝ := 1 - ∑ i, p i ^ 2
 
 /-- Probabilities for measurement in the standard basis. -/
 def probA (ρ : Matrix (Fin 3) (Fin 3) ℂ) : Fin 3 → ℝ := fun i => (ρ i i).re
@@ -44,7 +43,8 @@ def claim : Prop :=
     ∃ T ∈ Matrix.unitaryGroup (Fin 3) ℂ,
       (∀ i j, ‖T i j‖ ≤ c) ∧ (∃ i j, ‖T i j‖ = c) ∧
       ∃ ρ : Matrix (Fin 3) (Fin 3) ℂ, ρ.PosSemidef ∧ ρ.trace = 1 ∧
-        tsallisTwo (probA ρ) + tsallisTwo (probB T ρ) = overlapBound c
+        MUBModeSymmetryBudget.threeModeMixing (probA ρ) +
+          MUBModeSymmetryBudget.threeModeMixing (probB T ρ) = overlapBound c
 
 private lemma threshold_facts {c : ℝ} (hc : 1 / Real.sqrt 2 < c) :
     0 < c ∧ 1 / 2 < c ^ 2 ∧ Real.sqrt 2 / 2 < c := by
@@ -109,25 +109,25 @@ private lemma overlapBound_eq {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c ≤ 
     nlinarith [Real.cos_le_one (4 * θ - 2 * γ)]
 
 private lemma entropy_small (p : Fin 3 → ℝ) (hp : ∀ i, 0 ≤ p i)
-    (hs : ∑ i, p i = 1) (hm : ∀ i, p i ≤ 1 / 2) : 1 / 2 ≤ tsallisTwo p := by
+    (hs : ∑ i, p i = 1) (hm : ∀ i, p i ≤ 1 / 2) : 1 / 2 ≤ MUBModeSymmetryBudget.threeModeMixing p := by
   have h : ∑ i, p i ^ 2 ≤ ∑ i, p i / 2 := by
     apply Finset.sum_le_sum
     intro i _
     nlinarith [hp i, hm i]
   rw [← Finset.sum_div, hs] at h
-  unfold tsallisTwo
+  rw [Fin.sum_univ_three] at h
+  unfold MUBModeSymmetryBudget.threeModeMixing MUBModeSymmetryBudget.threeModeCollision
   linarith
 
 private lemma entropy_maximum (p : Fin 3 → ℝ) (hp : ∀ i, 0 ≤ p i)
     (hs : ∑ i, p i = 1) (i : Fin 3) :
-    2 * p i * (1 - p i) ≤ tsallisTwo p ∧
-      (tsallisTwo p = 2 * p i * (1 - p i) → ∃ k, k ≠ i ∧ p k = 0) := by
+    2 * p i * (1 - p i) ≤ MUBModeSymmetryBudget.threeModeMixing p ∧
+      (MUBModeSymmetryBudget.threeModeMixing p = 2 * p i * (1 - p i) → ∃ k, k ≠ i ∧ p k = 0) := by
   have h0 := hp 0
   have h1 := hp 1
   have h2 := hp 2
   rw [Fin.sum_univ_three] at hs
-  unfold tsallisTwo
-  rw [Fin.sum_univ_three]
+  unfold MUBModeSymmetryBudget.threeModeMixing MUBModeSymmetryBudget.threeModeCollision
   fin_cases i <;> dsimp only
   · change 2 * p 0 * (1 - p 0) ≤ 1 - (p 0 ^ 2 + p 1 ^ 2 + p 2 ^ 2) ∧ _
     have hp0 : p 0 = 1 - p 1 - p 2 := by linarith
@@ -331,8 +331,8 @@ private lemma zero_corner (T : Matrix (Fin 3) (Fin 3) ℂ)
 private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
     (T : Matrix (Fin 3) (Fin 3) ℂ) (hT : T ∈ Matrix.unitaryGroup (Fin 3) ℂ)
     (hTc : ∀ i j, ‖T i j‖ ≤ c) (ψ : Fin 3 → ℂ) (hψ : ∑ i, ‖ψ i‖ ^ 2 = 1) :
-    1 - c ^ 2 < tsallisTwo (fun i => ‖ψ i‖ ^ 2) +
-      tsallisTwo (fun j => ‖(T *ᵥ ψ) j‖ ^ 2) := by
+    1 - c ^ 2 < MUBModeSymmetryBudget.threeModeMixing (fun i => ‖ψ i‖ ^ 2) +
+      MUBModeSymmetryBudget.threeModeMixing (fun j => ‖(T *ᵥ ψ) j‖ ^ 2) := by
   let x : EuclideanSpace ℂ (Fin 3) := WithLp.toLp 2 ψ
   let y : EuclideanSpace ℂ (Fin 3) := WithLp.toLp 2 (T *ᵥ ψ)
   let p : Fin 3 → ℝ := fun i => ‖ψ i‖ ^ 2
@@ -357,21 +357,23 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
   obtain ⟨hc0, hc2, _⟩ := threshold_facts hc
   by_cases hpSmall : ∀ i, p i ≤ 1 / 2
   · have hsmall := entropy_small p hp0 hψ hpSmall
-    have hnonneg : 0 ≤ tsallisTwo q := by
+    have hnonneg : 0 ≤ MUBModeSymmetryBudget.threeModeMixing q := by
       have hs := Finset.sum_sq_le_sq_sum_of_nonneg (s := Finset.univ) (fun j _ => hq0 j)
       rw [hq] at hs
-      unfold tsallisTwo
+      rw [Fin.sum_univ_three] at hs
+      unfold MUBModeSymmetryBudget.threeModeMixing MUBModeSymmetryBudget.threeModeCollision
       nlinarith
-    change 1 - c ^ 2 < tsallisTwo p + tsallisTwo q
+    change 1 - c ^ 2 < MUBModeSymmetryBudget.threeModeMixing p + MUBModeSymmetryBudget.threeModeMixing q
     linarith
   by_cases hqSmall : ∀ j, q j ≤ 1 / 2
   · have hsmall := entropy_small q hq0 hq hqSmall
-    have hnonneg : 0 ≤ tsallisTwo p := by
+    have hnonneg : 0 ≤ MUBModeSymmetryBudget.threeModeMixing p := by
       have hs := Finset.sum_sq_le_sq_sum_of_nonneg (s := Finset.univ) (fun i _ => hp0 i)
       rw [hψ] at hs
-      unfold tsallisTwo
+      rw [Fin.sum_univ_three] at hs
+      unfold MUBModeSymmetryBudget.threeModeMixing MUBModeSymmetryBudget.threeModeCollision
       nlinarith
-    change 1 - c ^ 2 < tsallisTwo p + tsallisTwo q
+    change 1 - c ^ 2 < MUBModeSymmetryBudget.threeModeMixing p + MUBModeSymmetryBudget.threeModeMixing q
     linarith
   push Not at hpSmall hqSmall
   obtain ⟨i, hP⟩ := hpSmall
@@ -398,7 +400,7 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
   obtain ⟨hbound, hequal⟩ := ellipse_bound hP hQ (norm_nonneg _) (hTc j i) hc2 hc1 he
   obtain ⟨hpBound, hpZero⟩ := entropy_maximum p hp0 hψ i
   obtain ⟨hqBound, hqZero⟩ := entropy_maximum q hq0 hq j
-  change 1 - c ^ 2 < tsallisTwo p + tsallisTwo q
+  change 1 - c ^ 2 < MUBModeSymmetryBudget.threeModeMixing p + MUBModeSymmetryBudget.threeModeMixing q
   by_contra hn
   have heq : 2 * p i * (1 - p i) + 2 * q j * (1 - q j) = 1 - c ^ 2 := by
     linarith
@@ -447,7 +449,7 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
 
 private lemma entropy_mixture (w : Fin 3 → ℝ) (hw : ∀ k, 0 ≤ w k)
     (hs : ∑ k, w k = 1) (p : Fin 3 → Fin 3 → ℝ) :
-    ∑ k, w k * tsallisTwo (p k) ≤ tsallisTwo (fun i => ∑ k, w k * p k i) := by
+    ∑ k, w k * MUBModeSymmetryBudget.threeModeMixing (p k) ≤ MUBModeSymmetryBudget.threeModeMixing (fun i => ∑ k, w k * p k i) := by
   have hj (i : Fin 3) : (∑ k, w k * p k i) ^ 2 ≤ ∑ k, w k * p k i ^ 2 := by
     have h := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul Finset.univ
       (r := fun k => w k * p k i) (f := w) (g := fun k => w k * p k i ^ 2)
@@ -455,18 +457,30 @@ private lemma entropy_mixture (w : Fin 3 → ℝ) (hw : ∀ k, 0 ≤ w k)
       (fun k _ => le_of_eq (by ring))
     rwa [hs, one_mul] at h
   have hsum := Finset.sum_le_sum (s := Finset.univ) (fun i _ => hj i)
-  have he : (∑ k, w k * tsallisTwo (p k)) = 1 - ∑ i, ∑ k, w k * p k i ^ 2 := by
-    simp only [tsallisTwo, mul_sub, mul_one, Finset.sum_sub_distrib, Finset.mul_sum, hs]
-    rw [Finset.sum_comm]
+  have he : (∑ k, w k * MUBModeSymmetryBudget.threeModeMixing (p k)) = 1 - ∑ i, ∑ k, w k * p k i ^ 2 := by
+    simp only [MUBModeSymmetryBudget.threeModeMixing, mul_sub, mul_one,
+      Finset.sum_sub_distrib, hs]
+    congr 1
+    unfold MUBModeSymmetryBudget.threeModeCollision
+    simp only [mul_add]
+    rw [Finset.sum_add_distrib, Finset.sum_add_distrib]
+    conv_rhs => rw [Fin.sum_univ_three]
   rw [he]
-  unfold tsallisTwo
+  unfold MUBModeSymmetryBudget.threeModeMixing MUBModeSymmetryBudget.threeModeCollision
+  rw [Fin.sum_univ_three]
+  change 1 - ((∑ k, w k * p k 0 ^ 2) +
+      (∑ k, w k * p k 1 ^ 2) + (∑ k, w k * p k 2 ^ 2)) ≤
+    1 - ((∑ k, w k * p k 0) ^ 2 +
+      (∑ k, w k * p k 1) ^ 2 + (∑ k, w k * p k 2) ^ 2)
+  simp only [Fin.sum_univ_three]
+  simp only [Fin.sum_univ_three] at hsum
   linarith
 
 private lemma strict_overlap_bound {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
     (T : Matrix (Fin 3) (Fin 3) ℂ) (hT : T ∈ Matrix.unitaryGroup (Fin 3) ℂ)
     (hTc : ∀ i j, ‖T i j‖ ≤ c) (ρ : Matrix (Fin 3) (Fin 3) ℂ)
     (hρ : ρ.PosSemidef) (htrace : ρ.trace = 1) :
-    overlapBound c < tsallisTwo (probA ρ) + tsallisTwo (probB T ρ) := by
+    overlapBound c < MUBModeSymmetryBudget.threeModeMixing (probA ρ) + MUBModeSymmetryBudget.threeModeMixing (probB T ρ) := by
   rw [overlapBound_eq hc hc1.le]
   let U := hρ.1.eigenvectorUnitary
   let wgt := hρ.1.eigenvalues
@@ -518,15 +532,15 @@ private lemma strict_overlap_bound {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c
   have hp := entropy_mixture wgt hwgt hsum (fun k i => ‖U i k‖ ^ 2)
   have hq := entropy_mixture wgt hwgt hsum (fun k j => ‖V j k‖ ^ 2)
   have hall (k : Fin 3) : 1 - c ^ 2 <
-      tsallisTwo (fun i => ‖U i k‖ ^ 2) + tsallisTwo (fun j => ‖V j k‖ ^ 2) := by
+      MUBModeSymmetryBudget.threeModeMixing (fun i => ‖U i k‖ ^ 2) + MUBModeSymmetryBudget.threeModeMixing (fun j => ‖V j k‖ ^ 2) := by
     have h := pure_strict hc hc1 T hT hTc (fun i => U i k)
       (Matrix.unitaryGroup_row_norm U k)
     exact h
   obtain ⟨k, _, hk⟩ := (Finset.sum_pos_iff_of_nonneg (fun k _ => hwgt k)).mp
     (show 0 < ∑ k, wgt k by rw [hsum]; norm_num)
   have hstrict : (∑ k, wgt k * (1 - c ^ 2)) <
-      ∑ k, wgt k * (tsallisTwo (fun i => ‖U i k‖ ^ 2) +
-        tsallisTwo (fun j => ‖V j k‖ ^ 2)) := by
+      ∑ k, wgt k * (MUBModeSymmetryBudget.threeModeMixing (fun i => ‖U i k‖ ^ 2) +
+        MUBModeSymmetryBudget.threeModeMixing (fun j => ‖V j k‖ ^ 2)) := by
     apply Finset.sum_lt_sum
     · intro k _
       exact mul_le_mul_of_nonneg_left (hall k).le (hwgt k)

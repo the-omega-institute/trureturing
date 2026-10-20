@@ -18,9 +18,6 @@ internal sealed class QutritOverlapBoundNonOptimalityDocument : IScribeDocumentD
                 "All indices range over Fin 3, and complex moduli and real parts have their usual meanings. "
                     + "The two probability maps read the diagonal in the standard basis and after conjugating a density matrix by T. "
                     + "The overlap parameter c is real.")),
-            Node("tsallisTwo", "Tsallis entropy of order two", TsallisFormula(),
-                "This is the Tsallis entropy for order two: h(x) = 1 − x and φ(x) = x², so the entropy is one minus the sum of squared probabilities.",
-                AssessedProvenance.FromLiterature(Source)),
             Node("probA", "Standard-basis probabilities", ProbAFormula(),
                 "For a complex 3 by 3 matrix ρ, the standard-basis probability p_i is the real part of its diagonal entry ρᵢᵢ.",
                 AssessedProvenance.FromLiterature(Source)),
@@ -115,25 +112,18 @@ internal sealed class QutritOverlapBoundNonOptimalityDocument : IScribeDocumentD
     private static Formula Power(Formula value, Formula exponent) =>
         new Formula.Power(Parenthesized(value), exponent);
     private static Formula Norm(Formula value) => new Formula.Norm(value);
-    private static Formula SumOver(Formula variable, Formula body) =>
-        Seq(new Formula.Subscript(Sum, variable), Sp, Parenthesized(body));
     private static Formula Lambda(string name, Formula type, Formula body) =>
         Seq(LambdaLower, Sp, Typed(F.Id(name), type), Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula RealType() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula ComplexType() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Fin3() => At(Qualified("Fin"), D(3));
-    private static Formula VectorReal() => new Formula.TypeArrow(Fin3(), RealType());
     private static Formula MatrixComplex() => At(Qualified("Matrix"), Fin3(), Fin3(), ComplexType());
     private static Formula MatrixEntry(Formula matrix, Formula row, Formula column) =>
         At(At(matrix, row), column);
     private static Formula RealPart(Formula value) => QCall("Complex", "re", value);
-
-    private static Formula TsallisFormula()
-    {
-        Formula p = F.Id("p"), i = F.Id("i");
-        return All("p", VectorReal(), Equal(Call("tsallisTwo", p),
-            Subtract(D(1), SumOver(i, Power(At(p, i), D(2))))));
-    }
+    private static Formula ThreeModeMixing(Formula value) => At(
+        Qualified("D5", "S3", "Quantum", "Tomography", "MUB", "MUBModeSymmetryBudget",
+            "threeModeMixing"), value);
 
     private static Formula ProbAFormula()
     {
@@ -186,8 +176,8 @@ internal sealed class QutritOverlapBoundNonOptimalityDocument : IScribeDocumentD
             Equal(Norm(MatrixEntry(t, i, j)), c)));
         Formula density = And(QCall("Matrix", "PosSemidef", rho),
             And(Equal(QCall("Matrix", "trace", rho), D(1)),
-                Equal(Add(Call("tsallisTwo", Call("probA", rho)),
-                    Call("tsallisTwo", Call("probB", t, rho))),
+                Equal(Add(ThreeModeMixing(Call("probA", rho)),
+                        ThreeModeMixing(Call("probB", t, rho))),
                     Call("overlapBound", c))));
         return All("c", RealType(), Implies(lower, Implies(upper,
             Some("T", MatrixComplex(), And(unitary, And(entryBound,
