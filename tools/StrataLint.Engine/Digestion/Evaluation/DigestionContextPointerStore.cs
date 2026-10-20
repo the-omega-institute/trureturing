@@ -76,7 +76,7 @@ internal static class DigestionContextPointerStore
         var id = next ? occurrence.NextAtomId : occurrence.PreviousAtomId;
         var start = next ? occurrence.NextStartByte : occurrence.PreviousStartByte;
         if (id is null) return null;
-        var version = Load(snapshot, index.SourceId, id).SingleOrDefault(item => item.VersionKey == index.VersionKey)
+        var version = Load(snapshot, index.SourceId, id).SingleOrDefault(item => item.SourceSha256 == index.SourceSha256)
             ?? throw new FormatException($"CONTEXT_VERSION_MISSING atom_id={id}");
         return version.Entries[0].Occurrences.SingleOrDefault(item => item.StartByte == start)
             ?? throw new FormatException($"CONTEXT_REFERENCE_MISSING atom_id={id}");
