@@ -2272,3 +2272,588 @@ remaining noncompact limits 包括 $b\to0$、$r\to0,1$、无界 $r(1-r)/b$、fin
 [F84STRICT]: https://github.com/the-omega-institute/trureturing/blob/3350fc26dcbaf210d8ab035c7e25ab99c76e8447/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md#7-the-source-at-infinity-and-bounded-collision-endpoints
 
 ## 追加锚（本行以下为增补区）
+
+## 85. 两个邻近任务的局部 exact common branch
+
+**约定 85.1（同一实际信道与同一个终端 map）。** 本节使用定义 81.1、82.1 的整个 complex qutrit 合同：$F=\operatorname{Ad}_{U_0}\circ\Delta_W$，$\mathcal N=F^2$，actual words 的先后仍为 $V_{h_2}V_{h_1}$，history law 为 input-independent fair law。ordered basis 是 $(\xi,e,f)$，$P=|\xi\rangle\langle\xi|$，$E(q)=|\sqrt{1-q}\,\xi+\sqrt q\,e\rangle\langle\sqrt{1-q}\,\xi+\sqrt q\,e|$。比较类为所有与未知输入无关、只作用于终端 qutrit 的 complex CPTP maps $\mathcal D:M_3(\mathbb C)\to M_3(\mathbb C)$，同一个 map 同时服务 $P,E(q)$。对 $A=P,E(q)$，记
+
+$$
+L_{\mathcal D}(A)=\|\mathcal N^\dagger\mathcal D^\dagger(A)-A\|_{\rm op},
+\qquad c_2(q)=\min_{\mathcal D\ {\rm CPTP}}
+                   \max\{L_{\mathcal D}(P),L_{\mathcal D}(E(q))\}.
+$$
+
+此 loss 等于全部 qutrit density matrices 上的 worst-case absolute Born-probability error。decoder 可知道两个 tasks、$q$ 和固定 horizon $2$，不能读取 history、reference、额外 summary 或未知输入，不作 code restriction、intermediate correction 或 postselection。这里不加 exact-$P$ 条件；命题 82.3 的条件问题仍是另一个问题。
+
+唯一 noise interface 仍是 [Environment §27][F81ENV27] 的整个 complex effect image。在本 horizon，若 $B$ 是任意 Hermitian output effect，置 $K_2=(U_0^\dagger B U_0)_{\xi,e}$、$d=(U_0^\dagger B U_0)_{ff}$，则
+
+$$
+\mathcal N^\dagger(B)=G_{-1/2}(K_2\oplus d)
+ =\begin{pmatrix}
+x&-z/2&0\\
+-\overline z/2&(y+3d)/4&0\\
+0&0&(3y+d)/4
+\end{pmatrix},\qquad
+K_2=\begin{pmatrix}x&z\\\overline z&y\end{pmatrix}.
+\tag{85.1}
+$$
+
+这只是供应公式的 $n=2$ specialization；下界保留全部 complex degrees of freedom。多个任务对应的 effects 必须来自一个 $\mathcal D^\dagger$，不能分别在此 interval 中选取。
+
+**定理 85.2（局部 analytic common optimum）。** 存在 $\theta_*>0$，令 $q_* =\sin^2\theta_*>0$，使对每个 $0<q<q_*$，置 $\theta=\arcsin\sqrt q$，方程
+
+$$
+3\sin(4a-2\theta)=4\sin(2a-2\theta)
+\tag{85.2}
+$$
+
+在 $(a,\theta)=(0,0)$ 附近的唯一 analytic branch $a=a(\theta)$ 满足 $a/\theta\to-1/2$，且
+
+$$
+c_2(q)=c_*(q)
+ =\frac12\sqrt{\sin^2a\,(1+3\sin^2a)}.
+\tag{85.3}
+$$
+
+一个共同 attaining decoder 可用两个 Kraus operators 写成
+
+$$
+\begin{gathered}
+\Pi=P+|e\rangle\langle e|,\qquad
+V_a=\begin{pmatrix}\cos a&\sin a&0\\
+                     \sin a&-\cos a&0\\0&0&1\end{pmatrix},\\
+L_0=V_a^\dagger\Pi U_0^\dagger,\qquad
+L_1=V_a^\dagger|e\rangle\langle f|U_0^\dagger,\qquad
+\mathcal D_a(X)=L_0XL_0^\dagger+L_1XL_1^\dagger.
+\end{gathered}
+\tag{85.4}
+$$
+
+它在整个 $M_3(\mathbb C)$ 上为 CPTP，而不是两个 single-effect realizations。该 branch 的 expansions 为
+
+$$
+\begin{aligned}
+a(\theta)&=-\theta/2-(7/2)\theta^3+O(\theta^5),\\
+a(\arcsin\sqrt q)&=-\sqrt q/2-(43/12)q^{3/2}+O(q^{5/2}),\\
+c_2(q)&=\sqrt q/4+(15/8)q^{3/2}+O(q^{5/2}).
+\end{aligned}
+\tag{85.5}
+$$
+
+特别，$q$ 项的系数恰为零。本定理只给正邻域的存在性，不给 $q_*$ 的数值，也不把它等同于单任务定理 81.4 的 interval。
+
+**证明。** 先构造同一个 primal map，再给对全部 complex competitors 的 lower certificate。
+
+由 $V_a$ unitary、$\Pi^2=\Pi$，
+
+$$
+L_0^\dagger L_0+L_1^\dagger L_1
+ =U_0(\Pi+|f\rangle\langle f|)U_0^\dagger=I_3.
+$$
+
+故 (85.4) trace preserving；Kraus form 给 complete positivity。对 $A=P,E(q)$，令 $A_2$ 是其 $\xi,e$ block，$V=V_a|_{\operatorname{ran}\Pi}$。其 adjoint 同时给出
+
+$$
+U_0^\dagger\mathcal D_a^\dagger(A)U_0
+  =K_A\oplus y_A,\qquad K_A=VA_2V^\dagger,\qquad
+ y_A=(K_A)_{ee}.
+\tag{85.6}
+$$
+
+这里 $y_P=\sin^2a$、$y_E=\sin^2(a-\theta)$。代入 (85.1)，两个 full residuals 为
+
+$$
+R_A=\begin{pmatrix}\delta_A&b_A\\b_A&-\delta_A\end{pmatrix}\oplus y_A,
+\quad
+\begin{array}{ll}
+\delta_P=-\sin^2a,& b_P=-\sin(2a)/4,\\
+\delta_E=q-\sin^2(a-\theta),&
+ b_E=-\sin(2a-2\theta)/4-\sin\theta\cos\theta.
+\end{array}
+\tag{85.7}
+$$
+
+记
+
+$$
+p(a)=\sqrt{\delta_P^2+b_P^2}
+ =\tfrac12\sqrt{\sin^2a(1+3\sin^2a)},\qquad
+e(a,\theta)=\sqrt{\delta_E^2+b_E^2}.
+$$
+
+$p\ge y_P$，所以两个 losses 分别为 $p$ 与 $\max\{e,y_E\}$。直接展开平方差得到
+
+$$
+e^2-p^2=\frac{\sin(2\theta)}{16}
+        [3\sin(4a-2\theta)-4\sin(2a-2\theta)].
+\tag{85.8}
+$$
+
+方括号在原点对 $a$ 的偏导为 $4$，对 $\theta$ 的偏导为 $2$。解析隐函数定理给出唯一局部 branch，导数为 $-1/2$。方程在 $(a,\theta)\mapsto(-a,-\theta)$ 下变号，唯一性给出 $a$ 是 odd analytic function。将 $a=-\theta/2+c\theta^3+O(\theta^5)$ 代回 (85.2)，三次项为 $(4c+14)\theta^3$，故 $c=-7/2$。在正的充分小 $\theta$ 上，$p=e=c_*>0$，且
+
+$$
+y_E=9q/4+O(q^2)<\sqrt q/4+O(q^{3/2})=c_*.
+$$
+
+所以 (85.4) 确实达到共同值 $c_*$。还须排除所有其他 complex CPTP maps，而不只比较这条 real construction。
+
+对任意 competitor 令 $\Phi=\mathcal D^\dagger$，把 $M_2$ 元素嵌为 $X\oplus0$，定义
+
+$$
+T(X)=\left[\Pi\Delta_W\bigl(U_0^\dagger\Phi(X\oplus0)U_0\bigr)
+                    \Pi\right]_{\xi,e}.
+\tag{85.9}
+$$
+
+embedding、$\Phi$、conjugation、dephasing 与 compression 都是 CP，故 $T$ 是 CP；又因 $\Phi(I_3)=I_3$、$0\le\Pi\le I_3$，$T(I_2)\le I_2$。这个 subunital relaxation 包含每个实际 competitor。取 input-first Choi convention
+
+$$
+J_T=\sum_{i,j=1}^2|i\rangle\langle j|\otimes T(|i\rangle\langle j|),
+\qquad J_T\ge0,\qquad
+\operatorname{Tr}_{\rm input}J_T=T(I_2)\le I_2.
+\tag{85.10}
+$$
+
+以下所有 trace pairings 是 usual complex-matrix trace。对 $A=P,E(q)$，在所构造 branch 上定义 Hermitian witnesses
+
+$$
+H_A=\begin{pmatrix}\delta_A/c_*&b_A/(2c_*)\\b_A/(2c_*)&0\end{pmatrix},
+\qquad
+M_A=\begin{pmatrix}\delta_A/c_*&-b_A/(4c_*)\\-b_A/(4c_*)&0\end{pmatrix}.
+\tag{85.11}
+$$
+
+$H_A$ 的两个 eigenvalues 异号，其 trace norm 为
+$\sqrt{\delta_A^2+b_A^2}/c_*=1$，且
+$\operatorname{Tr}((H_A\oplus0)R_A)=c_*$。由 (85.1)，对任意 competitor 的 residual $R'_A$，
+
+$$
+L_{\mathcal D}(A)\ge
+\operatorname{Tr}((H_A\oplus0)R'_A)
+ =\operatorname{Tr}(M_AT(A_2))-\operatorname{Tr}(H_AA_2).
+\tag{85.12}
+$$
+
+$H_A$ 的 $ee$ entry 为零，所以这一 pairing 不含 competitor 的 $ff$ scalar，也未对其 complex off-diagonal 加 real restriction。
+
+在 $a=a(\theta)$ 处取偏导，$p'=\partial_a p$，$e_a=\partial_a e$。令
+
+$$
+\begin{gathered}
+\lambda=\frac{e_a}{e_a-p'},\qquad
+C=\lambda P_2^{\mathsf T}\otimes M_P
+       +(1-\lambda)E_2^{\mathsf T}\otimes M_E,\\
+Y=-\lambda M_PK_P-(1-\lambda)M_EK_E,\qquad
+Z=C+I_2\otimes Y,\\
+\beta=\lambda\operatorname{Tr}(H_PP_2)
+               +(1-\lambda)\operatorname{Tr}(H_EE_2).
+\end{gathered}
+\tag{85.13}
+$$
+
+这里 transpose 是 input-first Choi pairing 所需的 ordinary transpose；$P_2,E_2$ 是两个 fixed input tasks，不是另选的 effects。因 $p'\to-1/2$、$e_a\to1/2$，缩小正邻域后 $0<\lambda<1$，且 $\lambda\to1/2$。定义给出 exact stationarity
+
+$$
+\lambda p'+(1-\lambda)e_a=0.
+\tag{85.14}
+$$
+
+这一 scalar identity 同时保证 $Y$ Hermitian。具体地，令
+$J_0=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$，则
+$\partial_aK_A=[J_0,K_A]$，且由 (85.7)、(85.11)，
+
+$$
+\operatorname{Tr}(M_P\partial_aK_P)=p',\qquad
+\operatorname{Tr}(M_E\partial_aK_E)=e_a.
+$$
+
+real $2\times2$ skew-symmetric space 是 $J_0$ 的一维 span，因此 (85.14) 迫使
+$\lambda[M_P,K_P]+(1-\lambda)[M_E,K_E]=0$，即 $Y=Y^\dagger$。
+
+对 input-first vectorization $\operatorname{vec}(V)=\sum_i|i\rangle\otimes V|i\rangle$，定义 (85.13) 还给出 exact kernel 与 value identities：
+
+$$
+Z\operatorname{vec}(V)=0,\qquad -\operatorname{Tr}Y-\beta=c_*.
+\tag{85.15}
+$$
+
+第一式可直接用
+$(A^{\mathsf T}\otimes M)\operatorname{vec}(V)=\operatorname{vec}(MVA)$ 验证：由 $K_A=VA_2V^\dagger$，两项之和为
+$\operatorname{vec}((\lambda M_PK_P+(1-\lambda)M_EK_E+Y)V)=0$。第二式来自 (85.12) 在共同 primal map 上对每项均为等号，即
+$\operatorname{Tr}(M_AK_A)-\operatorname{Tr}(H_AA_2)=c_*$，再取 weighted sum。
+
+为证明 exact dual feasibility，而非只给形式 stationarity，写 $t=\sqrt q\downarrow0$。由 (85.7) 与 branch expansion，
+
+$$
+\begin{gathered}
+\delta_P=-t^2/4+O(t^4),\qquad
+\delta_E=-5t^2/4+O(t^4),\\
+b_P=t/4+O(t^3),\qquad b_E=-t/4+O(t^3),\qquad
+\lambda=1/2+O(t^2).
+\end{gathered}
+$$
+
+将这些式子及 $K_P=VP_2V^\dagger$、$K_E=VE_2V^\dagger$ 代入 (85.13)，得到
+
+$$
+\frac{Y}{t}\longrightarrow\frac18
+ \begin{pmatrix}25&0\\0&1\end{pmatrix},\qquad
+\frac{Z}{t}\longrightarrow\frac18
+ \begin{pmatrix}
+1&0&0&1\\
+0&1&1&0\\
+0&1&25&0\\
+1&0&0&1
+\end{pmatrix}=:Z_0.
+\tag{85.16}
+$$
+
+这里的四维基顺序为 input-output pairs $(\xi\xi,\xi e,e\xi,ee)$。$Z_0$ 的 eigenvalues 恰为
+
+$$
+0,\quad\frac14,\quad
+\frac{13-\sqrt{145}}8,\quad\frac{13+\sqrt{145}}8.
+$$
+
+后三个严格为正，kernel 恰为 $\operatorname{span}(1,0,0,-1)$，即 limiting $\operatorname{vec}(V)$。由于 (85.15) 对每个正 $t$ 都是 exact kernel，不能因连续扰动生成负的小 kernel eigenvalue：在连续选取的 $\operatorname{vec}(V(t))^\perp$ orthonormal frame 中，$Z/t$ 的 restriction 连续趋于 strictly positive restriction of $Z_0$。故缩小邻域后 $Z\ge0$；同时 (85.16) 的第一个 positive-definite limit 给出 $Y\ge0$。这是 exact kernel 加 positive complement 的论证，没有以数值 positivity 替代之。
+
+最后对任意 complex competitor 的 $J_T$，由 (85.12)、$0<\lambda<1$、(85.10) 及 $Y,Z\ge0$，
+
+$$
+\begin{aligned}
+\max_A L_{\mathcal D}(A)
+&\ge \lambda\operatorname{Tr}((H_P\oplus0)R'_P)
+          +(1-\lambda)\operatorname{Tr}((H_E\oplus0)R'_E)\\
+&=\operatorname{Tr}(CJ_T)-\beta\\
+&\ge-\operatorname{Tr}(Y T(I_2))-\beta\\
+&\ge-\operatorname{Tr}Y-\beta=c_*.
+\end{aligned}
+\tag{85.17}
+$$
+
+这是 CP/subunital Choi cone 上的 weak-duality bound，适用于包含实际 competitor 的整个 relaxation；不要求 strong duality，也不把 independently attainable effects 当成共同 map。与 (85.4) 的全 qutrit realization 合并即证 (85.3)。所有局部条件只有有限多个，故可共同选取一个 $0<\theta_*<\pi/2$。
+
+在正邻域 $\sin a<0$，可写
+$c_*=-\tfrac12\sin a\sqrt{1+3\sin^2a}$。代入 odd analytic $a(\theta)$ 得
+$c_*=\theta/4+(11/6)\theta^3+O(\theta^5)$；再用 $\theta=\sqrt q+q^{3/2}/6+O(q^{5/2})$ 得 (85.5)。odd expansion 也直接排除 $q$ 项。∎
+
+**命题 85.3（独立的 finite-range fallback）。** 不论定理 85.2 的 existential interval 取多小，对每个 $0<q\le1/1000$，$t=\sqrt q$、$k=\sqrt{1-q}$，都有
+
+$$
+\frac{t(k-1/2)}2\le c_2(q)\le\frac t4+4t^3.
+\tag{85.18}
+$$
+
+**证明。** 下界是定理 82.2 的全 complex common-map bound。对上界仍使用 (85.4)，但固定 $a=-\theta/2$，不要求满足 (85.2)。由 (85.7)，
+
+$$
+y_P=\frac{q}{2(1+k)},\quad b_P=t/4,\qquad
+y_E=\frac{q(1+2k)^2}{2(1+k)},\quad
+b_E=-t[1/4+k(1-k)].
+$$
+
+这里 $y_P\le q/2$、$q\le y_E\le9q/4$，所以 $|\delta_E|\le5q/4$；又 $k(1-k)=qk/(1+k)\le q/2$，故 $t/4\le|b_E|\le t/4+t^3/2$。用 $\sqrt{b^2+v^2}\le|b|+v^2/(2|b|)$，
+
+$$
+p\le t/4+t^3/2,\qquad
+ e\le t/4+(29/8)t^3.
+$$
+
+$f$ spectator residual 为 $y_E\le9t^2/4\le t/4$，因为 $t\le1/\sqrt{1000}<1/9$；$y_P\le p$。故 full residuals 的最大值不超过 $t/4+4t^3$。∎
+
+(85.18) 的显式 interval 属于这组较弱 inequalities；它不为 (85.2) 的 exact optimum 指定数值 endpoint。一般 finite-$q$ 的 common optimum、可能的 branch changes 与 spectator activation 仍未确定。
+
+## 86. 固定正方向的 certificate stability 与 phase dictionary
+
+**定义 86.1（已供应静态 labels 的 continuum task）。** 固定一个实数 $0<q\le1/1000$，固定 horizon $n=2$，使用约定 85.1 的同一 actual channel、fair chronology、全部 complex qutrit inputs 与终端权限。任务为定理 83.1 的整个 phase circle $E_\varphi(q)$，$\varphi\in\mathbb R/(2\pi\mathbb Z)$。对每个 fixed terminal CPTP map，令
+
+$$
+L_{\mathcal D}(\varphi)
+ =\|\mathcal N^\dagger\mathcal D^\dagger(E_\varphi(q))-E_\varphi(q)\|_{\rm op}.
+$$
+
+给定 $\delta\ge0$，$M_q(\delta)$ 是能够满足
+
+$$
+\forall\varphi\ \exists j\in\{1,\ldots,M\},\qquad
+L_{\mathcal D_j}(\varphi)\le\eta_2(q)+\delta
+\tag{86.1}
+$$
+
+的最小正整数 $M$；不存在有限 dictionary 时取 $+\infty$。每个 $\mathcal D_j$ 必须是一个在整个 $M_3(\mathbb C)$ 上定义、与未知输入无关的 fixed CPTP map。一个已供应的 deterministic static task label 只能选择 $j$，不能在同一 label 内继续按 phase 调整 map；该 label 不携带额外 history 或输入资料。既不要求 selection fibres 连续或可测，也不供应取得 phase 的操作。这里比较的是 projection-probability error，非 whole-identity recovery 的 reference-sensitive channel error。
+
+以下参数全部直接取自定理 81.4 的唯一 admissible root $R=R(q)$ 及其 $y,d,\vartheta,\gamma,w,\eta$，其中 $\eta=\eta_2(q)$。为显式给出 constants，记
+
+$$
+\begin{gathered}
+y=\frac{(R-1)(2-R)}{6R},\qquad
+ d=\frac{24q-R(R-1)(2-R)}{2(5R^2-8)},\qquad
+\vartheta=\frac{R^2-1}{3},\quad
+\gamma=\sqrt{\vartheta(1-\vartheta)},\\
+w=\frac\gamma{2R},\qquad \eta=\frac{3y+d}{4},\qquad
+h=\sqrt{q(1-q)},\\
+m_+=\frac{(2-R)(R+1)}{2R^2},\qquad
+\mu=\frac{(R-1)(R+2)}{2R^2},\\
+A_q=\mu(w-h)^2,\qquad
+B_q=\frac{h^2}{\eta+d}+\frac h2+h^2.
+\end{gathered}
+\tag{86.2}
+$$
+
+定理 81.4 与 83.1 已给出 $0<d<y/3$、$\eta>d$、$w^2=y(1-y)$ 与 $w>h$，故 $A_q,B_q>0$。admissible-root existence、uniqueness、attainment 与这些 strict inequalities 均复用原证明。
+
+**命题 86.2（从单任务 certificate 到任意共同 map 的定量约束）。** 对定义 86.1 的每个 complex qutrit CPTP map，令
+
+$$
+\mathcal T_{\mathcal D}(X)
+  =(U_0^\dagger\mathcal D^\dagger(X)U_0)_{\xi,e},\qquad
+K_\varphi=\mathcal T_{\mathcal D}(E_\varphi),\qquad
+\mathsf P_\varphi=\begin{pmatrix}
+1-y&-we^{-i\varphi}\\-we^{i\varphi}&y
+\end{pmatrix}.
+$$
+
+则对每个 $\varphi$，
+
+$$
+L_{\mathcal D}(\varphi)\le\eta+\delta
+ \quad\Longrightarrow\quad
+\|K_\varphi-\mathsf P_\varphi\|_{\rm op}\le\sqrt{\delta/\mu}.
+\tag{86.3}
+$$
+
+而对任意 $\varphi,\psi$，不加近似最优假设也有
+
+$$
+\max\{L_{\mathcal D}(\varphi),L_{\mathcal D}(\psi)\}-\eta
+ \ge\frac{A_q}{4}|e^{i\varphi}-e^{i\psi}|^2.
+\tag{86.4}
+$$
+
+**证明。** $\mathcal T_{\mathcal D}:M_3\to M_2$ 是 unital CP compression，故 $K_\varphi$ 是任意可能的 complex effect。这里 domain 为 $M_3$，所以它 unital；(85.9) 另将 domain 限制为 $M_2$ 的 corner，才得到 subunital map。两种接口均从一个实际 $\mathcal D$ 取得。
+
+令 $Z_\varphi^{(2)}=\operatorname{diag}(1,e^{i\varphi})$，
+$Q_\varphi=Z_\varphi^{(2)}Q_\vartheta Z_\varphi^{(2)\dagger}$，其中 $Q_\vartheta$ 是定理 81.4 的 certificate projection。复用该定理与定理 83.1 的 conjugated witness，
+
+$$
+Y_\varphi=\frac{Q_\varphi\oplus(-3\vartheta)}{R^2},\qquad
+\|Y_\varphi\|_1=1,
+\qquad
+M_\varphi=m_+\mathsf P_\varphi-\mu(I_2-\mathsf P_\varphi).
+$$
+
+(85.1) 中的 competitor scalar $d'$ 在此 pairing 中消去，故
+
+$$
+\operatorname{Tr}\bigl(Y_\varphi\mathcal N^\dagger
+                         \mathcal D^\dagger(E_\varphi)\bigr)
+   =\operatorname{Tr}(M_\varphi K_\varphi),\qquad
+\operatorname{Tr}(Y_\varphi E_\varphi)-m_+=\eta.
+\tag{86.5}
+$$
+
+由 trace/operator-norm support duality，
+
+$$
+L_{\mathcal D}(\varphi)\ge\eta+g_\varphi,\qquad
+ g_\varphi=m_+-\operatorname{Tr}(M_\varphi K_\varphi).
+$$
+
+令 $a_\varphi=\operatorname{Tr}(\mathsf P_\varphi(I-K_\varphi))$、
+$b_\varphi=\operatorname{Tr}((I-\mathsf P_\varphi)K_\varphi)$。两者非负，且
+
+$$
+g_\varphi=m_+a_\varphi+\mu b_\varphi
+ \ge\mu(a_\varphi+b_\varphi),\qquad
+m_+-\mu=\frac{2-R^2}{R^2}>0.
+$$
+
+因为 $K_\varphi^2\le K_\varphi$，
+
+$$
+\|K_\varphi-\mathsf P_\varphi\|_{\rm HS}^2
+ =\operatorname{Tr}(K_\varphi^2)+1
+                  -2\operatorname{Tr}(\mathsf P_\varphi K_\varphi)
+ \le a_\varphi+b_\varphi.
+$$
+
+若 loss 不超过 $\eta+\delta$，则 $g_\varphi\le\delta$，再用 operator norm 不超过 Hilbert–Schmidt norm 得 (86.3)。这是 reduced-image stability，不声称 decoder 本身唯一或接近某个唯一 map。
+
+对同一个 map 的两个 tasks，置 $r=|e^{i\varphi}-e^{i\psi}|$。positive unital maps 在 Hermitian operator norm 下 contract，故
+
+$$
+\|K_\varphi-K_\psi\|\le\|E_\varphi-E_\psi\|=hr,
+\qquad
+\|\mathsf P_\varphi-\mathsf P_\psi\|=wr.
+$$
+
+两个 individual optima 均为 $\eta$，所以
+$\epsilon=\max\{L_{\mathcal D}(\varphi),L_{\mathcal D}(\psi)\}-\eta\ge0$。用 (86.3) 的 $\delta=\epsilon$ 与三角不等式，
+
+$$
+(w-h)r\le2\sqrt{\epsilon/\mu}.
+$$
+
+平方即得 (86.4)。此处 $K_\varphi,K_\psi$ 一直来自同一个 $\mathcal T_{\mathcal D}$，未以两个独立可达 effects 代替 commonness。∎
+
+**命题 86.3（一个全 qutrit CPTP map 的 quadratic phase neighbourhood）。** 对每个 center $\alpha\in\mathbb R/(2\pi\mathbb Z)$，令 $Z_\alpha=\operatorname{diag}(1,e^{i\alpha},1)$，
+
+$$
+\begin{aligned}
+B_\alpha&=U_0Z_\alpha(\mathsf P_0\oplus d)Z_\alpha^\dagger U_0^\dagger,\\
+\mathcal D_\alpha(X)&=\operatorname{Tr}(B_\alpha X)E_\alpha
+       +\operatorname{Tr}((I_3-B_\alpha)X)|f\rangle\langle f|.
+\end{aligned}
+\tag{86.6}
+$$
+
+这是一个 fixed input-independent terminal complex qutrit CPTP map，满足对所有 phases $\varphi$ 的 global bound
+
+$$
+L_{\mathcal D_\alpha}(\varphi)
+ \le\eta+B_q|e^{i\varphi}-e^{i\alpha}|^2.
+\tag{86.7}
+$$
+
+在 $\varphi=\alpha$ 时它达到 exact individual optimum $\eta$。
+
+**证明。** $0\le B_\alpha\le I_3$，两个 prepared states 都 trace one。input-first Choi matrix 为
+
+$$
+B_\alpha^{\mathsf T}\otimes E_\alpha
+ +(I_3-B_\alpha)^{\mathsf T}\otimes|f\rangle\langle f|\ge0,
+$$
+
+output partial trace 是 $I_3$，故这是真正的 whole-qutrit CPTP realization。令 $u=\varphi-\alpha$、$r(u)=|1-e^{iu}|$，因为 $f$ 与全部 $E_\varphi$ 正交，
+
+$$
+\mathcal D_\alpha^\dagger(E_\varphi)=a(u)B_\alpha,\qquad
+ a(u)=\operatorname{Tr}(E_\varphi E_\alpha)=1-h^2r(u)^2.
+$$
+
+由 (85.1) 及已供应的 phase conjugation，
+
+$$
+\mathcal N^\dagger(B_\alpha)=Z_\alpha C_0Z_\alpha^\dagger,
+\qquad
+C_0=\begin{pmatrix}
+1-y&w/2&0\\w/2&(y+3d)/4&0\\0&0&\eta
+\end{pmatrix},\qquad 0\le C_0\le I_3.
+\tag{86.8}
+$$
+
+只对这些明确的 effect images 使用 conjugation；未假定实际 $F$ phase covariant。由 unitary invariance，
+
+$$
+L_{\mathcal D_\alpha}(\varphi)=\|a(u)C_0-E_u\|,\qquad
+ C_0-E_0=H_0\oplus\eta,\qquad
+ H_0=-\eta Q_\vartheta+d(I_2-Q_\vartheta).
+$$
+
+这是定理 81.4 已供应的 residual identity，不重证其 optimizer。令 $\sigma_x,\sigma_y$ 为 usual Pauli matrices；$H_0$ real symmetric，eigenvalues 为 $-\eta,d$，且
+
+$$
+E_0-E_u=[h(1-\cos u)\sigma_x-h\sin u\,\sigma_y]\oplus0.
+$$
+
+$H_0$ 的 traceless real part 与 $\sigma_y$ anticommute。因此
+
+$$
+\begin{aligned}
+\|H_0-h\sin u\,\sigma_y\|
+ &=\frac{\eta-d}{2}
+       +\sqrt{\frac{(\eta+d)^2}{4}+h^2\sin^2u}\\
+ &\le\eta+\frac{h^2\sin^2u}{\eta+d}.
+\end{aligned}
+$$
+
+第一行至少为 $\eta$，也控制了 full residual 中的 spectator scalar $\eta$。剩余 cosine perturbation 的 norm 为 $h(1-\cos u)=hr(u)^2/2$，scaling perturbation 的 norm 不超过 $h^2r(u)^2$，因为 $\|C_0\|\le1$。最后用 $\sin^2u\le r(u)^2$，三角不等式给出 (86.7)。当 $u=0$，residual 的 norm 恰为 $\eta$。∎
+
+**定理 86.4（fixed-$q$ positive-slack dictionary law）。** 对每个固定 $0<q\le1/1000$，在 $0<\delta\le A_q/4$ 上有
+
+$$
+\left\lceil\frac{\pi}{\arcsin\sqrt{\delta/A_q}}\right\rceil-1
+ \le M_q(\delta)
+ \le\left\lceil\pi\sqrt{B_q/\delta}\right\rceil.
+\tag{86.9}
+$$
+
+右侧对每个 $\delta>0$ 均成立。特别，
+
+$$
+\begin{gathered}
+M_q(\delta)=\Theta_q(\delta^{-1/2})\quad(\delta\downarrow0),\\
+\pi\sqrt{A_q}\le
+\liminf_{\delta\downarrow0}\sqrt\delta\,M_q(\delta)
+\le\limsup_{\delta\downarrow0}\sqrt\delta\,M_q(\delta)
+\le\pi\sqrt{B_q}.
+\end{gathered}
+\tag{86.10}
+$$
+
+对固定的 $N\ge2$ 个不同 phases，令
+$r_{\min}=\min_{i\ne j}|e^{i\varphi_i}-e^{i\varphi_j}|>0$。若
+
+$$
+0\le\delta<A_qr_{\min}^2/4,
+\tag{86.11}
+$$
+
+则该 finite catalogue 恰需 $N$ 个 dictionary labels。对于整个 circle，$M_q(0)=+\infty$；在另一个端点 $q=0$，所有 phases 都是 $P$，一个 decoder 足够。
+
+**证明。** 对 upper bound，取 $M$ 个等间隔 centers 并使用命题 86.3 的 actual maps。每个 phase 到某 center 的 circular distance 至多 $\pi/M$，所以其 chord 至多 $\pi/M$，由 (86.7) 达到 excess 不超过 $B_q\pi^2/M^2$。取 $M=\lceil\pi\sqrt{B_q/\delta}\rceil$ 即得 finite dictionary。这一 construction 给出每个 label 的完整 CPTP map，而非仅给一个希望实现的 effect。
+
+反过来，任意满足阈值的 $M$-map dictionary 在 $M+1$ 个等间隔 phases 中，至少有两个 phases 可以选择同一个 successful map。无论 selection fibres 有何形状，所选两 phases 的 chord 至少为 $2\sin(\pi/(M+1))$。由对 arbitrary common map 的 (86.4)，
+
+$$
+\delta\ge A_q\sin^2\frac{\pi}{M+1}.
+$$
+
+$M\ge1$ 使 $0<\pi/(M+1)\le\pi/2$；当 $0<\delta\le A_q/4$，反正弦的 monotonicity 给出 (86.9) 的 integer lower bound。再用 $\arcsin x/x\to1$ 与 ceiling error 有界，得到 (86.10)。这是在实际 common-map constraint 上应用有限 pigeonhole 与 circle covering；不要求 fibres regular、compact 或 measurable。
+
+对于 finite catalogue，(86.4) 与 (86.11) 排除同一个 label 含两个 tasks；逐 task 使用 (86.6) 的中心 decoder 则 $N$ labels 足够。zero-slack circle 的结论也可直接使用定理 83.1 的 pairwise optimal-image obstruction；$q=0$ 时使用保持 $P$ 的 decoder。∎
+
+定理 86.4 将推论 83.2 的 qualitative finite-catalogue margin 量化，并给出 continuum positive-slack compression。$q$ 必须先固定：$A_q,B_q$ 及 lower-bound interval 均依赖 $q$，没有 uniform joint-$(q,\delta)$ conclusion，也没有 exact finite-$\delta$ count 或 sharp leading coefficient。命题 86.2 的 stability 是 reduced image 的约束；实际 attaining maps 的 existence 不蕴含 decoder uniqueness。
+
+## 87. Phase 精度的静态 FIB register consequence
+
+**推论 87.1（独立固定长度 names 的精度代价）。** 固定定义 86.1 的一个 $0<q\le1/1000$。假设 static dictionary label 仅用一个独立的长度 $\ell\ge0$ binary data word 命名，word 内禁止相邻 $11$，前置 seam 固定为 $0$ 且在这 $\ell$ 位之外，不加其他末端约束。每个 name 只索引一个已供应的 fixed whole-qutrit CPTP decoder，不能附带未计入的 phase access 或 name-dependent continuous program parameter。则对 $\delta>0$，存在达到全部 phase tasks 阈值 $\eta_2(q)+\delta$ 的这种 static naming，当且仅当
+
+$$
+F_{\ell+2}\ge M_q(\delta),\qquad F_0=0,\quad F_1=1.
+\tag{87.1}
+$$
+
+因此最短这种 data length $\ell_q(\delta)$ 满足
+
+$$
+\ell_q(\delta)=\frac{\log(1/\delta)}{2\log\phi}+O_q(1),
+\qquad\phi=\frac{1+\sqrt5}{2},\qquad\delta\downarrow0.
+\tag{87.2}
+$$
+
+同一 naming contract 对定理 86.4 的 fixed finite catalogue，在 (86.11) 下的精确 capacity condition 是 $F_{\ell+2}\ge N$。
+
+**证明。** §76.4 与推论 83.2 已供应此独立 fixed-length no-$11$ contract 的 word count $F_{\ell+2}$，此处不另立 counting theorem。若 naming 实现阈值，distinct names 使用的 fixed maps 数不超过 $F_{\ell+2}$，由定义 86.1 不小于 $M_q(\delta)$。反之，(86.9) 说明 $\delta>0$ 有 finite dictionary，故最小 positive integer $M_q(\delta)$ 确实由某 dictionary 实现；若 (87.1) 成立，将这些 maps 分配到不同 legal names 即足够。没有结尾限制，且前置 seam 为 $0$，因此不会删除已计入的 words。
+
+标准 Fibonacci formula
+
+$$
+F_{\ell+2}=\frac{\phi^{\ell+2}-(-\phi^{-1})^{\ell+2}}{\sqrt5}
+$$
+
+给出 $F_{\ell+2}=\Theta(\phi^\ell)$。对最短 $\ell$ 使用 $F_{\ell+2}\ge M$ 及前一长度的失败条件，得
+$\ell=(\log M)/\log\phi+O(1)$。将定理 86.4 的 fixed-$q$ relation
+$\log M_q(\delta)=\tfrac12\log(1/\delta)+O_q(1)$ 代入即得 (87.2)。finite catalogue 则使用其恰为 $N$ 的 label count。∎
+
+这一推论把同一 actual quantum task 的 positive-slack phase resolution 翻译成声明的 FIB static-address length。precision 放宽使一个 fixed map 可以服务一段 tasks；zero-slack 时 circle 不存在 finite dictionary，fixed finite catalogue 则每个 phase 仍须独立 label。它只计算 names 的静态容量，不计算 decoder descriptions、phase acquisition、online updates、program counter、量子 program/storage dimension、paid read ports 或物理费用。即使 names 可编码，也没有构造实际取得 phase、更新 register 或执行 decoder 的装置；这些仍需原来源的权限与付费实现合同。
+
+**约定 87.2（承重来源与未解范围）。** §§85–86 的 actual effect image 固定使用 [Environment §27][F81ENV27] 的原 pin；单任务 admissible branch、residual 与 phase-image separation 使用本卷定理 81.4、83.1，不重建其 owning proofs。§85 新增的 common local certificate 在 CP/subunital Choi relaxation 中比较所有 complex maps，并以一个全 qutrit Kraus map 达到；§86 新增的 quantitative stability、共同 map separation 与 quadratic actual decoder neighbourhood 共同支撑 fixed-$q$ dictionary law。§87.1 是该 law 在独立 no-$11$ naming contract 下的应用，而不是另一个一般 classical coding theorem。
+
+trace/operator-norm support duality、CP positivity、Kraus/Choi representation、positive-unital norm contraction、analytic implicit functions 和 circle packing/covering 均为成熟中间工具；量子 map 的规范沿 §82.1 所引 [Watrous 条目](../../../Library/Quantum/watrous2018theory.md)，observable correction 的对应沿 §81.6 所引 [Bény–Kempf–Kribs 条目](../../../Library/Quantum/benykempfkribs2007observables.md)。这些 standard results 本身不供应 (85.2)、$15/8$ 系数或 (86.2) 的 model-specific constants。这里的内容是相对于上述供应结果的组合推导，不作 worldwide novelty 或文献优先权主张。
+
+定理 85.2 不确定局部 branch 外的 finite-$q$ common optimum，(85.18) 不扩大 exact interval。定理 86.4 不交换 $q\downarrow0$ 与 $\delta\downarrow0$，不推广到其他 horizons、其他 task directions 或另一种 input-dependent law。静态 task labels 的上述结论也不供应 erased-history causal control。
+
+定义 80.2 与 84.6 的 native acquisition、reverse kernels、maintenance/current-at-return recovery、chronology supplement 与资源、general quantitative tasks、动态 controller optimum 继续保留。§78.3 的 actual subexponential pair-energy、finite cutoff、collision entropy 及其有条件 causal-memory programme，和 §79.4、84.5 的 strict-real global joint incidence、same-child lifting 与 ancestor obligations，均未由这两个固定 horizon 的论文结论结算。这些 fixed-horizon 结论不结算原无界 horizon 目标。
+
+## 追加锚（本行以下为增补区）
