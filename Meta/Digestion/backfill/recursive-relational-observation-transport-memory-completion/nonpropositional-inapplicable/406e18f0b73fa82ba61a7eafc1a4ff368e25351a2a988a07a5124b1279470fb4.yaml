@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:406e18f0b73fa82ba61a7eafc1a4ff368e25351a2a988a07a5124b1279470fb4
+  normalized_sha256: sha256:406e18f0b73fa82ba61a7eafc1a4ff368e25351a2a988a07a5124b1279470fb4
+cas_ref: sha256:406e18f0b73fa82ba61a7eafc1a4ff368e25351a2a988a07a5124b1279470fb4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional definition: this atom declares the weighted continuation-system data, composition laws, residual function, and quotient notation; it supplies no theorem beyond the model contract.'
+    previous_atom_id: 0d9331f52f866e2defbf1ef1dce5a0e32a29c5c45e8f020a9a387a1807416355
+    next_atom_id: 13b002e5413c51f306c4448b40943532d25cc35af7717e676e5d3e2ad92eb575
