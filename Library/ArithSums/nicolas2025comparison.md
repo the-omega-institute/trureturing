@@ -15606,3 +15606,186 @@ No sufficient joint lower for
 $C_A(n)+G_{\mathrm{low},A}(n)+D_{\mathrm{far,new},A}(n)$ is supplied.
 Complete-defect positivity, RH and strict Robin for every $n>5040$
 remain unproved.
+
+## An actual integer family consumes the enlarged far-prime credit
+
+The following application gives a cofinal family of actual integers
+whose complete central first-layer debit cancels GMW's enlarged far
+credit to leading order. It uses MS's strict actual products, the
+owned effective PNT, HLD's full higher inventory and the unchanged
+KTO/GMW/CPW observation. This is an obstruction to retaining a fixed
+positive fraction of that credit through separate sector estimates.
+It supplies no root-scale lower for the full defect, literature-priority
+claim, Lean certification or RH/Robin proof.
+
+### A complete pressure balance at the unchanged observation
+
+Keep $A=\log n$, $L=\log A$, $T_A=\sqrt A L$, the same slow degree,
+source and observer, and the exact cuts $Y_A,P_A$ from CPW and GMW.
+Keep $\widetilde H_A=\beta_1^k(k-1)!/L^k$ and the actual far
+pressure $U'_A$ from GMW4. KTO1 and KTO11 give
+
+$$
+\mathcal J(A):=V_A-M(\lambda(A))
+=I_\psi(A)+o(1/T_A).
+\tag{ACC1}
+$$
+
+Let
+$F_{\mathrm{cen}}(q)=\sum_{Y_A<p\le P_A}\log p\,(r_p-q)_+$ and
+$\mathcal J_{\mathrm{cen}}(A)
+=\int F_{\mathrm{cen}}(\lambda(Av))\,d\omega_A(v)
+-F_{\mathrm{cen}}(\lambda(A))$.
+The original-price far pressure is zero: $p>P_A>A$ implies
+$r_p<1/(p\log p)<\lambda(A)$.
+CPW3 and exact mass/price identify the low pressure gap with
+$J_{\mathrm{low}}(A)$; HLD6 retains the complete higher gap.
+The disjoint pressure account therefore gives
+
+$$
+\mathcal J_{\mathrm{cen}}(A)
+=I_\psi(A)-U'_A+o(1/T_A)
+=-\widetilde H_A(1+o(1)).
+\tag{ACC2}
+$$
+
+Here the effective PNT input used in ACP1 bounds
+$|I_\psi(A)|\le Ce^{-a\sqrt L}=o(\widetilde H_A)$ for fixed
+$C,a>0$. GMW8 and $T_A\widetilde H_A\to\infty$ pay the other
+relative errors. No root-smallness of $U'_A$ is asserted.
+All pressure integrals are absolute by KTO, GMW, HLD and CPW.
+This balance alone concerns pressure: the complete central defect
+still retains its nonnegative original-price baseline.
+
+### Use actual strict products at their own size
+
+Reuse MS's actual products
+
+$$
+N_x=\prod_p p^{a_p(x)},\qquad
+ a_p(x)=\#\{j\ge1:r_{p,j}>\lambda(x)\},\qquad
+ A_x=\log N_x.
+$$
+
+All equality layers are excluded. The owned finite-layer pressure
+formula gives
+
+$$
+W(N_x)=M(\lambda(x))+\lambda(x)A_x.
+\tag{ACC3}
+$$
+
+Every active first prime has $p<x$. Conversely, $p\le x-1$ gives
+$r_p>1/((p+1)\log p)>\lambda(x)$. Thus the first active mass lies
+between $\vartheta(x-1)$ and $\vartheta(x)$.
+Use the same effective PNT, including the endpoint allowance
+$O(\log x)$, and HLD3/MS3's bound $O(\sqrt x)$ for the complete
+higher active mass. For some fixed $a>0$,
+
+$$
+A_x=x+O\!\left(xe^{-a\sqrt{\log x}}\right),\qquad A_x\sim x.
+\tag{ACC4}
+$$
+
+This retains every growing exponent layer. In particular the actual
+integers $N_x$ are unbounded. It does not assert $A_x=x$ or zero
+defect at their own-size price.
+
+For large $x$, one has $A_x\in[x/2,2x]$. On the price interval
+between $\lambda(x)$ and $\lambda(A_x)$, all pressure slopes have
+absolute value at most $Cx$: even the weak endpoint inventory at
+$2x$ is bounded by the strict inventory at $3x$, which is $O(x)$
+by ACC4. The finite piecewise-affine pressure is therefore
+$Cx$-Lipschitz on that interval, including all ties.
+Use ACC3 and $|\lambda'(y)|=O(1/(x^2\log x))$ for
+$y\in[x/2,2x]$. The full original-price defect of this same integer
+satisfies
+
+$$
+\begin{aligned}
+0\le d_{A_x}(N_x)
+&=M(\lambda(A_x))-M(\lambda(x))
+       +(\lambda(A_x)-\lambda(x))A_x\\
+&\le\frac{C|A_x-x|}{x\log x}
+\le\frac{Ce^{-a\sqrt{\log x}}}{\log x}
+=o(\widetilde H_{A_x}).
+\end{aligned}
+\tag{ACC5}
+$$
+
+The last comparison uses GMW2--GMW3's
+$\log\widetilde H_A=-\epsilon(\log L)^2+
+O(\log L\log\log L)$; $\sqrt L$ dominates $(\log L)^2$.
+ACC5 is only relative to this larger scale. It does not give
+$d_{A_x}(N_x)=o(1/T_{A_x})$.
+
+The original-price defect is the classical CA benefit, as recorded in
+[Erdős–Nicolas 1975](erdosnicolas1975repartition.md). ACC5 uses the
+unrestricted pressure slope; it assumes none of Proposition 5's
+additional localization hypotheses.
+
+### The complete central debit and far credit are jointly realized
+
+Put $n=N_x$ and $A=A_x$ in all unchanged cuts and observations.
+Since $A\sim x$, one has $P_A>x$ and $2Y_A<x$ eventually.
+Every prime factor of $N_x$ is below $x$, so the exact far occupation
+correction vanishes. CPW4 gives
+$r_p>\lambda(2Y_A)>\lambda(x)$ for every $p\le Y_A$;
+hence all low primes divide this same $N_x$. Consequently
+
+$$
+D_{\mathrm{far,new},A}(N_x)=U'_A
+=\widetilde H_A(1+o(1)),\qquad
+G_{\mathrm{low},A}(N_x)=0.
+\tag{ACC6}
+$$
+
+The original-price central and higher baselines are nonnegative
+parts of the full $d_A(N_x)$ and are each bounded by ACC5.
+Exact mass and price mean, ACC2, HLD8 and CPW8 now give
+
+$$
+C_A(N_x)=-\widetilde H_A(1+o(1)),\qquad
+D_{\mathrm{low},A}(N_x)=o(1/T_A),\qquad
+D_{2,A}(N_x)=o(\widetilde H_A).
+\tag{ACC7}
+$$
+
+These are the complete occupied-and-absent defect contributions,
+not just their pressure terms. In particular the disjoint CPW9
+account yields
+
+$$
+D_A(N_x)-D_{\mathrm{far,new},A}(N_x)
+=-\widetilde H_A(1+o(1)),\qquad
+D_A(N_x)=o(\widetilde H_A).
+\tag{ACC8}
+$$
+
+Thus, for every fixed real $\alpha<1$, eventually along this cofinal
+actual integer family, with the threshold allowed to depend on the
+fixed $\alpha$,
+
+$$
+\begin{aligned}
+C_A(N_x)+\alpha D_{\mathrm{far,new},A}(N_x)&<0,\\
+[D_A(N_x)-D_{\mathrm{far,new},A}(N_x)]
+       +\alpha D_{\mathrm{far,new},A}(N_x)&<0.
+\end{aligned}
+\tag{ACC9}
+$$
+
+Uniform separate-sector estimates that leave a fixed positive fraction
+of the enlarged far credit cannot hold on all original integers.
+The same actual integers realize both sides of the cancellation;
+no separately optimized configurations are combined.
+The intermediate pressure balance and near-price estimates are used
+only to establish this actual-integer obstruction.
+
+The surviving target remains the root-scale compensated account
+$T_A\Delta(N_x)=T_Ad_A(N_x)+T_AI_\psi(A)+c_R+o(1)$.
+Neither term on the right has been bounded here sufficiently at that
+scale. No sign of $D_A(N_x)$, $\Delta(N_x)$ or a Robin violation is
+inferred. A joint arithmetic estimate preserving the root reserve
+can still succeed; RH and strict Robin for every $n>5040$ remain
+unproved.
