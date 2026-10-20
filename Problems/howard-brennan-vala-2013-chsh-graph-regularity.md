@@ -60,7 +60,7 @@ The canonical source is `D5/S3/Quantum/Contextuality/StabilizerCHSHGraphRegulari
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Registration.** The §3.9 registration is `Reg/D5/S3/Quantum/Contextuality/StabilizerCHSHGraphRegularity.lean`.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Contextuality/StabilizerCHSHGraphRegularity.lean.json`, statement `sha256:70899a8c310b4c2abc3963180128947fb54fe1040ac7706f590e6a05db5dcb45`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Contextuality/StabilizerCHSHGraphRegularity.lean.json`, statement `sha256:4026e12e64dab621ed497ad74014446d470b4c4b228299b0ae43ebb452d4e53e`.
 
 Declaration statements:
 - `result`: `sha256:630686833ad540b45939ef2245fbd5c3c11502df7a852c77b6fd52ddc968842d`;
