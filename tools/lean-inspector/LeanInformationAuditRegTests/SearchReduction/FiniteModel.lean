@@ -6,6 +6,8 @@ bridge to find target in the same budget. No nonemptiness hypothesis is used. -/
 
 namespace LeanInformationAudit.Tests.SearchReduction.FiniteModel
 
+open LeanInformationAudit.SearchReduction (Run Verdict)
+
 inductive Atom where
   | seed | bridge | target
   deriving DecidableEq, Repr

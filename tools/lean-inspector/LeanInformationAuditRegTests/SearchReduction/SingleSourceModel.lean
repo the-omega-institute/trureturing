@@ -1,3 +1,4 @@
+import Mathlib
 import LeanInformationAuditRegAnalysis.SearchReduction.PresentationSyntax
 
 /-! Statement-level certificates and coverage for the executable syntax lookup.

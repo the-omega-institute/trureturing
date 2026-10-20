@@ -4,7 +4,6 @@ import LeanInformationAuditRegAnalysis.SearchReduction.Runner
 handlers and the assembled search outcome. Ordinary failure stays exhausted. -/
 open Lean Meta
 open LeanInformationAudit.SearchReduction
-open LeanInformationAudit.Tests.SearchReduction
 
 run_meta do
   let env ← getEnv
