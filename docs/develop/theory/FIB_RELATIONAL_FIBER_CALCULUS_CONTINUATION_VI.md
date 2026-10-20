@@ -3480,3 +3480,562 @@ $$
 [F91SCALE26]: https://github.com/the-omega-institute/trureturing/blob/77e6b52ce93d57d5dc918ac16456e97edc3e1a13/docs/develop/theory/FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数
 
 ## 追加锚（本行以下为增补区）
+
+## 92. Finite phase-circle common minimax at the actual horizon
+
+**Definition 92.1 (The finite phase-circle contract).** Fix a finite integer
+$n\ge2$ and $0<q\le10^{-3}$. In the ordered actual basis
+$(|0\rangle,|1\rangle,|2\rangle)=(\xi,e,f)$, put
+
+$$
+s=s_n=(-1/2)^{n-1},\qquad t=|s|=2^{1-n},\qquad
+c=\sqrt{q(1-q)},
+$$
+
+and let
+
+$$
+|v_\varphi\rangle=\sqrt{1-q}\,|0\rangle
+       +e^{i\varphi}\sqrt q\,|1\rangle,\qquad
+E_\varphi=|v_\varphi\rangle\langle v_\varphi|.
+\tag{92.1}
+$$
+
+The actual fair chronological channel is
+$F^n=\operatorname{Ad}_{U_0}\circ\Phi_s$, with
+
+$$
+\Phi_s(X)=
+\begin{pmatrix}
+ x_{00}&s x_{01}&0\\
+ s x_{10}&\frac{1+s}{2}x_{11}+\frac{1-s}{2}x_{22}&0\\
+ 0&0&\frac{1-s}{2}x_{11}+\frac{1+s}{2}x_{22}
+\end{pmatrix}.
+\tag{92.2}
+$$
+
+A terminal decoder is one input-independent whole complex qutrit CPTP map
+$D$. By the actual-channel correspondence, write
+$D=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger}$ and optimize over whole
+complex CPTP maps $\mathcal R:M_3(\mathbb C)\to M_3(\mathbb C)$. The loss is
+
+$$
+e_{\mathcal R}(\varphi)=
+ \left\|\Phi_s^\dagger\mathcal R^\dagger(E_\varphi)-E_\varphi
+ \right\|_{\rm op}.
+\tag{92.3}
+$$
+
+By the effect interface, (92.3) is the supremum of the absolute Born-
+probability error over every complex qutrit density input. There is no
+reference, history, summary, smaller input code, postselection or
+intermediate correction. Define
+
+$$
+\begin{aligned}
+\eta_{(q,n)}&=\min_{\mathcal R\ {\rm CPTP}}e_{\mathcal R}(0),\\
+\varepsilon_{\circ}(q,n)&=\min_{\mathcal R\ {\rm CPTP}}
+             \sup_{\varphi\in\mathbb R/(2\pi\mathbb Z)}e_{\mathcal R}(\varphi),\\
+\Delta_1(q,n)&=\varepsilon_{\circ}(q,n)-\eta_{(q,n)}.
+\end{aligned}
+\tag{92.4}
+$$
+
+The notation $\varepsilon_{\circ}$ is specific to this whole phase circle.
+It is not the two-task $c_2(q)$ of §85 and is not the half-diamond
+whole-channel quantity of the actual recovery source.
+
+Let $U_\theta=P_0+e^{i\theta}P_1+P_2$ and write
+$\mathcal G_\theta=\operatorname{Ad}_{U_\theta}$. The channel is covariant:
+$\Phi_s\mathcal G_\theta=\mathcal G_\theta\Phi_s$, and
+$E_\varphi=\mathcal G_\varphi(E_0)$.
+
+**Lemma 92.2 (Arbitrary complex lower bound by phase twirling).** For every
+whole complex CPTP map $\mathcal R$,
+
+$$
+\sup_\varphi e_{\mathcal R}(\varphi)
+ \ge (1-t)c.
+\tag{92.5}
+$$
+
+*Proof.* Haar-twirl the map over the phase circle,
+
+$$
+\overline{\mathcal R}=
+ \frac1{2\pi}\int_0^{2\pi}
+ \mathcal G_\theta\circ\mathcal R\circ\mathcal G_{-\theta}\,d\theta.
+\tag{92.6}
+$$
+
+This is again CPTP. Covariance of $\Phi_s$, unitary invariance of the
+operator norm and convexity give
+
+$$
+\sup_\varphi e_{\overline{\mathcal R}}(\varphi)
+ \le \sup_\varphi e_{\mathcal R}(\varphi).
+\tag{92.7}
+$$
+
+It is therefore enough to consider a covariant map. Put
+$D_0=(1-q)P_0+qP_1$ and
+$C=\overline{\mathcal R}^{\dagger}(|0\rangle\langle1|)$. The operator
+$\overline{\mathcal R}^{\dagger}(D_0)$ has charge zero and hence has zero
+$01$ entry. The operator $C$ has charge $-1$, so it is a linear combination
+of $|0\rangle\langle1|$ and $|2\rangle\langle1|$. The adjoint of (92.2)
+multiplies its $01$ entry by $s$ and kills its $21$ entry. Thus the $01$
+entry of
+$\Phi_s^\dagger\overline{\mathcal R}^{\dagger}(E_\varphi)-E_\varphi$
+is
+
+$$
+c\,e^{-i\varphi}(sC_{01}-1).
+\tag{92.8}
+$$
+
+The adjoint of a CPTP map is unital completely positive, so it contracts
+operator norm and $|C_{01}|\le\|C\|_{\rm op}\le1$. Consequently
+$|sC_{01}-1|\ge1-|s|=1-t$. An operator norm dominates the modulus of
+any matrix entry, proving (92.5). $\square$
+
+**Lemma 92.3 (Whole-map upper certificate and spectator).** Let
+$\sigma=\operatorname{sgn}(s)$ and define
+
+$$
+K_0=P_0+\sigma P_1,\qquad K_1=|1\rangle\langle2|,\qquad
+\mathcal R_\sigma(X)=K_0XK_0^\dagger+K_1XK_1^\dagger.
+\tag{92.9}
+$$
+
+Then $\mathcal R_\sigma$ is CPTP and, for every $\varphi$,
+
+$$
+e_{\mathcal R_\sigma}(\varphi)=(1-t)c.
+\tag{92.10}
+$$
+
+*Proof.* The two adjoint Kraus products sum to $P_0+P_1+P_2$. Directly,
+
+$$
+\mathcal R_\sigma^\dagger(E_\varphi)=
+ (1-q)P_0+qP_1+qP_2
+ +\sigma c\bigl(e^{-i\varphi}|0\rangle\langle1|
+                 +e^{i\varphi}|1\rangle\langle0|\bigr).
+\tag{92.11}
+$$
+
+Applying $\Phi_s^\dagger$ changes the off-diagonal coefficient to
+$s\sigma c=tc$ and leaves all three displayed diagonal entries fixed. The
+residual is therefore the direct sum of a $2\times2$ off-diagonal block
+with eigenvalues $\pm(1-t)c$ and the spectator entry $q$. Since
+$t\le1/2$ and $q\le10^{-3}$,
+
+$$
+q<\tfrac12\sqrt{q(1-q)}\le(1-t)c.
+\tag{92.12}
+$$
+
+Hence the spectator does not dominate, and (92.10) follows. The actual
+whole-qutrit decoder is
+$D_\sigma=\mathcal R_\sigma\circ\operatorname{Ad}_{U_0^\dagger}$,
+whose Kraus operators are $K_0U_0^\dagger,K_1U_0^\dagger$. $\square$
+
+**Theorem 92.4 (Finite phase-circle common minimax).** For every finite
+$n\ge2$ and $0<q\le10^{-3}$,
+
+$$
+\boxed{\displaystyle
+\varepsilon_{\circ}(q,n)=\bigl(1-2^{1-n}\bigr)\sqrt{q(1-q)}.}
+\tag{92.13}
+$$
+
+*Proof.* Lemma 92.2 gives the lower bound for every arbitrary complex
+whole-map competitor, and Lemma 92.3 attains it with one map for all
+phases. $\square$
+
+**Proposition 92.5 (Strict phasewise individual gap).** In the same range,
+
+$$
+0<\Delta_1(q,n),\qquad
+\eta_{(q,n)}<\varepsilon_{\circ}(q,n).
+\tag{92.14}
+$$
+
+*Proof.* Use $\sigma=\operatorname{sgn}(s)$. For $0<r<1-q$, set
+
+$$
+z_r=\sqrt{(1-q-r)(q+r)},\qquad
+A_r=
+\begin{pmatrix}
+ 1-q-r&\sigma z_r&0\\
+ \sigma z_r&q+r&0\\
+ 0&0&q+r
+\end{pmatrix}.
+\tag{92.15}
+$$
+
+The $01$ block is a rank-one projection and its $22$ entry is in $(0,1)$;
+therefore $0\le A_r\le I$. Prepare the actual task state $E_0$ on the
+$A_r$ outcome and the orthogonal state $P_2$ on its complement:
+
+$$
+\mathcal R_{A_r}(X)=\operatorname{Tr}(A_rX)E_0
+ +\operatorname{Tr}((I-A_r)X)P_2
+\tag{92.16}
+$$
+
+This is a whole-qutrit CPTP map. Explicitly, with
+$a=q+r$,
+$|w_r\rangle=\sqrt{1-a}|0\rangle+\sigma\sqrt a|1\rangle$ and
+$|u_r\rangle=\sigma\sqrt a|0\rangle-\sqrt{1-a}|1\rangle$,
+a Kraus family is
+
+$$
+L_0=|v_0\rangle\langle w_r|,\quad
+L_1=\sqrt a\,|v_0\rangle\langle2|,\quad
+L_2=|2\rangle\langle u_r|,\quad
+L_3=\sqrt{1-a}\,P_2.
+$$
+
+The first two adjoint products sum to $A_r$, the last two to $I-A_r$,
+and all four to $I_3$. Its adjoint on any matrix $B$ is
+
+$$
+\mathcal R_{A_r}^\dagger(B)
+ =\operatorname{Tr}(E_0B)A_r
+  +\operatorname{Tr}(P_2B)(I-A_r).
+$$
+
+Since $E_0^2=E_0$, $\operatorname{Tr}E_0=1$ and $E_0P_2=0$, this gives
+$\mathcal R_{A_r}^\dagger(E_0)=A_r$. The actual terminal decoder is
+$D_{A_r}=\mathcal R_{A_r}\circ\operatorname{Ad}_{U_0^\dagger}$, with
+Kraus operators $L_jU_0^\dagger$. Applying (92.2) in the adjoint direction
+leaves the equal $11,22$ entries of $A_r$ fixed and sends its $01$ entry
+to $s\sigma z_r=tz_r$. Thus its full phase-zero residual is
+
+$$
+\Phi_s^\dagger\mathcal R_{A_r}^\dagger(E_0)-E_0=
+\begin{pmatrix}
+-r&tz_r-c&0\\
+tz_r-c&r&0\\
+0&0&q+r
+\end{pmatrix}
+$$
+
+with eigenvalues $\pm\sqrt{r^2+(c-tz_r)^2}$ and $q+r$. Hence
+
+$$
+e_{\mathcal R_{A_r}}(0)=\max\left\{
+ \sqrt{r^2+(c-tz_r)^2},\ q+r\right\}.
+\tag{92.17}
+$$
+
+At $r=0$ the first term is $(1-t)c$ and the second is strictly smaller
+by (92.12). Moreover
+
+$$
+z'_0=\frac{1-2q}{2c}>0,
+$$
+
+and the derivative at zero of the square of the first term in (92.17)
+is $-2t(1-t)c z'_0=-t(1-t)(1-2q)<0$. For each fixed $(q,n)$ in the
+declared range, $0<t\le1/2$ and $1-2q>0$. The derivative and continuity
+therefore give an $r>0$ with $r<1-q$ and $q+r<(1-t)c$ for which both
+terms in (92.17) are strictly smaller than $(1-t)c$. This proves
+$\eta_{(q,n)}<\varepsilon_{\circ}(q,n)$ at every finite $n\ge2$;
+no choice of $r$ uniform in $n$ is needed. Phase covariance gives
+$e_{\mathcal G_\varphi\circ\mathcal R\circ\mathcal G_{-\varphi}}(\varphi)
+=e_{\mathcal R}(0)$, so the individual minimum is the same
+$\eta_{(q,n)}$ at every phase. It is attained by compactness of the
+finite-dimensional Choi set, and $\Delta_1>0$. $\square$
+
+**Corollary 92.6 (Exact one-label excess threshold and positive slack).**
+For a tolerance $\delta\ge0$, a one-label dictionary of fixed whole maps satisfies
+
+$$
+ e_{\mathcal R}(\varphi)\le\eta_{(q,n)}+\delta
+ \quad\text{for every }\varphi
+\tag{92.18}
+$$
+
+if and only if $\delta\ge\Delta_1(q,n)$. The threshold is exact even
+though $\eta_{(q,n)}$ is generally not explicitly evaluated for $n\ge3$.
+
+For every $\delta>0$ there is a finite positive-slack dictionary. If
+$\mathcal R_0$ attains $\eta_{(q,n)}$ at phase zero, rotate it by
+$\mathcal R_\theta=\mathcal G_\theta\circ\mathcal R_0\circ\mathcal G_{-\theta}$.
+Then $e_{\mathcal R_\theta}(\theta)=\eta_{(q,n)}$. Since
+$\Phi_s^\dagger\circ\mathcal R_\theta^\dagger$ is unital completely
+positive and therefore contracts Hermitian operator norm,
+
+$$
+ e_{\mathcal R_\theta}(\varphi)
+ \le \eta_{(q,n)}+4c\left|
+ \sin\frac{\varphi-\theta}{2}\right|.
+\tag{92.19}
+$$
+
+Indeed $\|E_\varphi-E_\theta\|_{\rm op}=2c|\sin((\varphi-\theta)/2)|$.
+An equally spaced $M$-point phase grid is consequently sufficient when
+
+$$
+M\ge\frac{\pi}{2\arcsin(\min\{1,\delta/(4c)\})},
+\qquad
+M_0:=\max\left\{1,\left\lceil\frac{2\pi c}{\delta}\right\rceil\right\}
+\tag{92.20}
+$$
+
+Taking $M=M_0$ is one convenient sufficient integer choice. Transporting every rotated
+map by $D_\theta=\mathcal R_\theta\circ\operatorname{Ad}_{U_0^\dagger}$
+gives whole actual terminal CPTP maps. This is only an upper certificate:
+it gives no sharp multi-label rate, and it does not prove that finite
+zero-excess dictionaries are infinite for any $n\ge3$. The known $n=2$
+zero-slack obstruction and the unresolved $n\ge3$ question retain their
+separate scopes.
+
+## 93. The actual $s=0$ restricted-circle endpoint
+
+**Definition 93.1 (Limiting restricted phase family).** Let
+$0\le q\le1/2$, $h=\sqrt{q(1-q)}$, and use the same effects $E_\varphi$
+from (92.1). At the actual limiting channel,
+
+$$
+\mathcal N_\infty=\Phi_0,\qquad
+\Phi_0(X)=x_{00}P_0+\frac{x_{11}+x_{22}}2(P_1+P_2).
+\tag{93.1}
+$$
+
+This is the $s=0$ limiting channel. It is not the empty-horizon identity
+$\mathcal N_0$.
+
+**Lemma 93.2 (All-complex lower bound at the endpoint).** For every whole
+complex CPTP decoder $D$ and every phase $\varphi$,
+
+$$
+\left\|\Phi_0^\dagger D^\dagger(E_\varphi)-E_\varphi\right\|_{\rm op}
+\ge h.
+\tag{93.2}
+$$
+
+*Proof.* For $K=D^\dagger(E_\varphi)$, the adjoint of (93.1) is
+
+$$
+\Phi_0^\dagger(K)=\operatorname{diag}
+ \left(K_{00},\frac{K_{11}+K_{22}}2,
+                    \frac{K_{11}+K_{22}}2\right).
+\tag{93.3}
+$$
+
+Thus the recovered effect has zero $01$ entry, even when the competing
+CPTP map and its effect are fully complex. The residual has $01$ entry
+$-h e^{-i\varphi}$, and compression to the unit vectors $|0\rangle$ and
+$|1\rangle$ gives the lower bound in (93.2). $\square$
+
+**Theorem 93.3 (Common individual optimum at $s=0$).** Define
+
+$$
+D_*(X)=\operatorname{Tr}(P_0X)P_0
+       +\operatorname{Tr}((I-P_0)X)P_1.
+\tag{93.4}
+$$
+
+Then $D_*$ is one whole-qutrit CPTP map, independent of $q$ and
+$\varphi$, and for every $0\le q\le1/2$ and every phase,
+
+$$
+\min_{D\ {\rm CPTP}}
+ \left\|\Phi_0^\dagger D^\dagger(E_\varphi)-E_\varphi\right\|_{\rm op}
+ =\left\|\Phi_0^\dagger D_*^\dagger(E_\varphi)-E_\varphi\right\|_{\rm op}
+ =h.
+\tag{93.5}
+$$
+
+In particular the same map attains every individual minimum and
+$\min_D\sup_\varphi e_D(\varphi)=h$.
+
+*Proof.* Kraus operators for (93.4) are
+$P_0,|1\rangle\langle1|,|1\rangle\langle2|$, whose adjoint products
+sum to $I_3$. Their adjoint sends
+
+$$
+D_*^\dagger(E_\varphi)=(1-q)P_0+q(P_1+P_2).
+\tag{93.6}
+$$
+
+The endpoint adjoint fixes this diagonal operator. The full residual is
+
+$$
+H_\varphi=
+\begin{pmatrix}
+0&-h e^{-i\varphi}&0\\
+-h e^{i\varphi}&0&0\\
+0&0&q
+\end{pmatrix},
+\tag{93.7}
+$$
+
+whose eigenvalues are $-h,h,q$. Since $0\le q\le1/2$ implies $q\le h$,
+its norm is $h$. The lower bound (93.2) proves optimality for every
+phase, and the same calculation includes both endpoints: at $q=0$ the
+residual is zero, while at $q=1/2$ its spectrum is
+$\{-1/2,1/2,1/2\}$. $\square$
+
+**Corollary 93.4 (Restricted common-optimum horizon set).** Fix
+$0<q\le10^{-3}$ and consider the same restricted $0/1$ phase family at
+actual horizons $n\in\{0,1,2,\ldots,\infty\}$. A single whole terminal
+CPTP decoder attains the individual minimum for every phase exactly at
+
+$$
+\boxed{\{0,1,\infty\}.}
+\tag{93.8}
+$$
+
+*Proof.* At $n=0$ the identity decoder is exact. At $n=1$,
+Proposition 103.2 of the owning actual-channel source supplies
+$D=\operatorname{Ad}_{U_0^\dagger}$. Here $\Phi_1=\Delta_W$ fixes each
+$E_\varphi$, which is supported on $\operatorname{span}\{|0\rangle,|1\rangle\}$,
+so this decoder has zero loss for the whole phase family. For each
+finite $n\ge2$, Proposition 92.5 gives the same individual minimum
+$\eta_{(q,n)}$ at every phase and
+$\eta_{(q,n)}<\varepsilon_{\circ}(q,n)$. A map attaining all those minima
+would have supremum loss $\eta_{(q,n)}$, contradicting Theorem 92.4.
+Theorem 93.3 supplies $D_*$ at the limiting channel.
+The all-rank-one obstruction at the limit has a different task family:
+it contains $P_0,P_2$ and the $0/2$ task $Q$, not the fixed-population
+$0/1$ circle. Therefore that obstruction does not remove $\infty$ from
+(93.8). At $q=0$ all phases coincide with $P_0$; this degenerate case is
+separate and the identity already attains the task exactly at every
+actual horizon, including the limit. $\square$
+
+The statement (93.8) is a restricted task-family result. It does not
+extend to all rank-one tasks, to arbitrary phase directions, or to
+whole-channel inversion. For $0<q\le1/2$, the endpoint task error $h$ is
+positive. The normalized unit vectors
+$|\psi_\pm\rangle=(|0\rangle\pm e^{i\varphi}|1\rangle)/\sqrt2$
+give density inputs $\rho_\pm=|\psi_\pm\rangle\langle\psi_\pm|$ with
+
+$$
+\Phi_0(\rho_+)=\Phi_0(\rho_-)
+ =\tfrac12P_0+\tfrac14(P_1+P_2),\qquad
+\operatorname{Tr}(E_\varphi\rho_\pm)=\tfrac12\pm h.
+$$
+
+The probabilities are distinct, with opposite deviations from $1/2$.
+Thus even this common optimum is not recovery of the input state.
+
+## 94. Same-channel task error and full-state testing
+
+At the same actual limiting channel, keep the decoder permissions of
+§93 and distinguish two input tests. The no-reference full-state quantity
+of the owning terminal source is
+
+$$
+\mu_\infty=\min_{D\ {\rm CPTP}}
+ \max_{\rho\in\mathsf D(\mathbb C^3)}
+ \frac12\|D\Phi_0(\rho)-\rho\|_1=\frac23,
+\tag{94.1}
+$$
+
+whereas the stabilized half-diamond quantity, whose reference is
+untouched and available only in the input test, is
+
+$$
+\delta_\infty=\min_{D\ {\rm CPTP}}
+ \frac12\|D\Phi_0-\operatorname{id}\|_\diamond=\frac45.
+\tag{94.2}
+$$
+
+These are supplied by the exact no-reference and stabilized terminal
+results from the full-state source at revision
+88e708c6e499168a6bf79cabb6bd08d4e62fb6fb (§§105--111). The reference is never a decoder input.
+In particular $\mu_\infty\le\delta_\infty$ and the exact gap is
+$\delta_\infty-\mu_\infty=2/15$. No finite no-reference value for
+$n\ge2$ is thereby supplied; those finite minimax problems remain open
+where the owning source leaves them open.
+
+The phase-optimal map $D_*$ makes the distinction concrete. Since
+$\Phi_0(P_2)=(P_1+P_2)/2$ and $D_*$ sends the lower subspace to $P_1$,
+
+$$
+D_*\Phi_0(P_2)=P_1,\qquad
+\frac12\|P_1-P_2\|_1=1.
+\tag{94.3}
+$$
+
+Thus a single map can be optimal for every member of the restricted
+phase family while performing badly on a full-state probe. Equation
+(94.3) is only an explicit distinction for the supplied map; it is not a
+new full-state minimax theorem and does not duplicate the proof of
+(94.1) or (94.2).
+
+## 95. Positive slack, static names and remaining boundaries
+
+For finite $n\ge2$ define $M_{q,n}(\delta)$ to be the least number of
+supplied fixed whole-qutrit CPTP maps whose labels cover the phase circle
+with loss at most $\eta_{(q,n)}+\delta$. Corollary 92.6 gives, for every
+$\delta>0$,
+
+$$
+M_{q,n}(\delta)\le
+\max\left\{1,\left\lceil\frac{2\pi\sqrt{q(1-q)}}{\delta}\right\rceil\right\}.
+\tag{95.1}
+$$
+
+If labels are independent fixed-length binary data words of length $\ell$,
+with no adjacent $11$, a preceding seam fixed to $0$ outside the data and
+no extra end condition, then the existing word-count supplier gives the
+exact static capacity condition
+
+$$
+F_{\ell+2}\ge M_{q,n}(\delta),\qquad F_0=0,\quad F_1=1.
+\tag{95.2}
+$$
+
+The proof is the same finite assignment used by the existing naming
+result: a successful naming uses at most $F_{\ell+2}$ fixed maps, while
+any dictionary of that cardinality can be assigned distinct legal names.
+Combining (95.1) and (95.2) gives a concrete sufficient static length by
+choosing the least $\ell$ with
+
+$$
+F_{\ell+2}\ge
+\max\left\{1,\left\lceil\frac{2\pi\sqrt{q(1-q)}}{\delta}\right\rceil\right\}.
+\tag{95.3}
+$$
+
+This is a positive-slack upper certificate. It does not assert a sharp
+multi-label rate, a uniform lower bound, or a finite zero-slack dictionary
+for $n\ge3$. At $s=0$, and also at $n=0,1$ for this phase family, one
+static name suffices even at zero excess by Theorem 93.3 and the owning
+first-horizon proposition. For $n=2$ the existing zero-slack obstruction
+remains; for $n\ge3$ the question whether a finite zero-excess dictionary
+exists is unresolved by the present theorem.
+
+A name in (95.2) selects a pre-supplied fixed whole CPTP map. The count
+therefore measures only the declared independent static data words. It
+does not provide phase acquisition, an online controller, a program
+counter, quantum storage, a paid port, or a physical-cost minimum. The
+same actual-channel contract continues to quantify over all complex
+qutrit density inputs and one common map per selected label.
+
+The finite phase-circle theorem leaves the individual optima
+$\eta_{(q,n)}$ generally unevaluated for $n\ge3$, the finite no-reference
+full-state minima and minimizers unresolved, and all sharp multi-label
+rates beyond the displayed upper certificate open. The endpoint result
+also leaves other task directions, finite-to-limit interchange and
+whole-channel recovery outside its scope. The standing unbounded
+subexponential, cutoff, entropy, strict-real joint-incidence,
+ancestor-lifting, dynamic-controller and physical-resource programmes
+remain unchanged.
+
+The arguments use only the actual channel and first-horizon suppliers,
+finite-dimensional Choi compactness, Haar symmetry, complete positivity,
+convexity and unital operator-norm contraction. These are mature
+intermediates; the model-specific constants and endpoint certificates are
+proved above. The results make no worldwide novelty claim. The two supplier pins used for the correspondence are the actual-channel
+and first-horizon source at revision 37142002ed7d67cdfc47940a899f4dc818f42cf3
+(§§93 and 103--104) and the no-reference and stabilized full-state source
+at revision 88e708c6e499168a6bf79cabb6bd08d4e62fb6fb (§§105--111, including
+the exact stabilized values).
+
+## 追加锚（本行以下为增补区）
