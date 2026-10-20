@@ -43,7 +43,7 @@ noncomputable def operationalWordProbability
   | generator :: rest =>
       operationalWordProbability instrument (instrument generator state) rest
 
-private theorem operational_probability_eq_trace_foldl
+theorem operational_probability_eq_trace_foldl
     {d : Nat} {Alphabet : Type*}
     (instrument : Alphabet -> MatrixAlgebra (Fin d) →CP MatrixAlgebra (Fin d))
     (state : MatrixAlgebra (Fin d)) (word : List Alphabet) :
