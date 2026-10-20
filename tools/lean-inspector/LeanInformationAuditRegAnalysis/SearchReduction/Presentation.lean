@@ -164,7 +164,7 @@ private def baselineSource (env : Environment) (levels : List Name) (target : Ex
 query precede all Meta operations on candidate statements. No whnf is run for
 an unmatched source. Every failure remains incomplete unless a proof is found. -/
 def baselinePresentation (env : Environment) (levels : List Name) (target : Expr)
-    (index? : Option FactIndex) :
+    (index? : Option FactIndex) (requireNonneutral := false) :
     IO (Run × Option PresentationEvidence × String) := do
   profilePhase "presentation/start"
   let some index := index?
@@ -177,6 +177,10 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
     | .ok atoms => pure atoms
     | .error err => return (.incomplete .execution, none,
         s!"search.presentation_target_normalization: {err}")
+  -- An empty nonneutral support is contained in every source. Such a match
+  -- does not certify that an added structure presents a baseline statement.
+  if requireNonneutral && targetAtoms.all (·.isScope) then
+    return (.exhausted, none, "search.structure_all_neutral: no baseline presentation")
   let targetNormalized ← IO.getNumHeartbeats
   if targetNormalized - start > unitLimit then
     return (.incomplete .heartbeat, none, "search.presentation_target_normalization_budget")

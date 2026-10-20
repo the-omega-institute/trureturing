@@ -135,6 +135,7 @@ private def prepareAdditions (source base : Environment) (index : FactIndex) :
     for dep in info.type.getUsedConstants do copyVocabulary source dep
     let started ← IO.getNumHeartbeats
     let (present, _, detail) ← baselinePresentation (← getEnv) info.levelParams info.type (some index)
+      (requireNonneutral := true)
     let used := (← IO.getNumHeartbeats) - started
     IO.eprintln s!"structure presentation: source={n}, independent_heartbeats={used}, {detail}"
     withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do

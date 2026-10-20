@@ -4,6 +4,10 @@ namespace LeanInformationAudit.Tests.SearchReduction.GraphCandidates
 
 theorem squareFact : (42 : Nat) * 42 = 1764 := rfl
 
+theorem trueFact : True := True.intro
+
+theorem arithmeticFact : (1 : Nat) + 1 = 2 := rfl
+
 theorem square : ∃ n : Nat, n * n = 1764 := ⟨42, rfl⟩
 
 theorem scopedWitness (x : Nat) (hx : x * x = 1764) : ∃ n : Nat, n * n = 1764 := ⟨x, hx⟩
