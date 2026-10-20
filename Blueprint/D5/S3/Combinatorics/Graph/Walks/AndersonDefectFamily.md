@@ -41,3 +41,4 @@ The construction proves the stated family and factor inclusions. It makes no ass
 - Dependency: [D5/S3/Combinatorics/Graph/AndersonSymmetryConverseRefutation](../AndersonSymmetryConverseRefutation.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Walks/AndersonDefectSeed](AndersonDefectSeed.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Walks/CycleDiagonalUnitPropagation](CycleDiagonalUnitPropagation.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/CyclicTridiagonalTransferTrace](../../SpectralGraph/CyclicTridiagonalTransferTrace.md)
