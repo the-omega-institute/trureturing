@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:cfd86fb343f6bc5574a838f75fc0dcc7256f1ca7ceb1a41868cde091f348954f
+  normalized_sha256: sha256:cfd86fb343f6bc5574a838f75fc0dcc7256f1ca7ceb1a41868cde091f348954f
+cas_ref: sha256:cfd86fb343f6bc5574a838f75fc0dcc7256f1ca7ceb1a41868cde091f348954f
+coverage_gids:
+  - gid: D5/S0/Computability/Coding/DepthBudgetIidGreedyOptimality.depth_budget_iid_greedy_optimality
+    target_statement_id: sha256:70c1aaa1ef1027db27bcdfa27a4083f5cd7039fe24251663cbeaf1ff32f4fbd2
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/HistoricalDepthBudgetJointExtremum.historical_depth_budget_joint_extremum
+    target_statement_id: sha256:088ea578a4fccae254c4961d2101d994038853bc0b4ad153d1556327c74d224a
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 9de8ca1161c41a6aaaf75f6b18bf1826d4d6dafafe243ed80cd4edfaf9153edd
+    - 5cd0b46cee239256bc8c4044a14f1ef05d3785143a78cec5f88db8b52d2e3a26

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:d3d75cdc3e377b7de9e94a267f95aea73d1f10cc50f6bb4633e84edf12ed32a5
+  normalized_sha256: sha256:d3d75cdc3e377b7de9e94a267f95aea73d1f10cc50f6bb4633e84edf12ed32a5
+cas_ref: sha256:d3d75cdc3e377b7de9e94a267f95aea73d1f10cc50f6bb4633e84edf12ed32a5
+coverage_gids:
+  - gid: D5/S0/Computability/Coding/DepthBudgetIidGreedyOptimality.depth_budget_iid_greedy_optimality
+    target_statement_id: sha256:70c1aaa1ef1027db27bcdfa27a4083f5cd7039fe24251663cbeaf1ff32f4fbd2
+  - gid: D5/S3/Observer/Budget/SparseGridIntegrability.sparse_grid_integrability
+    target_statement_id: sha256:adcd6f6f71a4a41df1ced39b093d01e43480c7fe6e72f24a0f5e3aa6c69d3a15
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/EffectiveRationalTransportTail.historical_survivor_transport
+    target_statement_id: sha256:49c30ef5eca1561afc98d9afcd10c255fb08169c4b6a21af1b2d9313757d767f
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/EffectiveRationalTransportTail.q_free_historical_rational_certificate
+    target_statement_id: sha256:a2bb0bbb854eaf15f88c4b53f16adc735d8dabc8b50be062e7b232819f5e6c08
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/HistoricalDepthBudgetJointExtremum.historical_depth_budget_joint_extremum
+    target_statement_id: sha256:088ea578a4fccae254c4961d2101d994038853bc0b4ad153d1556327c74d224a
+receipts:
+  unresolved_subitems: []

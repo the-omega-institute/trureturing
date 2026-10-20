@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:985062800b0d7cfb1697a2e77607cbb89ce08823dc6f7e0ae224e92e4eaff360
+  normalized_sha256: sha256:985062800b0d7cfb1697a2e77607cbb89ce08823dc6f7e0ae224e92e4eaff360
+cas_ref: sha256:985062800b0d7cfb1697a2e77607cbb89ce08823dc6f7e0ae224e92e4eaff360
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'The atom contains only proof prose and transition commentary: it states no independent mathematical proposition beyond the adjacent theorem atom. The actual theorem assertions are carried by child e9865e32ea62e390c53094e92685e7d4b4d498eaa8418296c33357ac2b11044d and the following atom; this receipt is bookkeeping only.'
+    previous_atom_id: e9865e32ea62e390c53094e92685e7d4b4d498eaa8418296c33357ac2b11044d
+    next_atom_id: aea9dfe9738625fb6180c9825eae8d0a181766c1d6e0800550f91502e45e89ad
