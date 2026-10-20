@@ -520,3 +520,20 @@ theorem correctedField_translation_physical (D : LatticeData) (hu : IsUnit D.G.d
 
 end D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
 end
+
+
+namespace D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField
+/-- Coefficients of the canonical even Hahn shift. -/
+theorem shiftField_coeff (D : LatticeData) (hu : IsUnit D.G.det)
+    (s : ℕ) (A : NativeField D hu) (e : ℤ) :
+    (shiftField D hu s A).coeff e = A.coeff (e + 2 * (s : ℤ)) :=
+  shiftField_coefficient D hu s A e
+end D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField
+
+namespace D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+/-- Successive native jets keep the same signed current mode. -/
+theorem native_jet_successor (order : ℕ) (mode : ℤ) :
+    (order + 1 : ℂ) * jetScalar (order + 1) mode =
+      (-(mode : ℂ) - 3 / 2 - (order : ℂ)) * jetScalar order mode :=
+  jet_successor order mode
+end D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation

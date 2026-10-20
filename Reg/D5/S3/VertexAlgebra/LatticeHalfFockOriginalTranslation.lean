@@ -23,6 +23,19 @@ open scoped BigOperators TensorProduct
 
 noncomputable section
 
+/- Faithful typed audit attempts for the newly exposed consumed APIs.  These
+   exact source mirrors are not four-slot registrations; the missing
+   realization/readout evidence is reported with this delivery. -/
+abbrev sourceScope_shiftField_coeff :=
+  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField.shiftField_coeff)
+theorem source_actual_shiftField_coeff : sourceScope_shiftField_coeff :=
+  @_root_.D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField.shiftField_coeff
+
+abbrev sourceScope_native_jet_successor :=
+  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.native_jet_successor)
+theorem source_actual_native_jet_successor : sourceScope_native_jet_successor :=
+  @_root_.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.native_jet_successor
+
 private def hyperbolic : LatticeData where
   rank := 2
   G := !![0, 1; 1, 0]

@@ -701,3 +701,23 @@ theorem polynomialField_X_mul (D : LatticeData) (hu : IsUnit D.G.det)
 
 end
 end D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
+
+
+namespace D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
+open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
+open scoped BigOperators
+
+/-- Pointwise signed-mode formula for the canonical singleton operation. -/
+theorem singletonLinear_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i : Index D) (e : ℤ) (v : ActualTensor D hu) :
+    (singletonLinear D hu i F).coeff e v =
+      ∑ᶠ m : ℤ, flatTerm D hu F [i] e v (m, ()) :=
+  singleton_coefficient D hu F i e v
+
+/-- Canonical cons decomposition through singleton insertion. -/
+theorem wordField_cons_singleton (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i : Index D) (w : List (Index D)) :
+    wordField D hu F (i :: w) = singletonLinear D hu i (wordField D hu F w) :=
+  wordField_cons D hu F i w
+
+end D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField

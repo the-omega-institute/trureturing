@@ -771,5 +771,18 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end PolynomialInsertion
 
+/- Faithful typed audit attempts for the newly exposed consumed APIs.  These
+   exact source mirrors are not four-slot registrations; the missing
+   realization/readout evidence is reported with this delivery. -/
+abbrev sourceScope_singletonLinear_coefficient :=
+  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.singletonLinear_coefficient)
+theorem source_actual_singletonLinear_coefficient : sourceScope_singletonLinear_coefficient :=
+  @_root_.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.singletonLinear_coefficient
+
+abbrev sourceScope_wordField_cons_singleton :=
+  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.wordField_cons_singleton)
+theorem source_actual_wordField_cons_singleton : sourceScope_wordField_cons_singleton :=
+  @_root_.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.wordField_cons_singleton
+
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
