@@ -1,4 +1,4 @@
-# AURIC–FIB approximate online recovery memory II: a common-tester bracket at three steps
+# AURIC–FIB approximate online recovery memory II: exact six-record recovery at three steps
 
 ## 1. The instrument, resource class and finite question
 
@@ -120,6 +120,23 @@ $6\ge4$. Its realization retains prefixes through time two and makes
 the desired record transition upon reading the third label. These
 suppliers are reused with these parameters and operations; their general
 proofs are not additional results of this volume.
+
+The finite question has the exact answer
+
+$$
+\epsilon_{\rm op}(6,3)
+=E^*:=1-\left[\frac{r-c}{r-1+\sqrt2(1-c)}\right]^2,
+\qquad
+\tau=\frac{3\sqrt3}{8},\quad c=\frac{\sqrt{13}}4,\quad r=\sqrt{1+\tau}.
+$$
+
+Sections 11–14 prove this equality with one anisotropic common tester
+covering every partition and arbitrary decoder, and a legal two-branch
+protocol with matching all-reference error. Sections 5–10 supply useful
+intermediate bounds and exact protocol norms. Within
+$0<\varepsilon<1/4$, peak width at most six is possible exactly when
+$`\varepsilon\ge E^*`$. The full unbounded joint memory law and
+critical-pair energy remain open.
 
 ## 2. All complete partitions and the exact Choi optimization
 
@@ -357,7 +374,8 @@ Carathéodory's finite-dimensional convex-hull theorem now gives 29
 partition channels in this affine space. This dimension count uses only
 the commuting $U(1)$ action. An arbitrary $SU(2)$ conjugation on $T$
 does not commute with the actual words and is not a permitted symmetry
-reduction here. Nor does the bound 29 establish optimality of two seeds.
+reduction here. The bound 29 alone does not establish optimality of two seeds; that
+requires the matching certificates of §§11–14.
 $\square$
 ## 4. Signed chronological word geometry
 
@@ -1143,10 +1161,10 @@ $\square$
 $z=\sqrt{1-\tau}$, $\gamma=15/\sqrt{481}$, and
 
 $$
-p_* =\frac{t}{h}=\frac hD,\qquad
-\rho_* =p_*P+
-  \frac{(1-p_*)I_T-
-           p_*(N_o-\gamma N_g)/(z(1-\gamma^2))}{2}.
+p_{\rm ref} =\frac{t}{h}=\frac hD,\qquad
+\rho_{\rm ref} =p_{\rm ref}P+
+  \frac{(1-p_{\rm ref})I_T-
+           p_{\rm ref}(N_o-\gamma N_g)/(z(1-\gamma^2))}{2}.
 \tag{9.6}
 $$
 
@@ -1159,27 +1177,27 @@ $$
 $$
 
 Proof. The positivity proof in Theorem 9.2 gave
-$0<p_*<k/(2d_1)<1/32$. The traceless Hermitian matrix
+$0<p_{\rm ref}<k/(2d_1)<1/32$. The traceless Hermitian matrix
 $N_o-\gamma N_g$ squares to $(1-\gamma^2)I_T$, by the Pauli
 anticommutator and (4.6). Its two eigenvalues are therefore
 $\pm\sqrt{1-\gamma^2}$, where
 $1-\gamma^2=256/481>1/2$. Also $z^2=1-\tau>1/4$.
-The two plane eigenvalues of $\rho_*$ are
+The two plane eigenvalues of $\rho_{\rm ref}$ are
 
 $$
-\frac12\left(1-p_*\pm
-                     \frac{p_*}{z\sqrt{1-\gamma^2}}\right).
+\frac12\left(1-p_{\rm ref}\pm
+                     \frac{p_{\rm ref}}{z\sqrt{1-\gamma^2}}\right).
 $$
 
-They are positive: the perturbation is less than $3p_*<3/32$, while
-$1-p_*>31/32$. The line eigenvalue is $p_*>0$, and the trace is
-$p_*+(1-p_*)=1$.
+They are positive: the perturbation is less than $3p_{\rm ref}<3/32$, while
+$1-p_{\rm ref}>31/32$. The line eigenvalue is $p_{\rm ref}>0$, and the trace is
+$p_{\rm ref}+(1-p_{\rm ref})=1$.
 
 The exact expectation identities are
 
 $$
-\operatorname{Tr}(\rho_*N_g)=0,\qquad
-\operatorname{Tr}(\rho_*N_o)=-p_*/z.
+\operatorname{Tr}(\rho_{\rm ref}N_g)=0,\qquad
+\operatorname{Tr}(\rho_{\rm ref}N_o)=-p_{\rm ref}/z.
 \tag{9.8}
 $$
 
@@ -1190,10 +1208,10 @@ Consequently the three signed residuals obey
 
 $$
 \begin{aligned}
-\operatorname{Tr}(\rho_*L_1)&=(t-hp_*)/\sqrt t=0,\\
-\operatorname{Tr}(\rho_*L_2)&=
-    -\sqrt{w_o}\,p_*/z+\beta p_*/\sqrt{w_o}=0,\\
-\operatorname{Tr}(\rho_*L_3)&=0.
+\operatorname{Tr}(\rho_{\rm ref}L_1)&=(t-hp_{\rm ref})/\sqrt t=0,\\
+\operatorname{Tr}(\rho_{\rm ref}L_2)&=
+    -\sqrt{w_o}\,p_{\rm ref}/z+\beta p_{\rm ref}/\sqrt{w_o}=0,\\
+\operatorname{Tr}(\rho_{\rm ref}L_3)&=0.
 \end{aligned}
 \tag{9.9}
 $$
@@ -1202,19 +1220,19 @@ Here the middle equality uses the actual common weights
 $w_o=s_1z^2/4$ and $\beta=s_1z/4$, hence
 $\beta/w_o=1/z$.
 
-Let $|\psi_*\rangle=|\sqrt{\rho_*}\rangle\!\rangle$, whose
-system marginal is $\rho_*$ and reference marginal is
-$\rho_*^{\mathsf T}$. Each residual output vector
-$(L_j\otimes I)|\psi_*\rangle$ is orthogonal to $|\psi_*\rangle$
+Let $|\psi_{\rm ref}\rangle=|\sqrt{\rho_{\rm ref}}\rangle\!\rangle$, whose
+system marginal is $\rho_{\rm ref}$ and reference marginal is
+$\rho_{\rm ref}^{\mathsf T}$. Each residual output vector
+$(L_j\otimes I)|\psi_{\rm ref}\rangle$ is orthogonal to $|\psi_{\rm ref}\rangle$
 by (9.9). Their positive sum has total trace $\eta$, by (9.3).
 The output difference on this input is therefore the sum of a negative
-target term $-\eta|\psi_*\rangle\langle\psi_*|$ and an orthogonally
+target term $-\eta|\psi_{\rm ref}\rangle\langle\psi_{\rm ref}|$ and an orthogonally
 supported positive term of trace $\eta$. Its trace norm is
 $2\eta=U$. The all-reference upper bound in Theorem 9.2 proves the
 matching equality (9.7). This is an exact norm of the displayed
 protocol, not a matching global lower certificate. $\square$
 
-## 10. The finite bracket, exact enclosures and remaining boundaries
+## 10. An intermediate finite bracket and exact enclosures
 
 **Theorem 10.1 (Strict finite operational bracket).** For the actual
 instrument, original controller class, arbitrary full-$H$ system-only
@@ -1260,53 +1278,940 @@ intervals lie strictly inside the two intervals in (10.2). These are
 enclosures of algebraic expressions, not exact decimal optima or PSD
 certificates. $\square$
 
-**Corollary 10.2 (Memory consequences without integer-bit saving).** For
-the unchanged operational memory function of Recovery Definition 2.4,
+## 11. The anisotropic tester and the full distinguished-cell duals
+
+**Definition 11.1 (Exact candidate and common input).** To distinguish
+scalars from the plane matrix $A$ of Definition 4.1, use the starred
+notation
 
 $$
-0<\varepsilon\le L\ \Longrightarrow\ W_3(\varepsilon)\ge7,
+\begin{aligned}
+b&=1-\tau,\qquad z=\sqrt b,\qquad rz=\sqrt{37}/8,\\
+p&=\frac{r-\sqrt2c}{r-\sqrt2c+\sqrt2-1},\qquad q=1-p,\qquad v=2rp,\\
+A^*&=p+cq=\frac{r-c}{r-1+\sqrt2(1-c)},\qquad
+E^*=1-(A^*)^2,\qquad g=2(A^*)^2,\\
+R&=(qI_T+vJ)/2,\qquad \rho=pP+R.
+\end{aligned}
+\tag{11.1}
+$$
+
+The vector coefficient $v$ in (11.1) is a scalar; it is distinct from
+the encoded basis vector $v$ in Definition 1.1. Throughout §§11–15,
+$p,q,v,R,\rho$ denote these fixed anisotropic quantities, rather than
+the variable isotropic tester of §5. Put $N_{o,0}=N_o$ and
+$N_{o,2}=8(v_2\cdot\sigma)/\sqrt{37}$ using (4.7). Explicitly,
+
+$$
+\begin{aligned}
+N_g&=\frac{1}{2\sqrt{13}}
+ \begin{pmatrix}0&3\sqrt3+5i\\3\sqrt3-5i&0\end{pmatrix},\\
+N_{o,0}&=\frac{1}{2\sqrt{37}}
+ \begin{pmatrix}8&5\sqrt3+3i\\5\sqrt3-3i&-8\end{pmatrix},\\
+N_{o,2}&=\frac{1}{2\sqrt{37}}
+ \begin{pmatrix}8&-5\sqrt3-3i\\-5\sqrt3+3i&-8\end{pmatrix}.
+\end{aligned}
+\tag{11.2}
+$$
+
+All three operators are extended by zero on $\xi$. These are the
+actual axes in the fixed $(f_1,f_2)$ frame, with
+
+$$
+\frac12\operatorname{Tr}_T(JN_g)=0,\qquad
+\frac12\operatorname{Tr}_T(JN_{o,0})
+=\frac12\operatorname{Tr}_T(JN_{o,2})=-\frac4{\sqrt{37}}.
+\tag{11.3}
+$$
+
+The two complementary axes are distinct; (11.3) asserts their common
+projection, not their equality or an arbitrary rotation symmetry.
+
+**Lemma 11.2 (Positivity, phases and balancing identities).** The
+marginal $\rho$ is full rank, and
+
+$$
+0<p<1/32,\qquad t_v:=v/q<1/16,\qquad
+p+rq=\sqrt2A^*,\qquad
+\operatorname{Tr}(RN_g)=0,\qquad
+\operatorname{Tr}(RN_{o,j})=-p/z\quad(j=0,2).
+\tag{11.4}
+$$
+
+Its normalized canonical purification is
+
+$$
+|\psi_\rho\rangle=
+ \sqrt p\,|\xi\xi\rangle+
+ \sqrt{(q-v)/2}\,|f_1f_1\rangle+
+ \sqrt{(q+v)/2}\,|f_2f_2\rangle.
+\tag{11.5}
+$$
+
+For a good pair the principal root of its actual relative is
+
+$$
+H_g=P+cP_T+i\frac{\sqrt3}{4}N_g.
+\tag{11.6}
+$$
+
+For each complementary pair the root is
+
+$$
+H_{o,j}=P+\frac{r(1+\epsilon_j i)}2P_T
+                 +\frac{z(1-\epsilon_j i)}2N_{o,j},
+\quad (j,\epsilon_j)=(0,+1)\ \text{or}\ (2,-1).
+\tag{11.7}
+$$
+
+The first two complementary pairs in Theorem 4.2 use $j=0$; the last
+two use $j=2$.
+
+Proof. Since $r^2-2c^2=\tau-5/8$, positive-square comparisons give
+
+$$
+0<\tau-5/8<1/40,\quad r<9/7,\quad \sqrt2c>5/4,\quad
+\sqrt2-1>41/100>2/5.
+$$
+
+Consequently
+
+$$
+\frac pq=\frac{\tau-5/8}{(r+\sqrt2c)(\sqrt2-1)}<1/40,
 \qquad
-U\le\varepsilon<1/4\ \Longrightarrow\ W_3(\varepsilon)\le6.
+\frac{2r}{r+\sqrt2c}<\frac{72}{71}<\frac{41}{40}.
 $$
 
-Proof. The first follows because no width-at-most-six controller has
-error at most $L$; the second uses the refined legal width-six
-protocol. These are statements about numbers of classical records.
-Under integer-bit accounting,
-$\lceil\log_2 6\rceil=\lceil\log_2 8\rceil=3$, so they do not
-give an integer-bit saving. $\square$
+The first inequality implies $p<1/41<1/32$. The second, together
+with $\tau-5/8<1/40$ and $\sqrt2-1>41/100$, gives
+$t_v=2rp/q<1/16$. Thus $p,(q-v)/2,(q+v)/2$ are positive and
+sum to one. Formula (11.5) follows because $J=\operatorname{diag}(-1,1)$.
+The definition of $p$ is precisely
+$p+rq=\sqrt2(p+cq)$. Equations (11.3), $v=2rp$ and
+$rz=\sqrt{37}/8$ give the two moment identities in (11.4).
 
-**Proposition 10.3 (Boundaries of the finite result).** The results here
-do not identify the global exact optimum, justify offline counting
-below the last-transition range, or determine the unbounded joint
-$(n,\varepsilon)$ random-history memory law or critical-pair energy.
+Equations (11.6)–(11.7) retain the spectator value one. On $T$,
+$H_g^2=K_2K_0$ by $c^2-3/16=5/8$ and
+$2c\sqrt3/4=\sqrt{39}/8$. On a complementary pair,
 
-Proof. The global common-tester support (3.1) still optimizes all 266
-partitions and their arbitrary decoders, whereas (9.7) evaluates just
-one selected mixture. The lower tester of §5 is strictly non-tight by
-§6; it cannot be turned into a matching certificate by reporting more
-decimal places. A sufficient missing step is an exact feasible averaged
-channel and one common tester with equal objectives, including all
-210 matching and 56 triple inequalities and analytically positive cell
-support slacks. Restricting singleton channels, using known-word
-inverses where a collision hides the word, or collapsing different axes
-on the basis of equal spectra would instead change this optimization.
+$$
+H_{o,j}^2=rzN_{o,j}+\epsilon_j i\tau I_T.
+$$
 
-Online feasibility cannot in general be inferred from terminal alphabet
-size alone: Recovery Proposition 43.3's three-bit majority assignment
-has residual-function layer counts $1,2,3,2$, so terminal size two
-does not imply peak two. The present protocols satisfy the larger
-last-transition hypothesis and explicitly use layers $1,2,4,6$.
-Nor can convexity select one successful seed: the norm of an averaged
-channel can be strictly below the average of its component norms.
-The identities (7.4) and (9.3) retain that average before evaluating
-error. Finally the argument fixes $n=3$ throughout and supplies no
-horizon-uniform estimates or critical-energy limit. Those questions
-remain open. $\square$
+Indeed $r^2+z^2=2$ and $r^2-z^2=2\tau$; the cross coefficient
+is $rz$. The same identities give unitarity. Their real parts on
+$T$ are respectively $cI_T$ and $(rI_T+zN_{o,j})/2$, both positive
+because $r>z>0$. Hence these are the principal roots of the ordered
+relatives in Theorem 4.3, including their opposite imaginary-trace
+signs. $\square$
 
-## 11. Mathematical sources and correspondence
+**Theorem 11.3 (Exact full-CPTP support of the six distinguished
+pairs).** With the output-first convention of §2 set
 
-**Convention 11.1 (Repository sources).** The supplier statements used
+$$
+W=|\rho\rangle\!\rangle\langle\!\langle\rho|,\qquad
+f_\rho(F)=\sum_a|\operatorname{Tr}(\rho F_a)|^2,
+\qquad
+H_C=\sum_{h\in C}|\rho Q_h^\dagger\rangle\!\rangle
+                      \langle\!\langle\rho Q_h^\dagger|.
+\tag{11.8}
+$$
+
+Then $0\preceq W\preceq I_3\otimes\rho$, the identity score is one,
+and $f_\rho$ is the survival probability of (11.5). For an arbitrary
+qutrit CPTP decoder define
+
+$$
+S_C=\max_D\sum_{h\in C}f_\rho(D\operatorname{Ad}_{Q_h}).
+$$
+
+Every singleton has $S_C=1$. Each good or complementary pair has
+$S_C=g$, with explicit full nine-dimensional Choi duals below.
+
+Proof. The matrix $\rho$ is real diagonal in the specified frame.
+Whitening $|\rho\rangle\!\rangle$ by $I\otimes\rho^{-1/2}$
+gives squared norm $\operatorname{Tr}\rho=1$, proving tester
+admissibility. Also
+$\langle\!\langle\rho|F_a\rangle\!\rangle
+=\operatorname{Tr}(\rho F_a)$, proving its survival interpretation.
+For any Hermitian $B_C$,
+
+$$
+I_3\otimes B_C\succeq H_C
+\quad\Longrightarrow\quad
+S_C\le\operatorname{Tr}B_C,
+\tag{11.9}
+$$
+
+because a CPTP decoder has positive Choi matrix with output partial
+trace $I_3$. Thus (11.9) includes decoders that transfer population or
+coherences between the line and plane.
+
+For a pair $C=\{a,b\}$ put $V_C=Q_aH$, where $H$ is its root
+(11.6) or (11.7), and change decoder coordinates to $D V_C$.
+The two known corrected branches become $H^\dagger,H$. Define
+
+$$
+C_g=P+cP_T,\quad S_g=\frac{\sqrt3}{4}N_g,\qquad
+D_o^{\rm op}=P+rP_T,\quad E_{o,j}^{\rm op}=P+zN_{o,j}.
+$$
+
+The corrected support matrices are exactly
+
+$$
+\begin{aligned}
+H_g^{\rm corr}
+ &=2|\rho C_g\rangle\!\rangle\langle\!\langle\rho C_g|
+   +2|\rho S_g\rangle\!\rangle\langle\!\langle\rho S_g|,\\
+H_{o,j}^{\rm corr}
+ &=|\rho D_o^{\rm op}\rangle\!\rangle
+                     \langle\!\langle\rho D_o^{\rm op}|
+   +|\rho E_{o,j}^{\rm op}\rangle\!\rangle
+                     \langle\!\langle\rho E_{o,j}^{\rm op}|.
+\end{aligned}
+\tag{11.10}
+$$
+
+For the second identity, the real and imaginary parts of (11.7) on
+the full qutrit are $(D_o^{\rm op}+E_{o,j}^{\rm op})/2$ and
+$\epsilon_j(D_o^{\rm op}-E_{o,j}^{\rm op})/2$. This explains both
+the spectator term in $E_{o,j}^{\rm op}$ and the absence of a sign
+change in its support.
+
+Choose the positive $3\times3$ matrices
+
+$$
+B_g=(2A^*\rho C_g)^{\mathsf T},\qquad
+B_o=((p+rq)\rho D_o^{\rm op})^{\mathsf T}.
+\tag{11.11}
+$$
+
+In the ordered frame $(\xi,f_1,f_2)$ these are the actual diagonal
+matrices
+
+$$
+\begin{aligned}
+B_g&=\operatorname{diag}(2A^*p,A^*c(q-v),A^*c(q+v)),\\
+B_o&=(p+rq)\operatorname{diag}(p,r(q-v)/2,r(q+v)/2).
+\end{aligned}
+\tag{11.12}
+$$
+
+Both traces equal $g$: the first is $`2A^*(p+cq)`$ and the second
+is $(p+rq)^2$. To verify the full inequalities
+$I_3\otimes B_g\succeq H_g^{\rm corr}$ and
+$I_3\otimes B_o\succeq H_{o,j}^{\rm corr}$, whiten the two
+support vectors by the indicated positive $9\times9$ matrix. For
+$N$ a Hermitian unitary on $T$, write
+
+$$
+T_N=\operatorname{Tr}(R^{-1}NR^2N).
+$$
+
+Their two-vector Gram matrices are exactly
+
+$$
+\operatorname{diag}\left(1,\frac{3T_{N_g}}{16cA^*}\right),
+\qquad
+\operatorname{diag}\left(1,
+             \frac{p+(b/r)T_{N_{o,j}}}{p+rq}\right).
+\tag{11.13}
+$$
+
+For example the cross entries reduce to
+$\operatorname{Tr}(\rho S_g)=0$ and
+$\operatorname{Tr}(\rho E_{o,j}^{\rm op})
+=p-4zv/\sqrt{37}=0$. The leading entries are one by
+$\operatorname{Tr}(\rho C_g)=A^*$ and
+$\operatorname{Tr}(\rho D_o^{\rm op})=p+rq$.
+Direct $2\times2$ multiplication also gives
+
+$$
+T_{N_g}=\frac{q(q^2+3v^2)}{q^2-v^2},\qquad
+T_{N_{o,j}}=\frac{q(37q^2+47v^2)}{37(q^2-v^2)}.
+\tag{11.14}
+$$
+
+Alternatively, for either axis and indeed any such $N$,
+
+$$
+T_N\le\|R^{-1}\|\operatorname{Tr}R^2
+=\frac{q(1+t_v^2)}{1-t_v}<2q.
+$$
+
+Thus the second good Gram eigenvalue is strictly less than
+$3q/(8cA^*)\le6/13<1$. The second complementary eigenvalue is
+strictly less than one because $2b<r^2$. A whitened sum of two
+rank-one matrices is bounded by identity exactly when this two-vector
+Gram is; this proves the PSD slacks on all nine dimensions.
+
+Identity decoding in corrected coordinates attains the traces in
+(11.11). Its two good traces are $A^*,A^*$; for a complementary
+pair they are $(p+rq)(1+\epsilon_j i)/2$ and its conjugate, since
+$\operatorname{Tr}(\rho E_{o,j}^{\rm op})=0$. Their squared
+moduli sum to $g$. Hence these support bounds are exact.
+In original decoder coordinates the dual is
+
+$$
+B_C=\overline{V_C}B_g V_C^{\mathsf T}
+\quad\text{or}\quad
+B_C=\overline{V_C}B_o V_C^{\mathsf T}.
+\tag{11.15}
+$$
+
+Indeed right multiplication of a vectorized matrix by $V_C^\dagger$
+acts as $I\otimes\overline{V_C}$, so (11.15) preserves the full
+PSD inequality and trace.
+
+For a singleton the corrected support is $W$, its dual is
+$\rho^{\mathsf T}=\rho$, and its original dual is
+$\overline{Q_h}\rho^{\mathsf T}Q_h^{\mathsf T}$. This proves
+score at most one for unrestricted singleton decoders; its inverse
+unitary attains one. $\square$
+
+## 12. Uniform full-Choi supports for all remaining pairs and triples
+
+**Lemma 12.1 (An explicit dual from a weighted plane Gram bound).** For
+any cell of size $m$ define
+
+$$
+\lambda_C=\lambda_{\max}
+ \left([\operatorname{Tr}(R^2G_h^\dagger G_k)]_{h,k\in C}\right).
+$$
+
+If $\lambda_C\le\Lambda$ with $\Lambda>0$, put
+$a_C=\sqrt m\,p$, $d_C=\sqrt{2\Lambda}$ and
+
+$$
+B_C=(a_C+d_C)\left(a_CP+\frac{d_C}{2}P_T\right).
+\tag{12.1}
+$$
+
+Then $I_3\otimes B_C\succeq H_C$ on the full Choi space and
+
+$$
+S_C\le\operatorname{Tr}B_C
+       =(\sqrt m\,p+\sqrt{2\Lambda})^2.
+\tag{12.2}
+$$
+
+Proof. Each vector $|\rho Q_h^\dagger\rangle\!\rangle$ is the
+orthogonal sum of its spectator component and its plane component.
+The spectator-vector Gram has norm $mp^2$. The literal plane-vector
+Gram is the transpose of the matrix defining $\lambda_C$; transpose
+does not change its eigenvalues. Whitening by $I_3\otimes B_C$
+therefore gives a Gram norm bounded by
+
+$$
+\frac{mp^2}{(a_C+d_C)a_C}
++\frac{\Lambda}{(a_C+d_C)d_C/2}
+=\frac{a_C+d_C}{a_C+d_C}=1.
+$$
+
+The positive matrices in (12.1) are invertible since $p>0$ and
+$\Lambda>0$. The rank-one Gram criterion used in Theorem 11.3 now
+proves the full PSD inequality, and (11.9) gives (12.2). No
+block-preserving restriction is imposed on the decoder. $\square$
+
+**Theorem 12.2 (All other pair supports are strictly smaller).** Every
+pair outside the two good and four complementary pairs has $S_C<g$.
+
+Proof. Put
+
+$$
+a_2=\operatorname{Tr}R^2=(q^2+v^2)/2,\qquad
+\mu=\frac{qv}{a_2}=\frac{2t_v}{1+t_v^2}
+                <\frac{32}{257}<\frac18.
+\tag{12.3}
+$$
+
+Multiplying plane words by scalar phases does not change the spectrum
+of their weighted Gram. Make their relatives $SU(2)$, writing an
+ordinary relative as $\kappa I+i\ell\cdot\sigma$, where
+$\kappa^2+|\ell|^2=1$. The signed table in Theorem 4.2 gives
+$|\kappa|\le1/2$ for each remaining pair. Its normalized weighted
+overlap has the form
+$\kappa+i\mu\,n_0\cdot\ell$, so
+
+$$
+\begin{aligned}
+\lambda_C
+ &\le a_2\left[1+
+       \sqrt{\kappa^2+\mu^2(1-\kappa^2)}\right]\\
+ &\le a_2\left[1+\sqrt{1/4+3\mu^2/4}\right]
+ <\frac{25}{16}a_2
+ <\frac{6425}{8192}q^2<\frac{13}{16}q^2.
+\end{aligned}
+\tag{12.4}
+$$
+
+Here $\sqrt{1/4+3/256}=\sqrt{67}/16<9/16$ and
+$a_2<(257/512)q^2$ by $t_v<1/16$. Apply (12.1) with
+$m=2$, $\Lambda=(13/16)q^2$. Its trace is
+
+$$
+[\sqrt2p+\sqrt{13/8}\,q]^2
+=2[p+cq]^2=g.
+$$
+
+To retain strictness, the strict bound on $\lambda_C$ in (12.4)
+allows a strictly smaller positive $\Lambda$; (12.2) then gives
+$S_C<g$. Thus this is a strict support exclusion, including leakage
+decoders, for all 22 remaining pairs. $\square$
+
+**Theorem 12.3 (All 56 triple supports).** Every triple has
+
+$$
+S_C\le T_3:=
+ [\sqrt3p+\sqrt{(17/8)(q^2+v^2)}]^2<2g-1.
+\tag{12.5}
+$$
+
+Proof. It suffices to bound its weighted Gram eigenvalue by
+$(17/8)a_2$. The following classification exhausts the 56 triples.
+
+| Parity and complementary edges | Count | Unweighted overlap structure |
+| --- | --- | --- |
+| Mixed parity, no complementary edge | $24$ | One nonzero edge, magnitude at most $5/8$ |
+| Mixed parity, one complementary edge | $24$ | Two nonzero edges, magnitudes $\tau$ and at most $5/8$ |
+| Same parity | $8$ | Three real edges $-1/2,-1/2,d$, with $d=5/8$ in four triples and $d=-1/8$ in four |
+
+There are $2\binom43=8$ same-parity triples. Of the other 48,
+exactly $4\cdot6=24$ contain a complementary edge; the four
+complementary edges are disjoint, so no triple contains two. A
+mixed-parity triple has one same-parity edge of Hamming distance two.
+Its opposite-parity edges have distance one or three, giving exactly
+the first two rows by Theorem 4.2. Within each four-vertex parity
+class, the two outer-bit edges have values $5/8$ and $-1/8$;
+every triple contains one of them and two adjacent-position edges
+of value $-1/2$. Each outer edge occurs twice, giving the final row.
+
+For the mixed rows, remove the common left factor $A^3$ in (4.1)
+and multiply odd-parity $R_h$ by $-i$ to obtain $SU(2)$ words.
+The unweighted normalized Gram becomes a real symmetric matrix $M_0$.
+The weighted normalized matrix is
+
+$$
+M=M_0+i\mu B,
+\tag{12.6}
+$$
+
+where $B$ is real skew-symmetric and each of its three independent
+entries is a component $n_0\cdot\ell$ of an $SU(2)$ relative,
+so has absolute value at most one. A real skew $3\times3$ matrix
+has norm equal to the Euclidean norm of these three entries, hence
+$\|B\|\le\sqrt3$.
+The first two rows' unweighted largest eigenvalues are at most
+$1+5/8$ and $1+\sqrt{\tau^2+25/64}=1+c$, respectively.
+Consequently all 48 mixed-parity triples obey
+
+$$
+\lambda_C/a_2\le1+c+\mu\sqrt3
+ <1+\frac{29}{32}+\frac{56}{257}<\frac{17}{8}.
+\tag{12.7}
+$$
+
+The strict rational comparisons use $c<29/32$, $\sqrt3<7/4$
+and (12.3); they follow by squaring positive quantities.
+
+For each same-parity triple, precisely one edge differs in positions
+$h_2,h_3$. Its weighted imaginary part is $\pm\mu\tau$;
+the other two edges have no imaginary part. To check this directly,
+the former relative is $K_2K_1$ or its conjugate by $K_0$, whose
+Pauli vector has $n_0$ component of magnitude $\tau$ by (4.3).
+The other relatives have the form $KK_0$ or $K_0K$, whose vector
+is perpendicular to $n_0$. Up to a simultaneous permutation of rows
+and columns the actual normalized matrix is therefore
+
+$$
+M=\begin{pmatrix}
+1&-1/2+i\epsilon\mu\tau&-1/2\\
+-1/2-i\epsilon\mu\tau&1&d\\
+-1/2&d&1
+\end{pmatrix},\qquad \epsilon\in\{+1,-1\}.
+\tag{12.8}
+$$
+
+The matrix $(17/8)I-M$ has diagonal $9/8$. Its two-by-two principal
+minors are $(9/8)^2-1/4$, $(9/8)^2-1/4-\mu^2\tau^2$ and
+$(9/8)^2-d^2$, all positive for $\mu<1/8$. Its determinant is
+
+$$
+\det((17/8)I-M)=
+\begin{cases}
+(56-243\mu^2)/512,&d=5/8,\\
+(464-243\mu^2)/512,&d=-1/8.
+\end{cases}
+\tag{12.9}
+$$
+
+For example expand
+$(9/8)^3-(9/8)(1/2+d^2+\mu^2\tau^2)-d/2$
+and use $\tau^2=27/64$. Both determinants are positive for
+$\mu<1/8$. Positive principal minors prove the full Hermitian
+matrix is positive definite, covering all eight same-parity triples.
+Together with (12.7), this proves $\lambda_C\le(17/8)a_2$ for
+every triple. Lemma 12.1 supplies its actual full-Choi dual (12.1)
+with $m=3$ and $\Lambda=(17/16)(q^2+v^2)$.
+
+Finally,
+
+$$
+\frac{17}{8}\frac{257}{256}<\left(\frac{47}{32}\right)^2,
+\qquad
+\sqrt{T_3}<2p+\frac{47}{32}q
+ <\frac{1521}{1024}<\frac32.
+$$
+
+The first comparison is $4369/2048<4418/2048$, and the second
+uses $p<1/32$ and $\sqrt3<2$. Since $`A^*=p+cq\ge c`$,
+$g\ge2c^2=13/8$. Thus $T_3<9/4\le2g-1$, as required.
+$\square$
+
+## 13. The common lower certificate for every online controller
+
+**Theorem 13.1 (Global anisotropic lower bound).** Every channel in the
+original operational class has unhalved diamond error at least
+$`E^*=1-(A^*)^2`$.
+
+Proof. Use the single input and measurement (11.5), (11.8) for every
+partition in (2.1). For a two-pair partition, unrestricted singleton
+support is at most four and pair support at most $2g$, by Theorems
+11.3 and 12.2. For a triple partition, Theorem 12.3 gives total
+support at most $5+T_3<4+2g$. Thus all 210 and 56 partition
+inequalities in Theorem 3.1 hold with
+
+$$
+z_0=\frac{4+2g}{8}=\frac{1+(A^*)^2}{2}.
+\tag{13.1}
+$$
+
+These inequalities have explicit $9\times9$ PSD slacks: (11.11),
+(11.15) for the six distinguished pairs, (12.1) for all other pairs
+and triples, and the singleton dual following (11.15). They bound
+all cell decoders simultaneously, including arbitrary nonunitary
+singleton maps and maps with line-plane leakage.
+
+Theorem 2.1 already includes every stochastic online controller and
+arbitrary input- and history-independent shared seed permitted by
+Definition 1.2. Refinement duplicates decoders on split cells, and
+finite-program replacement preserves the entire averaged channel.
+Since $f_\rho$ is one fixed linear functional of that channel,
+convexification preserves $f_\rho(F)\le z_0$. It is not a minimum
+over separately chosen partition errors.
+
+The survival measurement on (11.5) then gives
+
+$$
+\|F-\operatorname{id}_3\|_\diamond
+\ge\|(F\otimes\operatorname{id})(|\psi_\rho\rangle
+       \langle\psi_\rho|)-|\psi_\rho\rangle\langle\psi_\rho|\|_1
+\ge2[1-f_\rho(F)]\ge E^*.
+\tag{13.2}
+$$
+
+The middle inequality is the two-outcome measurement bound for a
+trace-zero difference. Its factor two is the unhalved convention.
+For an arbitrary full-$H$ decoder, compose its averaged encoded channel
+with $C$ as in Convention 1.3. Complete trace-norm contraction yields
+
+$$
+\|\mathcal E-\iota\|_\diamond
+\ge\|C\mathcal E-\operatorname{id}_3\|_\diamond\ge E^*.
+$$
+
+The input remains the encoded qutrit and the reference is untouched;
+no assertion about arbitrary unencoded $H$ input is used. $\square$
+
+## 14. A legal matching channel and its all-reference norm
+
+**Definition 14.1 (Optimal seed probability).** Retain the actual
+partitions and polar decoders of Definition 7.1, with the principal
+roots (11.6) and (11.7). Set
+
+$$
+\begin{aligned}
+D_g&=(1-c)^2/2,\qquad D_o=(r-1)^2/4,\qquad
+\alpha=D_o-D_g=\alpha_0,\\
+D(s)&=(1-s)D_g+sD_o,\qquad h(s)=a(s)-u(s)=-d_0+d_1s,\\
+s^*&=\frac{d_0+pD_g}{d_1-p\alpha},\qquad
+F^*=F_{s^*}.
+\end{aligned}
+\tag{14.1}
+$$
+
+Here $D_o$ is a positive scalar, distinct from the operator
+$D_o^{\rm op}$ in §11. In (14.1) and below, $u(s),a(s)$ are
+exactly the averaged coefficients in (7.3).
+
+**Lemma 14.2 (Scalar balance and legal probability).** The constants
+satisfy
+
+$$
+\begin{aligned}
+D(s)&=u(s)+2h(s)-s/4>0\quad(0\le s\le1),\\
+k&=2d_1p-\alpha p^2,\qquad \alpha>0,\\
+0&<s^*<1,\qquad h(s^*)=pD(s^*).
+\end{aligned}
+\tag{14.2}
+$$
+
+Proof. On the good branch,
+$u_g+2(a_g-u_g)=D_g$, using $c^2=13/16$. On the odd branch,
+$u_o+2(a_o-u_o)-1/4=D_o$, using $r^2=1+\tau$.
+Affinity proves the first identity, and $D_g,D_o>0$ prove positivity.
+Its slope is $2d_1-k-1/4=\alpha$, agreeing with (8.1);
+Theorem 8.2 proves $\alpha>0$.
+
+The balance relation follows by expanding
+$(p+rq)^2=2(p+cq)^2$. More explicitly,
+
+$$
+\begin{aligned}
+k-2d_1p+\alpha p^2
+ &=kq^2+\frac{r-2c}{2}pq-\frac14p^2\\
+ &=\frac{(p+rq)^2-2(p+cq)^2}{4}=0,
+\end{aligned}
+$$
+
+where $k=(\tau-5/8)/4$ and
+$d_1=c/2-5/32+\tau/4-r/4$.
+The numerator of $`s^*`$ is positive. Its denominator minus that
+numerator equals
+
+$$
+e_0-pD_o=\frac{(r-1)[r-p(r-1)]}{4}>0,
+\tag{14.3}
+$$
+
+since $p<1$. Hence the denominator is positive and $`s^*`$ lies
+strictly between zero and one. Solving
+$-d_0+d_1s=p(D_g+\alpha s)$ gives the stated balance at $`s^*`$.
+$\square$
+
+**Theorem 14.3 (Signed residual certificate and exact global value).**
+The original operational minimum is
+
+$$
+\boxed{\epsilon_{\rm op}(6,3)=E^*
+=1-\left[\frac{r-c}{r-1+\sqrt2(1-c)}\right]^2}.
+\tag{14.4}
+$$
+
+It is attained by $`F^*`$ with its legal independent two-branch seed.
+The exact error is the unhalved diamond norm over every finite
+untouched reference, also after lifting to the encoded full-$H$ problem.
+
+Proof. Theorem 7.2 gives the complete actual channel, with plane block
+and spectator multiplier
+
+$$
+\begin{aligned}
+F^*|_{M(T)}&=(1-u)\operatorname{id}
+                 +(1-s^*)u_g\operatorname{Ad}_{N_g}
+                 +s^*u_o\operatorname{Ad}_{N_{o,0}},\\
+\text{line-plane multiplier}&=(1-a)I_T+\frac{s^*z}{4}N_{o,0}.
+\end{aligned}
+\tag{14.5}
+$$
+
+All coefficients here are evaluated after averaging the actual
+channels. Put $D=D(s^*)$, $u=u(s^*)$, $\eta=u+p^2D$, and
+
+$$
+\begin{aligned}
+L_1&=\sqrt D\,(pP_T-qP),\\
+L_2&=\frac{\sqrt{s^*}}2(P+zN_{o,0}),\\
+L_3&=\sqrt{(1-s^*)3/32}\,N_g.
+\end{aligned}
+\tag{14.6}
+$$
+
+The spectator coefficient of $L_1$ is $-q\sqrt D<0$. On the plane,
+the sum of their effects is
+$[p^2D+s^*b/4+(1-s^*)3/32]I_T=\eta I_T$.
+On the line it is $Dq^2+s^*/4$. The identities (14.2) give
+
+$$
+Dq^2+s^*/4
+=D(1-2p+p^2)+s^*/4=u+p^2D=\eta.
+$$
+
+Thus there are no cross-effect terms and
+
+$$
+\sum_jL_j^\dagger L_j=\eta I_3.
+\tag{14.7}
+$$
+
+The channel identity on all nine matrix units is
+
+$$
+F^*=(1-\eta)\operatorname{id}_3+\sum_{j=1}^3\operatorname{Ad}_{L_j}.
+\tag{14.8}
+$$
+
+Indeed on $M(T)$ the identity coefficient is
+$1-\eta+p^2D=1-u$, and the other coefficients are exactly those
+in (14.5). On $P$ the coefficient is $1-\eta+Dq^2+s^*/4=1$.
+On $|x\rangle\langle\xi|$, $x\in T$, it is
+
+$$
+[1-\eta-pqD]x+\frac{s^*z}{4}N_{o,0}x
+=[1-u-pD]x+\frac{s^*z}{4}N_{o,0}x
+=[1-a]x+\frac{s^*z}{4}N_{o,0}x.
+$$
+
+The reverse coherence block follows by adjoint and complex linearity.
+This proves (14.8) on the line, four plane units and both pairs of
+coherence units. Replacing the negative spectator coefficient in
+(14.6) by its absolute value would invalidate this identity.
+
+All three residual moments against the common input vanish:
+
+$$
+\begin{aligned}
+\operatorname{Tr}(\rho L_1)&=\sqrt D(pq-qp)=0,\\
+\operatorname{Tr}(\rho L_2)&=\frac{\sqrt{s^*}}2
+                    [p+z\operatorname{Tr}(RN_{o,0})]=0,\\
+\operatorname{Tr}(\rho L_3)&=0.
+\end{aligned}
+\tag{14.9}
+$$
+
+On $|\psi_\rho\rangle$ the positive residual output in (14.8)
+is therefore orthogonal to the target and has trace $\eta$, by
+(14.7). The difference has trace norm exactly $2\eta$.
+For the matching upper bound, let
+$\mathcal R=\eta^{-1}\sum_j\operatorname{Ad}_{L_j}$. It is CPTP
+and $\eta>0$. Complete trace-norm contractivity gives
+$\|\mathcal R\|_\diamond=\|\operatorname{id}_3\|_\diamond=1$,
+so for every finite untouched reference, and arbitrary operators in
+the diamond-norm definition,
+
+$$
+\|F^*-\operatorname{id}_3\|_\diamond
+=\eta\|\mathcal R-\operatorname{id}_3\|_\diamond\le2\eta.
+\tag{14.10}
+$$
+
+It remains to identify this exact protocol norm with the common lower
+bound. Its four singleton contributions have score four. In either
+branch the two actual pair corrections attain $g$ by Theorem 11.3.
+Consequently
+
+$$
+f_\rho(F^*)=\frac{4+2g}{8}=\frac{1+(A^*)^2}{2}.
+$$
+
+Equations (14.8)–(14.9) also give $f_\rho(F^*)=1-\eta$.
+Thus $2\eta=1-(A^*)^2=E^*$, with $0<\eta<1$. This proves
+both all-reference norm equality and the matching value in (14.4),
+using Theorem 13.1 for the all-controller lower bound.
+
+Operationally, the seed chooses the two complete partitions (7.1)
+with probabilities $1-s^*,s^*$. Retaining prefixes through time two
+and transitioning directly into their six cells uses the actual layer
+widths $1,2,4,6$. The pair decoder is
+$\operatorname{Ad}_{H^\dagger Q_a^\dagger}$ and a singleton uses
+$\operatorname{Ad}_{Q_h^\dagger}$; these depend only on the retained
+cell, horizon and independent seed. The fixed pair polar unitary is
+$Q_aH$, not an inverse selected using the hidden member of the pair.
+Each qutrit decoder lifts as $\iota D C$, and Convention 1.3 gives
+
+$$
+\|\iota F^*-\iota\|_\diamond
+=\|F^*-\operatorname{id}_3\|_\diamond=E^*.
+$$
+
+This exact lift and the contraction in Theorem 13.1 cover arbitrary
+system-only full-$H$ decoders in both directions, with encoded input
+and target fixed. $\square$
+
+## 15. The family equality condition, strict improvement and threshold
+
+**Theorem 15.1 (General family norm identity and unique fixed-family
+minimizer).** For $s\in[0,1]$ put
+$p_s=h(s)/D(s)$, $q_s=1-p_s$. If
+
+$$
+p_s\ge0,\qquad 2rp_s\le1-p_s,
+\tag{15.1}
+$$
+
+then
+
+$$
+\|F_s-\operatorname{id}_3\|_\diamond
+=2\left[u(s)+\frac{h(s)^2}{D(s)}\right]
+=E^*+2D(s)(p_s-p)^2.
+\tag{15.2}
+$$
+
+The unique minimizing seed weight in the entire fixed family
+$\{F_s:0\le s\le1\}$ is $`s^*`$. This uniqueness concerns the
+specified two partitions and their polar/inverse decoders, rather than
+all protocols attaining the global value.
+
+Proof. For a weight satisfying (15.1), use
+
+$$
+\begin{aligned}
+\rho_s&=p_sP+[(1-p_s)I_T+2rp_sJ]/2,\\
+L_{1,s}&=\sqrt{D(s)}[p_sP_T-(1-p_s)P],\\
+L_{2,s}&=\sqrt s(P+zN_{o,0})/2,\qquad
+L_{3,s}=\sqrt{(1-s)3/32}\,N_g,\\
+\eta_s&=u(s)+p_s^2D(s).
+\end{aligned}
+\tag{15.3}
+$$
+
+The condition (15.1) states exactly the required nonnegativity of the
+line weight and both plane eigenvalues of $\rho_s$; its trace is one.
+The effect, block and zero-moment calculations (14.7)–(14.9) apply
+with $p_s,q_s$ because $h(s)=p_sD(s)$. They require no inverse of
+$\rho_s$, so also cover equality in (15.1). In particular the
+spectator coefficient remains negative, since
+$p_s\le1/(1+2r)<1$. The canonical purification gives output trace
+norm $2\eta_s$, and the residual channel gives the upper bound for
+all finite references. This proves the first equality in (15.2).
+
+For the second, $u(s)+2ph(s)-p^2D(s)$ is affine in $s$ with
+slope $-k+2pd_1-p^2\alpha=0$ by (14.2). Its value at $`s^*`$
+is $E^*/2$ by Theorem 14.3. Completing the square gives
+
+$$
+u(s)+\frac{h(s)^2}{D(s)}-\frac{E^*}{2}
+=D(s)\left(\frac{h(s)}{D(s)}-p\right)^2.
+\tag{15.4}
+$$
+
+At $`s^*`$ the inequalities in (15.1) are strict by Lemma 11.2.
+They remain strict on an open interval about that weight. Moreover
+for $s_2>s_1$ in $[0,1]$,
+
+$$
+p_{s_2}-p_{s_1}
+=\frac{(d_1D_g+\alpha d_0)(s_2-s_1)}{D(s_2)D(s_1)}>0.
+\tag{15.5}
+$$
+
+Thus (15.4) is strictly positive in that neighborhood except at
+$`s^*`$. On the whole interval, the map $s\mapsto F_s$ is affine
+and $s\mapsto\|F_s-\operatorname{id}_3\|_\diamond$ is convex.
+Another minimizing weight would force equality on the entire segment
+to $`s^*`$, contradicting the strict local inequality. This proves
+uniqueness throughout the fixed family without assuming an endpoint
+norm formula or deducing uniqueness just from a matching global value.
+$\square$
+
+**Corollary 15.2 (Strict exact improvement over the refined value).**
+The value $U$ of (9.1) is the exact norm of its protocol and satisfies
+
+$$
+L<E^*<U,\qquad
+U-E^*=2D(s_1)(p_1-p)^2>0,
+\qquad
+p_1=\frac{kd_1}{2d_1^2+\alpha k}.
+\tag{15.6}
+$$
+
+Proof. Since $s_1=s_0+H_0k/(2d_1^2)$,
+$h(s_1)=d_1x$ and $D(s_1)=H_0+\alpha x$, giving the stated
+$p_1$. The positive constants in (8.2) and (14.2) give
+
+$$
+0<p_1<\frac{k}{2d_1}<p.
+$$
+
+The last strict inequality follows from
+$k=2d_1p-\alpha p^2$ with $\alpha>0$. Thus
+$2rp_1<2rp<1-p<1-p_1$, so (15.1) holds strictly at $s_1$.
+Formula (15.2) applies and its first expression is exactly (9.1)'s
+$U$. Formula (15.4) proves the strictly positive factor in (15.6).
+This is exact sign evidence, independent of a rounded decimal gap.
+The strict lower comparison follows from Theorem 6.1 and (14.4).
+$\square$
+
+**Corollary 15.3 (Exact finite threshold and record cost).** In the
+original range $0<\varepsilon<1/4$, a legal protocol of peak width
+at most six and error at most $\varepsilon$ exists if and only if
+$`\varepsilon\ge E^*`$. In particular,
+
+$$
+0<\varepsilon<E^*\ \Longrightarrow\ W_3(\varepsilon)\ge7,
+\qquad
+E^*\le\varepsilon<1/4\ \Longrightarrow\ W_3(\varepsilon)\le6.
+\tag{15.7}
+$$
+
+Proof. Theorem 13.1 excludes every such protocol below $E^*$;
+Theorem 14.3 attains the endpoint and hence every larger error
+allowance. The full record convention is unchanged. Under integer-bit
+accounting, six and eight records both cost three bits:
+$\lceil\log_2 6\rceil=\lceil\log_2 8\rceil=3$. $\square$
+
+**Corollary 15.4 (Rational enclosures of the exact value and gap).**
+
+$$
+\begin{aligned}
+\frac{183475875370782602}{10^{18}}
+ &<E^*<\frac{183475875370782603}{10^{18}},\\
+\frac{148012572}{10^{18}}
+ &<U-E^*<\frac{148012573}{10^{18}}.
+\end{aligned}
+\tag{15.8}
+$$
+
+For orientation, $`E^*\approx0.183475875370782602048620`$.
+
+Proof. Use the positive radical formulas (11.1), (14.1) and (9.1).
+The outward rational interval procedure of Theorem 10.1, with
+$N=10^{90}$ and integer-square-root endpoints for each positive
+radical, gives intervals strictly inside (15.8). All denominators
+have the positive lower bounds proved above. For the gap use the
+exact nonnegative expression (15.6), whose nonzero factor has already
+been proved, rather than subtracting displayed decimal approximations.
+The inequalities in (15.8) enclose scalar algebraic expressions; PSD
+and norm equality follow from the displayed analytic certificates.
+$\square$
+
+## 16. Residual boundaries of the exact finite result
+
+**Proposition 16.1 (Scope beyond the finite threshold).** The exact
+value (14.4) does not determine the whole $W_3$ curve, justify offline
+counting below the last-transition range, or determine the unbounded
+joint $(n,\varepsilon)$ random-history memory law or critical-pair
+energy. Physical realization and literature priority are unresolved.
+
+Proof. The lower certificate optimizes the original peak-six class,
+and the matching channel attains that class's minimum. This settles
+precisely the existence threshold in (15.7). It does not optimize all
+other width classes, so does not determine every value of $W_3$.
+Online feasibility cannot in general be inferred from terminal
+alphabet size alone: Recovery Proposition 43.3's three-bit majority
+assignment has residual-function layer counts $1,2,3,2$, so terminal
+size two does not imply peak two. The present protocols explicitly
+satisfy the last-transition hypothesis with layers $1,2,4,6$.
+
+Nor does convexity select one successful seed: the norm of an averaged
+channel can be below the average of its component norms. The identities
+(7.4) and (14.8) retain the actual average before evaluating error.
+The only covariance used is the commuting phase action of Theorem
+3.2; no arbitrary $SU(2)$ twirl or replacement of the two actual
+complementary axes is justified. The whole-$H$ correspondence always
+keeps the encoded qutrit input and target, rather than changing to an
+arbitrary-$H$ input problem.
+
+Finally the proof fixes horizon three and provides no horizon-uniform
+joint memory estimate or critical-energy limit. Its channels and
+record accounting are mathematical constructions in the stated model;
+no physical implementation, integer-bit saving, Lean/kernel
+verification or worldwide originality certificate follows. Those
+extensions require their own evidence. $\square$
+
+## 17. Mathematical sources and correspondence
+
+**Convention 17.1 (Repository sources).** The supplier statements used
 here are the following ordinary mathematical sources, with their
 published forms at revision
 `3af20bcb7bd0189f7a4462a9e98bb91fccd20947` providing a fixed reference.
@@ -1323,7 +2228,10 @@ realization, or Lean/kernel-certification claim.
 | [Actual-word](AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md), §66 | Output-first unnormalized Choi and common-tester convention at $d=3$; Theorem 3.1 extends its fixed-record minimax to the exact seed-convexified partition set. |
 | Actual-word Theorem 67.1 | Two good pairs, common $T$, positive cosine $5/8$, conditional probabilities $1/2$, masses $1/4$; supplies the fixed-partition exact value $3/16$, rather than a global converse. |
 | This volume, §§2–6 | Reversible 266-partition/85-block aggregation, actual signed Gram and axis correspondence, common full-rank survival support and strict all-controller lower certificate. |
-| This volume, §§7–10 | Actual good/odd protocol combination, exact base error, signed residual identity and full-rank purification proving exact refined-protocol error $U$, with the strict global bracket. |
+| This volume, §§7–10 | Actual good/odd protocol combination, exact base error, signed residual identity and full-rank purification proving exact refined-protocol error $U$, and the intermediate strict global bracket. |
+| This volume, §§11–13 | Actual common projection of both complementary axes, positive anisotropic marginal, full nine-dimensional cell duals, uniform weighted pair/triple bounds and the all-266-partition lower certificate. |
+| This volume, §§14–15 | Legal seed weight, signed residual effect and channel identities, all-reference matching norm, exact global value, strict improvement over $U$, unique optimum in the fixed family and the exact peak-six threshold. |
+| This volume, §16 | Remaining width-curve, unbounded-law, critical-energy, physical-realization and priority boundaries. |
 
 Choi positivity, finite-dimensional SDP duality, polar decomposition,
 convex minimax and the affine-dependence argument behind the
@@ -1332,7 +2240,7 @@ constitute new mathematics. The additional content is their exact
 parameter and operation correspondence to this resource class, the
 specific signed word identities, and the displayed certificates.
 
-**Convention 11.2 (Unverified bibliographic leads).** The following
+**Convention 17.2 (Unverified bibliographic leads).** The following
 primary-source identifiers are bibliographic leads only. Their cited
 versions and specific theorem attributions are unverified here and
 non-loadbearing; no result above imports a theorem from them. In
