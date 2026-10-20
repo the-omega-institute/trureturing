@@ -24,13 +24,17 @@ internal sealed class JanaMahatoSivasubramanianPeakRefutationDocument : IScribeD
                 "Conjecture 29, page 18, states: “For a path P_n on n > 5 vertices, if CharPoly_{𝔇_{P_n}}(x) = Σ_{i=0}^{2n−3} a_i x^i and |a_ℓ| = max{|a_0|, |a_1|, …, |a_{2n−4}|}, then ℓ = n − 1.” Matrix.charpoly is det(xI−D); the quantified inequalities express attainment of the maximum over precisely the nonleading coefficients, from zero through 2n−4."),
             Node("result", "Refutation at sixteen vertices", new Formula.Not(Parenthesized(ClaimBody())),
                 "For n=16, the coefficient magnitudes at indices 15 and 16 are 939602445008 and 956326515118. The latter dominates all coefficients at indices zero through 28, while 16 differs from 16−1. The exact coefficient vector in ascending order is (−15, −813, −20869, −337481, −3858223, −33170333, −222721740, −1197384332, −5242633806, −18915546250, −56691343231, −141862420523, −297217763703, −521743703045, −766504605632, −939602445008, −956326515118, −802497798666, −549972018662, −304018467998, −133385920554, −45480785950, −11720987416, −2198470872, −284539268, −23452364, −1076103, −20755, −43, 1). The interval formula evaluates the matrix entries. An integer matrix K satisfies A K = K C for the coefficient companion matrix C, and a left inverse of K modulo seven proves its determinant nonzero. Characteristic-polynomial invariance and the coefficient multiplication theorem then identify the polynomial. This refutes the proposed exact peak; it leaves the source's upper bound and its separate coefficient identities unaffected. The exact peak for unbounded n remains an open question.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("jana-mahato-sivasubramanian-2025-steiner-path-peak"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role = DescribeRole.Definition, AssessedProvenance? provenance = null) =>
+        DescribeRole role = DescribeRole.Definition, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("jms-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance ?? AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role);
+            provenance ?? AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat() => Call("Nat");

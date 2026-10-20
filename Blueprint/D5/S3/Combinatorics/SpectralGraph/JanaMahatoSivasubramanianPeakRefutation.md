@@ -58,6 +58,10 @@ $$\neg (\forall n \in \operatorname{Nat},\; (5 < n) \Rightarrow (\forall ell \in
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/JanaMahatoSivasubramanianPeakRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jana-mahato-sivasubramanian-2025-steiner-path-peak` (refuted) by `D5/S3/Combinatorics/SpectralGraph/JanaMahatoSivasubramanianPeakRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jana-mahato-sivasubramanian-2025-steiner-path-peak","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/JanaMahatoSivasubramanianPeakRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* S. Jana; I. Mahato; S. Sivasubramanian (2025). *Unimodality and peak location of the characteristic polynomials of two distance matrices of trees*. DOI: [10.1007/s40314-025-03163-5](https://doi.org/10.1007/s40314-025-03163-5). URL: <https://arxiv.org/abs/2407.03309v1>.
