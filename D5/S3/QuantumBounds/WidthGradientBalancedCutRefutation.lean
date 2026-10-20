@@ -7,8 +7,9 @@
    digest: A product of four singlets violates the balanced-cut gradient bound. -/
 
 import D5.S3.Quantum.Entanglement.ElegantJointMeasurementSourceNoise
+import D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+import D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
-import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
 /-!
 Four singlets within the two halves have zero total spin and gradient square 240.
@@ -27,29 +28,24 @@ open Matrix
 open scoped BigOperators Kronecker ComplexOrder
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-  (localOp pauliMatrix Pauli tensorOp wordOp)
+  (localOp pauliMatrix tensorOp)
 open D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence (IsSeparable)
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity pure_state_handshake)
 open D5.S3.Quantum.Entanglement.ElegantJointMeasurementSourceNoise
   (singletVector singlet)
+open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction (pauli)
+open D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape (Bits local_adjoint)
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
-  (word_hermitian)
-
-/-- Computational basis of one side of the balanced cut. -/
-abbrev Half (m : ℕ) := Fin m → Fin 2
+  (pauli_hermitian)
 
 /-- Computational basis of both sides of the balanced cut. -/
-abbrev Sys (m : ℕ) := Half m × Half m
+abbrev Sys (m : ℕ) := Bits m × Bits m
 
 /-- A single-site operator, with the first m sites on the first tensor factor. -/
 def siteOp (m : ℕ) (k : Fin (2 * m)) (A : Matrix (Fin 2) (Fin 2) ℂ) :
     Matrix (Sys m) (Sys m) ℂ :=
   if h : k.val < m then localOp ⟨k.val, h⟩ A ⊗ₖ 1
   else 1 ⊗ₖ localOp ⟨k.val - m, by omega⟩ A
-
-/-- The three Pauli matrices, in the order x, y, z. -/
-def pauli : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
-  ![qubitX, pauliMatrix Pauli.Y, qubitZ]
 
 /-- Squared total spin, using Pauli normalization. -/
 def totalSpinSq (m : ℕ) : Matrix (Sys m) (Sys m) ℂ :=
@@ -75,24 +71,24 @@ def claim : Prop :=
             6 * (2 * (m : ℝ))) / (2 * (2 * (m : ℝ)))) *
               (ρ * totalSpinSq m).trace.re
 
-private def halfEquiv : Half 4 ≃ ((Fin 2 × Fin 2) × (Fin 2 × Fin 2)) where
+private def halfEquiv : Bits 4 ≃ ((Fin 2 × Fin 2) × (Fin 2 × Fin 2)) where
   toFun x := ((x 0, x 1), (x 2, x 3))
   invFun p := ![p.1.1, p.1.2, p.2.1, p.2.2]
   left_inv x := by funext i; fin_cases i <;> rfl
   right_inv p := by rcases p with ⟨⟨a,b⟩,⟨c,d⟩⟩; rfl
 
-private lemma half_sum (f : Half 4 → ℂ) :
+private lemma half_sum (f : Bits 4 → ℂ) :
     ∑ x, f x = ∑ a : Fin 2, ∑ b : Fin 2, ∑ c : Fin 2, ∑ d : Fin 2,
       f ![a,b,c,d] := by
   rw [← Equiv.sum_comp halfEquiv.symm]
   simp only [Fintype.sum_prod_type]
   rfl
 
-private def chi (x : Half 4) : ℂ :=
+private def chi (x : Bits 4) : ℂ :=
   (1 / 2 : ℂ) * singletVector (finTwoEquiv (x 0), finTwoEquiv (x 3)) *
     singletVector (finTwoEquiv (x 1), finTwoEquiv (x 2))
 
-private def halfDensity : Matrix (Half 4) (Half 4) ℂ := rankOneDensity chi
+private def halfDensity : Matrix (Bits 4) (Bits 4) ℂ := rankOneDensity chi
 
 private lemma chi_normalized : star chi ⬝ᵥ chi = 1 := by
   have hs : ((1 / 2 : ℝ) • rankOneDensity singletVector).trace = 1 :=
@@ -114,39 +110,21 @@ private lemma chi_normalized : star chi ⬝ᵥ chi = 1 := by
 private lemma half_trace_one : halfDensity.trace = 1 := by
   simpa only [halfDensity, rankOneDensity, trace_vecMulVec, dotProduct_comm] using chi_normalized
 
-private lemma half_expectation (A : Matrix (Half 4) (Half 4) ℂ) :
+private lemma half_expectation (A : Matrix (Bits 4) (Bits 4) ℂ) :
     (halfDensity * A).trace = star chi ⬝ᵥ A *ᵥ chi := by
   rw [trace_mul_comm]
   exact (pure_state_handshake chi chi_normalized A).2.2.symm
 
-private def halfSpin (l : Fin 3) : Matrix (Half 4) (Half 4) ℂ :=
+private def halfSpin (l : Fin 3) : Matrix (Bits 4) (Bits 4) ℂ :=
   ∑ j : Fin 4, localOp j (pauli l)
 
-private def halfGradient (c : ℝ) (l : Fin 3) : Matrix (Half 4) (Half 4) ℂ :=
+private def halfGradient (c : ℝ) (l : Fin 3) : Matrix (Bits 4) (Bits 4) ℂ :=
   ∑ j : Fin 4, ((c + 2 * j.val : ℝ) : ℂ) • localOp j (pauli l)
-
-private def axisLabel : Fin 3 → Pauli := ![Pauli.X, Pauli.Y, Pauli.Z]
-
-private lemma pauli_label (l : Fin 3) : pauli l = pauliMatrix (axisLabel l) := by
-  fin_cases l <;> rfl
-
-private lemma local_pauli_adjoint (j : Fin 4) (l : Fin 3) :
-    (localOp j (pauli l))ᴴ = localOp j (pauli l) := by
-  have he : localOp j (pauli l) =
-      wordOp (Function.update (fun _ : Fin 4 => Pauli.I) j (axisLabel l)) := by
-    unfold localOp wordOp
-    congr 1
-    funext k
-    by_cases h : k = j
-    · subst k; simp only [Function.update_self, pauli_label]
-    · simp only [Function.update_of_ne h, pauliMatrix]
-  rw [he]
-  exact word_hermitian _
 
 private lemma half_gradient_adjoint (c : ℝ) (l : Fin 3) :
     (halfGradient c l)ᴴ = halfGradient c l := by
-  simp only [halfGradient, conjTranspose_sum, conjTranspose_smul, local_pauli_adjoint,
-    Complex.star_def, Complex.conj_ofReal]
+  simp only [halfGradient, conjTranspose_sum, conjTranspose_smul, local_adjoint,
+    pauli, pauli_hermitian, Complex.star_def, Complex.conj_ofReal]
 
 set_option maxHeartbeats 2000000 in
 -- The sums use all sixteen computational basis amplitudes.
@@ -206,7 +184,7 @@ private lemma half_spin_second (l : Fin 3) :
 
 private def rho : Matrix (Sys 4) (Sys 4) ℂ := halfDensity ⊗ₖ halfDensity
 
-private lemma product_second (A B : Matrix (Half 4) (Half 4) ℂ) :
+private lemma product_second (A B : Matrix (Bits 4) (Bits 4) ℂ) :
     (rho * (A ⊗ₖ 1 + 1 ⊗ₖ B) ^ 2).trace =
       (halfDensity * A ^ 2).trace +
         2 * (halfDensity * A).trace * (halfDensity * B).trace +
