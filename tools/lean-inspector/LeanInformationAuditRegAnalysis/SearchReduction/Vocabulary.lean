@@ -73,6 +73,31 @@ def projectionShape (info : ConstantInfo) : Option (Name × Nat) := do
   let .proj owner index _ := body | none
   return (owner, index)
 
+/-- Inline source-owned helpers to expose the actual author edge. Only its
+head and the data-slot shape cross into R_loc; no source theorem is installed. -/
+private partial def vocabularySpine (source clean : Environment) (proof : Expr)
+    (seen : NameSet := {}) : MetaM (Option Expr × Array (Option Expr)) := do
+  let proof := proof.consumeMData.headBeta
+  if let .lam name domain body kind := proof then
+    return ← withLocalDecl name kind domain fun x =>
+      vocabularySpine source clean (body.instantiate1 x) seen
+  let head := proof.getAppFn
+  if let .const name levels := head then
+    if !clean.contains name then
+      if seen.contains name then return (none, #[])
+      if let some info := (source.setExporting false).find? name then
+        if let some value := info.value? (allowOpaque := true) then
+          return ← vocabularySpine source clean
+            (mkAppN (value.instantiateLevelParams info.levelParams levels) proof.getAppArgs)
+            (seen.insert name)
+      return (none, #[])
+  else if !head.isFVar then return (none, #[])
+  let scope ← localParameters
+  let data ← proof.getAppArgs.mapM fun arg => do
+    if ← isProof arg then return none
+    return some (← mkLambdaFVars scope arg)
+  return (some (← mkLambdaFVars scope head), data)
+
 private def checkReconstructionBudget (ctx : TransportContext) : MetaM Unit := do
   if let some used := ctx.searchHeartbeats? then
     let work := (← IO.getNumHeartbeats) - ctx.budgetStart - ((← used.get) - ctx.budgetExcludedStart)
@@ -269,23 +294,15 @@ mutual
         let started ← IO.getNumHeartbeats
         -- Only the author's application head is supplied. Its arguments are
         -- abstracted by the same hidden-data reconstructor as graph edges.
-        let author := part.consumeMData
-        let head := author.getAppFn
-        let usable := head.isFVar || (head.constName?.any (← getEnv).contains)
-        let (head?, data) ← if usable then do
-            let head ← mkLambdaFVars xs head
-            let data ← author.getAppArgs.mapM fun arg => do
-              if ← withEnv ctx.source (isProof arg) then return none
-              return some (← mkLambdaFVars xs arg)
-            pure (some head, data)
-          else pure (none, #[])
+        let clean ← getEnv
+        let (head?, data) ← withEnv ctx.source <| vocabularySpine ctx.source clean part
         let rebuilt ← localRebuild closed head? data [] []
         let outcome := match rebuilt.cost with
           | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
         let used := (← IO.getNumHeartbeats) - started
         if let some spent := ctx.searchHeartbeats? then spent.modify (· + used)
         checkReconstructionBudget proofCtx
-        IO.eprintln s!"vocabulary obligation: owner={owner}, type={closed}, outcome={reprStr outcome}, internal_heartbeats={used}"
+        IO.eprintln s!"vocabulary obligation: owner={owner}, type={closed}, outcome={reprStr outcome}, detail={rebuilt.detail}, internal_heartbeats={used}"
         let some proof := rebuilt.proof?
           | if outcome == .incomplete .heartbeat then
               throw <| Exception.error (← getRef) <| .tagged `runtime.maxHeartbeats
