@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6207b7f7ac72be22d7048e5b2485d9424f853456238dfe203fcee6c1df3e15a
+  normalized_sha256: sha256:b6207b7f7ac72be22d7048e5b2485d9424f853456238dfe203fcee6c1df3e15a
+cas_ref: sha256:b6207b7f7ac72be22d7048e5b2485d9424f853456238dfe203fcee6c1df3e15a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only mathematical reuse (not an assertion-free atom): for every category C and every commutative square sq in Arrow C, IsIso sq iff IsIso sq.left and IsIso sq.right. CategoryTheory.Arrow.isIso_left, CategoryTheory.Arrow.isIso_right, and CategoryTheory.Arrow.isIso_of_isIso_left_of_isIso_right supply both directions by instance application. Pinned Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. Searched all 9508 tracked D5 Lean files including private/local declarations, by Yoneda/Arrow/IsIso/density/fully faithful and generic bijection/left inverse/right inverse/equivalence shapes; inspected ProObjects and generic component-bijection candidates. No existing frozen project GID supplies a subgoal in the complete reuse derivation. No new D5 declaration. Exact quantified application compiled with only propext, Classical.choice, Quot.sound.'
+    previous_atom_id: 47f370cd5abaf0d3be8dc69cf41d3da7cb118b7b396d9cb245b1b4271b0a1783
+    next_atom_id: a380c05a01620bc421a79f130f6a05df68e76b525dafa1579160f7e36dce995b
