@@ -35,7 +35,7 @@ The literature check before any Lean is recorded in #19308:
 
 ## Route
 
-Let R be the marginal of P_ψ, m its least positive eigenvalue, c = 1/m and K = 2bc, and put W = −(log₀ R) ⊗ I − K(I − P_ψ).
+Let R be the marginal of P_ψ, c = Σ_i r_i^{−1} over its positive eigenvalues r_i (the module's choice; the smaller c = 1/r_min also works) and K = 2bc, and put W = −(log₀ R) ⊗ I − K(I − P_ψ).
 1. **Scalar bound.** −t ln t ≥ −t log₀ r − (t − r) − c(t − r)² for each eigenvalue r of R and each t ∈ [0, 1].
 2. **Matrix bound.** Averaging with the doubly stochastic overlaps of the two eigenbases gives S(T) ≥ −Tr(T log₀ R) − c‖T − R‖²_HS for every density T.
 3. **Pure states.** ‖Tr_B X‖²_HS ≤ b‖X‖²_HS, and ‖Q − P‖²_HS = 2(1 − Tr PQ) for pure Q. Together they give S(Tr_B Q) ≥ Tr(WQ), with equality at Q = P.
@@ -47,7 +47,7 @@ The theorem would not settle the question if the module's E_F differed from the 
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/PureState/PureStateFormationSupportingFunctional.lean` (428 lines).
+The canonical source is `D5/S3/Quantum/PureState/PureStateFormationSupportingFunctional.lean` (429 lines).
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Escape registration:** `Reg/D5/S3/Quantum/PureState/PureStateFormationSupportingFunctional.lean` (`result`).
@@ -70,7 +70,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 **Proved by `result`:** every pure state of a finite-dimensional bipartite system has a supporting affine functional for the entanglement of formation.
 
 **Argued, not formalized.**
-- *Mechanism.* The entropy of the marginal is controlled from below by the relative-entropy tangent at R plus a quadratic correction. The correction is quadratic in the Hilbert–Schmidt distance, and for pure states that distance is linear in 1 − Tr(PQ), which is affine in Q. The constant K = 2b/m depends on the least positive Schmidt coefficient, so it blows up as the Schmidt spectrum degenerates. Dividing E_F(P) − E_F(σ) by ‖P − σ‖₁ is therefore bounded at every pure state, though not uniformly.
+- *Mechanism.* The entropy of the marginal is controlled from below by the relative-entropy tangent at R plus a quadratic correction. The correction is quadratic in the Hilbert–Schmidt distance, and for pure states that distance is linear in 1 − Tr(PQ), which is affine in Q. The constant K = 2bc grows as the least positive Schmidt coefficient tends to zero. Dividing E_F(P) − E_F(σ) by ‖P − σ‖₁ is therefore bounded at every pure state, though not uniformly.
 - *Scope.* Mixed boundary states remain excluded, consistent with the earlier counterexamples.
 
 **Effect on the paper.** The pure-state question of the Introduction and Section 3.1 is answered positively for all finite dimensions.
