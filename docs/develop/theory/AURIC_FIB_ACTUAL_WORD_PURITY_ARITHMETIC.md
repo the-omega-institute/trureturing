@@ -2327,3 +2327,1081 @@ instrument. They are ordinary mathematical derivations, without a
 Lean or kernel certification claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 69. Exact terminal recovery for the actual six-record partition
+
+The setting is the actual fair qutrit instrument of §§63–68, with the
+letters $V_0,V_1$ in (63.4). Composition of maps is from right to left,
+and $\operatorname{Ad}_A(X)=AXA^\dagger$ even when $A$ is not unitary.
+For $h=h_1h_2h_3$ the chronological word is
+$Q_h=V_{h_3}V_{h_2}V_{h_1}$. The terminal partition is fixed to be
+
+$$
+\mathcal P=\{\{001,111\},\{000,101\},\{010\},\{011\},\{100\},\{110\}\}.
+\tag{69.1}
+$$
+
+As in Definition 63.1, each history has input-independent mass $1/8$,
+including for inputs entangled with an untouched reference. Thus each
+pair has mass $1/4$ and conditional weights $1/2,1/2$; the singleton
+masses are $1/8$. A decoder is an arbitrary system-only terminal CPTP
+map $M_3\to M_3$ selected by the observed cell. It cannot distinguish
+the two histories inside a pair and has no access to the reference.
+The final record is averaged out in the error channel; it is not an
+extra output flag available to the norm test.
+
+**Theorem 69.1 (Exact fixed-partition optimum).** Under these permissions,
+the minimum in (63.2), with the unhalved diamond norm, is
+
+$$
+\boxed{\displaystyle
+\varepsilon_{\mathcal P}
+=\frac{161-32\sqrt{13}}{4(65-8\sqrt{13})}
+=\frac{793-88\sqrt{13}}{1508}.}
+\tag{69.2}
+$$
+
+The upper bound holds after tensoring with every finite untouched
+reference. A single input with a three-dimensional reference gives
+the matching lower bound for every family of terminal CPTP decoders,
+including arbitrary singleton decoders. This theorem concerns (69.1),
+not a minimization over all record partitions or online controllers.
+
+The proof consists of the exact reduction below, the feasible decoder
+and reference-stable upper bound in §§70–72, and the arbitrary-decoder
+lower bound in §§73–76.
+
+**Proposition 69.2 (Unrestricted record reduction).** Put
+
+$$
+R_1=Q_{001}^\dagger Q_{111},\qquad
+R_2=Q_{000}^\dagger Q_{101},\qquad
+\mathcal N_j=\tfrac12(\operatorname{id}+\operatorname{Ad}_{R_j}).
+\tag{69.3}
+$$
+
+Here $\mathcal N_j$ denotes the relative conditional channel, with its
+known first word removed. Then (63.2) is exactly
+
+$$
+\varepsilon_{\mathcal P}
+=\min_{D_0,D_1,D_2\ {\rm CPTP}}
+\left\|\tfrac12D_0+\tfrac14D_1\mathcal N_1
+                     +\tfrac14D_2\mathcal N_2
+                     -\operatorname{id}\right\|_\diamond.
+\tag{69.4}
+$$
+
+**Proof.** Write $E_j$ for a decoder on the original pair $\{a,b\}$,
+where $(a,b)=(001,111)$ or $(000,101)$. Since $Q_b=Q_aR_j$, its
+conditional channel before decoding is
+
+$$
+\tfrac12(\operatorname{Ad}_{Q_a}+\operatorname{Ad}_{Q_b})
+=\operatorname{Ad}_{Q_a}\mathcal N_j.
+\tag{69.5}
+$$
+
+The transformation $D_j=E_j\operatorname{Ad}_{Q_a}$ is a bijection on
+CPTP maps, with inverse $E_j=D_j\operatorname{Ad}_{Q_a^\dagger}$.
+It absorbs only a known system unitary, without providing the hidden
+history to the decoder. The chronology gives, in particular,
+
+$$
+Q_{001}=V_1V_0^2,\quad Q_{111}=V_1^3,\quad
+Q_{000}=V_0^3,\quad Q_{101}=V_1V_0V_1,
+\qquad R_1=(V_0^2)^\dagger V_1^2.
+\tag{69.6}
+$$
+
+For a singleton $h\in\{010,011,100,110\}$, set
+$C_h=E_h\operatorname{Ad}_{Q_h}$. Again $E_h\mapsto C_h$ is a
+bijection on CPTP maps, independently for each singleton. Their sum is
+
+$$
+\tfrac18\sum_h C_h=\tfrac12D_0,\qquad
+D_0=\tfrac14\sum_h C_h.
+\tag{69.7}
+$$
+
+Every such $D_0$ is CPTP by convexity. Conversely, every CPTP $D_0$
+is realized by choosing $C_h=D_0$ for all four histories, equivalently
+$E_h=D_0\operatorname{Ad}_{Q_h^\dagger}$. Thus aggregation has exactly
+the full CPTP range, not a relaxation or restriction. These are
+identities of channels and remain so on every reference extension.
+In particular no assumption that optimal singleton decoders are
+inverses has entered (69.4). $\square$
+
+## 70. Signed roots, common spectator and exact balancing constants
+
+Use the real orthonormal basis $(\xi,f_1,f_2)$ of Proposition 63.2,
+where $\xi=(1,1,1)^{\mathsf T}/\sqrt3$,
+$f_1=(1,-1,0)^{\mathsf T}/\sqrt2$ and
+$f_2=(1,1,-2)^{\mathsf T}/\sqrt6$. Put
+$P=|\xi\rangle\langle\xi|$ and $Q=I-P$, so $Q$ has rank two.
+The symbol $Q$ without a history subscript is this projection, not a
+word unitary. The exact relative matrices from (63.3) are
+
+$$
+\begin{aligned}
+R_1&=1\oplus
+\begin{pmatrix}
+-1/2&-\sqrt3/4-3i/4\\
+\sqrt3/4-3i/4&-1/2
+\end{pmatrix},\\
+R_2&=1\oplus
+\begin{pmatrix}
+5/8&-5\sqrt3/16+9i/16\\
+5\sqrt3/16+9i/16&5/8
+\end{pmatrix}.
+\end{aligned}
+\tag{70.1}
+$$
+
+These are the relatives of the actual chronological words, not freely
+chosen binary noises. Define Hermitian axes with the following signs:
+
+$$
+\begin{aligned}
+Z_1&=\frac{2(R_1-P+Q/2)}{i\sqrt3}
+=0\oplus\begin{pmatrix}
+0&(-\sqrt3+i)/2\\(-\sqrt3-i)/2&0
+\end{pmatrix},\\
+Z_2&=\frac{8(R_2-P-5Q/8)}{i\sqrt{39}}
+=0\oplus\begin{pmatrix}
+0&(9+5i\sqrt3)/(2\sqrt{39})\\
+(9-5i\sqrt3)/(2\sqrt{39})&0
+\end{pmatrix}.
+\end{aligned}
+\tag{70.2}
+$$
+
+Each off-diagonal entry has modulus one: its squared modulus is
+$(3+1)/4=1$ for $Z_1$, and $(81+75)/(4\cdot39)=1$ for $Z_2$.
+Consequently, by multiplying these two-by-two matrices,
+
+$$
+Z_j^\dagger=Z_j,\quad Z_j^2=Q,\quad
+PZ_j=Z_jP=0,\quad \operatorname{Tr}Z_j=0.
+\tag{70.3}
+$$
+
+In particular the eigenvalues on $Q\mathbb C^3$ are $+1,-1$.
+
+**Lemma 70.1 (The chosen square roots).** With $s=\sqrt{13}$ and
+$k=s/4$, define
+
+$$
+H_1=P+\tfrac12Q+\tfrac{i\sqrt3}{2}Z_1,\qquad
+H_2=P+kQ+\tfrac{i\sqrt3}{4}Z_2.
+\tag{70.4}
+$$
+
+Both are unitary, and $H_j^2=R_j$ with exactly the signs in (70.1).
+
+**Proof.** If $H=P+tQ+ibZ$ with real $t,b$, (70.3) gives
+
+$$
+H^\dagger H=P+(t^2+b^2)Q,\qquad
+H^2=P+(t^2-b^2)Q+2itbZ.
+\tag{70.5}
+$$
+
+For $(t,b)=(1/2,\sqrt3/2)$, these expressions are $I$ and
+$P-Q/2+i\sqrt3Z_1/2=R_1$. For
+$(t,b)=(s/4,\sqrt3/4)$, they are $I$ and
+$P+5Q/8+i\sqrt{39}Z_2/8=R_2$. This checks both unitarity and
+the square-root signs, including the spectator eigenvalue $+1$.
+$\square$
+
+**Lemma 70.2 (Domains and balance).** Define
+
+$$
+\begin{aligned}
+x&=\frac{25-4s}{40-4s},&
+w&=\frac{x}{1+x}=\frac{25-4s}{65-8s},&
+q&=1-w=\frac1{1+x},\\
+a&=\frac{8-2x-s}{16},&
+u&=\frac{1+2x^2}{16},&
+v&=\frac3{64},&
+c&=\frac{a}{1+x}.
+\end{aligned}
+\tag{70.6}
+$$
+
+Then $0<x<1$, $0<w<1/2$, $q>0$, $x=w/q$, $0<c<1$ and
+$u,v>0$. Moreover,
+
+$$
+a=c(1+x),\qquad u+v=a(1-x)=c(1-x^2).
+\tag{70.7}
+$$
+
+**Proof.** Since $3<s<4$, both $25-4s$ and $40-4s$ are
+positive; their difference is $15$. This proves $0<x<1$ and the
+claims about $w,q$. Also $8-2x-s>8-2-4=2$, while $a<1/2$.
+Thus $0<c<1/2<1$, and $u,v$ are strictly positive. The defining
+equation $(40-4s)x=25-4s$ gives
+
+$$
+\begin{aligned}
+64\bigl[a(1-x)-(u+v)\bigr]
+&=4(8-2x-s)(1-x)-(7+8x^2)\\
+&=25-4s-(40-4s)x=0.
+\end{aligned}
+\tag{70.8}
+$$
+
+The other equalities follow from $c=a/(1+x)$. All square roots
+of $1-x^2$, $u/c$ and $v/c$ used below are therefore real and
+positive. $\square$
+
+## 71. Explicit original-record decoders and centered expansions
+
+**Proposition 71.1 (Feasible decoders).** Define the CPTP map
+
+$$
+\mathcal G_x
+=\operatorname{Ad}_{P+xQ}+(1-x^2)\operatorname{Ad}_{Z_1}.
+\tag{71.1}
+$$
+
+In the reduced problem (69.4) choose
+
+$$
+D_0=\operatorname{id},\qquad
+D_1=\mathcal G_x\operatorname{Ad}_{H_1^\dagger},\qquad
+D_2=\operatorname{Ad}_{H_2^\dagger}.
+\tag{71.2}
+$$
+
+Thus the original record decoders are
+
+$$
+\begin{aligned}
+E_{\{001,111\}}&=\mathcal G_x
+             \operatorname{Ad}_{H_1^\dagger Q_{001}^\dagger},\\
+E_{\{000,101\}}&=\operatorname{Ad}_{H_2^\dagger Q_{000}^\dagger},\\
+E_{\{h\}}&=\operatorname{Ad}_{Q_h^\dagger}
+             \quad(h=010,011,100,110).
+\end{aligned}
+\tag{71.3}
+$$
+
+**Proof.** The Kraus operators of $\mathcal G_x$ are $P+xQ$ and
+$\sqrt{1-x^2}Z_1$. Equations (70.3) and (70.6) give
+
+$$
+(P+xQ)^\dagger(P+xQ)+(1-x^2)Z_1^\dagger Z_1
+=P+x^2Q+(1-x^2)Q=I.
+\tag{71.4}
+$$
+
+Hence $\mathcal G_x$ is CP and trace preserving. Lemma 70.1 makes
+all remaining factors unitary channels. Proposition 69.2 gives (71.3)
+from (71.2). The singleton inverses here are an explicit feasible
+choice made after the unrestricted reduction, not an assumption on
+all candidate optimizers. $\square$
+
+**Proposition 71.2 (Full centered-channel expansions).** Put
+$\mathcal N_j^c=\operatorname{Ad}_{H_j^\dagger}\mathcal N_j$ and
+$F_j=D_j\mathcal N_j$ for the choices (71.2). Then
+
+$$
+\begin{aligned}
+\mathcal N_1^c
+&=\operatorname{Ad}_{P+Q/2}+\tfrac34\operatorname{Ad}_{Z_1},\\
+\mathcal N_2^c
+&=\operatorname{Ad}_{P+kQ}+\tfrac3{16}\operatorname{Ad}_{Z_2},\\
+F_1
+&=\operatorname{Ad}_{P+(x/2)Q}
+ +\tfrac34(1-x^2)\operatorname{Ad}_Q
+ +\tfrac{1+2x^2}{4}\operatorname{Ad}_{Z_1},\\
+F_2
+&=\operatorname{Ad}_{P+kQ}+\tfrac3{16}\operatorname{Ad}_{Z_2}.
+\end{aligned}
+\tag{71.5}
+$$
+
+These are identities on all of $M_3$, including spectator-plane
+coherences.
+
+**Proof.** Since $H_j^\dagger R_j=H_j$,
+
+$$
+\mathcal N_j^c
+=\tfrac12(\operatorname{Ad}_{H_j^\dagger}
+                         +\operatorname{Ad}_{H_j}).
+\tag{71.6}
+$$
+
+For $H_j=A_j+ib_jZ_j$ with $A_j=P+t_jQ$ Hermitian, expansion
+on an arbitrary matrix $X$ gives
+
+$$
+\begin{aligned}
+H_jXH_j^\dagger
+ &=A_jXA_j+b_j^2Z_jXZ_j+ib_j(Z_jXA_j-A_jXZ_j),\\
+H_j^\dagger XH_j
+ &=A_jXA_j+b_j^2Z_jXZ_j-ib_j(Z_jXA_j-A_jXZ_j).
+\end{aligned}
+\tag{71.7}
+$$
+
+The imaginary cross terms cancel in their average. Substituting
+$(t_1,b_1)=(1/2,\sqrt3/2)$ and
+$(t_2,b_2)=(k,\sqrt3/4)$ proves the first two lines of (71.5).
+For the first further decoder, the four products of its Kraus
+factors with these centered factors use the identities
+
+$$
+(P+xQ)(P+Q/2)=P+(x/2)Q,\quad
+(P+xQ)Z_1=xZ_1,\quad
+Z_1(P+Q/2)=Z_1/2,\quad Z_1^2=Q.
+\tag{71.8}
+$$
+
+Consequently $\mathcal G_x\mathcal N_1^c$ is
+
+$$
+\operatorname{Ad}_{P+(x/2)Q}
++\left[\tfrac34x^2+\tfrac14(1-x^2)\right]\operatorname{Ad}_{Z_1}
++\tfrac34(1-x^2)\operatorname{Ad}_Q.
+\tag{71.9}
+$$
+
+The bracket is $(1+2x^2)/4$, proving the third line. The second
+further decoder is the identity after centering, proving the last
+line. $\square$
+
+## 72. A CPTP residual and an attained reference-stable upper bound
+
+**Theorem 72.1 (Exact residual decomposition).** The averaged recovered
+channel for (71.3) is
+
+$$
+F=\tfrac12\operatorname{id}+\tfrac14F_1+\tfrac14F_2
+=(1-c)\operatorname{id}+c\mathcal E,
+\qquad
+\mathcal E=\operatorname{Ad}_{P-xQ}
+       +\frac{u}{c}\operatorname{Ad}_{Z_1}
+       +\frac{v}{c}\operatorname{Ad}_{Z_2}.
+\tag{72.1}
+$$
+
+The residual $\mathcal E$ is CPTP, and
+$\|F-\operatorname{id}\|_\diamond=2c$, with the all-finite-reference,
+unhalved convention.
+
+**Proof.** To verify the channel identity on every matrix block, let
+$\mathcal K(X)=PXQ+QXP$. For real $t$,
+
+$$
+\operatorname{Ad}_{P+tQ}
+=\operatorname{Ad}_P+t\mathcal K+t^2\operatorname{Ad}_Q,
+\qquad
+\operatorname{id}=\operatorname{Ad}_P+\mathcal K+\operatorname{Ad}_Q.
+\tag{72.2}
+$$
+
+Inserting (71.5) gives
+
+$$
+\begin{aligned}
+F={}&\operatorname{Ad}_P
+ +\left(\tfrac12+\tfrac{x}{8}+\tfrac{k}{4}\right)\mathcal K\\
+ &+\left(\tfrac12+\tfrac{x^2}{16}
+                   +\tfrac3{16}(1-x^2)+\tfrac{k^2}{4}\right)
+                                      \operatorname{Ad}_Q
+ +u\operatorname{Ad}_{Z_1}+v\operatorname{Ad}_{Z_2}\\
+={}&\operatorname{Ad}_P+(1-a)\mathcal K
+ +(1-u-v)\operatorname{Ad}_Q
+ +u\operatorname{Ad}_{Z_1}+v\operatorname{Ad}_{Z_2}.
+\end{aligned}
+\tag{72.3}
+$$
+
+Here $k=s/4$, $k^2=13/16$, and the definitions (70.6) give both
+coefficient equalities. On the other hand, (72.2) gives
+
+$$
+(1-c)\operatorname{id}+c\operatorname{Ad}_{P-xQ}
+=\operatorname{Ad}_P+[1-c(1+x)]\mathcal K
+                       +[1-c(1-x^2)]\operatorname{Ad}_Q.
+\tag{72.4}
+$$
+
+The balance (70.7) identifies (72.3) with (72.1).
+The displayed residual has Kraus operators
+
+$$
+L_0=P-xQ,\qquad L_1=\sqrt{u/c}\,Z_1,\qquad
+L_2=\sqrt{v/c}\,Z_2.
+\tag{72.5}
+$$
+
+The two scalar Kraus weights are positive and
+
+$$
+\sum_{r=0}^2L_r^\dagger L_r
+=P+\left[x^2+\frac{u+v}{c}\right]Q=I,
+\tag{72.6}
+$$
+
+so $\mathcal E$ is CPTP. Since $0<c<1$, (72.1) is a convex
+combination of channels, with an exact, trace-preserving residual.
+
+For completeness, a CPTP map tensored with any finite identity has
+induced trace norm at most one. Indeed its Kraus isometry preserves
+trace norm, and its partial trace contracts trace norm: by duality,
+$|\operatorname{Tr}(Y^\dagger\operatorname{Tr}_{\rm env}X)|
+=|\operatorname{Tr}((Y^\dagger\otimes I)X)|\le\|Y\|_\infty\|X\|_1$.
+This applies also to non-Hermitian $X$. Thus, for every finite
+reference $\mathsf R$ and every $X\in M_3\otimes M_{\mathsf R}$,
+
+$$
+\|((F-\operatorname{id})\otimes\operatorname{id}_{\mathsf R})(X)\|_1
+=c\|((\mathcal E-\operatorname{id})\otimes
+                         \operatorname{id}_{\mathsf R})(X)\|_1
+\le2c\|X\|_1.
+\tag{72.7}
+$$
+
+This proves the required upper bound directly for all finite
+references, without restricting to unentangled inputs.
+
+To attain it, use the density matrix and its canonical purification
+in the fixed real basis $(\xi,f_1,f_2)$:
+
+$$
+\rho_*=wP+\tfrac q2Q=\frac{xP+Q/2}{1+x},\qquad
+|\psi_*\rangle=|\sqrt{\rho_*}\rangle\!\rangle
+=\sqrt w\,|\xi\rangle|\overline\xi\rangle
+ +\sqrt{q/2}\sum_{r=1}^2|f_r\rangle|\overline{f_r}\rangle.
+\tag{72.8}
+$$
+
+Column vectorization is specified fully in §73. The norm of
+$|\psi_*\rangle$ is one since $\operatorname{Tr}\rho_*=w+q=1$.
+For any matrix $L$,
+$\langle\psi_*|(L\otimes I)|\psi_*\rangle=\operatorname{Tr}(\rho_*L)$.
+Every residual Kraus operator in (72.5) has zero weighted trace:
+
+$$
+\begin{aligned}
+\operatorname{Tr}(\rho_*L_0)&=w-xq=0,\\
+\operatorname{Tr}(\rho_*Z_j)
+ &=w\operatorname{Tr}(PZ_j)+\tfrac q2\operatorname{Tr}(QZ_j)=0
+ \qquad(j=1,2).
+\end{aligned}
+\tag{72.9}
+$$
+
+The first equality uses $x=w/q$; the second uses (70.3). Hence all
+vectors $(L_r\otimes I)|\psi_*\rangle$ are orthogonal to
+$|\psi_*\rangle$. The state
+$\sigma_*=(\mathcal E\otimes\operatorname{id})
+(|\psi_*\rangle\langle\psi_*|)$ has trace one by (72.6) and is
+supported in that orthogonal complement. Therefore
+$\|\sigma_*-|\psi_*\rangle\langle\psi_*|\|_1=2$ by its
+orthogonal positive and negative blocks. Equation (72.1) now attains
+$2c$ on this same input. $\square$
+
+## 73. One canonical input and the full Choi overlap operator
+
+All lower bounds below use precisely $\rho_*$ and $|\psi_*\rangle$
+from (72.8). The two axes will be diagonalized separately only to
+compute matrices for this one input.
+
+**Definition 73.1 (Output-first convention).** In the fixed basis let
+
+$$
+|A\rangle\!\rangle=\sum_{a,i}A_{ai}|a\rangle_{\rm out}|i\rangle_{\rm in},
+\qquad
+J(D)=\sum_\alpha|K_\alpha\rangle\!\rangle
+                         \langle\!\langle K_\alpha|,
+\tag{73.1}
+$$
+
+where $K_\alpha$ are Kraus operators of $D$. This is the unnormalized
+Choi convention of (66.1): $J(D)\succeq0$ and
+$\operatorname{Tr}_{\rm out}J(D)=I$ for every CPTP $D$.
+In particular $J(\operatorname{id})=|I\rangle\!\rangle
+\langle\!\langle I|$. Vectorization satisfies
+$(A\otimes B)|X\rangle\!\rangle=|AXB^{\mathsf T}\rangle\!\rangle$,
+where transpose and entrywise conjugation always refer to this
+coordinate convention. Write
+
+$$
+T_*=|\psi_*\rangle\langle\psi_*|,\qquad
+W=|\rho_*\rangle\!\rangle\langle\!\langle\rho_*|
+=(I\otimes\sqrt{\rho_*})T_*(I\otimes\sqrt{\rho_*}).
+\tag{73.2}
+$$
+
+Here $\rho_*$ is real diagonal in the chosen basis; the same real
+matrix represents the system marginal and the conjugate reference
+marginal. Thus $0\preceq W\preceq I\otimes\rho_*$ and
+$\operatorname{Tr}(WJ(\operatorname{id}))=|\operatorname{Tr}\rho_*|^2=1$.
+For any channel $\Phi$ the same conventions give
+
+$$
+\langle\psi_*|(\Phi\otimes\operatorname{id})(T_*)|\psi_*\rangle
+=\sum_\alpha|\operatorname{Tr}(\rho_*K_\alpha)|^2
+=\operatorname{Tr}(WJ(\Phi)).
+\tag{73.3}
+$$
+
+No factor of three is suppressed: both $|I\rangle\!\rangle$ and
+$J$ are unnormalized, while $|\psi_*\rangle$ is normalized.
+
+For arbitrary recovery of $\mathcal N_j$, centering remains a
+bijection. Indeed $\mathcal N_j=\operatorname{Ad}_{H_j}\mathcal N_j^c$,
+so $D\mathcal N_j=(D\operatorname{Ad}_{H_j})\mathcal N_j^c$, and
+$D\mapsto D\operatorname{Ad}_{H_j}$ ranges over all CPTP maps.
+Let the centered noise Kraus operators be
+$L_{j,-}=H_j^\dagger/\sqrt2$ and $L_{j,+}=H_j/\sqrt2$.
+These symbols are distinct from the residual Kraus operators in
+(72.5).
+
+**Lemma 73.2 (Exact overlap and arbitrary-decoder bound).** Define
+
+$$
+\begin{aligned}
+A_j
+&=\sum_{t\in\{-,+\}}
+ |\rho_*L_{j,t}^\dagger\rangle\!\rangle
+ \langle\!\langle\rho_*L_{j,t}^\dagger|\\
+&=\sum_{t\in\{-,+\}}
+ (I\otimes\overline{L_{j,t}})W(I\otimes L_{j,t}^{\mathsf T}).
+\end{aligned}
+\tag{73.4}
+$$
+
+For every CPTP centered decoder $D$ its recovered overlap is
+$\operatorname{Tr}(A_jJ(D))$. If a Hermitian $Y_j$ on the input
+factor satisfies $I_{\rm out}\otimes Y_j\succeq A_j$, this overlap
+is at most $\operatorname{Tr}Y_j$.
+
+**Proof.** With arbitrary Kraus operators $K_\alpha$ for $D$, (73.3)
+applied to $D\mathcal N_j^c$ gives
+
+$$
+\begin{aligned}
+\langle\psi_*|((D\mathcal N_j^c)\otimes\operatorname{id})(T_*)
+                  |\psi_*\rangle
+&=\sum_{\alpha,t}|\operatorname{Tr}(\rho_*K_\alpha L_{j,t})|^2\\
+&=\sum_{\alpha,t}
+ |\langle\!\langle\rho_*L_{j,t}^\dagger|K_\alpha\rangle\!\rangle|^2
+=\operatorname{Tr}(A_jJ(D)).
+\end{aligned}
+\tag{73.5}
+$$
+
+The middle equality is the cyclic trace identity
+$\operatorname{Tr}(L_{j,t}\rho_*K_\alpha)
+=\operatorname{Tr}(\rho_*K_\alpha L_{j,t})$.
+Vectorization gives
+$|\rho_*L_{j,t}^\dagger\rangle\!\rangle
+=(I\otimes\overline{L_{j,t}})|\rho_*\rangle\!\rangle$;
+its adjoint has $I\otimes L_{j,t}^{\mathsf T}$ on the right.
+This verifies the conjugation and transpose order in (73.4).
+Finally positivity and the Choi partial-trace constraint imply
+
+$$
+\operatorname{Tr}(A_jJ(D))
+\le\operatorname{Tr}((I\otimes Y_j)J(D))
+=\operatorname{Tr}(Y_j\operatorname{Tr}_{\rm out}J(D))
+=\operatorname{Tr}Y_j.
+\tag{73.6}
+$$
+
+No diagonal, unitary or unital restriction on $D$ is used. $\square$
+
+**Lemma 73.3 (Axis coordinates and full-space extension).** For each
+$j$ choose eigenvectors $e_{j,+},e_{j,-}$ of $Z_j$ in $Q\mathbb C^3$,
+with eigenvalues $+1,-1$. In the system basis
+$(\xi,e_{j,+},e_{j,-})$ and its conjugate reference basis, both
+computations use the populations
+
+$$
+p=(w,q/2,q/2)^{\mathsf T}.
+\tag{73.7}
+$$
+
+The Schur matrices of $\mathcal N_j^c$ are
+
+$$
+C_1=\begin{pmatrix}1&1/2&1/2\\1/2&1&-1/2\\1/2&-1/2&1\end{pmatrix},
+\qquad
+C_2=\begin{pmatrix}1&k&k\\k&1&5/8\\k&5/8&1\end{pmatrix}.
+\tag{73.8}
+$$
+
+The operator $A_j$ is supported on
+$\mathcal S_j=\operatorname{span}\{|00\rangle,|++\rangle,|--\rangle\}$
+in these coordinates, where its matrix is
+
+$$
+M_j=\operatorname{diag}(p)C_j\operatorname{diag}(p).
+\tag{73.9}
+$$
+
+For a diagonal $Y_j=\operatorname{diag}(y_0,y_+,y_-)$ in these
+input coordinates, $I\otimes Y_j-A_j\succeq0$ on the full
+nine-dimensional Choi space follows whenever $y_i\ge0$ and
+$\operatorname{diag}(y)-M_j\succeq0$.
+
+**Proof.** The eigenvalues of $H_1$ are
+$1,1/2+i\sqrt3/2,1/2-i\sqrt3/2$ and those of $H_2$ are
+$1,k+i\sqrt3/4,k-i\sqrt3/4$. By (71.6), the Schur entry for
+indices $r,l$ is the real part of the $H_j$ eigenvalue at $r$
+times the conjugate of its eigenvalue at $l$. The spectator-plane entries
+are $1/2$ or $k$; the plane off-diagonal entries are respectively
+$1/4-3/4=-1/2$ and $k^2-3/16=5/8$. This proves (73.8).
+
+If $l_{t,r}$ are the diagonal entries of $L_{j,t}$, (73.4) has
+matrix entries on $\mathcal S_j$
+
+$$
+(A_j)_{rr,ll}
+=p_rp_l\sum_t\overline{l_{t,r}}l_{t,l}
+=p_rp_l(C_j)_{lr}.
+\tag{73.10}
+$$
+
+Thus the generally relevant Schur matrix here is $C_j^{\mathsf T}$.
+It equals $C_j$ because the centered matrices (73.8) are real
+symmetric. Each vector in (73.4) is diagonal, so there is no
+support on $\mathcal S_j^\perp$. On $\mathcal S_j$ the slack is
+$\operatorname{diag}(y)-M_j$, and on each basis vector $|a i\rangle$
+with $a\ne i$ it is multiplication by $y_i$. There are no cross
+blocks. This proves the full-space positivity assertion.
+
+Equivalently, in the original fixed coordinates let $B_j$ be the
+isometry whose columns are $|\Pi_{j,r}\rangle\!\rangle$, where
+$\Pi_{j,r}$ are the three eigenprojections, and put
+$\Pi_j=B_jB_j^\dagger$. For the witnesses below $y_+=y_-$,
+so $Y_j=y_0P+y_+Q$ is unchanged by either axis basis choice.
+The full slack has the explicit extension
+
+$$
+I\otimes Y_j-A_j
+=B_j\bigl(\operatorname{diag}(y)-M_j\bigr)B_j^\dagger
+ +(I-\Pi_j)(I\otimes Y_j)(I-\Pi_j).
+\tag{73.11}
+$$
+
+The vectors $|\Pi_{j,r}\rangle\!\rangle$ are orthonormal because
+the rank-one projections are Hilbert–Schmidt orthonormal.
+Moreover $I\otimes Y_j$ preserves $\mathcal S_j$ and its
+orthogonal complement, so (73.11) has no missing cross term.
+It is a sum of positive operators under the stated conditions.
+
+Finally, $\rho_*$ is scalar on $Q\mathbb C^3$. Any unitary $U$
+fixing $\xi$ and changing the basis of that plane commutes with
+$\rho_*$, and
+
+$$
+(U\otimes\overline U)|\sqrt{\rho_*}\rangle\!\rangle
+=|U\sqrt{\rho_*}U^\dagger\rangle\!\rangle
+=|\sqrt{\rho_*}\rangle\!\rangle.
+\tag{73.12}
+$$
+
+The same holds for $|\rho_*\rangle\!\rangle$. Thus $T_*,W$ and
+the physical input remain the same in the two computations.
+No simultaneous diagonalization of $Z_1,Z_2$ is asserted or
+needed. $\square$
+
+## 74. The first arbitrary-CPTP overlap certificate
+
+**Proposition 74.1 (Rank-one slack).** The largest recovered overlap
+on $T_*$ for the first pair, over all CPTP decoders, is
+
+$$
+\beta_1=\tfrac32w^2+\tfrac34q^2.
+\tag{74.1}
+$$
+
+**Proof.** In the first axis coordinates put
+
+$$
+Y_1=\operatorname{diag}(3w^2/2,3q^2/8,3q^2/8),\qquad
+z=(-2w/q,1,1)^{\mathsf T}.
+\tag{74.2}
+$$
+
+All diagonal entries of $Y_1$ are positive. From (73.8)–(73.9),
+
+$$
+M_1=\begin{pmatrix}
+w^2&wq/4&wq/4\\
+wq/4&q^2/4&-q^2/8\\
+wq/4&-q^2/8&q^2/4
+\end{pmatrix},\qquad
+Y_1-M_1=\tfrac{q^2}{8}zz^{\mathsf T}\succeq0.
+\tag{74.3}
+$$
+
+Here $Y_1$ also represents the restriction of $I\otimes Y_1$
+to $\mathcal S_1$ in its diagonal basis. Lemma 73.3 extends (74.3) to
+$I\otimes Y_1-A_1\succeq0$ on all nine dimensions. Lemma 73.2
+therefore bounds every recovered overlap by
+$\operatorname{Tr}Y_1=3w^2/2+3q^2/4$.
+
+This includes arbitrary off-diagonal Kraus entries. Explicitly, for
+any decoder Kraus operator $K$,
+$\langle\!\langle K|I\otimes Y_1|K\rangle\!\rangle
+=\sum_i(Y_1)_{ii}\sum_a|K_{ai}|^2$;
+trace preservation fixes the sum over all Kraus operators to
+$\operatorname{Tr}Y_1$. The diagonal-subspace calculation did not
+drop the $a\ne i$ terms: they belong to the positive complementary
+block in (73.11).
+
+The centered decoder $\mathcal G_x$ attains the bound. Its two
+diagonal Kraus vectors in this basis are
+
+$$
+g_0=(1,x,x)^{\mathsf T},\qquad
+g_1=(0,\sqrt{1-x^2},-\sqrt{1-x^2})^{\mathsf T}.
+\tag{74.4}
+$$
+
+Since $x=w/q$, $z^{\mathsf T}g_0=-2w/q+2x=0$ and
+$z^{\mathsf T}g_1=0$. They lie in the kernel of the full slack:
+they have no complementary-space components, and (74.3) annihilates
+their diagonal components. Thus
+$\operatorname{Tr}((I\otimes Y_1-A_1)J(\mathcal G_x))=0$.
+Together with (71.4), (73.6) gives equality and proves (74.1).
+The centering bijection proves the assertion for the original first
+pair, not only its centered representation. $\square$
+
+## 75. The second arbitrary-CPTP overlap certificate
+
+**Proposition 75.1 (Positive weighted Laplacian slack).** The largest
+recovered overlap on the same $T_*$ for the second pair is
+
+$$
+\beta_2=(w+kq)^2.
+\tag{75.1}
+$$
+
+**Proof.** In the second axis basis define a diagonal $Y_2$ by
+
+$$
+(Y_2)_{ii}=p_i\sum_l(C_2)_{il}p_l.
+\tag{75.2}
+$$
+
+Every entry is positive because all $p_i$ and all entries of $C_2$
+are positive. More explicitly,
+
+$$
+Y_2=\operatorname{diag}\left(
+ w(w+kq),\ \tfrac{kwq}{2}+\tfrac{13q^2}{32},
+                 \tfrac{kwq}{2}+\tfrac{13q^2}{32}\right).
+\tag{75.3}
+$$
+
+Let $e_0,e_+,e_-$ be the coordinate vectors in the diagonal
+subspace. Subtracting $M_2$ from the diagonal restriction gives
+
+$$
+Y_2-M_2
+=\sum_{i<l}p_ip_l(C_2)_{il}
+                 (e_i-e_l)(e_i-e_l)^{\mathsf T}\succeq0.
+\tag{75.4}
+$$
+
+Indeed its off-diagonal entry is $-p_ip_l(C_2)_{il}$, and its
+$i$th diagonal entry is $\sum_{l\ne i}p_ip_l(C_2)_{il}$, exactly
+as in the displayed sum. The three edge weights are
+$kwq/2,kwq/2,5q^2/32$, all strictly positive. Each summand in
+(75.4) is positive, proving the claim without a numerical eigenvalue
+calculation. Lemma 73.3 supplies the nonnegative complementary
+block on the full Choi space. Therefore (73.6) bounds the overlap
+of every CPTP centered decoder, including every choice of its
+off-diagonal Kraus entries, by $\operatorname{Tr}Y_2$.
+
+For the identity centered decoder the diagonal Kraus vector is
+$(1,1,1)^{\mathsf T}$. Each summand of (75.4) kills it, and it has
+no complementary component, so this decoder attains the bound.
+Finally $k^2=13/16$ gives
+
+$$
+\operatorname{Tr}Y_2=w^2+2kwq+\tfrac{13}{16}q^2=(w+kq)^2.
+\tag{75.5}
+$$
+
+The centering bijection again transfers this maximum to all original
+second-pair decoders. $\square$
+
+## 76. Common-projector lower bound and exact scalar equality
+
+**Theorem 76.1 (All-CPTP lower bound on one actual input).** Every
+triple in (69.4) obeys
+
+$$
+\left\|\tfrac12D_0+\tfrac14D_1\mathcal N_1
+                      +\tfrac14D_2\mathcal N_2
+                      -\operatorname{id}\right\|_\diamond
+\ge1-\frac{\beta_1+\beta_2}{2}=2c.
+\tag{76.1}
+$$
+
+**Proof.** Let $F_D$ denote the averaged channel for an arbitrary
+triple. The singleton aggregate produces a density matrix on input
+$T_*$, so its overlap $\alpha_0$ with $T_*$ lies in $[0,1]$.
+There is no restriction on $D_0$. By Propositions 74.1 and 75.1,
+the two paired overlaps are at most $\beta_1,\beta_2$ respectively.
+Thus the full output overlap $\alpha$ satisfies
+
+$$
+\alpha=\operatorname{Tr}(T_*(F_D\otimes\operatorname{id})(T_*))
+\le\tfrac12+\tfrac14\beta_1+\tfrac14\beta_2.
+\tag{76.2}
+$$
+
+Measure the same projector $T_*$ and its complement on this output
+and on the ideal output $T_*$. The probability vectors are
+$(\alpha,1-\alpha)$ and $(1,0)$, with unhalved distance
+$2(1-\alpha)$. Equivalently the Hermitian observable $2T_*-I$
+has operator norm one and evaluates the ideal-minus-recovered
+state difference to $2(1-\alpha)$, giving directly
+
+$$
+\begin{aligned}
+\|F_D-\operatorname{id}\|_\diamond
+&\ge\|(F_D\otimes\operatorname{id})(T_*)-T_*\|_1\\
+&\ge2(1-\alpha)
+\ge1-\tfrac12(\beta_1+\beta_2).
+\end{aligned}
+\tag{76.3}
+$$
+
+The norm test may jointly measure system and untouched reference;
+only the decoders are system-only. This uses one fixed input and
+one fixed measurement for all records and all decoders. The
+saturation parts of §§74–75 identify the overlap maxima, but their
+upper bounds alone already suffice for (76.3).
+
+It remains to check the exact scalar equality. From (74.1) and
+(75.5), with $q=1-w$ and $k=s/4$,
+
+$$
+\begin{aligned}
+\beta_1+\beta_2
+&=\tfrac52w^2+\tfrac s2wq+\tfrac{25}{16}q^2\\
+&=\frac{25+(8s-50)w+(65-8s)w^2}{16}.
+\end{aligned}
+\tag{76.4}
+$$
+
+Write $d=65-8s>0$ and $b=25-4s$, so $w=b/d$ and
+$8s-50=-2b$. Since $s^2=13$,
+$25d-b^2=792$, whence
+
+$$
+\beta_1+\beta_2=\frac{25d-b^2}{16d}=\frac{99}{2d},\qquad
+1-\frac{\beta_1+\beta_2}{2}=1-\frac{99}{4d}
+=\frac{161-32s}{4d}.
+\tag{76.5}
+$$
+
+For the primal coefficient in (70.6), using
+$1+x=d/(40-4s)$ gives independently
+
+$$
+\begin{aligned}
+2c
+&=\frac{8-2x-s}{8(1+x)}\\
+&=\frac{(8-s)(40-4s)-2(25-4s)}{8d}
+=\frac{322-64s}{8d}
+=\frac{161-32s}{4d}.
+\end{aligned}
+\tag{76.6}
+$$
+
+Thus (76.3) equals the upper bound of Theorem 72.1. Finally,
+rationalization gives
+
+$$
+\frac{161-32s}{4(65-8s)}
+=\frac{7137-792s}{13572}
+=\frac{793-88s}{1508}.
+\tag{76.7}
+$$
+
+The unrestricted reduction (69.4) now proves Theorem 69.1 with an
+explicit minimizing decoder family. All of the original singleton
+choices remain covered by the lower bound. $\square$
+
+## 77. Strict endpoint comparisons and the common-input mechanism
+
+**Corollary 77.1 (Old bounds, strict endpoints and nonadditivity).**
+The bracket (65.1) remains valid, and its two endpoints are strictly
+separated from the exact value:
+
+$$
+\frac{37-4\sqrt{13}}{72}
+<\varepsilon_{\mathcal P}
+<\frac{47-8\sqrt{13}}{54}
+<\frac{11}{32}.
+\tag{77.1}
+$$
+
+In particular, the exact joint terminal optimum is strictly smaller
+than the sum of mass-weighted separate binary optima.
+
+**Proof.** Substitution of (69.2) yields
+
+$$
+\begin{aligned}
+\varepsilon_{\mathcal P}-\frac{37-4s}{72}
+ &=\frac{325-76s}{27144},\\
+\frac{47-8s}{54}-\varepsilon_{\mathcal P}
+ &=\frac{14027-3656s}{40716}.
+\end{aligned}
+\tag{77.2}
+$$
+
+Since $s<15/4$, the numerators exceed respectively
+$325-76(15/4)=40$ and $14027-3656(15/4)=317$; both are positive.
+The last inequality in (77.1) is also exact:
+
+$$
+\frac{11}{32}-\frac{47-8s}{54}
+=\frac{128s-455}{864}>0,
+\qquad 128^2\cdot13-455^2=5967>0.
+\tag{77.3}
+$$
+
+Proposition 63.2 identifies the separate optima as $1,3/8$ for
+the two pairs and zero for each singleton, so their weighted sum
+is $(1/4)(1+3/8)=11/32$. This proves strict nonadditivity for
+the actual partition, while preserving both previously valid
+inequalities. $\square$
+
+The matching certificates explain the mechanism. The scalar plane
+marginal $\rho_*|_{Q\mathbb C^3}=(q/2)I_2$ makes both signed,
+traceless axis operators $Z_1,Z_2$ have zero weighted trace on one
+and the same purification. Choosing $w=x/(1+x)$ also annihilates
+the diagonal residual $P-xQ$. The adjustment $\mathcal G_x$ of
+the first centered decoder supplies precisely the balance
+$u+v=c(1-x^2)$ needed for that residual to be a channel. Hence
+the two recovered pair channels combine into a single channel
+whose residual output is orthogonal to the target on $T_*$.
+The lower witnesses show that arbitrary other CPTP decoders cannot
+improve the corresponding common-input overlap bound.
+
+This is a joint statement about the averaged channel, rather than
+an addition of two independently optimized norm errors. It does
+not require that the inputs maximizing the separate binary errors
+coincide. The shared-plane, nonnegative-cosine sufficient class of
+Theorem 67.1 remains a separate conditional statement; the first
+relative here has cosine $-1/2$ and is outside that class. The
+present calculation uses the exact matrices (70.1), their specified
+angles and the signed identities (70.3)–(70.5). It asserts no
+classification or universality for other angles, axes, actual-word
+partitions or reachable controller histories.
+
+## 78. Applicability, supplier scope and the continuing memory problem
+
+**Encoded-input transfer.** The exact value also applies to the
+encoded-input full-space problem of Proposition 68.1, with arbitrary
+terminal $M_5\to M_5$ CPTP decoders and target $\iota$. Indeed
+$C\iota=\operatorname{id}$ in (68.1). Every full-space decoder
+induces the qutrit CPTP decoder $C\widetilde D_j\iota$, giving
+one inequality by reference-inclusive contractivity. Every qutrit
+decoder extends as $\iota D_jC$, giving the reverse inequality
+because $\iota$ preserves trace norm, also on untouched references.
+Thus the entire optimization values coincide, and Theorem 69.1
+transfers. This says nothing about identity recovery on arbitrary
+unencoded $\mathbb C^5$ inputs.
+
+**Corollary 78.1 (A legal peak-six online application).** For the actual
+fair horizon-three instrument and the original averaged encoded-input
+recovery convention,
+
+$$
+\varepsilon_{\rm op}(6,3)
+\le\varepsilon_{\mathcal P}
+=\frac{793-88\sqrt{13}}{1508}.
+\tag{78.1}
+$$
+
+**Application of Recovery Theorem 43.2.** Here $n=3$, $N=2^3=8$ and
+the width $W=6$ satisfies $W\ge N/2=4$. Thus the online peak-six and
+offline terminal-six feasible averaged full-$H$ channel sets coincide
+by [Recovery, Theorem 43.2](AURIC_FIB_APPROXIMATE_ONLINE_RECOVERY_MEMORY.md#43-near-full-matching-and-simultaneous-legal-pair-merges).
+Apply it to the partition (69.1) and decoders (71.3), extended to
+full-$H$ decoders by the encoded-input transfer above.
+
+Concretely, let $f(h)$ be the cell of (69.1) containing $h$. Retain
+the exact acquired prefix through time two, with layer counts $1,2,4$.
+At time three, from prefix $h_1h_2$ and the acquired label $h_3$,
+transition directly to $f(h_1h_2h_3)$ in the six-cell terminal alphabet.
+The resulting layer counts are $1,2,4,6$; no eight-state layer is
+created. These deterministic updates and a constant independent
+shared seed are permitted by Recovery Definition 2.3. The complete
+persistent state is the prefix or terminal cell; the known horizon
+and static decoder tables use that definition's separate resource
+convention. The averaged full-$H$ channel is exactly the transferred
+channel already constructed above, with target $\iota$ and the same
+unhalved diamond error for every finite untouched reference.
+Theorem 69.1 therefore gives (78.1). $\square$
+
+**Mathematical and literature status.** The explicit composite
+primal/dual certificate of §§69–77 is a repo-derived ordinary
+finite-dimensional mathematical proof. The actual letters,
+chronology, input-independent law and relative matrices are supplied
+by §§63–68 and their stated Recovery references. The separate
+binary errors are supplied by Theorem 59.2 and Proposition 63.2.
+The proof above supplies the new joint optimum through the explicit
+Kraus, trace and positive-semidefinite calculations; it does not
+require a numerical SDP optimum or a new external recovery theorem.
+Corollary 78.1 separately applies the existing Recovery Theorem 43.2
+to that certificate; the new joint-certificate content is in §§69–77.
+
+The primary references already scoped in the owning volume retain
+those scopes. Watrous, *The Theory of Quantum Information*, Chapter 2,
+as cited in §66, supplies the standard Choi representation and
+partial-trace convention. Its Theorems 3.46 and 3.51, cited in
+§§62 and 64, supply the usual pure-input diamond stabilization.
+Here (72.7) gives the upper bound directly for every finite
+reference, and the lower bound uses the explicit three-dimensional
+reference (72.8). Sion's Theorem 3.4, cited in §66, supplies that
+section's convex minimax exchange; no minimax exchange is needed
+for the explicit lower witnesses (73.4)–(75.4). The averaged-fidelity
+and near-optimal-recovery works discussed in §62 are not suppliers
+of the exact diamond value (69.2). No additional bibliographic
+claim or original-priority claim is made. These are not Lean/kernel
+certification or physical certification statements.
+
+**Continuing objective and limits.** The exact result fixes the
+horizon, the fair input-independent history law, the partition and
+the permission of one arbitrary system-only CPTP decoder per terminal
+record. It gives no optimization over record partitions, causal
+controllers, shared seeds, input-dependent Born-weight instruments,
+or physical implementations. Corollary 78.1 gives an attainable
+online error bound, without asserting a global minimum over
+partitions, stochastic controllers or shared seeds. Beyond this
+concrete application, the full finite $(n,\varepsilon)$ joint
+recovery/memory law, including general online compatibility and
+optimal peak memory requirements, remains open. The critical-energy
+estimate remains open as well; no energy estimate follows from
+the terminal channel identity or from these Choi witnesses.
+
+A terminal alphabet alone does not generally determine the required
+intermediate width; Corollary 78.1 supplies the legal peak-six
+realization for (69.1). This establishes no saving in fixed-length
+bits: both six and eight possible outcomes require three bits,
+since $\lceil\log_2 6\rceil=\lceil\log_2 8\rceil=3$.
+The remaining general causal, resource and physical questions are
+part of the AURIC FIB quantum recovery/memory objective. Theorem 69.1
+settles exactly the finite terminal-channel optimization stated
+there, with all decoder and reference permissions retained, and
+Corollary 78.1 supplies its concrete online application.
+
+## 追加锚（本行以下为增补区）
