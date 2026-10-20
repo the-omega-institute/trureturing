@@ -40,7 +40,161 @@ $$claim = (\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\opera
 
 Section 3, p. 7: “However, we do not show that an all-odd subtraction set necesarily do not converge (although we conjeture it) nor we provide the exact limits of the even and odd subsequences for the (conjectured) non-convergent case.” The section assumes a finite nonempty subtraction set with gcd one. Odd natural numbers are positive, and nonconvergence means that no real limit exists.
 
-**Theorem 1.4 (Every all-odd subtraction set fails to converge).**
+**Definition 1.4 (Alternating probability transform).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; \forall n \in \mathbb{N},\; \operatorname{b}\left(S, n\right) = (-1:\mathbb{R})^{n} \cdot (1 - 2 \cdot \operatorname{winProb}\left(S, n\right))$$
+
+*Formalization.* `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.b` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private definition b uses real powers and real arithmetic.
+
+**Definition 1.5 (Adjacent transformed probabilities).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; \forall n \in \mathbb{N},\; \operatorname{d}\left(S, n\right) = \operatorname{b}\left(S, n\right) + \operatorname{b}\left(S, n + 1\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.d` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private definition d adds consecutive values of b.
+
+**Lemma 1.6 (A newly legal subtraction).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (\operatorname{Odd}\left(s\right))) \Rightarrow (\forall n \in \mathbb{N},\; (\operatorname{Finset}.\operatorname{Nonempty}\left(\operatorname{legalMoves}\left(S, n\right)\right)) \Rightarrow ((n + 1 \in S) \Rightarrow (((\operatorname{Finset}.\operatorname{card}\left(\operatorname{legalMoves}\left(S, n\right)\right):\mathbb{R}) + 1) \cdot \operatorname{d}\left(S, n\right) = \sum_{s \in \operatorname{legalMoves}\left(S, n\right)} (\operatorname{d}\left(S, (n - s)\right)) + \operatorname{b}\left(S, n\right) + 1)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.d_threshold` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private d_threshold identity includes the changing-denominator term b S n + 1. The cardinality is cast to the reals before adding one.
+
+**Lemma 1.7 (Before the first legal subtraction).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (\operatorname{Odd}\left(s\right))) \Rightarrow (\forall n \in \mathbb{N},\; (\operatorname{legalMoves}\left(S, n\right) = \emptyset) \Rightarrow (\operatorname{d}\left(S, n\right) = \operatorname{if} n + 1 \in S \operatorname{then} 2 \operatorname{else} 0))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.d_initial` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private d_initial identity covers both possibilities for the next pile size.
+
+**Lemma 1.8 (Nonnegative adjacent sums).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (\operatorname{Odd}\left(s\right))) \Rightarrow (\forall n \in \mathbb{N},\; 0 \le \operatorname{d}\left(S, n\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.d_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private d_nonneg theorem uses strong induction through changes of legal moves; it requires neither nonemptiness nor a gcd hypothesis.
+
+**Lemma 1.9 (The positive seed at the least subtraction).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (\operatorname{Odd}\left(s\right))) \Rightarrow (\forall m \in \mathbb{N},\; (m \in S) \Rightarrow ((\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (m \le s)) \Rightarrow (\operatorname{d}\left(S, (m - 1)\right) = 2)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.d_seed` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private d_seed theorem assumes membership and minimality of m. Natural subtraction in m - 1 is truncated.
+
+**Definition 1.10 (The finite adjacent-sum window).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; \forall N \in \mathbb{N},\; \operatorname{invariant}\left(S, N\right) = \sum_{s \in S} (\sum_{r \in \operatorname{Finset}.\operatorname{range}\left(s\right)} (\operatorname{d}\left(S, ((N - s) + r)\right)))$$
+
+*Formalization.* `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.invariant` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private invariant definition sums over Finset.range s. The index N - s + r means truncated natural subtraction followed by addition.
+
+**Lemma 1.11 (Conservation after all moves are legal).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (\operatorname{Odd}\left(s\right))) \Rightarrow ((\operatorname{Finset}.\operatorname{Nonempty}\left(S\right)) \Rightarrow (\forall N \in \mathbb{N},\; (\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (s \le N)) \Rightarrow (\operatorname{invariant}\left(S, N + 1\right) = \operatorname{invariant}\left(S, N\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.invariant_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private invariant_step theorem applies when N bounds every element of S.
+
+**Lemma 1.12 (The conserved window at every later index).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (\operatorname{Odd}\left(s\right))) \Rightarrow ((\operatorname{Finset}.\operatorname{Nonempty}\left(S\right)) \Rightarrow (\forall M \in \mathbb{N},\; (\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (s \le M)) \Rightarrow (\forall n \in \mathbb{N},\; \operatorname{invariant}\left(S, M + n\right) = \operatorname{invariant}\left(S, M\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.invariant_constant` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private invariant_constant theorem iterates conservation from any upper bound M.
+
+**Lemma 1.13 (The conserved window is at least two).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (\operatorname{Odd}\left(s\right))) \Rightarrow (\forall (hne:\operatorname{Finset}.\operatorname{Nonempty}\left(S\right)), 2 \le \operatorname{invariant}\left(S, \operatorname{Finset}.\operatorname{max'}\left(S, hne\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.invariant_positive` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private invariant_positive theorem evaluates the window at Finset.max' S hne. Here hne is the proof of nonemptiness required by Finset.max'.
+
+**Theorem 1.14 (Nonconvergence without a gcd hypothesis).**
+
+$$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\operatorname{Finset}.\operatorname{Nonempty}\left(S\right)) \Rightarrow ((\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (\operatorname{Odd}\left(s\right))) \Rightarrow (\neg(\exists L \in \mathbb{R},\; \operatorname{Filter}.\operatorname{Tendsto}\left(\operatorname{winProb}\left(S\right), \operatorname{Filter}.\operatorname{atTop}, \operatorname{nhds}\left(L\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.nonconvergence` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nicolás Capitelli, Francisco Somma (2024). *On sequences arising from randomizing subtraction games*. DOI: [10.48550/arXiv.2405.19593](https://doi.org/10.48550/arXiv.2405.19593). URL: <https://arxiv.org/abs/2405.19593v1>.
+
+*Commentary.*
+
+The private nonconvergence theorem is the stronger statement consumed by result. Its hypotheses are exactly nonemptiness and oddness of every subtraction.
+
+**Theorem 1.15 (Every all-odd subtraction set fails to converge).**
 
 $$\forall S \in \operatorname{Finset}\left(\mathbb{N}\right),\; (\operatorname{Finset}.\operatorname{Nonempty}\left(S\right)) \Rightarrow ((\forall s \in \mathbb{N},\; (s \in S) \Rightarrow (\operatorname{Odd}\left(s\right))) \Rightarrow ((\operatorname{Finset}.\operatorname{gcd}\left(S, \operatorname{id}\right) = 1) \Rightarrow (\neg(\exists L \in \mathbb{R},\; \operatorname{Filter}.\operatorname{Tendsto}\left((\lambda (n:\mathbb{N})\mapsto\operatorname{winProb}\left(S, n\right)), \operatorname{Filter}.\operatorname{atTop}, \operatorname{nhds}\left(L\right)\right)))))$$
 
@@ -60,7 +214,18 @@ Put b(n)=(-1)^n(1-2 winProb S n) and d(n)=b(n)+b(n+1). Oddness makes b satisfy a
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.b`
 - Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.claim`
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.d`
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.d_initial`
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.d_nonneg`
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.d_seed`
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.d_threshold`
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.invariant`
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.invariant_constant`
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.invariant_positive`
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.invariant_step`
 - Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.legalMoves`
+- Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.nonconvergence`
 - Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.result`
 - Truth anchor: `D5/S3/Combinatorics/Games/CapitelliSommaAllOddNonconvergence.winProb`

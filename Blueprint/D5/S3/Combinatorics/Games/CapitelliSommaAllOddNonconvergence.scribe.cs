@@ -36,6 +36,45 @@ internal sealed class CapitelliSommaAllOddNonconvergenceDocument : IScribeDocume
                 + "The section assumes a finite nonempty subtraction set with gcd one. "
                 + "Odd natural numbers are positive, and nonconvergence means that no real limit exists.",
                 AssessedProvenance.FromLiterature(Source)),
+            Node("b", "Alternating probability transform", BBody(),
+                "The private definition b uses real powers and real arithmetic.",
+                AssessedProvenance.FromRepo(Source)),
+            Node("d", "Adjacent transformed probabilities", DBody(),
+                "The private definition d adds consecutive values of b.",
+                AssessedProvenance.FromRepo(Source)),
+            Node("d_threshold", "A newly legal subtraction", ThresholdBody(),
+                "The private d_threshold identity includes the changing-denominator term b S n + 1. "
+                + "The cardinality is cast to the reals before adding one.",
+                AssessedProvenance.FromRepo(Source), DescribeRole.Lemma),
+            Node("d_initial", "Before the first legal subtraction", InitialBody(),
+                "The private d_initial identity covers both possibilities for the next pile size.",
+                AssessedProvenance.FromRepo(Source), DescribeRole.Lemma),
+            Node("d_nonneg", "Nonnegative adjacent sums", NonnegBody(),
+                "The private d_nonneg theorem uses strong induction through changes of legal moves; "
+                + "it requires neither nonemptiness nor a gcd hypothesis.",
+                AssessedProvenance.FromRepo(Source), DescribeRole.Lemma),
+            Node("d_seed", "The positive seed at the least subtraction", SeedBody(),
+                "The private d_seed theorem assumes membership and minimality of m. "
+                + "Natural subtraction in m - 1 is truncated.",
+                AssessedProvenance.FromRepo(Source), DescribeRole.Lemma),
+            Node("invariant", "The finite adjacent-sum window", InvariantBody(),
+                "The private invariant definition sums over Finset.range s. "
+                + "The index N - s + r means truncated natural subtraction followed by addition.",
+                AssessedProvenance.FromRepo(Source)),
+            Node("invariant_step", "Conservation after all moves are legal", InvariantStepBody(),
+                "The private invariant_step theorem applies when N bounds every element of S.",
+                AssessedProvenance.FromRepo(Source), DescribeRole.Lemma),
+            Node("invariant_constant", "The conserved window at every later index", InvariantConstantBody(),
+                "The private invariant_constant theorem iterates conservation from any upper bound M.",
+                AssessedProvenance.FromRepo(Source), DescribeRole.Lemma),
+            Node("invariant_positive", "The conserved window is at least two", InvariantPositiveBody(),
+                "The private invariant_positive theorem evaluates the window at Finset.max' S hne. "
+                + "Here hne is the proof of nonemptiness required by Finset.max'.",
+                AssessedProvenance.FromRepo(Source), DescribeRole.Lemma),
+            Node("nonconvergence", "Nonconvergence without a gcd hypothesis", NonconvergenceBody(),
+                "The private nonconvergence theorem is the stronger statement consumed by result. "
+                + "Its hypotheses are exactly nonemptiness and oddness of every subtraction.",
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Node("result", "Every all-odd subtraction set fails to converge", ClaimBody(),
                 "Put b(n)=(-1)^n(1-2 winProb S n) and d(n)=b(n)+b(n+1). "
                 + "Oddness makes b satisfy a positive averaging recurrence. At a newly legal subtraction, "
@@ -53,7 +92,7 @@ internal sealed class CapitelliSommaAllOddNonconvergenceDocument : IScribeDocume
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
         OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("capitelli-somma-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("capitelli-somma-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Module + "." + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
@@ -81,6 +120,104 @@ internal sealed class CapitelliSommaAllOddNonconvergenceDocument : IScribeDocume
         Parenthesized(Seq(LambdaLower, Sp, Parenthesized(Seq(F.Id(name), Colon, type)), Mapsto, body));
     private static Formula Legal(Formula s, Formula n) => Call("legalMoves", s, n);
     private static Formula Prob(Formula s, Formula n) => Call("winProb", s, n);
+    private static Formula Nonempty(Formula s) => App(Qualified("Finset", "Nonempty"), s);
+    private static Formula Odds(Formula s) =>
+        All("s", Nat, Imp(Member(F.Id("s"), s), Call("Odd", F.Id("s"))));
+    private static Formula Bound(Formula s, Formula n) =>
+        All("s", Nat, Imp(Member(F.Id("s"), s), Leq(F.Id("s"), n)));
+    private static Formula SumOver(string name, Formula set, Formula body) =>
+        Seq(new Formula.Subscript(Sum, Member(F.Id(name), set)), Sp, Parenthesized(body));
+
+    private static Formula BBody()
+    {
+        var s = F.Id("S"); var n = F.Id("n");
+        var sign = new Formula.Power(Parenthesized(Seq(Minus, D(1), Colon, Real)), n);
+        return All("S", SetType, All("n", Nat, Equal(Call("b", s, n),
+            Multiply(sign, Parenthesized(Subtract(D(1), Multiply(D(2), Prob(s, n))))))));
+    }
+
+    private static Formula DBody()
+    {
+        var s = F.Id("S"); var n = F.Id("n");
+        return All("S", SetType, All("n", Nat, Equal(Call("d", s, n),
+            Add(Call("b", s, n), Call("b", s, Add(n, D(1)))))));
+    }
+
+    private static Formula ThresholdBody()
+    {
+        var s = F.Id("S"); var n = F.Id("n"); var k = F.Id("s");
+        var legal = Legal(s, n);
+        var card = Parenthesized(Seq(App(Qualified("Finset", "card"), legal), Colon, Real));
+        var sum = SumOver("s", legal, Call("d", s, Parenthesized(Subtract(n, k))));
+        return All("S", SetType, Imp(Odds(s), All("n", Nat,
+            Imp(Nonempty(legal), Imp(Member(Add(n, D(1)), s),
+                Equal(Multiply(Parenthesized(Add(card, D(1))), Call("d", s, n)),
+                    Add(Add(sum, Call("b", s, n)), D(1))))))));
+    }
+
+    private static Formula InitialBody()
+    {
+        var s = F.Id("S"); var n = F.Id("n");
+        var value = Seq(Named("if"), Sp, Member(Add(n, D(1)), s), Sp,
+            Named("then"), Sp, D(2), Sp, Named("else"), Sp, D(0));
+        return All("S", SetType, Imp(Odds(s), All("n", Nat,
+            Imp(Equal(Legal(s, n), Emptyset), Equal(Call("d", s, n), value)))));
+    }
+
+    private static Formula NonnegBody()
+    {
+        var s = F.Id("S"); var n = F.Id("n");
+        return All("S", SetType, Imp(Odds(s), All("n", Nat, Leq(D(0), Call("d", s, n)))));
+    }
+
+    private static Formula SeedBody()
+    {
+        var s = F.Id("S"); var m = F.Id("m"); var k = F.Id("s");
+        var minimum = All("s", Nat, Imp(Member(k, s), Leq(m, k)));
+        return All("S", SetType, Imp(Odds(s), All("m", Nat, Imp(Member(m, s),
+            Imp(minimum, Equal(Call("d", s, Parenthesized(Subtract(m, D(1)))), D(2)))))));
+    }
+
+    private static Formula InvariantBody()
+    {
+        var s = F.Id("S"); var n = F.Id("N"); var k = F.Id("s"); var r = F.Id("r");
+        var index = Parenthesized(Add(Parenthesized(Subtract(n, k)), r));
+        return All("S", SetType, All("N", Nat, Equal(Call("invariant", s, n),
+            SumOver("s", s, SumOver("r", App(Qualified("Finset", "range"), k), Call("d", s, index))))));
+    }
+
+    private static Formula InvariantStepBody()
+    {
+        var s = F.Id("S"); var n = F.Id("N");
+        return All("S", SetType, Imp(Odds(s), Imp(Nonempty(s), All("N", Nat,
+            Imp(Bound(s, n), Equal(Call("invariant", s, Add(n, D(1))), Call("invariant", s, n)))))));
+    }
+
+    private static Formula InvariantConstantBody()
+    {
+        var s = F.Id("S"); var m = F.Id("M"); var n = F.Id("n");
+        return All("S", SetType, Imp(Odds(s), Imp(Nonempty(s), All("M", Nat,
+            Imp(Bound(s, m), All("n", Nat,
+                Equal(Call("invariant", s, Add(m, n)), Call("invariant", s, m))))))));
+    }
+
+    private static Formula InvariantPositiveBody()
+    {
+        var s = F.Id("S"); var hne = F.Id("hne");
+        var maximum = App(Seq(Named("Finset"), Dot, Operatorname, Grp(F.Id("max"), Apos)), s, hne);
+        var positive = Seq(Forall, Sp, Parenthesized(Seq(hne, Colon, Nonempty(s))), Comma, Sp,
+            Leq(D(2), Call("invariant", s, maximum)));
+        return All("S", SetType, Imp(Odds(s), positive));
+    }
+
+    private static Formula NonconvergenceBody()
+    {
+        var s = F.Id("S"); var l = F.Id("L");
+        var limit = App(Qualified("Filter", "Tendsto"), App(Named("winProb"), s),
+            Qualified("Filter", "atTop"), Call("nhds", l));
+        return All("S", SetType, Imp(Nonempty(s), Imp(Odds(s),
+            Seq(Neg, Parenthesized(Some("L", Real, limit))))));
+    }
 
     private static Formula LegalMovesBody()
     {
