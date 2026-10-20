@@ -143,6 +143,10 @@ FIB 五模式单元刻画两个选择的耦合，不刻画是否存在选择。�
 
 合法角色限于上述单向模型桥、猜测边上的静态 `coupled/independent` 注记，以及预登记的 `shared_data × c` 交叉表。它们不引入新的 LawFamily/Application 适配器或 FIB 来源定理。
 
+静态注记只读取消费者陈述的逻辑骨架：经可约头正规化后，若一个 `Exists` 的非证明见证变量同时出现在其作用域内某个 `And` 的两侧，则 `shared_data=true`、`coupled`；否则为 `false`、`independent`。递归范围是 `forall`、`Exists`、`And` 和 `Or`；外层已给定参数不作为待选见证。`independent` 只表示该骨架未检出共享，不声称任意隐藏谓词、切式或证明实现语义独立，更不构成 strict/collapsed 证书。读取失败为 unknown；该注记不参与定价、种子排除或判词。
+
+交叉表的总体、注记定义和夹具预测须在运行前登记。表按基底臂候选边的 `shared_data∈{false,true}` 与 `c∈{0,1}` 计数，明确包含作者边、两层前沿和根探针边；unknown 价和缺少注记分别报告，不填入任一布尔单元。`d_cut/d_given`、无辅助声明数与 opaque 声明数随同报告。
+
 更强的 ATOM 完备性命题保持研究开放问题：必须事先固定证明语言、FIB 网络、可执行编码 `E` 和解码语义，证明覆盖、语义保持与反射、作用域保持、证书可译回和资源对应；映射不得按结果事后选择。受限网络须先检验能否表达三元 OR；只有二元化或同名对应不能完成这些义务。
 
 ## 8. 模型核验义务
@@ -166,7 +170,7 @@ FIB 五模式单元刻画两个选择的耦合，不刻画是否存在选择。�
 - 校准与登记单元应同时出现 bind-only 和 non-bind-only；否则报告校准失败，不能用手造模型图替代实际提取的非退化检验。
 - `doubledContent ← addition` 的预测为 `d_B∈{1,2}`、正约化、`closure=zero`，`Lean.Omega.*` 只作叶或不出现；替换 `addition` 内部闭合器不改变该声明图读数。若根探针直接闭合 `T`，如实判 bind-only。
 - `squareVia := ⟨42,squareFact⟩` 的预测为一到零、zero，`squareFact` 是合成前提且自身不被误记为难；真实依赖它的两层链预测为二到一、partial。`S` 必须出现在作者证明的活依赖中，只有作用域可见不算。
-- unwrapped、splitHelper、specialized、package、dead、等价泛化及例行 `by omega` helper 均不得判非 bind-only。单源呈现、宽 `S` 排除、全中性 `S`、私有名与词汇传输回归保留；判词变化逐项说明适用规则。
+- unwrapped、splitHelper、specialized、package、dead、等价泛化及目标本身例行的 `routineVia` 夹具均不得判非 bind-only；单独知道某个合成辅助陈述例行可证不构成排除理由。单源呈现、宽 `S` 排除、全中性 `S`、私有名与词汇传输回归保留；判词变化逐项说明适用规则。
 - 登记声明逐条报告是否越过词汇阶段、顶点和边数、合成前提数、两臂区间、判词、closure、unknown 原因、见证边、耗时与整棵进程树的物理 footprint 峰值。
 - 同时报告 `d_cut/d_given`、`shared_data × c` 交叉表、“无辅助声明”数量与 opaque 声明数量。切式消融全等时如实报告无可观测效应。
 

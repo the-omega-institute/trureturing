@@ -36,9 +36,16 @@ run_cmd do
       (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.routineVia, #[]),
       (``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContent, #[addition]),
       (``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContentWithoutOmega,
-        #[``LeanInformationAudit.Tests.SearchReduction.Candidates.additionWithoutOmega])]
+        #[``LeanInformationAudit.Tests.SearchReduction.Candidates.additionWithoutOmega]),
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.sharedRoutine, #[]),
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.sharedWitness, #[])]
     let mut positives := 0
     let mut bindings := 0
+    let mut sharedTable : Array Nat := #[0, 0, 0, 0]
+    let mut missingShared := 0
+    let mut unknownCost := 0
+    let mut noAuxiliary := 0
+    let mut opaqueCount := 0
     let mut doubled : Option GraphReading := none
     for (name, additions) in fixtures do
       let graph ← withEnv source <| extractGraph base name additions
@@ -59,6 +66,15 @@ run_cmd do
         isolated := true, structureChecked := true,
         structureClean := true, presentationComplete := true}
       let verdict := classifyGraph certified
+      if reading.noAuxiliary then noAuxiliary := noAuxiliary + 1
+      opaqueCount := opaqueCount + (reading.graph.vertices.filter (·.opaqueDecl)).length
+      for edge in reading.graph.edges do
+        match edge.sharedData?, edge.cost with
+        | none, _ => missingShared := missingShared + 1
+        | _, .unknown => unknownCost := unknownCost + 1
+        | some shared, cost =>
+          let cell := (if shared then 2 else 0) + (if cost == .one then 1 else 0)
+          sharedTable := sharedTable.modify cell (· + 1)
       if verdict == .bindOnly then bindings := bindings + 1
       if verdict == .nonBindOnly then positives := positives + 1
       let observation : Observation := {
@@ -96,4 +112,26 @@ run_cmd do
       if name == ``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContentWithoutOmega then
         logInfo s!"DECL_CLOSER_INVARIANCE {doubled.any (fun old =>
           old.baseline == reading.baseline && old.paired == reading.paired)}"
+      if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.sharedRoutine then
+        let rootEdges := reading.graph.edges.filter (·.conclusion == reading.graph.root)
+        unless rootEdges.all (·.sharedData? == some true) &&
+            reading.baseline == ⟨.finite 0, .finite 0⟩ do
+          throwError "sharedRoutine static-sharing/zero-price prediction failed"
+      if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.sharedWitness then
+        let rootEdges := reading.graph.edges.filter (·.conclusion == reading.graph.root)
+        unless rootEdges.all (·.sharedData? == some true) &&
+            reading.baseline == ⟨.finite 1, .finite 1⟩ do
+          throwError "sharedWitness static-sharing/one-price prediction failed"
     logInfo s!"DECL_CALIBRATION non_bind_only={positives} bind_only={bindings}"
+    let table := Json.mkObj [
+      ("configuration", toJson localConfiguration),
+      ("population", toJson "all calibration candidate edges; baseline c"),
+      ("shared_false", Json.mkObj [("c_zero", toJson sharedTable[0]!),
+        ("c_one", toJson sharedTable[1]!)]),
+      ("shared_true", Json.mkObj [("c_zero", toJson sharedTable[2]!),
+        ("c_one", toJson sharedTable[3]!)]),
+      ("unknown_cost", toJson unknownCost), ("missing_shared", toJson missingShared),
+      ("no_auxiliary_declarations", toJson noAuxiliary),
+      ("opaque_declarations", toJson opaqueCount)]
+    logInfo s!"DECL_SHARED_DATA_TABLE {table.compress}"
+    unless missingShared == 0 do throwError "missing static sharing annotation"

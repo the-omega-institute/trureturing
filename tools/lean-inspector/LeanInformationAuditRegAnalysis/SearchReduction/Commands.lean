@@ -53,6 +53,7 @@ private def intervalJson (i : Interval) : Json := Json.mkObj [
   ("lower", boundJson i.lower), ("upper", boundJson i.upper)]
 
 private def graphJson (r : GraphReading) : Json := Json.mkObj [
+  ("sharing_configuration", toJson sharingConfiguration),
   ("k", toJson r.k), ("vertices", toJson r.graph.vertices.length),
   ("edges", toJson r.graph.edges.length), ("complete", toJson r.graph.complete),
   ("issues", toJson r.graph.issues),
@@ -82,6 +83,8 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
     ("used_premises", toJson edge.usedPremises),
     ("paired_used_premises", toJson edge.pairedUsedPremises),
     ("shared_data", toJson edge.sharedData?),
+    ("coupled", toJson (edge.sharedData?.map fun shared =>
+      if shared then "coupled" else "independent")),
     ("cost", toJson (reprStr edge.cost)), ("paired_cost", toJson (reprStr edge.pairedCost)),
     ("detail", toJson edge.detail)])),
   ("witness_edges", toJson r.witnessEdges),

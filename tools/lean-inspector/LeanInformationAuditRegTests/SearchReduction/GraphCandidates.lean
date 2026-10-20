@@ -25,6 +25,13 @@ theorem secondWitness : ∃ m : Nat, m * m = 1849 := ⟨43, secondSquareFact⟩
 theorem twoLayerVia : ∃ n : Nat, n * n = 1764 ∧ ∃ m : Nat, m * m = 1849 :=
   ⟨42, squareFact, secondWitness⟩
 
+theorem sharedRoutine : ∃ n : Nat, n = 0 ∧ n = 0 := ⟨0, rfl, rfl⟩
+
+theorem successorFact : (42 : Nat) + 1 = 43 := rfl
+
+theorem sharedWitness : ∃ n : Nat, n * n = 1764 ∧ n + 1 = 43 :=
+  ⟨42, squareFact, successorFact⟩
+
 theorem routineHelper (n : Nat) : n < n + 1 := by omega
 
 theorem routineVia (n : Nat) : n < n + 1 := routineHelper n

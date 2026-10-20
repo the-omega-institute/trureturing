@@ -11,6 +11,7 @@ open Lean Meta Elab Tactic
 
 abbrev localBudget : Nat := 200000
 abbrev localConfiguration : String := "R_loc-decl/analytic-cut-k2/200000"
+abbrev sharingConfiguration : String := "statement-exists-and-support"
 
 private def standardClosure (xs : Array Name) : Bool :=
   xs.all (#[`propext, `Classical.choice, `Quot.sound].contains ·)
@@ -366,13 +367,50 @@ def localRebuild (target : Expr) (types : List Expr := []) : MetaM LocalResult :
 private def vertex (graph : ProofGraph) (id : Nat) : GraphVertex :=
   (graph.vertices.find? (·.id == id)).getD default
 
+/-- Only existential data choices enter this syntactic observation. A shared
+parameter already supplied by the caller is not an unresolved witness. -/
+private partial def sharedWitnessSupport (type : Expr) (choices : Array Expr := #[]) :
+    MetaM Bool := do
+  let type ← withReducible <| whnf type
+  if type.isForall then
+    return ← forallTelescopeReducing type fun _ body => sharedWitnessSupport body choices
+  if type.isAppOfArity ``Exists 2 then
+    let domain := type.getArg! 0
+    let predicate := type.getArg! 1
+    return ← withLocalDeclNoLocalInstanceUpdate `_sharingWitness .default domain fun x => do
+      let choices := if ← isProp domain then choices else choices.push x
+      sharedWitnessSupport (mkApp predicate x) choices
+  if type.isAppOfArity ``And 2 || type.isAppOfArity ``Or 2 then
+    let left := type.getArg! 0
+    let right := type.getArg! 1
+    if type.isAppOfArity ``And 2 && choices.any (fun x =>
+        left.containsFVar x.fvarId! && right.containsFVar x.fvarId!) then return true
+    if ← sharedWitnessSupport left choices then return true
+    return ← sharedWitnessSupport right choices
+  return false
+
+/-- Sharing is an observation with its own bound; failure cannot change prices
+or the mathematical completeness of the declaration graph. -/
+private def statementSharing (type : Expr) : MetaM (Except String Bool) := do
+  let started ← IO.getNumHeartbeats
+  try
+    return .ok (← withTheReader Core.Context (fun ctx =>
+      {ctx with initHeartbeats := started, maxHeartbeats := localBudget * 1000}) do
+        sharedWitnessSupport type)
+  catch ex => return .error (← ex.toMessageData.toString)
+
 /-- Type classification is shared by both arms and the given-premise ablation. -/
 private def annotateGraph (graph : ProofGraph) : MetaM ProofGraph := do
   let mut edges := []
   let mut graph := graph
   for edge in graph.edges do
-    let started ← IO.getNumHeartbeats
     let mut edge := edge
+    match ← statementSharing (vertex graph edge.conclusion).type with
+    | .ok shared => edge := {edge with sharedData? := some shared}
+    | .error detail =>
+      graph := {graph with issues :=
+        s!"graph.shared_data:{edge.source}:{detail}" :: graph.issues}
+    let started ← IO.getNumHeartbeats
     try
       let analytic ← withTheReader Core.Context (fun ctx =>
           {ctx with initHeartbeats := started, maxHeartbeats := localBudget * 1000}) do
@@ -495,6 +533,7 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
         usedPremises := if paired then [] else actual, pairedUsedPremises := actual,
         givenUsedPremises := if paired then [] else actual, pairedGivenUsedPremises := actual,
         zeroProof := if paired then none else probe.proof?, pairedZeroProof := probe.proof?,
+        sharedData? := (graph.edges.find? (·.conclusion == graph.root)).bind (·.sharedData?),
         detail := if paired then "paired-root-probe" else "baseline-root-probe"}]}
   let baselineGraph := armGraph graph false false
   let pairedGraph := armGraph graph true false
