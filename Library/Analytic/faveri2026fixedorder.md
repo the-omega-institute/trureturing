@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray and zero-support applications improving the complete classwise pole and paying it on a specified original witness sector, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -1957,6 +1957,175 @@ Indeed the pole factor is $U^{5/6}$; $N^2\le U$ pays $KN^{1/3}$, and division of
 At the original $t=1$ witness setting, write $D=U^r$, $N=U^m$ and $H_0\ll U^h$. Retain $r\le1$, $r+m\ge1$, $0\le m\le1/2$ and their original arbitrarily small losses. If $9m+12h<1$ with fixed reserve, then $r+9m+12h<2$, and $r>3m+4h$ follows from $r\ge1-m$ and $4h<(1-9m)/3$. Thus (C10) holds after absorbing the small losses. This includes a nonempty interval $0\le m<1/9$ at fixed height. The witness theorem does not guarantee that returned witnesses lie in this sector, and no length or shared height budget has been reset.
 
 This source-conditional application pays the specified classwise all-column pure-sixth-power pole only on that sector. It supplies no bound for the remaining dual ideals, the earlier cross-class signed pole, all other witness sectors or signed same-integer Robin restoration. RH and the full Robin inequality remain unproved; no complete analytical Lean certification is claimed.
+
+### Weighted interpolation before the ray-divisor sum
+
+The two owned estimates for each actual scalar norm can be compared before summing the original ray divisors. This application reuses (C1)–(C2), (B5), the coefficient-uniform cubic core norm and the unrestricted pure-power shifted-integral bound. The elementary interpolation inequalities are used inside this consumer, without being claimed as new results.
+
+A related conductor-aspect cubic application is [de Faveri, arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), §8, Proposition 8.1 and equations (8.1)–(8.3). Its inner character index is squarefree, and the proof explicitly requires the transformed coefficients to be independent of the two variables combined into its new numerator. Remark 8.2 leaves the cube-free extension unworked because of root-number complications. That proposition is not a direct bound for the scalar vectors below; the present application uses the already matched inputs, with no literature-novelty claim.
+
+#### Same scalar norm, two owned bounds
+
+Fix an original core pair and its nonempty original factorizations:
+
+$$
+h=gcs_0z,\quad k=gc't_0w,\quad
+a=a_ga_c,\quad b=b_gb_cs_0,\quad
+g=a_gb_g,\quad c=a_cb_c.
+$$
+
+Keep $a_g=(a,\operatorname{rad}g)$, $a_c\mid\operatorname{rad}c$, and the original cross-core coprimality conditions. Put
+
+$$
+f_c=\operatorname{rad}(r_6(c)),\quad
+u_c=q_{f_c}q_{s_0},\quad
+f_0=f_cs_0f_{c'}t_0,\quad
+R=\operatorname{rad}(gcc'S_0)/f_0,\quad
+X=K/(q_gq_cq_{s_0}).
+$$
+
+For the same actual scalar vector $H_{c,r,e}^{a,b}$ at each $r\mid R$, write
+
+$$
+\mathscr R_{c,r}^{a,b}=\sum_e|H_{c,r,e}^{a,b}|^2.
+$$
+
+It may still depend on the opposite core; neither of the two estimates changes its coefficients. C2 gives, with the original profile norms,
+
+$$
+\mathscr R_{c,r}^{a,b}
+\ll K^\epsilon q_\ell^\epsilon q_{f_0}q_{r_g}\mathcal L_c^2,
+\quad
+\mathcal L_c^2=X^{1/3}\frac N{q_b}
+\left(\frac D{q_a}\right)^{1/2}\mathcal B^2.
+\tag{D1}
+$$
+
+The coefficient-uniform cubic bound for that same vector is
+
+$$
+\mathscr R_{c,r}^{a,b}\ll K^\epsilon
+\left\{X+X^{1/3}\left(\frac D{q_a}+\frac N{q_b}\right)\right\}\mathcal P^2.
+\tag{D2}
+$$
+
+All $r$-twists, zero masks, finite class weights and orientations occur in the vectors before either estimate. In D1, zero-only support has already been removed by C1, at epsilon cost. D2 is uniform in these bounded coefficient weights. Fixed original bad-prime factors cost constants.
+
+On a nonempty opposite factorization, $\operatorname{rad}c'\mid b_{c'}$ and
+
+$$
+q_{f_{c'}}q_{t_0}\le q_{b_{c'}}q_{t_0}
+\ll N/q_{b_g'}\le CN.
+$$
+
+Thus $q_{f_0}\le CN u_c$, uniformly in the opposite core. Empty opposite ranges contribute zero. This is the same original $b'$-support argument as C4, without summing $r$ yet. Since $q_{r_g}\le q_r$, D1 permits the uniform host-core bound $q_r\mathcal A_c$ with
+
+$$
+\mathcal A_c=Nu_c\mathcal L_c^2.
+$$
+
+#### Compare before summing the ray divisors
+
+Set the two positive numerical cubic components
+
+$$
+\mathcal E_c=\left(X+X^{1/3}\frac N{q_b}\right)\mathcal P^2,
+\qquad
+\mathcal J_c=X^{1/3}\frac D{q_a}\mathcal P^2.
+$$
+
+The elementary inequalities
+
+$$
+\min(A,E+J)\le E+\min(A,J),\qquad
+\min(A,J)\le A^{2/3}J^{1/3}
+$$
+
+are applied inside the positive norm bound. They do not split or change the actual coefficient vector. Combining D1-D2, and retaining the original weight $q_r^{-5/6}$, gives
+
+$$
+\begin{aligned}
+\sum_{r\mid R}q_r^{-5/6}\mathscr R_{c,r}^{a,b}
+&\ll K^\epsilon q_\ell^\epsilon
+\left\{\mathcal E_c\sum_{r\mid R}q_r^{-5/6}
++\mathcal A_c^{2/3}\mathcal J_c^{1/3}
+\sum_{r\mid R}q_r^{-1/6}\right\}\\
+&\ll K^\epsilon q_\ell^\epsilon
+\left\{\mathcal E_c+\mathcal A_c^{2/3}\mathcal J_c^{1/3}\right\}.
+\end{aligned}
+\tag{D3}
+$$
+
+Both divisor sums cost epsilon, since $q_R\ll K^C$ for a fixed $C$; no sum over all ideals of exponent $1/6$ is claimed convergent. Auxiliary epsilon powers are allocated relative to one final epsilon. In particular D3 does not first pay the $q_g^{1/6}$ conductor cost in C3.
+
+For each fixed core pair, Cauchy in the weighted $(r,e)$ Hilbert space bounds its original contraction by the product of these two root-norm envelopes. The envelopes are uniform in the opposite cores. One may then take absolute values and sum the core pairs using the own-core numerical envelopes. This does not give different opposite-core-dependent vectors a common realization.
+
+#### Exact cancellation of the core weight
+
+The interpolated square-root contribution in D3 equals
+
+$$
+\begin{aligned}
+\mathcal A_c^{1/3}\mathcal J_c^{1/6}
+={}&K^{1/6}D^{1/3}N^{2/3}
+q_g^{-1/2}q_c^{-1/2}q_{s_0}^{-1/6}
+q_{f_c}^{1/3}\mathcal B^{2/3}\mathcal P^{1/3}.
+\end{aligned}
+\tag{D4}
+$$
+
+Indeed the combined $a$ and $b$ factors each have exponent $-1/2$. Use $ab=gcs_0$ and $u_c=q_{f_c}q_{s_0}$. The existing outer core weight is exactly $w(c)=q_{f_c}^{-1/3}$, so it cancels $q_{f_c}^{1/3}$ in D4.
+
+The remaining positive core sum has an epsilon bound:
+
+$$
+\sum_{\substack{c\ \mathrm{powerful}\\q_c\le CK}}
+q_c^{-1/2}\tau(c)\ll_\epsilon K^\epsilon.
+\tag{D5}
+$$
+
+Here $\tau(c)$ may be the ideal divisor function or a fixed divisor-bounded multiplicity covering the original $a_c$ choices. For any fixed $s>0$, its Rankin series has local first nonunit term $O(q_{\mathfrak p}^{-1-2s})$, since a powerful exponent is at least two, and hence converges. Take $s$ sufficiently small in terms of the final epsilon. The bounded choices of $s_0\mid\operatorname{rad}g$ and of the original squarefree distribution $a_g$ cost $q_g^\epsilon$. The negative $s_0$ factor is dropped only in this positive upper bound. All core supports may be enlarged here; the original supports were retained when deriving D1-D4.
+
+Consequently, for fixed $g$, the summed interpolated root envelope is
+
+$$
+\ll K^\epsilon q_\ell^\epsilon
+K^{1/6}D^{1/3}N^{2/3}q_g^{-1/2}
+\mathcal B^{2/3}\mathcal P^{1/3}.
+\tag{D6}
+$$
+
+Squaring and summing $q_g\ll K$ uses only $\sum_{q_g\ll K}q_g^{-1}\ll\log(2K)$, and yields $K^\epsilon D N^{5/3}\mathcal B^{4/3}\mathcal P^{2/3}$.
+
+The two components of $\mathcal E_c$ are the unchanged cubic $X$ and $N/q_b$ components. Their existing core/gcd bounds give $K^{1+\epsilon}(1+N^{1/3})\mathcal P^2$. After fixed-pair Cauchy and the core sums, separate the three numerical root envelopes by $(x+y+z)^2\le3(x^2+y^2+z^2)$. This retains all cross terms, including interpolated/uninterpolated ones. The actual $z=w=1$ sector and its algebraically added counterpart keep the owned $O(K^{1+\epsilon})$ bounds. The original $q_\ell^{-5}$ sum absorbs the auxiliary $q_\ell^\epsilon$ uniformly in its cutoff. There is no split of the signed source moment by an unproved positivity claim.
+
+#### Complete consumer and its original witness sector
+
+These steps give the complete classwise all-column pure-sixth-power pole bound
+
+$$
+\boxed{
+|\mathcal C^{a,\mathrm{all}}_{6,L}[c_j]|
+\ll K^\epsilon\left\{
+K(1+N^{1/3})\mathcal P^2
++D N^{5/3}\mathcal B^{4/3}\mathcal P^{2/3}
+\right\}.
+}
+\tag{D7}
+$$
+
+It is uniform in $L$ and uses the original coefficients, nonsquarefree and mixed columns, common gcds, finite labels, zero masks and shared height. With $\mathcal B\le CH_0\mathcal P$, $H_0\ge1$, retain the minimum with all owned earlier bounds. The new term improves the old cubic $KD^{1/3}\mathcal P^2$ term when $D>N^2H_0^4$ with power reserve. Relative to the optimized C9 term, its ratio is $(H_0^4/K)^{1/12}$; hence it improves C9 in its useful range when that ratio has power room. No claim is made to improve every previous term at every length.
+
+For the original row scale $U=U_j\ge1$ and bounded original $\mathcal P$, a sufficient payment condition is simply
+
+$$
+\boxed{N^4H_0^8\le U.}
+\tag{D8}
+$$
+
+Indeed $N^{2/3}H_0^{4/3}\le U^{1/6}$ pays the new term after the original pole factor $U^{5/6}$; D8 also pays $N^{1/3}$ and $1$. There is no added $D$ constraint. For original $t=1$ witnesses with $N=U^m$ and $H_0\ll U^h$, fixed reserve in $4m+8h<1$ absorbs the original arbitrarily small losses. At fixed height this includes $0\le m<1/4$. No actual witness length or height has been reset, and the detector still does not guarantee that its returned witnesses occupy this sector.
+
+The unrestricted pure-power shifted integral is already paid in the owning note at every $U_j,K\ge1$, and is reused directly. Combining that result with D7-D8 pays the complete specified pure-dual-sixth-power subterm on this wider sector, not the complementary dual ideals. Other witness sectors, the earlier cross-class signed pole and the signed same-integer Robin restoration remain open. This consumer is an application of owned analytical inputs; no complete Lean certification or literature-novelty claim is made.
 
 ## The possible FIB interface
 
