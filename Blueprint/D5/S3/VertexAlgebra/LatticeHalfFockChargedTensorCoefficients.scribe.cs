@@ -219,16 +219,28 @@ internal sealed class LatticeHalfFockChargedTensorCoefficientsDocument : IScribe
                 + "and the physical two-step order is abs(g); positive g can have an opposite-cover pole. "
                 + "This coefficient transport statement alone supplies no one-sided delta identity, "
                 + "pair-locality or twisted Jacobi conclusion.")),
-            Paragraph(Text("The precise termwise native cover-energy application remains a mathematical endpoint. "
+            Paragraph(Text("The original charged energy-covariance theorem is proved in "),
+                Ref("D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero"),
+                Text(". For every D, hu:IsUnit D.G.det, charge a, integer e and v:ActualTensor D hu, "
+                + "the original commutator L0(A_a[e]v)-A_a[e](L0(v)) equals ((e+B(a,a))/2) A_a[e]v. "
+                + "L0 uses the integral inverse Gram matrix mapped into C; both inverse laws follow from hu. "
+                + "Weighted substitution gives signed translated coefficient weight N-d, and the original "
+                + "creation index e+q_a+d gives total weight N+e+q_a. Existing finite support and the actual "
+                + "L_zero_monomial_coeff then give the full polynomial and tensor statement, including the "
+                + "former C_b[n] termwise application. Negative creation indices give literal zero. "
+                + "The scalar 2^(-q_a), original groundAction, ground shift D.rank/16 and physical z=t^2 "
+                + "are retained. Rank zero and indefinite Gram data are included; no metric or positivity is assumed. "
+                + "Full conformal twisted-module structure and the further VOA/CFT programme still require additional identities.")),
+            Paragraph(Text("The precise termwise native cover-energy application follows from the proved L0 derivation. "
                 + "For H satisfying BOTH H*gramComplex(D)=1 and gramComplex(D)*H=1, use the actual half-Fock L0. "
                 + "If the input polynomial is C_b[n], the degree-d summand is "
                 + "T_d=kappa_g(d) C_b[n-d] C_a[e+q_a+d]. Universal transport gives this equality from the actual translation, "
                 + "not from an assumed field commutator. The native creation coefficient grading makes the two nonzero factors "
                 + "homogeneous of weights (n-d).toNat and (e+q_a+d).toNat. If either integer index is negative the term is zero. "
-                + "Otherwise their sum of weights is n+e+q_a. The exact remaining application is "
+                + "Otherwise their sum of weights is n+e+q_a. The exact termwise identity is "
                 + "L0(T_d)=(D.rank/16+(n+e+q_a)/2) T_d, for all integer n and e, using "
                 + "the actual L_zero_monomial_coeff supplier and finite monomial decomposition. "
-                + "This separate termwise formulation remains open in this source under the two stated inverse-Gram hypotheses. "
+                + "Weighted substitution and L_zero_monomial_coeff give this termwise identity under the two stated inverse-Gram hypotheses. "
                 + "The ground shift remains D.rank/16 and physical z=t^2. Lifting the termwise identity to a complete "
                 + "charged tensor coefficient covariance is supplied below by the native coherent-seed proof.")),
             Describe.Lean(
