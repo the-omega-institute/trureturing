@@ -10,7 +10,7 @@ internal sealed class FaceMagicModuleDocument : IScribeDocumentDefinition
     private const string SourceQuestion =
         "What is the structure of the R-module U_n(R) of face magic hypercubes of dimension n over R when the characteristic is even and positive?";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/bhargava2026facemagic");
+        LibraryNoteRef.Create("D5/L/Hamming/bhargava2026facemagic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "All-ring coordinates classify unrestricted face-magic hypercubes.",
