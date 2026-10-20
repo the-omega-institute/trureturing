@@ -585,3 +585,64 @@ are three different claims. The first is now witnessed off \(24\); the second
 requires typed acquisition and successor data; the third additionally needs a
 finite-history or trap argument. None follows from the preceding one by
 relabeling the response.
+
+## 68. Actual-word pair energy improves the recovery boundary without closing it
+
+The latest actual-word geometry supplies a joint, same-law estimate for the
+collision mass \(E_n(r)\), where the pair is drawn from the same fair ordered
+FIB word process. Put
+
+$$
+\kappa=1-\gamma/2,
+\qquad
+\widehat\xi=-\log\kappa,
+\qquad
+R_L=\kappa^{2\lfloor(L-1)/2\rfloor}
+\quad(L\ge1),
+$$
+
+with \(R_0=1\). For \(0\le m\le n\), \(0<r\le1/4\), and the strict actual-word
+separation condition \(4r<\Delta_m\), the supplied estimate is
+
+$$
+E_n(r)
+\le16\bigl(r^3+2^{-m}R_{n-m}\bigr).
+$$
+
+The two terms have different meanings. The \(r^3\) term is local volume, while
+\(2^{-m}R_{n-m}\) is the remaining same-history mass after a real prefix of
+length \(m\). The estimate uses one joint ordered process, so it cannot be
+replaced by combining two separately attainable projection bounds.
+
+For radii \(r_n=\exp(-an+o(n))\), this yields the lower exponent
+
+$$
+\widehat b(a)=
+\begin{cases}
+\min\{3a,\ a+\widehat\xi(1-a/\log2)\},&0<a<\log2,\\
+\log2,&a\ge\log2.
+\end{cases}
+$$
+
+It strictly improves the previous full-envelope exponent on its former
+unmatched interval, while the target exponent \(\min\{3a,\log2\}\) is matched
+only on the enlarged range \(0<a\le\widehat a\) and \(a\ge\log2\) when
+\(\gamma<1\), where
+
+$$
+\widehat a=\frac{\widehat\xi}{2+\widehat\xi/\log2}.
+$$
+
+The remaining interval \(\widehat a<a<\log2\) is still open. If the extra
+condition \(\gamma=1\) were supplied, the displayed lower envelope would match
+the target for every \(a>0\), but that condition is not established by the
+current result. Consequently, the all-\(a,c\) critical pair-energy statement,
+the sharp finite-\(n,\varepsilon\) law, and the global minimum controller-memory
+law remain open.
+
+This result changes the quantitative boundary of the FIB programme without
+changing the logical promotion rule of Section 65. A better joint collision
+bound can improve a recovery rate; it does not by itself provide an acquired
+response collision, a common post-observation state, or a finite-controller
+obstruction. Geometry, acquisition, and control remain separate fibres of the
+same analysis.
