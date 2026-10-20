@@ -31,6 +31,21 @@ internal sealed class FibonacciMapFirstStartDocument : IScribeDocumentDefinition
                     + "start set is nonempty and its infimum is its least element."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("fibonacci-map-open-rotation-run"),
+                DeclarationHandle.Create(Prefix + "open_rotation_run"),
+                H("An orbit confined to an open interval"),
+                StatementSource.FromAuthor(OpenRotationRunFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let x be a finite orbit of rotation by a positive step eps, "
+                    + "forward or backward according to the Boolean forward. If all "
+                    + "length points lie in (lo,hi) inside [0,1], and eps is at most "
+                    + "the complementary gap, no step wraps around. The last point "
+                    + "is therefore the first point plus the signed total displacement, "
+                    + "whose magnitude is strictly less than hi-lo. The subtraction "
+                    + "length-1 is natural subtraction before coercion to the reals."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("fibonacci-map-first-start-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Both parity families"),
@@ -96,7 +111,50 @@ internal sealed class FibonacciMapFirstStartDocument : IScribeDocumentDefinition
             Implies(AtMost(D(1), n), Parenthesized(And(odd, even)))));
     }
 
+    private static Formula OpenRotationRunFormula()
+    {
+        var lo = F.Id("lo"); var hi = F.Id("hi"); var eps = F.Id("eps");
+        var x = F.Id("x"); var length = F.Id("length");
+        var forward = F.Id("forward"); var k = F.Id("k");
+        var zero = D(0); var one = D(1);
+        var width = Subtract(hi, lo);
+        var steps = Parenthesized(Seq(Subtract(length, one), Colon, Naturals()));
+        var choice = Seq(Operatorname, Grp(F.Id("if")), Sp, forward, Sp,
+            Operatorname, Grp(F.Id("then")), Sp, eps, Sp,
+            Operatorname, Grp(F.Id("else")), Sp, new Formula.Negate(eps));
+        var sign = Seq(Operatorname, Grp(F.Id("if")), Sp, forward, Sp,
+            Operatorname, Grp(F.Id("then")), Sp, Parenthesized(Seq(one, Colon, Reals())), Sp,
+            Operatorname, Grp(F.Id("else")), Sp, new Formula.Negate(one));
+        var memory = Bind(FormulaQuantifier.ForAll, "k", Naturals(),
+            Implies(Less(k, length), Parenthesized(And(
+                Less(lo, new Formula.Apply(x, [k])),
+                Less(new Formula.Apply(x, [k]), hi)))));
+        var orbit = Bind(FormulaQuantifier.ForAll, "k", Naturals(),
+            Implies(Less(Add(k, one), length), Equal(
+                new Formula.Apply(x, [Add(k, one)]),
+                new Formula.Apply(Seq(Operatorname, Grp(F.Id("Int")), Dot,
+                    Operatorname, Grp(F.Id("fract"))),
+                    [Add(new Formula.Apply(x, [k]), Parenthesized(choice))]))));
+        var conclusion = And(
+            Equal(new Formula.Apply(x, [Subtract(length, one)]),
+                Add(new Formula.Apply(x, [zero]),
+                    Multiply(Multiply(Parenthesized(sign), steps), eps))),
+            Less(Multiply(steps, eps), width));
+        Formula body = Parenthesized(conclusion);
+        foreach (var premise in new[] { orbit, memory, Less(zero, length),
+            AtMost(eps, Subtract(one, Parenthesized(width))), AtMost(hi, one),
+            AtMost(zero, lo), Less(zero, eps) })
+            body = Implies(Parenthesized(premise), Parenthesized(body));
+        body = Bind(FormulaQuantifier.ForAll, "forward", F.Id("Bool"), body);
+        body = Bind(FormulaQuantifier.ForAll, "length", Naturals(), body);
+        body = Bind(FormulaQuantifier.ForAll, "x", Seq(Naturals(), Sp, To, Sp, Reals()), body);
+        body = Bind(FormulaQuantifier.ForAll, "eps", Reals(), body);
+        body = Bind(FormulaQuantifier.ForAll, "hi", Reals(), body);
+        return Disp(Bind(FormulaQuantifier.ForAll, "lo", Reals(), body));
+    }
+
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(F.Id(name), [.. arguments]);
