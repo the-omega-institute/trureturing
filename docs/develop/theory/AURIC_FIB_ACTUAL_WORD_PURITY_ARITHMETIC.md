@@ -4900,3 +4900,98 @@ unbounded-memory targets remain unresolved. The separate $r=0$
 root-rule candidate is not adopted here.
 
 ## 追加锚（本行以下为增补区）
+
+## 92. Separable partners in the scalar observation fibers of the actual Choi sequence
+
+Use the actual fair independent chronological channel, ordered basis and normalized output-first
+Choi states of Definition 87.1. Retain exactly Definition 89.1's arbitrary independent local SIC
+effects $\Pi_i/3$ and complete-MUB literal projectors, with no basis-sampling factor. Write
+$\mathbf P(\rho),\mathbf Q(\rho)$ for those tables; $\|\cdot\|_*$ is their nuclear norm.
+
+**Definition 92.1 (Explicit product-state partners).** Put $P_j=|j\rangle\langle j|$ in
+$(|0\rangle,|1\rangle,|2\rangle)=(\xi,e,f)$. For finite $n\ge3$ let $\tau=2^{1-n}$;
+at $n=\infty$ let $\tau=0$. Define
+
+$$
+\begin{gathered}
+D_{\rm cc}=\frac13\sum_{j=0}^2P_j\otimes P_j,\qquad
+p_n=\frac{1+3\tau}{2},\qquad
+\sigma_n=(1-p_n)\frac{I_9}{9}+p_nD_{\rm cc}
+       =\sum_{i,j=0}^2w_{ij}P_i\otimes P_j,\\
+w_{ij}=\frac{1-p_n}{9}+\frac{p_n}{3}\delta_{ij}.
+\end{gathered}
+\tag{92.1}
+$$
+
+**Theorem 92.2 (Exact separable-partner horizons and all-family scalar equality).**
+Among $n\in\{0,1,2,\ldots\}\cup\{\infty\}$, a separable state with the same two
+marginals and SIC/MUB scalar norms as $\omega_n$, simultaneously for every independent
+local choice in Definition 89.1, exists exactly for $n\ge3$ and $n=\infty$.
+The states (92.1) supply such partners, with both marginals $I_3/3$ and
+
+$$
+\|\mathbf P(\sigma_n)\|_*=\|\mathbf P(\omega_n)\|_*=\frac{5+3\tau}{36},
+\qquad
+\|\mathbf Q(\sigma_n)\|_*=\|\mathbf Q(\omega_n)\|_*=\frac53+\tau.
+\tag{92.2}
+$$
+
+At every finite $n\ge3$, $\omega_n$ is NPT whereas $\sigma_n$ is separable.
+At infinity both are separable. Thus opposite entanglement classes occur exactly at the
+finite partner horizons. The partner is the normalized Choi state of the EB channel
+
+$$
+\Psi_n(X)=\Psi^{\rm EB}_{p_n}(X),\qquad
+\Psi^{\rm EB}_{p}(X)=\sum_{j=0}^2\langle j|X|j\rangle
+       \left(pP_j+(1-p)\frac{I_3}{3}\right).
+\tag{92.3}
+$$
+
+Proof. Here $1/2\le p_n\le7/8$, so every $w_{ij}$ is nonnegative,
+$\sum_{i,j}w_{ij}=1$, and each row and column sums to $1/3$.
+This proves separability and both marginal identities directly.
+
+For a state with these marginals, its orthonormal Hermitian coefficient matrix in §89
+is $C=\operatorname{diag}(1/3,T)$. Applying the already established frame identities
+(89.5)–(89.6), without a new frame assumption, gives
+
+$$
+\|\mathbf P(\rho)\|_*=\frac19+\frac{\|T\|_*}{12},\qquad
+\|\mathbf Q(\rho)\|_*=\frac43+\|T\|_*.
+\tag{92.4}
+$$
+
+The coefficient block of $D_{\rm cc}$ is one third of the orthogonal projection onto
+the two-dimensional diagonal traceless plane: for traceless Hermitian $A,B$ its
+bilinear form is $\frac13\sum_j A_{jj}B_{jj}$. The maximally mixed state's block
+is zero. Consequently $\|T(\sigma_n)\|_*=2p_n/3=1/3+\tau$, which with
+(89.8)–(89.10) proves (92.2) for all the independent frames at once.
+For $n=0,1,2$, (89.2) instead gives $\|\mathbf Q(\omega_n)\|_*>2$,
+forbidden to every separable state by (89.11) with $r=1$. This proves the exact
+horizon set. Corollary 87.3 gives the finite NPT distinction, and (88.3) supplies
+the separable actual limit. Finally, (92.3) measures a basis and prepares densities;
+its normalized Choi expansion is exactly (92.1), proving the EB assertion. $\square$
+
+Rotating or repeating complete local families and applying any nonlinear function only to
+their scalar norms and the two marginals preserves the equality. Such observations cannot
+determine separability on this state domain. Even the actual-model identity
+$N(\omega_n)=(\|\mathbf Q(\omega_n)\|_*-5/3)/3$ for $n\ge1$ is not a universal
+witness: it assigns $\tau/3>0$ to the separable finite partners. The model promise is essential.
+The full tables retain their informational completeness by (89.5)–(89.6), as explained in §91;
+no equality of tables is asserted. Their operational distinction for the same fixed
+$P_0=P_\xi$ task is proved in Environment record memory,
+[§28, “Same scalar observations and different exact invariant-task optima”][ENV92].
+
+The frame facts and separable bounds are those cited in §89, especially Tavakoli–Morelli,
+Results 1–2. A close prior for the projector correlation is Wyderka–Ketterer,
+*Probing the geometry of correlation matrices with randomized measurements*,
+PRX Quantum 4, 020325 (2023), [DOI:10.1103/PRXQuantum.4.020325](https://doi.org/10.1103/PRXQuantum.4.020325),
+§V, Theorem 5 and Appendix F, at $d=3,m=1$: their generators satisfy
+$\operatorname{Tr}(\lambda_i\lambda_j)=d\delta_{ij}$, so their correlation matrix
+is divided by $d=3$ for the orthonormal convention here. The generic construction and
+frame tools are intermediates; this is an ordinary deduction for the actual sequence,
+without an exhaustive literature or priority claim. Further supplier scope is given in Environment §28.
+
+[ENV92]: AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md#28-same-scalar-observations-and-different-exact-invariant-task-optima
+
+## 追加锚（本行以下为增补区）

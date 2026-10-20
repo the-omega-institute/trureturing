@@ -25,7 +25,10 @@ internal sealed class GuoHatSubadditivityRefutationDocument : IScribeDocumentDef
             Node("result", "The conjectured inequality fails", "result",
                 Seq(Neg, Sp, Parenthesized(ClaimBody())),
                 "For r = 0, 1, let uᵣ(i,j) be 1 when j = i + r in Fin 5 and 0 otherwise. Put R = (1/10) • (Matrix.vecMulVec u₀ (star u₀) + Matrix.vecMulVec u₁ (star u₁)). Each summand is positive semidefinite. The squared norms of u₀ and u₁ are 5 and their cross dot products vanish. Consequently R has trace one and R² = (1/2) • R. Unitary spectral decomposition makes each eigenvalue either zero or 1/2; trace one and the decreasing eigenvalue order force its first two entries to be 1/2. Both partial traces are (1/5) • 1, so each of their eigenvalues is 1/5. Therefore hHat R = 1/2 while the two marginal values sum to 2/5; the gap is 1/10. All dimensions and all density matrices remain quantified in the negated proposition.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("guo-2024-partial-negativity-hhat-subadditivity"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula HhatFormula()
     {
@@ -65,10 +68,11 @@ internal sealed class GuoHatSubadditivityRefutationDocument : IScribeDocumentDef
 
     private static DocumentBlock Node(
         string id, string title, string declaration, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Word(string name) => Seq(Operatorname, Grp(V(name)));

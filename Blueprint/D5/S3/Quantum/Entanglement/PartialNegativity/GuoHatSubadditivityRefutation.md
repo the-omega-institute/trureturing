@@ -34,6 +34,10 @@ $$\neg (\forall dA: \mathbb{N}, \forall dB: \mathbb{N}, \forall \rho: \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/PartialNegativity/GuoHatSubadditivityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/guo-2024-partial-negativity-hhat-subadditivity` (refuted) by `D5/S3/Quantum/Entanglement/PartialNegativity/GuoHatSubadditivityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"guo-2024-partial-negativity-hhat-subadditivity","declaration_gid":"D5/S3/Quantum/Entanglement/PartialNegativity/GuoHatSubadditivityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Y. Guo (2024). *Complete Genuine Multipartite Entanglement Monotone*. DOI: [10.1016/j.rinp.2024.107430](https://doi.org/10.1016/j.rinp.2024.107430). URL: <https://arxiv.org/abs/2301.00334v3>.
