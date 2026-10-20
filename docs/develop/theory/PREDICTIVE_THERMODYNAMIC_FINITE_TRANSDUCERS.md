@@ -948,7 +948,10 @@ $$
 \tag{12.2}
 $$
 
-A tautological raw clause contributes zero, an empty clause contributes
+The product objective is the standard Max-SAT mean-field expression of
+[Shen et al., Methods (11) and Supplement (S13)–(S17)](../../../Library/Estimation/shen2024freeenergy.md),
+with the penalty and temperature conversion stated in that reference
+note. A tautological raw clause contributes zero, an empty clause contributes
 one, and repeated identical literals impose their variable condition only
 once. After this local simplification a nonzero violation probability is
 a product of at most three factors $\theta_i$ or $1-\theta_i$. In
