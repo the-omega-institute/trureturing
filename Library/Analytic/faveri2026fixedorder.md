@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known estimates pay specified all-column pure-power pieces and control an actual Gauss-row correction with its growing-label Gram condition supplied, while the primitive-residue quadratic, complementary operator and signed restoration remain open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; specified pure-power pieces, a Gauss-row correction and a balanced-sector prime-labelled residue quadratic are controlled, while the full primitive-residue quadratic, complementary operator and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, a squarefree-component consumer covering all original witness lengths under the original height reserve, a weighted powerful-part positive majorant extending that collective pure-power payment to every original column, an actual Gauss-row compression with its growing-label Gram condition supplied and coherent correction consumed in every original core packet, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, a squarefree-component consumer covering all original witness lengths under the original height reserve, a weighted powerful-part positive majorant extending that collective pure-power payment to every original column, an actual Gauss-row compression with its growing-label Gram condition supplied and coherent correction consumed in every original core packet, a prime-labelled primitive-residue estimate for the unsplit convolution on a balanced witness sector, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -2541,6 +2541,169 @@ $$
 $$
 
 The aggregate primitive-residue quadratic and the full orthogonal complement still require coefficient-sensitive upper bounds with the same weights. Positivity supplies no such upper bound. F6 pays a different isolated pure-power contraction and does not automatically pay either term here. This application controls an actual shared-row correction with its Gram hypothesis supplied; it does not bound the full F4 majorant, prove J, restore the signed Robin inequality, or prove RH.
+
+### A prime-labelled residue cut for the original unsplit convolution
+
+The [averaged Type-I manuscript, version 1](https://rstation.ai/api/v1/papers/riemann_hypothesis_8/versions/1/download), Theorem 1, estimates primitive sextic residues with squarefree outer modulus and unrestricted quotient. Its §8 already treats an unshifted Möbius/plain convolution. The application here retains a growing annulus of prime-ideal labels, including their overlaps with the Möbius variable. It uses the [primitive-mean manuscript, version 2](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download), §7, for the exact adjoint. The applications below are conditional on the cited analytical inputs. They are paper derivations without local Lean certification or a literature-priority claim.
+
+Work before F4, with the original unrestricted columns and one physical presentation:
+
+$$
+b(h)=\omega_j(h)\sum_{dn=h}\mu(d)V(q_d/D)W(q_n/N),\qquad K=DN.
+\tag{H1}
+$$
+
+All original exclusions and finite masks remain. Here $\omega_j(h)$ includes $\nu(h)\chi_h^{\rm raw}(\zeta\operatorname{gen}(s))^{\varepsilon_\chi}$ from the physical-label decomposition. Conjugate the whole family for negative orientation. This is a different exact projection decomposition of the original positive moment; F6's payments in its F4 majorant do not transfer to its complement.
+
+#### Complete fixed filters and the residual section
+
+Let $S_0$ be the primes above $2,3$, and let $Q$ be the product of the original fixed exclusions in $S\setminus S_0$. Choose a fixed modulus $B$, supported on the original $S$, detecting every original finite character, primary sector and common arithmetic mask. Reciprocity expresses $\chi_h^{\rm raw}(\zeta\operatorname{gen}(s))$ as a ray function of $h$: its good-prime conductor divides the support of $s$, and the supplementary factors belong to the fixed $S_0$ data. Those character values remain in $\omega_j$.
+
+For the exact section $\nu_{[h]}$ of the primitive-mean manuscript's §7 and $p\nmid S$, define
+
+$$
+\phi_{p,j,\tau}(m)=
+\overline{\omega_j(p^{-1}m)}
+\mathbf1_{\nu_{[p^{-1}m]}=\tau}\mathbf1_{(m,S)=1}.
+\tag{H2}
+$$
+
+Include all original fixed numerator masks in this function. The inverse is taken modulo $B$. Thus $p$ only permutes a fixed finite family of functions. If $B_{D,N}$ denotes H1's convolution without $\omega_j$, the actual pairing is exactly
+
+$$
+T_p=\sum_h b(h)\overline{\rho_{\mathrm{prim},\nu_{[h]};S}(ph)}
+=\sum_{h,\tau}B_{D,N}(h)
+\overline{\phi_{p,j,\tau}(ph)\rho_{\mathrm{prim},\tau;S}(ph)}.
+\tag{H3}
+$$
+
+The Type-I manuscript's explicit numerator projector (6.6) assumes an $S_0$-supported modulus. The following fixed-level check supplies the broader filter in H2. First insert $\mathbf1_{(c,Q)=1}$ in its bottom-row Eisenstein section (2.1). On a deep fixed congruence subgroup, the bottom-row substitution preserves this support and the original ray weight because $c'\equiv c$ modulo the level. The same Kubota law therefore holds. This is a finite cusp Eisenstein combination, whose normalized residue $f_{\tau,Q}$ has Fourier coefficients
+
+$$
+t_{\tau,Q}(n)=q_n^{1/12}\rho_{\mathrm{full},\tau;S}(n).
+$$
+
+It is square-integrable, with cusp constants of exponent $5/6$ or zero. The fixed-form square-sum bound of that manuscript's Lemma 3 applies to its finite cusp components. Its unfiltered sixth-power step remains valid outside $S$: the vector is spherical there, and the fixed $Q$-place support requires only that the modulus be a unit, which local unit sixth powers preserve. The original $S_0$-place section has the same invariance. The manuscript's finite Gauss identity then gives
+
+$$
+\rho_{\mathrm{prim},\tau;S}(n)=w_S(n)\rho_{\mathrm{full},\tau;S}(n),
+\qquad w_S(n)=\prod_{\substack{p\mid n\\p\notin S}}\frac{q_p}{q_p+1}.
+\tag{H4}
+$$
+
+Only $n$ avoiding $S$ is needed. On that support, eliminating the finitely many $Q$-exclusions with the primitive-mean manuscript's (3.3) at $u=7/6$ gives denominators $1-q_p^{-2}$ and fixed numerator shifts. Gao–Zhao's Lemma 2.6 and the unexcluded primitive/full density therefore imply $\rho_{\mathrm{full},\tau;S}(n)\ll_{S,\varepsilon}q_n^{1/6+\varepsilon}$. No changing local conductor is used.
+
+To impose a numerator function $\phi$ modulo $B$, put $T_a=\left(\begin{smallmatrix}1&a\\0&1\end{smallmatrix}\right)$ with $a=b/B$. For $\gamma=\left(\begin{smallmatrix}A&H\\C&D\end{smallmatrix}\right)$ in a sufficiently deep $\Gamma(M_0B^2)$,
+
+$$
+T_a\gamma T_a^{-1}
+=\begin{pmatrix}A+aC&H+a(D-A)-a^2C\\C&D-aC\end{pmatrix}
+\in\Gamma(M_0).
+$$
+
+Write $D'=D-bC/B$. At every good prime dividing $C$, one has $D'\equiv D$: at a prime dividing $B$, $v(C)\ge2v(B)$ ensures $v(C/B)\ge1$; elsewhere $B$ is a unit. Hence $D'\equiv D\pmod{\operatorname{rad}(C_{\rm good})}$. The sextic character with denominator $C_{\rm good}$ factors through this radical even for nonsquarefree $C$. Reciprocity now gives the same Kubota multiplier for $\gamma$ and $T_a\gamma T_a^{-1}$; their $S_0$ supplementary factors agree because both lower-right entries are $1$ at the fixed deep bad-place level. For $C=0$ both multipliers are $1$.
+
+Consequently the exact finite Fourier projector
+
+$$
+\widehat\phi(b)=q_B^{-1}\sum_{u\bmod B}\phi(u)e(-ub/B),\qquad
+f_{\tau,Q,\phi}(z,y)=\sum_{b\bmod B}\widehat\phi(b)f_{\tau,Q}(z+b/B,y)
+$$
+
+has coefficient $\phi(n)t_{\tau,Q}(n)$ and the same multiplier on one fixed subgroup. This retains all Fourier frequencies and zero values. Rational translation preserves the eigenvalue and square integrability on that fixed cover. Choose its level supported on $S$. Every outer modulus below avoids $S$, so the Type-I manuscript's §5 finite cusp calculation, Lemma 3 and Proposition 4 apply, including their finite reciprocity components and kernel. The additional fixed row exclusions do not increase its positive sieve norms. Filtration is applied after H4; no sixth-power invariance of $\phi$ is assumed.
+
+#### The overlapping progression modulus
+
+For a good sixth-power-free ideal $a$, allowing exponents $0,\ldots,5$, the same fixed-form calculation gives
+
+$$
+\begin{aligned}
+&\sum_{a\mid n}\phi(n)\rho_{\mathrm{prim},\tau;S}(n)\mathcal W(q_n/Y)\\
+&\quad=C_{\tau,Q,\phi}Z_SY^{5/6}\widehat{\mathcal W}(5/6)
+\frac{v(\operatorname{rad}a)}{q_a}
++O_\varepsilon((Yq_a)^\varepsilon Y^{1/3}),
+\end{aligned}
+\tag{H5}
+$$
+
+where $Z_S=\prod_{p\notin S}(1-1/(q_p(q_p+1)))$ and $v(r)=\prod_{p\mid r}q_p^2/(q_p^2+q_p-1)$. Constants depend on the complete fixed data and finitely many profile seminorms.
+
+Here is the additional modulus step. In the manuscript's (5.4)–(5.8), keep the full imprimitive $g_6(-n,r)$ for $r\mid a$, rather than its squarefree factorization. All CRT phases, $\chi_r(M)$, cusp coefficients and the Mellin kernel remain. For each nonunit sixth-power-free $r$, the character on units is nonprincipal, so only $r=1$ contributes a cusp constant. The prime-power Gauss formula gives
+
+$$
+|g_6(n,r)|\le q_r^{1/2}q_{(n,r)}^{1/2}.
+$$
+
+At exponent $1\le k\le5$ it is nonzero only when $v_p(n)=k-1$, with magnitude $q_p^{k-1/2}$. On a dual dyad of length $H$, Lemma 3 and $\sum q_{(n,r)}\ll_M H\tau(r)$ give the Cauchy bound $\ll(Hq_r)^\varepsilon q_r^{1/2}H$. The dual scale is $q_r^2/Y$; retain the residual kernel's small-argument cost $(q_r^2/(YH))^{1/12+\varepsilon}$ and arbitrary large-argument decay. Summing the dyads and $r\mid a$ yields
+
+$$
+\sum_{a\mid n}\phi(n)t_{\tau,Q}(n)\mathcal W(q_n/Y)
+=\frac{C_f}{q_a}Y^{11/12}\widehat{\mathcal W}(11/12)
++O((Yq_a)^\varepsilon q_a^{1/2}).
+$$
+
+Remove $q_n^{1/12}$ through the profile. The full-residue error becomes $Y^{-1/12}q_a^{1/2}$. In H4 use $w_S=1*h_S$, where $h_S(p)=-1/(q_p+1)$, $h_S(p^k)=0$ for $k\ge2$. Its exact divisor expansion is
+
+$$
+\sum_{a\mid n}\phi(n)\rho_{\mathrm{prim},\tau;S}(n)\mathcal W(q_n/Y)
+=w_S(a)\sum_{\substack{g\ {\rm squarefree}\\(g,aS)=1}}h_S(g)
+\sum_{ag\mid n}\phi(n)\rho_{\mathrm{full},\tau;S}(n)\mathcal W(q_n/Y).
+$$
+
+For $q_g\le G$ the errors total $\ll(Yq_a)^\varepsilon Y^{-1/12}q_a^{1/2}G^{1/2}$. The complementary tail is $\ll Y^{7/6+\varepsilon}/(q_aG)$ by the point bound on $\phi$'s support. Choose $G=Y^{5/6}/q_a$ when this is at least $1$; the omitted main tail is smaller. For larger $q_a$, direct counting gives $Y^{7/6+\varepsilon}/q_a\le Y^{1/3+\varepsilon}$. The Euler main is $Z_Sv(\operatorname{rad}a)/q_a$, proving H5. The numerator function stays attached to $n$ throughout.
+
+#### The actual prime-labelled quadratic
+
+Take prime ideals $p\nmid S$ with $L\le q_p<2L$. Use G7 for their actual sub-Gram $G_P$ and the primitive-mean manuscript's §7 residue matrix $W_P$ on unrestricted columns. This unrestricted adjoint is already supplied there; no new generic norm statement is needed. Let $\mathcal N$ be a fixed finite seminorm envelope for the actual profiles, common Mellin-separation transforms and reciprocal-$L$ costs. It is not assumed bounded for all original growing-height profiles.
+
+In H3 put $m=pdn$. If $p\nmid d$, the outer modulus $a=pd$ is squarefree. The fixed-form averaged estimate at $Y=q_pK$, $A=q_pD$, with coefficient norm $\ll D^{1/2+\varepsilon}\mathcal N$, has error $\ll(KL)^\varepsilon\mathcal N q_p^{1/2}K^{1/3}D^{2/3}$. If $d=pe$, Möbius support gives $(e,p)=1$; the outer modulus $p^2e$ is sixth-power-free. Applying H5 to each $e\asymp D/q_p$ costs $\ll(KL)^\varepsilon\mathcal N K^{1/3}Dq_p^{-2/3}$. Both branches preserve the original overlaps.
+
+For the main terms use only the owned $B_0=7/8$ zero-free and reciprocal-strip inputs for fixed finite-order Hecke characters. For each such $\xi$,
+
+$$
+\sum_{(d,pS)=1}\frac{\mu(d)v(d)\xi(d)}{q_d}V(q_d/D)
+\ll\mathcal N D^{B_0-1+\varepsilon}q_p^\varepsilon.
+$$
+
+Its Dirichlet series is $L(s,\xi)^{-1}$ times an Euler product normally convergent for $\Re s>0$, since $v(p)=1+O(q_p^{-1})$. Smooth Mellin inversion shifts to $B_0+\varepsilon$; the deleted $p$-factor costs a subpower. Retain all reciprocal-$L$/profile costs in $\mathcal N$. H2 gives only finitely many main constants, independent of $d,e$. The $d=pe$ main has an additional $q_p^{-B_0}$ and is absorbed. Thus, with $2L\le D$ up to fixed annular constants,
+
+$$
+|T_p|\ll(KL)^\varepsilon\mathcal N
+\left(K^{5/6}D^{-1/8}q_p^{-1/6}
++K^{1/3}D^{2/3}q_p^{1/2}+K^{1/3}Dq_p^{-2/3}\right).
+\tag{H6}
+$$
+
+The actual coherent quadratic is $Q_\rho^P(b)=(W_P^*b)^*G_P^{-1}(W_P^*b)$. G7 and ideal counting on the prime annulus give
+
+$$
+\begin{aligned}
+Q_\rho^P(b)\ll&(UKL)^\varepsilon\mathcal N^2U^{1/3}
+\left(K^{5/3}D^{-1/4}L^{2/3}
++K^{2/3}D^{4/3}L^2+K^{2/3}D^2L^{-1/3}\right).
+\end{aligned}
+\tag{H7}
+$$
+
+Indeed $\sum_pq_p^{-1/3}\ll L^{2/3}$, $\sum_pq_p\ll L^2$, and $\sum_pq_p^{-4/3}\ll L^{-1/3}$. The coherent $h$-sum in every $T_p$ has been estimated before this positive label sum. The cross-label matrix is controlled by the actual inverse Gram norm.
+
+For $U\asymp K$, $L=K^\ell$, $0<\ell<1/9$, and
+
+$$
+K^{1/2}\le D\le K^{1/2}L^{1/6-\delta},\qquad0<\delta<1/6,
+$$
+
+G7 holds and H7 becomes
+
+$$
+Q_\rho^P(b)\ll K^{2-\zeta+\varepsilon}\mathcal N^2,\qquad
+\zeta=\min\left\{\frac18-\frac{2\ell}3,
+\frac13-\left(\frac{20}9-\frac{4\delta}3\right)\ell,
+2\delta\ell\right\}>0.
+\tag{H8}
+$$
+
+For bounded $\mathcal N$ and small enough $\varepsilon$, this pays the prime-labelled primitive-residue quadratic below $K^2$ on that original balanced sector. It does not pay the remainder pairing or projection replacement at $K^2$, the full projection energy, all labels, the complement, every original length or height, or F4's different squarefree-column quadratic. The original height reserve has not been certified for $\mathcal N$. Signed Robin restoration and RH remain open.
 
 ## The possible FIB interface
 
