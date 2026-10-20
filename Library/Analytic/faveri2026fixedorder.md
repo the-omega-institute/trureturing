@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known cubic estimates pay its classwise all-column pure-sixth-power pole at specified lengths, and a standard absolute Rankin estimate pays the pure-power shifted integral at all lengths, while other dual terms and signed restoration remain open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known estimates pay its classwise all-column pure-sixth-power pole at specified lengths and its classwise squarefree pure-power subterm at all original witness lengths under the stated height reserve, while other dual terms and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, a squarefree-component consumer covering all original witness lengths under the original height reserve, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -2126,6 +2126,122 @@ $$
 Indeed $N^{2/3}H_0^{4/3}\le U^{1/6}$ pays the new term after the original pole factor $U^{5/6}$; D8 also pays $N^{1/3}$ and $1$. There is no added $D$ constraint. For original $t=1$ witnesses with $N=U^m$ and $H_0\ll U^h$, fixed reserve in $4m+8h<1$ absorbs the original arbitrarily small losses. At fixed height this includes $0\le m<1/4$. No actual witness length or height has been reset, and the detector still does not guarantee that its returned witnesses occupy this sector.
 
 The unrestricted pure-power shifted integral is already paid in the owning note at every $U_j,K\ge1$, and is reused directly. Combining that result with D7-D8 pays the complete specified pure-dual-sixth-power subterm on this wider sector, not the complementary dual ideals. Other witness sectors, the earlier cross-class signed pole and the signed same-integer Robin restoration remain open. This consumer is an application of owned analytical inputs; no complete Lean certification or literature-novelty claim is made.
+
+### Complete squarefree pure-power consumer at the original witness lengths
+
+The exact positive squarefree/nonsquarefree column partition, (C1)–(C2) and the per-ray comparison (D1)–(D3) give a stronger consumer for the already specified squarefree component. The application removes its former $D^{1/3}$ loss and covers every original witness length under the stated height reserve. The Gauss identities, angular moment, cubic sieve and interpolation inequality are reused; this is not a bound for the entire original signed contraction or a literature-novelty claim.
+
+#### Exact squarefree source and absence of an extra core conductor
+
+Use the original $c_j(h)=\omega_j(h)B_{D,N}(h)$, $K=DN$, original annular profiles, zero masks, physical labels and the finite primary class $a$. The already owned finite Cauchy partition is
+
+$$
+T_j\le2|\mathcal T|\sum_a
+(\widetilde T^{\mathrm{sf}}_{j,a}+\widetilde T^{\mathrm{nsf}}_{j,a}).
+$$
+
+The object here is exactly $\mathcal C^{\mathrm{sf},a}_{6,L}[c_j]$, the specified pure-sixth-power pole extraction inside the first positive component. This does not assert a signed-pole inequality between the original extraction and the two projected extractions. The nonsquarefree component and its interactions in other formulations are not discarded.
+
+For a squarefree column pair $h=gx,k=gy$, the ideals $g,x,y$ are squarefree and pairwise coprime. In the all-column decomposition this means
+
+$$
+c=c'=s_0=t_0=1,\qquad f_0=1,
+\qquad R=\operatorname{rad}(gS_0).
+$$
+
+The primitive ratio conductor remains $xy$ and is not set to one. The original classwise root-number formula, reciprocity phase and $\gamma_{-1}(y)$ sign are unchanged. All $g\ell$ exclusions are zero-only and C1 handles them at epsilon cost. The ray-divisor twist has genuine conductor at most $Cq_{r_g}\le Cq_r$, for $r\mid R$. Unlike the general opposite-core bound $q_{f_0}\ll Nu_c$, this costs no factor $N$.
+
+#### Same vector and the exact length-product identity
+
+Distribute an actual factorization $dn=gx$ by $g=ab$ with $a=g_d,b=g_n$, retaining the squarefree constraints and original support. Put
+
+$$
+X=K/q_g,\qquad D_a=D/q_a,\qquad N_b=N/q_b,
+\qquad D_aN_b=X.
+\tag{E1}
+$$
+
+The original $e=e_de_n$ distribution and Gauss CRT are reused. Let $H^{a,b}_{g,r,e}$ be that same actual scalar vector, including its $r,\ell$ twists, finite ray filters and zero masks. The angular bound C2/B5 and the cubic bound give, respectively,
+
+$$
+\sum_e|H^{a,b}_{g,r,e}|^2
+\ll K^\epsilon q_\ell^\epsilon q_r
+X^{1/3}N_bD_a^{1/2}\mathcal B^2,
+\tag{E2}
+$$
+
+$$
+\sum_e|H^{a,b}_{g,r,e}|^2
+\ll K^\epsilon
+\{X+X^{1/3}(D_a+N_b)\}\mathcal P^2.
+\tag{E3}
+$$
+
+They are bounds for the same coefficients; neither deletes a phase or uses monotonicity of absolute Dirichlet-series values. Empty original ranges contribute zero. The fixed original bad-prime factors are constants. Apply the already used comparison $\min(A,E+J)\le E+A^{2/3}J^{1/3}$ with $E=(X+X^{1/3}N_b)\mathcal P^2$ and $J=X^{1/3}D_a\mathcal P^2$. Keep the original $q_r^{-5/6}$ weight and use only the divisor products $\sum_{r\mid R}q_r^{-5/6},\sum_{r\mid R}q_r^{-1/6}\ll K^\epsilon$. E1 makes the interpolated energy exactly
+
+$$
+\left(X^{1/3}N_bD_a^{1/2}\mathcal B^2\right)^{2/3}
+\left(X^{1/3}D_a\mathcal P^2\right)^{1/3}
+=X\mathcal B^{4/3}\mathcal P^{2/3}.
+$$
+
+Consequently the weighted norm has the uniform numerical envelope
+
+$$
+\sum_{r\mid R}q_r^{-5/6}\sum_e|H^{a,b}_{g,r,e}|^2
+\ll K^\epsilon q_\ell^\epsilon
+\{X(\mathcal P^2+\mathcal B^{4/3}\mathcal P^{2/3})
++X^{1/3}N_b\mathcal P^2\}.
+\tag{E4}
+$$
+
+The interpolated term has the same $X$ energy as the already paid cubic constant term. Its bound is independent of how the fixed squarefree $g$ is distributed between the original factors. This is where the joint length identity is consumed, rather than treating $D_a,N_b$ as independently attainable extrema.
+
+#### Complete gcd, diagonal and row-cutoff accounting
+
+Use the original fixed-pair Cauchy in weighted $(r,e)$, then the numerical root envelopes and divisor Cauchy over $a\mid g$. Cross terms between the $X$, interpolated and $N_b$ branches are kept by the same three-term numerical square inequality as D7. The divisor multiplicities cost $K^\epsilon$.
+
+The $X$ and interpolated terms sum with
+
+$$
+\sum_{q_g\ll K}K/q_g\ll K\log(2K).
+$$
+
+For the $N_b$ term, retain $q_a\ll D,q_b\ll N$ and reuse the existing sum
+
+$$
+K^{1/3}N
+\sum_{q_a\ll D}q_a^{-1/3}
+\sum_b q_b^{-4/3}
+\ll KN^{1/3}.
+$$
+
+Enlargement to all ideal pairs occurs only in these positive upper bounds. The actual $x=y=1$ principal diagonal and its algebraically added counterpart keep their owned $O(K^{1+\epsilon}\mathcal P^2)$ treatment. The original $q_\ell^{-5}$ factor absorbs $q_\ell^\epsilon$, uniformly in $L$. Whole-family conjugation handles the negative orientation. Thus the complete same squarefree-component pole satisfies
+
+$$
+\boxed{
+|\mathcal C^{\mathrm{sf},a}_{6,L}[c_j]|
+\ll K^{1+\epsilon}
+\{(1+N^{1/3})\mathcal P^2
++\mathcal B^{4/3}\mathcal P^{2/3}\}.
+}
+\tag{E5}
+$$
+
+There is no upper length restriction on $D$, and every common gcd and original coefficient is retained. At bounded height, the former $KD^{1/3}$ term is replaced by $K$; the remaining $KN^{1/3}$ term is unchanged. This is an actual same-source consumer and can be combined with the prior full-column bounds where those are better.
+
+#### All original witness lengths, with the original height reserve
+
+Let $U=U_j\ge1$, $\mathcal B\le CH_0\mathcal P$, $H_0\ge1$, and bounded original $\mathcal P$. Sufficient conditions to pay the specified pole after its original $U^{5/6}$ factor are
+
+$$
+\boxed{N^2\le U,\qquad H_0^8\le U.}
+\tag{E6}
+$$
+
+They give $N^{1/3},H_0^{4/3}\le U^{1/6}$. The original witness theorem already has $N=U^m$ with $0\le m\le1/2+O(\text{loss})$, for every permitted $t\in[1,3/2]$ and the actually returned $D$. Thus every original witness LENGTH is covered, including $m=1/2$, at $(UK)^\epsilon UK$ after assigning the original arbitrarily small losses relative to final epsilon. For height retain the original common cumulative allowance: fixed reserve $h<1/8$ in $H_0\ll U^h$ is sufficient. This does not claim coverage at arbitrary heights or give each polynomial a new height budget.
+
+Reuse the owned unrestricted shifted-integral estimate, which also applies to this classwise squarefree component. Its sum with E5 pays the complete specified squarefree pure-dual-sixth-power subterm at all original witness lengths under E6 and its stated epsilon/height convention. It does not pay the nonsquarefree component or the complementary dual ideals, estimate the earlier cross-class signed pole, or restore the signed same-integer Robin target. The full RH and Robin objectives remain unchanged and unproved; no Lean certification or literature-novelty claim is made.
 
 ## The possible FIB interface
 
