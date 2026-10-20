@@ -1,0 +1,21 @@
+**Proposition 86.4 (a genuine additional singleton from exact kinetic equality).** There exist a normalized $\phi\in\mathcal D_0$, a single bounded amplitude probe with representer $f\in\mathcal H$, and $T_\phi=T[\phi]>0$, for which the normalized exact amplitude fibre is nonsingleton, but
+
+$$
+\{\psi\in D(L^{1/2}):\|\psi\|_2=1,\ \langle f,\psi\rangle=\langle f,\phi\rangle,
+\ T[\psi]=T_\phi\}=\{\phi\}.
+\tag{86.12}
+$$
+
+Proof. Choose a normalized product $\phi(x,y,z,w)=b(x,y,w)\zeta(z)$ of nonzero smooth compact factors, with $b$ supported away from $(x,y)=(0,0)$. It is a punctured compact test. It is not an eigenfunction of $L$. Indeed, if $L\phi=\lambda\phi$, projection in $(x,y,w)$ against $b$ gives $-\zeta''+c\zeta=\lambda\zeta$ for a real constant $c$. A compactly supported nonzero smooth solution of this constant-coefficient ODE is impossible by uniqueness from zero Cauchy data outside its support. Fix $\tau>0$ and take $f=(L+\tau)\phi\in L^2$. Then $f$ is not proportional to $\phi$, so $\phi\notin\operatorname{span}\{f\}$ and Theorem 86.3 proves that the amplitude-only fibre is nonsingleton.
+
+For $\psi$ in (86.12), define the strictly positive free inner product $t_\tau(u,v)=t(u,v)+\tau\langle u,v\rangle$. The operator-form identity gives
+
+$$
+t_\tau(\phi,\psi)=\langle (L+\tau)\phi,\psi\rangle
+ =T_\phi+\tau,qquad
+t_\tau(\phi,\phi)=t_\tau(\psi,\psi)=T_\phi+\tau.
+\tag{86.13}
+$$
+
+Equality in Cauchy--Schwarz forces $\psi$ to be proportional to $\phi$, and the positive exact complex response forces the proportionality factor to be one. This proves (86.12). In contrast, Theorem 86.3 produces exact-amplitude collapsing perturbations with $T[\psi_r]\to T_\phi$, so every positive kinetic tolerance still permits those perturbations. A simpler amplitude-only singleton uses $f=\phi$ and the exact response one. These examples forbid a blanket collapse assertion on every normalized exact record. $\square$
+

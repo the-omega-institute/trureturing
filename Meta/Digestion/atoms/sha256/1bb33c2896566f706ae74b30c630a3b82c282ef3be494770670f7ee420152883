@@ -1,0 +1,33 @@
+**Proposition 90.7 (uniform finite-dimensional exclusion).** Fix an integer
+$k\ge1$ and $0<c\le C<\infty$. No family of maps
+$\Phi_h:\mathcal F_h\to\mathbb R^k$ satisfies simultaneously for all
+$h\ge1$ and all pairs
+
+$$
+ c\,d^A_h(u,v)\le\|\Phi_h(u)-\Phi_h(v)\|_2\le C\,d^A_h(u,v).
+\tag{90.10}
+$$
+
+This holds for every independent choice of the $s_h$. More quantitatively,
+any such constants on a single $\mathcal F_h$ must satisfy
+
+$$
+2^m\le(1+2C/c)^k,
+\qquad C/c\ge\tfrac12(2^{m/k}-1).
+\tag{90.11}
+$$
+
+Proof. Fix one image point. All $2^m$ images lie within radius $Cs_h$
+of it; the open balls of radius $cs_h/2$ about the images are disjoint.
+Their union lies within radius $(C+c/2)s_h$ of that point. Euclidean
+volume scales as the $k$th power of radius, giving (90.11). The scale
+cancels and the cardinality tends to infinity. This is the classical
+disjoint-ball estimate applied after the actual fiber construction and
+its quotient calculation; it does not turn source cardinality into
+physical dimension. $\square$
+
+In particular $k=3$ has no uniform distortion constants here, just as
+any other fixed finite $k$ does. The source configurations being compared
+are not spatial points. A finite cutoff or a changed metric changes a
+premise; no minimal coding dimension is asserted.
+
