@@ -70,6 +70,10 @@ $$\neg (\forall n \in \mathrm{Nat},\; (8 \le n) \Rightarrow (\forall T \in \oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/LinWangCaiBroomSpectralRatio.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lin-wang-cai-2023-broom-spectral-ratio-conjecture-5-4` (refuted) by `D5/S3/Combinatorics/SpectralGraph/LinWangCaiBroomSpectralRatio.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lin-wang-cai-2023-broom-spectral-ratio-conjecture-5-4","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/LinWangCaiBroomSpectralRatio.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhen Lin; Jiajia Wang; Min Cai (2023). *The Laplacian spectral ratio of connected graphs*. DOI: [10.48550/arXiv.2302.10491](https://doi.org/10.48550/arXiv.2302.10491). URL: <https://arxiv.org/abs/2302.10491v1>.

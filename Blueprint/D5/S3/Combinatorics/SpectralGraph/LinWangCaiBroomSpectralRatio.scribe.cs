@@ -30,12 +30,16 @@ internal sealed class LinWangCaiBroomSpectralRatioDocument : IScribeDocumentDefi
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "result", "Refutation at order nineteen", new Formula.Not(Parenthesized(ClaimBody())),
                 "The tree broom 19 7 has spectral ratio strictly larger than broom 19 8. A rational vector orthogonal to constants gives µ18(B₁₉⁷) < 35467/1000000, and a second rational vector gives 9018480/1000000 < µ1(B₁₉⁷). Positive rational LDL transpose factorizations give 39388/1000000 < µ18(B₁₉⁸) and µ1(B₁₉⁸) < 10014270/1000000. The integer products satisfy 355176114090 < 355219890240, so 10014270/39388 < 9018480/35467. Specializing the proposed upper bound to this tree contradicts those inequalities. This refutes the conjunction and does not refute its separate star lower bound.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lin-wang-cai-2023-broom-spectral-ratio-conjecture-5-4"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("lwc-" + id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula FinN() => Call("Fin", V("n"));
