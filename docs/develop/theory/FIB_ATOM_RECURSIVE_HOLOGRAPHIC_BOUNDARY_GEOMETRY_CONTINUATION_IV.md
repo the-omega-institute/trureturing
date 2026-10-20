@@ -5498,3 +5498,125 @@ coordinates. This result does not establish such a realization, and it
 does not select a physical dimension.
 
 ## 118.99 追加锚（本行以下为增补区）
+
+## 119. Full child-coordinate target-clock obstruction on the finite raw carrier
+
+Section 118 leaves the child coordinates outside its old-only equation. The
+full equation has a direct finite obstruction once the clock is placed on the
+target side. Use \(\mathbf W_e\) and \(\mathbf W_{e+1}\) for positive diagonal
+node-mass matrices, reserving \(M_e\) for the beta-parent set of (112.6).
+Write
+
+$$
+\mathcal L_e=\mathbf W_e^{-1}L_e,
+\qquad
+\mathcal L_{e+1}=\mathbf W_{e+1}^{-1}L_{e+1},
+\qquad
+\mathbf W_{e+1}=\operatorname{diag}(\mathbf W_o,\mathbf W_c).
+\tag{119.1}
+$$
+
+**Theorem 119.1 (target-side diagonal-clock no-go).** Let \(B_e\ne\varnothing\),
+let \(S_Qf=(f,Qf)\) be top-fixed, and require edge-form preservation
+
+$$
+S_Q^*L_{e+1}S_Q=L_e.
+\tag{119.2}
+$$
+
+If \(C_e^*L_e\ne0\), there are no positive diagonal mass matrices in
+(119.1) and no positive diagonal output clock
+
+$$
+\Lambda_{e+1}=\operatorname{diag}(\Lambda_o,\Lambda_c)
+$$
+
+such that the full target-side equation
+
+$$
+\boxed{\mathcal L_{e+1}S_Q
+       =\Lambda_{e+1}S_Q\mathcal L_e}
+\tag{119.3}
+$$
+
+holds. For the raw unweighted carrier of (112.4), set
+\(\mathbf W_e=\mathbf W_{e+1}=I\); the same requirement is literally
+
+$$
+\boxed{L_{e+1}S_Q=\Lambda_{e+1}S_QL_e}.
+\tag{119.3a}
+$$
+
+The mass-weighted equation (119.3) and this raw special case have the same
+child-block obstruction.
+
+A connected nontrivial old tree with a nonempty beta-parent set is a
+sufficient condition for the nonzero hypothesis \(C_e^*L_e\ne0\): each
+beta-parent row of its tree Laplacian is nonzero, and \(C_e^*\) duplicates that
+row on its two children.
+
+**Proof.** By (119.2), the parent-copy uniqueness of Theorem 115.2 gives
+\(Q=C_e^*\) and \(S_Q=T_e\). Reuse its exact identity
+
+$$
+A_e:=D_e^*D_e=L_e,\qquad
+A_{e+1}T_e=J_eA_e
+\quad\text{equivalently}\quad
+L_{e+1}T_e=J_eL_e.
+\tag{119.4}
+$$
+
+Taking the old and child blocks of (119.3), with
+\(\mathbf W_{e+1}=\operatorname{diag}(\mathbf W_o,\mathbf W_c)\), gives
+
+$$
+\begin{pmatrix}\mathbf W_o^{-1}L_e\\0\end{pmatrix}
+=
+\begin{pmatrix}
+\Lambda_o\mathcal L_e\\
+\Lambda_cC_e^*\mathcal L_e
+\end{pmatrix}.
+\tag{119.5}
+$$
+
+The child block forces
+\(\Lambda_cC_e^*\mathcal L_e=0\). Positivity makes \(\Lambda_c\) invertible,
+while multiplication by the positive diagonal \(\mathbf W_e^{-1}\) only
+rescales each duplicated parent row. Hence \(C_e^*\mathcal L_e=0\) is
+equivalent to \(C_e^*L_e=0\), contradicting the hypothesis. No node-norm
+condition (N) is used; retaining (N) therefore gives only an a fortiori
+stronger impossibility. \(\square\)
+
+**Corollary 119.2 (the first finite witness).** For
+\(x=\langle\alpha,\beta\rangle\), order the old vertices as
+\((\varepsilon,L,R)\). The old star Laplacian and the child restriction are
+
+$$
+L_e=
+\begin{pmatrix}
+2&-1&-1\\
+-1&1&0\\
+-1&0&1
+\end{pmatrix},
+\qquad
+C_e^*=\begin{pmatrix}0&0&1\\0&0&1\end{pmatrix},
+$$
+
+so
+
+$$
+C_e^*L_e=
+\begin{pmatrix}-1&0&1\\-1&0&1\end{pmatrix}\ne0.
+\tag{119.6}
+$$
+
+The beta-parent row is duplicated on \(RL,RR\), and
+\(C_e^*L_e\delta_R=(1,1)^{\mathsf T}\). Thus the full child response is
+already impossible at this finite birth step under Theorem 119.1.
+
+The exact escape boundaries are: the old-only condition (118.1), which does
+not constrain the child block; a transport that is not top-fixed or does not
+preserve the edge form; a non-diagonal or singular clock or state metric; an
+empty birth or \(C_e^*L_e=0\); and a quotient task whose specification omits
+the child response. This finite result does not select a physical dimension
+or assert a physical realization.
