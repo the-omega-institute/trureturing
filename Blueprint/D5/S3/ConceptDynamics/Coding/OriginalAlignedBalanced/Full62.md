@@ -14,7 +14,7 @@ Lean statement: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/Full62.ful
 
 *Commentary.*
 
-The theorem retains the complete general actual-edge statement and the original CompatibleCertificate statement. Essential matrices A and B, arbitrary original R and S, and the original positive lag and bijections remain unchanged. No alignment, balance, second long compatibility equation or pre-assumed conjugacy is added.
+The theorem has two branches. The general branch assumes positive vertex counts n and k, essential matrices A, B and C, actual incoming-lift data I : ActualIncoming C A and J : ActualIncoming C.transpose B.transpose, and natural depths dL and dR with Forgets I.stateLift dL and Forgets J.stateLift dR. The certificate branch assumes positive n and k and c : CompatibleCertificate A B R S m for arbitrary rectangular R and S. This certificate supplies m > 0, essentiality of A and B, the endpoint-preserving bijections phi : AR ≃ RB, psiA : RS ≃ A-paths of length m and psiB : SR ≃ B-paths of length m, and the R compatibility equation for those maps. Neither branch adds alignment, balance, a second long compatibility equation or a preexisting conjugacy.
 
 The square reconstruction combines the original squareCoordinates inverse law with the original phi inverse law. The incoming and outgoing square-path relations identify the exact square states.
 
