@@ -1357,3 +1357,77 @@ remainder at the slower $A^{\nu-1}$ scale. This is an applicability map
 and a localization of the remaining estimate, not a new RH criterion,
 new signed gain, originality claim, or Lean certification of the
 analytic source inputs.
+
+## Retain the original oscillation exponent on the regular GA1 source
+
+The direct [Pintz 1980 Corollary 1 input (P80)](../Analytic/pintz1984remainder.md#direct-full-chebyshev-sign-changes-on-every-fixed-power-window)
+can be used in the existing construction (S1)–(S2) and its subsequent
+proper-GA1 and regular-return selection. The CA oscillation theorem,
+integer maximization, activation rules and prime-local bridge are reused.
+The additional application retains every original oscillation exponent
+on the same joint source class; it is a paper-level parameter
+correspondence, without a literature-priority or Lean-certification claim.
+
+Assume RH fails and put $\Theta=\sup_{\zeta(\rho)=0}\Re\rho>1/2$.
+For every fixed
+
+$$
+1-\Theta<\eta<\frac12,
+$$
+
+there is a fixed $c_\eta>0$ and an unbounded family of actual
+$N\in\mathscr S_{\rm reg}$ such that
+
+$$
+G(N)>e^\gamma\left(1+c_\eta(\log N)^{-\eta}\right).
+\tag{S5}
+$$
+
+To apply the existing sources, choose a fixed
+$r\in((1-\Theta)/\eta,1)$ and set $u=r\eta$.
+Then $1-\Theta<u<1/2$, so (O1) supplies unbounded actual CA witnesses
+$C$ with $a=\log C$ and
+$G(C)>e^\gamma(1+c_u a^{-u})$.
+Apply (P80) with $Y=a/8$. It supplies a positive $\psi$-point
+$t\in[(a/8)^r,a/8]$ for every sufficiently large witness.
+The existing finite prime-power selection and the unchanged CA pair
+construction give actual $D,H$ with
+
+$$
+\log D\ge\frac12(a/8)^r,\qquad
+\log H\le a/4,\qquad D<H<C,\qquad G(H)>G(D).
+$$
+
+Select the same rightmost maximizer $N$ over integers at least $D$.
+The existing selection after (S2) and the proper-GA1 argument give
+$N\ge H$, $N\in\mathscr S_{\rm reg}$ and $G(N)\ge G(C)$.
+This retains the actual integer, every prime-deletion and insertion
+comparison, and the event-free own-price identification.
+
+Put $A=\log N$ and $k_r=(2\,8^r)^{-1}$. Then
+$A\ge k_r a^r\to\infty$, and the complete exponent comparison is
+
+$$
+a^{-u}\ge k_r^{u/r}A^{-u/r}=k_r^\eta A^{-\eta}.
+$$
+
+Thus (S5) holds with $c_\eta=c_u k_r^\eta$.
+All constants are fixed after $\Theta,\eta,r$ are chosen.
+The direct input allows the whole interval $0<r<1$, so this application
+needs neither an auxiliary $\sigma>\Theta$ nor the earlier
+$r\sigma<1/2$ restriction. It asserts no effective start or uniform
+limit as $\eta\downarrow1-\Theta$.
+
+At these same actual clocks, the already established implication (O3)
+therefore applies for every fixed $\eta\in(1-\Theta,1/2)$:
+
+$$
+\sqrt A\log A\,I_\psi(A)
+< -\mathcal E(\log A)
+  -\frac{c_\eta}{2}A^{1/2-\eta}\log A
+\longrightarrow-\infty.
+$$
+
+The complete original improper integral and all its prime-power and
+endpoint terms are retained. The independent signed lower bound (S4),
+strict Robin for every integer $n>5040$, and RH remain unproved.

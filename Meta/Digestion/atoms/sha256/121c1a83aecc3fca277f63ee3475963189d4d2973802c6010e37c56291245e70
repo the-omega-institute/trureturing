@@ -1,0 +1,6 @@
+这一区分非常重要：
+
+* moment constraints 看不见 infinity mass；
+* resolvent budget 看得见；
+* 因此 budget 正则化精确阻止无成本谱逃逸。
+

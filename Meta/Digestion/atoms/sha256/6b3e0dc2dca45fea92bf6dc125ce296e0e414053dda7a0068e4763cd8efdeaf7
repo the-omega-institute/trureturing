@@ -1,0 +1,38 @@
+**Corollary 28.3 (the exact Fibonacci/Ostrowski consequence).** There is
+no Fibonacci-recognizable numerical predicate satisfying (ABT.95) on $D$,
+and no such predicate first-order definable in
+$(\mathbb N,+,V_\varphi)$, even with fixed numerical parameters and any
+finite collection of additional fixed Fibonacci-recognizable relations.
+Here $\varphi=(1+\sqrt5)/2$. More generally the same no-extension
+conclusion holds in any one fixed quadratic Ostrowski automatic
+presentation, including finite fixed automatic expansions of its
+first-order arithmetic.
+
+Proof. The canonical Fibonacci case follows directly from Theorem 28.2.
+Hieronymi–Terry Theorems A–B and Definitions 3.2–3.3 [ABT-HT] give
+regular domains, automatic addition and first-order closure for each
+fixed quadratic irrational. Reverse their canonical words as in
+Convention 28.1, restrict the capacity sort to the positive numbers,
+and apply Theorem 27.4. A fixed parameter is a singleton regular
+language; additional fixed automatic relations remain subject to
+first-order closure. $\square$
+
+For $\varphi$, the paper has $q_0=q_1=1$, $q_k=F_{k+1}$ and a forced
+lowest digit $b_1=0$. Deleting that one trailing zero gives $Z(n)$;
+appending it reverses the conversion, with the zero convention handled
+as a finite exceptional code. These are fixed regular transformations.
+$V_\varphi(n)$ for $n>0$ returns the least occupied denominator **value**
+$q_k$, and $V_\varphi(0)=1$; it does not return $k$.
+
+In particular the ordinary-index/value graph $j=F_{e+3}$ is not
+Fibonacci-recognizable or definable in the above Fibonacci signature:
+its graph together with automatic order would define
+$\exists j\,(j=F_{e+3}\land j\le h)$, contradicting Corollary 28.3.
+This is consistent with the Fibonacci-*value* set being automatic:
+its positive canonical words are $10^*$. That set is not Presburger,
+since an infinite ultimately periodic set has bounded successive gaps,
+whereas the distinct Fibonacci values have unbounded gaps. Thus the
+excluded scalar class genuinely extends the Presburger class of §25.
+The result does not assert automatic conversion between an ordinary
+count and a Fibonacci value merely because both have Fibonacci numerals.
+

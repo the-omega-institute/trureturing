@@ -1,0 +1,6 @@
+因此真正需要证明的是：
+
+1. Weil／Paley–Wiener 测试空间可以在两个目标点插值；
+2. 其他零点贡献可以控制到预算以内；
+3. prime–Gamma 显式公式与目标 kernel normalization 一致。
+

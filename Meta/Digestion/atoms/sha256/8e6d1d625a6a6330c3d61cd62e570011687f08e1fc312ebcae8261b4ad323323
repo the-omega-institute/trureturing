@@ -1,0 +1,88 @@
+**Definition 112.9 (the immutable supplier and its separate consumer).**
+Reuse `ActualTreeReadoutAcquisition` only for its four-valued immutable
+address readout, history-only `acquisitionStep`/`frontier`, actual
+`acquisitionTrace`, report-only `restore`, and distinct-address charge
+\[
+\operatorname{paid}(h)=\{p:(p,r)\text{ occurs in }h\},\qquad
+k(h)=|\operatorname{paid}(h)|.
+\tag{112.18a}
+\]
+Its original `Policy` returns an address or a Boolean, and its `Strategy`
+task is membership in the third actual substitution image. That Boolean
+task, immutable source and payment rule remain unchanged. The acquisition
+phase can be consumed separately under the native controller contract;
+the equality row consumer below is not a supplier `Strategy` for a changed
+task. No Apply, refusal, authentication or physical-duration supplier is
+inferred from that immutable-query API. See also
+[Continuation I, §58.11](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md).
+
+At the authentic \(N=0\) entry of Definition 112.1, keep the register static.
+Start the supplier acquisition frontier from its **own empty phase history**
+and pending root. Request the actual root, pop each requested address, and
+push its left then right children only after an actual branch reply. Thus
+the root is an actual later raw Read even though the pre-cut branch reply
+is retained. Use the same reply-driven DFS preorder as `acquisitionTrace`;
+no unacquired size, fuel or tree description is supplied to the controller.
+At completion the phase history is
+\[
+\mathsf{Hist}(u)=((p,r_u(p)):p\in V_0(u)\text{ in preorder}).
+\tag{112.18}
+\]
+Restore the description solely from these acquired reports, compare the
+two finite ordered descriptions below \(L,R\), and return exactly (112.2).
+This local comparison is purchased evidence, not an unknown equality port.
+
+Put
+\[
+S(u)=|V_0(u)|,\qquad \Lambda(u)=\sum_{p\in V_0(u)}|p|.
+\tag{112.19}
+\]
+The actual native post-entry coordinates and the supplier phase charge are
+\[
+(q,a,\ell,k_{\rm phase})(u)=(S(u),0,\Lambda(u),S(u)).
+\tag{112.20}
+\]
+Here \(a=0\) means no Apply attempt or accepted update. All phase addresses
+are fresh within that phase; this is why its distinct charge equals its raw
+Read count. For arbitrary native repeated calls those coordinates differ,
+and (112.17) is about raw calls and literal lengths, not the supplier's
+original Boolean strategy cost.
+
+Cache scope at the pre-cut/post-entry boundary is explicit. Let
+\(h_{\rm pre}=[(\varepsilon,\mathsf{branch})]\) and
+\(h_{\rm post}=\mathsf{Hist}(u)\). Then
+\[
+\begin{aligned}
+q_{\rm pre}=1,&\quad q_{\rm post}=S,\quad q_{\rm total}=S+1,\\
+\ell_{\rm pre}=0,&\quad \ell_{\rm post}=\ell_{\rm total}=\Lambda,\\
+k(h_{\rm pre})=1,&\quad k(h_{\rm post})=S,\quad
+k(h_{\rm pre}\mathbin{+\!+}h_{\rm post})=S.
+\end{aligned}
+\tag{112.20a}
+\]
+If one immutable-source paid-address cache spans both phases, the incremental
+post-entry distinct charge is therefore \(S-1\), and the cumulative charge
+is \(S\). If fees are assessed separately on the two empty logical phase
+ledgers, the two phase charges are \(1,S\), totaling \(S+1\). These are
+the two declared history scopes of the same paid-set formula, not a promise
+of a supplier cache reset, refund, or interphase tariff. The supplier alone
+does not choose between them. The retained pre-cut root report and the
+later raw root call count twice as raw events in either scope. A cache hit
+does not invent a second paid address; a locally simulated cache lookup is
+not a raw native Read. Such a lookup could save that raw call, but is not
+the root-first schedule being compared here. These scopes are lawful only
+on the same authentic immutable \(N=0\) source; an old-version report is
+not a cache for a later substituted version.
+
+Post-entry record counts are \(S\) phase events. Retaining both complete
+chronologies gives \(S+1\) events with the repeated root; a deduplicated
+address-value archive has \(S\) entries. In the declared bookkeeping unit
+of one push or pop per address, DFS makes \(2S\) stack operations including
+the initial push; comparing paired constructors uses at most \(S\) visits.
+These are record/operation counts, not byte, instruction, duration or monetary
+prices. Source preparation, root/epoch authentication, access cut, archive
+bytes/protection, address generation, local computation, output encoding,
+physical duration and amplitude/actuator preparation remain **unpriced**
+unless an actual separate supplier defines them. No matched physical resource
+vector or clock follows from naming those quantities.
+

@@ -1,0 +1,127 @@
+**Theorem 22.4 (Rational compact-band deadlines preserving the cubic order).** The same uncapped observer admits an effective deterministic cap on every supplied rational band $[u,v]\subset(0,1)$, with separately quantified family-wise errors at most $\alpha$ on that band. The following construction uses only finite rational arithmetic.
+
+Using (22.7), form the fixed rational polynomials
+
+$$
+\begin{aligned}
+B_i(t)&=\sum_{k=1}^{t-1}k(t-k)F_i(k)F_i(t-k),\\
+P(t)&=B_0(t)A_1(t)-B_1(t)A_0(t),&Q(t)&=A_0(t)A_1(t).
+\end{aligned} \tag{22.28}
+$$
+
+Their relevant degrees and leading coefficients are respectively
+
+$$
+\deg A_0=19,\quad [t^{19}]A_0=\mathsf B;\qquad
+\deg P=39,\quad [t^{39}]P=\frac{a\mathsf B^2}{189};\qquad
+\deg Q=38,\quad [t^{38}]Q=\mathsf B^2.
+\tag{22.29}
+$$
+
+For a polynomial $f(t)=f_dt^d+\sum_{j<d}f_jt^j$ in this list, put $E_f(T)=\sum_{j<d}|f_j|T^{j-d}$. Choose $T_0$ by starting with $T=4$ and doubling until
+
+$$
+E_{A_0}(T)\le\mathsf B/2,\qquad
+E_P(T)\le a\mathsf B^2/378,\qquad
+E_Q(T)\le\mathsf B^2/2;\qquad T_0=T.
+\tag{22.30}
+$$
+
+Set the positive fixed rational constants and band quantities
+
+$$
+\begin{aligned}
+d_*&=\frac{a}{756},&g_*&=\frac{16\mathsf B d_*^2}{U^2},\\
+G_{17}(u,T_0)&=\sum_{t\ge T_0}t^{17}u^t,&
+\underline d_{u,v}&=\frac{g_*G_{17}(u,T_0)}{\max_i Z_i(v)^2},\\
+\overline\mu_v&=\max_i\mu_i(v),&\overline\beta_v&=\max_i\beta_i(v),\\
+\mathcal B_{u,v}&=1+\overline\beta_v+
+\frac{2\overline\mu_v R_\alpha}{\underline d_{u,v}},&
+W_{u,v}&=\left\lceil\frac{2\mathcal B_{u,v}}\alpha\right\rceil.
+\end{aligned} \tag{22.31}
+$$
+
+The infinite-sum notation here has the finite rational evaluation
+
+$$
+G_{17}(u,T_0)=u^{T_0}\sum_{j=0}^{17}\binom{17}{j}T_0^{17-j}R_j(u),
+\qquad R_0(u)=\frac1{1-u},\quad R_j(u)=\sum_{n\ge1}n^ju^n\ (j\ge1),
+\tag{22.32}
+$$
+
+where the monomial power sums $R_j$ are evaluated by (19.8). Run Theorem 22.3 for at most $W_{u,v}$ actual reads, giving its ordinary decision priority if that final read closes a crossing pair; otherwise emit a fixed default on timeout. Then
+
+$$
+\sup_{q\in[u,v]}\mathsf P_{0,q}(\text{label }1)\le\alpha,
+\qquad
+\sup_{q'\in[u,v]}\mathsf P_{1,q'}(\text{label }0)\le\alpha.
+\tag{22.33}
+$$
+
+For fixed $H,\alpha$, on rational bands $[u,v]=[1-2\epsilon,1-\epsilon]$ as $\epsilon\downarrow0$,
+
+$$
+\underline d_{u,v}=\Theta_H(\epsilon^2),
+\qquad W_{u,v}=O_{H,\alpha}(\epsilon^{-3}).
+\tag{22.34}
+$$
+
+Proof. Let $b_t(k)=k(t-k)/t^2\in[0,1/4]$ and
+$\Delta_t=\mathbb E_{c_{0,t}}b_t-\mathbb E_{c_{1,t}}b_t=P(t)/(t^2Q(t))$.
+The exact identities $b_tu=1/t$, (22.9), and $\mathbb E_{c_{0,t}}b_t=S_{10,10}(t)/(t^2A_0(t))=5/21+O(t^{-1})$ imply
+
+$$
+\operatorname{Cov}_{c_{0,t}}(b_t,u)=-\frac1{189t}+O(t^{-2}).
+\tag{22.35}
+$$
+
+The remainder in (22.11) has $\mathbb E|e_t|=O_H(t^{-2})$, while $b_t$ is bounded. Since $m_t=1+O_H(t^{-1})$,
+
+$$
+\Delta_t=-\frac{\operatorname{Cov}_{c_{0,t}}(b_t,w_t)}{m_t}
+=\frac{a}{189t}+O_H(t^{-2}).
+\tag{22.36}
+$$
+
+Here $B_i$ has degree 21 and leading coefficient $10!^2/21!$. The degree-40 terms in $P$ cancel; (22.14) and (22.36) give its nonzero degree-39 coefficient in (22.29). The other degree assertions follow directly. Thus all leading coefficients in (22.30) are positive. Each $E_f(T)$ decreases to zero as $T$ doubles, so the finite rational search terminates. For every real $t\ge T_0$, its inequalities imply
+
+$$
+A_0(t)\ge\tfrac12\mathsf B t^{19},\qquad
+P(t)\ge\frac{a\mathsf B^2}{378}t^{39},\qquad
+Q(t)\le2\mathsf B^2t^{38},\qquad
+\Delta_t\ge d_*/t.
+\tag{22.37}
+$$
+
+For a lower information bound valid in both directions, the second derivatives of $-\log x$ and $x\log x$ on $[1,U]$ are at least $U^{-2}$ and $U^{-1}$ respectively. Their Jensen gaps, and the divisor $m_t\le U$ in the second direction, give
+
+$$
+d_{i,t}\ge\frac{\operatorname{Var}_{c_{0,t}}(w_t)}{2U^2}.
+\tag{22.38}
+$$
+
+Explicitly, subtract the tangent at $m_t$ and integrate the lower second-derivative bound, then average; the linear term disappears. Also $\operatorname{Var}(b_t)\le1/64$, since $|b_t-1/8|\le1/8$. Cauchy–Schwarz and $m_t\ge1$ yield
+$\operatorname{Var}(w_t)\ge64m_t^2\Delta_t^2\ge64\Delta_t^2$.
+Together with $A_i(t)\ge A_0(t)$ and (22.37), this proves
+
+$$
+A_i(t)d_{i,t}\ge g_*t^{17}\quad(t\ge T_0, i=0,1).
+\tag{22.39}
+$$
+
+On the supplied band $q^t\ge u^t$ and $Z_i(q)\le Z_i(v)$, so summing (22.39) gives
+$\mathfrak d_i(q)\ge\underline d_{u,v}>0$.
+Omitting $t<T_0$ here is a lower-bound operation on nonnegative summands; their actual contributions and remainders were included in Theorem 22.2. Monotonicity of $\mu_i,\beta_i$, proved in (20.13), and (22.20) now give $\mathbb E_{i,q}L\le\mathcal B_{u,v}$. A wrong capped decision lies in the union of a wrong uncapped decision and $\{L>W_{u,v}\}$, whose latter probability is at most $\alpha/2$ by Markov. This proves (22.33), including timeout before the first tick or inside either gap of a pair. No conditional law is reconditioned on finishing before the deadline.
+
+Equation (22.32) follows by writing $t=T_0+n$, expanding $(T_0+n)^{17}$, and summing each power of $n$ with (19.8). The two shape normalizers and the moment numerators in (22.31) use monomial power sums through degree 11. Thus the search, the bound and the ceiling are all finite rational calculations on the supplied inputs. The actual $q$ need not be represented or rational.
+
+Finally (18.13), (20.29) and fixed $T_0$ give
+
+$$
+G_{17}(1-2\epsilon,T_0)\sim\frac{17!}{(2\epsilon)^{18}},\qquad
+\max_i Z_i(1-\epsilon)^2\sim(9!)^2\epsilon^{-20}.
+\tag{22.40}
+$$
+
+Their ratio is a positive constant times $\epsilon^2$, while $\overline\mu_{1-\epsilon}$ and $\overline\beta_{1-\epsilon}$ are $O_H(\epsilon^{-1})$. Substitution in (22.31) proves (22.34). $\square$
+

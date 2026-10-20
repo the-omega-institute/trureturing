@@ -1,0 +1,85 @@
+### 26.1 分辨率塔与共同实际来源
+
+令 \(\Lambda\) 是有限的有向分辨率偏序，\(\lambda\succeq\mu\) 表示 \(\lambda\)
+比 \(\mu\) 精细。固定非空实际来源 \(\Omega\)，允许 \(\Omega\) 无限。每层有配置集合
+\(S_\lambda\)、实际实现映射
+
+$$
+\sigma_\lambda:\Omega\longrightarrow S_\lambda,
+\qquad
+S_\lambda^0=\sigma_\lambda[\Omega].
+$$
+
+只在实际像 \(S_\lambda^0\) 上定义后续操作。对 \(\lambda\succeq\mu\)，给出层间
+投影
+
+$$
+p_{\lambda\mu}:S_\lambda^0\longrightarrow S_\mu^0,
+$$
+
+并要求
+
+$$
+\boxed{
+p_{\lambda\lambda}=\operatorname{id},\qquad
+p_{\mu\nu}\,p_{\lambda\mu}=p_{\lambda\nu},\qquad
+p_{\lambda\mu}\,\sigma_\lambda=\sigma_\mu.
+}
+\tag{RA.2601}
+$$
+
+最后一个等式是共同来源条件。它排除了一种不合法的拼接：先在细层选择一个实际
+来源，再在粗层任意换成另一个具有相同边缘读数的来源。
+
+每层使用同一个声明动作族 \(A\)。把事件、读数、失败原因、时钟增量和 writer
+记录打包为有限输出字母表 \(O_\lambda\)。动作 \(a\) 的总核记为
+
+$$
+J^a_\lambda(o,s'\mid s),
+\qquad s,s'\in S_\lambda^0, o\in O_\lambda.
+$$
+
+不合法调用也使用显式失败输出和固定的失败后继；不把未定义的非法核行当作零概率
+合法事件。若 \(\lambda\succeq\mu\)，输出的粗化写成
+\(\varepsilon_{\lambda\mu}:O_\lambda\to O_\mu\)，则共同来源上的核自然性为
+
+$$
+\boxed{
+J^a_\mu(o_\mu,t\mid p_{\lambda\mu}s)
+=
+\sum_{\substack{\varepsilon_{\lambda\mu}(o)=o_\mu\\
+                   p_{\lambda\mu}s'=t}}
+J^a_\lambda(o,s'\mid s).
+}
+\tag{RA.2602}
+$$
+
+它同时要求合法性、失败、记录和读数按同一输出映射下降。确定性特例是
+\(p_{\lambda\mu}T_{\lambda,a}=T_{\mu,a}p_{\lambda\mu}\)，并且输出标签也按
+\(\varepsilon_{\lambda\mu}\) 下降。若策略根据输出前缀选择动作，声明的策略族须在
+这些输出投影下闭合。
+
+若动作在分辨率 \(\lambda\) 上需要更细的输入，不能把这个前视依赖省略。给出
+\(j_a(\lambda)\succeq\lambda\)，并要求
+\(\lambda\succeq\mu\Rightarrow j_a(\lambda)\succeq j_a(\mu)\)。把该动作的前视核明确写成
+\[
+J^a_\lambda:S^0_{j_a(\lambda)}\longrightarrow O_\lambda\times S^0_\lambda,
+\]
+或在随机情形写成同一类型上的联合质量核。它从
+\(S_{j_a(\lambda)}^0\) 取输入、把后继放回 \(S_\lambda^0\)；对
+\(s\in S_{j_a(\lambda)}^0\)，粗输入由
+\(p_{j_a(\lambda),j_a(\mu)}s\) 给出，层间相容应写成
+
+$$
+J^a_\mu(o_\mu,t\mid p_{j_a(\lambda),j_a(\mu)}s)
+=
+\sum_{\substack{\varepsilon_{\lambda\mu}(o)=o_\mu\\
+                   p_{\lambda\mu}s'=t}}
+J^a_\lambda(o,s'\mid s).
+\tag{RA.2602a}
+$$
+
+单调性保证输入限制的类型成立；否则右侧的粗输入并不是该动作在 \(\mu\) 层的
+合法前视输入。下文为简洁起见写成同层形式 (RA.2602)，但结论同样适用于
+(RA.2602a)。
+

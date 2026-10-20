@@ -1,0 +1,7 @@
+可使用的后续桥包括：
+
+* Blaschke 修复因子的全局最小性；
+* Power-Packet 指数支配；
+* Chebyshev 外极点局部化；
+* shifted de Branges 与 Weil 空间的整体等距。
+

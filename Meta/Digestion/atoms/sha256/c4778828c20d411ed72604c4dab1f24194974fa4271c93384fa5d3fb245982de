@@ -1,0 +1,23 @@
+### 定理 385.2（正确的下降压缩界）
+
+在定义 385.1 的记号下，若
+
+$$
+\widehat c_n(r_n(x_{\le n}),y_n)
+\le L_n c_n(x_n,y_n),
+$$
+
+则
+
+$$
+\boxed{
+\widehat W^{\downarrow}_r(P,Q)
+\le
+\left(\max_nL_n\right)W^{\downarrow}_r(P,Q).
+}
+$$
+
+不能在没有额外假设时把右侧换成全部原始因果耦合的值
+\(W_{\mathcal F\to\mathcal G}(P,Q)\)，因为下降类是原始可行类的子集，故
+\(W^{\downarrow}_r\ge W_{\mathcal F\to\mathcal G}\)。若另有“某个原始最优耦合下降”的假设，才可把右侧进一步替换为原始最优值；若每个压缩因果耦合都可提升，才可把左侧识别为压缩空间的全部因果最优值。
+

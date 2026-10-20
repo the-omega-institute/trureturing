@@ -1,0 +1,23 @@
+## 3. 固定内缩候选的尺度族障碍
+
+设归一化候选满足
+
+\[
+\operatorname{supp}k_a\subset[-a+2t,a-2t],
+\qquad k_a\longrightarrow k_\infty\ne0\text{ in }L^2(\mathbb R),
+\]
+
+其中 `t>0` 固定。内缩余量使一次、两次平移仍为原窗口合法测试函数。此时
+
+\[
+B_ak_a\longrightarrow(S_t-\alpha_\infty)k_\infty.
+\]
+
+右侧非零，因为 Fourier 乘子 `2*cos(t*xi)-alpha_infty` 的零集离散，非零 L2 函数不可能完全支撑于该零测集。因此，若余维一强制性成立，必有
+
+\[
+\boxed{\liminf_{a\to\infty}r_a/\delta_a>0.}
+\]
+
+这个障碍已经存在于偶子空间内部，因为对称平移保持偶性。
+

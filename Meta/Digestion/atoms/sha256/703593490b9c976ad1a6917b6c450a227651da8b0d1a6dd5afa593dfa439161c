@@ -1,0 +1,18 @@
+**假设 55.1（参考切点与一次更新）。** 固定第12节单位速度、左反射右吸收的 FIB 链，暂态集 \(E_j=\{0,\ldots,L_j-1\}\)，吸收点 \(L_j\)，转移核 \(K_j\)，并假设 \(\rho(K_j)<1\)。取参考态 \(a_j\in E_j\)，从 \(a_j\) 出发令
+\[
+\sigma_0=0,\qquad
+\sigma_{r+1}=\inf\{n>\sigma_r:X_n\in\{a_j,L_j\}\}.
+\]
+记 \(R_j=\{X_{\sigma_1}=a_j\}\)、\(D_j=\{X_{\sigma_1}=L_j\}\)、\(\kappa_j=\mathbb P_{a_j}(D_j)\in(0,1)\)。一次段的持续时间和有界奖励分别为
+\[
+T_j=\sigma_1,\qquad
+Y_j=\sum_{n=0}^{\sigma_1-1}g_j(X_n),\qquad
+g_j:E_j\to\mathbb R_+^d.
+\]
+定义两个子概率测度
+\[
+\mu_j^R(B)=\mathbb P_{a_j}((T_j,Y_j)\in B;R_j),\qquad
+\mu_j^D(B)=\mathbb P_{a_j}((T_j,Y_j)\in B;D_j).
+\]
+它们的总质量分别为 \(1-\kappa_j\) 和 \(\kappa_j\)。区间 \([\sigma_r,\sigma_{r+1})\) 不重复计入返回端点。
+

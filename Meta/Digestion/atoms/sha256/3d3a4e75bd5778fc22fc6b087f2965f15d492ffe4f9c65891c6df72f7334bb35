@@ -1,0 +1,74 @@
+**定理 327.3（值的首项最优不消去矩阵的首项偏差）。** 在同一个正角点规范中，令 $R_u$ 为式（326.1）的非零矩阵。预算匹配修复仍满足
+
+$$
+T_{\rm match}-T_H
+=-\varepsilon\delta^3R_u
++O\bigl(|\varepsilon|\delta^3(|\varepsilon|+\delta)\bigr).
+\tag{327.16}
+$$
+
+缩小共同邻域后，还存在常数 $c>0$，使
+
+$$
+e_\varepsilon(T_{\rm match})-H(\varepsilon,\delta)
+\ge c\varepsilon^2\delta^5.
+\tag{327.17}
+$$
+
+因此对非零的小 $\varepsilon$ 和正的小 $\delta$，预算匹配修复严格不是齐次最优矩阵。另一方面，对任意这样的联合趋零序列，
+
+$$
+\frac{e_\varepsilon(T_{\rm match})-G}{H-G}\longrightarrow1,
+\qquad
+\frac{e_\varepsilon(T_{\rm raw})-G}{H-G}\longrightarrow4.
+\tag{327.18}
+$$
+
+证明。式（327.4）的主衰减对数可直接写成
+
+$$
+\widetilde M
+=\frac{\theta}{\delta}M_G(\varepsilon,\theta)
++\frac{\alpha(\varepsilon,\theta)}{\delta}I,
+\qquad T_{\rm match}=e^{-\delta\widetilde M}.
+\tag{327.19}
+$$
+
+右侧是接近 $M_0$ 的有界实矩阵，故这里确是近恒等矩阵的主对数。利用 $M_G$ 的解析性和式（327.5）、（327.6），有
+
+$$
+\widetilde M-M_G(\varepsilon,\delta)=O(\varepsilon^2\delta^2).
+$$
+
+再用第326节得
+
+$$
+\widetilde M-M_H
+=\varepsilon\delta^2R_u
++O\bigl(|\varepsilon|\delta^2(|\varepsilon|+\delta)\bigr).
+\tag{327.20}
+$$
+
+标准矩阵指数微分在该有界邻域内给出
+$e^{-\delta\widetilde M}-e^{-\delta M_H}
+=-\delta(\widetilde M-M_H)+O(\delta^2\|\widetilde M-M_H\|)$，不要求两矩阵交换。这证明式（327.16）。
+
+因为 $R_u\ne0$，缩小邻域后式（327.20）使
+$\|\widetilde M-M_H\|\ge c_1|\varepsilon|\delta^2$。修复矩阵已经满足齐次生成元条件与同一精确预算，并留在第325节的共同局部邻域。因此将该节的齐次问题统一二次增长估计应用于
+
+$$
+W=\left(\widetilde M,\frac{e_\varepsilon(T_{\rm match})}{\delta}\right)
+$$
+
+及真正的齐次最优支线，得到
+
+$$
+\frac{e_\varepsilon(T_{\rm match})-H}{\delta}
+\ge c_2\|\widetilde M-M_H\|^2
+\ge c_2c_1^2\varepsilon^2\delta^4.
+$$
+
+乘以 $\delta$ 即为式（327.17）。这只提供五阶下界，不断言它是精确阶次或已经确定相应系数。式（327.18）则直接由第325节的严格正首项和式（327.7）取比值得到。证毕。
+
+本节的局部结论同时保留了三个区别：标量生成元修复的最小噪声、给定任务预算下的最小恢复误差，以及通道矩阵本身的最优性。重新用满残差预算使这一显式构造达到最优误差差距的联合首项，但它仍保留一阶不对称矩阵偏差及严格正的更高阶误差。本节未求一般有限预算曲线，也未将这些任务系数视为一般量子动力学的普适常数。
+

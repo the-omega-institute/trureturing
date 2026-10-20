@@ -1,0 +1,14 @@
+**定理 62.4（正观测通道下的初态遗忘）。** 假定存在 \(\varepsilon>0\)，使所有 \(Q(i,j)\ge\varepsilon\)、\(O_i(y)\ge\varepsilon\)。对同一观测串，用
+\[
+\mathsf F_y(\alpha)=\frac{\alpha QD_y}{\alpha QD_y\mathbf1}
+\]
+迭代任意两个全支撑初始后验，则存在依赖于 \(\varepsilon\) 和 \(|S|\) 的 \(C<\infty\)、\(0<\kappa<1\)，使
+\[
+\left\|
+\mathsf F_{y_t}\circ\cdots\circ\mathsf F_{y_1}(\alpha)
+-\mathsf F_{y_t}\circ\cdots\circ\mathsf F_{y_1}(\alpha')
+\right\|_1
+\le C\kappa^t.
+\]
+这是正矩阵乘积的 Hilbert 距离收缩及有限维范数等价的结果。仅有可达性而无正性时，周期、零支撑和观测不可区分类必须另行处理。
+

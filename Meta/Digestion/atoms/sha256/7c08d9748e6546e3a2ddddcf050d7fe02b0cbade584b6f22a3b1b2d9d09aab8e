@@ -1,0 +1,280 @@
+**定理 438.1（全参数平坦分支及锐利端点折叠）。** 对 $r\in J$，$k\in\{0,1,2\}$、$\epsilon,\sigma\in\{+1,-1\}$，定义
+
+$$
+\begin{aligned}
+\mu_{k\epsilon\sigma}&={\pi+\epsilon\sigma\phi+2\pi k\over3},&
+\alpha_{k\epsilon\sigma}&=\mu_{k\epsilon\sigma}+\epsilon\theta,&
+\beta_{k\epsilon\sigma}&=\mu_{k\epsilon\sigma}-\epsilon\theta,\\
+x_{k\epsilon\sigma}&=(R\cos\alpha_{k\epsilon\sigma},
+R\sin\alpha_{k\epsilon\sigma},\sigma Z),\\
+y_{k\epsilon\sigma}&=(R\cos\beta_{k\epsilon\sigma},
+R\sin\beta_{k\epsilon\sigma},-\sigma Z).
+\end{aligned}
+$$
+
+一、$\mathcal S_r$ 恰为这些标签的像。在 $I$ 内有十二个互异有序对，十二个第一方向亦互异，每个方向有唯一伙伴；交换两因子的标签对合为
+
+$$
+(k,\epsilon,\sigma)\longmapsto(k,-\epsilon,-\sigma).
+$$
+
+所有分支在 $I$ 上实解析，包括 $r=1$。在 $r=1$ 时，公式精确成为定理 426.1 的十二方向及其配对。
+
+二、每个端点 $r_e\in\{r_-,r_+\}$ 恰有六个有序反足对，即三个无序对：
+
+$$
+\mathcal S_{r_e}=\left\{(x,-x):
+x=\left(\sqrt{2/3}\cos\alpha,\sqrt{2/3}\sin\alpha,
+{\sigma\over\sqrt3}\right),\quad
+e^{3i\alpha}=-\sigma\operatorname{sgn}(q(r_e)),\quad \sigma=\pm1\right\}.
+$$
+
+写 $\tau=\sigma\operatorname{sgn}(q(r_e))$，十二个连续标签在端点的全部碰合恰为
+
+$$
+(k,+1,\sigma)\sim
+\left(k+{3+\tau\over2}\pmod3,-1,\sigma\right).
+$$
+
+在正轴的其余参数 $r\notin J$，有 $\mathcal S_r=\varnothing$。
+
+三、对任意 $r,s\in J$，用 $\Delta R=R(r)-R(s)$ 等同样记号，置
+
+$$
+\mathscr D(r,s)^2=(\Delta R)^2+(\Delta Z)^2
++4R(r)R(s)\max_{e=\pm1}
+\sin^2\!\left({\Delta\phi/3+e\Delta\theta\over2}\right).
+$$
+
+则 $d_H^B(\mathcal S_r,\mathcal S_s)\le\mathscr D(r,s)$。这是显式上界，不要求同标签匹配实现最近距离。
+
+对每个紧区间 $K\subset I$，令
+
+$$
+\begin{aligned}
+L_K&=\max_{t\in K}\sqrt{{R'(t)^2\over Z(t)^2}
++R(t)^2\left({|\phi'(t)|\over3}+|\theta'(t)|\right)^2},\\
+H_K&=\max_{t\in K}|h'(t)|.
+\end{aligned}
+$$
+
+这些常数有限，且对 $r,s\in K$，
+
+$$
+d_H^B(\mathcal S_r,\mathcal S_s)\le L_K|r-s|,\qquad
+|h(r)-h(s)|\le H_K|r-s|.
+$$
+
+在整个 $J$ 上有 $|h'|\le\sqrt2/36$，并存在有限 $C_J$ 使
+
+$$
+d_H^B(\mathcal S_r,\mathcal S_s)\le C_J|r-s|^{1/2}
+\qquad(r,s\in J).
+$$
+
+四、端点的指数 $1/2$ 对集合本身是锐利的。对每个 $r\in I$ 和每个端点 $r_e$，
+
+$$
+d_H^B(\mathcal S_r,\mathcal S_{r_e})\ge R(r)u(r),
+$$
+
+且当 $t\downarrow0$ 时，
+
+$$
+u(r_-+t)^2={t\over2\sqrt2}+O(t^2),\qquad
+u(r_+-t)^2={t\over4\sqrt2}+O(t^2).
+$$
+
+因此两端的 Hausdorff 距离均为 $\Theta(\sqrt t)$，任何大于 $1/2$ 的端点 Hölder 指数均不成立；整个 $I$ 上也不存在统一的集合 Lipschitz 常数。这不对 $\eta_{\mathrm{fin}}$ 施加相同的下正则性限制。
+
+证明。先直接消去五个平坦方程。两极等式相减给出 $x_z+y_z=0$，共同水平再给 $1-x_z^2=4h=R^2$。所以
+
+$$
+x=(R\cos\alpha,R\sin\alpha,\sigma Z),\qquad
+y=(R\cos\beta,R\sin\beta,-\sigma Z).
+$$
+
+纬线方程的残量在 $t_j=2\pi j/3$ 上写为
+
+$$
+C_0+C_1e^{-it_j}+\overline{C_1}e^{it_j},
+$$
+
+其中
+
+$$
+\begin{aligned}
+C_0&=1-q^2Z^2+{a^2R^2\over2}\cos(\alpha-\beta)-R^2,\\
+C_1&={aR\over2}\left[(1-q\sigma Z)e^{i\alpha}
++(1+q\sigma Z)e^{i\beta}\right]
++{a^2R^2\over4}e^{-i(\alpha+\beta)}.
+\end{aligned}
+$$
+
+最后一项来自 $e^{2it_j}=e^{-it_j}$ 的三点混叠；不能删去。三点离散 Fourier 变换可逆，故三个纬线方程当且仅当 $C_0=C_1=0$，其中共轭模也同时为零。
+
+令 $\mu=(\alpha+\beta)/2$、$\delta=(\alpha-\beta)/2$。由 $a^2+q^2=R^2+Z^2=1$，
+
+$$
+C_0=a^2\left[Z^2+{R^2\over2}\cos(2\delta)\right],\qquad
+C_0=0\ \Longleftrightarrow\
+\cos^2\delta={3\over2}-{1\over R^2}={3a-B\over4a}=u^2.
+$$
+
+角提升的变换 $(\mu,\delta)\mapsto(\mu+\pi,\delta+\pi)$ 使 $\alpha$ 增加 $2\pi$、$\beta$ 不变，表示同一有序对。在 $I$ 中可据此选 $\cos\delta=u>0$，恰留下 $\delta=\epsilon\theta$ 模 $2\pi$ 的两个选择。剩余 Fourier 方程化为
+
+$$
+e^{3i\mu}(u-i\epsilon\sigma qZv)=-{aR\over4}.
+$$
+
+它的模条件恒成立且严格非零。确切地，$Z^2=(B-a)/(3a+B)$，所以
+
+$$
+\begin{aligned}
+u^2+q^2Z^2v^2
+&={(3a-B)(3a+B)+(1-a^2)(B^2-a^2)\over4a(3a+B)}\\
+&={a^4\over4a(3a+B)}={a^2R^2\over16}>0.
+\end{aligned}
+$$
+
+由于 $u-i\epsilon\sigma w=(aR/4)e^{-i\epsilon\sigma\phi}$，精确相位条件为
+
+$$
+e^{3i\mu}=-e^{i\epsilon\sigma\phi}.
+$$
+
+其三个立方根就是陈述中的 $k=0,1,2$。反向代入这些角，单位范数、两极方程以及 $C_0=C_1=0$ 全部成立；由 Fourier 反演恢复全部纬线方程。这同时证明必要性、充分性和相位穷尽性。
+
+不同 $\sigma$ 具有不同非零高度；固定 $\sigma$，若相反 $\epsilon$ 给出同一有序对，将两方位角同余相减便要求 $4\theta\in2\pi\mathbb Z$，与 $0<\theta<\pi/2$ 矛盾。固定 $\epsilon,\sigma$ 而改变 $k$ 则旋转 $2\pi/3$，三个有序对互异。正伙伴唯一性是第 417 节已有结果；这里也可直接看出其应用：正水平保证 $1+\mathbf v_i\cdot x>0$，故
+
+$$
+\mathbf v_i\cdot y={4h\over1+\mathbf v_i\cdot x}-1.
+$$
+
+五个源方向张成 $\mathbb R^3$，这些数唯一确定 $y$，于是十二个第一方向亦互异。改变 $\epsilon,\sigma$ 的符号保持 $\mu$ 不变并交换 $\alpha,\beta$，给出伙伴对合。
+
+为明确与第 419 节的重用关系，该节 $\delta_{419}$ 是从第一因子到第二因子的完整带符号方位角差；其被动共同坐标旋转不改变此差。在本节标签下
+
+$$
+\delta_{419}=\beta-\alpha=-2\epsilon\theta\pmod{2\pi},\qquad
+\cos\delta_{419}={1-3\kappa\over2},\qquad
+\sin^2\delta_{419}={3(1-\kappa)(1+3\kappa)\over4}.
+$$
+
+该节选第一因子高度为负时取 $\sigma=-1$。共同三等分旋转改变 $k$，交换伙伴同时反转 $\epsilon,\sigma$；因此固定 $\epsilon\sigma$ 就给出该类六有序对轨道。本节的两种 $\epsilon\sigma$ 穷尽十二对，未把已有高度或相对角重新当作新结论。
+
+在 $r=1$，
+
+$$
+q=\phi=0,\quad h=3-2\sqrt2,\quad
+R=2(\sqrt2-1),\quad Z=\sqrt{8\sqrt2-11},\quad
+u={\sqrt2-1\over2},\quad \mu={ (2k+1)\pi\over3}.
+$$
+
+这逐项对应定理 426.1 的 $R_\perp,\zeta,\theta,m_k$ 与伙伴标签。所有所需根在 $I$ 内有正被开方数，$\phi=\arctan(w/u)$ 在 $q=0$ 处也解析，所以 $r=1$ 没有分支切口或碰合。
+
+端点须直接使用方程，不能沿用 $u>0$ 的规范。此时
+
+$$
+a=a_0,\quad q(r_-)=1/3,\quad q(r_+)=-1/3,\quad
+h=1/6,\quad R=\sqrt{2/3},\quad Z=1/\sqrt3,\quad
+u=0,\quad v=1,\quad\theta=\pi/2.
+$$
+
+均值方程迫使 $\alpha-\beta=\pi$ 模 $2\pi$，故 $y=-x$。代入 $C_1=0$ 得
+
+$$
+-aRq\sigma Z e^{i\alpha}-{a^2R^2\over4}e^{-2i\alpha}=0,
+\qquad e^{3i\alpha}=-{aR\over4q\sigma Z}
+=-\sigma\operatorname{sgn}(q).
+$$
+
+每个高度有三个方位角，直接得到六个有序对及其充分性。将 $\phi=\operatorname{sgn}(q)\pi/2$ 代入连续标签，$\epsilon=+1$ 与 $-1$ 的 $\alpha$ 同余恰要求 $k'-k=(3+\tau)/2$ 模三；$\beta$ 同时相同。高度及三个不同根排除其余碰合。若 $r>0$ 在 $J$ 外，则 $a<a_0$；同一均值必要式要求 $\cos^2\delta<0$，所以 $\mathcal S_r$ 为空。
+
+下面证明两方向的距离估计。匹配同一个 $(k,\epsilon,\sigma)$，两个角差为
+
+$$
+\Delta\alpha=\epsilon(\sigma\Delta\phi/3+\Delta\theta),\qquad
+\Delta\beta=\epsilon(\sigma\Delta\phi/3-\Delta\theta).
+$$
+
+圆周弦长公式给出
+
+$$
+|x(r)-x(s)|^2=(\Delta R)^2+(\Delta Z)^2
++4R(r)R(s)\sin^2(\Delta\alpha/2),
+$$
+
+$y$ 的公式将 $\Delta\alpha$ 换成 $\Delta\beta$。对两坐标及两个符号取最大即得 $\mathscr D$。每边每一点都有一个标签；端点重复标签也各自存在于另一边。因此两个有向 Hausdorff 距离均受该界控制，碰合不破坏反向匹配。
+
+为给出可核对的内部常数，导数为
+
+$$
+\begin{aligned}
+a'&={2(1-r^2)\over(1+r^2)^2},&q'&={-4r\over(1+r^2)^2},&
+h'&={B a'\over(3a+B)^2},\\
+R'&={2h'\over R},& Z'&=-{RR'\over Z},&
+u'&={a'\over2\sqrt2\,a^2u},\\
+v'&=-{uu'\over v},&\theta'&=-{u'\over v},&
+w'&=q'Zv+qZ'v+qZv',\\
+\phi'&={uw'-wu'\over u^2+w^2}.
+\end{aligned}
+$$
+
+含 $u'$ 的公式仅用于 $I$。由 $R^2+Z^2=1$，一条分支的速度满足
+
+$$
+|x'|^2={R'^2\over Z^2}+R^2\alpha'^2,
+\qquad |y'|^2={R'^2\over Z^2}+R^2\beta'^2.
+$$
+
+积分并双向匹配给出 $L_K$，均值定理给出 $H_K$。在 $J$ 上，$|a'|\le4/9$、$3a+B\ge4\sqrt2$，所以 $|h'|\le\sqrt2/36$。
+
+全闭区间的估计不对奇异的 $u'$ 积分。写 $g=u^2$，则
+
+$$
+g'={1-r^2\over2\sqrt2\,r^2},\qquad
+|g'|\le G:={1\over2\sqrt2},\qquad
+|u(r)-u(s)|\le\sqrt{G|r-s|}.
+$$
+
+$R,Z,v=\sqrt{1-g},w=qZv$ 在 $J$ 的邻域光滑，且
+
+$$
+|u+iw|={aR\over4}\ge m:={1\over3\sqrt3}>0.
+$$
+
+对模长至少 $m$、实部非负的两个复数，先归一化到右半圆，再用弧长不超过 $\pi/2$ 倍弦长，得到本相位支路的估计
+
+$$
+|\phi(r)-\phi(s)|\le{\pi\over m}
+\bigl(|u(r)-u(s)|+|w(r)-w(s)|\bigr).
+$$
+
+给出一个全局常数的具体取法：令 $T=r_+-r_-$，$A_f=\max_J|f'|$（$f=R,Z,w$），$R_{\max}=\max_JR$，$v_{\min}=\min_Jv>0$。这些是光滑函数的有限最大值；计算端点 $v'$ 时使用 $v'=-g'/(2v)$。由 $|\Delta\theta|\le|\Delta u|/v_{\min}$ 及上述弦长式，可取
+
+$$
+C_J=\sqrt T\sqrt{A_R^2+A_Z^2}
++R_{\max}\left[
+{\pi\over3m}(\sqrt G+A_w\sqrt T)+{\sqrt G\over v_{\min}}
+\right].
+$$
+
+这证明全局 $1/2$-Hölder 上界，且明确排除了相位模消失造成的额外奇点。
+
+最后，对任一内部标签，横向向量求和给 $|x+y|=2R\cos\theta=2Ru$。任一端点对为 $(z,-z)$，三角不等式给
+
+$$
+2Ru=|x+y|\le|x-z|+|y+z|
+\le2\max\{|x-z|,|y+z|\}.
+$$
+
+这是对每一个端点对的下界，与如何重新标记无关，故给出所述集合距离下界。$g'(r_-)=1/(2\sqrt2)$、$g'(r_+)=-1/(4\sqrt2)$ 给出两个 Taylor 式；相应的 $Ru$ 下界首项系数分别为
+
+$$
+\sqrt{{1\over3\sqrt2}}\,\sqrt t,\qquad
+\sqrt{{1\over6\sqrt2}}\,\sqrt t.
+$$
+
+与上界合用即得锐利阶数。若整个 $I$ 有统一 Lipschitz 常数，让一参数趋于端点将给出端点 Lipschitz 界，与该下界矛盾。证毕。
+

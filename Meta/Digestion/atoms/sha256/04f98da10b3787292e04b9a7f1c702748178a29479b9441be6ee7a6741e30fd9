@@ -1,0 +1,28 @@
+以下更新始终使用动作前的字段，除非明确写为更新后的值。
+
+1. 实际读返回 $e_\mathrm{obs}$ 时，先作已知单位算术
+   $$
+   y=P_0^{-1}e_\mathrm{obs}Q_0^{-1},\qquad
+   j=3q+r,\quad z_r=J^q(y).
+   \tag{TM.4508}
+   $$
+   将 $r$ 加入 $I$；若已经存有 $z_r$，实际读必须与之相同。其余字段不变。这里的逆只消去已知单位，不对未知实际来源作逆动作。
+2. 任一侧的正上下文 $v$ 被拒绝时，不改变 $j,U,V,P,Q,I$，只置
+   $$
+   r_j\longleftarrow\max(r_j,0,H-U-d).
+   \tag{TM.4509}
+   $$
+   若接受，则置 $(U,V)\leftarrow(U+d,V+e)$。右侧接受置 $Q\leftarrow Q\odot W_3(v)$；左侧接受置 $P\leftarrow W_3(v)\odot P$。保留全部读字段和下界。
+3. $\rho$ 被拒绝时，不改变来源运输和读字段，只置
+   $$
+   r_{j+1}\longleftarrow\max(r_{j+1},0,H-V).
+   \tag{TM.4510}
+   $$
+   若接受，则置
+   $$
+   (j,U,V,P,Q)\longleftarrow
+   (j+1,V,U+V,F(P),F(Q)),
+   \tag{TM.4511}
+   $$
+   保留已有下界，并为新末方向附加一个零下界。$j$ 是完整接受次数，不按三或六取模。
+

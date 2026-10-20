@@ -24,6 +24,11 @@ The argument takes a genuine finite minimum of all positive H₀ principal deter
 
 The n = 0 branch, empty principal minor and empty prefix are retained; repeated grades and empty grade layers are allowed. This abstract interface does not construct the physical trajectory or moment Gramian, its orthonormal graded coordinates, determinant leading term, statistical risk, or the remaining original 5.2/5.3/6.2/6.3 clauses.
 
+For the observable Euclidean application with arbitrary d,p≥1 and observable matrices B,C, use the minimal layers, ordered subordinate orthonormal basis, weights w_i and fixed coordinates described in `D5/S3/Observer/Linear/DerivativeLayerNativeGramian.derivative_layer_native_gramian`. In that notation G_L(T)=Sᵀ G_standard(T) S, D(T)=diag(sqrt(T) T^(w_i)), H(T)=D(T)^(-1) G_L(T) D(T)^(-1), and H₀=M_L is the integral of P_L(s)ᵀ P_L(s) on [0,1] in the same basis. The norm estimate H(T)=M_L+O(T) supplies the right-sided convergence, M_L is positive definite, and the exact congruence D(T) H(T) D(T)=G_L(T) is positive definite for every T>0. Thus the abstract receiver applies to these actual objects.
+
+There are common fixed positive c,C,δ such that, for every i<d and 0<T<δ, c T^(2w_i+1)≤λ_i(G_standard(T))≤C T^(2w_i+1). Here λ_i is the canonical decreasing eigenvalue₀ coordinate specified above, transported from G_L(T) by the orthogonal matrix S. For every 0≤j≤m, the set {i:w_i=j} has exactly d_j=dim E(j) elements, and precisely these sorted indices have the common bound Θ(T^(2j+1)). This accounts for all d indices, repeated weights and zero-dimensional groups, with constants independent of T and i. The physical realization and determinant coefficient come from the application in the native Gramian owner; the abstract theorem retains its stated hypotheses and conclusion.
+
 ## References
 
+- Truth anchor: `D5/S3/Observer/Linear/DerivativeLayerNativeGramian.derivative_layer_native_gramian`
 - Truth anchor: `D5/S3/Observer/Linear/GradedCongruenceSpectrum.graded_congruence_spectrum`

@@ -1,0 +1,41 @@
+## 4. 原始 Fourier 代表元及完整残差
+
+在偶扇区使用 g_z(x)=conjugate(cos(zx))，仍有 <g_z,f>=Zeta23.paperFT(f,z)，因为 f 为偶函数。直接积分、保留 V_n 的相位，得到
+
+\[
+(g_z)_n=\overline{\frac{2z\sin(az)}{\sqrt L\{z^2-(2\pi n/L)^2\}}}.
+\tag{AD8}
+\]
+
+在本次非实圆盘中分母均非零；一般实共振点须按可去极限处理，未用 totalized division 改变 Fourier 值。取 w_z=L conjugate(z)/(2*pi)、eta_z=-L^(3/2)conjugate(z sin(az))/(2*pi^2)，则该系数为 eta_z/(n^2-w_z^2)。
+
+对 m>M>=max(2N,2|w_z|)，(AD7) 给出完整对偶残差的
+
+\[
+|(g_z-Av)_m|\le Q/m^2,\quad
+Q=4|\eta_z|/3+(4B_c/\pi)\sum n|t_n|.
+\]
+
+k 和 v 在 |m|>N 都没有系数，所以候选投影和 ell 移位在这些模式不增加项。因此
+
+\[
+\boxed{\sum_{|m|>M}|(r_{g_z})_m|^2\le2Q^2/(3M^3).}
+\tag{AD9}
+\]
+
+此处 sum_(m>M)m^-4<=integral_M^infinity x^-4 dx=1/(3M^3)，没有终端外部截止。实际 B_3=4/sqrt3+log2/sqrt2<3，由定向区间重新验证。
+
+中心 z0=20+i/4 采用 M=32768。内部完整矩阵保留原 Gamma、pole、prime 对角及非对角。投影使用 s*(sum s_j d_j)/(sum s_j^2)，不把近零配对当作零。所有 65<=|m|<=M 的实际符号和残差以向外舍入区间逐项计算；末次和把每个 binary64 上端点解码为精确二进制有理数后相加，未使用无误差预算的浮点求和。结果的数值显示为：
+
+\[
+\|P_{|n|\le64}r\|^2\approx0.0011552183026,\qquad
+\sum_{65\le|n|\le M}|r_n|^2\le0.000053760121725,
+\]
+
+\[
+\sum_{|n|>M}|r_n|^2<7.00\cdot10^{-11},\qquad
+2\Re\langle g_{z0},v\rangle-q_M(v)\approx1.14338908925.
+\]
+
+第二、第三项是上预算，不能从其正值推出真实尾质量的正下界。程序中 `center_dual_budget_upper_enclosure` 是一个充分上预算表达式的区间，不冒充精确 C 的双侧包络。
+

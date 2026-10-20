@@ -1,0 +1,5 @@
+区分以下两种资源：
+
+- $d_{\rm all}$：在所有有限维输出 CPTP 通道 $\Phi:\mathcal L(\mathcal H)\to\mathcal L(\mathcal K)$ 中，最小化整个输出空间的维数 $\dim\mathcal K$。若输出包含可读的经典分区标签，它们也计入这个空间。
+- $q_{\rm free}$：允许任意有限个免费经典标签，输出为 $M_q(\mathbb C)\otimes\mathbb C^L\cong\bigoplus_{\ell=1}^L M_q(\mathbb C)$，只最小化共享量子寄存器的维数 $q$，$L$ 不计成本。直和上的迹与迹范数均取各块之和。
+

@@ -1,0 +1,13 @@
+**Definition 113.6 (factorization of the authentic row).** For a finite
+prefix-free $Q$, including $\varnothing$ and the root cut, let $R_Q(u)$
+be exactly Sparse Literal History Transport, Definition 59.1, equivalently
+Native Alpha Recut Memory, Definition 1.2. Its reached holes are
+$I_Q(u)=Q\cap V_u$ in lexicographic order; its concrete exterior retains
+all remaining ordered brackets and leaf labels; its complete partition
+equates holes exactly when their entire original subtrees agree.
+An absent address produces no hole. On $D=\mathcal T$ or on the entire
+authentic branch domain $D=\mathcal B$ of (112.1), factorization means
+there exists a value function $F_Q$ on the attained boundary measures
+such that $R_Q(u)=F_Q(\nu_u)$ for **every** $u\in D$.
+This target is always INITIAL $u$, regardless of later accepted updates.
+

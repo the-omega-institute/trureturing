@@ -1,0 +1,11 @@
+## 定义 271.3（机制变化余量）
+
+\[
+\operatorname{ShiftRes}(e,e')
+=
+\left\{
+v:
+K_{v,e}\neq K_{v,e'}
+\right\}.
+\]
+

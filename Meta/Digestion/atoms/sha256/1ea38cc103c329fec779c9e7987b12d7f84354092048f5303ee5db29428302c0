@@ -1,0 +1,82 @@
+**定理 34.2（全正局部族的严格界与同一上确界）。** 对每个 $n\ge5$，
+存在全部 $p_i(\sigma)>0$ 的局部相容而不可实现族。
+每个全正 $p\in\mathscr L_n$ 都有
+
+$$
+\Delta_n(p)<\mathfrak E_n,
+\qquad
+\sup_{\substack{p\in\mathscr L_n\\p_i(\sigma)>0\ \forall i,\sigma}}
+\Delta_n(p)=\mathfrak E_n.
+\tag{34.4}
+$$
+
+证明。对 $B_n^{\mathrm{cyc}}$ 中的全部合法字均匀取样，记其窗口族为 $u$。
+为避免同确定字记号混淆，本证明 $u$ 指这个概率族。
+每个局部合法模式都能延成原长度合法字：将该模式安放在原标签
+$i,i+1,i+2$，其余位置全部置零即可。对 $000$ 得全零字，对
+$100,010,001$ 得相应的单占位字，对 $101$ 得两位相隔二的双占位字。
+$n\ge5$ 保证最后一种在另一个环向距离上也不相邻，故所有延拓均合法。
+因此均匀来源赋给这些字正概率，$u_i(\sigma)>0$ 对每个坐标都成立，
+并且 $u\in\mathscr C_n$。
+
+现在设 $p$ 全正，定义
+
+$$
+\lambda=\min_{i,\sigma}\frac{p_i(\sigma)}{u_i(\sigma)}.
+\tag{34.5}
+$$
+
+有限个正比值的最小值为正。由 $p_i\ge\lambda u_i$ 逐窗求和，
+$1\ge\lambda$，故 $0<\lambda\le1$。
+若 $\lambda=1$，则每个坐标 $p_i(\sigma)\ge u_i(\sigma)$；
+同一窗口的总和又相等，迫使逐坐标相等，即 $p=u$，从而
+$\Delta_n(p)=0<\mathfrak E_n$。
+
+若 $0<\lambda<1$，定义残余族
+
+$$
+v_i(\sigma)=\frac{p_i(\sigma)-\lambda u_i(\sigma)}{1-\lambda},
+\qquad p=\lambda u+(1-\lambda)v.
+\tag{34.6}
+$$
+
+最小比值定义保证每项非负，归一化给每窗质量一。
+$p$ 与 $u$ 的完整重叠等式相减并除以 $1-\lambda$，给 $v$ 的全部重叠等式，
+所以 $v\in\mathscr L_n$。为 $v$ 取定理 32.1 的真实修补 $\widetilde v$，
+再以相同权重混合 $u$ 的真实来源与 $\widetilde v$ 的来源。
+所得 $\widetilde p=\lambda u+(1-\lambda)\widetilde v$ 属于 $\mathscr C_n$，且
+
+$$
+\Delta_n(p)\le d_n(p,\widetilde p)
+=(1-\lambda)d_n(v,\widetilde v)
+\le(1-\lambda)\mathfrak E_n<\mathfrak E_n.
+\tag{34.7}
+$$
+
+最后选取 §§30–31 的相应极值族 $p^*$，对 $0<\varepsilon<1$ 置
+
+$$
+p_\varepsilon=(1-\varepsilon)p^*+\varepsilon u.
+\tag{34.8}
+$$
+
+这个族局部相容且每个坐标严格正。TV 齐次性与两概率律的 TV 至多一给
+
+$$
+d_n(p_\varepsilon,p^*)=\varepsilon d_n(u,p^*)\le\varepsilon.
+$$
+
+先前已证明的一 Lipschitz 性 (26.9) 因而给
+
+$$
+\Delta_n(p_\varepsilon)\ge\Delta_n(p^*)-\varepsilon
+=\mathfrak E_n-\varepsilon.
+\tag{34.9}
+$$
+
+取 $0<\varepsilon<\mathfrak E_n$ 就得到严格正距离，所以这种全正族
+确实不可实现。令 $\varepsilon\downarrow0$，又使距离任意接近
+$\mathfrak E_n$；结合 (34.7) 的严格界得到 (34.4)。
+最大缺陷在非全正边界达到，但闭合失败并不限于零概率模式。
+这是凸混合与距离连续性的结论，不是零事件解释。证毕。
+

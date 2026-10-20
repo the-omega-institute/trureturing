@@ -4,8 +4,6 @@
 
 Joint moments of ordered defects under the actual positive semidefinite constraint.
 
-The Lean #print axioms output for actual_psd_zero_jump_two_ninths_moment and actual_psd_nonflat_middle_energy_two_ninths is [propext, Classical.choice, Quot.sound] for each theorem.
-
 **Theorem 1.1 (Sharp two-ninths actual PSD moment).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSDMoment.actual_psd_zero_jump_two_ninths_moment`
@@ -16,7 +14,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSD
 
 *Commentary.*
 
-Let h:Fin 5 to Real be antitone and nonnegative and d:Fin 9 to Real be monotone with 0<=d_i<=1. Put H=sum h_i, D=sum d_i, H2=sum h_i^2 and D2=sum d_i^2. Assume H+D<=4 and the literal actual matrix K(h,d) is PSD: its diagonal is 2(1-d8),2(1-d6),2(1-d3), and upper off-diagonal entries are -(h0+d7),-(h1+d5),-(h2+d4). Then H2+D2-(2/9)(H-D)<=32/9. All fourteen defects are arbitrary real coordinates; ties, zeros and singular PSD matrices are included. Proof shape: content. Admission basis: escape-witness; the determinant-controlled curved head boundary and joint ordered tail charge provide the new inference. This does not assert APPT sufficiency or physical attainment.
+Let h:Fin 5 to Real be antitone and nonnegative and d:Fin 9 to Real be monotone with 0<=d_i<=1. Put H=sum h_i, D=sum d_i, H2=sum h_i^2 and D2=sum d_i^2. Assume H+D<=4 and the literal actual matrix K(h,d) is PSD: its diagonal is 2(1-d8),2(1-d6),2(1-d3), and upper off-diagonal entries are -(h0+d7),-(h1+d5),-(h2+d4). Then H2+D2-(2/9)(H-D)<=32/9. All fourteen defects are arbitrary real coordinates; ties, zeros and singular PSD matrices are included. The determinant bound on the first three heads combines with the ordered-tail energy estimate to control the joint moment. This does not assert APPT sufficiency or physical attainment.
 
 **Theorem 1.2 (Middle energy down to two ninths).**
 
@@ -28,9 +26,9 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSD
 
 *Commentary.*
 
-Under the same head ordering and tail caps, assume 2/9<=w<=1/2, H+D<=4-6w, and K(w+h,d) is PSD with the literal entries stated in the source theorem. Then E=w(H+D)+H2+D2<=C(w)=4-2w-4w^2+w^3+w^4. The original frozen 1/4 theorem retains its exact telescope. Proof shape: content. Admission basis: escape-witness; the larger interval requires new polynomial signs. For h0<=1 the existing small-head chord suffices. Otherwise flatten the tail into h0 using r=d6+d7+d8. The actual congruent Z-matrix proves PSD preservation and ordered-tail bounds pay the w(D-r) charge. For shifted heads a,b,e,x,y the existing determinant and pair-square estimates reduce to min(F(w,e),T(w,e)), where F=4-2w-4we+we^2+e^4 and T=4-2w+2e-5we+(w-4)e^2+e^3+e^4. For e<=3/5 the gap C-F=(e-w)[4w-(e+w)(e^2+w^2+w)] is nonnegative; for e>=3/5 the gap C-T is nonnegative. The source proves both polynomial identities as sums of nonnegative rational Bernstein monomials. Python rational checks are not imported or trusted.
+Under the same head ordering and tail caps, assume 2/9<=w<=1/2, H+D<=4-6w, and K(w+h,d) is PSD. Its diagonal entries are 2(1-d8),2(1-d6),2(1-d3), and upper off-diagonal entries are -(w+h0+d7),-(w+h1+d5),-(w+h2+d4). Then E=w(H+D)+H2+D2<=C(w)=4-2w-4w^2+w^3+w^4. For h0<=1 the small-head chord suffices. Otherwise flatten the tail into h0 using r=d6+d7+d8. The actual congruent Z-matrix proves PSD preservation and ordered-tail bounds pay the w(D-r) charge. For shifted heads a,b,e,x,y the determinant and pair-square estimates reduce to min(F(w,e),T(w,e)), where F=4-2w-4we+we^2+e^4 and T=4-2w+2e-5we+(w-4)e^2+e^3+e^4. For e<=3/5 the gap C-F=(e-w)[4w-(e+w)(e^2+w^2+w)] is nonnegative; for e>=3/5 the gap C-T is nonnegative. Both scalar comparisons follow from polynomial decompositions into nonnegative rational Bernstein monomials.
 
-For the two-ninths moment, h0<=4/9 gives H2<=(4/9)H and the existing sharp tail bound D2<=9/4, hence the moment is at most 113/36<32/9. Otherwise r=d6+d7+d8 and the actual PSD flattening give hbar=(h0+r,h1,h2,h3,h4), with moment no smaller because D2<=r^2, D<=3r and h0>=4/9. The shared five-head chord/convex-interval proof is parameterized by its coefficient and scalar endpoint suppliers, so the old and new theorems share one proof architecture. At c=2/9 the new endpoints z=e, z=2-e^2 and the interior kink z=4-4e are proved by explicit rational polynomial identities; the kink obeys 9/16<=e<=4/5.
+For the two-ninths moment, h0<=4/9 gives H2<=(4/9)H and the sharp tail bound D2<=9/4, hence the moment is at most 113/36<32/9. Otherwise r=d6+d7+d8 and the actual PSD flattening give hbar=(h0+r,h1,h2,h3,h4), with moment no smaller because D2<=r^2, D<=3r and h0>=4/9. After flattening, the five-head chord and a convex quadratic interval bound reduce the moment to scalar endpoint estimates. At c=2/9 the endpoints z=e, z=2-e^2 and the interior kink z=4-4e satisfy the required bounds by explicit rational polynomial identities; the kink obeys 9/16<=e<=4/5.
 
 **Theorem 1.3 (Continuous joint moment bound).**
 
@@ -66,7 +64,7 @@ Set a=w+h0, b=w+h1, e=w+h2, x=w+h3 and y=w+h4. The shared literal determinant im
 
 The scalar comparison is G(w,z,e)=min(z^2+4e^2-wz-4we,z^2-(w+e)z+(4-5w)e). Both entries increase from z to A when 1+w is at most z and z is at most A. This comparison remains valid if the replacement L4 remainder is negative: the chord was used only at the original point, and no replacement spectrum is asserted to be feasible or PSD. At A, the two entries are F(w,e)=4-2w-4we+we^2+e^4 and U(w,e)=4-2w+2e-5we+(w-4)e^2+e^3+e^4.
 
-For w at most e at most 1/2, the exact full-polynomial secant and its nonnegative factor decomposition give F(w,e) at most F(w,w). For e at least 1/2, the exact truncated-polynomial secant gives U(w,e) at most U(w,1/2), which is at most F(w,1/2) and hence at most F(w,w). Finally F(w,w)=4-2w-4w^2+w^3+w^4. The private scalar proof works up to w=1/2; the public statement retains the original upper endpoint. This middle estimate is only one dimension-independent obligation for a later rounded-purity assembly; it asserts neither an all-dimension purity theorem nor a physical APPT characterization.
+For w at most e at most 1/2, the exact full-polynomial secant and its nonnegative factor decomposition give F(w,e) at most F(w,w). For e at least 1/2, the exact truncated-polynomial secant gives U(w,e) at most U(w,1/2), which is at most F(w,1/2) and hence at most F(w,w). Finally F(w,w)=4-2w-4w^2+w^3+w^4. These scalar comparisons hold for 1/4<=w<=1/2; the flat-tail estimate above uses w<=(5-sqrt(17))/2. This dimension-independent middle estimate supplies an energy bound for the rounded-purity assembly; it asserts neither an all-dimension purity theorem nor a physical APPT characterization.
 
 **Theorem 1.5 (Middle energy with arbitrary ordered tails).**
 

@@ -1,0 +1,52 @@
+### 26.2 四视图的动态充分性
+
+令 \(\Pi_\lambda\) 是层 \(\lambda\) 的有限前缀闭合测试族，\(K^{\pi}_{\lambda,s}\)
+是从 \(s\) 执行测试 \(\pi\) 所得的有限转录核。定义层行为关系
+
+$$
+s\sim_\lambda t
+\iff
+\forall\pi\in\Pi_\lambda,\ \forall\tau,
+\quad
+K^{\pi}_{\lambda,s}(\tau)=K^{\pi}_{\lambda,t}(\tau).
+$$
+
+四个表示的索引集为
+
+$$
+I=\{\mathrm{space},\mathrm{time},\mathrm{boundary},\mathrm{memory}\}.
+$$
+
+各表示是实际像上的读出
+
+$$
+r_{i,\lambda}:S_\lambda^0\longrightarrow Y_{i,\lambda}^0,
+\qquad
+Y_{i,\lambda}^0=r_{i,\lambda}[S_\lambda^0].
+$$
+
+称 \(r_{i,\lambda}\) 动态充分，如果同一读出纤维中的状态具有相同的合法性、失败
+类型和输出，并且对每个新表示纤维的后继质量相同：若
+\(r_{i,\lambda}(s)=r_{i,\lambda}(t)=y\)，则对每个 \(a,o,y'\)，有
+
+$$
+\sum_{r_{i,\lambda}(s')=y'}J_{\lambda,a}(o,s'\mid s)
+=
+\sum_{r_{i,\lambda}(t')=y'}J_{\lambda,a}(o,t'\mid t).
+$$
+
+selector、停止、记录和权限更新还必须只使用该表示及明示的档案。于是可以定义表示
+上的核 \(K^i_{\lambda,a}\)，并得到
+\(\ker r_{i,\lambda}\subseteq\sim_\lambda\)。称其为精确行为表示，当且仅当还满足
+
+$$
+\boxed{
+\ker r_{i,\lambda}=\sim_\lambda.
+}
+\tag{RA.2603}
+$$
+
+右向包含是最小性：表示不把同一行为商中的两个状态永久拆成两个状态。动态充分
+本身只需要左向包含；若只要求一个目标而非全部行为，则应把右侧的行为商换成该目标
+的纤维关系。
+

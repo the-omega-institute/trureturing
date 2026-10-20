@@ -1,0 +1,14 @@
+**定理 34.5（严格误差与非空坐标轴）。** 两个正半径下，正开合同及正混合合同在 $\Omega,D$ 上的恢复条件均恰为
+
+$$
+\boxed{H\le\delta/2.}
+$$
+
+精确坐标是非空条件 $e_j=0$，不同于字面开半径零。非空轴合同的条件分别如下。
+
+| 34章非空轴合同 | $\Omega$ 上恢复条件 | $D$ 上恢复条件 |
+| --- | --- | --- |
+| 当前精确，终端闭 $\varepsilon_n\ge0$ | $\varepsilon_n<\phi/2$ | 全部 $\varepsilon_n\ge0$ |
+| 当前精确，终端正开 $\varepsilon_n>0$ | $\varepsilon_n\le\phi/2$ | 全部 $\varepsilon_n>0$ |
+| 终端精确，当前闭 $\varepsilon_0\ge0$ | $\varepsilon_0<\delta/2$ | $\varepsilon_0<\delta/2$ |
+| 终端精确，当前正开 $\varepsilon_0>0$ | $\varepsilon_0\le\delta/2$ | $\varepsilon_0\le\delta/2$ |

@@ -1,0 +1,51 @@
+**Theorem 17.3 (A finite-record converse with the stationary initial cost).** Define
+
+$$
+\pi_0(a)=U_a/\mu_0,\quad\pi_1(a)=V_a/\mu_1,\quad
+C_i=D(\pi_i\Vert\pi_{1-i}),\quad
+\lambda_1(k,a)=h_k/\mu_1\ (0\le a\le k).
+\tag{17.9}
+$$
+
+For every $W\ge1$,
+
+$$
+\begin{aligned}
+D(\mathsf P_i^W\Vert\mathsf P_{1-i}^W)&\le C_i+(W-1)I_i,\\
+C_0&\le D(\lambda_0\Vert\lambda_1)
+\le\frac{\operatorname{Var}_{\lambda_0}(r_K)}{2\ell^2}
+\le\frac{(u-\ell)^2}{8\ell^2}.
+\end{aligned} \tag{17.10}
+$$
+
+The analogous initial bound holds after reversing the tilt. If a rule with deadline $W$ has both errors at most $\alpha\in(0,1/2)$, then, for $i=0,1$,
+
+$$
+ b_\alpha:=(1-2\alpha)\log\frac{1-\alpha}{\alpha}
+ \le D(\mathsf P_i^W\Vert\mathsf P_{1-i}^W),\qquad
+ W\ge1+\frac{(b_\alpha-C_i)_+}{I_i}.
+\tag{17.11}
+$$
+
+These necessary bounds include independently randomized rules and rules that stop before the deadline.
+
+Proof. Use a countable age chain only as a proof variable. Its state is zero at a tick and $a\ge1$ at the $a$th zero following that tick. For the first law, its transitions from $a$ are to zero with probability $p_a/U_a$ and to $a+1$ with probability $U_{a+1}/U_a$. Its invariant distribution is $\pi_0$: incoming advance mass is $U_a/\mu_0$ for $a\ge1$, and incoming reset mass is $\sum_a p_a/\mu_0=1/\mu_0$. The second chain uses $h,V,\pi_1$. Emitting $\mathbf1_{\{a=0\}}$ gives the stationary renewal cylinders, so the observed word is a deterministic projection of the chain's $W$ states. At $a=0$ the reset term is zero under both laws and the advance is forced.
+
+Multiplying the one-step conditional divergence by $\pi_0(a)$, and summing, gives the telescoping identity
+
+$$
+\begin{aligned}
+\mu_0\sum_{a\ge0}\pi_0(a)D(Q_0(a,\cdot)\Vert Q_1(a,\cdot))
+={}&\sum_{a\ge0}p_a\log\frac{p_a}{h_a}\\
+&+\sum_{a\ge0}\left(
+U_{a+1}\log\frac{U_{a+1}}{V_{a+1}}-U_a\log\frac{U_a}{V_a}\right)
+=d_0.
+\end{aligned} \tag{17.12}
+$$
+
+Here $0\log(0/0)$ denotes the absent reset term at zero. All other log ratios are bounded by fixed multiples of $\log\kappa$, and $\sum_aU_a=\mu_0<\infty$. The terminal tail term tends to zero and the initial term is zero. Thus the finite path chain rule gives exactly $C_0+(W-1)I_0$ for the augmented path, and data processing gives the first inequality in (17.10) in the displayed upper-bound direction. No hidden age is provided to the observer.
+
+The projection of $\lambda_i$ to $a$ is $\pi_i$. Moreover $\lambda_1=r_K\lambda_0/b_*$. Data processing and the Taylor argument of (17.3) give the next bound. For a variable in $[\ell,u]$, $(r-\ell)(u-r)\ge0$ implies $\operatorname{Var}(r)\le(u-\mathbb Er)(\mathbb Er-\ell)\le(u-\ell)^2/4$, proving the last bound.
+
+An early-stopped decision is a function of the complete $W$-prefix, ignoring its unused suffix. Adding an independent common seed changes neither relative entropy nor the argument. Data processing to the decision gives, in the forward orientation, the Bernoulli divergence with probabilities $1-\alpha_0\ge1-\alpha$ and $\alpha_1\le\alpha$ for label zero. On the region $x>y$, $D(\operatorname{Ber}(x)\Vert\operatorname{Ber}(y))$ increases with $x$ and decreases with $y$, as follows by differentiation. Its minimum on this region is attained at $(1-\alpha,\alpha)$ and equals $b_\alpha$. The reverse direction is identical. Combining with (17.10) and the necessary $W\ge1$ gives (17.11). $\square$
+

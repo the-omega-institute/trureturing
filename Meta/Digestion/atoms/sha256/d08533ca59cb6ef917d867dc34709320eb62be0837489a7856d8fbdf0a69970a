@@ -1,0 +1,7 @@
+本文由四层构成：
+
+1. **定义层**：不依赖任何特殊常数或 RH；
+2. **直接定理层**：由定义、初等分析和 Mellin/Fourier 变换推出；
+3. **项目实例层**：连接 `DECT`、Golden Euler germ、Weil 显式公式与 prime observer；
+4. **开放研究层**：连接 Wang–Deng 多尺度重整化、\(p\)-adic capacity 与 RH。
+

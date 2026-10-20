@@ -1,0 +1,53 @@
+**Definition 117.1 (Weighted prefix events).** Retain Definition
+110.1 and Acquisition Resources, Definition 90.1, including the
+entire original positive nonincreasing vanishing sequence (110.2).
+The source is the actual countable labeled prime-answer source;
+its answers are static. The resource is a hard count of at most
+two actual requests, including repetitions, with zero advice, one
+source-independent common seed and sourcewise almost-sure finite
+handoff. Original competitors retain arbitrary addresses and the
+full original measurable output carrier. All targets here are the
+separately selected marked laws (110.3).
+
+For an integer $m\ge4$, use the finite targets on $B_m$ with first
+zero $n$ given by $\eta_b=(1-a_n)e_0+a_ne_n$, and put
+$\eta_{1^m}=e_0$. This last word is finite bookkeeping, not an
+infinite all-positive actual source. Define the following words:
+$h_k$ has its sole one at $k$; $g=10^{m-1}$; $g_k$ has ones
+precisely at $1,k$; and
+
+$$
+w_n=1^{n-1}0^{m-n+1},\qquad
+v_n=1^{n-1}0\,1^{m-n-1}0.
+\tag{117.1}
+$$
+
+The weighted events $(b,E_b,k_b)$ are
+
+$$
+\begin{array}{c|c|c|c}
+\text{word}&\text{index range}&E_b&k_b\\\hline
+h_k&2\le k\le m-1&\{0,1\}&1\\
+g&\text{one row}&\{0,2\}&1\\
+g_k&3\le k\le m-1&\{2\}&1\\
+w_n&3\le n\le m-2&\{n\}&m-3\\
+v_n&3\le n\le m-2&\{n\}&1\\
+w_n&n=m-1,m&\{n\}&m-2\\
+1^m&\text{one row}&\{0\}&m-2
+\end{array}
+\tag{117.2}
+$$
+
+Empty index ranges contribute no rows. For a kernel $p$ define
+$S_m(p)=\sum_b k_b p_b(E_b)$, with the sum taken over these
+rows. Their total weight and target score are
+
+$$
+\begin{aligned}
+M_m&=(m-2)(m+1),\\
+T_m&=\sum_bk_b\eta_b(E_b)
+ =2m-3+(m-3)a_2+(m-2)\sum_{n=3}^m a_n.
+\end{aligned}
+\tag{117.3}
+$$
+

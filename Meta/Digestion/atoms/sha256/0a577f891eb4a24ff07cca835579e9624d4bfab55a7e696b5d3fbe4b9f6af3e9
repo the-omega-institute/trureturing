@@ -1,0 +1,50 @@
+**Definition 15.1 (prescribed-code compatibility).** Retain exactly
+$\mathcal U_*$, $P$, $R_*$, the actual class values $x_d$, and the five
+complete predecessor rows $R_0,\ldots,R_4$ of Definition 9.1 and
+Proposition 9.3. Write
+
+$$
+D=\{a,c,b_1,b_2,b_3,b_4\},\qquad
+J=\{1,2,3,4\},\qquad J_a=\{1,2\},\quad J_c=\{3,4\}.
+\tag{NBP.15.1}
+$$
+
+All finite ordered native origins in this fiber remain allowed. Keep
+Assumption 9.2's genuine acquisition on the authenticated current version,
+actual export, complete access cut, lawful common entry and stationary
+native service. In particular the available acquired data $A(u)$ are the
+lossless current tree or the complete current row with its six acquired
+finite class values. Fix a specified lawful finite computation $\kappa$
+on those data, and prescribe the complete exported code
+
+$$
+\sigma(u)=\kappa(A(u))\in\{0,1\}\qquad(u\in\mathcal U_*).
+\tag{NBP.15.2}
+$$
+
+The code may depend on the internal structure of the acquired terms.
+It need not factor through their roots or through the predecessor row.
+Its acquisition and computation are supplied pre-cut operations, with
+separate prices. No assertion below supplies acquisition, authentication,
+export, access isolation, entry or service continuity from a representation.
+
+Use precisely the stationary Moore controller of Definition 11.1:
+one finite installed set $\mathcal K=Q\sqcup H$, one fixed literal
+address per running state, all four reply successors, and one fixed
+whole row per halt. The only accessible source-dependent state after
+entry is the current member of $\mathcal K$. Initialization is the
+same function $\iota(\sigma(u))$ on every source. The initial state
+must recover the prescribed complete code on its attained range.
+The code and acquired archive cannot be accessed again after entry;
+there is no additional source argument, address computation, selector,
+phase, counter or output decoder. Every installed state counts, and
+every running visit makes and pays for exactly one actual native call.
+
+Call $\sigma$ compatible if one such common controller returns the
+entire $F(u)=R_P(u)$ on every $u\in\mathcal U_*$ in at most two calls,
+with at most eight total installed states. The code in (NBP.15.2) is
+held fixed in this existence question. No pre-cut replacement of it by
+a more convenient initial-state code is allowed. The lower arguments
+also allow a merging $\iota$; success will force its two used values
+to have different entries, hence the required entry recoverability.
+

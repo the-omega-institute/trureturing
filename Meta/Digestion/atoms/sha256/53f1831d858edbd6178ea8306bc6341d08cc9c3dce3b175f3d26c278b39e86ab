@@ -1,0 +1,6 @@
+现在假设：
+
+1. primal optimizer \((\lambda_*,\mu_*)\) 存在；
+2. dual optimizer \((\phi_*,\theta_*)\) 存在；
+3. strong duality 成立。
+

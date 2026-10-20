@@ -1,0 +1,10 @@
+### 101.3 中点纤维的精确行与笛卡尔块
+
+在 $c=\ell$ 时写前半字为 $x\in\{0,1\}^{\ell}$，令 $\beta=|x|$、$t=\ell-\beta$、$z=1-x$，并设
+
+$$
+\sigma_\rho(y)=\sum_{i=1}^{\ell}y_i\rho^{\,i-1},\qquad
+h=\sigma_\rho(z),\qquad
+F_t(h)=\{y:|y|=t,\ \sigma_\rho(y)=h\},\qquad M_t(h)=|F_t(h)|.
+$$
+

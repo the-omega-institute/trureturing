@@ -1,0 +1,35 @@
+**定理 56.2（符号观测的传递矩阵与 Rényi 熵率）。** 取有限字母表 \(\mathcal A\) 及记忆无关发射通道 \(O(a\mid i)\)，满足 \(\sum_aO(a\mid i)=1\)。令
+\[
+D_a=\operatorname{diag}(O(a\mid i)),\qquad M_a=D_aQ.
+\]
+若 \(Y_t\) 条件于 \(X_t\) 独立发射，则任意词 \(a_0^{n-1}\) 的概率为
+\[
+p_n(a_0^{n-1})
+=\pi^{\mathsf T}M_{a_0}M_{a_1}\cdots M_{a_{n-1}}\mathbf1.
+\]
+对整数 \(\alpha\ge2\)，定义
+\[
+\mathcal T_\alpha=\sum_{a\in\mathcal A}M_a^{\otimes\alpha}.
+\]
+则
+\[
+\sum_{a_0^{n-1}}p_n(a_0^{n-1})^\alpha
+=(\pi^{\otimes\alpha})^{\mathsf T}
+\mathcal T_\alpha^n\mathbf1^{\otimes\alpha}.
+\]
+若 \(\mathcal T_\alpha\) primitive 且首末向量对其 Perron 向量投影为正，则
+\[
+h_\alpha(Y)
+=\lim_{n\to\infty}\frac1{1-\alpha}
+\frac1n\log\sum_{a_0^{n-1}}p_n(a_0^{n-1})^\alpha
+=\frac{\log\rho(\mathcal T_\alpha)}{1-\alpha}.
+\]
+\(\alpha=2\) 时 \(h_2(Y)=-\log\rho(\sum_aM_a\otimes M_a)\)。Shannon 熵率
+\[
+h(Y)=\lim_{n\to\infty}n^{-1}H(Y_0,\ldots,Y_{n-1})
+\]
+对平稳有限字母过程存在；一般隐藏 Markov 输出不能把它直接替换为 \(\alpha\to1\) 的张量谱式，除非另加可微延拓条件。若观测是状态本身，则
+\[
+h(X)=-\sum_i\pi_i\sum_jQ_{ij}\log Q_{ij}.
+\]
+

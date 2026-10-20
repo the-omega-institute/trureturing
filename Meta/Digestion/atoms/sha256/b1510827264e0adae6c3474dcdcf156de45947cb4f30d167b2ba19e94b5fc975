@@ -1,0 +1,28 @@
+**条件接口 371.3（大数律、Poisson 方程与中心极限）。** 假设上下文集有限，$P_{ab}=K_{ab}(\mathbb R)$ 不可约且非周期，平稳分布为 $\pi$。若每行一阶绝对矩有限，定义
+
+$$
+r(a)=\sum_b\int xK_{ab}(dx),
+\qquad
+\mu=\sum_a\pi_ar(a).
+\tag{371.6}
+$$
+
+在式（371.4）的联合条件核模型中，对任意初态都有 $S_n/n\to\mu$ 几乎必然。若进一步存在 $\delta>0$，使每行 $2+\delta$ 阶绝对矩有限，则可取唯一的中心化解
+
+$$
+(I-P)h=r-\mu\mathbf1,
+\qquad \sum_a\pi_ah(a)=0.
+$$
+
+增量 $\xi_{k+1}-\mu+h(X_{k+1})-h(X_k)$ 的条件均值为零；相应鞅接口给出
+
+$$
+\sigma^2=\sum_{a,b}\pi_a\int
+[x-\mu+h(b)-h(a)]^2K_{ab}(dx),
+\qquad
+\frac{S_n-n\mu}{\sqrt n}\Longrightarrow\mathcal N(0,\sigma^2).
+\tag{371.7}
+$$
+
+方差必须由同一联合核计算。它允许退化：$\sigma^2=0$ 当且仅当对每个 $a,b$，奖励满足 $x=\mu+h(a)-h(b)$，$K_{ab}$ 几乎处处成立；此时 $S_n-n\mu=h(X_0)-h(X_n)$ 只剩有界端点项。无限上下文中的不可约性不能替代正再生、可积性和相应的鞅、再生或混合条件。
+

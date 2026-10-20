@@ -1,0 +1,100 @@
+**Theorem 51.3 (controlled band and memory correspondence).** There are
+$r_0>0$ and $C<\infty$, independent of $\kappa$ and of the unit vector
+$e$, such that for $|r|\le r_0$ the original lowest Dirichlet band obeys
+
+$$
+\Lambda_\kappa(re)
+ =\lambda+m_e r^2-\mathcal B_\kappa(e)r^4+E_\kappa(r,e),
+\qquad |E_\kappa(r,e)|\le C\mathcal B_\kappa(e)|r|^6.
+\tag{51.6}
+$$
+
+The quartic band coefficient is negative, with the exact vanishing
+set (50.1). In contrast, its contribution to the logarithm of the
+phase characteristic function is positive. More explicitly, at fixed
+$t$,
+
+$$
+\log u_\kappa(t,re)
+ =-m_e t r^2+r^4\int_0^t(t-s)
+       \langle f_e,e^{-s\mathcal L}f_e\rangle_\pi ds+O_t(r^6).
+\tag{51.7}
+$$
+
+At leading small frequency the exact memory satisfies
+
+$$
+\begin{aligned}
+K_\kappa(t,re)
+ &=r^4\langle f_e,e^{-t\mathcal L}f_e\rangle_\pi
+   +O(\mathcal B_\kappa(e)|r|^6t e^{-\gamma t}),\\
+\Sigma_\kappa(0,re)
+ &=r^4\mathcal B_\kappa(e)+O(\mathcal B_\kappa(e)|r|^6).
+\end{aligned}
+\tag{51.8}
+$$
+
+These are controlled small-frequency statements. If
+$\mathcal B_\kappa(e)>0$, globally exponentiating the band polynomial
+would give $\exp[-t(m_er^2-\mathcal B_\kappa(e)r^4)]>1$ for large
+$|r|$, contradicting (49.5). It is therefore not a characteristic
+semigroup generator for the original model.
+
+Proof. A uniform estimate needed here also controls the degeneracies.
+Every $f_e$ has the form
+$p(k)/(k-\alpha_\kappa)^2$ with $p$ of degree at most four and
+$\pi(f_e)=0$. On this finite-dimensional family,
+
+$$
+\|f\|_\infty^2\le C\langle f,\mathcal R f\rangle_\pi
+\quad\text{for every centered }
+ f(k)=p(k)/(k-\alpha_\kappa)^2,\quad\deg p\le4.
+\tag{51.9}
+$$
+
+Indeed the denominator stays uniformly away from zero. Polynomial
+coefficient norms and the supremum norm on the fixed interval are
+uniformly equivalent. If (51.9) failed, normalize a countersequence
+to supremum norm one and take converging parameter and polynomial
+coefficients. Its limit is centered, nonzero, and has zero positive
+inverse-generator energy, an impossibility. This argument includes
+limits in which the original unnormalized $f$ tends to zero.
+In particular $\|f_e\|_2^2\le C\mathcal B_\kappa(e)$.
+
+Set $s=r^2$, $v=a_e^2$, and $\delta=\Lambda_\kappa(re)-\lambda$.
+The scalar perturbation is $A+sv$. For small fixed $s$ its lowest
+simple eigenvalue satisfies $0\le\delta\le s\|v\|_\infty<\gamma/2$
+by the same min-max argument as §36. Its eigenvector has nonzero
+$\phi$ component. Complement elimination on the domain of (49.1)
+therefore gives exactly
+
+$$
+\delta=s m_e-s^2
+\left\langle f_e\phi,
+ (A|_{\phi^\perp}+sP^\perp vP^\perp-\delta)^{-1}
+ f_e\phi\right\rangle.
+\tag{51.10}
+$$
+
+Both inverses in the resolvent identity comparing this inverse with
+$(A|_{\phi^\perp})^{-1}$ are uniformly bounded, and their difference
+has norm at most $Cs$. The quadratic error is consequently at most
+$Cs\|f_e\|_2^2\le Cs\mathcal B_\kappa(e)$, which proves (51.6).
+The complementary eigenvector has norm
+$O(s\|f_e\|_2)$; thus the squared ground-overlap amplitude in the
+stationary compression is $1+O(\mathcal B_\kappa(e)r^4)$.
+There is no order-$r^2$ source-overlap term in this particular law.
+
+Equation (51.7) is also the direct finite-time cumulant expansion
+(51.4). Finally $w=r^2f_e\phi$ in (49.1). Duhamel's identity
+compares $e^{-t(A|_{\phi^\perp}+r^2P^\perp vP^\perp)}$ with
+$e^{-tA|_{\phi^\perp}}$ by a norm bound
+$Cr^2t e^{-\gamma t}$, since both generators are bounded below
+by $\gamma$ and $v$ is uniformly bounded. Use (51.9), then integrate
+in time, to obtain (51.8). The band identity evaluates the exact
+self-energy at $z=-\delta$, whereas (51.8) evaluates it at zero;
+the resolvent identity shows that their first difference is order
+$\mathcal B_\kappa(e)r^6$. This reconciles the negative band quartic,
+the positive finite-time fourth cumulant and the tilted return memory
+without equating their full finite-frequency evolutions. $\square$
+

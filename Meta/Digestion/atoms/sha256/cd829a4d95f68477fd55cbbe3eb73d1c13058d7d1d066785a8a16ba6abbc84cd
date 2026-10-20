@@ -1,0 +1,7 @@
+四种修复分别作用于不同 kernel：
+
+- pair observer 不能 grounding common charge；
+- anchor 不能恢复 deep phase；
+- deep phase 不能提供 determinant boundary floor；
+- positive determinant floor 不能重构 prime ordering。
+

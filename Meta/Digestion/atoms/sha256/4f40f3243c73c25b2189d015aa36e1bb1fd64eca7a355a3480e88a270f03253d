@@ -1,0 +1,62 @@
+**候签命题 31.2（同平均的完整未知尾部）。** 在上述计数界下，若 $R\ge1$ 且 $X=\sqrt{RT}/3\ge28$，则
+
+$$
+|\mathcal R_T(R)|\le6000\,T^7\log T
+\exp\!\left(\frac{bR}{2}-\frac{\sqrt{RT}}3\right).
+$$
+
+证明。对 $\gamma\ge1$，$|\Im z_\rho|<1/2$ 给出
+
+$$
+|p(z_\rho)|\le45\gamma^6.
+$$
+
+候签引理 31.1 对所有 $1\le u\le b$ 给出
+
+$$
+|\Phi(uRz_\rho)|^2
+\le16\exp\!\left(\frac{bR}{2}-\frac{\sqrt{R\gamma}}3\right).
+$$
+
+由于 $w\ge0$、$\int w=1$，先得到完整尾部绝对界
+
+$$
+|\mathcal R_T(R)|
+\le1440e^{bR/2}
+\sum_{\gamma>T}m_\rho\gamma^6e^{-\sqrt{R\gamma}/3}.
+$$
+
+置 $\alpha=\sqrt R/3$、$F(t)=t^6e^{-\alpha\sqrt t}$，则 $F$ 在 $[T,\infty)$ 上递减。对实际含重数计数作 Stieltjes 分部积分，保留高度 $T$ 的头尾约定：
+
+$$
+\begin{aligned}
+\sum_{\gamma>T}m_\rho F(\gamma)
+&=-N_+(T)F(T)+\int_T^\infty N_+(t)(-F'(t))\,dt\\
+&\le\frac\alpha2\int_T^\infty t^{13/2}\log t\,e^{-\alpha\sqrt t}\,dt.
+\end{aligned}
+$$
+
+$T$ 处全部零点重数在 $P_T$ 中，不在余项中；末端 $N_+(t)F(t)$ 趋于零。取 $y=\alpha\sqrt t$，上述积分等于
+
+$$
+T^7\int_X^\infty
+\left(\frac yX\right)^{14}
+\left(\log T+2\log\frac yX\right)e^{-y}\,dy.
+$$
+
+再写 $y=X+s$。因为 $X\ge28$，
+
+$$
+(1+s/X)^{14}\le e^{s/2},\qquad
+\log(1+s/X)\le s/X,
+$$
+
+所以该值不超过
+
+$$
+T^7e^{-X}\left(2\log T+\frac8X\right)
+\le4T^7\log T\,e^{-X}.
+$$
+
+$1440\cdot4=5760\le6000$，给出陈述。这份可和界也支付有限尺度区间上的求和、平均交换；没有以有限零点截断代替完整显式公式。$\square$
+

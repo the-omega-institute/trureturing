@@ -1,0 +1,36 @@
+### 51.2 由假设轨道得到实际配对 completion
+
+令 \(L(z)=J+(z-1)I\)、\(X=L(r)\)、\(Y=gL(t)\)，并定义
+\[
+K=\frac1{\sqrt6}\begin{pmatrix}X&-\bar Y\\Y&\bar X\end{pmatrix}.
+\]
+前三列是 \(v\) 的三个循环平移；后三列是其在
+\(\Theta(x,y)=(-\bar y,\bar x)\) 下的像。恒等式
+\(H_0\Theta=-\Theta H_0\) 保证这六列及其 \(H_0\) 像全部平坦，所用相位始终来自同一个 \(r,t,g\)。
+
+\(K\) 的 mode 块为
+\[
+U_0=\frac1{\sqrt6}\begin{pmatrix}r+2&-\bar g(\bar t+2)\\
+g(t+2)&\bar r+2\end{pmatrix},\qquad
+U_1=U_2=\frac1{\sqrt6}\begin{pmatrix}r-1&-\bar g(\bar t-1)\\
+g(t-1)&\bar r-1\end{pmatrix}.
+\]
+由 \(\Re(r+t)=-1\)，各块均形如
+\(\bigl(\begin{smallmatrix}u&-\bar z\\z&\bar u\end{smallmatrix}\bigr)\)，且 \(|u|^2+|z|^2=1\)。因此 \(U_0,U_1\in SU(2)\)，\(K\) 酉，\(K\) 与 \(H_0K\) 均为归一化复 Hadamard 矩阵。
+
+mode 块为 \(W_0,W_1,W_1\) 的矩阵，其空间对角二阶块为 \((W_0+2W_1)/3\)，非对角二阶块为 \((W_0-W_1)/3\)。平坦性遂给出
+\[
+\|U_0-U_1\|_F^2=6,\qquad
+\|T_0U_0-T_1U_1\|_F^2=6.
+\]
+设 \(Q=T_1^*T_0\)、\(R=U_0U_1^*\)。两者属于 \(SU(2)\)，其迹为实数；上述等式以及 \(H_0\) 的非对角块平坦性给出
+\[
+\operatorname{tr}R=\operatorname{tr}(QR)=\operatorname{tr}Q=-1.
+\]
+Cayley–Hamilton 恒等式给出 \(Q^2+Q+I=0\)、\(Q^*=-I-Q\)，从而
+\[
+\operatorname{tr}(Q^*R)=2,\qquad
+\|Q-R\|_F^2=4-2\Re\operatorname{tr}(Q^*R)=0.
+\]
+故 \(R=Q\)、\(U_0=QU_1\)。这一步依赖实际酉 mode 块，不能由各 mode 的独立模长条件替代。
+

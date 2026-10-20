@@ -1784,3 +1784,340 @@ analytic, conditional joint-interior/saturation or expanded-storage
 contract supplies an additional numerical or operational transfer.
 
 ## 追加锚（临界二十精确结论；本行以下为增补区）
+
+## 12. Twenty live hosts with arbitrary never-live installation
+
+**Convention 12.1 (live count and unchanged conditional premises).**
+Retain exactly Convention 11.1 and its displayed SI interfaces, on
+one complete original eight-coordinate threshold-four graph. In
+particular both caps are $8,W$ on every same complete input run,
+all original distinct positive positions are allowed, and every
+installed running state counts. Put
+
+$$
+Q_{\rm live}(4)=\bigcup_{p\in V}F_p,\qquad
+v=|Q_{\rm live}(4)|,\qquad u=m-v.
+\tag{74}
+$$
+
+Thus $u$ counts states with no live occurrence from the declared
+start; a state live on one input and used after certification on
+another belongs to $Q_{\rm live}(4)$, not to $u$. No condition
+$u=0$ is imposed.
+
+The distinction between local and installed conclusions is essential.
+Lemma 7.2's two-cell limit and pair classification, Lemma 7.3's
+axis fork, and Lemmas 8.1–8.3's pool estimates concern only live
+incidences. Their proofs have no bound on $m$ or $u$. Lemma 3.2,
+as used in Lemma 8.3, likewise has no such bound. Lemmas 10.2
+and 10.3 propagate actual fixed live children and compare their
+supports; Lemmas 11.2 and 11.3 use singleton support families and
+actual fixed live children. None of these four support lemmas uses
+a nineteen-state total or $u=0$. In each, one host implies one
+support by $1\le a_p\le b_p$. The partner and live-child tables
+of Convention 10.1 are the necessary consequences of the same
+interfaces, independently of its later equality discussion.
+
+By contrast, the installed-label multiplicities in Proposition 10.6
+use $u=0$. They are not premises here. Nor do we substitute $v$
+for $m$ in Corollary 11.5: deleting never-live states could change
+actual paid certified continuations. The proof below keeps every
+state and every successor of the original graph.
+
+**Theorem 12.2 (conditional critical live bound).**
+For every graph and every original position vector in Convention
+12.1,
+
+$$
+|Q_{\rm live}(4)|\ge20,\qquad m\ge20+u.
+\tag{75}
+$$
+
+**Proof: live incidence and the complete equality alternatives.**
+Subtract $u$ from the exact same-graph identity (4), obtaining
+
+$$
+v-20=E_{\rm cut}+\sum_B(E_B-D_B).
+\tag{76}
+$$
+
+The endpoint exhaustion in Theorem 9.1 uses only the pool estimates
+identified in Convention 12.1: short gaps compensate; gaps ending
+at five or earlier have no sharing; those ending at six compensate;
+the only possible deficit is at most one in a gap $(1,7)$ or
+$(2,7)$; and every long gap ending at eight compensates. There
+is at most one gap ending at seven. Equation (76) therefore gives
+$v\ge19$ without any assertion about $u$.
+
+Suppose $v=19$. Equality in that same exhaustion forces
+$E_{\rm cut}=0$, one deficit-one pool, and zero contribution from
+every other pool. Consecutivity, the cuts zero and one and the
+formal endpoint eight give exactly the lists
+
+$$
+(0,1,7,8)\quad\hbox{or}\quad(0,1,2,7,8).
+\tag{77}
+$$
+
+For its long pool write $E=E_B$, $D=D_B=E+1$. Let $A$ count
+axis-endpoint shared states and $N_{\rm sh}$ count non-axis shared
+states. The two-cell limit gives $D=A+N_{\rm sh}$. Set
+$\ell=e_{\mathsf a}+e_{\mathsf b}$ and
+$\varrho=e_{\mathsf c}+e_{\mathsf d}$; the latter is unrelated to
+the number of Native latches. The non-axis pairs are exactly
+$\mathsf a\mathsf c,\mathsf b\mathsf c,\mathsf b\mathsf d$, so
+
+$$
+N_{\rm sh}\le2+\min(\ell,\varrho).
+\tag{78}
+$$
+
+Equality on either endpoint side exhausts all its hosts in non-axis
+sharing. No exhausted host can also host an axis cell, by the
+two-cell limit. We now exclude both lists directly at live scope.
+
+**Proof: the list $(0,1,7,8)$.**
+For $B=(1,7)$ put $\kappa=1$ if $A=4$, and $\kappa=0$
+otherwise. Lemma 7.3 gives $A\le3+\kappa$ and
+$e_3\ge1+\kappa$. Internal depths two through six are noncommon,
+and the live excess decomposition is
+
+$$
+\begin{gathered}
+E=\ell+\varrho+e_2+e_3+e_6+e_{\mathsf M}+e_{\mathsf N},\\
+D\le5+\kappa+\min(\ell,\varrho),\qquad
+E\ge5+\kappa,\qquad E\ge\ell+\varrho+3+\kappa.
+\tag{79}
+\end{gathered}
+$$
+
+If $\min(\ell,\varrho)=0$, the first two bounds contradict
+$D=E+1$. Otherwise the first and third imply
+$\max(\ell,\varrho)\le1$. Thus necessarily
+
+$$
+\begin{gathered}
+\ell=\varrho=1,\quad E=5+\kappa,\quad
+A=3+\kappa,\quad N_{\rm sh}=3,\\
+e_2=e_6=1,\quad e_3=1+\kappa,\quad
+e_{\mathsf M}=e_{\mathsf N}=0.
+\tag{80}
+\end{gathered}
+$$
+
+The three non-axis states exhaust all hosts of
+$\mathsf a,\mathsf b,\mathsf c,\mathsf d$. The live-child table
+now excludes every use of $Z_2$ or $O_2$ in sharing. A
+$Z_2,O_2$ host has a $Z_3,\mathsf R$ zero child, contradicting
+Lemma 10.2 and $e_{\mathsf N}=0$. A $Z_2,O_3$ host has a
+$Z_3,\mathsf c$ zero child, violating exhaustion of
+$\mathsf c$. A $Z_3,O_2$ host has a $\mathsf a,O_3$ one
+child, violating exhaustion of $\mathsf a$. A $Z_4,O_2$ host
+has a $\mathsf b,O_3$ one child, violating exhaustion of
+$\mathsf b$. These are all their partners.
+
+Only $Z_3,Z_4,O_3$ remain as participating axes, each with one
+host. Their three incidences cannot supply $A=4$. If $A=3$,
+each shared state uses exactly one of these incidences. The
+$Z_3$ host cannot partner $O_2$ (excluded), $O_3$ (two axis
+incidences) or $\mathsf c$ (exhausted). Its partner must be
+$\mathsf R$, again contradicting Lemma 10.2 and
+$e_{\mathsf N}=0$. This excludes the first list.
+
+**Proof: parameters for the list $(0,1,2,7,8)$.**
+For $B=(2,7)$ define
+
+$$
+\begin{gathered}
+a_0=e_{\mathsf a},\quad b_0=e_{\mathsf b},\quad
+c_0=e_{\mathsf c},\quad d_0=e_{\mathsf d},\quad
+\mu=e_{\mathsf M},\quad\nu=e_{\mathsf N},\\
+t=e_3,\quad f=e_6,\quad w=\mu+\nu,\quad
+\ell=a_0+b_0,\quad\varrho=c_0+d_0,\\
+E=\ell+\varrho+t+f+w,\quad D=E+1,\\
+t,f\ge1,\qquad a_0+c_0+\mu\ge1,\qquad
+b_0+d_0+\nu\ge1.
+\tag{81}
+\end{gathered}
+$$
+
+In particular $E\ge4$. Only $Z_3,Z_4,O_3$ are possible axis
+endpoints in this pool, so $A\le3$. If $A=3$, each uses a
+distinct shared state with one axis incidence; the $Z_3$ partner
+is then $\mathsf R$ or $\mathsf c$. Their actual zero children
+are respectively $Z_4,\mathsf M$ or $Z_4,\mathsf d$; the
+former parent also has an $\mathsf a,\mathsf c$ one child.
+
+Let $X,Y,Z$ count the non-axis types
+$\mathsf a\mathsf c,\mathsf b\mathsf c,\mathsf b\mathsf d$.
+Then
+
+$$
+\begin{gathered}
+N_{\rm sh}=X+Y+Z,\quad
+X\le1+a_0,\quad Y+Z\le1+b_0,\\
+X+Y\le1+c_0,\quad Z\le1+d_0.
+\tag{82}
+\end{gathered}
+$$
+
+Every $\mathsf a\mathsf c$ state has its fixed zero successor
+of type $\mathsf b\mathsf d$. This does not assert injectivity
+of that successor map.
+
+First exclude $\ell=\varrho=0$. Equations (78), (81) and
+$D=A+N_{\rm sh}=E+1$ force
+$E=4,D=5,A=3,N_{\rm sh}=2,t=f=1$. The two non-axis states
+exhaust the two hosts on each side. They must be one
+$\mathsf a\mathsf c$ and one $\mathsf b\mathsf d$ state.
+The unique supports at $\mathsf b,\mathsf d$ let Lemma 10.3
+force $f\ge2$, a contradiction. This is the live argument
+underlying Corollary 10.5; it uses no installed-state conclusion.
+
+Put $H=\max(\ell,\varrho)\ge1$. From (78) and (81),
+
+$$
+H+t+f+w\le A+1\le4.
+\tag{83}
+$$
+
+Thus $H$ is one or two. The following cases exhaust the remaining
+nonnegative integers.
+
+**Proof: $H=2$.**
+Equation (83) forces $A=3,t=f=1,\mu=\nu=0$ and
+$N_{\rm sh}=\ell+\varrho$. Lemma 10.2 excludes the
+$Z_3,\mathsf R$ option, so $Z_3$ shares with $\mathsf c$,
+and its zero child shares $Z_4,\mathsf d$. These two distinct
+axis states consume two upper-endpoint hosts outside the non-axis
+states. Hence $N_{\rm sh}+2\le2+\varrho$, giving
+$\ell=0,\varrho=2,N_{\rm sh}=2$.
+
+Lower saturation forces one $\mathsf a\mathsf c$ state and its
+distinct $\mathsf b\mathsf d$ zero successor. Each upper cell
+therefore needs one axis and one non-axis host. Their total capacity
+is four, so each has exactly two, and
+$F_{\mathsf d}\subseteq F_{\mathsf b}\cup F_{Z_4}$.
+But $\mathsf a,\mathsf b,\mathsf M,\mathsf N$ each have one
+host and support. Lemma 11.3 supplies an actual live
+$\mathsf d$ host outside that union, a contradiction.
+
+**Proof: $H=1$ and $A=2$.**
+Equation (83) gives $t=f=1,\mu=\nu=0$. Since $E\ge4$,
+necessarily $\ell=\varrho=1,E=4,N_{\rm sh}=3$. Both endpoint
+sides are exhausted. The depth-four and depth-five excesses in
+(81) are each one, so (82) becomes
+
+$$
+2X+Y=3,\qquad Y+2Z=3,\qquad X,Z\ge1.
+\tag{84}
+$$
+
+The only nonnegative integral solution is $X=Y=Z=1$.
+Consequently $\mathsf a,\mathsf M,\mathsf d$ have one host
+and support, while $\mathsf a\mathsf c$ sharing occurs.
+Lemma 11.2 excludes it.
+
+**Proof: $H=1$, $A=3$ and $\ell+\varrho=1$.**
+The bounds $N_{\rm sh}\le2$, $E\ge4$ and
+$E+1=3+N_{\rm sh}$ force $E=4,N_{\rm sh}=2$.
+The two middle layers each have positive excess; their total is
+$1+w$. Together with $t,f\ge1$, this forces
+$t=f=1,w=1$, with each middle-layer excess exactly one.
+
+If $\ell=1,\varrho=0$, both upper hosts are in non-axis
+sharing, so $Z_3$ must partner $\mathsf R$. Lemma 10.2
+gives $\nu=1,\mu=0$. The depth-five equation then gives
+$b_0=d_0=0$. Its $\mathsf a\mathsf c$ one child has singleton
+supports at $\mathsf b,\mathsf d$, so Lemma 10.3 contradicts
+$f=1$.
+
+If $\ell=0,\varrho=1$, lower saturation forces one
+$\mathsf a\mathsf c$ and one $\mathsf b\mathsf d$ state.
+Were $\nu=0$, we would have $\mu=1,c_0=0,d_0=1$.
+Lemma 10.2 would exclude $Z_3,\mathsf R$; its only other
+option $Z_3,\mathsf c$ would need an additional $\mathsf c$
+host beyond its sole exhausted one. Thus $\nu=1,\mu=0$.
+The middle-layer equations give $c_0=1,d_0=0$, making
+$\mathsf a,\mathsf M,\mathsf d$ singleton-support cells with
+$\mathsf a\mathsf c$ sharing. Lemma 11.2 excludes this too.
+
+**Proof: $H=1$, $A=3$ and $\ell=\varrho=1$.**
+Here $E=N_{\rm sh}+2$ is four or five. If $E=4$, then
+$t=f=1,\mu=\nu=0,N_{\rm sh}=2$. Lemma 10.2 forces the
+$Z_3,\mathsf c$ option and its $Z_4,\mathsf d$ zero child.
+These two axis states plus the two non-axis states need four upper
+hosts, whereas $2+\varrho=3$.
+
+If $E=5$, then $N_{\rm sh}=3$ exhausts both endpoint sides.
+Thus $Z_3$ must partner $\mathsf R$, which gives
+$t=f=1,\mu=0,\nu=1$. Saturation in (82) yields
+
+$$
+X=1+a_0,\quad Z=1+d_0,\quad
+X+Y=1+c_0,\quad Y+Z=1+b_0,\quad a_0+d_0+Y=1.
+\tag{85}
+$$
+
+Exactly one of the three final summands equals one. If $Y=1$,
+then $a_0=d_0=0$, and Lemma 11.2 excludes the
+$\mathsf a\mathsf c$ sharing with singleton
+$\mathsf a,\mathsf M,\mathsf d$. If $a_0=1$, then
+$b_0=d_0=0$, and Lemma 10.3 excludes it at $f=1$ using
+singleton $\mathsf b,\mathsf d$. If $d_0=1$, then
+$a_0=c_0=\mu=0$, contradicting the depth-four inequality in
+(81). This exhausts (85).
+
+For $H=1$, (83) requires $A\ge2$, and the preceding three
+cases exhaust $A,\ell,\varrho$. Together with the zero-endpoint
+case and $H=2$, they exclude the second list in (77). Hence
+$v=19$ is impossible and (75) follows. All additional children
+used are live; extra never-live installation cannot supply a missing
+live incidence or invalidate these counts. Original certified
+continuations and their charges remain in the graph. $\square$
+
+**Corollary 12.3 (threshold-five transport).**
+For every original eight-coordinate cost vector, every complete
+threshold-five graph at both caps $8,W$ has at least twenty live
+states from its declared start, under the transported conditional
+interfaces of Convention 11.1. If $u_5$ is its never-live count,
+then $m\ge20+u_5$.
+
+**Proof.** Swap the two bit successors at every running state and
+interchange terminal outputs. On input $y$ the resulting graph
+follows exactly the old run on $1-y$, with the same visited
+coordinates and both same-run charges. Its output is
+$1-\mathbf1_{\{8-|y|\ge5\}}=\mathbf1_{\{|y|\ge4\}}$.
+A live old prefix with counts $(h,z)$ becomes a live threshold-four
+prefix with counts $(z,h)$, and conversely. Thus live and never-live
+state sets have unchanged cardinalities. Apply Theorem 12.2 to this
+threshold-four graph. This is a fixed table transformation in a
+proof, not a free bit-complement port for an apparatus. $\square$
+
+**Attribution and scope 12.4.**
+Sections 7–11 own the critical geometry, pool estimates, support
+forks, singleton obstructions and installed minimum twenty.
+Theorem 12.2 extracts their live-scope consequence while retaining
+arbitrary $u$ and all actual certified traffic. Its consumer is the
+paid-root theorem in [Common Prefix, Section 7][CP12]: an adjacent
+total threshold entry must sit outside a chosen live set. An
+installed bound twenty alone does not supply that extra state.
+This is repo-derived synthesis using mature incidence counting,
+stationary continuation and Boolean complementation; no worldwide
+originality or new Lean certification is claimed.
+
+Convention 11.1's conditional SI hypotheses remain exactly the proof
+boundary. The all-size collective obligation (73), original unrestricted
+alternatives A/B, unrestricted-budget minimum and fixed-specification
+attainment remain unresolved. The conditional critical installed
+minimum and Native minimum of Section 11 are unchanged. The entire
+actual full fiber, literal code and latches, complete separate $K=8$
+reader, source and service assumptions of Sections 1 and 11.6 are
+retained; [Common Prefix, Section 8][CP12] gives their parameter
+map for the nine-coordinate consumer. No observation, acquisition,
+selector, history store or inverse service is installed by (75),
+and no four-view mutual recovery follows from counting live states.
+
+[CP12]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_COMMON_PREFIX_MEMORY_FRONTIER.md
+
+## 追加锚（临界二十精确结论；本行以下为增补区）

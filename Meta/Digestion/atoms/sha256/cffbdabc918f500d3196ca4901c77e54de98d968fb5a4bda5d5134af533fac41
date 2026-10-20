@@ -1,0 +1,93 @@
+### 证明
+
+使用：
+
+$$
+\int_0^\infty e^{-zu}\ln u\,du
+=
+\frac{-\gamma-\ln z}{z},
+$$
+
+以及：
+
+$$
+\begin{aligned}
+\int_0^\infty e^{-zu}M_0(e^u)\,du
+&=
+\frac1z\sum_{p,k}\frac{p^{-k(1+z)}}k\\
+&=\frac{\ln\zeta(1+z)}z.
+\end{aligned}
+$$
+
+三项相加即得。
+
+令 \(z\downarrow0\)，使用 \(B\in L^1\) 与 ζ 的 Laurent 展开：
+
+$$
+\boxed{
+\int_0^\infty B(u)\,du=-\gamma.
+}
+\tag{82}
+$$
+
+但 \(B\) 并不是处处负。
+
+在：
+
+$$
+e^{-\gamma}<u<\ln2
+$$
+
+上：
+
+$$
+B(u)=\gamma+\ln u>0.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+C_{\mathrm{ar}}
+&\ge
+\gamma+
+2\left[
+e^{-\gamma}
++\ln2\bigl(\gamma+\ln\ln2-1\bigr)
+\right]\\
+&>0.605935>\gamma.
+\end{aligned}
+}
+\tag{83}
+$$
+
+中间表达式约为：
+
+$$
+0.6059362972385.
+$$
+
+严格小数下界已用有理区间核验。
+
+所以：
+
+$$
+\boxed{
+\gamma\text{ 记录正负残差相消后的面积；}
+}
+$$
+
+$$
+\boxed{
+C_{\mathrm{ar}}\text{ 记录不允许相消时的总影响。}
+}
+$$
+
+数值上，本轮计算的有限绝对积分为：
+
+| 截止位置 | \(\displaystyle\int_0^{\ln X}|B(u)|\,du\)，约值 |
+|---:|---:|
+| \(X=100\) | \(0.6989695858\) |
+| \(X=1000\) | \(0.7032750658\) |
+| \(X=10000\) | \(0.7042742424\) |

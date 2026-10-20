@@ -1,0 +1,90 @@
+**命题 21.2（五模式联合一阶报告的实际秩）。** 在定义 21.1 的整个自由
+一阶来源域上，$\mathcal J_c$ 的像维数及微分秩均为
+$8$ 当 $j\ne0$，均为 $6$ 当 $j=0$。前者恢复 $(p,h)$；
+后者只确定 $(m,\dot m)$。这是固定五模式颜色的联合报告结论。
+
+证明。概率逆式使 $(m,\kappa)$ 成为 $\Delta_4^\circ$ 的四维开坐标，
+其速度有四个独立坐标。令
+
+$$
+B_c=\begin{pmatrix}I_3&0\\A&j\end{pmatrix}.
+$$
+
+式（21.1）除常数外是两个独立的 $B_c$ 块。前三列因上方 $I_3$
+独立，第四列与它们独立恰当且仅当 $j\ne0$。因此两块的秩分别为
+$2\cdot4$、$2\cdot3$，并且开来源域的像在相应线性像中相对开。
+在 $j\ne0$ 时，命题 20.3 的反解和它的速度式给出
+
+$$
+\kappa=\frac{j^{\mathsf T}(\bar c-b-Am)}{j^{\mathsf T}j},\qquad
+\dot\kappa=\frac{j^{\mathsf T}(\dot{\bar c}-A\dot m)}{j^{\mathsf T}j};
+\tag{21.2}
+$$
+
+再用同一概率逆式及其导数得到全部 $p,h$。当 $j=0$，两个
+$\kappa$ 坐标均不参与报告。$A$ 的奇异性不影响这些结论，因为位置均值本身
+仍在报告中。
+
+在非空固定支持 $S\subseteq\Sigma$ 的相对内部，来源改为
+$\Delta_S^\circ\times T_S$，其中
+$T_S=\{h:\operatorname{supp}h\subseteq S,\sum h_s=0\}$。
+若 $j\ne0$，像维数为 $2(|S|-1)$；若 $j=0$，为
+$2\operatorname{affdim}\{v_s:s\in S\}$。这是把上述两个块限制到实际
+$T_S$ 得到的，不给边界额外速度。例如仅四个底角为正时，前者为六、后者为四；
+单点支持均为零。固定整个 $m$ 的非退化纤维及其切空间只剩
+$(\kappa,\dot\kappa)$ 两个来源坐标，报告秩为二或零，仍按 $j\ne0$ 或
+$j=0$ 区分；单点纤维没有这两个自由坐标。若另给
+可微 $F:\Delta_4^\circ\to T_0$ 并指定 $h=F(p)$，
+则来源是四维状态图，报告秩至多四；自由速度的八／六结论
+不能套到这个约束动力学上。
+
+比较所需的另外两个模型时，用经典切空间坐标与链式法则作为中间工具
+（[Tong，§2.2.1 的曲线切向量与 §2.2.2 的向量场](https://www.damtp.cam.ac.uk/user/tong/gr/grhtml/S2.html)）。
+独立位置 $q\in\mathbb R^3$ 和独立颜色 $c\in\mathbb R^3$ 的来源
+$E=\mathbb R_q^3\times\mathbb R_c^3$ 为六维，其速度态
+$(q,c;\dot q,\dot c)\in TE$ 为十二维；若把参数 $t$ 本身也放入曲线的一阶
+jet，则 $\mathbb R_t\times TE$ 为十三维。若改为定义 20.1 的
+$c=\Phi(q)$，则 $\dot c=D\Phi(q)\dot q$，图上的速度态只有六维。
+这三种来源与式（21.1）的概率来源各有不同约束，十二、六、八不能相加。
+相同的数字十二也不同于
+[联合投影卷 theorem 18.2](AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md)
+的二十一合法边、十顶点、一个连通分量的双窗口边缘核；
+后者为 $21-10+1=12$，且非全正支持时还须使用该条目的边界限定。
+
+一个实际固定颜色选择是
+$c_s=(S_s,S_s^2,e^{\lambda S_s})$，
+$S=2x+5y+3z$，$\lambda\in\mathbb R\setminus\{0\}$。
+本卷推导 3.3 已给
+$J_S=0$、$J_{S^2}=20$ 及两个相应期望式；
+在五函数展开中代入这个指数函数，其第三系数为
+
+$$
+e^{7\lambda}-e^{2\lambda}-e^{5\lambda}+1
+=(e^{2\lambda}-1)(e^{5\lambda}-1)>0.
+$$
+
+故这个颜色的 $j=(0,20,(e^{2\lambda}-1)(e^{5\lambda}-1))$ 非零，
+在全正来源取得八维联合一阶报告；三项只补同一条隐藏方向，并非三条新方向。
+这里联合模式的数值是七，标签 $25$ 和列表 $[2,5]$ 不是数值二十五。
+
+同一均值纤维上颜色如何反映相关，直接消费
+[基础公式卷数学引文 5.2、命题 7.3、定理 9.3](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)：
+当 $r=1-Z>0$ 时，令 $\kappa_0=XY/r$ 和
+$\bar c_0=b+Am+j\kappa_0$，则
+
+$$
+\Delta=r\kappa-XY,\qquad
+\operatorname{Cov}(x,y\mid z=0)=\Delta/r^2,\qquad
+\bar c-\bar c_0=j\Delta/r.
+$$
+
+这些只是本报告的既有中间关系。自然对数熵 $H=-\sum_s p_s\ln p_s$
+在固定 $m$、四个底角质量都正时对 $\kappa$ 的导数满足
+$H'=\log(p_Lp_R/(p_Op_J))$、
+$H''=-(1/p_O+1/p_L+1/p_R+1/p_J)<0$；
+若采用所引定理的二底熵，导数同除 $\ln2$。
+其唯一最大熵律正是所引的条件独立补全；闭边界由该定理的零质量惯例处理。
+在 $r=0$ 的顶点 $T$，唯一律、$\kappa$ 和颜色都已确定，不定义底面条件律。
+$j=0$ 时颜色残差始终零，不能据零残差反推 $\Delta=0$；
+非退化纤维才有两份待分离的律。$\square$
+

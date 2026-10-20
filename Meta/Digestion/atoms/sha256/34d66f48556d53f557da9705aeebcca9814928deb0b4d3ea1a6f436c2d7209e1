@@ -1,0 +1,31 @@
+**定义 17.2（已积分的线性修正核）。** 取 $r>0$，令 $\operatorname{sinc}z=\sin z/z$，在零点连续延拓。对任意 $a,b>0$，定义
+
+$$
+J_{a,b}(t)=e^{t/2}\int_{e^{-t}}^1
+\left[
+\operatorname{sinc}\bigl(2\pi x(a-be^t)\bigr)
++\operatorname{sinc}\bigl(2\pi x(a+be^t)\bigr)
+\right]dx.
+$$
+
+矩形截断的线性核为
+
+$$
+\mathcal K_{S,\mathbf N}(t)=
+4\sum_{\mathbf j,\mathbf k\in\mathcal I_{\mathbf N}}
+w_{\mathbf j}w_{\mathbf k}J_{\lambda_{\mathbf j},\lambda_{\mathbf k}}(t).
+$$
+
+定义正数
+
+$$
+\begin{aligned}
+L(r)&=\frac{e^{r/4}}{\sqrt\pi}(4\sqrt r+r),\\
+z_p&=p^{-3/4}+\frac{1-p^{-1}}{1-p^{-1/4}},\\
+z_{p,N}&=p^{-3/4}+(1-p^{-1})\frac{1-p^{-(N+1)/4}}{1-p^{-1/4}},\\
+Z_S&=\prod_{p\in\mathcal P}z_p,\qquad
+Z_{S,\mathbf N}=\prod_{p\in\mathcal P}z_{p,N_p},\\
+E_S(r,\mathbf N)&=4L(r)(Z_S^2-Z_{S,\mathbf N}^2).
+\end{aligned}
+$$
+

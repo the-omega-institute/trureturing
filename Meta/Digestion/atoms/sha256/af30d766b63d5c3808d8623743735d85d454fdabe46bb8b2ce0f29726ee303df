@@ -1,0 +1,14 @@
+**条件接口 376.7（从粒子系统到流体方程）。** 若粒子状态含位置 \(x\)、动量 \(p\) 和能量 \(e\)，且外加动力学具有质量、动量和能量碰撞不变量，局部平衡族由这些不变量参数化，碰撞尺度 \(\varepsilon\) 与观察尺度满足指定的稀薄气体或高密度缩放，并通过紧性、熵耗散和边界控制建立极限，则守恒量的矩可趋向流体场 \((\rho,\rho v,E)\)。在黏性尺度闭合后，所得方程可具有
+\[
+\begin{aligned}
+&\partial_t\rho+\nabla\!\cdot(\rho v)=0,\\
+&\partial_t(\rho v)+
+\nabla\!\cdot(\rho v\otimes v+pI)
+ =\nabla\!\cdot\!\bigl(\mu(\nabla v+\nabla v^{\mathsf T})\bigr)+\rho f,\\
+&\partial_tE+\nabla\!\cdot\bigl((E+p)v\bigr)
+ =\nabla\!\cdot(\kappa\nabla T)+\text{外加功率项}.
+\end{aligned}
+\tag{376.14}
+\]
+压力 \(p\)、黏度 \(\mu\)、热导率 \(\kappa\)、状态方程和外力 \(f\) 由碰撞核、局部平衡和物理单位给出。无碰撞不变量、熵条件或极限闭合时，FIB 的路径递归至多提供输运支撑，不能推出 Euler、Navier–Stokes 或能量方程。无黏性极限出现冲击时还须指定熵解选择；不可压缩极限须另给低马赫数缩放和压力约束 \(\nabla\cdot v=0\)。
+

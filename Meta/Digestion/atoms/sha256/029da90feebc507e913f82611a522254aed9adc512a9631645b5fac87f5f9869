@@ -1,0 +1,8 @@
+满足：
+
+* \(\phi_j(\bar z)=\overline{\phi_j(z)}\)；
+* \(\phi_j(-z)=\phi_j(z)\)；
+* \(\phi_j(\xi)\in\mathbb R\) 对实 \(\xi\) 成立；
+* 全部极点位于临界带之外；
+* 在实方向具有足够多的衰减。
+

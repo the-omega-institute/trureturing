@@ -1,0 +1,41 @@
+### Theta jets distinguish the radial edge
+
+For $r\ge0$ define
+
+$$
+H_r(t)=\frac{\Phi(r+t)+\Phi(r-t)}{2\Phi(r)}.
+$$
+
+It is holomorphic on the existing physical strip
+$|\Im t|<\pi/4$, has $H_r(0)=1$, zero odd derivatives, and even
+derivatives $\Phi^{(2k)}(r)/\Phi(r)$ at zero. Thus, if $|x|\ne|y|$
+and $\lambda\ne0$ satisfy
+
+$$
+v_k(v)-v_k(u)=\lambda\bigl(v_k(y)-v_k(x)\bigr)
+\quad\text{for every }k\ge1,
+$$
+
+the analytic identity theorem gives
+$H_{|v|}-H_{|u|}=\lambda(H_{|y|}-H_{|x|})$. These functions are
+integrable on the real line. Their angular Fourier transforms are
+$\Xi(z)\cos(zr)/\Phi(r)$. Canceling $\Xi$ only on its known nonzero
+neighborhood of zero gives
+
+$$
+\frac{\cos(z|v|)}{\Phi(v)}-\frac{\cos(z|u|)}{\Phi(u)}
+=\lambda\left(
+\frac{\cos(z|y|)}{\Phi(y)}-\frac{\cos(z|x|)}{\Phi(x)}\right).
+\tag{S5}
+$$
+
+The finite entire cosine sum then vanishes identically. Independence
+of its distinct exponential frequencies identifies its nonzero signed
+atomic supports, so
+$\{|u|,|v|\}=\{|x|,|y|\}$. An endpoint at zero only combines the two
+equal zero-frequency atoms. The same argument shows that the full
+vector of critical increments at a nondegenerate radial edge is nonzero.
+Consequently its proportionality fiber consists of at most eight signed
+and oriented endpoint pairs. No assertion that $\Phi$ is entire in its
+physical coordinate, or that $\Xi$ has no zeros, is used.
+

@@ -1,0 +1,4 @@
+## 327. 用满残差预算后的退极化修复与值近优性
+
+第320节的标量修复将微分可分最优通道变成实际齐次通道，但也降低了残差。本节在第325节的联合邻域中把这部分预算重新用满，并比较修复误差与真正的齐次最优误差。加入最小各向同性噪声的办法仍是 Wolf、Eisert、Cubitt 与 Cirac，*Assessing Non-Markovian Quantum Dynamics*（2008），[“Measuring Markovianity”部分](https://arxiv.org/abs/0711.3172v2)的既有构造；下面新增的是同一六态任务的预算校准及其误差系数。
+

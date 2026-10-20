@@ -1,0 +1,45 @@
+**Theorem 37.2 (Unbounded persistent sources in every probe cylinder).** For every $\beta$ as in Definition 37.1, every finite $S\subset\mathbb P$, every realized $b\in d_S(N[X])$, and every finite real threshold $K$, there exists
+
+$$
+x\in C(S,b)\cap B_\beta
+\quad\text{with}\quad \Omega(x)>K.
+\tag{37.3}
+$$
+
+**Proof.** Fix $S,b,K$ and suppose, to the contrary, that every $x\in C(S,b)$ with $\Omega(x)>K$ lies outside $B_\beta$. Put $m=|E_0|\ge1$. We construct nonempty finite probe cylinders $D_j$, sets $A_j\subseteq E_0$ of $j$ distinct advice values, and finite real bounds $H_j\ge K$, for $0\le j\le m$, satisfying
+
+$$
+D_j\subseteq C(S,b),\qquad
+\Omega(y)\le H_j
+\quad\text{whenever }y\in D_j\text{ and }\beta(y)\in A_j.
+\tag{37.4}
+$$
+
+Start with $D_0=C(S,b)$, $A_0=\varnothing$ and $H_0=\max\{K,0\}$. Suppose the data are constructed for $j<m$, and write $D_j=C(S_j,b_j)$. By (37.1), choose $x_j\in D_j$ with $\Omega(x_j)>H_j$. Its advice value $e_j=\beta(x_j)$ is not in $A_j$, by (37.4). Since $\Omega(x_j)>K$ and $D_j\subseteq C(S,b)$, the contrary assumption gives $x_j\notin B_\beta$. Hence there are a finite prime set $T_j$ and a finite real $M_j$ such that
+
+$$
+\Omega(y)\le M_j\qquad(y\in J_\beta(x_j,T_j)).
+\tag{37.5}
+$$
+
+Set
+
+$$
+\begin{aligned}
+D_{j+1}
+&=D_j\cap C(T_j,d_{T_j}(N(x_j)))\\
+&=C(S_j\cup T_j,d_{S_j\cup T_j}(N(x_j))),\\
+A_{j+1}&=A_j\cup\{e_j\},\qquad
+H_{j+1}=\max\{H_j,M_j\}.
+\end{aligned}
+\tag{37.6}
+$$
+
+The equality of cylinders holds because $x_j\in D_j$, so the two patterns agree on their overlap. This cylinder contains $x_j$ and is again a nonempty finite probe cylinder. The bounds for advice values in $A_j$ persist under restriction to $D_{j+1}$; the bound for $e_j$ follows from (37.5), since its sources in $D_{j+1}$ belong to $J_\beta(x_j,T_j)$. Thus (37.4) holds at $j+1$, with one additional distinct advice value.
+
+After $m$ steps, $A_m=E_0$. Equation (37.4) therefore bounds $\Omega$ by the finite number $H_m$ on all of $D_m$. This contradicts (37.1) for the nonempty cylinder $D_m$, proving (37.3).
+
+The finite induction removes an advice value from the possible values of sources above the current bound; it does not remove all sources of that value. No regularity of the advice cells is used. The integer $m$ counts this proof's restrictions, not the number of queries made by a procedure or an effective method for selecting witnesses. In contrast with Proposition 36.5, which selects an unbounded advice cell separately for each fixed probe menu, (37.3) selects one actual $x$ before quantifying over every finite further menu $T$ in (37.2).
+
+The finite-partition viewpoint for discrete advice and discontinuity obstructions is established background; see Martin Ziegler, *Real Computation with Least Discrete Advice: A Complexity Theory of Nonuniform Computability*, [arXiv:0811.3782v5, Sections 1.2 and 2.1](https://arxiv.org/html/0811.3782v5), [doi:10.1016/j.apal.2011.12.030](https://doi.org/10.1016/j.apal.2011.12.030). The argument above uses the elementary finite-color elimination principle directly on the cylinders (37.1). It does not apply a represented-space or Cauchy-representation theorem to $X$. The source-specific conclusion (37.3) is a deduction from the every-pattern unboundedness supplied by Theorem 35.2 and Corollary 35.3; no literature-priority claim is made.
+

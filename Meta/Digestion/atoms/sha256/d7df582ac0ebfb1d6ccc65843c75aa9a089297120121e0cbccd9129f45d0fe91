@@ -1,0 +1,43 @@
+**定理 12.2（精确格林逆给出的路径测试校正）。** 对任意 $f\in C^2([0,1])$ 且 $f'(0)=0$，令
+
+$$
+b_f(u)=Df''(u),\qquad
+\overline b_{j,i}=L_j\int_{i/L_j}^{(i+1)/L_j}b_f(v)\,dv,
+$$
+
+并以第10.2节的精确逆定义
+
+$$
+f_{j,i}=f(1)-\epsilon_j\sum_{m=0}^{L_j-1}
+G_j(i,m)\overline b_{j,m}\quad(0\le i<L_j),\qquad
+f_{j,L_j}=f(1).
+$$
+
+则在固定参数下
+
+$$
+\max_{0\le i\le L_j}|f_{j,i}-f(i/L_j)|=O(L_j^{-1}),
+\qquad
+(A_jf_j)_i=\overline b_{j,i}\ (i<L_j),\qquad
+(A_jf_j)_{L_j}=0.
+$$
+
+将 $b_f$ 在吸收点的生成元值定义为 $0$ 后，暂态点上的生成元误差不超过 $b_f$ 的连续模 $\omega_{b_f}(L_j^{-1})$，吸收点上的误差为零。特别地，对 $f\in\mathscr D_A$，此为连续测试域上的一致生成元逼近。相邻校正值还满足
+
+$$
+f_{j,i+1}-f_{j,i}
+=\frac{\epsilon_jr_i}{\theta}
+\sum_{m=0}^{i}\overline b_{j,m},\qquad
+\max_{i<L_j}|f_{j,i+1}-f_{j,i}|
+\le\frac{\epsilon_jL_j\max(r_\alpha,r_\beta)}{\theta}
+\|b_f\|_\infty=O(L_j^{-1}).
+$$
+
+**证明。** 第10.2节的连续格林算子满足
+
+$$
+\mathcal T b_f=f(1)-f,
+$$
+
+因为两边的二阶导数均为 $-f''$，左端导数为零，右端值为零。单元平均使 $\epsilon_jG_j\overline b_j$ 恰为 $\mathcal T_jb_f$ 的阶梯值；第10.2节的核一致误差给出校正值的 $O(L_j^{-1})$ 误差。完整生成元作用于常数 $f(1)$ 为零，而作用于吸收端为零的暂态向量时为 $-B_j/\epsilon_j$。由 $B_jG_j=I$，得到 $A_jf_j=\overline b_j$，包括所述吸收端值。单元平均与左端采样的差由连续模控制。最后将第10.2节的累积通量公式用于 $\overline b_j$，即得相邻差；$\epsilon_jL_j^2\to\delta/\varphi^4$ 给出其量级。若 $f''(1)\ne0$，上述离散恒等式仍成立，但分段定义的 $Af$ 在吸收点不连续，不能将它直接作为连续生成元域的元素。$\square$
+

@@ -1,0 +1,12 @@
+Suzuki 的 shifted-\(\xi\) 理论证明：
+
+* 当 \(\omega\ge\tfrac12\) 时，\(\Theta_\omega\) 无条件是上半平面的 meromorphic inner function；
+* 更一般地，固定 \(\omega_0\ge0\)，ζ 在
+
+  $$
+  \Re s>\frac12+\omega_0
+  $$
+
+  无零点，当且仅当所有 \(\omega>\omega_0\) 的 \(\Theta_\omega\) 都是 meromorphic inner；
+* 由此可构造对应的 model space 和 de Branges 空间。([arXiv][1])
+

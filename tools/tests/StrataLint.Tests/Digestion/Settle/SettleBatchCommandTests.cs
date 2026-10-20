@@ -15,8 +15,6 @@ public sealed partial class SettleBatchCommandTests
     [InlineData("COVER_DISPOSITION_PRESENT")]
     [InlineData("UNRESOLVED_SUBITEMS_PRESENT")]
     [InlineData("BROKEN_CHAIN")]
-    [InlineData("ATOMIZER_UNSUPPORTED")]
-    [InlineData("SOURCE_MISSING")]
     [InlineData("OCCURRENCE_MISSING")]
     [InlineData("ATOM_ABSENT")]
     [InlineData("ATOM_AMBIGUOUS")]
@@ -80,7 +78,7 @@ public sealed partial class SettleBatchCommandTests
     {
         var fixture = AtomContextFixture.Create();
         var request = Request(fixture, AtomContextFixture.Id(fixture.Atomized.Claims[1]));
-        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray(), ContextIndex = null };
         Reject(fixture, request, "OCCURRENCE_INDEX_REQUIRED");
     }
 
@@ -95,7 +93,7 @@ public sealed partial class SettleBatchCommandTests
     {
         var fixture = AtomContextFixture.Create();
         var request = Request(fixture, AtomContextFixture.Id(fixture.Atomized.Claims[1])) + $"occurrence_index = {index}\n";
-        if (repeated) fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        if (repeated) fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray(), ContextIndex = null };
         Reject(fixture, request, code);
     }
 

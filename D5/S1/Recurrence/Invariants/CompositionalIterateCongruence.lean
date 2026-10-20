@@ -6,6 +6,13 @@
    utility: none
    digest: Degree contraction and a mod-ten geometric fixed point prove Hanna A396807. -/
 
+/- Escape audit unfinished for published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
+
+/-
+agree_subst: proof_shape: bind-only; consumer: HannaBilateralReversionParity.regular_subst
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19114
+-/
+
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.PowerSeries.WellKnown
@@ -14,7 +21,7 @@ open PowerSeries
 namespace D5.S1.Recurrence.Invariants.CompositionalIterateCongruence
 variable {R : Type*} [CommRing R]
 
-private def Agree (degree : ℕ) (left right : PowerSeries R) : Prop :=
+def Agree (degree : ℕ) (left right : PowerSeries R) : Prop :=
   ∀ index < degree, coeff index left = coeff index right
 
 private theorem agree_iff (degree : ℕ) (left right : PowerSeries R) :
@@ -31,7 +38,7 @@ private theorem coeff_pow_zero {series : PowerSeries R} (hz : constantCoeff seri
     {index exponent : ℕ} (hi : index < exponent) : coeff index (series ^ exponent) = 0 :=
   X_pow_dvd_iff.mp (pow_dvd_pow_of_dvd (X_dvd_iff.mpr hz) exponent) index hi
 
-private theorem agree_subst {degree : ℕ} {left right inner other : PowerSeries R}
+theorem agree_subst {degree : ℕ} {left right inner other : PowerSeries R}
     (hz : constantCoeff inner = 0) (hw : constantCoeff other = 0)
     (outer_agree : Agree degree left right) (inner_agree : Agree degree inner other) :
     Agree degree (left.subst inner) (right.subst other) := by
@@ -171,11 +178,11 @@ private theorem geometric_inverse (parameter : R) :
     rescale parameter (mk 1) * denominator parameter = 1 := by
   simpa [denominator] using congrArg (rescale parameter) (mk_one_mul_one_sub_eq_one R)
 
-private theorem mobius_denominator (parameter : R) :
+theorem mobius_denominator (parameter : R) :
     mobius parameter * denominator parameter = X := by
   rw [mobius, mul_assoc, geometric_inverse, mul_one]
 
-private theorem mobius_zero (parameter : R) : constantCoeff (mobius parameter) = 0 := by
+theorem mobius_zero (parameter : R) : constantCoeff (mobius parameter) = 0 := by
   simp [mobius]
 
 private theorem mobius_composition (left right : R) :
@@ -257,10 +264,5 @@ theorem coefficient_congruence (index : ℕ) (hi : 1 ≤ index) : a index % 10 =
     simpa [coeff_map, generatingSeries, hb, hom] using hcoeff
   exact (ZMod.intCast_eq_intCast_iff' (a index) 1 10).mp hc
 
-#print axioms fixed_unique
-#print axioms generating_equation
-#print axioms mobius_iterate
-#print axioms mod_ten_fixed
-#print axioms coefficient_congruence
 
 end D5.S1.Recurrence.Invariants.CompositionalIterateCongruence

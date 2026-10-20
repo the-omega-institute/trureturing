@@ -1,0 +1,65 @@
+**Lemma 20.6 (The unequal-parameter converse on actual histories).** Fix any $q,t\in(0,1)$ and put $p=f_{0,q}$, $h=f_{1,t}$, $U_a=\sum_{k\ge a}p_k$, $V_a=\sum_{k\ge a}h_k$, $\mu=\mathbb E_p(K+1)$ and $\widetilde\mu=\mathbb E_h(K+1)$. Define
+
+$$
+\begin{aligned}
+d(q,t)&=D(p\Vert h),&I(q,t)&=d(q,t)/\mu,\\
+\pi(a)&=U_a/\mu,&\widetilde\pi(a)&=V_a/\widetilde\mu,&
+C(q,t)&=D(\pi\Vert\widetilde\pi),\\
+\Lambda(k,a)&=p_k/\mu,&
+\widetilde\Lambda(k,a)&=h_k/\widetilde\mu\quad(0\le a\le k).
+\end{aligned} \tag{20.15}
+$$
+
+These divergences are finite, $d(q,t)>0$, and for every integer $W\ge1$,
+
+$$
+D(\mathsf P_{0,q}^W\Vert\mathsf P_{1,t}^W)
+\le C(q,t)+(W-1)I(q,t),\qquad
+C(q,t)\le D(\Lambda\Vert\widetilde\Lambda).
+\tag{20.16}
+$$
+
+Consequently a decision with deadline $W$ and both errors at most $\alpha$ for this selected pair must satisfy
+
+$$
+b_\alpha:=(1-2\alpha)\log\frac{1-\alpha}\alpha
+\le C(q,t)+(W-1)I(q,t).
+\tag{20.17}
+$$
+
+This includes early stopping and common independent randomization. Interchanging the two laws gives the analogous bounds.
+
+Proof. The age-chain projection and chain rule in Theorem 17.3 apply once their summability and terminal-tail conditions are checked for this pair. They cannot be imported from its bounded-common-$q$ premise. Here
+
+$$
+\log\frac{p_k}{h_k}
+=\log\frac{Z_1(t)}{Z_0(q)}-\log r_k+k\log(q/t),
+\tag{20.18}
+$$
+
+which need not be bounded in $k$, but has absolute value at most a constant times $k+1$. To check tails explicitly, for $0<v<1$ put $S_9(v)=\sum_{j\ge0}(j+1)^9v^j<\infty$. For $a\ge1$, $(a+j)^9\le a^9(j+1)^9$ and the center envelope imply
+
+$$
+\begin{aligned}
+\frac{a^9q^a}{Z_0(q)}&\le U_a\le
+\frac{a^9q^a S_9(q)}{Z_0(q)},\\
+\frac{a^9t^a}{Z_1(t)}&\le V_a\le
+\frac{(1+\delta_9)a^9t^a S_9(t)}{Z_1(t)}.
+\end{aligned} \tag{20.19}
+$$
+
+Thus $|\log(U_a/V_a)|\le A+B a$ for finite constants depending on the fixed pair. Both $\sum_a(a+1)U_a$ and $\sum_k(k+1)^2p_k$ are finite. It follows that the gap, age and interval-position log-density ratios are absolutely integrable, that $U_{N+1}\log(U_{N+1}/V_{N+1})\to0$, and that the reset and advance log terms of the age chains are absolutely summable against their stationary transition masses. At age zero the advance is forced under both laws; the absent reset term is taken as zero.
+
+In detail, if $Q,\widetilde Q$ are the two age transition kernels, summing their two branches through age $N$ gives exactly
+
+$$
+\begin{aligned}
+\mu\sum_{a=0}^N\pi(a)D(Q(a,\cdot)\Vert\widetilde Q(a,\cdot))
+={}&\sum_{a=1}^Np_a\log\frac{p_a}{h_a}
++U_{N+1}\log\frac{U_{N+1}}{V_{N+1}}
+-U_0\log\frac{U_0}{V_0}.
+\end{aligned} \tag{20.20}
+$$
+
+The last term is zero because $U_0=V_0=1$. The established bounds let $N$ tend to infinity, leaving $d(q,t)$. The two chains start in their own invariant laws $\pi,\widetilde\pi$, and their binary emissions are the actual stationary cylinders by the same construction as in Theorem 17.3. The chain rule for their $W$ states therefore gives $C(q,t)+(W-1)d(q,t)/\mu$. Projection to the visible word proves the first part of (20.16). Projection of interval-position to age proves the second. Strict positivity of $d$ follows from Theorem 20.2 and strictness of relative entropy for different positive probability laws. The Bernoulli-decision data-processing argument of (17.11) gives (20.17); adjoining the same independent seed does not change the divergence. Neither a bounded same-parameter log ratio nor the remainder $3\log\kappa$ of (17.5) is asserted here. Age and interval-position variables are only converse proof variables. $\square$
+

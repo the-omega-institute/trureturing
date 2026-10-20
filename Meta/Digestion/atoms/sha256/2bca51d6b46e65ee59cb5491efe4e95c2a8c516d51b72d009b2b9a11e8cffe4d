@@ -1,0 +1,56 @@
+## 3. 黄金尺度 character 与既有 Fourier phase 是同一个对象
+
+定义整数模式的黄金尺度 character：
+
+\[
+\boxed{
+\Theta_k(x)
+=
+\exp\left(-2\pi i k\eta_\varphi(x)\right).
+}
+\]
+
+它也可以理解为单位圆点 \(\vartheta_\varphi(x)\) 上的第 \(k\) 个 character。
+
+本轮机器证明：
+
+\[
+\boxed{
+\Theta_k(x)
+=
+\chi_{\log x}(t_k)
+=
+\exp(-it_k\log x).
+}
+\]
+
+这条等式把两套已经存在的坐标精确识别：
+
+\[
+\boxed{
+\text{黄金尺度圆的整数 Fourier mode}
+=
+\text{log-frequency flow 的黄金 Mellin 采样}.
+}
+\]
+
+因此新增节点没有引入第二套相位语义。`goldenScaleFourierPhase` 是既有 `fourierPhase` 的黄金坐标表达。
+
+机器同时证明：
+
+\[
+\boxed{|\Theta_k(x)|=1},
+\]
+
+以及对正数 \(x,y\)：
+
+\[
+\boxed{
+\Theta_k(xy)=\Theta_k(x)\Theta_k(y).
+}
+\]
+
+所以每个整数模式都是正乘法群到 \(U(1)\) 的酉 character。
+
+---
+

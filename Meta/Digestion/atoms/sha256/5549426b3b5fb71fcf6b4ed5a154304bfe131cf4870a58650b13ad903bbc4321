@@ -1,0 +1,49 @@
+## 8. Pick/Pontryagin 负指标接口
+
+仓库已经冻结抽象真源：
+
+\[
+\boxed{\texttt{HermitianKernelNegativeSquares}.}
+\]
+
+下一步需要输入一个来自 completed xi 的具体函数。标准候选为：
+
+\[
+\Theta_\omega(z)
+=
+\frac{\xi(\frac12-\omega-iz)}
+{\xi(\frac12+\omega-iz)},
+\qquad\omega>0.
+\]
+
+相应 half-plane Pick kernel 可规范化为：
+
+\[
+K_{\Theta_\omega}(z,w)
+=
+\frac{1-\Theta_\omega(z)\overline{\Theta_\omega(w)}}
+{-i(z-\overline w)}.
+\]
+
+下一真源命名为：
+
+\[
+\boxed{\texttt{XiRatioPickKernel}.}
+\]
+
+它应证明定义域、极点排除、Hermitian symmetry、reflection compatibility、临界线假设下的 Schur/inner implication，以及有限 Gram 矩阵到 `HermitianKernelNegativeSquares` 的接口。
+
+随后建立：
+
+\[
+\boxed{\texttt{OfflineZeroPickIndexLowerBound}.}
+\]
+
+第一阶段只要求一个被窗口与采样隔离的离线零点轨道产生至少一个有限负方向。精确计数：
+
+\[
+\kappa_{\omega,T}=N_{\mathrm{off}}(\omega,T)
+\]
+
+仍登记为后续 index theorem。
+

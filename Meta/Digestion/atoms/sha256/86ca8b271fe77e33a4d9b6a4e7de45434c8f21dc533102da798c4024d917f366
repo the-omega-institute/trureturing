@@ -1,0 +1,30 @@
+**定义 411.1（同源频率账与正阻尼日程）。** 保留 §§403–408 的同一实际 $\mathcal B$、$\mathscr G_\varepsilon$、$Q_\varepsilon$、$\mathscr G_\varepsilon^\circ$ 与 $\widetilde w_x$。令 $x\to\infty$、$\ell=\log x$，取任意正日程满足
+
+$$
+\varepsilon_x\longrightarrow0,\qquad
+\varepsilon_x\ell\longrightarrow0,
+\qquad \sigma_x=1-\varepsilon_x/2.
+\tag{411.1}
+$$
+
+因此 $0<\sigma_x<1$ 对全部充分大的 $x$ 成立，原来的完整反演合法；（403.5）与（410.8）都属于这一类。定义完整实际绝对账
+
+$$
+\mathcal A(x)=\frac1{2\pi}\int_{\mathbb R}
+\left|\mathscr G_{\varepsilon_x}^\circ(\sigma_x+i\tau)
+\widetilde w_x(\sigma_x+i\tau)\right|d\tau.
+\tag{411.2}
+$$
+
+使用（408.7）的已有系数极限，记
+
+$$
+\begin{aligned}
+Q_0(z)&=\frac1{z-1}-\frac{1+\gamma}{(z-2)^2},\\
+g_0(z)&=-\frac{\zeta'(z)}{z\zeta(z)}-Q_0(z).
+\end{aligned}
+\tag{411.3}
+$$
+
+$g_0$ 在 $z=1$ 采用（408.4）的可去延拓，满足 $g_0(z)=O(|z-1|)$。在其他 $1+i\tau$ 上，经典 $\zeta(1+i\tau)\ne0$ 保证定义合法，见 [DLMF §25.10](https://dlmf.nist.gov/25.10)。$g_0$ 是实际中心化来源的零阻尼极限，不是另外选择的谱模型。
+

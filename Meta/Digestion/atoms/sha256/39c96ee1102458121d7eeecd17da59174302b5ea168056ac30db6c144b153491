@@ -1,0 +1,43 @@
+**定理 71.2（似然扰动到后验的总变差界）。** 令参数空间为有限或可测空间，先验为 \(\Pi\)，观测为 \(y\)，基准似然和扰动似然分别为 \(L_\theta(y)\) 与 \(\widetilde L_\theta(y)\)。若两者在 \(\Pi\)-几乎处处的共同支撑上满足
+\[
+|\log\widetilde L_\theta(y)-\log L_\theta(y)|\le r,
+\]
+记相应后验为 \(\Pi_y,\widetilde\Pi_y\)。则
+\[
+\frac{d\widetilde\Pi_y}{d\Pi_y}(\theta)
+=\frac{e^{\delta(\theta)}}{\mathbb E_{\Pi_y}e^\delta},
+\qquad |\delta|\le r,
+\]
+并有
+\[
+e^{-2r}\le
+\frac{d\widetilde\Pi_y}{d\Pi_y}
+\le e^{2r},
+\qquad
+\operatorname{TV}(\Pi_y,\widetilde\Pi_y)
+\le\frac{e^{2r}-1}{e^{2r}+1}
+=\tanh r.
+\]
+任意有界后验泛函 \(b\) 满足
+\[
+|\mathbb E_{\Pi_y}b-\mathbb E_{\widetilde\Pi_y}b|
+\le\operatorname{osc}(b)\tanh r.
+\]
+若完整路径似然来自
+\[
+\nu_\theta(x_0)\prod_{t<T}Q_\theta(x_t,x_{t+1}),
+\]
+并且共同支撑上
+\[
+\left|\log\frac{\widetilde\nu_\theta}{\nu_\theta}\right|\le r_0,
+\qquad
+\left|\log\frac{\widetilde Q_\theta(i,j)}
+{Q_\theta(i,j)}\right|\le r_Q,
+\]
+则可取 \(r=r_0+Tr_Q\)，得到
+\[
+\operatorname{TV}(\Pi_y,\widetilde\Pi_y)
+\le\tanh(r_0+Tr_Q).
+\]
+行的总变差很小并不保证对数比很小；支撑出现零点时必须先处理绝对连续性。
+

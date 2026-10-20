@@ -1,0 +1,37 @@
+**Construction 11.6 (the complete installed word).** For the particular
+table of Construction 11.5 let $k=k(e)$. The logical word has two
+$k$-bit banks $A,B'$, five one-hot reply flags
+$f_\alpha,f_\beta,f_{\mathsf{branch}},f_{\mathsf{absent}},f_\star$,
+and three phase bits. Its logical length is $m=2k+8$.
+The source-independent initial word has phase 000, bank $A=z_{\rm init}$,
+bank $B'=0^k$ and zero flags. No bank, phase or flag exists outside this
+word. The actual physical word is
+
+$$
+J(x_1\cdots x_m)=x_1\,0\,x_2\,0\,\cdots\,0\,x_m,
+\qquad W=J(\{0,1\}^m),\qquad \ell=2m-1=4k+15.
+\tag{SLHC.11.9}
+$$
+
+All $2^m$ such words are installed. The inserted zeros never change.
+The following rows give their fixed instruction and typed responses.
+A deterministic row always executes Read$(\varepsilon)$, ignores
+which of its four raw replies arrived, and makes the single stated
+bit change. It is not an internal instruction. "Least" refers to the
+fixed bit order of the bank.
+
+| Phase and word condition | Instruction | Immediate response action |
+| --- | --- | --- |
+| 000, flags zero, $B'=0$ | $I(A)$ | For Read reply $r$, set $f_r$; for Update acknowledgement, set $f_\star$; a Halt outputs its fixed bit |
+| 000, exactly one flag $f_r$, $r$ typed for $I(A)$ | Root Read | If $B'\ne\delta(A,r)$, flip the least differing bit of $B'$; otherwise change phase to 001 |
+| 001, exactly one flag | Root Read | If $A\ne0$, clear its least one; otherwise change phase to 011 |
+| 011, $A=0$, exactly one flag | Root Read | Clear that flag |
+| 011, $A=0$, flags zero | Root Read | Change phase to 010 |
+| 010, flags zero, $A=0$ | $I(B')$ | For Read reply $r$, set $f_r$; for Update acknowledgement, set $f_\star$; a Halt outputs its fixed bit |
+| 010, exactly one flag $f_r$, $r$ typed for $I(B')$ | Root Read | If $A\ne\delta(B',r)$, flip the least differing bit of $A$; otherwise change phase to 110 |
+| 110, exactly one flag | Root Read | If $B'\ne0$, clear its least one; otherwise change phase to 111 |
+| 111, $B'=0$, exactly one flag | Root Read | Clear that flag |
+| 111, $B'=0$, flags zero | Root Read | Change phase to 101 |
+| 101, $B'=0$, flags zero | Root Read | Change phase to 100 |
+| 100, $B'=0$, flags zero | Root Read | Change phase to 000 |
+| Any remaining installed word | Root Read | Hold the word for each of the four replies |

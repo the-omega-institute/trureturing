@@ -1,0 +1,18 @@
+**定义 1521.1（二维参数）。** 固定 $0<\kappa<1$，记
+
+$$
+P(x_1,x_2)=\frac{1+\kappa x_1x_2}{4},\quad
+b=\frac{1+\kappa}{4},\quad
+s=\sqrt{1+\kappa}-1.
+$$
+
+第 782、1484 节给 $s$ 为准确最近乘积距离。对 $0\le\delta<s$，定义
+
+$$
+w_\delta=\frac{(1+\delta)^2}{1+\kappa},\qquad
+\lambda_\delta=1-w_\delta,\qquad
+r_\delta=\frac{\kappa-\delta}{1+\delta}.
+$$
+
+此时 $1/2<w_\delta<1$、$0<\lambda_\delta<1/2$、$0<r_\delta<1$。本批采用自然对数、有限正标签支撑及允许确定坐标的乘积通道，零权重标签省略；端点为 $H_0=\log|\operatorname{supp}w|$ 与 $H_\infty=-\log\max_jw_j$。所有来源都要求实际生成律 $Q$ 满足 $\operatorname{TV}(P,Q)\le\delta$，不要求保留目标的两个均匀边缘，也不施加后验恢复约束。
+

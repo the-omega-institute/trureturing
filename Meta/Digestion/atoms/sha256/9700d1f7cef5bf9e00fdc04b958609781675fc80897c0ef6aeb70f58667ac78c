@@ -1,0 +1,134 @@
+**Theorem 117.2 (Uniform original-source second-head bound).**
+For every sequence (110.2), every integer $m\ge4$ and every
+original acquisition $A\in\mathcal N_2$,
+
+$$
+(m-2)(m+1)e_a(A)
+ \ge (m-3)a_2+(m-2)\sum_{n=3}^m a_n-(m-3).
+\tag{117.4}
+$$
+
+The same bound holds for every $A\in\mathcal O_2$. No assumption
+on $a_{m+1}$, no restriction on competitor addresses or output
+support, and no probability law on the source set is imposed.
+
+**Proof.** First consider a finite preselected rule on $B_m$.
+Fix its common seed, which fixes both its schedule and its entire
+deterministic terminal table. For a distinct queried pair $i<j$
+and acquired cell $uv$, the score of output label $r$ is
+
+$$
+g_{ij}^{uv}(r)=
+ \sum_{b:(b_i,b_j)=(u,v)}k_b\mathbf1_{r\in E_b}.
+\tag{117.5}
+$$
+
+Every nonzero label in $J_m$ has total event weight $m-2$;
+labels outside the displayed events have score zero. The four
+maximum cell scores are
+
+$$
+\begin{array}{c|cccc}
+\text{pair}&00&01&10&11\\\hline
+i<j<m&m-3&1&m-2&m-2\\
+i<j=m&m-2&0&m-2&m-2
+\end{array}
+\tag{117.6}
+$$
+
+Here is a uniform verification of all entries. Suppose $j<m$.
+In cell $00$, label zero receives $m-3$ rows of weight one:
+if $i=1$ these are the $h_k$ with $k\ne j$, while if $i>1$
+there are $m-4$ such $h_k$ plus $g$. Label one receives only
+those $h_k$; label two receives at most $m-3$ rows, from $g$
+and the admissible $g_k$. For a later label $n$, a contributing
+$w_n$ in $00$ requires $n\le i\le m-2$ and has weight
+$m-3$. Its $v_n$ cannot also contribute there: its only zeros
+are $n,m$. Thus the $00$ maximum is $m-3$.
+
+In cell $01$, labels zero and one receive only $h_j$, of
+weight one. Label two receives at most $g_j$. A chain word
+$w_n$ never has bits $01$ at increasing coordinates; the only
+possible later-label contribution is $v_i$, of weight one.
+Thus this maximum is one. In cell $10$, label zero has score
+at most one, and every nonzero label has total weight $m-2$.
+Label $j$ attains that weight. For $j=2$, necessarily $i=1$;
+$g$ and the $m-3$ rows $g_k$, $3\le k\le m-1$, contribute
+one each, totaling $m-2$. For $3\le j\le m-2$, $w_j,v_j$
+contribute $m-3,1$, and for $j=m-1$, $w_{m-1}$ contributes
+$m-2$. In cell $11$, label zero attains $m-2$ from $1^m$;
+no other zero-label row is in that cell. This proves the first
+line of (117.6).
+
+If $j=m$, every row word except $1^m$ has last bit zero, so
+the $01$ cell carries no weight. In $00$, label zero receives
+$m-2$ unit rows: all $h_k$ when $i=1$, or the $m-3$ rows
+$h_k$ with $k\ne i$ together with $g$ when $i>1$. Other
+labels cannot exceed their total weight $m-2$. Label $m$
+attains $m-2$ in $10$ from $w_m$, and label zero attains
+$m-2$ in $11$ from $1^m$. The second line follows.
+
+Every distinct pair therefore scores at most $3(m-2)$.
+An empty, singleton or repeated-coordinate schedule gives a
+coarsening of a distinct pair's cells, and cannot improve that
+upper bound. Reverse query order changes no acquired static
+information. Integrating the seed-fixed score gives
+$S_m(p)\le3(m-2)$ for every finite preselected kernel. If all
+word laws are within cap $r$ of their targets, each event has
+$p_b(E_b)\ge\eta_b(E_b)-r$, so
+
+$$
+T_m-M_mr\le S_m(p)\le3(m-2).
+\tag{117.7}
+$$
+
+The union events in (117.2) use the independent pair-TV row,
+not merely the two singleton rows. Rearranging gives (117.4)
+with $r$ in place of $e_a(A)$ for the finite rule.
+
+Now let an original competitor have error at most a positive
+$r\le1$. Theorem 110.2 supplies a class-preserving cap-feasible
+finite representative at active length $L(r)$. This does not
+assert preservation of the original competitor's law. If $L(r)>m$,
+fix every higher finite input bit to zero and project every output
+label above $m$ to zero. A low first-zero target is fixed; the
+low all-positive target becomes $e_0$ under this projection.
+TV contracts. Delete the fixed high observations from each
+preselected schedule and compose its table with their known zero
+replies; this retains at most two low observations. For a stopped
+schedule, a reached first high zero determines a terminal choice
+without further observation, so the resulting rule is stopped as
+well.
+
+If $L(r)<m$, add ignored input bits. At any new first zero
+$n>L(r)$, the output has no label $n$, $a_n\le r$, and the
+old all-positive row has nonbase mass at most $r$. Consequently
+
+$$
+\operatorname{TV}(p,(1-a_n)e_0+a_ne_n)
+       =\max\{1-p(0),a_n\}\le r.
+\tag{117.8}
+$$
+
+The all-positive row is preserved too. This includes $L(r)=0$.
+Both operations retain a common seed and a preselected hard-two
+schedule. Thus (117.7) applies at every $m$, regardless of the
+original tail or competitor addresses. For positive error take
+$r=e_a(A)\le1$; for error zero apply the result at every $r>0$
+and let $r$ decrease to zero. Error one is included by $r=1$.
+Proposition 90.2 supplies $\mathcal O_2\subseteq\mathcal N_2$
+with the same seed and law, proving the stopped bound. $\square$
+
+The case $m=4$ is exactly Acquisition Resources, Lemma 97.2,
+with $a_2,a_3,a_4$ in place of $v,w,z$. The uniform weighted-event
+argument is repo-derived. The scalar expectation characterization
+in Kaniewski, Lee and de Wolf, [*Query complexity in expectation*,
+Definition 8 and Theorem 9](https://arxiv.org/html/1411.7280v1),
+does not supply a common probability-vector stopped cap theorem.
+The independent random-input and expected-testing-cost model of
+Hellerstein, Kletenik, Liu and Witter, [*Adaptivity Gaps for the
+Stochastic Boolean Function Evaluation Problem*, Section
+1](https://arxiv.org/html/2208.03810v1), does not supply the uniform
+all-source hard-request comparison here. These source relationships
+assert no exhaustive mathematical-priority claim.
+

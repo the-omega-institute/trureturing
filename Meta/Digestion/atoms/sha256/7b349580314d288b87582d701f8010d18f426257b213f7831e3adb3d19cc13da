@@ -1,0 +1,25 @@
+**定理 64.1（有限类型的 Perron 计数）。** 令有限类型集为 \(\mathcal T\)，每种类型替换产生的子类型数由非负矩阵 \(A\) 给出。若 \(A\) primitive，令 \(\rho=\rho(A)\)，右、左 Perron 向量分别为 \(r,\ell\)，归一化为 \(\ell^{\mathsf T}r=1\)。从初始计数行向量 \(\nu^{\mathsf T}\) 出发，\(Z_n=\nu^{\mathsf T}A^n\)，则
+
+\[
+\rho^{-n}A^n\longrightarrow r\ell^{\mathsf T},
+\qquad
+\rho^{-n}Z_n\longrightarrow(\nu^{\mathsf T}r)\ell^{\mathsf T}.
+\]
+
+对任意类型奖励列向量 \(c\)，只要 \(\nu^{\mathsf T}r>0\)，有
+
+\[
+\frac{Z_nc}{Z_n\mathbf1}
+\longrightarrow
+\frac{\ell^{\mathsf T}c}{\ell^{\mathsf T}\mathbf1}.
+\]
+
+例如，若某个有限闭包恰为 \(\alpha\mapsto\alpha\beta\)、\(\beta\mapsto\alpha\)，则
+
+\[
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},
+\qquad \rho=\varphi.
+\]
+
+从单个 \(\alpha\) 出发，总数按 \(C\varphi^n\) 增长；极限类型比例为 \(\alpha:\beta=\varphi^{-1}:\varphi^{-2}\)。这只是该闭包的计数结论，不能把任意 FIB 递归直接替换成这个矩阵。
+

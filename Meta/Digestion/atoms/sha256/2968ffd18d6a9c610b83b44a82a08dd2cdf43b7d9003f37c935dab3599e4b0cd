@@ -1,0 +1,32 @@
+**定理 35.1（未知 $D$ 的联合可识别性）。** 设 $D,\widetilde D>0$，$\nu,\widetilde\nu\in\mathcal P([0,1])$。若两条曲线在任意含聚点的非退化 $s>0$ 区间上相等，则只有以下退化例外：
+
+$$
+\nu=\widetilde\nu=\delta_1,
+\qquad
+\mathcal L_{\delta_1,D}(s)\equiv1,
+$$
+
+此时 $D$ 与 $\widetilde D$ 任意；除此之外必有 $D=\widetilde D$ 且 $\nu=\widetilde\nu$。
+
+**证明。** 令
+
+$$
+\Phi_\nu(q)=\int_{[0,1]}\cosh(xq)\,d\nu(x),
+\qquad c=\sqrt{D/\widetilde D}.
+$$
+
+实轴上的相等性经整函数恒等定理给出
+
+$$
+\Phi_\nu(q)\cosh(cq)
+=\Phi_{\widetilde\nu}(cq)\cosh(q).
+$$
+
+若 $\nu\ne\delta_1$，则
+
+$$
+\Phi_\nu(i\pi/2)=\int\cos(\pi x/2)d\nu(x)>0,
+$$
+
+因为被积函数在 $[0,1)$ 上严格为正。若 $\widetilde\nu\ne\delta_1$，在 $q=i\pi/2$ 和 $q=i\pi/(2c)$ 分别代入上式，得到 $c$ 与 $1/c$ 都是正奇整数，故 $c=1$。此时 $\Phi_\nu=\Phi_{\widetilde\nu}$，再由第34节的矩确定性得到 $\nu=\widetilde\nu$。若一方为 $\delta_1$，其曲线恒等于 $1$；对任意 $s>0$，只要另一方在 $[0,1)$ 有质量，积分核严格小于 $1$，故另一方也必须为 $\delta_1$。$\square$
+

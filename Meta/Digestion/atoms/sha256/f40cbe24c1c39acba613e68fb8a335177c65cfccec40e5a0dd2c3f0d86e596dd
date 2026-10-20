@@ -1,0 +1,26 @@
+**Proposition 37.4 (Bounded cells, partial success and the finite-range boundary).** On the same source $X$, define the two-valued observation
+
+$$
+\beta_1(x)=
+\begin{cases}
+0,&\Omega(x)\le1,\\
+1,&\Omega(x)>1.
+\end{cases}
+\tag{37.9}
+$$
+
+Both cells are occupied, the zero cell is bounded, and
+
+$$
+B_{\beta_1}=\{x\in X:\Omega(x)>1\}.
+\tag{37.10}
+$$
+
+A sound partial procedure may successfully output $1$ without prime queries on the zero cell and make no successful output on the one cell. In contrast, allowing advice that is a finite string at each source with infinitely many possible strings permits a sound total procedure with no prime queries: take $\gamma(x)=1^{\Omega(x)}$ and output its length.
+
+**Proof.** Proposition 35.5 supplies the labeled sources $(7,2)$ and $(13,26)$ with target values $1$ and $2$, so both cells in (37.9) are occupied. If $\beta_1(x)=0$, every $J_{\beta_1}(x,T)$ has target at most $1$, and $x\notin B_{\beta_1}$. If $\beta_1(x)=1$, fix any finite $T$. The cylinder $C(T,d_T(N(x)))$ has unbounded target by (37.1). Removing its sources with target at most $1$ leaves an unbounded set, exactly $J_{\beta_1}(x,T)$. Explicitly, for any finite $H$, choose in the cylinder a source with target greater than $\max\{1,H\}$; it belongs to that joint cell. This proves (37.10).
+
+The stated partial procedure is sound by the definition of the zero cell; on the one cell it may run forever. Replacing this nonhalting branch by unknown gives a procedure that halts everywhere but is still not total finite upper certification. This refutes both the assertion that every cell of every finite-valued observation must be unbounded and the assertion that no source can admit sound partial certification with such advice.
+
+Finally, every $\Omega(x)$ is a finite integer, so $\gamma(x)$ is a finite word over the one-letter alphabet and its length is exactly the target. Equation (37.1) for $S=\varnothing$ makes these lengths unbounded, hence the attained range of $\gamma$ is infinite. Reading the supplied word and returning its length terminates at each source, but the finite-range hypothesis of Theorem 37.2 fails. This is a distinction between finite attained range and pointwise finite strings of unbounded possible lengths, not a way to obtain the advice from the prime-query transcript.
+

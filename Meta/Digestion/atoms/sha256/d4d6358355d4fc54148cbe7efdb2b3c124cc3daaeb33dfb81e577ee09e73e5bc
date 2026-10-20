@@ -1,0 +1,29 @@
+**命题 391.4（精确平滑运输及其有限修正）。** 有
+
+$$
+\boxed{
+\widetilde E^{\rm Fib}(N)
+=\sum_{d\ge1}\beta_da_N(d)U_d\widetilde E^\mu(N/d)+C_N,
+\qquad
+\|C_N\|_2\le\frac{L_\beta}{\log N}.}
+\tag{391.12}
+$$
+
+若另有尚未在本节建立的估计 $\|\widetilde E^\mu(t)\|_2\to0$（$t\to\infty$，全部实数截断），则（391.12）推出 $\|\widetilde E^{\rm Fib}(N)\|_2\to0$。本节不将 RH、点态收敛或数字几何长度守恒当作这个估计的证明。
+
+**证明。** 对 $d<N$、$dm\le N$，权重满足精确乘积式
+
+$$
+a_N(d)\left(1-\frac{\log m}{\log(N/d)}\right)
+=1-\frac{\log(dm)}{\log N}.
+\tag{391.13}
+$$
+
+$d=N$ 时外因子为零，实际 $n=N$ 的权重也为零；使用 $t=1$ 的上述约定，不引入 $0/0$。$d>N$ 时 $a_N(d)=0$。由有限卷积重排，函数项恰为（391.10）的实际 $e_n$ 前缀；剩下的目标就是（391.11）的 $C_N$，包括全部 $d>N$ 目标尾。
+
+由于 $d\ge1$、$N>1$，有 $0\le1-a_N(d)\le\log d/\log N$。又 $\|\chi\|_2=1$，（391.4）给修正项上界。$L_\beta$ 的收敛直接由 §385 的实际指数界 $|\beta_d|\le q^d/(1-q)$ 给出。
+
+在额外收敛条件下，$\widetilde E^\mu(t)$ 全域有界：远处由趋零保证，有限范围内由有限和及权重位于 $[0,1]$ 保证。每个固定 $d$ 的 $N/d\to\infty$，而 $0\le a_N(d)\le1$，故同一个有限部分加可和尾的论证使（391.12）的主和趋零；修正项也趋零。$\square$
+
+已有条件最优估计直接复用 [PZG_BEDC.md，条目 26.11](PZG_BEDC.md) 的 Bettin–Conrey–Farmer 结果。原始来源 [arXiv:1211.5191v1，Theorem 1](https://arxiv.org/abs/1211.5191v1) 使用同一对数权重，但保留 RH 及某个 $\delta>0$ 的 $\sum_{|\Im\rho|\le T}|\zeta'(\rho)|^{-2}\ll T^{3/2-\delta}$ 前提；后者还隐含非平凡零点单纯性。这里不另写最优性证明，不删除这些前提，也不把条件结果用作无条件 RH 证明。
+

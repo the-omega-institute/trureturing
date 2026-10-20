@@ -1,0 +1,7 @@
+离线零点只负责选择：
+
+* 中心 \(\gamma\)；
+* 尺度 \(\delta\)；
+* 重数 \(m\)；
+* inner／inverse-inner 方向。
+

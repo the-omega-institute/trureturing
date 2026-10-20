@@ -9,6 +9,8 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
     private const string Prefix = "D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Arith/hanna2026a392525");
+    private static readonly LibraryNoteRef FrobeniusSource =
+        LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathlib2026powerseriesfrobenius");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The coefficients of OEIS A392525 are odd exactly at powers of two.",
@@ -28,6 +30,9 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
                 + "function, and choose selects a witness of the displayed proved "
                 + "existential proposition. The auxiliary series has coefficients in "
                 + "ZMod(2); generatingSeries and a have integer coefficients.")),
+            Node("prime_power_subst", "Frobenius as monomial substitution", PrimePowerFormula(),
+                "For any prime p, raising a series over ZMod(p) to p equals substitution of X to the power p. PowerSeries.subst takes the inner series as its first argument.",
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(FrobeniusSource)),
             Node("powerTwoSeries", "The power-of-two series", PowerTwoFormula(),
                 "Coefficient n is one in ZMod(2) precisely when n is a power of two, "
                 + "and is zero otherwise. In particular the constant coefficient is "
@@ -81,6 +86,12 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
         Describe.Lean(DescribeId.Create("a392525-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, claim);
+
+    private static Formula PrimePowerFormula() => Disp(Seq(Bound("p", Naturals()),
+        OpenBracket, Call("Fact", new Formula.Apply(Seq(Named("Nat"), Dot, Named("Prime")), [F.Id("p")])), CloseBracket, Comma, Sp,
+        Bound("f", Series(Call("ZMod", F.Id("p")))),
+        Equal(Power(F.Id("f"), F.Id("p")), new Formula.Apply(
+            Seq(Named("PowerSeries"), Dot, Named("subst")), [Power(X(), F.Id("p")), F.Id("f")]))));
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));

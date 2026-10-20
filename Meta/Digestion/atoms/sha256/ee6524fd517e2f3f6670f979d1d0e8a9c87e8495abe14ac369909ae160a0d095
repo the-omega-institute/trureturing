@@ -1,0 +1,40 @@
+### definition 36.1: 同源切面、实际前缀与观察域
+
+令 $\mu$ 为正整数深度上的任意概率质量函数。在
+
+$$
+\Omega=\mathbb N_{>0}\times\{0,1\}^{\mathbb N},\qquad
+\mathbb P_\mu=\sum_{k\ge1}\mu_k\bigl(\delta_k\otimes P_k\bigr)
+$$
+
+上，$P_k$ 是字母 $0,1$ 的独立流律，质量分别为
+
+$$
+r_k=\frac{\mathrm{Fib}_{k+1}}{\mathrm{Fib}_{k+3}},\quad
+s_k=\frac{\mathrm{Fib}_{k+2}}{\mathrm{Fib}_{k+3}}=1-r_k,\quad
+q_k=r_ks_k,\quad d_k=1-q_k=r_k+s_k^2,\quad
+u_k=\frac{r_k}{d_k},\quad v_k=\frac{s_k^2}{d_k}.
+$$
+
+此律取原 `NativeConditionalControl.DepthLaw.jointLaw(μ)` 的实数质量读法；$K$ 是一次抽取后保持的第一坐标。运行取原 `initial`、`nativeRead`、`nativeStop` 和 `nativeDrive`。令 $\tau_3$ 为第一次达到完成数 $3$ 的事件数，未达到时取 $\infty$。此前只有 Read，所以 $\tau_3$ 同时是该切面的付费 Read 数。这里事件数不指定物理耗时。
+
+在 $\tau_3<\infty$ 时，$h_3$ 是实际发出的前缀，$c_3$ 是其完整 acquired state。用原唯一 `PrefixForm` 写成
+
+$$
+h_3=\operatorname{reads}\!\left(
+\operatorname{retryWord}(a)\,\operatorname{seedWord}(\rho)
+\,p(j_0,b_0)\,p(j_1,b_1)\,p(j_2,b_2)\right),
+\qquad p(j,b)=(10)^j\begin{cases}0,&b=0,\\11,&b=1.\end{cases}
+$$
+
+其中 $a$ 是实际拒绝对的有序种类词，$\rho\in\{0,1\}$ 是取得的种子，$b=(b_0,b_1,b_2)\in\{0,1\}^3$ 是按完成次序写入的标记。相应 `PayloadForm` 为三次 `segment` 后接 `active 0 p`。定义
+
+$$
+n_0=\#_0a,\quad n_1=\#_1a,\quad
+J=j_0+j_1+j_2,\quad w=b_0+b_1+b_2.
+$$
+
+从字母历史生成的过滤为 $\mathcal F_n=\sigma(\omega_0,\ldots,\omega_{n-1})$，不含隐藏 $K$ 的直接读口。$\mathcal F_{\tau_3}$ 取通常的停止 $\sigma$ 代数：事件 $A$ 满足 $A\cap\{\tau_3\le n\}\in\mathcal F_n$。完整停止记录为 $(\tau_3,h_3,c_3)$；数学计数记录为 $(\rho,b,J,A,B)$；无计数记录为 $R=(\rho,b)$。未完成处各记录取单独的 $\dagger$。记 $\mathcal G_R=\sigma(R)$，它是上述停止记录的粗化。$J$ 是原 state 的 `payloadReturns` 在切面上的值，不是新设的 selected-count bank；有序词 $a$ 和各 $j_\ell$ 是前缀证明数据，不是虚构的运行字段。
+
+附属来源：[NativeAcquiredPrefixState](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixState.lean)，`render`、`reconstruct`、`writeMarker`；[NativeAcquiredPrefixReconstruction](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixReconstruction.lean)，`native_acquired_prefix_reconstruction`；[NativeConditionalControl](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeConditionalControl.lean)，`DepthLaw.jointLaw`。这些对象供应原前缀语法、重构和同一深度流。
+

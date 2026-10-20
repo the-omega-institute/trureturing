@@ -59,7 +59,7 @@ For $n\ge2$, the formal claim would fail if an extreme-point set had full span b
 
 ## Evidence
 
-The public declarations in `D5/S3/Analytic/BanachGeometry/LinfKNumber.lean` are `BJOrth`, `PreservesBJAt`, `IsScalarMulIsometry`, `IsKSet`, `claim`, and `result`. The supporting lemmas are private. The theorem `D5.S3.Analytic.BanachGeometry.LinfKNumber.result` has type `claim`.
+The public declarations in `D5/S3/Analytic/BanachGeometry/LinfKNumber.lean` are `BJOrth`, `PreservesBJAt`, `IsScalarMulIsometry`, `IsKSet`, `claim`, `active_not_BJ`, and `result`. The remaining supporting lemmas are private. The exposed `active_not_BJ` strict-descent criterion is used by `image_vertex`, `inverse_sign`, and `PolyhedralBJRefutation.product_of_bj`; its statement and proof remain in the original Linf owner. The theorem `D5.S3.Analytic.BanachGeometry.LinfKNumber.result` has type `claim`.
 
 For every $n\ge2$, `claim` is the conjunction of: the equivalence between `IsKSet A` and full span for any set $A$ contained in the extreme points of the closed unit ball; the existence of an $n$-element finite K-set; and the lower bound $n\le|A|$ for every finite K-set, without an extreme-point restriction on that lower bound.
 
@@ -81,7 +81,7 @@ The axiom closure is $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.
 
 6. **Open (transfer, not formalized) — isometric copies.** Conjugating by a linear isometric equivalence is the expected transport route for any space linearly isometric to $\ell_\infty^n$. The orthogonality, operator, and K-set transport statements are not formalized in this module.
 
-7. **Open — other polyhedral norms.** The general polyhedral-space question of arXiv:2511.20345 remains open as stated there. Irregular hexagonal norms in the plane are not addressed by this delivery. The consecutive-vertex results of Theorem 2.16 of 2407.08900 concern the regular case. The K-number of other polyhedral spaces is not determined here.
+7. **Refuted — the universal polyhedral assertion.** The separate [polyhedral extreme-test dossier](manna-mandal-paul-sain-2025-polyhedral-extreme-tests.md) gives the native real-plane counterexample to the final question of arXiv:2511.20345. This sup-norm module retains its positive conclusion. The consecutive-vertex results of Theorem 2.16 of 2407.08900 concern the regular case. The K-number of other polyhedral spaces is not determined here.
 
 8. **Open — minimal K-sets involving non-extreme points.** Remark 2.20(ii) gives the inclusion-minimal K-set $\{(1,1),(1,0),(0,1)\}$ in $\ell_\infty^2$, of size three despite $\kappa(\ell_\infty^2)=2$. The classification of all such minimal K-sets remains open.
 
@@ -91,4 +91,4 @@ Coverage is limited to the cited arXiv versions; journal-version equivalence and
 
 PDF page numbers for Definitions 1 and 3 and the end-of-§2 Open Question are unverified; the quotations use definition and section locators.
 
-The row-sum identity and the minimal-basis and final-question consequences are mathematical deductions from the formal statements, not additional named Lean theorems. Isometric transport and the assertions for other polyhedral spaces remain unformalized.
+The row-sum identity and the minimal-basis and final-question consequences are mathematical deductions from the formal statements, not additional named Lean theorems. Isometric transport remains unformalized in this module. The separate polyhedral refutation has its own source and claim.

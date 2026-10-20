@@ -1,0 +1,8 @@
+参考：
+
+- A. Connes, *The Riemann Hypothesis: Past, Present and a Letter Through Time*, arXiv:2602.04022, Sections 6.4-6.6. https://arxiv.org/html/2602.04022
+- A. Connes, C. Consani, H. Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Lemma 7.3 and Section 8. https://arxiv.org/html/2511.22755v1
+- Mathlib `ArithmeticFunction.vonMangoldt_sum`, pinned `db584cd6d46c92f209a44c0f1c829460d327499d`, `Mathlib/NumberTheory/ArithmeticFunction/VonMangoldt.lean`.
+- loning #5326, `3beb435bf9ca8aa35aa6079ea4033a9c2e6c9007`, actual theory C13; AlyciaBHZ #5895, `04eaf09b47c39f7688a8df498c4fe30e0663dcbd`, actual `NormalizedReadoutDisk.lean`.
+
+

@@ -1,0 +1,7 @@
+以下等价：
+
+1. $R_{\mathrm{strat}}(q,s)=\varnothing$；
+2. $K_q\subseteq K_s$；
+3. $s$ 在有效像上通过 $q$ 唯一因子化；
+4. $A(q,s)$ 与 $q$ 具有相同 kernel。
+

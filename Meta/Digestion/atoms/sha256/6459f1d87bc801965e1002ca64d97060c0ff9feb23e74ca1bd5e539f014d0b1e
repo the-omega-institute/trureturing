@@ -1,0 +1,27 @@
+## 最小下一步 19.1
+
+要闭合该前沿，最直接的证明目标不是继续证明唯一性，而是构造对每个 \(n\) 的实际相邻边 witness，并证明其 additive 字段：
+
+\[
+(c(n+1):\mathbb Z)
+=
+c(n)+
+\begin{cases}
+a,&\ell_n=1,\\b,&\ell_n=0.
+\end{cases}
+\]
+
+一旦该式成立：
+
+\[
+\text{PhaseEnrichedCoreTrace}
+\Longrightarrow
+\text{source-index delta}
+\Longrightarrow
+\text{six-phase gap stream}
+\Longrightarrow
+\text{F/G/H sequence reconstruction}.
+\]
+
+因此当前主线已经从十五节点链压缩为一个**相位接口下降桥**。
+

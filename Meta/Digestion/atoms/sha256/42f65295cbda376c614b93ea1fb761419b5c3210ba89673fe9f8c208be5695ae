@@ -1,0 +1,12 @@
+### 证明
+
+将定义展开：
+
+$$
+\langle u,(A^n)^*C_n^*C_nA^nu\rangle
+=
+\langle C_nA^nu,C_nA^nu\rangle.
+$$
+
+各项非负，和为零当且仅当每项都为零，故核相等。正定等价于核为零。证毕。
+

@@ -1,0 +1,71 @@
+**Theorem 20.7 (The composite small-band deadline order).** Let $\mathcal W_\alpha([a,b])$ be the least integer cap for one deterministic rule that receives $H,\alpha,[a,b]$ and has both family-wise errors at most $\alpha$ on that band. It may stop early and is not supplied the true nuisance value. For the fixed $H$ of this section, as rational $\epsilon\downarrow0$ with $2\epsilon<1$,
+
+$$
+\mathcal W_\alpha([\epsilon,2\epsilon])
+=\Theta_{H,\alpha}(\epsilon^{-2}).
+\tag{20.21}
+$$
+
+The same order holds if the decision may use independent randomization. The constants depend on the fixed center and risk, and are not sharp minimax constants.
+
+Proof. For the necessary bound choose the permitted unequal-parameter pair $p=f_{0,q}$, $h=f_{1,\lambda q}$, with $q>0$ small enough that $\lambda q<1$. Theorem 20.2 gives $1<\lambda<2$. With
+
+$$
+d_k=\frac{r_k}{r_1}\lambda^{k-1},\qquad
+A(q)=\sum_{k\ge1}k^9q^{k-1},\qquad
+B(q)=\sum_{k\ge1}k^9d_kq^{k-1},
+\tag{20.22}
+$$
+
+we have $d_1=d_2=1$, $d_3=\chi>1$, and $p_k=k^9q^{k-1}/A(q)$, $h_k=k^9d_kq^{k-1}/B(q)$. In particular $h_2/h_1=p_2/p_1=512q$: changing the nuisance matches the first rare-gap odds exactly. The analytic expansions are
+
+$$
+\begin{aligned}
+A(q)&=1+512q+19683q^2+O_H(q^3),\\
+B(q)&=1+512q+19683\chi q^2+O_H(q^3),\\
+\mathbb E_p\log d_K&=19683\log\chi\,q^2+O_H(q^3).
+\end{aligned} \tag{20.23}
+$$
+
+Here is a remainder justification that includes the unbounded tilt. Fix $q_0>0$ with $\lambda q_0<1$. The envelope for $r_k$ gives $d_k\le(1+\delta_9)\lambda^{k-1}/r_1$ and $|\log d_k|\le A_0+B_0k$. After extracting $q^3$ from the terms $k\ge4$, the three tail series in (20.23) are bounded uniformly for $0<q\le q_0$ by convergent constant multiples of $\sum_{k\ge4}k^{10}(\lambda q_0)^{k-4}$. The denominator $A(q)$ is at least one. Expanding its reciprocal and the logarithms near one thus preserves the displayed remainders; all constants are for this fixed $H$.
+
+It follows that, with $\gamma=19683(\chi-1-\log\chi)>0$,
+
+$$
+\begin{aligned}
+d(q,\lambda q)&=\log\frac{B(q)}{A(q)}-\mathbb E_p\log d_K
+=\gamma q^2+O_H(q^3),\\
+I(q,\lambda q)&=\frac\gamma2q^2+O_H(q^3).
+\end{aligned} \tag{20.24}
+$$
+
+The mean in the second line is $\mu_0(q)=2+O_H(q)$. To control the stationary initial information as well, the $K$ marginals of $\Lambda,\widetilde\Lambda$ in (20.15) have weights $a_kq^{k-1}$ and $a_kd_kq^{k-1}$, where $a_k=(k+1)k^9/2$. Conditional on $K=k$, both position laws are uniform on $\{0,\ldots,k\}$. Their divergence is therefore exactly the divergence of those marginals. Their two normalizers begin
+
+$$
+1+768q+39366q^2+O_H(q^3),\qquad
+1+768q+39366\chi q^2+O_H(q^3).
+\tag{20.25}
+$$
+
+The same calculation gives
+$D(\Lambda\Vert\widetilde\Lambda)=2\gamma q^2+O_H(q^3)$: the first nonzero log-tilt term is $39366\log\chi\,q^2$. Its remainder is controlled as above with $k^{11}$ in place of $k^{10}$. Hence $C(q,\lambda q)=O_H(q^2)$ by (20.16), not by a common-$q$ variance bound. Since $b_\alpha>0$, (20.17) and (20.24) imply $W=\Omega_{H,\alpha}(q^{-2})$ for any rule handling this pair. More explicitly, sufficiently small $q$ has $C\le b_\alpha/2$ and $I\le\gamma q^2$, giving $W\ge1+b_\alpha/(2\gamma q^2)$. Set $q=\epsilon$; both $\epsilon$ and $\lambda\epsilon$ belong to $[\epsilon,2\epsilon]$. Every composite rule must handle this pair, proving the necessary band order also for randomized rules.
+
+For sufficiency use the concrete deadline (20.12). The fixed positive coefficients at the first gap and convergent power series give, uniformly near zero,
+
+$$
+Z_i(q)=F_i(1)q(1+O_H(q)),\qquad
+\mu_i(q)=2+O_H(q),\qquad
+\beta_i(q)=\tfrac12+O_H(q).
+\tag{20.26}
+$$
+
+With $a=\epsilon,b=2\epsilon$ this yields
+
+$$
+\eta_{\epsilon,2\epsilon}
+=\min_i\frac{C_i}{4F_i(1)^2}\,\epsilon^2(1+O_H(\epsilon)).
+\tag{20.27}
+$$
+
+The positive minimum is a fixed constant, $M$ depends only on $H,\alpha$, and the other terms of $\mathcal B_{\epsilon,2\epsilon}$ stay bounded. Thus $W_{\epsilon,2\epsilon}=O_{H,\alpha}(\epsilon^{-2})$, with both errors controlled for every parameter in the band. The deterministic rule supplies the upper bound for both decision classes. $\square$
+

@@ -1,0 +1,14 @@
+**Citation 2.2 (abstract control and effective implementations).** The
+following are reused with their exact restrictions; private proofs and
+corresponding Scribes preserve the indicated boundaries.
+
+| Supplier | Exact reusable content and limit |
+| --- | --- |
+| [Process Geometry, Definition 19.6 and Theorems 19.7–19.8, 20.2][PG] | Common reachable records, control, actual report updates and complete selected responses govern adaptive continuation. Theorem 20.2 gives abstract full-behavior repair without finiteness; finite stabilization in 19.8 needs its stated finite carrier or uniform external-record contract. Neither supplies an effective native acquisition inverse. |
+| [ControlledBehaviorUniversality][CBU], `controlled_behavior_universal_property`; private `run_word_intertwines`; [Scribe][CBU-S] | Finite controlled realizations factor through complete behavior, with transition and readout equations. This is a quotient/minimality supplier, not an effective acquisition inverse. |
+| [ActualCompletionAcquisitionCut][ACA], `acquisition_provenance_contract`; private `verify_acquisition_cut`, `route_acquisition_cut`; [Scribe][ACA-S] | On actual prefixes, the complete route and selected first mismatch precede acquisition on the same stationary source; the ordered cache persists. An acquisition-local phase name does not erase the earlier route. The installed native clause also retains `Allowed N U`. |
+| [NativeSerialMachine][NSM], `operational_replay`, `replay_deterministic`; [Scribe][NSM-S] | A supplied actual serial `Run` gives finite replay with control and chronological local/update/read events, not independent-writer inverse existence. |
+| [NativeSerialEffective][NSE], `original_service_simulation`, `original_code_service_simulation`, `effective_service_inclusion`; [Scribe][NSE-S] | Partial-recursive selectors have the stated serial simulation. Certified controller-owned epochs are not hidden independent-writer counts. Our effective outputs are finite encodings, not arbitrary noneffective semantic output maps. |
+| [NativeEffectiveSourceProducer][NEP], `effective_source_producer`; private `original_stationary`; [Scribe][NEP-S] | One source-independent numeric selector acquires a stationary epoch-zero source. Its proof-side `sourceDecoder` is not a runtime source port. |
+| [NativeSourceSelectorCode][NSC], `tick_code_correct`, `workspace_code_correct_of_tick`, `selector_code_correct`; [Scribe][NSC-S] | Closed code and exact partial-value correspondence implement that numeric selector. Neither the code nor its private first-return proof adds independent-writer acquisition. |
+| [IntrinsicSubstitutionCoordinates][ISC], `no_alpha`, `pair_image`, `intrinsic_coordinates`; private `substitution_injective`, `primitive_index`, `normal_root`; [Scribe][ISC-S] | Finite actual trees have unique primitive-ray coordinates. These are source-coordinate results, not freely supplied source identities or clocks. |

@@ -1,0 +1,72 @@
+### 119.8 The connected full-q second derivative
+
+Let mu=mu_{alpha,y} from(119.30) and define
+$$
+ Z(\alpha,y)=\mathbb E_\mu e^{\alpha\ell},\qquad
+ w(n)=e^{\alpha\ell(n)}/Z(\alpha,y),\qquad
+ \widetilde\mu=w\mu.
+\tag{119.48}
+$$
+The law tilde mu is exactly the original full-q count escort under the same output: it is proportional to exp(-alpha(A_y-ell)). Constants from modal masses are output independent.
+
+From(119.10),(119.46), uniformly1<=alpha<=2,
+$$
+ |Z-1|\le C\delta^5,\quad Z\ge1/2,\quad
+ 0<w\le C,\quad |w-1|\le C\delta^5(1+\mathcal D^2),
+$$
+$$
+ \mathbb E_{\widetilde\mu}\ell^2\le C\delta^{10}.
+\tag{119.49}
+$$
+For negative ell use1-e^{alpha ell}<=alpha|ell|, and for positive ell its uniform upper bound. The final inequality uses the fourth charge moment and bounded w. These are full-box inequalities, not a truncation that drops extreme selection costs.
+
+The exact second derivative is particularly useful:
+$$
+ \partial_\alpha^2\log Z(\alpha,y)
+      =\operatorname{Var}_{\widetilde\mu}(A_y-\ell)
+                       -\operatorname{Var}_\mu(A_y).
+\tag{119.50}
+$$
+It follows by twice differentiating the two finite partition logs whose ratio is Z. All scores inside the original partitions remain fixed under differentiation.
+
+Put B_y=A_y-E_mu A_y. Then E_mu B_y=0, and algebra gives
+$$
+ \operatorname{Var}_{\widetilde\mu}A_y-\operatorname{Var}_\mu A_y
+    =\mathbb E_\mu[(w-1)B_y^2]
+                      -\{\mathbb E_\mu[(w-1)B_y]\}^2.
+\tag{119.51}
+$$
+Equations(119.31),(119.46),(119.49) bound the first term by Cdelta^5 M_Q and the squared term by Cdelta^10 M_Q. Moreover Var_tilde A_y<=E_tilde B_y^2<=C M_Q and Var_tilde ell<=Cdelta^10. Thus
+$$
+ |\operatorname{Cov}_{\widetilde\mu}(A_y,\ell)|
+                         \le C\delta^5\sqrt{M_Q}.
+\tag{119.52}
+$$
+Substitute Var_tilde(A_y-ell)=Var_tilde A_y-2Cov_tilde(A_y,ell)+Var_tilde ell into(119.50):
+$$
+ |\partial_\alpha^2\log Z(\alpha,y)|
+ \le C\{\delta^5 M_Q+\delta^{10}M_Q
+                +\delta^5\sqrt{M_Q}+\delta^{10}\}
+                      =O(\delta).
+\tag{119.53}
+$$
+The last step uses m_Q<=Cdelta^(-4). This is the missing connected estimate: the leading m_Q mean cancels before the polynomial selection bound is applied.
+
+For closure of the full C2 norm, also
+$$
+ |\log Z|\le C\delta^5,\qquad
+ |\partial_\alpha\log Z|
+       \le C\delta^5(1+\sqrt{M_Q}).
+\tag{119.54}
+$$
+Indeed the first derivative is E_mu A_y-E_tilde(A_y-ell), equal to -E_mu[(w-1)B_y]+E_tilde ell. Apply(119.49),(119.31),(119.46) and Cauchy–Schwarz. This supplies both lower derivatives directly as well.
+
+Exactly, the ratio of the two output-density ratios for P_alpha and Q_alpha is Z(alpha,y)/Z(alpha,0). Unconditioned escort normalizers cancel. Equations(119.53)–(119.54), including differentiation of the bounded factor -1/alpha, yield
+$$
+ D_\alpha(y)-D_\alpha^Q(y)=o_{C^2_\alpha}(1)
+\tag{119.55}
+$$
+uniformly on[1,2] and compact outputs. This step includes the exact full-q selection and actual path dependence through the same fiber and the good-event inputs. It is not a product-independence assertion for the original posterior.
+
+Combining(119.29),(119.47),(119.55) proves(119.15). No additional constant-order term remains in the C2 remainder.
+

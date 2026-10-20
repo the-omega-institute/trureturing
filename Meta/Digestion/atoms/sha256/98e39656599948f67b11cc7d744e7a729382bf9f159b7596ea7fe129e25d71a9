@@ -1,0 +1,41 @@
+### 定义 40.4（已知左因子的可行提升）
+
+固定严格正列 $u$，令 $R=u v^{\mathsf T}$，其中 $v=(v_1,v_2)^{\mathsf T}>0$，且
+$A_i u=(r_i,s_i)^{\mathsf T}$。记 $\Pi_j$ 为实次数不超过 $j$ 的多项式空间，并定义
+
+$$
+C_u:\Pi_k\times\Pi_k\times\Pi_d\longrightarrow\mathbb R^N,\qquad
+C_u(p,q,E)_i=r_i p(i)+s_iq(i)+E(i).
+$$
+
+对物理目标，$p=Gv_1$、$q=Gv_2$，其中 $G\in\Pi_k\setminus\{0\}$；因此可行
+提升域为
+
+$$
+\mathcal V_u=\{(p,q,E)\in\Pi_k\times\Pi_k\times\Pi_d:
+p\not\equiv0,\ q=\rho p\text{ for some }\rho>0\}.
+$$
+
+对可行提升，写 $p(t)=\sum_{h=0}^kp_ht^h$、$q(t)=\sum_{h=0}^kq_ht^h$。
+选择任一 $p_h\ne0$，则规范目标为
+
+$$
+\rho=\frac{q_h}{p_h}=\frac{v_2}{v_1}>0,\qquad
+R_0=\frac{u(1,\rho)}{u_1+\rho u_2},\qquad
+H=u_1p+u_2q=(u_1+\rho u_2)p\not\equiv0,\qquad D=E.
+$$
+
+反过来，$R_0$ 的第二列对第一列之比唯一给出 $\rho$，继而规范目标给出
+$p=H/(u_1+\rho u_2),q=\rho p,E=D$，故规范目标与可行提升一一对应。
+由于 $v_1>0$、$v_2=\rho v_1$ 且 $p=Gv_1$，每个可行提升的全部原始实现恰为
+
+$$
+v=\lambda(1,\rho)^{\mathsf T},\qquad G=p/\lambda,\qquad D=E,\qquad \lambda>0.
+$$
+
+因此原始分解的全部剩余尺度恰为
+
+$$
+ v\longmapsto\lambda v,\qquad G\longmapsto G/\lambda,\qquad \lambda>0. \tag{40.3}
+$$
+

@@ -1,0 +1,36 @@
+### 101.1 固定种子的残余综合征核
+
+固定 $q=2^d$、$\rho\in\mathbb F_q$，并写
+
+$$
+E_\rho=\{R=\rho,\ Q_{2\ell}=q_0,\ \widetilde A=1\}.
+$$
+
+以下条件化均针对这个同源正质量事件。
+
+对一个已完成 $c$ 个标记的正质量前缀 $u=(b_1,\ldots,b_c)$，令
+
+$$
+\beta=\sum_{j=1}^{c}b_j,\qquad t=\ell-\beta,\qquad
+v_i=\rho^{\,i-1},\quad v_{\ell+i}=v_i,\qquad
+C_\rho=\sum_{i=1}^{\ell}v_i,
+$$
+
+并定义残余综合征
+
+$$
+h=C_\rho+\sum_{j=1}^{c}v_jb_j.
+$$
+
+对按原位置编号的后缀 $y=(y_{c+1},\ldots,y_{2\ell})$，定义
+
+$$
+\begin{aligned}
+F_c(t,h)&=\left\{y\in\{0,1\}^{2\ell-c}:\ |y|=t,
+\sum_{j=c+1}^{2\ell}v_jy_j=h\right\},\\
+N_c(t,h)&=|F_c(t,h)|,
+\end{aligned}
+$$
+
+超出 $0\le t\le 2\ell-c$ 的项约定为零；“不可达综合征”只表示没有满足后缀条件的元素，即 $F_c(t,h)=\varnothing$、$N_c(t,h)=0$，不按前缀可达性筛除计数表项。
+

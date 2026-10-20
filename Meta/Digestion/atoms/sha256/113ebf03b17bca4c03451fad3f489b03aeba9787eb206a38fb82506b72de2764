@@ -1,0 +1,4 @@
+**来源 1160.1（数学关系与项目接口）。** 来源熵与共同信息沿用前述 Kumar–Li–El Gamal、Xu–Liu–Chen 的定义范围。强峰基础继续复用第 1140 节已核读的 Montúfar–Morton，[*When Does a Mixture of Products Contain a Product of Mixtures?*, arXiv:1206.0387v5](https://arxiv.org/abs/1206.0387v5)，定义 3.4、定理 3.7 及其证明。本批进一步由同一线性超额建立来源组质量和熵下界，再推导准确弱区间及联合尺度充分条件；这些推导不被归称为该文已有的完整结论，也不作原创申报。
+
+项目核读 `D5/S3/Entropy/Observation/DeterministicReadoutEntropyDecomposition.lean` 与 `D5/S3/Entropy/Forgetting/DeterministicEntropyEquality.lean`。有限概率、真实确定映射、因子化及正支撑条件见第 1152 节；它们没有自动补齐本批的强峰估计或精细余量。
+

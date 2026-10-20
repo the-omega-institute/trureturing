@@ -37,6 +37,8 @@ internal sealed class GeneralizedCHSHGroupDecompositionDocument : IScribeDocumen
                 "L n is C_(2n) times n-2 independent copies of C_2. Fin (n-2) indexes the independent involutions; subtraction here is natural subtraction.", AssessedProvenance.FromRepo(Source)),
             Node("cyclicHom", "A homomorphism out of a cyclic group", CyclicHomFormula(),
                 "For a^n = 1, cyclicHom sends the additive residue of an integer j to a^j. It uses the additive universal map ZMod.lift and the multiplicative type conversion. The parenthesized proposition in the subtype constructor is its constructor proof field: zmultiplesHom sends the integer n to zero.", AssessedProvenance.FromRepo(Source)),
+            Node("cyclicHom_int", "Evaluation on an integer residue", CyclicHomIntFormula(),
+                "For every group H, natural n, element a with a^n = 1 and integer i, cyclicHom n a ha sends ofAdd (i : ZMod n) to the integer power a^i.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Node("s", "The cyclic generator", All("n", N, Equal(Call("s", n), Pair(Call("ofAdd", D(1)), D(1)))),
                 "The first component is 1 in ZMod (2*n), converted to multiplicative notation; the function component is constantly the identity.", AssessedProvenance.FromRepo(Source)),
             Node("t", "The independent involutions", All("n", N, All("i", Index(), Equal(Call("t", n, i),
@@ -60,7 +62,7 @@ internal sealed class GeneralizedCHSHGroupDecompositionDocument : IScribeDocumen
                 "For n at least two, alpha maps ofAdd 1 to stepAut n. Thus alpha(s) = s times u n 1 and alpha(t n i) = u n (i.val+2) times u n 1. The dependent last involution gives the wrap-around. The parenthesized proof argument asserts that stepAut n hn raised to n is the identity automorphism under the branch hypothesis hn. For n below two, alpha is the constant identity homomorphism.", AssessedProvenance.FromRepo(Source)),
             Node("claim", "The uniform decomposition", ClaimFormula(),
                 "Section 1.4 (Further work), item 2, printed p. 7: \"In Section 5, we give efficient explicit presentations for G_n and its multiplication table. Can we go further and characterize these groups in terms of direct and semidirect products of small well-known groups? The first few cases are as follows\" The encoding answers this question for every natural n >= 2 by an actual multiplicative equivalence. C_m is Multiplicative (ZMod m); the elementary abelian factor uses Fin (n-2), and alpha is the displayed action.", AssessedProvenance.FromRepo(Source)),
-            Node("result", "The decomposition theorem", Call("claim"),
+            Node("result", "The decomposition theorem", ClaimBodyFormula(),
                 "The forward homomorphism sends P0 to inr(ofAdd 1), P1 to inl(s) times inr(ofAdd 1), and J to inl(s^2). In the presented group, the elements P0^i P1^(-i) commute, allowing the inverse map from L. Its compatibility with conjugation by P0 gives a homomorphism from the semidirect product. Both composites fix the generators, so the maps form a multiplicative equivalence. No group-order computation is used.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("cui-mehta-mousavi-nezhadi-2020-chsh-group-decomposition"),
@@ -70,7 +72,7 @@ internal sealed class GeneralizedCHSHGroupDecompositionDocument : IScribeDocumen
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
         OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-            DescribeId.Create("cmmn-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
+            DescribeId.Create("cmmn-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             provenance,
             Blocks(Paragraph(Text(prose))), role, resolution);
@@ -124,6 +126,14 @@ internal sealed class GeneralizedCHSHGroupDecompositionDocument : IScribeDocumen
             Constructor(multiples, Parenthesized(annihilates)));
         return GroupBind(All("n", N, All("a", h, All("ha", Equal(Pow(a, n), D(1)),
             Equal(Call("cyclicHom", n, a, ha), App(Q("AddMonoidHom", "toMultiplicativeLeft"), lifted))))));
+    }
+
+    private static Formula CyclicHomIntFormula()
+    {
+        Formula ha = F.Id("ha");
+        Formula residue = Call("ofAdd", Parenthesized(Seq(i, Colon, Sp, Call("ZMod", n))));
+        return GroupBind(All("n", N, All("a", h, All("ha", Equal(Pow(a, n), D(1)),
+            All("i", Z, Equal(Call("cyclicHom", n, a, ha, residue), Pow(a, i)))))));
     }
 
     private static Formula LiftLFormula()
@@ -193,11 +203,14 @@ internal sealed class GeneralizedCHSHGroupDecompositionDocument : IScribeDocumen
             Call("cyclicHom", n, Call("stepAut", n, F.Id("hn")),
                 Parenthesized(Equal(Pow(Call("stepAut", n, F.Id("hn")), n), D(1)))), Sp, Named("else"), Sp, D(1))));
 
-    private static Formula ClaimFormula()
+    private static Formula ClaimFormula() =>
+        new Formula.Logic(Call("claim"), FormulaLogicOperator.Iff, Parenthesized(ClaimBodyFormula()));
+
+    private static Formula ClaimBodyFormula()
     {
         Formula product = Call("SemidirectProduct", Call("L", n), Cyclic(n), Call("alpha", n));
         Formula equivalence = Call("MulEquiv", Call("G", n), product);
-        return new Formula.Logic(Call("claim"), FormulaLogicOperator.Iff, All("n", N,
-            new Formula.Logic(LeqTo(D(2), n), FormulaLogicOperator.Implies, Call("Nonempty", equivalence))));
+        return All("n", N,
+            new Formula.Logic(LeqTo(D(2), n), FormulaLogicOperator.Implies, Call("Nonempty", equivalence)));
     }
 }

@@ -1,0 +1,14 @@
+### 38.1. 正测度已经足够；严格性由同一实际核支付
+
+固定定义18.1中的一个密度 $\rho$：它是整条实轴上的实值 $L^1$ 函数，
+几乎处处非负，$\int\rho=1$。偶性只用于使下面的核为实值。对任意有限
+互异实节点 $x_j$ 和复系数 $v_j$，仍使用原来的正号 Fourier 核与 Gram：
+$$
+K_\rho(t)=\int_{\mathbb R}\rho(u)e^{2\pi iut}\,du,
+\qquad G_\rho(x)_{ij}=K_\rho(x_i-x_j),
+\qquad
+v^*G_\rho(x)v=\int_{\mathbb R}\rho(u)
+\left|\sum_jv_je^{-2\pi ix_ju}\right|^2du.
+\tag{38.1}
+$$
+

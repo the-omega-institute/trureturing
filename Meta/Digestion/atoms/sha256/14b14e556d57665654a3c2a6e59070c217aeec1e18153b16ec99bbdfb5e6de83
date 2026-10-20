@@ -1,0 +1,104 @@
+**定理98.1（实际零位接收跨度至少五维）。** 令 $p$ 为首轮零位的实际单位接收向量，$G_2,\ldots,G_6$ 为第2至6轮的实际二维零位接收平面。则
+
+$$
+\boxed{\dim\bigl(\mathbb Cp+G_2+G_3+G_4+G_5+G_6\bigr)\ge5.}
+$$
+
+证明保留全部实际来源列、共同输入与环境以及严格主角差值。它不把每一轮分别可选的平面当作同一接收器的实现。
+
+使用的已有结果仅为：第71节四个共同后继环境的八维下界，第74节五个尾环境至多三条不同射线，第69节引理69.1的共同分叉限制，第66节引理66.1的退化纤维保范数方向，以及第86节引理86.2的公共向量局部矩阵禁阻。后三者均不要求首轮环境外置；下面逐项建立所需接口，而不直接外推外置首轮定理。
+
+### 98.1 共同四维实际跨度与完整后继纤维
+
+反设定理中的跨度维数至多四，记该跨度为 $S$。实际早期列为
+$$
+V_0k=p\eta_1,\quad V_1k=q\eta_1,
+\quad V_0p=u\eta_2,\quad V_1p=v\eta_2,
+\quad V_0q=w\eta_2,
+$$
+$$
+H_1=\operatorname{span}(p,q),\quad
+G_2=\operatorname{span}(u,w),\quad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{98.1}
+$$
+$p,q$ 正交单位，$u,v,w$ 正交单位。后续实际二维空间满足
+$$
+V_0H_{n-1}=G_n\eta_n,\quad V_1G_{n-1}=Q_n\eta_n,
+\quad H_n\subset G_n\oplus Q_n,
+\quad G_n\perp Q_n,
+\tag{98.2}
+$$
+且 $H_n$ 到两个同轮分量的投影均为同构，$3\le n\le6$。特别 $H_n\cap G_n=0$。
+
+令 $R_-=G_2+G_3+G_4+G_5\subset S$。第97节命题97.3说明 $R_-$ 的维数不能至多三：否则任两个二维平面相交非零，固定 $V_1$ 使四个后继环境全共线，违反第71节。由 $\dim S\le4$，因此
+$$
+R_-=S,\qquad \dim V_1S=4.
+\tag{98.3}
+$$
+从实际后继中选两条不同射线 $B,C$，相应二维接收平面为 $Q_B,Q_C$。则
+$$
+V_1S=(Q_B\otimes B)\dotplus(Q_C\otimes C).
+\tag{98.4}
+$$
+该空间在 $B,C$ 上的完整纤维分别为 $Q_B,Q_C$，在第三条射线上为 $Q_B\cap Q_C$。因此每个实际二维后继像都填满其完整纤维。固定单射性给
+$$
+[\eta_{i+1}]=[\eta_{j+1}]\Longrightarrow G_i=G_j
+\qquad(2\le i,j\le5).
+\tag{98.5}
+$$
+若 $[\eta_2]=[\eta_{j+1}]$，因为 $p\in S$ 且 $V_1p=v\eta_2$，同一完整纤维还给
+$$
+p\in G_j.
+\tag{98.6}
+$$
+这一步保留首轮真实向量 $p$，不把输入或来源列重新独立选择。
+
+如四个后继中至少出现三条不同射线，（98.4）的第三纤维必须二维，所以存在共同二维空间 $Q_0$，使
+$$
+V_1S=Q_0\otimes F,\qquad Q_3=Q_4=Q_5=Q_6=Q_0.
+\tag{98.7}
+$$
+对每个 $2\le i\le5$，实际 $G_i\otimes\eta_i\subset\operatorname{ran}V_0$，而 $Q_0\otimes F=V_1S\subset\operatorname{ran}V_1$。选后一个空间中的环境向量也为 $\eta_i$，跨位正交给 $Q_0\perp G_i$。这些 $G_i$ 张成同一个 $S$，所以
+$$
+Q_0\perp S.
+$$
+该正交关系来自实际共同位像，不预设任何乘积单线结构。又 $p\in S$ 及 $V_1p=v\eta_2$ 给 $v\in Q_0$。于是
+$$
+H_2,\ldots,H_5\subset S\oplus Q_0,
+\quad P_SH_2=G_2,
+\quad P_SH_n=G_n,
+\quad H_n\cap S=0\ (3\le n\le5).
+\tag{98.8}
+$$
+记 $U=V_1|_S:S\to Q_0\otimes F$ 为满等距；后继射线为 $D$ 的实际平面唯一记为 $T_D$，则 $UT_D=Q_0\otimes D$。不同 $T_D$ 交零且张成 $S$，其投影范数只由对应环境内积决定。
+
+### 98.2 有限尾词与直接空间矛盾
+
+第74节将尾部限制为两条或三条射线。第69节引理69.1只比较已经执行的后继，给下列完整候选表：
+
+| 射线数 | 满足共同分叉限制的全部尾词 |
+|---|---|
+| 两条 | AAAAB, AAABA, AAABB, AABAA, AABAB, AABBB, ABAAA, ABAAB, ABABA, ABABB, ABBAB, ABBBA, ABBBB |
+| 三条 | AAABC, AABAC, AABCC, ABAAC, ABABC, ABACA, ABBBC, ABBCB, ABCAB, ABCBA, ABCBB, ABCBC, ABCCC |
+
+可直接递推核对这张表：从 $A$ 开始，每个位置加入已见字母或下一个新字母；若某字母在前四位置具有两个不同后继，其余当前字母的后继并集至多一个字母。这里未给最后位置添加后继。
+
+以下相同 $H$ 的结论均来自同一个 $V_0$ 的相同乘积子空间像。记实际主角行列式为 $\delta_n=x^2t_{n-2}/t_n$，其中 $x=|a|^2,y=|b|^2,t_0=1,t_j=1-yt_{j-1}$。保留严格差值
+$$
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0,
+\qquad
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0.
+\tag{98.9}
+$$
+
+由（98.5）、（98.6）直接排除以下各词：
+
+| 尾词 | 同一实际空间中的冲突 |
+|---|---|
+| AAAAB, ABBBA, ABBBC | $G_2=G_3=G_4$、$H_2=H_3$，故 $0\ne w\in H_3\cap G_3$ |
+| AABAB, ABABA, ABCBC | $G_2=G_4$、$G_3=G_5$、$H_2=H_4$，故 $0\ne w\in H_4\cap G_4$ |
+| AABBB, ABAAA, ABCCC | $G_3=G_4=G_5$、$H_3=H_4$，违反 $\delta_3\ne\delta_4$ |
+| AABAA, ABAAB, ABBAB | $H_1=H_4$，而（98.6）给 $0\ne p\in G_4$，违反 $H_4\cap G_4=0$ |
+| ABABB | $H_1=H_3$，而（98.6）给 $0\ne p\in G_3$，违反 $H_3\cap G_3=0$ |
+| ABBBB | 四个后继环境共线，违反第71节 |

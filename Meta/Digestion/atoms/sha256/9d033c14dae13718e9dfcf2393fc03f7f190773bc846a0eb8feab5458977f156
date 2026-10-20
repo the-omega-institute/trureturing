@@ -1,0 +1,48 @@
+## 2. 固定文献中的实际 prolate 对象
+
+令 lambda>1，c=lambda^2，a=log(lambda)。在 x=lambda*t 坐标下，文献的
+
+\[
+PW_\lambda=-\partial_x((\lambda^2-x^2)\partial_x)+(2\pi\lambda x)^2
+\]
+
+变为 [-1,1] 上的正规 prolate 实现
+
+\[
+J_q=-\partial_t((1-t^2)\partial_t)+q^2t^2,
+\qquad q=2\pi c.
+\tag{PM1}
+\]
+
+使用偶 Legendre 正交归一基
+
+\[
+e_r(t)=\sqrt{(4r+1)/2}\,P_{2r}(t),\qquad r\ge0.
+\]
+
+未扰动实现定义为此正交基上的自伴对角算子，特征值 (2r)(2r+1)，其多项式核心在图范数中稠密。q^2*t^2 是有界非负乘法算子，因此在同一个算子域上得到自伴 J_q，有限 Legendre 和保持为核心；resolvent 紧性也被有界扰动保留。这选定的是端点正规、无对数奇分支的 Legendre/prolate 实现。可以从 Legendre 方程与分部积分识别其微分形式，或直接由上述对角实现定义后加入实际乘法势。DLMF 30.2、30.3、30.8 给出相应正规 spheroidal 函数及三项递推。DLMF 的特征值参数与这里可能相差 q^2；特征函数不变，数值证书始终使用 (PM1)。
+
+令
+
+\[
+\alpha_j=\frac{j+1}{\sqrt{(2j+1)(2j+3)}},\qquad\alpha_{-1}=0.
+\]
+
+由 t*P_j 的标准三项递推直接得到实际无限三对角矩阵
+
+\[
+A_{rr}=2r(2r+1)+q^2(\alpha_{2r}^2+\alpha_{2r-1}^2),\qquad
+A_{r,r+1}=q^2\alpha_{2r}\alpha_{2r+1}.
+\tag{PM2}
+\]
+
+本节需要偶谱中编号 0 和 2 的正规特征函数 psi_0、psi_4，它们分别对应文献的 h_(0,lambda)、h_(4,lambda)。选择单位 L2 范数并使零阶 Legendre 系数为正。定义
+
+\[
+H(t)=\psi_4(t)-\frac{(\psi_4)_0}{(\psi_0)_0}\psi_0(t),
+\qquad h_\lambda(x)=H(x/\lambda).
+\tag{PM3}
+\]
+
+因为 integral(e_0)=sqrt(2)，而其他 e_r 的积分为零，(PM3) 严格满足零积分。其直线是 span{h_(0,lambda),h_(4,lambda)} 中唯一的零积分直线。任何对两个非零模式的独立重归一化都会给出同一条直线。本文比较的是之后的单位函数，因此省略的整体非零系数不会改变比较对象；最终 Xi 极限的尺度系数仍须用此前已经校准的文献归一化，不能任意缩小。
+

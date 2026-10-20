@@ -1,0 +1,42 @@
+**约定 90.0（公开固定尺度的逐历史合同）。** 固定整数 $m\ge2$ 和 $T\ge0$，沿用第87–89节的实际树族 $t_m$、初始化后一直保留的同一来源、type-only 抽样合同和共同 ACTIVE 端口。令 $\mathcal C_T(m)$ 为约定89.0中先验恰为 $\delta_m$ 的旧实验子类：旧宏调用数至多 $T$，正概率实际端口像 $H_E$ 非空，每个 $h\in H_E$ 的交接深度 $k(h)\in\{0,\ldots,T\}$，后验仍为 $\delta_m$。整数 $m$ 作为公共参数显式供应给两种未来观察器；这仅替代继承合同中禁止输入隐藏 $m$ 的条款，不开放其他隐藏信息。两种比较使用完全相同的旧实验类，旧实验仍可使用原合同的全部动作；仅未来权限分别为
+
+$$
+\mathcal A_{\mathrm{pair}}=\{\mathrm{Read},\mathrm{PairRead},\rho\},
+\qquad
+\mathcal A_{\mathrm{read}}=\{\mathrm{Read},\rho\},
+\tag{90.1}
+$$
+
+两者均可自由停止。每个实际执行的采样或 $\rho$ 计一宏调用，解码、停止和停止后的共同固定补齐计零；交接接口的取得成本不在此指标内。Read 恢复所读叶，PairRead 在一次调用内均匀抽取同一当前树的两个有序且互异的叶出现，恢复两叶；跨调用使用与过去独立的新生产者随机性。来源不重置、不重抽、不复制。端口不重新激活全局已经停止的观察者，其共同可用性是第87.1节供应的模型条件。
+
+同一共同可测程序—解码器可依赖公开的 $E,m,T,\varepsilon$，不能依赖实际旧 $h$。新的控制种子 $s\sim\nu^+$ 位于共同标准 Borel 空间 $\mathsf U$，在未来记录生成之前与整个旧实验、$M=m$ 和生产者抽样随机性独立，全部额外控制及解码随机化并入它。种子与其受控记录保留联合律。旧选择器、旧种子、旧记录与档案、树形、叶身份、来源句柄或隐藏态、来源相关时钟或成本及隐藏选择侧道均不可访问。公共的候选律表可由 $m$ 和候选深度计算，但合同不提供返回实际深度或实际概率律的预言机，也不提供实际深度像的免费查询。
+
+令 $V_i$ 为第 $i$ 次付费调用的动作—应答，已停止后取共同固定补齐符号。在第89节的共同 RAW 空间上取
+
+$$
+\Omega_{\mathrm{RAW}}=\mathsf U\times\mathsf R^{\mathbb N},
+\qquad
+\mathcal F_n=\sigma(s,V_1,\ldots,V_n),\qquad
+\mathcal F_0=\sigma(s).
+\tag{90.2}
+$$
+
+$\mathsf R$ 是共同有限记录字母表，取原始乘积可测结构，不按 $h$ 分别完成化。停止付费调用数 $\tau$ 允许为零，输出目录为完整的 $\{0,\ldots,T\}$，并要求 $\{\tau=n,\widehat k=j\}\in\mathcal F_n$ 对全部 $n\ge0,0\le j\le T$ 成立；未达到的输出也计错误。目标是交接时的 $k(h)$，不是未来增长后的深度。
+
+对 $a\in\{\mathrm{pair},\mathrm{read}\}$，以 $\mathfrak P_a(E,m,T,\varepsilon)$ 表示满足相应未来权限及下列逐历史条件的共同程序—解码器集合。用 $P_h^\sigma$ 表示给定旧 $h$ 后的种子—记录联合律，定义
+
+$$
+\begin{aligned}
+R^a_{T,m}(\varepsilon)
+&:=\sup_{E\in\mathcal C_T(m)}
+\inf_{(\sigma,\widehat k)\in\mathfrak P_a(E,m,T,\varepsilon)}
+\sup_{h\in H_E}\mathbb E_h^\sigma\tau,\\
+P_h^\sigma(\tau<\infty)&=1,\qquad
+P_h^\sigma(\widehat k\ne k(h))\le\varepsilon
+\quad\text{对每个 }h\in H_E.
+\end{aligned}
+\tag{90.3}
+$$
+
+空程序集合的下确界为 $+\infty$。同一程序选定后才取历史上确界，再取旧实验上确界；误差不按历史质量平均，也不交换这三个量词。
+

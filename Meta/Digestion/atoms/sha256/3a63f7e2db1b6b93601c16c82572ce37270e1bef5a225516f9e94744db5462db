@@ -1,0 +1,9 @@
+若一个对偶系统能够被正规化为：
+
+1. 二元分支；
+2. 反射 \(z\mapsto-z\)；
+3. 整数或有理 quotient invariant；
+4. primitive 非负整数更新；
+5. unimodular；
+6. 选择最小非平凡扩张；
+

@@ -1,0 +1,26 @@
+### 20.1 当前态合同与核约化判据
+
+固定素数 $p$，对每个 $h\ge1$ 取
+
+$$
+\begin{gathered}
+V_h=(\mathbb Z/p^h\mathbb Z)^2,\qquad
+M(a,b)=(b,a+b),\qquad G(a,b)=(a+1,b),\\
+q_h(a,b)=2a+3b\pmod{p^h},\qquad
+r_h:V_h\to R_h=r_h(V_h),\\
+(q_h,r_h)\text{ 单射},\qquad
+r_hM=u_hr_h,\qquad r_hG=v_hr_h.
+\end{gathered}
+\tag{RA.2001}
+$$
+
+$r_h$ 是确定的当前态记录，$u_h,v_h$ 是时齐次更新，输入只有记录与已声明的操作名；当前 $q_h$、历史、相位和额外时钟不进入更新器。源域是整个 $V_h$。解码器可以读取当前 $q_h$，$|R_h|$ 只计实际像中的补充标签，不是取得阶段或总硬件容量。
+
+记 $\pi_h:V_{h+1}\to V_h$ 为坐标约化。§19 已给出唯一陪集核 $W_h\le V_h$，满足 $MW_h=W_h$、$W_h\cap\ker q_h=\{0\}$，且
+
+$$
+r_h(x)=r_h(y)\iff x-y\in W_h.
+$$
+
+以下复用该分类及其单层最小值，不重新证明单层同余分类。
+

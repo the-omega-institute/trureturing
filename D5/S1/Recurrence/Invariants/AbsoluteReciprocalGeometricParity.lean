@@ -6,6 +6,8 @@
    utility: none
    digest: Degree contraction and geometric cancellation prove A383377 parity. -/
 
+/- Escape audit unfinished for published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
+
 import Mathlib.RingTheory.PowerSeries.Inverse
 
 open PowerSeries
@@ -63,7 +65,7 @@ private theorem agree_pow {d : ℕ} {f g : PowerSeries R}
   (agree_iff _ _ _).mpr ((agree_iff _ _ _).mp h |>.trans
     (sub_dvd_pow_sub_pow f g k))
 
-private theorem agree_inv {d : ℕ} {f g : PowerSeries R}
+theorem agree_inv {d : ℕ} {f g : PowerSeries R}
     (hf : constantCoeff f = 1) (hg : constantCoeff g = 1)
     (h : Agree d f g) : Agree d (invOfUnit f 1) (invOfUnit g 1) := by
   apply (agree_iff _ _ _).mpr
@@ -185,9 +187,5 @@ theorem hanna_conjecture (n : ℕ) (hn : 1 < n) : Even (a n) := by
   simpa [coeff_map, generatingSeries, coeff_one, coeff_X, show n ≠ 0 by omega,
     show n ≠ 1 by omega] using he
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms mod_two_identity
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Invariants.AbsoluteReciprocalGeometricParity

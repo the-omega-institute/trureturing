@@ -1,0 +1,30 @@
+**命题 1129.1（指数衰减关联下的集中）。** 令 $N\to\infty$，$0<\varepsilon_N<1$，且
+
+$$
+\frac{\log(1/\varepsilon_N)}N\longrightarrow\alpha\in(0,\infty).
+$$
+
+对每个 $P_{N,\varepsilon_N}$ 任取来源熵最优表示，充分大的 $N$ 下其最大权重唯一，可写为 $1-\delta_N$，并满足
+
+$$
+\varepsilon_N\le\delta_N=O(\varepsilon_N).
+$$
+
+**证明。** 简记 $\varepsilon=\varepsilon_N$、$s=\log(1/\varepsilon)$。明确生成器的熵给出
+
+$$
+G_N(\varepsilon)\le h_2(\varepsilon)+(N-1)\varepsilon\log2=O(N\varepsilon)\longrightarrow0.
+$$
+
+若最大权重为 $p$，则 $H(Z)\ge\log(1/p)$，所以 $p\to1$ 并最终唯一。写 $p=1-\delta$，由 $-\log(1-\delta)\ge\delta$ 得 $\delta=O(N\varepsilon)$。又因为最终 $\varepsilon<1/2$，第 1103–1104 节的最大权重界给出 $\delta\ge\varepsilon$。
+
+第一次得到的界已经足以说明
+
+$$
+\log(1/\delta)\ge s-O(\log N)\sim\alpha N.
+$$
+
+分组熵及非负性给 $\delta\log(1/\delta)\le h_2(\delta)\le G_N(\varepsilon)=O(N\varepsilon)$，所以 $\delta=O(\varepsilon)$。证毕。
+
+这里没有沿用第 1109 节的 $\delta/\kappa\to1$；那一节固定维数。本节只证明联合尺度所需的比例有界，并在下面保留可能不同的余量律。
+

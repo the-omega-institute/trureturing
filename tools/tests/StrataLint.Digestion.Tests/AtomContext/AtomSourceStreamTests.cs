@@ -131,7 +131,7 @@ public sealed class AtomSourceStreamTests
             SourcePath = "docs/ledger-path.md",
         }));
         var missing = fixture.Snapshot(includeSource: false);
-        AssertError(DigestionAtomContextError.SOURCE_MISSING, "source_id=source source_path=docs/ledger-path.md",
+        AssertError(DigestionAtomContextError.OCCURRENCE_MISSING, $"CONTEXT_UNAVAILABLE atom_id={target}; run migrate-atom-context explicitly",
             () => DigestionAtomContextProjection.ResolveOccurrences(missing, fixture.Ledger, target));
         AssertError(DigestionAtomContextError.ARGUMENTS_INVALID, "atom_id must be 64 lowercase hexadecimal characters",
             () => DigestionAtomContextProjection.ResolveOccurrences(missing, fixture.Ledger, "bad"));
@@ -141,7 +141,7 @@ public sealed class AtomSourceStreamTests
         {
             SourceId = "unregistered",
         }));
-        AssertError(DigestionAtomContextError.SOURCE_MISSING, "source_id=unregistered source_path=docs/ledger-path.md",
+        AssertError(DigestionAtomContextError.OCCURRENCE_MISSING, $"CONTEXT_UNAVAILABLE atom_id={target}; run migrate-atom-context explicitly",
             () => DigestionAtomContextProjection.ResolveOccurrences(missing, fixture.Ledger, target));
     }
 

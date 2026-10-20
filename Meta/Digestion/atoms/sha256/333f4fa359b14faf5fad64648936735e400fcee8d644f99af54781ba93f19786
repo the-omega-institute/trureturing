@@ -1,0 +1,14 @@
+**状态口径**:下表 `literature-attested` 一律指**出版元数据已联网核对**(作者、年份、刊名、卷页、DOI);原文段落的**内容转述**除 Schmidhuber(评审席亲读 arXiv:0812.4360 §2.3–2.4)与 Poincaré(搜索结果含英译原句)外,一律 `ASSUMED-UNVERIFIED`(逐项收据见 12.6)。
+
+| 锚 | 用于 | 状态 |
+|---|---|---|
+| Gödel 1931,*Monatshefte f. Math. u. Phys.* 38:173–198(DOI 10.1007/BF01700692) | 定理 2.2(ii)、10.1 | `literature-attested`(本会话联网核对) |
+| Tarski 1944,*Philos. Phenomenol. Res.* 4(3):341–376 | 定义 2.1 模型真的语义观 | `literature-attested`(本会话联网核对) |
+| Hume 1739,*Treatise* III.i.1 | 评注 4.2 | `literature-attested`(本会话联网核对) |
+| Moore 1903,*Principia Ethica* §13 | 评注 4.2 | `literature-attested`(本会话联网核对) |
+| Popper 1934/1959,*Logik der Forschung*(Springer,Wien)/ *The Logic of Scientific Discovery*(Hutchinson,London) | 定理 3.9 | `literature-attested`(本会话联网核对) |
+| Poincaré 1908,*Science et méthode*「有用的组合恰恰是最美的」 | 假设 13.33 | `literature-attested`(本会话联网核对) |
+| Hardy 1940,*A Mathematician's Apology*「丑陋的数学没有永久的位置」 | 假设 13.33 | `literature-attested`(本会话联网核对) |
+| Schmidhuber 2009,*J. SICE* 48(1):21–32;arXiv:0812.4360 | 假设 13.33 | `literature-attested`(本会话联网核对) |
+| Solomonoff 1964,*Information and Control* 7(1):1–22 与 7(2):224–254 | 假设 13.33 | `literature-attested`(本会话联网核对) |
+| Tarski 1955,*Pacific J. Math.* 5:285–309 | 定理 5.7 | `literature-attested`(本会话联网核对);mathlib `OrderHom.gfp` 本机 grep 命中 |

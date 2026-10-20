@@ -1,0 +1,45 @@
+## 47. Mathematical suppliers and the scope of the bridge
+
+**Mathematical correspondence 47.1 (reuse and classical comparisons).**
+The source snapshots for the native premises are the six indicated volumes
+at commit
+[`b669ef36ee32627638ed55edc90152bf606a9df0`](https://github.com/the-omega-institute/trureturing/tree/b669ef36ee32627638ed55edc90152bf606a9df0/docs/develop/theory).
+The mathematical dependencies and limits of comparison are as follows.
+
+| Supplier | Precise role and applicability |
+| --- | --- |
+| G Definition 25.1, (26.5)--(26.12), (32.2) | Original rational coefficients, fixed interval, raw measures, both deaths, all-real-frequency coercivity and uniform bracket independence. Lemma 41.2 extends their scalar argument to a spatial estimate and an integrable band error; no elliptic heat bound is assumed for the rank-two native operator. |
+| This volume §§35--40 | The tensor, signed pushforward, point heat limit and Q/source conventions are reused. The new inference is the all-time Green comparison, its periodic crossover and its corrected finite parts, not another derivation of that tensor or heat limit. |
+| C (32.4)--(32.5) | Isolated scalar Dirichlet band perturbation is reused through the multivariate proof already in §36. Its visible-zero-block coefficient is not the joint-point Schur complement. |
+| N Theorems 10.3 and 10.5; F §§2--3 | Native controls and same-clock symbol/quotient boundaries. They do not identify a hidden integral with a full point response. |
+| S §50 | A finite-state FIB chain with a different mixed height boundary. Its quasi-stationary and Doob constructions are comparisons, not a supplier of the present two-Dirichlet-face Green. |
+| X. Geng and G. Iyer, *Long Time Asymptotics of Heat Kernels and Brownian Winding Numbers on Manifolds with Boundary*, [arXiv:1804.00368v1, Theorem 2.1, §2](https://arxiv.org/html/1804.00368v1) | Compact smooth Riemannian base, finitely generated abelian deck group and Laplace--Beltrami operator with mixed Dirichlet/Neumann conditions. The native four-dimensional symbol has rank two and is not that elliptic operator. The comparison explains the ground-band method but supplies neither Lemma 41.2 nor its time-integrated uniformity. |
+| M. Kha, *Green's function asymptotics of periodic elliptic operators on abelian coverings of compact manifolds*, [arXiv:1511.00276v3, Theorem 3.4 and Assumption A1--A4](https://arxiv.org/html/1511.00276v3) | Spectral-edge Green asymptotics for a second-order periodic selfadjoint elliptic operator, deck rank at least three, a unique nondegenerate band minimum and separation from other bands. Its effective Hessian is a useful comparison, but native ellipticity fails. Its theorem does not prove a uniform small-wall result for this hypoelliptic family or a rank-two cylinder endpoint. |
+| T. Ballu, *Asymptotics of Green functions for Markov-additive processes: an approach via dyadic splitting of integrals*, [arXiv:2407.10685v2, Theorem 1.5, Assumptions 1.2 and 1.4](https://arxiv.org/html/2407.10685v2) | Irreducible aperiodic discrete-time process on $\mathbb Z^d\times\{1,\ldots,p\}$, finite exponential moments and nonzero stationary drift. Here height is continuous and the conservative Q additive martingale is centered. Its noncentered Green theorem cannot be applied by naming this a Markov-additive process. |
+| N. Champagnat and D. Villemonais, *Exponential convergence to quasi-stationary distribution and Q-process*, [arXiv:1404.1349v2, Theorem 3.1(ii)--(iii), Assumption (A)](https://arxiv.org/html/1404.1349v2) | The transform formula has the same algebra as (37.2). Their uniform conditional minorization/mixing hypothesis is not available for phase translations on this noncompact cover; its probability-invariant conclusion is not imported. The height and fully wrapped invariant probabilities here are computed directly. |
+
+The classical reflection, bounded-potential product formula, analytic
+simple-eigenvalue perturbation, Fourier inversion, Gaussian integration
+and recurrence criterion are tools, not new general results.
+For the last criterion the precise classical statement is
+Fukushima--Oshima--Takeda, *Dirichlet Forms and Symmetric Markov Processes*,
+[second revised and extended edition (2011)](https://doi.org/10.1515/9783110218091),
+Theorem 1.6.3: recurrence is
+equivalent to a sequence $0\le u_n\le1$ in the form domain tending to one
+almost everywhere with $\mathcal E(u_n,u_n)\to0$. This is applied to the
+conservative regular symmetric Q form, not to the killed form. In particular
+the symmetric-form criterion used in Theorem 45.1 is the equivalence between
+recurrence and existence of bounded form-domain functions tending to one
+with energies tending to zero; it applies to the conservative symmetric
+regular Q form. The displayed logarithmic cutoffs check that criterion
+for the actual cylinder and leaf, including their height reference weight.
+The explicit $K_0$ integral in (43.5) fixes its normalization without
+requiring a special-function convention from a secondary source.
+
+The native assertions are repository-derived ordinary mathematical proofs.
+The comparison results above do not certify the new global estimates.
+No exhaustive literature survey or originality certification follows from
+these correspondences. The three-phase Coulomb law is conditional on the
+specified cover, threshold shift, covariance, density, clock and source;
+the physical and operation boundaries in §46 remain part of its statement.
+

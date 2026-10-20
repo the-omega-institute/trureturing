@@ -1,0 +1,7 @@
+真正要将其提升为数学定理，需要构造：
+
+1. 黄金 symbolic base；
+2. 一个零 Lyapunov 的 suspension coordinate；
+3. 其 transfer determinant；
+4. 该 determinant 与 \(G\) 的同一性。
+

@@ -1,0 +1,62 @@
+## 83. 分数高斯环境、非马尔可夫记忆与异常响应
+
+取已指定的 FIB hull 或有限上下文过程 \(X_t\)，令有界观测 \(a_t=a(X_t)\)。另行加入独立分数高斯噪声 \(\xi_t\)，其协方差为
+\[
+R_H(k)=\frac{\sigma^2}{2}
+\left(|k+1|^{2H}-2|k|^{2H}+|k-1|^{2H}\right),
+\qquad 0<H<1.
+\]
+令 \(Y_t=a_t\xi_t\)。若 \(a_t\) 平稳且独立于 \(\xi\)，则
+\[
+\operatorname{Cov}(Y_0,Y_k)
+=R_H(k)\,\mathbb E[a_0a_k].
+\]
+当 \(\mathbb E[a_0a_k]=\bar a^2+r_a(k)\) 且 \(r_a\) 可和时，长记忆主项由 \(\bar a^2R_H(k)\) 决定。部分和方差恒等式为
+\[
+\operatorname{Var}\left(\sum_{t=0}^{n-1}Y_t\right)
+=nC_Y(0)+2\sum_{k=1}^{n-1}(n-k)C_Y(k).
+\]
+在精确分数高斯或残差可忽略的条件下，\(H>1/2\) 时
+\[
+\operatorname{Var}\left(\sum_{t<n}Y_t\right)
+\sim \bar a^2\sigma^2n^{2H},
+\qquad
+n^{-H}\sum_{t<\lfloor ns\rfloor}Y_t
+\Longrightarrow \bar a\sigma B_H(s).
+\]
+\(H=1/2\) 回到普通平方根标度；\(H<1/2\) 时零频抵消可能产生次扩散，但 FIB 调制的短程残差也可能重新产生平方根项。若 \(\bar a=0\)，主标度由 \(r_a\) 和联合谱决定，不能只由 \(H\) 判断。
+
+更一般地，定义外加 Volterra 过程
+\[
+Z_t=\sum_{m\ge0}K_ma_{t-m}+\varepsilon_t,
+\qquad
+K_m\sim\kappa m^{d-1},\quad 0<d<\tfrac12.
+\]
+若创新谱在零频正且尾部满足线性过程的 Lindeberg 条件，则
+\[
+f_Z(\lambda)\asymp|\lambda|^{-2d},
+\qquad
+H=d+\tfrac12,
+\]
+并有
+\[
+\operatorname{Var}\sum_{t<n}Z_t\asymp n^{2H},
+\qquad
+n^{-H}\sum_{t<\lfloor ns\rfloor}Z_t
+\Longrightarrow cB_H(s).
+\]
+\(\sum_m|K_m|<\infty\) 时恢复短记忆 CLT。若把该核解释为转移核，还必须另加非负性、归一化和历史条件概率一致性；线性记忆公式本身不是 Markov 核。
+
+有限时域的粗糙响应可由
+\[
+U_a(t)=\int_0^t
+\frac{(t-s)^{H_r-1/2}}{\Gamma(H_r+1/2)}
+a_s\,dW_s,
+\qquad 0<H_r<\tfrac12
+\]
+定义。在局部正则条件下，
+\[
+\mathbb E|U_a(t+h)-U_a(t)|^2\asymp h^{2H_r}.
+\]
+分数高斯噪声、Volterra 核、创新律、独立性和平稳测度都由外部模型指定；FIB 只提供调制状态。因此 \(H\) 和粗糙指数不是 FIB 自动推出的物理常数。
+

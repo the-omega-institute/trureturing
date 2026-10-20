@@ -1,0 +1,8 @@
+真正要反证有限压缩，需要证明例如：
+
+* Hankel rank 无界；
+* transfer-state complexity 无界；
+* 任意有限 generator family 留有 primitive residual；
+* operator algebra 不能由有限秩闭包生成；
+* 或 generating function 具有无法由有限谱产生的奇点结构。
+

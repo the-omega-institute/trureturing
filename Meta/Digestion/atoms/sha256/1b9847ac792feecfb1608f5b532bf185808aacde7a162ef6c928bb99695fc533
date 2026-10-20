@@ -1,0 +1,9 @@
+## Equality in Schur's test checks the unprojected theta-edge shortcut
+
+The criterion above and the classical equality condition in
+Cauchy–Schwarz are reused here. The application concerns the
+[original minimal even theta form](../Weil/fukushima2011dirichlet.md)
+and its [known critical family](../Weil/lagarias2004li.md), under those
+notes' paper-level model and domain premises. It does not construct a
+transfer or supply a new numerical lower bound or Lean certification.
+

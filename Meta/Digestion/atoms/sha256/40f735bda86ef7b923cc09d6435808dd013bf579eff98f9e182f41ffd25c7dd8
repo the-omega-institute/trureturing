@@ -1,0 +1,21 @@
+**定义 44.1（共同 β 地址与固定参考来源）。** 沿用定义 29.1、30.1、30.6的原全有限树只读合同、实际像 $\mathcal I_3=\rho^3(\mathcal T)$、等叶数集合 $\mathcal I_3(n)$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$、全域确定性策略空间 $\mathfrak D_3$、共同费用 $D$ 和容量 $\mathsf{Cap}$。未知输入仍遍历全部非空有限自由有序满二叉 $\alpha/\beta$ 树；所有有限左右地址，包括根，都可直接查询同一不变输入的原始四值。评价族的正性、共同叶数和完整描述均不成为未知输入的承诺。费用仍只计真实同址缓存后不同的实际请求地址。
+
+采用原有字面树，并给八叶树另设不混淆左右次序的记号：
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle,\qquad
+C=\langle A,E\rangle,\qquad
+T_*=\langle A,C\rangle.
+\tag{44.1}
+$$
+
+这里 $T_*\ne B=\langle C,A\rangle$；$B$ 保持式（30.2）的原义。对正来源定义定向缺额
+
+$$
+\delta_\beta(P,Q)=|\Lambda_\beta(P)\setminus\Lambda_\beta(Q)|.
+\tag{44.2}
+$$
+
+实际像双孔上下文仍取定义 32.1 的对象：两个各出现一次的孔、保留次序的二叉配对以及固定的实际正子树。完整前像的存在与唯一性只使用母卷定义 2.1、3.1及规范编译卷命题 4.3，不由组成相等推断完整树相等。
+

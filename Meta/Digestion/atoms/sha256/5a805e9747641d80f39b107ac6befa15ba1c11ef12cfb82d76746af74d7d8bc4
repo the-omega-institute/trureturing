@@ -1,0 +1,42 @@
+**Lemma 131.2 (Saturation from the entire N5 class).** Every finite
+$\mathscr N_5$ kernel has $C_3(p)\le15$. At a feasible
+$\kappa_3=0$ cap, all 16 C3 events are tight and a representation has
+support only on pairs $12,13,14,23,24,34,45$, using precisely the
+maximizer-label restrictions in the preceding table.
+
+**Proof.** A common terminal-mass representation gives schedule weight
+$w_Q$ and nonnegative cell masses $T_{Qz}(j)$, with
+$\sum_jT_{Qz}(j)=w_Q$ for every cell and $\sum_Qw_Q=1$.
+The schedule and all deterministic cell outputs are fixed by one seed.
+Its score is at most $B^{C_3}_Q\le15$; integrating proves the bound.
+For the target, the table gives
+
+$$
+C_3(\eta)=13+2a_2+4a_3+5a_4+5a_5,\qquad
+\sum_r k^{C_3}_r=29.
+\tag{131.2}
+$$
+
+Each event obeys $p_{b^r}(E_r)\ge\eta_{b^r}(E_r)-\varepsilon$,
+so $C_3(p)\ge15-\kappa_3$. At $\kappa_3=0$ equality follows.
+The exact nonnegative loss decomposition is
+
+$$
+15-C_3(p)=\sum_Q(15-B^{C_3}_Q)w_Q+
+ \sum_{Q,z,j}(M^{C_3}_{Qz}-g^{C_3}_{Qz}(j))T_{Qz}(j).
+\tag{131.3}
+$$
+
+Every summand must vanish. Empty and singleton schedules, thus also
+repeated-coordinate schedules, and pairs $15,25,35$ have zero weight.
+All remaining positive masses use C3 maximizers. Separately, the weighted
+sum of nonnegative event gaps
+$p_{b^r}(E_r)-\eta_{b^r}(E_r)+\varepsilon$ is zero; all C3 weights
+are positive, so every event is tight. The $00,01$ masses remain distinct
+N vectors even when their allowed sets agree. Pair $45/01$ has score
+zero for all six labels and keeps all six labels and its full-word rows.
+For original necessity first apply 110.2 to the unrestricted
+arbitrary-address/full-carrier competitor. This deduction concerns its
+finite feasible representative, without restricting the original rule's
+addresses, tapes or exact laws. $\square$
+

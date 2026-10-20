@@ -1,0 +1,6 @@
+其中：
+
+- $Z:\texttt{ZeroData}$；
+- $g:\texttt{WeilTestFunction}$；
+- `hZero : SymmetricConvergent Z (convolutionSquare g)`。
+

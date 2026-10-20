@@ -1,0 +1,16 @@
+### 定理 355.3（离散 Stokes 关系）
+
+对任意三维上链 \(V\in C_3(K;\mathbb Z)\)，任意面曲率上链 \(F\in C^2(K;A)\)，有
+
+$$
+\langle F,\partial V\rangle
+=
+\langle d_2F,V\rangle.
+$$
+
+若 \(F=d_1g\)，则
+
+$$
+\boxed{\langle F,\partial V\rangle=0.}
+$$
+

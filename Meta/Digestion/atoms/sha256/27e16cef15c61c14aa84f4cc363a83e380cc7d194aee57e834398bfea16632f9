@@ -1,0 +1,8 @@
+研究状态应从以下事实派生：
+
+- Lean 构建结果；
+- `#print axioms`；
+- source digest；
+- theorem 完整类型；
+- 已固定依赖。
+

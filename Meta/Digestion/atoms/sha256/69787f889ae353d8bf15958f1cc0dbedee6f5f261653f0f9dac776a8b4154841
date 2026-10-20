@@ -1,0 +1,71 @@
+**引理 99.2（共同整数关系）。** 有 $B>A$。对固定整数 $h,l$，
+不同时为零，置
+
+$$
+T=hu+lv,\qquad D_{h,l}=h/A-l/B,\qquad J=hj+lk\in\mathbb Z.
+\tag{99.2}
+$$
+
+在共同有界正均值带上，
+
+$$
+\begin{aligned}
+J-NT={}&-\frac{3D_{h,l}\ln Q}{Q}\\
+&+\frac1Q\left[
+\frac hA\{C_Q(u;\beta)-\ln\mu_+\}
+-\frac lB\{C_Q(v;\beta)-\ln\mu_-\}\right]+o(Q^{-1}).
+\end{aligned}
+\tag{99.3}
+$$
+
+$C_Q$ 保留两个原取整相位且一致有界。
+两均值同处任一固定多项式带 $[Q^{-K},Q^K]$ 时，仍有
+$\|NT\|=O_K(\ln Q/Q)$。
+
+证明。原实际均值展开为
+
+$$
+\ln\mu^{\mathcal E}_{Q,j}(\beta)
+=Q^3\{c(\beta)-I(j/N)\}-3\ln Q+C_Q(j/N;\beta)+o(1).
+\tag{99.4}
+$$
+
+具体地，令 $\Delta_Q=\lfloor aQ^3\rfloor-aQ^3$、
+$\rho_Q=\{\phi Q^3/(\beta\ln2)\}$、$\eta=\ln((1+r)/(1-r))$，则
+
+$$
+\begin{aligned}
+A_Q(x)={}&-\ln(2\pi)-\tfrac12\ln[(a+x)(b+\vartheta x)]\\
+&+\Delta_Q\left[\ln\frac{b+\vartheta x}{b}-\ln\frac{a+x}{a}\right],\\
+C_Q(x;\beta)={}&(1-\rho_Q)\ln2-\Delta_Q\eta+A_Q(x).
+\end{aligned}
+\tag{99.5}
+$$
+
+内部紧集上这些函数及所需导数一致有界；原 $P/Q-\vartheta$ 误差小于
+这里任一保留阶。多项式均值带和简单根定位给
+$d_+=j-Nu,\ d_-=k-Nv=O_K(\ln Q/Q)$，因此
+
+$$
+\begin{aligned}
+\ln\mu_+&=-QA\,d_+-3\ln Q+C_Q(u;\beta)+o(1),\\
+\ln\mu_-&= QB\,d_--3\ln Q+C_Q(v;\beta)+o(1).
+\end{aligned}
+\tag{99.6}
+$$
+
+Taylor 余项为 $O((d_+^2+d_-^2)/Q)=o(1)$。解出两个位移并取线性组合，
+得到 (99.3)。共同 $N$ 和整数 $J$ 不能由两个无关的边缘子序列替代。
+
+再核对严格斜率。$I''>0,I'''<0$；令
+$H(x)=I'(x)^2-2I(x)I''(x)$，有 $H(0)=0$、
+$H'=-2II'''>0$（$x\ne0$）。等率两点满足
+
+$$
+\frac{I''(u)}{I'(u)^2}<\frac1{2I(u)}
+<\frac{I''(v)}{I'(v)^2}.
+$$
+
+反根映射 $v=\psi(u)$ 经隐函数微分得 $\psi''>0$；
+零点延拓 $\psi'(0)=-1$，故 $-1<\psi'=-A/B<0$，即 $B>A$。证毕。
+

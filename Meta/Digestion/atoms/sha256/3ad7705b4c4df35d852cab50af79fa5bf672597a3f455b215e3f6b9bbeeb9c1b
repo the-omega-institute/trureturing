@@ -1,0 +1,33 @@
+## 形式化依赖
+
+本轮按提交
+
+```text
+7964bc54f38cf4d24bf7b702ca3ec1d5f5b89a1e
+```
+
+核对了项目中的两个相关基础模块：
+
+`ExactDescentNoCarry.lean` 用于判定单体边缘接口是否足以支持后续受力目标。
+
+`ConservationAutonomySeparation.lean` 区分能量守恒与局部相位过程的自主性。
+
+新增证明可以分层为：
+
+| 层次    | 应形式化的对象             |
+| ----- | ------------------- |
+| 有限能量层 | 互易偏导、双线性能量、有限能级差    |
+| 有限量子层 | 四分支相位、局部相位等价、纠缠判据   |
+| 运动分析层 | 自伴域、总动量、相对坐标与反冲     |
+| 几何读取层 | 混合空间差分、Hessian、潮汐误差 |
+| 实现层   | 分支嵌入、控制残差、完整过程误差    |
+
+本轮的 **16 项精确代数检查均通过**，包括能量互易性、重复计数恒等式、共同—相对动能分解、Newton 势 Hessian、有限分支纠缠及相同边缘态下的相互作用能量差。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_reciprocal_tidal_interaction.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/reciprocal_tidal_interaction_checks.json)
+
+本轮没有运行 Lean 编译。这些检查支持所列恒等式与有限实例，不替代一般分析定理的机器证明，也不验证模型已经唯一对应现实引力。
+
+---
+

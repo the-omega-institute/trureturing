@@ -1,0 +1,25 @@
+**定义 44.1（统一的群同态循环控制）。** 固定定义 39.1 的非空有限扇区集 $S$、正整数源尺寸 $r_s$ 与目标尺寸 $d_s$，并记 $C_m=\mathbb Z/m\mathbb Z$，其中 $C_1$ 为平凡群。源谱 $\lambda_s$ 遍历长度 $r_s$ 的所有非增概率向量，允许零项。对每一族 $\lambda=(\lambda_s)_s$，沿用 §39 的补零约定、共同环境指标 $j<M$、幅度 $\alpha_{saj}$、向量 $\psi_{sj}$、Fourier 向量 $T_{sk}$ 与系数 $c_{sjk}$。特别地，$b_{sj}=c_{sj0}$，$G_{st}=\sum_j b_{sj}b_{tj}$。记该族的完整目标信道为
+
+$$
+\mathcal F^\lambda_G(X)
+=T(G\circ X)T^*+\sum_sX_{ss}L_s,
+\qquad
+L_s=\sum_{k\ne0}\left(\sum_j|c_{sjk}|^2\right)
+|T_{sk}\rangle\langle T_{sk}|.
+$$
+
+这个记号保留由源谱决定的全部 $L_s$；只给出理想子空间上的 $G$ 块不算给出完整信道。
+
+取有限群 $H$，不预设阿贝尔性，以及对每个 $s$ 的满射群同态 $\pi_s:H\twoheadrightarrow C_{d_s}$。令 $h$ 在 $H$ 上均匀分布，两侧在 §39 的局部拆分并丢弃环境后使用同一个 $h$。若 $X_s|s,a\rangle=|s,a+1\bmod d_s\rangle$，置
+
+$$
+U_h=\bigoplus_sX_s^{\pi_s(h)},\qquad V_h=U_h\otimes U_h,
+\qquad
+\mathcal C^\lambda_{H,\pi}(X)
+=\frac1{|H|}\sum_{h\in H}V_h
+\left(\sum_{s,t}X_{st}\sum_{j<M}
+|\psi_{sj}\rangle\langle\psi_{tj}|\right)V_h^*.
+$$
+
+群与同态固定于整个源谱族，不随 $\lambda$ 或输入 $X$ 改变。称它们实现统一粗化，当且仅当对每个允许的 $\lambda$ 有 $\mathcal C^\lambda_{H,\pi}=\mathcal F^\lambda_G$。定义 $N_{\min}(\mathbf r,\mathbf d)$ 为这些实现中的最小 $|H|$；直积群 $\prod_sC_{d_s}$ 的坐标控制给出非空候选集。此处优化的是这一固定拆分之后的均匀群同态循环控制标签数。依定理 42.1，联合控制像的大小与实际不同信道分支数须区分：一个特殊源谱可能使不同控制标签诱导相同的编码后映射，本节不最小化该谱的不同映射数。所求也不是一般 CPTP 或 LOSR 分解的分支数、非均匀或非同态控制的最小支持，不把标签数解释为物理资源。它与定理 39.2 的不受限钻石误差极值属于不同的优化问题。
+

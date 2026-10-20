@@ -1,0 +1,13 @@
+### 82.2 尺度差异的具体 Hellinger 强度
+
+本节使用[波粒子事件卷定义371.1](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md)的归一化：
+
+$$
+H^2(P,Q)
+:=\frac12\sum_x(\sqrt{P(x)}-\sqrt{Q(x)})^2
+=1-\mathsf A(P,Q),
+\qquad
+\mathsf A(P,Q):=\sum_x\sqrt{P(x)Q(x)}.
+\tag{82.8}
+$$
+

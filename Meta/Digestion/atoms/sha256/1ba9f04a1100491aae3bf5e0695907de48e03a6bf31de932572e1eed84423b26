@@ -1,0 +1,49 @@
+## 142. FIB 路径约束上的外加 Schrödinger 桥与随机控制
+
+令 \(\Omega\) 为路径空间，\(e_0,e_T\) 为端点映射，\(R\) 为参考路径律。把 FIB 允许路径记为 \(\mathcal F\subset\Omega\)，其端点支撑为
+$$
+E_{\mathcal F}=\{(e_0(\omega),e_T(\omega)):\omega\in\mathcal F\}.
+$$
+给定端点分布 \(\mu_0,\mu_T\)，FIB 约束下的可行类为
+$$
+\mathcal A_{\mathcal F}
+=\{P\ll R:P(\mathcal F)=1,\ e_{0\#}P=\mu_0,\ e_{T\#}P=\mu_T\}.
+\tag{142.1}
+$$
+Schrödinger 桥定义为
+$$
+\min_{P\in\mathcal A_{\mathcal F}}D_{\mathrm{KL}}(P\|R).
+\tag{142.2}
+$$
+
+若路径空间具有紧性、可行类非空并含有限 KL 元素、成本下半连续，且受限参考律在允许支撑上严格正并满足连通性，则最优解存在；KL 的严格凸性给出唯一最优路径律。若 FIB 约束端点可测，最优律具有
+$$
+\frac{dP^*}{dR_{\mathcal F}}
+=f(X_0)g(X_T),
+\tag{142.3}
+$$
+其中势函数只在 \(f\mapsto cf,\ g\mapsto c^{-1}g\) 的规范变换下不唯一。支撑不连通时，各连通分量还可能有独立规范。
+
+熵正则最优传输可写成
+$$
+\min_{\pi\in\Pi(\mu_0,\mu_T),\ \pi(E_{\mathcal F})=1}
+\left[\int c\,d\pi+\varepsilon
+D_{\mathrm{KL}}(\pi\|K_{\mathcal F})\right].
+\tag{142.4}
+$$
+若参考扩散受漂移控制
+$$
+dX_t=b(X_t)dt+\sigma(X_t)(u_tdt+dW_t),
+$$
+则在适用的 Girsanov 条件下，相对熵转为控制能量
+$$
+D_{\mathrm{KL}}(P^u\|R)
+=\frac12\mathbb E\int_0^T|u_t|^2dt.
+\tag{142.5}
+$$
+这把路径约束的熵最小化与带端点分布的随机控制联系起来。
+
+相同端点观测不保证相同隐藏路径成本。只有当 FIB 支撑、参考条件律和成本都能因子化到观测商时，路径问题与观测问题才等价。若 \(R(\mathcal F)=0\)，标准 KL 问题没有有限值；若 \(\mathcal F\) 不是端点可测集合，端点约束只是必要条件，不能替代整条路径约束。令 \(\varepsilon\to0\) 后严格凸性可能消失，唯一性也不再由 FIB 保证。
+
+本节结论是：FIB 提供允许路径的硬支撑，参考概率、端点分布、成本、熵系数和控制动力学均需外加；桥接律与控制律是这些条件共同作用的结果。
+

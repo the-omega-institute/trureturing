@@ -33,7 +33,8 @@ internal static partial class IngestCommand
         var finalRanks = LedgerDurabilityRanks(finalDocument.RequireDigestionEntries());
         var updates = final.Entries
             .Where(static entry => entry.Path == BackfillInventoryLoader.RelativePath
-                || BackfillInventoryLoader.IsCanonicalPath(entry.Path))
+                || BackfillInventoryLoader.IsCanonicalPath(entry.Path)
+                || IsContextIndexPath(entry.Path))
             .Where(entry => !currentEntries.TryGetValue(entry.Path, out var existing)
                 || !existing.Bytes.AsSpan().SequenceEqual(entry.Bytes.AsSpan()))
             .Select(entry => new LedgerUpdate(
@@ -42,7 +43,8 @@ internal static partial class IngestCommand
                 finalRanks.GetValueOrDefault(entry.Path)))
             .Concat(current.Entries
                 .Where(static entry => entry.Path == BackfillInventoryLoader.RelativePath
-                    || BackfillInventoryLoader.IsCanonicalPath(entry.Path))
+                || BackfillInventoryLoader.IsCanonicalPath(entry.Path)
+                || IsContextIndexPath(entry.Path))
                 .Where(entry => !finalEntries.ContainsKey(entry.Path))
                 .Select(entry => new LedgerUpdate(
                     entry.Path,
@@ -53,6 +55,8 @@ internal static partial class IngestCommand
             .ToImmutableArray();
         return updates;
     }
+
+    internal static bool IsContextIndexPath(string path) => DigestionContextPointerStore.IsCanonicalPath(path);
 
     private static IReadOnlyDictionary<string, int> LedgerDurabilityRanks(
         IEnumerable<DigestionLedgerEntry> ledgerEntries)

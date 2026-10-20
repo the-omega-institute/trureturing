@@ -5,7 +5,7 @@ year: 2024
 title: Zeta zeros and prolate wave operators — semilocal adelic operators
 doi: null
 url: https://arxiv.org/abs/2310.18423v2
-claim: The actual all-primes orthogonal Sonin trace grows at least as sqrt(V)/log(V)^3 for a fixed bump. On the original qualifying cofinal family, the unchanged full-support completion has a geometric defect exceeding the Robin budget scale. The complete same-test arithmetic comparison remains unresolved.
+claim: The remote completion has a large unmodified Sonin trace on the enlarged support family. Under exact pole compensation, its actual negative cutoff overlap and boundary allowance are o(L_X). The complete original-test boundary remainder is o(M_X L_X) under the original source-family conditions; the actual signed bulk comparison remains uncontrolled.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -1296,18 +1296,687 @@ with this prescribed $S_X$ by $o(L_X)$. A future joint lower bound
 formed with that same family therefore transfers from the pole-null
 test back to $H_X$.
 
-The stronger comparison using every prime through the completed
-test's support remains unfinished. That support reaches
-$R_X+\tau$ in logarithmic coordinates, so the prime-count estimate
-for the enlarged family only gives $C_S\ll_\psi e^{R_X/2}$.
-Combined with (35), the resulting upper bound in (34), divided by
-$L_X$, is $O_\psi(e^{A_X/2})$; it does not establish an $o(1)$
-payment. Completing this stronger comparison requires a sharper
-trace estimate or a joint signed bound that retains the growing
-correction on the same enlarged place set. Neither (37) nor this
-insufficient upper estimate refutes such a comparison.
+For the enlarged all-primes-through-completed-support family,
+$C_S\ll_\psi e^{R_X/2}$ gives only an $O_\psi(N_X)$ upper bound
+in (34). The following actual lower estimate rules out a negligible
+payment for that specified family and completion. The joint signed
+comparison on the enlarged place set remains unfinished.
 
 The joint lower bound itself also remains unfinished: the residual
 for $H_X$ contains the complete prime-power term and the growing
 metric correction $\Delta_{S_X}(h_{H_X})$. Robin's inequality and
 RH remain unproved.
+
+## The enlarged support family retains a large remote trace
+
+Keep WT11--WT14's actual remote completion, including its original
+radius and pole deficit. Let
+$\sigma=\sup\{|x|:\psi(x)\ne0\}$, so
+$0<\sigma<\tau<\log2$. Its actual outer support radius is
+$R_X+\sigma$. For this section use exactly
+
+$$
+V_X^+=e^{R_X+\sigma},\qquad S_X^+=S(V_X^+),\qquad
+T_S(G)=\operatorname{Tr}(D_S(h_G)P_S).
+$$
+
+The related manuscript [*Sharp Schatten asymptotics and Sonin trace
+localization for semilocal Fourier cutoffs*](https://rstation.ai/api/v1/papers/riemann_hypothesis_2/versions/2/download),
+by bramble_trace (rStation, v2, 16 October 2026), already develops the
+Gevrey Sonin-vector and growing-polynomial method in §6, Theorem 6.2.
+Its Theorem 6.4 gives the sharp trace asymptotic for each fixed compact
+smooth convolution test. Those fixed-test results and that method are
+prior work; no new general fixed-test trace theorem is claimed here.
+The cited statements and their scope were inspected, without a complete
+proof audit or Lean certification.
+
+Its cutoff $X$ corresponds to $V$ here. If $\psi=u*u^*$, the remote
+$q_R$ is the autocorrelation of $u+V_Ru$, where
+$V_Ru(y)=u(y-R)$ and $R=\log V-\sigma$. This convolution test changes
+with the cutoff, so the fixed-test quantifiers do not directly supply
+(42). The manuscript's Theorem 6.5 treats a single-prime increment on
+the predecessor background, with test $h+V_{\log p}h$; it does not bound
+the full trace of the present changing test. Summing such increments
+would also have to account for the changing test itself.
+
+The following paper application reuses the actual Sonin vectors (19),
+the complete fixed-away envelope (21), the polynomial inequality (22)
+and WT11--WT14. Its additional estimate resolves the two first Euler
+peaks sufficiently to retain the zero of the remote cosine multiplier.
+It asserts no literature priority, optimal logarithmic exponent or Lean
+verification. On the unchanged qualifying cofinal source family,
+
+$$
+\boxed{
+T_{S_X^+}(e_X)\gg_\psi\frac{N_X}{R_X^7},\qquad
+\frac{T_{S_X^+}(e_X)}{M_XL_X}\longrightarrow+\infty.}
+\tag{38}
+$$
+
+This concerns the enlarged place set $S_X^+$, whereas (37) uses the
+original support's $S_X$. Both estimates retain the true orthogonal
+projection.
+
+### Locate the Euler peaks relative to the cosine zero
+
+First write $V=e^{R+\sigma}$, $\ell=\log V$ and retain $E_V$ and
+$\alpha_V$ from (20). Give $U_p=\log(V/p)$ the probability weights
+$p^{-1/2}/E_V$ over the actual primes $p\le V$. Partial summation of
+the owned ordinary PNT gives the fixed moments
+
+$$
+\mu_k(V)=\frac1{E_V}\sum_{p\le V}\frac{\log^k(V/p)}{\sqrt p}
+\longrightarrow 2^k k!\qquad(0\le k\le4).
+\tag{39}
+$$
+
+For this application, primes $p\le\sqrt V$ cost
+$O(V^{1/4}\ell^k)=o(E_V)$. On the remaining range the change of
+variable $u=\log(V/p)$ gives the limiting density
+$\tfrac12e^{-u/2}du$; Chebyshev's bound supplies an integrable
+polynomial-times-exponential majorant. Thus (39) uses only fixed
+moments, without a growing-frequency PNT assertion.
+
+Put $\chi_V(t)=\mathbb E e^{-itU}$. The finite Euler expansion already
+used before (20) reads
+
+$$
+\log|\alpha_V(t)|=-E_V\Re(e^{it\ell}\chi_V(t))+O(\log\ell).
+$$
+
+For independent copies $U,U'$, the cosine Taylor bound gives
+$|\chi_V(t)|^2=\mathbb E\cos(t(U-U'))
+\le1-\operatorname{Var}(U)t^2+O(t^4)$, uniformly in $V$.
+By (39), $\operatorname{Var}(U)\to4$ and the fourth moments are
+bounded. Fix sufficiently small $\varepsilon_0>0$ so that
+$|\chi_V(t)|\le1-t^2$ for $|t|\le\varepsilon_0$ and large $V$.
+For one fixed $C_0>10\pi$, this bounds
+$C_0/\ell\le|t|\le\varepsilon_0$ by
+$E_V-C_0^2E_V/\ell^2+O(\log\ell)$. On
+$\varepsilon_0\le|t|\le V^4$, use (21) at this fixed
+$\varepsilon_0$. Its constants are not used at a shrinking cutoff.
+
+On $|v|\le C_0$, where $v=t\ell$, the bounded third moment gives
+uniformly
+
+$$
+\frac{\log|\alpha_V(t)|}{E_V}
+=-\cos v-\mu_1\frac v\ell\sin v
++\frac{\mu_2v^2}{2\ell^2}\cos v
++O(\ell^{-3})+O(\log\ell/E_V).
+$$
+
+Near an odd multiple $k\pi$, put $v=k\pi+s/\ell$. For bounded $s$
+and the finitely many relevant odd $k$, (39) gives uniformly
+
+$$
+\log|\alpha_V(t)|
+=E_V-\frac{E_V}{\ell^2}
+\left[2(k\pi)^2+\frac{(s-2k\pi)^2}{2}+o(1)\right].
+\tag{40}
+$$
+
+These neighborhoods include every contender for the maximum on the
+$E_V/\ell^2$ scale. Indeed, with
+$d(v)=\operatorname{dist}(v,\pi+2\pi\mathbb Z)$, the preceding uniform
+expansion bounds the loss below by
+$c\,d(v)^2-Cd(v)/\ell-C/\ell^2$. A loss of $O(\ell^{-2})$
+therefore forces $d(v)=O(\ell^{-1})$. Formula (40) then shows that
+$k=\pm1$ have limiting minimum loss $2\pi^2$, while all
+$|k|\ge3$ have loss at least $18\pi^2$.
+
+Fix $0<b<\min(1,\pi(2-\sigma)/4)$ and set
+
+$$
+\begin{aligned}
+t_V&=\frac\pi\ell+\frac{2\pi}{\ell^2},\\
+J_V&=\{t:\bigl||t|-t_V\bigr|\le b/\ell^2\},\\
+I_V^+&=[t_V-b/(2\ell^2),t_V+b/(2\ell^2)].
+\end{aligned}
+$$
+
+The full frequency bounds above imply, with errors uniform on the
+indicated sets,
+
+$$
+\begin{aligned}
+\inf_{I_V^+}\log|\alpha_V|
+&\ge E_V-(2\pi^2+b^2/8+o(1))E_V/\ell^2,\\
+\sup_{[-V^4,V^4]\setminus J_V}\log|\alpha_V|
+&\le E_V-(2\pi^2+b^2/2+o(1))E_V/\ell^2.
+\end{aligned}
+\tag{41}
+$$
+
+In particular these are separated by a fixed positive multiple of
+$E_V/\ell^2$ eventually. They retain every competing odd peak and
+both ordinate signs of the real Mellin variable.
+
+### Concentrate a full actual subspace inside the two peaks
+
+Use the same $f_0$, finite vanishing order $m$ and moments as (19).
+Set $n_V=\lfloor\sqrt V/\ell^5\rfloor$ and use the actual subspace
+
+$$
+\mathcal E_V^+=\{\alpha_Vf_0P:\deg P<n_V\}
+\subseteq\alpha_V\mathcal K.
+$$
+
+Its dimension is $n_V$. For
+$H_P=\int_{I_V^+}|P|^2$, the finite-order lower bound at zero gives
+
+$$
+\|\alpha_Vf_0P\|_2^2
+\ge c\ell^{-2m}\exp\bigl(2\inf_{I_V^+}\log|\alpha_V|\bigr)H_P.
+$$
+
+Apply the existing interval polynomial bound (22) with half-width
+$b/(2\ell^2)$ and (19)'s moment bound. By (41), the normalized mass
+in $[-V^4,V^4]\setminus J_V$ is at most
+
+$$
+\exp\!\left[-c_bE_V/\ell^2
++O_{f_0,b}\bigl(n_V\log(n_V+2)+n_V\log\ell
++\log(n_V\ell)\bigr)\right]=o(1).
+$$
+
+Here $n_V\log(n_V+2)=O(\sqrt V/\ell^4)=o(E_V/\ell^2)$.
+For $|t|>V^4$, the same Gevrey envelope and polynomial argument used
+in (23) give
+$\exp[O(E_V/\ell^2+n_V\log V+n_V\log\ell)-cV^2]=o(1)$.
+These bounds are uniform over all nonzero polynomials in the subspace,
+including cancellations on $I_V^+$. Every unit vector of
+$\mathcal E_V^+$ therefore has mass $1-o(1)$ in $J_V$, in the true
+$\alpha_V$-weighted norm.
+
+For $t=\pm[\pi/\ell+s/\ell^2]\in J_V$, $|s-2\pi|\le b$ and
+$R=\ell-\sigma$ give
+
+$$
+Rt=\pm\left[\pi+\frac{s-\pi\sigma}{\ell}
++O_\psi(\ell^{-2})\right],\qquad
+1+\cos(Rt)\ge c_\psi\ell^{-2}.
+$$
+
+The last bound follows because $s-\pi\sigma$ stays bounded away from
+zero by the fixed choice of $b$. Also
+$\widehat\psi(t)\ge\widehat\psi(0)/2$ there eventually. Thus the
+actual multiplier (30), positive projection order and an orthonormal
+basis of $\mathcal E_V^+$ give
+
+$$
+\boxed{
+T_{S(V)}(\varepsilon q_R)
+\gg_\psi\varepsilon\ell^{-2}n_V
+\gg_\psi\frac{\varepsilon\sqrt V}{(\log V)^7}.}
+\tag{42}
+$$
+
+The cosine zero has not been dropped: its quadratic loss is the
+additional factor $\ell^{-2}$. The inverse metric remains in the
+actual orthogonal projection throughout.
+
+### Transfer the estimate to the original Robin scales
+
+By WT11 and $V_X^+=e^{R_X+\sigma}$,
+$\varepsilon_X\sqrt{V_X^+}\asymp_\psi N_X$, proving (38)'s
+first bound. Reuse the
+[whole-horizon comparison](../Estimation/trureturing2026pricegapconvexity.md#the-whole-horizon-growth-hypothesis-fails)
+and WT4--WT5: $N_X\sim\mathsf P_X^{\rm Weil}\sim\mathsf P_X$,
+$\mathsf P_X/S_X\to\infty$,
+$S_X\ge L_X\sqrt{b_X}\log b_X$ and
+$b_X/\ell_X\to\infty$. Since
+$\ell_X=(d/8)X^{1-\eta}\log X$, these imply
+
+$$
+\frac{N_X}{M_XL_XR_X^7}
+\gg\frac{\sqrt{\ell_X}}{M_XR_X^7}
+=\sqrt{\frac d8}\,
+\frac{X^{\eta/2}}{\sqrt{\log X}\,R_X^7}
+\longrightarrow\infty.
+\tag{43}
+$$
+
+WT13 supplies $R_X=O((\log X)^8)$ and the original fixed parameters
+have $\eta>0$, including $\Theta=1$. No new clock ceiling or source
+window is chosen. Existence of the qualifying cofinal family remains
+a hypothesis of this source application.
+
+For each $X$ keep this same enlarged $S_X^+$ on both tests and put
+$\mathcal D_S(G)=\mathscr W(G)-T_S(G)$. Linearity, WT13 and (38)
+now give
+
+$$
+\boxed{
+\frac{\mathcal D_{S_X^+}(H_X+e_X)-\mathcal D_{S_X^+}(H_X)}
+{M_XL_X}
+=\frac{\mathscr W(e_X)-T_{S_X^+}(e_X)}{M_XL_X}
+\longrightarrow-\infty.}
+\tag{44}
+$$
+
+Thus a negligible arithmetic--trace transfer on this enlarged family
+fails for the specified completion. This leaves (37)'s original-family
+transfer intact. A successful enlarged-family comparison using this unmodified Sonin trace
+would have to retain the growing correction jointly with the original test; (44)
+does not exclude such cancellation or determine the sign of its full
+Weil functional. The strict Robin estimate and RH remain unproved.
+
+## Exact pole compensation pays the remote negative cutoff overlap
+
+A different auxiliary operator gives a small **negative cutoff overlap**
+for the same remote completion on the enlarged family. This does not
+change (38)--(44)'s large trace of the unmodified positive Sonin
+projection. The construction and weighted Hankel estimate are reused
+from bramble_trace's [versioned manuscript](https://rstation.ai/api/v1/papers/riemann_hypothesis_2/versions/2/download),
+Lemma 4.1, equation (5.2), the explicit support estimate at the end of
+§6, and Theorem 7.1. They are source inputs, without a complete proof
+audit or Lean certification. The application below quantifies their
+cost on WT11's actual changing test; the source's fixed-test little-$o$
+statement is not used uniformly in that test.
+
+Write $\mathsf R=1_{(-\infty,0)}$ and $\mathsf P=I-\mathsf R$ in
+logarithmic physical coordinates. For $\ell\ge1$, use every prime
+$p\le V=e^\ell$, the source's semilocal multiplier $\omega_V$, and its
+exact pole compensation
+
+$$
+\chi_\ell(t)=4\int_0^\ell\cosh(v/2)\frac{\sin(tv)}v\,dv,
+\qquad \widetilde\omega_\ell=\omega_Ve^{i\chi_\ell},
+\qquad \widetilde K_\ell=
+\mathsf R\widetilde{\mathcal F}_\ell\mathsf R.
+\tag{45}
+$$
+
+Here $\widetilde{\mathcal F}_\ell$ is the resulting Fourier involution.
+For a positive-definite compact smooth $G$, let
+$\widetilde n_\ell(G)$ be the positive localized trace of
+$\widetilde K_\ell\widetilde K_\ell^*$ with multiplier
+$\widehat G$ in Mellin coordinates. In particular,
+$\widetilde n_\ell(f*f^*)=\|T_f\widetilde K_\ell\|_{\rm HS}^2$.
+This is linear in the nonnegative multiplier. It is not a Sonin
+projection trace. Put $b(G)=\|\mathsf R T_G\mathsf P\|_{\mathcal S_1}$.
+The source's signed comparison, with its support contract, is
+$\mathscr W(G)\ge-\widetilde n_\ell(G)-b(G)$ and includes the poles.
+The existing smooth Boas--Kac factorization supplies its convolution
+factor for positive-definite compact smooth $G$.
+
+### Retain a quantitative phase error at every real frequency
+
+Set $a_0=0.8274$ and
+$\eta(v)=9.39v^{1.515}e^{-a_0\sqrt v}$. Apply the owned
+[Johnston--Yang cumulative bound](johnstonyang2022pnt.md) to
+$E(y)=\Psi(y)-y$. For
+
+$$
+S_\ell(t)=\sum_{n\le e^\ell}\Lambda(n)n^{-1/2+it},
+$$
+
+Stieltjes integration, retaining the finite lower endpoint, gives for
+all real $t$
+
+$$
+\left|S_\ell(t)-
+\frac{e^{(1/2+it)\ell}-1}{1/2+it}\right|
+\le C(1+|t|)\bigl[1+e^{\ell/2}\eta(\ell)\bigr].
+\tag{46}
+$$
+
+Indeed the endpoint at $e^\ell$ is bounded by
+$e^{\ell/2}\eta(\ell)$, and the integral error by
+$(1+|t|)\int_1^{e^\ell}|E(y)|y^{-3/2}dy$.
+Above a fixed threshold the logarithmic derivative of
+$e^{v/2}\eta(v)$ is at least $1/3$, so this integral is at most
+$C[1+e^{\ell/2}\eta(\ell)]$. The initial finite interval and lower
+endpoint supply the constant. No uniform oscillatory PNT assertion is
+needed.
+
+The complete finite-prime phase sum differs from $S_\ell(t)$ by exactly
+those proper powers $p^k>e^\ell$ with $p\le e^\ell$. Their absolute
+contribution is $O(\ell)$ by the source's complete $k\ge2$ estimate
+following (5.2). Thus none is omitted. Differentiating (45) cancels
+(46)'s continuous main term exactly. Its second, decaying-exponential
+endpoint term is uniformly bounded. The archimedean derivative grows
+as $O(\log(2+|t|))$. For the compensated phase
+$\widetilde\omega_\ell=e^{i\widetilde\varphi_\ell}$ this proves
+
+$$
+|\widetilde\varphi_\ell'(t)|
+\le C(1+|t|)\bigl[1+\ell+e^{\ell/2}\eta(\ell)\bigr]
+\qquad(t\in\mathbb R).
+$$
+
+### Apply the source estimate to the actual moving factor
+
+Keep WT7's fixed nonnegative real even $u$ and $\psi=u*u^*$. If
+$a=\sup\{|x|:u(x)\ne0\}$, nonnegativity and evenness give
+$\sigma=2a$. For $\ell=R+\sigma$ the centered factor
+
+$$
+f_R(y)=u(y+R/2)+u(y-R/2)
+$$
+
+has autocorrelation $q_R$ and support in $[-\ell/2,\ell/2]$.
+Moreover $|\widehat f_R|\le2|\widehat u|$ and
+$\|f_R\|_{H^1}^2\le4\|u\|_{H^1}^2$, uniformly in $R$.
+The weighted phase integral in source Lemma 4.1 is consequently at
+most $C_u[1+\ell+e^{\ell/2}\eta(\ell)]$.
+Reuse its Theorem 7.1 bound
+$\|\widetilde\varphi_\ell''\|_\infty=O(e^{\ell/2}\ell)$ for the
+second-derivative error. The moving trace-class remainder is retained:
+the explicit §6 support estimate gives
+$b(q_R)=O_u((1+\ell)^3)$.
+The source's Mellin reflection preserves the even weight
+$\widehat q_R$. Lemma 4.1 therefore yields
+
+$$
+\boxed{
+\widetilde n_\ell(q_R)
+\le C_u\left[e^{\ell/2}\eta(\ell)
++e^{\ell/4}\sqrt\ell+(1+\ell)^3\right].}
+\tag{47}
+$$
+
+This controls the full negative compression, not merely a signed
+arithmetic cancellation. It uses the explicit weighted estimate at
+the changing $f_R$, without turning a fixed-test asymptotic into a
+uniform one.
+
+### The original completion changes this lower allowance below scale
+
+Now use exactly $\ell_X=R_X+\sigma$ and the enlarged place set
+$S_X^+$ from (38). WT11 gives
+$\varepsilon_X\ll_u N_Xe^{-\ell_X/2}$. Multiplying (47) proves
+
+$$
+\boxed{
+0\le\widetilde n_{\ell_X}(e_X)
+\le C_uN_X\left[\eta(\ell_X)
++(1+\ell_X)^3e^{-\ell_X/4}\right]
+=o(L_X),\qquad b(e_X)=o(L_X).}
+\tag{48}
+$$
+
+The boundary estimate uses
+$b(e_X)=\varepsilon_Xb(q_{R_X})\ll_u
+\varepsilon_X(1+\ell_X)^3$.
+For the limit, retain WT13's original
+$Z_X=1+A_X+\log X$, $R_X=KZ_X^2$ and fixed
+$a_0\sqrt K>3$. The same exponential slack gives
+$\eta(\ell_X)=O(e^{-3Z_X})$; the other term in (48) decays faster
+than $e^{-cZ_X}$ for every fixed $c$. The already owned
+$N_X\ll L_Xe^{A_X/2}$ pays both terms. No larger radius, different
+clock or new qualifying family is selected.
+
+For $H_X'=H_X+e_X$, keep the same compensated operator at
+$\ell_X$ on both tests. Linearity of the positive localized trace
+and the trace-norm triangle inequality give
+
+$$
+\boxed{
+\begin{aligned}
+\widetilde n_{\ell_X}(H_X')-
+\widetilde n_{\ell_X}(H_X)&=o(L_X),\\
+|b(H_X')-b(H_X)|&\le b(e_X)=o(L_X).
+\end{aligned}}
+\tag{49}
+$$
+
+Thus adding the actual remote correction $e_X$, which makes
+$H_X+e_X$ pole-null, changes the entire negative-overlap plus boundary
+allowance in this compensated lower comparison by $o(L_X)$. WT12 had paid only its full signed arithmetic
+cost; (48) pays a distinct nonnegative operator contribution.
+There is no estimate here for $\widetilde n_{\ell_X}(H_X)$.
+The original test on the same compensated operator still needs its
+signed comparison. The unmodified positive Sonin trace remains large
+as in (38), and no small corrected Sonin trace, uniform spectral
+perturbation estimate, all-integer Robin inequality or RH proof is
+asserted.
+
+## The original test pays its complete boundary remainder
+
+Keep WT6--WT8's actual $H_X=c_X-F_X$, its original support,
+all windows and maximizing ties, and (45)'s compensated operator.
+The following application pays the complete off-diagonal remainder
+of the source's §6 signed block identity and its §7 compensated
+counterpart. It reuses standard positive-convolution factorization,
+Plancherel and the Hilbert--Schmidt product bound; these are existing
+analytic tools, including the attributed [trace-ideal suppliers](../QuantumBounds/diem2026traceclass.md).
+No new general operator theorem, literature priority or Lean
+verification is asserted.
+
+Use the additive normalization
+$\widehat G(t)=\int G(x)e^{itx}dx$, with inverse factor $1/(2\pi)$.
+For a positive-definite compact smooth $G$ supported in $[-B,B]$,
+put $E_-=1_{[-B,0]}$ and $E_+=1_{[0,B]}$. Its convolution kernel
+$G(x-y)$ gives
+$\mathsf R T_G\mathsf P=E_-T_GE_+$, up to null endpoints.
+Since $\widehat G\ge0$, $T_G$ is positive. Its positive square root
+has an $L^2$ convolution kernel $h$ with
+$\|h\|_2^2=(2\pi)^{-1}\int\widehat G=G(0)$.
+Thus the existing square-root and Schatten estimates give
+
+$$
+\|E_-T_G^{1/2}\|_{\rm HS}^2
+=\|T_G^{1/2}E_+\|_{\rm HS}^2=B\,G(0),
+\qquad
+b(G)\le B\,G(0).
+\tag{50}
+$$
+
+This uses positivity of the convolution operator, with no pointwise
+nonnegativity requirement on $G$ or support requirement on $h$.
+
+For the actual source, take
+$B_X=\max\{1,A_X,\tau\}$, where
+$A_X=\log\mathsf V_X$ is MR5's unchanged support ceiling.
+WT7 and MR1/MR5 give
+
+$$
+\begin{aligned}
+c_X(0)&=\psi(0)\sum_j a_j
+\le\psi(0)\sum_j(1+j)a_j
+\ll_\tau L_X(1+\log D)^2
+\ll_\tau L_X\mathsf Y_X^2,\\
+0\le H_X(0)&\le c_X(0)+\|F_X\|_\infty
+\ll_\tau L_X\mathsf Y_X^2.
+\end{aligned}
+$$
+
+The prescribed FH1 choices have
+$\mathsf Y_X=O((\log X)^2)$ and
+$A_X=O((\log X)^4)$, including CP1's published-input choice at
+$\Theta=1$. Since $M_X=X^{1/2-\eta}\log X$ with fixed
+$0<\eta<1/2$, (50) yields
+
+$$
+\boxed{
+b(H_X)\ll_\tau(1+A_X)L_X\mathsf Y_X^2
+=O_\tau\!\left(L_X(\log X)^8\right)
+=o(M_XL_X).}
+\tag{51}
+$$
+
+Only fixed source parameters enter the constants. The estimate uses
+no bound on the actual test's higher derivatives and is independent
+of the finite prime set or a projection-angle constant.
+
+For $H_X'=H_X+e_X$, apply the trace-norm triangle inequality to the
+actual decomposition and reuse (48):
+
+$$
+\boxed{
+b(H_X')\le b(H_X)+b(e_X)=o(M_XL_X).}
+\tag{52}
+$$
+
+Keep exactly $\ell_X=R_X+\sigma$ and the enlarged place set from
+(45)--(49); both tests satisfy this common support contract.
+Writing $\widetilde p_{\ell_X}(G)$ for the source's **full** positive
+compression, its signed block identity therefore has, for
+$G=H_X$ and $G=H_X'$, the form
+
+$$
+\mathscr W(G)=\widetilde p_{\ell_X}(G)
+-\widetilde n_{\ell_X}(G)+r_X(G),
+\qquad |r_X(G)|\le b(G)=o(M_XL_X).
+\tag{53}
+$$
+
+Here the smooth compact convolution factor is supplied by the same
+Boas--Kac interface used above. The positive term retains the generic
+two-projection contribution as well as the Sonin contribution.
+Equations (51)--(53) pay the entire boundary uncertainty for the
+original test and its actual pole-null completion. They do not
+control the signed bulk
+$\widetilde p_{\ell_X}(G)-\widetilde n_{\ell_X}(G)$;
+separate smallness of these two terms is not required by the target.
+That actual joint estimate, the strict all-integer Robin inequality
+and RH remain unproved.
+
+## The enlarged remote trace exceeds the actual complete source response
+
+Keep (38)--(43), WT11--WT14 and their same original qualifying
+cofinal source family, including its full-window and maximizing-tie
+contracts. Use the identical remote completion $e_X$, pole deficit
+$N_X$, enlarged place set $S_X^+$ and radius $R_X$.
+Here $R_X$ is WT13's remote radius, not the coarse core-clock ceiling.
+Write
+
+$$
+\mathcal T_X=T_{S_X^+}(e_X),\qquad
+\mathcal S_X=\int_{t_0}^{t_m}s_{B(t)}dt,
+\quad s_B=\sqrt B\log B,\quad b_X=\min_tB(t).
+$$
+
+The prefactor $\mathcal S_X$ is the same positive $S$ used in
+(43)'s whole-horizon reference comparison. It is distinct from the
+place set $S_X^+$. Keep the actual original compensated response
+
+$$
+G_a(B)=s_B\int_B^\infty E(v)k(v)dv-\frac{aE(B)}{\sqrt B},
+\qquad
+\mathcal G_X=\sum_{i<m}\delta_iG_a(B_i),\qquad E(v)=v-\psi(v).
+$$
+
+Every original coefficient, prime power, infinite endpoint,
+outgoing weight and tie remains. JM3--JM7 give
+$\mathcal G_X\ge cM_XL_X>0$ eventually on this source; no upper
+bound $\mathcal G_X=O(M_XL_X)$ is assumed.
+
+This is a `repo-derived` paper application of the existing PNT
+majorant and the retained actual trace bound (38). It does not
+reprove the Sonin-vector construction, Euler-peak analysis or a
+prime-number theorem, and makes no literature-priority or Lean
+verification claim.
+
+### The full response is smaller than its positive prefactor by every logarithmic power
+
+Reuse [Trudgian's all-prime-power error bound](trudgian2014pnt.md),
+Theorem 1 of arXiv:1401.2689v2, already consumed by CQ4--CQ5.
+Its exponential decay implies, for each fixed real $m>0$, a fixed
+$C_m$ and a common real start with
+
+$$
+|E(v)|\le C_m\frac{v}{(\log v)^m}.
+$$
+
+No uniformity in an increasing $m$ is asserted. Apply this bound
+to the whole original improper integral. For $L_B=\log B$,
+CQ4's same change of variables gives
+
+$$
+\begin{aligned}
+\int_B^\infty |E(v)|k(v)dv
+&\le C_m\int_{L_B}^\infty
+ \frac{1+y}{y^{m+2}}dy\\
+&=C_m\left[\frac{L_B^{-m}}m+
+           \frac{L_B^{-m-1}}{m+1}\right],\\
+\frac{a|E(B)|}{\sqrt B\,s_B}
+&\le aC_m L_B^{-m-1}.
+\end{aligned}
+$$
+
+Consequently, at every sufficiently large actual core,
+$|G_a(B)|\le C_{a,m}s_B(\log B)^{-m}$.
+Reuse CQ5's unchanged complete-response quadrature, rather than
+altering its atomic core occupation. It gives
+
+$$
+\mathcal G_X\le
+ C_{a,m}(\log b_X)^{-m}\mathcal S_X+o(1).
+$$
+
+The $o(1)$ is absorbed in the first term since
+$\mathcal S_X\ge L_X\sqrt{b_X}\log b_X$ and
+$b_X\to\infty$, with $L_X\asymp\ell_X\to\infty$.
+The original $b_X/\ell_X\to\infty$ and
+$\ell_X=(d/8)X^{1-\eta}\log X$ give
+$\log b_X\ge c_\eta\log X$ beyond one common start. Thus
+
+$$
+\boxed{0<\mathcal G_X\le
+ C_{a,m,\eta}(\log X)^{-m}\mathcal S_X
+ \quad\text{for every fixed }m>0\text{ eventually}.}
+\tag{54}
+$$
+
+This bounds the actual growing complete response, not only its
+original target scale. It uses an upper estimate for
+$\mathcal G_X$; its lower margin alone could not justify the
+comparison below.
+
+### Compare the unchanged trace to that same response
+
+Reuse (38), (43)'s $N_X/\mathcal S_X\to\infty$ and WT13's
+$R_X=O((\log X)^8)$. They refer to the same actual completion,
+source weights and original horizon. For every fixed $m>0$,
+
+$$
+\frac{\mathcal T_X}{\mathcal G_X}
+\ge c_m\frac{N_X}{\mathcal S_X}
+ (\log X)^{m-56}.
+$$
+
+For a requested fixed $q\ge0$, take the fixed exponent
+$m=q+57$ before taking the source start. Hence
+
+$$
+\boxed{\forall q\ge0\quad
+\frac{\mathcal T_X}{\mathcal G_X(\log X)^q}
+\longrightarrow+\infty.}
+\tag{55}
+$$
+
+WT12--WT13 retain $\mathscr W(e_X)=o(L_X)$ and
+$\mathcal G_X\ge cM_XL_X$, where $M_X\to\infty$.
+For the same defect as after (43),
+$\mathcal D_S(G)=\mathscr W(G)-T_S(G)$, linearity therefore gives
+
+$$
+\boxed{\forall q\ge0\quad
+\frac{\mathcal D_{S_X^+}(H_X+e_X)
+      -\mathcal D_{S_X^+}(H_X)}
+     {\mathcal G_X(\log X)^q}
+\longrightarrow-\infty.}
+\tag{56}
+$$
+
+These statements retain the original parameter range of (38)--(43),
+including $\Theta=1$ where supplied, without WRC1's additional
+$\eta<13/30$ restriction. Constants and common starts may depend
+on the fixed requested $m$ or $q$ and the original parameters.
+
+Thus the added unmodified positive Sonin trace cannot be discarded
+as a vanishing fraction of the actual source response, even when
+that response is unbounded relative to $M_XL_X$. This strengthens
+(43)'s obstruction for the specified enlarged place family and
+completion. The original-support trace estimate (37), the paid
+signed arithmetic change and the pole-compensated negative-overlap
+and boundary allowances retain their own scopes. No conclusion
+about all completions or all projections is inferred.
+
+A joint signed comparison may still retain and cancel this large
+term with its matching contributions. No such comparison, signed
+upper bound on the actual visited response, all-integer Robin
+inequality or RH proof is supplied.

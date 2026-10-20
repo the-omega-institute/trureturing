@@ -1,0 +1,44 @@
+### 43.1 来源、参数与原只读合同
+
+沿用定义 23.1、30.1、30.6 的全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $\mathcal T$、实际三步像 $\mathcal I_3=\rho^3(\mathcal T)$、等叶数像集 $\mathcal I_3(n)$、叶地址集 $L(X)$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$ 与全域正确总控制器类 $\mathfrak D_3$。未知输入 $U\in\mathcal T$ 不附叶数、高度、组成、正性或候选身份承诺；每个有限左右地址，包括空地址，都允许查询同一不变 $U$，报告恰为 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。费用 $C_\sigma(U)=|J_\sigma(U)|$ 只计本次运行真正请求的不同地址，地址长度、定位与内部计算不收费。$J_\sigma(U)$ 不包括由原型、来源组成或强制关系推断而未请求的地址。
+
+仅为统一记号，对正整数 $r$ 置
+
+$$
+\mathcal F[r,2]=F_r\quad\text{（定义 40.5）},\qquad
+\mathcal F[r,3]=F_{r,3}\quad\text{（定义 41.3）}.
+\tag{43.1}
+$$
+
+$Q_{r,t}(P)$ 表示定理 40.6、41.5 已给出的 $P\in\mathcal F[r,t]$ 的唯一完整前像，$t\in\{2,3\}$。这些记号不扩展原族的参数范围。它们的行树是以 $C$ 结束、左槽属于 $\{A,B\}$ 的右梳，外层是以 $A$ 结束的有序行列；允许全部原有零长度行和标记模式。原参数满足
+
+$$
+1\le\ell\le t+1,\qquad
+\sum_{j=1}^{\ell}r_j=r,\qquad
+S_j\subseteq\{1,\ldots,r_j\},\qquad
+\ell+\sum_{j=1}^{\ell}|S_j|=t+1.
+\tag{43.2}
+$$
+
+$t=2$ 的约束就是式（40.18），$t=3$ 的约束就是式（41.11）。直接采用原完整实现、计数及扫描结果：
+
+$$
+c(Q_{r,t}(P))=\binom{r+1}{t+1},\qquad
+n(P)=3r+5t+8,\qquad
+|\mathcal F[r,t]|=D(r,t).
+\tag{43.3}
+$$
+
+这里 $D(r,t)=D_{r,t}$ 是经典 Delannoy 路径数，不是确定性联合费用 $D(F)$；其非负整数指标仍采用定理 41.5 的三种步定义。式（43.1）的树族只在 $r\ge1$ 使用。
+
+沿用式（30.2）、（34.1）—（34.2）的完整字面块及连接树：
+
+$$
+E=\langle\beta,\alpha\rangle,\quad
+A=\langle E,\beta\rangle=\rho^3\alpha,\quad
+C=\langle A,E\rangle=\rho^3\beta,\quad
+B=\langle C,A\rangle=\rho^3\langle\beta,\alpha\rangle,\quad
+W_1=\langle B,C\rangle.
+\tag{43.4}
+$$
+

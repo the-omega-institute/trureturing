@@ -1,0 +1,36 @@
+**Definition 108.1 (the closed successor and its old-set clock).**
+Retain the free finite ordered sources, actual occurrence addresses and
+closed unit-edge counting Laplacians of Definitions 92.1–92.2. For every
+original $`t\in\mathcal T`$ and $`n\ge0`$, write
+
+```math
+s(t,n)=\rho^nt,\quad V(t,n)=V_{s(t,n)},\quad
+N(t,n)=|V(t,n)|,\quad L(t,n)=L_{s(t,n)},\quad
+r(t,n)=\frac{N(t,n+1)}{N(t,n)}.
+\tag{108.1}
+```
+
+The old vertices keep their addresses. Exactly two new degree-one children
+are attached to each actual old beta leaf; no other vertex or edge is born.
+Let $`X_b`$ be the continuous-time comparison chain on $`V(t,n+1)`$ with
+generator $`-L(t,n+1)`$, initially at any old vertex $`x\in V(t,n)`$. Its
+rates are one on existing edges, rather than a degree-normalized walk.
+Define old-set occupation time and its right-continuous inverse by
+
+```math
+B(b)=\int_0^b\mathbf1_{V(t,n)}(X_v)\,dv,\qquad
+A(t,n)(a)=\inf\{b\ge0:B(b)>a\},\qquad
+Y_a=X_{A(t,n)(a)}.
+\tag{108.2}
+```
+
+The infimum equals $`\sup\{b:B(b)\le a\}`$. Finite recurrence gives
+$`B(b)\to\infty`$ almost surely, so this inverse is finite at every finite
+$`a`$. At a plateau value it selects the return endpoint of the entire
+new-child excursion. At zero it equals zero almost surely because the
+initial old holding time is strictly positive. The trace $`Y`$ has generator
+$`-L(t,n)`$; the singleton trace is the constant chain. All these laws are
+conditional mathematical comparisons on the specified finite sources.
+The variable $`a`$ is old-set trace time, and $`b`$ is successor comparison
+time. Neither is a duration assigned to a native substitution.
+

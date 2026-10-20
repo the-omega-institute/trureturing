@@ -1,0 +1,14 @@
+#### 2.1.8 仓内现有所有者与本节的复用边界
+
+以下定位统一使用不可变快照 `237012b49d0d4729a86f7e9dd252d94df1de8dd0`。它们说明哪些机制已有正文或 Lean 供应；正文所有者与形式证明所有者分别列明，不把文中的数学推导自动标成 kernel 已认证。
+
+| 既有位置 | 已承担的结构 | 本节连接时保留的边界 |
+|---|---|---|
+| `docs/develop/theory/QUANTUM-REALITY.md` 第164.2节，约第21994行 | 相同局部态、计算基联合概率和能量分布，在共振交换后产生不同局部读数的两态见证；具体后续读数为 $4/9$ 与 $2/9$ | “边缘与能量相同不保证全部合法未来相同”已经有现成实例；本节不再次申报这一现象为新发现 |
+| 同卷第373节，第49984行起；定理373.1在第50026行 | 固定独立、相位不变参考不能读取系统第一阶相位；式373.2—373.4给联合关系效果、参考降低算子及有效读数对比度 | 式(TM.127)将同一机制写成任意有限能谱的完整张量恒等式，仍须独立、固定与不变前件 |
+| 同卷第374节，第50124行起 | 有限能级相位参考的最优区分成功概率，定理374.1为 $\tfrac12(1+\cos(\pi/(N+1)))$ | 精度与参考资源已有专门所有者，不从抽象可恢复性推免费、无限精度访问 |
+| `D5/S3/Observer/Conditioning.lean:30`、`:37`、`:58`、`:98`、`:108` | `IsRecordMeasurement`、`unreadState`、`unreadState_trace`、`unreadState_idempotent`、`unreadState_fixed_iff` | 有限完备正交自伴记录投影及其 pinching 已有 Lean 定义、迹保持、幂等和无跨块固定点接口；谱投影代入不构成新的通用 pinching 定理 |
+| `D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean:45`、`:50`、`:58`、`:81` | `DynClosure` 与保留原观察、操作闭合、最小细化三项定理 | 指定全部有限操作词的动态商已有一般供应；将载体换为量子密度态不另造抽象最小性定理 |
+| `D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.lean:46` | 一个指定 Heisenberg 实线性算子、有限中心化效果族的全部未来统计充分性 | 其量词是单算子的迭代；式(TM.115)的多动作词须说明相应表示关系，不能直接冒领原定理的范围 |
+| `docs/develop/theory/BEDC-WM.md:219`，B14.C | 已用相同能量概率的 $|+\rangle\langle+|$ 与 $I/2$ 区分观察纤维、群轨道与 twirling 的像 | 观察等价不自动等于同一群轨道，pinching 商也不自动证明状态只差一个相位变换 |
+| `D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.lean:30` | `finite_horizon_value_factorization`，具有 `[Fintype Action] [Nonempty Action]`，并要求转移交织、阶段与终端报酬分解 | 式(TM.133)—(TM.134)使用有限非空菜单；无限相容酉群与随机仪器决策需另匹配接口 |

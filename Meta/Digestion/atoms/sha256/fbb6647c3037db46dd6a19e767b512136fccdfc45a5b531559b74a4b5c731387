@@ -1,0 +1,4 @@
+**定义 337.1（tester 闭包）。** 设 \(\mathfrak A\) 为允许的前置、后置和控制操作族，定义 tester 空间的闭包
+\[
+\operatorname{Cl}_{\mathfrak A}(\mathcal V)
+=

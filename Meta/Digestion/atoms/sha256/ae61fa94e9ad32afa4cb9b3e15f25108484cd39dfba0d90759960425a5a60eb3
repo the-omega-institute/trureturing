@@ -1,0 +1,33 @@
+### 定义 375.1（有限结果空间与耦合）
+
+令 \(X\) 是有限事件结果集，给定度量
+
+$$
+d_X:X\times X\longrightarrow[0,\infty).
+$$
+
+对概率分布 \(P,Q\in\Delta(X)\)，定义耦合集合
+
+$$
+\Gamma(P,Q)
+=
+\left\{
+\pi\in\Delta(X\times X):
+\sum_y\pi(x,y)=P(x),\
+\sum_x\pi(x,y)=Q(y)
+\right\}.
+$$
+
+定义一阶离散 Wasserstein 距离
+
+$$
+\boxed{
+W_{d_X}(P,Q)
+=
+\min_{\pi\in\Gamma(P,Q)}
+\sum_{x,y}d_X(x,y)\pi(x,y).
+}
+$$
+
+耦合 \(\pi\) 表示把来源 \(P\) 的一次结果重新运输为来源 \(Q\) 的结果；代价不是重新命名，而是声明的结果空间几何。
+
