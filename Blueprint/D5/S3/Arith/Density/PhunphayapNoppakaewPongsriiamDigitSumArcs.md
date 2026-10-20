@@ -38,6 +38,10 @@ $$\forall b \in \mathbb{N},\; \forall n \in \mathbb{N},\; (2 \le b) \Rightarrow 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Density/PhunphayapNoppakaewPongsriiamDigitSumArcs.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/phunphayap-noppakaew-pongsriiam-2023-digit-sum-arcs` (proved) by `D5/S3/Arith/Density/PhunphayapNoppakaewPongsriiamDigitSumArcs.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"phunphayap-noppakaew-pongsriiam-2023-digit-sum-arcs","declaration_gid":"D5/S3/Arith/Density/PhunphayapNoppakaewPongsriiamDigitSumArcs.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. N. Phunphayap; P. Noppakaew; P. Pongsriiam (2023). *Directed graphs of integers with arcs determined by an arithmetic function*. DOI: [10.61091/um124-06](https://doi.org/10.61091/um124-06). URL: <https://arxiv.org/abs/2303.13017v1>.
