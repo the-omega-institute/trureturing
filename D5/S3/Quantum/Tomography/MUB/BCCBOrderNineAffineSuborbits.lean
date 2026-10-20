@@ -1,15 +1,17 @@
 /- GID: D5/S3/Quantum/Tomography/MUB/BCCBOrderNineAffineSuborbits
    generality: G
    mirror-B: D5/B/S3/Quantum/Tomography/MUB/BCCBOrderNineAffineSuborbits
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: Affine order nine BCCB suborbits have a cancelling pair or an equilateral triple. -/
 
 import Mathlib.Analysis.Analytic.Uniqueness
+import Mathlib.Analysis.Complex.Circle
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.RingTheory.RootsOfUnity.Complex
+import D5.S3.Observer.WindowRegister
 
 /-! Affine dephasings of the BCCB family with four unit parameters summing to one
 are contained in the cancelling-pair or equilateral-triple families. -/
@@ -21,7 +23,7 @@ open Complex
 
 namespace D5.S3.Quantum.Tomography.MUB.BCCBOrderNineAffineSuborbits
 
-def omega : ℂ := Complex.exp (2 * Real.pi * I / 3)
+def omega : ℂ := D5.S3.Observer.WindowRegister.windowRoot 3
 
 def bccb (x y u w : ℂ) : Matrix (Fin 9) (Fin 9) ℂ :=
   !![1,x,x,y,u,w,y,w,u;
@@ -59,12 +61,8 @@ def claim : Prop :=
           params x y u w t ∘ π = ![1, ξ t, omega * ξ t, omega ^ 2 * ξ t])
 
 private def phaseCharacter {p : ℕ} (L : (Fin p → ℝ) →ₗ[ℝ] ℝ) :
-    Multiplicative (Fin p → ℝ) →* ℂ where
-  toFun t := Complex.exp ((L (Multiplicative.toAdd t) : ℂ) * I)
-  map_one' := by simp
-  map_mul' a b := by
-    change Complex.exp ((L (Multiplicative.toAdd a + Multiplicative.toAdd b) : ℂ) * I) = _
-    rw [map_add, ofReal_add, add_mul, Complex.exp_add]
+    Multiplicative (Fin p → ℝ) →* ℂ :=
+  Circle.coeHom.comp ((Real.probChar.compAddMonoidHom L.toAddMonoidHom).toMonoidHom)
 
 private lemma phase_analytic {p : ℕ} (L : (Fin p → ℝ) →ₗ[ℝ] ℝ) (t : Fin p → ℝ) :
     AnalyticAt ℝ (fun s => Complex.exp ((L s : ℂ) * I)) t := by
@@ -95,7 +93,12 @@ private lemma character_coefficients {p n : ℕ} {U : Set (Fin p → ℝ)}
     apply hlin.finsuppLinearCombination_injective
     simp only [map_sum, Finsupp.linearCombination_single]
     ext t
-    simpa [Finset.sum_apply, smul_eq_mul, phaseCharacter] using
+    have hphase (j) : phaseCharacter (L j) t =
+        Complex.exp ((L j (Multiplicative.toAdd t) : ℂ) * I) := by
+      change (Real.probChar (L j (Multiplicative.toAdd t)) : ℂ) = _
+      exact Real.probChar_apply _
+    simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hphase,
+      MonoidHom.one_apply, one_mul] using
       congrFun hg (Multiplicative.toAdd t)
   have hh := congrArg (fun f => f χ) he
   simpa only [Finsupp.finsetSum_apply, Finsupp.single_apply, eq_comm] using hh
@@ -247,7 +250,8 @@ private lemma four_character_classes {M : Type*} [One M] (f : Fin 4 → M)
 
 private lemma unit_pair (b c : ℂ) (hb : ‖b‖ = 1) (hc : ‖c‖ = 1) (hs : b + c = 1) :
     (b = -omega ∧ c = -omega ^ 2) ∨ (b = -omega ^ 2 ∧ c = -omega) := by
-  have hp : IsPrimitiveRoot omega 3 := Complex.isPrimitiveRoot_exp 3 (by norm_num)
+  have hp : IsPrimitiveRoot omega 3 :=
+    D5.S3.Observer.WindowRegister.windowRoot_isPrimitiveRoot 3
   have hroot : 1 + omega + omega ^ 2 = 0 := by
     simpa [Finset.sum_range_succ] using hp.geom_sum_eq_zero (by norm_num : 1 < 3)
   have hd : ‖b - 1‖ = 1 := by
@@ -360,7 +364,5 @@ theorem result : claim := by
       funext j
       fin_cases j <;>
         simp [Function.comp_def, Equiv.swap_apply_def, hrep t ht, hf, hone, hb, hd, ξ, mul_assoc]
-
-#print axioms result
 
 end D5.S3.Quantum.Tomography.MUB.BCCBOrderNineAffineSuborbits
