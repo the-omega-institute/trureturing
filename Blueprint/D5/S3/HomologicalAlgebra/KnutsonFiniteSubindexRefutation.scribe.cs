@@ -34,14 +34,18 @@ internal sealed class KnutsonFiniteSubindexRefutationDocument : IScribeDocumentD
                 AssessedProvenance.FromLiterature(Source)),
             Node("result", "No finite subset suffices in general", Disp(Seq(F.Neg, Parenthesized(ClaimBody()))),
                 "Use a ring whose elements are integer tuples (d,a,b,f,t), with augmentation d + 2a + 2b + 4t. Its multiplication is the coordinate multiplication of the fiber product of ℤ and ℤ[u,v]/(u²,v²) over ℤ/4, where u and v map to 2. The tuple r = (0,0,0,0,1) is regular and has augmentation 4. For every integer k, X(k) = (0,1,2k,0,−k) and Y(k) = (0,1,−2k,0,k) multiply to r, so X(k) has Knutson index one. Given a finite S, choose k = 1 + ∑(s ∈ S) |s.b|. Eligibility of s forces s.d = 0 and s.b = −2k s.a. The bound on |s.b| forces s.a = s.b = 0, and the coefficient of r is then 2s.t, an even integer. The subindex is therefore divisible by two or infinite, so it differs from one. Proposition 2.6 still gives a finite subset for reduced rings. The source states that the rings in its subsequent applications embed in finite products of ℂ and hence are reduced; those applications retain that hypothesis.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem)),
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("johnston-martin-duro-rumynin-2024-knutson-index-question-2-5"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("knutson-finite-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname,
         Grp(Seq([.. name.Split('.').SelectMany((part, index) =>

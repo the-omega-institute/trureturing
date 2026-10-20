@@ -82,6 +82,10 @@ $$\neg(\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], 
 
 *Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/KnutsonFiniteSubindexRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/johnston-martin-duro-rumynin-2024-knutson-index-question-2-5` (refuted) by `D5/S3/HomologicalAlgebra/KnutsonFiniteSubindexRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"johnston-martin-duro-rumynin-2024-knutson-index-question-2-5","declaration_gid":"D5/S3/HomologicalAlgebra/KnutsonFiniteSubindexRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Dylan Johnston; Diego Martín Duro; Dmitriy Rumynin (2025). *Global Representation Ring and Knutson Index*. DOI: [10.1080/00927872.2025.2498055](https://doi.org/10.1080/00927872.2025.2498055). URL: <https://arxiv.org/abs/2403.18498v6>.
