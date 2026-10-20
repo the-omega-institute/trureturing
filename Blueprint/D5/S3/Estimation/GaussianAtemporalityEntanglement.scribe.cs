@@ -49,7 +49,10 @@ internal sealed class GaussianAtemporalityEntanglementDocument : IScribeDocument
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Gaussian atemporality implies entanglement", Disp(ClaimBody()),
                 "For each physical local uncertainty matrix, D5.S3.Quantum.Measurements.GeneralDyneSteadyStateOptimality.physical_forward gives positive definiteness of its real covariance and determinant at least one after identifying the single-mode symplectic coordinates. Thus both local blocks are invertible. Conjugating the PPT inequality by the momentum flip gives H = V_AB + i((−Ω) ⊕ Ω) positive semidefinite. With T = Cᵀ VA⁻¹ and K = [−T,1], matrix multiplication gives K V_AB Kᵀ = N and K((−Ω) ⊕ Ω)Kᵀ = Ω − TΩTᵀ. Congruence yields forwardX positive semidefinite. Complex conjugation and exchange of Alice and Bob give the reverse direction. Either directional incompatibility therefore contradicts PPT. Diagonality of the local blocks is unnecessary for this argument.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gaussian-atemporality-entanglement"),
+                    ResolutionKind.Proved))
         ), []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
