@@ -1,0 +1,43 @@
+fingerprints:
+  raw_sha256: sha256:efe4c3af1ec8d919d3deb245ddbd4934ca95a77fcee55dd95e0c4b0b898b5eb9
+  normalized_sha256: sha256:efe4c3af1ec8d919d3deb245ddbd4934ca95a77fcee55dd95e0c4b0b898b5eb9
+cas_ref: sha256:efe4c3af1ec8d919d3deb245ddbd4934ca95a77fcee55dd95e0c4b0b898b5eb9
+coverage_gids:
+  - gid: D5/S3/Observer/Conditioning.IsRecordMeasurement
+    target_statement_id: sha256:fe8a376e990542004cce06e6f95c1bcc355856100c4e3b00b007549dcf02cee8
+  - gid: D5/S3/Observer/Conditioning.unreadState
+    target_statement_id: sha256:2bd8c99aecb7120c0b1cf8c03f734974ae0c4c88f0ea0054765ddf948a3a37cd
+  - gid: D5/S3/Observer/Conditioning.unreadState_idempotent
+    target_statement_id: sha256:40a59c00ad5c06e8478f18ec37e960d3cb0be1d483718f2bc553ac24464c1797
+  - gid: D5/S3/Observer/Conditioning.unreadState_trace
+    target_statement_id: sha256:0e84333aa70c9c65a46709e7f86b8c3069a7c68721ecf59d41f08db46c7316a2
+  - gid: D5/S3/Quantum/Fibers/OperatorSystemTowerStability.MatrixAlgebra
+    target_statement_id: sha256:d9073d5272d8ddd09853d8d96e36eac217634a2544dceb19aeb61fedf83231ee
+  - gid: D5/S3/Quantum/FiniteDimensional.QubitMatrix
+    target_statement_id: sha256:e376bbe008ddbbc49fcf9763247304ed70ec54ac5cf49af3c6f7fb58fa626f30
+  - gid: D5/S3/Quantum/FiniteDimensional.qubitX
+    target_statement_id: sha256:cfaddf4a17693b52013e93be8cd6559e7021ed57ca0305492712468b57f882f7
+  - gid: D5/S3/Quantum/FiniteDimensional.qubitZ
+    target_statement_id: sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.IsCompletelyPositive
+    target_statement_id: sha256:31bd68fc3c839750d1a8ac1474555b08fcd9579b1627c81db36a58f3172e1252
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.MatrixMap
+    target_statement_id: sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus
+    target_statement_id: sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus_isCompletelyPositive
+    target_statement_id: sha256:522daaecff9970808def6ecdd938d4b89107d2820c79bafbf378ab083767f57f
+  - gid: D5/S3/Quantum/Measurement/WordProbabilityTraceRepresentation.operationalWordProbability
+    target_statement_id: sha256:e8cf8e186a81c568e77bfde8dd229b21d10baf0ae8f993be125a2c3039764964
+  - gid: D5/S3/Quantum/Measurement/WordProbabilityTraceRepresentation.operational_probability_eq_trace_foldl
+    target_statement_id: sha256:94bdb6e24fe2d9184b212a77669ea2bdd0b2afc99079fb2b43466cab4f9c6848
+  - gid: D5/S3/QuantumChannels/Pinching.pinching
+    target_statement_id: sha256:fb6c705669f53d662ac6ef2c6fa5caa417a18321f54d41f0079cac3a0f98dc6b
+  - gid: D5/S3/QuantumChannels/Pinching.pinching_apply
+    target_statement_id: sha256:95dacc8bed01114b64a32196697cac3bc98aeae86868d263050138966e4d4308
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 5778c85cc5be17aebeddc8d0fa11579fb7941b019ff6daff97f19ae0693b99bb
+    - fa4beb9b9ca41aaa2b4e49d8798829fad9f1883681d7165c459b6bc0028be92c
+    - 5f9c4bb3046097be907cac146553175839967ec3cfc7c46dcc01ba11cb100eac
