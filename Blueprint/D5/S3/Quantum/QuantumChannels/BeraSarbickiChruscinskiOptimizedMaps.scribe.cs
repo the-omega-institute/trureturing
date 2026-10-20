@@ -30,7 +30,10 @@ internal sealed class BeraSarbickiChruscinskiOptimizedMapsDocument : IScribeDocu
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take n = 6, k = 3 and a = b = 1/√2. The asserted parameter is 15/4. For q = (1,0,0,1,0,0), the matrix R = I/60 + (27/60) vecMulVec(q,star(q)) is positive semidefinite. Its quadratic forms are q* tau(6,3)(R) q = 59/30 and q* hadamardMap(6,v)(R) q = 11/18. Their difference at 15/4 is −13/40. A positive semidefinite output has a nonnegative quadratic form at q, giving a contradiction. Only coordinates 0 and 3 of v enter this calculation. The argument does not determine the exact greatest positivity parameter or settle the other parts of Conjecture 2."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bera-sarbicki-chruscinski-2023-gcd3-equator"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create("bsc-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),

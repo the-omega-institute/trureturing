@@ -70,6 +70,10 @@ $$\neg (\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; [\operatorname{N
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/BeraSarbickiChruscinskiOptimizedMaps.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bera-sarbicki-chruscinski-2023-gcd3-equator` (refuted) by `D5/S3/Quantum/QuantumChannels/BeraSarbickiChruscinskiOptimizedMaps.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bera-sarbicki-chruscinski-2023-gcd3-equator","declaration_gid":"D5/S3/Quantum/QuantumChannels/BeraSarbickiChruscinskiOptimizedMaps.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Bera; G. Sarbicki; D. Chruściński (2023). *Optimizing positive maps in the matrix algebra M_n*. DOI: [10.48550/arXiv.2309.09621](https://doi.org/10.48550/arXiv.2309.09621). URL: <https://arxiv.org/abs/2309.09621v1>.
