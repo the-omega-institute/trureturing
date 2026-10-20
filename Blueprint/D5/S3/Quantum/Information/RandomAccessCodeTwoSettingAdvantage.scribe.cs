@@ -18,38 +18,47 @@ internal sealed class RandomAccessCodeTwoSettingAdvantageDocument : IScribeDocum
                 "Fin(n) denotes the indices 0 through n minus one. A word x is a function "
                     + "from Fin(n) to Fin(d). Alice receives a uniformly chosen word and sends "
                     + "one d-dimensional system; Bob receives a uniformly chosen index j and "
-                    + "guesses x(j). Complex conjugation is denoted by an overline. "
-                    + "All sums range over the displayed finite domains.")),
+                    + "guesses x(j). The annotations (n : ℝ) and (d : ℝ) denote the "
+                    + "natural-number casts to the reals. Complex conjugation is denoted "
+                    + "by an overline and is Lean's star on ℂ; star on vectors acts "
+                    + "coordinatewise. All sums range over the displayed finite domains.")),
             Node("deterministic-value", "deterministicValue", "The deterministic classical value",
                 DeterministicFormula(),
                 "The encoder E sends one alphabet symbol and the decoder D returns a symbol "
-                    + "for each received symbol and query. The indicator is one when its "
-                    + "condition holds and zero otherwise. The factor 1/(n d^n) averages "
+                    + "for each received symbol and query. The conditional ite returns one "
+                    + "when its condition holds and zero otherwise, both in ℝ. "
+                    + "The factor 1/(n d^n) averages "
                     + "over words and queries, as in Section 2, Eq. (4), and Section 3.1 "
                     + "of the source. This real-valued definition has no positivity "
                     + "hypotheses on n or d; division by zero has its usual totalized field value zero."),
             Node("classical-strategy", "ClassicalStrategy", "A classical strategy with shared randomness",
                 ClassicalStrategyFormula(),
-                "The displayed record consists of a type Lambda, a chosen finite enumeration "
-                    + "of Lambda, weights p, and encoder and decoder families E and D. "
+                "The displayed record consists of a type Λ, a chosen finite enumeration "
+                    + "of Λ, weights p, and encoder and decoder families E and D. "
                     + "Each weight is nonnegative and their sum is one. For a shared value "
-                    + "lambda, E(lambda) and D(lambda) form a deterministic strategy. "
-                    + "The record fields are Lambda, finite, weight, nonneg, total, encode "
+                    + "λ, E(λ) and D(λ) form a deterministic strategy. "
+                    + "The record fields are Λ, finite, weight, nonneg, total, encode "
                     + "and decode, with p, E and D denoting weight, encode and decode. "
+                    + "The bracketed Fintype is the field named finite; nonneg and total are "
+                    + "the displayed nonnegativity and sum-one conditions. "
                     + "This is the finite shared-randomness description in Section 3.1."),
             Node("classical-value", "classicalValue", "The value of a classical mixture",
                 ClassicalValueFormula(),
                 "The value is the weighted average of the deterministic values. Here "
-                    + "weight(S), encode(S), decode(S) and Lambda(S) denote the corresponding "
-                    + "fields of S. Shared randomness therefore forms a convex combination "
+                    + "Λ(S), finite(S), weight(S), nonneg(S), total(S), encode(S) and "
+                    + "decode(S) are the field projections. The sum uses the enumeration "
+                    + "finite(S) of Λ(S). Shared randomness therefore forms a convex combination "
                     + "of deterministic success probabilities, as in Section 3.1."),
             Node("quantum-value", "quantumValue", "The quantum value for two settings",
                 QuantumFormula(),
                 "For query j, Bob uses setting s(j); the measurement vector for a correct "
                     + "outcome is column x(j) of U(s(j)). The inner sum is the inner product "
-                    + "of that column with psi(x), conjugating the column entries. Its squared "
-                    + "modulus is the Born probability when psi(x) is a unit vector and the "
-                    + "two matrices are unitary. These conditions are imposed in claim; "
+                    + "of that column with psi(x), conjugating the column entries. This is "
+                    + "Lean's dotProduct of the starred column with psi(x), with no further "
+                    + "conjugation in dotProduct itself. The norm is the complex norm, "
+                    + "equal to the modulus. Its square is the Born probability when "
+                    + "psi(x) is a unit vector and the two matrices are unitary. "
+                    + "These conditions are imposed in claim; "
                     + "quantumValue itself is defined for arbitrary vectors and matrices. "
                     + "The normalization is again that of Section 2, Eq. (4)."),
             Node("claim", "claim", "Strict advantage for every pair of parameters",
@@ -57,7 +66,9 @@ internal sealed class RandomAccessCodeTwoSettingAdvantageDocument : IScribeDocum
                 "For every n and d at least two, one encoding by complex unit vectors, "
                     + "two unitary matrices and one setting choice per query simultaneously "
                     + "give a value strictly greater than that of every finite classical "
-                    + "mixture. The unitary group consists of d by d complex unitary matrices. "
+                    + "mixture. The unit-vector condition is an equality in ℂ, with the "
+                    + "sum of conjugate-coordinate products equal to the complex number one. "
+                    + "Matrix.unitaryGroup consists of d by d complex unitary matrices. "
                     + "This states the general quantum-advantage question and its two-setting "
                     + "resource requirement from Section 5 of the source."),
             Describe.Lean(
@@ -83,9 +94,12 @@ internal sealed class RandomAccessCodeTwoSettingAdvantageDocument : IScribeDocum
                             + "exceed this optimum, in agreement with the classical benchmark "
                             + "of Ambainis, Kravchenko, Sazim, Bae and Rai.")),
                     Paragraph(Text(
-                        "Take U(0) = I and U(1) = F, where F has first two by two block "
+                        "Take U(0) = I, the identity matrix, and U(1) = F, where F has first "
+                            + "two by two block "
                             + "[[3/5, 4/5], [4/5, -3/5]] and is the identity on the remaining "
-                            + "coordinates. The columns of F are an orthonormal rotated basis. "
+                            + "coordinates. Real matrix entries and encoding coordinates are "
+                            + "included in ℂ by Complex.ofReal. The columns of F are an "
+                            + "orthonormal rotated basis. "
                             + "Use this basis for the last query and the standard basis for "
                             + "every other query. For a fixed prefix z of length n minus one, "
                             + "let N(i) count symbol i, let m be the largest count and let M "
@@ -98,7 +112,8 @@ internal sealed class RandomAccessCodeTwoSettingAdvantageDocument : IScribeDocum
                             + "of the words (z,b). Averaging over prefixes proves that this "
                             + "baseline encoding has value C(n,d).")),
                     Paragraph(Text(
-                        "Change only the encoding of the all-zero word 0^n to "
+                        "Write e(i) for the standard basis vector at index i. "
+                            + "Change only the encoding of the all-zero word 0^n to "
                             + "(2n e(0) + e(1))/sqrt(4n^2 + 1). Its old score, summed over "
                             + "queries, is n - 1 + 9/25. The new score is "
                             + "((n - 1) 4n^2 + (6n + 4)^2/25)/(4n^2 + 1). "
@@ -156,8 +171,8 @@ internal sealed class RandomAccessCodeTwoSettingAdvantageDocument : IScribeDocum
     {
         Formula n = F.Id("n"), d = F.Id("d"), e = F.Id("E"), decoder = F.Id("D");
         Formula x = F.Id("x"), j = F.Id("j");
-        Formula indicator = Seq(new Formula.Subscript(Named("indicator"),
-            Parenthesized(Equal(At(At(decoder, At(e, x)), j), At(x, j)))));
+        Formula indicator = Call("ite", Equal(At(At(decoder, At(e, x)), j), At(x, j)),
+            Typed(D(1), Reals()), Typed(D(0), Reals()));
         Formula value = Multiply(AverageFactor(n, d), SumOver(x, Words(n, d),
             SumOver(j, Finite(n), indicator)));
         return All(n, Naturals(), All(d, Naturals(), All(e, Encoder(n, d),
@@ -185,7 +200,7 @@ internal sealed class RandomAccessCodeTwoSettingAdvantageDocument : IScribeDocum
         Formula term = Multiply(At(Call("weight", s), l), Call("deterministicValue", n, d,
             At(Call("encode", s), l), At(Call("decode", s), l)));
         return All(n, Naturals(), All(d, Naturals(), All(s, Call("ClassicalStrategy", n, d),
-            Equal(Call("classicalValue", s), SumOver(l, Call("Lambda", s), term)))));
+            Equal(Call("classicalValue", s), SumOver(l, At(Lambda, s), term)))));
     }
 
     private static Formula QuantumFormula()
@@ -195,7 +210,7 @@ internal sealed class RandomAccessCodeTwoSettingAdvantageDocument : IScribeDocum
         Formula entry = At(At(u, At(s, j)), k, At(x, j));
         Formula amplitude = SumOver(k, Finite(d), Multiply(Conjugate(entry), At(At(Psi, x), k)));
         Formula value = Multiply(AverageFactor(n, d), SumOver(x, Words(n, d),
-            SumOver(j, Finite(n), new Formula.Power(new Formula.Absolute(amplitude), D(2)))));
+            SumOver(j, Finite(n), new Formula.Power(new Formula.Norm(amplitude), D(2)))));
         return All(n, Naturals(), All(d, Naturals(), All(Psi, States(n, d),
             All(u, MatrixFamily(d), All(s, Arrow(Finite(n), Settings()),
                 Equal(Call("quantumValue", n, d, Psi, u, s), value))))));
@@ -206,9 +221,10 @@ internal sealed class RandomAccessCodeTwoSettingAdvantageDocument : IScribeDocum
         Formula n = F.Id("n"), d = F.Id("d"), u = F.Id("U"), s = F.Id("s");
         Formula x = F.Id("x"), k = F.Id("k"), i = F.Id("i"), strategy = F.Id("S");
         Formula unit = All(x, Words(n, d), Equal(SumOver(k, Finite(d),
-            Multiply(Conjugate(At(At(Psi, x), k)), At(At(Psi, x), k))), D(1)));
+            Multiply(Conjugate(At(At(Psi, x), k)), At(At(Psi, x), k))), Typed(D(1), Complexes())));
         Formula unitary = All(i, Settings(), new Formula.Relation(At(u, i),
-            FormulaRelationOperator.MemberOf, Call("unitaryGroup", Finite(d), Complexes())));
+            FormulaRelationOperator.MemberOf,
+            At(Seq(Named("Matrix"), Dot, Named("unitaryGroup")), Finite(d), Complexes())));
         Formula advantage = All(strategy, Call("ClassicalStrategy", n, d),
             new Formula.Relation(Call("classicalValue", strategy), FormulaRelationOperator.LessThan,
                 Call("quantumValue", n, d, Psi, u, s)));
