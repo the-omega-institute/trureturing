@@ -33,6 +33,12 @@ internal sealed class CHaarConcatenationNonmonotoneDocument : IScribeDocumentDef
                 "hsNormSq", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The concatenation monotonicity assertion", Claim(), ClaimQuote,
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("swap-hermitian", "The coordinate swap is Hermitian", SwapHermitian(),
+                "The permutation matrix of the coordinate swap equals its conjugate transpose.",
+                "swapHermitian", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("swap-square", "The coordinate swap is an involution", SwapSquare(),
+                "Applying the coordinate swap twice gives the identity matrix.",
+                "swapSquare", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "The concatenation assertion is false", new Formula.Not(Call("claim")),
                 "At d = e = t = 2 the fourth power has squared norm 1213852/1171875, and the fifth has squared norm 30362908/29296875. Their difference is 5536/9765625, which is positive. In the rational identity/swap basis, the decaying eigenmode coexists with a growing coefficient towards a non-orthogonal limiting projection.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -82,6 +88,18 @@ internal sealed class CHaarConcatenationNonmonotoneDocument : IScribeDocumentDef
         return All("i",F.Id("Type"),Instance(Call("Fintype",i),
             All("M",MatrixOf(i),Eqn(Call("hsNormSq",m),sum))));
     }
+    private static Formula SwapHermitian() => Generic(QCall("Matrix.IsHermitian", SwapMatrix(F.Id("n"))));
+    private static Formula SwapSquare()
+    {
+        Formula n = F.Id("n");
+        Formula swap = SwapMatrix(n);
+        return Generic(Eqn(Mul(swap, swap), Cast(D(1), MatrixOf(Product(n, n)))));
+    }
+    private static Formula SwapMatrix(Formula n) => At(
+        Seq(Operatorname,Grp(F.Id("Equiv"),Dot,F.Id("Perm"),Dot,F.Id("permMatrix"))),
+        Complex(), QCall("Equiv.prodComm", n, n));
+    private static Formula Generic(Formula body) => All("n",F.Id("Type"),
+        Instance(Call("Fintype",F.Id("n")), Instance(Call("DecidableEq",F.Id("n")), body)));
     private static Formula Nat() => Seq(Mathbb,Grp(F.Id("N")));
     private static Formula Complex() => Seq(Mathbb,Grp(F.Id("C")));
     private static Formula Fin(Formula n) => Call("Fin",n);
