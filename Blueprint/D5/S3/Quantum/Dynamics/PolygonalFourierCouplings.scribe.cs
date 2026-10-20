@@ -14,6 +14,18 @@ internal sealed class PolygonalFourierCouplingsDocument : IScribeDocumentDefinit
         "The polygonal coupling model uses real symmetric circulant matrices with zero diagonal. Diagonal phase shifts act before and after the Hamiltonian evolution.",
         H("Polygonal couplings and the discrete Fourier transform"),
         Blocks(
+            Describe.Lean(DescribeId.Create("polygonal-fourier-transform"), DeclarationHandle.Create(Prefix + "transform"),
+                H("The normalized Fourier transform on ZMod"), StatementSource.FromAuthor(TransformFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For a nonzero modulus, each matrix entry is the standard additive character of the negative product of its two residue indices, divided by the square root of the modulus."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("polygonal-fourier-spectral-value"), DeclarationHandle.Create(Prefix + "spectralValue"),
+                H("The discrete Fourier eigenvalue"), StatementSource.FromAuthor(SpectralValueFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The eigenvalue at a residue is the discrete Fourier transform of the circulant's first column at that residue."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("polygonal-fourier-transform-unitary"), DeclarationHandle.Create(Prefix + "transform_unitary"),
+                H("Unitarity of the normalized Fourier transform"), StatementSource.FromAuthor(TransformUnitaryFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Multiplying the Fourier transform by its conjugate transpose gives the identity matrix."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("polygonal-fourier-circulant-spectral"), DeclarationHandle.Create(Prefix + "circulant_spectral"),
+                H("Diagonalization of a circulant"), StatementSource.FromAuthor(CirculantSpectralFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The normalized Fourier transform intertwines a circulant with the diagonal matrix of its discrete Fourier eigenvalues."))), DescribeRole.Theorem),
             Node("fourier", "The Fourier matrix", FourierFormula(),
                 "The indices are the residues represented by 0 through N - 1. The Fourier matrix uses the negative exponential convention and the normalization by the square root of N.",
                 "fourier", DescribeRole.Definition),
@@ -34,6 +46,33 @@ internal sealed class PolygonalFourierCouplingsDocument : IScribeDocumentDefinit
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("barriga-2026-polygonal-fourier-couplings"), ResolutionKind.Proved))),
         []));
+
+    private static Formula QCall(string owner, string name, params Formula[] args) => new Formula.Apply(Seq(Named(owner), Dot, Named(name)), [.. args]);
+    private static Formula Zmod(Formula n) => Call("ZMod", n);
+    private static Formula Zfun(Formula n) => new Formula.TypeArrow(Zmod(n), Field("C"));
+    private static Formula WithNeZero(Formula n, Formula body) => Seq(OpenBracket, Call("NeZero", n), CloseBracket, Comma, Sp, body);
+    private static Formula TransformFormula()
+    {
+        Formula n = F.Id("N"), j = F.Id("j"), k = F.Id("k");
+        Formula value = new Formula.Fraction(QCall("ZMod", "stdAddChar", Neg(Mul(j, k))), QCall("Complex", "ofReal", QCall("Real", "sqrt", Parenthesized(Seq(n, Sp, Colon, Sp, Field("R"))))));
+        return Disp(All("N", Field("N"), WithNeZero(n, All("j", Zmod(n), All("k", Zmod(n), Eq(Call("transform", n, j, k), value))))));
+    }
+    private static Formula SpectralValueFormula()
+    {
+        Formula n = F.Id("N"), b = F.Id("b"), k = F.Id("k");
+        return Disp(All("N", Field("N"), WithNeZero(n, All("b", Zfun(n), All("k", Zmod(n), Eq(Call("spectralValue", n, b, k), QCall("ZMod", "dft", b, k)))))));
+    }
+    private static Formula TransformUnitaryFormula()
+    {
+        Formula n = F.Id("N"), t = Call("transform", n);
+        return Disp(All("N", Field("N"), WithNeZero(n, Eq(Mul(t, QCall("Matrix", "conjTranspose", t)), D(1)))));
+    }
+    private static Formula CirculantSpectralFormula()
+    {
+        Formula n = F.Id("N"), b = F.Id("b"), t = Call("transform", n);
+        return Disp(All("N", Field("N"), WithNeZero(n, All("b", Zfun(n),
+            Eq(Mul(t, QCall("Matrix", "circulant", b)), Mul(QCall("Matrix", "diagonal", Call("spectralValue", n, b)), t))))));
+    }
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
         string declaration, DescribeRole role) =>
