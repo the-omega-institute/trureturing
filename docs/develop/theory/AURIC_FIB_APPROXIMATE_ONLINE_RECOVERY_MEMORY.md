@@ -3906,11 +3906,12 @@ f_{h,r,s}=F_{\rm e}(D_{r,s}\circ\operatorname{Ad}_{Q_h},\operatorname{id}_3),
 \qquad a_{h,r,s}=p_s(r\mid h).
 $$
 
-First suppose the terminal assignment is deterministic.  If its occupied
-cells have sizes \(m_r\), Lemma 33.3 gives
+First suppose the terminal assignment is a deterministic function
+\(\phi:\{0,1\}^n\to[W]\).  If its occupied cells have sizes
+\(m_r=|\phi^{-1}(r)|\), Lemma 33.3 gives
 
 $$
-\sum_{h,r}f_{h,r,s}\le\sum_r[1+c_n(m_r-1)]
+\sum_r\sum_{h:\phi(h)=r}f_{h,r,s}\le\sum_r[1+c_n(m_r-1)]
 \le c_nN+(1-c_n)W.
 $$
 
