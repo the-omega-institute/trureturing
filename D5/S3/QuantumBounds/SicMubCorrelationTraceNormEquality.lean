@@ -8,6 +8,11 @@
 
 import D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteMUB
 
+/-!
+SIC and complete-MUB correlation matrices have proportional trace norms, with the product of the
+local factors `sqrt (d * (d + 1))`.
+-/
+
 noncomputable section
 
 open Matrix
@@ -68,7 +73,7 @@ private theorem sicProjector_gram {d : ℕ} (S : SICFamily d) (i j : Fin (d * d)
   by_cases hij : i = j
   · subst j
     rw [S.2.1 i]
-    simp only [norm_one, one_pow, Complex.ofReal_one, if_pos rfl, mul_one]
+    simp only [norm_one, one_pow, Complex.ofReal_one]
     have hd : (d : ℂ) + 1 ≠ 0 := by positivity
     field_simp
     simp only [ite_true, mul_one]
@@ -76,40 +81,53 @@ private theorem sicProjector_gram {d : ℕ} (S : SICFamily d) (i j : Fin (d * d)
     simp only [hij, ite_false, mul_zero, zero_add, Complex.ofReal_div,
       Complex.ofReal_one, Complex.ofReal_add, Complex.ofReal_natCast]
 
-private theorem sicProjector_independent {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
-    LinearIndependent ℂ (sicProjector S) := by
-  classical
-  apply Fintype.linearIndependent_iff.mpr
-  intro c hc i
-  have hs : ∑ j, c j = 0 := by
-    have ht := congrArg Matrix.trace hc
-    simpa only [Matrix.trace_sum, Matrix.trace_smul, sicProjector_trace, smul_eq_mul,
-      mul_one, Matrix.trace_zero] using ht
-  have ht := congrArg (fun X => (X * sicProjector S i).trace) hc
-  simp only [Matrix.sum_mul, Matrix.smul_mul, Matrix.trace_sum, Matrix.trace_smul,
-    smul_eq_mul, sicProjector_gram, mul_add, Finset.sum_add_distrib,
-    ← Finset.sum_mul, hs, zero_mul, add_zero, Matrix.zero_mul, Matrix.trace_zero] at ht
-  have hi : c i * ((d : ℂ) / (d + 1)) = 0 := by
-    simpa only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
-      ite_true] using ht
-  exact (mul_eq_zero.mp hi).resolve_right (div_ne_zero (by exact_mod_cast (by omega : d ≠ 0))
-    (by positivity))
-
 private theorem sicProjector_span {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
     Submodule.span ℂ (Set.range (sicProjector S)) = ⊤ := by
-  apply (sicProjector_independent hd S).span_eq_top_of_card_eq_finrank'
+  classical
+  let K : LinearMap.BilinForm ℂ (Matrix (Fin d) (Fin d) ℂ) :=
+    LinearMap.compr₂ (LinearMap.mul ℂ (Matrix (Fin d) (Fin d) ℂ))
+      (Matrix.traceLinearMap (Fin d) ℂ ℂ)
+  have hgram (i j : Fin (d * d)) :
+      K (sicProjector S i) (sicProjector S j) =
+        if i = j then (1 : ℂ) ^ 2 else 1 / (d + 1) := by
+    change (sicProjector S i * sicProjector S j).trace = _
+    rw [sicProjector_gram]
+    by_cases h : i = j <;> simp only [h, ite_true, ite_false, one_pow, mul_one,
+      mul_zero, zero_add]
+    field_simp
+  have hlin : LinearIndependent ℂ (sicProjector S) := by
+    apply Fintype.linearIndependent_iff.mpr
+    intro c hc i
+    have hs : ∑ j, c j = 0 := by
+      have ht := congrArg Matrix.trace hc
+      simpa only [Matrix.trace_sum, Matrix.trace_smul, sicProjector_trace,
+        smul_eq_mul, mul_one, Matrix.trace_zero] using ht
+    have hp := D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.gram_pair_sum
+      K (sicProjector S) 1 (1 / (d + 1)) hgram c i
+    rw [hc, map_zero, LinearMap.zero_apply, hs, mul_zero, add_zero, one_pow] at hp
+    have hcoeff : (1 : ℂ) - 1 / (d + 1) ≠ 0 := by
+      have heq : (1 : ℂ) - 1 / (d + 1) = d / (d + 1) := by
+        field_simp
+        ring
+      rw [heq]
+      exact div_ne_zero (by exact_mod_cast (by omega : d ≠ 0)) (by positivity)
+    exact (mul_eq_zero.mp hp.symm).resolve_left hcoeff
+  apply hlin.span_eq_top_of_card_eq_finrank'
   simp only [Fintype.card_fin, Module.finrank_matrix, Module.finrank_self, mul_one]
 
-private theorem trace_pairing_ext {d : ℕ} {ι : Type*} [Fintype ι]
+private theorem trace_pairing_ext {d : ℕ} {ι : Type*}
     (P : ι → Matrix (Fin d) (Fin d) ℂ)
     (hP : Submodule.span ℂ (Set.range P) = ⊤)
     {X Y : Matrix (Fin d) (Fin d) ℂ}
     (h : ∀ i, (X * P i).trace = (Y * P i).trace) : X = Y := by
   apply Matrix.ext_iff_trace_mul_right.mpr
   intro Z
-  obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).mp
-    (show Z ∈ Submodule.span ℂ (Set.range P) by rw [hP]; trivial)
-  simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul, h]
+  have hZ : Z ∈ Submodule.span ℂ (Set.range P) := by rw [hP]; trivial
+  induction hZ using Submodule.span_induction with
+  | mem Z hZ => obtain ⟨i, rfl⟩ := hZ; exact h i
+  | zero => simp only [Matrix.mul_zero]
+  | add A B _ _ hA hB => simp only [Matrix.mul_add, Matrix.trace_add, hA, hB]
+  | smul c A _ hA => simp only [Matrix.mul_smul, Matrix.trace_smul, hA]
 
 private theorem sicProjector_sum {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
     ∑ i, sicProjector S i = (d : ℂ) • 1 := by
@@ -122,7 +140,7 @@ private theorem sicProjector_sum {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
     nsmul_eq_mul, Matrix.smul_mul, Matrix.one_mul, Matrix.trace_smul,
     sicProjector_trace, smul_eq_mul, mul_one, Nat.cast_mul]
   field_simp
-  <;> ring
+  ring
 
 private theorem sic_frame {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d)
     (X : Matrix (Fin d) (Fin d) ℂ) :
@@ -176,15 +194,15 @@ private theorem mub_gram {d : ℕ} (M : MUBFamily d (d + 1))
     D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj_overlap]
   change ((‖((M.1 p.1).1ᴴ * (M.1 q.1).1) p.2 q.2‖ ^ 2 : ℝ) : ℂ) = _
   by_cases hpq : p.1 = q.1
-  · rw [if_pos hpq, hpq]
+  · rw [ite_eq_left hpq, hpq]
     have hu := Unitary.star_mul_self_of_mem (M.1 q.1).2
     change (M.1 q.1).1ᴴ * (M.1 q.1).1 = 1 at hu
     rw [hu]
     by_cases hab : p.2 = q.2 <;> simp only [Matrix.one_apply, hab, ite_true, ite_false,
       norm_one, norm_zero, one_pow, zero_pow (by decide : 2 ≠ 0), Complex.ofReal_one,
       Complex.ofReal_zero]
-  · rw [if_neg hpq, M.2 p.1 q.1 hpq p.2 q.2]
-    simp only [Complex.ofReal_div, Complex.ofReal_one, Complex.ofReal_natCast, one_div, Complex.ofReal_inv]
+  · rw [ite_eq_right hpq, M.2 p.1 q.1 hpq p.2 q.2]
+    simp only [Complex.ofReal_natCast, one_div, Complex.ofReal_inv]
 
 private def mubBasisVector {d : ℕ} (hd : 2 ≤ d) (M : MUBFamily d (d + 1)) :
     Option (Fin (d + 1) × Fin (d - 1)) → Matrix (Fin d) (Fin d) ℂ
@@ -196,7 +214,9 @@ private theorem mubBasisVector_trace {d : ℕ} (hd : 2 ≤ d)
     (M : MUBFamily d (d + 1)) (p : Option (Fin (d + 1) × Fin (d - 1))) :
     (mubBasisVector hd M p).trace = if p = none then (d : ℂ) else 0 := by
   cases p with
-  | none => simp only [mubBasisVector, Matrix.trace_one, Fintype.card_fin, ite_true]
+  | none =>
+    simp (congrConsts := false) only [mubBasisVector, Matrix.trace_one,
+      Fintype.card_fin, ite_true]
   | some p =>
     change (M.effect _ - M.effect _).trace = 0
     rw [Matrix.trace_sub]
@@ -215,12 +235,13 @@ private theorem mubBasisVector_pair {d : ℕ} (hd : 2 ≤ d)
     have := q.2.isLt
     simp only [Fin.val_castLE] at *
     omega
-  simp only [mubBasisVector, Matrix.sub_mul, Matrix.trace_sub, mub_gram]
+  simp (congrConsts := false) only [mubBasisVector, Matrix.sub_mul, Matrix.trace_sub, mub_gram]
   by_cases hl : p.1 = q.1
-  · rw [if_pos hl, if_pos hl, if_neg hlast, sub_zero]
+  · rw [ite_eq_left hl, ite_eq_left hl, ite_eq_right hlast, sub_zero]
     congr 1
     simp only [Prod.ext_iff, hl, true_and, Fin.ext_iff, Fin.val_castLE]
-  · rw [if_neg hl, if_neg hl, sub_self, if_neg (fun h => hl (congrArg Prod.fst h))]
+  · rw [ite_eq_right hl, ite_eq_right hl, sub_self,
+      ite_eq_right (fun h => hl (congrArg Prod.fst h))]
 
 private theorem mubBasisVector_span {d : ℕ} (hd : 2 ≤ d)
     (M : MUBFamily d (d + 1)) :
@@ -231,7 +252,8 @@ private theorem mubBasisVector_span {d : ℕ} (hd : 2 ≤ d)
     intro c hc
     have hc0 : c none = 0 := by
       have ht := congrArg Matrix.trace hc
-      simp only [Fintype.sum_option, Matrix.trace_add, Matrix.trace_sum, Matrix.trace_smul,
+      simp (congrConsts := false) only [Fintype.sum_option, Matrix.trace_add,
+        Matrix.trace_sum, Matrix.trace_smul,
         mubBasisVector_trace, smul_eq_mul, reduceCtorEq, ite_true, ite_false,
         mul_zero, Finset.sum_const_zero, add_zero, Matrix.trace_zero] at ht
       exact (mul_eq_zero.mp ht).resolve_right (by exact_mod_cast (by omega : d ≠ 0))
@@ -275,9 +297,9 @@ private theorem mub_frame {d : ℕ} (hd : 2 ≤ d) (M : MUBFamily d (d + 1))
         if l = q.1 then M.effect q else (d : ℂ)⁻¹ • 1 := by
       by_cases h : l = q.1
       · subst l
-        simp only [if_pos rfl, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq',
+        simp only [ite_smul, one_smul, zero_smul, Finset.sum_ite_eq',
           Finset.mem_univ, ite_true]
-      · simp only [if_neg h, ← Finset.smul_sum, hsum]
+      · simp only [ite_eq_right h, ← Finset.smul_sum, hsum]
     simp_rw (congrConsts := false) [hl]
     have heq (l : Fin (d + 1)) :
         (if l = q.1 then M.effect q else (d : ℂ)⁻¹ • 1) =
@@ -299,12 +321,12 @@ private theorem mub_frame {d : ℕ} (hd : 2 ≤ d) (M : MUBFamily d (d + 1))
         mubBasisVector hd M p + (mubBasisVector hd M p).trace • 1 := by
     cases p with
     | none =>
-      simp only [mubBasisVector, Matrix.mul_one, htrace, one_smul,
+      simp (congrConsts := false) only [mubBasisVector, Matrix.mul_one, htrace, one_smul,
         Fintype.sum_prod_type, hsum, Finset.sum_const, Finset.card_univ,
-        Fintype.card_fin, Matrix.trace_one, Nat.cast_add, Nat.cast_one]
+        Fintype.card_fin, Matrix.trace_one]
       module
     | some p =>
-      simp only [mubBasisVector, Matrix.mul_sub, Matrix.trace_sub, sub_smul,
+      simp (congrConsts := false) only [mubBasisVector, Matrix.mul_sub, Matrix.trace_sub, sub_smul,
         Finset.sum_sub_distrib, hproj, htrace, sub_self, zero_smul, add_zero]
       abel
   calc
@@ -426,7 +448,6 @@ private theorem transition_gram {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d)
       by_cases hij : i = j <;> simp only [hij, ite_true, ite_false]
       <;> field_simp <;> ring
 
-
 private theorem correlation_transition {dA dB : ℕ} (hdA : 2 ≤ dA) (hdB : 2 ≤ dB)
     (SA : SICFamily dA) (SB : SICFamily dB)
     (MA : MUBFamily dA (dA + 1)) (MB : MUBFamily dB (dB + 1))
@@ -467,12 +488,13 @@ private theorem correlation_transition {dA dB : ℕ} (hdA : 2 ≤ dA) (hdB : 2 �
 
 private theorem scaled_isometry_traceNorm
     {a b m n : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
-    [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
+    [Fintype m] [Fintype n]
     (U : Matrix m a ℂ) (V : Matrix n b ℂ) (X : Matrix a b ℂ)
     (α β : ℝ) (hα : 0 < α) (hβ : 0 < β)
     (hU : Uᴴ * U = ((α : ℂ) ^ 2) • 1)
     (hV : Vᴴ * V = ((β : ℂ) ^ 2) • 1) :
     traceNorm (U * X * Vᴴ) = α * β * traceNorm X := by
+  classical
   let P := CFC.sqrt (Xᴴ * X)
   have hP : P.PosSemidef := Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg _)
   have hPP : P * P = Xᴴ * X :=
@@ -502,7 +524,6 @@ private theorem scaled_isometry_traceNorm
     congr 1
     rw [Complex.ofReal_div]
     field_simp
-    <;> ring
   have hpositive :
       (0 : Matrix n n ℂ) ≤ ((α / β : ℝ) : ℂ) • (V * P * Vᴴ) := by
     apply Matrix.PosSemidef.nonneg
@@ -517,9 +538,8 @@ private theorem scaled_isometry_traceNorm
   have hscalar : ((α / β : ℝ) : ℂ) * (β : ℂ) ^ 2 = ((α * β : ℝ) : ℂ) := by
     rw [Complex.ofReal_div, Complex.ofReal_mul]
     field_simp
-    <;> ring
   rw [← mul_assoc, hscalar]
-  simp only [Complex.re_ofReal_mul, Complex.ofReal_re]
+  simp only [Complex.re_ofReal_mul]
 
 theorem result : claim := by
   intro dA dB hdA hdB SA SB MA MB ρ _hρ _htrace
@@ -531,11 +551,11 @@ theorem result : claim := by
     congr 1
     rw [← Complex.ofReal_pow, Real.sq_sqrt (by positivity)]
     simp only [Complex.ofReal_mul, Complex.ofReal_natCast, Complex.ofReal_add,
-      Complex.ofReal_one, Nat.cast_add, Nat.cast_one]
+      Complex.ofReal_one]
   · rw [transition_gram hdB SB MB]
     congr 1
     rw [← Complex.ofReal_pow, Real.sq_sqrt (by positivity)]
     simp only [Complex.ofReal_mul, Complex.ofReal_natCast, Complex.ofReal_add,
-      Complex.ofReal_one, Nat.cast_add, Nat.cast_one]
+      Complex.ofReal_one]
 
 end D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality
