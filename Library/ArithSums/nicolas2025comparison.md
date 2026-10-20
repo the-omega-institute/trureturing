@@ -15127,3 +15127,266 @@ No sufficient lower bound for $E'_A(n)$ is supplied. Its integrand is
 pointwise nonnegative but its observer average is signed. The new
 first-layer boundary and positive band do not prove complete-defect
 positivity, RH or strict Robin for every $n>5040$.
+
+## A root-small debit for the complete actual higher-layer defect
+
+This application bounds every actual exponent layer $j\ge2$ of the
+same original integer under the unchanged KTO observer. It reuses
+the actual second cutoff MS3, the ordinary integral GPP4, KTO's
+quantitative root-tail transport and the standard effective
+unconditional PNT. These supporting estimates are not separate new
+results. The application concerns the complete higher-layer defect;
+the earlier reference prime-power transport is not assumed to bound
+that defect. No literature priority, numerical common threshold,
+Lean certification or RH/Robin proof is claimed.
+
+For the classical actual-cutoff and full-exponent bookkeeping, see
+Akatsuka, [arXiv:2411.19259v1, §3](https://arxiv.org/html/2411.19259v1#S3),
+Lemma 3.1, Proposition 3.2 and (3.6)--(3.8), (3.11).
+The correspondence is $\kappa=1$, the paper's price
+$\varepsilon=\lambda(x)$, first cutoff $x_1(\varepsilon)$, and
+higher cutoffs $y_j(x_1(\varepsilon))$.
+These are the actual ratio thresholds used here, rather than reference
+prime powers. Those source statements concern CA products and their
+full-layer remainders; they do not state the signed-observer defect
+lower bound consumed below. No claim of priority is attached to the
+intermediate higher-pressure asymptotic.
+
+### The actual higher pressure and its finite limit
+
+Keep KTO's $A=\log n$, $L=\log A$, $T_A=\sqrt A L$,
+$k=\max\{1,\lfloor\epsilon\log L\rfloor\}$, sources
+$\nu_k,\eta_A$ and observer $\omega_A$.
+Its mass is exactly one and its price mean is exactly $\lambda(A)$.
+Keep $\lambda(x)=1/(x\log x)$ and $K(x)=-\lambda'(x)$.
+Use the same actual increments
+
+$$
+\beta_{p,j}=\log\left(1+\frac1{p+\cdots+p^j}\right),\qquad
+r_{p,j}=\frac{\beta_{p,j}}{\log p}.
+$$
+
+Define the full higher pressure and its tail by
+
+$$
+\mathcal M_{\ge2}(q)=\sum_p\sum_{j\ge2}\log p\,(r_{p,j}-q)_+,
+\qquad C_2=\sum_p\sum_{j\ge2}\beta_{p,j}=\log\zeta(2),
+$$
+
+$$
+F_2(x)=C_2-\mathcal M_{\ge2}(\lambda(x)),\qquad
+\mathcal A_{\ge2}(x)=
+ \sum_{\substack{p,\ j\ge2\\r_{p,j}>\lambda(x)}}\log p.
+\tag{HLD1}
+$$
+
+The constant uses the ordinary telescope
+$\sum_{j\ge2}\beta_{p,j}=-\log(1-p^{-2})$ and the convergent
+Euler product for $\zeta(2)$. In particular $F_2$ is nonnegative,
+bounded and decreases to zero on $[e,\infty)$.
+Tonelli for nonnegative scalar hinges, followed by $q=\lambda(t)$,
+gives the exact account
+
+$$
+F_2(x)=\sum_p\sum_{j\ge2}
+       \min\{\beta_{p,j},\lambda(x)\log p\}
+     =\int_x^\infty\mathcal A_{\ge2}(t)K(t)\,dt.
+\tag{HLD2}
+$$
+
+The actual active set is finite at every finite $t$. The strict
+threshold convention remains unchanged; isolated equality values do
+not affect this ordinary integral.
+
+### Insert the owned actual second cutoff and retain every higher layer
+
+MS3 gives the actual second cutoff
+$q_2(t)=\sqrt{2t}(1+O(1/\log t))$.
+The effective PNT, including the possible strict endpoint atom
+$O(\log t)$, therefore gives
+
+$$
+\sum_{p:r_{p,2}>\lambda(t)}\log p
+=\vartheta(q_2(t)-)
+=\sqrt{2t}+O(\sqrt t/\log t).
+$$
+
+For all growing indices $j\ge3$, reuse the owned activation bound
+$p^j\log p<t\log t$. Put $X=t\log t/\log2$.
+Then $j<\log X/\log2$ and $p<X^{1/j}$.
+The elementary bound $\vartheta(y)\le y\log y$ yields
+
+$$
+\sum_{j\ge3}\sum_{p:r_{p,j}>\lambda(t)}\log p
+\le\sum_{3\le j\le\log X/\log2}\vartheta(X^{1/j})
+=O\!\left(X^{1/3}(\log X)^2\right)
+=O\!\left(t^{1/3}(\log t)^3\right).
+\tag{HLD3}
+$$
+
+This is uniform over the entire growing index range. Every actual
+layer and its full weight remains; reference prime-power thresholds
+are not substituted. The short-interval GM estimates elsewhere in
+the MS3 application are not needed here.
+
+Insert these bounds in HLD2 and reuse GPP4's integral estimate
+$\int_x^\infty\sqrt tK(t)\,dt
+=2/(\sqrt x\log x)+O(1/(\sqrt x\log^2x))$.
+The second-layer error integrates to
+$O(1/(\sqrt x\log^2x))$.
+The entire $j\ge3$ term is $O(x^{-2/3}\log^2x)$, smaller than
+that error. Consequently the actual pressure tail satisfies
+
+$$
+F_2(x)=\frac{2\sqrt2}{\sqrt x\log x}
+       +O\!\left(\frac1{\sqrt x\log^2x}\right).
+\tag{HLD4}
+$$
+
+### Use the same quantitative root-tail transport
+
+Apply KTO9--KTO10's root-tail argument with $F_2$ in place of $R$
+and $2\sqrt2$ in place of $c_R$, keeping the same sources,
+degree and observer. The required input is HLD4 with its quantitative
+extra logarithm, together with boundedness on $[e,\infty)$.
+The correspondence of error bounds is as follows.
+
+Below $c=A^{-1/2}$, the clamped bounded integrand and source mass
+$A^{-2}M_{-4}(k)$ cost $O(A^{-3/2}L^{5/4})$ after multiplication
+by $T_A$. On $c\ge A^{-1/2}$ put $z=\log c$, so $L+z\ge L/2$.
+HLD4 gives
+
+$$
+T_AF_2(Ac)=c^{-1/2}
+ \left[\frac{2\sqrt2 L}{L+z}
+       +O\!\left(\frac L{(L+z)^2}\right)\right].
+$$
+
+Its difference from $2\sqrt2c^{-1/2}$ is bounded by
+$(C/L)c^{-1/2}(1+|\log c|)$.
+KTO2 makes its full source integral $O(L^{-3/4})$.
+The omitted source reference moment is at most
+$A^{-7/4}M_{-4}(k)$, and the same two correction atoms are negligible.
+This gives
+$T_A\int F_2(Ac)\,d\eta_A(c)
+=2\sqrt2H_k(1/2)+O(L^{-3/4})$.
+
+For $c\ge A^{-1/2}$ the entire kernel support has $v\ge c$.
+HLD4 bounds every later $F_2(Av)$ by
+$C/(\sqrt{Ac}\log(Ac))$. KTO6 therefore gives
+
+$$
+T_A\left|\int F_2(Av)\,d\kappa_{A,c}(v)-F_2(Ac)\right|
+\le\frac C L c^{-1/2}|\log c|.
+$$
+
+Its $|\eta_A|$ integral is $O(L^{-3/4})$.
+On the remaining small clocks the kernel is positive of mass one;
+bounded $F_2$ and the same small-clock mass pay its complete infinite
+tail. Thus the reused root-tail transport yields
+
+$$
+T_A\int F_2(Av)\,d\omega_A(v)
+=2\sqrt2H_k(1/2)+O(L^{-3/4}).
+\tag{HLD5}
+$$
+
+All source Mellin identities remain on $\nu_k$.
+No positive-power moment of $\omega_A$ is used.
+Bounded $F_2$ and finite variation also give absolute integration.
+
+Since $\omega_A$ has exact mass one, HLD4--HLD5 imply the actual
+higher-pressure gap
+
+$$
+\mathcal J_2(A):=
+\int\mathcal M_{\ge2}(\lambda(Av))\,d\omega_A(v)
+       -\mathcal M_{\ge2}(\lambda(A)),
+$$
+
+$$
+T_A\mathcal J_2(A)
+=2\sqrt2[1-H_k(1/2)]+O(L^{-3/4})
+=2\sqrt2Q(h(1/2))^k+O(L^{-3/4})=o(1).
+\tag{HLD6}
+$$
+
+Here $|Q(h(1/2))|<1$ by XLR2/GPC8.
+No Jensen sign is asserted. In particular, for a fixed sufficiently
+large $C$, put
+$\varepsilon_A=C(|Q(h(1/2))|^k+L^{-3/4})\to0$;
+then $|\mathcal J_2(A)|\le\varepsilon_A/T_A$ eventually.
+
+### Compare with the same integer's nonnegative own-price defect
+
+For the original integer $n$, let $a_p=v_p(n)$ and put
+$W_2(n)=\sum_p\sum_{2\le j\le a_p}\beta_{p,j}$ and
+$L_2(n)=\sum_p(a_p-1)_+\log p$.
+Its pointwise complete higher-layer defect is
+
+$$
+d_2(n,q)=\mathcal M_{\ge2}(q)-W_2(n)+qL_2(n)
+ =\sum_p\sum_{2\le j\le a_p}\log p\,(q-r_{p,j})_+
+  +\sum_p\sum_{j\ge\max\{2,a_p+1\}}
+                 \log p\,(r_{p,j}-q)_+\ge0.
+\tag{HLD7}
+$$
+
+Every active and occupied sum at $q>0$ is finite.
+This retains all higher layers and the original integer's exact
+occupation pattern. Its observer average is absolute: the higher
+pressure is bounded, $W_2(n),L_2(n)$ are finite, and KTO owns the
+absolute price integral.
+Define $D_{2,A}(n)=\int d_2(n,\lambda(Av))\,d\omega_A(v)$.
+Exact mass and exact price mean give
+
+$$
+D_{2,A}(n)=d_2(n,\lambda(A))+\mathcal J_2(A)
+\ge-\frac{\varepsilon_A}{T_A},\qquad
+\varepsilon_A\longrightarrow0.
+\tag{HLD8}
+$$
+
+The lower bound is uniform for every original integer at its own
+$A=\log n$. It compares to the nonnegative defect at the original
+price; it does not carry pointwise positivity through signed averaging
+or replace $n$ by an optimizer. All remaining observer error depends
+on $n$ only through $A$.
+
+### The first-layer consumer and the remaining full target
+
+Let $N_A(n)$ average the complete actual first-layer defect for
+$p\le P_A$, with GMW2's cutoff and unchanged observer.
+Let $D_{\mathrm{far,new},A}(n)$ average the first-layer complement
+$p>P_A$. The disjoint account is
+
+$$
+D_A(n)=N_A(n)+D_{\mathrm{far,new},A}(n)+D_{2,A}(n),
+$$
+
+$$
+D_{\mathrm{far,new},A}(n)
+=D_A^{\mathrm{band}}(n)+D_{\mathrm{far},A}^{(16)}(n)
+\ge\widetilde H_A/2>0\quad\text{eventually}.
+\tag{HLD9}
+$$
+
+No overlapping GMW sector is counted twice.
+KTO12, GMW and HLD8 therefore give
+
+$$
+\begin{aligned}
+T_A\Delta(n)
+&\ge T_AN_A(n)+T_AD_{\mathrm{far,new},A}(n)
+                       +c_R-\varepsilon_A+o(1)\\
+&\ge T_AN_A(n)+T_A\widetilde H_A/2+c_R-o(1).
+\end{aligned}
+\tag{HLD10}
+$$
+
+Every actual higher layer has a root-small possible debit.
+The remaining signed estimate concerns the same integer's first
+layers $p\le P_A$ and their joint compensation with the paid far
+sector. No sufficient lower bound for $N_A(n)$ is supplied.
+Complete-defect positivity, strict Robin for every $n>5040$ and RH
+remain unproved.
