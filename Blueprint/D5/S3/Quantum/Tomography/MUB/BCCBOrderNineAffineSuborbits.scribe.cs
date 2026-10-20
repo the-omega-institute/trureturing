@@ -16,7 +16,7 @@ internal sealed class BCCBOrderNineAffineSuborbitsDocument : IScribeDocumentDefi
             Paragraph(Text(
                 "Use zero-based matrix indices 0 through 8 and parameter positions 0 through 3. "
                     + "Fin(n) denotes the index set from 0 to n minus one. The parameter space "
-                    + "Fin(p) to R is R to the power p, and LinR denotes real linear maps. "
+                    + "Fin(p) to R is R to the power p. LinearMap(R,V,R) denotes real linear maps from V to R. "
                     + "Write i for the imaginary unit and omega for the positive cubic root in "),
                 Ref("D5/S3/Observer/WindowRegister.windowRoot"), Text(":")),
             new DocumentBlock.DisplayFormula(Disp(RootFormula())),
@@ -148,7 +148,8 @@ internal sealed class BCCBOrderNineAffineSuborbitsDocument : IScribeDocumentDefi
         new Formula.Subscript(matrix, Seq(a, Comma, b));
     private static Formula Tuple(Formula a, Formula b, Formula c, Formula d) =>
         Seq(OpenBracket, a, Comma, Sp, b, Comma, Sp, c, Comma, Sp, d, CloseBracket);
-    private static Formula Phase(Formula form, Formula t) => Call("exp", Mul(At(form, t), F.Id("i")));
+    private static Formula Phase(Formula form, Formula t) =>
+        Call("exp", Mul(Call("ofReal", At(form, t)), F.Id("i")));
     private static Formula ParameterTuple(Formula x, Formula y, Formula u, Formula w, Formula t) =>
         Call("params", x, y, u, w, t);
 
@@ -195,7 +196,7 @@ internal sealed class BCCBOrderNineAffineSuborbitsDocument : IScribeDocumentDefi
         Formula p = F.Id("p"), set = F.Id("U"), f = F.Id("F"), a = F.Id("a"), b = F.Id("b"), t = F.Id("t");
         Formula c = Entry(F.Id("c"), a, b), form = Entry(F.Id("L"), a, b);
         Formula entries = All(a, Index(D(9)), All(b, Index(D(9)),
-            Some(c, Complexes(), Some(form, Call("LinR", Space(p), Reals()),
+            Some(c, Complexes(), Some(form, Call("LinearMap", Reals(), Space(p), Reals()),
                 All(t, Space(p), ImpliesFormula(Member(t, set),
                     Equal(Entry(At(f, t), a, b), Mul(c, Phase(form, t)))))))));
         return All(p, NumberSet("N"), All(set, Call("Set", Space(p)),

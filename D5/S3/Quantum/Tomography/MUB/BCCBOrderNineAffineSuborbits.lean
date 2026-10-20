@@ -6,11 +6,6 @@
    utility: none
    digest: Affine order nine BCCB suborbits have a cancelling pair or an equilateral triple. -/
 
-import Mathlib.Analysis.Analytic.Uniqueness
-import Mathlib.Analysis.Complex.Circle
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.RingTheory.RootsOfUnity.Complex
 import D5.S3.Observer.WindowRegister
 
 /-! Affine dephasings of the BCCB family with four unit parameters summing to one
