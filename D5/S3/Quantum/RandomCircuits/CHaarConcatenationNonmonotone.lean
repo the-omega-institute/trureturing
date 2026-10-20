@@ -15,6 +15,7 @@ proof_shape: hsNormSq: bind-only; consumers: claim, result.
 proof_shape: claim: bind-only; consumers: result.
 proof_shape: swapHermitian: bind-only; consumers: twirlSwapTrace.
 proof_shape: swapSquare: bind-only; consumers: twirlFormula.
+Escape audit unfinished for swapHermitian (D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapHermitian; statement_id sha256:f54d121473ff7089d6a4e4ddb59f07c052a2b01de8dbb2be98989df6087984d7), swapSquare (D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapSquare; statement_id sha256:e38cf16db43e5fa8076efb0b29d793ec6e2f3c6755db13a2496a370e78352442): https://github.com/the-omega-institute/trureturing/issues/19279.
 proof_shape: traceSwap: bind-only; consumers: twirlFormula.
 proof_shape: twirlTrace: bind-only; consumers: twirlFormula.
 proof_shape: twirlSwapTrace: bind-only; consumers: twirlFormula.
@@ -185,12 +186,12 @@ def claim : Prop := ∀ (d e t : ℕ) [NeZero e],
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private theorem swapHermitian : ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))).IsHermitian := by
+theorem swapHermitian : ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))).IsHermitian := by
   ext ⟨a,b⟩ ⟨c,d⟩
   simp only [Matrix.conjTranspose_apply, Prod.swap_prod_mk, Prod.mk.injEq]
   simp [and_comm, eq_comm]
 
-private theorem swapSquare : (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) = 1 := by
+theorem swapSquare : (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) = 1 := by
   have h : Equiv.prodComm n n * Equiv.prodComm n n = (1 : Equiv.Perm (n×n)) := by
     ext x <;> rfl
   simp [← Matrix.permMatrix_mul, h]

@@ -43,6 +43,7 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
             Node("vectorize","The literal action on vectorized matrices",Vectorize(),"Column vectorization intertwines the four-replica literal action with conjugation by the two-copy unitary.","literalMoment_vectorize",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("globalidentity","The full identity vector is fixed",GenericIdentity(),"The full identity matrix is invariant under two-copy unitary conjugation.","haarAverage_identity_fixed",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("globalswap","The full swap vector is fixed",GenericSwap(),"Exchanging the two copies commutes with the tensor square of every unitary.","haarAverage_swap_fixed",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
+            Node("swapcommutes","Replica swap commutes with a tensor square",ReplicaSwapCommutes(),"The replica swap commutes with the tensor square of every complex matrix.","replicaSwap_commutes",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("imagespan","The image is in the identity/swap span",ImageSpan(),"Two distinct coordinates suffice for the commutant argument. Each averaged vector is a linear combination of the vectorized identity and replica swap.","haarAverage_image_span",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("fixedpairing","Pairing against a Hermitian fixed vector",FixedPairing(),"Moving a Hermitian matrix to the other side of the pairing preserves every fixed vector.","hermitian_fixed_pairing",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("replicaswap","Entries of the replica swap",ReplicaSwapEntry(),"The permutation matrix has entry one exactly when the row with its coordinates exchanged equals the column.","D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
@@ -117,6 +118,12 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
     {
         Formula n=F.Id("n"), v=QCall("Matrix","vec",ReplicaSwap(n));
         return Generic(Eqn(MulVec(Call("haarAverage",n),v),v));
+    }
+    private static Formula ReplicaSwapCommutes()
+    {
+        Formula n=F.Id("n"),u=F.Id("U");
+        Formula s=ReplicaSwap(n);
+        return Generic(All("U",MatrixOf(n),Eqn(Mul(s,Kron(u,u)),Mul(Kron(u,u),s))));
     }
     private static Formula ImageSpan()
     {

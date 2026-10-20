@@ -20,6 +20,7 @@ proof_shape: haarAverage_identity_fixed: bind-only; consumer: CHaarConcatenation
 proof_shape: haarAverage_swap_fixed: bind-only; consumer: CHaarConcatenationNonmonotone.twirlSwapTrace.
 proof_shape: haarAverage_image_span: bind-only; consumer: CHaarConcatenationNonmonotone.twirlFormula.
 proof_shape: hermitian_fixed_pairing: bind-only; consumer: CHaarConcatenationNonmonotone.twirlTrace.
+proof_shape: replicaSwap_commutes: bind-only; consumer: AlsingBirrittellaLogNegativitySandwich.factor_commutes.
 proof_shape: literalMoment_integrable: bind-only; consumer: CHaarConcatenationNonmonotone.momentOp2HaarEntries.
 proof_shape: literalMoment_vectorize: bind-only; consumer: haarAverage_identity_fixed.
 proof_shape: Commutant.replicaSwap_apply: bind-only; consumer: CHaarConcatenationNonmonotone.moment22Reindex.
@@ -27,6 +28,7 @@ escape_witness: Commutant.two_copy_commutant, via quarter phases and a Hadamard 
 admission_basis: escape-witness
 Direct frozen dependencies: none; the upstream imports are pinned Mathlib.
 Escape audit unfinished for hadamard_unitary: https://github.com/the-omega-institute/trureturing/issues/16609.
+Escape audit unfinished for replicaSwap_commutes (statement_id sha256:4e959fbf6211116c2b2f1192bc6dcc6b24a3bbd20d41e9f98e2cae0823852cc8): https://github.com/the-omega-institute/trureturing/issues/19279.
 The finite Gram and coefficient identities are consumed normalization helpers. The new
 content is a universal commutant classification and the literal Haar-average reduction;
 no bounded enumeration, checker, numerical certificate or positive finite instance is retained.
@@ -505,7 +507,7 @@ private theorem invariant_unvectorize_commutes (v : ((n × n) × (n × n)) → �
   have h := congrArg (fun X : Matrix (n×n) (n×n) ℂ => X*(U.val ⊗ₖ U.val)) hc
   simpa [mul_assoc,hs] using h.symm
 
-private theorem replicaSwap_commutes (U : Matrix n n ℂ) :
+theorem replicaSwap_commutes (U : Matrix n n ℂ) :
     (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (U ⊗ₖ U) =
       (U ⊗ₖ U)*(Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) := by
   simp only [Equiv.Perm.permMatrix,
