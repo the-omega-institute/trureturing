@@ -3138,3 +3138,551 @@ earlier sections remain separate from single-use simulation capacity.
 [SS17]: https://arxiv.org/pdf/2512.14588v1
 
 ## 追加锚（本行以下为增补区）
+
+## 23. Signed-angle six-state terminal recovery near the bounded angles
+
+**Definition 23.1 (Signed calibration and the terminal decoder).** Use
+exactly the actual measured instrument of Definitions 2.1 and 11.1 at a
+fixed real angle $\theta$, with the repeated acquisitions and complete
+classical view of Assumption 1.4 and Definition 1.5. For this approximate
+recovery task replace exact success by an unhalved diamond error bound,
+using (17.2). In particular, the supremum includes arbitrary complex
+operators and every untouched finite reference, not just system density
+operators. Choose a nearest integer $k$ to $2\theta/\pi$ and put
+
+$$
+\eta=\theta-k\pi/2,\qquad
+\delta=|\eta|=\operatorname{dist}(\theta,(\pi/2)\mathbb Z)\le\pi/4,
+\qquad \epsilon_k=k\bmod2.
+\tag{23.1}
+$$
+
+Either nearest integer is permitted at a tie. The decoder uses the signed
+$\eta$; $\delta$ is only the nonnegative error parameter. On each actual
+supplied label $h_{t+1}$, relabel it statically as
+$\widetilde h_{t+1}=h_{t+1}\mathbin\oplus\epsilon_k$ and update
+
+$$
+P_0=I_3,\qquad P_{t+1}=U_{\widetilde h_{t+1}}P_t\in S_3.
+\tag{23.2}
+$$
+
+Thus the complete persistent history state has at most six values, with
+at most twelve fixed transition entries. These are the actual permutation
+matrices of Theorem 2.2. There is no newly sampled generator or random
+choice of label. The transition requires no persistent clock.
+
+In the orthonormal basis $(t_1,t_2)$ of $T$ from Theorem 6.1 define
+
+$$
+\begin{gathered}
+J=W_T=\begin{pmatrix}-1&0\\0&1\end{pmatrix},\qquad
+H_c=\begin{pmatrix}2/3&0\\0&-2/3\end{pmatrix},\\
+C=J+H_c=\begin{pmatrix}-1/3&0\\0&1/3\end{pmatrix},\qquad
+A=\begin{pmatrix}0&1/\sqrt3\\1/\sqrt3&0\end{pmatrix}.
+\end{gathered}
+\tag{23.3}
+$$
+
+Here $A$ is a two-dimensional Hermitian matrix, distinct from the measured
+five-dimensional Kraus matrices $A_j(\theta)$. For $P\in S_3$, all these
+permutations preserve $\mathbb C\xi\oplus T$; define on the qutrit
+
+$$
+Y^\eta_{t,P}=e^{it\eta}\big|_{\mathbb C\xi}
+ \ \oplus\ e^{i\eta H_c}P_Te^{-i\eta H_c}.
+\tag{23.4}
+$$
+
+At the externally declared horizon $n$, apply exactly one unitary on $H$:
+
+$$
+D^\eta_{n,P_n}=B(Y^\eta_{n,P_n})^\dagger B^\dagger+(I_5-P_R).
+\tag{23.5}
+$$
+
+The two orthogonal blocks make this unitary on all of $H$. Its recovery
+target is the encoded qutrit, jointly with every untouched reference.
+The intermediate $Y^\eta_{t,P}$ are coordinates for analysis, not
+intermediate quantum operations. Between acquisitions only (23.2) is
+performed. No ancilla for recovery, retained quantum environment,
+intermediate quantum control, adaptive measurement basis, reference
+access or postselection is admitted. The fresh measured environments
+are exactly those already specified in Assumption 1.4.
+
+Let $\mathcal F_{n,\theta}:M_3\to M_5$ be the channel obtained by averaging
+the actual histories and applying (23.5). Signed angle calibration, the
+known horizon and the at most six terminal control descriptions are
+supplied separately. Their precision, synthesis and cost, and the $n$
+acquisitions, preparations and communications, are not counted by six.
+Any further history-dependent control description, buffer or clock value
+would belong to the complete state and is absent from this construction.
+
+**Theorem 23.2 (Finite all-reference terminal bound).** For every real
+$\theta$ and every integer $n\ge0$, Definition 23.1 gives
+
+$$
+\boxed{\quad
+\|\mathcal F_{n,\theta}-\iota\|_\diamond
+\le\min\{2,\,2n\delta^2/3\}.
+\quad}
+\tag{23.6}
+$$
+
+The bound concerns the averaged corrected channel. It asserts neither
+this error for each history nor a tail bound for histories. At
+$\delta=0$ the construction recovers exactly at every horizon. The
+operator (23.5) acts on all $H$, but (23.6) does not assert recovery of
+arbitrary full-$H$ inputs.
+
+Proof. First work at the signed angle $\eta$, so that $k=0$ and
+$\widetilde h=h$. Reuse Theorem 2.2 and Definition 3.1:
+
+$$
+A_j(\eta)B=2^{-1/2}BV_j(\eta),\qquad
+V_j(\eta)=U_je^{i\eta W},\qquad
+A_{h_t}(\eta)\cdots A_{h_1}(\eta)B
+ =2^{-t/2}BQ_h(\eta).
+\tag{23.7}
+$$
+
+Each normalized conditional branch is a qutrit unitary with effect
+$I_3/2$ at the next acquisition. This remains true after tensoring with
+any reference, and its output remains in $R$. Consequently every actual
+history has probability $2^{-t}$ independently of the encoded input.
+This uses the actual measured branches, not a different realization of
+the same averaged channel. Fairness is only asserted on $R$.
+
+The matrix cancellation is in the orthonormal $T$ coordinates of
+Theorem 6.1. To make its signs explicit, those restrictions give
+
+$$
+\begin{aligned}
+U_{0,T}^\dagger H_cU_{0,T}
+ &=\begin{pmatrix}-1/3&1/\sqrt3\\1/\sqrt3&1/3\end{pmatrix}=C+A,\\
+U_{1,T}^\dagger H_cU_{1,T}
+ &=J(C+A)J=C-A.
+\end{aligned}
+\tag{23.8}
+$$
+
+For example, the first matrix follows by multiplying
+$\left(\begin{smallmatrix}1/2&\sqrt3/2\\\sqrt3/2&-1/2\end{smallmatrix}\right)$
+on both sides of $H_c$. The second uses $U_1=U_0W$, $JCJ=C$ and
+$JAJ=-A$. The average in (23.8), minus $H_c$, is precisely $J$.
+Thus, if $F(P)=P_T^\dagger H_cP_T$ and
+$(\mathsf PF)(P)=\tfrac12\sum_jF(U_jP)$, then
+
+$$
+\begin{aligned}
+(\mathsf PF-F)(P)&=P_T^\dagger JP_T,\\
+F(U_jP)-(\mathsf PF)(P)&=(-1)^jP_T^\dagger AP_T.
+\end{aligned}
+\tag{23.9}
+$$
+
+This is an additive Poisson/coboundary correction: its innovation has
+conditional mean zero. The classical additive-functional use of such
+corrections is literature-attested, for example Glynn–Meyn,
+*A Liapounov Bound for Solutions of the Poisson Equation*, §1,
+(1), (3)–(4), pp. 916–917 [GM23]. On the finite state space here,
+all entries are bounded. Equation (23.9) is checked directly and
+imports no recurrence, central limit, independence or quantum-product
+conclusion from that supplier. The noncommutative product estimate
+needed here is the following calculation.
+
+For $P'=U_jP$, introduce a local residual on the full qutrit:
+
+$$
+L_{j,P}=(Y^\eta_{t+1,P'})^\dagger V_j(\eta)Y^\eta_{t,P}.
+\tag{23.10}
+$$
+
+Its $\xi$ block is exactly
+$e^{-i(t+1)\eta}e^{i\eta}e^{it\eta}=1$. For its $T$ block, write
+$U=U_{j,T}$ and use $[J,H_c]=0$ to obtain, in order,
+
+$$
+\begin{aligned}
+L_{j,P,T}
+ &=e^{i\eta H_c}P_T^\dagger U^\dagger e^{-i\eta H_c}
+       Ue^{i\eta J}e^{i\eta H_c}P_Te^{-i\eta H_c}\\
+ &=S_Pe^{-i\eta(C+(-1)^jA)}e^{i\eta C}S_P^\dagger,
+ \qquad S_P=e^{i\eta H_c}P_T^\dagger.
+\end{aligned}
+\tag{23.11}
+$$
+
+In particular this residual is independent of $t$. Both branches use
+the same conjugating unitary $1\oplus S_P$, and the $\xi$ block has
+not been discarded as a relative phase.
+
+Extend $C,A$ by zero on $\mathbb C\xi$, denoting the extensions by
+$\widehat C,\widehat A$, and set, for a real auxiliary variable $a$,
+
+$$
+\begin{gathered}
+G(a)=\operatorname{Ad}_{e^{-i\eta(\widehat C+a\widehat A)}}
+       =e^{\mathcal L(a)},\qquad
+\mathcal L(a)=-i\eta[\widehat C+a\widehat A,\,\cdot\,],\\
+\mathcal K=\mathcal L'(a)=-i\eta[\widehat A,\,\cdot\,].
+\end{gathered}
+\tag{23.12}
+$$
+
+For any reference and any complex operator $X$, left and right
+multiplication by $\widehat A\otimes I$ each have trace-norm bound
+$\|\widehat A\|_{\rm op}=1/\sqrt3$. Hence
+$\|\mathcal K\|_\diamond\le2|\eta|/\sqrt3$. Every factor
+$e^{s\mathcal L(a)}$, for real $s$, is a unitary conjugation and
+has diamond norm one. Differentiating the matrix exponential once gives
+$G'(a)=\int_0^1e^{(1-s)\mathcal L(a)}\mathcal K
+ e^{s\mathcal L(a)}\,ds$. Differentiating again inserts the second
+$\mathcal K$ at either of its two ordered positions. Reparametrizing
+the two integrals yields the exact Duhamel formula
+
+$$
+G''(a)=2\int_{0\le r\le s\le1}
+ e^{(1-s)\mathcal L(a)}\mathcal K
+ e^{(s-r)\mathcal L(a)}\mathcal K
+ e^{r\mathcal L(a)}\,dr\,ds.
+\tag{23.13}
+$$
+
+Submultiplicativity and the simplex area $1/2$ therefore give
+$\|G''(a)\|_\diamond\le4\eta^2/3$ for every real $a$. The
+finite-dimensional integrals are ordinary integrals of linear maps,
+so their norm estimates hold uniformly in reference dimension.
+The exact symmetric Taylor identity is
+
+$$
+\frac{G(1)+G(-1)}2-G(0)
+ =\frac12\int_0^1(1-s)\bigl(G''(s)+G''(-s)\bigr)\,ds.
+\tag{23.14}
+$$
+
+It follows by applying the integral remainder separately at $1$ and
+$-1$; the first derivatives cancel. Since $\int_0^1(1-s)\,ds=1/2$,
+its diamond norm is at most $2\eta^2/3$.
+By (23.11), the channel
+
+$$
+\Phi_P=\tfrac12\sum_{j=0}^1\operatorname{Ad}_{L_{j,P}}
+\tag{23.15}
+$$
+
+is the common unitary conjugate of
+$\tfrac12(G(1)+G(-1))\circ G(0)^{-1}$, where the conjugation
+acts on both the input and output of the channel. Such compositions
+preserve the diamond norm and send $G(0)\circ G(0)^{-1}$ to identity.
+Consequently
+
+$$
+\|\Phi_P-\operatorname{id}_3\|_\diamond\le2\eta^2/3.
+\tag{23.16}
+$$
+
+This is a finite inequality for every real signed $\eta$, with no
+omitted small-angle remainder and no factor of one half in the norm.
+Quadratic improvement by mixing unitaries is also a known general
+mechanism: Campbell, *Shorter gate sequences for quantum computing by
+mixing unitaries*, arXiv:1612.02689v3, §III Lemma 1, (14) [CA23],
+assumes $a,b>0$, $p_j>0$, $\sum_jp_j=1$,
+$\|U_j-V\|_{\rm op}\le a$ and
+$\|\sum_jp_jU_j-V\|_{\rm op}\le b$, and gives
+$\|\sum_jp_j\operatorname{Ad}_{U_j}-\operatorname{Ad}_V\|_\diamond
+\le a^2+2b$. Its equation (2) calls half the norm a diamond distance;
+(14) is the unhalved norm bound. This is a generic intermediate
+precedent. Equations (23.11)–(23.16) give the needed actual matrices
+and the coefficient $2/3$ directly, rather than importing a protocol
+or a resource assertion from gate synthesis.
+
+It remains to accumulate (23.16) on the same actual histories. For a
+length-$t$ history define
+
+$$
+\begin{gathered}
+Z_h=(Y^\eta_{t,P_h})^\dagger Q_h(\eta),\qquad
+M_t(P)=2^{-t}\sum_{h:P_h=P}\operatorname{Ad}_{Z_h},\\
+p_t(P)=2^{-t}|\{h:P_h=P\}|,\qquad
+\mathcal C_t=\sum_PM_t(P).
+\end{gathered}
+\tag{23.17}
+$$
+
+Each $Z_h$ is unitary. If $p_t(P)>0$, $M_t(P)/p_t(P)$ is a
+convex combination of unitary channels, so it has diamond norm one:
+the upper bound follows from trace-norm invariance of each summand,
+and a density input gives the lower bound by trace preservation.
+If $p_t(P)=0$, $M_t(P)=0$. Thus
+
+$$
+\|M_t(P)\|_\diamond=p_t(P),\qquad \sum_Pp_t(P)=1.
+\tag{23.18}
+$$
+
+Appending the actual label $j$ gives the pointwise identity
+$Z_{hj}=L_{j,P_h}Z_h$. Conditional fairness from (23.7) and grouping
+those same histories give the complete CP recursion
+
+$$
+M_{t+1}(P')=\frac12
+ \sum_{\substack{P,j\\U_jP=P'}}
+ \operatorname{Ad}_{L_{j,P}}\circ M_t(P).
+\tag{23.19}
+$$
+
+No distribution of $Z_h$ has been detached from its state $P_h$.
+Summing over $P'$ and then subtracting $\mathcal C_t$ gives
+
+$$
+\begin{aligned}
+\mathcal C_{t+1}&=\sum_P\Phi_P\circ M_t(P),\\
+\mathcal C_{t+1}-\mathcal C_t
+ &=\sum_P(\Phi_P-\operatorname{id}_3)\circ M_t(P),\\
+\|\mathcal C_{t+1}-\mathcal C_t\|_\diamond
+ &\le\sum_P(2\eta^2/3)p_t(P)=2\eta^2/3.
+\end{aligned}
+\tag{23.20}
+$$
+
+This is the conditional-CP-component bookkeeping already used in
+[*AURIC FIB approximate online recovery memory*, Theorem 8.4,
+(8.6)–(8.7)][AP23], here with the deterministic permutation state
+and the new local residual (23.11). It requires no independence between
+the current frame and the accumulated residual. In particular it does
+not replace the weighted sum by a product of unconditional averages.
+
+Since $Y^\eta_{0,I}=I_3$, $\mathcal C_0=\operatorname{id}_3$.
+Telescoping (23.20) gives $2n\eta^2/3$. Each $\mathcal C_t$ is a
+channel, so the triangle inequality also bounds its distance from
+identity by two. On the actual branch the terminal decoder obeys
+
+$$
+D^\eta_{n,P_h}BQ_h(\eta)=BZ_h,
+\qquad \mathcal F_{n,\eta}=\iota\circ\mathcal C_n.
+\tag{23.21}
+$$
+
+An isometry $B\otimes I$ preserves all nonzero singular values of
+an operator under $X\mapsto(B\otimes I)X(B^\dagger\otimes I)$.
+Thus postcomposition by $\iota$ preserves diamond norm, giving
+$\|\mathcal F_{n,\eta}-\iota\|_\diamond
+=\|\mathcal C_n-\operatorname{id}_3\|_\diamond$.
+This proves (23.6) at signed angle $\eta$ with every reference.
+
+For general $\theta=k\pi/2+\eta$, the full-qutrit symmetry of
+Theorem 11.2 has the explicit form
+
+$$
+\begin{gathered}
+e^{ik\pi W/2}=i^kW^k,\qquad U_jW=U_{j\mathbin\oplus1},\\
+V_j(\theta)=i^kV_{j\mathbin\oplus\epsilon_k}(\eta),\qquad
+Q_h(\theta)=i^{kn}Q_{\widetilde h}(\eta).
+\end{gathered}
+\tag{23.22}
+$$
+
+The relabeling is a bijection of actual histories and preserves their
+fair probabilities. The phase $i^{kn}$ is common to the entire qutrit,
+including both $\xi$ and $T$, so it disappears in each branch channel.
+The same terminal decoder therefore gives the same averaged corrected
+channel as at $\eta$. This proves (23.6) for every real angle, including
+either choice at a nearest-lattice tie. At $n=0$ the state is $I_3$,
+$Y^\eta_{0,I}=I_3$, and (23.5) is $I_5$. At $\eta=0$ the residual
+in (23.11) is identity for every $P,j$, proving exact recovery.
+All coordinate transformations used in the argument are analysis only;
+the sole quantum correction is (23.5). $\square$
+
+## 24. Calibration sign and the coefficient of the fixed gauge
+
+**Proposition 24.1 (A wrong-sign first-order probe).** At actual angle
+$-d$, $d>0$, use the state update (23.2) with $k=0$, but mistakenly
+use $+d$ in the one-step decoder (23.5). Let the resulting corrected
+qutrit-coordinate channel be $\widetilde{\mathcal C}_1$. As $d\to0$,
+
+$$
+\widetilde{\mathcal C}_1
+ =\operatorname{id}_3-2id[W,\,\cdot\,]+O(d^2).
+\tag{24.1}
+$$
+
+For $\psi=(\xi+t_1)/\sqrt2$ and $\rho=|\psi\rangle\langle\psi|$,
+its unhalved output trace-norm error is $4d+O(d^2)$. Thus the
+nonnegative distance $\delta$ in (23.1) cannot replace the signed
+$\eta$ in the decoder. The calibration sign is static information;
+retaining it does not require another history state.
+
+Proof. Write $\widehat H_c=0\oplus H_c$. From (23.4),
+$Y^d_{1,U_j}$ has $\xi$ block $e^{id}$ and $T$ block
+$e^{idH_c}U_{j,T}e^{-idH_c}$. Hence the wrong-sign residual
+$(Y^d_{1,U_j})^\dagger V_j(-d)$ has $\xi$ block $e^{-2id}$
+and $T$ expansion
+
+$$
+I_T-id\bigl(U_{j,T}^\dagger H_cU_{j,T}-H_c+J\bigr)+O(d^2)
+ =I_T-id\bigl(2J+(-1)^jA\bigr)+O(d^2).
+\tag{24.2}
+$$
+
+Averaging the two conjugations cancels the $A$ term. Since
+$W=1|_{\mathbb C\xi}\oplus J$, this proves (24.1), with a remainder
+bounded in diamond norm by a constant times $d^2$ near zero; this also
+follows directly from analyticity of the finite matrix exponentials.
+On the two-dimensional span of $\xi,t_1$, $W$ has eigenvalues $1,-1$.
+The matrix $-2i[W,\rho]$ there is
+$\left(\begin{smallmatrix}0&-2i\\2i&0\end{smallmatrix}\right)$,
+with eigenvalues $2,-2$ and trace norm four. The reverse triangle
+inequality now gives $4d+O(d^2)$. The isometric embedding leaves this
+error unchanged. This is an encoded input witness, not a claim about
+full-$H$ recovery or a typical history. $\square$
+
+**Proposition 24.2 (The fixed gauge has quadratic coefficient $2/3$).**
+For Definition 23.1 at $k=0,n=1$, put
+$\rho_a=|t_a\rangle\langle t_a|$, $a=1,2$. Its qutrit-coordinate
+channel satisfies the exact identity
+
+$$
+\mathcal C_1(\rho_1)=(1-p)\rho_1+p\rho_2,\qquad
+p=\frac34\sin^2(2\eta/3).
+\tag{24.3}
+$$
+
+Consequently
+
+$$
+\|\mathcal C_1-\operatorname{id}_3\|_\diamond
+\ge\frac32\sin^2(2\eta/3)
+=\frac23\eta^2+O(\eta^4).
+\tag{24.4}
+$$
+
+No constant $c<2/3$ can replace $2/3$ in a bound $cn\eta^2$ valid
+for this fixed gauge at all horizons and sufficiently small signed
+angles. This is not a lower bound for all six-state terminal decoders.
+
+Proof. Directly from (23.3),
+$(C+A)^2=(C-A)^2=4I_T/9$. Therefore
+
+$$
+e^{-i\eta(C\pm A)}
+ =\cos(2\eta/3)I_T-\frac{3i}{2}\sin(2\eta/3)(C\pm A).
+\tag{24.5}
+$$
+
+At $P=I_3$, the other factors $S_I,e^{i\eta C},S_I^\dagger$ in
+(23.11) are diagonal. They only change component phases of $t_1$ and
+$t_2$. The off-diagonal transition amplitude of (24.5) has squared
+modulus $3\sin^2(2\eta/3)/4$. The diagonal amplitudes are the same
+for the two signs and the off-diagonal amplitudes are opposite, so
+the averaged off-diagonal output entries vanish. This proves (24.3).
+The two orthogonal states $\rho_1,\rho_2$ give trace norm $2p$ for
+the difference from $\rho_1$, proving the diamond lower bound and its
+Taylor coefficient. Dividing (24.4) by $\eta^2$ and taking
+$\eta\to0$ excludes every $c<2/3$ for this construction.
+In contrast, at $n=1$ storing the actual binary label and applying
+$BV_j(\eta)^\dagger B^\dagger+(I_5-P_R)$ recovers exactly with
+two states by Theorem 2.2 and (3.3). Thus fixed-gauge sharpness does
+not establish global six-state optimality or a necessary crossover.
+$\square$
+
+## 25. Exact and approximate records on the same rational-angle instance
+
+**Corollary 25.1 (Exact $n$ bits versus at most six states).** For every
+integer $n\ge1$, every $\varepsilon>0$ and every integer $k$, choose
+an integer $q$ satisfying
+
+$$
+q>\max\left\{4,\,\pi\sqrt{\frac{2n}{3\varepsilon}}\right\},
+\qquad \eta=\pi/q,\qquad \theta=k\pi/2+\eta.
+\tag{25.1}
+$$
+
+For the one actual measured instrument at this $\theta$ and this
+horizon, the following hold under the complete-view and recovery
+permissions of Definition 1.5 and Assumption 1.4:
+
+$$
+\begin{gathered}
+\min|\mathcal Y_n^{\rm exact}|=2^n,\qquad
+\min b_n^{\rm exact}=n,\qquad
+\min H_{\rm Sh}(\mathcal Y_n^{\rm exact})=n,\\
+|\{P_t:|h|=t\}|\le6\quad(0\le t\le n),\qquad
+H_{\rm Sh}(P_n)\le\log_2 6,\qquad
+\|\mathcal F_{n,\theta}-\iota\|_\diamond<\varepsilon.
+\end{gathered}
+\tag{25.2}
+$$
+
+The entropy minimum is over discrete complete exact views. The exact
+lower bounds permit arbitrary randomized summaries and arbitrary terminal
+CPTP maps on all $H$, with success required only on the averaged
+encoded channel; the six-state upper bound uses just the single
+unitary (23.5). These are the same acquired-label, same-angle,
+same-horizon instances and the same encoded all-reference target.
+
+Proof. The ratio $\theta/\pi=k/2+1/q$ is rational and is not in
+$\tfrac12\mathbb Z$, since $0<1/q<1/4$. Theorem 14.2 directly gives
+$m_n(\theta)=2^n$, and Theorem 16.2 directly gives the three exact
+minima, including the history determination and discrete entropy
+conclusion. Their attainment uses the complete actual history and its
+terminal inverse. No new collision-free premise or shrinking
+collision-neighborhood argument is needed. For approximate recovery,
+$q>4$ makes $k\pi/2$ the nearest bounded angle, so $\delta=\pi/q$.
+Theorem 23.2 and (25.1) give
+$2n\delta^2/3<\varepsilon$. The state bound is (23.2).
+For its entropy, if $s\le6$ states have positive probabilities $p_a$,
+concavity of logarithm gives
+$\sum_ap_a\log_2(1/p_a)\le\log_2\sum_ap_a/p_a=\log_2s$.
+This proves (25.2). The exact suppliers are reused with their stated
+scope, rather than re-proving maximal word growth or exact-record
+necessity. $\square$
+
+**Definition 25.2 (Quantifiers, attribution and unresolved boundaries).**
+The sufficient six-state condition is
+$n\operatorname{dist}(\theta,(\pi/2)\mathbb Z)^2\le3\varepsilon/2$.
+For (25.2) the angle is explicitly permitted to depend on both $n$ and
+$\varepsilon$; for example the integer
+$\lfloor\max\{4,\pi\sqrt{2n/(3\varepsilon)}\}\rfloor+1$ is a
+valid $q$. This is an existence statement for each finite horizon and
+tolerance. It does not assert six-state recovery at any fixed nonbounded
+angle for arbitrarily long horizons. For fixed $\delta>0$, the upper
+bound (23.6) eventually becomes only the trivial bound two; that loss
+of information in an upper bound is not a recovery impossibility proof.
+The coefficient limitation in Proposition 24.2 is specific to (23.4).
+The optimal error over all six-state controllers, a necessary
+error-memory crossover, and a uniform fixed-nonzero-angle long-horizon
+construction are not determined by these statements.
+
+The additive Poisson correction [GM23] and quadratic unitary mixing
+[CA23] are literature-attested mechanisms used inside the actual-model
+derivation. The conditional CP-component method is already supplied by
+[AP23, Theorem 8.4][AP23]. The project-specific additional deduction is
+the explicit signed gauge (23.3)–(23.5), its all-angle and all-reference
+bound with correlated frame/residual bookkeeping, its calibration and
+coefficient probes, and its composition with the existing exact rational
+suppliers in (25.2). This is a repo-derived ordinary application with
+complete derivations, without a claim of literature priority or a
+kernel certificate. No physical realization is inferred from the ideal
+measured-instrument and exact-control premises.
+
+At the original fixed angle $\theta=\pi/6$, the online memory problem
+of [AP23, Definitions 2.3–2.4 and Theorem 9.1][AP23] has the separate
+fixed-error bounds
+$c_{\gamma,\varepsilon}(n/\ln n)^{3/2}\le W_n(\varepsilon)
+\le C_\varepsilon n^{3/2}$ in their stated range. The present angle
+choice does not close that logarithmic gap, supply its constants or
+replace its fixed-angle quantifiers. The operational resources remain
+those of Definition 23.1: six counts only the persistent classical
+history state, not calibrated angle precision, terminal-control
+precision, acquisition cost or the externally supplied horizon.
+The average-channel error gives no per-history or high-probability
+guarantee. Full-$H$ input inversion, retained-environment recovery,
+intermediate quantum control, additional recovery ancillas,
+postselection and reference access remain outside these conclusions.
+
+[GM23]: https://web.stanford.edu/~glynn/papers/1996/GM96.pdf
+[CA23]: https://arxiv.org/html/1612.02689v3
+[AP23]: https://github.com/the-omega-institute/trureturing/blob/ff06ef4d419e29fee5224ec3d78175a5144a9568/docs/develop/theory/AURIC_FIB_APPROXIMATE_ONLINE_RECOVERY_MEMORY.md
+
+## 追加锚（本行以下为增补区）
