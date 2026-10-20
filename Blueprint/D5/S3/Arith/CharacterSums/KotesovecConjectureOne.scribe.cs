@@ -41,14 +41,15 @@ internal sealed class KotesovecConjectureOneDocument : IScribeDocumentDefinition
             Node("good_2401", "The modulus 2401", Call("Good", D(2,4,0,1)), false,
                 "For degree three the fibers over zero and three hundred forty-three have sizes forty-nine and one hundred forty-seven. Quadratic nonvanishing handles degree two and the missing-preimage argument handles all degrees at least four."),
             Node("result", "Every A368959 term is powerful", ClaimBody(), false,
-                "If a prime p divides m only once, Chinese remaindering isolates a prime-modulus factor. At degree p, Fermat's identity turns this factor into the sum of a nontrivial additive character, which is zero. Thus every prime divisor of a modulus in A368959 occurs at least twice."))));
+                "If a prime p divides m only once, Chinese remaindering isolates a prime-modulus factor. At degree p, Fermat's identity turns this factor into the sum of a nontrivial additive character, which is zero. Thus every prime divisor of a modulus in A368959 occurs at least twice.", resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kotesovec-2024-a368959-monomial-sums"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, bool definition,
-        string prose, bool literature = false) => Describe.Lean(
+        string prose, bool literature = false, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("kotesovec-one-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>

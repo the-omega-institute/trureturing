@@ -22,6 +22,10 @@ $$(\forall m: \mathbb{N}, (\operatorname{InA338325}\left(m\right)) \Rightarrow (
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/KotesovecConjectureTwo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kotesovec-2024-a368959-family` (proved) by `D5/S3/Arith/CharacterSums/KotesovecConjectureTwo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kotesovec-2024-a368959-family","declaration_gid":"D5/S3/Arith/CharacterSums/KotesovecConjectureTwo.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Václav Kotěšovec (2024). *OEIS A368959: nonzero complete monomial exponential sums*. URL: <https://oeis.org/A368959>.

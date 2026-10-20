@@ -184,6 +184,10 @@ $$\forall m: \mathbb{N}, (\operatorname{InA368959}\left(m\right)) \Rightarrow (\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/KotesovecConjectureOne.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kotesovec-2024-a368959-monomial-sums` (proved) by `D5/S3/Arith/CharacterSums/KotesovecConjectureOne.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kotesovec-2024-a368959-monomial-sums","declaration_gid":"D5/S3/Arith/CharacterSums/KotesovecConjectureOne.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Václav Kotěšovec (2024). *OEIS A368959: nonzero complete monomial exponential sums*. URL: <https://oeis.org/A368959>.

@@ -22,7 +22,8 @@ internal sealed class KotesovecConjectureTwoDocument : IScribeDocumentDefinition
                 H("The family and four further moduli"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Nonvanishing for injective additive characters holds for prime squares, prime cubes, 243 and 2401. Chinese remaindering preserves it for coprime products. The products 972=4*243 and 1944=8*243 yield the remaining two moduli, and the standard additive character gives the exponential sums of A368959."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kotesovec-2024-a368959-family"), ResolutionKind.Proved)))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
