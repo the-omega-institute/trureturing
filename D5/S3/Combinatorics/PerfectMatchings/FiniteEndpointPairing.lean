@@ -368,7 +368,10 @@ theorem endpoint_pairing_reattach_return_data (s r : Perm X)
   obtain ⟨hfirst, hend⟩ := first_visit_reattach q E J x n hn
   refine ⟨n, hn, ?_, ?_⟩
   · simpa only [q, mul_assoc] using hfirst
-  · simpa only [q, mul_assoc] using hend
+  · change ((s * (r * J.ofSubtype)) ^ n) x = (nextVisit q E (J x) : X)
+    calc
+      _ = (q ^ n) (J x) := by simpa only [q, mul_assoc] using hend
+      _ = _ := (next_visit_eq_of_first_visit (q := q) (S := E) (J x) hn).symm
 
 #print axioms endpoint_pairing_fixed_point_free
 #print axioms endpoint_pairing_reattach_same_cycle

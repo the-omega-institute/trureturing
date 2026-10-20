@@ -18,6 +18,22 @@ internal sealed class FiniteReturnTowersDocument : IScribeDocumentDefinition
                 + "The tower model is the disjoint union of those points with pairs (x,k), where x is marked and 0<=k<l(x). "
                 + "Its explicit successor preserves the original step on untouched points, increments k below the roof, "
                 + "and sends (x,l(x)-1) to (H(x),0).")),
+            Describe.Lean(DescribeId.Create("temporal-split"),
+                DeclarationHandle.Create(Prefix + "ReturnData.temporal_decomposition"),
+                H("Each Time Has One Completed-Return Count and Offset"),
+                StatementSource.FromAuthor(Context(All("x", V("S"), All("k", V("Natural"),
+                    new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("p"),
+                        Call("Product", V("Natural"), V("Natural")),
+                        Both(Split(V("p")), All("t", Call("Product", V("Natural"), V("Natural")),
+                            Imp(Split(V("t")), Equal(V("t"), V("p"))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural time k there is exactly one pair (n,d) with k=T_x(n)+d and "
+                    + "0<=d<l(H^n(x)); its position is f^k(x)=f^d(H^n(x)). "
+                    + "Strict increase of cumulative return times makes the half-open return intervals disjoint. "
+                    + "Thus n records the full elapsed history even after an induced cycle repeats. "
+                    + "Uniqueness of this temporal pair and uniqueness of the spatial tower coordinate both hold."))),
+                DescribeRole.Theorem),
             Node("tower", "Every Original Point Has One Tower Coordinate", "ReturnData.tower_decomposition",
                 Context(Call("ConstructedTowerEquivalence", V("R"), V("f"))),
                 "The encoding sends an untouched point to itself and (x,k) to f^k(x). "
@@ -56,6 +72,14 @@ internal sealed class FiniteReturnTowersDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(proof))), DescribeRole.Theorem);
+    private static Formula Both(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Split(Formula p) => Both(
+        Equal(V("k"), Add(Call("Elapsed", V("R"), V("x"), Call("First", p)), Call("Second", p))),
+        Both(new Formula.Relation(Call("Second", p), FormulaRelationOperator.LessThan,
+                Call("Length", V("R"), Call("NextIterate", V("R"), Call("First", p), V("x")))),
+            Equal(Call("Iterate", V("f"), V("k"), V("x")),
+                Call("Iterate", V("f"), Call("Second", p),
+                    Call("NextIterate", V("R"), Call("First", p), V("x"))))));
     private static Formula V(string name) => F.Id(name);
     private static Formula All(string x, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);

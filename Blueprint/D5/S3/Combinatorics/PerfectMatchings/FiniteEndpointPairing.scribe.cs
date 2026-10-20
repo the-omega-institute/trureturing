@@ -12,7 +12,7 @@ internal sealed class FiniteEndpointPairingDocument : IScribeDocumentDefinition
         "Finite alternating paths pair exposed endpoints and determine all reattached endpoint orbits.",
         H("Finite Alternating Paths and Endpoint Pairing"),
         Blocks(
-            Paragraph(Text("The consumed helper endpoint_pairing_reattach_return_data additionally exports the same least positive first-visit length for the original cut path from J(x) and the reattached path from x, with terminal endpoint (P*J)(x). WeightedReattachment consumes this witness; the helper is not an independent novelty claim.")),
+            Paragraph(Text("The first-return witnesses give the same least positive first-visit length for the original cut path from J(x) and the reattached path from x, with terminal endpoint (P*J)(x). These lengths are the segment weights in the complete reattachment inventory.")),
             Paragraph(Text("Let X be finite and let s and r be involutive permutations of X. "
                 + "Put E = {x : r(x)=x} and q=s*r, with the right factor applied first. "
                 + "For x in E, take the least positive n with q^n(x) in E. Such n exists by finite "

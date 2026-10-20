@@ -123,9 +123,40 @@ private theorem greedy_decomposition (x : S) (k : ℕ) :
   refine ⟨n, d, he, hd, ?_⟩
   rw [he, Nat.add_comm, pow_add, Perm.mul_apply, R.elapsed_position]
 
+/-- Each natural time has exactly one number of completed returns and one
+interior offset. This counts elapsed returns even after a whole induced cycle;
+the spatial tower coordinate may repeat, while this temporal pair is unique. -/
+theorem temporal_decomposition (x : S) (k : ℕ) :
+    ∃! p : ℕ × ℕ, k = R.elapsed x p.1 + p.2 ∧
+      p.2 < R.length ((R.next ^ p.1) x) ∧
+      (f ^ k) x = (f ^ p.2) ((R.next ^ p.1) x : S) := by
+  obtain ⟨n, d, he, hd, hp⟩ := R.greedy_decomposition x k
+  refine ⟨(n, d), ⟨he, hd, hp⟩, ?_⟩
+  rintro ⟨n', d'⟩ ⟨he', hd', _⟩
+  change k = R.elapsed x n' + d' at he'
+  change d' < R.length ((R.next ^ n') x) at hd'
+  have hu : k < R.elapsed x (n + 1) := by
+    rw [elapsed]
+    omega
+  have hu' : k < R.elapsed x (n' + 1) := by
+    rw [elapsed]
+    omega
+  have hn : n' = n := by
+    apply le_antisymm
+    · by_contra h
+      have ht := (R.elapsed_strict x).monotone (show n + 1 ≤ n' by omega)
+      omega
+    · by_contra h
+      have ht := (R.elapsed_strict x).monotone (show n' + 1 ≤ n by omega)
+      omega
+  have hdn : d' = d := by
+    simp only [hn] at he'
+    omega
+  exact Prod.ext hn hdn
+
 def Untouched (_R : ReturnData f S) : Set X := {z | ∀ x : S, ¬ f.SameCycle x z}
-def Tower := Σ x : S, Fin (R.length x)
-def Model := R.Untouched ⊕ R.Tower
+abbrev Tower := Σ x : S, Fin (R.length x)
+abbrev Model := R.Untouched ⊕ R.Tower
 
 def encode : R.Model → X
   | Sum.inl z => z
@@ -170,13 +201,21 @@ private theorem encode_injective : Function.Injective R.encode := by
     | inr b =>
       have hc : f.SameCycle b.1 (R.encode (Sum.inr b)) :=
         ⟨(b.2.val : ℤ), by simp only [zpow_natCast]; rfl⟩
-      exact False.elim (a.property b.1 (by simpa only [← h] using hc))
+      apply False.elim
+      apply a.property b.1
+      change f.SameCycle b.1 (R.encode (Sum.inl a))
+      rw [h]
+      exact hc
   | inr a =>
     cases b with
     | inl b =>
       have hc : f.SameCycle a.1 (R.encode (Sum.inr a)) :=
         ⟨(a.2.val : ℤ), by simp only [zpow_natCast]; rfl⟩
-      exact False.elim (b.property a.1 (by simpa only [h] using hc))
+      apply False.elim
+      apply b.property a.1
+      change f.SameCycle a.1 (R.encode (Sum.inl b))
+      rw [← h]
+      exact hc
     | inr b => exact congrArg Sum.inr (R.tower_injective h)
 
 private theorem encode_surjective : Function.Surjective R.encode := by
@@ -187,7 +226,7 @@ private theorem encode_surjective : Function.Surjective R.encode := by
   · simp only [Untouched, Set.mem_setOf_eq, not_forall, not_not] at hz
     obtain ⟨x, hx⟩ := hz
     obtain ⟨k, hk⟩ := hx.exists_nat_pow_eq
-    obtain ⟨n, d, _, hd, hp⟩ := R.greedy_decomposition x k
+    obtain ⟨⟨n, d⟩, ⟨_, hd, hp⟩, _⟩ := R.temporal_decomposition x k
     exact ⟨Sum.inr ⟨(R.next ^ n) x, ⟨d, hd⟩⟩, hp.symm.trans hk⟩
 
 noncomputable def modelEquiv : R.Model ≃ X :=
@@ -211,10 +250,14 @@ private theorem encode_step (p : R.Model) : R.encode (R.step p) = f (R.encode p)
   rcases p with z | ⟨x, k⟩
   · rfl
   · by_cases h : k.val + 1 < R.length x
-    · simp only [step, h, dite_true, encode, pow_succ', Perm.mul_apply]
+    · simp only [step, dif_pos h, encode, pow_succ', Perm.mul_apply]
     · have hk : k.val + 1 = R.length x := by omega
-      simp only [step, h, dite_false, encode, pow_zero, Perm.one_apply]
-      rw [← R.jump x, ← hk, pow_succ', Perm.mul_apply]
+      simp only [step, dif_neg h, encode, pow_zero, Perm.one_apply]
+      rw [← R.jump x]
+      calc
+        (f ^ R.length x) x = (f ^ (k.val + 1)) x :=
+          congrArg (fun n : ℕ => (f ^ n) (x : X)) hk.symm
+        _ = f ((f ^ k.val) x) := by rw [pow_succ', Perm.mul_apply]
 
 /-- The complete constructive cycle model, including all untouched cycles.
 This equivalence identifies every original point, not only marked endpoints. -/
@@ -234,7 +277,11 @@ theorem least_period_sum (x : S) (N : ℕ)
   refine ⟨⟨lt_of_lt_of_le hp (R.index_le_elapsed x N), ?_⟩, ?_⟩
   · rw [R.elapsed_position, hreturn]
   · intro k hk
-    obtain ⟨j, d, he, hd, hpos⟩ := R.greedy_decomposition x k
+    have hkpos : 0 < k := hk.1
+    obtain ⟨⟨j, d⟩, ⟨he, hd, hpos⟩, _⟩ := R.temporal_decomposition x k
+    change k = R.elapsed x j + d at he
+    change d < R.length ((R.next ^ j) x) at hd
+    change (f ^ k) x = (f ^ d) ((R.next ^ j) x : S) at hpos
     have hd0 : d = 0 := by
       by_contra hd0
       apply (R.first ((R.next ^ j) x)).2.2 d (Nat.pos_of_ne_zero hd0) hd
@@ -277,6 +324,8 @@ theorem weighted_inventory [Fintype X] {A : Type*} [AddCommMonoid A] (Φ : ℕ �
       (∑ z : R.Untouched, Φ (orbitPeriod f z)) +
       ∑ x : S, R.length x • Φ (R.weightedPeriod x) := by
   classical
+  letI : Fintype R.Tower := inferInstanceAs (Fintype (Σ x : S, Fin (R.length x)))
+  letI : Fintype R.Model := inferInstanceAs (Fintype (R.Untouched ⊕ R.Tower))
   have hs : (∑ p : R.Model, Φ (orbitPeriod f (R.modelEquiv p))) =
       ∑ z : X, Φ (orbitPeriod f z) := by
     apply Fintype.sum_equiv R.modelEquiv
@@ -305,5 +354,11 @@ theorem weighted_cycle_inventory [Fintype X] :
     (fun n => Polynomial.monomial n (1 / (n : ℚ)))
 
 end ReturnData
+
+#print axioms ReturnData.temporal_decomposition
+#print axioms ReturnData.tower_decomposition
+#print axioms ReturnData.least_period_sum
+#print axioms ReturnData.weighted_inventory
+#print axioms ReturnData.weighted_cycle_inventory
 end
 end D5.S3.Combinatorics.PerfectMatchings.FiniteReturnTowers
