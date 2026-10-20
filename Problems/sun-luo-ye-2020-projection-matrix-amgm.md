@@ -12,14 +12,20 @@ motivation_gids:
 
 ## Problem
 
-R. Sun, Z.-Q. Luo, and Y. Ye, *On the efficiency of random permutation for ADMM and coordinate descent*, Math. Oper. Res. 45(1) (2020), 233–271, Section 3.3, Conjecture 1, arXiv:1503.06387v3, state:
+R. Sun, Z.-Q. Luo, and Y. Ye, *On the efficiency of random permutation for ADMM and coordinate descent*, arXiv:1503.06387v3, Section 3.3, Conjecture 3.1, equation (37), PDF p.20, state:
 
 > We observe that we only need to prove a matrix AM-GM inequality for projection matrices. We conjecture that the following matrix AM-GM inequality holds.
 >
-> **Conjecture** (matrix AM-GM inequality for projection matrices). Suppose $P_i \in \mathbb R^{N \times N}, i=1,\dots,n$ are projection matrices, then
+> **Conjecture 3.1** (matrix AM-GM inequality for projection matrices). Suppose $P_i \in \mathbb R^{N \times N}, i=1,\dots,n$ are projection matrices, then
 > $$\frac{1}{n!}\sum_{\sigma=(\sigma_1,\dots,\sigma_n)\in\Gamma} P_{\sigma_n}P_{\sigma_{n-1}}\cdots P_{\sigma_1}\preceq\left(\frac1n\sum_i P_i\right)^n.$$
 
 Here $\Gamma$ is the set of permutations of $\{1,\dots,n\}$ and $X\preceq Y$ means that $Y-X$ is positive semidefinite. The source and its coordinate-descent motivation are recorded in [the Library note](../Library/QuadraticForms/sunluoye2020projectionamgm.md). Preregistration: [#15647](https://github.com/the-omega-institute/trureturing/issues/15647).
+
+The inspected mathematical source is arXiv v3. The matching journal record is
+*Mathematics of Operations Research* 45(1) (2020), 233–271,
+DOI [10.1287/moor.2019.0990](https://doi.org/10.1287/moor.2019.0990);
+the journal PDF was not independently inspected. The conjecture number above
+is the arXiv v3 number.
 
 ### Statement echo
 
@@ -32,6 +38,44 @@ Here $\Gamma$ is the set of permutations of $\{1,\dots,n\}$ and $X\preceq Y$ mea
 | Average over all permutations, with the first entry rightmost | `symProd` | The real inverse factorial scales the sum of reversed permutation words |
 | Positive-semidefinite order | `claim`: the mean power minus the symmetrized product is `Matrix.PosSemidef` | Exact difference direction |
 | Refutation of the universal assertion | `result`: negation of `claim` | Witness $n=N=3$; no assumptions on the result |
+
+### Structured block target and source identities
+
+The separately registered target [#17674](https://github.com/the-omega-institute/trureturing/issues/17674),
+with its [pre-probe scope notice](https://github.com/the-omega-institute/trureturing/issues/17674#issuecomment-6287957803),
+restricts (37) to the following complete domain. For every integer $n\ge1$
+and positive integers $d_1,\ldots,d_n$, put $N=\sum_i d_i$ and take real
+$A_i\in\mathbb R^{N\times d_i}$ with $A_i^\top A_i=I_{d_i}$ such that
+the actual concatenation $A=[A_1,\ldots,A_n]$ is square and nonsingular.
+Set $P_i=I_N-A_iA_i^\top$, $M=n^{-1}\sum_iP_i$, and
+$G=(n!)^{-1}\sum_{\sigma\in\Gamma}P_{\sigma_n}\cdots P_{\sigma_1}$.
+The target is $G\preceq M^n$, with all block permutations uniformly
+weighted and the number of blocks as the exponent. The six-dimensional
+witness below refutes this universal restricted assertion.
+
+The block dimensions and normalization come from source Sections 2.1.1
+and 2.2, equations (7)–(8) and (23). Claim 4.1, equations (51a)–(51b),
+PDF p.23, assumes this square nonsingular, block-orthonormal structure
+and states identities. In the original block coordinates, let $L_\sigma$
+have block $(\sigma_i,\sigma_j)$ equal to
+$A_{\sigma_i}^\top A_{\sigma_j}$ for $j\le i$ and zero otherwise,
+and put $Q_\sigma=L_\sigma^{-1}$ and
+$Q=(n!)^{-1}\sum_\sigma Q_\sigma$. Then those identities are
+
+$$
+I-AQ_\sigma A^\top=P_{\sigma_n}\cdots P_{\sigma_1},\qquad
+I-AQA^\top=G.
+$$
+
+They hold for the witness below; Claim 4.1 is not refuted. Lemma 3,
+equation (52), and Corollary 4.1, equation (53), prove the weaker bound
+$G\preceq M$. The target $G\preceq M^n$ is a strengthening on that
+structured domain and a restriction of unrestricted Conjecture 3.1.
+The unrestricted conjecture was already refuted by the historical Lean
+result above before the block probes. No literal published, still-open
+full-block assertion matching #17674 was established by the inspected
+pre-probe record. The block result is retained here as exposition, with
+no new open-problem-resolution admission or literature-priority claim.
 
 ## Motivation
 
@@ -60,8 +104,18 @@ The scalar three-coordinate complement-projection argument under Triage is prose
 The six-dimensional block counterexample under Triage is a separate prose
 proof with an exact integer certificate and a self-contained checker. It
 satisfies the square nonsingular concatenation and block orthonormality
-conditions of Claim 4.1. It introduces no new Lean declaration, kernel
-statement, frozen result or open-problem-resolution admission.
+conditions of Claim 4.1. A separate checker, independently authored from
+the fixed witness using exact rational arithmetic, completed on Mac Studio
+on 2026-10-20 with native exit 0. It verified the full block Gram matrices,
+positive square-root normalization, $\det K=3500$, the full six-dimensional
+projectors, all six reversed words, every (51a) matrix identity and their
+(51b) average, and the exact negative form displayed below. This independent
+check is distinct from the original researcher's integer checker. Neither
+is Lean kernel verification. The historical 29-declaration scoped report
+concerns only the unchanged `ProjectionAMGMRefutation` module; it does not
+certify this block witness or the scalar-three prose. The block exposition
+introduces no new Lean declaration, kernel statement, frozen result or
+open-problem-resolution admission.
 
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9). There are no other new public theorems in this module.
 
@@ -83,6 +137,7 @@ The exact rational checks enumerate all $n!$ words at $n=3,5,7$: respectively 6,
 | Arbitrary-block coordinate-descent assertion $G\preceq M^n$ | Refuted in prose with exact integer checks below | $n=3$, $N=6$, $d_1=d_2=d_3=2$; actual orthonormal blocks and square nonsingular concatenation |
 | All-$n$ scalar coordinate-descent assertion | Open | The six-dimensional witness has two columns per block; it does not settle the all-$n$ scalar class |
 | Optimal RP-CD convergence rate | Open | The source's intended application is not settled by this refutation |
+| Kim–Lee–Yun second-moment comparison | Open | Separate from the first-moment matrix inequality tested here |
 | Unrestricted projection inequality for even $n$ | Open | No universal even-$n$ theorem or counterexample is delivered |
 
 ### What the settlement shows
@@ -270,9 +325,10 @@ remain open.
 The block assertion fails already for $n=3$, $N=6$ and
 $d_1=d_2=d_3=2$. The construction here is repo-derived; literature
 priority is not established. The source hypotheses are those of
-Sun–Luo–Ye, arXiv:1503.06387v3, Claim 4.1, PDF p.23, with the original
-comparison (37), PDF p.20. This is a readable argument and exact
-computational certificate, not a new kernel-checked result.
+Sun–Luo–Ye, arXiv:1503.06387v3, Claim 4.1, PDF p.23. The tested
+comparison is the restriction of Conjecture 3.1, equation (37), PDF p.20,
+to that structured domain, as specified above. This is a readable argument
+and exact computational certificate, not a new kernel-checked result.
 
 Let $e_0,e_1,e_2,f_0,f_1,f_2$ be the standard orthonormal basis of
 $\mathbb R^6$, in that order. Indices on $e_i,f_i$ are taken modulo
