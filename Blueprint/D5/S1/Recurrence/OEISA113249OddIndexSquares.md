@@ -36,6 +36,10 @@ $$\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; \operatorname{IsSquare
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/OEISA113249OddIndexSquares.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/dement-2005-a113249-odd-index-squares` (proved) by `D5/S1/Recurrence/OEISA113249OddIndexSquares.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dement-2005-a113249-odd-index-squares","declaration_gid":"D5/S1/Recurrence/OEISA113249OddIndexSquares.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Creighton Dement (2005). *OEIS A113249: odd-index squares in a fourth-order recurrence family*. URL: <https://oeis.org/A113249>.

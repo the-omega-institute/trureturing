@@ -48,13 +48,17 @@ internal sealed class OEISA113249OddIndexSquaresDocument : IScribeDocumentDefini
                 + "identities, so each auxiliary term is an integer square root "
                 + "of the corresponding odd-index term. The argument includes "
                 + "every natural m without a nonzero or distinct-root hypothesis.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("dement-2005-a113249-odd-index-squares"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("a113249-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula SequenceFormula()
     {
