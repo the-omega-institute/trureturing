@@ -21,6 +21,20 @@ open D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
 open D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate
 open D5.S3.ConceptDynamics.Coding.IncomingLiftAmbiguityCriterion
 
+/- Export the exact frozen path lemmas as namespace aliases.  Lean's export
+   creates no declaration and preserves their private kernel names and proofs. -/
+namespace D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate
+run_cmd do
+  let supplier := Lean.Name.num
+    `_private.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgettingBound 0
+  let owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate
+  for short in [`squareIncomingLift_path, `squareOutgoingLift_path] do
+    let kernel := supplier ++ owner ++ short
+    unless (← Lean.getEnv).contains kernel do
+      throwError "missing original kernel supplier {kernel}"
+    modify fun s => { s with env := Lean.addAlias s.env (owner ++ short) kernel }
+end D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate
+
 namespace D5.S3.ConceptDynamics.Coding.OriginalAlignedBalanced.Full62
 
 open D5.S3.ConceptDynamics.Coding.OriginalAlignedBalanced.FiniteWindowWordTransport
@@ -304,7 +318,14 @@ theorem outgoing_transport (c : CompatibleCertificate A B R S m) (sq : Square c)
     (h : r.target = b.source) : c.outgoingSquare r b h = sq := by
   subst r
   subst b
-  exact c.outgoingSquare_reconstruct sq
+  rcases sq with ⟨i,z,⟨j,a,rn⟩,⟨t,r0,bn⟩,commutes⟩
+  apply (c.squareCoordinates).injective
+  change (⟨i,z,(c.phi i z).symm ⟨t,r0,bn⟩⟩ :
+    Σ i : Fin n, Σ z : Fin k, EdgePair A R i z) = ⟨i,z,⟨j,a,rn⟩⟩
+  exact congrArg (fun input : EdgePair A R i z =>
+    (⟨i,z,input⟩ : Σ i : Fin n, Σ z : Fin k, EdgePair A R i z))
+      ((congrArg (c.phi i z).symm commutes).symm.trans
+        ((c.phi i z).symm_apply_apply ⟨j,a,rn⟩))
 
 def leftFiber (c : CompatibleCertificate A B R S m)
     (u v : Fin (Fintype.card (Edge R))) :
@@ -318,10 +339,20 @@ def leftFiber (c : CompatibleCertificate A B R S m)
     right_inv := ?_ }
   · have ht : e.symm v = s.val.terminalR := (congrArg e.symm s.property.2).symm.trans (e.symm_apply_apply _)
     have hs : e.symm u = s.val.initialR := (congrArg e.symm s.property.1).symm.trans (e.symm_apply_apply _)
-    refine ⟨?_, ?_⟩
-    · rw [ht]; rfl
-    · change (c.incomingSquare s.val.leftA (e.symm v) _).initialR = e.symm u
-      simpa only [ht,hs] using congrArg Square.initialR (incomingSquare_reconstruct c s.val)
+    have hp : (e.symm v).source = s.val.leftA.target := by rw [ht]; rfl
+    refine ⟨hp, ?_⟩
+    change (c.incomingSquare s.val.leftA (e.symm v) hp.symm).initialR = e.symm u
+    have hsq0 : c.incomingSquare s.val.leftA s.val.terminalR rfl = s.val := by
+      apply (c.squareCoordinates).injective
+      rcases s.val with ⟨i,z,⟨j,a,rn⟩,⟨t,r0,bn⟩,commutes⟩
+      rfl
+    have hsq : c.incomingSquare s.val.leftA (e.symm v) hp.symm = s.val := by
+      have hr : (⟨e.symm v, hp.symm⟩ :
+          {r : Edge R // s.val.leftA.target = r.source}) =
+          ⟨s.val.terminalR, rfl⟩ := Subtype.ext ht
+      exact (congrArg (fun r : {r : Edge R // s.val.leftA.target = r.source} =>
+        c.incomingSquare s.val.leftA r.val r.property) hr).trans hsq0
+    exact (congrArg Square.initialR hsq).trans hs.symm
   · constructor
     · have h := a.property.choose_spec
       change (c.incomingSquare a.val (e.symm v) _).initialR = e.symm u at h
@@ -332,7 +363,16 @@ def leftFiber (c : CompatibleCertificate A B R S m)
     apply Subtype.ext
     have ht : e.symm v = s.val.terminalR := (congrArg e.symm s.property.2).symm.trans (e.symm_apply_apply _)
     dsimp only
-    simpa only [ht] using incomingSquare_reconstruct c s.val
+    have hsq0 : c.incomingSquare s.val.leftA s.val.terminalR rfl = s.val := by
+      apply (c.squareCoordinates).injective
+      rcases s.val with ⟨i,z,⟨j,a,rn⟩,⟨t,r0,bn⟩,commutes⟩
+      rfl
+    have hp : s.val.leftA.target = (e.symm v).source := by rw [ht]; rfl
+    have hr : (⟨e.symm v, hp⟩ :
+        {r : Edge R // s.val.leftA.target = r.source}) =
+        ⟨s.val.terminalR, rfl⟩ := Subtype.ext ht
+    exact (congrArg (fun r : {r : Edge R // s.val.leftA.target = r.source} =>
+      c.incomingSquare s.val.leftA r.val r.property) hr).trans hsq0
   · intro a
     apply Subtype.ext
     rcases a with ⟨⟨i,j,h⟩,ha⟩
@@ -353,7 +393,7 @@ def rightFiber (c : CompatibleCertificate A B R S m)
     refine ⟨?_, ?_⟩
     · rw [hs]; rfl
     · change (c.outgoingSquare (e.symm v) s.val.rightB _).terminalR = e.symm u
-      simpa only [hs,ht] using congrArg Square.terminalR (outgoingSquare_reconstruct c s.val)
+      simpa only [hs,ht] using congrArg Square.terminalR (outgoing_transport c s.val s.val.initialR s.val.rightB rfl rfl _)
   · constructor
     · exact (congrArg e ((square_lifts_left_forgetting c).2.1 (e.symm v)
         (reverseEdge a.val) a.property.choose)).trans (e.apply_symm_apply v)
@@ -369,7 +409,13 @@ def rightFiber (c : CompatibleCertificate A B R S m)
       (@reverse_reverse k B s.val.rightB) _
   · intro a
     apply Subtype.ext
-    exact congrArg reverseEdge (outgoingSquare_rightB c (e.symm v) (reverseEdge a.val) a.property.choose)
+    have hright (r : Edge R) (b : Edge B) (h : r.target = b.source) :
+        (c.outgoingSquare r b h).rightB = b := by
+      rcases r with ⟨i,z,num⟩
+      rcases b with ⟨u,t,edge⟩
+      cases h
+      rfl
+    exact congrArg reverseEdge (hright (e.symm v) (reverseEdge a.val) a.property.choose)
 
 def leftIso (c : CompatibleCertificate A B R S m) :
     EdgeIso c.squareMatrix (Model c.squareIncomingLift) :=
@@ -465,7 +511,7 @@ theorem incoming_square_step (c : CompatibleCertificate A B R S m) (sq : Square 
     (c.squareIncomingLift.lift a ⟨r,h⟩).val = sq.initialR := by
   subst a
   subst r
-  exact congrArg Square.initialR (incomingSquare_reconstruct c sq)
+  exact congrArg Square.initialR ((c.squareCoordinates).symm_apply_apply sq)
 
 theorem outgoing_square_step (c : CompatibleCertificate A B R S m) (sq : Square c)
     (r : Edge R) (b : Edge B) (h : r.target = b.source)
@@ -473,7 +519,7 @@ theorem outgoing_square_step (c : CompatibleCertificate A B R S m) (sq : Square 
     (c.outgoingSquare r b h).terminalR = sq.terminalR := by
   subst r
   subst b
-  exact congrArg Square.terminalR (outgoingSquare_reconstruct c sq)
+  exact congrArg Square.terminalR (outgoing_transport c sq sq.initialR sq.rightB rfl rfl _)
 
 theorem certificate_formulas (c : CompatibleCertificate A B R S m)
     {dL dR : ℕ}
