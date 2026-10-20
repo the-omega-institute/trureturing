@@ -19,13 +19,16 @@ internal sealed class KoutschanKrattenthalerSchlosserTenElevenDocument : IScribe
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The determinant identity", ClaimBody(),
                 "The column generating functions are sums of two shifted inverse powers. Multiplication of adjacent column differences by the inverse of (1−X)(1−2X)(1−2X+2X²) preserves each finite determinant. The resulting columns agree after their initial zero blocks, so block determinants and the first-row expansion give the rational factors and size shifts.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("koutschan-krattenthaler-schlosser-2024-ten-eleven-determinants"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("kks-teneleven-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula I(int value) => value < 0 ? Neg(new Formula.Number(-value)) : new Formula.Number(value);
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));

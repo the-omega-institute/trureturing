@@ -25,7 +25,9 @@ internal sealed class KoutschanKrattenthalerSchlosserShiftedGDocument : IScribeD
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The determinant identity", ClaimBody(),
                 "The column generating functions are sums of two shifted inverse powers. Multiplication of adjacent column differences by the inverse of (1−X)(1−2X)(1−2X+2X²) preserves each finite determinant. The resulting columns agree after their initial zero blocks, so block determinants and the first-row expansion give the rational factors and size shifts.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("koutschan-krattenthaler-schlosser-2024-shifted-g-determinants"), ResolutionKind.Proved)),
             Node("link_BC", "link BC", PublicFormula("link_BC"),
                 "The common transformed columns and their vanishing initial block give this determinant ratio. The initial block determinants determine its rational factor.", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
             Node("link_PD", "link PD", PublicFormula("link_PD"),
@@ -48,10 +50,11 @@ internal sealed class KoutschanKrattenthalerSchlosserShiftedGDocument : IScribeD
                 "The common transformed columns and their vanishing initial block give this determinant ratio. The initial block determinants determine its rational factor.", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("kks-shiftedg-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula I(int value) => value < 0 ? Neg(new Formula.Number(-value)) : new Formula.Number(value);
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));

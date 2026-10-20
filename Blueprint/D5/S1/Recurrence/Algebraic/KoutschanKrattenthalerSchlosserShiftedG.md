@@ -46,6 +46,10 @@ $$\forall n: \mathbb{N}, 3 \le n \implies (\operatorname{G}\left(2, 1, 2, 0, n\r
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/KoutschanKrattenthalerSchlosserShiftedG.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/koutschan-krattenthaler-schlosser-2024-shifted-g-determinants` (proved) by `D5/S1/Recurrence/Algebraic/KoutschanKrattenthalerSchlosserShiftedG.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"koutschan-krattenthaler-schlosser-2024-shifted-g-determinants","declaration_gid":"D5/S1/Recurrence/Algebraic/KoutschanKrattenthalerSchlosserShiftedG.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Christoph Koutschan; Christian Krattenthaler; Michael J. Schlosser (2024). *Determinant evaluations inspired by Di Francesco's determinant for twenty-vertex configurations*. DOI: [10.1016/j.jsc.2024.102352](https://doi.org/10.1016/j.jsc.2024.102352). URL: <https://arxiv.org/abs/2401.08481v1>.
