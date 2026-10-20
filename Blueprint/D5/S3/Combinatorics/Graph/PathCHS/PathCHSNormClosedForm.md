@@ -158,6 +158,10 @@ $$\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; (1 \le n) \to (2 \le m
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chavez-2023-path-chs-norm-closed-form` (proved) by `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chavez-2023-path-chs-norm-closed-form","declaration_gid":"D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ángel Chávez, Sarah Fullerton, Matilda LaFortune, Keyron Linarez, Nethmin Liyanage, Justin Son and Tyler Ting (2023). *Extremal polynomial norms of graphs*. DOI: [10.48550/arXiv.2311.04689](https://doi.org/10.48550/arXiv.2311.04689). URL: <https://arxiv.org/abs/2311.04689v3>.
