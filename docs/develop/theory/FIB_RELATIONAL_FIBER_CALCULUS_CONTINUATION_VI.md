@@ -1028,441 +1028,499 @@ $$
 Skipping the first two arrows would again confuse a mathematical response
 table with a protocol that an observer can actually run.
 
-## 七十三、取得前沿、重放纤维与历史时序纤维
+## 七十三、目标保持、任务控制与审计的不同合同
 
-最新 dev 的 [Native acquired input, the unfinished-request frontier, and actual replay](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md)
-把上一节的“控制记忆”再分成三个不同问题：什么已经被实际取得，当前请求做到哪一步，以及从当前材料还能否唯一重放后续行动。三者都可以写成纤维，但它们不是同一个观察器。
+**约定 73.1（任务与有限模型）。** 设 $\mathcal H^+$ 是声明的实际历史域，$z:\mathcal H^+\to Z$ 是在比较切面指定的目标，$s:\mathcal H^+\to S$ 是完整当前状态。会影响后续合法性、响应、successor、资源或停止条件的隐藏字段属于状态；列入数学状态不等于授予读取权限。本节调用 §§60–62 时，保留其有限 $Z,S,A,O$ 合同，且 $O$ 只含控制器实际可取得的响应。若实际装置的原始状态无限，须另给有限抽象：目标、所用动作的共同合法域、取得的响应、后继和停止判据沿抽象交换；需要保留的资源标签也须沿抽象下降。没有这种对应时，不将有限模型定理直接用于整个无限装置。
 
-### 定义 73.1：取得前沿
-
-设 \(h\) 是一条实际执行到原子操作切点的有限历史。记：
+令有限摘要 $m:\mathcal H^+\to M$ 只使用合同允许取得并保留的资料。对 $u\in m(\mathcal H^+)$，定义非空候选关系
 
 $$
-I(h)=\text{外部输入已经实际被 IN 消费的有序词},
+B_u=\{(z(h),s(h)):h\in\mathcal H^+,\ m(h)=u\}\subseteq Z\times S.
 $$
 
+这里 $B_u\in\mathcal W_n$ 才是定义 60.2 中有类型的判断。定理 60.3、60.5 给出：允许在知道 $u$ 后选择一个至多 $n$ 步的协议时，摘要对该预算安全，当且仅当每个 $B_u\in\mathcal W_n$。协议内部仍只能按实际取得的响应分支。若存在 $\bar z:M\to Z$ 使 $z=\bar z\circ m$，则每个 $B_u\in\mathcal W_0$；这种**目标保持**是零步特例，不是普通可继续取得任务的必要条件。
+
+一个选定的有限控制器还须满足 §62 的初始支持覆盖、所选动作在支持上的共同合法性、每个实际响应的后继支持闭合、source-independent controller update、halt 目标相等和自然数 rank 严格下降。未选择的动作无需在该摘要上具有相同响应。相反，full-behaviour predictive quotient 要求所有声明动作的合法/禁止/未定义状态、响应、raw successor、资源、停止与更新同时因子化。后者的充分键不自动给出前者的最小控制器；$\mathcal W_n$ 对候选并集不封闭，也不保证一般任务安全分割有唯一最粗商。
+
+**定义 73.2（raw 审计与公开投影）。** 对一个动作 $a$，将其 lawful task-domain status 与 physical execution status 分别记入 $\operatorname{RawAct}(h,a)$，并保留实际发生的功能标签、released output、receipt、完整 successor 和声明的未来行费用。未执行的 disabled/unauthorized trial 为 `none`，无 receipt，状态不变。物理上 enabled 的 noncanonical Supply 可以在 lawful task map 中未定义，却已经执行一个 IN successor；其 latch/control、mirror 和 receipt 不因 task-domain status 未定义而消失。只在确无物理执行时才使用未执行标记。
+
+可将当前原始状态及这些带类型的行记录记为 $\operatorname{Aud}(h)$。一个声明的当前公开值 $\operatorname{Pub}(h)=\pi_{\rm pub}(\operatorname{Aud}(h))$ 只投影合同实际公开的字段。已 released 而未保留的整个旧 OUT stream 不因此成为当前状态的一部分；控制器也不能按未取得的完整 successor 序列分支。若任务另行要求旧 stream、累计费用或历史全状态序列，它们是额外历史观察，须单独声明取得与保留。审计等价蕴含这种已声明的公开投影相等，逆向一般不成立。
+
+**约定 73.3（native 供应与其边界）。** 以下各节的仓内供应引用均固定于 [源版本](https://github.com/the-omega-institute/trureturing/tree/033c1b370f2447aa20e191a6a3da609aba697e50)。其中 [Native acquired input, the unfinished-request frontier, and actual replay](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md) 简称 native。其 §§11.1–11.5 在固定 $A^+$ 的整个 lawful reached domain $\Omega^+$ 上给出
+
 $$
-\lambda(h)=\text{仍停留在输入 latch 中的已消费材料},
+K(h)=\bigl(\operatorname{code}(u),I(h),n(h),\kappa(h),m_C(h)\bigr),
 \qquad
-\phi(h)=\text{请求、写入、响应、封存或交付阶段},
+h\equiv_{\rm now}h'
+\ \Longleftrightarrow\ K(h)=K(h')
+\ \Longleftrightarrow\ X^+(h)=X^+(h').
 $$
 
-并把权限、pending event、部分 frame、计数器、head、PC 和 owner 绑定一并记入
+$u$ 是实际安装的 seed/source code，$I$ 是实际 IN 已消费的有序输入，$n$ 是绝对 P receipt 数，$\kappa$ 是 Capture 的实际 P 切点，$m_C=N_C-c_F(u)$ 是固定 startup 后 C 的已执行行数；未 Capture 时为 $(\kappa,m_C)=(\bot,0)$。$\equiv_{\rm now}$ 比较从当前切面开始的 partial finite-experiment maps，包括其域与完整 raw successor。native Theorems 11.9、11.11 和 Proposition 11.12 已供应该 kernel 及实际更新，不在这里重证。
 
+完整 successor 是其反向 kernel 所用的数学审计数据，不是免费公开读口。该键也不是已经由 C 取得的 package。它不提供 public-output-only rigidity、独立自然视图的逆、历史累计结构费用的因子化或全域有限控制器最小性。raw noncanonical Supply 的物理边仍存在，但其后续不再属于 $\Omega^+$；不能用一个统一 $\bot_{\rm undefined}$ 覆盖整个物理记录。
+
+## 七十四、取得前沿、当前重放与不可逆的全序损失
+
+**定义 74.1（取得切面与因子关系）。** 实际取得前沿保留已经消费的有序输入、尚未 WR 的 latch 材料、请求阶段、owner、权限、pending event 和实际计数器。它按
+
 $$
-\operatorname{AF}(h)=\bigl(I(h),\lambda(h),\phi(h),\operatorname{perm}(h),\operatorname{pending}(h),\operatorname{ctr}(h),\operatorname{owner}(h)\bigr).
+\text{acquire}\to\text{latch}\to\text{write}\to\text{request complete}
+\to\text{seal}\to\text{deliver}
 $$
 
-这里的 \(\operatorname{AF}\) 是**取得前沿**。若一个 bit 已被实际 IN 消费，即使它尚未 WR 到 tape，它已经属于 \(I(h)\) 和当前 latch 前沿；它不能在重放时被当作“未来输入”重新索取。
+区分不同切面。bit 一旦由 IN 消费，即使尚未 WR，也不能在 replay 中再次作为未来输入索取。对两个观察 $f,g$，只有在实际域上存在 $q$ 使 $f=q\circ g$，才称 $f$ 由 $g$ 因子化；等价义务是 $f$ 在每个 $g$-纤维上恒定。因此 acquired frontier、replay key、当前公开值与 exact chronology 不是未经证明就嵌套的集合链。
 
-因此有严格的切面次序：
+**命题 74.2（chronology 的确定域与排除域）。** 在 native §11 的 captured key 上令
 
 $$
-\text{acquire}\;\to\;\text{latch}\;\to\;\text{write}\;\to\;\text{request complete}\;\to\;\text{seal}\;\to\;\text{deliver}.
+p=n-\kappa,\qquad q=m_C-1,
+\qquad L(K)=\binom{p+q}{p}.
 $$
 
-这些切面可以具有相同的最终数值，却具有不同的后继权限和不同的合法动作域。
+完整 endpoint 纤维有恰好 $L(K)$ 条实际 P/C 全序。Armed 纤维为单点；captured 纤维恰在 $p=0$ 或 $q=0$ 时为单点。在这些单点纤维上，normal evaluation 恢复实际 chronology。若 $p,q>0$，任何只依赖当前 endpoint 的函数都不能恢复实际执行全序。即使同时给出当前 $S_{\rm now},B_{\rm now},M_C$，或者从同一 endpoint 继续执行相同的未来选择且不加入先前保留的记录，结论仍然如此。
 
-### 定理 73.2：预测记忆必须同时分解读出和更新
+**证明。** native Theorem 11.16 已确定纤维：固定 startup、Capture 前 P 链及 Capture 后两条 owner 链，只剩这两条链的 shuffle。其枚举、实际合法性、相同完整 endpoint 和单点条件均由该定理供应。$L(K)>1$ 时两条不同全序具有相同函数输入，却要求不同答案，故不存在所述逆。相同 endpoint 上相同未来选择给出相同后续，是同一状态转移语义的直接归纳。∎
 
-设 \(m\) 是历史到记忆值的压缩，\(a\) 是允许动作。要使 \(m\) 成为下一步预测与控制的安全商，必须存在 \(\bar D_a,\bar r_a,\bar U_a\)，使得在实际历史域上：
+native Theorem 11.15 给出的 $T_{\rm cut}$ 保留两条 owner 链及实际 Capture bracket，它与 $K,X^+,S_{\rm now}$ 的 actual-image recovery routes 相容；选取其任意线性扩展只得到一个相容历史。按 native Corollary 11.17，若增加 supplement $Z$ 后要求精确全序，则 $Z$ 必须在同一 endpoint 纤维上区分全部 $L(K)$ 个历史，故固定二进制宽度满足 $2^b\ge L(K)$。这是历史补充记录的必要标签数，不构造在线 logger，也不给出物理 port 或总代价下界。过去累计结构 tariff 是否下降到 endpoint 还需 native (AIF.40) 的逐交换费用等式；当前 successor 的未来费用相同不替代该条件。
 
-$$
-h\in D_a\iff m(h)\in\bar D_a,
-$$
+**约定 74.3（不同 $A_R$ 的 pre-Pin historical inverse）。** native §12 的 $A_R$ 增加 disjoint scaffold、十五槽构造、atomic two-meter Pin、受限 cursor/read grants、canonical code/seed loader 和实际进入的 startup。令 $\mathcal D_R$ 为所有实际 reached、R 仍 Armed 的 pre-Pin 状态，允许旧 P/C 处于各个声明阶段。令 $\pi$ 为保持旧身份的投影，$K_R(x)=K(\pi(x))$。native (AIF.46)、Theorems 12.21、12.23 供应
 
 $$
-r_a(h)=\bar r_a(m(h)),\qquad
-m(h\cdot a)=\bar U_a(m(h),r_a(h)).
+\mathcal L_RK_R=\operatorname{id}_{\mathcal D_R},\qquad
+K_R\mathcal L_R=\operatorname{id}_{K_R(\mathcal D_R)}.
 $$
+
+其中 target $x$ 是实际 Pin 的**前驱状态**。在每个已调用程序的 pointwise R-progress、足够 backing 和声明权限下，程序逐 bit demand 已达到的输入，实际取得、seal、copy、print、ACK 并返回该历史记录；每次有限调用终止，不提供统一 scheduling-delay、elapsed-time 或总资源上界。Pin 离开 $\mathcal D_R$，不是 Armed key 的域内更新。打印历史 token/permission/grant 不恢复 live capability。
 
-只证明读出 \(r_a\) 可以由 \(m\) 计算，而没有证明合法域和更新也下降到 \(m\)，不能得到预测充分性。
+这一 actual-image inverse 包含目标时刻的 R 初始化材料，却不反演后来的 R acquisition/maintenance 状态，不恢复 current-at-return 的整个联合状态，也不是 unchanged $A^+$ 的全域 collector。固定 R startup 的插入点不分开旧的非单点 shuffle 纤维，因此它不推翻命题 74.2。没有 supplement 的全域 endpoint-only exact chronology 已被排除；可继续研究的是另外声明的历史记录合同及其取得成本。
 
-证明是直接的：第一式保证同一记忆值不会把合法动作和非法动作混合；第二式保证同一记忆值给出相同响应；第三式保证响应之后仍落在同一个记忆系统中。反过来，若未来任务的 enabledness、response 或 successor 在同一 \(m\)-纤维上不同，则存在一对历史见证，说明该压缩不是安全控制商。
+## 七十五、付费 current gcd 口上的一源算术取得
 
-这把前一节的控制相容性判据推进了一步：
+**约定 75.1（实际端口与两个目标）。** 本节只使用 [Arithmetic acquisition and behavior return §9](RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md) 的独立 pair apparatus。公开 $H\ge1$，唯一实际 source $u=(a,b)^{\mathsf T}\in\mathbb N^2$，包括零坐标，入口为 $v_0$。只有
 
 $$
-\boxed{
-\text{保存答案的读出}
-\neq
-\text{保存选择动作的记忆}
-\neq
-\text{保存更新后继续工作的记忆}.
-}
+R(u)=Mu,\quad G(u)=u+\alpha,\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+\alpha=\binom10,\quad q=(2,3),\qquad
+\operatorname{Read}_H(u)=\gcd(qu,H)
 $$
 
-### 定义 73.3：取得键与重放键
+是 source 服务；read 是明确供应的、付费无损**当前**读口，$\gcd(0,H)=H$。执行串行且绑定唯一，没有 reset、clone、saved entry source、物理 inverse、坐标读或额外 source-dependent reply。隐藏 source 大小、service tariff 和 backing 不是控制器判别口。每个声称的有限运行有足够有限 backing、合法绑定/权限和服务完成；这不假定一个固定有限容量覆盖所有无界入口或未来长度。
 
-在 dev 文档的 \(\Omega^+\) 合法历史域上，设 \(u\) 是实际安装的 source code，\(n\) 是 P owner 的实际 receipt 计数，\(I\) 是实际消费的 source-frame 输入，\(\kappa\) 是 Capture 读取的 P 切点，\(m\) 是 Capture 后 C owner 的实际进度；未 Capture 时取 \(\kappa=\bot,m=0\)。定义：
+安装的两个寄存器分别为
 
 $$
-K(h)=\bigl(\operatorname{code}(u),I(h),n(h),\kappa(h),m(h)\bigr).
+e=v_0\bmod H\quad\text{（immutable entry）},\qquad
+c=u_*\bmod H\quad\text{（mutable reached state）}.
 $$
 
-这不是一个免费安装的寄存器，而是从真实达到的 raw state 中提取的数学键。它只能在声明的实际历史像上使用。
+$c$ 随同一实际绑定的后续 $R/G$ acknowledgement 同步更新；$e$ 不变。二者均不是未取得的源坐标或原 source 的恢复。
 
-### 定理 73.4：当前行动的精确重放纤维
+**约定 75.2（Theorem 9.3 供应的同运行向量）。** 按资源顺序 $(N_{\rm read},N_G,N_R)$，精确 endpoint 和已执行计数为
 
-在上述合法域上，dev 的精确 endpoint 纤维给出：
-
 $$
-X(h)=X(h')\iff K(h)=K(h').
+H=1:\quad (0,0,0),\qquad u_*=v_0;
 $$
-
-并且当前允许的有限实验映射相同，当且仅当这些键相同：
 
 $$
-h\equiv_{\mathrm{now}}h'\iff K(h)=K(h').
+H>1\text{ 奇}:\quad(2H,2H,1),\qquad
+u_*=Mv_0+HM\alpha+H\alpha;
 $$
 
-所以 \(K\) 保留了当前动作所需的 source provenance、已消费输入、计数、Capture 读取切点和 C 进度；它不需要保存每一条过去的 P/C 交错历史。
+$$
+H\text{ 偶},\quad L=H/2:\quad
+(H+r+\chi,\ H+\chi,\ r+1+\chi),\qquad
+r\in\{0,1,2\},\quad\chi\in\{0,1\},
+$$
 
-### 证明
+$$
+u_*=
+\begin{cases}
+M^{r+1}v_0+L(M\alpha+\alpha),&\chi=0,\\
+M^{r+2}v_0+L(M^2\alpha+\alpha)+M\alpha,&\chi=1.
+\end{cases}
+$$
 
-同一 \(K\) 时，固定 startup、实际输入前缀和 owner-local 进度确定正常重放代表；P 与 C 的后续行在 Capture 后满足完整 diamond，交换相邻的合法 owner 行不改变完整 endpoint。因此得到相同 raw state、同样的动作域、响应和 successor。
+$r$ 是入口 paid parity search 实际执行的 replacement 数，$\chi$ 是第一 scan 后在 $Mw$ 的 paid parity test 是否要求实际 $G,R$ correction。偶数分支始终只有**两个完成的 $L$-scans**，各含最后一次 read 之后的 closing $G$。第一次从 $M^rv_0$ 开始；第二次从 $Mw$（$\chi=0$）或 $M^2w+M\alpha$（$\chi=1$）开始，其中 $w=M^rv_0+L\alpha$。$Mw$ 的奇数回复是中间付费测试，不是已完成的另一 scan。仅在同一 binding、同一 scan start、未发生 source update 时，已付费的回复才可复用为 scan 的第零项。上述调度、两个取得寄存器及向量的证明均引用 supplier Theorem 9.3 的 (AQBRP.5)–(AQBRP.17)，不另立不同调度。
 
-反向地，若当前实验映射相同，选择一个合法的下一 P 行。它的响应和完整 successor 相同，故 \(n\) 或 \(I\) 的更新相同；逐步取消这次更新得到前一键相同。Capture 的存在及其 \(\kappa\)，以及 C 的 \(m\)，由同样的 successor 递归恢复。于是 \(K(h)=K(h')\)。
+实际末端数量为
 
-这里的关键不是“保存一个摘要就能重放”，而是该摘要已经被证明同时决定合法域、响应和更新；没有这三个交换式，\((\operatorname{code}(u),I,n)\) 的短元组只是候选摘要。
+$$
+qu_*=
+\begin{cases}
+2a+3b,&H=1,\\
+3a+5b+5H,&H>1\text{ 奇},\\
+qM^{r+1+\chi}v_0+(5+2\chi)H/2+3\chi,&H\text{ 偶}.
+\end{cases}
+$$
 
-### 定理 73.5：重放纤维不等于历史纤维
+supplier (AQBRP.8)–(AQBRP.9) 保证每个实际 acquisition prefix 的数量不超过末端；偶数时 $qu_*\le13a+21b+7H/2+3$。这保留未知入口的依赖，并不把数量变成可读参数。偶数计数上界为 $N_{\rm read}\le H+3,N_G\le H+1,N_R\le4$。
 
-对一个已 Capture 的键，令
+**定义 75.3（分开的资源与继续使用）。** 对实际 pre-call sources $u_i$ 和分别供应的 tariffs $\rho_H,\gamma,\tau$，source-service work 为
 
 $$
-p=n-\kappa,\qquad q=m-1.
+W_{\rm svc}=
+\sum_{i\in\mathcal I_{\rm read}}\rho_H(u_i)
++\sum_{i\in\mathcal I_G}\gamma(u_i)
++\sum_{i\in\mathcal I_R}\tau(u_i).
 $$
 
-则同一 raw endpoint 的实际历史数为：
+另外计入 local bit work、tape reads/writes、installed code/data、source storage/retention、backing、binding/rights、acknowledgement 和 output/installation。supplier 的 $O(H\log(H+1))$ acquisition tape 与 $O(\log(H+1))$ modular working space 是充分 local bounds，不控制 source backing 或 source services 对未知入口的依赖，也不覆盖任意未来 trace 保留。
 
+同一 source 的继续使用由 supplier (AQBRP.22)–(AQBRP.23) 供应：
+
 $$
-L(K)=\binom{p+q}{p}=\binom{n-\kappa+m-1}{n-\kappa}.
+\operatorname{Out}_H(c)=\gcd(2c_1+3c_2,H),\qquad
+\delta_R(c)=Mc,\qquad\delta_G(c)=c+\alpha.
 $$
 
-Armed 情形 \(m=0,\kappa=\bot\) 的纤维为单点；已 Capture 且 \(p,q>0\) 时，历史纤维通常含多个不同的 P/C 交错。
+真实 source action 完成后再 local commit，才开放下一个 callable cut。这里取得的是改变 endpoint 后的 arithmetic quotient；相同 residue 的源可有不同整数 composition、树顺序/括号、chronology、handle、权限与 service bill。固定数量的 primitive replacements 不等于固定总费用，所列点也不是 minimum、reset 策略的支配比较或物理 gcd 口实现。
 
-因此：
+## 七十六、终端 sharp-task 签名及其最粗纤维
 
+**定义 76.1（全 qutrit 的 flagged instrument 与可见信息）。** 固定有限 $n\ge0$ 和实角 $\theta$，取 [Environment record memory §26](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md) 的整个 $H_q=\mathbb C^3$：
+
 $$
-\boxed{
-\text{当前 continuation 可以被精确重放}
-\quad\not\Rightarrow\quad
-\text{完整过去 chronology 可以被恢复}.
-}
+U_0=(23),\quad W=(12),\quad a=U_0e^{i\theta W},\quad b=aW,
+\qquad Q_h=V_{h_n}\cdots V_{h_1},\quad (V_0,V_1)=(a,b).
 $$
 
-同一 endpoint、同一当前 storage、同一当前 boundary 和同一已取得 C backing，仍可能对应不同的总历史。若目标是 \(T_{\mathrm{exact}}\)，必须加入能够区分这些线性扩展的历史记录；若目标只是当前 continuation，则 \(K\) 已足够。
+$h_1$ 最先作用，$Q_\varnothing=I_3$。实际 fresh measured instrument 的每步 outcome 在所有 qutrit 输入上条件公平，因此 $p_h=2^{-n}$。以下终端判据也允许同一 word matrices 上另行声明的任意 input-independent full-support law $p_h>0$，不声称公平 apparatus 产生其他律。
 
-这解释了上一节中的“双不动点”为什么还不完整：
+设 $t(m\mid h)$ 为 input-independent stochastic kernel，$M$ 为有限终端 alphabet。其**实际传给解码器的量子—经典系统**为
 
 $$
-\begin{aligned}
-\nu\Psi&=\text{对允许动作保持不变的安全行为商},\\
-\mu\Phi&=\text{有限目标的可取得域},\\
-\operatorname{ReplayFib}&=\text{同一当前行动语义的最粗实际纤维},\\
-\operatorname{ChronFib}&=\text{同一 endpoint 下仍未被恢复的历史线性扩展}.
-\end{aligned}
+\mathcal F_t(X)=\sum_{m\in M}|m\rangle\langle m|\otimes
+ \sum_h p_ht(m\mid h)Q_hXQ_h^\dagger.
 $$
-
-其中 \(\operatorname{ReplayFib}\) 可以安全合并历史，\(\operatorname{ChronFib}\) 则说明这种合并具体遗忘了什么。
 
-## 七十四、取得前沿向可执行协议的提升
+解码器只能获得该 qutrit 与完整 counted view $m$，并知道固定的 $\theta,n,p,t$、预先指定的有限 projection family $\mathscr E=(E_1,\ldots,E_k)$（$k\ge1$）及固定控制描述。没有其他未计入的 history-dependent clock、archive、program selection 或 seed，没有 input-dependent side information、reference access、postselection 或较小输入 code。丢弃的 private randomness 已平均进 $t$；可见且 history-dependent 的随机变量计入 $m$。允许每个 $m$ 选一个 qutrit CPTP map $\mathcal D_m$，但同一个 $\mathcal D_m$ 必须同时服务全部 $E_j$。目标是在所有 density matrices 上使 averaged corrected channel
 
-### 定义 74.1：FIB 取得—重放提升
-
-设语义来源纤维由 \(\eta_{\mathrm{sem}}\) 给出，实际输入取得映射为 \(A\)，控制记忆为 \(m\)。称一个目标在该合同下被**可执行提升**，如果满足：
+$$
+\mathcal T=\sum_m w_m\mathcal D_m\mathcal N_m,
+\quad w_m=\sum_hp_ht(m\mid h),\quad
+H_m=\{h:p_ht(m\mid h)>0\},\quad
+\mathcal N_m=\sum_{h\in H_m}\frac{p_ht(m\mid h)}{w_m}
+                  \operatorname{Ad}_{Q_h}
+$$
 
-1. \(A\) 沿一条实际 owner 历史取得了目标所需的输入，而不是由数学模型事后填入；
-2. \(m\) 对每个允许动作同时因子化合法域、响应和 successor；
-3. \(m\) 的后继具有有限下降秩，或落入已知的有限取得层 \(\mathcal W_n\)；
-4. 所有输入、封存、交付、重放和控制更新都计入实际成本。
+满足 $\mathcal T^\dagger(E_j)=E_j$；只定义 $w_m>0$ 的条件分支。这里的 dagger 是 trace adjoint。目标是同时恢复这些 sharp Born probabilities，不是将不同未知输入或不同任务的最优 decoder 拼接。
 
-这一定义把“语义纤维有限”与“观察者能执行”分开。
+**定理 76.2（正支持任务签名判据）。** 定义 finite-horizon task signature
 
-### 定理 74.2：有限语义纤维的提升判据
+$$
+\sigma_{\mathscr E}(h)=
+ (Q_hE_1Q_h^\dagger,\ldots,Q_hE_kQ_h^\dagger).
+$$
 
-若 \(\eta_{\mathrm{sem}}\) 的目标纤维有限，但缺少第 74.1 条的实际取得或 successor 因子化条件，则不能推出存在有限协议。
+定义 76.1 的 exact common decoding 存在，当且仅当对每个 $w_m>0$，$\sigma_{\mathscr E}$ 在 $H_m$ 上恒定。等价地，对所有 $h,g\in H_m$ 和所有 $j$，
 
-若第 74.1 条全部成立，并且取得键 \(m_0\) 属于 \(\mathcal W_n\)，则从该实际历史开始可以提取一个至多 \(n\) 次语义操作的 FIB 控制协议；其控制状态至少保存 \(m\) 所区分的历史类，并沿每个实际响应更新到下一个键。
+$$
+[E_j,Q_h^\dagger Q_g]=0.
+$$
 
-### 证明
+若 $\mathcal A_{\mathscr E}$ 是 $I_3,E_1,\ldots,E_k$ 生成的 complex unital star algebra，等价条件也写成
 
-前一方向由破坏性读出反例直接给出：潜在响应联合可以单射，而一次实际读出把不同目标压到同一终止状态，故没有有限协议。
+$$
+\mathcal A_{\mathscr E}\subseteq
+\bigcap_{m:w_m>0}\{Q_h^\dagger Q_g:h,g\in H_m\}'.
+$$
 
-后一方向先用实际取得映射把来源推进到 \(m_0\)，再用有限取得层的递归提取动作。读出、更新因子化保证每个动作在原合同中可执行，秩下降保证有限终止；FIB 无损编码只负责保存控制状态和证书，不增加隐藏观察能力。
+**证明。** 若 exact decoding 存在，对每个 $j$ 写 $F_{m,j}=\mathcal D_m^\dagger(E_j)$，它是 effect，且
 
-### 定理 74.3：dev 的两 owner 采集桥是一个条件性提升
+$$
+E_j=\sum_{h,m}p_ht(m\mid h)Q_h^\dagger F_{m,j}Q_h.
+$$
 
-最新 dev 的 §12 在新增的、与原 apparatus 分离的 \(A_R\) 上，给出一个明确的提升实例：在每个实际到达的 pre-Pin Armed collector 状态，两个同时绑定的 meter endpoint、已取得的 source/code capsule、以及对已达到输入前缀的逐 bit demand，足以构造
+projection 是 effect interval 的极点。具体地，对 $x\in\ker E_j$，右侧各非负二次型之和为零，故每个正权项 annihilate $x$；对 $x\in\operatorname{ran}E_j$，同样将该论证用于补 effect。于是每个正权 effect 都恰等于 $E_j$。因此
 
 $$
-K_R(x)=K(\pi(x))
+F_{m,j}=Q_hE_jQ_h^\dagger\qquad(h\in H_m),
 $$
+
+同一 $m$ 的签名必恒定。这一步也说明只要求 averaged exactness 不能让不同正权分支互相抵消错误。
 
-并在真实付费 startup、word/effect interpreter、copy、seal、ACK 和调用 token 返回之后，得到完整状态重建
+反之，为每个非空 $H_m$ 选一个 $h_m\in H_m$，使用单一 unitary decoder $\mathcal D_m=\operatorname{Ad}_{Q_{h_m}^\dagger}$。签名相等给出
 
 $$
-\mathcal L_R(K_R(x))=x.
+Q_h^\dagger Q_{h_m}E_jQ_{h_m}^\dagger Q_h=E_j
+\qquad(h\in H_m,\ 1\le j\le k).
 $$
 
-这不是原 apparatus 的免费逆，也不是“两个 meter 数值就足够”。成立条件包括：新增 disjoint scaffold、实际 Pin、owner 权限、canonical code/seed loader、已有输入前缀的合法 demand、完整十五 slot successor、以及每个调用阶段的 progress 条件。
+故同一 $\mathcal D_m$ 对全部任务精确，求和仍精确。签名相等与 displayed commutators 等价；与生成元交换等价于与其生成的 star algebra 交换，得到最后的写法。∎
 
-### 推论 74.4：采集边界可以小于完整快照，但不能小于实际控制边界
+这是对本 word instrument 的 terminal fibres 的直接组合证明。[Bény–Kempf–Kribs, *Quantum Error Correction of Observables*, Definition 8、Theorem 9、Corollary 10](https://arxiv.org/html/0705.1574v1) 已供应一般 observable-algebra correction 判据；这里其 code projection 是 $I_3$，Kraus products 为 $\sqrt{p_ht(m\mid h)p_gt(m\mid g)}\,Q_h^\dagger Q_g$。本定理不另立一般 observable-correction 定理，也不将 qutrit spectator projection 当作输入 code。
 
-在 \(A_R\) 的声明域内，完整 raw snapshot 可以被压缩成两个 endpoint 绑定、source/code provenance、实际输入前缀、计数与 Capture 状态，再通过付费重放恢复；但删除其中任何一个会产生具体风险：
+**推论 76.3（最粗 deterministic terminal partition 与正 alphabet）。** 令
 
 $$
-\begin{array}{c|c}
-\text{删除项}&\text{失去的性质}\\ \hline
-\text{实际输入前缀}&\text{无法重放 source IN 的真实 successor}\\
-\text{latch/partial-frame frontier}&\text{把已消费但未 WR 的 bit 错当成未来输入}\\
-\text{Capture 切点}&\text{不同 meter root 的后续输出被错误合并}\\
-\text{owner/permission}&\text{数学内容存在但当前调用未授权}\\
-\text{完整 successor 更新}&\text{读出可算而控制器不能继续闭环}\\
-\text{实际费用与进度}&\text{有限代码被误报为统一有限成本}
-\end{array}
+h\sim_{\mathscr E}g\quad\Longleftrightarrow\quad
+\sigma_{\mathscr E}(h)=\sigma_{\mathscr E}(g),\qquad
+N_{n,\theta}(\mathscr E)=|\sigma_{\mathscr E}(\{0,1\}^n)|.
 $$
 
-因此，FIB 的最小充分边界现在应写成：
+在定义 76.1 的 terminal contract 下，所有安全 deterministic partitions 恰为该 signature partition 的 refinements；所以它是唯一最粗者。即使允许 stochastic summaries 和任意 qutrit CPTP decoders，最小 positive terminal alphabet 也恰为 $N_{n,\theta}(\mathscr E)$。
 
+**证明。** deterministic 情形直接应用定理 76.2。stochastic 情形中，每条正概率历史至少给一个终端值正质量；不同 signatures 的 histories 不能给同一终端值正质量。因此每个 signature class 必须占用一个不同的 positive value，给出下界。存储 signature class 并按定理 76.2 选 inverse 达到该数。若另有明确不计费的 independent shared seed，条件于该 seed；有限 histories 的共同满测集上同一论证仍成立，故不能降低 conditional alphabet 下界。∎
+
+此唯一最粗商属于终端 exact sharp-task 合同；它不与 §73 的一般动态任务分割相混。对实际下一标签 $j$，signature 的数学更新是将每个成员同时以 $V_j$ 共轭，故其相等性保持。在线实现还须实际取得这些标签并供应相应控制、更新表与时钟；终端 alphabet 定理不优化这些资源，也不产生整个任务控制器或 apparatus minimum。
+
+**命题 76.4（$\theta=0,n\ge3$ 的三个不同终端任务）。** 令 $\xi=(1,1,1)^{\mathsf T}/\sqrt3$，$P=|\xi\rangle\langle\xi|$，并用标准坐标基 $\epsilon_1,\epsilon_2,\epsilon_3$。取三种预先指定任务：$(P)$；$(|\epsilon_1\rangle\langle\epsilon_1|)$；以及下列 finite tomographic projection family
+
 $$
-\boxed{
-\text{语义读出}
-\subseteq
-\text{取得前沿}
-\subseteq
-\text{当前重放键}
-\subseteq
-\text{完整历史记录}.
-}
+\mathscr E_{\rm full}=
+\left(\ |\epsilon_i\rangle\langle\epsilon_i|\ (1\le i\le3),\quad
+\frac{|\epsilon_i+\epsilon_j\rangle\langle\epsilon_i+\epsilon_j|}{2},\quad
+\frac{|\epsilon_i+\mathrm i\epsilon_j\rangle\langle\epsilon_i+\mathrm i\epsilon_j|}{2}
+\ (1\le i<j\le3)\ \right).
 $$
 
-每一步都是相对于任务的偏序：恢复当前动作时可以停在重放键，恢复完整 chronology 时必须继续保留历史 supplement。
+其最小 terminal alphabets 依次为 $1,3,6$。若把一个 terminal label 单独编码为固定长度、禁止子串 $11$ 的 binary word，且不混入 horizon/phase/其他资源，则最短长度依次为 $0,2,4$。
 
-## 七十五、结合最新 dev 后的剩余边界
+**证明。** Environment §§4–5 的 Theorems 4.1、5.1 已供应 actual chronological words 在 $n\ge3$ 恰遍历 $S_3$，且 permutation matrices 的 projective equality 就是 equality。全部 words 固定 $P$，给出一个 signature；坐标 rank-one projection 的 orbit 有三个成员。$\mathscr E_{\rm full}$ 的 Hermitian real span 为全部 Hermitian $M_3$，因为它给出各 diagonal、off-diagonal real part 和 imaginary part；所以同时保留其 Born probabilities 等价于 full-state channel identity。相同 full signatures 要求两 word matrices 之比与全部 $M_3$ 交换，即相差 scalar；此处恰有六类。推论 76.3 给出三个 alphabets，包括 stochastic 情形。禁止 $11$ 的长度 $\ell$ words 数为 $F_{\ell+2}$（$F_0=0,F_1=1$），由按首位 $0$ 或 $10$ 分类的递推得到；长度 $0,1,2,3,4$ 分别有 $1,2,3,5,8$ 个。于是三个最短长度为 $0,2,4$。∎
 
-现在可以把项目的新进展准确放回 FIB 理论：
+Environment Theorem 4.1 对 full projective-word statistic 另供应 clock/table 条件下的 online realization，§5 还供应 homogeneous six-value register；这些是独立的 supplier 结论。上述单个 forbidden-$11$ code 长度不计 paid label acquisitions、fresh environments、calibration、clock、tables、inverse controls 或动态编码更新，不能据此推论整个任务控制器的最小成本。
 
-1. Native acquired input 解决了“输入何时成为观察者已有信息”的接口问题：答案是实际 IN 的 acquired cut，而不是 WR、seal 或事后 replay 的时刻。
-2. Exact joint endpoint fibres 解决了“什么可以被当前动作安全遗忘”的问题：在声明的 \(\Omega^+\) 域，\(K=(\operatorname{code}(u),I,n,\kappa,m)\) 是当前 continuation 的精确键。
-3. Chronological ambiguity 解决了“精确重放是否等于精确历史恢复”的问题：不是；其剩余歧义由 \(\binom{n-\kappa+m-1}{n-\kappa}\) 明确计数。
-4. Paid two-meter acquisition 解决了“语义键能否成为实际可调用记录”的一个条件实例：能，但需要新增 apparatus、真实输入、权限、loader、successor 和费用合同。
-5. Growing \(\xi\) 的最新算术校准目前仍属于成本模型支线。只有建立其非线性 price 与 FIB 协议的实际动作/资源坐标映射后，才能把它纳入上述提升定理；当前不能把该校准当成 FIB 几何或控制记忆的新增闭合结果。
+**约定 76.5（完全擦除的供应边界）。** 当 $M$ 只有一个值时，Environment Theorem 26.2、Corollary 26.3 对所有 full-support input-independent laws 供应唯一最大 common-correctable algebra
 
-所以目前最强的统一结论是：
-
 $$
-\boxed{
-\begin{gathered}
-\text{有限语义纤维给出候选世界；}\\
-\text{取得前沿给出观察者实际拥有的输入；}\\
-\text{重放键给出当前可继续行动的最小充分边界；}\\
-\text{历史纤维说明被压缩掉的 chronology；}\\
-\text{付费采集桥把该键提升为可调用协议，但只在声明 apparatus 上成立。}
-\end{gathered}
-}
+\mathcal C_{n,p}=
+\begin{cases}
+M_3,&n=0,\\
+\{W\}'\cong M_2\oplus\mathbb C,&n=1,\\
+\mathbb CP\oplus\mathbb C(I_3-P),&n\ge2.
+\end{cases}
 $$
+
+共同 decoder 可分别取 $\operatorname{id}_3,\operatorname{Ad}_{a^\dagger},\operatorname{id}_3$。所以 $n\ge2$ 完全擦除后 exact sharp projections 恰为 $0,I_3,P,I_3-P$。Proposition 26.4 已说明 positive support 在 $0^n,e_1,e_2$ 上足够维持这一上界，删去所需支持则可扩大 correctable algebra；此处 $e_i$ 是第 $i$ chronological bit 为一的历史。一般支持分类和一般 correction 原理均引用 supplier；定理 76.2 使用的是每个 summary 的实际正支持。
 
-仍然开放的不是“有没有更多符号可以编码”，而是更具体的合同问题：原固定 apparatus 是否存在同样的全域采集桥；任意 busy cut 是否有统一的 acquired-input frontier；完整 \(T_{\mathrm{exact}}\) 在不增加历史 supplement 时能否恢复；以及在给定误差、费用和控制状态预算下的全局最小控制器是什么。最新 dev 把这些问题的边界写得更细，但没有把条件性桥梁升级成这些全域结论。
+## 七十七、公平擦除后的方向依赖误差
 
-## 七十六、无 reset 的算术取得：投影充分性与真实回返
+**定义 77.1（量化任务与记号）。** 本节严格使用 [Environment §27](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md) 的实际 fair law $2^{-n}$，完全擦除历史且不保留 summary。令
 
-最新 dev 的 [Recursive relational observation: arithmetic acquisition and behavior return](RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md)
-给出一个比抽象“可取得”更强的实例：同一个正整数 source 被实际修改，只有当前 ReadF 端口、原始正加法和正乘法，没有 subtraction、division、clone、reset 或保存的 entry copy。这里的关键不是把 residue 当成 source，而是在一条真实历史上完成 acquisition，并把 source 返回到同一个模 \(H\) 的行为位置。
+$$
+\Delta_W(X)=\tfrac12(X+WXW),\quad
+F=\operatorname{Ad}_{U_0}\circ\Delta_W,\qquad\mathcal N_n=F^n.
+$$
+
+actual angle family 的 averaged channel 在每个 $\theta$ 都是该 $F$，但单独 word matrices 未被替换。对固定 unit vector $v$ 与 $E=|v\rangle\langle v|$，任务为
+
+$$
+\eta_n(E)=\min_{\mathcal D\ {\rm CPTP}}
+\sup_{\rho\in\mathsf D(\mathbb C^3)}
+\left|\operatorname{Tr}(E\mathcal D F^n(\rho))-\operatorname{Tr}(E\rho)\right|.
+$$
 
-### 定义 76.1：算术旧纤维与新目标
+所有 qutrit inputs 均在 supremum 中，decoder 只按固定 $E,n$ 选择，没有历史、reference access、较小 input code、intermediate correction 或 postselection。此处是 Born-probability error，不是 diamond distance。
 
-令 \(H\ge2\)，旧代码为 \(\eta_o\)，新目标代码为 \(\eta_n\)。对已取得的旧读数 \(s_o\)，令
+取 ordered orthonormal basis
 
 $$
-E_{s_o}=\{C\ge1:\eta_o(C)=s_o\}.
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+ e_q=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+ f_q=(1,-1,0)^{\mathsf T}/\sqrt2,
 $$
 
-在每个 \(p^h\parallel H\) 上，设旧读数确定的深度为 \(r_p\)，新代码的深度阈值为 \(e_p\)。把坐标分成
+并记
 
 $$
-B=\{p:r_p<e_p\},\qquad G=\{p:r_p\ge e_p\}.
+p=|\langle\xi,v\rangle|^2,\quad
+q=|\langle e_q,v\rangle|^2,\quad
+r=|\langle f_q,v\rangle|^2,\quad p+q+r=1.
 $$
 
-在 \(G\) 上保留完整模 \(p^h\) 坐标，记其 CRT 投影为 \(\pi(C)\)。在 \(B\) 上，成功的 acquisition-and-behavior-return 不能使用会把深度推进到 \(e_p\) 的非单位乘法，因为正加法不能把深度降回去。
+这些是 task populations，不是 history law，也不是 §75 的 entry register。对有限 $n\ge1$，置
 
-### 定理 76.2：archive-conditioned acquisition 的精确判据
+$$
+s=(-1/2)^{n-1},\quad\tau=|s|>0,\quad
+\alpha=(1+s)/2,\quad\beta=(1-s)/2,\quad k=\sqrt{r(1-r)}.
+$$
 
-在一个已经有效给出的非空子域 \(E\subseteq E_{s_o}\) 上，存在确定性的 acquisition-and-behavior-return 控制器，当且仅当：
+**约定 77.2（供应的 effect image 与边界值）。** Environment (27.4)–(27.7)、Proposition 27.2 已给出整个 effect optimization
 
 $$
-\boxed{
-\pi(C)=\pi(D)\Longrightarrow \eta_n(C)=\eta_n(D)
-\qquad(C,D\in E).
-}
+\eta_n(E)=\min_{0\le B\le I_3}\|(F^n)^\dagger(B)-E\|_{\rm op},
 $$
 
-必要性来自同一历史：相同 \(\pi\) 的两个 source 在 \(G\) 上保持相同 residue；在 \(B\) 上，为了返回原行为，成功运行只能使用保持旧深度的操作。因此它们的每次 ReadF 都相同，控制选择和停止也相同，若新目标不同便矛盾。
+及所有可达 $C=(F^n)^\dagger(B)$：
 
-充分性不靠不可访问 source label。只要 \(E\) 的 residue support 是实际提供并计费的有限数据，就可以按 \(\pi\) 分组，验证每组的 \(\eta_n\) 是否一致；随后同一条 sweep 协议取得 \(\pi(C_0)\)，再从表中取出目标并安装后续 updater。若 archive 只有一个语义描述而没有有效 support presentation，这个表的构造仍是独立义务。
+$$
+C=G_s(K)=
+\begin{pmatrix}
+x&sz&0\\s\overline z&\alpha y+\beta d&0\\
+0&0&\beta y+\alpha d
+\end{pmatrix},\qquad
+K=\begin{pmatrix}x&z&0\\\overline z&y&0\\0&0&d\end{pmatrix},
+\qquad 0\le K_2\le I_2,\quad 0\le d\le1.
+$$
 
-### 定理 76.3：正加法 sweep 既取得又回返
+这里 $K_2$ 为左上 $2\times2$ block。对应实际 output effect 是 $B=U_0KU_0^\dagger$；可用 $\mathcal D_B(X)=\operatorname{Tr}(BX)E+\operatorname{Tr}((I_3-B)X)(I_3-E)/2$ 实现该单任务 decoder。supplier 同时供应 matching lower certificates，且以 diagonal-unitary invariance 将 complex phases 归约，误差只依赖 $(p,r)$。
 
-令 \(d=d_n\)，\(L=H/d\)。存在只由原始加法组成的公开词 \(W_d\)，其实际增量 \(S\) 满足
+具体地，Theorems 27.3–27.5 供应 $\eta_0(E)=0$、$\eta_1(E)=k$、$\eta_n(E)\ge k$，以及两个边界的 exact values。$p=0$ 时对每个有限 $n\ge1$，
 
 $$
-S\equiv d\pmod H,\qquad
-1\le |W_d|\le L-1
-\quad(L>1).
+\eta_n(E)=\tfrac12\sqrt{4qr+(|q-r|-\tau)_+^2}.
 $$
 
-在同一 source 上依次执行：
+$q=0,n\ge2$ 时，令 $a_\tau=(1+\tau)/2,b_\tau=(1-\tau)/2$，并定义
 
-1. 对 \(t=0,\ldots,L-1\)，调用一次当前 ReadF 并记录；
-2. 每次读出后都执行 \(W_d\)，包括最后一次；
-3. 在 \(G\) 上从某个饱和读数位置 \(t_p\) 恢复 \(C_0\bmod p^h\)。
+$$
+h_\tau(w)=
+\begin{cases}
+b_\tau w/a_\tau,&0\le w\le a_\tau,\\
+(a_\tau w-\tau)/b_\tau,&a_\tau\le w\le1.
+\end{cases}
+$$
 
-则所有所需 \(\pi(C_0)\) 坐标都来自同一实际 read tape，并且最终 source 满足
+则
 
 $$
-C_*=C_0+L S\equiv C_0\pmod H.
+\eta_n(E)=
+\begin{cases}
+k,&h_\tau(r)\le k,\\
+\displaystyle\frac{b_\tau(\tau-a_\tau r)+a_\tau\sqrt{\tau^2p+b_\tau^2r^2}}{\tau},
+ &h_\tau(r)>k.
+\end{cases}
 $$
 
-协议使用恰好 \(L\) 次 ReadF 和 \(L|W_d|\) 次原始加法；这些是上界，不是所有合同下的最小成本。
+这些式子的优化与 attainability 引用 supplier，不另复证。$n=1$ 使用 $k$，不在 $b_\tau=0$ 时代入后一式；$n=0$ 也不代入 $s$。
 
-### 证明
+**推论 77.3（同一 spectator population 不决定误差）。** 在同一实际 fair instrument、同一 finite horizon，取 $v=e_q$ 和 $v=(e_q+f_q)/\sqrt2$。二者均有 $p=0$，但误差分别为 $(1-\tau)/2$ 和 $1/2$；在 $n=3$ 恰为 $3/8$ 与 $1/2$。
 
-把每个原始加法除以 \(d\) 后看作有限循环群 \(\mathbb Z/L\mathbb Z\) 的正向边。由于规范化加数生成整个群，重复正向边即可产生逆元，故存在从 \(0\) 到 \(1\) 的无重复路径，给出 \(W_d\)。
+**证明。** 将 $(q,r)=(1,0)$ 与 $(1/2,1/2)$ 代入已引用的 $p=0$ 边界值。这也是 supplier Corollary 27.6 的两个 actual tasks；差为 $\tau/2>0$。∎
 
-实际第 \(t\) 次读出的 source 是 \(C_0+tS\)，不是独立的 counterfactual source。对 \(p\in G\) 且 \(e_p<h\)，恰有一个 \(t\bmod p^{h-e_p}\) 使 \(C_0+tS\equiv0\pmod{p^h}\)；在 \(0\le t<L\) 内能取得该位置，于是由读数恢复该 residue。最后一次加法执行使总增量为 \(LS\equiv0\pmod H\)，所以 source 回到原行为类。∎
+因而仅保留 task 的 spectator population $p$ 会合并不同的 quantitative answers，必须保留相对于 erased $W$ sectors 的方向。反之 $r$ 单独在 $n\ge2$ 也不够：$v=\xi$ 与 $v=e_q$ 都有 $r=0$，但误差为零与 $(1-\tau)/2$。
 
-### 推论 76.4：完整旧纤维的可回返分类
+**定义 77.4（定量残余的精确范围）。** Environment Theorem 27.7 的 scalar feasibility criterion (27.24) 已完全判定 $0<r<1$ 时何时达到 floor $k$；Proposition 27.9 的 (27.27)–(27.28) 给出其余误差的有限维 coupled feasibility。尚缺的是 $n\ge2$ 时 $r=0,pq>0$，以及 interior $p,q,r>0$ 且不在 floor region 内的 analytic/piecewise 或足够显式 fixed-degree algebraic optimum、attaining effect 和 matching lower certificate。rank-two tasks 由 supplier Proposition 27.8 的 $\eta_n(I_3-E)=\eta_n(E)$ 归约。
 
-在完整旧纤维上，若低深度轴的局部 lift 数为
+这些 numerical values 不转移到任意 full-support correlated laws；§76 的 exact support criterion 则有那一较宽适用域。有限任务族的 approximate common objective 必须直接最小化同一 $\mathcal D$ 下的最大任务误差。分别最优化每个 $E_j$ 的值不能拼成一个共同 decoder；§76 的 exact common construction 不给出这种 approximate conclusion。
 
+## 七十八、实际压缩的快速率障碍与仍开放的临界目标
+
+**约定 78.1（同一完整复空间）。** [Actual pair energy §30](AURIC_FIB_ACTUAL_PAIR_ENERGY_OVERLAPPING_PROJECTIONS.md) 保持原 $\theta=\pi/6$ actual matrices
+
 $$
-m_p=\frac{\varphi(p^{h-e_p})}{\varphi(p^{h-e_{o,p}})},
+A=\tfrac14\begin{pmatrix}\sqrt3-i&3+i\sqrt3\\3-i\sqrt3&-\sqrt3-i\end{pmatrix},
+\quad J=\operatorname{diag}(-1,1),\quad
+C=JA^{-1}JA,\quad D=AC,
 $$
 
-则 acquisition-and-behavior-return 当且仅当所有低深度轴满足 \(m_p=1\)。对所有正整数 entry 都成功的统一合同进一步等价于：
+并在 $K_{\rm grp}=\{g\in U(2):\det g=\pm1\}$ 的 $L^2(K_{\rm grp};\mathbb C)$ 上取其 §20 的 translation convention $T_g$，
 
 $$
-\boxed{
-e_p=0
-\quad\text{或}\quad
-e_p=e_{o,p}
-\quad\text{或}\quad
-(p=2,\ e_{o,p}=h,\ e_p=h-1).
-}
+Q=(I+T_J)/2,\quad\mathcal H_J=\operatorname{ran}Q,\quad
+\mathsf S=(T_C+T_{C^{-1}})/2,\quad
+\mathsf B=(T_D\mathsf S)|_{\mathcal H_J},\quad
+E_C=(I+T_C+T_C^2)/3.
 $$
 
-这个例子修正了一个容易过强的直觉：没有 reset 并不自动意味着不能取得。真正的边界是旧纤维上未被完整 projection 切开的新目标是否仍能被同一实际 sweep 统一恢复；在不满足条件的低深度轴上，任何更精确的后续读出都不能补回已经被不可逆推进的区别。
+$D^3=iI$ 在完整群中保持；不能将其当作三阶矩阵或删除其他中心扇区。令 $\Pi$ 是任意有限个完整 Peter–Weyl 左正则等型分量的投影，$\mathcal H_{J,\Pi}=\mathcal H_J\cap\ker\Pi$，$B_\Pi=\mathsf B|_{\mathcal H_{J,\Pi}}$。它是约化子空间。
 
-### 定理 76.5：阶段式 refinement 仍需每阶段重新验纤维
+**约定 78.2（供应的实际下界和被排除的窗口）。** supplier Theorem 30.3、Corollaries 30.4–30.5 供应，对每个有限整数 $r\ge1$、每个上述 finite $\Pi$，
 
-若有
-
 $$
-d_0\mid H,\qquad d_{j+1}\mid d_j,
+\|B_\Pi^r\|^2\ge(1+r/2)2^{-r}>2^{-r}.
 $$
 
-且每阶段只使用该阶段声明的实际加法表，则在第 \(j\) 阶段先对当前已取得 alternative domain \(E_j\) 检查定理 76.2，再执行 sweep。共同的 intervening word \(w\) 把剩余支持变为
+这里是原完整复空间中的实际子表示见证，不是离散正则模型的范数替代。令 $E=E_C|_{\mathcal H_{J,\Pi}}$，同一实际缺陷给出
 
 $$
-E_{j+1}=\{w(x)\bmod H:x\in K_L\}.
+G_r=\sum_{j=0}^{r-1}(B_\Pi^\dagger)^j(I-E)B_\Pi^j
+ =\tfrac43\bigl[I-(B_\Pi^r)^\dagger B_\Pi^r\bigr].
 $$
 
-所以可以重复进行有限层级的细化、回返和继续使用，但不能把历史的 \(\eta_{H,d_j}\) 当成后续时刻的当前标签，也不能由 \(d_{j+1}\mid d_j\) 自动借用另一个阶段的 primitive。
+因此若 $G_r\ge cI$、$a_r=1-3c/4$，必有
 
-这给 FIB 取得前沿增加了一个可执行形状：
-
 $$
-\boxed{
-\text{实际读出 sweep}
-\to
-\text{同源投影}
-\to
-\text{行为回返}
-\to
-\text{下一阶段的当前纤维}.
-}
+a_r\ge(1+r/2)2^{-r},\qquad
+c\le\tfrac43\bigl[1-(1+r/2)2^{-r}\bigr]
+ <\tfrac43(1-2^{-r}).
 $$
 
-## 七十七、相同平均通道，不同记录任务
+被排除的是 supplier (24.4) 的 exact fast-window requirement $a_r\le2^{-r}$，对每个 finite window 都被排除，即使 $r$ 和 finite removal 依 horizon 改选。较弱正耗散常数是否存在未由此判定；增长窗口允许 subexponential excess 的路线也未被排除。相应统一供应若写成
 
-最新 dev 的 [AURIC FIB environment instruments and terminal record memory](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md)
-则从另一侧说明：相同的 averaged channel 不能决定相同的记录压缩或控制任务。两个实际环境测量基底可以给出同一个完整 \(H\) 通道，但它们产生不同的 fine environment labels；目标若从平均输出改成 fine instrument，观察纤维立即改变。
+$$
+\|B_\Pi^{n-1}\|^2\le2^{-n}s_n\quad(n\ge1),
+$$
 
-### 定理 77.1：项目射影词是精确终端恢复的纤维判据
+则必要 $s_n\ge n+1$，但并未证明这个 prefactor 足够，也没有反驳 $\log s_n=o(n)$。全部供应证明见 §30，不在此重复其矩或自旋 certificates。
 
-设 \(h\in\{0,1\}^n\) 是真实取得的环境标签历史，\(Q_h\) 是其在编码子空间上的有序乘积。任意随机或确定的终端 summary \(a\) 都诱导条件权重 \(r(a\mid h)\)。在要求所有参考系统和所有输入上精确恢复时：
+**定义 78.3（原目标的保留量词）。** 原 finite upper-frequency target 仍为
 
 $$
-\boxed{
-\text{每个正概率 summary fibre }
-\{h:r(a\mid h)>0\}
-\text{ 必须落在一个 projective class }[Q_h]\text{ 内}.
-}
+L_n=\left\lfloor2^{n/3}/4\right\rfloor,\quad
+\rho_\ell(g)=(\det g)^\ell\operatorname{Sym}^{2\ell}(g),\quad
+Q_\ell=(I+\rho_\ell(J))/2,\quad M_\ell=\rho_\ell(A)Q_\ell,
 $$
 
-充分性是把 \(Q_h\) 的逆控制附着到该 summary；必要性使用目标 identity channel 的 rank-one Choi 极值性，说明不同 projective classes 不能由任意 CPTP decoder 在平均后互相补偿。该判据已经包含随机压缩、可见 seed 和任意 reference，不是只针对确定性表格。
+$$
+\mathcal S_n=\sum_{\ell=0}^{L_n}(2\ell+1)\|M_\ell^n\|_{\rm HS}^2,
+\qquad \log\mathcal S_n=o(n).
+$$
 
-### 推论 77.2：终端容量和控制容量是不同的资源
+finite removal 后的无限尾空间与仅保留 $\ell\le L_n$ 的窗口不同。§30 的下界先固定 $r$ 再取充分大自旋；其方便的充分见证阈值在 $r=n-1$ 时为 $\ell\ge2^{10n-8}$，不能据此将见证放入 $L_n$。这个充分阈值也不排除窗口内另有见证。故快速率障碍既不证明也不反驳 $\mathcal S_n$ 的原目标。
 
-对无旋转的六状态 \(S_3\) 实例，项目射影类数量为
+令 $g_0=A,g_1=AJ$，并保留原 actual chronological products
 
 $$
-m_0=1,\qquad m_1=2,\qquad m_2=4,\qquad m_n=6\quad(n\ge3).
+G_h=g_{h_n}\cdots g_{h_1},\quad
+F_h=e^{-in\pi/6}G_h,\qquad
+E_n(r)=4^{-n}\sum_{h,g\in\{0,1\}^n}
+\mathbf 1_{\{\|F_h-F_g\|_F\le r\}}.
 $$
-
-因此每个 \(n\ge3\) 的终端 summary 至少需要六个值；而且可以用不超过六个值的在线寄存器递归更新。这里的六是 retained record 的最小字母表，不等于完整 quantum apparatus 的维数、安装表大小、时间或环境访问成本。
 
-### 定理 77.3：平均通道相同不等于原 fine instrument 可执行
+这里 $\|\cdot\|_F$ 是未归一化 Frobenius norm。按 supplier §§19、23、30.8，仍需原 actual fair ordered pair quantity $Q_n^{\rm pair}=2^nE_n(2^{-n/3})$ 的 subexponential upper bound；它与该 finite-cutoff target、原分辨地址碰撞熵 $H_{\rm col}(Z_n)=n-o(n)$ 的接口保持不变。$E_n$ 保留闭有序 pairs、diagonal histories、actual multiplicities 和共同时间相位。在另外供应的 same-controller recovery necessity (7.3) 下，仅有条件界
 
-在最新 dev 的完整 \(H=\mathbb C^5\) flagged instrument 合同中，原五级 register 的全部有限深度、几乎处处终止协议及其 diamond closure，都与目标 fine instrument 保持正距离；一个明确的有限协议下界为
-
 $$
-\|\mathcal J_\theta-\mathcal T\|_\diamond\ge \frac4{25}.
+\varepsilon_n=2^{-2n/3}/36,\qquad
+W_n^{\rm peak}(\varepsilon_n)\ge\frac{2^n}{4Q_n^{\rm pair}},\qquad
+\log_2W_n^{\rm peak}(\varepsilon_n)\ge n-\log_2Q_n^{\rm pair}-2.
 $$
 
-若扩大合同，tensor 类至少需要二维纯 ancilla，direct-sum 类至少需要额外一个维度；这些最小性结论依赖新增的 joint control/measurement permissions。它们不能被解释为原五级系统里“多写几个 FIB 标签”就能得到的能力。
+$W_n^{\rm peak}$ 是该 supplier 完整 causal controller 的 peak width，与 §60 的 acquisition layer $\mathcal W_n$ 不同；误差是原 full-$H$、reference-inaccessible、平均不减半 diamond norm。缺少 $Q_n^{\rm pair}$ 的目标上界就不能得到 $n-o(n)$ memory conclusion。该 full-state approximate programme 不由 §76 的有限 exact sharp alphabets 或 §77 的单任务 probability errors 结算。
 
-### 推论 77.4：FIB 任务必须给目标和可用边界编号
+## 七十九、strict-real 同基底见证与一次取得的局部应用
 
-相同的 \(\Phi_\circ\) 可以支持：
+**定义 79.1（完整 legal-world collision）。** [Strict-real joint-incidence support §§1–2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md) 在本节局部取 $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$、$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$，保持原 acquired word $J,M,J,M,M,M$、clocks $0,\ldots,7$ 与
 
 $$
-\begin{aligned}
-&\text{统计任务：只恢复 outcome probabilities};\\
-&\text{平均通道任务：只恢复 }\Phi_\circ;\\
-&\text{编码 fine-instrument 任务：恢复标签和 qutrit branch};\\
-&\text{完整 flagged instrument 任务：恢复五级输入上的标签化量子输出}.
-\end{aligned}
+H_4=(0,J,24,M,147/5,J,24,M,18),\qquad
+C(p,v)=\mathcal F(H_4,M,p,M,v),\quad p\ne24.
 $$
 
-这些任务的 observation fibre、控制记忆和可执行资源边界不同。把它们都记作“同一个 FIB 关系”会丢掉目标坐标，产生错误的最小性结论。准确的表示应是带下标的：
+此处用 $P_{\rm par}$ 区别于 qutrit spectator projection，whole world 为
 
 $$
-\mathcal F_{\eta}^{\,g,\mathsf{contract}},
+W=(P_{\rm par}(r,b),g,d),\qquad
+P_{\rm par}(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\quad 0<r<1,\quad b>0.
 $$
 
-其中 \(g\) 指目标，contract 指可用操作、输入域、权限、误差和成本。
+$g$ 是每个 world 内同一个 nonzero real polynomial、$\deg g\le3$，$d\in\mathbb R$。以 $A_0=I_2,A_i=E_iA_{i-1}$ 累积该历史已执行的字母，clock $i$ 的读数为 $d+g(i)\operatorname{tr}(A_iP_{\rm par})$；各原读数必须按其真实 clock 已发生。允许较低 degree、sampled/repeated roots、zero drift、singular source 与 unbounded positive off-diagonal，不能靠 regular chart 排除它们。clock seven 的 $J/M$ 是两个 counterfactual alternatives，不是在同一 run 顺次多读两次。
 
-这三项最新结果合在一起，给出更强的统一链：
+在同一 acquired $(p,v)$，$D_J$ 表示 $C(p,v)$ 中有一对 distinct legal worlds 的 terminal-$J$ responses 相等，$D_M$ 类似。$D_J\cap D_M$ 要求两个 collision pairs 共用同一 child；两 pairs 可以重叠，但每对内部必须 distinct。同一个 resultant index zero、complex root 或违反 strict guards 的 rational label 不是该见证。
 
-$$
-\boxed{
-\begin{gathered}
-\text{semantic source fibre}
-\;\to\;
-\text{acquired-input frontier}
-\;\to\;
-\text{projection-sufficient sweep}
-\\
-\to\;
-\text{current replay key}
-\;\to\;
-\text{task-specific controller}
-\;\to\;
-\text{terminal/quantum record certificate}.
-\end{gathered}
-}
-$$
+**命题 79.2（一个 transverse algebraic intersection 不产生双 collision）。** supplier Theorem 2.2 的 actual acquired off-$24$ base $(p^*,v^*)$ 有 transverse、locally isolated common regular terminal-index zero，却不在 $D_J\cap D_M$。其原完整 child 有恰好三个 legal worlds，两个 terminal maps 各自 injective。
+
+**证明。** 直接使用该定理的 complete three-world enumeration 与 strict-real lifting。构成 common index zero 的共同代数 label 违反 $b>0,0<r<1$；它不是实际 world。定理对整个 child（包括其 zero-safe branches）的穷尽性与两响应的 injectivity，排除了另一组合法 collision pairs。无需重现其 rational boxes、resultants 或 interval certificates。∎
+
+**命题 79.3（在已取得 child 上的单次任务证书）。** 固定命题 79.2 的同一 actual base，令 $z$ 是其三个 legal worlds 的 branch label。若合同允许原 clock-seven $M$，实际取得其 paid response 并保留，且 source-independent 规则可判别 supplier 的三个不交 response intervals，则该 branch-label task 有一次动作的有限证书。这里没有新增 source port 或追加 counterfactual $J$。
+
+**证明。** 固定 base 的三个候选 world 给出三个 pre-read complete states，加入这一次合法 $M$ 的实际 successor、response class 和 halt labels 就构成一个有限局部模型。其抽象只忘记与这一个任务无关的 fields；合法性和各实际 successor 逐候选保留，判别规则使用三个固定的 rational intervals，不依赖隐藏 world 选择动作。由 supplier injectivity，每个非空 response class 只有一个 $z$，故其 successor candidate relation 在 $\mathcal W_0$；读前的 union 在 $\mathcal W_1$。以读前/读后 rank $1/0$、实际 response update 和正确 halt label 得到 §62 的 chosen-action certificate。若计费用，其 actual branch cost 作为另行已声明的标签保留；三个固定候选上的标签仍只有有限多个。∎
+
+这个应用取得的是固定 child 的 branch label；它不安装对任意 real $(p,v)$ 的 world enumerator，不假定有限 semantic candidates 已被读取，也不供应全局最小控制器。用于原任务时，已取得 $(p,v)$、exact read permission、response retention、source-independent 判别和 successor/cost 合同都是必要前提。反过来，一处 algebraic false lift 不排除其他 children 的合法 collisions。
+
+**定义 79.4（未结算的 joint incidence）。** supplier §5.2 保留所有 $p\ne24,v$ 上 $D_J\cap D_M$ 的 real guarded decision：regular common components 与 isolated points 必须做 whole-world strict-real lifting；exceptional $E_0=0$ strata 还须 zero-safe reconstruction。每对内部 distinctness、每 label 的同一完整 $g$、singular sources、zero drift、repeated roots 和无界正 off-diagonal 均须保留。即使找到一处 positive child，也仍有同一 $p$ 的 sixth-$J$、fifth-$J$、common-parent 与 ancestor obligations，不能直接推出 $H_4$ 的 $L_3$、root $L_7$ 或 eight-versus-nine 结论。
+
+## 八十、任务纤维的综合边界
+
+**命题 80.1（任务充分性不等于统一行为或历史逆）。** 对上述声明的 source contracts，可分别使用 finite chosen-action certificate、current raw continuation kernel、terminal sharp-task signature 和 same-law quantitative estimates，但替换合同的任一步都须保留目标、支持、权限、更新及所数资源。具体有：native 的 current kernel 允许忘掉不影响 future behaviour 的 post-Capture chronology；算术 reached register 允许预测改变 endpoint 后的 quotient；sharp signature 允许合并对全部指定 projections 有同一像的 terminal histories；strict-real 的合法三-world child 允许一次声明读取得到 branch label。任何一个充分表示都不单独确定其他合同的 minimum 或逆。
+
+**证明。** native 的反例和 singleton domain 是命题 74.2；算术使用约定 75.1–75.2 的两个不同 target times 与 supplier 的同步更新；terminal conclusion 是定理 76.2 和推论 76.3；局部取得是命题 79.3。它们分别使用不同的 source domain、可见信息与 target。要迁移一个协议，必须有保持这些数据的映射；仅由表示的存在不能补出缺失的读取或更新。命题 74.2 的两条实际历史还直接否定跨到 endpoint-only exact chronology 的迁移。∎
+
+**定义 80.2（残余问题的范围）。** 仍待研究的是：unchanged native $A^+$ 的 whole-current joint-key acquisition 与各独立自然视图的 reverse kernels；$A_R$ 的完整 maintenance domain 和 current-at-return joint recovery；额外 chronology supplement 的实际取得与资源，而不是已被排除的全域 endpoint-only chronology inverse；给定动态任务与取得合同下的 controller optimum；§77.4 指定的 general quantitative sharp tasks 及共同 approximate decoder；§78.3 的原 subexponential/cutoff/collision-entropy 与 causal-memory goals；以及 §79.4 的 global strict-real joint incidence 和 ancestor obligations。
+
+这里的承重组合是 prescribed-task signature 的 positive-support/terminal-partition 结论及固定 actual child 的 chosen-action 应用。一般 observable correction、native kernels 与历史逆、算术 parity acquisition、quantitative boundary optima、pair-energy obstruction 和 strict-real certificates 均按所引 supplier 的原范围使用。这些是普通论文数学与有条件 apparatus 定义，不提供新的物理服务实现、Lean kernel 认证或文献优先权结论，也不结算无界 horizon 的完整研究目标。
 
-它同时说明三种不能跨越的边界：语义 finite fibre 不自动给 acquisition；无 reset 不自动阻止 acquisition；相同 averaged behavior 不自动给相同 fine record 或可执行 simulator。每一条都由具体的同源条件、实际 successor、权限和成本合同决定，而不是由更换 FIB 编码解决。
+## 追加锚（本行以下为增补区）
