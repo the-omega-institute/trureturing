@@ -30,7 +30,10 @@ internal sealed class SkewInformationLambdaRefutationDocument : IScribeDocumentD
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Take f(x) = (2/9)(1 + x) + (10/3)·x/(11x + 1) + (10/3)·x/(x + 11). For a,b > 0 and x at least zero, x/(ax + b) = 1/a − (b/a)(ax + b)⁻¹. Matrix inversion reverses order on positive definite matrices, so this identity makes each rational term operator monotone on positive semidefinite matrices of every finite size. Positive linear combinations and the affine term preserve that order. All three terms are nonnegative on the nonnegative real axis. Direct calculation gives f(0) = 2/9, f(1) = 1 and x f(1/x) = f(x) for x > 0: the two rational terms are exchanged by the symmetry and the affine term is fixed. Thus f is admissible. At x = 1/4, f(1/4) = 31/54 and F_f(1/4) = 7641/7688 < 1 = min{1, 9/8}. The proposed least value is therefore not a lower bound of the integrand, contradicting claim."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("yu-oh-2013-skew-information-lambda-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
