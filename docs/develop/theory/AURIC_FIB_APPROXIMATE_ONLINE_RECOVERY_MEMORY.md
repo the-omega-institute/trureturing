@@ -1182,3 +1182,1349 @@ $\Theta(n^{3/2})$ or a fully numerical near-optimal lower bound.
 [BG-DOI]: https://doi.org/10.4171/JEMS/337
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Actual single-source maxima and exact lossless startup
+
+**Convention 12.1 (Fixed model and complex vectors).** Throughout §§12–16
+the instrument, embedding, untouched references, complete persistent state,
+seed independence and averaged unhalved diamond criterion are exactly
+Definitions 2.1–2.4. In particular the angle remains $\pi/6$ and the
+decoder is an arbitrary CPTP map on $M_5$. The matrices
+$F_j=\lambda^{-1}g_j$ are those of Definition 4.1; individual letters,
+words and vectors are never rephased. Use the ordered basis $(f_1,f_2)$
+of (2.1), and put $e_-=(1,0)^{\mathsf T}$ and
+$e_+=(0,1)^{\mathsf T}$. These coordinates give
+
+$$
+F_0=\begin{pmatrix}
+(1-i\sqrt3)/4&\sqrt3/2\\
+(\sqrt3-3i)/4&-1/2
+\end{pmatrix},\qquad F_1=F_0J,\qquad J=\operatorname{diag}(-1,1).
+\tag{12.1}
+$$
+
+The widths below bound the complete state at every time. They do not
+bound static table precision or deterministic schedules.
+
+**Theorem 12.2 (Single-source maximum and lossless threshold).** Fix
+integers $W\ge1$ and $n\ge0$. For deterministic, possibly many-to-one,
+time-varying maps $f_{k,j}:[W]\to[W]$, write
+$\phi_h=f_{n,h_n}\circ\cdots\circ f_{1,h_1}$, with the identity at
+$n=0$. The quantity in Definition 4.1 has the attained normal form
+
+$$
+a_W(n)=
+\max_{\substack{f_{k,j}:[W]\to[W],\ r_0\in[W]\\
+                 t\in\mathbb C^2,\ \|t\|_2=1}}
+\sum_{b=1}^W
+\left\|2^{-n}\sum_{\substack{h\in\{0,1\}^n\\
+                            \phi_h(r_0)=b}}F_ht\right\|_2.
+\tag{12.2}
+$$
+
+Every maximizing path starts from the actual single-source tuple
+$e_{r_0}t$ and is reachable by its displayed controller. One has
+
+$$
+a_W(0)=1,\qquad
+a_W(n)=1\ \Longleftrightarrow\ W\ge2^{n-1}\quad(n\ge1).
+\tag{12.3}
+$$
+
+Proof. Write $X_W=\ell_1([W];\mathbb C^2)$ with norm
+$\|x\|_{1,2}=\sum_r\|x_r\|_2$, and let $L_k$ denote the layer in
+(4.1). For a fixed product $L=L_n\cdots L_1$, decompose
+$x=\sum_r e_rx_r$. If $\|x\|_{1,2}=1$, the triangle inequality gives
+
+$$
+\|Lx\|_{1,2}\le
+\sum_{r:x_r\ne0}\|x_r\|_2
+ \left\|L\left(e_r\frac{x_r}{\|x_r\|_2}\right)\right\|_{1,2}
+\le\max_{r,\|t\|_2=1}\|L(e_rt)\|_{1,2}.
+$$
+
+Zero input blocks contribute zero. The reverse inequality follows because
+every $e_rt$ is an allowed initial tuple. For fixed $W,n$, the product of
+stochastic simplices and the complex unit sphere is compact, and the
+objective is continuous, so the maxima are attained.
+
+To reduce the layers, let $P(b\mid r)$ be any column-stochastic table.
+For $f:[W]\to[W]$ set
+$\alpha_P(f)=\prod_{r=1}^W P(f(r)\mid r)$ and
+$D_f(b\mid r)=\mathbf1_{\{f(r)=b\}}$. Finite marginalization gives
+$\sum_f\alpha_P(f)=1$ and
+$\sum_f\alpha_P(f)D_f(b\mid r)=P(b\mid r)$.
+Apply this identity to both label tables at each time. Expanding the
+product of the layers expresses $L$ as a convex combination of products
+of deterministic layers, with weights independent of the actual labels.
+The norm of $L(e_rt)$ is at most the largest norm of these deterministic
+products on that same input. Deterministic tables are already permitted,
+giving equality of the maxima. The path expansion is exactly (12.2).
+There are $W^{2Wn}$ table programs, $W$ starting states, and a compact
+full complex sphere of choices of $t$. Maximization over this Cartesian
+product can be performed in any order. No minimax exchange is involved.
+
+For the sufficiency in (12.3), start at $e_+$ and discard the first
+label. Since $Je_+=e_+$, both first-step vectors equal
+$v=F_0e_+=(\sqrt3/2,-1/2)^{\mathsf T}$. Store the subsequent $n-1$
+labels exactly. At time $k\ge1$ this uses $2^{k-1}$ states. Histories
+with the same suffix $(h_2,\ldots,h_n)$ have identical full-phase vectors,
+so the terminal sum of norms is one. Pad to width $W$ when needed.
+
+For necessity, use the attained deterministic single-source maximum.
+Each $F_ht$ is a unit vector. The terminal norm sum is at most one by
+the triangle inequality. If it is one, equality holds separately in each
+nonempty endpoint group. For unit vectors $v_1,\ldots,v_m$,
+
+$$
+m^2-\left\|\sum_{i=1}^m v_i\right\|_2^2
+=\sum_{i<j}\|v_i-v_j\|_2^2.
+$$
+
+Thus equality requires all vectors within that group to coincide,
+including their complex phases. The already established separation (5.2)
+says that two distinct length-$n$ histories in the same determinant class
+have distance at least $2^{-n}$ for every unit $t$. Hence one endpoint
+contains at most one history from each of the two determinant classes,
+and $2^n\le2W$. Empty endpoint groups cause no exception. Compact
+attainment makes the inequality $a_W(n)<1$ strict below this threshold;
+it supplies no quantitative size for that strict deficit. At $n=0$ the
+empty product preserves the norm. $\square$
+
+The normal form is used here for the actual startup statement and below
+for the energy minimum. It is a convex reduction of a vector objective.
+It neither determinizes the averaged recovery error nor finds a decoder
+which works simultaneously for every qutrit direction. There is no
+additional relaxed-to-reachable bridge for the maximum in (12.2): its
+maximizers themselves have single-source reachable paths. A bound for
+only one direction or a restricted set of controllers would still be
+insufficient.
+
+**Proposition 12.3 (Width one and necessary startup allowance).** For the
+actual generators,
+
+$$
+a_1(0)=1,\qquad a_1(n)=2^{1-n}\quad(n\ge1).
+\tag{12.4}
+$$
+
+For fixed $W$, the largest positive integer horizon with $a_W(n)=1$ is
+$1+\lfloor\log_2W\rfloor$. Consequently, if constants $c>0$ and a
+function $s(W)$ obey the proposed uniform envelope
+
+$$
+a_W(n)\le
+\exp\{-cW^{-2/3}(n-s(W))_+\}\qquad(W\ge1,\ n\ge0),
+\tag{12.5}
+$$
+
+then necessarily $s(W)\ge1+\lfloor\log_2W\rfloor$. In particular
+$s(W)=K\ln(2W)$ requires $K\ge1/\ln2$. With $W\ge2$ and
+$s(W)=K\ln W$, it requires $K\ge2/\ln2$. These are necessary conditions,
+not a proof of (12.5) for either choice.
+
+Proof. Width one leaves the unique layer
+
+$$
+M=(F_0+F_1)/2=F_0(I+J)/2
+=\begin{pmatrix}0&\sqrt3/2\\0&-1/2\end{pmatrix}.
+$$
+
+It has operator norm one and $M^2=-M/2$. Thus
+$M^n=(-1/2)^{n-1}M$ for $n\ge1$, proving (12.4).
+Theorem 12.2 gives the largest lossless horizon. Substituting that horizon
+in (12.5) forces its exponent to vanish. For $W=2^m$ the resulting
+condition with $\ln(2W)$ is
+$m+1\le K(m+1)\ln2$. For $\ln W$ on $W\ge2$, take $W=2$ and $n=2$.
+At $W=1,n=1$, any formula using $s(W)=K\ln W$ instead would assert
+$1\le e^{-c}<1$. Replacing $\ln W$ by $\ln(2W)$ removes this
+contradiction but does not establish a decay estimate. $\square$
+
+**Proposition 12.4 (Reachable width-two startup and recovery separation).**
+There is an actual width-two single-source path with $N_0=N_1=N_2=1$.
+Nevertheless at width one and horizon one every recovery protocol in
+Definitions 2.3–2.4 has unhalved diamond error at least one, although
+$a_1(1)=1$.
+
+Proof. Start from $x_0=(e_+,0)$. At time one map every state to state
+one for both labels. At time two map every state to state one on label
+zero and to state two on label one. Then
+
+$$
+x_1=(v,0),\qquad
+x_2=(F_0v/2,F_1v/2),\qquad v=F_0e_+.
+\tag{12.6}
+$$
+
+Unitarity gives all three norms equal to one. In particular a universal
+strict one-step loss asserted whenever the preceding reachable norm is
+at least $3/4$ fails even at positive time.
+
+For the recovery assertion let $Z=|e_-\rangle\langle\xi|$ in qutrit
+coordinates, so $\|Z\|_1=1$. The fair uncorrected horizon-one channel
+sends it to $|Me_-\rangle\langle\xi|=0$. At width one, for almost every
+seed there is only one decoder input; every full-$H$ CPTP decoder sends
+this zero operator to zero. Averaging over any independent seed still
+annihilates $Z$, whereas the target sends it to $\iota(Z)$, of trace
+norm one. This is already a diamond-norm witness without a reference.
+It proves the bound for arbitrary full-$H$ decoders and hence explicitly
+separates the necessary vector-survival condition (4.4) from sufficient
+recovery. $\square$
+
+## 13. Finite-support replacement of the entire averaged recovered channel
+
+**Theorem 13.1 (Finite-horizon independent seed replacement).** For each
+finite $W\ge1$ and $n\ge0$, every legal width-$W$ controller with a free
+independent measurable standard-Borel seed has another legal controller
+whose entire averaged recovered channel (2.2) is identical, with an
+independent seed supported on at most
+
+$$
+W^{1+2Wn}
+\tag{13.1}
+$$
+
+programs. Each selected program consists of one initial state and complete
+deterministic update tables for all times and both labels. Its terminal
+maps are CPTP maps on $M_5$ obtained by seed-weighted averaging of the
+original terminal maps. The peak width remains at most $W$.
+
+Proof. Let $\mu$ be the original seed law and $\pi_s$ the initial-state
+law. Since the horizon is finite, intersect the full-measure sets on
+which the width bound and the finitely many kernel and decoder
+conditions hold. Use the measurable padded labels of Definition 2.3
+to identify every state space there with a subset of $[W]$. Extend
+unused states by any fixed stochastic transitions and CPTP decoders.
+On the exceptional null set choose a fixed legal padded protocol.
+This does not change (2.2).
+
+Let $v=(r_0,(f_{k,j})_{k,j})$ range over the finite set of all such
+programs, including tables at unused states. Define measurable weights
+
+$$
+\beta_s(v)=\pi_s(r_0)
+ \prod_{k=1}^n\prod_{j=0}^1\prod_{r=1}^W
+       T_{k,j,s}(f_{k,j}(r)\mid r),\qquad
+\beta(v)=\int\beta_s(v)\,d\mu(s).
+\tag{13.2}
+$$
+
+Empty products equal one. Marginalizing each table column gives
+$\sum_v\beta_s(v)=1$, including zero entries, and hence
+$\sum_v\beta(v)=1$. For a fixed history $h$, each pair
+$(k,h_k)$ uses exactly one table column along its path; summing every
+unused column gives one. Summing paths and initial states therefore gives
+
+$$
+p_s(r\mid h)=
+ \sum_v\beta_s(v)\mathbf1_{\{\phi_h^v(r_0)=r\}}.
+\tag{13.3}
+$$
+
+This is a distribution of complete tables sampled independently of the
+actual acquired history, not a choice based on a future label.
+
+For $\beta(v)>0$ put
+
+$$
+\overline D^{\,H}_{r,v}
+=\frac1{\beta(v)}
+ \int\beta_s(v)D^H_{r,s}\,d\mu(s).
+\tag{13.4}
+$$
+
+The integral exists entrywise in the finite-dimensional vector space of
+linear maps on $M_5$. Measurability is inherited from the original
+family, and CPTP maps form a bounded closed convex set. More explicitly,
+their Choi matrices are positive with the fixed trace-preserving partial
+trace; weighted integration preserves both properties. Thus (13.4) is
+CPTP on all of $M_5$. If $\beta(v)=0$, nonnegativity gives
+$\beta_s(v)=0$ almost everywhere; omit that program. One may instead
+give it any CPTP decoders and probability zero, with no division by zero.
+
+Choose the new free seed $v$ with probability $\beta(v)$, independently
+of the qutrit, reference and actual labels. Start at its $r_0$, follow
+its tables and use (13.4). The new averaged recovered channel is
+
+$$
+2^{-n}\sum_{h,v}\beta(v)
+ \overline D^{\,H}_{\phi_h^v(r_0),v}
+       \circ\iota\circ\operatorname{Ad}_{Q_h}
+=\int 2^{-n}\sum_{h,r}p_s(r\mid h)
+ D^H_{r,s}\circ\iota\circ\operatorname{Ad}_{Q_h}\,d\mu(s).
+\tag{13.5}
+$$
+
+Substitute (13.4), interchange the finite sums with the bounded integral,
+and apply (13.3) to prove this equality. There are $W$ initial states
+and $W^{2Wn}$ complete table programs, proving (13.1).
+Equality as complex-linear maps also gives equality after tensoring with
+every untouched finite reference, and therefore identical averaged
+unhalved diamond error. $\square$
+
+**Convention 13.2 (Scope of the replacement).** Theorem 13.1 is exact for
+the specified finite horizon and averaged channel. The new terminal
+decoders can be mixtures of many original decoders. It asserts neither
+that one original seed succeeds nor that one deterministic program with
+one original decoder has no larger error. It gives no efficient
+algorithm, finite-precision description bound or horizon-uniform finite
+list of programs. Nonuniform changing tables and arbitrary measurable
+seed-dependent decoders remain allowed. Seed independence and inclusion
+of every persistent variable in the counted state are essential to the
+factorization (13.3).
+
+For the necessary condition (4.4) one can also retain the original seed:
+for each fixed unit $t$, on the common full-measure padded set
+$N_{n,s}\le a_W(n)$, whence
+$\|\mathcal C_n(Z_t)\|_1\le\int N_{n,s}\,d\mu(s)\le a_W(n)$.
+This integration uses a uniform conditional upper bound, not conditional
+success and not a measurable selection of an optimal seed.
+
+## 14. Same-controller backward vectors and occupation-weighted energy
+
+**Definition 14.1 (Actual dual fields).** Use the complex inner product
+$\langle y,x\rangle=y^\dagger x$, conjugate-linear in its first
+argument, and real pairing
+$[y,x]=\operatorname{Re}\sum_r\langle y_r,x_r\rangle$.
+The real norm dual of $X_W$ is
+$Y_W=\ell_\infty([W];\mathbb C^2)$, with
+$\|y\|_{\infty,2}=\max_r\|y_r\|_2$.
+For a fixed deterministic controller $f$ let $L_k$ be its actual forward
+layer and define its adjoint by
+
+$$
+(L_k^\ast y)_r
+=\frac12\sum_{j=0}^1 F_j^\dagger y_{f_{k,j}(r)}.
+\tag{14.1}
+$$
+
+For terminal $y$, define $b_n=y$ and
+$b_k=L_{k+1}^\ast b_{k+1}$ for $0\le k<n$.
+For a fixed starting state $r_0$, let the scalar occupation law of this
+same controller under the actual fair labels be
+
+$$
+p_0(r)=\mathbf1_{\{r=r_0\}},\qquad
+p_{k+1}(s)=\frac12\sum_{r,j}
+ p_k(r)\mathbf1_{\{f_{k+1,j}(r)=s\}}.
+\tag{14.2}
+$$
+
+The $b_k$ are backward analysis fields. They are not additional stored
+variables, reverse stochastic kernels or intermediate quantum operations.
+
+**Theorem 14.2 (Exact dual maximum and minimum energy).** At the same
+width $W$ and for the actual $F_j$, one has
+
+$$
+\begin{aligned}
+\|L_n\cdots L_1(e_{r_0}t)\|_{1,2}
+&=\max_{\|y\|_{\infty,2}\le1}
+ \operatorname{Re}\langle b_0(r_0),t\rangle,\\
+a_W(n)
+&=\max_{\substack{f,r_0\\\|y_s\|_2=1\ (s\in[W])}}
+ \|b_0(r_0)\|_2 .
+\end{aligned}
+\tag{14.3}
+$$
+
+For each fixed $f,r_0,y$ with all terminal norms one, the exact identity is
+
+$$
+1-\|b_0(r_0)\|_2^2
+=\frac14\sum_{k=0}^{n-1}\sum_r p_k(r)
+ \left\|F_0^\dagger b_{k+1}(f_{k+1,0}(r))
+       -F_1^\dagger b_{k+1}(f_{k+1,1}(r))\right\|_2^2 .
+\tag{14.4}
+$$
+
+In particular,
+
+$$
+1-a_W(n)^2
+=\frac14\min_{\substack{f,r_0\\\|y_s\|_2=1\ (s\in[W])}}
+ \sum_{k=0}^{n-1}\sum_r p_k(r)
+ \left\|F_0^\dagger b_{k+1}(f_{k+1,0}(r))
+       -F_1^\dagger b_{k+1}(f_{k+1,1}(r))\right\|_2^2 .
+\tag{14.5}
+$$
+
+Every $p_k$ and $b_k$ inside a candidate in this minimum must come from
+that candidate's same controller $f$, with (14.1)–(14.2).
+There is no positive-occupation assumption.
+
+Proof. For $x\in X_W$, Cauchy–Schwarz gives
+$[y,x]\le\|x\|_{1,2}$ on the dual unit ball. Equality is attained by
+$y_s=x_s/\|x_s\|_2$ at nonzero blocks; at a zero block any unit vector
+works. Expanding (4.1) in the pairing proves (14.1) and
+$[y,L_kx]=[L_k^\ast y,x]$. Unitarity and the triangle inequality imply
+$\|L_k^\ast y\|_{\infty,2}\le\|y\|_{\infty,2}$ even for many-to-one
+maps. Iterating gives the first identity in (14.3).
+
+For fixed $f,r_0$, maximize also over unit $t$. The maximum of
+$\operatorname{Re}\langle b_0(r_0),t\rangle$ is
+$\|b_0(r_0)\|_2$, including the zero case. All maxima exist on compact
+finite-dimensional sets and their order can be exchanged. They may
+be restricted to unit terminal blocks: choose a maximizing $t$ for
+this fixed forward product and choose unit norm-supporting $y$ for its
+terminal tuple, arbitrarily at zero blocks. This gives the full forward
+maximum. Conversely, for every such $y$ its initial norm is bounded by
+that forward maximum, by the same dual formula maximized over $t$.
+Theorem 12.2 now proves the second identity in (14.3). This argument
+optimizes only maxima; it does not interchange a minimum with a maximum.
+
+To prove the energy identity, put
+$E_k=\sum_r p_k(r)\|b_k(r)\|_2^2$. Apply the usual complex Hilbert-space
+parallelogram identity inside (14.1),
+
+$$
+\left\|\frac{u+v}{2}\right\|_2^2
+=\frac{\|u\|_2^2+\|v\|_2^2}{2}
+ -\frac{\|u-v\|_2^2}{4},
+$$
+
+with $u=F_0^\dagger b_{k+1}(f_{k+1,0}(r))$ and
+$v=F_1^\dagger b_{k+1}(f_{k+1,1}(r))$. Multiply by $p_k(r)$ and
+sum over $r$. Unitarity and the same occupation recursion (14.2) identify
+the first sum with $E_{k+1}$. Hence
+
+$$
+E_{k+1}-E_k
+=\frac14\sum_r p_k(r)\|u-v\|_2^2.
+$$
+
+Now $E_0=\|b_0(r_0)\|_2^2$ and $E_n=1$, so telescoping proves (14.4).
+For terminal norms at most one the general formula has the additional
+nonnegative right-hand term
+$\sum_s p_n(s)(1-\|y_s\|_2^2)$. No term divides by $p_k(r)$, so zero
+occupancies contribute zero without restricting the corresponding field.
+All fields are built from the same complex $F_j^\dagger$; their phases
+are retained.
+
+The finite set of $f,r_0$ and the product of complex unit spheres is
+compact. By (14.3), its maximum of $\|b_0(r_0)\|_2^2$ is $a_W(n)^2$.
+Taking one minus this maximum in (14.4) proves the attained minimum
+(14.5). At $n=0$ the sum is empty and both sides vanish. $\square$
+
+**Proposition 14.3 (Stochastic version for the original controller).**
+For a stochastic controller at a fixed seed, replace (14.1) by
+
+$$
+(L_{k+1}^\ast b_{k+1})_r
+=\sum_{j,s}\nu_{k,r}(j,s)F_j^\dagger b_{k+1}(s),\qquad
+\nu_{k,r}(j,s)=\tfrac12T_{k+1,j}(s\mid r),
+\tag{14.6}
+$$
+
+and use
+$p_{k+1}(s)=\sum_{r,j}p_k(r)\nu_{k,r}(j,s)$ from the same stochastic
+controller. If $z_{j,s}=F_j^\dagger b_{k+1}(s)$, the exact telescoping
+identity is
+
+$$
+\begin{aligned}
+1-\|b_0(r_0)\|_2^2
+={}&\sum_s p_n(s)(1-\|y_s\|_2^2)\\
+&+\frac12\sum_{k,r}p_k(r)
+ \sum_{j,s,j',s'}\nu_{k,r}(j,s)\nu_{k,r}(j',s')
+       \|z_{j,s}-z_{j',s'}\|_2^2 .
+\end{aligned}
+\tag{14.7}
+$$
+
+Here $p_0=e_{r_0}$, the time sum is $0\le k<n$, and the terminal
+norms are at most one. With an initial probability law $\pi$, replace
+$\|b_0(r_0)\|_2^2$ by $\sum_r\pi(r)\|b_0(r)\|_2^2$.
+
+Proof. For the finite probability vector $\nu_{k,r}$, expansion of the
+squared norm of $\sum\nu_{k,r}z_{j,s}$ gives its mean squared norm minus
+one half the displayed ordered-pair squared-distance sum. Multiply by
+$p_k(r)$ and use the same stochastic occupation recursion to obtain
+$E_{k+1}-E_k$ as that variance term. Telescoping and
+$1-E_n=\sum_s p_n(s)(1-\|y_s\|_2^2)$ give (14.7).
+The adjoint pairing and contraction follow by the same finite expansion.
+Zero transition probabilities and zero occupancies have zero weight.
+For deterministic tables this variance is exactly the one-quarter term
+in (14.4). These identities hold almost everywhere for the original
+measurable seed family and can be integrated, since the finite sums are
+measurable and bounded. For the extremum $a_W(n)$ the deterministic
+minimum (14.5) already suffices by Theorem 12.2. $\square$
+
+## 15. Permutation-program suppliers and actual transfer obstructions
+
+**Convention 15.1 (The CDG supplier and its conditions).** Cohen, Doron
+and Goldgraber, *A Forward–Backward Weight Analysis of INW for Permutation
+Branching Programs*, arXiv:2607.18168v2 [CDG][CDG], Theorem 3.1, analyzes
+binary read-once permutation branching programs. Under Definition 2.2,
+both label transitions at every layer are permutations of the same
+$w$ states. Definition 2.3 tests scalar Boolean acceptance probability
+against uniform input bits. For $0<\eta\le1$, the paper takes spectral
+expander parameter $\theta_{\rm exp}=\eta/(32w^3)$ and obtains an
+$\eta$-fooling INW generator with seed length
+$O((\log w+\log(1/\eta))\log n)$; a single layer uses one fair bit.
+Definition 2.4 requires undirected regular expanders with normalized
+adjacency minus the averaging matrix of operator norm at most
+$\theta_{\rm exp}$. Their degrees are polynomial in $1/\theta_{\rm exp}$
+and independent of $n$; identity layers pad other lengths to powers of
+two.
+
+For comparison with the actual deterministic controller, use the paper's
+row matrices
+$P_{k,j}(r,s)=\mathbf1_{\{f_{k,j}(r)=s\}}$ and
+$T_k=(P_{k,0}+P_{k,1})/2$. These are the transposes of the column
+tables used in (4.1). In the notation of [CDG, §3.1][CDG-WEIGHTS], the
+scalar forward and backward recursions and weights are
+
+$$
+\begin{aligned}
+p_{k+1}^{\mathsf T}&=p_k^{\mathsf T}T_{k+1},&
+\mathfrak F_{[n]}(p_0)
+ &=\sum_{k=0}^{n-1}
+   \|p_k^{\mathsf T}(P_{k+1,0}-P_{k+1,1})\|_1,\\
+q_k&=T_{k+1}q_{k+1},&
+\mathfrak B_{[n]}(q_n)
+ &=\sum_{k=0}^{n-1}
+   \|(P_{k+1,0}-P_{k+1,1})q_{k+1}\|_1 .
+\end{aligned}
+\tag{15.1}
+$$
+
+The paper's Lemma 3.2 proves the length-independent permutation bounds
+
+$$
+\mathfrak F_I(p)\le2\sum_{r<s}|p_r-p_s|\le2w\|p\|_1,\qquad
+\mathfrak B_I(q)\le2\sum_{r<s}|q_r-q_s|\le2w\|q\|_1.
+\tag{15.2}
+$$
+
+Backward propagation there is a reversed permutation walk. Proposition
+3.4 bounds the INW expander-product discrepancy by
+$\theta_{\rm exp}\mathfrak F_L(p)\mathfrak B_R(q)$.
+Proposition 3.5 then proves, for $c\ge2$ and
+$\theta_{\rm exp}\le1/(8c^2w^3)$, the direct bilinear bound
+
+$$
+|p^{\mathsf T}(\widetilde T_I-T_I)q|
+ \le c\theta_{\rm exp}\mathfrak F_I(p)\mathfrak B_I(q)
+\tag{15.3}
+$$
+
+on dyadic intervals. Its induction uses (15.2), including the estimate
+$\mathfrak F_R(\delta)\le2w\|\delta\|_1$ for a propagated error vector.
+This is a known nonaccumulation estimate for PRG-versus-uniform error.
+It is not a decay estimate for the actual uniform-input vector objective
+(12.2). Equations (15.1)–(15.3) are cited supplier statements, used to
+specify the hypotheses tested by the following actual-model examples.
+
+**Proposition 15.2 (Many-to-one scalar weight counterfamilies).** At
+unchanged finite controller width, the analogues of (15.2) for arbitrary
+legal deterministic transitions fail: there are width-two forward
+weights $2n$ and width-three backward weights $n$ for every horizon $n$.
+Attach the unchanged actual $F_j$ to each label in both families.
+
+Proof. For width two use the same maps at every time, each sending every
+state to state one on label zero and to state two on label one. Their
+row matrices and a stationary fair occupation law are
+
+$$
+P_0=\begin{pmatrix}1&0\\1&0\end{pmatrix},\qquad
+P_1=\begin{pmatrix}0&1\\0&1\end{pmatrix},\qquad
+p^{\mathsf T}=(1/2,1/2).
+\tag{15.4}
+$$
+
+Thus $p^{\mathsf T}T=p^{\mathsf T}$ but
+$p^{\mathsf T}P_0=(1,0)$ and $p^{\mathsf T}P_1=(0,1)$.
+Each forward weight is two, giving $\mathfrak F_{[n]}(p)=2n$.
+Both states have positive occupation; starting from a single state also
+gives weight two at the first step and the same stationary law thereafter.
+For the stationary initial law the first bound in (15.2) would be zero,
+and even $2w\|p\|_1=4$ is exceeded for $n>2$.
+For example $P_0^{\mathsf T}$ has row sums two and zero, so it is not a
+reverse stochastic kernel in the row convention.
+
+For width three let
+$f_0=(1,2,1)$ and $f_1=(1,2,2)$ on states $(1,2,3)$, and take
+$q=(0,1,1/2)^{\mathsf T}$. The associated row matrices obey
+
+$$
+Tq=q,\qquad (P_0-P_1)q=(0,0,-1)^{\mathsf T}.
+\tag{15.5}
+$$
+
+Starting with terminal $q_n=q$ gives the same $q_k=q$ at every time
+and hence $\mathfrak B_{[n]}(q)=n$. The two bounds in (15.2) would be
+four and nine, respectively. If the actual controller starts at state
+three, its occupation there is one at time zero and zero for every
+$k\ge1$: $p_0=(0,0,1)^{\mathsf T}$ and
+$p_k=(1/2,1/2,0)^{\mathsf T}$ for every $k\ge1$, since both maps
+send all states into $\{1,2\}$ and fix states one and two.
+Starting in state one gives $p_k=(1,0,0)^{\mathsf T}$ for all $k\ge0$.
+Thus this unweighted backward sum charges state three at each step,
+although its forward occupation is zero after the first step
+(and at every time when starting in state one). In (14.4) the occupation
+is instead the one belonging to the same chosen controller and initial
+state. Both families are legal actual transition tables; no successful
+recovery is asserted for them. They disprove a transplantation of
+(15.2), not the permutation theorem or a loss-conditioned alternative.
+$\square$
+
+**Proposition 15.3 (Scalar acceptance does not determine actual phase
+observables).** At width one, all the scalar weights in (15.1) can
+vanish while different label laws give different actual vector
+expectations. For the actual generators at horizon two and $t=e_-$,
+uniform independent labels give zero, whereas the law assigning
+probability $1/2$ to each of $00,11$ gives a vector of norm $1/2$.
+
+Proof. The sole controller has $P_0=P_1=[1]$, so every scalar acceptance
+test of this controller is constant and its weights vanish. Uniform
+labels give $M^2e_-=0$. Put $a=(1-i\sqrt3)/4$. Direct multiplication of
+(12.1) gives
+
+$$
+\frac{F_0^2+F_1^2}{2}e_-=aF_0e_-,
+\qquad |a|=1/2.
+\tag{15.6}
+$$
+
+Unitarity proves the asserted norm. Thus even exact agreement on all
+scalar tests of this controller misses the actual complex observable.
+The correlated label law is a test of observable sufficiency; it is
+not substituted for the physical fair labels, and no claim is made that
+it is a CDG generator. $\square$
+
+For each fixed dual test in (14.3), the actual observable is
+
+$$
+g_{f,r_0,t,y}(h)=
+ \operatorname{Re}\langle y_{\phi_h(r_0)},F_ht\rangle\in[-1,1],
+\tag{15.7}
+$$
+
+not merely terminal acceptance of the controller. A direct faithful
+permutation simulation is available at finite horizon by retaining an
+$n$-bit register: at time $k$ XOR label $j$ into bit $k$. Each such
+update is a permutation of $2^n$ states, and the terminal register
+determines both $\phi_h(r_0)$ and the full-phase $F_h$. If a generator
+fools every terminal accepting set for this register within $\eta$, the
+two terminal laws have total variation at most $\eta$. Writing a
+function $g\in[-1,1]$ as $2u-1$ with $0\le u\le1$, and integrating
+the indicators of $\{u>z\}$ for $0\le z\le1$, bounds its expectation
+difference by $2\eta$. Thus the CDG theorem can control (15.7) through
+this register, but with width $2^n$ its seed bound is
+$O((n+\log(1/\eta))\log n)$. This supplies no improved width-$W$
+recovery bound. A transfer retaining small width and controlling the
+phase-sensitive observable would require its own proved reduction and
+cost estimate. The counterfamilies above do not exclude all such
+reductions, all forward–backward methods or other approaches.
+
+## 16. Quantitative boundary of the energy representation
+
+**Definition 16.1 (Minimum energy and a sufficient unresolved target).**
+Let $\mathcal Q_W(n)$ denote the minimum of the sum on the right of
+(14.5), before the factor $1/4$. Its exact value as a representation is
+
+$$
+\mathcal Q_W(n)=4(1-a_W(n)^2).
+\tag{16.1}
+$$
+
+A sufficient uniform coercive estimate would be the existence of
+constants $c,K>0$ such that, for every $W\ge1$ and $n\ge0$,
+
+$$
+\mathcal Q_W(n)\ge
+4\left(1-\exp\{-2cW^{-2/3}(n-K\ln(2W))_+\}\right).
+\tag{16.2}
+$$
+
+Equivalently, it would give (12.5) with $s(W)=K\ln(2W)$.
+Estimate (16.2) is unresolved. Nonnegativity and telescoping alone do
+not prove it. The zero energies throughout the exact startup range in
+(12.3), including the width-two path (12.6), are compatible with
+(14.4)–(14.5). By Proposition 12.3 a valid estimate of this form must
+allow at least that startup. Finite convolutions of the actual
+two-letter walk have finite support and remain singular to sphere Haar
+measure; the auxiliary smoothing in Theorem 7.1 is not smoothing of the
+physical walk.
+
+**Proposition 16.2 (Conditional sharp fixed-error consequence).** If
+(16.2) holds, then for each fixed $0<\varepsilon<1/4$ the actual
+recovery problem satisfies
+$W_n(\varepsilon)=\Theta_\varepsilon(n^{3/2})$.
+This is only an implication with the unproved premise (16.2).
+
+Proof. By (16.1) the premise gives
+$a_W(n)\le\exp\{-cW^{-2/3}(n-K\ln(2W))_+\}$.
+For a successful width $W$, (4.4) implies
+
+$$
+b_\varepsilon\ge cW^{-2/3}(n-K\ln(2W))_+.
+$$
+
+If $W\ge n^{3/2}$ the required lower bound already holds. Otherwise
+$\ln(2W)\le\ln2+(3/2)\ln n$, so for all sufficiently large $n$,
+depending only on $K$, the positive part is at least $n/2$. Then
+
+$$
+W\ge\left(\frac{c}{2b_\varepsilon}\right)^{3/2}n^{3/2}.
+$$
+
+Theorem 8.4 supplies the unchanged upper bound. Combining the two cases
+proves the conditional statement. $\square$
+
+**Convention 16.3 (Reused results and remaining mathematical scope).**
+The same-determinant-class separation (5.2), phase-resolved ball estimate
+(7.2), same-history loss identity (7.6), spectral block bounds and
+stochastic rounding construction are existing results of §§5–8.
+The convex table expansion, norm duality and Hilbert variance identities
+are used only inside the actual-model deductions above. In particular a
+static Haar quantization loss is not a dynamic occupation-weighted
+coercivity theorem. The external nonaccumulation input used for comparison
+is the direct bilinear statement of [CDG, Propositions 3.4–3.5][CDG-ERROR],
+with its permutation and scalar-test conditions.
+
+Theorem 9.1 remains the established fixed-error rate:
+$c_{\gamma,\varepsilon}(n/\ln n)^{3/2}\le W_n(\varepsilon)
+\le C_\varepsilon n^{3/2}$ in its stated range, with growth power $3/2$
+and leading bit coefficient $3/2$. No logarithmic improvement or
+unconditional repaired exponential bound follows from §§12–15.
+A bound such as (16.2) is sufficient, not shown necessary for sharp
+actual recovery; vector survival tests one direction at a time and
+does not incorporate all decoder constraints, as Proposition 12.4
+demonstrates. The cited overlap does not constitute an exhaustive
+literature classification or a claim of novelty. These are ordinary
+finite-dimensional mathematical proofs, without a Lean/kernel
+certificate or a physical or QFT assertion.
+
+[CDG]: https://arxiv.org/html/2607.18168v2
+[CDG-WEIGHTS]: https://arxiv.org/html/2607.18168v2#S3.SS1
+[CDG-ERROR]: https://arxiv.org/html/2607.18168v2#S3.SS3
+
+## 追加锚（本行以下为增补区）
+
+## 17. From an actual backward field to full-qutrit recovery with a parity bit
+
+**Definition 17.1 (Field energy and determinant parity).** Fix integers
+$W\ge1$, $n\ge0$, a starting state $r_0\in[W]$, deterministic changing
+maps $f_{k,j}:[W]\to[W]$, and terminal vectors $y_s\in\mathbb C^2$
+with $\|y_s\|_2=1$ for every $s$. Use precisely the backward fields
+$b_k$ and occupations $p_k$ of (14.1)–(14.2) for this same controller.
+Write $R_n(h)=\phi_h(r_0)$ and set
+
+$$
+\begin{aligned}
+\beta&=\|b_0(r_0)\|_2,\\
+\mathscr E(f,r_0,y)
+&=\sum_{k=0}^{n-1}\sum_r p_k(r)
+ \left\|F_0^\dagger b_{k+1}(f_{k+1,0}(r))
+       -F_1^\dagger b_{k+1}(f_{k+1,1}(r))\right\|_2^2,\\
+\omega&=e^{2\pi i/3},\qquad
+\eta(h)=\sum_{k=1}^n h_k\pmod2,\qquad
+ d_\eta=\omega^n(-1)^\eta .
+\end{aligned}
+\tag{17.1}
+$$
+
+The $F_j$ remain exactly (12.1), with their full complex phases. The
+energy here is a mathematical squared-norm functional. It specifies no
+Hamiltonian, physical energy, dynamics of a quantum field, or QFT model.
+By Theorem 14.2, $0\le\beta\le1$ and
+$\mathscr E=4(1-\beta^2)$. Let $S=[\xi\ f_1\ f_2]$ be the unitary
+qutrit change of basis in Theorem 2.2. Thus
+$Q_h=\lambda^n S(1\oplus F_h)S^\dagger$.
+
+**Theorem 17.2 (Paid-parity operational bridge).** For every field in
+Definition 17.1 there is a legal controller of peak width at most $2W$
+with deterministic classical updates and one terminal full-$H$ unitary,
+whose averaged encoded error satisfies
+
+$$
+\|\mathcal E_n-\iota\|_\diamond
+\le\min\{2,(1-\beta)(3+\beta)\}
+\le\min\{2,3\mathscr E(f,r_0,y)/4\}.
+\tag{17.2}
+$$
+
+The norm is unhalved and includes every untouched finite reference. The
+complete persistent state is $(r,\eta)\in[W]\times\{0,1\}$; the extra
+bit stores actual determinant parity. No intermediate quantum operation,
+extra quantum register, label resampling, postselection, reference access,
+or shared random seed is needed.
+
+Proof. Iterating (14.1) along the same actual fair histories gives
+
+$$
+2^{-n}\sum_h F_h^\dagger y_{R_n(h)}=b_0(r_0).
+\tag{17.3}
+$$
+
+For $\beta>0$ choose $t=b_0(r_0)/\beta$; for $\beta=0$ choose any fixed
+unit $t$. In both cases $b_0(r_0)=\beta t$. The standard quaternionic
+completion of a complex two-vector is
+
+$$
+C(z)=\begin{pmatrix}z_1&-\overline z_2\\
+z_2&\overline z_1\end{pmatrix},\qquad
+C(z)^\dagger C(z)=\|z\|_2^2I_2,\qquad
+\det C(z)=\|z\|_2^2 .
+\tag{17.4}
+$$
+
+For unit $z$, this is the $SU(2)$ matrix with first column $z$. It is
+the same real quaternion algebra used in §8, with different real
+coordinates. Calculation in (12.1) gives
+$\det F_0=\omega$ and $\det F_1=-\omega$. Multiplicativity therefore
+retains the exact identity $\det F_h=d_{\eta(h)}$, including the empty
+product. Define the static terminal table
+
+$$
+\Gamma_{s,\eta}
+ =C(y_s)\operatorname{diag}(1,d_\eta)C(t)^\dagger,\qquad
+\mathsf V_h=\Gamma_{R_n(h),\eta(h)}^\dagger F_h.
+\tag{17.5}
+$$
+
+Every $\Gamma_{s,\eta}$ is unitary, sends $t$ to $y_s$, and has
+$\det\Gamma_{s,\eta}=d_\eta$. Hence $\mathsf V_h\in SU(2)$, and
+(17.3) says
+
+$$
+\left(2^{-n}\sum_h\mathsf V_h^\dagger\right)t=\beta t.
+$$
+
+To pass from one vector to the whole matrix, use the real vector space
+$\mathbb H_2=\{C(z):z\in\mathbb C^2\}$, closed under real sums and
+adjoints and containing $SU(2)$ and real scalar matrices. Every
+$Q\in\mathbb H_2$ satisfies $Q^\dagger Q=\alpha I_2$ for some
+$\alpha\ge0$, by (17.4). If $Qt=0$ for a unit $t$, then $\alpha=0$
+and $Q=0$. Apply this to
+$Q=2^{-n}\sum_h\mathsf V_h^\dagger-\beta I_2$ and take adjoints:
+
+$$
+2^{-n}\sum_h\mathsf V_h=\beta I_2.
+\tag{17.6}
+$$
+
+This uses the standard completion and rigidity inside the source-specific
+construction, rather than a phase quotient or a simultaneous assumption
+about all starting directions.
+
+The classical update, starting from $(r_0,0)$, is
+
+$$
+(r,\eta)\longmapsto(f_{k,j}(r),\eta\mathbin\oplus j).
+\tag{17.7}
+$$
+
+At the known horizon apply the full-$H$ unitary
+
+$$
+\mathcal U^H_{s,\eta}
+ =BS(1\oplus\Gamma_{s,\eta}^\dagger)S^\dagger B^\dagger
+       +(I_5-P_R).
+\tag{17.8}
+$$
+
+Its summands are unitary on the orthogonal spaces $R$ and $R^\perp$.
+On the actual branch the corrected qutrit matrix is
+$\lambda^n S(1\oplus\mathsf V_h)S^\dagger$.
+Only the common scalar $\lambda^n$ on the entire qutrit disappears in
+its channel. Thus the error equals that of
+$\Lambda=2^{-n}\sum_h\operatorname{Ad}_{U_h}$ relative to identity,
+where $U_h=1\oplus\mathsf V_h$, by the trace-norm isometry of Lemma 3.1
+and unitary change of qutrit coordinates. All phases between $\xi$ and
+$T$ are retained.
+
+Put $D=\mathbb E_hU_h=1\oplus\beta I_2$. Expanding around the mean,
+with the same actual uniform history law throughout, gives the exact CP
+decomposition
+
+$$
+\begin{aligned}
+\Lambda&=\operatorname{Ad}_D+\Psi,\\
+\Psi(X)&=\mathbb E_h[(U_h-D)X(U_h-D)^\dagger],\\
+\Psi^\dagger(I_3)&=I_3-D^\dagger D=(1-\beta^2)P_T,
+\qquad P_T=0\oplus I_2.
+\end{aligned}
+\tag{17.9}
+$$
+
+The mixed terms vanish because $\mathbb E_h(U_h-D)=0$.
+For completeness, the standard CP norm identity used here follows in all
+reference dimensions from a Stinespring operator $A$ for $\Psi$:
+$A^\dagger A=\Psi^\dagger(I)$, multiplication by $A\otimes I$ costs
+at most $\|A\|^2$, and partial trace is trace-norm contractive, including
+on non-Hermitian operators by trace/operator duality. Therefore
+$\|\Psi\|_\diamond\le\|\Psi^\dagger(I)\|_{\rm op}$.
+A unit eigenstate for the largest eigenvalue gives the reverse inequality
+by positivity and trace, so here
+$\|\Psi\|_\diamond=1-\beta^2$.
+
+For every complex operator $X$ on the qutrit and any reference, suppressing
+identity tensor factors,
+
+$$
+DXD^\dagger-X=(D-I)XD^\dagger+X(D^\dagger-I).
+$$
+
+Since $\|D\|_{\rm op}=1$ and $\|D-I\|_{\rm op}=1-\beta$, this proves
+$\|\operatorname{Ad}_D-\operatorname{id}\|_\diamond\le2(1-\beta)$.
+Consequently (17.9) gives
+$\|\Lambda-\operatorname{id}\|_\diamond
+\le1-\beta^2+2(1-\beta)=(1-\beta)(3+\beta)$.
+The distance between channels is at most two, and
+
+$$
+3(1-\beta^2)-(1-\beta)(3+\beta)=2\beta(1-\beta)\ge0.
+$$
+
+Together with (14.4), these are exactly (17.2). The mean-cancellation
+estimate is the standard mixture mechanism: [Hastings, Lemma 1][HASTINGS]
+gives variance plus twice the mean displacement. In this application
+$(\mathsf V_h-\beta I)^\dagger(\mathsf V_h-\beta I)$ is scalar by the
+quaternion algebra, so its averaged operator-norm variance is exactly
+$1-\beta^2$. The random index is the entire actual history, without an
+independent-gate hypothesis or a uniform small error on each history.
+
+At $\beta=0$, (17.6) follows without division, and (17.2) has the channel
+cap two. At $\beta=1$, (17.9) is zero variance; every positive-probability
+$U_h=D=I_3$, giving exact recovery. At $n=0$, $b_0(r_0)=y_{r_0}$,
+$\beta=1$, $d_0=1$ and the reached $\Gamma$ is identity, giving the
+identity correction. Unreachable states may have arbitrary unit terminal
+vectors and padded updates; their occupation weights are zero and no
+formula divides by them. The unit-terminal hypothesis is essential:
+with subunit terminal data the additional deficit described after (14.4)
+remains. Static real choices of $t,y,\Gamma$, exact control precision,
+calibration and deterministic clock information are separate resources
+under Definition 2.3. Only $(r,\eta)$ is run-dependent persistent memory.
+$\square$
+
+**Proposition 17.3 (Actual same-width and phase boundaries).** The
+factor-two construction cannot be replaced by an unconditional same-width
+converse on the basis of $a_W(n)$ alone. For the actual width-one,
+horizon-one controller, $a_1(1)=1$ but the best unhalved recovery error is
+at least one. Omitting the retained parity from (17.5), or identifying
+scalar phases on $T$, can destroy the claimed entire-code recovery.
+
+Proof. The first assertion is Proposition 12.4: the actual average
+$M=(F_0+F_1)/2$ kills $e_-$ and hence kills
+$|e_-\rangle\langle\xi|$ before every sole decoder, even with a free
+independent seed. A width-two controller records the actual label and
+applies its full inverse, giving exact recovery.
+For the completion example take $y=F_0e_+$ at $W=n=1$. Then
+$b_0=e_+$ and $\beta=1$, since $Je_+=e_+$. If the table uses
+$\Gamma=F_0$ for both histories, its corrected matrices are $I_2,J$;
+their mean is $\operatorname{diag}(0,1)$, not $I_2$.
+Finally $1\oplus(-I_2)$ sends $|e_-\rangle\langle\xi|$ to its
+negative; its trace-norm discrepancy on this norm-one operator is two.
+A scalar on $T$ is therefore not an irrelevant scalar on the qutrit.
+These examples do not prove that every controller needs an additional bit,
+or that one bit is minimal at every positive error. $\square$
+
+## 18. Attained operational error and vector-width comparison
+
+**Definition 18.1 (Operational error at a fixed width).** For integers
+$W\ge1$, $n\ge0$, let $\varepsilon_{\rm op}(W,n)$ be the infimum of
+$\|\mathcal E_n-\iota\|_\diamond$ over all legal width-at-most-$W$
+protocols in Definitions 2.3–2.4, including their full-$H$ CPTP decoders
+and free independent seeds. For this infimum the same resource class is
+used without a success threshold. Define, for $0\le\delta<1$,
+
+$$
+V_n(\delta)=\min\{W\ge1:a_W(n)\ge1-\delta\}.
+\tag{18.1}
+$$
+
+At zero error $W_n(0)$ has the separate exact meaning in Convention 11.3.
+The width minima are finite because retaining the history is feasible.
+
+**Theorem 18.2 (Attainment and quantitative comparison).** The operational
+infimum is a minimum for every fixed $W,n$. For all such integers,
+
+$$
+1-a_W(n)\le\varepsilon_{\rm op}(W,n),\qquad
+\varepsilon_{\rm op}(2W,n)
+ \le(1-a_W(n))(3+a_W(n))\le4(1-a_W(n)).
+\tag{18.2}
+$$
+
+Consequently, for $0<\varepsilon<1/4$,
+
+$$
+V_n(\varepsilon)\le W_n(\varepsilon)
+       \le2V_n(\varepsilon/4).
+\tag{18.3}
+$$
+
+The separately defined zero-error endpoints are
+
+$$
+\begin{aligned}
+V_n(0)&=2^{n-1},&W_n(0)&=2^n&& (n\ge1),\\
+V_0(\delta)&=1,&W_0(\varepsilon)&=1,
+&\varepsilon_{\rm op}(W,0)&=0 .
+\end{aligned}
+\tag{18.4}
+$$
+
+Here the $n=0$ widths also include zero error, and the stated $V_0$ range
+is $0\le\delta<1$. In particular the factor-two width comparison is
+sharp at zero error, without asserting a same-width approximate converse.
+
+Proof. Reuse Theorem 13.1. There are finitely many complete deterministic
+programs, $P=W^{1+2Wn}$, each with one initial state and all changing
+label tables. Every feasible averaged channel has a representation as a
+probability mixture of these programs with program/state-indexed full-$H$
+CPTP decoders. Conversely every such mixture is legal: use its program
+index as the independent free seed. Include programs of weight zero with
+arbitrary decoders. The product of the $P$-simplex with the finitely many
+Choi sets of these decoders is compact. Indeed each Choi set is closed,
+positive, has the fixed trace-preserving partial trace, and hence fixed
+trace five and bounded norm. The map from these parameters to the
+averaged channel (13.5) is continuous. Its compact image is exactly the
+feasible set, so the continuous finite-dimensional diamond error attains
+its minimum. This assertion neither selects one successful original seed
+nor determinizes the averaged error.
+
+For the first inequality of (18.2), the proof of Theorem 4.3 applies to
+every candidate error, not just to a candidate below $1/4$. The norm-one
+coherence $Z_t=|t\rangle\langle\xi|$ has corrected output norm at most
+$a_W(n)$, even for arbitrary stochastic tables and almost every seed.
+Thus the reverse triangle inequality gives error at least $1-a_W(n)$.
+Averaging uses the uniform bound at each seed, not conditional success.
+Take the infimum, or its attained minimum.
+
+For the upper bound, Theorems 12.2 and 14.2 supply an attained
+deterministic $f,r_0,y$ with unit terminal blocks and
+$\|b_0(r_0)\|_2=a_W(n)$. Theorem 17.2 applies to this very controller,
+producing width at most $2W$ and the middle bound of (18.2).
+The final inequality uses $0\le a_W(n)\le1$.
+Apply the first bound to an optimal successful width to get the left side
+of (18.3). At $W=V_n(\varepsilon/4)$ the attained vector maximum has
+$1-a_W(n)\le\varepsilon/4$, so the actual constructed protocol has
+error at most $\varepsilon$; this gives the right side. No infimum is
+replaced by an unattained threshold equality.
+
+For (18.4), the vector threshold is exactly Theorem 12.2. The operational
+threshold is the exact same-source history-separation and arbitrary-decoder
+result [OWN, Theorems 9.2–9.3][OWN], already used in Convention 11.3;
+it includes independent seeds and averaged error zero. At horizon zero
+the empty branch needs only the identity decoder. These endpoint formulas
+are separate from estimates dividing by $\sqrt\varepsilon$ or using
+$-\log(1-\varepsilon)$. They show $W_n(0)=2V_n(0)$ for $n\ge1$,
+while both widths at $n=0$ equal one. $\square$
+
+## 19. Constant contraction and the remaining operational lower bound
+
+**Theorem 19.1 (Conditional equivalence with explicit constants).** In the
+fixed actual model the following two existence statements are equivalent:
+
+1. There exist $C>0$ and $0<c_0<1$ such that, for every integer $W\ge1$,
+   $a_W(\lceil CW^{2/3}\rceil)\le1-c_0$.
+2. There exist one $\varepsilon_0\in(0,1/4)$, $c>0$ and an integer
+   $n_0\ge1$ such that $W_n(\varepsilon_0)\ge c n^{3/2}$ for every
+   integer $n\ge n_0$.
+
+The first statement in fact implies such a lower bound at every fixed
+$0<\varepsilon<1/4$. It is also equivalent to the existence of $C>0$
+and $0<\eta<4$ such that for every $W$ the attained energy minimum at
+$n=\lceil CW^{2/3}\rceil$ is at least $\eta$.
+None of these existence statements is asserted without its premise.
+
+Proof. Suppose statement 1 and put
+
+$$
+L_W=\lceil CW^{2/3}\rceil,\qquad
+d=-\log(1-c_0)>0,\qquad b_\varepsilon=-\log(1-\varepsilon)>0.
+$$
+
+Submultiplicativity and contraction from Lemma 4.2 give
+
+$$
+a_W(n)\le(1-c_0)^{\lfloor n/L_W\rfloor}.
+\tag{19.1}
+$$
+
+A successful width satisfies $1-\varepsilon\le a_W(n)$ by Theorem 4.3,
+so $\lfloor n/L_W\rfloor\le b_\varepsilon/d$ and
+$n<(1+b_\varepsilon/d)L_W$. Since $W\ge1$ implies
+$L_W\le(C+1)W^{2/3}$, every successful width, for $n\ge1$, obeys
+
+$$
+W>\left(\frac{n}{(C+1)(1+b_\varepsilon/d)}\right)^{3/2}.
+\tag{19.2}
+$$
+
+This supplies statement 2, with any chosen fixed error in its range,
+$n_0=1$ and the corresponding displayed positive coefficient.
+
+Conversely suppose statement 2. Choose $C$ so that
+
+$$
+C\ge\max\{1,n_0\},\qquad cC^{3/2}>2.
+\tag{19.3}
+$$
+
+For any integer $W\ge1$ put $n=\lceil CW^{2/3}\rceil$. If
+$a_W(n)\ge1-\varepsilon_0/4$, the attained construction in Theorem 18.2
+gives an actual successful protocol of width at most $2W$. Then
+
+$$
+2W\ge W_n(\varepsilon_0)\ge cn^{3/2}
+   \ge cC^{3/2}W>2W,
+$$
+
+a contradiction. Therefore
+$a_W(\lceil CW^{2/3}\rceil)<1-\varepsilon_0/4$ for every $W$.
+Statement 1 follows with $c_0=\varepsilon_0/4$. The factor two here
+pays the retained parity bit in the actual operational construction.
+The threshold error is attained, so the argument includes equality in
+the hypothetical vector-survival premise.
+
+Finally (16.1) identifies the attained minimum with $4(1-a_W(n)^2)$.
+A deficit $c_0$ gives $\eta=4(1-(1-c_0)^2)\in(0,4)$; an energy
+bound $\eta\in(0,4)$ gives deficit
+$c_0=1-\sqrt{1-\eta/4}\in(0,1)$. This is an equivalence of conditions,
+not a proof of a positive energy bound. $\square$
+
+**Proposition 19.2 (Finite exceptions and a possible counterfamily).**
+In statement 1 of Theorem 19.1 it is equivalent to require the estimate
+only for $W\ge W_*$, for some finite integer $W_*$. Such exceptions can
+be absorbed by increasing $C$. If there were legal fields with
+
+$$
+\frac{n_m}{W_m^{2/3}}\longrightarrow\infty,
+\qquad \mathscr E(f_m,r_{0,m},y_m)\longrightarrow0,
+\tag{19.4}
+$$
+
+then they would give full-qutrit recovery of error tending to zero and
+width $2W_m=o(n_m^{3/2})$. Existence of a family (19.4) remains unresolved.
+
+Proof. For each omitted width choose
+$\ell_W=2+\lfloor\log_2 W\rfloor$, so Theorem 12.2 gives the attained
+$q_W=a_W(\ell_W)<1$. Choose a positive integer $m_W$ with
+$q_W^{m_W}\le1-c_0$; this is possible also when $q_W=0$.
+Increase $C$ until $CW^{2/3}\ge m_W\ell_W$ for every omitted width.
+There are finitely many. Submultiplicativity and monotonicity in horizon
+then give the required contraction there. Increasing the horizon also
+preserves contraction at all other widths. Thus finite width exceptions,
+like the finite time exceptions in statement 2, do not change the
+existence statement. For (19.4), Theorem 17.2 gives error at most
+$3\mathscr E/4$ and
+$2W_m/n_m^{3/2}=2(n_m/W_m^{2/3})^{-3/2}\to0$.
+This is an implication conditional on the same-controller family;
+it supplies no such family. $\square$
+
+**Convention 19.3 (Distinct unresolved rates).** The equivalent condition
+in Theorem 19.1 asks for a constant deficit after time proportional to
+$W^{2/3}$. Its iterated consequence is (19.1), with that block scale.
+The particular all-time envelope (16.2), with its logarithmic startup
+allowance, is a stronger sufficient target and is not established by
+this argument. The original gap in (9.2), sharper error dependence,
+numerical constants and a genuine violating controller family remain
+unresolved. Combining a conditional lower bound here with Theorem 8.4
+would give $\Theta_\varepsilon(n^{3/2})$ at fixed error; no unconditional
+improvement on Theorem 9.1 follows from the bridge alone.
+
+## 20. The actual occupation graph and its exact time mode
+
+**Definition 20.1 (Layered connection graph).** For a deterministic
+controller and starting state as in Definition 17.1, with $n\ge1$, let
+
+$$
+\mathcal V_+=\{(k,r):0\le k\le n,\ p_k(r)>0\}.
+$$
+
+For every $0\le k<n$, each retained $(k,r)$, and each label $j$, keep
+a separate undirected edge $e=(k,r,j)$ to
+$(k+1,f_{k+1,j}(r))$, of weight $w_e=p_k(r)/2$. The endpoint is retained
+by (14.2). Two labels with the same endpoints remain parallel edges.
+The transport from the lower to the upper vertex is $F_j$; in the
+reverse direction it is $F_j^\dagger$. For a complex field $z$ define
+
+$$
+Q_{\rm conn}(z)=\sum_{k=0}^{n-1}\sum_{r:p_k(r)>0}\sum_{j=0}^1
+ \frac{p_k(r)}2
+ \|z_{k+1,f_{k+1,j}(r)}-F_jz_{k,r}\|_2^2.
+\tag{20.1}
+$$
+
+The scalar adjacency $A_0$ sums parallel edge weights, the degree matrix
+is $D_0=\operatorname{diag}(d_v)$, and
+$\mathcal L_0=I-D_0^{-1/2}A_0D_0^{-1/2}$ is the normalized scalar
+Laplacian. Order its eigenvalues increasingly. The connection form keeps
+each transport separately; complex fibers may equivalently be realified
+to $\mathbb R^4$ with orthogonal, inverse-paired transports.
+
+**Theorem 20.2 (Energy identity, degrees and time eigenfunction).** On this
+actual graph, the restriction of the backward field satisfies
+
+$$
+Q_{\rm conn}(b)=\mathscr E(f,r_0,y)/4.
+\tag{20.2}
+$$
+
+Its degrees and total volume are
+
+$$
+d_{k,r}=\begin{cases}p_k(r),&k=0\text{ or }k=n,\\
+2p_k(r),&0<k<n,\end{cases}
+\qquad \sum_{v\in\mathcal V_+}d_v=2n.
+\tag{20.3}
+$$
+
+The graph is connected, and the scalar random-walk operator
+$P=D_0^{-1}A_0$ has the nonconstant time eigenfunction
+$g(k,r)=\cos(\pi k/n)$ with eigenvalue $\cos(\pi/n)$. Hence
+
+$$
+\lambda_2(\mathcal L_0)
+\le1-\cos(\pi/n)\le\frac{\pi^2}{2n^2}\qquad(n\ge1).
+\tag{20.4}
+$$
+
+Proof. At $(k,r)$ put
+$u_j=F_j^\dagger b_{k+1}(f_{k+1,j}(r))$.
+The actual backward equation is $b_k(r)=(u_0+u_1)/2$. By unitarity the
+$j$ edge residual has norm $\|u_j-b_k(r)\|_2$, and these residuals are
+$\pm(u_0-u_1)/2$. Their two weighted squares sum to
+$p_k(r)\|u_0-u_1\|_2^2/4$. Summing proves (20.2), including every
+zero-occupation term omitted from the graph.
+
+A vertex has total outgoing weight $p_k(r)$ if $k<n$. Its total incoming
+weight, if $k>0$, is $p_k(r)$ by the same occupation recursion (14.2),
+regardless of whether the transitions are many-to-one. This proves the
+degrees. Each layer has total occupation one, so the endpoint volumes are
+one each, every interior layer has volume two, and the total is $2n$.
+Every retained vertex is reached by a positive-weight history path from
+$(0,r_0)$; their union is connected. There are no isolated retained
+vertices or zero degrees.
+
+For a function constant on each layer, the random walk sends the
+interior value $g_k$ to $(g_{k-1}+g_{k+1})/2$. At time zero it sends it
+to $g_1$, and at time $n$ to $g_{n-1}$. For $\theta=\pi/n$,
+
+$$
+\frac{\cos((k-1)\theta)+\cos((k+1)\theta)}2
+ =\cos\theta\cos(k\theta),\quad
+\cos\theta=\cos\theta\cos0,\quad
+\cos((n-1)\theta)=\cos\theta\cos(n\theta).
+\tag{20.5}
+$$
+
+Thus $Pg=\cos\theta\,g$, also at $n=1$, where the two layer values
+are $1,-1$ and the eigenvalue is $-1$. Since $\cos(\pi/n)<1$ and
+$g$ is nonconstant, the corresponding Laplacian eigenvalue is positive.
+Similarity of $P$ with $D_0^{-1/2}A_0D_0^{-1/2}$ gives the first
+inequality in (20.4). Equivalently $D_0^{1/2}g$ is an eigenvector of
+$\mathcal L_0$, orthogonal to its constant mode $D_0^{1/2}\mathbf1$.
+The elementary inequality $1-\cos x\le x^2/2$ gives the second bound.
+No averaging of connection matrices is used. $\square$
+
+**Proposition 20.3 (Boundary-field and scalar-gap limitations).** This
+undirected occupation graph has no positive scalar spectral gap uniform
+in horizon. The actual backward-field problem and unrestricted unit-sphere frustration
+have different admissible fields and normalizations. In particular a direct
+use of a scalar gap as a horizon-independent constant, or replacement of
+unequal parallel transports by their average as a unitary signature, is
+invalid for this graph.
+
+Proof. The upper bound (20.4) tends to zero. The actual field satisfies
+unit terminal values, $\|b_k(r)\|_2\le1$ internally, the directed
+backward-averaging equation, and weights determined by its same forward
+controller. In contrast, full unit-sphere frustration minimizes over
+unit fields at every vertex. For a weighted connected graph with positive degrees and inverse-paired
+orthogonal transports, [Bandeira–Singer–Spielman, Theorem 2.4][BSS] compares that minimum
+$\eta_G$ with the lowest normalized connection eigenvalue by
+
+$$
+\lambda_1(\mathcal L_1)\le\eta_G
+ \le44\frac{\lambda_1(\mathcal L_1)}{\lambda_2(\mathcal L_0)}.
+\tag{20.6}
+$$
+
+Their normalization is the connection quadratic form divided by
+$\sum_v d_v\|z_v\|_2^2$; for a unit field the denominator is the total
+volume. Equation (20.2) concerns an unnormalized energy at a specified
+boundary-constrained field, which is usually not a unit field internally.
+Nor does its directed averaging impose the unrestricted undirected
+Euler–Lagrange equation: variation of the latter includes incoming as well
+as outgoing residuals. Thus neither a boundary coercivity estimate nor a
+lower bound on $\mathscr E$ follows just by citing (20.6). Even a proved
+application preserving its graph hypotheses would retain its
+$1/\lambda_2(\mathcal L_0)$ factor, which cannot be bounded uniformly in
+$n$ here by (20.4).
+
+The cited theorem is stated with a single orthogonal signature for each
+vertex pair. No extension to unequal parallel signatures is needed for
+Theorem 20.2, and (20.6) is not being asserted for such a collapsed graph.
+The actual example
+$M=(F_0+F_1)/2$ has $M^\dagger M=\operatorname{diag}(0,1)$ by (12.1).
+If two distinct labels share endpoints, replacing their separate
+transports by $M$ therefore gives a nonunitary matrix. Scalar adjacency
+may sum their weights; connection signatures must keep their separate
+edge contributions. These facts limit this direct transfer. They do not
+refute the contraction condition in Theorem 19.1 or preclude directed
+boundary estimates, holonomy arguments, occupation-compatible reductions,
+or other methods. $\square$
+
+## 21. Attribution and mathematical boundaries of the bridge
+
+**Convention 21.1 (Suppliers and scope of the deductions).** The
+source-specific construction (17.3)–(17.8), the operational comparisons
+(18.2)–(18.4), the conditional equivalence in §19, and the occupation/time
+statements (20.2)–(20.4) are deductions in this manuscript's fixed model.
+They reuse the same-determinant rigidity of §5, the quaternion algebra
+and averaged cancellation of §8, the attained normal form and startup
+threshold of §12, the finite-program channel representation of §13,
+and the duality and occupation identity of §14. Those inputs are not
+new standalone results of this supplement. The generic $SU(2)$
+completion, CP norm identity, compactness and norm duality are standard
+ingredients inside the proofs.
+
+The primary mixture supplier is Matthew B. Hastings, *Turning Gate
+Synthesis Errors into Incoherent Errors*, arXiv:1612.01011v1,
+Lemma 1, equation (3) and proof [HASTINGS][HASTINGS]. For unitary target $U$, unitary $W_a$, probability $q(a)$, mean $\overline W$ and
+$\delta=\sum_aq(a)\|W_a-\overline W\|_{\rm op}^2$, it bounds the
+unhalved diamond error against $\operatorname{Ad}_U$ by
+$\delta+2\|\overline W-U\|_{\rm op}$. Here its index is the whole actual
+history and its variance is $1-\beta^2$, as established inside Theorem
+17.2. Earl Campbell, *Shorter gate sequences for quantum computing by
+mixing unitaries*, arXiv:1612.02689v3, §III, Lemma 1, equation (14)
+[CAMPBELL][CAMPBELL], supplies the related bound $a^2+2b$ for a
+probability mixture of unitaries $U_j$, a unitary target $V$, and
+$a,b>0$, under the hypotheses $\|U_j-V\|_{\rm op}\le a$ for every index and
+$\|\sum_jp_jU_j-V\|_{\rm op}\le b$. That paper's diamond distance is
+half its diamond norm, by §I, equations (1)–(2). A uniform $a^2$ is not
+replaced by an unproved averaged error; (17.9) or the Hastings variance
+statement supplies the estimate actually used here.
+
+The graph comparison (20.6) is Afonso S. Bandeira, Amit Singer and
+Daniel A. Spielman, *A Cheeger Inequality for the Graph Connection
+Laplacian*, arXiv:1204.3873v2, §2.2, Theorem 2.4, with the weighted
+connected positive-degree graph, inverse-paired orthogonal signatures
+and frustration definitions in
+§1.3, equations (1.4)–(1.5) [BSS][BSS]. The scalar time-mode proof is
+independent of that comparison and retains all parallel edges. The
+permutation/scalar-test transfer boundaries of §15 are unchanged; no
+additional coding or metric-spectral supplier is assumed to prove
+contraction here.
+
+These attributions identify the ingredients and their conditions, not
+an exhaustive literature or priority classification. The mathematical
+bridge addresses the actual two-letter, fixed-$\pi/6$, phase-faithful
+qutrit with complete persistent classical-state accounting and untouched
+references. It does not establish a physical implementation or a
+Hamiltonian or QFT derivation. Exact static real controls, their
+precision and calibration, deterministic schedules, acquisition and
+communication costs remain separate under Definition 2.3. Uniform
+constant contraction, (16.2), the logarithmic gap, sharper joint
+$n,\varepsilon$ rates and an actual family (19.4) remain unresolved.
+
+[HASTINGS]: https://arxiv.org/pdf/1612.01011v1
+[CAMPBELL]: https://arxiv.org/pdf/1612.02689v3
+[BSS]: https://arxiv.org/pdf/1204.3873v2
+
+## 追加锚（本行以下为增补区）

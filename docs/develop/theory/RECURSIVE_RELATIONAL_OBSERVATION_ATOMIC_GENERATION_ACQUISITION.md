@@ -2707,3 +2707,847 @@ for this selected task is not success for the complete old generation
 recall task or for the original fixed-apparatus $Q$.
 
 ## 追加锚（本行以下为增补区）
+
+## 30. Adaptive membership missing from every selected side tape
+
+**Definition 30.1 (an event-only adaptive selector).** Retain exactly LAB,
+its known allocated $\alpha$ seed, its persistent logical addresses and
+all finite lawful successful generation words of Definition 17.1. An
+installed selector $C$ consists of a finite nonempty state set $Q$, one
+fixed initial state $q_0$, and a deterministic terminating finite program
+for
+
+$$
+C:Q\times\bigl(\{P,S\}\times\{L,R\}^*\bigr)
+       \longrightarrow Q\times\{0,1\}.
+\tag{AA.96}
+$$
+
+The program receives each actual successful event once, with its literal
+kind and acquired finite address. It receives no refused request, ordinary
+query, elapsed time, allocation ordinal, future endpoint, unselected-history
+oracle or additional source readout. In particular its transition uses the
+old selection state, not a state chosen retrospectively at the endpoint.
+For a lawful word $w$, define $q_C(w)$ and the selected identity word
+$\nu_C(w)$ by starting from $(q_0,\varepsilon)$ and, for each successive
+event $e$, applying $C(q,e)=(q',b)$ and appending $e$ precisely when $b=1$.
+This is ordinary deterministic state transduction; its iteration is the
+fold-and-append method, not a new transducer theorem. Finite $Q$ does not
+bound the address input, program workspace, source or retained records.
+
+For each current branch $v$, let $V^C_v(w)$ project the selected events
+strictly below $v$ to their first side below $v$, in actual selected order.
+This has the selected-tape meaning of Definition 24.1, with history-dependent
+membership replacing fixed $\chi$. At fixed installation, binding, current
+rights and settled phase the observation being tested is
+
+$$
+O_C(w)=\bigl(t,(V^C_v(w))_{v\in I(t)},q_C(w)\bigr),
+\qquad w\in\mathcal H(t).
+\tag{AA.97}
+$$
+
+Every selected side coordinate and its length is included. No accessible
+full tape, input archive, membership marks, timing field or observable
+capacity is included. Such extra inputs would define a different
+observation. Recovery here means a single-valued decoder on this actual
+image, not an ability to obtain an inaccessible record.
+
+**Definition 30.2 (one fixed selector and its witness schedules).** Fix
+$C_*$ with states $0,1,2$, initial state $0$, and the disjoint event classes
+
+$$
+G=\{S_p:p\in L^*RL\},\qquad
+A=\{P_p:p\in L^*RR\},\qquad
+D=\{S_p:p\in L^*RR\}.
+\tag{AA.98}
+$$
+
+Here the star permits an arbitrary initial run of $L$ symbols, including
+an empty run. The entries below are $(\text{next state},\text{selection bit})$.
+
+| Event class | Old state $0$ | Old state $1$ | Old state $2$ |
+| --- | --- | --- | --- |
+| $G$ | $(1,0)$ | $(1,0)$ | $(2,0)$ |
+| $A$ | $(2,1)$ | $(1,0)$ | $(2,0)$ |
+| $D$ | $(0,0)$ | $(0,1)$ | $(0,0)$ |
+| Other | $(0,0)$ | $(1,0)$ | $(2,0)$ |
+
+Fixed regular-address recognizers implement these tests by scanning the
+acquired address. Their finite matching control, installation and scanning
+work are additional to the three persistent selection states. There is
+no parameter $n$ in this selector or its initialization.
+
+For each integer $n\ge1$ and $0\le i<n$, put
+
+$$
+s_i=L^i,\qquad r_i=L^iR,\qquad g_i=L^iRL,\qquad p_i=L^iRR.
+\tag{AA.99}
+$$
+
+Products of words below concatenate in increasing $i$. Define
+
+$$
+\begin{aligned}
+u_n&=P_\varepsilon\,
+       \prod_{i=0}^{n-1}S_{s_i}\,
+       \prod_{i=0}^{n-1}(P_{r_i}S_{r_i}),\\
+B_i(0)&=P_{p_i}S_{g_i}S_{p_i},&
+B_i(1)&=S_{g_i}P_{p_i}S_{p_i},\\
+w_{n,z}&=u_n\prod_{i=0}^{n-1}B_i(z_i),
+& z&\in\{0,1\}^n.
+\end{aligned}
+\tag{AA.100}
+$$
+
+The first symbol on the right of the first line is the root promotion;
+$s_0=\varepsilon$ supplies its subsequent split. Let $t_n$ be the endpoint
+of $w_{n,0^n}$. Its branch addresses are exactly
+$\{s_i,r_i,g_i,p_i:0\le i<n\}$. Let $o_n$ be the observation with endpoint
+$t_n$, final state zero, and all branch coordinates specified by
+
+$$
+V_{s_i}=RL^{\,n-1-i},\qquad V_{r_i}=R,
+\qquad V_{g_i}=V_{p_i}=\varepsilon.
+\tag{AA.101}
+$$
+
+**Theorem 30.3 (exact adaptive-membership ambiguity on one complete
+observation fibre).** The words $w_{n,z}$ are lawful, have the same endpoint
+$t_n$ and satisfy $O_{C_*}(w_{n,z})=o_n$. On the entire fibre
+
+$$
+\mathcal F_n=\{w\in\mathcal H(t_n):O_{C_*}(w)=o_n\},
+\tag{AA.102}
+$$
+
+the set of selected identity words is exactly
+
+$$
+\{e_0\cdots e_{n-1}: e_i\in\{P_{p_i},S_{p_i}\}\}.
+\tag{AA.103}
+$$
+
+It has $2^n$ values. Consequently a supplement $\lambda$ that, together
+with (AA.97), recovers every indexed literal selected event on
+$\mathcal F_n$ must have at least $2^n$ conditional values there. Any
+fixed-width binary data field serving that purpose needs at least $n$
+bits. An $n$-bit field attains this conditional bound on this entire
+specified fibre. The attainment concerns selected identity words, not
+reconstruction of every full history or an installed minimum-cost record.
+
+Proof. After the root promotion, each spine split creates its next left
+$\beta$ and its right $\alpha$. Thus the increasing spine splits are
+legal. Each $r_i$ is a distinct born-$\alpha$ leaf; promoting and splitting
+it creates $g_i$ as a $\beta$ leaf and $p_i$ as an $\alpha$ leaf. Every
+setup event belongs to Other in the table, so setup leaves state zero.
+In a gadget the split at $g_i$ and promotion at $p_i$ act on different
+leaves and are causally incomparable. Different gadgets have no cross-
+precedence after setup. The split at $p_i$ follows its promotion. Both displayed orders are
+therefore legal. Each gadget ends with the same two child subtrees,
+$\langle\beta,\alpha\rangle$ at $g_i$ and at $p_i$. This proves equality
+of endpoints, including all omitted leaves at their birth types. It also
+follows from Theorem 17.2's exact event-membership correspondence.
+
+Starting at zero, $B_i(0)$ has state/bit sequence
+$(2,1),(2,0),(0,0)$, while $B_i(1)$ has
+$(1,0),(1,0),(0,1)$. Thus each gadget returns to zero and selects exactly
+one event at $p_i$: its promotion for zero and its split for one.
+The selected addresses are $p_0,\ldots,p_{n-1}$ in that order for every
+$z$. Their side projections are precisely (AA.101). This proves the
+common observation and realizes every word in (AA.103), with the same
+installed selector and initialization.
+
+In the installation of §32, comparison is at MarkedReady with all other
+parser, evaluation, continuation and output control reset. Thus these
+witnesses also have equal settled service-control fields; only the acquired
+membership records differ among the specified retained annotations.
+
+For the converse, Theorem 17.2 determines the entire occurred event set
+at $t_n$. Besides $P_\varepsilon$, it consists, for each $i$, of
+
+$$
+S_{s_i},\quad P_{r_i},\quad S_{r_i},\quad
+S_{g_i},\quad P_{p_i},\quad S_{p_i}.
+\tag{AA.104}
+$$
+
+Among these, only $P_{p_i}$ and $S_{p_i}$ can ever be selected; $G$ is
+always unselected. In any member of $\mathcal F_n$, $V_{r_i}=R$ forces
+exactly one selected event strictly below $r_i$. It must be one of those
+two events at $p_i$. There are no other possibly selected identities.
+The tape at $s_i$ places this right-cone event before every selected event
+in its left cone. Recursing down the spine gives their increasing-$i$
+order. Hence every selected word on the full fibre has the form (AA.103).
+This establishes an exact output alphabet, without claiming that the
+fibre contains only the displayed $2^n$ full histories.
+
+Two different words in (AA.103) differ at some index $i+1$. If a supplement
+identified their readings, exact selected recall at that index would
+require two different kind/address answers from one decoder input.
+The standard distinguishing-family argument of PG §40.4 and NCR §8
+therefore gives the alphabet and fixed-width bounds. Conversely, on
+$\mathcal F_n$ retain the bit specifying promotion or split at each
+$p_i$ in increasing order. Equations (AA.99) and (AA.103) reconstruct the
+entire selected word from these $n$ bits and the fixed observation; every
+bit vector is realized above. This is the matching conditional coding
+statement. It neither supplies those bits from $o_n$ alone nor asserts
+$n$ bits suffice at other observations, for other selectors or for all
+simultaneously constructed material. $\square$
+
+**Proposition 30.4 (complete old-event replies can differ with the same
+new source action).** In the marked installation of §32, two histories
+$w_{n,z},w_{n,z'}$ with $z_i\ne z_i'$ have different FetchSelected$(i+1)$
+replies and different complete NextSelected$(i+1)$ replies. The latter
+requests nevertheless perform the same immediate source operation and
+have the same source successor.
+
+Proof. The fetched events are respectively $P_{p_i}$ and $S_{p_i}$.
+In both current sources the subtree at $p_i$ is
+$\langle\beta,\alpha\rangle$. Definition 20.4's actual left descent
+therefore reaches the same current $\beta$ leaf $p_iL$ and executes
+$S_{p_iL}$ in both cases. Its address $L^iRRL$ belongs to neither address
+class in (AA.98), so the new event is unselected and the final selection
+state remains zero. The full reply contains the acquired old event as
+well as this new event, and thus differs in the old kind. The retained
+selected words, and hence the selected semantic successors, still differ.
+Current source equality alone does not remove a distinction exposed by
+these complete replies. Section 32 supplies actual retained operands and
+current rights for the stated calls; event names alone do not supply them.
+$\square$
+
+## 31. Acquired local membership and recursive selected recovery
+
+**Definition 31.1 (local membership marks).** For a current logical
+position $p$ retain two bits $\mu_P(p),\mu_S(p)$. A bit is one exactly
+when that local event has actually occurred and was selected by $C$.
+A nonexistent or occurred-but-unselected event has bit zero. The source
+already determines which local events have occurred by (AA.67), so these
+bits need not duplicate event existence. Positions that are unary
+material markers in $C(t)$ are not yet logical event positions.
+
+Write $\mathcal L(t)$ for all present logical positions, branches and
+logical leaves, and put
+
+$$
+\begin{aligned}
+\mathcal R_C(w)&=\bigl(t,(\mu_P(p),\mu_S(p))_{p\in\mathcal L(t)},
+                         (V^C_v(w))_{v\in I(t)},q_C(w)\bigr),\\
+K_C(w)&=(t,\nu_C(w),q_C(w)).
+\end{aligned}
+\tag{AA.105}
+$$
+
+Both domains are actual images of the same lawful words with the same
+$C,q_0$. Arbitrary separately chosen source, marks, tapes and control
+are not asserted to be jointly realizable. Marks express the relation
+between occurred lifecycle events and the selected serial chain;
+side words express the relative order between its two child projections.
+These are different relations: (AA.101) retains the latter while erasing
+the former.
+
+**Theorem 31.2 (source-local selected decoder and exact record
+correspondence).** For every selector of Definition 30.1 and every finite
+lawful history, the record $\mathcal R_C$ and $K_C$ recover one another
+by finite algorithms on their actual images. In particular the source,
+marks and selected tapes recover every indexed selected kind/address,
+including checked OutOfRange. The decoder does not need an unselected
+serial history or reconstruct missing membership from final control.
+
+Proof. At a logical subtree root, its birth type and current constructor
+determine its occurred local prefix: empty, $P$, $S$, or $PS$, exactly as
+in Theorem 17.2. Filter this prefix using its actual local marks, retaining
+$P$ before $S$ if both are marked. Every local root event precedes every
+strict-descendant event. At a branch, recursively decode its two selected
+child lists and merge them by the successive sides in its actual $V_v$,
+consuming the next event of the indicated child. Prepend the filtered local
+prefix. At a logical leaf there are no child lists. Logical addresses are
+carried along the recursion; a unary material marker is never traversed
+as a logical child.
+
+Induction on the finite logical subtree proves this outputs exactly its
+selected subword. The induction hypothesis gives the actual child lists;
+projection of the actual selected word gives exactly their merge tape,
+with the required multiplicities and no missing or excess symbol. The
+local prefix has the actual membership supplied by the marks. This is
+the credited routing/shuffle method of §§19 and 24 with its previously
+missing local-prefix input now acquired explicitly.
+
+Direct indexed decoding handles the marked local prefix first. For a
+later index, subtract its length, scan to that position of $V_v$, count
+the occurrences of its side through that symbol and descend to the actual
+child with that count as its new index. A zero index or missing symbol
+returns OutOfRange. Each recursive descent uses a smaller subtree and
+each scan is finite. At a leaf, an index beyond its local selected prefix
+is out of range. This proves termination and correctness without a full
+word materialization; counters and accumulated addresses still require
+backing when used operationally.
+
+In the reverse direction, given actual $(t,\nu,q)$, set a local mark
+exactly for each identity appearing in $\nu$ and project its selected
+strict-descendant sides at every branch. LAB identities occur at most
+once, so this recovers every local bit unambiguously. These are precisely
+the original marks and tapes. The forward decoder recovers the same
+$\nu$, and both directions retain $t,q$, proving both round trips on
+the actual images. This is not a decision procedure for realizability
+of arbitrary proposed records. Theorem 30.3 shows that dropping all local
+membership data cannot uniformly preserve this correspondence, even
+when every selected side tape and current control remain. It does not
+make this two-slot layout an optimal code. $\square$
+
+## 32. Recording the selection and continuing on the live source
+
+**Assumption 32.1 (a marked owned LAB installation).** Use Assumption
+20.1's actual known-seed allocation, bound root, current exclusive
+source/record/input/output rights, retention, finite work arena, individual
+field and bit primitives, and supplied local acknowledgement. All claimed
+finite completed operations have sufficient finite material, including
+backed program workspace; quota, exhaustion and material-supply state are
+not observable service branches. No concurrent writer, revocation, crash
+or interrupt is admitted. The root, driver and its real input/output
+connections are installed before an arbitrary schedule, independently of
+that schedule and its future endpoint. This is a distinct installation,
+with the following additional acquired fields and control; it does not
+change the original installations of §§20 or 26.
+
+Install the fixed program $C$ and its initialized persistent selection
+state $q_0$. Each logical source position has two writable auxiliary mark
+fields, initially zero when that logical position is created. They are
+excluded from source edges. An inactive unary marker is not consulted as
+a logical mark record; if it later becomes a logical child, its fields
+are initialized for that role. Other unused auxiliary fields have fixed
+inactive values. At every logical branch use an actual selected-tape
+descriptor with source-reference binding, head, tail and next reference,
+in canonical source preorder, as in Assumption 26.1. Its cells have a side
+bit and next reference. Lookup scans this retained list using real
+reference equality. New descriptor insertion uses finite source-preorder
+navigation. No numeral-to-reference cast or creation-order directory is
+supplied. All records, links, bindings and their rights are actually
+constructed, retained and charged.
+
+This installation starts with no historical archive or handoff. It maintains
+selected tapes and local marks from its actual seed growth. No old full
+service, response table, source-dependent code or saved request history
+is a selector input. The source fields, marks, tapes, current selection
+state and installed entry remain live. A mathematical description of
+these fields does not allocate them, authenticate an imported past or
+grant access. In particular initializing empty marks at a late endpoint
+is not one of the acquisition procedures asserted here.
+
+**Definition 32.2 (marked requests and their pending phases).** Use the
+three-bit grammar of Definition 20.2 in this distinct installation,
+replacing FetchGrowth and Next by FetchSelected and NextSelected.
+The other five request kinds and address framing $A(p)=1^{|p|}0p$ are
+unchanged; selected requests take $U(k)=1^k0$. The unused tag returns
+BadFrame. Use the same eight three-bit reply tags and payloads, now with
+Recall returning the literal selected identity and Next returning the
+old selected identity and new actual growth identity. Zero and missing
+indices return OutOfRange. There is no Handoff request in this grammar.
+
+MarkedReady has the actual root cursor, empty request/pending/output
+fields, current rights, committed selection state, and no unfinished
+source, mark, descriptor or tape write. Receive copies each acquired input
+bit from its occupied latch to backing before releasing that latch and
+enabling the next input. Parser marks retain the tag, framing subphase
+and remaining finite length or index. Navigate and Guard use the actual
+root links and logical arity, with the same absent/wrong-type refusals
+and authority/phase guards as §20. Queries and refused growth do not
+feed $C$ and change none of (AA.105).
+
+For a successful addressed growth, or one chosen by NextSelected, retain
+its actual kind, target reference/address, old selection state and
+continuation in pending backing. Reserve the source-template material,
+a possible new branch descriptor and at most one selected cell per proper
+logical ancestor before source editing; any further finite computation
+workspace is supplied under Assumption 32.1. No next request is admitted
+during the following phases.
+
+1. Edit performs exactly the $P$ or $S$ source template of Definition
+   20.2. A promotion preserves its logical root marks and attaches its
+   unary material marker. A split preserves the old root's marks, makes
+   its old marker the new left logical $\beta$ root, attaches that child's
+   fresh marker and the new right logical $\alpha$ root, and initializes
+   the two new logical positions' marks to zero. It constructs and binds
+   an empty selected descriptor at the newly split root. Earlier local
+   events there remain root events, not entries of this new strict-
+   descendant tape. Parent references are the actual source parents.
+2. Evaluate applies the installed $C$ exactly once to the old retained
+   state and this acquired successful event. It retains the resulting
+   $(q',b)$ and an evaluation-complete flag. Its internal work consists
+   of finite charged steps on backed operands. No later phase reevaluates
+   the event using $q'$ as if it were a new receipt.
+3. Mark writes $b$ to the field for this actual event at its logical
+   root, preserving the other local field. Maintain, when $b=1$, walks
+   the target's actual parent chain and appends its actual side at each
+   proper logical ancestor's selected tape. For $b=0$ it appends nothing.
+   Each append initializes its cell before linking it and advancing its
+   tail; pending fields retain unfinished references, append subphases
+   and the remaining ancestor cursor. Newly created branch descriptors
+   remain empty until a later strict-descendant selected event occurs.
+4. Commit installs $q'$ only after source, marks, descriptors and selected
+   appends are complete. BuildAnswer constructs and seals the actual
+   finite reply. Print emits precisely its backing bits, then End. The
+   supplied local acknowledgement enables root Return and finite scratch
+   clearing/reuse. Only after these finish does MarkedReady resume.
+
+FetchSelected uses Theorem 31.2's indexed decoder on the actual mark fields,
+selected descriptors and source. Its index marks, scan cursor, within-side
+counter, accumulated address and pending answer all have backing.
+NextSelected calls that same internal handler, retains its acquired
+result and continuation phase, and follows Definition 20.4's current
+left descent at the returned historical address. It performs that
+leaf's genuinely enabled $P$ or $S$ using the four phases above. Its
+reply contains both literal identities, even if the new event is
+unselected. An out-of-range call performs no growth. These phases are
+finite control with loops over constructed finite operands, not an
+oracle for successful completion or a constant-time whole-word update.
+
+**Theorem 32.3 (actual acquisition, retention, output and continued use).**
+Under Assumption 32.1, the installation of Definition 32.2 acquires exactly
+$\mathcal R_C(w)$ after every completed request, where $w$ is its own
+actual successful generation word. Every actually supplied finite complete
+request beginning at MarkedReady returns its specified full reply in
+finite work and returns to MarkedReady on the same live source. An
+in-range NextSelected performs one actual enabled source event, preserves
+all earlier selected recalls and makes the new event callable precisely
+when $C$ selects it at that receipt. These assertions compose for every
+finite sequence of complete requests. Every finite lawful LAB generation
+word can occur with this same driver. A proper request prefix waits with
+its acquired backing; a supplied finite completion suffices for return.
+
+Proof. At initialization there is the allocated $\alpha$, no branch tape,
+zero root marks and $q_0$. This is the record of the empty word. Suppose
+the invariant holds at MarkedReady. The input latch/copy invariant of
+§20 retains exactly the supplied frame, without presuming a missing bit.
+For a complete finite frame, finite guarded navigation and source tests
+supply the same current Tag, event-membership query or refusal as §20.
+They preserve the invariant and do not change selection state.
+
+For successful growth, actual source editing produces one event $e$ on
+this bound object. Old $q$ and actual $e$ remain available until Evaluate
+has returned $(q',b)$. The evaluation-complete flag prevents duplicate
+receipts; no refusal or query enters that phase. By the definition of
+transduction the new semantic data must be
+
+$$
+(t,\nu,q)\longmapsto
+\begin{cases}
+(t\cdot e,\nu e,q'),&C(q,e)=(q',1),\\
+(t\cdot e,\nu,q'),&C(q,e)=(q',0),
+\end{cases}
+\tag{AA.106}
+$$
+
+where $t\cdot e$ denotes the actual enabled LAB edit, not a free action
+on an arbitrary term. The mark write is exactly the new local selected
+membership. All earlier event identities persist. A split's new logical
+children have no earlier local events; its new tape has no earlier
+strict-descendant event. At every proper ancestor, projection of the
+new selected word appends exactly the side written by Maintain when
+$b=1$, and makes no change when $b=0$. These statements prove the full
+record invariant after Commit, including final control and all selected
+tapes. They do not assume the missing membership relation as an input.
+
+Every loop used here terminates on its declared finite operands. $C$
+terminates on every finite acquired event by assumption. The guarded
+source navigation and descriptor scans are finite; ancestor maintenance
+shortens a parent chain of length $|\operatorname{addr}(e)|$. Descriptor
+insertion traverses a finite source. Tape-cell construction consists of
+finitely many field operations at each visited ancestor. Reserved or
+unfinished fields remain pending and unservable. Finite answer construction,
+printing, End, local acknowledgement, root return and scratch cleanup
+restore exactly MarkedReady. No eventual external acknowledgement is
+used to assert this termination.
+
+For FetchSelected, Theorem 31.2 decodes the actual recorded selected word;
+its finite scans and subtree descents give the implemented termination
+measure. For NextSelected, every returned old address is still a logical
+source position because LAB has no deletion. Its current finite left
+descent reaches a leaf, whose tag permits exactly one growth template.
+The current source-write right and actual root binding execute this on
+the live object. Applying the preceding growth argument gives (AA.106)
+and the two-identity reply. An out-of-range call instead leaves the
+record unchanged. Thus earlier selected indices persist and a selected
+new event is exactly the new last entry. Queries, refusals and BadFrame
+preserve the record.
+
+Induction on completed requests now gives arbitrary finite interleavings.
+For any finite lawful generation word, supply its complete addressed
+growth frames in order, with the required finite material; the guards
+accept each by Theorem 17.2 and this construction places no further
+restriction on their schedule. Retention and callability follow from
+the real root, record heads, backing, live grants and installed entry
+remaining accessible after each return. They do not follow from a
+symbolic inverse. This proof gives pointwise finite completion, not
+an infinite-run or uniformly bounded-storage assertion. $\square$
+
+## 33. Annotated space, boundary, selected time and callable memory
+
+**Definition 33.1 (independent observations and declared continuation
+task).** Fix $C$, its installation, live binding/authority roles and the
+MarkedReady domain of §32. The task $Q_C$ permits the seven request kinds
+of Definition 32.2 with their complete literal replies, actual source
+operations and settled successors for further such requests. All policy
+inputs are the acquired old event, current source, current request and
+specified pending fields for NextSelected, and old $q$ plus the actual
+new event for $C$. No omitted archive, scratch history or outside selector
+is an admitted input. Task behavior compares the same finite future
+request sequences, their legality and full replies at each step. It
+exposes neither raw fresh-name spellings nor obsolete workspace, complete
+controller chronology, primitive time, current capacity or allocation
+order. Those exclusions define this semantic task, not an assertion
+that the joint process has no such work or material.
+
+The following observations select different relations of this one process.
+
+- $S_C$ exposes the actual oriented source-edge support $S_0$, with the
+  local membership bits at logical positions, selected side words at
+  branches, and current selection state $q$ as explicit annotations.
+- $B_C$ exposes the actual terminal source antichain $B_0$, with those
+  same source-indexed annotations and $q$. Their indices are positions
+  in its prefix closure; record cells are not extra source-boundary leaves.
+- $T_C$ exposes the labelled causal creation/lifecycle order $T_c$, the
+  actual selected serial chain of literal event identities, and current
+  selection state $q$. It retains causal precedence and chosen-event
+  precedence, not durations or the unselected serial extension.
+- $M_C$ exposes the actually retained source/mark/selected-tape/control
+  fields, their real source bindings and readable backing, and the
+  callable installed entry under its current rights. It excludes unused
+  reservations, inactive auxiliary fields and obsolete scratch. Record
+  list order is source preorder and each tape is a null-ended linked word.
+
+Support and boundary use the material unary $\beta$ marker of Definition
+17.3; omitting it would lose the independent $\alpha/\beta$ meaning.
+The annotations are expressly acquired relations, not a claim that bare
+geometry encodes selected membership. Each $q$ is an admitted future
+selection input, not the entire program counter. These views omit input,
+printing and maintenance chronology; none receives an unrestricted copy
+of that history. On (AA.100), even their selected serial component has
+only $n$ events out of $6n+1$. Other selectors can select more, including
+all events, without giving a general compression guarantee.
+
+Equality of memory descriptions means equality of the specified rooted
+oriented contents and binding relations modulo spelling of fresh record
+names, with the fixed actual source and authority roles retained. It is
+not equality of unrelated roots or an identification of different grants.
+Recovering such a description does not construct an accessible object.
+
+**Theorem 33.2 (mutual recovery, route agreement and settled updates,
+without an unwarranted minimality claim).** On this actual MarkedReady
+domain all four observations recover one another by finite mathematical
+maps on their actual images. More precisely, for every two such histories
+$h,h'$ and every $Z\in\{S_C,B_C,T_C,M_C\}$,
+
+$$
+Z(h)=Z(h')\quad\Longleftrightarrow\quad K_C(h)=K_C(h').
+\tag{AA.107}
+$$
+
+Every recovery route agrees, and every route commutes with each declared
+settled request's legality, complete reply and $K_C$ successor. Equality
+in (AA.107) implies $Q_C$ behavior equivalence for all finite future
+requests. Conversely $Q_C$ equivalence forces equal source and equal
+selected identity word. It need not force equal raw selection state;
+no general equality of (AA.107) with the minimal behavior kernel is claimed.
+The actual acquired callable memory is supplied by Theorem 32.3, separately
+from the mathematical descriptions and their recovery maps.
+
+Proof. Prefix closure converts $B_0$ to $S_0$, and maximal elements convert
+$S_0$ to $B_0$. Arity parses the same $t$, including the unary marker.
+Their attached marks and side words decode $\nu$ by Theorem 31.2, with
+$q$ unchanged. The labelled causal order in $T_C$ recovers $t$ by Theorem
+17.2, while its selected serial chain already gives $\nu$. Reading the
+selected retained fields of $M_C$ gives exactly the source, marks, tapes
+and $q$, and hence the same $K_C$.
+
+Conversely, from actual $K_C=(t,\nu,q)$ form its source support or terminal
+antichain, and attach the local bits and strict-descendant side projections
+proved unique in Theorem 31.2. Form $T_c$ from $t$ by (AA.67) and attach
+the actual selected chain and $q$. For memory form the corresponding
+source/mark/tape/control description with canonical source-preorder
+bindings and the fixed callable-entry roles. Every one of these operations
+is finite on a finite input. Each returns the original semantic observation
+on its actual image. This proves (AA.107) and the inverse identities.
+Every triangle and longer route extracts and reconstructs the same
+$K_C$ of this same process; it never combines independently chosen
+marginal realizations. Only §32, not this reconstruction of a description,
+provides real objects, current rights and an accessible service entry.
+No serializer for all twelve descriptions is presumed installed.
+
+At equal $K_C$, guarded source queries and addressed growth have the same
+legality and ordinary replies. Selected fetches return the same complete
+identity or OutOfRange. NextSelected therefore reaches the same current
+leaf and performs the same actual growth identity. Selection then reads
+the same $q,e$, so it returns the same $(q',b)$ and has exactly successor
+(AA.106); Theorem 31.2 uniquely determines that successor's mark/tape
+description. Queries and refusals instead preserve $K_C$. These statements
+also cover the unused tag and checked invalid indices. Thus the complete
+one-step responses and successors descend, and the explicit view maps
+commute with them. Induction over finite request sequences proves
+behavior equivalence. This supplies the actual legality, label and update
+premises of the PG and typed-view suppliers; it does not infer them from
+view names.
+
+Different source terms have different Tag replies at a first differing
+logical constructor/address. At equal source, different finite selected
+words differ at a FetchSelected index, including the in-range versus
+OutOfRange case when one is a proper prefix. Hence task equivalence
+forces equal $(t,\nu)$. For the limitation about $q$, consider an event-only
+selector that selects nothing and merely stores the kind of the last
+successful event. The two actual words (AA.75) have equal source, empty
+selected word and different last kinds. Its stored state never affects
+selection or any source handler, so every future $Q_C$ request has the
+same behavior despite those different raw states. Thus a sufficient
+current control coordinate is not automatically a minimal behavioral
+quotient. Proposition 30.4 separately shows why comparing only immediate
+source successors would be too weak even at equal $q$. $\square$
+
+## 34. Same-run contributions and sufficient journal alternatives
+
+**Proposition 34.1 (the witness-family resource contributions).** Consider
+any $w_{n,z}$ in the installation of §32, with one successful addressed
+growth request per event and no additional requests. Counts refer to
+this one execution through its returned endpoint $t_n$. Let $P,S,N$,
+$V$ and $D$ have their meanings in §22, and let
+$D_C=\sum_{e\text{ selected}}|\operatorname{addr}(e)|$. Then
+
+$$
+\begin{aligned}
+P&=2n+1,& S&=4n,&N&=6n+1,\\
+V&=10n+2,& |\mathcal L(t_n)|&=8n+1,\\
+D&=n(3n+5),& D_C&=\frac{n(n+3)}2.
+\end{aligned}
+\tag{AA.108}
+$$
+
+The literal selected construction retains $4n$ branch descriptors and
+$D_C$ side cells, and performs exactly $D_C$ selected side appends. Its
+two-slot local layout has $16n+2$ active logical mark bits, of which $n$
+are one. It performs $N$ per-event mark assignments and $N$ selection
+state transitions/evaluations. Under the literal convention of writing
+both zeros whenever a position becomes logical, logical mark initialization
+makes $2+4S=16n+2$ further zero assignments. Initialization or reserved
+capacity at inactive material markers, source/tape bindings and all
+reference fields are additional; active mark bits alone are not total
+retained material.
+
+The full address-journal alternative of Proposition 22.2 has payload
+$6n^2+16n+1$ bits on these same source words. A selected identity journal
+retaining one kind bit and $A(p)$ per selected event has payload
+$n^2+5n$ bits. Its selected-address part alone has $n^2+4n$ bits and is
+identical throughout the displayed family. For the request/reply framing
+of Definition 32.2, this growth-only run receives $6n^2+34n+4$ request
+bits and emits $6n^2+40n+5$ reply bits, with a further $N$ End symbols,
+$N$ local acknowledgements and $N$ completed returns. No expression here
+is a total tariff or minimum apparatus cost.
+
+Proof. The setup contributes the root promotion, $n$ spine splits and
+$n$ promotions/splits at the $r_i$. The gadgets contribute $n$ promotions
+and $2n$ splits, independently of their order choices. This gives $P,S,N$.
+Each split adds two logical positions; (AA.78) counts physical source
+vertices, giving the first two lines of (AA.108). Depth contributions
+from (AA.104) give
+
+$$
+\begin{aligned}
+D&=\sum_{i=0}^{n-1}i
+       +2\sum_{i=0}^{n-1}(i+1)
+       +3\sum_{i=0}^{n-1}(i+2)=n(3n+5),\\
+D_C&=\sum_{i=0}^{n-1}(i+2)=\frac{n(n+3)}2.
+\end{aligned}
+\tag{AA.109}
+$$
+
+The root promotion has depth zero. Every selected event creates exactly
+one side cell at each proper logical ancestor, while every split creates
+one branch descriptor. There are two local mark slots at each of the
+$1+2S$ logical positions; each event writes its one corresponding mark
+once, and exactly $n$ selected identities set distinct slots to one.
+Initialization writes two zeros at the initial root and four at each
+split's two new logical children. The selector is fed exactly once per
+successful event, not once per side append or input bit.
+
+The full address journal has $2D+N$ payload bits by (AA.80). A selected
+identity entry has $1+(2|p|+1)$ bits, so its total is $2D_C+2n=n^2+5n$.
+Removing its kind bits leaves $2D_C+n=n^2+4n$ bits. Each growth request
+has three tag bits and $2|p|+1$ address bits, giving $2D+4N$ input bits.
+Its reply has three tag bits, one kind bit and that address frame,
+giving $2D+5N$ output bits. Substitution of (AA.108) gives the displayed
+values. These count the actual complete frames and successful replies
+on each specified run, not a separately optimized producer and consumer.
+$\square$
+
+**Proposition 34.2 (already sufficient records and the exact missing
+coordinate).** Under the corresponding initialized owned-service
+premises, each of the following supports the same selected recall and
+continued-use task for every selector in Definition 30.1: the complete
+all-event tapes of Theorem 19.2; the complete successful-address journal
+of Proposition 22.2; and an online selected identity journal together
+with current selection state. None of these capabilities is refuted by
+Theorem 30.3. In contrast, selected successful addresses alone, even with
+$t$ and final $q$, do not uniformly support this adaptive task.
+
+Proof. Full tapes reconstruct the actual complete $w$. Replay the known
+installed $C$ from its actual $q_0$ through this finite word to recover
+$\nu_C(w)$ and $q_C(w)$. The full address journal reconstructs event kinds
+from all occurrences and birth types, as Proposition 22.2 proves, and
+therefore permits the same replay. These are terminating finite computations
+with paid scans and workspace. Their existing maintained source binding
+and current rights support the same current-source left descent; on each
+new successful event maintain the chosen full representation and apply
+$C$ to its acquired identity. The original record/reply/return discipline
+continues to supply actual retention and use on that representation.
+
+Alternatively, start at the same known seed and, for each actual selected
+receipt, append its kind and self-delimiting address to a retained linked
+bit journal before the next Ready. Update current $q$ for every successful
+receipt, selected or not. Literal parsing and scanning recover each
+selected event, with checked OutOfRange. NextSelected consumes that
+acquired identity on the same live source, applies the same actual growth
+and updates the journal and $q$. The acquisition and finite-return proof
+is the induction of §32 with journal append replacing local marks and
+ancestor tape appends. Thus this is a credited sufficient representation,
+not a capability newly absent from existing journal methods.
+
+For the negative statement, all $w_{n,z}$ have the same selected address
+list $p_0,\ldots,p_{n-1}$, source and final state, but the distinct replies
+of Theorem 30.3. Counting only selected occurrences cannot say whether an
+unrecorded promotion preceded a recorded split. In the fixed-$\chi$
+address-journal alternative after Theorem 26.3, membership is already
+fixed by $t,\chi$; that premise is not retained by this adaptive transfer.
+The full journal in Proposition 22.2 has all occurrences and retains its
+original sufficiency without modification. On (AA.102), one acquired
+kind bit per selected entry attains exactly the $n$ conditional bits
+missing from the common selected address list. The source-local marked
+layout stores these distinctions differently and is not asserted to
+be their cheapest encoding. $\square$
+
+**Definition 34.3 (resource and parsimony boundaries).** The comparisons
+above separate conditional information, actual recording, and service
+work. Every event receipt and selector evaluation, regular-address scan,
+source guard/edit/navigation, local mark initialization/write, branch
+insertion/lookup, ancestor visit, side-cell allocation/link, request copy,
+backed counter, recall scan, output construction/printing, End,
+acknowledgement, return and scratch clearing is charged on the same
+execution. Driver/control installation, real source and record references,
+grants, occupied input latches, reserved material and unfinished writes
+coexist with their operands. Reference widths, inactive fields and work
+storage have not been replaced by unit-size numerals. A bit-payload
+comparison alone gives no Pareto dominance across these coordinates.
+
+For the declared source task the distinct current $\alpha/\beta$ tags
+and their different enabled $P/S$ operations must remain distinguishable;
+source orientation and the actual binding identify where a continued
+operation occurs. One allocated known $\alpha$ suffices here to produce
+$\beta$ by promotion, as §22 already establishes. Theorems 30.3 and 31.2
+locate an additional indispensable selected-membership distinction for
+this recall task, but do not force local two-bit fields, a particular tape
+layout, three selection states, an external serial clock or any total
+cost optimum. Current $q$ is a sufficient installed update input; it can
+be behaviorally redundant as Theorem 33.2 demonstrates. Source binding
+and current authority are operational premises for live use, not extra
+content inferred from a selected address. Finite control descriptions
+and finite selection state do not bound growing source, records, operands
+or service workspace.
+
+## 35. Supplier correspondence and the remaining common-process domain
+
+**Definition 35.1 (the uncovered source-specific conclusion).** Theorem
+30.3's one fixed $C_*$, complete selected-side observation, exact fibre
+(AA.102)–(AA.103) and its literal complete-reply separation are
+`repo-derived` ordinary mathematical synthesis. Sections 31–33 give a
+credited constructive application of retained local membership and
+routing to that newly specified adaptive LAB domain. The acquired update
+invariant identifies the source, selection input, local prefix and callable
+consumer correspondence that a generic factorization statement alone
+leaves as premises. The attribution is as follows.
+
+| Supplier and its exact retained hypothesis | Correspondence and additional obligation here |
+| --- | --- |
+| FARG §§2–3 and this volume's Theorems 17.2 and 19.2 | Ordered alpha/beta syntax, birth-typed LAB membership, lawful schedules as extensions and full local shuffles are reused. FARG's simultaneous global $\rho$ is not the single addressed LAB edit. The additional family varies adaptive selected **identity** within one LAB endpoint and every selected side reading. |
+| Theorems 24.2 and 25.2 | Their $\chi$ is a fixed identity predicate, so local selected prefixes and the counts $a_p,b_p,o_p$ depend only on $t,\chi$. Their exact $R_\chi/H_\chi$ criteria and the unbounded omitted-old-full-coordinate example retain those hypotheses. Here no selected side coordinate is omitted, and the local selected prefix is not endpoint-fixed. Equations (AA.101)–(AA.104) prove this failure of transfer, rather than applying their fixed-$\chi$ count to a different fibre. |
+| Assumptions/Definitions 20.1–20.4 and 26.1–26.2, Theorem 26.3 and Theorem 27.2 | Known-seed ownership, acquired framed input, retained backing, actual Next use, Print/End/local ACK/Return, annotated views and settled phase are credited methods. Section 32 installs additional marks and an event-only adaptive evaluator from initialization; it does not assert an adaptive old-coordinate handoff or reuse a fixed-$\chi$ local-prefix decoder without its premise. |
+| [PG §§3.2–3.4,19.6–19.8,20.1–20.2,40](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) | Actual policy inputs, full response/readout/update factorization, finite-request induction and distinguishing-family counting are suppliers. PG §40.2 assumes a distinguishing output or successor for its different FIB paths. Proposition 30.4 identifies the actual LAB reply and action, including equal immediate source successors; Theorem 32.3 proves the required acquired operands and update. Finite-carrier minimality is not inferred for growing records or raw $q$. |
+| [NASF Definitions 1.1–1.4 and Applications 8.1–8.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ADAPTIVE_SELECTION_FIBERS.md) | Selection-aware actual fibres and the distinction between recovery, acquisition and permitted continuation are reused. Its unknown invocation source and independent writer use global $\rho$ with a different Read/Return contract. Its source-fibre criteria do not assert (AA.103) or create local marks on LAB. |
+| [NCR §8](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md) and [SC §§2–5,23](RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md) | Acquired order complements, overlapping records, missing-precedence supplements and finite coding/counting are already supplied on their command/history domains. Their generic recording and complement methods are credited, not renamed as a new capability. Here the missing relation is selected membership of an occurred $P/S$ identity despite all selected side records. |
+| [PVC §§1,10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md), [SSA §§7,13.7](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md), and [PR57 §§57.1–57.2,57.9](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#57-a-complete-paid-ideal-realization-of-the-original-ordered-tree-interface) | Actual source acquisition, fixed-$H$ entrances where specified, owner-installed conversions, exclusive paid copying, bindings and callable subsequent use are suppliers on their own installations. PR57 uses its original global-substitution/graft menu and actual tapes/meters; PVC's $D_2$ uses its additional installation/unused-lane contract. None is identified with the local LAB primitives or a solution of their original fixed-apparatus task. |
+
+The repository's relevant formal declarations and their owning Blueprint
+Scribes retain the following narrower roles. They are cited as existing
+source, not as new Lean certification of this append.
+
+| Declaration source, with its corresponding owning Scribe | Retained role and hypothesis boundary |
+| --- | --- |
+| [TypedFiniteViewKernel](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean), [Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.scribe.cs) | `response` retains partial legality, complete labels and terminal readouts; `typed_finite_view_kernel` concerns independently specified path semantics. Our step semantics and actual source/record correspondence must first be supplied by §§31–33. |
+| [PredictiveMemoryMinimalQuotient](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean), [Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.scribe.cs) | `predictive_memory_minimal_quotient` requires both `readout_factors` and `update_factors`. It supplies neither missing selected membership nor its acquisition; a sufficient representation need not itself equal the quotient. |
+| [ControlledBehaviorUniversality](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean), [Scribe](../../../Blueprint/D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.scribe.cs) | `runWord`, `controlledBehavior` and private `run_word_intertwines` supply ordinary transition iteration and commuting-word reasoning. `controlled_behavior_universal_property` has finite-carrier, surjective-realization and readout/update commutation premises. Finite code or three selection states do not discharge those finiteness premises for this entire installation. |
+| [EnabledPathSwapConnectivity](../../../D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.lean), [Scribe](../../../Blueprint/D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.scribe.cs) | `Enabled`, `Exec` and `result` supply finite lower-set executions, extension correspondence and legal adjacent exchanges. Theorem 17.2 supplies their concrete LAB guard correspondence. The gadget proof explicitly supplies its two legal local orders; an abstract swap lemma alone would not establish their selected identities. |
+| [NativeUniformTree](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.lean), [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.scribe.cs) | `term_at_prim`, `readout_prim` and private `treeView`, `child`, `walkStep`, `walk_exact`, `rootReply`, `readout_walk` supply exact finite ordered-tree navigation/readout methods. Their Native source representation and global substitution remain distinct from the source links, rights and local edits expressly installed here. |
+| [NativeFullSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean), [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs) | `sourceControl`, `initialControl`, `native_source_producer` and private `traverse`, `production_reads`, `stationary` already supply genuine stationary unknown-tree acquisition from Native reads with acquired stacks. They do not supply an unknown historical selection transcript; the present known-seed local acquisition is a different declared domain, not a missing general producer. |
+| [BinarySelectorRecutFibers](../../../D5/S3/ObserverMemory/BinarySelectorRecutFibers.lean), [Scribe](../../../Blueprint/D5/S3/ObserverMemory/BinarySelectorRecutFibers.scribe.cs) | `selector_residual_classification`, `selector_widths_and_fibers`, `selector_optimal_supplements` and their private coding/fibre helpers supply exact recut fibres and supplement bounds for the declared binary-word relation. That relation is not the family of actual LAB schedules (AA.102). Generic finite-fibre counting and coding remain suppliers; the LAB controller, equal records and complete replies are proved here. |
+
+At pinned mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679`,
+[`Computability/DFA`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/DFA.lean)
+provides `evalFrom` as a left fold, `evalFrom_of_append` and
+`evalFrom_append_singleton`. These are the ordinary state-iteration
+suppliers behind (AA.96) and its appended-event equation, not an acquired
+source or new adaptive-recovery theorem.
+
+[Cover, *Enumerative Source Encoding*, Propositions 1–2 and the inverse
+algorithm](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf)
+is `literature-attested` for finite-sequence ranking/unranking; its
+Example 1 is the ordinary $n$-bit enumeration used on (AA.103), and its
+Example 2 credits earlier constant-weight indexing. The distinguishing-
+family lower bound is the elementary injectivity/pigeonhole argument,
+already used in PG, NCR and §18. [Bennett, *Logical Reversibility of
+Computation*, abstract and introduction](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html)
+is `literature-attested` for retaining computation history and copying
+output. No reversible uncomputation or physical cost is asserted here.
+Section 29.1 credits Grossi–Gupta–Vitter's subtree dictionaries and their
+rank/select suppliers for the established routing representation. This
+append reuses that method through §§19 and 24; its literal finite scans
+inherit no succinct-index or constant-time bound. Fixed visible-event
+projection, generic quotient/replay and the existence of sufficient
+journals are not new claims of this append.
+
+The uncovered conclusion after these suppliers is the explicit adaptive
+LAB membership fibre and its marked source-local acquisition/update
+correspondence. Its proof gives an actual jointly realizable family,
+not an argument from an absent API name, a finite isolated example or
+source-corpus omissions. This is a bounded source-relative result and
+an explicitly credited synthesis, not a worldwide originality or
+Lean/kernel verification claim.
+
+**Definition 35.2 (preserved domains and unresolved bridges).** Theorems
+24.2–27.2 and their fixed-selector settlements stand with their exact
+fixed-$\chi$, access, initialization, authority and phase hypotheses.
+Every fixed-$G_{\rm gc}$, original-$Q$, parked-consumer,
+unchanged-initialization, terminal and final-no-Ready obligation from
+the earlier volumes and this volume retains its original statement and
+settlement. No MarkedReady entry, local primitive, new recording field
+or acquired-input permission has been inserted into those old models.
+
+The present recovered domain is annotated source geometry/boundary,
+causal-plus-selected time and acquired callable memory after completed
+requests in a known-seed owned LAB process with an event-only selector.
+It does not recover bare geometry from arbitrary serial order or vice
+versa, complete controller chronology or pending busy cuts. It does
+not retrospectively acquire lost selection from $O_C$, solve unknown
+historical-source acquisition, extend the exact old-full-coordinate
+handoff criterion to adaptive selection, or cover selectors with omitted
+source, archive, meter or history inputs. Revocation, cross-owner grants,
+concurrent writers, crashes and observable finite-capacity behavior would
+require new complete legality/output/successor contracts. A symbolic
+record inverse cannot supply those contracts.
+
+The explicit counts concern finite actual runs with sufficient finite
+material, not a uniformly bounded device, minimum total cost or one
+coherent indefinitely supplied execution. Alpha/beta local generation
+remains a candidate foundation assessed on this source and task, not
+a universal reduction or a physical spacetime law. The broader search
+for a parsimonious common process with independently meaningful space,
+time, boundary and memory and proved general recovery remains unresolved.
+Neither the selected task, this bounded obstruction/repair nor its
+publication completes that programme or the original full-recall task.
+
+## 追加锚（本行以下为增补区）

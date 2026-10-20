@@ -9598,3 +9598,452 @@ $$
 The lower bound is the existing original-source normalization, and the upper bound applies W330 to a completed minimizer with $B=B_*(K)$. The additional content is the common quantitative start/count, not another existence or spectral criterion. More generally if a member of the ENTIRE class has $\mathfrak E(F)\le-\Delta$, taking $\eta\le\min(1,\Delta/2)$ gives an original source with $A Q_{\mathcal K_A^g}\le-\Delta/(8\pi^3)$ at these same uniform bounds. No negative member is exhibited.
 
 The estimate does not show that $e_K^{\mathbb F}$ is nonnegative, identify the real and complex minima, or reduce the count constant to W228's positive fixed fraction of $e^{2A}$. It therefore does not prove W258, unrestricted complete positivity, full RH or strict Robin for EVERY integer $n>5040$. Classical smoothing and the already cited polynomial approximation are reused; the joint quantitative inverse-boundary/cutoff estimates and their exact-budget source transport are repository-derived, without a priority claim. Bounded bibliography retrieval is not exhaustive literature coverage. This is paper mathematics without Lean/kernel certification or scientific execution.
+
+## Retain a Gamma fraction in the actual complete prime-power debit
+
+The [existing higher-prime-power budget](broadbent2026mertens.md#retaining-a-gamma-fraction-by-the-classical-stechkin-comparison), equation (15), supplies the classical Stechkin comparison on arbitrary compact smooth tests. It is reused. Its application to W317 needs a further interface: the actual arithmetic test is an even extension of the half-line $B$ image, whereas the original positive Gamma form uses the zero-extended theta image WITHOUT $B$. A factor-two bound would spend the available reserve. The following comparison pays this interface with a support-independent bounded error and consumes it in a lower bound for the SAME complete physical form.
+
+Keep W317's $\mathcal V$, $\mathcal P$ and complete $\mathfrak E$. For $F\in\mathcal V$ put $U=\mathscr TF$, retain its zero-extended profile $u=u_F$, and set
+$$
+S(F)=\|u\|_2^2=\|U\|_W^2,\qquad
+b(t)=u(t)-\frac32\int_0^\infty e^{-5s/4}u(t+s)ds\quad(t\ge0),
+\qquad g_F(r)=b(2|r|).
+$$
+Here $b(t)=(\pi e^t)^{9/4}BU(\pi e^t)$ is the ACTUAL $B$ image, not an independently chosen arithmetic profile. Write
+$$
+R_g(s)=\Re\int_{\mathbb R}g(r)\overline{g(r-s)}dr,\qquad
+T_1(g)=2\sum_p\frac{\log p}{\sqrt p}R_g(\log p),
+\qquad \alpha=\frac2{\sqrt\pi},\quad\kappa_S=\frac1{\sqrt5}.
+$$
+Let $T_{\ge2}(g)$ denote the corresponding sum over $p^j$, $j\ge2$, with coefficients $(\log p)p^{-j/2}$. Reuse the shifted energy $E_*(g)$ and the nonnegative $\mathcal D_{\rm odd}(g)$ and $\mathcal J(g)$ of equations (8), (15) in the cited application. Its bounded rational-frequency energy $\mathcal J$ is distinct from W317's complete debit $\mathfrak J$.
+
+For a universal $C$, depending only on the fixed Gamma shift of W317, EVERY $F\in\mathcal V$ satisfies
+$$
+\|g_F\|_2^2\le S(F),\qquad
+\left|E_*(g_F)-\frac{\mathcal P(F)}\alpha\right|\le CS(F).
+\tag{W338}
+$$
+Its SAME complete physical energy has the lower bound
+$$
+\mathfrak E(F)\ge
+\kappa_S\mathcal P(F)-\alpha T_1(g_F)
+-\frac\alpha2\left|\int_{\mathbb R}g_F\right|^2-CS(F)
++\alpha\bigl[\mathcal D_{\rm odd}(g_F)+\mathcal J(g_F)\bigr].
+\tag{W339}
+$$
+There is no support, sign, mean, coefficient, source-count or moment-budget-size restriction within $\mathcal V$. The primary-prime correlation and mean terms remain explicit and uncontrolled against the retained reserve. Thus W339 is an all-source estimate, not positivity of $\mathfrak E$, a positive source subclass or another RH criterion.
+
+### Pair the actual Toeplitz and Hankel channels before applying the supplier
+
+Initially take $F\in C_c^\infty((\pi,\infty))$. Its $u$ and $b$ are smooth on the closed half-line and compact there. The even $g_F$ belongs to $H^1$, though it need not be smooth at zero. Splitting its correlation integral at $0$ and $s$ gives, for $s\ge0$,
+$$
+2R_{g_F}(s)=
+2\Re\int_0^\infty\overline{b(t)}b(t+2s)dt
++\int_0^{2s}\overline{b(t)}b(2s-t)dt.
+$$
+The second integral is real by reflection. W249/W284's ENTIRE prime Toeplitz-plus-Hankel pairing is consequently
+$\langle b,(C+C^*+H)b\rangle=T_1(g_F)+T_{\ge2}(g_F)$. The actual energy therefore has the identity
+$$
+\mathfrak E(F)=\mathcal P(F)
+-\alpha[T_1(g_F)+T_{\ge2}(g_F)]-\mathcal B_0(F),
+\qquad |\mathcal B_0(F)|\le CS(F).
+\tag{W340}
+$$
+The remainder $\mathcal B_0$ retains BOTH folded-model channels, W247's rank-two cutoff and the fixed Gamma shift. Their $W$ bounds are W232/W247 and the right Hardy interface used in W317. None is discarded or counted as a separately positive reserve. Every prime power, including the first prime $2$, has its original coefficient.
+
+### Compare the full logarithmic forms with a bounded boundary cost
+
+Put $k=5/4$, $c=3/2$, $r_0=1/4$. On the full line let
+$$
+(B_{\rm full}u)(t)=u(t)-c\int_0^\infty e^{-ks}u(t+s)ds.
+$$
+Its Fourier multiplier has squared modulus
+$|h(\xi)|^2=(\xi^2+r_0^2)/(\xi^2+k^2)\le1$.
+Let $v=\mathbf1_{t\ge0}b$ and $w=B_{\rm full}u-v$. Then
+$$
+w(t)=-cA_ue^{kt}\mathbf1_{t<0},\qquad
+A_u=\int_0^\infty e^{-ks}u(s)ds,\qquad
+|A_u|^2\le\frac{S(F)}{2k}.
+$$
+Thus $\|b\|_2\le\|u\|_2$; the scaling and even extension defining $g_F$ preserve this norm exactly.
+
+Use the nonnegative digamma-difference form $\mathcal A$ with multiplier
+$a(\xi)=\Re\operatorname{digamma}(k+i\xi)-\operatorname{digamma}(k)$.
+The classical [digamma integral, DLMF 5.9.16](https://dlmf.nist.gov/5.9.E16), gives
+$$
+a(\xi)=\int_0^\infty K(s)(1-\cos(\xi s))ds,
+\qquad K(s)=\frac{e^{-ks}}{1-e^{-s}}\le\frac1s.
+$$
+For profiles supported on opposite half-lines, the off-diagonal pairing of $\mathcal A$ is minus one half of the Hankel kernel $K(s+t)$. The classical Carleman inequality used in W176--W177 bounds its modulus by $\pi/2$ times the product of the $L^2$ norms. Also $\mathcal A(w)\le C|A_u|^2$: the Fourier density of $e^{kt}\mathbf1_{t<0}$ is a constant times $(k^2+\xi^2)^{-1}$, and $a(\xi)=O(\log(2+|\xi|))$. Polarization with the ACTUAL $w$ gives
+$$
+|\mathcal A(v)-\mathcal A(B_{\rm full}u)|\le CS(F).
+$$
+To pay even extension without a factor two, put $z=(v+v(-\cdot))/\sqrt2$. Reflection invariance and the SAME off-diagonal kernel give
+$$
+\mathcal A(z)=\mathcal A(v)-\frac12
+\int_0^\infty\int_0^\infty K(s+t)\overline{b(s)}b(t)dsdt,
+\qquad |\mathcal A(z)-\mathcal A(v)|\le CS(F).
+$$
+The unitary scaling $g_F(r)=\sqrt2z(2r)$ yields $E_*(g_F)=\mathcal A(z)$, with the supplier's exact multiplier
+$\Re\operatorname{digamma}(5/4+i\tau/2)-\operatorname{digamma}(5/4)$.
+Finally digamma recurrence gives
+$$
+\begin{aligned}
+|h(\xi)|^2a(\xi)
+={}&|h(\xi)|^2
+ [\Re\operatorname{digamma}(1/4+i\xi)-\log\pi]\\
+&+[\log\pi-\operatorname{digamma}(5/4)]|h(\xi)|^2
++\frac{1/4}{\xi^2+25/16}.
+\end{aligned}
+$$
+The first term is W317's unshifted $m_\Gamma/\alpha$; the two remaining multipliers and W317's fixed Gamma shift are bounded. Hence
+$|\mathcal A(B_{\rm full}u)-\mathcal P(F)/\alpha|\le CS(F)$.
+This proves W338 with the entire logarithmic form intact. No Fourier truncation, derivative replacement for Gamma, independently optimized profiles or loss proportional to $\mathcal P$ is used.
+
+### Consume the signed higher-power estimate on this exact test
+
+Let $\kappa_0=-\gamma+C_{\rm odd}$ and $d_\xi$ have their existing supplier meanings, distinct from $\kappa_S$. Its equation (15) states
+$$
+\begin{aligned}
+T_{\ge2}(g)\le{}&\frac12\left|\int g\right|^2
++(2\kappa_0+d_\xi+2)\|g\|_2^2
++(1-\kappa_S)E_*(g)\\
+&-\mathcal D_{\rm odd}(g)-\mathcal J(g).
+\end{aligned}
+$$
+On the compact core, smooth the even $H^1$ function $g_F$ in $H^1$ with a common bounded support. The finite prime correlations, mean, shifted energy and both bounded nonnegative energies converge. The compact-smooth supplier therefore applies to this actual $g_F$. Insert it into W340, use the UPPER side of W338 with its exact leading coefficient, and absorb only bounded multiples of $S(F)$. This proves W339. Both retained nonnegative energies belong to the SAME $g_F$ as the primary-prime and mean terms.
+
+For general $F\in\mathcal V$, use W324's existing joint full-Gamma/moment core. The theta transform is bounded in $H_6$, since its $n$th dilation has norm $n^{-3}$ and $\sum n^{-3}<\infty$. Thus $u$ has an exponentially weighted $L^2$ bound from $M(F)$; $b$ and $g_F$ have finite $L^1$ norms, and their means pass under the same core approximation. W338 applied to differences gives convergence of $g_F$ in the shifted logarithmic form. W313--W314 apply also to the primary-prime and higher-power SUBSUMS, so each arithmetic pairing passes continuously in $\mathcal N$. The two retained nonnegative energies are $L^2$-bounded. W340's bounded remainder and W317's full form pass under the same graph approximation. This proves W338--W340 on the entire specified $\mathcal V$.
+
+For an original finite Gaussian source normalized by $Q_H(\sigma)=1$, use W257 once: with $\psi=F/\|F\|_H$, the right side of W339 evaluated at $\psi$, divided by $4\pi^3$, bounds its original $A Q_{\mathcal K_A^g}$ from below. EVERY fixed $K>1$ and every such source with $Q_{6,A}\le K$ are included at W257's admitted start; no condition on the remaining primary-prime/mean term is added.
+
+The Gamma fraction is the existing Stechkin supplier's fraction. The additional content is the actual half-line $B$/even-extension comparison with a bounded error independent of support, and its complete-source consumer W339. W317's complete-debit bound remains independently available. The primary-prime and mean terms have not been controlled against the retained reserve, and neither constrained optimum is shown nonnegative. Full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without numerical/scientific execution, Lean/kernel certification, exhaustive bibliography or a worldwide-priority claim.
+
+## An arbitrarily large Gamma reserve after centering higher prime powers
+
+The fixed Stechkin reserve in W339 can be strengthened by reusing an existing unconditional one-line estimate. [Hiary--Leong--Yang, *Explicit bounds for the Riemann zeta-function on the 1-line*, arXiv:2306.13289v3, Theorem 2](https://arxiv.org/html/2306.13289v3#Thmtheorem2), at $\sigma=1$, gives
+$$
+\left|\frac{\zeta'}{\zeta}(1+it)\right|
+\le154.5\,\frac{\log t}{\log\log t}\qquad(t\ge500).
+$$
+Only its consequence $\zeta'/\zeta(1+it)=o(\log|t|)$ is used; negative heights follow by conjugation. This classical supplier is cited rather than reproved. [Leong, arXiv:2405.04869v5, introduction and the paragraph before Lemma 3](https://arxiv.org/html/2405.04869v5), identifies two gaps in older Trudgian estimates: a factor $1/c$ and an equal-log-exponent restriction. In the selected supplier, the local proof locators are §6, Lemma 4, footnote 7, which explicitly uses equal logarithmic exponents, and §6.1, the displayed choices of $A_2$ and $\lambda_2$, which retain the full $1/d$ term. No older erroneous constant is imported here. The published theorem is an external input; its complete proof and numerical constants are not independently certified.
+
+Keep the angular Fourier convention and every definition of the [existing higher-power account](broadbent2026mertens.md#the-actual-even-power-boundary-pairing). To avoid confusing its regular zeta function with a physical feature, denote it here by
+$$
+F_{\rm reg}(s)=-\frac{\zeta'}{\zeta}(s)-\frac1{s-1},\qquad
+F_{\rm reg}(1)=-\gamma.
+$$
+In particular the pole has already contributed the separate rank-one term $\tfrac12|\int g|^2$ in that account; it is not part of the multiplier below. For $g\in C_c^\infty(\mathbb R;\mathbb C)$ put
+$$
+\epsilon(g)=T_{\ge2}(g)-\frac12\left|\int g\right|^2
+-2\kappa_0\|g\|_2^2,\qquad \kappa_0=-\gamma+C_{\rm odd}.
+$$
+For EVERY $0<\delta<1$ there is a finite $C_\delta$, independent of $g$, its support, mean and coefficients, such that
+$$
+\begin{aligned}
+|\epsilon(g)|&\le\delta E_*(g)+C_\delta\|g\|_2^2,\\
+\mathcal Z(g)&\ge(1-\delta)E_*(g)-C_\delta\|g\|_2^2.
+\end{aligned}
+\tag{W341}
+$$
+Here $\mathcal Z$, $\mathcal D_{\rm odd}$ and $\mathcal J$ are the SAME nonnegative forms as equation (8) of the cited account, and $\mathcal J$ is still distinct from the complete debit $\mathfrak J$.
+
+Indeed its exact multiplier formula (7) is
+$$
+m_\epsilon(\tau)=2\Re F_{\rm reg}(1+2i\tau)
++2\Re O(\tau)-2\kappa_0.
+$$
+For $\tau\ne0$, $1/(2i\tau)$ has zero real part. The supplier therefore gives $\Re F_{\rm reg}(1+2i\tau)=o(\log|\tau|)$ at infinity. The function $F_{\rm reg}$ is continuous at one and on the zero-free line, so this real multiplier is bounded on every compact frequency interval. The absolutely convergent odd-power series $O$ is bounded. By the already used digamma asymptotic,
+$$
+a_*(\tau)=\Re\operatorname{digamma}(5/4+i\tau/2)
+-\operatorname{digamma}(5/4)\sim\log|\tau|.
+$$
+Thus for each fixed $\delta$ a single compact-frequency split gives
+$|m_\epsilon(\tau)|\le\delta a_*(\tau)+C_\delta$ at EVERY real frequency. Pair it with $|\widehat g|^2d\tau/(2\pi)$ to obtain the first line of W341. Equation (8), namely
+$\mathcal Z=E_*-\epsilon+d_\xi\|g\|_2^2-\mathcal D_{\rm odd}-\mathcal J$, gives its second line because both subtracted energies are bounded by $C\|g\|_2^2$. Using that second line back in the SAME exact identity preserves the useful upper estimate
+$$
+\epsilon(g)\le\delta E_*(g)+C_\delta\|g\|_2^2
+-\mathcal D_{\rm odd}(g)-\mathcal J(g).
+$$
+These are applications of the existing scalar supplier and residual identity, not new zero-free-region or logarithmic-derivative results.
+
+### Consume the small relative expense in the entire actual form
+
+Use the actual $u_F$, $b=Bu_F$, $g_F(r)=b(2|r|)$, $S(F)$ and $\alpha=2/\sqrt\pi$ of W338--W340. Their bounded-error Gamma comparison is reused without modification. EVERY $F\in\mathcal V$ satisfies, for the SAME $g_F$ and each fixed $0<\delta<1$,
+$$
+\left|\mathfrak E(F)-\mathcal P(F)+\alpha T_1(g_F)
++\frac\alpha2\left|\int g_F\right|^2\right|
+\le\delta\mathcal P(F)+C_\delta S(F).
+\tag{W342}
+$$
+The complete lower estimate can retain both independently nonnegative energies:
+$$
+\begin{aligned}
+\mathfrak E(F)\ge{}&(1-\delta)\mathcal P(F)-\alpha T_1(g_F)
+-\frac\alpha2\left|\int g_F\right|^2-C_\delta S(F)\\
+&+\alpha\bigl[\mathcal D_{\rm odd}(g_F)+\mathcal J(g_F)\bigr].
+\end{aligned}
+\tag{W343}
+$$
+The constants do not depend on support, coefficients, source count or moment-budget size. They may grow as $\delta\downarrow0$. No claim with $\delta=0$ or a uniform $C_\delta$ is made.
+
+For the proof, W340 gives the exact centered difference in W342 as
+$$
+-\alpha\epsilon(g_F)-2\alpha\kappa_0\|g_F\|_2^2-\mathcal B_0(F).
+$$
+Apply W341 and the UPPER side of W338, with $\|g_F\|_2^2\le S(F)$ and $|\mathcal B_0(F)|\le CS(F)$. This proves W342. Use instead the refined upper estimate for $\epsilon$ to obtain W343. In particular BOTH folded-model channels, the rank-two cutoff and fixed Gamma shift remain paid in $\mathcal B_0$; none is dropped or counted as a positive reserve. The primary-prime and mean terms remain the original ones on the SAME actual test.
+
+On the compact physical core the actual even test is in $H^1$ and compactly supported, so the same smoothing passage already used for W339 applies. For all of $\mathcal V$, reuse W324's joint full-Gamma/moment core and the continuity arguments after W340. W338 on differences gives shifted-energy convergence; the mean, both arithmetic subsums, the complete form and the two bounded nonnegative energies pass under that SAME approximation. This establishes W342--W343 on the entire domain without an extra sign, parity, frequency, support or budget restriction.
+
+For an ORIGINAL finite Gaussian source normalized by $Q_H(\sigma)=1$, W257 again applies once: evaluate the right side of W343 at its actual $\psi=F/\|F\|_H$ and divide by $4\pi^3$ to bound $A Q_{\mathcal K_A^g}$ from below. This includes EVERY fixed $K>1$ and every original source with $Q_{6,A}\le K$ at its admitted start.
+
+The additional application is the infinitesimal FULL-Gamma expense of the centered higher-power term and its two-sided, actual-source consumer W342, with W343 retaining any fixed fraction $1-\delta$. W338's half-line interface, the pole-continuum pairing, the classical scalar estimate and the existing core are reused. This is a repository synthesis without a priority claim. The low-frequency allowance $C_\delta S$ and the SAME-source primary-prime/mean terms still need joint signed control; W342 does not make either constrained minimum nonnegative. Full RH and strict Robin for EVERY integer $n>5040$ remain unproved. This is paper mathematics without numerical/scientific execution or Lean/kernel certification.
+
+## Extract real sources without changing the original moment budget
+
+The real and complex problems in W328--W329 and W337 have so far been kept separate. A classical rank-one decomposition identifies their values, even at each fixed original source count and window. It suffices to preserve the moment and improve the COMPLETE energy; there is no need to preserve each prime, Gamma or folded contribution separately.
+
+The supplier is Sturm--Zhang, *On Cones of Nonnegative Quadratic Functions*, [Mathematics of Operations Research 28 (2003), 246--267, DOI 10.1287/moor.28.2.246.14485](https://doi.org/10.1287/moor.28.2.246.14485). The exact statement used here is Proposition 4, section 5.2, printed p.18 of the [author working paper, CentER Discussion Paper 2001-26](https://pure.uvt.nl/ws/portalfiles/portal/538603/26.pdf). It says that, for a real positive semidefinite matrix $X$ of rank $r$ and a real symmetric matrix $Q$, $Q\mathbin\bullet X=0$ is equivalent to a decomposition $X=\sum_{j=1}^r z_jz_j^T$ with $z_j^TQz_j=0$ for every $j$. Here $Q\mathbin\bullet X=\operatorname{tr}(QX)$. This result is reused, not reproved; the proposition number refers to the specified working-paper version.
+
+### Balance the actual moment before choosing a real component
+
+Fix ANY admitted $A$, $w>0$, and finite list of distinct physical sites in $[A,A+w)$. In their original coefficient coordinates write the three actual quadratic forms as
+$$
+Q_H(\sigma_c)=c^*\mathbf Hc,\qquad
+Q_{6,A}(\sigma_c)=c^*\mathbf Mc,\qquad
+A Q_{\mathcal K_A^g}(\sigma_c)=c^*\mathbf Lc.
+$$
+The matrices are real symmetric: the original Gaussian weights and kernels are real, as is the physical feature map in W257. The last matrix is the COMPLETE actual kernel, including both folded channels and their correction; it is not a selected prime or model form. Also $\mathbf H\succeq0$. If a real coefficient vector has zero $\mathbf H$ form, W257 makes its actual physical feature zero in $L^2(\pi,\infty)$, so its moment and complete energy are both zero. This handles any null directions without a strict-positive-definiteness assumption.
+
+For EVERY complex source $\sigma_c$ on these sites with $Q_H(\sigma_c)=1$, there is a real source $\sigma_d$ using only the SAME sites such that
+$$
+\begin{aligned}
+Q_H(\sigma_d)&=1,\\
+Q_{6,A}(\sigma_d)&=Q_{6,A}(\sigma_c),\\
+A Q_{\mathcal K_A^g}(\sigma_d)&\le A Q_{\mathcal K_A^g}(\sigma_c).
+\end{aligned}
+\tag{W344}
+$$
+Zero coefficients may be removed, so the active count cannot increase. Arbitrary positive and negative real coefficients remain allowed. Neither a coefficient bound nor a stable numerical extraction is asserted.
+
+To apply the supplier, put $c=x+iy$, $X=xx^T+yy^T$, and $m=c^*\mathbf Mc$. Every real symmetric matrix $D$ satisfies $D\mathbin\bullet X=c^*Dc$. Hence
+$$
+\mathbf H\mathbin\bullet X=1,\qquad
+(\mathbf M-m\mathbf H)\mathbin\bullet X=0.
+$$
+Apply the cited proposition with $Q=\mathbf M-m\mathbf H$. It gives at most two vectors $z_j$, since $\operatorname{rank}X\le2$. Set $t_j=z_j^T\mathbf Hz_j\ge0$, so $\sum_jt_j=1$. Terms with $t_j=0$ have zero moment and complete energy by the actual feature factorization just stated and can be discarded. For every remaining term let $d_j=z_j/\sqrt{t_j}$. Its original norm is one and its moment is EXACTLY $m$. Moreover
+$$
+c^*\mathbf Lc=\sum_{j:t_j>0}t_j\,d_j^T\mathbf Ld_j.
+$$
+Choose a term whose energy is no larger than this average. This proves W344 on the original sites, with no extra site, support enlargement, moment slack or approximation. Taking the real or imaginary part alone would not justify this step: its normalized moment need not satisfy the original cap. The balanced decomposition is the reused input that keeps that constraint.
+
+### The same extraction applies to the completed physical vectors
+
+All three forms $\|F\|_H^2$, $M(F)$ and $\mathfrak E(F)$ on W317's domain are invariant under complex conjugation. For the Gamma part this uses the EVEN real multiplier $p(\xi)$ and the real theta map. The moment and all complete debit kernels are real. Consequently $\mathcal V_{\mathbb C}$ is closed under taking real and imaginary parts, and these forms split as the sum of their values on those two parts.
+
+For EVERY $F\in\mathcal V_{\mathbb C}$ with $\|F\|_H=1$, there is
+$G\in\operatorname{span}_{\mathbb R}\{\Re F,\Im F\}\subset\mathcal V_{\mathbb R}$ such that
+$$
+\|G\|_H=1,\qquad M(G)=M(F),\qquad
+\mathfrak E(G)\le\mathfrak E(F).
+\tag{W345}
+$$
+Indeed choose a real $H$-orthonormal basis of that span, whose dimension is one or two. Restrict the moment and complete energy to it and apply the SAME cited finite-dimensional decomposition with $\mathbf H=I$ and $Q=\mathbf M-M(F)I$. All restricted entries are finite because the span lies in $\mathcal V$. The preceding weighted-average argument gives W345. No theorem for bounded operators on the whole Hilbert space, extra dimension, closure of a joint numerical range or interchange of extrema is required.
+
+### Consume the extraction in every fixed source problem
+
+Use $m_{A,w,N}^{\mathbb F}(K)$ from W328, allowing any positive integer count cap $N$, and $r_{A,w,N}^{\mathbb F}(\lambda)$ from W329 with that same cap. For EVERY admitted fixed $A,w,N$, EVERY $K>1$, and EVERY $\lambda>0$,
+$$
+\begin{aligned}
+m_{A,w,N}^{\mathbb R}(K)&=m_{A,w,N}^{\mathbb C}(K),&
+r_{A,w,N}^{\mathbb R}(\lambda)&=r_{A,w,N}^{\mathbb C}(\lambda),\\
+e_K^{\mathbb R}&=e_K^{\mathbb C},&
+\lambda_0^{\mathbb R}(\lambda)&=\lambda_0^{\mathbb C}(\lambda).
+\end{aligned}
+\tag{W346}
+$$
+The first line follows from W344: every feasible complex source has a real source on a subset of its original sites with the SAME moment and no larger complete energy. The penalized objective also cannot increase because its moment term is unchanged. Real sources are a subset of complex sources, proving the reverse infimum inequalities. Empty normalized feasible classes match, with infimum $+\infty$; no finite-source attainment is inferred. The second line follows identically from W345 and the already existing completed minima W321--W322. In particular a real completed minimizer can be chosen with the same moment as any given complex minimizer.
+
+Thus W328, W329 and W337 compare one common real/complex value, rather than two unconnected values. The equality holds already at EACH finite source budget, before the cofinal limit. Any uniform complete-energy lower bound proved for all signed real sources at a fixed moment cap therefore holds for all complex sources at exactly that cap, with the same start, count schedule and allowance. A hypothetical complex negative original source similarly yields a real negative source without changing its moment or introducing sites. No separate estimate for each real and imaginary component is needed.
+
+This application removes the scalar-field distinction from the actual constrained problem; it does not restrict the signed real sources to positive coefficients or force any term of W343 to have a favorable sign. The extracted source may change its individual Gamma, primary-prime, higher-power, mean and low-frequency contributions. Their joint COMPLETE sign, nonnegativity of the common $e_K$, W258's vanishing scaled negative allowance, full RH and strict Robin for EVERY integer $n>5040$ remain unproved. The rank-one decomposition is established literature; its same-sites/exact-moment application here is a repository synthesis without a priority claim. This is paper mathematics without scientific execution, a numerical algorithm or Lean/kernel certification.
+
+## Remove the mean by an exact null direction of the actual source form
+
+The rank-one mean in W343 need not be estimated separately. The original odd kernel supplies a fixed zero-energy direction whose ACTUAL arithmetic profile has nonzero mean. Subtracting that direction preserves the complete energy and removes the mean. The auxiliary feature has a controlled finite moment, and no normalization of it is required. The original source's norm, count, window and moment constraints remain the ones being tested.
+
+The classical xi null-vector and mixed-nullity results are already recorded in the [Lagarias account](lagarias2004li.md#mixed-nullity-and-the-theta-weighted-even-weil-interface), together with its full derivative family. They are not new results here. The following uses W255's own physical source map and the oddness in W38 to identify the direction in the DIFFERENT actual form $\mathfrak E$; no identity between that form and the classical full Weil form is assumed. The theta formula and its Fourier normalization are the existing [Romik supplier](../Analytic/romik2021orthogonal.md), equations (1.6)--(1.11). Adding radical vectors to adjust a functional already has a classical precedent in Connes--Consani--Marcolli, [The Weil proof and the geometry of the adeles class space](https://arxiv.org/abs/math/0703392v1), Proposition 6.4 and Lemma 7.3 (pp. 29--30 and 33). Their trace-pairing radical adjusts the degree $\widehat f(1)$ on the space in equation (4.20); this is not an identification with the present physical form or its unweighted mean $\ell(F)$. That degree-adjustment idea is reused as precedent; the bounds below concern the actual physical source and its auxiliary moment.
+
+### Identify the mixed null direction before subtracting it
+
+Let $F_\circ(x)=e^{-x}$ on $x\ge\pi$, and let $\mathfrak E(F,G)$ denote the Hermitian polarization of W317's complete form. Then
+$$
+\begin{aligned}
+F_\circ&\in\mathcal V,\qquad
+\mathfrak E(F_\circ,F)=0\quad(F\in\mathcal V),\\
+g_{F_\circ}(r)&=\frac{\pi^{1/4}}4\Phi(r),\qquad
+m_\circ:=\int_{\mathbb R}g_{F_\circ}(r)dr
+=\frac{\pi^{1/4}}4\xi(1/2)>0.
+\end{aligned}
+\tag{W347}
+$$
+This is mixed nullity, not an inference from a single zero quadratic value. In W255's map the physical source $\delta_0$ has feature $F_\circ$. Since $L_0$ is odd in either argument, $L_0(0,a)=0$ for every real $a$. Polarizing the exact W255 source identity therefore gives $\mathfrak E(F_\circ,F)=0$ for every finite Gaussian source feature. The finite-feature core W326 and continuity of the polarized complete form in $M+\mathcal P$ extend this to all $\mathcal V$. The fixed feature belongs to that domain: its theta image has exponential physical decay, and its logarithmic zero extension has at most one jump, hence Fourier decay $O((1+|\xi|)^{-1})$, integrable against the owned logarithmic multiplier. Equivalently it is the same finite-Gaussian membership argument used in W317.
+
+For its actual profile, $I\mathscr TF_\circ(x)=\sum_{n\ge1}n^2e^{-n^2x}$. Insert this into $B\mathscr TF_\circ$ and set $x=\pi e^{2|r|}$. The original theta series gives exactly $g_{F_\circ}=\pi^{1/4}\Phi/4$, with no Fourier rescaling or missing factor. The existing all-complex transform of $\Phi$ at zero and its positivity give the value and strict sign of $m_\circ$. The point $a=0$ is an auxiliary physical source, not an admitted site added to the original late-window Gaussian source.
+
+### A fixed continuous centering map on the entire original domain
+
+Define the linear functional and map
+$$
+\ell(F)=\int_{\mathbb R}g_F(r)dr,
+\qquad
+RF=F-\frac{\ell(F)}{m_\circ}F_\circ.
+$$
+There is a fixed finite $C_R$, independent of $F$, source count, support and moment-budget size, such that
+$$
+\begin{gathered}
+RF\in\mathcal V,\qquad \ell(RF)=0,\qquad R^2F=RF,\qquad
+\mathfrak E(RF)=\mathfrak E(F),\\
+M(RF)\le C_RM(F),\qquad
+\mathcal P(RF)\le C_R[\mathcal P(F)+M(F)].
+\end{gathered}
+\tag{W348}
+$$
+Indeed the change of variable in the ACTUAL profile gives
+$$
+\ell(F)=\int_\pi^\infty x^{5/4}B\mathscr TF(x)dx,\qquad
+|\ell(F)|\le\sqrt{\frac25}\,\pi^{-5/4}
+\|x^3B\mathscr TF\|_2\le C\sqrt{M(F)}.
+$$
+The last step is W238's cubic $B$ bound and W324's $H_6$ theta bound; no new Hardy or theta theorem is needed. The fixed $M(F_\circ)$ and $\mathcal P(F_\circ)$ now give both bounds in W348 by the triangle inequality in their form norms. Linearity of the actual profile gives $\ell(RF)=0$ and idempotence. W347 eliminates both mixed terms and the diagonal null term in the complete energy. The map preserves real-valued features when $F$ is real; signed coefficients are not restricted.
+
+Neither the $H$ norm nor the auxiliary moment is asserted unchanged. In particular $RF$ can be zero. The argument never divides by $\|RF\|_H$; renormalizing it could destroy uniform control of its moment. W348 is a bounded change of the feature used to evaluate the energy, not an exact-budget replacement of the original source such as W344.
+
+### Consume centering in the full Gamma-relative estimate
+
+For EVERY $F\in\mathcal V$ and each fixed $0<\delta<1$, the SAME complete energy satisfies
+$$
+\begin{aligned}
+\left|\mathfrak E(F)-\mathcal P(RF)+\alpha T_1(g_{RF})\right|
+&\le\delta\mathcal P(RF)+C_\delta S(RF),\\
+\mathfrak E(F)\ge{}&(1-\delta)\mathcal P(RF)-\alpha T_1(g_{RF})
+-C_\delta S(RF)\\
+&+\alpha[\mathcal D_{\rm odd}(g_{RF})+\mathcal J(g_{RF})].
+\end{aligned}
+\tag{W349}
+$$
+Apply the ALREADY established W342--W343 to $RF$ and use W348. This is their actual-source consumer with the mean charge eliminated exactly; their estimates and external logarithmic-derivative supplier are not reproved. Every remaining term belongs to the ONE profile $g_{RF}$. Both folded channels, their full correction, the rank-two cutoff and fixed Gamma shift stay paid as in W340. Constants have the same support/count/budget independence as before and may diverge as $\delta\downarrow0$. The positive form and primary-prime terms now use $RF$, so W349 is not claimed to dominate W343 numerically at every feature or to be a strict numerical improvement.
+
+For an ORIGINAL source with $Q_H=1$, let $\psi=F/\|F\|_H$ be its W257 feature. Evaluate the second line of W349 at $\psi$ and divide its right side by $4\pi^3$ to bound the ORIGINAL $A Q_{\mathcal K_A^g}$. This includes EVERY original source with $Q_{6,A}\le K$ for EVERY fixed $K>1$, at the existing admitted start, with its original count and window. Its auxiliary feature obeys $M(R\psi)\le C_RK$; it is not normalized or passed off as a new source in that window. The two-sided line applies with the same exact W257 factor. It also covers $R\psi=0$, when the complete energy is zero.
+
+Thus the explicit mean term can be removed from the actual all-source lower estimate without a sign assumption or an unpaid energy change. The remaining primary-prime term and low-frequency allowance still require a joint signed bound; their values change under $R$, and neither has been shown favorable. No nonnegativity of the common constrained minima, W258, full RH or strict Robin for EVERY integer $n>5040$ follows. The published theta/null-vector facts and W342--W343 are reused; the additional application is their exact physical null-direction realization, domain-controlled centering and original-source consumer, without a priority claim. This is paper mathematics without scientific execution or Lean/kernel certification.
+
+## One fixed sixth-moment cap controls the entire signed source class
+
+The previous source budgets ranged over every $K>1$. The actual mixed null direction W347 and the already established equal-moment extraction W345 give a quantitative reduction to the ONE fixed cap $4$, without losing any negative direction. The reduction is consumed below by a complete-energy bound for every original budget and by W330's original-source recovery. It does not assume the sign still sought in W349.
+
+The quadratic mixing is classical; the rank-one extraction is the Sturm--Zhang supplier already cited in W344--W346 and is not reproved. The radical-adjustment precedent and its distinct adelic functional are recorded before W347. The application here uses the actual $e^{-x}$ direction, its actual sixth moment, and the already paid return to original Gaussian sources. No generic mixing theorem, new null-vector theorem or literature-priority claim is made.
+
+### The fixed actual null vector fits below cap four
+
+Retain exactly $H$, $M$, $\mathcal V$ and the COMPLETE $\mathfrak E$ of W317. Normalize the known null direction by
+$$
+z_\circ=\frac{e^{-x}}{\|e^{-x}\|_H}.
+$$
+Its moment and one convenient positive lower allowance are
+$$
+\begin{gathered}
+\kappa_\circ:=M(z_\circ)
+=\sum_{j=0}^6\binom6j\frac{j!}{(2\pi)^j}
+<\frac{1223}{324}<4,\qquad c_*:=\frac{73}{324}<4-\kappa_\circ,\\
+e_4:=\min_{\substack{F\in\mathcal V,\ \|F\|_H=1\\M(F)\le4}}
+\mathfrak E(F)\le0.
+\end{gathered}
+\tag{W350}
+$$
+For the moment formula, substitute $x=\pi+y$ in the normalized exponential integral and integrate its degree-six polynomial expansion. Using $\pi>3$ bounds their sum by
+$1+1+5/6+5/9+5/18+5/54+5/324=1223/324$.
+The minimum is finite and attained by W321, agrees in both fields by W346, and is nonpositive because $z_\circ$ is feasible and has complete energy zero by W347. No nonnegative lower bound for it has been established.
+
+### Compress an arbitrary signed feature and quantify its full energy
+
+Define, for $m>1$,
+$$
+\theta_4(m)=
+\begin{cases}
+1,&m\le4,\\
+(4-\kappa_\circ)/(m-\kappa_\circ),&m>4.
+\end{cases}
+$$
+For EVERY $F\in\mathcal V_{\mathbb C}$ with $\|F\|_H=1$, writing $m=M(F)$, there is a REAL $G\in\mathcal V$ such that
+$$
+\|G\|_H=1,\qquad M(G)=\min(m,4),\qquad
+\mathfrak E(G)\le\theta_4(m)\mathfrak E(F).
+\tag{W351}
+$$
+First apply W345 to obtain a real unit $v$ with moment $m$ and complete energy no larger than that of $F$. If $m\le4$, take $G=v$. Otherwise set
+$$
+t^2=\frac{m-4}{4-\kappa_\circ},\qquad
+Y=\frac{v+it z_\circ}{\sqrt{1+t^2}}.
+$$
+Since $v$ and $z_\circ$ are real, their cross terms in both the $H$ norm and moment vanish in this complex combination. W347 gives
+$$
+\|Y\|_H=1,\qquad M(Y)=4,\qquad
+\mathfrak E(Y)=\frac{\mathfrak E(v)}{1+t^2}
+\le\theta_4(m)\mathfrak E(F).
+$$
+Reuse W345 on $Y$ to extract the required real $G$ with the SAME moment and no larger COMPLETE energy. Thus complex mixing creates no restriction to complex final sources. Individual Gamma, prime and folded contributions are not asserted unchanged.
+
+In particular, if $\mathfrak E(F)\le-\Delta<0$, put $d=\theta_4(m)\Delta$. Then
+$\mathfrak E(G)\le-d$ and $d\ge c_*\Delta/m>0$.
+The retained margin depends on the original feature; no universal negative margin or efficient extraction algorithm is claimed.
+
+### Consume the reduction in every original budget
+
+For $K>1$ set
+$$
+D_4(K)=\max\left(1,\frac{K-\kappa_\circ}{4-\kappa_\circ}\right).
+$$
+The SAME existing completed minima satisfy
+$$
+\begin{gathered}
+e_K\ge D_4(K)e_4\quad(K>1),\qquad
+e_K\le e_4\quad(K\ge4),\\
+\mathfrak E(F)\ge\frac{e_4}{c_*}M(F)\quad(F\in\mathcal V).
+\end{gathered}
+\tag{W352}
+$$
+Indeed W351 makes $G$ feasible for $e_4$, so
+$\mathfrak E(F)\ge e_4/\theta_4(m)$ for every unit $F$. For $m\le K$, the reciprocal is at most $D_4(K)$; since $e_4\le0$, this gives the first lower bound. Set inclusion gives the upper bound for $K\ge4$. Also $1/\theta_4(m)\le m/c_*$ for every $m>1$. Homogeneity now gives the global moment bound, including the zero feature.
+
+This has a SAME-original-source consumer through W257. For every admitted original normalized source with $Q_H=1$ and $Q_{6,A}\le K$,
+$$
+4\pi^3 A Q_{\mathcal K_A^g}\ge D_4(K)e_4.
+$$
+Without normalization, every admitted finite original source obeys
+$$
+A Q_{\mathcal K_A^g}\ge\frac{e_4}{4\pi^3c_*}Q_{6,A}.
+$$
+These include arbitrary real or complex coefficients, counts and widths, with the ENTIRE kernel retained. The new coefficient is an unevaluated actual minimum, not a certified favorable number or a numerical improvement over earlier constants. A finite-source trial value supplies an upper bound on $e_4$; it cannot be inserted as its lower certificate.
+
+### Return every compressed negative direction to legal original sources
+
+The auxiliary $z_\circ$ is not a new site inserted in the original late window. Apply the existing recovery W330 to W351's completed $G$, at the exact budget $K=4$ and $B=0$. With
+$$
+\eta=\min(1,d/2),\qquad L=19/3+\eta^{-1},
+$$
+there is the SAME universal recovery constant $C$ such that EVERY $A\ge CL^{100}$ and EVERY $w>0$ admit a real ORIGINAL source satisfying
+$$
+\begin{gathered}
+\operatorname{supp}\sigma\subset[A,A+w),\qquad
+\#\operatorname{supp}\sigma\le\left\lceil e^{CL^{100}}e^{2A}\right\rceil,\\
+Q_H(\sigma)=1,\qquad Q_{6,A}(\sigma)\le4,\qquad
+A Q_{\mathcal K_A^g}(\sigma)\le-\frac{d}{8\pi^3}<0.
+\end{gathered}
+\tag{W353}
+$$
+W330 pays its own strict-slack step even when $M(G)=4$, and gives $\mathfrak E(\psi)\le\mathfrak E(G)+\eta\le-d/2$ for the recovered normalized feature. W257 supplies the displayed original factor. No original count, sites, gap or coefficient bound is asserted preserved by this recovery.
+
+Consequently the conditional negative witnesses of W254, if any exist, can ALL be chosen inside the fixed original cap $4$ rather than a seed-dependent moment cap. This captures every possible negative direction; it does not replace the original goal by a positive subclass. W328/W337 already identify and approximate precisely this $e_4$ by actual cap-four source extrema. A vanishing lower allowance at that single cap would therefore pay all the other budgets through W352; such an allowance remains unproved.
+
+The current W349 estimate can likewise be tested only on the normalized cap-four class when trying to exclude arbitrary negative features: W351 would move any negative feature into that class. Its centered auxiliary test then has $M(RG)\le4C_R$ and the SAME energy, by W348, and is still never renormalized. Every Gamma, primary-prime, low-frequency and folded term must remain on that one centered profile. Their required joint sign, the sign $e_4=0$ versus $e_4<0$, full RH and strict Robin for EVERY integer $n>5040$ remain unresolved. This is a paper application of the existing null direction, classical rank-one extraction and owned source recovery, without scientific execution or Lean/kernel certification.
