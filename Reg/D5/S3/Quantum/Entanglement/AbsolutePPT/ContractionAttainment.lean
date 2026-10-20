@@ -1,7 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
 import Reg.Support.DependentFamily
-import Reg.Support.SingleDependentReadout
 
 /-! Faithful four-slot audit evidence for the dimension-general contraction family.
 All finite systems and matrices remain in scope, including empty systems and
@@ -19,6 +18,8 @@ open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 namespace Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
 noncomputable section
 
+universe t s o
+
 structure Systems where
   A : Type
   B : Type
@@ -32,9 +33,32 @@ def system (A B : Type) [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B] 
     Systems := ⟨A, B, inferInstance, inferInstance, inferInstance, inferInstance⟩
 abbrev Mat (p : Systems) := Matrix (p.A × p.B) (p.A × p.B) ℂ
 
+abbrev owningSignature (P : Type t) (X : P → Type s) (Y : P → Type o) : Signature where
+  Params := P
+  State := X
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ => Y
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
 abbrev matrixSignature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Systems
-    (fun p => Mat p) (fun p => Mat p)
+  owningSignature Systems (fun p => Mat p) (fun p => Mat p)
+
+private theorem owningSensitivity {P : Type t} {X : P → Type s} {Y : P → Type o}
+    (law : Realization (owningSignature P X Y) → Prop)
+    (actual bad : Realization (owningSignature P X Y)) (hbad : ¬ law bad) :
+    Sensitivity ⟨owningSignature P X Y, law⟩ actual := by
+  constructor
+  · intro i
+    refine ⟨bad, ?_, ?_, hbad⟩
+    · intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
 
 namespace Identity
 def actual : Realization matrixSignature :=
@@ -108,8 +132,7 @@ def family : Registration arena (type_of% @kraus_identity) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@kraus_identity, bad, bad_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual bad bad_law
+  sensitivity := owningSensitivity arena.Law actual bad bad_law
   dependence := dependence
 def audit : Contract.Registration (@kraus_identity) (Realization matrixSignature) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Identity.unit
@@ -178,8 +201,7 @@ def family : Registration arena (type_of% @partial_transpose_posSemidef) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@partial_transpose_posSemidef, bad, bad_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual bad bad_law
+  sensitivity := owningSensitivity arena.Law actual bad bad_law
   dependence := dependence
 def audit : Contract.Registration (@partial_transpose_posSemidef) (Realization matrixSignature) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Positivity.unit
@@ -247,8 +269,7 @@ def family : Registration arena (type_of% @contraction_appt) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@contraction_appt, bad, bad_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual bad bad_law
+  sensitivity := owningSensitivity arena.Law actual bad bad_law
   dependence := dependence
 def audit : Contract.Registration (@contraction_appt) (Realization matrixSignature) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Absolute.unit
