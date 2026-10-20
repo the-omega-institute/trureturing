@@ -294,11 +294,6 @@ private def payoff {d : ℕ} (N : Fin d → ℕ) (f v : Fin d → ℝ) : ℝ :=
 private def mass {d : ℕ} (N : Fin d → ℕ) (f : Fin d → ℝ) : ℝ :=
   ∑ i, if N i = Finset.univ.sup N then f i ^ 2 else 0
 
-private theorem normalized_square {d : ℕ} (u : Fin d → ℝ) (q : ℝ) (hq : 0 < q)
-    (hu : (∑ i, u i ^ 2) = q) :
-    (∑ i, (u i / Real.sqrt q) ^ 2) = 1 := by
-  simp only [div_pow, ← Finset.sum_div, Real.sq_sqrt hq.le, hu, div_self hq.ne']
-
 private theorem baseline_vector {d : ℕ} [Nonempty (Fin d)]
     (N : Fin d → ℕ) (f : Fin d → ℝ) :
     ∃ v : Fin d → ℝ, (∑ i, v i ^ 2) = 1 ∧
@@ -322,10 +317,14 @@ private theorem baseline_vector {d : ℕ} [Nonempty (Fin d)]
       (if N i = Finset.univ.sup N then f i else 0) / Real.sqrt (mass N f)
     have hs : Real.sqrt (mass N f) ^ 2 = mass N f := Real.sq_sqrt hmass
     have hv : (∑ i, v i ^ 2) = 1 := by
-      apply normalized_square _ _ hp
-      apply Finset.sum_congr rfl
-      intro i _
-      split_ifs <;> simp
+      calc
+        (∑ i, v i ^ 2) = mass N f / mass N f := by
+          simp only [v, div_pow, ← Finset.sum_div, hs]
+          congr 1
+          apply Finset.sum_congr rfl
+          intro i _
+          split_ifs <;> simp
+        _ = 1 := div_self hp.ne'
     have hw : (∑ i, (N i : ℝ) * v i ^ 2) = ((Finset.univ.sup N : ℕ) : ℝ) * ∑ i, v i ^ 2 := by
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
@@ -579,7 +578,8 @@ private theorem constant_improvement {n d : ℕ} (hn : 2 ≤ n) (j : Fin n)
     simp only [he, Finset.sum_add_distrib]
     simp [q]
   let v : Fin d → ℝ := fun i => u i / Real.sqrt q
-  refine ⟨v, normalized_square u q hq hu, ?_⟩
+  refine ⟨v, ?_, ?_⟩
+  · simp only [v, div_pow, ← Finset.sum_div, Real.sq_sqrt hq.le, hu, div_self hq.ne']
   have hscore : payoff N (fun i => block a b i a) v =
       ((n : ℝ) - 1) * (2 * n / Real.sqrt q) ^ 2 +
         (3 / 5 * (2 * n / Real.sqrt q) + 4 / 5 * (1 / Real.sqrt q)) ^ 2 := by
