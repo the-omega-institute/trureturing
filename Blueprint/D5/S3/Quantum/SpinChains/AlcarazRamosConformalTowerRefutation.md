@@ -58,6 +58,10 @@ $$\neg (\forall i \in \mathbb{N},\; (1 \le i) \Rightarrow (\operatorname{Tendsto
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/AlcarazRamosConformalTowerRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alcaraz-ramos-2024-conformal-tower-lowest-mode` (refuted) by `D5/S3/Quantum/SpinChains/AlcarazRamosConformalTowerRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alcaraz-ramos-2024-conformal-tower-lowest-mode","declaration_gid":"D5/S3/Quantum/SpinChains/AlcarazRamosConformalTowerRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Francisco C. Alcaraz, Lucas M. Ramos (2024). *Conformally invariant free parafermionic quantum chains with multispin interactions*. DOI: [10.1103/PhysRevE.109.044138](https://doi.org/10.1103/PhysRevE.109.044138). URL: <https://arxiv.org/abs/2402.09936v3>.

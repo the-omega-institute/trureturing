@@ -33,7 +33,10 @@ internal sealed class AlcarazRamosConformalTowerRefutationDocument : IScribeDocu
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "It suffices to use i=1. The recurrence gives the coefficient formula (−1)^j choose(n−2j,j). Reversing the finite sum at M=3m gives a scaled polynomial Q_m. Binomial asymptotics and dominated convergence imply Q_m(v_m) → F(u) whenever v_m → u and eventually |v_m|≤5, where F(u)=Σ_{k≥0}(−1)^k u^{3k}/(3k+2)!. The alternating-series lower bound through k=5 proves F(u)>0 throughout [4.2321,4.2323]. Bounds on π and √3 place 7π/(3√3) in that interval. The predicted quasienergy limit would produce positive roots with Q_m(v_m)=0 eventually, forcing F(7π/(3√3))=0, a contradiction. The argument does not establish existence or the exact value of the actual lowest-mode limit, equal spacing of its first zeros, other N or residue classes, or asymptotic large-index spacing."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alcaraz-ramos-2024-conformal-tower-lowest-mode"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(
