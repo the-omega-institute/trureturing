@@ -3,6 +3,7 @@ import LeanInformationAuditRegTests.SearchReduction.FiniteModel
 /-! Statement-level prefix and scope model. This does not verify the metaprogram. -/
 namespace LeanInformationAudit.Tests.SearchReduction.VocabularyModel
 open FiniteModel
+open LeanInformationAudit.SearchReduction (Failure Run)
 
 /-- Weakening transports derivations, without asserting that a bounded search
 will find the transported proof. -/
