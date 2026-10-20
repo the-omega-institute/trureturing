@@ -610,6 +610,22 @@ The two terms have different meanings. The \(r^3\) term is local volume, while
 length \(m\). The estimate uses one joint ordered process, so it cannot be
 replaced by combining two separately attainable projection bounds.
 
+The mechanism behind the improvement is chronological and algebraic. The
+actual forward operator has the exact factorization
+
+$$
+P^L=U^LQ_{L-1}\cdots Q_1Q_0,
+$$
+
+and the spectral-gap estimate controls every three-projection block
+\(Q_{j+2}Q_{j+1}Q_j\) on the componentwise-zero subspace by
+\(\kappa=1-\gamma/2\). Consecutive blocks share their endpoint projection;
+the identity \(Q_{2j}^2=Q_{2j}\) therefore joins them in the actual time order.
+This gives \(\lfloor(L-1)/2\rfloor\) effective contractions from \(L\) actual
+letters, rather than a product of independently selected left and right
+bounds. The shared endpoint is the precise reason the estimate is a statement
+about one realizable history law.
+
 For radii \(r_n=\exp(-an+o(n))\), this yields the lower exponent
 
 $$
@@ -629,10 +645,36 @@ $$
 \widehat a=\frac{\widehat\xi}{2+\widehat\xi/\log2}.
 $$
 
-The remaining interval \(\widehat a<a<\log2\) is still open. If the extra
-condition \(\gamma=1\) were supplied, the displayed lower envelope would match
-the target for every \(a>0\), but that condition is not established by the
-current result. Consequently, the all-\(a,c\) critical pair-energy statement,
+The newest finite \(S^3\) calculation in the actual-word volume gives a
+nonzero mean-zero test vector with Rayleigh quotient \(3/8\). Hence the
+already supplied positivity of the same spectral-gap constant now has the
+additional certified direction
+
+$$
+0<\gamma=\gamma_{22}\le\frac38<1,
+\qquad
+\kappa\ge\frac{13}{16},
+\qquad
+\widehat\xi\le\log\frac{16}{13}.
+$$
+
+Consequently the universally justified matching threshold is bounded by
+
+$$
+\widehat a\le
+a_*:=
+\frac{\log(16/13)}{2+\log(16/13)/\log2}
+\approx0.09029525.
+$$
+
+This changes the status of the former \(\gamma=1\) branch: it is incompatible
+with the new finite test vector, so it must no longer be presented as a live
+route to closing the full exponent. The interval \(a_*<a<\log2\) remains a
+gap in the present envelope, but the gap is unresolved rather than a
+counterexample to the target.
+
+The remaining interval \(\widehat a<a<\log2\) is still open. Consequently,
+the all-\(a,c\) critical pair-energy statement,
 the sharp finite-\(n,\varepsilon\) law, and the global minimum controller-memory
 law remain open.
 
