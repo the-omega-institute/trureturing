@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation
    generality: I
    mirror-B: D5/B/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation.claim; result=D5/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation.result; claim=D5/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation.claim
    digest: A unitary matrix of order three has a nonglobal local scaling minimum. -/
@@ -15,6 +15,7 @@ nonglobal local maximum in modulus, giving a nonglobal local minimum of its land
 noncomputable section
 
 open Matrix Finset
+open Complex (exp I)
 open scoped Topology
 
 namespace D5.S3.Quantum.Matrix.UnitaryScalingLandscapeRefutation
@@ -31,18 +32,10 @@ def claim : Prop :=
   ∀ (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ), A ∈ Matrix.unitaryGroup (Fin n) ℂ →
     ∀ x, IsLocalMin (landscape A) x → ∀ y, landscape A x ≤ landscape A y
 
-private def phase (t : ℝ) : ℂ := Complex.exp ((t : ℂ) * Complex.I)
-
-private theorem phase_norm (t : ℝ) : ‖phase t‖ = 1 := by
-  simp [phase, Complex.norm_exp]
-
-private theorem phase_add (s t : ℝ) : phase (s + t) = phase s * phase t := by
-  simp only [phase, Complex.ofReal_add, add_mul, Complex.exp_add]
-
 private def witnessMatrix : Matrix (Fin 3) (Fin 3) ℂ :=
   !![-2 / 34, 24 / 34, 24 / 34;
-     24 / 34, (1 + 17 * Complex.I) / 34, (1 - 17 * Complex.I) / 34;
-     24 / 34, (1 - 17 * Complex.I) / 34, (1 + 17 * Complex.I) / 34]
+     24 / 34, (1 + 17 * I) / 34, (1 - 17 * I) / 34;
+     24 / 34, (1 - 17 * I) / 34, (1 + 17 * I) / 34]
 
 private theorem witness_unitary : witnessMatrix ∈ Matrix.unitaryGroup (Fin 3) ℂ := by
   rw [Matrix.mem_unitaryGroup_iff']
@@ -59,52 +52,30 @@ private theorem landscape_zero : landscape witnessMatrix 0 = 200 / 289 := by
   rw [landscape, scaling_zero]
   norm_num
 
-private def rowSum {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (ρ : Fin n → ℝ)
-    (j : Fin n) : ℂ := ∑ k, A j k * phase (ρ k)
-
 private theorem scaling_rows {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
     (x : (Fin n → ℝ) × (Fin n → ℝ)) :
-    scalingSum A x = ∑ j, phase (x.1 j) * rowSum A x.2 j := by
-  unfold scalingSum rowSum
+    scalingSum A x = ∑ j, exp ((x.1 j : ℂ) * I) * (A *ᵥ fun k => exp ((x.2 k : ℂ) * I)) j := by
+  unfold scalingSum Matrix.mulVec dotProduct
   apply Finset.sum_congr rfl
   intro j _
   rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro k _
-  rw [← phase, phase_add]
+  rw [Complex.ofReal_add, add_mul, Complex.exp_add]
   ring
-
-private theorem scaling_triangle {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
-    (x : (Fin n → ℝ) × (Fin n → ℝ)) :
-    ‖scalingSum A x‖ ≤ ∑ j, ‖rowSum A x.2 j‖ := by
-  rw [scaling_rows]
-  calc
-    ‖∑ j, phase (x.1 j) * rowSum A x.2 j‖ ≤
-        ∑ j, ‖phase (x.1 j) * rowSum A x.2 j‖ := norm_sum_le _ _
-    _ = ∑ j, ‖rowSum A x.2 j‖ := by simp only [norm_mul, phase_norm, one_mul]
-
-private theorem phase_align (z : ℂ) : phase (-Complex.arg z) * z = (‖z‖ : ℂ) := by
-  conv_lhs => rw [← Complex.norm_mul_exp_arg_mul_I z]
-  rw [mul_left_comm, ← phase, ← phase_add]
-  simp [phase]
 
 private theorem scaling_aligned {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (ρ : Fin n → ℝ) :
-    ‖scalingSum A (fun j => -Complex.arg (rowSum A ρ j), ρ)‖ =
-      ∑ j, ‖rowSum A ρ j‖ := by
+    ‖scalingSum A (fun j => -Complex.arg ((A *ᵥ fun k => exp ((ρ k : ℂ) * I)) j), ρ)‖ =
+      ∑ j, ‖(A *ᵥ fun k => exp ((ρ k : ℂ) * I)) j‖ := by
   rw [scaling_rows]
-  simp only [phase_align]
+  have halign : ∀ z : ℂ, exp (((-Complex.arg z : ℝ) : ℂ) * I) * z = (‖z‖ : ℂ) := by
+    intro z
+    rw [Complex.ofReal_neg, neg_mul, Complex.exp_neg]
+    apply (inv_mul_eq_iff_eq_mul₀ (Complex.exp_ne_zero _)).2
+    simpa only [mul_comm] using (Complex.norm_mul_exp_arg_mul_I z).symm
+  simp only [halign]
   rw [← Complex.ofReal_sum, Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg (Finset.sum_nonneg fun _ _ => norm_nonneg _)]
-
-private theorem norm_affine_phase_sq (a b u : ℝ) :
-    ‖(a : ℂ) + (b : ℂ) * phase u‖ ^ 2 =
-      (a + b) ^ 2 - 2 * a * b * (1 - Real.cos u) := by
-  rw [Complex.sq_norm, Complex.normSq_add, Complex.normSq_mul,
-    Complex.normSq_ofReal, Complex.normSq_ofReal, Complex.normSq_eq_norm_sq, phase_norm]
-  simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, map_mul,
-    Complex.conj_ofReal, Complex.conj_re, phase, Complex.exp_ofReal_mul_I_re,
-    zero_mul, sub_zero]
-  ring
 
 private theorem central_radius_bound (b h R : ℝ) (hb : 23 / 24 ≤ b)
     (hh : 0 ≤ h) (hR : 0 ≤ R)
@@ -132,9 +103,9 @@ private theorem side_radius_bound (B h R : ℝ) (hB0 : 0 ≤ B) (hB2 : B ≤ 2)
   nlinarith [hprod, hmul]
 
 private theorem radial_certificate (u v : ℝ) (hv : |v| < 1 / 100) :
-    ‖(-1 : ℂ) + (24 * Real.cos v : ℝ) * phase u‖ +
-      ‖(12 : ℂ) + ((Real.cos v - 17 * Real.sin v : ℝ) : ℂ) * phase u‖ +
-      ‖(12 : ℂ) + ((Real.cos v + 17 * Real.sin v : ℝ) : ℂ) * phase u‖ ≤ 49 := by
+    ‖(-1 : ℂ) + (24 * Real.cos v : ℝ) * exp (u * I)‖ +
+      ‖(12 : ℂ) + ((Real.cos v - 17 * Real.sin v : ℝ) : ℂ) * exp (u * I)‖ +
+      ‖(12 : ℂ) + ((Real.cos v + 17 * Real.sin v : ℝ) : ℂ) * exp (u * I)‖ ≤ 49 := by
   have ht : |Real.sin v| ≤ 1 / 100 := (Real.abs_sin_le_abs).trans hv.le
   have hv2 : v ^ 2 ≤ (1 / 100 : ℝ) ^ 2 := by
     have := abs_le.mp hv.le
@@ -155,55 +126,68 @@ private theorem radial_certificate (u v : ℝ) (hv : |v| < 1 / 100) :
   have hp2 : Real.cos v + 17 * Real.sin v ≤ 2 := by
     have := abs_le.mp ht
     linarith
-  have h0 := norm_affine_phase_sq (-1) (24 * Real.cos v) u
-  have hm := norm_affine_phase_sq 12 (Real.cos v - 17 * Real.sin v) u
-  have hp := norm_affine_phase_sq 12 (Real.cos v + 17 * Real.sin v) u
+  have h0 := Complex.normSq_add (-1) ((24 * Real.cos v : ℝ) * exp (u * I))
+  have hm := Complex.normSq_add 12
+    (((Real.cos v - 17 * Real.sin v : ℝ) : ℂ) * exp (u * I))
+  have hp := Complex.normSq_add 12
+    (((Real.cos v + 17 * Real.sin v : ℝ) : ℂ) * exp (u * I))
+  simp only [Complex.normSq_mul, Complex.normSq_ofReal, Complex.normSq_neg,
+    Complex.normSq_one, Complex.normSq_ofNat] at h0 hm hp
+  simp only [Complex.normSq_eq_norm_sq, Complex.norm_exp_ofReal_mul_I, one_pow,
+    mul_one, map_mul, Complex.conj_ofReal, Complex.mul_re, Complex.ofReal_re,
+    Complex.ofReal_im, Complex.conj_re, Complex.exp_ofReal_mul_I_re,
+    zero_mul, sub_zero, Complex.neg_re, Complex.one_re, Complex.neg_im,
+    Complex.one_im, neg_zero, Complex.re_ofNat, Complex.im_ofNat] at h0 hm hp
   have e0 := central_radius_bound (Real.cos v) (1 - Real.cos u)
-    ‖(-1 : ℂ) + (24 * Real.cos v : ℝ) * phase u‖ hb hh (norm_nonneg _)
-    (by norm_num only [Complex.ofReal_neg, Complex.ofReal_one] at h0; nlinarith [h0])
+    ‖(-1 : ℂ) + (24 * Real.cos v : ℝ) * exp (u * I)‖ hb hh (norm_nonneg _)
+    (by nlinarith [h0])
   have em := side_radius_bound (Real.cos v - 17 * Real.sin v) (1 - Real.cos u)
-    ‖(12 : ℂ) + ((Real.cos v - 17 * Real.sin v : ℝ) : ℂ) * phase u‖
-    hm0 hm2 hh (norm_nonneg _) (by norm_num only [Complex.ofReal_ofNat] at hm; linarith)
+    ‖(12 : ℂ) + ((Real.cos v - 17 * Real.sin v : ℝ) : ℂ) * exp (u * I)‖
+    hm0 hm2 hh (norm_nonneg _) (by norm_num only [Complex.ofReal_ofNat] at hm; nlinarith [hm])
   have ep := side_radius_bound (Real.cos v + 17 * Real.sin v) (1 - Real.cos u)
-    ‖(12 : ℂ) + ((Real.cos v + 17 * Real.sin v : ℝ) : ℂ) * phase u‖
-    hp0 hp2 hh (norm_nonneg _) (by norm_num only [Complex.ofReal_ofNat] at hp; linarith)
+    ‖(12 : ℂ) + ((Real.cos v + 17 * Real.sin v : ℝ) : ℂ) * exp (u * I)‖
+    hp0 hp2 hh (norm_nonneg _) (by norm_num only [Complex.ofReal_ofNat] at hp; nlinarith [hp])
   have hb0 : 0 ≤ Real.cos v := by linarith
   nlinarith [mul_nonneg hb0 hh]
 
 private def reducedRows (u v : ℝ) : Fin 3 → ℂ :=
-  ![(-1 : ℂ) + ((24 * Real.cos v : ℝ) : ℂ) * phase u,
-    (12 : ℂ) + ((Real.cos v - 17 * Real.sin v : ℝ) : ℂ) * phase u,
-    (12 : ℂ) + ((Real.cos v + 17 * Real.sin v : ℝ) : ℂ) * phase u]
+  ![(-1 : ℂ) + ((24 * Real.cos v : ℝ) : ℂ) * exp (u * I),
+    (12 : ℂ) + ((Real.cos v - 17 * Real.sin v : ℝ) : ℂ) * exp (u * I),
+    (12 : ℂ) + ((Real.cos v + 17 * Real.sin v : ℝ) : ℂ) * exp (u * I)]
 
 private theorem row_reduction (ρ : Fin 3 → ℝ) (j : Fin 3) :
-    rowSum witnessMatrix ρ j = phase (ρ 0) / 17 *
+    (witnessMatrix *ᵥ fun k => exp ((ρ k : ℂ) * I)) j = exp ((ρ 0 : ℂ) * I) / 17 *
       reducedRows ((ρ 1 + ρ 2) / 2 - ρ 0) ((ρ 1 - ρ 2) / 2) j := by
   let u := (ρ 1 + ρ 2) / 2 - ρ 0
   let v := (ρ 1 - ρ 2) / 2
-  have h1 : phase (ρ 1) = phase (ρ 0) * phase u * phase v := by
-    rw [← phase_add, ← phase_add]
+  have h1 : exp ((ρ 1 : ℂ) * I) = exp ((ρ 0 : ℂ) * I) * exp (u * I) * exp (v * I) := by
+    rw [← Complex.exp_add, ← Complex.exp_add]
     congr 1
     dsimp [u, v]
+    push_cast
     ring
-  have h2 : phase (ρ 2) = phase (ρ 0) * phase u * phase (-v) := by
-    rw [← phase_add, ← phase_add]
+  have h2 : exp ((ρ 2 : ℂ) * I) = exp ((ρ 0 : ℂ) * I) * exp (u * I) * exp (((-v : ℝ) : ℂ) * I) := by
+    rw [← Complex.exp_add, ← Complex.exp_add]
     congr 1
     dsimp [u, v]
+    push_cast
     ring
-  have hv : phase v = (Real.cos v : ℂ) + (Real.sin v : ℂ) * Complex.I :=
+  have hv : exp (v * I) = (Real.cos v : ℂ) + (Real.sin v : ℂ) * I :=
     Complex.exp_ofReal_mul_I v
-  have hnv : phase (-v) = (Real.cos v : ℂ) - (Real.sin v : ℂ) * Complex.I := by
-    rw [phase, Complex.exp_ofReal_mul_I]
+  have hnv : exp (((-v : ℝ) : ℂ) * I) = (Real.cos v : ℂ) - (Real.sin v : ℂ) * I := by
+    rw [Complex.exp_ofReal_mul_I]
     simp only [Real.cos_neg, Real.sin_neg,
       Complex.ofReal_neg, neg_mul, sub_eq_add_neg]
-  change rowSum witnessMatrix ρ j = phase (ρ 0) / 17 * reducedRows u v j
+  change (witnessMatrix *ᵥ fun k => exp ((ρ k : ℂ) * I)) j =
+    exp ((ρ 0 : ℂ) * I) / 17 * reducedRows u v j
   fin_cases j <;>
-    simp [rowSum, witnessMatrix, reducedRows, Fin.sum_univ_succ, h1, h2, hv, hnv,
+    simp [-Complex.ofReal_neg, -Complex.exp_neg, Matrix.mulVec, dotProduct,
+      witnessMatrix, reducedRows, Fin.sum_univ_succ, h1, h2, hv, hnv,
       Complex.ofReal_sub, Complex.ofReal_add, Complex.ofReal_mul] <;>
     ring_nf <;> simp only [Complex.I_sq] <;> ring
 
 private theorem column_norm_bound (ρ : Fin 3 → ℝ) (hρ : |ρ 1 - ρ 2| < 1 / 50) :
-    ∑ j, ‖rowSum witnessMatrix ρ j‖ ≤ 49 / 17 := by
+    ∑ j, ‖(witnessMatrix *ᵥ fun k => exp ((ρ k : ℂ) * I)) j‖ ≤ 49 / 17 := by
   let u := (ρ 1 + ρ 2) / 2 - ρ 0
   let v := (ρ 1 - ρ 2) / 2
   have hv : |v| < 1 / 100 := by
@@ -213,10 +197,11 @@ private theorem column_norm_bound (ρ : Fin 3 → ℝ) (hρ : |ρ 1 - ρ 2| < 1 
   have hred : ∑ j, ‖reducedRows u v j‖ ≤ 49 := by
     simpa [reducedRows, Fin.sum_univ_succ, add_assoc] using radial_certificate u v hv
   calc
-    ∑ j, ‖rowSum witnessMatrix ρ j‖ = ∑ j, (1 / 17 : ℝ) * ‖reducedRows u v j‖ := by
+    ∑ j, ‖(witnessMatrix *ᵥ fun k => exp ((ρ k : ℂ) * I)) j‖ =
+        ∑ j, (1 / 17 : ℝ) * ‖reducedRows u v j‖ := by
       apply Finset.sum_congr rfl
       intro j _
-      rw [row_reduction, norm_mul, norm_div, phase_norm]
+      rw [row_reduction, norm_mul, norm_div, Complex.norm_exp_ofReal_mul_I]
       norm_num [u, v]
     _ = (1 / 17 : ℝ) * ∑ j, ‖reducedRows u v j‖ := (Finset.mul_sum ..).symm
     _ ≤ 49 / 17 := by linarith
@@ -228,7 +213,14 @@ private theorem witness_local_min : IsLocalMin (landscape witnessMatrix) 0 := by
       𝓝 (0 : (Fin 3 → ℝ) × (Fin 3 → ℝ)) :=
     (isOpen_lt hc continuous_const).mem_nhds (by norm_num)
   filter_upwards [hU] with p hp
-  have hnorm := (scaling_triangle witnessMatrix p).trans (column_norm_bound p.2 hp)
+  have htriangle : ‖scalingSum witnessMatrix p‖ ≤
+      ∑ j, ‖(witnessMatrix *ᵥ fun k => exp ((p.2 k : ℂ) * I)) j‖ := by
+    rw [scaling_rows]
+    simpa only [norm_mul, Complex.norm_exp_ofReal_mul_I, one_mul] using
+      norm_sum_le (s := Finset.univ)
+        (f := fun j => exp ((p.1 j : ℂ) * I) *
+          (witnessMatrix *ᵥ fun k => exp ((p.2 k : ℂ) * I)) j)
+  have hnorm := htriangle.trans (column_norm_bound p.2 hp)
   rw [landscape_zero, landscape]
   have hn := norm_nonneg (scalingSum witnessMatrix p)
   norm_num only [Nat.cast_ofNat]
@@ -237,7 +229,7 @@ private theorem witness_local_min : IsLocalMin (landscape witnessMatrix) 0 := by
 private def comparisonColumns : Fin 3 → ℝ := ![0, 2 * Real.pi / 3, Real.pi / 3]
 
 private theorem comparison_squares (j : Fin 3) :
-    ‖rowSum witnessMatrix comparisonColumns j‖ ^ 2 =
+    ‖(witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) j‖ ^ 2 =
       ![(433 / 289 : ℝ), 217 / 289 - Real.sqrt 3 / 34,
         217 / 289 + Real.sqrt 3 / 34] j := by
   have hu : (comparisonColumns 1 + comparisonColumns 2) / 2 - comparisonColumns 0 =
@@ -245,44 +237,41 @@ private theorem comparison_squares (j : Fin 3) :
   have hv : (comparisonColumns 1 - comparisonColumns 2) / 2 = Real.pi / 6 := by
     norm_num [comparisonColumns]
     ring
-  rw [row_reduction, hu, hv, norm_mul, norm_div, phase_norm]
+  rw [row_reduction, hu, hv, norm_mul, norm_div, Complex.norm_exp_ofReal_mul_I]
   norm_num only [mul_pow, div_pow, one_pow]
-  have h0 := norm_affine_phase_sq (-1) (24 * Real.cos (Real.pi / 6)) (Real.pi / 2)
-  have hm := norm_affine_phase_sq 12
-    (Real.cos (Real.pi / 6) - 17 * Real.sin (Real.pi / 6)) (Real.pi / 2)
-  have hp := norm_affine_phase_sq 12
-    (Real.cos (Real.pi / 6) + 17 * Real.sin (Real.pi / 6)) (Real.pi / 2)
-  norm_num only [Complex.ofReal_neg, Complex.ofReal_one, Complex.ofReal_ofNat,
-    Real.cos_pi_div_two, Real.cos_pi_div_six, Real.sin_pi_div_six] at h0 hm hp
   have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
   fin_cases j <;>
-    norm_num [reducedRows, Real.cos_pi_div_six, Real.sin_pi_div_six] at h0 hm hp ⊢ <;>
+    norm_num [reducedRows, Complex.sq_norm, Complex.normSq_apply,
+      Complex.mul_re, Complex.mul_im, Real.cos_pi_div_six, Real.sin_pi_div_six] <;>
     nlinarith
 
-private theorem comparison_larger : 49 / 17 < ∑ j, ‖rowSum witnessMatrix comparisonColumns j‖ := by
+private theorem comparison_larger :
+    49 / 17 < ∑ j, ‖(witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) j‖ := by
   have hs : (3 / 2 : ℝ) ≤ Real.sqrt 3 := Real.le_sqrt_of_sq_le (by norm_num)
   have hs2 : Real.sqrt 3 ≤ 2 := (Real.sqrt_le_iff).mpr ⟨by norm_num, by norm_num⟩
-  have h0 : (6 / 5 : ℝ) ≤ ‖rowSum witnessMatrix comparisonColumns 0‖ := by
+  have h0 : (6 / 5 : ℝ) ≤ ‖(witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) 0‖ := by
     have := comparison_squares 0
     norm_num only [Matrix.cons_val_zero] at this
-    nlinarith [norm_nonneg (rowSum witnessMatrix comparisonColumns 0)]
-  have hm : (4 / 5 : ℝ) ≤ ‖rowSum witnessMatrix comparisonColumns 1‖ := by
+    nlinarith [norm_nonneg ((witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) 0)]
+  have hm : (4 / 5 : ℝ) ≤ ‖(witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) 1‖ := by
     have := comparison_squares 1
     norm_num at this
-    nlinarith [norm_nonneg (rowSum witnessMatrix comparisonColumns 1)]
-  have hp : (8 / 9 : ℝ) ≤ ‖rowSum witnessMatrix comparisonColumns 2‖ := by
+    nlinarith [norm_nonneg ((witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) 1)]
+  have hp : (8 / 9 : ℝ) ≤ ‖(witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) 2‖ := by
     have := comparison_squares 2
     norm_num at this
-    nlinarith [norm_nonneg (rowSum witnessMatrix comparisonColumns 2)]
+    nlinarith [norm_nonneg ((witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) 2)]
   simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
-  change 49 / 17 < ‖rowSum witnessMatrix comparisonColumns 0‖ +
-    (‖rowSum witnessMatrix comparisonColumns 1‖ + ‖rowSum witnessMatrix comparisonColumns 2‖)
+  change 49 / 17 < ‖(witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) 0‖ +
+    (‖(witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) 1‖ +
+      ‖(witnessMatrix *ᵥ fun k => exp ((comparisonColumns k : ℂ) * I)) 2‖)
   linarith
 
 theorem result : ¬ claim := by
   intro h
   have hglobal := h 3 witnessMatrix witness_unitary 0 witness_local_min
-    (fun j => -Complex.arg (rowSum witnessMatrix comparisonColumns j), comparisonColumns)
+    (fun j => -Complex.arg ((witnessMatrix *ᵥ fun k =>
+      exp ((comparisonColumns k : ℂ) * I)) j), comparisonColumns)
   rw [landscape_zero, landscape, scaling_aligned] at hglobal
   have hs := comparison_larger
   norm_num only [Nat.cast_ofNat] at hglobal
