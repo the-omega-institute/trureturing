@@ -4,14 +4,14 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Certain majority success in parallel qubit hedging requires certain single-game success. -/
+   digest: Certain majority success in qubit hedging requires certain single-game success. -/
 
 import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
 import D5.S3.QuantumStates.ZeroWeightSupportFace
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.LinearAlgebra.Matrix.Kronecker
+
+/-! Strict-majority certainty for the parallel Arunachalam–Molina–Russo qubit game. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -99,13 +99,13 @@ private theorem outcome_laws (θ : ℝ) :
     (∀ a b, outcomeProj θ a * outcomeProj θ b = if a = b then outcomeProj θ a else 0) := by
   have hp : outcomeProj θ 1 * outcomeProj θ 1 = outcomeProj θ 1 := by
     unfold outcomeProj
-    rw [if_pos rfl, vecMulVec_mul_vecMulVec, win_norm θ, one_smul]
+    rw [ite_eq_left rfl, vecMulVec_mul_vecMulVec, win_norm θ, one_smul]
   have hh : (outcomeProj θ 1)ᴴ = outcomeProj θ 1 := by
     unfold outcomeProj
-    rw [if_pos rfl, conjTranspose_vecMulVec, star_star]
+    rw [ite_eq_left rfl, conjTranspose_vecMulVec, star_star]
   have hzero : outcomeProj θ 0 = 1 - outcomeProj θ 1 := by
     unfold outcomeProj
-    rw [if_neg (by decide), if_pos rfl]
+    rw [ite_eq_right (by decide), ite_eq_left rfl]
   constructor
   · intro b
     fin_cases b
@@ -130,11 +130,11 @@ private theorem outcome_tensor_product {n : ℕ} (θ : ℝ) (a b : Fin n → Fin
   rw [tensor_mul]
   by_cases hab : a = b
   · subst b
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
     congr 1
     funext i
-    exact ((outcome_laws θ).2 (a i) (a i)).trans (if_pos rfl)
-  · rw [if_neg hab]
+    exact ((outcome_laws θ).2 (a i) (a i)).trans (ite_eq_left rfl)
+  · rw [ite_eq_right hab]
     obtain ⟨i, hi⟩ : ∃ i, a i ≠ b i := by
       by_contra h
       exact hab (funext fun i => not_not.mp fun hi => h ⟨i, hi⟩)
@@ -142,7 +142,7 @@ private theorem outcome_tensor_product {n : ℕ} (θ : ℝ) (a b : Fin n → Fin
     apply Finset.prod_eq_zero (Finset.mem_univ i)
     change (outcomeProj θ (a i) * outcomeProj θ (b i))
       (p.1 i, p.2 i) (q.1 i, q.2 i) = 0
-    rw [(outcome_laws θ).2, if_neg hi]
+    rw [(outcome_laws θ).2, ite_eq_right hi]
     rfl
 
 private theorem winning_projector (n k : ℕ) (θ : ℝ) :
@@ -170,15 +170,41 @@ private theorem winning_projector (n k : ℕ) (θ : ℝ) :
     intro a ha
     rw [Matrix.mul_sum]
     simp only [outcome_tensor_product θ]
-    rw [Finset.sum_ite_eq, if_pos ha]
+    rw [Finset.sum_ite_eq, ite_eq_left ha]
 
 private theorem tensor_trace {n : ℕ}
     (M : Fin n → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
     trace (gameTensor n M) = ∏ i, trace (M i) := by
+  let tensor (r : ℕ) (N : Fin r → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
+      Matrix (Fin r → Fin 2 × Fin 2) (Fin r → Fin 2 × Fin 2) ℂ :=
+    fun p q => ∏ i, N i (p i) (q i)
+  have ht : ∀ (r : ℕ) (N : Fin r → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ),
+      trace (tensor r N) = ∏ i, trace (N i) := by
+    intro r
+    induction r with
+    | zero =>
+      intro N
+      norm_num [tensor, trace, Matrix.diag, Fintype.card_fun]
+    | succ r ih =>
+      intro N
+      have he : trace (tensor (r + 1) N) =
+          trace (N 0 ⊗ₖ tensor r (fun i => N i.succ)) := by
+        change (∑ p : Fin (r + 1) → Fin 2 × Fin 2, ∏ i, N i (p i) (p i)) =
+          ∑ p : (Fin 2 × Fin 2) × (Fin r → Fin 2 × Fin 2),
+            N 0 p.1 p.1 * ∏ i, N i.succ (p.2 i) (p.2 i)
+        rw [← (Fin.consEquiv (fun _ : Fin (r + 1) => Fin 2 × Fin 2)).sum_comp]
+        apply Finset.sum_congr rfl
+        intro p _
+        change (∏ i, N i ((Fin.cons p.1 p.2 : Fin (r + 1) → Fin 2 × Fin 2) i)
+          ((Fin.cons p.1 p.2 : Fin (r + 1) → Fin 2 × Fin 2) i)) =
+          N 0 p.1 p.1 * ∏ i, N i.succ (p.2 i) (p.2 i)
+        rw [Fin.prod_univ_succ]
+        rfl
+      rw [he, trace_kronecker, ih, Fin.prod_univ_succ]
+  rw [← ht n M]
   change (∑ p : (Fin n → Fin 2) × (Fin n → Fin 2),
     ∏ i, M i (p.1 i, p.2 i) (p.1 i, p.2 i)) =
-    ∏ i, ∑ r, M i r r
-  rw [Fintype.prod_sum]
+    ∑ p : Fin n → Fin 2 × Fin 2, ∏ i, M i (p i) (p i)
   exact ((Equiv.arrowProdEquivProdArrow (Fin n) (fun _ => Fin 2)
     (fun _ => Fin 2)).sum_comp _).symm
 
@@ -296,7 +322,7 @@ private theorem trace_retained {A B : Type*} [Fintype A] [DecidableEq A]
     trace (((1 : Matrix A A ℂ) ⊗ₖ D) * X) = trace (D * partialTraceFirst X) := by
   simp only [trace, Matrix.diag, mul_apply, Fintype.sum_prod_type, kroneckerMap_apply,
     one_apply, ite_mul, one_mul, zero_mul, Finset.sum_ite_irrel,
-    Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, Finset.sum_const_zero,
+    Finset.sum_ite_eq, Finset.mem_univ, Finset.sum_const_zero,
     ite_true, partialTraceFirst, Finset.mul_sum]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
@@ -377,16 +403,16 @@ private theorem output_marginal {m n : ℕ}
       ((α ^ 2 - Real.cos θ ^ 2 : ℝ) : ℂ) := by
     unfold testLocal
     rw [trace_retained, pair_marginal α ha ha', diagonal_mul_diagonal, trace_diagonal]
-    simp only [Fin.sum_univ_two, Fin.isValue, ite_true, ite_false, zero_ne_one,
-      one_ne_zero]
+    simp only [Fin.sum_univ_two, Fin.isValue, ite_true, ite_false, one_ne_zero]
     exact_mod_cast (by nlinarith [Real.sin_sq_add_cos_sq θ] :
       Real.sin θ ^ 2 * α ^ 2 + -Real.cos θ ^ 2 * (1 - α ^ 2) =
         α ^ 2 - Real.cos θ ^ 2)
   simp only [ht, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
 
-private theorem projection_support {ι : Type*} [Fintype ι] [DecidableEq ι]
+private theorem projection_support {ι : Type*} [Fintype ι]
     (P ρ : Matrix ι ι ℂ) (hP : Pᴴ = P) (hPP : P * P = P)
     (hρ : ρ.PosSemidef) (ht : trace (P * ρ) = trace ρ) : ρ = P * ρ * P := by
+  classical
   have hQ : (1 - P)ᴴ = 1 - P := by
     rw [conjTranspose_sub, conjTranspose_one, hP]
   have hQQ : (1 - P) * (1 - P) = 1 - P := by
@@ -445,7 +471,7 @@ private theorem certain_strategy {n k : ℕ} (hk : k ≤ n) (α θ : ℝ)
           (Real.sin θ : ℂ)
         rw [hβ, signedUnit_action]
     · unfold sharedAmp winVec
-      rw [if_neg hyz, if_neg hyz, mul_zero]
+      rw [ite_eq_right hyz, ite_eq_right hyz, mul_zero]
   let v : (Fin n → Fin 2) × (Fin n → Fin 2) → ℂ :=
     fun p => ∏ i, winVec θ (p.1 i) (p.2 i)
   have hUv : (U ⊗ₖ (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)) *ᵥ
@@ -480,11 +506,11 @@ private theorem certain_strategy {n k : ℕ} (hk : k ≤ n) (α θ : ℝ)
       unfold winAtLeast
       rw [Matrix.sum_mul]
       simp only [outcome_tensor_product θ]
-      rw [Finset.sum_ite_eq', if_pos hm]
+      rw [Finset.sum_ite_eq', ite_eq_left hm]
     rw [hfix, tensor_trace]
     have ht : trace (outcomeProj θ 1) = 1 := by
       unfold outcomeProj
-      rw [if_pos rfl, trace_vecMulVec, dotProduct_comm, win_norm]
+      rw [ite_eq_left rfl, trace_vecMulVec, dotProduct_comm, win_norm]
     simp only [ht, Finset.prod_const_one]
 
 /-- Bob can guarantee a strict majority exactly in the certain single-game case. -/
