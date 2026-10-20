@@ -10290,3 +10290,127 @@ $$
 Indeed insert that supplier's upper bound for $T_{\ge2}$ into the exact expression for $\mathcal Q_W$ above and use the displayed scalar identity. The full $E_*$ logarithmic Gamma energy is retained with its fixed fraction; the scalar debit is explicitly $2+\log2+2C_{\rm odd}$. No boundary-comparison constant is left unpaid. On the ORIGINAL source in W363, the same lower bound multiplied by $\alpha$ applies to $4\pi^3 A Q_{\mathcal K_A^g}$ with $g=g_{R\psi}$ and no mean-square term. It covers every original budget and coefficient with the already stated auxiliary moment control.
 
 W362--W364 replace the previously unspecified low-frequency comparison loss by the explicit scalar $c_{\rm a}s(g)$ and preserve the entire nonnegative resolvent, odd and rational energies on the SAME actual profile. The remaining task is a signed bound for $\mathcal D_\vartheta(g)+c_{\rm a}s(g)$ against their joint sum, on the full allowed class. No favorable sign, numerical dominance over every earlier estimate, all-source positivity, sign of $e_4$, full RH or strict Robin for EVERY integer $n>5040$ follows yet. Classical Hadamard, Weil and higher-power results are reused; the actual exact interface and its all-source signed consumer are paper mathematics without scientific execution, Lean/kernel certification or a priority claim.
+
+## A finite verified zero height controls the entire actual negative allowance
+
+The exact interface W359 gives a quantitative use of finite zero verification on the ENTIRE actual source class. The allowance below is measured by the original sixth moment, without a fixed-support, finite-dictionary or theta-variance-norm restriction. It decreases with the verified height, but a fixed verified height does not remove it.
+
+Reuse W317's complete-energy bound, W338's full logarithmic Gamma comparison, the exponential profile estimate before W355, W359's exact identification, and W257's original-source normalization. The analytic tools are classical Gaussian convolution, weighted interpolation, the signed Weil explicit formula and the already cited actual zero count; none is introduced as a new general theorem. The [existing whole-projector height supplier](fukushima2011dirichlet.md#verified-zero-height-and-a-whole-projector-strip-tail-budget) retains its different theta-variance domain and cutoff constants. Division by $\Phi$ is not assumed bounded on the present finite-moment domain. No literature-priority or Lean/kernel-certification claim is made.
+
+### State the height premise and the full-source lower bound
+
+For $T\ge3$, let $\mathsf{RH}(T)$ mean that every nontrivial zeta zero $\rho$ with $|\Im\rho|\le T$ has $\Re\rho=1/2$, including the height boundary. There is an absolute $C$, independent of $T$, the scalar field, source count, widths, support and coefficients, such that
+$$
+\mathsf{RH}(T)\quad\Longrightarrow\quad
+\mathfrak E(F)\ge-\frac{C}{(\log T)^{1/3}}M(F)
+\qquad(F\in\mathcal V).
+\tag{W365}
+$$
+Here $\mathfrak E$ and $M$ are exactly W317's COMPLETE form and sixth moment. The constant is not numerically evaluated; no numerical improvement at a particular available height is asserted.
+
+It suffices to consider $\mathfrak E(F)\le0$. The opposite sign already satisfies W365, and the zero source requires no division. Put $g=g_F$, $b=5/2$, and write
+$$
+\|v\|_a^2=\int_{\mathbb R}e^{2a|r|}|v(r)|^2dr,
+\qquad
+\mathcal L(v)=\int_{\mathbb R}\log(2+|\tau|)|\widehat v(\tau)|^2d\tau
+$$
+with unitary Fourier normalization. W317 gives
+$\mathcal P(F)\le|\mathfrak J(F,F)|\le C\mathcal N(F)^2\le CM(F)$
+on this nonpositive-energy class. W338, its shifted digamma multiplier and the exponential estimate then imply
+$$
+\|g\|_b^2+\mathcal L(g)\le CM(F).
+\tag{W366}
+$$
+The moment by itself is not claimed to bound Gamma: the sign of the COMPLETE energy is used for precisely that step.
+
+### Filter once and retain the signed Gamma comparison
+
+For $0<\epsilon\le1$ use the normalized heat kernel
+$$
+K_\epsilon(r)=(4\pi\epsilon)^{-1/2}e^{-r^2/(4\epsilon)},
+\qquad h_\epsilon=K_\epsilon*g,
+\qquad \widehat h_\epsilon(\tau)=e^{-\epsilon\tau^2}\widehat g(\tau).
+$$
+The auxiliary $h_\epsilon$ remains even, also for complex $g$; no assertion that it is another actual profile is needed. The classical weighted convolution bound gives
+$\|h_\epsilon\|_b\le2e^{b^2\epsilon}\|g\|_b$.
+Split its unweighted Fourier error at $|\tau|=\epsilon^{-1/4}$. The low part is at most $\epsilon\|g\|_0^2$ and the rest is at most $\mathcal L(g)/\log(2+\epsilon^{-1/4})$. For $a=5/6$, weighted interpolation with $a/b=1/3$ therefore gives
+$$
+\begin{aligned}
+\|g-h_\epsilon\|_0^2&\le\frac{CM(F)}{\log(2+\epsilon^{-1})},
+&\|g-h_\epsilon\|_b^2&\le CM(F),\\
+\|g-h_\epsilon\|_a^2
+&\le\|g-h_\epsilon\|_0^{4/3}\|g-h_\epsilon\|_b^{2/3}
+\le\frac{CM(F)}{[\log(2+\epsilon^{-1})]^{2/3}}.
+\end{aligned}
+\tag{W367}
+$$
+
+Let $q(\tau)=\Re\operatorname{digamma}(1/4+i\tau/2)-\log\pi$ and $q_0=q(0)$. The owned digamma integral gives $q\ge q_0$. The shifted nonnegative Gamma form with multiplier $q-q_0$ cannot increase under the filter. Thus the signed Gamma difference is bounded below by
+$-|q_0|(\|g\|_0^2-\|h_\epsilon\|_0^2)$.
+The nonnegative norm-square loss is at most $2\|g\|_0\|g-h_\epsilon\|_0$, so its cost is $CM(F)[\log(2+\epsilon^{-1})]^{-1/2}$. No absolute-value estimate spends the positive Gamma tail.
+
+For weighted tests $v,w$, the same-source correlation estimate
+$$
+\left|\int v(r)\overline{w(r-s)}dr\right|
+\le e^{-a|s|}\|v\|_a\|w\|_a
+$$
+bounds the complete prime-power pairing by
+$2\sum_{n\ge2}\Lambda(n)n^{-a-1/2}\|v\|_a\|w\|_a$.
+This series converges for the chosen $a>1/2$. Both exponential pole functionals are bounded in that SAME norm; on even tests they give W359's coefficient-$2$ cosh square. Polarization, W366 and W367 bound the change of the entire prime-and-pole part by
+$C(\|g\|_a+\|h_\epsilon\|_a)\|g-h_\epsilon\|_a$.
+Consequently
+$$
+\mathcal Q_W(g)\ge\mathcal Q_W(h_\epsilon)
+-\frac{CM(F)}{[\log(2+\epsilon^{-1})]^{1/3}}.
+\tag{W368}
+$$
+Every prime power and both pole contributions remain; no favorable correlation sign is assumed.
+
+### Bound the entire unverified zero tail
+
+Use ordinary transforms, without the unitary factor, in the zero formula:
+$$
+v(z)=\int g(r)e^{izr}dr,
+\qquad v_\epsilon(z)=e^{-\epsilon z^2}v(z),
+\qquad |v(z)|\le C\sqrt{M(F)}\quad(|\Im z|\le1/2).
+$$
+The last estimate follows from W366 by weighted Cauchy--Schwarz. For the complete frequency zero set $\Gamma$ and actual multiplicities $m_\gamma$ of W360, the classical signed formula is
+$$
+\mathcal Q_W(h_\epsilon)=
+\sum_{\gamma\in\Gamma}m_\gamma
+v_\epsilon(\gamma)\overline{v_\epsilon(\overline\gamma)}.
+\tag{W369}
+$$
+For each fixed $\epsilon>0$, the filtered function and its first two derivatives have exponentially weighted $L^2$ and weighted $L^1$ bounds. Smooth compact even cutoffs give a common inverse-square transform majorant in the closed zero strip. Actual zero counting permits the signed sum to pass to the limit; the full Gamma norm, poles and absolutely convergent prime-power sums pass under the same approximation. Constants for this domain passage may depend on $\epsilon$ and are not used to estimate the tail.
+
+Under $\mathsf{RH}(T)$, every term with $|\Re\gamma|\le T$ is a nonnegative square. On the remaining zeros, $|\Im\gamma|<1/2$ gives
+$$
+\left|v_\epsilon(\gamma)\overline{v_\epsilon(\overline\gamma)}\right|
+\le CM(F)e^{\epsilon/2}e^{-2\epsilon(\Re\gamma)^2}.
+$$
+The owned count $N(u)\le C[1+u\log(2+u)]$, including both signs and all multiplicities, gives by summation by parts
+$\sum_\gamma m_\gamma e^{-(\Re\gamma)^2/T}\le C\sqrt T\log(2+T)$.
+Set $\epsilon=1/T$. For $|\Re\gamma|>T$,
+$e^{-2(\Re\gamma)^2/T}\le e^{-T}e^{-(\Re\gamma)^2/T}$; therefore
+$$
+\mathcal Q_W(h_{1/T})
+\ge-CM(F)\sqrt T\log(2+T)e^{-T}.
+\tag{W370}
+$$
+Nonreal zeros retain their signed pairing throughout. W368, W370 and W359 prove W365, after increasing a single absolute constant. No numerical zero truncation or assumption about the unverified zeros has entered.
+
+### Return the height allowance to every original source
+
+The already defined completed minima and original sources now satisfy, under the SAME $\mathsf{RH}(T)$,
+$$
+\begin{gathered}
+e_K\ge-\frac{CK}{(\log T)^{1/3}}\quad(K>1),
+\qquad -\frac{4C}{(\log T)^{1/3}}\le e_4\le0,\\
+4\pi^3 A Q_{\mathcal K_A^g}(\sigma)
+\ge-\frac{C}{(\log T)^{1/3}}Q_{6,A}(\sigma).
+\end{gathered}
+\tag{W371}
+$$
+The last line is W257 and homogeneity on EVERY admitted finite original source, with arbitrary real or complex coefficients, counts and widths. No source class has been replaced by the filtered auxiliary test, and no auxiliary feature is normalized.
+
+The existing published premise can be used at $T_0=3\cdot10^{12}$: [Platt--Trudgian, arXiv:2004.09765v1](https://arxiv.org/pdf/2004.09765v1), Theorem 1, printed p.2, verifies through $3000175332800$. Their computation is cited, not repeated or independently certified. W365--W371 supply a uniform height-dependent rate in the actual moment norm; they do not evaluate the constant or establish a numerical improvement at $T_0$. Letting the allowance vanish requires unbounded verified heights. A fixed $T_0$ proves neither $e_4=0$, the missing full signed dominance, RH nor strict Robin for EVERY integer $n>5040$. These are paper-level source applications without Lean/kernel certification or scientific execution.
