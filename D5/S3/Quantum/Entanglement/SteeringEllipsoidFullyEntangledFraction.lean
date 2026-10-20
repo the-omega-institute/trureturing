@@ -160,14 +160,14 @@ def claim : Prop :=
     ∀ t : ℝ, 0 ≤ t → t ≤ 1 → ∃ ρ : TwoQubit, ρ.PosSemidef ∧ trace ρ = 1 ∧
       vlen (centre ρ) = t ∧ fef ρ = 1 - t / 2
 
-private lemma pauli_zero : pauli 0 = !![0, 1; 1, 0] := by
+lemma pauli_zero : pauli 0 = !![0, 1; 1, 0] := by
   simp [pauli.eq_def, pauliMatrix, qubitX]
 
-private lemma pauli_one : pauli 1 = !![0, -Complex.I; Complex.I, 0] := by
+lemma pauli_one : pauli 1 = !![0, -Complex.I; Complex.I, 0] := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [pauli.eq_def, pauliMatrix, qubitX, qubitZ]
 
-private lemma pauli_two : pauli 2 = !![1, 0; 0, -1] := by
+lemma pauli_two : pauli 2 = !![1, 0; 0, -1] := by
   simp [pauli.eq_def, pauliMatrix, qubitZ]
 
 def blochVec (X : Matrix (Fin 2) (Fin 2) ℂ) (i : Fin 3) : ℝ := (trace (X * pauli i)).re
