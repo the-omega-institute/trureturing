@@ -260,6 +260,23 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
   -- environment maps and extension states need not be made persistent.
   probeRegions.modify (· ++ source.header.regions)
   let result ← run source request shared
+  let guardProof? ← if result.verdict == .nonBindOnly then
+    liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
+      -- Replay precedes publication, so author extension initializers cannot
+      -- affect either independent baseline search in this compiler process.
+      let target := mkIdent request.target
+      let sha := Syntax.mkStrLit request.baselineCommit
+      let bs := request.baseline.map mkIdent
+      let os := owners.map mkIdent
+      activeProbe.set (some (source, shared))
+      try
+        return some (← synthesizeUsingTactic' (u := .zero) (mkConst ``True)
+          (← `(tactic|
+            (fail_if_success (reference_baseline $target at $sha baseline [$bs,*] from [$os,*]))
+            <;> exact True.intro)))
+      finally
+        activeProbe.set none
+    else pure none
   -- Publish in a fully initialized fork of the same immutable module storage.
   -- The baseline has already returned, and no author extension enters it.
   -- This also gives the module writer the complete extension array without
@@ -270,21 +287,8 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
     finalizeImport sourceState imports options 0 (leakEnv := false) (loadExts := true)
   modifyEnv fun _ => serialization.setMainModule mainModule
   liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
-    if result.verdict == .nonBindOnly then
-      -- Construct syntax identifiers directly from the exact Name AST.
-      let target := mkIdent request.target
-      let sha := Syntax.mkStrLit request.baselineCommit
-      let bs := request.baseline.map mkIdent
-      let os := owners.map mkIdent
-      let guardType := mkConst ``True
-      activeProbe.set (some (source, shared))
-      let guardProof ← try
-        synthesizeUsingTactic' (u := .zero) guardType (← `(tactic|
-            (fail_if_success (reference_baseline $target at $sha baseline [$bs,*] from [$os,*]))
-            <;> exact True.intro))
-      finally
-        activeProbe.set none
-      discard <| checkProof (name ++ `baselineFailureGuard) [] guardType guardProof
+    if let some guardProof := guardProof? then
+      discard <| checkProof (name ++ `baselineFailureGuard) [] (mkConst ``True) guardProof
     publish name result (some source)
   logInfo (observationJson result request.baselineCommit).compress
 

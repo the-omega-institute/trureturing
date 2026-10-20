@@ -177,13 +177,13 @@ def baselinePresentation (env : Environment) (levels : List Name) (target : Expr
     | .ok atoms => pure atoms
     | .error err => return (.incomplete .execution, none,
         s!"search.presentation_target_normalization: {err}")
+  let targetNormalized ← IO.getNumHeartbeats
+  if targetNormalized - start > unitLimit then
+    return (.incomplete .heartbeat, none, "search.presentation_target_normalization_budget")
   -- An empty nonneutral support is contained in every source. Such a match
   -- does not certify that an added structure presents a baseline statement.
   if requireNonneutral && targetAtoms.all (·.isScope) then
     return (.exhausted, none, "search.structure_all_neutral: no baseline presentation")
-  let targetNormalized ← IO.getNumHeartbeats
-  if targetNormalized - start > unitLimit then
-    return (.incomplete .heartbeat, none, "search.presentation_target_normalization_budget")
   let needsOrigins := targetAtoms.any (fun key =>
     !key.scope.isEmpty || key.constants.any (originAnchor env))
   let mut eligible := #[]
