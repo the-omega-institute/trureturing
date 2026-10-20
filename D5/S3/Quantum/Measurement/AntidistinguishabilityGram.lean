@@ -84,7 +84,6 @@ Definition rows classify unfolding; they assert no proposition and supply no esc
 Utility: none; finite-dimensional symbolic mathematics for arbitrary parameters.
 The Gram construction is Matrix.gram; state columns have no forwarding definition.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
-Kernel lemma escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19372.
 DTR reading: DTR-Unregistered for the public theorem targets in this module.
 Registration gap: exact dependent source-family reconstruction, lawful template readout,
 selection coordinates, whole-family variation, slot sensitivity and observational dependence
