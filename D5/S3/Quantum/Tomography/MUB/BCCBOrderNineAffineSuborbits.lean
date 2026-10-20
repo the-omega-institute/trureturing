@@ -6,7 +6,10 @@
    utility: none
    digest: Affine order nine BCCB suborbits have a cancelling pair or an equilateral triple. -/
 
-import Mathlib
+import Mathlib.Analysis.Analytic.Uniqueness
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.RingTheory.RootsOfUnity.Complex
 
 /-! Affine dephasings of the BCCB family with four unit parameters summing to one
 are contained in the cancelling-pair or equilateral-triple families. -/
@@ -88,10 +91,12 @@ private lemma character_coefficients {p n : ℕ} {U : Set (Fin p → ℝ)}
       (Filter.eventually_of_mem (hU.mem_nhds ht₀) (fun t ht => hs t ht))
   have he : (∑ j, Finsupp.single (phaseCharacter (L j)) (c j)) =
       Finsupp.single (1 : Multiplicative (Fin p → ℝ) →* ℂ) (1 : ℂ) := by
-    apply (linearIndependent_monoidHom (Multiplicative (Fin p → ℝ)) ℂ).finsuppLinearCombination_injective
+    have hlin := linearIndependent_monoidHom (Multiplicative (Fin p → ℝ)) ℂ
+    apply hlin.finsuppLinearCombination_injective
     simp only [map_sum, Finsupp.linearCombination_single]
     ext t
-    simpa [Finset.sum_apply, smul_eq_mul, phaseCharacter] using congrFun hg (Multiplicative.toAdd t)
+    simpa [Finset.sum_apply, smul_eq_mul, phaseCharacter] using
+      congrFun hg (Multiplicative.toAdd t)
   have hh := congrArg (fun f => f χ) he
   simpa only [Finsupp.finsetSum_apply, Finsupp.single_apply, eq_comm] using hh
 
