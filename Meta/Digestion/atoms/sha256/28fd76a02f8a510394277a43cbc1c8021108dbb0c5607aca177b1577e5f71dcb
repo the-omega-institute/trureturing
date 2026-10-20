@@ -1,0 +1,20 @@
+**定理69.5（十六种剩余必要尾词）。** 在（69.1）的外置首轮二维尾环境合同中，任何尚可能的五位尾词必须属于下面十六种之一：
+
+| 关系类型 | 必要尾词 |
+|---|---|
+| 两射线分叉 | AAABA, AAABB, AABAA, ABAAA, ABAAB, ABABB, ABBAB, ABBBA |
+| 三射线分叉 | ABACA, ABBCB, ABCBB |
+| 已见后继无分叉 | ABABA, ABBBB, ABCAB, ABCBC, ABCCC |
+
+本定理是必要分类，不宣称表内任何一个词已经实现。
+
+**证明。** 用受限增长串表示射线分划：首项为 $0$，每个后项不超过此前最大值加一。按不同射线数1至5，长度5的这些串分别有 $1,15,25,10,1$ 个；这也可由逐位置加入“已有字母之一或一个新字母”的递推直接列出。一条射线不满足 $\dim F=2$。
+
+对至少两条射线的串，按每个出现在前四位的字母收集其已见后继。若某个集合含两个以上字母，引理69.1要求其他全部当前字母的后继并集至多为一个字母。逐个首现字母递推后，满足这一条件的完整词表为：
+
+| 不同射线数 | 分叉限制保留的全部词 |
+|---|---|
+| 2 | AAAAB, AAABA, AAABB, AABAA, AABAB, AABBB, ABAAA, ABAAB, ABABA, ABABB, ABBAB, ABBBA, ABBBB |
+| 3 | AAABC, AABAC, AABCC, ABAAC, ABABC, ABACA, ABBBC, ABBCB, ABCAB, ABCBA, ABCBB, ABCBC, ABCCC |
+| 4 | ABCBD, ABCDA, ABCDB, ABCDC, ABCDD |
+| 5 | ABCDE |

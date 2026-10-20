@@ -1,0 +1,6 @@
+式 (C11.2) 是有限参数 witness，但它还不是完全离散的 machine certificate。要验证它，仍需要：
+
+- 对 $G_a$ 在有理点的可认证求值或区间界；
+- 对 radial derivative 的可认证严格负上界；
+- 对 branch、Cayley inverse 与远离 $w=-1$ 的域控制。
+

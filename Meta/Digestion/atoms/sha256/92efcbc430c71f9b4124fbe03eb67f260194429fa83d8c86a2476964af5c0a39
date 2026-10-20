@@ -1,0 +1,36 @@
+**Lemma 130.3 (Head and residual identities).** At $\kappa_3=0$,
+
+$$
+\begin{aligned}
+29(S-6\varepsilon)&=12\delta+M,&29\sigma&=22\delta-3M,\\
+S-6\varepsilon&=(2\delta-\sigma)/3,&
+H_{\rm head}&=(17\delta-M)/29=(\delta+\sigma)/3.
+\end{aligned}
+\tag{130.6}
+$$
+
+The sign of $M$ in the first identity is positive. On the feasible strict
+domain, $\delta>0$ and
+
+$$
+\begin{gathered}
+0<\sigma\le2\delta/7,\qquad
+0\le h\le H_{\rm head},\qquad
+\delta/3<H_{\rm head}\le3\delta/7,\\
+4\delta/7\le S-6\varepsilon<2\delta/3,\qquad
+6\varepsilon<S\le7\varepsilon.
+\end{gathered}
+\tag{130.7}
+$$
+
+**Proof.** Substitute
+$29\varepsilon=-2\delta+4a_3+5a_4+5a_5$ to obtain (130.6).
+The retained upper residual condition, or the necessary supplier 113.2,
+is $S-6\varepsilon\le\delta-h$, equivalent to $h\le H_{\rm head}$.
+The cut $F_1\ge0$ says $M\ge32\delta/7$; $\sigma>0$ says
+$M<22\delta/3$. These give the residual interval and sigma bound.
+The cut $F_3\ge0$ is equivalent on this hyperplane to $S\le7\varepsilon$.
+If $\delta=0$, order gives $M=3a_5+4(a_4-a_5)+5(a_3-a_4)>0$,
+contradicting $29\sigma=-3M>0$. Hence $\delta>0$.
+The head bounds follow from its identity. $\square$
+

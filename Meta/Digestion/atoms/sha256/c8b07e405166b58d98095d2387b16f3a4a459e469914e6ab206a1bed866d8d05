@@ -1,0 +1,21 @@
+**定义 17.1（条带、砖与位置标签）。** 对整数 $n\ge0$，令
+$\mathcal T_n$ 为长度 $n$、高度一的条带的完整铺法集合。
+砖 $\mathtt M$ 覆盖一个单位格，砖 $\mathtt D$ 覆盖相邻两个单位格；
+所有砖沿条带放置，内部不交并覆盖每个格。等价地，铺法是由
+$\mathtt M,\mathtt D$ 组成、总长度为 $n$ 的有限词，其中两字母的长度分别为一、二。
+$\mathcal T_0=\{\varepsilon\}$，空条带有唯一空铺法。
+本章的 $\mathcal T_n$ 不表示本卷定义 1.1 的来源树 $T_n$；
+砖 $\mathtt M$ 也不表示组成递推矩阵 $M$。
+
+记
+
+$$
+\mathcal I_k=\{I\subseteq\{1,\ldots,k\}:i\in I\Longrightarrow i+1\notin I\},
+\qquad \mathcal I_0=\{\varnothing\}.
+$$
+
+这是 [StaticSeams 定义 5.1][EF-SS] 的独立支持集 $\Sigma_k$；
+该处 $\Gamma_k$ 是以这些支持为顶点、以一位差为边的图。
+因此将 $\Gamma_k$ 用作合法位词空间时，本章精确取其顶点集
+$V(\Gamma_k)=\mathcal I_k$，不混用图与集合。
+

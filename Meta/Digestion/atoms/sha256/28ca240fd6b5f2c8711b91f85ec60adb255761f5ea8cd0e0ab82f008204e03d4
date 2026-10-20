@@ -1,0 +1,55 @@
+### 证明第三步：完整共同主导与后两项付款
+
+现在先固定 \(\sigma>1\)、有限 \(V\)，取
+
+\[
+x=z^\sigma,\quad \Lambda=\sigma L,\quad u=aL,\quad0\le a\le V.
+\]
+
+选择固定 \(m\) 使 \(1<m<\sigma\)，再取 \(z\) 足够大使 \(s_z\le m\)。定义
+
+\[
+B_{z,a}(v)=e^{-av}F_z(v)-1+(a-s_z)v.
+\]
+
+（SL.12）及 \(B_{z,a}(0)=B'_{z,a}(0)=0\) 给
+
+\[
+|B_{z,a}(v)|\le Cv^2\quad(0\le v\le1),
+\qquad
+|B_{z,a}(v)|\le e^{mv}+1+(V+m)v\quad(v\ge1).
+\tag{SL.13}
+\]
+
+于是 \(e^{-\sigma v}|B_{z,a}(v)|/v^2\) 和
+\(e^{-\sigma v}|B_{z,a}(v)|/v\) 分别有独立于 \(z,a\) 的可积主导函数。
+这是保留符号和之后的主导；没有引入（CP.4）的 \(\sum|\theta_z(j)|/j\) 预算。
+
+在（SL.6）中取 \(t=v/L\)，得到精确三项分解
+
+\[
+\begin{aligned}
+\mathcal G_{P_z,z^\sigma}((\sigma+a)L)
+={}&LE_{z,0}\int_0^\infty e^{-\sigma v}\frac{B_{z,a}(v)}{v^2}\,dv\\
+&+E_{z,0}\int_0^\infty e^{-\sigma v}\frac{B_{z,a}(v)}v\,dv\\
+&+\frac{E_{z,0}}L\int_0^\infty e^{-\sigma v-av}
+F_z(v)D_\eta(v/L)\,dv.
+\end{aligned}
+\tag{SL.14}
+\]
+
+由（SL.5）、（SL.11）及（SL.13），后两项共同分别为
+\(O_{\sigma,V}(E_{z,0})=O_{\sigma,V}(L^{-1})\) 和
+\(O_{\sigma,V}(E_{z,0}/L)=O_{\sigma,V}(L^{-2})\)。
+
+第一项使用 \(LE_{z,0}\to c_*\)、\(s_z\to1\) 和（SL.10），趋于（SL.2）。
+其趋近对 \(a\in[0,V]\) 共同成立：对每个 \(v\)，可先取该紧区间的误差上确界，紧区间内的 \(e^{-av}\) 因子不超过一；近零和无穷端分别由（SL.13）的可积主导支付。由此得
+
+\[
+\sup_{0\le a\le V}
+|\mathcal G_{P_z,z^\sigma}((\sigma+a)L)-\Xi_\sigma(a)|\longrightarrow0.
+\tag{SL.15}
+\]
+
+外部指数是 \(\sigma\)，位移指数 \(a\) 在 \(e^{-av}\) 内；二阶微分后的指数才合并为 \(\sigma+a\)。有限约数的 \(\log d\) 已在 \(F_z(v)\) 中完整保留，未重复或遗漏位移。
+

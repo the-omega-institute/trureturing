@@ -1,0 +1,26 @@
+**定义 908.1（临界参数及联合预算）。** 固定 $\rho=\rho_*=2-\sqrt3$，写
+
+$$
+a_0=4-2\sqrt3,\quad B_0=4\sqrt3-6=\sqrt3a_0,\quad D_0=3a_0.
+$$
+
+此时 $0<\delta\le a_0$ 是完整合法范围，且
+
+$$
+A=2+\delta,\quad a=a_0-\delta,\quad B=B_0+\delta,\quad D=D_0-\delta.
+$$
+
+尤其 $D-3a=2\delta$。令 $K=D+3a$、$J=K+4B=4\sqrt3$。对预算 $s$ 的任意候选，其有利增加量满足 $X+y\le s$，因此
+
+$$
+d\sum_i\alpha_i\le(D+y)(3a+X)\le\frac{(K+s)^2}{4}.
+$$
+
+后一界是两个非负因子的固定和乘积极值。若 $X+y=s$ 且等号能达到，增加量须满足
+
+$$
+y=\frac{s-(D-3a)}2=\frac{s-2\delta}{2}.
+$$
+
+它允许同时增加 $D$ 和三个 $a_i$，与两个严格区域中只向一类格值增加的方式不同。
+

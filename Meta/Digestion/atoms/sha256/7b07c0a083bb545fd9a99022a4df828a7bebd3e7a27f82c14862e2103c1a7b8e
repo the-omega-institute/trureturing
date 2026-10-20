@@ -1,0 +1,26 @@
+**Corollary 53.4 (perfect label classes at either equality).** If either
+$\ell=2K-3$ or $M=2^{K-1}$ holds in a valid installation, then every label
+class $C_q=\pi^{-1}(q)$ is a perfect radius-one code inside the installed
+$(K-1)$-cube, and
+
+$$
+K|C_q|=2^{K-1},\qquad K\mid2^{K-1}.
+\tag{FIB.53.5}
+$$
+
+In particular $K$ is a power of two. Equality in the width bound also
+forces equality in the size bound; equality in size permits fixed padding.
+
+Proof. Theorem 53.3 makes $W$ a $d$-cube in either case. Each closed
+neighborhood has $d+1=K$ vertices and all $K$ labels, each exactly once.
+For each fixed $q$, every vertex of this cube is therefore within distance
+one of exactly one member of $C_q$. The radius-one balls centered at
+$C_q$ partition the installed cube and each contain $K$ vertices. Counting
+gives (FIB.53.5). Every prime divisor of $K$ must divide a power of two,
+so $K=2^r$ for an integer $r\ge1$. This is the domatic fullness/divisibility
+argument used for ordinary cubes by Zelinka, p. 117 [FIB53-ZELINKA], applied
+after the installation rigidity has been established. These are balls in
+$G_W$, not balls required to partition the whole Fibonacci graph
+$\Gamma_\ell$. The argument does not classify the labellings or require
+them to be linear. $\square$
+

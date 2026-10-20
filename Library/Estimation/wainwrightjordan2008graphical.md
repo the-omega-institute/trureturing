@@ -41,3 +41,27 @@ identity, native reply loss and degenerate apex treatment are the
 consumer's elementary finite-law applications. They are not attributed
 to the paper's exponential-family parameter formulas or to a missing
 primary historical source.
+
+
+## Product proposals and local optima
+
+The same primary author PDF, Section 5.3, printed pp. 134–136,
+equations (5.13), (5.15)–(5.17), specifies a fully factorized proposal,
+its sum of binary entropies and coordinate updates. The paragraph on
+p. 136 explicitly distinguishes convergence to a local optimum from
+global optimization. Section 5.4, pp. 138–143, explains nonconvexity;
+Section 5.5 develops structured mean field with tractable subgraphs.
+These are existing methods and limitations, rather than new claims
+about the repository's observer model.
+
+[Finite transducers, Sections 12–13](../../docs/develop/theory/PREDICTIVE_THERMODYNAMIC_FINITE_TRANSDUCERS.md#12-a-product-proposal-and-an-explicit-missing-correlation-example)
+apply the product family to the raw clause penalty $n+1$. Disjoint
+three-bit even-parity constraints give a strictly positive Hessian at
+the independent uniform parameter while success is $2^{-n/3}$.
+The explicit four-clause encoding, numerical Hessian, successful
+correlated block sampler and finite-precision global-progress
+criterion are derived there; they are not attributed to the paper's
+pairwise Ising examples. A statement that mean-field optimization is
+nonconvex supplies no uniform time lower bound for every learning
+method, and a structured proposal description supplies no general
+algorithm for finding its useful interactions.

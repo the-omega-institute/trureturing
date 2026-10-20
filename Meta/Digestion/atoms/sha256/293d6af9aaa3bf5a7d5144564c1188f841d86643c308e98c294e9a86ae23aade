@@ -1,0 +1,78 @@
+**Lemma 15.3 (saturated support of a successful prescribed-code table).**
+Suppose a controller satisfies Definition 15.1. On each family
+(NBP.15.3), the union of its actual runs is a forest of two disjoint
+full binary trees, of depth at most two. It contains every installed
+state: exactly three running states and exactly five halts, with one
+halt $H_j$ of whole output $R_j$ for each $0\le j\le4$. The two roots
+are the two different entries $\iota(0),\iota(1)$.
+
+Both zero sources lie in the same tree. Its running states form a
+chain of singleton tests for a set $S\subseteq J$, with $s=|S|\le2$.
+Each singleton-positive edge halts at its own $H_j$; the continuation
+ends at $H_0$. The other tree has the remaining positive leaves
+$T=J\setminus S$ and $3-s$ running states. Across both trees the three
+queried occurrence classes are different. A partner query can occur
+only in the positive tree, at most once. If $s=0$, that tree first
+queries a partner and then one right class from each of $J_a,J_c$.
+
+Proof. Restrict the fixed controller and the original prescribed code
+to one of these actual six-source families. Let $n,h,m,e$ denote the
+numbers of visited running states, visited halts, distinct entries and
+distinct directed successor edges in their run union. Five different
+required whole rows force $h\ge5$. Reachability from the entries gives
+$n+h-m\le e$, by the spanning-forest count used in Proposition 11.2.
+The all-address restriction in Proposition 15.2 gives $e\le2n$ and
+$m\le2$. Also $n+h\le8$. Consequently
+
+$$
+5\le h\le m+n\le2+n,\qquad n+h\le8,
+\quad\Longrightarrow\quad
+(n,h,m,e)=(3,5,2,6).
+\tag{NBP.15.4}
+$$
+
+All eight installed states are therefore visited; there are no extra
+installed states or duplicate-output halts. Each running state has two
+distinct actual successors. List two entry slots and the two successor
+slots of each of the three running states. Their images cover all eight
+vertices by reachability. As there are exactly eight slots, their images
+are pairwise different. Thus entries have no incoming edge, every other
+vertex has exactly one, and every vertex is reachable from an entry.
+No directed cycle is reachable under these conditions. This proves the
+two-tree assertion without assuming the original four-successor table
+acyclic. Every root-to-leaf path in this support is an actual run path:
+each leaf is visited, and the forest has a unique path from its root.
+Hence its depth is at most two.
+
+The two zero sources reach the unique $H_0$, so they have the same
+entry and the same path. A nonconstant partner query separates them;
+it cannot occur on that path. A constant query has only one used
+successor and is also excluded by (NBP.15.4). Each node on the zero
+path must thus isolate some positive $j$ by a $b_j$-cone query. Its
+positive child is immediately $H_j$: only that one actual source takes
+this child, so no further full binary node can be supported there.
+The other child continues the zero path. A repeated singleton query
+would be constant after its positive source had left. Thus these nodes
+are exactly the distinct indices of $S$, and $s\le2$.
+
+The other tree has $4-s$ distinct positive leaves and $3-s$ running
+vertices. No $b_j$ with $j\in S$ can be queried there, since its reply
+is constant on these positive sources. For $s=2$ its sole running node
+separates two positive sources and queries either one of their right
+classes or a partner if their groups differ. For $s=1$ there are three
+positive leaves and two running vertices, arranged as a root with one
+halting child and one running child. A singleton at the root removes
+its positive source; neither that singleton nor any removed index can
+be a nonconstant child query. A partner at the root leaves each child
+inside one group, where every partner query is constant. If the child
+is a partner query the root was therefore a singleton. In every case
+these two queried classes are different, with at most one partner.
+
+For $s=0$ the four-leaf tree has depth at most two, so both children of
+its root are running and each has two leaves. A singleton root would
+leave three positive leaves for one remaining call on its other child,
+which is impossible. A partner root splits $J_a\mid J_c$; each child
+must query a right class in its own pair, because all partner queries
+there are constant. These are three different classes. Combined with
+the distinct zero-chain classes, this proves all assertions. $\square$
+

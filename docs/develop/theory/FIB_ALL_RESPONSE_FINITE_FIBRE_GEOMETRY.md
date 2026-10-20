@@ -2982,3 +2982,1514 @@ It does not require injectivity of $f_{MJ}$ or decide the other
 fifth-response or ancestor questions. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 25. A strict separator and every sampled-odd-root endpoint
+
+**Definition 25.1 (Full-parent collision coordinates).** In Sections
+25–27, [O](https://github.com/the-omega-institute/trureturing/blob/30b5f1199c1c6c6b5f38a5b06a4d264176f119ed/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md)
+denotes *FIB common-parent geometry and two exact mixed children*;
+its numbered statements are ordinary mathematical premises with their
+stated domains. Retain exactly O, Definitions 1.1–1.3:
+
+$$
+\begin{gathered}
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\\
+0<r<1,\quad b>0,\quad 0\ne g\in\mathbb R[s],\quad\deg g\le3,
+\quad d\in\mathbb R,\\
+H_4=(0,J,24,M,147/5,J,24,M,18),\\
+j=b+r(1-r)/b,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\quad V=U+n.
+\end{gathered}
+\tag{25.1}
+$$
+
+Each world has one whole gain and one fixed drift, at the original
+clocks $0,\ldots,7$, with $Q_i=E_iQ_{i-1}$ and
+$y_i=d+g(i)\operatorname{tr}(Q_iP)$. Define, on the entire parent,
+
+$$
+\begin{gathered}
+p=d+Vg(5),\qquad u=d+(2U+n)g(6),\qquad
+m=d+(3U+2n)g(7),\\
+k=m-\frac{32}{5}u,\qquad \epsilon=d-24,\qquad\Delta=b-1/8,\\
+h(s)=\frac85(s-1)(s-3)(s-5),\qquad
+A_r=(P(r,1/8),h,24),\qquad
+\mathcal K=\{A_r:0<r<1\}.
+\end{gathered}
+\tag{25.2}
+$$
+
+Here $(p,u,m)$ are the three actual responses along the fixed
+continuation $M,M,M$. Thus two distinct worlds in the entire actual
+child $\mathcal F(H_4,M,p,M,v)$ collide at terminal M exactly when
+they have equal $(p,u,m)$, with $u=v$. The set $\mathcal K$ is O's
+saturated family, and its reflected collisions are already given
+by O (16.3), (16.13) and Theorem 16.5.
+
+**Theorem 25.2 (Strict drift/separator barrier on the entire p24 fibre).**
+Every world $W\in\mathcal F(H_4,M,24)\setminus\mathcal K$ satisfies
+
+$$
+(d-24)\left(k+\frac{1128}{5}\right)<0.
+\tag{25.3}
+$$
+
+Proof. Use the exhaustive whole-world union in O, Theorem 13.2,
+including its set-theoretic treatment of intersections. Outside
+$\mathcal K$ it gives $H(r,b)=0$ and
+
+$$
+\begin{gathered}
+g=h+\epsilon v,\qquad
+\epsilon E_2=-\frac{24}{5}\Delta,\qquad E_2=1+Tv(2),\\
+v(2)=\frac15-\frac3{4j}-\frac1{2n}+\frac1{20V},\\
+v(6)=1-\frac9{4j}+\frac5{2n}-\frac9{4V},\qquad
+v(7)=\frac{16}{5}-\frac7j+\frac7n-\frac{21}{5V}.
+\end{gathered}
+\tag{25.4}
+$$
+
+The sextic $H$ is precisely the polynomial in Section 2 above,
+or equivalently O (12.2). Define
+
+$$
+\mathcal B=32E_2-\frac{27}{5}
+ +(3U+2n)v(7)-\frac{32}{5}(2U+n)v(6).
+\tag{25.5}
+$$
+
+Substituting the same entire gain in both responses gives the identity
+
+$$
+ k+\frac{1128}{5}
+ =\epsilon\mathcal B
+ -32\left(\epsilon E_2+\frac{24}{5}\Delta\right)
+ =\epsilon\mathcal B.
+\tag{25.6}
+$$
+
+Clearing the positive source denominators yields
+
+$$
+\mathcal B=\frac{\Pi(r,b)}{5b^3jnV},
+\tag{25.7}
+$$
+
+where
+
+$$
+\begin{aligned}
+\Pi(r,b)={}&-73b^6+26(17r-25)b^5
+ -4(88r^2-55r+54)b^4\\
+&-r(868r^2-1427r+717)b^3\\
+&-2r(1-r)(279r^2-334r+108)b^2\\
+&+2r^2(1-r)^2(172r+7)b+171r^3(1-r)^3.
+\end{aligned}
+\tag{25.8}
+$$
+
+The following exact polynomial comparison proves the sign on the
+whole strict graph, rather than on a restricted source rectangle.
+Put
+
+$$
+q=r(1-r)(1+2r/3),\qquad B_i(r)=r^i(1-r)^{12-i}.
+$$
+
+The polynomial identities are
+
+$$
+\begin{aligned}
+-729H(r,q)&=r^3(1-r)^3\sum_{i=0}^{12}h_iB_i(r),\\
+-729\Pi(r,q)&=r^3(1-r)^3\sum_{i=0}^{12}a_iB_i(r),
+\end{aligned}
+\tag{25.9}
+$$
+
+with coefficient vectors, in increasing $i$,
+
+$$
+\begin{aligned}
+(h_i)={}&(1458,16767,91125,352755,1199691,3480003,7585857,\\
+&\qquad11454855,11415867,7094914,2479206,390402,17388),\\
+(a_i)={}&(22599,416745,3333960,15317586,44859501,87549363,\\
+&\qquad115352262,101744139,58815129,22240780,6205974,\\
+&\qquad1513755,188271).
+\end{aligned}
+\tag{25.10}
+$$
+
+For completeness these finite identities mean direct expansion in
+$\mathbb Q[r]$: substitute the displayed $q$ into (25.8) and the
+Section 2 polynomial $H$, and compare powers of $r$ with the two
+sums in (25.9). Thus their specifications involve only the stated
+polynomials and integer arithmetic. Every listed coefficient is
+strictly positive. Hence $H(r,q)<0$ and $\Pi(r,q)<0$ for $0<r<1$.
+
+O (13.7) proves that $H(r,b)/b^2$ is strictly increasing in $b>0$
+and has its unique zero at $B_H(r)$. Consequently $B_H(r)>q$.
+The coefficients of $b^6,b^5,b^4,b^3,b^2$ in $\Pi$ are strictly
+negative. For the three quadratics in these coefficients the
+respective discriminants are
+
+$$
+-15983,\qquad-453095,\qquad-8972,
+$$
+
+and their leading coefficients are positive. The coefficient of
+$b^5$ is negative because $17r-25<0$. The constant coefficient
+of $\Pi$ is positive. It follows by differentiating $\Pi/b$ that
+
+$$
+\partial_b(\Pi(r,b)/b)<0\qquad(b>0).
+\tag{25.11}
+$$
+
+Indeed each of its positive-degree terms has a negative
+coefficient, its constant term has derivative zero, and the
+positive coefficient of $b^{-1}$ has a negative derivative.
+Therefore
+
+$$
+\frac{\Pi(r,B_H(r))}{B_H(r)}
+ <\frac{\Pi(r,q)}q<0.
+$$
+
+All denominator factors in (25.7) are positive, so
+$\mathcal B<0$ on this whole graph. Finally O, Theorem 2.2,
+gives $\epsilon\ne0$ outside $\mathcal K$. Multiplying (25.6)
+by $\epsilon$ proves (25.3), since $\epsilon^2\mathcal B<0$.
+This proof uses the complete union of O, Theorem 13.2, including
+singular sources and every allowed polynomial degree or root
+multiplicity; it never divides by a gain sample or the drift. ∎
+
+**Theorem 25.3 (Exhaustion of collisions touching a sampled odd root).**
+Let $p,v\in\mathbb R$, and let distinct complete worlds
+$W,W'\in\mathcal F(H_4,M,p,M,v)$ have the same terminal-M
+response. If either endpoint satisfies $d=24$ or
+$g(1)g(3)=0$, then, for some $r\ne t$,
+
+$$
+ W=A_r,\qquad W'=A_t,\qquad
+ r+t=9/8,\qquad 1/8<r,t<1,\qquad p=24.
+\tag{25.12}
+$$
+
+Conversely all these legal reflected pairs are collisions.
+
+Proof. Either odd gain sample being zero forces $d=24$ from
+its original response 24; its trace is $j>0$ or $n>0$.
+O, Theorem 2.2, then places that endpoint in $\mathcal K$.
+A $\mathcal K$ world has $p=24$ and $k=-1128/5$ by O (16.13).
+Its partner has the same $u,m$, hence the same $k$. Theorem 25.2
+excludes every partner outside $\mathcal K$.
+
+On $\mathcal K$, the inherited response formulas are
+
+$$
+\begin{gathered}
+n(r)=1/8+9r-8r^2,\qquad p=24,\\
+u=84+24n(r),\qquad m=312+\frac{768}{5}n(r),\\
+n(r)-n(t)=(r-t)\{9-8(r+t)\}.
+\end{gathered}
+\tag{25.13}
+$$
+
+Equality of $u$ and distinctness force $r+t=9/8$; strict source
+legality gives $1/8<r,t<1$. Conversely these equations give equal
+$p,u,m$. The complete triples are different because $r\ne t$.
+Thus this is exhaustion of endpoints in the stated stratum, for
+all real $p,v$, rather than a global classification of the
+remaining collision correspondence. ∎
+
+## 26. Equal projective M-trace ratios
+
+**Definition 26.1 (Unobserved ratio and exceptional quartic).** On
+the entire parent put
+
+$$
+\chi(W)=\frac{n}{U}>0,\qquad
+\mathfrak p(x)=8x^4+29x^3+18x^2-15x-6.
+\tag{26.1}
+$$
+
+The ratio is a source coordinate used to partition pairs of
+worlds; it is not an acquired reading. At clocks $3,4,5,6,7$
+the five actual M-continuation traces are
+
+$$
+ U\,(\chi,1,\chi+1,\chi+2,2\chi+3).
+\tag{26.2}
+$$
+
+Let $\alpha$ denote the unique positive root of $\mathfrak p$.
+Existence follows from its negative constant and positive leading
+coefficient, and uniqueness follows from the single sign change
+in its descending coefficient sequence, by Descartes' rule.
+Use the exact rational endpoints
+
+$$
+\ell=\frac{62587023180336296158875989932560022}{10^{35}},
+\qquad h_\alpha=\ell+10^{-35}.
+\tag{26.3}
+$$
+
+**Definition 26.2 (Exceptional source polynomials and rational rules).**
+For variables $x,z$ define the following polynomials, in this order:
+
+$$
+\begin{aligned}
+c_x&=x^2+x-1,\\
+D&=(1-x)^2+(2x-1)(1-x)z+c_xz^2,\\
+B_*&=z(1-x),\qquad R_*=z\{x(1-x)+c_xz\},\\
+T_*&=D+B_*,\qquad U_*=D+2B_*,\\
+J_*&=xU_*-R_*,\qquad N_*=xU_*,\\
+L_{\rm num}&=T_*U_*J_*N_*+6DU_*J_*N_*+DT_*J_*N_*\\
+&\qquad-4DT_*U_*(J_*+N_*),\\
+L&=L_{\rm num}/(2U_*).
+\end{aligned}
+\tag{26.4}
+$$
+
+The last division is exact in $\mathbb Q[x,z]$. Define further
+
+$$
+\begin{aligned}
+q_0(x)&=-\frac{45x^3+89x^2-32x-40}{x(x+1)(x+2)},\\
+d_x(z)&=24-\frac{3x(8B_*-D)(3U_*-T_*)J_*}{5L},\\
+K_x(z)&=d_x(z)\{q_0(x)-U_*/D\},\\
+\mathcal M(x,z)&=5(x+1)(x+2)L^2\partial_zK_x(z).
+\end{aligned}
+\tag{26.5}
+$$
+
+Cancellation in the last expression gives a polynomial in
+$\mathbb Q[x,z]$. The degrees of $L$ in $(z,x)$ are $(6,8)$,
+and those of $\mathcal M$ are $(10,17)$.
+
+For any polynomial $A(x,z)$ of $z$-degree at most $N$, define
+its degree-$N$ Bernstein coefficients by
+
+$$
+\beta_{k,N}(A)(x)=\sum_{i=0}^k
+ [z^i]A(x,z)\frac{\binom{k}{i}}{\binom{N}{i}},\qquad0\le k\le N.
+\tag{26.6}
+$$
+
+Thus $A(x,z)=\sum_k\beta_{k,N}(A)(x)\binom Nkz^k(1-z)^{N-k}$.
+To evaluate a polynomial $\beta(x)=\sum_{i=0}^s b_ix^i$ on
+$I_\alpha=[\ell,h_\alpha]$, set $I_{s+1}=[0,0]$ and, for
+$i=s,s-1,\ldots,0$, set
+
+$$
+I_i=I_\alpha I_{i+1}+[b_i,b_i].
+\tag{26.7}
+$$
+
+All coefficients, including missing zero coefficients, enter this
+recursion after expansion in $\mathbb Q[x]$. Interval sums add
+endpoints and interval products take the minimum and maximum of
+the four endpoint products. Let $\operatorname{up}(\beta)$ be
+the upper endpoint of $I_0$. Polynomial divisions in (26.4)–(26.5)
+are exact divisions performed before coefficient extraction or
+interval evaluation. No reduction modulo $\mathfrak p$ is part
+of these definitions.
+
+**Theorem 26.3 (Entire exceptional source fibre and strict invariant).**
+At $x=\alpha$, the formulas
+
+$$
+ b=B_*/D,\qquad r=R_*/D,\qquad0<z<1
+\tag{26.8}
+$$
+
+parametrize exactly all strict positive sources with $n/U=x$,
+once each. Every such source has $\Lambda<0$, so has exactly
+one complete parent world, with drift $d_x(z)$ and the single
+gain reconstructed by O, Theorem 2.1. On the whole interval,
+
+$$
+\partial_zK_\alpha(z)<0.
+\tag{26.9}
+$$
+
+Proof. Rational evaluation of the quartic at (26.3) gives
+$\mathfrak p(\ell)<0<\mathfrak p(h_\alpha)$, locating its unique
+positive root. These same rational endpoints give
+
+$$
+1/2<\ell<\alpha<h_\alpha<2/3,\qquad
+\ell^2+\ell-1>0.
+\tag{26.10}
+$$
+
+In particular all three coefficients of $D$ in (26.4) are positive
+at $x=\alpha$. Direct polynomial identities give
+
+$$
+\begin{gathered}
+D-R_*=(1-x)^2(1-z),\qquad
+(J_*-B_*)B_*=R_*(D-R_*),\\
+\frac{db}{dz}
+ =\frac{(1-x)\{(1-x)^2-c_xz^2\}}{D^2}>0,
+\qquad (1-x)^2-c_x=2-3x>0.
+\end{gathered}
+\tag{26.11}
+$$
+
+For $0<z<1$, these identities give $0<r<1$, $b>0$ and
+$c=(J_*-B_*)/D=r(1-r)/b>0$, with $j=J_*/D$,
+$U=U_*/D$ and $n=N_*/D=xU$. The coordinate $b$ increases
+from zero to
+
+$$
+b_{\max}=\frac{1-x}{2x-1}>1.
+\tag{26.12}
+$$
+
+To prove exhaustion, every source of this ratio satisfies
+
+$$
+F_b(r)=r^2-(1+b)r+b\{x+(2x-1)b\}=0.
+\tag{26.13}
+$$
+
+For $0<b<b_{\max}$, $F_b(0)>0$ and $F_b(1)<0$, so this
+quadratic has exactly one root in $(0,1)$; its other root is
+larger than one. For $b\ge b_{\max}>1$, its derivative is
+negative on $[0,1]$ and $F_b(1)\ge0$, so it has no strict
+root there. The strictly increasing $b(z)$ and (26.11) therefore
+supply every legal source exactly once. The closed chart endpoints
+are auxiliary points, not worlds.
+
+Here is a finite rational sign certificate on the full closed
+rectangle $I_\alpha\times[0,1]$. Apply (26.6)–(26.7) to the
+polynomials defined in (26.4)–(26.5). The resulting strict
+comparisons, in increasing $k$, are
+
+$$
+\begin{aligned}
+\operatorname{up}(\beta_{k,6}(L))&<-a_{L,k}/10^6,\\
+\operatorname{up}(\beta_{k,10}(\mathcal M))&<-a_{M,k}/10^6,
+\end{aligned}
+\tag{26.14}
+$$
+
+where the exact integer vectors are
+
+$$
+\begin{aligned}
+(a_{L,k})={}&(2568,5336,9737,15554,23008,32865,46551),\\
+(a_{M,k})={}&(12697,21923,36249,59040,97503,164302,\\
+&\qquad278586,466328,759734,1195254,1809568).
+\end{aligned}
+\tag{26.15}
+$$
+
+These comparisons are specified entirely by rational operations:
+expand the divisions in (26.4)–(26.5), extract the $z^i$
+coefficients, sum them with the binomial fractions (26.6), and
+apply the descending recursion (26.7) with (26.3). For example
+the right bound in row $k$ is the displayed integer divided by
+$10^6$ with a minus sign; no floating-point root or sampled
+value enters a comparison. Equations (26.3)–(26.7), (26.14)–(26.15)
+are a finite reproducible certificate for all 18 inequalities.
+The Bernstein weights are nonnegative and sum to one on $[0,1]$.
+Thus (26.14) gives $L<0$ and $\mathcal M<0$ on the entire
+closed rectangle.
+
+On every strict source of (26.8), substitution in the original
+parent coefficient gives
+
+$$
+\Lambda=\frac{L_{\rm num}}{T_*U_*J_*N_*}<0.
+\tag{26.16}
+$$
+
+Indeed $T_*,U_*,J_*,N_*$ are positive there and
+$L_{\rm num}=2U_*L$. Substitution also gives the rational identity
+
+$$
+(d_x-24)\Lambda+
+ \frac{24}{5}(b-1/8)
+ \left(\frac6{1+b}-\frac2{1+2b}\right)=0.
+\tag{26.17}
+$$
+
+It follows either by clearing the stated positive denominators
+in (26.4)–(26.5), or by inserting $L_{\rm num}=2U_*L$.
+O, Theorem 2.1, now reconstructs exactly one complete parent
+world at each source. In particular the gain is nonzero because
+the original responses at clocks zero and one differ.
+Finally (26.5) and the strict sign of $\mathcal M$ imply
+
+$$
+\partial_zK_x=\frac{\mathcal M}{5(x+1)(x+2)L^2}<0
+\quad(x=\alpha),
+$$
+
+with a strictly positive denominator. This proves (26.9). ∎
+
+**Theorem 26.4 (Complete equal-ratio collision classification).**
+Let $W,W'\in\mathcal F(H_4)$ be any complete worlds. If
+
+$$
+\chi(W)=\chi(W'),\qquad
+(p,u,m)(W)=(p,u,m)(W'),
+\tag{26.18}
+$$
+
+then either $W=W'$, or they are a legal distinct reflected pair
+$A_r,A_{9/8-r}$ of Theorem 25.3. Conversely every such reflected
+pair satisfies (26.18). Hence the map
+$W\mapsto(\chi(W),p(W),u(W),m(W))$ has fibres of size at most
+two, and every two-point fibre is one of these known mirror pairs.
+
+Proof. Write $x=\chi(W)=\chi(W')$, $H=Ug$,
+$H'=U'g'$ and $\delta=d-d'$. Equality of the original readings
+at clocks $3,4$ and of the three actual later readings gives
+
+$$
+(H-H')(i)=-\delta/f_i,\qquad
+(f_3,f_4,f_5,f_6,f_7)=(x,1,x+1,x+2,2x+3).
+\tag{26.19}
+$$
+
+The fourth difference of the degree-at-most-three polynomial
+$H-H'$ vanishes. The reciprocal difference is exactly
+
+$$
+\frac1x-4+\frac6{x+1}-\frac4{x+2}+\frac1{2x+3}
+ =-\frac{\mathfrak p(x)}{x(x+1)(x+2)(2x+3)}.
+\tag{26.20}
+$$
+
+All denominator factors are positive. Thus
+$\delta\mathfrak p(x)=0$.
+
+First suppose $x\ne\alpha$. Then $\delta=0$, so $H-H'$ has
+five distinct zeros and is identically zero. The common
+clock-zero equation $g(0)=g'(0)=-d$ now gives
+$d(U-U')=0$. At clock two, $T=(U+1)/2$, and the common
+response $C=147/5$ gives
+
+$$
+ H(2)=\frac{2U(C-d)}{U+1}
+     =\frac{2U'(C-d)}{U'+1}.
+$$
+
+Consequently $(C-d)(U-U')=0$. Since $C\ne0$, these two
+equations force $U=U'$. Therefore $b=b'$, $n=n'$ and
+$g=g'$, with $d=d'$. If $r=r'$ these are the identical
+complete world. Otherwise $j=n-r\ne n-r'=j'$, and the
+clock-one equations force $g(1)=0$, hence $d=24$.
+O, Theorem 2.2, gives $b=1/8$, $g=h$. The common-source
+quadratic, or (25.13), gives $r+r'=9/8$.
+
+Now suppose $x=\alpha$. Let $q_x$ be the unique cubic with
+values $(1/x,1,1/(x+1),1/(x+2))$ at nodes $3,4,5,6$.
+Its explicitly reproducible Lagrange formula is
+
+$$
+q_x(s)=\sum_{i=3}^6\frac1{f_i}
+ \prod_{\substack{3\le j\le6\\j\ne i}}\frac{s-j}{i-j}.
+\tag{26.21}
+$$
+
+Evaluation gives $q_x(0)=q_0(x)$ of (26.5), and
+
+$$
+ q_x(7)-\frac1{2x+3}
+ =\frac{\mathfrak p(x)}{x(x+1)(x+2)(2x+3)}=0.
+$$
+
+The four nodes $3,4,5,6$ in (26.19) imply the identity of whole
+polynomials $H-H'=-\delta q_x$. At clock zero this gives
+
+$$
+ d(q_0-U)=d'(q_0-U').
+\tag{26.22}
+$$
+
+Theorem 26.3 parametrizes both entire sources by $z,z'\in(0,1)$
+and gives their unique reconstructed drifts. Thus (26.22) is
+$K_\alpha(z)=K_\alpha(z')$. The strict derivative (26.9) forces
+$z=z'$. Sources coincide, and the unique full-parent lift in
+Theorem 26.3 gives $W=W'$.
+
+Finally (25.13) shows that every legal reflected pair has equal
+$p,u,m$ and equal $n$. It also has common $U=5/4$, hence equal
+$\chi$. For a fixed world its distinct reflected partner, when
+legal, is unique, proving the fibre bound. The proof nowhere
+requires a nonzero gain sample, exact degree, simple roots or
+nonzero drift. This is classification within an equal unobserved
+source ratio, with arbitrary real acquired responses; it supplies
+no acquisition of $\chi$ and no assertion about unequal ratios. ∎
+
+## 27. Saturation at the central diagonal limit
+
+**Definition 27.1 (Central world and full-parent local coordinates).**
+Give complete worlds the Euclidean coefficient topology of O,
+Definition 16.1, padding the gain coefficient vector through degree
+three. Set
+
+$$
+ r_0=9/16,\qquad W_0=A_{r_0},\qquad k_0=-1128/5.
+\tag{27.1}
+$$
+
+O, Theorem 2.1 and Lemma 16.2, identify the entire parent near
+$W_0$ with the zeros of
+
+$$
+\begin{gathered}
+R_0(b,r,e)=e\Lambda+\frac{24}{5}(b-1/8)B_{\rm coef},\\
+B_{\rm coef}=6/(1+b)-2/(1+2b)>0,\qquad e=d-24.
+\end{gathered}
+\tag{27.2}
+$$
+
+At $e=0,b=1/8$, $\partial_bR_0=448/25$. The ordinary implicit
+function theorem therefore gives a smooth chart of all nearby
+parent worlds with coordinates $(r,e)$ and dependent coordinate
+$b=b(r,e)$. The whole gain in this chart is the single interpolant
+of O (2.3), added to $h$. Along $e=0$, (25.13) gives
+
+$$
+ p=24,\qquad k=k_0,\qquad
+ u=\frac{591}{4}-192(r-9/16)^2.
+\tag{27.3}
+$$
+
+In particular $(p,u,m)(W_0)=(24,591/4,720)$.
+
+**Theorem 27.2 (Local central-diagonal saturation).** There exists
+an open neighbourhood $\mathcal U$ of $W_0$ in the entire complete
+parent such that any distinct $W,W'\in\mathcal U$ with equal
+$(p,u,m)$ are exactly a legal reflected pair
+$A_r,A_{9/8-r}$. In particular their fifth response is 24.
+Consequently no sequence of distinct nonmirror terminal-M collision
+pairs can converge to $(W_0,W_0)$ in the coefficient topology.
+
+Proof. In the full-parent chart of Definition 27.1, put
+
+$$
+\alpha_0(r)=\partial_ep(r,0),\qquad
+\eta_0(r)=\partial_ek(r,0).
+$$
+
+The derivatives in O, Lemmas 16.3–16.4, computed from the same
+whole interpolant, have the exact form
+
+$$
+\begin{aligned}
+\alpha_0&=a_0+a_1/j,&
+a_0&=\frac{-512n^2-218n+475}{42n},&
+a_1&=\frac{85(4n+5)}{84},\\
+\eta_0&=e_0-c_0/j,&
+e_0&=\frac{10240n^2+33924n-32375}{140n},&
+c_0&=\frac{1672n+7455}{70},\\
+j&=1/8+8r(1-r),&n&=j+r.
+\end{aligned}
+\tag{27.4}
+$$
+
+Here the subscripted $a_0,e_0$ in (27.4) are rational functions
+of $n$ and do not denote the drift coordinate $e$. At $r=r_0$,
+
+$$
+ j=67/32,\quad n=85/32,\quad j_r=-1,\quad n_r=0,
+ \quad\Lambda=12701/3417.
+\tag{27.5}
+$$
+
+Substitution into (27.4) and differentiation give
+
+$$
+\begin{aligned}
+\alpha_0(r_0)&=-205402/7973,&
+\eta_0(r_0)&=10698679/39865,\\
+\alpha_0'(r_0)&=340000/94269,&
+\eta_0'(r_0)&=-1218176/31423,\\
+\alpha_0\eta_0'-\eta_0\alpha_0'&=49333024/1602573.
+\end{aligned}
+\tag{27.6}
+$$
+
+These fractions can also be recovered directly from (27.2):
+$b_e=-25\Lambda/448$, and differentiating the gain at nodes
+$0,1,2,3$ gives
+
+$$
+ \left(-1,-1/j,-\{1+(24/5)b_e\}/(9/8),-1/n\right).
+\tag{27.7}
+$$
+
+The extrapolation rows to clocks $5,6,7$ are
+$(-4,15,-20,10)$, $(-10,36,-45,20)$ and $(-20,70,-84,35)$,
+respectively. Substitution into the actual responses (25.2)
+gives (27.4)–(27.6); differentiation of $j,n$ at (27.5) yields
+$\alpha_0'=a_1/j^2$ and $\eta_0'=-c_0/j^2$ there.
+All these denominators are positive source traces.
+
+Since $p(r,0)=24$ and $k(r,0)=k_0$ throughout this chart,
+smooth factorization gives
+
+$$
+ p-24=e\,A(r,e),\qquad k-k_0=e\,E(r,e),\qquad
+ A(r,0)=\alpha_0(r),\quad E(r,0)=\eta_0(r).
+\tag{27.8}
+$$
+
+For example $A(r,e)=\int_0^1p_e(r,te)\,dt$, with the
+analogous formula for $E$. Thus these functions extend smoothly
+through $e=0$; this is not division by a sampled gain zero.
+Because $A(r_0,0)\ne0$, the inverse function theorem changes
+coordinates locally from $(r,e)$ to $(r,q)$, where $q=p-24$.
+Writing $e=e(r,q)$, (27.8) becomes
+
+$$
+ k-k_0=q\,L_c(r,q),\qquad
+ L_c(r,q)=\frac{E(r,e(r,q))}{A(r,e(r,q))}.
+\tag{27.9}
+$$
+
+At $q=0$, local uniqueness gives $e(r,0)=0$. Hence the derivative
+at the centre is
+
+$$
+\partial_rL_c(r_0,0)
+ =\frac{\alpha_0\eta_0'-\eta_0\alpha_0'}{\alpha_0^2}
+ =\frac{1467657464}{31642486203}>0.
+\tag{27.10}
+$$
+
+Choose an open product rectangle about $(r_0,0)$ in these
+coordinates, small enough that $A\ne0$ and $\partial_rL_c>0$
+on it. Its inverse image $\mathcal U$ is open in the entire
+parent because the original reconstruction and the coordinate
+changes are homeomorphisms.
+
+Two members of $\mathcal U$ having equal $(p,u,m)$ have equal
+$q$ and equal $k$. If $q\ne0$, (27.9) gives equal $L_c$ at
+that fixed $q$. Its strict increase in $r$ on the rectangle
+forces equal $r$, hence equal $e$ and the identical complete
+world. If $q=0$, both $e$ values are zero. The parent equation
+then forces $b=1/8$, and reconstruction gives $g=h$ and $d=24$.
+Equality of $u$ in (27.3) gives
+
+$$
+ (r-r')\{9-8(r+r')\}=0.
+$$
+
+Distinctness removes $r=r'$, leaving $r'=9/8-r$.
+Conversely every such pair lying in $\mathcal U$ has equal
+responses by (25.13). This proves the local classification.
+If a sequence of nonmirror collision pairs converged to
+$(W_0,W_0)$, both endpoints would eventually lie in $\mathcal U$,
+contradicting that classification. ∎
+
+## 追加锚（本行以下为增补区）
+
+
+## 28. A global order on the external H graph at $p=24$
+
+The next theorem uses the ordinary premises O, Definition 13.1 and
+Theorem 13.2, together with F, Theorem 25.3. O, Theorem 13.2 is used
+with its original positive source domain and its single whole-gain lift;
+F, Theorem 25.3 is used only for a collision having a member with
+$d=24$. No transitive audit of those supplier proofs is intended here.
+
+**Definition 28.1 (The exhaustive proportional chart).** Put
+
+$$
+q=r(1-r),\qquad t=\frac{b}{q},\qquad b=qt,
+$$
+
+on $0<r<1$, $b>0$. Define
+
+$$
+\begin{aligned}
+J_0&=1+qt^2,&N_0&=J_0+rt,&U&=1+2qt,\\
+T&=1+qt,&V_0&=N_0+tU,&Z&=J_0N_0V_0.
+\end{aligned}
+$$
+
+Then
+
+$$
+j=\frac{J_0}{t},\qquad n=\frac{N_0}{t},\qquad V=\frac{V_0}{t}.
+\tag{28.1}
+$$
+
+The change of coordinates is a bijection from the entire strict positive
+source domain to $(r,t)\in(0,1)\times(0,\infty)$; its inverse is
+$b=r(1-r)t$ and $r(1-r)/b=1/t$.
+
+The polynomial equation for the external branch in these coordinates is
+
+$$
+\begin{aligned}
+G(r,t)={}&14q^3t^6+(95-73r)q^2t^5+(47r^2-39r+30)qt^4\\
+&+r(147r^2-232r+105)t^3\\
+&+2(44r^2-55r+15)t^2-64rt-32.
+\end{aligned}
+\tag{28.2}
+$$
+
+Direct expansion gives
+
+$$
+H(r,qt)=q^3G(r,t).
+\tag{28.3}
+$$
+
+For the whole-gain lift set
+
+$$
+\delta=8qt-1,
+$$
+
+and define
+
+$$
+\begin{aligned}
+D={}&20Z+T(4Z-15tN_0V_0-10tJ_0V_0+tJ_0N_0),\\
+A_6={}&4Z-9tN_0V_0+10tJ_0V_0-9tJ_0N_0,\\
+A_7={}&16Z-35tN_0V_0+35tJ_0V_0-21tJ_0N_0,\\
+D_0&=24D-12\delta Z,\\
+G_6&=24D-3\delta A_6,\\
+G_7&=384D-12\delta A_7,\\
+S_6&=2tU+N_0,&S_7&=3tU+2N_0.
+\end{aligned}
+$$
+
+Let $h(s)=\frac85(s-1)(s-3)(s-5)$ and let $v$ be the cubic of O,
+Definition 13.1, with values $(-1,-1/j,-1/n,-1/V)$ at the nodes
+$0,1,3,5$. On every strict zero of $G$ the complete world supplied by
+O, Theorem 13.2, is exactly
+
+$$
+\epsilon=-\frac{12\delta Z}{D},\qquad d=24+\epsilon,\qquad
+g=h+\epsilon v.
+\tag{28.4}
+$$
+
+Indeed, O (13.2) gives $E_2=1+Tv(2)$ and direct substitution gives
+
+$$
+D=20J_0N_0V_0E_2.
+\tag{28.5}
+$$
+
+Thus $D\ne0$ on the strict graph by O, Theorem 13.2. The same
+substitution gives
+
+$$
+v(6)=\frac{A_6}{4Z},\qquad v(7)=\frac{A_7}{5Z},\qquad
+g(6)=\frac{G_6}{D},\qquad g(7)=\frac{G_7}{5D}.
+\tag{28.6}
+$$
+
+The actual sixth-M and seventh-M responses in (25.1)--(25.2) therefore
+are
+
+$$
+u=\frac{tD_0+S_6G_6}{tD},\qquad
+m=\frac{5tD_0+S_7G_7}{5tD}.
+\tag{28.7}
+$$
+
+Define the integer polynomials
+
+$$
+\begin{aligned}
+P={}&2(8N_0-19t)D\\
+&+\delta\{19tZ+6S_6A_6-S_7A_7\},\qquad B=tD.
+\end{aligned}
+\tag{28.8}
+$$
+
+The cleared numerator identity is
+
+$$
+5tD_0+S_7G_7-24(tD_0+S_6G_6)=12P.
+	ag{28.9a}
+$$
+
+so expansion of (28.7) gives the actual-response identity
+
+$$
+m-\frac{24}{5}u=\frac{12}{5}\frac{P}{B}.
+\tag{28.9}
+$$
+
+No gain sample, drift, leading coefficient, gain root, source label or
+unobserved ratio is divided out in (28.4)--(28.9).
+
+**Lemma 28.2 (The graph lies in one derived compact strip).** Every
+strict positive root of $G(r,\cdot)$ satisfies
+
+$$
+1<t<2.
+\tag{28.10}
+$$
+
+Proof. In the degree-six Bernstein basis in $r$ the coefficient vectors
+of $G(r,1)$ and $G(r,2)$ are respectively
+
+$$
+\begin{aligned}
+&(-2,-17/2,-343/15,-459/10,-1024/15,-227/3,-68),\\
+&(88,640/3,5512/15,302,160/3,4/3,32).
+\end{aligned}
+\tag{28.11}
+$$
+
+The Bernstein weights are nonnegative and sum to one on $0\le r\le1$.
+Thus $G(r,1)<0<G(r,2)$ there. O, Theorem 13.2, supplies exactly one
+positive root for every strict $r$, so that root lies in $(1,2)$. ∎
+
+**Definition 28.3 (Derivative numerator).** Set
+
+$$
+\mathcal A(r,t)=
+\frac{(P_rB-PB_r)G_t-(P_tB-PB_t)G_r}{t}.
+\tag{28.12}
+$$
+
+The numerator in (28.12) is divisible by $t$ in $\mathbb Z[r,t]$;
+$\mathcal A$ has bidegree $(19,19)$ and 159 nonzero monomials.
+
+**Lemma 28.4 (Exact tensor-Bernstein certificate).** On the closed
+rectangle $R=[0,1]\times[1,2]$, every zero of $G$ satisfies
+
+$$
+\mathcal A(r,t)>0.
+\tag{28.13}
+$$
+
+Proof. For a polynomial $F$ of coordinate degrees at most $(M,N)$ and
+a cell $[a,a+h]\times[c,c+k]$, write
+
+$$
+F(a+hx,c+ky)=\sum_{i,j}f_{ij}x^iy^j.
+$$
+
+Its degree-$(M,N)$ tensor-Bernstein coefficients are
+
+$$
+\beta_{IJ}(F)=
+\sum_{i\le I,\,j\le J}f_{ij}
+\frac{\binom Ii}{\binom Mi}\frac{\binom Jj}{\binom Nj}.
+\tag{28.14}
+$$
+
+The corresponding tensor Bernstein basis is nonnegative on the cell
+and sums to one. Consequently a strict lower bound on all coefficients
+is a pointwise strict lower bound for $F$.
+
+Encode a cell by $[i,d,j,e,\mathsf A]$ or $[i,d,j,e,\mathsf G]$,
+meaning the closed rectangle
+
+$$
+\left[\frac{i}{2^d},\frac{i+1}{2^d}\right]
+\times
+\left[1+\frac{j}{2^e},1+\frac{j+1}{2^e}\right].
+\tag{28.15}
+$$
+
+The following are the leaves of the alternating bisection of $R$, first
+in $r$ and then in $t$; their interiors are disjoint and their union is
+all of $R$:
+
+$$
+\begin{array}{rrrr|c@{\qquad}rrrr|c}
+0&5&0&5&\mathsf G&0&5&1&5&\mathsf A\\
+1&5&0&5&\mathsf G&1&5&1&5&\mathsf A\\
+0&4&1&4&\mathsf A&1&4&0&4&\mathsf G\\
+1&4&1&4&\mathsf A&0&3&1&3&\mathsf A\\
+2&4&0&4&\mathsf G&4&5&2&5&\mathsf G\\
+4&5&3&5&\mathsf A&5&5&1&4&\mathsf G\\
+3&4&0&3&\mathsf G&1&3&1&3&\mathsf A\\
+0&2&1&2&\mathsf A&2&3&0&3&\mathsf A\\
+2&3&1&3&\mathsf A&3&3&0&2&\mathsf G\\
+1&2&1&2&\mathsf A&0&1&1&1&\mathsf A\\
+2&2&0&2&\mathsf G&2&2&1&2&\mathsf A\\
+3&2&0&1&\mathsf G&1&1&1&1&\mathsf A
+\end{array}
+\tag{28.16}
+$$
+
+On every $\mathsf A$ cell, use $(M,N)=(19,19)$ in (28.14): all 400
+coefficients of $\mathcal A$ are strictly greater than $500$. On every
+$\mathsf G$ cell, use $(M,N)=(6,6)$ for $G$: all 49 coefficients of $G$
+are at most $-49/512$. There are 14 cells of type $\mathsf A$ and 10
+of type $\mathsf G$, hence 5600 and 490 exact rational comparisons.
+The exact minima are
+
+$$
+\min_{\mathsf A}\beta_{IJ}(\mathcal A)=
+\frac{341124130829334753610607074478220625550859}
+{680564733841876926926749214863536422912}>500,
+\qquad
+\min_{\mathsf G}\beta_{IJ}(-G)=\frac{49}{512}.
+\tag{28.17}
+$$
+
+Thus a zero of $G$ cannot lie in a $\mathsf G$ cell and lies in an
+$\mathsf A$ cell, where (28.14) gives $\mathcal A>0$. This proves
+(28.13). ∎
+
+**Theorem 28.5 (Strict order on the whole external H graph).** Let
+$\mathcal H(r)$ be the complete world in O, Theorem 13.2. For
+$0<r<s<1$,
+
+$$
+\left[m-\frac{24}{5}u\right](\mathcal H(r))
+<
+\left[m-\frac{24}{5}u\right](\mathcal H(s)).
+\tag{28.18}
+$$
+
+Proof. Along the strict graph, (28.3) and O, Theorem 13.2 give
+$G_t=H_b/q^2>0$. Implicit differentiation gives
+$t'(r)=-G_r/G_t$. From (28.9) and (28.12),
+
+$$
+\frac{d}{dr}\left(m-\frac{24}{5}u\right)
+=\frac{12}{5}\frac{t\,\mathcal A}{B^2G_t}>0.
+\tag{28.19}
+$$
+
+Here $t>0$, $B=tD\ne0$ by (28.5), and $\mathcal A>0$ by Lemma
+28.4. The mean value theorem on every compact subinterval of $(0,1)$
+proves (28.18). Equality of both actual responses on two H worlds
+therefore forces equal $r$; O, Theorem 13.2 then forces equal $b$ and
+the identical complete gain and drift. ∎
+
+The certificate includes the auxiliary boundaries $r=0$ and $r=1$.
+At them,
+
+$$
+G(0,t)=30t^2-32,\qquad
+G(1,t)=4(5t^3+2t^2-16t-8).
+\tag{28.20}
+$$
+
+The first has its unique root in $[1,2]$ at $4/\sqrt{15}$; the second
+has a unique root there because its derivative is positive on $[1,2]$.
+Consequently every sequence of strict graph points approaching either
+strict source endpoint has $t$ bounded in the same closed interval,
+$b=q t\to0$, and $1/t$ remains finite and positive. These boundary
+points are not admitted as worlds. At either of the two O13.2 K/H
+intersections, $\delta=0$, so (28.4) reduces to the same exact world
+$g=h,d=24$; no intersection is deleted or duplicated.
+
+## 29. The complete original $p=24$ terminal-M classification
+
+**Theorem 29.1 (Joint-response injectivity and the whole-union
+classification).** Let $W,W'$ be complete worlds in the original
+positive domain of Definition 25.1 with the literal history $H_4$ and
+the actual continuation $M,M,M$. Assume both have fifth-M response
+$p=24$. If their actual sixth-M and seventh-M responses agree, then
+either $W=W'$, or
+
+$$
+W=\mathcal K(r),\qquad W'=\mathcal K(s),\qquad
+r+s=\frac98,\qquad \frac18<r,s<1,
+\qquad r\ne s.
+\tag{29.1}
+$$
+
+Conversely every pair in (29.1) has equal $(p,u,m)$. Thus every
+two-world fibre of the original $(p,u,m)$ map at $p=24$ is exactly one
+known legal K mirror pair, and no distinct external H/H pair exists.
+
+Proof. By O, Theorem 13.2, the complete $p=24$ fibre is the set union
+
+$$
+\{\mathcal K(r):0<r<1\}\cup\{\mathcal H(r):0<r<1\},
+\tag{29.2}
+$$
+
+with the two K/H intersections counted once. If neither endpoint of a
+distinct matched pair belongs to $\mathcal K$, both lie on the H graph,
+and Theorem 28.5 makes equality of $(u,m)$ impossible. If one endpoint
+belongs to $\mathcal K$, then its drift is $24$; F, Theorem 25.3,
+classifies the distinct pair as a legal K mirror pair. This proves the
+only-if direction, including the intersections.
+
+For the converse, O, (16.13), equivalently F, (25.13), gives on
+$\mathcal K$
+
+$$
+ p=24,\qquad u=84+24n(r),\qquad
+m=312+\frac{768}{5}n(r),\qquad
+n(r)=\frac18+9r-8r^2,
+\tag{29.3}
+$$
+
+and
+
+$$
+ n(r)-n(s)=(r-s)\{9-8(r+s)\}.
+\tag{29.4}
+$$
+
+For distinct legal parameters, equality of the responses is therefore
+equivalent to $r+s=9/8$. The strict inequalities in (29.1) are exactly
+the original source legality for both reflected parameters, and
+$r=s=9/16$ is removed by distinctness. ∎
+
+The proof retains the full original scope: $g$ is one nonzero real
+polynomial of degree at most three and $d$ is one fixed real drift at
+all original clocks; lower degrees, repeated roots, sampled zeros,
+zero drift and singular parent cases remain included. The only
+divisions made above are by $q,t,Z,D,B,G_t$ on the strict H graph;
+$q,t,Z$ are positive, $D\ne0$ is (28.5), $B\ne0$ follows, and
+$G_t>0$ is O13.2. No endpoint is added. F24, F26 and F27 retain
+their stated exact-$p_J$, equal-$\chi$ and local full-parent scopes;
+Theorem 29.1 adds no conclusion for $p\ne24$ or for the general
+unequal-$\chi$ correspondence away from this fibre.
+
+## 追加锚（本行以下为增补区）
+
+## 30. Reconstruction over every off-twenty-four acquired base
+
+**Definition 30.1 (The entire actual child).** Retain the complete
+worlds, strict source domain and literal history of O, Definitions
+1.1–1.3, as recalled in (25.1). Thus
+
+$$
+\begin{gathered}
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\\
+0<r<1,\quad b>0,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R,\\
+H_4=(0,J,24,M,147/5,J,24,M,18).
+\end{gathered}
+\tag{30.1}
+$$
+
+Here O is [the common-parent volume](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md).
+Fix arbitrary real $p\ne24$ and $v$, and write
+
+$$
+C(p,v)=\mathcal F(H_4,M,p,M,v).
+\tag{30.2}
+$$
+
+The products are $Q_0=I$, $Q_i=E_iQ_{i-1}$; at every original clock
+$i$, the reading is $d+g(i)\operatorname{tr}(Q_iP)$. The initial
+read counts and every atom is immediately read. In particular, the
+acquired word through clock six is $J,M,J,M,M,M$, without a reset,
+copy, skipped read, clock shift or additional port. Cardinality in
+(30.2) counts distinct complete triples, including lower-degree gains,
+sampled or repeated roots, zero drift, singular sources and unbounded
+positive offdiagonals.
+
+For a world in this child put
+
+$$
+\begin{gathered}
+j=b+r(1-r)/b,\qquad n=j+r,\qquad
+T=1+b,\qquad U=1+2b,\\
+x=n/U>0,\qquad H(s)=Ug(s),\qquad C_2=147/5.
+\end{gathered}
+\tag{30.3}
+$$
+
+The letters $x,H$ are mathematical coordinates on worlds, not acquired
+observations. For arbitrary $x>0,d\in\mathbb R$ define
+
+$$
+h_3=\frac{24-d}{x},\quad h_4=18-d,\quad
+h_5=\frac{p-d}{x+1},\quad h_6=\frac{v-d}{x+2},
+\tag{30.4}
+$$
+
+and let $H$ be their unique degree-at-most-three interpolant at
+$3,4,5,6$. Explicitly,
+
+$$
+H(s)=\sum_{i=3}^6 h_i
+ \prod_{\substack{3\le j\le6\\j\ne i}}\frac{s-j}{i-j}.
+\tag{30.5}
+$$
+
+Write $H_i=H(i)$ for $i\in\{0,1,2,7\}$. The needed extrapolations are
+
+$$
+\begin{aligned}
+H_0&=20h_3-45h_4+36h_5-10h_6,\\
+H_1&=10h_3-20h_4+15h_5-4h_6,\\
+H_2&=4h_3-6h_4+4h_5-h_6,\\
+H_7&=-h_3+4h_4-6h_5+4h_6.
+\end{aligned}
+\tag{30.6}
+$$
+
+The interpolation theorem here is the classical distinct-node theorem;
+see Berrut–Trefethen, *Barycentric Lagrange Interpolation*, §2,
+[(2.1)–(2.2)](https://people.maths.ox.ac.uk/trefethen/barycentric.pdf).
+It requires neither exact degree three nor nonzero sampled values.
+
+**Lemma 30.2 (Faithful whole-world reconstruction).** The map
+$W\mapsto(x,d)$ from $C(p,v)$ is injective. Its image consists exactly
+of the real pairs $x>0,d\ne24$ for which, with (30.4)–(30.6),
+
+$$
+\begin{gathered}
+B_0=2(C_2-d)-H_2,\qquad H_1\ne0,\qquad d^2+B_0^2>0,\\
+U=\frac{-dH_0+B_0H_2}{d^2+B_0^2}>1,\qquad
+b=\frac{U-1}{2},\qquad
+j=\frac{U(24-d)}{H_1},\qquad r=xU-j,\\
+0<r<1,\qquad j=b+\frac{r(1-r)}b,\qquad
+dU=-H_0,\qquad B_0U=H_2.
+\end{gathered}
+\tag{30.7}
+$$
+
+The corresponding complete world has the entire polynomial $g=H/U$.
+
+Proof. O, Theorems 2.1–2.2, applied to this exact $H_4$, say that
+$d=24$ forces $b=1/8$ and
+$g(s)=\frac85(s-1)(s-3)(s-5)$. Its fifth-$M$ response is $24$.
+Thus $p\ne24$ implies $d\ne24$. On an actual world, the traces at
+clocks zero through six, by O, (1.6)–(1.7), are
+
+$$
+1,\quad j,\quad T,\quad n,\quad U,\quad U+n,\quad 2U+n.
+\tag{30.8}
+$$
+
+Consequently $Ug$ has the four samples (30.4), so is exactly the
+whole polynomial (30.5). Clock one gives
+$H_1=U(24-d)/j\ne0$. Clocks zero and two give, respectively,
+$dU=-H_0$ and $B_0U=H_2$, since $T=(U+1)/2$. The pair
+$(d,B_0)$ cannot be $(0,0)$: those equations would give $H_2=0$,
+whereas the definition of $B_0$ would give $H_2=2C_2\ne0$.
+Taking the scalar product of the two equations with $(d,B_0)$
+therefore gives the displayed formula for $U$. All remaining source
+coordinates and the entire gain are then forced by (30.7), proving
+injectivity.
+
+Conversely suppose all guards in (30.7) hold. They give a strict
+source $P(r,b)$, with $n=j+r=xU$ and $T=(U+1)/2$. The last two
+equations give readings zero and $C_2$ at clocks zero and two;
+the definition of $j$ gives reading $24$ at clock one. Formula
+(30.4) gives readings $24,18,p,v$ at clocks three through six.
+The gain $H/U$ is one whole polynomial of degree at most three.
+It cannot be identically zero, since that would make the first two
+readings equal. This proves the converse with every original row,
+rather than only an equation on projected coordinates. ∎
+
+The two clock-seven alternatives of this reconstructed world remain
+exactly O, (1.7):
+
+$$
+f_{MJ}=d+\frac{T+2j+4r}{U}H_7,\qquad
+f_{MM}=d+(3+2x)H_7.
+\tag{30.9}
+$$
+
+They use the same fixed world and original clock seven. The two final
+actions are counterfactual alternatives, not two acquired ports.
+
+## 31. A fixed determinant and global noncollapse
+
+**Definition 31.1 (Source-specific polynomial equations).** For the
+interpolant above put
+
+$$
+D=x(x+1)(x+2),\qquad Z=xH_1-(24-d),
+\tag{31.1}
+$$
+
+and define
+
+$$
+\begin{aligned}
+f={}&5D^2(dH_2+H_0B_0),\\
+k={}&\frac{D^4}{4}\bigl\{
+4H_0^2Z^2+2H_0(d-H_0)ZH_1\\
+&\hspace{35mm}-(H_0+d)\bigl(d+(1-2x)H_0\bigr)H_1^2\bigr\}.
+\end{aligned}
+\tag{31.2}
+$$
+
+These are integer polynomials in $x,d,p,v$, with $d$-degrees two
+and four. For a denominator-free specification of their coefficients,
+set
+
+$$
+\begin{gathered}
+z_3=(24-d)(x+1)(x+2),\qquad z_4=(18-d)D,\\
+z_5=(p-d)x(x+2),\qquad z_6=(v-d)x(x+1),\\
+a_0=20z_3-45z_4+36z_5-10z_6,\\
+a_1=10z_3-20z_4+15z_5-4z_6,\qquad
+a_2=4z_3-6z_4+4z_5-z_6,\\
+z_*=xa_1-D(24-d).
+\end{gathered}
+\tag{31.3}
+$$
+
+Then $a_i=DH_i$ for $i=0,1,2$, and
+
+$$
+\begin{aligned}
+f={}&5dDa_2+a_0\bigl((294-10d)D-5a_2\bigr),\\
+4k={}&4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1\\
+&\quad-(a_0+dD)\bigl(dD+(1-2x)a_0\bigr)a_1^2.
+\end{aligned}
+\tag{31.4}
+$$
+
+Expansion of the second numerator gives coefficients divisible by four.
+
+Every world of $C(p,v)$ satisfies $f=k=0$. Indeed the two clock
+equations of (30.7) imply $dH_2+H_0B_0=0$. The rank-one source
+identity, using $n=j+r$, is
+
+$$
+r^2-(1+b)r+b(n-b)=0.
+\tag{31.5}
+$$
+
+For $d\ne0$ substitute $U=-H_0/d$ and $r=UZ/H_1$ into
+(31.5). Multiplication by $4d^2H_1^2$ gives exactly the braces in
+(31.2). If $d=0$, the actual clock-zero equation gives $H_0=0$,
+so those same braces vanish directly. Thus zero drift is retained.
+The converse $f=k=0\Rightarrow W\in C(p,v)$ is not asserted;
+actual points must satisfy the full guards (30.7).
+
+**Lemma 31.2 (Exact determinant identities).** Let $\mathsf S(x,p,v)$
+be the fixed six by six coefficient matrix with rows
+
+$$
+d^3f,\ d^2f,\ df,\ f,\ dk,\ k
+\quad\hbox{and columns }d^5,d^4,\ldots,1.
+\tag{31.6}
+$$
+
+This is the degree-$(2,4)$ Sylvester matrix, retained with its
+original size under every specialization. Define
+
+$$
+F_0=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480.
+\tag{31.7}
+$$
+
+There is a uniquely specified $R\in\mathbb Z[x,p,v]$ such that
+
+$$
+\det\mathsf S=16D^8F_0^2R,\qquad
+(\deg_xR,\deg_pR,\deg_vR)=(18,6,6).
+\tag{31.8}
+$$
+
+Writing $c_i(p,v)=[x^i]R$, and
+
+$$
+A=32p-5v-366,\qquad
+B=120p^2-38pv-3360p+3v^2+522v+23112,
+\tag{31.9}
+$$
+
+one has
+
+$$
+c_0=10^6A^2B^2.
+\tag{31.10}
+$$
+
+The leading $d$-coefficients $L_f=[d^2]f$ and $L_k=[d^4]k$
+depend on $x$ alone and have degrees six and fourteen. For the
+following certificates let $\operatorname{pp}$ mean clearing rational
+denominators and taking the primitive integer polynomial with positive
+leading coefficient. Set
+
+$$
+\begin{aligned}
+u_i(p)&=\operatorname{pp}\!\left(c_i\left(p,\frac{32p-366}{5}\right)\right),\\
+w_i(p)&=\operatorname{pp}\!\left(\operatorname{Res}_v(B,c_i)\right),
+\qquad i=2,3.
+\end{aligned}
+\tag{31.11}
+$$
+
+Their exact degrees and their complete descending coefficient arrays
+modulo $101$ are as follows. In each row the final entry is the
+resultant of the two listed reduced polynomials, in the listed order.
+
+| Polynomial pair and variable | Degrees | First coefficient array modulo $101$ | Second coefficient array modulo $101$ | Resultant modulo $101$ |
+| --- | --- | --- | --- | --- |
+| $\operatorname{pp}(L_f),\operatorname{pp}(L_k)$ in $x$ | $6,14$ | $(76,17,37,66,78,95,59)$ | $(81,20,0,22,71,53,30,80,19,54,96,98,75,95,85)$ | $87$ |
+| $u_2,u_3$ in $p$ | $6,6$ | $(45,81,4,6,45,69,87)$ | $(21,68,8,27,37,84,77)$ | $71$ |
+| $w_2,w_3$ in $p$ | $12,12$ | $(48,72,7,55,13,92,8,79,92,51,8,14,66)$ | $(62,22,14,67,84,83,15,61,76,5,83,19,52)$ | $86$ |
+
+Proof. All identities are integer polynomial identities obtained from
+the four linear forms (31.3). More explicitly, form the six rows
+(31.6) using (31.4), expand their determinant, and divide by
+$16x^8(x+1)^8(x+2)^8F_0^2$. The remainder is zero; the quotient has
+512 nonzero monomials and coordinate degrees $(18,6,6)$, and its
+constant $x$-coefficient factors as (31.10). This division fixes every
+coefficient of $R$, including its normalization. Extracting
+$[d^2]f,[d^4]k,[x^2]R,[x^3]R$ then gives the table by the operations
+in (31.11). For example the first leading coefficient is
+
+$$
+L_f=-10\bigl(177x^6+724x^5+542x^4-742x^3-629x^2+196x+160\bigr).
+\tag{31.12}
+$$
+
+The leading entries of all reduced arrays are nonzero, so the stated
+degrees are preserved modulo $101$. Evaluating their Sylvester
+determinants over $\mathbb F_{101}$ gives $87,71,86$, respectively.
+Thus the displayed finite coefficient identities also prove that the
+three integer resultants are nonzero. The Sylvester construction over
+a commutative coefficient ring is the classical one; see Moreno Maza,
+*[The resultant](https://www.csd.uwo.ca/~mmorenom/AM583/Lectures/ResultantGcd.html/node3.html)*,
+Definition 4 and Propositions 5–7. Here it is used for these specified
+polynomials, with no converse to a specialized resultant-zero test. ∎
+
+**Lemma 31.3 (No vertical collapse and no base collapse).** For every
+complex $\alpha$, $L_f(\alpha)$ and $L_k(\alpha)$ do not both vanish.
+For every complex pair $(p,v)$, the specialization $R(x,p,v)$ is a
+nonzero polynomial in $x$.
+
+Proof. The first row of the table proves the first assertion: a common
+complex root would force the nonzero integer resultant to vanish.
+Consequently at every fixed $x=\alpha$ and every base $(p,v)$ at
+least one of $f(\alpha,d,p,v),k(\alpha,d,p,v)$ has its full degree
+two or four. In particular they are never both zero polynomials in $d$.
+
+For the second assertion suppose $R(x,p,v)\equiv0$. Then
+$c_0=c_2=c_3=0$. Equation (31.10) forces $A=0$ or $B=0$.
+If $A=0$, then $v=(32p-366)/5$, so $u_2(p)=u_3(p)=0$,
+contrary to the second nonzero resultant in the table. If $B=0$,
+the common finite $v$-root of $B,c_i$ forces
+$\operatorname{Res}_v(B,c_i)(p)=0$ for $i=2,3$.
+This implication holds even if a leading $v$-coefficient specializes
+to zero: its finite-root evaluation vector is in the kernel of the
+fixed Sylvester matrix. Thus $w_2(p)=w_3(p)=0$, contrary to the
+third nonzero resultant. Both alternatives are impossible. ∎
+
+## 32. The twenty-four-world bound on the entire original child
+
+**Theorem 32.1 (Uniform full-domain off-twenty-four finite fibre).**
+For every real $p\ne24$ and every real $v$,
+
+$$
+\left|C(p,v)\right|
+=\left|\mathcal F(H_4,M,p,M,v)\right|\le24.
+\tag{32.1}
+$$
+
+This counts distinct complete worlds over the entire strict domain
+(30.1), including the singular parent sources.
+
+Proof. Fix the actual base $(p,v)$. Lemma 30.2 injects its complete
+worlds into the real solutions $(x,d)$ of $f=k=0$ with $x>0$.
+Lemma 31.3 implies that over any fixed complex $x=\alpha$ at
+least one of these two polynomials in $d$ is nonzero of degree two
+or four. There are therefore at most four distinct common finite
+$d$-roots above $\alpha$.
+
+Let $n_\alpha$ count these distinct common roots. Each root $t$
+gives the null vector
+
+$$
+(t^5,t^4,t^3,t^2,t,1)^{\mathsf T}
+\tag{32.2}
+$$
+
+of $\mathsf S(\alpha,p,v)$. Since $n_\alpha\le4<6$, the
+Vandermonde determinant shows that these vectors are independent.
+Hence the corank is at least $n_\alpha$. Constant invertible row
+and column operations put $\mathsf S(\alpha,p,v)$ in rank normal
+form. In the transformed polynomial matrix at least $n_\alpha$
+columns have every entry divisible by $x-\alpha$. Multilinearity
+of the determinant gives
+
+$$
+n_\alpha\le\operatorname{ord}_{x=\alpha}\det\mathsf S(x,p,v).
+\tag{32.3}
+$$
+
+This is the same classical determinant-order argument used in the
+proof of Theorem 10.2; its application here uses (31.8) and the
+global noncollapse of Lemma 31.3, rather than that theorem's
+restricted-$p$ hypotheses.
+
+For $D(\alpha)\ne0$, (31.8) turns (32.3) into
+
+$$
+n_\alpha\le
+\operatorname{ord}_{x=\alpha}\bigl(F_0(x,p,v)^2R(x,p,v)\bigr).
+\tag{32.4}
+$$
+
+The polynomial on the right is nonzero: $F_0$ has leading
+coefficient $405$ and $R$ is nonzero by Lemma 31.3. Its degree
+is at most $2\cdot3+18=24$. Every common root with $D\ne0$
+projects to a root of that polynomial, and summing (32.4) over its
+finitely many roots bounds the number of distinct common pairs
+$(x,d)$ with $D\ne0$ by $24$. Legal worlds have $x>0$, hence
+$D>0$, and the injection proves (32.1). ∎
+
+This proof retains every specialization of the acquired base. A drop
+in either $d$-degree is harmless because the matrix (31.6) keeps
+its fixed size and Lemma 31.3 prevents a whole vertical line of
+solutions. Multiple projected roots and several distinct drifts over
+one projected root are counted by (32.3). No division by $d$ or
+$\Lambda$ occurs in the reconstruction, and the necessary equation
+$k=0$ at $d=0$ was proved separately. No simplicity of a gain root,
+nonzero gain sample, exact gain degree, bounded source coordinate
+or regular source chart is assumed. The zeros of $F_0R$ are only
+necessary projections; their reality, strictness and whole-world
+lifting still require (30.7). Determinant multiplicity is used to
+bound distinct points, not to manufacture additional worlds.
+
+## 33. The same-base distinct-pair question
+
+**Definition 33.1 (The two actual distinct-pair images).** On the
+original real base domain $\{(p,v):p\ne24\}$ define
+
+$$
+\begin{aligned}
+D_J=\{(p,v):{}&\exists W,W'\in C(p,v),\quad
+ W\ne W',\ f_{MJ}(W)=f_{MJ}(W')\},\\
+D_M=\{(p,v):{}&\exists W,W'\in C(p,v),\quad
+ W\ne W',\ f_{MM}(W)=f_{MM}(W')\}.
+\end{aligned}
+\tag{33.1}
+$$
+
+At each fixed base Theorem 32.1 bounds the number of ordered
+distinct candidate pairs for either terminal action by $24\cdot23=552$.
+The original joint condition is exactly $(p,v)\in D_J\cap D_M$:
+the two pairs may overlap or be disjoint, and need not have the same
+terminal response. Theorem 32.1 neither supplies a point of this
+intersection nor excludes all such points. Its base domain is still
+the whole infinite real set $p\ne24,v\in\mathbb R$.
+
+Theorem 7.1 remains the $49$-world bound on its stated interval
+$\mathcal P$, and Theorem 10.2 remains the $18$-world bound on its
+regular locus. Theorems 24.2–24.3 concern the inherited exact $p_J$;
+Theorem 29.1 concerns $p=24$. Their quantified scopes are unchanged.
+The extension (32.1) uses a whole-world reconstruction and global
+noncollapse specific to (30.1); its interpolation, Sylvester
+determinants and determinant-order counting are the classical tools
+cited in Sections 30–32.
+
+In the notation of O, Definitions 1.2–1.3 and Theorem 17.1, the
+bound alone gives no $L_1$ child. Even a point of $D_J\cap D_M$
+would supply only the sixth-$M$ $L_1$ child at that one acquired
+base. A sixth-$J$ $L_1$ child at the same fifth response $p$, the
+remaining fifth-$J$ conditions and the ancestor conditions would
+still be required for the corresponding $H_4$ $L_3$, root $L_7$
+or eight-versus-nine conclusion.
+
+## 追加锚（本行以下为增补区）

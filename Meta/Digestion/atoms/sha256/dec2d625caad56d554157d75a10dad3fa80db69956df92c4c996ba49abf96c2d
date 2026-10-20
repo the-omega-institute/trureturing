@@ -1,0 +1,23 @@
+**Proposition 36.3 (A fixed window and finite probes need not determine $\omega$).** For the exact supplied index $r=13$ and $S=\{2,5\}$, one occupied observation cell contains two different $\omega$ values:
+
+$$
+\begin{aligned}
+F_{13}&=233,& I_{13}&=[24,46]\cap\mathbb Z,\\
+5593&=1+233\cdot24=7\cdot17\cdot47,& \omega(5593)&=3,\\
+6059&=1+233\cdot26=73\cdot83,& \omega(6059)&=2.
+\end{aligned}
+\tag{36.11}
+$$
+
+Both integers have $d_{\{2,5\}}=(0,0)$. Thus exact index information supplies finite upper calibration without, in general, exact target recovery from the index and the existing probes.
+
+**Proof.** The Fibonacci recurrence gives $F_{13}=233$; hence $L_{13}=\lceil233/10\rceil=24$ and $U_{13}=\lfloor233/5\rfloor=46$. The index $13$ is prime and both $24,26$ lie in the interval. Direct multiplication gives the two factorizations in (36.11). Trial division by primes not exceeding each factor's square root verifies that $7,17,47,73,83$ are prime; the only trial primes needed are among $2,3,5,7$. The factors in each product are distinct. Both products are odd and neither is a multiple of $5$, giving the same zero bits and the stated unequal counts. The window magnitude bound is
+
+$$
+1+F_{13}U_{13}=1+233\cdot46=10719,
+\qquad 2^{13}\le10719<2^{14}.
+\tag{36.12}
+$$
+
+For $o=o_{\mathrm{id},\{2,5\}}$ and $y=(13,(0,0))$, it follows that $L_o(y)\le2<3\le U_o(y)\le13$. These inequalities exhibit a nonzero exactness gap, without claiming either endpoint is sharp.
+

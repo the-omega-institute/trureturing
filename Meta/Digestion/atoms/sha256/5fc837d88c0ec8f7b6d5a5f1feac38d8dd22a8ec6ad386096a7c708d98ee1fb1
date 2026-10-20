@@ -1,0 +1,52 @@
+## 5. The new Lean estimate controls the actual complex Fourier observable
+
+For n>0 direct integration in the same basis gives
+
+\[
+\widehat\phi_n(z)=
+\frac{2\sqrt{2/L}\,z\sin(Lz/2)}{z^2-(2\pi n/L)^2}.
+\tag{CO11}
+\]
+
+The paired positive and negative modes cancel the leading inverse-frequency
+term. Let y=sum_{n>N}v_n phi_n be any even L2 tail, N>=1. If L*|z|<=pi*N,
+put w=L*z/(2*pi); then |n^2-w^2|>=3*n^2/4. The identity
+
+\[
+\frac1{3x^3}-\frac1{3(x+1)^3}-\frac1{(x+1)^4}
+=\frac{6x^2+4x+1}{3x^3(x+1)^4}\ge0
+\]
+
+proves sum_{n>N}n^(-4)<=1/(3N^3), including convergence. Young's inequality
+and this positive majorant prove absolute convergence of the Cauchy series
+for every square-summable complex v. Finite Cauchy-Schwarz followed by its
+sum limit proves
+
+\[
+\boxed{|\widehat y(z)|^2\le
+\frac{8L^3}{27\pi^4N^3}|z\sin(Lz/2)|^2\|y\|_2^2.}
+\tag{CO12}
+\]
+
+`WeilEvenFourierObservationTail.even_exterior_fourier_observation_bound`
+proves absolute convergence and the precise normalized coefficient-series
+inequality. There is no upper exterior cutoff or assumed boundary
+cancellation. To identify that response with the actual L2 Fourier tail,
+use Parseval and convergence of the finite cosine sums in L2(I), hence L1(I).
+Their transforms converge at each complex z by Cauchy-Schwarz on the fixed
+window. Equation (CO11) identifies the finite sums, and the proved absolute
+series convergence identifies their limit. This last Fourier-space bridge
+is a paper proof rather than a second hidden Lean assumption.
+
+On |z|<=R, |Im z|<=b, use |sin(Lz/2)|<=exp(bL/2) to obtain
+
+\[
+|\widehat y(z)|\le\sqrt{\frac8{27\pi^4}}L^{3/2}R e^{ba}N^{-3/2}\|y\|_2.
+\tag{CO13}
+\]
+
+When a certified high energy is at least beta*||y||^2, the squared
+observation budget is divided by beta. This controls the entire exterior
+observation. It does not assert that the low component of a ground-mode
+error is small, or that exp(ba) has disappeared.
+

@@ -1,0 +1,13 @@
+## 定义 18.2（现实观察者）
+
+若每层有准入 \(A_i\)，则：
+
+\[
+\boxed{
+\operatorname{PhysObs}
+=
+\sum_{x:\operatorname{Obs}(\mathbf X)}
+\prod_iA_i(x_i).
+}
+\]
+

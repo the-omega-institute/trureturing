@@ -1,0 +1,8 @@
+要从所有有限 \(T\) 推到全局，必须提供一个统一结构，例如：
+
+* 正 storage operator；
+* uniform retention gap；
+* 全尺度 Weil 正性；
+* stable congruence theorem；
+* 全局 factorization。
+

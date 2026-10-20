@@ -1,0 +1,37 @@
+## 9. What has and has not been removed from the problem
+
+The executed fixed-window estimate has genuinely improved. On paper, the
+actual high-mode weights have an independent arithmetic proof, and an
+explicit finite dyadic prolate family now has a calibrated Xi limit with
+quantified projection and rounding errors. The new Lean increment proves
+the infinite complex observation-tail bound with absolute convergence.
+
+The first open research obligation is still to certify the *same* family
+(CO20) against the actual Weil operator along an unbounded scale sequence,
+and make (CO28), or the earlier weighted projective bound, tend to zero.
+No finite matrix positivity assumption has been promoted to an arithmetic
+theorem without its certificate. Neither the Neumann comparison nor the
+new observable estimate is claimed to evade the earlier shift barrier.
+The remaining low-mode error, prime cancellations, and prolate integral
+certification require further work. No RH proof, universal simple-even
+family theorem, or end-to-end Lean real-zero limit is asserted.
+
+References used for this append:
+
+* Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1,
+  (7.1)-(7.12), Lemmas 7.2-7.3 and Section 8. The literal normalization was
+  independently checked by (CO14), and the omitted Gaussian tail is retained.
+* Suzuki, *Weil's quadratic form via the screw function*, arXiv:2606.09096v1,
+  Theorems 1.1-1.4 and Section 8.2. Results stated under RH are not used.
+* Connes, Consani, *Spectral triples and zeta-cycles*, arXiv:2106.01715v1,
+  Lemma 2.2 and Proposition 2.3, for the actual form core.
+* Dusson, Sigal, Stamm, *Analysis of the Feshbach-Schur method for the Fourier
+  spectral discretizations of Schrodinger operators*, arXiv:2008.10871v2.
+  The elimination principle is classical; its Schrodinger regularity
+  assumptions are not silently imported into the Weil problem.
+* DLMF 5.7.6, digamma partial fractions, and the Gamma integral and recurrence,
+  for the elementary resolvent and Mellin computations.
+
+
+---
+

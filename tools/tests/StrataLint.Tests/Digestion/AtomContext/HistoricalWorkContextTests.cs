@@ -29,6 +29,7 @@ public sealed class HistoricalWorkContextTests
             Assert.Contains($"NEXT atom_id={Id(children[index + 1])}", result.Output, StringComparison.Ordinal);
             Assert.Contains("BEGIN_CURRENT_TEXT\n" + children[index] + "END_CURRENT_TEXT", result.Output, StringComparison.Ordinal);
         }
+        f.CaptureContext();
         var before = f.Current;
         var repeated = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
         Assert.True(repeated.Success, repeated.Error);
@@ -56,6 +57,7 @@ public sealed class HistoricalWorkContextTests
         var next = "| $F[3]$ | $0$";
         f.Add(DecomposeFixture.Entry(previous, AtomizerRegistry.GenericId), previous);
         f.Add(DecomposeFixture.Entry(next, AtomizerRegistry.GenericId), next);
+        f.CaptureContext();
         var before = f.Current;
         var result = AtomContextCommand.Run(f.Gateway, ["--atom-id", f.Parent.AtomId, "--source", "probe"]);
         Assert.True(result.Success, result.Error);
@@ -107,6 +109,7 @@ public sealed class HistoricalWorkContextTests
         f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Select(entry => entry.Path == "docs/probe.md"
             ? RawRepositoryEntry.FromText(entry.Path, before + parent + after) : entry));
         foreach (var text in new[] { before, after }) f.Add(DecomposeFixture.Entry(text, AtomizerRegistry.GenericId), text);
+        f.CaptureContext();
         var interior = DecomposeFixture.Entry(parts[20].TrimEnd('\r', '\n'), AtomizerRegistry.GenericId);
         f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Append(
             RawRepositoryEntry.FromText(DecomposeFixture.PathFor(interior), "invalid: [")));
@@ -126,14 +129,14 @@ public sealed class HistoricalWorkContextTests
     [Theory]
     [InlineData("## No longer present\n")]
     [InlineData("**Other**\n")]
-    public void AbsentHistoricalBytesStayMissing(string replacement)
+    public void CapturedHistoricalBytesSurviveSourceReplacement(string replacement)
     {
         var f = new DecomposeFixture("- old fragment\n", AtomizerRegistry.GenericId);
         f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Select(entry => entry.Path == "docs/probe.md"
             ? RawRepositoryEntry.FromText(entry.Path, replacement) : entry));
         var result = AtomContextCommand.Run(f.Gateway, ["--atom-id", f.Parent.AtomId]);
-        Assert.False(result.Success);
-        Assert.Contains("OCCURRENCE_MISSING", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("- old fragment", result.Output, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -163,6 +166,7 @@ public sealed class HistoricalWorkContextTests
                 ProjectedStatus = new(DigestionMigrationState.Partial, DigestionTruthState.Open),
             });
         }
+        f.CaptureContext();
         var before = f.Current;
         foreach (var (row, label, exterior) in new[] { (rows[0], "PREVIOUS", header), (rows[^1], "NEXT", next) })
         {
@@ -185,6 +189,7 @@ public sealed class HistoricalWorkContextTests
         var f = new DecomposeFixture(string.Concat(children), AtomizerRegistry.GenericId);
         foreach (var text in children) f.Add(DecomposeFixture.Entry(text, AtomizerRegistry.GenericId), text);
         f.Replace(f.Parent with { Receipts = f.Parent.Receipts with { ChainAtoms = [.. children.Select(Id)] } });
+        f.CaptureContext();
         return f;
     }
 

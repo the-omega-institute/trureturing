@@ -1,0 +1,62 @@
+**定理 1323.1（单通道的统一后验下界）。** 对第 1321–1322 节的每个允许分量，
+
+$$
+A(w,q)\ge\gamma_\kappa d
+\ge\gamma_\kappa\left(1-\frac1{Mw}\right)_+.
+$$
+
+**证明。** 只需证明 $A(w_*,q)\ge\gamma_\kappa d$。令
+
+$$
+g(r)=r\log\frac{1-r}{r},\qquad g(0)=0.
+$$
+
+记模态概率为 $Q_0=\prod_i(1-r_i)$。在模态所属奇偶类中，最大通道概率为 $Q_0$；在相反奇偶类中，最大值为 $Q_0r_1/(1-r_1)$，若 $r_1=0$ 则该类无正概率。因为一次翻转的概率比为 $r_i/(1-r_i)\le1$，增加其他翻转不增大该比；从中选择最大的即可得到所述最大值。这确定 $w_*$ 的限制格。
+
+若模态为负奇偶，模态格给最小支配比值，直接用 $H(q)+\log Q_0=\sum_i g(r_i)$ 展开得
+
+$$
+A(w_*,q)=\sum_i g(r_i)+OL\ge UL\ge dL/2\ge\gamma_\kappa d.
+$$
+
+若模态为正奇偶且 $r_1\le v$，模态格仍给限制，此时
+
+$$
+A(w_*,q)=
+\sum_i r_i\log\frac{v(1-r_i)}{ur_i}
++L\left(\sum_i r_i-O\right).
+$$
+
+零概率项按连续延拓取零。因所有 $r_i\le v$，第一和式各项非负。若 $r_1\ge v/2$，第 1322 节立即给 $A\ge2Lr_1d\ge\gamma_\kappa d$。若 $r_1<v/2$，每个正 $r_i$ 的对数因子至少为 $\log((1+u)/u)>\log2$，而 $\sum_{i\ge2}r_i\ge d$。又有 $vL=h_2(v)+\log u<\log2$，其中使用二元熵至多为 $\log2$ 及 $u<1$，所以下界再次成立。
+
+最后，若模态为正奇偶且 $r=r_1>v$，第一坐标翻转格给限制。置
+
+$$
+h=\log\frac{1-r}{r},\quad \delta=1-2r,\quad
+G_- =\sum_{i=2}^N g(r_i).
+$$
+
+此时 $0\le h\le L$、$0\le\delta\le\kappa$，并有
+
+$$
+A(w_*,q)=(1-r)(L-h)+G_- -\delta UL.
+$$
+
+因 $r_i\le r$，有 $G_-\ge h\sum_{i\ge2}r_i\ge hU$。令 $B=h-\delta L$。当 $B\ge0$，使用 $U\ge d/2$、$d\le1$ 及 $(1-r)(L-h)\ge0$，得到
+
+$$
+A(w_*,q)\ge d\left[(1-r)(L-h)+B/2\right]
+=\frac d2(L-\delta h)\ge vLd.
+$$
+
+当 $B<0$，改用 $U\le1/2$，得到
+
+$$
+A(w_*,q)\ge(1-r)(L-h)+B/2
+=\frac12(L-\delta h)\ge vL\ge vLd.
+$$
+
+两种情况均给所需的 $\gamma_\kappa d=vLd$。三个分支覆盖全部通道，结合第 1321、1322 节即得。证毕。
+
+这条估计允许确定坐标、模态并列和任意均值符号。其常数依赖固定关联，未给 $\kappa\to0$ 或 $\kappa\to1$ 时的统一正下界。
+

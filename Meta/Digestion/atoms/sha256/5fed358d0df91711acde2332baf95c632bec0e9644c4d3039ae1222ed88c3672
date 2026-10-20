@@ -1,0 +1,4 @@
+**引理 7.1（有理耦合证书）。** 设 $v\in\mathbb R^L$,$L\ge3$。若对每个站点 $j$ 都存在实数 $t_j$,使 $p(\cdot,t_j)$ 与 $q_j(\cdot,t_j)$ 在 $\mathbb R[\lambda]$ 中互素,则 $v$ 是好势。并且好坏性与二面体稳定子是否平凡,在二面体重标号 $v\mapsto v\circ\pi$($\pi\in D_L$)与变号 $v\mapsto-v$ 下都不变。
+
+**证明。** $p$ 与 $q_j$ 关于 $\lambda$ 首一,结式与取值 $t=t_j$ 可交换:$\operatorname{Res}_\lambda(p,q_j)(t_j)=\operatorname{Res}_\lambda(p(\cdot,t_j),q_j(\cdot,t_j))$,右边非零,因为互素的两个多项式没有公共复根。故每个 $\operatorname{Res}_\lambda(p,q_j)$ 都不是零多项式,由母卷推论 3.3,$v$ 是好势。设 $\Pi$ 是 $\pi\in D_L$ 的置换矩阵,则 $\Pi$ 与 $A_L$ 可交换,$H_t(v\circ\pi)$ 与 $H_t(v)$ 经 $\Pi$ 共轭,本征值相同、本征向量只差坐标置换;又 $H_t(-v)=H_{-t}(v)$,而「除有限个 $t$ 外」的条件在 $t\mapsto-t$ 下不变。$v\circ\pi$ 的稳定子是 $v$ 的稳定子的共轭,$-v$ 的稳定子与 $v$ 的相同。∎
+

@@ -1,0 +1,8 @@
+**定义 1014.2（有限前缀与折扣距离）。** 项目 `D5/S3/Observer/MetricGeometry/FiniteWordFiberDiameter.lean` 的 `finite_word_fiber_prediction_diameter`，考虑确定更新、读出、全局距离上界 $B_0$ 及 $0<\lambda\le1$。如果两状态在零至 $m$ 的读出相同，则折扣预测距离至多为
+
+$$
+\lambda^{m+1}B_0.
+$$
+
+其理由是前缀的距离为零，后面的每一项都被相应折扣系数控制。当 $\lambda<1$，这种尾部保证随窗口增长衰减；$\lambda=1$ 时只保留原上界，不产生衰减。这里的 $\lambda$ 是任务如何评价远期差别的权重，第 1008 节的 $\rho$ 则限制实际系统的衰减速度。二者可以在某个新模型中同时出现，却不能因为都小于一就互相替换。
+

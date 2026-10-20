@@ -1,0 +1,61 @@
+**Theorem 42.1 (native Green asymptotics including zero mass).**
+Put $d_\kappa(r)=\sqrt{r^{\mathsf T}M_\kappa^{-1}r}$. For $r\ne0$,
+
+$$
+Y_{\kappa,m}(r)=\int_0^\infty e^{-mt}\Gamma_{\kappa,t}(r)dt
+=\frac{e^{-\sqrt m\,d_\kappa(r)}}
+       {4\pi\sqrt{\det M_\kappa}\,d_\kappa(r)},\qquad m\ge0.
+\tag{42.1}
+$$
+
+The actual native Green is finite at every distinct full point, including
+$r=0$, $k\ne k'$, at $m=0$. Uniformly for every $m\ge0$, $|r|\ge1$,
+$\kappa\in\mathcal K$ and both heights in $I$,
+
+$$
+|\mathcal G_{\kappa,m}(k,k';r)-pY_{\kappa,m}(r)|
+\le Cp|r|^{-3}.
+\tag{42.2}
+$$
+
+In particular, as $R\to\infty$,
+
+$$
+R\mathcal G_{\kappa,\mu/R^2}(k,k';Rz)
+=p\frac{e^{-\sqrt\mu d_\kappa(z)}}
+ {4\pi\sqrt{\det M_\kappa}\,d_\kappa(z)}+O(pR^{-2})
+\tag{42.3}
+$$
+
+uniformly for $\mu$ in every compact subset of $[0,\infty)$ and $z$ in
+every compact subset of $\mathbb R^3\setminus\{0\}$. The normalized error
+is uniform even as either height approaches either absorbing face. No
+relation between $R$ and $\kappa$ is required. For the original real lift,
+replace the left side by
+$|\kappa|R\mathcal G^{\rm orig}_{\kappa,\mu/R^2}
+ (k,k';J_\kappa Rz)$ when $\kappa\ne0$.
+Its tensor is exactly $J_\kappa M_\kappa J_\kappa^{\mathsf T}$,
+including the signed cross terms in (39.1).
+
+Proof. The first two lines of (41.2) prove off-diagonal finiteness at both
+time endpoints. For the error on $t\ge1$, split at $t=|r|$ if $|r|\ge1$.
+The part below that time is exponentially small in $|r|$, and the rest is
+bounded by
+$Cp\int_0^\infty t^{-5/2}e^{-c|r|^2/t}dt=C'p|r|^{-3}$.
+The small-time native and Gaussian integrals are exponentially small for
+$|r|\ge1$. Multiplication by $e^{-mt}\le1$ preserves every estimate,
+including $m=0$. This proves (42.2). Formula (42.1) follows by substituting
+$u=d_\kappa(r)/(2\sqrt t)$ in its Gaussian integral (or differentiating
+that integral in $\sqrt m$ and fixing its value at zero).
+It has the displayed unit-source constant because
+$-\nabla\cdot M_\kappa\nabla+m$ becomes $-\Delta+m$ after
+$r=M_\kappa^{1/2}y$, whose volume Jacobian is $\sqrt{\det M_\kappa}$.
+The native unit-source identity is also retained at $m=0$:
+$(B_\kappa-\lambda+m)\mathcal G_{\kappa,m}=\delta$
+in distributions relative to raw measure. Integrate the heat equation
+against a compactly supported smooth test; its boundary terms are the
+unit delta at time zero and zero at infinity, the latter by (41.2).
+Scaling proves (42.3); (39.1) proves its signed pushforward.
+Thus the time-zero and time-infinity tails are controlled by native bounds,
+not by a formal Laplace transform of (36.3). $\square$
+

@@ -1,0 +1,28 @@
+**Corollary 116.1 (Necessary location of a cap separator).** If a
+sequence (110.2) and a cap $0<\varepsilon\le1$ satisfy
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing,\qquad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_L=\varnothing,
+\tag{116.1}
+$$
+
+then necessarily
+
+$$
+a_1<1,\qquad L\ge5,\qquad
+3\varepsilon<D_3(a,\varepsilon)
+                 \le3\varepsilon+1-a_1.
+\tag{116.2}
+$$
+
+**Proof.** The upper bound is Theorem 113.2. Theorem 113.3
+excludes $D_3\le3\varepsilon$, and the strict lower bound together
+with the upper bound forces $a_1<1$. Acquisition Resources,
+Proposition 93.1 gives identical restricted feasibility for
+$L\le3$, and Theorem 96.2 gives it for $L=4$. For active length
+four its cap hypothesis holds automatically:
+$a_5\le\varepsilon<a_4$. Hence (116.1) requires $L\ge5$.
+These are necessary location conditions, not a stopped
+infeasibility certificate in the strip. $\square$
+

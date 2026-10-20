@@ -1,0 +1,30 @@
+**命题 17.10（地址域的逐点平面覆盖）。**
+定义 17.8 的平移族满足点态不交并
+
+$$
+\mathbb R^2=\bigsqcup_{\lambda\in\Lambda}(\mathcal D+\lambda),
+\qquad
+\sum_{\lambda\in\Lambda}\mathbf1_{\mathcal D}(x-\lambda)=1
+\quad\text{对每个 }x\in\mathbb R^2.
+$$
+
+证明。整数端点和半开约定给精确分解
+$\mathcal D=\bigsqcup_{d\in D}(d+[0,1)^2)$。
+对任意实点 $x$，逐坐标取下整，唯一得到
+$x=k+f$，$k\in\mathbb Z^2$、$f\in[0,1)^2$。
+由 17.9 唯一分解 $k=d+\lambda$，于是
+$x=(d+f)+\lambda\in\mathcal D+\lambda$。
+
+若还有 $x=(d'+f')+\lambda'$，其中 $d'\in D$、
+$f'\in[0,1)^2$、$\lambda'\in\Lambda\subseteq\mathbb Z^2$，
+唯一小数部分先给 $f=f'$，再由整数代表的唯一性给
+$d=d',\lambda=\lambda'$。证明包括整数格线、方块接口和所有顶点。
+$\mathcal D$ 有界且格离散，所以每个点的覆盖和只有有限个可能非零项。
+
+若把所有半开方块改为闭方块，平移族仍覆盖平面且内部不交，
+但共同边界可被多次计入，不能再宣称每一点覆盖数为一。
+例如 $a=b=1$ 时 $(1,0)$ 属于 $\mathcal D$，
+$(1,0)-v_1=(0,-1)$ 不属于 $\mathcal D$；
+$(0,1)-v_2=(1,0)$ 属于 $\mathcal D$，而 $(0,1)$ 本身不属于。
+这说明顶边必须交给相邻平移，而非删去或重复保留。证毕。
+

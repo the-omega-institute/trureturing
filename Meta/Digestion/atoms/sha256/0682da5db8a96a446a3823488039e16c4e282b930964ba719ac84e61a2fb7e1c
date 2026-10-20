@@ -1,0 +1,20 @@
+**定理 6.5（$r=3$ 子族的节点因子）。** 设 $m\ge3$,$q=3m-2$。在约定 2.2 的坐标 $a,b$ 中 $\sigma_3=a^2b-2a-b$。对每个 $0<k<m/2$,多项式 $\sigma_3-2\cos(2\pi k/m)$ 在 $\mathbb R(t)[\lambda]$ 中不可约,且不同 $k$ 给出的多项式两两不相伴。因此 $\Psi_m(\sigma_3)$ 在 $\mathbb R(t)[\lambda]$ 中无平方因子,
+
+$$
+\Psi_m(\sigma_3)=\prod_{0<k<m/2}\bigl(\sigma_3-2\cos(2\pi k/m)\bigr)
+$$
+
+是它的不可约分解,并且 $(-1)^{\lfloor(m-1)/2\rfloor}\Psi_m(\sigma_3)$(关于 $\lambda$ 首一)在 $\mathbb R[t][\lambda]$ 中整除 $U_{3,m}$ 在 $q$ 处的节点因子 $g_q$。$m=3$ 时 $-\Psi_3(\sigma_3)=-(\sigma_3+1)$ 就是母卷定义 4.2 的三次式 $c$。
+
+**证明。** $u_3=-++$,$B_{u_3}=T(a)T(a)T(b)$。对任意 $x,y,z$,
+
+$$
+T(y)T(z)=\begin{pmatrix}yz-1&-y\\ z&-1\end{pmatrix},\qquad \operatorname{tr}\bigl(T(x)T(y)T(z)\bigr)=x(yz-1)-z-y=xyz-x-y-z,
+$$
+
+取 $x=y=a$、$z=b$ 得 $\sigma_3=a^2b-2a-b$。
+
+固定 $c=2\cos\theta$,$\theta=2\pi k/m\in(0,\pi)$,则 $\sigma_3-c=(a^2-1)\,b-(2a+c)$ 关于 $b$ 是一次的。若它在 $\mathbb R[a,b]$ 中分解为两个非常数因子,其中一个因子 $f(a)$ 不含 $b$ 且次数为正,并同时整除 $a^2-1$ 与 $2a+c$。$2a+c$ 的唯一根是 $-c/2=-\cos\theta$,而 $\cos^2\theta-1=-\sin^2\theta\ne0$,矛盾。故 $\sigma_3-c$ 在 $\mathbb R[a,b]$ 中不可约。变量替换 $a=2-\lambda+t$、$b=2-\lambda-t$ 是 $\mathbb R^2$ 上可逆的仿射变换,故 $\sigma_3-c$ 在 $\mathbb R[\lambda,t]$ 中不可约;它关于 $\lambda$ 的首项系数是 $-1$(来自 $a^2b$ 的 $(-\lambda)^3$),从而在 $\mathbb R[t]$ 上本原,由 Gauss 引理在 $\mathbb R(t)[\lambda]$ 中不可约。若 $\sigma_3-c=\kappa(\sigma_3-c')$,$\kappa\in\mathbb R(t)^{\times}$,比较 $\lambda^3$ 的系数得 $\kappa=1$,于是 $c=c'$;故不同的 $k$ 给出两两不相伴的不可约因子。
+
+由定理 6.2 (2),每个 $-(\sigma_3-2\cos(2\pi k/m))$(首一)都整除 $g_q$。它们两两互素,$\mathbb R(t)[\lambda]$ 是唯一分解整环,故其乘积 $(-1)^{\lfloor(m-1)/2\rfloor}\Psi_m(\sigma_3)$ 整除 $g_q$。二者都关于 $\lambda$ 首一且系数在 $\mathbb R[t]$ 中,用首一多项式作带余除法不离开 $\mathbb R[t][\lambda]$,故商也在 $\mathbb R[t][\lambda]$ 中。$m=3$ 时 $\Psi_3(\sigma_3)=a^2b-2a-b+1$,即母卷引理 4.3 中的 $k(a,b)$,而母卷引理 4.3 给出 $c=-k$。∎
+

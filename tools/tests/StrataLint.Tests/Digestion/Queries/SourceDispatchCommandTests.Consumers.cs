@@ -149,8 +149,10 @@ public sealed partial class SourceDispatchCommandTests
         var result = IngestCommand.RunReportFree(temporary.Path, Gateway(raw), ["--source", "source"]);
         Assert.True(result.Success, result.Error);
         var after = Read(temporary.Path);
-        foreach (var original in raw.Entries)
+        foreach (var original in raw.Entries.Where(file => !DigestionContextPointerStore.IsCanonicalPath(file.Path)))
             Assert.Equal(original.Bytes.ToArray(), after.Entries.Single(entry => entry.Path == original.Path).Bytes.ToArray());
+        Assert.Equal(2, DigestionContextPointerStore.Load(DigestionQuerySelection.Load(after).Snapshot, "source",
+            Id(fixture.Atomized.Claims[1])).Length);
         Assert.Contains("default_dispatch = \"excluded\"", File.ReadAllText(Path.Combine(temporary.Path, MetadataPath("source"))), StringComparison.Ordinal);
         Assert.Equal(DigestionDefaultDispatch.Excluded,
             DigestionQuerySelection.Load(after).Document.RequireDigestionSources().Single().DefaultDispatch);

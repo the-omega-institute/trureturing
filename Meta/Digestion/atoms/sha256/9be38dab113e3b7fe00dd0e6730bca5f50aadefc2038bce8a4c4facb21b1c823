@@ -1,0 +1,20 @@
+**定理 48.3（绝对扩散尺度与 Robin 参数的联合不可识别性）。** 在未知 \(w_i\) 的模型类中，内部探针的全部均值与二点协方差不区分尺度变换
+\[
+(D,\rho,w_1,\ldots,w_m)
+\longmapsto
+(cD,c\rho,cw_1,\ldots,cw_m),
+\qquad c>0.
+\]
+因此 \(D\) 与 \(\rho\) 不能分别从这些联合观测中识别；可识别的边界形状量是 \(D/\rho=r\)。
+
+**证明。** 在该变换下
+\[
+g_{cD,c\rho}(u)=\frac1c\,g_{D,\rho}(u).
+\]
+所以均值和异点协方差分别保持为
+\[
+(cw_i)g_{cD,c\rho}(u_i)=M_i,\qquad
+(cw_i)(cw_j)g_{cD,c\rho}(u_j)^2=C_{ij}.
+\]
+但 \(D,\rho\) 各自随 \(c\) 改变，故不能分别识别。$\square$
+

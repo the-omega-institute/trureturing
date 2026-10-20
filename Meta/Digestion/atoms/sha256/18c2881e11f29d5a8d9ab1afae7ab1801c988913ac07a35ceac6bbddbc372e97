@@ -1,0 +1,28 @@
+# 24. 局部 closure、gluing 与公共固定点
+
+设 $L$ 是一个集合大小的完备格，且
+
+$$
+\{C_i:L\to L\}_{i\in I}
+$$
+
+是一族 closure operator。每个 $C_i$ 单调、扩张且幂等。定义联合推进算子
+
+$$
+T(x)=x\vee\bigvee_{i\in I}C_i(x).
+$$
+
+前置的 $x\vee(-)$ 使定义也覆盖空指标族；此时 $T=\operatorname{id}$。当 $I$ 非空时，由每个 $C_i$ 的扩张性可省略该前置项。
+
+从 $x_0=x$ 开始作超限迭代：
+
+$$
+x_{\alpha+1}=T(x_\alpha),
+$$
+
+$$
+x_\lambda=\bigvee_{\alpha<\lambda}x_\alpha
+$$
+
+对极限序数 $\lambda$。
+

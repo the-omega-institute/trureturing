@@ -1,0 +1,98 @@
+**定义 438.1（五射线族与平坦集合）。** 对已知实数 $r>0$，令
+
+$$
+\begin{gathered}
+\omega=e^{2\pi i/3},\qquad
+s_1=|0\rangle,\quad s_2=|1\rangle,\quad
+s_{3+j}=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}
+\quad(j=0,1,2),\\
+S=\mathbb C^5,\qquad R_A=R_B=\mathbb C^2,\qquad
+q_i(r)=s_i\otimes s_i,\qquad
+\mathcal J_r|i\rangle=|i\rangle\otimes q_i(r),\\
+r_-={1\over\sqrt2},\qquad r_+=\sqrt2,\qquad
+I=(r_-,r_+),\qquad J=[r_-,r_+],\\
+a={2r\over1+r^2},\qquad q={1-r^2\over1+r^2},\qquad
+a^2+q^2=1,\qquad B=2\sqrt2,\qquad a_0={B\over3},\\
+\kappa={B\over3a}={\sqrt{4+2(r^2+r^{-2})}\over3},\qquad
+h={a\over3a+B}={1\over3(1+\kappa)},\qquad
+M={1\over3+2\sqrt2}.
+\end{gathered}
+$$
+
+以固定计算基的标准 Pauli 矩阵 $\boldsymbol\sigma$ 定义
+
+$$
+D=\{x\in\mathbb R^3:|x|\le1\},\qquad
+\rho(x)={I_2+x\cdot\boldsymbol\sigma\over2}.
+$$
+
+源的 Bloch 向量为
+
+$$
+\mathbf v_1=(0,0,1),\quad \mathbf v_2=(0,0,-1),\quad
+\mathbf v_{3+j}=(a\cos t_j,a\sin t_j,q),\quad t_j={2\pi j\over3}.
+$$
+
+在全部 $r>0$ 上定义有序平坦集合
+
+$$
+\mathcal S_r=\left\{(x,y)\in D^2:
+|x|=|y|=1,\quad
+(1+\mathbf v_i\cdot x)(1+\mathbf v_i\cdot y)=4h(r)
+\quad(1\le i\le5)\right\}.
+$$
+
+这里 $h$ 是单位乘积效果的共同响应。定理 413.1、416.1 及第 417 节的归一化计算已给出：在 $J$ 内，每个具有相等五响应的单位乘积向量，其响应必为 $h$；单位对称见证的响应则为 $1/3$。零水平也不产生遗漏的平坦对：两极零响应会迫使 $x,y$ 为相反两极，纬线乘积却为 $a^2>0$。在 $J$ 外，定理 413.1 排除正平坦对称见证，从而排除正平坦乘积见证。
+
+在有序对上取最大块距离及其非空紧集 Hausdorff 距离
+
+$$
+d_B((x,y),(x',y'))=\max\{|x-x'|,|y-y'|\},\qquad d_H^B.
+$$
+
+Bloch 嵌入满足精确的归一化关系
+
+$$
+\|\rho(x)-\rho(x')\|_{\mathrm{op}}={|x-x'|\over2}.
+$$
+
+仅在 $J$ 上再定义下列非负根与连续相位；标量 $v$ 不与源向量 $\mathbf v_i$ 混用：
+
+$$
+\begin{gathered}
+R=2\sqrt h,\qquad Z=\sqrt{1-R^2},\qquad
+u=\sqrt{{3a-B\over4a}},\qquad
+v=\sqrt{{a+B\over4a}}=\sqrt{1-u^2},\\
+\theta=\arccos u,\qquad w=qZv,\qquad
+\phi=\operatorname{atan2}(w,u)\in[-\pi/2,\pi/2].
+\end{gathered}
+$$
+
+有 $2/3\le R^2\le12-8\sqrt2<1$，故 $R,Z,v$ 严格为正。内部 $u>0$，取 $\phi=\arctan(w/u)$；端点取连续值 $\phi=\operatorname{sgn}(q)\pi/2$。下面的非零模恒等式保证这一相位定义始终有意义。
+
+操作合同采用假设 430.2 的完整接口。Alice、Bob 持有原始 $R_A,R_B$；每棵协议各自有限，每个局部节点是有限结果、分支完全正且迹不增、总和保迹的仪器，工作与输出空间有限维，输出非零。允许有限私有量子和经典记忆、与未知输入及参考独立的初始乘积辅助态、局部丢弃、粗粒结果、后来遗忘的实际历史、双方重复操作和双向经典通信。保留每个失败、余量、零分支、单例通道、提前停止和不等叶深。禁止共享纠缠、量子通信、向对称子空间的预设物理压缩，以及终端反馈前对 $S$ 的操作。各仪器须在完整原始输入空间上完备。
+
+下一操作只用当时实际可用的信息；隐藏 Kraus 指标不是实际结果，遗忘的历史只能为数学求和保留。若真实终端历史为 $\ell$，最终实际标签为 $y(\ell)$，迹掉全部记录输出与剩余记忆后置
+
+$$
+\mathcal M_\ell(X)=\operatorname{Tr}_{O_\ell}
+[(\operatorname{id}_S\otimes\mathcal I_\ell)
+(\mathcal J_rX\mathcal J_r^\dagger)],\qquad
+\mathcal M_y=\sum_{\ell:y(\ell)=y}\mathcal M_\ell.
+$$
+
+固定接受集合及每个实际标签的一个全系统终端酉 $U_y$；同一标签的全部历史和隐藏项共用它。精确恢复要求同一协议、同一 $p\in[0,1]$ 满足
+
+$$
+\begin{aligned}
+\mathcal T(X)&=\sum_{y\ \mathrm{accepted}}U_y\mathcal M_y(X)U_y^\dagger=pX
+&&\bigl(X\in\mathcal L(S)\bigr),\\
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})&=pX_{FS}
+&&\bigl(X_{FS}\in\mathcal L(F\otimes S)\bigr)
+\end{aligned}
+$$
+
+对每个有限维未操作参考 $F$ 成立。两行由矩阵张量基展开等价，仍显式保留同一协议和同一标量的要求。控制、接受规则及反馈可依赖已知 $r$，不可依赖未知输入或参考；空接受集合给出 $p=0$。
+
+深度是根至叶路径上的局部仪器节点数的最大值，单例通道也计数；纯经典通信、记账及最后的系统酉不计数，记账伴随的实际量子操作仍计数。令 $p_n(r)$ 为深度至多 $n\in\mathbb N_0$ 的成功概率上确界，$\eta_{\mathrm{fin}}(r)=\sup_n p_n(r)$。不同协议不共用结果数、记忆维数或深度上界。下文只在 $I$ 内引用 430.2 的物理桥；端点与外部物理值另由 416.1 给出。
+

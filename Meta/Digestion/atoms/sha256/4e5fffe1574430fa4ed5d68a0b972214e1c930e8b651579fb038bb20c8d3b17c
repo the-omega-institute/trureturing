@@ -1,0 +1,22 @@
+## 定理 4.2（代数递推）
+
+\[
+\boxed{
+\mathcal A_{n+1}
+=
+\operatorname{Alg}\bigl(\mathcal A_0\cup F^*\mathcal A_n\bigr).
+}
+\]
+
+这里右侧是在 \(\mathbb K^X\) 中生成的最小含幺函数代数。
+
+### 证明
+
+\(\mathcal A_0\) 区分当前读数，\(F^*\mathcal A_n\) 区分第 \(1\) 至 \(n+1\) 步读数。二者共同诱导的等价关系是
+
+\[
+K_q\cap(F\times F)^{-1}K_n=K_{n+1}.
+\]
+
+有限集合上，含幺函数代数由其点分离关系唯一决定。\(\square\)
+

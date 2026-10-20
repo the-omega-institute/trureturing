@@ -1,0 +1,12 @@
+### 20.5 一棵共同有限树的准确来源像
+
+沿用非空有限有序二叉树 $\mathcal T$ 及叶计数 $c$。计数的实际像为
+
+$$
+C=\{(a,b)\in\mathbb N_0^2:a+b>0\},\qquad
+\mathcal T\xrightarrow{c}C\xrightarrow{\iota}\mathbb Z_p^2.
+\tag{RA.2011}
+$$
+
+$c$ 满射：给定该非负计数对，任意配对指定数量的两类叶即可。$\iota$ 是普通整数的自然嵌入；计数不保留左右次序或括号结构。
+

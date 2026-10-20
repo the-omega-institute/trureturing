@@ -1,0 +1,33 @@
+## 5. 保留边界后的精确缺陷
+
+令 `P` 为窗口正交截断，`Q=I-P`，`Pk=k`，并记
+
+\[
+v=PBk,\quad h=QBk,\quad w=PBv,\quad e=QBv.
+\]
+
+在混合 Weil 配对合法的条件下，相关函数转移给出
+
+\[
+W(v,v)+W(h,v)=W(k,w)+W(k,e).
+\]
+
+由此
+
+\[
+q_a(v)-\mu\|v\|_2^2
+=\Re\langle R,w\rangle+\mathcal B_a(k,t),
+\]
+
+\[
+\mathcal B_a(k,t)=\Re\{W(k,e)-W(h,v)\}.
+\]
+
+因为 `v` 与 `k` 正交且 `||w||<=4||v||`，强制性要求
+
+\[
+\boxed{\mathcal B_a(k,t)\ge\delta\|v\|_2^2-4r\|v\|_2.}
+\]
+
+中心化系数 `alpha` 在这个边界泛函中抵消。因此该量由明确候选、窗口与平移步长独立决定。边界贡献需要支撑所需谱分离，不能仅以边界 L2 质量小为由忽略。
+

@@ -1,0 +1,6 @@
+**定义 946.1（分支类型的接触边界）。** 取足够小的 $\varepsilon>0$，使 $[-\varepsilon,\varepsilon]$ 位于本批已解区域及其零点。将正侧最佳分支标为 $V$ 类型，负侧标为 $U$ 类型，零点另设一个标签。两类参数集合的闭包都含零点，因此这种离散分类不连续；正负目标之间也不存在统一严格为正的全变差间隔，因为 $\operatorname{TV}(P_{r,k},P_{r,-k})=|k|$。
+
+项目 `D5/S3/ConceptDynamics/Topology/CompactClassificationPositiveMargin.lean` 的 `compact_classification_positive_margin_and_closure_obstruction` 区分两项关系：紧致度量空间上的连续非恒定离散分类有达到的正类间距；两个不同标签的纤维闭包相交则阻碍连续性。这里参数区间取通常度量，标签取离散拓扑，正负纤维的闭包在零点相交，准确满足后一项的前提。
+
+该接口本身没有计算本批概率表的跳跃量。第 945 节较强的 $r$ 分隔还使用了最近点的全部分类及其明确极限。于是“没有正分类间隔”与“最佳概率表留下确定跳跃”各有独立的证明义务，不能把前一项的直观读法当成后一项的代替。
+

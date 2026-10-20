@@ -1,0 +1,32 @@
+**假设 33.0（固定关系与累计操作）。** 设 $K$ 为带单位的交换环，且
+
+$$
+R=
+\begin{pmatrix}
+p&q\\
+r&s
+\end{pmatrix}
+\in\operatorname{Mat}_2(K).
+$$
+
+仍令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+定义一条不可重置的累计路径：
+
+$$
+A_0=I,\quad
+A_1=M,\quad
+A_2=JM,\quad
+A_3=MJM,\quad
+A_4=M^2JM,\quad
+A_5=M^3JM.
+$$
+
+这里 $A_i$ 是到第 $i$ 次读数时已经执行的总操作；它们对应先执行 $M$，再执行 $J$，随后连续执行三次 $M$。
+

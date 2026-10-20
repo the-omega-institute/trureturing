@@ -1,0 +1,79 @@
+**Definition 112.2 (the source-indexed occurrence object).** For \(u\in D\)
+and every integer \(e\ge0\), put
+\[
+s_e(u)=\rho^eu,\quad V_e(u)=V_{s_e(u)},\quad E_e(u)=E_{s_e(u)},
+\quad \lambda_e(p)=s_e(u)|_p,\quad N_e(u)=|V_e(u)|.
+\]
+Every repeated occurrence is a distinct vertex. The exact object is
+\[
+\mathsf O_e(u)=\bigl(V_e,E_e,\lambda_e,N_e,L_e,\operatorname{port}_e\bigr).
+\tag{112.4}
+\]
+Use counting inner products and the closed unit-edge operator
+\(L_e=D_e^*D_e\) of §§92, 103 and 108. Let
+\(R_e:\ell^2(V_e)\to\mathbb R^{\mathcal P}\) be restriction to the ordered
+ports \((\varepsilon,L,R)\); \(R_e^*\) is zero extension from them. Define
+\[
+\operatorname{port}_e=
+ \bigl(K_e:=R_eL_eR_e^*,\ (\deg_{E_e}(p))_{p\in\mathcal P},\ (1,1,1)\bigr).
+\tag{112.4a}
+\]
+This is the actual principal compression, retaining degrees from **all**
+edges, including edges leaving the port set. For every \(u\in D\),
+\[
+K_e=
+\begin{pmatrix}
+2&-1&-1\\
+-1&1+2\mathbf1_{\{r_{s_e}(L)=\mathsf{branch}\}}&0\\
+-1&0&1+2\mathbf1_{\{r_{s_e}(R)=\mathsf{branch}\}}
+\end{pmatrix}.
+\tag{112.4b}
+\]
+A reached nonroot leaf has degree one, a nonroot branch degree three,
+and the branch root degree two. This compression is neither an induced
+three-node star Laplacian nor a grounded or degree-normalized operator.
+
+Old vertices retain their literal addresses:
+\[
+\iota_e:V_e\to V_{e+1},\quad p\mapsto p.
+\tag{112.5}
+\]
+Distinguish the beta-**parent** set \(M_e\) from the born-**child** set \(B_e\):
+\[
+M_e=\{p\in V_e:\lambda_e(p)=\beta\},\quad
+B_e=\{pL,pR:p\in M_e\},\quad \operatorname{par}_e(p\sigma)=p.
+\tag{112.6}
+\]
+The actual disjoint unions are
+\[
+V_{e+1}=\iota_e(V_e)\sqcup B_e,\qquad
+E_{e+1}=\iota_e^E(E_e)\sqcup\{(p,p\sigma):p\sigma\in B_e\}.
+\tag{112.7}
+\]
+The old labels are not asserted unchanged: even an old leaf can become a
+branch. Let \(J_e:\ell^2(V_e)\to\ell^2(V_{e+1})\) be zero extension;
+\(J_e^*\) is old-coordinate restriction. Let \(I_e^E\) be old-edge zero
+extension and \(T_e:\ell^2(B_e)\to\ell^2(E_{e+1})\) send a child coordinate
+to its new parent-child edge. Orient edges away from the root. Let
+\(H_e\) project onto \(M_e\), and
+\(C_e:\ell^2(B_e)\to\ell^2(V_e)\) sum each child's value at its parent.
+Thus \((C_e^*f)(p\sigma)=f(p)\). The typed gradient and adjoint squares are
+\[
+D_{e+1}J_e=I_e^ED_e-T_eC_e^*,\qquad
+J_e^*D_{e+1}^*=D_e^*(I_e^E)^*-C_eT_e^*.
+\tag{112.8}
+\]
+In the exact orders \(V_e\sqcup B_e\) and \(E_e\sqcup B_e\),
+\[
+D_{e+1}=
+\begin{pmatrix}D_e&0\\-C_e^*&I\end{pmatrix},\quad
+L_{e+1}=
+\begin{pmatrix}L_e+2H_e&-C_e\\-C_e^*&I\end{pmatrix},
+\quad C_eC_e^*=2H_e.
+\tag{112.9}
+\]
+The zero-parameter old-set Schur complement is \(L_e\). If \(B_e\) is empty,
+its identity block is the identity on the zero-dimensional space and the
+same formulas hold. Likewise \(J_e^*J_e=I\) and \(R_{e+1}J_e=R_e\).
+They do not say \(L_{e+1}J_e=J_eL_e\) or that ancestry intertwines heat.
+

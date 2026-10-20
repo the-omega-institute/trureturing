@@ -1,0 +1,24 @@
+**References 26.3 (proof basis and literature scope).** The attained
+source/response map and no-extension argument are `repo-derived` ordinary
+proofs. CAP/ARC/GENERAL supply the actual same-initialization preparation,
+source operations, admission and paid return paths; AIF/SOURCECALL and
+Convention 18.2 supply the original response protocol. The atomic
+Fibonacci recurrence is reused. [NCE, Sections 10–12][ABT-NCE] supplies
+the independently proved regular-membership elimination; NCE Sections
+4–5 and SFP Sections 3–4 remain the prior equation and all-source suppliers.
+
+Ginsburg and Spanier, *Semigroups, Presburger Formulas, and Languages*,
+Pacific Journal of Mathematics 16(2), 285–296, Theorems 1.1–1.3,
+especially Theorem 1.3 on printed p. 288 [ABT-GS], is
+`literature-attested` for effective Presburger/semilinear equivalence
+and scalar projection closure. The pinned mathlib declaration
+`presburger.definable_iff_isSemilinearSet` has this arithmetic meaning;
+it is not a compiled instance of (ABT.91). Comon–Delor's admissible
+constructor-membership theorem is used only through NCE's proved
+$c/f$ reduction, not as a theorem about varying native capacity.
+No new Lean verification, installed algorithm, universal minimality or
+worldwide-originality claim is made.
+
+[ABT-NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md
+[ABT-GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
+

@@ -1,0 +1,12 @@
+**例 22.3（Eight paid blocks at $(m,k)=(16,30)$）。** Here $r=4$, $T=31$. Formula (22.4), with bits printed in read order $i=0,\ldots,15$, gives the following one literal stream. In the increment column, $x=x(j)$ and $z=z(j)$ are (22.8); every row costs one complete block.
+
+| Block number $t$ | Literal word | Start displacement mod $31$ | Actual increment $d_t$ |
+| --- | --- | --- | --- |
+| $0$ | `0110011001100110` | $0$ | $\beta_0(x)$ |
+| $1$ | `0110011001100110` | $16$ | $\beta_0(z)$ |
+| $2$ | `0100010001000100` | $1$ | $\beta_1(x)$ |
+| $3$ | `0100010001000100` | $17$ | $\beta_1(z)$ |
+| $4$ | `0010100000101000` | $2$ | $\beta_2(x)$ |
+| $5$ | `0010100000101000` | $18$ | $\beta_2(z)$ |
+| $6$ | `0000010101010000` | $3$ | $\beta_3(x)$ |
+| $7$ | `0000010101010000` | $19$ | $\beta_3(z)$ |

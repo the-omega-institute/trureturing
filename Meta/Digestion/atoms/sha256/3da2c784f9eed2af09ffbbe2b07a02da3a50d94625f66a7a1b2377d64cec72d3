@@ -1,0 +1,17 @@
+### 第二层：内部运输纤维
+
+在固定边界后，内部概率律的自由度由支持运输图的环路数决定：
+
+$$
+\dim\mathcal F_i=
+E_i-V_i+c_i.
+$$
+
+对三原子 AURIC 窗口：
+
+$$
+\dim\mathcal F_i=1,
+\qquad
+\mathcal F_i\cong[\kappa_{i,-},\kappa_{i,+}].
+$$
+

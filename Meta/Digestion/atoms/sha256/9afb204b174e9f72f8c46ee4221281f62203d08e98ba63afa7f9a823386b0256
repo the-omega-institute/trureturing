@@ -1,0 +1,30 @@
+**Theorem 14.5 (Exact minimum complex dimension and saturation of every minimizer).** For every $m\ge1$ and $0<q<1$, the minimum complex memory dimension among all realizations in Definition 14.1 is exactly $m+2$. For a competitor of dimension $D'$ let $\tau_0$ be its actual average state just after the first tick and let $F_1=\mathcal E_1^*(I_{D'})$. Then
+
+$$
+D'\ge m+1+\max(\operatorname{rank}\tau_0,\operatorname{rank}F_1)
+\ge m+2.
+\tag{14.20}
+$$
+
+At the minimum, both ranks are one, both reachable spaces of (13.2) are the full memory, and the competitor's entire tick map is $\mathcal E_1(X)=\tau_0\operatorname{Tr}(F_1X)$ with Choi rank one. Any invariant initialization of that minimum-dimensional competitor reproducing the law is faithful and mixed. These conclusions allow a noninvariant hidden initializer in (14.3) and assume no reset for the competitor.
+
+Proof. Theorem 14.4 supplies a realization in dimension $m+2$, establishing the upper bound with all stationary cylinders. For any competitor, use the one-symbol cylinder and the two-tick cylinders in (14.2):
+
+$$
+\begin{aligned}
+\nu&=\operatorname{Tr}\mathcal E_1(\rho_0)
+=\mathbb P_{m,q}(1)=1/\mu>0,\\
+\tau_0&=\mathcal E_1(\rho_0)/\nu,\qquad
+F_1=\mathcal E_1^*(I_{D'}),\\
+\operatorname{Tr}[F_1\mathcal E_0^k(\tau_0)]
+&=\frac{\operatorname{Tr}[\mathcal E_1\mathcal E_0^k\mathcal E_1(\rho_0)]}{\nu}
+=\frac{\mathbb P_{m,q}(1\,0^k1)}{\mathbb P_{m,q}(1)}
+=\gamma_k.
+\end{aligned}
+\tag{14.21}
+$$
+
+The last equality uses $S_0=1$. This is the conditional next-gap marginal after an actual tick; no independence premise is needed for the displayed equality. The imposed stationary output law fixes this marginal even when $\rho_0$ itself is not invariant. Positivity makes $\tau_0$ a density and $F_1$ a positive effect. A finite-dimensional CP map admits a finite Kraus representation, as follows by diagonalizing its finite positive Choi matrix and unvectorizing its eigenvectors, so Theorem 13.2 applies to $\mathcal E_0$ without a restriction on its Kraus count.
+
+Theorem 14.2 identifies the first positive $\gamma_k$ as $k=m+1$. Equation (13.4), with $h=m+1$, proves (14.20). If $D'=m+2$, then $h=D'-1$ and (14.21) supplies precisely the actual-output premise of Theorem 13.3. That theorem gives the pure output, rank-one effect, full primal and dual reachable spaces, global reset and tick Choi rank one. If the competitor also has an invariant initialization reproducing the cylinders, its tick rate is $1/\mu>0$, and (13.14) makes it faithful; $D'\ge3$ makes it mixed. No hidden invariance is used for the lower bound or the global-reset conclusion. $\square$
+

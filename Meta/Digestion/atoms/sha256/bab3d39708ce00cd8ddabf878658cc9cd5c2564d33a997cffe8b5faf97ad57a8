@@ -1,0 +1,52 @@
+## 4. 偶化以后的完整修正
+
+记 Rf(x)=f(-x)、P_+=(I+R)/2、P_-=(I-R)/2，并设
+
+\[
+p=E_{a,M}h,\quad e=P_+p,\quad r=P_-p,\quad g=E_{a,M}((\log t)h).
+\]
+
+有限 prolate 模式的压缩 Fourier 特征值不必相同，所以一般 r!=0。源文件独立定义两个方向的素数平移，并证明
+
+\[
+\boxed{S e=(I+R)g-2Xr-(I+R)B_+r.}
+\tag{MP4}
+\]
+
+这是 `prime_even_mellin_identity`。推导使用 R B_+ R=B_-、e=p-r 及 e 的偶性：
+
+\[
+S e=(I+R)B_+e=(I+R)(g-Xp-B_+r),
+\]
+
+而 (I+R)Xp=2Xr。最后一等式中的 x 因子随反射变号，不能漏掉。
+
+定义完整偶化修正
+
+\[
+\mathcal C_h=2Xr+(I+R)B_+r.
+\tag{MP5}
+\]
+
+在 L2([-a,a]) 上，每个压缩平移范数不超过一。若 V_a 是 B_+ 的独立范数上界，例如有限绝对权重和，则
+
+\[
+\boxed{\|\mathcal C_h\|_2\le2(a+V_a)\|r\|_2.}
+\tag{MP6}
+\]
+
+这是 (MP4) 的纸面 L2 推论；本次 Lean 保存的是完整逐点恒等式。对实际 prolate seed 或有限多项式 seed，有限合成在窗口内分段光滑且有界，所以全部配对合法。更一般地，正半轴上的 L2 seed 也可由 t=m exp(x) 的变换逐项证明合成可积。
+
+实际素数二次型因此满足
+
+\[
+\boxed{
+q_{\rm prime}(e)
+=-2\Re\langle e,g\rangle
++2\Re\langle e,Xr+B_+r\rangle.
+}
+\tag{MP7}
+\]
+
+当 e 非零时，省略奇部分造成的归一化能量误差最多为 2(a+V_a)||r||/||e||。这一上界不保证误差相对于真实最低能量或最低谱间隔足够小。
+

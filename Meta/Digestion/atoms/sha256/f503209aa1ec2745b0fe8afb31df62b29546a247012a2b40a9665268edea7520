@@ -1,0 +1,16 @@
+### C. Agency enrichment 与 agency completion
+
+给定当前读出 $q$ 与策略轮廓 $s$，配对读出
+
+$$
+q\vee s=(q,s)
+$$
+
+首先只是两个接口的联合精化，称为 **agency enrichment**。只有在指定动力学或控制作用后，再对 $(q,s)$ 施加行为 completion，并证明稳定性与最小性，所得
+
+$$
+C_A(q,s)
+$$
+
+才称为该作用下的 **agency completion**。
+

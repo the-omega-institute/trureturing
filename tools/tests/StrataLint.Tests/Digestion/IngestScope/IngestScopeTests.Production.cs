@@ -88,13 +88,14 @@ public sealed partial class IngestScopeTests
             Assert.Equal(Image(before), Image(RawRepositorySnapshot.Create(
                 after.Entries.Where(entry => beforePaths.Contains(entry.Path)))));
             var addedId = Atom(Addition).Fingerprints.RawSha256["sha256:".Length..];
-            Assert.Equal(new[]
-            {
-                DigestionCasStore.RootPath + addedId,
-                SourcePrefix("beta") + "residual-open/" + addedId + ".yaml",
-            }.Order(StringComparer.Ordinal), after.Entries
-                .Where(entry => !beforePaths.Contains(entry.Path)).Select(static entry => entry.Path)
-                .Order(StringComparer.Ordinal));
+            var required = new[] { DigestionCasStore.RootPath + addedId,
+                SourcePrefix("beta") + "residual-open/" + addedId + ".yaml" };
+            var additions = after.Entries.Where(entry => !beforePaths.Contains(entry.Path)).ToArray();
+            foreach (var path in required) Assert.Contains(additions, entry => entry.Path == path);
+            Assert.All(additions, entry => Assert.True(required.Contains(entry.Path)
+                || DigestionContextPointerStore.IsCanonicalPath(entry.Path) || DigestionCasStore.IsCanonicalPath(entry.Path)));
+            DirectoryLedgerTestSupport.AssertContextCasReferenced(after, additions.Where(entry => DigestionCasStore.IsCanonicalPath(entry.Path))
+                .Select(entry => entry.Path).Except(required));
         }
         else
         {
@@ -371,16 +372,13 @@ public sealed partial class IngestScopeTests
         Assert.Contains("ineligible digestion source", decompose.Error);
         Assert.Equal(0, fixture.Writes);
         var context = AtomContextCommand.Run(fixture.Gateway, ["--atom-id", fixture.Parent.AtomId]);
-        Assert.False(context.Success);
-        Assert.Contains("ineligible digestion source", context.Error);
+        Assert.True(context.Success, context.Error);
         using var temporary = new TemporaryDirectory();
         SettleAtomCommandTests.WriteFiles(temporary.Path, fixture.Current);
         var image = SettleAtomCommandTests.Image(temporary);
         var settle = SettleAtomCommandTests.Run(temporary.Path, fixture.Current,
             "atom_id = \"" + fixture.Parent.AtomId + "\"\njustification = \"prose\"\nprevious_atom_id = \"source-boundary\"\nnext_atom_id = \"source-boundary\"\n");
-        Assert.False(settle.Success);
-        Assert.Contains("ineligible digestion source", settle.Error);
-        Assert.Equal(image, SettleAtomCommandTests.Image(temporary));
+        Assert.True(settle.Success, settle.Error);
     }
 
 
@@ -410,14 +408,14 @@ public sealed partial class IngestScopeTests
         Assert.Equal(0, fixture.Writes);
         var context = AtomContextCommand.Run(fixture.Gateway, ["--atom-id", fixture.Parent.AtomId]);
         Assert.False(context.Success);
-        Assert.Contains("ATOMIZER_UNSUPPORTED", context.Error);
+        Assert.Contains("CONTEXT_UNAVAILABLE", context.Error);
         using var temporary = new TemporaryDirectory();
         SettleAtomCommandTests.WriteFiles(temporary.Path, fixture.Current);
         var image = SettleAtomCommandTests.Image(temporary);
         var settle = SettleAtomCommandTests.Run(temporary.Path, fixture.Current,
             "atom_id = \"" + fixture.Parent.AtomId + "\"\njustification = \"prose\"\nprevious_atom_id = \"source-boundary\"\nnext_atom_id = \"source-boundary\"\n");
         Assert.False(settle.Success);
-        Assert.Contains("ATOMIZER_UNSUPPORTED", settle.Error);
+        Assert.Contains("CONTEXT_UNAVAILABLE", settle.Error);
         Assert.Equal(image, SettleAtomCommandTests.Image(temporary));
     }
 

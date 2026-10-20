@@ -1,0 +1,22 @@
+**定理 321.4（$k$-元 parity 的严格高阶协同）。** 令隐藏标签 $X\in\{0,1\}$，组件为 $u_1,\ldots,u_k$。取独立均匀比特 $Y_1,\ldots,Y_{k-1}$，并令
+
+$$
+Y_k=X\oplus Y_1\oplus\cdots\oplus Y_{k-1}.
+$$
+
+则任意真子集访问都与 $X$ 独立，而全集访问可由
+
+$$
+X=Y_1\oplus\cdots\oplus Y_k
+$$
+
+完美恢复。因此
+
+$$
+\boxed{
+\mathcal M_X=\{\{u_1,\ldots,u_k\}\},
+\qquad
+\operatorname{syn}(X)=k-1.
+}
+$$
+

@@ -1,0 +1,36 @@
+**定理 394.3（总变差对任务的双向刻画）。** 本条替代 §329.2、§329.3 的相应陈述与证明。
+
+对有限输出空间上的两个分布 $p,q$，有
+$$
+\boxed{
+\sup_{0\le g\le1}
+\left|\mathbb E_p g-\mathbb E_q g\right|
+=
+\operatorname{TV}(p,q).
+}
+
+$$
+因此，若 $A\preceq_{\varepsilon,\lambda}B$，则每个翻译后的有限未来任务满足
+$$
+\left|
+\mathbb E_A[g\mid s,\omega]
+-
+\mathbb E_B[g\circ G\mid s,\theta(\omega)]
+\right|
+\le\varepsilon.
+$$
+
+**证明。**
+令 $p-q$ 的正部分支撑为 $E_+$。取 $g=\mathbf 1_{E_+}$，得到正负质量之和的一半，即总变差；任意 $0\le g\le1$ 的差值不超过同一正负质量。在（327.1）中取 $p=K^A_\omega$、$q=G_*K^B_{\theta(\omega)}$，并用 $\mathbb E_{G_*q}g=\mathbb E_q(g\circ G)$，即得第二项。证毕。
+
+固定允许的动作翻译与输出映射 $(\theta,G)$。若存在共同状态 $s$、未来动作词 $\omega$ 及事件 $E\subseteq O_A$，使
+$$
+\left|K^A_\omega(E\mid s)
+-K^B_{\theta(\omega)}(G^{-1}(E)\mid s)\right|>\varepsilon,
+$$
+则该映射对不能实现误差不超过 $\varepsilon$ 的模拟。要排除该方向的所有允许模拟，须对每一对满足成本合同的允许 $(\theta,G)$ 都找到这样的见证；见证可随映射对变化。若不存在满足成本合同的映射对，则已由成本条件排除模拟。
+
+**证明。**
+
+对固定映射对取 $g=\mathbf1_E$；$B$ 侧对应 $g\circ G=\mathbf1_{G^{-1}(E)}$，定理 394.3 给出超过 $\varepsilon$ 的总变差。有限输出空间上，总变差又由某个事件达到，因此逐对的事件判据也能检测各对是否满足误差合同。只有量化所有允许映射对，才能推出全方向的不存在性。证毕。
+

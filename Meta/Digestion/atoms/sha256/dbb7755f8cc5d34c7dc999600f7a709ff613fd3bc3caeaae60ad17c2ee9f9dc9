@@ -1,0 +1,63 @@
+**Theorem 16.6 (Newton realization, stability, observability and reachability for every pair).** Choose any degree-bounded anchored pair for $d$. On $\mathbb C^{m+2}$ use target basis $e_0,\ldots,e_m$ and source basis vector $e_{\mathrm{src}}=e_{m+1}$. Define
+
+$$
+\begin{aligned}
+N_{j,j+1}&=1\ (0\le j<m),\quad N_{ij}=0\text{ otherwise},&U&=I_{m+1}+N,\\
+u_j&=\Delta^{j+1}s(0),&v_j&=\Delta^jp(0)\quad(0\le j\le m),\\
+A&=\begin{pmatrix}U&u\\0&1\end{pmatrix},&
+B&=\begin{pmatrix}0&v\\0&0\end{pmatrix},\\
+x&=e_{\mathrm{src}},&f&=e_0,\qquad F_0=ff^{\mathsf T},\\
+\mathcal T_q(X)&=q(AXA^{\mathsf T}+BXB^{\mathsf T}).
+\end{aligned}
+\tag{16.17}
+$$
+
+The polynomial $s$ retains its meaning in (16.1). All unshown blocks of $B$ are zero. For all nonnegative integers $k,t,r$,
+
+$$
+\begin{aligned}
+u_m&=0,\qquad v_m=m![t^m]p\ne0,\\
+f^{\mathsf T}A^kx&=s(k),\qquad f^{\mathsf T}A^tBA^rx=p(t),\qquad BA^rB=0,\\
+\operatorname{Tr}[F_0\mathcal T_q^k(xx^{\mathsf T})]&=q^kP(k),\\
+\operatorname{spec}(\mathcal T_q)&=\{q\}\text{ on }M_{m+2}(\mathbb C),\\
+Q=\sum_{k\ge0}(\mathcal T_q^*)^k(F_0)&>0,\qquad x^{\mathsf T}Qx=Z\in(0,\infty).
+\end{aligned}
+\tag{16.18}
+$$
+
+The raw reachable span from $x$ is all of $\mathbb C^{m+2}$, witnessed by $x,A^jBx$ for $0\le j\le m$. All moments of $\gamma$ are finite, $\gamma_k>0$ exactly for $k\ge h$, and
+
+$$
+S_a=q^aH(a),\qquad
+H(t)=\frac1Z\sum_{r\ge0}q^rP(t+r),\qquad
+\deg H=2m+1,\quad [t^{2m+1}]H=\frac{\delta}{(2m+1)Z(1-q)}.
+\tag{16.19}
+$$
+
+Proof. Newton expansion as in (16.2) gives $p(t)=\sum_jv_j\binom tj$ and $\Delta s(t)=\sum_ju_j\binom tj$. At integer $t\ge0$, $U^t=\sum_{j=0}^m\binom tjN^j$, so the first target row applied to $U^tv$ is $p(t)$ and applied to $U^tu$ is $\Delta s(t)$. Since $\deg s\le m$ and $\deg p=m$, the last coefficients have precisely the values in (16.18). The block power sends $x$ to $(\sum_{j<k}U^ju,1)$, whose first coordinate is $s(k)-s(0)=s(k)$. Also $BA^rx=(v,0)$, giving the second word amplitude. The image of $B$ is in the target, which $A$ preserves and $B$ annihilates, so $BA^rB=0$.
+
+With rightmost factors acting first, the sole all-$A$ word of length $k$ contributes $s(k)^2$. The exactly $k$ words with one $B$ are $A^tBA^{k-1-t}$ for $0\le t<k$, contributing $p(t)^2$. Every word with at least two $B$ factors is zero. Thus the complete Kraus-word sum is
+
+$$
+q^k\sum_{|w|=k}|f^{\mathsf T}wx|^2
+=q^k\left(s(k)^2+\sum_{t<k}p(t)^2\right)=q^kP(k).
+\tag{16.20}
+$$
+
+At $k=0$ the empty word contributes $s(0)^2=0$. Separate words contribute separate squared amplitudes, so no interference between different Kraus alternatives is being assumed.
+
+Both $A$ and $B$ are upper triangular, with diagonals all one and all zero. Column vectorization represents $\mathcal T_q$ on the full complex matrix space by $q(A\otimes A+B\otimes B)$, upper triangular with every diagonal entry $q$. This proves its spectrum, without restricting to real or diagonal matrices. Subtracting $qI$ gives a nilpotent matrix of index at most $(m+2)^2$. Its binomial power expansion shows that for every $q<\theta<1$, $\|\mathcal T_q^k\|\le C_\theta\theta^k$: each of the finitely many terms is a fixed constant times $\binom{k}{j}q^{k-j}$, and a polynomial times $(q/\theta)^k$ is bounded. The dual has the same stability bound, ensuring norm convergence of $Q$.
+
+For a complex vector $y=(y_T,y_{\mathrm{src}})$, positivity gives
+
+$$
+y^\dagger Qy=\sum_{k\ge0}q^k\sum_{|w|=k}|f^{\mathsf T}wy|^2.
+\tag{16.21}
+$$
+
+If this vanishes, every summand vanishes. The rows $f^{\mathsf T}A^tB=p(t)e_{\mathrm{src}}^{\mathsf T}$ force $y_{\mathrm{src}}=0$, since a nonzero degree-$m$ polynomial cannot vanish at every integer $0,\ldots,m$. The rows $f^{\mathsf T}A^j$ for $0\le j\le m$ then force $\sum_{\ell=0}^m\binom j\ell(y_T)_\ell=0$. This coefficient matrix is lower triangular with diagonal one, so $y_T=0$. Hence $Q$ is faithful on every complex memory direction. This detector observability is separate from reachability: the target parts of $A^jBx$ are $U^jv$, whose span equals that of $v,Nv,\ldots,N^mv$ by the same invertible binomial matrix. In reversed target-coordinate order the latter columns form a triangular matrix with diagonal $v_m\ne0$. They span the target, and $x$ supplies the remaining source direction.
+
+Summing (16.20) yields $x^{\mathsf T}Qx=Z$. The polynomial bound $0\le P(k)\le C(1+k)^{2m+1}$ and the ratio test give finiteness of $Z$ and of every moment sum; $P(h)>0$ gives strict positivity of $Z$. The support assertion follows from Theorem 16.3. For (16.19), expand each monomial of $P(t+r)$ in powers of $t$. Each coefficient is a finite linear combination of convergent sums $\sum_{r\ge0}r^jq^r$, with $r^0=1$ also at $r=0$. Thus $H$ is a polynomial, and its top coefficient is the top coefficient of $P$ times $1/(Z(1-q))>0$. Substitution $j=a+r$ in the tail sum proves the identity for $S_a$.
+
+These are the Newton and word mechanisms of Section 11 with the actual polynomial $P$ replacing the monomial, and with $m=0$ included: then $N=0$, $u=0$ and $v_0=p\ne0$, so every step above still holds. $\square$
+

@@ -1,0 +1,7 @@
+shifted-\(\xi\) 中：
+
+* 边界 all-pass 模长完全正常；
+* 局部散射通道可以酉；
+* 但可能不存在全局 retarded Hardy 因子化；
+* inverse-inner denominator 携带负指标。
+

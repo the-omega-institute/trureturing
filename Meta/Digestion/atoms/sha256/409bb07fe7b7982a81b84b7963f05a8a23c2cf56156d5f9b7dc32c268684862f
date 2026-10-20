@@ -1,0 +1,21 @@
+**定义 251.1（并行接口合同）。** 令 $Z_A,Z_B$ 是两个并行关系体的接口，联合接口来源为 $\Gamma_M$，它是 $Z_A\times Z_B$ 上的概率分布。两个局部续接核分别为 $K^A_M(y_A\mid z_A)$ 和 $K^B_M(y_B\mid z_B)$。并行终端分布为
+
+$$
+P_M(y_A,y_B)
+=
+\sum_{z_A,z_B}
+\Gamma_M(z_A,z_B)
+K^A_M(y_A\mid z_A)
+K^B_M(y_B\mid z_B).
+$$
+
+若声明了独立来源合同
+
+$$
+\Gamma_M(z_A,z_B)
+=
+\lambda^A_M(z_A)\lambda^B_M(z_B),
+$$
+
+则称该并行边界为因子化；否则必须保留联合接口来源，而不能由两个边缘 $\lambda^A_M,\lambda^B_M$ 代替。
+

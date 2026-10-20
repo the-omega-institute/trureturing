@@ -1,0 +1,2 @@
+**约定 2.1（沿用母卷的记号）。** 本卷沿用母卷约定 2.1–2.5:$C_L$、$A_L$、$\Delta_L=2I-A_L$、$e_i$、$E_{ij}$,Anderson 哈密顿量 $H_t=\Delta_L+tV$($V=\operatorname{diag}(v)$),特征多项式 $p=\det(\lambda I-H_t)$ 与主子式多项式 $q_j=\det(\lambda I-H_t^{(j)})$,坏势与好势,共享对称与共享交换子。除另行说明外 $L\ge3$,站点取 $\mathbb Z/L\mathbb Z$ 中的值,势 $v\in\mathbb R^L$;取值于 $\{-1,1\}$ 的势称为 $\pm1$ 势。若母卷定理 3.2 的五个等价条件对站点 $j$ 成立,称 $v$ 在 $j$ 处有**持续节点分支**;此时 $p$ 与 $q_j$ 在 $\mathbb R(t)[\lambda]$ 中的首一最大公因式记作 $g_j$,称为 $j$ 处的**节点因子**。由母卷定理 3.2 的证明,$g_j\in\mathbb R[t][\lambda]$。
+

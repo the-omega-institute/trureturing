@@ -1,0 +1,31 @@
+**定理 4.6（同余站点上的多点缺陷）。** 设 $r\ge1$,$m\ge3$,$L=rm$,$u\in\mathbb R^r$,$\tilde u$ 如定理 4.3。取整数 $0<\nu<m/2$(Bloch 指标,不同于站点指标 $j$),令 $c=2\cos(2\pi\nu/m)$,$g=\gcd(m,2\nu)$,$e=m/g$,站点集
+
+$$
+Q=\{\,q+k\,e\,r\bmod L:\ k\in\mathbb Z\,\}\subset\mathbb Z/L\mathbb Z,\qquad |Q|=g .
+$$
+
+设势 $w\in\mathbb R^L$ 在 $Q$ 以外与 $\tilde u$ 相同,在 $Q$ 上取任意实数。则:
+
+1. 对每个实数 $t_0$ 与 $\sigma_u(\cdot,t_0)-c$ 的每个复根 $\lambda_0$,$\lambda_0$ 是实数,$H^w_{t_0}$ 有本征值 $\lambda_0$ 的实本征向量 $z$,它在 $Q$ 的每个站点处为零,并且对一切 $k\ge1$ 满足 $z_{q+kr}=S_{k-1}(c)\,z_{q+r}$;
+2. $\sigma_u-c$ 在 $\mathbb R(t)[\lambda]$ 中的每个首一不可约因子,对每个 $q'\in Q$ 都整除 $w$ 在 $q'$ 处的节点因子 $g_{q'}$。
+
+特别地,$w$ 在 $Q$ 的每个站点处都有持续节点分支。$g=1$ 时 $Q=\{q\}$;$m$ 为偶数且 $\nu=1$ 时 $Q=\{q,\,q+L/2\}$。
+
+**证明。** 由 $0<2\nu<m$ 得 $m\nmid2\nu$,故 $e\ge2$;$Q$ 是 $\mathbb Z/L\mathbb Z$ 中以 $er$ 为步长的陪集,$er\mid L$,元素个数为 $L/(er)=g$。
+
+设 $K$ 是含 $\mathbb R$ 的代数闭域,$(\lambda_0,t_0)\in K^2$ 满足 $\sigma_u(\lambda_0,t_0)=c$。令 $\theta=2\pi\nu/m$,则 $\Psi_m(c)=0$,与定理 4.3 证明中的一般域步骤相同,递推 $\tilde d_iz_i-z_{i-1}-z_{i+1}=0$ 的解空间是二维的,且每个解都是 $L$-周期的。取 $z_q=0$、$z_{q+1}=1$ 的解 $z$。令 $B'=T(\tilde d_{q+r-1})\cdots T(\tilde d_q)$,则 $Z_{q+r}=B'Z_q$ 且 $Z_{q+kr}=B'^kZ_q$。$B'$ 的因子是 $B_u$ 的因子的一个循环轮换,故 $B'$ 与 $B_u(\lambda_0,t_0)$ 相似,$\operatorname{tr}B'=c$,$\det B'=1$。由事实 4.1,
+
+$$
+Z_{q+kr}=S_{k-1}(c)\,B'Z_q-S_{k-2}(c)\,Z_q,
+$$
+
+取第一个坐标并用 $z_q=0$ 得 $z_{q+kr}=S_{k-1}(c)\,z_{q+r}$。而 $S_{k-1}(c)\sin\theta=\sin(k\theta)$,$\sin\theta\ne0$;当 $k=en$($n\in\mathbb Z_{\ge0}$)时 $k\theta=(m/g)\,n\cdot2\pi\nu/m=\pi\cdot(2\nu/g)\cdot n\in\pi\mathbb Z$,因为 $g\mid2\nu$。所以 $z$ 在 $q+n\,e\,r$($n\in\mathbb Z_{\ge0}$)处为零,由 $L$-周期性在整个 $Q$ 上为零。于是
+
+$$
+H^w_{t_0}z=H^{\tilde u}_{t_0}z+t_0\sum_{q'\in Q}(w_{q'}-\tilde u_{q'})\,z_{q'}\,e_{q'}=\lambda_0z .
+$$
+
+(1) 取 $K=\mathbb C$:$H^w_{t_0}$ 实对称,故 $\lambda_0$ 实;取 $z$ 的实部或虚部中非零的一个即得实本征向量,它仍在 $Q$ 上为零并满足同一递推关系,因而仍满足 $z_{q+kr}=S_{k-1}(c)z_{q+r}$(该关系对实部与虚部分别成立)。由定理 4.3 的证明 (1),$\sigma_u(\cdot,t_0)-c$ 的 $\lambda$-次数为 $r\ge1$,复根存在。
+
+(2) 设 $\pi$ 是 $\sigma_u-c$ 的首一不可约因子,$`\lambda_*`$ 是它在 $\mathbb R(t)$ 的代数闭包 $F$ 中的根。以 $K=F$、$`(\lambda_*,t)`$ 应用上面的步骤,得 $H^w_t$ 在 $F$ 上的本征向量在每个 $q'\in Q$ 处为零;由引理 3.4,$`p_w(\lambda_*)=q_{w,q'}(\lambda_*)=0`$,故 $\pi\mid g_{q'}$。∎
+

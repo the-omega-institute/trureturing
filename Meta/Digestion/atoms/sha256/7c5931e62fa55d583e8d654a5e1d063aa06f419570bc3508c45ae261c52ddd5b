@@ -1,0 +1,5 @@
+这比 coarse quotient 更完整：
+
+* quotient 记录“哪些点被识别”；
+* groupoid 还记录“为什么被识别”和“稳定子何时增大”。
+

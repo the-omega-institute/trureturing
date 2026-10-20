@@ -1,0 +1,30 @@
+**定义 33.1（联合横向参数与精确外层分解）。** 对 $\gamma>0$、$\delta\in\mathbb R$、$R>0$，置
+
+$$
+z=\gamma-i\delta,\quad T=R\gamma,\quad
+\eta=\frac{R\delta}{\sqrt T},\quad x=iRz=\eta\sqrt T+iT,
+$$
+
+并保留同一个平均
+
+$$
+A_R(z)=\int_1^bw(u)\Phi(uRz)^2\,du,
+\qquad
+w(u)=\frac1{dM}e^{-a/(u-1)-a/(b-u)},
+\quad d=b-1,\ a=d/4.
+$$
+
+置 $c=\sqrt{d/2}$。当 $T$ 充分大且 $\eta$ 有界时，候签定理 32.1 给出精确的三项分解
+
+$$
+\begin{aligned}
+A_R(z)&=S_+(x)+C(x)+S_-(x),\\
+S_+(x)&=\int_1^bw(u)e^{ux}Q_-(ux)^2\,du,\\
+C(x)&=2\int_1^bw(u)Q_-(ux)Q_+(-ux)\,du,\\
+S_-(x)&=\int_1^bw(u)e^{-ux}Q_+(-ux)^2\,du.
+\end{aligned}
+\tag{33.1}
+$$
+
+这些是解析平方；只有其合法模长上界使用绝对值。
+

@@ -1,0 +1,46 @@
+# 第一千五百四十八部　三类有限反证书
+
+现在离线零点至少拥有三类有限证明对偶。
+
+| 证书              | 形式                       | 适合的场景                 |
+| --------------- | ------------------------ | --------------------- |
+| 法向标量            | \(\mathcal J_m(q)<0\)    | 局部化异常高度；最短证书          |
+| 逆平方 Hankel      | \(c^*H_N^\xi c<0\)       | 只使用中心偶阶 jet           |
+| Cayley–Toeplitz | \(c^*\mathbb T_N(u)c<0\) | 有界 moment、尺度可调、适合严格数值 |
+
+它们的逻辑形式分别是：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists(q,m):\mathcal J_m(q)<0,
+}
+$$
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N:H_N^\xi\not\succeq0,
+}
+$$
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N:\mathbb T_N(u_0)\not\succeq0
+}
+$$
+
+对任意固定合法尺度 \(u_0\)，在单尺度 rigidity 已闭合的条件下成立。
+
+它们并非同样容易数值发现：
+
+* 中心 Hankel 对高零点极不敏感；
+* 移动 jet 可以把高度 \(\gamma\) 从局部尺度中消去；
+* Cayley chart 可以通过 \(u\) 调节，对异常尺度作 matched filtering。
+
+---
+

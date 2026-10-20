@@ -1,0 +1,52 @@
+# AURIC FIB ATOM Dynamic Future Quotient and Future-Closed Memory
+
+**Reference-input status.** This volume is an open theory reference input assembled from two complete user-supplied source parts. It is not Lean-verified, frozen truth, a physical law, a biological theorem, or an experiment report. Lean declarations and their kernel-checked axiom closures remain the repository's mathematical truth source.
+
+**Provenance.** Author kind: mixed user-supplied material; original author and model are unknown. Receipt date: 2026-10-10. The source state cites the historical project snapshots [`912f4990050451866c2bb1cf71e33151a637d4b7`](https://github.com/the-omega-institute/trureturing/commit/912f4990050451866c2bb1cf71e33151a637d4b7) and [`3a56aa49697ab7641b7dbe616e0424327c69d2ca`](https://github.com/the-omega-institute/trureturing/commit/3a56aa49697ab7641b7dbe616e0424327c69d2ca). Current/latest statements from the supplied parts are retained as attributed historical claims.
+
+**Dictionary fixed throughout both source parts.**
+
+$$
+F[\mathrm{null}]=\mathrm{null},\qquad F[1]=[2],\qquad F[2]=[3],\qquad F[3]=[5],\qquad F[1,3]=[2,5].
+$$
+
+The symbols $x,y,z$ mean occupancy at positions $1,3,2$, respectively. A probability vector $p$, a phase symbol $p$, and the response variable $y$ are distinct by context.
+
+**Editorial qualification matrix.** The following notes are scope qualifications for the supplied source claims; they do not replace or silently rewrite the source text.
+
+- **Q1 (Part I §§1–6, 9–10):** Count and phase classification is restricted to actual positive-mass fourth-segment activity after third-marker writing/latching, under one fixed finite or countable prior on positive integer depths with at least two positive support points and one once-sampled $K$ shared by all Reads. Paid retries, returns, and partial parses from zero remain in scope; future acceptance is not conditioned on. Reachable histories need not fill $\mathbb N^2\times\{p,\beta\}$, and the seed-stage $(\alpha\alpha)^j$ construction is not an active fourth-stage loop.
+- **Q2 (Part I §§2–4, 8):** Minimality means equality of complete probabilistic residual laws on the declared legal domain, up to equivalent encodings. The Myhill–Nerode comparison is a scoped right-congruence analogy requiring equal branch masses and positive-probability legal residuals. It is stronger than equality of means, pointwise reports, or one sampled outcome.
+- **Q3 (Part I §§4–7; Part II §§4, 14.1):** Active, pending$_0$, pending$_1$, and delivered are distinct boundary domains. Pending states retain their mandatory original Stop and forbid Read; delivered has empty future. An unbounded exact quotient differs from finite coordinate dimension, realization rank, finite states, and finite bits. Counters in an implementation record do not by themselves make pending states minimal coordinates.
+- **Q4 (Part I §7; Part II §§2, 7–8):** Combining static $\kappa$ with a depth posterior requires a shared source, joint law, and response kernel. The displayed $(\kappa,a,A,B,\tau)$ is a conditional synthesis, not a universally proved joint minimum, and it cannot reconstruct arbitrary static $p$ without visible coordinates. For $\chi=z+xy$, $E[\chi]=Z+\kappa$; statewise identities and expectation identities must not be interchanged. Spectral $M_2$ is an additional readout with its stated nonnegative-root domain.
+- **Q5 (Part II §§3–5, 14.1):** The linear minimal-memory statement concerns exact expectation determination for all laws on the declared finite domain, with constants and a fixed action family. One-step $\mathcal C(V)$ coverage is not recursive invariant closure; $V^{(\infty)}$ is the iterated action closure. Guarded, stochastic, and conditioned actions require their guards, kernels, and normalization. Dimension counts such as $1/12/4$ are scoped relation ranks until their action and target correspondence is supplied.
+- **Q6 (Part II §§5–6, 12–14):** Function factorization on a specified reachable extended domain establishes selected future prediction only. It does not supply acquired memory, a recursive updater, feedback actions, controllability, viability, maintenance, or resource budgets. Prediction, maintenance, and physical reversal remain separate. Life and inverse-decay language is an open model proposal, not a biological or thermodynamic theorem.
+- **Q7 (Part II §§2–3, 6, 14.2):** Degenerate feasible fibers and fixed-support faces can remove a hidden direction. The $J_f$ criterion requires actual variation on the relevant fiber. Modular invertibility applies to declared integer or residue domains. The raw representative $J_fxy$ differs from the fixed-law orthogonal residual $J_f(xy-\operatorname{Proj}_Vxy)$; $1/\mathcal I$ and $J_f^2/\mathcal I$ require the stated support and positive base corners, and are not energy or maintenance-cost theorems.
+- **Q8 (Part II §6):** The stability recurrence requires a nonnegative adapted integrable error, sufficient conditioning information, uniform deterministic $0\le\lambda<1$, and $\varepsilon\ge0$. The displayed bound uses deterministic initial error $e_0$; for random $e_0$, its first term is $\lambda^t\mathbb E[e_0]$. It proves only the stated conditional upper bound. A passive relaxation may also satisfy $\lambda<1$; an upper bound with $a\ge1$ does not prove growth. Passive/critical/life labels remain source interpretations.
+- **Q9 (Part II §§9–10, 14.3):** The Gram determinant and rank apply to the specified Hermitian unit-record five-cycle with zero nonadjacent entries and a positive-semidefinite realization; phase requires a nonzero cycle product. The FIB-to-holonomy comparison is an analogy at the supplied scope. Independence-complex suspension and transition/reachability structure do not by themselves identify physical time, memory-growth periods, or gravity. Reachability with cycles is a preorder, and safe forgetting is task-relative.
+- **Q10 (Part II §§11–12, 14.2):** Ancestry recovery is tied to the specified tree family and acquired area/address data. The response-memory model retains positive couplings, mass, the internal initial-state term, and the stated transfer-function scope. Dissipation follows only from the supplied relaxation model; accessibility, physical energy costs, and biological feedback do not follow from static geometry.
+
+The complete source parts follow in order. Part I is the dynamic future-quotient source; Part II is the future-closed-memory/life source. Their local numbering and wording are retained.
+
+这一步继续推进到“动态闭包”层。先校准项目状态：
+
+- 远端 `dev` 已经继续前移，但新增提交是治理和环境维护类变化；
+- Auric FIB ATOM / Fibonacci future-response 相关的最新理论仍然是 [PR #14893](https://github.com/the-omega-institute/trureturing/pull/14893) 及其提交 [`912f4990050451866c2bb1cf71e33151a637d4b7`](https://github.com/the-omega-institute/trureturing/commit/912f4990050451866c2bb1cf71e33151a637d4b7)；
+- 当前项目的公开 PR 列表仍将“recover native Fibonacci Read counts from future laws”列为该理论线的关键工作。[GitHub](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+前一轮已经得到静态关系：
+
+\[
+\kappa=p_{13}=E[xy]
+\]
+
+是三位窗口唯一的隐藏二阶矩。
+
+现在继续证明：
+
+> 对动态历史而言，完整 future law 诱导出一个类似 Myhill–Nerode 的最小状态商。  
+> 在非单例 Fibonacci 深度先验下，这个最小商通常是无限的，不能被有限状态摘要精确替代。
+
+这正是静态 FIB 金字塔和“时间方向上的选择性遗忘”之间的严格连接。
+
+---
+

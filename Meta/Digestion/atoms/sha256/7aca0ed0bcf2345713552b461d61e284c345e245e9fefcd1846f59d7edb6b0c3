@@ -1,0 +1,21 @@
+## 定理 133.2（身份残余熵）
+
+\[
+\boxed{
+H(N\mid Q_\kappa(N))
+=
+\sum_p
+p^{-s\kappa(p)}H_p(s).
+}
+\]
+
+这里约定：
+
+\[
+\kappa(p)=0
+\Rightarrow
+p^{-s\kappa(p)}=1,
+\]
+
+即未观察素数保留全部局部熵。
+

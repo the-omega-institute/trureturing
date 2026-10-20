@@ -1,0 +1,41 @@
+**定义 50.3（复用的源向字段）。** 对定义 50.1 的每个实际记录，使用定义 45.2 的字段
+
+$$
+\mathsf B_\omega=(j,U,V,P,Q,I,(z_i)_{i\in I},r_0,\ldots,r_{j+1}).
+\tag{TM.5005}
+$$
+
+$j$ 是全部接受 $\rho$ 次数；$U,V$ 是运输至当前的已接受材料资源；$P,Q$ 是保持左右次序的已知三窗因子；$I\subseteq\{0,1,2\}$ 只含真实 Read 已规范化取得的初始窗；$r_k$ 是第 $k$ 个 Fibonacci 方向的最大非负拒绝下界。三重单位表示没有外材料的代数因子，不是空来源。令 $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$，并写
+
+$$
+\lambda_k(t)=F_{k+1}a(t)+F_{k+2}b(t),\qquad
+\mathcal U(x_0,x_1,x_2)=(x_1,x_2,J(x_0)),\quad J^2=\operatorname{id}.
+\tag{TM.5006}
+$$
+
+这里 $\mathcal U$ 是 §§28、35 的窗口运输 $F$ 的改记号，避免与 Fibonacci 数混淆。定理 45.3 与命题 45.4 已证明
+
+$$
+\begin{aligned}
+\mathcal A_\omega=\{t\in\mathcal F:\;&E_i(t)=z_i\ (i\in I),\quad
+\lambda_j(t)\le H-U,\quad
+\lambda_k(t)>r_k\ (0\le k\le j+1)\},\\
+\binom{m'}{n'}&=T^j\binom{a+b}{a+2b}+\binom UV,\quad
+T=\begin{pmatrix}0&1\\1&1\end{pmatrix},\\
+W_3(s_\omega(t))&=P\odot\mathcal U^j(W_3(t))\odot Q.
+\end{aligned}
+\tag{TM.5007}
+$$
+
+由 $(a',b')=(2m'-n',n'-m')$ 和 (TM.3003) 计算当前商，由初始行计算本人 $\tau$，即解码 (TM.5001)。等号接受使拒绝条件严格；最后当前叶上界蕴含所有旧接受上界，因为正拼接及替换均不减叶数。实际读先消去已知左右因子，再按 $j=3q+r$ 用 $J^q$ 得到 $z_r$；该算术不取得未读窗口。表的数学三窗仅是静态可能行的描述，不告知未知行，也不提供新端口。
+
+命题 45.5 已给非空节点 $0\le j\le J_H=O(\log(H+1))$、$0\le U\le V\le2U$、$U\le H-1$、$0\le r_k\le H$。至多 $j+2$ 个阈值各有 $O(\log(H+1))$ 位。已接受材料的两个有序叶词共至多 $H-1$ 叶，故 $P,Q$ 的六项正规指数均为 $O(H+1)$；至多三个已取得初始窗也有这个指数界。由 §28 的唯一正规坐标，全部这些非阈值字段共需 $O(\log(H+1))$ 位。于是同一个固定解码器通过 (TM.5007) 对每个实际记录恢复完整 $\mathcal P_\omega$，不再要求旧动作流作为旁输入。这直接复用 TM.4515，给统一常数 $C_0$ 使
+
+$$
+\forall H\ge1\ \forall\varnothing\ne\mathcal F\subseteq\mathcal T_H,
+\qquad b(H,\mathcal F)\le C_0(\log_2(H+1))^2.
+\tag{TM.5008}
+$$
+
+上界与定义 50.1 的初始族、完整关系及所有可达到记录量词一致。它是既有充分表示的应用；本章新增承重内容是下述实际来源的匹配下界。它不包括静态表、解码计算、展开输出或任意旧程序继续运行所需状态。
+

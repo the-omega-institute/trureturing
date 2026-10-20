@@ -1,0 +1,57 @@
+### 证明
+
+先支付两个经典中间积分。对任意 \(\sigma,\tau>0\)，
+
+\[
+F(\sigma,\tau)=\int_0^\infty
+\frac{e^{-\sigma v}-e^{-\tau v}}v\,dv
+=\log\frac\tau\sigma.
+\tag{ST.5}
+\]
+
+零端的指数差为 \((\tau-\sigma)v+O(v^2)\)，无穷端由正指数衰减支付。又因
+
+\[
+\frac{e^{-\sigma v}-e^{-\tau v}}v
+=-\int_\tau^\sigma e^{-tv}\,dt,
+\]
+
+在 \(t\) 的两个正端点之间，交换所需绝对积分由
+\(\int_{\min\{\sigma,\tau\}}^{\max\{\sigma,\tau\}}dt/t<\infty\)
+支付。故积分为 \(-\int_\tau^\sigma dt/t\)，得到（ST.5），也包含 \(\sigma<\tau\) 的有向积分。
+
+再令
+
+\[
+J(\sigma,\tau)=\int_0^\infty
+\frac{e^{-\tau v}-e^{-\sigma v}-(\sigma-\tau)v e^{-\tau v}}
+{v^2}\,dv.
+\]
+
+分子零端二阶消失；无穷端可积。对 \(\sigma\) 在任意正紧区间内求导，得到
+
+\[
+\frac{\partial J}{\partial\sigma}
+=\int_0^\infty\frac{e^{-\sigma v}-e^{-\tau v}}v\,dv
+=\log\frac\tau\sigma.
+\]
+
+微分的零端由常数共同控制，无穷端由两个正指数中的较小者共同控制。利用 \(J(\tau,\tau)=0\)，
+
+\[
+J(\sigma,\tau)
+=-\sigma\log\frac\sigma\tau+\sigma-\tau.
+\tag{ST.6}
+\]
+
+现在（ST.1）两项中含 \(\varphi\) 的部分，因
+\(\sigma+a=\tau+b\) 而完全抵消。剩余分子恰为
+
+\[
+e^{-\tau v}-e^{-\sigma v}
+-(\sigma-\tau)v e^{-\tau v}
++(a-1)v(e^{-\sigma v}-e^{-\tau v}).
+\]
+
+两项分别由（ST.6）与 \((a-1)F(\sigma,\tau)\) 支付。代入后即得（ST.3），取 \(\tau=1\) 得（ST.4）。所有相减都作用于已经绝对可积的完整轮廓或已经支付的补偿积分，未拆出两个各自发散的零端积分。证毕。
+

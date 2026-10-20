@@ -1,0 +1,41 @@
+### 119.3 Finite posterior algebra fixes the signs and factors
+
+For a finite positive law p_y=P_x^y define
+$$
+ \Lambda_y(\alpha)=\log\sum_n p_y(n)^\alpha.
+$$
+Finite differentiation gives
+$$
+ \Lambda_y''(1)=\operatorname{Var}_{p_y}[\log p_y(N)]
+                         =\mathcal V_x(y).
+\tag{119.11}
+$$
+Both signs of the surprise have the same variance.
+
+Let P_alpha=P_x^alpha/sum P_x^alpha and let f_alpha be the density of the original scalar under P_alpha plus independent Gaussian noise sigma/sqrt(alpha). Define
+$$
+ D_\alpha(y)=-\alpha^{-1}
+                 \log\{f_\alpha(y)/f_\alpha(0)\}.
+\tag{119.12}
+$$
+Writing the exact Gaussian posterior atom and summing its alpha power cancels prior-power and Gaussian constants between y and0, and gives
+$$
+ \Lambda_y(\alpha)-\Lambda_0(\alpha)
+             =-\alpha D_\alpha(y)+\alpha D_1(y).
+\tag{119.13}
+$$
+There is no limiting operation in this identity. Differentiating twice at1 yields
+$$
+ \mathcal V_x(y)-\mathcal V_x(0)
+                =-2D'_1(y)-D''_1(y).
+\tag{119.14}
+$$
+It therefore suffices to prove a C2 remainder on a fixed order neighborhood:
+$$
+ D_\alpha(y)=b_\alpha y+c_\alpha y^2+r_\alpha(y),\qquad
+ \sup_{\alpha\in[1,2],\,|y|\le R}
+       \sum_{k=0}^2|\partial_\alpha^k r_\alpha(y)|\to0.
+\tag{119.15}
+$$
+Right derivatives at1 in this compact interval equal the ordinary derivatives of the finite smooth functions. The proof of(119.15), not formal differentiation of Chapter 117, is the proof below.
+

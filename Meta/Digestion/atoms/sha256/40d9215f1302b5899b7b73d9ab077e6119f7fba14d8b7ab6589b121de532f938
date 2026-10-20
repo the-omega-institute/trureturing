@@ -1,0 +1,24 @@
+## 定义 204.2（统计有效状态商）
+
+\[
+\boxed{
+Z_K
+=
+X/{\sim_K^{\mathrm{law}}}.
+}
+\]
+
+由商映射 \(\eta_K:X\to Z_K\) 与单射：
+
+\[
+\overline\Lambda_K:Z_K\hookrightarrow\mathcal P(O)
+\]
+
+满足：
+
+\[
+\Lambda_K
+=
+\overline\Lambda_K\circ\eta_K.
+\]
+

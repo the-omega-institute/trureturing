@@ -1,0 +1,8 @@
+Deng 式重整化应当：
+
+1. 分离有限低零点原子；
+2. 对 \(z=1\) 附近的高零点尾部做尺度缩放；
+3. 使用 Riemann–von Mangoldt 主密度作为连续 counterterm；
+4. 将零点密度振荡保留为 primitive residual；
+5. 对 Schur tail 或 Clark phase 建立统一余项界。
+

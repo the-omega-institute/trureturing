@@ -1,0 +1,10 @@
+可直接对应的既有形式化支点为：
+
+* `D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.lean` 的 `realized_image_unique_factorization_iff_reverse_kernel`：实际像上的唯一跨层因子与反向核包含等价；
+* `D5/S3/ConceptDynamics/Sufficiency/UniversalSufficiencyFactorization.lean` 的 `universal_sufficiency_factorization`：目标因子化与读出纤维恒定等价；
+* `D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean` 的 `target_recovery_criterion`：指定来源目标恢复与目标在读出纤维上恒定等价；
+* `D5/S3/ConceptDynamics/Transport/EffectiveImageNaturality.lean` 的 `effective_image_naturality`：源运输、读出因子化和目标因子化推出实际像上的自然交换；
+* `D5/S3/ConceptDynamics/Sufficiency/DescentCompositionLaw.lean` 的 `descent_composition_law`：连续层间半共轭的复合；
+* `D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean` 的 `stateThread_injective_iff_separates`、`stateThread_bijective_iff_complete_and_separates`，以及 `LocalGlobalAtlasExactness.lean`：线程来源恢复所需的分离与完备双条件；
+* 若要把单层确定更新压到最小前向商，可复用 `MinimalPredictiveCompletionQuotient.lean` 的 `minimal_predictive_completion_quotient`，不必另造最小商定义。
+

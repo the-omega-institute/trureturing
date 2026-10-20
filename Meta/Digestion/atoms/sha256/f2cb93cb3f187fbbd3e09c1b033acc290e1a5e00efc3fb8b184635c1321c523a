@@ -1,0 +1,29 @@
+**定理 328.2（交叉尺度与两侧不对称系数）。** 在定理328.1的条件下，沿任何 $\varepsilon\ne0$、$\delta>0$ 的联合趋零序列，有以下结论。
+
+若 $|\varepsilon|=o(\delta^2)$，则
+
+$$
+\frac{\mathcal E}{\varepsilon^2\delta^5}\longrightarrow\frac{5K_u}{144}.
+\tag{328.15}
+$$
+
+若 $\delta^2=o(|\varepsilon|)$ 且 $\operatorname{sgn}\varepsilon=\sigma\in\{-1,1\}$ 固定，则
+
+$$
+\frac{\mathcal E}{|\varepsilon|^3\delta^3}
+\longrightarrow4K_u\max_i(-\sigma u_i).
+\tag{328.16}
+$$
+
+若 $\varepsilon/\delta^2\to\tau\in\mathbb R$，则
+
+$$
+\frac{\mathcal E}{\varepsilon^2\delta^5}
+\longrightarrow K_u\left[\frac5{144}+4\max_i(-\tau u_i)\right].
+\tag{328.17}
+$$
+
+证明。分别按所述尺度除以式（328.2），利用有限最大值的连续性，即得三式。对 $\tau=0$，式（328.17）还原式（328.15）；参数序列仍要求 $\varepsilon\ne0$，不在零分母处取比值。证毕。
+
+本节使用标准 KKT 拉格朗日展开与有限最大值的连续性。新增内容是同一实际修复方案的两个显式代价：列误差分裂给出带方向的三次不对称项，约束面上的矩阵位移给出五阶预算项。交叉尺度由这两个非负首项共同决定，而不是把分别优化的两个方案当作同一实现。结论不确定固定正预算下的完整各向异性系数，也不扩展到奇异支撑分支。
+

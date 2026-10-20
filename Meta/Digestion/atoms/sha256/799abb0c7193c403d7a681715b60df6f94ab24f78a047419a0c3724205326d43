@@ -1,0 +1,45 @@
+## 87. 风险敏感 Bellman、非线性谱与小噪声作用量
+
+固定有限 FIB 状态集 \(E_j\)，给定外加核 \(Q_j^a\)、阶段代价 \(\ell_j\)、终端代价 \(G_j\) 和风险参数 \(\theta>0\)。风险敏感值函数定义为
+\[
+V_t^\theta(x)
+=\frac1\theta\log
+\inf_\pi
+\mathbb E_x^\pi
+\exp\left[
+\theta\left(
+\sum_{s=t}^{T-1}\ell_j(X_s,A_s)+G_j(X_T)
+\right)\right].
+\]
+它满足非线性 Bellman 递推
+\[
+V_T^\theta=G_j,
+\]
+\[
+V_t^\theta(x)
+=\frac1\theta\log\min_a
+\left\{
+e^{\theta\ell_j(x,a)}
+\sum_yQ_j^a(x,y)e^{\theta V_{t+1}^\theta(y)}
+\right\}.
+\]
+\(\theta\downarrow0\) 恢复普通期望代价；\(\theta>0\) 放大上尾，\(\theta<0\) 偏向下尾。若无限时域折扣或齐次核使乘法算子
+\[
+(\mathcal T_\theta f)(x)
+=\min_a e^{\theta\ell_j(x,a)}
+\sum_yQ_j^a(x,y)f(y)
+\]
+具有正性和原始性，则长期风险率由其非线性 Perron 根给出。动作并列、核不可约性或代价无界时，不能无条件声称唯一风险率。
+
+对固定策略的路径奖励 \(A_T\)，有
+\[
+\frac1\theta\log\mathbb E e^{\theta A_T}
+=\frac1\theta\Lambda_T(\theta),
+\]
+其一阶导数是平均奖励，二阶导数是方差；当 \(T\to\infty\) 且压力极限存在时，
+\[
+\Lambda(\theta)
+=\lim_{T\to\infty}T^{-1}\log\mathbb E e^{\theta A_T}
+\]
+与奖励大偏差率函数通过 Legendre 对偶相连。此处的“自由能”只是风险敏感路径的谱量，不是热力学自由能。
+

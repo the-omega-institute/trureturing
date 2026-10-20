@@ -1,0 +1,29 @@
+## Q.6 定理状态矩阵
+
+| 结论 | 当前状态 | 主要依赖 |
+|---|---|---|
+| 观测／干预／反事实 kernel 层级 | Paper definition + explicit witnesses | finite SCM |
+| 观测等价但干预不等价 | Finite paper certificate | two binary models |
+| 全单世界干预等价但反事实不同 | Finite paper certificate | shared-\(U\) coupling |
+| 因果 law quotient 普适性质 | Paper / direct specialization | `CausalStateFactorization` |
+| 干预族单调精化 | Paper direct | coordinate restriction |
+| 目标因果余量空 iff 可识别 | Paper direct | range factorization |
+| 有限干预 set cover 等价 | Paper direct | finite pair cover |
+| 随机化桥 | Classical/Paper | independence + consistency |
+| back-door 调整 | Classical, not Lean-closed here | DAG blocking + positivity |
+| positivity failure | Finite paper certificate | off-support mechanism |
+| hidden confounding gap | Finite paper certificate | shared Bernoulli source |
+| product SCM intervention factorization | Paper | independent exogenous blocks |
+| cross-prime confounding反例 | Finite paper certificate | shared source |
+| interventional Markov equivalence refinement | Classical | Hauser–Bühlmann |
+| transport residual criterion | Paper direct | kernel inclusion |
+| transport formula completeness | Classical | selection diagrams / do-calculus |
+| ATE depends only on marginals | Paper direct | linearity |
+| benefit/harm Fréchet bounds | Paper finite proof | \(2\times2\) table |
+| monotonicity point identification | Paper direct | remove harm cell |
+| nested counterfactual identification | Classical/Open Lean bridge | causal hierarchy algorithms |
+| causal belief sufficiency | Classical finite target | Bayes kernels |
+| causal Bellman contraction | Paper specialization | existing Bellman anchor |
+| sequential g-formula | Classical/Open Lean bridge | longitudinal exchangeability |
+| off-policy residual criterion | Paper direct | target factorization |
+

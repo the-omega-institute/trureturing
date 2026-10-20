@@ -1,0 +1,10 @@
+**推论 1381.2（保留矩符号的格谱）。** 若 $k>0$，置 $\sigma=\operatorname{sign}(\mathbb E_P\prod_iX_i)$，并定义
+
+$$
+A_s^\sigma(P)=\max\{P(B):B\subseteq\{x:\prod_ix_i=\sigma\},\ |B|\le s\}.
+$$
+
+则上面的两项结论仍可将 $A_s(P)$ 换成不大于它的 $A_s^\sigma(P)$。
+
+**证明。** 在完整矩恒等式乘以 $\sigma$ 后，所选标签中 $\sigma\tau_j\le0$ 的贡献可以在上界中丢弃。其余通道的坐标均值均非零，其模态的奇偶符号正是 $\sigma$。把这些通道按不同模态分组，所选部分至多贡献 $A_s^\sigma(P)$；未选部分仍至多贡献 $1-W_s$。证毕。
+

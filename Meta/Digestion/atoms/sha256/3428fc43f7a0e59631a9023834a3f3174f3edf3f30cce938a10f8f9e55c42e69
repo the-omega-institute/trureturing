@@ -1,0 +1,13 @@
+**定义 24.1（有方向的中心剩余预算）。** 在第 21 节合同下，对 $a>0$ 定义
+
+$$
+\begin{aligned}
+R_{a,S}(f)&=\left\|(\omega_S(t)+a)\widehat f(-t)
++i\widehat f'(-t)\right\|_{L^2(d\mu)}^2,\\
+U_{\mathrm{or},a,S}(f)&=
+\left(\sqrt{D(f)}+\frac{\sqrt{R_{a,S}(f)}}{2\sqrt a}\right)^2.
+\end{aligned}
+$$
+
+$\widehat f'(-t)$ 表示先对 $\widehat f$ 求导，再在 $-t$ 处取值。完整 $\omega_S$ 包含实际 Gamma 相位和全部有限素数幂，不把局部内函数或平移分开收费。
+

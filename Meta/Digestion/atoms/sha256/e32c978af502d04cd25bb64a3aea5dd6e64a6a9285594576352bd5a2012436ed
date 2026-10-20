@@ -1,0 +1,68 @@
+**定理 37.8（整数二次参数与平方根保证节省）。** 对所有整数 $H\ge1$，按（TM.3713）取 $\eta$，定义
+
+$$
+r_H=
+\begin{cases}
+\displaystyle\left\lfloor\frac{\sqrt{8K+17}-3}{4}\right\rfloor,&\eta=0,\\[2mm]
+\displaystyle\left\lfloor\frac{\sqrt{8K+25}-5}{4}\right\rfloor,&\eta=1.
+\end{cases}
+\tag{TM.3730}
+$$
+
+则
+
+$$
+M_A(H)\le K-r_H,
+\qquad r_H=\frac{\sqrt H}{4}+O(1).
+\tag{TM.3731}
+$$
+
+$r_H=0$ 时使用既有固定档案构造。对 $17\le H\le20$ 保留定理 36.9 的更强精确值 $M_A(H)=2$。特别地，对每个 $H\ge49$，有 $M_A(H)<M_B(H)$。
+
+证明。若 $\eta=0$ 且 $r=r_H\ge1$，（TM.3730）精确等价于选取满足
+
+$$
+K\ge2r^2+3r-1
+\tag{TM.3732}
+$$
+
+的最大非负整数 $r$。此时 $K\ge4$，$1\le r<K$，且
+
+$$
+J=K-r-r^2\ge K/2,
+\qquad
+c=H-4(K-r)\le4K+4r-4\le8J.
+\tag{TM.3733}
+$$
+
+第一式由 $K/2-r-r^2\ge(r-1)/2\ge0$ 得到，第二式最后的不等式恰是（TM.3732）。又 $H\ge8K-7$ 给 $c\ge4K+4r-7>0$，所以截止是一个正的公共整数。
+
+若 $\eta=1$ 且 $r=r_H\ge1$，它是满足
+
+$$
+K\ge2r^2+5r
+\tag{TM.3734}
+$$
+
+的最大非负整数 $r$。此时 $K\ge7$，$1\le r<K$，且
+
+$$
+J=K-r-r(r+1)\ge(K+r)/2,
+\qquad
+0<c\le4K+4r\le8J.
+\tag{TM.3735}
+$$
+
+第一式和最后一个不等式都由（TM.3734）直接移项得到，正性来自 $H\ge8K-3$。
+
+在两种非零 $r$ 情形，$J\ge1$。由定理 36.3 与 $H\le8K$，有
+
+$$
+D_2(H)\le\left\lceil\frac K3\right\rceil\le J.
+\tag{TM.3736}
+$$
+
+为核对第一个整数界，$2\le H\le4$ 时 $D_2=1$；$H\ge5$ 时以 $K=3d,3d+1,3d+2$ 分别代入 $1+\lfloor(8K-5)/24\rfloor$，所得上界依次为 $d,d+1,d+1$。$H=1$ 的空层为0。第二个界由整数 $J\ge K/2$ 得到。于是（TM.3726）全部满足，定理 37.7 给 $M_A(H)\le K-r_H$。若 $r_H=0$，定理 32.3 的 $\sigma_K$ 本来就给此界，所有小尺度均被覆盖。
+
+两根式都等于 $\sqrt{K/2}+O(1)$，向下取整只改变有界量；而 $K=H/8+O(1)$，故 $r_H=\sqrt H/4+O(1)$。若 $H\ge49$，则 $K\ge7$；在两种半块中 $r=1$ 分别满足（TM.3732）、（TM.3734），所以 $r_H\ge1$，而 $M_B(H)=K$。这给严格全家族分离；平方根是已构造的保证节省，不是未知最优节省的渐近等号。$\square$
+

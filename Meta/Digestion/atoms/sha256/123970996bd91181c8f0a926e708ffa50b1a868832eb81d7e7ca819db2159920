@@ -1,0 +1,2 @@
+**来源 1440.2（项目中的预测与整体实现）。** 实际源码为 `D5/S3/Estimation/DecisionRisk/FinitePowerExtrapolationRisk.lean`、`D5/S3/Observer/Hankel/RankOneInfiniteHorizonRisk.lean`、`D5/S0/Automata/BoundedStateSampleCompactness.lean`，以及后者使用的 `D5/S0/Automata/FiniteSampleRestriction.lean`。引用保留逐点有界噪声、严格稳定参数、有限或整个未来、有限字母表及固定状态预算的条件。源码阅读不等于当前编译、kernel 或 axiom 闭包验证。
+

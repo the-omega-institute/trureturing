@@ -1,0 +1,78 @@
+## 178. FIB 图上的外加界面生长、KPZ 方程与粗糙度标度
+
+本节把 FIB 作为界面邻接结构和更新次序。沉积速率、噪声、表面张力、斜率非线性、空间尺度和边界条件均需外加。设有限界面图为 \(G_L=(V_L,E_L)\)，节点高度为 \(h_i(t)\)，节点权重为 \(\mu_i>0\)，边权为 \(c_{ij}=c_{ji}\ge0\)。定义
+$$
+(\Delta_Gh)_i
+=\frac1{\mu_i}\sum_{j\sim i}c_{ij}(h_j-h_i),
+\qquad
+Q_i(h)=\frac1{2\mu_i}\sum_{j\sim i}c_{ij}(h_j-h_i)^2.
+\tag{178.1}
+$$
+\(Q_i\) 是特定离散斜率项；不同离散化可能给出不同连续极限。
+
+一种外加生长规则为
+$$
+h_i\leftarrow h_i+\Delta t
+\left[F+\nu(\Delta_Gh)_i+\frac\lambda2Q_i(h)\right]
++\sqrt{\frac{2D\Delta t}{\mu_i}}\xi_{i,m}.
+\tag{178.2}
+$$
+其中 \(F\) 是平均沉积，\(\nu\) 是平滑系数，\(\lambda\) 是斜率非线性系数，\(D\) 是噪声强度。FIB 更新次序只有在明确每轮访问频率和局部时钟后才可解释为时间；不同更新次序可能产生不同离散动力学。
+
+若图族具有适当欧氏嵌入、局部相互作用和连续极限，候选连续方程为
+$$
+\partial_t h
+=F+\nu\nabla^2h+\frac\lambda2|\nabla h|^2+\eta,
+\tag{178.3}
+$$
+其中白噪声理想化为
+$$
+\mathbb E[\eta(\mathbf x,t)\eta(\mathbf x',t')]
+=2D\delta(\mathbf x-\mathbf x')\delta(t-t').
+$$
+长程边、守恒噪声、冻结无序或相关沉积会改变方程。没有欧氏极限时，图上的随机演化仍可定义，但不能直接替换为普通拉普拉斯的 KPZ 方程。
+
+扣除加权平均高度
+$$
+\bar h=\frac1{M_L}\sum_i\mu_i h_i,\qquad
+M_L=\sum_i\mu_i,
+$$
+后，粗糙度定义为
+$$
+W^2(L,t)=
+\mathbb E\left[
+\frac1{M_L}\sum_i\mu_i(h_i-\bar h)^2
+\right].
+\tag{178.4}
+$$
+若存在自仿射标度，可检验 Family–Vicsek 形式
+$$
+W(L,t)\sim L^\alpha f(t/L^z),
+\tag{178.5}
+$$
+从而
+$$
+W\sim t^\beta,\qquad
+W_{\rm sat}\sim L^\alpha,\qquad
+t_{\rm sat}\sim L^z,\qquad
+\beta=\frac\alpha z.
+$$
+这些指数需要在微观截止尺度、相关长度和系统尺度之间存在清晰窗口；异常粗糙化可能要求区分局部与全局指数。
+
+\(\lambda=0\) 时得到 Edwards–Wilkinson 型线性模型。若 \(-\Delta_G\) 的谱为
+$$
+0=\omega_0<\omega_1\le\cdots,
+$$
+则闭合连通图上的线性粗糙度满足
+$$
+W^2(t)=
+\frac D{\nu M_L}\sum_{k\ge1}
+\frac{1-e^{-2\nu\omega_kt}}{\omega_k},
+\qquad
+t_{\rm rel}\asymp\frac1{\nu\omega_1}.
+\tag{178.6}
+$$
+这说明低频谱控制有限图上的弛豫和饱和粗糙度；要由谱推出 \(\alpha,z\)，还需一列不断增大的图及其低频谱标度。标准 KPZ 的 \(\alpha+z=2\) 依赖额外倾斜对称性，不由 FIB 邻接自动保证。
+
+本节结论是：FIB 提供界面更新的组合骨架；KPZ 普适类、粗糙度指数、相关长度和有限尺寸饱和值由生长规则、噪声、连续极限与边界决定。
+

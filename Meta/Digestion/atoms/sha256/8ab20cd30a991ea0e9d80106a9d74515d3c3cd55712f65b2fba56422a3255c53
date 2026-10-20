@@ -1,0 +1,32 @@
+## 3. 已提交 Lean：算术符号有独立统一界
+
+令
+
+\[
+B_c=2\cosh(L/2)+\sum_{0\le j<c}\left|\Lambda(j)/\sqrt j\right|.
+\]
+
+则
+
+\[
+\boxed{|s_c(n)|\le B_c\quad(n\in\mathbb Z).}
+\tag{AC4}
+\]
+
+Gamma 部分的证明没有假设这个上界。令 w>=0，d_j=w+2j+1/2，有
+
+\[
+\frac w{(2j+5/2)^2+w^2}
+\le w\left(d_j^{-1}-(d_j+2)^{-1}\right).
+\]
+
+分母交叉相乘后，差由 (w-2j-3/2)^2 和非负余项控制。对所有有限部分和望远镜求和，再加第零项 w/(1/4+w^2)<=1，得到
+
+\[
+\sum_{r\ge0}\frac w{(2r+1/2)^2+w^2}\le2.
+\]
+
+这也给出绝对收敛。因 0<=1-exp(-beta_r*L)<=1，(AC1) 的 Gamma 级数被同一正级数支配。极点的绝对值最多为 2(cosh(L/2)-1)，有限素数项的绝对值最多为权重绝对值和。三者相加得到 (AC4)。
+
+Lean 主声明 `arithmetic_boundary_symbol_bound` 同时保存实际 Gamma 级数的绝对收敛与 (AC4)。没有以 RH、Gamma 尾项正性、谱间隔或一个待证明的算子范数作为输入。
+

@@ -1,0 +1,79 @@
+**候签定理 17.1（无间距假设的混合共振尾界）。** 对每个固定有限 $\mathcal P$ 和每个固定 $r>0$，双级数
+
+$$
+\mathcal K_S=4\sum_{\mathbf j,\mathbf k}
+w_{\mathbf j}w_{\mathbf k}J_{\lambda_{\mathbf j},\lambda_{\mathbf k}}
+$$
+
+在 $L^1(0,r)$ 中绝对可和，且
+
+$$
+\begin{aligned}
+\|\mathcal K_S\|_{L^1(0,r)}&\le4L(r)Z_S^2,\\
+\|\mathcal K_S-\mathcal K_{S,\mathbf N}\|_{L^1(0,r)}
+&\le E_S(r,\mathbf N)\longrightarrow0
+\quad(\min_{p\in\mathcal P}N_p\longrightarrow\infty).
+\end{aligned}
+$$
+
+不同 $r$ 的极限在交叠区间上一致。此极限分布由 $\mathcal K_S(t)\,dt$ 给出，没有矩形截断中遗漏的 Dirac 质量。结论不要求不同 $\log(\lambda_{\mathbf j}/\lambda_{\mathbf k})$ 之间存在正间距，也不声称整个核在稠密共振处具有统一点态渐近式。
+
+**证明。** 先对任意 $a,b>0$ 积分一对频率。复用标量界 $|\operatorname{sinc}z|\le\min\{1,|z|^{-1}\}\le|z|^{-1/2}$；该 bound 及连续延拓属于标准 sinc 估计。令 $d=\log(a/b)$。精确恒等式和算术—几何平均给出
+
+$$
+\begin{aligned}
+|a-be^t|&=2\sqrt{ab}\,e^{t/2}
+\left|\sinh\frac{d-t}{2}\right|
+\ge\sqrt{ab}\,e^{t/2}|t-d|,\\
+a+be^t&\ge2\sqrt{ab}\,e^{t/2}.
+\end{aligned}
+$$
+
+又有 $\int_{e^{-t}}^1x^{-1/2}dx\le2$。故 difference 项的积分绝对值不超过
+
+$$
+\sqrt{\frac2\pi}(ab)^{-1/4}
+\int_0^r e^{t/4}|t-d|^{-1/2}dt.
+$$
+
+对所有 $d\in\mathbb R$，
+
+$$
+\int_0^r|t-d|^{-1/2}dt\le2\sqrt{2r}.
+$$
+
+当 $d\in[0,r]$，左边为 $2\sqrt d+2\sqrt{r-d}$；区间外的值更小。因此 difference 项至多为 $4e^{r/4}\sqrt r\,(ab)^{-1/4}/\sqrt\pi$。plus 项至多为 $re^{r/4}(ab)^{-1/4}/\sqrt\pi$，于是
+
+$$
+\|J_{a,b}\|_{L^1(0,r)}\le L(r)(ab)^{-1/4}.
+$$
+
+对频率求和时，$j_p=-1$ 的贡献为 $p^{-1}p^{1/4}=p^{-3/4}$，而 $j_p\ge0$ 的贡献是几何级数。因此
+
+$$
+\sum_{\mathbf j}|w_{\mathbf j}|\lambda_{\mathbf j}^{-1/4}=Z_S,\qquad
+\sum_{\mathbf j\in\mathcal I_{\mathbf N}}
+|w_{\mathbf j}|\lambda_{\mathbf j}^{-1/4}=Z_{S,\mathbf N}.
+$$
+
+从而
+
+$$
+4\sum_{\mathbf j,\mathbf k}|w_{\mathbf j}w_{\mathbf k}|
+\|J_{\lambda_{\mathbf j},\lambda_{\mathbf k}}\|_1
+\le4L(r)Z_S^2<\infty.
+$$
+
+矩形外所有 pair 的正权重和恰为 $Z_S^2-Z_{S,\mathbf N}^2$，得到所列误差。绝对 $L^1$ 收敛同时给出有限测度的 total-variation 收敛，所以不存在额外集中质量。单个共振点的无穷 majorant 不改变这一步积分结论。
+
+该乘积尾界还满足
+
+$$
+E_S(r,\mathbf N)\le
+8L(r)Z_S^2\sum_{p\in\mathcal P}
+\frac{(1-p^{-1})p^{-(N_p+1)/4}}
+{(1-p^{-1/4})z_p}.
+$$
+
+这里使用 $1-\prod_p(1-u_p)\le\sum_pu_p$ 和 $1-a^2\le2(1-a)$，其中 $0\le a,u_p\le1$。例如 $\mathcal P=\{2,3\}$、$N_2=N_3=N$ 时，误差为 $O_r(2^{-(N+1)/4}+3^{-(N+1)/4})$，常数由上式确定。证明没有把两个近共振替换成彼此分离的共振。$\square$
+

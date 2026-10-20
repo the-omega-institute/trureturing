@@ -1,0 +1,38 @@
+**定义 42.1（完整二十变体语法与联合选择）。** 固定整数 $m\ge1$，取[定义 41.3 的完整参数集 $\Theta_{m,3}$、前像 $Q_\theta$ 和像 $P_\theta$](#41-任意固定超额的继承历史界与共享行标记取得)。沿用定义 30.1 的 $\operatorname{NC}$、式（30.2）的完整块 $A=\rho^3(\alpha)$、$C=\rho^3(\beta)$，以及定义 40.5 的右梳 $\mathcal R_T$。令 $\mathcal Z_4$ 为全部恰有四片叶、叶标签全为 $\alpha$ 的有序满二叉树，即
+
+$$
+\begin{aligned}
+\mathcal Z_4=\{\,&
+\langle\langle\langle\alpha,\alpha\rangle,\alpha\rangle,\alpha\rangle,
+\ \langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,\alpha\rangle,
+\ \langle\langle\alpha,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle,\\
+&\langle\alpha,\langle\langle\alpha,\alpha\rangle,\alpha\rangle\rangle,
+\ \langle\alpha,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle\,\}.
+\end{aligned}
+\tag{42.1}
+$$
+
+对 $Q_\theta$ 的任一实际 $\beta$ 叶出现地址 $p$ 和任一 $Z\in\mathcal Z_4$，只将该处完整叶替为 $Z$，其余括号、左右次序与标签逐字保持，记所得完整前像为 $Q_\theta[p\leftarrow Z]$。相应候选是整棵树
+
+$$
+\widetilde P_{\theta,p,Z}=\rho^3\bigl(Q_\theta[p\leftarrow Z]\bigr).
+\tag{42.2}
+$$
+
+由定理 41.5，每个原前像恰有四片 $\beta$，故每个参数至多有二十个候选。联合选择是在每个 $\theta$ 处任取一对 $\sigma(\theta)=(p_\theta,Z_\theta)$；地址和形状均可任意依赖整个参数及 $m$，不要求统一选择同一出现、同一行或同一形状。记 $\widetilde P_\theta=\widetilde P_{\theta,p_\theta,Z_\theta}$。完整前像与像的对应直接采用[母卷定义 2.1、3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的自由树与替换同态；[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)复合三次保证每个已给出的像拥有唯一的所示完整前像，并不保证不同参数所选的新前像互不相同。
+
+以下规模关系只是既有组成作用的应用。定理 41.5 给 $c(Q_\theta)=(m+1,4)^{\mathsf T}$；一次所规定替换把组成改变为 $(m+5,3)^{\mathsf T}$。[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的第三步作用因而给
+
+$$
+\begin{gathered}
+c\bigl(Q_\theta[p\leftarrow Z]\bigr)=\binom{m+5}{3},\qquad
+c(\widetilde P_{\theta,p,Z})=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{m+5}{3}
+=\binom{m+11}{2m+19},\\
+\widetilde P_{\theta,p,Z}\in\mathcal I_3(3m+30).
+\end{gathered}
+\tag{42.3}
+$$
+
+未知输入仍是定义 29.1 的全部非空有限带标签有序满二叉树 $U\in\mathcal T$；上述参数和候选仅描述评价来源，不给 $U$ 任何承诺。全部有限地址包括根均合法，报告为同一不变 $U$ 的四值；费用只计实际请求的不同地址。选择原型不接受，完整认证仍须实际请求所选整棵原型的全部带标签叶，真实缓存仅复用实际请求过的同址报告，后备仍须有自己的完整初态和空逻辑历史。
+

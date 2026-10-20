@@ -1,0 +1,10 @@
+当前 mathlib 的 `Mathlib.NumberTheory.LSeries.RiemannZeta` 已包括：
+
+- `riemannZeta`；
+- completed zeta 及去极点的 entire 版本 `completedRiemannZeta₀`；
+- 在极点外的解析性／可微性；
+- functional equation；
+- 在 $\Re s>1$ 与 Dirichlet 级数的一致；
+- 平凡零点、留数等基本结果；
+- `RiemannHypothesis` 的正式命题定义。
+

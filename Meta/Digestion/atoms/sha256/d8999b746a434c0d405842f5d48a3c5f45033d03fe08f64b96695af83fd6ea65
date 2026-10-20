@@ -1,0 +1,19 @@
+# Auric FIB ATOM：静态隐藏纤维、输出分辨未来商与可维护性
+
+**Reference input: open.** 本卷完整保存两部分用户供文，包括所有陈述、证明、表格、例子、项目对应说明、重复总结和拟议 Lean 目标。供文中的“定理”“证明”“已证明”等语言仍属开放参考输入；本文不取得 Lean/Frozen 证明、物理认证、生物学结论或优先权。Lean 声明、证明项及其内核核验的公理闭包才承载本库形式系统内的数学真值。
+
+**来源。** Author kind: mixed user-supplied material; original author and model unknown. Receipt date: 2026-10-10. 来源标识为本会话供文 static-fiber-and-maintainability-source 与 output-resolved-instrument-source。第二次发送中的第一部分与此前供文逐字一致，本文保留该部分一次，随后完整保留追加的第二部分。下表指纹属于接收的原始文本，正文仅作下述结构规范化。
+
+| 来源部分 | 原始字节数 | 原始 SHA-256 |
+| --- | ---: | --- |
+| I static-fiber-and-maintainability-source | 24778 | 033869ff61fe472a074ace0df3a39bac9b5a889191b4f77c7b0e5641dcad7ef6 |
+| II output-resolved-instrument-source | 25152 | 27b5713b7c3a8b2cc1575467b43ff26327e7ce0efdb4715a5e4688632e39b526 |
+
+**历史读法。** 第一部分给出的 dev 状态归属历史提交 46ec5166a750ea6d0b0612d157c86f19975688ef，第二部分归属 ae4f135cebf29ea39c8253bf1c21016cf7cb7cfb；两者均在接收工作树中实际观察过。正文中的“当前”“最新”、提交数量、PR 时间和证明等级语言保持来源归属，不认证交付时移动 dev 的最新状态。“D5/InstrumentClosure.lean”是供文的拟议路径，不是本卷新增的形式化或已准入地址。
+
+**结构规范化。** 全部原句、公式内容、证明和例子保留；只将 Markdown 数学入口改为 GitHub 的美元号形式，对全卷节号及定理局部地址作唯一化，并把证明标题降为所属声明的子标题。代码围栏原样保存，公式中的独立等号并入前一行以避免 setext 标题。原中文节名、原声明名称和编号保留在标题中。这些地址仅用于本文定位，不指定 Lean 名称、依赖或覆盖。
+
+**固定字典与对象类型。** 本卷的 F[null]、F[1]、F[2]、F[3]、F[1,3] 分别对应 null、[2]、[3]、[5]、[2,5]；占位 x,y,z 分别表示索引 1,3,2。Legacy 25 是联合模式标签，数量和 7 才是 2+5。静态概率律、条件后验、取得记录、参数先验、instrument 子核、动态 phase、边界义务和控制 belief 不能仅凭同名变量互换。
+
+**既有归属。** 静态纤维、四角差、联合投影和矩读数沿用 [Joint Projection, Multiwindow Order and Response Fibers](AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md) 与 [Foundational Formulas and Relations](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。深度先验、活动历史与终端边界沿用 [Dynamic Future Quotient and Future-Closed Memory](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md) 的限定。第二部分引用 [Paired Calibration Observability](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) 与 [Acquired Return p-Emission Variation](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md) 只作声明范围内的参考；本卷没有证明它们到五态 instrument 的 native 实现桥。有限维可观测闭包、线性表示和安全 belief 最大不动点属于既有数学方法；本文不宣称这些方法原创。新增综合的作用是保留逐输出分支、明确平均泄漏抵消反例，并把预测与可维护性分开。
+

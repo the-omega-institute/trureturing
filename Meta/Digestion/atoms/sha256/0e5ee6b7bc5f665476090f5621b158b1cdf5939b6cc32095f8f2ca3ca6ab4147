@@ -1,0 +1,6 @@
+本增补把此前已经分别冻结的三层结构连接起来：
+
+1. `GoldenScaleCircle` 给出黄金对数尺度与整壳平移；
+2. `GoldenVerticalSampling` 给出黄金 Fourier 模式对应的 Mellin 竖直频率；
+3. `SecondMagnusSwapCurvature` 给出时间槽与频率槽的交替二阶核。
+

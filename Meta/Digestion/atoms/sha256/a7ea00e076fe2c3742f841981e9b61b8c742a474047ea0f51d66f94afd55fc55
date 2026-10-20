@@ -1,0 +1,44 @@
+**Theorem 18.2 (Rare departures from the alternating limit).** As $q\downarrow0$,
+
+$$
+\begin{aligned}
+I_0&=\frac{j_*^n}{2}(c_*-1-\log c_*)q^{j_*-1}+O(q^{j_*}),\\
+I_1&=\frac{j_*^n}{2}(c_*\log c_*+1-c_*)q^{j_*-1}+O(q^{j_*}),\\
+1-A&=\frac{j_*^n}{2}(\sqrt{c_*}-1)^2q^{j_*-1}+O(q^{j_*}),\\
+\mu_i&=2+O(q),&\mathbb E_i\tau&=\tfrac12+O(q),&C_i&\longrightarrow0.
+\end{aligned} \tag{18.3}
+$$
+
+All three displayed leading coefficients are positive.
+
+Proof. It is useful to give exact identities that will also control the other endpoint. For a bounded variable $v>-1$, define the convex kernels
+
+$$
+f(v)=v-\log(1+v),\quad
+g(v)=(1+v)\log(1+v)-v,\quad
+h(v)=1+v/2-\sqrt{1+v}.
+\tag{18.4}
+$$
+
+For any representation of the tilt as $h_k/p_k=(1+v_k)/(1+\bar v)$, where $\bar v=\mathbb E_pv_K$, direct substitution gives
+
+$$
+ d_0=\mathbb E_pf(v_K)-f(\bar v),\quad
+ d_1=\frac{\mathbb E_pg(v_K)-g(\bar v)}{1+\bar v},\quad
+ 1-A=\frac{\mathbb E_ph(v_K)-h(\bar v)}{\sqrt{1+\bar v}}.
+\tag{18.5}
+$$
+
+Here the symbol $h(v)$ is the scalar kernel in (18.4), distinguished by its argument from the gap masses $h_k$.
+
+For this endpoint set $v_k=r_k/r_1-1$. It vanishes for $k<j_*$ and equals $c_*-1$ at $j_*$. The analytic generating series, whose coefficients are bounded constants times $k^n$, give $Z_n(q)=q(1+O(q))$, $\bar v=O(q^{j_*-1})$, and for $F=f,g,h$,
+
+$$
+\mathbb E_pF(v_K)=j_*^n F(c_*-1)q^{j_*-1}+O(q^{j_*}).
+\tag{18.6}
+$$
+
+For example, for $0<q\le q_0<1$, the tail starting at $j_*+1$ is bounded in absolute value by a constant times $q^{j_*+1}\sum_{v\ge0}(v+j_*+1)^n q_0^v$ before division by $Z_n$. This proves the stated uniform remainder on a sufficiently small endpoint interval. All three kernels vanish to second order at zero. Hence $F(\bar v)=O(q^{2j_*-2})=O(q^{j_*})$. Formula (18.5) yields the gap divergences and affinity; division by $\mu_i=2+O(q)$ gives (18.3). The mean and waiting-time assertions follow from their polynomial-geometric moment formulas, whose $k=1$ term dominates.
+
+For the initial cost, the $K$ marginal of $\lambda_0$ concentrates at one. Its tilt is $r_K/\mathbb E_{\lambda_0}r_K$, so boundedness of $r$ and $\log r$ gives $D(\lambda_0\Vert\lambda_1)\to0$. The same argument for the reciprocal tilt gives the reverse limit. Equation (17.10) then gives $C_i\to0$. Strict positivity of the kernels away from zero proves the coefficient assertions. $\square$
+

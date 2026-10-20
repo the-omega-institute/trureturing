@@ -1,0 +1,19 @@
+**定义 867.2（修复参数统一记号）。** 下文令 $t=t_-$，并记
+
+$$
+(u,v)=
+\begin{cases}
+(t,0),&t\le4\rho,\\[2pt]
+\left(\dfrac{4\rho+t}{2},\,\dfrac{t-4\rho}{2}\right),&t\ge4\rho.
+\end{cases}
+$$
+
+这里 $u+v=t$、$u>0$、$v\ge0$，且
+
+$$
+(a+u)(D+v)=B(B-t),\qquad
+\Delta=Du+av+uv+Bt.
+$$
+
+最后的恒等式会用于判断尚未修复的其他面，而不只用于求距离数值。
+

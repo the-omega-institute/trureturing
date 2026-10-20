@@ -1,0 +1,26 @@
+**推论 1369.1（固定维数的高阶差距）。** 在本批固定参数下，$G_{\infty,N}=-\log a>0$。充分大 $\alpha$ 时，
+
+$$
+G_{\alpha,N}-G_{\infty,N}
+=\frac{G_{\infty,N}}{\alpha-1}
+-\frac{\log[1+M(r_0/a)^\alpha]}{\alpha-1}.
+$$
+
+因此
+
+$$
+(\alpha-1)(G_{\alpha,N}-G_{\infty,N})
+\longrightarrow G_{\infty,N},
+$$
+
+并且
+
+$$
+\frac{\alpha}{\alpha-1}G_{\infty,N}-G_{\alpha,N}
+\sim\frac{M}{\alpha-1}(r_0/a)^\alpha.
+$$
+
+**证明。** 从第 1368 节提出 $a^\alpha$，直接整理得到第一式。因 $0<r_0/a<1$，所示对数趋零，给第一个极限；再用 $\log(1+t)\sim t$ 得最后一式。证毕。
+
+最优熵趋于无穷阶值的主要差距为倒数阶；在扣去一般上包络后，余下差距才是指数小量。两个比较基准不同，不能把最后一式误称为原始 $G_{\alpha,N}-G_{\infty,N}$ 的指数收敛。
+

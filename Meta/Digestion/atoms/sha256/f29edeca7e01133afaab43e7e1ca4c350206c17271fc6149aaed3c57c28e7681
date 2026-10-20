@@ -1,0 +1,5 @@
+这给出一个精确 selection rule：
+
+* mirror-even source 改变零点高度，沿 \(q\)-实轴运动；
+* mirror-odd source 激活 transverse displacement，沿 \(q\)-虚方向运动。
+

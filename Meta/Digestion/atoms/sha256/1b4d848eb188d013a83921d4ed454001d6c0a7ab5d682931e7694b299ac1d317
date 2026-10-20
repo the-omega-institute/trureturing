@@ -1,0 +1,6 @@
+**来源 1260.1（Rényi 来源与三态模型）。** Yu–Tan，[*Common Information, Noise Stability, and Their Extensions*, arXiv:2211.01788v1](https://arxiv.org/abs/2211.01788v1)，第 7.3–7.4 节，PDF 第 117–121 页，定义单次共同 Rényi 熵，区分其独立重复的渐近量，并提出非负 $\alpha$ 秩及趋零阶恢复非负秩的陈述。本卷使用自然对数，限定有限多坐标单次准确来源；没有把块长极限与阶极限混用。
+
+Seigal–Montúfar，[*Mixtures and products in two graphical models*, arXiv:1709.05276v1](https://arxiv.org/abs/1709.05276v1)，定理 1.1、1.2 及推论 1.3，PDF 第 2–3 页，提供整个闭概率单纯形上的三比特三态混合成员判据。原论文区分混合模型与未取闭包的 RBM 参数化；本批使用前者。第 1247 节的总变差值还依赖本卷第 802–805 节的共同预算推导，不归称为论文原有的距离公式。
+
+支撑缩减继续接续第 784 节及 Kumar–Li–El Gamal 的既有凹扰动方法；不同阶的端点选择、共同距离权重界与联合极限由本批列出的解析推导承担。项目核读 `D5/S3/RenyiDivergence/OrderSpectrum.lean` 与 `D5/S3/RenyiDivergence/OrderOneLimit.lean`，保留计数权重、支撑条件和一阶极限的范围；源码阅读不是当前 kernel 或 axiom 闭包核验。不作原创申报。
+

@@ -1,0 +1,12 @@
+At $V(a,01)$ perform Update and select $V(a,11)$; at $V(a,11)$
+perform Update and select $V(a,10)$; at $V(a,10)$ perform Read
+$\varepsilon$, with all four replies selecting $Q(0,a)$.
+Every word with a nonzero latch performs Read $\varepsilon$ and
+ignores its raw value. For its current stage $i$, accumulator $a$
+and occupied $L_{b,r}$, all four replies select the following one change,
+in the displayed priority order:
+
+1. If $a\ne b$, change $a$ to $b$.
+2. Otherwise, if $i\bmod2=r$, change $g_i$ to $g_{i+1}$.
+3. Otherwise clear $L_{b,r}$.
+

@@ -1,0 +1,11 @@
+### 证明
+
+由定理 355.3，\(\langle F,S\rangle=0\)。故
+
+$$
+\langle\widehat F,S\rangle
+=\langle\widehat F-F,S\rangle.
+$$
+
+逐面展开并使用三角不等式得到第一式，移项得到第二式。证毕。
+

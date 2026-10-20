@@ -1,0 +1,45 @@
+**条件接口 373.5（统一收缩与关联尺度）。** 对软势的单点条件核，定义
+
+$$
+c_{xy}=\sup_{\eta_z=\eta'_z\;(z\ne y)}
+\|\gamma_x(\cdot\mid\eta)-\gamma_x(\cdot\mid\eta')\|_{\mathrm{TV}},
+\qquad c_{xx}=0.
+$$
+
+若同一非负矩阵 $\mathbf C=(c_{xy})$ 支配全部所讨论有限区域、边界及无限规格的影响，且
+
+$$
+q:=\sup_x\sum_yc_{xy}<1,
+\qquad
+\mathbf D=\sum_{k\ge0}\mathbf C^k,
+\tag{373.10}
+$$
+
+则 Dobrushin 比较接口给出唯一无限 Gibbs 测度和边界影响收缩。单点观测的相关界为
+
+$$
+|C_{xy}^{f,g}|
+\le\frac{\operatorname{osc}(f)\operatorname{osc}(g)}4D_{xy}.
+\tag{373.11}
+$$
+
+把同一作用支撑内的节点连成无向相互作用图，距离记为 $d_{\mathcal I}$。这是统计作用的邻接，不是原生有向传播的反向边。少于 $d_{\mathcal I}(x,y)$ 步的影响链不能连接两点，故对 $x\ne y$，
+
+$$
+D_{xy}\le\frac{q^{d_{\mathcal I}(x,y)}}{1-q}.
+\tag{373.12}
+$$
+
+当 $0<q<1$ 时，$1/(-\log q)$ 是充分界保证的衰减尺度，不是实际相关长度的等式；$q=0$ 时不同节点独立。若每个作用支撑在原生无向组合距离 $d_F$ 中的直径至多 $R\ge1$，则 $d_{\mathcal I}(x,y)\ge\lceil d_F(x,y)/R\rceil$，才可把衰减界转为 FIB 距离界。物理长度换算仍需要空间嵌入。
+
+二体 Ising 势 $-J_{xy}\sigma_x\sigma_y$ 可用
+
+$$
+c_{xy}\le\tanh(\beta|J_{xy}|),
+\qquad
+\sup_x\sum_y\tanh(\beta|J_{xy}|)<1
+\tag{373.13}
+$$
+
+作为充分条件。纯父子展开树的度至多三，$|J_{xy}|\le J_0$ 时，$3\tanh(\beta J_0)<1$ 足以保证收缩，并给出 $0\le\chi_n\le\beta/(1-q)$。这些条件不等于精确临界温度；$q\uparrow1$ 只表示该收缩界失效。
+

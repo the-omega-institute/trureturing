@@ -1,0 +1,21 @@
+**命题 38.5（固定两扇区模型中的最优指数，repo-derived）。** 即使固定两个不同的平坦残余秩，定理 38.4 中的平方根指数也不能统一改为任何大于 $1/2$ 的指数。
+
+**证明。** 此时 $K=\left(\begin{smallmatrix}1&k\\k&1\end{smallmatrix}\right)$，$0<k<1$，$\delta_*=1-k$。共同拆分后，在一侧输出旗标施加相位酉 $\operatorname{diag}(1,e^{i\theta})$，得到允许的乘积操作，其编码后信道 $\mathcal F_\theta$ 的非对角系数为 $ke^{i\theta}$，相位符号不影响以下量。
+
+两个标签上，对角为零、非对角系数为 $b$ 的保 Hermitian Schur 差，其不除二钻石范数是 $|b|$：纯参考输入的输出差是非对角块矩阵，迹范数为 $2|b|\sqrt{p_1p_2}\le|b|$，等质量达到。因此
+
+$$
+\delta_\theta=\|\mathcal F_\theta-\mathcal T\|_\diamond
+=|1-ke^{i\theta}|,
+\qquad d_\theta=\|\mathcal F_\theta-\mathcal F_K\|_\diamond
+=k|e^{i\theta}-1|.
+$$
+
+令 $\epsilon_\theta=\delta_\theta-(1-k)$，直接平方得到
+
+$$
+d_\theta^2=k\bigl(2(1-k)\epsilon_\theta+\epsilon_\theta^2\bigr).
+$$
+
+故 $\theta\to0$ 时 $d_\theta/\sqrt{\epsilon_\theta}\to\sqrt{2k(1-k)}>0$。对等质量测试，$q=(1+k)/2$ 且 $\eta_\theta=k(1-\cos\theta)/2$，更有精确等式 $d_\theta=2\sqrt{k\eta_\theta}$。两种认证参数都不允许更大的统一指数；这不声称定理 38.4 的常数最优。证毕。
+

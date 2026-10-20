@@ -1,0 +1,72 @@
+### 15.6 精确有限观察器必须覆盖完整行为商
+
+再固定一个有限的 FIB 任务：源状态集为有限实际像 $Y$，动作更新为
+$T_a:Y\to Y$，当前读出为 $o:Y\to O$。令
+
+$$
+\mathsf B(y)(w)=o(T_w(y)),
+\qquad
+Q=Y/{\ker\mathsf B},
+\qquad
+q:Y\twoheadrightarrow Q,
+\tag{RA.1516}
+$$
+
+其中 $w$ 遍历包括空词的全部有限动作词，$T_w$ 按动作词逐项复合。
+完整行为相等在每个动作下保持，且包含当前读数相等，因此商上有良定义的
+$T_a^Q([y])=[T_a(y)]$ 与 $o_Q([y])=o(y)$。若一个有限观察器载体 $W$ 具有满射实现
+$r:Y\twoheadrightarrow W$、更新 $\widetilde T_a$ 和读出 $\widetilde o$，并满足
+
+$$
+rT_a=\widetilde T_a r,
+\qquad
+o=\widetilde o r,
+\tag{RA.1517}
+$$
+
+则存在唯一满射
+
+$$
+f:W\twoheadrightarrow Q,
+\qquad q=fr,
+\tag{RA.1518}
+$$
+
+且 $f$ 交织每个动作更新和当前读出：
+
+$$
+f\widetilde T_a=T_a^Qf,
+\qquad o_Qf=\widetilde o.
+\tag{RA.1518a}
+$$
+
+证明是：由（RA.1517）沿动作词归纳，
+$r$ 的同一纤维产生同一完整行为，因此 $\mathsf B$ 在 $r$ 的纤维上恒定；实际像
+给出 $f(r(y))=q(y)$ 的良定义。$r$ 满射保证它定义在整个 $W$ 上且唯一；
+$q=fr$ 及 $q$ 满射保证 $f$ 满射。把每个 $w\in W$ 写成 $r(y)$，
+再应用（RA.1517），即得（RA.1518a）。于是
+
+$$
+|Q|\le |W|.
+\tag{RA.1519}
+$$
+
+对 FIB 的组成—$\rho$ 后继任务，固定 $m\ge2$ 并取
+
+$$
+Y=V_m=(\mathbb Z/m\mathbb Z)^2,
+\qquad T(x)=Mx,\qquad o(x)=2x_1+3x_2.
+$$
+
+则前两层数量读数的可逆矩阵使 $Q\cong V_m$，故任何精确有限观察器至少需要
+$m^2$ 个实际实现状态。若整个观察器状态只保存一个模 $m$ 标量，则至多有 $m$ 个
+值，不能满足这一界；两层读数作为联合状态达到它。这里计数的是全部允许初态的
+完整未来行为，不是某一次输出的字母表大小。§14.4 已说明每个模组成状态都有
+实际树来源；这里不把从单个 $\alpha$ 出发的 $M$ 轨道等同于整个 $V_m$。
+
+（RA.1516）—（RA.1519）是仓内
+`D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality.controlled_behavior_universal_property`
+的 FIB 特化说明；本节没有新增 Lean 声明。它把“两个叶生成元”与“观察者必须
+保存多少可继续使用的边界状态”明确分开：前者是源签名的大小，后者由任务行为商
+决定，二者不能相互替代。
+

@@ -1,0 +1,66 @@
+**Theorem 44.3 (simultaneous zero mass and hidden decompactification).**
+Let $L\to\infty$, $\kappa=\pm2\pi/L$, and $m=m(L)>0$ arbitrary.
+For full points in a fixed compact off-diagonal set and a bounded chosen
+phase representative $r=(w,x)$, uniformly in both signs,
+
+$$
+\begin{aligned}
+\mathcal G^L_{\kappa,m}(k,k';w,x)
+&=\mathcal G_{\kappa,m}(k,k';w,x)+pT_\kappa(L,m)+O(pL^{-2}),\\
+T_\kappa(L,m)
+&=-\frac1{2\pi L\sqrt{\det N_\kappa}}
+       \log\!\left(1-e^{-L\sqrt{m/S_\kappa}}\right).
+\end{aligned}
+\tag{44.5}
+$$
+
+The formula retains $r=0$, $k\ne k'$. Its error is uniform in $m>0$;
+it does not require $L\sqrt m$ bounded away from zero. When
+$L\sqrt m\to0$ its additional tail is
+
+$$
+T_\kappa(L,m)=\frac1{2\pi L\sqrt{\det N_\kappa}}
+ \log\!\frac{\sqrt{S_\kappa}}{L\sqrt m}+o(L^{-1}).
+\tag{44.6}
+$$
+
+Thus this tail can vanish, converge to a nonzero constant, or diverge.
+For example $m=L^{-4}$ gives a vanishing tail,
+$m=L^{-2}e^{-cL}$ gives $c/(4\pi\sqrt{\det N_0})$ for $c>0$,
+and $m=L^{-2}e^{-L^2}$ gives a tail growing as
+$L/(4\pi\sqrt{\det N_0})$.
+The product $|\kappa|R$ alone does not determine a simultaneous
+zero-mass/decompactification limit when $mR^2$ may also tend to zero.
+More generally, for $|r|\le c_0L$ with one sufficiently small fixed $c_0$,
+the error in the first line of (44.5) is bounded by
+$Cp(|r|L^{-2}+L^{-3})$. Hence the same additional tail also controls
+long-distance sequences $r=Rz$, $L/R\to\infty$: after multiplication
+by $R$ their error is $O(p[(R/L)^2+R/L^3])$ for bounded $z$.
+The central native term remains exact even at phase-coincident points.
+
+Proof. Keep the central image as the exact native Green, also when its
+phase vector is zero. For every noncentral image (42.2) has summable error
+$O(pL^{-3}|j|^{-3})$. Replace those images by their Yukawa values.
+For $r=0$ their sum is exactly $T_\kappa(L,m)$, because
+$(M_\kappa^{-1})_{33}=1/S_\kappa$ and
+$\det M_\kappa=(\det N_\kappa)S_\kappa$, so the paired $j$ terms are
+
+$$
+\frac1{2\pi L\sqrt{\det N_\kappa}}
+ \sum_{j\ge1}\frac{e^{-jL\sqrt{m/S_\kappa}}}{j}.
+\tag{44.7}
+$$
+
+The series is $-\log(1-e^{-L\sqrt{m/S_\kappa}})$ for every $m>0$.
+Moving its argument by bounded $r$ changes each image by at most
+$C|r|/(jL)^2$, uniformly in $m$: differentiate
+$e^{-\sqrt m s}/s$ and use $(1+\sqrt m s)e^{-\sqrt m s}\le C$.
+Summing these errors proves (44.5). Expanding $1-e^{-b}=b(1+O(b))$
+proves (44.6) and its examples. If also $m\to0$, the central native term
+converges to its finite zero-mass value, uniformly on these compact
+sets, by (41.2). This proves the stated distinct outcomes in the original
+native cylinder, rather than merely in an effective comparison.
+For instance take the same $R=L^2$ in the last two exponential examples:
+$|\kappa|R=2\pi L$ is identical, while their additional tails differ.
+$\square$
+

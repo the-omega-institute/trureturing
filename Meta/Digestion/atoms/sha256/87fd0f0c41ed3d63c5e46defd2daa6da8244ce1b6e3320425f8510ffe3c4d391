@@ -1,0 +1,107 @@
+### 定理：实际補偿积分的显式一致速率
+
+对 \(a\ge0\)，保持 §434 的完整补偿分子
+
+\[
+B_{z,a}(v)=e^{-av}F_z(v)-1+(a-s_z)v,\qquad
+B_a(v)=e^{-av}\varphi(v)-1+(a-1)v,
+\]
+
+并定义
+
+\[
+\mathcal I_z(\sigma,a)=\int_0^\infty
+e^{-\sigma v}\frac{B_{z,a}(v)}{v^2}\,dv,
+\qquad
+\mathcal I(\sigma,a)=\int_0^\infty
+e^{-\sigma v}\frac{B_a(v)}{v^2}\,dv.
+\tag{SC.12}
+\]
+
+这些完整积分对每个 \(z\ge2,\sigma>0,a\ge0\) 绝对收敛。任取先固定的 \(V\ge0\)、\(\sigma_0>0\)，记
+
+\[
+q_0=\sigma_0/2,\qquad
+P_V=(V+1)^2+\tfrac12,\quad
+A_V=D(3+2V)+C_2,\quad B_V=DP_V.
+\]
+
+对全部满足 \(D/L\le\min\{1,\sigma_0/2\}\) 的 \(z\ge2\)、全部 \(\sigma\ge\sigma_0\) 和 \(0\le a\le V\)，有
+
+\[
+\boxed{\displaystyle
+|\mathcal I_z(\sigma,a)-\mathcal I(\sigma,a)|
+\le\frac e{2L}\left[
+A_V\left(\frac1{q_0}+\frac1{q_0^2}\right)
++B_V\left(\frac1{q_0^2}+\frac2{q_0^3}\right)
+\right].}
+\tag{SC.13}
+\]
+
+这里 \(\sigma\) 无有限上界要求。
+
+**证明。** 先支付每个固定有限筛的两个端点。令 \(Q_{z,a}=e^{-av}F_z\)，由实际有限乘积给
+
+\[
+Q_{z,a}''=Q_{z,a}[(S_z-a)^2-T_z],\qquad
+B_{z,a}(0)=B_{z,a}'(0)=0.
+\]
+
+因此
+
+\[
+B_{z,a}(v)=\int_0^v(v-w)Q_{z,a}''(w)\,dw.
+\tag{SC.14}
+\]
+
+对固定 \(z\)，（SC.5）及 \(F_z(v)\le e^{s_zv}\) 使二阶导数在 \([0,1]\) 有界，故零端为 \(O_{z,a}(v^2)\)。无穷端由字面有限乘积给
+
+\[
+0<F_z(v)\le\frac1{E_z(1)}\qquad(v\ge0),
+\]
+
+所以 \(B_{z,a}(v)=O_{z,a}(1+v)\)，任意 \(\sigma>0\) 支付其尾端。极限分子同样零值、零导数，并由 \(\varphi\le e(1+v)\) 支付尾端。§434 的共同近零界在这里复用为既有结论，不另列为新定性极限。
+
+为取得速率，令 \(\eta=D/L\le1\)、\(Q=e^{-av}\varphi\)、\(Q_z=e^{-av}F_z\)。由（SC.4）与 \(|e^x-1|\le |x|e^{|x|}\)，
+
+\[
+|Q_z-Q|\le e(1+v)e^{\eta v}\eta v,\qquad
+Q_z\le e(1+v)e^{\eta v}.
+\]
+
+又有 \(0\le S_z\le1+\eta\)，以及
+
+\[
+|(r-a)^2-j|\le P_V,\qquad
+|(S_z-a)^2-(r-a)^2|\le\eta(3+2V).
+\]
+
+利用（SC.6）将二阶导数差完整拆为
+
+\[
+(Q_z-Q)[(r-a)^2-j]
++Q_z[(S_z-a)^2-(r-a)^2-(T_z-j)],
+\]
+
+得共同于全部 \(v\ge0\) 的
+
+\[
+|Q_z''(v)-Q''(v)|
+\le\frac eL(1+v)e^{\eta v}(A_V+B_Vv).
+\]
+
+\(B_{z,a}-B_a\) 的零值和零导数恰为零；特别地，一次项 \((s_z-1)v\) 已在有限筛的实际补偿中抵消。两次 FTC 与右侧非减性给
+
+\[
+\boxed{\displaystyle
+|B_{z,a}(v)-B_a(v)|
+\le\frac e{2L}v^2(1+v)e^{\eta v}(A_V+B_Vv),\quad v\ge0.}
+\tag{SC.15}
+\]
+
+该全参数二阶误差可直接除以 \(v^2\)，不留下零端 \(1/v\) 项。若 \(\sigma\ge\sigma_0\)、\(\eta\le\sigma_0/2\)，则
+\(e^{-(\sigma-\eta)v}\le e^{-q_0v}\)。将（SC.15）乘上 \(e^{-\sigma v}/v^2\) 并积分，使用
+\(\int_0^\infty v^ke^{-q_0v}dv=k!/q_0^{k+1}\) 对 \(k=0,1,2\)，即得（SC.13）。证毕。
+
+（SC.13）是未乘前因子的完整补偿轮廓积分速率。原始核主项还含 \(LE_z(1)\)，完整阶乘密度还含 §434（GE.8）的另两项，相邻整数块还需纤维运输；本定理不为这些额外步骤另行断言 \(O(1/L)\) 误差，也不决定与粗糙前缀配对后的 Robin 残量符号。
+

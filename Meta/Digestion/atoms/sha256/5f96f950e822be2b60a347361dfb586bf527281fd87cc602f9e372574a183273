@@ -1,0 +1,134 @@
+**引理 44.2（四片共同残差的唯一伴随来源）。** 设 $S\subseteq\mathcal I_3(n)$ 非空有限且两两非冲突，固定
+
+$$
+Z\subseteq\bigcap_{Q\in S}\Lambda_\beta(Q).
+$$
+
+若存在一个参考来源 $P\in S$，则有
+
+$$
+\boxed{
+\begin{aligned}
+|\Lambda_\beta(P)\setminus Z|\le3&\ \Longrightarrow\ |S|=1,\\
+|\Lambda_\beta(P)\setminus Z|\le4&\ \Longrightarrow\ |S|\le2.
+\end{aligned}}
+\tag{44.3}
+$$
+
+第二式中，相对于同一个 $P,Z$，至多存在一个不同于 $P$ 的兼容来源；不要求整个族具有预先共同的前像骨架。
+
+**证明。** 先在本证明内计算既有规范分歧前沿的 $\beta$ 缺额。若正来源 $T$ 的唯一完整前像组成为 $(a,q)^{\mathsf T}$，令 $\omega(T)=|\Lambda_\beta(T)|$。直接使用母卷定理 3.4 的第三步组成作用，有
+
+$$
+\omega(T)=2a+3q,\qquad n(T)=3a+5q,\qquad
+a,q\in\mathbb N_0,\quad a+q>0.
+\tag{44.4}
+$$
+
+所以 $\omega(T)\ge2$，$\omega(T)=2$ 只可能为 $T=A$；$T\ne A$ 时 $\omega(T)\ge3$，而 $\omega(T)=3$ 只可能为 $T=C$。最后两个唯一性是在完整前像上成立的：对应组成分别只有 $(1,0)$ 与 $(0,1)$，非空满二叉前像因而分别是单叶 $\alpha$ 与单叶 $\beta$。同理，五叶正来源唯一为 $C$。这些不是一般组成观察的单射性断言。
+
+对不同、等叶数且非冲突的 $P,Q$，直接取引理 30.3的规范分歧前沿。在每个孔上将原子侧记为 $T_0$、复合侧记为 $T_1$。引理 30.2已经穷尽全部可能比较；在其原字面对象上，缺额恰为
+
+$$
+\begin{array}{c|c|c|c}
+(T_0,T_1)&\delta_\beta(T_0,T_1)&\delta_\beta(T_1,T_0)&n(T_1)-n(T_0)\\ \hline
+(A,\langle X,Y\rangle),\ X\ne A
+&2&\omega(X)+\omega(Y)\ge5&n(X)+n(Y)-3\ge5\\
+(C,\langle A,Y\rangle),\ Y\ne A
+&1&\omega(Y)\ge3&n(Y)-2\ge3\\
+(C,\langle\langle X_1,X_2\rangle,Y\rangle),\ X_1\ne A,\ Y\ne A
+&3&\omega(X_1)+\omega(X_2)+\omega(Y)\ge8
+&n(X_1)+n(X_2)+n(Y)-5\ge8
+\end{array}
+\tag{44.5}
+$$
+
+表内所有变量均属于 $\mathcal I_3$。第一、三行没有共享叶，故缺额就是各侧全部 $\beta$ 数。第二行恰共享左侧的 $A$：$C$ 的三片 $\beta$ 扣除该 $A$ 的两片后剩一片，复合侧则剩下 $Y$ 的全部 $\beta$。各下界分别使用非 $A$ 正来源至少三片 $\beta$、任意正来源至少两片 $\beta$，以及引理 30.2 的叶数下界。因此没有加入抽象响应表或未实现的局部类型。
+
+令 $k$ 为前沿中 $P$ 侧为原子的孔数，$l$ 为 $P$ 侧为复合像的孔数。每个孔的复合侧严格较大；等叶数使全部有符号大小差之和为零，非空前沿遂迫使 $k,l\ge1$。前沿的孔根前缀自由，孔外完全相同，故与定理 32.2 证明中式（32.8）的地址分割相同，定向 $\beta$ 缺额也逐孔相加。于是
+
+$$
+\delta_\beta(P,Q)\ge k+3l\ge4,\qquad
+\delta_\beta(Q,P)\ge3k+l\ge4.
+\tag{44.6}
+$$
+
+若第一方向取等，$k+3l\le4$ 强制 $k=l=1$，且 $P$ 在原子孔的缺额为一，在复合孔的缺额为三。将这两个孔分别命名为 $u,v$。表（44.5）说明两孔都必须属于第二行。在 $v$ 处有
+
+$$
+(P|_v,Q|_v)=(\langle A,Y\rangle,C),\qquad \omega(Y)=3,
+$$
+
+因而 $Y=C$，该孔的大小增加量为三。在 $u$ 处写
+
+$$
+(P|_u,Q|_u)=(C,\langle A,Y'\rangle).
+$$
+
+两孔以外相同，等叶数使 $n(Y')-2=3$；五叶正来源的唯一性给 $Y'=C$。所以存在这一对来源自己的实际像双孔上下文 $J$，使
+
+$$
+P=J[C,T_*],\qquad Q=J[T_*,C].
+\tag{44.7}
+$$
+
+反方向取等给相同结论；式（44.7）又使两个方向的缺额均为四。这也说明，定理 32.2 的 $\alpha$ 取等分类中允许的 $\langle A,A\rangle$ 填充没有在这里被当成 $C$：它有四片 $\beta$，不能满足本处的三片复合侧缺额。
+
+为核对该形状的充分性及完整来源，取任意定义 32.1 的实际像双孔上下文 $J$。把它的每个固定正旁支换成各自的完整前像，得到保留同一配对和孔位置的上下文 $J_0$。两棵完整树
+
+$$
+J_0[\beta,\langle\alpha,\beta\rangle],\qquad
+J_0[\langle\alpha,\beta\rangle,\beta]
+$$
+
+的第三步像正是式（44.7）的两树。规范编译卷命题 4.3 给这些完整前像的唯一性。两个孔各是原子前像与分支前像的比较，因此原规范前沿恰在这两个孔停止。引理 30.2 第二行给每孔的非冲突性；相反的三叶大小差抵消，给等叶数；孔内不同子树给整树不同。局部共有部分恰为左 $A$，所以两个定向 $\beta$ 缺额均为 $1+3=4$。至此，取等形的两个方向和全部实际前像均已核对，而没有改变既有 $\alpha$ 分离定理。
+
+更精确地，$C$ 的 $\beta$ 地址为 $\{\mathtt{LLL},\mathtt{LR},\mathtt{RL}\}$，$T_*$ 与它共享左 $A$ 的两片 $\beta$。因此在式（44.7）的 $P$ 中，四个失去的地址恰为
+
+$$
+\Lambda_\beta(P)\setminus\Lambda_\beta(Q)
+=\{u\mathtt{RL}\}\ \sqcup\ v\mathtt R\Lambda_\beta(C).
+\tag{44.8}
+$$
+
+这里的并不交，因为 $u,v$ 是不同且前缀不可比的孔地址；孔外没有任何缺额。
+
+现在固定引理中的 $P,Z$，令 $D_P=\Lambda_\beta(P)\setminus Z$。对任意 $Q\in S$，共同地址条件给
+
+$$
+\Lambda_\beta(P)\setminus\Lambda_\beta(Q)\subseteq D_P.
+$$
+
+若 $|D_P|\le3$，式（44.6）排除任何 $Q\ne P$，得到第一式。若 $|D_P|\le4$ 且存在 $Q\ne P$，同一下界强迫
+
+$$
+|D_P|=4,\qquad
+D_P=\Lambda_\beta(P)\setminus\Lambda_\beta(Q),\qquad
+Z=\Lambda_\beta(P)\cap\Lambda_\beta(Q).
+\tag{44.9}
+$$
+
+每一个不同兼容来源都因而具有式（44.7）—（44.8）的形状，但在此之前不假设它们的上下文或孔相同。
+
+只在固定的完整 $P$ 中考察所有字面 $C$ 出现。由引理 31.2 的完整位置分类，每一个这样的出现恰为 $P$ 的一个规范 $C$ 根；这些根是其唯一前像的叶地址，因而前缀自由。不同根 $r,r'$ 下的完整三元组 $r\Lambda_\beta(C)$ 与 $r'\Lambda_\beta(C)$ 不交：若有共同地址，两根都会是该地址的前缀，必可比较，违背前缀自由性。
+
+四元集合 $D_P$ 至多包含一个这样的完整规范 $C$ 三元组，否则两个不交三元组会使其大小至少为六。而式（44.8）已经供应一个，根为 $r=v\mathtt R$。所以该根由 $P,D_P$ 唯一确定，删去其最后一个字母 $\mathtt R$ 后，$v$ 唯一确定。集合 $D_P\setminus r\Lambda_\beta(C)$ 恰有一个地址，式（44.8）说明它是 $u\mathtt{RL}$；自由地址词的右消去性使 $u$ 也唯一确定。最后，在固定的 $P$ 上，把地址 $u$ 的 $C$ 换为 $T_*$，把地址 $v$ 的 $T_*$ 换为 $C$，其余字面子树不动，结果只能是一棵树。因此不同于 $P$ 的兼容来源至多一个，证明第二式。这个唯一性使用固定 $P$ 的真实规范块位置；四元集合的抽象分拆本身没有供应它，也没有预置全族共同的前像上下文。
+
+残差四确实允许两个来源。直接复用式（30.6）的十三叶对 $P_{13}=\langle C,T_*\rangle$、$Q_{13}=\langle T_*,C\rangle$；不另构造来源或控制器。共同实际历史
+
+$$
+H_*=\bigl((\mathtt{LLLR},\mathsf{leaf}_\alpha),
+(\mathtt{RLLR},\mathsf{leaf}_\alpha)\bigr)
+$$
+
+按原五行强制规则只加入根为 $\mathtt{LL},\mathtt{RL}$ 的两个 $A$，所以
+
+$$
+\Psi(H_*)=
+\{\mathtt{LLLL},\mathtt{LLR},\mathtt{RLLL},\mathtt{RLR}\}
+=\Lambda_\beta(P_{13})\cap\Lambda_\beta(Q_{13}).
+\tag{44.10}
+$$
+
+每棵树有八片 $\beta$，故各剩四片。两次查询在这个二元素族上都是常值，第一步就不是严格分裂；它们只校准共同历史的残差边界，不证明严格路由容量或任何全局容量上界取等。证毕。
+

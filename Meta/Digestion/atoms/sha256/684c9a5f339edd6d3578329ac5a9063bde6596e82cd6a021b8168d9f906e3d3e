@@ -1,0 +1,23 @@
+### 434.1 全参数 Abel 误差与 Euler 包络
+
+保持已有经典第一 Mertens 合同
+
+\[
+A(t)=\sum_{p\le t}\frac{\log p}{p}=\log t+\rho_A(t),\qquad
+|\rho_A(t)|\le K_1\quad(t\ge1),
+\]
+
+其中 \(A(1)=\rho_A(1)=0\)，且可取仓内既有 \(K_1=\log4+4\)。这里 \(\rho_A\) 只是 Mertens 余项，区别于 Dickman 函数。
+置
+
+\[
+R_1=\sum_{m\ge2}\frac{\log m}{m(m-1)}<\infty,\qquad
+D=K_1+R_1,
+\]
+
+\[
+F_z(v)=\frac{E_z(1+v/L)}{E_{z,0}},\qquad
+\varphi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vb}}b\,db\right),
+\quad v\ge0.
+\]
+

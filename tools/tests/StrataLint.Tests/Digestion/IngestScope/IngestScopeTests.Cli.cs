@@ -202,7 +202,7 @@ public sealed partial class IngestScopeTests
             var accepted = Environment(fixture, preserved).Ingest(args);
             Assert.True(accepted.Success, accepted.Error);
             var preservedRaw = DirectoryLedgerTestSupport.ReadRepository(preserved);
-            Assert.Equal(
+            DirectoryLedgerTestSupport.AssertContextOnlyAdditions(
                 Image(beforePreserved, SourcePrefix("alpha")),
                 Image(preservedRaw, SourcePrefix("alpha")));
         }
@@ -241,6 +241,6 @@ public sealed partial class IngestScopeTests
             Assert.False(result.Success);
             Assert.Contains("BACKFILL_COVERAGE_ORDER", result.Error, StringComparison.Ordinal);
         }
-        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        DirectoryLedgerTestSupport.AssertContextOnlyAdditions(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
     }
 }

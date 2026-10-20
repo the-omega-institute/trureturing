@@ -1,0 +1,76 @@
+**Theorem 9.2 (Full terminal-swap factorization and moment response).** The words $U_j,V_j$ have a common prefix $P_j$ of length $L-2$ and opposite final pairs. For odd $j$ the pairs are $\alpha\beta$ and $\beta\alpha$, respectively; for even $j$ their roles reverse. For every $s\ge0$,
+$$
+D_{U_j}(s)-D_{V_j}(s)
+=\frac{s\Delta_j}{\theta}D_{P_j}(s),
+$$
+and consequently
+$$
+f_{U_j}(s)-f_{V_j}(s)
+=-\frac{s\Delta_j}{\theta}\,
+\frac{D_{P_j}(s)}{D_{U_j}(s)D_{V_j}(s)}.
+$$
+For $s>0$ and unequal resistances, the sign of the transform difference is $-\operatorname{sgn}(\Delta_j)$. The exact first and second moment differences are
+$$
+\mu_{U_j}-\mu_{V_j}=\frac{\Delta_j}{\theta},
+\qquad
+m_{2,U_j}-m_{2,V_j}
+=\frac{\Delta_j}{\theta}
+\left[2(\mu_{U_j}+\mu_{V_j}-\mu_{P_j})-1\right].
+$$
+These statements compare discounted responses; they assert no stochastic dominance of the passage-time tails.
+
+**Proof.** At $j=1$ one has $U_1=\beta\alpha\beta$ and $V_1=\beta\beta\alpha$, so $P_1=\beta$. The recurrence gives
+$$
+U_{j+1}=W_{j+1}V_j,\qquad V_{j+1}=W_{j+1}U_j.
+$$
+Thus $P_{j+1}=W_{j+1}P_j$ and the final pairs reverse at every step. Their total length is $F_{j+2}+F_{j+1}=F_{j+3}$, proving the prefix and parity assertions. Equal composition gives equal aggregate trajectories by Definition 1.1.
+
+For a fixed word let $h_i=\mathbb E_i(1+s)^{-\tau_w}$, including $h_L=1$. Put
+$$
+J_{-1}=0,\qquad J_i=\frac{\theta}{r_{w_i}}(h_{i+1}-h_i).
+$$
+The exact first-step equation is $(1+s)h_i=\mathbb E_i h_{X_1}$, hence $J_i-J_{i-1}=s h_i$. Therefore
+$$
+\binom{h_{i+1}}{J_i}
+=\mathsf T_{r_{w_i}}(s)\binom{h_i}{J_{i-1}},\qquad
+\mathsf T_r(s)=
+\begin{pmatrix}1+sr/\theta&r/\theta\\s&1\end{pmatrix}.
+$$
+With $e=(1,0)^{\mathsf T}$ and $h_L=1$, this gives
+$$
+D_w(s)=e^{\mathsf T}\mathsf T_{r_{w_{L-1}}}(s)\cdots
+\mathsf T_{r_{w_0}}(s)e.
+$$
+The order of multiplication is the reverse of the order of letters. Direct multiplication yields
+$$
+\mathsf T_{r_\beta}(s)\mathsf T_{r_\alpha}(s)
+-\mathsf T_{r_\alpha}(s)\mathsf T_{r_\beta}(s)
+=\frac{s(r_\beta-r_\alpha)}{\theta}
+\begin{pmatrix}1&0\\-s&-1\end{pmatrix}.
+$$
+The first row of the matrix on the right is $e^{\mathsf T}$. Multiplying the appropriate signed commutator by the transfer product for $P_j$ proves the factorization. All $D_w(s)$ are positive for $s\ge0$, so inversion proves the signed transform comparison.
+
+The same finite response has the resolvent representation
+$$
+(B_w+sI)h=B_w\mathbf1,\qquad
+D_w(s)=\frac{\det(B_w+sI)}{\det B_w}=\det(I+sG_w).
+$$
+The determinant identity is the finite birth-death spectral generating-function formula of J. A. Fill, [*The passage time distribution for a birth-and-death chain: Strong stationary duality gives a first stochastic proof*](https://arxiv.org/pdf/0707.4042v4), Theorem 1.2, used here as a proof ingredient. Indeed, if $\lambda_0,\ldots,\lambda_{L-1}$ are the transient eigenvalues, its formula at $z=(1+s)^{-1}$ gives
+$$
+f_w(s)=\prod_{a=0}^{L-1}\frac{1-\lambda_a}{1+s-\lambda_a}.
+$$
+All birth probabilities and all interior death probabilities are positive in Definition 5.1; no nonnegativity assumption on the transient eigenvalues is needed for that generating-function identity.
+
+The geometric tail permits differentiation at $s=0$. Since
+$$
+D_w'(0)=\mu_w,\qquad
+D_w''(0)=2\mu_w^2-m_{2,w}-\mu_w,
+$$
+the first derivative of the factorization gives $\mu_{U_j}-\mu_{V_j}=\Delta_j/\theta$. Its second derivative gives
+$$
+2(\mu_{U_j}^2-\mu_{V_j}^2)
+-(m_{2,U_j}-m_{2,V_j})-(\mu_{U_j}-\mu_{V_j})
+=\frac{2\Delta_j}{\theta}\mu_{P_j}.
+$$
+Substitution of the first difference proves the second. The ordered recurrence and composition bridge used here are those in [this volume, §§1 and 5](https://github.com/the-omega-institute/trureturing/blob/82197d4bd68d6491767cb20e99d3ed8ceb5520e3/docs/develop/theory/FIB_ATOM_STATISTICAL_LAWS.md), with the underlying source identities in [*Fibonacci Atomic Relation Generation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), Theorems 3.2, 3.4 and 8.2. $\square$
+

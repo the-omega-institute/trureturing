@@ -1,0 +1,17 @@
+## 本轮可以直接接入项目的部分
+
+此次按提交
+
+```text
+ebaa73d45da88c662c393b46531554f4fd784ea8
+```
+
+读取了相关模块。
+
+| 项目基础                                   | 本轮推进                        |
+| -------------------------------------- | --------------------------- |
+| `ControlledRelationRecursion`          | 将“全部行动后仍不可区分”提升到量子仪器的联合记录概率 |
+| `ControlledFiniteStability`            | 将有限状态计数换成量子效果空间的有限维稳定性      |
+| `HamiltonianEffectCompletionGenerator` | 从单 Hamiltonian 闭包扩展为多控制共同闭包 |
+| `ExactDescentNoCarry`                  | 用合法密度矩阵给出新增控制暴露旧接口缺口的见证     |
+| 物理实现与记录                                | 区分数学上的预测坐标、量子存储与不可逆经典记录     |

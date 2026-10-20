@@ -1,0 +1,12 @@
+**Theorem 10.1 (exact acquired-selector classification).** SOME-LAWFUL-ACQUIRED-CODE is DP-complete when the entire explicit serving table is input, with the same full actual domain, original labels, selected-entry criterion and separate acquired-data services.
+
+Proof. Given well-formed $(\phi,\psi)$ install Reads $C_1,\ldots,C_4$, a separate gate $G$, disjoint occurrence graphs for the two CNFs, loop Read $D$, and five whole-row Halts $H_0,\ldots,H_4$. The $\phi$ evaluator is $\operatorname{Eval}(\phi;D,H_1)$ and the $\psi$ evaluator is $\operatorname{Eval}(\psi;H_2,D)$ with precisely the occurrence records of Lemma 6.2. Use these complete transitions:
+
+| Read | Fixed literal | alpha successor | Each of beta, branch, absent successors |
+| --- | --- | --- | --- |
+| $C_1$ | $p_{b_1}$ | Entry of $\operatorname{Eval}(\phi;D,H_1)$ | $C_2$ |
+| $C_2$ | $p_{b_2}$ | $H_2$ | $C_3$ |
+| $C_3$ | $p_{b_3}$ | $H_3$ | $C_4$ |
+| $C_4$ | $p_{b_4}$ | $H_4$ | $H_0$ |
+| $G$ | $p_{b_2}$ | Entry of $\operatorname{Eval}(\psi;H_2,D)$ | $D$ |
+| $D$ | $\varepsilon$ | $D$ | $D$ |

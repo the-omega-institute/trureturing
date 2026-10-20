@@ -1,0 +1,23 @@
+## 8. 恢复接口与数学来源
+
+第2节的最小距离由一份可执行语言和增益数据共同决定；第3节证明准确运输这份语言时，其行为商几何随之运输。状态坐标、未来响应和当前预测记忆若满足RRO第120节的精确交织条件，并同时保持本卷读数度量及增益，就属于定理3.3的不同表示。额外的欧氏内积、概率律和物理时间尺度仍须各自运输，不能由行为核相同自动取得。
+
+稳定恢复则要求恢复映射相对于指定输入输出距离具有可控制的增益；恢复公式存在本身不提供该常数。把一个恢复模块接到后续操作前，首先证明它的误差在式(6.1)所用几何中有界，再用有限树或路径预算传播。对一族联合任务，误差证书还须属于同一个联合实现，不能把分别可达的最佳误差直接放进一份共同输出。加权线性恢复与原子代价闭包由伴随卷[恢复几何](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)进一步研究。
+
+本卷的共同结构是有类型的允许路径、读数和可检验的误差关系。它给出相对于指定任务的最小性与保真条件；不要求所有物理模型具有相同的实验语言，也不由任意边界投影推出引力对偶或面积熵定律。
+
+| 数学来源 | 本卷使用的范围 |
+|---|---|
+| [StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean)，contextual_equivalence_is_greatest | 严格部分上下文、失败标签、全部旁支参数及精确最大同余；第1、3、4节保留这些条件，并区别实际可取得语言。 |
+| [PartialFunctionDomainObservation](../../../D5/S3/ConceptDynamics/Observation/PartialFunctionDomainObservation.lean)，common_success_domain_refutation | 双方成功时读数相同不足以保持动作定义域；命题1.3将成对删测试的失败明确为三角律反例。 |
+| [EvaluationSupremumMinimality](../../../D5/S3/Observer/MetricGeometryLaws/EvaluationSupremumMinimality.lean)，evaluation_suprema_are_least_dominating；[DualSupremumPseudometricKernels](../../../D5/S3/Observer/MetricGeometryLaws/DualSupremumPseudometricKernels.lean) | 评价上确界的最小支配及零核组件；任意路径增益与允许箭头的闭合由第2节直接给出。 |
+| [CanonicalDiscountedFutureGeometry](../../../D5/S3/Observer/MetricGeometryLaws/CanonicalDiscountedFutureGeometry.lean)，canonical_discounted_future_geometry；[FirstDifferencePowerLaw](../../../D5/S3/Observer/MetricGeometryLaws/FirstDifferencePowerLaw.lean)，first_difference_power_law | 有界读数下一元折扣距离、更新增益与首次差异公式；命题7.3是二进制移位实例。 |
+| [FinitePredictionTruncation](../../../D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.lean)，finite_prediction_truncation_formula_and_error | 一元有限预测和几何尾界；第7节另保留路径深度消耗、实际费用与有限枚举的条件。 |
+| [IteratedDefectAccumulation](../../../D5/S3/Observer/Naturality/IteratedDefectAccumulation.lean)，iterated_naturality_defect_bound；[ApproximateSemiconjugacyError](../../../D5/S3/Observer/Naturality/ApproximateSemiconjugacyError.lean)，approximate_semiconjugacy_error | 近似交织的一元轨道缺陷与收缩预算；本卷使用同一递推，另证明多元局部证书到树形预算的条件。 |
+| [Mathlib DiscreteGronwall](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/ODE/DiscreteGronwall.lean)，discrete_gronwall_prod_general | 在递推前提成立后，式(6.3)为非负实数增益下的直接参数代入。 |
+| [SemiconjugacyComposition](../../../D5/S3/Observer/MetricGeometry/SemiconjugacyComposition.lean)，semiconjugacy_defect_composition；[MetricEntourageComposition](../../../D5/S3/Observer/MetricGeometryLaws/MetricEntourageComposition.lean)，metric_entourage_comp_subset | 两次近似运输的缺陷和式、正容差复合半径相加。 |
+| [定量对角化与观察者完成化](QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md) 第24节 | 一元折扣几何、递归表达、截断与近似半共轭的既有正文；本卷不把这些一元结果作为新的缺口。 |
+| Matteo Mio、Ralph Sarkis、Valeria Vignudelli，[*Beyond Nonexpansive Operations in Quantitative Algebraic Reasoning*](https://arxiv.org/abs/2201.09087v1)，2022，DOI 10.1145/3531130.3533366 | 为运算指定输入距离提升、再要求非扩张的成熟框架。本卷采用扩展值、异质读数与逐箭头增益；不将论文中有界距离的整个元定理未经对应地直接套用。 |
+
+这些来源分别承担上确界、Lipschitz 组合、精确上下文核与离散误差累积。正文给出的普通数学证明说明它们如何在实际允许语言中接续；数学来源、形式化状态和可执行实验能力是不同的陈述。
+

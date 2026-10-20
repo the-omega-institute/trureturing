@@ -1,0 +1,6 @@
+只需维护：
+
+* 当前 residue；
+* 当前 index 在 Pisano 周期中的位置；
+* Zeckendorf 邻接合法状态。
+

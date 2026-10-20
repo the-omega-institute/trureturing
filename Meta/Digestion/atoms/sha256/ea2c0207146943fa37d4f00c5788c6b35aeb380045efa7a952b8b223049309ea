@@ -1,0 +1,6 @@
+所以：
+
+* even completion weight 是 \(2x\)；
+* odd recompletion weight 是 \(2(1-x)\)；
+* RH 正好要求两者均为正。
+

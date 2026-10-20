@@ -1,0 +1,12 @@
+### 推论 33.5（对象—量具分解的尺度）
+
+在定理 33.2 的合同中，若 $R=c\ell$，则对任意 $\lambda\in K^\times$，变换
+
+$$
+c\mapsto\lambda c,\qquad \ell\mapsto\lambda^{-1}\ell
+$$
+
+保持恢复的 $R,\delta_0,\delta_1$ 及全部读数。故关系与漂移的唯一恢复不蕴含 $c,\ell$ 分别的唯一恢复。
+
+**证明。** $(\lambda c)(\lambda^{-1}\ell)=c\ell=R$，而漂移参数不变；代入定义 33.1 即得。∎
+

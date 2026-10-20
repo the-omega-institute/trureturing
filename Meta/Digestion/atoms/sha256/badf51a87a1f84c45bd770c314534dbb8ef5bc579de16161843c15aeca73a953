@@ -1,0 +1,34 @@
+**Definition 112.3 (words, exact execution, and coarse observation).** A finite
+word has actions
+\[
+\mathsf{Read}(p)\ (p\in\mathcal P),\quad \mathsf{Apply}\rho,\quad
+\mathsf{Stop}.
+\tag{112.10}
+\]
+The word specifies an attempt, not its acceptance outcome. Execute from
+\((0,\mathsf{alive},[])\) using Contract 112.1a; a suffix after Stop is
+ignored. For the native unrestricted run replace \(p\in\mathcal P\) by any
+finite address, with absent replies allowed. The chronological record is
+\[
+\mathsf{Run}_{u,G}(w)=(H,e,\mathsf{alive/terminal}),
+\tag{112.11}
+\]
+including repeated calls, literal addresses, replies and every Apply status.
+The **source-indexed** execution \((u,G,w)\) also determines \(\mathsf O_e(u)\)
+and all birth/ancestry maps through accepted epochs. This is not a function
+recovering \(u\) or \(\mathsf O_e(u)\) from \(H\) alone.
+
+The endpoint coarse snapshot is
+\[
+\mathsf c_{u,G}(w)=
+\bigl(e,N_e(u),|B_e(u)|,\operatorname{port}_e(u),
+       \text{chronological Apply statuses and terminal flag}\bigr).
+\tag{112.12}
+\]
+The complete coarse trace retains the entry snapshot, action tags/addresses
+and this snapshot after each executed event; it erases the four-valued Read
+labels and the INITIAL partition. In this three-port scope no absent reply
+occurs. It retains repetitions and every acceptance, refusal and Stop.
+Counts and operator snapshots are mathematical comparison observations;
+no native count, operator, amplitude or extra address port is installed.
+

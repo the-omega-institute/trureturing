@@ -9,7 +9,9 @@ internal sealed record ReportFreeDigestionIngestPlan(
     int SkippedExisting,
     ImmutableArray<DigestionCasObject> CasObjects,
     ImmutableArray<DigestionIngestFallback> Fallbacks,
-    ImmutableHashSet<string> AddedAtomIds);
+    ImmutableHashSet<string> AddedAtomIds,
+    ImmutableArray<DigestionContextPointerIndex> ContextIndexes = default,
+    ImmutableArray<DigestionCasObject> ContextCasObjects = default);
 
 internal static class ReportFreeDigestionIngestor
 {

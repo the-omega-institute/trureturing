@@ -1,0 +1,18 @@
+### 定理 369.4（独立重复记录的精度缩放）
+
+若同一策略在共同参数 \(\theta\) 下独立重复 \(M\) 次，单次 transcript 的 Fisher 信息为 \(I(\theta)\)，则总信息为
+
+$$
+I^{(M)}(\theta)=M I(\theta).
+$$
+
+在 \(I(\theta)\) 正定时，Cramér–Rao 下界按
+
+$$
+\operatorname{Cov}(\widehat\theta)
+\succeq
+\frac1M I(\theta)^{-1}
+$$
+
+缩放。
+

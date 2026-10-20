@@ -1,0 +1,7 @@
+其中：
+
+* \(\Lambda(s)\) 是 completed Riemann zeta；
+* \(\Lambda(s,\chi_D)\) 是 completed quadratic \(L\)-function；
+* \(e_D(s)\) 是取决于局部 test vector、平移和测度规范的全纯 period functional；
+* 对每个参数 \(s\)，可以选择 test vector 使 \(e_D(s)\neq0\)。
+

@@ -1,0 +1,56 @@
+**Proposition 56.2 (known initial height and stopped prefixes).**
+If instead the initial height is a known fixed $k_0\in I$, the
+positive-time scalar classification of Theorem 56.1 is unchanged.
+In every negative case its expected conditional variance at every
+fixed $t>0$ is still positive. Knowledge of $k_0$ only makes its
+recovery at time zero trivial. For any identifying record, the same
+single pathwise reconstruction also applies at an observed finite
+stop $T>0$, on $T<\zeta$ under a killed law, and recovers $K_T$
+from that stopped prefix. No classification for a new
+height-dependent stopping rule is inferred from the deterministic-time
+negative statements.
+
+Proof. The positive proofs use the same variation identities.
+Where Theorem 56.1 used stationarity to avoid the finite set $E$
+at positive rational times, use instead the fixed-start Q height
+density $e^{\lambda s}h_I(s;k_0,k)\phi(k)/\phi(k_0)$.
+It is absolutely continuous for $s>0$, so gives zero mass to $E$.
+For an autonomous coefficient the record remains independent of
+the height path, and this strictly positive interior density has
+positive variance at every $t>0$.
+
+For a folded coefficient with center $r\in I$, let
+$\varsigma=\inf\{s\ge0:K_s=r\}$. The event
+$\varsigma<t/2$ has positive probability from every $k_0\in I$:
+a Brownian path can reach $r$ inside $I$ by that time, and its
+fixed-start Q weight on surviving paths is strictly positive.
+After $\varsigma$, restrict height to a closed symmetric
+$J\Subset I$ about $r$ and require its endpoint to belong to
+$J_+\Subset J\cap(r,u)$. This event has positive probability by
+the strong Markov property and the positive killed heat kernel in
+$J$. Reflect height only after $\varsigma$, and reverse the phase
+driver only after that time. The transformed record is exactly the
+same because $f(2r-k)=-f(k)$, and the initial height is unchanged.
+
+For killed Brownian height the transformation preserves the reference
+measure on these paired events, by the strong Markov property and
+reflection symmetry of the post-hitting increments. Conditional on
+height, reversal of the phase driver after the fixed time
+$\varsigma(K)$ preserves its independent Wiener law. The fixed-start
+Q weight is $e^{\lambda t}\phi(K_t)/\phi(k_0)$, so the ratio of
+paired Q weights is $\phi(2r-K_t)/\phi(K_t)$, bounded above and
+below on $J$. The disintegration argument of Theorem 56.1 therefore
+gives positive posterior mass on the two separated terminal intervals
+$J_+$ and its reflection. This proves positive conditional variance
+with the same known $k_0$.
+
+Finally all identifying constructions hold simultaneously at every
+positive time outside one null set. Evaluating their left limits
+and left variation derivatives at $T$ uses only the supplied stopped
+prefix, so proves the stopped assertion. At a death time, the
+predeath limit gives an absorbing face, with the cemetery meaning
+specified in Proposition 60.2. A stopping tag selected from hidden
+height can itself encode height; the negative classification above
+assumes the stated deterministic horizon and does not add such a
+tag to its observations. $\square$
+

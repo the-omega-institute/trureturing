@@ -1,0 +1,9 @@
+移植 Chuk／Groskin 前先固定：
+
+- angular frequency 还是 ordinary frequency；
+- $2\pi$ 因子；
+- Fourier 变换号号；
+- completed zeta／gamma 因子；
+- 零点按重数还是按不同点计数；
+- 窗口参数 $L$ 的定义。
+

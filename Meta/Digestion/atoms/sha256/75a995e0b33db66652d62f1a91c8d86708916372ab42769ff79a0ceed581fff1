@@ -1,0 +1,15 @@
+**定理 54.3（有限实验族的最小充分记录）。** 令 $r:X\to R$ 是一个记录。以下两件事等价：
+
+1. 对每个实验 $\tau_i$，存在只依赖记录值的分布 $\widehat p_i(\,\cdot\mid r)$，使
+
+   $$
+   p_i(\,\cdot\mid x)=\widehat p_i(\,\cdot\mid r(x))
+   \qquad(x\in X).
+   $$
+
+2. $r$ 的每个纤维都包含在一个 $\sim_H$ 等价类中，即
+
+   $$
+   r(x)=r(x')\Longrightarrow x\sim_H x'.
+   $$
+

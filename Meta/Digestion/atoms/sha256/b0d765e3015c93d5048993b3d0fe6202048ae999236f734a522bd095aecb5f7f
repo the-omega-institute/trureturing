@@ -1,0 +1,32 @@
+**定理 1326.1（任意趋零预算的高维主阶）。** 固定 $0<\kappa<1$。若 $\eta_N\ge0$ 且 $\eta_N\to0$，则
+
+$$
+\frac{F_N(\kappa,\eta_N)}{D_N}\longrightarrow1.
+$$
+
+另定义同一可行来源族上的互信息最小值
+
+$$
+F^I_N(\kappa,\eta)=\inf\{I(Z;X):
+\text{有限准确乘积来源},\ H(Z\mid X)\le\eta\}.
+$$
+
+则同样有 $F^I_N(\kappa,\eta_N)/D_N\to1$。对任意 $\alpha\in[0,\infty]$，在相同 Shannon 后验预算下最小化 $H_\alpha(Z)$，记所得值为 $F_{\alpha,N}(\kappa,\eta)$。则对每个固定 $0\le\alpha\le1$，
+
+$$
+\frac{F_{\alpha,N}(\kappa,\eta_N)}{D_N}\longrightarrow1.
+$$
+
+**证明。** 第 1325 节给
+
+$$
+1-M^{-1}-E_{\eta_N}
+\le F_N(\kappa,\eta_N)/D_N\le1.
+$$
+
+左端趋于一，得到 Shannon 结论。对每张同一实际来源，$I(Z;X)=H(Z)-H(Z\mid X)\ge H(Z)-\eta_N$，故 $F^I_N\ge F_N-\eta_N$。完美匹配来源有互信息 $D_N$，给另一侧；除以趋于无穷的 $D_N$ 即得。
+
+当 $0\le\alpha\le1$，每张来源均有 $H_\alpha(Z)\ge H(Z)$，所以 $F_{\alpha,N}\ge F_N$。完美匹配的均匀权重在所有阶的熵均为 $D_N$，再夹逼即可。证毕。
+
+这解决了第 1269、1289 节留下的固定关联、后验预算任意趋零时的归一化 Shannon 问题。对 Shannon 熵与互信息还可说得更强：每张可行来源均有 $I(Z;X)\le H(P)$ 及 $H(Z)\le H(P)+\eta_N$，而 $H(P)=D_N+h_2((1+\kappa)/2)$；结合共同下界，任一可行来源序列的这两个量除以 $D_N$ 后也趋于一。低阶结论则按所定义的最优值表述；相同夹逼还允许 $\alpha_N$ 在 $[0,1]$ 内任意随维数变化。第 1127 节公平加点来源的后验是严格正的常数 $T(\kappa)$，因此它不属于趋零预算族。
+

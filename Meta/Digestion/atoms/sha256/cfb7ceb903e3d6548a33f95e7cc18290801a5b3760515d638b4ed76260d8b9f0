@@ -1,0 +1,6 @@
+令 \(F_{\mathrm{shift}}\) 表示：
+
+* 推进 shifted 深度；
+* 更新 Hardy scattering；
+* 产生未来 Poisson/Hankel 响应；
+

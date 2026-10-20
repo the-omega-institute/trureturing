@@ -1,0 +1,37 @@
+## 6. 剩余有限问题必须保留完整耦合
+
+若某个明确候选 k 已位于 P_NH 中，令 E=P_NH intersect k-perp，Q_N=I-P_N。对 tau=mu+delta<beta(a,N)，完整 (A) 的一个充分条件是
+
+\[
+\boxed{
+\left.P_N(A_a-\tau)P_N\right|_E
+-\frac1{\beta_{a,N}-\tau}
+\left.P_NA_aQ_NA_aP_N\right|_E\succeq0.
+}
+\tag{IC6}
+\]
+
+证明是将 f=x+y 分解到 E 和 Q_NH，使用 (IC2) 后配方。只有 beta 由本节独立下界控制；上述有限矩阵不等式尚未对实际候选证明。不能把它当作已成立输入来宣布 (A) 完成。
+
+对算子域中的有限基底，耦合 Gram 可由完整算子图像计算：
+
+\[
+G_{ij}=\langle A_ae_i,A_ae_j\rangle
+-\sum_{|n|\le N}\langle A_ae_i,e_n\rangle
+\langle e_n,A_ae_j\rangle.
+\]
+
+零延拓 Fourier 基属于本算子的形式域和算子域：其 Fourier 变换 O(1/|t|)，Gamma 乘子为 O(log(2+|t|))，故 Gamma 乘子作用后仍在 L2；有限平移与极点项有界。对应 Friedrichs 形式配对的表示向量是压回窗口后的这些完整算子项。该定义域识别仍是纸面桥。
+
+同样，对有限候选，实际算子残差满足
+
+\[
+\boxed{
+\|(A_a-\mu)k\|_2^2
+=\|P_N(A_a-\mu)k\|_2^2+\|Q_NA_ak\|_2^2.
+}
+\tag{IC7}
+\]
+
+第二项不会因为有限矩阵的 Gamma 积分算得很准而消失。候选来自 prolate 模型时，还需把原模型与所选有限 Fourier 近似的误差计入，而非假设原模型已经属于 P_NH。
+

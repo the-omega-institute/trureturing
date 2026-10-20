@@ -1,0 +1,48 @@
+## 定理 243.2（次模性）
+
+对：
+
+\[
+S\subseteq T,
+\qquad
+e\notin T,
+\]
+
+有：
+
+\[
+\boxed{
+F(S\cup\{e\})-F(S)
+\ge
+F(T\cup\{e\})-F(T).
+}
+\]
+
+### 证明
+
+边际增益为：
+
+\[
+I(X;Y_e\mid Y_S)
+=
+H(Y_e\mid Y_S)
+-
+H(Y_e\mid X,Y_S).
+\]
+
+条件独立使：
+
+\[
+H(Y_e\mid X,Y_S)=H(Y_e\mid X).
+\]
+
+而条件熵随 conditioning 增加不增：
+
+\[
+H(Y_e\mid Y_S)
+\ge
+H(Y_e\mid Y_T).
+\]
+
+故得 diminishing returns。 \(\square\)
+

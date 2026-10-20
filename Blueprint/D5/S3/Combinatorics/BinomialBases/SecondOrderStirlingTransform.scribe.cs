@@ -12,7 +12,23 @@ internal sealed class SecondOrderStirlingTransformDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A factorial-Stirling identity holds for every complex sequence satisfying a second-order linear recurrence, including zero parameters and every nonnegative offset.",
         H("The complete second-order factorial-Stirling transform"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(DescribeId.Create("sequence-coefficient-pairing"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/BinomialBases/SecondOrderStirlingTransform.pair"),
+                H("Coefficient pairing with an actual sequence"), StatementSource.FromAuthor(PairStatement()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The functional pairs polynomial coefficients with the fixed sequence u at offset c. Its sum is over the finite polynomial support."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("sequence-pairing-monomial"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/BinomialBases/SecondOrderStirlingTransform.pair_monomial"),
+                H("Monomial pairing"), StatementSource.FromAuthor(MonomialStatement()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("A scalar monomial reads precisely one term of u."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("sequence-pairing-scalar"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/BinomialBases/SecondOrderStirlingTransform.pair_scalar"),
+                H("Scalar multiplication in the pairing"), StatementSource.FromAuthor(ScalarStatement()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The coefficient pairing is complex linear in its polynomial argument."))), DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("second-order-stirling-transform"),
             DeclarationHandle.Create("D5/S3/Combinatorics/BinomialBases/SecondOrderStirlingTransform.result"),
             H("The uniform recurrence identity"),
@@ -26,6 +42,26 @@ internal sealed class SecondOrderStirlingTransformDocument : IScribeDocumentDefi
                 "Write Q for the existing ordinary factorial-Stirling row polynomial and H for the shifted row with coefficients m! S(ell+1,m+1). Their differential recurrences prove H(-1-X)=(-1)^ell Q(X) for every degree. Homogenization supplies the powers of q without division. Pair a polynomial with u by summing its coefficients against u(j+c). The recurrence makes this pairing vanish on every multiple of X squared minus p X minus q. The difference-of-powers identity then replaces (q+p X) raised to m by X raised to 2m inside the pairing, yielding both finite sums. This argument retains zero parameters, repeated roots, zero initial data and nonnegative offsets without an inverse shift."))),
             DescribeRole.Theorem)), []));
 
+    private static Formula PolyType() => Call("Polynomial", Complexes());
+    private static Formula PairStatement()
+    {
+        Formula u=F.Id("u"), c=F.Id("c"), f=F.Id("f"), j=F.Id("j");
+        return Disp(All("u", SeqType(), All("c", Naturals(), All("f", PolyType(),
+            Eq(Call("pair",u,c,f), Seq(F.Sum, Underscore, Grp(j,Sp,InMacro,Sp,Call("support",f)),Sp,
+                Par(Mul(Call("coeff",f,j),Call("u",Add(j,c))))))))));
+    }
+    private static Formula MonomialStatement()
+    {
+        Formula u=F.Id("u"), c=F.Id("c"), k=F.Id("k"), a=F.Id("a");
+        return Disp(All("u",SeqType(),All("c",Naturals(),All("k",Naturals(),All("a",Complexes(),
+            Eq(Call("pair",u,c,Mul(Call("C",a),Pow(F.Id("X"),k))),Mul(a,Call("u",Add(k,c)))))))));
+    }
+    private static Formula ScalarStatement()
+    {
+        Formula u=F.Id("u"), c=F.Id("c"), a=F.Id("a"), f=F.Id("f");
+        return Disp(All("u",SeqType(),All("c",Naturals(),All("a",Complexes(),All("f",PolyType(),
+            Eq(Call("pair",u,c,Mul(Call("C",a),f)),Mul(a,Call("pair",u,c,f))))))));
+    }
     private static Formula SeqType() => new Formula.TypeArrow(Naturals(), Complexes());
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Complexes() => Seq(Mathbb, Grp(F.Id("C")));

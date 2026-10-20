@@ -1,0 +1,14 @@
+\operatorname{TV}(p,q).
+}
+\tag{329.1}
+\]
+因此，若 \(A\preceq_{\varepsilon,\lambda}B\)，则每个翻译后的有限未来任务满足
+\[
+\left|
+\mathbb E_A[g\mid s,\omega]
+-
+\mathbb E_B[g\mid s,\theta(\omega)]
+\right|
+\le\varepsilon.
+\]
+

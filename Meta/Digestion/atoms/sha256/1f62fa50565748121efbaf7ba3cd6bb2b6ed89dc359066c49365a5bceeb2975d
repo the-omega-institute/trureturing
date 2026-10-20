@@ -1,0 +1,16 @@
+**定义 16.7（本章统一的自然对数）。** 对概率律使用
+$H(p)=-\sum_s p_s\ln p_s$，对密度矩阵使用
+$S(\sigma)=-\operatorname{Tr}(\sigma\ln\sigma)$，均取 $0\ln0=0$。
+量子相对熵为
+$D(\sigma\Vert\tau)=\operatorname{Tr}[\sigma(\ln\sigma-\ln\tau)]$
+当 $\operatorname{supp}\sigma\subseteq\operatorname{supp}\tau$，
+否则为 $+\infty$；对数在相应正支撑上取值。
+经典 $D(p\Vert q)$ 采用同一支持约定。
+$\mathsf I(A:B)_\sigma=S(\sigma_A)+S(\sigma_B)-S(\sigma)$。
+所有当前熵量的单位为 nat；本卷 §5.1–5.2 的二底量须乘 $\ln2$：
+
+$$
+H=(\ln2)H_2,\qquad D=(\ln2)D_2,\qquad
+\mathsf I=(\ln2)\mathsf I_2.
+$$
+

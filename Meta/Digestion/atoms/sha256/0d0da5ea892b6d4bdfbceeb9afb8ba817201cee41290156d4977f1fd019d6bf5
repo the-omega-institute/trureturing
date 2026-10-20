@@ -1,0 +1,164 @@
+**命题 48.1。** 若 `x,y` 逐项有模一，`H(x,y)^T` 也逐项有模一，且 `x` 只支撑于 Fourier mode `1` 或 `2`，则 `y` 必支撑于同一个 mode。
+
+**证明。** 因 `H_0` 与同步坐标置换交换，反射置换交换 modes `1,2`，故只需处理第一个。用公共相位归一化 `x=f_1`，于是 `u_1=sqrt(3)`、其余 `u_l=0`。
+
+单位相位三元组的 Fourier 支撑只能是单模或完整三模：若一个 Fourier 分量为零，对应三个单位复数之和为零，它们必组成等边三角形，从而原三元组为某个单模。若 `y` 是不同于 `1` 的单模，则第一个输出 channel 有且仅有两个非零 Fourier 分量，与上述支撑性质矛盾。这里涉及的 mode entries 都非零：`P,Q,2+p,2+q` 均非零。
+
+剩下只需排除 `z_0 z_1 z_2!=0`。令：
+
+```math
+\zeta=\frac{z_2}{\overline{z_0}},\qquad r=|\zeta|^2>0.
+```
+
+`H_0(x,y)^T` 的两个 Fourier channel 在除以 `sqrt(6)` 前分别为：
+
+```math
+\bigl((2+q)z_0,\ P\sqrt3+Qz_1,\ Qz_2\bigr),
+```
+
+```math
+\bigl(-\overline{(2+p)}z_0,\ \overline Q\sqrt3-\overline Pz_1,
+-\overline Pz_2\bigr).
+```
+
+令 `X=conjugate(z_0)z_1`、`Y=conjugate(z_2)z_0`。从两个输出 channel 的循环自相关方程中分别减去 `|Q|²`、`|P|²` 倍的输入自相关方程，得到：
+
+```math
+QX+\overline QY
+=-\frac{P\overline{(2+q)}\overline{z_0}+\overline P Qz_2}{\sqrt3},
+```
+
+```math
+\overline PX+PY
+=\frac{(2+p)\overline Q\overline{z_0}+Q\overline Pz_2}{\sqrt3}.
+\tag{48.1}
+```
+
+该系统的行列式 `QP-conjugate(QP)` 非零，因为：
+
+```math
+\operatorname{Im}(PQ)=-\frac{h(s+3)}{1+s}<0.
+```
+
+解得：
+
+```math
+\sqrt3z_1=A+B\zeta,\qquad
+\sqrt3\overline{z_2}z_0=(C+D\zeta)\overline{z_0},
+\tag{48.2}
+```
+
+其中本证明内的标量 `A,B,C,D` 为：
+
+```math
+A=\frac{a(5s^2+2s-3)+ih(5s^2-12s-9)}{2s(s+3)},\qquad
+B=-\frac{a(s+1)-ih(s+3)}{2s},
+```
+
+```math
+C=-\frac{a(s^2+4s+3)+ih(s^2-12s-9)}{2s(s+3)},\qquad
+D=\frac{a(s+1)-ihs}{s}.
+```
+
+输入自相关、输入范数和第一个输出 channel 的范数分别给出：
+
+```math
+A+C+(B+\overline A+D)\zeta+\overline Br=0,
+\tag{48.3}
+```
+
+```math
+|C+D\zeta|^2(1+r)+|A+B\zeta|^2r-9r=0,
+\tag{48.4}
+```
+
+```math
+2\operatorname{Re}\bigl(\overline P Q(A+B\zeta)\bigr)r
+-a|C+D\zeta|^2=0.
+\tag{48.5}
+```
+
+具体地，式 (48.2) 给出 `|z_0|²=|C+D zeta|²/(3r)`，而输入平方范数为三。第一个输出 channel 的平方范数条件是 `2 Re(conjugate(P)Q sqrt(3)z_1)=3a|z_0|²`。因此三式保留的是同一个实际 `y` 和同一个 `zeta`，没有独立放松各个相位。
+
+若 `a=0`，则 `s=3`、`p=q=omega`，以及：
+
+```math
+A=0,\qquad B=i\sqrt3,\qquad C=i\sqrt3,\qquad D=-i\sqrt3.
+```
+
+式 (48.3) 给出 `r=1`，式 (48.4) 给出 `|1-zeta|²=1`，故 `Re(zeta)=1/2`。因 `conjugate(P)Q=3`，式 (48.5) 又迫使 `Im(zeta)=0`，与 `|zeta|²=1` 矛盾。
+
+现设 `a!=0`，故 `1<s<3`。式 (48.3) 中 `zeta` 的系数是非零数：
+
+```math
+B+\overline A+D
+=\frac{3(s+1)[ah+i(3-s)]}{h(s+3)}.
+```
+
+解得：
+
+```math
+\operatorname{Re}\zeta
+=\frac{(2s^2+9s+9)r-8s^2+6s}{6(2s+3)},
+```
+
+```math
+\operatorname{Im}\zeta
+=-\frac{a[(2s^3+7s^2-9)r-8s^3+14s^2-18]}{6h(s-3)(2s+3)}.
+\tag{48.6}
+```
+
+定义：
+
+```math
+F(s,r)=(s+3)^2(2s+3)r^2+(5s^3-48s^2-99s-54)r
++20s^3-21s^2-18s+27.
+```
+
+将式 (48.6) 代入 `|zeta|²=r` 后，余项恰为：
+
+```math
+|\zeta|^2-r=-\frac{F(s,r)}{9(s-3)(s+1)(2s+3)}.
+```
+
+因此 `F(s,r)=0`。再将式 (48.6) 代入式 (48.4)、(48.5) 的左侧，各乘以共同的非零分母：
+
+```math
+9s(s-3)(s+1)(s+3)^2(2s+3),
+```
+
+并在变量 `r` 上对 `F` 取多项式余式，依次得到：
+
+```math
+-27s(s-3)(s+1)\,[K(s)r-L(s)],\qquad
+9a(s+1)\,[J(s)r-M(s)],
+\tag{48.7}
+```
+
+其中：
+
+```math
+K(s)=(s+3)^2(s+6),\qquad L(s)=16s^3+30s^2+72s+54,
+```
+
+```math
+J(s)=(s+3)^2(2s+3)(2s^2+3s+9),\qquad
+M(s)=28s^5+207s^4-108s^3-918s^2-324s+243.
+```
+
+这里仅使用 `h²=s` 与 `a²=s(3-s)/(1+s)`。式 (48.7) 中消去的因子均非零，故必须同时有 `Kr=L` 与 `Jr=M`。然而：
+
+```math
+JL-KM=9s(s+3)^3(4s^4-19s^3+51s^2+279s+189)>0.
+\tag{48.8}
+```
+
+最后的不等式来自 `s>0` 及：
+
+```math
+4s^4-19s^3+51s^2+279s+189
+=s^2(4s^2-19s+51)+279s+189>0,
+```
+
+其中二次式 `4s²-19s+51` 首项系数为正、判别式为 `-455`。这与 `Kr=L`、`Jr=M` 矛盾，完成全部情形。证毕。
+

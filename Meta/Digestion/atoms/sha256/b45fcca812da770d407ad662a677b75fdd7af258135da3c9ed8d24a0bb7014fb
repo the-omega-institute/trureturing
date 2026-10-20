@@ -1,0 +1,24 @@
+**命题 1648.1（全部预算的无穷阶成本）。** 在第 1647 节模型中，令 $0\le\delta<\varepsilon$。最大可行单标签权重为
+
+$$
+W_\delta=\max\left\{\frac12+\delta,\frac\delta\varepsilon\right\},
+\qquad F_\infty(P,\delta;\mathcal C_\varepsilon)=-\log W_\delta.
+$$
+
+两支相交于
+
+$$
+\delta_c=\frac\varepsilon{2(1-\varepsilon)}.
+$$
+
+**证明。** 第 1622–1625 节将最大单标签质量归约到超额函数。对任意 $w\in[0,1]$，本例四个通道分别给
+
+$$
+E(w,q_\varepsilon)=w\varepsilon,\qquad
+E(w,\delta_1)=E(w,\delta_2)=(w-1/2)_+,\qquad E(w,\delta_3)=w.
+$$
+
+所以 $e(w)=\min\{w\varepsilon,(w-1/2)_+\}$。每个满足 $e(w)\le\delta$ 的头部都可由点质量余量补齐，故最大值正为所列两支的较大者。对 $\delta<\varepsilon<1/3$，两支都小于一；无穷阶结论直接用第 1624 节。证毕。
+
+当 $\delta\ge\varepsilon$ 时，一标签来源 $q_\varepsilon$ 可行，全部阶成本为零。第一支由两点来源向一个端点倾斜产生；第二支来自使用带泄漏的通道。相同最优权重数值可以连接不同生成方式，下一节再判全部有限阶。
+

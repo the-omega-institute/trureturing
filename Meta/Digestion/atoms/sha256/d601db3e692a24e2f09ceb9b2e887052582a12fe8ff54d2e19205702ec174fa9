@@ -1,0 +1,75 @@
+**命题 404.3（完整反演与实际系数的绝对交换）。** 对每个固定 $x>1$、$0<\varepsilon<1$，取
+
+$$
+\sigma_\varepsilon=1-\varepsilon/2.
+\tag{404.8}
+$$
+
+则 §403 的实际完整和满足
+
+$$
+\boxed{
+I_\varepsilon(x)=\frac1{2\pi i}
+\int_{\sigma_\varepsilon-i\infty}^{\sigma_\varepsilon+i\infty}
+\frac{\mathcal B(z+\varepsilon)}{\zeta(z+\varepsilon)}
+\frac{-\zeta'(z)}{z\mathcal B(z)}
+\widetilde w_x(z)\,dz.}
+\tag{404.9}
+$$
+
+此竖线积分绝对收敛，身份保留全部 $n\ge1$，没有删去前缀或把窗口补集留作未知项。这里只证明每个正 $\varepsilon$ 的合法性，不宣称其绝对积分范数对 $\varepsilon\downarrow0$ 一致有界。
+
+证明。先支付反演的正则性。用已合法的换元写
+
+$$
+P_x(s)=\int_{x/s}^\infty R(y)s w(sy)dy.
+$$
+
+在任意 $s_0>0$ 的充分小紧邻域中，积分下端有统一正下界，且 $sy\ge x$ 的被积函数由常数倍 $|R(y)|y^{-2}$ 控制。该包络在下端以上可积；移动端点的单点集合不影响积分。经典支配收敛因此证明 $P_x$ 在正半轴连续。（404.7）同时给 $\int_0^\infty|P_x(s)|s^{\sigma-1}ds<\infty$。
+
+竖线可积性直接消费 [DLMF §25.2.8](https://dlmf.nist.gov/25.2.E8) 的既有一次 Euler 求和公式。固定 $0<\sigma<1$，取整数 $N\asymp|\tau|\ge2$，在公式中对 $z$ 微分；有界小数部分的积分与其对数矩给经典粗界
+
+$$
+\zeta'(\sigma+i\tau)
+=O_\sigma(|\tau|^{1-\sigma}\log|\tau|).
+\tag{404.10}
+$$
+
+这里求导时先固定该整数 $N$；不对随 $\tau$ 选择的 $N$ 求导。该估计是既有 Euler 公式的标准应用，不是新的 $\zeta'$ 估计。
+
+在（404.2）中令 $v(u)=(u+1)/u^2$。$v$ 及 $v'$ 在 $[\ell,\infty)$ 上有相应指数可积包络，对 $e^{-(1-z)u}v(u)$ 分部积分给
+
+$$
+\widetilde w_x(\sigma+i\tau)=O_{x,\sigma}(|\tau|^{-1}).
+\tag{404.11}
+$$
+
+§385 的实际 $|\mathcal B(z)|\ge\delta>0$ 在右半平面一致成立。将（404.10）、（404.11）代入（404.3），得到
+
+$$
+\widetilde P_x(\sigma+i\tau)
+=O_{x,\sigma}(|\tau|^{-1-\sigma}\log|\tau|).
+\tag{404.12}
+$$
+
+这在竖线上属于 $L^1$；有界频率段由（404.7）控制。于是直接使用 [DLMF §1.14.35](https://dlmf.nist.gov/1.14.E35) 的 Mellin 反演，在所有 $s>0$ 有
+
+$$
+P_x(s)=\frac1{2\pi i}\int_{\sigma-i\infty}^{\sigma+i\infty}
+\widetilde P_x(z)s^{-z}dz.
+\tag{404.13}
+$$
+
+等价地，$u\mapsto e^{\sigma u}P_x(e^u)$ 及其 Fourier 变换均属于 $L^1$，且前者连续；标准 Fourier 反演给同一身份。没有只用形式变换替代反演条件。
+
+现在取（404.8）。因 $\sigma_\varepsilon+\varepsilon=1+\varepsilon/2>1$，实际有界系数 $e_n$ 的绝对 Dirichlet 和满足
+
+$$
+\sum_{n\ge1}|e_n|n^{-\sigma_\varepsilon-\varepsilon}<\infty.
+\tag{404.14}
+$$
+
+（404.12）与（404.14）的乘积恰好支付系数求和与竖线积分的绝对 Fubini。其有符号和直接复用原有 $\sum e_n n^{-z-\varepsilon}=\mathcal B(z+\varepsilon)/\zeta(z+\varepsilon)$，即得（404.9）。$\square$
+
+### 404.1 完整权重的非消去与仍未支付的符号预算
+

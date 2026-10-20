@@ -1,0 +1,9 @@
+**推论 341.3（成本—误差概念前沿）。** 固定任务族 \(\Phi\)，定义
+\[
+\varepsilon^*_\Phi(c)
+=
+\inf\{\varepsilon:
+\exists A,\ c(A)\le c,\ \Phi\subseteq A'_\varepsilon\}.
+\]
+则 \(\varepsilon^*_\Phi(c)\) 关于成本 \(c\) 单调不增；其每个阈值截面都由 \(\operatorname{MinAcc}_\varepsilon(\Phi)\) 的加权成本决定。
+

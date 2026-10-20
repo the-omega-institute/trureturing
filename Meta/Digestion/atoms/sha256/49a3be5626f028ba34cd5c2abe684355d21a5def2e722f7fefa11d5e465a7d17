@@ -1,0 +1,20 @@
+## 7. 实际检查与研究边界
+
+原点归一化 verifier 在 110、130 位定向区间精度均实际通过，重放前置实际算术对偶与真正 prolate 验证。原点初始方向未经假定；最终代码使用真实负原点值及其模长。工作精度不代表所有输入都有同等准确度，前置 bulk symbol 仍用其原来的向外舍入包络。没有新 eigensolver、zeta 值或零点数据。
+
+精确诊断运行了 720 个有理乘法坐标/支撑/seed 例子，每例核对两条函数恒等式；960 个 Dirichlet logarithmic derivative 系数与独立 Euler 局部式逐项相等；另有两条符号复商恒等式、120 组有理商例子、300 个首缺失素数幂例子。5040 的 11 项缺失及 25 项负系数有明确失败对照：在 25 处有限 logarithmic derivative 的系数为 -log5，而原 B_+ 为 +log5。例子只是诊断，普遍性依赖上面的证明。
+
+已读实际源码：loning 研究链 #6050 `GoldenCell5040Certificate.lean` at c5ea3ae9e24175119146686dac3b64d2aff9be4b；#6131 `PaddingRatio.lean` at bc79fbdf7e984037434eee40e852b5ef49abdb17；dev 的 `HiddenArithmeticWeightFormula.lean` 及 `ZECKENDORF_EULER_5040.md`。这些 PR 自报的编译状态未在本轮重放。主线保持 #5602 的实际算术定义，并按既有 #5882/#5895 的能量与归一化误差结构记账，没有新增通用 quotient 定理。
+
+本节完成两个精确对应：有非零分母证据的原点归一化真模态比较，以及有限 divisor data 到原始 prime action 的函数级字典。仍未完成沿无界尺度的正交补强制性、对偶系数衰减、真实最低模态的 Xi 极限。Connes-Consani-Moscovici Sections 7-8 以及 Connes 2026 综述仍将模型极限与这些逼近要求分开，本节不把 carrier 的精确覆盖替代它们。
+
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 3-4 and 7-8. https://arxiv.org/html/2511.22755v1
+- Connes, *The Riemann Hypothesis: Past, Present and a Letter Through Time*, arXiv:2602.04022v1, Sections 6.4-6.6. https://arxiv.org/html/2602.04022v1
+- Banks, Hart, Moree, Nevans, *The Nicolas and Robin inequalities with sums of two squares*, arXiv:0710.2424, Monatsh. Math. 157 (2009). https://arxiv.org/abs/0710.2424
+- Existing owners: `WeilMellinPrimeIntertwining`, `HiddenArithmeticWeightFormula`, #6050 and #6131 at the pinned sources above. Arithmetic coverage, finite products and logarithmic derivatives are classical tools; no mathematical priority is claimed.
+
+
+---
+

@@ -1,0 +1,4 @@
+**来源 1180.1（数学与项目）。** 乘积混合的强峰事实继续复用第 1140 节所核读的 Montúfar–Morton，[*When Does a Mixture of Products Contain a Product of Mixtures?*, arXiv:1206.0387v5](https://arxiv.org/abs/1206.0387v5)，定义 3.4、定理 3.7 及其证明；来源熵与共同信息沿用前述 Kumar–Li–El Gamal、Xu–Liu–Chen 定义范围。本批的显式充分范围、累积权重反例、稀疏字符密度及稳健权重界按所列解析推导承担，不归称为这些论文中已有的完整结论，也不作原创申报。
+
+项目核读 `D5/S3/Entropy/MaxEntropy.lean`，并复用前批已核读的 `EntropyDivergenceIdentity.lean` 与 `DeterministicReadoutEntropyDecomposition.lean` 所表达的有限概率关系。源码阅读没有代替具体估计，也不申报当前 kernel 或 axiom 闭包核验。
+
