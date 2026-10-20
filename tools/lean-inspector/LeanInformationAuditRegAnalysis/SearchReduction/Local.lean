@@ -208,17 +208,21 @@ private def tryAssumptions (goal : MVarId) (facts : Array Expr) : MetaM Bool := 
     saved.restore
   return false
 
+private partial def localComponents (fact : Expr) : MetaM (Array Expr) := do
+  let type ← whnf (← inferType fact)
+  if type.isAppOfArity ``And 2 then
+    let left ← mkAppM ``And.left #[fact]
+    let right ← mkAppM ``And.right #[fact]
+    return #[fact] ++ (← localComponents left) ++ (← localComponents right)
+  if type.isAppOfArity ``Iff 2 then
+    return #[fact, ← mkAppM ``Iff.mp #[fact], ← mkAppM ``Iff.mpr #[fact]]
+  if type.isAppOfArity ``Subtype 2 then
+    let property ← mkAppM ``Subtype.property #[fact]
+    return #[fact] ++ (← localComponents property)
+  return #[fact]
+
 private def eliminateLocal (facts : Array Expr) : MetaM (Array Expr) := do
-  let mut result := facts
-  for fact in facts do
-    let type ← withReducible <| whnf (← inferType fact)
-    if type.isAppOfArity ``And 2 then
-      for n in #[``And.left, ``And.right] do result := result.push (← mkAppM n #[fact])
-    else if type.isAppOfArity ``Iff 2 then
-      for n in #[``Iff.mp, ``Iff.mpr] do result := result.push (← mkAppM n #[fact])
-    else if type.isAppOfArity ``Subtype 2 then
-      result := result.push (← mkAppM ``Subtype.property #[fact])
-  return result
+  return (← facts.mapM localComponents).flatten
 
 private partial def structuralLocal (goal : MVarId) (facts : Array Expr)
     (fuel : Nat := 32) : MetaM Bool := goal.withContext do
