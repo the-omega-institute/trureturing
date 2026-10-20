@@ -100,7 +100,10 @@ internal sealed class BCCBOrderNineAffineSuborbitsDocument : IScribeDocumentDefi
                             + "either order. Taking xi(t) to be a times the common character "
                             + "gives the equilateral-triple family. In both cases a fixed "
                             + "permutation arranges the positions as in the claim."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("karlsson-2016-bccb-order-nine-affine-suborbits"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
