@@ -1524,3 +1524,751 @@ $g$ 是每个 world 内同一个 nonzero real polynomial、$\deg g\le3$，$d\in\
 这里的承重组合是 prescribed-task signature 的 positive-support/terminal-partition 结论及固定 actual child 的 chosen-action 应用。一般 observable correction、native kernels 与历史逆、算术 parity acquisition、quantitative boundary optima、pair-energy obstruction 和 strict-real certificates 均按所引 supplier 的原范围使用。这些是普通论文数学与有条件 apparatus 定义，不提供新的物理服务实现、Lean kernel 认证或文献优先权结论，也不结算无界 horizon 的完整研究目标。
 
 ## 追加锚（本行以下为增补区）
+
+## 81. 实际终端单任务的局部与联合误差几何
+
+**定义 81.1（固定的输入、仪器与终端权限）。** 本节及 §§82–83 延续定义 77.1，令 $e=e_q,f=f_q$，使用同一 ordered basis $(\xi,e,f)$、$P=|\xi\rangle\langle\xi|$ 与 actual fair independent chronological channel $\mathcal N_n=F^n$。每个实际历史仍按 $V_{h_n}\cdots V_{h_1}$ 执行；擦除后平均为 $F^n$ 不改变历史顺序。令
+
+$$
+E(q)=|v_q\rangle\langle v_q|,\qquad
+v_q=\sqrt{1-q}\,\xi+\sqrt q\,e,\qquad 0\le q\le1,
+\qquad \eta_n(q)=\eta_n(E(q)).
+$$
+
+这里 $q$ 是任务方向，history law 始终为 $2^{-n}$。decoder 是按任务与 horizon 预先选择、与未知输入无关的一个 terminal complex qutrit CPTP map。误差在全部 $\rho\in\mathsf D(\mathbb C^3)$ 上取 supremum，等于 recovered effect 与 target 的 Hermitian operator-norm distance。没有 history/reference access、较小 input code、intermediate correction、postselection 或额外 summary。
+
+本节唯一使用的 effect interface 是 [Environment §27，Proposition 27.2 与 (27.4)–(27.7)][F81ENV27]，即约定 77.2 的整个 complex interval $C=G_s(K_2\oplus d)$，$0\le K_2\le I_2,0\le d\le1$，不是仅挑选一个 real ansatz。有限 $n\ge1$ 时记
+
+$$
+s=(-1/2)^{n-1},\quad t=|s|=2^{1-n},\quad
+\alpha=(1+s)/2,\quad\beta=(1-s)/2.
+$$
+
+每个所构造的 effect 都经 supplier 的 $B=U_0(K_2\oplus d)U_0^\dagger$ 与 (27.5) 实现一个该模型允许的 CPTP decoder；该接口的证明不再重复。一个任务的 effect right inverse 不供应多个任务的共同 decoder。
+
+**定理 81.2（先固定 horizon 的尖锐一阶律）。** 对每个固定整数 $n\ge2$，
+
+$$
+\eta_n(q)=(t^{-2}-1)q+o_n(q)
+          =(4^{n-1}-1)q+o_n(q),\qquad q\downarrow0.
+$$
+
+更具体地，设 $h=\sqrt{q(1-q)}$、$A=t^{-2}-1$。对 $0\le q\le1$ 有
+
+$$
+\eta_n(q)\ge\max\{0,L_t(q)\},\qquad
+L_t(q)=h+\frac{t^2}{2}-\frac t2\sqrt{t^2+4(h+q)}.
+$$
+
+对 $0<q<t^2$ 有
+
+$$
+\eta_n(q)\le Aq+
+\frac{Aq^{3/2}}{\sqrt{1-q}+\sqrt{1-q/t^2}}.
+$$
+
+**证明。** 对任意 complex feasible $K_2=\left(\begin{smallmatrix}x&z\\\overline z&y\end{smallmatrix}\right)$ 与 $d$，令 $\epsilon=\|G_s(K)-E(q)\|_{\rm op}$。矩阵元界及 $I_2-K_2\ge0$ 给出
+
+$$
+x\ge1-q-\epsilon,\quad |sz-h|\le\epsilon,\quad
+|z|^2\le(1-x)(1-y)\le q+\epsilon.
+$$
+
+故 $(h-\epsilon)_+^2\le t^2(q+\epsilon)$。当 $\epsilon\ge h$，所需下界立即成立；当 $\epsilon<h$，解二次不等式得 $\epsilon\ge L_t(q)$，因为其另一根大于 $h$。这覆盖全部 complex effects。将小根有理化，
+
+$$
+L_t(q)=\frac{q(1-q-t^2)}
+ {h+t^2/2+(t/2)\sqrt{t^2+4(h+q)}}.
+$$
+
+对上界取 $d=0$ 与 rank-one projection $K_2=uu^\dagger$，其中
+
+$$
+u=\begin{pmatrix}\sqrt{1-q/t^2}\\ \operatorname{sgn}(s)\sqrt{q/t^2}\end{pmatrix}.
+$$
+
+残余对角为 $(-Aq,(\alpha/t^2-1)q,\beta q/t^2)$，仅有的 off-diagonal residual 的模为
+
+$$
+w=h-\sqrt{q(1-q/t^2)}
+ =\frac{Aq^{3/2}}{\sqrt{1-q}+\sqrt{1-q/t^2}}.
+$$
+
+实际 $n\ge2$ 满足 $-1/2\le s\le1/4$，从而
+$\alpha-t^2=(1-s)(1+2s)/2\ge0$；三个对角绝对值均不超过 $Aq$。三角不等式得上界。固定 $t>0$ 后，$L_t(q)/q\to A$ 且 $w/q\to0$，故两界夹出结论。∎
+
+**命题 81.3（trace balance 会删去更好的实际 effects）。** 在 $n=2$ 令 $\ell=(y+3d)/4$，并把 $x+\ell=1$ 强加于 supplier 的 feasible effects；记该受限最优值为 $\eta_{\rm tb}(q)$。对每个 $0<q\le1/10000$，
+
+$$
+\eta_2(q)\le\frac{199}{66}q<\frac{10}{3}q<\eta_{\rm tb}(q),
+\qquad \eta_{\rm tb}(q)-\eta_2(q)>\frac7{22}q.
+$$
+
+**证明。** 取 $d=0$，
+
+$$
+K_2=\begin{pmatrix}
+1-4q&-2\sqrt{q(1-4q)}\\
+-2\sqrt{q(1-4q)}&4q
+\end{pmatrix}.
+$$
+
+它是 rank-one projection。$G_{-1/2}(K)-E(q)$ 为
+$\left(\begin{smallmatrix}-3q&-w\\-w&0\end{smallmatrix}\right)\oplus3q$，其中
+
+$$
+w=\frac{3q\sqrt q}{\sqrt{1-q}+\sqrt{1-4q}}<\frac q{66}.
+$$
+
+最后一步用 $\sqrt q\le1/100$ 且分母两项均大于 $99/100$。故 unrestricted error 小于 $199q/66$。
+
+反之对任何满足 trace balance 的 complex effect，positivity 给出
+
+$$
+|z|^2\le\min\{(1-\ell)y,\ell(1-y)\}\le\min(y,\ell).
+$$
+
+$f$ residual 为 $c=(3y+d)/4=(2y+\ell)/3\ge\min(y,\ell)$。若其误差不超过 $\delta=10q/3$，则 $c\le\delta$，且
+$h\le\delta+|z|/2\le\delta+\sqrt\delta/2$。除以 $\sqrt q$ 得
+
+$$
+\sqrt{1-q}\le\frac{10}{3}\sqrt q+\sqrt{5/6}
+ \le\frac1{30}+\frac{11}{12}=\frac{19}{20},
+$$
+
+与 $\sqrt{1-q}>99/100$ 矛盾。受限 effect set 非空（含 $I_3/2$）且 compact，故最小值严格大于 $\delta$。系数差为 $7/22$。∎
+
+**定理 81.4（$n=2$ 的 admissible small-$q$ exact branch）。** 对每个实数 $0<q\le1/1000$，多项式
+
+$$
+\mathscr P_q(R)=16q(1-q)(5R^2-8)^2
+ -(R^2-1)(4-R^2)(3R-4+20q)^2
+$$
+
+在下列 admissible domain 中恰有一根：
+
+$$
+1<R\le21/20,\qquad
+0\le d(R,q)\le y(R)/3,\qquad
+y=\frac{(R-1)(2-R)}{6R},\quad
+d=\frac{24q-R(R-1)(2-R)}{2(5R^2-8)}.
+$$
+
+在此根上，令
+
+$$
+\vartheta=\frac{R^2-1}{3},\quad
+\gamma=\sqrt{\vartheta(1-\vartheta)},\quad
+w=\frac\gamma{2R},\quad
+Q_\vartheta=\begin{pmatrix}1-\vartheta&\gamma\\\gamma&\vartheta\end{pmatrix},
+\quad K_2=\begin{pmatrix}1-y&-w\\-w&y\end{pmatrix},\quad
+\eta=\frac{3y+d}{4}.
+$$
+
+则 $K_2$ 是 rank-one orthogonal projection，$0<d<y/3$，且
+
+$$
+\eta_2(q)=\eta,\qquad
+G_{-1/2}(K_2\oplus d)-E(q)
+ =[-\eta Q_\vartheta+d(I_2-Q_\vartheta)]\oplus\eta.
+$$
+
+这是全部 complex effects 上唯一的 reduced optimizer $K_2\oplus d$；不声称 decoder 唯一。其 residual spectrum 为 $(-\eta,d,\eta)$，$\xi,e$ block trace 为 $-3(y-d)/4<0$。当 $q\downarrow0$，
+
+$$
+y=4q-84q^2+O(q^3),\qquad d=108q^2+O(q^3),\qquad
+\eta_2(q)=3q-36q^2+O(q^3).
+$$
+
+**证明。** 先让 $R\in[1,21/20]$，将 $d$ 作为变量，定义
+
+$$
+\widetilde E(R,d)=G_{-1/2}(K_2\oplus d)_{\xi,e}
+       -dI_2+\left(\frac{3y+d}{4}+d\right)Q_\vartheta.
+$$
+
+直接展开发现 $w^2=y(1-y)$、$\operatorname{Tr}\widetilde E=1$，并且
+
+$$
+\begin{aligned}
+Q(R,d)&=\widetilde E_{ee}
+ =\frac{R(R-1)(2-R)}{24}+\frac{5R^2-8}{12}d,\\
+H(R,d)&=\widetilde E_{\xi e}=\frac{\gamma(3-R+10d)}8,\\
+16\det\widetilde E&=C_R+B_Rd-A_Rd^2,\\
+A_R&=5R^2-4,\quad B_R=3R^3+R^2-4R-4,\quad
+C_R=(R-1)^2(4-R^2)/4.
+\end{aligned}
+$$
+
+当 $R>1$，$A_R,C_R>0$，故 determinant 恰有一个正根
+
+$$
+d_R=\frac{B_R+\sqrt{B_R^2+4A_RC_R}}{2A_R},
+$$
+
+它连续延伸到 $d_1=0$。整个区间上 $\vartheta\le41/1200$、$y\le\vartheta/4$；在 $d=y/3$ 有
+
+$$
+Q=\frac{y(1+7\vartheta)}6,\qquad
+H-w/2=\frac{7\gamma(2-R)(R-1)}{36R}\ge0.
+$$
+
+于是
+
+$$
+\det\widetilde E\le Q-w^2/4
+ =\frac{y(-1+14\vartheta+3y)}{12}<0,
+\qquad14\vartheta+3y\le2419/4800<1.
+$$
+
+$d=0$ 时 determinant 为 $C_R/16>0$，所以 $0<d_R<y/3$。
+$\widetilde E(R,d_R)$ trace 一、determinant 零且 off-diagonal 正，故恰为 $E(Q(R,d_R))$ 的 $\xi,e$ block。函数 $Q(R,d_R)$ 连续，起点为零，且
+
+$$
+Q(R,d_R)=\frac{y-d_R}{4}+\frac{3y+5d_R}{4}\vartheta>y/6,
+\qquad Q(21/20,d_{21/20})>19/15120>1/1000.
+$$
+
+中间值定理给出每个声明的 $q$，无需假设 monotonicity。构造立即给出 residual identity，且 $\eta>d$，所以其 norm 为 $\eta$。
+
+为对全部 complex effects 给出 lower certificate，取
+
+$$
+Y=\frac{Q_\vartheta\oplus(-3\vartheta)}{R^2},\qquad \|Y\|_1=1.
+$$
+
+对任意 competing $K'_2\oplus d'$，$d'$ 的 pairing 系数消去，并有
+
+$$
+\operatorname{Tr}(YG_{-1/2}(K'))=\operatorname{Tr}(M_RK'_2),\qquad
+M_R=\frac1{R^2}\begin{pmatrix}1-\vartheta&-\gamma/2\\-\gamma/2&-2\vartheta\end{pmatrix}
+ =m_+K_2+m_-(I_2-K_2),
+$$
+
+其中 $m_+=(2-R)(R+1)/(2R^2)>0$，$m_-=(1-R)(R+2)/(2R^2)<0$。在 $M_R$ eigenbasis 中，effect 的对角元在 $[0,1]$，所以此 pairing 不超过 $m_+$；等号迫使两个对角元为 $1,0$，positivity 再迫使 complex off-diagonal 为零。因此 support maximizer 唯一为 $K_2$。由标准 trace/operator-norm duality，
+
+$$
+\|E(q)-G_{-1/2}(K')\|_{\rm op}
+ \ge\operatorname{Tr}(YE(q))-m_+=\eta.
+$$
+
+构造的 residual 达到等号。任何 optimizer 都必须有 $K'_2=K_2$；又因 $Y$ 的正 $Q_\vartheta$ 权和负 $f$ 权均非零，norm 等号迫使 $f$ residual 等于 $\eta$，即 $(3y+d')/4=\eta$，所以 $d'=d$。这是弱对偶与 equality case 的直接证明，不需要假设 strong duality。
+
+由 $Q(R,d)=q$ 解得陈述中的 $d(R,q)$，分母在区间上满足 $5R^2-8\le-199/80<0$。代入得
+
+$$
+H(R,d(R,q))=\frac{3\gamma(3R-4+20q)}{4(5R^2-8)},\qquad
+16(5R^2-8)^2[q(1-q)-H^2]=\mathscr P_q(R).
+$$
+
+整个 rectangle 上 $3R-4+20q\le-83/100<0$，故 $H>0$，平方没有混入反号 target。每个 admissible root 都重建同一 $E(q)$ 并取得上述证书；reduced optimizer 唯一且 $y'(R)=(2/R^2-1)/6>0$，故 admissible root 唯一。不排除 domain 之外的其他实根。
+
+最后令 $h_R=R-1$。在 $(R,d)=(1,0)$，determinant polynomial 对 $d$ 的导数为 $-4$。解析隐函数及逆函数定理给出
+
+$$
+d_R=3h_R^2/16+13h_R^3/64+O(h_R^4),\quad
+q=h_R/24-3h_R^2/64+O(h_R^3),\quad
+h_R=24q+648q^2+O(q^3),
+$$
+
+代回得三个 expansions。每个构造均由定义 81.1 的 supplier decoder 实现；也可将 (27.5) 的 prepared states 取为 $E(q)$ 与 $|f\rangle\langle f|$。在 $q=0$ 连续取 $R=1,y=w=d=\eta=0$ 达到零，但本定理不在该端点声称 optimizer 唯一。∎
+
+**定理 81.5（单任务的 joint cubic profile）。** 令 $t_n=2^{1-n}$。对每个固定 $\kappa\ge0$，在 $q_n=\kappa t_n^4\le1$ 的最终整数尾段上，两个 parity subsequences 均满足
+
+$$
+\frac{\eta_n(q_n)}{t_n^2}\longrightarrow
+\mathcal L(\kappa)=\min_{z\ge0}\sqrt{z^4+(z-\sqrt\kappa)^2}
+ =z_\kappa^2\sqrt{1+4z_\kappa^2},\qquad
+2z_\kappa^3+z_\kappa=\sqrt\kappa.
+$$
+
+对固定 $K\ge0$、$n\ge2$ 且 $Kt_n^2\le1$，还有 compact-$\kappa$ bound
+
+$$
+\sup_{0\le\kappa\le K}
+\left|\frac{\eta_n(\kappa t_n^4)}{t_n^2}-\mathcal L(\kappa)\right|
+ \le(K+2K^{3/2})t_n^2.
+$$
+
+**证明。** 写 $t=t_n$、$a=\sqrt\kappa$。对任意 feasible complex $K_2=\left(\begin{smallmatrix}x&w\\\overline w&y\end{smallmatrix}\right)$，置 $A_0=(1-x)/t^2$、$Z=\operatorname{sgn}(s)w/t$。由 $I-K_2\ge0$ 得 $|Z|^2\le A_0(1-y)\le A_0$。scaled residual 的第一列是
+
+$$
+(-A_0+\kappa t^2,\ \overline Z-a\sqrt{1-\kappa t^4},\ 0)^{\mathsf T}.
+$$
+
+矩阵 norm 至少为列 norm，所以其不小于
+$\sqrt{A_0^2+|Z-a|^2}-\delta_n\ge\mathcal L(\kappa)-\delta_n$，其中
+
+$$
+\delta_n=\sqrt{\kappa^2t^4+\kappa(1-\sqrt{1-\kappa t^4})^2}.
+$$
+
+这里用 $|Z-a|\ge||Z|-a|$，没有限制 complex optimizer。
+
+对上界，任取 $z\ge0$ 且 $u=z^2t^2\le1$，令
+
+$$
+K_2=\begin{pmatrix}1-u&\operatorname{sgn}(s)zt\sqrt{1-u}\\
+\operatorname{sgn}(s)zt\sqrt{1-u}&u\end{pmatrix},\qquad d=u.
+$$
+
+这是 rank-one block 加合法 scalar effect。scaled residual 对角为
+$(-z^2+\kappa t^2,z^2-\kappa t^2,z^2)$，off-diagonal 为
+$z\sqrt{1-z^2t^2}-a\sqrt{1-\kappa t^4}$。其 norm 趋向 $\sqrt{z^4+(z-a)^2}$，并经 supplier 的一个单任务 decoder 达到。函数 $z^4+(z-a)^2$ 的二阶导数为 $12z^2+2>0$，所以唯一非负 minimizer 满足所列 cubic；在根上 $a-z=2z^3$，得 $\mathcal L$ 的闭式。
+
+为得 quantitative bound，$z_\kappa\le\sqrt\kappa$，故当 $Kt^2\le1$ 时所有这些 upper effects 都 feasible。用 $1-\sqrt{1-v}\le v$，lower perturbation 不超过 $(K+K^{3/2})t^2$；upper diagonal perturbation 不超过 $Kt^2$，off-diagonal perturbation 不超过
+$z_\kappa^3t^2+\kappa^{3/2}t^4\le2K^{3/2}t^2$。两侧取较大常数即得结论。$\kappa=0$ 时全部值恰为零。∎
+
+**约定 81.6（适用域与中间工具）。** 定理 81.2 先固定 $n$；不能把随 $n$ 增长的 $t^{-2}$ 系数直接代入 joint scale。定理 81.5 有独立的 moving-horizon proof，且 compact bound 不统一于无界 $\kappa$。定理 81.4 只解 $n=2,0<q\le1/1000$；它没有给出更大 $q$、其他 active sets、$n\ge3$ 的 finite-$q$ root rule 或 interior $p,q,r>0$ 的一般 optimum。
+
+承重推导使用标准 convex support duality、Hermitian norm duality、解析隐函数定理与 supplier 的 observable-correction interface；一般 simultaneous observable correction 的先例为 [Bény–Kempf–Kribs 的现有文献条目](../../../Library/Quantum/benykempfkribs2007observables.md)。这些成熟中间工具不承担本节具体 branch、admissible interval 或 joint constants 的数值结论。
+
+## 82. 同一个 CPTP decoder 的耦合约束
+
+**定义 82.1（共同终端目标）。** 在定义 81.1 的同一 source 与权限下，令
+
+$$
+\begin{aligned}
+L_{n,\mathcal D}(A)&=\|(F^n)^\dagger\mathcal D^\dagger(A)-A\|_{\rm op},\\
+c_n(q)&=\min_{\mathcal D\ {\rm CPTP}}
+       \max\{L_{n,\mathcal D}(P),L_{n,\mathcal D}(E(q))\}.
+\end{aligned}
+$$
+
+两个 losses 必须来自同一个 complex CPTP map，不要求 exact preservation of $P$。有限维 Choi set $\{J\ge0:\operatorname{Tr}_{\rm out}J=I_3\}$ compact、convex、非空，且目标连续，故此 minimum 及下文的 finite common minima 均达到。这是标准 Choi/Kraus representation 的应用，见 [Watrous，Theorems 2.22、2.26 与 Corollary 2.27 的现有条目](../../../Library/Quantum/watrous2018theory.md)。
+
+**定理 82.2（fixed-horizon common law）。** 对每个固定整数 $n\ge2$，
+
+$$
+c_n(q)=\frac{1-t}{2}\sqrt q+O_n(q),\qquad q\downarrow0.
+$$
+
+$n=1$ 时 $c_1(q)=0$ 对所有 $q\in[0,1]$ 成立。特别在 $n=2$，对全部 $q\in[0,1]$ 有
+
+$$
+\frac{\sqrt q}{2}\left(\sqrt{1-q}-\frac12\right)
+ \le c_2(q)\le\frac{\sqrt q}{4}+\frac{13q}{4},
+\qquad c_2(q)=\frac{\sqrt q}{4}+O(q).
+$$
+
+后一个 lower bound 在 $q\ge3/4$ 时不提供正信息。
+
+**证明。** 对 Hermitian $X$，unital positive maps 保持 order interval $[-\|X\|I,\|X\|I]$，所以 contract operator norm。由 supplier 的 linear $G_s$ formula，
+
+$$
+\left|\big((F^n)^\dagger\mathcal D^\dagger(X)\big)_{\xi e}\right|
+ \le t\|X\|_{\rm op}.
+$$
+
+令 $H_q=E(q)-P$，则 $H_q^2=q(P+|e\rangle\langle e|)$，所以 $\|H_q\|_{\rm op}=\sqrt q$。写两个 residuals 为 $R_P,R_E$，由同一 map 的线性性，
+
+$$
+2\max(\|R_P\|,\|R_E\|)
+ \ge|(R_E-R_P)_{\xi e}|
+ \ge\sqrt{q(1-q)}-t\sqrt q.
+$$
+
+这给出所有 complex decoders 的 lower bound。
+
+对 fixed-$n$ upper bound，令 $\theta_q=\arcsin\sqrt q$、$\sigma=\operatorname{sgn}(s)$、$b=(1-t)/(2s)$、$\phi=b\theta_q$，在 $(\xi,e)$ plane 取
+
+$$
+V=\begin{pmatrix}\cos\phi&-\sigma\sin\phi\\
+\sin\phi&\sigma\cos\phi\end{pmatrix}\oplus1,
+\qquad \mathcal D=\operatorname{Ad}_{V^\dagger U_0^\dagger}.
+$$
+
+这是两个任务共用的一个 unitary CPTP decoder。其 adjoint 为 $\operatorname{Ad}_{U_0V}$，因此 supplier 中的 $K$ 分别为 $VPV^\dagger$ 与 $VE(q)V^\dagger$；它们均与 $W$ 交换，且 $d=0$。两个 rank-one directions 的角度为 $\gamma_P=b\theta_q$ 与 $\gamma_E=(b+\sigma)\theta_q$。恢复后的 $\xi e$ entry 是 $s\sin\gamma\cos\gamma$，对角为 $(\cos^2\gamma,\alpha\sin^2\gamma,\beta\sin^2\gamma)$。由于
+
+$$
+s\gamma_P=\frac{1-t}{2}\theta_q,\qquad
+s\gamma_E-\theta_q=-\frac{1-t}{2}\theta_q,
+$$
+
+且 $|\sin\gamma|\le|\gamma|$、$|\sin\gamma\cos\gamma-\gamma|\le2|\gamma|^3/3$，两个全 qutrit residual norms 分别不超过
+
+$$
+\begin{aligned}
+&\frac{1-t}{2}\theta_q+b^2\theta_q^2+\frac{2t|b|^3}{3}\theta_q^3,\\
+&\frac{1-t}{2}\theta_q+[1+(b+\sigma)^2]\theta_q^2
+ +\frac23[t|b+\sigma|^3+1]\theta_q^3.
+\end{aligned}
+$$
+
+固定 $n$ 后这些常数有限，$\theta_q=\sqrt q+O(q^{3/2})$，得 matching upper asymptotic。$n=1$ 时取 $V=I$；两个 tasks 与 $W$ 交换，$\mathcal D=\operatorname{Ad}_{U_0^\dagger}$ 同时精确恢复它们。
+
+在 $n=2$ 可给出上述全区间 sandwich。此时 $V$ 的 $2\times2$ block 为
+$\left(\begin{smallmatrix}\cos a&\sin a\\\sin a&-\cos a\end{smallmatrix}\right)$，$a=-\theta_q/2$。置 $k=\sqrt{1-q}$，
+
+$$
+y_0=\frac{q}{2(1+k)},\qquad
+y_3=\frac{q(1+2k)^2}{2(1+k)}\le\frac94q.
+$$
+
+同一个 decoder 的两个 residuals 恰为
+
+$$
+R_P=\begin{pmatrix}-y_0&\sqrt q/4&0\\\sqrt q/4&y_0/4&0\\0&0&3y_0/4\end{pmatrix},\quad
+R_E=\begin{pmatrix}q-y_3&b_q&0\\b_q&y_3/4-q&0\\0&0&3y_3/4\end{pmatrix},
+\quad b_q=-\sqrt q\,[1/4+k(1-k)].
+$$
+
+$9q/4-y_3=q(1-k)(8k+7)/[4(1+k)]\ge0$，且 $k(1-k)\le q$。因此 $\|R_P\|\le\sqrt q/4+q/2$，$\|R_E\|\le\sqrt q/4+q^{3/2}+9q/4\le\sqrt q/4+13q/4$。lower bound 由前式置 $t=1/2$ 得到。∎
+
+**命题 82.3（附加 exact-$P$ 条件的不同障碍）。** 若 $n\ge2$ 且同一个 decoder 满足 $(F^n)^\dagger\mathcal D^\dagger(P)=P$，则
+
+$$
+L_{n,\mathcal D}(E(q))\ge(1-t)\sqrt{q(1-q)}.
+$$
+
+这不是定义 82.1 的 minimax lower bound。
+
+**证明。** 令 $\Psi=\operatorname{Ad}_{U_0^\dagger}\circ\mathcal D^\dagger$，$B=\Psi(P)$。由 $G_s(\Delta_W B)=P$，$x=1$，且因 $\alpha,\beta>0$，$y=d=0$。$0\le B\le I$ 的零对角及单位对角迫使相应 off-diagonals 全为零，故 $B=P$。unital CP map 将 projection $P$ 映为 projection $P$ 时，$P$ 属于其 multiplicative domain：$\Psi(PX)=P\Psi(X)$、$\Psi(XP)=\Psi(X)P$。这一标准 CP equality case 也可由 Stinespring isometry $V_\Psi$ 直接看出：
+$P\otimes I$ 与 $V_\Psi$ 的 intertwining 来自两侧 complementary projection 的零 norm。
+
+于是 $\Psi(P)$ 与 $\Psi(|e\rangle\langle e|)$ 都不贡献 $\xi e$ entry。对 $X=|\xi\rangle\langle e|+|e\rangle\langle\xi|$，$\|X\|=1$，norm contraction 给出 $|\Psi(X)_{\xi e}|\le1$。因此 recovered $E(q)$ 的该 entry 的模至多 $th$，其 target entry 是 $h=\sqrt{q(1-q)}$，得结论。∎
+
+在 $n=2$，这个 conditional bound 的 leading coefficient 为 $1/2$，而定理 82.2 的 unconstrained common coefficient 为 $1/4$；后者允许 $P$ 有正误差。两者均不确定一般 finite-$q$ common optimum。
+
+**定理 82.4（same-decoder joint profile 与 $\kappa=2$ 分支）。** 对固定 $\kappa\ge0$，$a=\sqrt\kappa$，在 $q_n=\kappa t_n^4\le1$ 的最终尾段上，
+
+$$
+\frac{c_n(q_n)}{t_n^2}\longrightarrow\mathcal H(\kappa)
+ =\min_{z\ge0}\sqrt{z^4+\max\{z^2,(z-a)^2\}}.
+$$
+
+两个 parity subsequences 具有同一 limit，唯一 scalar minimizer 为
+$z_* =\min\{a/2,z_\kappa\}$，且
+
+$$
+\mathcal H(\kappa)=
+\begin{cases}
+\dfrac{\sqrt\kappa}{2}\sqrt{1+\kappa/4},&0\le\kappa\le2,\\
+\mathcal L(\kappa),&\kappa\ge2.
+\end{cases}
+$$
+
+特别 $\mathcal H(0)=0$，$\mathcal H(2)=\sqrt3/2$。第二分支仅是 leading-profile equality，不是 finite-$n$ simultaneous individual optimality。
+
+**证明。** $a=0$ 时 $E=P$，identity decoder 精确恢复，故以下设 $a>0$。用 identity decoder 与 norm contraction 得
+$c_n(q)\le2\|E(q)-P\|=2at^2$。取达到 minimum 的同一个 $\mathcal D$，记 $\epsilon=c_n(q)$、$\Psi=\operatorname{Ad}_{U_0^\dagger}\circ\mathcal D^\dagger$、$B=\Psi(P)$。$P$ loss 不超过 $\epsilon$ 意味着
+
+$$
+1-B_{\xi\xi}\le\epsilon,\qquad B_{ee}+B_{ff}\le2\epsilon.
+$$
+
+对各 basis vector $i$，$\omega_i(X)=\langle i|\Psi(X)|i\rangle$ 是 positive unital functional。令 $A=|\xi\rangle\langle e|$、$P_e=|e\rangle\langle e|$。其 Cauchy–Schwarz inequality 及 $P+P_e\le I$ 给出
+
+$$
+|\Psi(A)_{ii}|^2\le\omega_i(P)\omega_i(P_e)
+ \le B_{ii}(1-B_{ii})\le2\epsilon.
+$$
+
+因此 $\Psi(H_q)$ 的每个 diagonal 绝对值不超过
+$q+2h\sqrt{2\epsilon}$。$G_s$ 仅 convexly 混合 $e,f$ diagonals，保留的 off-diagonal 由 norm contraction 不超过 $t\sqrt q$。对于这个同一个 map，
+
+$$
+\begin{aligned}
+\Delta&=(F^n)^\dagger\mathcal D^\dagger(H_q),\\
+\|\Delta\|&\le q+2h\sqrt{2\epsilon}+t\sqrt q
+ \le a^2t^4+(4a^{3/2}+a)t^3=o(t^2).
+\end{aligned}
+$$
+
+所以 $C_E=C_P+\Delta=C_P+o(t^2)$；这一步不是两个独立 effects 的拼合。
+
+写 $\Delta_W B=\left(\begin{smallmatrix}x&w\\\overline w&y\end{smallmatrix}\right)\oplus d$，置 $A_0=(1-x)/t^2$、$Z=\operatorname{sgn}(s)w/t$，则 $|Z|^2\le A_0$。两个 scaled residuals 的第一列分别为
+$(-A_0,\overline Z,0)^{\mathsf T}$ 与
+$(-A_0,\overline Z-a,0)^{\mathsf T}$ 加上 norm 不超过
+
+$$
+\delta_n=\|\Delta\|/t^2+a^2t^2+a(1-\sqrt{1-a^2t^4})\longrightarrow0
+$$
+
+的扰动。故
+
+$$
+\frac\epsilon{t^2}\ge
+\sqrt{A_0^2+\max\{|Z|^2,|Z-a|^2\}}-\delta_n
+ \ge\mathcal H(\kappa)-\delta_n.
+$$
+
+此界对 chosen minimizers uniform，未假设它们收敛，亦未限制 complex phases。
+
+为实现 matching upper，给定 $z\ge0$，取定理 81.5 的 $K_2$ 与 $d=u=z^2t^2$，令 $B=U_0KU_0^\dagger$，但现在固定 prepared states 为 $P$ 与 $(I-P)/2$：
+
+$$
+\mathcal D_B(X)=\operatorname{Tr}(BX)P
+       +\operatorname{Tr}((I-B)X)(I-P)/2.
+$$
+
+这是供两个 tasks 共用的一个 CPTP decoder。其 adjoint 同时满足
+
+$$
+\mathcal D_B^\dagger(P)=B,\qquad
+\mathcal D_B^\dagger(E(q))=(1-3q/2)B+(q/2)I.
+$$
+
+于是 $C_E=(1-3q/2)C_P+(q/2)I$，$\|C_E-C_P\|\le q$，两个 scaled residuals 分别趋向
+
+$$
+\begin{pmatrix}-z^2&z\\z&z^2\end{pmatrix}\oplus z^2,
+\qquad
+\begin{pmatrix}-z^2&z-a\\z-a&z^2\end{pmatrix}\oplus z^2.
+$$
+
+取两者 norm 的最大值并置 $z=z_*$ 即给 matching limsup。
+
+最后在 $z\ge a/2$ 上 squared objective 为严格递增的 $z^4+z^2$；在 $[0,a/2]$ 上为严格凸的 $z^4+(z-a)^2$。故唯一 minimizer 是 $\min(a/2,z_\kappa)$。条件 $z_\kappa\ge a/2$ 等价于 $a^2\le2$；在 $a^2=2$ 两式均为 $\sqrt3/2$。∎
+
+**约定 82.5（不交换量词）。** 定理 82.2 的 constants 含 $1/s$，不统一于 $n$；定理 82.4 另由 same-map CP coupling 证明。该 joint theorem 只固定 $\kappa$，不声称 compact-$\kappa$ remainder 与定理 81.5 相同。所给 decoders 是模型内明确的 unitary 或 measure-and-prepare channels；这些数学 realizations 不证明外部装置已提供其操作，也不计算量子存储维数、online controller memory 或 paid physical ports。
+
+## 83. 共同 decoder 的任务纤维与有限不相容见证
+
+**定理 83.1（phase family 的 optimal-image separation）。** 固定 $n=2$、$0<q\le1/1000$，令
+
+$$
+E_\varphi(q)=|\sqrt{1-q}\,\xi+e^{i\varphi}\sqrt q\,e\rangle
+ \langle\sqrt{1-q}\,\xi+e^{i\varphi}\sqrt q\,e|,
+\qquad \varphi\in\mathbb R/(2\pi\mathbb Z).
+$$
+
+它们的 individual optima 均为定理 81.4 的 $\eta$。每个任务的 optimal recovered image 唯一为
+
+$$
+C_\varphi=Z_\varphi G_{-1/2}(K_0)Z_\varphi^\dagger,\quad
+Z_\varphi=\operatorname{diag}(1,e^{i\varphi},1),\quad
+K_0=\begin{pmatrix}1-y&-w\\-w&y\end{pmatrix}\oplus d,
+\quad (C_\varphi)_{\xi e}=\frac w2e^{-i\varphi}.
+$$
+
+任意两个不同 phases 没有一个共同 CPTP decoder 同时达到这两个 individual optima。因此对 $N\ge1$ 个不同 phases，若一个已供应的 deterministic task label 仅用于从固定 terminal decoder dictionary 选一个 decoder，并要求每个任务恰达到 individual optimum，则最少恰需 $N$ 个 labels。
+
+**证明。** $G_s$ 与 $Z_\varphi$ 的 conjugation 交换，后者保持整个 effect interval；这是 supplier Proposition 27.2 的 attainable-set invariance，并非 $F$ 的 covariance。故定理 81.4 的 optimum、optimizer 与 dual certificate 都逐 phase conjugate，给出所列 unique image。令 $B_\varphi=U_0Z_\varphi K_0Z_\varphi^\dagger U_0^\dagger$，以 $E_\varphi$ 与 $|f\rangle\langle f|$ 为 prepared states 的 supplier map 达到该 optimum。
+
+令 $h=\sqrt{q(1-q)}$。定理 81.4 的 residual identity 给出
+
+$$
+h=w/2+(\eta+d)\gamma=\gamma(3-R+10d)/8,
+\qquad \frac wh=\frac4{R(3-R+10d)}.
+$$
+
+由 $\vartheta\le41/1200$、$y\le\vartheta/4$、$d<y/3$，
+
+$$
+0<R(3-R+10d)<\frac{21}{20}\left(2+\frac{41}{1440}\right)
+ =\frac{20447}{9600}<4,
+\qquad w/h>1.
+$$
+
+对不同 $\varphi,\psi$，置 $a_{\varphi\psi}=|e^{-i\varphi}-e^{-i\psi}|>0$。$H=E_\varphi-E_\psi$ 的 eigenvalues 为 $ha_{\varphi\psi},-ha_{\varphi\psi},0$，故 $\|H\|=ha_{\varphi\psi}$。任何同一个 CPTP decoder 满足
+
+$$
+\left|\big((F^2)^\dagger\mathcal D^\dagger(H)\big)_{\xi e}\right|
+ \le\frac12\|\mathcal D^\dagger(H)\|
+ \le\frac12ha_{\varphi\psi}.
+$$
+
+若它对两个 tasks 都 individually optimal，unique image 与线性性却要求该 entry 的模为 $wa_{\varphi\psi}/2$，矛盾。因此每个 dictionary label fibre 至多含一个 phase；逐任务使用上面的 attaining map 则 $N$ labels 足够。这里没有 decoder uniqueness 结论。∎
+
+**推论 83.2（固定 finite catalogue 的正 slack margin）。** 对定理 83.1 中固定 $q$ 与固定 $N\ge2$ 个不同 phases，存在 $\delta_*>0$，使得只要 $0\le\delta<\delta_*$，要求每个任务的 error 不超过 $\eta+\delta$ 仍恰需 $N$ 个 dictionary labels。
+
+**证明。** 对每一 pair 定义
+
+$$
+\delta_{ij}=\min_{\mathcal D\ {\rm CPTP}}
+ \max\{L_{2,\mathcal D}(E_{\varphi_i})-\eta,
+         L_{2,\mathcal D}(E_{\varphi_j})-\eta\}.
+$$
+
+两个 terms 均非负；compact Choi set 上 minimum 达到。若 $\delta_{ij}=0$，同一 minimizer 就违反定理 83.1，故 $\delta_{ij}>0$。有限个 pairs 的 minimum $\delta_*$ 为正。若某 label 含两个 tasks 且都达到阈值 $\eta+\delta$，则 $\delta_{ij}\le\delta<\delta_*$，矛盾。individual optimal maps 给出 matching sufficiency。∎
+
+$\delta_*$ 依赖整个 finite catalogue 与 $q$；此证明不给出 uniform phase-separation-free margin、$q\downarrow0$ margin 或一般 positive-slack capacity。$q=0$ 时所有 phases 是同一 $P$，一个 decoder 达到零。若另外规定 labels 用长度 $\ell$、禁止相邻 $11$ 的 data words 编码，前置固定 seam $0$ 不计入 $\ell$ 且无其他端点条件，则仅该静态编码的可用 word 数为 $F_{\ell+2}$，故条件为 $F_{\ell+2}\ge N$。这是 §76 的同一 Fibonacci counting，未计任务取得或在线更新。
+
+**定义 83.3（实际 common image 中的 feasible task fibres）。** 对一个固定 finite $n\ge1$，令 $T_n=(F^n)^\dagger$ 作用于 real Hermitian space $\mathcal H_3$。给定 finite task catalogue $A_1,\ldots,A_N\in\mathcal H_3$ 与各阈值 $\epsilon_i\ge0$，定义
+
+$$
+\mathscr K=\left\{J\subseteq\{1,\ldots,N\}:\quad
+ \exists\mathcal D\ {\rm CPTP},\quad
+ \|T_n\mathcal D^\dagger(A_i)-A_i\|_{\rm op}\le\epsilon_i
+ \text{ for every }i\in J\right\}.
+$$
+
+$\varnothing\in\mathscr K$，且该 family 向下封闭。其 source 仍为全部 qutrit densities，decoder 仍按固定 tasks 与 horizon 选择；对 Hermitian $A_i$，loss 是 absolute expectation error，只有当 $A_i$ 为 effect 时才是 event-probability error。定义中一个 fibre 只享有一个共同 map。
+
+**定理 83.4（实际 rank-five image 的 bounded incompatibility）。** 在定义 83.3 下，令
+
+$$
+S=\operatorname{span}_{\mathbb R}\{I_3,A_1,\ldots,A_N\},\qquad
+m=\dim_{\mathbb R}S-1\le8.
+$$
+
+每个不属于 $\mathscr K$ 的 finite task set 都含一个不属于 $\mathscr K$ 的非空 subset，其大小不超过 $5m+1\le41$。因此整个 catalogue feasible 当且仅当其每个大小至多 $5m+1$ 的 subset feasible，后者允许对不同 subsets 选择不同 decoders，但始终使用原来同一个 $S,T_n,A_i,\epsilon_i$。
+
+对 fixed-$q$ phase family，单独的 $E_\varphi(q)$ 可取 $m\le3$，得到 $16$；若再加入 $P$，可取 $m\le4$，得到 $21$。这些是上界，不声称 sharp。
+
+**证明。** supplier 的整个 Hermitian linear image 由五个 real coordinates
+$(x,y,d,\operatorname{Re}z,\operatorname{Im}z)$ 给出。$\Delta_W\operatorname{Ad}_{U_0^\dagger}$ onto $\mathcal H_2\oplus\mathbb R$，而 $G_s$ 在这些 coordinates 上的 determinant 是
+
+$$
+(\alpha^2-\beta^2)s^2=s^3\ne0.
+$$
+
+故每个 fixed finite $n\ge1$ 都有 $\operatorname{rank}_{\mathbb R}T_n=5$，包括全部 complex off-diagonal degrees of freedom。
+
+现将同一 Choi set 线性映到
+
+$$
+\Omega_S=\{(T_n\circ\mathcal D^\dagger)|_S:\mathcal D\ {\rm CPTP}\}.
+$$
+
+这是非空 compact convex set；每点按定义有一个 realizing decoder。其所在 affine space 是从 $S$ 到 $\operatorname{ran}T_n$ 的 real-linear maps，且 $I_3$ 的值固定为 $I_3$，维数至多 $5m$。每个 task 切出其中的 convex compact subset
+
+$$
+\Omega_i=\{L\in\Omega_S:\|L(A_i)-A_i\|_{\rm op}\le\epsilon_i\}.
+$$
+
+在这个同一个 affine space 使用经典 finite Helly theorem：空的 full intersection 必有至多 dimension 加一项的空 subintersection。该中间定理见 [Weisstein, “Helly's Theorem”](https://mathworld.wolfram.com/HellysTheorem.html)，其 finite real-convex statement 亦见 [Mathlib 的固定源表述][F83HELLY]。不重新证明 Helly，也不把它当作新的 quantum theorem。这里的新增对应在于从实际 $F^n$ 的 rank-five entire image 得到维数并只在 $\Omega_S$ 中求交；不假定任意 ambient linear map 都可实现。更精确地，$\dim\operatorname{aff}\Omega_S+1$ 也给出上界。
+
+最后 $E_\varphi(q)$ 均在 $\operatorname{span}_{\mathbb R}(D_q,X,Y)$ 中，其中
+
+$$
+D_q=\operatorname{diag}(1-q,q,0),\quad
+X=|\xi\rangle\langle e|+|e\rangle\langle\xi|,\quad
+Y=i(|\xi\rangle\langle e|-|e\rangle\langle\xi|).
+$$
+
+加入 $I_3$ 给 $m\le3$，再加 $P$ 给 $m\le4$。当 $0<q<1$ 且 phases 含 $0,\pi,\pi/2$ 时这两个维数分别达到 $3,4$；short 或 degenerate catalogues 可更小。$m=0$ 时所有 tasks 为 scalar identities，loss 恒为零；empty list 亦总 feasible。∎
+
+**命题 83.5（decoder-choice hypergraph 与 pairwise 的边界）。** 将定义 83.3 的 inclusion-minimal infeasible subsets 作为 forbidden hyperedges。一个 deterministic task label selecting one fixed decoder per label 满足全部阈值，当且仅当没有 forbidden edge 是 monochromatic。对实际 $F^n$，每条 edge 的大小至多 $5m+1$。singleton edge 意味着任何 labeling 都失败；空 catalogue 约定使用零 labels。
+
+**证明。** 若每个 label fibre feasible，就可分别选择一个其 realizing decoder，且它不能含 forbidden edge。反之，一个 infeasible fibre 因 finite 而含 minimal infeasible subset，故若不存在 monochromatic edge 则每个 fibre feasible。edge-size bound 是定理 83.4。∎
+
+这个 finite task hypergraph 不可一般替换为 pairwise graph。例如，另取 qutrit replacement noise $\mathcal N(\rho)=\operatorname{Tr}(\rho)|0\rangle\langle0|$，三任务为互相正交 coordinate projections $P_1,P_2,P_3$，阈值均为 $1/2$。任意 decoder 的 recovered input effects 是 $p_iI$，其中 $p_i=\operatorname{Tr}(P_i\sigma)$，$\sigma=\mathcal D(|0\rangle\langle0|)$；loss 是 $\max(p_i,1-p_i)$，individual optimum 为 $1/2$。任意 pair 由 preparation decoder 输出 $(P_i+P_j)/2$ 达到，但 triple 要求三个 $p_i=1/2$，违反 $\sum p_i=1$。这是另一个固定 channel 的反例，不声称实际 $F^n$ 存在同样 triple。
+
+**约定 83.6（凸性与资源范围）。** Helly 作用于固定 noise 下同一个 effective common-CPTP image。若 encoder 也变化，composition 的 bilinearity 不自动给出该 convex image；discrete controllers 或非凸 resource restrictions 同样不能直接套用。bounded witness size 不给出 efficient enumeration、arbitrary-real decidability、统一 label 数上界或 memory dimension。定理 83.1 的 zero-slack phase catalogue 有更强的 pairwise obstruction；定理 83.4 则适用于一般方向与 thresholds。两者均只刻画已供应 tasks 的 static decoder choice，不推导 online controller minimum、quantum capacity 或物理资源 minimum。
+
+## 84. 供应合同的对应与仍缺的桥梁
+
+**定义 84.1（各命题的 owning supplier）。** §§73–80 保留其原 source contract；本批次只按下表使用明确的固定来源。一个来源更新不改变另一个来源的对象、权限或误差度量。
+
+| 来源与固定版本 | 在本批次供应的中间结论 | 不转移的条件 |
+| --- | --- | --- |
+| [Environment §27][F81ENV27]，`033c1b370f2447aa20e191a6a3da609aba697e50` | actual all-angle fair chronological channel、whole-qutrit task、entire complex effect image 与单 effect right inverse | 不是 arbitrary law 或多任务 common right inverse |
+| [Purity §§87–91][F84PA87]，`29400a844a8c71ee6134aeec1d34ec0103084b4e` | normalized Choi spectra、finite NPT、EB limit、frame norms 与 full-table injectivity | scalar norms 的承诺模型不能替换为所有 states/channels |
+| [Purity §92][F84PA92] 与 [Environment §28][F84ENV28]，`054965ffe9988c98e97c1fbdc4d6edc125acde96` | separable same-scalar partners 与同一 fixed-$P$ task 的 exact optimum separation | 每 horizon 各有 partner，不是同一 partner semigroup、共同 decoder 或实际历史 |
+| [RRO carrier §§9、11][F84RRO]，`8d00be1638132bbcf0ef888fa0901cacb583ca45` | actual unassisted delayed joint encoding 的 exact capacity 与 endpoint half-trace necessity | normalized live-state error、晚选 wait/execute 和全部 usable information 的 factorization 必须保留 |
+| [Strict-real §§7–10][F84STRICT]，`3350fc26dcbaf210d8ab035c7e25ab99c76e8447` | both-endpoint tail、whole-child singleton neighbourhood、actual mixed-$M$ child 与 finite exceptional-meeting outer set | 不把 complex candidates、别的 child 或 counterfactual alternative 当作实际 acquired world |
+
+**命题 84.2（scalar fibre 不决定扩域后的 fixed-task answer）。** 对 finite $n\ge3$ 及 $n=\infty$，令 $\tau=2^{1-n}$，在 infinity 取 $\tau=0$。采用 [Purity Theorem 92.2][F84PA92] 的 normalized Choi partner $\sigma_n$ 及其 EB channel $\Psi_n$。它与实际 normalized Choi state $\omega_n$ 的两个 marginals 均为 $I_3/3$；对每一组独立 local SIC choices 与每一组 independent complete local MUB choices，二者对应 table norms 同时相等：
+
+$$
+\|\mathbf P\|_*=(5+3\tau)/36,\qquad
+\|\mathbf Q\|_*=5/3+\tau.
+$$
+
+SIC 使用 effects $\Pi_i/3$，MUB 使用 literal projectors；不添加 basis-sampling factor。对同一 fixed task $P_0=P=|\xi\rangle\langle\xi|$，全部 input densities 上、分别允许一个 input-independent terminal CPTP decoder 的 optima 却为
+
+$$
+\eta_{P_0}(F^n)=0,\qquad
+\eta_{P_0}(\Psi_n)=\frac{2(1-3\tau)}{7-3\tau}>0.
+$$
+
+因此在包含这两类 channels 的 comparison domain 上，任何仅使用上述 marginals 与 scalar norms 的函数都不能决定该 task optimum。
+
+**证明。** scalar equality、separable partner 与 channel correspondence 直接使用 Purity Theorem 92.2；exact unrestricted task values、attaining decoder 和 lower certificate 直接使用 Environment Theorem 28.2，不在此重建。两个 channels 在同一 retained scalar fibre 内，但该 task answer 不同，所以 answer 不能通过此 observation map factor。把相同读数代入任意 nonlinear postprocessing 仍相同，故后处理亦不能补回区别。∎
+
+有限 $n\ge3$ 时 $\omega_n$ 是 NPT 而 $\sigma_n$ separable；infinity 时二者 channels 都是 EB，仍有 gap $2/7$（$n=3$ 时为 $2/25$）。这个任务差异因而也不等同于 EB/non-EB 二分。在 promised actual family 上，$\|\mathbf Q\|_*-5/3=\tau$ 仍恢复参数；反例使用的是 enlarged domain，未否定该受限辨识。固定同一 local frames 的 full tables 仍 informationally complete，故会区分 partners；二者 output on $P_0$ 已不同。
+
+量词严格为 $\forall n\in\{3,4,\ldots,\infty\}\ \exists\Psi_n$，各 channel/task/horizon 有各自允许的 decoder。这里没有一个 channel 其 powers 同时等于全部 $\Psi_n$ 的结论，没有一个 decoder 同时实现全部 optima 的结论，也没有 partners 与 actual FIB histories 相同的结论。frame identities、entanglement bounds、product-state construction 的成熟先例与适用规范均沿 Purity §§89、92 所引文献，不把供应证书重复计作本批新的 witness。
+
+**约定 84.3（delayed joint retention 的实际 necessity）。** [RRO Definition 9.2 与 Theorem 9.3][F84RRO] 使用其实际 double-wall source、known height $1/8$、所有未知 normalized live inputs $\rho_{\beta,m}$，先实际收到 command $j\in\{1,\ldots,N\}$，再 joint encoding、retention，之后才收到 wait/execute bit $b$。其 unassisted CPTP restrictions 与两个 fixed common endpoint decoders 为
+
+$$
+\mathcal E_j:M_3\to\mathcal B,\qquad
+\mathcal B=\bigoplus_\alpha M_{d_\alpha},\qquad
+\mathcal D_b:\mathcal B\to M_3,
+\qquad
+U_j=\operatorname{diag}(e^{-iC_j/4},e^{iC_j/4},1),\quad C_j=j/(N+1).
+$$
+
+$U_j$ 的 basis 是该来源的 $(U_+,U_-,e_2)$，不是本批的 $(\xi,e,f)$。两 endpoint identities 是
+$\mathcal D_0\mathcal E_j(\rho_{\beta,m})=\rho_{\beta,m}$ 与
+$\mathcal D_1\mathcal E_j(\rho_{\beta,m})=U_j\rho_{\beta,m}U_j^\dagger$。
+所有 retention 后可用信息必须通过 $\mathcal B$；不存在 encoder 另行读取的 history-correlated helper、accessible archive、specimen bypass、surviving command dial 或 assisting receiver share。输入独立 ancillas 归入 maps，真正 spectator reference 不可访问。仅把一个 archive 列入资源账不证明输入具有 $\mathcal E_j(\rho_{\beta,m})$ 这一 unassisted form。
+
+该来源的 exact necessary-and-sufficient condition 为
+
+$$
+N\le\sum_\alpha\lfloor d_\alpha/3\rfloor.
+$$
+
+这是其原 delayed task 的 theorem，不是 §83 的 label count。RRO §11 的 approximation 则要求在原 endpoint 对全部 $j,b,\beta,m$ uniform：
+
+$$
+\sup_{j,b,\beta,m}\frac12
+\|\mathcal D_b\mathcal E_j(\rho_{\beta,m})
+       -U_j^b\rho_{\beta,m}(U_j^b)^\dagger\|_1\le\epsilon.
+$$
+
+这是 normalized-live endpoint half-trace metric，包含每个 encoding outcome；没有 postselection、abort 或额外失败。若 $N\ge2$，令
+
+$$
+\begin{gathered}
+\kappa_R=(2-\sqrt2)/8,\quad r_\epsilon=\sqrt{\epsilon/\kappa_R},\quad
+u_\epsilon=2r_\epsilon+r_\epsilon^2,\\
+s_N=\sqrt{1-\left(\frac{1+2\cos(1/[4(N+1)])}{3}\right)^2},\qquad
+D=\sum_\alpha d_\alpha.
+\end{gathered}
+$$
+
+RRO Theorem 11.2 供应 necessity
+
+$$
+D\ge\frac{9N}{(\sqrt3+u_\epsilon)^2
+ +(N-1)u_\epsilon^2(1+2/s_N)^2}.
+$$
+
+此处 $D$ 不是 $\sum d_\alpha^2$。该界不是 sufficient 或 optimal approximate capacity，不决定给定 blocks 的可行性；即使 $\epsilon=0$，$D\ge3N$ 也不能替代 exact sum-of-floors condition。该来源还明确允许 positive-error command supports overlap。
+
+terminal projection-probability loss 仅限制指定 effects，不能反推此 uniform half-trace premise；static supplied labels 亦没有 joint retention factorization。若 execute 在 encoding 前就不可撤回地选定，原 late wait option 已改变，也不是该 theorem 的任务。supplier 的 complete-continuation extension 还要求同一实际 joint endpoint ports、law、reference、archives、clocks、permissions 与 selection/update kernel，不能从 specimen marginal 近似直接推出。
+
+**命题 84.4（最新 mixed child 的 chosen-$J$ 局部证书）。** 保持定义 79.1 的实际 $H_4$、strict-real guards、chronological clocks 与 complete worlds。在 [Strict-real Theorem 8.2][F84STRICT] 的同一个 acquired sixth-$M$ base $(p^*,v^*)$，以该 entire child 三个 legal worlds 的 identity 为 target $z$。假设原 clock-seven $J$ 已获许可，实际 paid response 被保留，并且存在已供应的 source-independent discriminator，把三个 terminal-$J$ values 分配到三个不交 intervals。则该 fixed child 的 branch-label task 有一次 chosen-$J$ 的 $\mathcal W_1$ certificate。相反，在没有额外区分输入的同一 read-and-halt task 中，只选一次 terminal $M$ 不能恢复全部三个 labels。
+
+**证明。** Theorem 8.2 已穷尽该 entire child：恰有三个 legal complete worlds，其唯一 unordered terminal-$M$ collision pair 是一个 singular endpoint 与一个 ordinary endpoint，且 terminal $J$ 在整个 child 上 injective。无需重新隔离或 lift 其 algebraic roots。
+
+将这三个 pre-read complete states、原合法 $J$ 的 actual successors、三种 response classes 和正确 halt labels 组成有限模型。其 chosen action、read permission 与 successor fields 来自同一原合同；discriminator 只用已供应 intervals，不查询隐藏 world。每个非空 response class 只剩一个 $z$，所以读后 candidate relation 在 $\mathcal W_0$，读前 relation 在 $\mathcal W_1$。保留实际 branch costs 为各自标签，取 rank $1/0$，就得到 §62 的 finite chosen-action certificate。这个有限关系抽象使用 abstract interpretation 的保守性思想（Cousot–Cousot，DOI [10.1145/512950.512973](https://doi.org/10.1145/512950.512973)）；抽象本身不授予读取或动作权限。
+
+若只选原 terminal $M$ 然后 halt，该 actual collision pair 给出同一个 response，却有两个不同 target labels，因此 source-independent halt rule 不能同时正确。这个失败只针对所述 chosen action 与 read-and-halt task，不是所有后续协议的不可能性。∎
+
+**约定 84.5（strict-real support reductions 的准确残余）。** 同一 [Strict-real §§7–10][F84STRICT] 的 Theorem 7.3 给出一个 finite $B_*>0$，同时约束每个 terminal-$J/M$ collision pair 的两个 endpoints：$b(W),b(W')<B_*$。Theorem 7.4 另给出 $q_\infty=(-216/5,-225)$ 附近的 whole-child empty-or-singleton neighbourhood，且 sufficiently large-$b$ acquired worlds 的 entire sixth-$M$ child 是 singleton。这里没有 explicit numerical bound，也没有把仅一个 endpoint 的 tail 估计当成整个 child 的分类。
+
+Theorem 8.4 的 singular-endpoint-$M$ bases 构成 finite nonempty set。更宽的 Theorem 9.10 只要求整个 same child 与 exceptional set $E(p,v)$ 相交，即使 exceptional world 不在所选两 pairs 中，也将同时有 actual distinct $J$ pair 和 actual distinct $M$ pair 的 base 放入明确的 finite complex outer set
+
+$$
+\begin{aligned}
+Z_E={}&V_{\mathbb C}(Q_{10},E_0N_J,E_0N_M)\\
+ &\cup V_{\mathbb C}(S_4,E_0N_J,E_0N_M)\\
+ &\cup V_{\mathbb C}(Q_{24},e_{24}n_{24,J},e_{24}n_{24,M}).
+\end{aligned}
+$$
+
+所有 symbols 按该来源 Definitions 9.1、9.6–9.7 与 Theorem 9.10；$E(p,v)$ 是 strict-real exceptional worlds，不是 quantum task $E(q)$。这个 containment 只给 necessary outer candidates；没有任何 candidate 由此被 isolation、strict-real lifting 或分类。两 pairs 必须在同一 actual acquired child，各自内部 distinct，允许重叠；其共同 responses 无需相同。Theorem 8.2 的 mixed-$M$ witness 因 whole-child $J$ injective，尤其不是 actual joint-$J/M$ witness。
+
+remaining noncompact limits 包括 $b\to0$、$r\to0,1$、无界 $r(1-r)/b$、finite-source singularities 和 denominator/ramification limits；children avoiding $E$ 亦不在上述 finite-image reduction 中。即使排除 $Z_E$ 的全部 legal candidates，也只结算 exceptional-meeting sector。actual joint child、same-$p$ sixth-$J$、fifth-$J$、common parent 与 ancestor obligations 均保留；没有 $H_4$ $L_3$、root $L_7$ 或 eight-versus-nine 结论。
+
+**定义 84.6（本批实际缩小的缺口与原目标）。** §77.4 的 $r=0,pq>0$ 缺口现在在定理 81.4 的 bounded $n=2$ interval 有 exact branch，在定理 81.2、81.5 的不同 limit contracts 有 sharp laws；其余 finite-$q$ regimes、interior outside supplier floor region 与一般 attaining certificates 仍缺。§§82–83 增加 prescribed-task common-decoder laws、optimal-image incompatibility 与有限 feasibility witnesses，没有给出一般 finite-$q$ common optimum、所有 horizons 共用 decoder 或动态 controller optimum。
+
+定义 80.2 的 native current joint-key acquisition、reverse kernels、$A_R$ maintenance/current-at-return recovery、实际 chronology supplement acquisition 与资源问题继续保留。§78.3 的原 actual subexponential pair-energy/cutoff/collision-entropy targets 和有条件 causal-memory programme，不由 terminal task errors 结算；原 fast-window obstruction 也未被削弱。§79.4 及约定 84.5 的 global strict-real incidence 与 ancestors 仍需各自 source guards 下的 actual witnesses 或 exhaustive exclusions。
+
+这些任务关系的综合使用 mature convex support duality、CP positivity、norm contraction、Helly convex intersection 与保守有限抽象作为中间工具。所列既有 sources 供应其已证明内容，本批的承重推导限于实际终端 task geometry、same-decoder coupling 和有限 task-fibre consequences；没有 worldwide priority、物理实现或形式内核认证结论。任何迁移仍须逐项保留 source、chronology、permissions、input-independent laws、target time、task、metric 和所数资源，不能由 static alphabets 或充分 full-behaviour keys 推出 task-controller minimum。
+
+[F81ENV27]: https://github.com/the-omega-institute/trureturing/blob/033c1b370f2447aa20e191a6a3da609aba697e50/docs/develop/theory/AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md#27-quantitative-sharp-tasks-after-fair-chronological-history-erasure
+[F83HELLY]: https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Convex/Radon.lean#L86
+[F84PA87]: https://github.com/the-omega-institute/trureturing/blob/29400a844a8c71ee6134aeec1d34ec0103084b4e/docs/develop/theory/AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md#87-exact-choi-spectra-of-the-actual-erased-history-qutrit
+[F84PA92]: https://github.com/the-omega-institute/trureturing/blob/054965ffe9988c98e97c1fbdc4d6edc125acde96/docs/develop/theory/AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md#92-separable-partners-in-the-scalar-observation-fibers-of-the-actual-choi-sequence
+[F84ENV28]: https://github.com/the-omega-institute/trureturing/blob/054965ffe9988c98e97c1fbdc4d6edc125acde96/docs/develop/theory/AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md#28-same-scalar-observations-and-different-exact-invariant-task-optima
+[F84RRO]: https://github.com/the-omega-institute/trureturing/blob/8d00be1638132bbcf0ef888fa0901cacb583ca45/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md#9-delayed-waitexecute-capacity-for-arbitrary-joint-encoders
+[F84STRICT]: https://github.com/the-omega-institute/trureturing/blob/3350fc26dcbaf210d8ab035c7e25ab99c76e8447/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md#7-the-source-at-infinity-and-bounded-collision-endpoints
+
+## 追加锚（本行以下为增补区）
