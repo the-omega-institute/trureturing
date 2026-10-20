@@ -12810,18 +12810,18 @@ $$
 The Gamma diagonal has compact resolvent and the remaining operator is bounded, so $\mathcal H_c$ is selfadjoint, bounded below and has compact resolvent. Let $n_-(\mathcal H_c)$ count its strictly negative eigenvalues, with multiplicity. Then
 $$
  \boxed{\limsup_{\substack{c\to\infty\\c\in\mathbb N}}
- \frac{\log(1+n_-(\mathcal H_c))}{\sqrt c}\le\frac45.}
+ \frac{\log(1+n_-(\mathcal H_c))}{\sqrt c}\le\frac23.}
  \tag{NPC1}
 $$
 Equivalently, for every fixed $\varepsilon>0$, eventually
-$n_-(\mathcal H_c)\le\exp((4/5+\varepsilon)\sqrt c)$.
+$n_-(\mathcal H_c)\le\exp((2/3+\varepsilon)\sqrt c)$.
 The start can depend on $\varepsilon$. This is an upper bound on possible negative multiplicity, not an assertion that a negative eigenvalue exists.
 
-This source-specific application reuses JPP's complete prime/pole norm and exterior comparison, the classical bounded-variable exponential estimate, finite geometric sums, Hilbert--Schmidt ideal bounds, the min--max principle and the trace inequality of [Junge--LaRacuente, arXiv:2009.11866v2, Theorem 1.2](https://arxiv.org/pdf/2009.11866v2). Independent circle variables below extract finite Laurent coefficients exactly; they are not a probability model for actual prime phases. No new general concentration, trace or spectral-counting theorem, literature-priority claim or Lean/kernel certification is proposed. All proper prime powers, both orientations, both poles and the actual Gamma boundary remain present.
+This source-specific application reuses JPP's complete prime/pole norm and exterior comparison, the classical bounded-variable exponential estimate, Selberg's discrete large sieve, Hilbert--Schmidt ideal bounds, the min--max principle and the trace inequality of [Junge--LaRacuente, arXiv:2009.11866v2, Theorem 1.2](https://arxiv.org/pdf/2009.11866v2). Independent circle variables below extract finite Laurent coefficients exactly; they are not a probability model for actual prime phases. No new general concentration, trace or spectral-counting theorem, literature-priority claim or Lean/kernel certification is proposed. All proper prime powers, both orientations, both poles and the actual Gamma boundary remain present.
 
 #### Growing moments on the actual Fourier exterior
 
-Fix $0<\kappa<1$, $\tau>1$ and $0<\eta<\kappa/2$. Put
+Fix $0<\kappa<1$, $\tau>1$ and $0<\eta<\kappa$. Put
 $$
  N=\lceil e^{\kappa a}\rceil,\qquad Q=\mathbf1_{\{|m|>N\}},
  \qquad A=Q\mathsf P_LQ\big|_{\operatorname{ran}Q},
@@ -12849,14 +12849,24 @@ $$
  \delta_r=\frac{\log(1+1/(cH_r^2))}{d},\qquad
  D_r=\delta_r^{-1}\le2d\,c^{r+2}.
 $$
-For any consecutive integer interval, finite geometric summation bounds the absolute partial sum of
-$\|\mathsf P_L^r\phi_m\|^2-E_r$ by $2D_r(2W)^{2r}$. This follows by summing the absolute cross coefficients at each $x$, whose total is at most $(2W)^{2r}$; disjoint-support aliases contribute zero. Summation by parts with the actual monotone $h_m$ yields
+At each fixed $x$, restrict to its finite active endpoint set. The discrete large-sieve inequality (1) of the [existing Montgomery source](../Fourier/montgomery1978largesieve.md) applies to its $\delta_r$-separated circular frequencies and coefficients $C_r(q,x)$. Its constant is uniform in both the active set and the initial integer sample. After integration, for every integer $U\ge0$ and $H\ge1$ it gives
+$$
+ \sum_{m=U+1}^{U+H}\|\mathsf P_L^r\phi_m\|^2
+ \le(H-1+D_r)E_r.
+$$
+Here disjoint-support aliases are removed separately at each $x$; no assertion of separation for the global endpoint list is needed. With $U=N$, summation by parts against the actual decreasing $h_m$ gives
+$$
+ \sum_{m>N}h_m\|\mathsf P_L^r\phi_m\|^2
+ \le E_r\left[\sum_{m>N}h_m+(D_r-1)h_{N+1}\right].
+$$
+The terminal term vanishes since the unweighted partial sums are $O(H)$ for each fixed $c,r$. The negative modes have the same norms by complex conjugation, so
 $$
  \frac{\operatorname{Tr}(\rho\mathsf P_L^{2r})}{Z}
- \le E_r+O_\tau\!\left(\frac{D_r(2W)^{2r}}{N}\right).
+ \le E_r\left[1+2(D_r-1)\frac{h_{N+1}}Z\right]
+ \le E_r\left[1+O_\tau\!\left(\frac{D_r}{N}\right)\right].
  \tag{NPC3}
 $$
-The trace in NPC3 retains all output frequencies. It has not yet replaced the compressed moment in NPC2.
+This relative bound uses the coefficient energy rather than the sum of absolute cross coefficients. Its trace retains all output frequencies; it has not yet replaced the compressed moment in NPC2.
 
 Dropping the surviving-prefix indicators gives nonnegative unrestricted word coefficients $G_r(q)$ and $E_r\le\sum_qG_r(q)^2$. Unique prime factorization identifies the latter sum with the constant coefficient of the $2r$th power of the finite Laurent polynomial for the paired prime-power shifts. Grouping by prime gives independent auxiliary circle polynomials
 $$
@@ -12867,12 +12877,12 @@ $$
 $$
 The last estimate is the classical Chebyshev bound with partial summation. Each $X_p$ has mean zero. The classical convexity bound
 $\mathbb E e^{tX_p}\le\cosh(tb_p)\le e^{t^2b_p^2/2}$ gives the even-moment estimate
-$E_r\le(C_1rd^2)^r$. This is exact finite coefficient extraction followed by an auxiliary integral bound; the actual Fourier phases remain accounted for in NPC3. Uniformly on the stated range,
+$E_r\le(C_1rd^2)^r$ for every integer $r\ge1$. This is exact finite coefficient extraction followed by an auxiliary integral bound; the actual Fourier phases remain accounted for in NPC3. Uniformly on the stated range,
 $$
- \log\!\left(\frac{D_r(2W)^{2r}}N\right)
- \le(2\eta-\kappa)a+o(a),
+ \log\!\left(\frac{D_r}N\right)
+ \le(\eta-\kappa)a+o(a),
 $$
-so NPC3's absolute error tends to zero.
+so NPC3's relative factor tends to one.
 
 It remains to pay every intermediate projection. Write $F=I-Q$. The actual Fourier translation overlaps give
 $$
@@ -12938,11 +12948,11 @@ $$
  \tag{NPC5}
 $$
 In particular its upper exponential rate is at most $\max(\kappa,L)$. Set
-$\kappa=4/5$, $\tau=1+\delta$, $\eta=2/5-\delta$ for any fixed $0<\delta<2/5$. Then
+$\kappa=2/3$, $\tau=1+\delta$, $\eta=2/3-\delta$ for any fixed $0<\delta<2/3$. Then
 $$
- L=\frac45+\frac7{10}\delta.
+ L=\frac23+\frac56\delta.
 $$
-First take $c\to\infty$ at each fixed $\delta$, then let $\delta\downarrow0$. This proves NPC1 without taking the inadmissible values $\tau=1$ or $\eta=\kappa/2$, and without a uniform starting scale at either endpoint. The norm-only comparison using JPP3 gives an upper rate $1$ instead of $4/5$.
+First take $c\to\infty$ at each fixed $\delta$, then let $\delta\downarrow0$. This proves NPC1 without taking the inadmissible values $\tau=1$ or $\eta=\kappa$, and without a uniform starting scale at either endpoint. The norm-only comparison using JPP3 gives an upper rate $1$ instead of $2/3$.
 
 #### Consume the count in the original retained Schur matrix
 
@@ -12955,7 +12965,7 @@ Completion of the square in the full form, using the strictly positive $H_\alpha
 $$
  \boxed{n_-(S_\alpha)=n_-(\mathcal H_c),\qquad
  \limsup_{c\to\infty}
- \frac{\log(1+n_-(S_\alpha))}{\sqrt c}\le\frac45.}
+ \frac{\log(1+n_-(S_\alpha))}{\sqrt c}\le\frac23.}
  \tag{NPC6}
 $$
 Thus the bound applies to the same complete retained matrix, including every coupling and every arithmetic, pole and Gamma term. It covers every original source direction; no positive subclass replaces the full form. It also applies along the original unbounded integer FIB support schedules.
