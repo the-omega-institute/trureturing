@@ -44,7 +44,10 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
                         "For a local dimension d at least two, a SIC family S, and a complete MUB family M, transition S M has row indices p in Fin (d + 1) times Fin d and column indices i in Fin (d * d). Its (p, i) entry is ((d : ℂ) + 1) times trace(rankOneDensity(S.val i) * M.effect p), minus one. The entries are real by transition_real, and transition_gram says that its conjugate transpose times itself is (d : ℂ) * ((d : ℂ) + 1) times the identity.")),
                     Paragraph(Text(
                         "For the dimensions, families, and operator in claim, correlation_transition expresses mubCorrelation rho MA MB as transition SA MA times sicCorrelation rho SA SB times the conjugate transpose of transition SB MB. For each local dimension d, the transition matrix is the square root of (d : ℝ) * ((d : ℝ) + 1) times an isometry. The theorem scaled_isometry_traceNorm uses uniqueness of the positive square root and cyclicity of the trace to give the stated product of square-root factors."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tavakoli-morelli-2024-conjecture-1-sic-mub-trace-norm-equality"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
