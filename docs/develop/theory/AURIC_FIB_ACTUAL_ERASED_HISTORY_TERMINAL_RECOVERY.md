@@ -1011,3 +1011,451 @@ erased-history qutrit channel and terminal permissions only.
 [W12L]: ../../../Library/QuantumChannels/watrous2012simpler.md
 
 ## 追加锚（本行以下为增补区）
+## 102. Restricted-unital terminal decoders
+
+**Definition 102.1 (Restricted terminal value).** For a finite horizon or the
+limiting channel, let
+
+$$
+\delta_n^{\mathrm u}=
+ \min_{\substack{D\ \mathrm{CPTP}\\D(I_3)=I_3}}
+ \frac12\lVert D\mathcal N_n-\operatorname{id}_{M_3}\rVert_\diamond .
+\tag{102.1}
+$$
+
+For $n\ge1$ use the bijection (93.10), and write
+$\mathcal C=\mathcal R\Phi_s$. Since conjugation by $U_0$ is a unitary
+channel, $D$ is unital exactly when $\mathcal R(I_3)=I_3$. Thus the
+restricted problem can be studied entirely in the reduced frame.
+
+**Theorem 102.2 (The unital equality set).** For the actual horizons,
+
+$$
+\delta_n^{\mathrm u}=\delta_n
+\quad(n=0,\ n\ge1\text{ odd},\ n=\infty),
+\qquad
+\delta_n^{\mathrm u}>\delta_n
+\quad(n\ge2\text{ finite even}).
+\tag{102.2}
+$$
+
+At every finite even horizon, every unrestricted optimal terminal decoder is
+therefore nonunital. The strict inequality is per horizon; no uniform lower
+bound for $\delta_n^{\mathrm u}-\delta_n$ is asserted.
+
+*Proof.* The unrestricted class contains the unital class, so the first
+inequality in the comparison is always $\delta_n^{\mathrm u}\ge\delta_n$.
+At $n=0$ the identity is an attainer. For every odd $n\ge1$, the decoder
+$D_n=\operatorname{Ad}_{U_0^\dagger}$ in (94.6) is unitary and unital. At
+the limit the identity decoder is unital and attains the value $\delta_\infty
+=4/5$ in (94.2). It remains to exclude equality at a finite even horizon.
+
+Fix such a horizon, put $s=-t$ with $t>0$, and let $p$ be the strictly
+positive probe in (97.2) when $n=2$, or in (98.2) when $n\ge4$. For an
+arbitrary reduced decoder define $T_{ij}$ and $\ell$ as in (95.1), put
+$u=\sqrt{T_{11}}$ and $z=T_{22}$, and let $G_{\mathcal R}(p)$ and
+$L_s(p;u,z)$ be (95.2) and (95.3). The exact even-sign remainder is
+
+$$
+\begin{aligned}
+L_s(p;u,z)-G_{\mathcal R}(p)
+={}&p_0^2(1-T_{00})
+ +b p_1^2(1-z-T_{12})\\
+&+b p_2^2(1-u^2-T_{21})
+ +2t p_0p_1(u+\operatorname{Re}\ell).
+\end{aligned}
+\tag{102.3}
+$$
+
+Every term is nonnegative. The first three assertions follow from
+column stochasticity and $T_{00}\le1$; for the last one,
+$|\ell|^2\le T_{00}T_{11}$ gives $\operatorname{Re}\ell\ge-u$.
+The lower certificate (95.4), together with the optimal value
+$\delta_n=1-\eta_n$, gives for every decoder
+
+$$
+\delta_n\ge 1-G_{\mathcal R}(p)\ge1-L_s(p;u,z)\ge\delta_n
+$$
+
+whenever the decoder attains $\delta_n$. Hence equality holds throughout,
+and (102.3) forces
+
+$$
+T_{00}=1,\qquad T_{12}=1-z,\qquad T_{21}=1-u^2,
+\qquad \ell=-u.
+\tag{102.4}
+$$
+
+Indeed all coefficients in (102.3) are strictly positive, and the last
+identity uses $|\ell|\le u$. Column sums then give
+$T_{10}=T_{20}=T_{01}=T_{02}=0$. If $\mathcal R$ is unital, its population
+matrix is doubly stochastic; the sum of row one in (102.4) gives
+
+$$
+ z=u^2.
+\tag{102.5}
+$$
+
+We next record the complete consequence of saturation in the trace-distance
+certificate. Let $P_p=|\psi_p\rangle\langle\psi_p|$ and
+$\rho=(\mathcal C\otimes\operatorname{id})(P_p)$. Equality in the
+measurement bound in (95.4) says
+
+$$
+\frac12\lVert\rho-P_p\rVert_1
+ =1-\langle\psi_p|\rho|\psi_p\rangle=1-\eta_n.
+\tag{102.6}
+$$
+Put $H=P_p-\rho$ and write its Jordan decomposition
+$H=H_+-H_-$. Since $\operatorname{Tr}H=0$,
+$\operatorname{Tr}H_+=\operatorname{Tr}H_-=1-\eta_n$; and (102.6) gives
+$\operatorname{Tr}(P_pH)=1-\eta_n$. Therefore
+$\operatorname{Tr}(P_pH_-)=0$ and $H_+=(1-\eta_n)P_p$.
+Consequently
+
+$$
+\rho=\eta_nP_p+H_-,\qquad H_-\succeq0.
+\tag{102.7}
+$$
+
+Let $S=\operatorname{diag}(\sqrt{p_0},\sqrt{p_1},\sqrt{p_2})$. In the
+output-first Choi convention (93.9),
+$\rho=(I\otimes S)J(\mathcal C)(I\otimes S)$ and
+$P_p=(I\otimes S)J(\operatorname{id})(I\otimes S)$. All $p_i$ are positive,
+so the inverse congruence in (102.7) yields
+
+$$
+J(\mathcal C)-\eta_nJ(\operatorname{id})\succeq0,
+\qquad
+\mathcal C-\eta_n\operatorname{id}\ \text{is completely positive}.
+\tag{102.8}
+$$
+
+This is a necessity for an equality case in the present weighted probe; it is
+not a general trace-distance equality theorem for unrelated channels.
+
+For $n=2$, (97.7) and the strict signs in (97.4) give
+
+$$
+L_s(p;u,z)-\eta_2=A(u-r_*)^2+Bz,
+\qquad A<0,\quad B<0.
+\tag{102.9}
+$$
+
+The ratio estimate (97.5) is the reason both signs are strict. Equality in
+(102.9) forces $u=r_*$ and $z=0$, whereas (102.5) would require
+$z=r_*^2>0$. Thus an unital decoder cannot attain $\delta_2$.
+
+Now let $n\ge4$ be even. Use $h,r,z_*,p,\eta$ from (98.1)--(98.2), where
+$z_*$ is the attainer's parameter in (94.6). Equality in (98.12) forces
+$u=r$; a unital equality case would have $z=r^2$. The principal Choi block
+of $\mathcal C=\mathcal R\Phi_{-t}$ on
+$|00\rangle,|11\rangle,|22\rangle$, using (102.4), (102.5), is
+
+$$
+M=\begin{pmatrix}1&tr&0\\tr&q&0\\0&0&q\end{pmatrix},
+\qquad q=b-tr^2.
+\tag{102.10}
+$$
+
+By (102.8), $N=M-\eta\mathbf1\mathbf1^{\mathsf T}$ must be positive
+semidefinite. Let $M_*$ be the block (95.5) with the same $r$ and with
+$z=z_*$. Equations (98.7)--(98.10) say $M_*p=\eta\mathbf1$. Put
+
+$$
+ d=r^2-z_*
+ =\frac{h-1}{h+1}
+   \left[h-\left(\frac{1+h^2}{h^2+3}\right)^2\right]>0.
+\tag{102.11}
+$$
+
+The positivity is immediate from $h>1$ and
+$(1+h^2)/(h^2+3)<1$. Since $p_2=hp_1$ and $b=ah^2$, direct subtraction of
+$M_*p=\eta\mathbf1$ from (102.10) gives
+
+$$
+Np=\begin{pmatrix}0\\-b p_1d\\a p_2d\end{pmatrix},
+\qquad
+p^{\mathsf T}Np=-bp_1^2d+ap_2^2d=0.
+\tag{102.12}
+$$
+
+A positive semidefinite matrix whose quadratic form vanishes on $p$ must
+annihilate $p$; (102.12) does not. This contradiction excludes every unital
+optimal decoder at every later finite even horizon.
+
+Finally, for fixed $n$ the unital Choi set is closed and bounded: it is
+specified by complete positivity, trace preservation, and the additional
+unital partial-trace constraint, while its trace is fixed at three. It is
+therefore compact, and the diamond objective is continuous in the Choi
+entries. The restricted minimum exists. Since it cannot equal the
+unrestricted minimum by the preceding arguments, the inequality is strict.
+This proves (102.2). $\square$
+
+The parity in (102.2) is a statement about the actual horizon parameter of
+this qutrit channel. A structurally related analysis in a different setting
+is [Shahbeigi et al.][SHA]. That work concerns dimension $d>3$ and average
+fidelity, with a dimension-parity issue rather than the horizon parity here. No general
+nonunital-correction principle is inferred from either result.
+
+## 103. Rank-one task optima and a common decoder
+
+Use the original ordered basis (93.1), so that
+$P_i=|i\rangle\langle i|$ and define
+
+$$
+Q=\frac12(|0\rangle+|2\rangle)(\langle0|+\langle2|).
+\tag{103.1}
+$$
+
+For each finite $n\ge1$ and for the limiting member $s=0$, write
+$\tau=|s|$, $A=(1+\tau)/2$, and $B=(1-\tau)/2$. For a reduced decoder
+put
+
+$$
+ e_E(\mathcal R;s)=
+ \left\|\Phi_s^\dagger(\mathcal R^\dagger(E))-E\right\|_{\rm op}.
+\tag{103.2}
+$$
+
+By the effect interface in [Environment record memory, equation (27.4)][ENV],
+this is exactly the supremum of the absolute expectation error over all
+complex qutrit density matrices; (93.10) transports it back to the actual
+terminal decoder. The terminal permissions are those of Definitions
+93.1--93.3.
+
+At each fixed horizon a common decoder is chosen before the unknown input
+and the subsequently selected task from the prescribed family. It may
+depend on the horizon and that family. Each individual minimum instead
+allows a task-specific decoder, as in (101.1). Simultaneous attainment is
+therefore an intersection of taskwise argmin sets; it is distinct from the
+whole-channel half-diamond minimax (93.8).
+
+The exact observable-correction interface of
+[Bény--Kempf--Kribs, Definition 8 and Theorem 9][BKK] requires one decoder
+with $\Phi_s^\dagger(\mathcal R^\dagger(X))=X$ for every $X$ in a specified
+unital $*$-subalgebra of $M_3$. Here their code projection is $I_3$, since
+the input space is the whole qutrit space. The present taskwise objective
+allows nonzero individual residual minima and asks that one decoder attain
+all of them; exact observable correction does not supply that argmin
+intersection.
+
+**Proposition 103.1 (Three individual task optima).** For every finite
+$n\ge1$ and at the actual limit,
+
+$$
+\inf_{\mathcal R\ {\rm CPTP}}e_{P_0}(\mathcal R;s)=0,\qquad
+\inf_{\mathcal R\ {\rm CPTP}}e_{P_2}(\mathcal R;s)=B,\qquad
+\inf_{\mathcal R\ {\rm CPTP}}e_Q(\mathcal R;s)=\frac12.
+\tag{103.3}
+$$
+
+At the empty horizon all three optima are zero.
+
+*Proof.* The first value is attained by $\mathcal R=\operatorname{id}$,
+since $\Phi_s^\dagger(P_0)=P_0$. For the second, let
+$K=\mathcal R^\dagger(P_2)$ and $C=\Phi_s^\dagger(K)$. Since $C$ is an
+effect,
+
+$$
+ e_{P_2}(\mathcal R;s)\ge\max\{C_{11},1-C_{22}\}.
+$$
+The displayed formula (93.5) gives $C_{22}-C_{11}\le\tau$, hence
+$2e_{P_2}\ge1-\tau=2B$. If $s\ge0$, the choice $\mathcal R=\operatorname{id}$
+attains $B$; if $s<0$, use the unitary swapping $|1\rangle$ and $|2\rangle$
+and fixing $|0\rangle$, which makes $\mathcal R^\dagger(P_2)=P_1$ and
+again gives error $B$. At $s=0$ the first choice applies.
+
+For $Q$, every $\Phi_s^\dagger(K)$ has zero $(0,2)$ entry, while $Q_{02}=1/2$; therefore $e_Q\ge1/2$. Taking $K=I_3/2$ attains this bound, because
+$\Phi_s^\dagger(I_3/2)=I_3/2$ and $I_3/2-Q$ has operator norm $1/2$.
+$\square$
+
+The two operators
+
+$$
+\begin{aligned}
+\mathcal R_{0Q}(X)&=\operatorname{Tr}(P_0X)P_0
+ +\operatorname{Tr}((I_3-P_0)X)P_2,\\
+\mathcal R_j(X)&=\operatorname{Tr}(P_jX)P_2
+ +\operatorname{Tr}((I_3-P_j)X)P_0\qquad(j=1,2)
+\end{aligned}
+\tag{103.4}
+$$
+
+are CPTP measure-and-prepare channels. For the first, Kraus operators are
+$P_0,|2\rangle\langle1|,|2\rangle\langle2|$; for the second they are
+$|2\rangle\langle j|$ and $|0\rangle\langle k|$ for $k\ne j$. Their
+adjoint actions satisfy
+
+$$
+\mathcal R_{0Q}^\dagger(P_0)=P_0,
+\quad \mathcal R_{0Q}^\dagger(Q)=I_3/2,
+\quad
+\mathcal R_j^\dagger(P_2)=P_j,
+\quad \mathcal R_j^\dagger(Q)=I_3/2.
+\tag{103.5}
+$$
+
+Consequently every proper subset of $\{P_0,P_2,Q\}$ has a common
+individual-optimum decoder. For $\{P_0,P_2\}$ use $\operatorname{id}$ when
+$s\ge0$ and the $|1\rangle\leftrightarrow|2\rangle$ swap when $s<0$.
+For $\{P_0,Q\}$ use $\mathcal R_{0Q}$, and for $\{P_2,Q\}$ use
+$\mathcal R_j$ with $j=2$ for $s\ge0$ and $j=1$ for $s<0$. The displayed
+Kraus families prove complete positivity and trace preservation directly.
+These measure-and-prepare maps are the elementary form of the
+entanglement-breaking construction in
+[Horodecki--Shor--Ruskai, equation (1) and Theorem 2][HSR].
+
+**Proposition 103.2 (The common all-complex optima at the first two
+horizons).** A single decoder attains every rank-one task optimum at
+$n=0$ and at $n=1$. No restriction to real vectors is involved.
+
+*Proof.* At $n=0$ take the identity. At $n=1$, $\Phi_1=\Delta_W$. Let
+$W_+=P_0+P_1$ and $W_-=P_2$. For any complex unit vector $v$, write
+$v=u+z$ with $u=W_+v$ and $z=W_-v$, and let $E=|v\rangle\langle v|$. Then
+
+$$
+\Delta_W(E)-E=-|u\rangle\langle z|-|z\rangle\langle u|,
+\qquad
+\|\Delta_W(E)-E\|_{\rm op}=\|u\|\,\|z\|.
+\tag{103.6}
+$$
+
+For an arbitrary decoder, $C=\Phi_1^\dagger(\mathcal R^\dagger(E))$
+is block diagonal with respect to $W_+\oplus W_-$. The $W_+$--$W_-$
+compression of $C-E$ is $-|u\rangle\langle z|$, whose norm is
+$\|u\|\|z\|$. Therefore $\|C-E\|_{\rm op}\ge\|u\|\|z\|$, while
+$\mathcal R=\operatorname{id}$ attains equality in (103.6). The actual
+terminal decoder is $D=\operatorname{Ad}_{U_0^\dagger}$ by (93.10). $\square$
+
+## 104. A uniform three-task obstruction
+
+For the later actual horizons
+
+$$
+\mathcal S_{\rm late}
+=\{(-1/2)^{n-1}:n\ge2\}\cup\{0\},
+\tag{104.1}
+$$
+
+define the triple regret
+
+$$
+\Gamma_T(s)=\inf_{\mathcal R\ {\rm CPTP}}
+ \max\left\{e_{P_0}(\mathcal R;s),
+ e_{P_2}(\mathcal R;s)-B,
+ e_Q(\mathcal R;s)-\frac12\right\},
+\qquad T=\{P_0,P_2,Q\}.
+\tag{104.2}
+$$
+
+**Theorem 104.1 (Quantitative incompatibility of the triple).** For every
+$s\in\mathcal S_{\rm late}$,
+
+$$
+\Gamma_T(s)\ge\frac1{250}>\frac1{256}.
+\tag{104.3}
+$$
+
+*Proof.* Here $0\le\tau\le1/2$, so $1/2\le A\le3/4$ and
+$B\le A$. Suppose that a CPTP $\mathcal R$ has all three quantities in
+(104.2) at most $\gamma$, with $0\le\gamma\le1/250$. Put
+
+$$
+\sigma_i=\mathcal R(\Phi_s(P_i))\qquad(i=0,1,2).
+$$
+
+The $P_0$ bound, evaluated on inputs $P_1$ and $P_2$, gives
+$(\sigma_1)_{00},(\sigma_2)_{00}\le\gamma$. For $s\ge0$, put
+$v=\langle2|\mathcal R(P_1)|2\rangle$ and
+$w=\langle2|\mathcal R(P_2)|2\rangle$. Then
+
+$$
+(\sigma_1)_{22}=Av+Bw\le B+\gamma,
+\qquad
+(\sigma_2)_{22}=Bv+Aw\le A+\frac BA\gamma\le A+\gamma.
+\tag{104.4}
+$$
+
+The second inequality follows by writing the second expression as
+$(B/A)(Av+Bw)+(A^2-B^2)w/A$. For $s<0$ the two input populations are
+interchanged and the same calculation applies; at $s=0$ it remains valid
+with $A=B=1/2$. Thus, with
+$x=(\sigma_2)_{00}$ and $y=(\sigma_2)_{22}$,
+
+$$
+0\le x\le\gamma,\qquad 0\le y\le A+\gamma.
+$$
+
+Positivity of $\sigma_2$ gives
+$|(\sigma_2)_{02}|\le\sqrt{xy}$. Since
+$C=\Phi_s^\dagger(\mathcal R^\dagger(Q))$ has
+$C_{22}=\operatorname{Tr}(Q\sigma_2)$, we obtain
+
+$$
+C_{22}\le\frac{x+y}{2}+\sqrt{xy}
+ \le\frac38+\gamma+\sqrt{\gamma(3/4+\gamma)}.
+\tag{104.5}
+$$
+
+At $\gamma=1/250$ the last expression is
+$(379+\sqrt{3016})/1000<434/1000=217/500$; it is increasing in
+$\gamma$, so this bound holds throughout the assumed interval. The erased
+$(0,2)$ entry of every $\Phi_s^\dagger(K)$ gives
+
+$$
+(C-Q)|2\rangle=-\tfrac12|0\rangle+(C_{22}-\tfrac12)|2\rangle,
+$$
+
+and hence
+
+$$
+ e_Q(\mathcal R;s)^2
+ \ge\frac14+(C_{22}-\tfrac12)^2
+ >\frac14+\left(\frac{33}{500}\right)^2
+ =\frac{63589}{250000}
+ >\left(\frac12+\frac1{250}\right)^2.
+\tag{104.6}
+$$
+
+This contradicts the assumed third bound. Therefore every decoder has the
+maximum in (104.2) greater than $1/250$, which implies (104.3) for its
+infimum. The CPTP Choi set is compact and the three task losses are
+continuous, so the infimum is also a minimum; this observation is not
+needed for the numerical lower bound. $\square$
+
+**Theorem 104.2 (Exact horizon set and minimal witness).** There exists a
+single terminal decoder attaining the individual optimum of every rank-one
+task exactly at the empty horizon and at the one-step horizon, and at no
+other actual finite horizon. The same failure holds at the actual limiting
+channel. The witness $T=\{P_0,P_2,Q\}$ is inclusion-minimal: every proper
+subset has a common attainer, while (104.3) holds for all
+$s\in\mathcal S_{\rm late}$.
+
+*Proof.* Proposition 103.2 proves existence at $n=0,1$. If a decoder were
+optimal for every rank-one task at a later horizon or at the limit, it would
+be optimal simultaneously for the three tasks in $T$, contradicting
+Theorem 104.1. Proposition 103.1 and (103.4)--(103.5) show that every
+proper pair, and hence every proper subset, has a common individual-optimum
+attainer. Thus the exact finite set is $\{0,1\}$, with the actual limit
+excluded as well. The claim is only inclusion-minimality of this particular
+triple; it does not assert that all pairs are compatible or that three is a
+global minimum obstruction size. $\square$
+
+The effect formulation (103.2) is the standard worst-state/operator-norm
+interface used in the task definition; see [Janssens, §2][JAN]. His
+convention for completely positive maps includes unitality, as holds for
+the adjoint of every CPTP decoder here. For a unital completely positive
+map, the multiplicative-domain criterion uses both Schwarz equalities; see
+[Choi--Johnston--Kribs, Theorem 8][CJK]. No multiplicative-domain
+classification is needed for the displayed pair constructions or for the
+PSD obstruction. The Choi positivity and trace-preservation interfaces are
+those recorded in [Watrous, Chapter 2, Theorems 2.22 and 2.26][TQI2].
+
+[HSR]: https://arxiv.org/pdf/quant-ph/0302031v2 "M. Horodecki, P. W. Shor and M. B. Ruskai, Entanglement Breaking Channels"
+[CJK]: https://arxiv.org/pdf/0811.0947v1 "M.-D. Choi, K. Johnston and D. W. Kribs, The Multiplicative Domain in Quantum Error Correction"
+[JAN]: https://arxiv.org/pdf/quant-ph/0606093v1 "G. Janssens, Unifying Decoherence and the Heisenberg Principle"
+[SHA]: https://arxiv.org/abs/2104.06062 "Shahbeigi et al., Journal of Physics A 54, 345301 (2021)"
+[BKK]: https://arxiv.org/pdf/0705.1574 "C. Bény, A. Kempf and D. W. Kribs, Quantum Error Correction of Observables"
+
+## 追加锚（本行以下为增补区）
