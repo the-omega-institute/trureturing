@@ -80,7 +80,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.wordField_co
 
 For all D,hu,A,w,e,v, (wordField(D,hu,A,w)).coeff(e)v equals finsum_m flatTerm(D,hu,A,w,e,v,m). This coefficient identity is the of_coeff interface consumed by sourceField_coefficient; its proof is a binding step, not a separate mathematical novelty. The actual construction is the pointwise linear map and derived bound preceding it. In particular the empty word sums over Unit and recovers A.
 
-chargedWordField uses exactly chargedField(D,hu,a) as its seed, for every integral charge a. That existing seed retains chargeNorm=B(a,a), chargeScalar=2^(-B(a,a)), the native half-creation/translation coefficients and the actual groundAction(a). occurrences(d)=d.toMultiset.toList enumerates each natural exponent with its multiplicity. polynomialField extends the corresponding charged word fields by basisMonomials.constr over every oscillator polynomial. sourceField is Finsupp.lsum of these linear maps over the existing ordinary source Carrier(D)=Charge(D) ->finitely-supported Oscillator(D). Thus it is a linear map from every finite-charge source to genuine Hahn fields acting on all actual twisted states. This construction chooses the canonical occurrence list; independence of other occurrence enumerations is not asserted here.
+chargedWordField uses exactly chargedField(D,hu,a) as its seed, for every integral charge a. That existing seed retains chargeNorm=B(a,a), chargeScalar=2^(-B(a,a)), the native half-creation/translation coefficients and the actual groundAction(a). occurrences(d)=d.toMultiset.toList enumerates each natural exponent with its multiplicity. polynomialField extends the corresponding charged word fields by basisMonomials.constr over every oscillator polynomial. sourceField is Finsupp.lsum of these linear maps over the existing ordinary source Carrier(D)=Charge(D) ->finitely-supported Oscillator(D). Thus it is a linear map from every finite-charge source to genuine Hahn fields acting on all actual twisted states. The occurrence lists retain multiplicity. Permutation invariance identifies different enumerations, and multiplication by one oscillator becomes singleton word insertion.
 
 **Theorem 1.6 (Finite charge and monomial extension of the actual coefficient).**
 
@@ -114,9 +114,23 @@ Source provenance: the preserved arbitrary-word support candidate is the 347-lin
 
 The native current/tensor architecture retains Kalle Kytola's 2025 copyright, Apache-2.0 notice and the additional 2026 half-integer implementation notice. Finite-support, contraction and induction architecture comes through VirasoroProject revision 5ff4245383b2cdd4eea7a0524bc1274c32041eb4 and completed trureturing PolynomialFock sources at bfd9ff0f15397a4fb933f36d701a60d325d84b08. These are architectural sources, not an imported arbitrary-word half-Fock theorem. Mathematical context: Dong-Nagatomo, math/9808088v1, section 3.2, PDF pp.12-14, especially oscillator tensor ground and Delta on p.13; rank/16 is on p.19, proof of Theorem 3.13(3), attributed there to FLM. Bakalov-Kac, math/0402315v1, (4.4) and pp.10-13, (4.23)-(4.38), supplies twisted-current/field context. FLM and FHL full texts were not retrieved by this source phase. No mathematical or literature novelty is claimed.
 
-The proof scope includes arbitrary-word pointwise finite support, derived lower truncation and finite-charge source extension on the actual dependent tensor module. Registration remains unfinished: all seven records are declared_unresolved, none declared_validated. Each is blocked at source.dictionary_or_proof_coordinate because hu is selected as lexical proof coordinate 1. Issue https://github.com/the-omega-institute/trureturing/issues/17623 covers all seven displayed source theorems and this hu-dependent boundary. Compiled typed Reg proof terms do not establish accepted source binding or certificates, and an unknown continuation supplies no residual certificate.
+The proof scope includes arbitrary-word pointwise finite support, derived lower truncation and finite-charge source extension on the actual dependent tensor module. The dependent-family audit retains the original determinant witness hu and the actual carrier. Issue https://github.com/the-omega-institute/trureturing/issues/17623 identifies the dictionary/proof-coordinate template boundary; each new target still requires its own current diagnostic and binding evidence.
 
-The scientific residual remains: consume actual charged coordinate monodromy; prove the arbitrary-polynomial normal parity law including inhomogeneous inputs and negative exponents; prove the pure Corr(-a,sigma p)[s]=sigma(Corr(a,p)[s]) law with the original singleton/pair derivations; then construct the actual finite corrected field with coefficient index e+2*s and prove its own truncation and unrestricted all-source two-sheet covariance. The shift dictionary is S_s(A)[e]=A[e+2*s], t^(-2*s)=z^(-s), with z=t^2. This normal supplier does not identify itself with that corrected field. Ordered normal-field identities, corrected all-state translation/BPZ, twisted locality/Jacobi/Borcherds, conformal identification, twisted intertwiners, holomorphic extension, Leech/Monster, anomalies/fusion, full CFT, string theory and the AdS/CFT bridge remain downstream obligations.
+The normal field is distinct from the Corr-corrected field. The shift dictionary is S_s(A)[e]=A[e+2*s], t^(-2*s)=z^(-s), with z=t^2. LatticeHalfFockOriginalTranslation combines polynomial insertion, jet differentiation, the charged seed and the public Corr sector contract through a correction-polynomial evaluator induction to obtain physical translation of every corrected source. Coordinate monodromy, arbitrary-polynomial parity and all-source two-sheet covariance are separate assertions. Twisted locality/Jacobi/Borcherds, full conformal identification, twisted intertwiners, holomorphic extension, Leech/Monster, anomalies/fusion, full CFT, string theory and the AdS/CFT bridge remain further obligations.
+
+**Theorem 1.8 (Oscillator multiplication is singleton word insertion).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.polynomialField_X_mul`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.polynomialField_X_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For every D:LatticeData, hu:IsUnit D.G.det, q:Charge D, i:Index D and p:Oscillator D, polynomialField D hu q (X i * p) equals wordField D hu (polynomialField D hu q p) [i]. singletonLinear is precisely this existing singleton wordField, organized as a linear map on its seed. The cons identity applies finsum_curry to the joint mode support of the whole word at fixed exponent and input. Adjacent exchanges reindex both modes by an involution. Same-sign jet currents commute by the actual half-integer Heisenberg law l+r+1=0; mixed signs require only association. List permutation then transports the monomial occurrence enumeration. Basis linear extension proves the statement on every algebraic oscillator polynomial, including repeated variables and inhomogeneous inputs. The normal evaluator uses this identity in its polynomial induction.
 
 `D5/L/VertexAlgebra/bakalovkac2004lattice`
 
@@ -129,6 +143,7 @@ The scientific residual remains: consume actual charged coordinate monodromy; pr
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.flatCoefficient_factorization`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.flatTerm_finite`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.flatTerm_support_bound`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.polynomialField_X_mul`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.sourceField_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.sourceField_lower_truncation`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.wordCoefficient_lower_truncation`
