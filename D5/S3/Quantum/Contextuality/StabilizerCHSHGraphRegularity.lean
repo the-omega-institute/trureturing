@@ -6,6 +6,7 @@
    utility: none
    digest: The qudit CHSH stabilizer-projector orthogonality graph has degree (2p-1)(p-1). -/
 
+import D5.S3.Fourier.SparseGeneratorFamily
 import D5.S3.Observer.BornReduction
 import D5.S3.Observer.MatrixUnitCertificate
 import D5.S3.Quantum.PureState.PureStateHandshake
@@ -18,42 +19,33 @@ set_option relaxedAutoImplicit false
 open scoped BigOperators Matrix Kronecker
 
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Observer.WindowRegister (windowRoot shiftMatrix clockMatrix)
+open D5.S3.Fourier.SparseGeneratorGapObstruction (char_sum)
 
 namespace D5.S3.Quantum.Contextuality.StabilizerCHSHGraphRegularity
 
 noncomputable section
 
-/-- The primitive phase used by the qudit Weyl operators. -/
-def omega (p : ℕ) : ℂ := D5.S3.Observer.WindowRegister.windowRoot p
-
-/-- The cyclic shift matrix, with `shiftX p |x⟩ = |x+1⟩`. -/
-def shiftX (p : ℕ) [Fact p.Prime] : Matrix (ZMod p) (ZMod p) ℂ :=
-  D5.S3.Observer.WindowRegister.shiftMatrix p
-
-/-- The clock matrix, with `clockZ p |x⟩ = omega p ^ x |x⟩`. -/
-def clockZ (p : ℕ) [Fact p.Prime] : Matrix (ZMod p) (ZMod p) ℂ :=
-  D5.S3.Observer.WindowRegister.clockMatrix p
-
 /-- Alice's CHSH measurement operator. -/
 def aliceOp (p : ℕ) [Fact p.Prime] (j : ZMod p) : Matrix (ZMod p) (ZMod p) ℂ :=
   if p = 2 then
-    if j = 0 then shiftX p else Complex.I • (shiftX p * clockZ p)
+    if j = 0 then shiftMatrix p else Complex.I • (shiftMatrix p * clockMatrix p)
   else
-    omega p ^ (j * (j + 1)).val • (shiftX p * clockZ p ^ j.val)
+    windowRoot p ^ (j * (j + 1)).val • (shiftMatrix p * clockMatrix p ^ j.val)
 
 /-- Bob's CHSH measurement operator. -/
 def bobOp (p : ℕ) [Fact p.Prime] (k : ZMod p) : Matrix (ZMod p) (ZMod p) ℂ :=
   if p = 2 then
-    if k = 0 then shiftX p else Complex.I • (shiftX p * clockZ p)
+    if k = 0 then shiftMatrix p else Complex.I • (shiftMatrix p * clockMatrix p)
   else
     let h : ZMod p := (2 : ZMod p)⁻¹
-    omega p ^ (h ^ 2 * (k ^ 2 + 2 * k)).val • (shiftX p * clockZ p ^ (h * k).val)
+    windowRoot p ^ (h ^ 2 * (k ^ 2 + 2 * k)).val • (shiftMatrix p * clockMatrix p ^ (h * k).val)
 
 /-- The normalized spectral projector for an eigenvalue indexed by `a`. -/
 def eigenProj (p : ℕ) [Fact p.Prime] (M : Matrix (ZMod p) (ZMod p) ℂ) (a : ZMod p) :
     Matrix (ZMod p) (ZMod p) ℂ :=
   (p : ℂ)⁻¹ • ∑ m : Fin p,
-    omega p ^ (-(m : ZMod p) * a).val • M ^ m.val
+    windowRoot p ^ (-(m : ZMod p) * a).val • M ^ m.val
 
 /-- The rank-one projector selected by the qudit CHSH decomposition. -/
 def vertexProj (p : ℕ) [Fact p.Prime] (v : ZMod p × ZMod p × ZMod p) :
@@ -71,25 +63,6 @@ def claim : Prop :=
         (Finset.univ.filter
           (fun w => w ≠ v ∧ vertexProj p v * vertexProj p w = 0)).card =
           (2 * p - 1) * (p - 1)
-
-private theorem phase_eq (p : ℕ) [Fact p.Prime] (t : ZMod p) :
-    omega p ^ t.val = ZMod.stdAddChar t := by
-  have h : omega p = ZMod.stdAddChar (1 : ZMod p) := by
-    simpa [omega, D5.S3.Observer.WindowRegister.windowRoot] using
-      (ZMod.stdAddChar_coe (N := p) (1 : ℤ)).symm
-  rw [h, ← AddChar.map_nsmul_eq_pow]
-  simp
-
-private theorem char_star (p : ℕ) [Fact p.Prime] (t : ZMod p) :
-    star (ZMod.stdAddChar t) = ZMod.stdAddChar (-t) := by
-  simpa only [AddChar.inv_apply, starRingEnd_apply] using
-    (AddChar.starComp_apply (R := ZMod p) (φ := ZMod.stdAddChar)
-      (by rw [ringChar.eq (ZMod p) p]; exact (Fact.out : p.Prime).pos) t)
-
-private theorem char_unit (p : ℕ) [Fact p.Prime] (t : ZMod p) :
-    ZMod.stdAddChar t * star (ZMod.stdAddChar t) = 1 := by
-  simp only [ZMod.stdAddChar_apply, Complex.star_def, Complex.mul_conj,
-    Circle.normSq_coe, Complex.ofReal_one]
 
 /-- A cyclic shift conjugated by the diagonal matrix of unit phases. -/
 private def twistedShift (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ) :
@@ -114,40 +87,42 @@ private theorem twistedShift_pow (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
         funext i
         exact (mul_comm _ _).trans (hu i) }
   have hconj : twistedShift p u = (U : Matrix (ZMod p) (ZMod p) ℂ) *
-      shiftX p * (↑U⁻¹ : Matrix (ZMod p) (ZMod p) ℂ) := by
+      shiftMatrix p * (↑U⁻¹ : Matrix (ZMod p) (ZMod p) ℂ) := by
     ext i j
     change (if i = j + 1 then u i * star (u j) else 0) =
-      (Matrix.diagonal u * shiftX p * Matrix.diagonal (star u)) i j
-    simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, shiftX,
+      (Matrix.diagonal u * shiftMatrix p * Matrix.diagonal (star u)) i j
+    simp only [Matrix.mul_diagonal, Matrix.diagonal_mul,
       D5.S3.Observer.WindowRegister.shiftMatrix, Matrix.circulant_apply, sub_eq_iff_eq_add']
     split_ifs <;> simp
   rw [hconj, Units.conj_pow]
-  change (Matrix.diagonal u * shiftX p ^ m * Matrix.diagonal (star u)) x y = _
-  simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, shiftX,
+  change (Matrix.diagonal u * shiftMatrix p ^ m * Matrix.diagonal (star u)) x y = _
+  simp only [Matrix.mul_diagonal, Matrix.diagonal_mul,
     D5.S3.Observer.MatrixUnitCertificate.shift_matrix_pow_apply, sub_eq_iff_eq_add']
   split_ifs <;> simp
-
-private theorem sum_fin_cast (p : ℕ) [Fact p.Prime] (f : ZMod p → ℂ) :
-    (∑ m : Fin p, f (m.val : ZMod p)) = ∑ m : ZMod p, f m := by
-  have h (m : Fin p) : (ZMod.finEquiv p).toEquiv m = (m.val : ZMod p) := by
-    cases p with
-    | zero => exact Fin.elim0 m
-    | succ n => exact (ZMod.natCast_zmod_val (n := n + 1) m).symm
-  simpa only [h] using (ZMod.finEquiv p).toEquiv.sum_comp f
 
 private theorem twisted_eigenProj (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
     (hu : ∀ x, u x * star (u x) = 1) (a x y : ZMod p) :
     eigenProj p (twistedShift p u) a x y =
       (p : ℂ)⁻¹ * ZMod.stdAddChar (-a * (x - y)) * u x * star (u y) := by
+  have hphase (t : ZMod p) : windowRoot p ^ t.val = ZMod.stdAddChar t := by
+    have hroot : windowRoot p = ZMod.stdAddChar (1 : ZMod p) := by
+      simpa [windowRoot] using (ZMod.stdAddChar_coe (N := p) (1 : ℤ)).symm
+    rw [hroot, ← AddChar.map_nsmul_eq_pow]
+    simp
   classical
   simp only [eigenProj, Matrix.smul_apply, smul_eq_mul, Matrix.sum_apply,
-    twistedShift_pow p u hu, phase_eq]
+    twistedShift_pow p u hu, hphase]
   have hs :
       (∑ m : Fin p, ZMod.stdAddChar (-(m.val : ZMod p) * a) *
         (if x = y + (m.val : ZMod p) then u x * star (u y) else 0)) =
         ZMod.stdAddChar (-a * (x - y)) * (u x * star (u y)) := by
     simp_rw [mul_ite, mul_zero]
-    rw [sum_fin_cast p (fun m => if x = y + m then
+    have hcast (m : Fin p) : (ZMod.finEquiv p).toEquiv m = (m.val : ZMod p) := by
+      cases p with
+      | zero => exact Fin.elim0 m
+      | succ n => exact (ZMod.natCast_zmod_val (n := n + 1) m).symm
+    simp_rw [← hcast]
+    rw [(ZMod.finEquiv p).toEquiv.sum_comp (fun m => if x = y + m then
       ZMod.stdAddChar (-m * a) * (u x * star (u y)) else 0)]
     have he (m : ZMod p) : x = y + m ↔ m = x - y := by
       constructor <;> intro h <;> linear_combination -h
@@ -167,10 +142,14 @@ private theorem twisted_eigenProj_pure (p : ℕ) [Fact p.Prime] (u : ZMod p → 
     (hu : ∀ x, u x * star (u x) = 1) (a : ZMod p) :
     eigenProj p (twistedShift p u) a =
       pureProj p (fun x => ZMod.stdAddChar (-a * x) * u x) := by
+  have hstar (t : ZMod p) : star (ZMod.stdAddChar t) = ZMod.stdAddChar (-t) := by
+    simpa only [AddChar.inv_apply, starRingEnd_apply] using
+      (AddChar.starComp_apply (R := ZMod p) (φ := ZMod.stdAddChar)
+        (by rw [ringChar.eq (ZMod p) p]; exact (Fact.out : p.Prime).pos) t)
   ext x y
   rw [twisted_eigenProj p u hu]
   simp only [pureProj, rankOneDensity, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
-    star_mul, char_star, smul_eq_mul]
+    star_mul, hstar, smul_eq_mul]
   rw [show -a * (x - y) = -a * x + -(-a * y) by ring,
     AddChar.map_add_eq_mul]
   ring
@@ -228,42 +207,42 @@ private theorem pure_mul_zero (p : ℕ) [Fact p.Prime] (u v : ZMod p → ℂ)
 private def chirp (p : ℕ) [Fact p.Prime] (j c : ZMod p) (x : ZMod p) : ℂ :=
   ZMod.stdAddChar (c * x + j * (2 : ZMod p)⁻¹ * x * (x - 1))
 
-private theorem chirp_unit (p : ℕ) [Fact p.Prime] (j c x : ZMod p) :
-    chirp p j c x * star (chirp p j c x) = 1 := char_unit p _
-
-private theorem clock_pow (p : ℕ) [Fact p.Prime] (n : ℕ) :
-    clockZ p ^ n = Matrix.diagonal (fun y => ZMod.stdAddChar ((n : ZMod p) * y)) := by
-  rw [clockZ, D5.S3.Observer.WindowRegister.clockMatrix, Matrix.diagonal_pow]
-  congr 1
-  funext y
-  change (omega p ^ y.val) ^ n = _
-  rw [phase_eq, ← AddChar.map_nsmul_eq_pow]
-  simp only [nsmul_eq_mul]
-
 /-- The quadratic chirp has successive phase difference c+j*y. -/
 private theorem weyl_chirp (p : ℕ) [Fact p.Prime] (hp : p ≠ 2) (j c : ZMod p) :
-    omega p ^ c.val • (shiftX p * clockZ p ^ j.val) =
+    windowRoot p ^ c.val • (shiftMatrix p * clockMatrix p ^ j.val) =
       twistedShift p (chirp p j c) := by
+  have hstar (t : ZMod p) : star (ZMod.stdAddChar t) = ZMod.stdAddChar (-t) := by
+    simpa only [AddChar.inv_apply, starRingEnd_apply] using
+      (AddChar.starComp_apply (R := ZMod p) (φ := ZMod.stdAddChar)
+        (by rw [ringChar.eq (ZMod p) p]; exact (Fact.out : p.Prime).pos) t)
+  have hphase (t : ZMod p) : windowRoot p ^ t.val = ZMod.stdAddChar t := by
+    have hroot : windowRoot p = ZMod.stdAddChar (1 : ZMod p) := by
+      simpa [windowRoot] using (ZMod.stdAddChar_coe (N := p) (1 : ℤ)).symm
+    rw [hroot, ← AddChar.map_nsmul_eq_pow]
+    simp
+  have hclock : clockMatrix p ^ j.val =
+      Matrix.diagonal (fun y => ZMod.stdAddChar (j * y)) := by
+    rw [D5.S3.Observer.WindowRegister.clockMatrix, Matrix.diagonal_pow]
+    congr 1
+    funext y
+    change (windowRoot p ^ y.val) ^ j.val = _
+    rw [hphase, ← AddChar.map_nsmul_eq_pow]
+    simp only [nsmul_eq_mul, ZMod.natCast_zmod_val]
   have htwo : (2 : ZMod p) ≠ 0 := by
     exact Ring.two_ne_zero (by simpa only [ZMod.ringChar_zmod_n] using hp)
   have hi : (2 : ZMod p) * (2 : ZMod p)⁻¹ = 1 := mul_inv_cancel₀ htwo
   ext x y
-  simp only [clock_pow, Matrix.mul_diagonal, Matrix.smul_apply, smul_eq_mul,
-    shiftX, D5.S3.Observer.WindowRegister.shiftMatrix, Matrix.circulant_apply,
-    phase_eq, twistedShift, chirp, char_star]
+  simp only [hclock, Matrix.mul_diagonal, Matrix.smul_apply, smul_eq_mul,
+    D5.S3.Observer.WindowRegister.shiftMatrix, Matrix.circulant_apply,
+    hphase, twistedShift, chirp, hstar]
   have he : x - y = 1 ↔ x = y + 1 := sub_eq_iff_eq_add'
   simp only [he]
   split_ifs with h
   · subst x
-    simp only [one_mul, ZMod.natCast_zmod_val, ← AddChar.map_add_eq_mul]
+    simp only [one_mul, ← AddChar.map_add_eq_mul]
     congr 1
     linear_combination -(j * y) * hi
   · simp
-
-private theorem char_sum (p : ℕ) [Fact p.Prime] (c : ZMod p) :
-    (∑ x : ZMod p, ZMod.stdAddChar (c * x)) = if c = 0 then (p : ℂ) else 0 := by
-  simpa only [mul_comm c, ZMod.card, Nat.cast_ite, Nat.cast_zero] using
-    (AddChar.sum_mulShift c (ZMod.isPrimitive_stdAddChar p))
 
 /-- In the squared quadratic sum, translation leaves a nontrivial linear
 character except at the zero shift. -/
@@ -304,9 +283,11 @@ private theorem quadratic_energy (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
 
 private theorem chirp_eigenProj (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
     (j c a : ZMod p) :
-    eigenProj p (omega p ^ c.val • (shiftX p * clockZ p ^ j.val)) a =
+    eigenProj p (windowRoot p ^ c.val • (shiftMatrix p * clockMatrix p ^ j.val)) a =
       pureProj p (chirp p j (c - a)) := by
-  rw [weyl_chirp p hp, twisted_eigenProj_pure p _ (chirp_unit p j c)]
+  rw [weyl_chirp p hp, twisted_eigenProj_pure p _ (fun x => by
+    simp only [chirp, ZMod.stdAddChar_apply, Complex.star_def, Complex.mul_conj,
+      Circle.normSq_coe, Complex.ofReal_one])]
   congr 1
   funext x
   simp only [chirp, ← AddChar.map_add_eq_mul]
@@ -318,9 +299,13 @@ private theorem chirp_overlap (p : ℕ) [Fact p.Prime] (j c l d : ZMod p) :
       ∑ x : ZMod p, ZMod.stdAddChar
         (((l - j) * (2 : ZMod p)⁻¹) * x ^ 2 +
           (d - c - (l - j) * (2 : ZMod p)⁻¹) * x) := by
+  have hstar (t : ZMod p) : star (ZMod.stdAddChar t) = ZMod.stdAddChar (-t) := by
+    simpa only [AddChar.inv_apply, starRingEnd_apply] using
+      (AddChar.starComp_apply (R := ZMod p) (φ := ZMod.stdAddChar)
+        (by rw [ringChar.eq (ZMod p) p]; exact (Fact.out : p.Prime).pos) t)
   apply Finset.sum_congr rfl
   intro x _
-  simp only [Pi.star_apply, chirp, char_star, ← AddChar.map_add_eq_mul]
+  simp only [Pi.star_apply, chirp, hstar, ← AddChar.map_add_eq_mul]
   congr 1
   ring
 
@@ -373,36 +358,24 @@ private theorem alice_unit (p : ℕ) [Fact p.Prime] (j a x : ZMod p) :
       _ = (ZMod.stdAddChar (-a * x) * star (ZMod.stdAddChar (-a * x))) *
           ((if j = 0 then 1 else Complex.I ^ x.val) *
           star (if j = 0 then 1 else Complex.I ^ x.val)) := by ring
-      _ = 1 := by rw [char_unit, hx]; ring
-  · simpa only [aliceVec, ite_eq_right hp] using chirp_unit p j (j * (j + 1) - a) x
+      _ = 1 := by
+        rw [hx]
+        simp only [ZMod.stdAddChar_apply, Complex.star_def, Complex.mul_conj,
+          Circle.normSq_coe, Complex.ofReal_one, mul_one]
+  · simp only [aliceVec, ite_eq_right hp, chirp, ZMod.stdAddChar_apply, Complex.star_def,
+      Complex.mul_conj, Circle.normSq_coe, Complex.ofReal_one]
 
 private theorem bob_unit (p : ℕ) [Fact p.Prime] (k b x : ZMod p) :
     bobVec p k b x * star (bobVec p k b x) = 1 := by
   by_cases hp : p = 2
   · simpa only [bobVec, ite_eq_left hp] using alice_unit p k b x
-  · simpa only [bobVec, ite_eq_right hp] using chirp_unit p _ _ x
-
-private theorem omega_two : omega 2 = -1 := by
-  unfold omega D5.S3.Observer.WindowRegister.windowRoot
-  norm_num only [Nat.cast_ofNat]
-  rw [show 2 * (Real.pi : ℂ) * Complex.I / (2 : ℂ) = Real.pi * Complex.I by ring]
-  exact Complex.exp_pi_mul_I
-
-private theorem two_cases (x : ZMod 2) : x = 0 ∨ x = 1 := by
-  fin_cases x
-  · exact Or.inl rfl
-  · exact Or.inr rfl
-
-private theorem sum_two (f : ZMod 2 → ℂ) : ∑ x : ZMod 2, f x = f 0 + f 1 :=
-  Fin.sum_univ_two f
-
-private theorem char_two (x : ZMod 2) :
-    ZMod.stdAddChar x = if x = 0 then (1 : ℂ) else -1 := by
-  rcases two_cases x with rfl | rfl <;>
-    norm_num [← phase_eq, omega_two, ZMod.val_zero, ZMod.val_one_eq_one_mod]
+  · simp only [bobVec, ite_eq_right hp, chirp, ZMod.stdAddChar_apply, Complex.star_def,
+      Complex.mul_conj, Circle.normSq_coe, Complex.ofReal_one]
 
 private theorem alice_pure (p : ℕ) [Fact p.Prime] (j a : ZMod p) :
     eigenProj p (aliceOp p j) a = pureProj p (aliceVec p j a) := by
+  have hroot_two : windowRoot 2 = -1 :=
+    (D5.S3.Observer.WindowRegister.windowRoot_isPrimitiveRoot 2).eq_neg_one_of_two_right
   classical
   by_cases hp : p = 2
   · subst p
@@ -415,16 +388,16 @@ private theorem alice_pure (p : ℕ) [Fact p.Prime] (j a : ZMod p) :
       · fin_cases x <;> norm_num [ZMod.val, Complex.star_def]
     have hm : aliceOp 2 j = twistedShift 2 u := by
       ext x y
-      rcases two_cases j with rfl | rfl <;>
-        rcases two_cases x with rfl | rfl <;>
-        rcases two_cases y with rfl | rfl <;>
-        norm_num [aliceOp, shiftX, clockZ, twistedShift, u, omega,
+      have hcases (z : ZMod 2) : z = 0 ∨ z = 1 :=
+        (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
+          ∀ z : ZMod 2, z = 0 ∨ z = 1) z
+      rcases hcases j with rfl | rfl <;>
+        rcases hcases x with rfl | rfl <;>
+        rcases hcases y with rfl | rfl <;>
+        norm_num [aliceOp, shiftMatrix, clockMatrix, twistedShift, u,
           ZMod.val_zero, ZMod.val_one_eq_one_mod,
           show (-1 : ZMod 2) = 1 by rfl, show (2 : ZMod 2) = 0 by rfl,
-          D5.S3.Observer.WindowRegister.shiftMatrix,
-          D5.S3.Observer.WindowRegister.clockMatrix, Matrix.circulant_apply,
-          Matrix.mul_diagonal, show D5.S3.Observer.WindowRegister.windowRoot 2 = -1
-            from omega_two] <;>
+          Matrix.circulant_apply, Matrix.mul_diagonal, hroot_two] <;>
         simp [show (-1 : ZMod 2) = 1 by rfl, show (2 : ZMod 2) = 0 by rfl]
     rw [hm, twisted_eigenProj_pure 2 u hu]
     rfl
@@ -445,13 +418,38 @@ private theorem alice_energy (p : ℕ) [Fact p.Prime] (j a l b : ZMod p) :
         (star (aliceVec p l b) ⬝ᵥ aliceVec p j a) =
       if j = l then (if a = b then (p : ℂ) ^ 2 else 0) else p := by
   classical
+  have hchar_two (x : ZMod 2) :
+      ZMod.stdAddChar x = if x = 0 then (1 : ℂ) else -1 := by
+    have hroot_two : windowRoot 2 = -1 :=
+      (D5.S3.Observer.WindowRegister.windowRoot_isPrimitiveRoot 2).eq_neg_one_of_two_right
+    have hphase (t : ZMod 2) : windowRoot 2 ^ t.val = ZMod.stdAddChar t := by
+      have hroot : windowRoot 2 = ZMod.stdAddChar (1 : ZMod 2) := by
+        simpa [windowRoot] using (ZMod.stdAddChar_coe (N := 2) (1 : ℤ)).symm
+      rw [hroot, ← AddChar.map_nsmul_eq_pow]
+      simp
+    have hcases : x = 0 ∨ x = 1 :=
+      (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
+        ∀ x : ZMod 2, x = 0 ∨ x = 1) x
+    rcases hcases with rfl | rfl <;>
+      norm_num [← hphase, hroot_two, ZMod.val_zero, ZMod.val_one_eq_one_mod]
   by_cases hp : p = 2
   · subst p
-    rcases two_cases j with rfl | rfl <;>
-      rcases two_cases a with rfl | rfl <;>
-      rcases two_cases l with rfl | rfl <;>
-      rcases two_cases b with rfl | rfl <;>
-      norm_num [aliceVec, dotProduct, sum_two, char_two, ZMod.val_zero,
+    change (∑ x : Fin 2, star (aliceVec 2 j a x) * aliceVec 2 l b x) *
+        (∑ x : Fin 2, star (aliceVec 2 l b x) * aliceVec 2 j a x) = _
+    rw [Fin.sum_univ_two, Fin.sum_univ_two]
+    change
+      (star (aliceVec 2 j a 0) * aliceVec 2 l b 0 +
+        star (aliceVec 2 j a 1) * aliceVec 2 l b 1) *
+      (star (aliceVec 2 l b 0) * aliceVec 2 j a 0 +
+        star (aliceVec 2 l b 1) * aliceVec 2 j a 1) = _
+    have hcases (z : ZMod 2) : z = 0 ∨ z = 1 :=
+      (Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩ :
+        ∀ z : ZMod 2, z = 0 ∨ z = 1) z
+    rcases hcases j with rfl | rfl <;>
+      rcases hcases a with rfl | rfl <;>
+      rcases hcases l with rfl | rfl <;>
+      rcases hcases b with rfl | rfl <;>
+      norm_num [aliceVec, hchar_two, ZMod.val_zero,
         ZMod.val_one_eq_one_mod, Pi.star_apply, Complex.star_def] <;> ring_nf <;> norm_num
   · simp only [aliceVec, ite_eq_right hp]
     rw [chirp_overlap_energy p hp]
