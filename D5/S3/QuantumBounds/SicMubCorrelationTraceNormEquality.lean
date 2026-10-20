@@ -86,22 +86,23 @@ private theorem sicProjector_span {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
   let K : LinearMap.BilinForm ℂ (Matrix (Fin d) (Fin d) ℂ) :=
     LinearMap.compr₂ (LinearMap.mul ℂ (Matrix (Fin d) (Fin d) ℂ))
       (Matrix.traceLinearMap (Fin d) ℂ ℂ)
-  let τ := Matrix.traceLinearMap (Fin d) ℂ ℂ
-  let B : LinearMap.BilinForm ℂ (Matrix (Fin d) (Fin d) ℂ) :=
-    K - (1 / (d + 1) : ℂ) • τ.smulRight τ
   have hlin : LinearIndependent ℂ (fun i => rankOneDensity (S.1 i)) := by
-    apply LinearMap.BilinForm.linearIndependent_of_iIsOrtho (B := B)
-    · intro i j hij
-      change (rankOneDensity (S.1 i) * rankOneDensity (S.1 j)).trace -
-        1 / (d + 1) * ((rankOneDensity (S.1 i)).trace * (rankOneDensity (S.1 j)).trace) = 0
-      rw [sicProjector_gram, sicProjector_trace, sicProjector_trace]
-      simp only [hij, ite_false, mul_zero, zero_add, mul_one, sub_self]
-    · intro i
-      change (rankOneDensity (S.1 i) * rankOneDensity (S.1 i)).trace -
-        1 / (d + 1) * ((rankOneDensity (S.1 i)).trace * (rankOneDensity (S.1 i)).trace) ≠ 0
-      rw [sicProjector_gram, sicProjector_trace]
-      simp only [ite_true, mul_one, add_sub_cancel_right]
-      exact div_ne_zero (by exact_mod_cast (by omega : d ≠ 0)) (by positivity)
+    apply D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.independent_nonzero_trace
+      K (Matrix.traceLinearMap (Fin d) ℂ ℂ) _ 1 (1 / (d + 1))
+    · intro i j
+      change (rankOneDensity (S.1 i) * rankOneDensity (S.1 j)).trace = _
+      rw [sicProjector_gram]
+      by_cases hij : i = j <;> simp only [hij, ite_true, ite_false, one_pow,
+        mul_one, mul_zero, zero_add]
+      field_simp
+    · exact sicProjector_trace S
+    · intro h
+      have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+      have hd1 : (d : ℂ) + 1 ≠ 0 := by positivity
+      have heq := (eq_div_iff hd1).mp (show (1 : ℂ) = 1 / (d + 1) by simpa using h)
+      apply hd0
+      linear_combination heq
+    · exact one_ne_zero
   apply hlin.span_eq_top_of_card_eq_finrank'
   simp only [Fintype.card_fin, Module.finrank_matrix, Module.finrank_self, mul_one]
 

@@ -18,6 +18,10 @@ internal sealed class GerzonEqualityParameterIdentityDocument : IScribeDocumentD
                 AssessedProvenance.FromRepo(),
                 "A bilinear form with constant diagonal value a squared and constant off-diagonal value b pairs a linear combination with its j-th vector by separating the j-th coefficient from the sum of all coefficients. The scalar field and the module are arbitrary; neither symmetry nor nondegeneracy is needed.",
                 DescribeRole.Theorem),
+            Entry("independent-nonzero-trace", "independent_nonzero_trace", "Nonzero constant trace gives linear independence", IndependentNonzeroTraceFormula(),
+                AssessedProvenance.FromRepo(),
+                "Suppose a linear functional takes the same nonzero value a on every vector, while a bilinear form takes value a squared on the diagonal and b off the diagonal, with a squared different from b. Applying the functional to a linear relation makes the coefficient sum vanish. Pairing that relation with each vector then makes every coefficient vanish. No symmetry, nondegeneracy or dimension assumption is required.",
+                DescribeRole.Theorem),
             Entry("equiangular-system", "IsEquiangularSystem", "Equiangular systems", EquiangularDefinition(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note)),
                 "Definition 2.8, page 5: “Let Φ = {ϕⱼ}ⱼ∈[n] be a sequence of vectors in a quadratic space W over F_q. For a, b ∈ F_q, Φ is called an (a, b)-equiangular system if: (i) ⟨ϕⱼ, ϕⱼ⟩ = a for every j ∈ [n], (ii) ⟨ϕᵢ, ϕⱼ⟩² = b for every i ≠ j in [n].” The sequence is represented by φ : Fin n → Fin d → F, the pairing by B, and the field parameters by a and b. Fin n indexes n vectors from zero; [n] in the paper indexes the same number from one. The predicate is polymorphic in the field and does not require its finiteness.",
@@ -46,6 +50,25 @@ internal sealed class GerzonEqualityParameterIdentityDocument : IScribeDocumentD
         var body = All(V("K"), Apply(Qualified("LinearMap", "BilinForm"), V("F"), V("S")),
             All(V("P"), Arrow(index, V("S")), All(V("a"), V("F"), All(V("b"), V("F"),
                 Imp(gram, All(V("t"), Arrow(index, V("F")), All(V("j"), index, equation)))))));
+        var structures = Seq(OpenBracket, Call("Field", V("F")), CloseBracket, Sp,
+            OpenBracket, Call("AddCommGroup", V("S")), CloseBracket, Sp,
+            OpenBracket, Call("Module", V("F"), V("S")), CloseBracket, Sp, All(V("n"), Nat, body));
+        var type = Seq(V("Type"), Star);
+        return All(V("F"), type, All(V("S"), type, structures));
+    }
+
+    private static Formula IndependentNonzeroTraceFormula()
+    {
+        var index = Call("Fin", V("n"));
+        var gram = All(V("i"), index, All(V("j"), index,
+            Equal(Call("K", Call("P", V("i")), Call("P", V("j"))),
+                Call("if", Equal(V("i"), V("j")), Square(V("a")), V("b")))));
+        var trace = All(V("i"), index, Equal(Call("tau", Call("P", V("i"))), V("a")));
+        var body = Imp(gram, Imp(trace, Imp(NotEqual(Square(V("a")), V("b")),
+            Imp(NotEqual(V("a"), D(0)), Call("LinearIndependent", V("F"), V("P"))))));
+        body = All(V("K"), Apply(Qualified("LinearMap", "BilinForm"), V("F"), V("S")),
+            All(V("tau"), Call("LinearMap", V("F"), V("S"), V("F")),
+                All(V("P"), Arrow(index, V("S")), All(V("a"), V("F"), All(V("b"), V("F"), body)))));
         var structures = Seq(OpenBracket, Call("Field", V("F")), CloseBracket, Sp,
             OpenBracket, Call("AddCommGroup", V("S")), CloseBracket, Sp,
             OpenBracket, Call("Module", V("F"), V("S")), CloseBracket, Sp, All(V("n"), Nat, body));
