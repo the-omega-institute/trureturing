@@ -162,11 +162,13 @@ private theorem coverLocal_shift (D : LatticeData) (hu : IsUnit D.G.det)
   refine ⟨order, ?_⟩
   intro firstExponent secondExponent
   have grid : coverGrid D hu (shiftField D hu shift first) second firstExponent secondExponent =
-      coverGrid D hu first second (firstExponent + 2 * shift) secondExponent := by
+      translated (coverGrid D hu first second firstExponent secondExponent) (-(shift : ℤ)) 0 := by
     funext left right
-    simp only [coverGrid, shiftField_coefficient_public]
-    rw [show firstExponent - 2 * left + 2 * shift = firstExponent + 2 * shift - 2 * left by omega]
-  rw [grid, killed]
+    simp only [coverGrid, translated, shiftField_coeff, zero_add]
+    rw [show firstExponent - 2 * left + 2 * shift =
+      firstExponent - 2 * (-(shift : ℤ) + left) by omega]
+  rw [grid, delta_translated, killed firstExponent secondExponent]
+  rfl
 
 
 private theorem chargedWordField_cover_locality (D : LatticeData) (hu : IsUnit D.G.det)
