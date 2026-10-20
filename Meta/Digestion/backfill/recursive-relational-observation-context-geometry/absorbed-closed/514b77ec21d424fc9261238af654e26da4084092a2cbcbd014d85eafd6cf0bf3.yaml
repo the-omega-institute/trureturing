@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:514b77ec21d424fc9261238af654e26da4084092a2cbcbd014d85eafd6cf0bf3
   normalized_sha256: sha256:514b77ec21d424fc9261238af654e26da4084092a2cbcbd014d85eafd6cf0bf3
 cas_ref: sha256:514b77ec21d424fc9261238af654e26da4084092a2cbcbd014d85eafd6cf0bf3
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Entropy/Submodularity/ConditionalMutualInformation.conditional_mutual_information_eq_entropy_defect
+    target_statement_id: sha256:f49a777c4725ed85c0ff757cbace9f26cc066a61708c0faea402233bf7b0f6d0
 receipts:
   unresolved_subitems: []
   chain_atoms:
