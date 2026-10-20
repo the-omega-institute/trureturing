@@ -90,7 +90,10 @@ internal sealed class WidthGradientBalancedCutRefutationDocument : IScribeDocume
                         + "⟨B²⟩ ≤ 6N = 48 at ⟨J²⟩ = 0. Since 240 > 48, the universal "
                         + "claim is false. The singlets join sites inside each half; separability "
                         + "across the cut permits these nonadjacent pairs."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wolk-guhne-2016-balanced-cut-gradient-bound-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
