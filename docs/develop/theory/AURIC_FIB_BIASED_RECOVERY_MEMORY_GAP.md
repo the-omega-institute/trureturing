@@ -802,14 +802,13 @@ entropy-rate or kernel-verified claim.
 The fixed-angle problem in [Approximate Online Recovery Memory,
 §§9, 16 and 21][APP] has a different measured instrument, scalar
 restricted effects, phase-sensitive unitary histories and prescribed
-positive-error online peak questions with $n^{3/2}$ growth bounds and
-separate unresolved logarithmic and uniform-contraction issues. Here
+positive-error online peak questions with $n^{3/2}$ growth bounds. Here
 $\eta$ is a population parameter and the unrotated accumulated
 permutation has at most six values; the unequal positive filters
 create an unavoidable optimum error. The fixed-parameter excess above
 that optimum, its vanishing terminal boundary in Theorem 6.1, and the
 finite-seed convexification do not transfer those fixed-angle
-asymptotics to this model or settle that other model's remaining gaps.
+asymptotics to this model.
 
 [FW]: AURIC_FIB_FIVE_WINDOW_QUANTUM_MEMORY.md
 [ERM]: AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md
