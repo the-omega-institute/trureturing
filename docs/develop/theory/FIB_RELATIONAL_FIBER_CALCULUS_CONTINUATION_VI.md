@@ -961,3 +961,69 @@ $$
 Both statements are contract-relative and ordinary mathematical results. They
 do not provide a universal \(W_n\) law, a physical register cost, or Lean/
 kernel certification.
+
+## 72. Finite transducers as an execution-layer realization
+
+The latest `dev` volume [Predictive Thermodynamic Finite Transducers](PREDICTIVE_THERMODYNAMIC_FINITE_TRANSDUCERS.md)
+supplies a concrete instance of the execution layer that Sections 60--62 leave
+abstract. Its source decoder is total: a valid raw word is mapped to its
+physical query, while a malformed word is mapped to a declared dummy query and
+also records an actual error prefix. The two cases are therefore not inferred
+from equality of the final output.
+
+For a raw source word of length \(L\), the declared preprocessor has a total
+clock
+
+$$
+b(L)=(4L+20)L+13,
+$$
+
+and the paid one-query protocol has an explicit total edge bound
+
+$$
+16L^2+50L+71.
+$$
+
+The response itself is read, pushed, reversed and handed to the postprocessor
+by actual transitions. The finite control labels, all writable stack contents,
+the query phase and the error-cleanup phase therefore form the controller
+state; none of these fields can be erased merely because the final numerical
+answer is unchanged. Arbitrary bad-input stack contents are explicitly cleaned
+to a terminal configuration, which is a concrete cleanup-and-clock witness for
+the failure branches in the closed-loop certificate of Section 62. The actual
+transition bound supplies the decreasing execution budget; it is not a claim
+that the thermal volume has already proved the abstract controller-minimality
+problem.
+
+This gives the following precise bridge:
+
+$$
+\text{semantic source fibre}
+\longrightarrow
+\text{finite transducer state plus actual response}
+\longrightarrow
+\text{clean terminal certificate}.
+$$
+
+It demonstrates how a FIB protocol can carry syntax, permissions, response
+phase, failure state and real transition cost in one executable history. It does
+not supply a universal finite controller for the geometric fibres above: the
+physical response port, the explicit variable universe and the declared dummy
+query are part of its contract. Nor does it turn a finite semantic fibre into
+an acquired parameter, or establish efficient physical Gibbs preparation.
+
+The new dev result therefore strengthens the theory's execution boundary rather
+than closing its recovery boundary. The required order remains
+
+$$
+\text{acquire the needed observation}
+\longrightarrow
+\text{choose a legal action}
+\longrightarrow
+\text{execute the finite transducer}
+\longrightarrow
+\text{verify termination and output}.
+$$
+
+Skipping the first two arrows would again confuse a mathematical response
+table with a protocol that an observer can actually run.
