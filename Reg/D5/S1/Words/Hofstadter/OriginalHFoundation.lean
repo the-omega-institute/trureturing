@@ -93,7 +93,9 @@ abbrev signature : Signature where
   Role := Bool
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output i _ := if i then List Letter else Letter
+  Output i _ := match i with
+    | false => Letter
+    | true => List Letter
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -187,8 +189,9 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actualReadout (i : Bool) (x : ℕ → Letter) (n : ℕ) : ℕ :=
-  if i then (wordPrefix x n).count .one else H n
+def actualReadout : Bool → (ℕ → Letter) → ℕ → ℕ
+  | false, _, n => H n
+  | true, x, n => (wordPrefix x n).count .one
 
 def actual : Realization signature :=
   realize signature actualReadout (fun e => nomatch e)
