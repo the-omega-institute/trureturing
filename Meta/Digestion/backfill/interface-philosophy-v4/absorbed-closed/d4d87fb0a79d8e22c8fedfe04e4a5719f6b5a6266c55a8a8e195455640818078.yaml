@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d4d87fb0a79d8e22c8fedfe04e4a5719f6b5a6266c55a8a8e195455640818078
-  normalized_sha256: sha256:d4d87fb0a79d8e22c8fedfe04e4a5719f6b5a6266c55a8a8e195455640818078
-cas_ref: sha256:d4d87fb0a79d8e22c8fedfe04e4a5719f6b5a6266c55a8a8e195455640818078
-coverage_gids:
-  - gid: D5/S0/Naming/ToleranceNonGroup.tolerance_non_group
-    target_statement_id: sha256:c3f6047edf5b3d4c999801a1f50145860f6f1cf007b1f03febc34df4f3d6cd24
-receipts:
-  unresolved_subitems: []

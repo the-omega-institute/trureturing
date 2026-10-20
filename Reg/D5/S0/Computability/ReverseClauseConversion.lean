@@ -40,7 +40,7 @@ def rejected_law : ¬ arena.Law rejected := by
   have bad := (h dummySource).2.2.2
   have good := (reverse_word_run dummySource).2.2.2
   have decoded : explicitRawCount dummySource = 0 := by
-    change unaryCount ([[]] : UnaryFormula 0) = 0
+    change unaryCount ([.empty] : UnaryFormula 0) = 0
     simp [unaryCount,unaryStandard,Std.Sat.CNF.eval,Std.Sat.CNF.Clause.eval]
   rw [decoded] at good
   have equal : (0 : Nat) = 3 := good.symm.trans bad
@@ -62,7 +62,7 @@ def registration : Registration arena (arena.Law actual) where
     intro i
     refine ⟨(),sourceWord ([] : UnaryFormula 0),dummySource,?_⟩
     have decoded : explicitRawCount dummySource = 0 := by
-      change unaryCount ([[]] : UnaryFormula 0) = 0
+      change unaryCount ([.empty] : UnaryFormula 0) = 0
       simp [unaryCount,unaryStandard,Std.Sat.CNF.eval,Std.Sat.CNF.Clause.eval]
     change explicitRawCount (sourceWord ([] : UnaryFormula 0)) ≠ explicitRawCount dummySource
     rw [decoded]

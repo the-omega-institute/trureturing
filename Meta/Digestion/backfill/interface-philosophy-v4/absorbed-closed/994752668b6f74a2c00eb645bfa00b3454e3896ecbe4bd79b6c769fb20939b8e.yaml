@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:994752668b6f74a2c00eb645bfa00b3454e3896ecbe4bd79b6c769fb20939b8e
-  normalized_sha256: sha256:994752668b6f74a2c00eb645bfa00b3454e3896ecbe4bd79b6c769fb20939b8e
-cas_ref: sha256:994752668b6f74a2c00eb645bfa00b3454e3896ecbe4bd79b6c769fb20939b8e
-coverage_gids:
-  - gid: D5/S0/History/Accounting/ClerkInequality.clerk_inequality
-    target_statement_id: sha256:453654a563413af0b0f8c479f97aabbbd20c4f96fb7871446d837950fced58d5
-receipts:
-  unresolved_subitems: []

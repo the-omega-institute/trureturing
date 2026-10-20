@@ -64,7 +64,7 @@ namespace D5.S3.Factorization.Galois.GoldenCubicBlockCommonDiscriminants
 
 universe u v w
 
-set_option maxHeartbeats 200000
+set_option maxHeartbeats 5000000
 theorem actual_common_cubic_three_completion_collapses (J : ℕ) :
     ∃ hK : NumberField ComplexBase, ∃ hN : NumberField (complexTower J),
     letI := hK
@@ -325,7 +325,7 @@ theorem actual_common_cubic_three_completion_collapses (J : ℕ) :
     exact hdense.closure_range
   exact ⟨fKN, hKN, hcont, hsurj⟩
 
-set_option maxHeartbeats 200000
+set_option maxHeartbeats 5000000
 theorem actual_common_cubic_three_completion_and_ramification (J : ℕ) :
     ∃ hK : NumberField ComplexBase, ∃ hN : NumberField (complexTower J),
     letI := hK
@@ -378,7 +378,7 @@ theorem actual_common_cubic_three_completion_and_ramification (J : ℕ) :
         rw [hfK a]
         change Valued.v (iN (algebraMap K N a)) = Valued.v (iK a) ^ e
         rw [hvalN, hvalK]
-        exact (valuation_liesOver (K := K) N v w a).symm)
+        simpa [heIndex] using (valuation_liesOver (K := K) N v w a).symm)
     exact congrFun hEq x
   obtain ⟨y, hy⟩ := w.valuedAdicCompletion_surjective N (WithZero.exp (1 : ℤ))
   obtain ⟨x, hx⟩ := hfsurj y
@@ -439,7 +439,7 @@ theorem actual_common_cubic_three_residue_degree_one (J : ℕ) :
         change Valued.v (iN (algebraMap K N a)) = Valued.v (iK a)
         rw [hvalN, hvalK]
         have h := valuation_liesOver (K := K) N v w a
-        rw [Ideal.ramificationIdx'_eq_ramificationIdx v.asIdeal w.asIdeal v.ne_bot, he, pow_one] at h
+        rw [he, pow_one] at h
         exact h.symm)
     exact congrFun hEq x
   letI : Field ((𝓞 K) ⧸ v.asIdeal) := Ideal.Quotient.field v.asIdeal
@@ -610,7 +610,7 @@ theorem actual_common_cubic_q_galois_and_conjugation (J : ℕ) :
     change star x ∈ QN
     rw [hN] at hx ⊢
     exact IntermediateField.adjoin_induction ℚ (s := S)
-      (p := fun x _ => star x ∈ IntermediateField.adjoin ℚ S)
+      (motive := fun x _ => star x ∈ IntermediateField.adjoin ℚ S)
       (by
         intro x hx
         rcases hx with hx | ⟨j, hj, hjJ, rfl⟩

@@ -181,10 +181,10 @@ private theorem crossProduct_abs_bound {M : ℕ} {ε : ℝ} (hε : 0 ≤ ε) (h�
   simp_rw [Finset.abs_prod]
   calc
     _ ≤ ∏ _i : Fin M, ∏ _j : Fin M, (1+(∑ i, x i)+(∑ j, y j)) := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro i _; exact Finset.prod_nonneg (fun j _ => abs_nonneg _)
       · intro i _
-        exact Finset.prod_le_prod (fun j _ => abs_nonneg _) (fun j _ => hi i j)
+        exact Finset.prod_le_prod₀ (fun j _ => abs_nonneg _) (fun j _ => hi i j)
     _ = _ := by simp [← pow_mul, pow_two]
 
 private theorem joint_delta_factor (M : ℕ) (x y : Fin M → ℝ) :
@@ -318,7 +318,7 @@ private theorem crossProduct_bound {M : ℕ} {ε : ℝ} (hε : 0 ≤ ε) (hε1 :
       (1+(∑ i, x i)+(∑ j, y j))^(M^2) := by
     calc
       _ ≤ ∏ _p : Fin M × Fin M, (1+(∑ i, x i)+(∑ j, y j)) := by
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro p _; positivity
         · intro p _
           have hi := Finset.single_le_sum (fun i (_ : i ∈ (Finset.univ : Finset (Fin M))) => hx i) (Finset.mem_univ p.1)

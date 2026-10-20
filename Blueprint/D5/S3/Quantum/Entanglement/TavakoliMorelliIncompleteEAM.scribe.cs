@@ -44,6 +44,9 @@ internal sealed class TavakoliMorelliIncompleteEAMDocument : IScribeDocumentDefi
                 "The a-th effect is d/n times the projector of the a-th ket, as in Section V A. For positive d the effects sum to the identity.", DescribeRole.Definition),
             Node("Pn", "The EAM joint-probability table", PnFormula(),
                 "The two sides choose equiangular measurements independently, with the same local dimension and number of outcomes. Pn is the n by n table formed from their effects.", DescribeRole.Definition),
+            Node("traceNorm_mul_le_hsSq", "The Hilbert–Schmidt product bound", TraceNormProductFormula(),
+                "For square complex matrices on any finite index type, the trace norm of their product is at most the product of their Frobenius norms. Here entryNormSq(M) is the sum of the squared absolute values of all entries of M. This is the Hilbert–Schmidt Hölder inequality, and it includes the empty index type.", DescribeRole.Theorem,
+                AssessedProvenance.FromRepo()),
             Node("ket_dot_self", "Normalization as a conjugate dot product", KetDotFormula(),
                 "The conjugate dot product of a normalized ket with itself equals one, in the complex field.", DescribeRole.Theorem),
             Node("proj_eq_outer", "The projector as an outer product", ProjectorFormula(),
@@ -247,5 +250,14 @@ internal sealed class TavakoliMorelliIncompleteEAMDocument : IScribeDocumentDefi
                     All("rho", Call("BipartiteOp", X("d")), Imp(Call("SchmidtNumberLE", X("rho"), X("r")),
                         Leq(Call("traceNorm", Call("Pn", X("rho"), X("A"), X("B"))), bound)))))))))));
         return Disp(Iff(X("claim"), body));
+    }
+
+    private static Formula TraceNormProductFormula()
+    {
+        var matrix = MatrixType(X("K"));
+        var bound = Mul(Seq(Sqrt, Grp(Call("entryNormSq", X("R")))),
+            Seq(Sqrt, Grp(Call("entryNormSq", X("S")))));
+        return Disp(All("K", Type(), Instances(All("R", matrix, All("S", matrix,
+            Leq(Call("traceNorm", Mul(X("R"), X("S"))), bound))), Call("Fintype", X("K")))));
     }
 }

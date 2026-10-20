@@ -8,6 +8,7 @@
 /- Candidate source, not yet kernel checked or admitted for freezing.
    The private transport below is intended for the actual eight-piece
    joint constructor, not as a separately delivered application. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2QSourcePromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
 

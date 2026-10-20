@@ -31,7 +31,7 @@ theorem beta13_normalized_gap_type_count_five :
   rw [D5.S0.Tower.NonPisot.GapCounts.beta13NormalizedGapSpectrum,
     Finset.card_image_of_injective _
       D5.S0.Tower.NonPisot.GapCounts.beta13_gap_code_value_injective]
-  decide
+  decide +kernel
 
 /-- The certified next greedy digit is zero, but the frozen ten-digit prefix predicate rejects
 that eleven-digit greedy prefix and hence the frozen name generator omits it. -/

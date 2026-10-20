@@ -154,6 +154,10 @@ public sealed partial class RuleCatalog
     internal RuleExecutionOutcome ExecuteTheoryDelta(RepositorySnapshot current, ValidatedPolicy policy,
         RawChangeSet changes, RuleEvaluationMeasure? measureRule = null)
     {
+        // Copy sources are provenance, not changed endpoints.
+        changes = RawChangeSet.CreateWithKinds(changes.Entries
+            .Where(static change => change.Kind is not RawChangeKind.Copied)
+            .Select(static change => (change.Path.Value, change.Kind)));
         if (!RepositoryRules.IsTheoryOnlyChange(changes))
             return new RuleExecutionOutcome.InfrastructureFailure(
                 "Report-free check-delta requires a nonempty theory-only change; other changes require --candidate-lean-report.");

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3aff78dc0c83548118a6ddce173c175a15c543fb3e17717760b91a45fbbd1a66
-  normalized_sha256: sha256:3aff78dc0c83548118a6ddce173c175a15c543fb3e17717760b91a45fbbd1a66
-cas_ref: sha256:3aff78dc0c83548118a6ddce173c175a15c543fb3e17717760b91a45fbbd1a66
-coverage_gids:
-  - gid: D5/S3/Quantum/Algebra/QuotientOrthogonalComplement.quotient_orthogonal_complement_isometry
-    target_statement_id: sha256:ec3b6b6b9530ab8c0e33c7ff3c88b1cbd55a8e384b7216f4fc7e7fe0756dfb8e
-receipts:
-  unresolved_subitems: []

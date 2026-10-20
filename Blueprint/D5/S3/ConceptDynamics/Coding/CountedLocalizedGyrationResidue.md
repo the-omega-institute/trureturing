@@ -4,7 +4,19 @@
 
 CountedLocalizedGyrationResidue
 
-**Theorem 1.1 (Signed congruence for the fixed positive-lift cochain).**
+**Theorem 1.1 (The dyadic cochain recovers the actual forward residue).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.dyadicGyration_nonnegative`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.dyadicGyration_nonnegative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonzero period divisible by three, cast the nonnegative rectangular factors through the integers into the dyadic ring. Their dyadic gyration equals the reduction of the original ranked relative forward gyration. This is the bridge used by the relabel, positive-word and presentation-time comparisons.
+
+**Theorem 1.2 (Signed congruence for the fixed positive-lift cochain).**
 
 Lean statement: `D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.canonicalLocalizedGyration_signed_agreement`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.ca
 
 For a commutative ring L equipped with reduction rho to ZMod of three to the power e plus one, each matrix entry is lifted to its natural residue plus that modulus. The canonical cochain is the same signed integer gyration polynomial evaluated at these strictly positive representatives, reduced modulo three. Here e is at least the three-adic valuation of the factorial of twice the period. Any signed integer pair with the same reductions gives the same value, by the explicit accepted integral numerator and the clearing-denominator theorem.
 
-**Theorem 1.2 (One rectangular family satisfies the triangle).**
+**Theorem 1.3 (One rectangular family satisfies the triangle).**
 
 Lean statement: `D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.canonicalLocalizedGyration_triangle`
 
@@ -34,7 +46,7 @@ Let n and m be arbitrary natural dimensions, d a nonzero period with three divid
 
 Apply canonicalLocalizedGyration_signed_agreement to those matrices in L and the signed integer pair R.map (Nat.castRingHom ℤ), S.map (Nat.castRingHom ℤ). Entrywise map_intCast for rho supplies both reduction equalities, including zero entries. The accepted relativeForwardGyration_eq_order_types at Sum.elim of the R and S entries identifies the actual primitive-path offset sum with the natural orderTypeGyrationLift in ZMod d. Mapping to ZMod 3 commutes with the integer cast because three divides d. Finally Sum.elim of the integer-cast entries is the pointwise cast of the natural tuple; unfolding integerGyrationValue and using Ring.choose_natCast and Nat.cast_prod identifies signedGyrationLift with orderTypeGyrationLift. This derives the agreement for the same invariant and the full stated parameter range.
 
-**Definition 1.3 (The fixed dyadic specialization).**
+**Definition 1.4 (The fixed dyadic specialization).**
 
 Lean statement: `D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.dyadicGyration`
 
@@ -51,4 +63,5 @@ The canonical dyadic value uses the universal localization reduction at the thre
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.canonicalLocalizedGyration_signed_agreement`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.canonicalLocalizedGyration_triangle`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.dyadicGyration`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue.dyadicGyration_nonnegative`
 - Dependency: [D5/S3/ConceptDynamics/Coding/CountedPositiveTriangleLocalizedConsumer](CountedPositiveTriangleLocalizedConsumer.md)

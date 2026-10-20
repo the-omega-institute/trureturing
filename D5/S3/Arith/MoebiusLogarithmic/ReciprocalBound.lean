@@ -20,7 +20,7 @@ namespace D5.S3.Arith.MoebiusLogarithmic
 def reciprocalSum (x : ℝ) : ℝ :=
   ∑ n ∈ Ioc 0 ⌊x⌋₊, (ArithmeticFunction.moebius n : ℝ) / n
 
-private theorem floor_cancellation {x : ℝ} (hx : 1 ≤ x) :
+theorem floor_cancellation {x : ℝ} (hx : 1 ≤ x) :
     (∑ n ∈ Ioc 0 ⌊x⌋₊,
       (ArithmeticFunction.moebius n : ℝ) * (⌊x / n⌋₊ : ℝ)) = 1 := by
   have h := ArithmeticFunction.sum_Ioc_mul_zeta_eq_sum

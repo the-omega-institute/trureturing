@@ -622,6 +622,48 @@ theorem canonicalForwardOffset_equation {n d : ℕ} [NeZero d] {A : CountMat n n
         (cyclicPath (rotate k a.val) (rotate_legal a.val a.property k)) :=
       cyclicPath_rotate _ (rotate_legal a.val a.property k) (-k)
 
+/-- Every actual primitive orbit has exactly its period's worth of forward phases,
+including when the graph or the primitive stratum is empty. -/
+theorem primitivePath_card_eq_period_mul_orbit_card {n : ℕ}
+    (A : CountMat n n) (d : ℕ) [NeZero d] :
+    Fintype.card (PrimitivePath A d) = d * Fintype.card (ActualPathOrbit A d) := by
+  let e : PrimitivePath A d ≃ PathBasis A d × Fin d := by
+    let move (b : PathBasis A d) (q : Fin d) : PrimitivePath A d :=
+      ⟨(shift A)^[q.val] b.val.val, by
+        rw [Function.minimalPeriod_apply_iterate
+          (Function.mk_mem_periodicPts (Nat.pos_of_ne_zero (NeZero.ne d))
+            (primitivePath_period b.val)), b.val.property]⟩
+    refine {
+      toFun := fun x => (canonicalPath x, canonicalForwardOffset x)
+      invFun := fun y => move y.1 y.2
+      left_inv := ?_
+      right_inv := ?_ }
+    · intro x
+      exact Subtype.ext (canonicalForwardOffset_equation x).symm
+    · rintro ⟨b, q⟩
+      have hb : SamePathOrbit b.val (move b q) := ⟨q.val, rfl⟩
+      have hc : canonicalPath (move b q) = b :=
+        (canonicalPath_eq_of_sameOrbit hb).symm.trans (canonicalPath_of_basis b)
+      apply Prod.ext
+      · exact hc
+      · apply Fin.ext
+        have hp := (canonicalPath (move b q)).val.property
+        apply (Function.iterate_eq_iterate_iff_of_lt_minimalPeriod
+          (f := shift A) (x := (canonicalPath (move b q)).val.val)
+          (m := (canonicalForwardOffset (move b q)).val) (n := q.val)
+          (by simpa only [hp] using (canonicalForwardOffset (move b q)).isLt)
+          (by simpa only [hp] using q.isLt)).mp
+        calc
+          _ = (move b q).val := (canonicalForwardOffset_equation (move b q)).symm
+          _ = _ := by rw [hc]
+  calc
+    Fintype.card (PrimitivePath A d) = Fintype.card (PathBasis A d × Fin d) :=
+      Fintype.card_congr e
+    _ = Fintype.card (PathBasis A d) * d := by
+      rw [Fintype.card_prod, Fintype.card_fin]
+    _ = d * Fintype.card (ActualPathOrbit A d) := by
+      rw [← Fintype.card_congr (orbitBasisEquiv A), Nat.mul_comm]
+
 open scoped Fin.NatCast in
 theorem finEquiv_eq_natCast {d : ℕ} [NeZero d] (k : Fin d) :
     ZMod.finEquiv d k = (k.val : ZMod d) := by

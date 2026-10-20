@@ -20,6 +20,11 @@ Information-escape registration is paused under CLAUDE.md section 3.9.
 
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+import Mathlib.Data.Complex.Basic
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+import Mathlib.LinearAlgebra.Matrix.Orthogonal
+import Mathlib.LinearAlgebra.UnitaryGroup
+import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option maxRecDepth 4096
@@ -569,7 +574,7 @@ theorem result : ¬ claim := by
   have hs := scalar_commutant O hD hV
   have hsq : (O 0 0) ^ 2 = 1 := by
     have ho := congrArg (fun M : Matrix (Fin 8) (Fin 8) ℝ => M 0 0)
-      ((Matrix.mem_orthogonalGroup_iff' (Fin 8) ℝ).mp hO)
+      ((Matrix.mem_orthogonalGroup_iff' (n := Fin 8) (R := ℝ)).mp hO)
     rw [hs] at ho
     norm_num [Matrix.mul_apply, Fin.sum_univ_succ, Matrix.transpose_apply,
       Matrix.smul_apply, Matrix.one_apply] at ho

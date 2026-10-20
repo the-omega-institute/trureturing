@@ -6,6 +6,7 @@
    utility: none
    digest: The complete derivative vector of the original primal theta tail. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Zeros.Jensen.OriginalTailDerivativeVectorSources
 
 set_option autoImplicit false

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:49b32120b5c81a774f96bf4b272507eb10788618b448237f0f713526e7714e2c
-  normalized_sha256: sha256:49b32120b5c81a774f96bf4b272507eb10788618b448237f0f713526e7714e2c
-cas_ref: sha256:49b32120b5c81a774f96bf4b272507eb10788618b448237f0f713526e7714e2c
-coverage_gids:
-  - gid: D5/S3/ArithUnits/PrimeAdditiveGenerator.nonzero_generates_additive_group
-    target_statement_id: sha256:44b44e9491db1b392e27486c2ea3c447f2d531034e2bd6f4d6f1aad507ce3b07
-receipts:
-  unresolved_subitems: []

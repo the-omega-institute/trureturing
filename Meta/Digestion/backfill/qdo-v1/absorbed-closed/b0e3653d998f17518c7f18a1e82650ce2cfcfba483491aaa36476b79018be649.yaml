@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b0e3653d998f17518c7f18a1e82650ce2cfcfba483491aaa36476b79018be649
-  normalized_sha256: sha256:b0e3653d998f17518c7f18a1e82650ce2cfcfba483491aaa36476b79018be649
-cas_ref: sha256:b0e3653d998f17518c7f18a1e82650ce2cfcfba483491aaa36476b79018be649
-coverage_gids:
-  - gid: D5/S3/Quantum/Algebra/QuotientContractionRigidity.quotient_contraction_rigidity
-    target_statement_id: sha256:a97b642976067ecd4859f8bb4f310225c0637bffc06037aa393432ac84b90ca7
-receipts:
-  unresolved_subitems: []

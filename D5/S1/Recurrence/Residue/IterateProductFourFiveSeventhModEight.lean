@@ -6,6 +6,7 @@
    utility: none
    digest: The seventh compositional iterate has coefficient period 7,1,3,5 modulo eight. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.IterateProductFourFiveThirdModEight
 import D5.S1.Recurrence.Residue.IterateProductFourFiveFourthModEight
 

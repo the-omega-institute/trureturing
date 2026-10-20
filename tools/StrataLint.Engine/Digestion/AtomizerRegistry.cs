@@ -2,125 +2,52 @@ using System.Collections.Immutable;
 
 namespace StrataLint.Engine;
 
-internal delegate AtomizedTheoryDocument TheoryAtomizer(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules);
+internal delegate AtomizedTheoryDocument TheoryAtomizer(ReadOnlySpan<byte> bytes);
 
 internal delegate AtomizedTheoryDocument TheoryAtomizerWithContentKinds(
     ReadOnlySpan<byte> bytes,
-    TheoryAtomizerRules rules,
     IDictionary<string, string>? contentKinds);
 
 internal sealed record AtomizerRegistration(
     TheoryAtomizer Atomize,
-    TheoryAtomizerWithContentKinds AtomizeWithContentKinds,
-    bool EmitsClausePlans = false);
+    TheoryAtomizerWithContentKinds AtomizeWithContentKinds);
 
 internal static class AtomizerRegistry
 {
-    /// <summary>
-    /// The atomizer a source gets when no dialect has been written for it. It is a rule
-    /// rather than a lexicon, so it needs no registration data and never rejects a shape.
-    /// </summary>
     internal const string GenericId = "generic-v1";
-    internal const string ConeId = "cone-v1";
-    internal const string GictId = "gict-v1";
-    internal const string ObserverId = "observer-v1";
-    internal const string PeriodicTreeId = "periodic-tree-v1";
-    internal const string PzgId = "pzg-v1";
-    internal const string WmId = "wm-v1";
-    internal const string NoAtomizerId = "none";
 
     private static readonly ImmutableDictionary<string, AtomizerRegistration> Atomizers =
         ImmutableDictionary<string, AtomizerRegistration>.Empty
             .WithComparers(StringComparer.Ordinal)
-            .Add(
-                GenericId,
-                new AtomizerRegistration(
-                    GenericAtomizer.Atomize,
-                    GenericAtomizer.AtomizeWithContentKinds))
-            .Add(
-                ConeId,
-                new AtomizerRegistration(ConeAtomizer.Atomize, ConeAtomizer.AtomizeWithContentKinds))
-            .Add(
-                GictId,
-                new AtomizerRegistration(GictAtomizer.Atomize, GictAtomizer.AtomizeWithContentKinds))
-            .Add(
-                ObserverId,
-                new AtomizerRegistration(
-                    ObserverAtomizer.Atomize,
-                    ObserverAtomizer.AtomizeWithContentKinds))
-            .Add(
-                PeriodicTreeId,
-                new AtomizerRegistration(
-                    PeriodicTreeAtomizer.Atomize,
-                    PeriodicTreeAtomizer.AtomizeWithContentKinds))
-            .Add(
-                PzgId,
-                new AtomizerRegistration(
-                    PzgAtomizer.Atomize,
-                    PzgAtomizer.AtomizeWithContentKinds,
-                    EmitsClausePlans: true))
-            .Add(
-                WmId,
-                new AtomizerRegistration(WmAtomizer.Atomize, WmAtomizer.AtomizeWithContentKinds));
+            .Add(GenericId, new AtomizerRegistration(
+                GenericAtomizer.Atomize, GenericAtomizer.AtomizeWithContentKinds));
 
     internal static ImmutableArray<string> RegisteredIds { get; } =
         Atomizers.Keys.Order(StringComparer.Ordinal).ToImmutableArray();
 
     internal static AtomizedTheoryDocument Atomize(
         string id,
-        ReadOnlySpan<byte> bytes,
-        TheoryAtomizerRules rules)
+        ReadOnlySpan<byte> bytes)
     {
-        if (id == NoAtomizerId)
-        {
-            throw new FormatException(
-                "Source has no deterministic atomizer. Registered atomizers: "
-                + string.Join(", ", RegisteredIds)
-                + ".");
-        }
-
-        return Require(id).Atomize(bytes, rules);
+        return Require(id).Atomize(bytes);
     }
 
     internal static ImmutableDictionary<string, string> ResolveContentKinds(
         string id,
-        ReadOnlySpan<byte> bytes,
-        TheoryAtomizerRules rules)
+        ReadOnlySpan<byte> bytes)
     {
         var kinds = new Dictionary<string, string>(StringComparer.Ordinal);
-        var document = Require(id).AtomizeWithContentKinds(bytes, rules, kinds);
+        var document = Require(id).AtomizeWithContentKinds(bytes, kinds);
         if (document.ClausePlans.IsEmpty)
             InheritClauseContentKinds(kinds, document.Claims.Select(DigestionDecomposition.PlanClauses)
                 .OfType<DigestionClausePlan>());
         return kinds.ToImmutableDictionary(StringComparer.Ordinal);
     }
 
-    /// <summary>
-    /// A dialect declared in atomizer data rather than registered in code. Its identity is
-    /// resolved against the loaded rules at use, so a new volume needs data, not a build.
-    /// </summary>
-    internal static bool IsDeclaredDialect(string id) =>
-        id.StartsWith(DeclaredDialectAtomizer.IdPrefix, StringComparison.Ordinal);
-
-    internal static bool IsRegistered(string id) =>
-        Atomizers.ContainsKey(id) || IsDeclaredDialect(id);
-
-    internal static bool EmitsClausePlans(string id) => Require(id).EmitsClausePlans;
+    internal static bool IsRegistered(string id) => id == GenericId;
 
     internal static AtomizerRegistration Require(string id) =>
-        Atomizers.TryGetValue(id, out var registration)
-            ? registration
-            : IsDeclaredDialect(id)
-                ? new AtomizerRegistration(
-                    (bytes, rules) => DeclaredDialectAtomizer.Atomize(id, bytes, rules),
-                    (bytes, rules, contentKinds) =>
-                        DeclaredDialectAtomizer.AtomizeWithContentKinds(
-                            id,
-                            bytes,
-                            rules,
-                            contentKinds),
-                    EmitsClausePlans: true)
-                : throw Unknown(id);
+        Atomizers.TryGetValue(id, out var registration) ? registration : throw Unknown(id);
 
     internal static ImmutableDictionary<string, string> CaptureContentKinds(
         Action<IDictionary<string, string>> atomize)

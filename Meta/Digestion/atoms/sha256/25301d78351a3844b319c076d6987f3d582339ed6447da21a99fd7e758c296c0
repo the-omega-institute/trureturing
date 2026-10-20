@@ -1,0 +1,23 @@
+**Corollary 76.3 (full rational group and reduction image).** Under the hypotheses of Theorem 76.1,
+
+$$E_Q(\mathbb Q)=\mathbb Z S\oplus E_Q[2],\qquad
+\operatorname{red}_P(E_Q(\mathbb Q))=E_Q(\mathbb F_P)[2].$$
+
+The group on the right has exactly the four points $O,(0,0),(-5Q,0),(15Q,0)$ reduced modulo $P$.
+
+**Proof.** First $[2]U\in G_0(Q)$ for every $U\in E_Q(\mathbb Q)$. This is immediate for two-torsion and for $U\in G_0(Q)$. Otherwise $U$ reduces to the cusp at $Q$, so $k=v_Q(X(U))\ge1$. The duplication formula is
+
+$$X(2U)=\frac{(X(U)^2+75Q^2)^2}{4X(U)(X(U)+5Q)(X(U)-15Q)}.$$
+
+If $k\ge2$, the shifted factors each have valuation one. The curve equation forces $k+2$ to be even, and the numerator has valuation four, so $v_Q(X(2U))=2-k\le0$.
+
+If $k=1$, write $X(U)=Qw$ with $w$ a $Q$-adic unit. The even valuation of
+
+$$Y(U)^2=Q^3w(w+5)(w-15)$$
+
+forces exactly one of $w+5,w-15$ to have a positive, odd valuation $t$. Their difference is $20$, a unit at $Q>5$. At the respective residues $w=-5$ and $w=15$, the expression $w^2+75$ is $100$ or $300$, also a unit at $Q>5$. Thus $v_Q(X(2U))=4-(3+t)=1-t\le0$.
+
+Negative $X$-valuation gives reduction to infinity, while zero valuation gives a finite nonsingular point on $Y^2=X^3$. This proves $[2]U\in G_0(Q)$ in all cases. Theorem 76.1 now writes $[2]U=[k]S$ for an integer $k$. If $k$ were odd, its $X$-coordinate would have the negative squareclass $-15$ of $X(S)$, by complete two-descent. It would therefore be negative. But the nonzero double $[2]U$ has positive $X$ by the real duplication formula. Hence $k=2l$, and $U-[l]S$ is rational two-torsion. Non-torsion of $S$ makes the sum direct.
+
+The four rational two-torsion points reduce distinctly at $P>5$, $P\ne Q$. The point $S$ reduces to infinity, proving the image equality. ∎
+

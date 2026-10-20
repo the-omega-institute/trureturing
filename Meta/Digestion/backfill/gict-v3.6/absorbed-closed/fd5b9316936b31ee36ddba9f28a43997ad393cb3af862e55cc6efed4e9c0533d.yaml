@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fd5b9316936b31ee36ddba9f28a43997ad393cb3af862e55cc6efed4e9c0533d
-  normalized_sha256: sha256:fd5b9316936b31ee36ddba9f28a43997ad393cb3af862e55cc6efed4e9c0533d
-cas_ref: sha256:fd5b9316936b31ee36ddba9f28a43997ad393cb3af862e55cc6efed4e9c0533d
-coverage_gids:
-  - gid: D5/S3/Quantum/Sharpness/SpectralPairingCapacity.spectral_pairing_capacity_monotone_of_doubly_stochastic
-    target_statement_id: sha256:7de25e4223beda37dd425f7e99e221590d158183685ce0883b2ae22efa1bbfbb
-receipts:
-  unresolved_subitems: []

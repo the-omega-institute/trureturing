@@ -5,7 +5,7 @@ year: 1962
 title: "Approximate formulas for some functions of prime numbers"
 doi: 10.1215/ijm/1255631807
 url: https://doi.org/10.1215/ijm/1255631807
-claim: "Theorem 8 gives explicit reciprocal prime-product bounds; Corollaries 1 and 3 give global and dyadic prime-count bounds used in actual Fibonacci cofactor Newton subseries."
+claim: "Theorem 8 gives explicit reciprocal prime-product bounds; Corollaries 1 and 3 give global and dyadic prime-count bounds used in actual Fibonacci cofactor Newton subseries; Theorem 13 bounds the complete proper-prime-power counting contribution."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -123,3 +123,28 @@ summation for its Gaussian prime kernel. The kernel's derivative
 and endpoint budgets give errors uniform over its particular growing
 cofactor range. That actual signed-source interface is separate from the
 source theorem and remains a paper derivation.
+
+
+## Complete proper-prime-power count
+
+On printed page 71 (PDF page 8 of the same inspected public scan),
+Theorem 13, equation (3.36), states
+
+\[
+0\le\psi(x)-\vartheta(x)<1.42620\sqrt x\qquad(x>0),
+\]
+
+with $\psi(x)=\sum_{m\le x}\Lambda(m)$ and
+$\vartheta(x)=\sum_{p\le x}\log p$. The difference contains every
+prime power $p^k$ with $k\ge2$, counted once with weight $\log p$.
+The theorem states that its ratio to $\sqrt x$ attains its maximum
+at $x=361$; the application does not need that maximizing point.
+The statement and its range were read from the primary scan with the
+same SHA-256 recorded above; this does not independently certify the
+paper's numerical tables or proof.
+
+The [actual Li-channel application](../Zeros/coffey2009stieltjes.md)
+uses this bound directly to obtain a finite weighted cumulative-count
+norm and hence a Bessel budget for the full higher-power sequence.
+It does not derive a primary-prime discrepancy estimate from this
+higher-power count or claim a new counting theorem.

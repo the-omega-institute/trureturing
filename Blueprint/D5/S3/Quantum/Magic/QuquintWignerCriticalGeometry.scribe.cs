@@ -23,6 +23,16 @@ internal sealed class QuquintWignerCriticalGeometryDocument : IScribeDocumentDef
                         Qualified("Complex", "I"), Slash, D(5)))),
                 "The phase convention uses exp of two pi times the imaginary unit divided by five.",
                 DescribeRole.Definition),
+            Claim("powerTable", "The five powers in radical coordinates",
+                Equal(Name("powerTable"), RootPowerTable),
+                "The vector lists complex powers in the order zero through four. "
+                    + "Complex.mk pairs a real part with an imaginary part; radical is real.",
+                DescribeRole.Definition),
+            Claim("zeta_powers", "Exact fifth-root powers",
+                Seq(Forall, Sp, I, Colon, Fin(5), Comma,
+                    Equal(Power(Name("zeta"), Call(Name("val"), I)),
+                        Call(Name("powerTable"), I))),
+                "Every natural representative of Fin 5 selects the corresponding entry of the radical table."),
             Claim("phasePoint", "The phase-point kernel",
                 Seq(Forall, Sp, Q, Sp, P, Sp, X, Sp, Y, Colon, Fin(5), Comma,
                     Call(Name("phasePoint"), Q, P, X, Y), Eq,
@@ -236,6 +246,15 @@ internal sealed class QuquintWignerCriticalGeometryDocument : IScribeDocumentDef
     private static Formula R => Name("radical");
     private static Formula R2 => Power(R, D(2));
     private static Formula R3 => Power(R, D(3));
+    private static Formula RootPowerTable => Vector(D(1),
+        Call(Qualified("Complex", "mk"), Seq(Parenthesized(Seq(R2, Minus, D(1, 2))), Slash, D(8)),
+            Seq(R, Slash, D(4))),
+        Call(Qualified("Complex", "mk"), Seq(Parenthesized(Seq(D(8), Minus, R2)), Slash, D(8)),
+            Seq(Parenthesized(Seq(R3, Minus, D(1, 2), Cdot, R)), Slash, D(1, 6))),
+        Call(Qualified("Complex", "mk"), Seq(Parenthesized(Seq(D(8), Minus, R2)), Slash, D(8)),
+            Seq(Parenthesized(Seq(D(1, 2), Cdot, R, Minus, R3)), Slash, D(1, 6))),
+        Call(Qualified("Complex", "mk"), Seq(Parenthesized(Seq(R2, Minus, D(1, 2))), Slash, D(8)),
+            Seq(Minus, R, Slash, D(4))));
     private static Formula PhaseVector => Vector(D(1), D(1), Power(Name("zeta"), D(3)), D(1), Power(Name("zeta"), D(2)));
     private static Formula ZeroSet => new Formula.SetLiteral([Point(0, 3), Point(1, 3), Point(2, 4), Point(3, 1), Point(4, 4)]);
     private static Formula Point(int q, int p) => Parenthesized(Seq(Num(q), Comma, Num(p)));

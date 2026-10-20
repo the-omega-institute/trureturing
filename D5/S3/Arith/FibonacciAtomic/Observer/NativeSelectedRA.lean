@@ -201,7 +201,7 @@ private theorem choice_preserved (s : State) (q : Bool) (u : Source)
   | update run ih => exact ih hs
 
 /-- A proof-side finite quiescent prefix. This is not observer storage. -/
-private def Continues (U : Source) (c d : State) : Prop :=
+def Continues (U : Source) (c d : State) : Prop :=
   ∀ (h : Word) (b : State), Run step d U h b →
     ∃ w : Word, (.update ∉ w) ∧ Run step c U (w ++ h) b
 
@@ -351,7 +351,7 @@ def Progressing (schedule : Nat → Bool) (w : World) : Prop :=
   ∀ n : Nat, (trajectory schedule w n).returned = false →
     ∃ m : Nat, n ≤ m ∧ schedule m = false
 
-private theorem trajectory_add (schedule : Nat → Bool) (w : World) (m k : Nat) :
+theorem trajectory_add (schedule : Nat → Bool) (w : World) (m k : Nat) :
     trajectory schedule w (m+k) =
       trajectory (fun i => schedule (m+i)) (trajectory schedule w m) k := by
   induction k with
@@ -442,7 +442,7 @@ private theorem root_candidate_steps (w : Work) :
 
 /-- The actual guard follows the left spine and ends with an authentic leaf
 reply, retaining its materialized address for later validation. -/
-private theorem guard_search (U T : Source) (q : Bool) (p : Address)
+theorem guard_search (U T : Source) (q : Bool) (p : Address)
     (observed : ∀ z : Address, readout (p ++ z) U = readout z T) :
     ∃ (g : Address) (ell : Reply), (ell = .alpha ∨ ell = .beta) ∧
       readout g U = ell ∧
@@ -621,13 +621,13 @@ theorem selected_root_support :
     cases no
 
 
-private def pairStart (w : Work) (z : Address) : Work :=
+def pairStart (w : Work) (z : Address) : Work :=
   {w with pc := 20, operand := false :: z}
 
-private def pairDone (w : Work) (z : Address) (ell : Reply) : Work :=
+def pairDone (w : Work) (z : Address) (ell : Reply) : Work :=
   {w with pc := 27, operand := true :: z, leftReply := ell, rightReply := ell}
 
-private def rightLeafReply : Source → Reply
+def rightLeafReply : Source → Reply
   | .of b => if b then .alpha else .beta
   | .mul _ r => rightLeafReply r
 
@@ -647,7 +647,7 @@ private theorem pair_reads (U : Source) (w : Work) (z : Address) (a b : Reply)
     cases b <;> rfl
   · exact hb
 
-private theorem pair_equal_scan (U T : Source) (w : Work) (z : Address)
+theorem pair_equal_scan (U T : Source) (w : Work) (z : Address)
     (hl : ∀ a : Address, readout (false :: (z ++ a)) U = readout a T)
     (hr : ∀ a : Address, readout (true :: (z ++ a)) U = readout a T) :
     Continues U (.active false (pairStart w z))
@@ -704,7 +704,7 @@ private theorem pair_mismatch (U : Source) (w : Work) (z : Address) (a b : Reply
   apply continues_local
   simp [step,lift,privateStep,localInstruction,go,hne]
 
-private theorem pair_unequal_scan (U A B : Source) (w : Work) (z : Address)
+theorem pair_unequal_scan (U A B : Source) (w : Work) (z : Address)
     (hl : ∀ a : Address, readout (false :: (z ++ a)) U = readout a A)
     (hr : ∀ a : Address, readout (true :: (z ++ a)) U = readout a B)
     (hne : A ≠ B) :
@@ -793,7 +793,7 @@ private theorem fork_candidate_steps (w : Work) :
   apply LocalSteps.cons rfl
   exact LocalSteps.refl _
 
-private theorem pair_complete (U A B : Source) (w : Work)
+theorem pair_complete (U A B : Source) (w : Work)
     (hl : ∀ a : Address, readout (false :: a) U = readout a A)
     (hr : ∀ a : Address, readout (true :: a) U = readout a B) :
     ∃ v : Work, v.pc = 8 ∧ v.row = w.row ++ [if A = B then 10 else 9] ∧

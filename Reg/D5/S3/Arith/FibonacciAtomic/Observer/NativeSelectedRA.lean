@@ -312,4 +312,361 @@ noncomputable def cleanup_progressing_registration :
   familyRecord := none
   options := #[]
 
+/-- The same continuation law with the actual transition family explicit. -/
+def scanContinues (δ : State → Op State) (U : Source) (c d : State) : Prop :=
+  ∀ (h : Word) (b : State), Run δ d U h b →
+    ∃ t : Word, .update ∉ t ∧ Run δ c U (t ++ h) b
+
+abbrev equalScanArena : Arena where
+  signature := supportSignature
+  Law R := ∀ (U T : Source) (w : Work) (z : Address),
+    (∀ a : Address, _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout
+      (false :: (z ++ a)) U = _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout a T) →
+    (∀ a : Address, _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout
+      (true :: (z ++ a)) U = _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout a T) →
+    scanContinues (R.readout () ()) U (.active false (pairStart w z))
+      (.active false (pairDone w z (rightLeafReply T)))
+
+private theorem equal_scan_bad : ¬ equalScanArena.Law supportBad := by
+  intro h
+  let U : Source := .mul (.of true) (.of true)
+  let d : State := .active false (pairDone emptyWork [] .alpha)
+  have tail : Run (supportBad.readout () ()) d U [.observer .ret] d := Run.ret rfl
+  obtain ⟨t,_,run⟩ := h U (.of true) emptyWork [] (fun _ => rfl) (fun _ => rfl)
+    [.observer .ret] d tail
+  have same := stopped_only run
+  have no := congrArg (fun s : State => match s with
+    | .active _ w => w.pc.val | _ => 0) same
+  norm_num [d,pairDone,pairStart,emptyWork] at no
+
+abbrev unequalScanArena : Arena where
+  signature := supportSignature
+  Law R := ∀ (U A B : Source) (w : Work) (z : Address),
+    (∀ a : Address, _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout
+      (false :: (z ++ a)) U = _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout a A) →
+    (∀ a : Address, _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout
+      (true :: (z ++ a)) U = _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout a B) →
+    A ≠ B → ∃ v : Work, v.pc = 29 ∧ v.row = w.row ∧ v.guardPath = w.guardPath ∧
+      v.guardReply = w.guardReply ∧
+      scanContinues (R.readout () ()) U (.active false (pairStart w z)) (.active false v)
+
+private theorem unequal_scan_bad : ¬ unequalScanArena.Law supportBad := by
+  intro h
+  let U : Source := .mul (.of true) (.of false)
+  obtain ⟨v,hv,_,_,_,cont⟩ := h U (.of true) (.of false) emptyWork []
+    (fun _ => rfl) (fun _ => rfl) (by decide)
+  have tail : Run (supportBad.readout () ()) (.active false v) U
+      [.observer .ret] (.active false v) := Run.ret rfl
+  obtain ⟨t,_,run⟩ := cont [.observer .ret] (.active false v) tail
+  have same := stopped_only run
+  have no := congrArg (fun s : State => match s with
+    | .active _ w => w.pc.val | _ => 0) same
+  norm_num [pairStart,hv] at no
+
+abbrev completeScanArena : Arena where
+  signature := supportSignature
+  Law R := ∀ (U A B : Source) (w : Work),
+    (∀ a : Address, _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout
+      (false :: a) U = _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout a A) →
+    (∀ a : Address, _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout
+      (true :: a) U = _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout a B) →
+    ∃ v : Work, v.pc = 8 ∧ v.row = w.row ++ [if A = B then 10 else 9] ∧
+      v.guardPath = w.guardPath ∧ v.guardReply = w.guardReply ∧
+      scanContinues (R.readout () ()) U (.active false (pairStart w [])) (.active false v)
+
+private theorem complete_scan_bad : ¬ completeScanArena.Law supportBad := by
+  intro h
+  let U : Source := .mul (.of true) (.of false)
+  obtain ⟨v,hv,_,_,_,cont⟩ := h U (.of true) (.of false) emptyWork
+    (fun _ => rfl) (fun _ => rfl)
+  have tail : Run (supportBad.readout () ()) (.active false v) U
+      [.observer .ret] (.active false v) := Run.ret rfl
+  obtain ⟨t,_,run⟩ := cont [.observer .ret] (.active false v) tail
+  have same := stopped_only run
+  have no := congrArg (fun s : State => match s with
+    | .active _ w => w.pc.val | _ => 0) same
+  norm_num [pairStart,hv] at no
+
+def pair_equal_scanProof : Registration equalScanArena (type_of% (@pair_equal_scan)) where
+  actual := supportActual
+  bridge := Iff.rfl
+  variation := ⟨@pair_equal_scan,supportBad,equal_scan_bad⟩
+  sensitivity := ⟨fun i => ⟨supportBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,equal_scan_bad⟩,fun i => nomatch i⟩
+  dependence := support_dependence
+
+noncomputable def pair_equal_scan_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.pair_equal_scan)
+      (Realization supportSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.pair_equal_scan
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.pair_equal_scanProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨equalScanArena⟩
+  objectArena := .source ⟨equalScanArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source equalScanArena ⟨pair_equal_scanProof⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize supportSignature (fun _ _ s => step s) (fun i => nomatch i))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+    definition := some {
+      owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+      name := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.Continues
+      path := #[]}
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","body","domain","fn","fn","fn","fn","arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def pair_unequal_scanProof : Registration unequalScanArena (type_of% (@pair_unequal_scan)) where
+  actual := supportActual
+  bridge := Iff.rfl
+  variation := ⟨@pair_unequal_scan,supportBad,unequal_scan_bad⟩
+  sensitivity := ⟨fun i => ⟨supportBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,unequal_scan_bad⟩,fun i => nomatch i⟩
+  dependence := support_dependence
+
+noncomputable def pair_unequal_scan_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.pair_unequal_scan)
+      (Realization supportSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.pair_unequal_scan
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.pair_unequal_scanProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨unequalScanArena⟩
+  objectArena := .source ⟨unequalScanArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source unequalScanArena ⟨pair_unequal_scanProof⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize supportSignature (fun _ _ s => step s) (fun i => nomatch i))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+    definition := some {
+      owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+      name := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.Continues
+      path := #[]}
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","body","domain","fn","fn","fn","fn","arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def pair_completeProof : Registration completeScanArena (type_of% (@pair_complete)) where
+  actual := supportActual
+  bridge := Iff.rfl
+  variation := ⟨@pair_complete,supportBad,complete_scan_bad⟩
+  sensitivity := ⟨fun i => ⟨supportBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,complete_scan_bad⟩,fun i => nomatch i⟩
+  dependence := support_dependence
+
+noncomputable def pair_complete_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.pair_complete)
+      (Realization supportSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.pair_complete
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.pair_completeProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨completeScanArena⟩
+  objectArena := .source ⟨completeScanArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source completeScanArena ⟨pair_completeProof⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize supportSignature (fun _ _ s => step s) (fun i => nomatch i))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+    definition := some {
+      owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+      name := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.Continues
+      path := #[]}
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","body","domain","fn","fn","fn","fn","arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+abbrev guardArena : Arena where
+  signature := supportSignature
+  Law R := ∀ (U T : Source) (q : Bool) (p : Address),
+    (∀ z : Address, _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout
+      (p ++ z) U = _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout z T) →
+    ∃ (g : Address) (ell : _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.Reply),
+      (ell = .alpha ∨ ell = .beta) ∧
+      _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout g U = ell ∧
+      scanContinues (R.readout () ()) U (.active q {emptyWork with guardPath := p})
+        (.active q {emptyWork with pc := 3,guardPath := g,guardReply := ell})
+
+private theorem guard_bad : ¬ guardArena.Law supportBad := by
+  intro h
+  obtain ⟨g,ell,_,_,cont⟩ := h (.of true) (.of true) true [] (fun _ => rfl)
+  let d : State := .active true {emptyWork with pc := 3,guardPath := g,guardReply := ell}
+  have tail : Run (supportBad.readout () ()) d (.of true) [.observer .ret] d := Run.ret rfl
+  obtain ⟨t,_,run⟩ := cont [.observer .ret] d tail
+  have same := stopped_only run
+  have no := congrArg (fun s : State => match s with
+    | .active _ w => w.pc.val | _ => 0) same
+  norm_num [d,emptyWork] at no
+
+def guard_searchProof : Registration guardArena (type_of% (@guard_search)) where
+  actual := supportActual
+  bridge := Iff.rfl
+  variation := ⟨@guard_search,supportBad,guard_bad⟩
+  sensitivity := ⟨fun i => ⟨supportBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,guard_bad⟩,fun i => nomatch i⟩
+  dependence := support_dependence
+
+noncomputable def guard_search_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.guard_search)
+      (Realization supportSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.guard_search
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.guard_searchProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨guardArena⟩
+  objectArena := .source ⟨guardArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source guardArena ⟨guard_searchProof⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize supportSignature (fun _ _ s => step s) (fun i => nomatch i))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+    definition := some {
+      owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+      name := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.Continues
+      path := #[]}
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","body","domain","fn","fn","fn","fn","arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+abbrev additionSignature : Signature where
+  Params := (Nat → Bool) × World
+  State _ := Nat
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := World
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def additionActual : Realization additionSignature :=
+  realize additionSignature (fun _ p n => trajectory p.1 p.2 n) (fun i => nomatch i)
+
+def additionBad : Realization additionSignature :=
+  realize additionSignature (fun _ _ n => ⟨.entry,.of (decide (n = 1)),false⟩) (fun i => nomatch i)
+
+abbrev additionArena : Arena where
+  signature := additionSignature
+  Law R := ∀ (σ : Nat → Bool) (w : World) (m k : Nat),
+    R.readout () (σ,w) (m+k) =
+      R.readout () ((fun i => σ (m+i)),R.readout () (σ,w) m) k
+
+private theorem addition_bad : ¬ additionArena.Law additionBad := by
+  intro h
+  have no := congrArg World.source (h (fun _ => false) ⟨.entry,.of true,false⟩ 1 1)
+  simp [additionBad,realize] at no
+  cases no
+
+private theorem addition_dependence : ObservationalDependence additionSignature additionActual := by
+  intro i
+  refine ⟨((fun _ => false),⟨.entry,.of false,false⟩),0,1,?_⟩
+  intro e
+  have no := congrArg World.config e
+  simp [additionActual,realize,trajectory,worldEvent,step,
+    _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout] at no
+
+def trajectory_addProof : Registration additionArena (type_of% (@trajectory_add)) where
+  actual := additionActual
+  bridge := Iff.rfl
+  variation := ⟨@trajectory_add,additionBad,addition_bad⟩
+  sensitivity := ⟨fun i => ⟨additionBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,addition_bad⟩,fun i => nomatch i⟩
+  dependence := addition_dependence
+
+noncomputable def trajectory_add_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.trajectory_add)
+      (Realization additionSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.trajectory_add
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.trajectory_addProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨additionArena⟩
+  objectArena := .source ⟨additionArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source additionArena ⟨trajectory_addProof⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize additionSignature (fun _ p n => trajectory p.1 p.2 n) (fun i => nomatch i))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{
+      path := #["body","body","body","body","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA

@@ -32,6 +32,15 @@ internal sealed class AlternatingGcdSumPillaiDocument : IScribeDocumentDefinitio
                 SumTo(N(), Call("gcd", K(), N())))),
                 "Each positive integer k at most n contributes gcd(k,n).",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("pillai_divisors", "The classical totient divisor formula",
+                Positive(Equal(P(N()), SumTo(N(), Call("divisorContribution", K(), N())))),
+                "For n nonzero, pillai(n) is the sum over positive divisors d of n "
+                + "of totient(d)*div(n,d). In this display divisorContribution(k,n) "
+                + "is totient(k)*div(n,k) if k divides n, and zero otherwise. "
+                + "Grouping indices by their gcd and exchanging complementary divisors "
+                + "gives the formula. This is the classical divisor representation "
+                + "used by both the alternating identity and summatory analysis.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("altGcdSum", "The alternating half-sum", Universal(Equal(S(N()),
                 SumTo(Mul(D(2), N()), Mul(Power(Parenthesized(Seq(Minus, D(1))), K()),
                     ToInt(Call("gcd", K(), Mul(D(4), N()))))))),

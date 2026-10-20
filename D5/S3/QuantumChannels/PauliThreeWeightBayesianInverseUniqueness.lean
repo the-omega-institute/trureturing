@@ -53,7 +53,7 @@ def claim : Prop := ∀ p : Fin 4 → ℝ, (∀ μ, 0 ≤ p μ) → ∑ μ, p μ
       ((∃ F, IsBayesianInverse (pauliChannel p) (pauliChannel p) F ρ) ↔
         ρ = (1 / 2 : ℂ) • 1)
 
-private theorem sigma_properties (μ : Fin 4) : (sigma μ)ᴴ = sigma μ ∧ sigma μ * sigma μ = 1 := by
+theorem sigma_properties (μ : Fin 4) : (sigma μ)ᴴ = sigma μ ∧ sigma μ * sigma μ = 1 := by
   obtain ⟨hanti, hX, hZ, hXX, hZZ⟩ := qubit_weyl_star
   change qubitXᴴ = qubitX at hX
   change qubitZᴴ = qubitZ at hZ

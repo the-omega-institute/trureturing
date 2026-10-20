@@ -82,8 +82,8 @@ Computed: the [experiment entry](https://github.com/the-omega-institute/truretur
 
 ### Other questions
 
-Open: whether $\Pi(n)$ is sublattice dismantlable for every $n$; the authors report checks for $n\le5$, not a uniform proof. Open: its flag quasi-symmetric function. Open: a map from maximal chains to minimal cycle factorizations. Open: which intervals $[x,y]$ with $x\ne\hat0$ and $y\ne\hat1$ are isomorphic to some $\Pi(m)$. The interval counts do not settle these questions or change the hypotheses of the source's other results.
+Refuted under disjoint sublattice subdivisions: whether $\Pi(n)$ is sublattice dismantlable for every $n$; [the n = 6 obstruction](lillo-rosas-2026-priority-lattice-sublattice-dismantling.md) settles that separate question. Open: its flag quasi-symmetric function. Open: a map from maximal chains to minimal cycle factorizations. Open: which intervals $[x,y]$ with $x\ne\hat0$ and $y\ne\hat1$ are isomorphic to some $\Pi(m)$. The interval counts do not settle these questions or change the hypotheses of the source's other results.
 
 ## ASSUMED-UNVERIFIED
 
-The bounded literature search does not certify the absence of every previous publication. The general kernel-checked conclusion concerns the binding priority-forest and edge-inclusion convention. No conclusion is claimed for the other final-section questions.
+The bounded literature search does not certify the absence of every previous publication. The general kernel-checked conclusion concerns the binding priority-forest and edge-inclusion convention. The interval enumeration does not settle the other final-section questions; the separate dismantling refutation has its own dossier.

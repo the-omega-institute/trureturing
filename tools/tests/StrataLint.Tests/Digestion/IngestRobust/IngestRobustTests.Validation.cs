@@ -71,22 +71,21 @@ public sealed partial class IngestRobustTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void Ingest_SelectedMalformedSourceFailsEvenWhenOtherSourceOwnsContentHash(bool includeGamma)
+    public void Ingest_SelectedParserFailureIsNotSkippedForForeignContentHash(bool includeGamma)
     {
         const string malformed = "**Claim 1.1 malformed**\n\nAlpha content.\n";
         const string gammaPath = "docs/develop/theory/GAMMA.md";
         var bytes = Encoding.UTF8.GetBytes(malformed);
-        Assert.Throws<TheorySourceFormatException>(() =>
-            ConeAtomizer.Atomize(bytes, DigestionTestSupport.Rules));
+        Assert.NotEmpty(GenericAtomizer.Atomize(bytes).Claims);
         var opaque = DigestionAtom.FromFrozenCas(
             ImmutableArray.CreateRange(bytes), DigestionFingerprint.ComputeOpaque(bytes));
         var holder = DigestionTestSupport.Entry(opaque, opaque.Fingerprints.RawSha256[7..],
-            AtomizerRegistry.NoAtomizerId, sourceId: "beta", sourcePath: BetaPath);
-        var alpha = Source("alpha", AlphaPath, AlphaText) with { Atomizer = AtomizerRegistry.ConeId };
+            AtomizerRegistry.GenericId, sourceId: "beta", sourcePath: BetaPath);
+        var alpha = Source("alpha", AlphaPath, AlphaText) with { Atomizer = AtomizerRegistry.GenericId };
         var document = BackfillInventoryDocument.Create(
         [
             alpha,
-            EmptySource("beta", BetaPath) with { Atomizer = AtomizerRegistry.NoAtomizerId, Entries = [holder] },
+            EmptySource("beta", BetaPath) with { Atomizer = AtomizerRegistry.GenericId, Entries = [holder] },
             EmptySource("gamma", gammaPath),
         ], []);
         Assert.DoesNotContain(alpha.Entries, entry => entry.AtomId == holder.AtomId);
@@ -100,7 +99,10 @@ public sealed partial class IngestRobustTests
         WriteFixture(temporary, fixture);
         var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
 
-        var result = Environment(fixture, temporary).Ingest(
+        var dependencies = new ReportFreeIngestDependencies(AtomizerResolver: _ => input =>
+            input.SequenceEqual(bytes) ? throw new TheorySourceFormatException("selected parser failure")
+                : GenericAtomizer.Atomize(input));
+        var result = Environment(fixture, temporary, dependencies: dependencies).Ingest(
             includeGamma ? Arguments("alpha", "gamma") : Arguments("alpha"));
 
         Assert.False(result.Success);
@@ -114,7 +116,7 @@ public sealed partial class IngestRobustTests
         var fixture = Fixture();
         fixture.Files[AlphaPath] += Addition;
         var dependencies = new ReportFreeIngestDependencies(
-            AtomizerResolver: _ => (_, _) =>
+            AtomizerResolver: _ => (_) =>
                 throw new TheorySourceFormatException("selected format failure"));
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);

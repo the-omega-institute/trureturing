@@ -252,7 +252,7 @@ private theorem symmetrized_measure_inv_invariant (sigma : FiniteMeasure Circle)
       (2 : NNReal)⁻¹ • (sigma + sigma.map Inv.inv)
     mu.map Inv.inv = mu := by
   dsimp only
-  rw [FiniteMeasure.map_smul, FiniteMeasure.map_add measurable_inv,
+  rw [FiniteMeasure.map_smul _ measurable_inv.aemeasurable, FiniteMeasure.map_add measurable_inv,
     finite_measure_map_inv_inv]
   ac_rfl
 

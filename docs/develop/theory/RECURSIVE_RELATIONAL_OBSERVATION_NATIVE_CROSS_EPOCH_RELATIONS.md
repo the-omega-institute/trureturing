@@ -983,3 +983,605 @@ are not invoked with enlarged languages.
 [AK]: https://arxiv.org/html/2009.09488v1
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Regular memberships at shared affine native epochs
+
+**Definition 10.1 (finite native membership language).** Retain exactly
+$\mathcal T,\rho$ and literal equality from Definition 1.1. Let
+$\mathbf z\in\mathbb N^k$ be a finite tuple. Expressions have grammar
+(NCE.9); a supplied Presburger condition $G(\mathbf z)$ requires every
+specified integer-affine exponent to be nonnegative. Let $\Phi$ be any
+finite Boolean combination of
+
+$$
+A=B,\qquad A\in L_i,
+\tag{NCE.22}
+$$
+
+where each $L_i$ is supplied by a finite tree automaton over the fixed
+ranked signature $\alpha:0,\beta:0,\langle\ ,\ \rangle:2$. Membership
+is tested on the expanded native value of $A$. Automata are fixed input
+descriptions, independent of the values of $\mathbf z$. All tree variables
+are jointly existential finite native trees. Every occurrence of a name
+uses the same whole value, including occurrences beneath different powers.
+
+There are no free unknown tree parameters, rational or infinite trees,
+variable addresses, arbitrary homomorphisms, products of epoch parameters,
+tree-quantifier alternations or numerical leaf-count operator. A supplied
+finite ground tree is its literal constructor expression. Negated
+membership and whole-tree disequality are included by Boolean negation.
+The guard may contain scalar quantifiers; these are ordinary Presburger
+quantifiers and do not quantify native trees.
+
+**Theorem 10.2 (exact Presburger support with joint witnesses).** There is
+an effective construction of a Presburger formula $F_{G,\Phi}(\mathbf z)$
+such that, for every identical tuple $\mathbf z$,
+
+$$
+F_{G,\Phi}(\mathbf z)
+\quad\Longleftrightarrow\quad
+G(\mathbf z)\land
+\exists\mathbf x\in\mathcal T^r\ \Phi(\mathbf z,\mathbf x).
+\tag{NCE.23}
+$$
+
+At any accepted tuple the construction gives one simultaneous finite
+native assignment satisfying every atom and every repeated occurrence.
+It decides global nonemptiness and, in the nonempty case, gives a tuple
+and such an assignment. No epoch, tree-size or residual-depth bound is
+an input premise. The proof is given in Sections 11–12.
+
+The output may require congruences. It does not claim the stronger
+quantifier-free affine-polyhedral format of Theorem 4.2, nor a
+parameter-independent finite list of witness shapes. Theorem 4.2 remains
+the equation-only supplier. [SFP, Theorem 4.1][NCE-SFP] already preserves
+every source and every leaf rank using supplied arbitrary residual shapes;
+(NCE.23) instead decides existential support and may replace a realizing
+source even at one fixed tuple.
+
+## 11. The common-shape rank automaton
+
+**Lemma 11.1 (primitive-state arithmetic).** Complete and determinize the
+supplied automata and take their finite product. Write its state set as
+$Q$, leaf states as $q_\alpha,q_\beta$, and pair transition as
+$\delta:Q^2\to Q$. If $q_r$ is its state on $T_r=\rho^r\alpha$, then
+
+$$
+q_0=q_\alpha,\qquad q_1=q_\beta,\qquad
+q_{r+2}=\delta(q_{r+1},q_r).
+\tag{NCE.24}
+$$
+
+For each $s\in Q$, the predicate $q_r=s$ on $r\in\mathbb N$ is effectively
+Presburger.
+
+Proof. This is the primitive-state orbit of [NRF, Definition 4.1][NCE-NRF].
+The pair $(q_r,q_{r+1})$ follows a deterministic map on the finite set
+$Q^2$. Find its finite preperiod and positive period by the first repeated
+pair. Each state preimage is then a finite set together with finitely many
+arithmetic progressions. Their equalities, lower bounds and congruences
+are Presburger formulas. The recurrence evaluates the actual $T_r$,
+not a free unary-constructor encoding of its index. $\square$
+
+**Definition 11.2 (one residual sort).** A shape is a finite full ordered
+$c/f$ tree. Fix a finite nonempty set $V$ of block names sharing one
+unknown shape $K$. A block $U_v$ assigns a natural rank to every leaf
+of $K$. Supply finitely many pointwise equations and whole-block negatives
+
+$$
+U_u=U_v+a(\mathbf z),\qquad
+U_u\ne U_v+b(\mathbf z),
+\tag{NCE.25}
+$$
+
+with specified integer-affine $a,b$. An equation holds at every leaf;
+a negative means that at least one leaf has the indicated rank mismatch.
+Integer offsets are differences, not backward native operations.
+Let $D$ index the negatives, retaining repeated demands. Also prescribe
+one root state $s_v\in Q$ for the native expansion of every block.
+Every block must be a normal code: at every sibling-leaf pair its left
+rank minus its right rank is different from $1$.
+
+For a state vector $\sigma\in Q^V$ and a mask $M\subseteq D$, let
+$P_{\sigma,M}(\mathbf r,\mathbf z)$ assert that $\mathbf r\in\mathbb N^V$
+satisfies all pointwise equations of (NCE.25), that $q_{r_v}=\sigma_v$
+for every $v$, and that each negative $d=(u,v,b)$ has exactly the truth
+specified by its bit:
+
+$$
+d\in M\quad\Longleftrightarrow\quad r_u-r_v\ne b(\mathbf z).
+\tag{NCE.26}
+$$
+
+This is a Presburger formula by Lemma 11.1. A mask records an actual
+mismatch, not distinct automaton states or universal pointwise inequality.
+
+**Lemma 11.3 (guarded automaton for all simultaneous block values).**
+There is a finite bottom-up automaton on $c/f$ shapes with finitely many
+Presburger transition guards in $\mathbf z$ whose accepted nonleaf shapes
+are exactly those supporting the blocks of Definition 11.2 with their
+prescribed root states. Both directions use one rank field per block,
+shared at every use of that block.
+
+Proof. States consist of a leaf/nonleaf flag, a vector in $Q^V$, and a
+subset of $D$. The $c$ transition to $(\mathsf{leaf},\sigma,M)$ has guard
+
+$$
+\exists\mathbf r\ P_{\sigma,M}(\mathbf r,\mathbf z).
+\tag{NCE.27}
+$$
+
+At an $f$ node combine state vectors coordinatewise by $\delta$, take
+the union of the two masks, and mark the result nonleaf. If at least
+one child is nonleaf, this transition has guard true. If both are
+leaves with annotations $(\sigma,M),(\sigma',M')$, its guard is
+
+$$
+\exists\mathbf r,\mathbf r'\quad
+P_{\sigma,M}(\mathbf r,\mathbf z)\land
+P_{\sigma',M'}(\mathbf r',\mathbf z)\land
+\bigwedge_{v\in V}(r_v-r'_v\ne1).
+\tag{NCE.28}
+$$
+
+Accept precisely nonleaf roots with vector $(s_v)_{v\in V}$ and mask
+$D$. All of these states, transitions and formulas are constructed
+before assigning the numerical parameters.
+
+Given actual blocks, label each shape leaf by its simultaneous rank
+tuple, native-state vector and exact mismatch mask. Bottom-up native
+evaluation supplies the internal state vectors. Mask union records
+precisely the negatives witnessed somewhere below. Normality supplies
+(NCE.28). This is an accepting run.
+
+Conversely fix an accepting run at one $\mathbf z$. For each primitive
+cherry choose the two simultaneous rank tuples witnessing its particular
+(NCE.28). For each leaf not in such a cherry choose a tuple witnessing
+its (NCE.27). These choices are compatible: a leaf belongs to at most
+one primitive cherry. Choosing a cherry witness can change the witness
+for its child transition, but preserves that child's entire state vector
+and mask. There is no other constraint between different shape positions:
+all equations are pointwise, negatives require only the accumulated mask,
+and normality compares ranks only at primitive cherries. Thus the chosen
+ranks define every $U_v$ on the same $K$. All its pointwise equations hold;
+every bit in $D$ has a genuine mismatch witness; and every block is normal.
+Induction up the run gives its prescribed native root state. This proves
+exactness without replacing ranks by constants or equating values that
+merely share a finite state. $\square$
+
+The joint guard (NCE.28) is essential. Testing two leaf transitions for
+separate existence would not establish that their witnesses can also
+satisfy every block's sibling normality. Requiring all mismatches at one
+leaf would instead lose valuations whose negatives are witnessed at
+different leaves. Mask union preserves those valuations.
+
+## 12. Elimination of the shared native variables
+
+**Construction 12.1 (finite structural cases).** Use ABC Theorems 2.2–2.3
+and the flattening of Theorem 4.2, keeping its native normal coordinates
+$[r],F$, smart pairing $J$, and translation $\tau_a$. These identities
+hold at every natural $a$, so their use at $a(\mathbf z)$ preserves
+that identical tuple. Convert the Boolean formula into a finite disjunction
+of conjunctions. Negated regular membership uses the complement of a
+completed deterministic automaton. Keep a shared code name for each tree
+variable and each subexpression, with positive definitions even below
+negative atoms. Split each $J$ into its actual collapse and ordinary
+normal-$F$ cases, as in (NCE.11)–(NCE.12).
+
+There is one additional structural split for each code disequality
+$X\ne Y$: either their actual erased shapes differ, retaining that
+$c/f$ term disequality, or their shapes agree, adding that equation to
+the positive shape system. Solve all positive free-shape equations
+jointly by an idempotent finite-tree unifier. An occurs-check failure
+has no finite shape solution. This check is on $c/f$ only, after native
+collapse splitting. It does not discard the native solution $x=\beta$
+of $\rho x=\langle x,\alpha\rangle$.
+
+The successful unifier supplies finite shape terms $S_Z$ in residual
+variables $w_j$. Split every residual variable into the cases $w_j=c$
+and $w_j$ nonleaf. Substitute $c$ in the first case before decorating
+any template. The remaining residual variables have nonleaf roots;
+their ground shapes need not be distinct. Retain all selected shape
+inequalities after these substitutions, including any now impossible
+ones. A later shape decision rejects an identical pair so obtained.
+
+Decorate every explicit $c$ occurrence in each named template with a
+scalar rank, and every residual occurrence with its own block name of
+that residual sort. Every use of one code name reuses its decorated
+template. Different block occurrences sharing a shape are not identified
+as values. Traverse the positive definitions, shifts and comparisons
+through their identical unified templates. They give scalar affine
+rank equations or pointwise affine block equations within one residual
+sort. There is no scalar/block alignment: a residual position in one
+side is the same residual position on the other. Ordinary pairing aligns
+the two children separately. Collapse gives primitive offsets $1,2$;
+constants give scalar ranks $0,1$.
+
+For every disequality assigned equal shapes, traverse the equal templates
+and choose an aligned scalar or whole block at which the values differ.
+This is a finite disjunction, distributed jointly across all negatives.
+Retain each selected scalar mismatch or whole-block mismatch with its
+actual affine offset. Any actual unequal codes on one shape select such
+a position. Reassembly makes a selected mismatch sufficient. Disequalities
+assigned unequal shapes retain the selected ground-shape inequality
+instead. No syntactic shape disagreement is presumed to survive an
+arbitrary residual substitution.
+
+Require normality at each explicit $c/c$ cherry of every named template.
+The nonleaf split ensures that there is no untested primitive cherry
+across a template/residual insertion. Internal residual cherries will be
+checked by Lemma 11.3. Thus these are all the normality requirements,
+including those exposed when a residual was specialized to $c$.
+
+**Construction 12.2 (membership reduction and the finite shape problem).**
+Guess the product-automaton state of each explicit primitive occurrence
+and of each residual block. The primitive guesses have the Presburger
+conditions $q_r=s$ from Lemma 11.1. Evaluate each finite template bottom-up
+with these guessed states and $\delta$, and require the accepting or
+rejecting component specified by every membership atom. Normal expansion
+uses actual native pairing at every $F$, so this evaluation tests exactly
+the expanded native memberships. State equality does not replace any
+positive or negative native comparison.
+
+For each remaining residual sort apply Lemma 11.3 to all its block names,
+pointwise equations and selected whole-block mismatches simultaneously.
+This gives its regular shape domain by a finite transition table with
+Presburger guards. Partition the parameter space by the complete truth
+vector of all these finitely many guards. Each region $\Theta(\mathbf z)$
+is Presburger. On that region every residual automaton is an ordinary
+fixed finite $c/f$ tree automaton. The remaining shape question is exactly
+
+$$
+\exists K_1,\ldots,K_s\quad
+\bigwedge_j K_j\in\mathcal L_j\ \land\
+\bigwedge_\ell S_\ell(\mathbf K)\ne T_\ell(\mathbf K),
+\tag{NCE.29}
+$$
+
+where the $\mathcal L_j$ are those fixed regular languages and all terms
+use only $c:0,f:2$. Repeated occurrences of $K_j$ remain one variable.
+Empty residual lists and ground shape inequalities are included.
+
+For completeness of this final decision step, regular languages over
+$c/f$ satisfy the admissibility hypotheses of Comon–Delor, Lemma 1,
+Theorem 4 and Corollary 2 [NCE-CD]. Boolean combinations of these languages
+are effective regular languages. The preimage of a regular state language
+under $f$ is a finite union of products of child-state languages, obtained
+from its finite transition table; the $c$ case is a finite leaf test.
+Product determinization gives the same decomposition for Boolean sorts.
+Emptiness and finiteness are decidable: trim the finite automaton to
+productive states usable at an accepting root; an arbitrarily repeatable
+state along a productive path gives unbounded height, while no such cycle
+bounds accepting height. In the finite case enumerate all accepted trees
+through that bound. These are precisely effective constructor
+preimages and finite-sort operations required by admissibility.
+Consequently the cited theorem decides (NCE.29), including all its shared
+constructor-term disequalities. It sees no native $\rho$, integer rank,
+free-power symbol or non-flat rewriting law. A product of automata, with
+separate membership symbols for its accepting sets, supplies a single
+finite regular-membership structure if required by the paper's notation.
+
+**Proof of Theorem 10.2.** There are finitely many Boolean, collapse,
+shape-equality, leaf/nonleaf, mismatch and state choices. Fix one such
+choice and one guard region. The answer to (NCE.29) is a constant Boolean,
+independent of the numerical tuple. If false discard this choice. If true,
+conjoin its region with $G$ and all explicit scalar-rank equations,
+mismatches, nonnegativity and primitive-state conditions. Existentially
+project the finitely many scalar ranks. Taking the finite disjunction
+constructs a Presburger $F_{G,\Phi}$.
+
+For soundness at an accepted $\mathbf z$, extract scalar ranks, a solution
+to (NCE.29), and accepting runs of the fixed shape automata. Lemma 11.3
+chooses simultaneous local ranks at that same $\mathbf z$. Each named
+normal code is then assembled once and reused at all of its occurrences.
+Every positive aligned equation, collapse definition and ordinary-pair
+definition reassembles. A negative either has different actual shapes or
+its chosen genuine scalar/block mismatch. All primitive cherries are
+normal, and bottom-up evaluation gives every demanded native membership.
+Expanding by ABC's $E$ therefore supplies one joint original assignment.
+
+For completeness, start with any original native assignment at a guarded
+$\mathbf z$. Its normal codes select their actual collapse cases and
+actual shape comparisons. Their shape solution factors through the
+unifier; each residual selects its actual leaf/nonleaf case. Decorated
+codes retain their actual scalar ranks and block fields. For each
+same-shape negative choose an actual differing template position. Their
+native states give the state guesses; their residual fields give accepting
+runs by Lemma 11.3. Thus their shapes solve (NCE.29) on the selected guard
+region, and their scalar ranks satisfy the remaining arithmetic at the
+unchanged $\mathbf z$. This proves both directions of (NCE.23).
+
+All constructions terminate. Arithmetic witness extraction can follow a
+positive Presburger decision by finite-tuple enumeration. After a positive
+shape decision one may enumerate finite shape tuples and their finite runs
+until a solution to (NCE.29) is found; the decision proves this search will
+terminate. At each local rank choice Presburger witness extraction likewise
+terminates. Negative decisions use the terminating arithmetic and shape
+deciders, not failed unbounded witness searches. Every expansion is finite.
+Finally deciding $\exists\mathbf z\ F_{G,\Phi}$ gives global nonemptiness
+and a parameter witness when nonempty. $\square$
+
+**Remark 12.3 (why the new membership step is necessary).** The constant
+rank-field replacement of Lemma 3.3 is an equation-only supplier, not a
+membership-preserving operation. The singleton regular language
+$\{\langle\alpha,\beta\rangle\}$ requires the normal code
+$F([0],[1])$. A constant field on that residual shape cannot represent
+this member. Lemma 11.3 keeps the two ranks jointly, and in general keeps
+all finite native states and separately located mismatch witnesses.
+Conversely $x=y\land x\ne y$, and
+$x,y\in\{\alpha\}\land x\ne y$, still have no joint solution.
+No independent witness per record or equality-by-state shortcut is used.
+
+## 13. Fixed-capacity source realization and an original Rho label
+
+**Convention 13.1 (actual apparatus and fixed numeral).** Use exactly
+[ABT, Definition 18.1 and Convention 18.2][NCE-ABT]: the one GENERAL/ARC
+installation $G_{\mathrm{gc}}$, its preparation occurrence $\xi$, actual
+source16 and growing $\phi_K$, first Ready $P$ with source $\beta$ and
+$H_0=h=K=1$, parked original client, occupied verifier and INITIAL consumer.
+A completed call below is an actual outer01 call with canonical frame,
+ReadState, generation, source/maintenance work, response, counters, rows,
+actual delivery/check/ACK, source-token return, InnerReturn, CaptureCAP
+and genuine Ready. Each next call begins after that return. The finite
+supply and local-termination hypotheses are GENERAL Assumption 1.2's.
+No outer00, history1 flight, reset, clone or new installation is used.
+
+Fix a supplied numeral $h\ge1$. Let $\mathsf{HasBeta}$ be the language
+of trees containing a beta leaf, and put
+$L_h=\{u\in\mathcal T:\lambda(u)\le h\}$. Both are regular.
+For $\mathsf{HasBeta}$ use an occurrence bit, with pair transition OR.
+For $L_h$ use states $1,\ldots,h,\mathsf{overflow}$, leaf state $1$,
+and truncated addition at a pair, accepting the numeral states. This
+is an automaton for each supplied $h$, not one automaton with an unknown
+numerical cutoff.
+
+**Theorem 13.2 (exact attained chronological source-value projection).**
+The logical source-value image of completed canonical source-only extensions
+from this same $P$, allowing the installed Reserve/Raise maintenance, is
+exactly $\mathsf{HasBeta}$. At final guard/reserve $h=K$ its image is
+exactly $\mathsf{HasBeta}\cap L_h$.
+
+More precisely, for every $t\in\mathsf{HasBeta}$ and every tuple
+$0=n_0\le\cdots\le n_{m-1}$ with
+$\rho^{n_{m-1}}t\in L_h$, there is a finite actual extension which first
+constructs $t$ with accepted-Rho epoch zero and guard/reserve $h$, then
+performs exactly $n_{m-1}$ accepted original Rho calls. At its Ready
+boundaries the designated values are precisely $\rho^{n_i}t$ at these
+identical epochs. Tied indices may designate the same boundary, including
+$P$ when no construction is required. Every tuple with such a preparation
+and pure-Rho tail satisfies these semantic conditions.
+
+Proof. The beta-occurrence invariant holds initially. Reads, maintenance
+and executed refusal preserve the source. An accepted Left/Right retains
+the entire old source as one child. Each leaf's $\rho$ image contains
+beta, so an accepted Rho also preserves the invariant. CAP's source-domain
+invariant gives $\lambda(t)\le h$ at a completed boundary with guard $h$.
+These prove necessity; no statement about the equality of full histories
+has been made.
+
+For the unrestricted image choose a numeral $h\ge\lambda(t)$; for the
+fixed-capacity image use its stipulated $\lambda(t)\le h$. Select any
+beta leaf in this supplied $t$. Starting at the actual $\beta$, build
+the ancestors of that occurrence from the leaf
+upwards. If the current subtree is the desired left child, issue
+Right($v$) with the actual right sibling as context; if it is the right
+child, issue Left($v$) with the actual left sibling. Supply that complete
+finite sibling in the canonical prefix code. First complete Reserve($h$)
+and Raise($h$) if $h>1$; omit them if $h=1$. CAP Theorems 5.2–5.3
+preserve this same source occurrence and set $h=K$ without a Rho. Every
+intermediate subtree has at most $\lambda(t)$ leaves, so every supplied
+whole graft is accepted at this guard. If $h=1$, the only such $t$ is
+beta and no graft is required. CAP Theorem 4.5, Lemmas 4.7 and 6.7,
+ARC's actual outer01 entry and GENERAL Lemma 8.1 give the full finite
+return after each call. This is a prescribed sequence of existing legal
+frames; it does not replace the parked controller with a tree builder.
+
+For the chronological assertion note
+$\lambda(\rho u)=\lambda(u)+b(u)\ge\lambda(u)$, with $b(u)$ the
+number of beta leaves. The stated final bound therefore bounds every
+intermediate candidate, including $t$. Each of the next $n_{m-1}$ Rho
+calls accepts and installs the declared iterate. Maintenance and grafts
+have preserved accepted-Rho epoch zero, and subsequent accepted Rho
+increments it once per call. The complete-return induction gives all
+designated Ready boundaries. Conversely the stated prepared pure tail
+has exactly these values, and its source-domain invariant gives the final
+bound. $\square$
+
+**Definition 13.3 (one-source class and its two label supports).** Let $I$
+be any finite proposed-row/link input of Definition 1.2. Validate it before
+using (NCE.4). Let $\Xi(\mathbf n,t,\mathbf x)$ be any additional finite
+Boolean formula of Definition 10.1, with any further joint existential
+tree variables. Its regular languages are supplied fixed descriptions.
+For this one fixed numeral $h$, define
+
+$$
+\begin{aligned}
+C_h(\mathbf n,t,\mathbf x)={}&
+\operatorname{Chron}(\mathbf n)\land\Psi_I(\mathbf n,t,\mathbf x)
+\land\Xi(\mathbf n,t,\mathbf x)\\
+&\land\ t\in\mathsf{HasBeta}\land\rho^{n_{m-1}}t\in L_h,\\
+E^+_h(\mathbf n)\ \Longleftrightarrow{}&
+\exists t,\mathbf x\quad C_h(\mathbf n,t,\mathbf x)
+                   \land\rho^{n_{m-1}+1}t\in L_h,\\
+E^-_h(\mathbf n)\ \Longleftrightarrow{}&
+\exists t,\mathbf x\quad C_h(\mathbf n,t,\mathbf x)
+                   \land\rho^{n_{m-1}+1}t\notin L_h.
+\end{aligned}
+\tag{NCE.30}
+$$
+
+For malformed $I$ both supports are false, with the malformed indication
+kept distinct from inconsistency. No reachedness guard, exterior leaf,
+blocker, old-class negative or signed link is dropped. Class names are
+local to their rows until linked. The same $t$, epoch tuple and entire
+class valuations occur in all constraints.
+
+**Theorem 13.4 (exact original-label possibility and uniqueness test).**
+Both $E^+_h$ and $E^-_h$ are effectively Presburger, with simultaneous
+native witnesses at each supported tuple. Their union is exactly the
+support of $C_h$. Every witness has a source-value realization from the
+same initialized $P$ by Theorem 13.2. At its last Ready, supply the next
+actual outer01/Rho frame `0010`, seal/parse it, obtain the actual service
+admission and complete ReadState. At this original source-body cut,
+before generation, the lawful original completion protocol releases
+accept exactly for the $E^+_h$ witnesses and executed refusal exactly
+for the $E^-_h$ witnesses.
+
+At a fixed tuple, neither support means the constrained source class is
+unattainable; just one means this existing response label is unique on
+that class; both mean that two actual alternative prefixes of the same
+initialization give different labels of this admitted original experiment.
+In the last case their original $Q$ responses are different. A unique
+label proves no equality of complete responses or full-$Q$ behaviors.
+
+Proof. Apply Theorem 10.2 to each formula in (NCE.30), including the
+complemented capacity membership for the negative support. Proposition
+2.2 identifies their rows and signed links with those of the one actual
+source at the identical tuple. Theorem 13.2 realizes that source-value
+tuple with its actual current guard and reserve. This realizes the
+mathematical row truths; it does not assert that the constructed path
+acquires the rows or publishes $\Xi$ as observer data.
+
+CAP's source compiler tests the whole next candidate, whose value is
+$\rho^{n_{m-1}+1}t$, against the actual $h$. ABT Convention 18.2,
+AIF Definition 2.6 and SOURCECALL Lemma 2.3 give its already admitted
+finite original completion through response release, before the changed
+idle CTL. The prescribed enabled non-IN actions have their actual guards,
+current owners, operands, labels and complete original joint successors.
+Overlarge candidates are canonical executed refusals, not unexecuted
+none. This proves the label assertion. The two complementary memberships
+partition every candidate, giving the three cases of the decision test.
+
+The completion protocol is used at its real admission point. Each
+instance terminates finitely; no common all-source bound on its primitive
+depth is asserted. For any two witnessing prefixes, their finite
+completion traces give a finite original experiment distinguishing them:
+use prescribed Advance and branch only on actual released responses. If
+responses already differ sooner, they are already distinguished; if not,
+continue through their finite completions to the differing release.
+No private-state branch is needed. The original semantic protocol also
+has its stated AIF admission. Equality of labels cannot reverse this
+argument, because the response retains all other actual fields. $\square$
+
+## 14. Source correspondence, authority, costs and remaining obligations
+
+**Convention 14.1 (what the construction consumes).** The logical input
+is a supplied finite formula, complete rows and declared regular predicates.
+For actually acquired truthful records on the stated prepared pure-Rho
+segment, their actual source belongs to (NCE.30) when its additional
+predicates hold. To assert that this is the *entire* accessible-information
+fiber still requires a two-sided acquisition/selection proof, including
+all retained fields. No complete acquired request, context, snapshot,
+archive or accessible distinction is removed to enlarge that fiber.
+Theorem 13.2 supplies alternative source-value histories, not histories
+with identical retained inputs or identical physical records.
+
+This distinction is substantive in [NASF, Definitions 1.2–1.4 and Theorem
+3.4][NCE-NASF]: one returning adaptive program has its entire accessible
+output and branch-sensitive history fiber. Its exact representation is
+in general a countable family of finite constraints. NASF Theorem 6.2
+and Corollary 6.3 concern the undecidable fiber of one such program;
+Theorem 10.2 does not make that countable family one finite formula.
+NRF Theorem 6.6 retains every original source for its regular-selector
+producer, with a separate invocation/validation/Return correspondence.
+The arbitrary shared signed epoch comparisons here do not instantiate
+that producer or its complete handoff in $G_{\mathrm{gc}}$.
+
+**Convention 14.2 (literal implementation and evidence interfaces).** The
+native interpretation and public/private proof suppliers retain these
+exact scopes; reading them supplies documentary correspondence, not a new
+kernel certificate.
+
+| Source | Interface used and boundary |
+| --- | --- |
+| ABC Theorems 2.2–2.3; NCE Sections 2–4; SFP Sections 2–4 | Normal-code identities, same-source row compilation, scalar/block alignment and source-preserving arbitrary-shape coordinates are reused. Constant residual replacement is not applied to memberships. |
+| NRF Definition 4.1 and Sections 6–7 | Primitive-state periodicity and finite regular-domain methods are suppliers; their fixed selected-row producer is not the present arbitrary signed cross-epoch input. |
+| [NativeUnificationCore][NCE-CORE], namespace `NativeTermUnification` | `Source = FreeMagma Bool`, `Term X = FreeMagma (Bool ⊕ X)`, `evaluate` and the literal constructor encoding. There is no interpreted free-power symbol in this Lean term signature. |
+| [NativeGroundSolutionSpace][NCE-GROUND] and its [Scribe][NCE-GROUND-S] | `solutionEquiv` retains the full original assignment; `constrainedEquiv` pulls back an already supplied arbitrary predicate, and does not decide it. |
+| [NativeHistoryCells][CELL], its [Scribe][CELL-S]; [NativeSymbolicRecutting][NCE-RECUT] | Private `syntax_iff_ground`, public `cell_feasibility_exact`/`historyCellEquiv` and `symbolic_recut_exact` keep complete old-class negatives and actual fixed-history/depth scopes. They are not replaced by state equality. |
+| [NativeWholeRowPlan][NCE-PLAN] | Private `ground_action_value` actually consumes `parameterization.ground_exact`; public `pair_plan_correct` consumes `native_complete` in the failed-unification branch. These are existing consumers, not an installed evaluator of (NCE.23). |
+| CAP Sections 1, 4–6; ARC Definitions 4.1, 5.2, 9.1; GENERAL Lemma 8.1 | Existing seven-label ingress, current source16/$\phi_K$, maintenance, source semantics and complete paid returns establish Theorems 13.2–13.4. AIF/SOURCECALL establish only the indicated original-row completion domain. |
+
+**Convention 14.3 (resources and the four independent expressions).**
+The finite decision construction can enlarge Boolean branches, unifiers,
+automaton products, guard regions and Presburger descriptions. No complexity
+bound, installed solver or cheap witness expansion is asserted. Output
+expansion has its actual native size as in (NCE.21). A mathematical
+membership predicate is not a new source instruction.
+
+Every physical preparation and test uses the existing producer/current
+service token, actual source binding, code, scratch and channels. Complete
+contexts and frames are actually supplied at their prescribed INs. All
+Base/seek/Resolve work, ingress, generation, source writes, guards, fences,
+counters, row/index construction, copies, receiver seals/checks, ACKs,
+owner transfers, InnerReturn and CaptureCAP remain paid and retained on
+their own run. If its literal primitive suffix has $N$ rows, it has $N$
+receipts, $N$ ticks and $2N$ fee units; the earlier entrance bill stays
+separate. Non-meter material and complete marked receipts keep their
+actual sizes and contents. Leaf number, accepted-Rho epoch, semantic
+source/event counters and primitive ordinal are different coordinates.
+No cross-run cost equality, monotonicity or zero-cost read follows.
+
+The source tree and its code shape are not physical storage support $S$,
+terminal boundary $B$, actual occurrence-order $T$, or joint retained and
+permission-bearing $M_J$. A mathematical joint valuation is not actor
+memory. The original client remains parked; neither a supplied context
+nor a historical permission installs an adaptive controller or current
+read right. Complete original successors remain task outputs, not actor
+inspection rights. Theorem 13.4 uses an included original released label;
+it does not decide inclusion of annex fields or equate full responses.
+
+**Problem 14.4 (remaining recovery bridge).** A practical use still needs
+actual lawful acquisition of the required complete records, comparisons
+and membership evidence, a proved exact selection-aware fiber, current
+access to those operands, an installed consumer and paid handoff/return.
+The regular membership theorem alone authenticates none of these.
+GENERAL's existing paid historical four-view conversions and source-only
+original-response inverses remain suppliers at their exact domains.
+
+The complete original-$Q$ correspondence, synchronized-mate and equal-weight
+complete-response comparisons, independent successful mixed inputs and
+growth, changed-return/annex admission, arbitrary old targets, and the
+raw/bootstrap/preacquisition/unfinished/fault/final00/absorbing-terminal
+domains retain their existing obligations. All-domain mutual recovery of
+the four independently defined expressions and currently callable use
+remain the full programme. Theorems 10.2 and 13.4 supply a finite logical
+extension and an actual original-label consumer, not that completion.
+
+**References 14.5 (mathematical attribution and fixed capacity).** The
+common-shape rank automaton, its exact assembly and the source-class
+application are `repo-derived` ordinary proofs. No new Lean verification
+or worldwide-originality claim is made. Comon–Delor, *Equational Formulas
+with Membership Constraints*, Information and Computation 112(2), 167–216,
+DOI [10.1006/inco.1994.1056][NCE-CD-DOI], author manuscript Lemma 1
+(pp. 7–8), Theorem 4 and Corollary 2 (p. 33) [NCE-CD], is
+`literature-attested` only for the ordinary admissible $c/f$ shape problem
+after the proved native elimination. No arbitrary homomorphism extension,
+HOM image-language comparison or TABG flat-theory enlargement is assumed.
+Ginsburg–Spanier Theorems 1.2–1.3 [GS] supply the final Presburger decision
+and semilinear conversion. The pinned mathlib interface
+`presburger.definable_iff_isSemilinearSet` in
+`Mathlib/ModelTheory/Arithmetic/Presburger/Definability.lean` has that
+arithmetic scope, not the new native elimination.
+
+The capacity quantifiers are $\forall h\ge1$ supplied as a numeral,
+$\exists$ a constructed $L_h$ automaton and formulas $E_h^\pm$.
+Automaton size and formula syntax may depend on $h$. This is different
+from one finite formula with fixed automata and free numeric capacity
+$h$. [ABT, Sections 24–26][NCE-ABT] gives the attained original-response
+boundary for that uniform language. Neither result turns semantic
+source replacement into actual acquired or callable memory.
+
+[NCE-SFP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOURCE_FIBER_PARAMETRIZATION.md
+[NCE-NRF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REGULAR_FRONTIER_SELECTION.md
+[NCE-NASF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ADAPTIVE_SELECTION_FIBERS.md
+[NCE-ABT]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md
+[NCE-CORE]: ../../../D5/S0/Rewriting/NativeUnificationCore.lean
+[NCE-GROUND]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSolutionSpace.lean
+[NCE-GROUND-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSolutionSpace.scribe.cs
+[NCE-RECUT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSymbolicRecutting.lean
+[NCE-PLAN]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowPlan.lean
+[NCE-CD]: https://lsv.ens-paris-saclay.fr/~comon/ftp.articles/membership.ps
+[NCE-CD-DOI]: https://doi.org/10.1006/inco.1994.1056
+
+## 追加锚（本行以下为增补区）

@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Restore the Actual Native Third-Order Base State. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
 import D5.S3.Combinatorics.Graph.Walks.ActualThirdOrderBoundaryBase
 

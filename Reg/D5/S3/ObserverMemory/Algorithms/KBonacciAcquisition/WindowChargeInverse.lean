@@ -313,8 +313,6 @@ def legalEvidence : Registration legalArena
     intro i
     refine ⟨⟨2, 2⟩, (fun _ => false), (fun _ => true), ?_⟩
     norm_num [legalActual, realize, DBonacciAdmissible, runAdmissible, Fin.tail]
-    change (true : Bool) ≠ false
-    decide
 
 noncomputable def legalRegistration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse.short_legal)

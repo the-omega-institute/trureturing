@@ -9,6 +9,7 @@
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 import D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
 import D5.S0.Observation.MatrixTracePowerSum
+import D5.S3.Quantum.Schatten.TraceNorm
 
 /-!
 For two-qubit coefficient matrices, the adjugate complement identity bounds the square
@@ -25,6 +26,7 @@ open D5.S3.Quantum.Matrix.CartesianVariance
 open D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 
 namespace D5.S3.Quantum.Information.TwoQubitSVDEntropyLowerBound
+open D5.S3.Quantum.Schatten.TraceNorm (transitionMass_sq det_transitionAbs)
 
 def reducedTransition (A B : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   partialTraceRight
@@ -103,31 +105,6 @@ private theorem frobSq_mul_conjTranspose_add_two_det_le
   simp only [Matrix.det_mul, Matrix.det_adjugate, Fintype.card_fin,
     Nat.reduceSub, pow_one, norm_mul] at h
   linarith [frobSq_mul_conjTranspose_add_mul_adjugate A B]
-
-private theorem det_transitionAbs (T : Matrix (Fin 2) (Fin 2) ℂ) :
-    (CFC.sqrt (Tᴴ * T)).det = (‖T.det‖ : ℂ) := by
-  rw [(posSemidef_conjTranspose_mul_self T).det_sqrt,
-    RCLike.sqrt_of_nonneg (posSemidef_conjTranspose_mul_self T).det_nonneg,
-    Matrix.det_mul, Matrix.det_conjTranspose]
-  simp only [RCLike.re_eq_complex_re, Complex.star_def, Complex.conj_mul',
-    ← Complex.ofReal_pow, Complex.ofReal_re, Real.sqrt_sq (norm_nonneg _)]
-  rfl
-
-private theorem transitionMass_sq (T : Matrix (Fin 2) (Fin 2) ℂ) :
-    (CFC.sqrt (Tᴴ * T)).trace.re ^ 2 = RHLinalg.frobSq T + 2 * ‖T.det‖ := by
-  have hr := (Complex.nonneg_iff.mp
-    (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (Tᴴ * T))).trace_nonneg).2
-  have h := congrArg Complex.re
-    (D5.S0.Observation.MatrixTracePowerSum.trace_pow_add_two
-      (CFC.sqrt (Tᴴ * T)) 0)
-  simp only [Nat.zero_add, pow_two, pow_zero, pow_one, Matrix.trace_one] at h
-  rw [CFC.sqrt_mul_sqrt_self _ (posSemidef_conjTranspose_mul_self T).nonneg,
-    det_transitionAbs] at h
-  norm_num [Complex.mul_re, Complex.sub_re, Complex.ofReal_re, Complex.ofReal_im,
-    Complex.re_ofNat, Complex.im_ofNat, hr.symm, RHLinalg.frobSq,
-    RCLike.re_eq_complex_re] at h
-  change (CFC.sqrt (Tᴴ * T)).trace.re ^ 2 = (Tᴴ * T).trace.re + 2 * ‖T.det‖
-  nlinarith [h]
 
 private theorem transitionMass_pos {T : Matrix (Fin 2) (Fin 2) ℂ} (hT : T ≠ 0) :
     0 < (CFC.sqrt (Tᴴ * T)).trace.re := by

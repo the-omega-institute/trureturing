@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:61bd97ee93c47155d875a36e60fe252c934a70dffdff54936362c62baffe334d
-  normalized_sha256: sha256:61bd97ee93c47155d875a36e60fe252c934a70dffdff54936362c62baffe334d
-cas_ref: sha256:61bd97ee93c47155d875a36e60fe252c934a70dffdff54936362c62baffe334d
-coverage_gids:
-  - gid: D5/S3/Entropy/Fusion/QuotientFiberDecomposition.quotient_fiber_entropy_decomposition
-    target_statement_id: sha256:6661d41769a4c338816fbfaeaa223da3be341a42fe554f91f0e82dc3b1dc20df
-receipts:
-  unresolved_subitems: []

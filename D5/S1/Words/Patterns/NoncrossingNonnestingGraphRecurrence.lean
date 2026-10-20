@@ -103,9 +103,11 @@ private theorem goodEdges_extend_iff (E : Finset (Edge n)) (S : Finset (Fin n)) 
     · intro e he f hf
       have hpair := hgood
         ((edgeSuccEquiv n).symm (Sum.inl e)) (by
-          simpa [extendEdges, splitEdges] using he)
+          simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using he)
         ((edgeSuccEquiv n).symm (Sum.inl f)) (by
-          simpa [extendEdges, splitEdges] using hf)
+          simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using hf)
       simpa [Crossing, Nesting, edgeSuccEquiv] using hpair
     · intro c hc
       simp only [allowedEdges, Finset.mem_filter, Finset.mem_univ, true_and]
@@ -117,9 +119,11 @@ private theorem goodEdges_extend_iff (E : Finset (Edge n)) (S : Finset (Fin n)) 
       exfalso
       have hpair := hgood
         ((edgeSuccEquiv n).symm (Sum.inl e)) (by
-          simpa [extendEdges, splitEdges] using he)
+          simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using he)
         ((edgeSuccEquiv n).symm (Sum.inr c)) (by
-          simpa [extendEdges, splitEdges] using hc)
+          simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using hc)
       simp [Crossing, Nesting, edgeSuccEquiv] at hpair
       omega
   · rintro ⟨hgood, hallowed⟩ x hx y hy
@@ -130,7 +134,8 @@ private theorem goodEdges_extend_iff (E : Finset (Edge n)) (S : Finset (Fin n)) 
           simpa using hxcase
         subst x
         have he : e ∈ E := by
-          simpa [extendEdges, splitEdges] using hx
+          simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using hx
         cases hycase : edgeSuccEquiv n y with
         | inl f =>
             have hyform : y = (edgeSuccEquiv n).symm (Sum.inl f) := by
@@ -138,7 +143,8 @@ private theorem goodEdges_extend_iff (E : Finset (Edge n)) (S : Finset (Fin n)) 
               simpa using hycase
             subst y
             have hf : f ∈ E := by
-              simpa [extendEdges, splitEdges] using hy
+              simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using hy
             simpa [Crossing, Nesting, edgeSuccEquiv] using hgood e he f hf
         | inr c =>
             have hyform : y = (edgeSuccEquiv n).symm (Sum.inr c) := by
@@ -146,7 +152,8 @@ private theorem goodEdges_extend_iff (E : Finset (Edge n)) (S : Finset (Fin n)) 
               simpa using hycase
             subst y
             have hc : c ∈ S := by
-              simpa [extendEdges, splitEdges] using hy
+              simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using hy
             have hcAllowed := hallowed hc
             simp only [allowedEdges, Finset.mem_filter, Finset.mem_univ, true_and] at hcAllowed
             have hincident := hcAllowed e he
@@ -171,7 +178,8 @@ private theorem goodEdges_extend_iff (E : Finset (Edge n)) (S : Finset (Fin n)) 
           simpa using hxcase
         subst x
         have hc : c ∈ S := by
-          simpa [extendEdges, splitEdges] using hx
+          simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using hx
         cases hycase : edgeSuccEquiv n y with
         | inl f =>
             have hyform : y = (edgeSuccEquiv n).symm (Sum.inl f) := by
@@ -179,7 +187,8 @@ private theorem goodEdges_extend_iff (E : Finset (Edge n)) (S : Finset (Fin n)) 
               simpa using hycase
             subst y
             have hf : f ∈ E := by
-              simpa [extendEdges, splitEdges] using hy
+              simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using hy
             have hcAllowed := hallowed hc
             simp only [allowedEdges, Finset.mem_filter, Finset.mem_univ, true_and] at hcAllowed
             have hincident := hcAllowed f hf
@@ -215,12 +224,14 @@ private theorem castSucc_mem_allowedEdges_extend_iff
     constructor
     · intro e he hde
       have hincident := hd ((edgeSuccEquiv n).symm (Sum.inl e)) (by
-        simpa [extendEdges, splitEdges] using he) (by
+        simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using he) (by
         simpa [edgeSuccEquiv] using hde)
       simpa [edgeSuccEquiv] using hincident
     · intro c hc
       have hincident := hd ((edgeSuccEquiv n).symm (Sum.inr c)) (by
-        simpa [extendEdges, splitEdges] using hc) (Fin.castSucc_lt_last d)
+        simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using hc) (Fin.castSucc_lt_last d)
       have hcd : c = d := by
         simpa [edgeSuccEquiv] using hincident.resolve_right
           (fun h => Fin.castSucc_ne_last d h.symm)
@@ -235,7 +246,8 @@ private theorem castSucc_mem_allowedEdges_extend_iff
           simpa using hxcase
         subst x
         have he : e ∈ E := by
-          simpa [extendEdges, splitEdges] using hx
+          simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using hx
         have hincident := hd e he (by simpa [edgeSuccEquiv] using hdx)
         simpa [edgeSuccEquiv] using hincident
     | inr c =>
@@ -244,7 +256,8 @@ private theorem castSucc_mem_allowedEdges_extend_iff
           simpa using hxcase
         subst x
         have hc : c ∈ S := by
-          simpa [extendEdges, splitEdges] using hx
+          simpa [extendEdges, splitEdges, Equiv.finsetCongr_symm,
+            Equiv.finsetCongr_apply, Finset.mem_map_equiv] using hx
         have hcd : c = d := by simpa using hsingle hc
         exact Or.inl (by simp [edgeSuccEquiv, hcd])
 

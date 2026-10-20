@@ -13,6 +13,7 @@ Same-delivery prerequisite: D5.S3.Quantum.Entanglement.HiguchiSudbery.HermiteEnt
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Entanglement.HiguchiSudbery.HermiteEntropy
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Analysis.SpecialFunctions.Log.Base

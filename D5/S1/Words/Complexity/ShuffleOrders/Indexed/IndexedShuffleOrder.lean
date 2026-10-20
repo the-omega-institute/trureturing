@@ -6,6 +6,7 @@
    utility: none
    digest: Indexed Lyndon schedule evaluation is bounded by factor concatenation. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder
 import D5.S1.Words.Complexity.ShuffleOrders.Indexed.IndexedSchedulePromotion
 

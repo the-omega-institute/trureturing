@@ -1,0 +1,5 @@
+# FIB stopping-law rigidity and sharp linear address radius
+
+For each positive total paid-read budget $k$, one explicit stopping law has exact minimum law-preserving address radius $2k+1$. Every lawful representative of that law makes a read at distance at least $2k+1$ with probability at least $(1+p^k+(1-p)^k)/2$, and the explicit rule attains equality. These conclusions hold at each fixed biased interior parameter, for either original endpoint and every unchanged independent seed space. They concern the full joint law of the seed, actual endpoint, output, return indicator and paid count.
+
+The resulting universal lower bound is linear. Together with the inherited upper bound it gives $2k+1\le\rho_{\mathrm{law}}(k;p,j,\nu)\le2^{k+1}-1$ for $k\ge1$. The exact universal values at budgets zero and one are $0$ and $3$. 

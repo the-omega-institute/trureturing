@@ -34,8 +34,21 @@ For norm(z)<=R and abs(Im(z))<=b the paper consequence is norm(response)<=sqrt(8
 
 The existing source analysis applies this estimate to the explicit, suitably normalized prolate model of Connes-Consani-Moscovici. It constructs an evenized, finite dyadic candidate family with the same Xi limit. That model-limit proof, the factor-four Mellin normalization calculation, and the observable Schur energy certificate are paper results. None is silently asserted by this Lean theorem. The fixed 129-entry numerical candidate has not been identified with that new family. No unbounded-scale ground approximation or RH conclusion is claimed. Lean and Scribe compilation were not run in this session.
 
+**Theorem 1.3 (The consumed exact inverse-fourth partial tail).**
+
+$$\operatorname{Positive}(N)\Rightarrow\operatorname{LessEqual}(\operatorname{InverseFourthPartial}(N, k), \operatorname{sub}(\operatorname{div}(1, \operatorname{mul}(3, \operatorname{cube}(N))), \operatorname{div}(1, \operatorname{mul}(3, \operatorname{cube}(\operatorname{add}(N, k))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/WeilEvenFourierObservationTail.inverse_fourth_partial_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+SOURCE_ONLY_UNCOMPILED. For every natural N>0 and every natural k, including k=0, sum_{j<k} 1/(N+j+1)^4<=1/(3*N^3)-1/(3*(N+k)^3). This minimally exposes the already present private fourth_partial proof, leaving all original definitions and proof bodies intact. It is reuse, not a novelty claim. Its live consumer is ActualColumnRemainder.paired_first_jet_remainder_tail and thereby the full paired actual column. All compiler, axiom, Reg source reconstruction/enrollment, Scribe and CI checks remain pending.
+
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilEvenFourierObservationTail.evenExteriorResponse`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilEvenFourierObservationTail.even_exterior_fourier_observation_bound`
+- Truth anchor: `D5/S3/Weil/ZetaBridge/WeilEvenFourierObservationTail.inverse_fourth_partial_le`
 - Dependency: [D5/S3/Weil/ZetaBridge/WeilInfiniteComplementLeakage](WeilInfiniteComplementLeakage.md)

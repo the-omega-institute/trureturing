@@ -22,7 +22,7 @@ internal static class NonpropositionalTestSupport
         + "/" + entry.AtomId + ".yaml";
 
     internal static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
-        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
 
     internal static DigestionLedgerEntry Settled(DigestionLedgerEntry entry, string? receipt = null)
     {

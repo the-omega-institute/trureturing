@@ -6,6 +6,7 @@
    utility: none
    digest: Actual original controller histories and their rows laws. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.ObserverMemory.Algorithms.StationaryHistoryData
 
 set_option autoImplicit false

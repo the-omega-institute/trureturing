@@ -60,7 +60,7 @@ def probabilitySimplexEquiv : ProbabilityMeasure W ≃ stdSimplex ℝ W where
 
 lemma massVector_map {V : Type*} [Fintype V] [MeasurableSpace V]
     [MeasurableSingletonClass V] (f : W → V) (θ : ProbabilityMeasure W) :
-    massVector (θ.map (measurable_of_countable f).aemeasurable) = pushMass f (massVector θ) := by
+    massVector (θ.map f) = pushMass f (massVector θ) := by
   classical
   funext v
   have hset : (↑(Finset.univ.filter (fun w => f w = v)) : Set W) = f ⁻¹' {v} := by
@@ -79,7 +79,7 @@ lemma map_eq_iff_massVector {V : Type*} [Fintype V] [MeasurableSpace V]
     (θ : Measure W).map f = (Q : Measure V) ↔ pushMass f (massVector θ) = massVector Q := by
   constructor
   · intro h
-    have hp : θ.map (measurable_of_countable f).aemeasurable = Q := Subtype.ext h
+    have hp : θ.map f = Q := Subtype.ext h
     rw [← massVector_map f θ, hp]
   · intro h
     have hp := massVector_injective ((massVector_map f θ).trans h)
@@ -208,7 +208,7 @@ lemma native_feasible_iff_coordinates (label : W → Z) (source : W → U) (A : 
   have hs : (θ : Measure W).map source = (ρ : Measure W).map source ↔
       pushMass source (massVector θ) = pushMass source (massVector ρ) := by
     simpa only [massVector_map, ProbabilityMeasure.toMeasure_map] using
-      (map_eq_iff_massVector source θ (ρ.map (measurable_of_countable source).aemeasurable))
+      (map_eq_iff_massVector source θ (ρ.map source))
   simp only [nativeFeasible, declaredCoordinateClass, Set.mem_ofPred_eq,
     map_eq_iff_massVector label θ Q, hs, support_one_iff_outside_zero,
     massVector_mem_simplex, true_and]

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8f13dfc967936db9fbfbdf1ceea51dfbe28ca2c3c5ca27a52e980eb509e3b1e7
-  normalized_sha256: sha256:8f13dfc967936db9fbfbdf1ceea51dfbe28ca2c3c5ca27a52e980eb509e3b1e7
-cas_ref: sha256:8f13dfc967936db9fbfbdf1ceea51dfbe28ca2c3c5ca27a52e980eb509e3b1e7
-coverage_gids:
-  - gid: D5/S0/Naming/DenseGreenClass.dense_inter_green_class_nonempty
-    target_statement_id: sha256:e8fd413102486bc84a90e828a425c6212b2430338db1d4246241a5da58d3a7f9
-receipts:
-  unresolved_subitems: []

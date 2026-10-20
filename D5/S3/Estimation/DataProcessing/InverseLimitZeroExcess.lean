@@ -118,11 +118,11 @@ theorem expected_excess_zero_iff_all_levels {B : ℕ → Type u}
     exact (measurable_of_countable (fun k : ℕ => (k : ℝ≥0∞))).comp (hc.sub hb)
   have hgThread : Measurable (threadEquiv q g hg) := by
     apply Measurable.subtype_mk
-    exact measurable_pi_lambda _ fun l =>
+    exact Measurable.of_eval fun l =>
       (measurable_of_countable (g l)).comp
         ((measurable_pi_apply l).comp measurable_subtype_coe)
   have hπ (l : ℕ) : Measurable (levelProjection q (n + 1) l) := by
-    exact measurable_pi_lambda _ fun j =>
+    exact Measurable.of_eval fun j =>
       (measurable_pi_apply l).comp (measurable_subtype_coe.comp (measurable_pi_apply j))
   rw [lintegral_eq_zero_iff (hm _ hgThread)]
   simp only [Filter.EventuallyEq, Pi.zero_apply, Nat.cast_eq_zero]

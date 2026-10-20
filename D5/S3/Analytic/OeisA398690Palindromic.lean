@@ -449,7 +449,7 @@ private theorem finite_log_deriv {ι : Type*}
     (s : Finset ι) (a : ι → ℝ) :
     (∏ j ∈ s, (1 - PowerSeries.C (a j) * PowerSeries.X : PowerSeries ℝ)) *
       (∑ j ∈ s, PowerSeries.mk (fun n => a j ^ (n + 1))) =
-        -(PowerSeries.derivative ℝ)
+        -(PowerSeries.derivative (R := ℝ))
           (∏ j ∈ s, (1 - PowerSeries.C (a j) * PowerSeries.X : PowerSeries ℝ)) := by
   classical
   induction s using Finset.induction_on with
@@ -460,20 +460,20 @@ private theorem finite_log_deriv {ι : Type*}
         ∏ j ∈ s, (1 - PowerSeries.C (a j) * PowerSeries.X : PowerSeries ℝ)
       let G : PowerSeries ℝ := PowerSeries.mk (fun n => a i ^ (n + 1))
       let S : PowerSeries ℝ := ∑ j ∈ s, PowerSeries.mk (fun n => a j ^ (n + 1))
-      have hA : (PowerSeries.derivative ℝ) A = -PowerSeries.C (a i) := by
+      have hA : (PowerSeries.derivative (R := ℝ)) A = -PowerSeries.C (a i) := by
         dsimp [A]
-        simp [(PowerSeries.derivative ℝ).leibniz, smul_eq_mul]
+        simp [(PowerSeries.derivative (R := ℝ)).leibniz, smul_eq_mul]
       have hG : G * A = PowerSeries.C (a i) := geom_factor (a i)
-      have hP : P * S = -(PowerSeries.derivative ℝ) P := ih
+      have hP : P * S = -(PowerSeries.derivative (R := ℝ)) P := ih
       simp only [Finset.prod_insert hi, Finset.sum_insert hi]
-      change (A * P) * (G + S) = -(PowerSeries.derivative ℝ) (A * P)
+      change (A * P) * (G + S) = -(PowerSeries.derivative (R := ℝ)) (A * P)
       calc
         (A * P) * (G + S) = P * (G * A) + A * (P * S) := by ring
-        _ = P * PowerSeries.C (a i) - A * (PowerSeries.derivative ℝ) P := by
+        _ = P * PowerSeries.C (a i) - A * (PowerSeries.derivative (R := ℝ)) P := by
           rw [hG, hP]
           ring
-        _ = -(PowerSeries.derivative ℝ) (A * P) := by
-          rw [(PowerSeries.derivative ℝ).leibniz, hA]
+        _ = -(PowerSeries.derivative (R := ℝ)) (A * P) := by
+          rw [(PowerSeries.derivative (R := ℝ)).leibniz, hA]
           simp only [smul_eq_mul]
           ring
 

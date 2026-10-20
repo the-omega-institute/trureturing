@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3d583abe686668a01e81875675171d67ddd7d5b5157e3d99fcf1cb77b0aeffe1
-  normalized_sha256: sha256:3d583abe686668a01e81875675171d67ddd7d5b5157e3d99fcf1cb77b0aeffe1
-cas_ref: sha256:3d583abe686668a01e81875675171d67ddd7d5b5157e3d99fcf1cb77b0aeffe1
-coverage_gids:
-  - gid: D5/S3/Quantum/DoubleArtanhBounds.double_artanh_bounds
-    target_statement_id: sha256:f85d76a246d00741ff6d28197b7a5d7fd21d643b0ce39147e541ebcfa55a5f57
-receipts:
-  unresolved_subitems: []

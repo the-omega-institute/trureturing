@@ -5,8 +5,7 @@
    anchors: []
    digest: Port the PrimeNumberTheoremAnd additive-combination tactic. -/
 
-/- Ported from anthropics/zeta-23-lean commit 3635e74826a4c1fcece7d1cd2b6fa75e43a00510.
-   Modified by trureturing on 2026-08-14: repository routing and Lean v4.31.0 adaptation. -/
+/- Ported from anthropics/zeta-23-lean commit 3635e74826a4c1fcece7d1cd2b6fa75e43a00510. -/
 
 /-
 Ported from https://github.com/AlexKontorovich/PrimeNumberTheoremAnd
@@ -14,11 +13,7 @@ at commit 6a380f0c4658c04a420a9eb00b1ed62a1e3fde01 (tag v4.32.2), file
 PrimeNumberTheoremAnd/Tactic/AdditiveCombination.lean.
 Copyright the PrimeNumberTheoremAnd contributors; Apache License 2.0
 (http://www.apache.org/licenses/LICENSE-2.0).
-Local modifications: none besides this header.
-Re-ported from the
-v4.29.0 port (commit 10e1218932db7e2432aa5881d750acb819e91f19) when the project
-moved to Lean v4.32.2 / Mathlib 905b95818eb32af7874a58b427f50c1711a5e96c.
-Modified 2026 by Anthropic PBC.
+Additional contributions by Anthropic PBC.
 -/
 /-
 Copyright (c) 2022 Abby J. Goldberg. All rights reserved.
@@ -26,7 +21,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Abby J. Goldberg, Mario Carneiro, Heather Macbeth
 -/
 import Mathlib.Tactic.Abel
-import Mathlib.Tactic.LinearCombinationPrime
+import Mathlib.Algebra.GroupWithZero.Basic
+import Mathlib.Tactic.LinearCombination
 
 /-!
 # additive_combination Tactic
@@ -56,6 +52,7 @@ Lastly, calls a normalization tactic on this target.
 namespace Mathlib.Tactic.LinearCombinationPrime
 open Lean
 open Elab Meta Term
+open Mathlib.Tactic.LinearCombination (Expanded normStx expStx)
 
 variable {α β : Type*}
 
@@ -67,40 +64,61 @@ theorem smul_pf [SMul α β] {a₁ b₁ : α} (p₁ : (a₁ : α) = b₁) {a₂ 
 /--
 Performs macro expansion of a additive combination expression,
 using `+`/`-`/`*`/`/` on equations and values.
-* `.proof p` means that `p` is a syntax corresponding to a proof of an equation.
-  For example, if `h : a = b` then `expandAdditiveCombo (2 • h)` returns `.proof (c_add_pf 2 h)`
+* `.proof .eq p` means that `p` is a syntax corresponding to a proof of an equation.
+  For example, if `h : a = b` then `expandAdditiveCombo (2 • h)` returns
+  `.proof .eq (c_smul_pf h 2)`
   which is a proof of `2 • a = 2 • b`.
 * `.const c` means that the input expression is not an equation but a value.
 -/
 partial def expandAdditiveCombo (ty : Expr) (stx : Syntax.Term) : TermElabM Expanded := withRef stx do
   match stx with
-  | `(($e)) => expandLinearCombo ty e
+  | `(($e)) => expandAdditiveCombo ty e
   | `($e₁ + $e₂) => do
     match ← expandAdditiveCombo ty e₁, ← expandAdditiveCombo ty e₂ with
     | .const c₁, .const c₂ => .const <$> ``($c₁ + $c₂)
-    | .proof p₁, .const c₂ => .proof <$> ``(pf_add_c $p₁ $c₂)
-    | .const c₁, .proof p₂ => .proof <$> ``(c_add_pf $p₂ $c₁)
-    | .proof p₁, .proof p₂ => .proof <$> ``(add_pf $p₁ $p₂)
+    | .proof _ p₁, .const c₂ => .proof .eq <$> ``(congrArg (fun x => x + $c₂) $p₁)
+    | .const c₁, .proof _ p₂ => .proof .eq <$> ``(congrArg (fun x => $c₁ + x) $p₂)
+    | .proof _ p₁, .proof _ p₂ =>
+      .proof .eq <$> ``(congr (congrArg (fun x y => x + y) $p₁) $p₂)
   | `($e₁ - $e₂) => do
     match ← expandAdditiveCombo ty e₁, ← expandAdditiveCombo ty e₂ with
     | .const c₁, .const c₂ => .const <$> ``($c₁ - $c₂)
-    | .proof p₁, .const c₂ => .proof <$> ``(pf_sub_c $p₁ $c₂)
-    | .const c₁, .proof p₂ => .proof <$> ``(c_sub_pf $p₂ $c₁)
-    | .proof p₁, .proof p₂ => .proof <$> ``(sub_pf $p₁ $p₂)
+    | .proof _ p₁, .const c₂ => .proof .eq <$> ``(congrArg (fun x => x - $c₂) $p₁)
+    | .const c₁, .proof _ p₂ => .proof .eq <$> ``(congrArg (fun x => $c₁ - x) $p₂)
+    | .proof _ p₁, .proof _ p₂ =>
+      .proof .eq <$> ``(congr (congrArg (fun x y => x - y) $p₁) $p₂)
   | `(-$e) => do
     match ← expandAdditiveCombo ty e with
     | .const c => .const <$> `(-$c)
-    | .proof p => .proof <$> ``(neg_pf $p)
+    | .proof _ p => .proof .eq <$> ``(congrArg (fun x => -x) $p)
   | `(← $e:term) => do
     match ← expandAdditiveCombo ty e with
     | .const c => return .const c
-    | .proof p => .proof <$> ``(Eq.symm $p)
+    | .proof _ p => .proof .eq <$> ``(Eq.symm $p)
   | `($e₁ • $e₂) => do
     match ← expandAdditiveCombo ty e₁, ← expandAdditiveCombo ty e₂ with
     | .const c₁, .const c₂ => .const <$> ``($c₁ • $c₂)
-    | .proof p₁, .const c₂ => .proof <$> ``(pf_smul_c $p₁ $c₂)
-    | .const c₁, .proof p₂ => .proof <$> ``(c_smul_pf $p₂ $c₁)
-    | .proof p₁, .proof p₂ => .proof <$> ``(smul_pf $p₁ $p₂)
+    | .proof _ p₁, .const c₂ => .proof .eq <$> ``(pf_smul_c $p₁ $c₂)
+    | .const c₁, .proof _ p₂ => .proof .eq <$> ``(c_smul_pf $p₂ $c₁)
+    | .proof _ p₁, .proof _ p₂ => .proof .eq <$> ``(smul_pf $p₁ $p₂)
+  | `($e₁ * $e₂) => do
+    match ← expandAdditiveCombo ty e₁, ← expandAdditiveCombo ty e₂ with
+    | .const c₁, .const c₂ => .const <$> ``($c₁ * $c₂)
+    | .proof _ p₁, .const c₂ => .proof .eq <$> ``(congrArg (fun x => x * $c₂) $p₁)
+    | .const c₁, .proof _ p₂ => .proof .eq <$> ``(congrArg (fun x => $c₁ * x) $p₂)
+    | .proof _ p₁, .proof _ p₂ =>
+      .proof .eq <$> ``(congr (congrArg (fun x y => x * y) $p₁) $p₂)
+  | `($e⁻¹) => do
+    match ← expandAdditiveCombo ty e with
+    | .const c => .const <$> ``($c⁻¹)
+    | .proof _ p => .proof .eq <$> ``(congrArg (fun x => x⁻¹) $p)
+  | `($e₁ / $e₂) => do
+    match ← expandAdditiveCombo ty e₁, ← expandAdditiveCombo ty e₂ with
+    | .const c₁, .const c₂ => .const <$> ``($c₁ / $c₂)
+    | .proof _ p₁, .const c₂ => .proof .eq <$> ``(congrArg (fun x => x / $c₂) $p₁)
+    | .const c₁, .proof _ p₂ => .proof .eq <$> ``(congrArg (fun x => $c₁ / x) $p₂)
+    | .proof _ p₁, .proof _ p₂ =>
+      .proof .eq <$> ``(congr (congrArg (fun x y => x / y) $p₁) $p₂)
   | e =>
     -- We have the expected type from the goal, so we can fully synthesize this leaf node.
     withSynthesize do
@@ -108,7 +126,7 @@ partial def expandAdditiveCombo (ty : Expr) (stx : Syntax.Term) : TermElabM Expa
       -- The expected type is just a hint.
       let c ← withSynthesizeLight <| Term.elabTerm e ty
       if (← whnfR (← inferType c)).isEq then
-        .proof <$> c.toSyntax
+        .proof .eq <$> c.toSyntax
       else
         .const <$> c.toSyntax
 
@@ -123,20 +141,30 @@ def elabAdditiveCombination (tk : Syntax)
   | some e =>
     match ← expandAdditiveCombo ty e with
     | .const c => `(Eq.refl $c)
-    | .proof p => pure p
-  let norm := norm?.getD (Unhygienic.run <| withRef tk `(tactic| ((try simp only [smul_add, smul_sub]); abel)))
+    | .proof _ p => pure p
+  let norm := norm?.getD (Unhygienic.run <| withRef tk `(tactic| ((try simp only [smul_add, smul_sub]) <;> abel)))
   Term.withoutErrToSorry <| Tactic.evalTactic <| ← withFreshMacroScope <|
   if twoGoals then
     `(tactic| (
-      refine eq_trans₃ $p ?a ?b
+      refine Eq.trans (Eq.symm ?a) (Eq.trans $p ?b)
       case' a => $norm:tactic
       case' b => $norm:tactic))
   else
     match exp? with
     | some n =>
-      if n.getNat = 1 then `(tactic| (refine eq_of_add $p ?a; case' a => $norm:tactic))
-      else `(tactic| (refine eq_of_add_pow $n $p ?a; case' a => $norm:tactic))
-    | _ => `(tactic| (refine eq_of_add $p ?a; case' a => $norm:tactic))
+      if n.getNat = 1 then
+        `(tactic| (
+          refine sub_eq_zero.mp ((sub_eq_zero.mp ?a).trans (sub_eq_zero.mpr $p))
+          case' a => $norm:tactic))
+      else
+        `(tactic| (
+          refine sub_eq_zero.mp (eq_zero_of_pow_eq_zero (n := $n)
+            ((sub_eq_zero.mp ?a).trans (sub_eq_zero.mpr $p)))
+          case' a => $norm:tactic))
+    | _ =>
+      `(tactic| (
+        refine sub_eq_zero.mp ((sub_eq_zero.mp ?a).trans (sub_eq_zero.mpr $p))
+        case' a => $norm:tactic))
 
 /--
 `additive_combination` attempts to simplify the target by creating a additive combination

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b4fdcd5c357659649177bcef86b67a831dffdd962cbf2db070995eb93c07ae64
-  normalized_sha256: sha256:b4fdcd5c357659649177bcef86b67a831dffdd962cbf2db070995eb93c07ae64
-cas_ref: sha256:b4fdcd5c357659649177bcef86b67a831dffdd962cbf2db070995eb93c07ae64
-coverage_gids:
-  - gid: D5/S1/Phase/LonelyRunnerFourteenOfTwenty.certificate_package
-    target_statement_id: sha256:b9211ccf394f6d938f65c7f6f5d5d577c5d61da6cdd195deb0a02861d638f278
-receipts:
-  unresolved_subitems: []

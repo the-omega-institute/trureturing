@@ -80,8 +80,12 @@ lemma integral_main_eq {T : ℝ} (hT : 0 < T) :
     refine ContinuousOn.mul continuousOn_const ?_
     intro τ hτ
     have hτ0 : (0 : ℝ) < τ := lt_of_lt_of_le hT hτ.1
-    exact ((Real.continuousAt_log (by positivity)).comp
-      (continuousAt_id.div_const _)).continuousWithinAt
+    have harg : τ / (2 * Real.pi) ≠ 0 :=
+      div_ne_zero (ne_of_gt hτ0) (by positivity)
+    have hlog : ContinuousAt (fun x : ℝ => Real.log (x / (2 * Real.pi))) τ :=
+      ((continuousAt_id : ContinuousAt (fun x : ℝ => x) τ).div_const
+        (2 * Real.pi)).log harg
+    exact hlog.continuousWithinAt
   rw [integral_eq_sub_of_hasDerivAt hftc hcont]
   have h2T : Real.log (2 * T / (2 * Real.pi)) = Real.log 2 + Real.log (T / (2 * Real.pi)) := by
     rw [show 2 * T / (2 * Real.pi) = 2 * (T / (2 * Real.pi)) by ring,
@@ -113,8 +117,12 @@ theorem int_mu_of_stirling (hst : StirlingHyp) :
     refine ContinuousOn.mul continuousOn_const ?_
     intro τ hτ
     have hτ0 : (0 : ℝ) < τ := lt_of_lt_of_le hT0 hτ.1
-    exact ((Real.continuousAt_log (by positivity)).comp
-      (continuousAt_id.div_const _)).continuousWithinAt
+    have harg : τ / (2 * Real.pi) ≠ 0 :=
+      div_ne_zero (ne_of_gt hτ0) (by positivity)
+    have hlog : ContinuousAt (fun x : ℝ => Real.log (x / (2 * Real.pi))) τ :=
+      ((continuousAt_id : ContinuousAt (fun x : ℝ => x) τ).div_const
+        (2 * Real.pi)).log harg
+    exact hlog.continuousWithinAt
   have hsplit : (∫ τ in T..(2 * T), Zeta23.mu τ)
       = (∫ τ in T..(2 * T), (1 / (2 * Real.pi)) * Real.log (τ / (2 * Real.pi)))
         + ∫ τ in T..(2 * T),
@@ -222,8 +230,12 @@ lemma integral_main_sq_eq {T : ℝ} (hT : 0 < T) :
     rw [Set.uIcc_of_le (by linarith)]
     intro τ hτ
     have hτ0 : (0 : ℝ) < τ := lt_of_lt_of_le hT hτ.1
-    exact (((Real.continuousAt_log (by positivity)).comp
-      (continuousAt_id.div_const _)).pow 2).continuousWithinAt
+    have harg : τ / (2 * Real.pi) ≠ 0 :=
+      div_ne_zero (ne_of_gt hτ0) (by positivity)
+    have hlog : ContinuousAt (fun x : ℝ => Real.log (x / (2 * Real.pi))) τ :=
+      ((continuousAt_id : ContinuousAt (fun x : ℝ => x) τ).div_const
+        (2 * Real.pi)).log harg
+    exact (hlog.pow 2).continuousWithinAt
   rw [integral_eq_sub_of_hasDerivAt hftc hcont]
   have h2T : Real.log (2 * T / (2 * Real.pi)) = Real.log 2 + Real.log (T / (2 * Real.pi)) := by
     rw [show 2 * T / (2 * Real.pi) = 2 * (T / (2 * Real.pi)) by ring,
@@ -353,8 +365,12 @@ theorem int_mu_sq_of_stirling (hst : StirlingHyp) :
     rw [Set.uIcc_of_le (by linarith)]
     intro τ hτ
     have hτ0 : (0 : ℝ) < τ := lt_of_lt_of_le hT0 hτ.1
-    exact ((continuousAt_const.mul ((Real.continuousAt_log (by positivity)).comp
-      (continuousAt_id.div_const _))).pow 2).continuousWithinAt
+    have harg : τ / (2 * Real.pi) ≠ 0 :=
+      div_ne_zero (ne_of_gt hτ0) (by positivity)
+    have hlog : ContinuousAt (fun x : ℝ => Real.log (x / (2 * Real.pi))) τ :=
+      ((continuousAt_id : ContinuousAt (fun x : ℝ => x) τ).div_const
+        (2 * Real.pi)).log harg
+    exact ((continuousAt_const.mul hlog).pow 2).continuousWithinAt
   have hCtau2 : IntervalIntegrable
       (fun τ : ℝ => C / τ ^ 2 * (2 * ((L + m) / (2 * Real.pi)) + C)) volume T (2 * T) := by
     apply ContinuousOn.intervalIntegrable

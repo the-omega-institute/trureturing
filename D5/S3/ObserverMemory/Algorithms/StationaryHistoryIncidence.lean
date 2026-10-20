@@ -6,6 +6,7 @@
    utility: none
    digest: Actual original controller histories and their incidence laws. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.ObserverMemory.Algorithms.StationaryReadHistory
 import D5.S3.ObserverMemory.Algorithms.FixedForestSlotGraph
 

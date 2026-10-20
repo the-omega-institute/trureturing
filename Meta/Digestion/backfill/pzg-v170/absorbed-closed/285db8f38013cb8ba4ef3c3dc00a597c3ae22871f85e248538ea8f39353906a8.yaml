@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:285db8f38013cb8ba4ef3c3dc00a597c3ae22871f85e248538ea8f39353906a8
-  normalized_sha256: sha256:285db8f38013cb8ba4ef3c3dc00a597c3ae22871f85e248538ea8f39353906a8
-cas_ref: sha256:285db8f38013cb8ba4ef3c3dc00a597c3ae22871f85e248538ea8f39353906a8
-coverage_gids:
-  - gid: D5/S3/Midline/AutomaticMidlineDecomposition.half_density_unitarity_iff_self_resonance
-    target_statement_id: sha256:ae278ffc5bdededbafe8c775139adc2be11e41847ffb40007ecabe1413a62477
-receipts:
-  unresolved_subitems: []

@@ -752,39 +752,67 @@ private theorem Q_kernel : Q (fderiv ℝ (circuit witnessP) point v) = 0 := by
   have hn (i : Fin 14) : (12 : Fin 15).succAbove i ≠ 12 := Fin.succAbove_ne _ _
   rw [← U_pivot, Q_DF]; ext i; simp -implicitDefEqProofs [Fin.removeNth, hn]
 
+private noncomputable def criticalL : Param →L[ℝ] (Fin 14 → ℝ) :=
+  Q.comp (fderiv ℝ (circuit witnessP) point)
+private noncomputable def criticalT : Param → ((Fin 14 → ℝ) × ℝ) :=
+  fun α => (Q (circuit witnessP α), g α)
+private theorem criticalL_apply (z : Param) :
+    criticalL z = Q (fderiv ℝ (circuit witnessP) point z) := rfl
+private theorem criticalL_right_inverse (y : Fin 14 → ℝ) :
+    criticalL (U *ᵥ Fin.insertNth 12 0 y) = y := by
+  rw [criticalL_apply]
+  exact (Q_DF (Fin.insertNth 12 0 y)).trans
+    (@Fin.removeNth_insertNth 14 (fun _ => ℝ) 12 0 y)
+private theorem criticalL_kernel : criticalL v = 0 := by
+  rw [criticalL_apply]
+  exact Q_kernel
+private theorem prod_range_top
+    (L : Param →L[ℝ] (Fin 14 → ℝ)) (s : Param →L[ℝ] ℝ)
+    (hL : ∀ y : Fin 14 → ℝ, L (U *ᵥ Fin.insertNth 12 0 y) = y)
+    (hLv : L v = 0) (hs : s v = -1) :
+    (L.prod s).range = ⊤ := by
+  apply LinearMap.range_eq_top.mpr
+  rintro ⟨y, t⟩
+  refine ⟨U *ᵥ Fin.insertNth 12 0 y +
+      (s (U *ᵥ Fin.insertNth 12 0 y) - t) • v, ?_⟩
+  change (L (U *ᵥ Fin.insertNth 12 0 y +
+      (s (U *ᵥ Fin.insertNth 12 0 y) - t) • v),
+    s (U *ᵥ Fin.insertNth 12 0 y +
+      (s (U *ᵥ Fin.insertNth 12 0 y) - t) • v)) = (y, t)
+  apply Prod.ext
+  · simp only [Prod.fst]
+    rw [map_add, map_smul, hL, hLv, smul_zero, add_zero]
+  · simp only [Prod.snd]
+    rw [map_add, map_smul, hs]
+    simp -implicitDefEqProofs only [smul_eq_mul]
+    ring
+private theorem criticalA_range :
+    (criticalL.prod (gD point)).range = ⊤ :=
+  prod_range_top criticalL (gD point) criticalL_right_inverse criticalL_kernel
+    gD_direction
+
 private theorem critical_dim_lower :
     (14 : ℝ≥0∞) ≤ dimH (circuit witnessP '' critical witnessP) := by
-  let L := Q.comp (fderiv ℝ (circuit witnessP) point)
-  let A := L.prod (gD point)
-  let T := fun α => (Q (circuit witnessP α), g α)
   have hf : HasStrictFDerivAt (circuit witnessP)
       (fderiv ℝ (circuit witnessP) point) point := by
     have h := circuit_strict witnessP point
     exact h.congr_fderiv h.hasFDerivAt.fderiv.symm
-  have hT : HasStrictFDerivAt T A point :=
-    (Q.hasStrictFDerivAt.comp point hf).prodMk (g_strict point)
-  have hA : A.range = ⊤ := by
-    apply LinearMap.range_eq_top.mpr
-    rintro ⟨y,t⟩
-    let x := U *ᵥ Fin.insertNth 12 0 y
-    refine ⟨x + (gD point x - t) • v, ?_⟩
-    apply Prod.ext
-    · change L (x + (gD point x - t) • v) = y
-      simp -implicitDefEqProofs only [map_add, map_smul, L, ContinuousLinearMap.comp_apply, Q_kernel,
-        smul_zero, add_zero]
-      exact (Q_DF _).trans (Fin.removeNth_insertNth _ _ _)
-    · change gD point (x + (gD point x - t) • v) = t
-      rw [map_add, map_smul, gD_direction]; simp -implicitDefEqProofs only [smul_eq_mul]; ring
-  have hr : Set.range T ∈ nhds (T point) := by
+  have hT : HasStrictFDerivAt criticalT (criticalL.prod (gD point)) point := by
+    change HasStrictFDerivAt (fun α => (Q (circuit witnessP α), g α))
+      (criticalL.prod (gD point)) point
+    exact (Q.hasStrictFDerivAt.comp point hf).prodMk (g_strict point)
+  have hA : (criticalL.prod (gD point)).range = ⊤ := criticalA_range
+  have hr : Set.range criticalT ∈ nhds (criticalT point) := by
     rw [← hT.map_nhds_eq_of_surj hA]
     simpa -implicitDefEqProofs only [Set.image_univ] using
-      (Filter.image_mem_map (m := T) (Filter.univ_mem (f := nhds point)))
-  have ho : {y : Fin 14 → ℝ | (y,0) ∈ Set.range T} ∈
+      (Filter.image_mem_map (m := criticalT) (Filter.univ_mem (f := nhds point)))
+  have ho : {y : Fin 14 → ℝ | (y,0) ∈ Set.range criticalT} ∈
       nhds (Q (circuit witnessP point)) := by
     have hc : Continuous (fun y : Fin 14 → ℝ => (y,(0 : ℝ))) :=
       continuous_id.prodMk continuous_const
-    exact hc.continuousAt.preimage_mem_nhds (by simpa -implicitDefEqProofs only [T, g_point] using hr)
-  have hs : {y : Fin 14 → ℝ | (y,0) ∈ Set.range T} ⊆
+    exact hc.continuousAt.preimage_mem_nhds
+      (by simpa -implicitDefEqProofs only [criticalT, g_point] using hr)
+  have hs : {y : Fin 14 → ℝ | (y,0) ∈ Set.range criticalT} ⊆
       Q '' (circuit witnessP '' critical witnessP) := by
     rintro y ⟨α,hα⟩
     refine ⟨circuit witnessP α, ⟨α, ?_, rfl⟩, congrArg Prod.fst hα⟩

@@ -34,7 +34,7 @@ noncomputable instance : Fintype (FixedPointFreeInvolution α) := by
   classical
   exact Fintype.ofFinite _
 
-private theorem involution_iff_cycleType (h : ℕ) (hc : Fintype.card α = 2 * h)
+theorem involution_iff_cycleType (h : ℕ) (hc : Fintype.card α = 2 * h)
     (p : Equiv.Perm α) :
     (Function.Involutive p ∧ ∀ x, p x ≠ x) ↔
       p.cycleType = Multiset.replicate h 2 := by
@@ -95,9 +95,5 @@ theorem card_fixedPointFreeInvolution (h : ℕ) (hc : Fintype.card α = 2 * h) :
       (2 * h).factorial / (h.factorial * 2 ^ h) := by
   apply Nat.eq_div_of_mul_eq_right (by positivity)
   simpa only [Nat.mul_comm] using card_fixedPointFreeInvolution_mul h hc
-
-#print axioms card_fixedPointFreeInvolution_mul
-#print axioms card_fixedPointFreeInvolution
-#print axioms involution_iff_cycleType
 
 end D5.S3.Zeros.Convolution.PerfectMatchingCount

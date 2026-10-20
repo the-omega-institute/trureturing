@@ -6,6 +6,7 @@
    utility: none
    digest: Private leading-block norm closure for the actual positive-composition branch. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.AnalyticClosure.ComplexPowerDifference
 import D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksLeadingTransport
 import Mathlib.Analysis.Polynomial.Basic
