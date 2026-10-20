@@ -56,7 +56,7 @@ def shiftField (D : LatticeData) (hu : IsUnit D.G.det) (s : ℕ) :
     exact (smul_comm c (HahnSeries.single (-2 * (s : ℤ)) (1 : ℂ)) (A v)).symm
 
 /- Native Hahn monomial action, consumed by shift and evaluator calculus. -/
-theorem shiftField_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem shiftField_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
     (s : ℕ) (A : NativeField D hu) (e : ℤ) :
     (shiftField D hu s A).coeff e = A.coeff (e + 2 * (s : ℤ)) := by
   apply LinearMap.ext
@@ -67,6 +67,11 @@ theorem shiftField_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
     (r := (1 : ℂ)) (x := A v) (a := e + 2 * (s : ℤ)) (b := -2 * (s : ℤ))
   simpa only [HVertexOperator.coeff_apply_apply, vadd_eq_add, neg_add_cancel_left, one_smul,
     show -2 * (s : ℤ) + (e + 2 * (s : ℤ)) = e by ring] using h
+
+theorem shiftField_coefficient_public (D : LatticeData) (hu : IsUnit D.G.det)
+    (s : ℕ) (A : NativeField D hu) (e : ℤ) :
+    (shiftField D hu s A).coeff e = A.coeff (e + 2 * (s : ℤ)) :=
+  shiftField_coefficient D hu s A e
 
 def correctedSum (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) :
     (ℕ →₀ Oscillator D) →ₗ[ℂ] NativeField D hu :=

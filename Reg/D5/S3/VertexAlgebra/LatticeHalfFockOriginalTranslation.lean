@@ -193,12 +193,12 @@ def arena : Arena where
   Law readout := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
     (s : ℕ) (A : NativeField D hu) (e : ℤ),
     (shiftField D hu s A).coeff e = A.coeff (readout.readout () s e)
-theorem source_bridge : (type_of% (@shiftField_coefficient)) ↔ arena.Law actual := Iff.rfl
+theorem source_bridge : (type_of% (@shiftField_coefficient_public)) ↔ arena.Law actual := Iff.rfl
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   have bad := law hyperbolic hyperbolic_unit 1
     (chargedField hyperbolic hyperbolic_unit 0) (-2)
-  rw [shiftField_coefficient] at bad
+  rw [shiftField_coefficient_public] at bad
   have value := LinearMap.congr_fun bad probeState
   have zero : chargedCoefficient hyperbolic hyperbolic_unit 0 (-2) probeState = 0 := by
     apply charged_polynomial_lower_bound
@@ -213,16 +213,16 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨0, 0, 1, ?_⟩
   norm_num [actual, realize]
 
-def familyRegistration : Registration arena (type_of% (@shiftField_coefficient)) where
+def familyRegistration : Registration arena (type_of% (@shiftField_coefficient_public)) where
   actual := actual
   bridge := source_bridge
-  variation := ⟨source_bridge.mp shiftField_coefficient, rejected, rejected_law⟩
+  variation := ⟨source_bridge.mp shiftField_coefficient_public, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@shiftField_coefficient) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
-  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField.shiftField_coefficient "__information_unit"
+    (@shiftField_coefficient_public) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField.shiftField_coefficient_public "__information_unit"
   realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.ShiftCoefficient.familyRegistration
   realizationSource := none
   generated := false

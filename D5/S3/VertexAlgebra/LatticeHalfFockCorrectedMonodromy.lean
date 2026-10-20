@@ -103,12 +103,12 @@ theorem normal_polynomial_coordinate_monodromy (D : LatticeData) (hu : IsUnit D.
     apply (basisMonomials (Index D) ℂ).ext
     intro d
     change (polynomialField D hu (-a) (sigma D (monomial d 1))).coeff e = _
-    rw [sigma_monomial, map_smul, polynomialField_monomial]
+    rw [sigma_monomial, map_smul, polynomialField_monomial_public]
     simp only [map_smul, Pi.smul_apply]
     change ((-1 : ℂ)^(occurrences D d).length) •
       (chargedWordField D hu (-a) (occurrences D d)).coeff e =
       ((-1 : ℂ)^e) • (polynomialField D hu a (monomial d 1)).coeff e
-    rw [polynomialField_monomial, word_charge_parity, smul_smul]
+    rw [polynomialField_monomial_public, word_charge_parity, smul_smul]
     congr 1
     calc
       _ = ((-1 : ℂ)^e) *
@@ -231,7 +231,7 @@ private theorem correctedSum_parity (D : LatticeData) (hu : IsUnit D.G.det)
     Finsupp.mapRange_single, correctedSum, Finsupp.lsum_single, LinearMap.smul_apply]
   change (shiftField D hu s (polynomialField D hu (-a) (sigma D p))).coeff e =
     ((-1 : ℂ)^e) • (shiftField D hu s (polynomialField D hu a p)).coeff e
-  rw [shiftField_coefficient, shiftField_coefficient,
+  rw [shiftField_coefficient_public, shiftField_coefficient_public,
     normal_polynomial_coordinate_monodromy, even_shift_sign]
 
 private theorem correctedPolynomial_parity (D : LatticeData) (hu : IsUnit D.G.det)

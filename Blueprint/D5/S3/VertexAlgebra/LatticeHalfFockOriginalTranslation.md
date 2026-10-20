@@ -22,9 +22,9 @@ The result concerns every algebraic polynomial and tensor state; it does not con
 
 **Theorem 1.1 (The exact canonical Hahn shift).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient`
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient_public`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient_public` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -51,6 +51,6 @@ For every D:LatticeData, hu:IsUnit D.G.det, source:Carrier D, e:Int and v:Actual
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_translation_physical`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient_public`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical](LatticeHalfFockChargedSeedPhysical.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCorrectionTranslation](LatticeHalfFockCorrectionTranslation.md)

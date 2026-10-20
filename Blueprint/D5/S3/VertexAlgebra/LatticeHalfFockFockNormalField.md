@@ -134,9 +134,9 @@ For every D:LatticeData, hu:IsUnit D.G.det, q:Charge D, i:Index D and p:Oscillat
 
 **Theorem 1.9 (The monomial basis value).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.polynomialField_monomial`
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.polynomialField_monomial_public`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.polynomialField_monomial` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.polynomialField_monomial_public` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -158,7 +158,7 @@ For every D:LatticeData, hu:IsUnit D.G.det, q:Charge D and a:Index D -> finitely
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.flatTerm_finite`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.flatTerm_support_bound`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.polynomialField_X_mul`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.polynomialField_monomial`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.polynomialField_monomial_public`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.sourceField_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.sourceField_lower_truncation`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField.wordCoefficient_lower_truncation`

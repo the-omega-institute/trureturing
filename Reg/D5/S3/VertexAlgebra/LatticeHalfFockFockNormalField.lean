@@ -786,7 +786,7 @@ def arena : Arena where
     (q : Charge D) (a : Index D →₀ ℕ),
     readout.readout () ⟨⟨D, hu⟩, q⟩ a =
       wordField D hu (chargedField D hu q) (occurrences D a)
-theorem source_bridge : (type_of% (@polynomialField_monomial)) ↔ arena.Law actual := Iff.rfl
+theorem source_bridge : (type_of% (@polynomialField_monomial_public)) ↔ arena.Law actual := Iff.rfl
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   have bad := law hyperbolic hyperbolic_unit 0 0
@@ -825,16 +825,16 @@ private theorem dependence : ObservationalDependence signature actual := by
     (polynomialField hyperbolic hyperbolic_unit 0 (MvPolynomial.X probeIndex)).coeff 0 probeState at value
   exact probe_leading (value.trans zero)
 
-def familyRegistration : Registration arena (type_of% (@polynomialField_monomial)) where
+def familyRegistration : Registration arena (type_of% (@polynomialField_monomial_public)) where
   actual := actual
   bridge := source_bridge
-  variation := ⟨source_bridge.mp polynomialField_monomial, rejected, rejected_law⟩
+  variation := ⟨source_bridge.mp polynomialField_monomial_public, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@polynomialField_monomial) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
-  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.polynomialField_monomial "__information_unit"
+    (@polynomialField_monomial_public) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.polynomialField_monomial_public "__information_unit"
   realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.PolynomialMonomial.familyRegistration
   realizationSource := none
   generated := false

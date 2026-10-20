@@ -665,12 +665,18 @@ def singletonLinear (D : LatticeData) (hu : IsUnit D.G.det) (i : Index D) :
     simp only [flatTerm, flatCoefficient]
     split_ifs <;> simp [Module.End.mul_apply]
 
-theorem polynomialField_monomial (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem polynomialField_monomial (D : LatticeData) (hu : IsUnit D.G.det)
     (q : Charge D) (a : Index D →₀ ℕ) :
     polynomialField D hu q (MvPolynomial.monomial a 1) =
       wordField D hu (chargedField D hu q) (occurrences D a) :=
   (MvPolynomial.basisMonomials (Index D) ℂ).constr_basis ℂ
     (fun a => chargedWordField D hu q (occurrences D a)) a
+
+theorem polynomialField_monomial_public (D : LatticeData) (hu : IsUnit D.G.det)
+    (q : Charge D) (a : Index D →₀ ℕ) :
+    polynomialField D hu q (MvPolynomial.monomial a 1) =
+      wordField D hu (chargedField D hu q) (occurrences D a) :=
+  polynomialField_monomial D hu q a
 
 /-- Multiplication of the source by one oscillator is actual singleton insertion.
 The occurrence list is used only up to permutation, with multiplicities retained. -/
