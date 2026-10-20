@@ -23,6 +23,7 @@ namespace D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality
 
 open D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteMUB (MUBFamily)
 open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 
 def SICFamily (d : ℕ) :=
   {ψ : Fin (d * d) → Fin d → ℂ //
@@ -31,7 +32,7 @@ def SICFamily (d : ℕ) :=
 
 def sicEffect {d : ℕ} (S : SICFamily d) (i : Fin (d * d)) :
     Matrix (Fin d) (Fin d) ℂ :=
-  ((d : ℂ)⁻¹) • vecMulVec (S.1 i) (star (S.1 i))
+  ((d : ℂ)⁻¹) • rankOneDensity (S.1 i)
 
 def sicCorrelation {dA dB : ℕ}
     (ρ : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ)
@@ -55,20 +56,17 @@ def claim : Prop :=
           Real.sqrt (dA * (dA + 1)) * Real.sqrt (dB * (dB + 1)) *
             traceNorm (sicCorrelation ρ SA SB)
 
-private def sicProjector {d : ℕ} (S : SICFamily d) (i : Fin (d * d)) :
-    Matrix (Fin d) (Fin d) ℂ := vecMulVec (S.1 i) (star (S.1 i))
-
 private theorem sicProjector_trace {d : ℕ} (S : SICFamily d) (i : Fin (d * d)) :
-    (sicProjector S i).trace = 1 := by
-  rw [sicProjector, trace_vecMulVec, dotProduct_comm]
+    (rankOneDensity (S.1 i)).trace = 1 := by
+  rw [rankOneDensity, trace_vecMulVec, dotProduct_comm]
   exact S.2.1 i
 
 private theorem sicProjector_gram {d : ℕ} (S : SICFamily d) (i j : Fin (d * d)) :
-    (sicProjector S i * sicProjector S j).trace =
+    (rankOneDensity (S.1 i) * rankOneDensity (S.1 j)).trace =
       (d : ℂ) / (d + 1) * (if i = j then 1 else 0) + 1 / (d + 1) := by
   have h := D5.S3.Observer.BornReduction.rank_one_pure_state_modulus_square_reduction
-    (fun k => sicProjector S k) (sicProjector S j) i (S.1 i) (S.1 j) rfl rfl
-  change (sicProjector S j * sicProjector S i).trace = _ at h
+    (fun k => rankOneDensity (S.1 k)) (rankOneDensity (S.1 j)) i (S.1 i) (S.1 j) rfl rfl
+  change (rankOneDensity (S.1 j) * rankOneDensity (S.1 i)).trace = _ at h
   rw [Matrix.trace_mul_comm] at h
   rw [h]
   by_cases hij : i = j
@@ -83,7 +81,7 @@ private theorem sicProjector_gram {d : ℕ} (S : SICFamily d) (i j : Fin (d * d)
       Complex.ofReal_one, Complex.ofReal_add, Complex.ofReal_natCast]
 
 private theorem sicProjector_span {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
-    Submodule.span ℂ (Set.range (sicProjector S)) = ⊤ := by
+    Submodule.span ℂ (Set.range (fun i => rankOneDensity (S.1 i))) = ⊤ := by
   classical
   let K : LinearMap.BilinForm ℂ (Matrix (Fin d) (Fin d) ℂ) :=
     LinearMap.compr₂ (LinearMap.mul ℂ (Matrix (Fin d) (Fin d) ℂ))
@@ -91,16 +89,16 @@ private theorem sicProjector_span {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
   let τ := Matrix.traceLinearMap (Fin d) ℂ ℂ
   let B : LinearMap.BilinForm ℂ (Matrix (Fin d) (Fin d) ℂ) :=
     K - (1 / (d + 1) : ℂ) • τ.smulRight τ
-  have hlin : LinearIndependent ℂ (sicProjector S) := by
+  have hlin : LinearIndependent ℂ (fun i => rankOneDensity (S.1 i)) := by
     apply LinearMap.BilinForm.linearIndependent_of_iIsOrtho (B := B)
     · intro i j hij
-      change (sicProjector S i * sicProjector S j).trace -
-        1 / (d + 1) * ((sicProjector S i).trace * (sicProjector S j).trace) = 0
+      change (rankOneDensity (S.1 i) * rankOneDensity (S.1 j)).trace -
+        1 / (d + 1) * ((rankOneDensity (S.1 i)).trace * (rankOneDensity (S.1 j)).trace) = 0
       rw [sicProjector_gram, sicProjector_trace, sicProjector_trace]
       simp only [hij, ite_false, mul_zero, zero_add, mul_one, sub_self]
     · intro i
-      change (sicProjector S i * sicProjector S i).trace -
-        1 / (d + 1) * ((sicProjector S i).trace * (sicProjector S i).trace) ≠ 0
+      change (rankOneDensity (S.1 i) * rankOneDensity (S.1 i)).trace -
+        1 / (d + 1) * ((rankOneDensity (S.1 i)).trace * (rankOneDensity (S.1 i)).trace) ≠ 0
       rw [sicProjector_gram, sicProjector_trace]
       simp only [ite_true, mul_one, add_sub_cancel_right]
       exact div_ne_zero (by exact_mod_cast (by omega : d ≠ 0)) (by positivity)
@@ -119,23 +117,23 @@ private theorem trace_pairing_ext {d : ℕ} {ι : Type*}
   exact Matrix.ext_iff_trace_mul_right.mpr (fun Z => LinearMap.congr_fun heq Z)
 
 private theorem sicProjector_sum {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
-    ∑ i, sicProjector S i = (d : ℂ) • 1 := by
+    ∑ i, rankOneDensity (S.1 i) = (d : ℂ) • 1 := by
   classical
-  apply trace_pairing_ext (sicProjector S) (sicProjector_span hd S)
+  apply trace_pairing_ext (fun i => rankOneDensity (S.1 i)) (sicProjector_span hd S)
   intro j
   let K : LinearMap.BilinForm ℂ (Matrix (Fin d) (Fin d) ℂ) :=
     LinearMap.compr₂ (LinearMap.mul ℂ (Matrix (Fin d) (Fin d) ℂ))
       (Matrix.traceLinearMap (Fin d) ℂ ℂ)
   have hgram (i k : Fin (d * d)) :
-      K (sicProjector S i) (sicProjector S k) =
+      K (rankOneDensity (S.1 i)) (rankOneDensity (S.1 k)) =
         if i = k then (1 : ℂ) ^ 2 else 1 / (d + 1) := by
-    change (sicProjector S i * sicProjector S k).trace = _
+    change (rankOneDensity (S.1 i) * rankOneDensity (S.1 k)).trace = _
     rw [sicProjector_gram]
     by_cases h : i = k <;> simp only [h, ite_true, ite_false, one_pow, mul_one,
       mul_zero, zero_add]
     field_simp
   have h := D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.gram_pair_sum
-    K (sicProjector S) 1 (1 / (d + 1)) hgram (fun _ => 1) j
+    K (fun i => rankOneDensity (S.1 i)) 1 (1 / (d + 1)) hgram (fun _ => 1) j
   simp only [one_smul, one_pow, mul_one, Finset.sum_const, Finset.card_univ,
     Fintype.card_fin, nsmul_eq_mul, Nat.cast_mul] at h
   calc
@@ -148,19 +146,19 @@ private theorem sicProjector_sum {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
 private theorem sic_frame {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d)
     (X : Matrix (Fin d) (Fin d) ℂ) :
     ∑ i, (sicEffect S i * X).trace •
-      (((d : ℂ) + 1) • sicProjector S i - 1) = X := by
+      (((d : ℂ) + 1) • rankOneDensity (S.1 i) - 1) = X := by
   classical
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
   have hd1 : (d : ℂ) + 1 ≠ 0 := by positivity
-  let D (i : Fin (d * d)) := ((d : ℂ) + 1) • sicProjector S i - 1
+  let D (i : Fin (d * d)) := ((d : ℂ) + 1) • rankOneDensity (S.1 i) - 1
   have hD : ∑ i, D i = (d : ℂ) • 1 := by
     simp only [D, Finset.sum_sub_distrib, ← Finset.smul_sum,
       sicProjector_sum hd S, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
       ← Nat.cast_smul_eq_nsmul ℂ, Nat.cast_mul, smul_smul]
     module
   have hb (j : Fin (d * d)) :
-      ∑ i, (sicEffect S i * sicProjector S j).trace • D i = sicProjector S j := by
-    simp only [sicEffect, ← sicProjector.eq_def, Matrix.smul_mul, Matrix.trace_smul,
+      ∑ i, (sicEffect S i * rankOneDensity (S.1 j)).trace • D i = rankOneDensity (S.1 j) := by
+    simp only [sicEffect, Matrix.smul_mul, Matrix.trace_smul,
       smul_eq_mul, sicProjector_gram, mul_add, add_smul, Finset.sum_add_distrib]
     have hδ : ∑ i, ((d : ℂ)⁻¹ * ((d : ℂ) / (d + 1) * (if i = j then 1 else 0))) •
         D i = ((d : ℂ) + 1)⁻¹ • D j := by
@@ -214,16 +212,10 @@ private theorem mub_frame {d : ℕ} (hd : 2 ≤ d) (M : MUBFamily d (d + 1))
     ∑ p, (M.effect p * X).trace • M.effect p = X + X.trace • 1 := by
   classical
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
-  have hsum (l : Fin (d + 1)) : ∑ a, M.effect (l, a) = 1 := by
-    ext i j
-    change (∑ a, D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj
-      (M.ket l a)) i j = _
-    simp only [Matrix.sum_apply, MState.pure_apply]
-    change ∑ a, (M.1 l).1 i a * star ((M.1 l).1 j a) = _
-    exact congrArg (fun N : Matrix (Fin d) (Fin d) ℂ => N i j)
-      (Unitary.mul_star_self_of_mem (M.1 l).2)
+  have hsum (l : Fin (d + 1)) : ∑ a, M.effect (l, a) = 1 :=
+    (M.context l).resolvesIdentity
   have htrace (p : Fin (d + 1) × Fin d) : (M.effect p).trace = 1 :=
-    MState.tr' (MState.pure (M.ket p.1 p.2))
+    ((M.context p.1).rankOne p.2).2.2.1
   have hproj (q : Fin (d + 1) × Fin d) :
       ∑ p, (M.effect p * M.effect q).trace • M.effect p = M.effect q + 1 := by
     simp only [mub_gram, Fintype.sum_prod_type]
@@ -252,30 +244,12 @@ private theorem mub_frame {d : ℕ} (hd : 2 ≤ d) (M : MUBFamily d (d + 1))
   cases d with
   | zero => omega
   | succ n =>
-    let context : Fin (n + 2) →
-        D5.S3.Quantum.Tomography.RankOneContextCommutator.RankOneContext (n + 1) :=
-      fun l => {
-        projector := fun a => M.effect (l, a)
-        rankOne := fun a => by
-          let v := M.ket l a
-          have hscaled :
-              D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.ScaledPure
-                (M.effect (l, a)) := ⟨1, v, zero_le_one, (one_smul ℂ _).symm⟩
-          refine ⟨(D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.scaledPure_hermitian
-            hscaled).eq, ?_, htrace (l, a), ?_⟩
-          · exact (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake
-              v.vec (D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.ket_dot_self v)
-              1).1
-          · intro Y
-            rw [D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.scaledPure_sandwich
-              hscaled, Matrix.trace_mul_comm]
-        resolvesIdentity := hsum l }
     have hoverlap (l k : Fin (n + 2)) (a b : Fin (n + 1)) :
-        ((context l).projector a * (context k).projector b).trace =
+        ((M.context l).projector a * (M.context k).projector b).trace =
           if l = k then (if a = b then 1 else 0) else ((n + 1 : ℕ) : ℂ)⁻¹ :=
       mub_gram M (l, a) (k, b)
     apply (D5.S3.Quantum.Tomography.CompleteContextTomography.complete_context_tomography
-      context hoverlap).2.2
+      M.context hoverlap).2.2
     intro l a
     change ((∑ p, (M.effect p * X).trace • M.effect p) * M.effect (l, a)).trace =
       ((X + X.trace • 1) * M.effect (l, a)).trace
@@ -296,22 +270,19 @@ private theorem mub_frame {d : ℕ} (hd : 2 ≤ d) (M : MUBFamily d (d + 1))
 
 private def transition {d : ℕ} (S : SICFamily d) (M : MUBFamily d (d + 1)) :
     Matrix (Fin (d + 1) × Fin d) (Fin (d * d)) ℂ :=
-  fun p i => ((d : ℂ) + 1) * (sicProjector S i * M.effect p).trace - 1
+  fun p i => ((d : ℂ) + 1) * (rankOneDensity (S.1 i) * M.effect p).trace - 1
 
 private theorem transition_real {d : ℕ} (S : SICFamily d) (M : MUBFamily d (d + 1))
     (p : Fin (d + 1) × Fin d) (i : Fin (d * d)) :
     star (transition S M p i) = transition S M p i := by
-  have hP : (sicProjector S i).IsHermitian :=
+  have hP : (rankOneDensity (S.1 i)).IsHermitian :=
     (Matrix.posSemidef_vecMulVec_self_star (S.1 i)).1
-  have hG : (M.effect p).IsHermitian := by
-    change (D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj
-      (M.ket p.1 p.2)).IsHermitian
-    rw [D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj_eq_outer]
-    exact (Matrix.posSemidef_vecMulVec_self_star _).1
+  have hG : (M.effect p).IsHermitian :=
+    ((M.context p.1).rankOne p.2).1
   have ht := D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.trace_mul_real_of_hermitian
-    (sicProjector S i) (M.effect p) hP hG
-  have hreal : star (sicProjector S i * M.effect p).trace =
-      (sicProjector S i * M.effect p).trace := by
+    (rankOneDensity (S.1 i)) (M.effect p) hP hG
+  have hreal : star (rankOneDensity (S.1 i) * M.effect p).trace =
+      (rankOneDensity (S.1 i) * M.effect p).trace := by
     rw [ht]
     exact Complex.conj_ofReal _
   simp only [transition, star_sub, star_mul, star_add, star_natCast, star_one, hreal]
@@ -322,26 +293,26 @@ private theorem transition_expansion {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d)
     ∑ i, transition S M p i • sicEffect S i = M.effect p := by
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
   have hE : ∑ i, sicEffect S i = 1 := by
-    change ∑ i, (d : ℂ)⁻¹ • sicProjector S i = 1
+    change ∑ i, (d : ℂ)⁻¹ • rankOneDensity (S.1 i) = 1
     rw [← Finset.smul_sum, sicProjector_sum hd S, smul_smul,
       inv_mul_cancel₀ hd0, one_smul]
   have ht : ∑ i, (sicEffect S i * M.effect p).trace = 1 := by
     rw [← Matrix.trace_sum, ← Matrix.sum_mul, hE, Matrix.one_mul]
-    exact MState.tr' (MState.pure (M.ket p.1 p.2))
+    exact ((M.context p.1).rankOne p.2).2.2.1
   have hterm (i : Fin (d * d)) : transition S M p i • sicEffect S i =
-      (sicEffect S i * M.effect p).trace • (((d : ℂ) + 1) • sicProjector S i) -
-        (d : ℂ)⁻¹ • sicProjector S i := by
-    simp only [transition, sicEffect, ← sicProjector.eq_def, Matrix.smul_mul,
+      (sicEffect S i * M.effect p).trace • (((d : ℂ) + 1) • rankOneDensity (S.1 i)) -
+        (d : ℂ)⁻¹ • rankOneDensity (S.1 i) := by
+    simp only [transition, sicEffect, Matrix.smul_mul,
       Matrix.trace_smul, smul_eq_mul, smul_smul, ← sub_smul]
     congr 1
     ring
   calc
     _ = (∑ i, (sicEffect S i * M.effect p).trace •
-        (((d : ℂ) + 1) • sicProjector S i)) - 1 := by
+        (((d : ℂ) + 1) • rankOneDensity (S.1 i))) - 1 := by
       simp only [hterm, Finset.sum_sub_distrib, ← Finset.smul_sum,
         sicProjector_sum hd S, smul_smul, inv_mul_cancel₀ hd0, one_smul]
     _ = ∑ i, (sicEffect S i * M.effect p).trace •
-        (((d : ℂ) + 1) • sicProjector S i - 1) := by
+        (((d : ℂ) + 1) • rankOneDensity (S.1 i) - 1) := by
       simp only [smul_sub, Finset.sum_sub_distrib, ← Finset.sum_smul, ht, one_smul]
     _ = M.effect p := sic_frame hd S (M.effect p)
 
@@ -350,45 +321,46 @@ private theorem transition_gram {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d)
     (transition S M)ᴴ * transition S M = ((d : ℂ) * (d + 1)) • 1 := by
   classical
   have htrace (p : Fin (d + 1) × Fin d) : (M.effect p).trace = 1 :=
-    MState.tr' (MState.pure (M.ket p.1 p.2))
+    ((M.context p.1).rankOne p.2).2.2.1
   have hAll : ∑ p, M.effect p = ((d : ℂ) + 1) • 1 := by
     have h := mub_frame hd M 1
     simp only [Matrix.mul_one, htrace, one_smul, Matrix.trace_one, Fintype.card_fin] at h
     rw [h]
     module
   have hs (i : Fin (d * d)) :
-      ∑ p, (sicProjector S i * M.effect p).trace = (d : ℂ) + 1 := by
+      ∑ p, (rankOneDensity (S.1 i) * M.effect p).trace = (d : ℂ) + 1 := by
     rw [← Matrix.trace_sum, ← Matrix.mul_sum, hAll, Matrix.mul_smul,
       Matrix.mul_one, Matrix.trace_smul, sicProjector_trace, smul_eq_mul, mul_one]
   have hpair (i j : Fin (d * d)) :
-      ∑ p, (sicProjector S i * M.effect p).trace * (sicProjector S j * M.effect p).trace =
-      (sicProjector S i * sicProjector S j).trace + 1 := by
+      ∑ p, (rankOneDensity (S.1 i) * M.effect p).trace *
+        (rankOneDensity (S.1 j) * M.effect p).trace =
+      (rankOneDensity (S.1 i) * rankOneDensity (S.1 j)).trace + 1 := by
     have h := congrArg (fun N : Matrix (Fin d) (Fin d) ℂ =>
-      (sicProjector S i * N).trace) (mub_frame hd M (sicProjector S j))
+      (rankOneDensity (S.1 i) * N).trace) (mub_frame hd M (rankOneDensity (S.1 j)))
     simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul,
       smul_eq_mul, sicProjector_trace, one_smul, Matrix.mul_add, Matrix.mul_one,
       Matrix.trace_add] at h
     calc
-      _ = ∑ p, (M.effect p * sicProjector S j).trace *
-          (sicProjector S i * M.effect p).trace := by
+      _ = ∑ p, (M.effect p * rankOneDensity (S.1 j)).trace *
+          (rankOneDensity (S.1 i) * M.effect p).trace := by
         apply Finset.sum_congr rfl
         intro p _
-        rw [Matrix.trace_mul_comm (M.effect p) (sicProjector S j)]
+        rw [Matrix.trace_mul_comm (M.effect p) (rankOneDensity (S.1 j))]
         ring
       _ = _ := h
   ext i j
   simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, transition_real,
     Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
   calc
-    _ = ((d : ℂ) + 1) ^ 2 * ((sicProjector S i * sicProjector S j).trace + 1) -
+    _ = ((d : ℂ) + 1) ^ 2 * ((rankOneDensity (S.1 i) * rankOneDensity (S.1 j)).trace + 1) -
         ((d : ℂ) + 1) * (d + 1) - ((d : ℂ) + 1) * (d + 1) +
         ((d : ℂ) + 1) * d := by
       calc
         _ = ∑ p, (((d : ℂ) + 1) ^ 2 *
-            ((sicProjector S i * M.effect p).trace *
-              (sicProjector S j * M.effect p).trace) -
-            ((d : ℂ) + 1) * (sicProjector S i * M.effect p).trace -
-            ((d : ℂ) + 1) * (sicProjector S j * M.effect p).trace + 1) := by
+            ((rankOneDensity (S.1 i) * M.effect p).trace *
+              (rankOneDensity (S.1 j) * M.effect p).trace) -
+            ((d : ℂ) + 1) * (rankOneDensity (S.1 i) * M.effect p).trace -
+            ((d : ℂ) + 1) * (rankOneDensity (S.1 j) * M.effect p).trace + 1) := by
           apply Finset.sum_congr rfl
           intro p _
           dsimp only [transition]
