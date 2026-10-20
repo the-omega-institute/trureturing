@@ -7,7 +7,6 @@
    digest: Modified separable quantum transport can exceed unrestricted quantum transport. -/
 
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
-import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import D5.S3.Quantum.Matrix.PartialTransposeTrace
 import D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence
 import D5.S3.QuantumContext.RankOfContextualityNonPowerTwo
