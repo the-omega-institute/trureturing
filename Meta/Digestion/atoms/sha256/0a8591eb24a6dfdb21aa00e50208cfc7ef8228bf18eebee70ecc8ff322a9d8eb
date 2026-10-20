@@ -1,0 +1,15 @@
+**Proposition 1.4 (all eleven actual profiles, reused).** Put $\mathcal B=\mathcal I\setminus\{\beta\}$. Exactly the following disjoint cases occur. In each row all six whole values are different; the unspecified coordinates range over every permitted member of $\mathcal B$.
+
+| Profile | Forced coordinates | Remaining coordinates | Whole target |
+| --- | --- | --- | --- |
+| $\Pi_1$ | $x_a=\beta,\ x_{b_1}=\alpha$ | Four branch images | $R_1$ |
+| $\Pi_2$ | $x_a=\beta,\ x_{b_2}=\alpha$ | Four branch images | $R_2$ |
+| $\Pi_3$ | $x_c=\beta,\ x_{b_3}=\alpha$ | Four branch images | $R_3$ |
+| $\Pi_4$ | $x_c=\beta,\ x_{b_4}=\alpha$ | Four branch images | $R_4$ |
+| $Z_a$ | $x_a=\beta$ | Five branch images | $R_0$ |
+| $Z_c$ | $x_c=\beta$ | Five branch images | $R_0$ |
+| $Z_{b_1}$ | $x_{b_1}=\beta$ | Five branch images | $R_0$ |
+| $Z_{b_2}$ | $x_{b_2}=\beta$ | Five branch images | $R_0$ |
+| $Z_{b_3}$ | $x_{b_3}=\beta$ | Five branch images | $R_0$ |
+| $Z_{b_4}$ | $x_{b_4}=\beta$ | Five branch images | $R_0$ |
+| $Z_*$ | None | Six branch images | $R_0$ |

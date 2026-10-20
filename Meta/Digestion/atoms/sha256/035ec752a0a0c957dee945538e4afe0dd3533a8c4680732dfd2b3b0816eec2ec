@@ -1,0 +1,38 @@
+# Appendix B：模 \(60\) 三环画像完整表
+
+| \(r\bmod60\) | Gaussian | Eisenstein | Golden | 三环画像 |
+|---:|:---:|:---:|:---:|:---:|
+| 1  | S | S | S | SSS |
+| 7  | I | S | I | ISI |
+| 11 | I | I | S | IIS |
+| 13 | S | S | I | SSI |
+| 17 | S | I | I | SII |
+| 19 | I | S | S | ISS |
+| 23 | I | I | I | III |
+| 29 | S | I | S | SIS |
+| 31 | I | S | S | ISS |
+| 37 | S | S | I | SSI |
+| 41 | S | I | S | SIS |
+| 43 | I | S | I | ISI |
+| 47 | I | I | I | III |
+| 49 | S | S | S | SSS |
+| 53 | S | I | I | SII |
+| 59 | I | I | S | IIS |
+
+纤维配对：
+
+\[
+\begin{aligned}
+SSS &: \{1,49\},\\
+SSI &: \{13,37\},\\
+ISS &: \{19,31\},\\
+ISI &: \{7,43\},\\
+SIS &: \{29,41\},\\
+SII &: \{17,53\},\\
+IIS &: \{11,59\},\\
+III &: \{23,47\}.
+\end{aligned}
+\]
+
+---
+

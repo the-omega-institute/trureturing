@@ -1,0 +1,13 @@
+### 定义 376.3（带局部失配的随机事件核）
+
+令 \(K:\Delta(X)\to\Delta(Y)\) 是随机核。假定存在 \(L\ge0,\epsilon\ge0\)，使对每一对 \(x,x'\) 存在 \(K\) 的输出耦合 \(\kappa_{x,x'}\) 满足
+
+$$
+\mathbb E_{\kappa_{x,x'}}
+[d_Y(Y,Y')]
+\le
+L\,d_X(x,x')+\epsilon.
+$$
+
+\(\epsilon\) 是核在零距离输入上的局部记录失配合同。
+

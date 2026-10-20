@@ -44,7 +44,7 @@ internal static partial class DigestionQuerySelection
         if (atomIds.Count == 0) return Load(RawRepositorySnapshot.Create([]));
         var ids = atomIds.ToHashSet(StringComparer.Ordinal);
         var scope = selectors is { Count: > 0 }
-            ? ResolveSources(repository, selectors).Select(source => Literal(BackfillInventoryLoader.RootPath + source)).ToArray()
+            ? ResolveSources(repository, selectors).SelectMany(source => atomIds.Select(id => $":(glob){BackfillInventoryLoader.RootPath}{source}/*/{id}.yaml")).ToArray()
             : atomIds.Select(id => $":(glob){BackfillInventoryLoader.RootPath}*/*/{id}.yaml").ToArray();
         var matches = repository.SearchCurrentPaths(scope).Where(IsAtomPath)
             .Where(path => ids.Contains(Path.GetFileNameWithoutExtension(path))).ToArray();

@@ -1,0 +1,5 @@
+The desired conclusion has two levels:
+
+1. a robust deterministic statement that interval uncertainty does or does not preserve the center kernel on a specified finite golden window;
+2. a finite-shot statistical statement giving a confidence-controlled decision margin after the worst-case contraction of the Bernoulli separation.
+

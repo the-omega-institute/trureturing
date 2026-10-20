@@ -1,0 +1,34 @@
+**命题 260.2（隐藏方向的动作暴露反例）。** 取当前动作的
+
+$$
+A_0=I_2,
+\qquad
+C_0=\begin{pmatrix}1&0\end{pmatrix}.
+$$
+
+状态 $x=(0,0)^{\mathsf T}$ 与 $x'=(0,1)^{\mathsf T}$ 在当前动作下产生相同的任意长度输出零。若下一步允许动作 $a$ 具有
+
+$$
+A_a=
+\begin{pmatrix}
+1&1\\
+0&1
+\end{pmatrix},
+\qquad
+C_a=\begin{pmatrix}1&0\end{pmatrix},
+$$
+
+则下一次输出分别为 $0$ 与 $1$。
+
+### 证明
+
+当前 $A_0=I$ 且 $C_0x=C_0x'=0$，所以两状态记录完全相同。作用 $A_a$ 后，
+
+$$
+A_ax=(0,0)^{\mathsf T},
+\qquad
+A_ax'=(1,1)^{\mathsf T},
+$$
+
+再用 $C_a$ 即得不同输出。证毕。
+

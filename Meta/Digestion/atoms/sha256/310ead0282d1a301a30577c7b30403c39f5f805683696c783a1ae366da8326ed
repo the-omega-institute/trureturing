@@ -1,0 +1,24 @@
+### 定理 359.2（有限 Hodge 正交分解）
+
+对每个 \(k\)，有正交直和
+
+$$
+\boxed{
+C^k
+=
+\operatorname{im}d_{k-1}
+\ \oplus\
+\mathcal H^k
+\ \oplus\
+\operatorname{im}\delta_{k+1}.
+}
+$$
+
+并且
+
+$$
+\mathcal H^k
+=
+\ker d_k\cap\ker\delta_k.
+$$
+

@@ -1,0 +1,6 @@
+对 `U=FQ^dagger`，以下条件等价：
+
+1. 每一行 `U_r` 只支持一个 Fourier mode；
+2. 在行置换后，`U=L_0 direct-sum L_1 direct-sum L_2`；
+3. `FSF^dagger=U Lambda U^dagger` 是 diagonal，且三个 eigenvalues 各出现两次。
+

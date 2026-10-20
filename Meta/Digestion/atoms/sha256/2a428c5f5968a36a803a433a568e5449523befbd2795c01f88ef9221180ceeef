@@ -1,0 +1,35 @@
+### 证明
+
+写 \(p_x=p_\theta(x)\)，
+
+$$
+p_{\theta+d\theta}(x)
+=
+p_x+\nabla p_x^{\mathsf T}d\theta+O(\|d\theta\|^2).
+$$
+
+在正概率区域，
+
+$$
+\sqrt{p_{\theta+d\theta}(x)}
+=
+\sqrt{p_x}
+\left(
+\frac{\nabla p_x^{\mathsf T}d\theta}{2\sqrt{p_x}}
+\right)
+O(\|d\theta\|^2).
+$$
+
+代入 Hellinger 平方并求和，得到
+
+$$
+\mathsf H^2
+=
+\frac18
+\sum_x
+\frac{(\nabla p_x^{\mathsf T}d\theta)^2}{p_x}
++o(\|d\theta\|^2),
+$$
+
+而求和项正是 \(d\theta^{\mathsf T}I(\theta)d\theta\)。证毕。
+

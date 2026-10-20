@@ -1,0 +1,6 @@
+$`G_+,G_-`$ 独立标准实 Gaussian；在 $`\ell=\infty`$ 时，$`E_\infty`$ 为均值 $`\gamma`$ 的指数变量减去 $`\gamma`$。
+与全部旧坐标联合的完整序列收敛，当且仅当下列二者之一成立：
+
+- $`\ell_M\to\infty`$，此时斜率独立于整个旧场和 $`N_2`$；
+- $`\ell_M\to\ell<\infty`$ 且 $`m_M`$ 的奇偶性最终固定为 $`e`$，此时斜率为 $`2\theta\{|F_e(\ell/\omega)|^2-\gamma\}`$。
+

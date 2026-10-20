@@ -1,0 +1,26 @@
+**命题 895.1（严格距离差）。** 第 891 节全区间内，
+
+$$
+d_2^{\mathrm{sym}}-d_2
+=\frac{S-T}{8}
+=\frac{S^2}{24C}>0.
+$$
+
+证明。$CT=3\Delta$，而 $CS-S^2/3=3\Delta$，相减即得 $C(S-T)=S^2/3$。$S>0$、$C>0$ 给出严格性。
+
+当 $\delta\downarrow0$，由两个根式或有理式，
+
+$$
+\frac{T}{\delta}\longrightarrow\frac{16}{5},\qquad
+\frac{S}{\delta}\longrightarrow\frac{16}{5},
+$$
+
+而
+
+$$
+\frac{d_2^{\mathrm{sym}}-d_2}{\delta^2}
+\longrightarrow\frac{128}{1125}.
+$$
+
+最后一式直接由 $S^2/(24C)$ 及 $C\to15/4$ 得到。两种问题的一阶距离斜率都为 $2/5$，但有限正 $\delta$ 时始终存在严格距离差。因此只取得共同的一阶近似，不能证明两种优化完全相同。
+

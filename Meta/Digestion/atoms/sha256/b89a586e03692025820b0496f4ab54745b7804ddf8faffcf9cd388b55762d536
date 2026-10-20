@@ -1,0 +1,30 @@
+## 215. Signed shared stock, original schedule laws, and complete six-coordinate attainment
+
+Use the full scores, anchor, quotient, hull and one-budget certificate of
+Definition 213.1. In particular every Boolean word, independent A/C/P
+row and positive row remains, and every cell maximizes over all labels
+$0,\ldots,L$. Write $w(Z)$ for the word with zero set exactly $Z$,
+and $M_{\mathcal C}(q)=\min_{V\ge0,Q(V)=q}\Delta_{\mathcal C}(V)$
+when the full fiber is nonempty. These minima allow arbitrary A,
+early-00 and late P, correct-row cancellations, suffix correlations,
+changed anchors and unaries. A restricted family or coupling minimum
+will be stated explicitly. All coefficients below are dual proof weights;
+only normalized table mixtures are acquisition laws.
+
+For any one full score V, any signed target q and the same full feasible
+$\lambda\ge0$ at $b\in H_N$, of mass $M$, the inherited certificate is
+
+$$
+\theta=\max(0,\sigma_H(q-Q(V))),\qquad
+\Delta_N(V)+\theta\le1,\qquad
+F_q(b)\le M\Delta_N(V)+\theta\le\max(1,M).
+\tag{215.1}
+$$
+
+Here $G_N\lambda\ge h(b)$ includes negative singleton demands without
+truncation, the independent pair demands and the positive demand.
+A minimum over an unrestricted fiber is not by itself a unit certificate:
+either an actual full unit-O input must force that minimum at most one,
+or the cost bound at most one must be established directly. Nonzero
+zero-cost scores remain allowed at $\theta=1$.
+

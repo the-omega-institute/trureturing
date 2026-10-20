@@ -1,0 +1,5 @@
+### 51.2 Theorem (pure-target specialization)
+By Theorem 51.1, for |ψ_p⟩=√p|00⟩+√(1−p)|11⟩, take d=√(p(1−p)). Under the same population interval,
+δ=2(√(p(1−p))−|c|).
+For example r=9/10, c=1/10 and p=3/4 give a genuinely mixed entangled source, a nonflat pure target, and exact error √3/2−1/5. The shared identity probability is t=13/16. The lower bound covers all outputs of the larger operation class, not only the displayed two-branch construction.
+

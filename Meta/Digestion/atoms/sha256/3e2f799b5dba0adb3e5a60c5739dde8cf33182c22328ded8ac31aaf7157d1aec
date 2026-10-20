@@ -1,0 +1,28 @@
+**定义 101.1（先验信道内的平均）。** 保持定义 98.1、100.1 的完整计数向量、
+精确先验后验 $\mathsf P_x$、原标量 $T$、所有取整及同一观测
+$Y=T+\sigma_MG$。继续要求
+
+$$
+L_M=\ln(1/\sigma_M)\to\infty,\qquad
+\limsup_M L_M/Q^3<c_q/2.
+\tag{101.1}
+$$
+
+采用 (100.2) 的固定核心及 (100.3) 的观测系数
+$A,\nu_0,\kappa_3,\Lambda=\nu_0+\sigma_M^2,C_x$。
+记 $f_x$ 为精确先验信道的 Gaussian 混合输出密度，
+$m_x=\mathbb E_xY$，并置
+
+$$
+D_x(y)=V_{{\rm post},x}(y)-V_{{\rm prior},x}
++A^2/\Lambda-C_xy,
+\qquad
+R_*(y)=\frac{29}{6}-3\sqrt2+
+\left(3\sqrt2+\frac8{\sqrt3}-9\right)\frac{y^2}{\nu}.
+\tag{101.2}
+$$
+
+星号区分此确定性多项式与计数向量。本章信息量为自然对数，信息方差为
+nats 的平方。以下积分在给定数据 $x$ 的同一个先验信道内进行；
+它不是对罕见原始数据环境取无界量的期望。
+

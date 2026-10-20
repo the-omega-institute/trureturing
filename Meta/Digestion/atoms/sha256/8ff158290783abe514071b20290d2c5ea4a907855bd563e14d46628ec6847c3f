@@ -1,0 +1,28 @@
+**引理 1342.1（最大权重集中）。** 对任意幂和最优来源，将权重降序排列，则在固定 $\kappa,\alpha$ 下，所有最优者都满足
+
+$$
+w_1\longrightarrow a,\qquad w_2\longrightarrow0
+\quad(N\to\infty).
+$$
+
+同样的结论适用于任意准确来源序列，只要其幂和趋于 $a^\alpha$。
+
+**证明。** 第 1103 节给最大允许分量 $\max\{a,(1+\kappa)^{-(N-1)}\}$，故充分大 $N$ 时每个权重都至多为 $a$。取阈值 $\varepsilon_N=\sqrt{b_N}$。大于等于阈值的标签数至多为 $1/\varepsilon_N$；第 1301 节对这组标签给其总质量至多为 $a+b_N/\varepsilon_N=a+\sqrt{b_N}$。
+
+对这部分使用 $w_j^\alpha\le w_1^\beta w_j$，对其余部分使用 $w_j^\alpha\le\varepsilon_N^\beta w_j$，得到所有来源共同的估计
+
+$$
+\sum_jw_j^\alpha
+\le w_1^\beta(a+\sqrt{b_N})+b_N^{\beta/2}.
+$$
+
+最优来源的左侧至少为 $S^{\mathrm{fp}}_{\alpha,N}\ge a^\alpha$；对所述近优序列，左侧也趋于 $a^\alpha$。结合 $w_1\le a$，该不等式迫使 $w_1\to a$，且估计不依赖所选最优者。具体地，当分子为正时，全部最优者同时满足
+
+$$
+w_1\ge\left(\frac{a^\alpha-b_N^{\beta/2}}{a+\sqrt{b_N}}\right)^{1/\beta}.
+$$
+
+再对最大两个权重使用第 1301 节，得到 $w_1+w_2\le a+2b_N$。于是 $w_2\le a-w_1+2b_N\to0$。证毕。
+
+这一步只定位来源质量，没有立即证明大权重通道已经公平。一个权重与一个通道是表示中的两项不同数据，还需下一步的逐格支配条件。
+

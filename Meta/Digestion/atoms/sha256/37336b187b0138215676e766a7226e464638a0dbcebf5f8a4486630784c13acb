@@ -1,0 +1,81 @@
+### 56.1 Complete actual sources, resource types, and the prefix class
+
+<a id="TM56-S1"></a>
+**Reused source and target correspondence.** An actual source is a nonempty ordered binary tree $t::=\alpha\mid\beta\mid\langle t,t\rangle$. Tree equality retains leaf order and every bracket. The original substitution is $\rho\alpha=\beta$, $\rho\beta=\langle\beta,\alpha\rangle$, extended structurally to trees. Write $E_j(t)=E(\rho^jt)$ and distinguish the letter composition $c(t)=(a_\alpha,a_\beta)$ from the resource pair $(m,n)=(a_\alpha+a_\beta,a_\alpha+2a_\beta)$. The complete unit family is
+
+<a id="TM56-E01"></a>
+$$
+U_H=\{t:1\le m(t)\le H,\ (E_0(t),E_1(t),E_2(t))=(1,1,1)\},
+\qquad H=4h+\delta,\quad 0\le\delta\le3.
+\tag{TM.5601}
+$$
+
+Atomic360.2–4 and TM51.2–3 give exactly the initial compositions and resource coordinates
+
+<a id="TM56-E02"></a>
+$$
+\begin{gathered}
+c(t)=(4r,4s),\qquad r,s\ge1,\qquad r+s\le h,\\
+z=r+s,\quad w=r+2s,\qquad
+2\le z\le h,\quad z+1\le w\le2z-1,\\
+m=4z,\quad n=4w,\qquad r=2z-w,\quad s=w-z.
+\end{gathered}
+\tag{TM.5602}
+$$
+
+For $w\le h$, the initial target is
+
+<a id="TM56-E03"></a>
+$$
+\tau_h(z,w)=
+\begin{cases}
+(2,(4(2z-w),4(w-z)),(1,1,1)),&z+w\le h,\\
+(1,(4(2z-w),4(w-z)),1,1),&z+w>h.
+\end{cases}
+\tag{TM.5603}
+$$
+
+For $w>h$, it is $(0,1,4z)$, with hidden $w$ irrelevant to that initial target. A tag-0 row exists exactly when $2\le z\le h$ and $2z-1>h$. A genuine witness for every positive pair is any fixed ordered bracketing of
+
+<a id="TM56-E04"></a>
+$$
+\omega_{r,s}=\alpha^{2r-1}\beta^{2s}\alpha\beta^{2s-1}\alpha^{2r}\beta.
+\tag{TM.5604}
+$$
+
+Its eight Atomic360 edge multiplicities are $(r,r,r,r;s,s,s,s)$, positive, balanced and with connected support. The tag-0 row $z$ has witness $\omega_{1,z-1}$. Atomic360.3 includes every qualifying leaf word and every ordered binary bracketing, not only these witnesses. Selecting a witness in a lower argument never substitutes it for the running source.
+
+The ambient action contract is TM30.1–2. A whole current `Read` returns actual current $E$ and preserves the source. A whole $\rho$ attempt or whole left/right concatenation with an actual nonempty positive context accepts exactly when the entire candidate has at most $H$ leaves; equality accepts. Rejection preserves the complete source and provides no candidate read. The record retains public inputs, supplied label, action and context identities, all responses and all actual reads. There is no reset, copy, inverse, source replacement, navigation, size port, target port or additional observation. The required output remains the **initial** $q_H(t)$ throughout; current $q_H(t_{\rm cur})$ describes future behavior only.
+
+<a id="TM56-D1"></a>
+**Definition TM56.1 (common physical prefix).** Fix public $H$, one public actual nonempty positive context $v$ and one fixed side. A controller belongs to $\mathrm{CPF}(v,H)$ if on every run it attempts this same context and then its first whole $\rho$, independently of the supplied symbol. These are its first two modifying attempts. Finitely many harmless current `Read` calls may precede the context or intervene between it and $\rho$; the attempts are consecutive after deleting those Reads. No additional modifying attempt, even a rejected one, occurs before that first $\rho$. After it, arbitrary ambient TM30 actions are allowed: either side, mixed positive contexts, Reads, arbitrary retained records and any finite accepted replacement depth. Continuation decisions may depend on the supplied label and the actual record.
+
+Advice is a genuinely supplied function $\ell:U_H\to\mathcal L$ of the same unmodified initial source, authentic to that source before online actions. Lower bounds permit any exact-tree function, including dependence on leaf order and brackets, without target factorization or computability restrictions. Controllers are effective deterministic programs with common public initialization for equal labels and must stop correctly after finitely many source calls on each declared input. Exhibited upper suppliers are conditional constructions from authentic initial-target information or a certified same-tree archive; their production and pairing are separate obligations.
+
+For the context put $p=d_0(v)>0$ and $q=d_1(v)$, so $p\le q\le2p$, and define
+
+<a id="TM56-E05"></a>
+$$
+c=\left\lfloor\frac{H-p}{4}\right\rfloor,
+\qquad k=\left\lfloor\frac{H-q}{4}\right\rfloor,
+\qquad k\le c\le h.
+\tag{TM.5605}
+$$
+
+Here scalar $c$ is a cutoff, whereas $c(t)$ denotes letter composition. The context accepts exactly at $z\le c$. On acceptance the subsequent $\rho$ accepts exactly at $w\le k$; on context rejection the source is unchanged and $\rho$ accepts exactly at $w\le h$. These guards include equality. In particular $c<0$ makes the context always reject.
+
+<a id="TM56-E06"></a>
+$$
+\begin{aligned}
+(m,n)&=(4z,4w)\\
+&\xrightarrow{\text{accepted context}}(4z+p,4w+q)\\
+&\xrightarrow{\text{accepted }\rho}(4w+q,\ 4(z+w)+p+q).
+\end{aligned}
+\tag{TM.5606}
+$$
+
+All three pairs in (TM.5606) are current/next **sizes**, not $\alpha/\beta$ letter counts. An accepted context adds letter composition $(2p-q,q-p)$; an accepted $\rho$ sends letter composition $(a,b)$ to $(b,a+b)$. Thus its post-$\rho$ next resource is exactly $m+n+p+q$. For an all-$\alpha$ context $p=q=P$, this is $m+n+2P$. Rejection changes neither the resource pair nor the actual tree. These are the typed TM30 transport formulas, with no omitted contribution.
+
+<a id="TM56-S2"></a>
+**Reused permanent-collision principle.** TM30.2 and TM38.1 apply to two actual sources with equal complete acquired records and equal current $q_H$, even when their initial targets differ. Every common later action then has the same response, actual reads and successor behavior on both. Pointwise finite stopping gives the same output, so recovery of both different initial targets is impossible. This principle covers all ambient continuations, including sources that have left $U_H$. It requires equality of the full record and current target; equality of a terminal size alone would not suffice.
+

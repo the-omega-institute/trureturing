@@ -1,0 +1,22 @@
+**定义 23.6（联合出生场的局部规则）。** 在有限坐标乘积中独立定义
+
+$$
+\mathcal D=\prod_{p\in\mathcal P}\{0,\ldots,2|p|\},\qquad
+B(u)=(b_u(p))_{p\in\mathcal P}.
+\tag{RA.2313}
+$$
+
+$\mathcal A\subseteq\mathcal D$ 恰由以下规则组成，所有规则对每个 $p$ 施加；$e_b(p)$ 是两个孩子的共同值：
+
+$$
+\begin{gathered}
+b(\varepsilon)=0,\qquad b(pL)=b(pR)=e_b(p),\\
+b(p)=0\ \Longrightarrow\ e_b(p)\in\{0,1,2\},\\
+b(p)>0\ \Longrightarrow\
+ e_b(p)=\begin{cases}b(p)+1,&p\text{ 末字母为 }L,\\b(p)+2,&p\text{ 末字母为 }R.\end{cases}
+\end{gathered}
+\tag{RA.2314}
+$$
+
+令 $Z_b=\{p:b(p)=0\}$，$\mathcal A_{\rm fin}=\{b\in\mathcal A:Z_b\text{ 有限}\}$。局部规则及有限性条件都没有引用“存在一个实现来源”。从根开始，每条边使值不减且至多加二，故规则本身也蕴含 $b(p)\le2|p|$；乘积中的界只是规范化。
+

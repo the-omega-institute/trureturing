@@ -1,0 +1,5 @@
+**例 331.4（Hadamard 控制暴露相位）。** 取二模式基 \(|0\rangle,|1\rangle\)，初态
+\[
+|\psi_\pm\rangle=\frac{|0\rangle\pm|1\rangle}{\sqrt2}.
+\]
+它们的模式落点边界相同，均为 \((1/2,1/2)\)。先施加 Hadamard 控制，再测量 \(|0\rangle\) 效果时，两个状态的结果概率分别为 \(1\) 与 \(0\)。

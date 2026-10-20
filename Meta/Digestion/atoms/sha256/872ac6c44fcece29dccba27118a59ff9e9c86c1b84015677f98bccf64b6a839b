@@ -1,0 +1,75 @@
+## 命题 235.1（零密度发散证据集存在）
+
+存在素数子集：
+
+\[
+S\subseteq\mathbb P
+\]
+
+满足相对密度为零，但：
+
+\[
+\sum_{p\in S}\frac1p=\infty.
+\]
+
+因此若：
+
+\[
+e_p(x,y)\asymp\frac1p
+\quad(p\in S),
+\]
+
+即使 informative primes 在计数意义上极稀疏，仍可统计完成。
+
+### 一个显式纸面构造
+
+记第 \(n\) 个素数为 \(p_n\)。对充分大的 \(k\)，令：
+
+\[
+n_k
+=
+\left\lfloor
+k\log\log k
+\right\rfloor,
+\qquad
+S
+=
+\{p_{n_k}:k\ge k_0\}.
+\]
+
+由素数定理：
+
+\[
+p_n\sim n\log n.
+\]
+
+因此：
+
+\[
+p_{n_k}
+\asymp
+k\log k\log\log k,
+\]
+
+从而：
+
+\[
+\sum_{p\in S}\frac1p
+\asymp
+\sum_{k\ge k_0}
+\frac1{
+k\log k\log\log k
+}
+=\infty.
+\]
+
+另一方面：
+
+\[
+\#\{k:n_k\le N\}
+\asymp
+\frac{N}{\log\log N},
+\]
+
+故 \(S\) 在全部素数索引中的相对密度为零。
+

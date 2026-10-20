@@ -1,0 +1,61 @@
+**Theorem 57.2 (signed character classification and both zero objects).**
+For $\kappa\ne0$ an original scalar torus character
+$e^{i(n\theta+mv+jD)}$, $(n,m,j)\in\mathbb Z^3$, has resolved
+frequency $(n,m,\kappa j)$. Define
+
+$$
+E_\kappa(n,m,j)=2Hj-(H-\kappa)n+\kappa m.
+\tag{57.3}
+$$
+
+Its complete continuous record identifies height if
+$E_\kappa\ne0$. If $E_\kappa=0$ and $n+m\ne0$, it identifies
+height exactly when
+
+$$
+\kappa+\frac{Hn}{n+m}\notin I.
+\tag{57.4}
+$$
+
+The remaining $E_\kappa=0$, $n+m=0$ cases are precisely the
+independent autonomous characters (50.2). The cases failing (57.4)
+have the actual positive posterior ambiguity of Theorem 56.1.
+This includes all integer characters, primitive or not, for either
+sign of $\kappa$.
+
+For a vector of original characters, substitute each row
+$(n,m,j)\mapsto(n,m,\kappa j)$ in Theorem 57.1. This is the complete
+integer-matrix classification; individually folded characters with
+different fold centers can jointly identify height.
+
+At the resolved comparison zero, a supplied real frequency $(p,q,r)$
+has residue $r$. Frequencies with $r\ne0$ identify; those with $r=0$
+follow the affine criterion with fold center $Hp/(p+q)$ and autonomous
+line $p+q=0$. In contrast, on the actual frozen-$D$ zero leaf every
+original character has moving coefficient
+
+$$
+f_{n,m,j}(k)=\frac{Hn-(n+m)k}{2H}.
+\tag{57.5}
+$$
+
+The integer $j$ contributes only a known constant phase. Such a
+character identifies height exactly when $n+m\ne0$ and
+$Hn/(n+m)\notin I$. If $n+m=0$ it is independent of height;
+otherwise its interior fold is a positive-ambiguity case.
+The full matrix criterion on that leaf is (57.1)–(57.2) with row
+slope $-(n+m)/(2H)$ and row intercept $n/2$.
+
+Proof. Substitute the signed frequency into (56.2); its parenthesis
+is $\kappa E_\kappa$. When it vanishes, (56.4) gives the fold
+center (57.4). If $m=-n$, equation (57.3) forces $n=2j$, precisely
+(50.2). Continuous lifting of the supplied character path, as in
+Definition 55.1, gives its real increments; taking a nonprimitive
+character therefore loses no increments of that character itself.
+No division by a wrapped endpoint or an unavailable cover coordinate
+is used. The matrix claim follows componentwise from the same lifting
+and Theorem 57.1. At actual zero, insert $A_0=(H-k)/(2H)$,
+$B_0=-k/(2H)$ and $dD=0$ to obtain (57.5). At comparison zero,
+(56.2) instead gives $C_\eta=r$, because $b_0=1/k-1/H$ remains
+moving. These are different observations and different laws. $\square$
+

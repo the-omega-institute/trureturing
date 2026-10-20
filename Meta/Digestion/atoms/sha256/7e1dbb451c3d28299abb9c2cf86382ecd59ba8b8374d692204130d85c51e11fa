@@ -1,0 +1,29 @@
+### 35.12 固定原生仿射分支的余切提升
+
+数学引文与分支对应。本卷 §1.1 已给一般可逆离散映射的余切提升。将其中 $x=C$、$F(C)=SC+\delta_\sigma$，限制在一个固定、实际合法的分支，并在实扩展上另供共轭协向量 $\Pi\in\mathbb R^2$，得到
+
+$$
+\widetilde F_\sigma(C,\Pi)
+=(SC+\delta_\sigma,S^{-\mathsf T}\Pi),
+\qquad
+\omega_{\rm cot}=dU\wedge d\Pi_U+dV\wedge d\Pi_V.
+$$
+
+本原生矩阵的 $\det S=-1$ 仍允许可逆余切提升；具体有
+
+$$
+S^{-\mathsf T}=\begin{pmatrix}-3&2\\2&-1\end{pmatrix}.
+$$
+
+将既有保持律应用于该分支，计算是
+
+$$
+\widetilde F_\sigma^*(\Pi^{\mathsf T}dC)
+=(S^{-\mathsf T}\Pi)^{\mathsf T}d(SC+\delta_\sigma)
+=\Pi^{\mathsf T}dC,
+\qquad
+\omega_{\rm cot}=-d(\Pi^{\mathsf T}dC).
+$$
+
+故此四维提升保持辛形式，尽管其二维基映射反辛。新增的是协向量及四维载体，不是把原生 $C$ 的单步反辛符号改成保辛。固定 $\sigma$ 是调用 §1.1 的必要对应：若把多个分支合并、删去旧接缝或保留吸收错误态，整个读者未必可逆，也不自动成为上述微分同胚。可逆分支的对偶拉回不能替代拒绝、遗忘及实际输出的联合状态完成。
+

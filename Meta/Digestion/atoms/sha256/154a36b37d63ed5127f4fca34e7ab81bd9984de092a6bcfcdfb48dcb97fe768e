@@ -1,0 +1,5 @@
+**证明。** 有限维矩阵指数的 Duhamel 恒等式给出
+\[
+\left.\frac{d}{d\varepsilon}
+ e^{t\mathscr L_\varepsilon}\right|_{\varepsilon=0}
+ =

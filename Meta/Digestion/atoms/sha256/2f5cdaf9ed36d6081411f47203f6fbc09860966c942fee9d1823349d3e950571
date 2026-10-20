@@ -1,0 +1,38 @@
+## 206. FIB 递归路径上的外加分子马达、主动输运与化学循环效率
+
+固定 FIB 状态接续路径，另给马达状态空间 \(\mathbb Z\times\{1,\ldots,M\}\)。位置步长、构象势能、负载力、化学储库和观测坐标均外加。允许内部跃迁和位移 \(\delta\) 的主方程为
+$$
+\dot p_{n,i}=\sum_{j,\delta}
+\left[w_{ji}^{\delta}p_{n-\delta,j}-w_{ij}^{\delta}p_{n,i}\right].
+\tag{206.1}
+$$
+局部详细平衡可写
+$$
+\log\frac{w_{ij}^{\delta}}{w_{ji}^{-\delta}}
+=\beta[\Delta\mu_r-(U_j-U_i)-f\delta d],
+\tag{206.2}
+$$
+但主动驱动和非热浴需要改写该关系。周期稳态中的速度为
+$$
+v=d\sum_{i,j,\delta}\delta J_{ij}^{\delta},
+\qquad
+J_{ij}^{\delta}=w_{ij}^{\delta}\pi_i-w_{ji}^{-\delta}\pi_j .
+\tag{206.3}
+$$
+无负载速度和失速力由 \(v(0)\) 与 \(v(f_s)=0\) 定义；多循环、漏循环和反向滑移会使失速力不等于单一化学亲和力除以步长。
+
+机械功率、化学输入和效率为
+$$
+P_{\rm out}=fv,\qquad
+\dot W_{\rm chem}=\sum_rJ_r\Delta\mu_r,\qquad
+\eta=\frac{P_{\rm out}}{\dot W_{\rm chem}}.
+\tag{206.4}
+$$
+等温局部详细平衡网络的熵产生满足
+$$
+\dot S_{\rm tot}
+=\beta(\dot W_{\rm chem}-P_{\rm out})\ge0.
+\tag{206.5}
+$$
+无负载和失速时机械功率都为零，最大效率与最大功率一般不在同一负载。位移—燃料联合路径还满足相应的熵产生涨落关系；其扩散常数、Fano 因子和异常扩散取决于障碍、门控和等待时间尾部。只测位置轨迹不能识别隐藏燃料消耗、无步耗散循环或内部构象。速度、效率、失速和涨落因此都是外加马达动力学下的条件结论。
+

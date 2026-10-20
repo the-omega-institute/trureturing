@@ -1,0 +1,37 @@
+**定义与推导 26.2（平均距离、连续性与达到）。** 使用定义 19.1 的同一距离
+
+$$
+\operatorname{TV}(a,b)=\frac12\sum_{\sigma\in\Sigma}|a(\sigma)-b(\sigma)|,
+\qquad d_n(p,r)=\frac1n\sum_{i\in\mathbb Z_n}\operatorname{TV}(p_i,r_i),
+\qquad \Delta_n(p)=\min_{r\in\mathscr C_n}d_n(p,r),
+\tag{26.7}
+$$
+
+并定义最坏平均闭合缺陷
+
+$$
+\mathfrak E_n=\max_{p\in\mathscr L_n}\Delta_n(p).
+\tag{26.8}
+$$
+
+修补域是整个 $\mathscr C_n$，允许改变 $q_i$ 和 $\kappa_i$；固定均值后的
+最近点问题是另一个问题。$d_n$ 是有限概率向量族上的度量。
+$\mathscr L_n$ 是有限个闭线性条件与有限单纯形乘积的交，非空、紧且凸。
+$\mathscr C_n$ 是有限集合 $\{v(u):u\in B_n^{\mathrm{cyc}}\}$ 的凸包，
+也非空、紧且凸，其中 $v(u)$ 是确定字的全部窗口指示向量。
+因此对每个 $p$，连续函数 $d_n(p,\cdot)$ 在 $\mathscr C_n$ 上达到最小值。
+
+在取 (26.8) 的最大值之前还须验证 $\Delta_n$ 连续。
+对任意 $p,p'$ 和任意 $r\in\mathscr C_n$，TV 三角不等式给
+$d_n(p,r)\le d_n(p,p')+d_n(p',r)$。对 $r$ 取最小，再交换 $p,p'$，得到
+
+$$
+|\Delta_n(p)-\Delta_n(p')|\le d_n(p,p').
+\tag{26.9}
+$$
+
+这正是本卷定理 23.2 的一 Lipschitz 性，故 $\Delta_n$ 在紧集
+$\mathscr L_n$ 上连续并达到最大。最近点的达到也说明
+$\Delta_n(p)=0$ 当且仅当 $p\in\mathscr C_n$。
+下面要计算的正是这个保持原标号来源域的最大值。
+

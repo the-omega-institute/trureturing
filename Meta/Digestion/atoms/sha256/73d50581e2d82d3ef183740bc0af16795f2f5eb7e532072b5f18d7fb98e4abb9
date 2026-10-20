@@ -1,0 +1,10 @@
+## 定理 211.1（affinity 乘法）
+
+\[
+\boxed{
+\rho(P,Q)
+=
+\prod_{j=1}^m\rho(P_j,Q_j).
+}
+\]
+

@@ -1,0 +1,50 @@
+**Theorem 119.2 (Quantitative score-loss restriction).** For every
+finite preselected five-coordinate kernel cap feasible for these
+targets, and every common deterministic-table representation,
+
+$$
+\begin{aligned}
+\mathsf E[9-s(D)]&\le\sigma,\qquad \sigma\ge0,\\
+\mathsf P\{D\text{ queries at most one distinct coordinate}\}
+       &\le\sigma/2,\\
+\mathsf P\{s(D)<9\}&\le\sigma.
+\end{aligned}
+\tag{119.3}
+$$
+
+At $\sigma=0$, almost every represented table uses a distinct
+pair and maximizes each of its acquired-cell scores. Each of the
+eleven event inequalities is then an equality:
+$p_b(E_b)=\eta_b(E_b)-\varepsilon$.
+
+**Proof.** Every $s(D)$ is an integer at most nine by (117.6).
+Directly summing (119.1), an empty schedule scores at most seven;
+for a singleton coordinate $1,2,3,4$ the two cell maxima are
+$3,4$, and for coordinate five they are $4,3$. Repeated-coordinate
+schedules acquire the same static information as a singleton and
+also score at most seven. Thus a short schedule loses at least
+two score units, and any nonmaximizing table loses at least one.
+The cap event inequalities give
+
+$$
+S_5(p)\ge7+2a_2+3(a_3+a_4+a_5)-18\varepsilon
+          =9-\sigma.
+\tag{119.4}
+$$
+
+Together with $S_5(p)\le9$, this proves the expectation and
+probability bounds. At $\sigma=0$ all nonnegative score loss
+vanishes almost surely. The sum of the four cell maxima of every
+distinct pair is nine, so each cell's output must maximize its
+score. Also each gap
+$p_b(E_b)-\eta_b(E_b)+\varepsilon$ is nonnegative, and their
+weighted sum is
+
+$$
+S_5(p)-[7+2a_2+3(a_3+a_4+a_5)]+18\varepsilon=0.
+\tag{119.5}
+$$
+
+Every row weight is positive, forcing all eleven gaps to vanish.
+$\square$
+

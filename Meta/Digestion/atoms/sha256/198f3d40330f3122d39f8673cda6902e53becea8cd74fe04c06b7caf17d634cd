@@ -1,0 +1,80 @@
+**定理 21.2（二字母阻抗的区间差异与同长度比较）。** 对每个 $0\le b\le c\le L_j$，
+
+$$
+\left|\sum_{i=b}^{c-1}r_{(W_j)_i}
+-\overline r(c-b)\right|\le\Delta_r.
+$$
+
+归一化 Green 核
+
+$$
+\mathcal K_j(u,v)
+=\epsilon_jL_jG_j(\iota_j(u),\iota_j(v))
+$$
+
+按定义 10.1 在吸收端取零。若
+
+$$
+C(u,v)=\frac{1-\max(u,v)}D,\qquad
+c_j=\frac{\epsilon_j\overline rL_j^2}{\theta},
+$$
+
+则
+
+$$
+\|\mathcal K_j-C\|_\infty
+\le |c_j-D^{-1}|
++\frac{\epsilon_jL_j}{\theta}(\overline r+\Delta_r)
+=O(L_j^{-1}).
+$$
+
+这里的误差常数只依赖固定的阻抗、跳尺度与时钟。为区分极限平均与有限词的实际平均，再令
+
+$$
+\widehat r_j=\frac1{L_j}\sum_{i=0}^{L_j-1}r_{(W_j)_i},
+\qquad
+|\widehat r_j-\overline r|\le\frac{\Delta_r}{L_j}.
+$$
+
+对任意正数 $r_0$，记同长度 $L_j$、同 $\theta,\epsilon_j$ 的常阻抗 Green 核为
+
+$$
+\mathcal K_j^{[r_0]}(u,v)
+=\frac{\epsilon_jL_j r_0}{\theta}
+\bigl(L_j-\max(\iota_j(u),\iota_j(v))\bigr),
+$$
+
+并在任一参数等于 $1$ 时取零。则有两种同长度比较界：
+
+$$
+\|\mathcal K_j-\mathcal K_j^{[\overline r]}\|_\infty
+\le\frac{\epsilon_jL_j}{\theta}\Delta_r,
+\qquad
+\|\mathcal K_j-\mathcal K_j^{[\widehat r_j]}\|_\infty
+\le\frac{2\epsilon_jL_j}{\theta}\Delta_r.
+$$
+
+后一比较保持有限词的总阻抗不变；两者均为 $O(L_j^{-1})$。
+
+**证明。** 第 3.2、10.2 节的机械词表示使任一区间的 $\alpha$ 数与 $a(c-b)$ 的差小于一。将总阻抗写为
+
+$$
+r_\beta(c-b)+(r_\alpha-r_\beta)A_{b,c-b}
+$$
+
+即得区间差异界。第 10.2 节的精确 Green 逆为
+
+$$
+G_j(i,k)=\frac1\theta
+\sum_{\ell=\max(i,k)}^{L_j-1}r_{(W_j)_\ell}.
+$$
+
+将尾区间的总阻抗替换为 $\overline r$ 乘以尾长度，误差不超过 $\Delta_r$；再将格点坐标换为连续坐标，误差不超过 $\overline r$ 乘以一个格点长度。结合
+
+$$
+c_j=D^{-1}+O(L_j^{-2}),\qquad
+\epsilon_jL_j=O(L_j^{-1}),
+$$
+
+即得一致核估计与第一种同长度比较。全词区间的同一界给出 $|\widehat r_j-\overline r|\le\Delta_r/L_j$。任一尾区间长度不超过 $L_j$，所以将 $\overline r$ 再换成 $\widehat r_j$ 额外损失不超过 $\Delta_r$，得到第二种比较。$\square$
+

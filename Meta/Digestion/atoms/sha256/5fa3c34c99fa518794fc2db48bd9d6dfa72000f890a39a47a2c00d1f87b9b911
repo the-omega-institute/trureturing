@@ -1,0 +1,150 @@
+**定理 107.3（受控增长阶数）。** 在 (107.2) 下，对每个确定序列
+$a_Q\to\infty$、$a_Q\le\ln Q$，有
+
+$$
+\sup_{\substack{a_Q\le\alpha\le\ln Q\\|y|\le R}}
+\left|\delta[H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x)+L_M]
+-c_\infty\right|\to0
+\tag{107.15}
+$$
+
+于同一实际数据概率和支持口径成立。上限 $\ln Q$ 是充分范围，不声称最优。
+
+**证明：不用边界鞍点的密度界。** 选 $l<c_q/2$ 使最终 $L_M\le lQ^3$，
+选 $\epsilon>0$ 满足 $2\epsilon<c_q-l$，只为证明划分
+$H=\{j:C_j\ge e^{\epsilon Q^3}\}$，保留完整 $V$。
+这里的 $H$ 是本证明的高计数组，不是第 106 章对数核心。
+以 $g_{\alpha,\sigma'}$ 表示
+
+$$
+\delta^{-1/2}\left[\sum_H(\sqrt{v_j/\alpha}Z_j-e_j)^2-V\right]
++\frac{\sigma'}{\sqrt\alpha}G
+\tag{107.16}
+$$
+
+的密度，$\sigma'$ 允许核夹逼所需的邻近宽度。
+其能量乘 $\alpha$ 后的缩放累积量函数是
+
+$$
+F_{\alpha,x}(t)=C_x^{G}(t)+\alpha D_{x,\sigma'}^{G}(t),
+\quad C_x^{G}(t)=-\frac\delta2\sum_H\ln(1-2tv_j/\delta),
+$$
+
+$$
+D_{x,\sigma'}^{G}(t)=t\sum_H\frac{e_j^2}{1-2tv_j/\delta}
++\tfrac12(\sigma')^2t^2.
+\tag{107.17}
+$$
+
+上标仅避免与信息方差系数 $C_x$ 混淆。
+任取固定 $0<t<t_c=1/(2\rho_0)$，共同分母余量给
+$C_x^{G}(t)=O_{\mathbb P}(1)$、$D_{x,\sigma'}^{G}(t)\to0$。
+倾斜后标准化能量的特征函数模由
+$(1+b\delta\xi^2)^{-b'/\delta}$ 主控，常数不依赖 $\alpha$：
+非中心因子即使带 $\sqrt\alpha e_j$，其模仍至多一。
+该包络积分一致有界，故倾斜标准化密度处处有界。
+在目标能量 $\alpha h_y$ 处解除倾斜，得到
+
+$$
+g_{\alpha,\sigma'}(y)
+\le C\alpha\exp\left[-\frac{\alpha h_y t-C_x^{G}(t)
+-\alpha D_{x,\sigma'}^{G}(t)}\delta\right].
+\tag{107.18}
+$$
+
+乘对数以 $\delta/\alpha$，先用 $\alpha\ge a_Q\to\infty$，再令固定 $t\uparrow t_c$，
+给极限上界 $-\gamma t_c$。这里没有假定随 $\alpha$ 增长的鞍点保持内部紧性。
+
+反向界单独取最大权重坐标。其余平方能量 $R_\alpha$ 的期望至多
+$V/\alpha+\|e\|^2$，故以至少 $1/2$ 概率不超过
+$\epsilon_x=2(V/a_Q+\|e\|^2)\to0$。
+独立能量尺度噪声的标准差为 $s_E=\sqrt\delta\sigma'/\sqrt\alpha$，
+其绝对值不超过 $s_E$ 的概率为固定正常数。
+最大坐标平方 $X=(\sqrt{v_*/\alpha}Z-e_*)^2$ 的精确密度为
+
+$$
+p_X(z)=\frac{\sqrt{\alpha/(2\pi v_*)}}{2\sqrt z}
+\left[e^{-\alpha(\sqrt z+e_*)^2/(2v_*)}
++e^{-\alpha(\sqrt z-e_*)^2/(2v_*)}\right],\qquad z>0.
+$$
+
+在上述两个事件上，$z=h_y-R_\alpha-\mathrm{noise}$ 位于固定正紧区间。
+积分并乘能量到输出的 Jacobian $\sqrt\delta$，得到
+
+$$
+g_{\alpha,\sigma'}(y)\ge c\sqrt{\alpha\delta/v_*}
+\exp\left[-\frac\alpha{2v_*}(\sqrt{h_y+s_E}+|e_*|)^2\right].
+\tag{107.19}
+$$
+
+结合 (103.8) 和精确中心界，(107.18)–(107.19) 给
+
+$$
+\sup_{a_Q\le\alpha\le\ln Q,|y|\le R}
+\left|\frac\delta\alpha\ln g_{\alpha,\sigma'}(y)+c_\infty\right|\to0.
+\tag{107.20}
+$$
+
+这一步本身不需要阶数上限；上限用于下列实际计数回接。
+
+**显式支付增长阶数。** 对 $1\le\alpha\le\ln Q$、$N\ge e^{\epsilon Q^3}$，
+将二项 Stirling 展开的对数误差乘 $\alpha$。
+在 $|z|\le N^{1/12}$ 内误差至多 $C\alpha N^{-1/4}$；
+幂质量的外部 Gaussian 原子包络相对中央归一化至多
+$e^{C\alpha}\operatorname{poly}(\alpha)e^{-c\alpha N^{1/6}}$，仍一致可忽略。
+因此幂二项归一化为
+
+$$
+\sum_kb_{N,p}(k)^\alpha
+=(2\pi d)^{(1-\alpha)/2}\alpha^{-1/2}(1+o(1)),
+\tag{107.21}
+$$
+
+相对误差至多 $\operatorname{poly}(Q)e^{-\epsilon Q^3/4}$。
+单位取整格积分的对数误差至多
+$C\alpha(1+|z|)/\sqrt N+C\alpha/N$。
+故在共同盒 $|n_j-C_jp_j|/\sqrt{d_j}\le Q^2$ 上，
+完整高组 escort 与独立取整 $N(C_jp_j,d_j/\alpha)$ 的质量比为
+$1+O(\operatorname{poly}(Q)e^{-\epsilon Q^3/4})$，
+两律盒外概率至多 $\operatorname{poly}(Q)e^{-cQ^4}$。
+
+全部低组配置能量至多 $CQ^2e^{2\epsilon Q^3}/B^2$，原标量取整误差仍为
+$\Delta_Q\le\operatorname{poly}(Q)[B^{-1}+B^{-2}e^{2\epsilon Q^3}]$。
+对 $s=\sigma/\sqrt\alpha$ 用 (103.20)，
+$h=\sqrt\alpha\Delta_Q/\sigma\le\operatorname{poly}(Q)e^{-bQ^3}$，
+对应 $\sigma'=\sigma/\sqrt{1\pm h}$，(107.20) 对两宽度都成立。
+盒外加性密度至多 $\operatorname{poly}(Q)\sigma^{-1}e^{-cQ^4}$，
+而 (107.19) 给比较密度下界 $e^{-C\alpha/\delta}$。
+由于 $\alpha\le\ln Q$、$L_M=O(Q^3)$，加性误差相对下界仍指数小。
+于是 (107.20) 传给原乘积计数 escort 的稀有输出密度。
+
+同一质量比较给 $\sup_{1\le\alpha\le\ln Q}\mathbb E_{\mathsf Q_\alpha}E=O_{\mathbb P}(1)$。
+盒内用 Gaussian 能量均值与小组全范围界；盒外使用确定界
+$E\le N_J^2/B^2=O_{\mathbb P}(B^2)$ 乘 $e^{-cQ^4}$，而 $\ln B^2=O(Q^3)$。
+Gaussian 尾能量用其直接尾矩控制。
+第 103 章非负能量的稀有 Gaussian 重加权均值界遂对这些阶数一致。
+用 $D^2/q\le C\delta(E+\|e\|^2)$、Jensen 及 (103.11)，精确比值
+
+$$
+\frac{f_{\mathsf P_\alpha,\sigma/\sqrt\alpha}(y)}
+{f_{\mathsf Q_\alpha,\sigma/\sqrt\alpha}(y)}
+=\frac{\mathbb E_{\mathsf Q_\alpha,y}\mathcal L_x^\alpha}
+{\mathbb E_{\mathsf Q_\alpha}\mathcal L_x^\alpha}
+$$
+
+的对数绝对值至多 $O_{\mathbb P}(\alpha\delta)$。
+乘 $\delta/\alpha$ 后趋零，得到实际版本的 (107.20)。
+最后代入精确 (103.10)：$\alpha/(\alpha-1)\to1$ 一致，
+普通密度项由 (103.27) 消失，其余常数乘 $\delta$ 也消失，即得 (107.15)。证毕。
+
+作为一致性核对，固定阶系数中的 $t_\alpha\uparrow t_c$，
+而 $K(t_c-)$ 有限：原点附近只出现可积的 $\ln|s|$ 奇性。
+因此 $J_\alpha/(\alpha-1)\to\gamma t_c$，与本章一致。
+此核对不是上述任一证明中的极限交换步骤。
+
+本章未给常数阶输出响应、超过受控窗口的增长阶数、Shannon 延拓或输出平均熵。
+离散众数比、凸性、Stirling 和指数倾斜为成熟方法；原模型中的全元组下界、可行整数构造、
+实际完整选择修正和增长阶数的稀有密度回接构成本章连接。
+归属和经典最大猜测概率、Gaussian 二次型大偏差的对象差别见
+[Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
+

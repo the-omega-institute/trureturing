@@ -1,0 +1,26 @@
+**命题 19.4（原样上下文的后继障碍）。** 对任意 $N=2k\ge2$、任何非空有限
+$v,t$，若把编码源 $\mathsf C_Nt$ 上的上下文仍用原 $v$，则一次接受的整左
+或整右 graft 均不能实现原接受后继在关系 $\widehat t=\mathsf C_Nt$ 下的
+对应。此结论不涉及被拒绝后保持旧源的情形。
+
+证明。由 (ABT.64)、(ABT.66) 有
+
+$$
+\lambda(\mathsf C_Nv)\ge2\lambda(v)>\lambda(v).
+$$
+
+故 $\mathsf C_Nv\ne v$。自由有序配对的构造子单射性与 (ABT.68) 给出
+
+$$
+\langle v,\mathsf C_Nt\rangle
+ \ne\mathsf C_N\langle v,t\rangle,
+\qquad
+\langle\mathsf C_Nt,v\rangle
+ \ne\mathsf C_N\langle t,v\rangle.
+\tag{ABT.69}
+$$
+
+原样上下文若接受，就写入左边的实际源，不能同时是右边的编码后继；若将它
+拒绝，又不能保持本来接受的原始响应。证明不使用结合律、重新配对或重新准备。
+证毕。
+

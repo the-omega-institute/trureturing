@@ -1,0 +1,8 @@
+**数学引文 16.2（分片 KL 与条件互信息）。** 使用 [Shannon 的链式恒等式](../../../Library/Estimation/shannon1948communication.md)、[基础公式卷 §9](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)及 C-17.6 的 KL 工具，采用自然对数及 $0\log0=0$。在定义 16.1 的相同相邻律合同下，经典恒等式为
+
+$$
+D(P\Vert M)=I_P(A;C\mid B)=H(M)-H(P)\ge0,
+$$
+
+等号恰在 $P=M$。其支持条件在此自动成立：$P_{abc}>0$ 使 $R_{ab},S_{bc},\mu_b>0$，从而 $M_{abc}>0$；所用有限和的对数比为 $\log(P_{abc}\mu_b/(R_{ab}S_{bc}))$。此公式度量指定补全与实际来源的区别，不授予识别实际来源或热力学能耗的结论。它在定理 17.1 的同几何异返回族中作为量化读口使用。
+

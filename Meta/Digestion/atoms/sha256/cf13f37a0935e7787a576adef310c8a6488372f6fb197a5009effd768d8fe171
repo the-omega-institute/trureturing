@@ -1,0 +1,13 @@
+批次内固定但未知的参数为 \(r\in[l,1]\)、\(h\in(0,1]\)，假设标号 \(j=0,1\)。不提供正增益下界。每次完成调用返回二元联合记录 \((X,Z)\)：
+
+- \(X\) 仍是原任务币或参考币，分别为
+  \(\operatorname{Bernoulli}((1-hk^jr/C)/B)\)、
+  \(\operatorname{Bernoulli}((1-h/C)/B)\)；
+- 同次独立产生
+  $$
+  Z\sim\operatorname{Bernoulli}((1-\sqrt h)/2),
+  \qquad \tau=1+Z\in\{1,2\}.
+  \tag{305.17}
+  $$
+  给定参数，新联合记录与过去独立。
+

@@ -1,0 +1,68 @@
+## 93. FIB 状态载体上的外加热力学协议、功恒等式与粗粒化不可逆性
+
+固定有限 FIB 上下文闭包 \(S=E_j\)。递归只给状态、标签与词序；时间反演 \(\vartheta\)、能量 \(H_\lambda\)、温度 \(\beta^{-1}\)、协议 \(\lambda_0,\ldots,\lambda_T\)、初态律和转移核均是外加。正向第 \(k\) 步核为 \(P_k(x,y)\)，反向核记为 \(P_k^\dagger(\vartheta y,\vartheta x)\)，假设双向支撑相同，并以流入热浴的热量 \(q_k(x,y)\) 施加局部详细平衡
+\[
+\log\frac{P_k(x,y)}{P_k^\dagger(\vartheta y,\vartheta x)}=\beta q_k(x,y).
+\tag{93.1}
+\]
+外加第一定律约定为 \(H_{\lambda_{k+1}}(y)-H_{\lambda_k}(x)=w_k(x,y)-q_k(x,y)\)。对路径 \(\omega=(x_0,\ldots,x_T)\)，令 \(\Theta\omega=(\vartheta x_T,\ldots,\vartheta x_0)\)，并设
+\[
+P_F(\omega)=\rho_0(x_0)\prod_{k<T}P_k(x_k,x_{k+1}),\quad
+P_R(\Theta\omega)=\rho_T^\dagger(\vartheta x_T)\prod_{k<T}P_k^\dagger(\vartheta x_{k+1},\vartheta x_k).
+\]
+路径熵产生为
+\[
+\Sigma(\omega)=\log\frac{P_F(\omega)}{P_R(\Theta\omega)}
+=\log\frac{\rho_0(x_0)}{\rho_T^\dagger(\vartheta x_T)}+\beta\sum_{k<T}q_k(x_k,x_{k+1}).
+\tag{93.2}
+\]
+路径反演双射给出有限时域涨落恒等式
+\[
+\mathbb E_F e^{-\Sigma}=1,\qquad
+\mathbb E_F\Sigma=D_{\rm KL}(P_F\Vert P_R\circ\Theta)\ge0.
+\tag{93.3}
+\]
+若定义反向随机变量 \(\Sigma_R(\Theta\omega)=-\Sigma(\omega)\)，则共同支撑上
+\[
+p_F(s)=e^s p_R(-s).
+\tag{93.4}
+\]
+零均值当且仅当正、反向路径律在反演下相同；负的单条路径熵产生可以出现，但平均值不能为负。
+
+取两端 Gibbs 律 \(\pi_{\lambda_0},\pi_{\lambda_T}\)，其中 \(\pi_\lambda(x)=Z_\lambda^{-1}e^{-\beta H_\lambda(x)}\)，并令 \(\Delta F=-\beta^{-1}\log(Z_{\lambda_T}/Z_{\lambda_0})\)。由 (93.2) 和第一定律，\(W=\sum_{k<T}w_k\) 满足
+\[
+\Sigma=\beta(W-\Delta F),
+\qquad
+\mathbb E_F e^{-\beta W}=e^{-\beta\Delta F},
+\qquad
+\mathbb E_FW\ge\Delta F.
+\tag{93.5}
+\]
+这说明功界和 Jarzynski 恒等式需能量、热浴与协议同时存在；它们不由 FIB 递归单独给出。
+
+令 FIB 词或标签是外加映射 \(\phi:S\to\mathcal Y\)，并把逐时映射记为 \(Y=\phi^{\otimes(T+1)}(X)\)。推前正、反向路径律为 \(P_F^\phi\) 与 \(R^\phi\)，其中 \(R=P_R\circ\Theta\)。可见路径熵产生
+\[
+\Sigma_\phi(Y)=\log\frac{P_F^\phi(Y)}{R^\phi(Y)}
+\]
+满足
+\[
+\mathbb E_F\Sigma-\mathbb E_F\Sigma_\phi
+=D(P_F\Vert R)-D(P_F^\phi\Vert R^\phi)
+=\mathbb E_{Y\sim P_F^\phi}
+ D\!\left(P_F(\cdot\mid Y)\Vert R(\cdot\mid Y)\right)\ge0.
+\tag{93.6}
+\]
+故词层至多看见微观不可逆性；等号要求每个词纤维内正、反向条件路径律相同。若词映射把方向信息合并，词层可以表观详细平衡，而隐藏状态仍有正熵产生。
+
+反例取同一三状态 FIB 载体 \(S=\{0,1,2\}\)，恒等时间反演和恒定能量。外加核为
+\[
+P(i,i+1\!\!\pmod3)=p,\quad P(i,i-1\!\!\pmod3)=q,\quad P(i,i)=1-p-q,
+\]
+其中 \(p,q>0,\ p+q<1\)，平稳律均匀。反向核交换 \(p,q\)，稳态路径熵产生率为
+\[
+\sigma=(p-q)\log(p/q),
+\]
+所以 \(p=q\) 时为零，\(p\ne q\) 时为正。若 \(\phi(0)=\phi(1)=\phi(2)\)，所有词路径都相同而 \(\Sigma_\phi=0\)；同一载体在保留方向的标签映射下又可显示正的词层熵产生。改变 \(p,q\)、能量协议或读出映射即可得到相反的可见统计，而 FIB 递归不变。
+
+若支撑不互易、反向协议未定义或状态映射随层改变，(93.3)–(93.6)须改写为共同支撑上的扩展值相对熵；不能把有限路径恒等式无条件提升为长时熵率或真实第二定律。FIB 递归只提供组合载体，不提供温度、热量、能量、时间反演、局部详细平衡、熵单位或物理不可逆方向。
+

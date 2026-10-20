@@ -1,0 +1,29 @@
+**定理 69.4（同一标准单纯形内闭星不交与定量分离）。** 对任意不同的 $i,j\in I$，有
+
+$$
+\operatorname{Star}_i\cap\operatorname{Star}_j=\varnothing,
+\qquad
+\forall x\in\operatorname{Star}_i\ \forall y\in\operatorname{Star}_j,
+\quad\|x-y\|_\infty\ge\frac{1}{24},
+$$
+
+其中 $\|z\|_\infty=\max_{a\in I}|z_a|$ 是 $\mathbb R^4$ 中的环境范数。这里的 $1/24$ 是保证分离的下界，不主张它是两个闭星之间的最优距离。
+
+证明。若 $z$ 同时在两个闭星中，则定理 69.3 给出
+
+$$
+z_i+z_j\ge\frac{25}{48}+\frac{25}{48}=\frac{25}{24}>1.
+$$
+
+但 $z\in\Delta$，其全部坐标非负且坐标和为 $1$，故不同坐标之和满足 $z_i+z_j\le1$，矛盾。因此两个闭星不交。
+
+进一步，任取 $x\in\operatorname{Star}_i$ 和 $y\in\operatorname{Star}_j$。因为 $y\in\Delta$ 且 $i\ne j$，有
+
+$$
+y_i\le1-y_j\le1-\frac{25}{48}=\frac{23}{48},
+\qquad
+x_i-y_i\ge\frac{25}{48}-\frac{23}{48}=\frac{1}{24}.
+$$
+
+故 $|x_i-y_i|\ge1/24$，再由环境范数定义得到 $\|x-y\|_\infty\ge1/24$。证明使用的是同一个标准四面体中的两个实际点及其共同坐标和约束。证明完毕。
+

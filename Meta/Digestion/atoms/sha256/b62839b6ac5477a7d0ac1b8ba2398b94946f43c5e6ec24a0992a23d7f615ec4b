@@ -1,0 +1,48 @@
+## 123. FIB 合法上下文图上的外加二聚体、随机铺砖与高度涨落
+
+固定有限合法上下文图，并另选无向图
+\[
+\Gamma_\partial=(V_\partial,E_\partial)
+\]
+作为匹配载体。FIB 接缝只筛选候选边；无向化、完美匹配约束、铺砖几何、边界和边权均为外加。完美匹配配置为
+\[
+\mathcal M_\partial
+=\left\{M\subseteq E_\partial:
+\sum_{e\ni v}1_{\{e\in M\}}=1
+\ \text{对所有 }v\in V_\partial\right\}.
+\tag{123.1}
+\]
+若采用二分图，还须满足两侧等势与 Hall 条件；FIB 的两个字母不自动是二分颜色。给每条允许边正权 \(\omega_e\)，配分函数和概率律为
+\[
+Z_\partial=\sum_{M\in\mathcal M_\partial}\prod_{e\in M}\omega_e,
+\qquad
+\mathbb P_\partial(M)=Z_\partial^{-1}\prod_{e\in M}\omega_e.
+\tag{123.2}
+\]
+无完美匹配时 \(Z_\partial=0\)，概率模型尚未定义；允许单体则是另一模型。
+
+若 \(\Gamma_\partial\) 已给定平面二分嵌入并满足 Kasteleyn 符号条件，黑点为行、白点为列的 Kasteleyn 矩阵 \(K\) 给出
+\[
+Z_\partial=|\det K|.
+\tag{123.3}
+\]
+平面非二分情形改用 Pfaffian；环面边界需要多个绕行扇区的扭转矩阵组合。普通邻接矩阵不能替代 Kasteleyn 矩阵，因为其行列式会发生符号抵消。
+
+当 \(K\) 可逆时，边占用具有行列式相关核。对互不相同的边 \(e_i=(b_i,w_i)\)，
+\[
+\mathbb P_\partial(e_1,\ldots,e_r\in M)
+=\left(\prod_i k_{e_i}\right)
+\det[(K^{-1})_{w_i b_j}]_{i,j=1}^r,
+\tag{123.4}
+\]
+并且
+\[
+\frac{\partial\log Z_\partial}{\partial\log\omega_e}
+=\mathbb P_\partial(e\in M),\qquad
+\frac{\partial^2\log Z_\partial}
+{\partial\log\omega_e\,\partial\log\omega_f}
+=\operatorname{Cov}(1_e,1_f).
+\tag{123.5}
+\]
+相关核不必 Hermitian，不能仅凭形式符号断言所有边负相关。若另给平面二分取向和参考匹配，匹配差流可积成面高度；高度增量的方差由 (123.4) 的协方差双重和决定。连续液态高度极限、熵密度和高斯涨落需要额外周期图列、嵌入、权重归一化与紧性假设。FIB 只提供合法关系，不内生生成匹配、铺砖或高度场。
+

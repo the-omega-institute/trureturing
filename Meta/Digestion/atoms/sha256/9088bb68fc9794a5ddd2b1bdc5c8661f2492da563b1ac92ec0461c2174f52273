@@ -1,0 +1,7 @@
+这提供了一个真正严格的“构型曲率之前的几何对象”：
+
+* metric 来自二阶 cumulant；
+* connection 来自三阶 cumulant；
+* 更高 jet 来自更高 cumulant；
+* metric 退化对应局部不可存活。
+

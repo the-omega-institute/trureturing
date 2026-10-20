@@ -1,0 +1,10 @@
+### 定义 353.5（边修正距离）
+
+设 \(\widetilde g\) 是另一份边运输，且对每条边
+
+$$
+ d(g_e,\widetilde g_e)\le\eta.
+$$
+
+对长度为 \(r\) 的闭路 \(c=e_1\cdots e_r\)，令 \(\widetilde T(c)\) 为 \(\widetilde g\) 的运输。
+

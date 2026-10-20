@@ -1,0 +1,15 @@
+**Definition 17.1 (Promised pair and observation contract).** Fix the polynomial data of Definition 15.1 independently of $q$, with $e\ne0$, $H(k)>0$ for every integer $k\ge1$, and constants $0<\ell\le u<\infty$ such that $\ell\le r_k:=H(k)/k^n\le u$. For each fixed common $q\in(0,1)$ put
+
+$$
+\begin{aligned}
+p_k&=\frac{k^nq^k}{Z_n(q)},&h_k&=\frac{H(k)q^k}{Z_H(q)},&
+c&=\frac{Z_H(q)}{Z_n(q)}=\mathbb E_p r_K,\\
+p_0&=h_0=0,&U_a&=\sum_{k\ge a}p_k,&V_a&=\sum_{k\ge a}h_k,\\
+\mu_0&=\mathbb E_p(K+1),&\mu_1&=\mathbb E_h(K+1),&\kappa&=u/\ell.
+\end{aligned} \tag{17.1}
+$$
+
+In particular $U_0=U_1=V_0=V_1=1$. Write $\mathsf P_0,\mathsf P_1$ for the stationary binary renewal laws with these gap laws, and $\mathsf P_i^W$ for their restrictions to $X_0,\ldots,X_{W-1}$. Their cylinders are (15.8), using $p,U,\mu_0$ or $h,V,\mu_1$. Define $z_i(W)=\mathsf P_i(0^W)$; the empty word has $z_i(0)=1$.
+
+The observer's available action is to read the next bit, or stop and emit a label in $\{0,1\}$. Reading a zero costs one bit just as reading a one does. There is no query of hidden age, instrument memory, exact source probability, or an alternative response on the same state; no reset, second source, omitted interval or free gap sample is available. A deadline $W$ means a label must be emitted after at most $W$ consecutive reads. The two errors are $\alpha_0=\mathsf P_0(\text{label }1)$ and $\alpha_1=\mathsf P_1(\text{label }0)$. An independently randomized rule may use an additional seed with the same law under both hypotheses; its randomness and storage are separate resources. The sufficient rules below are deterministic. Known real parameters define statistical experiments; bit-effective execution requires the additional representation stated in Section 19. All logarithms in Sections 17–19 are natural.
+

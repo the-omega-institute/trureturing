@@ -1,0 +1,28 @@
+**条件接口 373.2（相关与静态响应）。** 对局部实值观测定义同一联合 Gibbs 律中的连通相关
+
+$$
+C_{xy}^{f,g}=\langle f_xg_y\rangle-\langle f_x\rangle\langle g_y\rangle.
+\tag{373.3}
+$$
+
+单点边缘不能决定它。对 $\mathcal S=\{-1,+1\}$，若允许集、参考测度与边界固定，且 $H_n^\eta=H_{n,0}^\eta-\sum_xh_x\sigma_x$，则有限求和及归一化微分给出
+
+$$
+\frac{\partial\log Z_n^\eta}{\partial h_x}=\beta\langle\sigma_x\rangle,
+\qquad
+\frac{\partial^2\log Z_n^\eta}{\partial h_x\partial h_y}=\beta^2C_{xy},
+\qquad
+\frac{\partial\langle\sigma_x\rangle}{\partial h_y}=\beta C_{xy},
+\tag{373.4}
+$$
+
+其中 $C_{xy}=C_{xy}^{\sigma,\sigma}$。统一外场 $h_x=h$ 下，令 $M_n=\sum_x\sigma_x$，有
+
+$$
+\chi_n:=\frac{\partial}{\partial h}\frac{\langle M_n\rangle}{|V_n|}
+=\frac{\beta}{|V_n|}\operatorname{Var}(M_n)\ge0.
+\tag{373.5}
+$$
+
+这些是静态平衡响应接口，不指定自旋翻转时钟、耗散或动态响应核。
+

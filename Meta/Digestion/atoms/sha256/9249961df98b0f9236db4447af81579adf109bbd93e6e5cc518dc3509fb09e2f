@@ -1,0 +1,6 @@
+把 \(\phi_j\) 看成有限角色／观察通道：
+
+* 它们的线性关系形成 relation space；
+* 所有可实现的联合 profile 形成 character code；
+* 选择器正是竞争 profile code 的正交补方向。
+

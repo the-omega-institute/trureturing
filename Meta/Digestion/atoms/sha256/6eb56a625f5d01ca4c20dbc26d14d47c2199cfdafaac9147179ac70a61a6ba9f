@@ -1,0 +1,16 @@
+**Corollary 17.5 (What finite certification does and does not mean).** No rule can be correct with probability one under both hypotheses and emit a terminal label at a finite time with positive probability under either. Nevertheless the finite-confidence rules of Theorem 17.4 exist at every fixed $q$. On infinite paths,
+
+$$
+\frac1W\log\frac{\mathsf P_0(X_0\cdots X_{W-1})}
+                         {\mathsf P_1(X_0\cdots X_{W-1})}
+\longrightarrow
+\begin{cases}I_0,&\mathsf P_0\text{-almost surely},\\-I_1,&\mathsf P_1\text{-almost surely}.
+\end{cases}
+\tag{17.18}
+$$
+
+Proof. Both laws assign positive probability to every legal finite word, including all-zero words, and zero to every illegal word. Their finite restrictions therefore have exactly the same null sets. The property persists after adjoining any common independent seed. For each finite time and each terminal label, an error-free rule would require a stopping event of zero probability under the opposite law; equivalence makes its probability zero under both. The countable union over terminal times proves the first assertion, including rules with possible nontermination.
+
+For the last assertion, after the first observed tick use the strong laws for the iid cycle lengths $K_j+1$ and the bounded rewards $\log(p_{K_j}/h_{K_j})$. The number of complete subsequent cycles divided by $W$ tends to $1/\mu_i$, and their average reward tends to $d_0$ or $-d_1$. The initial wait is finite almost surely, and (17.7) bounds the remaining likelihood contribution uniformly. This proves (17.18). The sign of this limit classifies the infinite path almost surely; no finite stopping certificate follows. Finite risks concern the promised pair, not certification of exact probabilities, the model promise, or residual vanishing against all unspecified stationary alternatives. $\square$
+
+

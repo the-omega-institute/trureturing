@@ -1,0 +1,18 @@
+**引理 1030.1（固定窗口的活动约束）。** 固定整数 $T\ge1$，令 $\eta\downarrow0$、$\gamma=1-\rho\downarrow0$。最终有
+
+$$
+\alpha=(\rho^T-2\eta)^{1/T},\qquad
+d:=\rho-\alpha\sim\frac{2\eta}{T}.
+$$
+
+**证明。** 由第一时刻的约束，$\alpha\ge(\rho-2\eta)_+\to1$。当 $T>1$，最终 $\alpha>(T-1)/T$。对 $1\le j<T$，函数 $h_j(x)=(1-x)x^j$ 在 $x>j/(j+1)$ 严格下降，故
+
+$$
+(\rho^{j+1}-\alpha^{j+1})-(\rho^j-\alpha^j)
+=h_j(\alpha)-h_j(\rho)>0.
+$$
+
+因此观测端点差随 $j$ 严格增加。某个约束必须取得 $2\eta$，否则还可减小最小允许端点 $\alpha$；所以取得等号的约束必为 $T$。$T=1$ 时结论直接成立。最后用中值定理，$2\eta=T\xi^{T-1}d$，其中 $\xi\in[\alpha,\rho]$ 趋于一，即得等价式。
+
+以下以 $s=d/\gamma$ 衡量参数不确定宽度相对于统一衰减余量的大小。这个比值比较两个实际约束，不是给远期误差另加折扣。
+

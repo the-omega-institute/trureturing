@@ -1,0 +1,6 @@
+### 83.6 所用概率结果与适用边界
+
+引理83.2中使用的是 W. Hoeffding，[*Probability Inequalities for Sums of Bounded Random Variables*](https://doi.org/10.1080/01621459.1963.10500830)，Journal of the American Statistical Association 58(301)，13–30（1963）。独立但不必同分布、各有不同区间宽度的版本见 R. Vershynin，[*High-Dimensional Probability*](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf)，Theorem 2.2.6，印刷页17（PDF页25）。定理83.3中第一 Borel–Cantelli 引理见 R. Durrett，[*Probability: Theory and Examples*, Version 5](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf)，Theorem 2.3.1，印刷页68（PDF页76）；它只要求失败概率可和，不要求事件独立。
+
+[FIB 白盒卷§51](FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md)已经在另一 iid 模型中使用 Hoeffding 和第一 Borel–Cantelli 引理；[素数观察卷§§218–223、228、231、250](FORMAL_PRIME_OBSERVER_DYNAMICS.md)承担一般乘积完成、等价律障碍及有限状态后验停止的相关范围。本节仅在第81–82节实际 FIB 二值族上构造式（83.3）–（83.7）的共同有效规则，并用推论82.6承担有限能量反向；不另立通用浓缩、共同分割或后验收敛定理。极限识别与联合置信的概念已有成熟文献，此处陈述的是这个特定生产合同的综合推导，不作原创性主张。
+

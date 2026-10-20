@@ -1,0 +1,6 @@
+**约定 31.7（文献对应与项目特定结论）。** Pavel Panteleev，[*Preset Distinguishing Sequences and Diameter of Transformation Semigroups*，arXiv:1412.0034v1，第1—2页](https://arxiv.org/pdf/1412.0034v1)，给出已知确定 Mealy 转移／输出下的初态识别与预定区别词语义；这里复用其“未知初态、已知动作语义”的区分，不引用预定词长度界作为本协议的来源调用界。Petra van den Bos、Frits Vaandrager，[*State Identification for Labeled Transition Systems with Inputs and Outputs*，arXiv:1907.11034v2，定义12—20与图3](https://arxiv.org/pdf/1907.11034v2)，给出按输出自适应的无环测试、观察迹分离及首次选择合并状态而不存在全状态自适应区别图的例子。这些语义已在 Context 卷 §55 路由；本节使用完整迹识别，不把它改成终止控制态独自解码的容量合同，也不把学习接口或区别测试的文献当作复位权限。
+
+Clifford 叶积、三窗正规形、字符、组成替换和固定行为核分别复用本卷 §§28—30 与 [FIBONACCI_ATOMIC_RELATION_GENERATION.md §§355—357](FIBONACCI_ATOMIC_RELATION_GENERATION.md)。实际取得记录、八叶阈值、三个正叶来源的首次动作障碍及公共初始尺寸下的反解，是在这些前提上的 repo-derived 普通数学综合推导；所引识别文献不供应这一来源特定阈值，也不据此宣称文献原创性或 Lean 内核核验。
+
+恢复的对象始终是初始固定合同的行为边界。窗口档案把替换位置上的时间读数与填充取得的容量关系组合起来；公共初始尺寸使同一个组成能够从最终可达窗口尺寸反解。它们不恢复原树括号、叶路径、绝对时间或来源逆向执行。定理 31.4 的全家族否定允许任意大的已见档案；定理 31.5 只给出一个明确充分的先验条件，不分类任意先验。本文没有关于随机控制、固定家族的资源反单调、物理维数、最优调用／记忆代价或全局关系统一的结论。
+

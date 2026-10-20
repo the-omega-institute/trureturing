@@ -1,0 +1,26 @@
+**命题 1445.1（分组凸性差距的上界）。** 在第 1441 节来源序列的最终范围内，令
+
+$$
+C_\Gamma=1+C_w\left[\alpha3^\beta C_\nu+4^\alpha\right].
+$$
+
+则 $\Gamma\le C_\Gamma e_N$。
+
+**证明。** 记低矩标签的幂和为 $S_{\mathcal L}$。它至多为其总质量的 $\alpha$ 次幂，故 $S_{\mathcal L}\le(4\delta)^\alpha$。总尾幂和恒等式为
+
+$$
+\sum_{j\ge2}w_j^\alpha
+=\tau_N+a^\alpha-(a-\delta)^\alpha-e_N.
+$$
+
+将高矩幂和写成总尾幂和减去 $S_{\mathcal L}$，并用第 1444 节，得到
+
+$$
+\Gamma\le\alpha(3p)^\beta C_\nu\delta
+-[a^\alpha-(a-\delta)^\alpha]+e_N+(4\delta)^\alpha.
+$$
+
+方括号非负，可在上界中删去其负值。最终 $\delta\le1$，且 $p\le1$，所以右端至多为 $e_N+[\alpha3^\beta C_\nu+4^\alpha]\delta$。再用 $\delta\le C_we_N$ 即得。证毕。
+
+这个差距同时使用主权重亏损、尾部实际幂和以及模态格的聚合质量。只知道观察律接近目标，不会自动提供同一格内部的标签分裂控制；第 1445 节补入了目标成本所保存的关系。
+

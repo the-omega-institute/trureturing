@@ -1,0 +1,24 @@
+**引理 47.1（乘积族的实际性、组成及唯一前像）。** 对每个 $k\ge1$、$s\in I^k$ 及 $x\in\{\mathrm b,\mathrm p\}$，有
+
+$$
+\begin{gathered}
+\rho^3(Q_k^x(s))=F_k^x(s),\qquad
+c(Q_k^x(s))=(9k,3k)^{\mathsf T},\qquad
+c(F_k^x(s))=(15k,27k)^{\mathsf T},\\
+|L(F_k^x(s))|=42k,\qquad
+L(F_k^x(s))=\bigsqcup_{j=1}^k p_j^{(k)}L(P_{s_j}^x).
+\end{gathered}
+$$
+
+每个 $F_k^x(s)$ 都有且只有这个完整三步前像 $Q_k^x(s)$；$F_k^x(s)$（以及 $Q_k^x(s)$）随 $s$ 两两不同。因此 $\eta_k:I^k\to I^k$、$\eta_k(s)=s$ 是两组之间的字面指标双射。
+
+**证明。** 第 28.3 节给出每个 $P_i^x$ 的组成 $(15,27)^{\mathsf T}$、42 片叶及唯一前像 $Q_i^x$ 的组成 $(9,3)^{\mathsf T}$。第 26.2 节的孔地址分解给出最后一个不交并。组成的加性和替换对二叉构造的同态性于是给出所列两个组成等式及
+
+$$
+\rho^3(Q_k^x(s))
+=B_k(\rho^3(Q_{s_1}^x),\ldots,\rho^3(Q_{s_k}^x))
+=F_k^x(s).
+$$
+
+若 $s\ne t$，取 $j$ 使 $s_j\ne t_j$。第 28.3 节的四个块在字面上两两不同，故第 $j$ 个孔中的子树不同；孔前缀自由性使两棵梳树不同。$Q_k^x(s)\ne Q_k^x(t)$ 同理。规范编译卷命题 4.3 的树替换单射性给出 $\rho^3$ 在全部完整有序树上的单射性，所以若另有 $R$ 满足 $\rho^3(R)=F_k^x(s)$，则 $R=Q_k^x(s)$。证毕。
+

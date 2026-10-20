@@ -1,0 +1,15 @@
+禁止重新定义已有：
+
+- `Concept`;
+- `ConceptFiber`;
+- `Refines`;
+- `conceptJoin`;
+- `jointReadout`;
+- `ObserverStructure`;
+- `controlledBehavior`;
+- `DynClosure`;
+- `defectRelation`;
+- `empiricalSetoid`;
+- `TargetClosure`;
+- `blindResidual`.
+

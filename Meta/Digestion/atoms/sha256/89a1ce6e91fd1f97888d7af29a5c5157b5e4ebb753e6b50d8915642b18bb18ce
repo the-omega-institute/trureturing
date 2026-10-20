@@ -1,0 +1,7 @@
+Schur 类函数具有以下等价刻画：
+
+1. 取值于单位圆盘；
+2. de Branges–Rovnyak kernel 正定；
+3. 可实现为 contractive system 的 transfer function；
+4. 可选择 conservative/unitary realization。
+

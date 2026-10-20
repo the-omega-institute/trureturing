@@ -1,0 +1,10 @@
+## 1189.1 可以使用的变换
+
+| 原始缺陷          | 对偶像                                  | 是否保留“为零” |
+| ------------- | ------------------------------------ | -------: |
+| \(\delta\)    | \(\delta^2\)                         |        是 |
+| \(\delta\)    | \(\sinh^2(P\delta)\)                 |        是 |
+| \(M\)         | \(\frac12\operatorname{tr}(M^*M)-1\) |        是 |
+| bulk zero     | 右半空间 Chern 通量                        |        是 |
+| off-line zero | negative Weil/OS vector              |        是 |
+| negative form | negative Pick/Toeplitz eigenvalue    | 在相应完备桥下是 |

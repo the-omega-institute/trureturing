@@ -1,0 +1,35 @@
+**引理 1023.1（受限中心也具有同一端点方向）。** 设 $\varepsilon=2\eta>0$，并定义
+
+$$
+\alpha(b)=\max_{1\le j\le T}(b^j-\varepsilon)_+^{1/j}.
+$$
+
+则 $b\mapsto r_T(\alpha(b),b)$ 在 $[0,\rho]$ 上不减。
+
+**证明。** 取 $b\le B\le\rho$，记 $a=\alpha(b)$、$A=\alpha(B)$。若 $A=0$，则 $a=0$，区间嵌套直接给出结论：在较大区间取最优中心，再向较小区间截取，不会增加较小区间的任何误差。
+
+若 $A>0$，选择达到定义中最大值的 $j\le T$，于是 $B^j-A^j=\varepsilon$。令
+
+$$
+\Delta=B^j-b^j,\qquad
+\phi(x)=(x^j-\Delta)_+^{1/j},\qquad
+\psi(x)=\max\{a,\phi(x)\},\quad A\le x\le B.
+$$
+
+这些函数连续且不减，并满足 $\psi(A)=a$、$\psi(B)=b$。对 $A\le x\le z\le B$ 和 $n\ge T\ge j$，设 $q=n/j\ge1$。函数 $t\mapsto(t-\Delta)_+^q$ 的导数不超过 $t\mapsto t^q$ 的导数，故
+
+$$
+\phi(z)^n-\phi(x)^n\le z^n-x^n.
+$$
+
+再从下方截到 $a$，只会减小有序两点的幂差，因此同一不等式对 $\psi$ 成立。任取上端区间中心 $C$，便有
+
+$$
+E_T(a,\psi(C))\le E_T(A,C),\qquad
+E_T(\psi(C),b)\le E_T(C,B).
+$$
+
+把上端区间的最优中心代入，即得所求。若某个幂指数为一，导数比较仍成立；正部截断点可分段积分处理。
+
+这里需要的是把整个中心选择和两侧误差一同传递的映射。第 1011 节只比较直径的单调性，本身尚不足以推出受限半径的同一结论。
+

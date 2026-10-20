@@ -1,0 +1,30 @@
+### 110.2 正活动纤维的剩余标记上界
+
+沿用第102节的完整有限集，令
+
+$$
+\begin{aligned}
+U_c^\rho(\beta,h)&=\{u\in\{0,1\}^c:|u|=\beta,\ h(u)=h\},\\
+\mathcal F_c^\rho(t,h)&=\{y\in\{0,1\}^{n-c}:|y|=t,\ \sum_{i>c}v_i y_i=h\},\\
+N_c^\rho(t,h)&=|\mathcal F_c^\rho(t,h)|.
+\end{aligned}
+\tag{110.7}
+$$
+
+后缀下标使用原全字位置。$U_c^{\pi,\rho}(\beta,h)$ 是恰在 $c$ 首次选中的前缀集，$U_n^{\pi,\rho,a}$ 是接受的终端选中过去中末位为 $a$ 的块。定义
+
+$$
+\begin{aligned}
+A_\rho&=\max_{c<n,\,N_c^\rho(\ell-\beta,h)>0}
+ |U_c^{\pi,\rho}(\beta,h)|,\\
+D_\rho&=\max(A_\rho,|U_n^{\pi,\rho,0}|,|U_n^{\pi,\rho,1}|),\qquad
+D=\max_{\rho\in\mathbb F_q}D_\rho,\\
+W_c^\rho(\beta,h)&=\{u\in U_c^\rho(\beta,h):u\text{ 的所有前缀，包括自身，均未被选中}\}.
+\end{aligned}
+\tag{110.8}
+$$
+
+空最大值取0。$W_c$ 是**本次决定之后**的活动集，合并全部不可读控制；不是定理106.2按 $\kappa$ 固定的决定前纤维。各集合在全部标记前缀上定义，只在 $N>0$ 的格子要求恢复不变量。$D_\rho\ge1$：例如两半逐位互补的平衡字在每个种子上都接受，而完整选择器必选择它。
+
+第102.2、104.2节的来源对应在这里具体为：同一格子中的任意 $u\in U_c^\rho(\beta,h)$ 与 $y\in\mathcal F_c^\rho(\ell-\beta,h)$ 拼接后满足式（110.5），有式（110.6）的正质量。首次选择只删掉过去的整行，保留全部相容未来列。因此正选中支撑是 $U_c^{\pi,\rho}(\beta,h)\times\mathcal F_c^\rho(\ell-\beta,h)$。
+

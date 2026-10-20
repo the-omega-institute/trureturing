@@ -1,0 +1,34 @@
+**定义 44.1（原生单寄存器合同）。** 来源是非空有限有序满二叉自由树
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle s,t\rangle,
+\qquad
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{PG.4401}
+$$
+
+左右次序和每层括号均保留。记 $c(t)=(A,B)^{\mathsf T}$、$L(t)=A+B\ge1$、$n(t)=2A+3B$，其中 $A,B$ 为实际叶数，$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$。在定向欧氏空间 $E$ 取 $a=e_1,b=e_2,k=b\times a=-e_3$，定义 $q\alpha=a,q\beta=b,q\langle s,t\rangle=qs\times qt$。因此 $(a,b,k)$ 是左手正交标架；下文叉积始终使用原定向。复用 Boundary7.2 的
+
+$$
+S=\{0,\pm a,\pm b,\pm k\},\quad q(\mathcal T)=S,
+\quad Ra=b, Rb=k, Rk=a,\quad R^3=I,
+\quad c\rho=Mc, q\rho=Rq.
+\tag{PG.4402}
+$$
+
+设 $\eta(t)=(c(t),q(t))$，$J=\eta(\mathcal T)$；$J$ 是同一树产生的实际像，不预设为两个边缘的自由乘积。
+
+一个固定、只出现一次未知源的上下文由
+
+$$
+C::=\square\mid\rho(C)\mid\langle u,C\rangle\mid\langle C,u\rangle
+\tag{PG.4403}
+$$
+
+生成，$u\in\mathcal T$ 是与未知源无关、已实际准备的常量树。执行时只有一个未知当前树寄存器；每次替换、左接或右接覆盖它，在此数学合同中均对所有 $\mathcal T$ 合法。每次 graft 消耗一份新准备的 $u$；反复写同一字面常量不供应免费副本。对已知常量的构造另计，不计为未知源的主动更新。该语法不含未知树的重置、逆更新、复制、任意线性组合、重加权、拆解重建、叶重命名或来源替换。这是对声明语法的分类，不声称穷尽仓内所有名为原生的接口。
+
+数值端口须另外供应和付费。使用哪个端口，就只取得当前树的那个实际函数：$\eta$、$q$、$c$、$(c,s)$、$(n,q)$ 或 $(n,s)$，其中 $s(t)=\langle a,q(t)\rangle$ 是固定轴向标量。Read 不改树；单独 CountRead 和 ScalarRead 是两次调用，捆绑 Read$(c,s)$ 是一次较宽调用，二者不互换。初始化仅供应一棵未知 $T_0$、空的来源无关记录、共同程序及常量；不供应叶数、组成、标签、方向、语法或大小承诺。确定控制器只能依已经取得的记录选择常量、更新、下一读、停止和输出，每个输入须有限停止。记录保留按时间排列的实际回复、更新方向与身份、所用常量的准备身份及停止标记。以下数值下界排除原树检查、地址端口、计时及更新成本侧信道；记录身份不夹带这些信息。所有回复来自这一棵不断演化的 $T_0$，没有从 $T_0$ 重新开始的另一条实验历史。
+
+仓内另有更宽的合法地址接口：[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean) 的 `readout` 允许所有有限左右地址，包括根，回复 `alpha/beta/branch/absent`，同一来源在该次 acquisition 中不可变。`Policy` 的动作类型是查询地址或返回 Boolean；`execute` 保留终端历史。定义 `flip` 是改变一个指定叶的数学竞争源，原 Policy 没有执行 flip 的动作。`acquisition_foundation` 的完整取得与 `restore` 能恢复原有序语法，但其原返回值是第三替换像的成员位。需要数值输出时，可对保留历史解码，或另外明确供应 frontier 取得阶段的数值目标与输出合同；不能改换 Boolean Strategy 的目标而仍引用原正确性。对一个当前版本取得真实地址回复，再恢复、求 $c,q$，可以实现收费数值读口；地址、运算和输出费用均另计。旧版本回复不回答更新后版本的查询，原不可变源的 distinct-address 价格也不授予跨更新缓存折扣。
+

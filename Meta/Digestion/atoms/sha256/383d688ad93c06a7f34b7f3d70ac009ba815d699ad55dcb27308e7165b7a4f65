@@ -1,0 +1,30 @@
+**推论 49.5（同 composition 纤维的不可识别下界）。** 固定任意满足 \(a,b\ge0\) 且 \(a+b\ge1\) 的 composition \((a,b)\)，令 \(\pi_0,\pi_1\) 是 \(\mathcal F(a,b)\) 上的两条概率律。则
+\[
+c_\#\pi_0=c_\#\pi_1=\delta_{(a,b)},\qquad
+\mathsf O_\#\pi_0=\mathsf O_\#\pi_1,
+\]
+即观测总变差为零。若 \(\theta_i=\int h\,d\pi_i\) 不同，则任意数量轨迹估计量均满足
+\[
+\max_i\mathbb E_{\pi_i}|\widehat\theta-\theta_i|
+\ge \frac{|\theta_1-\theta_0|}{2},
+\]
+且任意二点测试的最坏错误概率至少为 \(1/2\)。特别地，若纤维上有界隐藏性质 \(h\) 的振幅
+\[
+\operatorname{osc}_{\mathcal F(a,b)}h
+=\max_{t\in\mathcal F(a,b)}h(t)-\min_{t\in\mathcal F(a,b)}h(t)
+\]
+为正，则
+\[
+\inf_{\widehat\theta(\mathsf O)}\sup_{\pi\in\mathcal P(\mathcal F(a,b))}
+\mathbb E_\pi\left|\widehat\theta-\int h\,d\pi\right|
+\ge \frac12\operatorname{osc}_{\mathcal F(a,b)}h.
+\]
+若 \(h\) 为二值且在该纤维上同时取 \(0,1\)，则绝对误差 minimax 半径至少为 \(1/2\)。若选择纤维上互不相交支持的两律，则可同时有
+\[
+\operatorname{TV}(\pi_0,\pi_1)=1,\qquad
+\operatorname{TV}(\mathsf O_\#\pi_0,\mathsf O_\#\pi_1)=0.
+\]
+
+**范围边界。** 这些结论只针对静态源律和完整 quantity trajectory 这一观测映射；若加入叶序窗口、路径、输运时间、受控操作或跨探针 joint coupling，须重新计算观测推前，以上零总变差结论不自动延伸。结果也不声称 composition 推前可由数量轨迹反演，不把隐藏性质下界解释成物理噪声、热流或普适统计定律；它只说明在未增加能切开纤维的观测前，composition 因子化带来的信息缺口具有上述 minimax 代价。
+
+

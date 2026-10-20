@@ -1,0 +1,47 @@
+### 119.4 Twice differentiable finite-saddle geometry
+
+The strict positivity of the noise gives K''>0 and K'(t)->-infinity as t->-infinity; the maximal positive coordinate gives K'(t)->infinity at the right pole. Thus the real root is unique and smooth. The original empty zero-variance coordinates contribute nothing; deterministic zero-variance terms can also be interpreted directly.
+
+The compact-order geometry from Chapter 117 uses
+$$
+ s_\alpha=2v_*t_\alpha/\alpha,\quad r_j=v_j/v_*,\quad
+ D_j=1-s_\alpha r_j,\qquad -C\|e\|^2\le s_\alpha\le s_+<1.
+\tag{119.16}
+$$
+Here s_+ is fixed on each good-event class. The root equation is
+$$
+ F(s_\alpha)/\alpha+C(s_\alpha)
+             +\delta\sigma^2s_\alpha/(2v_*)=V,
+\quad F(s)=\sum_j\frac{v_j}{1-sr_j},\quad
+ C(s)=\sum_j\frac{e_j^2}{(1-sr_j)^2}.
+\tag{119.17}
+$$
+Its derivative in s is uniformly bounded below by a positive constant, from sum v_j^2/v_* bounded below, and above by a constant. On(119.16) all fixed further derivatives in s and alpha are bounded. Twice implicit differentiation therefore gives |s'_alpha|+|s''_alpha|<=C. This is a direct finite-equation estimate, including the small negative portion near1.
+
+At the full saddle let
+$$
+ w_j=v_j/(\alpha D_j),\qquad m_j=-e_j/D_j.
+\tag{119.18}
+$$
+For k=1,2, product and quotient differentiation give
+$$
+ w_j\asymp v_j,\quad
+ |\partial_\alpha^k w_j|\le Cw_j,\quad
+ |\partial_\alpha^k m_j|\le C|e_j|,\quad
+ W_\alpha\asymp\delta,\quad
+ |\partial_\alpha^kW_\alpha|\le C\delta.
+\tag{119.19}
+$$
+One may equally bound derivatives of m_j relative to |m_j|; at e_j=0 all such derivatives vanish. The formulas follow from D_j bounded above and below, bounded s derivatives, and
+W=2sum w_j^2+4sum w_jm_j^2+delta sigma^2/alpha.
+
+Choose l<c_q/2 with L<=lQ^3 eventually, and choose zeta>0 with2zeta<c_q-l. Split H={j:C_j>=exp(zeta Q^3)} only within the proof. The full arrays in(119.4) are unchanged. The omitted sums obey
+$$
+ \sum_{j\notin H}v_j\le\operatorname{poly}(Q)e^{-(c_q-\zeta)Q^3},
+ \quad
+ \sum_{j\notin H}e_j^2
+          \le\operatorname{poly}(Q)e^{-(c_q-2\zeta)Q^3}.
+\tag{119.20}
+$$
+Let K_H retain the high coordinate sums and the original noise. At the full t_alpha put epsilon_H=V-K_H'(t_alpha), W_H=K_H''(t_alpha). The differences epsilon_H, W_alpha-W_H and their first TWO total alpha derivatives are exponentially small times polynomials. Indeed |t_alpha^(k)|<=C/delta for k<=2 and each differentiated omitted summand retains a v_j or e_j^2 factor from(119.20). The high core still has order1/delta coordinates. All constants allow arbitrarily slow sigma->0.
+

@@ -1,0 +1,50 @@
+## 定义 15.2（加法 carry cocycle）
+
+在扩张：
+
+\[
+0\to R\to X\xrightarrow qB\to0
+\]
+
+及截面 \(s\) 下：
+
+\[
+\kappa_s(a,b)
+=s(a)+s(b)-s(a+b).
+\]
+
+结合律蕴含：
+
+\[
+\boxed{
+\kappa_s(a,b)+\kappa_s(a+b,c)
+=
+\kappa_s(b,c)+\kappa_s(a,b+c).
+}
+\]
+
+若改变截面：
+
+\[
+s'(a)=s(a)+\beta(a),
+\]
+
+则：
+
+\[
+\kappa_{s'}
+=
+\kappa_s+\delta\beta.
+\]
+
+因此局部描述可以改变，而 cocycle 类记录不能由单一代表重命名消除的全局接缝。
+
+哲学上，这区分：
+
+- 观点差异：截面或坐标不同；
+- 实质障碍：所有 gauge 下仍非平凡的接缝类；
+- 纯语言争执：可由 gauge 变化消除；
+- 结构冲突：不能由重命名消除。
+
+---
+

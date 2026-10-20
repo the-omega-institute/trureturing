@@ -1,0 +1,6 @@
+**定义 1182.1（指定反奇偶质量的最小正峰）。** 对 $N\ge2$ 与 $\theta\in[0,1]$，记
+
+$$
+\psi_N(\theta)=\min_{q\text{ 为乘积律},\ q(E_N^c)=\theta}\max_{v\in E_N}q(v).
+$$
+

@@ -41,7 +41,7 @@ internal static class AtomContextCommand
         for (var ordinal = 0; ordinal < contexts.Length; ordinal++)
         {
             var context = contexts[ordinal];
-            writer.WriteLine($"OCCURRENCE index={ordinal + 1} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)}");
+            writer.WriteLine($"OCCURRENCE index={ordinal + 1} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)} source_sha256={context.SourceSha256}");
             WriteNeighbor(writer, "CURRENT", context.Current, null);
             if (context.Previous is { } previous) WriteText(writer, "PREVIOUS", previous.RawBytes);
             WriteText(writer, "CURRENT", context.Current.RawBytes);

@@ -1,0 +1,32 @@
+### 证明
+
+先取任意闭上链 \(z\in Z^k=\ker d_k\)。由定理 359.2 写成
+
+$$
+z=d_{k-1}a+h+\delta_{k+1}b.
+$$
+
+因为 \(d_kz=0\)，有 \(d_k\delta_{k+1}b=0\)。于是
+
+$$
+\|\delta_{k+1}b\|^2
+=
+\langle d_k\delta_{k+1}b,b\rangle
+=0,
+$$
+
+故 \(\delta_{k+1}b=0\)，从而 \(z=d_{k-1}a+h\)。这说明每个上同调类都有 harmonic 代表。
+
+若 \(h\in\mathcal H^k\) 同时是恰当上链 \(h=d_{k-1}a\)，则
+
+$$
+\|h\|^2
+=
+\langle d_{k-1}a,h\rangle
+=
+\langle a,\delta_kh\rangle
+=0.
+$$
+
+所以 \(h=0\)，代表唯一。证毕。
+

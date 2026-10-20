@@ -1,0 +1,67 @@
+# 第一千三百四十一部　磁单极子与黑洞不是互相替代，而是 bulk–boundary 对偶
+
+现在可以严格区分三个对象。
+
+| 层           | 数学对象                           | 回答的问题         |
+| ----------- | ------------------------------ | ------------- |
+| bulk 拓扑     | Chern 荷、零点重数                   | 缺陷是否存在？有几个通道？ |
+| horizon 动力  | spectral flow、Hardy 极化穿越       | 缺陷何时进入可见边界？   |
+| boundary 辐射 | Poisson 场、Hankel/Bogoliubov 泄漏 | 外部观察者看见多强的信号？ |
+
+所以：
+
+$$
+\boxed{
+\text{磁单极子图景测量“荷”；}
+}
+$$
+
+$$
+\boxed{
+\text{黑洞图景测量“隐藏与释放”；}
+}
+$$
+
+$$
+\boxed{
+\text{霍金图景测量“释放后的占据与熵”。}
+}
+$$
+
+真正连接磁单极子与黑洞视界的，不是模糊的物理类比，而是：
+
+$$
+\boxed{
+\text{bulk Chern number}
+=
+\text{boundary spectral flow}.
+}
+$$
+
+在当前局部模型中：
+
+$$
+\boxed{
+\operatorname{ord}_{\rho}\xi
+=
+c_1
+=
+\Delta\operatorname{ind}_{-}\mathcal K_\omega
+=
+\operatorname{rank}\mathfrak H_\omega
+}
+$$
+
+在孤立、互素、无抵消条件下由同一零点除子产生。
+
+因此：
+
+$$
+\boxed{
+\text{离线零点的“单极子”与“黑洞”形象，
+分别是同一缺陷的空间图像与时间图像。}
+}
+$$
+
+---
+

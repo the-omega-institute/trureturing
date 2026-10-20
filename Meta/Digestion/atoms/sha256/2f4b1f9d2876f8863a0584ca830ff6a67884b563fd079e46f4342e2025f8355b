@@ -1,0 +1,6 @@
+这将 Wang 式“分支／粘滞”变成了一个可解模型：
+
+* rational slope：大量 sticky collision；
+* irrational slope：完全 non-collision；
+* Golden slope：在有限精度下仍有定量 separation。
+

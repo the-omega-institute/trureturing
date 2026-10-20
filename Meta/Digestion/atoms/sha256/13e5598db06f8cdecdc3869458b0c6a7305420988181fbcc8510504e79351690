@@ -1,0 +1,69 @@
+**Theorem 13.2 (Support horizon and its two detector bounds).** For the data of Definition 13.1, put $b=r-u$. Then
+
+$$
+X_b=\sum_{k=0}^{b}\Phi^k(\tau),\qquad
+\operatorname{ran}X_b=R,\qquad \ker X_b=R^\perp.
+\tag{13.3}
+$$
+
+Vanishing of $w_0,\ldots,w_b$ is equivalent both to $F$ annihilating $R$ and to vanishing of every $w_k$. If detection is nontrivial, both $\tau$ and $F$ have positive rank and
+
+$$
+h\le r-\operatorname{rank}\tau,\qquad
+h\le r^\vee-\operatorname{rank}F,
+\qquad
+h\le\min(r-u,r^\vee-\operatorname{rank}F)
+\le D-\max(\operatorname{rank}\tau,\operatorname{rank}F).
+\tag{13.4}
+$$
+
+No trace preservation, trace contraction, stability, commutation or single-Kraus premise is required.
+
+Proof. The increasing-support mechanism has the finite-dimensional antecedents of [Nengkun Yu and Mingsheng Ying, *Reachability and Termination Analysis of Concurrent Quantum Programs*, arXiv:1206.1935v1, Theorem 1, pp. 7–8](https://arxiv.org/pdf/1206.1935v1), and [Shenggang Ying, Yuan Feng, Nengkun Yu and Mingsheng Ying, *Reachability Probabilities of Quantum Markov Chains*, arXiv:1304.0060v2, Lemma 1(2), p. 5](https://arxiv.org/pdf/1304.0060v2). Those displayed horizons are $D-1$. The following argument keeps the reachable and seed ranks, and supplies the detector and dual interfaces needed here.
+
+Let $W_n=\operatorname{span}\{K_wU:|w|\le n\}$. Then
+
+$$
+W_0=U,\qquad W_{n+1}=W_n+\sum_iK_iW_n,\qquad W_n\subseteq R.
+\tag{13.5}
+$$
+
+If $W_{n+1}=W_n$, each $K_i$ preserves $W_n$, so induction on word length gives $W_n=R$. Otherwise the dimension increases by at least one. Therefore $W_{r-u}=R$: either a plateau has already occurred, or the $r-u$ strict increases from dimension $u$ reach dimension $r$. This includes $r=u$, since then $U\subseteq R$ already has equal dimension.
+
+For any matrix $M$, $\ker(MM^\dagger)=\ker M^\dagger$, by $y^\dagger MM^\dagger y=\|M^\dagger y\|^2$; taking orthogonal complements gives $\operatorname{ran}(MM^\dagger)=\operatorname{ran}M$. Since $\operatorname{ran}\tau^{1/2}=U$, it follows that
+
+$$
+\operatorname{ran}(K_w\tau K_w^\dagger)=K_wU.
+\tag{13.6}
+$$
+
+For a finite collection of positive semidefinite matrices $Y_j$, their sum has kernel $\bigcap_j\ker Y_j$: a zero quadratic form of the sum forces every nonnegative summand to be zero, and $y^\dagger Y_jy=\|Y_j^{1/2}y\|^2$. Hence its range is the sum of their ranges. Expanding $\Phi^k$ into all length-$k$ Kraus words and applying this fact yields
+
+$$
+\operatorname{ran}\Big(\sum_{k=0}^n\Phi^k(\tau)\Big)=W_n.
+\tag{13.7}
+$$
+
+At $n=b$ this proves (13.3), including the exact orthogonal-complement kernel. A vector merely outside $R$ need not belong to that kernel.
+
+For positive $F,X$,
+
+$$
+\operatorname{Tr}(FX)
+=\|F^{1/2}X^{1/2}\|_{\rm HS}^2\ge0.
+\tag{13.8}
+$$
+
+It vanishes exactly when $F^{1/2}$, equivalently $F$, annihilates $\operatorname{ran}X$. Thus $\sum_{k=0}^bw_k=\operatorname{Tr}(FX_b)=0$ exactly when $F$ annihilates $R$. Every later $\Phi^k(\tau)$ is supported in $R$, so this condition makes every later detection weight zero as well. Conversely, vanishing forever includes vanishing through $b$. Nontrivial detection must therefore occur by $b$.
+
+Cyclicity of the finite-dimensional trace gives, for every $k$,
+
+$$
+w_k=\operatorname{Tr}\big[\tau(\Phi^*)^k(F)\big].
+\tag{13.9}
+$$
+
+Apply the same argument to the CP map $\Phi^*$ with Kraus family $K_i^\dagger$, seed $F$ and detector $\tau$. Its reachable dimension is exactly $r^\vee$, by (13.2), and it has the same nontrivial sequence and the same $h$. This proves the second bound in (13.4). Since $r,r^\vee\le D$, taking the smaller of the two ambient bounds gives the last inequality.
+
+If $\tau=0$, then $R=0$, $b=0$, $X_b=0$ and all weights vanish. If $F=0$, detection is also trivial. If $D=0$, both operators are zero. For an empty Kraus family, $\Phi=0$, $R=U$, $b=0$ and $X_b=\tau$; detection, if any, occurs at $h=0$. The same conclusion holds for a full-rank seed whenever detection occurs. These cases require no minimum over an empty set: $h$ is defined only for nontrivial detection. $\square$
+

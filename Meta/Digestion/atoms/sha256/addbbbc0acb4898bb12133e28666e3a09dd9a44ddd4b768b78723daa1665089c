@@ -1,0 +1,19 @@
+### 接口 D：transfer 接口
+
+定义：
+
+$$
+T(\kappa)=
+\begin{pmatrix}
+p_0&0&p_3\\
+p_1&0&p_{13}\\
+0&p_2&0
+\end{pmatrix}.
+$$
+
+证明：
+
+$$
+\det T=-Z\Delta.
+$$
+

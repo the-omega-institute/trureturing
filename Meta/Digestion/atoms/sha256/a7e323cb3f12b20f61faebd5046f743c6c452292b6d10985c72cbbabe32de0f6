@@ -1,0 +1,11 @@
+The independent pure-Python verifier reads the current Lean-owned literals,
+reconstructs all successors with integer-coordinate sets, and performs:
+
+- 2643 geometric transition checks and 881 integer growth rows;
+- 881 exact whole-box affine row checks, including 704 clamped cases and
+  177 nonpositive-residual cases;
+- 21144 exact rational recursion/pruning regressions across all child subsets;
+- six corruption tests, all rejected, including message/type misalignment,
+  a wrong clamp pattern, omitted root deletion, loss of message positivity,
+  a missing state and an unsupported increase of the activity to three.
+

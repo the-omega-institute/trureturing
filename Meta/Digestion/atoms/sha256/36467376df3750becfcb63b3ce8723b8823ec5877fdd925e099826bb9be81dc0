@@ -1,0 +1,25 @@
+**推论 1485.1（零成本门槛及其尺度）。** 对每个 $0\le\alpha\le\infty$，
+
+$$
+\widetilde G_{\alpha,N}(\kappa,\delta)=0
+\quad\Longleftrightarrow\quad
+\delta\ge\frac{\kappa-\mu_{1,N}}2.
+$$
+
+在本批 $\mu=\kappa-2\delta$ 坐标中，这等价于 $\mu\le\mu_{1,N}$，也等价于 $R_N=1$。当 $\kappa$ 固定、$N\to\infty$ 时，置 $c=\log(1+\kappa)$，有
+
+$$
+\mu_{1,N}=\sqrt{1+\kappa}\left(\frac cN\right)^N
+\left(1+O_\kappa(N^{-1})\right).
+$$
+
+**证明。** 第 1481 节保证最小值取得。有限概率向量在任一所列阶的熵为零，当且仅当恰有一个正权重，因此零成本等价于一个实际乘积律可行；再用第 1484 节。对尺度，$r_0=e^{c/N}-1=(c/N)(1+c/(2N)+O_\kappa(N^{-2}))$，故
+
+$$
+N\log r_0=N\log(c/N)+c/2+O_\kappa(N^{-1}).
+$$
+
+取指数即得。证毕。
+
+公平律的门槛 $\kappa/2$ 与准确门槛之间的差为 $\mu_{1,N}/2$，比任意固定指数率更快趋零。但当允许误差也精确到这一尺度，来源数一与来源数二的区别仍由它决定。相近的数值不能替代准确可行性的判断。
+

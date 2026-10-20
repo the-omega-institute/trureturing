@@ -1,0 +1,16 @@
+**定义 381.2（双重对数损失与相对素数密度）。** 所有对数均为自然对数；对正实数 $t$ 和实数 $b$，$t^b=\exp(b\log t)$。对整数 $n>5040$，记
+
+$$
+D(n)=\frac{\log\log C(n)}{\log\log n},
+\qquad
+\pi(x)=\#\{p\le x:p\text{ 为素数}\}\quad(x\ge0).
+$$
+
+（362.11）给 $n\mid C(n)$，所以 $C(n)\ge n>5040>e$，双重对数都有定义，分母严格为正。给定实数 $K>0$，令
+
+$$
+\mathcal G_K=\{p:p\text{ 为素数},\ p>5040,\ B(p)=1,\ D(p)>K\}.
+$$
+
+素数集合 $\mathcal G$ 的相对素数密度一，指实数 $x\to+\infty$ 时 $\#(\mathcal G\cap[0,x])/\pi(x)\to1$。
+

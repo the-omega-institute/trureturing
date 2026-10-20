@@ -1,0 +1,60 @@
+**Theorem 53.3 (installation bounds and equality rigidity).** Every valid
+installation of Definition 53.1 satisfies
+
+$$
+\ell\ge2K-3,\qquad M\ge2^{K-1}.
+\tag{FIB.53.3}
+$$
+
+Put $d=K-1$. If $\ell=2d-1$, the installed set is exactly the odd-coordinate
+cube
+
+$$
+W=\{x_1\,0\,x_2\,0\,\cdots\,0\,x_d:x\in\{0,1\}^d\}.
+\tag{FIB.53.4}
+$$
+
+If $M=2^d$, then $W$ is a coordinate $d$-cube in $\{0,1\}^\ell$:
+exactly $d$ coordinates vary independently and all others are fixed padding.
+The whole face must lie in $L_\ell$. Thus its free positions are pairwise
+nonadjacent, fixed positions adjacent to them are zero, and the remaining
+fixed bits obey the no-$11$ constraint.
+
+Proof. Proposition 53.2 gives $|N_W[w]|\ge K$, hence every vertex has
+degree at least $d$. Choose an installed word of maximum Hamming weight.
+Every installed neighbor decreases its weight, so its degree is at most
+its weight, which is at most $\lceil\ell/2\rceil$ for a no-$11$ word.
+Consequently $d\le\lceil\ell/2\rceil$ and $\ell\ge2d-1$.
+
+Suppose $\ell=2d-1$. The only no-$11$ word of weight $d$ has ones in
+positions $1,3,\ldots,2d-1$: fitting $d$ ones with a gap between each pair
+uses all $2d-1$ positions. Every word with an even-position one therefore
+has weight at most $d-1$. If any such word is installed, choose one of
+maximum weight among that subset. An upward installed neighbor would still
+have its even-position one and contradict maximality in the subset.
+Its degree is therefore at most $d-1$, a contradiction. Hence $W$ lies in
+the odd-coordinate $d$-cube. Degree at least $d$ now forces all $d$ cube
+neighbors of each installed word to be installed. Nonemptiness and the
+connectivity of the cube force all its vertices, proving (FIB.53.4).
+
+For the size bound, Simon's cube lemma is supplied by Ambainis–Vihrovs,
+*Size of Sets with Small Sensitivity: a Generalization of Simon's Lemma*,
+§3, Theorem 1 and Corollary 1, pp. 4–5 [FIB53-AV]. For the actual minimum
+degree $D$ it gives $M\ge2^D$, with equality only for a coordinate
+$D$-cube. There is no irreducibility premise in this result. Here $D\ge d$,
+so $M\ge2^D\ge2^d$; equality $M=2^d$ forces $D=d$ and a coordinate
+$d$-cube, with the stated padding restrictions imposed by $W\subseteq L_\ell$.
+
+For a direct proof of this classical step, induct on ambient dimension.
+For a nonempty induced cube subgraph of minimum degree at least $t$,
+the case $t=0$ has size at least one, with equality a singleton.
+For $t\ge1$, a constant coordinate
+can be deleted and induction applied unchanged. Otherwise split a varying
+coordinate into its two nonempty slices. Each slice loses at most one
+neighbor per vertex, so has minimum degree at least $t-1$ and, by
+induction, at least $2^{t-1}$ vertices. Equality in the summed bound
+forces both slices to be coordinate $(t-1)$-faces. Their internal degrees
+are exactly $t-1$, so every vertex must have its cross-slice mate. Their
+projections coincide, and adjoining the split coordinate gives a coordinate
+$t$-face. This proves both the bound and its equality assertion. $\square$
+

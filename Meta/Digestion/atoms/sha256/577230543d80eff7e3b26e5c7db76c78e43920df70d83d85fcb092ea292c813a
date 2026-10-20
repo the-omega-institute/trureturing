@@ -1,0 +1,90 @@
+**定义 441.1（固定装置、共同控制与完整停止输出）。** 固定
+
+$$
+\begin{gathered}
+S=\mathbb C^5,\qquad R_2=(\mathbb C^2)^{\otimes2}=W_2\oplus\mathbb C e_-,\qquad
+I=[\arctan(1/\sqrt2),\arctan\sqrt2],\qquad \omega=e^{2\pi i/3},\\
+e_0=|00\rangle,\quad e_1=(|01\rangle+|10\rangle)/\sqrt2,\quad
+e_2=|11\rangle,\quad e_-=(|01\rangle-|10\rangle)/\sqrt2,\qquad
+W_2=\operatorname{span}\{e_0,e_1,e_2\}.
+\end{gathered}
+$$
+
+沿用定义 440.1 的确切 ket 代表及实际制备，亦即对 $t\in I$，
+
+$$
+\begin{aligned}
+q_1(t)&=e_0,\qquad q_2(t)=e_2,\\
+q_{3+j}(t)&=\cos^2t\,e_0+\sqrt2\sin t\cos t\,\omega^j e_1
+                      +\sin^2t\,\omega^{2j}e_2\quad(j=0,1,2),\\
+J_t|i\rangle&=|i\rangle\otimes q_i(t).
+\end{aligned}
+$$
+
+先固定校准点 $u\in I$ 及一个第 413 节的归一化平衡见证 $b$。可写成
+
+$$
+b=\frac{e_0+e^{-i\beta}e_1+e^{-i\gamma}e_2}{\sqrt3},\qquad
+\sqrt2 e^{i(\beta+\gamma)}+\sqrt2\tan^2u\,e^{i(2\gamma-\beta)}+\tan u=0.
+$$
+
+令 $De_\ell=\omega^\ell e_\ell$、$b_a=D^a b$。第 415 节的完整四维仪器和固定反馈为
+
+$$
+\begin{aligned}
+Q_0&=|b_0\rangle\langle b_0|+|e_-\rangle\langle e_-|,&
+Q_1&=|b_1\rangle\langle b_1|,& Q_2&=|b_2\rangle\langle b_2|,\\
+\mathcal I_a(Z)&=Q_aZQ_a,& \sum_{a=0}^2Q_a&=I_{R_2},\\
+h_{ai}(t)&=\langle b_a|q_i(t)\rangle,&
+U_a(u)&=\operatorname{diag}_{i=1}^5\bigl(\sqrt3\,\overline{h_{ai}(u)}\bigr),\\
+A_a(t)&=U_a(u)\operatorname{diag}_{i=1}^5h_{ai}(t).
+\end{aligned}
+$$
+
+$\langle b_a|b_c\rangle=\frac13\sum_{\ell=0}^2\omega^{(c-a)\ell}=\delta_{ac}$，故 $\{b_a\}$ 是 $W_2$ 的正交归一基。纬线指标在 $b_a$ 下只作 $j\mapsto j-a\pmod3$ 的替换，两极的响应模长不变，所以平衡性给出 $|h_{ai}(u)|^2=1/3$，故 $U_a(u)$ 为酉且 $A_a(u)=I_S/\sqrt3$。每次调用先作 $J_t$，再作上述完整仪器及反馈，取迹量子 $R_2$，保留三个实际结果中的每一个。记 $C=\mathbb C^3$，单次可见通道为
+
+$$
+\mathcal Q_t(X):=\mathcal Q_{u,t}(X)
+ =\sum_{a=0}^2|a\rangle\langle a|_C\otimes A_a(t)XA_a(t)^\dagger,
+\qquad \sum_aA_a(t)^\dagger A_a(t)=I_S.
+$$
+
+反对称方向始终属于实际 $Q_0$，虽在制备像上诱导零映射，仍共用同一个 $U_0(u)$。调用使用新鲜环境；已经取迹的记录和隐藏环境不可再次访问。
+
+固定有限维的全部变量输入空间 $A$。所有可变初始记忆都包括在 $A$ 内；若只有原系统可变，则 $A=S$。外部初始制备、固定辅助态、调用间的控制仪器、查询寄存器路由、停止决策与终端读出构成一个共同控制器。它们在 $t=u$ 与 $t=\theta$ 两实验中逐一相同，不依赖实际参数 $t$，可以依赖已固定的 $u,b$，以及此前的实际记录和可访问量子记忆。任意有限维参考 $F$ 始终不被操作。这里固定的是控制规则；同一规则作用于两个不同的状态和历史分布，并不要求产生同一个调用次数。
+
+历史树可数，完整保留每次调用的实际 $a\in\{0,1,2\}$ 及控制器实际产生的经典结果，包括继续、停止及指定失败结果。隐藏 Kraus 指标不是实际结果。每个有限历史前缀和终端历史都有预先指定的有限维可访问记忆块，所有控制仪器均正规；不要求各块维数有统一上界。两次查询之间的控制步骤在每条分支上有限完成，不允许以未计入的无限内部计算代替停止或下一次查询。
+
+每次可能调用之前，控制器已记录经典的 live/halt 标志。halt 为吸收状态，终端历史、该标志及全部最终可访问记忆一经形成即冻结。令 $T$ 为实际处于 live 状态时的调用总数；允许 $T=0$，若不终止则置 $T=\infty$。取所有允许的有限终端历史之集合 $\mathsf H_{\mathrm{stop}}$，包括概率为零的历史，定义共同输出空间
+
+$$
+\mathcal H_{\mathrm{stop}}=\bigoplus_{h\in\mathsf H_{\mathrm{stop}}}M_h.
+$$
+
+块指标包含完整实际历史与 halt 标志，$M_h$ 包含最终全部可访问量子记忆。记终端历史 $h$ 的分支映射为 $\mathcal S_{t,h}$，按原权重求和定义
+
+$$
+\mathcal S_t(X)=\bigoplus_{h\in\mathsf H_{\mathrm{stop}}}\mathcal S_{t,h}(X).
+$$
+
+这是有限终端分支的无条件和；不删去任何失败叶，也不对停止或成功作条件归一化。其迹类收敛和正规性将在证明中说明。一般它仅为完全正、迹不增映射；在几乎必然终止的输入上输出迹为一。
+
+对同一个输入密度算子 $\rho=\rho_{FA}$，写
+
+$$
+\begin{aligned}
+\sigma_t(\rho)&=(\operatorname{id}_F\otimes\mathcal S_t)(\rho),\\
+p_t(k;\rho)&=\Pr_{t,\rho}(T\ge k)\quad(k\ge1),\qquad
+m_t(\rho)=\mathbb E_{t,\rho}T.
+\end{aligned}
+$$
+
+本节使用未折半范数
+
+$$
+\|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X},\qquad
+\|\Lambda\|_\diamond
+ =\sup_{\dim F<\infty}\ \sup_{0\ne X\in\mathcal L(F\otimes A)}
+ \frac{\|(\operatorname{id}_F\otimes\Lambda)(X)\|_1}{\|X\|_1}.
+$$
+

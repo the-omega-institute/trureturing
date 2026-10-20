@@ -1,0 +1,22 @@
+## 条件命题 19.1（剩余核心的因子化形式）
+
+当前两个剩余 provider 的共同核心可写成：存在二值函数
+
+\[
+\gamma(s)
+=
+\begin{cases}
+a,&\text{selected letter}=1,\\
+b,&\text{selected letter}=0,
+\end{cases}
+\]
+
+使
+
+\[
+\boxed{
+g=\gamma\circ s.}
+\]
+
+换言之，实际相邻 gap 必须沿“六态相位 + aperiodic Fibonacci 输入位”接口下降。
+

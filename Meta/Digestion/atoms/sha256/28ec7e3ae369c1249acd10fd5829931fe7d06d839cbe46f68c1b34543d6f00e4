@@ -1,0 +1,9 @@
+Any proposed diagonal must specify:
+
+- the update on prime or local coordinates;
+- the update on golden or Zeckendorf depth;
+- the coupling relation;
+- the observer that distinguishes the path;
+- the chronology data retained after projection;
+- whether parity completion concerns one readout or the full state.
+

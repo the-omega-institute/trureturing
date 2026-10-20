@@ -1,0 +1,18 @@
+**Theorem 130.2 (Complete adjacent existential cap equivalence).**
+For every original sequence and cap in $\mathcal D_{\rm adj}$,
+
+$$
+\begin{aligned}
+\exists N\in\mathcal N_2:\ e_a(N)\le\varepsilon
+&\ \Longleftrightarrow\ \exists O\in\mathcal O_2:\ e_a(O)\le\varepsilon\\
+&\ \Longleftrightarrow\ \mathcal F_N(a,\varepsilon)\cap\mathscr C_5\ne\varnothing\\
+&\ \Longleftrightarrow\ F_i\ge0\quad(1\le i\le5).
+\end{aligned}
+\tag{130.5}
+$$
+
+When feasible, one continuous finite-law construction attains the cap
+exactly on every actual tail and supplies $O$ and its completed $N$
+with one common seed and identical laws. This replaces the whole law;
+it need not preserve an input $N$ law. Sections 131--136 prove the claim.
+

@@ -1,0 +1,24 @@
+## 379. FIB 因果锥、相对论输运与动力学极限接口
+
+FIB 原生递归给出端口、合法有向路径和接缝复合，但不提供时空坐标、度规、光速或物理时钟。要讨论因果传播，先给同一实际实现中的顶点嵌入
+\(\iota:V_F\to\mathcal M\)、Lorentz 型度规 \(g\)、外加边时长 \(\tau_e\ge0\) 和速度尺度 \(c>0\)。对一条路径 \(\gamma=(e_1,\ldots,e_n)\)，其外加时空轨迹记为
+
+$$
+\Gamma_\gamma=(\iota(v_0),\ldots,\iota(v_n)),
+\qquad
+T(\gamma)=\sum_{r=1}^{n}\tau_{e_r}.
+\tag{379.1}
+$$
+
+固定惯性坐标 \(x^0=ct\)，并取 Minkowski 度规
+\(g(\Delta x,\Delta x)=-(\Delta x^0)^2+\|\Delta\mathbf x\|^2\)。FIB 路径属于因果支撑，当且仅当每一条边的位移满足
+
+$$
+g(\iota(v_r)-\iota(v_{r-1}),\iota(v_r)-\iota(v_{r-1}))\le0,
+\qquad
+(\iota(v_r)-\iota(v_{r-1}))^0\ge0,
+\tag{379.2}
+$$
+
+这等价于 \(\Delta x^0\ge\|\Delta\mathbf x\|\) 和未来定向。它只是给定嵌入和度规后的筛选条件；原生 FIB 可达性不蕴含式（379.2），不同嵌入可以把同一组合路径映为不同的因果关系。
+

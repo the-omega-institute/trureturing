@@ -1,0 +1,24 @@
+**定理 115.5（完整自适应历史的实际后验）。** 设
+
+$$
+\mathfrak h=((w_1,g_1),\ldots,(w_n,g_n))
+$$
+
+是一条确定性策略的记录分支，其中 $w_i$ 是这条分支上实际选择的字面词，$g_i\in\{1,p,p^2,\mathsf{err}\}$ 是完整 gcd 或错误回答。对每个实际模 $p$ 基类 $\beta$，用定理 115.2 的 $D_\beta=\mathbb F\times\mathcal T_\beta$ 和定理 115.4 的精确整数进位直线定义兼容集合 $S_i(\beta)$，则此历史的实际行为后验恰为
+
+$$
+\mathcal P_{\mathfrak h}(\beta)
+=D_\beta\cap\bigcap_{i=1}^nS_i(\beta).
+$$
+
+这里后验指一致类的支持集，不预设概率律。$S_i(\beta)$ 的全部情形为
+
+| 115.5 查询在基类上的类型 | 记录回答 | 兼容集合 |
+| --- | --- | --- |
+| 非法接缝或不适当 End | $\mathsf{err}$ | $D_\beta$ |
+| 非法接缝或不适当 End | 任意数值 gcd | $\varnothing$ |
+| 合法且底部表达式非零模 $p$ | $1$ | $D_\beta$ |
+| 合法且底部表达式非零模 $p$ | $p,p^2$ 或 $\mathsf{err}$ | $\varnothing$ |
+| 合法且底部表达式为零模 $p$ | $p^2$ | $D_\beta\cap\{z+a_it+c_i=0\}$ |
+| 合法且底部表达式为零模 $p$ | $p$ | $D_\beta\setminus\{z+a_it+c_i=0\}$ |
+| 合法且底部表达式为零模 $p$ | $1$ 或 $\mathsf{err}$ | $\varnothing$ |

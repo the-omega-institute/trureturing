@@ -1,0 +1,49 @@
+**定义 70.1（方向、具体轮廓与开星约定）。** 令 $I=\{1,2,3,4\}$，并沿用第 69 节的 $\Delta$、$e_i$、$\mathcal C$、$\mathcal D$、$b_F$、$b_C$ 和 $\sigma_D^{(2)}$。对 $i\in I$，定义实际方向面及射线参数化
+
+$$
+O_i=\{u\in\Delta:u_i=0\},\qquad
+R_i(u,r)=(1-r)e_i+ru\quad(u\in O_i,\ 0\le r\le1).
+$$
+
+因此 $u_j\ge0$、$\sum_j u_j=1$，且三个非 $i$ 坐标之和为 $1$。当 $r>0$ 时，$x=R_i(u,r)$ 的参数唯一，且
+
+$$
+r=1-x_i,\qquad u_i=0,\qquad u_j=\frac{x_j}{r}\quad(j\ne i).
+$$
+
+在 $r=0$ 时只取点 $e_i$，不为顶点选择方向，也不在该处使用除以 $r$ 的公式。
+
+记三个非 $i$ 坐标的最大值、最小值和中间值为
+
+$$
+M_i(u)=\max_{j\ne i}u_j,\qquad
+m_i(u)=\min_{j\ne i}u_j,\qquad
+w_i(u)=1-M_i(u)-m_i(u).
+$$
+
+它们满足 $M_i\ge w_i\ge m_i\ge0$ 和 $M_i+w_i+m_i=1$；$w_i$ 正是中间次序统计量。以下省略同一方向上的下标，定义具体函数
+
+$$
+B_i(u)=\max\{2(M-w),\ 3(w-m),\ 4m\},\qquad
+a_i(u)=\frac{1}{1+M+B_i(u)}.
+$$
+
+有限最大值、最小值连续，中间值由坐标和恢复，故这些次序统计量在并列处仍连续且不依赖排序选择。分母至少为 $1$，所以 $a_i:O_i\to\mathbb R$ 连续。它是上述具体次序统计量的函数。
+
+本节的闭星恰取定义 69.1 的并集，不改变其指标条件：
+
+$$
+\operatorname{Star}_i
+=\bigcup_{\substack{D\in\mathcal D\\ e_i\in\{b_C:C\in D\}}}\sigma_D^{(2)}.
+$$
+
+开星取全部维数的实际含顶点单纯形的相对内部之并：
+
+$$
+\operatorname{Star}_i^{\circ}
+=\bigcup_{\substack{D\in\mathcal D\\ e_i\in\{b_C:C\in D\}}}
+\operatorname{relint}(\sigma_D^{(2)}).
+$$
+
+相对内部按该单纯形的仿射包计算，特别地 $\operatorname{relint}\{e_i\}=\{e_i\}$。为区分链与稍后的半角区，把第 69 节的单元素链 $C_i=\{\{i\}\}$ 在本节记为 $\mathfrak c_i$。
+

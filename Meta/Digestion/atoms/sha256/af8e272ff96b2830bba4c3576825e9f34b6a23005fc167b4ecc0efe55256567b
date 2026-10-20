@@ -1,0 +1,18 @@
+在这些共同来源与前向同余条件下，可得到以下条件箭头，而非无条件的四视图等价：
+
+- 端点到累计 grade 仅在 PG.3006 的路径独立性、势存在和单根（或 (PG.3400e)）条件下成立；完整时间因子仍至少不粗于该投影。
+- 端点到空间因子需要已声明的 support/metric irreducibility 合同和 (PG.3400d)；没有这些假设，空间只保留实际提供的 incidence 字段。
+- 在 §33 的纤维和 source 条件下，端点到边界的因子化只需
+  $K_{\mathrm{end}}\subseteq K_{\mathrm{beh}}$；附加的等号
+  $K_{\mathrm{end}}=K_{\mathrm{beh}}$ 才给出边界到端点的反向因子化及二者互相恢复；
+  严格包含时只能恢复行为商。
+- 在每个共同纤维 $H_Q$ 上，静态映射
+  $\mathsf{Memory}\to\mathsf{Boundary}$ 的因子化当且仅当
+  $\ker(\mathsf{Memory}|_{H_Q})\subseteq
+  \ker(\mathsf{Boundary}|_{H_Q})$；这是 PG.3403 的核包含判据，不把 update
+  closure 混进静态 iff。若还要得到可执行的动态边界商，则另外要求 (PG.3402a) 的
+  forward/update closure，使相同记忆值对每个动作有相同 enabledness/失败、事件、后继
+  标签和更新状态。
+- 四者全部互相恢复，要求相关因子在共同 $H_R$ 上的核相等（并满足执行所需的
+  前向同余）；任意一个严格更粗的核都会留下不可恢复的历史区分。
+

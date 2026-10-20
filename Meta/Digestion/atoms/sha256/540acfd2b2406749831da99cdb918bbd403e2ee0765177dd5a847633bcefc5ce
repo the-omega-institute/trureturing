@@ -1,0 +1,73 @@
+### 引理 40.2（两来源多项式碰撞）
+
+对任意固定合法路径和 $N\le 2k+d+2$，存在两个不同的严格正秩一规范关系
+$R_0^{(1)},R_0^{(2)}$，两个非零 $H_1,H_2\in\Pi_k$，以及
+$D_1,D_2\in\Pi_d$，使
+
+$$
+H_1(i)\operatorname{tr}(A_iR_0^{(1)})+D_1(i)
+ =H_2(i)\operatorname{tr}(A_iR_0^{(2)})+D_2(i)\quad(0\le i<N).
+$$
+
+这两个世界的全部操作和读数序号相同，但规范关系不同。
+
+**证明。** 零次读取时，任取两个不同规范关系、$H_1=H_2=1,D_1=D_2=0$ 即可；
+以下设 $N\ge1$。记 $\Pi_j$ 为实次数不超过 $j$ 的多项式空间。固定任意严格正列
+$u=(u_1,u_2)^{\mathsf T}$，写 $A_i u=(r_i,s_i)^{\mathsf T}$。在未知系数
+
+$$
+(P,Q,E)\in\Pi_k\times\Pi_k\times\Pi_d
+$$
+
+上考虑齐次评价方程
+
+$$
+r_iP(i)+s_iQ(i)+E(i)=0\qquad(0\le i<N).                    \tag{40.1}
+$$
+
+其未知数为 $2k+d+3>N$，故有非零核元。先保证可选取 $(P,Q)\ne(0,0)$：
+当 $N\ge d+1$ 时，次数至多 $d$ 的多项式在这 $N$ 个互异序号上全零就恒零，
+所以非零核元不可能只有漂移块。当 $1\le N<d+1$ 时，直接取 $P=1,Q=0$，
+并以 Lagrange 插值取 $E(i)=-r_i$；其次数至多 $N-1\le d$，故同样得到
+所需核元。
+
+对这个核元，选择两个不同的正数 $\rho_1,\rho_2$，使
+$Q-\rho_jP\not\equiv0$。这样的选择总存在：若 $P=0$，则 $Q\ne0$；
+若 $P\ne0$，恒等式 $Q=\rho P$ 至多排除一个实数 $\rho$。定义
+
+$$
+p_1=\frac{Q-\rho_2P}{\rho_1-\rho_2},\qquad
+p_2=\frac{Q-\rho_1P}{\rho_1-\rho_2}.
+$$
+
+两者均为非零的 $\Pi_k$ 元素，且直接相减给出多项式恒等式
+
+$$
+p_1-p_2=P,\qquad \rho_1p_1-\rho_2p_2=Q.
+$$
+
+取实际来源 $R^{(j)}=u(1,\rho_j)$、实际增益 $G_j=p_j$，并令 $D_1=E,D_2=0$。
+每个 $R^{(j)}$ 都严格正且秩一；它在整条路径上固定，且
+$\operatorname{tr}(A_iR^{(j)})=r_i+\rho_js_i$。故两世界的读数之差恰为
+式 (40.1) 的左侧，在每个实际序号上为零。置
+
+$$
+a_j=u_1+\rho_ju_2>0,\qquad
+R_0^{(j)}=\frac{u(1,\rho_j)}{a_j},\qquad H_j=a_jp_j.
+$$
+
+这就得到声明中的规范世界，两个 $H_j$ 仍非零。规范化保持第二列与第一列
+之比 $\rho_j$，所以 $\rho_1\ne\rho_2$ 保证两个规范关系不同。整个构造只使用
+给定的累计矩阵 $A_i$；重复累计矩阵不改变序号互异，也不影响插值或差分恒等式。
+
+这里的秩—核、可行像的差分（secant）及模变换群识别均为标准工具，背景见
+Li–Lee–Bresler, Definition 2.7、Theorem 2.8（文献及链接见推论 39.4），以及
+Kech–Krahmer, “Optimal Injectivity Conditions for Bilinear Inverse Problems with
+Applications to Identifiability of Deconvolution Problems”, Definitions III.1–III.2,
+[arXiv:1603.07316](https://arxiv.org/abs/1603.07316)。所需的实正来源实现由上面的
+显式构造给出，不借用复数域或泛型假设。
+
+证明从未除以采样增益，也不要求其为正、次数达到上界或根为单根。它不剔除初读
+零点、其他采样零点、负采样值、重根或较低实际次数。$k=d=0$ 时同一构造给出
+常非零增益和常漂移的碰撞；更强的四读数不充分性见定理 40.6。∎
+

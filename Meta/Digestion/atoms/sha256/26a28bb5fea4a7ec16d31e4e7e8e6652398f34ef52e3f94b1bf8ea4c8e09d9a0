@@ -1,0 +1,20 @@
+## 定理 127.3（概率生成函数）
+
+对 \(0\le z\le1\)：
+
+\[
+\mathbb E[z^{\omega(N)}]
+=
+\prod_p
+\left(1-(1-z)p^{-s}\right).
+\]
+
+在收敛允许的 \(z\) 区域：
+
+\[
+\mathbb E[z^{\Omega(N)}]
+=
+\prod_p
+\frac{1-p^{-s}}{1-zp^{-s}}.
+\]
+

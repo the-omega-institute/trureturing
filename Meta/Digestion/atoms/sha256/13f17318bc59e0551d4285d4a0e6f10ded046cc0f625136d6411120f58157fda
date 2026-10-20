@@ -1,0 +1,36 @@
+# 第一千一百二十四部　黄金比例究竟与什么对偶
+
+必须按层回答，不能只给一个对象。
+
+| 黄金对象                         | 同层对偶                              | 变换                            | 固定中心／不变量         |     |            |
+| ---------------------------- | --------------------------------- | ----------------------------- | ---------------- | --- | ---------- |
+| \(\varphi\)                  | \(\varphi'=1-\varphi\)            | Galois \(s\mapsto1-s\)        | 中点 \(1/2\)       |     |            |
+| (                            | \varphi                           | )                             | \(\varphi^{-1}\) | 乘法逆 | 几何中心 \(1\) |
+| \(\log\varphi\)              | \(-\log\varphi\)                  | 对数反射                          | 加法中心 \(0\)       |     |            |
+| \(\varphi^2\)                | \(\varphi^{-2}\)                  | 时间反演                          | 乘积 \(1\)         |     |            |
+| \(2\log\varphi\)             | \(\pi/\log\varphi\)               | period–frequency Fourier dual | \(2\pi\) 相位      |     |            |
+| \(\times\varphi^2\) on \(K\) | \(U_{\varphi^2}\) on \(\Sigma_K\) | Pontryagin contragredient     | 评价配对             |     |            |
+| 正 null eigenline             | 负／共轭 eigenline                    | cone polarity                 | Norm form        |     |            |
+| 黄金可见像                        | observer fiber                    | 投影／商                          | 完整 bundle        |     |            |
+
+所以：
+
+$$
+\boxed{
+\varphi\text{ 的直接对偶是 }\varphi',
+}
+$$
+
+而不是“道”。
+
+更准确地说：
+
+$$
+\boxed{
+\text{“道”是产生 }\varphi\text{ 与 }\varphi'
+\text{ 的反射商和配对规则。}
+}
+$$
+
+---
+

@@ -1,0 +1,17 @@
+\frac{\sum_{S\in\mathcal I_G(V)}
+ F(S)e^{\sum_{v\in S}\theta_v}
+ e^{\varepsilon N_h(S)}}
+ {\sum_{S\in\mathcal I_G(V)}
+ e^{\sum_{v\in S}\theta_v}
+ e^{\varepsilon N_h(S)}}.
+\]
+有限和逐项可导，且
+\[
+\left.\frac{d}{d\varepsilon}
+e^{\varepsilon N_h(S)}\right|_{\varepsilon=0}
+=N_h(S).
+\]
+商法则给出
+\[
+\mathcal R^{\mathrm{stat}}_{F,h}
+ =

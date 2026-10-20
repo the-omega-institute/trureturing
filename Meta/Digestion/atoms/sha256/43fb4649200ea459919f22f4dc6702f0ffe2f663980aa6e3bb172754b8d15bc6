@@ -1,0 +1,24 @@
+## 经典定理 165.1（Galois 分离密度公式）
+
+令：
+
+\[
+U_{f,g}
+=
+\{\sigma\in G:f(\sigma)\neq g(\sigma)\}.
+\]
+
+由于 \(f,g\) 共轭不变，\(U_{f,g}\) 是共轭类之并。Chebotarev 密度定理给出：
+
+\[
+\boxed{
+\delta
+\{\mathfrak p:
+f(\operatorname{Frob}_{\mathfrak p})
+\neq
+g(\operatorname{Frob}_{\mathfrak p})\}
+=
+\frac{|U_{f,g}|}{|G|}.
+}
+\]
+

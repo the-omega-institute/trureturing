@@ -1,0 +1,58 @@
+**Theorem 110.4 (passive forgetting is unsafe for the mixed comparison word).**
+For uniformly bounded sequences of centered counting states, define
+
+$$
+f\sim_{\mathrm{pass}}g
+ \quad\Longleftrightarrow\quad
+ \forall a>0,\quad\|S_n(a)(f_n-g_n)\|\longrightarrow0.
+\tag{110.19}
+$$
+
+Then $x\sim_{\mathrm{pass}}0$, and for every fixed $a>0$ the sequence
+$\widehat x_n=S_n(a)x_n$ also satisfies
+$x\sim_{\mathrm{pass}}\widehat x$. Nevertheless, for every fixed
+$s>0$,
+
+$$
+\begin{aligned}
+\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nx_n&\longrightarrow D(s),\\
+\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nS_n(a)x_n&\longrightarrow0.
+\end{aligned}
+\tag{110.20}
+$$
+
+Consequently passive positive-time equivalence does not preserve
+this mixed future root readout, on the fixed window of Theorem 110.3.
+This is an asymptotic statement about homogeneous initial states;
+it does not assert exact finite root blindness or compute an exact
+native mixed-future kernel.
+
+Proof. Equation (110.16) proves $x\sim_{\mathrm{pass}}0$.
+Contraction and the semigroup law give, for every $t>0$,
+
+$$
+\|S_n(t)(x_n-S_n(a)x_n)\|
+ \le\|S_n(t)x_n\|+\|S_n(t+a)x_n\|\longrightarrow0.
+\tag{110.21}
+$$
+
+The first line of (110.20) is Theorem 110.3. For the second, root
+smoothing (110.11) and $\|\mathcal A_n\|\le\sqrt{3N_n/N_{n+1}}$
+give
+
+$$
+\left|\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nS_n(a)x_n\right|
+ \le B_s\sqrt{3N_n/N_{n+1}}\,\|S_n(a)x_n\|\longrightarrow0.
+\tag{110.22}
+$$
+
+Thus the words are, in actual chronological order, renewal then
+successor heat then root readout, and old heat then renewal then
+successor heat then root readout. The intermediate heat cannot be
+moved across renewal under (110.19). The action-language distinctions
+of [Fiber II, Definition 44.5](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md)
+and [Fiber III, Definition 34.1](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_III.md)
+retain their original exact finite scope. Here $x_n$ need not lie in
+$K_{\mathrm{stat}}$ at any finite $n$; (110.19) is the precise weaker
+equivalence refuted by the source-specific witness. $\square$
+

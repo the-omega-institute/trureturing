@@ -1,0 +1,6 @@
+控制，而不是由：
+
+* \(n\le e^{2L}\) 的 prime-power 数量；
+* 使用的 Fourier 网格大小；
+* 零点高度 cutoff；
+

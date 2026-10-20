@@ -1,0 +1,72 @@
+**Proposition 60.2 (exact source weights and death boundaries).**
+Let $\rho$ be any common initial height probability on $I$, and use
+the same known initial phases for its killed and Q mixtures. Put
+$S_\rho(T)=\int_I S_k(T)\rho(dk)$. On full paths up to $T$,
+
+$$
+\frac{d\mathbb P_\rho^\kappa(\,\cdot\,,\zeta>T)}
+     {d\mathbb Q_\rho^\kappa}
+ =e^{-\lambda T}\frac{\phi(K_0)}{\phi(K_T)}.
+\tag{60.2}
+$$
+
+For the law obtained by conditioning that mixture on survival to $T$,
+its density on a prefix $\mathcal F_r$, $r\le T$, is
+
+$$
+\frac{d\mathbb P_\rho^\kappa(\,\cdot\mid\zeta>T)}
+     {d\mathbb Q_\rho^\kappa}\bigg|_{\mathcal F_r}
+ =\frac{e^{-\lambda r}\phi(K_0)S_{K_r}(T-r)}
+        {\phi(K_r)S_\rho(T)}.
+\tag{60.3}
+$$
+
+If instead each fixed-start law is first conditioned and then mixed
+with $\rho$, the denominator in (60.3) is $S_{K_0}(T)$.
+These are generally distinct initial-height laws. Formula (37.5)
+is their common fixed-start specialization.
+
+The pathwise identifying constructions above apply before death to
+the raw killed law and to a terminal-survivor law, with their own
+completed observation filtrations and exceptional null sets. Under
+an unknown initial law with positive density on the symmetric interval
+used in (56.8), the folded negative argument also persists on surviving
+compact-prefix events. The numerical risk theorem (59.1), however,
+is a theorem for $\rho=\pi$ under Q; no unchanged Bayes risk constant
+or uniform rate under a different source is asserted here.
+
+Proof. The finite-horizon Doob derivative at each fixed starting
+height is $e^{\lambda r}\phi(K_r)/\phi(K_0)$. Invert it on surviving
+paths and mix the same initial law to obtain (60.2). For a prefix
+conditioned on survival to $T$, multiply the killed prefix density
+by its actual remaining survival factor $S_{K_r}(T-r)$ and divide
+by $S_\rho(T)$. This proves (60.3). Performing conditioning before
+mixing instead divides by $S_{K_0}(T)$, as stated. All factors are
+positive at interior endpoints and are the original source factors,
+not observation-independent constants.
+
+For fixed finite $T$, these path laws are equivalent on survival;
+therefore any Q-almost-sure path identity has the asserted surviving
+version. For recovery at arbitrary times before the raw death,
+use countably many rational horizons and the same local variation
+identities. At death there is no surviving interior height: the raw
+process is at its cemetery state. If its record includes that state
+and one takes the limit of reconstructed predeath heights, this gives
+the absorbing face approached, not a continuation past death or a
+conservative raw law. The Q process itself has no finite death.
+
+On a compact symmetric interval the factors in (60.2)–(60.3) are
+bounded and positive; the reflection comparison consequently retains
+its two separated posterior possibilities for positive-density
+unknown initial laws. This is a local ambiguity assertion, not a
+transfer of the stationary endpoint risk. Globally $1/\phi(K_r)$
+is unbounded near either face. Integrability of the weights follows
+from the probability identities themselves, but uniform squared-risk
+bounds do not follow from mere absolute continuity. In (59.3) and
+(59.7) the actual Q factor and its derivative were explicitly kept;
+in (58.7)–(58.9) stationarity was explicitly used. These are the
+source-specific hypotheses that a different risk theorem would have
+to replace. No conditioning, reset, height sensor, changed clock or
+additional physical resource is provided by these measure identities.
+$\square$
+

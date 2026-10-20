@@ -1,0 +1,41 @@
+**定理 1428.1（靠近误差阈值的低阶过渡）。** 在第 1427 节条件下，进一步设 $\mu_N\to0$。令 $L_N=\log(1/\mu_N)$，允许 $\alpha_N\in[0,1]$，并记
+
+$$
+t_N=\frac{N(1-\alpha_N)\log2}{L_N}.
+$$
+
+若 $t_N\to t\in[0,\infty]$，则
+
+$$
+\frac{\widetilde G_{\alpha_N,N}(\kappa,\delta_N)}N
+\longrightarrow(\log2)J(t),
+\qquad
+J(t)=
+\begin{cases}
+0,&0\le t\le1,\\
+1-1/t,&1<t<\infty,\\
+1,&t=\infty.
+\end{cases}
+$$
+
+**证明。** 第 1427 节允许把最优值换成 $\Phi_{\mu_N}(N(\alpha_N-1))$ 而只产生趋零误差。若 $t_N>0$，直接代入有
+
+$$
+\Phi_{\mu_N}(N(\alpha_N-1))
+=\frac{\log2}{t_NL_N}
+\log\left[1-\mu_N+e^{(t_N-1)L_N}\right].
+$$
+
+两个正数之和的对数，位于其各自对数的最大值与该最大值加 $\log2$ 之间。当 $0<t<\infty$ 时，$t_NL_N\to\infty$，且 $\log(1-\mu_N)/L_N\to0$，由此得到 $\log2\max(0,1-1/t)$，包括 $t=1$。当 $t=\infty$，最终指数项占优，同一夹逼给 $\log2(1-1/t_N)+o(1)\to\log2$。
+
+最后设 $t=0$，避免除以可能趋零的 $t_NL_N$。任选 $\varepsilon\in(0,1)$，令 $\beta_N=1-\varepsilon L_N/(N\log2)$。因 $L_N=o(N)$，充分大时 $\beta_N\in[0,1]$，且 $t_N\le\varepsilon$ 蕴含 $\alpha_N\ge\beta_N$。同一可行族上的 Rényi 最优值随阶数不增，故
+
+$$
+0\le\widetilde G_{\alpha_N,N}/N
+\le\widetilde G_{\beta_N,N}/N\longrightarrow0,
+$$
+
+其中右端已由固定正尺度 $\varepsilon<1$ 的情形解决。证毕。
+
+因此，靠近该误差边界时，过渡位置由 $1-\alpha$ 与 $L_N/(N\log2)$ 的比较决定。每个固定 $\alpha<1$ 对应 $t_N\to\infty$，归一化成本仍趋于 $\log2$；阶一的归一化成本趋零，所有高于一阶的值由单调性也趋零。固定剩余关联与剩余关联趋零，给出两种不同的过渡尺度；统一公式保留了区分它们的参数。
+

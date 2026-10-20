@@ -41,6 +41,7 @@ internal sealed class StubCliEnvironment(
     public CommandResult Coverage(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "coverage is not configured in this fixture");
 
+    public CommandResult MigrateAtomContext(IReadOnlyList<string> arguments) => new(true, string.Empty, string.Empty);
     public CommandResult SourceDispatch(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "source dispatch is not configured in this fixture");
 

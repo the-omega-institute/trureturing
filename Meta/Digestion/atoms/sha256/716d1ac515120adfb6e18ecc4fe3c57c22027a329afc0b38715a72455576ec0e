@@ -1,0 +1,20 @@
+### 推论 351.4（二维局部约束的真正作用）
+
+在单纯连通有限二维复形中，面 holonomy 为单位元不仅是每个面的局部检查，而且足以保证所有路径之间存在一致的全局运输。若 \(K\) 不单纯连通，面 flatness 只能保证运输下降到基本群表示，不能自动令所有非可缩闭路 holonomy 为单位元。
+
+因此：
+
+$$
+\boxed{
+\text{局部面 flatness}
+\Longrightarrow
+\text{同伦不变运输};
+\qquad
+\text{但不必然}
+\Longrightarrow
+\text{全局平凡运输}.
+}
+$$
+
+---
+

@@ -1,0 +1,20 @@
+**定理132.1（两异常方向均在尾部时的五词收缩）。** 在上述同一实际合同中，五个尾环境只可能为
+
+$$
+\boxed{XXZYY,\qquad XZYYY,\qquad YXYXZ,\qquad YXXXZ,\qquad YXZXY.}
+\tag{132.3}
+$$
+
+这是必要形态的收缩，不是对这五词的实现或排除。本节也不处理小异常方向 $Y$ 不在尾部的另一分支。
+
+### 132.1 带支持标签的完整候选表
+
+所有非大当前位置的实际二维平面都包含于三维 $M$，其中普通方向的平面恰为 $P$。它们两两非零相交，故固定 $V_1$ 使所有已经执行的非大当前位置采用同一后继。
+
+第69、74节的十三个必要三尾词，结合这一共同后继条件，再将两个非大字母分别标为 $Y,Z$，得到下表。第2至5轮以外没有读取后继。
+
+| 第二轮 | 全部带标签候选 |
+|---|---|
+| $X$ | $XXXYZ,XXXZY,XXYXZ,XXZXY,XXYZZ,XXZYY,XYXXZ,XZXXY,XYXZX,XZXYX,XYZZZ,XZYYY$ |
+| $Y$ | $YXYXZ,YXXXZ,YXXZX,YXZXY,YXZXX,YXZXZ$ |
+| $Z$ | $ZXZXY,ZXXXY,ZXXYX,ZXYXZ,ZXYXX,ZXYXY$ |

@@ -1,0 +1,10 @@
+**定理 328.4（共同来源下的并联界）。** 若两个并联接口在同一来源上分别有误差 \(\varepsilon_1,\varepsilon_2\)，且存在一个联合耦合使两条局部失败事件的并集概率不超过 \(\varepsilon_1+\varepsilon_2\)，则联合输出的总变差误差满足
+\[
+\operatorname{TV}(K^{\parallel},\widetilde K^{\parallel})
+\le\varepsilon_1+\varepsilon_2.
+\]
+若局部失败事件在声明的联合耦合下独立，则可改进为
+\[
+1-(1-\varepsilon_1)(1-\varepsilon_2).
+\]
+

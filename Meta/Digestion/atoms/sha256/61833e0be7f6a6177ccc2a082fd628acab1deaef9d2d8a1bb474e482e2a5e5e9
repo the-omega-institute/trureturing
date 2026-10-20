@@ -1,0 +1,37 @@
+**定义 21.1（逐字阻抗与低频编号）。** 沿用定义 10.1 的逐字源 $W_j$、固定单位速度、左反射右吸收边界及数量缩放时钟。固定
+
+$$
+r_\alpha,r_\beta>0,\qquad
+0<\theta\le\frac{\min(r_\alpha,r_\beta)}2,\qquad
+\delta>0,
+$$
+
+并令
+
+$$
+a=\varphi^{-2},\qquad
+\overline r=a r_\alpha+(1-a)r_\beta,\qquad
+D=\frac{\theta\varphi^4}{\delta\overline r},
+$$
+
+$$
+L_j=F_{j+1},\qquad N_j=F_{j+3},\qquad
+\epsilon_j=\frac{\delta}{N_j^2},\qquad
+\Delta_r=|r_\alpha-r_\beta|.
+$$
+
+记暂态核为 $K_j$，$B_j=I-K_j$，$G_j=B_j^{-1}$。实对称三对角核 $K_j$ 的本征值按递减次序编号为
+
+$$
+\lambda_{j,0}>\lambda_{j,1}>\cdots>\lambda_{j,L_j-1},
+$$
+
+因此 $m=0$ 表示 $B_j$ 的最低频模态。将相应本征向量 $f_{j,m}$ 归一化为
+
+$$
+\frac1{L_j}\sum_{i=0}^{L_j-1}f_{j,m}(i)^2=1,
+\qquad f_{j,m}(0)>0,
+$$
+
+并嵌入分片常数函数：在 $[i/L_j,(i+1)/L_j)$ 上取值 $f_{j,m}(i)$，在吸收端 $u=1$ 取零。以下低频极限一律先固定整数 $m\ge0$，再令 $j\to\infty$；本征对只在充分大且 $L_j>m$ 的 $j$ 上使用。
+

@@ -24,6 +24,9 @@ internal sealed partial class ProductionCliEnvironment
         CoverageCommand.Run(repository, leanReportSource, arguments);
 
 
+    public CommandResult MigrateAtomContext(IReadOnlyList<string> arguments) =>
+        AtomContextMigrationCommand.Run(repositoryRoot, repository, arguments);
+
     public CommandResult SourceDispatch(IReadOnlyList<string> arguments) =>
         SourceDispatchCommand.Run(repositoryRoot, repository, arguments);
 

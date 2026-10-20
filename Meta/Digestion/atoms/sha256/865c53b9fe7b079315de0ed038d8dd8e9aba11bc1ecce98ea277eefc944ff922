@@ -1,0 +1,31 @@
+### 定义 374.1（信息几何边界）
+
+固定有限来源类、事件通道和允许的后处理。定义
+
+$$
+\boxed{
+\eta_{\mathrm{geom}}
+=
+\left(
+\Theta,
+\mathsf P_\theta,
+\mathsf I_\theta,
+\mathsf H,
+\mathsf A,
+\mathsf K_{\mathrm{evt}},
+\mathsf L_{\mathrm{coarse}},
+\mathsf{Cost},
+\mathsf{Risk},
+\mathsf{Event},
+\mathsf{Stop}
+\right).
+}
+$$
+
+各字段保存：
+
+1. 共同参数来源 \(\Theta\) 与完整记录分布 \(\mathsf P_\theta\)；
+2. Fisher 局部张量 \(\mathsf I_\theta\) 与 Hellinger 全局距离 \(\mathsf H\)；
+3. 事件通道、粗粒化映射及其数据处理收缩；
+4. 二元区分、重复资源、风险目标与停止后继。
+

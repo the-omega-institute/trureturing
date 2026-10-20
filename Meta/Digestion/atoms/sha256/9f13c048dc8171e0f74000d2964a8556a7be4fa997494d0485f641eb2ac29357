@@ -1,0 +1,19 @@
+**定理 1187.1（前半摘要区域的唯一根）。** 设 $0<r\le1/2$、$M_N\rho\ge1-r$ 且 $\rho<\psi_N(r)$。则存在唯一 $\theta_*\in(r,1/2]$，使
+
+$$
+\frac{\psi_N(\theta_*)}{\theta_*}=\frac\rho r,
+\qquad B_N(r,\rho)=\frac r{\theta_*}.
+$$
+
+**证明。** 在 $0<\theta\le1/2$ 上，$\psi_N(\theta)$ 严格减少且为正，故 $\psi_N(\theta)/\theta$ 严格减少。在 $\theta=r$，该比值大于 $\rho/r$；在 $1/2$，它等于 $1/M_N\le\rho/r$，最后一步来自 $M_N\rho\ge1-r\ge r$。连续性给唯一交点。
+
+当 $\theta\le r$ 时，三项约束给的有效上界为 $(1-r)/(1-\theta)$ 与 $\rho/\psi_N(\theta)$ 的较小者；两者都随 $\theta$ 增加，不能胜过 $\theta=r$。当 $r\le\theta\le1/2$ 时，有效上界为 $r/\theta$ 与 $\rho/\psi_N(\theta)$ 的较小者，一项严格减少、一项严格增加，故在交点取最大。当 $\theta\ge1/2$ 时，$\lambda\le r/\theta\le2r\le r/\theta_*$，也不能提高答案。第 1186 节保证交点值真实达到。证毕。
+
+等价地，令 $a=(1-2\theta_*)^{1/N}$，则它是区间 $[0,(1-2r)^{1/N})$ 内满足
+
+$$
+(1+a)^N=2^{N-1}\frac\rho r(1-a^N)
+$$
+
+的唯一根，准确权重为 $2r/(1-a^N)$。这是解析刻画，不需要数值求根来承担存在与唯一性。
+

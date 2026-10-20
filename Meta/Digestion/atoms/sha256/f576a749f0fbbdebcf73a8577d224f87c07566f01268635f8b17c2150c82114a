@@ -1,0 +1,9 @@
+这实际上统一了：
+
+* 自动机最小化；
+* 预测状态；
+* POMDP belief compression；
+* 量子 instrument-word quotient；
+* 素数—时间协议状态；
+* 策略充分自我。
+
