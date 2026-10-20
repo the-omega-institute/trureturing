@@ -70,7 +70,10 @@ internal sealed class KumarPengTranModularComplexityDocument : IScribeDocumentDe
                 + "inefficiency 17 3 and inefficiency 17 16 are greater than 6. The units "
                 + "represented by 1, 3 and 16 form a three-element subset of the filtered "
                 + "set. Monotonicity of finite cardinality contradicts its proposed bound.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kumar-peng-tran-2022-modular-integer-complexity-conjecture-4-4"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,

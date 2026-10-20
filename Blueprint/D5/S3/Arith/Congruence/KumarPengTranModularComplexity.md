@@ -84,6 +84,10 @@ $$\neg (\forall m \in \operatorname{Nat},\; [\operatorname{NeZero}\left(m\right)
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/KumarPengTranModularComplexity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kumar-peng-tran-2022-modular-integer-complexity-conjecture-4-4` (refuted) by `D5/S3/Arith/Congruence/KumarPengTranModularComplexity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kumar-peng-tran-2022-modular-integer-complexity-conjecture-4-4","declaration_gid":"D5/S3/Arith/Congruence/KumarPengTranModularComplexity.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Aarya Kumar, Siyu Peng, and Vincent Tran (2022). *Integer Complexity Generalizations in Various Rings*. DOI: [10.48550/arXiv.2211.04379](https://doi.org/10.48550/arXiv.2211.04379). URL: <https://arxiv.org/abs/2211.04379v1>.
