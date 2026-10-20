@@ -129,14 +129,16 @@ that each parameter in $[0,2)$ has a positive three-point family with at
 least two positive eigenvalues. Their axiom closure is restricted to
 `propext`, `Classical.choice`, and `Quot.sound`.
 
+The analytic route — the positive-definiteness factorization of the derivative defect and the three-point inertia family — was derived with the assistance of the ChatGPT Pro model and checked by hand before formalization.
+
 ## Triage
 
 - PROVED: `KernelFactor.positiveDefinite_f` establishes positive definiteness of the exact derivative defect for every real $\gamma\ge2$, including the arithmetic boundary.
 - PROVED: `KernelFactor.f_eq_factor` identifies the derivative defect with the explicit product on the entire real line.
 - PROVED: the reusable theorem `SecondDifference.Q_positiveDefinite` gives positive definiteness of the continuous extension of $(g(0)-g(t))/t^2$ for every even twice continuously differentiable positive definite real function.
-- ANALYTIC RESULT: For $\gamma>2$, the closed form gives $f_\gamma(t)=O(e^{-3|t|})$, so it is integrable. Positive definiteness then gives the explicit Fourier positivity $2\int_0^\infty f_\gamma(t)\cos(\omega t)\,dt\ge0$ for every real frequency. At $\gamma=2$ the function is zero. The Fourier conclusion requires the integrability argument in addition to positive definiteness.
-- COMPUTED: 40-digit evaluations at $\gamma\in\{2.3,3,4.7,9\}$ and $t\in\{0.1,0.7,2.5\}$ agree to 15 digits between the closed form, numerical second differentiation, and the factor product.
-- OPEN: whether $f_\gamma$ itself is infinitely divisible for $\gamma>2$. Numerical Fourier tests of $f_\gamma^s$ are positive for $s\in\{0.05,0.3,1,3\}$ at $\gamma\in\{2.5,7\}$; finitely many tests do not establish infinite divisibility.
+- PROVED (paper proof, not formalized here): For $\gamma>2$, the closed form gives $f_\gamma(t)=O(e^{-3|t|})$, so it is integrable. Positive definiteness then gives the explicit Fourier positivity $2\int_0^\infty f_\gamma(t)\cos(\omega t)\,dt\ge0$ for every real frequency. At $\gamma=2$ the function is zero. The Fourier conclusion requires the integrability argument in addition to positive definiteness.
+- COMPUTED (mpmath, 40-digit arithmetic, outside the Lean development): 40-digit evaluations at $\gamma\in\{2.3,3,4.7,9\}$ and $t\in\{0.1,0.7,2.5\}$ agree to 15 digits between the closed form, numerical second differentiation, and the factor product. These are numerical checks and not part of the formal proof.
+- OPEN: whether $f_\gamma$ itself is infinitely divisible for $\gamma>2$. Numerical Fourier tests (mpmath, outside the Lean development) of $f_\gamma^s$ are positive for $s\in\{0.05,0.3,1,3\}$ at $\gamma\in\{2.5,7\}$; finitely many tests do not establish infinite divisibility.
 - PROVED: `Result.conditionallyNegative_stolarsky` establishes conditional negativity, and `Result.inClassA_stolarsky` establishes the complete class A conclusion for every real parameter at least two and every nonempty finite positive family.
 - PROVED: `Result.result : Defs.claim` establishes both parameter ranges without hypotheses. The definitions and exact conjunction retain the source parameter range and continuous extensions.
 - OPEN and outside the conjecture: classification for $\gamma<0$.
@@ -152,12 +154,14 @@ matrix treatment; Bhatia–Friedland–Jain, *Inertia of Loewner matrices*
 (arXiv:1501.01505), which treats $S_\gamma^{\gamma-1}$; Kosaki,
 *Strong monotonicity for various means*, Theorem 12, whose ratio
 results do not settle the whole matrix conjecture;
-and Aggarwal–Singh work on translation kernels. The cited material
-contains no settlement of the full conjecture. Citation indexes were
-not exhaustively checked.
+and Aggarwal–Singh work on translation kernels.
+
+Searches covered arXiv abstracts combining Stolarsky with eigenvalue, matrix, matrices, conditionally negative or positive definite; the phrases exactly one positive eigenvalue and mean matrices; web searches for the Bhatia–Jain conjecture and its citing papers; GitHub repositories for Stolarsky mean; and this repository.
 
 The [Bhatia–Jain note](../Library/Fourier/bhatia2016mean.md) and
 [Kosaki note](../Library/Fourier/kosaki2014strong.md) record the
 locators and their source boundaries. The analytical route is documented
 by the Lean statements identified above; formal evidence is limited to
 those statements.
+
+No settlement of the full conjecture was found in that scope. Semantic Scholar and Google Scholar citation indexes were unavailable, so the citing literature was not exhaustively checked; this is not a priority certification.
