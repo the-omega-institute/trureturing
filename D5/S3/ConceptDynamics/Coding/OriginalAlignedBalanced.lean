@@ -6,23 +6,7 @@
    utility: none
    digest: The original fixed-lag numbered-path alignment implies both balances for the same four bijections. -/
 
-/- The proposal provenance below records the source's historical preparation.
-   The mathematical declarations and proof terms are retained verbatim. -/
-/-
-Source proposal for BDR arXiv:2411.05598v1, Proposition 3.4.
-The original tuple and the original fixed lag occur throughout.
-This standalone artifact has NOT been elaborated or kernel checked.
-
-Receiver: 1e0add864e162068a0543535f51dc9beb14bd4ba.
-Terminal source: c1b069408db977a8f1902d26685a4328bf1ef7f1.
-Mathlib: db584cd6d46c92f209a44c0f1c829460d327499d.
-
-The concatenate/word calculation below extracts the path-only calculation
-from IncomingLiftAmbiguityCriterion.lean, proof-local concatenate_paths,
-lines 663--683 at the receiver. It is proof organization, not new content.
-The original project sources are Copyright The Omega Institute,
-Apache-2.0. List concatenation laws and equivalence laws are reused.
--/
+/- Copyright The Omega Institute. Licensed under Apache-2.0. -/
 import D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
 import D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound
 import D5.S3.ConceptDynamics.Coding.IncomingLiftAmbiguityCriterion
@@ -433,8 +417,7 @@ private theorem balanced_of_aligned {n k m : ℕ}
 
 /-- BDR Proposition 3.4 on the same essential matrices, fixed positive lag,
     arbitrary original R,S, and all four original path isomorphisms.
-    Essentiality and positivity are retained, though the implication is stronger.
-    This theorem's source is proposed; no compiled status is asserted here. -/
+    Essentiality and positivity are retained, though the implication is stronger. -/
 theorem originalBDRProposition3_4 {n k m : ℕ}
     (A : CountMat n n) (B : CountMat k k) (R : CountMat n k) (S : CountMat k n)
     (_essentialA :

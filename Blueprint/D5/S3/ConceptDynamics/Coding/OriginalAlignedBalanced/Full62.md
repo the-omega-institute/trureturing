@@ -1,0 +1,38 @@
+# Original theorem 6.2
+
+## Abstract
+
+Full original 6.2 on actual numbered bilateral paths.
+
+**Theorem 1.1 (Full original theorem 6.2).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/Full62.full_original_6_2`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/Full62.full_original_6_2` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The theorem has two branches. The general branch assumes positive vertex counts n and k, essential matrices A, B and C, actual incoming-lift data I : ActualIncoming C A and J : ActualIncoming C.transpose B.transpose, and natural depths dL and dR with Forgets I.stateLift dL and Forgets J.stateLift dR. The certificate branch assumes positive n and k and c : CompatibleCertificate A B R S m for arbitrary rectangular R and S. This certificate supplies m > 0, essentiality of A and B, the endpoint-preserving bijections phi : AR ≃ RB, psiA : RS ≃ A-paths of length m and psiB : SR ≃ B-paths of length m, and the R compatibility equation for those maps. Neither branch adds alignment, balance, a second long compatibility equation or a preexisting conjugacy.
+
+The square reconstruction combines the original squareCoordinates inverse law with the original phi inverse law. The incoming and outgoing square-path relations identify the exact square states.
+
+Clause 6.2.1 uses the same actual C=c.squareMatrix and c.squareFiberEquiv. Explicit leftFiber and rightFiber equivalences retain numbered endpoints and readouts, giving the original incoming and outgoing counts. ActualIncoming.iso transports a supplied actual C edge through its unique lift and inverse numbering equations, rather than replacing edges by their counts.
+
+Clause 6.2.2 constructs PA and PB on the same bilateral C space from the existing incoming-lift theorem. Reversal on both ends gives PB on the original B carrier. The homeomorphism is h=PB composed with PA inverse, with inverse PA composed with PB inverse, actual signed shift laws and product/subspace continuity.
+
+Clauses 6.2.3 and 6.2.4 identify the same R-edge state using the canonical-window history identity on the actual finite Edge R histories. The left state is the first R factor of psiA inverse on the future A window. The right state is the second R factor of psiB inverse on the reversed dependent window, on the original B carrier. Square reconstruction then gives phi and inverse phi on the very same square.
+
+The canonical-window word identity gives the exact future word x(i),...,x(i+m-1). The reversal and canonical-window word identities give the original B past word y(i-m),...,y(i-1); the signed formula is reverse(List.ofFn(j : Fin m => y(i-j-1))). Both retain actual numbered edges.
+
+Clauses 6.2.5 and 6.2.6 choose least natural forgetting depths with Nat.find, including depth zero, bounded by m. The inverse windows are inclusive [i,i+dL] and [i-dR,i]. For every N including zero, supports [-N,N+dL] and [-N-dR,N] control the centered target interval. Both actual centered escape sets are empty at moduli N+dL and N+dR.
+
+These history and word identities combine in certificate_formulas and whole_certificate to establish both branches of full_original_6_2 on the same actual carriers.
+
+## References
+
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/Full62.full_original_6_2`
+- Dependency: [D5/S3/ConceptDynamics/Coding/CompatibleResponseForgettingBound](../CompatibleResponseForgettingBound.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion](../IncomingLiftAmbiguityCriterion.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced/FiniteWindowWordTransport](FiniteWindowWordTransport.md)
