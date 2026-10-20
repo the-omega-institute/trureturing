@@ -94,6 +94,10 @@ $$\forall d \in \mathbb{N},\; (1 \le d) \Rightarrow (\forall U \in \operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BadhaniDasNoisyUnitary.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/badhani-das-2026-noisy-unitary-conditional-min-entropy` (proved) by `D5/S3/Quantum/Information/BadhaniDasNoisyUnitary.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"badhani-das-2026-noisy-unitary-conditional-min-entropy","declaration_gid":"D5/S3/Quantum/Information/BadhaniDasNoisyUnitary.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* H. Badhani and S. Das (2026). *Conditional channel entropy sets fundamental limits on thermodynamic quantum information processing*. DOI: [10.48550/arXiv.2604.01217](https://doi.org/10.48550/arXiv.2604.01217). URL: <https://arxiv.org/abs/2604.01217v2>.

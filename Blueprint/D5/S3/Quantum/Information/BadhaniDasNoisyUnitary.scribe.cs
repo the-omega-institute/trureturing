@@ -40,7 +40,10 @@ internal sealed class BadhaniDasNoisyUnitaryDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(ClaimBody())), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The reduced two-qubit Choi matrix has both marginals maximally mixed. In the magic basis it is real symmetric, so its real orthonormal eigenvectors give a maximally entangled eigenbasis. Signs in this eigenbasis have unitary partners on the other factor. Their tensor products fix the pure Choi vector and the white-noise matrix. Averaging a feasible optimizer over these signs preserves its trace and makes it the normalized Choi matrix of a channel. The state and channel optimizations therefore have equal costs after scaling by d, which subtracts log₂ d from the entropy. The proof includes singular eigenvalues, the endpoints p = 0 and p = 1, and d = 1. Conditioning dimensions greater than two are outside this statement."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("badhani-das-2026-noisy-unitary-conditional-min-entropy"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
