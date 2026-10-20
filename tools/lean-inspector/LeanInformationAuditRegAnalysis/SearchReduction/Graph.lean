@@ -88,6 +88,8 @@ structure GraphEdge where
   analytic : List Nat := []
   usedPremises : List Nat := []
   pairedUsedPremises : List Nat := []
+  givenUsedPremises : List Nat := []
+  pairedGivenUsedPremises : List Nat := []
   pairedCost : EdgeCost := .unknown
   visibleCost : EdgeCost := .unknown
   pairedVisibleCost : EdgeCost := .unknown
@@ -338,11 +340,22 @@ def upperIsZero (i : Interval) : Bool :=
 def closureOf (i : Interval) : Closure :=
   if upperIsZero i then .zero else .partial_
 
+/-- An actual price change consumes a selected synthetic structure seed. -/
+def isWitnessEdge (graph : ProofGraph) (selected : List Nat) (edge : GraphEdge) : Bool :=
+  edge.cost == .one && edge.pairedCost == .zero &&
+    edge.pairedUsedPremises.any (fun p =>
+      (graph.vertices.find? (·.id == p)).any fun v =>
+        v.structureSeed && !v.seed && !v.targetPart &&
+          !edge.analytic.contains p && selected.contains p)
+
+def hasWitness (reading : GraphReading) : Bool :=
+  reading.graph.edges.any (isWitnessEdge reading.graph reading.selectedSeeds)
+
 def classifyGraph (reading : GraphReading) : Verdict :=
   if reading.presentationCertified || reading.priorReferenceSuccess ||
       upperIsZero reading.baseline then .bindOnly
   else if reading.graph.complete && reading.targetPartComplete &&
-      !reading.noAuxiliary && !reading.witnessEdges.isEmpty &&
+      !reading.noAuxiliary && hasWitness reading &&
       reading.graph.edges.all (fun e => e.cost != .unknown && e.pairedCost != .unknown) && reading.presentationComplete && reading.isolated && reading.structureChecked &&
       reading.structureClean && finite reading.baseline.lower &&
       finite reading.baseline.upper && finite reading.paired.lower &&

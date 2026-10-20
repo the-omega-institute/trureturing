@@ -1,5 +1,6 @@
 import Mathlib
 import LeanInformationAuditRegAnalysis.SearchReduction.Graph
+import LeanInformationAuditInterface.Contract.AuricFib
 
 /-! Finite-depth derivation semantics for the graph recurrence. -/
 namespace LeanInformationAudit.Tests.SearchReduction.GraphModel
@@ -386,6 +387,518 @@ theorem graph_verdict_partition (reading : GraphReading) :
     ¬ (classifyGraph reading = .nonBindOnly ∧ classifyGraph reading = .insufficient) := by
   cases classifyGraph reading <;> simp
 
+/-- Increasing a derivation budget preserves the same author-edge tree. -/
+private theorem derivable_budget_mono (graph : ProofGraph) (price : GraphEdge → Nat)
+    (seeds : List Nat) (fuel v a b : Nat) (hab : a ≤ b)
+    (h : Derivable graph price seeds fuel v a) :
+    Derivable graph price seeds fuel v b := by
+  induction fuel generalizing v a b with
+  | zero => exact h
+  | succ fuel ih =>
+    rcases h with hs | ⟨edge, he, hc, hp⟩
+    · exact Or.inl hs
+    · exact Or.inr ⟨edge, he, le_trans hc hab,
+        fun p hm => ih p _ _ (Nat.sub_le_sub_right hab _) (hp p hm)⟩
+
+private theorem seed_derivable (graph : ProofGraph) (price : GraphEdge → Nat)
+    (seeds : List Nat) (fuel v n : Nat) (h : v ∈ seeds) :
+    Derivable graph price seeds fuel v n := by
+  cases fuel with
+  | zero => exact h
+  | succ fuel => exact Or.inl h
+
+private theorem derivable_fuel_mono (graph : ProofGraph) (price : GraphEdge → Nat)
+    (seeds : List Nat) (fuel v n extra : Nat)
+    (h : Derivable graph price seeds fuel v n) :
+    Derivable graph price seeds (fuel + extra) v n := by
+  induction fuel generalizing v n with
+  | zero => simpa using seed_derivable graph price seeds extra v n h
+  | succ fuel ih =>
+    rw [Nat.succ_add]
+    rcases h with hs | ⟨edge, he, hc, hp⟩
+    · exact Or.inl hs
+    · exact Or.inr ⟨edge, he, hc, fun p hm => ih p _ (hp p hm)⟩
+
+/-- Graph simulation compares actual incoming hyperedges and their prices.
+It covers cut/given ablations without assuming a numerical DP result. -/
+theorem derivable_edge_simulation (expensive cheap : ProofGraph)
+    (expensivePrice cheapPrice : GraphEdge → Nat) (small large : List Nat)
+    (seedInclusion : ∀ v ∈ small, v ∈ large)
+    (simulate : ∀ edge ∈ expensive.edges, ∃ replacement ∈ cheap.edges,
+      replacement.conclusion = edge.conclusion ∧ replacement.premises = edge.premises ∧
+      cheapPrice replacement ≤ expensivePrice edge)
+    (fuel v n : Nat) (h : Derivable expensive expensivePrice small fuel v n) :
+    Derivable cheap cheapPrice large fuel v n := by
+  induction fuel generalizing v n with
+  | zero => exact seedInclusion v h
+  | succ fuel ih =>
+    rcases h with hs | ⟨edge, he, hc, hp⟩
+    · exact Or.inl (seedInclusion v hs)
+    · have hem := (List.mem_filter.mp he).1
+      have hcon : edge.conclusion = v := by simpa using (List.mem_filter.mp he).2
+      obtain ⟨replacement, member, con, premises, price⟩ := simulate edge hem
+      refine Or.inr ⟨replacement, List.mem_filter.mpr ⟨member, by simp [con, hcon]⟩,
+        le_trans price hc, ?_⟩
+      intro p hm
+      have h := ih p _ (hp p (premises ▸ hm))
+      exact derivable_budget_mono cheap cheapPrice large fuel p _ _
+        (Nat.sub_le_sub_left price n) h
+
+/-- If every cut-priced edge has the same-premise given-priced route at no
+larger price, then d_given ≤ d_cut. This also proves each-arm monotonicity
+under strengthening R, including heterogeneous edge-price changes. -/
+theorem cut_dominates_given (cut given : ProofGraph)
+    (cutWeight givenWeight : EdgeCost → Nat) (small large : List Nat)
+    (seedInclusion : ∀ v ∈ small, v ∈ large)
+    (simulate : ∀ edge ∈ cut.edges, ∃ replacement ∈ given.edges,
+      replacement.conclusion = edge.conclusion ∧ replacement.premises = edge.premises ∧
+      givenWeight replacement.cost ≤ cutWeight edge.cost)
+    (fuel v : Nat) :
+    depthFuel given givenWeight large fuel v ≤ depthFuel cut cutWeight small fuel v := by
+  cases hr : depthFuel cut cutWeight small fuel v with
+  | top => cases depthFuel given givenWeight large fuel v <;> trivial
+  | finite n =>
+    have h : Derivable cut (fun e => cutWeight e.cost) small fuel v n :=
+      (depthFuel_le_iff_derivable ..).mp (by rw [hr]; exact Nat.le_refl n)
+    exact (depthFuel_le_iff_derivable ..).mpr
+      (derivable_edge_simulation cut given _ _ small large seedInclusion simulate fuel v n h)
+
+/-- A zero baseline remains zero when R is strengthened and seed information
+is enlarged. This is the bind-only monotonic direction, not a claim about Δ. -/
+theorem zero_baseline_monotone (graph : ProofGraph) (cheap expensive : EdgeCost → Nat)
+    (small large : List Nat) (seedInclusion : ∀ v ∈ small, v ∈ large)
+    (costMonotone : ∀ c, cheap c ≤ expensive c) (fuel v : Nat)
+    (zero : depthFuel graph expensive small fuel v = .finite 0) :
+    depthFuel graph cheap large fuel v = .finite 0 := by
+  have bound := depthFuel_monotone graph cheap expensive small large seedInclusion
+    costMonotone fuel v
+  rw [zero] at bound
+  cases heq : depthFuel graph cheap large fuel v with
+  | top => simp [heq] at bound
+  | finite n =>
+    have hn : n ≤ 0 := by simpa [heq] using bound
+    simpa [Nat.eq_zero_of_le_zero hn]
+
+/-- Graph-locality depends only on incoming live edges and seed information on
+an ancestor-closed region. Arbitrary components outside that region are ignored. -/
+theorem derivable_locality (left right : ProofGraph) (price : GraphEdge → Nat)
+    (leftSeeds rightSeeds : List Nat) (region : Nat → Prop)
+    (sameSeeds : ∀ v, region v → (v ∈ leftSeeds ↔ v ∈ rightSeeds))
+    (sameIncoming : ∀ v, region v → incoming left v = incoming right v)
+    (closed : ∀ v, region v → ∀ edge ∈ incoming left v,
+      ∀ p ∈ edge.premises, region p) (fuel v n : Nat) (hv : region v) :
+    Derivable left price leftSeeds fuel v n ↔ Derivable right price rightSeeds fuel v n := by
+  induction fuel generalizing v n with
+  | zero => exact sameSeeds v hv
+  | succ fuel ih =>
+    simp only [Derivable]
+    constructor
+    · rintro (hs | ⟨edge, he, hc, hp⟩)
+      · exact Or.inl ((sameSeeds v hv).mp hs)
+      · exact Or.inr ⟨edge, (sameIncoming v hv) ▸ he, hc,
+          fun p hm => (ih p _ (closed v hv edge he p hm)).mp (hp p hm)⟩
+    · rintro (hs | ⟨edge, he, hc, hp⟩)
+      · exact Or.inl ((sameSeeds v hv).mpr hs)
+      · have old : edge ∈ incoming left v := (sameIncoming v hv).symm ▸ he
+        exact Or.inr ⟨edge, old, hc,
+          fun p hm => (ih p _ (closed v hv edge old p hm)).mpr (hp p hm)⟩
+
+/-- Changing only disconnected components or seeds off the live ancestor region
+preserves every min-max depth, including top and fuel-boundary cases. -/
+theorem off_path_invariance (left right : ProofGraph) (weight : EdgeCost → Nat)
+    (leftSeeds rightSeeds : List Nat) (region : Nat → Prop)
+    (sameSeeds : ∀ v, region v → (v ∈ leftSeeds ↔ v ∈ rightSeeds))
+    (sameIncoming : ∀ v, region v → incoming left v = incoming right v)
+    (closed : ∀ v, region v → ∀ edge ∈ incoming left v,
+      ∀ p ∈ edge.premises, region p) (fuel v : Nat) (hv : region v) :
+    depthFuel left weight leftSeeds fuel v = depthFuel right weight rightSeeds fuel v := by
+  apply bound_ext
+  intro n
+  rw [depthFuel_le_iff_derivable, depthFuel_le_iff_derivable]
+  exact derivable_locality left right _ leftSeeds rightSeeds region sameSeeds
+    sameIncoming closed fuel v n hv
+
+/-- No artificial fuel bound is imposed on the mathematical least-cost semantics. -/
+def Reachable (graph : ProofGraph) (price : GraphEdge → Nat) (seeds : List Nat)
+    (v n : Nat) : Prop := ∃ fuel, Derivable graph price seeds fuel v n
+
+private theorem eliminate_zero_seed (graph : ProofGraph) (price : GraphEdge → Nat)
+    (seeds : List Nat) (a zeroFuel : Nat)
+    (zero : Derivable graph price seeds zeroFuel a 0) (fuel v n : Nat)
+    (h : Derivable graph price (a :: seeds) fuel v n) :
+    Derivable graph price seeds (fuel + zeroFuel) v n := by
+  induction fuel generalizing v n with
+  | zero =>
+    rcases List.mem_cons.mp h with rfl | hs
+    · simpa using derivable_budget_mono graph price seeds zeroFuel v 0 n (Nat.zero_le _) zero
+    · simpa using seed_derivable graph price seeds zeroFuel v n hs
+  | succ fuel ih =>
+    rw [Nat.succ_add]
+    rcases h with hs | ⟨edge, he, hc, hp⟩
+    · rcases List.mem_cons.mp hs with rfl | hs
+      · have hzero := derivable_budget_mono graph price seeds zeroFuel v 0 n (Nat.zero_le _) zero
+        have h := derivable_fuel_mono graph price seeds zeroFuel v n (fuel + 1) hzero
+        simpa [Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using h
+      · exact seed_derivable graph price seeds _ v n hs
+    · exact Or.inr ⟨edge, he, hc, fun p hm => ih p _ (hp p hm)⟩
+
+/-- A zero-cost derived fact is redundant as a seed for fixed local prices.
+The quantification over fuel avoids a false claim at an unsaturated table. -/
+theorem zero_seed_redundant (graph : ProofGraph) (price : GraphEdge → Nat)
+    (seeds : List Nat) (a : Nat) (zero : Reachable graph price seeds a 0) (w n : Nat) :
+    Reachable graph price (a :: seeds) w n ↔ Reachable graph price seeds w n := by
+  obtain ⟨zeroFuel, hz⟩ := zero
+  constructor
+  · rintro ⟨fuel, h⟩
+    exact ⟨fuel + zeroFuel, eliminate_zero_seed graph price seeds a zeroFuel hz fuel w n h⟩
+  · rintro ⟨fuel, h⟩
+    exact ⟨fuel, derivable_mono graph price price seeds (a :: seeds)
+      (by intro v hv; exact List.mem_cons_of_mem a hv) (by intro e; exact Nat.le_refl _) fuel w n h⟩
+
+/-- Infimum of reachable finite costs; no proof or optimal value is assumed. -/
+noncomputable def semanticDepth (graph : ProofGraph) (price : GraphEdge → Nat)
+    (seeds : List Nat) (v : Nat) : WithTop Nat :=
+  sInf ((fun n : Nat => (n : WithTop Nat)) '' {n | Reachable graph price seeds v n})
+
+/-- The full least min-max distance is unchanged by adding a zero-cost seed,
+with fixed local prices. -/
+theorem zero_seed_depth_eq (graph : ProofGraph) (price : GraphEdge → Nat)
+    (seeds : List Nat) (a : Nat) (zero : Reachable graph price seeds a 0) (w : Nat) :
+    semanticDepth graph price (a :: seeds) w = semanticDepth graph price seeds w := by
+  unfold semanticDepth
+  congr 2
+  ext n
+  exact zero_seed_redundant graph price seeds a zero w n
+
+/-- If the strongest R closes every local declaration, every reachable vertex
+has zero depth. Unreachable vertices stay top instead of becoming false facts. -/
+theorem top_reference_zero (graph : ProofGraph) (seeds : List Nat) (fuel v n : Nat)
+    (reachable : Derivable graph (fun _ => 0) seeds fuel v n) :
+    depthFuel graph (fun _ => 0) seeds fuel v = .finite 0 := by
+  have lower : Derivable graph (fun _ => 0) seeds fuel v 0 := by
+    induction fuel generalizing v n with
+    | zero => exact reachable
+    | succ fuel ih =>
+      rcases reachable with hs | ⟨edge, he, _, hp⟩
+      · exact Or.inl hs
+      · exact Or.inr ⟨edge, he, Nat.zero_le _, fun p hm => ih p _ (hp p hm)⟩
+  have bound := (depthFuel_le_iff_derivable graph (fun _ => 0) seeds fuel v 0).mpr lower
+  cases heq : depthFuel graph (fun _ => 0) seeds fuel v with
+  | top => simp [heq] at bound
+  | finite n =>
+    have hn : n ≤ 0 := by simpa [heq] using bound
+    simpa [Nat.eq_zero_of_le_zero hn]
+
+/-- The weakest R has no zero-depth route at a nonseed vertex; it prices each
+edge one, rather than asserting that an entire multistep graph has depth one. -/
+theorem bottom_reference_positive (graph : ProofGraph) (seeds : List Nat)
+    (fuel v : Nat) (notSeed : v ∉ seeds) :
+    ¬ depthFuel graph (fun _ => 1) seeds fuel v ≤ .finite 0 := by
+  rw [depthFuel_le_iff_derivable]
+  cases fuel with
+  | zero => exact notSeed
+  | succ fuel =>
+    rintro (hs | ⟨_, _, hc, _⟩)
+    · exact notSeed hs
+    · exact Nat.not_succ_le_zero 0 hc
+
+/-- The three routes b→s, b→t, s→t retain their actual premises. -/
+def triangleGraph (direct via : EdgeCost) : ProofGraph where
+  vertices := [{id := 0}, {id := 1}, {id := 2}]
+  edges := [{conclusion := 1, premises := [0], cost := .one},
+    {conclusion := 2, premises := [0], cost := direct},
+    {conclusion := 2, premises := [1], cost := via}]
+  root := 2
+
+/-- Both arm distances are calculated by the production recurrence for every
+known direct/via price assignment. -/
+theorem triangle_distances (direct via : EdgeCost) :
+    depthFuel (triangleGraph direct via) costUpper [0] 3 2 =
+      .finite (min (costUpper direct) (1 + costUpper via)) ∧
+    depthFuel (triangleGraph direct via) costUpper [0, 1] 3 2 =
+      .finite (min (costUpper direct) (costUpper via)) := by
+  cases direct <;> cases via <;> decide
+
+/-- Strengthening only s→t creates a gain; then strengthening b→t erases it.
+Every edge price weakly decreases along this sequence. -/
+theorem delta_not_monotone :
+    (let original := triangleGraph .one .one
+     let middle := triangleGraph .one .zero
+     let strongest := triangleGraph .zero .zero
+     depthFuel original costUpper [0] 3 2 = .finite 1 ∧
+     depthFuel original costUpper [0, 1] 3 2 = .finite 1 ∧
+     depthFuel middle costUpper [0] 3 2 = .finite 1 ∧
+     depthFuel middle costUpper [0, 1] 3 2 = .finite 0 ∧
+     depthFuel strongest costUpper [0] 3 2 = .finite 0 ∧
+     depthFuel strongest costUpper [0, 1] 3 2 = .finite 0 ∧
+     (1 - 1 : Nat) < 1 - 0 ∧ (1 - 0 : Nat) > 0 - 0) := by
+  decide
+
+/-- An empty eligible auxiliary set is never a positive reduction verdict. -/
+theorem no_auxiliary_not_nonBindOnly (reading : GraphReading)
+    (empty : reading.noAuxiliary = true) : classifyGraph reading ≠ .nonBindOnly := by
+  simp [classifyGraph, empty]
+  split <;> simp
+
+/-- The classifier cannot turn an unfinished target-part exclusion into content. -/
+theorem target_part_incomplete_not_nonBindOnly (reading : GraphReading)
+    (incomplete : reading.targetPartComplete = false) :
+    classifyGraph reading ≠ .nonBindOnly := by
+  simp [classifyGraph, incomplete]
+  split <;> simp
+
+/-- Positive classification requires an actual one-to-zero price change,
+consuming a selected synthetic seed on the reported optimal route. -/
+theorem nonBindOnly_has_witness_edge (reading : GraphReading)
+    (positive : classifyGraph reading = .nonBindOnly) :
+    ∃ edge ∈ reading.graph.edges, edge.cost = .one ∧ edge.pairedCost = .zero := by
+  have witness : hasWitness reading = true := by
+    unfold classifyGraph at positive
+    split at positive
+    · contradiction
+    · split at positive
+      · rename_i condition
+        simp only [Bool.and_eq_true] at condition
+        aesop
+      · contradiction
+  obtain ⟨edge, member, priced⟩ := List.any_eq_true.mp witness
+  simp only [isWitnessEdge, Bool.and_eq_true, beq_iff_eq] at priced
+  exact ⟨edge, member, priced.1.1, priced.1.2⟩
+
+/-- Excluding every auxiliary vertex as target-part eliminates every eligible
+synthetic witness, independently of the supplied numerical intervals. -/
+theorem all_target_part_not_nonBindOnly (reading : GraphReading)
+    (parts : ∀ v ∈ reading.graph.vertices,
+      v.structureSeed = true → v.targetPart = true) :
+    classifyGraph reading ≠ .nonBindOnly := by
+  intro positive
+  have witness : hasWitness reading = true := by
+    unfold classifyGraph at positive
+    split at positive
+    · contradiction
+    · split at positive
+      · rename_i condition
+        simp only [Bool.and_eq_true] at condition
+        tauto
+      · contradiction
+  obtain ⟨edge, _, priced⟩ := List.any_eq_true.mp witness
+  simp only [isWitnessEdge, Bool.and_eq_true] at priced
+  obtain ⟨p, _, eligible⟩ := List.any_eq_true.mp priced.2
+  cases found : reading.graph.vertices.find? (fun v => v.id == p) with
+  | none => simp [found] at eligible
+  | some v =>
+    have member := List.mem_of_find?_eq_some found
+    simp only [found, Option.any_some, Bool.and_eq_true, Bool.not_eq_true] at eligible
+    have targetPart := parts v member (by tauto)
+    simp [targetPart] at eligible
+
+private def modelPaired (graph : ProofGraph) : ProofGraph :=
+  {graph with edges := graph.edges.map (fun e => {e with cost := e.pairedCost})}
+
+/-- A finite model with a synthetic seed and actual per-arm edge prices. -/
+def nondegenerateReading (direct : EdgeCost) : GraphReading := Id.run do
+  let graph : ProofGraph := {
+    vertices := [{id := 0}, {id := 1, structureSeed := true}, {id := 2}], root := 2
+    edges := [
+      {conclusion := 1, premises := [0], cost := .zero, pairedCost := .zero},
+      {conclusion := 2, premises := [0], cost := direct, pairedCost := direct},
+      {conclusion := 2, premises := [1], cost := .one, pairedCost := .zero,
+        pairedUsedPremises := [1]}]}
+  return {
+    graph, baseline := graphInterval graph [0],
+    paired := graphInterval (modelPaired graph) [0, 1], selectedSeeds := [1],
+    pairedUsesSeed := true, presentationComplete := true, isolated := true,
+    structureChecked := true, structureClean := true, witnessEdges := [2]}
+
+/-- Both graph verdicts occur on readings whose distances are computed from
+their actual hypergraphs, rather than supplied numerical intervals. -/
+theorem graph_nondegeneracy :
+    classifyGraph (nondegenerateReading .zero) = .bindOnly ∧
+    classifyGraph (nondegenerateReading .one) = .nonBindOnly ∧
+    classifyClosure (nondegenerateReading .one) = some .zero := by
+  decide +kernel
+
+/-- Assumption-monotone repricing alone does not make zero seeds redundant:
+the newly available statement can turn another local edge from one to zero. -/
+theorem zero_seed_repricing_counterexample :
+    (let r := nondegenerateReading .one
+     depthFuel r.graph costUpper [0] 3 1 = .finite 0 ∧
+     depthFuel r.graph costUpper [0] 3 2 = .finite 1 ∧
+     depthFuel (modelPaired r.graph) costUpper [0, 1] 3 2 = .finite 0 ∧
+     ∀ edge ∈ r.graph.edges, costUpper edge.pairedCost ≤ costUpper edge.cost) := by
+  decide
+
+/-- A two-edge fine graph and its one-declaration contraction share their
+boundary; their local reconstruction prices remain independent observations. -/
+def twoStepGraph (cost : EdgeCost) : ProofGraph where
+  vertices := [{id := 0}, {id := 1}, {id := 2}]
+  root := 2
+  edges := [{conclusion := 1, premises := [0], cost},
+    {conclusion := 2, premises := [1], cost}]
+
+def contractedGraph (cost : EdgeCost) : ProofGraph where
+  vertices := [{id := 0}, {id := 2}]
+  root := 2
+  edges := [{conclusion := 2, premises := [0], cost}]
+
+/-- Contracting declaration interiors changes both granularity and the object
+priced by R. Min-max depth therefore has no unconditional order by granularity. -/
+theorem granularity_unordered :
+    depthFuel (contractedGraph .one) costUpper [0] 3 2 = .finite 1 ∧
+    depthFuel (twoStepGraph .one) costUpper [0] 3 2 = .finite 2 ∧
+    depthFuel (twoStepGraph .zero) costUpper [0] 3 2 = .finite 0 ∧
+    (1 : Nat) < 2 ∧ (1 : Nat) > 0 := by
+  decide
+
+open D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window)
+open LeanInformationAudit.AuricFib.Contract
+
+/-- Boolean features supply four ordinary atoms; the fifth is unused. -/
+def featureWindow (x y : Bool) : Window :=
+  match x, y with
+  | false, false => .zero
+  | true, false => .low
+  | false, true => .high
+  | true, true => .ends
+
+/-- Pushforward of any finite probability distribution along two features. -/
+noncomputable def booleanFeatureLaw {α : Type*} [Fintype α]
+    (mass : α → ℝ) (x y : α → Bool) (w : Window) : ℝ :=
+  ∑ a, if featureWindow (x a) (y a) = w then mass a else 0
+
+/-- The unrestricted FIB encoding is available for arbitrary features and
+arbitrary finite distributions, with no independence or search hypothesis. -/
+theorem boolean_features_five_mode {α : Type*} [Fintype α]
+    (mass : α → ℝ) (x y : α → Bool)
+    (nonnegative : ∀ a, 0 ≤ mass a) (normalized : ∑ a, mass a = 1) :
+    (∀ w, 0 ≤ booleanFeatureLaw mass x y w) ∧
+    (booleanFeatureLaw mass x y .zero + booleanFeatureLaw mass x y .low +
+      booleanFeatureLaw mass x y .high + booleanFeatureLaw mass x y .ends +
+      booleanFeatureLaw mass x y .middle = 1) ∧
+    Pyramid.Z (booleanFeatureLaw mass x y) = 0 ∧
+    Pyramid.r (booleanFeatureLaw mass x y) = 1 := by
+  have middle : booleanFeatureLaw mass x y .middle = 0 := by
+    apply Finset.sum_eq_zero
+    intro a _
+    cases hx : x a <;> cases hy : y a <;> simp [featureWindow, hx, hy]
+  refine ⟨?_, ?_, middle, ?_⟩
+  · intro w
+    apply Finset.sum_nonneg
+    intro a _
+    split <;> simp_all
+  · unfold booleanFeatureLaw
+    rw [← Finset.sum_add_distrib, ← Finset.sum_add_distrib,
+      ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
+    convert normalized using 1
+    apply Finset.sum_congr rfl
+    intro a _
+    cases hx : x a <;> cases hy : y a <;> simp [featureWindow, hx, hy]
+  · simp [Pyramid.r, Pyramid.Z, middle]
+
+/-- Product Bernoulli law on two independently chosen data coordinates. -/
+noncomputable def independentLaw (a b : ℝ) : Window → ℝ
+  | .zero => (1 - a) * (1 - b)
+  | .low => a * (1 - b)
+  | .high => (1 - a) * b
+  | .ends => a * b
+  | .middle => 0
+
+/-- The independent-candidate bridge supplies a normalized nonnegative law and
+zero delta for all candidate proportions, rather than a fixed numerical law. -/
+theorem independent_law_bridge (a b : ℝ) (ha : 0 ≤ a ∧ a ≤ 1)
+    (hb : 0 ≤ b ∧ b ≤ 1) :
+    (∀ w, 0 ≤ independentLaw a b w) ∧
+    (independentLaw a b .zero + independentLaw a b .low +
+      independentLaw a b .high + independentLaw a b .ends +
+      independentLaw a b .middle = 1) ∧
+    Pyramid.delta (independentLaw a b) = 0 := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro w
+    have ha0 := ha.1
+    have hb0 := hb.1
+    have ha1 : 0 ≤ 1 - a := sub_nonneg.mpr ha.2
+    have hb1 : 0 ≤ 1 - b := sub_nonneg.mpr hb.2
+    cases w <;> simp only [independentLaw]
+    all_goals positivity
+  · simp only [independentLaw]
+    ring
+  · simp only [Pyramid.delta, Pyramid.r, Pyramid.Z, Pyramid.kappa,
+      Pyramid.X, Pyramid.Y, independentLaw]
+    ring
+
+/-- Coupling varies the joint coordinate while both marginals stay fixed. -/
+noncomputable def couplingLaw (a b joint : ℝ) : Window → ℝ
+  | .zero => 1 - a - b + joint
+  | .low => a - joint
+  | .high => b - joint
+  | .ends => joint
+  | .middle => 0
+
+/-- Two distinct feasible couplings with the same marginals are separated.
+The four positivity assumptions specify a real interior family, not mere
+sharing of syntax or an assertion that a single distribution is strict. -/
+theorem coupling_law_bridge (a b k l : ℝ)
+    (hk : 0 < 1 - a - b + k ∧ 0 < a - k ∧ 0 < b - k ∧ 0 < k)
+    (hl : 0 < 1 - a - b + l ∧ 0 < a - l ∧ 0 < b - l ∧ 0 < l)
+    (different : k ≠ l) :
+    (∀ w, 0 ≤ couplingLaw a b k w ∧ 0 ≤ couplingLaw a b l w) ∧
+    (couplingLaw a b k .zero + couplingLaw a b k .low +
+      couplingLaw a b k .high + couplingLaw a b k .ends +
+      couplingLaw a b k .middle = 1) ∧
+    Pyramid.CoarseEq (couplingLaw a b k) (couplingLaw a b l) ∧
+    Pyramid.delta (couplingLaw a b k) ≠ Pyramid.delta (couplingLaw a b l) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro w
+    cases w <;> simp only [couplingLaw] <;> constructor <;> linarith [hk.1, hk.2.1,
+      hk.2.2.1, hk.2.2.2, hl.1, hl.2.1, hl.2.2.1, hl.2.2.2]
+  · simp only [couplingLaw]
+    ring
+  · simp only [Pyramid.CoarseEq, Pyramid.X, Pyramid.Y, Pyramid.Z, couplingLaw]
+    constructor
+    · ring
+    constructor
+    · ring
+    · trivial
+  · simp only [Pyramid.delta, Pyramid.r, Pyramid.X, Pyramid.Y, Pyramid.Z,
+      Pyramid.kappa, couplingLaw]
+    intro equality
+    apply different
+    nlinarith
+
+/-- Separation already occurs on a two-point, explicitly enumerable family;
+strictness alone supplies no growing search-space lower bound. -/
+theorem two_point_strict_family :
+    (let law := fun t : Bool => couplingLaw (1 / 2) (1 / 2)
+       (if t then 3 / 8 else 1 / 8)
+     Pyramid.CoarseEq (law false) (law true) ∧
+     Pyramid.delta (law false) ≠ Pyramid.delta (law true) ∧
+     (Finset.univ : Finset Bool).card = 2) := by
+  dsimp
+  have h := coupling_law_bridge (1 / 2) (1 / 2) (1 / 8) (3 / 8)
+    (by norm_num) (by norm_num) (by norm_num)
+  exact ⟨h.2.2.1, h.2.2.2, by decide⟩
+
+#print axioms triangle_distances
+#print axioms delta_not_monotone
+#print axioms no_auxiliary_not_nonBindOnly
+#print axioms target_part_incomplete_not_nonBindOnly
+#print axioms nonBindOnly_has_witness_edge
+#print axioms all_target_part_not_nonBindOnly
+#print axioms graph_nondegeneracy
+#print axioms zero_seed_repricing_counterexample
+#print axioms granularity_unordered
+#print axioms boolean_features_five_mode
+#print axioms independent_law_bridge
+#print axioms coupling_law_bridge
+#print axioms two_point_strict_family
+
+#print axioms derivable_edge_simulation
+#print axioms cut_dominates_given
+#print axioms zero_baseline_monotone
+#print axioms off_path_invariance
+#print axioms zero_seed_depth_eq
+#print axioms top_reference_zero
+#print axioms bottom_reference_positive
 #print axioms dpTable_eq_depthFuel
 #print axioms dpRounds_le_iff_derivable
 #print axioms edge_extension_preserves_derivations
