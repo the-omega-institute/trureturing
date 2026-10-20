@@ -1,0 +1,26 @@
+**Proposition 88.4 (cofinality is not metric escape).** Source cofinality
+does not imply that a corresponding geometric realization escapes to
+infinite distance.
+
+**Proof.** Let \(n\in\mathbb N\) be a cofinal source index. The maps
+
+$$
+\chi_1(n)=(n,0,\ldots,0)\in\mathbb R^d,\qquad
+\chi_2(n)=(2^{-n},0,\ldots,0)\in\mathbb R^d
+$$
+
+are both injective source placements. The first has unbounded distance from
+the origin, while the second has a finite accumulation point. Replacing the
+second by
+\(\chi_3(n)=(\sin(\theta n),\cos(\theta n),0,\ldots,0)\), with
+\(\theta/(2\pi)\) irrational, gives an injective bounded placement as well.
+The source predicate, its cofinality sentence, and every \(J_B(h)\) value are
+unchanged because none of these definitions contains \(\chi_i\) or a metric.
+Therefore cofinal source rank alone cannot establish properness, radial
+escape, or a physical infinite boundary. \(\square\)
+
+The counterexample is deliberately elementary. It identifies the missing
+bridge rather than denying that a useful bridge may exist for FIB. A native
+transport could rule out the bounded placements, but that requires a theorem
+about the transport and its metric compatibility.
+
