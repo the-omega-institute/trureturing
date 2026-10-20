@@ -62,6 +62,8 @@ A mismatch of the source relators or the binding action would invalidate the int
 
 **Escape audit unfinished.** The public audit targets are `D5.S3.Quantum.Algebra.GeneralizedCHSHGroupDecomposition.result` and the compiler-generated congruence theorems `D5.S3.Quantum.Algebra.GeneralizedCHSHGroupDecomposition.cyclicHom.congr_simp` and `D5.S3.Quantum.Algebra.GeneralizedCHSHGroupDecomposition.stepAut.congr_simp`. The latter two are compiler consequences of the definitions, not additional authored mathematical conclusions. There is no delivered Reg mirror or validated registration. [#16351](https://github.com/the-omega-institute/trureturing/issues/16351) identifies the missing dependent-family reconstruction, exact bridge, enrolled readout, observational-dependence evidence, and variation and sensitivity proofs.
 
+The public cyclic evaluation helper `D5.S3.Quantum.Algebra.GeneralizedCHSHGroupDecomposition.cyclicHom_int` is consumed by this proof and by the encoder settlement in #19189. Its four-slot audit is unfinished under [#19215](https://github.com/the-omega-institute/trureturing/issues/19215), which identifies the missing dependent-family realization, reconstruction and equivalence bridges, enrolled readout, variation, sensitivity and observational dependence. No validated registration is claimed for this helper.
+
 ## Triage
 
 ### What the settlement shows

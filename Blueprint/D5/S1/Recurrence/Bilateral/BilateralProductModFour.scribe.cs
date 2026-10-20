@@ -16,6 +16,9 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
         "Hanna's bilateral product family has every positive coefficient equal to two modulo four.",
         H("The Bilateral Product Family of A381362 and A381363"),
         Blocks(
+            Node("ofSeries_inverse", "Laurent embedding preserves an inverse", OfSeriesInverseFormula(),
+                "For a rational power series whose constant coefficient is nonzero, "
+                + "ofPowerSeries sends its power-series inverse to its Laurent-series inverse."),
             Paragraph(Text("Paul D. Hanna's entries hanna2025a381362 and hanna2025a381363 "
                 + "specify the same bilateral product equation with parameters c=2 and c=3. "
                 + "Both conjecture a(n)=2 modulo four for every positive n. The common "
@@ -142,6 +145,19 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
         new Formula.Subscript(F.Sum, Seq(F.Id(name), Sp, InMacro, Sp, set)), Sp, Parenthesized(body));
     private static Formula Window(Formula n) => Call("Icc", Negative(n), n);
     private static Formula Half() => new Formula.Fraction(D(1), D(2));
+
+    private static Formula OfSeriesInverseFormula()
+    {
+        var b = F.Id("B");
+        var rational = Seq(Mathbb, Grp(F.Id("Q")));
+        var embedding = Seq(Operatorname, Grp(F.Id("HahnSeries")), Dot,
+            Operatorname, Grp(F.Id("ofPowerSeries")));
+        Formula Embed(Formula f) => new Formula.Apply(embedding, [Integers(), rational, f]);
+        var inverseB = new Formula.Power(Parenthesized(b), Negative(D(1)));
+        return Disp(Seq(Bound("B", Call("PowerSeries", rational)),
+            Implication(new Formula.Relation(Call("constantCoeff", b), FormulaRelationOperator.NotEqual, D(0)),
+                Equal(Embed(inverseB), new Formula.Power(Parenthesized(Embed(b)), Negative(D(1)))))));
+    }
 
     private static Formula TermFormula()
     {
