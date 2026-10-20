@@ -27,6 +27,7 @@ escape_witness: Commutant.two_copy_commutant, via quarter phases and a Hadamard 
 admission_basis: escape-witness
 Direct frozen dependencies: none; the upstream imports are pinned Mathlib.
 Escape audit unfinished for hadamard_unitary: https://github.com/the-omega-institute/trureturing/issues/16609.
+Escape audit unfinished for replicaSwap_commutes: https://github.com/the-omega-institute/trureturing/issues/19279.
 The finite Gram and coefficient identities are consumed normalization helpers. The new
 content is a universal commutant classification and the literal Haar-average reduction;
 no bounded enumeration, checker, numerical certificate or positive finite instance is retained.
@@ -505,7 +506,7 @@ private theorem invariant_unvectorize_commutes (v : ((n × n) × (n × n)) → �
   have h := congrArg (fun X : Matrix (n×n) (n×n) ℂ => X*(U.val ⊗ₖ U.val)) hc
   simpa [mul_assoc,hs] using h.symm
 
-private theorem replicaSwap_commutes (U : Matrix n n ℂ) :
+theorem replicaSwap_commutes (U : Matrix n n ℂ) :
     (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (U ⊗ₖ U) =
       (U ⊗ₖ U)*(Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) := by
   simp only [Equiv.Perm.permMatrix,
