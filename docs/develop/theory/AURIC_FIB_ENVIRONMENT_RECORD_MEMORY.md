@@ -4833,3 +4833,167 @@ mathematical results.
 [PA27]: AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md
 
 ## 追加锚（本行以下为增补区）
+
+## 28. Same scalar observations and different exact invariant-task optima
+
+**Definition 28.1 (The fixed actual task and its partner channels).** Use Definition 27.1's
+actual fair independent channel $F$, in the basis $(|0\rangle,|1\rangle,|2\rangle)=(\xi,e,f)$.
+Put $P_j=|j\rangle\langle j|$, $P_\perp=P_1+P_2$, $P_0=P_\xi$. For any channel $\Lambda$ write
+
+$$
+\eta_{P_0}(\Lambda)=\min_{\mathcal D\ {\rm CPTP}}
+ \sup_{\rho\in\mathsf D(\mathbb C^3)}
+ \left|\operatorname{Tr}(P_0\mathcal D\Lambda(\rho))
+                         -\operatorname{Tr}(P_0\rho)\right|.
+\tag{28.1}
+$$
+
+The decoder is one terminal qutrit CPTP map for its channel, task and horizon,
+independent of the unknown input, and must serve every input density.
+There is no history or reference access, smaller code, intermediate correction or postselection.
+
+For every finite $n\ge3$ set $\tau=2^{1-n}$ and $p_n=(1+3\tau)/2$;
+at infinity set $\tau=0$ and $p_\infty=1/2$. Let
+$\Psi_n=\Psi^{\rm EB}_{p_n}$ be (92.3) of
+[Purity arithmetic, §92, “Separable partners in the scalar observation fibers
+of the actual Choi sequence”][PA28]. The actual limit channel, obtained at $s=0$
+in that volume's (87.7), is
+
+$$
+F^\infty(X)=\operatorname{Tr}(P_0X)P_0
+                    +\operatorname{Tr}(P_\perp X)\frac{P_\perp}{2}.
+\tag{28.2}
+$$
+
+The output conjugation by $U_0$ in (87.7) preserves both projectors, so (28.2)
+is in the physical output frame. The Choi reference is only an analytical device.
+
+**Theorem 28.2 (Same retained observations, different sharp task optima).**
+For every finite $n\ge3$, and also for $n=\infty$ with (28.2),
+
+$$
+\eta_{P_0}(F^n)=0,\qquad
+\eta_{P_0}(\Psi_n)=\frac{2(1-3\tau)}{7-3\tau}>0.
+\tag{28.3}
+$$
+
+The partner value is $2/25$ at $n=3$ and $2/7$ at infinity.
+The normalized Choi states have identical marginals $I_3/3$ and, for every independent
+local SIC choice and every independent complete local MUB choice of Definition 89.1
+in Purity arithmetic, respectively the same norms $(5+3\tau)/36$ and $5/3+\tau$.
+These are SIC effects $\Pi_i/3$ and literal MUB projectors, not projectors divided
+by four. The finite actual Choi states are NPT and the partners are separable;
+at infinity both channels are EB, while their task optima still differ.
+
+Proof. Reuse (27.4)–(27.5) and Purity arithmetic (86.4): for every channel,
+
+$$
+\eta_{P_0}(\Lambda)
+ =\min_{0\le E\le I_3}\|\Lambda^\dagger(E)-P_0\|_{\rm op}.
+\tag{28.4}
+$$
+
+This existing interface covers every CPTP decoder and realizes every effect by (27.5).
+Its all-density supremum is the Hermitian operator norm; choose $P_0,P_1$ as prepared states.
+
+For the actual channel, $U_0\xi=U_1\xi=\xi$, hence
+$F^\dagger(P_0)=P_0$ and $(F^n)^\dagger(P_0)=P_0$ at every finite horizon.
+The identity decoder attains zero on every density; nonnegativity is the lower certificate.
+Equation (28.2) gives the same conclusion at infinity and explicitly makes that
+channel measure-and-prepare, hence EB.
+
+For the partner, solve its scalar parameter throughout $0\le p\le1$, writing
+$q=1-p$ only in this proof; these symbols are not §27's task populations.
+Directly from (92.3),
+
+$$
+(\Psi^{\rm EB}_p)^\dagger(E)
+ =\sum_{j=0}^2\left(pE_{jj}+\frac q3\operatorname{Tr}E\right)P_j.
+\tag{28.5}
+$$
+
+Pinching $E$ to its diagonal preserves $0\le E\le I_3$ and leaves (28.5)
+unchanged. Off-diagonal effects are therefore covered without restricting the
+decoder class. No equality between $E_{11}$ and $E_{22}$ is imposed:
+put $a=E_{00}$ and $b=(E_{11}+E_{22})/2$, both in $[0,1]$, and set
+
+$$
+A=\frac{1+2p}{3},\quad B=\frac{2q}{3},\quad
+C=\frac q3,\quad G=\frac{2+p}{3}.
+\tag{28.6}
+$$
+
+The two legitimate inputs $\rho_0=P_0$ and $\rho_\perp=P_\perp/2$
+have decoded task probabilities $y_0=Aa+Bb$ and $y_\perp=Ca+Gb$,
+with target probabilities one and zero. Both decoded probabilities lie in
+$[0,1]$. Therefore the worst-case error $t$ of any allowed decoder satisfies
+
+$$
+\begin{aligned}
+t&\ge1-Aa-Bb,\qquad t\ge Ca+Gb,\\
+(G+B)t&\ge G-(GA-BC)a=G-pa\ge G-p,\\
+t&\ge\varepsilon_p:=\frac{2(1-p)}{4-p}.
+\end{aligned}
+\tag{28.7}
+$$
+
+Here $GA-BC=p$, $G+B=(4-p)/3>0$ and $G-p=2q/3$.
+This certificate uses nonnegative normalized weights
+$G/(G+B)=(2+p)/(4-p)$ and $B/(G+B)=2q/(4-p)$.
+It covers unequal diagonal entries, all effects and hence every CPTP decoder.
+
+For attainment put $b_p=(1-p)/(4-p)$ and $E_p=P_0+b_pP_\perp$.
+Since $0\le b_p\le1$, this is an effect. An explicit physical terminal decoder is
+
+$$
+\mathcal D_p(Y)=[Y_{00}+b_p(Y_{11}+Y_{22})]P_0
+                     +(1-b_p)(Y_{11}+Y_{22})P_1.
+\tag{28.8}
+$$
+
+Its Kraus operators are $|0\rangle\langle0|$,
+$\sqrt{b_p}|0\rangle\langle1|$, $\sqrt{b_p}|0\rangle\langle2|$,
+$\sqrt{1-b_p}|1\rangle\langle1|$, $\sqrt{1-b_p}|1\rangle\langle2|$.
+Their adjoint products sum to $I_3$, and $\mathcal D_p^\dagger(P_0)=E_p$.
+Substitution into (28.5) gives
+
+$$
+(\Psi^{\rm EB}_p)^\dagger(E_p)-P_0=\varepsilon_p(-P_0+P_\perp).
+\tag{28.9}
+$$
+
+For every density $\rho$ its absolute expectation is
+$\varepsilon_p|1-2\operatorname{Tr}(P_0\rho)|\le\varepsilon_p$,
+with equality at $\rho_0$ and every state supported in $P_\perp$.
+Together with (28.7), this proves the unrestricted optimum.
+Substituting $p=p_n$ gives $b_{p_n}=(1-3\tau)/(7-3\tau)$ and (28.3).
+Here $\tau\le1/4$, so the gap is positive. At infinity the attaining effect is
+$P_0+P_\perp/7$. The scalar and separability assertions are Theorem 92.2. $\square$
+
+The quantifiers are $\forall n\in\{3,4,\ldots,\infty\}\ \exists\Psi_n$,
+with separately permitted task/horizon decoders. No single partner channel with
+powers $\Psi_n$, common decoder, or indistinguishability of processes is asserted.
+Full tables distinguish the Choi states: already $F^n(P_0)=P_0$ whereas
+$\Psi_n(P_0)=p_nP_0+(1-p_n)I_3/3\ne P_0$ since $p_n<1$.
+Thus no nonlinear rule of just the retained marginals and all these scalar norms
+can determine the sharp fixed-task optimum on a domain containing both channels.
+
+The generic suppliers remain §27's effect interface and Purity arithmetic §89's frame/bound results.
+Scott (2006), [DOI:10.1088/0305-4470/39/43/009](https://doi.org/10.1088/0305-4470/39/43/009),
+supplies tight-frame identities. Shang et al. (2018),
+[DOI:10.1103/PhysRevA.98.022309](https://doi.org/10.1103/PhysRevA.98.022309),
+gives the SIC criterion and local-SIC frame invariance. Tavakoli–Morelli (2024),
+[DOI:10.1103/PhysRevA.110.062417](https://doi.org/10.1103/PhysRevA.110.062417),
+Results 1–2 give the SIC and literal-MUB bounds. The measure-and-prepare/EB equivalence is
+Horodecki–Shor–Ruskai (2003), [DOI:10.1142/S0129055X03001709](https://doi.org/10.1142/S0129055X03001709).
+These mature tools and §92's projector correlation are intermediates in the actual-model
+deduction; no exhaustive literature or priority claim is made.
+
+The all-$v$, all-finite-$n$ target, $r=0,pq>0$ root-rule candidate, interior outside (27.24),
+common-decoder recovery, critical-spin/critical-norm estimates, causal recovery and
+uniform unbounded-memory targets remain unresolved. This fixed-task separation supplies
+none of those conclusions and makes no formal-kernel or physical-realization certification.
+
+[PA28]: AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md#92-separable-partners-in-the-scalar-observation-fibers-of-the-actual-choi-sequence
+
+## 追加锚（本行以下为增补区）

@@ -12,6 +12,16 @@ internal sealed class ForbiddenNeighbourDeterminantDocument : IScribeDocumentDef
         "Weighted forbidden-neighbour configurations, their Gram determinant, and quantum readout.",
         H("Forbidden Neighbour Determinant"),
         Blocks(
+            Def("pathMatrix", "path-matrix", "A unit-diagonal tridiagonal matrix", PathMatrixFormula(),
+                "The sequence a supplies the superdiagonal and b supplies the subdiagonal. The determinant recurrence removes the first one or two coordinates."),
+            Describe.Lean(DescribeId.Create("path-det-recurrence"), Handle("path_det_recurrence"),
+                H("The endpoint determinant recurrence"), StatementSource.FromAuthor(PathRecurrenceFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The two smaller matrices use the shifted edge sequences. The recurrence identifies the determinant of a constant-edge path pencil with its continuant."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("det-one-add-smul-hermitian"), Handle("det_one_add_smul_hermitian"),
+                H("A Hermitian determinant factors over its spectrum"), StatementSource.FromAuthor(HermitianDeterminantFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real scalar v, the determinant is the product of one plus v times each real Hermitian eigenvalue. This includes zero and negative v."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("adm-iff-no-adjacent-true"), Handle("adm_iff_no_adjacent_true"),
                 H("Admissibility as exclusion"), StatementSource.FromAuthor(AdmissibilityFormula()),
                 AssessedProvenance.FromRepo(),
@@ -133,6 +143,37 @@ internal sealed class ForbiddenNeighbourDeterminantDocument : IScribeDocumentDef
         EvalComplex(p, Multiply(CastComplex(r), Phase(theta))), CastComplex(Eval(p, r)));
     private static Formula WithWeights(Formula body) =>
         All("d", Nat(), All("w", Weights(Edges(F.Id("d"))), body));
+
+    private static Formula WithRing(Formula body) => All("R", Call("Type"),
+        Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Sp, body));
+    private static Formula PathMatrixFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("a"), b = F.Id("b"), i = F.Id("i"), j = F.Id("j"), r = F.Id("R");
+        var entry = Call("ite", Equal(i, j), D(1),
+            Call("ite", Equal(Add(Call("Fin.val", i), D(1)), Call("Fin.val", j)), At(a, Call("Fin.val", i)),
+                Call("ite", Equal(Add(Call("Fin.val", j), D(1)), Call("Fin.val", i)), At(b, Call("Fin.val", j)), D(0))));
+        var equation = Equal(At(Call("pathMatrix", n, a, b), i, j), entry);
+        return Disp(WithRing(All("n", Nat(), All("a", Arrow(Nat(), r), All("b", Arrow(Nat(), r),
+            All("i", Fin(n), All("j", Fin(n), equation)))))));
+    }
+    private static Formula PathRecurrenceFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("a"), b = F.Id("b"), i = F.Id("i"), r = F.Id("R");
+        Formula Shift(Formula sequence, Formula offset) => Lam("i", Nat(), At(sequence, Add(i, offset)));
+        Formula Det(Formula size, Formula upper, Formula lower) => Call("Matrix.det", Call("pathMatrix", size, upper, lower));
+        var equation = Equal(Det(Add(n, D(2)), a, b),
+            Subtract(Det(Add(n, D(1)), Shift(a, D(1)), Shift(b, D(1))),
+                Multiply(Multiply(At(a, D(0)), At(b, D(0))), Det(n, Shift(a, D(2)), Shift(b, D(2))))));
+        return Disp(WithRing(All("n", Nat(), All("a", Arrow(Nat(), r), All("b", Arrow(Nat(), r), equation)))));
+    }
+    private static Formula HermitianDeterminantFormula()
+    {
+        Formula d = F.Id("d"), a = F.Id("A"), h = F.Id("hA"), v = F.Id("v"), i = F.Id("i");
+        var equation = Equal(Call("Matrix.det", Add(D(1), Call("HSMul.hSMul", v, a))),
+            ProductOver("i", Fin(d), Add(D(1), Multiply(v, Call("Matrix.IsHermitian.eigenvalues", h, i)))));
+        return Disp(All("d", Nat(), All("A", Call("Matrix", Fin(d), Fin(d), Real()),
+            All("hA", Call("Matrix.IsHermitian", a), All("v", Real(), equation)))));
+    }
 
     private static Formula AdmissibilityFormula()
     {
