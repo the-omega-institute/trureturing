@@ -3,6 +3,18 @@ import LeanInformationAuditRegTests.SearchReduction.GraphCandidates
 
 open Lean Meta Elab Command LeanInformationAudit.SearchReduction
 
+set_option Elab.async false
+
+run_cmd liftTermElabM do
+  let target ← Term.elabType (← `(∀ (α : Type) (P : α → Prop),
+    (∃ x, P x) → ∃ x, P x ∧ P x))
+  Term.synthesizeSyntheticMVarsNoPostponing
+  let target ← instantiateMVars target
+  let result ← localRebuild target none #[] [] []
+  unless result.cost == .zero && result.proof?.isSome do
+    throwError "Exists elimination failed: {result.detail}"
+  logInfo "local-calibration Exists elimination: kernel-checked zero"
+
 run_cmd do
   enableInitializersExecution
   let base ← importModules #[{module := `Lean}] {} 0 (leakEnv := true) (loadExts := true)

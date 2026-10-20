@@ -262,9 +262,13 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
       let bs := request.baseline.map mkIdent
       let os := owners.map mkIdent
       let guardType := mkConst ``True
-      let guardProof ← synthesizeUsingTactic' (u := .zero) guardType (← `(tactic|
-          (fail_if_success (reference_baseline $target at $sha baseline [$bs,*] from [$os,*]))
-          <;> exact True.intro))
+      activeProbe.set (some (source, shared))
+      let guardProof ← try
+        synthesizeUsingTactic' (u := .zero) guardType (← `(tactic|
+            (fail_if_success (reference_baseline $target at $sha baseline [$bs,*] from [$os,*]))
+            <;> exact True.intro))
+      finally
+        activeProbe.set none
       discard <| checkProof (name ++ `baselineFailureGuard) [] guardType guardProof
     publish name result (some source)
   logInfo (observationJson result request.baselineCommit).compress

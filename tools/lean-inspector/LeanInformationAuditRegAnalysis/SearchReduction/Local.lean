@@ -13,8 +13,9 @@ private def standardClosure (xs : Array Name) : Bool :=
 
 /-- Kernel checking is performed on the closed sequent, including its scope. -/
 def checkLocalProof (type proof : Expr) : MetaM Unit := do
+  let type ← instantiateMVars type
   let proof ← instantiateMVars proof
-  unless !proof.hasMVar && !proof.hasFVar && !proof.hasSorry do
+  unless !type.hasMVar && !type.hasFVar && !proof.hasMVar && !proof.hasFVar && !proof.hasSorry do
     throwError "graph.unclosed_local_certificate"
   let name ← mkFreshUserName `_graphLocal
   let levels := (collectLevelParams {} type).params.toList
@@ -251,6 +252,23 @@ private partial def structuralLocal (goal : MVarId) (facts : Array Expr)
   saved.restore
   let facts ← eliminateLocal facts
   if ← exactLocal goal facts then return true
+  -- Exists has no data projection: eliminate it into a fresh branch scope.
+  -- The witness is a local variable there, never a globally selected datum.
+  for fact in facts do
+    let factType ← withReducible <| whnf (← inferType fact)
+    if factType.isAppOfArity ``Exists 2 then
+      let before ← saveState
+      try
+        let (major, next) ← (← goal.assert `_exists factType fact).intro1
+        let branches ← next.cases major
+        if h : branches.size = 1 then
+          let branch := branches[0]'(by omega)
+          let available := (facts.filter (· != fact)).map branch.subst.apply
+          if ← structuralLocal branch.mvarId (available ++ branch.fields) (fuel - 1) then
+            return true
+      catch ex =>
+        if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
+      before.restore
   let ctor? := if type.isAppOfArity ``And 2 then some ``And.intro
     else if type.isAppOfArity ``Iff 2 then some ``Iff.intro
     else if type.isAppOfArity ``Exists 2 then some ``Exists.intro
