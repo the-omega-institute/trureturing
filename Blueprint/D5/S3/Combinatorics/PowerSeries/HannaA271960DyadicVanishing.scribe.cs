@@ -46,13 +46,16 @@ internal sealed class HannaA271960DyadicVanishingDocument : IScribeDocumentDefin
                 + "inversion transfers this to the displayed coefficient with N=2^n and r=2^k. "
                 + "Existence follows from the normalized fixed point of the strict coefficient contraction "
                 + "F ↦ F + (F(X^2)-F^2-2X)/2, followed by compositional inversion.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a271960-dyadic-vanishing"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));
