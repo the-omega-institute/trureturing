@@ -3,6 +3,7 @@ bibkey: brassardhoyermoscatapp2002amplification
 authors: Gilles Brassard; Peter Høyer; Michele Mosca; Alain Tapp
 year: 2002
 title: Quantum Amplitude Amplification and Estimation
+doi: null
 url: https://arxiv.org/abs/quant-ph/0005055
 claim: Amplitude amplification rotates a coherently prepared state in its good and bad two-dimensional span, using the preparation, its inverse and a success phase oracle.
 strata_touched: []
