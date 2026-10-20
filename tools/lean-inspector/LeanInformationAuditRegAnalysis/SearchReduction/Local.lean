@@ -26,7 +26,7 @@ def checkLocalProof (type proof : Expr) : MetaM Unit := do
 
 structure ExtractionState where
   graph : ProofGraph := {}
-  shared : Std.HashMap Expr Nat := {}
+  shared : Std.HashMap (Expr × List FVarId) Nat := {}
 
 abbrev ExtractM := StateRefT ExtractionState MetaM
 
@@ -45,11 +45,12 @@ proposition equality is never a graph-node key. -/
 private partial def visit (base : Environment) (additions : Array (Expr × Expr))
     (proof : Expr) (position : List Nat) (unfolding : NameSet := {}) : ExtractM Nat := do
   let proof := proof.consumeMData
-  if let some id := (← get).shared[proof]? then return id
+  let scope ← scopeVariables
+  let key := (proof, scope.toList.map Expr.fvarId!)
+  if let some id := (← get).shared[key]? then return id
   if (← get).graph.vertices.length ≥ graphCapacity then
     incomplete "graph.capacity"
     return 0
-  let scope ← scopeVariables
   let type ← inferType proof
   let closed ← mkForallFVars scope type
   let mut structureSeed := false
@@ -66,7 +67,7 @@ private partial def visit (base : Environment) (additions : Array (Expr × Expr)
     id, type := closed, origin := proof, scope, lctx := ← getLCtx,
     instances := ← getLocalInstances, position, structureSeed, structureProof?}
   modify fun s => {s with
-    shared := s.shared.insert proof id
+    shared := s.shared.insert key id
     graph := {s.graph with vertices := s.graph.vertices ++ [vertex]}}
   let addEdge (premises : List Nat) (head : Option Expr := none)
       (authorData : Array (Option Expr) := #[]) : ExtractM Unit :=
@@ -126,7 +127,10 @@ only determines stopping leaves. Failures are explicit incompleteness. -/
 def extractGraph (base : Environment) (target proof : Expr)
     (additions : Array (Expr × Expr) := #[]) : MetaM ProofGraph := do
   try
-    let (root, state) ← (visit base additions proof []).run {}
+    let ((root, _), state) ← (do
+      let root ← visit base additions proof []
+      for (_, added) in additions do discard <| visit base additions added [graphCapacity]
+      pure (root, ())).run {}
     unless ← isDefEq (← inferType proof) target do
       return {state.graph with root, complete := false, issues := ["graph.target_type_mismatch"]}
     return {state.graph with root}
@@ -239,7 +243,8 @@ private partial def structuralLocal (goal : MVarId) (facts : Array Expr)
 private def tacticLocal (goal : MVarId) (facts forbidden : Array Expr)
     (useOmega : Bool) : MetaM Bool := do
   let mut goal := goal
-  for fact in forbidden.reverse do goal ← goal.clear fact.fvarId!
+  for fact in forbidden.reverse do
+    if (← goal.getDecl).lctx.contains fact.fvarId! then goal ← goal.clear fact.fvarId!
   goal.withContext do
     let target ← instantiateMVars (← goal.getType)
     if useOmega && target.hasMVar then return false
@@ -249,7 +254,7 @@ private def tacticLocal (goal : MVarId) (facts forbidden : Array Expr)
         let type ← whnf (← inferType fact)
         if type.isAppOfArity ``Eq 3 || type.isAppOfArity ``Iff 2 then
           theorems ← theorems.addTheorem (.fvar fact.fvarId!) fact
-      let context ← Simp.mkContext {} theorems {}
+      let context ← Simp.mkContext {failIfUnchanged := false} theorems {}
       let (remaining, _) ← simpGoal goal context (simprocs := #[])
       return remaining.isNone
     let goals ← try
@@ -314,7 +319,10 @@ def localRebuild (target : Expr) (head : Option Expr)
           let mut obligations := #[]
           let plan? := plan?.orElse (fun _ => head.map (fun h => SpinePlan.app h data []))
           if let some plan := plan? then
-            let hidden ← replayPlan plan scope visible (← goal.getType)
+            let cleanContext := residuals.foldl (fun context fact => context.erase fact.fvarId!) (← getLCtx)
+            let localInstances ← getLocalInstances
+            let hidden ← withLCtx cleanContext localInstances <|
+              replayPlan plan scope visible (← goal.getType)
             slots := hidden.dataSlots
             unless ← withReducible <| isDefEq (← inferType hidden.skeleton) (← goal.getType) do
               return {cost := .one, detail := "head-result-mismatch"}
@@ -333,8 +341,11 @@ def localRebuild (target : Expr) (head : Option Expr)
               if (← instantiateMVars slot).hasMVar then
                 return {cost := .one, detail := "unresolved-hidden-data", hiddenSlots := slots.size}
             for obligation in obligations do
-              unless ← tryAssumptions obligation (residuals ++ seeds) do
+              let type ← instantiateMVars (← obligation.getType)
+              let residualGoal ← mkFreshExprMVar type
+              unless ← tryAssumptions residualGoal.mvarId! (residuals ++ seeds) do
                 return {cost := .one, detail := "residual-interface-mismatch", hiddenSlots := slots.size}
+              obligation.assign (← instantiateMVars residualGoal)
             goal.assign hidden.skeleton
           else
             let mut solved ← solveLocalGoal goal seeds residuals

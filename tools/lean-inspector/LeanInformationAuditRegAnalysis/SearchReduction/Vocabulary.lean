@@ -165,7 +165,7 @@ def vocabularyBudgetPreflight (source : Environment) (roots : Array Name) : Meta
       let groups := (← plan.seen.get).size
       let obligations ← plan.obligations.get
       let units := 1 + groups + obligations
-      let searchUnits := 2 * obligations + (← plan.leafBound.get) * (← referenceHints).size
+      let searchUnits := 2 * obligations + (← plan.leafBound.get) * 3
       IO.eprintln s!"vocabulary prior budget: semantics=independent_units, roots={roots}, declaration_units={groups}, obligation_units={obligations}, unit_limit={reconstructionBudget * 1000}, prior_work_heartbeats_bound={units * reconstructionBudget * 1000}, preflight_internal_heartbeats={(← IO.getNumHeartbeats) - started}; prior_R_command_units_bound={searchUnits}, prior_total_heartbeats_bound={(units + searchUnits) * reconstructionBudget * 1000}"
       checkSystem "vocabulary preflight"
   catch ex =>
@@ -266,15 +266,15 @@ mutual
         let levels := (collectLevelParams {} closed).params.toList
         if closed.getUsedConstants.any ctx.bound.contains then
           throwError "search.vocabulary_obligation_unclosed: {owner}: group-local type {closed}"
-        let env ← getEnv
-        let hints ← referenceHints
         let started ← IO.getNumHeartbeats
-        let (outcome, rows) ← search env levels closed #[] hints
+        let rebuilt ← localRebuild closed none #[] [] []
+        let outcome := match rebuilt.cost with
+          | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
         let used := (← IO.getNumHeartbeats) - started
         if let some spent := ctx.searchHeartbeats? then spent.modify (· + used)
         checkReconstructionBudget proofCtx
         IO.eprintln s!"vocabulary obligation: owner={owner}, type={closed}, outcome={reprStr outcome}, internal_heartbeats={used}"
-        let some row := rows.find? (·.proof?.isSome)
+        let some proof := rebuilt.proof?
           | if outcome == .incomplete .heartbeat then
               throw <| Exception.error (← getRef) <| .tagged `runtime.maxHeartbeats
                 m!"search.vocabulary_obligation_budget: {owner}: {closed}"
@@ -290,14 +290,13 @@ mutual
                 pure false
             if isTarget then throwError "search.target_in_vocabulary_certificate: {owner}: {closed}"
             throwError "search.vocabulary_obligation_unclosed: {owner}: {closed}: {reprStr outcome}"
-        let proof := row.proof?.get!
         let beforeCheck ← getEnv
         let checked ← checkProof (← mkFreshUserName `_prefixCertificate) levels closed proof
         setEnv beforeCheck
         if let some certificates := ctx.certificates? then
           certificates.modify (·.push {owner, type := closed, proof, axioms := checked})
         unless standardAxioms checked do throwError "search.vocabulary_certificate_axioms: {owner}"
-        IO.eprintln s!"vocabulary certificate checked: owner={owner}, strategy={row.strategy}, axioms={checked}"
+        IO.eprintln s!"vocabulary certificate checked: owner={owner}, strategy={rebuilt.detail}, axioms={checked}"
         checkReconstructionBudget proofCtx
         let own := (← IO.getNumHeartbeats) - proofCtx.budgetStart -
           ((← spent.get) - proofCtx.budgetExcludedStart)

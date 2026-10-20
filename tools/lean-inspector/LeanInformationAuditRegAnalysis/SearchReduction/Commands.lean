@@ -383,18 +383,13 @@ syntax (name := searchReductionCatalogCmd) "#search_reduction_catalog " str : co
 
 syntax (name := searchReductionConfigCmd) "#search_reduction_config" : command
 @[command_elab searchReductionConfigCmd] unsafe def elabSearchReductionConfig : CommandElab := fun _ => do
-  enableInitializersExecution
-  let env ← referenceEnvironment
-  let hints ← strategies env
-  logInfo (Json.mkObj [("version", toJson "R_v1"), ("maxHeartbeats", toJson budget),
+  logInfo (Json.mkObj [("version", toJson "R_loc"), ("maxHeartbeats", toJson localBudget),
     ("transport", toJson transportVersion), ("reconstructionMaxHeartbeats", toJson reconstructionBudget),
     ("reconstructionBudgetSemantics", toJson "independent_units"),
     ("pinnedDeriving", toJson (pinnedDerivingClasses.map Name.toString)),
-    ("configuration", toJson "R_v1/prefix-reconstruction-independent-units-v1/200000"),
+    ("configuration", toJson "R_loc/hidden-data-k2/200000"),
     ("lean", toJson Lean.versionString), ("mathlib", toJson mathlibRevision),
-    ("options", Json.mkObj [("maxRecDepth", toJson (1000 : Nat)),
-      ("Elab.async", toJson false)]),
-    ("strategies", toJson (hints.map fun (prio, tac) =>
-      (prio, tac.raw.reprint.getD (toString tac))))]).compress
+    ("k", toJson (2 : Nat)), ("graphCapacity", toJson graphCapacity),
+    ("strategies", toJson (["intro", "assumption", "rfl", "And/Iff/Exists/Subtype", "ordered-apply-depth2", "simp-only-direct-eq-iff/no-simprocs", "omega/no-mvars"] : List String))]).compress
 
 end LeanInformationAudit.SearchReduction
