@@ -7,6 +7,7 @@
    digest: SIC and complete-MUB correlation trace norms differ by the dimension factor. -/
 
 import D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteMUB
+import D5.S3.Quantum.Tomography.CompleteContextTomography
 
 /-!
 SIC and complete-MUB correlation matrices have proportional trace norms, with the product of the
@@ -204,75 +205,6 @@ private theorem mub_gram {d : ℕ} (M : MUBFamily d (d + 1))
   · rw [ite_eq_right hpq, M.2 p.1 q.1 hpq p.2 q.2]
     simp only [Complex.ofReal_natCast, one_div, Complex.ofReal_inv]
 
-private def mubBasisVector {d : ℕ} (hd : 2 ≤ d) (M : MUBFamily d (d + 1)) :
-    Option (Fin (d + 1) × Fin (d - 1)) → Matrix (Fin d) (Fin d) ℂ
-  | none => 1
-  | some p => M.effect (p.1, p.2.castLE (Nat.sub_le d 1)) -
-      M.effect (p.1, ⟨d - 1, by omega⟩)
-
-private theorem mubBasisVector_trace {d : ℕ} (hd : 2 ≤ d)
-    (M : MUBFamily d (d + 1)) (p : Option (Fin (d + 1) × Fin (d - 1))) :
-    (mubBasisVector hd M p).trace = if p = none then (d : ℂ) else 0 := by
-  cases p with
-  | none =>
-    simp (congrConsts := false) only [mubBasisVector, Matrix.trace_one,
-      Fintype.card_fin, ite_true]
-  | some p =>
-    change (M.effect _ - M.effect _).trace = 0
-    rw [Matrix.trace_sub]
-    change (D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj
-      (M.ket _ _)).trace - (D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj
-      (M.ket _ _)).trace = 0
-    rw [MState.tr' (MState.pure _), MState.tr' (MState.pure _), sub_self]
-
-private theorem mubBasisVector_pair {d : ℕ} (hd : 2 ≤ d)
-    (M : MUBFamily d (d + 1)) (p q : Fin (d + 1) × Fin (d - 1)) :
-    (mubBasisVector hd M (some p) *
-      M.effect (q.1, q.2.castLE (Nat.sub_le d 1))).trace = if p = q then 1 else 0 := by
-  have hlast : (⟨d - 1, by omega⟩ : Fin d) ≠ q.2.castLE (Nat.sub_le d 1) := by
-    intro h
-    have := congrArg Fin.val h
-    have := q.2.isLt
-    simp only [Fin.val_castLE] at *
-    omega
-  simp (congrConsts := false) only [mubBasisVector, Matrix.sub_mul, Matrix.trace_sub, mub_gram]
-  by_cases hl : p.1 = q.1
-  · rw [ite_eq_left hl, ite_eq_left hl, ite_eq_right hlast, sub_zero]
-    congr 1
-    simp only [Prod.ext_iff, hl, true_and, Fin.ext_iff, Fin.val_castLE]
-  · rw [ite_eq_right hl, ite_eq_right hl, sub_self,
-      ite_eq_right (fun h => hl (congrArg Prod.fst h))]
-
-private theorem mubBasisVector_span {d : ℕ} (hd : 2 ≤ d)
-    (M : MUBFamily d (d + 1)) :
-    Submodule.span ℂ (Set.range (mubBasisVector hd M)) = ⊤ := by
-  classical
-  have hlin : LinearIndependent ℂ (mubBasisVector hd M) := by
-    apply Fintype.linearIndependent_iff.mpr
-    intro c hc
-    have hc0 : c none = 0 := by
-      have ht := congrArg Matrix.trace hc
-      simp (congrConsts := false) only [Fintype.sum_option, Matrix.trace_add,
-        Matrix.trace_sum, Matrix.trace_smul,
-        mubBasisVector_trace, smul_eq_mul, reduceCtorEq, ite_true, ite_false,
-        mul_zero, Finset.sum_const_zero, add_zero, Matrix.trace_zero] at ht
-      exact (mul_eq_zero.mp ht).resolve_right (by exact_mod_cast (by omega : d ≠ 0))
-    intro p
-    cases p with
-    | none => exact hc0
-    | some p =>
-      have ht := congrArg (fun X =>
-        (X * M.effect (p.1, p.2.castLE (Nat.sub_le d 1))).trace) hc
-      simpa only [Fintype.sum_option, hc0, zero_smul, zero_add, Matrix.sum_mul,
-        Matrix.smul_mul, Matrix.trace_sum, Matrix.trace_smul, mubBasisVector_pair,
-        smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
-        ite_true, Matrix.zero_mul, Matrix.trace_zero] using ht
-  apply hlin.span_eq_top_of_card_eq_finrank'
-  simp only [Fintype.card_option, Fintype.card_prod, Fintype.card_fin,
-    Module.finrank_matrix, Module.finrank_self, mul_one]
-  have h : d - 1 + 1 = d := by omega
-  nlinarith
-
 private theorem mub_frame {d : ℕ} (hd : 2 ≤ d) (M : MUBFamily d (d + 1))
     (X : Matrix (Fin d) (Fin d) ℂ) :
     ∑ p, (M.effect p * X).trace • M.effect p = X + X.trace • 1 := by
@@ -307,37 +239,56 @@ private theorem mub_frame {d : ℕ} (hd : 2 ≤ d) (M : MUBFamily d (d + 1))
       split_ifs <;> abel
     simp_rw (congrConsts := false) [heq]
     simp only [Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, ite_true,
-      Finset.sum_const, Finset.card_univ, Fintype.card_fin, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul,
-      Nat.cast_add, Nat.cast_one]
+      Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+      ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, Nat.cast_add, Nat.cast_one]
     have hcancel : ((d : ℂ) + 1) * (d : ℂ)⁻¹ = 1 + (d : ℂ)⁻¹ := by
       field_simp
     rw [hcancel, add_smul, one_smul]
     abel
-  obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).mp
-    (show X ∈ Submodule.span ℂ (Set.range (mubBasisVector hd M)) by
-      rw [mubBasisVector_span hd M]; trivial)
-  have hb (p : Option (Fin (d + 1) × Fin (d - 1))) :
-      ∑ q, (M.effect q * mubBasisVector hd M p).trace • M.effect q =
-        mubBasisVector hd M p + (mubBasisVector hd M p).trace • 1 := by
-    cases p with
-    | none =>
-      simp (congrConsts := false) only [mubBasisVector, Matrix.mul_one, htrace, one_smul,
-        Fintype.sum_prod_type, hsum, Finset.sum_const, Finset.card_univ,
-        Fintype.card_fin, Matrix.trace_one]
-      module
-    | some p =>
-      simp (congrConsts := false) only [mubBasisVector, Matrix.mul_sub, Matrix.trace_sub, sub_smul,
-        Finset.sum_sub_distrib, hproj, htrace, sub_self, zero_smul, add_zero]
-      abel
-  calc
-    _ = ∑ p, c p • (∑ q,
-        (M.effect q * mubBasisVector hd M p).trace • M.effect q) := by
-      simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul,
-        smul_eq_mul, Finset.sum_smul, Finset.smul_sum, smul_smul]
-      rw [Finset.sum_comm]
-    _ = _ := by
-      simp only [hb, smul_add, smul_smul, Finset.sum_add_distrib,
-        Matrix.trace_sum, Matrix.trace_smul, smul_eq_mul, Finset.sum_smul]
+  cases d with
+  | zero => omega
+  | succ n =>
+    let context : Fin (n + 2) →
+        D5.S3.Quantum.Tomography.RankOneContextCommutator.RankOneContext (n + 1) :=
+      fun l => {
+        projector := fun a => M.effect (l, a)
+        rankOne := fun a => by
+          let v := M.ket l a
+          have hscaled :
+              D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.ScaledPure
+                (M.effect (l, a)) := ⟨1, v, zero_le_one, (one_smul ℂ _).symm⟩
+          refine ⟨(D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.scaledPure_hermitian
+            hscaled).eq, ?_, htrace (l, a), ?_⟩
+          · exact (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake
+              v.vec (D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.ket_dot_self v)
+              1).1
+          · intro Y
+            rw [D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.scaledPure_sandwich
+              hscaled, Matrix.trace_mul_comm]
+        resolvesIdentity := hsum l }
+    have hoverlap (l k : Fin (n + 2)) (a b : Fin (n + 1)) :
+        ((context l).projector a * (context k).projector b).trace =
+          if l = k then (if a = b then 1 else 0) else ((n + 1 : ℕ) : ℂ)⁻¹ :=
+      mub_gram M (l, a) (k, b)
+    apply (D5.S3.Quantum.Tomography.CompleteContextTomography.complete_context_tomography
+      context hoverlap).2.2
+    intro l a
+    change ((∑ p, (M.effect p * X).trace • M.effect p) * M.effect (l, a)).trace =
+      ((X + X.trace • 1) * M.effect (l, a)).trace
+    have h := congrArg (fun N : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ =>
+      (X * N).trace) (hproj (l, a))
+    simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul,
+      smul_eq_mul, Matrix.mul_add, Matrix.mul_one, Matrix.trace_add] at h
+    simp only [Matrix.sum_mul, Matrix.smul_mul, Matrix.trace_sum, Matrix.trace_smul,
+      smul_eq_mul, Matrix.add_mul, Matrix.trace_add, Matrix.smul_mul, Matrix.one_mul,
+      htrace, mul_one]
+    calc
+      _ = ∑ p, (M.effect p * M.effect (l, a)).trace * (X * M.effect p).trace := by
+        apply Finset.sum_congr rfl
+        intro p _
+        rw [Matrix.trace_mul_comm (M.effect p) X]
+        ring
+      _ = _ := h
 
 private def transition {d : ℕ} (S : SICFamily d) (M : MUBFamily d (d + 1)) :
     Matrix (Fin (d + 1) × Fin d) (Fin (d * d)) ℂ :=
