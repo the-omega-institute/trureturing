@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Arbitrary ordered defects and constructive bulk subtraction for the full three-row cone. -/
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.DefectScalarBounds
 import D5.S3.Quantum.Entanglement.AbsolutePPT.HalfspaceConeTransfer
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
 import Mathlib.Analysis.Convex.Jensen
@@ -120,46 +121,6 @@ theorem ordered_block_energy {ι κ : Type*} [Fintype ι] [Fintype κ]
     _ = (k*m+Z)^2-2*(k-1)*m*Z := by ring
     _ ≤ (k*m+Z)^2 := sub_le_self _ hexcess
     _ = _ := by rw [hsum]
-
-private theorem affine_defect_transport (theta N j w c E : ℝ)
-    (ht : 0 ≤ theta) (hw : 0 ≤ w) (hj : 6 ≤ j)
-    (ha0 : 0 ≤ 2*theta*(N+3+2*w)-(2+w))
-    (ha1 : 2*theta*(N+3+2*w)-(2+w) ≤ 1/4)
-    (hF0 : 0 ≤ theta*(N+3+2*w)^2-(N+11+3*w+w^2))
-    (hE0 : E ≤ 5-4*w-w^2)
-    (hE1 : E ≤ 5-4*w-w^2+(c-(3-4*w))/4) :
-    (2+w)*(N+w*j+c)-(1+w)*N+E ≤ theta*(N+w*j+c)^2 := by
-  let L := N+3+2*w
-  let e := w*(j-6)
-  let a := 2*theta*L-(2+w)
-  have he : 0 ≤ e := mul_nonneg hw (by linarith)
-  have ha : 0 ≤ a := ha0
-  have ha' : 0 ≤ 1/4-a := sub_nonneg.mpr ha1
-  have hF : 0 ≤ theta*L^2-(2+w)*L+(1+w)*N-(5-4*w-w^2) := by
-    dsimp [L]
-    nlinarith only [hF0]
-  by_cases hc : 3-4*w ≤ c
-  · let d := c-(3-4*w)
-    have hd : 0 ≤ d := sub_nonneg.mpr hc
-    have hpos : 0 ≤ theta*(e+d)^2+a*(e+d) :=
-      add_nonneg (mul_nonneg ht (sq_nonneg _))
-        (mul_nonneg ha (add_nonneg he hd))
-    have hid : theta*(N+w*j+c)^2-
-        ((2+w)*(N+w*j+c)-(1+w)*N+(5-4*w-w^2)) =
-        (theta*L^2-(2+w)*L+(1+w)*N-(5-4*w-w^2))+
-        theta*(e+d)^2+a*(e+d) := by dsimp [L,e,d,a]; ring
-    linarith
-  · let d := (3-4*w)-c
-    have hd : 0 ≤ d := by dsimp [d]; linarith
-    have hpos : 0 ≤ theta*(e-d)^2+a*e+(1/4-a)*d :=
-      add_nonneg (add_nonneg (mul_nonneg ht (sq_nonneg _)) (mul_nonneg ha he))
-        (mul_nonneg ha' hd)
-    have hid : theta*(N+w*j+c)^2-
-        ((2+w)*(N+w*j+c)-(1+w)*N+(5-4*w-w^2-d/4)) =
-        (theta*L^2-(2+w)*L+(1+w)*N-(5-4*w-w^2))+
-        theta*(e-d)^2+a*e+(1/4-a)*d := by dsimp [L,e,d,a]; ring
-    have hE : E ≤ 5-4*w-w^2-d/4 := by dsimp [d]; linarith [hE1]
-    linarith
 
 def H (h : Fin 5 → ℝ) : ℝ := ∑ i, h i
 def D (d : Fin 9 → ℝ) : ℝ := ∑ i, d i

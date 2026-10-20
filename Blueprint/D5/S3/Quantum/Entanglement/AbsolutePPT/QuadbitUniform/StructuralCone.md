@@ -268,4 +268,5 @@ The analytic argument uses ordered nonnegative block energies, Mathlib convex an
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.quadratic_interval_le_fun`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.structural_fixed_good`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/HalfspaceConeTransfer](../HalfspaceConeTransfer.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/DefectScalarBounds](DefectScalarBounds.md)
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ScalarEnvelopes](ScalarEnvelopes.md)

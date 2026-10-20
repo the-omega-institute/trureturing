@@ -106,4 +106,5 @@ The two estimates are repository derivations from the existing actual-PSD moment
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSDMoment.actual_psd_small_jump_defect_bound`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSDMoment.actual_psd_zero_jump_moment`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSDMoment.actual_psd_zero_jump_two_ninths_moment`
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/DefectScalarBounds](DefectScalarBounds.md)
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone](StructuralCone.md)
