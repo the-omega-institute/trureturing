@@ -29,13 +29,17 @@ internal sealed class BargmannImaginaryMaximizersDocument : IScribeDocumentDefin
                 DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "Classification of every maximizing qubit tuple", Disp(ClaimBody()),
                 "Rephase consecutive overlaps onto one ray. AM–GM compares their product with their mean, and the exposed edge of the regular polygon of Fourier phases bounds that mean. Equality at the unique scalar maximum removes every Fourier mode except zero and one. Parseval's energy identity and unit length at two vertices force these two modes to be orthogonal. Their Gram matrix determines a common unitary, and the mean overlap fixes the latitude weight. Conversely, the polygon has constant consecutive overlap and its ordered trace has imaginary part tau n; unitary transformations and the individual phases preserve that trace.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhang-xie-2026-bargmann-imaginary-maximizers"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("bargmannmax-" + name), DeclarationHandle.Create(Module + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula BargmannFormula()
     {

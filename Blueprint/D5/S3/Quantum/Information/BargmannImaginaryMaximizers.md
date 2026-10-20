@@ -64,6 +64,10 @@ $$\forall (n : \mathbb{N}), (3 \le n) \Rightarrow (\forall (\psi : (\operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BargmannImaginaryMaximizers.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-xie-2026-bargmann-imaginary-maximizers` (proved) by `D5/S3/Quantum/Information/BargmannImaginaryMaximizers.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-xie-2026-bargmann-imaginary-maximizers","declaration_gid":"D5/S3/Quantum/Information/BargmannImaginaryMaximizers.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Lin Zhang; Bing Xie (2026). *A Survey of Bargmann Invariants: Geometric Foundations and Applications*. DOI: [10.48550/arXiv.2601.01858](https://doi.org/10.48550/arXiv.2601.01858). URL: <https://arxiv.org/abs/2601.01858v2>.
