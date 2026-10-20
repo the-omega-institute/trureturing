@@ -45,7 +45,10 @@ internal sealed class ChirvasituCusickRulesMatrixOrderDocument : IScribeDocument
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create("cc-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("chirvasitu-cusick-2024-rules-matrix-order-conjecture-6-1"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula NatType() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));

@@ -108,6 +108,10 @@ $$\neg (\forall i \in \mathrm{Nat},\; \forall j \in \mathrm{Nat},\; (1 \le j) \R
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BooleanFunctions/ChirvasituCusickRulesMatrixOrder.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chirvasitu-cusick-2024-rules-matrix-order-conjecture-6-1` (refuted) by `D5/S3/Combinatorics/BooleanFunctions/ChirvasituCusickRulesMatrixOrder.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chirvasitu-cusick-2024-rules-matrix-order-conjecture-6-1","declaration_gid":"D5/S3/Combinatorics/BooleanFunctions/ChirvasituCusickRulesMatrixOrder.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Chirvasitu; T. W. Cusick (2024). *Quadratic rotation symmetric Boolean functions*. DOI: [10.1016/j.dam.2023.10.010](https://doi.org/10.1016/j.dam.2023.10.010). URL: <https://arxiv.org/abs/2304.12734v1>.
