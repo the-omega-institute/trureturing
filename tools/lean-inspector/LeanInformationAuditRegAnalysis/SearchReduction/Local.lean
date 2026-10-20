@@ -187,13 +187,13 @@ def hideData (head : Expr) (arity : Nat) (visible : Array (Option Expr) := #[])
 private partial def replayPlan (plan : SpinePlan) (scope : Array Expr)
     (visible : Bool) (expected : Expr) : MetaM HiddenExpr := do
   let .app head data children := plan
-  let instantiateScope (closed : Expr) : Expr := Id.run do
-    let mut body := closed
-    let mut count := 0
-    while body.isLambda do
-      count := count + 1
-      body := body.bindingBody!
-    return (mkAppN closed (scope.extract 0 count)).headBeta
+  let mut headBody := head
+  let mut scopeArity := 0
+  while headBody.isLambda do
+    scopeArity := scopeArity + 1
+    headBody := headBody.bindingBody!
+  let instantiateScope (closed : Expr) : Expr :=
+    (mkAppN closed (scope.extract 0 scopeArity)).headBeta
   let head := instantiateScope head
   let authorData := data.map (·.map instantiateScope)
   let result ← hideData head data.size (if visible then authorData else #[]) authorData
