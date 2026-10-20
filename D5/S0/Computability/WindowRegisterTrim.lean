@@ -306,6 +306,10 @@ theorem canonical_lane_phase (m : Track → ℤ → Symbol) (h : Track → ℤ)
       Nat.ofDigits 2 ((normalized (bs.map (select j))).map Bool.toNat)=bitValue (select j) bs ∧
       (normalized (bs.map (select j))=[false] ∨
         ∃ pre, normalized (bs.map (select j))=pre++[true]) := by
+  have hnonneg : (0 : ℤ) ≤ bs.length := Int.natCast_nonneg _
+  have hnext : (0 : ℤ) ≤ bs.length + 1 := by omega
+  have hbound : (bs.length : ℤ) ≤ bs.length + 1 := by omega
+  have htarget : (0 : ℤ) ≤ bs.length + 2 := by omega
   have ht := target_ne_work j
   obtain ⟨hcopy,fcopy⟩ := copy_to_trim m h j bs
   obtain ⟨u,hu,htrim,ftrim⟩ := trim_run m h j bs (bs.map (select j))
@@ -321,7 +325,7 @@ theorem canonical_lane_phase (m : Track → ℤ → Symbol) (h : Track → ℤ)
     · simp [run,step,program,config,ht.symm]
       funext t
       by_cases hw : t=workTrack <;> by_cases hj : t=target j <;>
-        simp_all [Function.update_apply]
+        simp [Function.update_apply, hw, hj, ht, ht.symm]
       all_goals omega
     · simp [run,step,program,config]
   obtain ⟨hrewind,frewind⟩ := packed_rewind m h j bs
@@ -337,12 +341,13 @@ theorem canonical_lane_phase (m : Track → ℤ → Symbol) (h : Track → ℤ)
         config_frame m h j bs
           ((normalized (bs.map (select j))).map Symbol.unit ++ [.window .zero])
           (bs.length+1) 0 (.packedRewindMove j) bs.length
-          (by omega) (by omega) (by omega) (by omega)
+          hnext le_rfl le_rfl htarget
     · rw [hrewindMove]
-      exact config_frame m h j bs
+      have hframe := config_frame m h j bs
         ((normalized (bs.map (select j))).map Symbol.unit ++ [.window .zero])
         bs.length 0 (.packedRewind j) bs.length
-        (by omega) (by omega) (by omega) (by omega)
+        hnonneg hbound le_rfl htarget
+      exact hframe
   have hend : run (config m h j bs
       ((normalized (bs.map (select j))).map Symbol.unit ++ [.window .zero])
       (bs.length+1) 0 (.packedRewindMove j)) (2*bs.length+2) =
