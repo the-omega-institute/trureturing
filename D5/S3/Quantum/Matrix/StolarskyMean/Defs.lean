@@ -9,6 +9,8 @@
 import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
+/-! Total real Stolarsky means and the finite-dimensional class A assertion. -/
+
 noncomputable section
 
 namespace D5.S3.Quantum.Matrix.StolarskyMean.Defs
