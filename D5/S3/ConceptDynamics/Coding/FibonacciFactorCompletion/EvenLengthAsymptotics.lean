@@ -153,7 +153,7 @@ private theorem execution_word_append (xs ys : List Return) :
   | nil => rfl
   | cons a xs ih => simp only [List.cons_append, executionWord, ih, List.append_assoc]
 
-private theorem reset_execution_word (R : Return) (words : List (List Return)) :
+theorem reset_execution_word (R : Return) (words : List (List Return)) :
     executionWord (resetConcatenation R words) = resetFactor R words := by
   induction words with
   | nil => rfl
