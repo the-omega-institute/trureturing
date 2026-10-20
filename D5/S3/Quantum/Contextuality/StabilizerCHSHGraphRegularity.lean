@@ -6,17 +6,15 @@
    utility: none
    digest: The qudit CHSH stabilizer-projector orthogonality graph has degree (2p-1)(p-1). -/
 
-import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.LinearAlgebra.Matrix.Trace
 import D5.S3.Observer.WindowRegister
+
+/-! The normalized spectral-projector model for the qudit CHSH graph. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open scoped BigOperators Matrix Kronecker
-
-/-! The normalized spectral-projector model for the qudit CHSH graph. -/
 
 namespace D5.S3.Quantum.Contextuality.StabilizerCHSHGraphRegularity
 
@@ -95,10 +93,12 @@ private theorem char_unit (p : ℕ) [Fact p.Prime] (t : ZMod p) :
   rw [char_star, ← AddChar.map_add_eq_mul]
   simp
 
+/-- A cyclic shift conjugated by the diagonal matrix of unit phases. -/
 private def twistedShift (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ) :
     Matrix (ZMod p) (ZMod p) ℂ :=
   fun x y => if x = y + 1 then u x * star (u y) else 0
 
+/-- Intermediate phases cancel along a translated column. -/
 private theorem twistedShift_pow (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
     (hu : ∀ x, u x * star (u x) = 1) (m : ℕ) (x y : ZMod p) :
     (twistedShift p u ^ m) x y =
@@ -157,6 +157,7 @@ private theorem twisted_eigenProj (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
   rw [hs]
   ring
 
+/-- A phase vector has squared length p; this is its normalized outer product. -/
 private def pureProj (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ) :
     Matrix (ZMod p) (ZMod p) ℂ :=
   (p : ℂ)⁻¹ • Matrix.vecMulVec u (star u)
@@ -233,6 +234,7 @@ private theorem clock_pow (p : ℕ) [Fact p.Prime] (n : ℕ) :
   rw [phase_eq, ← AddChar.map_nsmul_eq_pow]
   simp only [nsmul_eq_mul]
 
+/-- The quadratic chirp has successive phase difference c+j*y. -/
 private theorem weyl_chirp (p : ℕ) [Fact p.Prime] (hp : p ≠ 2) (j c : ZMod p) :
     omega p ^ c.val • (shiftX p * clockZ p ^ j.val) =
       twistedShift p (chirp p j c) := by
@@ -256,6 +258,8 @@ private theorem char_sum (p : ℕ) [Fact p.Prime] (c : ZMod p) :
     (∑ x : ZMod p, ZMod.stdAddChar (c * x)) = if c = 0 then (p : ℂ) else 0 := by
   simpa only [phase_eq] using phase_sum p c
 
+/-- In the squared quadratic sum, translation leaves a nontrivial linear
+character except at the zero shift. -/
 private theorem quadratic_energy (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
     (d e : ZMod p) (hd : d ≠ 0) :
     (∑ x : ZMod p, ZMod.stdAddChar (d * x ^ 2 + e * x)) *
@@ -321,14 +325,14 @@ private theorem chirp_overlap_energy (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
   classical
   by_cases hj : j = l
   · subst l
-    simp only [chirp_overlap, sub_self, zero_mul, zero_sub, sub_zero,
+    simp only [chirp_overlap, sub_self, zero_mul, sub_zero,
       zero_add, char_sum, sub_eq_zero, ite_true]
     by_cases hc : c = d
     · simp [hc]; ring
     · simp [hc, Ne.symm hc]
   · have htwo : (2 : ZMod p) ≠ 0 :=
       Ring.two_ne_zero (by simpa only [ZMod.ringChar_zmod_n] using hp)
-    rw [if_neg hj, chirp_overlap, chirp_overlap]
+    rw [ite_eq_right hj, chirp_overlap, chirp_overlap]
     have hpoly (x : ZMod p) :
         (j - l) * (2 : ZMod p)⁻¹ * x ^ 2 +
             (c - d - (j - l) * (2 : ZMod p)⁻¹) * x =
@@ -363,13 +367,13 @@ private theorem alice_unit (p : ℕ) [Fact p.Prime] (j a x : ZMod p) :
           ((if j = 0 then 1 else Complex.I ^ x.val) *
           star (if j = 0 then 1 else Complex.I ^ x.val)) := by ring
       _ = 1 := by rw [char_unit, hx]; ring
-  · simpa only [aliceVec, if_neg hp] using chirp_unit p j (j * (j + 1) - a) x
+  · simpa only [aliceVec, ite_eq_right hp] using chirp_unit p j (j * (j + 1) - a) x
 
 private theorem bob_unit (p : ℕ) [Fact p.Prime] (k b x : ZMod p) :
     bobVec p k b x * star (bobVec p k b x) = 1 := by
   by_cases hp : p = 2
-  · simpa only [bobVec, if_pos hp] using alice_unit p k b x
-  · simpa only [bobVec, if_neg hp] using chirp_unit p _ _ x
+  · simpa only [bobVec, ite_eq_left hp] using alice_unit p k b x
+  · simpa only [bobVec, ite_eq_right hp] using chirp_unit p _ _ x
 
 private theorem omega_two : omega 2 = -1 := by
   unfold omega D5.S3.Observer.WindowRegister.windowRoot
@@ -418,17 +422,18 @@ private theorem alice_pure (p : ℕ) [Fact p.Prime] (j a : ZMod p) :
         simp [show (-1 : ZMod 2) = 1 by rfl, show (2 : ZMod 2) = 0 by rfl]
     rw [hm, twisted_eigenProj_pure 2 u hu]
     rfl
-  · simpa only [aliceOp, aliceVec, if_neg hp] using
+  · simpa only [aliceOp, aliceVec, ite_eq_right hp] using
       chirp_eigenProj p hp j (j * (j + 1)) a
 
 private theorem bob_pure (p : ℕ) [Fact p.Prime] (k b : ZMod p) :
     eigenProj p (bobOp p k) b = pureProj p (bobVec p k b) := by
   by_cases hp : p = 2
-  · simpa only [bobOp, aliceOp, bobVec, if_pos hp] using alice_pure p k b
-  · simpa only [bobOp, bobVec, if_neg hp] using
+  · simpa only [bobOp, aliceOp, bobVec, ite_eq_left hp] using alice_pure p k b
+  · simpa only [bobOp, bobVec, ite_eq_right hp] using
       chirp_eigenProj p hp ((2 : ZMod p)⁻¹ * k)
         ((2 : ZMod p)⁻¹ ^ 2 * (k ^ 2 + 2 * k)) b
 
+/-- Equal settings give orthogonal outcomes; unequal settings are mutually unbiased. -/
 private theorem alice_energy (p : ℕ) [Fact p.Prime] (j a l b : ZMod p) :
     (star (aliceVec p j a) ⬝ᵥ aliceVec p l b) *
         (star (aliceVec p l b) ⬝ᵥ aliceVec p j a) =
@@ -442,7 +447,7 @@ private theorem alice_energy (p : ℕ) [Fact p.Prime] (j a l b : ZMod p) :
       rcases two_cases b with rfl | rfl <;>
       norm_num [aliceVec, dotProduct, sum_two, char_two, ZMod.val_zero,
         ZMod.val_one_eq_one_mod, Pi.star_apply, Complex.star_def] <;> ring_nf <;> norm_num
-  · simp only [aliceVec, if_neg hp]
+  · simp only [aliceVec, ite_eq_right hp]
     rw [chirp_overlap_energy p hp]
     by_cases hj : j = l
     · subst l
@@ -455,10 +460,10 @@ private theorem bob_energy (p : ℕ) [Fact p.Prime] (k a l b : ZMod p) :
       if k = l then (if a = b then (p : ℂ) ^ 2 else 0) else p := by
   classical
   by_cases hp : p = 2
-  · simpa only [bobVec, if_pos hp] using alice_energy p k a l b
+  · simpa only [bobVec, ite_eq_left hp] using alice_energy p k a l b
   · have htwo : (2 : ZMod p) ≠ 0 :=
       Ring.two_ne_zero (by simpa only [ZMod.ringChar_zmod_n] using hp)
-    simp only [bobVec, if_neg hp]
+    simp only [bobVec, ite_eq_right hp]
     rw [chirp_overlap_energy p hp]
     have he : (2 : ZMod p)⁻¹ * k = (2 : ZMod p)⁻¹ * l ↔ k = l :=
       ⟨mul_left_cancel₀ (inv_ne_zero htwo), congrArg ((2 : ZMod p)⁻¹ * ·)⟩
@@ -506,6 +511,7 @@ private theorem bob_overlap (p : ℕ) [Fact p.Prime] (k a l b : ZMod p) :
   exact pure_overlap p _ _ k a l b (bob_unit p k a) (bob_unit p l b)
     (bob_energy p k a l b)
 
+/-- Fixing Alice's setting separates the count into p*(p-1) and (p-1)^2. -/
 private theorem neighbor_count (p : ℕ) [Fact p.Prime]
     (v : ZMod p × ZMod p × ZMod p) :
     (Finset.univ.filter (fun w : ZMod p × ZMod p × ZMod p =>
@@ -541,7 +547,8 @@ private theorem neighbor_count (p : ℕ) [Fact p.Prime]
       simp_rw [hcond]
       have hc (b : ZMod p) : (∑ a : ZMod p, if a ≠ b then (1 : ℕ) else 0) = p - 1 := by
         simpa only [Finset.filter_ne', Finset.card_erase_of_mem (Finset.mem_univ _),
-          Finset.card_univ, ZMod.card] using (Finset.card_filter (s := Finset.univ) (p := fun a : ZMod p => a ≠ b)).symm
+          Finset.card_univ, ZMod.card] using
+          (Finset.card_filter (s := Finset.univ) (p := fun a : ZMod p => a ≠ b)).symm
       simp_rw [hc]
       simp [ZMod.card]
     · simp only [hj, false_and, false_or, ite_false]
@@ -621,19 +628,20 @@ private theorem vertex_injective (p : ℕ) [Fact p.Prime] :
   · by_cases ha : v.2.2 = w.2.2
     · by_cases hk : v.2.1 = w.2.1
       · exact Prod.ext hj (Prod.ext hk ha)
-      · simp only [if_pos hj, if_pos ha, if_neg hk, one_mul] at ht
+      · simp only [ite_eq_left hj, ite_eq_left ha, ite_eq_right hk, one_mul] at ht
         exact (hi ht.symm).elim
-    · simp only [if_pos hj, if_neg ha, zero_mul] at ht
+    · simp only [ite_eq_left hj, ite_eq_right ha, zero_mul] at ht
       exact (one_ne_zero ht).elim
   · by_cases hk : v.2.1 = w.2.1
     · by_cases hb : -v.1 * v.2.1 - v.2.2 = -w.1 * w.2.1 - w.2.2
-      · simp only [if_neg hj, if_pos hk, if_pos hb, mul_one] at ht
+      · simp only [ite_eq_right hj, ite_eq_left hk, ite_eq_left hb, mul_one] at ht
         exact (hi ht.symm).elim
-      · simp only [if_neg hj, if_pos hk, if_neg hb, mul_zero] at ht
+      · simp only [ite_eq_right hj, ite_eq_left hk, ite_eq_right hb, mul_zero] at ht
         exact (one_ne_zero ht).elim
-    · simp only [if_neg hj, if_neg hk] at ht
+    · simp only [ite_eq_right hj, ite_eq_right hk] at ht
       exact (hisq ht.symm).elim
 
+/-- The normalized qudit CHSH projectors give the asserted regular graph for every prime. -/
 theorem result : claim := by
   classical
   intro p inst
