@@ -36,6 +36,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaSquareCompositionModFour.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a372527-square-composition-mod-four` (proved) by `D5/S1/Recurrence/Invariants/HannaSquareCompositionModFour.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a372527-square-composition-mod-four","declaration_gid":"D5/S1/Recurrence/Invariants/HannaSquareCompositionModFour.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2024). *OEIS A372527, square-composition generating function*. URL: <https://oeis.org/A372527>.
