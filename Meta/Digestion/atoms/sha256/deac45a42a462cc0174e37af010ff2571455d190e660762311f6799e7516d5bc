@@ -1,0 +1,26 @@
+## 5.1 共同不可区分核
+
+定义语言 \(\Gamma\) 的共同核为
+
+\[
+\boxed{
+K_\Gamma
+=
+\bigcap_{d\in\Gamma}\ker d.
+}
+\]
+
+若 \((x,y)\in K_\Gamma\)，则现有全部定义都不能区分二者。
+
+定义语言盲残差
+
+\[
+\boxed{
+\mathcal B_\Gamma(q;T)
+=
+\mathcal E(q;T)\cap K_\Gamma.
+}
+\]
+
+它表示目标必须区分、当前概念没有区分、而现有语言中的所有定义也都无法区分的对象对。
+

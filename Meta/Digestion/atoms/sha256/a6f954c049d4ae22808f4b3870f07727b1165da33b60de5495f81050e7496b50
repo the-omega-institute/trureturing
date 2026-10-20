@@ -1,0 +1,74 @@
+**推论 59.10（反射根式及整数舍入）。** 令
+
+$$
+\kappa=\frac{7-\sqrt{15}}{17},\quad
+ a_r=\frac{1+\kappa}{3},\quad c_r=\frac{1+\kappa}{2},\quad b_r=1-\kappa,
+\qquad q_r=2b_r-a_r-c_r=\frac{\sqrt{15}}6.
+\tag{TM.5928}
+$$
+
+对所有 $H\ge8$，完整族、所有原协议及任意真实精确树标签有
+
+$$
+A_U(H)\ge\left\lceil\kappa\lfloor H/4\rfloor-25\right\rceil,
+\qquad
+A_U(H)\ge\frac{7-\sqrt{15}}{68}H-O(1).
+\tag{TM.5929}
+$$
+
+常数及渐近下界都对四个余数统一。$\kappa=0.183942156105\ldots$ 是本证书得到的必要系数，不是 $A_U$ 的已证最优系数或归一化极限。
+
+证明。$0<\kappa<1/5$，因此
+
+$$
+a_r<1-c_r<\tfrac12<c_r<2b_r-1<b_r.
+\tag{TM.5930}
+$$
+
+反射板的连续宽度在这五段上分别为 $3x-1$、$2x-c_r$、$1-c_r$、$1-x$、$2b_r-2x$。从 $a_r$ 积分到 $b_r$ 得
+
+$$
+J_r=-\tfrac32a_r^2+a_r-b_r^2+2b_r-c_r^2+c_r-\tfrac54.
+\tag{TM.5931}
+$$
+
+一般变量 $a,c,b,\lambda$ 的恒等式为
+
+$$
+\begin{aligned}
+&-\tfrac32a^2+a-b^2+2b-c^2+c-\tfrac54-\lambda(2b-a-c)\\
+&\quad=-\tfrac32\left(a-\tfrac{1+\lambda}{3}\right)^2
+-\left(c-\tfrac{1+\lambda}{2}\right)^2
+-\left(b-(1-\lambda)\right)^2
++\frac{17\lambda^2-14\lambda+2}{12}.
+\end{aligned}
+\tag{TM.5932}
+$$
+
+$\kappa$ 是最后多项式的小根。在（TM.5928）的参数处三个平方及多项式都为零，故 $J_r=\kappa q_r$。
+
+舍入不省略量词。对 $h\ge10$ 取 $A=\lceil a_rh\rceil$、$C=\lceil c_rh\rceil$、$B=\lfloor b_rh\rfloor$，它们满足 $2\le A\le C\le B\le h$；例如 $b_r-c_r>1/5$，故在这个范围有足够整数间距。令
+
+$$
+g(x)=[\min(1,2x,2b_r-x)-\max(c_r,x,1-x)]_+.
+\tag{TM.5933}
+$$
+
+在所需区间它不超过1，且为 3-Lipschitz。实际整数行宽与 $hg(z/h)$ 的绝对差至多3：上界的 $2z-1$ 和 $2B+1-z$ 各有至多1误差，下界有至多1误差，含端点的 $+1$ 再贡献至多1。共不超过 $h$ 行。单元 $[(z-1)/h,z/h]$ 上采样积分误差合计至多 $3h/2$；$[a_r,b_r]$ 与这些单元覆盖区间相差至多两个宽 $1/h$ 的边界条带，面积贡献乘 $h^2$ 后至多 $2h$。所以
+
+$$
+|N_r-J_rh^2|\le7h,\qquad |T_r-q_rh|\le2.
+\tag{TM.5934}
+$$
+
+特别地 $T_r\ge q_rh/2$，因 $q_r>3/5$、$h\ge10$。由 $J_r=\kappa q_r$ 得
+
+$$
+\frac{N_r}{T_r}\ge\kappa h-\frac{(7+2\kappa)h}{T_r}
+\ge\kappa h-\frac{2(7+2\kappa)}{q_r}>\kappa h-25.
+\tag{TM.5935}
+$$
+
+最后一个严格界仅用 $\kappa<1/5$、$q_r>3/5$。$2\le h<10$ 时右侧为负，$A_U\ge1$ 已足够。容量整数性给第一式；$\lfloor H/4\rfloor=H/4+O(1)$ 给第二式。证明只选择了一个可用几何区间与参数序列，没有优化所有板形、所有供应或所有协议。$\square$
+
+<a id="TM59-C11"></a>

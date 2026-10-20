@@ -222,7 +222,7 @@ private theorem conditional_positive (M : Matrix (A × B) (A × B) ℂ)
     (hM : M.PosSemidef) (hσ : σ.PosSemidef) : (conditional M σ).PosSemidef := by
   rw [conditional_reindex]
   exact conditionalNatural_positive M _ hM (hσ.submatrix _)
-private theorem separable_ppt (σ : Matrix (A×B) (A×B) ℂ) (hσ : IsSeparable σ) :
+theorem separable_ppt (σ : Matrix (A×B) (A×B) ℂ) (hσ : IsSeparable σ) :
     Matrix.PosSemidef (fun i j : A × B => σ (i.1,j.2) (j.1,i.2)) := by
   let a := (Fintype.equivFin A).symm
   let b := (Fintype.equivFin B).symm
@@ -788,8 +788,8 @@ private theorem extend_decomposition {a b : ℕ}
 end
 section
 open Matrix D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Norm
-private def symKet : (Fin 3 × Fin 3) → ℂ := (Pi.single (0,1) (1 : ℂ))+(Pi.single (1,0) (1 : ℂ))
-private def antiKet : (Fin 3 × Fin 3) → ℂ := (Pi.single (0,1) (1 : ℂ))-(Pi.single (1,0) (1 : ℂ))
+def symKet : (Fin 3 × Fin 3) → ℂ := (Pi.single (0,1) (1 : ℂ))+(Pi.single (1,0) (1 : ℂ))
+def antiKet : (Fin 3 × Fin 3) → ℂ := (Pi.single (0,1) (1 : ℂ))-(Pi.single (1,0) (1 : ℂ))
 private def ptPlus : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
   (1/2 : ℂ) • vecMulVec ((Pi.single (0,0) (1 : ℂ))) (star ((Pi.single (0,0) (1 : ℂ))))+
   (1/2 : ℂ) • vecMulVec ((Pi.single (1,1) (1 : ℂ))) (star ((Pi.single (1,1) (1 : ℂ))))+

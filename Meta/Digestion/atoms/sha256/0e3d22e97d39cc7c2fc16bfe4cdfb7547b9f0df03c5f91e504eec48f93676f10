@@ -1,0 +1,14 @@
+以下命题等价：
+
+1. \(\mathcal E(q;T)=\varnothing\)；
+2. \(\ker q\subseteq\ker T\)；
+3. \(T\) 在每个 \(q\)-纤维上为常值；
+4. 存在
+   \[
+   \overline T:\operatorname{range}(q)\to Y
+   \]
+   使
+   \[
+   T=\overline T\circ\operatorname{rangeFactorization}(q).
+   \]
+

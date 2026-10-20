@@ -1,0 +1,200 @@
+**Theorem 59.1 (sharp order of endpoint Bayes squared risk).**
+For each fixed $\tau>0$ there are constants $0<c_\tau<C_\tau<\infty$
+and $n_0$ such that, simultaneously for all $\kappa\in\mathcal K$,
+
+$$
+c_\tau n^{-1/2}\le R_{n,\kappa}\le C_\tau n^{-1/2}
+\qquad(n\ge n_0).
+\tag{59.1}
+$$
+
+In particular this holds along every sequence $\kappa(n)$ in the
+same fixed two-sided family, including sequences with actual zero
+values. The assertion is an order bound, not an exact leading
+constant or a larger-class minimax assertion.
+
+Proof. The upper bound is Theorem 58.3. We prove the lower bound by
+giving extra information about this same actual probability, retaining
+its exact weights.
+
+Choose a grid-aligned final interval of length $h=m\Delta$, where
+$m=\lceil\sqrt n\rceil$ and $s=\tau-h$. Write $x=K_s$, $z=K_\tau$,
+and express the final height segment in the coordinates
+
+$$
+K_{s+r}=x+\frac rh(z-x)+b_r,\qquad
+0\le r\le h,\qquad b_0=b_h=0.
+\tag{59.2}
+$$
+
+Enlarge the data to contain the full height and phase-driver past up
+to $s$, the bridge $b$ in (59.2), and the $m$ exact unwrapped phase
+increments on this final interval. They determine all original
+wrapped samples. Crucially, they do not contain $z$. This is a
+comparison experiment on the original probability space; no such
+additional service is asserted in (58.1).
+
+Let $\beta_h$ be the centered Brownian bridge measure with variance
+rate $\sigma^2$, and let
+$\gamma_h(w)=(2\pi\sigma^2h)^{-1/2}\exp[-w^2/(2\sigma^2h)]$.
+Given the past ending at $x$, the exact Q joint kernel of $(b,z)$ is
+
+$$
+\beta_h(db)\,\gamma_h(z-x)\,dz\,
+ e^{\lambda h}\frac{\phi(z)}{\phi(x)}
+ \mathbf1\left\{x+\frac rh(z-x)+b_r\in I\text{ for all }r\le h\right\}.
+\tag{59.3}
+$$
+
+Indeed an ordinary Brownian segment disintegrates into its endpoint
+normal density and an independent centered bridge: the covariance
+of the bridge with its endpoint is zero, so joint Gaussianity gives
+independence. Killing restricts that segment to staying in $I$, and
+the exact Doob derivative is $e^{\lambda h}\phi(z)/\phi(x)$.
+Thus (59.3) is the actual conditional Q kernel, not an approximation
+by a flat height prior. Conditional on $(x,b,z)$ the final unwrapped
+increments $y_j$ are independent $N(0,V_j(z))$, with
+
+$$
+V_j(z)=\int_{(j-1)\Delta}^{j\Delta}
+ a_\kappa\left(x+\frac rh(z-x)+b_r\right)dr,
+\quad 1\le j\le m.
+\tag{59.4}
+$$
+
+Select a closed interval $J\Subset I$ of positive length and a fixed
+$\rho>0$ such that every $x\in J$ is at distance at least $3\rho$
+from the boundary. Take a nonzero $\psi\in C_c^\infty((-1,1))$ with
+$0\le\psi\le1$. For sufficiently small $h$, form a subprobability
+$\nu_h$ by multiplying the exact joint law of the enlarged experiment
+and its target by
+
+$$
+\mathbf1_{\{x\in J\}}
+\mathbf1_{\{\sup_{r\le h}|b_r|\le\rho\}}
+\psi\left(\frac{z-x}{\sqrt h}\right)^2.
+\tag{59.5}
+$$
+
+The multiplier is at most one, so every nonnegative loss has
+$\mathbf E_{\mathbf Q_\kappa}\text{loss}\ge\int\text{loss}\,d\nu_h$.
+On this support $|z-x|\le\sqrt h\le\rho$ and the full segment
+in (59.2) stays in an interior compact set. The indicator in (59.3)
+is identically one wherever the multiplier is nonzero, with a
+positive margin from the actual absorbing faces.
+
+There are constants $c_0>0,C_0<\infty$, independent of small $h$ and
+of $\kappa$, such that
+
+$$
+\nu_h(1)\ge c_0,
+\qquad
+\int |\partial_z\log p_{\nu_h}|^2d\nu_h
+ \le C_0(h^{-1}+m).
+\tag{59.6}
+$$
+
+Here the density is with respect to the actual Q law of the past,
+$\beta_h(db)$, Lebesgue $dz$ and Lebesgue measure in the final
+unwrapped increments. Its derivative is taken at fixed past and fixed
+bridge, which are precisely the coordinates revealed to the estimator.
+
+To prove the mass bound, stationarity gives
+$\mathbf Q_\kappa(x\in J)=\pi(J)>0$. The bridge maximal second
+moment is at most $C\sigma^2h$: write it as
+$\sigma(W_r-rW_h/h)$ and apply the Brownian maximal inequality.
+Thus its displayed cutoff has probability at least $1/2$ for small
+$h$. On the remaining support $\phi(z)/\phi(x)$ is bounded above
+and below by positive constants. Substitution $z=x+\sqrt h\,u$
+in the endpoint integral gives a positive constant times
+$\int_{-1}^1\psi(u)^2\exp[-u^2/(2\sigma^2)]du$.
+Integration of the normal observation densities gives one.
+This proves $\nu_h(1)\ge c_0$.
+
+For the information bound, the part of the logarithmic derivative
+coming from the endpoint kernel and cutoff is
+
+$$
+S_0=-\frac{z-x}{\sigma^2h}+\frac{\phi'(z)}{\phi(z)}
+       +\frac{2}{\sqrt h}
+          \frac{\psi'((z-x)/\sqrt h)}{\psi((z-x)/\sqrt h)}.
+\tag{59.7}
+$$
+
+The ratio involving $\psi$ is used only where $\psi>0$. Its squared
+integral is well defined because the factor $\psi^2$ cancels the
+denominator, leaving $4\psi'^2/h$. The first term has squared
+integral at most $C/h$ by the scaled support; the second is bounded
+on the fixed interior compact set. Thus $\int S_0^2d\nu_h\le C/h$.
+There is no hidden derivative of a survival indicator on this support.
+
+From (55.3), the bounded derivative of $a_\kappa$, and (59.4),
+
+$$
+V_j\ge a_-\Delta,
+\qquad |V_j'|\le \|a_\kappa'\|_\infty\Delta,
+\qquad |V_j'/V_j|\le C.
+\tag{59.8}
+$$
+
+A centered normal observation of variance $V_j(z)$ has score
+
+$$
+S_j=\frac{V_j'}{2V_j}\left(\frac{y_j^2}{V_j}-1\right),
+\qquad
+\mathbf E[S_j\mid x,b,z]=0,
+\qquad
+\mathbf E[S_j^2\mid x,b,z]=\frac{(V_j')^2}{2V_j^2}\le C.
+\tag{59.9}
+$$
+
+The conditional scores are independent, and their cross terms with
+$S_0$ vanish as well. Summing proves the second part of (59.6),
+including the genuine Q factor $\phi(z)/\phi(x)$ in its score.
+
+For completeness, the information inequality needed here follows
+from one integration by parts. For any estimator $g$ measurable in
+the enlarged data, it is a function of the past, $b$ and the $y_j$,
+so it has no $z$ derivative in these coordinates. The cutoff makes
+the density vanish at its $z$ integration boundaries. Therefore
+
+$$
+\int(g-z)\,\partial_z\log p_{\nu_h}\,d\nu_h=\nu_h(1).
+\tag{59.10}
+$$
+
+This identity follows first for bounded $g$ by integrating
+$\partial_z((g-z)p_{\nu_h})$. For finite-risk $g$ it follows by
+truncation and Cauchy–Schwarz using (59.6); infinite-risk estimators
+already satisfy the required bound. A second Cauchy–Schwarz gives
+
+$$
+\mathbf E_{\mathbf Q_\kappa}(g-K_\tau)^2
+ \ge\int(g-z)^2d\nu_h
+ \ge\frac{\nu_h(1)^2}{\int|\partial_z\log p_{\nu_h}|^2d\nu_h}
+ \ge\frac{c}{h^{-1}+m}.
+\tag{59.11}
+$$
+
+This is the Bayesian information argument applied to a dominated
+subprobability of the same source. It does not change its drift,
+height prior, independent phase driver or target.
+
+If $R^{\rm more}_{n,\kappa}$ is the Bayes risk with the enlarged
+data, information inclusion has the direction
+
+$$
+R_{n,\kappa}\ge R^{\rm more}_{n,\kappa}
+ \ge\frac{c}{h^{-1}+m}.
+\tag{59.12}
+$$
+
+With $h=m\tau/n$ and $m=\lceil\sqrt n\rceil$, the last quantity is
+at least $c_\tau n^{-1/2}$ for large $n$. All constants used depend
+only on the fixed native data, the fixed horizon and the chosen
+interior cutoffs. The height law, $\phi$ and the bridge measure do
+not depend on $\kappa$; the observation bounds are uniform on the
+original fixed $\mathcal K$. At actual zero, $v$ and its variance
+function are exactly the same limiting native coordinates, so every
+step applies without adjoining $x$. This completes (59.1). $\square$
+

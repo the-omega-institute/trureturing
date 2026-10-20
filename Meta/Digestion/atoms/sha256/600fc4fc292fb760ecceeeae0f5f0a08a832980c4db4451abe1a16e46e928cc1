@@ -1,0 +1,34 @@
+## 6. 同一个试探控制整个复圆盘
+
+令 D={z:|z-z0|<=rho}，rho=1/1000，b=1/4+rho。对整个线段积分 cos 的复导数，
+
+\[
+\|g_z-g_{z0}\|\le H\rho=:d,
+\qquad H=a\sqrt L e^{ab}.
+\]
+
+候选投影收缩，故若 R^2 是中心完整残差的上界，同一 v 在 D 上满足
+
+\[
+\boxed{C_{g_z}(v)\le C_{g_{z0}}(v)+2d\|v\|
++(2Rd+d^2)/\kappa.}
+\tag{AD11}
+\]
+
+无需对每个 z 重新求解或选择独立相位。程序认证右侧小于 107，进而
+
+\[
+\boxed{\sup_{z\in D}\left|\widehat u(z)/\langle k,u\rangle-\widehat k(z)\right|
+<342/10^6.}
+\tag{AD12}
+\]
+
+同时由 |khat(z)|>=|khat(z0)|-d，得到
+
+\[
+\boxed{\inf_{z\in D}|\widehat u(z)/\langle k,u\rangle|>3/10000.}
+\tag{AD13}
+\]
+
+这一非零下界是带数值裕量的读出认证。此前若已经承接实际 ground Fourier 的实零点定理，离实轴非零的定性事实本来已知；本节不把 (AD13) 包装为新的定性零点区域或 RH 进展。新的数学用途是 (AD12) 的实际定量方向误差。
+

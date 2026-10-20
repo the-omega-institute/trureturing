@@ -1,0 +1,17 @@
+### 45.1. 定义与结论
+
+设 `d` 为正整数，`C,D` 是 `C^d` 的两个互相无偏正交基，`E_C,E_D` 是对应的 rank-one diagonal pinching。采用第 32 节的归一化：
+
+```math
+\tau(X)=\frac{\operatorname{Tr}(X)}d,\qquad
+\langle X,Y\rangle_2=\tau(X^\dagger Y),\qquad
+\|X\|_2^2=\tau(X^\dagger X).
+```
+
+令 `S` 为 `Tr(S)=0`、`S^3=I` 的 unitary，并置
+
+```math
+A=\mathsf E_C(S),\quad B=\mathsf E_D(S),\quad R=S-A-B,
+\qquad a=\|A\|_2^2,\quad b=\|B\|_2^2,\quad r=\|R\|_2^2.
+```
+

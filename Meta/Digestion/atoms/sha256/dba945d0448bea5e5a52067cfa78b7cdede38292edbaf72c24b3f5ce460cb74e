@@ -1,0 +1,13 @@
+## 定义 255.2（观测余量）
+
+\[
+\operatorname{ObsRes}
+=
+\sum_{M,N:\mathfrak M}
+(M\neq N)
+\times
+\bigl(
+\operatorname{Obs}(M)=\operatorname{Obs}(N)
+\bigr).
+\]
+

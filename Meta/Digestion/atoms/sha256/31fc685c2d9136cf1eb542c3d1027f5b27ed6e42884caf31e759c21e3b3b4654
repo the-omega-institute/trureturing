@@ -1,0 +1,41 @@
+### 20.1 素数增长来自同一测试的实际活跃响应
+
+继续使用第 19 节的 $f_{\mathcal R}$ 及固定常数。取
+
+$$
+\eta=\min\{1/2,v/(2D_*)\}>0.
+$$
+
+对任意实 $F\in H^1(\mathbb R)$，复用平移的 Sobolev 界得到
+
+$$
+H_F(s)=\|F\|_2^2-\tfrac12\|F(\cdot+s)-F\|_2^2
+\ge\|F\|_2^2-\tfrac{s^2}{2}\|F'\|_2^2.
+$$
+
+代入 $F_{\mathcal R}$ 及第 19.3 节的界，得
+
+$$
+\boxed{
+H_{f_{\mathcal R}}(t)=H_{F_{\mathcal R}}(t/\mathcal R)
+\ge v^2/8>0\quad\text{当 }|t|\le\eta\mathcal R.
+}
+$$
+
+定义最小活跃素数集
+
+$$
+\mathcal P_{\mathcal R}^{\rm act}
+=\{p\text{ prime}:\exists k\ge1,\ H_{f_{\mathcal R}}(k\log p)\ne0\}.
+$$
+
+它是有限集，且
+
+$$
+\{p:p\le e^{\eta\mathcal R}\}
+\subseteq\mathcal P_{\mathcal R}^{\rm act}
+\subseteq\{p:p\le e^{\mathcal R}\}.
+$$
+
+每个 $p\le e^{\eta\mathcal R}$ 已在第一素幂活跃；所有 $k\log p\le\eta\mathcal R$ 的素幂也活跃。故本节没有把小支撑函数任意配上大量冗余素数，也没有删除高素幂。自相关实际支撑随 $\mathcal R$ 增长，而非仅把一个固定支撑的上界放大。
+

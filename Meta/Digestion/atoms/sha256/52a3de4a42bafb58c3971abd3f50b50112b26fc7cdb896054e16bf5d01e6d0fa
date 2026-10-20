@@ -1,0 +1,29 @@
+**Lemma 131.3 (Five-cut elimination on the saturated representation).**
+Every feasible saturated representation satisfies (130.3).
+
+**Proof.** Maximize each J score over the allowed sets of Lemma 131.2,
+separately on all four N cells. The resulting complete tables are:
+
+| Pair | J1 maxima | J2 maxima | J3 maxima | J4 maxima | J5 maxima |
+| --- | --- | --- | --- | --- | --- |
+| 12 | (2,6,8,8) | (1,3,4,4) | (0,2,1,1) | (1,2,3,4) | (1,2,3,3) |
+| 13 | (3,5,7,9) | (2,2,4,4) | (1,1,1,1) | (1,2,3,4) | (2,1,3,3) |
+| 14 | (4,4,8,8) | (3,1,4,4) | (1,1,1,1) | (1,2,3,4) | (2,1,2,4) |
+| 23 | (3,5,7,9) | (2,2,4,4) | (1,0,1,2) | (1,2,3,4) | (2,1,3,3) |
+| 24 | (4,4,8,8) | (3,1,4,4) | (1,0,1,2) | (1,2,3,4) | (2,1,2,4) |
+| 34 | (4,4,8,8) | (3,2,4,3) | (1,1,1,1) | (1,2,3,4) | (2,2,2,3) |
+| 45 | (10,0,8,6) | (6,0,3,3) | (2,0,1,1) | (3,0,4,3) | (3,0,3,3) |
+
+The sums on each permitted pair are respectively $24,12,4,10,9$.
+This is one budget: summing the cell bounds gives these same bounds
+multiplied by $\sum_Qw_Q=1$. No cell is assigned a separate unit budget.
+In particular $45/01$ contributes zero for every allowed label.
+The exact target score and row-weight sums are:
+
+| Score | Target score | Weight sum | Saturated upper |
+| --- | --- | --- | --- |
+| J1 | $22+2a_2+5a_3+8a_4+8a_5$ | 45 | 24 |
+| J2 | $11+a_2+3a_3+4a_4+3a_5$ | 22 | 12 |
+| J3 | $4+S$ | 7 | 4 |
+| J4 | $9+a_2+2a_3+3a_4+4a_5$ | 19 | 10 |
+| J5 | $8+a_2+3a_3+2a_4+3a_5$ | 17 | 9 |

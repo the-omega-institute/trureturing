@@ -452,6 +452,15 @@ theorem charged_tensor_current_ward (D : LatticeData) (hu : IsUnit D.G.det)
   rw [smul_comm]
   simp only [TensorProduct.smul_tmul']
 
+/-- Public access to the native creator recurrence used in ordered products. -/
+theorem oscillator_coefficient_X_mul (D : LatticeData) (charge : Charge D)
+    (exponent : ℤ) (index : Index D) (polynomial : Oscillator D) :
+    oscillatorCoefficient D charge exponent (MvPolynomial.X index * polynomial) =
+      MvPolynomial.X index * oscillatorCoefficient D charge exponent polynomial -
+        (bilinear D charge (unitCharge D index.1) : ℂ) •
+          oscillatorCoefficient D charge (exponent + omega D index) polynomial :=
+  oscillatorCoefficient_X_mul D charge exponent index polynomial
+
 end
 
 end D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients

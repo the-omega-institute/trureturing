@@ -1,0 +1,31 @@
+## 37. 长度—时间校准与边界读出的不变性
+
+设无量纲坐标为 $u\in[0,1]$、无量纲时间为 $t$，并把物理读出写成
+
+$$
+y=\ell u,
+\qquad T=\eta t,
+\qquad \ell,\eta>0.
+$$
+
+若无量纲扩散方程的系数为 $D$，则物理坐标中的扩散系数为
+
+$$
+\kappa=\frac{D\ell^2}{\eta},
+$$
+
+物理 Laplace 读出满足
+
+$$
+L_{\mathrm{phys}}(\sigma)
+=\mathcal L_{\nu,D}(\eta\sigma),
+$$
+
+物理谱率为
+
+$$
+\Lambda_m^{\mathrm{phys}}
+=\frac{D}{\eta}\left(m+\tfrac12\right)^2\pi^2
+=\frac{\kappa}{\ell^2}\left(m+\tfrac12\right)^2\pi^2.
+$$
+

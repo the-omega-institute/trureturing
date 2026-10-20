@@ -1,0 +1,6 @@
+项目 `ObserverConceptReadoutCorrespondence` 已证明：联合 CUT 的 kernel quotient 精确保留不可区分关系，但会遗忘：
+
+- ADMIT；
+- ANCHOR；
+- 原始 CUT 族的坐标分解。
+

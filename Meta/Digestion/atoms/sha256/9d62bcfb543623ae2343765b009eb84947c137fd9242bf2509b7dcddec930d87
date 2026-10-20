@@ -1,0 +1,37 @@
+### 28.1 来源、整数正规形与六步运输
+
+本节把来源固定为 [FIBONACCI_ATOMIC_RELATION_GENERATION.md §§2–3](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的全部自由有序非空二叉树，并使用[该来源卷 §§355–357](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的 Clifford 叶积、替换与历史结论。它与 [RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md §§101–107](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md) 的随机来源、概率选择器和停止记录分开。设 $\mathcal T$ 由非空自由语法
+
+$$
+t::=\alpha\mid\beta\mid\langle s,u\rangle,
+\qquad s,u\in\mathcal T,
+$$
+
+生成，且叶的实际顺序和括号都保留。实际替换与同源三项窗口为
+
+$$
+\begin{aligned}
+\rho(\alpha)&=\beta,\qquad \rho(\beta)=\langle\beta,\alpha\rangle,\\
+\rho(\langle s,u\rangle)&=\langle\rho(s),\rho(u)\rangle,\\
+W_3(t)&=\bigl(E(t),E(\rho t),E(\rho^2t)\bigr).
+\end{aligned}
+$$
+
+令 $A=E(\alpha)$、$B=E(\beta)$，其中 $E(\langle s,u\rangle)=E(s)E(u)$，并令 $G=\langle A,B\rangle$ 为指定 Clifford 单位中的子群。已有关系为
+
+$$
+A^2=1,
+\qquad B^2=-1,
+\qquad AB+BA=1.
+$$
+
+置 $S=BA$。于是
+
+$$
+S^2=S+1,
+\qquad S^{-1}=S-1,
+\qquad B=SA,
+\qquad ASA=1-S=-S^{-1}.
+\tag{28.1}
+$$
+

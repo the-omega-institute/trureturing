@@ -1,0 +1,50 @@
+## 22. Hardy–Littlewood 极限的 connected 版本
+
+假设对 \(H\) 的每个非空子构型 \(A\subseteq H\) 都成立：
+
+\[
+\sum_{n\le X}
+\prod_{h\in A}\Lambda(n+h)
+=
+\mathfrak S(A)X+o(X).
+\]
+
+则标准 Abelian 运输给出：
+
+\[
+\lim_{\sigma\downarrow1}
+M_A(\sigma)
+=
+\mathfrak S(A).
+\]
+
+因此：
+
+\[
+\boxed{
+\lim_{\sigma\downarrow1}
+\kappa_A(\sigma)
+=
+\mathfrak S_{\mathrm{conn}}(A),
+}
+\]
+
+其中：
+
+\[
+\boxed{
+\mathfrak S_{\mathrm{conn}}(A)
+=
+\sum_{\pi\in\Pi(A)}
+(-1)^{|\pi|-1}
+(|\pi|-1)!
+\prod_{B\in\pi}\mathfrak S(B).
+}
+\]
+
+这是一个条件定理，而不是 prime \(k\)-tuple conjecture 的证明。
+
+它把奇异级数从“原始矩常数”提升成一整套 connected singular-series hierarchy。
+
+---
+

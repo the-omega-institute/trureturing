@@ -1,0 +1,54 @@
+## 121. FIB 上下文图上的外加 Gaussian 自由场、Green 协方差与对数相关
+
+取有限连通上下文图 \(G_n=(V_n,E_n)\)，指定接地边界 \(B_n\subset V_n\)、内部 \(I_n\) 和正导通率 \(c_n(x,y)=c_n(y,x)\)。内部 Dirichlet 拉普拉斯记为 \(L_{n,D}\)，刚度 \(\kappa_n>0\)。零边界 Gaussian 自由场的密度为
+\[
+\mathrm d\mathbb P_n(h)
+\propto
+\exp\!\left[
+-\frac{\kappa_n}{2}
+\sum_{\{x,y\}\in E_n}c_n(x,y)(h_x-h_y)^2
+\right]\prod_{x\in I_n}\mathrm dh_x,
+\qquad h|_{B_n}=0.
+\tag{121.1}
+\]
+于是
+\[
+\operatorname{Cov}(H_n(x),H_n(y))
+=\kappa_n^{-1}G_n(x,y),
+\qquad
+G_n=L_{n,D}^{-1}.
+\tag{121.2}
+\]
+若另给速度质量 \(m_n\)，热核积分必须按终点质量归一化；速度质量、能量导通率和 FIB 出现频率是不同数据。
+
+有效电阻给出增量方差：
+\[
+\operatorname{Var}(H_n(x)-H_n(y))
+=\kappa_n^{-1}
+\bigl(G_n(x,x)+G_n(y,y)-2G_n(x,y)\bigr)
+=\kappa_n^{-1}R_{\mathrm{eff},n}^{B_n}(x,y).
+\tag{121.3}
+\]
+多个接地顶点的接线会改变有效电阻；不接地有限图的常数零模必须通过零均值约束或伪逆另行处理。
+
+若图列嵌入到共同空间并满足归一化协方差的对数相关条件
+\[
+\widehat C_n(x,y)
+=a\log\frac{\ell_0}
+{d(\iota_nx,\iota_ny)\vee\varepsilon_n}
++r_n(x,y),
+\tag{121.4}
+\]
+其中余项一致有界且微观截止 \(\varepsilon_n\to0\)，则可提出 Gaussian multiplicative chaos 候选测度
+\[
+\mathrm d\mathcal M_\gamma
+=\lim_{n\to\infty}
+\exp\!\left(
+\gamma\widehat H_n
+-\frac{\gamma^2}{2}
+\operatorname{Var}\widehat H_n
+\right)\mathrm d\mu,
+\tag{121.5}
+\]
+但其非退化范围、紧性和边界行为需要额外证明（通常要求 \(\gamma^2a\) 低于相应临界值）。有限图 Gaussian 恒等式不自动给出无限体积场、连续版本或混沌极限。FIB 只提供组合图和标签；导通率、刚度、嵌入、接地边界及随机场归一化均为外加。
+

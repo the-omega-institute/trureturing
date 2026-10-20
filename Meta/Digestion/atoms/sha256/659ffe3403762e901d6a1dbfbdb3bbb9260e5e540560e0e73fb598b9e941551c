@@ -1,0 +1,44 @@
+### I.1 — 一、当前项目进展：已经从“数值关系”转向“关系商与未来恢复”
+
+> **编者限定 QH（历史语境；第一部 I.1）。** 下文快照、进展和“当前”均为原供应文本的历史报告，具名快照见卷首；本卷不将该报告或动态链接提升为当前仓库状态。
+
+
+
+我读取到的当前 `dev` 分支快照是：
+
+```text
+912f4990050451866c2bb1cf71e33151a637d4b7
+2026-10-10 05:10:04 +0800
+Merge pull request #14893
+recover native Fibonacci Read counts from future laws
+```
+
+本次最重要的新增方向有四个：
+
+- `AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md`
+- `AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md`
+- `AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md`
+- `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.lean`
+
+仓库主页已经把 Fibonacci 权重、Zeckendorf 表示、观察丢失和恢复判据放进同一个“逻辑真值几何”的研究框架里；其中明确指出，若两个状态在给定观察下读数相同，而目标不同，则该目标不能由这些读数恢复，必须增加新的观察或关系。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com)
+
+这正好给 Auric FIB ATOM 一个严格的解释：
+
+> FIB ATOM 不是一套直接描述“物理本体”的坐标，而是一套逐层压缩、逐层恢复关系的读出系统。
+
+因此，我们必须始终区分：
+
+| 层 | 保存的对象 | 可能遗忘的关系 |
+|---|---|---|
+| 原树层 | 有序树、括号、叶序 | 组成相同但来源不同 |
+| 组成层 | 两维叶子计数 | 叶序与括号 |
+| 数量层 | Fibonacci 数量 | 组成方向 |
+| 选择层 | 合法窗口模式 | 某些联合选择关系 |
+| 三均值层 | $(X,Y,Z)$ | 端点联合概率 $\kappa$ |
+| 未来层 | 继续回复、拒绝、接缝 | 跨窗来源历史 |
+| 祖先层 | 地址、括号深度、共同来源 | 高阶整体关系 |
+
+下面把这套层次正式化。
+
+---
+

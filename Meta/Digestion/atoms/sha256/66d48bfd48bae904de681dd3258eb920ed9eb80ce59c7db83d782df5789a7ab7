@@ -1,0 +1,19 @@
+**Definition 25.2 (fixed finite uniform response language).** A uniform
+formula has free natural coordinates $(e,h)$ and finitely many auxiliary
+natural and finite native-tree variables. It uses alpha, beta, ordered
+pairing and the interpreted powers $\rho^{a(e,h,\mathbf s)}$ with
+specified integer-affine exponents, guarded nonnegative; Boolean native
+equalities/disequalities and regular native memberships; and Presburger
+scalar conditions. All native variables are existential. Regular
+automata and formula syntax are fixed independently of $(e,h)$.
+Finitely many existential auxiliary scalar projections and finite unions
+are allowed. A designated accept label is either a finite branch or
+an in-language definable coordinate, for example a scalar bit or one of
+the two literal leaf labels.
+
+There is no free ground record supplied as non-Presburger advice, variable
+formula length, unknown leaf-count cutoff inside an automaton, arbitrary
+predicate or alternating native-tree quantifier hidden in this definition.
+It concerns the same semantic $(e,h)$, rather than a new non-Presburger
+recoding whose original-parameter graph is left external to the formula.
+

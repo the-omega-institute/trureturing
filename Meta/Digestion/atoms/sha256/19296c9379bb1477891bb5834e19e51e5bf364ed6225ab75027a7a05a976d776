@@ -1,0 +1,52 @@
+**定义 16.1（有序副本及标签对应）。** 令单副本空间
+$\mathcal H=\mathbb C^5$ 的正交单位基按
+$\mathcal S=(0,1,2,3,13)$ 排列。其占位向量采用 $(x,y,z)$ 次序：
+
+$$
+v_0=(0,0,0),\quad v_1=(1,0,0),\quad v_2=(0,0,1),\quad
+v_3=(0,1,0),\quad v_{13}=(1,1,0).
+$$
+
+$|0\rangle$（亦记 $s_0$）是范数一的基向量，不是零向量。
+本卷 §4–5 的数量标签与本章位置标签的精确双射是
+
+$$
+(0,2,3,5,25)_{\rm old}\longleftrightarrow(0,1,2,3,13),
+\qquad
+(p_0,p_2,p_3,p_5,p_{25})_{\rm old}
+=(p_0,p_1,p_2,p_3,p_{13}).
+$$
+
+这是定义 15.2 的同一重标记；其张量位置次序 $(x,z,y)$
+与此处画金字塔用的 $(x,y,z)$ 仅交换后两个坐标。
+令 $E_s=|s\rangle\langle s|$，
+$N_x=E_1+E_{13},N_y=E_3+E_{13},N_z=E_2$。
+本卷 4.2、4.3、6.2 已分别供应概率逆式、行列式和整数核。
+在上述双射下直接消费为
+
+$$
+\begin{gathered}
+r=1-Z,\qquad
+p_\kappa=(r-X-Y+\kappa,X-\kappa,Z,Y-\kappa,\kappa),\\
+0\le Z\le1,\quad 0\le X,Y\le r,\quad
+\max(0,X+Y-r)\le\kappa\le\min(X,Y),\\
+d=(1,-1,0,-1,1),\qquad
+v_0+v_{13}=v_1+v_3,\qquad
+\Delta=p_0p_{13}-p_1p_3=r\kappa-XY.
+\end{gathered}
+$$
+
+因此同三均值的差为实数倍 $d$，同总数及总占位的整数计数差为整数倍 $d$。
+这里不把已有反解或核另立为新定理。
+
+有序配对空间是 $\mathcal H_A\otimes\mathcal H_B$，
+$|s,t\rangle=|s\rangle_A\otimes|t\rangle_B$，共二十五个基标签。
+这两个因子是两个完整五模式副本；它们不同于单个副本内部
+定义 15.2 的三个位置 qubit 因子，也不同于沿原生扫描相邻的两个守卫窗口。
+后者要满足本卷 7.1 的接缝条件，此处没有把二十五个有序副本标签
+宣布为全部合法的相邻原生输入。算子 $\mathsf S|s,t\rangle=|t,s\rangle$
+交换两个副本。全文密度矩阵均有限维、半正定且迹一；配对初态满足
+$\mathsf S\rho\mathsf S=\rho$，不预设乘积性。
+交换不变态可以同时含对称和反对称子空间的质量，不要求支撑包含于
+$\operatorname{Sym}^2\mathcal H$。
+

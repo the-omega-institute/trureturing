@@ -1,0 +1,51 @@
+### 21.2 物理截断与完整 Hankel 核
+
+采用 $\widehat h(t)=\int h(x)e^{-itx}dx$、$d\mu(t)=dt/(2\pi)$ 以及未完成的物理 Mellin 归一化。完整散射为
+
+$$
+\widehat{\mathcal F_Sh}(t)=m_S(t)\widehat h(-t),\qquad
+m_S(t)=\frac{\gamma(1/2-it)}{\gamma(1/2+it)}
+\prod_{p\in\mathcal P}\frac{1-p^{-1/2-it}}{1-p^{-1/2+it}},\qquad
+\gamma(s)=\pi^{-s/2}\Gamma(s/2).
+$$
+
+这保留实际 Gamma 因子，不把完成 Mellin 的评价密度直接用于物理 Fourier 乘子。有限 Euler 比值可按既有局部内函数方法写为 $e^{-it\sum_p\log p}B_S(t)$；这里不将平移和内函数分别估计，也不将 $B_S$ 识别为完整物理散射或有限维圆盘模型。
+
+定义
+
+$$
+g_{S,f}(t)=m_S(t)\widehat f(-t),\qquad
+h_{S,f}=\mathscr F^{-1}g_{S,f},\qquad
+D(f)=\int_{\mathbb R}|x|\,|f(x)|^2dx.
+$$
+
+$Q\mathcal F_SX_fQ$ 的实际核为 $\mathbf1_{x<0}\mathbf1_{y<0}h_{S,f}(x+y)$。标准 Hankel Hilbert–Schmidt 核积分给出
+
+$$
+\mathcal H_S(f):=\|Q\mathcal F_SX_fQ\|_{\rm HS}^2
+=\int_{-\infty}^0(-u)|h_{S,f}(u)|^2du.
+$$
+
+这与 Abusaksaka–Partington, arXiv:1704.00518v1, Proposition 2.5 的无权 Hankel 判据对应；这里只使用核积分部分，不借用其额外正测度表示条件。卷积截断的直接核积分与算子恒等式给出
+
+$$
+\|[Q,X_f]\|_{\rm HS}^2=D(f),\qquad
+CX_f=Q\mathcal F_SX_fQ+Q\mathcal F_S[Q,X_f].
+$$
+
+在 $g_{S,f}\in H^1(\mathbb R)$ 时，Cauchy–Schwarz 与 Plancherel 提供独立的有限性证明：
+
+$$
+\mathcal H_S(f)
+\le\|h_{S,f}\|_2\|u h_{S,f}\|_2
+=\|f\|_2\|g_{S,f}'\|_{L^2(d\mu)}<\infty.
+$$
+
+由第 21.1 节的谱配对上界得到同一测试上的单侧估计
+
+$$
+N_S(f)\le
+\left(\sqrt{\mathcal H_S(f)}+\sqrt{D(f)}\right)^2
+\le2\mathcal H_S(f)+2D(f).
+$$
+

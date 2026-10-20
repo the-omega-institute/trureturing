@@ -1,0 +1,12 @@
+**定义 1621.1（共同的有限通道模型）。** 令 $X$ 为非空有限集，$|X|=m$，$P$ 为其上一张概率律。允许通道组成概率单纯形中的非空紧集 $\mathcal C$，并假定 $\mathcal C$ 包含每个点质量 $\delta_x$。有限乘积空间上的全部乘积律满足这些条件，但一般通道族若排除确定通道，就不能未经检查使用下述完成结论。
+
+来源为有限混合律 $Q=\sum_jw_jq_j$，其中 $q_j\in\mathcal C$、$w_j>0$、$\sum_jw_j=1$；零权重标签省略。采用自然对数及 $H_0=\log|\operatorname{supp}w|$、$H_\infty=-\log\max_jw_j$。记
+
+$$
+F_\alpha(P,\delta)=\inf_{\operatorname{TV}(P,Q)\le\delta}H_\alpha(w),
+\qquad
+E(w,q)=\sum_x(wq(x)-P(x))_+.
+$$
+
+所有 $\delta\ge0$ 的可行族都非空，因为点通道可以准确生成 $P$。
+

@@ -1,0 +1,12 @@
+## 34. 完整 Laplace 曲线对初态律的可识别性
+
+对 $[0,1]$ 上的概率律 $\nu$，定义
+
+$$
+\mathcal L(\nu)(s)
+=\frac{\displaystyle\int_{[0,1]}
+\cosh\left(x\sqrt{\frac{s}{D}}\right)d\nu(x)}
+{\displaystyle\cosh\sqrt{\frac{s}{D}}},
+\qquad s\ge0.
+$$
+

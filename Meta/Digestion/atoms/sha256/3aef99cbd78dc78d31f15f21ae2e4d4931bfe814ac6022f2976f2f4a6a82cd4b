@@ -1,0 +1,25 @@
+**定义 44.1（有限硬核 Gibbs 场与静态响应）。** 设 \(G=(V,E)\) 是有限简单图，\(\mathcal I_G(V)\) 为其独立集族。给定严格正的顶点活动
+\[
+\lambda_v=e^{\theta_v}>0,\qquad v\in V,
+\]
+定义
+\[
+Z(\theta)=\sum_{S\in\mathcal I_G(V)}
+ \exp\!\left(\sum_{v\in S}\theta_v\right),
+\qquad
+p_\theta(S)=\frac{\exp(\sum_{v\in S}\theta_v)}{Z(\theta)}.
+\]
+令
+\[
+\eta_v(S)={\bf1}_{\{v\in S\}},\qquad
+N_f(S)=\sum_{v\in V}f_v\eta_v(S).
+\]
+对任意随机变量 \(F\) 写 \(\langle F\rangle_\theta\) 和
+\(\operatorname{Cov}_\theta(F,H)\) 表示在 \(p_\theta\) 下的期望与协方差。对场 \(h=(h_v)_{v\in V}\)，令
+\[
+N_h=\sum_{v\in V}h_v\eta_v.
+\]
+沿活动的对数方向定义静态响应
+\[
+\mathcal R^{\mathrm{stat}}_{F,h}(\theta)
+ =

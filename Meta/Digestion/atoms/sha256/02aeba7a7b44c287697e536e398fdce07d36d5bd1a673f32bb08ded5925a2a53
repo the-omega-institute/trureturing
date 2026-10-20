@@ -1,0 +1,100 @@
+## 255. FIB 网络上的外加磁振子与自旋波输运、三波散射及非平衡凝聚统计
+
+固定一族 FIB 图或细胞复形的组合支撑 \(G_j=(V_j,E_j)\)，并把顶点或胞腔附加为局域磁振子自由度 \(a_v\)。FIB ATOM 递归只给出支撑、邻接、路径、接缝、端口和层级索引；自旋长度、交换常数、各向异性、外磁场、陀螺磁比、阻尼、几何、晶向、温度、泵浦、储库和观测响应均须外加。
+
+小振幅近似中的二次 Hamiltonian 为
+
+$$
+H_2=\sum_{u,v\in V_j}a_u^\dagger h^{(j)}_{uv}a_v,
+\qquad [a_u,a_v^\dagger]=\delta_{uv}.
+\tag{255.1}
+$$
+
+\(h^{(j)}\) 的非零支撑可受 FIB 邻接约束，但其数值、相位和方向不由邻接确定；若有反常配对，还需外加 Bogoliubov 矩阵。线性模态满足 \(h\varphi_\nu=\hbar\omega_\nu\varphi_\nu\)，谱密度为
+
+$$
+\rho_j(\omega)=\sum_\nu\delta(\omega-\omega_{j\nu}).
+\tag{255.2}
+$$
+
+图上的路径长度、节点度或递归深度不能单独决定频率、群速度或局域化长度。
+
+若若干个边界子集与外部波导或热库相连，边界自能给出
+
+$$
+G_j^R(\omega)=\left[(\omega+{\rm i}0^+)I-h^{(j)}-\sum_\alpha\Sigma_\alpha^R(\omega)\right]^{-1},
+\qquad
+\Gamma_\alpha={\rm i}(\Sigma_\alpha^R-\Sigma_\alpha^A).
+\tag{255.3}
+$$
+
+端口透射和数流/能流可以写成
+
+$$
+\mathcal T_{\alpha\beta}(\omega)=\operatorname{Tr}[\Gamma_\alpha G_j^R\Gamma_\beta G_j^A],
+\tag{255.4}
+$$
+
+$$
+I_\alpha^N=\int_0^\infty\frac{{\rm d}\omega}{2\pi}\sum_\beta\mathcal T_{\alpha\beta}(n_\beta-n_\alpha),
+\qquad
+I_\alpha^E=\int_0^\infty\frac{{\rm d}\omega}{2\pi}\hbar\omega\sum_\beta\mathcal T_{\alpha\beta}(n_\beta-n_\alpha).
+\tag{255.5}
+$$
+
+温度、化学势、注入谱和端口阻抗决定占据与自能；FIB 路径计数只是候选通道，不能直接给出导热系数、衰减长度或接触电阻。
+
+三波过程的外加非线性顶点可写成
+
+$$
+H_3=\frac12\sum_{1,2,3}\left(V_{1;23}a_1^\dagger a_2a_3+V_{1;23}^*a_1a_2^\dagger a_3^\dagger\right),
+\tag{255.6}
+$$
+
+其模态重叠、偏振、晶向、共振展宽和泵浦均为外加。弱耦合动理学可写成
+
+$$
+\dot n_1=P_1-2\gamma_1n_1+\mathcal C_1^{(3)}[n],
+\tag{255.7}
+$$
+
+其中碰撞项含 \(|V_{1;23}|^2\) 和有限寿命的共振核。三波过程一般不守磁振子数；只有在反应计量关系允许且数改变过程被抑制时，才可引入有效化学势。泵浦—耗散稳态可能呈准热、幂律级联、双温尾或非 Bose 分布，单频带拟合不能推出全谱热化。
+
+平衡凝聚的候选判据为
+
+$$
+\liminf_{j\to\infty}\frac{N_{0,j}}{N_j}>0,
+\qquad
+N_{0,j}=\frac1{\exp[\beta(\hbar\omega_{0,j}-\mu_j)]-1},
+\tag{255.8}
+$$
+
+但是否存在临界温度取决于态密度、有效维数、红外边界、相互作用和极限次序。驱动系统中低模振幅可满足
+
+$$
+\dot\psi_0=\left[\frac{G_0-\kappa_0}{2}-{\rm i}\Omega_0\right]\psi_0
+-\chi_0|\psi_0|^2\psi_0+\xi_0,
+\tag{255.9}
+$$
+
+\(G_0=\kappa_0\) 只是给定泵浦、损耗和反馈后的阈值，不等同于平衡 Bose–Einstein 凝聚。空间相干性可由
+
+$$
+g^{(1)}_{uv}(t)=\frac{\langle a_u^\dagger(t)a_v(t)\rangle}{\sqrt{\langle n_u(t)\rangle\langle n_v(t)\rangle}}
+\tag{255.10}
+$$
+
+表征；局部强度峰、边界增强和长程相干是不同事件。
+
+磁光散射、微波天线、热电探针和端口功率都是内部态投影：
+
+$$
+y_a(t)=\sum_{v\in V_j}Q_{av}m_v(t)+\eta_a(t),
+\qquad
+S_{ab}(\omega)=\int e^{{\rm i}\omega t}\langle y_a(t)y_b(0)\rangle_c\,{\rm d}t.
+\tag{255.11}
+$$
+
+不同内部占据可以有相同端口功率而具有不同低模相干；探针位置、偏振和带宽也会改变谱峰。因此，FIB 递归只提供磁振子自由度的组合支撑、传播路径和边界端口；交换/各向异性、几何、阻尼、端口自能、泵浦、散射顶点、态密度、无序、图族极限及观测响应均须外加。输运、三波散射、非平衡级联、低模凝聚和谱峰统计都是条件模型结论。
+
+

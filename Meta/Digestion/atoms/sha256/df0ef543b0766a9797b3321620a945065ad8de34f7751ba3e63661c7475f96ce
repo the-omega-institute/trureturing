@@ -1,0 +1,40 @@
+## 3. Canonical provider 的含义
+
+定义：
+
+```lean
+structure CanonicalZeroDataSource : Prop where
+  riemannVonMangoldt :
+    Zeta23.RiemannVonMangoldt Zeta23.zetaZeroConfig
+```
+
+由该 source 选择：
+
+\[
+\operatorname{canonicalZeroData}(S)
+:
+\operatorname{ZeroData}.
+\]
+
+该值满足：
+
+1. 每个枚举项都是真实非平凡 zeta 零点；
+2. 每个真实非平凡 zeta 零点恰有一个自然数索引；
+3. 存储的解析重数严格为正；
+4. `ρ ↦ 1 - ρ` 的函数方程反射在索引上忠实实现并保持重数；
+5. 复共轭在索引上忠实实现并保持重数；
+6. 每个对称谱半径截断是有限集。
+
+“canonical”在此表示 canonical zeta-zero object 及其不依赖枚举的观察量。自然数排序由 classical choice 选出，不声称是可计算或唯一的顺序。
+
+仓库已有枚举不变性定理被直接复用。对任何另一份 `Z : ZeroData`：
+
+\[
+\operatorname{truncatedZeroSum}
+(\operatorname{canonicalZeroData}(S),g,T)
+=
+\operatorname{truncatedZeroSum}(Z,g,T),
+\]
+
+对应的 `SymmetricConvergent` 命题等价，收敛后的 `zeroSum` 值相等。
+

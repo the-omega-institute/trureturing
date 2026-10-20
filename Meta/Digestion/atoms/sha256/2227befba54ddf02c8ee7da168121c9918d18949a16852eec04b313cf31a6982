@@ -1,0 +1,74 @@
+**定义 51.1（失败批次的显式待办集）。** 固定 §48--50 的非平凡角色全集
+$\Omega:=\widehat A\setminus\{1\}$、覆盖集
+$$
+\overline C_K:=\{\eta\in\Omega:\eta\notin K^\perp\},
+$$
+以及有限、显式枚举的菜单序列
+$\mathscr L_1,\ldots,\mathscr L_N$。令
+$$
+X_0\subseteq X_1\subseteq\cdots\subseteq X_N\subseteq\Omega
+$$
+为有限阈值角色集链；已有前缀 $\mathcal Q_0$ 是一个层序列，允许它暂时未覆盖 $X_0$。
+记 $\underline{\mathcal Q}$ 为序列去重后的层集合；对任意层序列 $\mathcal S$，
+记
+$$
+V_{\mathcal S}:=\bigcup_{K\in\underline{\mathcal S}}\overline C_K.
+$$
+于是
+$$
+V_t:=V_{\mathcal Q_t},
+\qquad
+B_0:=X_0\setminus V_0,
+\qquad
+\delta_t:=X_t\setminus X_{t-1}.
+$$
+第 $t$ 批的活动残余定义为
+$$
+R_t:=(B_{t-1}\cup\delta_t)\setminus V_{t-1}.
+\tag{51.1}
+$$
+在下面的归纳不变式下，它等价于
+$$
+R_t=X_t\setminus V_{t-1}
+=B_{t-1}\cup(\delta_t\setminus V_{t-1}).
+\tag{51.2}
+$$
+
+若 $R_t=\varnothing$，约定 $\sigma_t:=0$、$d_t:=0$、$L_t:=0$，
+取空追加序列 $\mathcal S_t=\varnothing$，并令
+$\mathcal Q_t:=\mathcal Q_{t-1}$、$B_t:=\varnothing$。若 $R_t\ne\varnothing$，
+令
+$$
+\sigma_t:=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L_t,\
+R_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K\right\},
+\qquad
+d_t:=\max_{K\in\mathscr L_t}|\overline C_K\cap R_t|,
+$$
+若不存在覆盖则置 $\sigma_t:=\infty$；约定 $\max\varnothing=0$，并令
+$$
+L_t:=
+\begin{cases}
+\infty,&R_t\ne\varnothing\ \text{且}\ d_t=0,\\
+\left\lceil |R_t|/d_t\right\rceil,&R_t\ne\varnothing\ \text{且}\ d_t>0.
+\end{cases}
+$$
+若 $R_t\ne\varnothing$ 且 $\sigma_t<\infty$，在 $R_t$ 上运行最大增益贪心，
+得到覆盖 $R_t$ 的追加层序列 $\mathcal S_t\subseteq\mathscr L_t$，
+并置
+$$
+\mathcal Q_t:=\mathcal Q_{t-1}\mathbin{\|}\mathcal S_t,
+\qquad B_t:=\varnothing.
+$$
+若 $R_t\ne\varnothing$ 且 $\sigma_t=\infty$，采用 all-or-none 规则：
+预检当前菜单不能覆盖全部 $R_t$，不追加任何层，置
+$$
+\mathcal Q_t:=\mathcal Q_{t-1},
+\qquad B_t:=R_t.
+$$
+令
+$$
+G:=\{t:R_t\ne\varnothing,\ \sigma_t<\infty\},
+\qquad
+s_t:=|\mathcal S_t|\quad(t\in G).
+$$
+

@@ -1,0 +1,24 @@
+## 定理 18.1（极限残余）
+
+在极限阶段 \(\lambda\)，若
+
+\[
+V_\lambda
+=
+\overline{\bigcup_{\alpha<\lambda}V_\alpha},
+\]
+
+则
+
+\[
+\boxed{
+R_\lambda
+=
+\bigcap_{\alpha<\lambda}R_\alpha.
+}
+\]
+
+### 证明
+
+正交补把闭线性生成的上确界变成交。\(\square\)
+

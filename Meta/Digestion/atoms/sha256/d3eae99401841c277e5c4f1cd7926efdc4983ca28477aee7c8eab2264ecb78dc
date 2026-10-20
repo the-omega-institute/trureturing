@@ -1,0 +1,32 @@
+## 428. 同深度正则化、边界上半连续性与切片簇
+
+沿用第421节的完整操作约定，并取源参数 $r=1$。每个有限协议是一棵局部完全正仪器树：Alice、Bob 可以使用各自的有限量子和经典私有记忆、与未知输入及参考独立的初始乘积辅助态、双向经典通信、重复操作、重置、丢弃、粗粒结果、已经取得但后来遗忘的实际结果、提前停止、零分支和单结果通道；禁止共享纠缠、量子通信以及终端反馈以前对 $S$ 的操作。每条根到叶路径上的局部仪器节点计一个深度，纯经典记账和消息传递不计数，最后的系统酉反馈不计数。每一个真实终端历史和所有失败历史都保留在完整仪器中；实际结果标签合并真实历史，但同一标签下的所有真实历史和隐藏 Kraus 项共用一个作用于整个 $S$ 的反馈。隐藏 Kraus 指标从不成为控制结果。若 $\mathcal M_\ell$ 是记录输出取迹后的真实历史系统映射，且 $\mathcal M_y=\sum_{\ell:y(\ell)=y}\mathcal M_\ell$，则
+
+$$
+\mathcal T(X)=\sum_{y\in Y_{\mathrm s}}U_y\mathcal M_y(X)U_y^\dagger=pX
+\quad (X\in\mathcal L(S)),
+$$
+
+并且对每个有限维未操作参考 $H_{\mathrm{ref}}$，
+
+$$
+(\operatorname{id}_{H_{\mathrm{ref}}}\otimes\mathcal T)(X_{H_{\mathrm{ref}}S})=pX_{H_{\mathrm{ref}}S}
+\quad (X_{H_{\mathrm{ref}}S}\in\mathcal L(H_{\mathrm{ref}}\otimes S)).
+$$
+
+这两个等式等价于矩阵张量基上的全系统和全参考恢复；$p$ 与未知输入无关。以下的 $V_n$、$F=V_\infty$ 和累计效果树均指第421节中的对象；树的系数是累计输入效果的迹权重，不是未知输入下的结果概率，也不是操作后的条件态。
+
+置
+
+$$
+D=\{x\in\mathbb R^3:|x|\le1\},\qquad
+\rho(x)=\frac{I+x\cdot\sigma}{2},\qquad
+\mathcal U=\operatorname{int}(D)\times\operatorname{int}(D),
+$$
+
+并保留第426节的十二个方向 $X$、对合 $\pi:X\to X$、平坦边界报酬 $B_{\mathrm{partial}}$ 以及其精确纯面值和零集。记
+
+$$
+h=3-2\sqrt2.
+$$
+

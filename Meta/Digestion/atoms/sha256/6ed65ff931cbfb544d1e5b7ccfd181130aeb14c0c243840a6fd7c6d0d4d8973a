@@ -1,0 +1,77 @@
+**Definition 55.1 (source, observations and mathematical conventions).**
+Retain Definition 35.1 and G Definition 25.1, with their fixed closed
+parameter interval $\mathcal K$, original clock and coefficient functions.
+The premises in §§35–54 and G (25.1)–(25.5) are taken at
+[`11e2a65d554143d0e3f38b37f1b686453451e3c4`](https://github.com/the-omega-institute/trureturing/tree/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory).
+In this and the following sections the principal probability is
+
+$$
+\mathbf Q_\kappa=\int_I\pi(dk)\,\mathbb Q_{k,q_0}^\kappa,
+\qquad \pi(dk)=\phi(k)^2dk,
+\qquad \sigma=\sqrt2\varepsilon.
+\tag{55.1}
+$$
+
+The initial phase $q_0$ and native parameters are known, whereas $K_0$
+is the actual unobserved random variable with law $\pi$. The height
+and phase equations are exactly (37.8), with independent drivers.
+This stationary-height probability is an additional specified law;
+it is not a preparation operation supplied by the native controls.
+At nonzero $\kappa$ the original phases are
+$y=(\theta,v,D)=(\theta,v,\kappa x)$. At zero the actual source has
+$D=D_0$, and the comparison process with a moving $x$ remains separate.
+More precisely, (55.1) on the resolved space is denoted
+$\mathbf Q^{\rm res}_\kappa$ when a distinction is needed. Its
+pushforward on increments under
+$y_t=y_0+\operatorname{diag}(1,1,\kappa)(q_t-q_0)$
+is $\mathbf Q^{\rm act}_\kappa$, with the prescribed known
+initial $y_0=(\theta_0,v_0,D_0)$. At zero this map forgets the moving
+$x$ and retains the known frozen $D_0$. Both laws have exactly the same
+$(K,\theta,v)$ marginal. An observation involving comparison $x$
+at zero is taken under $\mathbf Q^{\rm res}_0$; assertions involving
+only $v$, including every risk below, hold for the actual source.
+No observation of comparison $x$ is inferred from frozen $D$.
+
+For an ideal supplied real phase projection $Y=Rq$, define
+
+$$
+\mathcal H_t^R=\sigma(Y_s:0\le s\le t)\vee\mathcal N_\kappa,
+\qquad
+\mathcal H_t^v=\sigma(e^{iv_s}:0\le s\le t)\vee\mathcal N_\kappa,
+\tag{55.2}
+$$
+
+where $\mathcal N_\kappa$ denotes the null sets in the complete
+underlying probability space. These are the completed causal
+filtrations, without adjoining observations at times greater than $t$.
+In particular we do not replace $\mathcal H_0^v$ by
+$\mathcal H_{0+}^v=\bigcap_{t>0}\mathcal H_t^v$: Theorem 55.2
+will put $K_0$ in the latter, while it is absent from the former.
+A null-set completion supplies no positive-time observations.
+For an integer matrix $N$, the lawful original torus observation is
+the vector of characters $\exp(iNy_s)$, with componentwise exponential;
+its filtration is defined in the same way. A real projection of a
+cover is asserted supplied only in the ideal real experiment.
+For a separately stipulated finite stopped record with an observed
+stop tag $T$, its data field means
+$\sigma(T,Y_{s\wedge T}:s\in\mathbb Q_+)\vee\mathcal N_\kappa$.
+This definition supplies neither a stopping operation nor a stop tag
+to any other experiment. Raw cemetery paths retain their death
+record instead of an implicitly frozen live phase.
+
+A continuous circle path with its known initial value has a unique
+continuous real lift after fixing any initial argument. Its increments
+are independent of this choice. Path lifting is Borel and causal:
+on a compact interval, subdivide until each image segment lies in a
+circle arc of length less than $\pi$ and concatenate the local arguments;
+the first successful subdivisions can be selected from a countable
+family. This construction uses only the supplied prefix. Consequently
+continuous character records give the corresponding real character
+increments, including windings, but finitely many circle values do not.
+
+All new source-specific assertions in §§55–60 are `repo-derived` in
+the ordinary proof sense. Quadratic variation, Itô's formula, Gaussian
+conditioning and the integration-by-parts information inequality used
+inside their proofs are `literature-attested` tools, with the
+correspondence specified in Definition 61.1.
+

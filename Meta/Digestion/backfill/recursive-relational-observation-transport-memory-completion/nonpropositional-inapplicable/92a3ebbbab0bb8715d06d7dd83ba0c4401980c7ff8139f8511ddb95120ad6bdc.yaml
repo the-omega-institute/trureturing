@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92a3ebbbab0bb8715d06d7dd83ba0c4401980c7ff8139f8511ddb95120ad6bdc
+  normalized_sha256: sha256:92a3ebbbab0bb8715d06d7dd83ba0c4401980c7ff8139f8511ddb95120ad6bdc
+cas_ref: sha256:92a3ebbbab0bb8715d06d7dd83ba0c4401980c7ff8139f8511ddb95120ad6bdc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional notation: this atom only introduces normalized record vectors, the overlap symbol, and the intensity definition; it has no mathematical conclusion.'
+    previous_atom_id: d9bce02d8e74ced8979ef79a731e0a8d8b4a8a42c46b56f42b7fb0d93a5516f8
+    next_atom_id: abc29dd5797339fecf65347e414a727bc69243a2bde431a60987fe36d51bc969

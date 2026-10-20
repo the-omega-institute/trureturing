@@ -4,7 +4,19 @@
 
 The normalized sum of finite Ramanujan phases over the divisors of d is the indicator that d divides n.
 
-**Definition 1.1 (The finite Ramanujan phase sum).**
+**Theorem 1.1 (The sum over all divisor moduli).**
+
+$$\forall d, n \in \mathbb{N}, 0 < d \Rightarrow \sum_{q \in \operatorname{Nat}.\operatorname{divisors}\left(d\right)} \operatorname{ramanujanSum}\left(q, n\right) = \operatorname{if} d \mid n \operatorname{then} (d : \mathbb{C}) \operatorname{else} 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Certified/FiniteRamanujanDivisorIdentity.sum_ramanujanSum_divisors` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive d and natural n, the sum of ramanujanSum q n over all divisors q of d is d when d divides n and zero otherwise.
+
+**Definition 1.2 (The finite Ramanujan phase sum).**
 
 $$\forall q, n \in \mathbb{N}, \operatorname{ramanujanSum}\left(q, n\right) = \sum_{0 \leq a < q, \operatorname{Coprime}\left(a, q\right)} \operatorname{exp}\left(2 \cdot \pi \cdot i \cdot \frac{a \cdot n}{q}\right).$$
 
@@ -16,7 +28,7 @@ $$\forall q, n \in \mathbb{N}, \operatorname{ramanujanSum}\left(q, n\right) = \s
 
 For natural q and n, ramanujanSum q n is exactly the finite sum of exp(2 pi i a n / q) over natural residues a below q that are coprime to q. In particular, the phase carrier is not replaced by an arithmetically equivalent definition.
 
-**Theorem 1.2 (Normalized Ramanujan sums reconstruct the divisor indicator).**
+**Theorem 1.3 (Normalized Ramanujan sums reconstruct the divisor indicator).**
 
 $$\forall d, n \in \mathbb{N}, 0 < d \Rightarrow \mathbf{1}_{{\{d \mid n\}}} = \frac{1}{d} \cdot \sum_{q \mid d} \operatorname{ramanujanSum}\left(q, n\right).$$
 
@@ -36,3 +48,4 @@ This module does not prove the von Mangoldt equality, the weighted finite phase 
 
 - Truth anchor: `D5/S3/Analytic/Certified/FiniteRamanujanDivisorIdentity.divisorIndicator_eq_normalized_sum_ramanujanSum`
 - Truth anchor: `D5/S3/Analytic/Certified/FiniteRamanujanDivisorIdentity.ramanujanSum`
+- Truth anchor: `D5/S3/Analytic/Certified/FiniteRamanujanDivisorIdentity.sum_ramanujanSum_divisors`

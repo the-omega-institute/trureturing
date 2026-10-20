@@ -1,0 +1,49 @@
+**定理 393.2（实际平方满贡献可越过任意幂尺度）。** 对每个整数 $k\ge1$，
+
+$$
+\boxed{
+|C_{\mathcal P}(k)|
+\le\zeta(2)\exp\left[-5\left(\frac{a^4k}{256}\right)^{1/5}\right].}
+\tag{393.4}
+$$
+
+因此，对每个固定 $A>0$，$C_{\mathcal P}(k)=o(k^{-A})$。特别地，对任意固定 $\varepsilon>0$，完整的临界幂条件
+
+$$
+c_k^e=O(k^{-3/4+\varepsilon})
+\tag{393.5}
+$$
+
+与 $C_{\mathcal S}(k)+C_{\mathcal X}(k)=O(k^{-3/4+\varepsilon})$ 等价；未消去的部分包括平方自由和混合指标。
+
+**证明。** 对 $n\in\mathcal P$，既有（382.11）给
+
+$$
+|e_n|\le\log(1+q^{\sqrt n})\le q^{\sqrt n}
+=e^{-a\sqrt n}.
+\tag{393.6}
+$$
+
+经典 $1-t\le e^{-t}$ 给 $(1-n^{-2})^k\le e^{-k/n^2}$。取 $u=\sqrt n>0$，将经典加权算术—几何平均不等式用在 $au/4$ 与 $k/u^4$，权重分别为 $4/5$ 与 $1/5$，得到
+
+$$
+\left(\frac{au}{4}\right)^{4/5}
+\left(\frac{k}{u^4}\right)^{1/5}
+\le\frac{au}{5}+\frac{k}{5u^4},
+\qquad
+a\sqrt n+\frac{k}{n^2}
+\ge5\left(\frac{a^4k}{256}\right)^{1/5}.
+\tag{393.7}
+$$
+
+这一步仅使用经典均值不等式；新增接口是将它用于实际平方满系数和 Newton 核的共同指标 $n$。于是每个实际项满足
+
+$$
+\frac{|e_n|}{n^2}(1-n^{-2})^k
+\le\frac1{n^2}
+\exp\left[-5\left(\frac{a^4k}{256}\right)^{1/5}\right].
+\tag{393.8}
+$$
+
+在平方满集合上求和，再用 $\sum_{n\ge1}n^{-2}=\zeta(2)$，得到（393.4）。伸展指数比每个固定逆幂衰减更快，再由同源分解（393.3）得到临界条件的等价。该证明不使用平方满指标的密度估计，也不将平方满包络扩大到所有含平方因子的指标。$\square$
+

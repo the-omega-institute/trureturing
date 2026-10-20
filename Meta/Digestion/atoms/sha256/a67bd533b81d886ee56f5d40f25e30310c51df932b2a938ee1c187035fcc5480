@@ -1,0 +1,28 @@
+**定理 412.2（固定有限零积分项不能改变完整绝对账的阶数）。** 对每个满足定义412.1的固定家族，置
+
+$$
+\mathcal A_T(x)=\frac1{2\pi}\int_{\mathbb R}
+|[\mathscr G_{\varepsilon_x}-T_{\varepsilon_x}](\sigma_x+i\tau)
+\widetilde w_x(\sigma_x+i\tau)|d\tau.
+\tag{412.3}
+$$
+
+则
+
+$$
+\boxed{
+\ell\mathcal A_T(x)\longrightarrow
+C_T:=\frac1{2\pi}\int_{\mathbb R}
+\frac{|-\zeta'(1+i\tau)/[(1+i\tau)\zeta(1+i\tau)]-T_0(1+i\tau)|}{|\tau|}d\tau,
+\qquad0<C_T<\infty.}
+\tag{412.4}
+$$
+
+因此，即使进一步消去任意预固定阶数的局部 Taylor 项，只要仍属于这一家族，全部绝对预算仍不能达到 $O(1/(\sqrt x\log x))$。
+
+证明。固定有限系数与极点保证所有远离 $P$ 的紧集上一致收敛，并使 $T_\varepsilon(\sigma_x+i\tau)=O(|\tau|^{-1})$ 的常数对小 $\varepsilon$ 一致。用（412.1）替代（408.4），§411 证明中的低频、紧环带与无穷高频三个支配预算保持成立；（411.8）也不改变。故同一支配收敛直接给（412.4）的有限极限。
+
+若 $C_T=0$，亚纯恒等定理再次迫使 $-\zeta'(z)/(z\zeta(z))=T_0(z)$。$T_0$ 的全部极点在 $\Re z\ge1$，而平凡零点 $-2$ 给左侧非零极点，矛盾。因此 $C_T>0$。$\square$
+
+本结论逐个固定家族给严格正的常数，不给所有家族共享的正下界。它不涉及随 $x$ 增长的项数、移动极点、发散系数或未经支付的移线。也不把 $C_T>0$ 当作实际有符号积分的下界；相位抵消仍存在。
+

@@ -1,0 +1,30 @@
+Finite exact checks of these literal definitions have the following scope:
+
+- All 1,446 labelled trees of maximum INITIAL depth at most three, including
+  both singleton leaves and all 1,444 branch sources: both input-fiber
+  directions, full numbered-hole rows, actual DFS histories and restoration.
+  Epochs zero through four give 7,230 successor cases, checking actual node
+  and child sets, all 280,264 old-coordinate gradient/adjoint columns and
+  degree entries, the full incidence/closed block, Schur complement and
+  typed port squares, including empty born blocks.
+- The witness pair at epochs zero through eight: nine full graph/operator,
+  old-inclusion and birth-parent squares, with full-operator port moments
+  of orders zero through four. All 19,531 action words of lengths zero
+  through six over the exact five-letter alphabet (112.10) are checked
+  under five fixed guards: all-accepted, caps zero and two, acceptance on
+  an even number of prior Apply attempts, and refusal iff the last native
+  event is a Read with branch reply. These are 97,655 paired word/guard
+  executions, with statuses as outputs; 6,928 contain both acceptance and
+  refusal, 63,525 have suppressed terminal suffixes and 41,775 have repeated
+  Reads. The all-domain nonclosure example is checked separately.
+- For every one-leaf flip of \(U_h\), \(h=0,\ldots,5\), epochs
+  zero through six and all addresses of lengths zero through \(h+4\):
+  126 competitors and 610,638 address/epoch/flip cases, including absent
+  replies. Each competitor has the same entry and a different INITIAL row;
+  every requested address outside its flipped cone has unchanged reply.
+- Exact DFS/read/address/cache endpoints on \(U_h\), \(h=0,\ldots,10\),
+  including both parities and the repeated pre/post-cut root. In addition,
+  420 executions of two history-driven sample controllers use repeated
+  and absent Reads, static or common capped Apply, and report-only recovery.
+  These sample controllers do not enumerate the universal controller class.
+

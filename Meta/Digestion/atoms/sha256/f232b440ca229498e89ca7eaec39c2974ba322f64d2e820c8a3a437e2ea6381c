@@ -1,0 +1,36 @@
+**定义 73.2（Lindblad 半群与量子谱隙）。** 在 \(\mathcal H\) 上给定外加 GKLS 生成元
+\[
+\mathcal L(\rho)
+=-i[H,\rho]
++\sum_\ell\gamma_\ell
+\left(
+V_\ell\rho V_\ell^\dagger
+-\tfrac12\{V_\ell^\dagger V_\ell,\rho\}
+\right),
+\qquad
+\mathcal T_t=e^{t\mathcal L}.
+\]
+若存在唯一忠实不变态 \(\sigma\)，并满足相对于
+\[
+\langle A,B\rangle_\sigma
+=\operatorname{Tr}(\sigma^{1/2}A^\dagger\sigma^{1/2}B)
+\]
+的量子详细平衡，定义
+\[
+\gamma_2
+=\inf_{\operatorname{Tr}(\sigma A)=0}
+\frac{-\operatorname{Re}\langle A,\mathcal L^\dagger A\rangle_\sigma}
+{\|A\|_{2,\sigma}^2}.
+\]
+则
+\[
+\operatorname{Var}_\sigma(\mathcal T_t^\dagger A)
+\le e^{-2\gamma_2t}\operatorname{Var}_\sigma(A),
+\]
+有限维范数等价进一步给出迹距离的指数收敛。无详细平衡时只能使用非零谱实部和可能的 Jordan 多项式前因子；不能无条件写成无常数的纯指数界。若另有量子对数 Sobolev 常数 \(\alpha>0\)，则
+\[
+D(\mathcal T_t\rho\Vert\sigma)
+\le e^{-2\alpha t}D(\rho\Vert\sigma).
+\]
+这些谱隙、\(\sigma\)、\(H\)、\(V_\ell\) 与速率都必须由外加量子模型给定，FIB 不自动产生量子退相干、耗散、温度或热平衡。
+

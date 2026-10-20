@@ -1,0 +1,73 @@
+**定理 55.2（更新测度与精确首达律）。** 定义
+\[
+U_j=\sum_{m\ge0}(\mu_j^R)^{*m},
+\qquad
+U_j=\delta_{(0,0)}+\mu_j^R*U_j.
+\]
+则 \(U_j\) 的总质量为 \(\kappa_j^{-1}\)，且杀死前的总时长与总奖励
+\[
+\tau_j=\inf\{n:X_n=L_j\},\qquad
+A_j=\sum_{n<\tau_j}g_j(X_n)
+\]
+满足精确卷积律
+\[
+\mathbb P_{a_j}((\tau_j,A_j)\in\cdot)
+=(U_j*\mu_j^D)(\cdot).
+\]
+对 \(s\ge0\)、\(\lambda\in\mathbb R_+^d\)，令
+\[
+\phi_j^R(s,\lambda)
+=\mathbb E_{a_j}[e^{-sT_j-\langle\lambda,Y_j\rangle};R_j],
+\qquad
+\phi_j^D(s,\lambda)
+=\mathbb E_{a_j}[e^{-sT_j-\langle\lambda,Y_j\rangle};D_j].
+\]
+则
+\[
+\mathbb E_{a_j}e^{-s\tau_j-\langle\lambda,A_j\rangle}
+=\frac{\phi_j^D(s,\lambda)}
+{1-\phi_j^R(s,\lambda)}.
+\]
+分母的零点给出首达变换的极点；若允许有符号奖励，则该公式限于变换存在的参数邻域。
+
+令
+\[
+\eta_j^e(k)
+=\mathbb E_{a_j}\left[
+\sum_{0\le n<\sigma_1}{\bf1}_{\{X_n=k\}};e
+\right],
+\qquad e\in\{R_j,D_j\}.
+\]
+则 Green 占用有精确再生分解
+\[
+G_j(a_j,k)=\frac{\eta_j^{R_j}(k)+\eta_j^{D_j}(k)}{\kappa_j},
+\qquad
+\mathbb E_{a_j}\sum_{n<\tau_j}g_j(X_n)
+=\frac{\eta_j^{R_j}(g_j)+\eta_j^{D_j}(g_j)}{\kappa_j}.
+\]
+参考态访问次数
+\[
+V_{a_j}=\sum_{n<\tau_j}{\bf1}_{\{X_n=a_j\}}
+\]
+满足
+\[
+\mathbb P(V_{a_j}=m)=\kappa_j(1-\kappa_j)^{m-1},
+\qquad
+\mathbb E V_{a_j}=G_j(a_j,a_j)=\kappa_j^{-1}.
+\]
+因此 \(\kappa_j=1/G_j(a_j,a_j)\)。
+
+**FIB 特例 55.3（参考态 \(0\) 的成功概率）。** 对 \(a_j=0\)，沿用第52节 Green 公式，
+\[
+G_j(0,0)=\frac1\theta\sum_{i=0}^{L_j-1}r_{(W_j)_i}.
+\]
+故
+\[
+\kappa_j=\frac{\theta}{\sum_{i<L_j}r_{(W_j)_i}},
+\qquad
+L_j\kappa_j\longrightarrow\frac{\theta}{\bar r},
+\qquad
+\bar r=\varphi^{-2}r_\alpha+\varphi^{-1}r_\beta.
+\]
+这里 \(L_j\)、词序和标签由 FIB 递归给出；核、阻抗、\(\theta\)、边界和初态仍是外加模型。
+

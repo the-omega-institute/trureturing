@@ -1,0 +1,13 @@
+### 23.1 成熟框架与本仓推导的边界
+
+分层代数、上下文等价、群代数与仿射空间采用成熟框架，不称新颖。§17.2 已核读收据中的 Burris/Sankappanavar、Pitts、Mathlib 在线有限支撑卷积仍分别支持这些背景概念；它们不直接承担本批的 CSA 特定摘要证明。另使用 caller 在批准计划中提供的核读结论：
+
+| 来源 | 精确范围与使用边界 |
+| --- | --- |
+| J. S. Milne, *Algebraic Groups* (2017)，[§12b，pp. 230–231](https://www.jmilne.org/math/Books/iAG2017.pdf) | `literature-attested`：域系数的有限生成阿贝尔群代数背景；不是本文整数系数单位分类的证明。 |
+| Jean Gallier，[geomcs-v2.pdf](https://www.cis.upenn.edu/~jean/gbooks/geomcs-v2.pdf)，作者 2025-10-09 版 §2.1，pp. 18–19 | `literature-attested`：实系数仿射空间与点/向量区分；不冒称该页直接证明整数 torsor 定理。 |
+
+CSA 的实际像、分层反例、$\Theta$ 闭合更新及必要性、此处整数仿射运输归类为 `repo-derived`；卷积极值、整数单位与整数仿射结论的证明均在正文自给，不以外部引文或有限核验填补证明。没有新增 Lean、axiom、判官、schema 或生产引擎，也不宣称本稿已被 Lean 验证。
+
+**本批产地与意见状态。** 本批由 `consensus-rnd:sshx` 的一个 Codex implementation_worker 在固定 PR1 已提交候选 `feec239217c30601cca92c53620492516bec915a` 上实施；输入包括用户批准数学计划、必读规范及本树文稿，属于 `repo-prior-exposed`。未读取另一工作树、同轮 architecture 工件或其他 review 输出，未调用其他 worker。按 caller 本批明确告知的事实，PR1 两次 architecture oracle 请求均因超过预定 `configuring_composer` 等待窗口而被 caller 取消，未返回数学内容；这两次不是已完成数学意见。§17.2 的思考失败和纯连通性探测也不计本轮 S1，§12 旧 PRO 任务只属原稿历史。用户所称 GPT PRO 即 nyxid oracle 通道，不另按型号名是否带 Pro 判定。当前没有可消费的本轮成功实质 Nyx 数学意见；S1 由后续实际 oracle 评审继续结算，实际意见的处置和独立三席评审由 caller 记录。本批不预报 PR2 最终评审通过、required checks 通过或合入。
+

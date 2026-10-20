@@ -1,0 +1,13 @@
+**命题 29.12（非负候选与原树前驱的两个失效）。** 取 $t=\langle\alpha,\beta\rangle$。其替换前驱候选组成为 $(0,1)$，却不存在实际前驱行为类。另取
+
+$$
+t_+=\langle\beta,\langle\beta,\alpha\rangle\rangle,
+\qquad t_-=\langle\langle\beta,\beta\rangle,\alpha\rangle.
+$$
+
+二者 $\eta$ 相同，但仅 $t_+$ 属于原树替换像。即使联合边界和前驱行为类均可恢复，也不能恢复供应原树的前驱合法性。
+
+证明。$c(t)=(1,1)$，所以前驱候选组成是 $(0,1)$。这一组成的非空实际树只能是单叶 $\beta$，而 $\rho\beta=\langle\beta,\alpha\rangle$。其初始叶积为 $BA=S$，$E(t)=AB=-S^{-1}$，二者不同，例如（28.2）的指数分别为 $1,-1$。故 $\eta(\rho\beta)\ne\eta(t)$，候选不属于 $\mathcal J$。类似地，任意 $w=t,v=\alpha$ 的右消去候选也有非负组成 $(0,1)$，但初始群值为 $ABA=A-B\ne B$，不等性由来源卷 §355 的 $A,B$ 线性无关性给出，所以不能仅凭组成非负认证右行为分解。
+
+$t_+,t_-$ 具有相同叶词 $\beta\beta\alpha$，每次替换后仍有相同叶词，因此三元观察和组成都相同。前者是 $\rho(\langle\alpha,\beta\rangle)$。后者不是任何叶的替换像；若是某个二元原树的替换像，则其右子树 $\alpha$ 必须属于 $\rho(\mathcal T)$。但叶 $\alpha$ 没有前驱：两种原子的像分别为 $\beta$ 和二元树，二元树的像也必为二元树。因此后者没有原树前驱。$\square$
+

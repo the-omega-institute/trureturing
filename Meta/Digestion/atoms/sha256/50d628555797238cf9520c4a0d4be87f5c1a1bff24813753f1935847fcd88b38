@@ -1,0 +1,24 @@
+## 定理 136.1（全局 KL 闭式）
+
+\[
+\boxed{
+D(\mathbb P_s\Vert\mathbb P_t)
+=
+\log\zeta(t)-\log\zeta(s)
++
+(t-s)\mathbb E_s[\log N].
+}
+\]
+
+### 证明
+
+\[
+\log\frac{\mathbb P_s(n)}{\mathbb P_t(n)}
+=
+\log\frac{\zeta(t)}{\zeta(s)}
++
+(t-s)\log n.
+\]
+
+对 \(\mathbb P_s\) 取期望。\(\square\)
+

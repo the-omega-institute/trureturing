@@ -1,0 +1,10 @@
+第一阶段必须证明：
+
+1. `jointEq_union`;
+2. `jointEq_mono`;
+3. `localGlobalResidual_empty_iff`;
+4. `finite_separating_subfamily`;
+5. `primeTraceEq_eq_congruenceKernel`;
+6. `primeTraceEq_forward`;
+7. `finite_prime_time_tomography`.
+

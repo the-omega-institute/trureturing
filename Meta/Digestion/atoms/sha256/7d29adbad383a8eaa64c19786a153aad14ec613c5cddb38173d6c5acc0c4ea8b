@@ -1,0 +1,18 @@
+### 定义 381.4（过滤保持的结果压缩）
+
+令
+
+$$
+r_n:X_{\le n}\to\widehat X_{\le n}
+$$
+
+为一族满足
+
+$$
+r_n\circ\operatorname{pr}_{\le n}
+=
+\operatorname{pr}_{\le n}\circ r_{n+1}
+$$
+
+（等式定义在 \(X_{\le n+1}\) 上）的前缀保持映射。它把源历史压缩成新历史，不把未来字段提前加入。
+

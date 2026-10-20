@@ -1,0 +1,29 @@
+# 增订一·18　结论地位总表
+
+| 结论 | 地位 |
+|---|---|
+| 合法 Zeckendorf words 与 $[0,F_{Q+2})$ 双射 | 仓库机器闭合 |
+| 有限 Zeckendorf exponent partition 是几何级数 | 仓库机器闭合 |
+| 其非平凡根在局部 fugacity 单位圆 | 直接推论 |
+| 该圆等于 RH Cayley 临界圆 | 不成立 |
+| Zeckendorf 重编码改变单 Euler factor | 不成立 |
+| hard-core occupation partition 满足二阶递推 | 纯有限定理 |
+| $z=1$ 的 transfer eigenvalues 为 $\varphi,-\varphi^{-1}$ | 纯有限定理 |
+| hard-core zeros 位于负实轴并趋向 $-1/4$ | 纯有限定理 |
+| Fibonacci count sequence 的最小 realization dimension 为 $2$ | 有限证明 + 仓库 Hankel 定理 |
+| 黄金指数增量取 $\varphi^2$ 或 $\varphi$ | 仓库机器闭合 |
+| 扣除 $\sqrt5$ 后创新均方为 $\varphi^{-3}$ | 本增订直接推论 |
+| prime-power translation 有 Zeckendorf shell 精确因子分解 | 本增订有限定理 |
+| 总 jump energy 自动下界每个 shell energy | 不成立；只有上界 |
+| Zeckendorf–prime susceptibility 二阶乘法分离 | 本增订有限定理 |
+| 均匀状态 susceptibility 按 $\varphi^{2Q}$ 增长 | 本增订直接推论 |
+| 单 Euler Gibbs ensemble 同样发散 | 不成立；二阶矩有限 |
+| Fibonacci shell 可补偿 short log-gap 的几何收缩 | 本增订条件极限定理 |
+| 该补偿自动克服 Euler mass 衰减 | 不成立 |
+| scalar first-order cancellation 与 quadratic energy reveal 是共同机制 | 抽象定理 + 多个仓库实例 |
+| prime transverse energy 已支配 off-line odd energy | 尚未建立 |
+| canonical transfer 的等模集合只在临界线 | 新核心猜想 |
+| 本增订证明 RH | 不成立 |
+
+---
+

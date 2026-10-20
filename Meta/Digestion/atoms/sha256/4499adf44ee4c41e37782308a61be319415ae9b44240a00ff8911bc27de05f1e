@@ -1,0 +1,21 @@
+### 26.7 与既有章节及 Lean 支点的去重
+
+第12节 TM.1201–1207 已处理同一分辨率上的四视图唯一运输、核交换以及“联合读出
+完整不等于每个单页都可递归”。第25节 RA.2501–2517 已处理有限策略树、实际联合
+后验、来源／纪元／游标／档案的联合边界和零即时互信息。本节只增加分辨率指标、
+共同实际来源、层间实际像投影、输出推前以及四视图—分辨率交换，不重复这些单层
+证明。有效分辨率卷第10—11节已给具体投影与仿射模边界；本节只抽象其自然性，不
+重算那些整数公式。
+
+可直接对应的既有形式化支点为：
+
+* `D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.lean` 的 `realized_image_unique_factorization_iff_reverse_kernel`：实际像上的唯一跨层因子与反向核包含等价；
+* `D5/S3/ConceptDynamics/Sufficiency/UniversalSufficiencyFactorization.lean` 的 `universal_sufficiency_factorization`：目标因子化与读出纤维恒定等价；
+* `D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean` 的 `target_recovery_criterion`：指定来源目标恢复与目标在读出纤维上恒定等价；
+* `D5/S3/ConceptDynamics/Transport/EffectiveImageNaturality.lean` 的 `effective_image_naturality`：源运输、读出因子化和目标因子化推出实际像上的自然交换；
+* `D5/S3/ConceptDynamics/Sufficiency/DescentCompositionLaw.lean` 的 `descent_composition_law`：连续层间半共轭的复合；
+* `D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean` 的 `stateThread_injective_iff_separates`、`stateThread_bijective_iff_complete_and_separates`，以及 `LocalGlobalAtlasExactness.lean`：线程来源恢复所需的分离与完备双条件；
+* 若要把单层确定更新压到最小前向商，可复用 `MinimalPredictiveCompletionQuotient.lean` 的 `minimal_predictive_completion_quotient`，不必另造最小商定义。
+
+本节的新增组织是把这些支点放进同一实际来源的分辨率塔，并明确行为恢复、来源恢复和实际取得的不同量词；它没有把普通数学综合冒充 Lean 核验。
+

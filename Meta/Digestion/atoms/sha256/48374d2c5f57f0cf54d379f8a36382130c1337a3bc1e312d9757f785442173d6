@@ -1,0 +1,7 @@
+离线零点中，它们是两个不同 lift，并拥有不同的 causal response：
+
+* 一个趋向正时间；
+* 一个趋向负时间；
+* 一个对应 inner；
+* 一个对应 inverse-inner。
+

@@ -1,0 +1,17 @@
+**定理 62.3（一步观测信息与熵分解）。** 令 \(\mathscr Y_t=\sigma(Y_0,\ldots,Y_t)\)，\(\beta_{t+1}=\Pr(X_{t+1}\in\cdot\mid\mathscr Y_t)\)，并记 \(h(p)=-\sum_y p(y)\log p(y)\)。则
+\[
+H(Y_{t+1}\mid\mathscr Y_t)
+=\mathbb E\,h(\bar O_{\beta_{t+1}}),
+\]
+且
+\[
+\begin{aligned}
+I(X_{t+1};Y_{t+1}\mid\mathscr Y_t)
+&=H(Y_{t+1}\mid\mathscr Y_t)-H(Y_{t+1}\mid X_{t+1})\\
+&=\mathbb E\sum_i\beta_{t+1}(i)
+D_{\rm KL}\!\left(O_i\middle\|\bar O_{\beta_{t+1}}\right)\\
+&=H(X_{t+1}\mid\mathscr Y_t)-H(X_{t+1}\mid\mathscr Y_{t+1})\ge0.
+\end{aligned}
+\]
+零值当且仅当对几乎处处历史，所有 \(\beta_{t+1}(i)>0\) 的状态给出相同的观测分布。
+

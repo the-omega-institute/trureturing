@@ -1,0 +1,55 @@
+### 26.4 行为恢复、来源恢复与实际取得
+
+三种“恢复”使用不同的量词。令 \(q_\lambda:S_\lambda^0\to Q_\lambda\) 为指定
+行为商，令 \(\theta:\Omega\to\Theta\) 是真正要恢复的来源目标；\(\theta=\operatorname{id}\)
+时表示完整来源身份。对视图定义来源层读出
+
+$$
+\widehat r_{i,\lambda}=r_{i,\lambda}\,\sigma_\lambda:
+\Omega\to Y_{i,\lambda}^0.
+$$
+
+**行为恢复**是存在 \(B_{i,\lambda}:Y_{i,\lambda}^0\to Q_\lambda\) 使
+
+$$
+q_\lambda\sigma_\lambda=B_{i,\lambda}\widehat r_{i,\lambda};
+$$
+
+等价地，\(\ker\widehat r_{i,\lambda}\subseteq
+\ker(q_\lambda\sigma_\lambda)\)。它只保证指定未来实验的转录可以重放。精确行为表示
+还要求反向包含，即 (RA.2603) 在实际状态层成立。
+
+**来源恢复**是存在 \(R_{i,\lambda}:Y_{i,\lambda}^0\to\Theta\) 使
+
+$$
+\theta=R_{i,\lambda}\widehat r_{i,\lambda};
+$$
+
+等价地，\(\ker\widehat r_{i,\lambda}\subseteq\ker\theta\)。完整来源的无损恢复
+取 \(\theta=\operatorname{id}\)，此时要求 \(\widehat r_{i,\lambda}\) 单射；若只关心
+来源的某个商，则只要求它在该商的纤维上恒定。即使四个视图都精确行为，行为等价
+仍可能合并来源目标不同的状态，因此不自动给出来源恢复。
+
+**实际取得**还需要一个观察合同。设 \(c\) 是当前记录、权限和参考，写
+\(\mathsf{Acq}_{i,\lambda}(c;\omega\Downarrow y)\) 表示存在一条合法有限协议，
+在同一个实际来源 \(\omega\) 上取得输出 \(y\)。视图可实际取得，要求对声明域中的每个
+\((\omega,c)\)，协议输出唯一且
+
+$$
+y=\widehat r_{i,\lambda}(\omega),
+$$
+
+并把协议的计算、校准、权限、参考、时钟和费用写入同一记录与控制状态。数学双射
+\(\chi\)、行为解码器 \(B\) 或来源解码器 \(R\) 只作用于已经取得的表示值；它们本身
+不证明观察者已经取得该值。
+
+若存在各层来源目标 \(\theta_\lambda:S_\lambda^0\to\Theta\)，满足
+\(\theta_\lambda\sigma_\lambda=\theta\) 且 \(\theta_\mu p_{\lambda\mu}=\theta_\lambda\)，并且
+两层解码器都存在，则在实际像上自动满足
+
+$$
+R_{i,\mu}\delta_{i,\lambda\mu}=R_{i,\lambda}.
+$$
+
+这只是来源目标的运输方程；它没有把来源恢复升级成实际读取权限。
+

@@ -1,0 +1,8 @@
+**Theorem 8 (prime translation orbit fibers).** For every prime $p$, two
+admissible triples are in the same translation orbit if and only if their
+unique nonzero affine slopes are equal and their three-element first-coordinate
+sets differ by a translation in $\mathbb Z/p\mathbb Z$. Indeed, translating by
+$(h,k)$ preserves the slope and sends $X$ to $h+X$; conversely, when the
+slopes agree and $X'=h+X$, the choice $k=b'-b+ah$ sends $(a,b,X)$ to
+$(a,b',X')$, so intercepts impose no further obstruction.
+

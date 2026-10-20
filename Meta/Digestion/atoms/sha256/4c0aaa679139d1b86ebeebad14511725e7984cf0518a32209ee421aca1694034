@@ -1,0 +1,16 @@
+**推论 58.2（倾斜压力与核参数的混合曲率）。** 对有界占用 \(c\) 令
+\[
+D_\vartheta=\operatorname{diag}(e^{\vartheta c(i)}),\qquad
+K_{\vartheta,\eta}=D_\vartheta K(\eta),\qquad
+\Psi(\vartheta,\eta)=\log\rho(K_{\vartheta,\eta}).
+\]
+在 \((0,0)\) 附近保持 primitive 时，\(\partial_\vartheta\Psi\) 是 Perron Doob 核下的长期占用均值，\(\partial_{\vartheta\vartheta}\Psi\) 是该核下的渐近占用方差；混合导数 \(\partial_{\vartheta a}\Psi\) 给出占用压力对第 \(a\) 个核参数的一阶响应。它们均由定理 58.1 的左右 Perron 向量和约化 resolvent 计算。
+
+若参数方向 \(u\in\mathbb R^d\) 满足
+\[
+\ell^{\mathsf T}\Bigl(\sum_a u_aA_a\Bigr)r=0,
+\]
+则该方向对 Perron 压力的一阶响应为零；若同时所有给定占用倾斜的混合导数也为零，则任何只读取这些压力的一阶和混合曲率的实验都不能在该阶区分该方向。完整路径、端点分布或其他探针仍可能携带额外信息。
+
+这里 \(A_a\)、初态、倾斜函数和读出协议都是外加模型。FIB 递归只提供状态标签、词序和允许的组合图；谱曲率不自动等于物理易感性、线性响应或能量二阶导数。
+

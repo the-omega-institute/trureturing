@@ -1,0 +1,22 @@
+## 定理 7A.2（一步递推）
+
+$$
+(x,y)\in K_{m+1}
+\iff
+q(x)=q(y)
+\ \land\ 
+(Fx,Fy)\in K_m.
+$$
+
+等价地，若把关系拉回记为 $(F\times F)^{-1}$，则
+
+$$
+K_{m+1}=K_q\cap(F\times F)^{-1}K_m.
+$$
+
+所以
+
+$$
+K_0\supseteq K_1\supseteq K_2\supseteq\cdots.
+$$
+

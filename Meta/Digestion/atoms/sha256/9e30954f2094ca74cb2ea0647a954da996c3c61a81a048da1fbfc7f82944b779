@@ -1,0 +1,303 @@
+**Theorem 12.2 (full-table native width at Fibonacci leading order).**
+Under Definition 12.1, the entire expanded active and static controllers
+of §§9.4–9.5 have faithful immediate encodings with respectively
+
+$$
+\begin{aligned}
+\ell_a&=d_F(h+1)+7,& |W_a|&=8h+8,\\
+\ell_s&=d_F(M+1)+7,& |W_s|&=8M+2.
+\end{aligned}
+\tag{SLHC.39}
+$$
+
+Each encoding is injective on every installed state, including those
+with empty actual support. It preserves the instruction, literal,
+successor on every typed response row, and fixed halt output of that
+state. On every same actual entry $E(x,t)$ it consequently preserves
+every primitive, raw reply, source successor, exact support, remaining
+primitive rank and first halt. Both constructions have zero internal
+instructions. The minima over the full comparison classes satisfy
+
+$$
+\begin{aligned}
+d_F(h+2)&\le\ell_a^*(S,T)
+ \le d_F(h+1)+7\le d_F(h+2)+7,\\
+d_F(hr+2)&\le\ell_s^*(S,T)
+ \le d_F(M+1)+7\le d_F(hr+2)+9.
+\end{aligned}
+\tag{SLHC.40}
+$$
+
+In particular, with $\varphi=(1+\sqrt5)/2$,
+
+$$
+\begin{aligned}
+\ell_a^*(S,T)&=\log_\varphi h+O(1),\\
+\ell_s^*(S,T)&=\log_\varphi\!\bigl(h(T+1)\bigr)+O(1).
+\end{aligned}
+\tag{SLHC.41}
+$$
+
+The constants are uniform over all these $h,T$ and all supplied
+skeletons, including unbalanced skeletons with their actual leaf depths.
+
+Proof. Use the mathematical state names $Q,B,C,V$ of (SLHC.32) and
+§9.5 for the already expanded tables. No two of these states are
+identified. Write $N=h$ for the active table and $N=M$ for the static
+table; the static table has no $V$ states. Set $d=d_F(N+1)$.
+
+The classical ingredient is a spanning path of $\Gamma_d$. It is
+supplied by Sandi Klavžar, *Structure of Fibonacci cubes: a survey*,
+Proposition 3.1, pp.5–6 of the [author manuscript][KLAVZAR-PATH],
+published in *Journal of Combinatorial Optimization* 25 (2013),
+505–522, [DOI 10.1007/s10878-011-9433-z][KLAVZAR-PATH-DOI].
+The survey attributes the construction to Cong, Zheng and Sharma
+(1993); that attribution is through the survey. The assertion used is
+a Hamilton path for every dimension, with consecutive words differing
+in one bit; no Hamilton cycle or prescribed endpoint is required.
+Since $F_{d+2}\ge N+1$, choose its first $N+1$ words
+$z_0,\ldots,z_N$. They are distinct members of $L_d$ and
+$d_H(z_i,z_{i+1})=1$ for $0\le i<N$. This path is an immutable
+choice in the installed table, not a runtime path generator.
+
+Order four latch coordinates as
+$(L_{0,0},L_{0,1},L_{1,0},L_{1,1})$, and denote their one-hot
+words by $e_{b,r}$, where $b,r\in\{0,1\}$. For a four-bit word
+$\lambda$, concatenate
+
+$$
+H(i,a,\lambda)=z_i\,0\,a\,0\,\lambda.
+\tag{SLHC.42}
+$$
+
+Define the images of all $Q,B,C$ states by
+
+$$
+\begin{aligned}
+\eta(Q(i,a))&=H(i,a,0000),
+ &&0\le i\le N,\quad a\in\{0,1\},\\
+\eta(B(i,a,b))&=H(i,a,e_{b,i\bmod2}),
+ &&0\le i<N,\quad a,b\in\{0,1\},\\
+\eta(C(i,b))&=H(i+1,b,e_{b,i\bmod2}),
+ &&0\le i<N,\quad b\in\{0,1\}.
+\end{aligned}
+\tag{SLHC.43}
+$$
+
+For the active table additionally set, for both $a=0,1$,
+
+$$
+\begin{aligned}
+\eta(V(a,01))&=H(0,a,0100),\\
+\eta(V(a,11))&=H(0,a,0101),\\
+\eta(V(a,10))&=H(0,a,0001).
+\end{aligned}
+\tag{SLHC.44}
+$$
+
+All these words have length $d+7$ and avoid $11$. Indeed, each
+$z_i$ avoids $11$, the two displayed zeros separate the accumulator
+from both its neighbors, and each used latch word is either empty,
+one-hot, or $0101$, which also avoids $11$.
+
+Here is injectivity on the whole installed set. Distinct $z_i$ separate
+distinct stages. At any fixed stage $j$, the $Q$ words have empty
+latch. A $B$ word there has latch index $r=j\bmod2$; a $C$ word
+there has index $r=(j-1)\bmod2$. Thus $B$ and $C$ cannot collide,
+even when their accumulator and latch value $b$ agree. Within each
+of these sets the remaining displayed parameters distinguish the words.
+At stage zero there is no $C$ word, and the $B$ words use only
+$r=0$. The two one-hot polling words in (SLHC.44) use $r=1$, so
+cannot collide with those $B$ words. The two-hot polling word is
+different from every $Q,B,C$ word and from both one-hot polling
+words. Its two choices of $a$ are distinct. No polling word occurs
+at any other stage. This covers the initial and final stages as well
+as the interior ones, including states unreachable from $Q(0,0)$.
+Therefore (SLHC.43) has $2(N+1)+4N+2N=8N+2$ words, and
+(SLHC.44) adds exactly six in the active case. Install exactly these
+images; all other ambient Fibonacci words have no instruction rows.
+
+For completeness the transported instruction tables are specified on
+every typed reply below. In the tables a state name means its full
+image under $\eta$, with no retained decoded state. Initialize at
+$\eta(Q(0,0))$ in either construction, independently of $x,t$.
+At $\eta(Q(N,a))$ the fixed instruction is $\mathsf{Halt}(a)$,
+and there are no primitive-response rows at a halt.
+
+At each nonhalt active $Q(i,a)$ execute the fixed literal
+$\mathsf{Read}(p_{i+1})$, $p_{i+1}=q_{i+1}R^K$. Its complete
+response table is
+
+| State range | $\alpha$ | $\beta$ | $\mathsf{branch}$ | $\mathsf{absent}$ |
+| --- | --- | --- | --- | --- |
+| $Q(0,a)$ | $B(0,a,a)$ | $B(0,a,a\oplus1)$ | $Q(0,a)$ | $V(a,01)$ |
+| $Q(i,a)$, $1\le i<h$ | $B(i,a,a)$ | $B(i,a,a\oplus1)$ | $B(i,a,a)$ | $B(i,a,a\oplus1)$ |
+
+At static $Q(i,a)$, $0\le i<M$, execute entry $i+1$ of the
+literal list (SLHC.33). Its four rows are
+
+| State range | $\alpha$ | $\beta$ | $\mathsf{branch}$ | $\mathsf{absent}$ |
+| --- | --- | --- | --- | --- |
+| $Q(i,a)$, $0\le i<M$ | $B(i,a,a)$ | $B(i,a,a\oplus1)$ | $B(i,a,a)$ | $B(i,a,a)$ |
+
+The common routing rows and the active polling rows are
+
+| State | Fixed native instruction | Successor on each declared reply |
+| --- | --- | --- |
+| $B(i,a,b)$, $a\ne b$ | $\mathsf{Read}(\varepsilon)$ | $B(i,b,b)$ for each of the four Read replies |
+| $B(i,b,b)$ | $\mathsf{Read}(\varepsilon)$ | $C(i,b)$ for each of the four Read replies |
+| $C(i,b)$ | $\mathsf{Read}(\varepsilon)$ | $Q(i+1,b)$ for each of the four Read replies |
+| $V(a,01)$ | $\mathsf{Update}$ | $V(a,11)$ on $\star$ |
+| $V(a,11)$ | $\mathsf{Update}$ | $V(a,10)$ on $\star$ |
+| $V(a,10)$ | $\mathsf{Read}(\varepsilon)$ | $Q(0,a)$ for each of the four Read replies |
+
+These are precisely §§9.4–9.5's expanded rows: the three routing
+cases are its accumulator correction, stage advance and latch clearing
+in that order. In particular, every $B$ advancing its stage has
+$i<N$, and $C(N-1,b)$ clears into the installed halt $Q(N,b)$.
+Every successor in these tables is installed. The actual root reply
+on this $h\ge2$ family is branch, but the other three root-response
+rows remain present and have their specified successors. The two
+pilot branch holds, including the row at $Q(0,1)$, also remain
+unchanged. No unsupported row is replaced by a different completion.
+
+Every nonhold response is an edge of the new Fibonacci cube. Each
+accepted data response adds one latch bit. The first routing case
+changes only $a$ to $b$; the second changes only the one differing
+coordinate of $z_i,z_{i+1}$, leaving its latch untouched; the third
+clears just that latch. For a polling retry, the four latch patterns
+are
+
+$$
+0000\ \longrightarrow\ 0100\ \longrightarrow\ 0101
+\ \longrightarrow\ 0001\ \longrightarrow\ 0000.
+\tag{SLHC.45}
+$$
+
+In order these four changes follow an absent data Read, an Update,
+another Update, and a paid root Read. The stage and accumulator stay
+fixed on this square. Each change is one bit and every intermediate
+word is legal. The active branch holds change zero bits. These are
+all typed rows, so the edge requirement is the full $G_{\rm all}$
+requirement of FIB §§45.4–45.5, not only its supported-edge version.
+Extra cube adjacencies supply no additional table transitions. The
+lookup table chooses the entire next instruction from the complete
+word; the immediate response service chooses the indicated successor
+and discards the raw reply. There is no internal instruction, free
+stage counter or separate polling phase register.
+
+To check the actual-source transport, denote the old table's instruction
+and response functions by $I_9,\delta_9$, and the new ones by
+$I_{12},\delta_{12}$. The displayed rows establish, at every installed
+nonhalt $v$ and every reply of its instruction's declared type,
+
+$$
+I_{12}(\eta(v))=I_9(v),\qquad
+\delta_{12}(\eta(v),o)=\eta(\delta_9(v,o)).
+\tag{SLHC.46}
+$$
+
+The first equality includes the literal itself and the instruction
+type, and holds also at each halt with its fixed output. Fix one
+original assignment and entry $(x,t)$. Initially both devices are
+exactly $E(x,t)$, with old control $Q(0,0)$ and new control
+$\eta(Q(0,0))$. If the devices agree at an event and the controls
+correspond by $\eta$, (SLHC.46) selects the identical primitive.
+The same device then gives the identical raw reply and device
+successor. Read leaves that device unchanged. Update applies $\rho$
+to that very device and gives its same constant acknowledgement;
+it is genuine by the clock identity used in §9.4. The second equality
+in (SLHC.46) gives the corresponding next control immediately.
+Induction proves equality of the entire actual primitive history and
+of the number of completed Updates at every event. It does not
+replace a source by another member of an observational fiber.
+
+For explicit support transport let $\mathcal C_v^{(9)}$ contain exactly
+the pairs $(\pi(x),E(x,t+j))$ attained at old state $v$ on a promised
+run, where $j$ is the number of actual post-entry Updates at that
+position. Let $\mathcal C_w^{(12)}$ be the corresponding definition
+for the new table. The induction, in both directions on the installed
+image, yields
+
+$$
+\mathcal C_{\eta(v)}^{(12)}=\mathcal C_v^{(9)}.
+\tag{SLHC.47}
+$$
+
+This also holds for empty supports; their installed words were not
+deleted. Sections 9.4–9.5 prove finite completion of each old run.
+On an old supported triple $(z,u,v)$ define $R_9(z,u,v)$ to be its
+deterministic number of remaining primitives to the first halt.
+It is well defined: the same current device and complete control have
+the same future, even if more than one history reaches them. It is
+finite on exact supports by those sections. Set
+
+$$
+R_{12}(z,u,\eta(v))=R_9(z,u,v).
+\tag{SLHC.48}
+$$
+
+Each actual primitive decreases this rank by exactly one. Initial
+coverage, legal actions and same-source successor closure follow from
+(SLHC.46)–(SLHC.47). Each halt retains its fixed payload, and only
+$Q(N,a)$ halts. Therefore the first halt occurs at exactly the old
+event and outputs the old correct bit $\pi(x)$; there is no earlier
+output or intervening halt. This supplies FIB §27.2's full support–rank
+certificate. It also gives the control equivalence and identity
+address map for the run-transport interface of §7.2, with
+$\operatorname{obs}_{x,t}(j,p)=r_{\rho^{t+j}u_x}(p)$ and $j$
+counting Updates only. Output correctness uses the fixed payload and
+§9's invariant; halt-endpoint uniqueness alone does not supply it.
+Neither $j$, the supports, nor the rank is an observer input.
+
+In particular the native readout and parity arguments of §§9.4–9.5
+apply without a new acquisition proof. The active table makes exactly
+$k=K-\lfloor(t+x_1)/2\rfloor$ polling retries and thereafter stays
+at epoch $\tau=t+2k$. Each accepted contribution is
+$(t\bmod2)\oplus x_i$. The static scan has exactly one leaf reply
+in each cone and the same contribution. Even $h$ cancels the common
+entry-parity term, giving the required original parity. These facts
+concern the same $x,t$ as in (SLHC.46); no source-independent
+normalization or acquired reference is added. Injectivity, word length
+and row legality now prove (SLHC.39) and the constructive sides of
+(SLHC.40).
+
+For the lower sides reuse §9.6's bounds (SLHC.26) on this exact
+comparison class. Its same-run leaf-flip witnesses require $h$
+distinct fixed-literal query words. Its static comparisons of
+$E(0^h,t)$ and $E(e_i,t)$ for each cone and each $0\le t\le T$
+require $r$ query words per cone, because one fixed suffix separates
+at most three adjacent atomic ranks. In both cases the two fixed
+outputs require two additional halt words. Those arguments explicitly
+allow arbitrary finite counted internal work; in the static case
+unused Update rows remain allowed. The capacity
+$|L_\ell|=F_{\ell+2}$ therefore gives
+$`d_F(h+2)\le\ell_a^*(S,T)`$ and
+$`d_F(hr+2)\le\ell_s^*(S,T)`$. No lower bound here is inferred
+from the two-valued target alone or from a restriction to the exhibited
+tables.
+
+Monotonicity of $d_F$ gives the last active inequality. For the static
+one, $r\ge1$ and $T+1\le3r$ imply
+$T\le3r-1\le4r-2$, hence $K+1\le2r$. Thus
+$M+1\le2hr+1\le2(hr+2)$. The Fibonacci recurrence gives
+
+$$
+F_{d+4}=2F_{d+2}+F_{d+1}\ge2F_{d+2},\qquad
+d_F(2n)\le d_F(n)+2.
+\tag{SLHC.49}
+$$
+
+Apply this with $n=hr+2$ to obtain the final $+9$ in (SLHC.40).
+For the leading coefficients, induction using
+$\varphi^2=\varphi+1$ gives
+$\varphi^d\le F_{d+2}\le\varphi^{d+1}$ for all $d\ge0$.
+Consequently
+$\log_\varphi n-1\le d_F(n)\le\lceil\log_\varphi n\rceil$.
+Together with $(T+1)/3\le r\le T+1$, these inequalities and
+(SLHC.40) prove (SLHC.41) with absolute additive constants. No
+leaf-depth term entered this width estimate. The classical spanning
+path is the cited ingredient; the full-table injection with the
+seven-bit control block and its native transport is the application
+proved here. $\square$
+

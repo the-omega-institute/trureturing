@@ -1,0 +1,45 @@
+**引理 1343.1（接近权重上限时的通道界）。** 令 $wq_m\le P_{N,\kappa}$，其中 $a/2\le w\le a$，记
+
+$$
+\delta=a-w,\qquad t_i=|m_i|,\qquad T=\sum_it_i.
+$$
+
+存在只依赖 $\kappa$ 的整数 $N_0$，使所有 $N\ge N_0$ 都满足
+
+$$
+T\le K\delta,\qquad K=\frac6{a\log2}.
+$$
+
+**证明。** 置 $Q=\prod_i(1+t_i)$、$C=2(1+\kappa)/a$。可以取
+
+$$
+N_0=\max\left\{7,
+\left\lceil\frac{\log C}{\log(3/2)}\right\rceil\right\}.
+$$
+
+若有零均值坐标，可任选其模态符号，使所选模态顶点为负奇偶。若模态为负奇偶，逐格支配给 $wQ\le a$；由 $\log(1+t)\ge t\log2$，有 $T\log2\le\log(a/w)$。
+
+其余情形的模态为正奇偶且各 $t_i>0$。令 $s=\min_it_i$。模态格的支配给 $Q\le(1+\kappa)/w\le C$，而 $Q\ge(1+s)^N$，所以按所选 $N_0$ 有 $s\le1/2$。将达到最小偏置的一个坐标翻转，得到负奇偶格，故
+
+$$
+wQ\frac{1-s}{1+s}\le a.
+$$
+
+先使用 $Q\ge(1+s)^N$，再取对数及 $\log(1-s)\ge-2s$，得到
+
+$$
+[(N-1)\log2-2]s\le\log(a/w).
+$$
+
+记方括号为 $B_N$；对 $N\ge7$，有 $B_N\ge2$。另一方面
+
+$$
+\log Q\le\log(a/w)+\log\frac{1+s}{1-s}
+\le\log(a/w)+4s
+\le3\log(a/w).
+$$
+
+所以两种模态情形均有 $T\log2\le3\log(a/w)$。因 $0\le\delta/a\le1/2$，$\log(a/w)=-\log(1-\delta/a)\le2\delta/a$，得到所示界。证毕。
+
+尤其，当 $w=a$ 时，$T=0$，通道准确公平。这里的结论使用所有相关格的支配，不仅使用完整奇偶矩；没有把矩趋零误判为每个坐标偏置趋零。
+

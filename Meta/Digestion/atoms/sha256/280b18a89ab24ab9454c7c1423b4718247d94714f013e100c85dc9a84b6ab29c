@@ -1,0 +1,4 @@
+**来源 1240.1（概率推导与项目）。** 第 1221–1229 节从既有纯奇偶单分量界、摘要根方程及两端生成器出发，列出高维渐近、成对误差、逐点分解、曲率及端点导数的解析证明。熵与准确来源继续使用前述 Kumar–Li–El Gamal、Xu–Liu–Chen 以及 Yu–Tan 的定义范围；这里新增列出的连续族与渐近推导不归称为那些论文已经给出的定理，不作原创申报。
+
+本批核读项目 `D5/S3/Estimation/DecisionRisk/LawRepresentationCanonicalQuotient.lean` 与 `D5/S3/ConceptDynamics/Decision/MixedFiberZeroErrorImpossible.lean`，分别使用完整律因子化的条件与同证据反标签的判据。源码阅读不是当前 kernel 或 axiom 闭包核验；本批也没有把来源表示等价与摘要相等混为同一商关系。
+

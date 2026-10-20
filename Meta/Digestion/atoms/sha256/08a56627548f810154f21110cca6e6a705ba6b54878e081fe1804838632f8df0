@@ -1,0 +1,34 @@
+## 35. 三级：真正的量子提升
+
+若要按量子意义使用“纠缠”，必须给出：
+
+1. Hilbert 空间分解
+   \[
+   \mathcal H=\mathcal H_L\otimes\mathcal H_R;
+   \]
+2. 密度算子 \(\rho_{\mathrm{state}}\)；
+3. 镜像作用的线性或反线性实现；
+4. 非可分离性判据。
+
+一个可选模型是：
+
+\[
+|\Omega_\rho\rangle
+=
+\frac1{\sqrt2}
+\left(
+|+\rangle_L|-\rangle_R
++
+e^{i\theta_\rho}
+|-\rangle_L|+\rangle_R
+\right).
+\]
+
+它的 Schmidt rank 为 \(2\)，故是 entangled state。
+
+但：
+
+- 对称轨道本身没有自动指定 \(\theta_\rho\)；
+- 没有自动指定左右 tensor factors；
+- 没有自动给出物理测量代数。
+

@@ -1,0 +1,17 @@
+# 238. belief 商对所有 Bayes 决策同时充分
+
+给定行动空间 \(A\) 与损失：
+
+\[
+\ell:X\times A\to[0,\infty],
+\]
+
+定义当前停止风险：
+
+\[
+R_{\mathrm{stop}}(\pi)
+=
+\inf_{a\in A}
+\int_X\ell(x,a)\pi(dx).
+\]
+

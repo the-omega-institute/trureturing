@@ -1,0 +1,14 @@
+## A.0 实例化表:本仓是定义 1.1–1.5 的模型
+
+| 理论对象 | 本仓实例 |
+|---|---|
+| $\mathcal P$、$\Pi$、$K$ | Lean 4 命题、证明项、kernel |
+| $\mathfrak A$ | `{propext, Classical.choice, Quot.sound}`(母仓公理白名单) |
+| $\mathrm{refs}$ | 声明的常量依赖(Lean `getUsedConstants`,须固定环境与直接/传递口径,见评审席读数) |
+| $N$、$w$ | `Golden/Frozen/state/<module>.lean.json` 状态片存在的模块及其 D5 源 |
+| $O$ | `X_Frontier` 的 `open` 标记与消化账本的 `residual-open` 条目 |
+| $\mathfrak M$ | 经三 required check 合入 dev 的 PR |
+| $\mathrm{Err}_u$ | 勘误 / revocation 协议(母仓第 1.3 条) |
+| 主张记录 $\mathcal U$ | PR / issue 正文、判词、完成声明(只追加,可编辑处按母仓第 5.2 条标 unverified) |
+| 读数 | 命令 + 窗口 + 口径(母仓第 2.9 条) |
+| $\mathrm{Adm}$ | 三 required check(不读提交者身份) |

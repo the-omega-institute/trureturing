@@ -1,0 +1,20 @@
+**推论 1550.1（同一来源对的方向性）。** 对第 1543 节来源，令 $E_m,F_m$ 的意义如前。固定有限 $\alpha>1$，有
+
+$$
+e_m\longrightarrow0,\qquad
+d_P(F_m\leftarrow E_m)\longrightarrow0,\qquad
+d_\infty(F_m\leftarrow E_m)\longrightarrow\frac{\kappa}{1+\kappa},
+$$
+
+同时
+
+$$
+d_\infty(E_m\leftarrow F_m)\longrightarrow0.
+$$
+
+**证明。** 前三项已由上述来源及核证明。对最后一项，第 1466 节的直接反向核可用于当前主通道 $q_1=U$：逐格缺口为 $aU-w_1q_1=\delta_mU$，所以其条件误差为 $\delta_mU(x)/P(x)\le\delta_m/a$。故反向最坏状态缺陷至多为 $\delta_m/a\to0$。这里甚至不需要一般近最优来源的偏置稳定性估计。证毕。
+
+对“不同表达是否说同一回事”，这提供一种具体分析顺序。先确定允许的翻译是否只读当前表达；再确定所要保持的是观察律、平均决策能力、全部状态下的能力还是标签本身；最后检查翻译在两个方向是否均成立。单向可模拟并不自动产生双向等价。
+
+项目 `SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean` 将最坏状态缺陷接到有限任务的风险转移，`DecisionRisk/FiniteBayesRiskDominanceCriterion.lean` 则在其有限实验条件下联系准确随机后处理与所有先验、行动和损失的风险支配。这里的反例说明为何不能把固定先验平均版本悄悄换成全先验版本。源码阅读不等于当前编译或 axiom 闭包核验，具体来源推导仍由本批明写的联合质量、核及猜测任务承担。
+

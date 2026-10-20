@@ -67,20 +67,22 @@ for circulant couplings.
 ## Evidence
 
 The canonical source is `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.lean`,
-with public `fourier`, `IsUnimodularDiagonal`, `IsPolygonalCoupling`, `claim`
-and `result : claim`. It imports the frozen
-`D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow` (for `hamiltonianPropagator`,
-$e^{-itH}$) and the frozen `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity`
-(for the Gram identity `fourierRows_gram` of the Fourier rows, made public at its
-origin), and uses Mathlib's discrete Fourier transform `ZMod.dft` with its inverse
-and `ZMod.dft_even_iff`. The axiom closure of `result` is exactly `propext`,
+with public `fourier`, `IsUnimodularDiagonal`, `IsPolygonalCoupling`, `claim`,
+`result : claim`, and the consumed Fourier declarations `transform`,
+`transform_unitary`, `spectralValue`, and `circulant_spectral`. It imports the frozen
+`D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow` for `hamiltonianPropagator`
+and `D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity` for
+`fourierRows_gram`, and uses Mathlib's `ZMod.dft`, its inverse and
+`ZMod.dft_even_iff`. The axiom closure of `result` is exactly `propext`,
 `Classical.choice` and `Quot.sound`; there is no `sorry`, `native_decide`, or
-new axiom.
-The module statement is `sha256:86195c1312f4468e797656b7564928ced7ecb53c5f01b7c277a0a9fe843b9677`,
-the `result` statement `sha256:5a1df594bf419a7559be2a8c707b24fd243ec6bf36fd9403678ba6e637e0ec3c` and the
-`claim` statement `sha256:9be0e0439bb0e37544677b1875f085b4a30c70179fa4ba06514143e3b090c8cf`. The Freeze
-event is `sha256:778e6ec2571f17b0c7783975d355794f912dd7df39d175de2f5c261ad1544bb8`; its project-level
-prerequisites are the frozen `ProjectionProbabilityFlow` and `TomiyamaDiagonalKPositivity` modules.
+new axiom. The canonical module state record is
+`Golden/Frozen/state/D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.lean.json`.
+
+The [escape audit #19204](https://github.com/the-omega-institute/trureturing/issues/19204)
+is unfinished for the published Fourier owners. No `declared_validated`
+registration is claimed. The source-bound realization bridge, variation,
+sensitivity and observational dependence evidence for their complete families
+remains missing.
 
 ## Triage
 
@@ -91,7 +93,7 @@ any Lean. `theorem`; resolution `proved`.
 | --- | --- | --- | --- |
 | result | bind-only | none | open-problem-resolution |
 
-The private definitions and lemmas of the module (the chirp, the Fourier
+The definitions and lemmas of the module (the chirp, the Fourier
 transform on `ZMod N`, the circulant spectral kernel and its bounds) carry free
 parameters and lie on the proof path of `result`. Utility is `none`. There is
 no digestion atom.
@@ -137,5 +139,5 @@ couplings.
 
 ## ASSUMED-UNVERIFIED
 
-The bounded literature check does not establish exhaustive worldwide novelty,
+Literature completeness is `ASSUMED-UNVERIFIED`. The bounded literature check does not establish exhaustive worldwide novelty,
 priority, or the absence of an independent proof.

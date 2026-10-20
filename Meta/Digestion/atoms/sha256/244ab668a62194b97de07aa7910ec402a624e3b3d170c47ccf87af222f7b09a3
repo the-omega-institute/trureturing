@@ -1,0 +1,27 @@
+**定理 1248.1（全来源的联合零阶尺度）。** 对 $\alpha\downarrow0$、$\kappa\downarrow0$，若
+
+$$
+\alpha\log(1/\kappa)\longrightarrow\tau\in[0,\infty],
+$$
+
+则
+
+$$
+G_\alpha(P_{3,\kappa})\longrightarrow\log(1+3e^{-\tau}),
+$$
+
+其中 $e^{-\infty}=0$。
+
+**证明。** 对每个正阶选第 1241 节的至多八项准确最优来源，补零并降序排列。第 1246–1247 节给
+
+$$
+w_1\ge1/8,\qquad w_2,w_3,w_4\ge w_4\ge c\kappa,
+\qquad c=\frac1{10(\sqrt2+1)}.
+$$
+
+因此其幂和至少为 $8^{-\alpha}+3(c\kappa)^\alpha$。当 $\tau<\infty$，该式趋向 $1+3e^{-\tau}$，除以趋于一的 $1-\alpha$ 后得到目标下界。这里的权重约束针对全部至多八项准确来源，并没有把它们限制成对称通道。
+
+上界取第 1165、1224 节的四项星形来源。其一个权重趋于一，其余三个分别渐近于 $\kappa,\kappa/2,\kappa/2$。当 $\alpha\log(1/\kappa)\to\tau<\infty$，幂和趋向 $1+3e^{-\tau}$，得到相同上界。当 $\tau=\infty$，这张来源的熵趋于零，再用非负性即可。证毕。
+
+第 1207 节只比较两张来源的联合极限；本节补入全模型距离与共同权重约束，才把较低的一条曲线提升为所有有限准确来源优化后的极限。这里依然没有识别每个有限 $(\alpha,\kappa)$ 的全部最优生成器。
+

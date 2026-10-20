@@ -1,0 +1,45 @@
+**Definition 14.1 (the entire intermediate table as the input).** Keep
+Definition 11.1's original domain: every ordered full $h$-leaf tree $u$,
+every independent original leaf assignment and every unknown entry
+$y=\rho^t u$, $0\le t\le T$. The target is the original $\pi(u)$.
+Public data are $h,T$ and the chosen static or active regime, not the
+shape, labels, actual entry lag, current clock or a reference leaf.
+The positive regimes are $T=0$ for every $h\ge1$, and finite $T\ge1$
+for even $h$. Initialization is common and source independent.
+
+Take $e,k=k(e),B,H,P,A_*$ exactly from (SLHC.11.1)–(SLHC.11.2).
+Thus $k=h+3+\lambda(h)+2\lambda(h+1)+e$, where
+$\lambda(n)=\lceil\log_2 n\rceil$, and the active constant is
+$B=2\lceil(T+2h)/2\rceil$. The three choices of $e$ are displayed
+in Corollary 14.3.
+The controller to be realized is **Construction 11.5 in §11.4**, with
+its entire state set
+
+$$
+Q_I=\{0,1\}^k,\qquad K_0=2^k.
+\tag{SLHC.14.1}
+$$
+
+Every bit pattern is installed. In particular this includes noncanonical
+halt-mode patterns, invalid padding, out-of-range counters and candidate
+indices, the unused mode code, and modes unavailable in the chosen regime.
+Their instructions are the specified Read$(\varepsilon)$ and each of their
+four responses goes to canonical ERROR. Canonical ERROR has that same
+instruction and four self-transitions. These are real typed completion
+rows, even though the promised runs never reach them.
+
+There are exactly two canonical halt states, HALT0 and HALT1, each with
+its own fixed output and no replies. Put $u_0=1$ for the active positive-$T$
+regime, and $u_0=0$ otherwise. There are exactly $u_0$ Update states, with
+one $\star$ successor each. All remaining $K_0-2-u_0$ patterns are Read
+states with four typed replies. The mode rules fix the instruction and
+successor from $z$ and the raw reply alone, including replies outside
+actual supports. No acquired input besides the original common setup is
+used. The original current tree is updated in place by each actual Update.
+
+The two-bank, flagged, paid-routing controller of Construction 11.6 is a
+different realization of this input table. Its inserted root Reads are not
+part of the trace specified here. The present realization uses the same
+conditional whole-word services of Definition 1.3 and does not add a new
+observation, internal instruction or response-retention service.
+

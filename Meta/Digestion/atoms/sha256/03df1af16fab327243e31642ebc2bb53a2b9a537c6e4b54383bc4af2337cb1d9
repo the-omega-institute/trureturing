@@ -1,0 +1,19 @@
+# 32. 多素数静态超度量
+
+为每个坐标指定正权重 \(w_i\)，定义：
+
+\[
+\delta_i(x,y)
+=
+\begin{cases}
+0,&q_i(x)=q_i(y),\\
+1,&q_i(x)\neq q_i(y).
+\end{cases}
+\]
+
+\[
+d_J(x,y)
+=
+\max_{i\in J}w_i\delta_i(x,y).
+\]
+

@@ -1,0 +1,13 @@
+# 49. 与当前仓库真值的追加锚定
+
+| 结论 | 当前锚点 | 状态 |
+|---|---|---|
+| 连续 solenoid 路径 = 实提升 + 恒定隐藏偏移 | `D5/S1/Solenoid/StreamlineDecomposition.existsUnique_normalized_streamline` | Lean closed |
+| 路径相连 iff 同一 real-flow 轨道 | `D5/S1/Solenoid/PathOrbitClassification.path_joined_iff_real_flow_orbit` | Lean closed |
+| 纯隐藏连续加法实流为零 | `D5/S3/Observer/HiddenFlow/ContinuousRigidity.continuous_hidden_flow_eq_zero` | Lean closed |
+| 非零整数隐藏动作无连续实扩张 | `D5/S3/Observer/HiddenFlow/DiscreteRigidity.nonzero_integer_action_has_no_continuous_real_extension` | Lean closed |
+| 读出与可逆更新的协变骨架 | `D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton` | Lean closed |
+| 完整控制画像商的普适最小性 | `D5/S3/ConceptDynamics/Control/ControlQuotientUniversalMinimality.control_quotient_universal_minimality` | Lean closed |
+| 预测充分性推出决策充分性 | `D5/S3/ConceptDynamics/Decision/PredictionDecisionSufficiency.prediction_sufficiency_implies_decision_sufficiency` | Lean closed |
+| $K_\infty/\mathbb Z$ 路径分量接口与穷尽 jump 分类 | `docs/reports/diag-month-r2/diag-month-r5-b-hidden-motion-dichotomy-open.md` | residual open |
+| 唯一观察者 policy／自由意志作者性 | 无现成锚点 | 未形式化，且不应预设必有唯一 policy |

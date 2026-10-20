@@ -1,0 +1,76 @@
+**例 441.4（首次实际标签为二时停止）。** 取
+
+$$
+u=\pi/4,\qquad \gamma=0,\qquad
+\beta=\arccos\!\left(-\frac1{2\sqrt2}\right),\qquad
+b=\frac{e_0+e^{-i\beta}e_1+e_2}{\sqrt3}.
+$$
+
+此时平衡相位方程化为 $2\sqrt2\cos\beta+1=0$，故这是定义 441.1 中合法的固定见证。令 $W:A\to M$ 为到同维记忆的固定酉同构，共同初始制备把任意变量输入等距停放到 $M$，另备查询系统于 $|3\rangle$；即 $\psi_A\mapsto W\psi_A\otimes|3\rangle_S$。记忆 $M$ 此后不动，并保留它与任意参考的关联。
+
+每个 live 槽调用同一 $\mathcal Q_t$，首次实际标签 $a=2$ 时停止；$a=0,1$ 时继续。全部先前的 $0,1$、最终的 $2$、控制器继续与停止标志、$M$ 和最终 $S$ 都属于输出。由于 $A_a(t)$ 对角，任何有正概率的实际分支中查询系统仍为 $|3\rangle$ 的同一纯态，故新鲜调用的实际标签独立同分布。写 $r_a(t)=|h_{a3}(t)|^2$，停止概率为
+
+$$
+r_2(t)=\frac13\left|\cos^2t+\sqrt2\sin t\cos t\,e^{i\beta}\omega
+                         +\sin^2t\,\omega^2\right|^2,
+\qquad r_2(u)=\frac13.
+$$
+
+这里 $j-a=0-2\equiv1\pmod3$，固定了实际标签二对应的相位取向。为确认参数响应，令括号内的幅度除以 $\sqrt3$ 为 $f(t)$，则
+
+$$
+f(u)=\frac{1+\sqrt2 e^{i\beta}\omega+\omega^2}{2\sqrt3},\qquad
+f'(u)=\frac{-1+\omega^2}{\sqrt3},
+$$
+
+从而直接计算得
+
+$$
+\begin{aligned}
+r_2'(u)
+&=2\operatorname{Re}\bigl(\overline{f(u)}f'(u)\bigr)\\
+&=\frac{\sqrt2}{3}\left[\cos(2\pi/3-\beta)-\cos(2\pi/3+\beta)\right]\\
+&=\frac{2\sqrt2}{3}\sin\beta\sin(2\pi/3)=\frac{\sqrt{21}}6\ne0.
+\end{aligned}
+$$
+
+在 $u$ 处三个 $r_a$ 都为 $1/3$，故由连续性存在 $u$ 的双侧邻域 $J\subset I$，使每个 $t\in J$ 的三个概率都严格为正，特别是 $0<r_2(t)<1$。固定任意 $\theta\in J$。对于所有输入，两实验均有
+
+$$
+\Pr_{t,\rho}(T=n)=(1-r_2(t))^{n-1}r_2(t)\quad(n\ge1),\qquad
+\Pr_{t,\rho}(T>N)=(1-r_2(t))^N>0,
+$$
+
+以及
+
+$$
+m_t(\rho)=\sum_{k\ge1}(1-r_2(t))^{k-1}=\frac1{r_2(t)}<\infty.
+$$
+
+任意有限 $N$ 后仍有正尾概率，所以这里没有确定调用上限。更明确地，在终端历史 $(a_1,\ldots,a_{n-1},2)$ 的块内，其中各 $a_j\in\{0,1\}$，停止映射作用为
+
+$$
+X\longmapsto
+\left(\prod_{j=1}^{n-1}r_{a_j}(t)\right)r_2(t)
+\,WXW^\dagger\otimes|3\rangle\langle3|,
+$$
+
+继续与停止标志由这一历史确定。对所有这些块求和的总权重为一，因而这是保留完整历史及输入记忆的停止通道，并未只取最后一个标签或对某次成功归一化。
+
+预算与停放输入无关，故 $M_u=3$、$M_\theta=1/r_2(\theta)$ 在整个 $A$ 上统一成立。定理直接给出
+
+$$
+\|\mathcal S_\theta-\mathcal S_u\|_\diamond
+\le B\!\left(\sin^2(\theta-u)\sqrt{\frac3{r_2(\theta)}}\right).
+$$
+
+当 $\theta\to u$ 时右侧为 $O(|\theta-u|)$，在充分小的邻域内严格小于二。导数 $r_2'(u)\ne0$ 还表明同一停止规则在两端通常具有不同均值。这个例子由实际仪器标签触发停止，确实使用了有限均值而无确定上限的范围。
+
+上述比较始终是同一控制器下的 $\mathcal S_\theta$ 与 $\mathcal S_u$。即使单次 $\mathcal Q_u(X)=(I_C/3)\otimes X$，控制器仍可能测量输入、按历史更新记忆或改变停止概率，故不能据此把整个 $\mathcal S_u$ 换成未经证明的 $\tau\otimes\operatorname{id}$。两端有限均值是本定理的充分条件，不声称必要；本证明也不以一个均值或某条轨迹的调用次数代替显示的两法则预算。有正不终止概率的输入只得到次归一化的有限叶和，不能在删除不终止质量后称为这里的停止通道。
+
+保留实际历史不授予隐藏环境的访问权，装置内部对两份原始记录的联合访问也不给出 LOCC 结论。相关而非新鲜的环境、依赖实际参数的控制或改变确切 ket 代表相位，均需另行规定模型和证明；第 440 节的系统边际二次误差本身不能替代本节保留历史的误差。
+
+本节装置与相位计算的直接来源为[固定版本的本卷](https://github.com/the-omega-institute/trureturing/blob/513818b416f6a3a198a4f8216e019abe350df88e/docs/develop/theory/QUANTUM-REALITY.md)：定理 413.1 的平衡相位方程、定理 415.1 的完整四维三结果仪器、定义 440.1 与定理 440.2 证明中的确切幅度和交叠，以及定义、定理 73.2 的半 diamond 累加约定。
+
+交叠变化按查询逐项相消、以查询分量平方范数计费的先例见 Aleksandrs Belovs、Duyal Yolcu，[*One-Way Ticket to Las Vegas and the Quantum Adversary*, arXiv:2301.02003v1](https://arxiv.org/pdf/2301.02003v1)，Definition 4.1（PDF 第 12 页）及 Theorem 7.4、式 (7.4)（第 25 页）。共同膨胀的通道连续性工具见 Dennis Kretschmann、Dirk Schlingemann、Reinhard F. Werner，[*The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation*, quant-ph/0605009v1](https://arxiv.org/pdf/quant-ph/0605009v1)，第 6 页式 (15)–(18)。保真度与迹距离的一般关系见 Christopher A. Fuchs、Jeroen van de Graaf，[*Cryptographic Distinguishability Measures for Quantum Mechanical States*, quant-ph/9712042v2](https://arxiv.org/pdf/quant-ph/9712042v2)，Theorem 1、式 (46)（第 17 页）。这些是所用方法的先例；本节的完整停止输出界由上面的精确膨胀、秩二计算与迹类超时极限直接推出。
+

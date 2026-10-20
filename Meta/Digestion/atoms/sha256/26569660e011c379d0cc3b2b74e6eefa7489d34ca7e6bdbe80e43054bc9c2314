@@ -1,0 +1,101 @@
+# 6. 与 RH 的关系
+
+RH 要排除：
+
+\[
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta\ne0.
+\]
+
+仓库 zero side 已经把一个离线四点轨道写成：
+
+\[
+\boxed{
+Q_{\operatorname{orb}(\rho)}
+=
+E_\rho^{\mathrm{even}}
+-
+E_\rho^{\mathrm{odd}},
+}
+\]
+
+其中：
+
+\[
+E_\rho^{\mathrm{even}}\ge0,
+\qquad
+E_\rho^{\mathrm{odd}}\ge0.
+\]
+
+全部符号风险集中在 odd spectral channel。
+
+本轮 time-ordered cocycle 给 prime side 一个更具体的候选输入：
+
+\[
+C_{r;p,q}(t_p,t_q)
+=
+(a-\lambda_q)\chi_{\omega_p}(t_p)b_p
+-
+(a-\lambda_p)\chi_{\omega_q}(t_q)b_q.
+\]
+
+可以由它构造 finite time-frequency holonomy energy：
+
+\[
+\boxed{
+\mathcal V_{r,P,T}^{\mathrm{time}}
+=
+\sum_{p,q\in P}
+\int_{\Delta_T}
+\left\|
+K_{p,q}(t_1,t_2)
+C_{r;p,q}
+\right\|^2
+\,dt_2dt_1,
+}
+\]
+
+其中：
+
+\[
+\Delta_T
+=
+\{(t_1,t_2):0<t_2<t_1<T\}
+\]
+
+是有序时间单纯形，\(K_{p,q}\) 是下一节登记的 Fourier slot-swap kernel。
+
+真正连接 RH 仍需证明：
+
+\[
+\boxed{
+\mathcal E^{\mathrm{odd}}_{\mathrm{off}}(L,N,T)
+\le
+A_{L,N,T}
+\mathcal V_{r,P,T}^{\mathrm{time}}
++
+R_{r,L,N,T},
+}
+\]
+
+且：
+
+\[
+R_{r,L,N,T}\to0.
+\]
+
+若 extraction tower 再给出：
+
+\[
+\mathcal V_{r,P,T}^{\mathrm{time}}\to0,
+\]
+
+则离线 odd energy 必须消失。通过已冻结的内部曲率判据，才可进入 RH。
+
+当前节点本身没有建立这个支配。
+
+---
+

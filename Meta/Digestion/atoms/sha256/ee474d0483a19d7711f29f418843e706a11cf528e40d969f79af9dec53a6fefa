@@ -1,0 +1,44 @@
+**命题 15.23（合法空间中的唯一零能量射线）。** $H_{\rm loc}$ 保持 $\mathcal K_n$，
+为正半定，且在该空间的零能量态唯一到整体相位，等于
+$|\psi_+\rangle=\mathcal Z^{-1/2}\sum_{I\in\Gamma_n}
+\prod_{i\in I}\sqrt{a_i}|I\rangle$。
+它选取正代表；一般复 $z_i$ 的目标应使用
+$UH_{\rm loc}U^\dagger$，不能直接宣称同一个正父湮灭所有相位。
+
+证明。邻位投影与中位 rank-one 正算子作用于不同位置，
+各项等于 $Q_i^\dagger Q_i$，其中
+$Q_i=\langle v_i|P_{i-1}P_{i+1}$，故正半定。
+若两邻位为零，中位翻转仍是合法配置；若任一邻位为一，
+该项作用为零。因此合法空间不泄漏。
+
+对 $|\eta\rangle=\sum_I\eta_I|I\rangle$，
+能量零等价于每个 $Q_i|\eta\rangle=0$。
+在每个可插入 $i$ 的同一外部配置上，这准确给
+
+$$
+\sqrt{a_i}\eta_I-\eta_{I\cup\{i\}}=0.
+$$
+
+删除合法集中的任意占位总是允许动作，
+由 $I$ 逐位删除到空集可得
+
+$$
+\eta_I=\eta_\varnothing\prod_{i\in I}\sqrt{a_i}.
+$$
+
+若 $\eta_\varnothing=0$ 则整态零；
+任何非零零能量态都因此在该射线上，归一化给显示的正代表。
+它逐项满足全部比值，确实被父湮灭。
+$n=1$ 时父矩阵为
+$\begin{pmatrix}a_1&-\sqrt{a_1}\\-\sqrt{a_1}&1\end{pmatrix}$，
+零向量正比于 $(1,\sqrt{a_1})$，同一结论成立。
+
+对 $z_i=\sqrt{a_i}e^{i\varphi_i}$，
+15.17 的局部 $U$ 保持合法空间，
+$UH_{\rm loc}U^\dagger$ 的零态是 $U|\psi_+\rangle$；
+其局部向量变为
+$\sqrt{a_i}|0\rangle-e^{i\varphi_i}|1\rangle$。
+整体相位仍不影响父。
+没有该共轭时，局部零条件要求正实比 $\sqrt{a_i}$，
+故一般复相位目标并非 $H_{\rm loc}$ 的零态。证毕。
+

@@ -1,0 +1,83 @@
+**候签定理 28.1（最终非负时的全尾矩约束）。** 对这一原固定形状测试族，若存在 $R_0\ge1$ 使 $\mathcal W(R)\ge0$ 对所有实数 $R\ge R_0$ 成立，则
+
+$$
+\boxed{
+\int_{R_0}^\infty R^n\mathcal W(R)\,dR<\infty
+\qquad(n=0,1,2,\ldots).
+}
+$$
+
+因此，对任意实数 $M\ge0$、$c>0$ 与 $R_1\ge1$，存在实数 $R\ge R_1$ 满足
+
+$$
+\mathcal W(R)<cR^{-M},\qquad
+\liminf_{R\to\infty}R^M\mathcal W(R)\le0.
+$$
+
+后一结论不假定最终非负，也不声称某个测试的实际 Weil 值为负。
+
+证明。对 $z=\gamma+iy$、$\gamma\ge\gamma_*$、$|y|<1/2$，令
+
+$$
+I_z(s)=\frac1z\int_0^\infty
+ e^{-s(1+t/z)}\Phi(z+t)^2\,dt.
+$$
+
+它在 $\Re(s/z)>0$ 上全纯。令 $K=\phi*\phi$，则 $\widehat K=\Phi^2$、$\operatorname{supp}K=[-1,1]$。对实数 $s>1/2$，两种积分均可由 Fubini 精确计算为
+
+$$
+I_z(s)=\int_1^\infty e^{-sR}\Phi(Rz)^2\,dR
+=\int_{-1}^1K(u)\frac{e^{-(s+izu)}}{s+izu}\,du.
+$$
+
+左侧的水平射线积分使用 $\Re(s/z)>0$；中间的尺度积分使用 $\Re(s+izu)\ge s-1/2>0$。没有以未经验证的弧积分消失代替这份身份。
+
+置
+
+$$
+\Omega=\left\{s:\Re s>\frac{|\Im s|}{2\gamma_*}\right\},\qquad
+G(s)=2\sum_{\gamma>0}m_\rho p(z_\rho)I_{z_\rho}(s).
+$$
+
+在 $\Omega$ 内，
+
+$$
+\Re(s/z_\rho)
+=\frac{\gamma\Re s+y\Im s}{|z_\rho|^2}>0.
+$$
+
+水平射线 $z_\rho+t$ 始终处于 $|\Im w|<1/2$ 的固定条带，故 $\Phi(z_\rho+t)$ 在 $\gamma+t$ 上任意快速下降。这同时支付 $p$ 的六次增长与零点重数，证明 $G$ 在 $\Omega$ 的紧子集上正常收敛并全纯。它与初始 $L$ 相等，所以 $L$ 可全纯延拓穿过每个正实数点。
+
+进一步，对任意整数 $j\ge0$，
+
+$$
+I_z^{(j)}(s)=\frac{(-1)^j}{z^{j+1}}
+\int_0^\infty (z+t)^j e^{-s(1+t/z)}\Phi(z+t)^2\,dt.
+$$
+
+当 $s\ge0$ 为实数时，指数的模不超过一。取 $2N>j+1$，上述条带下降界给出
+
+$$
+|I_z^{(j)}(s)|\le C_{j,N}|z|^{-j-1}
+\int_0^\infty(1+\gamma+t)^{j-2N}\,dt
+\le C'_{j,N}(1+\gamma)^{-2N}.
+$$
+
+增大 $N$ 后可在所有 $s\ge0$ 上统一求和，故 $G^{(j)}(s)$ 在 $s\downarrow0$ 时具有有限右极限。这只给出端点的右侧光滑性，不主张 $G$ 在零点附近全纯。
+
+若 $q$ 最终非负，扣除紧初始区间后，
+
+$$
+L_0(s)=G(s)-\int_1^{R_0}e^{-sR}q(R)\,dR
+$$
+
+是非负尾部的初始 Laplace 变换。直接复用 Landau–Widder 的非负函数收敛横坐标定理：有限实收敛横坐标必为奇点。由于 $L_0$ 在每个正实数点附近均全纯，它的收敛横坐标不能为正，故定义积分对每个实数 $s>0$ 收敛。该标准定理在 Suzuki, arXiv:2209.12832v1, §3 中明确引用 Widder, *The Laplace Transform*, Chapter II, Theorem 5b；这里验证的是原 $f_R$ 的变换延拓，不把 Suzuki 的 screw-function 判据直接当成这一族的结论。
+
+于是
+
+$$
+(-1)^jL_0^{(j)}(s)=\int_{R_0}^\infty R^j e^{-sR}q(R)\,dR.
+$$
+
+令 $s\downarrow0$，左侧具有有限极限，右侧按非负性单调增加，得到全部 $q$ 尾矩有限。取 $j=n+3$ 即得 $\mathcal W$ 的陈述。若有最终下界 $\mathcal W(R)\ge cR^{-M}$，它本身给出最终非负，而任一整数 $n\ge M$ 的尾矩都会发散，矛盾。$\square$
+

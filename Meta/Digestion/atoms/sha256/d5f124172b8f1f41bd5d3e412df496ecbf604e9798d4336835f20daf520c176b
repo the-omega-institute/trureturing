@@ -1,0 +1,8 @@
+任何候选 Li–Clark moment 数据若来自实轴正谱，都必须同时满足：
+
+1. \(a=\tfrac12\) 的 Toeplitz 正性；
+2. 由式 (548.5) 产生的附近尺度 moments 仍保持 Toeplitz 正性；
+3. budget curve 满足 Stieltjes complete monotonicity；
+4. 多尺度 Loewner matrices 正半定；
+5. Crofoot block Gram 可完成。
+

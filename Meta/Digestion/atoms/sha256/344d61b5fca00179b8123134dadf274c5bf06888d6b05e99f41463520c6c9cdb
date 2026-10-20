@@ -1,0 +1,37 @@
+**定理 1226.1（小参数下的准确族内端点最优）。** 对任意紧区间 $K\subset(0,1)$，存在 $\kappa_K>0$，使每个 $\alpha\in K$、$0<\kappa<\kappa_K$ 下，第 1224 节的来源熵在 $0\le u\le\kappa$ 上只可能在端点取得最小值：
+
+$$
+\min_{0\le u\le\kappa}H_\alpha(w(u))
+=\min\{H_\alpha(p(\kappa)),H_\alpha(q(\kappa))\}.
+$$
+
+如果两端值不同，较低端是唯一最小点；如果相同，最小点恰为两端。
+
+**证明。** 记幂和 $S_\alpha(u)=\lambda^\alpha+(C+J)^\alpha+2J^\alpha+A^\alpha$。在 $0<u<\kappa$，三个尾部函数正且凹，因为
+
+$$
+A''=-\frac{1-\kappa}{2(1-u)^3},\qquad
+J''=-\frac{1-\kappa}{2(1+u)^3},\qquad
+(C+J)''=\frac{(1-\kappa)(u-5)}{2(1+u)^4}<0.
+$$
+
+对 $0<\alpha<1$，取幂保持凹性。还可以只用一个 $J$ 项取得定量负曲率：
+
+$$
+(J^\alpha)''
+=\alpha(\alpha-1)J^{\alpha-2}(J')^2+\alpha J^{\alpha-1}J''
+\le-c_K\kappa^{\alpha-2}.
+$$
+
+这里对 $\kappa\le1/4$、$u\in[0,\kappa]$，有 $J\le\kappa/2$，而 $J'=(1-\kappa)/(4(1+u)^2)$ 有一致正下界；$\alpha(1-\alpha)$ 在 $K$ 上也有正下界，因此可取与 $\alpha,u,\kappa$ 无关的 $c_K>0$。
+
+主分量 $\lambda^\alpha$ 在 $0\le\kappa,u\le1/4$、$\alpha\in K$ 的紧长方体上光滑且远离零，其二阶导数有统一上界 $C_K$。若 $\beta=\max K<1$，便有
+
+$$
+S_\alpha''(u)\le C_K-c_K\kappa^{\beta-2}<0
+$$
+
+对充分小 $\kappa$ 成立。幂和在闭区间连续，在开区间严格凹，故内部值严格高于两端值的线性插值，进而高于或等于两端较小值。$H_\alpha=\log S_\alpha/(1-\alpha)$ 是幂和的严格增函数，所以只有端点能最小化。证毕。
+
+准确结论来自这一项曲率估计；它比第 1225 节的首项比较多承担了排除内部最优的义务。
+

@@ -41,7 +41,7 @@ internal static class AtomContextCommand
         for (var ordinal = 0; ordinal < contexts.Length; ordinal++)
         {
             var context = contexts[ordinal];
-            writer.WriteLine($"OCCURRENCE index={ordinal + 1} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)}");
+            writer.WriteLine($"OCCURRENCE index={ordinal + 1} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)} source_sha256={context.SourceSha256}{GraphToken(context)}");
             WriteNeighbor(writer, "CURRENT", context.Current, null);
             if (context.Previous is { } previous) WriteText(writer, "PREVIOUS", previous.RawBytes);
             WriteText(writer, "CURRENT", context.Current.RawBytes);
@@ -50,6 +50,8 @@ internal static class AtomContextCommand
         }
         return writer.ToString();
     }
+
+    private static string GraphToken(DigestionAtomContext context) => context.GraphSha256 is null ? string.Empty : $" graph_sha256={context.GraphSha256}";
 
     private static string NeighborToken(string label,
         (string AtomId, string? LedgerState, ImmutableArray<byte> RawBytes)? neighbor, string? boundary) => neighbor is { } value
@@ -60,7 +62,7 @@ internal static class AtomContextCommand
     {
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         writer.WriteLine($"ATOM_CONTEXT atom_id={context.Target.AtomId} source_id={context.SourceId} "
-            + $"source_path={context.SourcePath} atomizer={context.Atomizer}");
+            + $"source_path={context.SourcePath} atomizer={context.Atomizer}{GraphToken(context)}");
         WriteNeighbor(writer, "PREVIOUS", context.Previous, context.PreviousBoundaryReason);
         WriteNeighbor(writer, "CURRENT", context.Current, null);
         WriteNeighbor(writer, "NEXT", context.Next, context.NextBoundaryReason);

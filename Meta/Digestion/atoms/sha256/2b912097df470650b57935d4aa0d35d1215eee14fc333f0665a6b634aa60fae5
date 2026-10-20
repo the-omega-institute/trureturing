@@ -1,0 +1,17 @@
+**更正 347.1（第79.1、80.1节的 Pauli 乘积符号）。** 按定义78.4的 Pauli 矩阵约定，第79.1节两处及第80.1节一处的 $XZ=iY$ 应改读为
+
+$$
+XZ=-iY,\qquad ZX=iY.
+\tag{347.1}
+$$
+
+证明。直接相乘得到
+
+$$
+XZ=\begin{pmatrix}0&-1\\1&0\end{pmatrix}
+=-i\begin{pmatrix}0&-i\\i&0\end{pmatrix}=-iY,
+\qquad ZX=-XZ.
+$$
+
+Pauli 基在复数域上线性无关，故 $XZ\notin V_{XZ}+iV_{XZ}$，其中 $V_{XZ}=\operatorname{span}_{\mathbb R}\{I,X,Z\}$。原两节关于预测闭合不蕴含乘法闭合的结论仍成立；更正的是乘积符号。证毕。
+

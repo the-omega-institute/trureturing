@@ -1,0 +1,74 @@
+## 113. FIB 上下文图上的外加反应—扩散、Turing 失稳与模式选择
+
+固定 FIB 词 \(W_j=w(T_j)\)，以其位置或合法上下文为顶点，另取有限无向加权图
+\[
+\Gamma_j=(V_j,E_j,\omega^{(j)}),\qquad
+(\mathcal L_jx)(i)=\sum_{k:\{i,k\}\in E_j}
+\omega^{(j)}_{ik}\bigl(x(i)-x(k)\bigr).
+\tag{113.1}
+\]
+FIB 只提供词序、标签和候选组合关系；边集、边权、空间嵌入和连续时间均为外加。设 \(\mathcal L_j\phi_{j,m}=\mu_{j,m}\phi_{j,m}\)，且 \(\mu_{j,0}=0\)。
+
+在每个顶点配置两种外加浓度，规定
+\[
+\frac{\mathrm d}{\mathrm dt}\binom{u_i}{v_i}
+=\gamma F(u_i,v_i)
+-\begin{pmatrix}d_u&0\\0&d_v\end{pmatrix}
+\binom{(\mathcal L_ju)_i}{(\mathcal L_jv)_i},
+\qquad d_u,d_v,\gamma>0,
+\tag{113.2}
+\]
+其中 \(F=(f,g)^{\mathsf T}\) 是 \(C^1\) 反应场。若 \(F(u_*,v_*)=0\)，记
+\[
+J=DF(u_*,v_*)=
+\begin{pmatrix}a&b\\c&d\end{pmatrix},
+\qquad
+P=ad-bc,\qquad S=ad_v+dd_u.
+\tag{113.3}
+\]
+对图谱模态 \(\phi_{j,m}\) 的线性块为
+\[
+B_{j,m}(\gamma)=\gamma J-\mu_{j,m}
+\begin{pmatrix}d_u&0\\0&d_v\end{pmatrix}.
+\tag{113.4}
+\]
+若 \(a+d<0\) 且 \(P>0\)，无扩散均匀平衡线性稳定；同时
+\[
+\operatorname{tr}B_{j,m}
+=\gamma(a+d)-\mu_{j,m}(d_u+d_v)<0,
+\]
+\[
+\det B_{j,m}
+=\gamma^2P-\gamma S\mu_{j,m}+d_ud_v\mu_{j,m}^2.
+\tag{113.5}
+\]
+因此有限图出现严格的线性 Turing 失稳，当且仅当某个 \(m\ge1\) 使 \(\det B_{j,m}<0\)。若
+\[
+S>0,\qquad S^2>4d_ud_vP,
+\]
+令
+\[
+\chi_\pm=\frac{S\pm\sqrt{S^2-4d_ud_vP}}{2d_ud_v},
+\qquad 0<\chi_-<\chi_+.
+\tag{113.6}
+\]
+则第 \(m\) 个模态的失稳条件等价于
+\[
+\chi_-<\frac{\mu_{j,m}}{\gamma}<\chi_+.
+\tag{113.7}
+\]
+连通图的首次非均匀失稳阈值为
+\[
+\gamma_{j,\mathrm{on}}=\frac{\mu_{j,1}}{\chi_+},
+\tag{113.8}
+\]
+而实际首先增长的图样由
+\[
+\operatorname*{arg\,max}_{m:\,\chi_-<\mu_{j,m}/\gamma<\chi_+}
+\max\operatorname{Re}\operatorname{spec}B_{j,m}
+\tag{113.9}
+\]
+决定。重特征值会使整个特征空间同时失稳；边权或边界改变 \(\mu_{j,m}\)，即可改变阈值和图样。
+
+若另加图列 \(j\to\infty\) 的谱收敛 \(\mu_{j,m}\to\kappa_m\) 及特征向量插值收敛，则远离带边界的固定模态继承同一稳定性判定，且 \(\gamma_{j,\mathrm{on}}\to\kappa_1/\chi_+\)。例如外加区间 Neumann 拉普拉斯给出 \(\kappa_m=(m\pi)^2\)，但这个连续桥不是 FIB 递归的结果。非线性饱和、噪声选模、斑图唯一性以及有向或非对称图上的复谱，均需另行处理；不能把 (113.7) 宣称为 FIB 的内生定律。
+

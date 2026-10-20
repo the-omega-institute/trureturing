@@ -1,0 +1,11 @@
+**定义 44.3（固定动力学下的 Green 响应）。** 令
+\(\Omega=\mathcal I_G(V)\) 为有限状态空间，\((P_t)_{t\ge0}\) 为保持 \(p_\theta\) 的 Markov 半群，生成元记为 \(\mathscr L\)。固定动力学，只改变初始 Gibbs 场。对 \(z>0\) 定义
+\[
+\mathscr G_z
+ =\int_0^\infty e^{-zt}P_t\,dt
+ =(zI-\mathscr L)^{-1}.
+\]
+对观测量 \(F\) 和场 \(h\)，定义
+\[
+\mathcal R_{F,h}(t)
+ =

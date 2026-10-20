@@ -1,0 +1,24 @@
+**定义 409.1（原始供应器与实际来源）。** 保留 §§384–385 的 $q=\varphi^{-2}$、$\beta_d=\log(1-(-q)^d)$、$e=\mu*\beta$ 与 $H_m=\sum_{n\le m}e_n$。实参数的经典 Mertens 函数为 $M(y)=\sum_{n\le y}\mu(n)$，故已有有限卷积身份给
+
+$$
+H_m=\sum_{d\le m}\beta_dM(m/d)\quad(m\in\mathbb N_{>0}).
+\tag{409.1}
+$$
+
+直接采用 Johnston–Leong–Tudzi，[arXiv:2408.04143v3，定理 A.1、式（A.5）](https://arxiv.org/html/2408.04143v3#Sx2.Thmtheorem1) 的原始界
+
+$$
+|M(y)|\le\frac{2.91890y}{(\log y)^2}\quad\text{对全部实数 }y>1.
+\tag{409.2}
+$$
+
+该论文已在 *Experimental Mathematics* 发表，出版标识为 [DOI:10.1080/10586458.2025.2483942](https://doi.org/10.1080/10586458.2025.2483942)。再采用 Lee–Leong，[arXiv:2208.06141v5，定理 1.1、式（10）](https://arxiv.org/html/2208.06141v5#S1.Thmtheorem1) 的原始界
+
+$$
+|M(y)|<33.56y\log y\exp\!\left(-\sqrt{\log y/5.56}\right)
+\quad\text{对全部实数 }y\ge\exp(4589.20).
+\tag{409.3}
+$$
+
+后一个输入采用版本日期为 2026-09-09 的预印本；这一供应器组合包含发表论文与预印本，不是仅由已发表输入构成的链。两个界的实参数域允许直接代入 $m/d$，不先取整并另损失一份对数预算。
+

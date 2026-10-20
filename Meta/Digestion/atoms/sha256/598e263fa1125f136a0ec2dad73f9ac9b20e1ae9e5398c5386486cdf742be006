@@ -1,0 +1,7 @@
+虽然 \(\lambda_+\) 在无限精度下已单射，但 \(\lambda_-\) 提供：
+
+* Galois 证书；
+* 稳定逆变换；
+* cut-and-project 窗口；
+* finite-resolution residual。
+

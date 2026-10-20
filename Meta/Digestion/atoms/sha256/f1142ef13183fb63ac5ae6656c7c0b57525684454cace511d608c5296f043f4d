@@ -1,0 +1,52 @@
+**命题 22.2（实际替换的节点与孔实现）。** 对每个 $u\in\mathcal T$，令 $t=\rho(u)$。对每个 $p\in\operatorname{Pos}(t)$，非根切口的新旧归属只由其直接父节点是否为扩张块 $E$ 决定：
+
+$$
+\boxed{K(u,p)=1\iff
+p=\varepsilon\ \text{或}\ \bigl(p\ne\varepsilon\ \text{且}\ t|_{p^-}\ne E\bigr).}
+\tag{RA.2204}
+$$
+
+具体地，存在以下不交节点分解；旧节点的嵌入就是同地址映射 $p\mapsto p$：
+
+$$
+\operatorname{Pos}(\rho(u))
+=\operatorname{Pos}(u)
+\sqcup\{rL:r\in\mathcal B(u)\}
+\sqcup\{rR:r\in\mathcal B(u)\}.
+\tag{RA.2205}
+$$
+
+对同一 $u$ 的每个旧切口 $p\in\operatorname{Pos}(u)$，子树及单孔上下文都按该地址对应，且对每个 $v\in\mathcal T$ 有
+
+$$
+\begin{gathered}
+(\rho(u))|_p=\rho(u|_p),\qquad
+C_{\rho(u),p}=\widehat\rho(C_{u,p}),\\
+\boxed{\rho(C_{u,p}[v])=C_{\rho(u),p}[\rho(v)].}
+\end{gathered}
+\tag{RA.2206}
+$$
+
+证明。先确定本次替换的像语法。令 $\mathcal R=\rho(\mathcal T)$。它恰是由下面三个产生式生成的最小集合；相应解析在像上唯一：
+
+$$
+\begin{gathered}
+\mathcal R::=\beta\mid E\mid\langle\mathcal R,\mathcal R\rangle,\qquad
+\alpha\notin\mathcal R,\\
+\delta(\beta)=\alpha,\quad \delta(E)=\beta,\quad
+\delta(\langle x,y\rangle)=\langle\delta(x),\delta(y)\rangle
+\quad(x,y\in\mathcal R),\\
+\delta(\rho(u))=u,\qquad \rho(\delta(t))=t\quad(t\in\mathcal R).
+\end{gathered}
+\tag{RA.2207}
+$$
+
+源树结构归纳将每个像放入该语法。语法不产生叶 $\alpha$，故特殊块 $E$ 的右孩子不在语法中，$E$ 不能同时按一般配对产生式解析；叶、特殊块和一般配对三种情形不交。$\delta$ 在一般配对处递归到严格更小的有限子树。语法归纳给出每个生成树的原像及 $\rho\delta=\operatorname{id}$，源树归纳给出 $\delta\rho=\operatorname{id}$。这证明像的准确性、唯一解析和 $\rho$ 的单射性；这里的解析只为具体节点论证提供支持。
+
+再对 $u$ 归纳。源 $\alpha$ 只有旧根，像为叶 $\beta$；源 $\beta$ 的根仍在原地址，像为 $E$，恰多出左右两个孩子。源为 $\langle x,y\rangle$ 时，保留根并分别给两子树的归纳分解加前缀 $L,R$，即得（RA.2205）。源叶没有后代，不同源叶地址互不为前缀，所以新增地址既不与旧地址相交，也不彼此混同。旧父子边及左右次序都保留；源 $\beta$ 的旧根由叶变为分支，故嵌入不声称保留标签或叶性。
+
+同一归纳在旧地址上给出子树等式。因此输出中每个 $E$ 出现的根恰对应一个源 $\beta$ 叶：源 $\alpha$ 的像是 $\beta$；源配对的像有两个 $\mathcal R$ 子树，右子树不可能为 $\alpha$；新增节点本身都是叶。于是 $E$ 的两个孩子恰为新增节点，旧非根节点的父节点必来自源配对且其像不等于 $E$。根总是旧节点，得到（RA.2204）。
+
+最后沿旧地址证明上下文等式。根孔两侧均为 $\square$；若 $u=\langle x,y\rangle$、$p=Lq$，则
+$\widehat\rho(C_{u,p})=\langle\widehat\rho(C_{x,q}),\rho(y)\rangle=C_{\rho(u),Lq}$，右孔同理。再按上下文构造归纳：孔处恒等，左右包裹处使用（RA.2201），得 $\rho(H[v])=\widehat\rho(H)[\rho(v)]$ 对每个 $v$ 成立；代入已对应的实际上下文即得（RA.2206）。它覆盖根、源 $\alpha$ 叶、源 $\beta$ 的旧根和任意深度的源内部节点。新增地址 $rL,rR$ 不在 $\operatorname{Pos}(u)$ 中，$C_{u,rL},C_{u,rR}$ 未定义；输出孔仍可合法填充。证毕。
+

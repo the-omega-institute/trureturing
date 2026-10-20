@@ -1,0 +1,42 @@
+**Definition 21.1 (Fixed pair, normalizers and stationary laws).** Let $d_0,d_1$ be fixed globally nonnegative real polynomials, $d_0\ne0$. For $0<q<1$ and nonnegative integer gap counts, put
+
+$$
+P_i(k)=\sum_{t=0}^{k-1}d_i(t),\quad Z_i(q)=\sum_{k\ge0}q^kP_i(k),\quad
+\gamma_{i,q}(k)=\frac{q^kP_i(k)}{Z_i(q)}.
+$$
+
+Assume $P_0(0)=\cdots=P_0(h-1)=0$, $A=P_0(h)>0$ for an integer $h\ge2$, and $a=d_1(0)>0$. For $\varepsilon>0$ let $d_\varepsilon=d_0+\varepsilon d_1$, with the analogous symbols $P_\varepsilon,Z_\varepsilon,\gamma_{\varepsilon,q}$. Write
+
+$$
+R=\frac{Aq^{h-1}}{\varepsilon a},\qquad
+\alpha_R=\frac1{1+R},\qquad \beta_R=\frac R{1+R},\qquad
+\bar\gamma_R=\alpha_R\delta_1+\beta_R\delta_h.
+\tag{21.1}
+$$
+
+The equilibrium renewal law associated with a gap law $\gamma$ is written $\nu_\gamma$. Its interval mean and tails are
+
+$$
+\mu_\gamma=\sum_{k\ge0}(k+1)\gamma(k),\qquad S_\gamma(a)=\sum_{k\ge a}\gamma(k).
+\tag{21.2}
+$$
+
+For a word with at least one tick, the stationary cylinder convention is
+
+$$
+\nu_\gamma(0^a1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^b)
+=\frac{S_\gamma(a)S_\gamma(b)}{\mu_\gamma}
+ \prod_{j=1}^{r-1}\gamma(g_j),
+\tag{21.3}
+$$
+
+and
+
+$$
+\nu_\gamma(0^N)=\frac1{\mu_\gamma}
+ \sum_{k\ge N}(k-N+1)\gamma(k).
+\tag{21.4}
+$$
+
+Here an interval with gap count $k$ has length $k+1$; the factor $k+1$ in (21.4) is the stationary length bias. All word indices are nonnegative integers, the empty product is one, and $N=0$ denotes the empty word. This is the finite-mean discrete renewal convention of [Marzen–Crutchfield, *Informational and Causal Architecture of Discrete-Time Renewal Processes*, arXiv:1408.6876v2, Section II.A and Appendix A](https://arxiv.org/pdf/1408.6876v2): their zero-count law $F(k)$ and tail $w(a)$ are $\gamma(k)$ and $S_\gamma(a)$ here, and their count mean plus one is the interval mean $\mu_\gamma$.
+

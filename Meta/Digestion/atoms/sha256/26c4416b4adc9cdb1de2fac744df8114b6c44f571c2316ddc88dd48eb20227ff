@@ -1,0 +1,15 @@
+**定义 399.1（比例轮廓与参数范围）。** 保留 §398 的同一实际 $R,A,D,\mu_0,c_{\mathrm{diag}}$。本节的符号转折结论使用参数范围 $A>0$、$D>A$ 与 $c_{\mathrm{diag}}<0$；估计公式只需 $D>A>0$。令
+
+$$
+\begin{aligned}
+\ell&=\log x,\qquad u=\log(s/x),\\
+\mathcal G_x(r)&=\mathcal V_x(r)+\mathcal Z_R(r),\\
+p(u)&=\frac A2u^2+(D-A)u+c_{\mathrm{diag}},\\
+C(U)&=\frac A6U^3+\frac D2U^2+(2D-A)U+D+\mu_0(2U+11),\\
+a_*&=\min\{A,D-A\}>0.
+\end{aligned}
+\tag{399.1}
+$$
+
+这里的 $u$ 保留同一实际 $s$ 与 $x$ 的比例；它不是独立选择两个来源的规模。沿用（398.5）的 $J_x(m)=\int_m^{m+1}s^{-2}\mathcal G_x(\log s)\,ds$。
+

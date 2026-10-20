@@ -1,0 +1,25 @@
+## 3. 对数奇性不再作为未核验的求积尾项
+
+实际 Gamma 像的分段表达包含 log(1-exp(-d))。对 0<t<=1、d>=t，指数切线不等式给出
+
+\[
+t e^{-t}\le1-e^{-t}\le1-e^{-d},
+\qquad
+\boxed{|\log(1-e^{-d})|\le1-\log t.}
+\tag{GR5}
+\]
+
+新 Lean `gamma_endpoint_log_bound` 从正性和对数单调性证明 (GR5)。没有在端点用一个任意有限值替代奇性。
+
+对残差中一个端点 strip，先在同一空间合并所有指数系数与非奇对数项。若该部分模长不超过 S，奇对数项系数模长和不超过 B，则 |R(t)|<=A-B log(t)，其中 A=S+B。设 strip 宽度为 0<delta<=1、D=-log(delta)，有
+
+\[
+\boxed{\int_0^\delta(A-B\log t)^2dt
+=\delta\{A^2+2AB(D+1)+B^2(D^2+2D+2)\}.}
+\tag{GR6}
+\]
+
+Lean `exponential_affine_square_tail` 先证明 exp(-x)(A+Bx)^2 在 (T,infinity) 可积及其精确积分；显式原函数为 -exp(-x)[(A+Bx)^2+2B(A+Bx)+2B^2]，无穷端极限由已有多项式乘指数衰减给出。`gamma_logarithmic_endpoint_tail` 再把 (GR5) 代入实际复系数表达 f(x)+log(1-exp(-distance(x)))g(x)，证明完整平方尾的可积性与上界。其输入只是可测系数、独立系数界和 distance(x)>=exp(-x)，没有提供组装后残差界或积分存在性。
+
+物理变量 t=exp(-x) 的变换给出 (GR6)，该变换在本节为纸面步骤。实际程序用符号二元组标记每个 anchor 为整数倍 a 与 log2，精确合并同一个 logarithm，不根据浮点端点相等分组。未能直接取正对数区间的项，必须通过 anchor 与方向 guard，确认其距离就是当前端点距离。全部 strip 的平方质量都有预算。
+

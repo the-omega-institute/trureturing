@@ -1,0 +1,40 @@
+**定理 1408.1（有限正预算过渡参数）。** 设正预算 $\eta_N\to0$，$\ell_N=o(D_N)$。令有限阶 $\alpha_N=1+\beta_N>1$ 满足
+
+$$
+t_N=\frac{\beta_ND_N}{\ell_N}\longrightarrow t\in(0,\infty).
+$$
+
+则
+
+$$
+F_{\alpha_N,N}(\kappa,\eta_N)/D_N
+\longrightarrow\Psi(t):=\min\{1,1/t\}.
+$$
+
+**证明。** $\beta_N=t_N\ell_N/D_N\to0$，但 $\beta_ND_N=t_N\ell_N\to\infty$。因 $c_N/\eta_N\to0$，有 $-\log A_N=\ell_N+O_\kappa(1)$。第 1402 节的总幂和至多为
+
+$$
+A_N^{1+\beta_N}+c_N^{\beta_N}.
+$$
+
+两个正项的负对数与较小者至多相差 $\log2$，所以来源熵除以 $D_N$ 的下极限至少为
+
+$$
+\lim_N\min\left\{
+\frac{(1+\beta_N)(\ell_N+O_\kappa(1))}{\beta_ND_N},1
+\right\}
+=\min\{1,1/t\}.
+$$
+
+常数误差消失是因为 $\beta_ND_N\to\infty$。另一方面，完美匹配给归一化上界一，一个前缀格来源的标签下界给
+
+$$
+F_{\alpha_N,N}/D_N
+\le\frac{1+\beta_N}{\beta_ND_N}[\ell_N+O_\kappa(1)]
+\longrightarrow1/t.
+$$
+
+取两种上界中较小者即得。证毕。
+
+这里的尺度是 $(\alpha-1)D_N/\log(1/\eta_N)$。第 1387 节无后验约束时的尺度则是 $N(\alpha-1)$。两项问题的可行来源族不同，不能仅因为都接近阶一就使用同一个过渡参数。
+

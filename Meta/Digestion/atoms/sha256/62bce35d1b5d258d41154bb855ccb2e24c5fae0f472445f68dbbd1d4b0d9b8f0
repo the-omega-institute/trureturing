@@ -1,0 +1,80 @@
+## 167. FIB 关系网络上的外加主动物质、定向运动与集体相变
+
+FIB 递归生成关系网络
+$$
+G_n=(V_n,E_n),
+$$
+但组合路径只描述可达次序。主动速度、空间嵌入、极性记忆、排斥、容量、对齐作用、噪声和物理时间均需外加。递归层数不是时间，组合边方向也不自动成为主动驱动力。
+
+若指定嵌入 \(\mathbf r:V_n\to\mathbb R^d\)，二维主动布朗粒子的外加模型可写为
+$$
+d\mathbf x_i=
+\left[
+v_0\mathbf p_i-\mu\nabla W_{G_n}(\mathbf x_i)
+-\mu\sum_{j\ne i}\nabla U(\mathbf x_i-\mathbf x_j)
++\mu\mathbf f_i^{\rm ext}
+\right]dt
++\sqrt{2D_t}\,d\mathbf B_i,
+$$
+$$
+d\theta_i=
+\left[
+\kappa\sum_{j\ne i}K_{ij}\sin(\theta_j-\theta_i)
++h_i\sin(\theta_i^{\rm ext}-\theta_i)
++\omega_i^{\rm wall}
+\right]dt
++\sqrt{2D_r}\,dB_i^\theta,
+\tag{167.1}
+$$
+其中 \(\mathbf p_i=(\cos\theta_i,\sin\theta_i)\)。持续长度 \(\ell_p=v_0/D_r\) 只在无弯道、阻塞和交汇修正时具有直接意义；网络中的净漂移和长期扩散率还取决于通道几何和节点规则。
+
+在抽象图上，也可令粒子占据节点 \(v\)，容量为 \(m_v\)，并用有向跃迁率
+$$
+r_i(v\to w)
+=
+\frac{c_{vw}}{a_v}\mathbf1_{\{n_w<m_w\}}
+\exp\left[
+-\frac{\beta\Delta U_i}{2}
++\frac{\chi}{2}\mathbf p_i\cdot
+\frac{\mathbf r_w-\mathbf r_v}{\ell_0}
++\frac{A_{vw}}2
+\right]
+\tag{167.2}
+$$
+描述排斥、主动偏置和非保守驱动。对齐权重、主动偏置、排斥能和角噪声必须分开登记；若改变更新顺序或冲突消解规则，得到的是不同动力学。
+
+极化序参量与网络边净流可定义为
+$$
+P_N=\left|\frac1N\sum_{i=1}^N\mathbf p_i\right|,
+\qquad
+J_{vw}=\frac{N_{v\to w}-N_{w\to v}}{NT}.
+\tag{167.3}
+$$
+极化、净输运和局部密度聚集是不同观测量；高极化不必产生宏观净流，局部流也不必产生全网极化。
+
+在均匀、各向同性、充分混合的近似下，连续极化场可写成
+$$
+\partial_t\mathbf P
+=a(\rho)\mathbf P-b|\mathbf P|^2\mathbf P
+-D_P\nabla^2\mathbf P+\boldsymbol\xi,
+\tag{167.4}
+$$
+其中 \(a(\rho)\) 的符号变化给出平均场极化失稳，\(b>0\) 控制饱和。FIB 网络上的实际线性模态应由外加耦合矩阵和边界谱替代连续 Laplacian；高层接口瓶颈可能使局部群先同步而全网仍无序。有限尺寸下 \(P_N>0\) 还可能只是涨落偏置，需比较 \(N_n\)、边界和时间窗口。
+
+主动物质相分离（MIPS）需要持续推进、排斥、密度依赖有效速度或等价的聚集机制。一个标量密度近似可写为
+$$
+\partial_t\rho
+=-\nabla\cdot\bigl[v(\rho)\rho\,\mathbf p\bigr]
++D_\rho\nabla^2\rho+\zeta,
+$$
+或在消去极性后得到有效通量
+$$
+\mathbf J
+=-D_{\rm eff}(\rho)\nabla\rho+\cdots .
+$$
+只有在 \(D_{\rm eff}\) 变号、有效化学势满足相容性以及噪声和边界条件合适时，才可讨论密度相分离。FIB 的节点度或递归层级不自动提供密度依赖速度。
+
+主动物质通常破坏详细平衡。若跃迁存在有向亲和力 \(A_{vw}\)，稳态边流可非零；若所有主动偏置、对齐和外场消失，才可能退化为与容量权重相容的被动平衡。因而 flocking、MIPS、堵塞和普通渗流需要分别报告极性、密度、接触和连通观测。
+
+本节结论是：FIB 提供主动物质的关系网络和路径约束；主动输运、极化、集体同步、MIPS 及有限尺寸相变由空间嵌入、驱动、相互作用、噪声、边界和更新规则决定。
+

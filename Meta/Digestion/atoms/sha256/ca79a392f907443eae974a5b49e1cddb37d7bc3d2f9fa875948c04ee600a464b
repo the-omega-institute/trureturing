@@ -1,0 +1,5 @@
+需要区分两种后验：
+
+1. $\Pi(\kappa\mid E)$：参数 $\kappa$ 的后验；
+2. $p_\kappa(s\mid E)$：固定 $\kappa$ 下状态 $s$ 的条件后验。
+

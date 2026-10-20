@@ -1,0 +1,46 @@
+## 202. FIB 网络上的外加聚变等离子体、磁约束、能量增益与输运统计
+
+固定 FIB 网格 \(G_j=(V_j,E_j)\)，把顶点解释为等离子体控制体，把边解释为外加场线或输运通道。体积、磁场、密度、温度、流速、组分和通道几何均需外加。对反应 \(a+b\to\) products，反应率为
+$$
+R_{ab,v}=\frac{n_{a,v}n_{b,v}}{1+\delta_{ab}}\langle\sigma v\rangle_{ab,v},
+\qquad
+\langle\sigma v\rangle=\iint f_af_b\sigma(v_{\rm rel})v_{\rm rel}\,{\rm d}v_a{\rm d}v_b .
+\tag{202.1}
+$$
+Maxwell 分布、截面、非热尾和燃料比都不是 FIB 数据。聚变功率 \(P_{\rm fus}=R_{ab}E_{\rm fus}\)，α 自加热还需外加沉积分数。
+
+对各物种粒子数 \(N_{s,v}\) 和热能 \(W_v\)，外加边通量、加热和损失给出
+$$
+\dot N_{s,v}=-\operatorname{div}_j\Gamma_{s,v}+S_{s,v}+R_{s,v}-L_{s,v},
+\tag{202.2}
+$$
+$$
+\dot W_v=-\operatorname{div}_jQ_v+P_{{\rm aux},v}+P_{\alpha,v}
+-P_{{\rm rad},v}-P_{{\rm cx},v}-P_{{\rm wall},v}.
+\tag{202.3}
+$$
+能量约束时间和等离子体增益可定义为
+$$
+\tau_E=\frac W{P_{\rm loss}},\qquad
+Q_{\rm plasma}=\frac{P_{\rm fus}}{P_{\rm aux}}.
+\tag{202.4}
+$$
+\(Q_{\rm plasma}>1\) 不等于工程净功率为正；磁体、泵浦和能量转换还需计入再循环功率。
+
+稳态能量约束下的广义 Lawson 条件形如
+$$
+f_\alpha\frac{n_an_b}{1+\delta_{ab}}\langle\sigma v\rangle E_{\rm fus}
+\ge \frac W{\tau_EV}+\frac{P_{\rm rad}+P_{\rm cx}+P_{\rm wall}}V .
+\tag{202.5}
+$$
+只有在组成、温度、能量系数和损失闭合固定后，才可化为 \(n\tau_E\) 或 \(nT\tau_E\) 判据。磁约束还需场拓扑、碰撞率、漂移、湍流谱、开放场线端损失和中性粒子再循环；FIB 边只有在与场线或磁面的映射被声明后才可离散这些通量。新经典、湍流和边缘输运的分解、杂质辐射系数和电荷交换损失均是外加模型。
+
+自加热与损失的温度导数决定局部燃烧稳定性：
+$$
+C_T\dot T=P_{\rm aux}+f_\alpha P_{\rm fus}(T,n)-P_{\rm loss}(T,n).
+\tag{202.6}
+$$
+正反馈可引起热失稳或跃迁，高辐射和开放边界可使系统受限。随机磁场、加热、杂质和网格族会给出 \(Q_{\rm plasma}\)、\(\tau_E\) 和点火阈值的分布；改变离散分辨率而不改变连续参数不应被误判为物理相变。中子计数主要约束 \(\int n_an_b\langle\sigma v\rangle\,{\rm d}V\)，不能单独分离密度、温度、燃料比和有效体积；总能量与辐射功率也不能在未知 \(\tau_E\) 时分离不同输运机制。
+
+因此 FIB 只提供磁约束通道、控制体和网格组合骨架。反应截面、等离子体状态、磁场拓扑、加热、杂质、辐射、中性粒子、边界和输运闭合均需外加；Lawson 条件、能量增益、燃烧稳定性以及湍流/新经典损失都是这些结构下的条件结论。同一 FIB 骨架可通过改变磁场、燃料、加热和边界从开放低增益状态切换到高约束或辐射受限状态，不存在由 FIB ATOM 递归单独决定的普适聚变定律。
+

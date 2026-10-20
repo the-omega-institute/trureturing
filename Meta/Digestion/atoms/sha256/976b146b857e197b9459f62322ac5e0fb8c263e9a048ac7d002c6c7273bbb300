@@ -1,0 +1,102 @@
+## 169. FIB 路径的聚合物构象统计、熵弹性与回转半径
+
+将一条 FIB 路径解释为聚合物链时，FIB 只提供步长词
+$$
+w_N=(w_1,\ldots,w_N)
+$$
+和相邻连接关系。物理构象由
+$$
+\mathbf r_i-\mathbf r_{i-1}=b_i\mathbf u_i,
+\qquad |\mathbf u_i|=1,
+\qquad b_i=b(w_i)
+\tag{169.1}
+$$
+给出；空间维数、键长映射、弯曲能、排斥、温度和边界均为外加。固定 Fibonacci 词的构象统计与允许词本身随机变化的退火统计也必须区分。
+
+一个可选的链能量为
+$$
+H_w=\sum_{i=1}^{N-1}\kappa_i(1-\mathbf u_i\cdot\mathbf u_{i+1})
++H_{\rm ev}+H_{\rm attr}+H_{\rm conf},
+\tag{169.2}
+$$
+其中各项分别描述弯曲、排斥、吸引和外部限制。固定 \(\mathbf r_0=0\)，在温度 \(T\) 和外力 \(\mathbf f\) 下，
+$$
+Z_N(\mathbf f\mid w_N)
+=\int d\Gamma_w\,
+e^{-\beta(H_w-\mathbf f\cdot\mathbf R)},
+\qquad
+\mathbf R=\sum_{i=1}^Nb_i\mathbf u_i.
+\tag{169.3}
+$$
+自由能和平均伸长为
+$$
+G_N(\mathbf f)=-k_BT\log Z_N(\mathbf f),
+\qquad
+\langle\mathbf R\rangle_{\mathbf f}
+=-\nabla_{\mathbf f}G_N.
+$$
+端距约束使用
+$$
+Z_N(\mathbf R\mid w_N)
+=\int d\Gamma_w\,
+\delta^{(d)}\!\left(\mathbf R-\sum_i b_i\mathbf u_i\right)e^{-\beta H_w}.
+\tag{169.4}
+$$
+构象熵必须相对于明确的测度和参考体积定义；它不是 \(\log\) FIB 词数的自动同义词。
+
+自由连接、各向同性且无相互作用时，令
+$$
+B_N=\sum_{i=1}^Nb_i^2.
+$$
+有精确关系
+$$
+\langle\mathbf R\rangle=0,\qquad
+\langle R^2\rangle=B_N.
+\tag{169.5}
+$$
+当 \(\max_i b_i^2/B_N\to0\) 时，中心区域近似高斯：
+$$
+p_N(\mathbf R)
+\simeq
+\left(\frac d{2\pi B_N}\right)^{d/2}
+\exp\!\left(-\frac{dR^2}{2B_N}\right).
+\tag{169.6}
+$$
+因而小端距的熵弹性自由能为
+$$
+A_N(\mathbf R)-A_N(0)
+\simeq\frac{dk_BT}{2B_N}R^2,
+$$
+弱力下
+$$
+\mathbf f\simeq\frac{dk_BT}{B_N}\mathbf R.
+\tag{169.7}
+$$
+接近完全拉直时，高斯公式失效；有限链的恒力系综和固定端距系综也不能混用。
+
+回转半径定义为
+$$
+R_g^2=\frac1{N+1}\sum_{i=0}^N|\mathbf r_i-\mathbf r_{\rm cm}|^2
+=\frac1{(N+1)^2}\sum_{0\le i<j\le N}|\mathbf r_i-\mathbf r_j|^2.
+$$
+自由连接链满足
+$$
+\left\langle|\mathbf r_j-\mathbf r_i|^2\right\rangle
+=\sum_{k=i+1}^jb_k^2,
+$$
+从而
+$$
+\left\langle R_g^2\right\rangle
+=\frac1{(N+1)^2}
+\sum_{k=1}^Nk(N+1-k)b_k^2.
+\tag{169.8}
+$$
+FIB 字母频率可以影响 \(b_i\) 的平均统计，但不单独决定自避链或半柔性链的标度指数。加入自避作用后，可能出现
+$$
+R_g\sim N^\nu,\qquad
+\nu=\nu(d)
+$$
+的普适标度；其维数、排斥、弯曲、链序相关和有限尺寸修正需由具体模型确定。标准 Fibonacci 词的低因子复杂度也不能推出聚合物构象熵为零，因为固定词仍可拥有连续或指数多的空间构象。
+
+本节结论是：FIB 提供聚合物键序列和连接骨架；配分函数、熵弹性、回转半径、自避标度和有限尺寸效应由键长、构象测度、温度及相互作用决定。
+

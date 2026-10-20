@@ -1,0 +1,6 @@
+**定理 166.4（一阶匹配下，稳定记录维数刻画全视界稳定性）。** 设任意三维 CPTP 族 $\mathcal F_r$ 满足式（166.2），不要求参数连续。以下三项等价：
+
+1. 对所有充分接近一的 $r<1$，$m(\mathcal F_r)=3$。
+2. $\sup_{N\ge0}d_{\rm ref}(\mathcal F_r^N,\mathcal T_r^N)\to0$。
+3. $W_r(\mathcal F_r)\to L$，其中 $L=(\sqrt3/4)e^{-\pi/(3\sqrt3)}$。
+

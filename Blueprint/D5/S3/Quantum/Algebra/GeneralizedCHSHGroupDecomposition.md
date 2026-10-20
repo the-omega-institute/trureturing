@@ -92,7 +92,21 @@ $$\forall H \in \operatorname{Type},\; [\operatorname{Group}\left(H\right)], \fo
 
 For a^n = 1, cyclicHom sends the additive residue of an integer j to a^j. It uses the additive universal map ZMod.lift and the multiplicative type conversion. The parenthesized proposition in the subtype constructor is its constructor proof field: zmultiplesHom sends the integer n to zero.
 
-**Definition 1.8 (The cyclic generator).**
+**Theorem 1.8 (Evaluation on an integer residue).**
+
+$$\forall H \in \operatorname{Type},\; [\operatorname{Group}\left(H\right)], \forall n \in \mathbb{N},\; \forall a \in H,\; \forall ha \in a^{n} = 1,\; \forall i \in \mathbb{Z},\; \operatorname{cyclicHom}\left(n, a, ha, \operatorname{ofAdd}\left((i: \operatorname{ZMod}\left(n\right))\right)\right) = a^{i}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.cyclicHom_int` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* D. Cui; A. Mehta; H. Mousavi; S. S. Nezhadi (2020). *A generalization of CHSH and the algebraic structure of optimal strategies*. DOI: [10.22331/q-2020-10-21-346](https://doi.org/10.22331/q-2020-10-21-346). URL: <https://arxiv.org/abs/1911.01593>.
+
+*Commentary.*
+
+For every group H, natural n, element a with a^n = 1 and integer i, cyclicHom n a ha sends ofAdd (i : ZMod n) to the integer power a^i.
+
+**Definition 1.9 (The cyclic generator).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{s}\left(n\right) = (\operatorname{ofAdd}\left(1\right), 1)$$
 
@@ -106,7 +120,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{s}\left(n\right) = (\operatorname{of
 
 The first component is 1 in ZMod (2*n), converted to multiplicative notation; the function component is constantly the identity.
 
-**Definition 1.9 (The independent involutions).**
+**Definition 1.10 (The independent involutions).**
 
 $$\forall n \in \mathbb{N},\; \forall i \in \operatorname{Fin}\left(n - 2\right),\; \operatorname{t}\left(n, i\right) = (1, \operatorname{Pi}.\operatorname{mulSingle}\left(i, \operatorname{ofAdd}\left(1\right)\right))$$
 
@@ -120,7 +134,7 @@ $$\forall n \in \mathbb{N},\; \forall i \in \operatorname{Fin}\left(n - 2\right)
 
 t n i has first component 1 and is 1 except for ofAdd 1 at i in its function component. The paper's one-based index is i.val+1.
 
-**Definition 1.10 (The homomorphism from the abelian factor).**
+**Definition 1.11 (The homomorphism from the abelian factor).**
 
 $$\forall H \in \operatorname{Type},\; [\operatorname{Group}\left(H\right)], \forall n \in \mathbb{N},\; \forall a \in H,\; \forall b \in \operatorname{Fin}\left(n - 2\right) \to H,\; \forall ha \in a^{2 \cdot n} = 1,\; \forall hb \in \left(\forall i \in \operatorname{Fin}\left(n - 2\right),\; b\left(i\right)^{2} = 1\right),\; \forall hc \in \left(\forall i \in \operatorname{Fin}\left(n - 2\right),\; \forall j \in \operatorname{Fin}\left(n - 2\right),\; \operatorname{Commute}\left(b\left(i\right), b\left(j\right)\right)\right),\; \forall hd \in \left(\forall i \in \operatorname{Fin}\left(n - 2\right),\; \operatorname{Commute}\left(a, b\left(i\right)\right)\right),\; \operatorname{liftL}\left(n, a, b, ha, hb, hc, hd\right) = \operatorname{MonoidHom}.\operatorname{noncommCoprod}\left(\operatorname{cyclicHom}\left(2 \cdot n, a, ha\right), \operatorname{MonoidHom}.\operatorname{noncommPiCoprod}\left(\operatorname{fun} i: \operatorname{Fin}\left(n - 2\right) \mapsto \operatorname{cyclicHom}\left(2, b\left(i\right), hb\left(i\right)\right), (\forall i \in \operatorname{Fin}\left(n - 2\right),\; \forall j \in \operatorname{Fin}\left(n - 2\right),\; i \ne j \Rightarrow \left(\forall x \in \operatorname{Multiplicative}\left(\operatorname{ZMod}\left(2\right)\right),\; \forall y \in \operatorname{Multiplicative}\left(\operatorname{ZMod}\left(2\right)\right),\; \operatorname{Commute}\left(\operatorname{cyclicHom}\left(2, b\left(i\right), hb\left(i\right)\right)\left(x\right), \operatorname{cyclicHom}\left(2, b\left(j\right), hb\left(j\right)\right)\left(y\right)\right)\right))\right), (\forall x \in \operatorname{Multiplicative}\left(\operatorname{ZMod}\left(2 \cdot n\right)\right),\; \forall y \in \operatorname{Fin}\left(n - 2\right) \to \operatorname{Multiplicative}\left(\operatorname{ZMod}\left(2\right)\right),\; \operatorname{Commute}\left(\operatorname{cyclicHom}\left(2 \cdot n, a, ha\right)\left(x\right), \operatorname{MonoidHom}.\operatorname{noncommPiCoprod}\left(\operatorname{fun} i: \operatorname{Fin}\left(n - 2\right) \mapsto \operatorname{cyclicHom}\left(2, b\left(i\right), hb\left(i\right)\right), (\forall i \in \operatorname{Fin}\left(n - 2\right),\; \forall j \in \operatorname{Fin}\left(n - 2\right),\; i \ne j \Rightarrow \left(\forall x \in \operatorname{Multiplicative}\left(\operatorname{ZMod}\left(2\right)\right),\; \forall y \in \operatorname{Multiplicative}\left(\operatorname{ZMod}\left(2\right)\right),\; \operatorname{Commute}\left(\operatorname{cyclicHom}\left(2, b\left(i\right), hb\left(i\right)\right)\left(x\right), \operatorname{cyclicHom}\left(2, b\left(j\right), hb\left(j\right)\right)\left(y\right)\right)\right))\right)\left(y\right)\right))\right)$$
 
@@ -134,7 +148,7 @@ $$\forall H \in \operatorname{Type},\; [\operatorname{Group}\left(H\right)], \fo
 
 The images a and b i satisfy a^(2*n) = 1, (b i)^2 = 1 and commute pairwise. noncommPiCoprod forms the map from the involution factors and noncommCoprod joins it to the cyclic factor. The parenthesized propositions display the full proof arguments: images from distinct involution factors commute, and each cyclic-factor image commutes with each image of the involution product.
 
-**Definition 1.11 (The product of independent involutions).**
+**Definition 1.12 (The product of independent involutions).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{ts}\left(n\right) = \prod_{i\in \operatorname{Fin}\left(n - 2\right)} \operatorname{t}\left(n, i\right)$$
 
@@ -148,7 +162,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{ts}\left(n\right) = \prod_{i\in \ope
 
 ts multiplies all independent involutions over Fin (n-2); the product is 1 when n = 2.
 
-**Definition 1.12 (The dependent last involution).**
+**Definition 1.13 (The dependent last involution).**
 
 $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{u}\left(n, k\right) = \operatorname{if} (1 \le k) \land (k \le n - 2) \operatorname{then} \operatorname{t}\left(n, \langle k - 1, (k - 1 < n - 2) \rangle\right) \operatorname{else} \operatorname{if} k = n - 1 \operatorname{then} \operatorname{s}\left(n\right)^{n} \cdot \operatorname{ts}\left(n\right) \operatorname{else} 1$$
 
@@ -162,7 +176,7 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{u}\left(
 
 For 1 <= k <= n-2, u n k is t n at the finite index k-1. At k = n-1 outside that interval it is s n raised to n times ts n; at all other indices it is 1. The parenthesized proposition k-1 < n-2 is the Fin constructor proof field under the first branch's condition. This definition also fixes the values for n below two.
 
-**Definition 1.13 (The cyclic orbit coordinates).**
+**Definition 1.14 (The cyclic orbit coordinates).**
 
 $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{e}\left(n, k\right) = \operatorname{s}\left(n\right) \cdot \operatorname{u}\left(n, k\right)$$
 
@@ -176,7 +190,7 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{e}\left(
 
 e n k is s n times the k-th extended involution. For n at least two, e n 0 = e n n = s n.
 
-**Definition 1.14 (One cyclic step).**
+**Definition 1.15 (One cyclic step).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{step}\left(n\right) = \operatorname{liftL}\left(n, \operatorname{e}\left(n, 1\right), \operatorname{fun} i: \operatorname{Fin}\left(n - 2\right) \mapsto \operatorname{e}\left(n, \operatorname{val}\left(i\right) + 2\right) \cdot \operatorname{e}\left(n, 1\right)^{-1}, (\operatorname{e}\left(n, 1\right)^{2 \cdot n} = 1), (\forall i \in \operatorname{Fin}\left(n - 2\right),\; \left(\operatorname{e}\left(n, \operatorname{val}\left(i\right) + 2\right) \cdot \operatorname{e}\left(n, 1\right)^{-1}\right)^{2} = 1), (\forall i \in \operatorname{Fin}\left(n - 2\right),\; \forall j \in \operatorname{Fin}\left(n - 2\right),\; \operatorname{Commute}\left(\operatorname{e}\left(n, \operatorname{val}\left(i\right) + 2\right) \cdot \operatorname{e}\left(n, 1\right)^{-1}, \operatorname{e}\left(n, \operatorname{val}\left(j\right) + 2\right) \cdot \operatorname{e}\left(n, 1\right)^{-1}\right)), (\forall i \in \operatorname{Fin}\left(n - 2\right),\; \operatorname{Commute}\left(\operatorname{e}\left(n, 1\right), \operatorname{e}\left(n, \operatorname{val}\left(i\right) + 2\right) \cdot \operatorname{e}\left(n, 1\right)^{-1}\right))\right)$$
 
@@ -190,7 +204,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{step}\left(n\right) = \operatorname{
 
 step sends s to e n 1 and each t n i to e n (i.val+2) times the inverse of e n 1. Its four parenthesized proof arguments assert order dividing 2*n for the first image, square one for each involution image, pairwise commutation of those images, and their commutation with the first image.
 
-**Definition 1.15 (The cyclic automorphism).**
+**Definition 1.16 (The cyclic automorphism).**
 
 $$\forall n \in \mathbb{N},\; \forall hn \in 2 \le n,\; \operatorname{stepAut}\left(n, hn\right) = \operatorname{MulEquiv}.\operatorname{mk}\left(\operatorname{Equiv}.\operatorname{mk}\left(\operatorname{step}\left(n\right), \operatorname{step}\left(n\right)^{[n - 1]}, (\forall x \in \operatorname{L}\left(n\right),\; \left(\operatorname{step}\left(n\right)^{[n - 1]}\right)\left(\operatorname{step}\left(n\right)\left(x\right)\right) = x), (\forall x \in \operatorname{L}\left(n\right),\; \operatorname{step}\left(n\right)\left(\left(\operatorname{step}\left(n\right)^{[n - 1]}\right)\left(x\right)\right) = x)\right), (\forall x \in \operatorname{L}\left(n\right),\; \forall y \in \operatorname{L}\left(n\right),\; \operatorname{step}\left(n\right)\left(x \cdot y\right) = \operatorname{step}\left(n\right)\left(x\right) \cdot \operatorname{step}\left(n\right)\left(y\right))\right)$$
 
@@ -204,7 +218,7 @@ $$\forall n \in \mathbb{N},\; \forall hn \in 2 \le n,\; \operatorname{stepAut}\l
 
 For n at least two, step iterated n times is the identity on L n. stepAut has forward function step n and inverse function the (n-1)-fold iterate of step n. The parenthesized propositions are constructor proof fields: the two Equiv.mk fields assert the inverse identities for every x in L n, and the MulEquiv.mk field asserts preservation of multiplication for every x and y in L n.
 
-**Definition 1.16 (The action of C_n).**
+**Definition 1.17 (The action of C_n).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{alpha}\left(n\right) = \operatorname{if} hn: 2 \le n \operatorname{then} \operatorname{cyclicHom}\left(n, \operatorname{stepAut}\left(n, hn\right), (\operatorname{stepAut}\left(n, hn\right)^{n} = 1)\right) \operatorname{else} 1$$
 
@@ -218,9 +232,9 @@ $$\forall n \in \mathbb{N},\; \operatorname{alpha}\left(n\right) = \operatorname
 
 For n at least two, alpha maps ofAdd 1 to stepAut n. Thus alpha(s) = s times u n 1 and alpha(t n i) = u n (i.val+2) times u n 1. The dependent last involution gives the wrap-around. The parenthesized proof argument asserts that stepAut n hn raised to n is the identity automorphism under the branch hypothesis hn. For n below two, alpha is the constant identity homomorphism.
 
-**Definition 1.17 (The uniform decomposition).**
+**Definition 1.18 (The uniform decomposition).**
 
-$$\operatorname{claim} \Leftrightarrow \left(\forall n \in \mathbb{N},\; 2 \le n \Rightarrow \operatorname{Nonempty}\left(\operatorname{MulEquiv}\left(\operatorname{G}\left(n\right), \operatorname{SemidirectProduct}\left(\operatorname{L}\left(n\right), \operatorname{Multiplicative}\left(\operatorname{ZMod}\left(n\right)\right), \operatorname{alpha}\left(n\right)\right)\right)\right)\right)$$
+$$\operatorname{claim} \Leftrightarrow (\forall n \in \mathbb{N},\; 2 \le n \Rightarrow \operatorname{Nonempty}\left(\operatorname{MulEquiv}\left(\operatorname{G}\left(n\right), \operatorname{SemidirectProduct}\left(\operatorname{L}\left(n\right), \operatorname{Multiplicative}\left(\operatorname{ZMod}\left(n\right)\right), \operatorname{alpha}\left(n\right)\right)\right)\right))$$
 
 *Formalization.* `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.claim` (`✓ std3`).
 
@@ -232,9 +246,9 @@ $$\operatorname{claim} \Leftrightarrow \left(\forall n \in \mathbb{N},\; 2 \le n
 
 Section 1.4 (Further work), item 2, printed p. 7: "In Section 5, we give efficient explicit presentations for G_n and its multiplication table. Can we go further and characterize these groups in terms of direct and semidirect products of small well-known groups? The first few cases are as follows" The encoding answers this question for every natural n >= 2 by an actual multiplicative equivalence. C_m is Multiplicative (ZMod m); the elementary abelian factor uses Fin (n-2), and alpha is the displayed action.
 
-**Theorem 1.18 (The decomposition theorem).**
+**Theorem 1.19 (The decomposition theorem).**
 
-$$\operatorname{claim}$$
+$$\forall n \in \mathbb{N},\; 2 \le n \Rightarrow \operatorname{Nonempty}\left(\operatorname{MulEquiv}\left(\operatorname{G}\left(n\right), \operatorname{SemidirectProduct}\left(\operatorname{L}\left(n\right), \operatorname{Multiplicative}\left(\operatorname{ZMod}\left(n\right)\right), \operatorname{alpha}\left(n\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.result` (`✓ std3`). ∎
 
@@ -260,6 +274,7 @@ The forward homomorphism sends P0 to inr(ofAdd 1), P1 to inl(s) times inr(ofAdd 
 - Truth anchor: `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.alpha`
 - Truth anchor: `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.claim`
 - Truth anchor: `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.cyclicHom`
+- Truth anchor: `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.cyclicHom_int`
 - Truth anchor: `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.e`
 - Truth anchor: `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.liftL`
 - Truth anchor: `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.rels`

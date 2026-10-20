@@ -4,7 +4,55 @@
 
 The polygonal coupling model uses real symmetric circulant matrices with zero diagonal. Diagonal phase shifts act before and after the Hamiltonian evolution.
 
-**Definition 1.1 (The Fourier matrix).**
+**Definition 1.1 (The normalized Fourier transform on ZMod).**
+
+$$\forall N \in \mathbb{N},\; [\operatorname{NeZero}\left(N\right)], \forall j \in \operatorname{ZMod}\left(N\right),\; \forall k \in \operatorname{ZMod}\left(N\right),\; \operatorname{transform}\left(N, j, k\right) = \frac{\operatorname{ZMod}.\operatorname{stdAddChar}\left(-((j) \cdot (k))\right)}{\operatorname{Complex}.\operatorname{ofReal}\left(\operatorname{Real}.\operatorname{sqrt}\left((N : \mathbb{R})\right)\right)}$$
+
+*Formalization.* `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.transform` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonzero modulus, each matrix entry is the standard additive character of the negative product of its two residue indices, divided by the square root of the modulus.
+
+**Definition 1.2 (The discrete Fourier eigenvalue).**
+
+$$\forall N \in \mathbb{N},\; [\operatorname{NeZero}\left(N\right)], \forall b \in \operatorname{ZMod}\left(N\right) \to \mathbb{C},\; \forall k \in \operatorname{ZMod}\left(N\right),\; \operatorname{spectralValue}\left(N, b, k\right) = \operatorname{ZMod}.\operatorname{dft}\left(b, k\right)$$
+
+*Formalization.* `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.spectralValue` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The eigenvalue at a residue is the discrete Fourier transform of the circulant's first column at that residue.
+
+**Theorem 1.3 (Unitarity of the normalized Fourier transform).**
+
+$$\forall N \in \mathbb{N},\; [\operatorname{NeZero}\left(N\right)], (\operatorname{transform}\left(N\right)) \cdot (\operatorname{Matrix}.\operatorname{conjTranspose}\left(\operatorname{transform}\left(N\right)\right)) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.transform_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Multiplying the Fourier transform by its conjugate transpose gives the identity matrix.
+
+**Theorem 1.4 (Diagonalization of a circulant).**
+
+$$\forall N \in \mathbb{N},\; [\operatorname{NeZero}\left(N\right)], \forall b \in \operatorname{ZMod}\left(N\right) \to \mathbb{C},\; (\operatorname{transform}\left(N\right)) \cdot (\operatorname{Matrix}.\operatorname{circulant}\left(b\right)) = (\operatorname{Matrix}.\operatorname{diagonal}\left(\operatorname{spectralValue}\left(N, b\right)\right)) \cdot (\operatorname{transform}\left(N\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.circulant_spectral` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The normalized Fourier transform intertwines a circulant with the diagonal matrix of its discrete Fourier eigenvalues.
+
+**Definition 1.5 (The Fourier matrix).**
 
 $$\forall N \in \mathbb{N},\; \forall j \in \operatorname{Fin}\left(N\right),\; \forall k \in \operatorname{Fin}\left(N\right),\; (\operatorname{fourier}\left(N\right))_{j, k} = \frac{\operatorname{exp}\left(\frac{-(((((2) \cdot (\pi)) \cdot (i)) \cdot (j)) \cdot (k))}{N}\right)}{\operatorname{sqrt}\left(N\right)}$$
 
@@ -16,7 +64,7 @@ $$\forall N \in \mathbb{N},\; \forall j \in \operatorname{Fin}\left(N\right),\; 
 
 The indices are the residues represented by 0 through N - 1. The Fourier matrix uses the negative exponential convention and the normalization by the square root of N.
 
-**Definition 1.2 (Diagonal phase shifts).**
+**Definition 1.6 (Diagonal phase shifts).**
 
 $$\forall N \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \mathbb{C}\right),\; \operatorname{IsUnimodularDiagonal}\left(Phi\right) \Leftrightarrow (\exists z \in (\operatorname{Fin}\left(N\right) \to \mathbb{C}),\; (\forall x \in \operatorname{Fin}\left(N\right),\; \operatorname{norm}\left(z\left(x\right)\right) = 1) \land (Phi = \operatorname{diagonal}\left(z\right)))$$
 
@@ -28,7 +76,7 @@ $$\forall N \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operat
 
 A diagonal phase matrix has an entry of modulus one at every index.
 
-**Definition 1.3 (Polygonal coupling matrices).**
+**Definition 1.7 (Polygonal coupling matrices).**
 
 $$\forall N \in \mathbb{N},\; (\neg (N = 0)) \Rightarrow (\forall C \in \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \mathbb{R}\right),\; \operatorname{IsPolygonalCoupling}\left(C\right) \Leftrightarrow (\exists c \in (\operatorname{Fin}\left(N\right) \to \mathbb{R}),\; (c\left(0\right) = 0) \land ((\forall l \in \operatorname{Fin}\left(N\right),\; c\left(-(l)\right) = c\left(l\right)) \land (\forall i \in \operatorname{Fin}\left(N\right),\; \forall j \in \operatorname{Fin}\left(N\right),\; (C)_{i, j} = c\left((j) - (i)\right)))))$$
 
@@ -40,7 +88,7 @@ $$\forall N \in \mathbb{N},\; (\neg (N = 0)) \Rightarrow (\forall C \in \operato
 
 The coupling between i and j depends on j - i modulo N. Reversing this residue preserves the coupling, and the zero residue has zero coupling.
 
-**Definition 1.4 (The polygonal Fourier question).**
+**Definition 1.8 (The polygonal Fourier question).**
 
 $$claim \Leftrightarrow (\forall N \in \mathbb{N},\; (\neg (N = 0)) \Rightarrow (\exists C \in \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \mathbb{R}\right),\; (\operatorname{IsPolygonalCoupling}\left(C\right)) \land ((\forall i \in \operatorname{Fin}\left(N\right),\; \forall j \in \operatorname{Fin}\left(N\right),\; (\neg (i = j)) \Rightarrow (0 < (C)_{i, j})) \land (\exists Phiout \in \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \mathbb{C}\right),\; \exists Phiin \in \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \mathbb{C}\right),\; (\operatorname{IsUnimodularDiagonal}\left(Phiout\right)) \land ((\operatorname{IsUnimodularDiagonal}\left(Phiin\right)) \land (((Phiout) \cdot (\operatorname{hamiltonianPropagator}\left(\operatorname{map}\left(C, \operatorname{ofReal}\right), 1\right))) \cdot (Phiin) = \operatorname{fourier}\left(N\right)))))))$$
 
@@ -52,7 +100,7 @@ $$claim \Leftrightarrow (\forall N \in \mathbb{N},\; (\neg (N = 0)) \Rightarrow 
 
 For every positive dimension, the question asks for strictly positive off-diagonal couplings and two diagonal phase matrices whose product with the propagator at time one equals the Fourier matrix exactly.
 
-**Theorem 1.5 (Positive couplings in every dimension).**
+**Theorem 1.9 (Positive couplings in every dimension).**
 
 $$\forall N \in \mathbb{N},\; (\neg (N = 0)) \Rightarrow (\exists C \in \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \mathbb{R}\right),\; (\operatorname{IsPolygonalCoupling}\left(C\right)) \land ((\forall i \in \operatorname{Fin}\left(N\right),\; \forall j \in \operatorname{Fin}\left(N\right),\; (\neg (i = j)) \Rightarrow (0 < (C)_{i, j})) \land (\exists Phiout \in \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \mathbb{C}\right),\; \exists Phiin \in \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \mathbb{C}\right),\; (\operatorname{IsUnimodularDiagonal}\left(Phiout\right)) \land ((\operatorname{IsUnimodularDiagonal}\left(Phiin\right)) \land (((Phiout) \cdot (\operatorname{hamiltonianPropagator}\left(\operatorname{map}\left(C, \operatorname{ofReal}\right), 1\right))) \cdot (Phiin) = \operatorname{fourier}\left(N\right))))))$$
 
@@ -74,8 +122,12 @@ A periodic quadratic phase on the residues factors a symmetric circulant unitary
 
 - Truth anchor: `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.IsPolygonalCoupling`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.IsUnimodularDiagonal`
+- Truth anchor: `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.circulant_spectral`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.claim`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.fourier`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.result`
+- Truth anchor: `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.spectralValue`
+- Truth anchor: `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.transform`
+- Truth anchor: `D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.transform_unitary`
 - Dependency: [D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow](ProjectionProbabilityFlow.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity](../QuantumChannels/TomiyamaDiagonalKPositivity.md)

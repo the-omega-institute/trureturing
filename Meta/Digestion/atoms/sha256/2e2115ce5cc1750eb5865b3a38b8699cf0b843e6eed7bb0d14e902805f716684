@@ -1,0 +1,6 @@
+若要让矩阵秩等于总零点重数，应使用：
+
+* 完整 inverse Blaschke impulse；
+* confluent derivative samples；
+* 或 reproducing-kernel jets。
+

@@ -1,0 +1,72 @@
+## 5. 正交投影给出有序的有限秩修正
+
+为获得正半定余量，在加权 Hilbert 空间
+
+\[
+\mathcal H_T=L^2((T,\infty),w_L(t)dt)
+\]
+
+中定义
+
+\[
+h_k(t)=\frac{\sigma_k}{1-(\rho k/t)^2},
+\qquad Vv=\sum_kv_kh_k.
+\]
+
+此时 `E_T=V^*V`。令 `Pi_m` 是到
+
+\[
+\operatorname{span}\{1,t^{-2},\ldots,t^{-2(m-1)}\}
+\]
+
+的正交投影，并定义
+
+\[
+\boxed{E^{\mathrm{opt}}_{T,m}=V^*\Pi_mV.}
+\]
+
+这个修正由 Gamma 核、有限带宽和明确矩空间独立构造，不使用未知最低模态。其矩阵可直接写为
+
+\[
+E^{\mathrm{opt}}_{T,m}=C^*M^{-1}C,
+\]
+
+\[
+M_{ij}=\int_T^\infty w_L(t)t^{-2(i+j)}dt,
+\qquad C_{ik}=\int_T^\infty w_L(t)t^{-2i}h_k(t)dt.
+\]
+
+对 `m>0`，`M` 正定：非零的 `t^{-2}` 多项式不可能在一个区间上恒零，而权密度在离散的正弦零点以外严格为正。对 `m=0` 直接令修正为零，无须求逆。
+
+投影的最小二乘性质给出
+
+\[
+\|(1-\Pi_m)Vv\|_{\mathcal H_T}^2
+\le\|R_v-P_{m,v}\|_{\mathcal H_T}^2.
+\]
+
+结合精确几何余项，得到本轮较强的纸面定理：
+
+\[
+\boxed{
+0\preceq E_T-E^{\mathrm{opt}}_{T,m}
+=V^*(1-\Pi_m)V\preceq\kappa_mI,
+\qquad \operatorname{rank}E^{\mathrm{opt}}_{T,m}\le m,
+}
+\]
+
+其中
+
+\[
+\boxed{
+\kappa_m=
+\frac{2\rho(2N+1)}{\pi^2}
+\frac{\theta^{4m}}{(1-\theta^2)^2T}
+\left(\frac{\log T-8/5}{4m+1}+\frac1{(4m+1)^2}\right).
+}
+\]
+
+证明中先平方余项，使幂次从 `theta^(2m)` 改善到 `theta^(4m)`，再使用 `sin^2<=1` 和 Gamma 包络积分。正余量来自正交投影恒等式，绝不能从直接 Taylor Gram 近似擅自推断。
+
+该定理是本轮纸面证明，尚未经 Lean 验证。实际数值实现还需对 `M`、`C` 的积分以及线性求解做区间控制。使用缩放基 `(T/t)^(2j)` 可以避免部分幂次尺度问题，但它不自动提供良好的矩矩阵条件数。
+

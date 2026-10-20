@@ -7,6 +7,8 @@
    digest: Positive polygonal couplings realize every discrete Fourier transform. -/
 
 /-
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19204.
+
 admission_basis: open-problem-resolution (#13954; Proved).
 utility: none: all statements are uniform analytical identities or constructions in N.
 The auxiliary declarations below are consumed by result.
@@ -165,10 +167,10 @@ private lemma chirp_sub (N : ℕ) [NeZero N] (j k : ZMod N) :
   push_cast -congrConsts
   ring
 
-private def transform (N : ℕ) [NeZero N] : Matrix (ZMod N) (ZMod N) ℂ :=
+def transform (N : ℕ) [NeZero N] : Matrix (ZMod N) (ZMod N) ℂ :=
   fun j k => ZMod.stdAddChar (-(j * k)) / Real.sqrt N
 
-private lemma transform_unitary (N : ℕ) [NeZero N] :
+lemma transform_unitary (N : ℕ) [NeZero N] :
     transform N * (transform N)ᴴ = 1 := by
   classical
   let e := (ZMod.finEquiv N).toEquiv
@@ -226,10 +228,10 @@ private lemma chirp_factorization (N : ℕ) [NeZero N] :
   rw [chirp_sub]
   ring
 
-private def spectralValue (N : ℕ) [NeZero N] (b : ZMod N → ℂ) (k : ZMod N) : ℂ :=
+def spectralValue (N : ℕ) [NeZero N] (b : ZMod N → ℂ) (k : ZMod N) : ℂ :=
   ZMod.dft b k
 
-private lemma circulant_spectral (N : ℕ) [NeZero N] (b : ZMod N → ℂ) :
+lemma circulant_spectral (N : ℕ) [NeZero N] (b : ZMod N → ℂ) :
     transform N * Matrix.circulant b = Matrix.diagonal (spectralValue N b) * transform N := by
   ext i k
   rw [Matrix.mul_apply, Matrix.diagonal_mul]

@@ -1,0 +1,24 @@
+### 定理 373.2（Hellinger 对二元区分的上下界）
+
+在有限结果集上，有
+
+$$
+\boxed{
+\mathsf H^2(P,Q)
+\le
+\mathsf{TV}(P,Q)
+\le
+\sqrt2\,\mathsf H(P,Q).
+}
+$$
+
+因此
+
+$$
+\frac12(1+\mathsf H^2(P,Q))
+\le
+\mathsf P_{\mathrm{succ}}(P,Q)
+\le
+\frac12(1+\sqrt2\,\mathsf H(P,Q)).
+$$
+

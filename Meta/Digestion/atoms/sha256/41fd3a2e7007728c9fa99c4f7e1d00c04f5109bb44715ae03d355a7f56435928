@@ -1,0 +1,45 @@
+**定理 1130.1（余量的有界密度）。** 在第 1129 节条件下，写真实最优表示为
+
+$$
+P_{N,\varepsilon}=(1-\delta)q_m+\delta R,
+\qquad M=\frac\delta{1-\delta}.
+$$
+
+则存在 $\eta_N=O(N^2\delta)\to0$，使
+
+$$
+2^N R(x)\le4+2\eta_N\quad\text{对所有 }x,
+\qquad H(R)\ge N\log2-\log(4+2\eta_N).
+$$
+
+**证明。** 零的一阶目标矩给出 $|m_i|\le M$。每个非空真子集 $S$ 的余量矩为 $-(1-\delta)\prod_{i\in S}m_i/\delta$。所以所有至少二阶的真子集系数绝对值之和不超过
+
+$$
+\eta_N=\frac{1-\delta}{\delta}
+\left[(1+M)^N-1-NM-M^N\right].
+$$
+
+二项式的二阶余量界给括号不超过 $\binom N2M^2(1+M)^{N-2}$。因 $\delta=O(\varepsilon)$ 且 $\varepsilon$ 指数衰减，$N\delta\to0$，从而 $\eta_N=O(N^2\delta)\to0$。
+
+令 $b_i=\mathbb E_RX_i$、$t=\mathbb E_R\prod_iX_i$。字符反演将相对于公平律的密度写成
+
+$$
+2^N R(x)=1+\sum_i b_ix_i+t\prod_i x_i+e(x),\qquad |e(x)|\le\eta_N.
+$$
+
+选每个 $x_i$ 使 $b_ix_i=-|b_i|$，零系数的符号任取。由 $R(x)\ge0$ 得
+
+$$
+\sum_i|b_i|\le1+|t|+\eta_N\le2+\eta_N.
+$$
+
+再代回任意点，得到密度上界 $4+2\eta_N$。于是相对于公平律 $U_N$ 的散度满足
+
+$$
+D(R\Vert U_N)=\sum_xR(x)\log(2^NR(x))\le\log(4+2\eta_N).
+$$
+
+零概率项按通常约定为零。熵与均匀散度恒等式 $D(R\Vert U_N)=N\log2-H(R)$ 给出结论。证毕。
+
+这个估计没有把未知的一阶余量矩设为零，也没有声称变化字母表上的余量趋于某个固定 $P_{N,1}$。非负性与完整的字符展开共同给出足够的密度控制，正是联合极限所需的补充信息。
+

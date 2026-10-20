@@ -1,0 +1,25 @@
+**定义 13.1（完整 $W_4$ 与原 Boolean 目标）。** 来源是非空有序满二叉树
+
+$$
+\mathbb T::=\alpha\mid\beta\mid\langle\mathbb T,\mathbb T\rangle,
+\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\quad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+$$
+
+令 $w$ 为从左到右的叶词，定义
+
+$$
+\begin{aligned}
+T_4&=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                   \langle\beta,\alpha\rangle\rangle=\rho^4\alpha,\\
+W_4&=\{U\in\mathbb T:w(U)=\beta\alpha\beta\beta\alpha\},\\
+\operatorname{Pos}(U)&\Longleftrightarrow
+            \exists S\in\mathbb T,\ U=\rho^3(S).
+\end{aligned}
+$$
+
+固定叶词时，叶标签已定，来源数只由全部有序括号决定。若 $c_m$ 是 $m$ 叶括号数，则 $c_1=1$、$c_m=\sum_{i=1}^{m-1}c_i c_{m-i}$，从而 $c_2=1,c_3=2,c_4=5,c_5=14$。因此这里确实包含全部十四棵同词树；它既不是两棵树的 $\mathcal C_4$，也不是所有叶数至多五的来源。
+

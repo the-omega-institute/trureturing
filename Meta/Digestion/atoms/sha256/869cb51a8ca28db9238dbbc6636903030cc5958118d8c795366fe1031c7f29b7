@@ -1,0 +1,29 @@
+**定义 263.1（FIB 波支持与外加海洋模型）。** 令 \(\mathcal K_j=(V_j,E_j,\partial_j,\mathcal P_j)\) 为第 \(j\) 层 FIB 复形：\(V_j\) 是顶点，\(E_j\) 是有向边，\(\partial_j\) 给出边端点，\(\mathcal P_j\) 标记可连接的端口。若以端口粘合记号表示递归，则可写成
+
+$$
+\mathcal K_{j+1}=\mathcal K_j\mathop{\cup}_{\mathcal P_j}\mathcal K_{j-1},
+$$
+
+其中等式只表示组合拼接的规则；具体粘合映射由所采用的 FIB ATOM 定义给出。由 \(\mathcal K_j\) 可计算邻接、路径、割集、端口和层级关系，也可得到关联矩阵 \(B_j\)。为在其上讨论海洋波，另需给每条边赋坐标 \(x_e\)、长度 \(\ell_e\)、水深 \(h_e\)、密度 \(\rho_e\)、流速 \(U_e\)、阻尼和边界条件，并给端口指定入射谱、反射或散射规则。这些量不由 FIB 递归给出。
+
+**线性色散的外加接口。** 在窄带、小振幅和局部均匀水深假设下，边 \(e\) 上的线性重力—毛细波色散可写为
+
+$$
+\omega_e^{\pm}(k)
+=U_e k\pm\sqrt{\left(gk+\frac{\sigma_e}{\rho_e}k^3\right)\tanh(kh_e)},
+$$
+
+其中 \(g\) 是重力加速度，\(\sigma_e\) 是表面张力；若忽略毛细力则令 \(\sigma_e=0\)。因此浅水极限 \(kh_e\ll1\) 给出
+
+$$
+\omega_e^{\pm}(k)\simeq U_e k\pm\sqrt{gh_e}\,k,
+$$
+
+而深水重力极限 \(kh_e\gg1\)、\(\sigma_e=0\) 给出 \(\omega_e^{\pm}(k)\simeq U_e k\pm\sqrt{gk}\)。在给定边长和端口条件以后，带权图拉普拉斯 \(\Delta_j^{\ell}\) 的模态满足
+
+$$
+\Delta_j^{\ell}\phi_{j,r}=\mu_{j,r}\phi_{j,r},
+$$
+
+并由另外指定的边内坐标与顶点条件把 \(\mu_{j,r}\) 映射成波数 \(k_{j,r}\)。于是网络模态频率是 \(\omega_e^{\pm}(k_{j,r})\) 或其端口耦合后的共振根。FIB 只决定哪些模态可由共同路径和端口相遇；\(\ell_e,h_e,U_e,g,\rho_e,\sigma_e\) 以及 \(\mu\mapsto k\) 的实现决定实际频率。改变水深或流速而保持同一 FIB 复形，就能改变相速、群速、反射阈值和共振位置。
+

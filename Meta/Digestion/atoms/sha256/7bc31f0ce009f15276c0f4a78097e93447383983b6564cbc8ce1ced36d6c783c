@@ -1,0 +1,14 @@
+**定义 289.1（干预词与分离）。** 设每个干预的响应值都落在至多 $q\ge2$ 个结果中。对干预词
+
+$$
+\mathbf a=(a_1,\ldots,a_m)
+$$
+
+定义其响应记录映射
+
+$$
+T_{\mathbf a}:F\to Y_{a_1}\times\cdots\times Y_{a_m},
+$$
+
+其中后续干预可以按前缀记录自适应选择。称词族 $\mathcal W$ **分离** $F$，若对任意不同 $x,x'\in F$，存在 $\mathbf a\in\mathcal W$ 使其记录不同。
+

@@ -1,0 +1,17 @@
+**定义 382.1（原子偏差与奇核参数）。** 沿用定义 362.1 的 Fibonacci 数列、实际正整数原子 $\Psi_n$、$c_n=\log\Psi_n$、$D(S)$ 与 $M(S)$，并记
+
+$$
+\Phi=\frac{1+\sqrt5}{2},\qquad L=\log\Phi,\qquad q=\Phi^{-2},\qquad
+E_n=c_n-L\varphi(n)\quad(n\ge1).
+\tag{382.1}
+$$
+
+所有对数均为自然对数。把正整数唯一写成 $n=2^a m$，其中 $a\ge0$、$m$ 为奇数；令 $R=\operatorname{rad}(m)$、$h=m/R$，约定 $\operatorname{rad}(1)=1$。于是 $R$ 为奇平方自由数、$h$ 为正奇数。对任意奇平方自由数 $R\ge1$ 和 $0<t\le2/5$，定义有限和
+
+$$
+S_+(R,t)=\sum_{d\mid R}\mu(d)\log(1+t^d).
+\tag{382.2}
+$$
+
+这里 $\mu$ 是 Möbius 函数；$R=1$ 时该和只有 $d=1$ 一项。
+

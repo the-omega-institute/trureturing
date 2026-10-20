@@ -1,0 +1,20 @@
+**Definition 22.8 (Protocol class and proof-fixed timeout).** Keep the fixed rational $H=H_c$ from (19.7), and fix $0<\alpha<1/2$. A protocol in this section may have arbitrary persistent memory and a common independent random seed, but has the same $q$-free read-next-bit-or-stop rule for every nuisance value, starts from the stationary history, reads consecutive bits, pays for every zero, tick, initial wait, partial gap and pair, and emits its label internally. It terminates almost surely with finite pointwise mean $m_{i,q}:=\mathbb E_{i,q}L$. Its two separate promises are
+
+$$
+\sup_{0<q<1}\mathsf P_{0,q}(D=1)\le\alpha,
+\qquad
+\sup_{0<q'<1}\mathsf P_{1,q'}(D=0)\le\alpha.
+\tag{22.58}
+$$
+
+Put
+
+$$
+\rho=\frac{1-2\alpha}{4},\qquad \beta=\alpha+\rho<\frac12,
+\qquad b=(1-2\beta)\log\frac{1-\beta}{\beta}>0.
+\tag{22.59}
+$$
+
+For a proof-fixed target $i\in\{0,1\}$ and a proof-fixed $q\in(0,1)$, set
+$W=\max\{1,\lceil m_{i,q}/\rho\rceil\}$. Run the protocol through read $W$; retain its ordinary label if it stops by then, including on read $W$, and otherwise emit the predetermined label $1-i$. The index $i$ is fixed in this construction and is not supplied as a true label to the observer.
+

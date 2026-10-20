@@ -1,0 +1,21 @@
+**命题 66.12（实际路由、总后备与端点付费集）。** 以下既有端点构造在原始与粗读出下都给出全域总控制器。三树使用的四个地址是全局地址
+
+$$
+a=\mathtt{LLLR},\quad b=\mathtt{LRR},\quad
+q=\mathtt{LRLLR},\quad r=\mathtt{LLLLLR}.
+$$
+
+它们等于槽根 $p_1=\mathtt L$ 加相对地址 $\mathtt{LLR},\mathtt{RR},\mathtt{RLLR},\mathtt{LLLLR}$。五树取 $p_1=\mathtt L,p_2=\mathtt{RL}$，并令
+
+$$
+a_j=p_j\mathtt{LLR},\quad b_j=p_j\mathtt{RR},\quad
+q_j=p_j\mathtt{RLLR},\quad r_j=p_j\mathtt{LLLLR}\quad(j=1,2).
+$$
+
+三树的 $a_1,b_1,q_1,r_1$ 就是上面的 $a,b,q,r$。沿实际块逐字读取，四个相对地址的原始响应为
+
+| 活动块 | $\mathtt{LLR}$ | $\mathtt{RR}$ | $\mathtt{RLLR}$ | $\mathtt{LLLLR}$ |
+| --- | --- | --- | --- | --- |
+| $C$ | $\mathsf{leaf}_\alpha$ | $\mathsf{leaf}_\alpha$ | $\mathsf{absent}$ | $\mathsf{absent}$ |
+| $T$ | $\mathsf{leaf}_\alpha$ | $\mathsf{branch}$ | $\mathsf{leaf}_\alpha$ | $\mathsf{absent}$ |
+| $W_1$ | $\mathsf{branch}$ | $\mathsf{branch}$ | $\mathsf{leaf}_\alpha$ | $\mathsf{leaf}_\alpha$ |

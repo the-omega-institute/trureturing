@@ -1,0 +1,10 @@
+### 定理 364.2（有限谱观察的 Vandermonde 判据）
+
+若 \(N\ge r\)，且对每个 \(j\)，限制
+
+$$
+C\big|_{Q_j\mathcal C^k}
+$$
+
+是单射，则 \(\mathcal O_N\) 是单射。
+

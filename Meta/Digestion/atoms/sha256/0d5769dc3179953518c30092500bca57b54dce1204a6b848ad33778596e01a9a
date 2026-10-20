@@ -1,0 +1,22 @@
+**定义 436.1（同一绝对账与源时钟）。** 保持 §§430–431 的同一实际常数
+$A>0,D>A,\mu_0>0$、$a=e^{-\gamma_E}>0$、$\Delta_\beta>0$，
+以及（LC.1）、（LC.4）–（LC.5）的
+$P_z,\theta_{P_z},C,\mathsf C_z,\mathsf L_z,X_z$。
+这里 $A$ 是核的固定常数；整数来源 $N$ 的时钟另记为
+$\Lambda=\log N$。
+复用（CP.7）证明中的经典第一 Mertens 供应及其同一常数：
+
+$$
+F(z)=\sum_{p\le z}\frac{\log p}{p},\qquad
+|F(z)-\log z|\le K_1=\log4+4,
+\qquad
+R_1=\sum_{m\ge2}\frac{\log m}{m(m-1)}<\infty,
+\qquad D_S=K_1+R_1.
+\tag{436.1}
+$$
+
+§431 的完整账上界及固定正窗口的精确阶直接复用；
+下面只补 $U\ge0$ 上的共同下界，不重新推导其上界。
+§432 的 $\mathsf C_P^{\rm sgn}$ 是另一份保留符号的账，
+不属于（LC.4）的 $\mathsf C_z$；本节不对它断言相同下界。
+

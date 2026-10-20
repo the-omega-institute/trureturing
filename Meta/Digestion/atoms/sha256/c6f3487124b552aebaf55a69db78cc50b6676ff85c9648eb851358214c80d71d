@@ -1,0 +1,46 @@
+## 6. 有限素数幂表达与 Abel 变换
+
+设
+
+\[
+d=C(k,e)-C(h,v),\qquad H(s)=\Re(d(s)+d(-s)),\qquad M=2a+t.
+\]
+
+对紧支撑、有限分段光滑的候选，相关函数具有所需正则性。窗口内外正交性及支撑端点给出 `H(0)=H(M)=0`。定义
+
+\[
+\mathfrak D_M(H)=
+\sum_{2\le n\le e^M}\frac{\Lambda(n)}{\sqrt n}H(\log n)
+-\int_0^Me^{s/2}H(s)\,ds.
+\]
+
+保留极点与连续主项的抵消，得到
+
+\[
+\boxed{
+\mathcal B_a(k,t)=-\mathfrak D_M(H)
+-\int_0^M\frac{e^{-5s/2}}{1-e^{-2s}}H(s)\,ds.
+}
+\]
+
+令 `Psi(x)=sum_{n<=x} Lambda(n)`，`E(x)=Psi(x)-x+1`。Abel 分部积分给出
+
+\[
+\mathfrak D_M(H)=-\int_0^ME(e^s)e^{-s/2}
+\left(H'(s)-\tfrac12H(s)\right)ds.
+\]
+
+因此明确候选必须通过的必要检验是
+
+\[
+\begin{aligned}
+&\int_0^ME(e^s)e^{-s/2}\left(H'(s)-\tfrac12H(s)\right)ds\\
+&\quad-\int_0^M\frac{e^{-5s/2}}{1-e^{-2s}}H(s)\,ds
+\ge\delta\|v\|_2^2-4r\|v\|_2.
+\end{aligned}
+\]
+
+该候选下界仍未证明，也不足以单独替代所有正交方向上的强制性。分段光滑定义域延拓、上述边界展开与 Abel 变换尚未全部形式化。
+
+---
+

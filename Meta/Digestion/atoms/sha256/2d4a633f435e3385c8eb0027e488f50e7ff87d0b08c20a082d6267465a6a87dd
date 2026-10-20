@@ -1,0 +1,6 @@
+其中：
+
+* \(\beta_{\mathrm{exp}}\) 控制 Euler germ 余项的解析可和边界；
+* \(\alpha_{\mathrm{com}}\) 控制共同 normalized-Haar 背景；
+* \(\beta_{\mathrm{supp}}\) 控制 signed-normal 支撑边缘。
+

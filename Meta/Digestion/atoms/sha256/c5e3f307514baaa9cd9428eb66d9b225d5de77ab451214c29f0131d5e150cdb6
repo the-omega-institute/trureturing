@@ -1,0 +1,6 @@
+但一般不能简单说“永远刚好多一维”：
+
+* projective homogeneous coordinates 确实从 \(d\) 维升到 \(d+1\) 维；
+* 完整 frame space 通常有约 \(d^2\) 个自由度；
+* 函数空间中的观察者甚至是无限维的。
+

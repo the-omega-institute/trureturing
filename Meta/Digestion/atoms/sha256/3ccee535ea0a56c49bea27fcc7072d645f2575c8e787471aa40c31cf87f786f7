@@ -1,0 +1,8 @@
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, (7.5)-(7.12), Lemma 7.3, Section 8. https://arxiv.org/html/2511.22755v1
+- NIST DLMF 30.2, 30.3 and 30.8, regular spheroidal differential equation, eigenvalues and Ferrers/Legendre expansions. https://dlmf.nist.gov/30.2 ; https://dlmf.nist.gov/30.3 ; https://dlmf.nist.gov/30.8
+- Mathlib pinned commit `db584cd6d46c92f209a44c0f1c829460d327499d`, `integral_exp_mul_complex` and interval integrability; existing repository `Zeta23.paperFT`.
+- loning #5296, theory source at `9adc8b7e64469344089ce298cb3ab3478aebb21c`, B10.3-B10.4 and B13.4; AlyciaBHZ #5882 and #5895, PR-level scope audit for existing projective/readout formalizations.
+
+

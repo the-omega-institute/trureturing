@@ -1,0 +1,29 @@
+**推论 43.3（混合累积量与非高斯性）。** 令 \(\Lambda_k=\Lambda(u_k)\)，在 \(T=\operatorname{diag}(t_k)\) 足够小时，
+\[
+\log\mathbb E e^{\sum_k t_k\Lambda_k}
+ =-\log\det(I_m-CT)
+ =\sum_{r\ge1}\frac1r\operatorname{tr}((CT)^r).
+\]
+任取指标 \(i_1,\ldots,i_r\)，有
+\[
+\operatorname{cum}(\Lambda_{i_1},\ldots,\Lambda_{i_r})
+ =\frac1r\sum_{\pi\in S_r}
+ \prod_{\nu=1}^{r} C_{i_{\pi(\nu)},i_{\pi(\nu+1)}},
+ \qquad i_{\pi(r+1)}=i_{\pi(1)}.
+\tag{43.2}
+\]
+当所有 \(u_k<1\) 时 \(C_{k\ell}>0\)，故这些混合累积量为正。特别地
+\[
+\operatorname{Cov}(\Lambda(u),\Lambda(v))
+ =C(u,v)^2
+ =\frac{(1-\max(u,v))^2}{D^2},
+\]
+而 \(0\le u<v<w<1\) 时
+\[
+\operatorname{cum}(\Lambda(u),\Lambda(v),\Lambda(w))
+ =2C(u,v)C(v,w)C(w,u)>0.
+\]
+因此有限维占用场不是非退化高斯场，单点指数边缘也不意味着多点独立。
+
+**证明。** 离散 Feynman–Kac 方程在探针行的消元给出第一式；\(G(0,a)=G(a,a)=q_a\)、\(G(a,b)=q_{\max(a,b)}\) 使矩阵为 \(Q_j\)。取 \(z_k=e^{-h_js_k}\) 并用 \(h_jQ_j\to C\)、\(\gamma_j(s)\to s\) 得 (43.1)。对 (43.1) 的矩生成函数在零点邻域展开迹级数，取混合导数即得 (43.2)。$\square$
+

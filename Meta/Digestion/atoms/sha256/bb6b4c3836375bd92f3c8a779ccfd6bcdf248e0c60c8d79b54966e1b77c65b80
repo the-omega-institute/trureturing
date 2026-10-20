@@ -1,0 +1,7 @@
+禁止增加：
+
+- `Fintype Entry`；
+- `Nonempty Entry`；
+- `DecidableEq Status`；
+- 迭代收敛或有限状态前件。
+

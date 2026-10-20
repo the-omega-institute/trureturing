@@ -1,0 +1,28 @@
+**定义 275.1（调度间隔向量）。** 设
+
+$$
+S=\{s_1<\cdots<s_m\}\subseteq\{0,1,\ldots,T-1\}.
+$$
+
+定义其无记录间隔向量
+
+$$
+\begin{aligned}
+g_0&=s_1,\\
+g_j&=s_{j+1}-s_j-1\quad(1\le j<m),\\
+g_m&=T-1-s_m.
+\end{aligned}
+$$
+
+当 $m=0$ 时置 $g_0=T$。最长间隔为
+
+$$
+h(S)=\max_{0\le j\le m}g_j.
+$$
+
+这些间隔满足
+
+$$
+\sum_{j=0}^{m}g_j=T-m.
+$$
+

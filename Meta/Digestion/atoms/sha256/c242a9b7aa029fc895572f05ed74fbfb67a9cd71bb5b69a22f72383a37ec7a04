@@ -1,0 +1,7 @@
+Assume:
+
+1. `\mathcal F` is convex;
+2. `Q` is affine on `\mathcal F`;
+3. `L` and `U` are valid bounds;
+4. there are admissible endpoint witnesses `\pi_L,\pi_U` with query values `L,U`.
+

@@ -1,0 +1,45 @@
+**Corollary 52.1 (aliases, payloads and one matched run).** Use Theorem
+51.2, with its $f=1$ convention when $K=1$. Let $K_H$ count old halt states
+and let $E_0=\sum_{q\text{ nonhalt}}|O_q|$. The realization has exactly
+
+| Installed item | Count |
+| --- | --- |
+| Complete words and instruction rows | $Kf$ |
+| Aliases of each individual logical state | $f$ |
+| Halt rows, including unreachable halts | $K_Hf$ |
+| Typed response entries | $E_0f$ |
+| Full word-key bits in an explicit table | $Kf\ell$ |
+| Hold/flip-index bits for the typed entries | $E_0f\lceil\log_2(\ell+1)\rceil$ |
+
+If $\mathcal R$ is the set of old literal-Read states with literal $p_q$,
+the new Read-row count is $f|\mathcal R|$. Its distinct installed literal
+union is exactly the old one. Fully inlining the literals gives exactly
+$f\sum_{q\in\mathcal R}|p_q|$ address letters, with $f$ copies of each
+old row's payload. Empty literals have zero letters but still have rows,
+length fields, delivery and execution. Each old fixed halt payload is
+likewise installed $f$ times; no two different old halt states are silently
+merged merely because their outputs coincide.
+
+For a finite terminating run with logical states $q_0,\ldots,q_n$, the
+native call count is exactly the original $n$. There are $n+1$ instruction
+selections including Halt, $n$ immediate response selections and one output.
+The response bit-change count is
+
+$$
+b=\sum_{j=0}^{n-1}\mathbf1_{\{q_{j+1}\ne q_j\}}\le n.
+\tag{FIB.52.1}
+$$
+
+The same identity holds on every finite prefix of a nonterminating run.
+Counts of each primitive, submitted literal order and address-length sums,
+actual apparatus epochs and source-state peaks are preserved on the same
+source whenever these coordinates are defined by the original events.
+Initialization writes, table-selection costs and other implementation
+services are not included in this equality of event coordinates.
+
+Proof. Each old state has $f$ aliases, and each alias copies precisely that
+state's instruction, payload and typed-response list. This gives the table
+and payload counts. Equation (FIB.51.2) gives the exact bit-change indicator;
+the execution correspondence gives the remaining same-run equalities.
+No source maximum or coordinate minimum was taken. $\square$
+

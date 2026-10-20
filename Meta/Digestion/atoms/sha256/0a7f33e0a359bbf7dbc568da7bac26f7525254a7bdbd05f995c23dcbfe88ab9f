@@ -1,0 +1,12 @@
+**Corollary 52.1 (aliases, payloads and one matched run).** Use Theorem
+51.2, with its $f=1$ convention when $K=1$. Let $K_H$ count old halt states
+and let $E_0=\sum_{q\text{ nonhalt}}|O_q|$. The realization has exactly
+
+| Installed item | Count |
+| --- | --- |
+| Complete words and instruction rows | $Kf$ |
+| Aliases of each individual logical state | $f$ |
+| Halt rows, including unreachable halts | $K_Hf$ |
+| Typed response entries | $E_0f$ |
+| Full word-key bits in an explicit table | $Kf\ell$ |
+| Hold/flip-index bits for the typed entries | $E_0f\lceil\log_2(\ell+1)\rceil$ |

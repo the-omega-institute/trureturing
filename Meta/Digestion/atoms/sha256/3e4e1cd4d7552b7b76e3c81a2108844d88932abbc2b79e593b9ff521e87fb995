@@ -1,0 +1,8 @@
+## 定理 7A.1（有限视界 kernel）
+
+$$
+K_m
+=
+\bigcap_{k=0}^{m}(F\times F)^{-k}K_q.
+$$
+

@@ -220,5 +220,129 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end ordered_block_energy
 
+namespace boundary_mass
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (ℕ × ℕ) (fun _ => Fin 16 → ℝ) (fun _ => ℝ)
+def actual : Realization signature := realize signature (fun _ p x => ∑ k : Fin p.1, synth (positions p.1 p.2) x k) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => (1 : ℝ)) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law O := ∀ (N j : ℕ) (hN : 16 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ),
+    O.readout () (N,j) x = low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hf := h 16 6 (by norm_num) (by norm_num) (by norm_num) 0
+  norm_num [rejected, realize, low, head, tail, H, D, H2, D2, E, Fin.sum_univ_succ] at hf
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(16,6), 0, Pi.single (15 : Fin 16) 1, ?_⟩
+  change (∑ k : Fin 16, (synth (positions 16 6) (0 : Fin 16 → ℝ) k)) ≠
+    ∑ k : Fin 16, (synth (positions 16 6) (Pi.single (15 : Fin 16) 1) k)
+  rw [boundary_mass 16 6 (by norm_num) (by norm_num) (by norm_num) 0,
+    boundary_mass 16 6 (by norm_num) (by norm_num) (by norm_num) (Pi.single 15 1)]
+  norm_num [low, head, tail, H, D, H2, D2, E, Fin.sum_univ_succ,
+    Pi.single_apply, Pi.zero_apply]
+def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.boundary_mass)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.boundary_mass, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := actual_dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.boundary_mass) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone.boundary_mass.unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone.boundary_mass.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p x => ∑ k : Fin p.1, synth (positions p.1 p.2) x k) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end boundary_mass
+
+namespace boundary_square
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (ℕ × ℕ) (fun _ => Fin 16 → ℝ) (fun _ => ℝ)
+def actual : Realization signature := realize signature (fun _ p x => ∑ k : Fin p.1, (synth (positions p.1 p.2) x k)^2) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => (1 : ℝ)) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law O := ∀ (N j : ℕ) (hN : 16 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ),
+    O.readout () (N,j) x = (2*low x+x 5)*(low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x))-low x*(low x+x 5)*(N : ℝ)+E (x 5) (head x) (tail x)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hf := h 16 6 (by norm_num) (by norm_num) (by norm_num) 0
+  norm_num [rejected, realize, low, head, tail, H, D, H2, D2, E, Fin.sum_univ_succ] at hf
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(16,6), 0, Pi.single (15 : Fin 16) 1, ?_⟩
+  change (∑ k : Fin 16, (synth (positions 16 6) (0 : Fin 16 → ℝ) k)^2) ≠
+    ∑ k : Fin 16, (synth (positions 16 6) (Pi.single (15 : Fin 16) 1) k)^2
+  rw [boundary_square 16 6 (by norm_num) (by norm_num) (by norm_num) 0,
+    boundary_square 16 6 (by norm_num) (by norm_num) (by norm_num) (Pi.single 15 1)]
+  norm_num [low, head, tail, H, D, H2, D2, E, Fin.sum_univ_succ,
+    Pi.single_apply, Pi.zero_apply]
+def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.boundary_square)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.boundary_square, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := actual_dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.boundary_square) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone.boundary_square.unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone.boundary_square.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p x => ∑ k : Fin p.1, (synth (positions p.1 p.2) x k)^2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end boundary_square
+
 end
 end Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone

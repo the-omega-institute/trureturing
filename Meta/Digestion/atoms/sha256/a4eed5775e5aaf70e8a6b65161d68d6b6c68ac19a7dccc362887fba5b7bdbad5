@@ -1,0 +1,7 @@
+随着 \(L\) 增加：
+
+* 地态整函数允许更多实零点；
+* atomic ledger 的容量增加；
+* white floor \(\lambda_{\mathrm{full}}(L)/(2\pi)\) 下降；
+* 无限极限中 white floor 消失，只剩 Riemann 零点谱。
+

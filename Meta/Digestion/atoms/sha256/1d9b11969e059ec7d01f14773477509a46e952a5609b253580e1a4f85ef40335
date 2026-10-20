@@ -1,0 +1,24 @@
+## 437. 代数根面上的多项式上证书与完整有限标量树
+
+本节把最小面限制、内点多项式上主函数和有限树的严格阈值判定接在一起。报酬允许带符号和不连续；下方见证始终是一棵实际有限树，上方见证是根面坐标中的有理多项式。分别凹性始终针对整个向量块。
+
+输入与树的约定。令 $I$ 为有限集，允许为空。对每个 $i\in I$，输入整数 $d_i\ge0$、以精确实代数系数多项式等式和不等式的有限 Boolean 组合描述的集合 $C_i\subseteq\mathbb R^{d_i}$，以及精确实代数点 $a_i$。实代数常数由整数多项式及有理隔离数据指定。输入还包括报酬图公式 $\mathsf G_f(x,y)$ 和 $\varepsilon\in\mathbb Q_{>0}$。承诺每个 $C_i$ 非空、紧且凸，$a_i\in C_i$，并且 $\mathsf G_f$ 在 $C=\prod_iC_i$ 上恰为一个处处有定义、单值、有界函数 $f:C\to\mathbb R$ 的图。报酬图不要求闭，也不要求 $f$ 上半连续。
+
+完整有限单块分裂树采用定义432.1、433.1及434.1的约定：节点标签 $x_\nu\in C$，根标签 $a=(a_i)_i$；每个内部节点选择 $i\in I$，声明有限非空子节点集，并满足
+
+$$
+\lambda_{\nu j}\ge0,\qquad \sum_j\lambda_{\nu j}=1,\qquad
+x_{\nu,i}=\sum_j\lambda_{\nu j}x_{\nu j,i},\qquad
+x_{\nu j,h}=x_{\nu,h}\quad(h\ne i).
+$$
+
+最后一式也约束零权边。所有已声明的零权、余项、失败及提前停止分支均保留。深度是根叶路径上内部节点数的最大值，单子节点和零权路径上的内部节点也计数。叶质量 $w_\ell$ 是路径边权之积，根叶的空乘积为一。置
+
+$$
+\operatorname{val}_f(\mathsf T)=\sum_\ell w_\ell f(x_\ell),\qquad
+\tau=T_{\mathrm{fin}}^f(a;C)
+=\sup_{\mathsf T\text{ 为上述完整有限树}}\operatorname{val}_f(\mathsf T).
+$$
+
+空积 $C$ 是只含空元组的单点集；$I=\varnothing$ 时没有可选块，只有根叶树。
+

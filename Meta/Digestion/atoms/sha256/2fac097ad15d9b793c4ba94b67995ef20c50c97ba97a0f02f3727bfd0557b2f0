@@ -1,0 +1,162 @@
+### 69.1 同一完整原图与有界六倍周期合同
+
+本章使用[原实际地址与共同路径提升][69源原图]、[第60章的联合必要限制][69源60]、[第63章的同源凸包与原返回判据][69源63]、[第64章的类型及预算范围][69源64]，并直接复用[第66章的四对平移差][69源6566]与[定理67.2.1的准入结论][69源67]。一个时间步删除一个三位窗口；$0$ 是单个空窗标签，$25$ 是单个标签。置
+
+$$
+g=\sqrt5-2,\qquad g^2+4g=1,\qquad
+t=\frac{1+g}{2},\qquad u=\frac{1-g}{2}=t^2,\qquad
+\phi=1+t,\qquad \lambda=\frac{u}{10}.
+\tag{69.1}
+$$
+
+预算为实数 $0\le\beta<\lambda$，$\delta=\lambda-\beta>0$。实际地址域为 $A_0=\Omega$、$A_1=\{\omega\in\Omega:\omega_0=0\}$，状态区间为 $I_0=X=[-1,\phi]$、$I_1=[-1,t]$。实际分支、逆分支及全部合法 guard 为
+
+$$
+f_\ell(x)=\Delta_\ell-gx,\qquad
+F_\ell(x)=\frac{\Delta_\ell-x}{g},\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,u,1,2-t),
+$$
+
+$$
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5.
+\tag{69.2}
+$$
+
+五个合法根像按空间次序为 $[-1,-u],[-u,g],[g,t],[t,2t],[2t,\phi]$。guard 一只允许前三块，在闭端点 $t$ 允许 $5$ 而不允许 $2$。坐标、标签和 incoming guard 来自各自同一条实际地址。有限词按前接顺序复合：
+
+$$
+f_{\ell_0\cdots\ell_{L-1}}
+=f_{\ell_0}\circ\cdots\circ f_{\ell_{L-1}}.
+$$
+
+原六色使用 (65.1) 的闭区间。为固定其含义，记
+
+$$
+\begin{aligned}
+A_c&=3(g-1)/5,& B_c&=(11g-1)/10,&
+C_c&=(6g-1)/5,& D_c&=(3+7g)/10,\\
+J_c&=(1+4g)/5,& H_3&=(7+13g)/10,&
+L_4&=(3+7g)/5,& H_4&=(11+9g)/10.
+\end{aligned}
+$$
+
+于是
+
+$$
+\begin{aligned}
+E_0^\beta&=[-1,-u-\delta],&
+E_1^\beta&=[A_c+\delta,B_c-\delta],\\
+E_2^\beta&=[C_c+\delta,D_c-\delta],&
+E_3^\beta&=[J_c+\delta,H_3-\delta],\\
+E_4^\beta&=[L_4+\delta,H_4-\delta],&
+E_5^\beta&=[2t+\delta,\phi].
+\end{aligned}
+\tag{69.3}
+$$
+
+端色 $0,5$ 分别只允许标签 $3,25$；内色 $1,2,3,4$ 分别只允许相邻对 $(3,0),(0,5),(5,2),(2,25)$，宽度依次为 $t-2\delta,u-2\delta,t-2\delta,u-2\delta$。原端点归属固定，闭色成员不自动供应该归属规则下的实际噪声取得。
+
+每次应用先固定一个已经给定的有限端点集 $B\subseteq I_0$ 及其完整原配对图 $G_B$。$B$ 含全部原观察、guard 和合法根域端点，并满足全部原标签的域过滤逆闭合
+
+$$
+e\in B,\quad F_\ell(e)\in I_0
+\quad\Longrightarrow\quad F_\ell(e)\in B.
+\tag{69.4}
+$$
+
+每个 $B_s=B\cap I_s$ 的全部端点单点，以及每对相邻端点之间的整个闭片，都保留。完整原来源边恰为
+
+$$
+(s,P)\xrightarrow{\ell}(s',Q)
+\quad\Longleftrightarrow\quad
+s\xrightarrow{\ell}s'\text{ 合法},\qquad
+P\subseteq f_\ell(I_{s'}),\qquad Q\subseteq F_\ell(P).
+\tag{69.5}
+$$
+
+片 $P$ 的允许色 $c$ 指整个 $P\subseteq E_c^\beta$。配对顶点保留两个实际 incoming guard、两个整个原片及其全部共同闭色资格；配对边使用两条原边，共同色在出发顶点选择，有限路径终端不重复观察。本章应用中不改变 $B$、原片、原端点归属或全部原边，始终检查整个后继片 $Q\subseteq F_\ell(P)$。
+
+定理31.4及64.4的给定图联合提升使有限路径可在终端只选一次 guard 相容的实际尾，再逐边前接；无限路径由嵌套闭像及 $g^N\operatorname{diam}I_0\to0$ 提升。两条返回可以在同一个完整基点任意拼接，全部实际坐标保留逐边根域、guard 和共同原闭色。引理31.2的有限端点构造只适用于 $\mathbb Q(t)$ 种子；本章对一般实预算的量词始终以所需有限完整图已给为前提。
+
+第二来源是同一 $G_B$ 中已经供应的实际本原 singleton rival $R$，其本原周期恰为奇数 $p$。实际相位坐标 $y_r$、incoming guard $u_r$、原节点 $(u_r,\{y_r\})$ 及全部周期边已有同图成员资格。以共同基点的实际第二节点为相位零，使用该 typed 周期的旋转记号；周期倍数恢复整个第二原节点，而非只恢复标量后重选 guard。
+
+固定有限整数界 $P_{\max}\ge7$。对每个奇整数 $7\le p\le P_{\max}$，置
+
+$$
+d=2p,\qquad m=6,\qquad h=6p=3d,\qquad
+(a,b)\in\{(3,0),(0,5),(5,2),(2,25)\}.
+\tag{69.6}
+$$
+
+对每个长 $d-2$ 的字面标签词 $V$，定义
+
+$$
+\begin{aligned}
+C&=V\,b\,5,& D_-&=V\,a\,3,& D_+&=V\,b\,0,\\
+T&=C^2V,& U&=C^2D_-=T\,a\,3,&
+W&=C^2D_+=T\,b\,0.
+\end{aligned}
+\tag{69.7}
+$$
+
+$b,5$ 是两个依次接上的标签，$5$ 不是指数。$C,D_-,D_+$ 都长 $d$，$|T|=h-2$，$|U|=|W|=h$。只量化 $U,W$ 逐步实际合法、第一 guard 从零返回零的状态序列；字面形状不供应合法性。初始第一输入单独给为零，正时刻输入是前一实际标签的输出，其中
+
+$$
+\operatorname{out}(3)=\operatorname{out}(0)=\operatorname{out}(2)=0,\qquad
+\operatorname{out}(5)=\operatorname{out}(25)=1.
+\tag{69.8}
+$$
+
+沿用63.1的命名位置：共同链为 $i=0,\ldots,h-3$，分叉后两个 $D$ 位置的命名相位为 $h-2$，两个 $E$ 位置为 $h-1$。字面块 $D_\pm$ 与分叉位置按上下文区分。令 $\xi_-,\xi_+$ 为 $f_U,f_W$ 的固定点，令 $K_0$ 为全部无限 $U,W$ 块拼接在共同基点取得的实际第一坐标集合。按 (63.3)—(63.8)，同源混合凸包为
+
+$$
+\begin{aligned}
+H_0&=[\xi_-,\xi_+]=\operatorname{conv}K_0,\\
+H_i&=(f_{T_0\cdots T_{i-1}})^{-1}(H_0)
+\quad(0\le i\le h-3),\\
+H_{D_-}&=f_af_3(H_0),& H_{D_+}&=f_bf_0(H_0),\\
+H_{E_-}&=f_3(H_0),& H_{E_+}&=f_0(H_0).
+\end{aligned}
+\tag{69.9}
+$$
+
+空前缀为恒等映射；区间逆像仅运输同一实际坐标，不反转原边包含方向。所有凸包使用同一个 $K_0$。对每个命名位置 $v$，$s_v$ 取自实际第一状态序列，$r(v)=\operatorname{ph}(v)\bmod p$ 取自已给 rival。完整准入条件仍逐项为
+
+$$
+\begin{aligned}
+&\text{(i) }H_v\subseteq I_{s_v}\text{，并位于其实际首标签的合法根域；}\\
+&\text{(ii) }B\cap\operatorname{int}H_v=\varnothing;\\
+&\text{(iii) 存在原闭色 }c_v\text{ 使 }
+H_v\cup\{y_{r(v)}\}\subseteq E_{c_v}^\beta.
+\end{aligned}
+\tag{69.10}
+$$
+
+这就是全部 (63.11)。命题63.2在准入成立时给唯一非退化原承载片 $P_v\supseteq H_v$，使整个 $P_v$ 具有实际合法根及共同原闭色资格，并供应两条原配对返回。共同链完整顶点记为
+
+$$
+v_i=\bigl((s_i,P_i),(u_{i\bmod p},\{y_{i\bmod p}\})\bigr).
+\tag{69.11}
+$$
+
+原完整目标仍是第一投影返回不相干、第二投影为上述相干 rival、返回长度 gcd 恰为 $h=6p$，且恰有 $h+2$ 个不同完整命名配对顶点的整个原 SCC。除了全部 (69.10)，还须按定理63.3及64.1—64.5保留承载者不合并、全部原内部边的 (63.13)，以及完整图中对所有 $n\ge0$ 的外部不返程 (63.15)。设命名顶点集合为 $\mathcal N$，$\operatorname{Succ}$ 是完整 $G_B$ 的全部后继，这两项为
+
+$$
+\operatorname{ph}(w)=\operatorname{ph}(v)+1\pmod h
+\quad\text{对每条 }v,w\in\mathcal N\text{ 的完整原内部边},
+\tag{69.12}
+$$
+
+$$
+\begin{aligned}
+X_0&=\operatorname{Succ}(\mathcal N)\setminus\mathcal N,\\
+X_{n+1}&=X_n\cup\bigl(\operatorname{Succ}(X_n)\setminus\mathcal N\bigr),\\
+\operatorname{Succ}(X_n)\cap\mathcal N&=\varnothing
+\qquad(n\ge0).
+\end{aligned}
+\tag{69.13}
+$$
+
+内部测试使用整个原承载片及全部原边；单向外出允许存在。任何完成原整个最小目标的输入，还须在这一同一实现中满足第60章的整片条带、四行后继、两实际返回点间距及全部适用点界、宽度界、八行偏移和失配条件。各先修的局部预算域保持各自原假设。仅从 (69.10) 推导下文障碍时，不提前使用64.1限于实际 period-$h$ 目标的内部不交、容量或第60章最小结构。
+

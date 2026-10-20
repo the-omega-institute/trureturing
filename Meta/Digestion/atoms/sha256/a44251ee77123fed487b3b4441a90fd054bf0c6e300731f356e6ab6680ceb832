@@ -1,0 +1,30 @@
+## 16E. Local divisor 与 coherent divisor
+
+不能预设 \(G_3\) 零自由。局部 hard-core partition functions 一般可以拥有复零点。
+
+定义：
+
+\[
+g_p(s)
+=
+(1-p^{-\varphi^3s})
+(1+p^{-\varphi^2s})^{-1}
+A_p(s).
+\]
+
+固定 \(s\) 时定义 local address set：
+
+\[
+\operatorname{Addr}(s)
+=
+\{p:g_p(s)=0\}.
+\]
+
+若：
+
+\[
+\sum_p|g_p(s)-1|<\infty,
+\]
+
+则 \(\operatorname{Addr}(s)\) 必为有限集；否则每个零因子都贡献大小 \(1\) 的 deviation。
+

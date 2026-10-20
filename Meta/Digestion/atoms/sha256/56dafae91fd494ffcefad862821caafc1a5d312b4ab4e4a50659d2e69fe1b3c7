@@ -1,0 +1,7 @@
+因为 \(B_{L,a}\) 是有限个区间的并，这一步可输出：
+
+* 区间端点证书；
+* 总测度；
+* 最低 multiplier 值；
+* confinement radius。
+

@@ -1,0 +1,39 @@
+**定义 333.1（最优集合与一阶参考集合）。** 固定等半径六态模型 $0<a\le1$，记 $\beta=\sqrt{8/3}/a$、$t=\beta R$。令 $\mathcal O_R$ 为预算 $R$ 上全部实际最优复合恢复的 Bloch 矩阵集合。第293节保证这些复合恢复幺元，故这个定义不要求原编码或解码分别幺元。等价地，$\mathcal O_R$ 是幺元微分可分 CPTP 矩阵中满足 $r_*(T)\le R$、$e(T)=\widehat G_a(R)$ 的集合；它非空且紧。
+
+令
+
+$$
+\mathcal P_0=\{P_u=uu^{\mathsf T}:u_i\in\{\pm1/\sqrt3\}\},
+\qquad Q_u=I-P_u.
+\tag{333.1}
+$$
+
+整体符号给出同一个投影，所以 $\mathcal P_0$ 含四个矩阵。对每个投影任选代表 $u$，并对 $i=1,2,3$ 定义
+
+$$
+x_{u,i}=\frac32u_iQ_ue_i,
+\qquad
+A_{u,i}=Q_u-P_u+ux_{u,i}^{\mathsf T},
+\qquad
+B_{u,i}(t)=P_u+tA_{u,i}.
+\tag{333.2}
+$$
+
+当 $u$ 变成 $-u$ 时，$x_{u,i}$ 也变号，而 $A_{u,i}$ 与 $B_{u,i}$ 不变。置
+
+$$
+\mathcal B_t=\{B_{u,i}(t):P_u\in\mathcal P_0,\ i=1,2,3\}.
+\tag{333.3}
+$$
+
+这是位于实矩阵空间中的参考集合，尚未要求其元素 CPTP。两个非空紧矩阵集合的 Hausdorff 距离一律使用 Frobenius 范数：
+
+$$
+d_H(\mathcal A,\mathcal B)
+=\max\left\{
+\sup_{A\in\mathcal A}\inf_{B\in\mathcal B}\|A-B\|_F,
+\sup_{B\in\mathcal B}\inf_{A\in\mathcal A}\|A-B\|_F
+\right\}.
+\tag{333.4}
+$$
+
