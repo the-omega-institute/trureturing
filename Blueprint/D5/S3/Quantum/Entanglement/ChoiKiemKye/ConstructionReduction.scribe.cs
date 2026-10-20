@@ -23,7 +23,7 @@ internal sealed class ConstructionReductionDocument : IScribeDocumentDefinition
             Parenthesized(Seq(blockDiagonal, Dot, Operatorname, Grp(F.Id("mulVec")))),
             Sp, F.Id("v"), Sp, Langle, Sp, F.Id("i"), Comma, Sp, F.Id("j"), Sp, Rangle);
         Formula rhs = Seq(
-            Parenthesized(Seq(F.Id("M"), Sp, F.Id("i"), Dot, Operatorname, Grp(F.Id("mulVec")))),
+            Parenthesized(Seq(Parenthesized(Seq(F.Id("M"), Sp, F.Id("i"))), Dot, Operatorname, Grp(F.Id("mulVec")))),
             Sp, Parenthesized(Seq(Operatorname, Grp(F.Id("fun")), Sp, F.Id("k"), Sp, Mapsto, Sp,
                 F.Id("v"), Sp, Langle, Sp, F.Id("i"), Comma, Sp, F.Id("k"), Sp, Rangle)),
             Sp, F.Id("j"));

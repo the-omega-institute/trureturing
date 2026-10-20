@@ -6,7 +6,7 @@ Public declarations of ConstructionReduction, with complete parameters and the L
 
 **Theorem 1.1 (Block diagonal matrix-vector action).**
 
-$$\forall (\iota : Type*), [\operatorname{Fintype} \iota] [\operatorname{DecidableEq} \iota] \forall (\kappa : \iota \to Type*), [\forall i, \operatorname{Fintype} (\kappa i)] [\forall i, \operatorname{DecidableEq} (\kappa i)] \forall (M : \forall i, \operatorname{Matrix} (\kappa i) (\kappa i) \mathbb{C}), \forall (v : (\Sigma i, \kappa i) \to \mathbb{C}), \forall (i : \iota), \forall (j : (\kappa i)), (\operatorname{Matrix}.\operatorname{blockDiagonal}'\left(M\right).\operatorname{mulVec}) v \langle i, j \rangle = (M i.\operatorname{mulVec}) (\operatorname{fun} k \mapsto v \langle i, k \rangle) j$$
+$$\forall (\iota : Type*), [\operatorname{Fintype} \iota] [\operatorname{DecidableEq} \iota] \forall (\kappa : \iota \to Type*), [\forall i, \operatorname{Fintype} (\kappa i)] [\forall i, \operatorname{DecidableEq} (\kappa i)] \forall (M : \forall i, \operatorname{Matrix} (\kappa i) (\kappa i) \mathbb{C}), \forall (v : (\Sigma i, \kappa i) \to \mathbb{C}), \forall (i : \iota), \forall (j : (\kappa i)), (\operatorname{Matrix}.\operatorname{blockDiagonal}'\left(M\right).\operatorname{mulVec}) v \langle i, j \rangle = ((M i).\operatorname{mulVec}) (\operatorname{fun} k \mapsto v \langle i, k \rangle) j$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.mulVec_block` (`✓ std3`). ∎
 
