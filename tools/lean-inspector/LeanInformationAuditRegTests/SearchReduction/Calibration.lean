@@ -10,15 +10,15 @@ open LeanInformationAudit.Tests.SearchReduction
 
 #search_reduction_config
 
--- The reverse probe closes squareFact by rfl, so it is target-part even
--- though squareVia uses it on the live declaration path.
+-- A baseline-provable synthetic statement remains eligible when its statement
+-- supplies the hidden existential witness on the author's live path.
 #search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareFact] as squareResult
-#guard squareResult = Verdict.insufficient
+#guard squareResult = Verdict.nonBindOnly
 #guard squareResult.baseline = Run.exhausted
-#guard squareResult.paired = Run.exhausted
+#guard squareResult.paired = Run.found
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
@@ -169,6 +169,8 @@ open LeanInformationAudit.Tests.SearchReduction
 #guard backwardPresentationResult = Verdict.bindOnly
 
 #print axioms aliasResult.baselineProof
+#print axioms squareResult.pairedProof
+#print axioms squareResult.baselineFailureGuard
 #print axioms packageResult.baselineProof
 #print axioms aliasResult.presentationConversion
 #print axioms wrapResult.presentationConversion
