@@ -357,22 +357,16 @@ private lemma pure_strict {c : ℝ} (hc : 1 / Real.sqrt 2 < c) (hc1 : c < 1)
   obtain ⟨hc0, hc2, _⟩ := threshold_facts hc
   by_cases hpSmall : ∀ i, p i ≤ 1 / 2
   · have hsmall := entropy_small p hp0 hψ hpSmall
-    have hnonneg : 0 ≤ MUBModeSymmetryBudget.threeModeMixing q := by
-      have hs := Finset.sum_sq_le_sq_sum_of_nonneg (s := Finset.univ) (fun j _ => hq0 j)
-      rw [hq] at hs
-      rw [Fin.sum_univ_three] at hs
-      unfold MUBModeSymmetryBudget.threeModeMixing MUBModeSymmetryBudget.threeModeCollision
-      nlinarith
+    have hnonneg : 0 ≤ MUBModeSymmetryBudget.threeModeMixing q :=
+      MUBModeSymmetryBudget.threeModeMixing_nonneg q hq0
+        (by simpa only [Fin.sum_univ_three] using hq)
     change 1 - c ^ 2 < MUBModeSymmetryBudget.threeModeMixing p + MUBModeSymmetryBudget.threeModeMixing q
     linarith
   by_cases hqSmall : ∀ j, q j ≤ 1 / 2
   · have hsmall := entropy_small q hq0 hq hqSmall
-    have hnonneg : 0 ≤ MUBModeSymmetryBudget.threeModeMixing p := by
-      have hs := Finset.sum_sq_le_sq_sum_of_nonneg (s := Finset.univ) (fun i _ => hp0 i)
-      rw [hψ] at hs
-      rw [Fin.sum_univ_three] at hs
-      unfold MUBModeSymmetryBudget.threeModeMixing MUBModeSymmetryBudget.threeModeCollision
-      nlinarith
+    have hnonneg : 0 ≤ MUBModeSymmetryBudget.threeModeMixing p :=
+      MUBModeSymmetryBudget.threeModeMixing_nonneg p hp0
+        (by simpa only [Fin.sum_univ_three] using hψ)
     change 1 - c ^ 2 < MUBModeSymmetryBudget.threeModeMixing p + MUBModeSymmetryBudget.threeModeMixing q
     linarith
   push Not at hpSmall hqSmall
