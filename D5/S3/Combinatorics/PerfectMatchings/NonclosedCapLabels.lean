@@ -48,7 +48,11 @@ theorem compatible_reconnected (hx : Compatible M (detourLabels j y B)) :
   · rw [hpb] at hk
     have hp : skipPair j ((capSurgery M j).partner k) = M.partner j.castSucc := by
       rw [capSurgery_reconnect]
-      simp only [reconnectPartner, hpa, hpb, if_false, if_true]
+      have hba : j.succ ≠ j.castSucc := by
+        intro h
+        have hval : j.val + 1 = j.val := congrArg Fin.val h
+        omega
+      simp only [reconnectPartner, hpb, hba, if_false, if_true]
     have he : x (skipPair j k).castSucc =
           x (skipPair j ((capSurgery M j).partner k)).succ ∧
         x (skipPair j k).succ =
@@ -82,12 +86,12 @@ theorem compatible_of_reconnected
   · subst t; exact hb
   by_cases hpa : M.partner t = j.castSucc
   · have htu : t = M.partner j.castSucc := by
-      simpa only [M.involutive] using congrArg M.partner hpa
+      exact (M.involutive t).symm.trans (congrArg M.partner hpa)
     rw [hpa, htu]
     exact ⟨ha.2.symm, ha.1.symm⟩
   by_cases hpb : M.partner t = j.succ
   · have htv : t = M.partner j.succ := by
-      simpa only [M.involutive] using congrArg M.partner hpb
+      exact (M.involutive t).symm.trans (congrArg M.partner hpb)
     rw [hpb, htv]
     exact ⟨hb.2.symm, hb.1.symm⟩
   let k := unskipPair j t hta htb
@@ -103,6 +107,8 @@ section Nonclosed
 variable {m : ℕ} (M : NCMatching (m + 2)) (j : Fin (m + 1))
   (hn : M.partner j.castSucc ≠ j.succ)
 
+include hn
+
 theorem capU_survives :
     M.partner j.castSucc ≠ j.castSucc ∧ M.partner j.castSucc ≠ j.succ :=
   ⟨M.noFixed _, hn⟩
@@ -112,7 +118,7 @@ theorem capV_survives :
   refine ⟨?_, M.noFixed _⟩
   intro h
   apply hn
-  simpa only [M.involutive] using (congrArg M.partner h).symm
+  exact (congrArg M.partner h).symm.trans (M.involutive j.succ)
 
 /-- The two actual surviving partners, in shorter coordinates. -/
 def capU : Fin m := unskipPair j (M.partner j.castSucc)
@@ -131,7 +137,7 @@ theorem capSurgery_partner_U :
     (capSurgery M j).partner (capU M j hn) = capV M j hn := by
   apply skipPair_injective j
   rw [capSurgery_reconnect, skip_capU, skip_capV]
-  simp only [reconnectPartner, M.involutive, if_true]
+  simp only [reconnectPartner, M.involutive j.castSucc, if_true]
 
 theorem capSurgery_partner_V :
     (capSurgery M j).partner (capV M j hn) = capU M j hn := by
@@ -147,10 +153,14 @@ theorem cap_interval_before (hu : M.partner j.castSucc < j.castSucc) :
     simp only [Fin.lt_def, Fin.val_castSucc] at hu
     simp only [Fin.val_mk, if_pos hu]
   intro t hlow hhigh
+  change (capU M j hn).val + 1 ≤ t.val at hlow
+  change t.val < j.val at hhigh
   have htv : (skipPair j t).val = t.val := by
     simp only [skipPair, insertPort, if_pos hhigh, Fin.val_mk]
   have hi := M.interior_closed (M.partner j.castSucc) (skipPair j t)
-    (by change (M.partner j.castSucc).val < (skipPair j t).val; omega)
+    (by change (M.partner j.castSucc).val < (skipPair j t).val
+        rw [← huval]
+        omega)
     (by rw [M.involutive]; change (skipPair j t).val < j.val; omega)
   rw [M.involutive] at hi
   have hpa : M.partner (skipPair j t) ≠ j.castSucc := ne_of_lt hi.2
@@ -164,11 +174,14 @@ theorem cap_interval_before (hu : M.partner j.castSucc < j.castSucc) :
     rw [capSurgery_reconnect]
     simp only [reconnectPartner, hpa, hpb, if_false]
   have hpv := congrArg Fin.val hp
-  simp only [Fin.lt_def] at hi
+  change (M.partner j.castSucc).val < (M.partner (skipPair j t)).val ∧
+    (M.partner (skipPair j t)).val < j.val at hi
+  rw [← huval] at hi
   change (if ((capSurgery M j).partner t).val < j.val then
     ((capSurgery M j).partner t).val else ((capSurgery M j).partner t).val + 2) =
     (M.partner (skipPair j t)).val at hpv
-  simp only [Fin.val_succ, huval] at hlow ⊢
+  change (capU M j hn).val + 1 ≤ ((capSurgery M j).partner t).val ∧
+    ((capSurgery M j).partner t).val < j.val
   split_ifs at hpv <;> omega
 
 /-- The untouched interval inside the old b-v arc, when v is on the right. -/

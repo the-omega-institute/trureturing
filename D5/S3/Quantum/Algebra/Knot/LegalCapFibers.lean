@@ -22,9 +22,9 @@ def legalDetour {L : Type*} [Fintype L] [DecidableEq L]
   refine ⟨detourLabels j y.val B.val, ?_, ?_, ?_⟩
   · have hz : (0 : Fin (m + 3)).val ≤ j.val := Nat.zero_le _
     simpa [detourLabels, hz] using y.property.1
-  · have hl : ¬ (Fin.last (m + 2)).val ≤ j.val := by have := j.isLt; simp; omega
-    have hn : (Fin.last (m + 2)).val ≠ j.val + 1 := by have := j.isLt; simp; omega
-    simpa [detourLabels, hl, hn] using y.property.2.1
+  · have hl : ¬ m + 2 ≤ j.val := by have := j.isLt; omega
+    have hn : m + 1 ≠ j.val := by have := j.isLt; omega
+    simpa [detourLabels, hl, hn, Fin.last] using y.property.2.1
   · intro t
     by_cases hta : t = j.castSucc
     · subst t
@@ -41,6 +41,8 @@ section Closed
 variable {m : ℕ} (M : NCMatching (m + 2)) (j : Fin (m + 1))
   (hc : M.partner j.castSucc = j.succ)
 
+include hc
+
 /-- Exactly the entire closed conjunct of CapFiberGoal on actual rooted paths. -/
 theorem capSurgery_close_fiber {L : Type*} [Fintype L] [DecidableEq L]
     (R : L → L → Prop) (q : L → ℝ) (s : L) (y : LegalPath R m s s) :
@@ -56,6 +58,8 @@ end Closed
 section Nonclosed
 variable {m : ℕ} (M : NCMatching (m + 2)) (j : Fin (m + 1))
   (hn : M.partner j.castSucc ≠ j.succ)
+
+include hn
 
 /-- The singleton is in the subtype of genuine R-neighbors. Its edge is the
 surviving LegalPath edge at capU, reversed using the explicit symmetry premise. -/

@@ -20,20 +20,27 @@ section AffectedProducts
 variable {m : ℕ} (M : NCMatching (m + 2)) (j : Fin (m + 1))
   (hn : M.partner j.castSucc ≠ j.succ)
 
+include hn
+
 /-- Four *distinct* old affected endpoints; every other endpoint is in U. -/
 theorem old_affected_product {K : Type*} [CommMonoid K] (f : Fin (m + 2) → K) :
     (∏ t ∈ Finset.univ.filter (fun t => ¬ Unchanged M j t), f t) =
       f j.castSucc * f j.succ * f (M.partner j.castSucc) * f (M.partner j.succ) := by
   classical
-  have hab : j.castSucc ≠ j.succ := by intro h; have := congrArg Fin.val h; omega
+  have hab : j.castSucc ≠ j.succ := by
+    intro h
+    have hval : j.val = j.val + 1 := congrArg Fin.val h
+    omega
   have hua := M.noFixed j.castSucc
   have hvb := M.noFixed j.succ
   have hva := (capV_survives M j hn).1
   have huv : M.partner j.castSucc ≠ M.partner j.succ := M.partner.injective.ne hab
   have hs : Finset.univ.filter (fun t => ¬ Unchanged M j t) =
       {j.castSucc, j.succ, M.partner j.castSucc, M.partner j.succ} := by
-    ext t
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and,
+    apply Finset.ext
+    intro t
+    rw [Finset.mem_filter]
+    simp only [Finset.mem_univ, true_and,
       Finset.mem_insert, Finset.mem_singleton, Unchanged]
     tauto
   rw [hs]
@@ -53,16 +60,25 @@ theorem short_affected_product {K : Type*} [CommMonoid K] (f : Fin m → K) :
     have h' := congrArg (skipPair j) h
     rw [skip_capU, skip_capV] at h'
     have hab := M.partner.injective h'
-    have hv := congrArg Fin.val hab
+    have hv : j.val = j.val + 1 := congrArg Fin.val hab
     omega
   have hs : Finset.univ.filter (fun k => ¬ ShortUnchanged M j k) =
       {capU M j hn, capV M j hn} := by
     ext k
     simp only [Finset.mem_filter, Finset.mem_univ, true_and,
       Finset.mem_insert, Finset.mem_singleton, ShortUnchanged,
-      ← skip_capU M j hn, ← skip_capV M j hn,
-      (skipPair_injective j).eq_iff]
-    tauto
+      ← skip_capU M j hn, ← skip_capV M j hn, Set.mem_setOf_eq]
+    constructor
+    · intro h
+      by_cases hu : k = capU M j hn
+      · exact Or.inl hu
+      · apply Or.inr
+        by_contra hv
+        exact h ⟨fun he => hu (skipPair_injective j he),
+          fun he => hv (skipPair_injective j he)⟩
+    · rintro (rfl | rfl) h
+      · exact h.1 rfl
+      · exact h.2 rfl
   rw [hs, Finset.prod_pair huv]
 end AffectedProducts
 
@@ -71,6 +87,8 @@ variable {L : Type*} {m : ℕ} (M : NCMatching (m + 2)) (j : Fin (m + 1))
   (hn : M.partner j.castSucc ≠ j.succ)
   (q : L → ℝ) (hq : ∀ a, q a ≠ 0)
   (y : Fin (m + 1) → L) (B : L)
+
+include hn hq
 
 /-- Product transport with the cap coefficient, from the literal finite products.
 The proof does not assume the affected coefficient identity: it proves it after
@@ -124,9 +142,11 @@ theorem nonclose_opening_product
     rw [skip_capV M j hn, skip_capU M j hn] at h
     exact h.symm
   have hfa : openingFactor q M x a = if a < u then q B / q A else 1 := by
-    simp only [openingFactor, haL, haR]
+    change (if a < u then q (x a.succ) / q (x a.castSucc) else 1) = _
+    rw [haL, haR]
   have hfb : openingFactor q M x b = if b < v then q A / q B else 1 := by
-    simp only [openingFactor, hbL, hbR]
+    change (if b < v then q (x b.succ) / q (x b.castSucc) else 1) = _
+    rw [hbL, hbR]
   have hpu : M.partner u = a := M.involutive a
   have hpv : M.partner v = b := M.involutive b
   have hfu : openingFactor q M x u = if u < a then q A / q B else 1 := by
@@ -140,7 +160,6 @@ theorem nonclose_opening_product
       if v < u then q B / q A else 1 := by
     simp only [openingFactor, hlk, hlorder, hlc, hls]
   obtain ⟨hold, hnew⟩ := opening_products_split M j q y B
-  dsimp only at hold hnew
   rw [old_affected_product M j hn] at hold
   rw [short_affected_product M j hn] at hnew
   change openingProduct q M x = _ at hold
