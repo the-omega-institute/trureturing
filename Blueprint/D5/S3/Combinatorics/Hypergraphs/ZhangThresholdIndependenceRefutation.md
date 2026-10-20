@@ -86,6 +86,10 @@ $$\neg (\forall (k: \mathbb{N}) (V: \operatorname{Type}) (W: \operatorname{Type}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hypergraphs/ZhangThresholdIndependenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-2026-threshold-hypergraph-independence-polynomial` (refuted) by `D5/S3/Combinatorics/Hypergraphs/ZhangThresholdIndependenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-2026-threshold-hypergraph-independence-polynomial","declaration_gid":"D5/S3/Combinatorics/Hypergraphs/ZhangThresholdIndependenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Erchuan Zhang (2023). *On the Independence Polynomial and Threshold of an Antiregular k-Hypergraph*. DOI: [10.1016/j.dam.2025.07.017](https://doi.org/10.1016/j.dam.2025.07.017). URL: <https://arxiv.org/abs/2303.01024v1>.

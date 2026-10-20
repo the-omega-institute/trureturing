@@ -36,13 +36,17 @@ internal sealed class ZhangThresholdIndependenceRefutationDocument : IScribeDocu
             Node("result", "A five-vertex counterexample", "result",
                 Disp(new Formula.Not(Parenthesized(ClaimBody()))),
                 "On Fin 5, take all triples except {0,1,2}, {0,1,3}, {0,1,4} for the first hypergraph, and all triples except {0,1,2}, {0,1,3}, {0,2,3} for the second. The first labels are (0,0,1,1,1) with threshold 1; the second labels are (0,1,1,1,3) with threshold 2. Each hypergraph has exactly the empty independent set, the five singletons, the ten pairs, and its three missing triples. Hence their independence polynomials coincide. Vertex 2 of the first has degree 5; no vertex of the second has degree 5. A vertex bijection preserving edges preserves these incidence counts, so an isomorphism is impossible. This answers the general T2 question at five vertices. The arbitrary-size family, the antiregular identification and the T1 question are not established here. The source's formulas and threshold theorems do not require a positive answer to this closing question.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhang-2026-threshold-hypergraph-independence-polynomial"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("zhang-threshold-independence-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));
