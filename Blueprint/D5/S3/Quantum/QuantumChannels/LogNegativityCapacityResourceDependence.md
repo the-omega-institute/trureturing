@@ -52,7 +52,31 @@ $$claim \Leftrightarrow \forall (dA : \mathbb{N}), \forall (dB : \mathbb{N}), \f
 
 Section VII, p. 7, verbatim: “The most obvious open question is whether log-negativity EC is resource independent for all unitaries, or indeed all CPTP maps, or whether this is a singular feature of 2-qubit gates.” The assertion here is its all-CPTP clause. The dimensions dA and dB and the finite Kraus count r range over natural numbers. Completeness of the Kraus family states trace preservation. The two capacities include every finite local ancillary system.
 
-**Theorem 1.5 (Separable states have positive partial transpose).**
+**Definition 1.5 (The symmetric Bell vector).**
+
+$$(symKet : (\operatorname{Fin}\left(3\right) \times \operatorname{Fin}\left(3\right)) \to \mathbb{C}) = \operatorname{single}\left(((0, 1) : (\operatorname{Fin}\left(3\right) \times \operatorname{Fin}\left(3\right))), (1 : \mathbb{C})\right) + \operatorname{single}\left(((1, 0) : (\operatorname{Fin}\left(3\right) \times \operatorname{Fin}\left(3\right))), (1 : \mathbb{C})\right)$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.symKet` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The unnormalized vector has amplitude one at (0,1) and (1,0), and zero elsewhere in the two-qutrit space. Pi.single denotes a function supported at one index.
+
+**Definition 1.6 (The antisymmetric Bell vector).**
+
+$$(antiKet : (\operatorname{Fin}\left(3\right) \times \operatorname{Fin}\left(3\right)) \to \mathbb{C}) = \operatorname{single}\left(((0, 1) : (\operatorname{Fin}\left(3\right) \times \operatorname{Fin}\left(3\right))), (1 : \mathbb{C})\right) - \operatorname{single}\left(((1, 0) : (\operatorname{Fin}\left(3\right) \times \operatorname{Fin}\left(3\right))), (1 : \mathbb{C})\right)$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.antiKet` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The unnormalized vector has amplitude one at (0,1), minus one at (1,0), and zero elsewhere in the two-qutrit space. The two Bell vectors give the off-diagonal terms in the positive and negative parts of the Bell state's partial transpose.
+
+**Theorem 1.7 (Separable states have positive partial transpose).**
 
 $$\forall (A : Type), \forall (B : Type), \forall (finiteA : \operatorname{Fintype}\left(A\right)), \forall (finiteB : \operatorname{Fintype}\left(B\right)), \forall (eqA : \operatorname{DecidableEq}\left(A\right)), \forall (eqB : \operatorname{DecidableEq}\left(B\right)), \forall (sigma : \operatorname{Matrix}\left((A \times B), (A \times B), \mathbb{C}\right)), (\operatorname{IsSeparable}\left(sigma\right)) \Rightarrow \operatorname{PosSemidef}\left(\lambda (i : (A \times B)) \mapsto \lambda (j : (A \times B)) \mapsto sigma\left((\operatorname{fst}\left(i\right), \operatorname{snd}\left(j\right)), (\operatorname{fst}\left(j\right), \operatorname{snd}\left(i\right))\right)\right)$$
 
@@ -64,7 +88,7 @@ $$\forall (A : Type), \forall (B : Type), \forall (finiteA : \operatorname{Finty
 
 For arbitrary finite types A and B, a finite convex mixture of product density matrices remains positive semidefinite after transposing the B indices. The matrix entry at (a,b),(c,d) is sigma((a,d),(c,b)). Positivity follows by applying partial transpose to each product and adding the nonnegative weighted terms.
 
-**Theorem 1.6 (A CPTP separation).**
+**Theorem 1.8 (A CPTP separation).**
 
 $$\neg (\forall (dA : \mathbb{N}), \forall (dB : \mathbb{N}), \forall (r : \mathbb{N}), \forall (K : \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right)), (\sum_{k : \operatorname{Fin}\left(r\right)} (\operatorname{conjTranspose}\left(K\left(k\right)\right) \cdot K\left(k\right)) = (1 : \operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right))) \Rightarrow \operatorname{capAssisted}\left(K\right) = \operatorname{capSep}\left(K\right))$$
 
@@ -86,12 +110,14 @@ The Tiles complementary projector Q is positive under partial transpose. The inp
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.antiKet`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.capAssisted`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.capSep`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.claim`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.extend`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.result`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.separable_ppt`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.symKet`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitMaximumPurity](../Entanglement/AbsolutePPT/QuadbitMaximumPurity.md)
 - Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](../Entanglement/GHZMeasureBiseparableBound.md)
 - Dependency: [D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction](../Information/SeparableStateLocalUnitaryStabilizerObstruction.md)
