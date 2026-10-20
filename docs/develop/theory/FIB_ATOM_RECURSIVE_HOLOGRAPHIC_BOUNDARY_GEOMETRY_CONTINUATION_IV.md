@@ -5363,3 +5363,138 @@ problem and is not covered by this theorem. It still does not prove a
 universal transport no-go or select a physical dimension.
 
 ## 117.99 追加锚（本行以下为增补区）
+
+## 118. The surviving nonuniform clock has a mass-budget profile
+
+The scalar no-go does not justify declaring every clock repair impossible.
+The next weaker candidate is a node-dependent clock on the retained old
+coordinates. Its exact algebra identifies what a successful bridge would
+have to pay for.
+
+**Definition 118.1 (old-coordinate diagonal clock).** Let
+\(\Lambda_e=\operatorname{diag}(\lambda_e(p))\) be a positive diagonal
+operator on \(\ell^2(V_e)\). Replace the scalar condition (117.1) by
+
+$$
+\boxed{
+J_e^*\mathcal L_{e+1}S_Q
+   =\Lambda_e\mathcal L_e.
+}
+\tag{118.1}
+$$
+
+This is still only an old-coordinate response condition. A full
+node-dependent intertwining condition would also constrain the child block
+and is strictly stronger.
+
+**Theorem 118.2 (necessary profile for a diagonal clock).** Assume the old
+tree is connected and nontrivial, \(B_e\ne\varnothing\), and \(M_e\) and
+\(M_{e+1}\) are positive diagonal. If (F), (N), and (118.1) hold, then
+\(S_Q=T_e\), and, writing
+
+$$
+M_{e+1}=
+\begin{pmatrix}M_o&0\\0&M_c\end{pmatrix},
+\qquad M_c>0,
+$$
+
+one necessarily has
+
+$$
+\boxed{
+M_o=M_e\Lambda_e^{-1},
+\qquad
+C_eM_cC_e^*
+   =M_e(I-\Lambda_e^{-1}).
+}
+\tag{118.2}
+$$
+
+Consequently:
+
+1. every old vertex outside \(M_e\) has \(\lambda_e(p)=1\);
+2. every beta parent \(p\in M_e\) must satisfy
+
+   $$
+   m_{pL}+m_{pR}<m_e(p),
+   \qquad
+   \lambda_e(p)
+   =
+   \frac{m_e(p)}
+        {m_e(p)-m_{pL}-m_{pR}},
+   \tag{118.3}
+   $$
+
+   where \(m_e(p)=M_e(p,p)\) and
+   \(m_{p\sigma}=M_c(p\sigma,p\sigma)\).
+
+**Proof.** Condition (F) again forces \(S_Q=T_e\). Using
+\(A_{e+1}T_e=J_eA_e\), the old-coordinate part of (118.1) becomes
+
+$$
+M_o^{-1}A_e=\Lambda_eM_e^{-1}A_e.
+\tag{118.4}
+$$
+
+Every row of \(A_e\) is nonzero, so the diagonal factors in (118.4) agree
+row by row:
+
+$$
+M_o^{-1}=\Lambda_eM_e^{-1},
+\qquad
+M_o=M_e\Lambda_e^{-1}.
+\tag{118.5}
+$$
+
+The norm identity (N) is
+
+$$
+M_o+C_eM_cC_e^*=M_e.
+\tag{118.6}
+$$
+
+Substitution gives the second equation of (118.2). Since
+\(C_eM_cC_e^*\) is supported exactly on beta-parent coordinates and its
+diagonal entry at \(p\in M_e\) is \(m_{pL}+m_{pR}\), (118.3) follows.
+Positivity of \(\Lambda_e\) requires the denominator in (118.3) to be
+positive. At every \(p\notin M_e\), the left side of the second equation in
+(118.2) is zero, so positivity of \(m_e(p)\) forces
+\(\lambda_e(p)=1\). \(\square\)
+
+The first witness \(x=\langle\alpha,\beta\rangle\) exposes the profile
+without any abstraction. With old order
+\((\varepsilon,L,R)\), the two children \(RL,RR\) are born at the single
+beta parent \(R\), and
+
+$$
+C_eM_cC_e^*
+   =\operatorname{diag}(0,0,m_{RL}+m_{RR}).
+\tag{118.7}
+$$
+
+Thus \(\lambda_e(\varepsilon)=\lambda_e(L)=1\), while
+
+$$
+\lambda_e(R)
+   =\frac{m_R}{m_R-m_{RL}-m_{RR}}.
+\tag{118.8}
+$$
+
+For the literal counting measure,
+\(m_\varepsilon=m_L=m_R=m_{RL}=m_{RR}=1\), so (118.8) has a negative
+denominator. Hence a positive diagonal node-dependent clock cannot repair
+the counting-measure transport even after the global scalar restriction is
+removed.
+
+For a general positive mass assignment, (118.3) leaves a genuine but narrow
+bridge candidate: every beta parent must reserve enough old mass to pay for
+both children, and the clock must speed up precisely on those parent
+coordinates. The condition is necessary, not sufficient. In particular,
+the full transport equation still has the child-block obstruction
+\(0=\Lambda_{e+1,\mathrm{child}}C_e^*\mathcal L_e\) whenever its child
+response is required. A successful realization would therefore need both a
+mass profile satisfying (118.3) and a separate rule for the newly born
+coordinates. This result does not establish such a realization, and it
+does not select a physical dimension.
+
+## 118.99 追加锚（本行以下为增补区）
