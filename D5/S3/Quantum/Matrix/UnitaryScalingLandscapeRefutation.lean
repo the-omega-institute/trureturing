@@ -3,18 +3,11 @@
    mirror-B: D5/B/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation.claim; result=D5/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation.result; claim=D5/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation.claim; result=D5/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation.result; claim=D5/S3/Quantum/Matrix/UnitaryScalingLandscapeRefutation.claim
    digest: A unitary matrix of order three has a nonglobal local scaling minimum. -/
 
 import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.Topology.Order.LocalExtr
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.FunProp
 
 /-! The sum of the entries of a diagonally scaled unitary matrix can have a
 nonglobal local maximum in modulus, giving a nonglobal local minimum of its landscape. -/
@@ -239,6 +232,60 @@ private theorem witness_local_min : IsLocalMin (landscape witnessMatrix) 0 := by
   rw [landscape_zero, landscape]
   have hn := norm_nonneg (scalingSum witnessMatrix p)
   norm_num only [Nat.cast_ofNat]
+  nlinarith
+
+private def comparisonColumns : Fin 3 → ℝ := ![0, 2 * Real.pi / 3, Real.pi / 3]
+
+private theorem comparison_squares (j : Fin 3) :
+    ‖rowSum witnessMatrix comparisonColumns j‖ ^ 2 =
+      ![(433 / 289 : ℝ), 217 / 289 - Real.sqrt 3 / 34,
+        217 / 289 + Real.sqrt 3 / 34] j := by
+  have hu : (comparisonColumns 1 + comparisonColumns 2) / 2 - comparisonColumns 0 =
+      Real.pi / 2 := by norm_num [comparisonColumns]; ring
+  have hv : (comparisonColumns 1 - comparisonColumns 2) / 2 = Real.pi / 6 := by
+    norm_num [comparisonColumns]
+    ring
+  rw [row_reduction, hu, hv, norm_mul, norm_div, phase_norm]
+  norm_num only [mul_pow, div_pow, one_pow]
+  have h0 := norm_affine_phase_sq (-1) (24 * Real.cos (Real.pi / 6)) (Real.pi / 2)
+  have hm := norm_affine_phase_sq 12
+    (Real.cos (Real.pi / 6) - 17 * Real.sin (Real.pi / 6)) (Real.pi / 2)
+  have hp := norm_affine_phase_sq 12
+    (Real.cos (Real.pi / 6) + 17 * Real.sin (Real.pi / 6)) (Real.pi / 2)
+  norm_num only [Complex.ofReal_neg, Complex.ofReal_one, Complex.ofReal_ofNat,
+    Real.cos_pi_div_two, Real.cos_pi_div_six, Real.sin_pi_div_six] at h0 hm hp
+  have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
+  fin_cases j <;>
+    norm_num [reducedRows, Real.cos_pi_div_six, Real.sin_pi_div_six] at h0 hm hp ⊢ <;>
+    nlinarith
+
+private theorem comparison_larger : 49 / 17 < ∑ j, ‖rowSum witnessMatrix comparisonColumns j‖ := by
+  have hs : (3 / 2 : ℝ) ≤ Real.sqrt 3 := Real.le_sqrt_of_sq_le (by norm_num)
+  have hs2 : Real.sqrt 3 ≤ 2 := (Real.sqrt_le_iff).mpr ⟨by norm_num, by norm_num⟩
+  have h0 : (6 / 5 : ℝ) ≤ ‖rowSum witnessMatrix comparisonColumns 0‖ := by
+    have := comparison_squares 0
+    norm_num only [Matrix.cons_val_zero] at this
+    nlinarith [norm_nonneg (rowSum witnessMatrix comparisonColumns 0)]
+  have hm : (4 / 5 : ℝ) ≤ ‖rowSum witnessMatrix comparisonColumns 1‖ := by
+    have := comparison_squares 1
+    norm_num at this
+    nlinarith [norm_nonneg (rowSum witnessMatrix comparisonColumns 1)]
+  have hp : (8 / 9 : ℝ) ≤ ‖rowSum witnessMatrix comparisonColumns 2‖ := by
+    have := comparison_squares 2
+    norm_num at this
+    nlinarith [norm_nonneg (rowSum witnessMatrix comparisonColumns 2)]
+  simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
+  change 49 / 17 < ‖rowSum witnessMatrix comparisonColumns 0‖ +
+    (‖rowSum witnessMatrix comparisonColumns 1‖ + ‖rowSum witnessMatrix comparisonColumns 2‖)
+  linarith
+
+theorem result : ¬ claim := by
+  intro h
+  have hglobal := h 3 witnessMatrix witness_unitary 0 witness_local_min
+    (fun j => -Complex.arg (rowSum witnessMatrix comparisonColumns j), comparisonColumns)
+  rw [landscape_zero, landscape, scaling_aligned] at hglobal
+  have hs := comparison_larger
+  norm_num only [Nat.cast_ofNat] at hglobal
   nlinarith
 
 end D5.S3.Quantum.Matrix.UnitaryScalingLandscapeRefutation
