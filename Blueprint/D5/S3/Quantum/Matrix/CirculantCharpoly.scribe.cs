@@ -9,7 +9,7 @@ internal sealed class CirculantCharpolyDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fourier modes factor the characteristic polynomial of a circulant matrix.",
         H("Circulants and paired real cosine modes"), Blocks(
-            Item("root", "A positive primitive root", "The complex exponential exp(2 pi i/n) fixes the positive orientation of the modes.", DescribeRole.Definition),
+            Item("root", "A positive primitive root", "For positive n, the complex exponential exp(2 pi i/n) is primitive and fixes the positive orientation of the modes.", DescribeRole.Definition),
             Item("fourierValue", "Complex mode values", "The value at mode j is the sum of v(k) times the primitive root to the natural power j k.", DescribeRole.Definition),
             Item("fourierVector", "Fourier vectors", "The vector at mode j has coordinate exp(-2 pi i j k/n). Mathlib defines a circulant entry by v(a-b), so this negative vector exponent corresponds to a positive eigenvalue exponent.", DescribeRole.Definition),
             Item("fourierBasis", "An invertible Fourier basis", "Transport the coordinate basis through the invertible discrete Fourier transform, then identify the finite residue indices with Fin n. No primality assumption on n is needed.", DescribeRole.Definition),
