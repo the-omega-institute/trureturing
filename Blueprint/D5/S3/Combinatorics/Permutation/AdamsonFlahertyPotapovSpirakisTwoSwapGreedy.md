@@ -160,6 +160,10 @@ $$\neg (\forall s \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall w \in \o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/AdamsonFlahertyPotapovSpirakisTwoSwapGreedy.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/adamson-flaherty-potapov-spirakis-2023-two-swap-greedy` (refuted) by `D5/S3/Combinatorics/Permutation/AdamsonFlahertyPotapovSpirakisTwoSwapGreedy.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"adamson-flaherty-potapov-spirakis-2023-two-swap-greedy","declaration_gid":"D5/S3/Combinatorics/Permutation/AdamsonFlahertyPotapovSpirakisTwoSwapGreedy.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Duncan Adamson; Nathan Flaherty; Igor Potapov; Paul G. Spirakis (2024). *Structural and Combinatorial Properties of 2-swap Word Permutation Graphs*. DOI: [10.1007/978-3-031-55601-2_5](https://doi.org/10.1007/978-3-031-55601-2_5). URL: <https://arxiv.org/abs/2307.01648v3>.
