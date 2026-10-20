@@ -4253,3 +4253,591 @@ they do not claim a globally optimal controller or a sharp exponential
 precision transition.
 
 ## 追加锚（本行以下为增补区）
+
+## 38. Phase-resolved inverse Choi geometry on one actual controller
+
+**Definition 38.1 (Posterior analysis matrices).** Retain Definitions
+2.1–2.4 and 18.1, including the threshold-free error when needed.
+Write $S=[\xi,f_1,f_2]$, $F_h=\lambda^{-k}G_h$ for $|h|=k$, and
+$f_j=\lambda^{-1}g_j$, so $F_{hj}=f_jF_h$. Use output-first
+vectorization $\operatorname{vec}A=\sum_{a,b}A_{ab}|a\rangle|b\rangle$.
+For one complete controller, let $p_{k,s}(r\mid h)$ be its induced
+record law and put
+
+$$
+\begin{aligned}
+\omega_{k,s}(r,h)&=2^{-k}p_{k,s}(r\mid h),&
+u_h&=\operatorname{vec}(Q_h^\dagger)/\sqrt3,\\
+X_{k,r,s}&=\sum_{|h|=k}\omega_{k,s}(r,h)u_hu_h^\dagger,&
+m_{k,r,s}&=\operatorname{Tr}X_{k,r,s},\\
+\kappa_{k,r,s}&=X_{k,r,s}/m_{k,r,s}\quad(m_{k,r,s}>0),&
+v_k(s)&=\sum_{r:m>0}m_{k,r,s}(1-\operatorname{Tr}\kappa_{k,r,s}^2).
+\end{aligned}
+\tag{38.1}
+$$
+
+All sums run over words, with their actual multiplicities. Zero-mass
+matrices are zero and contribute zero. Write $\bar v_k=\mathbb E_Sv_k(S)$.
+These are posterior inverse-branch Choi analysis matrices; the controller
+still stores only its complete classical state $r$ and its permitted seed.
+
+**Theorem 38.2 (Exact minimal linear carrier).** On
+$\mathcal K=\mathbb C\oplus M_2(\mathbb C)$ with its Hilbert–Schmidt
+inner product define
+
+$$
+\mathsf E(a,\operatorname{vec}A)
+ =\operatorname{vec}(S\operatorname{diag}(a,A)S^\dagger),\qquad
+z_h=\frac{(1,\operatorname{vec}F_h^\dagger)}{\sqrt3},\qquad
+\mathsf M_j=1\oplus(I_2\otimes\overline{f_j}).
+\tag{38.2}
+$$
+
+Then $\mathsf E$ is an isometry, $u_h=\lambda^{-k}\mathsf Ez_h$,
+$z_{hj}=\mathsf M_jz_h$, and on the whole carrier
+
+$$
+(I_3\otimes\overline{V_j})\mathsf E
+ =\lambda^{-1}\mathsf E\mathsf M_j.
+\tag{38.3}
+$$
+
+The spans of the actual fixed-length vectors have complex dimensions
+$1,2,4,5$ at $k=0,1,2,3$, and dimension five at every $k\ge3$.
+Consequently five is minimal for a common exact isometric linear carrier
+of these vectors. It is not an identification with the five Boolean
+occupation states, a physical five-dimensional register, or a lower bound
+on nonlinear encodings.
+
+Proof. The five matrices $\xi\xi^\dagger$ and
+$f_af_b^\dagger$ for $a,b\in\{1,2\}$ are Hilbert–Schmidt orthonormal.
+This proves isometry. The source decomposition is
+$Q_h=\lambda^kS\operatorname{diag}(1,F_h)S^\dagger$.
+Taking its adjoint proves the vector identity. The formula
+$\operatorname{vec}(AB)=(I\otimes B^{\mathsf T})\operatorname{vec}A$
+and $F_{hj}^\dagger=F_h^\dagger f_j^\dagger$ give the chronological
+right tensor factor and the intertwining identity, also on arbitrary
+block-diagonal matrices. Removing $\lambda^{-k}$ from the entire vector
+does not change its projector; replacing $F_h$ by $G_h$ while keeping the
+first coordinate one changes the relative phase and generally its projector.
+
+For rank, put $a=U_0$, $b=U_1$. The coefficient matrix expressing
+$(V_0,V_1)$ in $(U_0,U_1)$ has determinant one. Its tensor powers are
+invertible, so the spans of products of either pair at each fixed length
+coincide. The relations $a^2=b^3=I$, $aba=b^2$ show that length-three
+chronological words $000,001,010,011,110,111$ give respectively
+$a,b,b^2,b^2a,ab^2,I$. These are the six permutation matrices. Their
+sole linear relation is $I+b+b^2=a+ab+ab^2$: in any relation each
+matrix entry equates the coefficient of one even permutation to the
+negative coefficient of one odd permutation, and every such even/odd
+pair meets in an entry. Thus the span is five-dimensional. At length two
+the four matrices $I,ba,ab,b^2$ are independent, since the sole six-term
+relation has every coefficient nonzero. The shorter ranks are immediate.
+Invertible left multiplication by $V_0$ preserves dimension from one
+length to the next, while the common block algebra has dimension five.
+Adjoints and nonzero common scalars preserve these ranks. Any isometric
+linear carrier must contain the resulting span. $\square$
+
+## 39. Exact occupation-weighted causal merge payments
+
+**Theorem 39.1 (Reduced recursion and cumulative purity).** For the very
+same controller of Definition 38.1, define
+$Y_{k,r,s}=\sum_h\omega_{k,s}(r,h)z_hz_h^\dagger$.
+Then $X=\mathsf EY\mathsf E^\dagger$; their masses and squared traces
+coincide. With the original stochastic tables,
+
+$$
+Y_{k+1,b,s}=\frac12\sum_{r,j}T_{k+1,j,s}(b\mid r)
+ \mathsf M_jY_{k,r,s}\mathsf M_j^\dagger,\qquad
+m_{k+1,b,s}=\frac12\sum_{r,j}m_{k,r,s}T_{k+1,j,s}(b\mid r).
+\tag{39.1}
+$$
+
+Suppress $k,s$ and write $\eta_r=Y_r/m_r$ on occupied states. For
+incoming indices $i=(r,j)$ to $b$, put
+$w_{b;i}=m_rT_{k+1,j,s}(b\mid r)/2$ and
+$R_i=\mathsf M_j\eta_r\mathsf M_j^\dagger$. Then
+
+$$
+v_{k+1}(s)-v_k(s)
+=\sum_{b:m_b'>0}\frac1{2m_b'}
+ \sum_{i,i'}w_{b;i}w_{b;i'}\|R_i-R_{i'}\|_F^2\ge0,
+\qquad v_n(s)=\sum_{k=0}^{n-1}(v_{k+1}(s)-v_k(s)).
+\tag{39.2}
+$$
+
+Proof. The actual joint recursion is
+$\omega_{k+1,s}(b,hj)=\frac12\sum_rT_{k+1,j,s}(b\mid r)
+\omega_{k,s}(r,h)$. Theorem 38.2 gives (39.1). Isometry gives
+$\operatorname{Tr}X^2=\operatorname{Tr}Y^2$ and equality of masses.
+For each destination expand the square of $\sum_iw_iR_i$ to obtain
+
+$$
+\sum_iw_i\operatorname{Tr}R_i^2
+-\frac{\operatorname{Tr}(\sum_iw_iR_i)^2}{\sum_iw_i}
+=\frac{\sum_{i,i'}w_iw_{i'}\|R_i-R_{i'}\|_F^2}
+       {2\sum_iw_i}.
+$$
+
+The pair sum is ordered. Summing destinations uses stochastic row sums,
+the fair factor $1/2$, and unitary invariance of purity. A zero destination
+mass has all incoming weights zero. Initially
+$Y_{0,r,s}=\pi_s(r)z_\varnothing z_\varnothing^\dagger$, where
+$z_\varnothing=(1,1,0,0,1)/\sqrt3$, so $v_0=0$ even for a random
+initial state. This proves telescoping. All identities are bounded
+measurable finite sums on the common full-measure padded-width set and
+therefore integrate over every allowed independent Borel seed. $\square$
+
+**Proposition 39.2 (Separate deterministic scalar minima).** Let
+$c_W(n)=\inf_{\mathcal C}\bar v_n(\mathcal C)$ over the complete causal
+width-at-most-$W$ controllers. This is an attained minimum over seed-free
+deterministic changing programs with one initial state. Splitting an
+incoming contribution among destinations has no intrinsic purity cost;
+mixing distinct normalized incoming matrices has exactly cost (39.2).
+
+Proof. On positive matrices set
+$\phi(Y)=\operatorname{Tr}Y^2/\operatorname{Tr}Y$, with $\phi(0)=0$.
+The identity in the preceding proof proves convexity, and
+$0\le\phi(Y)\le\operatorname{Tr}Y$ proves continuity at zero.
+Homogeneity $\phi(aY)=a\phi(Y)$ proves the splitting assertion.
+At finite $n,W$ the initial simplex and the $2nW$ stochastic row
+simplices form a compact product. Terminal matrices are continuous in
+these parameters. Each trajectory uses a given time-indexed row at most
+once, so terminal matrices are affine in any one row separately and in
+the initial law. Thus $1-\sum_r\phi(Y_r)$ is separately concave. At a
+global minimum some vertex of any chosen simplex has no larger value.
+Successively replacing all rows and the initial law by vertices preserves
+the global minimum and yields one of the finite $W^{1+2nW}$ complete
+programs. Every seed-conditioned value is bounded below by this same
+deterministic minimum; independent averaging cannot improve it. No
+measurable selection of an optimal seed is needed. This concerns the
+scalar loss, not determinization of the averaged diamond objective.
+$\square$
+
+## 40. Same-controller full-reference recovery from conditional purity
+
+**Theorem 40.1 (Nonlinear necessity and explicit sufficiency).** For
+each fixed permitted controller $\mathcal C$, let $e(\mathcal C)$ be
+its best averaged unhalved diamond error over the permitted terminal
+full-$H$ decoders. Then
+
+$$
+2(1-\sqrt{1-\bar v_n})\le e(\mathcal C)
+ \le\min\{2,4\bar v_n\}.
+\tag{40.1}
+$$
+
+For any successful decoder of error at most $0\le\varepsilon\le2$,
+put $q(\varepsilon)=\varepsilon-\varepsilon^2/4$. The same controller
+satisfies $\bar v_k\le q(\varepsilon)$ at every $0\le k\le n$,
+separately, and
+
+$$
+\sum_{k=0}^{n-1}\mathbb E_S[v_{k+1}(S)-v_k(S)]
+=\bar v_n\le q(\varepsilon).
+\tag{40.2}
+$$
+
+Consequently, at identical peak width,
+$2(1-\sqrt{1-c_W(n)})\le\varepsilon_{\rm op}(W,n)
+\le\min\{2,4c_W(n)\}$.
+
+Proof. Feed the normalized maximally entangled qutrit into the averaged
+corrected channel, and test the one embedded target projection. If its
+success probability is $f$, unhalved error is at least $2(1-f)$.
+For a full-$H$ decoder with Kraus operators $D_a$, its on-code
+compression $L_a=B^\dagger D_aB$ obeys
+$\sum_aL_a^\dagger L_a\le I_3$. The positive analysis matrix
+$Z=\frac13\sum_a|\operatorname{vec}L_a\rangle
+\langle\operatorname{vec}L_a|$ has trace at most one, and direct
+expansion gives conditional target probability
+$\operatorname{Tr}(\kappa Z)\le\lambda_{\max}(\kappa)$.
+The trace expression is representation independent: $3Z$ is the Choi
+matrix of the compressed CP map. It is measurable without choosing a
+measurable Kraus basis. On the probability measure $m_{n,r,s}d\nu(s)$,
+Cauchy–Schwarz and $\lambda_{\max}(\kappa)^2\le\operatorname{Tr}\kappa^2$
+give $f\le\sqrt{1-\bar v_n}$. This includes leakage and every independent
+seed, without conditioning the success promise. Squaring
+$1-\varepsilon/2\le\sqrt{1-\bar v_n}$ is valid for $\varepsilon\le2$
+and proves its necessary $q$ budget. Monotonicity in (39.2) proves all
+prefix budgets and the single total increment budget.
+
+For sufficiency, on an occupied posterior $\mu_{r,s}$ set
+$\mathcal N_{r,s}=\sum_h\mu_{r,s}(h)\operatorname{Ad}_{Q_h}$ and
+choose the qutrit decoder $\mathcal N_{r,s}^*$, a CPTP map because
+$\mathcal N_{r,s}$ is both unital and trace preserving. The corrected
+seed channel is $\sum_rm_r\mathcal N_r^*\mathcal N_r$, an
+inverse-symmetric mixture of $\operatorname{Ad}_{Q_g^\dagger Q_h}$
+with the actual conditional-pair weights. Its normalized entanglement
+fidelity is $1-v_n(s)$. Pair each unitary with its adjoint to obtain
+Hermitian Kraus operators $K_\ell$: the pair uses
+$(U+U^\dagger)/2$ and $(U-U^\dagger)/(2i)$ with the appropriate
+square-root weights. In dimension $d=3$, put
+$A_\ell=K_\ell-\operatorname{Tr}(K_\ell)I/d$,
+$B_0=\sum_\ell A_\ell^2$, and
+$\Psi(X)=\sum_\ell A_\ell XA_\ell$. Expansion using
+$\sum K_\ell^2=I$ gives
+
+$$
+\mathcal C_s-\operatorname{id}=\Psi-\tfrac12\{B_0,\cdot\},\qquad
+\operatorname{Tr}B_0=dv_n(s),\qquad
+\|B_0\|_{\rm op}\le(d-1)v_n(s).
+$$
+
+For the last estimate a traceless Hermitian $A$ obeys
+$\|A\|_{\rm op}^2\le(d-1)\operatorname{Tr}(A^2)/d$, by
+Cauchy–Schwarz on its other $d-1$ eigenvalues. The CP norm identity
+$\|\Psi\|_\diamond=\|\Psi^*(I)\|_{\rm op}$ and left/right
+multiplication bounds, unchanged by tensoring any reference identity,
+give $\|\mathcal C_s-\operatorname{id}\|_\diamond\le4v_n(s)$.
+Integrate and cap channel distance by two. Posterior probabilities are
+measurable finite ratios on occupied cells; choose any fixed CPTP map on
+zero cells. Theorem 3.2 extends each decoder as $\iota\mathcal N_r^*C$
+on all $H$ with the identical error and controller. Infimizing proves
+the scalar comparison; it needs no common optimizer for loss and error.
+$\square$
+
+**Proposition 40.2 (Accumulated levels cannot replace increments).** A
+legal controller can have $v_1=v_2=4/9$ while $v_0=0$: forget the first
+bit and retain only the second. Indeed the first posterior is the fair
+pair of $V_0,V_1$, whose normalized trace overlap has modulus $1/3$,
+so its loss is $\frac12(1-1/9)=4/9$. Each second-layer posterior is
+its unitary chronological image and has the same purity. Thus the two
+prefix levels sum to $8/9$, whereas their increments sum to $4/9$.
+This proves that (40.2) is not an additive budget for the prefix levels.
+$\square$
+
+## 41. Full-matrix distortion at the same causal peak width
+
+**Definition 41.1 (Matrix conditional variance).** For the posterior
+of Definition 38.1 put $\overline F_{k,r,s}=\mathbb E[F_H\mid r,s]$
+and
+
+$$
+\mathcal D_k(\mathcal C)
+=\mathbb E_S\sum_rm_{k,r,S}
+ \mathbb E[\|F_H-\overline F_{k,r,S}\|_F^2\mid r,S],\qquad
+\mathcal D_W(n)=\inf_{\mathcal C:\,\operatorname{peak}\le W}
+ \mathcal D_n(\mathcal C).
+\tag{41.1}
+$$
+
+This is the unnormalized full $2\times2$ matrix variance, equal to the
+sum of the two coordinate-vector variances for the same controller. It
+is distinct from the single-vector deficit in §23 and from $a_W(n)$.
+
+**Theorem 41.2 (Phase-sensitive pair and controller comparison).** Define
+$\ell(h,g)=1-|\operatorname{Tr}(Q_g^\dagger Q_h)|^2/9$.
+For every actual same-length pair, writing $t=\operatorname{Tr}
+(F_g^\dagger F_h)$ and $d_2=\|F_h-F_g\|_F^2$,
+
+$$
+\ell=\frac{8-2\operatorname{Re}t-|t|^2}{9},\quad
+d_2=4-2\operatorname{Re}t,\quad
+\ell-\frac{d_2}{9}=\frac{4-|t|^2}{9}\ge0,\quad
+\frac{d_2}{3}-\ell=\frac{|t-2|^2}{9}\ge0.
+\tag{41.2}
+$$
+
+Consequently, for each one controller and each prefix,
+$2\mathcal D_k/9\le\bar v_k\le2\mathcal D_k/3$, and
+
+$$
+\frac29\mathcal D_W(n)\le c_W(n)\le\varepsilon_{\rm op}(W,n)
+\le\min\{2,4c_W(n)\}\le\min\{2,\tfrac83\mathcal D_W(n)\}.
+\tag{41.3}
+$$
+
+Each scalar minimum $c_W$ and $\mathcal D_W$ is attained by a
+deterministic changing program, separately. The coefficient $8/3$
+supersedes the weaker $3\mathcal D_W$ upper comparison; optimality of
+$8/3$ and a shared scalar/diamond minimizer are not asserted.
+
+Proof. The fixed line gives the full relative trace $1+t$, and
+$|t|\le2$ proves (41.2), including imaginary traces. Two independent
+draws from the same actual posterior satisfy
+$\mathbb E\|F_H-F_{H'}\|_F^2=2\mathbb E\|F_H-\overline F\|_F^2$
+and $\mathbb E\ell(H,H')=1-\operatorname{Tr}\kappa^2$.
+Multiply by the same occupation masses, sum, and integrate. The factor
+two is essential. Apply Theorem 40.1 at one minimizing controller before
+infimizing; this preserves every layer's width without a determinant bit.
+For $\mathcal D$ use its expression $2-\sum_r\|A_r\|_F^2/m_r$,
+where $A_r=\sum_h\omega(r,h)F_h$. The squared-norm perspective is
+convex and $\|A_r\|_F\le\sqrt2m_r$ gives continuity at zero.
+The row-by-row argument of Proposition 39.2 applies separately to it.
+$\square$
+
+**Proposition 41.3 (Actual-word limiting pair constants).** The pair
+constants $1/9,1/3$ in (41.2) are limiting sharp constants across
+unbounded horizons of actual equal-length words, without a rate assertion.
+
+Proof. In $U(2)^2$ close the semigroup generated by all $(g_i,g_j)$.
+Its finite products are exactly actual equal-length pairs. Compact unitary
+recurrence puts each generator inverse in this closure: positive powers
+approach the identity, and the preceding powers approach the inverse.
+The closure is therefore the closed generated group. With $A=g_0$ and
+$g_1=AJ$, it contains $(I,J)$ and all $(I,A^{-k}JA^k)$.
+Theorem 6.2 gives $\{I\}\times SU(2)$ in the closure. Hence actual
+relative products $G_g^\dagger G_h=F_g^\dagger F_h$ are dense at
+every $SU(2)$ target. Approaching $-I$ gives ratio $\ell/d_2\to1/9$.
+At $\operatorname{diag}(e^{i\theta},e^{-i\theta})$ the ratio is
+$(2+\cos\theta)/9$; first approximate a nonzero $\theta$, then let
+$\theta\to0$, to obtain $1/3$. Continuity is used away from $d_2=0$.
+A common appended suffix increases both lengths preserving the relative
+product. This is qualitative pair sharpness, not fixed-horizon sharpness
+or optimality of the operational coefficient. $\square$
+
+## 42. Actual-word small balls and prefix folding
+
+**Definition 42.1 (Word-loss concentration).** For $k\ge0$, define
+$\mathcal A_k(t)=\max_{g\in\{0,1\}^k}2^{-k}
+\#\{h:\ell(h,g)\le t\}$. This counts histories, including multiplicities,
+and $\mathcal A_0(t)=1$ for $t\ge0$.
+
+**Theorem 42.2 (Same-controller concentration converse).** Every legal
+successful peak-width-$W$ protocol of error $0\le\varepsilon\le2$
+obeys, for every $0\le k\le n$ and $0<t\le1$,
+
+$$
+W\mathcal A_k(t)\ge1-\bar v_k/t
+ \ge1-q(\varepsilon)/t.
+\tag{42.1}
+$$
+
+Thus $W\ge\max_{k\le n}\sup_{q(\varepsilon)<t\le1}
+(1-q(\varepsilon)/t)/\mathcal A_k(t)$ whenever this range is nonempty.
+For $0<\varepsilon<1/4$ the weaker replacement of $q(\varepsilon)$
+by $\varepsilon$ is also valid.
+
+Proof. At each occupied posterior choose the lexicographically first
+actual word minimizing expected $\ell(H,g)$. Its risk is no greater
+than the average risk of a posterior draw, namely the conditional purity
+loss. This finite selection is measurable. Markov's inequality gives
+success mass at least $1-v_k(s)/t$ at each seed. Its history projection
+is contained in at most $W$ actual word balls. The history marginal at
+that seed is the same fair law, so the success mass is at most
+$W\mathcal A_k(t)$. Integrate over seeds before using (40.2); balls
+from different seeds are never united. Also $\mathcal A_k(t)\ge2^{-k}$,
+so the denominator is positive. No assertion at $t=0$ is needed.
+$\square$
+
+**Proposition 42.3 (Available spectral remainder).** With $\rho$ exactly
+as in (6.3), for $0<t\le23/144$,
+
+$$
+\mathcal A_k(t)\le\min\{1,
+ 8[3(1-\sqrt{1-t})]^{3/2}+10\rho^{\lfloor k/3\rfloor}\}.
+\tag{42.2}
+$$
+
+Proof. Opposite determinant parity has purely imaginary relative
+$T$-trace and $\ell\ge4/9$. In the same parity class the relative
+matrix is in $SU(2)$ with real trace $x\in[-2,2]$.
+The inequality $\ell\le t<8/9$ forces
+$x\ge3\sqrt{1-t}-1$. Every unit $a\in T$ then satisfies
+$\|F_ha-F_ga\|^2=2-x\le3(1-\sqrt{1-t})$.
+Its square-root radius is at most $1/2$ precisely throughout the stated
+range. Apply Theorem 7.1 to this containing actual vector ball. The
+spectral remainder remains $10\rho^{\lfloor k/3\rfloor}$; it has not
+been replaced by $2^{-k}$. $\square$
+
+**Theorem 42.4 (Legal future averaging).** For all $0\le k\le n$,
+$\varepsilon_{\rm op}(W,k)\le\varepsilon_{\rm op}(W,n)$ and hence
+$W_k(\varepsilon)\le W_n(\varepsilon)$. In particular, using the
+already proved common-decoder bound (33.4), every successful protocol has
+
+$$
+\varepsilon\ge\max_{1\le k\le n}2d_k(1-W/2^k)_+.
+\tag{42.3}
+$$
+
+Proof. Retract terminal decoders to qutrit maps $D_{b,s}$. At complete
+prefix record $r$ define the shorter-horizon decoder
+$D^{(k)}_{r,s}=2^{-(n-k)}\sum_{u,b}t_s(b\mid r,u)
+D_{b,s}\circ\operatorname{Ad}_{Q_u}$, using the original continuation
+kernels. This is a measurable CPTP mixture depending on the past only
+through the complete current state. Chronology $Q_{hu}=Q_uQ_h$
+and the conditional Markov factorization give exactly the original
+averaged qutrit channel. Theorem 3.2 extends this map to full $H$.
+Truncate the classical controller at $k$; its peak is still at most $W$.
+Apply Theorem 33.4 there. This constructs a different terminal decoder
+for a shorter task, not an intermediate correction in the original run.
+$\square$
+
+## 43. Near-full matching and simultaneous legal pair merges
+
+**Definition 43.1 (Disjoint-pair spectrum).** Put $N=2^n$. For
+$0\le q\le N/2$ let $\mathcal P_q(n)$ be the minimum total
+$\|F_h-F_g\|_F^2$ over $q$ disjoint unordered actual-history pairs,
+with $\mathcal P_0=0$.
+
+**Theorem 43.2 (Last-transition realizability and matching comparison).**
+For $n\ge1$ and integer $W\ge N/2$, the online peak-$W$ and offline
+terminal-$W$ feasible averaged full-$H$ channel sets coincide. For
+$1\le m\le N/2$ this gives
+
+$$
+\frac{\mathcal P_{\lceil m/2\rceil}(n)}{9N}
+\le\varepsilon_{\rm op}(N-m,n)
+\le\min\{2,\tfrac{3}{2N}\mathcal P_m(n)\}.
+\tag{43.1}
+$$
+
+Proof. Retain exact prefixes through time $n-1$, using at most $N/2$
+states. The last input-label pair selects the desired row of any offline
+terminal kernel and transitions directly to its record, with the same
+seed and decoder. There is no intervening $N$-state layer. Conversely
+every online law is an offline law.
+For a deterministic terminal partition let a cell of size $c$ have
+scatter $S_C=\sum_{h\in C}\|F_h-\overline F_C\|_F^2$.
+Then $\sum_{h<g\in C}\|F_h-F_g\|_F^2=cS_C$.
+A random perfect matching in an even cell has expected cost
+$cS_C/(c-1)\le2S_C$; in an odd cell randomly omit one word before
+matching, obtaining expectation $S_C$. There are at least
+$\sum_C\lfloor|C|/2\rfloor\ge m/2$ pairs. Retain
+$\lceil m/2\rceil$ of them to get
+$\mathcal P_{\lceil m/2\rceil}\le2N\mathcal D_W$.
+Deterministic scalar attainment and (41.3) prove the lower bound.
+Conversely $m$ chosen pairs and singletons have $N-m$ cells and
+distortion $\mathcal P_m/(2N)$. Their last-transition realization and
+(41.3), weakened from $8/3$ to $3$, give the displayed upper bound.
+No comparison between the two matching indices has been proved.
+$\square$
+
+**Proposition 43.3 (Causal compatibility below the last-transition range).**
+For a deterministic assignment $f$ on length-$n$ binary words, the least
+number of states at layer $k$ in a program computing $f$ is the number
+of distinct residual functions $v\mapsto f(pv)$, $|p|=k$.
+The least peak is the maximum of these numbers. In particular three-bit
+majority has layer counts $1,2,3,2$ and cannot be realized at peak two.
+
+Proof. Two prefixes sharing a complete state must give the same answer
+under every suffix. Conversely, use the residual function itself as
+the state, updating by restriction to the acquired bit. For majority,
+the length-two prefixes have residuals constant zero, identity of the
+last bit, and constant one. This proves the counts and the obstruction.
+Thus a terminal partition alone is not a legal low-peak construction.
+$\square$
+
+**Theorem 43.4 (Exact specified midpoint and several savings).** For
+$n\ge2$ and $0\le m\le N/4$, put
+$B_p=\pi^2 6^{2/3}=3C_p$ and $K_p=\pi^2 12^{2/3}$. Then
+
+$$
+\varepsilon_{\rm op}(N-m,n)
+\le\min\left\{2,\frac{B_p}{N}
+ \sum_{i=0}^{m-1}(N-2i)^{-2/3}\right\}
+\le\min\{2,K_pmN^{-5/3}\}.
+\tag{43.2}
+$$
+
+Consequently $W_n(\varepsilon)\le N-min\{\lfloor N/4\rfloor,
+\lfloor\varepsilon N^{5/3}/K_p\rfloor\}$, and the upper estimate
+in (36.3) improves to $\eta_n\le\min\{2/N,3C_pN^{-5/3}\}$.
+
+Proof. For an equal-weight same-parity pair, let its relative $T$-block
+have eigenvalues $e^{\pm i\theta}$, $0\le\theta\le\pi$, and choose
+the $SU(2)$ square root with eigenangles $\pm\theta/2$. At $-I$
+this means eigenvalues $i,-i$, not $iI$. Midpoint correction gives
+residuals $1\oplus T$ and $1\oplus T^\dagger$. Its conditional
+diamond error is exactly $b=1-\cos\theta$. Indeed put
+$a=1-\cos(\theta/2)$, so $2a\le b\le4a$. For any reference-purified
+input, the difference is supported on three orthogonal components of
+weights $p_0,p_+,p_-$, with zero diagonal and off-diagonal magnitudes
+$a\sqrt{p_0p_+},a\sqrt{p_0p_-},b\sqrt{p_+p_-}$.
+After a global sign this matrix has one positive and two nonpositive
+eigenvalues, with endpoint zeros allowed. Its trace norm is twice its
+top eigenvalue. For a unit Rayleigh vector put
+$z_i=\sqrt{p_i}|x_i|$, $\sum z_i\le1$, and $u=z_0$.
+The quotient is at most $2au(1-u)+(b/2)(1-u)^2\le b/2$;
+the last difference is $u[(b-2a)+(2a-b/2)u]\ge0$.
+Taking $p_0=0$, $p_+=p_-=1/2$ attains $b$. The pure-input
+characterization for Hermitian-preserving diamond norm makes this an
+all-reference calculation [Watrous, *The Theory of Quantum Information*,
+Theorem 3.51](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf).
+
+With $R=N-2i$ words remaining, one determinant coset contains at least
+$R/2\ge2$ words. The disjoint-cap calculation inside Lemma 36.1
+gives nearest squared geodesic angle at most
+$3^{2/3}\pi^2(R/2)^{-2/3}=B_pR^{-2/3}$.
+The selected pair has actual weight $2/N$ and contributes
+$(2/N)(1-\cos\theta)\le\theta^2/N$. Repeat for $m$ disjoint
+pairs. Each pair gets its own fixed terminal decoder; singletons use
+exact inverses. Triangle inequality combines their possibly different
+eigenbases. The peak is $\max\{N/2,N-m\}=N-m$ by Theorem 43.2.
+Summing and using $R\ge N/2$ proves (43.2) and its integer consequence.
+The $2/N$ alternative is the separate construction in Theorem 35.2.
+The specified midpoint is not claimed to optimize over all CPTP
+decoders: at $\theta=\pi$ it has error two, whereas the $U(2)$ root
+$iI$ gives error one. $\square$
+
+## 44. Logarithmic rate bracket and the remaining joint estimate
+
+**Theorem 44.1 (Known exponential-rate ranges).** Let $\beta>0$ and
+$\varepsilon_n=\exp(-\beta n+o(n))>0$. With $\gamma$ exactly from
+Definition 22.1,
+
+$$
+\max\{\min(\gamma/64,3\beta/2),\min(\ln2,\beta/2)\}
+\le\liminf_n\frac{\ln W_n(\varepsilon_n)}n
+\le\limsup_n\frac{\ln W_n(\varepsilon_n)}n
+\le\min\{\ln2,3\beta/2\}.
+\tag{44.1}
+$$
+
+Thus the rate equals $3\beta/2$ for $0<\beta\le\gamma/96$,
+and equals $\ln2$ for $\beta\ge2\ln2$, including equality.
+
+Proof. Rounding (Theorem 8.4) and exact history give the upper bound.
+On any subsequence with $\ln W/n\to r<\min(\gamma/64,3\beta/2)$,
+Proposition 28.2 has left side $(\gamma/64)n+O(1)$, whereas its right
+side is $rn+o(n)+O(\exp((-\beta+2r/3)n+o(n)))$, a contradiction.
+If $r<\min(\ln2,\beta/2)$, then
+$L_W^{\rm ar}=\lceil\log_2(3W)\rceil\le n$ eventually. Theorem
+5.1 and (18.2) give $\varepsilon_n\ge1/(216W^2)$, contradicting
+$\beta>2r$. This proves both lower terms.
+
+For an independent endpoint attribution, if $W\le2^{n-1}$ choose
+$k=\lceil\log_2(2W)\rceil\le n$. Then $2W\le2^k<4W$.
+Equations (34.2) and (42.3) give
+$\varepsilon\ge d_k\ge1/(288W^2)$.
+If $W>2^{n-1}$ its logarithmic rate is already $\ln2$.
+This prefix argument, or the preceding arithmetic block argument,
+establishes saturation at $\beta=2\ln2$ with arbitrary $o(n)$.
+The terminal estimate alone does not: for example
+$\varepsilon_n=2^{-2n}e^{\sqrt n}$ exceeds its scale $1/(9N^2)$.
+$\square$
+
+**Proposition 44.2 (A sufficient missing estimate and its scope).** If,
+for every fixed $0<r<\ln2$, the actual causal matrix distortion satisfied
+$\mathcal D_{\lceil e^{rn}\rceil}(n)
+\ge\exp(-(2r/3+o(1))n)$, then the rate in (44.1) would equal
+$\min\{\ln2,3\beta/2\}$ for every $\beta>0$.
+
+Proof. Choose any fixed $r<\min\{\ln2,3\beta/2\}$. Widths at most
+$\lceil e^{rn}\rceil$ infinitely often would, by monotonicity in width
+and (41.3), contradict $\beta>2r/3$. Let $r$ increase to the desired
+rate and use the upper bound. The premise is not established here.
+It is not uniform as $r\uparrow\ln2$ and would not imply critical
+prefactors or the full finite-$(n,\varepsilon)$ law. $\square$
+
+**Definition 44.3 (Unresolved joint bridge).** Question 32.2 retains its
+full scope. The remaining quantitative problem is to bound the actual
+restricted-word concentration and matching spectrum at exponentially
+shrinking scales, and to connect them to one legal controller at every
+prefix, so as to estimate $c_W(n)$ or $\mathcal D_W(n)$ sharply.
+Neither $\mathcal A_k(t)\le C(t^{3/2}+2^{-k})$ nor a comparison of
+$\mathcal P_{\lceil m/2\rceil}$ with $\mathcal P_m$ has been
+established. The spectral remainder in (42.2), qualitative pair density,
+and pair packing do not supply these estimates. The delayed controller
+of §30 and the counterexample in §31 remain constraints on any proposed
+joint law. The [same-topic arithmetic continuation](AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md)
+gives stronger separation and an exact restricted-tail recurrence; its
+finite attainment results leave arbitrary-horizon counting and sharp
+first-saving error unresolved. The deductions here use the original
+instrument and spectral suppliers of Conventions 1.2 and 32.1 and the
+generic finite-dimensional norm, variance and compactness tools inside
+their proofs. Their scope is the declared finite-dimensional model and its stated
+resource permissions; no physical register reduction follows.
+
+## 追加锚（本行以下为增补区）
