@@ -68,6 +68,11 @@ private theorem shiftField_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
   simpa only [HVertexOperator.coeff_apply_apply, vadd_eq_add, neg_add_cancel_left, one_smul,
     show -2 * (s : ℤ) + (e + 2 * (s : ℤ)) = e by ring] using h
 
+theorem shiftField_coefficient_public (D : LatticeData) (hu : IsUnit D.G.det)
+    (s : ℕ) (A : NativeField D hu) (e : ℤ) :
+    (shiftField D hu s A).coeff e = A.coeff (e + 2 * (s : ℤ)) :=
+  shiftField_coefficient D hu s A e
+
 def correctedSum (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) :
     (ℕ →₀ Oscillator D) →ₗ[ℂ] NativeField D hu :=
   Finsupp.lsum ℂ (fun s => (shiftField D hu s).comp (polynomialField D hu a))
