@@ -1,0 +1,5 @@
+联合 observers 下，两个状态不可区分，当且仅当：
+
+- charge 相同；
+- phase 落在同一个 $P_j$。
+

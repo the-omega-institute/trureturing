@@ -1,0 +1,18 @@
+### 26.7 关系阶数、动力学与文献边界
+
+命题 26.5 固定的是质量与全部一阶列计数，允许路径上更高阶关系改变；定理 26.15 则严格固定全部真子集联合计数。前者的两复制连通性与后者的指数次数下界量词不同，不矛盾。以三个孤立位置为例，从 $\{\varnothing,ab,ac,bc\}$ 到 $\{a,b,c,abc\}$ 可先交换 $ab+ac$ 为 $a+abc$，再交换 $\varnothing+bc$ 为 $b+c$；每步保持一阶计数，但第一步把 $M_{bc}$ 从一改为二，第二步才回到一。因此它并非严格二阶守恒的中间路线。
+
+每个四角作为完整配置的局部替换可逆，选定排序规则到规范代表却多对一；没有原态与路径档案就不作来源恢复。排序增加的整数势 $E$ 是经典终止证书，不是 $H_n$ 的量子能量，也不把排序步骤等同于 Hamilton 演化。即使固定扇区的基态射线唯一，幺正演化也保持各能量本征分量的模，不会仅由正半定性自主收敛到基态。
+
+$H_n$ 的二体项指两份完整历史模式的湮灭、产生次数，不指原生位或物理空间的短程相互作用。CCR 在整个代数 Fock 空间跨度作用，固定粒子度及其列荷扇区仍须分别处理。命题 26.10 的相干振幅态与定理 26.9 的固定荷基态也不是同一个制备对象。精确 $\pi$ 与模式平均只属于指定基态；其最大熵完成不赋予任意同均值实际来源 Markov 性或独立性。这与 §24 的联合来源、条件分支及预测记忆边界一致。
+
+文献归属逐项限定如下。[Richard P. Stanley，*Two Poset Polytopes*][S26]（Discrete & Computational Geometry 1，9–23，DOI:10.1007/BF02187680）的 Theorem 2.3、Example 4.3 供应高度二栅栏的仿射补，Theorem 4.1 供应 Ehrhart／序多项式对应；一般 transfer map 不被当成该仿射补。[Viviana Ene、Ayesha Asloob Qureshi、Asia Rauf，*Regularity of join-meet ideals of distributive lattices*][H26]（arXiv:1307.7557v2）开篇供应有限分配格的经典不可比 join-meet 理想及 Hibi 背景，不移植后续 regularity 定理的额外假设或结论。[Toric][T26] §§11–12 供应原单窗关系与核，§21.6 仅按 $0\mapsto O,1\mapsto J,N=n$ 的明确辅助嵌入供应固定相邻表的最大熵结果。[BoundaryCalculus][B26] 5.1–5.2、9.2–9.3 分别供应三位固定均值截面、路径均值可行性及实际来源边界；[HiddenRelations][R26] C-4.6 只消费其确有的单窗熵曲率公式。本卷 §23.1–23.2 供应实际接缝、完整矩反演与对偶方向，§24 保留条件及操作合同的区分。
+
+本章的综合结果限于上述 $\Gamma_n$ 复制纤维、指定 Fock 交换模型、阶乘归一化与模式平均、两复制星图、严格低阶守恒代价和受限菜单反例。一般经典结论不作为新增研究内容；这里不作全球原创性、Lean kernel 核验或物理装置实现断言。
+
+[S26]: https://math.mit.edu/~rstan/pubs/pubfiles/66.pdf
+[H26]: https://arxiv.org/pdf/1307.7557
+[T26]: AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md
+[B26]: AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md
+[R26]: AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md
+

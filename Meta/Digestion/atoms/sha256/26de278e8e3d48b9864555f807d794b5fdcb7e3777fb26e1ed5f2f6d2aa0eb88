@@ -1,0 +1,30 @@
+**定义 58.3（四分之一供应与共同执行器）。** 令
+
+<a id="TM58-E06"></a>
+$$
+L=\left\lceil\frac h4\right\rceil
+=\left\lfloor\frac{H+12}{16}\right\rfloor,\qquad
+\mathcal L_H=\{1,\ldots,L\},\qquad c_i=2L+2i-2.
+\tag{TM.5806}
+$$
+
+供应者按原目标字典计算
+
+<a id="TM58-E07"></a>
+$$
+\ell_H(t)=\begin{cases}
+1,&w>h,\\
+1+((z-1)\bmod L),&w\le h,\ z\le2L,\\
+\lceil x/2\rceil,&w\le h,\ z>2L,\ x\equiv y\pmod2,\\
+\lceil y/2\rceil,&w\le h,\ z>2L,\ x\not\equiv y\pmod2,
+\end{cases}\qquad (x,y)=(z-2L,w-2L).
+\tag{TM.5807}
+$$
+
+第一行不读取标签0隐藏的 $w$；在原目标处只需判断已给的目标标签并供应符号1。有限目标已保留组成，可恢复 $z,w$ 后计算其余三行。因此这是原目标的一个函数，符合定义58.1的供应边界。
+
+固定每个正整数 $p$ 的公开实际全 $\alpha$ 树 $v_p$：$v_1=\alpha$，$v_{p+1}=\langle v_p,\alpha\rangle$。收到符号 $i$ 后，共同程序先计算 $c_i$。若 $c_i<h$，尝试一次整右拼接 $\langle t_{\mathrm{cur}},v_P\rangle$，其中 $P=H-4c_i$；若 $c_i\ge h$，真实省略这一次调用，并仅在算术中置 $P=0$。随后无论真实响应为何，均尝试 $\rho$ 恰好一次，再在实际得到的 ambient 树上执行 §58.4 的既有 $\mathrm{Size}_H$，取得它的入口叶数 $M$。最后按 §58.3 的字典输出原目标。
+
+省略模式记作 O；它没有上下文候选、没有上下文响应，也没有空树 $v_0$。即使 $c_i=h$ 且 $\delta>0$，未执行的表达式 $H-4c_i=\delta$ 为正，程序仍省略，不以它代替 $P=0$。在实际发出模式中，A、R 分别表示真实接受、拒绝；AA、AR、RA、RR 按上下文、$\rho$ 的先后排列。OA、OR 只表示省略模式中的真实 $\rho$ 响应。符号、模式、所有实际前缀响应以及入口 $M$ 都保留；实际动作身份由公开 $H,i$ 和该记录确定。
+
+<a id="TM58-L4"></a>

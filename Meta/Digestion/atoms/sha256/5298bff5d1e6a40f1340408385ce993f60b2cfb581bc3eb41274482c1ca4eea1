@@ -1,0 +1,24 @@
+## 定义 252.3（反事实画像）
+
+给定反事实查询族 \(\mathcal Q\)，定义：
+
+\[
+\boxed{
+\operatorname{CF}_{\mathcal Q}(M)
+=
+\bigl(
+\mathcal L_M(Q)
+\bigr)_{Q\in\mathcal Q},
+}
+\]
+
+其中 \(Q\) 可以同时包含多个互相冲突的潜在结果，如：
+
+\[
+(Y_0,Y_1),
+\qquad
+Y_{x,M_{x'}},
+\qquad
+(Y_x\mid X=x',Y=y').
+\]
+

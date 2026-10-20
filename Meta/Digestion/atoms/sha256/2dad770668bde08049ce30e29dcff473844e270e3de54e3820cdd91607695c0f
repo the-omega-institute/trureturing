@@ -1,0 +1,10 @@
+### 证明
+
+构造混合路径：第 \(m\) 个中间过程使用前 \(m\) 步的 \(\widetilde{\widehat K}\)，后续使用 \(\widehat K\)。相邻两个中间过程只在第 \(n\) 步替换一个前缀核，产生至多 \(\epsilon_n\) 的局部运输差异。随后经过 \(\widehat K_{n+1},\ldots,\widehat K_{N-1}\)，由每一步 Lipschitz 界将其放大至多
+
+$$
+\epsilon_n\prod_{j=n+1}^{N-1}L_j.
+$$
+
+对相邻混合过程使用 Wasserstein 三角不等式并求和，得到结论。证毕。
+

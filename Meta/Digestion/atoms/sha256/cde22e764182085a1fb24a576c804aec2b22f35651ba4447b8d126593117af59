@@ -1,0 +1,48 @@
+## 36. Local self-calibration from window and prime-support side information
+
+This section uses exactly the numerical source $W$ and prime-divisibility observations of Section 35. Its conclusions are `repo-derived` deductions from Theorem 35.2 and elementary finite-set and divisibility arguments. They are ordinary mathematical theory prose, with no claim of Lean/kernel verification or literature priority. The added information is an explicit source relation; it is not inferred for free from the old probe bits.
+
+**Definitions (labeled source and calibration intervals).** Let $\mathbb P$ denote the positive primes and $\mathbb N_0$ the nonnegative integers. Retain the Fibonacci recurrence $F_0=0$, $F_1=1$, $F_{j+2}=F_{j+1}+F_j$ and write
+
+$$
+\begin{aligned}
+L_r&=\lceil F_r/10\rceil,& U_r&=\lfloor F_r/5\rfloor,&
+I_r&=[L_r,U_r]\cap\mathbb Z,\\
+X&=\{(r,g):r\in\mathbb P,\ g\in I_r\},&
+N(r,g)&=1+F_rg,& \Omega(r,g)&=\omega(N(r,g)).
+\end{aligned}
+\tag{36.1}
+$$
+
+Thus $W_r=\{N(r,g):g\in I_r\}$ and $N[X]=W=\bigcup_{r\in\mathbb P}W_r$, where an interval with $L_r>U_r$ is empty. The target $\omega(n)$ counts distinct prime divisors, with $\omega(1)=0$. For finite $S\subset\mathbb P$, write $d_S(n)=(\mathbf1_{p\mid n})_{p\in S}$ and $\rho_S(n)=\omega(n)-\sum_{p\in S}\mathbf1_{p\mid n}$ for the probe record and the unobserved support size. For $S=\varnothing$ there is one empty pattern, its sum is zero and $\rho_S=\omega$.
+
+The labels in $X$ keep the generating window explicit: if two windows share a numerical value, their labeled sources remain distinct. A numerical observation on $W$ is pulled back along $N$. Supplying $r$ means supplying the label, or the promise $n\in W_r$; it does not assume a unique index determined by $n$. None of these labels is a phase or an endpoint fee from the earlier sections.
+
+For any observation $o:X\to Y$ and any occupied cell $C_y=o^{-1}(\{y\})\ne\varnothing$, define
+
+$$
+L_o(y)=\min_{x\in C_y}\Omega(x),\qquad
+U_o(y)=\sup_{x\in C_y}\Omega(x)\in\mathbb N_0\cup\{+\infty\}.
+\tag{36.2}
+$$
+
+The minimum exists because the values are nonnegative integers; a finite supremum is also attained. No calibration interval is assigned to an empty cell. The interval $[L_o(y),U_o(y)]$ encloses the possible target values; it need not contain only attainable values. A sound finite upper certificate at $y$ is a finite number $c(y)$ with $\Omega(x)\le c(y)$ for every $x\in C_y$. Such a certificate exists exactly when $U_o(y)<\infty$. An exact decoder $D:o[X]\to\mathbb N_0$ with $D(o(x))=\Omega(x)$ exists exactly when every occupied cell has one $\Omega$ value, equivalently $L_o(y)=U_o(y)$. These are set-theoretic criteria, not computability assertions.
+
+Say $\widetilde o$ refines $o$ when $o=h\circ\widetilde o$ for some map $h$ on the attained observations. For every occupied refined cell with $y=h(\widetilde y)$,
+
+$$
+L_o(y)\le L_{\widetilde o}(\widetilde y)
+\le U_{\widetilde o}(\widetilde y)\le U_o(y).
+\tag{36.3}
+$$
+
+Indeed, its sources form a nonempty subset of $C_y$, so taking the minimum and supremum gives these inequalities. The decoding criteria follow by constancy on each fibre, and the certificate criterion follows by the definition of supremum. If $o$ includes a finite probe record $d_S(N(x))=b$, then the observed contribution gives the sound lower bound
+
+$$
+\sum_{p\in S}b_p\le L_o(y)\le\Omega(x)\le U_o(y)
+\qquad(x\in C_y).
+\tag{36.4}
+$$
+
+This lower bound need not be sharp. Refinement can raise the lower endpoint and lower the upper endpoint, while exactness requires the endpoints to coincide.
+

@@ -1,0 +1,17 @@
+**推论 1083.2（严格改进的首项）。** 对上面明确写出的三态来源，有
+
+$$
+I(Z_\varepsilon;X)=h_2(1/4)
+-\varepsilon\log\!\left(\frac{\sqrt3-1}{12\varepsilon}\right)
++O(\varepsilon^2)\qquad(\varepsilon\downarrow0).
+$$
+
+**证明。** 边来源的条件熵为 $-\varepsilon\log\varepsilon+\varepsilon(1+\log a)+O(\varepsilon^2)$。令两个面来源的总条件熵为 $F(\varepsilon)$，使用 $v_0=1-u_0$，对正负偏移作对称展开得
+
+$$
+F'(0)=-2h_2(u_0)+(2u_0-1)\log(v_0/u_0)-1
+=\log(u_0v_0)-1.
+$$
+
+余项是 $O(\varepsilon^2)$，因为 $h_2$ 在内点邻域具有有界四阶导数，奇数偏移项相消，而偏移平方是 $O(\varepsilon)$。合并两项，条件熵增量为 $\varepsilon\log(a u_0v_0/\varepsilon)+O(\varepsilon^2)$。$a u_0v_0=(\sqrt3-1)/12$，且观察熵固定，给出所示互信息式。证毕。
+

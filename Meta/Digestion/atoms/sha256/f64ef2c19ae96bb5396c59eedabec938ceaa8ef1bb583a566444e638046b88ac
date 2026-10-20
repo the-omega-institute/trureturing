@@ -1,0 +1,53 @@
+## 193. FIB 网络上的外加超流体、Gross–Pitaevskii 动力学与量子涡旋
+
+固定 FIB 图 \(G_j=(V_j,E_j)\)，另给顶点质量、边长、空间嵌入和面胞腔。FIB 只给顶点、边、词序和合法路径，不给 \(m,\hbar\)、相互作用、化学势、温度或物理距离。给顶点复振幅 \(\psi_v\) 和外加权重，可定义
+$$
+H_j(\psi)=\sum_v\left[V_{j,v}|\psi_v|^2+\frac{g_{j,v}}2|\psi_v|^4\right]
++\sum_{e=(u,v)}K_{j,e}|\psi_v-\psi_u|^2,
+\tag{193.1}
+$$
+$$
+{\rm i}\hbar\dot\psi_v=\frac{\partial H_j}{\partial\bar\psi_v}.
+\tag{193.2}
+$$
+无泵浦、无耗散且参数静态时，全局 \(U(1)\) 对称性给出
+$$
+N_j=\sum_v|\psi_v|^2,\qquad \frac{{\rm d}N_j}{{\rm d}t}=0 .
+\tag{193.3}
+$$
+稳态 \(\psi_v=e^{-{\rm i}\mu t/\hbar}\phi_v\) 满足
+$$
+\mu\phi_v=\frac{\partial H_j}{\partial\bar\phi_v}.
+\tag{193.4}
+$$
+凝聚、局域集中和调制不稳定取决于 \(g\)、图谱、边界、固定 \(N\) 还是固定 \(\mu\)，以及外加耗散。沿边的质量流和相位速度可写成
+$$
+\mathcal J_{u\to v}=\frac{2K_{j,e}}{\hbar}{\rm Im}(\bar\psi_u\psi_v),
+\qquad
+v_e=\frac{\hbar}{m}\frac{\theta_v-\theta_u}{\ell_e},
+\tag{193.5}
+$$
+其中 \(\psi_v=\sqrt{n_v}e^{{\rm i}\theta_v}\)，边长 \(\ell_e\) 仍为外加量。
+
+若闭环 \(C\) 上振幅处处非零，单值相位给出
+$$
+\sum_{e\in C}{\rm unwrap}(\theta_{h(e)}-\theta_{t(e)})=2\pi n_C,
+\qquad
+\Gamma_C=\sum_{e\in C}\ell_ev_e=n_C\frac hm .
+\tag{193.6}
+$$
+树图没有非平凡绕数；面填充、相位单值性和涡旋核心正则化必须另行指定。在外加细化和连续嵌入下，模型可趋向
+$$
+{\rm i}\hbar\partial_t\psi=
+\left[-\frac{\hbar^2}{2m}\Delta+V+g|\psi|^2\right]\psi .
+\tag{193.7}
+$$
+均匀排斥凝聚的 Bogoliubov 色散为
+$$
+\hbar^2\omega^2(k)=\varepsilon_k(\varepsilon_k+2g\rho_0),
+\qquad
+\varepsilon_k=\frac{\hbar^2|k|^2}{2m},
+\tag{193.8}
+$$
+离散图上须用外加拉普拉斯谱替代 \(|k|^2\)。声速、愈合长度和 Landau 临界速度依赖 \(g,m,\rho_0\)、缺陷和探针；有限温度的涡旋产生湮灭还需噪声和耗散。只测 \(|\psi|^2\) 看不见环路绕数，因此超流态、涡旋晶格和正常态均不是 FIB 单独决定的。
+

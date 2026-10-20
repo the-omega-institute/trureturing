@@ -1,0 +1,22 @@
+#### 8.10.1 共同来源、历史可达性与既有任务接口
+
+理论背景采用固定版本定位。提交 `625f417c1fbab0084ceab6dd7de75ebddca84532` 的《有效分辨率》§1.1.1–1.1.5、TM.352–364，声明同一实际集合的提升、删除、密度、首次删空层及共同轮廓。ER8.FH.21 是 TM.355 在 $m=tL$ 时的特化，ER8.FH.10 与不增大分辨率的 $k=1$ 删除支路相容。同版本《运输、记忆与完成化》的完整历史摘要最小性以全部合法续接、确定性更新和无隐藏旁路为条件，并只对可达像计数；ER8.FH.11–ER8.FH.14 保留这些界限。其具体群运输另有可逆执行等前提，不能把那份具体实现的可达轨道结论直接套到任意同余历史。
+
+《上下文时空算术与机器学习》相关任务接口分别要求目标、动作合法性、后继与费用下降。本文布尔商只压缩所声明的布尔目标，未声称同时保留实际成本或完整档案。合法控制信息可以保存在内部状态，也可以由外部控制器提供；后者不应重复计作内部记忆，但不能在数学接口中消失。
+
+以下项目接口以固定提交 `4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c` 为来源坐标，其一般结论与本文具体识别分别承担不同义务：
+
+| 既有接口 | 与本题的精确关系和限制 |
+|---|---|
+| [D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean)，`target_family_minimal_quotient` | 给任意目标族共同核的最小商、目标下降及所有充分读出的核包含；本题目标分别取全部合法精确计数或布尔读数。它不自行识别直方图、七类或噪声锐常数。 |
+| [D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage.lean)，`joint_residue_image_eq_compatible_pairs` | 共同余数像由 gcd 相容性精确刻画，使用 `Nat.chineseRemainder'`；ER8.FH.10 按实际共同像求交，不能把两边缘自由组合。 |
+| [D5/S3/Observer/Separation/FiniteFutureCongruence.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Observer/Separation/FiniteFutureCongruence.lean)，`finite_future_maximal_congruence`；[D5/S3/ConceptDynamics/Sufficiency/MinimalPredictiveCompletionQuotient.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/ConceptDynamics/Sufficiency/MinimalPredictiveCompletionQuotient.lean)，`minimal_predictive_completion_quotient` | 给有限未来合同及预测商，但原接口针对一个更新；本文由剩余 $M$ 控制多动作，须另核对其动作域对应。 |
+| [D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean)，`controlledBehavior`、`completionUpdate`、`controlled_behavior_universal_property` | 给所有有限控制词的行为商、更新，以及满足交换关系的有限实现到最小商的唯一满射和基数界。更新为全定义时，必须将剩余 $M$ 加入状态，并为非法重复动作指定失败状态／输出；也可经部分任务合同适配，不能直接忽略非法动作。 |
+| [D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean)，`dynamic_closure_is_least` | 给一般最小动态稳定细化；它不计算本题具体证书反链和七种规范形。 |
+| [D5/S3/ConceptDynamics/Provenance/SourceCutsetHittingDuality.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/ConceptDynamics/Provenance/SourceCutsetHittingDuality.lean)，`source_cutset_hitting_duality` | 有限单调语义的切断与最小支持击中对偶。以可用动作源集合 $A$ 上的可证明性为“存在实际 $r\in S$ 使 $E_r\subseteq A$”，得到删空／击中骨架；本题还要求每模数至多一标签，不能用无约束最小击中数代替合法最小值。 |
+| [D5/S3/ConceptDynamics/Provenance/SourceCutsetInclusionMinimalHittingDuality.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/ConceptDynamics/Provenance/SourceCutsetInclusionMinimalHittingDuality.lean) | 提供规范包含极小支持版本；与一般对偶同属已有结构，不代替本题动作约束的核对。 |
+
+两份二元几何接口还提供共同相位和切片的具体背景：[D5/S3/Arith/Covering/BinaryAffineGeometry.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Arith/Covering/BinaryAffineGeometry.lean) 的 `mixed_cover_iff` 对 $\mathbb F_2^2$ 上的满集、三方向直线和单点给覆盖的六类判据及27种互异最小形状；[D5/S3/Arith/Covering/MixedAffineQuotient.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Arith/Covering/MixedAffineQuotient.lean) 的 `result` 在 $M_0$ 为正整数、逐行周期正且整除 $2M_0$ 时，保留 guard、逐行合取和原相位，将两个整数坐标在同一基点的四个提升表示为空／满／线／点切片，并给精确见证及覆盖等价。这里以 $M_0$ 区别该接口中的标量与本文模数集合 $M$。
+
+这两份二元四提升模型没有声明任意模 $L$ 的完整未来计数、动态直方图或商类数。本文也未给任意一维状态到它们的归约映射，不能把其结论当成 定理 8.1 的直接证明。有限包含排除／Möbius 反演、CRT、击中集与目标族取商是标准组成结构；具体数学内容由前文显示的反演、更新和分类证明承担。
+

@@ -1,0 +1,90 @@
+**定理 403.2（方形隐藏块的精确系数判据）。** 在定义 403.1 下，若 $\ell\ge1$，则转移在 $q$ 上逐点下降，当且仅当 $B=0$，并且下列两种情形之一成立：
+
+1. $D=0$；$C,d,R,W$ 除维数与整体协方差半正定外不受限制。
+2. 存在 $a>0$、$O\in O(\ell)$、$\sigma\ge0$，使
+
+$$
+D=aO,\qquad C=0,\qquad d=0,\qquad
+W=\sigma^2I_\ell,\qquad R=0.
+$$
+
+两种情形中 $A,b,U$ 均可任取，只须满足已列协方差条件。$p=0$ 时可见块为空，相关条件按唯一的空矩阵解释。$\ell=1$ 时 $O=1$ 或 $O=-1$，$\sigma=0$ 也允许。$\ell=0$ 时 $q$ 等价于恒等观察 $u\mapsto u$，任意声明的可见转移均下降。
+
+下降时存在唯一的 Borel 商核 $\overline T$，满足 $q_*T(x,\cdot)=\overline T(q(x),\cdot)$。重置情形的核为
+
+$$
+\overline T((u,\rho),\cdot)
+=\mathcal L\bigl(Au+b+\epsilon,\ \|Cu+d+\zeta\|^2\bigr),
+$$
+
+其中 $(\epsilon,\zeta)$ 保留原来的共同 Gaussian 律，不能将右侧任意改成两个边缘律的乘积。第二种情形的核为
+
+$$
+\overline T((u,\rho),\cdot)
+=\mathcal N(Au+b,U)\otimes\nu_{\ell,a,\sigma}(\rho,\cdot),
+\qquad
+\nu_{\ell,a,\sigma}(\rho,\cdot)
+=\mathcal L\bigl(\|a\sqrt\rho\,n_0+\sigma G\|^2\bigr),
+$$
+
+$n_0$ 是任意固定单位向量，$G\sim\mathcal N(0,I_\ell)$。这个定义在 $\sigma=0$ 时直接给出 $\delta_{a^2\rho}$，不需要除以 $\sigma$。每一有限 $q$ 路径的联合律由此商核与当前 $q$ 递归决定。
+
+**证明。** 所有一次、二次及本证明使用的混合矩均有限。若下降成立，比较 $(u,v)$ 与 $(u,-v)$ 的可见均值，得到 $2Bv=0$，所以 $B=0$。令 $h(u)=Cu+d$，隐藏范数的均值为
+
+$$
+\mathbb E\|h(u)+Dv+\zeta\|^2
+=\|h(u)\|^2+2v^{\mathsf T}D^{\mathsf T}h(u)
++v^{\mathsf T}D^{\mathsf T}Dv+\operatorname{tr}W.
+$$
+
+先比较 $v,-v$，可得 $D^{\mathsf T}h(u)=0$ 对所有 $u$ 成立；再比较所有同范数的 $v$，可得二次型 $v^{\mathsf T}D^{\mathsf T}Dv$ 在单位球上恒定。具体地，标准基向量给出相同对角元 $a^2\ge0$，对 $i\ne j$ 比较 $(e_i+e_j)/\sqrt2$ 与 $(e_i-e_j)/\sqrt2$ 得到非对角元为零。因此
+
+$$
+D^{\mathsf T}D=a^2I_\ell.
+$$
+
+若 $a=0$，则 $\|Dv\|^2=0$ 对所有 $v$ 成立，故 $D=0$。若 $a>0$，方形矩阵 $D$ 可逆，$O=D/a$ 满足 $O^{\mathsf T}O=OO^{\mathsf T}=I$。由 $D^{\mathsf T}(Cu+d)=0$ 先取 $u=0$ 再遍历 $u$，得 $d=0,C=0$。这里使用了隐藏块为方形；若把确定性映射改为 $v\mapsto(av,c)$，输出隐藏空间增加一维，则其范数平方是 $a^2\|v\|^2+c^2$，仍只依赖输入半径，却容许 $c\ne0$，故上述仿射项消失结论不适用于任意矩形块。
+
+在 $a>0$ 的分支，令 $w=Dv$。将 $W$ 正交对角化，可把 $\zeta$ 写成旋转后的 $(\sqrt{\lambda_i}G_i)_i$，其中 $\lambda_i\ge0$，$G_i$ 独立标准正态。经典 Gaussian 矩运算在这里给出
+
+$$
+\operatorname{Var}\|w+\zeta\|^2
+=2\operatorname{tr}(W^2)+4w^{\mathsf T}Ww.
+$$
+
+为核对该式，包括奇异情形，单个 $G_i$ 的矩母函数 $\exp(t^2/2)$ 给出 $\mathbb EG_i^2=1$、$\mathbb EG_i^4=3$；于是 $\operatorname{Var}\|\zeta\|^2=2\sum_i\lambda_i^2$，$\operatorname{Var}(2w^{\mathsf T}\zeta)=4w^{\mathsf T}Ww$。线性项与中心化二次项的协方差因中心 Gaussian 的奇数阶矩为零而消失。这是在本转移中使用 Gaussian 二次型矩公式，而无须假设正定密度。
+
+下降要求上述方差也在每个输入球面上不变，所以 $D^{\mathsf T}WD$ 为标量矩阵。代入 $D=aO$，得 $W=\sigma^2I_\ell$，其中 $\sigma^2\ge0$。最后还须检验同一联合律。因已知 $B=C=d=0$，可见输出减去其已知均值 $Au+b$ 就是 $\epsilon$。直接展开得到向量混合矩
+
+$$
+\mathbb E\bigl[\epsilon\,\|Dv+\zeta\|^2\bigr]
+=2\mathbb E[\epsilon\zeta^{\mathsf T}]Dv
+=2RDv.
+$$
+
+常数项乘 $\epsilon$ 的均值为零，$\epsilon\|\zeta\|^2$ 的每一分量都是联合中心 Gaussian 的三阶矩，也为零。比较 $v$ 与 $-v$ 的联合输出律，得 $RDv=0$ 对所有 $v$ 成立；$D$ 可逆遂给出 $R=0$。这一步不能仅从可见与半径两个边缘律分别下降推出。
+
+反过来，若 $B=D=0$，输出联合向量就是定理所列重置核的随机向量，全部初始依赖仅通过 $u$ 进入，允许 $R\ne0$。若第二种情形成立，联合 Gaussian 特征函数由 $R=0$ 分解，所以 $\epsilon$ 与 $\zeta$ 独立，即使协方差奇异仍如此。标准 Gaussian 的正交不变性由特征函数 $\exp(-\|t\|^2/2)$ 得到；$Dv$ 的范数是 $a\|v\|$，故隐藏范数律恰为 $\nu_{\ell,a,\sigma}(\rho,\cdot)$，与方向无关。这给出所列乘积核，证明充分性。
+
+为说明可测性，$\ell\ge1$ 时固定 Borel 截面
+
+$$
+s(u,\rho)=(u,\sqrt\rho\,n_0),\qquad
+\overline T((u,\rho),H)=T(s(u,\rho),q^{-1}(H))
+$$
+
+供每个 Borel 集 $H\subseteq\mathcal Z_\ell$ 使用。仿射 Gaussian 平移是 Borel 核，$q,s$ 连续，故该式是 Borel 核；下降使它不依赖截面代表。$q$ 满射到 $\mathcal Z_\ell$，所以核唯一。$\ell=0$ 时取 $s(u,0)=(u,0)$，结论相同。
+
+在已知初态 $x$ 下，对每个 $n\ge0$ 及 Borel 集 $H_0,\ldots,H_n$，创新独立性与逐步条件期望给出
+
+$$
+\begin{aligned}
+&\mathbb P_x\{q(X_i)\in H_i,\ 0\le i\le n\}\\
+&\quad=\int_{H_0}\delta_{q(x)}(dq_0)
+\int_{H_1}\overline T(q_0,dq_1)\cdots
+\int_{H_n}\overline T(q_{n-1},dq_n).
+\end{aligned}
+$$
+
+这是 §159 的有限路径递推在所给连续状态核上的应用；对任意初态分布再积分即可。它决定声明的 $q$ 路径，不自动提供原来源在任意更新后、任意附加观测下的后验。重置只使下一步核不依赖当前 $\rho$；由于当前任务包括 $Q=\|m(u)\|^2+\rho$，重置也不能删除当前半径。证毕。
+

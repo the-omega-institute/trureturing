@@ -1,0 +1,50 @@
+**Corollary 19.2 (The ninth-degree endpoint constants and optimal orders).** Define the exact rational number
+
+$$
+ c_*:=\frac{r_2}{r_1}
+ =1-\frac{121392910145961}{64(10^{24}+2749658638697)}\in(0,1).
+\tag{19.11}
+$$
+
+For this fixed pair, as $q\downarrow0$,
+
+$$
+\begin{aligned}
+ I_0&=256(c_*-1-\log c_*)q+O(q^2),\\
+ I_1&=256(c_*\log c_*+1-c_*)q+O(q^2),\\
+ 1-A&=256(1-\sqrt{c_*})^2q+O(q^2).
+\end{aligned} \tag{19.12}
+$$
+
+As $s=-\log q\downarrow0$,
+
+$$
+\begin{aligned}
+ I_0&=\frac{a_*^2}{12960}s^3+O(s^4),&
+ I_1&=\frac{a_*^2}{12960}s^3+O(s^4),\\
+ 1-A&=\frac{a_*^2}{5184}s^2+O(s^3),&
+ \frac{a_*^2}{12960}&=
+ \frac{4521105578853889}{38146972656250000000000000000000000000000000}.
+\end{aligned} \tag{19.13}
+$$
+
+Consequently, for every fixed $\alpha\in(0,1/2)$,
+
+$$
+ W^*_\alpha(q)=\Theta_{H_c,\alpha}(q^{-1})\quad(q\downarrow0),\qquad
+ W^*_\alpha(q)=\Theta_{H_c,\alpha}((-\log q)^{-3})\quad(q\uparrow1).
+\tag{19.14}
+$$
+
+Proof. Equation (19.1) identifies $j_*=2$, $d=1$ and the nonzero $a_*$. Theorem 18.2 gives (19.12). For (19.13), (18.13) and the polynomial (19.7) give
+
+$$
+\mathbb E_pK^{-1}=s/9+O(s^2),\quad
+\mathbb E_pK^{-2}=s^2/72+O(s^3),\quad
+\operatorname{Var}_p(r_K)=a_*^2s^2/648+O(s^3),\quad
+\mathbb E_p|r_K-1|^3=O(s^3).
+\tag{19.15}
+$$
+
+The first two formulas are $Z_8/Z_9$ and $Z_7/Z_9$. In the variance, $r_k-1=a_*/k+O(k^{-2})$ and $Z_6/Z_9=O(s^3)$ bound every omitted cross term; the square of the mean must be subtracted. Also $\mu_i=10/s+O(1)$. Applying (18.5) and (18.15) gives the stated $O(s^3)$ gap-divergence and affinity remainders, and division by $\mu_i$ gives $O(s^4)$ in each rate. This proves the full remainders as well as the exact coefficient. The two-sided record orders are Theorem 18.4. Their multiplicative constants are not asserted to equal the reciprocals of the information-rate constants. $\square$
+

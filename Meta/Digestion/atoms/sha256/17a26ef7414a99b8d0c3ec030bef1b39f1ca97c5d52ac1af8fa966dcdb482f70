@@ -1,0 +1,5 @@
+**证明。** 分六步。
+
+1. 固定一层并省略 $\lambda$。若 $d\in\ker D$，$AS$ 的正二次型在 $(a,sd)$ 上对每个 $s\in\mathbb R$ 非负，其线性项 $2s\langle a,Ed\rangle$ 必为零，故 $Ed=0$。$SB$ 同理给 $F^*\ker D=0$，由自伴 $D$ 的 $\operatorname{ran}D=(\ker D)^\perp$ 得到式（15.7）的范围条件，亦有 $\operatorname{ran}E^*\subseteq\operatorname{ran}D$。在两个局部二次型中分别取共享向量 $-D^\dagger E^*a$、$-D^\dagger Fb$，得 $\langle a,Pa\rangle\ge0$、$\langle b,Qb\rangle\ge0$。几何上，这是本卷命题13.3的奇异Gram正交投影：投到共同耦合的像后，两侧剩余向量的Gram算子为 $P,Q$。
+
+2. 对候选交叉块 $X:U_B\to U_A$，令

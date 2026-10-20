@@ -1,0 +1,108 @@
+**Theorem 27.4 (no independent synchronous recoding retaining the count
+maps and capacity order).** Under Definition 27.2 there is no regular
+relation $A\subseteq C\times H$ such that
+
+$$
+\forall(e,h)\in D,\qquad
+A(c(e),v(h))\ \Longleftrightarrow\ h\ge f(e).
+\tag{ABT.99}
+$$
+
+Values outside $D$ are unrestricted. The exclusion permits arbitrary
+additional fixed automatic predicates and first-order definitions in
+the same word presentation.
+
+Proof. Suppose $A$ exists.
+
+Use the literature-attested finite-fiber length bound of Khoussainov,
+Nies, Rubin and Stephan [ABT-KNRS, Proposition 2]. For nonempty input
+and output tuples, if a synchronous regular relation $R(\mathbf x,\mathbf y)$
+has finitely many output tuples
+$\mathbf y$ for every fixed input tuple $\mathbf x$, there is a constant
+$p_R$ such that
+
+$$
+\max_i|y_i|\le\max_j|x_j|+p_R
+\quad\text{whenever }R(\mathbf x,\mathbf y).
+\tag{ABT.98}
+$$
+
+Its short proof also fixes the padding convention used here. In an
+accepting run whose longest output exceeds
+all inputs by more than the automaton's state count, some state repeats
+within that excess. The intervening input columns are all padding.
+Repeat the nonempty loop. If any shorter output then has a padding symbol
+followed by an ordinary symbol, the accepted word is not a valid
+convolution, contrary to the recognized language being exactly $R$.
+Otherwise pumping produces arbitrarily long distinct output tuples for
+the identical inputs, contrary to the finite fiber. This proves (ABT.98).
+The constant concerns words and automata, with no physical resource
+interpretation.
+
+Use the exact capacity order to define
+
+$$
+\begin{aligned}
+\operatorname{Tail}(x,y)&\ \Longleftrightarrow\
+ \forall z\in H\ (y\le_H z\Longrightarrow A(x,z)),\\
+B(x,y)&\ \Longleftrightarrow\
+ \operatorname{Tail}(x,y)\land
+ \forall w\in H\ (w<_H y\Longrightarrow
+                         \neg\operatorname{Tail}(x,w)).
+\end{aligned}
+\tag{ABT.100}
+$$
+
+Synchronous relations are closed under first-order operations on regular
+domains [ABT-KNRS, Theorem 1], so $B$ is regular. Reuse the least-tail
+argument of Theorem 25.1: every $h\ge f(e)$ is attained and accepts,
+whereas the attained $f(e)-1$ refuses. Thus a tail starts exactly at a
+capacity at least $f(e)$, independently of all off-promise values, and
+
+$$
+B(c(e),v(j))\ \Longleftrightarrow\ j=f(e).
+\tag{ABT.101}
+$$
+
+Apply the credited estimate (ABT.98) to this functional relation and then
+to the finite-fiber relation $\{(v(j),v(h)):1\le h\le j\}$. There are
+constants $p_B,p_\le$
+such that every $1\le h\le f(e)$ satisfies
+
+$$
+|v(h)|\le |v(f(e))|+p_\le
+          \le |c(e)|+p_B+p_\le.
+\tag{ABT.102}
+$$
+
+Put $K_\Sigma=\max(2,|\Sigma_H|)$ and $L=|c(e)|+p_B+p_\le$.
+The $f(e)$ distinct positive capacities through $f(e)$ have distinct
+words of length at most $L$. Counting all such words gives
+
+$$
+f(e)\le\sum_{i=0}^{L}|\Sigma_H|^i
+       \le K_\Sigma^{L+1},\qquad
+|c(e)|\ge\log_{K_\Sigma}f(e)-p_B-p_\le-1.
+\tag{ABT.103}
+$$
+
+In particular the label relation together with capacity order forces
+linear count-name growth: the supplied Fibonacci inequality gives
+$F_{e+3}\ge2^{(e+1)/2}$. This implication did not use either count map.
+
+Each graph $D_b$ is functional. The same credited estimate gives
+a common $p_D\ge1$ with $|c(2e+b)|\le|c(e)|+p_D$. Starting at $0$,
+read the ordinary binary digits of $e$ and use these two maps. For $e\ge1$
+this takes $\lfloor\log_2 e\rfloor+1$ maps, and therefore
+
+$$
+|c(e)|\le|c(0)|+p_D(\lfloor\log_2 e\rfloor+1).
+\tag{ABT.104}
+$$
+
+Equations (ABT.103)–(ABT.104) would bound $F_{e+3}$ by a fixed polynomial
+in $e+1$, contradicting its exponential lower bound. Equivalently their
+linear lower bound on $|c(e)|$ contradicts its logarithmic upper bound.
+The bijections, finite alphabets, exact order, affine count maps and
+off-promise quantifiers have all retained their original types. $\square$
+

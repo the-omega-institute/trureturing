@@ -56,6 +56,7 @@ public sealed partial class MakeWorkflowTests
         "scribe-release-publish",
         "scribe-release-fetch",
         "ingest",
+        "migrate-atom-context",
         "mathlib-reanchor",
         "source-dispatch",
         "search-atoms",

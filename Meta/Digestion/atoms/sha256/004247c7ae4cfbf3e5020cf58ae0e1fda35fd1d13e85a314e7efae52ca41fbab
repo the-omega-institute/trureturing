@@ -1,0 +1,65 @@
+## 2. 全部无限 Fourier 尾部的低频泄漏界
+
+固定 L=2a>0，I=[-L/2,L/2]，rho=2*pi/L。使用零延拓的正交归一基
+
+\[
+e_n(x)=(-1)^nL^{-1/2}e^{i\rho n x}\mathbf1_I(x),\qquad n\in\mathbb Z.
+\]
+
+令 P_N 是到 |n|<=N 的正交投影，N>=1。对任意 g 属于 P_N 的正交补，记其两侧系数为 u_j 和 v_j，对应 n=N+j+1 及 n=-(N+j+1)。Parseval 给出
+
+\[
+A=\sum_{j\ge0}|u_j|^2+\sum_{j\ge0}|v_j|^2=\|g\|_2^2.
+\]
+
+定义
+
+\[
+C(d,u)=\sum_{j\ge0}\frac{u_j}{d+j+1}.
+\]
+
+对 d>0，有逐项可求和的正上界
+
+\[
+\sum_{j=0}^{M-1}(d+j+1)^{-2}
+\le d^{-1}-(d+M)^{-1}\le d^{-1}.
+\]
+
+由此和 Cauchy–Schwarz 得到绝对收敛，以及
+
+\[
+|C(d,u)|^2\le d^{-1}\sum_{j\ge0}|u_j|^2.
+\]
+
+在 |s|<=N/4 上，N+s 和 N-s 均至少为 3N/4。因此
+
+\[
+|C(N+s,u)-C(N-s,v)|^2\le\frac8{3N}A.
+\]
+
+对有限 Fourier 和逐项积分，再取 L2 极限，得到
+
+\[
+\boxed{
+|\widehat g(\rho s)|^2
+=\frac L{\pi^2}\sin^2(\pi s)
+|C(N+s,u)-C(N-s,v)|^2.
+}
+\]
+
+极限交换无需边界正则性：支撑固定在 I 时，L2 收敛蕴含 L1 收敛，且 Fourier 变换在实轴上以 sqrt(L) 倍的 L2 误差一致收敛。右侧 Cauchy 级数在该紧带上一致绝对收敛，故与同一 Fourier 极限一致。一般 L2 向量不必具有端点值。
+
+使用 sin^2<=1 并积分，得到
+
+\[
+\boxed{
+\frac1{2\pi}\int_{|t|\le R_N}|\widehat g(t)|^2dt
+\le\epsilon_*\|g\|_2^2,
+\quad R_N=\frac{\pi N}{2L},
+\quad\epsilon_*=\frac4{3\pi^2}<\frac17.
+}
+\tag{IC1}
+\]
+
+Lean 主声明 `infinite_complement_low_frequency_mass` 证明 dimensionless 密度在 [-N/4,N/4] 上可积及其归一化积分界。输入是两条任意平方可和复序列，没有有限上截止、偶性、实值性、边界消失或谱间隔前提。Fourier 基展开与 Parseval 的上述识别仍为纸面桥，未冒充已形式化。
+

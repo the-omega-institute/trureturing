@@ -1,0 +1,9 @@
+## 定义 137.1（Hellinger／Bhattacharyya 亲和度）
+
+\[
+\mathcal A(s,t)
+=
+\sum_{n\ge1}
+\sqrt{\mathbb P_s(n)\mathbb P_t(n)}.
+\]
+

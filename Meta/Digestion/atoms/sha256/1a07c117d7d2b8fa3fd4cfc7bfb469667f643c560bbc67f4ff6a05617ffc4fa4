@@ -1,0 +1,19 @@
+### 定理 367.2（Fisher 信息的正性与局部不可识别方向）
+
+对任意 \(v\in\mathbb R^p\)，有
+
+$$
+v^{\mathsf T}I_a(\theta)v
+=
+\sum_x
+\frac{\bigl(v^{\mathsf T}\nabla p_a(x\mid\theta)\bigr)^2}
+p_a(x\mid\theta)
+\ge0.
+$$
+
+并且以下条件等价：
+
+1. \(v\in\ker I_a(\theta)\)；
+2. \(v^{\mathsf T}\nabla p_a(x\mid\theta)=0\) 对所有 \(x\in X_a\)；
+3. 沿方向 \(v\) 的一阶参数变化不改变该动作的全部结果概率。
+

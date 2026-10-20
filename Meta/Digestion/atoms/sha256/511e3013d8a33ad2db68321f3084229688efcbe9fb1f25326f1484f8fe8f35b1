@@ -1,0 +1,7 @@
+这样的黄金 null condition，必须额外使用：
+
+* pole 的边界通道；
+* even/odd 的不定号配对；
+* projective Fibonacci memory；
+* 或 prime–Archimedean 相减后的有效 Hessian。
+

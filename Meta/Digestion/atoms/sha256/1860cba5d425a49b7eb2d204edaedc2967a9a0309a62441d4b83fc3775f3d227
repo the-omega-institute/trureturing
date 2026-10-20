@@ -1,0 +1,30 @@
+### 证明
+
+由 Hodge 分解，
+
+$$
+\ker d_1=\mathcal E^1\oplus\mathcal H^1.
+$$
+
+而 \(\mathcal C^1\) 与这两个子空间正交。任意解都为
+
+$$
+g=g_{\mathrm{coex}}+v,
+\qquad
+v\in\ker d_1.
+$$
+
+勾股关系给出
+
+$$
+\|g\|^2=\|g_{\mathrm{coex}}\|^2+\|v\|^2.
+$$
+
+等号只在 \(v=0\) 时成立。Coulomb 条件对 exact 分量的作用来自
+
+$$
+\delta_1d_0=\Delta_0,
+$$
+
+其核只包含不改变 \(g\) 的常数势；\(\delta_1h=0\) 对 harmonic \(h\) 恒成立，所以它不能被该规范条件消除。证毕。
+

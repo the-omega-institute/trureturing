@@ -1,0 +1,33 @@
+### 31.1 成熟来源与本仓推导的边界
+
+| 范围 | 成熟来源及适用对象 | 本仓推导与结算边界 |
+| --- | --- | --- |
+| §27 来源语言 | §14–16 已使用的有限支撑与上下文归纳方法；§29 的关系来源文献仅提供查询／系数背景（`literature-attested`） | 联合分箱、非结合有序 pair 更新、来源核及混合时间核的 CSA 特定证明为 `repo-derived`；不把交换环公理移植到来源代数，不主张完整来源代数分类 |
+| §28 因果语言 | Rota 的 Möbius 反演框架，DOI [10.1007/BF00531932](https://doi.org/10.1007/BF00531932)，`literature-attested`；此处只用有限布尔格 | 目标域为当前区域的筛选、剖面推送、平衡参数隔离、完整 iff 与 D6–D10 为 `repo-derived`；正文另直接证明所用反演式，有限运行不承担一般必要性 |
+| §29 理论对照 | 下表逐项列出的游戏、关系查询、来源游戏、事件结构、因果集、可逆计算及范畴化对象，`literature-attested` | 每项操作／观察／条件的对应及不对应判断为 `repo-derived`；没有建立同一查询语言、monus、公理组或范畴结构 |
+| §30 量子边界 | 下表物理文献、测量覆盖／概率模型／全局截面框架、去量子化极限和阿贝尔群字符对偶，`literature-attested` | 本卷缺项与三条局部类比为 `repo-derived`；Fourier 仅绑定 §19 的空间群环，不推出 Born 规则、双缝或 Bell 型裁决 |
+
+`repo-derived` 说明本卷给出了推导，不声明优先权。本批按 DOI、arXiv、出版页、Crossref 元数据及作者／学术站点检索；没有作穷尽的新颖性排查，新颖性优先权为“未测”。原文访问失败不等于没有相关文献，不能据此标 `suspected-novel`。`literature-attested` 的归属标签与本席实际核读强度分开记录：下表“未取回”各项的原文核读为 `ASSUMED-UNVERIFIED`，其中元数据或二手核读的范围逐行写明。已下载文件也不等于已通读。
+
+| 文献（DOI 或稳定 URL） | 本席核读状态 | 实际范围与未核部分 |
+| --- | --- | --- |
+| [Rota (1964), Theory of Möbius Functions](https://doi.org/10.1007/BF00531932) | 未取回 | 取回出版页并核读元数据；原文未取回。正文另给布尔格反演的直接证明。 |
+| [Conway, On Numbers and Games](https://doi.org/10.1201/9781439864159) | 未取回 | 出版页及 Crossref 题名、作者、登记日期已核；书本文字未取回。第二版 DOI 的版次说明据 brief，非 1976 原版 DOI。 |
+| [Green–Ives–Tannen (2009), Reconcilable Differences](https://doi.org/10.1145/1514894.1514920) | 未取回 | 出版入口返回 HTTP 403；Crossref 元数据已核。整数差语义另由已通读的 TaPP 文 §4 交叉核读。 |
+| [Geerts–Poggi (2010), On Database Query Languages for K-relations](https://doi.org/10.1016/j.jal.2009.09.001) | 未取回 | 取回 linkinghub 入口及 Crossref 元数据，原文未取回；差扩展另见已通读 TaPP 文的讨论。 |
+| [Amsterdamer–Deutch–Tannen, TaPP 差运算限制 (2011)](https://arxiv.org/abs/1105.2255) | 已读全文 | 通读取回的 5 页；核对 Figure 2 的 A10/A11、§3 命题 3.4／推论 3.5 与 §4 整数差语义。 |
+| [Amsterdamer–Deutch–Tannen, PODS 聚合来源 (2011)](https://arxiv.org/abs/1101.1110) | 只读摘要 | 全文文件已取回，核读摘要中的值层来源、聚合与差；全文未通读。 |
+| [Köhler–Ludäscher–Zinn (2013), First-Order Provenance Games](https://arxiv.org/abs/1309.2655) | 只读摘要 | 全文文件已取回，核读完整摘要及开篇；全文未通读。另有 DOI 10.1007/978-3-642-41660-6_20。 |
+| [Winskel (1987), Event Structures](https://doi.org/10.1007/3-540-17906-2_31) | 只读摘要 | 核读出版页摘要；章节全文未取回。 |
+| [Bombelli–Lee–Meyer–Sorkin (1987), Space-time as a Causal Set](https://doi.org/10.1103/PhysRevLett.59.521) | 已读全文 | DOI 入口返回 HTTP 403 后，从 APS harvest 取回并通读 4 页。 |
+| [Bennett (1973), Logical Reversibility of Computation](https://doi.org/10.1147/rd.176.0525) | 未取回 | DOI 转至 IEEE，HTTP 202 且正文为空；另查 UVA PDF 与 IBM 题名入口均为 HTTP 404。未取得摘要或原文，外部断言据 brief。 |
+| [Baez–Dolan, Categorification](https://arxiv.org/abs/math/9802029) | 只读摘要 | 全文文件已取回，核读摘要及开篇的范畴、函子与相干要求；全文未通读。 |
+| [Baez, The Mysteries of Counting](https://math.ucr.edu/home/baez/counting/) | 只读摘要 | 核读讲座入口摘要；未通读讲义或幻灯片。 |
+| [Feynman (1948), Space-Time Approach to Non-Relativistic Quantum Mechanics](https://doi.org/10.1103/RevModPhys.20.367) | 只读摘要 | 从 APS harvest 取回全文；核读摘要、引言及 §2 片段的振幅相加／模平方；全文未通读。 |
+| [Griffiths (1984), Consistent Histories and the Interpretation of Quantum Mechanics](https://doi.org/10.1007/BF01015734) | 只读摘要 | 核读出版页摘要；原文未取回。 |
+| [Gell-Mann–Hartle (1990), Quantum Mechanics in the Light of Quantum Cosmology](https://arxiv.org/abs/1803.04605) | 只读摘要 | 取回 2018 重发全文；核读完整摘要及重发说明，确认概率指派的退相干条件；全文未通读。 |
+| [Sorkin (1994), Quantum Mechanics as Quantum Measure Theory](https://arxiv.org/abs/gr-qc/9401003) | 只读摘要 | 全文文件已取回，核读摘要中的测度加性层级；全文未通读。 |
+| [Abramsky–Brandenburger (2011), The Sheaf-Theoretic Structure of Non-Locality and Contextuality](https://arxiv.org/abs/1102.0264) | 只读摘要 | 全文文件已取回；除摘要外核读 §2.1–2.3 的测量覆盖、结果指派与分布定义，全文未通读。 |
+| [Litvinov–Maslov, Correspondence Principle for Idempotent Calculus and Some Computer Applications](https://arxiv.org/abs/math/0101021) | 已读全文 | 通读取回的 27 页；§2 的 h log u 运输及 h→0+ 极限为本节直接引用范围。 |
+| [Johnston (2008), Particle Propagators on Discrete Spacetime](https://arxiv.org/abs/0806.3083) | 只读摘要 | 全文文件已取回，核读摘要的离散传播子及 Minkowski 撒点比较条件；全文未通读。 |
+| [Encyclopedia of Mathematics, Pontryagin Duality](https://encyclopediaofmath.org/wiki/Pontryagin_duality) | 已读全文 | 通读该网页及所附参考、评论；仅引用局部紧阿贝尔群／字符群部分。 |

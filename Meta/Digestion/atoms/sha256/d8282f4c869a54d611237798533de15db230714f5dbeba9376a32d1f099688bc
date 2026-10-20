@@ -1,0 +1,41 @@
+**定理 23.1（带 TV 误差余量的严格反证书）。** 设
+$p,\widehat p\in\mathscr P_n$，并有另行建立的误差界
+
+$$
+\operatorname{TV}(\widehat p_i,p_i)\le\varepsilon_i,\qquad
+\overline\varepsilon=\frac1n\sum_i\varepsilon_i.
+\tag{23.1}
+$$
+
+两份族均不必先局部相容。则对任意 $f\in[0,1]^{5n}$，
+
+$$
+\left|\frac1n\langle f,\widehat p-p\rangle\right|
+\le\overline\varepsilon,
+\tag{23.2}
+$$
+
+从而
+
+$$
+\frac{\langle f,\widehat p\rangle-H_n(f)}n>
+\overline\varepsilon\quad\Longrightarrow\quad p\notin\mathscr C_n.
+\tag{23.3}
+$$
+
+证明。对单窗，(19.3) 给
+$\langle f_i,\widehat p_i-p_i\rangle\le\operatorname{TV}(\widehat p_i,p_i)$。
+交换两份律也给相反数的同一上界，故绝对值至多 $\varepsilon_i$。
+求和并用三角不等式得到 (23.2)。因此
+
+$$
+\frac{\langle f,p\rangle-H_n(f)}n
+\ge\frac{\langle f,\widehat p\rangle-H_n(f)}n-\overline\varepsilon>0.
+$$
+
+定理 17.3 即排除 $p\in\mathscr C_n$。严格大于不能改为大于等于，
+因为零余量可以落在支撑超平面上。
+若 (23.1) 只在某个已证明概率至少为 $1-\eta$ 的事件上成立，
+上述排除结论就在同一事件上成立；这份事件概率须来自取得模型，
+不由代数测试自行生成。证毕。
+

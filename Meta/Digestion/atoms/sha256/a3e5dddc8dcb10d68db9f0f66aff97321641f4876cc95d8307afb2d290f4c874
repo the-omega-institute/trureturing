@@ -1,0 +1,16 @@
+**定义 21.1（形状的饱和标签与原始体入口）。** 保留定义 18.1 的同一
+$G_{\mathrm{gc}}$、第一个真实 Ready $P$、准备发生 $\xi$、原始动作和
+约定 18.2 的规范调用。另记 $\mathcal I_1=\rho[\mathcal T]$。
+对一个非空有限有序满二叉形状 $\sigma$，令 $n(\sigma)$ 为叶数，
+$c(\sigma)$ 为两个孩子都是叶的节点数，称这些节点为 terminal cherries。
+令 $\mathsf L_\sigma$ 在每个 terminal cherry 的右叶放 alpha，其余叶
+全部放 beta。不同 terminal cherries 的叶不交，故该定义无冲突。
+它保留完整根、左右次序和括号，不是只给出一个叶词。
+
+本节的比较切口 $z$ 是已实际供给 Rho 帧 `0010`、封口、解析、取得
+原始服务 admission 并完成 ReadState 后，尚未开始源模板生成的原始体入口。
+有效逻辑源为 $t$，其当前实际守卫及 reserve 满足
+$\lambda(t)\le h\le K$。断言 $t\in\mathcal I_1$ 是关于这个当前源的
+前提，不由累计 epoch 的奇偶性代替。$h$ 是 ReadState 读出的当前值，
+不是在 busy 切口另设的新守卫。
+

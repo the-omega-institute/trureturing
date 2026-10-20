@@ -1,0 +1,14 @@
+**Theorem 9.2 (same-task active/static complete-memory comparison).**
+For every $S$ with even $h\ge2$ and every finite $T$, the bounded task
+in Definition 9.1 has the following conditional native realizations.
+
+| Quantity | Active realization | Static realization |
+| --- | --- | --- |
+| Complete mutable width | $2\lceil\log_2(h+1)\rceil+13$ | $2\lceil\log_2(M+1)\rceil+9$ |
+| Installed words, including two halts | $8h+8$ | $8M+2$ |
+| Actual Reads | $3h+2k+c$ | $3M+c$ |
+| Actual Updates | $2k$ | $0$ |
+| Internal steps and internal writes | $0$ | $0$ |
+| Response bit changes | $3h+4k+c$ | $3M+c$ |
+| Submitted address-length sum | $A_S+hK+k(d_1+K)$ | $(K+1)A_S+hK(K+1)/2$ |
+| Maximum submitted literal length | $D+K$ | $D+K$ |

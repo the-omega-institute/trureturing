@@ -1,0 +1,67 @@
+**定理 19.2（任意混合简并参考的精确五态偏置）。** 在定义 19.1 的全部条件下，
+
+$$
+\begin{aligned}
+B_N(s,t;\zeta)&=|\delta|\eta_1(\zeta),\\
+P_{\rm succ,N}^{\rm eq}(s,t;\zeta)&=\frac{1+|\delta|\eta_1(\zeta)}2.
+\end{aligned}
+$$
+
+第二式是等先验二假设判别的最佳成功概率。
+若允许全部效应而不要求总数守恒，则偏置为 $|\delta|$，成功概率为
+$(1+|\delta|)/2$。这些是概率差和成功概率，不是未除以二的迹范数。
+
+证明。写 $H=D_{s,t}\otimes\zeta$，以 $\Pi_n$ 表示实际总电荷投影，
+$\mathcal T_N(H)=\sum_n\Pi_nH\Pi_n$。守恒效应满足
+$\operatorname{tr}(EH)=\operatorname{tr}(E\mathcal T_N(H))$。
+因 $e_2,e_4$ 的电荷恰为一、二，唯一保留的上交叉块为
+$|e_2\rangle\langle e_4|\otimes P_{q+1}\zeta P_q$。
+在总电荷 $q+2$ 内，取有序子空间
+
+$$
+\mathcal W_q=(e_2\otimes\mathcal F_{q+1})\oplus(e_4\otimes\mathcal F_q),
+\qquad A_q=P_{q+1}\zeta P_q,
+$$
+
+则限制块为
+
+$$
+H_q=\begin{pmatrix}0&\delta A_q\\\overline\delta A_q^*&0\end{pmatrix}.
+$$
+
+缺失的子空间解释为零维；同一总电荷中的其他系统分量是 $H$ 的零块。
+不同 $q$ 对应不同总电荷，所以这些块正交直和，不能彼此抵消。
+对 $A_q$ 的每个非零奇异值 $\sigma$，选左右奇异向量 $u,v$，满足
+$A_qv=\sigma u$、$A_q^*u=\sigma v$。
+若 $\delta=|\delta|e^{i\phi}\ne0$，在 $(u,v)$ 张成的空间内，
+$(u,\pm e^{-i\phi}v)/\sqrt2$ 是 $H_q$ 的特征向量，特征值为
+$\pm|\delta|\sigma$。余下核空间只给零特征值。
+因此矩形块、任意内部重数和零奇异值都包含在
+
+$$
+\|\mathcal T_N(H)\|_1=\sum_q\|H_q\|_1
+=2|\delta|\sum_q\|A_q\|_1=2|\delta|\eta_1(\zeta)
+$$
+
+中。这里用的是标准奇异值分解与 Hermitian 非对角块谱，不另立一般谱定理。
+对任意迹零 Hermitian $K=K_+-K_-$，其正负部的迹同为 $\|K\|_1/2$。
+由 $0\le E\le I$ 得
+$-\operatorname{tr}K_-\le\operatorname{tr}(EK)\le\operatorname{tr}K_+$。
+故本问题的偏置至多为上述迹范数的一半。
+令 $E_+$ 是 $\mathcal T_N(H)$ 的严格正谱投影，在所有其余子空间置零，
+即得同一上界的取等效应；它与 $N_{\rm tot}$ 对易。
+比较两概率时始终固定这个 $E_+$，并没有为两假设分别换效应。
+零特征空间可任配合法效应；若 $\delta=0$ 或所有 $A_q=0$，零效应即可取等。
+
+用 $E_+$ 的结果猜 $s$、补结果猜 $t$，等先验成功概率为
+
+$$
+\frac12\left(\operatorname{tr}[E_+(\rho_s\otimes\zeta)]
++\operatorname{tr}[(I-E_+)(\rho_t\otimes\zeta)]\right)
+=\frac{1+B_N(s,t;\zeta)}2.
+$$
+
+这也是标准二元谱判别的 Helstrom 归一化；绝对偏置的另一符号由交换标签处理。
+不守恒时 $D_{s,t}$ 的非零谱为 $\pm|\delta|$，而密度参考的核范数为一，故
+$\|D_{s,t}\otimes\zeta\|_1=2|\delta|$，同一论证给 unrestricted 两式。证毕。
+

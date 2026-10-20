@@ -1,0 +1,26 @@
+## 定义 3.1（有限未来词接口）
+
+对 \(n\in\mathbb N\)，定义
+
+\[
+q^{[n]}(x)
+:=
+\bigl(q(x),q(Fx),\ldots,q(F^n x)\bigr).
+\]
+
+其核为
+
+\[
+K_n
+:=
+K_{q^{[n]}}
+=
+\bigcap_{j=0}^{n}(F^j\times F^j)^{-1}K_q.
+\]
+
+于是
+
+\[
+K_{n+1}\subseteq K_n.
+\]
+

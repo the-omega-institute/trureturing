@@ -1,0 +1,56 @@
+**定理 1110.1（最优来源余量的极限）。** 在第 1109 节条件下，令 $q_{m(\kappa)}$ 为唯一最大标签的乘积观察律，并将其余标签的观察混合归一化为 $R_\kappa$：
+
+$$
+P_{N,\kappa}=(1-\delta_\kappa)q_{m(\kappa)}+\delta_\kappa R_\kappa.
+$$
+
+则
+
+$$
+R_\kappa\longrightarrow P_{N,1}\quad\text{于全变差},\qquad
+m_i(\kappa)=o(\kappa)\quad(i=1,\ldots,N).
+$$
+
+**证明。** 简记 $\delta=\delta_\kappa$、$m_i=\mathbb E_{q_m}X_i$。目标的一阶矩为零，故
+
+$$
+(1-\delta)m_i+\delta\mathbb E_R X_i=0,
+\qquad |m_i|\le\frac\delta{1-\delta}=O(\kappa).
+$$
+
+完整矩给出
+
+$$
+\mathbb E_R\chi_{\{1,\ldots,N\}}
+=\frac{\kappa-(1-\delta)\prod_i m_i}{\delta}
+\longrightarrow1,
+$$
+
+因为 $\delta/\kappa\to1$，且乘积项除以 $\delta$ 是 $O(\kappa^{N-1})$。所以 $R$ 落在负奇偶类的概率趋于零。
+
+对 $2\le|S|\le N-1$，目标的相应矩为零，得到
+
+$$
+\mathbb E_R\chi_S
+=-\frac{1-\delta}{\delta}\prod_{i\in S}m_i
+=O(\kappa^{|S|-1})\longrightarrow0.
+$$
+
+剩下的是单坐标矩。由于 $N\ge3$，单坐标的补集至少含两个坐标，其矩已趋于零。在正奇偶类上 $\chi_{\{i\}}=\chi_{\{i\}^c}$，在负奇偶类上两者差的绝对值至多二，因此
+
+$$
+\left|\mathbb E_R\chi_{\{i\}}-\mathbb E_R\chi_{\{i\}^c}\right|
+\le2R(E_N^c)\longrightarrow0.
+$$
+
+故所有非空真子集矩都趋于零，完整矩趋于一。有限立方体的字符反演
+
+$$
+R(x)=2^{-N}\sum_{S\subseteq\{1,\ldots,N\}}
+\mathbb E_R\chi_S\,\chi_S(x)
+$$
+
+说明每格趋于 $P_{N,1}(x)$，有限求和随之给出全变差收敛。最后回到一阶矩恒等式，$\mathbb E_R X_i\to0$ 与 $\delta/\kappa\to1$ 共同给出 $m_i=o(\kappa)$。证毕。
+
+主要来源越来越接近公平乘积，余量总权重趋于零；但余量自身的归一化观察律趋于准确奇偶律。小权重与关系上的无足轻重不是同一判断。本节追踪的是完整分解中的质量与矩，不把某个稀有分量直接解释为宗教、意识或超验事物。
+

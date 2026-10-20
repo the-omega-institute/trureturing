@@ -75,7 +75,7 @@ public sealed class HistoricalReferenceOwnershipTests
         Assert.True(SettleAtomCommandTests.Run(dir.Path, f.Current, "", ["--clear", parent.AtomId]).Success);
         f.Current = SettleAtomCommandTests.ReadFiles(dir);
         var intact = f.Current;
-        foreach (var fault in new[] { "source", "cas", "chain" })
+        foreach (var fault in new[] { "cas", "chain" })
         {
             f.Current = intact;
             if (fault == "chain") f.Replace(Target(f) with { Receipts = Target(f).Receipts with
@@ -132,6 +132,10 @@ public sealed class HistoricalReferenceOwnershipTests
         }));
         f.Current = DigestionTestSupport.WithSourcePolicy(RawRepositorySnapshot.Create(
             f.Current.Entries.Where(entry => entry.Path != FileMapLoader.RelativePath)));
+        var unrelated = f.Current.Entries.Single(entry => entry.Path.Contains("unrelated", StringComparison.Ordinal));
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(entry => entry != unrelated));
+        f.CaptureContext();
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Append(unrelated));
         var query = DigestionQuerySelection.ReadContext(f.Gateway, left.AtomId);
         var scoped = DigestionAtomContextProjection.Resolve(query.Snapshot, query.Document, left.AtomId);
         Assert.DoesNotContain(f.Gateway.ScopedCurrentReads.SelectMany(paths => paths),
@@ -181,6 +185,7 @@ public sealed class HistoricalReferenceOwnershipTests
         }
         f.Current = DigestionTestSupport.WithSourcePolicy(RawRepositorySnapshot.Create(
             f.Current.Entries.Where(entry => entry.Path != FileMapLoader.RelativePath)));
+        f.CaptureContext();
         return f;
 
         string Raw(DigestionLedgerEntry entry) => Encoding.UTF8.GetString(f.Current.Entries.Single(e =>

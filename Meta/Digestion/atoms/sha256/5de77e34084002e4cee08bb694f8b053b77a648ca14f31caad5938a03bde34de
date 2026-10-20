@@ -1,0 +1,14 @@
+### 定理 361.3（周期读数切开全部非规范纤维）
+
+若 \(\Pi\) 在 \(\mathcal H^1\) 上单射，则
+
+$$
+\mathcal O_{\mathrm{enh}}(g)
+=
+\mathcal O_{\mathrm{enh}}(g')
+\quad\Longleftrightarrow\quad
+g'-g\in\operatorname{im}d_0.
+$$
+
+所以增强观察能够唯一确定边运输的规范等价类。
+

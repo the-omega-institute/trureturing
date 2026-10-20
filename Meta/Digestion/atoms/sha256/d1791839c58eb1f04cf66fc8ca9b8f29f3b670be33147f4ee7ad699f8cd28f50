@@ -1,0 +1,41 @@
+**定理 61.1（有限时间极值与首达谱率）。** 令
+\[
+M_T=\max_{0\le t\le T}g(X_t),\qquad
+\tau_\partial=\inf\{t\ge1:X_t=\partial\}.
+\]
+若初态律 \(\nu\) 支持于 \(S_u\)，则
+\[
+\mathbb P_\nu(M_T\le u,\tau_\partial>T)
+=\nu^{\mathsf T}K_u^T\mathbf1,
+\]
+并且若
+\[
+b_{A_u}(i)=\sum_{a\in A_u}Q(i,a),
+\]
+则
+\[
+\mathbb P_\nu(\tau_{A_u}=n+1<\tau_\partial)
+=\nu^{\mathsf T}K_u^n b_{A_u}.
+\]
+若 \(K_u\) primitive、\(\rho_u=\rho(K_u)\)，则
+\[
+\lim_{T\to\infty}\frac1T
+\log\mathbb P_\nu(M_T\le u,\tau_\partial>T)
+=\log\rho_u,
+\]
+而条件存活极值率为
+\[
+\lim_{T\to\infty}\frac1T
+\log\mathbb P_\nu(M_T\le u\mid\tau_\partial>T)
+=\log\rho_u-\log\rho.
+\]
+在 Doob 核下同一比值写成
+\[
+\widehat\rho_u=\frac{\rho_u}{\rho},
+\]
+即避开 \(A_u\) 的长期率为 \(\log\widehat\rho_u\)。谱隙
+\[
+\eta_u=\max_{m\ge1}\frac{|\lambda_{u,m}|}{\rho_u}<1
+\]
+还给出 Perron 首项和 \(O(\eta_u^T)\) 的相对修正；周期或可约时须改用周期子列或最大强连通分量。
+

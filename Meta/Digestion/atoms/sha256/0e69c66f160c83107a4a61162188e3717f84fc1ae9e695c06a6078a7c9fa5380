@@ -1,0 +1,27 @@
+## 16. 一般目标残差 `[L]`
+
+定义：
+
+\[
+\boxed{
+\operatorname{Residual}(q,T)
+=
+\{(x,y):
+q(x)=q(y)
+\land
+T(x)\ne T(y)\}.
+}
+\]
+
+即：
+
+\[
+\operatorname{Residual}(q,T)
+=
+\ker q\setminus\ker T.
+\]
+
+它表示当前 CUT 合并了目标必须区分的状态。
+
+---
+

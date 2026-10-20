@@ -1,0 +1,41 @@
+**定理 395.1（去相干模拟误差的精确值）。** 本条替代 §332.1、§332.2、§332.3、§332.6 的相应陈述与证明。
+
+对任意 Hermitian 算子 $F$，定义
+$$
+\boxed{\chi_Z(F)=\|F-\Delta_Z^*(F)\|_\infty.}
+
+$$
+实际概率任务的效果满足 $0\le F\le I$。设允许控制为酉算子、终端效果满足 $0\le E\le I$，记实际允许的拉回效果集合为
+$$
+\mathfrak F_{\mathcal U,\mathcal E}
+=\{U^\dagger EU:U\in\mathcal U,\ E\in\mathcal E\},
+\qquad
+\chi_Z(\mathfrak F)=\sup_{F\in\mathfrak F}\chi_Z(F).
+$$
+空任务族约定残差为零。对每个这样的效果，$0\le\Delta_Z^*(F)\le I$，故 $-I\le F-\Delta_Z^*(F)\le I$，从而 $0\le\chi_Z(\mathfrak F)\le1$。§331.1 的实线性空间仍是 $\mathcal V_{\mathcal U,\mathcal E}=\operatorname{span}_{\mathbb R}\mathfrak F_{\mathcal U,\mathcal E}$；它不用于有限概率误差的上确界。若其中有非零残差，任意实数倍缩放会使该空间上的残差上确界为 $+\infty$。
+
+对任意 Hermitian $F$，
+$$
+\boxed{
+\sup_\rho\left|\operatorname{Tr}(F\rho)-\operatorname{Tr}(F\Delta_Z(\rho))\right|
+=\chi_Z(F).
+}
+
+$$
+因此，对实际允许的归一化效果族 $\mathfrak F_{\mathcal U,\mathcal E}$，所有任务的统一经典模拟误差恰为 $\chi_Z(\mathfrak F_{\mathcal U,\mathcal E})$。
+
+**证明。**
+
+迹配对自伴性给出
+$$
+\operatorname{Tr}(F\rho)-\operatorname{Tr}(F\Delta_Z(\rho))
+=\operatorname{Tr}\bigl((F-\Delta_Z^*F)\rho\bigr).
+$$
+Hermitian 算子的该绝对期望在密度矩阵上的上确界等于其算子范数，取最大绝对本征值的本征纯态即可达到。再对实际效果族取上确界得到统一误差。证毕。
+
+$\chi_Z(\mathfrak F_{\mathcal U,\mathcal E})=0$ 当且仅当定理 331.2 的经典因子化条件成立。
+
+**证明。**
+
+残差为零等价于每个实际生成效果都由 $\Delta_Z^*$ 固定；由线性性，这又等价于整个实线性张成空间被固定。应用定理 331.2。证毕。
+

@@ -135,6 +135,36 @@ internal static class DirectoryLedgerTestSupport
                 + "\n"));
     }
 
+    internal static void AssertContextOnlyAdditions(string before, string after)
+    {
+        static Dictionary<string, byte[]> Parse(string image) => image.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(line => line.Split('\0')).ToDictionary(parts => parts[0], parts => Convert.FromBase64String(parts[1]));
+        var prior = Parse(before);
+        var current = Parse(after);
+        foreach (var (path, bytes) in prior) Assert.Equal(bytes, current[path]);
+        var raw = RawRepositorySnapshot.Create(current.Select(pair => new RawRepositoryEntry(pair.Key, [.. pair.Value])));
+        foreach (var path in current.Keys.Except(prior.Keys))
+            Assert.True(DigestionContextPointerStore.IsCanonicalPath(path) || DigestionCasStore.IsCanonicalPath(path), path);
+        AssertContextCasReferenced(raw, current.Keys.Except(prior.Keys).Where(DigestionCasStore.IsCanonicalPath));
+    }
+
+    internal static void AssertContextCasReferenced(RawRepositorySnapshot raw, IEnumerable<string> paths)
+    {
+        var refs = raw.Entries.Where(file => DigestionContextPointerStore.IsCanonicalPath(file.Path))
+            .SelectMany(file => DigestionContextPointerStore.ParseVersions(file.Bytes,
+                file.Path[BackfillInventoryLoader.RootPath.Length..].Split('/')[0], Path.GetFileNameWithoutExtension(file.Path)))
+            .SelectMany(version => version.Entries).SelectMany(entry => entry.Occurrences
+                .SelectMany(occurrence => new[] { entry.AtomId, occurrence.PreviousAtomId, occurrence.NextAtomId }
+                    .Concat(occurrence.GoverningContext.Select(scope => scope.AtomId))))
+            .OfType<string>().ToHashSet(StringComparer.Ordinal);
+        foreach (var path in paths)
+        {
+            var body = raw.Entries.Single(file => file.Path == path).Bytes;
+            Assert.Contains(path[DigestionCasStore.RootPath.Length..], refs);
+            Assert.Equal(path, DigestionCasStore.Capture(body.AsSpan()).RelativePath);
+        }
+    }
+
     internal static RawRepositorySnapshot ReadRepository(TemporaryDirectory repository) =>
         RawRepositorySnapshot.Create(RepositoryFiles(repository)
             .Select(path => new RawRepositoryEntry(

@@ -1,0 +1,15 @@
+**Lemma 112.7 (one-address locality).** For every finite original source,
+initial leaf \(x\), every \(e\ge0\) and address \(p\) not prefixed by \(x\),
+flipping the label at \(x\) leaves \(r_{\rho^eu}(p)\) unchanged. Each literal
+address belongs to at most one INITIAL leaf cone.
+
+**Proof.** Expansion acts independently below each original leaf, preserving
+all original branch brackets and addresses. More explicitly \(\rho^eu\)
+is the original branch skeleton with the leaf at \(z\) replaced by
+\(\rho^e\alpha\) or \(\rho^e\beta\) at the same prefix \(z\); induction on
+\(e\) proves this substitution description. A path strictly above \(x\)
+ends at a fixed original branch; a path outside its cone follows another
+fixed branch or another leaf block. If it exits that other block its absent
+reply is fixed by that block too. Thus none depends on the flipped label.
+Prefix-freedom of original leaves proves disjointness. \(\square\)
+

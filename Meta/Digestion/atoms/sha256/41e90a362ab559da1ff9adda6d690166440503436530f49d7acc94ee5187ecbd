@@ -1,0 +1,24 @@
+**定义 36.1（带接缝的组成及三种推进）。** 沿用本卷 §35.10 的 HIGH-to-LOW 读向。实际未拒绝状态为 $(s,C)$，其中 $s\in\{0,1\}$，$C=(U,V)^{\mathsf T}\in\mathbb N_0^2$；模式集合为 $\Sigma=\{0,1,2,3,13\}$。令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+T=M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},\qquad
+S=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix}.
+$$
+
+一个实际窗口的守卫及更新为
+
+$$
+s\,y(\sigma)=0,\qquad
+(s,C)\longmapsto\bigl(x(\sigma),SC+\delta_\sigma\bigr).
+$$
+
+非法窗口进入吸收错误态 $\bot$；$\bot$ 不与合法数量零合并。模式坐标 $x,y$ 分别是 LOW、HIGH 占位。下表的数量是该模式增量的线性读数 $q_0\delta_\sigma$，$q_0=(2,3)$，不是代数范数。
+
+| 模式 $\sigma$ | $x(\sigma)$ | $y(\sigma)$ | $\delta_\sigma$ | $q_0\delta_\sigma$ | $Q(\delta_\sigma)$ |
+| --- | ---: | ---: | --- | ---: | ---: |
+| $0$ | 0 | 0 | $(0,0)$ | 0 | 0 |
+| $1$ | 1 | 0 | $(1,0)$ | 2 | 1 |
+| $2$ | 0 | 0 | $(0,1)$ | 3 | $-1$ |
+| $3$ | 0 | 1 | $(1,1)$ | 5 | 1 |
+| $13$ | 1 | 1 | $(2,1)$ | 7 | 5 |

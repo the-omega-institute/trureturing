@@ -1,0 +1,55 @@
+## 283. 稀疏组成下的条件联合远频局部化
+
+本节的来源仍为定义 1.1、2.1 的自由有序非空满二叉树，采样假设明确取固定组成纤维上的均匀律 $U(a,b)$。左右次序及每一种二叉括号化分别保留。原替换逐字为
+$$
+\rho(\alpha)=\beta,\qquad \rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad \rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+$$
+沿用[母卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §§357、359、360 的同源观察
+$W_3(t)=(E(t),E(\rho t),E(\rho^2t))$，其中 $E$ 保持叶序，且
+$A^2=1$、$B^2=-1$、$AB+BA=1$。母卷定理 359.3 的唯一正规形为
+$$
+W_3(t)=L(u,v,w)R_{pq},\qquad
+L(u,v,w)=\bigl((-1)^vS^{2u},(-1)^wS^{2v},(-1)^uS^{2w}\bigr),
+\qquad S=BA,
+$$
+其中 $R_{00}=(1,1,1)$、$R_{10}=(A,B,S)$、$R_{01}=(B,S,A+B)$、$R_{11}=R_{10}R_{01}$，
+$p=a\bmod2$、$q=b\bmod2$。令 $Z=(u,v,w)$，始终用同一个 $U(a,b)$ 定义精确有限均值
+$\mu_{ab}=\mathbb E_{ab}Z$ 和完整协方差 $\Sigma_{ab}=\operatorname{Cov}_{ab}Z$。
+这里的 $L(u,v,w)$ 是母卷的三元组记号，下文不带参数的 $L$ 是间隔总长度；下文的标量 $D$ 是符号长度，不是母卷的向量 $A+B$。
+
+取整数 $k\ge64$、$M\ge3(k+1)$，置
+$$
+d=k+1,\qquad \delta_g=\frac{d}{M+d},\qquad
+\gamma=\delta_g(2-\delta_g),\qquad \kappa=k\bmod2.
+$$
+用于原组成时取 $k=\min(a,b)$、$M=\max(a,b)$、$n=a+b=k+M$。$\delta_g$ 仅为辅助几何倾斜参数，与假设 1.4 的物理时间单位 $\delta$ 不同。
+在未条件化的辅助概率空间上，令 $r_0,\ldots,r_k$ 独立，且
+$$
+\mathbb P(r_i=m)=\delta_g(1-\delta_g)^m\quad(m\in\mathbb Z_{\ge0}).
+$$
+定义
+$$
+L=\sum_{i=0}^k r_i,\qquad
+\varepsilon_0=0,\qquad
+\varepsilon_j=\left(\sum_{i<j}r_i\right)\bmod2\quad(1\le j\le k+1),
+$$
+$$
+O=\sum_{\substack{1\le j\le k\\j\text{ 奇}}}\varepsilon_j,
+\qquad E=\sum_{\substack{1\le j\le k\\j\text{ 偶}}}\varepsilon_j,
+\qquad H=\sum_{\substack{0\le i\le k\\i\text{ 奇}}}r_i,
+\qquad D=L-2H.
+$$
+令 $\mathbb T=\mathbb R/(2\pi\mathbb Z)$，$\operatorname{dist}_{\mathbb T}$ 为圆周距离，所有环面积分均为未归一化 Lebesgue 积分。令
+$$
+\chi(t,x,y)=\mathbb E\bigl[e^{i(tH+xO+yE)}\mid L=M\bigr].
+$$
+对实数 $R\ge1$，令 $U_R$ 为 $j=0,1$ 两个圆周盒的并：
+$$
+U_R=\bigcup_{j=0}^1\left\{(t,x,y)\in\mathbb T^3:
+\operatorname{dist}_{\mathbb T}(t,j\pi)\le\frac{R\delta_g}{\sqrt k},\quad
+\operatorname{dist}_{\mathbb T}(x,j\pi)\le\frac R{\sqrt k},\quad
+\operatorname{dist}_{\mathbb T}(y,j\pi)\le\frac R{\sqrt k}\right\}.
+$$
+圆周半宽达到 $\pi$ 时，相应条件覆盖整个圆周。
+

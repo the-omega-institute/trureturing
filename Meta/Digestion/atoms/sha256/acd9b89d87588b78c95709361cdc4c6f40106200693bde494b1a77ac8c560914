@@ -1,0 +1,26 @@
+### 推论 39.4（精确正尺度纤维与退化边界）
+
+对通过命题 39.3 的数据，所有定义 39.1 中的实现恰为
+
+$$
+\boxed{R=t\widehat R_0,\qquad
+G=\widehat H/t,\qquad
+D=\widehat D,\qquad t>0.}
+$$
+
+等价地，两个域内实现产生相同的所述有限读数，当且仅当存在 $\lambda>0$ 使 $R'=\lambda R,G'=G/\lambda,D'=D$。这也使它们沿任意相同的未来已知操作历史、在相同读数序号上的读数一致。若另把 $R=c\ell$ 分成正对象和正量具，定理 5.1 的内部互逆尺度仍在；关系—增益尺度没有分别校准该分解。
+
+零关系 $R=0$ 和恒零增益 $G\equiv0$ 均不在该恢复域中：前者使 $R/\operatorname{tr}R$ 无定义且所有增益不可见，后者使任意关系都只产生漂移。严格正性之外的零迹来源亦不属于本结论。已声明的有限次数上界、精确读数与已记录序号是前提；有限拟合不能证明一个未先声明上界的时间函数永远遵守该次数，也不恢复 §37.4 中可被多项式平移吸收的未知时间原点。
+
+**证明。** 定理 39.2 的唯一性强制每个实现具有同一 $R/\operatorname{tr}R=\widehat R_0$、$(\operatorname{tr}R)G=\widehat H$ 和漂移 $\widehat D$。取 $t=\operatorname{tr}R>0$ 得到必要性。反向任取 $t>0$，严格正性、秩一及次数上界保持，$G$ 因 $\widehat H\not\equiv0$ 仍非零，而且对每个操作矩阵 $A$ 及每个读数序号 $i$ 都有
+
+$$
+\frac{\widehat H(i)}t\operatorname{tr}(A\,t\widehat R_0)
++\widehat D(i)
+=\widehat H(i)\operatorname{tr}(A\widehat R_0)+\widehat D(i).
+$$
+
+这同时证明充分性及未来读数一致性。将两个实现的正迹之比取作 $\lambda$ 即得等价表述。零来源和零增益的断言由读数式直接代入可得；它们是更大的退化纤维，不能用上述正尺度纤维替代。
+
+对于未声明次数上界的函数，只需在任意 $L$ 个已读序号上给漂移增加非零倍数的 $\prod_{i=0}^{L-1}(t-i)$，就保留全部有限读数而改变未来。因此有限恢复不认证其前提在更大函数族中的有效性。时间平移边界直接沿用命题 37.4。模变换群识别的一般概念可参见 Li–Lee–Bresler, “A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models”, Definition 2.7, [arXiv:1501.06120](https://arxiv.org/abs/1501.06120)；本推论的具体正尺度群及其完备性由上述共同来源恢复给出。∎
+

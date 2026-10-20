@@ -1,0 +1,21 @@
+**定义 1463.1（带先验的模拟误差）。** 对有限状态集 $\mathcal X$、共同概率先验 $P$ 及两个有限实验 $E(j\mid x)$、$F(z\mid x)$，定义
+
+$$
+\epsilon_P(F\leftarrow E;T)
+=\sum_xP(x)\operatorname{TV}
+\left(F(\cdot\mid x),\sum_jE(j\mid x)T(\cdot\mid j)\right),
+$$
+
+其中 $T(z\mid j)$ 为每行归一的非负随机通道，且不依赖 $x$。它等于共同先验下两张状态与输出联合概率律的总变差。
+
+项目的 `FiniteDeficiencyRiskTransfer` 使用的是先对所有状态取最大误差，再对模拟器取下确界。因此本节的平均版本不能不加说明地冒用那项最坏状态结论；两者通过
+
+$$
+\epsilon_P(F\leftarrow E;T)
+\le\max_x\operatorname{TV}(F_x,(ET)_x)
+$$
+
+相联系，而反向需要先验质量或其他逐状态信息。本批直接保留给定先验下的平均误差，后面再单独处理先验变化。
+
+对于来源联合律，选其实际观察边缘为 $P$，正好保留来源权重所承担的同一平均。若只拿不同来源各自最有利的先验来比较，便不再是在比较同一决策问题。
+

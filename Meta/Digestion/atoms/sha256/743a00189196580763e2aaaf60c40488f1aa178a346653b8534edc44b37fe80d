@@ -1,0 +1,18 @@
+## 22. Complete four-state arena and exact kernel diamond
+
+The first explicit intrinsic calculation uses the entire length-three factor object. The four words are
+
+```text
+SLS, SLL, LSL, LLS.
+```
+
+They occur at starts 4, 1, 0 and 2. The frozen factor-complexity theorem proves there are exactly four length-three factors; thus their word-preserving finite presentation is complete. No sampling cutoff defines the arena.
+
+The actual readouts are:
+
+| Word | (r,z) | P | m |
+|---|---|---:|---:|
+| SLS | (1,2) | 1 | 0 |
+| SLL | (2,1) | 0 | -2 |
+| LSL | (2,1) | 1 | 0 |
+| LLS | (2,1) | 2 | 2 |

@@ -1,0 +1,37 @@
+**定义 389.1（两个中心矩与加权输入空间）。** 沿用 §§386–387 的同一个实际正核 $k$ 和 $K$。为免混淆参数与增长指数，记
+
+$$
+b=\beta_1,\qquad \delta=b-T>0,\qquad
+A=\frac1{\mathcal B(1)},\qquad
+C_0=\frac1{\mathcal B(1)}+\frac{\mathcal B'(1)}{\mathcal B(1)^2},
+\qquad \mu_0=\frac1\delta,\qquad \kappa=\frac\delta{b^2}>0.
+\tag{389.1}
+$$
+
+对正整数 $m$，置
+
+$$
+w_0(m)=\frac1{m(m+1)},\qquad
+w_1(m)=\frac{\log m}{m}-\frac{\log(m+1)}{m+1}.
+\tag{389.2}
+$$
+
+固定 $0<\alpha<1$。$X_\alpha$ 是正整数指标上满足下述范数有限的实序列空间，赋范数
+
+$$
+\|f\|_\alpha=\sup_{m\ge1}\frac{|f(m)|}{m^\alpha},
+\qquad
+M_i(f)=\sum_{m\ge1}f(m)w_i(m)\quad(i=0,1).
+\tag{389.3}
+$$
+
+这些矩在 $X_\alpha$ 上绝对收敛。将序列延伸到零指标时，一律取 $f(0)=0$，并沿用
+
+$$
+(\mathcal T_kf)(N)=\sum_{d=1}^Nk(d)f(\lfloor N/d\rfloor)
+\quad(N\in\mathbb N,\ N\ge1).
+\tag{389.4}
+$$
+
+两个矩是商分块中 $N\log N$ 和 $N$ 连续主项的系数。它们在经典约数核 $\tau(d)$ 的分数和中已有明确先例：Meselem Karras、Ling Li、Joshua Stucky，*Hyperbolic Summation for Fractional Sums*，[arXiv:2212.05443v3](https://arxiv.org/abs/2212.05443)，p. 2 式（1.4）的 $C_1(f)$ 和 $C_3(f)$ 正是（389.3）的 $M_0(f)$ 和 $M_1(f)$。下述命题针对此处实际 Fibonacci 正核，构造同时满足两个零矩的具体输入。
+

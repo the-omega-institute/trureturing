@@ -1,0 +1,21 @@
+**定义 350.1（矩阵读数空间与单向近包含）。** 设 $d\ge1$，$V\subseteq\operatorname{Herm}_d$ 是包含 $I$ 的实线性空间，$W=V+iV$。以下范数均为 $M_d(\mathbb C)$ 的算子范数；$U_1$ 表示线性空间 $U$ 的闭单位球。沿用第80.4节的乘法缺陷，并定义其复单位球版本：
+
+$$
+\eta=\sup_{a,b\in V_1}\operatorname{dist}(ab,W),
+\qquad
+\mu=\sup_{x,y\in W_1}\operatorname{dist}(xy,W).
+$$
+
+对含单位的环境 $C^*$-子代数 $A\subseteq M_d(\mathbb C)$，记
+
+$$
+\nu(A,W)=\sup_{a\in A_1}\operatorname{dist}(a,W),
+\qquad
+D(A,W)=\max\left\{
+\sup_{a\in A_1}\operatorname{dist}(a,W_1),
+\sup_{w\in W_1}\operatorname{dist}(w,A_1)
+\right\}.
+$$
+
+$\nu$ 的目标为整个线性空间，$D$ 比较两个完整复单位球；二者均未取矩阵放大后的上确界。
+

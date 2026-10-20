@@ -1,0 +1,15 @@
+**条件接口 373.3（接缝边界配分递推）。** 在只有节点势与父子二体势的展开树中，令 $Q_t(s)$ 为根自旋固定为 $s$ 的子块配分。若新根 $r$ 的左右边势为 $\Psi_L$、$\Psi_R$，固定根自旋后两块内部权重因子化，则
+
+$$
+\begin{aligned}
+Q_{\langle t,u\rangle}(s)
+={}&e^{-\beta U_r(s)}
+\left[\sum_{a\in\mathcal S}e^{-\beta\Psi_L(s,a)}Q_t(a)\right]
+\left[\sum_{b\in\mathcal S}e^{-\beta\Psi_R(s,b)}Q_u(b)\right],\\
+Z_{\langle t,u\rangle}={}&\sum_{s\in\mathcal S}Q_{\langle t,u\rangle}(s).
+\end{aligned}
+\tag{373.6}
+$$
+
+原子初值为 $Q_\alpha(s)=e^{-\beta U_\alpha(s)}$、$Q_\beta(s)=e^{-\beta U_\beta(s)}$。各子块须使用其实际出现位置的装饰；副本装饰相容时，才可统一写成层级递推。若作用同时穿过两块内部，根自旋未必是充分接缝状态，接口应保留全部跨块变量。消去这些变量会产生有效多体势，不能假定原有有限参数族闭合或自动产生重整化固定点。
+

@@ -1,0 +1,31 @@
+## 234. FIB 网络上的外加开放量子系统、量子信道与 Lindblad 谱隙
+
+固定 FIB 耦合支撑图，另给局部 Hilbert 空间、Hamiltonian、环境、初态和测量。局部 Hamiltonian 为
+
+$$
+H_j=\sum_vh_v+\sum_{\{u,v\}\in E_j}h_{uv},
+\tag{234.1}
+$$
+
+弱耦合 Markov 近似下的约化态满足
+
+$$
+\dot\rho=\mathcal L_j(\rho)
+=-{\rm i}[H_j,\rho]
++\sum_\alpha\left(L_\alpha\rho L_\alpha^\dagger
+-\tfrac12\{L_\alpha^\dagger L_\alpha,\rho\}\right).
+\tag{234.2}
+$$
+
+\(L_\alpha\) 的支撑、速率、浴谱和测量方式均外加；只有在构造成立时，\(\Phi_t=e^{t\mathcal L_j}\) 才是 CPTP 信道。唯一稳态且零模孤立时，Lindblad 谱隙
+
+$$
+\Delta_{\mathcal L,j}
+=-\max_{\lambda\ne0}\operatorname{Re}\lambda
+\tag{234.3}
+$$
+
+控制渐近混合时间；非正规 Jordan 块、暗子空间和守恒量会使谱隙不能代表所有短时观测。局部耗散可破坏纠缠，集体跳跃可产生亮/暗模，工程化耗散也可把纠缠态做成暗稳态；这些行为取决于 \(H_j,L_\alpha\)、温度、初态和测量。
+
+量子详细平衡、对数 Sobolev 混合、跳跃计数大偏差和有限尺寸耗散相变都要求外加 Gibbs 态、驱动协议、尺度极限和可观测通道。只测单体边缘或总能量，不能恢复暗模、多体跳跃相关和 Hamiltonian 相位。因此，开放量子信道、纠缠寿命、谱隙和稳态统计不是 FIB 耦合支撑单独决定的。
+

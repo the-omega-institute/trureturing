@@ -1,0 +1,7 @@
+以下 Lean 真源只承担其已声明的数学范围：
+
+- `D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.lean`：有界算子和显式逆见证下的分层消去结合律。
+- `D5/S3/Quantum/Fibers/FutureStatisticsEquivalence.lean`：固定量子通道下，全体未来统计相同与状态差对 Heisenberg 生成空间的迹配对为零的等价。
+- `D5/S3/Observer/GoldenCoding/GoldenLorentzUpdate.lean`：黄金更新对二次式的一步反等距与双步等距。
+- `D5/S3/Observer/GoldenCoding/GoldenBusemannCoordinate.lean`：黄金零坐标与双步快速度增量。
+

@@ -1,0 +1,10 @@
+**Attribution 7.3 (primary classical suppliers).** All graph results in
+this table are `literature-attested`. Their application does not assert
+new general graph bounds or worldwide originality.
+
+| Primary source | Used statement and checked parameter match |
+| --- | --- |
+| Ivan Havel and Jaroslav Morávek, *B-valuations of graphs*, Czechoslovak Mathematical Journal 22 (1972), 338–351, [DOI 10.21136/cmj.1972.101102][HM] | The introduction defines injective binary state assignment with one-coordinate transitions; Propositions 1–2, pp.340–341, give its coordinate-parity and adjacency-preserving embedding interpretation. It is not an induced or isometric requirement. This is the classical state-assignment meaning used in §4 and already consumed by FIB §45.4. |
+| Ivan Havel and Petr Liebl, *O vnoření dichotomického stromu do krychle*, Časopis pro pěstování matematiky 97 (1972), 201–205, [primary text][HL] | Definition 7 and the main theorem, p.203, with the explicit prefix-tree definition in the English summary, p.205: the complete binary tree of edge depth $h>1$ embeds in $Q_{h+2}$. Only this upper bound supplies $g$ in (SLHC.7); its minimum-dimension result for that different tree is not transferred to the actual primitive tree. |
+| Ivan Havel and Petr Liebl, *Embedding the polytomic tree into the n-cube*, Časopis pro pěstování matematiky 98 (1973), 307–314, [primary text][HL-P] | Remark 4, p.312, uses separate edge-coordinate sets for successive levels. This is attribution for the level-coordinate method behind Construction 4.1, not a new general forest chapter or a native realizability claim. |
+| Sergio Cabello, David Eppstein and Sandi Klavžar, *The Fibonacci Dimension of a Graph*, Electronic Journal of Combinatorics 18 (2011), P55, [DOI 10.37236/542][CEK-DOI], [arXiv:0903.2507v1][CEK] | Proposition 3.1's explicit zero-interleaving map supplies (SLHC.8), independently of an isometric hypothesis on $g$. Corollary 3.6, pp.7–8 of the preprint, gives $\operatorname{fdim}(T)=|E(T)|$ for a finite tree, supplying the old width $N-1$. No isometric lower bound is asserted for the new encodings. |

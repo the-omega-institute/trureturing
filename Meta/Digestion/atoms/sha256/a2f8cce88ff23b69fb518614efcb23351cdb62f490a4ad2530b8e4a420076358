@@ -1,0 +1,8 @@
+**Theorem 15.5 (full-fiber compatibility criterion).** A prescribed
+$\sigma$ of Definition 15.1 is compatible if and only if there is
+$z\in\{0,1\}$ with the following properties:
+
+1. $\sigma$ is identically $z$ on $Z_a\cup Z_c\cup Z_*$.
+2. On each entire $\Pi_j$ it is a constant $\varepsilon_j$.
+3. With
+

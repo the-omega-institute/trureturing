@@ -1,0 +1,26 @@
+**Corollary 22.11 (Retuned common-band means).** Let $I_\varepsilon=[1-2\varepsilon,1-\varepsilon]$ be a supplied rational band, and let $\mathcal C_\varepsilon$ contain protocols with the same observation contract whose two risk suprema are required only over $I_\varepsilon$, while the protocol may be retuned from that band description. For all sufficiently small $\varepsilon$,
+
+$$
+\varepsilon\le -\log q\le4\varepsilon\quad(q\in I_\varepsilon).
+\tag{22.66}
+$$
+
+Fix any $\mathcal A\in\mathcal C_\varepsilon$ and $q\in I_\varepsilon$, and repeat the proof of Theorem 22.9 on the selected pair $(\mathsf P_{0,q},\mathsf P_{1,q})$, with the admissible opponent $q'=q$. That proof uses only the two selected risk bounds at this $q$, both supplied by the band promises; no risk outside $I_\varepsilon$ enters. The same constants $c,s_0$ therefore apply independently of the band tuning. Using (22.66), take $c_B=c/64$ and $0<\varepsilon<\min\{1/4,s_0/4\}$. Then, uniformly over every $\mathcal A\in\mathcal C_\varepsilon$, every $q\in I_\varepsilon$ and both labels,
+
+$$
+\mathbb E_{i,q}^{\mathcal A}L\ge c_B\varepsilon^{-3}.
+\tag{22.67}
+$$
+
+The same q-free observer from Theorem 22.3 supplies the upper bound $C_B\varepsilon^{-3}$ on this band. Thus both separate worst-band infima and the joint worst-band infimum satisfy
+
+$$
+\inf_{\mathcal A\in\mathcal C_\varepsilon}\sup_{q\in I_\varepsilon}\mathbb E_{i,q}^{\mathcal A}L
+=\Theta_{H_c,\alpha}(\varepsilon^{-3}),
+\qquad
+\inf_{\mathcal A\in\mathcal C_\varepsilon}\sup_{i,q\in\{0,1\}\times I_\varepsilon}
+\mathbb E_{i,q}^{\mathcal A}L
+=\Theta_{H_c,\alpha}(\varepsilon^{-3}).
+\tag{22.68}
+$$
+

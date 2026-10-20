@@ -1,0 +1,10 @@
+其中：
+
+* \(\mathbb P^*\)：有序观察历史；
+* \(\Lambda_{\mathbb P}\)：交换 occupation state；
+* \(\mathcal H_{\mathbb P}\)：正交 prime mode space；
+* \(\ell(v)=\sum v_p\log p\)：Archimedean 线坐标；
+* \(\pi\)：观察顺序／旗标；
+* \(U_p\)：带记忆更新；
+* \(q\)：完成标量读数。
+

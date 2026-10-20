@@ -1,0 +1,55 @@
+## 3. 对实际 Gamma、素数幂和极点的完整下界
+
+记
+
+\[
+\gamma(t)=\Re\psi_\Gamma(1/4+it/2)-\log\pi.
+\]
+
+它在 |t| 上递增，且 gamma(t)>=gamma(0)>-2*pi。对完整 Friedrichs 形式域中的 g，式 (IC1) 和 Plancherel 给出
+
+\[
+q_\Gamma(g)\ge
+\big[(1-\epsilon_*)\gamma(R_N)+\epsilon_*\gamma(0)\big]\|g\|_2^2.
+\]
+
+设
+
+\[
+P_a=2\sum_{2\le n\le e^{2a}}\frac{\Lambda(n)}{\sqrt n}.
+\]
+
+实际相关函数满足 |C(g,g)(s)|<=||g||_2^2，故素数项至少为 -P_a||g||_2^2。两个极点在完整奇偶空间上的精确贡献为
+
+\[
+2|\langle g,\cosh(x/2)\rangle|^2
+-2|\langle g,\sinh(x/2)\rangle|^2.
+\]
+
+由于
+
+\[
+\int_{-a}^a\sinh^2(x/2)dx=\sinh a-a,
+\]
+
+极点项至少为 -2(sinh(a)-a)||g||_2^2。于是得到纸面定理：
+
+\[
+\boxed{
+q_a(g)\ge\beta_{a,N}\|g\|_2^2
+\quad\text{对所有 }g\in\operatorname{Dom}(q_a)\cap P_N^\perp,
+}
+\tag{IC2}
+\]
+
+\[
+\boxed{
+\beta_{a,N}=(1-\epsilon_*)\gamma\!\left(\frac{\pi N}{4a}\right)
++\epsilon_*\gamma(0)-P_a-2(\sinh a-a).
+}
+\]
+
+量词覆盖无限补空间中的所有允许向量。Gamma 形式积分在其形式域中有定义；有限素数平移及极点项是 L2 上的有界形式。因此同一不等式适用于该 Friedrichs 实现，不额外假定每个向量在算子域中。对偶向量，极点的负 sinh 通道为零，可删除最后一项。
+
+这个下界不假定补空间非负。所有常数由 a、N、Gamma 和不超过 e^(2a) 的素数幂独立给出。
+

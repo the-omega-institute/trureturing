@@ -1,0 +1,13 @@
+The supplementary exact replay reuses the previous direct independent-subset
+enumerator. It does not use the deletion recursion to manufacture reference
+partition values, and it does not read any stored result JSON. Across all 512
+subdomains of a 3-by-3 square and 21 exact Gaussian-rational activities in the
+claimed tube, the executed checks include:
+
+- 10752 quantitative partition lower bounds;
+- 59136 marked-vacancy modulus bounds;
+- 48384 root increment half-plane and four-child reconstruction checks;
+- 64512 present first-child and 129024 missing first-child checks;
+- 2304 internal geometric contexts and 5376 internal reconstruction checks;
+- 1536 complete vertex-elimination products.
+

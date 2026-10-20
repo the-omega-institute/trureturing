@@ -1,0 +1,631 @@
+**{(1,e):(1,(1,e)) for e in z.e}}
+
+def unit_at(t):
+    return time_shift(integer(1), t)
+
+def guard(x, y):
+    return all(x.e[e][0] < y.e[f][0] for e in x.e for f in y.e)
+
+def attempt(operation):
+    try:
+        return operation()
+    except ValueError:
+        return FAIL
+
+hist_left, hist_right = mul(u,add(u,u)), add(mul(u,u),mul(u,u))
+assert (len(hist_left.e),len(hist_right.e),q(hist_left),q(hist_right)) == (14,16,2,2)
+comm_left, comm_right = mul(source7,source8), mul(source8,source7)
+new_sources = [{z.e[e][3] for e in z.e if z.e[e][0] == 1}
+               for z in (comm_left,comm_right)]
+assert new_sources == [{("pair",("leaf",7),("leaf",8))},
+                       {("pair",("leaf",8),("leaf",7))}]
+assert new_sources[0].isdisjoint(new_sources[1])
+assert len(comm_left.w) == len(comm_right.w) == 4
+empty = integer(0)
+additive_isomorphisms = history_map(add(source7,source8),add(source8,source7),
+                                  {(i,e):(1-i,e) for i,z in enumerate((source7,source8)) for e in z.e})
+additive_isomorphisms += history_map(add(u,empty),u,{(0,e):e for e in u.e})
+assert add(u,empty) != u and add(add(u,u),u) != add(u,add(u,u))
+additive_isomorphisms += history_map(add(add(u,u),u),add(u,add(u,u)),rebracket(u,u,u))
+assert q(add(u,neg(u))) == 0 and len(add(u,neg(u)).e) == 4
+print(f"pr2_history: distributivity_archives={len(hist_left.e)},{len(hist_right.e)} ordered_source_new_events={len(comm_left.w)},{len(comm_right.w)} additive_isomorphisms={additive_isomorphisms}")
+
+temporal_states = [empty] + [unit_at(t0) for t0 in (-1,0,1,2)]
+current_empty = valid(replace(unit_at(4),w=frozenset(),a=frozenset()))
+temporal_states.append(current_empty)
+temporal_checks, temporal_defined = 0, 0
+for xx,yy,zz in product(temporal_states,repeat=3):
+    required = guard(xx,yy) and guard(xx,zz) and guard(yy,zz)
+    tl = attempt(lambda: temporal(temporal(xx,yy),zz))
+    tr = attempt(lambda: temporal(xx,temporal(yy,zz)))
+    assert (tl is not FAIL) == (tr is not FAIL) == required
+    if required:
+        history_map(tl,tr,rebracket(xx,yy,zz))
+        temporal_defined += 1
+    temporal_checks += 1
+assert guard(unit_at(2),empty) and guard(empty,unit_at(1))
+assert not guard(unit_at(2),unit_at(1))
+assert attempt(lambda:temporal(temporal(unit_at(2),empty),unit_at(1))) is FAIL
+assert attempt(lambda:temporal(unit_at(2),temporal(empty,unit_at(1)))) is FAIL
+legal = temporal(temporal(unit_at(0),unit_at(1)),unit_at(2))
+assert (len(legal.e),len(legal.o)) == (6,12)
+assert attempt(lambda:temporal(temporal(u,empty),unit_at(1))) is not FAIL
+assert temporal_checks == 216
+print(f"pr2_temporal: triples={temporal_checks} defined={temporal_defined} legal_archive={len(legal.e)} legal_edges={len(legal.o)} empty_middle_adjacent_guards_insufficient=True")
+
+# None denotes +infinity in m and -infinity in M/s; no finite float times.
+def theta(x):
+    return (read_pair(x), min((v[0] for v in x.e.values()),default=None),
+            max((v[0] for v in x.e.values()),default=None),
+            max((x.e[e][0] for e in x.w),default=None))
+
+def lo(*values):
+    return min((v for v in values if v is not None),default=None)
+
+def hi(*values):
+    return max((v for v in values if v is not None),default=None)
+
+def gamma(s, t):
+    return None if s is None or t is None else max(s,t)+1
+
+def theta_add(x, y):
+    return pair_add(x[0],y[0]),lo(x[1],y[1]),hi(x[2],y[2]),hi(x[3],y[3])
+
+def theta_mul(x, y):
+    g0 = gamma(x[3],y[3])
+    return pair_mul(x[0],y[0]),lo(x[1],y[1]),hi(x[2],y[2],g0),g0
+
+def theta_guard(x, y):
+    return x[2] is None or y[1] is None or x[2] < y[1]
+
+def ceiling_state(s, selected_time=None, floor=0, ceiling=10):
+    selected_time = s if selected_time is None else selected_time
+    e = {"pos":(selected_time,origin,1,("leaf",0)),
+         "neg":(s,origin,-1,("leaf",0)),
+         "old_min":(floor,origin,1,("leaf",9)),
+         "old_max":(ceiling,origin,1,("leaf",9))}
+    return valid(Rich(e,frozenset(),frozenset(("pos","neg")),frozenset(("pos",))))
+
+c0,c9 = ceiling_state(0),ceiling_state(9)
+selected_low = ceiling_state(9,selected_time=0)
+assert theta(c0) == (({},delta),0,10,0)
+assert theta(c9) == (({},delta),0,10,9)
+assert max(selected_low.e[e][0] for e in selected_low.a) == 0
+assert theta(selected_low)[3] == 9
+theta_states = [empty,unit_at(-1),u,unit_at(1),current_empty,c0,c9,selected_low]
+theta_pairs,theta_unary,threshold_checks = 0,0,0
+for xx in theta_states:
+    tx = theta(xx)
+    bg,zx = tx[0]
+    assert theta(neg(xx)) == ((bg,plus_c(bg,minus_c(zx))),*tx[1:])
+    theta_unary += 1
+    for points in (set(),{origin},{v}):
+        assert theta(at(xx,points)) == ((bg,{p:a for p,a in zx.items() if p in points}),*tx[1:])
+        theta_unary += 1
+    for k in (-3,0,4):
+        assert theta(time_shift(xx,k)) == (tx[0],*(a+k if a is not None else None for a in tx[1:]))
+        theta_unary += 1
+    for t0 in range(-3,13):
+        assert guard(xx,unit_at(t0)) == (tx[2] is None or tx[2] < t0)
+        assert guard(unit_at(t0),xx) == (tx[1] is None or t0 < tx[1])
+        threshold_checks += 2
+    for yy in theta_states:
+        ty = theta(yy)
+        assert theta(add(xx,yy)) == theta_add(tx,ty)
+        assert theta(mul(xx,yy)) == theta_mul(tx,ty)
+        out = attempt(lambda: temporal(xx,yy))
+        assert (out is not FAIL) == theta_guard(tx,ty)
+        if out is not FAIL:
+            assert theta(out) == theta_add(tx,ty)
+        theta_pairs += 1
+assert (theta_pairs,theta_unary,threshold_checks) == (64,56,256)
+c0_twice,c9_twice = [mul(mul(xx,u),u) for xx in (c0,c9)]
+maxima = theta(c0_twice)[2],theta(c9_twice)[2]
+assert maxima == (10,11)
+assert q(temporal(c0_twice,unit_at(11))) == 2
+assert attempt(lambda:temporal(c9_twice,unit_at(11))) is FAIL
+assert theta(mul(selected_low,u))[3] == 10  # Using max selected A would give 1.
+same_theta_time = ceiling_state(9,selected_time=5)
+assert theta(selected_low) == theta(same_theta_time)
+time_filter_reads = tuple(q(filt(xx,lambda e,xx=xx:xx.e[e][0] == 0))
+                          for xx in (selected_low,same_theta_time))
+assert time_filter_reads == (1,0)
+amplification_checks = 0
+amp0,amp2 = [ceiling_state(s,floor=-1,ceiling=2) for s in (0,2)]
+amp_empty = valid(replace(amp0,w=frozenset(),a=frozenset()))
+for xx,yy in ((amp0,amp2),(amp_empty,replace(amp2,a=frozenset()))):
+    tx,ty = theta(xx),theta(yy)
+    assert tx[:3] == ty[:3] and tx[3] != ty[3]
+    early = tx[1]
+    n = tx[2] - (tx[3] if tx[3] is not None else ty[3]) + 1
+    r0 = ty[3]+n
+    for j in range(1,n+1):
+        xx,yy = mul(xx,unit_at(early)),mul(yy,unit_at(early))
+        for rich,old_t in ((xx,tx),(yy,ty)):
+            s0 = old_t[3]
+            expected_s = None if s0 is None else s0+j
+            assert theta(rich)[2:] == (hi(old_t[2],expected_s),expected_s)
+    assert theta(xx)[2] < r0 == theta(yy)[2]
+    assert attempt(lambda:temporal(xx,unit_at(r0))) is not FAIL
+    assert attempt(lambda:temporal(yy,unit_at(r0))) is FAIL
+    amplification_checks += 1
+print(f"pr2_theta: pairs={theta_pairs} unary={theta_unary} integer_thresholds={threshold_checks} amplification_cases={amplification_checks} archive_maxima={maxima[0]},{maxima[1]} following_U11=defined,failed time_filter={time_filter_reads[0]},{time_filter_reads[1]}")
+
+theta_law_checks = 0
+law_states = [empty,u,current_empty,c9]
+for xx,yy,zz in product(law_states,repeat=3):
+    assert theta(add(add(xx,yy),zz)) == theta(add(xx,add(yy,zz)))
+    assert theta(mul(xx,add(yy,zz))) == theta(add(mul(xx,yy),mul(xx,zz)))
+    assert theta(mul(add(xx,yy),zz)) == theta(add(mul(xx,zz),mul(yy,zz)))
+    theta_law_checks += 1
+for xx,yy in product(theta_states,repeat=2):
+    assert theta(mul(xx,yy)) == theta(mul(yy,xx))
+    assert theta(add(xx,yy)) == theta(add(yy,xx))
+    assert theta(add(xx,empty)) == theta(xx)
+    assert theta(mul(xx,u))[3] != 0
+theta_left,theta_right = mul(mul(u,u),unit_at(1)),mul(u,mul(u,unit_at(1)))
+assert theta(theta_left) == (({},delta),0,2,2)
+assert theta(theta_right) == (({},delta),0,3,3)
+assert theta(mul(u,empty)) == (({},{}),0,0,None) != theta(empty)
+print(f"pr2_theta_laws: rich_triples={theta_law_checks} associativity_maxima={theta(theta_left)[2]},{theta(theta_right)[2]} zero_absorbing=False")
+
+small = [sparse(dict(zip((origin,v,h),cs))) for cs in product((-1,0,1),repeat=3) if any(cs)]
+extreme_checks,unit_product_checks = 0,0
+for ca,cb in product(small,repeat=2):
+    cc = conv(ca,cb)
+    assert cc
+    for extremum in (min,max):
+        pa,pb = extremum(ca),extremum(cb)
+        target = tuple(a+b for a,b in zip(pa,pb))
+        assert extremum(cc) == target and cc[target] == ca[pa]*cb[pb]
+        splits = [(p0,q0) for p0 in ca for q0 in cb
+                  if tuple(a+b for a,b in zip(p0,q0)) == target]
+        assert splits == [(pa,pb)]
+    if cc == delta:
+        assert len(ca) == len(cb) == 1
+        assert next(iter(ca.values()))*next(iter(cb.values())) == 1
+        unit_product_checks += 1
+    extreme_checks += 1
+unit_checks = 0
+for point,sgn in product((origin,v,tuple(-a for a in v),h,tuple(-a for a in h)),(-1,1)):
+    assert conv({point:sgn},{tuple(-a for a in point):sgn}) == delta
+    unit_checks += 1
+nonunit = {origin:2,v:-1}
+assert sum(nonunit.values()) == 1 and len(nonunit) == 2
+inverse_candidates = 0
+for cs in product((-1,0,1),repeat=3):
+    candidate = sparse(dict(zip((tuple(-a for a in v),origin,v),cs)))
+    assert conv(nonunit,candidate) != delta
+    inverse_candidates += 1
+assert (len(small),extreme_checks,unit_checks,inverse_candidates) == (26,676,10,27)
+print(f"pr2_extrema: nonzero_samples={len(small)} pairs={extreme_checks} products_delta0={unit_product_checks} signed_delta_inverses={unit_checks} nonunit_augmentation={sum(nonunit.values())} inverse_candidates_rejected={inverse_candidates}")
+
+def tree_shapes(start, n):
+    if n == 1:
+        return [start]
+    return [(left,right) for k in range(1,n) for left in tree_shapes(start,k)
+            for right in tree_shapes(start+k,n-k)]
+
+def tree_time(tree, times, delay=1):
+    if isinstance(tree,int):
+        return times[tree]
+    return max(tree_time(tree[0],times,delay),tree_time(tree[1],times,delay))+delay
+
+def leaf_depths(tree, depth=0):
+    return [(tree,depth)] if isinstance(tree,int) else (
+        leaf_depths(tree[0],depth+1)+leaf_depths(tree[1],depth+1))
+
+def tree_rich(tree, times):
+    return unit_at(times[tree]) if isinstance(tree,int) else mul(
+        tree_rich(tree[0],times),tree_rich(tree[1],times))
+
+tree_checks,rich_tree_checks = 0,0
+for n in (3,4):
+    for tree in tree_shapes(0,n):
+        for times in product((-2,0,3),repeat=n):
+            for delay in (1,2,3):
+                assert tree_time(tree,times,delay) == max(times[i]+delay*d for i,d in leaf_depths(tree))
+                tree_checks += 1
+        times = tuple(range(n))
+        rich = tree_rich(tree,times)
+        expected = max(times[i]+d for i,d in leaf_depths(tree))
+        assert theta(rich)[2:] == (expected,expected)
+        rich_tree_checks += 1
+translation_checks,delay_transport_checks = 0,0
+for a,b,c in product(range(-3,4),range(-3,4),(-2,0,3)):
+    assert max(a,b)+1+c == max(a+c,b+c)+1
+    translation_checks += 1
+for scale,b,delay,t0,t1 in product((1,2,3),(-2,0,3),(1,2,3),range(-2,3),range(-2,3)):
+    assert scale*(max(t0,t1)+delay)+b == max(scale*t0+b,scale*t1+b)+scale*delay
+    delay_transport_checks += 1
+assert 2*(max(0,0)+1) != max(2*0,2*0)+1
+assert (tree_checks,rich_tree_checks,translation_checks,delay_transport_checks) == (1377,7,147,675)
+print(f"pr2_clock: depth_cases={tree_checks} rich_trees={rich_tree_checks} translations={translation_checks} scaled_delay_cases={delay_transport_checks} fixed_delay_scaling_rejected=True")
+
+def mul_at(x, y, reference):
+    z = mul(x,y)
+    events = dict(z.e)
+    for key in z.w:
+        t0,p0,s0,r0 = events[key]
+        events[key] = (t0,tuple(a-b for a,b in zip(p0,reference)),s0,r0)
+    return valid(replace(z,e=events))
+
+def affine_point(p, matrix, offset):
+    return tuple(sum(a*b for a,b in zip(row,p))+v0 for row,v0 in zip(matrix,offset))
+
+def affine_rich(x, matrix, offset):
+    return valid(replace(x,e={key:(t0,affine_point(p0,matrix,offset),s0,r0)
+                              for key,(t0,p0,s0,r0) in x.e.items()}))
+
+def push_c(c, function):
+    out = {}
+    for p0,value in c.items():
+        target = function(p0)
+        out[target] = out.get(target,0)+value
+    return sparse(out)
+
+def conv_at(c, d, reference):
+    return {tuple(a-b for a,b in zip(p0,reference)):value for p0,value in conv(c,d).items()}
+
+matrices = [((1,0,0),(0,1,0),(0,0,1)),((2,0,0),(0,2,0),(0,0,2)),
+            ((1,1,0),(0,1,0),(0,0,-1)),((0,0,0),(0,1,0),(0,0,1))]
+references,offset = (origin,(1,2,-1)),(2,-1,3)
+reference_states = [u,sx,sy,current_empty]
+reference_checks,affine_checks,space_unit_checks = 0,0,0
+for reference in references:
+    for xx,yy in product(reference_states,repeat=2):
+        result = mul_at(xx,yy,reference)
+        standard = mul(xx,yy)
+        assert result.e.keys() == standard.e.keys()
+        assert (result.o,result.w,result.a) == (standard.o,standard.w,standard.a)
+        assert all((v0[0],v0[2:]) == (standard.e[e][0],standard.e[e][2:]) for e,v0 in result.e.items())
+        assert (q(result),charge(result,result.w),len(result.e)) == (
+            q(xx)*q(yy),0,len(xx.e)+len(yy.e)+len(xx.w)*len(yy.w))
+        assert read_pair(result) == tuple(conv_at(a,b,reference) for a,b in zip(read_pair(xx),read_pair(yy)))
+        if reference == origin:
+            assert result == standard
+        reference_checks += 1
+        for matrix in matrices:
+            function = lambda p,matrix=matrix:affine_point(p,matrix,offset)
+            transported = affine_rich(result,matrix,offset)
+            assert transported == mul_at(affine_rich(xx,matrix,offset),affine_rich(yy,matrix,offset),function(reference))
+            assert read_pair(transported) == tuple(push_c(c,function) for c in read_pair(result))
+            for a,b in zip(read_pair(xx),read_pair(yy)):
+                assert push_c(conv_at(a,b,reference),function) == conv_at(push_c(a,function),push_c(b,function),function(reference))
+            affine_checks += 1
+    for c in small:
+        assert conv_at({reference:1},c,reference) == conv_at(c,{reference:1},reference) == c
+        space_unit_checks += 1
+assert mul_at(spatial(u,offset=1),spatial(u,offset=1),origin) != spatial(mul_at(u,u,origin),offset=1)
+collapsed = realize({}, {origin:1,v:1})
+matrix = matrices[-1]
+function = lambda p:affine_point(p,matrix,origin)
+transported = affine_rich(collapsed,matrix,origin)
+assert transported.e.keys() == collapsed.e.keys() and len(transported.e) == 4
+wrong_before = affine_rich(at(collapsed,{origin}),matrix,origin)
+wrong_after = at(transported,{origin})
+assert (q(wrong_before),q(wrong_after)) == (1,2)
+pull_selected = filt(collapsed,lambda e:function(collapsed.e[e][1]) == origin)
+assert affine_rich(pull_selected,matrix,origin) == wrong_after
+assert push_c({origin:1},function) == {origin:1} != read_pair(wrong_after)[1]
+assert push_c(read_pair(pull_selected)[1],function) == read_pair(wrong_after)[1] == {origin:2}
+assert (reference_checks,affine_checks,space_unit_checks) == (32,128,52)
+print(f"pr2_reference: rich_pairs={reference_checks} affine_transports={affine_checks} space_units={space_unit_checks} noninjective_events={len(transported.e)} direct_image_filter={q(wrong_before)},{q(wrong_after)} pullback_filter={q(wrong_after)}")
+
+# PR3: finite checks only, using the original Rich archive operations.
+import json as pr3_json
+from random import Random as pr3_Random
+from itertools import combinations as pr3_combinations
+
+pr3_counts = {"source_updates": 0, "source_witnesses": 0,
+              "causal_updates": 0, "product_antichains": 0,
+              "bare_probes": 0, "legal_probes": 0,
+              "mobius_profiles": 0, "mobius_coefficients": 0,
+              "bounded_contexts": 0, "redundant_insertions": 0}
+
+def pr3_bytes(value):
+    def canonical(z):
+        if isinstance(z, dict):
+            return sorted([[canonical(k), canonical(v)] for k, v in z.items()],
+                          key=lambda item: pr3_json.dumps(item, sort_keys=True))
+        if isinstance(z, (set, frozenset)):
+            return sorted([canonical(k) for k in z], key=pr3_json.dumps)
+        if isinstance(z, (tuple, list)):
+            return [canonical(k) for k in z]
+        return z
+    return pr3_json.dumps(canonical(value), separators=(",", ":")).encode("utf-8")
+
+def pr3_equal(actual, expected, counter):
+    assert pr3_bytes(actual) == pr3_bytes(expected), (counter, actual, expected)
+    pr3_counts[counter] += 1
+
+def pr3_rho_src(x):
+    return tuple(sparse(c) for c in coarse(x, lambda e: (x.e[e][1], x.e[e][3])))
+
+def pr3_pair_product(c, d):
+    out = {}
+    for (p, r), n in c.items():
+        for (q0, s), m in d.items():
+            key = (tuple(a+b for a, b in zip(p, q0)), ("pair", r, s))
+            out[key] = out.get(key, 0) + n*m
+    return sparse(out)
+
+def pr3_alpha(x, e, timed=False):
+    t0, p, sign, source = x.e[e]
+    return (p, sign, source, t0) if timed else (p, sign, source)
+
+def pr3_U(x, e, timed=False):
+    return frozenset(pr3_alpha(x, d, timed) for d in x.w
+                     if e == d or (e, d) in x.o)
+
+def pr3_profile(x, timed=False):
+    out = {}
+    for e in x.w:
+        key = (pr3_alpha(x, e, timed), int(e in x.a), pr3_U(x, e, timed))
+        out[key] = out.get(key, 0) + x.e[e][2]
+    return sparse(out)
+
+def pr3_V(profile):
+    return frozenset(a for a, b, upper in profile)
+
+def pr3_causal_filter(x, Q, timed=False):
+    # The target domain is Omega = Rich.w, including unselected targets.
+    targets = frozenset(d for d in x.w if pr3_alpha(x, d, timed) in Q)
+    assert targets <= x.w
+    return filt(x, lambda e: any(e == d or (e, d) in x.o for d in targets))
+
+def pr3_diamond(a, b):
+    return (tuple(p+q0 for p, q0 in zip(a[0], b[0])), a[1]*b[1],
+            ("pair", a[2], b[2]))
+
+def pr3_profile_product(c, d):
+    out = {}
+    for (a, b, upper), n in c.items():
+        for (aa, bb, uu), m in d.items():
+            joined = pr3_diamond(a, aa)
+            key = (joined, b*bb, frozenset((joined,)))
+            out[key] = out.get(key, 0) + n*m
+    return sparse(out)
+
+def pr3_subsets(values):
+    values = sorted(values, key=repr)
+    return [frozenset(c) for n in range(len(values)+1)
+            for c in pr3_combinations(values, n)]
+
+pr3_U0 = integer(1)
+assert charge(pr3_U0, pr3_U0.w) == 0 and q(pr3_U0) == 1
+assert len(pr3_U0.w) == 2 and not pr3_U0.o
+
+class pr3_SignTargets:
+    # Membership in the fixed attribute set {a in Attr : sign(a) = eps}.
+    def __init__(self, eps):
+        assert eps in (-1, 1)
+        self.eps = eps
+    def __contains__(self, a):
+        return a[1] == self.eps
+
+def pr3_P_eps(z, eps):
+    return pr3_causal_filter(mul(z, pr3_U0), pr3_SignTargets(eps))
+
+def pr3_probe(x, Q, v0, eta):
+    p, eps, tau = v0
+    selected = x if eta == 1 else neg(x)
+    H = pr3_causal_filter(filt(at(selected, {p}),
+                              lambda e: selected.e[e][3] == tau), Q)
+    target = (p, eps, ("pair", tau, ("leaf", 0)))
+    return q(pr3_causal_filter(mul(H, pr3_U0), {target}))
+
+pr3_rng = pr3_Random(20260910)
+pr3_samples = []
+for pr3_i in range(48):
+    pr3_n = pr3_rng.choice((0, 2, 4))
+    pr3_signs = [1]*(pr3_n//2) + [-1]*(pr3_n//2)
+    pr3_rng.shuffle(pr3_signs)
+    pr3_events = {}
+    for pr3_j, pr3_sign in enumerate(pr3_signs):
+        pr3_p = origin if pr3_i % 2 else pr3_rng.choice((origin, v, h))
+        pr3_r = ("leaf", 0) if pr3_i % 2 else pr3_rng.choice(
+            (("leaf", 0), ("leaf", 7), ("pair", ("leaf", 0), ("leaf", 7))))
+        pr3_events[pr3_j] = (pr3_rng.randrange(-1, 3), pr3_p, pr3_sign, pr3_r)
+    pr3_whole = frozenset(pr3_events)
+    for pr3_j in range(pr3_rng.randrange(3)):
+        pr3_events[("old", pr3_j)] = (pr3_rng.randrange(-2, 4), v, 1, ("leaf", 9))
+    pr3_edges = {(a, b) for a in pr3_events for b in pr3_events
+                 if pr3_events[a][0] < pr3_events[b][0] and pr3_rng.randrange(3) == 0}
+    pr3_chosen = frozenset(e for e in sorted(pr3_whole) if pr3_rng.randrange(2))
+    pr3_samples.append(valid(Rich(pr3_events, closure(pr3_edges), pr3_whole, pr3_chosen)))
+
+for pr3_x in pr3_samples:
+    pr3_y = pr3_rng.choice(pr3_samples)
+    pr3_w, pr3_z = pr3_rho_src(pr3_x)
+    pr3_wy, pr3_zy = pr3_rho_src(pr3_y)
+    pr3_S, pr3_L = {origin, h}, {("leaf", 0), ("leaf", 7)}
+    pr3_equal(pr3_rho_src(add(pr3_x, pr3_y)),
+              (plus_c(pr3_w, pr3_wy), plus_c(pr3_z, pr3_zy)), "source_updates")
+    pr3_mul = mul(pr3_x, pr3_y)
+    pr3_equal(pr3_rho_src(pr3_mul),
+              (pr3_pair_product(pr3_w, pr3_wy), pr3_pair_product(pr3_z, pr3_zy)),
+              "source_updates")
+    assert all(r[0] == "pair" for c in pr3_rho_src(pr3_mul) for p, r in c)
+    pr3_equal(pr3_rho_src(neg(pr3_x)), (pr3_w, plus_c(pr3_w, minus_c(pr3_z))),
+              "source_updates")
+    pr3_equal(pr3_rho_src(at(pr3_x, pr3_S)),
+              (pr3_w, {k: n for k, n in pr3_z.items() if k[0] in pr3_S}), "source_updates")
+    pr3_source_filtered = filt(pr3_x, lambda e: pr3_x.e[e][3] in pr3_L)
+    pr3_equal(pr3_rho_src(pr3_source_filtered),
+              (pr3_w, {k: n for k, n in pr3_z.items() if k[1] in pr3_L}), "source_updates")
+    assert not any(a in pr3_mul.w for a, b in pr3_mul.o)
+    assert not any(a in pr3_mul.w and b in pr3_mul.w for a, b in pr3_mul.o)
+    pr3_counts["product_antichains"] += 1
+    pr3_g, pr3_gy = pr3_profile(pr3_x), pr3_profile(pr3_y)
+    assert pr3_V(pr3_g) == {pr3_alpha(pr3_x, e) for e in pr3_x.w}
+    assert all(pr3_alpha(pr3_x, e) in pr3_U(pr3_x, e) for e in pr3_x.w)
+    pr3_equal(pr3_profile(add(pr3_x, pr3_y)), plus_c(pr3_g, pr3_gy), "causal_updates")
+    pr3_equal(pr3_profile(neg(pr3_x)),
+              push_c(pr3_g, lambda k: (k[0], 1-k[1], k[2])), "causal_updates")
+    pr3_equal(pr3_profile(at(pr3_x, pr3_S)),
+              push_c(pr3_g, lambda k: (k[0], k[1]*int(k[0][0] in pr3_S), k[2])),
+              "causal_updates")
+    pr3_equal(pr3_profile(pr3_source_filtered),
+              push_c(pr3_g, lambda k: (k[0], k[1]*int(k[0][2] in pr3_L), k[2])),
+              "causal_updates")
+    for pr3_Q in pr3_subsets(pr3_V(pr3_g)):
+        pr3_equal(pr3_profile(pr3_causal_filter(pr3_x, pr3_Q)),
+                  push_c(pr3_g, lambda k: (k[0], k[1]*int(bool(k[2] & pr3_Q)), k[2])),
+                  "causal_updates")
+    pr3_equal(pr3_profile(pr3_mul), pr3_profile_product(pr3_g, pr3_gy), "causal_updates")
+    pr3_equal(pr3_profile(time_shift(pr3_x, 3)), pr3_g, "causal_updates")
+    # Exercise both success and failure, then force a legal nonempty timing if needed.
+    assert guard(pr3_x, pr3_y) == theta_guard(theta(pr3_x), theta(pr3_y))
+    pr3_late = time_shift(pr3_y, (theta(pr3_x)[2] or 0) - (theta(pr3_y)[1] or 0) + 1)
+    assert guard(pr3_x, pr3_late)
+    pr3_equal(pr3_profile(temporal(pr3_x, pr3_late)),
+              plus_c(push_c(pr3_g, lambda k: (k[0], k[1], k[2] | pr3_V(pr3_gy))), pr3_gy),
+              "causal_updates")
+
+pr3_l0, pr3_l1 = ("leaf", 0), ("leaf", 1)
+pr3_bracket_left, pr3_bracket_right = mul(mul(u, u), two), mul(u, mul(u, two))
+pr3_expected_left = {(origin, ("pair", ("pair", pr3_l0, pr3_l0), r)): 1
+                     for r in (pr3_l0, pr3_l1)}
+pr3_expected_right = {(origin, ("pair", pr3_l0, ("pair", pr3_l0, r))): 1
+                      for r in (pr3_l0, pr3_l1)}
+for pr3_actual, pr3_expected in (
+        (pr3_rho_src(pr3_bracket_left), ({}, pr3_expected_left)),
+        (pr3_rho_src(pr3_bracket_right), ({}, pr3_expected_right)),
+        (pr3_rho_src(source7), ({}, {(origin, ("leaf", 7)): 1})),
+        (pr3_rho_src(source8), ({}, {(origin, ("leaf", 8)): 1})),
+        (pr3_rho_src(comm_left), ({}, {(origin, ("pair", ("leaf", 7), ("leaf", 8))): 1})),
+        (pr3_rho_src(comm_right), ({}, {(origin, ("pair", ("leaf", 8), ("leaf", 7))): 1}))):
+    pr3_equal(pr3_actual, pr3_expected, "source_witnesses")
+assert set(pr3_expected_left).isdisjoint(pr3_expected_right)
+assert pr3_rho_src(comm_left) != pr3_rho_src(comm_right)
+assert pr3_rho_src(source7)[1] != pr3_rho_src(source8)[1]
+
+# D1: bare probes cancel, including equality after N, but the legal isolation separates.
+pr3_d1e = {e: (t0, origin, sign, pr3_l0)
+           for e, t0, sign in zip("abcd", (0, 1, 2, 2), (1, -1, 1, -1))}
+pr3_d1x = valid(Rich(pr3_d1e, closure({("a", "b"), ("b", "c"), ("b", "d")}),
+                     frozenset(pr3_d1e), frozenset("ab")))
+pr3_d1y = replace(pr3_d1x, a=frozenset())
+pr3_vp, pr3_vm = (origin, 1, pr3_l0), (origin, -1, pr3_l0)
+assert pr3_U(pr3_d1x, "a") == pr3_U(pr3_d1x, "b") == {pr3_vp, pr3_vm}
+for pr3_Q, pr3_S, pr3_L in product(pr3_subsets({pr3_vp, pr3_vm}),
+                                   (set(), {origin}), (set(), {pr3_l0})):
+    pr3_raw, pr3_complements = [], []
+    for pr3_x in (pr3_d1x, pr3_d1y):
+        for pr3_dest, pr3_z0 in ((pr3_raw, pr3_x), (pr3_complements, neg(pr3_x))):
+            pr3_dest.append(q(pr3_causal_filter(filt(at(pr3_z0, pr3_S),
+                                    lambda e: pr3_z0.e[e][3] in pr3_L), pr3_Q)))
+    assert pr3_raw == [0, 0] and pr3_complements[0] == pr3_complements[1]
+    pr3_counts["bare_probes"] += 1
+pr3_isolated = tuple(q(pr3_P_eps(z, 1)) for z in (pr3_d1x, pr3_d1y))
+assert pr3_isolated == (1, 0)
+assert tuple(pr3_probe(z, {pr3_vp, pr3_vm}, pr3_vp, 1) for z in (pr3_d1x, pr3_d1y)) == (1, 0)
+# Complemented bare readings are equal, NOT identically zero.
+assert tuple(q(pr3_causal_filter(neg(z), {pr3_vp})) for z in (pr3_d1x, pr3_d1y)) == (1, 1)
+
+# Targets outside Omega must have no effect, even when archived and reachable.
+pr3_outside = valid(Rich({"a": (0, origin, 1, pr3_l0), "b": (0, origin, -1, pr3_l0),
+                         "old": (1, origin, 1, ("leaf", 9))},
+                        frozenset({("a", "old")}), frozenset("ab"), frozenset("a")))
+assert set(pr3_outside.e) - pr3_outside.w == {"old"}
+assert q(pr3_causal_filter(pr3_outside, {pr3_alpha(pr3_outside, "old")})) == 0
+assert q(past(pr3_outside, {"old"})) == 1
+assert pr3_U(pr3_outside, "a") == {pr3_vp}
+
+# Full finite Boolean inversion through legal carrier-parameter contexts, both selection bits.
+for pr3_x in pr3_samples + [pr3_d1x, pr3_d1y, pr3_outside]:
+    pr3_D = frozenset(pr3_alpha(pr3_x, e) for e in pr3_x.w)
+    pr3_powerset = pr3_subsets(pr3_D)
+    pr3_restored = {}
+    for pr3_v0, pr3_eta in product(sorted(pr3_D, key=repr), (0, 1)):
+        pr3_f = {}
+        for pr3_Q in pr3_powerset:
+            pr3_f[pr3_Q] = pr3_probe(pr3_x, pr3_Q, pr3_v0, pr3_eta)
+            pr3_expected = sum(pr3_x.e[e][2] for e in pr3_x.w
+                               if pr3_alpha(pr3_x, e) == pr3_v0
+                               and int(e in pr3_x.a) == pr3_eta and pr3_U(pr3_x, e) & pr3_Q)
+            assert pr3_f[pr3_Q] == pr3_expected
+            pr3_counts["legal_probes"] += 1
+        pr3_h = {W: pr3_f[pr3_D] - pr3_f[pr3_D-W] for W in pr3_powerset}
+        for pr3_upper in pr3_powerset:
+            pr3_coeff = sum((-1)**(len(pr3_upper)-len(W))*pr3_h[W]
+                            for W in pr3_subsets(pr3_upper))
+            if pr3_coeff:
+                pr3_restored[(pr3_v0, pr3_eta, pr3_upper)] = pr3_coeff
+            pr3_counts["mobius_coefficients"] += 1
+    pr3_equal(pr3_restored, pr3_profile(pr3_x), "mobius_profiles")
+
+# B2: a bounded family of the actual signature; no new primitive is used.
+assert pr3_profile(causal) == pr3_profile(no_causal) == {
+    (pr3_vp, 1, frozenset((pr3_vp,))): 2,
+    (pr3_vm, 0, frozenset((pr3_vm,))): -2}
+pr3_ops = [neg, lambda z: at(z, {origin}), lambda z: at(z, {v}),
+           lambda z: filt(z, lambda e: z.e[e][3] == pr3_l0),
+           lambda z: add(z, u), lambda z: add(u, z),
+           lambda z: mul(z, u), lambda z: mul(u, z),
+           lambda z: temporal(z, unit_at(2)), lambda z: temporal(unit_at(-1), z),
+           lambda z: time_shift(z, 1), lambda z: time_shift(z, -1)]
+pr3_ops += [lambda z, Q=Q: pr3_causal_filter(z, Q)
+            for Q in pr3_subsets({pr3_vp, pr3_vm})]
+for pr3_depth in range(3):
+    for pr3_word in product(pr3_ops, repeat=pr3_depth):
+        assert observe(pr3_word, causal, q) == observe(pr3_word, no_causal, q)
+        pr3_counts["bounded_contexts"] += 1
+pr3_time_reads = tuple(q(pr3_causal_filter(z, {(origin, 1, pr3_l0, 1)}, timed=True))
+                       for z in (causal, no_causal))
+assert pr3_time_reads == (2, 1)
+pr3_J_reads = tuple(q(filt(z, lambda e: any((e, d) in z.o for d in z.w)))
+                    for z in (causal, no_causal))
+assert pr3_J_reads == (1, 0)
+
+# D2: inserting a same-attribute generating edge creates a cross-attribute closure edge.
+pr3_d2e = {e: (t0, origin, sign, pr3_l0)
+           for e, t0, sign in zip("abcd", (0, 1, 2, 0), (1, 1, -1, -1))}
+pr3_d2x = valid(Rich(pr3_d2e, frozenset({("b", "c")}), frozenset(pr3_d2e), frozenset("a")))
+pr3_d2y = valid(replace(pr3_d2x, o=closure(pr3_d2x.o | {("a", "b")})))
+assert pr3_rho_src(pr3_d2x) == pr3_rho_src(pr3_d2y)
+assert theta(pr3_d2x)[1:] == theta(pr3_d2y)[1:]
+pr3_edge_reads = tuple(q(pr3_causal_filter(z, {pr3_vm})) for z in (pr3_d2x, pr3_d2y))
+assert pr3_edge_reads == (0, 1)
+
+# D3: all singleton hitting marginals agree, but a two-attribute query differs.
+pr3_d3e = {"e1": (0, origin, 1, pr3_l0), "e2": (0, origin, 1, pr3_l0),
+           "b": (1, origin, -1, ("leaf", 1)), "c": (1, origin, -1, ("leaf", 2))}
+pr3_d3x = valid(Rich(pr3_d3e, frozenset({("e2", "b"), ("e2", "c")}),
+                     frozenset(pr3_d3e), frozenset(("e1", "e2"))))
+pr3_d3y = valid(replace(pr3_d3x, o=frozenset({("e1", "b"), ("e2", "c")})))
+for pr3_attr in {pr3_alpha(pr3_d3x, e) for e in pr3_d3x.w}:
+    assert q(pr3_causal_filter(pr3_d3x, {pr3_attr})) == q(pr3_causal_filter(pr3_d3y, {pr3_attr}))
+pr3_bc = {pr3_alpha(pr3_d3x, e) for e in ("b", "c")}
+pr3_marginal_reads = tuple(q(pr3_causal_filter(z, pr3_bc)) for z in (pr3_d3x, pr3_d3y))
+assert pr3_marginal_reads == (1, 2)
+
+# A lawful edge insertion with U(f) <= U(e) preserves every current upper set.
+for pr3_x in pr3_samples:
+    for pr3_e, pr3_f0 in product(sorted(pr3_x.w), repeat=2):
+        if (pr3_x.e[pr3_e][0] < pr3_x.e[pr3_f0][0]
+                and (pr3_e, pr3_f0) not in pr3_x.o
+                and pr3_U(pr3_x, pr3_f0) <= pr3_U(pr3_x, pr3_e)):
+            pr3_y = valid(replace(pr3_x, o=closure(pr3_x.o | {(pr3_e, pr3_f0)})))
+            assert all(pr3_U(pr3_x, e) == pr3_U(pr3_y, e) for e in pr3_x.w)
+            assert pr3_profile(pr3_x) == pr3_profile(pr3_y)
+            pr3_counts["redundant_insertions"] += 1
+assert pr3_counts["redundant_insertions"] > 0
+
+# D5: even the time-attribute profile need not recover incidence or history isomorphism.
+pr3_d5e = {e: (t0, origin, 1, pr3_l0)
+           for e, t0 in zip(("a1", "a2", "b1", "b2"), (0, 0, 1, 1))}
+pr3_d5e.update({("n", i): (0, origin, -1, pr3_l0) for i in range(4)})
+pr3_d5x = valid(Rich(pr3_d5e, frozenset({("a1", "b1"), ("a2", "b2")}),
+                     frozenset(pr3_d5e), frozenset(("a1", "a2", "b1", "b2"))))
+pr3_d5y = valid(replace(pr3_d5x, o=frozenset({("a1", "b1"), ("a2", "b1")})))
+assert pr3_profile(pr3_d5x, timed=True) == pr3_profile(pr3_d5y, timed=True)
+pr3_indegrees = tuple(sorted(sum((a, b) in z.o for a in z.e) for b in ("b1", "b2"))
+                      for z in (pr3_d5x, pr3_d5y))
+assert pr3_indegrees == ([1, 1], [0, 2])
+print(f"pr3_source: samples={len(pr3_samples)} updates={pr3_counts['source_updates']} witnesses={pr3_counts['source_witnesses']} brackets={len(pr3_bracket_left.e)},{len(pr3_bracket_right.e)} B1=distinct ordered_pair=distinct")
+print(f"pr3_causal: updates={pr3_counts['causal_updates']} product_antichains={pr3_counts['product_antichains']} targets=Omega bare_probes={pr3_counts['bare_probes']} P_plus={pr3_isolated[0]},{pr3_isolated[1]} legal_probes={pr3_counts['legal_probes']} mobius_profiles={pr3_counts['mobius_profiles']} mobius_coefficients={pr3_counts['mobius_coefficients']} bounded_contexts={pr3_counts['bounded_contexts']} B2_time={pr3_time_reads[0]},{pr3_time_reads[1]} strict_successor={pr3_J_reads[0]},{pr3_J_reads[1]} edge={pr3_edge_reads[0]},{pr3_edge_reads[1]} marginals={pr3_marginal_reads[0]},{pr3_marginal_reads[1]} redundant_insertions={pr3_counts['redundant_insertions']} timed_nonisomorphism=True")
+print("ALL_FINITE_CHECKS_PASSED")
+```
+

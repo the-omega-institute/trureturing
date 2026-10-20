@@ -1,0 +1,45 @@
+**Theorem 54.7 (reused small-cap exactness and explicit execution).** On the complete actual family,
+
+$$
+A_U(H)=\begin{cases}
+1,&8\le H\le19,\\
+2,&20\le H\le31.
+\end{cases}
+\tag{TM.5429}
+$$
+
+The numerical values in (TM.5429) are already published in [OR68.5][OR68], whose two-label interval continues through cap 35. The explicit protocol below establishes that at $28\le H\le31$, two labels suffice with at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+3$ calls, whereas the fixed executor that ignores the label, attempts $\rho$ immediately and then applies $\operatorname{Size}_H$ requires three labels for subsequent original-target decoding.
+
+**Proof.** The first interval is the published TM51.6–8 result. At $h=5,6$, both (TM.5418) and (TM.5425) yield alphabet 2. TM51.7 proves one label impossible for every $H\ge20$. This settles $20\le H\le27$.
+
+Now let $h=7$, $28\le H\le31$. The complete target set consists of the following two supplied classes, using the coordinate/target convention of (TM.5407):
+
+$$
+\begin{aligned}
+\mathcal C_1={}&\{(2,3),(3,4),(4,5),(5,6),(6,7),(4,6),(6,\infty),(7,\infty)\},\\
+\mathcal C_2={}&\{(3,5),(5,7),(4,7),(5,\infty)\}.
+\end{aligned}
+\tag{TM.5430}
+$$
+
+This is a complete ordinary coverage check: at $w=3,4,5,6,7$, the finite rows are respectively $\{2\}$, $\{3\}$, $\{3,4\}$, $\{4,5\}$, $\{4,5,6\}$. The tag-0 rows are $5,6,7$. They give all twelve distinct targets, each exactly once in (TM.5430). Each finite point is realized by $\omega_{2z-w,w-z}$, and each infinite marker by $\omega_{1,z-1}$. Thus the classes cover every actual word and bracketing through TM51's source correspondence.
+
+For label 1, first attempt the whole right macro $\alpha^{H-20}$; its positive length is 8, 9, 10 or 11. Acceptance is exactly $z\le5$. On acceptance, attempt $\rho$. If it accepts, the source was one of $(2,3),(3,4),(4,5)$: their $n+(H-20)$ are respectively $H-8,H-4,H$. Apply $\operatorname{Size}_H$ and distinguish those entry sizes. Output their own original targets. In particular **both $(2,3)$ and $(3,4)$ are original tag 2**; the latter satisfies $z+w=7$ on the equality boundary. The third is tag 1.
+
+If that $\rho$ rejects, the source was $(4,6)$ or $(5,6)$; their unchanged-after-attempt entry sizes are respectively $4z+(H-20)=H-4,H$. Terminal acquisition distinguishes them and returns their original tag-1 targets. If the first macro rejects, the original source is unchanged and is one of $(6,7),(6,\infty),(7,\infty)$. Attempt $\rho$: acceptance uniquely identifies $(6,7)$, since $28\le H$; rejection leaves the two tag-0 sources, distinguished by terminal entry sizes 24 and 28. The uniquely identified accepting branch may stop immediately.
+
+For label 2, first attempt the whole right macro $\alpha^{H-16}$, of positive length 12, 13, 14 or 15. Acceptance is exactly $z\le4$, selecting $(3,5)$ or $(4,7)$. Their entry sizes are respectively $H-4,H$; use $\operatorname{Size}_H$ and return the corresponding original tag-1 target, without replacement. Rejection leaves $(5,7)$ or $(5,\infty)$ unmodified. One $\rho$ attempt accepts on the former and rejects on the latter, identifying the original target immediately.
+
+Every displayed acceptance inequality uses the entire actual candidate. An all-$\alpha$ macro contributes its length equally to $m$ and $n$, by (TM.5401); after its acceptance, a $\rho$ guard therefore compares the stated $n+P$ with $H$. Rejected macros do not insert any part of their material. Every equality case accepts. Each branch has at most two prefix calls, at most one accepted $\rho$, and at most one terminal acquisition. All choices use the label and actual responses, with the public decoder just given. This proves sufficiency on the complete family. The published quartet lower proves necessity.
+
+For comparison, fix an executor independent of the supplied label: immediately attempt $\rho$, then apply $\operatorname{Size}_H$ to the actual resulting source. Its execution record retains every public input, action and context identity, guard response and read, but excludes the repair label subsequently supplied to the decoder. If the label was supplied earlier but ignored, this is the projection deleting only that initial label entry; decoding uses the pair of this record and the label. This fixed-execution repair task is distinct from Definition 54.1, where the controller uses the supplied label and the full record includes it. Its rejecting branch has one target per measured original $z$. Its accepting branch has one full record fiber for each $w$, containing all
+
+$$
+\lfloor w/2\rfloor+1\le z\le w-1.
+\tag{TM.5431}
+$$
+
+The response prefix is the same first acceptance, and the terminal procedure is deterministic from entry $4w$. Thus these are equal **complete label-independent execution records**, including every action and response, not only equal terminal summaries. Their original targets are pairwise different. The maximum fiber has $K=\lfloor(h-1)/2\rfloor$ members, achieved at $w=h$; ranks within those fibers and one reused symbol on each singleton rejecting fiber attain $K$ labels when $h\ge3$. This is the fixed-record repair calculation of TM32, scoped to this executor.
+
+At $h=7$, the $w=7$ record fiber contains actual targets $(4,7),(5,7),(6,7)$. Their sources have first resources $(16,28),(20,28),(24,28)$, all in $U_H$. The first replacement accepts, all resulting entry sizes are 28, and every subsequent terminal action and response is identical. Any decoder after this fixed execution needs three distinct labels. The two-label policy above is legal and succeeds on the complete family because its supplied label changes the execution itself. Hence the optimum over all policies is strictly smaller than this fixed-archive optimum. Adding the usual second replacement attempt before filling also gives the same three-target collision: it rejects for each source because each original $m+n>H$. This does not convert a fixed archive fiber count into a lower bound on arbitrary acquisition. $\square$
+

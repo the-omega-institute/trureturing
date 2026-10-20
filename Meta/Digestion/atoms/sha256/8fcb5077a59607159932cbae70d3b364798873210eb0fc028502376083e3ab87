@@ -1,0 +1,8 @@
+**约定 91.5（三个结论的作用域）。** 定理91.2在全部实际有限深度上使用同一有效有理停止规则，有限期望界（91.10）依赖真实深度的隔离半径；定理91.3在一项实际实验内量化每份共同程序的历史最坏成本；定理91.4只在另加理想标签的比较实验中排除共同停止。逐历史均值有限并不推出按旧历史先验平均的均值有限，本节不给额外的先验平均界。
+
+计数及四格律取自第81–82节；共同端口与旧历史任务的边界取自第87–88节。候选隔离推导使用（89.8）的精确比例恒等式，其静态供应为 [FibVajda](https://github.com/the-omega-institute/trureturing/blob/c199f582acea40a546d9cfcdc5a839ef6381adc6/D5/S1/Recurrence/FibVajda.lean)。阶段置信与第一可认证候选停止复用第83.3–83.4节及 [WaveParticleEvents 定理219.2](https://github.com/the-omega-institute/trureturing/blob/c199f582acea40a546d9cfcdc5a839ef6381adc6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md) 的 Hoeffding 可和并界逻辑；第83节原结论没有期望时间界，本节的逐点调用尾由（91.9）—（91.10）补足。两侧浓缩的经典供应仍是 [Vershynin《High-Dimensional Probability》第一版 Theorem 2.2.6](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf)，印刷页17、PDF页25，对指标及其负值分别应用单侧界。
+
+下界复用（90.13）—（90.18）的实际有限 RAW 前缀计算。[Kaufmann–Cappé–Garivier《On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models》](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf) Lemma 1 与 Appendix A.1 只供应固定 iid 臂的序贯换测度背景，不替代这里的状态核推导。第84节是尺度趋于边界、有限能量下的完整律 TV 比较，并明确没有把比较律当作实际来源；（91.17）则只承担交接深度趋于理想标签的有限前缀比较，二者不互换。
+
+这些结论是上述 FIB 生产合同的综合推导，不主张新的通用可数识别或置信序列方法，也不作原创性声明。有限次整数及有理计算可以需要增长的位长，定理91.2没有给有界位存储、物理时间、速率最优性或 minimax 成本上界；第83.5节的计算与物理边界仍适用。持久生产者、恢复随机抽样和共同 ACTIVE 端口都是供应条件，未在这些数学结论中获得物理可得性认证；恢复目标始终只为交接深度，不是旧路径、空间树形或被擦除档案。
+

@@ -1,0 +1,34 @@
+**数学引文 15.24（Lesanovsky 的准确符号、尺度与限制）。** 消费
+[Lesanovsky v2，式 (3)–(5)][PE-L]，
+其论文 DOI 为 [10.1103/PhysRevLett.106.025301][PE-LD]。
+在该文基 $|g\rangle=|0\rangle,|r\rangle=|1\rangle$ 和
+$n_k=N_k,P_k=P_k$ 下，均匀 $\xi>0$ 的正三体部分为
+
+$$
+H_{\rm 3body}
+=\Omega\sum_kP_{k-1}
+\left[\sigma_x+\xi^{-1}N_k+\xi(I-N_k)\right]P_{k+1},
+$$
+
+其合法零态振幅是 $(-\xi)^{|I|}$，概率活动为 $\xi^2$。
+该文 $h_k=[\xi^{-1}+\xi]^{-1/2}P_{k-1}P_{k+1}
+[\sigma_x+\xi^{-1}N_k+\xi(I-N_k)]$，
+并有 $H_{\rm 3body}=\Omega\sum_kh_k^\dagger h_k$；
+本章不把它的非归一化局部向量误作归一化投影。
+
+取 $W=\bigotimes_k\operatorname{diag}(1,-1)$、
+$a_k=\xi^2$，则逐项
+
+$$
+\frac{\xi}{\Omega}\,W H_{\rm 3body}W^\dagger
+=\sum_kP_{k-1}
+\begin{pmatrix}\xi^2&-\xi\\-\xi&1\end{pmatrix}_kP_{k+1}
+=H_{\rm loc}.
+$$
+
+因此 $\Omega>0$ 时为正尺度同构，$W$ 把负振幅代表变成正代表。
+供应者主要采用周期边界；本章采用开放路径，端外投影取恒等，
+非齐次 $a_i$ 和合法空间唯一性由 15.23 的逐位置删除证明承担。
+这里用的是精确三体数学模型，不把该文对长程 Rydberg Hamiltonian
+的近似分解、实验参数区间或热力学近似搬成任意非齐次开放链的物理实现证明。
+

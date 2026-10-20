@@ -1,0 +1,68 @@
+### 296.2 同一真实计数接口与对数比较差
+
+保持
+$$
+\sqrt{3/4}\le k<1,\qquad k^2<l\le k,\qquad
+\kappa=-\log k,\quad
+\eta=\frac{\log(l/k^2)}{\kappa}\in(0,1].
+$$
+实际两假设参数是同一个 $r\in[l,1]$ 下的 $c=r$ 与 $c=kr$。
+决定零概率为 $f(c)$ 时，风险为
+$$
+\frac12\left(1-\inf_{r\in[l,1]}[f(r)-f(kr)]\right).
+$$
+每个独立完整块计两份来源。
+
+两类权限都可产生下面的实际独立 Bernoulli 记录：
+$$
+Y\sim\operatorname{Bernoulli}(p(c)),\qquad
+p(c)=\frac{1-c/C}{B}.
+\tag{296.1}
+$$
+其参数为：
+
+| 访问类 | 实际记录 | $B$ | $C$ |
+|---|---|---:|---:|
+| 完整 $n=1$ | 反对称投影点击 | $4$ | $1$ |
+| 先reset | §295实际随机位的补位 | $2$ | $4/a_n^2$ |
+
+reset 原位成功率是 $1/2+a_n^2c/8$，所以补位成功率为
+$(1-a_n^2c/4)/2$，准确给（296.1）。这些都来自真实记录和独立随机数，不使用隐藏模拟位。由于
+$225/256\le a_n^2\le1$，统一有
+$$
+1\le C\le C_*:=1024/225,\qquad B\in\{2,4\}.
+\tag{296.2}
+$$
+实际参数满足 $0<c\le1\le C$，故 $0\le p(c)<1/B$。
+
+令
+$$
+\bar\eta=\min\{\eta,1/2\},\qquad
+D=3-\bar\eta/2\in[11/4,3),
+$$
+并定义仅用于比较的对数直线
+$$
+L(c)=1+\frac{\log c}{D\kappa},\qquad c>0.
+\tag{296.3}
+$$
+这不是一条被直接宣布可观测的决定概率。在两族真实参数上，它满足所需的单边范围：
+$$
+L(r)\le1,\qquad
+L(kr)\ge\frac{\bar\eta}{2D}>0.
+\tag{296.4}
+$$
+第二式来自
+$kr\ge kl=k^{3-\eta}\ge k^{3-\bar\eta}$。其准确比较差为
+$$
+L(r)-L(kr)=\frac1D
+=\frac13+\frac{\bar\eta}{6D}
+\ge\frac13+\frac{\bar\eta}{18}.
+\tag{296.5}
+$$
+目标是实际实现
+$$
+f_K(r)\ge L(r)-E_ke^{-a_kK},\qquad
+f_K(kr)\le L(kr)+E'_ke^{-a_kK}.
+$$
+不要求在所有参数上双边一致逼近 $L$，也不要求 $L$ 在全部经验结果上落于 $[0,1]$。
+

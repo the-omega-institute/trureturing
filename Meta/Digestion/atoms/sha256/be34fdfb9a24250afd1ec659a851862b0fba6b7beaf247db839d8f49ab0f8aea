@@ -1,0 +1,16 @@
+### 44.3 排除 Fourier 固定边与修正目标的范围
+
+对未归一化 Hadamard 矩阵定义交比集合
+
+```math
+\Lambda(G)=\{G_{ij}G_{k\ell}\overline{G_{i\ell}}\overline{G_{kj}}\}.
+```
+
+行列相位在交比中抵消，置换只重排指标，转置也不改变集合。由于 `H` 全部元素为四次单位根，其交比都在 `{1,-1,i,-i}` 中。另一方面，第 11 节 Fourier 两参数族的标准块代表包含完整的三阶 Fourier 子矩阵；其前两行、前两列的交比为 primitive cube root `omega`。转置族亦然。因此 `H` 与这两个 Fourier 族都不等价。本例是非 Fourier 双循环边，而不是 Fourier 中心的重述。
+
+每个 completion 行的 collision 是 `11/27`，故任选三行都构成实际共同无偏正交三元组，但其总 collision 为 `11/9<2`。这阻止把第 36、37 节的三元组目标无条件推广到全部非 Fourier 双循环边；不反驳那两节针对 `-1/5` 固定种子的目标，也不影响第 42 节在该种子邻域上的结论。
+
+按正负号排列 `F0` 的行后，它正是第 10、11 节的 Fourier 型块构造；`F=F0MR` 只再乘右单项式矩阵。因此这个低 affinity completion 仍是 Fourier 等价类的伴随，已由第 11 节的 quartet 文献归约排除。它说明“相对于指定 `S` 非 mode-local”不等于“已排除所有 Fourier-equivalent completions”：固定边自同构可以显著改变前一性质而保持后一等价类。
+
+所以，若继续以 affinity 攻击剩余 quartet fibre，必须明确限制 completion 等价类，排除整个已知 Fourier locus 及其固定边自同构轨道；仅去掉 mode-local 子集不够。非零判别式内域、以及去除已知排除类后的剩余 completion 下界均未由本例解决。第 17、18、31 节的条件预算与刚性论证保持有效；六维四 MUB 问题也未由本例解决。
+

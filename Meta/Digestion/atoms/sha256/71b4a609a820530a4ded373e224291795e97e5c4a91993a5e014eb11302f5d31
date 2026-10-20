@@ -1,0 +1,63 @@
+### 定理：源变换的复合律与共同曲率
+
+固定 \(s>0\)，在 \(0<\sigma\le s\) 上定义
+
+\[
+Y_s(\sigma)=\Xi_\sigma(s-\sigma),
+\qquad
+T_{\sigma\leftarrow\tau}(s)
+=c_*\left[(\sigma-\tau)-(s-1)\log\frac\sigma\tau\right].
+\]
+
+对 \(\sigma,\tau,\rho\in(0,s]\)，有
+
+\[
+Y_s(\sigma)=Y_s(\tau)+T_{\sigma\leftarrow\tau}(s),
+\]
+
+\[
+T_{\sigma\leftarrow\tau}(s)+T_{\tau\leftarrow\rho}(s)
+=T_{\sigma\leftarrow\rho}(s),\qquad
+T_{\sigma\leftarrow\sigma}(s)=0.
+\tag{ST.7}
+\]
+
+因此不同源指数的关系具有明确的可逆复合律。该律只针对保持 \(s=\sigma+a\) 的实际轮廓变换，不将任意 RH 等价判据或五分类直接宣称为一个群。
+
+另定义对 \(s>0\) 的共同势函数
+
+\[
+H(s)=c_*\int_0^\infty
+\frac{(e^{-sv}-e^{-v})\varphi(v)+(s-1)v e^{-v}}{v^2}\,dv.
+\tag{ST.8}
+\]
+
+则 \(H\) 在正半轴二次连续可微，且
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma(a)-\Xi_\sigma(0)
+=H(\sigma+a)-H(\sigma)-c_*a\log\sigma,}
+\tag{ST.9}
+\]
+
+\[
+\boxed{\displaystyle
+\Xi_\sigma''(a)=H''(\sigma+a)
+=c_*\int_0^\infty e^{-(\sigma+a)v}\varphi(v)\,dv>0.}
+\tag{ST.10}
+\]
+
+在 \(a=0\) 处，（ST.10）的导数按右导数理解；同一公式也给正邻域的延拓。若
+
+\[
+C_\sigma(a)=\Xi_\sigma(a)-\Xi_\sigma(0)+c_*a\log\sigma,
+\]
+
+则对于全部 \(\delta\ge0\)、\(a\ge0\)，
+
+\[
+C_{\sigma+\delta}(a)=C_\sigma(a+\delta)-C_\sigma(\delta).
+\tag{ST.11}
+\]
+

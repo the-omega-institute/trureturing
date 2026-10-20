@@ -1,0 +1,7 @@
+For every cardinality n, carry the following pair of assertions:
+
+1. Every finite domain V of size n has |Z(V;z)|>=2^(-n).
+2. Every such V whose origin is present and whose vertices avoid an actual
+   geometric mask F_i has a message m in Omega_i with
+   f_i(m)=Z(V\{0};z)/Z(V;z).
+

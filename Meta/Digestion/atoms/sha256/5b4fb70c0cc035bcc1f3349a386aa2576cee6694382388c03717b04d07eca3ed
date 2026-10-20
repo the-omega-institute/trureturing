@@ -1,0 +1,90 @@
+**定理 19.3（全正偶滞后的无共同标量守卫）。** 对每个 $N=2k\ge2$，有
+$2\le A_N<B_N$。在定义 18.1 的同一原始初始化中，可以到达源为 beta、
+历史守卫为 $h_0$ 的真实入口 $p$；又可以从该入口沿保持同一源 occurrence 的
+路径到达源为 $\mathsf C_N\beta$、当前守卫为任一给定 $H\ge B_N$ 的真实入口
+$\widehat p_H$。在 $p$ 分别请求 Left($v_+$)、Left($v_-$)，原始源响应是
+accept、reject；在 $\widehat p_H$ 分别请求
+Left($\mathsf C_Nv_+$)、Left($\mathsf C_Nv_-$)，两响应相同，且恰在
+$D_N\le H$ 时都接受。Right 方向也有完全相同的结论。
+
+因此，即使 $H$ 可以使用共同入口的全部保留数据来选取，定义 19.1 的一个
+请求无关标量也不能保持这两个原始源响应。所有四种请求分支都是真实有限规范
+源帧上的合法调用，拒绝分支不是被删去的未定义输入或无权 none。
+
+**证明。** 先给所有参数的精确范围。令 $F_0=0,F_1=1$ 且
+$F_{n+2}=F_{n+1}+F_n$。既有组成更新 $(a,b)\mapsto(b,a+b)$ 给出
+
+$$
+A_N=F_{N+1},\qquad B_N=F_{N+2},\qquad
+B_N-A_N=F_N\ge1\quad(N\ge2).
+\tag{ABT.64}
+$$
+
+也可由 $A_0=B_0=1$、$A_{n+1}=B_n$、$B_{n+1}=A_n+B_n$ 直接得到这些等式。
+故 $2\le A_N<B_N$，并且 $h_0=A_N+1\le B_N$。
+
+在共同 $P$ 之后完整执行 Reserve($h_0$)、Raise($h_0$)，得到 $p$：
+源仍是 beta，$h=K=h_0$，两条真实已返回维护记录留在同一历史内。
+若走编码入口分支，接着完整执行 Reserve($H$)、Raise($H$)，包括相等时的
+真实 unchanged 分支，再执行 $N$ 次 Rho。因 $H\ge B_N\ge h_0$，维护都合法；
+每次 Rho 候选沿这同一纯轨道的叶数不超过最终的 $B_N$，故全都接受。
+所得 $\widehat p_H$ 有 $t=\mathsf C_N\beta$、$h=K=H$，真实 accepted-Rho
+纪元为 $N$。其最新已取得行确实携带此纪元及守卫，不由形状反推或另供承诺。
+CAP 的同源 Reserve、实际帧入口及 GENERAL 的完整返回证明各步有限；
+全部旧记录、backing、token 与停放客户端保持其原有意义。
+
+在历史入口 $p$，两个整个左候选的叶数分别为
+
+$$
+\lambda\langle v_+,\beta\rangle=A_N+1=h_0,
+\qquad
+\lambda\langle v_-,\beta\rangle=B_N+1>h_0.
+\tag{ABT.65}
+$$
+
+所以它们实际接受、执行拒绝。两请求均按完整原始上下文语法进入；源守卫
+没有预先剔除较大的请求。它们是从共同 $p$ 的两个替代延长，不是先接受第一
+次修改后再在那个已改变的源上测试第二个请求。
+
+对任意源 $v$，同态性及逐叶相加给出
+
+$$
+\lambda(\mathsf C_Nv)=A_Na(v)+B_Nb(v).
+\tag{ABT.66}
+$$
+
+于是 $\lambda(\mathsf C_Nv_+)=A_NB_N$
+且 $\lambda(\mathsf C_Nv_-)=B_NA_N$。在共同编码入口 $\widehat p_H$，两个
+整个编码候选因而都有
+
+$$
+\lambda\langle\mathsf C_Nv_\pm,\mathsf C_N\beta\rangle
+ =A_NB_N+B_N=D_N
+\tag{ABT.67}
+$$
+
+个叶。CAP 对完整候选使用同一个 $H$，所以若 $H<D_N$ 两个都实际拒绝，
+若 $H\ge D_N$ 两个都实际接受。两个编码上下文本身是有限非空原树，其完整
+前缀码可以在同一已安装帧接口实际供给；无需给源任意新入口，也无需让停放
+客户端计算它们。请求过大只导致该次已执行 guard 拒绝。
+
+没有一个 $H$ 能同时把这个同值对变成 (accept,reject)。允许 $H$ 的选取
+读取更多共同入口数据不改变对每一个固定 $H$ 成立的二分。交换整个候选的
+左右方向不改变叶数，所以 Right 同样成立。证毕。
+
+本证明同时保留了源后继本应满足的同态等式
+
+$$
+\mathsf C_N\langle v,t\rangle
+ =\langle\mathsf C_Nv,\mathsf C_Nt\rangle,
+\qquad
+\mathsf C_N\langle t,v\rangle
+ =\langle\mathsf C_Nt,\mathsf C_Nv\rangle.
+\tag{ABT.68}
+$$
+
+也就是说，失败发生在真实原始接受/拒绝分支，而不是由丢掉括号或错误计算
+接受后的候选造成。任一保持完整原始响应的桥都必须保持这个已包括的响应
+分量；因此这个受限直接运输类连该必要源分量条件也不能满足。没有从它推出
+任意其他运输类的完整 $Q$ 不可能性。
+

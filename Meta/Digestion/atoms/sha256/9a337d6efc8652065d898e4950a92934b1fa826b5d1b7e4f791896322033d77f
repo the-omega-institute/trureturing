@@ -1,0 +1,36 @@
+**定理 49.5（原树极值的精确计算式与渐近）。** 设 $t=e+k$，并定义
+
+$$
+\begin{aligned}
+D_H(k)&=(-1)^e[z^t](1+z)^o(1-z)^e,\\
+C_H(\epsilon,k)&=
+\frac{\binom Ht+(-1)^\epsilon D_H(k)}2
+-\mathbf1_{\{\epsilon=0,k=0\}}.
+\end{aligned}
+\tag{TM.4911}
+$$
+
+系数越界取零。若 $H=2\ell$，则 $D_H(k)$ 在 $t$ 奇数时为零，在 $t$ 偶数时为 $(-1)^{\ell+t/2}\binom\ell{t/2}$；若 $H=2\ell+1$，则为 $(-1)^{\ell+\lfloor t/2\rfloor}\binom\ell{\lfloor t/2\rfloor}$。于是定理 49.4 给出有限二项式计算式，且
+
+$$
+R(H)\sim\frac{\sqrt2\,8^H}{8\pi H^2}
+\qquad(H\longrightarrow\infty).
+\tag{TM.4912}
+$$
+
+证明。不限制 $y$ 奇偶时，用 Vandermonde 恒等式得到
+$\sum_y\binom o{y+k}\binom ey=\binom H{e+k}$。
+带权 $(-1)^y$ 的和是 $(1+z)^o(1-z^{-1})^e$ 的 $z^k$ 系数，乘以 $z^e$ 后等于 (TM.4911) 中的 $D_H(k)$。偶／奇筛选分别取无符号和与有符号和的半和／半差，再删去唯一纯 $\alpha$ 词，得精确式。
+
+偶长度时 $(1+z)^o(1-z)^e=(1-z^2)^\ell$；奇长度时为 $(1+z)(1-z^2)^\ell$。直接取系数得所列公式，因而 $|D_H(k)|\le2^{\lfloor H/2\rfloor}$。令 $M_H=\binom H{\lfloor H/2\rfloor}$。所有 $\binom Ht\le M_H$，而 $k=0$ 给中央值；在该 $k$ 选较大的奇偶类，删去纯 $\alpha$ 至多损失一，故
+
+$$
+\frac{M_H}2-1\ \le\ \max_{\epsilon,k}C_H(\epsilon,k)
+\ \le\ \frac{M_H}2+\frac{2^{\lfloor H/2\rfloor}}2.
+\tag{TM.4913}
+$$
+
+经典 Stirling 公式给
+$M_H\sim2^H\sqrt{2/(\pi H)}$，故误差项相对 $M_H$ 趋零；又有
+$K_H\sim4^H/(4\sqrt\pi H^{3/2})$。将两式及 (TM.4909) 相乘，得到 (TM.4912) 的常数。Catalan、Vandermonde、奇偶筛选和 Stirling 均是成熟计数工具；新增的来源事实是它们在实际初始 $q_H$ 纤维中的精确接合及跨标签的极值归约。$\square$
+

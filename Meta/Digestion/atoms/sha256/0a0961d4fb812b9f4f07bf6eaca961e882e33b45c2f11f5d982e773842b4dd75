@@ -1,0 +1,77 @@
+**Theorem 17.2 (Residual variance, exact visible information and censored endpoints).** Let
+
+$$
+\begin{aligned}
+d_0&=D(p\Vert h)=\log c-\mathbb E_p\log r_K,&I_0&=d_0/\mu_0,\\
+d_1&=D(h\Vert p)=\mathbb E_h\log r_K-\log c,&I_1&=d_1/\mu_1.
+\end{aligned} \tag{17.2}
+$$
+
+Both $d_i,I_i$ are strictly positive, and
+
+$$
+\frac{\operatorname{Var}_p(r_K)}{2u^2}\le d_0
+\le\frac{\operatorname{Var}_p(r_K)}{2\ell^2}.
+\tag{17.3}
+$$
+
+For $W\ge1$, the exact finite-record relative entropy is
+
+$$
+\begin{aligned}
+D(\mathsf P_0^W\Vert\mathsf P_1^W)
+={}&(1-z_0(W))\log\frac{\mu_1}{\mu_0}
++\frac2{\mu_0}\sum_{a=0}^{W-1}U_a\log\frac{U_a}{V_a}\\
+&+\frac1{\mu_0}\sum_{k=1}^{W-2}(W-k-1)p_k\log\frac{p_k}{h_k}
++z_0(W)\log\frac{z_0(W)}{z_1(W)}.
+\end{aligned} \tag{17.4}
+$$
+
+An upper limit below a sum's lower limit gives zero. For both orientations,
+
+$$
+\left|D(\mathsf P_i^W\Vert\mathsf P_{1-i}^W)-WI_i\right|
+\le3\log\kappa\quad(W\ge1),\qquad
+\lim_{W\to\infty}\frac{D(\mathsf P_i^W\Vert\mathsf P_{1-i}^W)}W=I_i.
+\tag{17.5}
+$$
+
+At $W=0$ the relative entropy is zero.
+
+Proof. The tilt $h_k=p_kr_k/c$ gives (17.2). Applied to $f(x)=-\log x$ on $[\ell,u]$, Taylor's formula about $c$, with $1/u^2\le f''\le1/\ell^2$, gives (17.3) after taking expectations. If $p=h$, positivity of $q^k$ forces $H(k)=ck^n$ at every positive integer. Polynomial identity and the leading coefficient of $H$ give $c=1$ and $H=k^n$, hence $ne=\Delta(H-k^n)=0$, a contradiction. Strict convexity gives both positive divergences. Bounded ratios make them finite.
+
+For a legal word containing a one, write its unique decomposition as $w=0^a1\,0^{g_1}1\cdots0^{g_j}1\,0^b$, with $j\ge0$. The supplier's cylinder formula gives
+
+$$
+\log\frac{\mathsf P_0(w)}{\mathsf P_1(w)}
+=\log\frac{\mu_1}{\mu_0}+\log\frac{U_a}{V_a}
++\sum_{v=1}^j\log\frac{p_{g_v}}{h_{g_v}}
++\log\frac{U_b}{V_b}.
+\tag{17.6}
+$$
+
+The chance that the first one of the window is at position $a<W$ is $U_a/\mu_0$. The chance that the final run contains $b<W$ zeros after the last one is $U_b/\mu_0$, by the same cylinder formula. An internal $k$-gap has both endpoint ones in the window at exactly $W-k-1$ possible starting positions when $k\le W-2$, each of probability $p_k/\mu_0$ by stationarity. Taking expectations in (17.6), and adding the all-zero word's own likelihood, proves (17.4). This calculation includes a one-symbol window, a word with only one tick, and either zero-length boundary run. A boundary run is never counted as a complete gap.
+
+To bound the endpoint contribution sharply, let $\lambda_0(k,a)=p_k/\mu_0$, $0\le a\le k$, be the normalized interval-and-position law of (15.11), and put $b_*:=\mathbb E_{\lambda_0}r_K$. Then $\mu_1/\mu_0=b_*/c$. The tail tilts $r^{(a)}:=\mathbb E_p(r_K\mid K\ge a)$ lie in $[\ell,u]$ and satisfy $V_a/U_a=r^{(a)}/c$. Thus the three boundary terms in (17.6) together are
+
+$$
+\log\frac{b_*c}{r^{(a)}r^{(b)}},
+\qquad\left|\log\frac{b_*c}{r^{(a)}r^{(b)}}\right|
+\le2\log\kappa.
+\tag{17.7}
+$$
+
+For an all-zero word, its integrated-tail sum in (15.8) is tilted by a conditional weighted average $r^{[W]}\in[\ell,u]$; the full cylinder ratio is $z_1(W)/z_0(W)=r^{[W]}/b_*$. Its logarithm has absolute value at most $\log\kappa$. These statements use the common normalizers; bounding three unrelated logarithms separately loses this improvement.
+
+Finally, $|\log(p_k/h_k)|\le\log\kappa$, and
+
+$$
+\frac1{\mu_0}\sum_{k\ge1}
+\left(W-(W-k-1)_+\right)p_k
+\left|\log\frac{p_k}{h_k}\right|
+\le\frac{\log\kappa}{\mu_0}\mathbb E_p(K+1)=\log\kappa.
+\tag{17.8}
+$$
+
+The internal-gap expectation therefore differs from $WI_0$ by at most $\log\kappa$, while the expected remaining contribution has absolute value at most $2\log\kappa$. This proves (17.5). Reversing the laws uses the reciprocal tilt, whose endpoint ratio is also $\kappa$, and proves the other orientation. $\square$
+

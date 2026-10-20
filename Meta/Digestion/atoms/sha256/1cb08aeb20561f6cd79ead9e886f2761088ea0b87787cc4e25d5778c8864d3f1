@@ -1,0 +1,122 @@
+## 105. FIB 胞腔载体上的外加离散微分形式、Maxwell–Hodge 方程与规范模态
+
+固定第 \(j\) 层 FIB 上下文图的顶点和边，并额外选择有向胞腔、附着映射与取向，把它提升为有限胞腔复形 \(K_j\)。记
+\[
+C_j^k=\mathbb R^{K_j^{(k)}},
+\qquad
+D_{k,j}:C_j^k\to C_j^{k+1}
+\]
+为 \(k\)-胞腔上的实系数上链空间及其上链边界矩阵。胞腔的附着关系必须满足
+\[
+D_{k+1,j}D_{k,j}=0.
+\tag{105.1}
+\]
+这一步需要外加的胞腔、取向和边界数据；FIB 词序或递归标签本身既不产生高维胞腔，也不保证给定图能按唯一方式填充。再给每个 \(C_j^k\) 一个对称正定的质量矩阵（离散 Hodge 星）\(M_{k,j}\)，定义
+\[
+\delta_{k,j}
+=M_{k-1,j}^{-1}D_{k-1,j}^{\mathsf T}M_{k,j},
+\qquad
+\Delta_{k,j}
+=\delta_{k+1,j}D_{k,j}+D_{k-1,j}\delta_{k,j}.
+\tag{105.2}
+\]
+这里的长度、面积、体积、介电率、磁导率和单位全部由 \(M_{k,j}\) 或其他外加参数指定。有限维加权 Hodge 分解给出
+\[
+C_j^1
+=\operatorname{im}D_{0,j}
+\mathbin{\perp_{M_{1,j}}}
+\operatorname{im}\delta_{2,j}
+\mathbin{\perp_{M_{1,j}}}
+\ker\Delta_{1,j}.
+\tag{105.3}
+\]
+第一项是纯规范方向，第二项是横向（共恰）方向，最后一项是调和零模。式 (105.3) 需要 \(M_{1,j}\)，所以调和代表的具体形状不由上同调群单独决定。
+
+给定外加介电矩阵 \(M_{1,j}^{\varepsilon}\succ0\)、磁能矩阵 \(M_{2,j}^{\mu^{-1}}\succ0\)，令 \(A(t)\in C_j^1\) 为势、\(\phi(t)\in C_j^0\) 为标势，并按一个固定的源项符号约定设
+\[
+\mathsf E=\partial_tA+D_{0,j}\phi,
+\qquad
+B=D_{1,j}A,
+\]
+其中物理电场可取为 \(-\mathsf E\)。对外加电荷 \(\rho(t)\in C_j^0\) 和电流 \(J(t)\in C_j^1\)，作用量取为
+\[
+\mathcal S=\int\!\left[
+\frac12\langle\mathsf E,M_{1,j}^{\varepsilon}\mathsf E\rangle
+-\frac12\langle B,M_{2,j}^{\mu^{-1}}B\rangle
++\langle A,J\rangle-\langle\phi,\rho\rangle
+\right]\mathrm dt.
+\tag{105.4}
+\]
+其 Euler–Lagrange 方程可写成
+\[
+\begin{aligned}
+D_{1,j}\mathsf E&=\partial_tB,
+&
+D_{2,j}B&=0,\\
+D_{0,j}^{\mathsf T}M_{1,j}^{\varepsilon}\mathsf E&=\rho,
+&
+\partial_t(M_{1,j}^{\varepsilon}\mathsf E)
++D_{1,j}^{\mathsf T}M_{2,j}^{\mu^{-1}}B&=J.
+\end{aligned}
+\tag{105.5}
+\]
+第一行是两个 Bianchi 恒等式，直接使用
+\(D_{1,j}D_{0,j}=0\) 和 \(D_{2,j}D_{1,j}=0\)；第二行是由作用量选定的离散 Gauss–Ampère 方程。对最后一式施加 \(D_{0,j}^{\mathsf T}\) 并使用 (105.1)，得到
+\[
+\partial_t\rho=D_{0,j}^{\mathsf T}J.
+\tag{105.6}
+\]
+即若把离散散度定义为
+\(\operatorname{div}J=-D_{0,j}^{\mathsf T}J\)，则为
+\(\partial_t\rho+\operatorname{div}J=0\)。改变取向或源项号只会改变这个约定，不改变守恒内容。
+
+对任意 \(\lambda(t)\in C_j^0\) 作
+\[
+A\longmapsto A+D_{0,j}\lambda,
+\qquad
+\phi\longmapsto\phi-\partial_t\lambda.
+\tag{105.7}
+\]
+则 \(\mathsf E\) 和 \(B\) 不变，因为 \(D_{1,j}D_{0,j}=0\)。源耦合在无边界通量或相容边界下的变化量由 (105.6) 消去；这说明规范不变性要求源满足连续性方程。规范轨道上的 \(A\) 代表同一电磁状态，因而不能把 \(A\) 的每个坐标自由度当作可观测模态。
+
+在无源、时间规范 \(\phi=0\) 并取横向约束
+\(D_{0,j}^{\mathsf T}M_{1,j}^{\varepsilon}A=0\) 时，方程退化为
+\[
+M_{1,j}^{\varepsilon}\partial_t^2A
++D_{1,j}^{\mathsf T}M_{2,j}^{\mu^{-1}}D_{1,j}A=0.
+\tag{105.8}
+\]
+其横向模态由广义特征值问题
+\[
+D_{1,j}^{\mathsf T}M_{2,j}^{\mu^{-1}}D_{1,j}u_n
+=\omega_{n,j}^2M_{1,j}^{\varepsilon}u_n
+\tag{105.9}
+\]
+给出。 \(\operatorname{im}D_{0,j}\) 上的纯规范模态应先商掉；
+\(\ker\Delta_{1,j}\) 上的调和模态在无耗散模型中具有零频率，可表示全局通量或环路自由度。边界条件决定哪些模态存在，介电率和磁导率决定频率尺度，源的空间投影决定哪些模态被激发。若外加阻尼项 \(\Gamma_j\partial_tA\) 或开边界辐射条件，则 (105.9) 的实频率变为带宽有限的共振；传播速度、阻抗和能量单位均由这些外加系数决定。
+
+若 \(K_j\)、\(M_{1,j}^{\varepsilon}\)、\(M_{2,j}^{\mu^{-1}}\) 或源是随机的，可定义横向谱经验测度
+\[
+\nu_j=\frac1{\dim C_j^1}\sum_n\delta_{\omega_{n,j}^2}.
+\tag{105.10}
+\]
+在随机复形具有统一度数、正定性、边界控制和局部弱收敛等外加条件时，\(\nu_j\) 可能收敛到积分密度状态；不同的权重分布、胞腔几何和边界会给出不同的极限。若在阻尼线性系统上施加协方差为 \(Q_j(\omega)\) 的随机源，频域响应的协方差为
+\[
+\mathbb E[\widehat A(\omega)\widehat A(\omega)^*]
+=G_j(\omega)Q_j(\omega)G_j(\omega)^*,
+\]
+\[
+G_j(\omega)=
+\left[
+D_{1,j}^{\mathsf T}M_{2,j}^{\mu^{-1}}D_{1,j}
+-\omega^2M_{1,j}^{\varepsilon}
+-\mathrm i\omega\Gamma_j
+\right]^\dagger.
+\tag{105.11}
+\]
+其中伪逆只在固定规范和去除零模后使用。若再外加热浴与耗散的涨落—耗散关系，(105.11) 可产生热噪声谱、共振峰和有限尺寸涨落；没有这些关系时，随机源并不自动代表热平衡。
+
+本节的 Maxwell–Hodge 模型与第 91 节的拓扑缺陷结论有明确分工：第 91 节讨论上链的闭性、余边界和缺陷电荷，本节讨论在给定 Hodge 星、介质和时间动力学后，势、电场、磁通及其守恒方程；调和零模可受拓扑影响，却不等于局部缺陷。它也不同于第 92 节的词序转移矩阵：第 92 节沿一维词序相乘传输矩阵并研究 Lyapunov 指数与散射，本节使用不同次数胞腔的 incidence 矩阵和加权 Hodge 拉普拉斯，不要求一维顺序。相同 FIB 载体可分别承载两种外加模型，二者的谱和传播结论不能互相替代。
+
+FIB 递归本身只提供状态、标签、词序和上下文关系；胞腔附着、取向、Hodge 星、介电率、磁导率、源、时间、边界、阻尼、随机律、物理单位和连续极限都必须外加。因此，(105.5)–(105.11) 所得到的规范约束、波模态、谱密度和统计响应，是声明了这些外加条件后的 Maxwell–Hodge 模型结论，而不是 FIB 递归单独推出的真实电磁定律。改变同一 FIB 载体上的胞腔填充、介质权重或源边界，即可得到不同的零模、传播速度、共振谱乃至无传播的退化系统；不存在由 FIB 基础递归唯一确定的普适 Maxwell 参数或物理统计律。
+

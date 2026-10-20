@@ -1,0 +1,62 @@
+## 92. FIB 词序上的转移矩阵、散射与局域化
+
+固定有限上下文闭包或其路径子图。FIB 递归先给符号序列 \(a_n\)；若记忆阶为 \(r\)，可把
+\(c_n=(a_{n-r+1},\ldots,a_n)\) 增广为状态并写成 \(c_{n+1}=\Phi(c_n)\)。再取外加势和跃迁
+\(v_n=V(c_n,\eta_n)\)、\(t_n=T(c_n,c_{n+1},\eta_n)\ne0\)，定义 Jacobi 波方程
+\[
+t_n\psi_{n+1}+t_{n-1}\psi_{n-1}+v_n\psi_n=E\psi_n,
+\qquad
+\binom{\psi_{n+1}}{\psi_n}=T_n(E)\binom{\psi_n}{\psi_{n-1}},
+\]
+其中
+\[
+T_n(E)=
+\begin{pmatrix}
+(E-v_n)/t_n&-t_{n-1}/t_n\\
+1&0
+\end{pmatrix}.
+\]
+多通道时 \(\psi_n\in\mathbb C^d\)，转移矩阵为 \(2d\times2d\) 方块矩阵；自伴模型还需相应的辛或 \(J\)-酉结构。FIB 只决定 \(c_n\) 及允许的标签关系，不决定 \(V,T,E\) 的单位、波函数或环境。
+
+长度 \(L\) 的乘积为 \(M_L(E)=T_{L-1}(E)\cdots T_0(E)\)。若 \((c_n,\eta_n)\) 平稳遍历且
+\(\mathbb E\log^+\|T_0\|<\infty\)，Kingman 或 Furstenberg--Kesten 理论给出
+\[
+\gamma(E)=\lim_{L\to\infty}L^{-1}\log\|M_L(E)\|\quad\text{a.s.}
+\]
+在强不可约、非紧性和适当非共振条件下可进一步得到 Oseledets 分裂与指数衰减。若跃迁固定、存在积分态密度 \(N\)，则按所选归一化有 Thouless 公式
+\[
+\gamma(E)=\int\log|E-E'|\,dN(E')-\mathbb E\log|t_0|.
+\]
+一维非退化独立随机势在矩条件下通常有 \(\gamma(E)>0\)，定位长度可定义为 \(\xi(E)=1/\gamma(E)\)；对称点、相关退化和临界模型须单独检验。周期势在谱带内可有 \(\gamma=0\) 的 Bloch 波，在带隙中则有正指数。确定性 Fibonacci 型替换还可通过有序块乘积分析：若
+\(\sigma(a)=ab,\ \sigma(b)=a\)，则在固定乘积约定下
+\(M_{n+1}=M_{n-1}M_n\)。对 \(\det M_n=1\) 令 \(x_n=\tfrac12\operatorname{tr}M_n\)，有
+\[
+x_{n+1}=2x_nx_{n-1}-x_{n-2},
+\]
+且
+\[
+I=x_{n+1}^2+x_n^2+x_{n-1}^2-2x_{n+1}x_nx_{n-1}-1
+\]
+保持不变。这种确定性谱分析不能直接套用随机 Anderson 局域化结论。
+
+把有限 FIB 片段接到外加无耗散引线，匹配左右行波得到散射矩阵
+\(S(E)=\begin{psmallmatrix}r_L&t_R\\t_L&r_R\end{psmallmatrix}\)。自伴单通道模型满足
+\(|r_L|^2+|t_L|^2=1\)，透射为 \(\mathcal T_L=|t_L|^2\)；多通道则用 \(\operatorname{Tr}(t^*t)\)，有增益或吸收时 \(S\) 不再酉。若边界阻抗有界且处于一维局域化相，通常有
+\[
+-\frac1{2L}\log\mathcal T_L\to\gamma(E),
+\]
+边界只贡献次线性项；转移乘积满足混合 CLT 时，\(L^{-1/2}(\log\|M_L\|-L\gamma)\) 可收敛到均值为零的正态分布，但方差不是普适常数。
+
+在图而非路径上，可定义外加自伴图算子
+\[
+(H^\omega\psi)(u)=\sum_vt_{uv}(\omega)\psi(v)+v_u(\omega)\psi(u)
+\]
+及 Green 函数。若某能区满足分数矩条件
+\[
+\mathbb E|G^\omega(u,v;E+i0)|^s\le Ce^{-\mu d(u,v)},
+\qquad 0<s<1,
+\]
+才可推出谱或动力学局域化。扩散标度、Thouless 时间、平均能级间距和无量纲导通数同样需要外加动力学与谱极限，不能由词长直接推出。
+
+因此，同一 FIB 载体可以在不同外加势、跃迁、噪声、几何、边界和观测下承载 Bloch 传播、扩散、临界输运或指数局域化。FIB 递归本身只给出状态、标签、词序和组合关系，不能单独决定真实 Anderson 物理、散射定律或任何具有物理单位的普适统计律。
+

@@ -1,0 +1,78 @@
+**定理 23.2（Exact two-block phase and value-phase prices）。** Under the entire source and fee contract of Definition 23.1, for every integer $\gamma\ge2$ and separately for either original alphabet, define
+
+$$
+f_{\rm phase}(v,\theta,s)=\theta,
+\qquad
+f_{\rm pair}(v,\theta,s)=(v,\theta).
+\tag{23.5}
+$$
+
+Give each target its own arbitrary fixed label at $\bot$, allowing that label to coincide with a live target label. For each of these targets on all of (23.4),
+
+$$
+C_{\rm ad}(f_{\rm phase})=C_{\rm pre}(f_{\rm phase})=2,
+\qquad
+C_{\rm ad}(f_{\rm pair})=C_{\rm pre}(f_{\rm pair})=2.
+\tag{23.6}
+$$
+
+More generally, under the same contract, if $F:\mathbb F_2\times P\to Y$ is injective and $f(v,\theta,s)=F(v,\theta)$ for every live record, with any fixed $f(\bot)$, then
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=2.
+\tag{23.7}
+$$
+
+Proof. First define one literal word, indexed in actual read order,
+
+$$
+B_i=\begin{cases}1,&i=\gamma\text{ or }i=2\gamma,\\0,&\text{otherwise},\end{cases}
+\quad 0\le i<m,
+\qquad
+B=0^\gamma1\,0^{\gamma-1}1\,0^{\gamma-1},
+\qquad \mathcal B=B\mid B.
+\tag{23.8}
+$$
+
+The displayed word has exactly $3\gamma=m$ bits. Its first and last bits are zero, and its two ones have $\gamma-1\ge1$ zeros between them. From every legal inherited tail, the first actual zero clears that tail without rejecting. Each later one is isolated. Both blocks and their zero seam are therefore legal under the original order $k$, and the stream ends with tail zero. This clearing occurs inside the first paid block. It is an ordinary input operation, and neither a reset nor an observation of the INITIAL tail. Since every target in the statement is independent of $s$, clearing the tail loses no target distinction.
+
+For a live source, let $y_0=v$ be the free INITIAL value and let $y_1,y_2$ be the values at the two actual block endpoints. Put
+
+$$
+d_0=y_1\oplus y_0,
+\qquad d_1=y_2\oplus y_1,
+\qquad j=-\theta\pmod T\in P.
+\tag{23.9}
+$$
+
+The first block's two pulse offsets from INITIAL are $\gamma,2\gamma$; the second block's offsets are $m+\gamma=4\gamma$ and $m+2\gamma=5\gamma$. Thus (15.4) and the coefficient cycle give
+
+$$
+\begin{aligned}
+d_0&=c_{\theta+\gamma}\oplus c_{\theta+2\gamma}
+=\mathbf1_{j=\gamma}\oplus\mathbf1_{j=2\gamma},\\
+d_1&=c_{\theta+4\gamma}\oplus c_{\theta+5\gamma}
+=\mathbf1_{j=0}\oplus\mathbf1_{j=\gamma}.
+\end{aligned}
+\tag{23.10}
+$$
+
+To justify the last equalities, every charged index is a multiple of $\gamma$, and such an index cannot be $-1\pmod{4\gamma}$ because $\gamma\ge2$. Consequently only the coefficient at residue zero can contribute. The second block advances the actual phase by $m=3\gamma$; its pulses are not evaluated against the first block's phase.
+
+| INITIAL negative coordinate $j$ | INITIAL phase $\theta=-j\bmod T$ | $d_0$ | $d_1$ | Endpoint increment code |
+| --- | --- | --- | --- | --- |
+| $0$ | $0$ | $0$ | $1$ | $(0,1)$ |
+| $\gamma$ | $3\gamma$ | $1$ | $1$ | $(1,1)$ |
+| $2\gamma$ | $2\gamma$ | $1$ | $0$ | $(1,0)$ |
+| $3\gamma$ | $\gamma$ | $0$ | $0$ | $(0,0)$ |
+
+These four codes are distinct. The decoder reads this table using only $(y_0,y_1,y_2)$, recovers $j$, and returns $\theta=-j\bmod T$ for $f_{\rm phase}$. For $f_{\rm pair}$ it returns $(y_0,\theta)$, retaining the free INITIAL value rather than substituting the final value $y_2$. For (23.7) it returns $F(y_0,\theta)$. This computation does not require a tail, history, interior value or hidden clock. All live records, including both values and every legal tail, use the same literal stream $B\mid B$. Initial bottom is identified by its free distinct observation and immediately returns the chosen bottom label. Every live execution emits two complete blocks, hence pays two blocks, or $2m=6\gamma$ actual bits. All zero bits and both complete actions are charged. Therefore $C_{\rm pre}\le2$ for each stated target, and a GLOBAL protocol is also an adaptive protocol.
+
+For the lower bound, fix either free value $v\in\mathbb F_2$. The following four tail-zero records are actual instances of Lemma 15.1, with explicit complete-block history lengths:
+
+| INITIAL phase $\theta$ | History length $N_\theta$ | Actual INITIAL record |
+| --- | --- | --- |
+| $0$ | $12\gamma=4m$ | $(v,0,0)$ |
+| $\gamma$ | $9\gamma=3m$ | $(v,\gamma,0)$ |
+| $2\gamma$ | $6\gamma=2m$ | $(v,2\gamma,0)$ |
+| $3\gamma$ | $3\gamma=m$ | $(v,3\gamma,0)$ |

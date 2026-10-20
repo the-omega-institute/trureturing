@@ -1,0 +1,8 @@
+**Theorem 16.5 (exact feasibility for every fixed encoder).** For a fixed
+acquired encoder $e$ on (NAR.16.1), the following are equivalent:
+
+1. It supports finite adaptive current recovery in (NAR.16.3).
+2. It separates every pair $a,b$ with $a-b=d\mathbf1$ and $d\ne0$.
+3. It supports current recovery with one finite raw-call bound uniform
+   over all profiles, menu choices and legal unbounded lags.
+

@@ -1,0 +1,106 @@
+### 28.1 对角不变扇区与精确联合块
+
+准备的 $C,D$ 对角扇区
+
+$$
+\rho(t)=\sum_{c=0}^{m}\sum_{n=0}^{K}|c,n\rangle\langle c,n|\otimes X_{c,n}(t),
+\tag{28.5}
+$$
+
+在式(28.4)下不变。取初值 $X_{0,0}(0)=X_{SR}$，其余块为零。这里 $X_{c,n}(t)$ 是 $S\otimes R$ 上的矩阵。约定不存在的下标块为零，即 $X_{-1,n}=0$、$X_{c,-1}=0$。对 $0\le c<m$、$0\le n<K$，前向方程为
+
+$$
+\dot X_{c,n}
+=-i[H_S,X_{c,n}]
++\kappa X_{c-1,n}-\kappa X_{c,n}
++\nu X_{c,n-1}-\nu X_{c,n}.
+\tag{28.6}
+$$
+
+所以左下角边界明确为
+
+$$
+\dot X_{0,0}=-i[H_S,X_{0,0}]-(\kappa+\nu)X_{0,0},
+$$
+
+而 $c=0$ 时没有钟流入，$n=0$ 时没有计数器流入。对 $0\le c<m$ 的饱和列 $n=K$，方程是
+
+$$
+\dot X_{c,K}
+=-i[H_S,X_{c,K}]
++\kappa X_{c-1,K}-\kappa X_{c,K}
++\nu X_{c,K-1},
+\tag{28.7}
+$$
+
+其中没有 $-\nu X_{c,K}$，因为 $D=K$ 后计数器不再跳跃。终止行 $c=m$ 对每个 $0\le n\le K$ 满足
+
+$$
+\dot X_{m,n}=\kappa X_{m-1,n},
+\tag{28.8}
+$$
+
+没有 Hamiltonian 项、钟流出项或计数器流出项。这些式子同时显示，终止行不是把计数器替换成一个未饱和的无限寄存器。
+
+令
+
+$$
+U_t=e^{-itH_S},
+\qquad
+V_t(X_{SR})=(U_t\otimes I_R)X_{SR}(U_t^\dagger\otimes I_R),
+$$
+
+$$
+ p_c(t)=e^{-\kappa t}\frac{(\kappa t)^c}{c!}\quad(0\le c<m),
+$$
+
+$$
+ q_n(t)=e^{-\nu t}\frac{(\nu t)^n}{n!}\quad(0\le n<K),
+\qquad
+ q_K(t)=1-\sum_{n=0}^{K-1}q_n(t).
+\tag{28.9}
+$$
+
+再令第 $m$ 次钟跳跃的 Erlang 密度为
+
+$$
+ f(t)=\frac{\kappa^m t^{m-1}e^{-\kappa t}}{(m-1)!},
+\qquad
+\int_0^\infty f(t)\,dt=1.
+\tag{28.10}
+$$
+
+则对每个有限 $T\ge0$，运行块和停止块的精确解分别为
+
+$$
+ X_{c,n}(T)=p_c(T)q_n(T)V_T(X_{SR})
+ \quad(0\le c<m,\ 0\le n\le K),
+ \tag{28.11}
+$$
+
+$$
+ X_{m,n}(T)=\int_0^T f(t)q_n(t)V_t(X_{SR})\,dt
+ \quad(0\le n\le K).
+ \tag{28.12}
+$$
+
+这里 $q_K$ 是饱和尾概率，因而式(28.11)保留了计数器已经溢出的全部运行质量。证明直接检验前向方程。对 $c<m$，有 $\dot p_c=\kappa p_{c-1}-\kappa p_c$（$c=0$ 时取 $p_{-1}=0$）；对 $n<K$，有 $\dot q_n=\nu q_{n-1}-\nu q_n$，而 $\dot q_K=\nu q_{K-1}$。共轭酉满足 $\frac d{dt}V_t(X)=-i[H_S,V_t(X)]$，所以乘积式(28.11)给出式(28.6)和式(28.7)。又 $\kappa p_{m-1}(t)=f(t)$，式(28.12)的导数正好是 $\kappa X_{m-1,n}(T)$，初值为零，给出式(28.8)。有限维线性 ODE 的唯一性完成证明。
+
+对任意矩阵 $X_{SR}$，$\|V_t(X_{SR})\|_1=\|X_{SR}\|_1$。于是
+
+$$
+\sum_{n=0}^{K}\int_0^\infty f(t)q_n(t)\|V_t(X_{SR})\|_1\,dt
+\le \|X_{SR}\|_1,
+\tag{28.13}
+$$
+
+故所有停止块和后面的标签积分绝对收敛。若输入归一化，有限时刻仍在运行的总质量为
+
+$$
+\Pr(\tau>T)=\sum_{c=0}^{m-1}p_c(T)
+=e^{-\kappa T}\sum_{c=0}^{m-1}\frac{(\kappa T)^c}{c!},
+\tag{28.14}
+$$
+
+而已停止质量为 $1-\Pr(\tau>T)$；这里 $\tau$ 是密度 $f$ 的停止时间。因而任意有限 $T$ 都可能有 live mass，完整仪器是 $T\to\infty$ 的无条件极限，不是一个确定的 deadline。
+

@@ -1,0 +1,29 @@
+**Definition 12.1 (width minima for the full unknown-entry task).**
+Fix Definition 9.1's public full ordered skeleton $S$, with even
+$h\ge2$ independently labelled leaves, and a finite integer $T\ge0$.
+Keep all $2^h$ assignments and all entry lags $0\le t\le T$, with
+source-independent deterministic initialization and no reference leaf.
+Let $`\ell_a^*(S,T)`$ be the least complete no-$11$ word length among
+correct controllers in that definition's comparison class, which allows
+adaptive genuine Updates. Let $`\ell_s^*(S,T)`$ be the corresponding
+least length with zero actual Updates on every promised run. The active
+class also allows zero-Update runs. Both classes retain the permitted
+finite deterministic internal work: all its mutable state is counted,
+it obtains no source input, and every query word selects one fixed,
+fully materialized literal. Each halt word has one fixed output.
+Every actual primitive reply immediately selects a hold or one legal
+bit change and is discarded. These minima concern word length alone,
+without minimizing the other resource coordinates.
+
+Use $K,M,d_i,D,A_S,c$ from (SLHC.24), and set
+
+$$
+d_F(n)=\min\{d\in\mathbb N_0:F_{d+2}\ge n\}\quad(n\ge1),
+\qquad r=\left\lceil\frac{T+1}{3}\right\rceil.
+\tag{SLHC.38}
+$$
+
+Thus $d_F$ inverts the capacity of the complete no-$11$ word space,
+not the size of a selected supported subgraph. The constructions below
+make both width minima well defined.
+

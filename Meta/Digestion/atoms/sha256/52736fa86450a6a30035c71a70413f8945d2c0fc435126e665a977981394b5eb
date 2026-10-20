@@ -1,0 +1,14 @@
+### 定义 356.1（闭上链、恰当上链与上同调）
+
+记
+
+$$
+Z^k(K;A)=\ker d_k,
+\qquad
+B^k(K;A)=\operatorname{im}d_{k-1},
+\qquad
+H^k(K;A)=Z^k(K;A)/B^k(K;A).
+$$
+
+面曲率 \(F\) 的 Bianchi 条件是 \(F\in Z^2(K;A)\)。若存在边运输 \(g\) 使 \(F=d_1g\)，则 \(F\in B^2(K;A)\)。
+

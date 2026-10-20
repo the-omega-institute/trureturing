@@ -1,0 +1,23 @@
+## A.3 相关冻结结果(其他理论的定理,本卷只引不证)
+
+**定理 A.4(准入反单调:污染只会增加不可用的判者)**〔引〕。扩大一个判断的依赖闭包只会取消判者资格,不会增加:对任何判者,若其在较大闭包下可准入,则在较小闭包下亦可准入。
+*出处*。本仓冻结定理 `dependency_closure_admission_antitone`(GID `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/DependencyClosureAdmissionAntitone`)。本卷不重证;母仓第 2.7 条「准入反单调」即其运营读法:自己判断的依赖越被污染,自我裁决资格越收紧。
+
+**定理 A.5(回顾零损失不蕴含前瞻增益)**〔引〕。一个把已见数据逐条复制的判者,回顾损失为零,但其每条记录都被依赖污染,且零回顾损失不蕴含正的前瞻增益。
+*出处*。冻结定理 `lookup_copy_zero_loss_and_nonanticipating_failure`(GID `…/DefinitionEscapeAdjudication/RetrospectiveLookupFailure`)。母仓第 2.7 条「查表复制器」。
+
+**定理 A.6(盲核与预算包络)**〔引〕。(i) 有限定义族切下的残差恰分解为**盲核**(任何该语言的定义都切不掉)与**尚可切除**两部分;(ii) 随预算递增的残差包络反单调、有下确界,且下确界与极限相等,但不断言任一有限族达到它。
+*出处*。冻结定理 `blind_residual_charge_decomposition`(GID `…/EscapeSpectrum/BlindResidualChargeDecomposition`)与 `budget_envelope_infimum_and_limit`(GID `…/EscapeSpectrum/BudgetEnvelopeCompletion`)。母仓第 2.7 条「别拿预算买盲核」「触底换 Γ」。
+
+**定理 A.7(局部结算)**〔引〕。到截止时刻,open 态一律端化为无效;只有 proved 与 refuted 计票;五个父 atom 的承诺按预登记的三票阈值恰分为 success / failure 两支。
+*出处*。冻结定理 `spectrum_commitment_local_settlement`(GID `…/EscapeSpectrum/SpectrumCommitmentSettlement`)。母仓第 2.7 条「open 不许伪装成进行中赖过截止」。
+
+**定理 A.8(多方案比较:逐坐标弱支配与路径无关)**〔引〕。(i) 增益向量上的逐坐标弱支配是自反、传递的预序;(ii) 增益之差满足 $\Delta(a,a)=0$ 与 cocycle $\Delta(a,c)=\Delta(a,b)+\Delta(b,c)$。
+*出处*。冻结定理 `pareto_weak_reflexive_transitive`(GID `…/DefinitionEscapeAdjudication/ParetoWeakPreorder`)与 `gain_difference_self_zero_and_cocycle`(GID `…/DefinitionEscapeAdjudication/GainDifferenceCocycle`)。母仓第 2.7 条:「不拍单标量」「同一改动沿不同叙事路径算出的收益必须相等,不等即账错」——后者就是 cocycle 条件在账目上的读法:增益账路径无关,是诚(假设 4.3)对**核算**的要求。
+
+**定理 A.9(法不溯及既往)**〔引〕。向一个只追加的账本追加记录,不改变任何旧轮次的纯结算值。
+*出处*。冻结定理 `append_only_old_settlement_unchanged`(GID `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/TargetChangeSettlementConservation`)。它证明的是**固定同一评估函数**下追加不改旧轮结算,即假设 1.12 在「结算」上的 Lean 形,也是母仓第 2.7 条「追加目标不改旧结算」的根;规则本身的改变($H\to H'$,母仓第 7.12 条保守扩展律)**不在**该定理的前件内,仍是单独的 `open` 义务,本卷不冒领。
+
+**定理 A.10(让渡与先撞)**〔引〕。若全体主体遵守「持有者活跃则让渡、停滞则收回」且留痕原子可见,则同一问题不会被两方同时实施(除可见性延迟窗口内)。
+*出处*。OTT 定理骨架 T-F(`open`)。母仓第 5.4 条。
+

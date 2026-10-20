@@ -1,0 +1,19 @@
+## 4. 整个无限高块的独立下界
+
+复用 `WeilInfiniteComplementLeakage` 的实际低频质量界 epsilon=4/(3*pi^2)：对 |n|>N 的全部 Fourier 组合，其 |xi|<=R=pi*N/(2L) 的连续 Fourier 质量至多为 epsilon。有限 Fourier 和与零延拓变换的识别仍按本卷原证明承接。Gamma 增量随 |xi| 单调，故
+
+\[
+q_\Gamma(f)\ge\left[\gamma_0+(1-\epsilon)
+\sum_{j<2048}\frac{2R_-^2}{b_j(b_j^2+R_-^2)}\right]\|f\|^2,
+\]
+
+R_- 是整个参数区间 R 的下端点。Gamma 未求和的部分非负，故这是下界而非截断近似。两个 prime 位移在活跃时均大于半窗，其对称块范数各自至多 w_p=log(p)/sqrt(p)；pole 负特征值的模长为 2(sinh(a)-a)。统一减去这些实际最坏项，程序得到
+
+\[
+\boxed{q_a(f)\ge\beta\|f\|^2,\quad\beta>1.00907026>1,
+\qquad f\in P_N^\perp\cap\operatorname{Dom}q_a.}
+\tag{US7}
+\]
+
+为后续使用固定 beta_floor=1。这里没有继承旧 c=3 的第二特征值下界。所有 n、所有高空间向量和所有 a∈I 同时被覆盖。实际边界符号包络也重新验证为 B=4。
+

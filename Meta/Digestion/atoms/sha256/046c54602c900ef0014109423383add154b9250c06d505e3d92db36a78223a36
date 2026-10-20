@@ -1,0 +1,27 @@
+## 定理 13.1（零记忆与有效像下降）
+
+以下等价：
+
+1. $M(C,T)=0$；
+2. $\ker(C)$ 对 $T$ 不变；
+3. 存在唯一线性映射
+   $$
+   \bar T_C:\operatorname{ran}(C)\to\operatorname{ran}(C)
+   $$
+   使
+   $$
+   C_{\mathrm{eff}}T=\bar T_C C_{\mathrm{eff}}.
+   $$
+
+### 证明
+
+$M(C,T)=0$ 当且仅当 $\ker(C)=N_\infty$。而 $N_\infty$ 是 $\ker(C)$ 内最大 $T$-不变子空间，因此前两项等价。
+
+若 kernel 不变，定义
+
+$$
+\bar T_C(Cx)=C(Tx).
+$$
+
+kernel 不变保证代表元无关，有效像满射保证唯一性。反向由交换方块立即得到 kernel 不变。∎
+

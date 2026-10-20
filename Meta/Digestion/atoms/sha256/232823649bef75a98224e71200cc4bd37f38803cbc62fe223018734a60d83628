@@ -1,0 +1,7 @@
+**定理 40.3（长期事件的四个等价接口）。** 在定义 40.1 下，以下条件等价：
+
+- $\theta\mapsto R_\theta$ 在算子范数下连续。
+- $\displaystyle\lim_{m\to\infty}\sup_{\theta\in\Theta}\|R_{m,\theta}\|_\infty=0$。
+- $\theta\mapsto\Phi_{\infty,\theta}$ 在半 diamond 距离下连续。
+- $\displaystyle\lim_{m\to\infty}\sup_{\theta\in\Theta}\delta(\Phi_{\infty,\theta},\Phi_{m,\theta})=0$。
+

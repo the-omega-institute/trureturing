@@ -1,0 +1,73 @@
+### 87.3 有界有理后验桥
+
+固定 $k$，令 $\theta=1/m\in[0,1/2]$。
+函数
+
+$$
+ u(\theta)=\frac{A}{n}\frac{A-\theta}{n-\theta}
+$$
+
+的导数为 $\frac{A}{n}\frac{A-n}{(n-\theta)^2}<0$，所以它在物理区间严格单调，从而 $m\mapsto u_k(m)$ 在 $S$ 上单射。
+其反函数写成
+
+$$
+ \theta=\frac{A^2-n^2u}{A-nu},\qquad
+ D(u):=A-nu=\frac{AB}{n-\theta}>0.
+\tag{87.3}
+$$
+
+令 $J_k=u([0,1/2])$。
+历史中一次深度 $j$ 的同色 PairRead，在去掉与 $m$ 无关的正因子后给出 $(d-\theta)/(n_j-\theta)$，其中 $d=A_j$ 或 $B_j$；混色 PairRead 给出 $1/(n_j-\theta)$。
+所有旧 PairRead 的次数总和 $N_{\mathrm{pair}}(h)$ 不超过 $T$。
+
+把 (87.3) 代回，定义
+
+$$
+ \ell_d(u)=dD(u)-(A^2-n^2u)
+       =A(d-A)+n(n-d)u.
+\tag{87.4}
+$$
+
+则
+
+$$
+ d-\theta=\frac{\ell_d(u)}{D(u)},\qquad
+ n_j-\theta=\frac{\ell_{n_j}(u)}{D(u)}.
+$$
+
+在 $J_k$ 上 $\ell_d(u(\theta))=D(u(\theta))(d-\theta)>0$。
+所以每个同色因子可写为 $\ell_d/\ell_{n_j}$，每个混色因子可写为 $D/\ell_{n_j}$；虽不要求多项式系数逐项为正，但这些函数在整个实际区间都为正。
+
+删除单叶 Read 因子、控制相容权重和每次 PairRead 的正来源无关常数后，得到
+
+$$
+ F_h(u)=\frac{P_h(u)}{Q_h(u)}>0\quad(u\in J_k),
+$$
+
+其中 $P_h,Q_h$ 是由上述一次因子相乘得到的多项式，
+
+$$
+ \deg P_h\le N_{\mathrm{pair}}(h)\le T,
+ \qquad
+ \deg Q_h\le N_{\mathrm{pair}}(h)\le T,
+ \qquad Q_h(u)>0\ (u\in J_k).
+\tag{87.5}
+$$
+
+这是原始次数包络，不声称最小次数或资源最优。
+存在有限正的
+
+$$
+ z_h=\sum_{m\in S}w_m\frac{P_h(u_k(m))}{Q_h(u_k(m))}
+$$
+
+使同一深度的后验成为
+
+$$
+ \mu_h(m)=w_m\frac{P_h(u_m)}{z_hQ_h(u_m)},
+ \qquad u_m:=u_k(m).
+\tag{87.6}
+$$
+
+$P_h/Q_h$ 在紧区间上有界且 $Q_h$ 有正下界，故 (87.6) 的可数和绝对收敛；$z_h$ 与 87.1 中定义的 $Z_h$ 只是相应规范形的两个正归一化常数。
+

@@ -1,0 +1,21 @@
+**定义 16.1（有限探针与缩放变量）。** 继续使用定义 15.1 的固定单位速度、左反射右吸收链、初态 $X_0=0$、同一条随机历史及
+
+$$
+L_j=F_{j+1},\qquad N_j=F_{j+3},\qquad
+\epsilon_j=\frac{\delta}{N_j^2},\qquad h_j=\epsilon_jL_j,
+\qquad D=\frac{\theta\varphi^4}{\delta\overline r}.
+$$
+
+给定固定的 $m\ge1$ 个探针 $u_1,\ldots,u_m\in[0,1]$，令
+
+$$
+\ell_j(u)=h_jV_{\iota_j(u)},\qquad
+\kappa(u)=\frac{1-u}{D}.
+$$
+
+若有若干探针坐标相同，先把它们的势合并；若 $u_k=1$，其占用恒为零，可以从联合变换中删去。以下结论先对剩余的互异坐标陈述。记
+
+$$
+C_{k\ell}=\kappa(\max(u_k,u_\ell)).
+$$
+

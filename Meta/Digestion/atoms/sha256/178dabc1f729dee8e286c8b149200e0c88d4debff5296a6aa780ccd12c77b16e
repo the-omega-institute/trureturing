@@ -1,0 +1,17 @@
+**定理 76.1（primitive 替换的唯一遍历性与频率）。** 若 \(\sigma\) primitive，则 \((X_\sigma,T)\) 最小，并存在唯一 \(T\)-不变概率测度 \(\mu\)。对任意连续 \(f:X_\sigma\to\mathbb C\)，
+\[
+\lim_{N\to\infty}\frac1N\sum_{k=0}^{N-1}f(T^kx)
+=\int f\,d\mu
+\]
+对所有 \(x\in X_\sigma\) 一致成立。特别地，每个合法有限词 \(u\) 的圆柱频率
+\[
+\operatorname{freq}(u)=\mu([u])
+\]
+存在且与起点和相位无关。若 \(r,\ell\) 是 \(M\) 的正右、左 Perron 向量，则字母频率由 \(r\) 归一化给出；标准 Fibonacci 规范下
+\[
+\operatorname{freq}(\alpha)=\varphi^{-1},
+\qquad
+\operatorname{freq}(\beta)=\varphi^{-2}.
+\]
+有限 \(W_j\) 的端点只产生边界误差，前提是 \(W_j\) 确实来自该 primitive hull 的合法超词序列。
+

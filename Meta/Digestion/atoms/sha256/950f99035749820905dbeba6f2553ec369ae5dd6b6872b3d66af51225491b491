@@ -1,0 +1,25 @@
+**定义 388.1（同一逆核的加权预算与观察截断）。** 沿用 §§384–387 的实际 $q=\Phi^{-2}=(3-\sqrt5)/2$、$\beta_d=\log(1-(-q)^d)$、$a=\beta_1>0$ 和 Dirichlet 卷积逆 $\gamma=\beta^{-1}$。定义
+
+$$
+T_{1/4}=\sum_{d=2}^{\infty}|\beta_d|d^{1/4},\qquad
+\delta_{1/4}=a-T_{1/4},\qquad
+M_{1/4}=\sum_{d=1}^{\infty}|\gamma_d|d^{1/4}.
+\tag{388.1}
+$$
+
+对整数 $D\ge1$，置 $A_D=\sum_{d=1}^D|\gamma_d|d^{1/4}$。对 $\alpha\ge0$ 及 $f(0)=0$ 的复数序列，置
+
+$$
+\|f\|_\alpha=\sup_{N\ge1}\frac{|f(N)|}{N^\alpha},\qquad
+(\mathcal S_\gamma f)(N)=\sum_{d=1}^N\gamma_df(\lfloor N/d\rfloor),
+\tag{388.2}
+$$
+
+$$
+(\mathcal S_{\gamma,D}f)(N)
+=\sum_{d=1}^{\min(D,N)}\gamma_df(\lfloor N/d\rfloor).
+\tag{388.3}
+$$
+
+这里的 $\beta_d$ 是 Binet 校正系数，不是原始树的叶子 $\beta=\rho(\alpha)$；$D$ 是这份算术逆核的指标截断，不是单一收缩坐标的精度。
+

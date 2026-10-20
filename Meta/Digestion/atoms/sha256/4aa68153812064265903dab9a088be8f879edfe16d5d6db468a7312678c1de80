@@ -1,0 +1,9 @@
+**定义 337.1（tester 闭包）。** 设 \(\mathfrak A\) 为允许的前置、后置和控制操作族，定义 tester 空间的闭包
+\[
+\operatorname{Cl}_{\mathfrak A}(\mathcal V)
+=
+\operatorname{span}_{\mathbb R}
+\{A^*(T):T\in\mathcal V,\ A\in\mathfrak A\},
+\]
+其中 \(A^*\) 表示把组合操作拉回到过程空间的线性作用。有限深度 \(m\) 的闭包记为 \(\operatorname{Cl}_{\mathfrak A}^{\le m}\).
+

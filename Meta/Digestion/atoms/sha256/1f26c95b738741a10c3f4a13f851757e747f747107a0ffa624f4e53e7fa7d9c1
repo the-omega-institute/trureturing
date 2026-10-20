@@ -1,0 +1,8 @@
+### 86.9 来源供应与任务范围
+
+第81节式（81.15）–（81.18）供应实际来源、正支撑与可测种子密度；第85节式（85.1）供应局部四格律，本节只合并实际路径上的带符号因子。
+[Fithian《Sufficiency》](https://stat210a.berkeley.edu/fall-2024/reader/sufficiency.html)供应因子分解、共同条件律及经典似然比最小充分性判据；式（86.8）的数值因子识别已给出完整初等证明。
+[PosteriorHistoryCompression](../../../D5/S3/Estimation/DecisionRisk/PosteriorHistoryCompression.lean) 与 [TaskIndependentBeliefSufficiency](../../../D5/S3/Estimation/DataProcessing/TaskIndependentBeliefSufficiency.lean) 的结论要求同一隐藏态上的未来事件核、策略核或成本函数；它们不会替本节消去实际深度、动作阶段和历史读取权限。
+本卷第79–80节以及[过程几何第39–42节](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md#39-二叶生成历史的联合行为核与四视图恢复)承担共同实际像、联合任务、纤维恢复和行为下降条件；空间、时间、边界与记忆的互恢复仍按这些条件核对。
+本节分类仅针对固定 $\pi,\nu,T$、正可达支撑与全部整数 $m\ge2$ 的公共有限历史实验；来源实现、原始树、实际历史、控制种子及物理经过时间的恢复须另按声明任务和实际纤维核对。
+

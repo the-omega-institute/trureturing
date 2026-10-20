@@ -1,0 +1,27 @@
+**Corollary 29.2 (joint-native enrichment still has no attained response
+extension).** No formula of Definition 29.1 gives the existing released
+original acceptance label at every $z_{e,h}$ in $D$. A complete-original-
+response representation in this class with an in-class included-label
+projection is therefore also excluded, with arbitrary off-promise behavior.
+
+Proof. Split the finitely many Boolean scalar/native branches. In each
+branch keep the full tuple $(e,h,\mathbf s)$ and the single joint native
+block. Apply NCE Theorem 10.2 to its native Boolean condition with the
+Presburger affine nonnegativity guard. This yields a Presburger support
+at that **identical** tuple, preserving all shared native witnesses.
+Conjoin the branch's automatic scalar condition. Presburger predicates
+are Fibonacci-automatic; finite Boolean operations and scalar projection,
+including padding normalization, preserve that class. Finite label
+branches, an in-language label projection, or first-order combinations
+of the resulting support predicates likewise remain automatic.
+The resulting $A(e,h)$ would violate Corollary 28.3. $\square$
+
+The same argument works in any one of the fixed quadratic Ostrowski
+presentations of Corollary 28.3. This reuses NCE's elimination rather
+than strengthening its native theorem: witnesses coexist at one scalar
+tuple but may realize a different source from the actual unknown source.
+Neither existence nor a unique label acquires a native tree, identifies
+the observer's exact information fiber, or establishes complete-$Q$
+equality. NCE's supplied-numeral positive results in §§13–14 and the
+input-dependent constructions of Proposition 26.1 remain valid.
+

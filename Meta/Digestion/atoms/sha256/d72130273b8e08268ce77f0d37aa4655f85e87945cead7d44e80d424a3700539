@@ -1,0 +1,23 @@
+## 7. 验证范围与下一项
+
+新 Lean 三个公开声明有三个匹配的 FromLean Scribe 条目。证明脚本保存实际 Gamma 对数因子、完整平方尾积分和可积性，未宣称已经保存整个物理算子图范数或 Taylor 求积器的内核证明。Lean/lake 不在当前运行环境，未执行 Lean、Scribe 或传递公理报告。没有新增 authored sorry、admit 或 axiom。
+
+主 verifier 在载入前检查四个源文件 SHA-256，实际重新执行完整 prolate 谱和前节真实 Rayleigh/正形式误差认证。它没有调用 eigensolver、zeta 值或无误差账本的求积器。独立开发检查通过两个符号原函数、四个精确 dyadic 分割、12 个原子式/组装式残差值、12 个反射值、20 个有理解析模型平方误差和20个对数核诊断。非区间点值比较最大相对差约 2.449e-79；这些诊断由同一助手的第二份实现完成，不冒称独立作者审稿或内核验证。
+
+Verifier SHA-256：`e53103da8d4270a6595bfb7301afbe37a7fbcb8f0a4bc1e8265de68eadfc8b27`。
+100 位结果 SHA-256：`cbb028570c209f9ecf68e289494b229b802385de5e6c0d436dfbf80433356490`。
+开发检查 SHA-256：`b6d8953e4ada7a225a8a56aa4b511c69009971e081435f18d6135e62f00d2041`。
+
+本轮消除了同一真实 prolate 模型缺少完整 L2 算子残差和无界作用误差控制这一具体缺口。下一步应把实际残差与 #6029 的有限精度对偶试探尾及 #5882 的能量对偶消费者连接，在同一算子域中实证改进 Fourier 方向误差，并向无界尺度族运输。仍未证明该族的候选正交补强制性、所需条带速率或真实最低模态的 Xi 极限。单个固定窗口的完整残差认证不替代上述尺度定理。
+
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 3, 4, 7, 8. https://arxiv.org/html/2511.22755v1
+- Connes, *The Riemann Hypothesis: Past, Present and a Letter Through Time*, arXiv:2602.04022v1, Sections 6.4-6.6. https://arxiv.org/html/2602.04022v1
+- NIST DLMF 5.7.6, same Gamma partial-fraction normalization. https://dlmf.nist.gov/5.7
+- Mathlib pinned `db584cd6d46c92f209a44c0f1c829460d327499d`, ImproperIntegrals and IntegralEqImproper; the existing polynomial-times-exponential decay is reused.
+- AlyciaBHZ #6029 actual `WeilArithmeticResidualPrecision.lean` at `3037f47c69bf1f4065870413cc354c8995139258`; #5882 and #5895 current PR descriptions; loning research #6044 actual `GribinskiDegreeTwo.lean` at `ca166f8b2ae3ef27e210622303e8e94ce4ab98c3`.
+
+
+---
+

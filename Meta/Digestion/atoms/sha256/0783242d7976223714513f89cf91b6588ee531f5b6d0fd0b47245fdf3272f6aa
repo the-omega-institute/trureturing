@@ -1,0 +1,6 @@
+## 定理 24A.3（gauge 稳定性交）
+
+若两个 completion locus 分别在同一群作用下稳定，则它们的交仍稳定。因而多缺陷 completion 可以先取 predicate intersection，再限制群作用并取 orbit quotient。
+
+这些集合论定理描述参数解空间的组合、拉回与 gauge 约化。它们本身不产生行为 completion 的最小稳定接口；两层发生联系还需要一个把参数映射为读出或动力系统的明确语义函子。
+

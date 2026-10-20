@@ -1,0 +1,6 @@
+首返宏块部分以下列不可变源码快照为定位依据：`9d416050c9a90f785d50f2a5034f1a1f99334d62`。它与整数及增长部分采用的 `19a8543ea50538700a993a51989d9cbc7b5bf4fd` 是两个不同快照，各自仅承担所列源码定位与结论范围。
+
+- `D5/S0/Automata/TypedPartialDFAOOverBase.lean` 的 `runTransition` 按列表头到尾读取，`evalFrom_append` 与 `runFrom_append` 给部分运行的有序拼接。
+- `D5/S0/Automata/BinaryZeckendorfBlockSkeletonCore.lean` 的 `expand` 展开零、$10$ 与终止尾；`decode_expand`、`expandCode_injective`、`expand_compressLegalWord`、`compressLegalWord_expand` 给该代码层双向关系。其 `LegalWord` 定义为展开像，禁止相邻一的独立语言刻画还须结合下一项。
+- `D5/S0/Automata/BinaryZeckendorfLanguage.lean` 的 `base_success_iff_noAdjacentOnes` 对应成功运行与无相邻一；`BinaryZeckendorfBlockSkeleton.lean` 的 `eval_extractSkeleton` 与 `eval_extractSkeleton_start` 给 skeleton 的精确输出对应。这些声明不自动包括本节全部费用、相位、时长和熵率结论。
+

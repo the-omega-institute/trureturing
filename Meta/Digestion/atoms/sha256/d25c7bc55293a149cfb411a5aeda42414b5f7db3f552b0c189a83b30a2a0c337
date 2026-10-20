@@ -1,0 +1,27 @@
+# 第两千一百四十一部　理论深度审计
+
+| 结论                                                     | 当前地位         |
+| ------------------------------------------------------ | ------------ |
+| Maynard 增益 \(M_k\) 仅按 \(\log k\) 增长                    | PDF／经典筛法核心   |
+| 标准 \(\theta=\frac12\) 下，强制 \(m\) 个素数需 \(k\sim e^{4m}\) | 经典主尺度        |
+| admissible \(k\)-tuple 只需检查 \(p\le k\)                 | 精确           |
+| \(W(k)=\prod_{p\le k}p=e^{(1+o(1))k}\)                 | 素数定理推论       |
+| \(k=\varphi H\Rightarrow W\sim e^{\varphi H}\)         | 精确条件解释       |
+| 该预算表示 \(\varphi H\) 个 prime survivors                  | 不成立；它是同余观察模数 |
+| \(m=\varphi H\) 个 survivors 的经典预算为 \(e^{4\varphi H}\)  | 标准筛法归一化下精确   |
+| \(\varphi H\) 与 \(\varphi^H\) 可以互换                     | 不成立          |
+| 时间 kernel 与法向 kernel 统一为 \(\sinh^2+\sin^2\)            | 本轮核心精确恒等式    |
+| 当前项目的 pairwise resolution 是 \(\delta=0\) 截面            | 精确           |
+| prime gap 同时控制时间分辨和横向分裂                                | 精确           |
+| 短 gap 增强单对横向信号                                         | 不成立；它减弱单对信号  |
+| 短 gap 产生近简并、长相干 observer fibre                         | 精确           |
+| prime cluster 的反射矩阵在线秩一、离线秩二                           | 精确           |
+| cluster exterior energy 由 log-prime 方差控制               | 精确           |
+| \(P\)-倍 tangent blow-up 恢复加法 gap 几何                    | 精确局部极限       |
+| zero-side 离线轨道符号风险集中在 odd energy                       | 仓库机器闭合       |
+| prime-side hyperbolic energy 已经支配 zero-side odd energy | 尚未建立         |
+| Short Gaps 定理本身推出离线零点机制                                | 不成立          |
+| PrimeGap sticky tower + 全局正性可能形成 RH 桥                  | 新研究路线        |
+
+---
+

@@ -1,0 +1,7 @@
+目前未闭合的是：
+
+1. 构造完整的 \(F_{\mathrm{shift}}\) 状态空间；
+2. 证明其 profile 与此前 Hardy/Poisson 模型一致；
+3. 将离线零点对应为 \(I(R_J)\subsetneq R_J\)；
+4. 从 prime–Gamma 正性证明 \(R_J\) 为固定点。
+

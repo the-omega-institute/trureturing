@@ -1,0 +1,26 @@
+# 261. 有限模型类的干预层析与集合覆盖
+
+设候选模型类 \(\mathfrak M_0\subseteq\mathfrak M\) 有限，目标为 \(T\)。
+
+定义需区分的模型对：
+
+\[
+\mathcal U_T
+=
+\left\{
+\{M,N\}:
+T(M)\neq T(N)
+\right\}.
+\]
+
+对每个干预 \(a\)，定义其分离集：
+
+\[
+D_a
+=
+\left\{
+\{M,N\}\in\mathcal U_T:
+P_M^a\neq P_N^a
+\right\}.
+\]
+

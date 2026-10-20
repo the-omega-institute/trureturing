@@ -1,0 +1,19 @@
+### 定义 362.4（Hodge 波粒事件链）
+
+一条合法事件链写成
+
+$$
+\mathsf C_{\mathrm H}=
+\bigl(
+\text{exact 规范},
+\text{coexact 曲率响应},
+\text{harmonic 周期},
+\text{局部或周期探测},
+\text{钟标签},
+\text{离散结果},
+\text{后继边界}
+\bigr).
+$$
+
+粒子式事件是链中的离散结果；波性则是三个 Hodge 分量之间的相干约束以及它们对未来接口的联合作用。
+

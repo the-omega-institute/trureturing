@@ -1,0 +1,10 @@
+## 定义 7A.1（深度 $m$ 的行为读出）
+
+$$
+C_F^{\le m}(q)(x)
+=
+\big(q(x),q(Fx),\ldots,q(F^m x)\big).
+$$
+
+记其 kernel 为 $K_m$。
+

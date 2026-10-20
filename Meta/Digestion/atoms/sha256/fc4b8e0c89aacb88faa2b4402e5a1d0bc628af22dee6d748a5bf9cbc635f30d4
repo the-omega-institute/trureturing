@@ -1,0 +1,26 @@
+**定义 1441.1（固定高阶的尾部尺度）。** 固定 $0<\kappa<1$ 和有限 $\alpha>1$，记
+
+$$
+\beta=\alpha-1,\qquad a=1-\kappa,\qquad
+M=2^{N-1},\qquad p=\kappa/M,\qquad
+\tau_N=Mp^\alpha=\kappa^\alpha M^{-\beta}.
+$$
+
+在第 1348 节的充分大维数范围内，准确有限乘积来源的最大幂和为 $S_N^*=a^\alpha+\tau_N$，由公平加点来源取得。对任一来源，将正权重降序排列，定义
+
+$$
+e_N=S_N^*-\sum_jw_j^\alpha\ge0,\qquad
+\delta_N=a-w_1\ge0.
+$$
+
+以下考虑任意 $e_N\to0$ 的来源序列。第 1350 节给出只依赖 $\kappa,\alpha$ 的常数 $C_w,K>0$，使得最终
+
+$$
+\delta_N\le C_we_N,
+\qquad\operatorname{TV}(q_1,U)\le K\delta_N/2.
+$$
+
+其中 $U$ 为全公平乘积律；任意给定收敛序列的开始适用维数，可以依赖该序列。以下省略 $N$ 下标，但不改变这些量随维数变化的含义。
+
+主标签趋近权重 $a$，还没有判定总质量为 $\kappa$ 的细小标签怎样分布。其最优幂和 $\tau_N$ 指数趋零，所以一个绝对意义上很小的误差仍可能与整个尾幂和同阶。
+

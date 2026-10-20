@@ -1,0 +1,45 @@
+## 76.3 逆序块的共同仿射坐标
+
+写
+$$
+ \rho=g^{p-2}>0,\qquad q=g^p\in(0,1),
+ \qquad f_S(x)=\sigma-\rho x,
+$$
+其中 $\sigma$ 是给定词 $S$ 的平移系数。再置
+$$
+ \gamma=\Delta_b-\Delta_a,\qquad
+ c_*=\Delta_b-gu,\qquad
+ \alpha=\sigma-\rho c_*,
+$$
+$$
+ L=\rho(\gamma-g),\qquad M=\rho gu,\qquad
+ z=\frac{\alpha}{1+q}.
+$$
+四个标签对的 $\gamma$ 依次为 $t,u,t,u$。将 $x$ 写成 $z+r$，由同一个实际词的系数恒等式得到
+$$
+ f_A(z+r)=z-qr,
+$$
+$$
+ f_{D_-}(z+r)=z+L-qr,
+ \qquad
+ f_{D_+}(z+r)=z-M-qr.
+\tag{76.1}
+$$
+这些等式只描述已经给定的字面块，不允许跨不兼容 guard 任意前接尾部。
+
+原系数估计给出
+$$
+ L-M\ge \rho g^2>0,\qquad L\le \rho u=\frac{M}{g}.
+$$
+因而 $0<M<L$。又由于 $p\ge7$、$0<g<1/4$，有
+$$
+ q(L+M)\le M g^{p-1}(1+g)\le M g^6(1+g)<M.
+\tag{76.2}
+$$
+所以
+$$
+ L-q(L+M)>L-M>0.
+\tag{76.3}
+$$
+这些不等式只用原四对标签和周期下界，不增加新的预算比例、来源存在或图存在前提。
+

@@ -1,0 +1,136 @@
+**Theorem 15.5 (full-fiber compatibility criterion).** A prescribed
+$\sigma$ of Definition 15.1 is compatible if and only if there is
+$z\in\{0,1\}$ with the following properties:
+
+1. $\sigma$ is identically $z$ on $Z_a\cup Z_c\cup Z_*$.
+2. On each entire $\Pi_j$ it is a constant $\varepsilon_j$.
+3. With
+
+$$
+\begin{aligned}
+S&=\{j\in J:\varepsilon_j=z\},\qquad T=J\setminus S,
+       \qquad s=|S|,\\
+W&=\{j\in J:\text{there exists }u\in Z_{b_j}
+                              \text{ with }\sigma(u)\ne z\},
+\end{aligned}
+\tag{NBP.15.8}
+$$
+
+   one has
+
+$$
+s\le2,\qquad W\subseteq T,\qquad
+|W|\le1+\mathbf1_{\{s=1\}}.
+\tag{NBP.15.9}
+$$
+
+In particular the code on a permitted $Z_{b_j}$, $j\in W$, may vary
+arbitrarily with acquired finite structure. The criterion quantifies
+over every member of these actual fibers. Testing one source per profile
+is insufficient for an arbitrary prescribed code. Every compatible code
+actually uses both values, needs exactly eight states under this budget,
+and can be served by three running states and five whole-row halts.
+
+Proof, necessity. Apply Theorem 15.4, preserving $\sigma$ and $\iota$,
+and restrict the resulting root controller to any family (NBP.15.3).
+Use its two-tree structure from Lemma 15.3. Denote the code of the
+zero tree by $z$. This tree is a chain on $S$, ends at $H_0$, and
+has the positive leaves $H_j$, $j\in S$, with $s\le2$. The other tree
+contains precisely the positive leaves indexed by $T$.
+
+Consider starting the positive tree on a root profile with no right
+alpha, and with partner roots either those of $Z_a$, those of $Z_c$,
+or both branches. Every right-class test then follows its branch edge.
+At a partner test the two children contain nonempty sets of positive
+candidates, since both support edges are used. Either possible partner
+reply therefore chooses a nonempty set. There is at most one such test
+by Lemma 15.3. At every subsequent right test its branch edge retains
+at least one positive candidate. Thus all these runs stay within the
+positive tree and end at a positive halt, not $H_0$. This argument
+includes a positive tree with no partner test. Starting the zero tree
+on any of these profiles follows its chain to $H_0$. Since the normalized
+table depends only on roots, every source of $Z_a,Z_c,Z_*$ must have
+code $z$. This proves property 1 on the entire three fibers.
+
+If $j\in T$, its positive root profile follows the zero chain to
+$H_0$ when started there, because every tested singleton belongs to $S$.
+So all of $\Pi_j$ must use the other code. If $j\in S$, the positive
+tree has no $b_j$ query, and its run on that profile agrees with the
+no-right-alpha profile having the same partner roots. The preceding
+paragraph shows that it ends at a positive $T$-halt. It cannot return
+$R_j$. Hence all of $\Pi_j$ must use $z$. This proves property 2
+and identifies the same $S$ in (NBP.15.8), rather than a set sampled
+from six sources.
+
+Let $P_*$ be the state path from the other entry on the all-branch
+profile $Z_*$. As just proved, it ends at a positive halt in at most
+two calls. If $j\in W$, some actual source in $Z_{b_j}$ starts at
+this same entry and must return $R_0$. Its root profile differs from
+the all-branch profile only by beta at $b_j$. Its run can deviate from
+$P_*$ only if a state on $P_*$ queries $b_j$. Therefore
+
+$$
+W\subseteq\{j:\text{a state on }P_*\text{ queries }b_j\}
+\subseteq T.
+\tag{NBP.15.10}
+$$
+
+For $s=2$ the positive tree has one running state, so this set has
+size at most one. For $s=1$ its two running states give size at most
+two. For $s=0$, Lemma 15.3 forces a partner first and one right-class
+query second on $P_*$, giving size at most one. These are exactly
+(NBP.15.9). Both code values are attained on the witness family; the
+state count and necessity of eight follow from Lemma 15.3.
+
+Proof, sufficiency on every actual source. Assume properties 1--3.
+Install the five halts $H_j$ with their fixed whole outputs $R_j$.
+Every right test below queries the literal root $p_{b_j}=q_jR$.
+Its alpha successor is $H_j$, its beta successor is $H_0$, and its
+absent successor is $H_0$. Its branch successor is specified below.
+Thus every test has a total four-reply table. The absent successor is
+unreachable at these representatives, but is installed and fixed.
+
+For $s=2$, write $S=\{i_1,i_2\}$ and $T=\{k,l\}$, choosing $k$
+so that $W\subseteq\{k\}$. At entry $z$, test $i_1$ and then $i_2$
+on the branch continuations, the final branch going to $H_0$.
+At the other entry, test $k$, with branch successor $H_l$.
+
+For $s=1$, write $S=\{i\}$ and choose distinct $k,l\in T$ with
+$W\subseteq\{k,l\}$; let $m$ be the remaining member of $T$.
+At entry $z$, test $i$ with branch successor $H_0$. At the other
+entry, test $k$ and then $l$ on the branch continuation, with the
+final branch successor $H_m$.
+
+For $s=0$, entry $z$ is $H_0$ itself. At the other entry first query
+a partner. If $W$ has an element $w\in J_a$, query $c$; otherwise
+query $a$. A beta reply selects the positive pair belonging to that
+partner, and a branch reply selects the other positive pair. Install
+one right-class test in each pair, with branch successor the halt of
+the other index in that pair. If $W=\{w\}$, choose $w$ as the
+right-class test in its pair. The chosen partner ensures that an
+all-branch partner profile enters that pair. The partner's alpha and
+absent successors are fixed to $H_0$.
+
+These constructions use exactly three running states and five halts,
+with two different entries, and at most two actual calls on every
+required run. On $\Pi_j$, the prescribed entry is the one containing
+$j$; the unique right alpha and the forced partner beta give exactly
+$H_j$. On any zero profile, entry $z$ follows only branch or beta
+edges to $H_0$, or already is $H_0$. A zero source using the other
+entry must belong to $Z_{b_j}$ for $j\in W$. In the first two
+constructions its path tests that $j$ and takes its beta edge to $H_0$.
+In the third its partner is a branch, so it reaches the pair containing
+$w=j$, tests $j$, and takes the same beta edge. This verifies every
+source in the exhaustive partition of Proposition 15.2, including
+both codes within any permitted $Z_{b_j}$.
+
+Only the fixed original $\sigma$ is exported; its two distinct entry
+states recover it at entry. There is no retained copy of it after
+initialization. Representative-address reading and Proposition 9.3's
+whole-row target identity make these common native controllers on the
+entire $\mathcal U_*$. Every $H_j$ already contains the complete repaired
+exterior, the canonically renamed restricted partition, its equalities
+and disequalities and the absent-cut guards, including the surviving
+old occurrence of a repeated partner. The six sources are used only
+for necessity. $\square$
+

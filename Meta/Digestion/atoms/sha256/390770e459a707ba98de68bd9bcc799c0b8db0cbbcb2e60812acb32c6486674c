@@ -1,0 +1,61 @@
+**Definition 131.1 (Literal events and scores).** Number the following
+16 rows by $r=1,\ldots,16$. Coincident words with different events are
+different rows. $C_3,J_1,\ldots,J_5,K_5$ denote the scores obtained by
+weighting the event probabilities, with $K_5=C_3+J_5$.
+
+| Row | Word | Event | C3 | J1 | J2 | J3 | J4 | J5 | K5 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 00100 | {0,1} | 1 | 0 | 1 | 0 | 0 | 1 | 2 |
+| 2 | 00110 | {0,1} | 1 | 2 | 0 | 0 | 1 | 0 | 1 |
+| 3 | 01000 | {0,1} | 1 | 1 | 1 | 0 | 0 | 1 | 2 |
+| 4 | 01010 | {0,1} | 1 | 2 | 1 | 1 | 1 | 1 | 2 |
+| 5 | 01100 | {0,1} | 1 | 3 | 1 | 1 | 1 | 0 | 1 |
+| 6 | 10000 | {0,2} | 1 | 1 | 1 | 1 | 0 | 1 | 2 |
+| 7 | 10010 | {0,2} | 1 | 2 | 1 | 0 | 1 | 1 | 2 |
+| 8 | 10100 | {2} | 1 | 0 | 1 | 0 | 0 | 1 | 2 |
+| 9 | 10100 | {0,2} | 1 | 3 | 1 | 0 | 1 | 0 | 1 |
+| 10 | 10110 | {2} | 1 | 2 | 0 | 0 | 1 | 0 | 1 |
+| 11 | 11000 | {3} | 2 | 2 | 1 | 0 | 0 | 1 | 3 |
+| 12 | 11000 | {0,3} | 1 | 2 | 1 | 0 | 1 | 0 | 1 |
+| 13 | 11010 | {3} | 2 | 3 | 2 | 1 | 2 | 2 | 4 |
+| 14 | 11100 | {4} | 5 | 8 | 4 | 1 | 3 | 2 | 7 |
+| 15 | 11110 | {5} | 5 | 8 | 3 | 1 | 4 | 3 | 8 |
+| 16 | 11111 | {0} | 4 | 6 | 3 | 1 | 3 | 3 | 7 |
+
+For any score with weights $k_r$, any canonical schedule $Q$, its cell
+$z$, and any label $j\in J_5$, define
+
+$$
+g^k_{Qz}(j)=\sum_{r:b^r|_Q=z}k_r\mathbf1_{j\in E_r},\qquad
+M^k_{Qz}=\max_{j\in J_5}g^k_{Qz}(j),\qquad
+B^k_Q=\sum_zM^k_{Qz}.
+\tag{131.1}
+$$
+
+This literal formula reconstructs every label score, including zeros.
+Canonical schedules are empty, the five singletons and all ten distinct
+increasing pairs. For a singleton cells are $0,1$; for a pair they
+remain separately $00,01,10,11$. Reverse pairs reorder these cells.
+A repeated request has only cells $00,11$ and singleton information;
+its original actual request cost is still two. The full C3 maxima and
+maximizer-label sets are as follows, before any support reduction.
+
+| Schedule | Cell maxima | Maximizer sets in cell order | Sum |
+| --- | --- | --- | --- |
+| empty | (13) | {0} | 13 |
+| 1 | (5,8) | {0,1}; {0} | 13 |
+| 2 | (5,8) | {0,2}; {0} | 13 |
+| 3 | (5,8) | {0,3}; {0} | 13 |
+| 4 | (6,7) | {0}; {0} | 13 |
+| 5 | (9,4) | {0}; {0} | 13 |
+| 12 | (2,3,5,5) | {0,1}; {0,1}; {2}; {0,3,4,5} | 15 |
+| 13 | (2,3,5,5) | {0,1}; {0,1}; {3}; {0,4,5} | 15 |
+| 14 | (3,2,5,5) | {0,1}; {0,1}; {4}; {0,5} | 15 |
+| 15 | (5,0,5,4) | {0,1}; {0,1,2,3,4,5}; {2,3,4,5}; {0} | 14 |
+| 23 | (2,3,5,5) | {0,2}; {0,2}; {3}; {0,4,5} | 15 |
+| 24 | (3,2,5,5) | {0,2}; {0,2}; {4}; {0,5} | 15 |
+| 25 | (5,0,5,4) | {0,2}; {0,1,2,3,4,5}; {3,4,5}; {0} | 14 |
+| 34 | (3,2,5,5) | {0,3}; {0,3}; {4}; {0,5} | 15 |
+| 35 | (5,0,5,4) | {0,3}; {0,1,2,3,4,5}; {4,5}; {0} | 14 |
+| 45 | (6,0,5,4) | {0}; {0,1,2,3,4,5}; {5}; {0} | 15 |
+

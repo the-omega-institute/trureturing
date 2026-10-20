@@ -1,0 +1,14 @@
+**推论 441.3（有确定调用上限的情形）。** 若对整个输入域，两实验都满足 $T\le n$，其中 $n\ge0$ 为整数，则
+
+$$
+\boxed{\quad
+\|\mathcal S_\theta-\mathcal S_u\|_\diamond
+\le B\bigl(n\sin^2(\theta-u)\bigr)
+\le\min\{2,\,2\sqrt{2n}\,|\sin(\theta-u)|\}.
+\quad}
+$$
+
+证明。定理中直接取 $M_u,M_\theta\le n$，使用 $B$ 的单调性及 $B(q)\le\min\{2,2\sqrt{2q}\}$ 即得，$n=0$ 也成立。特别地，恰好调用 $n$ 次是同一推论的特例。证毕。
+
+作为同一输出的比较，第 440 节证明中实际得到的是 $\|\mathcal Q_\theta-\mathcal Q_u\|_\diamond\le2\sqrt2\,|\sin(\theta-u)|$。把全部记忆与经典控制包括在通道内，定理 73.2 的逐项累加给出 $\min\{2,2\sqrt2\,n|\sin(\theta-u)|\}$。该处一步误差定义为半 diamond 范数；先取每步 $\epsilon_i\le\sqrt2|\sin(\theta-u)|$，再将其式 (73.3) 两边乘二，才得到这里的未折半数值。对 $n>1$ 且 $n\sin^2(\theta-u)$ 小的范围，上述推论具有较好的 $\sqrt n$ 上界依赖；这不是最优性断言。
+

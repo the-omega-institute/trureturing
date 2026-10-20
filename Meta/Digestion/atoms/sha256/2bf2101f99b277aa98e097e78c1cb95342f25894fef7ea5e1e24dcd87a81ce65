@@ -1,0 +1,20 @@
+**定理 23.2（闭合距离对平均 TV 是一 Lipschitz）。** 对任意
+$p,\widehat p\in\mathscr P_n$，
+
+$$
+|\Delta_n(\widehat p)-\Delta_n(p)|
+\le d_n(\widehat p,p)
+\le\overline\varepsilon
+\quad\text{若 (23.1) 成立}.
+\tag{23.4}
+$$
+
+证明。任取 $r\in\mathscr C_n$，逐窗 TV 三角不等式给
+$d_n(\widehat p,r)\le d_n(\widehat p,p)+d_n(p,r)$。
+对 $r$ 取最小值得
+$\Delta_n(\widehat p)\le d_n(\widehat p,p)+\Delta_n(p)$。
+交换 $p,\widehat p$ 得反向差的同一界，合并即得第一式。
+对 (23.1) 求平均得第二式。
+所以即使估计族因误差而违反重叠等式，也能直接代入距离和测试定理，
+无须先将其投影到 $\mathscr L_n$。证毕。
+

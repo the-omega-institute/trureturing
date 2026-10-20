@@ -1,0 +1,44 @@
+## 48. C-IRPT 曲率 `[N]`
+
+对两个更新轴 \(i,j\)，定义：
+
+\[
+\boxed{
+\Omega_{ij}(\Sigma)
+=
+U_iU_j(\Sigma)
+\not\simeq
+U_jU_i(\Sigma).
+}
+\]
+
+更细地，可以分别比较：
+
+\[
+\Omega_{ij}^{\mathsf{CUT}}
+=
+\ker q_{ij}
+\triangle
+\ker q_{ji},
+\]
+
+\[
+\Omega_{ij}^{\mathsf{ADMIT}}
+=
+A_{ij}
+\triangle
+A_{ji},
+\]
+
+以及 ANCHOR、FLOW、ledger 的差异。
+
+因此：
+
+\[
+\boxed{
+\text{缺陷是当前不相容，曲率是修复顺序的不交换。}
+}
+\]
+
+---
+

@@ -1,0 +1,61 @@
+**定理 20.2（三类最优塔）。** 固定来源坐标，允许逐层任意双射重标记，则 split 恰有两条最优相容根分支；nonsplit（包括 $p=2$）只有全态类型；$p=5$ 只有下述两坐标类型。三类均可同时达到全部单层下界。
+
+证明。在 split 情形，§19 给出的最优核为
+$W_h=(\mathbb Z/p^h\mathbb Z)(1,\lambda_h)$，其中 $f(\lambda_h)=0$。约化后仍是满长直线，且核中第一坐标为 $1$ 的向量唯一，故
+
+$$
+\pi_h(W_{h+1})\subseteq W_h
+\iff\lambda_{h+1}\equiv\lambda_h\pmod{p^h}.
+$$
+
+模 $p$ 的两个根各有唯一的逐层提升（§19 的简单根提升结论），所以恰有两条相容分支，不能逐层独立换根。每条分支可取
+
+$$
+\begin{gathered}
+R_h=\mathbb Z/p^h\mathbb Z,\qquad
+r_h(a,b)=b-\lambda_ha,\qquad |R_h|=p^h,\\
+u_h(s)=(1-\lambda_h)s,\qquad
+v_h(s)=s-\lambda_h,\qquad
+\ell_h(s)=s\bmod p^h.
+\end{gathered}
+\tag{RA.2003}
+$$
+
+记录满射，核正是 $W_h$。联合解码所需单位可由整数恒等式直接看出：
+
+$$
+(2+3t)(5-3t)=1-9f(t).
+\tag{RA.2004}
+$$
+
+在同一环中的真根上，$2+3\lambda_h$ 的逆就是 $5-3\lambda_h$。
+
+在 nonsplit 情形，§19 给 $W_h=0$，故任意合格记录都是全态记录的双射重标记。取 $r_h(a,b)=(a,b)$、$\ell_h=\pi_h$，更新就是 $M,G$，每层有 $p^{2h}$ 个标签。模二无根，属于此类。
+
+在五进情形，§19 给模五唯一根 $3$、模二十五及以上无根，因此每层唯一最优核和标准记录为
+
+$$
+\boxed{
+\begin{gathered}
+H_h=5^{h-1},\qquad W_h=\langle H_h(1,3)\rangle,\qquad |W_h|=5,\\
+\pi_h(W_{h+1})=\{0\}\subsetneq W_h,\\
+R_h=\mathbb Z/5^{h-1}\mathbb Z\times\mathbb Z/5^h\mathbb Z,\\
+r_h(a,b)=(A,B)=(a\bmod H_h,\ b-3a\bmod5^h),\qquad
+|R_h|=5^{2h-1}.
+\end{gathered}}
+\tag{RA.2005}
+$$
+
+该记录满射、核为 $W_h$。其自主更新与降层为
+
+$$
+\begin{aligned}
+u_h(A,B)&=(3A+B\bmod H_h,\ -5A-2B\bmod5^h),\\
+v_h(A,B)&=(A+1\bmod H_h,\ B-3\bmod5^h),\\
+\ell_h(A,B)&=(A\bmod5^{h-1},\ B\bmod5^h).
+\end{aligned}
+\tag{RA.2006}
+$$
+
+最后一行的输入属于 $R_{h+1}$。第二更新坐标中的 $-5A$ 良定义，因为 $5H_h=5^h$。坐标约化满足源交换式，故与 $M/G$ 更新交换。$h=1$ 的第一坐标是 $\mathbb Z/1\mathbb Z$ 的单点，这个端点仍属于塔。所有最优记录具有同一个核，因而任意标签表示都由定理 20.1 组成相容塔。证毕。
+

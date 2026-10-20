@@ -1,0 +1,16 @@
+**定义 288.1（干预响应剖面）。** 对纤维 $F$ 定义响应剖面
+
+$$
+\mathbf R_{\mathcal A}(x)=\bigl(R_a(x)\bigr)_{a\in\mathcal A}.
+$$
+
+在 $F$ 上定义等价关系
+
+$$
+ x\sim_{\mathcal A}x'
+\quad\Longleftrightarrow\quad
+\mathbf R_{\mathcal A}(x)=\mathbf R_{\mathcal A}(x').
+$$
+
+记商集为 $F/\!\sim_{\mathcal A}$。
+

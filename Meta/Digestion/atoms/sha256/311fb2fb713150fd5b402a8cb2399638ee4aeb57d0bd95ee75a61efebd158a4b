@@ -1,0 +1,20 @@
+### 接口 C：独立规范接口
+
+定义：
+
+$$
+\kappa_0=\frac{XY}{1-Z}.
+$$
+
+证明：
+
+$$
+\Delta=0
+\iff
+\kappa=\kappa_0
+\iff
+\text{条件独立}
+\iff
+\text{条件熵最大}.
+$$
+

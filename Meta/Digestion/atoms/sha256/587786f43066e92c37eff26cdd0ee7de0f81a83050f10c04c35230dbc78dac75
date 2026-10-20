@@ -1,0 +1,24 @@
+**定义 387.1（实际逆核的加权矩与其余商块）。** 沿用 §§384–386 的实际 Fibonacci 参数 $q=\Phi^{-2}$、$\beta$、$\gamma=\beta^{-1}$、$k=\gamma*\ell$、$K$ 和实际校正原子部分和 $H_m$。置
+
+$$
+a=\beta_1,\qquad T=\sum_{d=2}^{\infty}|\beta_d|,
+\qquad \delta=a-T>0,
+\qquad B_1=\mathcal B(1),
+\tag{387.1}
+$$
+
+$$
+A=\frac1{B_1},\qquad
+D=\frac1{B_1}+\frac{\mathcal B'(1)}{B_1^2},\qquad
+c=\frac{a}{2B_1},\qquad C_\psi=\log4+4.
+\tag{387.2}
+$$
+
+这里的 $\mathcal B$ 始终是 §385 的有符号整个函数；$B_1$ 不是 §384 的绝对矩。对实数 $y\ge0$，定义 $\psi(y)=\sum_{1\le n\le y}\Lambda(n)$，其中求和指标是整数。对实数 $N\ge2$，定义其余商块的实际有符号和
+
+$$
+S_{\ge2}(N)=\sum_{m=2}^{\lfloor N\rfloor}
+H_m\left[K(N/m)-K(N/(m+1))\right].
+\tag{387.3}
+$$
+

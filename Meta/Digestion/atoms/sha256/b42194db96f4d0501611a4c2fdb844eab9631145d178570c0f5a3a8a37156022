@@ -1,0 +1,18 @@
+### 69.4 条件结论与保留的完整图义务
+
+定理69.2.1限于给定有限完整原 $G_B$ 的有界条件性排除，保留全部奇 $7\le p\le P_{\max}$、$m=6$、四对标签及实预算 $0\le\beta<\lambda$，包括 $\beta=0$。两个实际 guard、合法根域、同一实际 rival、全部原片、原端点归属、共同原闭色和全部原边均保留。31.2不被扩大为任意实预算的有限图存在定理；本章所用31.4是整条实际路径提升，不是31.4节中定理31.6的全路径极值取得。辅助 $z,z_1$ 只承担凸包内部相交和原片识别，无须实际取得。
+
+本章只得到 $k_S\mid2p$，没有得到 $k_S=2p$。实际长 $4p$ 游走是同一原图内从长 $6p$ 游走压缩所得，不将原目标的 gcd 重赋为 $4p$，不改变本原 rival 周期。完整准入前件是否在某个共同输入中同时成立仍未证明；条件排除不承担这一存在问题，也不排除这些词处于其他规模或其他 gcd 的 SCC 中。
+
+域外的任何正实现，仍须在同一个 $\beta,B,G_B,R$ 中联合供应实际来源、两侧实际 guard、合法根域、整个原片及共同原闭色，逐位置满足全部 (63.11)，给出 $h+2$ 个不同完整配对顶点，按整个原承载片验证全部原内部边的 (63.13)，并对所有 $n\ge0$ 证明完整图的 (63.15)。第60章适用联合限制与先修原局部预算域继续承担。强制端点全未命中、容量通过、独立点可达或两条返回本身均不能替代这些义务。
+
+本章不判定真实外部不返程通过或失败，单向外出始终允许。结论不涉及全部剩余 $T$ 或奇周期 rival 的分类、更大 SCC 排除、全局非存在、初始可达、任意端点归属下的实际噪声取得或物理结论。
+
+[69源原图]: https://github.com/the-omega-institute/trureturing/blob/88a79c490e7df6ef00ed500575a2e903d3d9980b/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L8290
+[69源60]: https://github.com/the-omega-institute/trureturing/blob/88a79c490e7df6ef00ed500575a2e903d3d9980b/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L25176
+[69源63]: https://github.com/the-omega-institute/trureturing/blob/88a79c490e7df6ef00ed500575a2e903d3d9980b/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26396
+[69源64]: https://github.com/the-omega-institute/trureturing/blob/88a79c490e7df6ef00ed500575a2e903d3d9980b/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26748
+[69源6566]: https://github.com/the-omega-institute/trureturing/blob/88a79c490e7df6ef00ed500575a2e903d3d9980b/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26893
+[69源67]: https://github.com/the-omega-institute/trureturing/blob/88a79c490e7df6ef00ed500575a2e903d3d9980b/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L27488
+[69源68]: https://github.com/the-omega-institute/trureturing/blob/88a79c490e7df6ef00ed500575a2e903d3d9980b/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L27738
+

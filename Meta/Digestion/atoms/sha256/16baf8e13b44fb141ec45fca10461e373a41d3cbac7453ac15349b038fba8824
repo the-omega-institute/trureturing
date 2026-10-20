@@ -1,0 +1,8 @@
+### 24.6 结论范围与来源
+
+本节的出生公式和游标运输是 FIB 自由二叶语法在固定纯 \(\rho\) 任务下的 repo-derived 推导；它们不把地址编码变成访问权限，也不把语义常数操作变成物理设备的常数时间。父导航下界只针对（RA.2407）的弱任务，完整观察者仍需第23节的实际共同来源、控制器、档案、权限和收据合同。
+
+二叉焦点/上下文的局部操作可参照 Gérard Huet, *The Zipper*, Journal of Functional Programming 7(5), 549–554 (1997), §3.2；静态 grammar-compressed tree 的预处理与常数延迟导航可参照 Markus Lohrey、Sebastian Maneth、Carl Philipp Reh, *Traversing Grammar-Compressed Trees with Constant Delay*, arXiv:1511.02141v2 (2015), Theorem 1。部分持久数据结构的摊还更新条件可参照 James R. Driscoll、Neil Sarnak、Daniel D. Sleator、Robert E. Tarjan, *Making Data Structures Persistent*, Journal of Computer and System Sciences 38(1), 86–124 (1989)。这些文献只支持其声明模型中的局部工具；没有一个自动供应本节的在线全局替换、句柄权限或完整 writer 合同。
+
+本节没有新增 Lean 声明、消化账目或物理实现结论。尚未解决的接口包括：实际取得的有限种子或正出生整层证书、跨纪元引用有效性、父引用刷新合同、完整过程的 reachable-domain 联合响应、以及把所有实际成本纳入同一度量。任何一个条件缺失时，相应结论只能保留为语义候选或条件命题。
+

@@ -1,0 +1,19 @@
+**命题 1449.1（Rényi 熵差与幂和差）。** 令 $\Delta_N=H_\alpha(w)-G_{\alpha,N}(\kappa)\ge0$。在当前准确最优公式的范围内，
+
+$$
+e_N=S_N^*\left(1-e^{-\beta\Delta_N}\right).
+$$
+
+特别地，若 $0\le\Delta_N\le1$，则
+
+$$
+\frac{a^\alpha\beta}{1+\beta}\Delta_N
+\le e_N\le\beta\Delta_N.
+$$
+
+**证明。** 熵定义给 $\Delta_N=\beta^{-1}\log(S_N^*/\sum_jw_j^\alpha)$，整理即得恒等式。对 $x\ge0$，有 $x/(1+x)\le1-e^{-x}\le x$，前一界来自 $e^x\ge1+x$，后一界来自 $e^{-x}\ge1-x$。再用 $a^\alpha\le S_N^*\le1$ 及 $\Delta_N\le1$，得到两侧界。证毕。
+
+所以在误差趋零的范围内，$e_N=o(\tau_N)$ 与 $\Delta_N=o(\tau_N)$ 等价。若欲从成本数值逼近取得第 1447–1448 节的细小标签结论，熵误差也需要小于相应尾尺度；仅报告 $\Delta_N\to0$ 尚不够。
+
+这不改变主来源稳定性的结论：主来源由未归一化误差趋零已经得到控制。不同部分在目标值中的权重不同，所需辨认精度因而可以不同；把两项稳定性统一写成一个无尺度的“接近”，会丢失其判断条件。
+

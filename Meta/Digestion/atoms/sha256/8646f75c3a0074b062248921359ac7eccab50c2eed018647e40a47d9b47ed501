@@ -1,0 +1,41 @@
+## 195. FIB 关系网络上的外加地震/断层动力学、Gutenberg–Richter 震级律与 Omori 余震统计
+
+固定 FIB 图 \(G_j=(V_j,E_j)\)，选出可解释为断层片段的边集 \(\mathcal F_j\)。FIB 只给接缝和层级；坐标、片段面积、弹性模量、应力、摩擦、加载时钟、破裂准则、波速和观测窗均外加。给滑移 \(s_e(t)\)、剪应力 \(\tau_e(t)\) 和弹性传递矩阵 \(K_j\)，准静态模型为
+$$
+\tau(t)=\tau^0+\dot\tau_{\rm load}t-K_js(t).
+\tag{195.1}
+$$
+\(K_j\) 来自外加弹性 Green 函数和边界，不能等同 FIB 邻接矩阵。库仑裕度和速率—状态摩擦可写成
+$$
+C_e=\tau_e-\mu_e(V_e,\theta_e)\sigma_{n,e},
+\qquad
+\mu_e=\mu_{0,e}+a_e\log\frac V{V_{0,e}}+b_e\log\frac{\theta V_{0,e}}{D_{c,e}} .
+\tag{195.2}
+$$
+触发、应力更新和动态波传播由外加规则决定。
+
+一次事件的地震矩和震级可取
+$$
+M_0(E)=\sum_{e\in\mathcal F_j}G_eA_e|\Delta s_e|,
+\qquad
+m_w(E)=\frac23\log_{10}\frac{M_0(E)}{M_\star}.
+\tag{195.3}
+$$
+在完备区间，经验 Gutenberg–Richter 关系为
+$$
+\mathbb EN([m,\infty);T)\simeq C_T10^{-bm},
+\qquad m_c\le m\le m_{\max}(L).
+\tag{195.4}
+$$
+\(b\) 不由 FIB 分支数、词频或递归深度给出。给定主震与余震分类，改进 Omori 形式为
+$$
+r(t\mid m_0)=r_{\rm bg}+K10^{\alpha(m_0-m_c)}(t+c)^{-p}.
+\tag{195.5}
+$$
+带空间核的 Hawkes/ETAS 过程还需震级分布、时间核和空间触发核；分支比 \(n<1\) 才给出有限平均簇，\(n\approx1\) 可产生长相关。检测概率 \(q(m,x,t)\) 使
+$$
+\lambda_{\rm obs}(x,t,m)=q(m,x,t)\lambda_{\rm true}(x,t,m),
+\tag{195.6}
+$$
+早期余震拥挤、空间盲区、震级饱和、去簇和观测窗会偏移 \(b,p,c\)。断层破裂也不自动等同 Abelian 沙堆：前者通常非交换并含波传播与历史依赖，后者的交换性和守恒—耗散账式需另行证明。因此地震标度是外加接触、摩擦、应力传递和观测条件下的经验或模型结论。
+

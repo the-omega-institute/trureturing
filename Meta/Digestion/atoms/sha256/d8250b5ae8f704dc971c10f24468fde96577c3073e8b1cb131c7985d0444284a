@@ -1,0 +1,15 @@
+**定义 23.1（来源、操作及查询域）。** 取自由有限非空有序满二叉树，不对左右次序、括号或同标签出现取商：
+
+$$
+\begin{gathered}
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad E=\langle\beta,\alpha\rangle,\\
+\rho(\alpha)=\beta,\quad \rho(\beta)=E,\quad
+\rho(\langle x,y\rangle)=\langle\rho(x),\rho(y)\rangle,\\
+\mathcal P=\{L,R\}^{*},\qquad t_j=\rho^j(u)\quad(j\in\mathbb N).
+\end{gathered}
+\tag{RA.2301}
+$$
+
+配对是构造来源的运算；演化另行指定为全局 $\rho$。固定一个 $u$ 为纪元零来源和根 $\varepsilon$，不允许中途编辑、重选来源、移根、空间平移、共享出现识别或纪元重置。读取、控制和档案追加不改变来源。$\operatorname{Pos}$ 与 $t|_p$ 使用（RA.2202）的实际出现地址。空间祖先是地址前缀，时间保持边是 $(j,p)\mapsto(j+1,p)$；不为初态已有分支赋予纪元零以前的装配时间。
+
