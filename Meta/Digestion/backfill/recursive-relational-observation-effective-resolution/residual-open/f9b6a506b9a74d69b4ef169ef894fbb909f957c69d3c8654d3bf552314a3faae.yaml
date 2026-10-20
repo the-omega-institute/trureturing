@@ -2,8 +2,6 @@ fingerprints:
   raw_sha256: sha256:f9b6a506b9a74d69b4ef169ef894fbb909f957c69d3c8654d3bf552314a3faae
   normalized_sha256: sha256:f9b6a506b9a74d69b4ef169ef894fbb909f957c69d3c8654d3bf552314a3faae
 cas_ref: sha256:f9b6a506b9a74d69b4ef169ef894fbb909f957c69d3c8654d3bf552314a3faae
-coverage_gids:
-  - gid: D5/S0/Tower/DBonacci/Names.dbonacci_add_two_of_le
-    target_statement_id: sha256:7c6f659df6ba7f060d3edc21c730980107cdbb97c8c998ea429851d40e282878
+coverage_gids: []
 receipts:
   unresolved_subitems: []
