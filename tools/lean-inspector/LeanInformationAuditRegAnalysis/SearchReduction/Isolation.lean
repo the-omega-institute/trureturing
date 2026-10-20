@@ -291,10 +291,13 @@ private unsafe def runCore (source base : Environment) (request : Request) : IO 
     let mut pairedEnv := clean
     let mut structureChecked := false
     let mut structureReason := ""
+    let mut structureFailure : Option Failure := none
     if !request.additions.isEmpty then
       match ← prepare source clean request true with
       | .ok (env, _, _) => pairedEnv := env; structureChecked := true
-      | .error (_, reason) => structureReason := reason
+      | .error (failure, reason) =>
+        structureReason := reason
+        structureFailure := some failure
     let work : CoreM Observation := MetaM.run' do
       let some proof := target.value? (allowOpaque := true)
         | return unknown "graph.missing_target_body" .missing
@@ -319,7 +322,9 @@ private unsafe def runCore (source base : Environment) (request : Request) : IO 
         presentationComplete := match presentation with | .incomplete _ => false | _ => true}
       let baseRun := intervalRun reading.graph reading.baseline
       let pairedGraph := {reading.graph with edges := reading.graph.edges.map (fun edge => {edge with cost := edge.pairedCost})}
-      let pairRun := intervalRun pairedGraph reading.paired
+      let pairRun := match structureFailure with
+        | some failure => .incomplete failure
+        | none => intervalRun pairedGraph reading.paired
       let attempts := baselineProof?.toArray.map fun proof =>
         {strategy := "graph/assembled-zero", outcome := .found, proof? := some proof : Attempt}
       let pairAttempts := pairedProof?.toArray.map fun proof =>

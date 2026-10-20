@@ -54,7 +54,8 @@ run_meta do
   using [] as emptyStructureResult
 #guard emptyStructureResult = Verdict.insufficient
 #guard emptyStructureResult.baseline = Run.exhausted
-#guard emptyStructureResult.paired = Run.incomplete Failure.missing
+-- With S empty, both graph arms evaluate the same baseline problem.
+#guard emptyStructureResult.paired = Run.exhausted
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.hiddenTarget
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
