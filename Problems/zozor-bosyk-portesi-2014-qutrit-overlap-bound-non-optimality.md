@@ -48,7 +48,7 @@ So S₂(p) + S₂(q) > 1 − c² = B(c) for every state and every T ∈ U(3) wit
 ## Falsifier
 
 The refutation would not answer the suspicion if the module's bound, entropies or admissible matrices differed from the source's. The module:
-- uses the Tsallis pair λ_A = λ_B = 2, given by h(x) = 1 − x and φ(x) = x² in the source's (h, φ) family;
+- uses the Tsallis pair λ_A = λ_B = 2, given by h(x) = 1 − x and φ(x) = x² in the source's (h, φ) family, through the frozen linear entropy `threeModeMixing`;
 - takes D with the source's floor term and the bound (22) as an infimum over [0, arccos c];
 - quantifies over all T ∈ U(3) with all entries of modulus at most c and one of modulus c, and over all density matrices.
 
@@ -56,15 +56,15 @@ The module's q_j = (T ρ T*)_jj uses the transpose of the source's T_ij = ⟨b_j
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Information/QutritOverlapBoundNonOptimality.lean` (549 lines).
+The canonical source is `D5/S3/Quantum/Information/QutritOverlapBoundNonOptimality.lean` (563 lines).
 - **Proof.** It proves `result : ¬ claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/QutritOverlapBoundNonOptimality.lean.json`, statement `sha256:db3e2d06d7ba4db2676cc94701151ae3e6b69ac6bd7ddac803f51eacef6c0446`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/QutritOverlapBoundNonOptimality.lean.json`, statement `sha256:fbe03503b5bae6aec08ca44cc64e86508b1a37fa4800dd8ba4afee2aadb90262`.
 
 Declaration statements:
 - `result`: `sha256:6203ed4462e3e4c43949c8bdc59045527c478018c1a62f71a0748ccf7057c7b7`;
-- `claim`: `sha256:0db3c8f848de6bcf2393e2a74854f7dc9a4f2d06a3c39a6e9c6d9c664cdf1364`.
+- `claim`: `sha256:67a5d8b609b5af26ff13ae8f3c1674e113d8bcb1baf0ee6fee088c752eb0f9db`.
 
 ## Triage
 
@@ -75,7 +75,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 ### What the settlement shows
 
-**Proved by `result`:** for every c with 1/√2 < c < 1, no T ∈ U(3) with all |T_ij| ≤ c and no density matrix attain the bound 1 − c². So the suspicion fails at c = 3/4, with bound 7/16.
+**Proved in the module:** the private `strict_overlap_bound`, with `overlapBound_eq`, shows that for every c with 1/√2 < c < 1 no T ∈ U(3) with all |T_ij| ≤ c and no density matrix attain the bound 1 − c². `result` derives ¬ claim from it at c = 3/4, with bound 7/16.
 
 **Computed, not formalized** (orchestrator, scipy, recorded in #19610): at c = 3/4 the smallest value found over 150 starts is 0.443040, above 7/16 = 0.4375.
 
@@ -84,7 +84,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 - *Scope.* The argument uses only the Tsallis-2 entropy and the strict monotonicity of D on [0, π/4]. It is expected to carry over to other pairs whose D is strictly increasing there, but this is not proved here.
 - *Endpoint.* At c = 1 the bound is 0 and is attained by T = I and a basis state, so the suspicion holds at c = 1.
 
-**Effect on the paper.** Corollary 2 cannot be extended to N = 3 for every admissible pair of entropies. The exact c-optimal bound for qutrits remains open; numerically it lies strictly above B(c) for c ∈ (1/√2, 1).
+**Effect on the paper.** Corollary 2 cannot be extended to N = 3 for every admissible pair of entropies. The exact c-optimal bound for qutrits remains open; at c = 3/4 the numerical minimum 0.443040 lies above B(3/4) = 7/16.
 
 ## ASSUMED-UNVERIFIED
 
