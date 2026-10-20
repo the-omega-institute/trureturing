@@ -428,3 +428,260 @@ The following primary-source distinctions are `literature-attested`: Petra van d
 The full four-expression problem still requires the missing inverse directions for independently meaningful views on its intended original processes, and a construction of whatever access ports are claimed there. Nothing here derives ReadF or old-boundary acquisition from $\alpha,\beta$, reconstructs original tree order or brackets, supplies an unknown-source Native/LAB reader, changes a fixed original task or initialization, or proves a universal reduction to this arithmetic apparatus. A finite acquisition-and-return theorem on this explicit interface does not complete that sustained problem.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Direct continuous pair acquisition by parity and two graft scans
+
+**Definition 9.1 (a distinct two-coordinate current-port apparatus).** Fix a public integer $H\ge1$. There is one opaque, exclusively controlled actual source $u\in\mathbb N^2$, initially $v_0=(a,b)$, with zero coordinates and $(0,0)$ admitted. Vectors are columns. The only source updates are the original Fibonacci replacement and alpha graft
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+\alpha=\binom10,\qquad q=(2,3),\qquad
+R(u)=Mu,\qquad G(u)=u+\alpha.
+\tag{AQBRP.1}
+$$
+
+Every occurrence acts forward on this very integer pair. It returns a fixed acknowledgement, with no numeric source field. An explicitly supplied, paid, nondestructive port returns the complete current value
+
+$$
+\operatorname{Read}_H(u)=\gcd(qu,H),\qquad \gcd(0,H)=H.
+\tag{AQBRP.2}
+$$
+
+Calls are serial and complete before the next call; reads occur at the current operation boundary. The source binding remains the same, and there is no unreported writer. No reset, clone, saved entry source, physical inverse, subtraction, direct coordinate reader, arbitrary scalar multiplier or additional source observation is available. Timing, source size, backing capacity, service prices and failure channels are not accessible discriminators. In particular, a cost account below is not a further read port.
+
+The installed controller initially has only public $H$, finite source-independent code and constants, bound handles for (AQBRP.1)–(AQBRP.2), lawful current rights, and writable backing. The opaque binding and rights convey no quantity or source-dependent selector advice. There is no acquired old scalar code, initial gcd, entry quantity, response table, history or clock. Local choices depend only on public inputs and replies already obtained on this run. Exact local binary arithmetic and record operations are permitted, with their installed code, storage and actual work charged. For each asserted finite run, sufficient finite backing for its actual source and controller is supplied, and every admitted primitive service and finite local computation completes. This is a per-run service/material premise, not a fixed finite capacity covering all unbounded entries or all future lengths. Rights retention, binding, service installation and backing provision are also charged. Declaring (AQBRP.2) is a conditional mathematical premise; its realization on a narrower Native, LAB or physical backend is not supplied by this declaration.
+
+For a nonempty ordered tree with leaves $\alpha,\beta$, its composition fold counts the two leaf types. The original simultaneous substitution $\rho(\alpha)=\beta$, $\rho(\beta)=\langle\beta,\alpha\rangle$ and, for example, the fixed right graft $t\mapsto\langle t,\alpha\rangle$ induce (AQBRP.1), by [FARG, Sections 2–5 and 130.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md). This fold is a source projection, not a syntax reader. The zero pair belongs to the arithmetic extension and is not the composition of a nonempty tree. All proofs below concern this pair interface, including its separate current gcd premise. They do not identify it with the positive scalar apparatus of Definition 1.1: the equal scalar quantities $q(3,0)=q(0,2)=6$ have replacement successors of quantities $9$ and $10$ respectively, as already observed in FARG5.1.
+
+**Definition 9.2 (targets, independently meaningful fields and resource coordinates).** Write $A_H=\mathbb Z/H\mathbb Z$, including the singleton ring at $H=1$, and let $\bar u$ denote coordinatewise reduction of an actual source. Entry identification outputs the immutable label $e=\bar v_0$. Reached-state acquisition installs a separate mutable label $c=\bar u_*$ for the actual endpoint $u_*$. Callable use requires retention of its actual binding and lawful rights, together with installed local output, prediction and synchronized update procedures. It does not require the endpoint behavior to equal the entry behavior or the actual source to return to $v_0$.
+
+At a fixed actual source cut, the spatial arithmetic field is $\mathcal S_H(u)=\bar u$: the two occurrence counts modulo $H$, retaining the distinction between atom types and forgetting order and brackets. Its prospective replacement-time field is the independently specified quantity progression
+
+$$
+\mathcal T_H(u)(k)=qM^ku\bmod H\quad(k\in\mathbb N).
+\tag{AQBRP.3}
+$$
+
+This progression describes what repeated replacement does to quantity; it is not an input oracle or a clock. Actual temporal data instead consist of the chronological action/read events of the acquisition, their actual replies, and separately their service work. Service work can be an external mathematical account even when unobservable to the controller. Neither that chronology nor elapsed physical time is identified with (AQBRP.3).
+
+The arithmetic boundary field is the complete controlled continuation behavior
+
+$$
+\mathcal B_H(u)(W)=\gcd\bigl(q\,W(u),H\bigr)
+\quad\bigl(W\in\{R,G\}^{<\omega}\bigr),
+\tag{AQBRP.4}
+$$
+
+with the empty word allowed and with successors given by prefixing an actual next action. Words here and below are written in chronological order. Each prefix is a possible current observation, but (AQBRP.4) does not supply its replies without calls. This full boundary has a different meaning from one current gcd answer. Memory is the actual acquired action/reply tape, acquired indices and branch records, immutable entry register, mutable current register, public code/control, and retained callable binding and rights. It contains no unobserved pre-entry history.
+
+The primitive resource vector is $(N_{\rm read},N_G,N_R)$ on this same run. Physical source letters count individual occurrences of $R$ and $G$, even in a displayed power. Installed code, binding/rights, local computation, record reads/writes, parameter and acknowledgement handling, output/installation, backing, source services and source retention are additional coordinates. There is no unit-cost assumption for a global replacement.
+
+**Theorem 9.3 (all-source direct acquisition, exact realized vectors and growth).** Under Definitions 9.1–9.2, one finite source-blind deterministic algorithm, uniform in public $H$, terminates on every $v_0=(a,b)\in\mathbb N^2$, earns $e=\bar v_0$, and installs $c=\bar u_*$ with actual continued callable use for every finite subsequent original $R/G$ continuation under the same service and synchronization premises.
+
+For $H=1$ it uses vector $(0,0,0)$, leaves $u_*=v_0$, and installs the singleton predictor. For odd $H>1$ its vector and exact integer endpoint are
+
+$$
+(N_{\rm read},N_G,N_R)=(2H,2H,1),\qquad
+u_*=Mv_0+H M\alpha+H\alpha,
+\tag{AQBRP.5}
+$$
+
+For even $H$, put $L=H/2$. The actual observed branches determine $r\in\{0,1,2\}$ and $\chi\in\{0,1\}$, defined in the proof. Their exact vector and integer endpoint are
+
+$$
+(N_{\rm read},N_G,N_R)=(H+r+\chi,\ H+\chi,\ r+1+\chi),
+\tag{AQBRP.6}
+$$
+
+$$
+u_*=\begin{cases}
+M^{r+1}v_0+L(M\alpha+\alpha),&\chi=0,\\
+M^{r+2}v_0+L(M^2\alpha+\alpha)+M\alpha,&\chi=1,
+\end{cases}
+\tag{AQBRP.7}
+$$
+
+In particular the even bounds are $N_{\rm read}\le H+3$, $N_G\le H+1$ and $N_R\le4$, all for this one run. No assertion that every branch pair occurs at each $H$ is needed. The exact terminal quantities are
+
+$$
+qu_*=\begin{cases}
+2a+3b,&H=1,\\
+3a+5b+5H,&H>1\text{ odd},\\
+qM^{r+1+\chi}v_0+(5+2\chi)H/2+3\chi,&H\text{ even}.
+\end{cases}
+\tag{AQBRP.8}
+$$
+
+Every actual acquisition prefix has quantity at most its terminal quantity. In the even case this gives the uniform bound
+
+$$
+qu\le qu_*\le13a+21b+\frac{7H}{2}+3
+\quad\text{at every actual prefix }u.
+\tag{AQBRP.9}
+$$
+
+A sufficient explicit retained acquisition tape uses $O(H\log(H+1))$ bits beyond public installed code and backend binding/rights representations; modular working registers use $O(\log(H+1))$ further bits. All their work and retention are paid. These local bounds do not bound source backing or source-service work independently of the unknown entry.
+
+On the actual reached cut, acquired memory computes $\mathcal S_H$, $\mathcal T_H$ and $\mathcal B_H$, with agreeing recovery routes and action-compatible updates. On their actual mathematical images the three arithmetic fields determine one another. This uses the existing full-behavior quotient, not an extra response oracle. Whole-memory installation, ordered syntax, exact unbounded composition and actual chronology are not recovered by these arithmetic fields. The theorem specifies an attainable joint resource point; it asserts no continuous optimum or resource dominance over reset strategies.
+
+**Proof (the paid scan used inside the construction).** For $H>1$ let $d=\gcd(2,H)$ and $L=H/d$. Suppose an actual scan starts at $x$ with $d\mid qx$. At each $j=0,\ldots,L-1$, read the current state and then execute one $G$, including after the final read. Induction gives the actual chronological read states and endpoint
+
+$$
+x+j\alpha,\qquad g_j=\gcd(qx+2j,H),\qquad
+x_{\rm end}=x+L\alpha.
+\tag{AQBRP.10}
+$$
+
+The congruence $2j\equiv-qx\pmod H$, divided by $d$, has exactly one solution modulo $L$, since $2/d$ is a unit modulo $L$. Thus exactly one of these $L$ paid replies equals $H$. Its acquired position $j_x$ gives $qx\equiv-2j_x\pmod H$. Also $2L$ is divisible by $H$, so this is the quantity residue at the scan endpoint as well. This is the positive-addend saturation argument of Theorem 3.1, specialized to the actual $+2$ quantity change of $G$, and is reused here. It is not a separately new scanning theorem.
+
+A stored reply may supply the $j=0$ entry of this scan only if it was obtained at this exact start on the same binding and no $R$ or $G$ intervened. Local processing does not invalidate it. Such a reuse is one physical read with two local uses, never a second free observation or a reply transported across an update. All other scan positions are actually read. Even when saturation occurs early, this specified controller completes all $L$ read positions and all $L$ grafts. The closing graft cannot be omitted from its endpoint or costs.
+
+**Proof (odd modulus).** For odd $H>1$, $d=1$ and $L=H$, so every start satisfies the scan condition. Scan from $v_0$ to $w=v_0+H\alpha$. Execute one $R$ and scan from $Mw$ to $u_*=Mw+H\alpha$. The acquired saturation indices give
+
+$$
+n=qw\bmod H=qv_0\bmod H,\qquad z=qMw\bmod H.
+\tag{AQBRP.11}
+$$
+
+Use the already supplied unimodular quantity coordinates of FARG5.4 and FARG130.1,
+
+$$
+C=\begin{pmatrix}2&3\\3&5\end{pmatrix},\qquad
+C^{-1}=\begin{pmatrix}5&-3\\-3&2\end{pmatrix},\qquad
+\widehat w=C^{-1}\binom nz\in A_H^2.
+\tag{AQBRP.12}
+$$
+
+Thus $\widehat w=\bar w$. Write the immutable entry register as $e=\widehat w-H\alpha=\bar v_0$ and the separate reached register as $c=M\widehat w+H\alpha=\bar u_*$. The displayed subtractions are local residue computations on earned operands. No source inverse occurs. Two complete scans and one replacement give (AQBRP.5), including its integer endpoint.
+
+**Proof (even entry parity and the first scan).** Suppose $H$ is even. Read the actual entry. While the acquired reply is odd, execute one $R$ and read again. Let $r$ count these replacements. For even $H$, a gcd reply is even exactly when the actual quantity is even. The identity $M^2=M+I$ gives
+
+$$
+qM^{k+2}v_0=qM^{k+1}v_0+qM^kv_0.
+\tag{AQBRP.13}
+$$
+
+If two consecutive quantities are odd, their next is even. Consequently $r\le2$, and this search earns an even reply at the actual state $x=M^rv_0$. It neither reads a coordinate nor receives an entry quantity. Reuse just that last reply as the first position of the $L$-step scan, then perform all its closing grafts. It ends at
+
+$$
+w=M^rv_0+L\alpha,
+\qquad N=qw=qx+H\text{ is even},
+\qquad n=N\bmod H=-2j_x\bmod H.
+\tag{AQBRP.14}
+$$
+
+$N$ here is a proof variable for the actual integer, not a controller input. The first scan has acquired $n$ and made $L$ real grafts. Its coordinate displacement $L\alpha$ is retained in decoding, even though its quantity displacement $H$ vanishes modulo $H$.
+
+**Proof (the second scan and the actual parity correction).** Execute $R$ on $w$ and read at $Mw$. Put $Z=qMw$ as a proof variable. If this paid reply is even, set $\chi=0$ and reuse it at position zero of the next $L$-step scan. This scan acquires $z=Z\bmod H$ and ends at $u_*=Mw+L\alpha$.
+
+If that reply is odd, set $\chi=1$. Retain it as a paid parity test, then execute $G$ followed by $R$ on that very state. The successive actual states are $Mw$, $Mw+\alpha$, and
+
+$$
+y'=M(Mw+\alpha)=M^2w+M\alpha,\qquad
+qy'=N+Z+3.
+\tag{AQBRP.15}
+$$
+
+Here $M^2=M+I$ and $qM\alpha=3$ give the integer equality. Because $N$ is even and $Z$ is odd, $qy'$ is even. Thus a fresh $L$-step scan from $y'$ is enabled. Its first read is a new paid read: the odd reply at $Mw$ is not reused after $G,R$. If its acquired quantity residue is $t$, set
+
+$$
+z=t-n-3\pmod H=Z\bmod H.
+\tag{AQBRP.16}
+$$
+
+The actual endpoint is $u_*=M^2w+M\alpha+L\alpha$. The scalar $+3$ in (AQBRP.15) is a consequence of two coupled original actions, not a new scalar primitive or an assumed realization bridge.
+
+In both branches (AQBRP.12) now gives $\widehat w=\bar w$. The earned entry and reached registers are respectively
+
+$$
+e=M^{-r}(\widehat w-L\alpha),\qquad
+c=\begin{cases}
+M\widehat w+L\alpha,&\chi=0,\\
+M^2\widehat w+M\alpha+L\alpha,&\chi=1.
+\end{cases}
+\tag{AQBRP.17}
+$$
+
+$M^{-1}=\begin{pmatrix}-1&1\\1&0\end{pmatrix}$ exists over every $A_H$, and $r\le2$. Its use in (AQBRP.17) is finite local arithmetic, not backward source movement. The first formula gives $e=\bar v_0$ by (AQBRP.14); the second gives $c=\bar u_*$ by the actual branch trajectories. Expanding those trajectories gives exactly (AQBRP.7).
+
+This specifies every source-dependent choice: parity search uses acquired gcd parity, the correction uses the next acquired parity, and scan decoding uses acquired saturation positions. All other choices are public loops or local arithmetic. There is one deterministic program for all entries, not a family of selectors indexed by hidden coordinates. At $H=2$, $L=1$: each scan still has its one genuine read and its closing graft; (AQBRP.14)–(AQBRP.17) remain valid. At $v_0=(0,0)$ the initial even read is already saturated, which is legitimate and paid; saturation never asserts that the exact source is zero. For $H=1$, bypass both scans and install the unique labels, with constant predicted gcd $1$ and no source call.
+
+**Proof (exact realized counts and source growth).** The odd branch has two scans of $H$ reads and $H$ grafts, with one intervening replacement. In the even branch the entry search has $r+1$ reads; the first scan adds $L-1$ reads; the replacement test adds one; and the second scan adds $L-1$ reads when $\chi=0$, or $L$ when $\chi=1$. Their sum is $2L+r+\chi$. There are $2L+\chi$ grafts and $r+1+\chi$ replacements. This proves (AQBRP.6) without moving a cached reply across a source action. The number of source letters, excluding reads, is $2H+1$ for odd $H>1$, and $H+r+1+2\chi$ for even $H$. The positive short-word reset compilers of [Canonical Window Compiler Geometry, Sections 1.1 and 1.4–1.8](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md) already supply a different attainable query/letter account under reset. This proof counts the displayed continuous schedule alone; it neither rederives their compiler nor transfers a reset minimum or another strategy's smaller read budget to this vector.
+
+For even $H$ the two endpoint formulas yield, using $q\alpha=2$, $qM\alpha=3$, and $qM^2\alpha=5$,
+
+$$
+qu_* = qM^{r+1+\chi}v_0+(5+2\chi)L+3\chi.
+\tag{AQBRP.18}
+$$
+
+For odd $H$, expansion of (AQBRP.5) yields $3a+5b+5H$. These are integer equalities, proving (AQBRP.8). On every nonnegative pair,
+
+$$
+q(Ru)-qu=u_1+2u_2\ge0,\qquad q(Gu)-qu=2.
+\tag{AQBRP.19}
+$$
+
+Reads preserve the source. Thus every acquisition prefix is bounded by the terminal quantity. Finally $r+1+\chi\le4$ and
+
+$$
+q=(2,3),\quad qM=(3,5),\quad qM^2=(5,8),\quad
+qM^3=(8,13),\quad qM^4=(13,21).
+\tag{AQBRP.20}
+$$
+
+These rows increase coordinatewise. Since $a,b\ge0$, (AQBRP.18) gives $qu_*\le13a+21b+7L+3$, proving precisely (AQBRP.9). It also implies the weaker bound $13a+21b+13(H+1)$; no such larger allowance is needed for this construction. The inequalities bound the actual source size in terms of its unknown entry; they do not make the source size an accessible input.
+
+**Proof (finite earned memory and complete service account).** Let $b_H=\lceil\log_2(H+1)\rceil$. Retain a chronological tape with one constant-size action tag per call and one $b_H$-bit field for each gcd reply, plus the fixed acknowledgements. Reuse is a local reference to an existing entry, not an extra reply. The exact counts just proved give $O(H)$ tape entries. The two saturation indices, loop/phase counters, $r,\chi$, residues $n,z,t$, immutable $e$ and mutable $c$ need $O(b_H)$ working bits. Sums and products in the decoder have fixed coefficients; intermediate residues and their reductions have $O(b_H)$ bits. Exact binary division with remainder, gcd, comparisons and these fixed-coefficient operations can use finitely many such registers and finite bit loops. No factorization of $H$, source coordinate or precomputed source-response table is needed. The tape uses $O(Hb_H)$ bits beyond installed code and backend references/rights; reading/writing it and every bit loop are charged. Public input delivery, installation of this uniform program, construction of its local record fields and output delivery are not free.
+
+More precisely, let $\mathcal I_{\rm read},\mathcal I_G,\mathcal I_R$ be the actual call positions, and $u_i$ the actual pre-call source at position $i$. For separately supplied finite service tariffs $\rho_H,\gamma,\tau$, the source-service work on this run is exactly
+
+$$
+W_{\rm svc}=
+\sum_{i\in\mathcal I_{\rm read}}\rho_H(u_i)
++\sum_{i\in\mathcal I_G}\gamma(u_i)
++\sum_{i\in\mathcal I_R}\tau(u_i).
+\tag{AQBRP.21}
+$$
+
+To it add the actual local bit work, input/output and acknowledgement handling, installed program/data and service blocks, bindings/rights, backing provision, source storage/retention and retained records, in their declared resource coordinates. These tariffs price the actual implementation of the specified services, rather than adding observable numeric replies. A replacement of an entire represented tree is not thereby one local rewrite or one bit operation. Applying (AQBRP.9) to storage or workload requires a separately justified correspondence between quantity, representation and tariff. Sufficient finite backing for acquisition is part of Definition 9.1; additional backing for any chosen finite continuation is supplied and charged under the same condition. Indefinitely retaining future inputs or traces has no bound supplied by the acquisition-tape estimate. Thus finite code is not a bounded-memory claim for arbitrary future retention or unbounded source size.
+
+**Proof (installed use, common-source recovery and its limits).** The reached-state task is homing in the sense of [Kushik and Yevtushenko, Section 2](https://arxiv.org/html/1504.02444v1): each surviving trace determines a unique reached task state. Entry identification is a separate assertion, as in the initialized-state test framework of [van den Bos and Vaandrager, Definitions 7–10](https://arxiv.org/html/1907.11034v2). These finite-machine distinctions are terminology here; the direct proof above establishes the actual infinite-source correspondence and costs. Really write the acquired $e,c$, tape and branch/scan records into the supplied local fields and retain the original binding and current rights. Install the following finite local reader and updater, reusing FARG130.1, FARG130.5 and FARG133.6:
+
+$$
+\operatorname{Out}_H(c)=\gcd(2c_1+3c_2,H),\qquad
+\delta_R(c)=Mc,\qquad \delta_G(c)=c+\alpha.
+\tag{AQBRP.22}
+$$
+
+The gcd uses any integer representatives of $c_1,c_2$ and is representative-independent. For an actual next requested action, the controller calls its retained source handle, consumes its completion acknowledgement, updates $c$ by the corresponding $\delta$, and exposes the next callable cut only after both have completed. Exclusive serial control prevents an observation between an actual update and this local commit. For a hypothetical finite word it instead evaluates these same updates on a scratch residue pair and returns the predicted outputs without changing the source. These are installed computations on earned registers, not declarations that a semantic inverse is already available.
+
+The initial equalities $e=\bar v_0$, $c=\bar u_*$ were proved above. Congruence under each actual $R,G$ and induction over every finite subsequent word $V$ give
+
+$$
+c_V=\overline{V(u_*)},\qquad
+\operatorname{Out}_H(c_V)=\mathcal B_H(u_*)(V).
+\tag{AQBRP.23}
+$$
+
+The entry register stays immutable. No further source read is required by this synchronized predictor; all subsequent source actions, local updates, requested output work and retained future data are still paid. An external unreported update, revoked right or interrupted commit violates the stated synchronization/service premise.
+
+Here are the exact recovery routes on this one acquired cut. The first two terms of (AQBRP.3) are $C\bar u$, so the existing inverse (AQBRP.12) gives $\mathcal T_H\mapsto\mathcal S_H$; the forward map is (AQBRP.3). By the existing FARG130.5 full original-alpha behavior quotient, $\mathcal B_H(u)=\mathcal B_H(u')$ exactly when $\bar u=\bar u'$, including $H=1$. Thus $\mathcal S_H\mapsto\mathcal B_H$ is (AQBRP.22) evaluated on words, and its inverse is well defined on the actual image. This inverse of a complete mathematical behavior is not a free behavior oracle in the acquisition interface. Computing both fields through the earned register yields exactly these maps, so $\mathcal T_H\mapsto\mathcal S_H\mapsto\mathcal B_H$ agrees with their direct common-source correspondence, and likewise in reverse. The theorem's acquisition supplies the missing finite earned payload, rather than assuming that inverse as initialization.
+
+These routes commute with actual dynamics: replacement shifts the progression by one, grafting adds $qM^k\alpha$ to its $k$th term, and each boundary successor prefixes the same actual action to its continuation word. Equations (AQBRP.22)–(AQBRP.23) realize all of these updates on the same source. If $A$ is the recorded acquisition action word with reads omitted, its actual affine law is $A(v)=M^kv+t_A$, with $t_A$ computed from that known word. Hence forward transport gives $c=M^ke+t_A$ modulo $H$, and, retaining this action complement, local inverse transport gives $e=M^{-k}(c-t_A)$. This is the existing affine-word law of FARG130.2 applied to the newly acquired real history. It agrees with (AQBRP.11)–(AQBRP.17). It does not restore a callable entry source; the callable handle still refers to $u_*$.
+
+The losses remain genuine. The distinct ordered trees $\langle\alpha,\beta\rangle$ and $\langle\beta,\alpha\rangle$ have the same composition, hence the same three arithmetic fields and all common arithmetic continuations; these fields cannot recover order, brackets or addresses. Even exact composition forgets brackets, while reduction further merges distinct actual pairs $v$ and $v+H\alpha$. Inserting the actual word $G^H$ changes the integer source and chronology but leaves its residue, prospective progression and arithmetic boundary unchanged. It adds $H$ source events; any separately priced nonzero grade of that insertion also differs. Therefore those arithmetic fields recover neither actual chronology nor such a grade or elapsed physical time. They also forget handle identity, installed code, record allocation and rights: two installations on equal residues can differ in these fields, which do not enter (AQBRP.3)–(AQBRP.4). Retained acquisition memory computes the arithmetic fields, but they do not reconstruct the whole memory installation. The tape earns only its actual post-entry records, not missing earlier history. This establishes the stated recovery domain and boundaries. $\square$
+
+**Definition 9.4 (supplier subtraction and the conditional claim domain).** The load-bearing addition in Theorem 9.3 is the direct pair-source parity schedule, its common integer endpoints, exact cached-read counts and source-growth account. The saturation sweep is reused from Theorem 3.1; $C^{-1}$, $M^2=M+I$, affine word transport and the full original-graft behavior quotient are reused from FARG5 and FARG130–131 and their [`GraftAffineClosure.result`](../../../D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean) with its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.scribe.cs). Sections 5–7 here supply the distinction between earned entry information, reached-state installation and behavior/literal return on the scalar interface. Their scalar multiplications and genuinely acquired old code are absent from Definition 9.1; they are not implicit steps of the pair construction.
+
+[FARG127.7](FIBONACCI_ATOMIC_RELATION_GENERATION.md) already supplies single-copy increasing-time execution under a separate current gcd port for its pure-replacement future-class task. Its later prime-power supplier [`protocol_spec`](../../../D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.lean), including the internal `continuation_fiber` and `paid_first_layer` arguments and its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.scribe.cs), preserves that pure-replacement target. It does not supply the complete original-$G/R$ composition target here. For example, multiplication of a pair by a unit modulo $H$ preserves every pure-replacement gcd, while it can change its composition residue. The full-alpha quotient used above is the stronger task distinction, not a new claim that continuous observation was absent.
+
+[FARG133.1–133.6](FIBONACCI_ATOMIC_RELATION_GENERATION.md), [`terminal_gcd_acquisition_cost`](../../../D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost.lean), its internal `scalar_word_realization` and [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost.scribe.cs) retain exactly their same-entry-reset, terminal-only query theorem. The later [Canonical Window Compiler Geometry, Sections 1–2](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md) supplies shorter positive reset-query words, adjacent-direction decoding and its own prefix/control bounds. Those are available reset strategies, not a missing compiler to reprove. Neither their smaller read budgets nor another strategy's resource coordinate is paired with (AQBRP.6). The present linear scan may use more reads while making at most four replacements; no optimum, total-work comparison or global dominance follows.
+
+The [Arithmetic Refinement Memory, Section 6](RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_REFINEMENT_MEMORY.md) direct initialization reader, [LAB Arithmetic Growth, Definitions 4.2 and 5.1](RECURSIVE_RELATIONAL_OBSERVATION_LAB_ARITHMETIC_GROWTH.md) paid field traversal, and [LAB Spent-Trigger Acquisition, Section 3](RECURSIVE_RELATIONAL_OBSERVATION_LAB_SPENT_TRIGGER_ACQUISITION.md) stationary prepass concern their own supplied access and actuators. Likewise [`NativeFullSourceProducer`](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean), [`NativePassiveServiceRealization`](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativePassiveServiceRealization.lean) and [`ActualPureAcquisitionCompiler`](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.lean), with their source-traversal, interpreter and cache helpers, acquire through stationary Native address replies. These stronger or different access contracts do not construct (AQBRP.2) or price its original global replacement. In particular the local LAB edits are not the simultaneous $R$ of (AQBRP.1).
+
+The initialized-state/reached-state distinction is literature-attested in Petra van den Bos and Frits Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2, Definitions 7–10 and Lemma 6](https://arxiv.org/html/1907.11034v2), and Natalia Kushik and Nina Yevtushenko, [*Adaptive Homing is in P*, arXiv:1504.02444v1, Section 2](https://arxiv.org/html/1504.02444v1). The latter defines homing by a singleton reached-successor set for each surviving trace on its known finite-machine contract. Markus Theo Frohme, [*Active Automata Learning with Adaptive Distinguishing Sequences*, arXiv:1902.01139v1, Section 8.1](https://arxiv.org/html/1902.01139v1), distinguishes dependent symbol queries from a separately available reset query. These are suppliers of terminology and interface distinctions; their finite-machine results do not supply this arithmetic parity policy, port implementation or unbounded-source service bound. Theorem 9.3 is a `repo-derived` source-specific synthesis with the direct finite proof above, without a literature-priority assertion.
+
+The attained result is paid acquisition and installed continued use of the arithmetic quotient on the changed two-coordinate current-port apparatus. It leaves unchanged the scalar AQBR definitions and all fixed-model settlements, including the original FARG133 reset-query formula and every fixed original-task/initialization restriction. Recovering the lost syntax, actual temporal fields and whole installation, realizing any claimed narrower backend port, and establishing mutual recovery of independently meaningful space, time, boundary and memory on the full intended process remain outside this arithmetic theorem. No universal physical space/time claim, alpha/beta primitive-minimality claim or completion of that full four-expression objective is asserted.
+
+## 追加锚（本行以下为增补区）

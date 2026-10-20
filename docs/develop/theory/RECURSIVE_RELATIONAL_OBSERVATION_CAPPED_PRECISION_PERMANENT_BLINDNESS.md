@@ -396,3 +396,68 @@ No whole infinite configuration, effective infinite inverse, historical selector
 [TARGET]: RECURSIVE_RELATIONAL_OBSERVATION_UNCALIBRATED_TARGET_ACQUISITION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 12. A fixed finite-core pair with precision uncapped after the first Return
+
+**Definition 12.1 (mixed-precision observation).** Keep the initialized producer, persistent exclusive turn, full public framing and excluded channels of Sections 1–2. Fix public $q\in\mathbb Q_{>0}$ and $N\ge1$. Before the first actual Step, Extent requests have $1\le n\le N$; from that Step's Return onward, every finite $n\ge1$ is permitted. At every allowed returned cut the same stationary backend replies
+
+$$
+\operatorname{Extent}(n)=\lfloor2^nq\alpha^{D}\rfloor,
+$$
+
+where $D$ is the actual acquired depth. There are no Extent calls during a Step. All actual Emit/Advance/Return events and local request counts remain visible. Raw Read contents, their number and latency, private acquired history and registers, old absolute counts and pre-handoff events remain excluded. The target is the first bit of the tail unread at the initial handoff, or its fixed first $m\ge1$ bits; it never resets after a Step.
+
+**Theorem 12.2 (one pair against every causal receiver).** For each such fixed $q,N$, there are two actually attained proper death handoffs on eventually-zero sources with different initial unread first bits and the same complete current point, whose entire permitted mixed-precision interactions agree for every deterministic causal receiver with common source-independent initial data. Consequently no such receiver is finite and correct for either original target on all legal handoffs. For any almost surely bit-outputting randomized receiver with one common world-independent random-tape law, its worst error on this same pair is at least $1/2$.
+
+Proof. Choose once, independently of the receiver, a finite $d\ge1$ with
+
+$$
+2^Nq\alpha^d<1.
+$$
+
+Use exactly the actually initialized family of [Known unit, hidden offset, Lemmas 4.1–4.4](RECURSIVE_RELATIONAL_OBSERVATION_KNOWN_UNIT_HIDDEN_OFFSET_IDENTIFIABILITY.md#4-complete-actual-deep-family), with additive offset zero and unit $q$. Its two histories are
+
+$$
+\begin{array}{c|c|c|c|c}
+ &x&p&r&\text{initial unread tail}\\\hline
+ A&Z(G_d)=0^d10\,0^\infty&0^d&G_{d+1}-2&10\,0^\infty\\
+ B&Z(0)=0^\infty&0^{d+1}&G_{d+2}-2&0^\infty.
+\end{array}
+$$
+
+The supplier's inclusive attainment clocks give genuine proper deaths with $N_p=0$. The recurrence gives $G_d+r_A=r_B$, and finite-core succession gives equality of the whole words
+
+$$
+T^{r_A}Z(G_d)=Z(r_B)=T^{r_B}Z(0).
+$$
+
+Both sources have finite support. At the initial depths $d,d+1$, every permitted numerator is zero, since for $1\le n\le N$,
+
+$$
+0<2^nq\alpha^{d+1}<2^nq\alpha^d<1.
+$$
+
+Thus any number of stationary capped queries has equal complete replies. If a receiver never Steps, every allowed finite observed prefix still agrees; a common finite answer cannot give both different targets.
+
+If it Steps, A physically reads $10$, including the forced zero, while B physically reads $0$. The supplier's first-Step calculation gives the common Emit $\operatorname{Low}(r_B)$ and, after Advance and Return,
+
+$$
+D_1=d+2,\qquad s_1=G_{d+2}-1,\qquad t_1=0^\infty,
+$$
+
+in both worlds. Their private values remain $N_A=G_d,N_B=0$ and $r_{A,1}=r_A+1,r_{B,1}=r_B+1$. They have not become the same private history. Nevertheless $N_A+r_{A,1}=N_B+r_{B,1}=s_1$, so the death slack $G_{D_1+1}-2-s_1$ agrees.
+
+At any later matched Return the two worlds have the same depth, the same $s=N_p+r$ and the same unread zero tail. Positive slack makes both read nothing; zero slack makes both read the next zero. Each branch gives the same Emit, increments $s$ by one, and updates depth and slack identically. This is precisely the invariant of the supplier's Lemma 4.4. Hence at every later return and every finite precision, including those above $N$,
+
+$$
+\lfloor2^nq\alpha^{D_A}\rfloor
+=\lfloor2^nq\alpha^{D_B}\rfloor.
+$$
+
+Causal induction over local actions, requests, replies and the events within Steps now gives full interaction equality. The first bits, and therefore every fixed nonempty initial prefix, differ. Equal finite outputs cannot be correct on both worlds; noncompletion fails the stipulated total recovery task.
+
+For the randomized assertion, use one random tape $R$ with a law independent of the chosen world, also including any source-independent random initial state. Condition on each fixed tape: the preceding causal induction is pathwise and uses the same fixed pair. Thus the output-bit law is common to A and B. If $p$ is its probability of one, the error probabilities are $1-p$ in A and $p$ in B, and their maximum is at least $1/2$. Almost sure output is needed here to interpret these as the two bit-error probabilities. $\square$
+
+This is a repo-derived application of the cited attained finite-core family and this volume's zero-cell estimate. It strengthens the precision schedule, not the source interface. Its quantifier order is $\forall q,N\ \exists(W_A,W_B)\ \forall D$; the pair does not depend on a receiver's queried precisions. No uncapped query is allowed before the first Step, and uncapping occurs only after its Return. Revealing the differing raw Reads, their count, timing or private history changes the observation and is outside this assertion. Equal allowed observations do not equate private costs or recover an original history; all supplier acquisition and resource boundaries remain in force.
+
+## 追加锚（本行以下为增补区）

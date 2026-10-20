@@ -869,3 +869,69 @@ RRO 命题17.2已经分类自然扩张的完整过去：非自然核点只有一
 [AF-IDENTIFY]: https://arxiv.org/html/1907.11034v2
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Fixed-boundary resolution and reversible history capacity
+
+**Definition 18.1 (One fibre and a separate quantum realization).** Fix one proper boundary $\partial(d,A)$ as in Definition 1.1, with $d\ge1$, and one complete current point $y\in U(\partial(d,A))$. Theorem 6.4 gives its actual source/time histories
+
+$$
+\mathcal F_{d,A}(y)=\{(pt_y,A-N_p):p\in P_d\},\qquad
+N_d=|\mathcal F_{d,A}(y)|=G_{d-1}=F_{d+1}.
+\tag{46}
+$$
+
+Here $F_0=0,F_1=1$ are ordinary Fibonacci numbers. The owned arc length of this same boundary is $E_d=\phi^{-d}$ by the supplying Paid Return Theorem 12.2. The fixed boundary is essential: the arbitrary-boundary point fibre of Theorem 12.1 is a different object.
+
+For a conditional quantum realization, encode these $N_d$ histories as orthonormal vectors $|h_p\rangle$ in an input space. Supply an isometry $V$ whose visible marginal is the same prescribed pure state $|Y_y\rangle\langle Y_y|$ on every such input. The remaining output space is $\mathcal H_R$. Orthogonal history preparation, this encoding and the quantum isometry are extra realization assumptions; the infinite sequences and the set-theoretic point $y$ do not by themselves supply them.
+
+**Theorem 18.2 (Resolution times provenance and its exact residual cost).** In Definition 18.1,
+
+$$
+E_dN_d=\frac{\phi}{\sqrt5}
+\left(1+(-1)^d\phi^{-2d-2}\right)
+\longrightarrow\frac{\phi}{\sqrt5}.
+\tag{47}
+$$
+
+Every supplied quantum realization has
+
+$$
+\dim\mathcal H_R\ge N_d
+=\frac{\phi}{\sqrt5E_d}
+\left(1+(-1)^d\phi^{-2d-2}\right),
+\tag{48}
+$$
+
+and equality is attainable on the span of the specified orthogonal history inputs. Thus the exact residual dimension for this pure-visible realization grows inversely with the fixed-boundary arc length, although knowing the full current point already determines its unread tail.
+
+Proof. The actual histories, their count and the unique $t_y$ are reused from Theorem 6.4; no new normal-form theorem is asserted. Substitute the classical Binet formula
+
+$$
+F_{d+1}=\frac{\phi^{d+1}-(-\phi^{-1})^{d+1}}{\sqrt5}
+$$
+
+and multiply by $\phi^{-d}$ to obtain (47).
+
+For (48), use the orthogonal-fibre residual argument of [History Records, §134](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md) as an intermediate with the concrete fibre (46). Because $V|h_p\rangle$ is pure with a pure visible marginal, it factors as
+
+$$
+V|h_p\rangle=|Y_y\rangle\otimes|r_p\rangle.
+\tag{49}
+$$
+
+A Schmidt decomposition proves this factorization: the visible marginal has rank one. Isometry then gives
+
+$$
+\delta_{pp'}=\langle h_p|h_{p'}\rangle
+=\langle r_p|r_{p'}\rangle.
+$$
+
+There must be $N_d$ orthonormal residual vectors. Conversely choose exactly $N_d$ such vectors and define (49) linearly on the input span; it preserves every inner product and so attains the bound. Together with (47) this proves (48). The new `repo-derived` application is this exact resolution/provenance/residual relation for the actual fixed-boundary histories. Binet arithmetic, pure-marginal factorization and the general isometric storage bound are reused intermediates, not additional general principles. $\square$
+
+**Proposition 18.3 (Depth-four mixed-visible counterexample).** At $d=4$, for any one boundary and current point of Definition 18.1, its five histories admit an orthogonal quantum encoding and isometric realization with equal mixed visible marginals and residual dimension three. Thus the five-dimensional lower bound of (48) cannot be transferred to that mixed-visible contract.
+
+Proof. The count is $N_d=G_3=5$. Reuse the standard maximally entangled basis construction on $\mathbb C^3\otimes\mathbb C^3$: let $X|r\rangle=|r+1\bmod3\rangle$ and $Z|r\rangle=e^{2\pi ir/3}|r\rangle$. The vectors $(I\otimes X^jZ^k)\sum_{r=0}^2|rr\rangle/\sqrt3$ for any five distinct pairs $(j,k)\in\mathbb Z_3^2$ are orthogonal, by the vanishing traces of nonidentity qutrit Weyl matrices, and each has both marginals $I_3/3$. Map the five orthogonal history labels to these five vectors and extend linearly on their span. This is an isometry with the asserted dimensions. The distinctions reside in correlations; this conditional encoding is not a native preparation furnished by the source controller. $\square$
+
+**Definition 18.4 (Projection and retention boundary).** Formula (47) compares different fixed-depth projections. It says neither that refining a retained acquired record erases its prefix nor that a known complete current point selects the actual past. Theorem 6.4 permits a separately retained actual selector $N_p$ to recover $(p,A-N_p)$; the projected future of §§4–5 omits that selector and the old absolute counter. If a policy actually reads either field, its state and future comparison must include them. The source/time fibre (46), the information in a retained full observer, and the quantum residual of the conditional encoding are consequently distinct resources.
+
+## 追加锚（本行以下为增补区）
