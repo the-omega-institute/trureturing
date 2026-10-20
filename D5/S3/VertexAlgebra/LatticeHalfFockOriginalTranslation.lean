@@ -68,6 +68,11 @@ private theorem shiftField_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
   simpa only [HVertexOperator.coeff_apply_apply, vadd_eq_add, neg_add_cancel_left, one_smul,
     show -2 * (s : ℤ) + (e + 2 * (s : ℤ)) = e by ring] using h
 
+theorem shiftField_coefficient_public (D : LatticeData) (hu : IsUnit D.G.det)
+    (s : ℕ) (A : NativeField D hu) (e : ℤ) :
+    (shiftField D hu s A).coeff e = A.coeff (e + 2 * (s : ℤ)) :=
+  shiftField_coefficient D hu s A e
+
 def correctedSum (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D) :
     (ℕ →₀ Oscillator D) →ₗ[ℂ] NativeField D hu :=
   Finsupp.lsum ℂ (fun s => (shiftField D hu s).comp (polynomialField D hu a))
@@ -527,7 +532,7 @@ namespace D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField
 theorem shiftField_coeff (D : LatticeData) (hu : IsUnit D.G.det)
     (s : ℕ) (A : NativeField D hu) (e : ℤ) :
     (shiftField D hu s A).coeff e = A.coeff (e + 2 * (s : ℤ)) :=
-  shiftField_coefficient D hu s A e
+  shiftField_coefficient_public D hu s A e
 end D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField
 
 namespace D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
@@ -537,3 +542,263 @@ theorem native_jet_successor (order : ℕ) (mode : ℤ) :
       (-(mode : ℂ) - 3 / 2 - (order : ℂ)) * jetScalar order mode :=
   jet_successor order mode
 end D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+
+noncomputable section
+namespace D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+open LatticeHalfFockCorrectedField LatticeHalfFockCurrentCorrection
+
+private theorem normalEvaluation_shift_power_mul (D : LatticeData) (hu : IsUnit D.G.det)
+    (charge : Charge D) (degree : ℕ) (polynomial : CorrectionPolynomial D) :
+    normalEvaluation D hu charge (X none ^ degree * polynomial) =
+      shiftField D hu degree (normalEvaluation D hu charge polynomial) := by
+  induction degree with
+  | zero =>
+    simp only [pow_zero, one_mul]
+    apply HVertexOperator.coeff_inj
+    funext e
+    rw [shiftField_coefficient]
+    simp
+  | succ degree previous =>
+    rw [pow_succ', mul_assoc, normalEvaluation_shift_mul, previous, shift_add,
+      Nat.add_comm 1 degree]
+
+private theorem normalEvaluation_scalar_shift (D : LatticeData) (hu : IsUnit D.G.det)
+    (charge : Charge D) (scalar : ℂ) (degree : ℕ) (polynomial : CorrectionPolynomial D) :
+    normalEvaluation D hu charge (C scalar * X none ^ degree * polynomial) =
+      scalar • shiftField D hu degree (normalEvaluation D hu charge polynomial) := by
+  rw [mul_assoc, ← MvPolynomial.smul_eq_C_mul, map_smul,
+    normalEvaluation_shift_power_mul]
+
+private theorem normalEvaluation_correctionLift (D : LatticeData) (hu : IsUnit D.G.det)
+    (charge : Charge D) (polynomial : Oscillator D) :
+    normalEvaluation D hu charge (correctionLift D charge polynomial) =
+      correctedPolynomial D hu charge polynomial := rfl
+
+private theorem pairDerivation_source_partials (D : LatticeData) (charge : Charge D)
+    (index : Index D) (polynomial : Oscillator D) :
+    pairDerivation D index (correctionLift D charge polynomial) =
+      ∑ other ∈ polynomial.vars,
+        pairPolynomial D index other * correctionLift D charge (pderiv other polynomial) := by
+  classical
+  let Q := correctionLift D charge polynomial
+  let delta := pairDerivation D index
+  have sum_apply (s : Finset (Option (Index D)))
+      (f : Option (Index D) → Derivation ℂ (CorrectionPolynomial D) (CorrectionPolynomial D))
+      (q : CorrectionPolynomial D) :
+      (∑ x ∈ s, f x) q = ∑ x ∈ s, f x q := by
+    have h := congrFun (map_sum
+      (Derivation.coeFnAddMonoidHom (R := ℂ) (A := CorrectionPolynomial D)
+        (M := CorrectionPolynomial D)) f s) q
+    simpa only [Derivation.coeFnAddMonoidHom_apply, Finset.sum_apply] using h
+  have expansion : delta Q = ∑ x ∈ Q.vars, delta (X x) * pderiv x Q := by
+    have h : delta Q = (∑ x ∈ Q.vars, delta (X x) • pderiv x) Q := by
+      apply MvPolynomial.derivation_eq_of_forall_mem_vars
+      intro x hx
+      rw [sum_apply]
+      simp [Derivation.smul_apply, pderiv_X, Pi.single_apply, apply_ite, hx]
+    rw [sum_apply] at h
+    simpa only [Derivation.smul_apply, smul_eq_mul] using h
+  let U := Q.vars ∪ polynomial.vars.image (some : Index D → Option (Index D))
+  have first : (∑ x ∈ Q.vars, delta (X x) * pderiv x Q) =
+      ∑ x ∈ U, delta (X x) * pderiv x Q := by
+    apply Finset.sum_subset Finset.subset_union_left
+    intro x hx outside
+    rw [pderiv_eq_zero_of_notMem_vars outside, mul_zero]
+  have second : (∑ x ∈ polynomial.vars.image (some : Index D → Option (Index D)),
+      delta (X x) * pderiv x Q) = ∑ x ∈ U, delta (X x) * pderiv x Q := by
+    apply Finset.sum_subset Finset.subset_union_right
+    intro x hx outside
+    cases x with
+    | none => simp [delta, pairDerivation, mkDerivation_X]
+    | some other =>
+      have absent : other ∉ polynomial.vars := by
+        intro member
+        exact outside (Finset.mem_image.mpr ⟨other, member, rfl⟩)
+      change delta (X (some other)) *
+        pderiv (some other) (correctionLift D charge polynomial) = 0
+      rw [correctionLift_partial, pderiv_eq_zero_of_notMem_vars absent, map_zero, mul_zero]
+  rw [expansion, first, ← second, Finset.sum_image]
+  · apply Finset.sum_congr rfl
+    intro other member
+    rw [show delta (X (some other)) = pairPolynomial D index other from
+      pairDerivation_variable D index other]
+    rw [correctionLift_partial]
+  · intro x hx y hy equal
+    exact Option.some.inj equal
+
+private theorem correctedPolynomial_insertion_partials (D : LatticeData)
+    (hu : IsUnit D.G.det) (charge : Charge D) (index : Index D) (polynomial : Oscillator D) :
+    correctedPolynomial D hu charge (polynomial * X index) =
+      singletonLinear D hu index (correctedPolynomial D hu charge polynomial) +
+        (halfBinomial (sourceWeight D index) *
+          (bilinear D (unitCharge D index.1) charge : ℂ)) •
+          shiftField D hu (sourceWeight D index) (correctedPolynomial D hu charge polynomial) +
+        ∑ other ∈ polynomial.vars,
+          (pairScalar (sourceWeight D index) (sourceWeight D other) *
+            (D.G index.1 other.1 : ℂ)) •
+            shiftField D hu (sourceWeight D index + sourceWeight D other)
+              (correctedPolynomial D hu charge (pderiv other polynomial)) := by
+  rw [← normalEvaluation_correctionLift, correctionLift_X_mul]
+  simp only [insertion, LinearMap.add_apply, LinearMap.mulLeft_apply,
+    Derivation.coeFn_coe, add_mul, pairDerivation_source_partials, map_add, map_sum,
+    singletonPolynomial, pairPolynomial, normalEvaluation_X_mul,
+    normalEvaluation_scalar_shift, normalEvaluation_correctionLift]
+
+end D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+end
+
+
+noncomputable section
+namespace D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+open LatticeHalfFockCorrectedField LatticeHalfFockCurrentCorrection
+open LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
+
+private theorem correctedPolynomial_pair_modes (D : LatticeData) (hu : IsUnit D.G.det)
+    (charge : Charge D) (index : Index D) (polynomial : Oscillator D) (bound : ℕ)
+    (bounded : ∀ other ∈ polynomial.vars, sourceWeight D other ≤ bound) :
+    (∑ other ∈ polynomial.vars,
+      (pairScalar (sourceWeight D index) (sourceWeight D other) *
+        (D.G index.1 other.1 : ℂ)) •
+        shiftField D hu (sourceWeight D index + sourceWeight D other)
+          (correctedPolynomial D hu charge (pderiv other polynomial))) =
+    ∑ r ∈ Finset.range bound,
+      (((sourceWeight D index : ℂ) * halfBinomial (sourceWeight D index) *
+        halfBinomial (r + 1)) / ((sourceWeight D index : ℂ) + ((r + 1 : ℕ) : ℂ))) •
+        shiftField D hu (sourceWeight D index + (r + 1))
+          (correctedPolynomial D hu charge
+            (neutralPolynomialMode D index.1 charge ((r : ℤ) + 1) polynomial)) := by
+  classical
+  have subset : polynomial.vars ⊆ (Finset.univ : Finset (Fin D.rank)) ×ˢ Finset.range bound := by
+    intro other member
+    have h := bounded other member
+    exact Finset.mem_product.mpr ⟨Finset.mem_univ _, Finset.mem_range.mpr (by
+      unfold sourceWeight at h
+      omega)⟩
+  rw [Finset.sum_subset subset (by
+    intro other member outside
+    rw [pderiv_eq_zero_of_notMem_vars outside, map_zero, map_zero, smul_zero])]
+  rw [Finset.sum_product_right]
+  apply Finset.sum_congr rfl
+  intro r member
+  rw [neutralPolynomialMode_positive]
+  simp only [LinearMap.smul_apply, weightedPartial, LinearMap.sum_apply,
+    Derivation.coeFn_coe, map_smul, map_sum, Finset.smul_sum, smul_smul]
+  apply Finset.sum_congr rfl
+  intro colour member
+  have denominator : ((sourceWeight D index : ℂ) + ((r + 1 : ℕ) : ℂ)) ≠ 0 := by
+    exact_mod_cast (show sourceWeight D index + (r + 1) ≠ 0 by
+      unfold sourceWeight
+      omega)
+  simp only [sourceWeight, Nat.cast_add, Nat.cast_one] at denominator
+  congr 1
+  simp only [sourceWeight, pairScalar, Nat.cast_add, Nat.cast_one]
+  field_simp [denominator]
+  <;> ring
+
+private theorem insertion_zero_scalar (D : LatticeData) (index : Index D) :
+    ((sourceWeight D index : ℂ) * halfBinomial (sourceWeight D index) * halfBinomial 0 /
+      ((sourceWeight D index : ℂ) + (0 : ℂ))) = halfBinomial (sourceWeight D index) := by
+  have positive : (sourceWeight D index : ℂ) ≠ 0 := by
+    exact_mod_cast (show sourceWeight D index ≠ 0 by
+      unfold sourceWeight
+      omega)
+  have zero : halfBinomial 0 = 1 := by norm_num [halfBinomial]
+  rw [zero, mul_one, add_zero]
+  exact mul_div_cancel_left₀ _ positive
+
+private theorem correctedPolynomial_insertion_modes (D : LatticeData)
+    (hu : IsUnit D.G.det) (charge : Charge D) (index : Index D) (polynomial : Oscillator D)
+    (bound : ℕ) (bounded : ∀ other ∈ polynomial.vars, sourceWeight D other ≤ bound) :
+    correctedPolynomial D hu charge (polynomial * X index) =
+      singletonLinear D hu index (correctedPolynomial D hu charge polynomial) +
+        ∑ n ∈ Finset.range (bound + 1),
+          (((sourceWeight D index : ℂ) * halfBinomial (sourceWeight D index) *
+            halfBinomial n) / ((sourceWeight D index : ℂ) + (n : ℂ))) •
+            shiftField D hu (sourceWeight D index + n)
+              (correctedPolynomial D hu charge
+                (neutralPolynomialMode D index.1 charge (n : ℤ) polynomial)) := by
+  rw [correctedPolynomial_insertion_partials,
+    correctedPolynomial_pair_modes D hu charge index polynomial bound bounded,
+    Finset.sum_range_succ']
+  simp only [Nat.cast_add, Nat.cast_one, Nat.cast_zero, Nat.add_zero, insertion_zero_scalar,
+    neutralPolynomialMode, lt_self_iff_false, ite_false, ite_true, LinearMap.smul_apply,
+    LinearMap.id_apply, map_smul, smul_smul]
+  abel
+
+private theorem source_variable_bound (D : LatticeData) (b : Carrier D)
+    (charge : Charge D) (supported : charge ∈ b.support) (other : Index D)
+    (occurs : other ∈ (b charge).vars) :
+    sourceWeight D other ≤ vectorFrequencyBound D b := by
+  exact le_trans (Finset.le_sup (f := fun u : Index D => u.2 + 1) occurs)
+    (Finset.le_sup (f := fun a => polynomialFrequencyBound D (b a)) supported)
+
+end D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+
+namespace D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField
+open LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
+open LatticeHalfFockOriginalTranslation
+
+/-- Negative current insertion on every finite-charge source, with the cutoff
+    taken on that original source and equality on the whole actual tensor field. -/
+theorem correctedField_negative_current_insertion
+    (D : LatticeData) (hu : IsUnit D.G.det)
+    (index : Index D) (b : Carrier D) :
+    let m : ℕ := LatticeHalfFockFiniteCorrection.sourceWeight D index
+    let N : ℕ := LatticeSugawaraCurrents.vectorFrequencyBound D b + 1
+    correctedField D hu (LatticeFiniteNegativeGeneration.neutralMode D index.1 (-(m : ℤ)) b) =
+      LatticeHalfFockFockNormalField.singletonLinear D hu index (correctedField D hu b) +
+        ∑ n ∈ Finset.range N,
+          (((m : ℂ) * LatticeHalfFockFiniteCorrection.halfBinomial m *
+              LatticeHalfFockFiniteCorrection.halfBinomial n) / ((m : ℂ) + (n : ℂ))) •
+            shiftField D hu (m + n)
+              (correctedField D hu
+                (LatticeFiniteNegativeGeneration.neutralMode D index.1 (n : ℤ) b)) := by
+  classical
+  dsimp only
+  have negative (charge : Charge D) :
+      neutralPolynomialMode D index.1 charge (-(sourceWeight D index : ℤ)) =
+        LinearMap.mulLeft ℂ (X index) := by
+    have frequency : -(sourceWeight D index : ℤ) = -(index.2 : ℤ) - 1 := by
+      simp only [sourceWeight, Nat.cast_add, Nat.cast_one]
+      ring
+    rw [frequency, neutralPolynomialMode_negative]
+  have expansion : b = ∑ charge ∈ b.support, Finsupp.single charge (b charge) := by
+    exact b.sum_single.symm
+  conv_lhs => rw [expansion]
+  rw [map_sum, map_sum]
+  simp only [neutralMode_single, correctedField, Finsupp.lsum_single,
+    negative, LinearMap.mulLeft_apply, mul_comm (X index)]
+  have recurrences : ∀ charge ∈ b.support,
+      correctedPolynomial D hu charge (b charge * X index) =
+        singletonLinear D hu index (correctedPolynomial D hu charge (b charge)) +
+          ∑ n ∈ Finset.range (vectorFrequencyBound D b + 1),
+            (((sourceWeight D index : ℂ) * halfBinomial (sourceWeight D index) *
+              halfBinomial n) / ((sourceWeight D index : ℂ) + (n : ℂ))) •
+              shiftField D hu (sourceWeight D index + n)
+                (correctedPolynomial D hu charge
+                  (neutralPolynomialMode D index.1 charge (n : ℤ) (b charge))) := by
+    intro charge supported
+    exact correctedPolynomial_insertion_modes D hu charge index (b charge)
+      (vectorFrequencyBound D b) (source_variable_bound D b charge supported)
+  simp_rw [Finset.sum_congr rfl recurrences]
+  rw [Finset.sum_add_distrib, Finset.sum_comm]
+  apply congrArg₂ (· + ·)
+  · rw [← map_sum]
+    rfl
+  · apply Finset.sum_congr rfl
+    intro n member
+    rw [← Finset.smul_sum, ← map_sum]
+    apply congrArg (fun F : NativeField D hu =>
+      (((sourceWeight D index : ℂ) * halfBinomial (sourceWeight D index) *
+        halfBinomial n) / ((sourceWeight D index : ℂ) + (n : ℂ))) •
+          shiftField D hu (sourceWeight D index + n) F)
+    rw [neutralMode, Finsupp.lsum_apply]
+    change (∑ charge ∈ b.support, _) =
+      (Finsupp.lsum ℂ (correctedPolynomial D hu))
+        (∑ charge ∈ b.support, Finsupp.single charge
+          (neutralPolynomialMode D index.1 charge (n : ℤ) (b charge)))
+    rw [map_sum]
+    simp only [Finsupp.lsum_single]
+
+end D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField
+end

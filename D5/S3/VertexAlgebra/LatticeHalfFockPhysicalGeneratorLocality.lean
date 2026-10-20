@@ -161,14 +161,16 @@ private theorem jetScalar_succ (order : ℕ) (mode : ℤ) :
     jetScalar (order + 1) mode =
       (-((order + 1 : ℕ) : ℂ)⁻¹) * ((mode : ℂ) + 3 / 2 + order) *
         jetScalar order mode := by
-  simp only [jetScalar, Finset.prod_range_succ, Nat.factorial_succ, Nat.cast_mul,
-    Nat.cast_add, Nat.cast_one]
-  have factorialNonzero : (order.factorial : ℂ) ≠ 0 := by
-    exact_mod_cast Nat.factorial_ne_zero order
-  have successorNonzero : (order : ℂ) + 1 ≠ 0 := by
+  have successorNonzero : ((order + 1 : ℕ) : ℂ) ≠ 0 := by
     exact_mod_cast Nat.succ_ne_zero order
-  field_simp
-  ring
+  calc
+    jetScalar (order + 1) mode =
+        ((-(mode : ℂ) - 3 / 2 - (order : ℂ)) * jetScalar order mode) /
+          ((order + 1 : ℕ) : ℂ) :=
+      (eq_div_iff successorNonzero).2 (by
+        simpa only [Nat.cast_add, Nat.cast_one, mul_comm] using
+          LatticeHalfFockOriginalTranslation.native_jet_successor order mode)
+    _ = _ := by push_cast; ring
 
 private theorem jet_commutator_succ (D : LatticeData) (hu : IsUnit D.G.det)
     (colour : Fin D.rank) (order : ℕ) (field : VertexOperator ℂ (ActualTensor D hu)) :

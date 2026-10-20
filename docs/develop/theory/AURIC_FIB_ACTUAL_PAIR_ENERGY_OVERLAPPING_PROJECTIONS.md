@@ -834,3 +834,1447 @@ P1 的工具是标准 Hilbert 空间几何。P2–P4 是在所给实际模型及
 
 ## 追加锚（本行以下为增补区）
 
+## 12. 增补的证据范围与状态
+
+本节以下是对前文第 1–11 节的补充。前文开篇所声明的
+**UNEXECUTED conditional symbolic mathematics** 证据范围保持原样：前文的供应
+前提、P1–P5、D1 以及由它们继承的恢复蕴涵，没有因本补充而获得 kernel、全局
+认证或新的执行状态。
+
+本补充给出普通数学草稿。第 13 节的有限矩阵等式是在所显示的
+$\mathbb Q(\sqrt3,i)$ 中的精确有限代数；第 14–15 节给出独立的度量和
+计数证明；第 16 节明确标为尚未证明的充分供应条件。它们都不是 Lean
+核验、全局认证或对前文状态的重写。所有实际历史、相位、重数、闭事件和
+两个行列式分量继续按第 1 节保留。
+
+## 13. 完整 $S^3$ 上的有限表示见证与 $\gamma_{22}$ 的方向
+
+仍取第 2 节的同一个 $A=A_g$、$J$、$J_j=A^{-j}JA^j$ 以及
+$C_1=J_0J_1$、$C_2=J_1J_2$。直接相乘得到
+
+$$
+C_1=\begin{pmatrix}
+-\frac12&\frac{\sqrt3}{4}+\frac{3i}{4}\\
+-\frac{\sqrt3}{4}+\frac{3i}{4}&-\frac12
+\end{pmatrix},
+\quad
+C_2=\begin{pmatrix}
+-\frac12+\frac{3\sqrt3}{8}i&-\frac{5\sqrt3}{16}-\frac{3i}{16}\\
+\frac{5\sqrt3}{16}-\frac{3i}{16}&-\frac12-\frac{3\sqrt3}{8}i
+\end{pmatrix}.
+\tag{13.1}
+$$
+
+这两个矩阵属于 $SU(2)$，且 $C_j^{-1}=C_j^\dagger$。令
+
+$$
+X=\frac18\begin{pmatrix}6&-5\sqrt3+9i\\-5\sqrt3-9i&-6\end{pmatrix}.
+\tag{13.2}
+$$
+
+则 $X=X^\dagger$、$\operatorname{tr}X=0$、$X^2=3I_2$，并且逐项有限
+相乘给出
+
+$$
+\frac14\left(C_1XC_1^\dagger+C_1^\dagger XC_1\,+C_2XC_2^\dagger+C_2^\dagger XC_2\right)=\frac58X.
+\tag{13.3}
+$$
+
+为说明 (13.3) 的有限代数内容，可用 Pauli 基底
+$\sigma_x,\sigma_y,\sigma_z$ 写共轭作用的实三维矩阵。四项对称平均为
+
+$$
+M=\frac1{256}
+\begin{pmatrix}
+25&63\sqrt3&-18\sqrt3\\
+63\sqrt3&-5&-90\\
+-18\sqrt3&-90&-20
+\end{pmatrix},
+$$
+
+而 $q=(-5\sqrt3,-9,6)^{\mathsf T}$ 满足 $Mq=\frac58q$。这与
+(13.2) 的坐标完全相同，故 (13.3) 是精确等式而非浮点特征值判断。
+
+在完整单位球面 $S^3\subset\mathbb C^2$ 上，对任意矩阵记
+$v_X(z)=z^\dagger Xz$，并取
+
+$$
+v(z)=z^\dagger Xz
+=\frac34(|z_1|^2-|z_2|^2)
++\frac14\operatorname{Re}\!\left[(-5\sqrt3+9i)\overline z_1z_2\right].
+\tag{13.4}
+$$
+
+对 $z_1=\sqrt t\,e^{i\alpha}$、$z_2=\sqrt{1-t}\,e^{i\beta}$，归一化球面
+测度为 $dt\,d\alpha\,d\beta/(2\pi)^2$。相位积分消去交叉项，故
+
+$$
+\int_{S^3}v\,dm=\frac34\int_0^1(2t-1)\,dt=0.
+$$
+
+同样计算平方，令 $B=-5\sqrt3+9i$，则 $|B|^2=156$，从而
+
+$$
+\begin{aligned}
+\|v\|_2^2
+&=\frac{36}{64}\int_0^1(2t-1)^2dt
++\frac{2\cdot156}{64}\int_0^1t(1-t)dt\\
+&=\frac{36}{64}\cdot\frac13+\frac{312}{64}\cdot\frac16=1.
+\end{aligned}
+\tag{13.5}
+$$
+
+函数 $v$ 是完整 $S^3$ 上的非零、均值零、范数一的复 $L^2$ 函数。对
+$\mathsf U_gv(z)=v(g^{-1}z)$，有
+$\mathsf U_gv_X=v_{gXg^\dagger}$。因此 (13.3) 在原来的完整球面作用中给出
+
+$$
+\mathsf U_\sigma v=\frac58v,
+\qquad
+\frac{\langle v,(I-\mathsf U_\sigma)v\rangle}{\|v\|_2^2}=\frac38.
+\tag{13.6}
+$$
+
+这只给出
+
+$$
+0<\gamma_{22}\le\frac38<1
+\tag{13.7}
+$$
+
+中的上界方向；正性沿用前文已明确标出的供应前提。没有证明 $\gamma_{22}=3/8$，
+没有证明它是全空间最小商，也没有得到独立的正下界。特别地，不能把
+$3/8$ 当作 P1–P4 所需的谱隙下界。
+
+若只在继承的 $0<\gamma=\gamma_{22}\le1$ 和前文条件包络下工作，
+$\kappa=1-\gamma/2$、$\widehat\xi=-\ln\kappa$ 满足
+
+$$
+\kappa\ge\frac{13}{16},\qquad
+0<\widehat\xi\le\ln\frac{16}{13}=:\xi_*<\ln2=:h_*.
+\tag{13.8}
+$$
+
+故前文阈值
+
+$$
+\widehat a=\frac{\widehat\xi}{2+\widehat\xi/h_*}
+\le
+a_*:=\frac{\ln(16/13)}{2+\ln(16/13)/\ln2}<\frac{h_*}{3}.
+\tag{13.9}
+$$
+
+对任意 $\widehat a<a<h_*$，同一条件包络的线性支满足
+
+$$
+3a>a+\widehat\xi(1-a/h_*),
+\qquad
+h_*>a+\widehat\xi(1-a/h_*),
+$$
+
+所以该包络在这一区间严格低于目标 $\min\{3a,h_*\}$。尤其
+$a_*<a<h_*$ 对所有与 (13.7) 相容的正 $\gamma$ 都未被这个包络匹配。
+这只是供应包络的未消除区间；它不是原目标的反例。原始的每个固定
+$a,c>0$ 的全尺度目标和完整有限联合恢复目标仍为 **OPEN**。相应地，
+若沿用前文的率变量 $\widehat\beta=2\widehat a$，则
+$\widehat\beta\le2a_*$，其条件操作率的未匹配区间仍为
+$\widehat\beta<\beta<2h_*$。
+
+## 14. 任意概率律的三维紧群几何不等式
+
+下面的引理对 $K=SU(2)\sqcup SU(2)J$ 上任意概率律 $\nu$ 成立，因而不把
+有限实际字律替换成 Haar 律。取常数 $a_0,b_0>0$，使得由第 5 节的
+体积公式，在 $0<s\le1/2$ 时
+
+$$
+a_0s^3\le V(s)\le b_0s^3.
+\tag{14.1}
+$$
+
+**引理 G。** 存在绝对常数 $C_G$，使得对所有充分小的
+$0<\delta\le1/8$、所有 $0\le r\le1/8$ 以及 $K$ 上任意概率律 $\nu$，
+
+$$
+E_\nu(r):=(\nu\times\nu)\{(x,y):d(x,y)\le r\}
+\le C_G(1+r/\delta)^3E_\nu(\delta).
+\tag{14.2}
+$$
+
+证明如下。取一个极大的 $\delta/2$-分离有限网
+$\{x_i\}_{i\in I}$。紧性保证有限性，极大性保证每个点在某个
+$B_{\delta/2}(x_i)$ 内。按最小指标打破平局，得到可测分割
+$K=\bigsqcup_iA_i$，且 $A_i\subseteq B_{\delta/2}(x_i)$，故
+$\operatorname{diam}A_i\le\delta$。置 $p_i=\nu(A_i)$。闭事件的边界
+不被删除，因为同一 cell 中的每一对点都满足 $d(x,y)\le\delta$，所以
+
+$$
+\sum_i p_i^2\le E_\nu(\delta).
+\tag{14.3}
+$$
+
+若 $x\in A_i$、$y\in A_j$ 且 $d(x,y)\le r$，则
+$d(x_i,x_j)\le r+\delta$。对固定 $i$ 令
+$N_i=\{j:d(x_i,x_j)\le r+\delta\}$。网点间的关系是对称的。由于
+$r+\delta<2$，相反行列式分量的网点不可能同时出现在 $N_i$ 中；因此
+所有这些小球留在同一个三维分量内。网点的开球
+$B_{\delta/4}(x_j)$ 两两不交，并包含于
+$B_{r+5\delta/4}(x_i)$。当 $\delta$ 足够小时，(14.1) 给出
+
+$$
+|N_i|\,a_0(\delta/4)^3
+\le b_0(r+5\delta/4)^3
+\le C_0(1+r/\delta)^3\delta^3,
+\tag{14.4}
+$$
+
+其中 $C_0$ 与 $\nu,r,\delta$ 无关。于是最大对称邻居度满足
+$\max_i|N_i|\le C_0(1+r/\delta)^3$。再由
+$p_ip_j\le(p_i^2+p_j^2)/2$，并按有序邻居求和，得到
+
+$$
+\begin{aligned}
+E_\nu(r)
+&\le\sum_i\sum_{j\in N_i}p_ip_j\\
+&\le\sum_i|N_i|p_i^2
+\le C_0(1+r/\delta)^3\sum_i p_i^2.
+\end{aligned}
+$$
+
+结合 (14.3) 即得 (14.2)。当 $r=0$ 时直接由单元对角项和
+$E_\nu(0)\le E_\nu(\delta)$ 得到结论；因此 (14.2) 包括闭边界和
+$0\le r$ 的端点。
+
+对实际长度 $n$ 的律 $\nu_n=\mu^{*n}$，置
+
+$$
+\delta_n=2^{-n/3},\qquad Q_n=2^nE_n(\delta_n).
+\tag{14.5}
+$$
+
+当 $n$ 足够大使 $\delta_n$ 落入引理 G 的范围时，
+$\delta_n^3=2^{-n}$ 和
+$(1+x)^3\le4(1+x^3)$ 给出统一的几何界
+
+$$
+E_n(r)\le C\,Q_n(2^{-n}+r^3)
+\qquad(0\le r\le1/8),
+\tag{14.6}
+$$
+
+其中 $C$ 为绝对常数。这个界只使用实际律的 cell 质量，保留了所有
+历史重数。
+
+## 15. 临界尺度、平滑二范数与精确尾字计数
+
+先证明临界尺度与原全尺度陈述的等价性。若
+$Q_n\le e^{o(n)}$，把 $r=ce^{-an}$ 代入 (14.6)，固定的 $a,c>0$
+给出
+
+$$
+E_n(ce^{-an})\le e^{o(n)}\bigl(e^{-3an}+2^{-n}\bigr).
+\tag{15.1}
+$$
+
+反过来，在原目标中取 $a=h_*/3$、$c=1$，便有
+$ce^{-an}=\delta_n$，所以
+
+$$
+Q_n=2^nE_n(\delta_n)\le2e^{o(n)}=e^{o(n)}.
+\tag{15.2}
+$$
+
+因此
+
+$$
+Q_n\le e^{o(n)}\quad\Longleftrightarrow\quad
+\text{原目标对每个固定 }a,c>0\text{ 成立}.
+\tag{15.3}
+$$
+
+这里的 $o(n)$ 可依赖所固定的 $a,c$；(14.6) 中的常数 $C$ 是统一的。
+这只是等价改写，不是临界假设的证明。
+
+令 $f_{n,s}=P^nb_s$。由实际前向卷积和闭球交叠的逐项展开，
+
+$$
+\|f_{n,s}\|_2^2
+=4^{-n}\sum_{h,g}
+\frac{m_K(B_s(G_h)\cap B_s(G_g))}{V(s)^2}.
+\tag{15.4}
+$$
+
+若中心距离不超过 $r$，则 $B_r(G_h)$ 落在两个
+$B_{2r}$ 球的交中；反之，交叠非空时中心距离不超过 $2s$。取
+$s=2\delta_n$，并用 (14.1)，得到充分大 $n$ 时的两侧关系
+
+$$
+Q_n\le C_1\|P^nb_{2\delta_n}\|_2^2,
+\tag{15.5}
+$$
+
+以及
+
+$$
+\|P^nb_{2\delta_n}\|_2^2
+\le\frac{E_n(4\delta_n)}{V(2\delta_n)}
+\le C_2Q_n.
+\tag{15.6}
+$$
+
+第一式直接来自 (15.4)：若 $d(G_h,G_g)\le r$，则
+$B_r(G_h)\subseteq B_{2r}(G_h)\cap B_{2r}(G_g)$，故
+
+$$
+E_n(r)\le\frac{V(2r)^2}{V(r)}\|P^nb_{2r}\|_2^2.
+$$
+
+在 $r=\delta_n$ 时，由 $2^n\delta_n^3=1$ 及 (14.1)，
+$2^nV(2\delta_n)^2/V(\delta_n)\le64b_0^2/a_0$，即得 (15.5)。
+第二式来自 (15.4) 中交叠质量至多 $V(2\delta_n)$，再把 (14.6)
+用于 $4\delta_n$。故
+
+$$
+Q_n\le e^{o(n)}
+\quad\Longleftrightarrow\quad
+\|P^nb_{2\delta_n}\|_2^2\le e^{o(n)}.
+\tag{15.7}
+$$
+
+现在给出不带取整的尾字等式。对 $m\ge0$ 保持第 8 节实际尾字集合
+$\mathcal T_m$ 和有序计数
+
+$$
+D_m(R)=\#\{(W,V)\in\mathcal T_m^2:N(W-V)\le R\}.
+$$
+
+第 8 节的实际时间字典把长度 $n=m+1$ 的每个奇偶类逐一对应于
+$\mathcal T_m$，并保留每条历史的质量 $2^{-(m+1)}$。同一奇偶类的
+距离平方为 $2\,4^{-m}N(W-V)$，两类之间的距离恰为 $2$。因为
+$\delta_{m+1}<2$，异奇偶项不进入临界闭球，故精确地
+
+$$
+E_{m+1}(\delta_{m+1})
+=\frac12\,4^{-m}
+D_m\!\left(\frac{4^m\delta_{m+1}^2}{2}\right).
+\tag{15.8}
+$$
+
+而
+
+$$
+\frac{4^m\delta_{m+1}^2}{2}
+=\frac{2^{2m}2^{-2(m+1)/3}}2
+=2^{(4m-5)/3}.
+$$
+
+所以，不作 floor 或半径舍入，保留 $m=n-1$，有
+
+$$
+\boxed{
+Q_{m+1}=2^{-m}D_m\!\left(2^{(4m-5)/3}\right)
+}\qquad(m\ge0).
+\tag{15.9}
+$$
+
+端点 $m=0$ 也在此式中成立：约定 $D_0(R)=1$（$R\ge0$），则
+$Q_1=1$。式 (15.9) 是实际有序尾对、对角项、原时间顺序和奇偶
+分量的精确字典，不是整壳均匀律。
+
+同样，若 $k+\ell=n$，把实际历史按时间写成 $XY$，其中
+$X\sim\mu^{*\ell}$ 是最后 $\ell$ 个字母的乘积，
+$Y\sim\mu^{*k}$ 是最初 $k$ 个字母的乘积。对两份独立历史
+$X'Y'$，双不变性给出严格的时间顺序恒等式
+
+$$
+d(XY,X'Y')=d(X'^{-1}X,Y'Y^{-1}).
+\tag{15.10}
+$$
+
+两项分别由独立的末块和首块产生，故其差律为
+
+$$
+\alpha_\ell=\check{(\mu^{*\ell})}*\mu^{*\ell},
+\qquad
+\beta_k=\mu^{*k}*\check{(\mu^{*k})}.
+\tag{15.11}
+$$
+
+这里没有交换乘积次序，也没有把两个边缘问题的分别最优值替换为同一联合
+实现的最优值。式 (15.10)–(15.11) 只是临界碰撞问题的另一种联合表述。
+
+## 16. 未证明的有限异常 Peter–Weyl 供应条件
+
+下面的条件是一个保留原非对称算子 $P=UQ_0$ 的充分供应者，当前不声称
+它对这些生成元成立。令 $\Pi$ 是 $L^2(K;\mathbb C)$ 中有限个完整
+Peter–Weyl 左正则等型分量的正交投影，包含常数分量和 $\chi$ 分量；记
+其有限秩为 $d_\Pi$。假定存在 $s_n\ge1$，$\log s_n=o(n)$，使
+
+$$
+\|P^n(I-\Pi)\|_{2\to2}^2\le s_n\,2^{-n}
+\qquad(n\ge1).
+\tag{16.1}
+$$
+
+这是未证明的充分条件，涉及原来的非正规前向算子及固定有限异常空间，
+不是谱半径结论、对称化行走结论或 Shannon 熵结论。
+
+为说明它确实足以供应临界二范数，取任一完整等型分量的标准正交基，
+有限和的 reproducing kernel 对角线恒为 $d_\Pi$：左不变性使其为常数，
+积分后常数正是秩。因此对任意非负概率密度 $f$，
+
+$$
+\|\Pi f\|_2
+=\left\|\int_K f(x)(\phi_a(x))_a\,dm_K(x)\right\|_2
+\le\int_K f(x)\left(\sum_a|\phi_a(x)|^2\right)^{1/2}dm_K(x)
+\le\sqrt{d_\Pi}.
+\tag{16.2}
+$$
+
+投影 $\Pi$ 与每个左平移、因而与原来的 $P$ 交换。对
+$f=b_{2\delta_n}$，由 (14.1) 有
+$\|f\|_2^2=V(2\delta_n)^{-1}\le C_3\,2^n$。于是 (16.1)–(16.2)
+以及 $(a+b)^2\le2a^2+2b^2$ 给出
+
+$$
+\begin{aligned}
+\|P^nf\|_2^2
+&\le2\|P^n\Pi f\|_2^2
+ +2\|P^n(I-\Pi)f\|_2^2\\
+&\le2d_\Pi+2s_n2^{-n}\|f\|_2^2
+\le2d_\Pi+2C_3s_n=e^{o(n)}.
+\end{aligned}
+\tag{16.3}
+$$
+
+由 (15.7) 和 (14.6)，(16.1) 条件蕴含临界尺度的
+$Q_n\le e^{o(n)}$，进而蕴含原全尺度目标。条件 (16.1) 本身仍是
+**UNPROVED sufficient supplier**；它没有被当作实际算子的已证性质，也没有
+改变主目标仍为临界配对能量这一事实。
+
+## 17. $\gamma$ 见证与实际局部恢复误差的有限对应
+
+这里仅复用固定有限二元 CPTP 定理 59.2 及其在编码 qutrit 上的已发表
+应用。为固定生成元与该应用的时间对应，仍取 $A=A_g$、
+$g_0=A,g_1=AJ$。同长度的共同相位消去后，约定相对矩阵为
+$F_h^{-1}F_k=G_h^{-1}G_k$。由 $J_j=A^{-j}JA^j$、$J_j^2=I$
+以及 (1.2) 的实际时间顺序，有
+
+$$
+\begin{aligned}
+G_{00}^{-1}G_{11}
+&=A^{-2}(AJ)(AJ)=A^{-1}JAJ=J_1J_0=C_1^{-1},\\
+G_{000}^{-1}G_{101}
+&=A^{-3}(AJ)A(AJ)=A^{-2}JA^2J=J_2J_0=(C_1C_2)^{-1}.
+\end{aligned}
+$$
+
+这里 $C_1C_2=J_0J_1^2J_2=J_0J_2$。由 (13.1) 的精确矩阵及
+$SU(2)$ 中逆矩阵与原矩阵的迹相同，
+
+$$
+\frac12\operatorname{tr}(J_2J_0)
+=\frac12\operatorname{tr}(C_1C_2)=\frac58.
+$$
+
+因此实际同一组 $A,J$ 的等奇偶历史 $000,101$ 在编码 qutrit 的
+相对矩阵中满足 $\cos\theta=5/8$。对固定且输入无关的公平权重
+$p=q=1/2$，定理 59.2 的数值域距离为 $\nu=\cos\theta=5/8$，故
+
+$$
+\delta_{1/2}(U)
+=1-\sqrt{1-4(1/2)(1/2)(1-\nu^2)}
+=1-\nu=\frac38.
+\tag{17.1}
+$$
+
+这是实际 $000/101$ 这一固定记录、固定公平权重、编码 qutrit 范围内的
+**条件 recovery error**。它与 (13.6) 的测试 Rayleigh 商同为
+$1-5/8=3/8$。因此在这个具体有限代数实例中可以写成
+
+$$
+\gamma_{22}\ \le\ \underbrace{\frac38}_{\text{测试商}}
+=\underbrace{\frac38}_{\text{实际 }000/101\text{ 的条件局部误差}}.
+\tag{17.2}
+$$
+
+等号右侧的局部解释依赖定理 59.2 的固定输入无关公平权重和编码 qutrit
+嵌入；它不涉及全局控制器、历史相关的最优记录、全体记忆宽度或终端
+CPTP 家族的全局最优。也不允许把公平权重改为输入依赖 Born 权重，或把
+这个角度推广为任意角度的谱隙—恢复等式。式 (17.2) 的唯一谱隙结论仍是
+变分定义给出的上界 $\gamma_{22}\le3/8$，而非一般的谱隙与恢复误差
+相等定理。
+
+## 18. 工具、来源相对性与未解决目标
+
+本补充使用的工具是标准的矩阵系数与 Rayleigh 商计算、紧群上的
+Peter–Weyl 分解、最大分离网与 Cauchy–Schwarz 邻居计数、Haar 小球体积
+比较，以及第 59.2 节的有限二元 CPTP 定理。它们在这里按实际
+$A,J$、实际时间顺序和实际公平字律应用；没有用 Haar 字律替换有限历史，
+也没有把与本字母表不相符的 entropy 或 golden-gate 方案作为定理前提。
+这些陈述是来源相对的普通数学草稿，不作全局原创性或文献穷尽声明。
+
+目前保留的主问题仍是：对同一实际独立公平历史、相位、重数、闭有序配对
+事件，证明每个固定 $a,c>0$ 的 (9.1)，以及在其基础上的完整有限
+$(n,\varepsilon)$ 联合恢复律。有限表示见证排除了同一条件包络中
+$\gamma_{22}=1$ 的分支，却没有证明或否定临界能量估计。有限异常
+Peter–Weyl 条件 (16.1) 是可检验的额外路线，尚未在实际算子上得到。
+
+## 追加锚（本行以下为增补区）
+
+## 19. 原临界配对能量的有限加权自旋表述
+
+本节仍取 (1.1) 的 $A=A_g$、$J=\operatorname{diag}(-1,1)$，
+以及 (2.2) 的实际算子 $P=T_AQ_0$。特别地，
+$A^*A=I$ 而 $\det A=-1$；不把 $A$ 当作 $SU(2)$ 的元素。
+以下所有球、距离、Haar 概率和 $b_r$ 均为第 5 节在完整 $K$ 上的定义。
+每条历史仍为 (1.2) 的 $G_h=(AJ^{h_n})\cdots(AJ^{h_1})$，
+其质量为 $2^{-n}$。共同的 $\lambda^{-n}$ 只通过 (1.5) 消去。
+本节不需要同长度注入性、分离下界或第 2 节的正谱隙前提。
+
+### 19.1 完整中心、表示与非负密度
+
+记 $z=iI$。由于 $K$ 包含 $SU(2)$，与 $K$ 中每个元素交换的矩阵
+先与 $SU(2)$ 的对角环面交换，因而是对角矩阵；再与其非对角旋转交换，
+两个对角元必须相等。标量 $\alpha I$ 属于 $K$ 当且仅当
+$\alpha^4=1$，故
+
+$$
+Z(K)=\{I,z,z^2,z^3\},\qquad
+K=Z(K)SU(2),\qquad Z(K)\cap SU(2)=\{I,-I\}.
+\tag{19.1}
+$$
+
+因此 $K/Z(K)\simeq SU(2)/\{I,-I\}$。其不可约酉表示由整数
+$\ell\ge0$ 编号；在 $K$ 上写成
+
+$$
+\rho_\ell(g)=(\det g)^\ell\operatorname{Sym}^{2\ell}(g),\qquad
+ d_\ell=2\ell+1,\qquad \vartheta_\ell(g)=\operatorname{tr}\rho_\ell(g).
+\tag{19.2}
+$$
+
+这里的 $\vartheta_\ell$ 与第 2 节的一维行列式特征 $\chi$ 不同。
+在 $SU(2)$ 上，(19.2) 是偶次对称幂；且
+$\rho_\ell(z)=(-1)^\ell i^{2\ell}I=I$。
+$SU(2)$ 的不可约表示为各次对称幂，$-I$ 在第 $k$ 次幂上作用为
+$(-1)^k$，故 (19.2) 恰好穷尽完整中心作用平凡的不可约表示，且没有重复。
+若 $u\in SU(2)$ 的特征值为 $e^{\pm it}$，其权重和给出
+
+$$
+\vartheta_\ell(u)=\sum_{j=-\ell}^{\ell}e^{2ijt}
+=\frac{\sin(d_\ell t)}{\sin t}.
+\tag{19.3}
+$$
+
+端点按连续延拓解释。这些特征标是实值的，在 Haar 概率 $m_K$ 下
+正交归一：两个行列式分量的积分相同，各占权重 $1/2$，而在
+$SU(2)$ 上应用特征标正交关系。
+
+在原复 Hilbert 空间中定义
+
+$$
+R_Z=\frac14\sum_{k=0}^3T_{z^k}.
+\tag{19.4}
+$$
+
+这是中心不变子空间的正交投影，并与 $P$ 交换。若 $f\in L^2(K)$
+是非负实函数，则
+
+$$
+\frac14\|f\|_2^2\le\|R_Zf\|_2^2
+=\frac1{16}\sum_{j,k=0}^3\langle T_{z^j}f,T_{z^k}f\rangle
+\le\|f\|_2^2.
+\tag{19.5}
+$$
+
+左侧只用四个对角项以及全部内积非负；右侧来自正交投影的收缩性。
+等价地，$\|f\|_2^2\le4\|R_Zf\|_2^2$。
+特别地，这适用于 $f=P^nb_r$。非负限制不可删除：
+$f(x)=\det x$ 满足 $\|f\|_2=1$ 而 $R_Zf=0$。
+所以中心平凡部分的估计不能由 (19.5) 推成任意复向量的算子范数估计。
+
+### 19.2 原球的 Fourier 系数与实际矩阵幂
+
+采用 Fourier 约定
+
+$$
+\widehat f(\rho)=\int_K f(x)\rho(x)\,dm_K(x),\qquad
+\widehat{T_gf}(\rho)=\rho(g)\widehat f(\rho).
+\tag{19.6}
+$$
+
+第二式由 $x=gy$ 换元得到。这个约定同样满足 Plancherel 公式：
+其矩阵系数可视为通常逆元约定下反对偶表示系数的转置，Hilbert–Schmidt
+范数及不可约维数权重均不变。
+
+对 $0<r<2$，原 Frobenius 球 $B_r(I)$ 完全位于 $SU(2)$ 分量。
+事实上，$\det x=-1$ 时特征值为 $\eta,-\overline\eta$，故
+$\operatorname{Re}\operatorname{tr}x=0$ 且 $\|I-x\|_F=2$。
+在 $SU(2)$ 分量写特征值为 $e^{\pm it}$，则
+
+$$
+\|I-u\|_F^2=8\sin^2(t/2),\qquad
+\theta_r=2\arcsin\frac r{2\sqrt2},\qquad
+V(r)=\frac1\pi\int_0^{\theta_r}\sin^2t\,dt.
+\tag{19.7}
+$$
+
+这里 $1/\pi$ 已含完整 $K$ 的分量权重，正是 (5.9) 的同一个体积。
+球函数是共轭不变的，Schur 引理和 (19.3) 因而给出
+
+$$
+\widehat b_r(\rho_\ell)=\beta_\ell(r)I_{d_\ell},\qquad
+\beta_\ell(r)=
+\frac{\int_0^{\theta_r}\sin(d_\ell t)\sin t\,dt}
+{d_\ell\int_0^{\theta_r}\sin^2t\,dt},\qquad \beta_0(r)=1.
+\tag{19.8}
+$$
+
+定义实际单步矩阵
+
+$$
+M_\ell=\rho_\ell(A)\frac{I+\rho_\ell(J)}2.
+\tag{19.9}
+$$
+
+独立公平比特与原时间顺序精确给出
+
+$$
+\mathbb E_h\rho_\ell(G_h)=M_\ell^n.
+\tag{19.10}
+$$
+
+这是先按最后比特取期望再归纳的矩阵乘积等式，不交换任何不同因子。
+应用 Peter–Weyl 和 Plancherel，得到
+
+$$
+\|R_ZP^nb_r\|_2^2
+=\sum_{\ell=0}^{\infty}d_\ell|\beta_\ell(r)|^2
+\|M_\ell^n\|_{\rm HS}^2.
+\tag{19.11}
+$$
+
+权重是 $d_\ell$，而矩阵空间有 $d_\ell^2$ 个系数；两者不能混为
+同一个重数。这里使用实际的 $n$ 次幂，不以特征值模的 $n$ 次幂替代。
+
+### 19.3 有限自旋和与显式双向比较
+
+沿用 (14.5) 的 $\delta_n=2^{-n/3}$、$Q_n=2^nE_n(\delta_n)$，置
+
+$$
+L_n=\left\lfloor\frac{2^{n/3}}4\right\rfloor,
+\qquad
+\mathcal S_n=\sum_{\ell=0}^{L_n}(2\ell+1)
+\left\|\left[\rho_\ell(A)\frac{I+\rho_\ell(J)}2\right]^n
+\right\|_{\rm HS}^2.
+\tag{19.12}
+$$
+
+$\mathcal S_n$ 是本节有限加权自旋和，避免与 (2.3) 的 $S_j$ 混用。
+取 (5.10) 的明确常数
+
+$$
+a_0=\frac1{12\sqrt2\pi},\qquad b_0=\frac1{6\sqrt2\pi},
+\qquad a_0r^3\le V(r)\le b_0r^3\quad(0<r\le1/2).
+\tag{19.13}
+$$
+
+**定理 19.1（有限加权自旋临界等价）。** 对每个整数 $n\ge18$，
+
+$$
+\boxed{\quad
+\frac{Q_n}{128\pi^2}\le\mathcal S_n
+\le\frac{18522\pi^2}{32a_0}\,Q_n.
+\quad}
+\tag{19.14}
+$$
+
+两侧均针对 (1.3) 的原闭 Frobenius 事件、全部有序历史对和全部重数。
+
+证明。暂写 $\delta=\delta_n$、$L=L_n$，则 $\delta\le1/64$。
+在 $[0,1/\sqrt2]$ 上，$\arcsin$ 的导数至多 $\sqrt2$，故
+$\theta_{2\delta}\le2\delta$。对 $\ell\le L$，
+
+$$
+d_\ell\theta_{2\delta}\le
+\left(\frac1{2\delta}+1\right)2\delta
+=1+2\delta\le\frac{33}{32}<\frac\pi2.
+\tag{19.15}
+$$
+
+由 $\sin x\ge2x/\pi$（$0\le x\le\pi/2$）和 $\sin t\le t$，
+在整个 $0\le t\le\theta_{2\delta}$ 上有
+$\vartheta_\ell(t)/d_\ell\ge2/\pi$，包括连续端点 $t=0$。
+平均后 $\beta_\ell(2\delta)\ge2/\pi$，所以 (19.11) 给出
+
+$$
+\mathcal S_n\le\frac{\pi^2}4\|R_ZP^nb_{2\delta}\|_2^2
+\le\frac{\pi^2}4\|P^nb_{2\delta}\|_2^2.
+\tag{19.16}
+$$
+
+下面只把既有 (15.4)–(15.6) 中需要的几何常数明确化。
+取极大 $\delta/2$-分离网，以最近网点及固定的平局规则形成可测单元
+$A_i\subseteq B_{\delta/2}(x_i)$，并令 $p_i=\nu_n(A_i)$。
+单元直径至多 $\delta$，故 $\sum_i p_i^2\le E_n(\delta)$。
+若两点的距离至多 $4\delta$，相应中心距离至多 $5\delta$。
+这些邻居中心的开 $\delta/4$ 球两两不交，全部落入
+$B_{21\delta/4}(x_i)$。所有体积半径都至多 $1/2$，故每个中心的邻居数至多
+
+$$
+\frac{b_0(21\delta/4)^3}{a_0(\delta/4)^3}
+=2\cdot21^3=18522.
+\tag{19.17}
+$$
+
+邻居关系对称，用 $p_ip_j\le(p_i^2+p_j^2)/2$ 按有序邻居求和得到
+$E_n(4\delta)\le18522E_n(\delta)$。
+由原球交叠公式 (15.4)，
+
+$$
+\|P^nb_{2\delta}\|_2^2
+\le\frac{E_n(4\delta)}{V(2\delta)}
+\le\frac{18522}{8a_0}Q_n.
+\tag{19.18}
+$$
+
+(19.16) 与 (19.18) 给出 (19.14) 的上界。
+这些公式中的 $2\delta$ 平滑半径和 $4\delta$ 配对半径均保持原义；
+相反方向仍由 (15.5) 的
+$Q_n\le(64b_0^2/a_0)\|P^nb_{2\delta}\|_2^2$ 供应。
+
+为证明有限和的下界，构造非负的有限特征标核，而不估计 (19.11) 的高频尾部。
+令
+
+$$
+m=\lfloor L/2\rfloor=\left\lfloor\frac1{8\delta}\right\rfloor,
+\quad N_m=\sum_{j=0}^m(2j+1)^2,
+\quad \mathcal D_m=\sum_{j=0}^m(2j+1)\vartheta_j,
+\quad \mathcal F_m=\frac{|\mathcal D_m|^2}{N_m}.
+\tag{19.19}
+$$
+
+特征标正交性给出 $\int_K\mathcal F_m\,dm_K=1$，且
+$\mathcal F_m\ge0$ 处处成立。在原球 $B_\delta(I)$ 上，(19.15) 的
+同一正弦界给出 $\mathcal D_m\ge2N_m/\pi$。直接求和有
+
+$$
+N_m=\frac{(m+1)(2m+1)(2m+3)}3,
+\qquad N_m-(m+1)^3=\frac{m(m+1)(m+2)}3\ge0.
+\tag{19.20}
+$$
+
+由于 $m+1>1/(8\delta)$，因此
+
+$$
+\mathcal F_m(x)\ge\frac{4N_m}{\pi^2}
+\ge\frac{\delta^{-3}}{128\pi^2}
+\qquad(x\in B_\delta(I)).
+\tag{19.21}
+$$
+
+将 (19.3) 的有限权重和相乘，逐权重计数得到
+
+$$
+\vartheta_j\vartheta_k
+=\sum_{\ell=|j-k|}^{j+k}\vartheta_\ell.
+\tag{19.22}
+$$
+
+具体地，左侧权重 $e^{2iat}$ 的系数是满足 $b+c=a$、
+$|b|\le j,|c|\le k$ 的整数对数；右侧系数是同时满足
+$|j-k|\le\ell\le j+k$、$|a|\le\ell$ 的整数 $\ell$ 数，两者相等。
+该等式在 $SU(2)$ 上成立，并因所有特征标均通过 $K/Z(K)$ 而在 $K$ 上成立。
+因此
+
+$$
+\mathcal F_m=\sum_{\ell=0}^{2m}d_\ell\kappa_\ell\vartheta_\ell,
+\qquad \kappa_\ell\ge0.
+\tag{19.23}
+$$
+
+还需要上界而不仅是系数的正性。中心性、Schur 引理和正交关系给出
+$\widehat{\mathcal F_m}(\rho_\ell)=\kappa_\ell I$。
+$\mathcal F_m$ 是非负概率密度，而 $\rho_\ell(x)$ 酉，故
+
+$$
+|\kappa_\ell|=
+\|\widehat{\mathcal F_m}(\rho_\ell)\|_{\rm op}
+\le\int_K\mathcal F_m\,dm_K=1.
+\tag{19.24}
+$$
+
+对两个独立的原实际历史，(19.10) 给出
+
+$$
+\mathbb E_{h,g}\vartheta_\ell(G_h^{-1}G_g)
+=\operatorname{tr}\bigl((M_\ell^n)^*M_\ell^n\bigr)
+=\|M_\ell^n\|_{\rm HS}^2.
+\tag{19.25}
+$$
+
+由 $2m\le L$ 和 $0\le\kappa_\ell\le1$，
+
+$$
+\mathbb E_{h,g}\mathcal F_m(G_h^{-1}G_g)
+=\sum_{\ell=0}^{2m}d_\ell\kappa_\ell\|M_\ell^n\|_{\rm HS}^2
+\le\mathcal S_n.
+\tag{19.26}
+$$
+
+原距离左右不变，所以 $d(G_h,G_g)\le\delta$ 当且仅当
+$G_h^{-1}G_g\in B_\delta(I)$。利用 (19.21) 和球外核的非负性，
+
+$$
+\mathbb E_{h,g}\mathcal F_m(G_h^{-1}G_g)
+\ge\frac{\delta^{-3}}{128\pi^2}E_n(\delta)
+=\frac{Q_n}{128\pi^2}.
+\tag{19.27}
+$$
+
+期望始终是原来的 $4^{-n}\sum_{h,g}$；相同乘积的不同历史和全部对角项
+都没有合并或删除。这就证明了另一侧。$\square$
+
+$\ell=0$ 项等于一，故 $\mathcal S_n\ge1$；对角历史对也给出
+$Q_n\ge1$。由定理 19.1 和既有 (15.3)、(15.7)，
+
+$$
+\log\mathcal S_n=o(n)
+\quad\Longleftrightarrow\quad Q_n\le e^{o(n)}
+\quad\Longleftrightarrow\quad
+\text{(15.3) 的原全尺度配对目标成立}.
+\tag{19.28}
+$$
+
+其中 $\log\mathcal S_n=o(n)$ 仍是需要证明的必要且充分条件。
+(19.14) 给出有限和的等价表述，没有给出该和的次指数估计。
+它也不把非负球密度的结论提升为完整复空间上的统一算子衰减。
+
+## 20. 原完整复空间上的相位保持压缩
+
+本节仍在 $L^2(K;\mathbb C)$ 中工作，写
+$Q=Q_0=(I+T_J)/2$、$\mathcal H_J=\operatorname{ran}Q$。
+为与 (2.5) 对齐，取 $C=C_1=JA^{-1}JA$，并令 $D=AC$。
+新的对称平均记作 $\mathsf S$，不改用原来的 $S_j$。
+
+### 20.1 被压缩的实际矩阵
+
+直接将 (1.1) 代入，得到
+
+$$
+C=\begin{pmatrix}
+-1/2&(\sqrt3+3i)/4\\
+(-\sqrt3+3i)/4&-1/2
+\end{pmatrix},\qquad
+D=\operatorname{diag}\left(\frac{-\sqrt3+i}{2},
+\frac{\sqrt3+i}{2}\right).
+\tag{20.1}
+$$
+
+由 $\operatorname{tr}C=-1$、$\det C=1$，Cayley–Hamilton 给出
+$C^2+C+I=0$，而 $C\ne I$。改变非对角项的符号并用 $C^{-1}=-I-C$，
+得到 $JCJ=C^{-1}$。$D$ 为对角矩阵，故 $DJ=JD$；定义又给出
+$A=DC^{-1}$。其两个对角元为 $e^{5\pi i/6},e^{\pi i/6}$，所以
+
+$$
+C^3=I,\qquad D^3=z=iI,\qquad D^{12}=I.
+\tag{20.2}
+$$
+
+$D$ 在完整 $K$ 中的阶是十二，不能按阶三的元素处理。
+
+置
+
+$$
+E_C=\frac{I+T_C+T_C^2}{3},\qquad
+\mathsf S=\frac{T_C+T_{C^{-1}}}{2}
+=\frac{3E_C-I}{2}.
+\tag{20.3}
+$$
+
+$C^3=I$ 说明 $E_C^*=E_C=E_C^2$，其像恰为 $T_C$ 的不动向量空间。
+因而 $\operatorname{spec}(\mathsf S)\subseteq\{1,-1/2\}$。
+由 $JCJ=C^{-1}$，$T_J\mathsf ST_J=\mathsf S$；$D$ 与 $J$ 交换，
+所以 $\mathsf S$、$T_D$ 均保持 $\mathcal H_J$。
+若 $v\in\mathcal H_J$，则
+$T_JT_{C^{-1}}v=T_CT_Jv=T_Cv$，于是
+
+$$
+QT_{C^{-1}}Q=\mathsf SQ,\qquad
+QT_AQ=T_D\mathsf SQ.
+\tag{20.4}
+$$
+
+这给出保留原相位的压缩算子
+
+$$
+\mathsf B=(QT_AQ)|_{\mathcal H_J}
+=(T_D\mathsf S)|_{\mathcal H_J}.
+\tag{20.5}
+$$
+
+这里没有从 $\mathsf S$ 的两个谱值推断 $T_D\mathsf S$ 的幂衰减：
+乘积的反复作用还取决于 $T_D$ 如何移动 $E_C$ 的像。
+例如常数函数满足 $\mathsf S1=T_D1=1$，因此完整空间中已经有不衰减向量。
+移除常数等有限分量后的情形还需要独立估计。
+
+### 20.2 时间幂、球向量与完整等型截断
+
+**定理 20.1（完整复空间的精确压缩恒等式）。** 对每个整数 $n\ge1$
+及每个复函数 $f\in L^2(K)$，
+
+$$
+P^n=T_A\mathsf B^{n-1}Q,\qquad
+\|P^nf\|_2=\|\mathsf B^{n-1}Qf\|_2.
+\tag{20.6}
+$$
+
+$\mathsf B^0$ 指 $\mathcal H_J$ 上的恒等算子。
+若 $\Pi$ 是任意固定有限个完整 Peter–Weyl 左正则等型分量的投影，
+则 $\mathcal H_{J,\Pi}=\mathcal H_J\cap\ker\Pi$ 受 $\mathsf B$ 保持，且
+
+$$
+\begin{aligned}
+\|P^n(I-\Pi)f\|_2
+&=\|\mathsf B^{n-1}Q(I-\Pi)f\|_2,\\
+\|P^n(I-\Pi)\|_{2\to2}
+&=\|\mathsf B^{n-1}|_{\mathcal H_{J,\Pi}}\|_{2\to2}.
+\end{aligned}
+\tag{20.7}
+$$
+
+证明。$P=T_AQ$ 给出 $n=1$。若 (20.6) 在 $n$ 成立，则
+$Q T_A$ 在 $\mathcal H_J$ 上等于 $\mathsf B$，故
+$P^{n+1}=T_AQT_A\mathsf B^{n-1}Q=T_A\mathsf B^nQ$。
+$T_A$ 是酉算子，遂得范数等式，且没有使用实值、正性或中心限制。
+完整等型投影与每个左平移交换，因而与 $Q,T_A,T_D,\mathsf S$ 及其
+适当限制均交换。于是 $\mathcal H_{J,\Pi}$ 不变。
+第一条截断等式直接来自 (20.6)。在 $\ker\Pi$ 上，$Q$ 正是到
+$\mathcal H_{J,\Pi}$ 的正交投影，故其收缩性给出第二条的“$\le$”。
+反过来在 $\mathcal H_{J,\Pi}$ 中取单位向量，此时
+$Qf=f$、$(I-\Pi)f=f$，取上确界给出“$\ge$”。
+若该空间为零，两侧均为零。$\square$
+
+特别地，对第 15 节的原球向量，有
+
+$$
+\|P^nb_{2\delta_n}\|_2
+=\|\mathsf B^{n-1}Qb_{2\delta_n}\|_2.
+\tag{20.8}
+$$
+
+没有换成商群球或不同的 Haar 归一化。对 (16.1) 允许的固定 $\Pi$
+还须包含常数和行列式分量；其充分条件恰好改写为：存在 $s_n\ge1$，
+$\log s_n=o(n)$，使
+
+$$
+\|\mathsf B^{n-1}|_{\mathcal H_{J,\Pi}}\|_{2\to2}^2
+\le s_n2^{-n}\qquad(n\ge1).
+\tag{20.9}
+$$
+
+这个全向量统一条件仍未证明。它比只要求 (20.8) 中指定球向量的范数
+次指数增长更强；两者不能凭压缩恒等式相互替换。
+
+### 20.3 四个中心扇区的相位
+
+对 $\xi\in\{1,i,-1,-i\}$，定义
+
+$$
+\mathcal L_\xi=\{f:T_zf=\xi f\},\qquad
+R_\xi=\frac14\sum_{k=0}^3\xi^{-k}T_z^k.
+\tag{20.10}
+$$
+
+这些是两两正交的闭扇区及其投影，直和为完整 $L^2(K;\mathbb C)$。
+本节所有算子以及完整等型投影均保持这些扇区。
+置 $W=T_{iD}=T_zT_D$。由 $D^3=z$ 得 $(iD)^3=I$，故 $W^3=I$。
+在 $\mathcal L_\xi$ 上，
+
+$$
+T_D^3=\xi I,\qquad T_D=\xi^{-1}W,\qquad
+\mathsf B|_{\mathcal H_J\cap\mathcal L_\xi}
+=\xi^{-1}(W\mathsf S)|_{\mathcal H_J\cap\mathcal L_\xi}.
+\tag{20.11}
+$$
+
+对应 $\xi=1,i,-1,-i$ 的系数分别为 $1,-i,-1,i$。
+因此若 $f_\xi\in\mathcal L_\xi$，完整的时间恒等式是
+
+$$
+P^nf_\xi
+=\xi^{-(n-1)}T_A
+\left((W\mathsf S)|_{\mathcal H_J\cap\mathcal L_\xi}\right)^{n-1}Qf_\xi.
+\tag{20.12}
+$$
+
+单位相位在单扇区范数中消去，但不能从算子等式中删除。
+对 $f=\sum_\xi f_\xi$，输出仍正交，故
+
+$$
+\|P^nf\|_2^2
+=\sum_\xi\left\|
+\left((W\mathsf S)|_{\mathcal H_J\cap\mathcal L_\xi}\right)^{n-1}Qf_\xi
+\right\|_2^2.
+\tag{20.13}
+$$
+
+这不认同不同扇区上的作用，也不允许只保留 $\xi=1$ 的扇区。
+(19.5) 的非负密度比较与这里任意复向量的恒等式承担不同的量词。
+
+还可用两个 $SU(2)$ 矩阵记录中心不变公式与完整公式的关系。
+取 Pauli 矩阵
+
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\quad
+r=\frac{I-i\sqrt3\sigma_y}{2},\quad
+s=\frac{I+i\sqrt3\sigma_z}{2}.
+\tag{20.14}
+$$
+
+用 $\sigma_j^2=I$ 及其反交换关系相乘，可得
+
+$$
+iA=rs,\quad r^3=s^3=-I,\quad JrJ=r^{-1},\quad Js=sJ,
+\quad C=s^{-1}r^2s,\quad D=zs.
+\tag{20.15}
+$$
+
+写 $V=T_s$、$\mathsf C_r=(T_r+T_{r^{-1}})/2$。
+由 $JrJ=r^{-1}$，有 $QT_rQ=\mathsf C_rQ$，且 $V$ 与 $Q$ 交换。
+另外 $r^2=(-I)r^{-1}$、$r^{-2}=(-I)r$，所以
+
+$$
+\mathsf S=T_z^2V^{-1}\mathsf C_rV,\qquad
+\mathsf B=T_z^{-1}\mathsf C_rV\big|_{\mathcal H_J},\qquad
+P^n=T_z^{-n}T_rV(\mathsf C_rV)^{n-1}Q.
+\tag{20.16}
+$$
+
+最后一式也可从 $P=T_z^{-1}T_rVQ$ 和 $QT_rQ=\mathsf C_rQ$ 归纳得到。
+只有在 $\xi=1$ 扇区，中心因子才全为一；一般扇区须保留 $\xi^{-n}$。
+(20.16) 和 (20.6) 因而是同一实际算子的两种相位完整表达。
+
+## 21. 每个紧开子群上的直接正双陪集障碍
+
+母文 [Proposition 45.3](AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md#45-quaternion-coordinates-for-the-actual-chronological-word-language)
+已经给出实际字律在树上的薄支撑，并区分实际律与完整球壳律。
+这里考察更具体的接口：能否选一个紧开子群，使实际正测度经右平滑后成为
+左不变测度。下面的逐字约化和指数比较适用于每个紧开子群，不以母文的
+自由积或群分类作为前提。
+
+### 21.1 同一实际字的有理四元数坐标
+
+为避免与母文的四元数坐标以及物理空间 $H$ 混淆，本节把有理代数记为
+$\mathbb B=(-1,-3)_{\mathbb Q}$，抽象生成元记为 $u,v$。
+在 (20.14) 的复矩阵中取
+
+$$
+u=-\frac i2(\sigma_x+\sqrt3\sigma_y),\qquad
+v=-i\sqrt3\sigma_z,\qquad a=\frac{I-v-2uv}{4}.
+\tag{21.1}
+$$
+
+Pauli 乘法给出
+
+$$
+u^2=-I,\quad v^2=-3I,\quad uv=-vu,\qquad
+a=iA,\qquad \frac v{\sqrt3}=iJ,
+\quad \operatorname{Nrd}(a)=1,\quad\operatorname{Nrd}(v)=3.
+\tag{21.2}
+$$
+
+这与母文 §45 的有理代数一致。具体地，把母文的坐标另写为
+$u_s=i\sigma_x$、$v_s=i\sqrt3\sigma_z$，则
+
+$$
+v=-v_s,\qquad u=\frac{(v_s-I)u_s}{2},\qquad
+u_s=\frac{(v-I)u}{2},\qquad
+a=\frac{I+v_s+(3I+v_s)u_s}{4}.
+\tag{21.3}
+$$
+
+后式就是母文 (45.1) 的 $a$；两边坐标可以有理地相互恢复。
+对实际历史 $h$，令 $k(h)=\sum_{j=1}^nh_j$，并保持原次序定义
+
+$$
+q_h=(av^{h_n})\cdots(av^{h_1})\in\mathbb B^\times.
+\tag{21.4}
+$$
+
+由 $A=-ia$、$J=-iv/\sqrt3$，逐个实际字母相乘得
+
+$$
+G_h=(-i)^{n+k(h)}3^{-k(h)/2}q_h,
+\qquad\operatorname{Nrd}(q_h)=3^{k(h)}.
+\tag{21.5}
+$$
+
+(21.5) 的复矩阵等式记录了每条历史自己的相位和尺度。
+它允许将同一 $q_h$ 放入射影算术表示，不允许在原 Frobenius 配对事件中
+逐字删去这些因子。尤其 $[G_h]=[q_h]$ 是复射影意义的等式；
+以下的 $2$-进射影元素由有理 $q_h$ 经明确的分裂映射得到。
+
+### 21.2 明确分裂与每条实际字的平移长度
+
+在 $\mathbb Q_2$ 中取 $t^2=-7$、$t\equiv3\pmod8$。
+其存在性可由 Hensel 引理直接得到：对 $f(X)=X^2+7$，
+$v_2(f(3))=4>2v_2(f'(3))=2$，根满足 $v_2(t-3)\ge3$。
+取分裂映射
+
+$$
+u\longmapsto\begin{pmatrix}0&1\\-1&0\end{pmatrix},\qquad
+v\longmapsto\begin{pmatrix}t&2\\2&-t\end{pmatrix}.
+\tag{21.6}
+$$
+
+平方和反交换子分别是 $-I,-3I,0$，因而给出
+$\mathbb B\otimes\mathbb Q_2\to M_2(\mathbb Q_2)$ 的非零含幺同态。
+四元数代数为中心单代数，该同态单射；两边维数均为四，故为同构。
+在这个分裂中继续写 $a,v,q_h$ 表示其矩阵像。直接代入 (21.1)，
+
+$$
+a=\frac14\begin{pmatrix}-t-3&2t-2\\2t-2&t+5\end{pmatrix},
+\qquad\det a=1,\quad\det v=3.
+\tag{21.7}
+$$
+
+写 $t=3+8b$、$b\in\mathbb Z_2$，则
+
+$$
+2a=\begin{pmatrix}-3-4b&2+8b\\2+8b&4+4b\end{pmatrix},\qquad
+\overline{2a}=e=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+\overline v=I.
+\tag{21.8}
+$$
+
+横线表示模二约化。因此对每条长度 $n$ 的历史，
+
+$$
+2^nq_h=(2av^{h_n})\cdots(2av^{h_1})\in M_2(\mathbb Z_2),
+\qquad\overline{2^nq_h}=e^n=e\quad(n\ge1).
+\tag{21.9}
+$$
+
+这是全部历史的同一个归纳，不限于常字或选定子族。
+
+树 $\mathcal T$ 的顶点为 $\mathbb Q_2^2$ 中满 $\mathbb Z_2$ 格的
+位似类；若代表格之间的指数为二，则相邻。
+每个格的三个相邻类对应 $\mathbb F_2^2$ 的三条直线，故树为三正则。
+Smith 标准形说明两个格的相对初等因子为 $2^r,2^s$ 时，距离为 $|r-s|$：
+位似消去较小指数后，逐次改变另一个指数给出长度 $|r-s|$ 的格链。
+更具体地，相对 $L_0=\mathbb Z_2^2$，每个非根顶点唯一取代表
+$L\subset L_0$、$L\not\subset2L_0$，其初等因子为 $(1,2^r)$、$r\ge1$。
+相邻顶点中只有 $[L+2^{r-1}L_0]$ 的指数距离下降，其余两个上升。
+这一描述由在相对基中列出三条模二直线直接得到，故每个顶点有唯一通往根的
+下降路径；图连通且无环，确为树。记 $x_0=[L_0]$。
+
+**定理 21.1（每条实际字的分裂平移长度）。** 对每个整数 $n\ge1$ 和
+每条 $h\in\{0,1\}^n$，(21.6) 中的射影元素 $[q_h]$ 满足
+
+$$
+d_{\mathcal T}(x_0,[q_h]x_0)=2n,
+\qquad\ell_{\mathcal T}([q_h])=2n.
+\tag{21.10}
+$$
+
+第一式针对所显示的分裂和标准顶点；第二式是平移长度，与顶点无关。
+
+证明。(21.9) 表明 $2^nq_h$ 有单位矩阵元；其行列式赋值为 $2n$。
+Smith 初等因子的赋值遂为 $(0,2n)$，故 $q_h$ 的为 $(-n,n)$。
+距离公式给出第一式。
+
+还需证明平移长度，而非只证明一个顶点的位移。
+(21.9) 的迹模二为一，所以 $T=\operatorname{tr}q_h$ 的赋值为 $-n$；
+$d=\det q_h=3^{k(h)}$ 是单位。特征多项式的判别式为
+
+$$
+T^2-4d=T^2\left(1-\frac{4d}{T^2}\right),\qquad
+1-\frac{4d}{T^2}\equiv1\pmod{16}.
+\tag{21.11}
+$$
+
+最后一个单位有平方根 $s\equiv1\pmod4$：对其平方根方程从 $1$ 用
+Hensel 引理，函数值赋值至少四而导数赋值为一。
+于是一个特征值为 $T(1+s)/2$，其赋值为 $-n$；另一个因乘积为 $d$
+而赋值为 $n$。两特征值不同，故 $q_h$ 在 $\mathbb Q_2$ 上可对角化。
+对角元素在两特征直线确定的格链上平移 $2n$ 条边。
+树中链外顶点到该链有唯一最近点；连接该顶点与其像的路径先到链、
+沿链移动 $2n$ 步、再离开链，因此距离为链上平移量加两倍离链距离。
+最小位移正是 $2n$，证明第二式。$\square$
+
+### 21.3 任意紧开子群的指数与正测度障碍
+
+令 $\mathcal G=\operatorname{PGL}_2(\mathbb Q_2)$。
+对紧开子群 $U,V$ 写 $i(U,V)=[U:U\cap V]$，这些指数均有限。
+三重交给出
+
+$$
+i(U,W)\le i(U,V)i(V,W).
+\tag{21.12}
+$$
+
+确实，$[U:U\cap W]\le[U:U\cap V\cap W]$，而后者分解成
+$[U:U\cap V][U\cap V:U\cap V\cap W]$；第二因子至多
+$[V:V\cap W]$。这里不需要子群正规。
+
+**定理 21.2（所有紧开子群的指数下界）。** 对每个 $n\ge1$、每条实际历史
+$h\in\{0,1\}^n$ 以及每个紧开子群 $H\le\mathcal G$，
+
+$$
+[H:H\cap[q_h]H[q_h]^{-1}]\ge4^n.
+\tag{21.13}
+$$
+
+证明。先对任意分裂双曲元素 $g\in\mathcal G$ 设其正平移长度为
+$\ell$，并令 $D_H(m)=i(H,g^mHg^{-m})$。
+沿共轭子群链反复应用 (21.12)，得到
+
+$$
+D_H(m)\le D_H(1)^m.
+\tag{21.14}
+$$
+
+取任意顶点 $x$ 的完整稳定子 $M$。通过 $H$ 和 $g^mHg^{-m}$
+再应用两次 (21.12)，并用共轭不变性，得到
+
+$$
+D_M(m)\le i(M,H)\,i(H,M)\,D_H(m).
+\tag{21.15}
+$$
+
+两个前因子可依赖 $H$，但不依赖 $m$。
+$M$ 在以 $x$ 为中心的每个球面上传递：在 $x=x_0$ 时这是 Smith
+标准形的 $\operatorname{GL}_2(\mathbb Z_2)$ 左右消元，其他顶点由共轭得到。
+半径 $r\ge1$ 的球面有 $3\cdot2^{r-1}$ 个顶点，因为第一步有三个选择，
+之后每一步排除返回边而有两个选择。
+$M\cap g^mMg^{-m}$ 正是 $M$ 中稳定 $g^mx$ 的子群，所以
+
+$$
+D_M(m)=3\cdot2^{d(x,g^mx)-1}\ge3\cdot2^{m\ell-1}.
+\tag{21.16}
+$$
+
+最后的不等式来自双曲元素轴上的平移以及链外距离公式。
+将 (21.14)–(21.16) 合并并取 $m$ 次根，令 $m\to\infty$，
+所有固定有限前因子消失，得到 $D_H(1)\ge2^\ell$。
+对 $g=[q_h]$ 应用定理 21.1 的 $\ell=2n$ 即得 (21.13)。$\square$
+
+这个量词允许 $H$ 随 $n$ 改变。证明中先固定该 $n,h,H$，再令辅助
+整数 $m\to\infty$；没有要求各个 $H$ 的前因子一致有界。
+
+记 $m_H$ 为 $H$ 的 Haar 概率，定义原实际正律的右平滑
+
+$$
+\nu_{n,H}=2^{-n}\sum_{h\in\{0,1\}^n}\delta_{[q_h]}*m_H.
+\tag{21.17}
+$$
+
+**推论 21.3（直接正双陪集识别的障碍）。** 对每个 $n\ge1$ 和每个紧开
+$H\le\mathcal G$，$\nu_{n,H}$ 不是左 $H$ 不变测度。
+
+证明。$\nu_{n,H}$ 支撑在至多 $2^n$ 个右陪集上，每个被支撑的陪集都有
+严格正质量。$H$ 在 $[q_h]H$ 上的左作用轨道大小为
+
+$$
+|H[q_h]H/H|=[H:H\cap[q_h]H[q_h]^{-1}]\ge4^n.
+\tag{21.18}
+$$
+
+若测度左 $H$ 不变，则一个有正质量的右陪集的整个轨道都必须具有
+相同正质量，故其支撑至少有 $4^n$ 个右陪集。
+这与 $4^n>2^n$ 矛盾。历史间的射影重合只会减少支撑，不影响论证。
+$\square$
+
+$n=0$ 时测度为 $m_H$，确实左 $H$ 不变；故正长度限制必要。
+把若干原步骤组成一个块也不能避开推论，因为它对每个正总长度都成立。
+这只排除在此明确射影实现中把原正律直接识别为稳定双陪集正律，或其
+正线性组合的路线。它不排除压缩、较大或不同的表示、选定实际字的系数估计，
+也不反驳 (19.28) 的临界目标。
+
+## 22. 中间工具与仍需建立的估计
+
+Peter–Weyl 完备性与紧群矩阵系数正交关系的原始文献为 F. Peter、
+H. Weyl，*Die Vollständigkeit der primitiven Darstellungen einer geschlossenen
+kontinuierlichen Gruppe*，Mathematische Annalen **97**，737–755，
+[DOI: 10.1007/BF01447892](https://doi.org/10.1007/BF01447892)。
+本节所需的具体权重和、维数、原球系数、Plancherel 权重和有限正核系数
+已分别在 (19.2)–(19.11)、(19.19)–(19.27) 中写出。
+平方特征标核与正交投影平均均为标准工具；这些工具并不供应实际矩阵幂的估计。
+格树和群作用的背景文献为 J.-P. Serre，*Trees*，
+[DOI: 10.1007/978-3-642-61856-7](https://doi.org/10.1007/978-3-642-61856-7)。
+这里的模二约化、每字平移长度、任意紧开子群指数比较及正支撑矛盾
+均由 (21.6)–(21.18) 的直接论证给出，不依赖群的最大有限子群、
+完整有限群合并或算术格分类。
+
+几何接口直接复用本卷 (15.3)、(15.7)，固定有限异常空间的充分接口复用
+(16.1)，薄树背景复用母文 Proposition 45.3。
+三个不同层次的要求分别是：有限和的必要且充分估计
+$\log\mathcal S_n=o(n)$，原球向量在 (20.8) 中的范数估计，以及更强的
+统一压缩幂估计 (20.9)。后两者的等式接口已经确定，所需衰减或增长上界
+尚未得到。正双陪集障碍不提供这些解析上界。
+
+由这些桥梁也没有得到任意时域的匹配记忆律、完整有限联合恢复律、因果相容性
+或物理实现与资源结论；它们仍需各自的数学和实现条件。
+
+## 追加锚（本行以下为增补区）
+
+
+## 23. 原临界配对量的有限精度碰撞熵
+
+**定义 23.1（实际历史的分辨地址）。** 对 $n\ge18$，仍取
+$\delta_n=2^{-n/3}$ 和原实际律 $\nu_n=\mu^{*n}$。在完整 $K$ 上取第 14 节
+证明中的极大 $\delta_n/2$-分离网，按同一确定性平局规则得到 Voronoi 分割
+$K=\bigsqcup_i A_i$。令 $Z_n(h)=i$ 当且仅当 $G_h\in A_i$，并置
+
+$$
+p_i=2^{-n}|\{h:Z_n(h)=i\}|,\qquad
+C_n=\sum_i p_i^2,\qquad
+H_{\mathrm{col}}(Z_n)=-\log_2 C_n.
+\tag{23.1}
+$$
+
+这是分辨地址的二阶 Rényi 熵，使用
+[Hirche §III、式 (8)](../../../Library/Entropy/hirche2020renyibounds.md#unconditional-collision-entropy)
+的标准定义。地址由公平历史确定；分割的选择不宣称可由
+多项式成本生成，也不提供因果更新程序。共同相位仅通过 (1.5) 消去。
+
+**定理 23.2（原自旋目标的碰撞熵等价式）。** 对定义 23.1 的每个分割，
+
+$$
+C_n\le E_n(\delta_n)\le1458C_n,
+\tag{23.2}
+$$
+
+且
+
+$$
+n-\log_2Q_n\le H_{\mathrm{col}}(Z_n)
+\le n-\log_2Q_n+\log_2 1458,\qquad
+H_{\mathrm{col}}(Z_n)\le H_{\mathrm{Sh}}(Z_n)\le n.
+\tag{23.3}
+$$
+
+因此，第 19 节的原有限和满足
+
+$$
+\log\mathcal S_n=o(n)
+\quad\Longleftrightarrow\quad
+H_{\mathrm{col}}(Z_n)=n-o(n).
+\tag{23.4}
+$$
+
+证明。直接复用第 14 节的同单元与对称邻居比较 (14.3)–(14.4)，只将
+$r=\delta=\delta_n$ 代入并保留第 5 节的常数。相邻中心距离至多
+$2\delta_n$，其开 $\delta_n/4$ 球互不相交且包含于
+$B_{9\delta_n/4}(x_i)$。所有半径均不超过 $1/2$；(5.10) 的体积界
+给出最大邻居数
+
+$$
+\frac{(9\delta_n/4)^3/(6\sqrt2\pi)}
+{(\delta_n/4)^3/(12\sqrt2\pi)}=1458.
+\tag{23.5}
+$$
+
+球边界的 Haar 质量为零，由第 5 节的连续径向体积公式可知，因此开球的
+打包与闭配对事件相容。(14.3) 和有序邻居求和遂给出 (23.2)。代入
+$E_n(\delta_n)=2^{-n}Q_n$ 并取负的二进制对数即得 (23.3) 的前两界。
+对正质量地址按 Jensen 不等式，
+$-\log_2\sum_i p_i^2\le-\sum_i p_i\log_2p_i$；后者不超过公平输入历史
+的熵 $n$，因为地址是其确定函数。最后，定理 19.1 给出
+$\mathcal S_n\asymp Q_n$，而对角历史对给出 $Q_n\ge1$，故
+$\log\mathcal S_n=o(n)$ 等价于 $\log_2Q_n=o(n)$。再用 (23.3) 得到
+(23.4)。这是同一实际律的等价表述，未证明等价式任一侧的开放增长条件。
+$\square$
+
+**定理 23.3（同尺度的原恢复记忆必要性）。** 在第 1 节的原恢复权限与
+宽度定义下，置 $\varepsilon_n=2^{-2n/3}/36$。则
+
+$$
+W_n(\varepsilon_n)\ge\frac{2^n}{4Q_n},\qquad
+\log_2W_n(\varepsilon_n)\ge n-\log_2Q_n-2
+\ge H_{\mathrm{col}}(Z_n)-\log_2 1458-2.
+\tag{23.6}
+$$
+
+若 (23.4) 的开放条件成立，便有
+$\log_2W_n(\varepsilon_n)\ge n-o(n)$。
+
+证明。$6\sqrt{\varepsilon_n}=\delta_n$，将其代入原控制器必要条件
+(7.3)，得到 $W_n\ge[4E_n(\delta_n)]^{-1}$。对角项使分母严格为正。
+剩余各式来自 (23.3)。这里所数的是原恢复模型的峰值状态及其固定长度
+比特编码；没有得到 SAT 时间下界，也没有把指数个状态误计为指数个比特。
+$\square$
+
+## 24. 原相位保持压缩的窗口耗散条件
+
+**定理 24.1（实际压缩幂的累计缺陷）。** 保持第 20 节完整复空间及其
+算子 $E_C,\mathsf S,T_D,\mathsf B$。对 $v\in\mathcal H_J$ 和整数 $t\ge1$，
+
+$$
+\begin{aligned}
+\|\mathsf Bv\|_2^2
+&=\|v\|_2^2-\frac34\|(I-E_C)v\|_2^2,\\
+\|\mathsf B^tv\|_2^2
+&=\|v\|_2^2-\frac34\sum_{j=0}^{t-1}
+\|(I-E_C)\mathsf B^jv\|_2^2.
+\end{aligned}
+\tag{24.1}
+$$
+
+证明。$E_C$ 为正交投影，故
+$\mathsf Sv=E_Cv-\frac12(I-E_C)v$ 的两项正交。$T_D$ 酉，所以
+$\|\mathsf Bv\|^2=\|E_Cv\|^2+\frac14\|(I-E_C)v\|^2$。
+这给出第一式；沿同一个向量轨道逐步相加得到第二式。
+$\mathcal H_J$ 的不变性已经由 (20.3)–(20.5) 给出。
+$\square$
+
+**定理 24.2（窗口条件及原目标所需的速率）。** 令
+$\mathcal H=\mathcal H_{J,\Pi}$，其中 $\Pi$ 是 (20.7) 的完整有限等型投影。
+若存在固定整数 $r\ge1$ 和固定 $0<c<4/3$，使每个 $v\in\mathcal H$ 满足
+
+$$
+\sum_{j=0}^{r-1}\|(I-E_C)\mathsf B^jv\|_2^2\ge c\|v\|_2^2,
+\qquad a=1-3c/4\in(0,1),
+\tag{24.2}
+$$
+
+则对每个整数 $t\ge0$，
+
+$$
+\|\mathsf B^t|_{\mathcal H}\|_{2\to2}^2
+\le a^{\lfloor t/r\rfloor}.
+\tag{24.3}
+$$
+
+若 $\Pi$ 还满足 (16.1) 的有限异常空间要求，且
+
+$$
+a\le2^{-r},\qquad\text{即}\qquad
+c\ge\frac43(1-2^{-r}),
+\tag{24.4}
+$$
+
+则 (20.9) 成立，可以取固定的 $s_n=2/a$；从而原临界条件 (23.4) 成立。
+
+证明。将 (24.2) 代入 (24.1) 的 $t=r$ 情形，得到
+$\|\mathsf B^rv\|^2\le a\|v\|^2$。空间 $\mathcal H$ 不变，故逐窗口迭代，
+末段使用收缩性，得到 (24.3)。由
+$\lfloor t/r\rfloor\ge t/r-1$，在 (24.4) 下有
+$a^{\lfloor t/r\rfloor}\le a^{-1}2^{-t}$；取 $t=n-1$ 正是 (20.9)。
+再应用第 20 节到 (16.1) 的既有充分接口及 (19.28)。
+零子空间的算子范数为零，也满足全部结论。$\square$
+
+(24.2) 是同一实际算子轨道的观测 Gramian 下界：在有限等型截断上，其
+矩阵为 $\sum_{j<r}(\mathsf B^*)^j(I-E_C)\mathsf B^j$，限制到
+$\mathcal H$ 后解释。离散线性观测与 Gramian 方法为标准工具，参见
+[Oymak–Ozay §5.1](../../../Library/Dynamics/oymakozay2019lti.md) 的有限观测矩阵接口；这里
+$3/4$ 的缺陷系数和 (24.4) 的速率来自原实际压缩。
+只有某个 $c>0$ 供应的指数收缩不足以推出所需的 $2^{-n}$ 平方范数速率；
+随表示频率改变的 $r,c$ 也不能当作固定统一常数。本节没有建立 (24.2)
+或 (24.4) 的实际供应。范数属于平均律的分析空间，各实际历史仍为幺正门乘积。
+
+## 追加锚（本行以下为增补区）

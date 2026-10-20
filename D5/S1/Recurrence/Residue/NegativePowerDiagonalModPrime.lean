@@ -6,6 +6,8 @@
    utility: none
    digest: Triangular negative-power diagonals prove Hanna's mod-two and mod-three clauses. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19133 -/
+
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.PowerSeries.WellKnown
@@ -297,12 +299,5 @@ theorem hanna_conjecture_a266489 (n : ℕ) (hn : 2 ≤ n) : (2 : ℤ) ∣ a 2 n 
 theorem hanna_conjecture_a395833 (n : ℕ) (hn : 2 ≤ n) : (3 : ℤ) ∣ a 3 n :=
   diagonal_conjecture_general 3 Nat.prime_three n hn
 
-#print axioms a
-#print axioms generatingSeries
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms diagonal_conjecture_general
-#print axioms hanna_conjecture_a266489
-#print axioms hanna_conjecture_a395833
 
 end D5.S1.Recurrence.Residue.NegativePowerDiagonalModPrime

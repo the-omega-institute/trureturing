@@ -20,7 +20,21 @@ The jet, shift and evaluator calculation is adapted from the preserved OriginalT
 
 The result concerns every algebraic polynomial and tensor state; it does not construct a completion by infinite oscillator series. Twisted locality, Jacobi and Borcherds identities, full VOA and CFT constructions, anomaly and fusion structures, string dynamics, spacetime reconstruction and AdS/CFT remain further mathematical obligations.
 
-**Theorem 1.1 (The exact all-source physical translation identity).**
+**Theorem 1.1 (The exact canonical Hahn shift).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient_public`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient_public` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For every D:LatticeData, hu:IsUnit D.G.det, s:Nat, A:NativeField D hu and e:Int, (shiftField D hu s A).coeff e = A.coeff(e+2*s), as endomorphisms of ActualTensor D hu. Hahn monomial multiplication by t^(-2*s) changes the coordinate by exactly -2*s. Physical translation and full-source theta monodromy both use this same shift.
+
+**Theorem 1.2 (The exact all-source physical translation identity).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_translation_physical`
 
@@ -34,8 +48,28 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correcte
 
 For every D:LatticeData, hu:IsUnit D.G.det, source:Carrier D, e:Int and v:ActualTensor D hu, (correctedField D hu (LatticeSugawaraConformal.translation D source)).coeff e v = (((e+2:Int):Complex)/2) smul (correctedField D hu source).coeff (e+2) v. The source translation is the actual Sugawara translation, the field is the native finite Corr-corrected Hahn field, and the target is the actual dependent tensor module. No derivative or seed law is assumed.
 
+**Theorem 1.3 (Negative current insertion on every source).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_negative_current_insertion`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_negative_current_insertion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For arbitrary D, hu, index and b:Carrier D, set m=index.2+1 and N=vectorFrequencyBound D b+1. The corrected field of neutralMode index.1 (-m) b equals singletonLinear index applied to correctedField b, plus the finite sum for 0<=n<N of c(m,n) times shiftField (m+n) applied to correctedField(neutralMode index.1 n b), where c(m,n)=m*halfBinomial(m)*halfBinomial(n)/(m+n) in Complex. This is equality of whole NativeField values, at every signed exponent and every ActualTensor input. Source and target carriers remain distinct. Zero sources and empty rank fibres remain included; there is no charge, homogeneity, eigenstate, positivity, locality or module-law hypothesis.
+
+The actual correctionLift_X_mul is evaluated by the existing Complex-linear normalEvaluation. Its none-variable power t^s evaluates to the true Hahn shift S_s, using shift_add; no multiplicative evaluator is assumed. For a fixed charge a and arbitrary polynomial p, the derivation on correctionLift p is expanded over its actual finite variable set, enlarged by the Option.some image of p.vars. Outside p.vars, correctionLift_partial and pderiv_eq_zero_of_notMem_vars remove terms. The resulting pair sum is over p.vars with the actual pderiv, retaining every repeated-variable multiplicity. Evaluation gives the singleton insertion, halfBinomial(m)*pairing(index,a) times S_m, and pairScalar(m,sourceWeight(u))*Gram(index,u) times S_(m+sourceWeight(u)) of each corrected partial.
+
+Expand the actual b once over b.support. Two finite sup inequalities bound each supported source variable by B(b); pad the finite source derivative sum to colours times range B(b), and identify positive source mode n with n times the Gram-weighted derivative. The zero mode is handled separately: m>0 gives c(m,0)=halfBinomial(m), while n*c(m,n)=pairScalar(m,n) for positive n. Signs are already contained in these scalars. The shift is m+n, so coefficient e is read at e+2*(m+n). Only finite sums are newly exchanged; the established singletonLinear pointwise finiteness supplies the normal insertion. This prerequisite does not establish full finite residues, Ward identities or twisted Jacobi.
+
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_negative_current_insertion`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_translation_physical`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient_public`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical](LatticeHalfFockChargedSeedPhysical.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCorrectionTranslation](LatticeHalfFockCorrectionTranslation.md)
