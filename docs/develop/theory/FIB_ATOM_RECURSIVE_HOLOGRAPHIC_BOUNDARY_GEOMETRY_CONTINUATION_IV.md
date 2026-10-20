@@ -5253,3 +5253,113 @@ leaving those relaxed options open; it does not prove a universal transport
 no-go or select a physical dimension.
 
 ## 116.99 追加锚（本行以下为增补区）
+
+## 117. Scalar clock rescaling does not repair the positive-mass obstruction
+
+The remaining scalar-clock option can be tested without assuming the full
+child-coordinate response. This makes the obstruction stronger: if even the
+old-coordinate generator is required to run at one common rescaled clock, the
+form and norm requirements are already incompatible.
+
+**Definition 117.1 (old-coordinate scalar-clock transport).** Keep the
+top-fixed extension and the three requirements (F) and (N) of Definition
+116.1. For a scalar \(\lambda_e>0\), replace (G) by the weaker condition
+
+$$
+\boxed{
+J_e^*\mathcal L_{e+1}S_Q
+   =\lambda_e\mathcal L_e.
+}
+\tag{117.1}
+$$
+
+The full rescaled intertwining condition
+
+$$
+\mathcal L_{e+1}S_Q
+   =\lambda_eS_Q\mathcal L_e
+\tag{117.2}
+$$
+
+implies (117.1), because \(J_e^*S_Q=I\). Thus a no-go for (117.1) also
+rules out the full scalar-clock repair.
+
+**Theorem 117.2 (scalar-clock no-go).** Suppose \(B_e\ne\varnothing\),
+\(M_e\) is positive diagonal, and the old tree has at least one vertex
+outside the beta-parent set \(M_e\). There is no top-fixed linear extension
+\(S_Q\) and no positive diagonal \(M_{e+1}\) satisfying (F), (N), and
+(117.1), for any \(\lambda_e>0\).
+
+**Proof.** By (F), Theorem 115.2 forces \(S_Q=T_e\). Write the positive
+child block of \(M_{e+1}\) as \(M_c\), and its old block as \(M_o\). From
+\(A_{e+1}T_e=J_eA_e\), the old-coordinate part of (117.1) is
+
+$$
+M_o^{-1}A_e=\lambda_eM_e^{-1}A_e.
+\tag{117.3}
+$$
+
+Every row of \(A_e\) is nonzero on a connected nontrivial tree. Since the
+left factor in (117.3) is diagonal, each row therefore gives
+
+$$
+M_o^{-1}=\lambda_eM_e^{-1},
+\qquad
+M_o=\lambda_e^{-1}M_e.
+\tag{117.4}
+$$
+
+The norm condition (N), together with \(T_e=(I,C_e^*)^{\mathsf T}\), now
+requires
+
+$$
+C_eM_cC_e^*
+   =(1-\lambda_e^{-1})M_e.
+\tag{117.5}
+$$
+
+The left side is supported on \(M_e\). At a vertex \(r\notin M_e\), its
+\(r,r\) entry is zero, whereas the right side is
+\((1-\lambda_e^{-1})M_e(r,r)\). Positivity of \(M_e(r,r)\) forces
+\(\lambda_e=1\). Substituting this into (117.5) gives
+
+$$
+C_eM_cC_e^*=0,
+$$
+
+which is impossible: \(B_e\ne\varnothing\), \(M_c>0\), and every born child
+contributes its positive mass to its beta parent. Hence no such scalar clock
+exists. \(\square\)
+
+For every native FIB birth with a nonempty child set, the root is a branch
+vertex and is therefore outside \(M_e\); the stated support hypothesis is
+thus met in the nontrivial birth steps considered here. The first witness
+\(\langle\alpha,\beta\rangle\) makes the calculation explicit: with the
+ordered old vertices \((\varepsilon,L,R)\),
+
+$$
+C_eM_cC_e^*
+   =\operatorname{diag}(0,0,m_{RL}+m_{RR}),
+\qquad m_{RL},m_{RR}>0.
+\tag{117.6}
+$$
+
+The root entry forces \(\lambda_e=1\), while the \(R,R\) entry then remains
+strictly positive, contradicting (117.5). An exact symbolic multiplication
+also gives \(A_{e+1}T_e=J_eA_e\) and
+\(C_e^*A_e\ne0\) for this witness. The latter shows that the child block of
+the stronger full condition (117.2) fails independently as well, since it
+would require
+
+$$
+0=\lambda_eC_e^*\mathcal L_e.
+\tag{117.7}
+$$
+
+The result closes the single global scalar-clock repair while leaving the
+actual alternatives explicit: a nonuniform clock, a transport that does not
+fix all old coordinates, or a non-diagonal state metric changes the bridge
+problem and is not covered by this theorem. It still does not prove a
+universal transport no-go or select a physical dimension.
+
+## 117.99 追加锚（本行以下为增补区）
