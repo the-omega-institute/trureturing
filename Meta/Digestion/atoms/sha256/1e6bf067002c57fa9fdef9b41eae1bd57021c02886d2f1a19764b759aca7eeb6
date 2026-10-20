@@ -1,0 +1,36 @@
+## 6. 时钟评价的行列商与双侧恢复
+
+第5节的协议回拉可以用一个双侧评价核完全刻画。令
+
+$$
+E:X\times P\to L,
+$$
+
+并定义状态行与协议列
+
+$$
+R_x(p)=E(x,p),qquad C_p(x)=E(x,p).
+$$
+
+完整协议 signature 为
+
+$$
+\Sigma_E(x):P\to L,qquad \Sigma_E(x)(p)=E(x,p).
+$$
+
+仓内 `UnifiedObserverRepresentation.unified_observer_representation` 给出两个实际像判据。首先，
+
+$$
+X/\ker(\Sigma_E)
+$$
+
+在实际像上与 $\operatorname{im}(\Sigma_E)$ 唯一等价；其次，任意摘要 $r:X\to A$ 能恢复每个固定协议的时钟读出，当且仅当
+
+$$
+ r(x)=r(y)\Longrightarrow
+\forall p\in P,\quad E(x,p)=E(y,p).
+\tag{TM.466}
+$$
+
+等价地，$\ker(r)\subseteq\ker(\Sigma_E)$。所以“一个时钟摘要足以支持所有声明协议”不是看它是否包含某个标量，而是看它是否切开了完整协议行的所有差异。实际像上的因子是唯一的；名义陪域中不可达的读数不构成额外状态。
+

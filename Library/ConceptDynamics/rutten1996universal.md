@@ -309,3 +309,140 @@ Proof. For each fixed goal $g$, remove outgoing edges once $g$ is present and de
 [FACTOR]: ../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Source-relative lookup addresses and finite acquisition
+
+**Definition 8 (Source-relative future equivalence).** Let $t$ be one currently live LAB source, let $Q$ be its finite control set, and let $\operatorname{Cont}(t)$ be the finite or infinite words of events that are actually legal from that same source. For $q,r\in Q$, write
+
+$$
+q\equiv_t r
+\iff
+\forall z\in\operatorname{Cont}(t),\quad
+\operatorname{bits}(q,z)=\operatorname{bits}(r,z).
+\tag{15}
+$$
+
+The selected word $\nu$ records the event identities whose selector bit is one. A source-relative predictive address is
+
+$$
+(t,\nu,[q]_{\equiv_t}).
+\tag{16}
+$$
+
+The source $t$ and the selected word are part of the address; a control representative alone is not an address for another source.
+
+**Proposition 15 (Successor closure and complete future behaviour).** Suppose a successful event $e$ updates a control by
+
+$$
+C(q,e)=(\delta(q,e),\lambda(q,e)),
+\qquad \lambda(q,e)\in\{0,1\}.
+\tag{17}
+$$
+
+If $q\equiv_t r$, then for every event $e$ legal from $t$,
+
+$$
+\lambda(q,e)=\lambda(r,e),
+\qquad
+\delta(q,e)\equiv_{t\cdot e}\delta(r,e).
+\tag{18}
+$$
+
+Consequently (16) determines legality, every complete seven-request reply and the actual $\operatorname{NextSelected}$ successor supplied by the LAB interface in [LAB §§36–38][LAB-ACQUISITION].
+
+Proof. Taking the one-event word $e$ in (15) gives equality of the selection bits. For any $z\in\operatorname{Cont}(t\cdot e)$, the concatenated word $ez$ is in $\operatorname{Cont}(t)$. Equality in (15) for $ez$, followed by removal of the common first selection bit, gives equality of the successor bit words on $z$. The source successor $t\cdot e$, selected-word append rule, and complete request semantics are therefore the same for either representative. The result is source-relative and does not identify hidden control states outside the equivalence class. $\square$
+
+**Assumption 16 (Supplied finite address presentation).** As in [LAB Definition 37.1][LAB-ACQUISITION], there is a finite address-class set $H$, a root class $h_0$, and maps $\ell,\rho:H\to H$ such that each current leaf is an $\alpha$- or $\beta$-leaf labelled by one of the classes $h$. The selector reads only the class of the event address, with finite transition table
+
+$$
+(\delta,\lambda):Q\times\{P,S\}\times H\to Q\times\{0,1\}.
+\tag{19}
+$$
+
+At class $h$, the local source operations are
+
+$$
+P_h:a_h\longmapsto b_h,
+\qquad
+S_h:b_h\longmapsto b_{\ell(h)}+a_{\rho(h)}.
+\tag{20}
+$$
+
+A finite current source is represented by the vector $m(t)\in\mathbb N^{2|H|}$ of its $a_h$ and $b_h$ leaf counts. A nonzero count means that an actual leaf of that class exists and can be selected for the corresponding legal operation.
+
+**Proposition 17 (Finite count abstraction and actual lifting).** Under Assumption 16, the relation $q\equiv_t r$ is decidable from the finite vector $m(t)$. Abstract operation paths in the count system lift step by step to legal operations on the actual source, and the count update is the projection of that actual operation.
+
+Proof. $P_h$ decreases the $a_h$ count and increases $b_h$; $S_h$ decreases $b_h$ and increases the indicated $b_{\ell(h)}$ and $a_{\rho(h)}$. If the relevant count is nonzero, choose one actual leaf of that class. The operation changes no other required class count, so induction on the abstract path gives an actual path with the same class sequence and selector bits. Conversely every actual operation has one of the transitions (20), so its count projection is an abstract path.
+
+To decide equivalence, run the two finite control states over the same abstract event paths while recording a disagreement whenever their output bits differ. The set of count vectors from which a disagreement is reachable is upward closed under componentwise order: extra leaves can be ignored while following the same path. For a transition $e$, with input vector $i_e$ and output vector $o_e$, the least predecessor covering a vector $v$ is
+
+$$
+\operatorname{pre}_e(v)=i_e+(v-o_e)^+,
+\tag{21}
+$$
+
+where $(u)^+$ is taken componentwise. Backward iteration from the disagreement events, followed by minimalization, computes the finite basis $B_{q,r}$ of this upward-closed set. Dickson's lemma gives finiteness of every minimal basis and termination of the finite-basis iteration. Hence
+
+$$
+q\not\equiv_t r
+\iff
+\exists v\in B_{q,r},\quad v\le m(t).
+\tag{22}
+$$
+
+The upward-closure computation is an address-class calculation; the lifting paragraph supplies the required actual legal witness and prevents the finite counter from being mistaken for a free source oracle. This is the finite presentation and coverability route of [LAB §§36–38, especially Lemma 37.2 and Theorem 37.3][LAB-ACQUISITION]. Geffroy–Leroux–Sutre, arXiv:1607.05956v1, Lemma 3.1 supplies stationarity of the growing upward-closed sequence, Lemma 4.1 supplies finite minimal bases, and Lemmas 4.3–4.4 supply the covering-predecessor formula and its set extension. $\square$
+
+**Theorem 18 (Finite candidate elimination on one live source).** Let a publicly supplied nonempty finite family $(C_i,Q_i,q_i^0)_{i\in I}$ of candidate LAB controls be given, with exactly one fixed but unknown candidate installed from its declared initial control on the known $\alpha$-seed source. There is only one actual source; it cannot be reset, copied or replaced. Assume each candidate supplies Assumption 16's finite presentation and every complete request has a finite effective reply. There is a finite acquisition procedure that returns a self-sufficient predictor for the complete seven-request task, as in [LAB supply application 41.3][LAB-ACQUISITION].
+
+Proof. Let $h$ be the complete actual request/reply history. Maintain its common current source description $t_h$ from the known seed and each actual new growth identity. For a successful NextSelected reply, only its second identity is the new event fed to the selector; the first identity is recalled history. Ordinary queries, refusals, OutOfRange and BadFrame feed no event. For each candidate, simulate $h$ from that candidate's own public initial control and retain it exactly when every complete reply agrees with the actual reply. Write $J_h$ for these candidates, $q_i(h)$ for their current controls and $\nu_i(h)$ for their selected words. The genuine installation remains in $J_h$. Every surviving simulation has the same source $t_h$, since its complete growth replies give the same new actual identities; only the candidate control and selected word may differ. These are local computations on supplied programs and acquired identities, not reads of hidden control or selection marks.
+
+Form the finite product $H=\prod_{i\in I}H_i$ of the supplied address classifiers, using their root tuple and coordinatewise left/right maps. On the tagged disjoint union $Q^\sqcup=\bigsqcup_{i\in I}Q_i$, each control uses its own coordinate's original table and stays within its tag. Proposition 17 applied to this supplied product decides cross-candidate source-relative equivalence using the leaf counts of the same $t_h$. By [LAB §41.2 and application 41.3][LAB-ACQUISITION], two surviving candidates have identical complete future behaviour exactly when
+
+$$
+\nu_i(h)=\nu_j(h),\qquad
+(i,q_i(h))\equiv_{t_h}^{\sqcup}(j,q_j(h)).
+$$
+
+If all surviving candidates agree in this sense, choose one finite current representative and return its predictor. Otherwise choose a disagreeing pair. If their selected words already differ, actually issue FetchSelected at an index where the literal identities differ or one word is out of range. Its complete reply distinguishes the pair without changing the source.
+
+If their selected words agree, their residual controls are inequivalent. Using the product decision and actual lifting in Proposition 17, find a finite source-legal event word on which their selection bits differ. An effective search enumerates finite event words by total binary encoding length, checks legality from $t_h$ and computes both candidates; each layer is finite and a finite witness exists. Truncate the word at its first unequal selector bit. Actually submit exactly these addressed growth requests, serially, to the same live source. Let $m$ be the common selected-word length immediately before that last event, including any selections from earlier events of this test. The last event appends its actual identity in exactly one of the two candidate simulations. Now actually submit FetchSelected$(m+1)$: one candidate predicts that identity and the other predicts OutOfRange. The ordinary Growth replies alone need not reveal the unequal bit. This is the complete-reply separation of [LAB Proposition 36.2 and application 41.3][LAB-ACQUISITION].
+
+All growth frames in the chosen test are legal on the same evolving source independently of which candidate is installed, including when the genuine installation is a third candidate. Delete candidates only by disagreement with actual complete replies. The final selected-query reply excludes at least one member of the chosen pair, while the genuine installation is retained. Recompute the surviving current states and equivalences at the already changed source; no test returns to an earlier cut. Each separating test executes one actual continuation and removes a candidate, so at most $|I|-1$ tests occur. This counts tests only: every actual growth request and every actual FetchSelected query, including OutOfRange replies, counts as a completed request; all actual work, frames, retained material and any other completed queries or refusals remain charged. There is no bound here on witness length or local search work.
+
+At termination all survivors have the same selected word and residual future class, and one is genuine. The chosen representative, supplied tables, current source and common selected word therefore give a finite self-sufficient predictor without an unknown installation parameter. For subsequent requests, (18) updates that representative on each actual new event, and its computed selection bit updates the word. Equality of the surviving future behaviours makes these predictions equal to the genuine service, including complete NextSelected replies and actual source successors. Induction over subsequent finite request words proves continued correctness. Every test is finite and there are finitely many tests, so acquisition terminates. $\square$
+
+**Proposition 19 (Depth-threshold acquisition cost).** For $n\ge1$, in the supplied two-candidate family in which $C_0$ never selects a growth event and $C_n$ selects exactly an event whose address depth is at least $n$, any certification procedure on the live source needs at least $n+2$ successful growth events and $n+3$ completed requests before it can return a correct self-sufficient predictor. A matching procedure uses $n+2$ growth requests followed by one distinguishing selected query.
+
+Proof. From the initial $\alpha$ root, a successful event at depth $d\ge n$ requires $d$ distinct strict-ancestor splits and the root promotion before the depth-$d$ event itself. Thus a depth-$n$ event requires $n$ strict-ancestor splits, one root promotion and that event, giving $n+2$ successful growths. A refused address, an incomplete frame and a query index create no source event, and a completed request creates at most one successful growth. Until a threshold event occurs, both selected words are empty and all complete replies agree. Its ordinary Growth reply still agrees, so the first distinguishing selected-query reply requires a later completed request, giving at least $n+3$. From every finite common current source, further legal growth can reach the threshold and a selected query can distinguish the two residual tasks. Hence a correct self-sufficient predictor cannot return on their common history before such a distinction.
+
+For the upper bound, execute exactly $P_\varepsilon S_\varepsilon S_L\cdots S_{L^n}$, with $n+2$ actual growth requests, and then actually issue FetchSelected$(1)$. The $C_0$ candidate returns OutOfRange, while $C_n$ returns the depth-$n$ selected identity $S_{L^n}$. For $n=1$, the word is $P_\varepsilon S_\varepsilon S_L$, with one strict-ancestor split. The live source, selected word and current permission are retained, so (18) supplies the continuing predictor. This is [LAB Theorem 42.2][LAB-ACQUISITION], with the request and material boundaries of §§41–43. $\square$
+
+**Theorem 20 (A merely existential finite presentation does not yield uniform acquisition).** There is no single uniform finite-return certification algorithm for the candidate class in which every instance has some finite effective address presentation but the presentation, a size bound and an extraction method are not supplied.
+
+Proof. Let $M_e$ be any finite machine and let $H(e,d)$ mean that bounded simulation has observed $M_e$ halt within the first $d$ stages. Define two one-state candidates
+
+$$
+Z(e_{\mathrm{event}})=0,
+\qquad
+D_e(k,p)=\mathbf 1_{H(e,|p|)}.
+\tag{23}
+$$
+
+Every finite address has a terminating bounded simulation. If $M_e$ never halts, $D_e$ is the same selector as $Z$; if the first halt is at stage $\tau$, $D_e$ selects exactly at depth at least $\tau$. Thus each fixed instance satisfies the semantic promise that a finite presentation exists.
+
+Assume a uniform certification algorithm $A$ always returns after finitely many actual successful events on the installation $Z$. Let $B_e$ be the largest successful event depth before that return, with $B_e=0$ when none occurs. If $M_e$ halts first at $\tau>B_e$, replacing the installation by $D_e$ leaves every pre-return selected bit, complete reply, source successor and request transcript unchanged: all observed event depths are below $\tau$. The same finite address and predictor are therefore returned for $Z$ and $D_e$.
+
+From the common current source one can legally extend the left $\beta$ chain to depth at least $\tau$. A later selected query distinguishes the candidates: $D_e$ returns a selected identity while $Z$ returns OutOfRange, and a subsequent $\operatorname{NextSelected}$ request, when used, has different actual successors. Correctness of one self-sufficient predictor would then require two different future behaviours from the same returned state. Hence
+
+$$
+M_e\text{ halts}\Longrightarrow\tau\le B_e.
+\tag{24}
+$$
+
+Simulate $M_e$ for $B_e$ stages. If it has halted, answer halting; otherwise (24) implies that it never halts. This decides the halting problem, a contradiction. The argument is [LAB Theorem 44.2][LAB-ACQUISITION], using one live source, complete replies and actual future successors; it does not infer a presentation from a semantic existence promise. $\square$
+
+**Convention 21 (Attribution and boundary).** The source-relative quotient, successor closure, finite presentation, candidate elimination, depth-threshold and non-acquisition results above are the substantive [LAB §§36–45][LAB-ACQUISITION] results, especially supply application 41.3 and Theorems 42.2 and 44.2, and their mathematical consequences; they are not re-attributed as new repository discoveries. The finite-basis method is literature-attested in Geffroy–Leroux–Sutre, arXiv:1607.05956v1. The negative theorem uses the standard halting obstruction, with Turing's §8 printing formulation as the undecidability source. A finite presentation is an effective supplied object; a statement that each instance merely has some finite presentation is an existence quantifier and does not provide a uniform extractor. $\square$
+
+[LAB-ACQUISITION]: ../../docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md
+
+## 追加锚（本行以下为增补区）

@@ -171,3 +171,101 @@ Conversely a nondeterministic polynomial-time $O_{\rm sp}$ machine has polynomia
 The result exhibits a model in which the same permitted interface is closed under the bounded projections of Proposition 2. It supplies no efficient ordinary implementation of $O_{\rm sp}$ and hence no ordinary $P=NP$ conclusion. If an interface is enlarged, verifiers also gain its operations, so closure must be checked for that enlarged whole class; adding answers to old tasks alone does not prove it. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 4. Polynomial observer presentations of bounded completion tables
+
+Throughout this section set $O=\varnothing$. Every verifier and every $\operatorname{Init}_R$, $\operatorname{Upd}_R$ and $\operatorname{Val}_R$ procedure is an ordinary uniform deterministic machine without oracle access; $P$ and $NP$ denote the ordinary unrelativized classes.
+
+**Definition 4 (Polynomial observer presentation).** Let $R(x,w)\in\{0,1\}$ be a fixed deterministic polynomial-time verification relation and let $m$ be a polynomially bounded, polynomial-time computable certificate-length function. For every $|u|\le m(|x|)$ put
+
+$$
+H_R(x,u)=
+\mathbf 1\left\{\exists z,\ |uz|=m(|x|),\ R(x,uz)=1\right\}.
+\tag{14}
+$$
+
+An observer presentation for $(R,m)$ consists of fixed ordinary uniform deterministic procedures
+
+$$
+\operatorname{Init}_R,\qquad
+\operatorname{Upd}_R,\qquad
+\operatorname{Val}_R
+$$
+
+and addresses $a_u$ satisfying
+
+$$
+a_\varnothing=\operatorname{Init}_R(x),
+\qquad
+a_{ub}=\operatorname{Upd}_R(x,a_u,b),
+\qquad
+\operatorname{Val}_R(x,a_u)=H_R(x,u)
+\tag{15}
+$$
+
+for every legal prefix $u$ and $b\in\{0,1\}$ with $|ub|\le m(|x|)$. The address length, initialization, one-bit update, one evaluation, and all input-dependent preparation or compilation material are bounded by a polynomial in $|x|+|u|$. Terminal prefixes $|u|=m(|x|)$ are included, so $\operatorname{Val}_R(x,a_u)=R(x,u)$. The empty prefix is included; if $m(|x|)=0$, the initialized address is already terminal. No precomputed table is supplied for free.
+
+**Theorem 5 (Observer presentation equivalence).** The following are equivalent:
+
+$$
+\boxed{
+P=NP
+\iff
+\text{every polynomial-time bounded verification relation }(R,m)
+\text{ has a polynomial observer presentation.}
+}
+\tag{16}
+$$
+
+The quantifier is per fixed relation and length function:
+
+$$
+\forall R\ \forall m\ \exists
+(\operatorname{Init}_R,\operatorname{Upd}_R,\operatorname{Val}_R)
+\ \forall x,u.
+\tag{17}
+$$
+
+It does not assert one compiler that receives an unclocked arbitrary program as input, and it does not assert that the semantic table is small without the stated address and preparation bounds.
+
+Proof. Assume observer presentations exist. For an $NP$ language represented by $R$ and $m$, compute the initialized address $a_\varnothing$ and return
+
+$$
+\operatorname{Val}_R(x,a_\varnothing)=H_R(x,\varnothing)
+=\mathbf 1\{\exists w,\ |w|=m(|x|),\ R(x,w)=1\}.
+$$
+
+Initialization and evaluation, including their input-dependent preparation, are polynomial-time by Definition 4. Hence the language is in $P$, so $NP\subseteq P$; the reverse containment is standard. This direction uses only the root address and value, so an update procedure is redundant for the implication but remains part of the observer-presentation contract.
+
+Conversely assume $P=NP$. For fixed $R,m$, define
+
+$$
+L_R^{\mathrm{pref}}
+=
+\{(x,u):|u|\le m(|x|),\
+\exists z,\ |uz|=m(|x|),\ R(x,uz)=1\}.
+\tag{18}
+$$
+
+This is in $NP$: a witness is the completion $z$, whose length is polynomial in the input length, and verification parses $(x,u,z)$ and runs $R$. Hence $L_R^{\mathrm{pref}}\in P$ under the assumption. Let $D_R(x,u)$ be a polynomial-time decider for it. Use the address $a_u=u$, initialize with the empty word, and update by concatenation,
+
+$$
+\operatorname{Init}_R(x)=\varepsilon,
+\qquad
+\operatorname{Upd}_R(x,u,b)=ub.
+\tag{19}
+$$
+
+For legal nonterminal prefixes set
+
+$$
+\operatorname{Val}_R(x,u)=D_R(x,u),
+$$
+
+and for terminal prefixes use the same decider, which equals $R(x,u)$ because the completion $z$ is empty. Return zero on overlong or malformed addresses. Since $|u|\le m(|x|)$ is polynomially bounded, all three procedures have a uniform polynomial bound in $|x|+|u|$, including the address construction and validation. Equations (14)–(15) follow, including empty and terminal prefixes. Thus an observer presentation exists for every fixed $(R,m)$. $\square$
+
+**Corollary 6 (Scope of the equivalence).** The equivalence in (16) identifies a precise uniform completion-table condition with the ordinary class equality. It gives no construction of the presentations without the assumption $P=NP$, no claim that a supplied finite table is cheaply obtainable, and no resolution of ordinary $P$ versus $NP$.
+
+Proof. The forward implication of Theorem 5 uses the assumed decider for the prefix language, while the reverse implication uses an already supplied presentation. Removing either assumption would change the quantifier or resource contract in Definition 4. $\square$
+
+## 追加锚（本行以下为增补区）
