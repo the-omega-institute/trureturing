@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBo
 
 *Commentary.*
 
-For N>=16 and every nonnegative original gap vector g:Fin N to Real, boundaryPacked is nonnegative at all sixteen slots. The first five entries retain the original first five gaps, slot five is the sum of the middle gaps, and the remaining ten entries retain the original last ten gaps. This consumed helper has proof shape bind-only and is used by the generalized concentration construction in ContinuousSpectrumAssembly; it supplies no new mathematical content or independent admission basis. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253.
+For N>=16 and every nonnegative original gap vector g:Fin N to Real, boundaryPacked is nonnegative at all sixteen slots. The first five entries retain the original first five gaps, slot five is the sum of the middle gaps, and the remaining ten entries retain the original last ten gaps. Each retained entry and each summand in the middle slot is nonnegative. The concentration construction in ContinuousSpectrumAssembly uses this helper to preserve nonnegative boundary coefficients.
 
 **Theorem 1.2 (Exact concentration of the original gap vector).**
 
@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBo
 
 *Commentary.*
 
-For N>=16 and every k with 5<=k.val<N-10, lifting boundaryPacked(g) at middle position k yields fixedGaps(g,k). All fifteen original boundary gaps remain unchanged, while the total middle mass is placed at k. The source exposes the existing single linear zero-extension implementation as boundaryLift for faithful Reg reconstruction. Proof shape: content. Admission basis: escape-witness; the support partition and injective slot embedding establish equality of complete gap vectors, including the zero middle-mass case. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253.
+For N>=16, every real gap vector g:Fin N to Real and every k with 5<=k.val<N-10, lifting boundaryPacked(g) at middle position k yields fixedGaps(g,k). All fifteen original boundary gaps remain unchanged, while the total middle mass is placed at k. The linear map boundaryLift places each of the sixteen coefficients at its original gap index and is zero elsewhere. The support partition and injective slot embedding establish equality of complete gap vectors, including the zero middle-mass case.
 
 **Theorem 1.3 (Compatibility of packing and spectrum synthesis).**
 
@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBo
 
 *Commentary.*
 
-For N>=16 and 6<=j<=N-10, fullSynth applied to boundaryLift(x) equals the original synth(positions N j,x) as an entire real spectrum, for arbitrary x. The construction reuses the existing step functions and their original indices. Proof shape: content. Admission basis: escape-witness; the index reconstruction and linear synthesis identify the exact full spectrum, without a finite-valued spectral assumption. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253.
+For N>=16 and 6<=j<=N-10, fullSynth applied to boundaryLift(x) equals synth(positions N j,x) as an entire real spectrum, for arbitrary real x:Fin 16 to Real. The construction uses the same step functions and their original indices. Index reconstruction and linear synthesis identify the full spectrum without a finite-valued spectral assumption. This identity connects the sixteen boundary coefficients to full-gap synthesis.
 
 **Theorem 1.4 (Exact rows retained under boundary packing).**
 
@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBo
 
 *Commentary.*
 
-For N>=16 and k in the middle gap interval, A times boundaryPacked(g) equals boundaryGapRows(g). The three rows remain exactly bottom-six minus top-three, bottom-ten minus top-six, and bottom-three minus the largest coordinate. The actual middle step has the same row image at every allowed position. Proof shape: content. Admission basis: escape-witness; this establishes the full row image and its preservation under arbitrary continuous concentration. Source-reconstruction evidence remains incomplete: https://github.com/the-omega-institute/trureturing/issues/19253.
+For N>=16, every real gap vector g:Fin N to Real and k with 5<=k.val<N-10, A times boundaryPacked(g) equals boundaryGapRows(g). The three rows remain exactly bottom-six minus top-three, bottom-ten minus top-six, and bottom-three minus the largest coordinate of fullSynth(g). The middle step has the same row image at every allowed position, so concentrating the middle gaps preserves all three row values. The equality holds for arbitrary real gaps without a nonnegativity premise.
 
 **Theorem 1.5 (Arbitrary-dimension squared-mass estimate).**
 
@@ -260,7 +260,7 @@ If j<t, integrality gives j≤t-1 and the product is positive; if j>t, j≥t+1 a
 
 Section 7 now proves the unconditional fixed-cone statement in Section 1. Applying it through the **existing** full compression/convex-mixture bridge gives the asserted inequality for every original l. That bridge preserves the original full three rows, nonnegativity, antitonicity and mass; no truncated rows or extra hypothesis have been substituted. With sum l_i=1, the homogeneous bound is exactly sum l_i²≤T_N.
 
-The analytic argument uses ordered nonnegative block energies, Mathlib convex and concave interval endpoint principles, the existing scalar envelope comparisons and exact integer optimizer, and the shared Euclidean norm-to-mass closure lemmas. The structural derivation was written independently before the external rectangular theorem was inspected; no external code is transplanted. The exact external theorem APPTReview.appt_rectangular_maximum_formula in mxym/math at immutable commit 479acd5d6269faf94433ad6b694c5b7979027c69, formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean:78 (https://github.com/mxym/math/blob/479acd5d6269faf94433ad6b694c5b7979027c69/formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean#L78), states the rounded plateau physical maximum for m at least 3 and n at least m^3-m-2, hence for four rows n at least 58. Its single four-row cut differs from the jointly imposed rank-two, rank-three and rank-four inequalities used here. The full leading asymptotic does not give the exact finite target. This scalar theorem alone establishes neither the arbitrary complex 4 by n physical maximum for n at least 17 nor an attaining state. Any prospective additional physical range is 17 through 57, subject to the complete physical application, attainment and further literature checks; global uniqueness is not established.
+The analytic argument uses ordered nonnegative block energies, Mathlib convex and concave interval endpoint principles, the scalar envelope comparisons and exact integer optimizer, and the Euclidean norm-to-mass closure lemmas. The external theorem APPTReview.appt_rectangular_maximum_formula in mxym/math at immutable commit 479acd5d6269faf94433ad6b694c5b7979027c69, formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean:78 (https://github.com/mxym/math/blob/479acd5d6269faf94433ad6b694c5b7979027c69/formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean#L78), states the rounded plateau physical maximum for m at least 3 and n at least m^3-m-2, hence for four rows n at least 58. Its single four-row cut differs from the jointly imposed rank-two, rank-three and rank-four inequalities used here. The leading asymptotic does not give the exact finite target. At N=4n, the N>=67 scalar estimate applies for n>=17, including the range 17 through 57 below the cited external theorem's threshold. A physical maximum also requires the necessary spectral inequalities and an attaining state; this scalar theorem alone supplies neither that state nor an equality classification. The threshold comparison alone establishes no literature priority or global uniqueness.
 
 ## References
 
