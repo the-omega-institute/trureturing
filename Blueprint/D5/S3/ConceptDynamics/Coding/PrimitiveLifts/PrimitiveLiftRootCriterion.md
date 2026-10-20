@@ -8,7 +8,7 @@ A primitive base orbit retains an ordered group return invisible to ordinary per
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall X \in Type,\; \operatorname{ReturnAtlas}\left(H, X\right):Type$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.ReturnAtlas` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.ReturnAtlas` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ ReturnAtlas H X contains d>0, g:H, a surjective point:Int->H->X, time and the le
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall X \in Type, A \in \operatorname{ReturnAtlas}\left(H, X\right),\; \operatorname{Equiv}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(\operatorname{period}\left(A\right)\right), H\right), X\right)$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.coordinates` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.coordinates` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ The equivalence sends (q,z) to point(q.val,z), with q in Fin d. Injectivity uses
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall X \in Type, A \in \operatorname{ReturnAtlas}\left(H, X\right),\; \forall f \in \operatorname{Map}\left(X, X\right),\; \operatorname{Equivariant}\left(A, f\right) = \left(\forall a \in H, x \in X,\; \operatorname{apply}\left(f, \operatorname{deck}\left(A, a, x\right)\right) = \operatorname{deck}\left(A, a, \operatorname{apply}\left(f, x\right)\right)\right)$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.Equivariant` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.Equivariant` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,7 +44,7 @@ Equivariance always uses multiplication on the left. The holonomy seam acts on t
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall X \in Type, A \in \operatorname{ReturnAtlas}\left(H, X\right), f \in \operatorname{Map}\left(X, X\right),\; (((\operatorname{Equivariant}\left(A, f\right) \land \operatorname{FunctionCommute}\left(f, \operatorname{time}\left(A\right)\right))) \implies (\exists q \in \operatorname{Prod}\left(\operatorname{Fin}\left(\operatorname{period}\left(A\right)\right), H\right),\; ((\operatorname{Commute}\left(\operatorname{second}\left(q\right), \operatorname{holonomy}\left(A\right)\right) \land \forall t \in Int, z \in H,\; \operatorname{apply}\left(f, \operatorname{point}\left(A, t, z\right)\right) = \operatorname{point}\left(A, (t+\operatorname{val}\left(\operatorname{first}\left(q\right)\right)), \operatorname{mul}\left(z, \operatorname{second}\left(q\right)\right)\right)) \land \forall r \in \operatorname{Prod}\left(\operatorname{Fin}\left(\operatorname{period}\left(A\right)\right), H\right),\; (((\operatorname{Commute}\left(\operatorname{second}\left(r\right), \operatorname{holonomy}\left(A\right)\right) \land \forall t \in Int, z \in H,\; \operatorname{apply}\left(f, \operatorname{point}\left(A, t, z\right)\right) = \operatorname{point}\left(A, (t+\operatorname{val}\left(\operatorname{first}\left(r\right)\right)), \operatorname{mul}\left(z, \operatorname{second}\left(r\right)\right)\right))) \implies (r = q)))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.normal_form` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.normal_form` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -56,7 +56,7 @@ For every deck-equivariant f commuting with time there is exactly one q=(s,b) in
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall X \in Type, A \in \operatorname{ReturnAtlas}\left(H, X\right),\; \forall s \in Int, b \in H, x \in X,\; \operatorname{normalMap}\left(A, s, b, x\right) = \operatorname{point}\left(A, (\operatorname{val}\left(\operatorname{first}\left(\operatorname{inverseCoordinates}\left(A, x\right)\right)\right)+s), \operatorname{mul}\left(\operatorname{second}\left(\operatorname{inverseCoordinates}\left(A, x\right)\right), b\right)\right)$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.normalMap` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.normalMap` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -68,7 +68,7 @@ The definition uses the existing carrier X and its complete coordinate equivalen
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall X \in Type, A \in \operatorname{ReturnAtlas}\left(H, X\right),\; \forall s \in Int, b \in H,\; ((\operatorname{Commute}\left(b, \operatorname{holonomy}\left(A\right)\right)) \implies (\operatorname{normalEquiv}\left(A, s, b\right):\operatorname{Perm}\left(X\right)))$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.normalEquiv` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.normalEquiv` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -80,7 +80,7 @@ normalEquiv(s,b) has normalMap(s,b) as its forward function and normalMap(-s,inv
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall X \in Type, A \in \operatorname{ReturnAtlas}\left(H, X\right), k \in Nat,\; ((\exists f \in \operatorname{Map}\left(X, X\right),\; (\operatorname{Equivariant}\left(A, f\right) \land \operatorname{iterate}\left(f, k\right) = \operatorname{time}\left(A\right))) \iff (\exists s \in \operatorname{Fin}\left(\operatorname{period}\left(A\right)\right), m \in Int, b \in H,\; (\operatorname{Commute}\left(b, \operatorname{holonomy}\left(A\right)\right) \land (\operatorname{mul}\left(k, \operatorname{val}\left(s\right)\right) = (1+\operatorname{mul}\left(\operatorname{period}\left(A\right), m\right)) \land \operatorname{mul}\left(b^{k}, \operatorname{holonomy}\left(A\right)^{m}\right) = 1))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.root_criterion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.root_criterion` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -92,7 +92,7 @@ For each natural k, a deck-equivariant f with f iterated k times equal to time e
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall n \in Nat, C \in \operatorname{GroupMat}\left(H, n, n\right), p \in \operatorname{Path}\left(C\right), d \in Nat,\; \operatorname{orbitHolonomy}\left(C, p, d\right) = \operatorname{totalLabel}\left(\operatorname{historyWindow}\left(\operatorname{baseGraph}\left(C\right), p, 0, d\right)\right)$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.orbitHolonomy` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.orbitHolonomy` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -104,7 +104,7 @@ The loop retains the original numbered edges and their time order. For d equal t
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall n \in Nat, C \in \operatorname{GroupMat}\left(H, n, n\right), p \in \operatorname{Path}\left(C\right), d \in Nat,\; \operatorname{LiftOrbit}\left(C, p, d\right) = \operatorname{Subtype}\left(\operatorname{History}\left(\operatorname{expandedGraph}\left(C\right)\right), \operatorname{liesOverForwardPhase}\left(C, p, d\right)\right)$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.LiftOrbit` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.LiftOrbit` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -116,7 +116,7 @@ LiftOrbit C p d consists exactly of actual History(expandedGraph C) whose forget
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall n \in Nat, C \in \operatorname{GroupMat}\left(H, n, n\right), p \in \operatorname{Path}\left(C\right), d \in Nat,\; (((\operatorname{Positive}\left(d\right) \land \operatorname{minimalPeriod}\left(\operatorname{baseShift}\left(C\right), p\right) = d)) \implies (\operatorname{ReturnAtlas}\left(H, \operatorname{LiftOrbit}\left(C, p, d\right)\right)))$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.actualAtlas` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.actualAtlas` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -126,15 +126,15 @@ The constructed atlas has period d, holonomy equal to the actual loop label, tim
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.Equivariant`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.LiftOrbit`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.ReturnAtlas`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.actualAtlas`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.coordinates`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.normalEquiv`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.normalMap`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.normal_form`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.orbitHolonomy`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion.root_criterion`
-- Dependency: [D5/S3/ConceptDynamics/Coding/OrderedGroupChainHistories](OrderedGroupChainHistories.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/TwistedPeriodicHistories](TwistedPeriodicHistories.md)
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.Equivariant`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.LiftOrbit`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.ReturnAtlas`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.actualAtlas`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.coordinates`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.normalEquiv`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.normalMap`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.normal_form`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.orbitHolonomy`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion.root_criterion`
+- Dependency: [D5/S3/ConceptDynamics/Coding/OrderedGroupChainHistories](../OrderedGroupChainHistories.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/TwistedPeriodicHistories](../TwistedPeriodicHistories.md)

@@ -8,7 +8,7 @@ Ordinary periodic counts do not determine equivariant square roots even with a f
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall g \in H,\; \operatorname{loop}\left(g\right) = \operatorname{oneByOneMatrix}\left(\operatorname{single}\left(g, 1\right)\right)$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.loop` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.loop` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ loop(g) is the one-by-one natural group-ring matrix whose only entry is single(g
 
 $$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall g \in H, k \in Nat,\; \operatorname{HasEquivariantRoot}\left(g, k\right) = \operatorname{existsDeckEquivariantTimeRoot}\left(\operatorname{loop}\left(g\right), k\right)$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.HasEquivariantRoot` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.HasEquivariantRoot` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ existsDeckEquivariantTimeRoot(C,k) means there exists f:History(expandedGraph C)
 
 $$DeckGroup = \operatorname{Multiplicative}\left(\operatorname{Prod}\left(\operatorname{ZMod}\left(4\right), \operatorname{ZMod}\left(2\right)\right)\right)$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.DeckGroup` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.DeckGroup` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,7 +44,7 @@ DeckGroup is C4 times C2, written multiplicatively. The labels are g=(2,0) and h
 
 $$claim = \left(\forall g \in DeckGroup, h \in DeckGroup,\; ((\forall x \in \operatorname{History}\left(\operatorname{expandedGraph}\left(\operatorname{loop}\left(g\right)\right)\right),\; \operatorname{minimalPeriod}\left(\operatorname{shift}\left(\operatorname{expandedGraph}\left(\operatorname{loop}\left(g\right)\right)\right), x\right) = 2) \implies (((\forall x \in \operatorname{History}\left(\operatorname{expandedGraph}\left(\operatorname{loop}\left(h\right)\right)\right),\; \operatorname{minimalPeriod}\left(\operatorname{shift}\left(\operatorname{expandedGraph}\left(\operatorname{loop}\left(h\right)\right)\right), x\right) = 2) \implies (((\forall j \in Nat,\; ((\operatorname{Positive}\left(j\right)) \implies (\operatorname{NatCard}\left(\operatorname{TwistedPeriod}\left(\operatorname{loop}\left(g\right), 1, j\right)\right) = \operatorname{NatCard}\left(\operatorname{TwistedPeriod}\left(\operatorname{loop}\left(h\right), 1, j\right)\right)))) \implies ((\operatorname{HasEquivariantRoot}\left(g, 2\right) \iff \operatorname{HasEquivariantRoot}\left(h, 2\right))))))))\right)$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.claim` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.claim` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -56,7 +56,7 @@ The claim universally quantifies g,h in this fixed DeckGroup. It assumes that ev
 
 $$\neg claim$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ The proof supplies the two labels above and uses the complete actual atlas to pr
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.DeckGroup`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.HasEquivariantRoot`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.claim`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.loop`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.result`
-- Dependency: [D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion](PrimitiveLiftRootCriterion.md)
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.DeckGroup`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.HasEquivariantRoot`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.claim`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.loop`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.result`
+- Dependency: [D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion](PrimitiveLiftRootCriterion.md)

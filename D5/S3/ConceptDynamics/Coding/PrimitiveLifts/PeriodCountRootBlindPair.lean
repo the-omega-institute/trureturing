@@ -1,12 +1,12 @@
-/- GID: D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair
+/- GID: D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair
    generality: I
-   mirror-B: D5/B/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair
    mirror-E: none(waiver:symbolic-refutation)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.claim; result=D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.result; claim=D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.claim; result=D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.result; claim=D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.claim
    digest: Two actual one-loop systems over the same group have equal periodic counts and different equivariant square-root existence. -/
 
-import D5.S3.ConceptDynamics.Coding.PrimitiveLiftRootCriterion
+import D5.S3.ConceptDynamics.Coding.PrimitiveLifts.PrimitiveLiftRootCriterion
 import Mathlib.Data.ZMod.Basic
 import Mathlib.GroupTheory.OrderOfElement
 
@@ -15,7 +15,7 @@ set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
-namespace D5.S3.ConceptDynamics.Coding.PeriodCountRootBlindPair
+namespace D5.S3.ConceptDynamics.Coding.PrimitiveLifts.PeriodCountRootBlindPair
 
 open EssentialWordRealization FiniteWindowTableCriterion FixedBlockRigidity
 open OrderedGroupChainHistories PrimitiveLiftRootCriterion TwistedPeriodicHistories
@@ -226,4 +226,4 @@ theorem result : ¬ claim := by
     exact orderOf_eq_prime (p := 2) (by decide) (by decide)
   exact no ((h firstLabel secondLabel hfirst hsecond period_data).1 yes)
 
-end D5.S3.ConceptDynamics.Coding.PeriodCountRootBlindPair
+end D5.S3.ConceptDynamics.Coding.PrimitiveLifts.PeriodCountRootBlindPair

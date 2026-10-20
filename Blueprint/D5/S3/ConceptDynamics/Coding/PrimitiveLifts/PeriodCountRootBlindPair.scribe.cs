@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PrimitiveLifts;
 
 internal sealed class PeriodCountRootBlindPairDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/ConceptDynamics/Coding/PeriodCountRootBlindPair.";
+    private const string Prefix = "D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PeriodCountRootBlindPair.";
     private static Formula I(string n) => F.Id(n);
     private static Formula.BoundVariable B(string n, Formula t) => new(FormulaIdentifier.Create(n),t);
     private static Formula Q(Formula f, params Formula.BoundVariable[] v) =>

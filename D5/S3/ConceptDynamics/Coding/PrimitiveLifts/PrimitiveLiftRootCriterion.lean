@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion
+/- GID: D5/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Coding/PrimitiveLiftRootCriterion
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PrimitiveLifts/PrimitiveLiftRootCriterion
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
@@ -17,7 +17,7 @@ set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
-namespace D5.S3.ConceptDynamics.Coding.PrimitiveLiftRootCriterion
+namespace D5.S3.ConceptDynamics.Coding.PrimitiveLifts.PrimitiveLiftRootCriterion
 
 universe u v
 
@@ -471,4 +471,4 @@ def actualAtlas : ReturnAtlas H (LiftOrbit C p d) where
     simp [actualPoint,rawPoint,groupHistory,mul_assoc]
 
 end Actual
-end D5.S3.ConceptDynamics.Coding.PrimitiveLiftRootCriterion
+end D5.S3.ConceptDynamics.Coding.PrimitiveLifts.PrimitiveLiftRootCriterion
