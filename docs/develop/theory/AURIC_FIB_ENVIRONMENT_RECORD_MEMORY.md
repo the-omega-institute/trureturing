@@ -4209,3 +4209,627 @@ realization or literature-priority assertion.
 [PA26]: https://github.com/the-omega-institute/trureturing/blob/2cd10a669fdb32fb481abd7136cac1b9ef480ee0/docs/develop/theory/AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md
 
 ## 追加锚（本行以下为增补区）
+
+## 27. Quantitative sharp tasks after fair chronological history erasure
+
+### 27.1. Task, actual channel and attainable effects
+
+**Definition 27.1 (One terminal task on the whole qutrit).** Use the actual
+matrices and chronological words of (26.1), at any real angle $\theta$
+and finite integer horizon $n\ge0$, with the fair independent law of
+Definition 11.1. In this chapter set
+
+$$
+\begin{gathered}
+\Delta_W(X)=\tfrac12(X+WXW),\qquad
+F=\operatorname{Ad}_{U_0}\circ\Delta_W
+ =\tfrac12(\operatorname{Ad}_{U_0}+\operatorname{Ad}_{U_1}),\qquad
+\mathcal N_n=F^n,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+e=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+f=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+E=|v\rangle\langle v|,\quad \|v\|=1,\quad
+p=|\langle\xi,v\rangle|^2,\quad q=|\langle e,v\rangle|^2,\quad
+r=|\langle f,v\rangle|^2,\quad p+q+r=1,\\
+\eta_n(E)=\min_{\mathcal D\ {\rm CPTP}}
+ \sup_{\rho\in\mathsf D(\mathbb C^3)}
+ \left|\operatorname{Tr}(E\mathcal D F^n(\rho))
+                   -\operatorname{Tr}(E\rho)\right|.
+\end{gathered}
+\tag{27.1}
+$$
+
+The decoder is a single qutrit channel, chosen for $E,n$, independent of
+the unknown input. All qutrit density matrices are included. There is no
+history, reference access, smaller input code, intermediate correction or
+postselection. The loss is a probability error, not a diamond distance.
+The symbols $p,q,r$ here are task populations, not the law $p_h$ of §26.
+For each finite $n\ge1$ write
+
+$$
+s=(-1/2)^{n-1},\qquad \tau=|s|>0,\qquad
+\alpha=(1+s)/2,\quad \beta=(1-s)/2,\qquad
+k=\sqrt{r(1-r)}.
+\tag{27.2}
+$$
+
+The horizon $n=0$ is treated separately throughout. No inverse involving
+$s$ below is evaluated at an infinite horizon.
+
+The identification $\mathcal N_n=F^n$ uses the actual all-angle law,
+not a replacement instrument. Indeed, putting $R_\theta=e^{i\theta W}$,
+Theorem 2.2 gives $V_0=U_0R_\theta$, $V_1=V_0W$. Since $\Delta_W(X)$
+commutes with $W$,
+
+$$
+\tfrac12\sum_j V_jXV_j^\dagger
+ =U_0R_\theta\Delta_W(X)R_\theta^\dagger U_0^\dagger=F(X).
+\tag{27.3}
+$$
+
+Each normalized branch is unitary, so its actual next outcome has
+conditional probability $1/2$ after every preceding history and on every
+qutrit input. Thus the chronological history law is $2^{-n}$; summing
+the products $V_{h_n}\cdots V_{h_1}$ gives $F^n$ at every angle.
+
+We reuse the task-effect interface of [Purity arithmetic, §86][PA27]
+and the [observable-correction note][NOTE26]:
+
+$$
+\begin{aligned}
+\eta_n(E)&=\min_{0\le B\le I_3}\|(F^n)^\dagger(B)-E\|_{\rm op},\\
+\eta_n(E)&\ge\operatorname{Tr}(YE)
+                 -\operatorname{Tr}\bigl((F^n(Y))_+\bigr)
+ \quad(Y=Y^\dagger,\ \|Y\|_1\le1).
+\end{aligned}
+\tag{27.4}
+$$
+
+Here $A_+$ is the positive part of a Hermitian matrix. To fix the decoder
+for every construction below, choose any fixed densities $\sigma_1$ in
+$\operatorname{ran}E$ and $\sigma_0$ in $\ker E$ and use
+
+$$
+\mathcal D_B(X)=\operatorname{Tr}(BX)\sigma_1
+                      +\operatorname{Tr}((I_3-B)X)\sigma_0.
+\tag{27.5}
+$$
+
+For rank-one $E$, one explicit choice is $\sigma_1=E$ and
+$\sigma_0=(I_3-E)/2$. This is CPTP with $\mathcal D_B^\dagger(E)=B$.
+Conversely every decoder
+supplies such an effect. The all-density supremum is the operator norm
+of its Hermitian residual. The second line of (27.4) follows from
+trace/operator-norm duality and
+$\max_{0\le B\le I}\operatorname{Tr}(AB)=\operatorname{Tr}(A_+)$,
+obtained by diagonalizing $A$. These are reused general tools. The
+minimum is attained because the effect interval is compact.
+
+**Proposition 27.2 (Entire effect image and complex orientation).** For
+every finite $n\ge1$, in the ordered orthonormal basis $(\xi,e,f)$,
+the entire set of effects
+$(F^n)^\dagger(B)$, $0\le B\le I_3$, is
+
+$$
+\begin{gathered}
+C=G_s(K)=\begin{pmatrix}
+x&sz&0\\s\overline z&\alpha y+\beta d&0\\
+0&0&\beta y+\alpha d
+\end{pmatrix},\qquad
+K=\begin{pmatrix}x&z&0\\\overline z&y&0\\0&0&d\end{pmatrix},\\
+0\le K_2:=\begin{pmatrix}x&z\\\overline z&y\end{pmatrix}\le I_2,
+\qquad 0\le d\le1.
+\end{gathered}
+\tag{27.6}
+$$
+
+Each displayed $C$ is attained by the physical output effect
+$B=U_0KU_0^\dagger$ and hence by (27.5). The error depends only on
+$(p,r)$, with $q=1-p-r$, even for complex $v$.
+
+Proof. In this basis the actual matrices are
+
+$$
+W=\operatorname{diag}(1,1,-1),\qquad
+U_0=1\oplus\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix}.
+$$
+
+Thus $F^\dagger=\Delta_W\circ\operatorname{Ad}_{U_0^\dagger}$ maps
+the effect interval onto its $W$-commuting part, with right inverse
+$K\mapsto U_0KU_0^\dagger$. On that part, one further adjoint step
+sends $z$ to $-z/2$ and sends $(y,d)$ to
+$((y+3d)/4,(3y+d)/4)$, fixing $x$. It fixes $y+d$ and multiplies
+$y-d$ by $-1/2$. Iterating gives exactly (27.6), including surjectivity.
+By trace duality the same calculation also gives, for every Hermitian $Y$,
+
+$$
+F^n(Y)=U_0G_s(\Delta_W(Y))U_0^\dagger,
+\tag{27.7}
+$$
+
+where $G_s$ is extended linearly to block Hermitian matrices.
+
+For every diagonal unitary $\Lambda$ in $(\xi,e,f)$,
+$G_s(\Lambda K\Lambda^\dagger)=\Lambda G_s(K)\Lambda^\dagger$,
+and conjugation preserves both effect constraints. Taking
+$v=\Lambda(\sqrt p,\sqrt q,\sqrt r)^{\mathsf T}$ therefore removes
+all phases from the optimization. Primal $K$ and dual $Y$ transfer to
+$\Lambda K\Lambda^\dagger$ and $\Lambda Y\Lambda^\dagger$; (27.7)
+preserves the dual support value under this transfer. The physical
+effect becomes $U_0\Lambda K\Lambda^\dagger U_0^\dagger$.
+This is diagonal invariance of the attainable effect set; it does not
+assert diagonal-unitary covariance of $F$. $\square$
+
+The restricted polynomial and iteration supplying the factor $s$ are
+already [Five-window quantum memory, §§19–20][QM27]: on $M_3$,
+$F(F-I)(F+I/2)=0$, $L=(F+2F^2)/3$ and
+$F^n=L+s(F-L)$ for $n\ge1$. These are reused with the qutrit restriction;
+the full $M_5$ polynomial has the additional zero-mode transient described
+there. Neither the polynomial nor its EB limit is a new task optimum.
+
+### 27.2. The erased-coherence floor and the complete one-step value
+
+**Theorem 27.3 (Empty and one-step horizons).** For every complex unit $v$,
+
+$$
+\eta_0(E)=0,\qquad \eta_1(E)=k,\qquad
+\eta_n(E)\ge k\quad(n\ge1).
+\tag{27.8}
+$$
+
+Proof. At $n=0$ take $B=E$. For $0<r<1$, let
+$\Pi_+=(I_3+W)/2$, $\Pi_-=(I_3-W)/2$ and set
+$u=\Pi_+v/\sqrt{1-r}$, $w=\Pi_-v/\sqrt r$. These are orthonormal.
+The difference $E-\Delta_W(E)$ is
+$k(|u\rangle\langle w|+|w\rangle\langle u|)$, with eigenvalues
+$k,-k,0$. At $n=1$ choose $K=\Delta_W(E)$ and
+$B=U_0KU_0^\dagger$. Equation (27.6) has $s=1$ and gives $C=K$,
+so this attains error $k$.
+
+For the matching lower certificate put
+
+$$
+Y_*=(|u\rangle\langle w|+|w\rangle\langle u|)/2.
+\tag{27.9}
+$$
+
+It has trace norm one, $\Delta_W(Y_*)=0$ and
+$\operatorname{Tr}(Y_*E)=k$. Hence $F^n(Y_*)=0$ at every $n\ge1$,
+and (27.4) supplies the floor. If $r=0$ or $r=1$, the target already
+commutes with $W$; the same one-step primal has zero error and the
+lower bound is nonnegativity, with no division by zero. $\square$
+
+### 27.3. Exact values on the active plane
+
+**Theorem 27.4 (The boundary $p=0$ at every finite positive horizon).**
+Suppose $p=0$, so $q+r=1$. Define
+
+$$
+h=q-r,\qquad \delta=\operatorname{clip}(h,-\tau,\tau),\qquad
+t=\tfrac12\sqrt{4qr+(|h|-\tau)_+^2}.
+\tag{27.10}
+$$
+
+Then $\eta_n(E)=t$ for every finite $n\ge1$. After phase removal,
+an attaining effect in (27.6) is
+
+$$
+K=\operatorname{diag}\left(0,\frac{1+\delta/s}{2},
+                              \frac{1-\delta/s}{2}\right).
+\tag{27.11}
+$$
+
+Proof. Since $|\delta/s|\le1$, this is an effect. Its image is
+$C=0\oplus\operatorname{diag}((1+\delta)/2,(1-\delta)/2)$.
+On $(e,f)$ the residual $R=E-C$ is traceless with entries
+$R_{ee}=(h-\delta)/2$, $R_{ff}=-(h-\delta)/2$,
+$R_{ef}=R_{fe}=\sqrt{qr}$. Its eigenvalues are $t,-t$, because
+$t^2=qr+(h-\delta)^2/4$. Thus the primal error is $t$.
+
+If $t>0$, extend $Y=R/(2t)$ by zero on $\xi$. Its trace norm is
+one. Applying (27.7) gives the exact support and task values
+
+$$
+\operatorname{Tr}\bigl((F^n(Y))_+\bigr)
+ =\frac{\tau|h-\delta|}{4t},\qquad
+\operatorname{Tr}(YE)=\frac{1-\delta h}{4t}.
+\tag{27.12}
+$$
+
+Indeed erasure kills its $e$–$f$ entry and the two remaining active
+eigenvalues after propagation are $\pm s(h-\delta)/(4t)$, up to the
+physical $U_0$ conjugation. The task trace uses $h^2+4qr=1$.
+Clipping gives $\delta(h-\delta)=\tau|h-\delta|$, whether $h$ lies
+inside or outside the clipping interval. Consequently the difference
+in (27.12) is $(1-2\delta h+\delta^2)/(4t)=t$. Equation (27.4)
+proves the lower bound against every full-qutrit effect. If $t=0$,
+(27.11) already attains zero, and nonnegativity completes the proof
+without defining $R/(2t)$. Complex phases transfer by Proposition 27.2.
+Although this witness is supported on $(e,f)$, the input domain has
+not been restricted to that plane. $\square$
+
+### 27.4. Exact values on the spectator–negative-sector plane
+
+**Theorem 27.5 (The boundary $q=0$).** Suppose $q=0$, $p+r=1$ and
+$n\ge2$ is finite. Set $a=(1+\tau)/2$, $b=(1-\tau)/2$, so
+$a+b=1$, $a-b=\tau>0$ and $b\ge1/4$. Define
+
+$$
+h_\tau(w)=\begin{cases}
+bw/a,&0\le w\le a,\\
+(aw-\tau)/b,&a\le w\le1.
+\end{cases}
+\tag{27.13}
+$$
+
+With $k=\sqrt{pr}$, the exact value is
+
+$$
+\eta_n(E)=\begin{cases}
+k,&h_\tau(r)\le k,\\[2pt]
+\displaystyle\frac{b(\tau-ar)+a\sqrt{\tau^2p+b^2r^2}}{\tau},
+ &h_\tau(r)>k.
+\end{cases}
+\tag{27.14}
+$$
+
+Proof. Remove phases first. Averaging an attainable effect over the
+phase of $e$ preserves $E$, preserves attainability and cannot increase
+the residual norm. It kills the $\xi$–$e$ entry, so it suffices to use
+diagonal $K$. Write $w=C_{ff}$. Order its active controls as $(D,J)$
+so that
+
+$$
+(K_{ee},K_{ff})=\begin{cases}(D,J),&s>0,\\(J,D),&s<0,
+\end{cases}
+\qquad C_{ee}=aD+bJ,\quad w=bD+aJ.
+\tag{27.15}
+$$
+
+At fixed $w$, minimizing $C_{ee}$ over $0\le D,J\le1$ gives precisely
+$h_\tau(w)$. For $w\le a$, choose $(D,J)=(0,w/a)$; for $w\ge a$,
+choose $((w-a)/b,1)$. For example, eliminating $J$ gives
+$C_{ee}=bw/a+(\tau/a)D$, so the least feasible $D$ is respectively
+zero or $(w-a)/b$. This also proves the lower bound at fixed $w$.
+
+Put $A=C_{\xi\xi}-p$ and $d_0=w-r$. The residual on $(\xi,f)$ has
+norm
+
+$$
+\frac{|A+d_0|+\sqrt{(A-d_0)^2+4pr}}2
+ \ \ge\ \sqrt{pr+d_0^2},
+\tag{27.16}
+$$
+
+with equality at $A=-d_0$, that is $C_{\xi\xi}=1-w\in[0,1]$.
+To see minimality, the square-root function of $A$ is 1-Lipschitz,
+so its decrease away from $A=-d_0$ is at most $|A+d_0|$.
+Thus both independent diagonal choices attain the exact reduction
+
+$$
+\eta_n(E)=\min_{0\le w\le1}
+ \max\{h_\tau(w),\sqrt{pr+(w-r)^2}\}.
+\tag{27.17}
+$$
+
+Values $w>r$ cannot improve the objective, since both entries are
+nondecreasing there. If $h_\tau(r)\le k$, choose $w=r$ and obtain
+the floor. Otherwise $r>a$: for $r\le a$,
+$k^2-(br/a)^2=r(1-r-b^2r/a^2)\ge rb\tau/a\ge0$.
+At $w=a$ the second entry is at least the first $h_\tau(a)=b$, since
+$pr+(a-r)^2-b^2=\tau p\ge0$. At $w=r$ the inequality is reversed.
+The first entry increases strictly and the second decreases on $[a,r]$,
+so there is exactly one crossing $w$ in $[a,r)$, and it minimizes
+(27.17). At the crossing $t=h_\tau(w)$ and $w=(bt+\tau)/a$.
+Squaring $t^2=pr+(w-r)^2$ yields
+
+$$
+\tau t^2+2b(ar-\tau)t+2a\tau r-\tau^2-a^2r=0.
+\tag{27.18}
+$$
+
+Its constant coefficient is negative: it is
+$-\tau^2+a(2\tau-a)r$, whose values at $r=0,1$ are
+$-\tau^2,-b^2$, respectively. Hence there is a unique positive root.
+Its discriminant after dividing by four is
+$a^2(\tau^2p+b^2r^2)$, giving exactly the second line of (27.14).
+The crossing argument identifies this root with the admissible $t$;
+no extraneous squared root is used.
+
+In either branch the attaining $K$ is diagonal: take
+$K_{\xi\xi}=1-w$ and the controls in (27.15) minimizing $C_{ee}$.
+Take $w=r$ in the floor branch and $w=(bt+\tau)/a$ otherwise.
+Together with $B=U_0KU_0^\dagger$ and (27.5), this specifies a
+terminal CPTP decoder, including $r=0$ and $r=1$.
+
+For a matching all-input dual in the floor branch use
+$Y=(|\xi\rangle\langle f|+|f\rangle\langle\xi|)/2$.
+Its trace norm is one, $F^n(Y)=0$ and $\operatorname{Tr}(YE)=k$.
+In the crossing branch put $\Delta=r-w\ge0$ and
+
+$$
+\begin{gathered}
+\mu=\frac{at}{at+b\Delta},\qquad
+\nu=\frac{b\Delta}{at+b\Delta},\qquad
+Y_0\big|_{(\xi,f)}=
+ \begin{pmatrix}0&k/(2t)\\k/(2t)&\Delta/t\end{pmatrix},\\
+Y_0e=0,\qquad Y=\mu Y_0-\nu|e\rangle\langle e|.
+\end{gathered}
+\tag{27.19}
+$$
+
+Here $t>0$ and $at+b\Delta>0$. Since $t^2=k^2+\Delta^2$,
+$\|Y_0\|_1=1$, also when $k=0$; the orthogonal $e$ block gives
+$\|Y\|_1=\mu+\nu=1$. To evaluate the support in the actual output
+coordinates, use (27.7). Order the physical active basis as
+$(U_0e,U_0f)$ if $s>0$ and $(U_0f,U_0e)$ if $s<0$.
+These are exactly the coordinates whose diagonal entries in $B$ are
+$(D,J)$. In that order $F^n(Y)$ has coefficients
+
+$$
+-\nu a+\mu b\Delta/t=0,\qquad
+-\nu b+\mu a\Delta/t=\frac{\mu\Delta\tau}{at}\ge0,
+\tag{27.20}
+$$
+
+and zero on $\xi$. Thus the chosen $J=1$ effect maximizes its support
+over the entire qutrit effect interval, not merely over diagonal effects.
+On $(\xi,f)$ the residual $E-C$ is
+$\left(\begin{smallmatrix}-\Delta&k\\k&\Delta\end{smallmatrix}\right)$,
+and its $e$ entry is $-t$. Therefore
+$\operatorname{Tr}(Y_0(E-C))=(k^2+\Delta^2)/t=t$ and
+$\operatorname{Tr}(Y(E-C))=\mu t+\nu t=t$.
+Support attainment makes this exactly the lower expression in (27.4).
+Proposition 27.2 transfers both certificates to every complex phase.
+The endpoint $r=0$ is in the floor branch and the endpoint $r=1$ has
+$w=a$, $\Delta=t=b$ in the crossing branch. The case $n=1$ is (27.8),
+not (27.13), whose second denominator would vanish. $\square$
+
+### 27.5. Orientation, boundary illustrations and finite-horizon limits
+
+**Corollary 27.6 (Strict orientation dependence).** For every finite
+$n\ge1$ the two tasks with $v=e$ and $v=(e+f)/\sqrt2$ both have $p=0$,
+but respectively have errors
+
+$$
+\frac{1-\tau}{2},\qquad \frac12.
+\tag{27.21}
+$$
+
+Their difference $\tau/2$ is strictly positive. At $n=3$ the values
+are $3/8$ and $1/2$. Thus $p$ alone is insufficient at every positive
+finite horizon. At $n=1$, $r$ alone suffices by (27.8); at every
+$n\ge2$, $r$ alone is insufficient, since $v=\xi$ and $v=e$ both
+have $r=0$ but errors zero and $(1-\tau)/2>0$.
+
+Proof. Theorem 27.4 gives (27.21). Explicit attaining controls are
+$\operatorname{diag}(0,(1+\operatorname{sgn}s)/2,
+(1-\operatorname{sgn}s)/2)$ and $\operatorname{diag}(0,1/2,1/2)$.
+Matching witnesses are $(|e\rangle\langle e|-|f\rangle\langle f|)/2$
+and $(|e\rangle\langle f|+|f\rangle\langle e|)/2$.
+Their task traces are $1/2$ and $1/2$; their propagated positive
+traces are $\tau/2$ and zero. The exact $\xi$ task is the conserved
+$P$ task of [PA27, Theorem 86.2][PA27], also (26.19). $\square$
+
+At $n=2$, Theorem 27.5 has $a=3/4$, $b=1/4$ and simplifies to
+
+$$
+\eta_2(E)\big|_{q=0}=\begin{cases}
+\sqrt{r(1-r)},&0\le r\le4/5,\\
+1-3r/4,&4/5\le r\le1.
+\end{cases}
+\tag{27.22}
+$$
+
+Indeed $\sqrt{\tau^2p+b^2r^2}=(2-r)/4$; on $r\ge3/4$ the
+floor inequality is $3r-2\le\sqrt{r(1-r)}$, equivalent there to
+$r\le4/5$. The two values at $4/5$ are both $2/5$.
+Pure $e$ and pure $f$ have error $(1-\tau)/2$ for every $n\ge1$.
+For $n\ge2$ the only zero-error rank-one task is $P$. One can also
+see the remaining $r=0,q>0$ obstruction directly: $C=E$ in (27.6)
+would require $K_{ff}=-\beta q/s<0$ for $s>0$, or
+$K_{ee}=\alpha q/s<0$ for $s<0$. The floor excludes $0<r<1$ and
+pure $f$ has positive error. This recovers the zero-error boundary
+of (26.19); it does not quantify the general $r=0,pq>0$ error.
+
+The boundary formulas also give the pointwise limits
+
+$$
+\lim_{n\to\infty}\eta_n(E)=\begin{cases}
+1/2,&p=0,\\
+\sqrt{r(1-r)},&q=0,\ 0\le r\le1/2,\\
+1/2,&q=0,\ 1/2\le r\le1.
+\end{cases}
+\tag{27.23}
+$$
+
+For $p=0$, use $4qr+(q-r)^2=1$ in (27.10). For $q=0$,
+$h_\tau(w)\to w$ uniformly on $[0,1]$ as $\tau\to0$, since its
+two differences from $w$ are $-\tau w/a$ and
+$-\tau(1-w)/b$. Thus the minima in (27.17) converge to the minimum
+of $\max\{w,\sqrt{r(1-r)+(w-r)^2}\}$.
+If $r\le1/2$, $w=r$ attains the lower floor, since $r\le k$.
+If $r\ge1/2$, $w=1/2$ gives $1/2$; $w\ge1/2$ has first entry
+at least $1/2$, and $w\le1/2$ has second entry at least $1/2$.
+This proves (27.23) without substituting $s=0$ into a finite-horizon
+inverse. The separation (27.21) tends to zero while remaining strict
+at every finite positive horizon.
+
+### 27.6. A scalar criterion for attaining the floor
+
+**Theorem 27.7 (Necessary and sufficient floor region).** Fix any
+finite $n\ge1$ and $0<r<1$. Put $m=1-r$ and $k=\sqrt{rm}$.
+Then $\eta_n(E)=k$ if and only if some real $\lambda\in[0,k]$ makes
+
+$$
+\begin{gathered}
+X=p+\lambda q/m,\qquad A=q+\lambda p/m,\qquad
+Z=\frac{\sqrt{pq}(1-\lambda/m)}s,\\
+Y_c=\frac{\alpha A-\beta r}s,\qquad
+D_c=\frac{\alpha r-\beta A}s,\\
+0\le X,Y_c,D_c\le1,\qquad
+Z^2\le XY_c,\qquad Z^2\le(1-X)(1-Y_c).
+\end{gathered}
+\tag{27.24}
+$$
+
+In that case, after phase removal an attaining effect is
+$K=\left(\begin{smallmatrix}X&Z&0\\Z&Y_c&0\\0&0&D_c\end{smallmatrix}\right)$.
+If (27.24) is infeasible, then $\eta_n(E)>k$.
+
+Proof. Remove phases and write $u=(\sqrt p,\sqrt q)^{\mathsf T}/\sqrt m$.
+Every attainable $C$ has the form $H\oplus d$. For $R=C-E$,
+$Rf=-k u+(d-r)f$, so $\|R\|\le k$ forces $d=r$.
+Then $Ru=(H-mI_2)u-kf$ forces $Hu=mu$. Hermiticity gives
+
+$$
+H=m|u\rangle\langle u|+\lambda|u_\perp\rangle\langle u_\perp|,
+\qquad u_\perp=(-\sqrt q,\sqrt p)^{\mathsf T}/\sqrt m.
+\tag{27.25}
+$$
+
+Effect positivity gives $\lambda\ge0$; the residual on $u_\perp$
+gives $\lambda\le k$. Its entries are $X,A,sZ$ in (27.24).
+Inverting the two population equations of $G_s$, whose determinant
+is $s\ne0$, gives exactly $Y_c,D_c$ there. The scalar bounds and
+two determinants in (27.24) are precisely $0\le K_2\le I_2$ and
+$0\le D_c\le1$. Thus they are necessary. Conversely they make $K$
+an effect with image (27.25) direct-summed with $r$. The residual
+has eigenvalues $k,-k,\lambda$, up to overall sign; its norm is
+$k$. The universal witness (27.9) gives the matching lower bound.
+Compact attainment in (27.4) makes failure of the criterion imply
+strict inequality, rather than an unattained infimum equal to $k$.
+
+In particular $r=1/2$ gives $\eta_n(E)=1/2$ for every $p,q$ and
+every positive horizon: $B=K=I_3/2$ attains that error. In (27.24)
+this is $\lambda=m=k=1/2$. The criterion determines equality with
+the floor; it is not an optimum formula outside that region.
+$\square$
+
+### 27.7. Rank-two tasks and the remaining coupled constraints
+
+**Proposition 27.8 (Complementary sharp task).** For every finite
+$n\ge0$ and every projection $E$,
+
+$$
+\eta_n(I_3-E)=\eta_n(E).
+\tag{27.26}
+$$
+
+For nontrivial $E$ this includes the explicit rank-two task associated
+to each rank-one task above. Indeed $(F^n)^\dagger$ is unital, so
+the bijection $B\mapsto I_3-B$ negates the residual in (27.4).
+In (27.5) exchange $\sigma_1,\sigma_0$ along with the two effects;
+the output states then lie in the range and kernel of $I_3-E$,
+respectively. This gives an attaining complementary decoder. The
+trivial tasks $0,I_3$ both have zero error. This is the reused unital
+complement argument applied to the present optima.
+
+**Proposition 27.9 (Exact structural feasibility for the remaining error).**
+Fix finite $n\ge1$, $0<r<1$ and $\varepsilon\in[k,1/2]$.
+After removing phases put $u=(\sqrt p,\sqrt q)^{\mathsf T}$,
+now unnormalized. Then $\eta_n(E)\le\varepsilon$ if and only if
+there exist a real symmetric $2\times2$ matrix $H$ and a real
+output population $d$ satisfying all of
+
+$$
+\begin{gathered}
+|d-r|\le\sqrt{\varepsilon^2-k^2},\\
+\frac{\varepsilon+d}{\varepsilon+d-r}uu^{\mathsf T}
+ -\varepsilon I_2
+ \ \le H\le\ \varepsilon I_2+
+ \frac{\varepsilon-d}{\varepsilon+r-d}uu^{\mathsf T},\\
+0\le K_2(H,d):=
+\begin{pmatrix}
+H_{00}&H_{01}/s\\
+H_{01}/s&(\alpha H_{11}-\beta d)/s
+\end{pmatrix}\le I_2,\qquad
+0\le D_c(H,d):=\frac{\alpha d-\beta H_{11}}s\le1.
+\end{gathered}
+\tag{27.27}
+$$
+
+At $r=0$, replace the first two lines of (27.27) by
+
+$$
+\|H-uu^{\mathsf T}\|_{\rm op}\le\varepsilon,\qquad
+0\le d\le\varepsilon,
+\tag{27.28}
+$$
+
+and keep the same inverse-effect constraints. This boundary version is
+valid for $\varepsilon\in[0,1/2]$. No Schur fractions are used at $r=0$.
+
+Proof. The choice $B=I_3/2$ gives the universal upper bound $1/2$,
+and (27.8) gives the lower floor. After phase removal,
+averaging an attainable $C$ with its entrywise complex conjugate
+preserves its effect constraints and cannot increase its distance to
+the real target. Thus real $H$ suffices. Set $C=H\oplus d$ and
+$R=C-E$. Its action on $f$ gives
+$\|Rf\|^2=k^2+(d-r)^2$, proving the first line of (27.27).
+Since $k>0$, this line ensures
+$|d-r|\le\sqrt{\varepsilon^2-k^2}<\varepsilon$; hence both
+$\varepsilon+d-r$ and $\varepsilon+r-d$ are strictly positive.
+The inequalities $\varepsilon I_3+R\ge0$ and
+$\varepsilon I_3-R\ge0$ have these two scalar bottom entries.
+Their Schur complements are exactly the two matrix bounds on $H$
+in (27.27). Conversely those bounds imply both positive matrices,
+and hence $\|R\|_{\rm op}\le\varepsilon$. Inverting $G_s$ gives
+the displayed $K_2(H,d),D_c(H,d)$; their effect constraints are
+equivalent to attainability of $C$. They also give the explicit
+effect $K=K_2(H,d)\oplus D_c(H,d)$ and decoder (27.5) whenever
+a feasible tuple is specified.
+
+If $r=0$, the residual is the block diagonal matrix
+$(H-uu^{\mathsf T})\oplus d$. Its norm bound is (27.28), because
+attainability already gives $d\ge0$. This proves the boundary form
+without divisions that can vanish. These equivalences are structural
+feasibility statements; they do not solve the coupled optimization.
+$\square$
+
+### 27.8. Sources and the unresolved quantitative target
+
+**Definition 27.10 (Reused interfaces and remaining domains).** The
+actual all-angle branches, conditional fairness and chronological law
+are Theorem 2.2 and Definition 11.1 of this volume. Section 26 supplies
+the exact sharp-algebra classification for all full-support laws;
+the quantitative values here concern only its actual fair independent
+law. [Five-window quantum memory, §§18–20][QM27] supplies the exact
+$P$ sector, restricted polynomial, iteration, EB limit and all-finite
+NPT statement. Those structural channel results are reused. The
+general task-effect and measure-and-prepare interface is already
+[Purity arithmetic, Definitions 86.1/86.3 and Theorem 86.2][PA27]
+and [the observable-correction note][NOTE26]. Its Bény–Kempf–Kribs
+correspondence is the one stated in §26; the norm and support-function
+calculations in (27.4) are elementary general tools, not additional
+observable-correction theorems. In particular the conditional errors
+$1/4$ and $3/16$ in [PA27, Theorem 86.2][PA27] belong to two different
+record-conditioned channels and tasks. They are not errors of $F^n$.
+
+Relative to these suppliers, the additional deductions are the entire
+orientation-sensitive effect image, all-input one-step value, the two
+boundary optima with matching certificates, strict same-$p$ separation,
+and the scalar equality region, with the explicit residual coupling.
+Their proofs are ordinary finite-dimensional mathematics. This bounded
+source correspondence makes no exhaustive literature-novelty or priority
+claim.
+
+The full quantitative target remains to determine, for every complex
+unit $v$ and every finite horizon, an analytic or piecewise value, or
+a sufficiently explicit fixed-degree algebraic value, together with an
+attaining effect and matching lower certificate. For $n\ge2$, the family
+$r=0,pq>0$ remains unsolved quantitatively, as does the interior
+$p,q,r>0$ outside (27.24). Strict positivity, a scalar floor test and
+the fixed-dimensional Schur conditions (27.27)–(27.28) do not discharge
+those optimization problems. Complementation supplies the corresponding
+rank-two tasks, but separate task decoders do not give one common
+decoder for several prescribed tasks. The long-word and retained-memory
+research targets, critical norm estimates and uniform unbounded-horizon
+recovery remain separate and unresolved by this chapter. No physical
+realization or kernel certification is inferred from these ordinary
+mathematical results.
+
+[QM27]: AURIC_FIB_FIVE_WINDOW_QUANTUM_MEMORY.md
+[PA27]: AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md
+
+## 追加锚（本行以下为增补区）
