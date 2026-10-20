@@ -44,7 +44,10 @@ internal sealed class AlsingBirrittellaLogNegativitySandwichDocument : IScribeDo
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create("alsing-birrittella-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("alsing-birrittella-2024-log-negativity-sandwich"),
+                ResolutionKind.Proved) : null);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Named(string name) => Seq(Operatorname,
