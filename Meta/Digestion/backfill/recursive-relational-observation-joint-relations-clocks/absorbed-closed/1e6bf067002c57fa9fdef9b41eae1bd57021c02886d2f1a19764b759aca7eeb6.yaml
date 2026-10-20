@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1e6bf067002c57fa9fdef9b41eae1bd57021c02886d2f1a19764b759aca7eeb6
+  normalized_sha256: sha256:1e6bf067002c57fa9fdef9b41eae1bd57021c02886d2f1a19764b759aca7eeb6
+cas_ref: sha256:1e6bf067002c57fa9fdef9b41eae1bd57021c02886d2f1a19764b759aca7eeb6
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/UnifiedObserverRepresentation.unified_observer_representation
+    target_statement_id: sha256:ad162280c72f41a1fb955ccefa0df63f365eb19bf06f3584b2e88ed0c2a7d166
+receipts:
+  unresolved_subitems: []
