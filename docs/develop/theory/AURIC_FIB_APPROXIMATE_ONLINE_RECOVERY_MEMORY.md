@@ -4259,7 +4259,7 @@ precision transition.
 **Definition 38.1 (Posterior analysis matrices).** Retain Definitions
 2.1–2.4 and 18.1, including the threshold-free error when needed.
 Write $S=[\xi,f_1,f_2]$, $F_h=\lambda^{-k}G_h$ for $|h|=k$, and
-$f_j=\lambda^{-1}g_j$, so $F_{hj}=f_jF_h$. Use output-first
+$F_j=\lambda^{-1}g_j$, so $F_{hj}=F_jF_h$. Use output-first
 vectorization $\operatorname{vec}A=\sum_{a,b}A_{ab}|a\rangle|b\rangle$.
 For one complete controller, let $p_{k,s}(r\mid h)$ be its induced
 record law and put
@@ -4289,7 +4289,7 @@ $$
 \mathsf E(a,\operatorname{vec}A)
  =\operatorname{vec}(S\operatorname{diag}(a,A)S^\dagger),\qquad
 z_h=\frac{(1,\operatorname{vec}F_h^\dagger)}{\sqrt3},\qquad
-\mathsf M_j=1\oplus(I_2\otimes\overline{f_j}).
+\mathsf M_j=1\oplus(I_2\otimes\overline{F_j}).
 \tag{38.2}
 $$
 
@@ -4315,7 +4315,7 @@ This proves isometry. The source decomposition is
 $Q_h=\lambda^kS\operatorname{diag}(1,F_h)S^\dagger$.
 Taking its adjoint proves the vector identity. The formula
 $\operatorname{vec}(AB)=(I\otimes B^{\mathsf T})\operatorname{vec}A$
-and $F_{hj}^\dagger=F_h^\dagger f_j^\dagger$ give the chronological
+and $F_{hj}^\dagger=F_h^\dagger F_j^\dagger$ give the chronological
 right tensor factor and the intertwining identity, also on arbitrary
 block-diagonal matrices. Removing $\lambda^{-k}$ from the entire vector
 does not change its projector; replacing $F_h$ by $G_h$ while keeping the
@@ -4731,7 +4731,7 @@ $$
 \tag{43.2}
 $$
 
-Consequently $W_n(\varepsilon)\le N-min\{\lfloor N/4\rfloor,
+Consequently $W_n(\varepsilon)\le N-\min\{\lfloor N/4\rfloor,
 \lfloor\varepsilon N^{5/3}/K_p\rfloor\}$, and the upper estimate
 in (36.3) improves to $\eta_n\le\min\{2/N,3C_pN^{-5/3}\}$.
 
@@ -4745,9 +4745,9 @@ $a=1-\cos(\theta/2)$, so $2a\le b\le4a$. For any reference-purified
 input, the difference is supported on three orthogonal components of
 weights $p_0,p_+,p_-$, with zero diagonal and off-diagonal magnitudes
 $a\sqrt{p_0p_+},a\sqrt{p_0p_-},b\sqrt{p_+p_-}$.
-After a global sign this matrix has one positive and two nonpositive
-eigenvalues, with endpoint zeros allowed. Its trace norm is twice its
-top eigenvalue. For a unit Rayleigh vector put
+After a global sign this matrix has at most one positive eigenvalue,
+and all others are nonpositive. Its trace norm is twice its top
+eigenvalue, also for the zero matrix. For a unit Rayleigh vector put
 $z_i=\sqrt{p_i}|x_i|$, $\sum z_i\le1$, and $u=z_0$.
 The quotient is at most $2au(1-u)+(b/2)(1-u)^2\le b/2$;
 the last difference is $u[(b-2a)+(2a-b/2)u]\ge0$.

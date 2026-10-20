@@ -414,7 +414,7 @@ are 64. This remains a necessary first-saving bound. $\square$
 The two formal tail points
 
 $$
-E_*=28-31\zeta,\qquad F_+=1+4v,qquad F_-=-1+4v
+E_*=28-31\zeta,\qquad F_+=1+4v,\qquad F_-=-1+4v
 \tag{49.2}
 $$
 
