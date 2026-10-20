@@ -457,3 +457,48 @@ and degree-drop cases in the necessary candidate reduction; their
 realizability or exclusion remains open. Other fifth responses, terminal
 components, replacement worlds, unrestricted adaptive readers, and the
 native acquisition/controller bridge also remain open.
+
+## 65. Response-collision strata and promotion to an executable obstruction
+
+For the complete-world domain of the common-parent source, let
+
+$$
+\Psi_{M^3}(W)=(p(W),u_M(W),m_M(W))
+$$
+
+denote the three actual responses of the fixed (M,M,M) continuation, and
+put
+
+$$
+\Sigma_{\mathrm{resp}}
+ =\{y:\exists W\ne W',\ \Psi_{M^3}(W)=\Psi_{M^3}(W')=y\}.
+$$
+
+The off-(24) construction now proves that
+\(\Sigma_{\mathrm{resp}}\) contains a point with
+\(p\in(2,3)\) and two worlds having unequal analytical ratios. The exact
+\(p_J\) joint-witness set is a different stratum: Theorem 31.1 bounds only
+the responses that can support both a final-(J\) collision and a final-(M\)
+collision in one child at that fixed (p_J). Consequently,
+
+$$
+\Sigma_{\mathrm{resp}}\ne\varnothing
+\quad\not\Rightarrow\quad
+\text{a witness of (32.1) exists at }p_J.
+$$
+
+Nor does a response collision alone prove failure of finite recovery. To use
+Theorem 15.4, a source-specific contract must still embed the two worlds as
+
+$$
+(g(W),s),\qquad(g(W'),s),\qquad g(W)\ne g(W'),
+$$
+
+with the same complete post-observation state (s), and prove that every
+permitted continuation depends only on that state. If a later permitted action
+has a different successor or response on the two worlds, the present
+collision is only an observation-fiber collision and may be recoverable.
+Thus the correct research order is: stratify response collisions by the
+parameter and terminal action, solve the exact-(p_J) joint witness or its
+exclusion, and only then add the acquisition, permission, successor, and
+finite-controller data needed for an executable obstruction or protocol.
