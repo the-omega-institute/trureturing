@@ -16,8 +16,11 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
         Blocks(
             Paragraph(Text(
                 "All vector and matrix entries are complex. Natural dimensions are used as finite index sizes, "
-                    + "and the trace norm is the rectangular norm defined by FiniteTraceDistance.traceNorm. "
-                    + "A complete MUB family has d + 1 bases, each with d rank-one effects.")),
+                    + "and FiniteTraceDistance.traceNorm is the real part of the trace of the positive square root "
+                    + "of the matrix's conjugate transpose times the matrix. "
+                    + "MUBFamily and its effect are those of TavakoliMorelliIncompleteMUB: "
+                    + "a complete family has d + 1 unitary bases, with squared overlaps 1/(d : ℝ) between distinct bases. "
+                    + "Its effect at a pair p is the rank-one projector onto column p.2 of basis p.1.")),
             Node("SICFamily", "SIC families", SICFamilyFormula(),
                 "A SIC family consists of d squared vectors in C to the d, each of unit norm, with squared modulus overlap 1/(d+1) for every distinct pair. The subtype retains exactly these normalization and equiangularity conditions.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("sicEffect", "SIC effects", SicEffectFormula(),
@@ -25,7 +28,7 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
             Node("sicCorrelation", "The SIC correlation matrix", SicCorrelationFormula(),
                 "For a bipartite operator and two local SIC families, the rectangular matrix records the trace of the operator against every tensor product of local SIC effects. Its row and column sets have sizes d_A squared and d_B squared.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("mubCorrelation", "The complete-MUB correlation matrix", MubCorrelationFormula(),
-                "For two complete frozen MUB families, the rectangular matrix records the trace against every pair of rank-one MUB effects. Its row and column labels are basis and outcome pairs.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+                "For two complete MUB families, the rectangular matrix records the trace against every pair of rank-one MUB effects. Its row and column labels are basis and outcome pairs.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The SIC–MUB trace-norm equality", ClaimFormula(),
                 "Conjecture 1 states that for local dimensions at least two, every pair of SIC families, every pair of complete MUB families, and every positive semidefinite trace-one bipartite operator, the complete-MUB trace norm equals the SIC trace norm multiplied by the two dimension factors.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
@@ -36,11 +39,11 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "The SIC projectors form a frame: every operator X is reconstructed from its SIC effect traces, and the projector sum is d times the identity. The complete MUB effects form the complementary frame identity sum over p of tr(G_p X) G_p = X + tr(X) I.")),
+                        "For a local dimension d at least two, a SIC family S, and any complex d by d matrix X, sic_frame reconstructs X from its traces against sicEffect S i. The identity sicProjector_sum says that the sum of rankOneDensity(S.val i) over all i in Fin (d * d) is (d : ℂ) times the identity. For a complete MUB family M, mub_frame says that the sum of trace(M.effect p * X) times M.effect p over p in Fin (d + 1) times Fin d is X plus trace(X) times the identity.")),
                     Paragraph(Text(
-                        "For each local dimension, the coefficient matrix Theta has entries (d+1) tr(P_i G_k) - 1 and satisfies Theta transpose times Theta = d(d+1) times the identity. The two correlation matrices therefore obey Q = Theta^A P (Theta^B) transpose.")),
+                        "For a local dimension d at least two, a SIC family S, and a complete MUB family M, transition S M has row indices p in Fin (d + 1) times Fin d and column indices i in Fin (d * d). Its (p, i) entry is ((d : ℂ) + 1) times trace(rankOneDensity(S.val i) * M.effect p), minus one. The entries are real by transition_real, and transition_gram says that its conjugate transpose times itself is (d : ℂ) * ((d : ℂ) + 1) times the identity.")),
                     Paragraph(Text(
-                        "Each Theta is the square root of d(d+1) times an isometry. Applying this relation to Q adjoint Q identifies its positive square root with the corresponding conjugated square root of P adjoint P. Uniqueness of the positive square root and cyclicity of the trace then give the stated product of square-root factors."))),
+                        "For the dimensions, families, and operator in claim, correlation_transition expresses mubCorrelation rho MA MB as transition SA MA times sicCorrelation rho SA SB times the conjugate transpose of transition SB MB. For each local dimension d, the transition matrix is the square root of (d : ℝ) * ((d : ℝ) + 1) times an isometry. The theorem scaled_isometry_traceNorm uses uniqueness of the positive square root and cyclicity of the trace to give the stated product of square-root factors."))),
                 DescribeRole.Theorem)
         )));
 
@@ -125,7 +128,7 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
         Formula d = X("d"), s = X("S"), i = X("i");
         Formula scalar = Fraction(D(1), Cast(d, Complex()));
         return Disp(All("d", Nat(), All("S", SIC(d), All("i", Fin(Multiply(d, d)),
-            Equal(Call("sicEffect", s, i), Scale(scalar, Outer(Field(s, "val"))))))));
+            Equal(Call("sicEffect", s, i), Scale(scalar, Outer(At(Call("val", s), i))))))));
     }
 
     private static Formula SicCorrelationFormula()
@@ -157,8 +160,8 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
     {
         Formula dA = X("dA"), dB = X("dB"), rho = X("rho"), sa = X("SA"), sb = X("SB"), ma = X("MA"), mb = X("MB");
         Formula state = MatrixPair(Fin(dA), Fin(dB));
-        Formula factorA = At(Qualified("Real", "sqrt"), Cast(Multiply(dA, Add(dA, D(1))), Real()));
-        Formula factorB = At(Qualified("Real", "sqrt"), Cast(Multiply(dB, Add(dB, D(1))), Real()));
+        Formula factorA = At(Qualified("Real", "sqrt"), Multiply(Cast(dA, Real()), Add(Cast(dA, Real()), D(1))));
+        Formula factorB = At(Qualified("Real", "sqrt"), Multiply(Cast(dB, Real()), Add(Cast(dB, Real()), D(1))));
         Formula equality = Equal(Call("traceNorm", Call("mubCorrelation", rho, ma, mb)),
             Multiply(Multiply(factorA, factorB), Call("traceNorm", Call("sicCorrelation", rho, sa, sb))));
         Formula stateHypothesis = Implication(Call("PosSemidef", rho),
