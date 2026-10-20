@@ -6,8 +6,9 @@
    utility: none
    digest: The qudit CHSH stabilizer-projector orthogonality graph has degree (2p-1)(p-1). -/
 
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import D5.S3.Observer.WindowRegister
+import D5.S3.Observer.BornReduction
+import D5.S3.Observer.MatrixUnitCertificate
+import D5.S3.Quantum.PureState.PureStateHandshake
 
 /-! The normalized spectral-projector model for the qudit CHSH graph. -/
 
@@ -15,6 +16,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open scoped BigOperators Matrix Kronecker
+
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 
 namespace D5.S3.Quantum.Contextuality.StabilizerCHSHGraphRegularity
 
@@ -77,11 +80,6 @@ private theorem phase_eq (p : ℕ) [Fact p.Prime] (t : ZMod p) :
   rw [h, ← AddChar.map_nsmul_eq_pow]
   simp
 
-private theorem phase_sum (p : ℕ) [Fact p.Prime] (c : ZMod p) :
-    (∑ x : ZMod p, omega p ^ (c * x).val) = if c = 0 then (p : ℂ) else 0 := by
-  simpa only [phase_eq, mul_comm c, ZMod.card, Nat.cast_ite, Nat.cast_zero] using
-    (AddChar.sum_mulShift c (ZMod.isPrimitive_stdAddChar p))
-
 private theorem char_star (p : ℕ) [Fact p.Prime] (t : ZMod p) :
     star (ZMod.stdAddChar t) = ZMod.stdAddChar (-t) := by
   simpa only [AddChar.inv_apply, starRingEnd_apply] using
@@ -90,8 +88,8 @@ private theorem char_star (p : ℕ) [Fact p.Prime] (t : ZMod p) :
 
 private theorem char_unit (p : ℕ) [Fact p.Prime] (t : ZMod p) :
     ZMod.stdAddChar t * star (ZMod.stdAddChar t) = 1 := by
-  rw [char_star, ← AddChar.map_add_eq_mul]
-  simp
+  simp only [ZMod.stdAddChar_apply, Complex.star_def, Complex.mul_conj,
+    Circle.normSq_coe, Complex.ofReal_one]
 
 /-- A cyclic shift conjugated by the diagonal matrix of unit phases. -/
 private def twistedShift (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ) :
@@ -104,35 +102,38 @@ private theorem twistedShift_pow (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
     (twistedShift p u ^ m) x y =
       if x = y + (m : ZMod p) then u x * star (u y) else 0 := by
   classical
-  induction m generalizing x y with
-  | zero =>
-      simp only [pow_zero, Nat.cast_zero, add_zero, Matrix.one_apply]
-      split_ifs with h
-      · subst y; exact (hu x).symm
-      · rfl
-  | succ m ih =>
-      rw [pow_succ, Matrix.mul_apply]
-      simp only [twistedShift, ih, mul_ite, mul_zero]
-      rw [Finset.sum_ite_eq']
-      simp only [Finset.mem_univ, ite_true, ite_mul, zero_mul, Nat.cast_succ]
-      have he : y + 1 + (m : ZMod p) = y + ((m : ZMod p) + 1) := by ring
-      rw [he]
-      split_ifs with h
-      · have hunit := hu (y + 1)
-        calc
-          (u x * star (u (y + 1))) * (u (y + 1) * star (u y)) =
-              u x * (u (y + 1) * star (u (y + 1))) * star (u y) := by ring
-          _ = u x * star (u y) := by rw [hunit]; ring
-      · rfl
+  let U : (Matrix (ZMod p) (ZMod p) ℂ)ˣ :=
+    { val := Matrix.diagonal u
+      inv := Matrix.diagonal (star u)
+      val_inv := by
+        rw [Matrix.diagonal_mul_diagonal, Matrix.diagonal_eq_one]
+        funext i
+        exact hu i
+      inv_val := by
+        rw [Matrix.diagonal_mul_diagonal, Matrix.diagonal_eq_one]
+        funext i
+        exact (mul_comm _ _).trans (hu i) }
+  have hconj : twistedShift p u = (U : Matrix (ZMod p) (ZMod p) ℂ) *
+      shiftX p * (↑U⁻¹ : Matrix (ZMod p) (ZMod p) ℂ) := by
+    ext i j
+    change (if i = j + 1 then u i * star (u j) else 0) =
+      (Matrix.diagonal u * shiftX p * Matrix.diagonal (star u)) i j
+    simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, shiftX,
+      D5.S3.Observer.WindowRegister.shiftMatrix, Matrix.circulant_apply, sub_eq_iff_eq_add']
+    split_ifs <;> simp
+  rw [hconj, Units.conj_pow]
+  change (Matrix.diagonal u * shiftX p ^ m * Matrix.diagonal (star u)) x y = _
+  simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, shiftX,
+    D5.S3.Observer.MatrixUnitCertificate.shift_matrix_pow_apply, sub_eq_iff_eq_add']
+  split_ifs <;> simp
 
 private theorem sum_fin_cast (p : ℕ) [Fact p.Prime] (f : ZMod p → ℂ) :
     (∑ m : Fin p, f (m.val : ZMod p)) = ∑ m : ZMod p, f m := by
-  let e : Fin p ≃ ZMod p :=
-    { toFun := fun m => (m.val : ZMod p)
-      invFun := fun t => ⟨t.val, t.val_lt⟩
-      left_inv := fun m => Fin.ext (ZMod.val_natCast_of_lt m.isLt)
-      right_inv := ZMod.natCast_zmod_val }
-  exact e.sum_comp f
+  have h (m : Fin p) : (ZMod.finEquiv p).toEquiv m = (m.val : ZMod p) := by
+    cases p with
+    | zero => exact Fin.elim0 m
+    | succ n => exact (ZMod.natCast_zmod_val (n := n + 1) m).symm
+  simpa only [h] using (ZMod.finEquiv p).toEquiv.sum_comp f
 
 private theorem twisted_eigenProj (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
     (hu : ∀ x, u x * star (u x) = 1) (a x y : ZMod p) :
@@ -160,7 +161,7 @@ private theorem twisted_eigenProj (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
 /-- A phase vector has squared length p; this is its normalized outer product. -/
 private def pureProj (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ) :
     Matrix (ZMod p) (ZMod p) ℂ :=
-  (p : ℂ)⁻¹ • Matrix.vecMulVec u (star u)
+  (p : ℂ)⁻¹ • rankOneDensity u
 
 private theorem twisted_eigenProj_pure (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
     (hu : ∀ x, u x * star (u x) = 1) (a : ZMod p) :
@@ -168,7 +169,7 @@ private theorem twisted_eigenProj_pure (p : ℕ) [Fact p.Prime] (u : ZMod p → 
       pureProj p (fun x => ZMod.stdAddChar (-a * x) * u x) := by
   ext x y
   rw [twisted_eigenProj p u hu]
-  simp only [pureProj, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
+  simp only [pureProj, rankOneDensity, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
     star_mul, char_star, smul_eq_mul]
   rw [show -a * (x - y) = -a * x + -(-a * y) by ring,
     AddChar.map_add_eq_mul]
@@ -177,7 +178,7 @@ private theorem twisted_eigenProj_pure (p : ℕ) [Fact p.Prime] (u : ZMod p → 
 private theorem pure_trace (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
     (hu : ∀ x, u x * star (u x) = 1) : Matrix.trace (pureProj p u) = 1 := by
   have hp : (p : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Fact.out : p.Prime).ne_zero
-  simp only [pureProj, Matrix.trace_smul, Matrix.trace_vecMulVec, dotProduct,
+  simp only [pureProj, rankOneDensity, Matrix.trace_smul, Matrix.trace_vecMulVec, dotProduct,
     Pi.star_apply, hu, Finset.sum_const, Finset.card_univ, ZMod.card,
     nsmul_eq_mul, mul_one, smul_eq_mul, inv_mul_cancel₀ hp]
 
@@ -187,7 +188,7 @@ private theorem pure_idem (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
   have hn : star u ⬝ᵥ u = (p : ℂ) := by
     simp only [dotProduct, Pi.star_apply, mul_comm, hu, Finset.sum_const,
       Finset.card_univ, ZMod.card, nsmul_eq_mul, mul_one]
-  simp only [pureProj, Matrix.smul_mul, Matrix.mul_smul,
+  simp only [pureProj, rankOneDensity, Matrix.smul_mul, Matrix.mul_smul,
     Matrix.vecMulVec_mul_vecMulVec, hn, Matrix.vecMulVec_smul, smul_smul]
   congr 1
   field_simp
@@ -195,10 +196,15 @@ private theorem pure_idem (p : ℕ) [Fact p.Prime] (u : ZMod p → ℂ)
 private theorem pure_trace_mul (p : ℕ) [Fact p.Prime] (u v : ZMod p → ℂ) :
     Matrix.trace (pureProj p u * pureProj p v) =
       (p : ℂ)⁻¹ ^ 2 * (star u ⬝ᵥ v) * (star v ⬝ᵥ u) := by
-  simp only [pureProj, Matrix.smul_mul, Matrix.mul_smul,
-    Matrix.vecMulVec_mul_vecMulVec, Matrix.vecMulVec_smul, smul_smul,
-    Matrix.trace_smul, Matrix.trace_vecMulVec, smul_eq_mul]
-  rw [dotProduct_comm u]
+  rw [pureProj, pureProj, Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul,
+    Matrix.trace_smul]
+  have hover := D5.S3.Observer.BornReduction.rank_one_pure_state_modulus_square_reduction
+    (fun _ : Unit => rankOneDensity u) (rankOneDensity v) () u v rfl rfl
+  change Matrix.trace (rankOneDensity v * rankOneDensity u) = _ at hover
+  rw [Matrix.trace_mul_comm, ← Complex.normSq_eq_norm_sq] at hover
+  rw [hover]
+  rw [Matrix.star_dotProduct v u, ← Complex.mul_conj]
+  simp only [smul_eq_mul, Complex.star_def]
   ring
 
 private theorem pure_mul_zero (p : ℕ) [Fact p.Prime] (u v : ZMod p → ℂ)
@@ -215,7 +221,7 @@ private theorem pure_mul_zero (p : ℕ) [Fact p.Prime] (u v : ZMod p → ℂ)
     have hz := congrFun h 0
     simp only [Pi.star_apply, Pi.zero_apply] at hz
     simp [hz] at hx
-  simp only [pureProj, Matrix.smul_mul, Matrix.mul_smul,
+  simp only [pureProj, rankOneDensity, Matrix.smul_mul, Matrix.mul_smul,
     Matrix.vecMulVec_mul_vecMulVec, smul_eq_zero, inv_eq_zero, hp,
     false_or, Matrix.vecMulVec_eq_zero, hun, hvn, or_false]
 
@@ -256,7 +262,8 @@ private theorem weyl_chirp (p : ℕ) [Fact p.Prime] (hp : p ≠ 2) (j c : ZMod p
 
 private theorem char_sum (p : ℕ) [Fact p.Prime] (c : ZMod p) :
     (∑ x : ZMod p, ZMod.stdAddChar (c * x)) = if c = 0 then (p : ℂ) else 0 := by
-  simpa only [phase_eq] using phase_sum p c
+  simpa only [mul_comm c, ZMod.card, Nat.cast_ite, Nat.cast_zero] using
+    (AddChar.sum_mulShift c (ZMod.isPrimitive_stdAddChar p))
 
 /-- In the squared quadratic sum, translation leaves a nontrivial linear
 character except at the zero shift. -/
@@ -386,9 +393,8 @@ private theorem two_cases (x : ZMod 2) : x = 0 ∨ x = 1 := by
   · exact Or.inl rfl
   · exact Or.inr rfl
 
-private theorem sum_two (f : ZMod 2 → ℂ) : ∑ x : ZMod 2, f x = f 0 + f 1 := by
-  rw [← sum_fin_cast 2 f, Fin.sum_univ_two]
-  rfl
+private theorem sum_two (f : ZMod 2 → ℂ) : ∑ x : ZMod 2, f x = f 0 + f 1 :=
+  Fin.sum_univ_two f
 
 private theorem char_two (x : ZMod 2) :
     ZMod.stdAddChar x = if x = 0 then (1 : ℂ) else -1 := by
@@ -572,20 +578,20 @@ private theorem neighbor_count (p : ℕ) [Fact p.Prime]
 private theorem kronecker_zero (p : ℕ) [Fact p.Prime]
     (A B : Matrix (ZMod p) (ZMod p) ℂ) :
     A ⊗ₖ B = 0 ↔ A = 0 ∨ B = 0 := by
-  constructor
-  · intro h
-    by_cases ha : A = 0
-    · exact Or.inl ha
-    · right
-      have hx : ∃ i j, A i j ≠ 0 := by
-        by_contra! hx
-        exact ha (Matrix.ext hx)
-      obtain ⟨i, j, hij⟩ := hx
-      ext k l
-      have he := congrArg (fun M : Matrix (ZMod p × ZMod p) (ZMod p × ZMod p) ℂ =>
-        M (i, k) (j, l)) h
-      exact (mul_eq_zero.mp he).resolve_left hij
-  · rintro (rfl | rfl) <;> simp
+  have he : A ⊗ₖ B = 0 ↔
+      Matrix.vecMulVec (fun ij : ZMod p × ZMod p => A ij.1 ij.2)
+        (fun ij : ZMod p × ZMod p => B ij.1 ij.2) = 0 := by
+    constructor
+    · intro h
+      ext ⟨i, j⟩ ⟨k, l⟩
+      exact congrFun₂ h (i, k) (j, l)
+    · intro h
+      ext ⟨i, k⟩ ⟨j, l⟩
+      exact congrFun₂ h (i, j) (k, l)
+  rw [he, Matrix.vecMulVec_eq_zero]
+  simp only [funext_iff, Prod.forall, Pi.zero_apply]
+  exact or_congr ⟨Matrix.ext, fun h i j => congrFun₂ h i j⟩
+    ⟨Matrix.ext, fun h i j => congrFun₂ h i j⟩
 
 private theorem vertex_laws (p : ℕ) [Fact p.Prime]
     (v : ZMod p × ZMod p × ZMod p) :
