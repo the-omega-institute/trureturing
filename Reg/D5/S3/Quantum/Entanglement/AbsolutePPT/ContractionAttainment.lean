@@ -93,7 +93,8 @@ def family : Registration arena (type_of% @kraus_identity) where
   variation := ⟨@kraus_identity, bad, bad_law⟩
   sensitivity := owningSensitivity arena.Law actual bad bad_law
   dependence := dependence
-def audit : Contract.Registration (@kraus_identity) (Realization matrixSignature) Unit Unit where
+def audit : Contract.Registration.{1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0}
+    (@kraus_identity) (Realization matrixSignature) Unit Unit where
   unitName :=
     `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Identity.unit
   realizationName :=
@@ -168,7 +169,8 @@ def family : Registration arena (type_of% @partial_transpose_posSemidef) where
   variation := ⟨@partial_transpose_posSemidef, bad, bad_law⟩
   sensitivity := owningSensitivity arena.Law actual bad bad_law
   dependence := dependence
-def audit : Contract.Registration (@partial_transpose_posSemidef) (Realization matrixSignature) Unit Unit where
+def audit : Contract.Registration.{1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0}
+    (@partial_transpose_posSemidef) (Realization matrixSignature) Unit Unit where
   unitName :=
     `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Positivity.unit
   realizationName :=
@@ -248,7 +250,8 @@ def family : Registration arena (type_of% @contraction_appt) where
   variation := ⟨@contraction_appt, bad, bad_law⟩
   sensitivity := owningSensitivity arena.Law actual bad bad_law
   dependence := dependence
-def audit : Contract.Registration (@contraction_appt) (Realization matrixSignature) Unit Unit where
+def audit : Contract.Registration.{1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0}
+    (@contraction_appt) (Realization matrixSignature) Unit Unit where
   unitName :=
     `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.Absolute.unit
   realizationName :=
@@ -331,7 +334,8 @@ def family : Registration arena (type_of% @five_row_attainment) where
   variation := ⟨@five_row_attainment, bad, bad_law⟩
   sensitivity := sensitivity
   dependence := dependence
-def audit : Contract.Registration (@five_row_attainment) (Realization signature) Unit Unit where
+def audit : Contract.Registration.{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@five_row_attainment) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.FiveRow.unit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment.FiveRow.family
   realizationSource := none
