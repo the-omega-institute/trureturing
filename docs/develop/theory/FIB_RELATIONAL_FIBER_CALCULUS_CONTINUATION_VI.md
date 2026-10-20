@@ -1265,3 +1265,204 @@ $$
 $$
 
 仍然开放的不是“有没有更多符号可以编码”，而是更具体的合同问题：原固定 apparatus 是否存在同样的全域采集桥；任意 busy cut 是否有统一的 acquired-input frontier；完整 \(T_{\mathrm{exact}}\) 在不增加历史 supplement 时能否恢复；以及在给定误差、费用和控制状态预算下的全局最小控制器是什么。最新 dev 把这些问题的边界写得更细，但没有把条件性桥梁升级成这些全域结论。
+
+## 七十六、无 reset 的算术取得：投影充分性与真实回返
+
+最新 dev 的 [Recursive relational observation: arithmetic acquisition and behavior return](RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md)
+给出一个比抽象“可取得”更强的实例：同一个正整数 source 被实际修改，只有当前 ReadF 端口、原始正加法和正乘法，没有 subtraction、division、clone、reset 或保存的 entry copy。这里的关键不是把 residue 当成 source，而是在一条真实历史上完成 acquisition，并把 source 返回到同一个模 \(H\) 的行为位置。
+
+### 定义 76.1：算术旧纤维与新目标
+
+令 \(H\ge2\)，旧代码为 \(\eta_o\)，新目标代码为 \(\eta_n\)。对已取得的旧读数 \(s_o\)，令
+
+$$
+E_{s_o}=\{C\ge1:\eta_o(C)=s_o\}.
+$$
+
+在每个 \(p^h\parallel H\) 上，设旧读数确定的深度为 \(r_p\)，新代码的深度阈值为 \(e_p\)。把坐标分成
+
+$$
+B=\{p:r_p<e_p\},\qquad G=\{p:r_p\ge e_p\}.
+$$
+
+在 \(G\) 上保留完整模 \(p^h\) 坐标，记其 CRT 投影为 \(\pi(C)\)。在 \(B\) 上，成功的 acquisition-and-behavior-return 不能使用会把深度推进到 \(e_p\) 的非单位乘法，因为正加法不能把深度降回去。
+
+### 定理 76.2：archive-conditioned acquisition 的精确判据
+
+在一个已经有效给出的非空子域 \(E\subseteq E_{s_o}\) 上，存在确定性的 acquisition-and-behavior-return 控制器，当且仅当：
+
+$$
+\boxed{
+\pi(C)=\pi(D)\Longrightarrow \eta_n(C)=\eta_n(D)
+\qquad(C,D\in E).
+}
+$$
+
+必要性来自同一历史：相同 \(\pi\) 的两个 source 在 \(G\) 上保持相同 residue；在 \(B\) 上，为了返回原行为，成功运行只能使用保持旧深度的操作。因此它们的每次 ReadF 都相同，控制选择和停止也相同，若新目标不同便矛盾。
+
+充分性不靠不可访问 source label。只要 \(E\) 的 residue support 是实际提供并计费的有限数据，就可以按 \(\pi\) 分组，验证每组的 \(\eta_n\) 是否一致；随后同一条 sweep 协议取得 \(\pi(C_0)\)，再从表中取出目标并安装后续 updater。若 archive 只有一个语义描述而没有有效 support presentation，这个表的构造仍是独立义务。
+
+### 定理 76.3：正加法 sweep 既取得又回返
+
+令 \(d=d_n\)，\(L=H/d\)。存在只由原始加法组成的公开词 \(W_d\)，其实际增量 \(S\) 满足
+
+$$
+S\equiv d\pmod H,\qquad
+1\le |W_d|\le L-1
+\quad(L>1).
+$$
+
+在同一 source 上依次执行：
+
+1. 对 \(t=0,\ldots,L-1\)，调用一次当前 ReadF 并记录；
+2. 每次读出后都执行 \(W_d\)，包括最后一次；
+3. 在 \(G\) 上从某个饱和读数位置 \(t_p\) 恢复 \(C_0\bmod p^h\)。
+
+则所有所需 \(\pi(C_0)\) 坐标都来自同一实际 read tape，并且最终 source 满足
+
+$$
+C_*=C_0+L S\equiv C_0\pmod H.
+$$
+
+协议使用恰好 \(L\) 次 ReadF 和 \(L|W_d|\) 次原始加法；这些是上界，不是所有合同下的最小成本。
+
+### 证明
+
+把每个原始加法除以 \(d\) 后看作有限循环群 \(\mathbb Z/L\mathbb Z\) 的正向边。由于规范化加数生成整个群，重复正向边即可产生逆元，故存在从 \(0\) 到 \(1\) 的无重复路径，给出 \(W_d\)。
+
+实际第 \(t\) 次读出的 source 是 \(C_0+tS\)，不是独立的 counterfactual source。对 \(p\in G\) 且 \(e_p<h\)，恰有一个 \(t\bmod p^{h-e_p}\) 使 \(C_0+tS\equiv0\pmod{p^h}\)；在 \(0\le t<L\) 内能取得该位置，于是由读数恢复该 residue。最后一次加法执行使总增量为 \(LS\equiv0\pmod H\)，所以 source 回到原行为类。∎
+
+### 推论 76.4：完整旧纤维的可回返分类
+
+在完整旧纤维上，若低深度轴的局部 lift 数为
+
+$$
+m_p=\frac{\varphi(p^{h-e_p})}{\varphi(p^{h-e_{o,p}})},
+$$
+
+则 acquisition-and-behavior-return 当且仅当所有低深度轴满足 \(m_p=1\)。对所有正整数 entry 都成功的统一合同进一步等价于：
+
+$$
+\boxed{
+e_p=0
+\quad\text{或}\quad
+e_p=e_{o,p}
+\quad\text{或}\quad
+(p=2,\ e_{o,p}=h,\ e_p=h-1).
+}
+$$
+
+这个例子修正了一个容易过强的直觉：没有 reset 并不自动意味着不能取得。真正的边界是旧纤维上未被完整 projection 切开的新目标是否仍能被同一实际 sweep 统一恢复；在不满足条件的低深度轴上，任何更精确的后续读出都不能补回已经被不可逆推进的区别。
+
+### 定理 76.5：阶段式 refinement 仍需每阶段重新验纤维
+
+若有
+
+$$
+d_0\mid H,\qquad d_{j+1}\mid d_j,
+$$
+
+且每阶段只使用该阶段声明的实际加法表，则在第 \(j\) 阶段先对当前已取得 alternative domain \(E_j\) 检查定理 76.2，再执行 sweep。共同的 intervening word \(w\) 把剩余支持变为
+
+$$
+E_{j+1}=\{w(x)\bmod H:x\in K_L\}.
+$$
+
+所以可以重复进行有限层级的细化、回返和继续使用，但不能把历史的 \(\eta_{H,d_j}\) 当成后续时刻的当前标签，也不能由 \(d_{j+1}\mid d_j\) 自动借用另一个阶段的 primitive。
+
+这给 FIB 取得前沿增加了一个可执行形状：
+
+$$
+\boxed{
+\text{实际读出 sweep}
+\to
+\text{同源投影}
+\to
+\text{行为回返}
+\to
+\text{下一阶段的当前纤维}.
+}
+$$
+
+## 七十七、相同平均通道，不同记录任务
+
+最新 dev 的 [AURIC FIB environment instruments and terminal record memory](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md)
+则从另一侧说明：相同的 averaged channel 不能决定相同的记录压缩或控制任务。两个实际环境测量基底可以给出同一个完整 \(H\) 通道，但它们产生不同的 fine environment labels；目标若从平均输出改成 fine instrument，观察纤维立即改变。
+
+### 定理 77.1：项目射影词是精确终端恢复的纤维判据
+
+设 \(h\in\{0,1\}^n\) 是真实取得的环境标签历史，\(Q_h\) 是其在编码子空间上的有序乘积。任意随机或确定的终端 summary \(a\) 都诱导条件权重 \(r(a\mid h)\)。在要求所有参考系统和所有输入上精确恢复时：
+
+$$
+\boxed{
+\text{每个正概率 summary fibre }
+\{h:r(a\mid h)>0\}
+\text{ 必须落在一个 projective class }[Q_h]\text{ 内}.
+}
+$$
+
+充分性是把 \(Q_h\) 的逆控制附着到该 summary；必要性使用目标 identity channel 的 rank-one Choi 极值性，说明不同 projective classes 不能由任意 CPTP decoder 在平均后互相补偿。该判据已经包含随机压缩、可见 seed 和任意 reference，不是只针对确定性表格。
+
+### 推论 77.2：终端容量和控制容量是不同的资源
+
+对无旋转的六状态 \(S_3\) 实例，项目射影类数量为
+
+$$
+m_0=1,\qquad m_1=2,\qquad m_2=4,\qquad m_n=6\quad(n\ge3).
+$$
+
+因此每个 \(n\ge3\) 的终端 summary 至少需要六个值；而且可以用不超过六个值的在线寄存器递归更新。这里的六是 retained record 的最小字母表，不等于完整 quantum apparatus 的维数、安装表大小、时间或环境访问成本。
+
+### 定理 77.3：平均通道相同不等于原 fine instrument 可执行
+
+在最新 dev 的完整 \(H=\mathbb C^5\) flagged instrument 合同中，原五级 register 的全部有限深度、几乎处处终止协议及其 diamond closure，都与目标 fine instrument 保持正距离；一个明确的有限协议下界为
+
+$$
+\|\mathcal J_\theta-\mathcal T\|_\diamond\ge \frac4{25}.
+$$
+
+若扩大合同，tensor 类至少需要二维纯 ancilla，direct-sum 类至少需要额外一个维度；这些最小性结论依赖新增的 joint control/measurement permissions。它们不能被解释为原五级系统里“多写几个 FIB 标签”就能得到的能力。
+
+### 推论 77.4：FIB 任务必须给目标和可用边界编号
+
+相同的 \(\Phi_\circ\) 可以支持：
+
+$$
+\begin{aligned}
+&\text{统计任务：只恢复 outcome probabilities};\\
+&\text{平均通道任务：只恢复 }\Phi_\circ;\\
+&\text{编码 fine-instrument 任务：恢复标签和 qutrit branch};\\
+&\text{完整 flagged instrument 任务：恢复五级输入上的标签化量子输出}.
+\end{aligned}
+$$
+
+这些任务的 observation fibre、控制记忆和可执行资源边界不同。把它们都记作“同一个 FIB 关系”会丢掉目标坐标，产生错误的最小性结论。准确的表示应是带下标的：
+
+$$
+\mathcal F_{\eta}^{\,g,\mathsf{contract}},
+$$
+
+其中 \(g\) 指目标，contract 指可用操作、输入域、权限、误差和成本。
+
+这三项最新结果合在一起，给出更强的统一链：
+
+$$
+\boxed{
+\begin{gathered}
+\text{semantic source fibre}
+\;\to\;
+\text{acquired-input frontier}
+\;\to\;
+\text{projection-sufficient sweep}
+\\
+\to\;
+\text{current replay key}
+\;\to\;
+\text{task-specific controller}
+\;\to\;
+\text{terminal/quantum record certificate}.
+\end{gathered}
+}
+$$
+
+它同时说明三种不能跨越的边界：语义 finite fibre 不自动给 acquisition；无 reset 不自动阻止 acquisition；相同 averaged behavior 不自动给相同 fine record 或可执行 simulator。每一条都由具体的同源条件、实际 successor、权限和成本合同决定，而不是由更换 FIB 编码解决。
