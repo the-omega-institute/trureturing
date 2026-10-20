@@ -4170,11 +4170,9 @@ of Convention 1.2.  The residue calculation is the actual-word lattice
 argument already used in Theorem 5.1.  Sections 33--36 add the
 common-decoder Gram estimate, its stochastic-cell integration, the
 phase-sensitive square-root merge, and the \(S^3\) packing deduction.
-The numerical finite-word checks that motivated the constants are
-diagnostics only; the displayed statements use the all-word proofs.
-The organization is source-relative synthesis and does not assert task
-equivalence with any other development, including a stopped common-decoder
-supplier.
+The displayed statements use the all-word proofs.  The organization is
+source-relative synthesis and does not assert literature priority or
+equivalence with another formulation.
 
 The sharp remaining problem is to determine \(W_n(\varepsilon)\) when
 \(\ln(1/\varepsilon)\) is comparable to or larger than \(n\).  A complete
