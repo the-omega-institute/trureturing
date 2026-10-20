@@ -114,5 +114,11 @@ The reduced two-qubit Choi matrix has both marginals maximally mixed. In the mag
 - Truth anchor: `D5/S3/Quantum/Information/BadhaniDasNoisyUnitary.result`
 - Dependency: [D5/S3/Observer/Existence/EmpiricalReflexiveSeparation](../../Observer/Existence/EmpiricalReflexiveSeparation.md)
 - Dependency: [D5/S3/Quantum/Algebra/GramUnitaryExtension](../Algebra/GramUnitaryExtension.md)
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
+- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation](../Recovery/LiJiangPolarPairOptimalityRefutation.md)
+- Dependency: [D5/S3/Quantum/Subentropy/ClassicalQuantumGram](../Subentropy/ClassicalQuantumGram.md)
 - Dependency: [D5/S3/Quantum/Subentropy/PinchingGap](../Subentropy/PinchingGap.md)

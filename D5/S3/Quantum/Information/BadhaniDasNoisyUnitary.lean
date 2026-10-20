@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: Noisy unitaries with qubit conditioning attain the Choi min-entropy bound. -/
-
 /-
 admission_basis: open-problem-resolution (#19060; Proved).
 escape_witness: none. All proof_shape labels use the same-delivery inlining rule.
@@ -98,12 +97,16 @@ entropy_identity_of_sign_symmetry: proof_shape: bind-only; consumers: result.
 result: proof_shape: bind-only; consumers: external open-problem settlement.
 Definitions: Dmax, condMinEntropy, choiN, choiState, channelCondMinEntropy, noisyUnitary, claim, quaternionCoeff, magicCoeff, magicRaw, magicW, sign, signConjugate, pinch, unitaryChoiVector, reducedUnitary, signReal.
 -/
-
-
 import D5.S3.Quantum.Algebra.GramUnitaryExtension
 import D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
 import D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
 import D5.S3.Quantum.Subentropy.PinchingGap
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.Quantum.Foundation.FiniteStateChannel
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Subentropy.ClassicalQuantumGram
 
 noncomputable section
 namespace D5.S3.Quantum.Information.BadhaniDasNoisyUnitary
