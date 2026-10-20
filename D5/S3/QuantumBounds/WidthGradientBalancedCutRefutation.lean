@@ -1,7 +1,7 @@
 /- GID: D5/S3/QuantumBounds/WidthGradientBalancedCutRefutation
    generality: I
    mirror-B: D5/B/S3/QuantumBounds/WidthGradientBalancedCutRefutation
-   mirror-E: none(waiver:kernel-checked-refutation)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuantumBounds/WidthGradientBalancedCutRefutation.claim; result=D5/S3/QuantumBounds/WidthGradientBalancedCutRefutation.result; claim=D5/S3/QuantumBounds/WidthGradientBalancedCutRefutation.claim
    digest: A product of four singlets violates the balanced-cut gradient bound. -/
@@ -55,7 +55,8 @@ def pauli : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
 def totalSpinSq (m : ℕ) : Matrix (Sys m) (Sys m) ℂ :=
   ∑ l : Fin 3, (∑ k : Fin (2 * m), siteOp m k (pauli l)) ^ 2
 
-private def gradientWeight (m : ℕ) (k : Fin (2 * m)) : ℂ :=
+/-- The one-based balanced-cut gradient weight `2 (k+1) - 2m - 1`. -/
+def gradientWeight (m : ℕ) (k : Fin (2 * m)) : ℂ :=
   (((2 * (k.val + 1) : ℝ) - 2 * m - 1 : ℝ) : ℂ)
 
 /-- Squared gradient spin with the one-based weights 2k - N - 1. -/
