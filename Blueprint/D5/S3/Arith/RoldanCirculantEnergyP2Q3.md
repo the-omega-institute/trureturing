@@ -58,6 +58,10 @@ $$\forall p \in \mathbb{N},\; \forall q \in \mathbb{N},\; (\operatorname{Nat}.\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/RoldanCirculantEnergyP2Q3.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/roldan-2026-integral-circulant-energy-p2q3` (proved) by `D5/S3/Arith/RoldanCirculantEnergyP2Q3.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"roldan-2026-integral-circulant-energy-p2q3","declaration_gid":"D5/S3/Arith/RoldanCirculantEnergyP2Q3.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. G. Roldán (2026). *Graph Energy Maximisation for Integral Circulant Graphs of Order n = p^2q^3*. DOI: [10.48550/arXiv.2604.09491](https://doi.org/10.48550/arXiv.2604.09491). URL: <https://arxiv.org/abs/2604.09491v1>.

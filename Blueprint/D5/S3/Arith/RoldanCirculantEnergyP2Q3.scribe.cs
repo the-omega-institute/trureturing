@@ -26,12 +26,13 @@ internal sealed class RoldanCirculantEnergyP2Q3Document : IScribeDocumentDefinit
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Unique maximization for all distinct odd primes", Disp(ClaimBody()),
                 "Fourier diagonalization expresses the energy as a sum of absolute Ramanujan sums with totient multiplicities. Prime-power divisor coordinates give twelve spectral classes. With u = p − 3 and v = q − 3, replacing each spectral polynomial's coefficients by their absolute values gives a majorant on the nonnegative quadrant. For Dstar the coefficients have one sign in each spectral class, so this majorant is attained. The integer coefficient comparison for every other mask gives an energy deficit of at least 96. The argument permits v = 0 and therefore includes q = 3.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("roldan-2026-integral-circulant-energy-p2q3"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("roldan-energy-" + declaration.ToLowerInvariant()), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Field(string name) => Seq(Mathbb, Grp(F.Id(name)));
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
