@@ -98,6 +98,10 @@ $$\forall (r : \mathbb{N}), (2 \le r) \Rightarrow (\forall (V1 : Type), \forall 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/AlikhaniGhanbariHenningCliqueGluing.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alikhani-ghanbari-henning-clique-gluing-problem-1` (proved) by `D5/S3/Combinatorics/Graph/Domination/AlikhaniGhanbariHenningCliqueGluing.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alikhani-ghanbari-henning-clique-gluing-problem-1","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/AlikhaniGhanbariHenningCliqueGluing.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Saeid Alikhani, Nima Ghanbari, Michael A. Henning (2026). *Strong domination number of graphs from primary subgraphs*. DOI: [10.2989/16073606.2025.2574046](https://doi.org/10.2989/16073606.2025.2574046). URL: <https://www.tandfonline.com/doi/full/10.2989/16073606.2025.2574046>.

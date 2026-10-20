@@ -40,13 +40,16 @@ internal sealed class AlikhaniGhanbariHenningCliqueGluingDocument : IScribeDocum
                 DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "The lower bound for every r at least two", Disp(ClaimBody()),
                 "Restrict a minimum strong dominating set to each graph outside the common clique. In each factor, add a clique vertex of maximum degree; it strongly dominates the rest of the clique. If the original set meets the clique, also add the external neighbours of that clique. Every remaining exterior vertex keeps its original dominator and degree comparison. The two restrictions then have total size at most the original size plus one plus sigmaXY: a selected clique vertex pays for one of the two added clique vertices. If the original set misses the clique, connectedness and the proper clique range give at least one external neighbour, which pays for the extra vertex. Taking minimum sizes and rearranging in the integers yields the displayed bound. General sharpness of the source family and bounds using finer parameters are not asserted.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alikhani-ghanbari-henning-clique-gluing-problem-1"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("agh-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
