@@ -60,7 +60,10 @@ internal sealed class UnitaryScalingLandscapeRefutationDocument : IScribeDocumen
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
         string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("de-vos-de-baerdemacker-2014-unitary-scaling-landscape-refutation"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula ScalingSumFormula()
     {
