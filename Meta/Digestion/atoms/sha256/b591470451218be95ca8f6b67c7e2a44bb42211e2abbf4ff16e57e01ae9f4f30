@@ -1,0 +1,9 @@
+黄金 germ 是本理论的 \(1\)-dimensional hard-core prototype：
+
+- Zeckendorf word 给出允许 occupation configurations；
+- local factor 是 partition function；
+- 对数给出 connected cluster modes；
+- ζ 因子是把同一 mode 对所有素数地址进行 Euler 装配；
+- residual factor 保存局部非独立记忆；
+- finite-address quotient 提取 global coherent divisor。
+

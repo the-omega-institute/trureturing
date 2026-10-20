@@ -1,0 +1,54 @@
+### 51.3 三个实际 Bloch 约束的矛盾
+
+由 \(Q=T_1^*T_0\) 及 \(Q^2+Q+I=0\)，有 \(T_0Q=-T_0-T_1\)。代回空间块后，\(K\) 的对角、非对角块分别为
+\(T_1^*DU_1/\sqrt6\)、\(T_1^*CU_1/\sqrt6\)；\(H_0K\) 的相应块分别为
+\(-CU_1/\sqrt6\)、\(-DU_1/\sqrt6\)。因此
+\[
+CU_1,\quad DU_1,\quad T_1^*CU_1,\quad T_1^*DU_1
+\]
+的每个元素模均为一。
+
+取 \(U_1\) 的第一列 \(\eta=(\eta_0,\eta_1)^T\)，则 \(\|\eta\|=1\)。令 \(Z=\operatorname{diag}(1,-1)\)，并用通常的 Pauli 矩阵 \(\sigma_x,\sigma_y,\sigma_z\)。上述平坦性蕴含
+\[
+\eta^*B_0\eta=\eta^*B_1\eta=\eta^*B_2\eta=0,
+\quad B_0=C^*ZC,\quad
+B_1=(N^*C)^*Z(N^*C),\quad B_2=(N^*D)^*Z(N^*D).
+\]
+只使用 \(s=h^2\)、\(a^2=s(3-s)/(1+s)\) 展开可得
+\[
+\begin{aligned}
+B_0&=2\sigma_x,\\
+B_1&=-4a\sigma_x-\frac{4h(s+3)}{s+1}\sigma_y
+                  +\frac{4(s+3)}{s+1}\sigma_z,\\
+B_2&=8a\sigma_x+\frac{8h^3}{s+1}\sigma_y
+                  +\frac{4(s+3)}{s+1}\sigma_z.
+\end{aligned}
+\]
+定义来自同一实际列的实坐标
+\[
+b_x=2\Re(\bar\eta_0\eta_1),\quad
+b_y=2\Im(\bar\eta_0\eta_1),\quad
+b_z=|\eta_0|^2-|\eta_1|^2.
+\]
+其满足 \(b_x^2+b_y^2+b_z^2=1\)。\(B_0\) 方程给出 \(b_x=0\)，\(B_1\) 方程给出 \(b_z=hb_y\)；代入 \(B_2\) 方程得到 \(12hb_y=0\)。由于 \(h>0\)，这强制 \(b=0\)，与单位长度矛盾。对应三个系数行的行列式为
+\[
+-\frac{96h(s+3)}{s+1}\ne0.
+\]
+命题 51.1 得证。
+
+上述矛盾也有明确的平方和形式。令
+\[
+L_0=b_x,\quad L_1=-\frac{a(s+1)}{s+3}b_x-hb_y+b_z,\quad
+L_2=\frac{2a(s+1)}{s+3}b_x+\frac{2hs}{s+3}b_y+b_z,
+\quad d=3h(s+1)(s+3)>0.
+\]
+三个平坦性方程等价于 \(L_0=L_1=L_2=0\)，而恒等式
+\[
+\begin{aligned}
+db_x&=dL_0,\\
+db_y&=(s+3)^2(L_2-L_1)-3a(s+1)(s+3)L_0,\\
+db_z&=2sh(s+3)L_1+h(s+3)^2L_2-6ah(s+1)L_0
+\end{aligned}
+\]
+平方相加后，左边为 \(d^2\|b\|^2=d^2>0\)，右边在三个约束上为零。所有分母在该分支严格为正，故可直接清除分母形成多项式证书。
+

@@ -1,0 +1,18 @@
+### 42.2 附录命令与 stdout
+
+实际执行命令（退出码 **0**，stderr 为空）为：
+
+```sh
+sed -n '/^```python$/,/^```$/p' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | sed '1d;$d' | python3 -
+```
+
+PR7 行逐字为：
+
+```text
+pr7_copy_expressibility: archive_parity_rule_copy=1 cancelled_square_linear=5 copy_causal_q=1 copy_causal_summary=1 copy_d15_fiber=1 copy_empty_product=1 copy_first_product_profiles=4 copy_first_product_q=4 copy_first_product_summary=1 copy_negative_time_control=1 copy_old_archive_control=1 copy_periodic_saturation=1 copy_q_only_control=1 copy_region_controls=4 copy_same_local_rows=1 copy_strict_temporal_failure=1 copy_tail_q_bytes=3 copy_unsaturated_control=1 copy_unselected_parent_control=1 cubic_control=4 d15_d10_controls=2 d17_square_vs_linear=1 d18_guard_failure=4 d18_slice_failure=1 image_d16_witness_failure=1 image_empty_endpoint_branches=6 image_empty_realizations=3 image_roundtrip_57=1 labeled_graphs_2x2=1 no_zero_row_orbits_2x2=1 orbit_cover_2x2=1 orbit_partition_2x2=1 orbits_2x2=1 ordered_pair_negation_suffix=1 ordered_pair_push=1 ordered_source_cross=1 poly_interpolation_coefficients=30 poly_profile_bytes=120 poly_q_bytes=120 pullback_encoding_copy=1 selected_pair_fiber_copy=1 selected_pair_profile_copy=1 shared_saturation_empty_factor=1 shared_saturation_endpoints=3 shared_saturation_nonempty_factor=1 shared_saturation_pairs=3 shared_saturation_without_product=1 slice_linear_coefficient=30 slice_nonzero_constant=5 successor_pair_push_copy=1 successor_size_rule_copy=1 required_pr6_keys=41 required_pr6_positive=1
+```
+
+末行为 `ALL_FINITE_CHECKS_PASSED`。PR7 段首先用 41 个字面键构造 `REQUIRED_PR6_KEYS`，其原有包含关系与正计数两条断言逐字保留；PR7 自身的 51 个实验专名与该集合不相交，并先检查字面键集包含，再检查全部计数为正。
+
+本次修复的 repo-derived 有限核验取 6 个固定复制项：自乘、带固定时移单位的中间因子、平方消去项、三次项、嵌套筛选项与非零常数项；覆盖 $F_S,F_L,F_{\downarrow Q},N,T_k$。输入为 $U_0$ 加种子 `2026091007` 生成的 4 个随机平衡输入；对每项、每输入的 $n=0,1,2,3$，Rich 求值与 $\Gamma_t$ 线性／双线性推送多项式分别作 120 次完整剖面、120 次 q 规范字节比较。30 组读数独立作精确拉格朗日插值，并将一次系数与逐叶保留、其余换空档案的切片差和比较；其中非零常数项检查 5 次、非零三次系数检查 4 次。D18 检得 q 读数 `0,2,4,6`、两个单出现替换 `0,1`，并在档案时刻为 `0,3` 时检得守卫失败，连同 N、空筛选、零因子外壳共 4 次严格失败传播。D17 在 −4 时刻位置 0 的单位复制上，生成时间 −3 为奇数，检得自乘 `1,4,9` 对区域目标 `1,2,3`；只接受有序来源 `pair(leaf(0),leaf(1))` 的四个选择读 `0,0,0,1`。共同饱和、命题 57 实际像及 2×2 二部图 9 张／4 轨道的既有 PR7 检查仍执行。所有定向对照均为有限读数，有限读数不承担全称否定，也不替代正文全称证明。
+

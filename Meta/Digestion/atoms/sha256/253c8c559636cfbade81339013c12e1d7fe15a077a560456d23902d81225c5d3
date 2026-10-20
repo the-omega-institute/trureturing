@@ -1,0 +1,34 @@
+# 第七部：residual 是拓扑分离缺陷
+
+定义拓扑分离缺陷
+
+\[
+\operatorname{SepDef}(q,T)
+=
+\{(x,y):x,y\text{ 在 }\tau_q\text{ 中不可分，且在 }\tau_T\text{ 中可分}\}.
+\]
+
+由核等价立即得到
+
+\[
+\boxed{
+\operatorname{SepDef}(q,T)=\mathcal E(q;T).
+}
+\]
+
+因此 residual 不是单纯的误差集合。它是当前观察拓扑相对于目标观察拓扑缺少的分离关系。
+
+加入候选定义后：
+
+\[
+\operatorname{SepDef}(q\vee d,T)
+=
+\operatorname{SepDef}(q,T)
+\cap
+\operatorname{Insep}(\tau_d).
+\]
+
+候选只能删除自己能在拓扑上分开的 residual pairs。
+
+---
+

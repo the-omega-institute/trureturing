@@ -1,0 +1,49 @@
+### 85.2 按数值合并的似然剖面
+
+只用活动深度的系数，取有限数值集合
+
+$$
+\mathcal D_K=\{A_k,B_k:0\le k\le K,\ r_k>0\}.
+$$
+
+这里按数值而非 Fibonacci 下标索引，特别将 $F_1=F_2=1$ 合并。对 $d\in\mathcal D_K$ 定义
+
+$$
+C_d(\omega)=
+\#\{(k,i)\in I_K:\omega_{k,i}=aa,\ A_k=d\}
++\#\{(k,i)\in I_K:\omega_{k,i}=bb,\ B_k=d\}.
+\tag{85.2}
+$$
+
+称 $C(\omega)=(C_d(\omega))_{d\in\mathcal D_K}$ 为合并剖面。混色总数为
+
+$$
+D(\omega)=N-\sum_{d\in\mathcal D_K}C_d(\omega).
+$$
+
+$D$ 在这个已知前缀中冗余；若读取次数或阶段未知，不能据此删去相应控制信息。
+再定义与来源参数无关的正权重
+
+$$
+c(\omega)=\prod_{(k,i)\in I_K}
+\begin{cases}
+A_k,&\omega_{k,i}=aa,\\
+A_kB_k,&\omega_{k,i}\in\{ab,ba\},\\
+B_k,&\omega_{k,i}=bb,
+\end{cases}
+\qquad
+Z_K(m)=\prod_{k=0}^K[n_k(mn_k-1)]^{r_k}.
+$$
+
+逐格乘入式（85.1），每个混色输出贡献 $m$，每个同色输出贡献一个 $dm-1$；相同数值的因子可以合并。因此
+
+$$
+Q_C(t)=t^{\,N-\sum_d C_d}\prod_{d\in\mathcal D_K}(dt-1)^{C_d},
+\qquad
+p_m(\omega)=c(\omega)\frac{Q_{C(\omega)}(m)}{Z_K(m)}.
+\tag{85.3}
+$$
+
+这个分解使用所有因子中的同一个 $m$。若不同深度独立更换隐藏来源，数值相同的系数仍可能乘着不同参数，式（85.3）的合并理由便不成立。
+无活动读取时 $\mathcal D_K=\varnothing$、$D=0$、$c=Z_K=Q_C=1$，合并剖面只有一个值。
+

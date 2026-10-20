@@ -25,6 +25,7 @@ public sealed class SourceSpanRegroupTests
         var nested = DecomposeFixture.Entry(group, AtomizerRegistry.GenericId);
         f.Add(nested, group);
         f.Replace(f.Parent with { Receipts = f.Parent.Receipts with { ChainAtoms = [.. children.Select(e => e.AtomId)] } });
+        f.CaptureContext();
         Assert.Null(DigestionDecomposition.PlanClauses(DecomposeFixture.Atom(Text)));
         Assert.Null(DigestionDecomposition.PlanClauses(DecomposeFixture.Atom(group)));
         Assert.Equal("db69816dc1398fd509098ca181a7c0a5611d7d672f84d4d30224455575a545e3", nested.AtomId);

@@ -1,0 +1,5 @@
+若核本身由小噪声扩散或小步长 FIB 嵌入产生，令 \(\theta=1/\varepsilon\)，则风险敏感 Bellman 的对数变换在形式上趋向 Hamilton–Jacobi 方程；其 Lagrangian 由外加漂移 \(b_j\) 和扩散矩阵 \(a_j\) 决定。控制表示为
+\[
+-\varepsilon\log\mathbb E
+e^{-F(X^\varepsilon)/\varepsilon}
+=

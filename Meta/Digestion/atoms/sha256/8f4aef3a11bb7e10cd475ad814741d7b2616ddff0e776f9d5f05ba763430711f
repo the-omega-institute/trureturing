@@ -1,0 +1,2 @@
+**定理 10.1(塔无封顶)**〔引〕。若 $\mathfrak A$ 一致、递归可枚举、包含 PA(或足够强的算术),且其可证性谓词满足 Hilbert–Bernays–Löb 导出条件,则 $\mathfrak A$ 不能证明自身一致性 $\mathrm{Con}_{\mathfrak A}$(Gödel 第二不完备定理,Gödel 1931,`literature-attested`;导出条件的表述 `ASSUMED-UNVERIFIED`,按记忆)。对不满足导出条件的可证性谓词(如 Rosser 谓词)结论可反转,故导出条件是承重前件。故任一层 harness 不在同层自证一致;每层由更核心一层判(母仓第 7.2 条内化塔),顶层 $\tau=0$ 的一致性诚实标 `open`。
+

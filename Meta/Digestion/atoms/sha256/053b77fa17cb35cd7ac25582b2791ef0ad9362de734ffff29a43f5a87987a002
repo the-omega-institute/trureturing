@@ -1,0 +1,26 @@
+### 定义 383.4（压缩的诱导过滤与下降核）
+
+令
+
+$$
+r_n:X_{\le n}\to\widehat X_{\le n}
+$$
+
+满足前缀交换关系
+
+$$
+r_n\circ\operatorname{pr}_{\le n}
+=
+\widehat{\operatorname{pr}}_{\le n}\circ r_{n+1}.
+$$
+
+压缩端采用诱导过滤 \(\widehat{\mathcal F}_n=\sigma(r_n)\)。称因果耦合 \(\pi\) **沿 \(r\) 下降**，若每个压缩后的目标前缀条件核存在 \(\widehat\kappa_n\)，使原核在 \(r_n\) 的每条纤维上相同：
+
+$$
+\kappa_n(\,\cdot\mid x_{\le n},y_{<n})
+=
+\widehat\kappa_n(\,\cdot\mid r_n(x_{\le n}),y_{<n}).
+$$
+
+这是假设压缩历史对当前后继足够，而非仅仅假设 \(r_n\) 不提前读取未来。
+

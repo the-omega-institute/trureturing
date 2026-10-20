@@ -1,0 +1,17 @@
+### 55.5 A decisive residue falsifier and original/current distinction
+
+<a id="TM55-E7"></a>
+**Example TM55.7 (constant tag-0 reuse loses an original target).** At $H=40$, $h=10$, $L=3$, $c=8$, $P=8$, take
+
+$$
+\begin{aligned}
+u&=\omega_{2,4},\quad (z,w)=(6,10),\quad q_{40}(u)=(1,(8,16),1,1),\\
+v&=\omega_{1,5},\quad (z,w)=(6,11),\quad q_{40}(v)=(0,1,24).
+\end{aligned}
+\tag{TM.5526}
+$$
+
+The finite source receives $i=\operatorname{rep}_3(4)=1$. Giving the tag-0 source the same constant symbol 1 would make both padding attempts accept with current size 32, and both replacements reject: their candidates have sizes 48 and 52. They have the same action identities and two actual response bits, and current $E=1$ since $A^8=1$. Their current targets are both $(0,1,32)$ but their initial targets differ. TM38.1 excludes every common continuation, including the identical terminal procedure. Correct supply gives the tag-0 source $i=\operatorname{rep}_3(8-6)=2$, reserving $j=0$ in its acquired row. The example falsifies that naive supply rule, not an unrestricted alphabet optimum.
+
+Equality in the complete theorem is substantive. For example $h=7$, $L=2$, $c=6$, and $H=28+\delta$ give $P=4+\delta$. The actual point $(5,6)$ accepts padding and then replacement at candidate size $4\cdot6+P=H$. Its terminal entry is exactly $H$; all interval probes and the final single-leaf attempt reject, yet the retained symbol 1 and recovered $w=6$ decode $z=5$. The actual tag-0 row $z=6$ also accepts padding at size $H$ but rejects replacement; its symbol is $\operatorname{rep}_2(0)=2$. These are different recorded histories, not a same-history collision. At $h=5$, $(2,3)$ has $z+w=h$ and is decoded as original tag 2, preserving the third original band even though the executor attempts replacement only once.
+

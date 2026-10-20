@@ -25,6 +25,7 @@ internal sealed class DecomposeFixture
             new RawRepositoryEntry(PathFor(Parent), BackfillInventoryWriter.WriteAtom(Parent)),
             RawRepositoryEntry.FromText(DigestionCasStore.RootPath + Parent.AtomId, text),
         ]), ["docs/*.md"]);
+        if (AtomizerRegistry.IsRegistered(atomizer)) CaptureContext();
         Baseline = Current;
         Gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), Current, Baseline,
             currentReader: () => Current);
@@ -32,6 +33,22 @@ internal sealed class DecomposeFixture
 
     internal DigestionLedgerEntry Parent { get; }
     internal RawRepositorySnapshot Current { get; set; }
+
+    internal void CaptureContext(params string[] sourceIds)
+    {
+        var decoded = Decode(Current);
+        var ledger = BackfillInventoryLoader.LoadForDigestion(decoded);
+        foreach (var source in ledger.RequireDigestionSources().Where(source => sourceIds.Length == 0 || sourceIds.Contains(source.SourceId)))
+        {
+            var built = DigestionContextIndexBuilder.Build(decoded, ledger, source.SourceId);
+            var files = Current.Entries.Where(file => !file.Path.StartsWith(
+                BackfillInventoryLoader.RootPath + source.SourceId + "/context/", StringComparison.Ordinal))
+                .ToDictionary(file => file.Path, StringComparer.Ordinal);
+            foreach (var item in built.CasObjects) files[item.RelativePath] = new RawRepositoryEntry(item.RelativePath, item.Bytes);
+            Current = DigestionContextPointerStore.Add(RawRepositorySnapshot.Create(files.Values), built.Index);
+        }
+    }
+
     internal RawRepositorySnapshot Baseline { get; }
     internal FakeRepositoryGateway Gateway { get; }
     internal int Writes { get; private set; }
@@ -75,7 +92,7 @@ internal sealed class DecomposeFixture
 
     internal void Add(DigestionLedgerEntry entry, string text)
     {
-        Current = RawRepositorySnapshot.Create(Current.Entries.Concat(new RawRepositoryEntry[]
+        Current = RawRepositorySnapshot.Create(Current.Entries.Where(file => file.Path != DigestionCasStore.RootPath + entry.AtomId).Concat(new RawRepositoryEntry[]
         {
             new RawRepositoryEntry(PathFor(entry), BackfillInventoryWriter.WriteAtom(entry)),
             RawRepositoryEntry.FromText(DigestionCasStore.RootPath + entry.AtomId, text),

@@ -1,0 +1,24 @@
+**定理 339.2（访问—任务 Galois 连接）。** 对任意 \(\mathcal A\subseteq\mathfrak A\) 与 \(\Phi\subseteq\mathfrak T\)，有
+\[
+\boxed{
+\mathcal A\subseteq\Phi'
+\quad\Longleftrightarrow\quad
+\Phi\subseteq\mathcal A'.
+}
+\tag{339.1}
+\]
+因此
+\[
+\mathcal A\subseteq\mathcal A'',
+\qquad
+\Phi\subseteq\Phi'',
+\]
+且双重导出是单调、幂等的闭包算子。
+
+### 证明
+左侧表示每个 \(A\in\mathcal A\) 对每个 \(\phi\in\Phi\) 满足 \(A I\phi\)，这与右侧逐字等价。取 \(\mathcal A=\mathcal A''\) 或 \(\Phi=\Phi''\) 得扩张性；若 \(\mathcal A_1\subseteq\mathcal A_2\)，共同任务条件对更大的访问族更严格，所以
+\[
+\mathcal A_2'\subseteq\mathcal A_1',
+\]
+再取一次导出得到双重闭包的单调性。由扩张性和反向包含，重复闭包不再改变。证毕。
+

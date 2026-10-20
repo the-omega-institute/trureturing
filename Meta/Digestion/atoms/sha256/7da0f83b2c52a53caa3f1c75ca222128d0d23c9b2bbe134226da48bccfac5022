@@ -1,0 +1,45 @@
+### 26.5 无限分辨率与线程恢复
+
+若分辨率为 \(\mathbb N\)，先区分环境层
+\(Y_{i,n}\) 与实际像 \(Y_{i,n}^0\subseteq Y_{i,n}\)。环境限制为
+\(\delta_{i,n}:Y_{i,n+1}\to Y_{i,n}\)，并满足
+\(\delta_{i,n}(Y_{i,n+1}^0)\subseteq Y_{i,n}^0\)；其在实际像上的限制才是实际来源所运输的
+映射。令
+\[
+L_i=\varprojlim(Y_{i,n},\delta_{i,n}),
+\]
+则实际来源给出落在 \(L_i\) 中的线程
+
+$$
+\operatorname{Thread}_i(\omega)
+=
+\bigl(\widehat r_{i,0}(\omega),
+       \widehat r_{i,1}(\omega),\ldots\bigr),
+$$
+
+并由 (RA.2604) 满足全部相容方程。由于 (RA.2605) 的每个分量都是双射，四种实际线程
+有相同的核：
+
+$$
+\operatorname{Thread}_i(\omega)=\operatorname{Thread}_i(\omega')
+\iff
+\operatorname{Thread}_j(\omega)=\operatorname{Thread}_j(\omega').
+$$
+
+这只说明四种表示在全部分辨率上保留同一线程区别。要把线程称作来源，仍需两项
+独立条件：
+
+1. **分离**：所有层读数相同的两个实际来源相等（或具有同一指定来源目标）；
+2. **完备**：每个环境逆极限中的相容线程都来自某个实际来源，即
+   \(\operatorname{Thread}_i(\Omega)=L_i\)（或在指定来源目标的商上满足相应满射）。
+
+前者是来源到线程的单射，后者是满射。二者同时成立时，来源与环境相容线程之间才有
+双射。没有分离时只能恢复行为线程；没有完备时，逆极限中还可能有数学上相容但
+实际来源没有实现的幽灵线程。这正是 `stateThread_bijective_iff_complete_and_separates`
+与 `local_global_atlas_exactness` 所分开的两个条件。
+
+若环境层等于实际像，即 \(Y_{i,n}=Y_{i,n}^0\)，且 \(\Omega\) 有限、每层实际像也有限，
+限制映射由共同来源条件满射，基数最终稳定，稳定段上的限制为双射，完备性可由此
+另行推出。环境层含有额外候选值时，这个有限稳定性不推出环境逆极限完备性；下面的
+反例刻意使用无限来源，避免把有限稳定性误当作一般逆极限完备性。
+

@@ -1,0 +1,7 @@
+## 三　具名目标(不在本节预登记)
+
+- **M3-f-3**:峰函数 b 与有限例外 killer k 的存在(`exists_peak_and_finite_exception_killer`):B(γ_n)=B(conj γ_n)=1,K(γ_n)=1,K(conj γ_n)=−1,K 在有限例外轨道上为 0,且例外集外 ‖B‖ ≤ 1/2(由第二级衰减 + 局部有限)。中等。
+- **M3-f-4**:`burnol_power_tail_bound`——g_N = b^{⋆N} ⋆ k 的轨道外 tsum ≤ 4^{−N}·(convolutionSquare k 的绝对可和 majorant,来自冻结 `EF_zero_sum_summable`)。**承重引理,重型**。
+- **M3-f-5**:完整 separator(取 N 使 4^{−N}S < 4·重数,严格)。重型。
+- **G-g**(增订十二)、**G-c**(增订十)、**M3-d**(增订九)仍 open。
+

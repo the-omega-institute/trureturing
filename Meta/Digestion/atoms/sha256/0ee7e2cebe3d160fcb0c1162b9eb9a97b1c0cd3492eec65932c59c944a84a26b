@@ -1,0 +1,46 @@
+对有界连续终点泛函 \(F\)，弱控制表示为
+\[
+-\varepsilon\log\mathbb E e^{-F(X^\varepsilon)/\varepsilon}
+=
+\inf_u\mathbb E\left[
+F(X^{\varepsilon,u})+\frac12\int_0^T|u_t|^2dt
+\right],
+\]
+\[
+dX^{\varepsilon,u}
+=(b_j+\sigma_ju)\,dt+\sqrt{\varepsilon}\sigma_j\,dW_t.
+\]
+Hamilton 量和 Lagrangian 为
+\[
+H_j(x,p)=p\cdot b_j(x)+\tfrac12p^{\mathsf T}a_j(x)p,
+\qquad
+L_j(x,v)=\sup_p\{p\cdot v-H_j(x,p)\}.
+\]
+有限终点代价的值函数在光滑处满足
+\[
+\partial_tV+b_j\cdot\nabla V
+-\tfrac12\nabla V^{\mathsf T}a_j\nabla V=0,
+\]
+非光滑时按黏性解理解。吸引集 \(A\) 的准势
+\[
+V_{A,j}(x)
+=\inf_{T>0,\ \phi(0)\in A,\ \phi(T)=x}I_{j,T}(\phi)
+\]
+在适当条件下满足
+\(H_j(x,\nabla V_{A,j})=0\)，达到下确界的路径是最小作用路径；若极小值不存在，只能使用任意 \(\delta\)-最优路径。多个最小路径可同时存在，不能宣称唯一。
+
+梯度扩散的外加特例
+\[
+dX_t=-D\nabla U(X_t)\,dt+\sqrt{2\varepsilon D}\,dW_t
+\]
+中，跨越目标集的指数代价为
+\[
+\Pr(\text{跨越 }B)
+=\exp[-\Gamma(A,B)/\varepsilon+o(1/\varepsilon)],
+\]
+其中 \(\Gamma\) 是势垒差。这一结论依赖梯度结构、噪声协方差和边界，不由 FIB 递归给出。离散核若满足
+\[
+-\varepsilon\log P_{\varepsilon,j}(x,y)\to c_j(x,y),
+\]
+固定步数路径代价才可写成 \(\sum_kc_j(x_{k-1},x_k)\)；步数随 \(\varepsilon\) 或 \(j\) 增长时需另证指数紧性和连续作用量。
+

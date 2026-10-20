@@ -1,0 +1,29 @@
+## 定理 255.1（观测商普适性质）
+
+若目标：
+
+\[
+T:\mathfrak M\to Y
+\]
+
+在每个观测 law 纤维上为常值，则存在唯一作用在有效像上的函数：
+
+\[
+\bar T:
+Z_{\mathrm{obs}}\to Y
+\]
+
+使：
+
+\[
+\boxed{
+T
+=
+\bar T\circ\Lambda_{\mathrm{obs}}.
+}
+\]
+
+### 证明
+
+这是函数对其 range 的 kernel-factorization。若两个模型具有同一观测 law，纤维常值性保证 \(\bar T(P)=T(M)\) 与代表选择无关；range surjectivity 给出唯一性。 \(\square\)
+

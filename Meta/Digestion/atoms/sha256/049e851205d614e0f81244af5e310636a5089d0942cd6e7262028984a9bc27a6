@@ -1,0 +1,5 @@
+它与项目此前的 prime observer 不同：
+
+* prime observer 按局部素数通道读取对象；
+* torus observer 把一整个二次扩张的有限位与无穷位同时组合成一个阿代尔周期。
+

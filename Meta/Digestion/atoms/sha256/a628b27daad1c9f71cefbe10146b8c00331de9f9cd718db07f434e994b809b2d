@@ -1,0 +1,39 @@
+**Theorem 45.2 (fully wrapped poles and their domains).**
+At each fixed nonzero $\kappa$, on the original fully wrapped
+$I\times\mathbb T^3$ with raw measure, write $\mathcal G^{\rm wr}_{\kappa,m}$
+for its threshold resolvent. Off the full source,
+
+$$
+\mathcal G^{\rm wr}_{\kappa,m}(k,q;k',q')
+=\frac{p}{(2\pi)^3m}+\mathfrak R_\kappa(k,q;k',q')+o(1),
+\qquad m\downarrow0,
+\tag{45.3}
+$$
+
+where
+$\mathfrak R_\kappa=\int_0^\infty
+ [e^{\lambda t}p^{\rm wr}_\kappa(t)-p/(2\pi)^3]dt$.
+The fully wrapped actual zero leaf has the analogous formula with
+$(2\pi)^2$ instead of $(2\pi)^3$. Their Q laws are positive recurrent,
+with invariant probabilities $\phi(k')^2dk'\,dq'/(2\pi)^d$, $d=3,2$.
+Their Q reference Green poles are $1/((2\pi)^dm)$ and raw Q poles
+$\phi(k')^2/((2\pi)^dm)$. Zero-mass threshold and Q kernels diverge.
+These fixed-parameter finite parts are not uniform assertions across
+$\kappa=0$.
+
+Proof. The ground eigenfunction in G Theorem 26.1 is
+$(2\pi)^{-3/2}\phi$ and its remaining spectral gap is comparable to
+$a^2$; its complete Fourier estimates give exponential convergence to
+$p/(2\pi)^3$ at fixed $a>0$. Integrating the ground term gives its exact
+pole. The remainder is integrable at infinity, and is integrable at zero
+off the full source by the native local bounds and image formula.
+This proves (45.3), including the specified finite part. At zero use the
+actual leaf heat limit (39.4) and its positive gap for the nonzero visible
+lattice modes; the same proof has two angular factors. Applying (37.2)
+gives the two Q density conventions and normalized invariant measures.
+Conservativity, irreducibility and this finite invariant measure give
+positive recurrence. The gap shrinks as $a\to0$, and the actual zero law
+has a frozen-coordinate delta, so these formulas cannot be passed to zero
+as raw four-dimensional point densities. In particular this compact pole
+is not the logarithm of the two-real-phase cylinder. $\square$
+

@@ -1,0 +1,17 @@
+**命题 394.2（共同来源的精确分解）。** （394.1）中的不同 $(m,p)$ 对应不同整数指标，且
+
+$$
+e_{mp}=-e_m+\eta_{m,p},
+\qquad
+\eta_{m,p}=\sum_{d\mid m}\mu(m/d)\beta_{dp},
+\qquad
+|\eta_{m,p}|\le\frac{\tau(m)}{1-q}q^p.
+\tag{394.2}
+$$
+
+这些式子保留 $m=1$ 的实际 $e_1=\log(1+q)$。
+
+**证明。** $p>D\ge m$ 给 $p\nmid m$，因而 $mp$ 的约数唯一分成 $d\mid m$ 与 $dp$（$d\mid m$）。对 $d\mid m$，$\mu(mp/d)=-\mu(m/d)$，包括两边同时为零的情形。将两个约数组合直接代入既有 $e=\mu*\beta$，得到（394.2）的身份；这是已有卷积公式的参数应用，不另立一般 Möbius 分解定理。由（385.9）、$d\ge1$、$|\mu|\le1$，得到其尾界。
+
+若 $mp=m'p'$ 且 $m,m'\le D<p,p'$，则 $p\mid m'p'$ 而 $p\nmid m'$，所以 $p=p'$，继而 $m=m'$。全级数由 $B\sum n^{-2}$ 绝对支配，因此可以按这些互不重复的实际指标分成 $\mathcal J_D+\mathcal R_D$。$\square$
+

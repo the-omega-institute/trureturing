@@ -1,0 +1,44 @@
+**Theorem 17.4 (An attainable test with every waiting bit charged).** Put
+
+$$
+ A=\sum_{k\ge1}\sqrt{p_kh_k}=\frac{\mathbb E_p\sqrt{r_K}}{\sqrt c},\qquad 0<A<1.
+\tag{17.13}
+$$
+
+Wait for the first actual one at $\tau=\min\{t\ge0:X_t=1\}$, then acquire $N\ge1$ complete subsequent gaps $K_1,\ldots,K_N$. The last required tick is at $T_N=\tau+\sum_{j=1}^N(K_j+1)$, and the actual number of bits read is $L_N=T_N+1$. Choose label zero when $\prod_{j=1}^N p_{K_j}/h_{K_j}\ge1$, with a fixed rule at equality. Without a deadline this rule terminates almost surely, each error is at most $A^N$, and
+
+$$
+\mathsf P_i(\tau=a)=\pi_i(a),\qquad
+\mathbb E_i L_N=1+\frac{\mathbb E_i[K(K+1)]}{2\mu_i}+N\mu_i.
+\tag{17.14}
+$$
+
+With a deadline $W$, perform this same acquisition until $W$ bits have been read. If $L_N\le W$, use the gap decision; otherwise emit a prescribed default label. Each error is at most
+
+$$
+ A^N+\mathsf P_i(T_N\ge W)
+ \le A^N+\min\left\{\frac{\mathbb E_i L_N}{W},
+ \inf_{1<z<1/q}z^{-W}F_i(z)G_i(z)^N\right\},
+\tag{17.15}
+$$
+
+where $Z_0=Z_n$, $Z_1=Z_H$ and
+
+$$
+G_i(z)=\mathbb E_i z^{K+1}=\frac{zZ_i(qz)}{Z_i(q)},\qquad
+F_i(z)=\mathbb E_i z^\tau=\frac{G_i(z)-1}{\mu_i(z-1)}.
+\tag{17.16}
+$$
+
+In particular, both errors are at most $\alpha$ with the explicit mathematical choices
+
+$$
+N=\left\lceil\frac{\log(2/\alpha)}{-\log A}\right\rceil,\qquad
+W=\left\lceil\frac2\alpha\max_{i=0,1}\mathbb E_i L_N\right\rceil.
+\tag{17.17}
+$$
+
+Proof. Strict Cauchy–Schwarz gives $A<1$, since equality would imply $p=h$. The actual cylinder for $0^a1\,0^{k_1}1\cdots0^{k_N}1$ equals $\pi_i(a)\prod_j f_i(k_j)$, with $f_0=p,f_1=h$. Summing these nonnegative terms proves that $\tau$ is finite almost surely and that the gaps after this actual tick are iid with law $f_i$, independently of $\tau$. The initial wait itself is not a gap sample. On the space of these $N$ completed gaps, the sum of the two likelihood-test errors is the sum of the smaller of the two product masses, bounded by the sum of their geometric means, namely $A^N$. Therefore each error is at most $A^N$.
+
+Since $\sum_{a=0}^k a=k(k+1)/2$, summing $a\pi_i(a)$ proves (17.14). Polynomial times geometric tails make every moment used here finite. Independence and $\sum_{a=0}^k z^a=(z^{k+1}-1)/(z-1)$ prove (17.16) and $\mathbb E_i z^{T_N}=F_i(z)G_i(z)^N$. The last tick fits precisely when $T_N\le W-1$; timeout is $T_N\ge W$, including a partially observed final gap or no observed tick. Exponential Markov at this integer threshold gives the second bound in (17.15); ordinary Markov on $L_N>W$ gives the first. A wrong deadline decision lies in the union of a wrong uncapped decision and timeout. This union bound does not condition the gap distribution on completing before the deadline. Formula (17.17) now gives the two error guarantees. $\square$
+

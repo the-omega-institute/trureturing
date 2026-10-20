@@ -1,0 +1,49 @@
+**Definition 51.1 (the supplied complete finite controller).** Let $Q$ be
+all installed logical states of a controller, with $K=|Q|\ge1$. Include
+halt states, unreachable states, error states and every installed invalid-code
+completion. At $q\in Q$ there is one fixed original instruction $I(q)$:
+either a primitive with its entire literal payload, or $\mathsf{Halt}(Y_q)$
+with one fixed complete output. A nonhalt instruction has a declared finite
+typed-response set $O_q$ and a total table
+
+$$
+\delta_q:O_q\longrightarrow Q.
+\tag{FIB.51.1}
+$$
+
+Every typed response has its row, whether or not it is possible on an
+admitted source. A silent primitive uses its declared constant response, such
+as $\bot$ in Definition 46.1. A primitive that is undefined outside its
+legal domain remains undefined there; this definition supplies no observable
+failure response for a missing strict edge. Halt has no response rows.
+For notational uniformity put $O_q=\varnothing$ at a halt, with its
+unique empty successor map.
+
+The source and apparatus domains may be infinite. Their original legality,
+actual response and apparatus-successor maps are retained. The complete
+proof-side apparatus state includes any history needed by these maps, as in
+§47; it is not an additional observer input. All mutable information used
+by instruction selection is already in $q$, and its next value depends only
+on $q$ and the actual declared response. In particular, the all-action
+factorization of Definition 46.1 is a premise. A source-indexed successor
+list that fails this factorization is not an input controller.
+
+Initialization is either a common $q_0$ or a map $c(i)\in Q$ of an initial
+record $i$ that was genuinely acquired under the original contract. The
+original source, target and acquired record stay paired. Neither an arbitrary
+source label nor a retrospectively compatible history qualifies as $i$.
+The record is not available again after initialization unless already
+represented in the counted control.
+
+Use exactly the conditional whole-word instruction and immediate-response
+services of [FIB continuation II][FIB51-II], Definition 45.1. A word is the
+whole mutable observer. The static instruction service selects the original
+instruction; that primitive's transient response immediately selects hold or
+one legal bit flip and is discarded. There is no intervening instruction.
+These control services obtain no further source response and perform no
+apparatus update beyond the declared original primitive.
+Installation, acquisition, initialization, selection, literal delivery,
+primitive execution, response writing and output are supplied and charged
+separately. The premise grants these functions at the chosen finite width;
+it does not construct their physical implementation from a word count.
+

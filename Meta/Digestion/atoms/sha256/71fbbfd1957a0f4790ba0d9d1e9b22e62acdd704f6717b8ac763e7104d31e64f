@@ -1,0 +1,27 @@
+**命题 19.8（可执行解码器）。** 令
+$\kappa=2+3\lambda$。命题 19.3 说明 $\kappa$ 在模 $D$ 下为单位。 给定记录 $(A,B)$ 和当前观测 $s=q(a,b)$，先取 $A,B,s$ 的标准整数代表，令
+
+$$
+E=\operatorname{rem}_m\bigl(s-\kappa A-3B\bigr).
+\tag{RA.1920}
+$$
+
+若 $D=1$，记录本身已是 $(a,b)$。若 $D>1$，相容观测满足 $H\mid E$，并令
+
+$$
+k=\kappa^{-1}(E/H)\pmod D,\qquad
+a=A+Hk\pmod m,\qquad
+b=B+\lambda a\pmod m.
+\tag{RA.1921}
+$$
+
+**证明。**
+由 $b=B+\lambda a$，
+
+$$
+s=\kappa a+3B\pmod m.
+\tag{RA.1922}
+$$
+
+又 $a=A+Hk$，故 $E$ 是 $\kappa Hk$ 的模 $m$ 标准代表，必被 $H$ 整除，且 $E/H=\kappa k\pmod D$。这给出（RA.1921）。若 $E$ 不被 $H$ 整除，应报告 $(s,A,B)$ 不相容；不能把整个笛卡尔积都宣称为实际联合像。这里 $E/H$ 是普通整数除法， 绝不是把 $H$ 当作模 $m$ 的逆。因联合单射，实际全联合像有 $m^2$ 个态；通常它是 $\mathbb Z/m\mathbb Z\times R$ 的真子集。证毕。
+

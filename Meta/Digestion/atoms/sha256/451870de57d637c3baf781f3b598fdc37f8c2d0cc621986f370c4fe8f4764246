@@ -1,0 +1,25 @@
+**定义 109.1（同一数组的标记密度）。** 保持第 106 章全部原模型与有限系数，记
+
+$$
+\mathcal B=q/Q^{11/4}=B^2\sqrt\delta,\qquad
+\mathcal D=\mathcal B\sqrt\delta=q/Q^3,\qquad
+L=\ln(1/\sigma),\qquad\Delta=\ln\mathcal B-L.
+\tag{109.1}
+$$
+
+信息量以 nats 计，$s_j=-\ln\mathsf Q_{x,j}(R_j)-\mathbb E[-\ln\mathsf Q_{x,j}(R_j)]$，
+$s_{\mathsf Q}=\sum_js_j$。仍用完整校准乘积律 $\mathsf Q_x$、原精确中心 $\mu_j$、原完整 $V$ 和
+
+$$
+T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V/\sqrt\delta,\qquad
+U=s_{\mathsf Q}+G^2/2,\qquad Y=T+\sigma G.
+\tag{109.2}
+$$
+
+以 $T',U',Y'$ 表示 (102.8)、第 106 章的同一核心 Gaussian 耦合：
+外部计数及其信息量保持原联合关系，测量变量仍是同一个 $G$。
+定义 $q_k(y)dy=\mathbb E_{\mathsf Q}[U^k;Y\in dy]$，
+$q'_k(y)dy=\mathbb E_{\mathsf Q}[(U')^k;Y'\in dy]$，$k=0,1,2$。
+记 $f_{\mathsf Q}=q_0$、$f'=q'_0$，$f_x$ 是原选中律的输出密度，
+$g_x$ 是第 106 章相同观测权重、相同噪声的中心 Gaussian 核心参考密度。
+

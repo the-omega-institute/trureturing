@@ -1,0 +1,23 @@
+可以提出一个明确但仍属模型的机制：
+
+1. 每个有限 prime/cumulant 层都保持临界轴对称；
+2. 有限阶展开中的 transverse odd coefficients 全部为零；
+3. 无限 gluing 留下一个 beyond-all-orders residual：
+
+   $$
+   \varepsilon_H
+   =
+   C e^{-H\log\varphi}
+   =
+   C\varphi^{-H};
+   $$
+4. 某个临界二重零点吸收该 residual；
+5. 二重零点分裂为：
+
+   $$
+   \frac12\pm
+   C'
+   \varphi^{-H/2}
+   +i\gamma.
+   $$
+

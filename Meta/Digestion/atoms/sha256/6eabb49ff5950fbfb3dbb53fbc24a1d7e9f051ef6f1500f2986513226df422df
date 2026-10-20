@@ -1,0 +1,6 @@
+项目已经机器核验：
+
+* \(p\equiv\pm1\pmod5\) 时在 GoldenInt 中分裂；
+* \(p\equiv\pm2\pmod5\) 时保持惰性；
+* \(5\) 为分歧素数。
+

@@ -1,0 +1,17 @@
+**Definition 58.1 (one fixed known-parameter Bayes experiment).**
+Fix $\tau>0$, $t_j=j\tau/n$ and $\Delta=\tau/n$. The data and risk are
+
+$$
+\mathcal D_n=\sigma(e^{iv_{t_j}}:0\le j\le n),\qquad
+R_{n,\kappa}=\inf_g\mathbf E_{\mathbf Q_\kappa}
+ (K_\tau-g(e^{iv_{t_0}},\ldots,e^{iv_{t_n}}))^2.
+\tag{58.1}
+$$
+
+The infimum is over Borel estimators with the common known parameters
+and initial phases. All expectations refer to the one source (55.1).
+The Bayes estimator is the conditional mean and
+$R_{n,\kappa}=\mathbf E\operatorname{Var}(K_\tau\mid\mathcal D_n)$.
+There is no supplied interpolation, height, Brownian driver, winding
+increment or additional observation between the sample times.
+

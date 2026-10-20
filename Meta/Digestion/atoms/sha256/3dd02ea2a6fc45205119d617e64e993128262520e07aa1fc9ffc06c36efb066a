@@ -1,0 +1,40 @@
+### 14.2 运输物理 Fourier 与正交投影
+
+令 $\ell=\log2$、$q=2^{-1/2}$、$U=\rho(2)$，定义
+
+$$
+T=I-qU,\qquad G=T^*T=\tfrac32I-q(U+U^*),
+\qquad K=(PGP)|_V.
+$$
+
+这里 $T$ 是[半局部源的 $\theta_{\{\infty,2\}}$](../../../Library/Weil/connesconsanimoscovici2024semilocal.md)在共同 unitary 物理表示中的候选实现。需要一起核对源 Mellin 约定与 Fourier 运输，而不能只核对乘子模。
+
+具体地，$(U\xi)(x)=2^{-1/2}\xi(x/2)$，故 $(T\xi)(x)=\xi(x)-\tfrac12\xi(x/2)$。令 $(\mathscr L\xi)(s)=e^{s/2}\xi(e^s)$；在这一 half-density unitary 坐标中，$U$ 是长度 $\ell$ 的平移。源式 (57) 的乘子及 Proposition 4.7(i)、Theorem 4.6 分别承担该运输的乘子、Fourier 与 Sonin 子空间合同；单个物理点值公式不能代替这三个对应。
+
+由 $(1-q)^2I\le G\le(1+q)^2I$，受限算子 $K$ 有有界逆。以下 $K^{-1}$ 只在 $V$ 上取逆，并在 $V^\perp$ 上延为零。
+
+设
+
+$$
+\mathcal F_2=T\mathcal FT^{-1},\qquad
+V_2=TV=\{\xi:Q\xi=Q\mathcal F_2\xi=0\}.
+$$
+
+由 $\mathcal F U\mathcal F=U^*$ 得 $[G,\mathcal F]=0$，这是把 $\mathcal F_2$ 当作自伴 unitary involution 所需的关系。$T$ 与 $T^{-1}$ 保持 $WH$；$T^{-*}$ 保持 $QH$。候选的闭直和运输为
+
+$$
+QH+\mathcal F_2QH=T^{-*}(QH+\mathcal FQH).
+$$
+
+记 $C_2=Q\mathcal F_2Q$。在紧性、闭直和与 $\gamma=\|C_2\|<1$ 的合同下，$R_2=(I-C_2^2)^{-1}$ 作用于 $QH$，实际正交投影写作
+
+$$
+\begin{aligned}
+P_2&=TPK^{-1}PT^*\\
+&=I-R_2(Q-C_2\mathcal F_2)
+-\mathcal F_2R_2(Q\mathcal F_2-C_2).
+\end{aligned}
+$$
+
+这是要与源 Sonin 投影识别的对象。混合配对幂等算子 $TPT^{-1}$ 具有不同的合同。
+

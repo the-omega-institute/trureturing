@@ -1,0 +1,32 @@
+**命题 27.1（最小预测商的因子化性质）。** 设 \(q:H\to Q\) 是一个候选边界，并且存在
+
+$$
+ \widehat{\operatorname{Resp}}:\operatorname{im}(q)\times\mathcal V
+ \longrightarrow \mathcal O_v
+$$
+
+使得
+
+$$
+ \operatorname{Resp}(h,v)
+ =
+ \widehat{\operatorname{Resp}}(q(h),v)
+ \qquad(h\in H, v\in\mathcal V).
+ \tag{TM.2703}
+$$
+
+则存在唯一满射
+
+$$
+ d_q:\operatorname{im}(q)\twoheadrightarrow C_{\mathcal V},
+ \qquad
+ d_q(q(h))=[h],
+ \tag{TM.2704}
+$$
+
+满足 \(d_q\circ q=q_{\mathcal V}\)。若 \(\ker q=\sim_{\mathcal V}\)，则 \(d_q\) 是双射；若 \(\ker q\) 严格细于 \(\sim_{\mathcal V}\)，则 \(q\) 动态充分但保留了可被任务商掉的额外历史。
+
+**证明。** 若 \(q(h)=q(h')\)，由（TM.2703）对每个 \(v\) 有相同响应，故 \(h\sim_{\mathcal V}h'\)，于是 \(q(h)\mapsto[h]\) 良定义。它的像包含每个 \([h]\)，所以满射。由 \(d_q(q(h))=[h]\) 唯一确定。若两边的核相等，\(d_q\) 同时单射；若候选核更细，则至少有两个候选边界值落在同一个行为类上。证毕。
+
+这个命题把“当前读数相同”与“未来可继续使用的边界相同”分开。一个只保留目标后验、单个端点或某个互信息数值的摘要，只有在它满足（TM.2703）时才是动态充分的；第25.5节的 \(X\oplus K\) 例子已经给出当前目标边缘相同而后续读 \(K\) 不同的反例。
+

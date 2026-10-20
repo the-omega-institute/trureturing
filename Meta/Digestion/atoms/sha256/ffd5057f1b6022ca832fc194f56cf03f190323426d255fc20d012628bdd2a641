@@ -1,0 +1,13 @@
+### 证明
+
+对任意下降耦合，定理 383.5 的推前仍是诱导过滤下的因果耦合，且逐层代价界给出
+
+$$
+\mathbb E_{\widehat\pi}\!\left[\sum_n\widehat c_n\right]
+\le
+\left(\max_nL_n\right)
+\mathbb E_\pi\!\left[\sum_nc_n\right].
+$$
+
+先在下降类上取下确界即得。集合包含关系说明不能无条件用更小的 unrestricted 原始值替代右侧。证毕。
+

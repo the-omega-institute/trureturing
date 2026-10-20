@@ -1,0 +1,105 @@
+**定理 439.3（实际 \(\{2\}\to\{2,3\}\) 更新的唯一阻尼转折）。** 固定
+\(L=\log3\)、\(a=0\)，令
+
+\[
+c=\frac{\log2}{\log3},\qquad
+D(\sigma)=\mathcal I_{\{2,3\},\log3}(\sigma,0)
+ -\mathcal I_{\{2\},\log3}(\sigma,0).
+\tag{PI.5}
+\]
+
+则存在唯一 \(\sigma_*\in(0,\infty)\)，使
+
+\[
+D(\sigma)<0\quad(0<\sigma<\sigma_*),\qquad
+D(\sigma_*)=0,\qquad
+D(\sigma)>0\quad(\sigma>\sigma_*).
+\tag{PI.6}
+\]
+
+而且
+
+\[
+\lim_{\sigma\to\infty}\sigma D(\sigma)
+=\frac12\left(c-\frac12\right)>0,
+\qquad
+D(\sigma)=\frac12\log\sigma+O(1)
+\quad(\sigma\downarrow0).
+\tag{PI.7}
+\]
+
+**证明：同一实际分子及两端。** 因为 \(4>3>1\)，有 \(c>1/2\)。
+此处 \(F_{\{2\},L}(v)=2-e^{-cv}\)，而插入 \(3\) 的
+\(b=1\)、\(\alpha=1/2\)。所以（PI.4）给出实际全轴差
+
+\[
+D(\sigma)=\frac12\int_0^\infty e^{-\sigma v}\frac{g(v)}{v^2}\,dv,
+\qquad
+g(v)=(2-e^{-cv})(1-e^{-v})-v.
+\tag{PI.8}
+\]
+
+Taylor 展开给 \(g(v)=(c-1/2)v^2+O(v^3)\)，且
+\(g(v)=-v+O(1)\) 于无穷端。因此
+\(h(v)=g(v)/(2v^2)\) 在零端连续延拓，\(h(0)=(c-1/2)/2\)，并在
+\([0,\infty)\) 上有界。换元 \(t=\sigma v\) 给
+
+\[
+\sigma D(\sigma)=\int_0^\infty e^{-t}h(t/\sigma)\,dt
+\longrightarrow h(0).
+\]
+
+有界性给共同可积主导函数，故该极限由主导收敛成立。
+对另一端，令
+
+\[
+H(v)=h(v)+\frac{\mathbf1_{[1,\infty)}(v)}{2v}.
+\]
+
+\(H\) 在 \((0,1)\) 有界，在 \([1,\infty)\) 等于
+\((2-e^{-cv})(1-e^{-v})/(2v^2)\)，故 \(H\in L^1(0,\infty)\)。于是
+
+\[
+D(\sigma)=\int_0^\infty e^{-\sigma v}H(v)\,dv
+ -\frac12\int_1^\infty\frac{e^{-\sigma v}}v\,dv.
+\]
+
+第一项一致有界。第二个积分换元后为
+\(\int_\sigma^\infty e^{-t}dt/t=-\log\sigma+O(1)\)：在 \((\sigma,1)\)
+减去 \(1/t\)，余项 \((e^{-t}-1)/t\) 可积，\([1,\infty)\) 的尾也可积。
+这证明（PI.7），并给正阻尼两端的相反符号。
+
+**证明：唯一转折。** 二阶导数恰为
+
+\[
+g''(v)=e^{-(c+1)v}
+ [(c+1)^2-2e^{cv}-c^2e^v].
+\tag{PI.9}
+\]
+
+方括号在 \([0,\infty)\) 严格递减，从 \(2c-1>0\) 趋于负无穷，
+所以有唯一正零点 \(q\)。由 \(g'(0)=0\)、\(g'(v)\to-1\)，
+\(g'\) 先严格增加再严格减少，因而有唯一正零点 \(t>q\)。又由
+\(g(0)=0\)、\(g(v)\to-\infty\)，有唯一正零点 \(r>t\)，且
+
+\[
+g(v)>0\quad(0<v<r),\qquad g(v)<0\quad(v>r).
+\]
+
+若 \(0<\sigma_1<\sigma_2\)，全部积分均绝对可积，并有
+
+\[
+\begin{aligned}
+D(\sigma_2)-e^{-(\sigma_2-\sigma_1)r}D(\sigma_1)
+=\int_0^\infty e^{-\sigma_1v}
+[e^{-(\sigma_2-\sigma_1)v}-e^{-(\sigma_2-\sigma_1)r}]h(v)\,dv>0.
+\end{aligned}
+\tag{PI.10}
+\]
+
+严格正性来自括号与 \(h\) 在 \((0,r)\) 都正，在 \((r,\infty)\) 都负；
+任取 \((0,r)\) 中一个正长度闭区间即可得到严格正的积分。
+因此 \(e^{\sigma r}D(\sigma)\) 严格递增。\(D\) 在每个正阻尼紧区间上
+由共同指数主导函数而连续。结合（PI.7）及中间值定理，零点存在、唯一，
+并有（PI.6）的全部符号。证毕。
+

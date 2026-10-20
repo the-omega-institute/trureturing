@@ -1,0 +1,43 @@
+**Theorem 213.13 (A whole-score cylinder cut).**
+For every $L\ge5$ and every full score V define
+
+$$
+m_f(V)=\sum_{w|_{[5]}=11100}P_w,\qquad
+\ell(V)=\sum_{n(w)\ge3}P_w,\qquad
+\widehat b=(2/3,2/3,2/3,1/4,1/4,1/6,\ldots,1/6;1/6).
+$$
+
+Then $\widehat b\in H_L$ and
+
+$$
+F_{Q(V)}(\widehat b)\le\Delta_O(V)+m_f(V)/12
+                         \le\Delta_N(V)+m_f(V)/12.
+\tag{213.16}
+$$
+
+For every signed q and every full certificate $(V,\theta)$ for q,
+$m_f(V)\ge12(F_q(\widehat b)-1)_+$.
+This quantifies over arbitrary A,C,P,T, all baseline and unary changes,
+and all signed residuals and nonzero zero-cost cores.
+
+**Proof.** Use this one normalized mixture of legal stopped tables:
+
+| Table | Probability |
+| --- | --- |
+| $(1,2;1,2,0)$ | $1/3$ |
+| $(1,2;1,2,3)$ | $1/6$ |
+| $(1,3;1,3,0)$ | $1/6$ |
+| $(2,3;0,3,0)$ | $1/6$ |
+| $(3,4;0,4,0)$ | $1/12$ |
+| $(3,5;0,5,0)$ | $1/12$ |
+
+Its base, correct and independent pair readings on every word are:
+
+| First-zero information | Base | Correct | Pair |
+| --- | --- | --- | --- |
+| $n=1$ | at least $1/6$ | $2/3$ | at least $5/6$ |
+| $n=2$ | at least $1/3$ | $1/2$ | at least $5/6$ |
+| $n=3$ | $1/2$ | $1/2$ | $1$ |
+| prefix $11100$ | $2/3$ | $1/12$ | $3/4$ |
+| prefix $11101$ or $11110$ | $3/4$ | $1/12$ | $5/6$ |
+| prefix $11111$, later first zero | $5/6$ | $0$ | $5/6$ |

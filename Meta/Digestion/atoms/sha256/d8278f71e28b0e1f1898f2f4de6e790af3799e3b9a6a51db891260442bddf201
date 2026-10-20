@@ -1,0 +1,83 @@
+**Theorem 19.3 (A counting observer with the same ninth-degree endpoint orders).** For any $J\ge1$ let
+
+$$
+ u_J=\mathsf P_0(K\le J),\quad v_J=\mathsf P_1(K\le J),\quad
+ \Delta_J=|v_J-u_J|,\quad
+ V_J=\max\{u_J(1-u_J),v_J(1-v_J)\}.
+\tag{19.16}
+$$
+
+Whenever $\Delta_J>0$, acquire $N$ complete gaps as in Theorem 17.4, count how many satisfy $K\le J$, and decide between the two binomial means at their midpoint. Each error before a deadline is at most $4V_J/(N\Delta_J^2)$. Thus, with
+
+$$
+ N=\left\lceil\frac{8V_J}{\alpha\Delta_J^2}\right\rceil,\qquad
+ W=\left\lceil\frac2\alpha\max_i\mathbb E_iL_N\right\rceil,
+\tag{19.17}
+$$
+
+and the same timeout default, both actual-record errors are at most $\alpha$.
+
+For the rational center, $J=1$ works for every fixed $q$. It attains the $O_{H_c,\alpha}(q^{-1})$ record order at zero. Near one, the choice
+
+$$
+ J(q)=\left\lfloor\frac9{1-q}\right\rfloor
+\tag{19.18}
+$$
+
+has $v_J-u_J>0$ for all sufficiently large $q<1$, and attains the $O_{H_c,\alpha}(s^{-3})$ order. After parameter preprocessing, the online control storage of this rule is
+
+$$
+ O\bigl(\log(J+2)+\log(N+2)+\log(W+2)\bigr)\text{ bits}.
+\tag{19.19}
+$$
+
+It needs no retained raw record or independent randomization. This is an achievable control bound, not a memory lower bound.
+
+Proof. The gap indicators after the first observed tick are iid Bernoulli variables with the indicated means. A midpoint error requires their sample mean to differ from its true mean by at least $\Delta_J/2$. Its variance is at most $V_J/N$. Chebyshev's inequality gives the asserted bound. The timeout is again bounded without conditioning on successful acquisition. Formula (19.17), together with Markov on $L_N$, allocates at most $\alpha/2$ to each of these two events.
+
+At zero, (19.1)–(19.2) and power-series expansion give
+
+$$
+ u_1=1-512q+O(q^2),\quad
+ v_1=1-512c_*q+O(q^2),\quad
+ \Delta_1=512(1-c_*)q+O(q^2),\quad V_1\sim512q.
+\tag{19.20}
+$$
+
+Thus (19.17) uses $N=O(q^{-1})$ and, since the mean cycle and initial wait are bounded, $W=O(q^{-1})$. The strict all-$q$ signal for $J=1$ was proved in Theorem 19.1.
+
+For the other endpoint, let $F_b(x)$ denote the cumulative distribution of a Gamma variable of shape $b$ and rate one. The Riemann sums used in (18.13), now truncated at $sJ\to9$, give
+
+$$
+ u_J\longrightarrow F_{10}(9)\in(0,1),\qquad
+ s^{-1}\mathbb E_p[K^{-1}\mathbf1_{K\le J}]\longrightarrow\tfrac19F_9(9).
+\tag{19.21}
+$$
+
+The limits follow by integration of $x^9e^{-x}/9!$ and $x^8e^{-x}/9!$ over $[0,9]$; the moving endpoint changes a vanishing integral. The tilt identity yields exactly
+
+$$
+ v_J-u_J=
+ \frac{\mathbb E_p[(r_K-1)\mathbf1_{K\le J}]-u_J\mathbb E_p(r_K-1)}c.
+\tag{19.22}
+$$
+
+The $O(k^{-2})$ part of $r_k-1$ contributes at most a constant times $Z_7/Z_9=O(s^2)$. Therefore (19.15) and (19.21) imply
+
+$$
+ v_J-u_J=a_*s\,\frac{F_9(9)-F_{10}(9)}9+o(s)
+ =a_*s\,\frac{e^{-9}9^9}{9\cdot9!}+o(s)>0
+\tag{19.23}
+$$
+
+for sufficiently small $s>0$. The identity between the Gamma cumulative distributions follows by one integration by parts. Also $V_J\to F_{10}(9)(1-F_{10}(9))>0$. Thus $N=O(s^{-2})$ and, by (18.7), $W=O(s^{-3})$. These derivations prove the remainders needed for both endpoint order assertions.
+
+For online implementation, keep a deadline/read counter, a counter for the number of completed gaps, a success count, and the current zero-run count saturated at $J+1$. Before the first one, only the deadline counter and a first-tick flag need updating. A later one closes one gap, updates the success count if its saturated count is at most $J$, and resets that count to zero. After $N$ such gaps compare the success count with the precomputed integer midpoint threshold; for $v_J>u_J$ this may be $\lceil N(u_J+v_J)/2\rceil$, assigning equality to label one. The opposite ordering reverses the comparison with a fixed tie convention. Integer counters and the threshold have precisely the sizes in (19.19). The deadline counter is an observer resource, not an uncharged clock supplied by the generator. An all-zero prefix or an unfinished gap at the deadline triggers the stated default. With ordinary binary counter and comparison operations, a conservative online bit-operation bound is
+
+$$
+ O\bigl(W\log((J+2)(N+2)(W+2))\bigr).
+\tag{19.24}
+$$
+
+Keeping all observed bits for later use would require up to $W$ additional bits. $\square$
+

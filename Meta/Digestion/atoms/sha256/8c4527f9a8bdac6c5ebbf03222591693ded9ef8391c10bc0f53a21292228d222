@@ -1,0 +1,33 @@
+**Theorem 129.2 (Resolution of the specified face projection).**
+For the strict face domain $\Delta_5$ of Definition 120.1,
+
+$$
+\mathcal P_N=\mathcal P_O
+ =\Delta_5\cap\{\text{the four cuts in (121.3)}\}.
+\tag{129.1}
+$$
+
+Thus the question (120.1) is affirmative on this entire face,
+with the closure (128.1). This conclusion does not assert the
+universal comparison (110.14), nor its negation.
+
+**Proof.** Theorem 119.3 relates the two finite systems defining
+these projections to original feasibility at the exact cap.
+Theorem 121.2 gives both directions and their exact amplitude
+conditions, with every legal actual tail. Theorem 128.2 gives
+the closure. $\square$
+
+The full all-amplitude/all-cap implication (110.14) remains
+unresolved, as do the $L=5$ profiles off this equality face
+and the $L\ge6$ comparison. No supplementary off-face theorem
+is included here. In particular common endpoint budgets and
+all-word affine interpolation prove this face; they furnish
+neither a universal stopped replacement nor an all-stopped
+separator at another profile. The claim is ordinary mathematical
+existence relative to the accepted ordinary suppliers, without
+kernel certification. Its exact real-parameter partitions do not
+assert effective computation on arbitrary reals. The acquisition
+statement applies to the separately selected original marked laws,
+with actual original tapes and counted queries; it does not change
+the original consumer or its nonatomic target laws.
+

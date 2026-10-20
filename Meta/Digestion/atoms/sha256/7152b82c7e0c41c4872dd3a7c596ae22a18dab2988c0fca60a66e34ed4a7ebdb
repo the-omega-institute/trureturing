@@ -1,0 +1,27 @@
+**定理 69.5（环境开邻域的共同半径）。** 对 $r>0$ 和 $i\in I$，定义环境 $L^\infty$ 开 $r$ 邻域
+
+$$
+U_i(r)=\big\{z\in\mathbb R^4:\ \exists x\in\operatorname{Star}_i,
+\ \|z-x\|_\infty<r\big\}.
+$$
+
+则对任意 $0<r<1/48$，四个集合 $U_i(r)$ 两两不交。它们是环境空间中的开集，且各自包含对应的整个闭星；在 $\Delta$ 内取交仍两两不交。
+
+证明。每个 $U_i(r)$ 是以 $\operatorname{Star}_i$ 的实际点为中心、半径 $r$ 的开球的并，故是开集；对 $x\in\operatorname{Star}_i$，有 $\|x-x\|_\infty=0<r$，故该闭星包含于 $U_i(r)$。若不同的 $i,j$ 有公共点 $z\in U_i(r)\cap U_j(r)$，则按定义存在实际星内点 $x\in\operatorname{Star}_i$ 和 $y\in\operatorname{Star}_j$，满足
+
+$$
+\|z-x\|_\infty<r,
+\qquad
+\|z-y\|_\infty<r.
+$$
+
+由三角不等式及定理 69.4，得到
+
+$$
+\frac{1}{24}\le\|x-y\|_\infty
+\le\|x-z\|_\infty+\|z-y\|_\infty
+<2r<\frac{1}{24},
+$$
+
+矛盾。与 $\Delta$ 取交不改变这个不交性。证明完毕。
+

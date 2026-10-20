@@ -28,7 +28,7 @@ public sealed class ReconcileChainTests
         var before = f.Current;
         var dryRun = DecomposeAtomCommand.Run("synthetic", f.Gateway, [.. Regroup(f), "--dry-run"], f.Apply);
         Assert.True(dryRun.Success, dryRun.Error);
-        Assert.Contains("cas_objects=0 ledger_updates=1", dryRun.Output, StringComparison.Ordinal);
+        Assert.True(dryRun.Output.Contains("cas_objects=0 ledger_updates=1", StringComparison.Ordinal), dryRun.Output);
         Assert.Same(before, f.Current);
         var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, Regroup(f), f.Apply);
         Assert.True(result.Success, result.Error);
@@ -160,7 +160,8 @@ public sealed class ReconcileChainTests
         var document = BackfillInventoryLoader.Load(DecomposeFixture.Decode(actual));
         Assert.Equal(new[] { Id(Group), Id(Last) }, document.RequireDigestionEntries().Single(e => e.AtomId == f.Parent.AtomId).Receipts.ChainAtoms);
         foreach (var prior in f.Current.Entries.Where(e => e.Path != DecomposeFixture.PathFor(f.Parent)))
-            Assert.Equal(prior.Bytes.ToArray(), actual.Entries.Single(e => e.Path == prior.Path).Bytes.ToArray());
+            Assert.True(prior.Bytes.AsSpan().SequenceEqual(actual.Entries.Single(e => e.Path == prior.Path).Bytes.AsSpan()),
+                prior.Path + " expected=" + Encoding.UTF8.GetString(prior.Bytes.AsSpan()) + " actual=" + Encoding.UTF8.GetString(actual.Entries.Single(e => e.Path == prior.Path).Bytes.AsSpan()));
         Assert.Equal(0, lean.CallCount);
     }
 
@@ -212,6 +213,7 @@ public sealed class ReconcileChainTests
         var second = Entry(f, Second);
         f.Replace(second with { Receipts = second.Receipts with { UnresolvedSubitems = ["retained child obligation"] } });
         f.Replace(f.Parent with { Receipts = f.Parent.Receipts with { ChainAtoms = [Id(First), Id(Second), Id(Third), Id(Last)] } });
+        f.CaptureContext();
         return f;
     }
 

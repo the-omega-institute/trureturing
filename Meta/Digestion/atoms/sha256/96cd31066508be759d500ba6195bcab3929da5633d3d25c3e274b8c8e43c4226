@@ -1,0 +1,132 @@
+**Theorem 126.1 (A stopped kernel at every real face profile).**
+For every tuple in the closed ambient region of Theorem 123.2,
+there are twelve nonnegative weights summing to one that recover
+its entire amplitude-cap tuple from Definition 124.1. Mixing the
+endpoint laws with those same weights gives a cap-feasible stopped
+kernel on every word, with $p_{11111}(0)=1-\varepsilon$ and
+$c=H$, $\beta=1$ in Definition 108.2.
+
+**Proof.** Take the nonnegative conic coefficients in (123.7)
+or (123.8). Define
+
+$$
+\begin{aligned}
+\lambda_x&=4x_0/3,&\lambda_y&=5y_0/3,&\lambda_z&=z_0/3,\\
+\lambda_A&=31q_A/9,&\lambda_B&=28q_B/9,
+ &\lambda_C&=29q_C/9,&\lambda_D&=3q_D,\\
+\lambda_0&=1-g/3.
+\end{aligned}
+\tag{126.1}
+$$
+
+The normalization factors are the reciprocals of the axis and
+ray scales in Definition 124.1. In particular
+
+$$
+\lambda_x+\lambda_y+\lambda_z+
+\lambda_A+\lambda_B+\lambda_C+\lambda_D=g/3\le1.
+\tag{126.2}
+$$
+
+This follows by applying the linear functional $g$ to (123.5),
+since each normalized nonorigin profile has $g=3$.
+Thus all weights, including $\lambda_0$, are nonnegative.
+For $\delta>0$ set $s=3h/\delta\in[0,1]$ and assign
+
+$$
+\lambda_{R0}=(1-s)\lambda_R,\qquad
+\lambda_{R1}=s\lambda_R\qquad(R=A,B,C,D).
+\tag{126.3}
+$$
+
+For $\delta=0$, (123.9) makes every $q_R$ zero and
+$h=0$; set $s=0$. This defines all twelve weights without
+division by zero. The ray contribution to $\delta$ is
+$\lambda_R\delta_R=q_R$, so the head contribution is
+
+$$
+\sum_R\lambda_{R1}\delta_R/3
+      =s\sum_Rq_R/3=h.
+\tag{126.4}
+$$
+
+The other four coordinates are recovered by (123.9).
+The affine inverse (123.2), and total weight one, therefore
+recover all six entries $(a_1,a_2,a_3,a_4,a_5,\varepsilon)$.
+Every closed equality is included directly: $g=3$ gives
+$\lambda_0=0$, $h=0$ or $h=\delta/3$ selects a head
+endpoint, and zero cone or schedule weights are omitted.
+
+For each pair mix its three terminal vectors with these weights;
+write the results $T_{ij}^0,T_{ij}^{10},T_{ij}^{11}$ and the
+mixed common pair weight $w_{ij}$. They are nonnegative,
+have the same mass within each pair and satisfy
+$\sum_{i<j}w_{ij}=1$. The mixed kernel is
+
+$$
+p_b=\sum_{i<j}\big[(1-b_i)T_{ij}^0+
+ b_i(1-b_j)T_{ij}^{10}+b_ib_jT_{ij}^{11}\big]
+       =\sum_V\lambda_Vp_b^V.
+\tag{126.5}
+$$
+
+Fix any zero word $b$ and its first zero $n$. The corresponding
+endpoint targets all use that same label $n$, even if an auxiliary
+endpoint amplitude is zero or equal to its cap. The affine
+amplitude identity gives
+
+$$
+(1-a_n)e_0+a_ne_n
+ =\sum_V\lambda_V[(1-a_n^V)e_0+a_n^Ve_n].
+\tag{126.6}
+$$
+
+Each of the three rows (110.6) is affine in the law, amplitude
+and cap. Taking the same weighted sum of its endpoint inequalities
+proves it at this $b$. This is done separately for all 31 zero
+words and all three rows, including the pair row. The all-positive
+target remains $e_0$, and (125.3) yields
+$p_{11111}(0)=\sum_V\lambda_V(1-\varepsilon_V)=1-\varepsilon$.
+Hence all 94 inequalities hold simultaneously. These identities
+prove the claim for every real parameter through the explicit
+cone decomposition; finite endpoint checks alone would not do so.
+
+For coefficient saturation, observe a support property common to
+all twelve tables: at any fixed pair $(i,j)$ every $10$ vector
+is supported only at label $j$, and every $11$ vector has zero
+at label $j$. Omitted vectors are zero. This property persists
+under the common convex mixture, so the two mixed supports are
+still disjoint. Put
+
+$$
+A_i=\sum_{j>i}T_{ij}^0,\qquad
+B_i=\sum_{j>i}T_{ij}^{10}.
+\tag{126.7}
+$$
+
+Expanding (126.5) and using that disjointness gives
+
+$$
+\begin{aligned}
+c&=\sum_iA_i,&\ell_i&=B_i-A_i,
+ &Q_{ij}&=T_{ij}^{11}-T_{ij}^{10},\\
+(-Q_{ij})_+&=T_{ij}^{10},&V_i&=B_i,
+ &h_i&=(V_i-\ell_i)_+=A_i,\\
+H&=\sum_iA_i=c.
+\end{aligned}
+\tag{126.8}
+$$
+
+Here $h_i$ is the coefficient vector of Definition 108.2,
+distinct from the head scalar $h$ in (123.1).
+Common column masses imply
+$\mathfrak m(A_i)=\mathfrak m(B_i)=\sum_{j>i}w_{ij}$;
+therefore $\beta=\sum_i\mathfrak m(A_i)=1$.
+The kernel has degree at most two. Applying Theorem 109.1 gives
+$p\in\mathscr C_5=\mathscr O_5\subseteq\mathscr N_5$,
+at the exact closed boundary $c=H$, $\beta=1$.
+This also agrees with the general face-saturation supplier 119.4.
+The support argument is made after mixing; disjointness for each
+endpoint by itself would not ensure disjointness of mixed columns.
+$\square$
+

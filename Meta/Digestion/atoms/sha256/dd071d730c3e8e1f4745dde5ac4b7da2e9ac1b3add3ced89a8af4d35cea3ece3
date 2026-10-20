@@ -1,0 +1,12 @@
+**定理 336.2（tester 残余判据）。** 两个过程 \(\mathcal E,\mathcal F\) 对所有允许 tester 给出相同概率，当且仅当
+\[
+\boxed{
+J_{\mathcal E}-J_{\mathcal F}
+\in
+\mathcal V_{\mathfrak T}^{\perp}.
+}
+\tag{336.1}
+\]
+若 \(\mathcal V_{\mathfrak T}\) 覆盖声明过程空间的全部 Hermitian 方向，则 tester 概率唯一确定过程；反之，任意非零正交残余都给出一对局部可区分性缺失的过程。
+
+### 证明

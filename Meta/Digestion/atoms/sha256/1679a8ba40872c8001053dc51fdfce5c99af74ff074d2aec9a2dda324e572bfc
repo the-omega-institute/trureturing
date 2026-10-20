@@ -1,0 +1,12 @@
+### 定理 369.2（矩阵 Cramér–Rao 下界）
+
+若 \(I_{T_N}(\theta)\) 正定，则任何正规无偏估计器满足
+
+$$
+\boxed{
+\operatorname{Cov}_\theta(\widehat\theta)
+\succeq
+I_{T_N}(\theta)^{-1}.
+}
+$$
+

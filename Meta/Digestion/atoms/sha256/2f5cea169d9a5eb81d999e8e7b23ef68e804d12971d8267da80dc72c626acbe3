@@ -1,0 +1,22 @@
+**定义 39.1（源谱的目标尺寸分块）。** 令 $S$ 为非空有限扇区集，$r_s,d_s$ 为正整数，$\lambda_s=(\lambda_{si})_{0\le i<r_s}$ 为非增概率向量，允许零项。两侧源空间为 $A=\bigoplus_s\mathbb C^{r_s}$，输出空间为 $B=\bigoplus_s\mathbb C^{d_s}$。定义源、目标等距
+
+$$
+J|s\rangle=\sum_{i<r_s}\sqrt{\lambda_{si}}|s,i\rangle_X|s,i\rangle_Y,
+\qquad T_s=T|s\rangle=\frac1{\sqrt{d_s}}\sum_{a<d_s}|s,a\rangle_X|s,a\rangle_Y.
+$$
+
+记相应编码信道为 $\mathcal J$、$\mathcal T$。允许两侧独立 CPTP 映射以及有限共享经典随机混合，不允许通信、后选择或额外共享纠缠，竞争输出不必保持旗标或基扇区纯态。误差仍为包含任意被动参考且不除以二的钻石范数。
+
+置 $M=\max_s\lceil r_s/d_s\rceil$，将每个 $\lambda_s$ 补零到 $d_sM$ 项，并定义
+
+$$
+\alpha_{saj}=\sqrt{\lambda_{s,d_sj+a}},\qquad
+b_{sj}=\frac1{\sqrt{d_s}}\sum_{a<d_s}\alpha_{saj},\qquad
+G_{st}=\sum_{j<M}b_{sj}b_{tj},\qquad
+q=\min_{p\in\Delta_S}p^{\mathsf T}Gp.
+$$
+
+每个 $b_s$ 非负且非增。分块 Cauchy–Schwarz 给 $\|b_s\|_2^2\le1$，所以 $G\succeq0$、$0\le G_{st}\le1$；此处一般只有 $G_{ss}\le1$。
+
+单扇区的最佳纯目标保真度 $\sum_jb_{sj}^2$ 是 George–Chitambar 的已有结果：其定理 8 的递减分块系数优化经 Cauchy–Schwarz 达到于与 $b_{sj}^2$ 成比例的辅助概率。定理 4 同时给出该保真度目标下 LO 与 LOSR 的等价性。以下结论研究同一个相干多扇区信道与被动参考，不把这一单态公式认作新增结果。精确来源见 [零通信纯态转化](../../../Library/QuantumChannels/george2024zerocommunication.md)。
+

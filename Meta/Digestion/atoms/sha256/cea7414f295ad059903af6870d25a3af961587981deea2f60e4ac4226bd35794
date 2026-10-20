@@ -1,0 +1,81 @@
+## 172. FIB 路径上的量子通道、测量退相干与信息流
+
+FIB 路径取得量子含义，需要指定每个接口的 Hilbert 空间、节点操作、串并行规则、系统—环境分区以及环境记忆。FIB 长度、节点数和分支数不能直接解释为 Hilbert 空间维数或独立量子自由度数。图上的重复调用也不等于未知量子态复制，因为不存在对任意未知 \(\rho\) 的通用通道
+$$
+\rho\longmapsto\rho\otimes\rho.
+$$
+
+有限维节点操作是完全正映射
+$$
+\Phi:\mathcal B(\mathcal H_{\rm in})
+\to\mathcal B(\mathcal H_{\rm out}),
+$$
+并可写成 Kraus 形式
+$$
+\Phi(\rho)=\sum_aK_a\rho K_a^\dagger.
+\tag{172.1}
+$$
+保迹量子通道满足
+$$
+\sum_aK_a^\dagger K_a=I;
+$$
+若仅有 \(\le I\)，则是某个测量结果或成功分支的迹不增操作。沿串行 FIB 路径的整体 Kraus 算子为
+$$
+C_{\boldsymbol a}
+=K^{(n)}_{a_n}\cdots K^{(1)}_{a_1},
+\qquad
+\Phi_p(\rho)=
+\sum_{\boldsymbol a}C_{\boldsymbol a}\rho C_{\boldsymbol a}^\dagger.
+\tag{172.2}
+$$
+并行组合使用张量积；串行复合和并行张量具有不同的维数和环境含义。
+
+测量需要量子仪器 \(\{\mathcal I_m\}_m\)：
+$$
+\mathcal I_m(\rho)=\sum_aK_{ma}\rho K_{ma}^\dagger,
+\qquad
+\sum_m\mathcal I_m\ \text{保迹}.
+\tag{172.3}
+$$
+结果概率与条件态为
+$$
+p_m=\operatorname{Tr}\mathcal I_m(\rho),
+\qquad
+\rho_m=\frac{\mathcal I_m(\rho)}{p_m}.
+$$
+保留经典记录 \(X\) 得到
+$$
+\rho_{XS}
+=\sum_mp_m|m\rangle\langle m|_X\otimes\rho_m,
+\tag{172.4}
+$$
+丢弃记录则只得到 \(\sum_m\mathcal I_m(\rho)\)。外部随机选择路径、测量分支和相干控制是三种不同机制，不能都按路径数平均。
+
+环境退相干可由等距嵌入
+$$
+\Phi(\rho)=\operatorname{Tr}_E(V\rho V^\dagger),
+\qquad V^\dagger V=I
+$$
+表示。若
+$$
+V|i\rangle=|i\rangle\otimes|e_i\rangle,
+$$
+则
+$$
+\rho'_{ij}=\rho_{ij}\gamma_{ij},
+\qquad
+\gamma_{ij}=\langle e_j|e_i\rangle.
+\tag{172.5}
+$$
+指定相干项对所有输入完全消失，当且仅当相应环境态正交，即 \(\gamma_{ij}=0\)。一般退相干强度由环境重叠矩阵和路径共享环境的联合结构决定；独立环境与记忆环境不会给出相同通道。
+
+测量记录与系统的总信息可用互信息
+$$
+I(X:S)=S(\rho_X)+S(\rho_S)-S(\rho_{XS})
+$$
+表征。完全丢弃记录可能使条件信息不可恢复；仅凭 FIB 路径频率不能确定量子互信息。若讨论纠缠，还需另给物理张量分解；地址直和分解不能替代子系统张量积。
+
+量子通道的时间反演或恢复还需指定参考态、伴随通道或 Petz 型恢复条件。一般通道不可逆；FIB 路径倒序也不自动给出物理逆通道。若不同路径共享环境，路径混合会留下相干交叉项；若环境记录完全区分路径，交叉项被压制。两种极限的次序和环境记忆时间都属于外加参数。
+
+本节结论是：FIB 提供量子操作的组合语法和路径组织；完全正性、测量概率、退相干、互信息、纠缠和恢复条件由 Hilbert 分解、Kraus 算子、环境、记录及时间反演实现决定。
+

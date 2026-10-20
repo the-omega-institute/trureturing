@@ -1,0 +1,22 @@
+**推论 48.2。** 固定 `-1<a<1`。实际共同平坦射线中 `Delta=0` 的全部解恰为六条 canonical mode-local 射线；仅当：
+
+```math
+a=\pm\sqrt{\frac{37-\sqrt{73}}{72}}
+```
+
+时，还包括第 47 节的六条额外射线。因此完整零行列式层的正交图通常为 `K_6`，在这两个参数处恰为 `K_6 ⊔ K_{3,3}`。
+
+任一不同于 canonical mode-local 基的正交 completion 至少包含三条 `Delta!=0` 射线。若它使用了上述任一额外零行列式射线，则至少包含四条 `Delta!=0` 射线。
+
+**证明。** 每个输入 channel 的 Fourier 支撑只能是完整三模或单模。第 46 节排除两个 channel 均满支撑时的 `Delta=0`。第一 channel 为零模时，命题 47.1 给出全部解；第一 channel 为另外两个单模时，命题 48.1 说明两个 channel 必在同一 mode，故只能是 canonical 射线。
+
+若只有第二 channel 为单模，则应用第 35、47 节的反酉对称 `Theta_0(x,y)=(-conjugate(y),conjugate(x))`。它交换 channel 并保持实际共同平坦条件；此情形中的非 canonical 解恰为常值第一 channel 的三个例外点的 Theta_0 像，与前一种情形合起来正好是第 47 节的六条额外射线。反过来，每条列出的射线都有一个自相关行为零，故确实满足 `Delta=0`。完整图即推论 47.2 已计算的图。
+
+完全落在该层中的六射线正交基只能是 canonical `K_6`。因此非 canonical completion 必包含一条 `Delta!=0` 射线。该射线在三个 rank-two mode 子空间中均有非零投影，所以不可能同时正交于某一 mode 中的两条 canonical 射线。一个含此射线的 completion 至多使用三条 canonical 射线。若 completion 没有额外零行列式射线，就至少有三条非零行列式射线。
+
+若 completion 含有一条额外零行列式射线，则根据两个子图间没有边的事实，它不能包含任何 canonical 射线。又 `K_{3,3}` 的团数为二，所以它至多使用两条额外零行列式射线，从而至少有四条非零行列式射线。这也蕴含一般的三条下界。证毕。
+
+在实际列基方向 `(I,H_0)` 中，对每条共同无偏单位射线 `v` 应把上述 `Delta` 施于单位相位坐标 `sqrt(6)H_0*v` 的两个 channel。对所有射线同时作这一酉基变换并恢复共同归一化，内积及正交图不变，故以上分类和计数原样适用。`Delta!=0` 亦强迫两个 channel 都满支撑。
+
+本节把非 canonical completion 的剩余问题限制到至少三条实际满 channel 支撑射线的正交兼容性。它不把全局正交替换为第 33 节所要求的逐模正交，也没有分类 `Delta!=0` 的全部射线、建立 affinity 下界或排除 quartet。
+

@@ -1,0 +1,80 @@
+**定理 19.2（加权有限维律与加权随机测度极限）。** 设互异探针 $0\le u_1<\cdots<u_m<1$，并令
+
+$$
+\ell_j^{(v)}(u)=h_jV_{\iota_j(u)}^{(v)}.
+$$
+
+则
+
+$$
+\mathbb E_0\exp\!\left(-\sum_{k=1}^m s_k\ell_j^{(v)}(u_k)\right)
+\longrightarrow
+\det\!\left(I_m+C\,\operatorname{diag}(v(u_k)s_k)\right)^{-1}.
+$$
+
+若
+
+$$
+\mu_j^{(v)}
+=\epsilon_j\sum_{i=0}^{L_j-1}V_i^{(v)}\delta_{i/L_j},
+$$
+
+则在有限非负测度弱拓扑下
+
+$$
+\mu_j^{(v)}
+\Longrightarrow
+\mu^{(v)}(du):=v(u)\Lambda(u)\,du,
+$$
+
+其中 $\Lambda$ 是第 16—18 节的同一辅助平方贝塞尔统计场的密度表示。这里“同一”只指分布表示；没有给出不同速度链在原概率空间上的逐样本耦合。
+
+特别地，
+
+$$
+\mathbb E X_v(u)=v(u)\kappa(u),
+\qquad
+\operatorname{Cov}(X_v(u),X_v(w))
+=v(u)v(w)C(u,w)^2,
+$$
+
+其中 $X_v(u)=v(u)\Lambda(u)$。对 $r\ge2$，
+
+$$
+\operatorname{cum}\bigl(X_v(u_1),\ldots,X_v(u_r)\bigr)
+=
+\left(\prod_{a=1}^rv(u_a)\right)
+\operatorname{cum}\bigl(\Lambda(u_1),\ldots,\Lambda(u_r)\bigr).
+$$
+
+**证明。** 固定有限链并取互异暂态切点 $a_1<\cdots<a_m$。第 16 节的首步方程适用于 $G_j^{(v)}$，而
+
+$$
+G_j^{(v)}(a_k,a_\ell)
+=q_{\max(a_k,a_\ell)}\,v(a_\ell/L_j).
+$$
+
+因此探针矩阵是
+
+$$
+Q^{(v)}=Q\,\operatorname{diag}\bigl(v(a_\ell/L_j)\bigr).
+$$
+
+其任意主子式等于 $\det(Q_I)\prod_{\ell\in I}v(a_\ell/L_j)$，仍非负；第 16 节的第一列 Cramer 分子仍为 $1$，所以有限链变换为
+
+$$
+\det\!\left(I_m+
+Q\,\operatorname{diag}\bigl(v(a_k/L_j)(e^{z_k}-1)\bigr)\right)^{-1}.
+$$
+
+令 $z_k=s_kh_j$，应用第 10.2 节的核极限即得固定有限维式。
+
+对全体切点取势时，同一行列式写成第 17 节的阶梯算子，并把 $g_j$ 换为 $v_jg_j$。正对称化算子变为
+
+$$
+\mathsf A_j^{(v)}
+=M_{\sqrt{v_jg_j}}\mathsf T_jM_{\sqrt{v_jg_j}},
+$$
+
+其极限为 $M_{\sqrt{vf}}\mathsf C M_{\sqrt{vf}}$。连续正性、对角线迹的黎曼和与第 17 节相同的迹范数论证给出 Fredholm 行列式收敛，因此得到 $\mu_j^{(v)}\Rightarrow v\Lambda\,du$。均值、协方差与全阶累积量由逐点乘法直接得到。$\square$
+

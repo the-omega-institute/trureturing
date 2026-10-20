@@ -1,0 +1,18 @@
+### 定理 360.5（曲率加周期的唯一重建）
+
+若 \(F\) 可实现，且给定周期数据 \(p\in\operatorname{im}\Pi\)，则存在唯一的 harmonic \(h_p\in\mathcal H^1\) 满足
+
+$$
+\Pi(h_p)=p.
+$$
+
+因此
+
+$$
+\boxed{
+g_{\mathrm{rec}}=g_{\mathrm{coex}}+h_p
+}
+$$
+
+是满足 Coulomb 条件和周期合同的唯一规范代表。所有其他满足同一数据的边运输只差一个不改变代表的常数顶点势。
+

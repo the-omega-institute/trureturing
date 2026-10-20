@@ -132,7 +132,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(result.Success, result.Error);
         Assert.Contains("skipped_existing=1", result.Output, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary));
+        DirectoryLedgerTestSupport.AssertContextOnlyAdditions(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
@@ -475,7 +475,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(0, reportSource.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary));
+        DirectoryLedgerTestSupport.AssertContextOnlyAdditions(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
@@ -517,7 +517,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("skipped_existing=1", result.Output, StringComparison.Ordinal);
-        Assert.Equal(before, GeneratedIngestImage(temporary));
+        DirectoryLedgerTestSupport.AssertContextOnlyAdditions(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
@@ -552,7 +552,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("skipped_existing=1", result.Output, StringComparison.Ordinal);
-        Assert.Equal(before, GeneratedIngestImage(temporary));
+        DirectoryLedgerTestSupport.AssertContextOnlyAdditions(before, GeneratedIngestImage(temporary));
     }
 
     private static RuleFixture UncoveredOnlyIngestFixture(
@@ -611,7 +611,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("skipped_existing=", result.Output, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary));
+        DirectoryLedgerTestSupport.AssertContextOnlyAdditions(before, GeneratedIngestImage(temporary));
     }
 
     private static string GeneratedIngestImage(TemporaryDirectory repository) =>

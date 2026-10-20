@@ -1,0 +1,39 @@
+### 定义 368.1（自适应事件策略）
+
+令
+
+$$
+H_n=(A_0,X_0,\ldots,A_{n-1},X_{n-1})
+$$
+
+是第 \(n\) 轮前的历史。策略给出条件动作分布
+
+$$
+q_n(a\mid H_n),
+$$
+
+并假定 \(q_n\) 不直接依赖未知 \(\theta\)。给定 \(H_n\) 和 \(A_n=a\)，结果分布为
+
+$$
+p_n(x\mid a,H_n,\theta).
+$$
+
+定义条件 score
+
+$$
+s_n
+=\nabla_\theta
+\log p_n(X_n\mid A_n,H_n,\theta),
+$$
+
+以及条件 Fisher 增量
+
+$$
+J_n(H_n,A_n;\theta)
+=
+\sum_x
+\frac{\nabla p_n(x\mid A_n,H_n,\theta)
+\nabla p_n(x\mid A_n,H_n,\theta)^{\mathsf T}}
+p_n(x\mid A_n,H_n,\theta).
+$$
+

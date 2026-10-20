@@ -1,0 +1,148 @@
+**Theorem 51.2 (finite redundant realization of every typed row).** For
+any controller in Definition 51.1, these conditional services admit a finite
+installed set $W\subseteq L_\ell$ and a proof-side surjection
+$\pi:W\to Q$ with fixed instruction table $\widehat I$ and immediate
+response table $\widehat\delta$, satisfying
+
+$$
+\begin{aligned}
+\widehat I(w)&=I(\pi(w)),\\
+\pi(\widehat\delta(w,o))&=\delta_{\pi(w)}(o),\\
+d_H(w,\widehat\delta(w,o))
+ &=\mathbf1_{\{\delta_{\pi(w)}(o)\ne\pi(w)\}}
+ \qquad(o\in O_{\pi(w)}).
+\end{aligned}
+\tag{FIB.51.2}
+$$
+
+For $K\ge2$, put
+
+$$
+r=\lceil\log_2K\rceil,\qquad m=2^r-1,\qquad
+f=2^{m-r}.
+\tag{FIB.51.3}
+$$
+
+One realization has
+
+$$
+\ell=2m-1=2^{r+1}-3,\qquad |W|=Kf,
+\qquad |\pi^{-1}(q)|=f\quad(q\in Q).
+\tag{FIB.51.4}
+$$
+
+For $K=1$ one may take $\ell=1$, $W=\{0\}$ and $f=1$.
+These bounds depend on the installed controller, not on source cardinality,
+a maximum execution length or an acyclicity assumption.
+
+For each admitted source and its original initialization, the realization
+preserves every original primitive, entire submitted literal, actual raw
+response, apparatus successor and original target. A first Halt exists in
+one run exactly when it exists in the other; its complete output and the
+number of preceding primitives are equal.
+This includes immediate halt, every finite execution prefix and infinite
+runs. Legality, success and termination transfer wherever the original
+controller has them; they are not conclusions about an arbitrary finite
+table solely from its encoding.
+
+Proof. For $K\ge2$, label the logical states injectively by
+$a:Q\hookrightarrow\mathbb F_2^r$. Index the $m$ data coordinates in a
+fixed order by the nonzero vectors $v\in\mathbb F_2^r$. Use the classical
+Hamming check map and the zero-interleaving map
+
+$$
+\sigma(x)=\sum_{v\ne0}x_vv,\qquad
+J(x_1,\ldots,x_m)=x_1\,0\,x_2\,0\,\cdots\,0\,x_m.
+\tag{FIB.51.5}
+$$
+
+The all-distinct nonzero check vectors and the rule identifying a one-bit
+change by its check vector are the Hamming construction in *Matrix Hamming
+Codes*, §§9.1–9.3 [MIT-HAMMING]. The displayed zero-interleaving map is
+Cabello–Eppstein–Klavžar's Proposition 3.1 [FIB51-CEK]. These are
+literature-attested ingredients, not new coding or coloring results.
+Their use here does not require the old controller graph to embed in a cube.
+
+The check vectors include a basis, so $\sigma$ is onto. Fixing all $m-r$
+coordinates outside those basis positions leaves a unique choice of the
+basis coordinates for each prescribed syndrome. Each syndrome fiber
+therefore has exactly $f$ elements. Install precisely
+
+$$
+W=\{J(x):\sigma(x)\in a(Q)\},\qquad
+\pi(J(x))=a^{-1}(\sigma(x)).
+\tag{FIB.51.6}
+$$
+
+Thus each logical state has exactly $f$ installed aliases, including states
+with empty actual support. When $K<2^r$, the unused syndrome fibers are not
+installed. Neither these words nor other ambient no-$11$ words have rows.
+The map $J$ is injective, has length $2m-1$ and always gives a no-$11$ word.
+
+At $w=J(x)$ install the exact instruction $I(q)$, where $q=\pi(w)$.
+For each typed response $o$, put $q'=\delta_q(o)$ and $d=a(q)+a(q')$.
+If $d=0$, install hold. Otherwise install the flip of data coordinate $d$,
+namely physical bit $2\operatorname{index}(d)-1$. If $e_d$ is the unit
+vector in that data coordinate, then
+
+$$
+\sigma(x+e_d)=\sigma(x)+d=a(q').
+\tag{FIB.51.7}
+$$
+
+The successor is in $W$, projects to $q'$ and differs in one physical bit.
+All separator bits stay zero. Injection of $a$ gives $d=0$ exactly when
+$q=q'$, proving all three equations (FIB.51.2). This specifies every typed
+row, including error transitions and responses with empty actual support;
+none is replaced by a convenient hold unless the original successor is
+$q$ itself. Every alias of a halt state has its original fixed full output
+and no response entries.
+
+For a common initial state, choose $a(q_0)=0$ and initialize at $0^\ell$.
+More generally the explicit section
+
+$$
+s(q)=
+\begin{cases}
+J(0^m),&a(q)=0,\\
+J(e_{a(q)}),&a(q)\ne0
+\end{cases}
+\quad\text{satisfies}\quad \pi(s(q))=q.
+\tag{FIB.51.8}
+$$
+
+Initialize to $s(c(i))$ using only the genuinely acquired $i$. This is one
+separately supplied whole-word initialization; it is not a response step
+or a free acquisition of $i$. For $K=1$, the sole instruction is copied to
+word $0$, every typed successor holds, and the same claims follow directly.
+
+The quantities $a,\sigma,\pi,q,q'$ and $d$ in these formulas specify
+finite static rows. They are not runtime computations or registers. Each
+entire installed word already selects its fixed original instruction, and
+each pair of that word and a typed response already selects hold or one
+fixed bit index. The conditional service has no external decoded PC,
+syndrome, phase, response latch or retained history. If an implementation
+needs such persistent state to perform the selection, it does not satisfy
+Definition 51.1's complete-word service premise.
+
+For the execution proof, relate an old boundary $(z,s,q)$ to a new boundary
+$(z,s,w)$ by $\pi(w)=q$, retaining the same original target $z$, complete
+apparatus state $s$ and ordered primitive history. Initialization establishes
+this relation. At related nonhalt boundaries, the instructions and their
+legality domains are equal. The same primitive with the same literal acts
+on the same apparatus, giving the same actual response and successor.
+Equation (FIB.51.2) restores the relation immediately. No instruction occurs
+between this response and the next corresponding boundary. Induction proves
+equality of every finite original event prefix. If execution reaches an
+undefined action, both sides have the same undefined action; no success or
+failure sensor is manufactured there.
+
+A new boundary is a halt exactly when its projected old boundary is one,
+with exactly the same output. Hence finite first halt and zero-call first
+halt correspond in both directions. An infinite original run has arbitrarily
+long matching finite prefixes; the recursively defined new run cannot halt
+at any finite boundary and is infinite. Conversely an infinite new run
+projects to the infinite old run. A logical cycle may return to another
+alias of its starting state; future rows still obey (FIB.51.2). No unfolding
+of histories and no bound on the number of traversals was used. $\square$
+

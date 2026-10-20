@@ -1,0 +1,41 @@
+**Proposition 113.9 (inherited paid acquisition, not a new optimum).**
+Conditional on an authentic same-source epoch-zero immutable register and
+the allowed four-valued Read service, the existing
+`ActualTreeReadoutAcquisition` frontier, `acquisitionTrace` and report-only
+`restore` supply the complete original $u$ on every finite source.
+Using that acquired value to compute $\mathcal J(u)$ and any $R_Q(u)$
+requires no extra native Read or Apply. From the supplier's empty phase
+history the sufficient inherited coordinates are
+
+$$
+(q,a,\lambda,k_{\rm phase})=
+\left(S(u),0,\sum_{p\in V_u}|p|,S(u)\right),\qquad S(u)=|V_u|.
+\tag{113.13}
+$$
+
+Here $q$ counts raw Reads, $a$ counts Apply attempts, $\lambda$ sums
+their Read-address lengths, and $k_{\rm phase}$ counts distinct acquired
+addresses in the supplier phase.
+On the branch entry of (112.1), its root-first schedule and repeated
+pre/post-entry root have exactly the raw, literal-length and paid-cache
+scopes (112.20a): total raw Reads $S+1$, total literal length
+$\sum_{p\in V_u}|p|$, cumulative distinct charge $S$ under one
+immutable-source cache, with incremental charge $S-1$; separate empty
+phase ledgers instead charge $1$ and $S$. No new optimal bound for
+acquiring the measure, scale or source is asserted.
+
+Proof. Reuse the acquisition/restoration supply of Definition 112.9 and
+Theorem 112.10; its structural argument applies also to the two singleton
+leaves. Each branch report queues its actual children, each terminal
+queues none, and the finite report history reconstructs the original
+ordered labels and brackets. The reply-driven traversal does not receive
+an initial size or fuel bound. Its nodes, depths and repetitions give
+(113.13) and the inherited branch cache scopes. Leaf counting on this
+acquired description supplies the exact integer pair $(a,b)$ for $W$;
+(113.7) supplies a finite cylinder density, interpreted as a measure
+value, and (113.10) supplies its inverse on the attained image.
+This is a different consumer of the same lossless acquisition phase,
+not a change to the supplier's original Boolean `Strategy` task.
+The source-bearing description and its price have not been obtained
+by merely writing a computable source-indexed function. $\square$
+

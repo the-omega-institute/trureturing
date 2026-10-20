@@ -10,9 +10,8 @@ import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ActualPSDMoment
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Tactic.FieldSimp
 
-/-! UNCOMPILED source composition of the terminal continuous assembly and
-the paid nonflat transport. The terminal telescope has only the original
-spectral hypotheses. No kernel or official acceptance is asserted. -/
+/-! Continuous concentration and actual-PSD defect transport for the literal
+K1 matrix and the original boundary inequalities. -/
 
 set_option autoImplicit false
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound
@@ -27,7 +26,7 @@ private def defectK (u v : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ) :
      -(v+h 0+d 7), 2*(u-d 6), -(v+h 2+d 4);
      -(v+h 1+d 5), -(v+h 2+d 4), 2*(u-d 3)]
 
-private def spectrumK (N : ℕ) (hN : 56 ≤ N) :
+private def spectrumK (N : ℕ) (hN : 16 ≤ N) :
     (Fin N → ℝ) →ₗ[ℝ] Matrix (Fin 3) (Fin 3) ℝ where
   toFun l := !![
     2*l ⟨N-1, by omega⟩, l ⟨N-2, by omega⟩-l ⟨0, by omega⟩,
@@ -183,14 +182,16 @@ private theorem synth_value (N j : ℕ) (x : Fin 16 → ℝ) (k : Fin N) :
   change (∑ q : Fin 16, x q • step N (positions N j q)) k = _
   simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, step]
 
-private theorem synth_head_value (N j : ℕ) (hN : 56 ≤ N)
+private theorem synth_head_value (N j : ℕ) (hN : 16 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ) (i : Fin 5) :
     synth (d := N) (positions N j) x (⟨i.val, by omega⟩ : Fin N) =
       low x+x 5+head x i := by
   have hi := i.isLt
   have hm : i.val < j := by omega
   have ht (r : ℕ) (hr : r ≤ 9) : i.val < N-r := by omega
-  rw [synth_value, positions_literal N j hN]
+  rw [synth_value, show positions N j =
+      ![1,2,3,4,5,j,N-9,N-8,N-7,N-6,N-5,N-4,N-3,N-2,N-1,N] from by
+      funext q; fin_cases q <;> simp [positions] <;> omega]
   simp only [Fin.sum_univ_succ, Matrix.cons_val, Fin.reduceFinMk, Fin.reduceSucc,
     Finset.univ_eq_empty, Finset.sum_empty, add_zero,
     if_pos hm, if_pos (ht 9 (by omega)), if_pos (ht 8 (by omega)),
@@ -273,7 +274,7 @@ private theorem synth_head_value (N j : ℕ) (hN : 56 ≤ N)
         (show 4 < N by omega),
       ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
 
-private theorem synth_tail_value (N j : ℕ) (hN : 56 ≤ N)
+private theorem synth_tail_value (N j : ℕ) (hN : 16 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ) (i : Fin 9) :
     synth (d := N) (positions N j) x (⟨N-(9-i.val), by omega⟩ : Fin N) =
       low x-tail x i := by
@@ -282,7 +283,9 @@ private theorem synth_tail_value (N j : ℕ) (hN : 56 ≤ N)
   have hh (r : ℕ) (hr : r ≤ 5) : ¬ N-(9-i.val) < r := by omega
   have ht (r : ℕ) (hr : r ≤ 9) :
       N-(9-i.val) < N-r ↔ i.val+r < 9 := by omega
-  rw [synth_value, positions_literal N j hN]
+  rw [synth_value, show positions N j =
+      ![1,2,3,4,5,j,N-9,N-8,N-7,N-6,N-5,N-4,N-3,N-2,N-1,N] from by
+      funext q; fin_cases q <;> simp [positions] <;> omega]
   simp only [Fin.sum_univ_succ, Matrix.cons_val, Fin.reduceFinMk, Fin.reduceSucc,
     Finset.univ_eq_empty, Finset.sum_empty, add_zero,
     if_neg hm, if_neg (hh 1 (by omega)), if_neg (hh 2 (by omega)),
@@ -391,36 +394,36 @@ private theorem synth_tail_value (N j : ℕ) (hN : 56 ≤ N)
         (show 0 < N by omega),
       ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
 
-private theorem spectrumK_synth (N j : ℕ) (hN : 56 ≤ N)
+private theorem spectrumK_synth (N j : ℕ) (hN : 16 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ) :
-    spectrumK N hN (synth (positions N j) x) = defectK (low x) (x 5) (head x) (tail x) := by
+    spectrumK N (by omega) (synth (positions N j) x) = defectK (low x) (x 5) (head x) (tail x) := by
   have hh0 : synth (d := N) (positions N j) x ⟨0, by omega⟩ =
       low x+x 5+head x 0 :=
-    synth_head_value N j hN hj hj' x (0 : Fin 5)
+    synth_head_value N j (by omega) hj hj' x (0 : Fin 5)
   have hh1 : synth (d := N) (positions N j) x ⟨1, by omega⟩ =
       low x+x 5+head x 1 :=
-    synth_head_value N j hN hj hj' x (1 : Fin 5)
+    synth_head_value N j (by omega) hj hj' x (1 : Fin 5)
   have hh2 : synth (d := N) (positions N j) x ⟨2, by omega⟩ =
       low x+x 5+head x 2 :=
-    synth_head_value N j hN hj hj' x (2 : Fin 5)
+    synth_head_value N j (by omega) hj hj' x (2 : Fin 5)
   have ht8 : synth (d := N) (positions N j) x ⟨N-1, by omega⟩ =
       low x-tail x 8 :=
-    synth_tail_value N j hN hj hj' x (8 : Fin 9)
+    synth_tail_value N j (by omega) hj hj' x (8 : Fin 9)
   have ht7 : synth (d := N) (positions N j) x ⟨N-2, by omega⟩ =
       low x-tail x 7 :=
-    synth_tail_value N j hN hj hj' x (7 : Fin 9)
+    synth_tail_value N j (by omega) hj hj' x (7 : Fin 9)
   have ht6 : synth (d := N) (positions N j) x ⟨N-3, by omega⟩ =
       low x-tail x 6 :=
-    synth_tail_value N j hN hj hj' x (6 : Fin 9)
+    synth_tail_value N j (by omega) hj hj' x (6 : Fin 9)
   have ht5 : synth (d := N) (positions N j) x ⟨N-4, by omega⟩ =
       low x-tail x 5 :=
-    synth_tail_value N j hN hj hj' x (5 : Fin 9)
+    synth_tail_value N j (by omega) hj hj' x (5 : Fin 9)
   have ht4 : synth (d := N) (positions N j) x ⟨N-5, by omega⟩ =
       low x-tail x 4 :=
-    synth_tail_value N j hN hj hj' x (4 : Fin 9)
+    synth_tail_value N j (by omega) hj hj' x (4 : Fin 9)
   have ht3 : synth (d := N) (positions N j) x ⟨N-6, by omega⟩ =
       low x-tail x 3 :=
-    synth_tail_value N j hN hj hj' x (3 : Fin 9)
+    synth_tail_value N j (by omega) hj hj' x (3 : Fin 9)
   ext a b
   fin_cases a <;> fin_cases b <;>
     simp only [spectrumK, LinearMap.coe_mk, AddHom.coe_mk, defectK,
@@ -431,11 +434,11 @@ private theorem normalized_small_good (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ)
     (hx : ∀ q, 0 ≤ x q) (hAx : ∀ r, 0 ≤ (A *ᵥ x) r)
     (hu : low x = 1) (hv : x 5 ≤ 1/2)
-    (hK : (spectrumK N hN (synth (positions N j) x)).PosSemidef) :
+    (hK : (spectrumK N (by omega) (synth (positions N j) x)).PosSemidef) :
     spectralGood (Real.sqrt (target N)) (synth (d := N) (positions N j) x) := by
   have hd : DefectData 1 (x 5) (head x) (tail x) := by
     simpa only [hu] using actual_defects x hx hAx
-  rw [spectrumK_synth N j hN hj hj', hu] at hK
+  rw [spectrumK_synth N j (by omega) hj hj', hu] at hK
   have hb : (2+x 5)*((N:ℝ)+x 5*(j:ℝ)+H (head x)-D (tail x))-
       (1+x 5)*(N:ℝ)+E (x 5) (head x) (tail x) ≤
       target N*((N:ℝ)+x 5*(j:ℝ)+H (head x)-D (tail x))^2 := by
@@ -457,12 +460,17 @@ private theorem normalized_small_good (N j : ℕ) (hN : 56 ≤ N)
   · rw [Real.sq_sqrt (target_nonneg N), hm, hq]
     exact hb
 
-private theorem actual_small_good (N j : ℕ) (hN : 56 ≤ N)
+private theorem actual_small_good (N j : ℕ) (hN : 16 ≤ N)
+    (c : ℝ)
+    (normalizedGood : ∀ (x : Fin 16 → ℝ), (∀ q, 0 ≤ x q) →
+      (∀ r, 0 ≤ (A *ᵥ x) r) → low x = 1 → x 5 ≤ 1/2 →
+      (spectrumK N (by omega) (synth (positions N j) x)).PosSemidef →
+      spectralGood c (synth (d := N) (positions N j) x))
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ)
     (hx : ∀ q, 0 ≤ x q) (hAx : ∀ r, 0 ≤ (A *ᵥ x) r)
     (hv : 2*x 5 ≤ low x)
-    (hK : (spectrumK N hN (synth (positions N j) x)).PosSemidef) :
-    spectralGood (Real.sqrt (target N)) (synth (d := N) (positions N j) x) := by
+    (hK : (spectrumK N (by omega) (synth (positions N j) x)).PosSemidef) :
+    spectralGood c (synth (d := N) (positions N j) x) := by
   have hu0 := low_nonneg x hx
   by_cases hu : low x = 0
   · rw [zero_low x hx hAx hu, map_zero]
@@ -483,11 +491,11 @@ private theorem actual_small_good (N j : ℕ) (hN : 56 ≤ N)
       rw [inv_mul_cancel₀ hu] at hh
       change (low x)⁻¹*x 5 ≤ 1/2
       nlinarith only [hh]
-    have hKz : (spectrumK N hN (synth (positions N j) z)).PosSemidef := by
+    have hKz : (spectrumK N (by omega) (synth (positions N j) z)).PosSemidef := by
       dsimp [z]
       rw [map_smul, map_smul]
       exact hK.smul hi
-    have hg := normalized_small_good N j hN hj hj' z hz hAz huz hvz hKz
+    have hg := normalizedGood z hz hAz huz hvz hKz
     have hr : (low x) • z = x := by
       ext q
       dsimp [z]
@@ -535,13 +543,22 @@ private theorem half_jump_good (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' :
   · rw [Real.sq_sqrt (target_nonneg N), hm]
     exact hbound.trans hmono
 
-private theorem actual_fixed_good (N j : ℕ) (hN : 56 ≤ N)
+private theorem actual_fixed_good (N j : ℕ) (hN : 16 ≤ N)
+    (c : ℝ)
+    (smallGood : ∀ (x : Fin 16 → ℝ), (∀ q, 0 ≤ x q) →
+      (∀ r, 0 ≤ (A *ᵥ x) r) → 2*x 5 ≤ low x →
+      (spectrumK N (by omega) (synth (positions N j) x)).PosSemidef →
+      spectralGood c (synth (d := N) (positions N j) x))
+    (halfGood : ∀ (x : Fin 16 → ℝ), (∀ q, 0 ≤ x q) →
+      (∀ r, 0 ≤ (A *ᵥ x) r) → 2*x 5 = low x →
+      spectralGood c (synth (d := N) (positions N j) x))
+    (bulkGood : spectralGood c (synth (d := N) (positions N j) bulk))
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ)
     (hx : ∀ q, 0 ≤ x q) (hAx : ∀ r, 0 ≤ (A *ᵥ x) r)
-    (hK : (spectrumK N hN (synth (positions N j) x)).PosSemidef) :
-    spectralGood (Real.sqrt (target N)) (synth (d := N) (positions N j) x) := by
+    (hK : (spectrumK N (by omega) (synth (positions N j) x)).PosSemidef) :
+    spectralGood c (synth (d := N) (positions N j) x) := by
   by_cases hv : 2*x 5 ≤ low x
-  · exact actual_small_good N j hN hj hj' x hx hAx hv hK
+  · exact smallGood x hx hAx hv hK
   · let a := 2*x 5-low x
     let y := x-a • bulk
     have ha : 0 ≤ a := by dsimp [a]; linarith only [hv]
@@ -583,16 +600,16 @@ private theorem actual_fixed_good (N j : ℕ) (hN : 56 ≤ N)
       simp only [y, a, bulk, Pi.sub_apply, Pi.smul_apply, smul_eq_mul,
         Matrix.cons_val, Fin.reduceFinMk, Fin.reduceSucc]
       ring
-    have hres := half_jump_good N j hN hj hj' y hy hAy hhalf
-    have hbulk := bulk_good N j hN hj hj'
+    have hres := halfGood y hy hAy hhalf
+    have hbulk := bulkGood
     have hrec : x = y+a • bulk := (sub_add_cancel x (a • bulk)).symm
     rw [hrec, map_add, map_smul]
     exact spectralGood_add _ _ _ hres (spectralGood_smul _ _ _ ha hbulk)
 
 private def middleK : Matrix (Fin 3) (Fin 3) ℝ := !![0,-1,-1; -1,0,-1; -1,-1,0]
 
-private theorem spectrumK_middle_step (N j : ℕ) (hN : 56 ≤ N)
-    (hj : 6 ≤ j) (hj' : j ≤ N-10) : spectrumK N hN (step N j) = middleK := by
+private theorem spectrumK_middle_step (N j : ℕ) (hN : 16 ≤ N)
+    (hj : 6 ≤ j) (hj' : j ≤ N-10) : spectrumK N (by omega) (step N j) = middleK := by
   have hh0 : 0 < j := by omega
   have hh1 : 1 < j := by omega
   have hh2 : 2 < j := by omega
@@ -603,12 +620,12 @@ private theorem spectrumK_middle_step (N j : ℕ) (hN : 56 ≤ N)
       ht 1 (by omega), ht 2 (by omega), ht 3 (by omega),
       ht 4 (by omega), ht 5 (by omega), ht 6 (by omega)]
 
-private theorem fixed_K (N : ℕ) (hN : 56 ≤ N) (g : Fin N → ℝ)
+private theorem fixed_K (N : ℕ) (hN : 16 ≤ N) (g : Fin N → ℝ)
     (k : Fin N) (hk : k ∈ middle N) :
-    spectrumK N hN (fullSynth N (fixedGaps g k)) = spectrumK N hN (fullSynth N g) := by
-  let L := (spectrumK N hN).comp (fullSynth N)
+    spectrumK N (by omega) (fullSynth N (fixedGaps g k)) = spectrumK N (by omega) (fullSynth N g) := by
+  let L := (spectrumK N (by omega)).comp (fullSynth N)
   have hi (i : Fin N) (hi : i ∈ middle N) : L (unitGap i) = middleK := by
-    change spectrumK N hN (fullSynth N (unitGap i)) = _
+    change spectrumK N (by omega) (fullSynth N (unitGap i)) = _
     rw [fullSynth_unit]
     exact spectrumK_middle_step N (i.val+1) hN
       (by have := (mem_middle i).mp hi; omega)
@@ -626,10 +643,16 @@ private theorem fixed_K (N : ℕ) (hN : 56 ≤ N) (g : Fin N → ℝ)
       exact sum_congr rfl (fun i _ => (map_smul L _ _).symm)
     _ = L g := by rw [gaps_split g]
 
-private theorem continuous_concentration_good (N : ℕ) (hN : 56 ≤ N)
+private theorem continuous_concentration_good (N : ℕ) (hN : 16 ≤ N)
+    (c : ℝ)
+    (fixedGood : ∀ (j : ℕ), 6 ≤ j → j ≤ N-10 →
+      ∀ (x : Fin 16 → ℝ), (∀ q, 0 ≤ x q) →
+        (∀ r, 0 ≤ (A *ᵥ x) r) →
+        (spectrumK N (by omega) (synth (positions N j) x)).PosSemidef →
+        spectralGood c (synth (d := N) (positions N j) x))
     (l : Fin N → ℝ) (ho : Antitone l) (hn : ∀ i, 0 ≤ l i)
-    (hrows : ∀ r, 0 ≤ slackMap N hN l r) (hK : (spectrumK N hN l).PosSemidef) :
-    spectralGood (Real.sqrt (target N)) l := by
+    (hrows : ∀ r, 0 ≤ boundarySlackMap N hN l r) (hK : (spectrumK N (by omega) l).PosSemidef) :
+    spectralGood c l := by
   let g := spectralGap l
   have hg : ∀ i, 0 ≤ g i := spectralGap_nonneg l ho hn
   have hr : fullSynth N g = l := gap_reconstruct l
@@ -639,21 +662,21 @@ private theorem continuous_concentration_good (N : ℕ) (hN : 56 ≤ N)
     simp
     omega
   have hfixed (k : Fin N) (hk : k ∈ middle N) :
-      spectralGood (Real.sqrt (target N)) (fullSynth N (fixedGaps g k)) := by
+      spectralGood c (fullSynth N (fixedGaps g k)) := by
     have hj : 6 ≤ k.val+1 := by have := (mem_middle k).mp hk; omega
     have hj' : k.val+1 ≤ N-10 := by have := (mem_middle k).mp hk; omega
-    have hKf : (spectrumK N hN (fullSynth N (fixedGaps g k))).PosSemidef := by
-      rw [fixed_K N hN g k hk, hr]
+    have hKf : (spectrumK N (by omega) (fullSynth N (fixedGaps g k))).PosSemidef := by
+      rw [fixed_K N (by omega) g k hk, hr]
       exact hK
-    rw [← lift_packed N hN g k hk, synth_lift N (k.val+1) hN hj hj'] at hKf ⊢
-    apply actual_fixed_good N (k.val+1) hN hj hj' (packed hN g)
-      (packed_nonneg hN g hg) _ hKf
+    rw [← boundary_lift_packed N hN g k hk, boundary_synth_lift N (k.val+1) hN hj hj'] at hKf ⊢
+    apply fixedGood (k.val+1) hj hj' (boundaryPacked hN g)
+      (boundary_packed_nonneg hN g hg) _ hKf
     intro r
-    rw [packed_image N hN g k hk]
-    change 0 ≤ slackMap N hN (fullSynth N g) r
+    rw [boundary_packed_image N hN g k hk]
+    change 0 ≤ boundarySlackMap N hN (fullSynth N g) r
     rw [hr]
     exact hrows r
-  have hm := mixture_transfer (spectralGood (Real.sqrt (target N)))
+  have hm := mixture_transfer (spectralGood c)
     (spectralGood_zero N _) (fun x y hx hy => spectralGood_add _ x y hx hy)
     (fun t x ht hx => spectralGood_smul _ t x ht hx)
     (middle N) hs g (fun i => fullSynth N (unitGap i)) (fullSynth N (boundaryGaps g))
@@ -669,8 +692,7 @@ private theorem continuous_concentration_good (N : ℕ) (hN : 56 ≤ N)
 
 /-- Exact original all-spectrum purity bound. Natural rounding, zeros,
 repetitions and singular PSD matrices are retained. The two literal PSD
-tests supply the rows, and N ≥ 67 consumes the existing three-row solver.
-UNCOMPILED source candidate; this comment is not validation evidence. -/
+tests supply the rows, and N ≥ 67 consumes the existing three-row solver. -/
 theorem actual_k1_l4_purity_bound
     (N : ℕ) (hN : 56 ≤ N) (l : Fin N → ℝ)
     (ho : Antitone l) (hn : ∀ i, 0 ≤ l i) (hmass : ∑ i, l i = 1)
@@ -711,12 +733,203 @@ theorem actual_k1_l4_purity_bound
       · exact sub_nonneg.mpr hL3
       · exact sub_nonneg.mpr hL4
       · exact sub_nonneg.mpr hC3
-    have hg := continuous_concentration_good N hN l ho hn hrows
+    have hfixed (j : ℕ) (hj : 6 ≤ j) (hj' : j ≤ N-10) :=
+      actual_fixed_good N j (by omega) (Real.sqrt (target N))
+        (actual_small_good N j (by omega) (Real.sqrt (target N))
+          (normalized_small_good N j hN hj hj') hj hj')
+        (half_jump_good N j hN hj hj') (bulk_good N j hN hj hj') hj hj'
+    have hg := continuous_concentration_good N (by omega) (Real.sqrt (target N)) hfixed l ho hn hrows
       (by simpa [spectrumK] using hK)
     have hb := spectralGood_square (Real.sqrt (target N)) l (Real.sqrt_nonneg _)
       (by rw [hmass]; norm_num) hg
     rw [hmass, Real.sq_sqrt (target_nonneg N)] at hb
     simpa only [one_pow, mul_one] using hb
+
+private theorem endpoint52_curve_threshold (w : ℝ) (hw : (2 / 9) ≤ w) (hw1 : w ≤ (7 / 16)) :
+    0 ≤ 52 * (1 + w) - (243 / 20) * (2 + w) ^ 2 - (4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4) := by
+  have wlo : 0 ≤ w - (2 / 9) := by linarith
+  have whi : 0 ≤ (7 / 16) - w := by linarith
+  calc
+    52 * (1 + w) - (243 / 20) * (2 + w) ^ 2 - (4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4) = (79167488 / 923521) * ((7 / 16) - w) ^ 4 +
+      (463454208 / 923521) * (w - (2 / 9)) ^ 1 * ((7 / 16) - w) ^ 3 +
+      (3668804928 / 4617605) * (w - (2 / 9)) ^ 2 * ((7 / 16) - w) ^ 2 +
+      (1928630736 / 4617605) * (w - (2 / 9)) ^ 3 * ((7 / 16) - w) ^ 1 +
+      (176641803 / 4617605) * (w - (2 / 9)) ^ 4 := by ring
+    _ ≥ 0 := by positivity
+
+private theorem endpoint52_total_threshold (w : ℝ) (hw : (7 / 16) ≤ w) (hw1 : w ≤ (1 / 2)) :
+    0 ≤ 52 * (1 + w) - (243 / 20) * (2 + w) ^ 2 - (4 - 6 * w) * (4 - 5 * w) := by
+  have wlo : 0 ≤ w - (7 / 16) := by linarith
+  have whi : 0 ≤ (1 / 2) - w := by linarith
+  calc
+    52 * (1 + w) - (243 / 20) * (2 + w) ^ 2 - (4 - 6 * w) * (4 - 5 * w) = (357 / 20) * ((1 / 2) - w) ^ 2 +
+      204 * (w - (7 / 16)) ^ 1 * ((1 / 2) - w) ^ 1 +
+      144 * (w - (7 / 16)) ^ 2 := by ring
+    _ ≥ 0 := by positivity
+
+private theorem shifted_two_ninths_energy (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hw : 0 ≤ w) (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : H h + D d ≤ 4 - 6 * w)
+    (hK : (!![2 * (1 - d 8), -(w + h 0 + d 7), -(w + h 1 + d 5);
+                -(w + h 0 + d 7), 2 * (1 - d 6), -(w + h 2 + d 4);
+                -(w + h 1 + d 5), -(w + h 2 + d 4), 2 * (1 - d 3)] :
+      Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    E w h d ≤ 32 / 9 + (2 / 9 - w) * (H h - D d) + (10 / 9) * w - 5 * w ^ 2 := by
+  have hsum : (∑ i : Fin 5, (w + h i)) = 5 * w + H h := by
+    simp [H, Fin.sum_univ_succ] <;> ring
+  have hsum2 : (∑ i : Fin 5, (w + h i) ^ 2) = H2 h + 2 * w * H h + 5 * w ^ 2 := by
+    simp [H, H2, Fin.sum_univ_succ] <;> ring
+  have hmass : (∑ i : Fin 5, (w + h i)) + (∑ i, d i) ≤ 4 := by
+    rw [hsum]
+    change 5 * w + H h + D d ≤ 4
+    linarith only [hL4, hw]
+  have hm := actual_psd_zero_jump_two_ninths_moment (fun i => w + h i) d
+    (fun i j hij => by simpa only [add_comm] using add_le_add_left (ho hij) w)
+    (fun i => add_nonneg hw (hn i)) dord hd hmass
+    hK
+  rw [hsum, hsum2] at hm
+  change H2 h + 2 * w * H h + 5 * w ^ 2 + D2 d - (5 * w + H h - D d) * (2 / 9) ≤ 32 / 9 at hm
+  dsimp [E]
+  nlinarith only [hm]
+
+
+private theorem normalized_endpoint52_good (j : ℕ) (hj : 6 ≤ j) (hj' : j ≤ 42)
+    (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤ x q) (hAx : ∀ r, 0 ≤ (A *ᵥ x) r)
+    (hu : low x = 1) (hv : x 5 ≤ 1/2)
+    (hK : (spectrumK 52 (by omega) (synth (positions 52 j) x)).PosSemidef) :
+    spectralGood (Real.sqrt (5 / 243)) (synth (d := 52) (positions 52 j) x) := by
+  have hd : DefectData 1 (x 5) (head x) (tail x) := by
+    simpa only [hu] using actual_defects x hx hAx
+  rw [spectrumK_synth 52 j (by omega) hj hj', hu] at hK
+  let w := x 5
+  let S : ℝ := 52 + w * j + H (head x) - D (tail x)
+  have hbudget : H (head x) + D (tail x) ≤ 4 - 6 * w := by
+    simpa only [mul_one] using hd.row1
+  have hb : (2+w)*S-(1+w)*52+E w (head x) (tail x) ≤ (5/243)*S^2 := by
+    by_cases hw : w ≤ 2/9
+    · have hm := shifted_two_ninths_energy w (head x) (tail x) (hx 5)
+        hd.ho hd.hn hd.do_ (fun i => ⟨hd.dn i, hd.du i⟩) hbudget
+        (by simpa only [defectK, one_mul] using hK)
+      have hjr : (6 : ℝ) ≤ j := by exact_mod_cast hj
+      have hp := mul_nonpos_of_nonneg_of_nonpos (hx 5) (by linarith : w - 2/9 ≤ 0)
+      have hpj := mul_nonpos_of_nonneg_of_nonpos (by linarith : 0 ≤ (j:ℝ)-5) hp
+      have hq : (2+w)*S-(1+w)*52+E w (head x) (tail x) ≤ (20/9)*S-60 := by
+        dsimp [S]
+        nlinarith only [hm, hpj]
+      nlinarith only [hq, sq_nonneg (S-54)]
+    · have hw0 : 2/9 ≤ w := by linarith
+      have henergy : E w (head x) (tail x) ≤
+          52*(1+w)-(243/20)*(2+w)^2 := by
+        by_cases hsplit : w ≤ 7/16
+        · have he := actual_psd_nonflat_middle_energy_two_ninths w (head x) (tail x)
+            hd.ho hd.hn hd.do_ (fun i => ⟨hd.dn i, hd.du i⟩) hbudget hw0 hv
+            (by simpa only [defectK, one_mul] using hK)
+          have ht := endpoint52_curve_threshold w hw0 hsplit
+          change E w (head x) (tail x) ≤ _ at he
+          linarith only [he, ht]
+        · have he := total_energy_estimate hd (hx 5)
+          have ht := endpoint52_total_threshold w (by linarith) hv
+          simp only [mul_one] at he
+          linarith only [he, ht]
+      nlinarith only [henergy, sq_nonneg (S-(243/10)*(2+w))]
+  have hm := boundary_mass 52 j (by omega) hj hj' x
+  have hq := boundary_square 52 j (by omega) hj hj' x
+  simp only [hu, one_mul, mul_one] at hm hq
+  apply spectralGood_of_square _ _ (Real.sqrt_nonneg _)
+  · exact sum_nonneg (fun k _ => synth_nonneg 52 j x hx k)
+  · rw [Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 5/243), hm, hq]
+    exact hb
+
+private theorem half_jump_endpoint52_good (j : ℕ) (hj : 6 ≤ j) (hj' : j ≤ 42)
+    (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤ x q) (hAx : ∀ r, 0 ≤ (A *ᵥ x) r)
+    (hv : 2*x 5 = low x) :
+    spectralGood (Real.sqrt (5 / 243)) (synth (d := 52) (positions 52 j) x) := by
+  let u := low x
+  have hd := actual_defects x hx hAx
+  have he := total_energy_estimate hd (hx 5)
+  have hv' : x 5 = u/2 := by dsimp [u]; linarith only [hv]
+  have he' : E (x 5) (head x) (tail x) ≤ (3/2)*u^2 := by
+    change E (x 5) (head x) (tail x) ≤ (4*u-6*x 5)*(4*u-5*x 5) at he
+    calc
+      E (x 5) (head x) (tail x) ≤ (4*u-6*x 5)*(4*u-5*x 5) := he
+      _ = (3/2)*u^2 := by rw [hv']; ring
+  let S : ℝ := 52*u+x 5*j+H (head x)-D (tail x)
+  have hb : (2*u+x 5)*S-u*(u+x 5)*52+E (x 5) (head x) (tail x) ≤
+      (5/243)*S^2 := by
+    have hhalf : (2*u+x 5)*S-u*(u+x 5)*52+E (x 5) (head x) (tail x) ≤
+        (25/(24*51))*S^2 := by
+      rw [hv'] at he' ⊢
+      nlinarith only [he', sq_nonneg (S-(306/5)*u)]
+    exact hhalf.trans (mul_le_mul_of_nonneg_right (by norm_num) (sq_nonneg S))
+  have hm := boundary_mass 52 j (by omega) hj hj' x
+  have hq := boundary_square 52 j (by omega) hj hj' x
+  apply spectralGood_of_square _ _ (Real.sqrt_nonneg _)
+  · exact sum_nonneg (fun k _ => synth_nonneg 52 j x hx k)
+  · rw [Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 5/243), hm, hq]
+    simpa only [S, u, Nat.cast_ofNat, mul_comm] using hb
+
+private theorem bulk_endpoint52_good (j : ℕ) (hj : 6 ≤ j) (hj' : j ≤ 42) :
+    spectralGood (Real.sqrt (5 / 243)) (synth (d := 52) (positions 52 j) bulk) := by
+  have hx : ∀ q, 0 ≤ bulk q := by intro q; fin_cases q <;> norm_num [bulk]
+  have hm := boundary_mass 52 j (by omega) hj hj' bulk
+  have hq := boundary_square 52 j (by omega) hj hj' bulk
+  conv at hm =>
+    rhs
+    norm_num [bulk, low, head, tail, H, D, H2, D2, E, Fin.sum_univ_succ]
+  conv at hq =>
+    rhs
+    norm_num [bulk, low, head, tail, H, D, H2, D2, E, Fin.sum_univ_succ]
+  apply spectralGood_of_square _ _ (Real.sqrt_nonneg _)
+  · exact sum_nonneg (fun k _ => synth_nonneg 52 j bulk hx k)
+  · rw [Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 5/243), hm, hq]
+    have hbulk : 8*(3*52+2*(j:ℝ))-3*5*52 ≤
+        (16/(15*52))*(3*52+2*(j:ℝ))^2 := by
+      nlinarith only [sq_nonneg (156-8*(j:ℝ))]
+    have hcoeff : (16/(15*52):ℝ) ≤ 5/243 := by norm_num
+    have hcomp := mul_le_mul_of_nonneg_right hcoeff (sq_nonneg (156+2*(j:ℝ)))
+    nlinarith only [hbulk, hcomp]
+
+/-- Unrestricted length-52 spectral purity endpoint under the actual necessary
+K1 matrix and L4 inequality. No K2, spectral ansatz or APPT sufficiency is assumed. -/
+theorem actual_k1_l4_length52_purity_bound
+    (l : Fin 52 → ℝ) (ho : Antitone l) (hn : ∀ i, 0 ≤ l i)
+    (hmass : ∑ i, l i = 1)
+    (hL4 : (∑ i : Fin 6, l ⟨i.val, by omega⟩) ≤
+      ∑ i : Fin 10, l ⟨42+i.val, by omega⟩)
+    (hK : (!![2*l 51, l 50-l 0, l 48-l 1;
+      l 50-l 0, 2*l 49, l 47-l 2;
+      l 48-l 1, l 47-l 2, 2*l 46] : Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    ∑ i, (l i)^2 ≤ (5 / 243 : ℝ) := by
+  have h111 := hK.dotProduct_mulVec_nonneg (![1,1,1] : Fin 3 → ℝ)
+  have h110 := hK.dotProduct_mulVec_nonneg (![1,1,0] : Fin 3 → ℝ)
+  norm_num [dotProduct, mulVec, Fin.sum_univ_succ] at h111 h110
+  have hL3 : (∑ i : Fin 3, l ⟨i.val, by omega⟩) ≤
+      ∑ i : Fin 6, l ⟨46+i.val, by omega⟩ := by
+    norm_num [Fin.sum_univ_succ]
+    linarith only [h111]
+  have hC3 : l 0 ≤ ∑ i : Fin 3, l ⟨49+i.val, by omega⟩ := by
+    norm_num [Fin.sum_univ_succ]
+    linarith only [h110]
+  have hrows : ∀ r, 0 ≤ boundarySlackMap 52 (by omega) l r := by
+    intro r
+    fin_cases r
+    · exact sub_nonneg.mpr hL3
+    · exact sub_nonneg.mpr hL4
+    · exact sub_nonneg.mpr hC3
+  have hfixed (j : ℕ) (hj : 6 ≤ j) (hj' : j ≤ 52-10) :=
+    actual_fixed_good 52 j (by omega) (Real.sqrt (5/243))
+      (actual_small_good 52 j (by omega) (Real.sqrt (5/243))
+        (normalized_endpoint52_good j hj hj') hj hj')
+      (half_jump_endpoint52_good j hj hj') (bulk_endpoint52_good j hj hj') hj hj'
+  have hg := continuous_concentration_good 52 (by omega) (Real.sqrt (5/243)) hfixed
+    l ho hn hrows (by simpa [spectrumK] using hK)
+  have hb := spectralGood_square (Real.sqrt (5/243)) l (Real.sqrt_nonneg _)
+    (by rw [hmass]; norm_num) hg
+  rw [hmass, Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 5/243)] at hb
+  simpa only [one_pow, mul_one] using hb
+
+#print axioms actual_k1_l4_length52_purity_bound
 
 end
 end D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound

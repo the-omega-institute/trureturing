@@ -1,0 +1,8 @@
+随后执行：
+
+1. 消去望远镜内部状态；
+2. 作 controllability–observability 最小化；
+3. 构造正 storage operator；
+4. 证明 endpoint denominator 不存在；
+5. 识别最小 transfer 为 \(\Theta_\omega\)。
+

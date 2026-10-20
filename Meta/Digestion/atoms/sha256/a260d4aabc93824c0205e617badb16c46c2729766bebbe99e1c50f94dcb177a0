@@ -1,0 +1,34 @@
+## 10. 十、最新项目进展如何改变 AURIC 的研究方向
+
+当前 `dev` 最新合并的 compatible-flow 工作，核心不是再增加一个静态公式，而是解决：
+
+> 一组相容的、可能是无限或非原子分布的未来律，能否被有限共同生成器近似或实现？
+
+这与 AURIC 的新结构有直接对应：
+
+| 项目最新方向 | AURIC 对应结构 |
+|---|---|
+| complete-law flow | 局部窗口之间的边流或概率流 |
+| common marginals | 相邻窗口的共享 separator 边缘 |
+| finite common generator | 有限状态 transfer / 有限兼容图 |
+| barycentric approximation | 金字塔内部点的凸分解 |
+| residual compatibility | $\kappa$、$\Delta$ 与后续 continuation 的相容性 |
+| finite atomicity | 有限个硬填充或有限个局部律原子 |
+| exact attainment vs tolerance | 精确闭合与近似闭合的区别 |
+
+这说明项目的研究重心正在从：
+
+$$
+\text{“一个点代表什么？”}
+$$
+
+推进到：
+
+$$
+\text{“一族局部律能否由共同流和有限装置同时实现？”}
+$$
+
+这正是 AURIC 金字塔下一阶段最值得形式化的方向。
+
+---
+

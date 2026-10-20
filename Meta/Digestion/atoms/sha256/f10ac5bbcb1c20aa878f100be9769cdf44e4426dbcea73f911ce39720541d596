@@ -1,0 +1,6 @@
+其中：
+
+* Li–Carathéodory 恒等式已经存在于理论层，但尚未成为 Lean truth anchor；
+* fixed-depth moment/eigenvalue recovery、truncated Toeplitz representation、exact Haar floor 与 contact support 已经可以直接复用；
+* Schur、Verblunsky 与 CMV 的基础对应可先接入标准 OPUC 接口。
+

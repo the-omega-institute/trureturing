@@ -1,0 +1,62 @@
+**定义 22.1（完整切向与另供的正定二次式）。** 沿用定义20.1的
+$(O,L,T,R,J)$ 状态顺序、低—高—中占位 $(x,y,z)$、
+命题20.3的概率逆式。在五项全正的律
+
+$$
+p=(1-X-Y-Z+\kappa, X-\kappa, Z, Y-\kappa, \kappa)
+$$
+
+处，取 $u=(\delta X,\delta Y,\delta Z)^{\mathsf T}$、
+$\eta=\delta\kappa$，则实际归一化切向映射为
+
+$$
+J\binom u\eta=
+(-u_1-u_2-u_3+\eta, u_1-\eta, u_3, u_2-\eta, \eta)^{\mathsf T}.
+\tag{22.1}
+$$
+
+第五、第二、第四、第三分量依次恢复 $\eta,u_1,u_2,u_3$，所以它单射，
+像是四维零质量切空间。全正律允许每个方向的双侧充分小扰动。
+$J(0,1)=d=(1,-1,0,-1,1)$ 是固定可见报告的垂直方向；
+尚未指定度量时，不把它称为与所有可见方向正交的法向。
+
+在这个共同四维坐标载体上，另供实对称正定二次式
+
+$$
+Q=\begin{pmatrix}A&B\\B^{\mathsf T}&D\end{pmatrix},
+\qquad A\in\mathbb R^{3\times3},\ B\in\mathbb R^{3\times1},\ D>0,
+\qquad v=(u^{\mathsf T},\eta)^{\mathsf T},\quad \mathcal E_Q(u,\eta)=v^{\mathsf T}Qv.
+$$
+
+定义
+
+$$
+G=A-BD^{-1}B^{\mathsf T},\qquad L=-D^{-1}B^{\mathsf T},\qquad Eu=(u,0).
+\tag{22.2}
+$$
+
+本接口使用经典完成平方和分块逆作为中间工具：
+
+$$
+\begin{aligned}
+\mathcal E_Q(u,\eta)&=u^{\mathsf T}Gu+(\eta-Lu)^{\mathsf T}D(\eta-Lu),\\
+\min_\eta\mathcal E_Q(u,\eta)&=u^{\mathsf T}Gu,\qquad \eta_*=Lu,\\
+Q&=\begin{pmatrix}G+L^{\mathsf T}DL&-L^{\mathsf T}D\\-DL&D\end{pmatrix},
+\qquad G^{-1}=E^{\mathsf T}Q^{-1}E.
+\end{aligned}
+\tag{22.3}
+$$
+
+代入 $DL=-B^{\mathsf T}$ 展开即得平方式，$D>0$ 给唯一极小点，
+分块逆的可见主块给最后式。可引用
+[Schur 二次最小的已有接口](../../../D5/S3/Quantum/Matrix/SchurMinimum.lean)
+和 Lami–Hirche–Adesso–Winter，
+[*Schur complement inequalities for covariance matrices and monogamy of quantum correlations*，
+性质(v)、定理1](https://arxiv.org/abs/1607.05285)
+的 Schur 变分背景；本文只在下列具体五态应用中消费这些工具。
+一般四阶正定式的 $(G,L,D)$ 有 $6+3+1=10$ 个参数，重构式保留全部十项；
+它们不是十个原子。只保留 $G$ 删除了隐藏调整 $L$ 与偏离代价 $D$。
+同一中间配方与块逆对有限维正定隐藏块 $D$ 仍成立，$L$ 相应成为矩阵；
+以下实际五态实例固定一个隐藏坐标，不由块推广增添物理自由度。
+任意另供 $Q$ 不被宣称来自五态 Fisher 源族；该源族另在命题22.4检验。
+

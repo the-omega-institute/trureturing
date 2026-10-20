@@ -1,0 +1,6 @@
+**命题 77.21（条件等号及有汇流的比较）。** 使用[固定公开版本 fb37ddf3d772942a0a82f6970cedecfffcb007af 的本卷](https://github.com/the-omega-institute/trureturing/blob/fb37ddf3d772942a0a82f6970cedecfffcb007af/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)第74.22节完整整数表及第75.18节 $K_0$ 完整表，原单位后继与标签不变。二者的同表统计如下。
+
+| 77.完整表账目 | $C$ | $r$ | $w$ | $U$ | $J$ | $s$ | $U_1$ | $\Xi$ | $b$ | $b_0$ | $g$ | $\gamma$ | $E$ |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 77.原105表 | 105 | 25 | 53 | 3 | 0 | 0 | 3 | 0 | 53 | 72 | 19 | 0 | 29 |
+| 77.原K0表 | 132 | 25 | 80 | 4 | 2 | 2 | 0 | 0 | 77 | 80 | 3 | 2 | 56 |

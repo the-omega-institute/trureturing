@@ -1,0 +1,19 @@
+**命题 1245.1（无穷阶端点的定量控制）。** 对 $\alpha>1$，
+
+$$
+G_\infty(P)\le G_\alpha(P)
+\le\frac\alpha{\alpha-1}G_\infty(P),
+\qquad
+0\le G_\alpha(P)-G_\infty(P)\le\frac{\log d}{\alpha-1}.
+$$
+
+**证明。** 对任意权重向量，设最大权重为 $m$。由于
+
+$$
+m^\alpha\le\sum_jw_j^\alpha\le m^{\alpha-1}\sum_jw_j=m^{\alpha-1},
+$$
+
+乘上负数 $1/(1-\alpha)$ 取对数后，得到 $H_\infty\le H_\alpha\le\alpha H_\infty/(\alpha-1)$。下界对所有表示取下确界；上界使用一张实际达到 $G_\infty$ 的表示。因此得到前两项，再用 $G_\infty\le\log d$。证毕。
+
+结合第 1203 节，$G_\infty=-\log\Lambda(P)$，所以最大可容纳乘积质量准确控制无穷阶来源熵；它也给高阶的统一近似界。这个事实仍未让最大单分量直接决定阶一的准确最优值。
+

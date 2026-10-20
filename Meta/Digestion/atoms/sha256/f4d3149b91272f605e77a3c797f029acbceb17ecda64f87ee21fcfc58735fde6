@@ -1,0 +1,8 @@
+其中：
+
+* \(I_F(R)\) 是 \(R\) 内部最大的 forward congruence；
+* \(C_F(R)\) 是包含 \(R\) 的最小 forward congruence；
+* 二者都是单调、幂等的；
+* 它们与稳定关系的包含形成两个 Galois connection；
+* 稳定名字恰好是二者的共同固定点。
+

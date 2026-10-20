@@ -1,0 +1,57 @@
+**定理 18.2（平方贝塞尔/移民扩散律）。** 在同一对布朗运动耦合下，存在一条一维布朗运动 $W$ 使得
+
+$$
+dY(s)=\frac1D\,ds+\sqrt{\frac{2Y(s)}D}\,dW(s),
+\qquad Y(0)=0.
+$$
+
+其生成元为
+
+$$
+\mathcal A\phi(y)=\frac1D\bigl(\phi'(y)+y\phi''(y)\bigr).
+$$
+
+对 $0\le s\le1$、$0\le h\le1-s$ 及 $z\ge0$，条件拉普拉斯变换为
+
+$$
+\mathbb E\!\left[e^{-zY(s+h)}\mid Y(s)=y\right]
+=
+\left(1+\frac{zh}{D}\right)^{-1}
+\exp\!\left(
+-\frac{yz}{1+zh/D}
+\right).
+$$
+
+因此
+
+$$
+\mathbb E[Y(s+h)\mid Y(s)=y]=y+\frac hD,
+$$
+
+$$
+\operatorname{Var}(Y(s+h)\mid Y(s)=y)
+=\frac{2yh}{D}+\frac{h^2}{D^2}.
+$$
+
+这是归一化的维数为 $2$ 平方贝塞尔扩散在时间 $s/D$ 下的径向能量律，也等价于带常数移民项的临界 Feller 扩散。它是极限占用密度的 Markov 表示，不是递归本身选择的物理温度或热流方程。
+
+**证明。** 对 $R_t$ 直接使用 Itô 公式：
+
+$$
+dR_t=B_1(t)\,dB_1(t)+B_2(t)\,dB_2(t)+dt.
+$$
+
+其局部鞅的二次变差为 $2R_t\,dt$，所以可重写为
+
+$$
+dR_t=dt+\sqrt{2R_t}\,dW_t.
+$$
+
+将 $t=s/D$ 代入并作布朗时间变换，得到所述随机微分方程与生成元。对固定初值 $R_0=y$，函数
+
+$$
+F(t,y)=\frac1{1+zt}\exp\!\left(-\frac{yz}{1+zt}\right)
+$$
+
+满足平方贝塞尔生成元的后向方程及初值 $F(0,y)=e^{-zy}$，由唯一性得到条件拉普拉斯变换；代入 $t=h/D$ 即得显示式。对 $z$ 在零点求一、二阶导数得到条件均值与方差。$\square$
+

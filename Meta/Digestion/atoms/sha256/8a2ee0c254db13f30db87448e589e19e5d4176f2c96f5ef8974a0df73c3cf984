@@ -1,0 +1,6 @@
+当前 Lean DAG 中：
+
+- 没有 `o5_independence → RiemannHypothesis`；
+- 没有 `RiemannHypothesis → o5_independence`；
+- 没有把 `eulerGerm` 与 completed zeta 因子严格连接的 theorem。
+

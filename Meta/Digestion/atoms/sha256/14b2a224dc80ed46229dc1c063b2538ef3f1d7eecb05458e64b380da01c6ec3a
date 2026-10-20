@@ -1,0 +1,41 @@
+# 第一千三百三十九部　“霍金辐射”直觉的最终概念表
+
+| 当前概念                 | 黑洞语言                   | \(\xi\)-scattering 语言        |
+| -------------------- | ---------------------- | ---------------------------- |
+| 完整双向场                | Kruskal 全局场            | \(L^2=H_+^2\oplus H_-^2\)    |
+| 外部观察者                | 无穷远静止观察者               | Hardy 正时间极化                  |
+| 视界                   | 正负频率分解奇异面              | \(\omega=\delta\)            |
+| 内部伙伴                 | 负 Killing 频率模式         | inverse-inner denominator    |
+| Bogoliubov \(\beta\) | 粒子产生幅度                 | anti-causal Hankel block     |
+| 霍金粒子数                | \(\beta^\dagger\beta\) | \(\mathcal N_\omega\)        |
+| 热熵                   | 约化态熵                   | \(\mathcal S_\omega\)        |
+| 灰体因子                 | 外部势垒传输                 | 正 outer／prime–Gamma transfer |
+| 准正常模                 | Green 函数复极点            | zero/resonance location      |
+| 磁单极子荷                | 拓扑简并荷                  | 零点重数／负指标                     |
+| 霍金温度                 | \(2\pi/\kappa\) 周期     | 候选模周期 \(2\log\varphi\)       |
+| 白洞分量                 | advanced 边界条件          | inverse-inner 负时间支撑          |
+
+这张表中最关键的一行是：
+
+$$
+\boxed{
+\text{离线零点}
+\neq
+\text{霍金粒子};
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{离线零点}
+\longrightarrow
+\text{Bogoliubov/Hankel 混合}
+\longrightarrow
+\text{Hawking-like 边界读数}.
+}
+$$
+
+---
+

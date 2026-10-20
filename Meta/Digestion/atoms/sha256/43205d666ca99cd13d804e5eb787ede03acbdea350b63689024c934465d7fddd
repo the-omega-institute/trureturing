@@ -1,0 +1,20 @@
+**定理 1385.1（全阶的常数宽度包络）。** 在第 1384 节条件下，对每个 $0\le\alpha\le\infty$，都有
+
+$$
+0\le H_\alpha(f)-G_{\alpha,N}(\kappa)\le\log K.
+$$
+
+常数 $K$ 只依赖固定关联，不依赖维数和熵阶。
+
+**证明。** 第 1303 节给 $H_\alpha(g)\le G_{\alpha,N}\le H_\alpha(f)$。合并正权重不增加任一所列阶的熵，所以 $H_\alpha(f)\le H_\alpha(v)$。再将每个 $g_i$ 的细分写成 $g_ir_{i\ell}$，每个条件向量 $r_i$ 最多有 $K$ 项。
+
+当 $0<\alpha<1$，凹性给 $\sum_\ell r_{i\ell}^\alpha\le K^{1-\alpha}$；当 $\alpha>1$，凸性给相反方向的 $\sum_\ell r_{i\ell}^\alpha\ge K^{1-\alpha}$。分别乘以 $g_i^\alpha$ 并求和，再按 $1/(1-\alpha)$ 的符号取对数，两者均得
+
+$$
+H_\alpha(v)\le H_\alpha(g)+\log K.
+$$
+
+阶一使用条件熵至多为 $\log K$。阶零使用正标签数最多乘以 $K$。无穷阶使用最大 $g_i$ 至少有一个细分权重不小于 $g_i/K$。结合各界得到 $H_\alpha(f)-G_{\alpha,N}\le H_\alpha(f)-H_\alpha(g)\le\log K$。证毕。
+
+这里没有将公平加点来源判为全部有限参数下的准确最优者。第 1348、1368 节的准确分类仍需各自的参数范围；本节提供的是跨全部阶、误差有界的共同包络。
+

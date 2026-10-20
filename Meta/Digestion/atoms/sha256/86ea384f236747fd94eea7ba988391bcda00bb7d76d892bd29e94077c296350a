@@ -1,0 +1,98 @@
+| $F[\mathrm{null}]$ | 0 | 0 | 0 |
+| $F[1]$ | 1 | 0 | 0 |
+| $F[2]$ | 0 | 0 | 1 |
+| $F[3]$ | 0 | 1 | 0 |
+| $F[1,3]$ | 1 | 1 | 0 |
+
+这五态函数空间为 $\mathbb R^S$，维数是 5。
+
+令状态分布为
+
+$$
+p=
+(p_{\mathrm{null}},p_1,p_2,p_3,p_{13}).
+$$
+
+定义三个可见均值
+
+$$
+X=\mathbb E_p[x]=p_1+p_{13},
+$$
+
+$$
+Y=\mathbb E_p[y]=p_3+p_{13},
+$$
+
+$$
+Z=\mathbb E_p[z]=p_2.
+$$
+
+隐藏关系为
+
+$$
+\kappa=p_{13}=
+\mathbb E_p[xy].
+$$
+
+于是完整分布可以写成
+
+$$
+\boxed{
+p_\kappa=
+\left(
+1-X-Y-Z+\kappa,\,
+X-\kappa,\,
+Z,\,
+Y-\kappa,\,
+\kappa
+\right).
+}
+$$
+
+正性条件为
+
+$$
+0\le \kappa\le \min(X,Y),
+$$
+
+以及
+
+$$
+1-X-Y-Z+\kappa\ge 0.
+$$
+
+固定 $(X,Y,Z)$ 改变 $\kappa$ 时，分布沿方向
+
+$$
+d=
+(1,-1,0,-1,1)
+$$
+
+移动：
+
+$$
+p_{\kappa+t}=p_\kappa+t\,d.
+$$
+
+这个方向满足
+
+$$
+d\cdot 1=0,
+\qquad
+d\cdot x=0,
+\qquad
+d\cdot y=0,
+\qquad
+d\cdot z=0,
+$$
+
+但
+
+$$
+d\cdot(xy)=1.
+$$
+
+因此三均值 $(X,Y,Z)$ 恰好忘掉一维信息 $\kappa$。
+
+---
+

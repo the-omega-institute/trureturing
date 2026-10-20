@@ -1,0 +1,85 @@
+## 2. Restore the all-parity logarithmic comparison
+
+Let L=2a>0, omega_n=2*pi*n/L, b_j=2j+1/2. Extract the Gamma part of the
+existing arithmetic boundary symbol:
+
+\[
+g_L(n)=\sum_{j\ge0}\frac{\omega_n(1-e^{-b_jL})}{b_j^2+\omega_n^2}.
+\]
+
+For w>0 the positive telescoping inequality
+
+\[
+\frac{w}{(2j+5/2)^2+w^2}
+\le w\left(\frac1{w+2j+1/2}-\frac1{w+2j+5/2}\right)
+\]
+
+and the zeroth term give an absolutely convergent majorant with sum at most
+1+1/w. The actual symbol therefore satisfies
+
+\[
+|g_L(n)|\le1+\frac{L}{2\pi|n|}\qquad(n\ne0).
+\tag{CO1}
+\]
+
+The same-source Fourier diagonal is
+
+\[
+d_n^\Gamma=\gamma(\omega_n)+\frac2L\sum_{j\ge0}
+(1-e^{-b_jL})\frac{b_j^2-\omega_n^2}{(b_j^2+\omega_n^2)^2}.
+\]
+
+The absolute correction series is bounded by the preceding majorant divided
+by |omega_n|, because |b_j^2-omega_n^2|<=b_j^2+omega_n^2. Thus
+
+\[
+|d_n^\Gamma-\gamma(\omega_n)|
+\le\frac1{\pi|n|}+\frac{L}{2\pi^2n^2}.
+\tag{CO2}
+\]
+
+The existing `arithmetic_archimedean_high_mode_bounds` proof script proves
+(CO1) for the actual extracted symbol, absolute summability of the correction,
+and its bound. Identification of the series with the actual diagonal is the
+Fourier calculation already recorded in (AC3), using the trigamma series.
+
+On l2(Z), H_nm=1/(m-n) for m!=n and H_nn=0 has norm at most pi.
+Indeed its circle Fourier multiplier is, up to the sign convention,
+i*(pi-theta) on 0<theta<2*pi. Its coefficients follow by integration by parts;
+Parseval proves the bound on finite sequences and then by density on l2.
+Every coordinate compression has the same bound. On |n|>=n0>=1 the complete
+Gamma off-diagonal block is [D_{-g},H]/pi, so (CO1) bounds its norm by
+2+L/(pi*n0), including all cross-shell couplings.
+
+Use the previously proved gamma(t)>=log(t/(2*pi))-2/t for t>0. Let P_L be
+an independently justified norm budget for the actual finite prime block,
+and D_L=2*(sinh(L/2)-L/2) its actual pole negative-channel budget. Then
+
+\[
+q_a(y)\ge\sum_{|n|\ge n_0}d_o(L,n;n_0)|y_n|^2,
+\tag{CO3}
+\]
+
+\[
+d_o(L,n;n_0)=\log\frac{|n|}{L}-2-
+\frac{2L+1}{\pi n_0}-\frac{L}{2\pi^2n_0^2}-P_L-D_L.
+\]
+
+This is a simultaneous lower form, first proved on finite Fourier vectors.
+For extension to the whole high form domain, subtract the finite low
+projection from a trigonometric form-core approximation. That projection
+is form-norm continuous since its finitely many basis vectors are in the
+operator domain. Add a constant to make the displayed diagonal weights
+nonnegative and use lower semicontinuity of the weighted coefficient sum.
+This also proves finiteness of that sum for a vector in the original form
+domain. The actual form core is the one of Connes-Consani,
+arXiv:2106.01715v1, Lemma 2.2 and Proposition 2.3. The Hilbert, Fourier and
+form-domain bridges here remain paper proofs, not declarations of CO1's owner.
+
+For c=3, L=log3 and n0=65, use P_L=log2/sqrt2. The compressed prime-2
+translations have disjoint input and output segments since L<2log2; hence
+the norm of their sum is at most one. At n0, (CO3) gives a constant greater
+than 1.5184518986360646, verified by directed interval arithmetic. It grows
+as log(|n|/65). This supplies the previous logarithmic-weighted certificate
+and the odd-sector weights in the combined certificate below.
+

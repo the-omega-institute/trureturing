@@ -1,0 +1,31 @@
+### 56.3 Direct residue reuse and the matching class interface
+
+<a id="TM56-P2"></a>
+**Proposition TM56.2 (TM55 residue executor belongs to the prefix class).** For $h\ge5$, put
+
+<a id="TM56-E14"></a>
+$$
+L=\left\lfloor\frac{h+1}{3}\right\rfloor,
+\qquad c=h-L+1,
+\qquad P=H-4c=4(L-1)+\delta>0.
+\tag{TM.5614}
+$$
+
+The supplier of [TM55.5][TM56Residue] and its [TM55.6 executor][TM56Residue6], with the actual right context $v=\alpha^P$ under its fixed public bracketing, belong to $\mathrm{CPF}(v,H)$. On complete actual $U_H$ that same construction simultaneously has $L$ supplied symbols, no Reads, at most one accepted $\rho$ and at most $\lceil\log_2H\rceil+3$ whole source calls, including terminal rejection.
+
+**Interface check.** The parameters satisfy $L\ge2$, $1\le c<h$, $h-c=L-1$ and $c\le2L+2$, precisely the hypotheses of TM55.5 (TM.5518). Positivity of $P$ holds in every cap residue because $L\ge2$. The context has letter composition $(P,0)$ and resource increments $p=q=P$, hence both scalar cutoffs in (TM.5605) are exactly $c$. The first two modifying attempts are this fixed actual context followed by one $\rho$ on either context response, with no intervening Reads or other attempts. The later `Size_H` is an allowed ambient continuation. Its entry source has size in $[1,H]$ by the preceding actual guards; it need not belong to $U_H$.
+
+The source correspondence is literal: TM55's $U_H$, $(r,s)$, $(z,w)$, $\omega_{r,s}$ and initial $\tau_h$ are those of (TM.5601–4). Its conditional supplier is exactly TM55 (TM.5520): $\operatorname{rep}_L(w-z)$ on finite targets, $\operatorname{rep}_L(c-z)$ on padded tag-0 rows, and 1 on unpadded tag-0 rows, where $\operatorname{rep}_L(x)=1+((x-1)\bmod L)$. The retained symbol and actual response bits are passed to the original-target decoder TM55 (TM.5521), without changing any label meaning. In its four actual histories $AA,AR,RA,RR$, terminal entries are respectively $4w+P,4z+P,4w,4z$. These entries are current sizes; they are not compositions or initial-target replacements. All words and brackets lift by the same Atomic360/TM47.2 correspondence. The residue correctness proof and supplier/decoder are reused, not new mathematical contributions of Proposition TM56.2. The simultaneous alphabet/depth/call guarantee is TM55.6 (TM.5524–25). $\square$
+
+Let $A_{\mathrm{CPF}}(H)$ minimize the conditional alphabet over all fixed actual nonempty contexts, fixed sides, arbitrary exact-source suppliers and successful controllers in their CPF classes. For $h\ge5$, [Theorem TM56.1](#TM56-T1) and [Proposition TM56.2](#TM56-P2) give
+
+<a id="TM56-E15"></a>
+$$
+\frac h3-2\le A_{\mathrm{CPF}}(H)
+\le\left\lfloor\frac{h+1}{3}\right\rfloor
+=\frac h3+O(1).
+\tag{TM.5615}
+$$
+
+Thus the leading coefficient $1/3$ is sharp **in this class**, with the exhibited costs belonging to its one actual execution. TM55.6's $h=2,3,4$ bases use one symbol, no padding, one $\rho$ and `Size_H`, with at most $\lceil\log_2H\rceil+2$ calls. Those no-padding protocols are outside the nonempty-context CPF class and are not upper certificates for (TM.5615). No unrestricted $h/3-O(1)$ necessity, minimum-depth assertion or unrestricted normalization theorem follows.
+

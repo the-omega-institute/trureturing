@@ -1,0 +1,10 @@
+随着 \(k\) 增长，还同时增长：
+
+* offset 数量；
+* 构型直径；
+* residue collision graph；
+* partition lattice；
+* connected hypergraph 类型；
+* 所需小素数范围；
+* Walsh／character sector 数量。
+

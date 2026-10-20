@@ -1,0 +1,31 @@
+**定理 1447.1（尾尺度的定量来源稳定性）。** 在第 1441 节条件下，对每个固定 $0<\varepsilon<1/2$，除至多比例 $C_{\kappa,\alpha,\varepsilon}e_N/\tau_N$ 的正奇偶顶点外，每个顶点 $x$ 都有一个唯一占同模态高矩质量至少 $1-\varepsilon$ 的标签 $j(x)$，且
+
+$$
+\left|\frac{w_{j(x)}}p-1\right|\le2\varepsilon,
+\qquad
+\operatorname{TV}(q_{j(x)},\delta_x)\le\varepsilon.
+$$
+
+因此，当 $e_N=o(\tau_N)$ 时，对每个固定精度 $\varepsilon$，不满足这项结论的顶点数为 $o(M)$。
+
+**证明。** 排除第 1446 节的三类顶点。在剩余格，主要标签满足
+
+$$
+(1-\varepsilon)^2p\le w_{j(x)}\le(1+\varepsilon)p.
+$$
+
+因 $(1-\varepsilon)^2\ge1-2\varepsilon$，得到相对权重误差界。又有 $z_{j(x)}\ge1-\varepsilon$，而 $q_{j(x)}(x)\ge z_{j(x)}$，给通道总变差界。
+
+三类比例之和控制并集；由于 $\tau_N\le1$，第一、第三项的 $e_N$ 可进一步以 $e_N/\tau_N$ 控制。因此可取
+
+$$
+C_{\kappa,\alpha,\varepsilon}
+=\frac{C_\nu C_w}{\varepsilon\kappa}
++\frac{C_\Gamma}{c_\varepsilon}
++\frac{2C_w}{\varepsilon(1-\varepsilon)^2\kappa}.
+$$
+
+若 $e_N/\tau_N\to0$，该比例趋零。证毕。
+
+这里的唯一性是同一模态高矩标签中的主要标签唯一。仍可有任意数量的微小副标签、低矩标签以及少数异常格；结论不是所有来源标签的一一精确分类。准确最优者的完整分类仍由第 1348 节承担。
+

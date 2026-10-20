@@ -1,0 +1,21 @@
+## 定理 16.1（三环画像通过模六十因子化）
+
+存在唯一函数：
+
+\[
+\bar\Sigma_3:
+(\mathbb Z/60\mathbb Z)^\times
+\to
+\{\mathrm S,\mathrm I\}^3
+\]
+
+使：
+
+\[
+\Sigma_3(p)
+=
+\bar\Sigma_3(p\bmod60)
+\]
+
+对所有 \(p>5\) 的素数成立。
+

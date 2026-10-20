@@ -1,0 +1,16 @@
+**命题 405.3（三阶极点界本身的适用阈值）.** 仅知道非负序列满足 $\sum_{m\ge1}m^{1-\beta}a_m\le C\beta^{-3}$，$0<\beta\le1/2$，不能普遍保证 $p\le3$ 的对数加权级数收敛。
+
+**证明.** 取 $a_1=0$，$a_m=(\log m)^2/m^2$，$m\ge2$。对 $t\in[m-1,m]$，有 $m\le2t$、$m^{-1-\beta}\le t^{-1-\beta}$，因而经典积分比较与 Laplace 矩给
+
+$$
+\begin{aligned}
+\sum_{m\ge2}\frac{(\log m)^2}{m^{1+\beta}}
+&\le\int_1^\infty\frac{(\log(2t))^2}{t^{1+\beta}}dt\\
+&=\frac2{\beta^3}+\frac{2\log2}{\beta^2}+\frac{(\log2)^2}\beta
+\le\left(2+\log2+\frac{(\log2)^2}4\right)\beta^{-3}.
+\end{aligned}
+\tag{405.10}
+$$
+
+但 $\sum_{m\ge2}ma_m/(\log m)^p=\sum_{m\ge2}(\log m)^{2-p}/m$ 对 $p\le3$ 发散。该反例只限定抽象三阶极点预算的普遍保证，不判定实际 $J_x$ 在 $p\le3$ 时的收敛性。$\square$
+

@@ -1,0 +1,71 @@
+## 188. FIB 网络上的外加引力 N 体、Vlasov–Poisson 动力学与 Jeans 不稳定
+
+固定 FIB 上下文给出的有限顶点集 \(V_j\)，并把顶点 \(i\) 另行嵌入 \(\Omega\subseteq\mathbb R^3\)，位置、动量和质量记为 \(x_i(t),p_i(t),m_i>0\)。FIB 只给出顶点、标签、词序及可供选择的组合关系；位置度量、质量、引力常数、边界和时间单位均需外加。给定相互作用掩码 \(A^{(j)}_{ik}\)、软化尺度 \(\ell_j\)、势核 \(U_j\) 和外势 \(V_j^{\rm ext}\)，可定义
+$$
+H_j=\sum_i\frac{|p_i|^2}{2m_i}
++\frac12\sum_{i\ne k}A^{(j)}_{ik}m_im_kU_j(x_i,x_k)
++\sum_i m_iV_j^{\rm ext}(x_i,t),
+\tag{188.1}
+$$
+$$
+\dot x_i=\frac{p_i}{m_i},\qquad
+\dot p_i=-\sum_{k\ne i}A^{(j)}_{ik}m_im_k\nabla_{x_i}U_j(x_i,x_k)
+-m_i\nabla V_j^{\rm ext}(x_i,t).
+\tag{188.2}
+$$
+取 \(U_j(x,y)=-G_j(|x-y|^2+\ell_j^2)^{-1/2}\) 得到软化吸引势；全对全掩码和图掩码分别给出不同的作用范围。无显含时势和无功通量边界下 \(H_j\) 守恒，阻尼、驱动和开放边界则改变能量账。
+
+定义经验相空间测度
+$$
+\mu_t^N=\frac1{M_N}\sum_{i\in V_j}m_i\delta_{(x_i(t),v_i(t))},
+\qquad M_N=\sum_i m_i .
+\tag{188.3}
+$$
+在 \(N\to\infty\)、\(m_i=O(N^{-1})\)、核满足外加正则性和截断条件时，可以寻求 \(\mu_t^N\Rightarrow f_t(x,v)\,{\rm d}x{\rm d}v\)，得到
+$$
+\partial_tf+v\cdot\nabla_xf-\nabla_x\Phi_f\cdot\nabla_vf=0,
+\qquad
+\Phi_f(x)=\int U(x,y)\rho_f(y)\,{\rm d}y,
+\qquad
+\rho_f=\int f\,{\rm d}v .
+\tag{188.4}
+$$
+碰撞、近距离散射或随机踢可另加 \(\varepsilon_NQ_N(f)\)。先取平均场极限还是先保留碰撞，会分别产生 Vlasov、Boltzmann 或 Landau 型极限；FIB 递归不选择极限次序。
+
+为讨论 Jeans 失稳，还需补入均匀背景、压力闭合和边界。取
+$$
+\partial_t\rho+\nabla\cdot(\rho u)=0,\qquad
+\partial_t(\rho u)+\nabla\cdot(\rho u\otimes u)+c_s^2\nabla\rho
+=-\rho\nabla\Phi,\qquad
+\Delta\Phi=4\pi G(\rho-\rho_0).
+\tag{188.5}
+$$
+围绕 \((\rho,u)=(\rho_0,0)\) 的模态 \(e^{st+{\rm i}k\cdot x}\) 满足
+$$
+s^2=4\pi G\rho_0-c_s^2|k|^2.
+\tag{188.6}
+$$
+因此在给定的三维等温无耗散模型中，
+$$
+|k|<k_J,\qquad
+k_J=\frac{\sqrt{4\pi G\rho_0}}{c_s},\qquad
+\lambda_J=\frac{2\pi}{k_J}
+\tag{188.7}
+$$
+给出长波增长。旋转、磁场、各向异性速度弥散、碰撞、阻尼和有限边界都会改变该判据；周期 FIB 图还只允许离散波数。更一般地，若图模态的压力算子和吸引算子分别为 \(\mathsf P_j,\mathsf A_j\)，共同模态满足
+$$
+\ddot\xi+(\mathsf P_j-\rho_0\mathsf A_j)\xi=0,\qquad
+s_{\ell,j}^2=\rho_0a_{\ell,j}-c_s^2\lambda_{\ell,j}.
+\tag{188.8}
+$$
+其中 \(a_{\ell,j}\)、\(\lambda_{\ell,j}\) 来自外加嵌入、权重和势核，不能由图入度或递归深度代替。
+
+在过阻尼缩放下可另得 Smoluchowski–Poisson 方程
+$$
+\partial_t\rho=\nabla\cdot(D\nabla\rho+\mu\rho\nabla\Phi),
+\qquad
+\Delta\Phi=4\pi G(\rho-\rho_0).
+\tag{188.9}
+$$
+它与趋化方程形式相似，但这里的势由同一质量分布对称地产生；是否存在有限温度平稳律仍需外加噪声、阻尼和涨落—耗散关系。仅观测 FIB 标签聚合或总质量时，长波聚集可落在观测核的零空间；即使观测完整密度，通常也只识别 \(G\rho_0/c_s^2\) 等组合。故聚集、Vlasov–Poisson 极限、Jeans 波长和长时间弛豫都是外加模型结论，不能宣称为 FIB ATOM 递归单独推出的引力定律。
+

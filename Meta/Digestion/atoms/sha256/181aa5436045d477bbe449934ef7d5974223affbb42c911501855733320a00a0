@@ -1,0 +1,5 @@
+项目已经机器证明：
+
+* 固定深度 moment 恢复会稳定传递到 Toeplitz 最小特征值；
+* 给定圆盘内 Verblunsky 参数后，Szegő transfer 自动属于 \(SU(1,1)\)。
+

@@ -1,0 +1,13 @@
+**Corollary 119.4 (Coefficient saturation for stopped equality-face
+witnesses).** Under (119.6), every feasible stopped finite kernel
+has $c=H$ and $\beta=1$.
+
+**Proof.** Choose its representation supplied by Theorem 119.3.
+There is no empty or singleton mass, and
+$W_{ij}^{10}\cap W_{ij}^{11}=\varnothing$ for every pair.
+Therefore $v_{ij}=u_{ij}^{10}$, $V_i=B_i$, $h_i=A_i$ and
+$c=\sum_iA_i=H$ by (109.4)--(109.5). Its coordinate mass is
+$\mathfrak m(H)=\sum_{i<j}w_{ij}=1$, so (108.4) gives
+$\beta=1$. This is a property of the specified equality face,
+not a condition imposed on all stopped kernels. $\square$
+

@@ -1,0 +1,30 @@
+**定理 20.1（只读取记录的降精度）。** 存在 $\ell_h:R_{h+1}\to R_h$ 满足源交换式，当且仅当核约化满足包含；存在时，该映射唯一、满射，并与两个更新交换：
+
+$$
+\boxed{
+\begin{gathered}
+\bigl(\exists\ell_h:R_{h+1}\to R_h,\ \ell_hr_{h+1}=r_h\pi_h\bigr)
+\quad\Longleftrightarrow\quad
+\pi_h(W_{h+1})\subseteq W_h,\\
+\ell_hu_{h+1}=u_h\ell_h,\qquad
+\ell_hv_{h+1}=v_h\ell_h.
+\end{gathered}}
+\tag{RA.2002}
+$$
+
+证明。必要性由 $r_{h+1}(w)=r_{h+1}(0)$ 得到 $r_h(\pi_hw)=r_h(0)$，故 $\pi_hw\in W_h$。反向定义
+$\ell_h(r_{h+1}(x))=r_h(\pi_hx)$；核包含保证同一高层记录的不同代表给出相同低层值。$r_{h+1}$ 满射给唯一性，$\pi_h$ 与 $r_h$ 满射给满射性。又因 $\pi_hM=M\pi_h$，
+
+$$
+\ell_hu_{h+1}r_{h+1}(x)
+=r_h(\pi_hMx)
+=u_hr_h(\pi_hx)
+=u_h\ell_hr_{h+1}(x).
+$$
+
+再用 $r_{h+1}$ 满射即得 $M$ 更新交换；$G$ 同理。证毕。
+
+若相邻包含对所有 $h$ 成立，记 $\pi_{h,k}$ 为坐标约化，复合 $\ell_{h,k}=\ell_h\cdots\ell_{k-1}$ 自动满足
+$\ell_{h,k}r_k=r_h\pi_{h,k}$ 与 $\ell_{h,k}\ell_{k,j}=\ell_{h,j}$。所以相邻条件足以构成整座塔，不要求核约化满射。逐层固定双射 $b_h:R_h\to R'_h$，即使非线性，也只把降层改为
+$\ell'_h=b_h\ell_hb_{h+1}^{-1}$，并共轭更新器；它不改变核或判据。合并标签则改变了记录，不属于双射重标记。
+

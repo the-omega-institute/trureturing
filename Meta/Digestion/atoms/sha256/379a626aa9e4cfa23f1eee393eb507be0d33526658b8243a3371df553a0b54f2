@@ -1,0 +1,37 @@
+**定义 259.1（有限观测合同）。** 令 $\mathcal H=\mathbb R^d$，系统在固定动作下满足
+
+$$
+x_{t+1}=Ax_t,
+\qquad
+y_t=Cx_t,
+$$
+
+其中 $A:\mathcal H\to\mathcal H$、$C:\mathcal H\to\mathbb R^r$。前 $N$ 个输出由观测矩阵
+
+$$
+\mathcal O_N
+=
+\begin{pmatrix}
+C\\
+CA\\
+\vdots\\
+CA^{N-1}
+\end{pmatrix}
+$$
+
+给出：
+
+$$
+\begin{pmatrix}
+y_0\\y_1\\\vdots\\y_{N-1}
+\end{pmatrix}
+=
+\mathcal O_Nx_0.
+$$
+
+定义 $N$ 步不可观测子空间
+
+$$
+\mathcal N_N=\ker\mathcal O_N.
+$$
+

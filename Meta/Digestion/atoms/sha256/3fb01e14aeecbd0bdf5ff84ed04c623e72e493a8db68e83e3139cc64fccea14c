@@ -1,0 +1,118 @@
+**定理 84.2（FIB 完整律的能量边界与聚集）。** 对上述任意固定调度，采用第82.3引理所用的归一化 $H^2=1-\mathsf A$，并令
+
+$$
+\operatorname{TV}(\mu,\nu)=\sup_{E\in\mathcal F_r}|\mu(E)-\nu(E)|.
+\tag{84.4}
+$$
+
+在有限空间上，这等于半个 $\ell^1$ 距离。设 $P_m^{\le K}$、$P_\infty^{\le K}$ 分别为深度 $k\le K$ 的实际与比较档案律。则
+
+$$
+\begin{aligned}
+\frac{2}{81m^2n_k^2}
+&\le e_{m,k}:=H^2(P_{m,k},P_{\infty,k})
+\le\frac{8}{3m^2n_k^2},\\
+H^2(P_m^{\le K},P_\infty^{\le K})
+&=1-\prod_{k=0}^K(1-e_{m,k})^{r_k}
+\le\frac{8S_K}{3m^2},\\
+\operatorname{TV}(P_m^{\le K},P_\infty^{\le K})
+&\le\min\left(1,\frac4{\sqrt3}\frac{\sqrt{S_K}}m\right),\\
+\operatorname{TV}(\mu_m^r,\mu_\infty^r)
+&=\sup_{K\ge0}\operatorname{TV}(P_m^{\le K},P_\infty^{\le K}).
+\end{aligned}
+\tag{84.5}
+$$
+
+空乘积取 $1$。完整律由此满足
+
+$$
+\begin{aligned}
+S<\infty&\ \Longrightarrow\
+\operatorname{TV}(\mu_m^r,\mu_\infty^r)
+\le\min\left(1,\frac4{\sqrt3}\frac{\sqrt S}m\right)
+\xrightarrow[m\to\infty]{}0,\\
+S=\infty&\ \Longrightarrow\
+\mu_m^r\perp\mu_\infty^r,\qquad
+\operatorname{TV}(\mu_m^r,\mu_\infty^r)=1\quad(m\ge2).
+\end{aligned}
+\tag{84.6}
+$$
+
+两种能量区域中，每个固定有限深度前缀的 TV 都随整数 $m\to\infty$ 趋于零。
+
+**证明。** 固定 $m,k$，在引理82.3中令不同于 $m$ 的整数 $m'\to\infty$。四格质量收敛到式（84.2）；有限个平方根的连续性使 $H^2(P_{m,k},P_{m',k})\to e_{m,k}$，而 $|1/m-1/m'|\to1/m$。直接取式（82.9）的极限即得第一行，不另证明通用 Hellinger 估计。
+
+[素数观察卷定理211.1](FORMAL_PRIME_OBSERVER_DYNAMICS.md#211-独立乘积实验的精确分解)允许任意有限个独立而非同分布的坐标，其亲和度相乘。用于全部 $(k,i)$、$k\le K$，即得式（84.5）的乘积公式；再用 $1-\prod_a(1-e_a)\le\sum_a e_a$ 和第一行得到能量上界。这里跨深度为异质乘积；仅对相同单格律取幂不能替代这一步。
+
+[波粒子事件卷定义371.1](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#371-fisher-张量的全局-hellinger-几何)及式（82.8）使用 $H^2=1-\mathsf A$。既有 [Hellinger](../../../D5/S3/TotalVariation/Hellinger.lean) 的 `total_variation_sq_le_hellinger_sq_sub_quarter` 对非负、总质量为 $1$ 的有限质量函数给出 $\operatorname{TV}^2\le E-E^2/4$，其中源码的 `hellingerSq` 是 $E=2H^2$。因此在此归一化下
+
+$$
+\operatorname{TV}^2\le2H^2-(H^2)^2\le2H^2,
+\tag{84.7}
+$$
+
+代入有限前缀能量上界并取平方根，得到常数 $4/\sqrt3$；再与概率律的 TV 至多 $1$ 合并。
+
+有限前缀的界还需接到完整原始 $\sigma$-代数。具体复用 [InverseLimitEventTotalVariation](../../../D5/S3/Estimation/DataProcessing/InverseLimitEventTotalVariation.lean) 的 `total_variation_eq_iSup_level`，以下给出其空间与测度的对应。令
+
+$$
+\begin{aligned}
+J_l&=\{(k,i)\in I_r:k<l\},& B_l&=\mathcal A^{J_l},\\
+q_l:B_{l+1}&\longrightarrow B_l,& q_l(b)&=b|_{J_l},\\
+\mathsf T_r&=\{x\in\prod_{l\ge0}B_l:\ q_l(x_{l+1})=x_l\text{ 对全部 }l\}.
+\end{aligned}
+\tag{84.8}
+$$
+
+每个 $J_l$ 有限，因为只有有限个深度且每个 $r_k$ 有限；给 $B_l$ 全部子集的可测结构，便满足供应定理的有限层空间和可测单点条件。$\mathsf T_r$ 取乘积可测结构在兼容线程子集上的限制，不添入新的事件。
+
+档案到线程的映射和逆映射为
+
+$$
+\Phi(\omega)=(\omega|_{J_l})_{l\ge0},
+\qquad
+\Psi(x)(k,i)=x_{k+1}(k,i).
+\tag{84.9}
+$$
+
+限制的复合给出 $\Phi(\omega)$ 的兼容性。反向迭代 $q_l(x_{l+1})=x_l$ 得：若 $a\le b$，则 $x_b|_{J_a}=x_a$；特别对 $k<l$ 取 $a=k+1,b=l$，得到 $\Psi(x)|_{J_l}=x_l$。故 $\Psi\Phi$ 与 $\Phi\Psi$ 都是恒等映射。$\Phi$ 的每个分量是有限坐标限制，因而可测；$\Psi$ 的每个坐标是线程的第 $k+1$ 层评价后再取 $(k,i)$，也可测。两者组成原始可测空间的双向可测同构。
+
+供应定理的载体是有限元组 `Fin n → Thread B q`。此处取其元组参数 $n=1$，通过 $x\mapsto(j\mapsto x)$ 及在唯一指标 $j=0$ 的评价，将 $\mathsf T_r$ 与 $\operatorname{Fin}(1)\to\mathsf T_r$ 双向可测地对应；这个 $n=1$ 与 Fibonacci 总数系数 $n_k$ 无关。把 $\mu_m^r,\mu_\infty^r$ 经该对应和 $\Phi$ 推前，得到供应定理的两份测度 $M_m,M_\infty$。它们是概率测度，因而满足有限测度前件。
+
+其第 $l$ 层投影取各线程的 $x_l$；在上述推前下，实际就是 $\omega|_{J_l}$ 再经单元素元组对应。因此层测度是实际有限档案律的推前：$l\ge1$ 时等于深度 $k\le l-1$ 的联合律在该同构下的表示，$l=0$ 时是共同单点律。双向可测同构使事件与其概率逐一对应，故保持事件上确界 TV。
+
+供应声明的 `measurableTotalVariation` 取 ENNReal 中两个截断方向差的最大值再取可测事件上确界。概率测度的事件质量均在 $[0,1]$，该最大值转成实数正是绝对事件差；全部值及其上确界均至多 $1$，故可转成这里的实数 TV。于是该声明给出
+
+$$
+\operatorname{TV}(\mu_m^r,\mu_\infty^r)
+=\sup_{l\ge0}\operatorname{TV}(\mu_m^r|_{J_l},\mu_\infty^r|_{J_l})
+=\sup_{K\ge0}\operatorname{TV}(P_m^{\le K},P_\infty^{\le K}).
+\tag{84.10}
+$$
+
+这里只记 $\mu|_{J_l}$ 为坐标限制的推前。有限活动坐标时塔最终恒定，无活动坐标时整个塔为单点，上述对应和供应前件仍成立。式（84.10）承担完整事件的桥梁，并非把柱集界直接宣布为任意无限事件的界。若 $S<\infty$，代入 $S_K\le S$ 即得式（84.6）的第一行。
+
+若 $S=\infty$，活动坐标必有无限多个。每个坐标两份四格质量都严格正，故局部双向绝对连续，且亲和度 $1-e_{m,k}>0$。固定 $m$ 时，第一行估计使
+
+$$
+\sum_{(k,i)\in I_r}e_{m,k}
+=\sum_{k\ge0}r_ke_{m,k}
+\ge\frac{2}{81m^2}S=\infty,
+\qquad
+\prod_{k\ge0}(1-e_{m,k})^{r_k}=0.
+\tag{84.11}
+$$
+
+最后一步沿用第82.4定理的正亲和度乘积判据，亦可由 $1-e\le e^{-e}$ 得到。按深度与批内编号枚举 $I_r$，把四个标签嵌入实数，即满足同一 [Durrett, Version 5, Theorem 4.3.8](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf)（印刷页229–230）的独立非同分布、局部绝对连续与正密度条件；零亲和度乘积给出 $\mu_m^r\perp\mu_\infty^r$。原始可测分离事件在两律下分别具有质量 $1,0$，所以 TV 为 $1$。最后，每个 $S_K$ 都有限，式（84.5）给出固定前缀的收敛。证毕。
+
+特别在 $S=\infty$ 时，有限视图与完整档案满足
+
+$$
+\lim_{m\to\infty}\sup_{K\ge0}\operatorname{TV}(P_m^{\le K},P_\infty^{\le K})=1,
+\qquad
+\sup_{K\ge0}\lim_{m\to\infty}\operatorname{TV}(P_m^{\le K},P_\infty^{\le K})=0.
+\tag{84.12}
+$$
+
+这是同一档案上固定有限视图与完整事件的区别，未改变来源族或任意扩大可测事件类。
+

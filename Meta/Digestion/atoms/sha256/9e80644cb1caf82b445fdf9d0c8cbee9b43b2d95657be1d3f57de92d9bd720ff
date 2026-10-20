@@ -1,0 +1,77 @@
+### 427.0 操作约定、射线编号与装填目标
+
+本节取 $r=1$，完整继承定理421.1的操作类别、固定 Pauli 坐标、$D=\{a\in\mathbb R^3:|a|\le1\}$、$\rho(a)=(I_2+a\cdot\sigma)/2$ 及 $p_n,V_n$。两个记录因子仍是原始的 $R_A=R_B=\mathbb C^2$；局部 CP 仪器及其私有量子、经典记忆、独立乘积辅助态、粗粒结果、遗忘、重复行动、提前停止、零分支和所有失败均按第421节保留。深度计数的是路径上的实际局部仪器节点，单结果通道也计数。接受标签各自只拥有一个作用于整个系统 $S=\mathbb C^5$ 的终端酉反馈，同标签下所有真实历史和隐藏 Kraus 项共用它；记录输出及剩余记忆全部迹掉。恢复要求仍是对全部系统矩阵及每个有限维未操作参考的全部联合矩阵成立的同一标量恒等式。以下归一化效果是累计原始输入效果，迹权重不是未知输入下的条件结果概率。
+
+十二个纯方向及其唯一伙伴取自定理426.1第1项。为写出有限表格，给该同一几何集合作本节的数值编号。置
+
+$$
+\begin{gathered}
+h=3-2\sqrt2,\qquad B=\sqrt{4\sqrt2-5},\qquad z=\sqrt{8\sqrt2-11},\qquad
+ t=\frac{h}{\sqrt3 B}=\sqrt{\frac{8\sqrt2-11}{21}},\qquad 0<t<\frac13,\\
+i=4k+(1-\epsilon)+\frac{1-\sigma}{2},\qquad
+k\in\{0,1,2\},\quad\epsilon,\sigma\in\{1,-1\},\\
+y_i=\left(\frac{\sqrt3 B}{2}U_{k,\epsilon},\frac B2 V_{k,\epsilon},\sigma z\right),\qquad
+(U_{k,\epsilon},V_{k,\epsilon})=
+\begin{cases}
+(t-\epsilon,3t+\epsilon),&k=0,\\
+(-2t,-2\epsilon),&k=1,\\
+(t+\epsilon,-3t+\epsilon),&k=2.
+\end{cases}
+\end{gathered}
+$$
+
+第426节的 $R_{\perp}\cos\theta=h$、$R_{\perp}\sin\theta=B$ 给出上述笛卡尔坐标，故 $y_i$ 就是该节的 $x_{k,\epsilon,\sigma}$，没有改变射线集合或计算基。以下另记目标方向
+
+$$
+x_i=\pi(y_i)=y_{i\mathbin{\mathrm{xor}}3},\qquad
+(0,1,2,3,4,5,6,7,8,9,10,11)\stackrel{\pi}{\longmapsto}
+(3,2,1,0,7,6,5,4,11,10,9,8).
+$$
+
+这里 $i\mathbin{\mathrm{xor}}3$ 只是翻转最低两位的整数编号。由
+
+$$
+3U_{k,\epsilon}^2+V_{k,\epsilon}^2=4(3t^2+1),\qquad
+3B^2t^2=h^2,\qquad h^2+B^2=4h,\qquad 4h+z^2=1
+$$
+
+得到 $|x_i|=|y_i|=1$。令 $X=\{x_i:0\le i<12\}=\{y_i:0\le i<12\}$。提取函数完整沿用定理426.1第2项：
+
+$$
+\ell(a;x)=\max\{c\ge0:\rho(a)-c\rho(x)\succeq0\}
+=\begin{cases}
+\dfrac{1-|a|^2}{2(1-a\cdot x)},&|a|<1,\\[4pt]
+1,&|a|=1,\ a=x,\\
+0,&|a|=1,\ a\ne x.
+\end{cases}
+\tag{427.1}
+$$
+
+定义紧装填集及其目标
+
+$$
+\begin{aligned}
+\mathcal P&=\left\{\lambda\in\mathbb R_{\ge0}^{12}:
+\sum_i\lambda_i\rho(y_i)\preceq\frac{I_2}{2}\right\},&
+Q_\lambda&=\frac{I_2}{2}-\sum_i\lambda_i\rho(y_i),\\
+s_\lambda&=\sum_i\lambda_i,&v_\lambda&=\sum_i\lambda_i y_i,\\
+Q_\lambda&=\frac{(1-s_\lambda)I_2-v_\lambda\cdot\sigma}{2},&
+\lambda\in\mathcal P&\iff\lambda_i\ge0,\quad s_\lambda+|v_\lambda|\le1,\\
+F_\lambda(a)&=\sum_i\lambda_i\ell(a;x_i),&
+M(a)&=\max_{\lambda\in\mathcal P}F_\lambda(a),\qquad
+M_* =\max_{a\in D}M(a).
+\end{aligned}
+\tag{427.2}
+$$
+
+特别指定 $S_0=\{0,1,2,11\}$，按这个升序令
+
+$$
+(\lambda^S_0,\lambda^S_1,\lambda^S_2,\lambda^S_{11})
+=\left(\frac t2,\frac{1-t}{2(1+3t)},\frac{1-t}{2},\frac{2t}{1+3t}\right),
+\qquad F_S=F_{\lambda^S},
+\tag{427.3}
+$$
+
+其余系数为零。以上最大值的存在、下述驻点的存在唯一性均在证明中给出。
+

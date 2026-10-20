@@ -1,0 +1,10 @@
+第五轮像 $`C_5\otimes\mathbb C\eta_5`$ 必须包含于（27.14）。在环境商空间 $`E/F`$ 上投影，分三种情形：
+
+- 若 $`\eta_5\in F`$，则
+  $`\mathcal R\cap(K\otimes F)=C_3\otimes F`$，从而 $`C_5\subseteq C_3`$。两者均四维，所以 $`C_5=C_3`$，违反（27.13）。
+- 若 $`\eta_5\notin F`$，商空间投影强制
+  $`\eta_5=c\eta_4+f`$，其中 $`c\ne0`$、$`f\in F`$，并且 $`C_5\subseteq C_4`$，故 $`C_5=C_4`$。
+  若 $`f\ne0`$，减去 $`c(C_4\otimes\eta_4)`$ 又给
+  $`C_4\otimes f\subseteq C_3\otimes F`$，从而 $`C_4=C_3`$，矛盾。
+- 余下 $`f=0`$ 时，$`\eta_5\parallel\eta_4`$ 且 $`C_5=C_4`$。两轮像相同，固定等距单射性给 $`L_5=L_4`$。分别取新位零与一的系数空间，得到 $`H_4=H_3`$、$`G_4=G_3`$，故 $`C_4=C_3`$，仍矛盾。
+

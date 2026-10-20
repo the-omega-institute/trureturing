@@ -1,0 +1,46 @@
+**命题 391.2（可逆目标运输与全截断身份）。** 两个算子均按算子范数绝对收敛，并且
+
+$$
+\begin{aligned}
+\|U_d\|&=d^{-1/2},\qquad U_dU_a=U_{da},\qquad U_d\varrho_m=\varrho_{dm},\\
+\|\mathscr B_\beta\|&\le B_{1/2},\qquad
+\|\mathscr B_\gamma\|\le\sum_{d\ge1}|\gamma_d|d^{-1/2}
+\le\frac1{\beta_1-T},\\
+\mathscr B_\gamma\mathscr B_\beta&=
+\mathscr B_\beta\mathscr B_\gamma=I.
+\end{aligned}
+\tag{391.4}
+$$
+
+对每个整数 $N\ge0$，两个残差有绝对收敛的精确式
+
+$$
+\boxed{
+E_N^{\rm Fib}
+=\sum_{d\ge1}\beta_dU_dE_{\lfloor N/d\rfloor}^\mu,
+\qquad
+E_N^\mu
+=\sum_{d\ge1}\gamma_dU_dE_{\lfloor N/d\rfloor}^{\rm Fib}.}
+\tag{391.5}
+$$
+
+**证明。** 半直线 Lebesgue 测度下的换元给 $\|U_df\|_2^2=d^{-1}\|f\|_2^2$；探针身份与复合律按定义成立。§384 已有 $\sum|\beta_d|=\beta_1+T<\infty$ 及 $\beta_1>T$。标准绝对卷积逆预算给
+
+$$
+\sum_{d\ge1}|\gamma_d|\le(\beta_1-T)^{-1}.
+\tag{391.6}
+$$
+
+这一通用预算已有仓内实现 `D5/S3/Arith/DirichletInverseAbsBudget.lean`；此处复用其数学内容，不另立包装声明，也不声称本节的具体应用已编译。算子级数于是绝对收敛，复合律与 $\gamma*\beta=\beta*\gamma=\mathbf1$ 给（391.4）。
+
+固定 $N$ 后，在（391.5）第一式中分离目标：所有 $d$ 的目标项恰为 $\Phi_\beta$；其余和只涉及 $dm\le N$，所以可以重排有限和，指标 $n$ 的系数就是 $\sum_{d\mid n}\beta_d\mu(n/d)=e_n$。第二式同理，目标为 $\mathscr B_\gamma\Phi_\beta=\chi$，有限系数为 $(\gamma*e)_n=\mu(n)$。无限部分只含一个固定目标向量，故（391.6）支付绝对收敛，不要求实际残差序列预先有全局界。$\square$
+
+特别地，第一式的 $d>N$ 部分是
+
+$$
+\sum_{d>N}\beta_dU_d\chi,
+\tag{391.7}
+$$
+
+而不是零。若仅将 $\mathscr B_\beta$ 作用于同一个 $E_N^\mu$，有限函数项会含 $dm>N$ 的额外系数；那也不是实际 $e_n$ 的 $n\le N$ 前缀。系数截断不能与整体卷积交换。实际目标在 $1/2<x\le1$ 上等于 $\beta_1$，因此也不能把它默认为未运输的 $\chi$。
+

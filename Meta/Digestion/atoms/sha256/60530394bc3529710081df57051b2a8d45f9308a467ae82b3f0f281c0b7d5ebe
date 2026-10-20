@@ -1,0 +1,48 @@
+**Theorem 14.3 (Real complete instrument and exact Kraus directions).** For (14.4)–(14.5), set $z=\mathcal Z_m(q)$, let $G=Q^{1/2}$ be the positive real symmetric square root, and define
+
+$$
+\begin{aligned}
+\xi&=Gx/\sqrt z,&\tau&=\xi\xi^{\mathsf T},&E&=G^{-1}F_0G^{-1},\\
+L_A&=\sqrt q\,GAG^{-1},&L_B&=\sqrt q\,GBG^{-1},&J&=\xi f^{\mathsf T}G^{-1},\\
+\Phi(X)&=L_AXL_A^{\mathsf T}+L_BXL_B^{\mathsf T},&&
+\Psi(X)=JXJ^{\mathsf T}.
+\end{aligned}
+\tag{14.9}
+$$
+
+This is a homogeneous binary CP instrument on $M_D(\mathbb C)$ with real entries and
+
+$$
+\begin{aligned}
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J&=I_D,\\
+\rho(\Phi)&=q<1,\qquad \Psi(X)=\tau\operatorname{Tr}(EX),\\
+\Psi\Phi^k(\tau)&=\gamma_k\tau,\qquad
+\sum_{k\ge0}\gamma_k=1,\qquad
+\operatorname{Tr}\Phi^a(\tau)=S_a.
+\end{aligned}
+\tag{14.10}
+$$
+
+The no-tick branch has exactly two independent Kraus directions and Choi rank two. The displayed no-tick matrix ranks are $D$ and one. The tick branch has one nonzero rank-one Kraus operator and Choi rank one. Its positive-probability outputs all normalize to the same pure state $\tau$. Its first-hit gap index is $m+1=D-1$.
+
+Proof. Theorem 2.1 applies with raw Kraus family $\sqrt q A,\sqrt q B$, detector column $f$, reset $x$, dimension $D=m+2$ and square root $G$. Theorem 14.2 verifies its full-complex stability and positive-Gramian premises and identifies its normalization as $z=\mathcal Z_m(q)$. Real orthogonal diagonalization of $Q>0$ gives real invertible $G$ and $\xi^{\mathsf T}\xi=1$. For explicit verification, shifting the norm-convergent Gramian gives
+
+$$
+Q-qA^{\mathsf T}QA-qB^{\mathsf T}QB=F_0.
+\tag{14.11}
+$$
+
+Conjugating by $G^{-1}$ yields completeness in (14.10); the detector term is $J^{\mathsf T}J=E$. Each displayed Kraus expression is completely positive on arbitrary complex positive inputs, because its amplification is a sum of conjugations by the Kraus matrices tensored with the identity. Completeness gives trace preservation of the sum and trace nonincrease of each branch. Thus the real entries do not restrict the allowed inputs to real densities.
+
+For the invertible matrix-space map $\Gamma(X)=GXG$,
+
+$$
+\Phi=\Gamma\mathcal T_q\Gamma^{-1},\qquad
+\Phi^k(\tau)=\frac{G\mathcal T_q^k(xx^{\mathsf T})G}{z}.
+\tag{14.12}
+$$
+
+This proves full stability. The outer-product formula for $J$ proves $\Psi(X)=\tau\operatorname{Tr}(EX)$ for every $X$. Combining (14.12) with (14.7) gives $\Psi\Phi^k(\tau)=q^kP_m(k)\tau/z$. Normalization is exactly the defining sum for $z$. If $s_a=\operatorname{Tr}\Phi^a(\tau)$, completeness gives $s_a-s_{a+1}=\gamma_a$, and stability gives $s_a\to0$. Telescoping gives $s_a=S_a$, including $S_0=1$ and no mass at an infinite next gap.
+
+The matrix $A$ is invertible, whereas $B=ve_s^{\mathsf T}$ is nonzero of rank one. They are linearly independent over $\mathbb C$, since a nonzero scalar multiple of $A$ has rank $D>1$. Invertible similarity and nonzero scaling preserve their ranks and independence. The Choi matrix of $\Phi$ is the sum of the outer products of the vectorizations of $L_A,L_B$; its range is their two-dimensional span, by the positive-sum argument of (13.7). Hence its rank is two, which is also the minimum Kraus count: any Kraus representation gives such a sum and must span its range, while the displayed two operators attain that count. Both factors of $J$ are nonzero, so it has matrix rank one and its Choi matrix has rank one. Lastly Theorem 14.2 gives $\gamma_0=\cdots=\gamma_m=0$ and $\gamma_{m+1}>0$, proving the asserted first-hit index and earliest interevent duration $m+2$. $\square$
+

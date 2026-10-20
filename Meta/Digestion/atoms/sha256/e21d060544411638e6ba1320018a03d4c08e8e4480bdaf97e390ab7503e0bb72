@@ -1,0 +1,33 @@
+### 证明
+
+令 \(a_x=\sqrt{P(x)}\)、\(b_x=\sqrt{Q(x)}\)。有
+
+$$
+|P(x)-Q(x)|
+=|a_x-b_x|(a_x+b_x).
+$$
+
+Cauchy–Schwarz 给出
+
+$$
+\sum_x|P(x)-Q(x)|
+\le
+\left(\sum_x(a_x-b_x)^2\right)^{1/2}
+\left(\sum_x(a_x+b_x)^2\right)^{1/2}
+\le2\sqrt2\,\mathsf H(P,Q),
+$$
+
+得到右侧不等式。
+
+另一方面，
+
+$$
+2\mathsf H^2(P,Q)
+=\sum_x(a_x-b_x)^2
+=\sum_x\frac{(P(x)-Q(x))^2}{(a_x+b_x)^2}
+\le
+\sum_x|P(x)-Q(x)|,
+$$
+
+其中使用 \((a_x+b_x)^2\ge|P(x)-Q(x)|\)。除以二得到左侧。代入 Helstrom 式即得成功概率界。证毕。
+

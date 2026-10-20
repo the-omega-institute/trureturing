@@ -20,8 +20,6 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     [InlineData("CONTEXT_MISMATCH", "next")]
     [InlineData("CONTEXT_MISMATCH", "previous-boundary")]
     [InlineData("CONTEXT_MISMATCH", "next-boundary")]
-    [InlineData("ATOMIZER_UNSUPPORTED")]
-    [InlineData("SOURCE_MISSING")]
     [InlineData("OCCURRENCE_MISSING")]
     [InlineData("OCCURRENCE_INDEX_REQUIRED")]
     [InlineData("REQUEST_KEYS_INVALID")]
@@ -55,7 +53,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
                 source with { SourceId = "second", Entries = [target with { SourceId = "second" }] }]) };
         }
         if (code == "OCCURRENCE_MISSING") fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes("Other text.\n") };
-        if (code == "OCCURRENCE_INDEX_REQUIRED") fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        if (code == "OCCURRENCE_INDEX_REQUIRED") fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray(), ContextIndex = null };
         request = code switch
         {
             "ATOM_ABSENT" => request.Replace(target.AtomId, new string('f', 64), StringComparison.Ordinal),
@@ -93,7 +91,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     {
         var fixture = AtomContextFixture.Create();
         var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
-        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray(), ContextIndex = null };
         var context = DigestionAtomContextProjection.ResolveOccurrences(fixture.Snapshot(), fixture.Ledger, target.AtomId)[1];
         var request = $"atom_id = '{target.AtomId}'\njustification = '{Reason}'\nprevious_atom_id = '{context.Previous!.Value.AtomId}'\nnext_atom_id = '{context.Next!.Value.AtomId}'\noccurrence_index = 2\n";
         using var temporary = new TemporaryDirectory();
@@ -108,7 +106,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     {
         var fixture = AtomContextFixture.Create();
         var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
-        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray(), ContextIndex = null };
         var request = $"atom_id = '{target.AtomId}'\njustification = '{Reason}'\nprevious_atom_id = '{AtomContextFixture.Id(fixture.Atomized.Claims[0])}'\nnext_atom_id = '{AtomContextFixture.Id(fixture.Atomized.Claims[2])}'\noccurrence_index = 99\n";
         var result = Run("/synthetic", fixture.RawSnapshot(), request);
         Assert.False(result.Success);
@@ -120,7 +118,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     {
         var fixture = AtomContextFixture.Create();
         var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
-        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray(), ContextIndex = null };
         var request = $"atom_id = '{target.AtomId}'\njustification = '{Reason}'\nprevious_atom_id = '{new string('f', 64)}'\nnext_atom_id = '{AtomContextFixture.Id(fixture.Atomized.Claims[2])}'\noccurrence_index = 2\n";
         using var temporary = new TemporaryDirectory();
         var raw = fixture.RawSnapshot();

@@ -13226,3 +13226,255 @@ source. The full signed response still includes all actual zeros,
 real parts, coefficients and elementary terms. These ordinary
 applications are not new prime-counting theorems or Lean-certified
 results; the all-integer Robin inequality and RH remain open.
+
+
+## A classical positive xi law pays the smoothed response on an unlimited range
+
+This application directly reuses the distribution in
+[Biane–Pitman–Yor, arXiv:math/9912170v1](https://arxiv.org/pdf/math/9912170v1),
+§2.2, Proposition 1(i) and equation (20). The positive xi law and its
+functional equation are classical results, not new constructions here.
+The xi null-vector mechanism is also already used in the
+[Weil comparison application](../Weil/frankliebseiringer2006hardy.md);
+its vanishing at actual zeros is not a new result. The present consumer
+is the original Robin response, whose integrability, broad-law transport
+and reserve must be paid separately.
+The other inputs are this note's all-scale remainder estimate GE2,
+integrated coefficient bound GAK13, complete higher-power comparison
+GPP2–GPP4, and same-integer identity and reserve GAK37–GAK39. Their
+analytic premises, finite-verification inputs and endpoint conventions
+are retained. No new zero computation or prime-counting theorem is used.
+
+The law below has unbounded support. It does not satisfy GPP1's narrow
+support hypothesis, so that section's uniform transport budget cannot
+be applied to it. The estimates below instead pay both small scales and
+the whole higher-power tail for this one law. They leave the original
+first-prime transport unbounded and do not prove RH or the strict Robin
+inequality for every integer greater than 5040.
+
+### Reuse the published law with the consumer's mean normalization
+
+Use the usual completed function
+$\xi(s)=s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)/2$.
+The cited proposition supplies a positive random variable $Y$ with
+
+$$
+\mathbb EY^s=2\xi(s)\qquad(s\in\mathbb C).
+$$
+
+In particular all real moments exist and $\mathbb EY=1$. Equation (20)
+identifies $Y^{-1}$ with the size-biased law of $Y$.
+Put
+
+$$
+m=2\xi(2)=\frac\pi3,\qquad C=\frac1{mY},\qquad
+\mu=\operatorname{Law}(C).
+$$
+
+The published functional equation $\xi(s)=\xi(1-s)$ gives exactly
+
+$$
+\mathbb EC=1,\qquad
+H_C(s):=\mathbb EC^{s-1}=2m^{1-s}\xi(s).
+\tag{XLR1}
+$$
+
+Thus $H_C(\rho)=0$ for every actual nontrivial zero, with no assumption
+about its real part. This uses a fixed positive probability law, not a
+choice of signs or a deletion of a zero tail. The moments needed below
+are
+
+$$
+\begin{aligned}
+\mathbb EC^{-1}&=m,\\
+M_4:=\mathbb EC^{-4}&=\frac{2\pi^2}{15}m^4<2,\\
+1\le m_{1/2}:=\mathbb EC^{-1/2}
+&=\sqrt m\,\mathbb E\sqrt Y\le\sqrt m<\frac{128}{125}.
+\end{aligned}
+\tag{XLR2}
+$$
+
+For the last line use convexity with $\mathbb EC=1$, then Cauchy–Schwarz
+with $\mathbb EY=1$. The rational bounds follow from $\pi<22/7$:
+$m<22/21$, $(22/21)^4<5/4$, $\pi^2<10$, and
+$22/21<(128/125)^2$.
+
+### Average the actual full response, including scales below the cutoff
+
+Keep $L=\log A$, $T_A=\sqrt A L$, the GPP kernel $K$ and the actual
+$J_c^\psi$ of GAK14. In this section $A>e^{107}$.
+The expectation of its infinite integral is absolutely justified as
+follows. At each $u\ge A$, divide the law into
+$G_u=\{C\ge u^{-1/2}\}$ and its complement.
+On $G_u$, $Cu\ge\sqrt u$ and the existing unconditional logarithmic PNT
+input gives
+
+$$
+\frac{|\psi(Cu)-Cu|}{C}
+\le\frac{4C_\psi u}{\log^2u}.
+$$
+
+On the complement, $\psi(t)\le t\log t$ for $t\ge1$, and $\psi(t)=0$
+for $t<1$. Markov's inequality and XLR2 give
+
+$$
+\begin{aligned}
+\mathbb P(C<u^{-1/2})&\le M_4u^{-2},\\
+\mathbb E\left[\frac{\psi(Cu)}C;\ C<u^{-1/2}\right]
+&\le\tfrac12M_4u^{-1}\log u<u^{-1}\log u,\\
+\mathbb E\left[\frac{|\psi(Cu)-Cu|}C;\ C<u^{-1/2}\right]
+&<u^{-1}(\log u+2).
+\end{aligned}
+\tag{XLR3}
+$$
+
+Both bounds become integrable after multiplication by $K(u)$.
+Consequently $\mathbb E|J_C^\psi|<\infty$, and absolute Fubini permits
+expectation inside its full infinite integral. No portion with $Cu<1$
+is discarded.
+
+The integrated zero series can likewise be averaged absolutely.
+For $0<\beta<1$,
+$\mathbb EC^{\beta-1}\le1+\mathbb EC^{-1}=1+m$.
+Taking the endpoint limit in GAK13, and using $A^{\beta-1}\le1$, yields
+
+$$
+\sum_\rho m_\rho\mathbb E
+ \left|C^{\rho-1}F_A(\rho)\right|
+\le 2w(A)(1+m)\mathcal C_\zeta<\infty.
+$$
+
+Here $w(A)=(1+\log A)/\log^2 A$, and $\mathcal C_\zeta$ is the same
+complete absolute zero weight used in GE1. This is an exchange of the
+integrated coefficient series, not of the unsmoothed explicit formula.
+XLR1 and GAK14–GAK15 therefore give
+
+$$
+Z_\mu(A)=\sum_\rho m_\rho H_C(\rho)F_A(\rho)=0,
+\qquad J_\mu^\psi(A)=\mathbb Er_C(A).
+$$
+
+GE2 applies to every positive $c$, including $cA<1$. Averaging its
+one-sided bound gives the actual signed estimate
+
+$$
+T_AJ_\mu^\psi(A)<\frac{5m}{\sqrt A}<\frac1{1000}
+\qquad(A>e^{107}).
+\tag{XLR4}
+$$
+
+Integrability of $r_C=J_C-Z_C$ follows from the two preceding absolute
+bounds. XLR4 is an upper bound, not an absolute estimate. All pole,
+constant and trivial-zero corrections are still included in $r_C$.
+
+### Pay the complete higher-prime-power transport for this same law
+
+Use the actual $P_{\ge2}=\psi-\vartheta$ and
+$\mathcal T_{\ge2}$ of GPP1, now with this unbounded $\mu$.
+On $G_u$, use GPP2 with $s=\sqrt A$; it applies because $Cu\ge\sqrt u$.
+On its complement, XLR3 also bounds $P_{\ge2}(Cu)/C$, and
+
+$$
+\sqrt u\,\mathbb E[C^{-1/2};\ C<u^{-1/2}]
+\le M_4u^{-5/4}<2u^{-5/4}.
+$$
+
+The good-scale square-root comparison, these two small-scale tails,
+and GPP2 for $P_{\ge2}(u)$ give
+
+$$
+\begin{split}
+\left|\mathbb E\frac{P_{\ge2}(Cu)}C-P_{\ge2}(u)
+ -(m_{1/2}-1)\sqrt u\right|
+\le{}&(m_{1/2}+1)\epsilon(\sqrt A)\sqrt u\\
+&+u^{-1}\log u+2u^{-5/4}.
+\end{split}
+\tag{XLR5}
+$$
+
+These same bounds justify the nonnegative Tonelli exchange and its
+finiteness. With the unchanged $B(A)$ of GPP4, integration gives
+
+$$
+\begin{split}
+\left|T_A\mathcal T_{\ge2}
+ -B(A)(m_{1/2}-1)\right|
+\le{}&B(A)(m_{1/2}+1)\epsilon(\sqrt A)\\
+&+L A^{-3/2}+2A^{-7/4}.
+\end{split}
+\tag{XLR6}
+$$
+
+Indeed $T_A\int_A^\infty u^{-1}\log u K(u)du\le L A^{-3/2}$,
+and $T_A\int_A^\infty2u^{-5/4}K(u)du<2A^{-7/4}$, by
+$(1+\log u)/\log u\le2$ and $\log u\ge L$.
+
+For the constants, $\sqrt A>e^{48}$ and $e>8/3$ give $e^8>2500$ and
+
+$$
+\epsilon(\sqrt A)
+<\frac1{2500}+\frac{89}{125000}<\frac1{500}.
+$$
+
+Also $L A^{-3/2}+2A^{-7/4}<1/1000$: both terms decrease with $L>107$,
+and $e^L>2^L$ with $L<e^{L/2}$ bounds their sum by
+$e^{-L}+2e^{-7L/4}<3\cdot2^{-107}<1/1000$.
+Using GPP4's $B(A)<2$ and XLR2 now gives
+
+$$
+\left|T_A\mathcal T_{\ge2}(A,\mu)\right|
+<\frac6{125}+\frac{506}{62500}+\frac1{1000}
+<\frac3{50}.
+\tag{XLR7}
+$$
+
+This covers all actual powers $k\ge2$, their endpoints, the entire
+positive law and the whole infinite integral. Together with XLR4 it pays
+one combined actual quantity on the unlimited range:
+
+$$
+T_A\bigl[J_\mu^\psi(A)+\mathcal T_{\ge2}(A,\mu)\bigr]
+<\frac{61}{1000}\qquad(A>e^{107}).
+\tag{XLR8}
+$$
+
+### Consume the bound at the original integer and state the unpaid term
+
+Define $\mathcal T_\vartheta=J_1^\vartheta-\mathbb EJ_C^\vartheta$
+using this same $\mu$. The preceding integrability bounds also pay this
+expectation. For each integer's own clock $A=\log n>e^{107}$, the
+unchanged exact GAK39 identity reads
+
+$$
+\Delta(n)=R(A)+d_A(n)-J_\mu^\psi(A)
+ -\mathcal T_\vartheta(A,\mu)-\mathcal T_{\ge2}(A,\mu).
+$$
+
+Combining XLR8 with the original reserve GAK37 gives
+
+$$
+\begin{aligned}
+T_A\Delta(n)>{}&Q_R-\frac{61}{1000}
+ +\frac{L}{(L+2)^3}+T_A d_A(n)-T_A\mathcal T_\vartheta(A,\mu)\\
+>{}&\frac34+\frac{L}{(L+2)^3}
+ +T_A d_A(n)-T_A\mathcal T_\vartheta(A,\mu),
+\end{aligned}
+\tag{XLR9}
+$$
+
+where the last strict inequality uses the existing exact
+$Q_R=67838284064811/83593750000000>811/1000$.
+The nonnegative defect belongs to this same integer and the original
+unrestricted pressure; no optimizer substitution is made.
+
+XLR8 is an estimate for the actual combined smoothed response and
+higher-power transport. XLR9 has only the first-prime transport left
+unbounded. No sufficient upper bound for that term is established here.
+Indeed $J_\mu^\psi+\mathcal T_\vartheta+\mathcal T_{\ge2}=J_1^\psi$
+exactly: annihilating the smoothed zero series does not annihilate the
+unsmoothed arithmetic error. The first-prime transport keeps the
+remaining oscillation, and its wide-scale cancellations have not been
+bounded at this reserve. This application is paper mathematics using
+published and existing inputs, with no Lean certification or literature
+priority claim. RH and strict Robin for every integer $n>5040$ remain
+unproved.

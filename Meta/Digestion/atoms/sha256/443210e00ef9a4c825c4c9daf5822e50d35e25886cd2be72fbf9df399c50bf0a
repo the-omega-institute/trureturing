@@ -1,0 +1,72 @@
+# 二十二、项目中的追加接口与本轮结论
+
+本轮只读核对的仓库快照为 `b9e3887`。其中 `ZetaPrimeProductCommonBoundary` 已经陈述了配分函数、素数激活、有限支撑、局部熵与 Fisher 敏感性的共同边界。
+
+本次追加的组织方式是：
+
+$$
+\boxed{
+\text{几何指数分布}
+\longrightarrow
+\text{素数幂事件过程}
+\longrightarrow
+\text{可细分的时间半群}
+\longrightarrow
+\text{临界尺度与误差预算}.
+}
+$$
+
+它至少需要区分五个接口：
+
+| 层次  | 应当证明的内容                          |
+| --- | -------------------------------- |
+| 算术层 | \(d_\tau\) 的约数卷积与 Euler 乘积       |
+| 路径层 | 事件过程、时间组合、终点条件桥                  |
+| 临界层 | \(\varepsilon\ln N\) 的联合分布极限与修正项 |
+| 观察层 | 小跳截断、时间窗增长及累计误差                  |
+| 目标层 | 原始 \(Z_B(1)\) 与 Robin 绝对预算       |
+
+仓库检索中的 `FinitePoisson` 属于 Fourier 求和，`PoissonSemigroup` 属于平滑卷积。不能仅因名称相近，就把它们当成本次随机 Poisson 过程的已有实现。
+
+本轮没有修改 GitHub，也没有运行新增 Lean 内核证明。
+
+有限核验使用整数和 `Fraction`，包括525项单轴卷积、1500项约数卷积、91项包数量系数、99项桥分布归一化与矩，以及6项跨轴协方差；同时保存了5040半段统计时间下的全部60个状态。渐近小数另用60位计算交叉检查，未冒充严格区间证明。
+
+[下载追加后的完整理论与核验包](sandbox:/mnt/data/causal_consistency_5040_appended_12_22.zip)
+
+[单独查看第十二至二十二节追加稿](sandbox:/mnt/data/causal_consistency_appendix_12_22.md)
+
+---
+
+这一轮最值得保留的，不是“又找到了一个概率模型”，而是三个明确的约束：
+
+$$
+\boxed{
+\text{同一个空间终点分布，不唯一决定时间结构。}
+}
+$$
+
+$$
+\boxed{
+\text{临界处可以失去有限微步时钟，}
+\quad
+\text{却仍保留非平凡的累计过程。}
+}
+$$
+
+$$
+\boxed{
+\text{宏观过程可以正确，}
+\quad
+\text{而决定尖锐算术边界的有限尺度信息已被移到修正项。}
+}
+$$
+
+5040在这里仍然是一个可完整算清的有限样本：8个单素数事件，可以被另一种包时钟组织成4至8个事件；相同的平均中间坐标，可以对应12状态切面，也可以对应60状态切面。
+
+**真正可靠的统一，不是把这些不同模型都叫作“同一个时空”，而是证明每次换时钟、换切面、取极限时，究竟保留了什么，以及被省略的部分是否足以改变最终的数学判断。**
+
+[1]: https://dlmf.nist.gov/25.2 "https://dlmf.nist.gov/25.2"
+[2]: https://arxiv.org/html/2306.08317v1 "https://arxiv.org/html/2306.08317v1"
+[3]: https://www.vmsta.org/journal/VMSTA/article/275/text "https://www.vmsta.org/journal/VMSTA/article/275/text"
+[4]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"

@@ -1,0 +1,73 @@
+**定理 398.2（实际积分后的精确分解）。** 对 $s\ge x$，同一个 $P_x(s)$ 满足
+
+$$
+P_x(s)=\frac{\mathcal E_x(\log s)}s
++\frac1s\int_1^\infty\frac{R(y)}{y^2}
+\left[\frac1{\log s+\log y}+\frac1{(\log s+\log y)^2}\right]dy.
+\tag{398.4}
+$$
+
+对 $s>x$，其导数以及每个整数 $m\ge x$ 的真实相邻差满足
+
+$$
+\begin{aligned}
+-P_x'(s)&=\frac{\mathcal V_x(\log s)+\mathcal Z_R(\log s)}{s^2},\\
+J_x(m)&=L_x(m)+\rho_x(m),\qquad
+\rho_x(m)=\int_m^{m+1}\frac{\mathcal Z_R(\log s)}{s^2}\,ds,\\
+|\rho_x(m)|&\le\frac{2\mu_0h(\log m)}{m(m+1)}.
+\end{aligned}
+\tag{398.5}
+$$
+
+若某个实际 $m\ge x$ 满足 $L_x(m)>2\mu_0h(\log m)/[m(m+1)]$，便有 $J_x(m)>0$。对于每个固定的 $x>1$，还成立
+
+$$
+\boxed{L_x(m)\sim J_x(m)\sim
+\frac{A\log m\log\log m}{m^2}\quad(m\to\infty).}
+\tag{398.6}
+$$
+
+因此存在依赖该固定 $x$ 的整数 $m_x$，使全部 $m\ge m_x$ 的 $J_x(m)$ 为正。（398.6）不声称对同时变化的 $x$ 一致。
+
+证明。在（395.2）中采用已经合法的换元 $t=sy$，并在 $y=1$ 分开。低商部分再令 $u=\log t$。当 $s\ge x$、$r=\log s$ 时，该部分精确等于
+
+$$
+\frac1s\int_\ell^r[D+A(r-u)]\frac{1+u}{u^2}\,du
+=\frac{\mathcal E_x(r)}s.
+\tag{398.7}
+$$
+
+这只是经典微积分基本定理的实际应用；$\mathcal E_x(\ell)=0$，所以 $s=x$ 的空低商区间仍被保留。高商部分即（398.4）的第二项。已有 $|R(y)|\le\mu_0(1+\log y)$ 给
+
+$$
+B_R:=\int_1^\infty\frac{|R(y)|}{y^2}\,dy\le2\mu_0.
+\tag{398.8}
+$$
+
+固定任意 $s_0>x$，在一个仍满足 $s>x$ 的紧邻域内，$s$ 与 $\log s$ 都有统一严格正下界。高商被积函数及其 $s$ 导数因此被常数倍的 $|R(y)|/y^2$ 控制。其可测性与导数连续性也由同一实际 $R$ 保留。由经典的支配参数微分定理，可在积分内微分；例如 [Mathlib 的参数积分接口](../../../Library/Analytic/mathlib2026parametricintegral.md) 明确要求这种与 $y$ 无关的局部邻域和可积包络，不只要求逐点导数存在。直接微分给
+
+$$
+-\frac{d}{ds}\left\{\frac1s\left[
+\frac1{\log s+\log y}+\frac1{(\log s+\log y)^2}\right]\right\}
+=\frac{h(\log s+\log y)}{s^2}.
+$$
+
+低商项则给 $-[\mathcal E_x(\log s)/s]'=[\mathcal E_x(\log s)-\mathcal E_x'(\log s)]/s^2$，而（398.1）的 $\mathcal V_x$ 恰为这个差。所得导数连续。公式还在 $s\downarrow x$ 时连续收敛，故微积分基本定理也处理 $m=x$ 的端点，得到（398.5）的两个身份。$h$ 在正轴递减，且
+
+$$
+|\mathcal Z_R(r)|\le B_Rh(r)\le2\mu_0h(r),\qquad
+\int_m^{m+1}s^{-2}ds=\frac1{m(m+1)},
+$$
+
+证明误差界与所列正性充分条件。
+
+最后保持 $x$ 固定。（398.1）直接给
+
+$$
+\mathcal V_x(r)=Ar\log r+O_x(r+\log r),\qquad
+\mathcal Z_R(r)=O(r^{-1}).
+\tag{398.9}
+$$
+
+这里的常数允许依赖同一实际 $A,D,\mu_0$ 和该固定 $x$。在 $m\le s\le m+1$ 上，$\log s/\log m\to1$、$s/m\to1$，上述主项的比值一致趋于一。对（398.5）的导数积分即得 $J_x$ 的渐近式；只保留 $\mathcal V_x$ 给 $L_x$ 的同一个渐近式。实际 $A>0$，故其最终符号严格为正。$\square$
+

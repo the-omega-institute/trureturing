@@ -1,0 +1,5 @@
+这是一条不同于横向分辨深度的定律：
+
+- 横向分辨深度由 $|\delta|\log(q/p)$ 控制；
+- 纵向 phase de-aliasing 深度由 $T\log p$ 控制。
+

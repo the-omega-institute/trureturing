@@ -1,0 +1,38 @@
+**定义 403.1（正交坐标、声明的续接与逐点下降）。** 固定定义 401.1 的模型。在正交直和 $E=S\oplus M\oplus N$ 中，选定等距坐标映射 $J_u:S\oplus M\to\mathbb R^p$、$J_v:N\to\mathbb R^\ell$，其中本节的 $p=\dim S+\dim M\ge0$、$\ell=\dim N\ge0$。记
+
+$$
+u=J_u(P_Sz+P_Mz),\qquad v=J_vP_Nz,\qquad
+q(u,v)=(u,\rho),\quad \rho=\|v\|^2.
+$$
+
+定理 401.2 的单射 $K|_M$ 及其逆 $D_K$ 给出 $P_Mz=D_K(KR_{\mathrm{st}}z)$，其中 $R_{\mathrm{st}}=I-P_S$ 是静态残差投影。因此 $\eta(z)$ 与 $q(u,v)$ 相互确定；没有把 $KR_{\mathrm{st}}z$ 当作正交坐标。若 $m(u)=P_MJ_u^{-1}u$，则完整相容残差是
+
+$$
+Q(z)=\|m(u)\|^2+\rho.
+$$
+
+给定非负整数 $p,\ell$，另行声明如下离散时间经典续接，各步前后的维数相同：
+
+$$
+\begin{aligned}
+u_{t+1}&=Au_t+Bv_t+b+\epsilon_t,\\
+v_{t+1}&=Cu_t+Dv_t+d+\zeta_t,\qquad t\in\mathbb N_0,\\
+\begin{pmatrix}\epsilon_t\\\zeta_t\end{pmatrix}
+&\sim\mathcal N\!\left(0,
+\begin{pmatrix}U&R\\R^{\mathsf T}&W\end{pmatrix}\right),
+\qquad
+\begin{pmatrix}U&R\\R^{\mathsf T}&W\end{pmatrix}\succeq0.
+\end{aligned}
+$$
+
+$A\in\mathbb R^{p\times p}$、$B\in\mathbb R^{p\times\ell}$、$C\in\mathbb R^{\ell\times p}$、$D\in\mathbb R^{\ell\times\ell}$、$b\in\mathbb R^p$、$d\in\mathbb R^\ell$ 及全部协方差已知且恒定。创新对在不同时刻独立同分布，并与初态独立；对随机初态也要求这项独立性。允许奇异及零协方差。本节的 $A,B,C,R$ 专指这些转移系数及创新交叉协方差，不与 §401 的同名字母混用。这一续接是增加的概率模型数据，不由静态联合噪声或 Hodge 算子推出。
+
+记 $T((u,v),\cdot)$ 为此转移核，$\mathcal Z_\ell=\mathbb R^p\times[0,\infty)$（$\ell\ge1$），$\mathcal Z_0=\mathbb R^p\times\{0\}$。称转移在 $q$ 上逐点下降，若对每两个满足 $q(u,v)=q(\widetilde u,\widetilde v)$ 的点，有
+
+$$
+q_*T((u,v),\cdot)=q_*T((\widetilde u,\widetilde v),\cdot)
+\quad\text{作为 }\mathcal Z_\ell\text{ 上的联合概率测度}.
+$$
+
+这里比较所有初始点，不以某个先验下几乎处处的等式替代。其有限状态对应是 §159.1 与主卷 §74.3 的逐纤维转移判据；有限链的文献表述见 G. Wolfer、S. Watanabe, *Geometric Aspects of Data-Processing of Markov Chains*, [arXiv:2203.04575v3，定理 3.1](https://arxiv.org/html/2203.04575v3#S3.Thmtheorem1)，该处归于 Kemeny–Snell 的定理 6.3.2，并在其不可约链框架中陈述。Markov 函数的另一相关框架是 L. C. G. Rogers、J. W. Pitman, *Markov Functions*, *The Annals of Probability* **9**(4), 573–582, 1981，DOI [10.1214/aop/1176994363](https://doi.org/10.1214/aop/1176994363)；这里的系数判据由下面的联合矩与旋转不变性直接推出，不把一般 Markov 函数或 intertwining 框架等同于本定义的全部初始点推前相等。
+

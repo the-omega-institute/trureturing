@@ -1,0 +1,16 @@
+其中以下节点可以纯有限地闭合：
+
+- prime thread compatibility；
+- charge formula；
+- reflection formula；
+- finite aliasing period；
+- full thread faithfulness；
+- two-prime embedding；
+- solenoid $\gcd/\operatorname{lcm}$ novelty criterion；
+- graph constant kernel；
+- grounded Laplacian coercivity；
+- local radial precursor；
+- Schur-to-singular floor；
+- singular-to-determinant floor；
+- rational rectangle count equivalence。
+

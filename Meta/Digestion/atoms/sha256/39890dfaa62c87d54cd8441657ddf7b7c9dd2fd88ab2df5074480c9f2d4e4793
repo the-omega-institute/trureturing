@@ -1,0 +1,58 @@
+### 19.1 复用的同一测试合同与对角假设
+
+沿用第 18 节的 $\mathcal F_S,C,R,B_f,P_S$，其中 $C=Q\mathcal F_SQ$、$R=(I-C^2)^{-1}$。有限非空素数集记为 $\mathcal P$，$S=\{\infty\}\cup\mathcal P$。为避免与尺度参数混淆，以下使用 $\mathcal R\ge1$ 表示测试族的大小。定义
+
+$$
+c_0=1-\|Q\mathcal FQ\|>0,\qquad
+\chi_S=(\beta_S/\alpha_S)^2\ge1,\qquad
+\delta_S=c_0/\chi_S,\qquad
+b_S=\frac{2J_S^3}{\delta_S(2-\delta_S)}.
+$$
+
+这里 $\alpha_S,\beta_S,J_S$ 均取第 18 节原定义。对实偶自相关 $H_f$ 支撑于 $[-r,r]$ 的测试，复用
+
+$$
+\begin{aligned}
+D_{\rm lin}(f)&=2\operatorname{Re}\operatorname{Tr}(CB_f\mathcal F_SQ),\\
+D_{\rm fin}(f)&=\int_0^r H_f(t)\mathcal K_{S,\mathbf N}(t)dt,\\
+|D_{\rm lin}(f)-D_{\rm fin}(f)|&\le\|f\|_2^2E_S(r,\mathbf N),\qquad
+\|B_f\|_1\le r\|f\|_2^2.
+\end{aligned}
+$$
+
+正项使用实际 Burnol 物理评价向量 $k_t\in V$。具体地，$k_t$ 是源的 Sonin 评价意义下未完成 Mellin 泛函
+
+$$
+\mathcal M\xi(t)=\int_0^\infty\xi(x)x^{-1/2-it}dx
+$$
+
+在 $V$ 上的 Riesz 代表。若 $D_{\rm comp}(t)$ 是对应完成 Mellin 评价的范数平方，令
+
+$$
+s_t=\tfrac12+it,\qquad \gamma(s)=\pi^{-s/2}\Gamma(s/2),\qquad
+d(t)=\|k_t\|^2=\frac{D_{\rm comp}(t)}{|\gamma(s_t)|^2}.
+$$
+
+这一归一化直接运输评价泛函；不能把完成对角 $D_{\rm comp}$ 直接作为物理迹密度。这里不构造一个假定的 Euler-product entire generator。令 $d\mu(t)=dt/(2\pi)$，并复用实际加权密度合同
+
+$$
+\sigma_S(f)=\int_{\mathbb R}|\widehat f(t)|^2
+w_S(t)\langle k_t,K^{-1}k_t\rangle\,d\mu(t),\qquad
+w_S(t)=\left|\prod_{p\in\mathcal P}(1-p^{-1/2-it})\right|^2.
+$$
+
+其中 $K=(PT^*TP)|_V$，不删除 $K^{-1}$。在 $K\ge\alpha_S^2I_V$、$w_S\le\beta_S^2$ 下，直接应用既有有界算子序给出
+
+$$
+\sigma_S(f)\le\chi_S\mathcal T_0(f),\qquad
+\mathcal T_0(f):=\int|\widehat f(t)|^2d(t)d\mu(t).
+$$
+
+本节另明确保留一个固定 cutoff 的对角假设：
+
+$$
+0\le d(t)\le C_d(1+t^2)\quad(t\in\mathbb R),\qquad C_d<\infty.
+$$
+
+$C_d$ 与 $S,r,\mathbf N$ 无关。这一弱界可由实际对角的局部有界性与 $d(t)=O(\log(2+|t|))$ 得到；这里把该对角输入作为条件保留。局部核及源生成元来自 [Burnol author preprint math/0208121v1](https://arxiv.org/abs/math/0208121v1)，但对角增长的推导不是该文一句具名的 growing-prime 定理。本文不把供应的纸面推导标成 Lean 真值，也不需要一个已认证的数值 $C_d$。
+

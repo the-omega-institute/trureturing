@@ -1,0 +1,24 @@
+**定义 17.1（按时间顺序的最大—加法矩阵）。** 在
+$\mathbb R\cup\{-\infty\}$ 上，$x\oplus y=\max(x,y)$、$x\otimes y=x+y$，
+并约定 $-\infty+x=-\infty$。矩阵乘法为
+
+$$
+(A\otimes B)_{st}=\max_{r\in\mathcal S}(A_{sr}+B_{rt}).
+$$
+
+单位矩阵的对角元是零，其余为 $-\infty$。按状态顺序 $(00,01,10)$ 定义
+
+$$
+T_i(f)=\begin{pmatrix}
+f_i(000)&f_i(001)&-\infty\\
+-\infty&-\infty&f_i(010)\\
+f_i(100)&f_i(101)&-\infty
+\end{pmatrix},\qquad
+M_f=T_0(f)\otimes\cdots\otimes T_{n-1}(f).
+\tag{17.1}
+$$
+
+行是出发状态、列是到达状态；乘积先走第零窗，再依次走到第 $n-1$ 窗，
+一般不能交换因子。最大—加法迹定义为
+$\operatorname{tr}_{\max}M=\max_sM_{ss}$，并非对角元的普通和。
+

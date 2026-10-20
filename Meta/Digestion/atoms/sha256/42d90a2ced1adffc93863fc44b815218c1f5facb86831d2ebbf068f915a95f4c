@@ -1,0 +1,64 @@
+**定理 1083.1（三个来源能够降低共同信息）。** 对第 1082 节固定的 $Q$，有
+
+$$
+C(Q)<G(Q)=h_2(1/4).
+$$
+
+严格改进可由三个正权重乘积来源达到；本节没有宣称三个状态达到 $C(Q)$ 的全局最小值。
+
+**证明。** 在标准坐标中，记
+
+$$
+a=Q(A)=\frac14,\quad b=Q(F)=\frac34,\quad
+q=Q(a_3)=\frac{\sqrt3-1}{4}.
+$$
+
+面内的两个自由坐标改用 $0,1$ 编码，使 $a_3$ 对应 $(1,1)$。归一化面律 $R_0$ 是乘积，其两个成功概率为
+
+$$
+u_0=1/\sqrt3,\qquad v_0=1-1/\sqrt3.
+$$
+
+取充分小的 $\varepsilon>0$。把 $A$ 的全部质量 $a$ 与 $a_3$ 的质量 $\varepsilon$ 放进一个边来源，权重为 $a+\varepsilon$。剩余面律为
+
+$$
+R_\varepsilon=\frac{bR_0-\varepsilon\delta_{(1,1)}}{b-\varepsilon}.
+$$
+
+它的两个边缘概率与协方差分别是
+
+$$
+u_\varepsilon=\frac{bu_0-\varepsilon}{b-\varepsilon},\quad
+v_\varepsilon=\frac{bv_0-\varepsilon}{b-\varepsilon},\quad
+k_\varepsilon=-\frac{b\varepsilon(1-u_0)(1-v_0)}{(b-\varepsilon)^2}<0.
+$$
+
+令 $d_\varepsilon=\sqrt{-k_\varepsilon}$。用各一半的权重混合两个二元乘积律，其参数为
+
+$$
+(u_\varepsilon+d_\varepsilon,\ v_\varepsilon-d_\varepsilon),
+\qquad
+(u_\varepsilon-d_\varepsilon,\ v_\varepsilon+d_\varepsilon).
+$$
+
+充分小的 $\varepsilon$ 下所有参数严格在 $(0,1)$。两边缘与协方差分别为 $u_\varepsilon,v_\varepsilon,k_\varepsilon$，所以这准确就是 $R_\varepsilon$。将第三坐标固定为负，连同边来源即得三个真实乘积来源，完整权重为
+
+$$
+a+\varepsilon,\qquad \frac{b-\varepsilon}{2},\qquad\frac{b-\varepsilon}{2}.
+$$
+
+边来源对条件熵的贡献是
+
+$$
+(a+\varepsilon)h_2\!\left(\frac{\varepsilon}{a+\varepsilon}\right)
+=\varepsilon\log(1/\varepsilon)+O(\varepsilon).
+$$
+
+另一方面，$u_\varepsilon-u_0$、$v_\varepsilon-v_0$ 与 $d_\varepsilon^2$ 都是 $O(\varepsilon)$。$h_2$ 在这些固定内点附近二阶导数有界，对正负 $d_\varepsilon$ 的两个 Taylor 式取平均会消去一阶项。因此两个面来源的条件熵总贡献为
+
+$$
+b[h_2(u_0)+h_2(v_0)]+O(\varepsilon).
+$$
+
+相对于原二态表示，总条件熵严格增加 $\varepsilon\log(1/\varepsilon)+O(\varepsilon)$；$\log(1/\varepsilon)\to\infty$ 保证充分小的正 $\varepsilon$ 下增加量为正。观察律 $Q$ 没变，所以 $I(Z;X)=H(Q)-H(X\mid Z)$ 严格减小。原二态值为 $h_2(1/4)$，结论成立。证毕。
+

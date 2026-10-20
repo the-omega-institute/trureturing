@@ -1275,3 +1275,1950 @@ genuinely executed rho event. The input repair changes the missing causal
 relation in the composition problem without changing any of these goals.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. A paid two-owner acquisition bridge at every attained D0 cut
+
+### 10.1. The target and the additional atomic basis
+
+**Definition 10.1 (one original target, not the installed RCA dispatcher).**
+Fix the controller of Definitions 2.1–2.5, including its actual finite
+native row description, all boot routines and the canonical acquisition
+of the seed. Call this controller $D_0$, its original primitive state
+$X_0$, and its acquisition fence $a(u)$. Its input is the original public
+IN, including the five-row payload loop of Definition 3.1. Its meter
+counts its own original native rows, starting at the original irreducible
+entrance. In particular the absolute target count is $n(h)$, not the
+number of rows after acquisition. This is one prospective acquisition
+flight: the initialized waiting consumer may choose any attained original
+cut, and its capture token is consumed only when it chooses that cut.
+Subsequent Calls use the one acquired historical package. The all-cut
+quantifier does not request simultaneous overlapping acquisition flights.
+
+Fix the port-local or general Base/Allocate implementations selected in
+that description once and for all. All reference fields below use their
+actual owner, arena, base and construction ordinal conventions. Choosing a
+different allocation implementation would require a different $D_0$ and
+its corresponding replay description.
+
+The [Retrospective Cut Acquisition volume](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md),
+here called RCA, supplies its finite word compiler (§11), literal row
+interpreter (§12), and actual archive/channel/return routines (§13.4).
+Its installed $D_1$, service-frame IN, retained port-38 input, activation
+chain and Initialize parser are **not** this producer or its entrance.
+Here there is no replacement of an original IN by RD(38); MR(38), no new
+version field in an original producer row, and no RCA source-frame
+activation. The consumer below interprets precisely the fixed $D_0$.
+
+**Definition 10.2 (the changed apparatus $A^+$).** There are two finite
+controllers, producer $P$ and consumer $C$. They have separate PCs, eight
+latches each, purpose bits, finite token fields, native code and meters.
+The original 64 tape ports, their cells and the original control fields
+belong to $P$. One additional tape $J$, assigned port 64, is a consumed-input
+mirror. Another 64 tapes belong to $C$: its local port $i$ has actual
+port $65+i$, for $0\le i<64$. Local 32–39 are its RCA compiler lanes;
+local 8 and 9 are its input and tally spools; local 40 and 48 are its
+receiver and mailbox. Each controller's meter is its own designated meter
+port, as specified in its finite description. None of these three spool,
+receiver or mailbox choices is the compiler bank, scratch or meter.
+
+All tape cells retain the structural encoding $G(c)=F_8[g(b_0),\ldots,
+g(b_7)]$ of the [Structural Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md),
+here called SSA, §§3–5: 47 vertices for one eight-bit cell. The ordinary
+ordered-tree ports and the four old head ports remain
+$P,L,R,O_0,H_0,O_1,H_1$. Enlarge this finite port alphabet by the two
+reciprocal pairs $O_2,H_2$ and $O_3,H_3$. These are extra physical
+incidences, not an interpretation of an old empty socket.
+
+There are four fixed anchor occurrences, two for $P$'s meter and two for
+$J$. At a captured tape, the first anchor's $O_2/H_2$ link names its fixed
+end cell; the second anchor's $O_3/H_3$ link names its moving scan cell.
+These links terminate at **cell roots**, never inside a $g$ bit. During
+startup the same anchors may be used for public immutable seed-copy
+scans; those links are all cleared before the acquisition fence. The
+anchors and controller register bits have fixed finite scaffold sockets.
+One may use a full ordered scaffold with at least 135 sockets: 129 tape
+origins, the two finite register-component roots and the four anchors.
+Register components expand to their actual finite numbers of encoded
+bits. Changing a scaffold routing depth changes the structural bill;
+no original tape or descriptor field acquires that depth as data.
+
+Erasing the additional tape and controller components, the four new port
+fields, and the additional finite control fields gives the original
+primitive representation. Port selection for $P$ routes to the same
+original port number. This erasure is denoted $\pi_P$. It is a specified
+projection of tape/control data, not an assertion that the enlarged
+scaffold has the same spatial shape as the old SSA scaffold.
+
+**Definition 10.3 (explicit new rights and atomic rows).** The following
+are added to the basis. Their bounded graph probes and assignments are
+charged by Definition 10.27. Only their complete atomic successors are
+cuts of $A^+$.
+
+1. A post-acquisition source-frame IN has its original latch, PC and producer
+   receipt effect and, in the **same row**, appends the supplied bit to
+   $J$. At $J$'s current R it replaces the symbol by that bit, seals that
+   data cell against further writes, constructs a new R, and moves only
+   $J$'s append link to that R. The seal is the append-only row restriction:
+   no row can later write that bit, so no uncounted per-cell seal flag is
+   assumed. This costs the real cell construction and
+   link work. It is not a second IN or an additional producer receipt.
+   Boot and private-installation INs retain their original effects and
+   are not source-frame input; the mirror is empty at the acquisition fence.
+2. One consumer row, Capture, can follow the actual append links of both
+   $J$ and the producer meter. In that same row it binds their current R
+   cell occurrences to the two fixed-end anchors, binds the two scan
+   anchors to their actual L boundary cells, and consumes a one-use
+   capture token. It appends one receipt to **C's** meter. No numeral,
+   prefix word, source packet or producer latch is returned by this row.
+3. A consumer cursor row may follow its own scan/end links, compare
+   their target occurrences for equality, read the eight-bit cell at its
+   scan link when authorized, or move that link to an existing adjacent
+   cell by the SSA local path. Each such test, read or move is a paid row,
+   with a consumer receipt and its actual finite latch/PC successor.
+   Equality is the alias case of two bounded followed links; it is not
+   comparison of unbounded numerals or a search for equal payloads.
+4. Startup grants read access to the already sealed acquisition sender
+   and its actual sealed placement/descriptor records. Public boot
+   constants are separately emitted during setup. The grant permits
+   auxiliary cursor placement at
+   the corresponding **fixed tape origins**, followed by paid local
+   scans. It grants neither a private-source port nor direct placement
+   at a numerically asserted seed offset. The source of the grant is the
+   actual acquisition-output seal, as specified in Definition 10.5.
+5. After startup, $C$ has read/cursor rights on $J$'s sealed bit cells,
+   its captured end occurrence and the producer meter's cell topology.
+   It has no right to change a producer symbol, old mark, latch, token,
+   descriptor or control field. On the producer meter it needs no right
+   to read receipt payloads. $P$ has append rights on $J$, no right to
+   change a sealed bit there, and no right to clear $H_2,H_3$ on a cell.
+
+The new row table also permits the two finite external consumer commands
+Capture and Call in their respective phases. These are actual paid
+entry rows, with no data payload. Their occurrence times are independent
+choices. The only historical target selector is the prospective Capture
+occurrence; no old target ordinal is supplied. The single-package Call
+needs no package index or further command frame. Internal work after
+either command is deterministic. All other new rows have finite PC,
+symbol, token and local-alias guards. There is no row that snapshots an
+unbounded word or performs a complete scan atomically.
+
+These are stronger atomic/read grants than PR57's original row menu.
+They are part of the changed apparatus and its tariff, not consequences
+of old occurrence identity, the old empty-port premise, or source-blind
+finite control. They are hypotheses of the constructive theorem.
+
+### 10.2. Actual initialization and owner independence
+
+**Definition 10.4 (physical rows and lawful rows).** A joint history is an
+interleaving of complete $P$ and $C$ rows. When $P$'s next original row is
+not IN, AdvanceP executes that exact row with Definition 10.3's preserved
+extra fields. When it is a public IN, SupplyP(0) and SupplyP(1) are both
+physically enabled. Their old latch/control/receipt effects and the new
+mirror effect all execute. Lawful histories require the bit to belong to
+$\operatorname{Adm}$ of Definition 2.2. A nonadmissible bit is an executed
+raw exit from this lawful domain; it is not `none`. No syntax filter is
+inserted in front of IN.
+
+The producer cannot read $C$'s PC, scratch, latches, commands or meter.
+After the fence its original enabledness never depends on consumer
+progress, capture or call. The consumer cannot take a producer source
+step. Its post-Capture internal enabledness never depends on another
+producer step, input, complete frame, committed event or row seal.
+There is no test requiring a producer Ready state. External P bits and
+external C command times are separate choices; neither predicts the
+other. Scheduling adds only joint interleaving, not an undisclosed input
+to the original controller.
+
+**Definition 10.5 (paid startup before the original acquisition fence).**
+The actual common run begins with construction of the declared finite
+scaffold, the two irreducible meters, all boundary pairs and all finite
+code, register, token and grant bits. Each finite constant is emitted by
+its literal finite sequence of writes. Each tape is built, not assumed
+to have free cells. Original $P$ boot and valid-source installation are
+exactly those of $D_0$, including its canonical private packet and its
+actual full-source traversal. No source-dependent auxiliary advice is
+installed in $C$. A paid finite startup-phase field selects the enabled
+owner: first BootP, then SeedCopyC, then FinishAcquisitionP. At the
+acquisition sender seal the new grant bits are set and startup enters
+SeedCopyC; only C startup rows are then enabled. C's completed manifest
+and cleared setup links enable its final SetupDone row, which hands the
+startup permission back and enters FinishAcquisitionP. Only the remaining
+original P acquisition rows are then enabled. The last acquisition row
+sets Armed and enters Independent, where Definition 10.4's union of
+owner edges applies. All these startup fields are additional finite
+encoded fields; no original P token is transferred. This synchronization
+is part of initialization, not a post-acquisition producer-progress
+hypothesis.
+
+During that traversal's ordinary acquisition output protocol, hold $P$
+after its lossless seed sender and placement records are sealed, before
+the original delivery/acknowledgement/return has completed $a(u)$. A sealed
+immutable sender exists before its receiver's completed delivery; this is
+the same two-stage channel distinction used in §6. The finite acquisition
+return path is not source-frame input and cannot admit the first source
+frame while held. The startup grant is attached to this actual seal, not
+to a proposed seed word.
+
+With $P$ held, C first executes RCA §11.4's native empty-bank prelude
+on its own ports, constructing its sentinels, empty registers, initial
+descriptors and seals. Its finite parser/word program is now physically
+entered; parsing is not used to assume that prelude. C's local 10 and 11
+are owned temporary data/counter tapes, distinct from the still-empty
+local 8 and 9 capture spools. Then $C$ copies from the granted public
+tapes as follows. It
+places its auxiliary scan link at their real L boundary, advances to the
+first ordinary cell, and reads/moves through the sealed descriptor
+prefix, using its ordinary finite tuple parser. It retains the actual
+acquisition sender's owner, arena, base, length and creation binding. If
+the arena contains earlier records, they are really scanned. The sender
+record is the completed acquisition-output record at the held protocol
+stage; its binding is the actual original placement record, not a newly
+chosen offset. Copy its unary base and length to C-owned scratch, clear
+the auxiliary link, and place it at the sender arena's L. Advance once
+to data offset zero; consume the copied base one mark at a time, taking
+one adjacent move per mark. Then copy precisely the copied length by
+paid read/append/move iterations, including every terminating test.
+The counter and data latches are different. Auxiliary cursor reads use
+C latch 0 for data and latch 1 for counter tests. RCA's compiler uses its
+separate latches 4–6. Before invoking a word helper on a read bit, branch
+on latch 0 to the literal-0 or literal-1 cons call; the helper need not
+preserve that input latch. Direct spool copies instead preserve latch 0
+through their matching WR. The immutable source block
+and its sealed descriptor are unchanged throughout.
+
+This routine reads and copies the actual framed seed payload. Parsing its
+fixed acquisition-output codec yields $\operatorname{code}(u)$; its copied
+placement records bind that output to this actual acquisition under the
+common preparation $\xi$. It does not query $u$ again. The fixed public
+$H,\xi$ and boot/descriptor parameters of Definition 2.1 are emitted by
+finite literal C-installer writes. Their equality to P's fixed public
+parameters is part of this canonical common installation, not an assumed
+new public-record tape in $D_0$. Code $\Delta(D_0)$ and the fixed
+entrance description are likewise emitted as finite constants, bit by bit; a
+native-description read port is not postulated. The output seed is
+variable acquired data; $\Delta(D_0)$ is source-independent code.
+
+C builds its own sealed manifest with these ordered fields: the fixed
+D0 description, public boot/descriptor parameters, $H$, $\xi$, the acquired
+seed, and its actual acquisition-sender binding. Each variable field is
+copied from the just constructed source block, with measured Base/length,
+actual descriptor, delimiter and seal. There is a leading F sentinel and
+one F after each field. The already constructed compiler banks retain
+all setup versions and their actual descriptors. Import this manifest
+with RCA's full-prefix
+routine: Home; MR reaches the leading F, the **second MR** reaches the
+first field, and finite field parsing includes empty fields. The parser
+here expects the stated D0 fields. It does not require or strip RCA
+Initialize's D1 field-zero tag 101, and does not obtain a D1 activation
+chain. The word helpers and the importer operate only on $C$'s banks,
+scratch and granted immutable manifest.
+
+All setup cursor links on original public cells are cleared. Construct
+$J$ as the empty L,R tape with its append link on R. The four capture
+anchors are empty, both spools are empty, and the capture and invocation
+tokens are actually encoded in their separate installed fields. The
+invocation token is live but Call is still phase-disabled. Setup has not
+modified an original head, latch, token, code bit, receipt or descriptor.
+The seed read grant has been paid and exercised; possession of a numeric
+code or a mathematical isomorphism is not used as acquisition.
+
+Now resume exactly the remaining original acquisition channel,
+acknowledgement and return rows. Their source and destination cells and
+old tokens are as before the pause. At the original acquisition fence's
+last row, additionally set C's phase to Armed. Call this joint fence $F$.
+Thus
+
+$$
+\pi_P(X^+(F))=X_0(a(u)),\qquad J(F)=\epsilon.
+\tag{AIF.13}
+$$
+
+C's setup rows precede this fence and have only C receipts. There is no
+post-$a(u)$ interval in which $P$ has advanced but Capture is uninstalled.
+The projection's original acquisition prefix is unchanged. The **joint**
+startup chronology contains the paid extra setup rows and is not claimed
+to equal that original prefix.
+
+**Lemma 10.6 (startup is finite and actually acquired).** For every valid
+finite seed $u\in\mathcal T_H$, Definition 10.5 reaches $F$ after finitely
+many actual rows, with exactly the manifest values just stated and all
+original $D_0$ acquisition fields preserved under $\pi_P$.
+
+Proof. The original acquisition terminates by the supplier used in
+Definition 2.1. At its held point all scanned source records and the
+sender word are finite, sealed and retained. The descriptor traversal
+consumes an unchanged finite prefix. Each unary skip/copy iteration
+consumes a mark of an actually copied counter; no count is supplied by
+the proof. Every copied bit comes from a cursor read of that immutable
+sender. The acquisition-output codec is lossless on this actual domain,
+so its parsed seed is $\operatorname{code}(u)$, not an independently
+postulated seed. Finite constant emission terminates. RCA §§11 and 13.2's
+word expansion/import terminate on the finite owned records; the stated
+two entry moves give the correct first field even when a field is empty.
+Their read/copy rights are the new setup grant, not a producer token.
+Each setup row changes only new links or C-owned data and its meter.
+The remaining original delivery therefore has its original preconditions
+and successors. Its final row establishes AIF.13. ∎
+
+### 10.3. Local realization and preservation of original rows
+
+**Definition 10.7 (complete slot policy).** Every graph occurrence has all
+11 ports. A newly constructed occurrence initializes all 11, including
+empty entries. Existing-row assignments name individual slots and preserve
+every unnamed slot. In particular the old bit-value template changes
+only the four old slots of SSA's five-occurrence bit gadget: root L and
+R, fork P, and singleton P. It leaves $O_2,H_2,O_3,H_3$ unchanged. Ordinary
+head operations change just their old reciprocal pair; they do not clear
+a cell's other incoming links. The meter's receipt operation changes its
+old append pair and receipt bits, preserving the read pair **after** any
+core read-head movement. It never uses core EX or WR on that meter.
+
+The mirror append uses the same right-spine cell constructor. If $z$ is
+the old trailing terminal beyond its old R cell, replace $z$ by the binary
+node $\langle G(\mathrm{new\ R}),z'\rangle$. The old R cell is retained;
+its symbol becomes the bit and it is sealed, with all its new link slots
+preserved. The cell-root path to the next cell is $P R L$; the previous
+cell path, when it exists, is $P P L$. No step detaches an old cell root
+or rewrites an earlier right-spine node. A seal protects the bit value,
+not an old head mark or every possible field of that occurrence.
+
+Capture sets four reciprocal links, hence eight link slots, on its
+anchors and the four target roles: two R ends and two L scan starts.
+The L and R cells of an empty tape are distinct occurrences. The two
+tapes are distinct. If a later cursor occupies an end, $H_2$ and $H_3$
+are different slots. If an old read/append head is there too, its $H_0$
+or $H_1$ is different again. Retargeting a scan clears only its old $H_3$
+and anchor $O_3$, then sets the corresponding new pair. The initialized
+reciprocal pair is treated as a single consistent assignment when two
+roles coincide; there is no double incompatible assignment to a slot.
+
+**Lemma 10.8 (finite bounded realization, including aliases).** The rows
+of Definitions 10.3–10.7 have a finite table of bounded structural
+patterns. They preserve the original row effects field by field under
+$\pi_P$. No old empty-port switch lemma is required.
+
+Proof. Static port routing, PC bits, latch bits and token fields belong
+to fixed finite scaffolds. At a tape origin, an old head, append link or
+new anchor link leads directly to its cell root. Reading a cell inspects
+its fixed 47-vertex gadget. A next/previous move uses the displayed
+three-edge tree route; neither length nor cell index affects its radius.
+A receipt or mirror append inspects the old append cell and its trailing
+terminal, and constructs one 47-vertex cell and one new terminal. The
+new row cases inspect at most eight cell roots, their fixed gadgets,
+the four fixed anchors and fixed finite registers. Their finite route
+words, together with the static scaffold routes, give a finite radius
+bound depending only on the installed apparatus. No route follows an
+unbounded chain within one row.
+
+For an ordinary original row, combine core and receipt effects by the
+old SSA alias rule first. That rule already handles an old read head
+coinciding with the old append cell. Then preserve all four new slots.
+A P input row has no core tape write, so its extra mirror append and
+producer receipt are on disjoint tapes. A C cursor row changes only its
+own anchor's $O_3$, the corresponding $H_3$ fields, its own finite
+registers, and C's receipt. Capture may meet old read/append marks, but
+the new slot names are disjoint from those marks. A new endpoint/cursor
+alias is handled by retaining both different incoming slots on that
+same root. These exhaust the possible cross-role coincidences, since
+producer, mirror and consumer tapes are disjoint.
+
+There are finitely many old row cases, symbols, register states and
+equality partitions of these finitely many roles. Enumerating their
+consistent old-value dependencies produces the finite table; all
+unmentioned ports are copied. It does not test whether all other ports
+are empty. New occurrences are initialized with the full 11-slot table.
+Thus the $g$-bit templates, append templates and head templates remain
+valid with these extra incidences by their explicit assignments, rather
+than by an application of SSA §13's stricter switch premise. Erasure
+removes exactly the named extra effects. ∎
+
+**Definition 10.9 (actual producer occurrence correspondence).** Delete
+all C rows from a joint prefix and replace each augmented producer row
+by its original D0 row. Call the resulting original prefix $p(z)$.
+Original cell and record names are carried by their actual P-port
+construction order and the old descriptor fields. $C$ allocates only
+on different ports and has a separate descriptor list. An original
+Base scan scans the same original arena; its creation scan scans the
+same original record stream. It does not count C's meter or records.
+The order-preserving injection of actual P rows into the joint history
+is the witness for occurrence correspondence. There is no arbitrary
+isomorphism or renumbering of stored original fields.
+
+**Theorem 10.10 (exact original-interface projection).** From $F$ onward,
+for every lawful joint prefix $z$, $p(z)\in\mathcal R_H$ and
+
+$$
+\pi_P(X^+(z))=X_0(p(z)).
+\tag{AIF.14}
+$$
+
+For every physically enabled original row $e$,
+
+$$
+\pi_P\bigl(\delta^+_P(X^+(z),e)\bigr)
+ =\delta_0\bigl(\pi_P(X^+(z)),e\bigr).
+\tag{AIF.15}
+$$
+
+Original labels, output bits, legality, raw bits, permission fields and
+complete successors agree. A C row stutters under $\pi_P$. Both raw IN
+successors satisfy AIF.15; only the admissible one or ones preserve
+membership in $\mathcal R_H$. Original disabled attempts stay disabled
+and execute no row.
+
+Proof. AIF.13 gives the initial state. Lemma 10.8 preserves every original
+row field. In particular extra C work cannot alter an original allocation
+base, head position, PC, latch, token, receipt count or construction name.
+Induction on joint rows proves AIF.14 and AIF.15 simultaneously, using
+Lemma 2.7 at the lawful-input cases. The original producer meter receives
+one receipt per P row, never per C row. Therefore its absolute count is
+exactly $n(p(z))$, including the unchanged projected boot/acquisition.
+An inadmissible bit changes the original latch and control and appends
+both the original receipt and the mirror bit; the same erasure equality
+holds for that executed raw successor. Its later malformed behavior has
+not been added to the lawful theorem. ∎
+
+This is a projection of the **entire original interface**, including
+current original actions at a busy cut. It is not just equality of the
+last decoded tree or of completed source-event lists.
+
+### 10.4. One capture binds two actual frontiers
+
+**Definition 10.11 (consumer phases and the acquisition package).** The
+consumer phases are Setup, Armed, InputPrime/InputTest/InputRead/InputAppend/
+InputNext, MeterPrime/MeterTest/MeterAppend/MeterNext, Finish, Sealed,
+CallBusy, and Ready. Append phases expand into their finite ordinary
+native rows; a finite PC remembers the subphase and preserves the data
+latch through its matching WR. A length/test latch is distinct. A consumer
+step is enabled exactly at its current installed subphase with the
+required actual token/links/read permission. There is no unbounded
+subphase index in finite control.
+
+Capture is enabled in Armed with its unused capture token and the actual
+append/read grants. Its complete successor enters InputPrime and fixes
+both frontier links. This unique occurrence defines $z_*$, its immediately
+preceding attained joint cut, and
+
+$$
+h_*=p(z_*),\qquad r=|I(h_*)|,\qquad n=n(h_*).
+\tag{AIF.16}
+$$
+
+These symbols are proof parameters, not Capture operands. The token is
+consumed, so another Capture has no transition. Finish seals the actually
+constructed input/tally spools, imports their words into C's compiler
+banks, and creates a sealed package with actual Base, length, creation
+record and manifest binding. Before this package seal no Call is enabled.
+The package retains the acquired input word, the actual unary target
+count and the manifest. Sealed and Ready permit Call with the live
+invocation token. A Call entry performs the actual token handoff to the
+handler and reserve; CallBusy disables another Call. The later return
+restores the token and enters Ready.
+
+An attempted unauthorized read, unavailable destination read, early Call,
+repeat Capture, or Call while busy is illegal and unexecuted. Original
+rejects and `absent` remain executed original outcomes. This construction
+has no Crash or hostile-writer recovery rule. It does not infer a valid
+source service from an uninstalled or invalid seed preparation.
+
+**Lemma 10.12 (mirror and meter invariants before Capture).** At every
+lawful joint cut at or after $F$, the sealed bit prefix of $J$ is exactly
+$I(p(z))$, in consumed order. It is followed by its unique current R.
+The producer meter has its original L, exactly $n(p(z))$ receipt cells,
+and its current R. Each cell root already constructed remains at the
+same position in that tape's right spine. All earlier mirror bit values
+remain unchanged.
+
+Proof. At $F$ the relative input word and mirror are empty. An augmented
+public IN appends exactly the bit just consumed, atomically with the old
+latch change. No other producer row changes $J$. This includes the
+IN-to-WR interval: a bit is in $J$ already when the original retention
+identity has it only in $Q$, not in $L$. Consumer rows preserve both the
+mirror word and producer meter. The original meter receives one cell per
+producer row by its common receipt stage; its core never EXs or WRs that
+meter. Appending changes an old R's symbol and the trailing terminal,
+not an earlier spine node or cell identity. Induction proves all claims.
+The topology claim makes no assertion that every original receipt mark
+bit is immutable. ∎
+
+**Lemma 10.13 (same-cut frontier binding).** At Capture's complete
+successor the end links name respectively the R immediately after the
+$r$ captured bits and the R immediately after the $n$ captured receipts.
+Those are the two frontiers of the **same** attained cut $z_*$.
+Arbitrary later legal producer activity preserves those linked
+occurrences and all captured mirror bit values. It may change either
+linked endpoint's symbol and old marks.
+
+Proof. Before the atomic row both append links have the values in
+Lemma 10.12. Capture binds those exact two targets before any other row
+can intervene. It obtains no independently sampled pair of optima or
+marginally compatible words. Its receipt goes to C's disjoint meter.
+Later producer appends can turn the linked old R into a bit or receipt;
+the old root and its new link slots are preserved by Definition 10.7.
+Earlier bit cells stay sealed. No producer row changes the end anchors,
+and there is no second Capture. ∎
+
+### 10.5. The forward scans, including changing endpoint symbols
+
+**Definition 10.14 (the actual prefix scan).** A scan link starts on its
+tape's actual L cell, as set by Capture. InputPrime takes **one** next
+move $P R L$. InputTest follows both links and tests target-occurrence
+equality **before reading a symbol**. On equality it performs no data
+read and enters MeterPrime. Otherwise InputRead reads the bit into C's
+data latch 0. InputAppend appends that latched bit to C's input spool by
+EX; WR; MR, then InputNext moves its scan link once by $P R L$ and
+returns to InputTest. Tests and moves each have their own C receipt.
+No helper overwrites that data latch between InputRead and its WR.
+
+MeterPrime takes one next move from its L. MeterTest likewise tests
+occurrence equality first. On equality it enters Finish. Otherwise
+MeterAppend appends the literal bit 1 to C's tally spool by EX; WR; MR;
+MeterNext moves its meter scan link once by $P R L$ and returns to
+MeterTest. It does not read receipt symbols, sequence numbers or moving
+old read marks. Finish executes Append(tally,0), Append(input,sep),
+Append(tally,sep), Seal(input), Seal(tally), in that order. Each Append
+is EX; WR; MR and each Seal is one designated CTL. The spool heads are
+already at their actual R cells, since every preceding append ended
+with MR. Thus an empty bit word is an empty framed field. The count is
+$U(n)=1^n0$, including when $n=0$.
+
+In particular a symbol test for R is **not** the stop guard. A cursor
+never moves from the captured endpoint. The receipt emitted by each scan
+row belongs to C, so it does not lengthen either scanned prefix.
+
+**Theorem 10.15 (actual finite prefix acquisition under arbitrary P).**
+After any lawful Capture, under any subsequent legal P interleaving,
+each scan has exactly its captured number of non-end iterations. It
+constructs exactly $I(h_*)$ and $U(n(h_*))$. This conclusion needs no
+further producer step or input, and no completion of an unfinished
+producer frame, source write, row or copy.
+
+Proof. Number the already existing cells of $J$ at capture as
+$L,c_1,\ldots,c_r,e$. Prime reaches $c_1$ if $r>0$, and reaches $e$ if
+$r=0$. At InputTest after $i$ completed iterations the spool is exactly
+the bits of $c_1,\ldots,c_i$, and the cursor is $c_{i+1}$ when $i<r$,
+or $e$ when $i=r$. For $i<r$, the current cell and its next neighbor
+were constructed before Capture. Their spine route and the current bit
+are preserved by Lemmas 10.12–10.13. The equality guard is false; the
+read and matched append copy that exact bit, and Next establishes the
+invariant for $i+1$. The induction remains true across any number of P
+rows between those C rows.
+
+At $i=r$, equality is true regardless of the current symbol of $e$.
+The scan stops without reading it. This proves both that the last desired
+cell was copied and that no later acquired bit is copied. For $r=0$,
+Prime/Test stops immediately even if subsequent P input has already
+turned $e$ into its first bit. A backwards scan from the mutable endpoint,
+or a scan stopping on its current R symbol, would not have this proof.
+
+For the meter, number its captured cells
+$L,d_1,\ldots,d_n,f$. The identical invariant has tally $1^i$ and cursor
+$d_{i+1}$ or $f$. Here the loop needs only the preexisting next route,
+not immutable receipt bytes or a fixed old read head. At equality it
+stops, then appends 0. No future P receipt is counted. The invariant also
+covers the formal zero-prefix case, without trying to read a nonexistent
+first receipt.
+
+Every iteration has a fixed finite number of C rows before its next
+Test. The two loops therefore have finitely many C rows. Their spools
+are disjoint from their scan sources, and all guards used are established
+by the invariant. This proves acquisition, not merely existence of a
+word equal to a mathematical prefix. ∎
+
+**Definition 10.16 (C-progress).** On a continuation with internal C work
+pending, every next enabled prescribed C row occurs after finitely many
+joint rows. The producer may take zero rows, finitely many rows, or
+arbitrarily many rows between C rows. No bound on those delays or on
+physical elapsed time is imposed. Once a Call is issued the same
+condition applies to its prescribed receiver, printing, ACK and return
+rows, which are controlled by C. A receiver awaiting an independently
+chosen external ACK would require an additional progress hypothesis;
+that is not this installed receiver.
+
+**Corollary 10.17 (sealed, bound acquisition under C-progress).** Under
+C-progress the complete Capture-to-Sealed routine terminates with an
+actually sealed package whose decoded fields are
+
+$$
+(\Delta(D_0),\mathrm{boot},H,\xi,
+ \operatorname{code}(u),I(h_*),U(n(h_*)),\mathrm{origins}).
+\tag{AIF.17}
+$$
+
+Its origins bind the real startup seed copy, the unique Capture, both
+fixed frontier occurrences, the actual spool seals and the package's
+construction. The stored anchor names are fixed literal role/port tags,
+whose actual links persist; they are not unbounded occurrence identifiers
+read by a new primitive. Other placement fields are the copied actual
+descriptors. Capture has a unique one-flight role, so binding to it needs
+no supplied joint-time ordinal. The package is available to its installed C owner; a
+pointer or its numeric descriptor alone is not that availability.
+
+Proof. Theorem 10.15 provides the actually written spools. No import or
+package code reads an unsealed spool. RCA §11's finite word construction
+and Base/descriptor routines terminate on finite C-owned tapes and
+retain their old versions. They scan those **actual** words, append
+complete framed fields and the actual descriptor, and seal only after
+the last field. Lemma 10.6 provides the other fields and their source
+binding. Each routine has finitely many own rows independent of P;
+C-progress therefore reaches the package seal. No new seed, target
+count or package key has been supplied as input. ∎
+
+### 10.6. Later actual Call, output and complete return
+
+**Definition 10.18 (the D0 prefix computation).** On a sealed package,
+Call imports its actual fields and uses RCA's word language and literal
+`Step`, specialized to the D0 description. Reconstruct the canonical
+private installation packet from the acquired seed and public $H$;
+prepare the fixed boot/control reservoir and the captured external-input
+reservoir. Initialize the represented original irreducible entrance,
+not the consumer's current native state. Copy the acquired unary target
+into a private countdown. While that countdown has a leading 1, execute
+one literal represented D0 row, append its complete represented event,
+and remove that 1. Stop before the next row when the terminal 0 is
+reached. Input reservoirs are selected by the represented boot/acquisition/
+source-frame phase, as in RCA §12. There is no D1 activation branch.
+
+The actual word bank operations are RCA §§11–12's finite scans and
+rewrites. Simulated permission bits are data, never physical TOKs.
+The resulting HistoricalImage is the complete original $D_0$ native
+history and raw endpoint, with $(D_0,\xi,n)$ binding. Pending ingress,
+invalid source packets and unsealed original destinations are encoded
+as such, not replaced by completed semantic states.
+
+**Definition 10.19 (actual publication and return).** Use RCA §13.4's
+Publish graph, with all ports renamed by $i\mapsto65+i$. Its sender is
+C's local service archive 39, mailbox is local 48, receiver is local 40.
+Base and length are measured on the actual current C arenas; complete
+Allocate and descriptor construction precede each copy. The payload is
+the HistoricalImage from Definition 10.18, framed as one actual result
+word with its target and package binding. There is no free read from a
+word register.
+
+The sender is sealed. The first real copy, with its length tests, seal
+and token handoff, constructs a mailbox. Only after that mailbox seal
+and handoff does the second copy construct the receiver. Only after the
+receiver seal is its read token available. Recover the actual receiver
+base and payload length by the staged records and paid Seek/counter
+copy. Execute the prescribed RD(length); RD(receiver); OUT; MR(receiver);
+MR(length) loop, including its final zero test. Thus its released
+serial output is the receiver's actual payload. Both length and data
+positioning are performed from their actual current heads.
+
+The receiver/client and handler are two installed operational roles of
+C, with distinct finite token fields. The invocation token moves to the
+handler at Call entry; the mailbox availability token moves to channel
+setup and back. The actual receiver ACK is a prescribed C-controlled
+row after printing and delivery completion. The completion record and
+handler return updates precede the actual invocation TOK back to the
+client, then the Ready CTL. Publish does not itself enter Ready.
+Retained package/read tokens and returned invocation ownership are
+separate fields. No original producer token is borrowed or minted.
+
+**Theorem 10.20 (continued callable use, actual output and return).**
+Let Capture occur at any lawful attained joint cut at or after $F$.
+Let C-progress hold until the package seals, and issue Call at any later
+Sealed or Ready cut with its live invocation token. Under C-progress,
+that Call terminates with actual sealed sender, mailbox and receiver,
+serial output
+
+$$
+\operatorname{HistoricalImage}
+ (D_0,\xi,n(h_*),h_*,X_0(h_*)),
+\tag{AIF.18}
+$$
+
+an executed ACK, the invocation token actually returned to the client,
+and C's actual Ready state. This holds for every legal subsequent
+producer continuation, including the continuation with **no producer
+step at all**. No future producer bit, source response, completion or
+frame is required by the consumer computation.
+
+Proof. Corollary 10.17 authenticates the input of the actual Call, not
+just a tuple asserted in the proof. Theorem 4.4 identifies that tuple's
+D0 replay with exactly $(h_*,X_0(h_*))$. RCA §12's per-row transformation
+has the same original pre-state, row, reservoirs, old-value dependencies,
+core effect and common receipt at each simulated step. Its word/compiler
+expansion gives an actual finite C routine for each of the $n(h_*)$
+steps. The countdown includes the absolute boot/acquisition rows, so it
+stops at the exact original row boundary. It consumes no input beyond
+$I(h_*)$. A source packet invalid at that cut is an ordinary represented
+bit list and availability phase; nothing calls a semantic source on it.
+This proves the value actually written into C's result bank.
+
+For publication, the length counter is constructed from that real finite
+word. Induction on each of the two copy loops shows that after $i$
+iterations its destination has exactly the first $i$ sender bits, while
+it is unavailable before its seal. The final tests, seals and actual
+TOKs establish the receiver value and read right. The print-loop invariant
+has output equal to the first $i$ receiver bits and the matching remaining
+length. It finishes with exactly AIF.18. The prescribed ACK and return
+rows then execute and restore the live invocation token. These are
+physical native token updates, unlike historical token bits in AIF.18.
+
+All Call loops scan finite immutable owned words, and only C's tapes can
+grow during them. Each has finite C work by the compiler, copy and return
+suppliers. C-progress suffices for their termination. Projection
+Theorem 10.10 lets any P continuation proceed independently throughout;
+none of these arguments reads its future input or waits for its phase. ∎
+
+**Definition 10.21 (the full successor, not a restored old world).** Write
+$E^+$ for the actual joint row list from the irreducible common foundation
+to this returned Ready, and $z_R$ for its endpoint. Its complete successor
+is obtained by the following fixed row recurrence: apply the row's
+old-value core assignment, its specified extra-slot/mirror assignment,
+its own controller's common receipt assignment, and preserve every
+unnamed field. Allocate fresh vertices by their actual controller/arena
+construction occurrences. This defines every intermediate and final raw
+field, including old versions and partial objects, rather than only the
+printed payload.
+
+In particular, if $w_P$ is the actual list of P rows after Capture through
+$z_R$, then
+
+$$
+\begin{aligned}
+\pi_P(X^+(z_R))&=X_0(h_*w_P),\\
+\mathrm{package}(z_R)&=\mathrm{package}(\mathrm{Sealed}),\\
+\mathrm{OUT}_{\mathrm{Call}}(z_R)&=\text{AIF.18},\\
+\mathrm{invocationOwner}(z_R)&=\mathrm{client},\qquad
+\mathrm{phase}_C(z_R)=\mathrm{Ready}.
+\end{aligned}
+\tag{AIF.19}
+$$
+
+Here $h_*w_P$ uses the original projected rows and their actual supplied
+bits. The latest mirror word is $I(h_*w_P)$; the end links still name
+the captured occurrences; the stopped scan links name those same ends.
+C's actual meters, dirty scratch, both copy destinations, all completed
+and retired bank/descriptor versions, package and completion records
+remain in $X^+(z_R)$. The result does not set them to their startup values
+or to historical simulated values.
+
+**Lemma 10.22 (complete-successor consistency).** The row recurrence in
+Definition 10.21 gives one actual common successor satisfying all of
+AIF.19. It preserves intermediate source rows and partial-copy states.
+
+Proof. Lemma 10.8 gives a single consistent assignment to every touched
+slot, including aliases, at each row. Original P effects project by
+Theorem 10.10; mirror effects follow Lemma 10.12. End links and the sealed
+package are not assigned after their respective creation/seal, so they
+remain fixed. The scan and print invariants prove the other value
+coordinates. The final token and PC assignments are exactly Definition
+10.19's ACK/TOK/Ready sequence. All other fields are preserved at each
+step, not discarded because their objects are dead for a later task.
+Induction on the actual joint list therefore proves simultaneous
+agreement of source, work, storage, output and live permission fields.
+There is no choice of separate source and archive successors with only
+matching marginal values. ∎
+
+### 10.7. The quantified all-cut bridge and agreement of routes
+
+**Theorem 10.23 (all attained lawful producer cuts, paid acquisition and use).**
+For the changed finite apparatus of Definitions 10.1–10.7, for every
+$H\ge1$, every actual canonically installed $u\in\mathcal T_H$, and
+every lawful joint interleaving reaching any post-$F$ cut $z$ while C
+is Armed, Capture is enabled there. It binds precisely $p(z)$, without
+a Ready or completed-frame premise. Every continuation with C-progress
+reaches its actual package seal. Every subsequent token-authorized Call
+with C-progress has the actual output, ACK, token return and complete
+successor of Theorems 10.20–10.22, for arbitrary later legal P activity,
+including zero P activity.
+
+Conversely every original $h\in\mathcal R_H$, including $a(u)$ itself,
+is attained as $p(z)$ at such an Armed cut of an actual initialized run.
+The assertion is pointwise over all finite attained cuts; it does not
+require a preselected upper bound on their lengths or an a priori
+bounded input history.
+
+Proof. Startup reaches $F$ with C Armed and all required grants. Holding
+C Armed does not change any producer enabledness. Theorem 10.10 realizes
+any original finite continuation to $h$ by the same producer rows and
+bits. No C row is needed during it. Capture's finite guard concerns only
+its installed token, grants and actual links, which still hold at every
+such cut. It does not inspect source validity, producer phase or an
+unfinished row/copy. Lemma 10.13 and Theorem 10.15 prove the actual
+prefix binding and acquisition on every subsequent legal interleaving.
+Corollary 10.17 and Theorems 10.20–10.22 give the claimed seal, use and
+successor. Thus both the universal actual-run statement and coverage of
+every original cut hold, rather than just a witness family of favorable
+post-IN cuts. ∎
+
+**Proposition 10.24 (route agreement and exact scope of updates).** At a
+Capture cut the following three routes have identical original values:
+projecting that actual cut by $\pi_P$; decoding the actually acquired
+package by the original Theorem 4.4; and parsing the delivered historical
+image of an actual later Call. They give the same $h_*,X_0(h_*)$ and,
+therefore, the same original raw source, work, row-prefix, copy, output
+and historical-permission coordinates.
+
+For a currently executed original action, the dynamic projection square
+is AIF.15 and its actual-key update is Corollary 4.5: non-IN increments
+$n$; admissible IN appends its supplied bit and increments $n$. These
+are statements about the same actual producer successor. The sealed
+captured package does not follow that update: it remains bound to
+$h_*$. It is not a live-source actuator or an evolving current key.
+
+Proof. Theorems 10.10, 10.13, 10.15 and 10.20 identify all three routes
+with the same attained original prefix and state, including their actual
+reference conventions. AIF.15 identifies the actual next original
+state; Corollary 4.5 identifies its replay key and domain. A package seal
+permits no later field update. Historical source-token bits are only
+represented data in the replay bank and output, and never authorize a
+physical producer operation. ∎
+
+**Definition 10.25 (four meanings and the chronology boundary).** On this
+one actual process, spatial storage means the current ordered scaffolds,
+constructed cell gadgets and their actual incidence/mark fields, including
+all retained material. Time means the actual ordered list of primitive
+occurrences, their owners and receipts. Boundary means the current
+terminal antichains of the primary ordered scaffolds together with the
+separately specified live port/token/availability relations controlling
+allowed actions. Memory of C means its acquired, retained material **with
+its actual read/call rights and installed access routines**. These are
+independent definitions; none is defined as an inverse of the others.
+A primary leaf boundary alone does not encode a live read permission.
+
+On an original D0 image, SSA's full structural support/frontier decoding
+and the [Callable Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md),
+here called CSA, §§3–7's view interpretations may be applied under their
+own original representation/retention premises. The historical image
+here supplies that complete original raw image by an actual C procedure.
+This gives agreement of those already defined **original-image**
+interpretations along the three routes of Proposition 10.24. It does
+not supply new spatial or boundary kernels on the enlarged apparatus.
+C's callable memory arises only after its actual acquisition/package
+seal and rights; the fact that P earlier retained a word was not C's
+acquisition of it.
+
+In particular $h_*$ is an actual reached **producer projection** of a
+joint cut; $E^+$ is the complete joint chronology; the delivered image
+represents the old original state $X_0(h_*)$; and current source actuation
+is controlled by the current P tokens and phase in $X^+(z_R)$. They
+are four different objects. AIF.18 does not encode the interleaving of
+all C rows with P rows. Extra C command times and schedules have not
+been mirrored as a joint replay input. A universal full joint-chronology
+recovery theorem would require that additional acquired relation and
+has not been proved here.
+
+### 10.8. Resource evaluation on the same actual run
+
+**Definition 10.26 (space with live and dead backing).** Let
+$E_{\rm found}$ be the actual finite foundation-construction prefix,
+$V_0$ its endpoint's vertex count, and $E_{\rm tail}(z)$ the subsequent
+rows through $z$. The irreducible atoms and all foundation initialization
+are included in the paid foundation cost. Let $\nu(e)$ count the new
+vertices of a subsequent row $e$. With no reclamation,
+
+$$
+V(X^+(z))=V_0+\sum_{e\in E_{\rm tail}(z)}\nu(e).
+\tag{AIF.20}
+$$
+
+Each vertex has 11 port fields, including empty fields. Model-bit cell
+capacity and incidence storage are different coordinates: an ordinary
+$G$ cell carries eight model bits and 47 vertices, while its represented
+links may target previously constructed occurrences. Retained references
+are charged as incidence fields, not counted as zero-sized payload
+substitutes.
+
+The foundation term and the disjoint tail sum include the original
+source/code/seed acquisition, both meters,
+the mirror, all spools, manifests, bank versions, Base/length scratch,
+descriptors, senders, mailboxes, receivers and partially constructed or
+retired records. A record dead for future Call is still in the sum.
+There is no deletion or reuse of its vertices. C's finite control does
+not bound this retained storage as cuts grow.
+
+**Definition 10.27 (a fully evaluated structural tariff).** For an actual
+row $e$, let $p(e)$ be its number of port probes, $a(e)$ its number of
+slot assignments (including unchanged assigned values), and $\nu(e)$
+its initialized new vertices. Fix the following concrete evaluation:
+read guard/register fields in their listed finite field order; visit
+cell gadgets by ordered depth-first traversal; follow each named route
+in its displayed order; resolve role equality on the resulting bounded
+pattern; perform consistent core, extra-link/mirror and receipt slot
+assignments in that order. Count every traversed slot as a probe and
+every initialized slot as an assignment. A route or field probed twice
+is charged twice. Clearing and setting different link slots are separate
+assignments. The resulting tariff is
+
+$$
+W(E^+)=\sum_{e\in E^+}\bigl(1+p(e)+a(e)+\nu(e)\bigr).
+\tag{AIF.21}
+$$
+
+Here $E^+=E_{\rm found}E_{\rm tail}(z_R)$ is the **one** actual
+foundation-to-return run, not separately optimized stages. Foundation is
+its finite literal construction prefix, charged once by the same
+probe/assignment/initialization rule; any initial irreducible-atom cost
+is included in that prefix's fixed constructor charge. AIF.20 separates
+its space term only to avoid counting those vertices twice. Native tick
+and fee coordinates are separately
+$N_P,N_C$ and $2N_P,2N_C$, with one receipt per row of its own controller.
+AIF.21 is the additional concrete structural operation tariff; it does
+not assert that an enlarged atomic row costs one old native fee.
+
+Variable word work is evaluated by RCA §11's complete native expansions,
+not by counting a word assignment as one row. In particular Base scans
+actual existing arenas; descriptor ordinals count actual completed
+descriptors; the manifest import includes both entry moves; each bank
+update constructs its dry length, new version, delimiter, descriptor,
+seal and parity change. Apply those expansions in their actual order
+from the preceding complete successor. The same applies to startup
+copies, spool import, the $n$ simulated rows, both delivery copies,
+printing, ACK and return. This specifies a finite evaluated cost for
+any supplied finite actual run without an unsupported closed polynomial.
+
+**Lemma 10.28 (concrete footprint and finiteness of the bill).** One
+right-spine cell append constructs exactly 48 vertices. In the 11-port
+basis its initialization accounts for 528 slot assignments, and changing
+the old trailing terminal's L and R adds two existing-slot assignments.
+Thus the constructor alone accounts for 530 assignments, before any
+old-symbol/head/control/receipt work. A mirror input row constructs one
+mirror cell and one producer receipt cell: 96 new vertices. Capture
+constructs its one C receipt cell and sets eight new link slots, in
+addition to its finite register/receipt work. Every running row of this
+construction has at most 100 new vertices. Its probe/assignment footprint
+has a constant finite bound depending on its installed finite scaffold
+and controller, independent of $r,n$, input length or P's later growth.
+Capture, the two prefix scans and the displayed Finish-to-spool-seals
+body use exactly
+
+$$
+N_{\rm acquire\ body}=6r+5n+16
+\tag{AIF.22}
+$$
+
+C rows. This excludes startup, spool import, package construction, Call
+and delivery, and excludes intervening P rows. All foundation-to-return
+costs in AIF.20–21 are finite under the progress hypotheses of Theorem
+10.23; no bound on arbitrary scheduling delays is claimed.
+
+Proof. SSA's cell has 47 vertices, and appending adds one new trailing
+terminal, giving 48. Initialization writes 11 slots at each of these
+vertices, giving $11\cdot48=528$; the existing expanded terminal has
+exactly its two child assignments, giving 530. Old link retargeting and
+cell-bit changes are separate. A producer IN has no core tape write,
+so its new mirror cell and its ordinary receipt are the two constructors
+just counted. Capture sets four reciprocal pairs and has only its own
+receipt constructor. An ordinary EX row has at most an ordinary cell
+and its own receipt; a bootstrap bit constructor may instead add the
+four fresh bit-gadget vertices and its receipt. The row schemata do not
+combine that bootstrap case with another ordinary EX; allowing both
+48-cell constructors and four bit vertices gives the stated safe bound
+100. Fixed-scaffold construction is its explicitly charged finite
+foundation prefix, not one running row with unbounded construction.
+
+Lemma 10.8 bounds the inspected cell roles and all static route lengths.
+Finite register and code sizes therefore bound their probes and
+assignments. Scan length increases the **number** of these rows, not
+a row's footprint. Startup and each compiler helper terminate on finite
+actual tapes; Theorem 10.15 supplies finite captured loops; Theorem
+10.20 supplies the finite simulation/publication/return. C-progress
+allows only finitely many joint rows before each of these finitely many
+C rows, so the actual return prefix is finite even with arbitrary
+producer work between them. Summing the evaluated finite contributions
+proves the cost claims and counts every retained vertex once at creation.
+For AIF.22, InputPrime and its last equality test cost two rows; each
+of its $r$ iterations costs Test, Read, EX, WR, MR and Next, or six.
+MeterPrime and its last equality test cost two; each of its $n$
+iterations costs Test, EX, WR, MR and Next, or five. Capture costs one.
+Finish has three three-row Appends and two one-row Seals, or eleven.
+Their disjoint sum is $1+(6r+2)+(5n+2)+11=6r+5n+16$, including both
+zero-prefix branches. Those rows' structural charges are still the
+actual AIF.21 evaluations; AIF.22 is not their old-native-fee price.
+These calculations prove neither an optimum nor a bound uniform over
+all cut lengths. ∎
+
+### 10.9. The acquired relation, suppliers and remaining limits
+
+**Proposition 10.29 (strict busy-cut capability and its price).** The
+bridge of Theorem 10.23 is not merely the post-IN case or a delayed
+Ready acquisition. For example take an actual canonical TagRead frame
+with payload length at least two and Capture immediately after its
+first payload IN, before its matching WR. Then let P take zero further
+steps. The consumer still seals, actually Calls, prints the exact
+historical IN-before-WR image and returns its invocation token under
+C-progress. The theorem also applies at all other lawful cuts, including
+raw invalid source-overwrite packets and either unsealed copy stage.
+
+Proof. The example is an actual prefix in $\mathcal R_H$ by Definitions
+2.2–2.3; the first bit is in $Q$ and already in $J$. Capture has no
+producer-phase guard. Theorems 10.15–10.23 require no later P work.
+For the other listed cuts, Theorem 10.10 retains their raw phase and
+state; the same phase-independent Capture and endpoint-scan proof
+applies. ∎
+
+The additional information relation is a sealed consumed-bit mirror joined
+atomically to the original receipt frontier, with persistent occurrence
+links, an actual copied seed binding and live C access rights. Each
+component has a distinct role. Data without a cut join does not identify
+which meter/input pair was attained together. A cut ordinal without the
+consumed input cannot separate §5's equal-clock input fibers. A symbolic
+key without the actual seed/input copy and rights is not callable memory.
+These observations justify the roles of the resources in this mechanism;
+they do not prove that a duplicate mirror or these particular four links
+are universally minimal. Indexing original request cells with a separately
+captured pending latch would be a different mechanism with its own
+permissions, invariance and same-cut proof obligations.
+
+The old AIF theorem supplies information sufficiency after the key is
+given; it does not supply the busy-cut capture and actual C acquisition.
+RCA's compiler, Step and Publish supply the reused finite computation
+and return machinery. RCA §§14–15's installed service instead obtains
+its covers after finite lawful completion/installation and uses its own
+D1 input/clock convention. It cannot finish that acquisition on the
+zero-P continuation of Proposition 10.29. SSA supplies the original
+bounded structural encodings and append/alias templates; its switch
+lemma's empty ports do not authorize the new links. CSA supplies scoped
+original-image interpretations and installed serial callable routines,
+not this independent C entry at every producer phase. The new theorem's
+delta is the proved **actual all-cut acquisition-to-use bridge in this
+explicitly stronger paid basis**, not those interpreters, kernels or
+renamed interfaces.
+
+The same distinction excludes replacement by a historical owner protocol
+requiring a future complete frame and SourceReady service interval
+([Owner-Control Historical Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_CONTROL_HISTORICAL_ACQUISITION.md),
+§§7–8), by the completed-predecessor cover of
+[General Cut Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GENERAL_CUT_ACQUISITION.md),
+§§1–2, or by a local open-row completion atom without an interior
+consumer acquisition callback
+([Open Row Completion and Authority](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OPEN_ROW_COMPLETION_AND_AUTHORITY.md),
+§§5,8). Mixed successful-history incidence covers do not establish these
+new seed/mirror/frontier rights either
+([General Target Incidence Cycle](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GENERAL_TARGET_INCIDENCE_CYCLE.md),
+§§18–20). Concurrent atomic Read/rho snapshot contracts, including those
+in [Concurrent Native Cut Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md),
+are different interfaces; no impossibility claim about them follows.
+
+At the declaration level, `NativeSerialMachine.replay_deterministic` and
+its reached-prefix applications use a supplied actual reply history;
+`NativeFullSourceProducer.native_source_producer` and its private traversal
+supply the original stationary source acquisition. The owning Scribes
+make those scopes explicit. `TypedFiniteViewKernel.typed_finite_view_kernel`
+supplies typed partial experiment semantics, not the new read grant.
+`NativeSerialEffective.original_code_service_simulation` assumes its
+actual original-code realization correspondence; it is not a proof of
+this bounded capture row. `NativeAcquiredPrefixCylinder` supplies its
+transaction-specific acquired-prefix/resumption facts, not D0 mirror
+installation or alias preservation. These actual statements, including
+their private proof auxiliaries, are reused at their stated scopes;
+the proof of Lemmas 10.8 and 10.12–10.17 is an additional concrete
+construction.
+
+Pinned mathlib `Computability/StateTransition.lean` at revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`, `StateTransition.Respects`,
+`tr_reaches` and `tr_eval`, provides transition/evaluation transport
+under a supplied state relation and matching fragments. It does not
+supply the acquisition relation or the cost/permission realization here.
+No external Lean package or private axiom is used to assert those facts.
+This prose construction claims no Lean certification.
+
+Herlihy and Wing, *Linearizability: A Correctness Condition for Concurrent
+Objects*, ACM TOPLAS 12(3), pp. 464–468
+([author copy](https://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf)),
+supplies the mature distinction between process histories and a legal
+linearization. The atomic Capture has a unique actual cut by its
+explicit row semantics; linearizability alone would not give its
+C-progress acquisition proof or complete joint chronology.
+Driscoll, Sarnak, Sleator and Tarjan, *Making Data Structures Persistent*,
+JCSS 38(1), pp. 86–88
+([author copy](https://www.cs.cmu.edu/~sleator/papers/another-persistence.pdf)),
+supplies the fixed-field/access-pointer formulation of retaining versions.
+Its update/time/null conventions are not substituted for this machine's
+11-slot initialization, retained-cell accounting or live ownership.
+These are `literature-attested` methods at those scopes. The concrete
+bridge proved here is `repo-derived`; no worldwide novelty or exhaustive
+absence of a stronger supplier is inferred.
+
+The hypothesis changes are essential and visible: two controllers and
+two meters, extra tapes and reciprocal ports, atomic mirrored IN,
+atomic two-frontier binding, cursor/equality reads, an acquisition-sender
+setup grant, and the installed C seed/code/channel/token foundation. Each fixed public
+capacity/description has a finite apparatus uniform in its source value;
+no uniform finite storage bound over all capacities or histories is claimed.
+The result leaves the original fixed-apparatus named-cut problem open
+when those grants are absent. It does not solve the original fixed
+$G_{gc}$ or parked-consumer tasks under unchanged initialization. It
+does not equate the current source with an invalid packet's old semantic
+tree, reconstruct current live source authority from historical bits,
+or identify $E^+$ from AIF.18. It proves no enlarged four-kernel theorem,
+no universal alpha/beta reduction, no physical or hostile-memory claim,
+no reclamation theorem and no cost optimum. The wider four-expression
+programme and its unrestricted recovery obligations remain open.
+
+## 追加锚（本行以下为增补区）
+
+## 11. Exact joint endpoint fibres and the chronological distinction
+
+### 11.1. One initialized process and two different continuation questions
+
+**Convention 11.1 (fixed apparatus and the whole reached domain).** Fix
+$H\ge1$, $\xi$, the literal $D_0$ description, its chosen allocation and
+descriptor routines, the scaffold, and all finite startup and C routines
+of Definitions 10.1–10.7. These are the published apparatus $A^+$; no row,
+port, token, input channel or naming convention is added here. For each
+canonically installed $u\in\mathcal T_H$, write $\sigma_u$ for its complete
+common startup through $F$, and put
+
+$$
+n_F(u)=n(a(u)),\qquad c_F(u)=N_C(F).
+\tag{AIF.23}
+$$
+
+The first number is the absolute original P ordinal; the second is the
+absolute C receipt count at $F$. Both include their actual paid startup
+work. They are finite functions of the acquired seed and fixed apparatus,
+not source-independent constants or free runtime numeral registers.
+
+Let $\Omega^+$ contain every finite lawful executed joint prefix at or
+after $F$, over every such $u$, every admissible producer input choice,
+and every lawful owner schedule and Capture/Call choice. Include $F$
+itself, all Armed cuts, every interior acquisition, import, bank update,
+descriptor, package, simulation, source-overwrite, partial-copy, printing,
+ACK, invocation-TOK and Ready-CTL cut, and any finite number of later
+Calls. A cut is between complete atomic rows, as in Definition 10.3.
+No final-seal, valid-current-source-packet, completed-request or consumer
+Ready restriction is imposed.
+
+An unexecuted trial is not an additional row in such a prefix. Waiting
+without a row adds neither a receipt nor an event. The external input
+actor is exactly Definition 2.2's common ready actor. There is no extra
+retained caller transcript, deadline, acknowledgement choice or policy
+state in this apparatus. Schedules and future supplied bits remain
+choices, not controller inputs supplied in advance. A physical
+noncanonical IN has its actual one-row successor, but its later
+continuation lies outside $\Omega^+$, exactly as in Definitions 2.2 and
+10.4. Startup permission fixes $\sigma_u$: it admits no alternative P/C
+interleaving before $F$. Its construction and seed-copy work are retained.
+
+**Definition 11.2 (raw state, space, chronology, boundary and acquired memory).**
+Write $X^+(z)$ for the complete raw state given by Definition 10.21's
+row recurrence, at any $z\in\Omega^+$. It contains all 129 tape
+components, both meters and controllers, all eleven slots of every
+constructed vertex, every mark, latch, PC, seal, origin and descriptor,
+all old versions and partial objects, the four anchors, grants, live
+tokens and availability fields. An invalid mid-write source packet is
+represented by its actual bits and phase. The chronological list used
+to define the recurrence is not an additional field of its endpoint.
+In particular there is no globally ordered output archive or allocation
+counter unless the specified rows actually construct it; these rows do
+not construct one across the owners.
+
+Keep the four meanings of Definition 10.25 independently:
+
+- $S_{\rm now}(z)$ is the actual current rooted ordered storage with its
+  cell/register gadgets and every labelled incidence, including access,
+  capture and scan links. It retains the fixed origins and actual
+  occurrence identities, not an arbitrary graph isomorphism class.
+- $T_{\rm exact}(z)$ is the actual total chronology $E^+(z)$ from the
+  common foundation: all primitive occurrences, owners, inputs,
+  commands, receipts and functional outcomes in their executed order.
+  When complete intermediate raw states or structural audit data are
+  requested, retain those as additional historical observations.
+- $B_{\rm now}(z)$ is the current primary terminal-antichain observation
+  together with the live port/token/availability relations specified in
+  Definition 10.25. It is not defined by a proposed decoder.
+- $M_C(z)$ is C's actually acquired retained backing, partial material,
+  grants and bound references, with its current read/call rights and
+  installed access routines. A partial destination is retained with its
+  actual unavailability. This does not give C all P data or a global scan.
+
+SSA §§3–5's cell decoding applies componentwise to $S_{\rm now}$:
+the eight ordered bit gadgets decode each cell, finite register gadgets
+decode control and rights, and the eleven labelled slots give the
+remaining links. Conversely those raw fields construct precisely that
+storage description. Thus $S_{\rm now}$ and $X^+$ are lossless
+representations of the same current material, with their actual names.
+This elementary representation correspondence claims no historical
+chronology inverse. A released OUT word and a stored word are distinct;
+owner-local output records, where constructed, remain in the raw state.
+
+**Definition 11.3 (the current native continuation task).** Define
+$Q_{\rm now}$ before introducing its sufficient coordinates. Its named
+primitive trials are AdvanceP, SupplyP($b$), Capture, Call, and AdvanceC
+of the next prescribed internal C row. AdvanceC does not select an
+arbitrary cursor operation or issue a command in place of internal work.
+Capture and Call have precisely Definition 10.11's phase/token guards.
+The installed original finite semantic, row-audit and delivery protocols
+of Definition 2.6 are experiments made from their actual primitive rows.
+There is no new selector, source request or arbitrary C helper entry.
+
+A response retains actual enabledness/authority, native functional label,
+released outputs, the complete raw joint successor after each executed
+row, and that future row's evaluated structural tariff and owner tick/fee
+charge. The complete successor is mathematical audit data, as in
+Definition 2.6; it is not an acquired public value on which the controller
+may secretly branch. Empty responses retain running/terminal type.
+Finite adaptive experiments branch only on their acquired public phase,
+availability and responses. All finite such experiment trees are allowed;
+no predetermined interleaving or fixed future producer word is assumed.
+
+The response and domain distinctions are exact:
+
+| Trial situation | Task value and physical effect |
+| --- | --- |
+| Enabled prescribed row, including a source reject, `absent` or paid `no-row` | Executed label, outputs, charge and complete $X^+$ successor, with the actual receipt |
+| Disabled or unauthorized trial, early/busy Call, repeated Capture, unavailable read | Unexecuted `none`; no receipt and no raw state change |
+| Physically enabled SupplyP($b$) with $b\notin\operatorname{Adm}$ | Undefined on the lawful experiment domain; nevertheless its actual latch/control, mirror and receipt successor physically executes |
+
+An experiment is defined exactly when none of its executed branches
+attempts the last kind of Supply. Write $z\equiv_{\rm now}w$ for equality
+of these partial finite-experiment maps, including their domains.
+$Q_{\rm now}$ starts at the compared cut. It does not request the already
+elapsed $E^+$, past complete joint successors, or accumulated past
+$W(E^+)$. Those remain legitimate, different tasks. Nor does it identify
+two differently ordered future experiment words: responses to a fixed
+word keep that word's chronological output and successor sequence.
+
+### 11.2. Material coordinates and actual occurrence identity
+
+**Definition 11.4 (the joint material coordinates).** For $z\in\Omega^+$,
+let $n(z)=n(p(z))$ be the absolute P receipt count, let
+$I(z)=I(p(z))$ be the full consumed source-frame input word in $J$, and let
+
+$$
+m(z)=N_C(z)-c_F(u).
+\tag{AIF.24}
+$$
+
+Set $\kappa(z)=\bot$ before Capture. After Capture, set $\kappa(z)$
+equal to the number of P receipt cells strictly before the cell root
+named by the persistent meter fixed-end anchor. Put
+
+$$
+\mathcal K(z)=
+ \bigl(\operatorname{code}(u),I(z),n(z),\kappa(z),m(z)\bigr).
+\tag{AIF.25}
+$$
+
+This is an auxiliary mathematical extraction, not a newly installed
+natural view or C input. On this domain $m=0$ precisely while Armed,
+and then $\kappa=\bot$. Otherwise $m\ge1$ and
+$n_F(u)\le\kappa\le n$. Lemma 10.13 identifies $\kappa$ with the
+absolute P count immediately before the unique Capture. Counting cells
+strictly before its linked root continues to give that number even
+when the root's symbol is no longer R. It does not require an immutable
+receipt byte. The captured input length need not be supplied separately:
+it is the consumed-input length in the original prefix through
+$\kappa$.
+
+**Lemma 11.5 (extraction includes provenance and unfinished material).**
+There is a finite mathematical extraction $\mathcal E$ on the actual
+raw-state image with $\mathcal E(X^+(z))=\mathcal K(z)$ for every
+$z\in\Omega^+$. The extraction uses no current-tree decoder at an invalid
+source packet, no future input and no new live read grant.
+
+Proof. The retained sealed startup manifest gives the actually acquired
+seed and its source binding. Equivalently, SSA Proposition 2.1 extracts
+that seed from the original retained acquisition rows under $\pi_P$.
+It is not reconstructed from a currently overwritten private packet.
+The fixed boot and seed-copy graphs determine $n_F(u),c_F(u)$ by finite
+evaluation. Lemma 10.12 gives $I$ as precisely $J$'s sealed bit prefix,
+including an original input bit still between its IN and WR. Count P's
+meter receipts to obtain $n$, and C's receipts to obtain $N_C$ and hence
+$m$. Detect Capture from its consumed token and fixed-end links; before
+it the anchors are empty. Afterwards enumerate the P meter from its L
+up to, but excluding, the root at that end link. Persistent spine/root
+identity and Lemma 10.13 make this count exactly $\kappa$. None of these
+finite inspections reads a receipt payload to infer its past position.
+Dirty banks, partial descriptors and unavailable destinations stay in
+the input raw state; the extraction neither completes nor discards them.
+These operations prove the assertion on authentic reached material. ∎
+
+**Lemma 11.6 (local construction identities survive an exchange).**
+In $A^+$ the name of a constructed occurrence is fixed by its actual
+controller/arena construction occurrence and fixed constructor role.
+Its descriptor fields and any original reference to it are unaffected
+by changing only the interleaving of two fixed post-Capture owner words.
+There is no additional global allocation-order coordinate in $X^+$.
+
+Proof. Definition 10.9 preserves P-port construction order and its old
+Base and descriptor streams. C has different ports and its own streams;
+its receipt count is not an input to an original Base/creation scan.
+Definition 10.21 uses these controller/arena construction occurrences
+also for fresh C vertices. Within one constructor the template roles
+are fixed. An expanded trailing terminal retains its identity; it is
+not replaced by a vertex named by the new global row position. Thus
+one can identify a row by its owner and absolute owner-local receipt
+ordinal, and its fresh vertices by their actual arena/constructor roles,
+without renaming any stored field. The local descriptor ordinal counts
+completed descriptors on that owner's actual stream, not all joint rows.
+
+During startup these conventions give one fixed $\sigma_u$. At Capture
+the roots are existing P-meter/J occurrences and the anchors are fixed
+roles. Corollary 10.17 binds the package to that unique flight through
+literal anchor role/port tags and their actual persistent links, not a
+supplied joint-time numeral. Later simulated histories use original D0
+references; their target is that captured original prefix. All other
+C creation/binding records come from its owned routines. These exhaust
+the sources of references in the declared apparatus. Interleaving
+therefore cannot introduce an extra name into those fields. This is a
+correspondence of the specified actual occurrences, not permission to
+replace the allocation convention by a convenient isomorphic one. ∎
+
+### 11.3. The guarded exchange on every post-Capture phase
+
+**Lemma 11.7 (complete native P/C diamond).** At every reached
+post-Capture cut $x$, take a lawful next P row $e$ and an enabled next C
+row $f$, including a token-authorized Call entry. Then each remains
+enabled and lawful after the other, with the same native functional
+operands, read/test results, owner-local receipt and released output.
+The complete two-row endpoints satisfy
+
+$$
+\delta_C(\delta_P(X^+(x),e),f)
+ =\delta_P(\delta_C(X^+(x),f),e).
+\tag{AIF.26}
+$$
+
+This includes every interior expansion row and the final ACK, invocation
+TOK and Ready CTL. It excludes Capture itself. It asserts equality of
+endpoints, not of the two ordered response lists or their intermediate
+complete successors. In particular it asserts no equality of past
+structural probe traces or accumulated tariffs.
+
+Proof. First partition the actual fields. A P core row reads/writes only
+its original ports, registers and rights. Its common receipt is on P's
+meter; its public IN additionally appends to $J$. It neither reads C's
+control/work nor tests C's tokens. C's core work, receipt, ordinary head
+marks, source/destination cells, compiler banks and tokens are on its
+ports/registers/meter. Only the two forward scans access P's meter or
+$J$ after Capture. The complete remaining cases are these:
+
+| C row family | Information it can use outside C-owned material | Assignments outside C-owned material |
+| --- | --- | --- |
+| InputPrime, InputNext | Existing next-cell spine route, strictly before the captured end when moving from a data cell | Only that scan anchor's $O_3$ and the old/new targets' $H_3$ |
+| InputTest | Equality of the persistent scan/end target occurrences, before a symbol read | None |
+| InputRead | Captured strict-prefix mirror bit | None |
+| MeterPrime, MeterNext | Existing next-cell spine route up to the captured end | Only its scan $O_3/H_3$ pair |
+| MeterTest | Equality of persistent target occurrences; no receipt-byte read | None |
+| InputAppend, MeterAppend and their EX/WR/MR subrows | None; the matched data latch or literal 1 is already C data | None |
+| Finish, spool seals/import and every partial package/descriptor row | None; manifest and spools are C-owned acquired data | None |
+| Call entry, literal simulation and every bank/scratch update | None; represented P bits and permissions are C data | None |
+| Archive, Allocate/Base, both copies, print OUT, ACK, completion/return, TOK and Ready CTL | None; actual arenas, channel roles and live invocation/read tokens are C-owned | None |
+
+The Capture end links are never reassigned in this table. Later imports
+or Calls may retain the fixed anchor role binding; they do not sample a
+new P value or follow a live append head. The consumer has no further
+external data input. The displayed families include subroutine entry,
+terminal tests and purpose-changing CTLs; the RCA word expansions do
+not insert a hidden access to P. Their local port renaming is $i\mapsto65+i$.
+
+Check the shared reads before reasoning about disjoint writes. At a
+non-end InputTest, the cursor is strictly within the captured prefix by
+Theorem 10.15's invariant. InputRead therefore reads the same sealed bit
+in either order. Any later P mirror append is at the captured end or
+to its right; it cannot change that bit or its existing next-cell route.
+At the end, InputTest compares occurrence identity first and reads no
+symbol. Thus even a P IN turning that very former-R root into a bit
+cannot change its branch. InputPrime from L, including the empty-input
+case, follows the same preexisting edge to the same root. InputNext
+never moves from the fixed endpoint. On the meter the argument is
+topological: each used next route already existed at Capture, and C
+never reads changing receipt bytes or old meter marks. A P receipt
+may change the fixed endpoint's symbol, but not its root or the equality
+test. These statements hold at every scan subphase, not just loop ends.
+
+Now check assignments and aliases. A P bit rewrite uses the old four
+bit-gadget slots of Definition 10.7 and preserves $O_2,H_2,O_3,H_3$.
+P ordinary heads and meter append/read heads use the old reciprocal
+pairs. C cursor movement changes only its own $O_3/H_3$ slots; it does
+not change symbol or old mark tracks. If the scan target, fixed end and
+old P read/append head coincide, these are still different slots. In
+particular clearing an old scan $H_3$ cannot clear a P $H_0/H_1$ or the
+fixed-end $H_2$. A P append preserves a scan slot left on its old R.
+The seal on a mirror bit is a write restriction, not a claim that every
+slot of that cell is frozen.
+
+For the spine, a P append changes its trailing terminal's child slots
+and attaches new vertices. C's guarded routes stop at the already
+existing captured cell root; none follows the newly extended suffix.
+The append therefore changes no traversed prefix edge. C changes none
+of P's read/append marks, guards, symbols, latches or current-frame
+syntax. In particular a chosen admissible Supply remains admissible.
+The compiler, copy and return rows have no shared data assignments at
+all. Each owner's receipt construction is on its own meter. Fresh
+vertices on the disjoint arenas have exactly the same identities by
+Lemma 11.6; allocating one owner's cell does not consume a name needed
+by the other. Unnamed slots, even on aliased roots, are preserved.
+
+It follows that both rows see the same functional data and authority
+in either order, take the same native branches and make the same
+consistent slot assignments. Combining those assignments gives the
+same eleven-slot raw state, including every dirty/retired object and
+live token. This proves both enabledness preservation and AIF.26.
+It also gives reverse reordering legality: in an actual adjacent pair
+$ef$, $f$ was already enabled before $e$, since $e$ changed none of its
+guards; likewise for $fe$. An early/busy Call or unauthorized operation
+is preserved as an unexecuted trial, not inserted as a successful event.
+Capture is absent from the table because it reads current append ends;
+its order-sensitive case is proved in Proposition 11.14. ∎
+
+### 11.4. Normal evaluation and the exact complete-state fibre
+
+**Lemma 11.8 (determined local words at every partial cut).** A realized
+$\mathcal K=(\operatorname{code}(u),I,n,\kappa,m)$ determines the entire
+original P word through $n$. If $m>0$, it also determines the exact
+post-$F$ C word of length $m$, starting with Capture, through whatever
+partial acquisition or Call row it ends at. No fixed whole producer
+word is an additional hypothesis.
+
+Proof. Apply Theorem 4.4 to $(\operatorname{code}(u),I,n)$ and the
+projection of Theorem 10.10. This recovers all original P rows, their
+actual input bits, outcomes, references and source/work states, not
+just completed semantic calls. Take its prefix through $\kappa$ and
+extract its already consumed $I_*$. This step uses no future input:
+replay stops at that count, even when the reservoir $I$ contains later
+bits. The same fixed startup evaluation gives the actual $\sigma_u$.
+
+With P held at this captured prefix, execute Capture and then C alone.
+The scan invariant and Lemma 11.7 give exactly the same C observations
+as any continued P schedule. After those scans, C reads only its owned
+manifest/spools and deterministically constructed data. Its next
+internal row is prescribed. At Sealed or Ready, the only next
+*executed* C entry is the payload-free Call; at Armed it was Capture.
+An optional delay or unsuccessful command trial contributes no C row.
+The finite native word compiler, literal simulator and return graphs
+fix all subsequent subrows. Hence the first $m$ executed C rows are
+fixed, including every latch, half-written bank, descriptor and token
+subphase, and any number of complete or incomplete Calls.
+
+Every needed finite C prefix exists with P paused: acquisition and each
+chosen Call have finite own work by Theorems 10.15–10.20, and Call can
+be chosen again after its actual token return. That fact proves
+existence of finite local words; it supplies no fairness or inevitable
+external Call. Comparing with an actual interleaving uses Lemma 11.7,
+or equivalently the scan invariant followed by deterministic C-only
+work, so no local C row depends on a future P row. ∎
+
+**Theorem 11.9 (exact raw-state fibres on $\Omega^+$).** For all
+$z,w\in\Omega^+$, including different valid installed seeds,
+
+$$
+X^+(z)=X^+(w)
+ \quad\Longleftrightarrow\quad
+\mathcal K(z)=\mathcal K(w).
+\tag{AIF.27}
+$$
+
+For a realized captured key set $p=n-\kappa$ and $q=m-1$.
+Its complete raw-state fibre consists precisely of the histories
+
+$$
+\sigma_u\ ;\ P_{n_F+1}\cdots P_\kappa\ ;\ \mathrm{Capture}\ ;\
+\operatorname{Shuffle}
+ \bigl(P_{\kappa+1}\cdots P_n,\ C_2\cdots C_m\bigr),
+\tag{AIF.28}
+$$
+
+where $P_i$ is its fixed absolute original P row and $C_j$ its fixed
+post-$F$ C row. Empty chains are allowed. Every indicated shuffle is a
+lawful execution with literally the same complete raw endpoint. Every
+history in this fibre is connected to every other by adjacent exchanges
+of one P row with one non-Capture C row strictly after Capture. An Armed
+key instead has just $\sigma_u;P_{n_F+1}\cdots P_n$.
+
+Proof. Equal raw states have equal extracted keys by Lemma 11.5,
+including the seed and captured root rank. Conversely fix a realized
+key. If Armed, no post-$F$ C row has executed, so Theorem 4.4 and fixed
+startup give the unique joint word. In the captured case every actual
+word has the fixed startup, exactly P rows through $\kappa$ before its
+first C row Capture, and the two remaining owner projections of
+Lemma 11.8. There is no earlier non-Capture C row while Armed.
+
+Normalize any such word by moving each remaining C row left past
+post-Capture P rows. Every exchanged pair is actually reorderable by
+Lemma 11.7, preserves its owner-local functional result and name, and
+has the same complete two-row successor. A shared suffix therefore
+continues from exactly the same raw state. A finite inversion count
+terminates this reordering at
+
+$$
+\sigma_u\ ;\ P_{n_F+1}\cdots P_\kappa\ ;\ \mathrm{Capture}\ ;\
+ C_2\cdots C_m\ ;\ P_{\kappa+1}\cdots P_n.
+\tag{AIF.29}
+$$
+
+Lemma 11.8 fixes every row in this representative and its endpoint.
+In particular its producer suffix is lawful after the C work, since
+that work changed no original P field or input prefix. Thus all histories
+with the key have the same complete $X^+$, proving AIF.27.
+
+For exactness rather than only inclusion, use the finite occurrence
+poset with the two displayed owner chains and
+$P_i<\mathrm{Capture}$ for $n_F<i\le\kappa$,
+$\mathrm{Capture}<P_i$ for $\kappa<i\le n$, with startup before them.
+Its linear extensions are exactly AIF.28. The already proved native
+guards and diamond realize every exchange of its incomparable P/C
+occurrences. Generic finite-poset swap connectivity, as in Context
+Theorem 13.6 and `EnabledPathSwapConnectivity.result`, now applies:
+no absent event's owner predecessor can be skipped, and both minimal
+remaining owner events are enabled at each lower cut. Alternatively
+induct over a proposed shuffle, choosing its next owner row; the
+shared-read invariant and independent guards give that same row and
+outcome. Both arguments realize every listed extension and exclude
+any additional one. The fixed words, actual occurrence identities and
+Capture rank preclude any further history in the raw-state fibre. ∎
+
+**Corollary 11.10 (finite mathematical reconstruction of the endpoint).**
+On the actual key image there is a finite decoder $\mathcal D$ given by
+AIF.29, and on the actual raw-state image
+
+$$
+\mathcal E\mathcal D=\mathrm{id},\qquad
+\mathcal D\mathcal E=\mathrm{id}.
+\tag{AIF.30}
+$$
+
+Proof. Decode the producer word and startup by Lemma 11.8, evaluate the
+finite normal representative, and retain its entire raw successor.
+All routines used are literal finite-prefix evaluations. Theorem 11.9
+identifies this with the actual endpoint of every representative.
+Re-extraction gives its prescribed key; reconstruction after extracting
+any actual endpoint returns that endpoint. No authentic-history
+recognizer on arbitrary fabricated keys is required or asserted. ∎
+
+### 11.5. Both continuation-kernel directions and actual updates
+
+**Theorem 11.11 (the exact current-continuation kernel).** On the entire
+$\Omega^+$ domain,
+
+$$
+\begin{aligned}
+z\equiv_{\rm now}w
+&\quad\Longleftrightarrow\quad \mathcal K(z)=\mathcal K(w)\\
+&\quad\Longleftrightarrow\quad X^+(z)=X^+(w)\\
+&\quad\Longleftrightarrow\quad S_{\rm now}(z)=S_{\rm now}(w).
+\end{aligned}
+\tag{AIF.31}
+$$
+
+The at-most-one-primitive response maps already have this kernel.
+There is no public-output-only rigidity assertion in this theorem.
+
+Proof. Equal keys give equal complete raw states by Theorem 11.9.
+From equal raw states, the same named trial has the same physical
+and task-domain status, guard, native output/label, tariff and complete
+successor. In the enabled noncanonical Supply case, both lawful maps
+are undefined there; both physical raw edges still have their actual
+equal successors. In a disabled case both trials are unexecuted `none`.
+In an executed lawful case the successor remains in $\Omega^+$ by
+Lemma 2.7, Theorem 10.10 and the installed C phase rules. Induction
+on finite experiment trees proves equality of the partial maps and
+all their response coordinates. This proves sufficiency, including
+future acquisition completion, repeated Calls, printing, ACK and
+actual invocation-token return.
+
+For the reverse direction choose one lawful next P action at $z$.
+Such an action exists at every cut: Lemma 2.7 supplies the prescribed
+non-IN step or at least one admissible bit, and Definition 10.4 makes
+its enabledness independent of C. The dispatcher continues at a final
+idle boundary; it is not a globally stopped producer. If AdvanceP
+executes, equality of the one-action response maps requires the same
+successful action at $w$, with equal complete raw successors.
+Extracting AIF.25 from these successors gives
+
+$$
+(\operatorname{code}(u_z),I_z,n_z+1,\kappa_z,m_z)
+ =(\operatorname{code}(u_w),I_w,n_w+1,\kappa_w,m_w).
+\tag{AIF.32}
+$$
+
+Cancel the increment to recover equal predecessor keys. If the chosen
+action is SupplyP($b$), the same response at $w$ cannot be disabled or
+undefined. It must be an admissible executed Supply, with equal raw
+successor. Its extracted equality is AIF.32 with $I_zb,I_wb$ in place
+of $I_z,I_w$. Right cancellation of the known last bit and cancellation
+of the count again give equal predecessor keys. Capture status and
+C count are unchanged by either P action. This proves necessity
+without a free empty-experiment state read. The representation
+correspondence in Definition 11.2 proves the last equivalence in both
+directions. It does not give the missing independent kernels for
+$B_{\rm now}$ or $M_C$. ∎
+
+**Proposition 11.12 (whole-edge transport, with raw exits kept distinct).**
+On the actual key image the updates for each executed lawful row are
+
+$$
+\begin{aligned}
+\text{P non-IN}:\quad &(u,I,n,\kappa,m)\longmapsto(u,I,n+1,\kappa,m),\\
+\text{P IN}(b):\quad &(u,I,n,\kappa,m)\longmapsto(u,Ib,n+1,\kappa,m),\\
+\text{Capture}:\quad &(u,I,n,\bot,0)\longmapsto(u,I,n,n,1),\\
+\text{other C row}:\quad &(u,I,n,\kappa,m)\longmapsto(u,I,n,\kappa,m+1).
+\end{aligned}
+\tag{AIF.33}
+$$
+
+Here $u$ abbreviates its code. An update is available only at that
+named action's actual guard; the numerical formula alone does not
+authorize a row. Disabled trials have the original `none` response
+and identity state effect. Recovering the state, taking the action and
+extracting its key equals the displayed update. Decoding the updated
+key gives the complete actual successor, with the same label, outputs,
+rights and future-row charge. These statements include every partial
+C phase and repeated Call.
+
+Proof. Every P row appends exactly one P receipt. Only a public IN
+adds one mirrored consumed bit. Neither changes the fixed-end rank
+or C's count. Capture samples the current P end, consumes its token
+and appends precisely its first post-$F$ C receipt. Every other C row
+preserves P's original state, mirror and fixed ends, and adds one C
+receipt. These are exactly AIF.33. Closure for the stated lawful
+P cases is Lemma 2.7; closure for C is its installed row semantics.
+Theorems 11.9–11.11 identify all guards, outputs, costs and complete
+successors from the recovered raw state, proving the update square.
+
+At an enabled Supply with a nonadmissible bit, reconstructing the
+current raw state still gives its one actual physical IN successor,
+including its extra mirror cell and P receipt. No $\mathcal D$-image
+claim for that successor's later malformed continuation follows:
+AIF.33 is a same-image theorem only for admissible bits. It does not
+turn an executed exit into `none` or erase its physical raw successor.
+No historical permission in a simulated image becomes current P
+actuation authority by any of these maps. ∎
+
+### 11.6. An independently specified partial time and its recovery routes
+
+**Definition 11.13 (owner-event time with the captured read cut).** Define
+$T_{\rm cut}(z)$ directly from actual event occurrences. Retain the fixed
+startup word $\sigma_u$, followed by the two post-$F$ owner chains.
+A row is located by its owner and owner-local receipt ordinal and
+carries its opcode, actual input bit or command, native functional
+read/test/output result and its owner-local construction/reference
+roles. Repeated equal commands are different occurrences. For $m>0$,
+retain additionally which P frontier Capture sampled: order every P
+row through $\kappa$ before Capture and every later P row after it.
+Taking transitive closure gives a finite occurrence poset. Equivalently
+retain its two bracketing inequalities, omitting a nonexistent endpoint.
+For $m=0$, only the P chain follows startup.
+
+This temporal observation has an independent operational meaning:
+it keeps each owner's executed succession and the actual shared
+read-version cut. It forgets other post-Capture cross-owner placement.
+It does not retain past whole joint successors or structural
+probe/assignment traces as row labels. Such traces need not commute.
+The upper Capture bracket is an exact read/append exclusion, not an
+assertion that P waits for a C message. Thus $T_{\rm cut}$ is a different
+partial-time task, not a renamed $T_{\rm exact}$ or a claim that its
+edges are exactly Lamport's message-based happened-before relation.
+
+**Proposition 11.14 (the captured frontier is indispensable).** At every
+actual Armed cut $x$ and every lawful next P row $e$, both
+$x;\mathrm{Capture};e$ and $x;e;\mathrm{Capture}$ are lawful. Their
+$\operatorname{code}(u),I,n,m$ coordinates at the displayed endpoints
+are equal, but their captured ranks are respectively $n(x)$ and
+$n(x)+1$. A future allowed C acquisition/Call experiment separates
+them by released output alone.
+
+Proof. Capture has no producer-phase guard, and P preserves its token
+and grants while Armed. Conversely Capture changes no original P
+field or admissible-input condition. The two orders therefore execute.
+Each P row appends one receipt, including a non-IN row which consumes
+no new bit. Capture hence attaches its meter end to two different
+permanent roots, giving the stated ranks. An input frontier alone
+would miss this distinction for any such non-IN row.
+
+Park P after each displayed prefix. Run prescribed C work until its
+package seals, issue Call with its actual invocation token, and run
+through printing, ACK and token return. Theorems 10.17 and 10.20 give
+finite C work under C-progress for both histories. These form one
+finite public-phase-driven experiment: take a bound exceeding the
+sum of the two finite acquisition/Call work lengths and branch on
+Sealed/Ready availability, rather than assuming a uniform bound over
+all cuts. Both release authentic HistoricalImages, one with target
+$n(x)$ and history $p(x)$, the other with target $n(x)+1$ and history
+$p(x)e$. The lossless target/history fields differ. No private-state
+read or live P token is used by this separator. Dropping the captured
+incidence therefore fails an actual future-use task, even when every
+other coordinate in AIF.25 is supplied. ∎
+
+**Theorem 11.15 (space/partial-time recovery and route agreement).** On
+$\Omega^+$,
+
+$$
+T_{\rm cut}(z)=T_{\rm cut}(w)
+ \quad\Longleftrightarrow\quad \mathcal K(z)=\mathcal K(w)
+ \quad\Longleftrightarrow\quad z\equiv_{\rm now}w.
+\tag{AIF.34}
+$$
+
+There are finite recovery maps between the actual images of
+$S_{\rm now},X^+,\mathcal K,T_{\rm cut}$. They are mutually inverse,
+agree around every triangle, and transport each same named next action
+with its complete successor, current guards, functional outputs and
+future charges. These are mathematical maps on authentic descriptions,
+not installed acquisition/conversion routines.
+
+Proof. From $T_{\rm cut}$, the canonical startup input/acquisition
+records determine $u$; its P chain determines absolute $n$ and all
+post-fence supplied bits $I$. Its C chain determines $m$; the Capture
+bracket determines $\kappa$, or absence of C gives $\bot$. Thus this
+observation determines AIF.25 without using a desired inverse as its
+definition. Conversely Lemma 11.8 fixes the startup and both complete
+local functional row words from that key. Lemma 11.6 fixes their actual
+occurrences and reference roles. Adding the prescribed bracket returns
+exactly the observed $T_{\rm cut}$. Theorem 11.11 gives AIF.34.
+
+For explicit routes, decode cell/register gadgets to pass between
+$S_{\rm now}$ and raw $X^+$. Use $\mathcal E$ for $X^+\to\mathcal K$;
+use normal evaluation $\mathcal D$ for the reverse. Extract the local
+words from that evaluation to obtain $T_{\rm cut}$; use the preceding
+chain/count extraction in the other direction. Each procedure returns
+the view of the same reached endpoint fibre. Theorem 11.9 makes all
+these values independent of its chosen chronological representative.
+It follows pointwise on actual images that, for any three such views,
+
+$$
+R_{WV}R_{VW}=\mathrm{id},\qquad
+R_{WZ}R_{VW}=R_{VZ}.
+\tag{AIF.35}
+$$
+
+For updates, append the actually executed event to its owner chain;
+at Capture install its bracket at current $n$, and after Capture put
+a new P event above that fixed read cut. All other C events extend
+the existing C chain. The extracted coordinate changes are exactly
+AIF.33. Proposition 11.12 then gives
+$R_{VW}\overline\delta_V=\overline\delta_W R_{VW}$ on each actual
+lawful action domain, with identical physical/task guard distinctions,
+labels, outputs, future charges and complete raw successors. Induction
+gives the same claim for finite experiments. It does not equate
+responses to reordered words, transport a policy based on unretained
+past chronology, or insert either $B_{\rm now}$ or $M_C$ into AIF.35
+without its own missing kernel proof. ∎
+
+### 11.7. Exactly how much total chronology is left undetermined
+
+**Theorem 11.16 (the complete chronological ambiguity).** For a realized
+captured key the number of different executed joint chronologies in
+its raw-state fibre is exactly
+
+$$
+L(\mathcal K)=\binom{n-\kappa+m-1}{n-\kappa}
+             =\binom{p+q}{p},\qquad p=n-\kappa,\quad q=m-1.
+\tag{AIF.36}
+$$
+
+An Armed fibre has size one. A captured fibre has size one exactly
+when $p=0$ or $q=0$. On each such singleton fibre normal evaluation
+recovers the actual chronology; on the full domain no function of
+$X^+$, or even the joint current value of $S_{\rm now},B_{\rm now},M_C$,
+recovers $T_{\rm exact}$. Non-singleton fibres occur also at actual
+returned Ready endpoints with their live callable rights.
+
+Exact time always has a finite forward recovery to the current raw
+state and to $T_{\rm cut}$ on their actual images. The first evaluates
+the actual chronological rows; the second retains their owner chains
+and actual Capture bracket. These two forward routes agree with the
+endpoint/partial-time maps of Theorem 11.15.
+
+Proof. Theorem 11.9 gives fixed startup, pre-Capture P word and Capture.
+For the remaining two fixed chains, choose the $p$ P positions among
+$p+q$ positions. This gives a bijection with all shuffles, each lawful
+by that theorem. Different choices differ in owner-labelled occurrence
+order, even if some functional symbols coincide. Therefore they are
+different total chronologies and give exactly AIF.36, with no quotient
+by equal opcodes. The binomial coefficient is one when a chain is empty.
+When both are nonempty, putting its first P row before or after its
+first C row gives at least two extensions, so it is greater than one.
+The Armed statement follows from the unique word in Theorem 11.9.
+
+For the forward claim, the chronological word includes its canonical
+installation inputs and all later supplied bits and commands. Apply
+the complete row recurrence from the common foundation in that exact
+order. Each finite row has its unique actual successor, so induction
+returns $X^+(z)$ with every intermediate state retained when requested.
+Projecting the same actual event word to its two owner chains and
+captured cut gives Definition 11.13. Theorem 11.9 identifies evaluation
+of any of its linear extensions with that same endpoint, proving route
+agreement. This does not select the actual extension from the poset.
+
+For a parameterized reached witness, take any valid $u$ and its $F$,
+then execute Capture. Choose any lawful next P row $e$, and let $f$
+be the now enabled InputPrime. Both
+
+$$
+\sigma_u;\mathrm{Capture};e;f
+\quad\hbox{and}\quad
+\sigma_u;\mathrm{Capture};f;e
+\tag{AIF.37}
+$$
+
+are lawful and have identical complete endpoints by Lemma 11.7.
+Their owner order differs. InputPrime releases no data output, so
+even their released output streams coincide. Append an identical
+C-only suffix completing acquisition, an authorized Call, printing,
+ACK, invocation-token return and the Ready CTL. Theorem 10.20 makes
+this suffix finite when C takes its prescribed rows. Determinism from
+the common endpoint makes the returned raw states, live rights and
+complete released streams equal. The distinct old owner orders remain
+in their $T_{\rm exact}$ values. Since $S_{\rm now},B_{\rm now},M_C$
+are observations of that identical current state and rights, they
+coincide as well. A chronological inverse on their joint current
+value would assign two different histories to that one value, which
+is impossible. This also shows that later installed state-based work,
+given the same future choices and no additional previously retained
+record, cannot learn which old ordering occurred. It produces the
+same future acquisitions and outputs from both states. ∎
+
+**Corollary 11.17 (history sequences and additional records).** Within a
+captured raw-state fibre, the complete historical sequence of raw
+joint states has the same $L(\mathcal K)$ ambiguity. Any additional
+record $Z$ for which $(X^+,Z)$ determines exact chronology must separate
+all those $L(\mathcal K)$ histories. A fixed-length binary supplement
+therefore requires
+
+$$
+2^b\ge L(\mathcal K).
+\tag{AIF.38}
+$$
+
+Proof. The fixed startup and fixed local chains evaluate to a unique
+complete raw-state sequence for each shuffle. Conversely that sequence
+reveals, at every post-$F$ step, which owner's meter acquired the next
+receipt. Thus it reveals the owner mask and hence that shuffle. In
+particular the two middle corners of a P/C diamond differ in their
+pair of meter lengths. The histories counted in AIF.36 therefore
+remain different as full-state sequences, even though their last
+states are equal. A sufficient $Z$ must be injective on this finite
+fibre, yielding AIF.38. This is the finite-fibre separation principle
+of `MinimumRollbackAlphabet.minimum_rollback_alphabet` on this actual
+fibre. It neither constructs an online logger nor identifies binary
+width with physical incidence, acquisition work or a cost optimum. ∎
+
+If one instead observes the past globally ordered OUT stream, a retained
+caller transcript, complete intermediate successors or accumulated
+structural work, the equivalence to classify is the fibre of
+$(X^+,\text{that historical observation})$. AIF.28 still enumerates
+its candidate histories, but they must be partitioned by their actual
+values of the additional observation. Those observations are not
+silently discarded by AIF.31 or AIF.34. In particular an arbitrarily
+chosen linear extension of $T_{\rm cut}$ is a compatible chronology,
+not identification of which extension was executed.
+
+### 11.8. Same-run resources, inherited use and the remaining bridges
+
+**Proposition 11.18 (what the fibre preserves in the actual bill).** For
+any $z\in\Omega^+$, its actual owner native counts and fees are
+
+$$
+N_P(z)=n(z),\qquad N_C(z)=c_F(u)+m(z),\qquad
+\mathrm{fee}_P=2n(z),\qquad \mathrm{fee}_C=2(c_F(u)+m(z)).
+\tag{AIF.39}
+$$
+
+Equal raw-state fibres have equal retained vertex counts under AIF.20
+and equal these owner-count/fee coordinates. Each history still pays
+its own complete evaluated AIF.21 structural tariff. Endpoint exchange
+alone supplies no interchange invariance for that past tariff.
+
+Proof. The receipt rules count one row only on its executing owner's
+meter, including startup, Capture and every Call subrow. Definitions
+AIF.23–25 give AIF.39. Literal endpoint equality includes every retained
+vertex and all eleven slots, so AIF.20 gives equal final retained space.
+It includes dead banks, unused allocation, partial records, references,
+source acquisition, copies, printing and return material; none is
+removed by proof normalization. AIF.21 is evaluated along each actual
+history, using the actual old-value alias/probe/assignment cases at
+that history's intermediate states. Equality of its final endpoint is
+not an additive-cost-square proof. To descend any accumulated tariff
+one would additionally need, for each exchanged pair at its actual
+start $x$,
+
+$$
+w_e(x)+w_f(\delta_e x)
+ =w_f(x)+w_e(\delta_f x).
+\tag{AIF.40}
+$$
+
+Process Geometry Theorem 9.2 supplies this separate criterion. No
+AIF.40 assertion is made for the present structural tariff. Identical
+current raw states do give identical costs for a fixed future row,
+which is the different assertion used in $Q_{\rm now}$. ∎
+
+The finite fibre and transport statements require no fairness: they
+concern finite actually executed prefixes and all finite lawful choices.
+When acquisition or a chosen Call is required to finish, retain exactly
+C-progress of Definition 10.16. The existing constructive service is
+Theorems 10.17–10.23: C really acquires the captured original package
+and later prints its historical image with ACK and token return,
+without subsequent P progress. Its acquisition-body subtotal remains
+$6|I_*|+5\kappa+16$, with precisely AIF.22's exclusions. Startup,
+imports, package building, literal simulation, allocation, both copies,
+printing and return remain additional actual work. Normalizing a proof
+of a fibre does not reschedule an actual run or reduce its bill.
+
+The mathematical key AIF.25 is not this acquired C package. It also
+contains *current* P input/progress and C's current progress. This
+section installs no authorized collector of that whole current joint
+key. Nor does it prove separate global kernels for the independently
+defined $B_{\rm now}$ or $M_C$. Common current raw-state sufficiency,
+actual historical-package acquisition, current-joint acquisition, and
+four individual natural-view kernels are distinct conclusions. The
+first and the precise partial-time correspondence are established
+here; the existing second is reused; the last two remain unproved.
+
+### 11.9. Suppliers, primary correspondence and exact mathematical gain
+
+The new source-specific content is Lemmas 11.6–11.8's complete
+alias/guard/phase and actual-occurrence correspondence, Theorem 11.9's
+whole-domain raw-state fibre, its reverse continuation-kernel argument,
+and the concrete distinction between an indispensable captured frontier
+and erased subsequent cross-owner chronology. The five-coordinate
+extraction adds no runtime generator or log. Original producer replay
+alone does not determine C's current partial work or justify exchanging
+its rows. A complete supplied joint schedule would determine them,
+but AIF.28 proves exactly which of those distinctions the present
+continuation task does not need. Two owner chains without their Capture
+attachment fail by the actual future experiment of Proposition 11.14.
+No claim of least hardware, memory or operational acquisition cost is
+attached to this sufficient organization.
+
+| Existing supplier | Use and hypothesis boundary |
+| --- | --- |
+| AIF Theorems 4.4–4.5 and 10.10–10.23 | Exact original D0 replay/projection, actual copied seed, persistent frontiers, acquired original package and later paid callable use. All canonical entrance, atomic grants, ownership and C-progress conditions are retained. The joint endpoint diamond and exact fibre require the additional proofs above. |
+| SSA §§3–5; CSA §§5–7 | Lossless cell/register storage and original retained extraction; four exact kernels on CSA's different serial installed domain. Its history-injectivity is not assumed for the present two-owner fibres, and its existing four-view result is unchanged. |
+| RCA §§11–13.4 | Finite owned word expansions, dirty/retired bank representations, literal original-row simulation, actual allocation/copy/print/ACK/return. Its D1, port-38 input and activation conventions are not substituted for D0. |
+| Context §§13.6,13.8,13.10; Process Geometry §§9,43; Atlas Stable Core Holonomy §§3,6 | Legal extension/swap, route, individual task-kernel and separate cost-square principles. Their generic machinery supplies no AIF shared-slot independence, acquired grant or reverse natural-view kernel by itself. |
+| `EnabledPathSwapConnectivity.result` and its owning Scribe | Finite occurrence-poset execution/linear-extension correspondence and legal adjacent-swap connectivity. It is applied only after Lemma 11.7 and Theorem 11.9 identify native guards and common successors at the relevant lower cuts. |
+| `AdjacentIncomparableSwapInvariance.evaluateOrder_adjacent_swap` | Endpoint preservation under a supplied commuting pair. Its parent-coordinate hypotheses are not automatically an allocating, multi-slot, partial native runtime; the native field proof supplies the required correspondence here. |
+| `TypedFiniteViewKernel.response`, `behavior`, `typed_finite_view_kernel` and its owning Scribe | Typed partial experiment semantics and kernel reasoning. Undefined noncanonical task input is kept separate as in AIF Definition 2.6; the generic result is not an acquisition theorem or a substitute for Theorem 11.11's reverse inclusion. |
+| `NativeSerialMachine.replay_deterministic`, `reached_prefix_replay`, `actual_register_execution`; `NativeFullSourceProducer.native_source_producer` and their owning Scribes | Supplied-history replay and actual stationary acquisition at their original scopes. Private `traverse`, `production_reads` and `stationary` invariants supply no runtime subtree advice or joint schedule. |
+| `NativeIndependentExecution.native_history_correspondence`, including private `recover_word` and `active_history_relation` | The supplied timed word retains all writer placements, including before locals and Return. Its chronology variables do not acquire an AIF schedule and are not erased by the present, explicitly different temporal observation. |
+| `MinimumRollbackAlphabet.minimum_rollback_alphabet` and its owning Scribe | Finite-fibre separation/counting; the actual AIF fibre to which it is applied is AIF.28. Its existential finite label construction supplies no installed logger or free reference capacity. |
+
+These suppliers apply only at their stated hypotheses; their private
+proof helpers grant no additional runtime input. No new Lean certification
+is claimed. Pinned
+mathlib `Mathlib/Computability/StateTransition.lean`, revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`, `Respects`, `tr_reaches` and
+`tr_eval`, transports a supplied relation through matching fragments;
+it supplies neither the native diamond nor a chronological inverse.
+
+The following primary texts supply mature methods and distinctions.
+The concrete AIF correspondence and fibre are `repo-derived`, not a
+claim of worldwide novelty or exhaustive absence of other results.
+
+| Primary text | Correspondence to the declared apparatus |
+| --- | --- |
+| L. Lamport, *Time, Clocks, and the Ordering of Events in a Distributed System*, CACM 21(7), pp. 558–560, [author copy](https://lamport.azurewebsites.net/pubs/time-clocks.pdf), “The Partial Ordering” and “Logical Clocks” | Actual process order is a partial-order generator; a logical clock respecting it does not supply the converse or identify an unrecorded actual total order. Here owner chains are actual receipt successions. The additional Capture bracket is proved from the exact frontier read, and is expressly a read-version constraint rather than an inferred message edge or physical-time law. |
+| G. Winskel, *Event Structures*, LNCS 255, pp. 326–328, [author chapter](https://www.cl.cam.ac.uk/~gw104/Winskel1987_Chapter_EventStructures.pdf), Definitions 1.1.1–1.1.2 and Examples 1.1.5–1.1.7 | Consistency/enabling, conflicting choices and concurrent squares are distinct. For each realized key the fixed occurrence fibre is consistent and its owner minimal events really execute by Lemma 11.7. Alternative input bits and Capture cuts are not amalgamated into a conflict-free global poset, and no static independence relation for every command pair is assumed. |
+| M. Herlihy and J. Wing, *Linearizability: A Correctness Condition for Concurrent Objects*, TOPLAS 12(3), pp. 464–468, [author copy](https://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf), §§1.2,2.1–2.2 | Their equivalence preserves process subhistories while sequential object legality and real-time precedence remain separate obligations. The register/queue examples explain why owners alone do not justify swaps. Here the native footprint proof justifies only the post-Capture exchanges, and Proposition 11.14 retains the concrete shared read/append distinction. Linearizability does not supply C acquisition, liveness or actual total chronology. |
+
+All previous fixed-model results and open obligations keep their original
+hypotheses. In particular this section does not change original
+$G_{gc}$, original-Q, parked-consumer or unchanged-initialization tasks,
+CSA's serial kernels, or AIF's historical producer-image service.
+Exact past chronology and complete historical state sequences remain
+strictly stronger observations on the exhibited fibres; accumulated
+structural work retains its own unproved square condition. Native
+current-joint acquisition, separate enlarged boundary/C-memory kernels,
+unrestricted observer recovery, uniform physical realization and the
+full space/time/boundary/memory programme remain unproved. A different
+partial-time observation advances that programme only with these exact
+recovery conditions and chronological limits retained.
+
+## 追加锚（本行以下为增补区）

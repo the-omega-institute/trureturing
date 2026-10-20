@@ -1,0 +1,27 @@
+## 定理 178.1（有理数由赋值画像与符号唯一恢复）
+
+\[
+\boxed{
+\mathbb Q^\times
+\cong
+\{\pm1\}
+\times
+\bigoplus_p\mathbb Z.
+}
+\]
+
+显式恢复为：
+
+\[
+\boxed{
+x
+=
+\operatorname{sgn}(x)
+\prod_p p^{v_p(x)}.
+}
+\]
+
+### 证明
+
+将分子、分母分别作唯一素因数分解。正指数来自分子，负指数来自分母；约分保证同一素数不同时出现在两侧。剩余单位恰为 \(\pm1\)。\(\square\)
+

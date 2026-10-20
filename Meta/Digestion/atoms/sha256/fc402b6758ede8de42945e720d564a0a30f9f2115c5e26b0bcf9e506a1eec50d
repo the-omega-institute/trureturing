@@ -1,0 +1,6 @@
+设 $D\succeq0$ 但奇异，固定 $x$ 并记 $b=B_0^Tx$。谱分解给
+$\mathbb R^d=\operatorname{im}D\oplus\ker D$。
+
+- 若 $b\notin\operatorname{im}D$，存在 $z\in\ker D$ 使 $b^Tz\ne0$。沿 $y=tz$，能量含线性项 $t\,b^Tz$ 而没有二次项，故下确界为 $-\infty$。
+- 若 $b\in\operatorname{im}D$，令 $D^\dagger$ 为在 $\operatorname{im}D$ 上取逆、在 $\ker D$ 上为零的对称伪逆。完成平方给
+

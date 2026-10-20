@@ -1,0 +1,25 @@
+## 9. 实际运行与剩余承重问题
+
+同一完整 verifier 在 110 和 130 位定向区间精度均实际通过，并重新执行了前置无限 prolate 谱认证。无 eigensolver、zeta 零点输入或数值求积参与新能量证书。Dilogarithm 的所有未求和项以明确正尾界覆盖，端点奇性使用真实极限。信任基础仍包含 mpmath.iv、Python 和整数/超越函数区间实现，并未在 Lean 内核中重放。
+
+独立开发检查包括 30 个精确多项式端点例子、32 个对数原函数符号导数，以及 20 个直接无限 Gamma 核数值积分对照。最后一组最大相对差约 3.229e-65；它是非区间的独立诊断，不是能量证书的一部分。删除原子外部 Gamma 作用、过强的 1/100 几何尾比都有失败控制。新 Lean 的主声明和唯一 Scribe handle 一致；没有 authored sorry、admit 或新 axiom，但未运行编译与公理报告。
+
+Verifier SHA-256：`d48dd32752a76edff93331cee6825d12e6c67fe46aa811e48e11b05ab96f646b`。
+开发检查 SHA-256：`105be445623262b52fa6d7f2d338723f8085404080f152750cbef92b7fedfc6a`。
+
+(GE5)-(GE8)、(GE9)-(GE11) 的公式是参数化的；(GE12)-(GE18) 的严格数值在当前 c=3 实例兑现。本轮消除了真实 prolate 模型的完整 Gamma 能量尚无受控评价这一缺口。尚未证明沿无界尺度的候选正交补强制性、相对于间隔的小残差、足够的复 Fourier 读出率或真实模态的 Xi 极限。
+
+下一数学任务应利用 (GE7) 的同一模型表达估计完整算子作用，或直接认证实际 energy-dual 读出，而非继续以单个 Rayleigh 数字替代模型逼近。尤其必须保留 E(T_lambda h)、D_+r、prime 奇修正与 pole 项之间的相消。#6029 的消矩尾界可用于独立选取的 dual trial，不能借它把本节真实 prolate 模型的非零边界矩设为零。
+
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 7-8. https://arxiv.org/html/2511.22755v1
+- Connes, *The Riemann Hypothesis: Past, Present and a Letter Through Time*, arXiv:2602.04022, Sections 6.4-6.6. https://arxiv.org/html/2602.04022
+- Suzuki, *Weil's quadratic form via the screw function*, arXiv:2606.09096v1. https://arxiv.org/abs/2606.09096
+- Groskin, *A finite Guinand-Weil dictionary and archimedean tail order for the truncated Weil quadratic form*, arXiv:2607.02828v1. https://arxiv.org/abs/2607.02828
+- NIST DLMF 5.7.6, 14.7, 14.10, 14.12 and 30.8, digamma and Legendre/spheroidal identities. https://dlmf.nist.gov/5.7 ; https://dlmf.nist.gov/14.7 ; https://dlmf.nist.gov/14.10 ; https://dlmf.nist.gov/14.12 ; https://dlmf.nist.gov/30.8
+- loning research #5892, actual source at `54f78c385cebdccb0b768b8a25b75dc04454b53e`; AlyciaBHZ #6029, actual source at `a2c2ccdc1fde62627deab56bbdea433c782621dc`; #5882 current PR description at `65339a3acbe99e661c6955dbb21728c4c62dfe76`.
+
+
+---
+

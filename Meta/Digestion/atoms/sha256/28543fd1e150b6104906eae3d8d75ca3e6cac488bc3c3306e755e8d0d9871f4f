@@ -1,0 +1,53 @@
+**定义 378.1（FIB 支撑与量子装饰）。** 令 $G_F=(V_F,E_F)$ 为 FIB 原生有向支撑，$\mathcal P_F(x,y)$ 为从端口 $x$ 到端口 $y$ 的合法路径族，$\mathcal C_F$ 为由路径拼接得到的路径范畴。对每个端口 $x$ 指定外加 Hilbert 空间 $\mathcal H_x$；若所有端口共用同一空间，则记为 $\mathcal H$。量子态是
+
+$$
+\mathsf D(\mathcal H_x)=\{\rho\in\mathcal B(\mathcal H_x):
+\rho\succeq0,\ \operatorname{Tr}\rho=1\}.
+$$
+
+每条合法边 $e:x\to y$ 携带一个外加完全正迹保持映射（量子通道）
+
+$$
+\Phi_e:\mathcal B_1(\mathcal H_x)\longrightarrow
+\mathcal B_1(\mathcal H_y),
+\qquad
+\Phi_e\text{ 完全正且 }\operatorname{Tr}\Phi_e(\rho)=\operatorname{Tr}\rho.
+\tag{378.1}
+$$
+
+若边表示尚未归一化的测量分支或吸收分支，则只要求完全正且迹不增；所有分支的和才须迹保持。沿路径 $\gamma=e_n\cdots e_1$ 定义
+
+$$
+\Phi_\gamma=\Phi_{e_n}\circ\cdots\circ\Phi_{e_1}.
+\tag{378.2}
+$$
+
+因此，若端口恒等路径映射为恒等通道、路径拼接映射为通道复合，则 $\gamma\mapsto\Phi_\gamma$ 是从 $\mathcal C_F$ 到量子通道范畴的一个协变函子。这个函子性是可验证的接口条件，不是 FIB 递归自动携带的语义。
+
+若两条 FIB 分支共享输入输出空间，并由外加经典选择概率 $p_L,p_R\ge0$、$p_L+p_R=1$ 选取，则它们诱导的无条件通道为
+
+$$
+\Phi(\rho)=p_L\Phi_L(\rho)+p_R\Phi_R(\rho).
+\tag{378.3}
+$$
+
+式（378.3）是经典混合；它不表示两条路径已经发生了量子相干叠加。若要保留分支相干，必须另给分支寄存器和等距嵌入。例如在给定 Stinespring 等距映射 $V_L,V_R$ 时，可定义
+
+$$
+V=\sqrt{p_L}\,V_L\otimes|L\rangle
+  +\sqrt{p_R}\,V_R\otimes|R\rangle,
+\qquad
+\widetilde\Phi(\rho)=V\rho V^*.
+\tag{378.4}
+$$
+
+这里 $\widetilde\Phi$ 的输出仍保留分支寄存器；只要不取其迹，分支寄存器就可以被保留、干涉或重新耦合，从而允许相干分支的额外观测。对分支寄存器取迹则得到
+
+$$
+\operatorname{Tr}_{\mathrm{branch}}\widetilde\Phi(\rho)
+=p_LV_L\rho V_L^*+p_RV_R\rho V_R^*,
+\tag{378.4a}
+$$
+
+即式（378.3）的经典混合（在 $\Phi_L(\rho)=V_L\rho V_L^*$、$\Phi_R(\rho)=V_R\rho V_R^*$ 的单等距实现下）。把路径条数直接当作振幅，或把式（378.3）改写成振幅相加，均缺少量子装饰中的依据。复相位、干涉相消、纠缠维数和归一化尺度都必须由 $V_L,V_R$ 或等价的 Kraus 数据指定。
+

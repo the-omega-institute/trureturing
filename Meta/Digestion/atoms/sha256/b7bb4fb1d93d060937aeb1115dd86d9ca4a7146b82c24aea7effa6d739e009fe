@@ -1,0 +1,19 @@
+## 1. 为什么改为原点归一化
+
+保持上一节 c=3、a=log3/2、原实偶单位候选 k 和实际最低模态 u。记
+
+\[
+F(z)=\widehat u(z)/\alpha,\quad \alpha=\langle k,u\rangle\ne0,
+\quad K(z)=\widehat k(z),\quad P(z)=\widehat v_P(z),
+\]
+
+其中 v_P=-p_h^+/||p_h^+|| 是此前同一个全局符号的真实单位 prolate 模型。原证书没有把 alpha 数值化。正确的下一步是证明 F(0)、P(0) 非零后，比较 F(z)/F(0) 和 P(z)/P(0)。两者分别严格等于
+
+\[
+\mathcal F(z)=\widehat u(z)/\widehat u(0),\qquad
+\mathcal P(z)=\widehat p_h^+(z)/\widehat p_h^+(0).
+\tag{ON1}
+\]
+
+全局相位、单位范数和 alpha 在同一函数的分子分母中代数消去。没有选择依赖 z 的归一化。若以后同一明确模型经正确尺度系数收敛到 Xi，且在原点也收敛到非零 Xi(0)，它的 (ON1) 就收敛到 Xi(z)/Xi(0)。这仅说明归一化的相容性，未在本节证明该尺度收敛。
+

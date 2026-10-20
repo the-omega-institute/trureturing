@@ -1,0 +1,67 @@
+**Theorem 113.2 (An arbitrary-length necessary residual bound).** For
+every sequence (110.2) and every $0<\varepsilon\le1$,
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+D_3(a,\varepsilon)\le3\varepsilon+1-a_1.
+\tag{113.2}
+$$
+
+By Theorem 110.2 this is necessary for every original
+$\mathcal N_2$ acquisition at the cap, and hence for every original
+$\mathcal O_2$ acquisition there.
+
+**Proof.** If $L\le2$, the residual sum is zero and the inequality
+is automatic. Let $L\ge3$ and $p\in\mathcal F_N(a,\varepsilon)$.
+Extend the chain-score argument of Acquisition Resources, Theorem
+91.1, to the $L+1$ words and label events
+
+$$
+\begin{aligned}
+w_t&=1^t0^{L-t}\quad(0\le t\le L),\\
+H_0&=\{1\},\qquad H_1=\{0,2\},\\
+H_t&=\{t+1\}\quad(2\le t<L),\qquad H_L=\{0\}.
+\end{aligned}
+\tag{113.3}
+$$
+
+Fix the common seed of a finite preselected rule. Two distinct
+queried coordinates $i<j$ divide this chain into the three transcript
+intervals $t<i$, $i\le t<j$, and $j\le t$. A terminal label is
+constant on each interval. The only repeated label between distinct
+events in (113.3) is zero, shared by $H_1$ and $H_L$. No interval
+can contain both $t=1$ and $t=L$: equality of both queried bits on
+these two words would require both distinct coordinates to be at
+most one. Thus each interval scores at most one and the total is
+at most three. A single distinct coordinate gives at most two
+intervals, only one of which can score twice through that shared
+zero label, again giving at most three. With no coordinate the
+score is at most two. Repeated requests do not refine transcripts
+because the answers are static. These bounds permit every terminal
+label, including unqueried marks and the base label.
+
+Integrating under the one common mixture proves
+
+$$
+p_{w_0}(1)+p_{w_1}(0)+p_{w_1}(2)
+       +\sum_{t=2}^{L-1}p_{w_t}(t+1)+p_{w_L}(0)\le3.
+\tag{113.4}
+$$
+
+The cap rows (110.6) bound the first singleton, the pair event,
+the later singletons and the final base event from below by
+$a_1-\varepsilon$, $1-\varepsilon$, $d_{t+1}$, and
+$1-\varepsilon$, respectively. Hence
+
+$$
+a_1+2+D_3(a,\varepsilon)-3\varepsilon\le3,
+\tag{113.5}
+$$
+
+which is (113.2). The row at $w_1$ uses the pair event
+$\{0,2\}$, not just a singleton demand. The original-to-finite
+direction of Theorem 110.2 supplies the cap-feasible $p$ for any
+original competitor; no bounded-address or mark-support assumption
+on that competitor has entered this proof. $\square$
+

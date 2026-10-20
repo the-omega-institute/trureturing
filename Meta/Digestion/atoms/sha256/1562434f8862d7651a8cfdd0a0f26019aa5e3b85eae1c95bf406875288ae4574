@@ -1,0 +1,48 @@
+**Proposition 51.4 (one closed native quartic value).** Put
+$k_c=(l+u)/2$, $d=u-l$, and take the real-cover projection vector
+$e_*=(-2k_c,2k_c-2H,0)$ at $\kappa=0$. Its native coefficient is
+$a_{e_*}(k)=k-k_c$, on both the resolved zero cover and the actual
+two-phase zero leaf. Its quadratic and first quartic coefficients are
+
+$$
+\begin{aligned}
+m_{e_*}&=d^2\left(\frac1{12}-\frac1{2\pi^2}\right),\\
+\mathcal B_0(e_*)&=
+\frac{d^6}{\varepsilon^2}
+ \left(-\frac1{720\pi^2}+\frac5{48\pi^4}-\frac7{8\pi^6}\right)>0.
+\end{aligned}
+\tag{51.11}
+$$
+
+Thus the coefficient of $r^4$ in its original lowest band is the
+negative of the second displayed number. This is a real projection;
+its coefficients do not by themselves assert an integer torus character.
+
+Proof. The formulas for $A_0,B_0$ give $e_*\cdot c_0=k-k_c$ exactly.
+Write $x=(k-l)/d$ and $g(x)=x^2-x+1/6$. Integration against
+$2\sin^2(\pi x)dx$ gives the first line of (51.11), so the dimensionless
+centered square is $f(x)=g(x)+1/(2\pi^2)$. Define
+
+$$
+Q(x)=\frac{x(2x-1)(x-1)}{12\pi},\qquad
+P(x)=-\frac{g(x)}{4\pi^2},\qquad
+y(x)=P(x)\sin(\pi x)+Q(x)\cos(\pi x).
+\tag{51.12}
+$$
+
+Direct differentiation gives
+$-(\partial_x^2+\pi^2)y=f(x)\sin(\pi x)$ and $y(0)=y(1)=0$.
+Subtracting its component along $\sin(\pi x)$ gives the orthogonal
+Dirichlet inverse; this subtraction has zero inner product with
+$f(x)\sin(\pi x)$. Rescaling the inverse in (51.3) therefore gives
+$\mathcal B_0(e_*)=(2d^6/\varepsilon^2)
+\int_0^1 f(x)\sin(\pi x)y(x)dx$.
+Using $(\sin^2\pi x)'=2\pi\sin\pi x\cos\pi x$ and the endpoint
+zeros of $Q$, the quantity $2\int_0^1 f(x)\sin(\pi x)y(x)dx$ equals
+$-\pi^{-2}\int_0^1 f g\sin^2(\pi x)dx
+-\pi^{-1}\int_0^1 f'Q\sin^2(\pi x)dx$.
+Integrating these polynomials gives
+$-1/(720\pi^2)+5/(48\pi^4)-7/(8\pi^6)$, proving (51.11).
+Strict positivity also follows without a numerical comparison from
+(51.3), since $(k-k_c)^2$ is nonconstant on $I$. $\square$
+

@@ -1,0 +1,52 @@
+**定义 17.1（共同物理表示与矩形频率截断）。** 沿用第 14.1 节的 $H,\mathcal F,Q,W,V,P,\rho$。取有限素数集 $\mathcal P$，记 $S=\{\infty\}\cup\mathcal P$，并定义
+
+$$
+q_p=p^{-1/2},\qquad U_p=\rho(p),\qquad
+T=\prod_{p\in\mathcal P}(I-q_pU_p),\qquad
+\mathcal F_S=T\mathcal FT^{-1}.
+$$
+
+此处物理运输及源 Sonin 空间的识别使用 [CCM 的半局部归一化](../../../Library/Weil/connesconsanimoscovici2024semilocal.md)，即 arXiv:2310.18423v2 的式 (57)、Proposition 4.7 与 Theorem 4.6；$T$ 是有界可逆运输。$\mathscr L\xi(s)=e^{s/2}\xi(e^s)$ 把 $I-q_pU_p$ 送到 Fourier 乘子 $1-p^{-1/2-i\tau}$。以下 $\mathcal P$ 取非空，以使矩形深度的最小值有定义。例如
+
+$$
+\mathcal P=\{2,3\}\quad\Longrightarrow\quad
+(T\xi)(x)=\xi(x)-\tfrac12\xi(x/2)-\tfrac13\xi(x/3)+\tfrac16\xi(x/6).
+$$
+
+由 $\mathcal FU_p=U_p^*\mathcal F$，在同一表示中有
+
+$$
+\mathcal F_S=\left(\prod_{p\in\mathcal P}V_p\right)\mathcal F,
+\qquad
+V_p=(I-q_pU_p)(I-q_pU_p^*)^{-1}.
+$$
+
+各 $V_p$ 是互相交换的 unitary；Neumann 展开给出
+
+$$
+V_p=-q_pU_p+(1-q_p^2)\sum_{j\ge0}q_p^j(U_p^*)^j.
+$$
+
+对 $\mathbf j\in\{-1,0,1,\ldots\}^{\mathcal P}$ 定义
+
+$$
+\lambda_{\mathbf j}=\prod_{p\in\mathcal P}p^{j_p},\qquad
+w_{\mathbf j}=\prod_{p\in\mathcal P}r_p(j_p),\qquad
+r_p(-1)=-p^{-1},\quad r_p(j)=1-p^{-1}\ (j\ge0).
+$$
+
+物理伸缩核中的平方根与级数系数相消，因此
+
+$$
+\mathcal F_S(x,y)=2\sum_{\mathbf j}w_{\mathbf j}
+\cos(2\pi\lambda_{\mathbf j}xy)
+$$
+
+首先表示 operator-norm 收敛级数所定义的算子核，或相应的分布核；不预设它处处点态收敛。取整数 $N_p\ge0$，令
+
+$$
+\mathcal I_{\mathbf N}=\prod_{p\in\mathcal P}\{-1,0,\ldots,N_p\},\qquad
+\mathcal F_{\mathbf N}(x,y)=2\sum_{\mathbf j\in\mathcal I_{\mathbf N}}
+w_{\mathbf j}\cos(2\pi\lambda_{\mathbf j}xy).
+$$
+

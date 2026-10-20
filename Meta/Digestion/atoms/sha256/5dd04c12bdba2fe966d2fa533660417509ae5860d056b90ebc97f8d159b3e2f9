@@ -1,0 +1,8 @@
+换言之,把任一解的"旧素数部分"取出来(去掉 \(\{2,3,5,7\}\) 之外的素因子),落回的一定是黄金单元 \(\mathcal C\) 的成员。下界 \(\alpha\ge4,\beta\ge2\) 由 \(5040=2^{4}3^{2}\cdot5\cdot7\mid n\) 给出;五条上界各由一个小模证书排除,**全部为本轮实测**:
+
+- \(128\mid n\Rightarrow 32\mid n\);\(\operatorname{ord}_{128}3=32\),故 \(3^{n}\equiv1\pmod{128}\),而 \(2241\equiv65\pmod{128}\)。排除。
+- \(81\mid n\Rightarrow 3^{n}\equiv0\pmod{81}\)(因 \(n\ge4\)),而 \(2241\equiv54\pmod{81}\)。排除。
+- \(25\mid n\):\(20\mid5040\mid n\) 且 \(\operatorname{ord}_{25}3=20\),故 \(3^{n}\equiv1\pmod{25}\),而 \(2241\equiv16\pmod{25}\)。排除。
+- \(49\mid n\):\(42\mid5040\mid n\) 且 \(\operatorname{ord}_{49}3=42\),故 \(3^{n}\equiv1\pmod{49}\),而 \(2241\equiv36\pmod{49}\)。排除。
+- \(83\mid n\):\(83\mid2241\) 而 \(83\nmid3^{k}\),故 \(n\mid3^{n}-2241\) 不可能。排除。
+

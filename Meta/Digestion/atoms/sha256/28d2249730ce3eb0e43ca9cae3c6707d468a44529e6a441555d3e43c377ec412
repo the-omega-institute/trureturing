@@ -1,0 +1,10 @@
+其中：
+
+- $\mathcal H_S$：被观察系统空间；
+- $\mathcal H_M$：记录／记忆空间；
+- $X$：可选择测量设置；
+- $A_x$：设置 $x$ 的结果集；
+- $\mathcal I_{a|x}$：CP instrument 分支；
+- $\Phi$：观察间隔中的系统动力学；
+- $\mathcal A_M$：观察者可以读取的记录代数。
+

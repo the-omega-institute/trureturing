@@ -1,0 +1,64 @@
+# 27. Lean owner 取址与剩余 frontier
+
+截至 v1.2，行为 completion 的主体已经由仓库中的 canonical owner 承担，包括：
+
+```text
+D5/S3/ObserverMemory/Prediction/ItineraryCompletion.lean
+D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean
+D5/S3/ObserverMemory/Refinement/FactorizationCategory.lean
+D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionMinimality.lean
+D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionReflection.lean
+D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionFunctoriality.lean
+D5/S3/ObserverMemory/RefinementClosure/CompletionKernelGreatestFixedPoint.lean
+D5/S3/ObserverMemory/RefinementClosure/BehaviorUpdateWordAction.lean
+D5/S3/ObserverMemory/Dynamics/FiniteObservabilityOrthogonalDuality.lean
+D5/S3/Observer/Completion/StructuralCompletionSignature.lean
+D5/S3/Observer/Completion/CompletionPointCovariance.lean
+```
+
+因此不再创建平行的 `InterfaceOrder`、`BehaviorCompletion` 或 `MemoryTransport` 原语。本轮新增理论应沿现有 owner 补入以下缺口：
+
+```text
+D5/S3/ObserverMemory/Refinement/
+  PostprocessingKernelCalculus.lean
+  JointReadoutSupremum.lean
+
+D5/S3/ObserverMemory/RefinementClosure/
+  FiniteHorizonKernelRecurrence.lean
+  CommutingClosureCommonFixedPoint.lean
+
+D5/S3/Observer/Agency/Self/
+  AgencyEnrichment.lean
+
+D5/S3/Observer/Agency/Holonomy/
+  VisibleLoopHolonomy.lean
+
+D5/S3/Observer/Completion/
+  CompletionLocusCalculus.lean
+```
+
+优先形式化声明为：
+
+```text
+postprocessing_kernel_le
+postprocessing_kernel_eq_iff_injOn_range
+postprocessing_strict_iff_range_collision
+pair_readout_kernel
+pair_readout_least_common_refinement
+finite_horizon_kernel_succ_iff
+finite_horizon_kernel_antitone
+complete_kernel_eq_iInf_finite_horizon
+finite_horizon_stabilizes_at_completionDepth
+current_kernel_strategy_residual_partition
+strategy_factorization_iff_no_residual
+visible_loop_policy_change_implies_nontrivial
+strategy_factorization_makes_visible_loops_invisible
+faithful_joint_readout_kills_hidden_holonomy
+completion_locus_pair_eq_inter
+completion_locus_preimage
+completion_locus_intersection_gauge_stable
+commuting_closure_composition_fixed_iff
+```
+
+超限 closure ordinal、一般拓扑 completion、测度化 almost-everywhere kernel 与无限维 Gramian 收敛继续保持 open，直到其载体、宇宙层级与收敛假设被单独取址。
+

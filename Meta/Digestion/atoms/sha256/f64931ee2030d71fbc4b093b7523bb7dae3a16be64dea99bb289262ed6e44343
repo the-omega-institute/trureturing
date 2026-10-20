@@ -1,0 +1,7 @@
+For a valid `FiniteEvenWeilOrbitFrame`, the module first proves that the actual four-point zero orbits are pairwise disjoint. It then constructs one peak b, a finite exceptional spectral ball E, and tests k_i satisfying:
+
+1. FT(b)=1 at both selected conjugate spectral nodes of every channel.
+2. FT(k_i)(gamma_j)=delta_ij and FT(k_i)(conj gamma_j)=-delta_ij.
+3. Every k_i vanishes at all exceptional zero indices outside the target union.
+4. Outside E, both conjugate evaluations of b have norm at most 1/2.
+

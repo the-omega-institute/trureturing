@@ -1,0 +1,42 @@
+### 56.5 Bound sources, bounded evidence, and remaining scope
+
+<a id="TM56-L1"></a>
+[Atomic359–360 at `28a41b31247b847af1b1b3118f7cb00ffd3b9cda`][TM56Atomic] supplies the ordered triple/common-source correspondence, actual positive witnesses, balanced connected edge support and every Euler word and ordered bracketing. Atomic360 (360.4–5) retains those supplier equation labels. [TM30.1–2 at that same pin][TM56Base], (TM.3001–4), supplies whole guards, equality acceptance, unchanged rejection, ordered source transport and behavioral congruence. TM38.1 supplies the full-record permanent collision used in both lower arguments. These source mechanisms are reused.
+
+<a id="TM56-L2"></a>
+[TM44.5 (TM.4419–20), TM51.5 and TM47.1–2 at that pin][TM56Base] supply terminal entry-size acquisition and complete-target lifting. `Size_H` needs only an actual ambient entry size in $[1,H]$, uses no Read or replacement, and costs at most $\lceil\log_2H\rceil+1$ calls including final rejection. TM45 retains ordered outer factors and initial/current pairing. TM51.2–3 supplies the complete unit target coordinates used throughout. None is an additional online observation.
+
+<a id="TM56-L3"></a>
+[TM55.5][TM56Residue] and [TM55.6][TM56Residue6] at `dc14da97f120bbc04038a3bbc7996c78d001b9f1` are the bound residue source in `docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md`. TM55.5 assumes $h\ge2$ and integers $L,c$ satisfying $L\ge2$, $1\le c<h$, $c\le2L+2$ and $h-c\le L-1$. TM55.6 applies for every integer $H\ge8$, with $h=\lfloor H/4\rfloor$ and $L=\lfloor(h+1)/3\rfloor$; for $h\ge5$ it uses $c=h-L+1$ and $P=H-4c>0$, whereas its $h=2,3,4$ bases omit padding. Both use the same complete $U_H$, initial target, conditional same-unmodified-initial-source advice and actual source/action correspondence as this chapter. The Atomic359–360 and TM30/38/44/45/47/51 source sections are byte-identical at that immutable source and this chapter's `28a41b31247b847af1b1b3118f7cb00ffd3b9cda` pin, so the common-source premises agree. The alphabet, Read, replacement and call guarantees hold simultaneously on the same running-source execution.
+
+<a id="TM56-L4"></a>
+[TM54 at merged revision `20b37ca68329a5d1ee0b67c28ffe2c90e89f4fce`][TM56Prior54] uses the same complete $U_H$, initial target and conditional same-source advice contract. Its complete-family necessary count (TM.5412) and upper constructions in Theorems 54.5–6 remain prior comparison results. The current CPF lower bound is not a bound over all the controllers minimized there, and the residue upper remains attributed to TM55.5–6.
+
+<a id="TM56-L5"></a>
+[OR68 Definition 68.1][TM56OR68] and [OR69 Definition 69.1][TM56OR69] use the same full-source conditional task: OR68's $\nu$ and OR69's $y$ are this chapter's $w$, and OR69's $x$ is $z$. The finite target $C_{r,s}$ is $\tau_h(r+s,r+2s)$; $Z_x$ is $(0,1,4z)$. Their arbitrary exact-tree labels and full ambient controllers retain a larger policy domain than CPF. OR68's linear growth and small-cap results, [OR69's complete-family exact intervals][TM56OR69], and [OR70's Ferrers necessary bound][TM56OR70] remain comparison/reuse boundaries. In particular the published complete-family value at $36\le H\le39$ is 2, whereas Theorem TM56.3 concerns a proper ten-target-fiber class with one common symbol. It adds no complete-family exact-small-cap claim. OR70 supplies a further unrestricted necessary bound, not unrestricted $h/3$ necessity or a general exact formula. The immutable comparison revisions are `511f1920bceaaf9f6ec6411030fbd4da42abfbfd` for OR68–69 and `4f981b86a637c4aff1f1825ec0efe41dd5bb36e2` for OR70.
+
+<a id="TM56-V1"></a>
+**Bounded arithmetic evidence.** The reported finite arithmetic checks have the following scopes, separate from the universal proofs above:
+
+| Arithmetic scope | Reported result |
+|---|---|
+| $7\le h\le40$, all four $\delta$, $1\le p\le H+2$, $p\le q\le2p$: selected lower witness sets and exact prefix size arithmetic | No counterexample to validity or the $h/3-2$ count; exit 0 |
+| $2\le h\le60$, all four $\delta$, every finite and tag-0 target: residue branch/entry/label dictionary | No duplicate decoder key; exit 0 |
+| $H=36,37,38,39$, the ten target fibers: actual second-context increments, equality guards and decoder keys | Ten distinct initial-target keys; exit 0 |
+
+These are bounded integer falsifiers, not arbitrary-policy enumeration, all-word testing or proofs of universal impossibility. The residue dictionary check supports the reused TM55 construction, not a new residue theorem. The source witnesses and full-fiber coverage follow from Atomic360 and the typed parameter correspondence; the one-symbol witness for $(8,9)$ is specifically $\omega_{7,1}$.
+
+<a id="TM56-O1"></a>
+**Remaining scope.** The unrestricted complete-family minimum $A_U(H)$, its sharp leading coefficient and existence of an unrestricted normalized limit remain undetermined here. Controllers with arbitrary pre-$\rho$ modifications, label-dependent contexts, multiple cutoffs, $\rho$-first schedules or other adaptive prehistories are outside the CPF lower theorem. Their post-$\rho$ actions are not restrictions inside that theorem: every ambient finite continuation remains quantified. The ten-fiber controller and counterexample do not give a general depth normal form or an exact complete-family capacity.
+
+Authentic label production and delivery, source membership and pairing, archive parsing and retention, full-record storage, context material, guard/replacement work, integer arithmetic and memory/time costs remain separately charged. All statements are ordinary mathematics on the declared source/action interface. This chapter supplies neither Lean kernel verification nor physical verification, and does not settle the unrestricted complete-family goal.
+
+[TM56Atomic]: https://github.com/the-omega-institute/trureturing/blob/28a41b31247b847af1b1b3118f7cb00ffd3b9cda/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md
+[TM56Base]: https://github.com/the-omega-institute/trureturing/blob/28a41b31247b847af1b1b3118f7cb00ffd3b9cda/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[TM56Residue]: https://github.com/the-omega-institute/trureturing/blob/dc14da97f120bbc04038a3bbc7996c78d001b9f1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM55-P5
+[TM56Residue6]: https://github.com/the-omega-institute/trureturing/blob/dc14da97f120bbc04038a3bbc7996c78d001b9f1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM55-T6
+[TM56Prior54]: https://github.com/the-omega-institute/trureturing/blob/20b37ca68329a5d1ee0b67c28ffe2c90e89f4fce/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#54-complete-unit-family-supplied-advice-linear-capacity-and-actual-acquisition
+[TM56OR68]: https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#68-完整单位原树的条件补充字母表配对上界与增长必要性
+[TM56OR69]: https://github.com/the-omega-institute/trureturing/blob/511f1920bceaaf9f6ec6411030fbd4da42abfbfd/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#69-完整单位原树在三十六至五十五上限的条件字母表精确值
+[TM56OR70]: https://github.com/the-omega-institute/trureturing/blob/4f981b86a637c4aff1f1825ec0efe41dd5bb36e2/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#70-完整单位原树的-ferrers-截角与更强条件字母表下界
+

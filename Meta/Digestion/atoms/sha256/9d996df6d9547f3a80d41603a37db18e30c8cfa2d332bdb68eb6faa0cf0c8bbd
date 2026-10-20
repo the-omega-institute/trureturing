@@ -1,0 +1,21 @@
+**命题39.2（同一密度的条件性有界构造）。** 若固定 $T\ne0$ 满足
+$K_\rho(T)=0$，则实际节点
+$$
+x_0(n)=0,\qquad x_1(n)=\frac{T}{n+2},\qquad x_2(n)=T
+\tag{39.4}
+$$
+对每个 $n\ge0$ 都互异，且 $|x_j(n)|\le|T|$。原 Gram $B_n$ 都严格正定，
+同时
+$$
+B_n\longrightarrow U_1,\qquad
+\|B_n-U_1\|_{2\to2}\longrightarrow0,\qquad
+\|B_n-U_1\|_F\longrightarrow0.
+\tag{39.5}
+$$
+
+证明。$1/(n+2)\in(0,1)$ 使三个节点互异且有界。第一对差趋零；
+另两对差趋于 $\pm T$。连续性、质量一及
+$K_\rho(-T)=\overline{K_\rho(T)}=0$ 给全部九个矩阵元恰好趋于 $U_1$。
+严格正定由命题38.1。有限维矩阵拓扑下，诱导 Euclidean $2$ 算子范数
+和 Frobenius 范数均连续，给式(39.5)的两份范数极限。∎
+

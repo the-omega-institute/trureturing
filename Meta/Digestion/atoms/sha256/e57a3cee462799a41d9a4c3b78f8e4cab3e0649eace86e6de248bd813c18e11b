@@ -1,0 +1,22 @@
+# 第一千四百零九部　理论深度审计
+
+| 结论                                           | 地位        |
+| -------------------------------------------- | --------- |
+| 离线 Poisson 光影是 Cauchy 概率状态                   | 精确        |
+| Cauchy Fisher 几何是双曲平面                        | 成熟信息几何    |
+| 临界线是 Fisher 理想边界                             | 精确推论      |
+| shifted 视界自由能等于 Cauchy KL                    | 本轮核心精确恒等式 |
+| KL 等于双曲距离的 \(2\log\cosh\) 函数                 | 精确        |
+| Poisson 正时间严格降低 shifted KL                   | 精确        |
+| Hankel logdet 定义有效观察指数                       | 新规范定义     |
+| 黄金匹配五重等价                                     | 本轮核心精确定理  |
+| \(\varphi^{-2}+\varphi^{-1}=1\) 是可见—隐藏能量分裂   | 精确        |
+| \(\varphi^2\) 为首个非整数 Jones 指数                | Jones 定理  |
+| 黄金轴半平移 \(=\log\varphi^2\)                    | 精确双曲计算    |
+| finite-index observer 排除离线零点                 | 条件定理      |
+| zeta observer algebra 具有黄金 Jones 塔           | 尚未建立      |
+| shifted kernel 是条件期望 Gram                    | RH 中心新桥   |
+| five-modular 六维格与 zeta observer inclusion 同一 | 未证明，不应混同  |
+
+---
+

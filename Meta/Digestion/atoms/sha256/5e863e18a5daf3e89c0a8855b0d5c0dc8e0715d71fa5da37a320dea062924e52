@@ -1,0 +1,31 @@
+**定义 25.1（固定测试与贪心实际素数簇）。** 令
+
+$$
+\phi_0(x)=
+\begin{cases}
+\exp\bigl(-1/(1-16x^2)\bigr),&|x|<1/4,\\
+0,&|x|\ge1/4,
+\end{cases}
+\qquad f=\phi_0'-4\phi_0'''.
+$$
+
+记
+
+$$
+M=\|f\|_2^2>0,\quad J_1=\|f'\|_2>0,\quad D=D(f),\quad
+\mathcal T_0=\int_{\mathbb R}|\widehat f(t)|^2d(t)\,d\mu(t)<\infty,
+$$
+
+并取
+
+$$
+\varepsilon=1/64,\qquad
+\delta=\min\{1,\sqrt M/(128J_1)\}>0.
+$$
+
+对充分大的 $L$，按递增顺序从 $[e^L,e^{L+\delta}]$ 中选择素数，直到倒平方根之和第一次达到 $\varepsilon$。记所得有限集合为 $\mathcal P_L$，并令 $S_L=\{\infty\}\cup\mathcal P_L$。定义实际正角能量
+
+$$
+E_S^+(f)=\|C_SX_f\|_{\mathrm{HS}}^2.
+$$
+

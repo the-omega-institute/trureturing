@@ -1,0 +1,72 @@
+## 84. 外加多粒子平均场涨落、线性化流与 SPDE 协方差
+
+固定 FIB 第 \(j\) 代有限上下文集 \(E_j\)，给定外加平均场核 \(Q_j(x,\mu)\)。令
+\[
+\mu_t^{N,j}=N^{-1}\sum_i\delta_{X_t^{N,i}},
+\qquad
+\Pr(X_{t+1}^{N,i}=y\mid\mathcal F_t)
+=Q_j(X_t^{N,i},\mu_t^{N,j})(y),
+\]
+并设
+\(\Phi_j(\mu)=\mu Q_{j,\mu}\)、\(\mu_{t+1,j}=\Phi_j(\mu_{t,j})\)。若 \(Q_j\) 对 \(\mu\) 可微、导数和二阶矩在固定时间窗内一致有界，初态为 iid，则
+\[
+\eta_t^{N,j}=\sqrt N(\mu_t^{N,j}-\mu_{t,j})
+\]
+收敛到高斯递推
+\[
+\eta_{t+1}=A_{t,j}\eta_t+\xi_{t+1,j},
+\qquad
+A_{t,j}=D\Phi_j(\mu_{t,j}).
+\]
+对测试函数 \(f,g\)，抽样噪声协方差为
+\[
+\Sigma_{t,j}(f,g)
+=\sum_x\mu_{t,j}(x)
+\sum_yQ_j(x,\mu_{t,j})(y)
+[f(y)-Q_jf(x)]
+[g(y)-Q_jg(x)].
+\]
+初态协方差为
+\[
+\Gamma_{0,j}(f,g)
+=\mu_{0,j}(fg)-\mu_{0,j}f\,\mu_{0,j}g,
+\]
+并递推
+\[
+\Gamma_{t+1,j}
+=A_{t,j}\Gamma_{t,j}A_{t,j}^{*}
++\Sigma_{t,j}.
+\]
+若初态仅交换而非渐近乘积，极限需条件于 de Finetti 变量，不能自动称为中心高斯。
+
+连续时间外加速率 \(q_j(x,y;\mu)\) 给出
+\[
+\frac d{dt}\langle f,\mu_{t,j}\rangle
+=\langle\mathcal A_{j,\mu_{t,j}}f,\mu_{t,j}\rangle,
+\quad
+\mathcal A_{j,\mu}f(x)
+=\sum_yq_j(x,y;\mu)[f(y)-f(x)].
+\]
+线性化涨落满足
+\[
+d\eta_t(f)
+=\eta_t(\mathcal A_{j,\mu_t}f)\,dt
++\langle D_\mu\mathcal A_{j,\mu_t}[\eta_t]f,\mu_t\rangle\,dt
++dM_t(f),
+\]
+其中
+\[
+d\langle M(f),M(g)\rangle_t
+=\sum_x\mu_t(x)\sum_yq_j(x,y;\mu_t)
+[f(y)-f(x)][g(y)-g(x)]\,dt.
+\]
+若水动力极限为反应—扩散密度 \(\rho_t\)，则 \(\sqrt N(\rho_t^N-\rho_t)\) 的漂移是 \(D\mathcal F(\rho_t)\)，噪声协方差由扩散梯度项和反应跳跃项共同给出。若有公共噪声，\(\rho_t\) 本身随机，CLT 必须条件于公共噪声。
+
+若存在嵌入 \(\iota_j:E_j\to E_\infty\) 和流逼近误差 \(\eta_j\)，则
+\[
+\sqrt N[(\iota_j)_\#\mu_t^{N,j}-\mu_t^\infty]
+=\eta_t^{N,j}
++\sqrt N[(\iota_j)_\#\mu_{t,j}-\mu_t^\infty].
+\]
+只有 \(\sqrt N\eta_j\to0\) 才能使用极限流作无偏 CLT 中心；若 \(\sqrt N\eta_j\to b_t\)，极限均值产生偏移。时间窗增长、网格粒子数不足或缺少统一可微性时，不能升级为统一 SPDE。所有噪声协方差和线性化系数均为外加模型数据。
+
