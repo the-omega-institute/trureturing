@@ -289,12 +289,17 @@ private unsafe def runCore (source : Environment) (request : Request) : IO Obser
     let (searched, searchedAttempts, index?) ← searchIndexed clean target.levelParams target.type #[] hints
     let baseRun := if vocabularyTarget.isSome then .found else searched
     let attempts := searchedAttempts ++ vocabularyTarget.toArray
+    let baseGraph? : Option ProofGraph := match searchedAttempts.find? (fun row => row.proof?.isSome) with
+      | some row => row.proof?.map (extractExprGraph target.type)
+      | none => none
     let (presentation, presentationEvidence?, presentationDetail) ←
       baselinePresentation clean target.levelParams target.type index?
     let observed : Observation := {
       target := request.target, base := baseRun, paired := .incomplete .undecided,
       verdict := classifyCertified true presentation baseRun false false (.incomplete .undecided),
-      attempts, targetChecked := true, presentation, presentationEvidence?, presentationDetail }
+      attempts, targetChecked := true, presentation, presentationEvidence?, presentationDetail,
+      graph? := baseGraph?.map (fun graph => graphReadingFromRuns graph baseRun (.incomplete .undecided)
+        false false) }
     if observed.verdict == .bindOnly then return observed
     if let .incomplete _ := presentation then
       return {observed with reason := "search.presentation_incomplete"}
@@ -316,11 +321,15 @@ private unsafe def runCore (source : Environment) (request : Request) : IO Obser
           base := baseRun, attempts, targetChecked := true,
           presentation, presentationEvidence?, presentationDetail }
     let (pairRun, pairAttempts) ← search pairedEnv target.levelParams target.type request.additions hints
+    let graph? : Option ProofGraph := match pairAttempts.find? (fun row => row.proof?.isSome) with
+      | some row => row.proof?.map (extractExprGraph target.type)
+      | none => none
     return {
       target := request.target, base := baseRun, paired := pairRun,
       verdict := classifyCertified true presentation baseRun true true pairRun, attempts, pairAttempts,
       targetChecked := true, structureChecked := true, structureClean := true,
       presentation, presentationEvidence?, presentationDetail,
+      graph? := graph?.map (fun graph => graphReadingFromRuns graph baseRun pairRun true true),
       reason := if pairRun == .exhausted then "search.structure_insufficient_to_close" else ""}
   catch ex => return unknown s!"search.execution: {ex}" .execution
 

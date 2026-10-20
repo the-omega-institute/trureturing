@@ -53,6 +53,7 @@ structure Observation where
   targetChecked : Bool := false
   structureChecked : Bool := false
   structureClean : Bool := false
+  graph? : Option GraphReading := none
 
 def standardAxioms (xs : Array Name) : Bool :=
   xs.all fun n => #[`propext, `Classical.choice, `Quot.sound].contains n

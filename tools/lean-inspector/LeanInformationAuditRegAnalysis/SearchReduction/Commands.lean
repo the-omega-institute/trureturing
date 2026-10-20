@@ -26,6 +26,14 @@ private def attemptJson (a : Attempt) : Json := Json.mkObj [
   ("axioms", toJson (a.axioms.map Name.toString)), ("detail", toJson a.detail),
   ("internal_heartbeats", toJson a.heartbeats)]
 
+private def graphJson (r : GraphReading) : Json := Json.mkObj [
+  ("k", toJson r.k),
+  ("baseline_interval", toJson (reprStr r.baseline)),
+  ("paired_interval", toJson (reprStr r.paired)),
+  ("paired_uses_seed", toJson r.pairedUsesSeed),
+  ("verdict", toJson (reprStr (classifyGraph r))),
+  ("closure", toJson ((classifyClosure r).map reprStr))]
+
 /-- A human-readable projection. No code reads it back for classification. -/
 def observationJson (r : Observation) (baselineCommit : String := "") : Json := Json.mkObj [
   ("reference", toJson "R_v1"), ("configuration", toJson r.configuration),
@@ -47,7 +55,8 @@ def observationJson (r : Observation) (baselineCommit : String := "") : Json := 
   ("attempt_count", toJson r.attempts.size),
   ("paired_attempt_count", toJson r.pairAttempts.size),
   ("attempts", Json.arr (r.attempts.map attemptJson)),
-  ("paired_attempts", Json.arr (r.pairAttempts.map attemptJson)), ("reason", toJson r.reason)]
+  ("paired_attempts", Json.arr (r.pairAttempts.map attemptJson)), ("reason", toJson r.reason),
+  ("graph", toJson (r.graph?.map graphJson))]
 
 private def runExpr : Run → Expr
   | .found => mkConst ``Run.found

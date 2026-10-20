@@ -8,6 +8,23 @@ namespace LeanInformationAudit.Tests.SearchReduction
 
 open LeanInformationAudit.SearchReduction
 
+def chainGraph : ProofGraph :=
+  { vertices := [{id := 0, seed := true}, {id := 1}, {id := 2}],
+    edges := [
+      {conclusion := 1, premises := [0], cost := .one},
+      {conclusion := 2, premises := [1], cost := .one}],
+    root := 2 }
+
+theorem chain_dp_is_min_max :
+    graphInterval chainGraph [0] =
+      ⟨.finite 2, .finite 2⟩ := by native_decide
+
+theorem graph_verdicts_are_nonempty :
+    classifyGraph (graphReadingFromRuns chainGraph .found .exhausted true true) = .bindOnly ∧
+    classifyGraph (graphReadingFromRuns chainGraph .exhausted .found true true) = .nonBindOnly ∧
+    classifyGraph (graphReadingFromRuns chainGraph (.incomplete .heartbeat) .found true true) =
+      .insufficient := by native_decide
+
 def unionRun : Run → Run → Run
   | .found, _ | _, .found => .found
   | .incomplete reason, _ => .incomplete reason
