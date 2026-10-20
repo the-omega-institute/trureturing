@@ -184,6 +184,24 @@ def depth (graph : ProofGraph) (weight : EdgeCost → Nat) (seeds : List Nat) : 
 def intervalDP (graph : ProofGraph) (seeds : List Nat) : Nat → Interval := fun v =>
   ⟨depth graph costLower seeds v, depth graph costUpper seeds v⟩
 
+def frontier (graph : ProofGraph) (k : Nat) : List GraphEdge :=
+  if k == 0 then [] else graph.edges
+
+def k2Frontier (graph : ProofGraph) : List GraphEdge := frontier graph 2
+
+def rootProbe (graph : ProofGraph) (seeds : List Nat) : ProbeResult :=
+  let reading := graphInterval graph seeds
+  { outcome := match reading.upper with
+      | .finite _ => .found
+      | .top => .incomplete .undecided,
+    checked := finite reading.upper }
+
+def baselineRootProbe (graph : ProofGraph) (seeds : List Nat) : ProbeResult :=
+  rootProbe graph seeds
+
+def pairedRootProbe (graph : ProofGraph) (seeds : List Nat) : ProbeResult :=
+  rootProbe graph seeds
+
 def graphInterval (graph : ProofGraph) (seeds : List Nat) : Interval :=
   intervalDP graph seeds graph.root
 
