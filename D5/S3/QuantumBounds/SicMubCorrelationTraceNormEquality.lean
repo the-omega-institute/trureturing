@@ -88,31 +88,22 @@ private theorem sicProjector_span {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
   let K : LinearMap.BilinForm ℂ (Matrix (Fin d) (Fin d) ℂ) :=
     LinearMap.compr₂ (LinearMap.mul ℂ (Matrix (Fin d) (Fin d) ℂ))
       (Matrix.traceLinearMap (Fin d) ℂ ℂ)
-  have hgram (i j : Fin (d * d)) :
-      K (sicProjector S i) (sicProjector S j) =
-        if i = j then (1 : ℂ) ^ 2 else 1 / (d + 1) := by
-    change (sicProjector S i * sicProjector S j).trace = _
-    rw [sicProjector_gram]
-    by_cases h : i = j <;> simp only [h, ite_true, ite_false, one_pow, mul_one,
-      mul_zero, zero_add]
-    field_simp
+  let τ := Matrix.traceLinearMap (Fin d) ℂ ℂ
+  let B : LinearMap.BilinForm ℂ (Matrix (Fin d) (Fin d) ℂ) :=
+    K - (1 / (d + 1) : ℂ) • τ.smulRight τ
   have hlin : LinearIndependent ℂ (sicProjector S) := by
-    apply Fintype.linearIndependent_iff.mpr
-    intro c hc i
-    have hs : ∑ j, c j = 0 := by
-      have ht := congrArg Matrix.trace hc
-      simpa only [Matrix.trace_sum, Matrix.trace_smul, sicProjector_trace,
-        smul_eq_mul, mul_one, Matrix.trace_zero] using ht
-    have hp := D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.gram_pair_sum
-      K (sicProjector S) 1 (1 / (d + 1)) hgram c i
-    rw [hc, map_zero, LinearMap.zero_apply, hs, mul_zero, add_zero, one_pow] at hp
-    have hcoeff : (1 : ℂ) - 1 / (d + 1) ≠ 0 := by
-      have heq : (1 : ℂ) - 1 / (d + 1) = d / (d + 1) := by
-        field_simp
-        ring
-      rw [heq]
+    apply LinearMap.BilinForm.linearIndependent_of_iIsOrtho (B := B)
+    · intro i j hij
+      change (sicProjector S i * sicProjector S j).trace -
+        1 / (d + 1) * ((sicProjector S i).trace * (sicProjector S j).trace) = 0
+      rw [sicProjector_gram, sicProjector_trace, sicProjector_trace]
+      simp only [hij, ite_false, mul_zero, zero_add, mul_one, sub_self]
+    · intro i
+      change (sicProjector S i * sicProjector S i).trace -
+        1 / (d + 1) * ((sicProjector S i).trace * (sicProjector S i).trace) ≠ 0
+      rw [sicProjector_gram, sicProjector_trace]
+      simp only [ite_true, mul_one, add_sub_cancel_right]
       exact div_ne_zero (by exact_mod_cast (by omega : d ≠ 0)) (by positivity)
-    exact (mul_eq_zero.mp hp.symm).resolve_left hcoeff
   apply hlin.span_eq_top_of_card_eq_finrank'
   simp only [Fintype.card_fin, Module.finrank_matrix, Module.finrank_self, mul_one]
 
@@ -132,22 +123,33 @@ private theorem sicProjector_sum {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d) :
   classical
   apply trace_pairing_ext (sicProjector S) (sicProjector_span hd S)
   intro j
-  simp only [Matrix.sum_mul, Matrix.trace_sum, sicProjector_gram,
-    Finset.sum_add_distrib, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
-    Finset.mem_univ, ite_true, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
-    nsmul_eq_mul, Matrix.smul_mul, Matrix.one_mul, Matrix.trace_smul,
-    sicProjector_trace, smul_eq_mul, mul_one, Nat.cast_mul]
-  field_simp
-  ring
+  let K : LinearMap.BilinForm ℂ (Matrix (Fin d) (Fin d) ℂ) :=
+    LinearMap.compr₂ (LinearMap.mul ℂ (Matrix (Fin d) (Fin d) ℂ))
+      (Matrix.traceLinearMap (Fin d) ℂ ℂ)
+  have hgram (i k : Fin (d * d)) :
+      K (sicProjector S i) (sicProjector S k) =
+        if i = k then (1 : ℂ) ^ 2 else 1 / (d + 1) := by
+    change (sicProjector S i * sicProjector S k).trace = _
+    rw [sicProjector_gram]
+    by_cases h : i = k <;> simp only [h, ite_true, ite_false, one_pow, mul_one,
+      mul_zero, zero_add]
+    field_simp
+  have h := D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.gram_pair_sum
+    K (sicProjector S) 1 (1 / (d + 1)) hgram (fun _ => 1) j
+  simp only [one_smul, one_pow, mul_one, Finset.sum_const, Finset.card_univ,
+    Fintype.card_fin, nsmul_eq_mul, Nat.cast_mul] at h
+  calc
+    _ = (1 - 1 / ((d : ℂ) + 1)) + 1 / (d + 1) * (d * d) := h
+    _ = (d : ℂ) := by field_simp; ring
+    _ = _ := by
+      simp only [Matrix.smul_mul, Matrix.one_mul, Matrix.trace_smul,
+        sicProjector_trace, smul_eq_mul, mul_one]
 
 private theorem sic_frame {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d)
     (X : Matrix (Fin d) (Fin d) ℂ) :
     ∑ i, (sicEffect S i * X).trace •
       (((d : ℂ) + 1) • sicProjector S i - 1) = X := by
   classical
-  obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).mp
-    (show X ∈ Submodule.span ℂ (Set.range (sicProjector S)) by
-      rw [sicProjector_span hd S]; trivial)
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
   have hd1 : (d : ℂ) + 1 ≠ 0 := by positivity
   let D (i : Fin (d * d)) := ((d : ℂ) + 1) • sicProjector S i - 1
@@ -173,13 +175,18 @@ private theorem sic_frame {d : ℕ} (hd : 2 ≤ d) (S : SICFamily d)
       field_simp
     rw [smul_smul, hcancel]
     abel
-  change ∑ i, (sicEffect S i * ∑ j, c j • sicProjector S j).trace • D i = _
-  calc
-    _ = ∑ j, c j • (∑ i, (sicEffect S i * sicProjector S j).trace • D i) := by
-      simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul,
-        smul_eq_mul, Finset.sum_smul, Finset.smul_sum, smul_smul]
-      rw [Finset.sum_comm]
-    _ = _ := by simp only [hb]
+  let T : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ :=
+    ∑ i, ((Matrix.traceLinearMap (Fin d) ℂ ℂ).comp
+      (LinearMap.mulLeft ℂ (sicEffect S i))).smulRight (D i)
+  have hT : T = LinearMap.id := by
+    apply LinearMap.ext_on_range (sicProjector_span hd S)
+    intro j
+    simpa only [T, LinearMap.sum_apply, LinearMap.smulRight_apply,
+      LinearMap.comp_apply, Matrix.traceLinearMap_apply, LinearMap.mulLeft_apply,
+      LinearMap.id_apply] using hb j
+  simpa only [T, LinearMap.sum_apply, LinearMap.smulRight_apply,
+    LinearMap.comp_apply, Matrix.traceLinearMap_apply, LinearMap.mulLeft_apply,
+    LinearMap.id_apply] using LinearMap.congr_fun hT X
 
 private theorem mub_gram {d : ℕ} (M : MUBFamily d (d + 1))
     (p q : Fin (d + 1) × Fin d) :
