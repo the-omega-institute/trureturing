@@ -94,6 +94,10 @@ $$(\forall (s : \mathbb{N}) , (mconv\left(P\left(\operatorname{SimpleGraph}.\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/LaPianaGraphQuantumMagicSquares.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/la-piana-2025-c5-graph-quantum-magic-squares` (proved) by `D5/S3/Quantum/LaPianaGraphQuantumMagicSquares.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"la-piana-2025-c5-graph-quantum-magic-squares","declaration_gid":"D5/S3/Quantum/LaPianaGraphQuantumMagicSquares.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Francesca La Piana (2025). *Graph Quantum Magic Squares and Free Spectrahedra*. DOI: [10.48550/arXiv.2512.08797](https://doi.org/10.48550/arXiv.2512.08797). URL: <https://arxiv.org/abs/2512.08797v3>.

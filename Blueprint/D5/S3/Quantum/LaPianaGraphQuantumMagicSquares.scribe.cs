@@ -29,7 +29,10 @@ internal sealed class LaPianaGraphQuantumMagicSquaresDocument : IScribeDocumentD
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Owner + ".result"),
                 H("Strict containment for C5"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
-                    "Every graph quantum permutation matrix on C5 has commuting entries. Products of entries in its first two rows give positive families R and S with Xij = R(i−j) + S(i+j); the cycle recurrence extends this identity to all rows. This form is preserved by blockwise compression and finite sums. An internal-size-two graph quantum magic square has blocks (1/25) times [[5+a(i−j), b(i+j)], [b(i+j), 5−a(i−j)]], where a=(3,−3,0,0,0) and b=(4,−4,0,0,0). Four rank-one blocks force two R summands to vanish, contradicting their unequal top-left entries. Positivity and the row, column and graph relations are preserved by all normalized blockwise compressions, proving containment. Only C5 is asserted here."))), DescribeRole.Theorem))));
+                    "Every graph quantum permutation matrix on C5 has commuting entries. Products of entries in its first two rows give positive families R and S with Xij = R(i−j) + S(i+j); the cycle recurrence extends this identity to all rows. This form is preserved by blockwise compression and finite sums. An internal-size-two graph quantum magic square has blocks (1/25) times [[5+a(i−j), b(i+j)], [b(i+j), 5−a(i−j)]], where a=(3,−3,0,0,0) and b=(4,−4,0,0,0). Four rank-one blocks force two R summands to vanish, contradicting their unequal top-left entries. Positivity and the row, column and graph relations are preserved by all normalized blockwise compressions, proving containment. Only C5 is asserted here."))), DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("la-piana-2025-c5-graph-quantum-magic-squares"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock.Describe Node(string id, string name, Formula formula,
         AssessedProvenance provenance, string text) => Describe.Lean(DescribeId.Create(id),
