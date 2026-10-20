@@ -53,14 +53,18 @@ internal sealed class SvininDiscretePolynomialIdentityDocument : IScribeDocument
                     + "No division or nonzero field value is required; commutative rings with zero divisors are included. "
                     + "This proves the prerequisite used by the paper's later difference-equation equivalences for (h,n)=(1,1); "
                     + "those equivalences and their other hypotheses are separate statements. General coprime (h,n) and noncommutative coefficients remain open here.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("svinin-2015-discrete-polynomial-identity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
             DescribeId.Create("svinin48-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) =>

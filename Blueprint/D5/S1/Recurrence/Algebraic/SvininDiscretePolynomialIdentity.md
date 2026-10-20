@@ -60,6 +60,10 @@ $$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \fora
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/SvininDiscretePolynomialIdentity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/svinin-2015-discrete-polynomial-identity` (proved) by `D5/S1/Recurrence/Algebraic/SvininDiscretePolynomialIdentity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"svinin-2015-discrete-polynomial-identity","declaration_gid":"D5/S1/Recurrence/Algebraic/SvininDiscretePolynomialIdentity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. K. Svinin (2015). *On integrals for some class of ordinary difference equations admitting a Lax pair representation*. DOI: [10.1088/1751-8113/49/9/095201](https://doi.org/10.1088/1751-8113/49/9/095201). URL: <https://arxiv.org/abs/1505.06394v2>.
