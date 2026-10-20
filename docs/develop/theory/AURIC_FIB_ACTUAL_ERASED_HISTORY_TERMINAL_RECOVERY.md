@@ -4110,6 +4110,6 @@ of all unrestricted optimal decoders nor a minimum possible size of a
 supporting certificate. Exact values for other finite horizons
 $n\ge3$ are outside this appendix.
 
-[CGW-N2]: https://arxiv.org/pdf/1810.13295v4 "Samuel Coutts, Mark Girard and John Watrous, Certifying optimality for convex quantum channel optimization problems, Theorem 3"
+[CGW-N2]: https://arxiv.org/pdf/1810.13295v4 "Bryan Coutts, Mark Girard and John Watrous, Certifying optimality for convex quantum channel optimization problems, Theorem 3"
 
 ## 追加锚（本行以下为增补区）
