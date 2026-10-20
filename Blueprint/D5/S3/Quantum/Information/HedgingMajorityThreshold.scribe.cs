@@ -99,7 +99,10 @@ internal sealed class HedgingMajorityThresholdDocument : IScribeDocumentDefiniti
                             + "qubit. Its n-fold tensor product is a single Kraus operator "
                             + "and produces v_theta in every game. All n outcomes are "
                             + "therefore 1 with certainty, giving at least k wins for k <= n."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("arunachalam-molina-russo-2013-hedging-majority-threshold"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title,
