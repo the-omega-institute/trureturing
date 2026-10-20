@@ -124,6 +124,10 @@ $$\neg (\forall m \in \operatorname{Nat},\; (2 \le m) \Rightarrow (\forall u \in
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FaustSpectralInvariantsOddRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/faust-friedman-omalley-ramos-sharma-2026-spectral-invariants-conjecture-3` (refuted) by `D5/S3/Combinatorics/SpectralGraph/FaustSpectralInvariantsOddRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"faust-friedman-omalley-ramos-sharma-2026-spectral-invariants-conjecture-3","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/FaustSpectralInvariantsOddRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Faust, L. Friedman, G. O'Malley, R. Ramos and A. Sharma (2026). *Algebraic Properties of the Ideal of Spectral Invariants for the Discrete Laplacian*. DOI: [10.48550/arXiv.2602.08304](https://doi.org/10.48550/arXiv.2602.08304). URL: <https://arxiv.org/abs/2602.08304v1>.
