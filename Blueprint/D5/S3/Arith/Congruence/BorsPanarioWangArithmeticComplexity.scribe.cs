@@ -64,10 +64,15 @@ internal sealed class BorsPanarioWangArithmeticComplexityDocument : IScribeDocum
                 "The prime-power separation estimate and Chebyshev's bound yield the eventual "
                 + "real lower bound 1/64. Its positive image in EReal is a lower bound for the "
                 + "lower limit, proving the full displayed proposition.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "bors-panario-wang-2023-arithmetic-complexity-question-6-3-1"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(name switch
         {
             "MCongruence" => "bpw631-congruence",
@@ -77,7 +82,7 @@ internal sealed class BorsPanarioWangArithmeticComplexityDocument : IScribeDocum
             _ => "bpw631-" + name,
         }),
         DeclarationHandle.Create(Prefix + (name == "MCongruence.Holds" ? "Holds" : name)), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));

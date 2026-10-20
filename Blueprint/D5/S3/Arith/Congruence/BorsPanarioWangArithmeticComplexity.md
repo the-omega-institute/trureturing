@@ -72,6 +72,10 @@ $$0 < \operatorname{Filter}.\operatorname{liminf}\left((\operatorname{fun} m:\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/BorsPanarioWangArithmeticComplexity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bors-panario-wang-2023-arithmetic-complexity-question-6-3-1` (proved) by `D5/S3/Arith/Congruence/BorsPanarioWangArithmeticComplexity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bors-panario-wang-2023-arithmetic-complexity-question-6-3-1","declaration_gid":"D5/S3/Arith/Congruence/BorsPanarioWangArithmeticComplexity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Alexander Bors, Daniel Panario, and Qiang Wang (2023). *Functional graphs of generalized cyclotomic mappings of finite fields*. DOI: [10.4171/MEMS/23](https://doi.org/10.4171/MEMS/23). URL: <https://arxiv.org/abs/2304.00181v1>.
