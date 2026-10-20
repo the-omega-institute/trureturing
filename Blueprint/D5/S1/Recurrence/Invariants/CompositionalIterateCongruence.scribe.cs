@@ -25,6 +25,12 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
                 + "series from its coefficient function; mk(1) uses the constant function one. "
                 + "Rescaling multiplies coefficient n by the nth power of its parameter. "
                 + "The final remainder is integer remainder, and all indices are natural numbers.")),
+            Node("Agree", "Agreement below a degree", AgreeFormula(),
+                "Two series agree below degree d when their coefficients coincide at every smaller natural index.",
+                DescribeRole.Definition),
+            Node("agree_subst", "Substitution preserves finite agreement", AgreeSubstFormula(),
+                "If the outer series agree below degree d and the inner zero-constant series do too, "
+                + "their substitutions agree below degree d."),
             Node("iterate", "Compositional iteration", IterateFormula(),
                 "The zeroth iterate is the identity series X. Each successor substitutes "
                 + "the original series into the previous iterate. On zero-constant series "
@@ -89,6 +95,39 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
         Describe.Lean(DescribeId.Create("a396807-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, claim);
+
+    private static Formula Agreement(Formula d, Formula left, Formula right) =>
+        Call("Agree", d, left, right);
+    private static Formula RingParameters() => Seq(Bound("R", F.Id("Type")),
+        OpenBracket, Call("CommRing", Ring()), CloseBracket, Sp);
+    private static Formula AgreeFormula()
+    {
+        var d = F.Id("d");
+        var left = F.Id("left");
+        var right = F.Id("right");
+        var i = F.Id("i");
+        var body = Seq(Bound("i", Naturals()), Implication(Seq(i, Sp, Lt, Sp, d),
+            Equal(Call("coeff", i, left), Call("coeff", i, right))));
+        return Disp(Seq(RingParameters(), Bound("d", Naturals()),
+            Bound("left", Series(Ring())), Bound("right", Series(Ring())),
+            Parenthesized(Agreement(d, left, right)), Sp, Iff, Sp, Parenthesized(body)));
+    }
+    private static Formula AgreeSubstFormula()
+    {
+        var d = F.Id("d");
+        var left = F.Id("left");
+        var right = F.Id("right");
+        var inner = F.Id("inner");
+        var other = F.Id("other");
+        return Disp(Seq(RingParameters(), Bound("d", Naturals()),
+            Bound("left", Series(Ring())), Bound("right", Series(Ring())),
+            Bound("inner", Series(Ring())), Bound("other", Series(Ring())),
+            Implication(Equal(Call("constantCoeff", inner), D(0)),
+                Implication(Equal(Call("constantCoeff", other), D(0)),
+                    Implication(Agreement(d, left, right),
+                        Implication(Agreement(d, inner, other),
+                            Agreement(d, Call("subst", left, inner), Call("subst", right, other))))))));
+    }
 
     private static Formula Ring() => F.Id("R");
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
