@@ -18,8 +18,10 @@ section Closed
 variable {m : ℕ} (M : NCMatching (m + 2)) (j : Fin (m + 1))
   (hc : M.partner j.castSucc = j.succ)
 
+include hc
+
 theorem close_partner_right : M.partner j.succ = j.castSucc := by
-  simpa only [M.involutive] using congrArg M.partner hc.symm
+  exact (congrArg M.partner hc).symm.trans (M.involutive j.castSucc)
 
 theorem close_shortUnchanged (k : Fin m) : ShortUnchanged M j k := by
   rw [ShortUnchanged, hc, close_partner_right M j hc]

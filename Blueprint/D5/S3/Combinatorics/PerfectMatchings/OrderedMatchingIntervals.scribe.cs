@@ -10,8 +10,8 @@ internal sealed class OrderedMatchingIntervalsDocument : IScribeDocumentDefiniti
         Blocks(
             Describe.Lean(
                 DescribeId.Create("interval"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/PerfectMatchings/OrderedMatchingIntervals.NCMatching.closed_interval_gap"),
-                H("Label transport across closed matching intervals"), StatementSource.FromAuthor(new Formula.Layout(FormulaLayoutMode.Display, All("L", V("Type"), All("n", V("Natural"), All("M", Call("NCMatching", V("n")), All("y", Call("Function", Call("Fin", Add(V("n"), Num(1))), V("L")), All("l", Call("Fin", Add(V("n"), Num(1))), All("r", Call("Fin", Add(V("n"), Num(1))), Implies(Call("Compatible", V("M"), V("y")), Implies(AtMost(V("l"), V("r")), Implies(Call("IntervalClosed", V("M"), V("l"), V("r")), Equal(Call("Apply", V("y"), V("l")), Call("Apply", V("y"), V("r")))))))))))))),
+                DeclarationHandle.Create("D5/S3/Combinatorics/PerfectMatchings/OrderedMatchingIntervals.closed_interval_gap"),
+                H("Label transport across closed matching intervals"), StatementSource.FromAuthor(FormulaDsl.Disp(All("L", V("Type"), All("n", V("Natural"), All("M", Call("NCMatching", V("n")), All("y", Call("Function", Call("Fin", Add(V("n"), Num(1))), V("L")), All("l", Call("Fin", Add(V("n"), Num(1))), All("r", Call("Fin", Add(V("n"), Num(1))), Implies(Call("Compatible", V("M"), V("y")), Implies(AtMost(V("l"), V("r")), Implies(Call("IntervalClosed", V("M"), V("l"), V("r")), Equal(Call("Apply", V("y"), V("l")), Call("Apply", V("y"), V("r")))))))))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("A partner-closed interval has equal boundary labels under every compatible labelling. Strong induction removes its first matched block and retains a closed suffix. The interval may contain any number of nested or disjoint arcs, and zero length is included."))),
                 DescribeRole.Theorem))));

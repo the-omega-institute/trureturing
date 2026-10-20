@@ -44,10 +44,10 @@ theorem unchanged_partner (t : Fin (m + 2)) (ht : Unchanged M j t) :
     reconnectPartner M j t = M.partner t := by
   have hpa : M.partner t ≠ j.castSucc := by
     intro h; apply ht.2.2.1
-    simpa only [M.involutive] using congrArg M.partner h
+    exact (M.involutive t).symm.trans (congrArg M.partner h)
   have hpb : M.partner t ≠ j.succ := by
     intro h; apply ht.2.2.2
-    simpa only [M.involutive] using congrArg M.partner h
+    exact (M.involutive t).symm.trans (congrArg M.partner h)
   simp only [reconnectPartner, hpa, hpb, if_false]
 
 theorem shortUnchanged_iff (k : Fin m) :
@@ -135,15 +135,18 @@ theorem prod_skipPair {K : Type*} [CommMonoid K] {m : ℕ}
     · intro ht
       exact Finset.mem_image.mpr ⟨unskipPair j t ht.1 ht.2,
         Finset.mem_univ _, skipPair_unskipPair j t ht.1 ht.2⟩
-  have hab : j.castSucc ≠ j.succ := by intro h; have := congrArg Fin.val h; omega
-  have ha : j.castSucc ∉ Finset.insert j.succ (Finset.univ.image (skipPair j)) := by
+  have hab : j.castSucc ≠ j.succ := by
+    intro h
+    have hval : j.val = j.val + 1 := congrArg Fin.val h
+    omega
+  have ha : j.castSucc ∉ insert j.succ (Finset.univ.image (skipPair j)) := by
     simp only [Finset.mem_insert, himg]
     tauto
   have hb : j.succ ∉ Finset.univ.image (skipPair j) := by
     rw [himg]
     tauto
   have hu : (Finset.univ : Finset (Fin (m + 2))) =
-      Finset.insert j.castSucc (Finset.insert j.succ (Finset.univ.image (skipPair j))) := by
+      insert j.castSucc (insert j.succ (Finset.univ.image (skipPair j))) := by
     ext t
     simp only [Finset.mem_univ, Finset.mem_insert, himg]
     tauto
