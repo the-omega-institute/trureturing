@@ -2528,3 +2528,759 @@ $n,\varepsilon$ rates and an actual family (19.4) remain unresolved.
 [BSS]: https://arxiv.org/pdf/1204.3873v2
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Barycentric entropy amortization for the actual online flow
+
+**Definition 22.1 (Fixed spectral constants and deficit).** Retain exactly
+Definitions 2.1–2.4, including the fixed angle $\pi/6$, the embedded qutrit
+in $H=\mathbb C^5$, full complex vector phase, complete persistent peak
+width, free independent standard Borel seeds and deterministic schedule,
+and fully averaged unhalved diamond error with every untouched reference.
+Write $F=F_0$ from (12.1), $F_1=FJ$, and put
+
+$$
+\omega=(-1+i\sqrt3)/2,\qquad \mathcal A=\omega F,\qquad
+C_1=J\mathcal A^{-1}J\mathcal A,\qquad
+C_2=\mathcal A^{-1}C_1\mathcal A.
+\tag{22.1}
+$$
+
+For normalized Haar measure on the full unit-vector sphere $S^3$, let
+$\mathsf U_g v(x)=v(g^{-1}x)$ and set
+
+$$
+\mathsf S=\frac14\left(\mathsf U_{C_1}+\mathsf U_{C_1^{-1}}
+                     +\mathsf U_{C_2}+\mathsf U_{C_2^{-1}}\right),\qquad
+\gamma=\min\left\{1,
+ \inf_{0\ne v\perp1}\frac{\langle v,(I-\mathsf S)v\rangle}
+                              {\|v\|_2^2}\right\}.
+\tag{22.2}
+$$
+
+The positivity $\gamma>0$ is proved in §24 from the spectral supplier
+already used in §6; it is not a controller-dependent coercivity
+assumption. This $\gamma$ is associated to $C_1,C_2$ and need not equal
+the constant associated to $R_1,R_2$ in (6.2). Define
+
+$$
+\begin{aligned}
+\kappa&=3\gamma/64,&
+B_W(n)&=[\kappa\lfloor n/3\rfloor-\ln W]_+,\\
+\Delta_W(n)&=\min\left\{\frac1{32},
+                 \frac{B_W(n)}{32768W^{2/3}}\right\},&
+C&=6+2^{17}/\gamma,\\
+\alpha&=\sqrt{31/32},&c_*&=1-\alpha.
+\end{aligned}
+\tag{22.3}
+$$
+
+All logarithms in §§22–27 are natural unless a base is displayed.
+
+**Theorem 22.2 (Unconditional finite-horizon deficit and sharp block
+contraction).** For every integer $W\ge1$ and $n\ge0$,
+
+$$
+a_W(n)^2\le1-\Delta_W(n),\qquad
+\mathcal Q_W(n)\ge4\Delta_W(n).
+\tag{22.4}
+$$
+
+More specifically, every deterministic changing many-to-one controller,
+starting state and unit terminal field of Definition 17.1, with its own
+occupations and backward vectors, satisfies
+
+$$
+\mathscr E(f,r_0,y)\ge
+\min\left\{\frac18,\frac{B_W(n)}{8192W^{2/3}}\right\}.
+\tag{22.5}
+$$
+
+There are no positive-occupation or stationarity hypotheses. In particular,
+
+$$
+a_W(\lceil CW^{2/3}\rceil)\le\alpha=1-c_*,\qquad
+ a_W(n)\le\alpha^{\lfloor n/\lceil CW^{2/3}\rceil\rfloor}.
+\tag{22.6}
+$$
+
+Here $C$ and $c_*$ are absolute constants for the fixed instrument;
+$0<\gamma\le1$, but no numerical lower bound on $\gamma$ is asserted.
+The proof is given in §§23–26. It supplies the first condition of
+Theorem 19.1 without an additional dynamic assumption. The exact
+lossless startup of Theorem 12.2 is retained.
+
+## 23. Actual conditional means and the entropy cost of their merging
+
+**Definition 23.1 (The common-history conditional-mean flow).** Fix one
+of the deterministic programs in (12.2), its starting state $r_0$ and a
+unit $t\in\mathbb C^2$. On the actual independent fair acquired labels
+$H_1,\ldots,H_n$ put
+
+$$
+\begin{aligned}
+R_0&=r_0,& R_{k+1}&=f_{k+1,H_{k+1}}(R_k),\\
+Z_0&=t,& Z_k&=F_{H_k}\cdots F_{H_1}t,\\
+p_k(r)&=\Pr(R_k=r),&u_k(r)&=\mathbb E[Z_k\mid R_k=r],\\
+S_k&=\sum_{r:p_k(r)>0}p_k(r)\|u_k(r)\|^2,& D_k&=1-S_k.
+\end{aligned}
+\tag{23.1}
+$$
+
+Conditional means are needed only where $p_k(r)>0$; a zero-occupation
+state may be assigned zero for notation. These $p_k$ are exactly (14.2)
+for this program, not a uniform law on its state set. All vectors retain
+their complex phases relative to $\xi$. Realification to $\mathbb R^4$
+uses the same Euclidean norm.
+
+**Proposition 23.2 (Barycentric block payment on the actual law).** For
+$k,\ell\ge0$ with $k+\ell\le n$, set
+
+$$
+Y=F_{H_{k+\ell}}\cdots F_{H_{k+1}}u_k(R_k),\qquad
+Q=u_{k+\ell}(R_{k+\ell}).
+$$
+
+Then
+
+$$
+\mathbb E[Y\mid R_{k+\ell}]=Q,\qquad
+\mathbb E\|Y-Q\|^2=S_k-S_{k+\ell}=D_{k+\ell}-D_k.
+\tag{23.2}
+$$
+
+Consequently $D_0=0$, $0\le D_k\le D_{k+1}\le1$ and
+$\|u_k(r)\|\le1$ on positive states. Let $G\sim N(0,I_4)$ be independent
+of this whole finite experiment, fix $\sigma>0$, and let $f_k$ be the
+Lebesgue density of $u_k(R_k)+\sigma G$. With
+$\mathsf P=(\mathsf U_{F_0}+\mathsf U_{F_1})/2$ on $\mathbb R^4$,
+
+$$
+h(f_{k+\ell})\ge h(\mathsf P^\ell f_k)
+              -\frac{D_{k+\ell}-D_k}{2\sigma^2}.
+\tag{23.3}
+$$
+
+The Gaussian defines an auxiliary density only. It is not an operation,
+noise source or persistent variable in the recovery procedure.
+
+Proof. The future labels are independent of the entire earlier history.
+The future state is a deterministic function of $R_k$ and those future
+labels, even when each update is many-to-one. Thus, conditional on that
+pair, replacing $Z_k$ by $u_k(R_k)$ preserves its expectation. For each
+state $s$ this gives
+
+$$
+\mathbb E[Y\mathbf1_{\{R_{k+\ell}=s\}}]
+=\mathbb E[Z_{k+\ell}\mathbf1_{\{R_{k+\ell}=s\}}].
+$$
+
+This proves the first identity in (23.2). Conditional-expectation
+orthogonality and unitarity give
+$\mathbb E\|Y-Q\|^2=\mathbb E\|Y\|^2-\mathbb E\|Q\|^2
+=S_k-S_{k+\ell}$. Since $\|Z_k\|=1$, conditional convexity gives
+$\|u_k(r)\|\le1$, and the remaining assertions follow.
+
+Here is the finite-mixture entropy inequality needed for (23.3), with
+its analytic details. Let $Y$ and $T$ be jointly finite-valued, in
+$\mathbb R^d$ and a finite set respectively, put $Q=\mathbb E[Y\mid T]$,
+and take an independent standard Gaussian $G$. For any $\sigma>0$,
+
+$$
+h(Y+\sigma G)-h(Q+\sigma G)
+\le\frac{\mathbb E\|Y-Q\|^2}{2\sigma^2}.
+\tag{23.4}
+$$
+
+Delete zero-probability atoms. For any of the resulting finite mixtures
+with centers $a_i$ and positive weights $w_i$, its density is
+
+$$
+f(x)=\sum_iw_i(2\pi\sigma^2)^{-d/2}
+                  e^{-\|x-a_i\|^2/(2\sigma^2)}.
+$$
+
+It is positive and smooth. A single positive component bounds $f$ below
+by $e^{-K(1+\|x\|^2)}$ for some finite $K$; the Gaussian kernel's
+maximum bounds it above by $(2\pi\sigma^2)^{-d/2}$. Thus
+$|\log f(x)|\le K'(1+\|x\|^2)$ after enlarging the constant.
+All these mixtures have finite moments of every order. Their entropies,
+cross-entropies and pairwise KL divergences are therefore finite, also
+when some centers coincide.
+
+Let $f_Q$ be the density of $Q+\sigma G$ and $\varphi=\log f_Q$.
+Differentiating the finite sum, with posterior weights proportional to
+$w_i e^{-\|x-q_i\|^2/(2\sigma^2)}$, gives
+
+$$
+\nabla\varphi(x)=\frac{\mathbb E[Q\mid Q+\sigma G=x]-x}{\sigma^2},
+\qquad
+\nabla^2\varphi(x)=-\frac{I_d}{\sigma^2}
+  +\frac{\operatorname{Cov}(Q\mid Q+\sigma G=x)}{\sigma^4}
+\succeq-\frac{I_d}{\sigma^2}.
+\tag{23.5}
+$$
+
+The gradient has at most linear growth. Taylor's formula integrated
+along the line from $q+z$ to $y+z$ now yields
+
+$$
+\varphi(y+z)\ge\varphi(q+z)
+ +\nabla\varphi(q+z)\cdot(y-q)-\frac{\|y-q\|^2}{2\sigma^2}.
+$$
+
+Use the same independent Gaussian in $q=Q$, $y=Y$, $z=\sigma G$.
+The linear term is integrable and has expectation zero, because
+$\mathbb E[Y-Q\mid T,G]=0$ and the gradient is measurable in $(T,G)$.
+Consequently
+
+$$
+\mathbb E\varphi(Y+\sigma G)\ge
+\mathbb E\varphi(Q+\sigma G)-\frac{\mathbb E\|Y-Q\|^2}{2\sigma^2}.
+$$
+
+For the density $f_Y$ of $Y+\sigma G$, the exact sign identity is
+
+$$
+\begin{aligned}
+h(f_Y)-h(f_Q)+D_{\rm KL}(f_Y\|f_Q)
+&=\int(f_Q-f_Y)\log f_Q\\
+&=\mathbb E\varphi(Q+\sigma G)-\mathbb E\varphi(Y+\sigma G).
+\end{aligned}
+\tag{23.6}
+$$
+
+KL is nonnegative: $-\ln t\ge1-t$ integrated with
+$t=f_Q/f_Y$ proves this directly. Dropping that nonnegative term proves
+(23.4). The growth bounds above justify every expectation and subtraction.
+
+Apply (23.4) to the actual $Y$ in (23.2), with $T=R_{k+\ell}$.
+Conditional on $R_k$, the independent future labels rotate its center
+by the actual length-$\ell$ word. Every $F_j$ is real orthogonal on
+$\mathbb R^4$, so it preserves the isotropic Gaussian and Lebesgue
+measure. The density of $Y+\sigma G$ is precisely
+$\mathsf P^\ell f_k$. This proves (23.3). Neither the conditional means
+nor their merging have been replaced by independently chosen centers.
+$\square$
+
+## 24. The actual finite-word comparison on radial and angular functions
+
+**Proposition 24.1 (Phase-faithful three-step angular contraction).**
+The constant $\gamma$ in (22.2) satisfies $0<\gamma\le1$. On
+$L^2(\mathbb R^4,dx)$ let $\Pi$ be the orthogonal projection onto radial
+functions. Then for every complex $v\in L^2(\mathbb R^4)$,
+
+$$
+\|v\|_2^2-\|\mathsf P^3v\|_2^2
+\ge\frac\gamma{16}\|(I-\Pi)v\|_2^2.
+\tag{24.1}
+$$
+
+Proof. The matrix identities connecting this use of the spectral
+supplier to the actual letters are
+
+$$
+\begin{aligned}
+\mathcal A&=\frac14\begin{pmatrix}
+1+i\sqrt3&-\sqrt3+3i\\\sqrt3+3i&1-i\sqrt3
+\end{pmatrix},& \det\mathcal A&=1,&\operatorname{tr}\mathcal A&=1/2,\\
+C_1&=\frac14\begin{pmatrix}-2&\sqrt3+3i\\-\sqrt3+3i&-2\end{pmatrix},\\
+C_2&=\frac1{16}\begin{pmatrix}
+-8+6i\sqrt3&-5\sqrt3-3i\\5\sqrt3-3i&-8-6i\sqrt3
+\end{pmatrix}.
+\end{aligned}
+\tag{24.2}
+$$
+
+They follow by multiplying (12.1) and (22.1); in particular
+$\mathcal A^\dagger\mathcal A=I$, $C_i\in SU(2)$,
+$\operatorname{tr}C_i=-1$ and $C_i^3=I$. One may check the last
+mixed trace without expanding all entries: for determinant-one
+$2\times2$ matrices, Cayley–Hamilton gives
+$\operatorname{tr}(XY)+\operatorname{tr}(XY^{-1})
+=\operatorname{tr}X\operatorname{tr}Y$. Here
+
+$$
+\operatorname{tr}(C_1\mathcal A^{-1})=1/2,\qquad
+\operatorname{tr}(C_1\mathcal A)=-1,\qquad
+\operatorname{tr}(C_1C_2)=-1/2-\operatorname{tr}(\mathcal A^{-2})=5/4.
+\tag{24.3}
+$$
+
+There is also an exact identification with the existing dense pair of
+Definition 6.1. The scalar relating $F$ and $A=g_0$ cancels in conjugation,
+so $J_k=F^{-k}JF^k=A^{-k}JA^k$. Therefore
+
+$$
+C_1=J_0J_1=R_1,\qquad C_2=J_1J_2=R_1^{-1}R_2,\qquad
+C_1C_2=R_2.
+\tag{24.4}
+$$
+
+Thus $\langle C_1,C_2\rangle=\langle R_1,R_2\rangle$, whose density
+is Theorem 6.2. Equivalently the same closed-subgroup argument applies
+to (24.3): the trace $5/4$ makes $C_1C_2$ infinite order, since a finite
+order matrix has algebraic-integer trace and a rational algebraic integer
+is integral. A proper infinite closed subgroup of $SU(2)$ has a circle
+as identity component and lies in its normalizer, as proved in §6.
+Elements of that normalizer outside the circle have trace zero. The
+nonzero traces of $C_1,C_2$ would put both in the circle; their commuting
+order-three product would then have finite order, a contradiction.
+This reuses the source's group argument, not a new density hypothesis.
+
+Apply [BG, publisher final, Theorem 1 and footnote 1, p. 1455][BG],
+DOI [10.4171/JEMS/337][BG-DOI], to $d=2$, $k=2$, $g_i=C_i$.
+All entries in (24.2) belong to $\mathbb Q(i,\sqrt3)$ and hence are
+algebraic. Both generators are in $SU(2)$, and their topological density
+is equivalent to the theorem's Zariski density in $SL_2(\mathbb C)$
+by that footnote. The paper uses the self-adjoint unnormalized Hecke sum
+$zv(x)=\sum_{i=1}^2[v(C_ix)+v(C_i^{-1}x)]$ and proves its top spectral
+supremum on constants-perpendicular is less than $4$. Its probability
+normalization (0.1), p. 1457, is the symmetric measure with mass $1/4$
+on each listed generator and inverse, with multiplicities. Under the
+inverse-translation convention here this is precisely $\mathsf S=z/4$.
+Only the resulting positive top gap is needed; no absolute gap for $z$
+or gap for the nonsymmetric $\mathsf P$ is inferred directly.
+
+The action on $S^3$ is the regular $SU(2)$ action, not a projective
+quotient. Indeed the completion $C(z)$ in (17.4) is the unique $SU(2)$
+matrix sending $(1,0)^{\mathsf T}$ to a prescribed unit complex vector
+$z$. For any other fixed unit vector $t$, use $C(z)C(t)^\dagger$.
+This identifies Haar with the uniform measure on the full sphere and
+transfers the Hecke gap to (22.2). This proves $\gamma>0$.
+
+In polar coordinates $x=r\theta$, with normalized sphere measure $m_3$,
+$dx=2\pi^2r^3\,dr\,dm_3(\theta)$. For almost every $r>0$, the angular
+section of $v$ is square-integrable; $\Pi v(r\theta)=\int v(r\eta)dm_3(\eta)$.
+Apply the sphere gap to its zero-mean part and integrate in $r$.
+Fubini and the boundedness of the rotation operators give
+
+$$
+\langle v,(I-\mathsf S)v\rangle
+\ge\gamma\|(I-\Pi)v\|_2^2.
+\tag{24.5}
+$$
+
+Finally, for a chronological word $w=abc$ write $g_w=F_cF_bF_a$.
+The three actual words with one label $1$ satisfy
+
+$$
+g_{100}=F^3J_0,\qquad g_{010}=F^3J_1,\qquad g_{001}=F^3J_2.
+$$
+
+Their ordered differences are
+$g_{100}^{-1}g_{010}=C_1$ and $g_{010}^{-1}g_{001}=C_2$;
+reversing each pair gives its inverse. Each word has actual probability
+$1/8$. Composition obeys $\mathsf U_g\mathsf U_h=\mathsf U_{gh}$,
+so, with $\mathsf T=\mathsf P^3$,
+
+$$
+\mathsf T^*\mathsf T=\frac1{64}\sum_{u,w\in\{0,1\}^3}
+                       \mathsf U_{g_u^{-1}g_w},\qquad
+\|v\|_2^2-\|\mathsf T v\|_2^2
+=\frac1{128}\sum_{u,w}\|v-\mathsf U_{g_u^{-1}g_w}v\|_2^2.
+\tag{24.6}
+$$
+
+The second equality is the Hilbert variance identity for eight unitary
+images. Keep the four specified ordered pairs, discarding nonnegative
+terms. The symmetric Dirichlet form is
+
+$$
+\langle v,(I-\mathsf S)v\rangle
+=\frac18\sum_{c\in(C_1,C_1^{-1},C_2,C_2^{-1})}
+                         \|v-\mathsf U_cv\|_2^2.
+$$
+
+Hence (24.6) is at least $\langle v,(I-\mathsf S)v\rangle/16$;
+(24.5) proves (24.1). This is the same actual forward-word comparison
+mechanism as §6, with the neighboring pair $C_1,C_2$ and radial
+disintegration made explicit. It adds no inverse move, extra label or
+controllable quantum operation to the physical two-letter process.
+$\square$
+
+## 25. Peak width forces entropy production while the deficit is small
+
+**Proposition 25.1 (Angular concentration and actual entropy production).**
+For the flow in Definition 23.1, choose
+
+$$
+\sigma=\frac1{256W^{1/3}}.
+\tag{25.1}
+$$
+
+If $D_k\le1/32$, then
+
+$$
+\|\Pi\sqrt{f_k}\|_2^2\le1/4,\qquad
+h(\mathsf P^3f_k)-h(f_k)\ge\kappa.
+\tag{25.2}
+$$
+
+Proof. Write $U=u_k(R_k)$. Since $\|U\|\le1$, Markov's inequality
+applied to $1-\|U\|^2$ gives
+
+$$
+\Pr(\|U\|<1/2)\le\frac{D_k}{3/4}\le1/24.
+$$
+
+For the independent standard Gaussian in four real dimensions,
+$\mathbb E\|G\|^2=4$, so $\Pr(\|G\|>16)\le1/64$.
+Around every direction $u_k(r)/\|u_k(r)\|$ with $\|u_k(r)\|\ge1/2$
+and positive occupation, take the sphere chord ball of radius
+
+$$
+\varrho=64\sigma=\frac1{4W^{1/3}}\le1/4.
+$$
+
+Their union $A_{\rm ang}$ has at most $W$ caps. The phase-resolved
+sphere-volume formula used in (7.2) gives, for a cap of chord radius
+$\varrho\le1$, geodesic radius $\theta=2\arcsin(\varrho/2)\le2\varrho$
+and normalized area
+
+$$
+\frac2\pi\int_0^\theta\sin^2s\,ds
+\le\frac{2\theta^3}{3\pi}\le4\varrho^3.
+$$
+
+Thus $a=m_3(A_{\rm ang})\le4W\varrho^3=1/16$. Let
+$A_{\rm cone}=\{r\theta:r>0,\theta\in A_{\rm ang}\}$.
+For nonzero $u$ and $u+e$, the triangle inequality and the reverse
+triangle inequality imply
+
+$$
+\left\|\frac{u+e}{\|u+e\|}-\frac u{\|u\|}\right\|
+\le\frac{2\|e\|}{\|u\|}.
+$$
+
+On $\|U\|\ge1/2$ and $\|G\|\le16$, the perturbed vector is nonzero:
+$\sigma\|G\|\le16/256=1/16<1/2$. Its direction is within $\varrho$
+of the corresponding center. Therefore the actual Gaussian mixture has
+
+$$
+\int_{A_{\rm cone}^c}f_k\le1/24+1/64=11/192<1/16.
+\tag{25.3}
+$$
+
+For any complex radial $v$ of $L^2(dx)$ norm one, polar integration
+gives $\int_{A_{\rm cone}}|v|^2=a$. Apply Cauchy–Schwarz on the cone
+and its complement separately:
+
+$$
+|\langle v,\sqrt{f_k}\rangle|
+\le\sqrt a\,\|\mathbf1_{A_{\rm cone}}\sqrt{f_k}\|_2
+   +\sqrt{1-a}\,\|\mathbf1_{A_{\rm cone}^c}\sqrt{f_k}\|_2
+\le\frac14+\sqrt{11/192}<\frac12.
+$$
+
+Taking the supremum over radial unit $v$ proves the first part of (25.2).
+No angular probability of the actual history was replaced by Haar:
+Haar enters only the cone's angular volume and radial projection.
+
+For completeness the entropy-production estimate follows from elementary
+KL and Hilbert inequalities. For a positive finite Gaussian mixture $f$,
+rotations preserve differential entropy. The eight-word mixture
+$\mathsf T f=\mathsf P^3f$ therefore satisfies
+
+$$
+h(\mathsf T f)-h(f)
+=\frac18\sum_wD_{\rm KL}(\mathsf U_{g_w}f\|\mathsf T f).
+\tag{25.4}
+$$
+
+All terms are finite by the growth bounds in §23. For positive
+probability densities $p,q$, $-\ln t\ge2(1-\sqrt t)$, obtained from
+$\ln s\le s-1$, gives
+
+$$
+D_{\rm KL}(p\|q)\ge2-2\int\sqrt{pq}
+=\|\sqrt p-\sqrt q\|_2^2.
+$$
+
+Since $\sqrt{\mathsf U_gf}=\mathsf U_g\sqrt f$ and
+$\|\sqrt{\mathsf T f}\|_2=1$, (25.4) is at least
+
+$$
+\begin{aligned}
+2-2\langle\mathsf T\sqrt f,\sqrt{\mathsf T f}\rangle
+&\ge2(1-\|\mathsf T\sqrt f\|_2)\\
+&\ge1-\|\mathsf T\sqrt f\|_2^2\\
+&\ge\frac\gamma{16}(1-\|\Pi\sqrt f\|_2^2).
+\end{aligned}
+\tag{25.5}
+$$
+
+Here $\mathsf T$ is an average of unitary operators and hence a
+contraction; for $0\le b\le1$, $2(1-b)\ge1-b^2$. The last inequality
+is (24.1) with $v=\sqrt f$. Apply the first part of (25.2) to obtain
+$3\gamma/64=\kappa$. The dimension three in $W^{-1/3}$ is the angular
+dimension of full complex unit vectors, while the auxiliary Gaussian
+lives in four real dimensions. $\square$
+
+## 26. One entropy budget and the all-controller deficit
+
+Proof of Theorem 22.2. First fix the deterministic single-source program
+and unit vector in Definition 23.1. The finite-mixture entropy budget at
+each layer is
+
+$$
+0\le h(f_k)-h(\sigma G)
+=I(R_k;u_k(R_k)+\sigma G)\le H(R_k)\le\ln W.
+\tag{26.1}
+$$
+
+Here $H$ is discrete entropy in nats. To justify all signs and the upper
+bound directly, put $p_r=p_k(r)>0$ and let $\phi_r$ be the Gaussian
+component at center $u_k(r)$, so $f_k=\sum_rp_r\phi_r$.
+Then the entropy difference equals
+$\sum_rp_r\int\phi_r\ln(\phi_r/f_k)$ by expansion, since each component
+has entropy $h(\sigma G)$. Each integral is KL and is nonnegative.
+Also $f_k\ge p_r\phi_r$, so it is at most $-\ln p_r$.
+Finally $\sum_r-p_r\ln p_r\le\ln W$, by KL nonnegativity against the
+uniform law on $W$ padded states. These arguments allow coincident
+centers and arbitrary nonuniform occupations. At initialization there
+is one center $t$, so $h(f_0)=h(\sigma G)$ and $D_0=0$.
+
+Suppose first that $D_n\le1/32$. Monotonicity in (23.2) makes
+Proposition 25.1 applicable at all earlier times. With
+$q=\lfloor n/3\rfloor$, apply (23.3) and (25.2) at
+$k=0,3,\ldots,3q-3$. Summing gives
+
+$$
+h(f_{3q})-h(f_0)\ge q\kappa-\frac{D_{3q}}{2\sigma^2}.
+$$
+
+Combining (26.1) and $D_{3q}\le D_n$ yields the useful finite-horizon
+budget inequality
+
+$$
+\kappa\lfloor n/3\rfloor\le\ln W+\frac{D_n}{2\sigma^2}
+\quad\text{whenever }D_n\le1/32.
+\tag{26.2}
+$$
+
+Since $2\sigma^2=(32768W^{2/3})^{-1}$, this gives
+$D_n\ge B_W(n)/(32768W^{2/3})$ in this case. If instead
+$D_n>1/32$, use that deficit directly. In all cases,
+
+$$
+D_n\ge\Delta_W(n).
+\tag{26.3}
+$$
+
+This is the model-specific entropy amortization: the at-most-$\ln W$
+entropy increase is paid once, while barycentric merging charges every
+subsequent three-step entropy production to the same cumulative
+squared loss. There is no independent coercivity premise.
+
+For the corresponding forward tuple, $x_{n,r}=p_n(r)u_n(r)$, so
+Cauchy–Schwarz in the actual probability law gives
+
+$$
+\left(\sum_r\|x_{n,r}\|\right)^2
+=\left(\mathbb E\|u_n(R_n)\|\right)^2
+\le S_n=1-D_n\le1-\Delta_W(n).
+\tag{26.4}
+$$
+
+The attained deterministic single-source maximum in Theorem 12.2 is
+exactly $a_W(n)$, including its supremum over arbitrary normalized
+initial tuples and all stochastic layers. Taking that maximum in
+(26.4) proves the first part of (22.4).
+
+For the pointwise energy bound, keep the original $f,r_0,y$ of
+Definition 17.1, put $\beta=\|b_0(r_0)\|$, and use its own $p_k$.
+If $\beta>0$, choose $t=b_0(r_0)/\beta$ in the preceding argument.
+The same-history backward identity (17.3) and the inner-product
+convention of Definition 14.1 imply
+
+$$
+\beta=\mathbb E\operatorname{Re}\langle y_{R_n},F_{H_n}\cdots F_{H_1}t\rangle
+=\mathbb E\operatorname{Re}\langle y_{R_n},u_n(R_n)\rangle
+\le\mathbb E\|u_n(R_n)\|.
+$$
+
+Thus $\beta^2\le S_n$. Reuse the exact occupation-weighted identity
+(14.4), $\mathscr E=4(1-\beta^2)$, to obtain
+$\mathscr E\ge4D_n\ge4\Delta_W(n)$, which is (22.5).
+If $\beta=0$, the energy is four and the assertion is immediate.
+Zero-occupation states never require division or a chosen conditional
+mean. Taking the attained energy minimum (14.5) gives the second
+part of (22.4), consistently with $\mathcal Q_W=4(1-a_W^2)$.
+This does not replace a controller's occupations by those of an optimizer
+for a different quantity.
+
+To check the constants for every width, write $x=W^{2/3}\ge1$ and
+$n=\lceil Cx\rceil$. Since $\lfloor n/3\rfloor\ge Cx/3-1$,
+
+$$
+\kappa\lfloor n/3\rfloor
+\ge(2\kappa+2048)x-\kappa
+\ge(\kappa+2048)x.
+$$
+
+Also $\ln W=(3/2)\ln x\le(3/2)x$. Hence
+$B_W(n)\ge(\kappa+2048-3/2)x>1024x$, so
+$\Delta_W(n)=1/32$. This proves the first inequality of (22.6).
+Submultiplicativity from Lemma 4.2, with a contractive remainder,
+proves its second inequality. No width is omitted and no finite
+exception is absorbed without an estimate.
+
+The randomization scope can be stated explicitly. For a fixed seed,
+a stochastic table is the convex combination of deterministic maps
+with weights $\prod_rT(f(r)\mid r)$. Expanding both label tables at
+each time expresses the product of layers as a convex combination of
+complete deterministic programs, with weights independent of acquired
+labels. Decomposing an arbitrary tuple as $\sum_re_rx_r$ then reduces
+the vector norm maximum to unit single-source inputs, precisely as in
+Theorem 12.2. Thus the bound just proved is uniform over stochastic
+layers and initial laws. For a measurable independent standard Borel
+seed, pad to width $W$ on the common full-measure set for the finitely
+many times and apply that same uniform bound at each seed. Bounded
+measurable vector norms can be integrated. Neither a successful seed
+nor conditional success is assumed. For a fixed stochastic controller's
+backward fields its exact variance identity remains (14.7); the sharp
+bound on the optimum needs no determinization of decoder error.
+
+At $n=0$, $B_W(0)=0$, $D_0=0$, $a_W(0)=1$ and every unit-terminal
+single-source energy is zero. At $W=1$, Proposition 12.3 gives exactly
+$a_1(n)=2^{1-n}$ for $n\ge1$, including $a_1(1)=1$.
+Throughout the lossless startup $W\ge2^{n-1}$, $n\ge1$, the new
+positive part is zero: for $n=1$ its floor is zero, while for $n\ge2$,
+
+$$
+\kappa\lfloor n/3\rfloor\le n/64
+\le(n-1)\ln2\le\ln W.
+$$
+
+Thus (22.4) preserves the exact startup and the width-two path of
+Proposition 12.4. It asserts no strict loss at every step.
+$\square$
+
+## 27. The original sharp fixed-error operational rate
+
+**Corollary 27.1 (All permitted controllers and full-space decoders).**
+For every fixed original $0<\varepsilon<1/4$, put
+
+$$
+q_\varepsilon=\left\lfloor
+ \frac{\ln(1-\varepsilon)}{\ln\alpha}\right\rfloor+1.
+\tag{27.1}
+$$
+
+For all integers $n\ge2q_\varepsilon$,
+
+$$
+\left(\frac{n}{2q_\varepsilon C}\right)^{3/2}
+\le W_n(\varepsilon)
+\le\min\left\{2^n,28\pi^2
+                 \left\lceil4\sqrt{n/\varepsilon}\right\rceil^3\right\}.
+\tag{27.2}
+$$
+
+In particular $W_n(\varepsilon)=\Theta_\varepsilon(n^{3/2})$ and
+$\lceil\log_2W_n(\varepsilon)\rceil=(3/2)\log_2n+O_\varepsilon(1)$.
+At $n=0$ the width is one. The constants are for this fixed instrument,
+with its proved positive spectral gap.
+
+Proof. The integer $q_\varepsilon\ge1$ satisfies
+$\alpha^{q_\varepsilon}<1-\varepsilon$, including when the ratio in
+(27.1) is integral. Let $N_W=\lceil CW^{2/3}\rceil$.
+A successful width $W$ must satisfy $1-\varepsilon\le a_W(n)$ by
+Theorem 4.3. If $n\ge q_\varepsilon N_W$, (22.6) contradicts this.
+Consequently
+
+$$
+n<q_\varepsilon\lceil CW^{2/3}\rceil
+\le q_\varepsilon(CW^{2/3}+1).
+$$
+
+For $n\ge2q_\varepsilon$ this implies
+$CW^{2/3}>n/q_\varepsilon-1\ge n/(2q_\varepsilon)$,
+proving the lower bound in (27.2).
+
+The converse used here keeps arbitrary terminal CPTP decoders on $M_5$:
+Theorem 3.2 retracts each to $M_3$ without increasing encoded error.
+For any unit $t\in T$, the norm-one complex coherence
+$Z_t=|t\rangle\langle\xi|$ has actual branch image
+$|F_ht\rangle\langle\xi|$. At almost every fixed seed, the decoded
+output norm is at most the terminal sum of vector norms, hence at most
+$a_W(n)$. A CPTP map contracts trace norm on this non-Hermitian operator
+by its unital CP adjoint, Schwarz inequality and trace/operator duality,
+as in Theorem 4.3. Integrating the uniform upper bound gives
+$\|\mathcal C_n(Z_t)\|_1\le a_W(n)$; the averaged diamond criterion
+gives $\|\mathcal C_n(Z_t)\|_1\ge1-\varepsilon$. No seed or history is
+selected for success. The norm is unhalved and the reduction preserves
+all untouched references. Full-$H$ decoding is allowed, while the
+recovery inputs remain the embedded qutrit.
+
+The upper bound is exactly Theorem 8.4, using its stochastic radial
+lattice shell with a counted determinant bit. With
+$m=\lceil4\sqrt{n/\varepsilon}\rceil\ge8$, its at-most-$28\pi^2m^3$
+states carry all persistent information. The source's zero-mean lattice
+rounding and radial normalization have mean bias at most $4/m^2$ and
+second moment at most $4/m^2$. Their local averaged diamond error is
+at most $12/m^2$ by Lemma 8.3. The actual weighted subchannels in (8.6)
+sum to a channel, giving accumulated error at most
+$12n/m^2\le3\varepsilon/4$. Only the terminal full-$H$ correction
+(3.1) is executed. This is the existing source construction with its
+relative phase and determinant coset preserved. Retaining all histories
+supplies the alternative $2^n$ upper bound.
+
+Finally $\lceil4\sqrt{n/\varepsilon}\rceil\le5\sqrt{n/\varepsilon}$
+for $n\ge1$ gives a constant times $n^{3/2}$ upper bound. Together
+with (27.2) it proves both asymptotic statements. $\square$
+
+**Convention 27.2 (Source-relative attribution and precise boundary).**
+The model-specific deduction in §§23, 25–26 is barycentric entropy
+amortization of the actual conditional-mean flow, yielding (22.4)–(22.6)
+and the unconditional sharp rate (27.2). Finite Gaussian-mixture
+semiconvexity, KL nonnegativity, Hellinger comparison, conditional
+expectation and entropy of a mixture are generic analytic ingredients;
+their needed arguments are included inside these deductions. The group
+density and actual forward-word comparison reuse §§6–7, with (24.4)
+giving the exact correspondence. Their external deep input is solely
+Bourgain–Gamburd's publisher-final Theorem 1, footnote 1 and normalization
+(0.1), at the locators specified in §24. No assertion of exhaustive
+literature novelty is attached to this synthesis.
+
+The energy identity, arbitrary-tuple and stochastic reductions, and
+operational converse are the existing results of §§4, 12–14 and 18.
+The paid-parity construction of Theorems 17.2 and 18.2 remains a
+width-$2W$ construction; its exact determinant
+$\det F_h=\omega^n(-1)^{\sum h_k}$ is retained in the decoder table.
+It is not necessary for the lower-bound direction of Corollary 27.1,
+and no same-width operational sufficiency is inferred from vector
+survival. In particular the width-one, horizon-one obstruction of
+Proposition 17.3 still applies. The rounding upper bound is §8's result.
+These reused inputs are not additional new standalone results here.
+
+Theorem 22.2 establishes the constant-contraction condition of §19 and
+Corollary 27.1 removes the fixed-error logarithmic gap in (9.2).
+Neither proof assumes (16.2); the particular all-time exponential
+formula with logarithmic startup in (16.2) is not asserted here.
+A family (19.4) is excluded by (22.5): if its energies tend to zero,
+then eventually $\mathscr E<1/8$, so
+$\kappa\lfloor n/3\rfloor\le\ln W+8192\mathscr E W^{2/3}$.
+After division by $W^{2/3}$ the right side stays bounded since
+$(\ln W)/W^{2/3}\le3/(2e)$, contradicting
+$n/W^{2/3}\to\infty$.
+
+Peak width enters at every layer in Proposition 25.1 through its at most
+$W$ actual centers. A terminal-only alphabet or a bound on the entropy
+of the final record cannot supply that premise at earlier layers.
+The terminal-entropy task permits unlimited intermediate memory and
+actual erasure; the autonomous STOP task has a homogeneous internally
+clocked controller and different seed and exact-error permissions.
+Neither supplies a premise for this peak-width theorem. Smoothing is
+solely an analytic potential and never replaces the singular finite-word
+law by Haar or adds Gaussian physical noise.
+
+Numerical values for the spectral gap and optimal constants, sharp
+joint $n,\varepsilon$ asymptotics, static-table and inverse-control
+precision, calibration, acquisition and communication costs remain
+outside (27.2). The result concerns the specified mathematical model;
+it gives no physical or QFT realization or Lean/kernel certification.
+The original fixed-zero-error and $n=0$ endpoints retain their separate
+statements in §§11 and 18.
+
+## 追加锚（本行以下为增补区）
