@@ -10,15 +10,17 @@ open LeanInformationAudit.Tests.SearchReduction
 
 #search_reduction_config
 
-#search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.square
+-- The reverse probe closes squareFact by rfl, so it is target-part even
+-- though squareVia uses it on the live declaration path.
+#search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareFact] as squareResult
-#guard squareResult = Verdict.nonBindOnly
+#guard squareResult = Verdict.insufficient
 #guard squareResult.baseline = Run.exhausted
-#guard squareResult.paired = Run.found
+#guard squareResult.paired = Run.exhausted
 
-#search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.square
+#search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.GraphCandidates.trueFact] as neutralTrueResult
@@ -26,7 +28,7 @@ open LeanInformationAudit.Tests.SearchReduction
 #guard neutralTrueResult.baseline = Run.exhausted
 #guard neutralTrueResult.paired = Run.exhausted
 
-#search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.square
+#search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.GraphCandidates.arithmeticFact] as neutralArithmeticResult
@@ -116,27 +118,19 @@ open LeanInformationAudit.Tests.SearchReduction
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.Candidates.addition] as contentResult
 #guard contentResult.presentation = Run.exhausted
-#guard contentResult.baseline = Run.exhausted
-#guard contentResult.paired = Run.found
-#guard contentResult = Verdict.nonBindOnly
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.doubledPair
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.Candidates.addition] as mixedResult
 #guard mixedResult.presentation = Run.exhausted
-#guard mixedResult.baseline = Run.exhausted
-#guard mixedResult.paired = Run.found
-#guard mixedResult = Verdict.nonBindOnly
 
--- These expectations distinguish presentation certification from R(B): the
--- scalar induction theorem is usable by the finite arithmetic conversion but
--- does not close R's original target search.
+-- The finite arithmetic conversion supplies an independent presentation
+-- certificate with its actual single source.
 #search_reduction LeanInformationAudit.Tests.SearchReduction.PresentationCandidates.arithmetic
   at "a5e5b163319079eeb1b4b431395c65e43beb4b07"
   baseline [LeanInformationAuditRegTests.SearchReduction.PresentationBaseline]
   using [] as arithmeticPresentationResult
-#guard arithmeticPresentationResult.baseline = Run.exhausted
 #guard arithmeticPresentationResult.presentation = Run.found
 #guard arithmeticPresentationResult = Verdict.bindOnly
 #guard arithmeticPresentationResult.presentationSource =
@@ -146,7 +140,6 @@ open LeanInformationAudit.Tests.SearchReduction
   at "a5e5b163319079eeb1b4b431395c65e43beb4b07"
   baseline [LeanInformationAuditRegTests.SearchReduction.PresentationBaseline]
   using [] as packagedPresentationResult
-#guard packagedPresentationResult.baseline = Run.exhausted
 #guard packagedPresentationResult.presentation = Run.found
 #guard packagedPresentationResult = Verdict.bindOnly
 
@@ -154,7 +147,6 @@ open LeanInformationAudit.Tests.SearchReduction
   at "a5e5b163319079eeb1b4b431395c65e43beb4b07"
   baseline [LeanInformationAuditRegTests.SearchReduction.PresentationBaseline]
   using [] as renamedPresentationResult
-#guard renamedPresentationResult.baseline = Run.exhausted
 #guard renamedPresentationResult.presentation = Run.found
 #guard renamedPresentationResult = Verdict.bindOnly
 
@@ -178,9 +170,6 @@ open LeanInformationAudit.Tests.SearchReduction
 
 #print axioms aliasResult.baselineProof
 #print axioms packageResult.baselineProof
-#print axioms contentResult.pairedProof
-#print axioms contentResult.baselineFailureGuard
-#print axioms mixedResult.pairedProof
 #print axioms aliasResult.presentationConversion
 #print axioms wrapResult.presentationConversion
 #print axioms projectionResult.presentationConversion

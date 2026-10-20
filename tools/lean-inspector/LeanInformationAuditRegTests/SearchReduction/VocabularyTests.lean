@@ -1,98 +1,10 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Commands
 import LeanInformationAuditRegTests.SearchReduction.VocabularyCandidates
 
-/-! Positive/negative transport probes and a deliberately unsound-copy mutant. -/
+/-! Isolated production vocabulary and private-name regressions. -/
 open Lean Meta Elab Command
 open LeanInformationAudit.SearchReduction
 open LeanInformationAudit.Tests.SearchReduction
-
-private partial def literalCopy (source : Environment) (n : Name) : MetaM Unit := do
-  if (← getEnv).contains n then return
-  let some info := (source.setExporting false).find? n | throwError "missing mutant input"
-  for dep in info.getUsedConstantsAsSet do literalCopy source dep
-  match info with
-  | .defnInfo value => addDecl (.defnDecl value)
-  | .thmInfo value => addDecl (.thmDecl value)
-  | _ => throwError "unsupported mutant input"
-
--- Aggregate independent probes; each transport and R call enforces its own bound.
-set_option maxHeartbeats 0 in
-run_meta do
-  let source ← getEnv
-  enableInitializersExecution
-  let base ← referenceEnvironment
-  enableInitializersExecution
-  discard <| referenceHints
-  let check := fun n => withEnv base do
-    copyVocabulary source n
-    let original := ((source.setExporting false).find? n).get!
-    let rebuilt ← getConstInfo n
-    unless ← isDefEq original.type rebuilt.type do throwError "transport changed type: {n}"
-    return ← getEnv
-  let modes ← check ``VocabularyCandidates.PureMode
-  unless modes.contains ``VocabularyCandidates.PureMode.ab do throwError "missing constructor"
-  unless modes.contains (``VocabularyCandidates.PureMode ++ `casesOn) do throwError "missing casesOn"
-  for n in #[``VocabularyCandidates.instDecidableEqPureMode,
-      ``VocabularyCandidates.instReprPureMode, ``VocabularyCandidates.instInhabitedPureMode] do
-    discard <| check n
-  let rejectedInstance ← try
-    discard <| check ``VocabularyCandidates.noncanonicalRepr
-    pure false
-  catch ex =>
-    unless (← ex.toMessageData.toString).startsWith "search.derived_computation_mismatch" do throw ex
-    pure true
-  unless rejectedInstance do throwError "author instance computation was replaced"
-  discard <| check ``VocabularyCandidates.ForwardLaw
-  discard <| check ``VocabularyCandidates.nestedBox
-  discard <| check ``VocabularyCandidates.continuousBox
-  let first ← check ``VocabularyCandidates.easyBox
-  let second ← check ``VocabularyCandidates.easyBoxOther
-  let firstInfo := (first.find? ``VocabularyCandidates.easyBox).get!
-  let secondInfo := (second.find? ``VocabularyCandidates.easyBoxOther).get!
-  unless firstInfo.value? == secondInfo.value? do throwError "author proof body changed reconstruction"
-  let localNames := first.constants.foldStage2 (fun ns n _ => ns.push n) (#[] : Array Name)
-  for n in localNames do
-    if base.contains n then continue
-    if let some info := (source.setExporting false).find? n then
-      if ← withEnv source (isProp info.type) then
-        throwError "author Prop constant leaked: {n}"
-  let hard := ``VocabularyCandidates.hardBox
-  let rejected ← try
-    discard <| check hard
-    pure false
-  catch ex =>
-    let detail ← ex.toMessageData.toString
-    unless detail.startsWith "search.vocabulary_obligation_unclosed" do throw ex
-    logInfo detail
-    pure true
-  unless rejected do throwError "hard embedded certificate accepted"
-  -- Mutation: literal copying of an author's proof reference changes rejection
-  -- into a kernel-accepted definition. This is precisely the leak being tested.
-  withEnv base do
-    literalCopy source hard
-    let target := ((source.setExporting false).find? ``VocabularyCandidates.hardProjection).get!
-    let hints ← strategies (← getEnv)
-    let (copiedRun, _) ← search (← getEnv) target.levelParams target.type #[] hints
-    unless copiedRun == .found do throwError "literal-copy mutation was not detected"
-    unless classify true false copiedRun false false (.incomplete .missing) == .bindOnly do
-      throwError "mutant did not change the insufficient verdict"
-    logInfo "literal-copy mutant: bind-only; prefix reconstruction: insufficient"
-
-run_meta do
-  let source ← getEnv
-  enableInitializersExecution
-  let base ← referenceEnvironment
-  enableInitializersExecution
-  discard <| referenceHints
-  withEnv base do
-    copyVocabulary source ``VocabularyCandidates.easyBox
-    let target := ((source.setExporting false).find? ``VocabularyCandidates.easyProjection).get!
-    let (outcome, rows) ← search (← getEnv) target.levelParams target.type #[] (← strategies (← getEnv))
-    unless outcome == .found && rows.any (·.proof?.isSome) do
-      throwError "easy projection reconstruction did not produce a certificate"
-    unless classifyCertified true (.incomplete .undecided) outcome false false
-        (.incomplete .missing) == .bindOnly do throwError "easy projection was not bind-only"
-    logInfo "easy certificate projection: bind-only; kernel-checked complete original type"
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.VocabularyCandidates.hardProjection
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"

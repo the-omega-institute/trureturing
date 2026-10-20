@@ -32,6 +32,8 @@
 
 顶点是 `T`、其活依赖闭包内的同批具名 `theorem`、`def`、`instance`，以及基底叶子 `B_used`。理论消化 atom 或 CAS id 只作地址，不作图节点。不得按命题相同、源码行数、文件、private 属性或 atom 数量收费。
 
+批内归纳类型、构造子与 recursor 属于共同重建的词汇；其类型依赖继续遍历并入消费者，不把这些类型生成物当作缺少证明体的辅助声明，也不把它们的证书当成免费事实。
+
 消费者 `v` 的作者边取其编译值，先按 `CLAUDE.md` §3.2(iv) 作 ζ/β/ι 归约、删除死项及被投影丢弃的分量，再以 `getUsedConstants` 读取同批与基底常量。依赖读取复用声明级 `CompiledAxioms.declarationDependencyParts`、`CompiledEvidence`、`CompiledSourceOperands` 机制。仅 import、死 `have/show/let`、未用分量或在活路径外提及的辅助声明不形成有效依赖。
 
 matcher、等式引理、`_proof_n` 等编译器生成常量用 Lean 自身的识别机制并入所属声明；其活依赖归入所有者，不新增作者构造层。无法识别所有者、缺少所需编译值或出现不能解释的循环时具名 incomplete。

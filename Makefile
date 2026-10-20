@@ -202,7 +202,7 @@ search-reduction-run:
 search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
 
 search-reduction-test:
-	@for module in GraphModel GraphCalibration Calibration Faults RealNegative VocabularyTests; do $(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.$$module" || exit $$?; done
+	@for module in GraphModel GraphCalibration Calibration Faults RealNegative VocabularyTransport VocabularyTests; do $(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.$$module" || exit $$?; done
 
 # Reexecute every probe and guard even when the compiled fixtures are current.
 search-reduction-replay-test:
@@ -216,5 +216,5 @@ search-reduction-replay-real-negative:
 	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/RealNegative.lean
 
 search-reduction-replay-vocabulary:
-	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/VocabularyTests.lean
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/VocabularyTransport.lean && $(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/VocabularyTests.lean
 

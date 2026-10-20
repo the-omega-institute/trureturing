@@ -1,6 +1,9 @@
-import LeanInformationAuditRegAnalysis.SearchReduction.Local
+import Mathlib
+import LeanInformationAuditRegAnalysis.SearchReduction.Commands
 import LeanInformationAuditRegTests.SearchReduction.GraphCandidates
+import LeanInformationAuditRegTests.SearchReduction.Candidates
 
+/-! Calibration on mechanically extracted declaration graphs. -/
 open Lean Meta Elab Command LeanInformationAudit.SearchReduction
 
 set_option Elab.async false
@@ -10,64 +13,79 @@ run_cmd liftTermElabM do
     (∃ x, P x) → ∃ x, P x ∧ P x))
   Term.synthesizeSyntheticMVarsNoPostponing
   let target ← instantiateMVars target
-  let result ← localRebuild target none #[] [] []
+  let result ← localRebuild target
   unless result.cost == .zero && result.proof?.isSome do
     throwError "Exists elimination failed: {result.detail}"
   logInfo "local-calibration Exists elimination: kernel-checked zero"
 
 run_cmd do
   enableInitializersExecution
-  let base ← importModules #[{module := `Lean}] {} 0 (leakEnv := true) (loadExts := true)
+  let base ← importModules #[{module := `Mathlib}] {} 0 (leakEnv := true) (loadExts := true)
   liftTermElabM do
     let source ← getEnv
-    let scopedInfo ← getConstInfo ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.scopedApply
-    let scopedGraph ← extractGraph base scopedInfo.type (scopedInfo.value? (allowOpaque := true)).get!.headBeta
-    let scopedReading ← withEnv base <| evaluateGraph scopedGraph
-    for edge in scopedReading.graph.edges do
-      logInfo m!"scoped edge {edge.conclusion}: {reprStr edge.cost} {edge.detail}"
-    logInfo m!"scoped interval {reprStr scopedReading.baseline}"
-    unless scopedGraph.complete && scopedReading.baseline == ⟨.finite 0, .finite 0⟩ &&
-        scopedReading.graph.edges.all (·.cost != .unknown) do
-      throwError "scoped function application reconstruction failed: {scopedGraph.issues}"
-    logInfo "local-calibration scoped application: complete, kernel-checked zero"
-    let helperInfo ← getConstInfo ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.helperApplications
-    let helperGraph ← extractGraph base helperInfo.type (helperInfo.value? (allowOpaque := true)).get!
-    let helperEdges := helperGraph.edges.filter fun edge =>
-      edge.source.any (fun name => name.getString! == "parametricHelper")
-    unless helperEdges.length == 2 && helperEdges.all (fun edge =>
-        edge.premises.head? == helperEdges.head!.premises.head?) do
-      throwError "generic helper proof was duplicated across applications"
-    let helperReading ← withEnv base <| evaluateGraph helperGraph
-    unless helperReading.baseline == ⟨.finite 0, .finite 0⟩ do
-      throwError "shared helper application reconstruction failed"
-    logInfo "local-calibration generic helper: one shared proof, two checked calls"
-    let squareFact ← getConstInfo ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareFact
-    let added := #[(squareFact.type, mkConst squareFact.name)]
-    for name in #[
-        ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.square,
-        ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.scopedWitness,
-        ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.nested,
-        ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.splitHelper,
-        ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.dead] do
-      let info ← getConstInfo name
-      let some value := info.value? (allowOpaque := true) | throwError "missing fixture body"
-      let graph ← withEnv source <| extractGraph base info.type value added
-      let reading ← withEnv base <| evaluateGraph graph
-      let checked? ← withEnv source <| assembleZero reading.graph true
-      logInfo m!"graph-calibration {name}: nodes={reading.graph.vertices.length} edges={reading.graph.edges.length} complete={reading.graph.complete} issues={reading.graph.issues} B={reprStr reading.baseline} BS={reprStr reading.paired} vis={reprStr reading.baselineVisible} k1BS={reprStr reading.pairedK1} probes={reprStr reading.baselineProbe.outcome}/{reprStr reading.pairedProbe.outcome} usesS={reading.pairedUsesSeed} checked={checked?.isSome} verdict={reprStr (classifyGraph {reading with isolated := true, structureChecked := true, structureClean := true, presentationComplete := true})}"
-      let certified := {reading with isolated := true, structureChecked := true, structureClean := true, presentationComplete := true}
-      unless reading.graph.complete do throwError "unexpected incomplete calibration graph"
-      if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.scopedWitness then
-        unless reading.baseline == ⟨.finite 0, .finite 0⟩ && classifyGraph certified == .bindOnly && checked?.isSome do
-          throwError "scoped-variable calibration failed"
-      else if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.nested then
-        unless reading.baseline == ⟨.finite 2, .finite 2⟩ && reading.paired == ⟨.finite 1, .finite 1⟩ &&
-            classifyGraph certified == .nonBindOnly && classifyClosure certified == some .partial_ do
-          throwError "nested-witness partial-reduction calibration failed"
-      else
-        unless reading.baseline == ⟨.finite 1, .finite 1⟩ && reading.paired == ⟨.finite 0, .finite 0⟩ &&
-            reading.baselineVisible == ⟨.finite 0, .finite 0⟩ && classifyGraph certified == .nonBindOnly &&
-            classifyClosure certified == some .zero && checked?.isSome do
-          throwError "hidden-witness zero-closure calibration failed"
-      for edge in reading.graph.edges do
-        logInfo m!"edge {edge.conclusion} <- {edge.premises} head={edge.source} k={edge.window} cost={reprStr edge.cost}/{reprStr edge.pairedCost} {edge.detail}"
+    let square := ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareFact
+    let addition := ``LeanInformationAudit.Tests.SearchReduction.Candidates.addition
+    let fixtures := #[
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.scopedApply, #[]),
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.helperApplications, #[]),
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia, #[square]),
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.twoLayerVia, #[square]),
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.scopedWitness, #[square]),
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.splitHelper, #[square]),
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.dead, #[square]),
+      (``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.routineVia, #[]),
+      (``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContent, #[addition]),
+      (``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContentWithoutOmega,
+        #[``LeanInformationAudit.Tests.SearchReduction.Candidates.additionWithoutOmega])]
+    let mut positives := 0
+    let mut bindings := 0
+    let mut doubled : Option GraphReading := none
+    for (name, additions) in fixtures do
+      let graph ← withEnv source <| extractGraph base name additions
+      for v in graph.vertices do
+        if v.seed then continue
+        let some n := v.origin.constName? | throwError "unnamed declaration vertex"
+        unless allowCompletion source n && !isMatcherCore source n &&
+            !(← withEnv source <| isEqnThm n) do
+          throwError "compiler auxiliary retained as an author vertex: {n}"
+        if n.toString.startsWith "Lean.Omega." then
+          throwError "Omega certificate retained as a nonseed vertex: {n}"
+      -- Rebuild only statement vocabulary before any local probe.
+      let reading ← withEnv base do
+        for v in graph.vertices do
+          for dep in v.type.getUsedConstants do copyVocabulary source dep
+        evaluateGraph graph
+      let certified := {reading with
+        isolated := true, structureChecked := true,
+        structureClean := true, presentationComplete := true}
+      let verdict := classifyGraph certified
+      if verdict == .bindOnly then bindings := bindings + 1
+      if verdict == .nonBindOnly then positives := positives + 1
+      let observation : Observation := {
+        target := name, base := reading.baselineProbe.outcome,
+        paired := reading.pairedProbe.outcome, verdict, graph? := some certified,
+        configuration := localConfiguration}
+      logInfo s!"DECL_FIXTURE {observationJson observation |>.compress}"
+      unless graph.complete do throwError "incomplete declaration fixture {name}: {graph.issues}"
+      if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.dead then
+        unless reading.noAuxiliary && verdict != .nonBindOnly do
+          throwError "dead helper acquired a positive verdict"
+      if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia then
+        let synthetic := reading.graph.edges.any fun edge =>
+          edge.premises.any fun p =>
+            (reading.graph.vertices.find? (·.id == p)).any fun v =>
+              v.origin.constName? == some square && !edge.analytic.contains p
+        unless synthetic do throwError "squareFact was not classified synthetic"
+        let predicted := reading.baseline == ⟨.finite 1, .finite 1⟩ &&
+          reading.paired == ⟨.finite 0, .finite 0⟩ && classifyClosure certified == some .zero
+        logInfo s!"DECL_PREDICTION squareVia {predicted}"
+      if name == ``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContent then
+        doubled := some reading
+        let predicted := (reading.baseline == ⟨.finite 1, .finite 1⟩ ||
+          reading.baseline == ⟨.finite 2, .finite 2⟩) && strictDrop reading.baseline reading.paired &&
+          classifyClosure certified == some .zero
+        logInfo s!"DECL_PREDICTION doubledContent {predicted}"
+      if name == ``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContentWithoutOmega then
+        logInfo s!"DECL_CLOSER_INVARIANCE {doubled.any (fun old =>
+          old.baseline == reading.baseline && old.paired == reading.paired)}"
+    logInfo s!"DECL_CALIBRATION non_bind_only={positives} bind_only={bindings}"

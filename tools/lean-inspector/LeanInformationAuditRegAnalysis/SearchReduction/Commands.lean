@@ -7,8 +7,7 @@ namespace LeanInformationAudit.SearchReduction
 open Lean Meta Elab Command Tactic
 open LeanInformationAudit.SearchReduction (Run Verdict)
 
--- Checked declarations may retain expressions from these small probe regions.
--- Their lifetime is the outer compiler process; no imported extension is read.
+-- Checked declarations retain expression storage until the compiler exits.
 private initialize probeRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
 
 /-- Request payloads share one immutable Lean import. Target declarations and
@@ -17,12 +16,13 @@ private initialize requestEnvironment : IO.Ref (Option Environment) ← IO.mkRef
 
 /-- Module bytes are immutable. The common import state contains only Mathlib;
 source and baseline fork it before independently initializing extension state. -/
-private def importSource (owners : Array Import) : IO (Environment × ImportState × ImportState) :=
+private unsafe def importSource (owners : Array Import) : IO (Environment × ImportState × ImportState) := do
+  enableInitializersExecution
   withImporting do
     let (_, shared) ← (importModulesCore #[{module := `Mathlib}]).run default
     let (_, sourceState) ← (importModulesCore owners).run shared
     let source ← finalizeImport sourceState owners options 0
-      (leakEnv := false) (loadExts := false)
+      (leakEnv := false) (loadExts := true)
     return (source, shared, sourceState)
 
 /-- The nested negative replay shares this probe's immutable module bytes.
@@ -56,6 +56,10 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
   ("k", toJson r.k), ("vertices", toJson r.graph.vertices.length),
   ("edges", toJson r.graph.edges.length), ("complete", toJson r.graph.complete),
   ("issues", toJson r.graph.issues),
+  ("declarations", toJson (r.graph.vertices.map fun v => Json.mkObj [
+    ("id", toJson v.id), ("constant", toJson (v.origin.constName?.map Name.toString)),
+    ("seed", toJson v.seed), ("structure_seed", toJson v.structureSeed),
+    ("target_part", toJson v.targetPart), ("opaque", toJson v.opaqueDecl)])),
   ("presentation_complete", toJson r.presentationComplete),
   ("baseline_interval", intervalJson r.baseline),
   ("paired_interval", intervalJson r.paired),
@@ -98,7 +102,7 @@ def observationJson (r : Observation) (baselineCommit : String := "") : Json := 
   ("B_load", toJson (r.loadedModules.map Name.toString)),
   ("B0_excluded", toJson (r.catalogExcluded.map Name.toString)),
   ("paired_structure_use", toJson (r.pairedStructureUse.map Name.toString)), ("baseline_commit", toJson baselineCommit),
-  ("mathlib", toJson mathlibRevision), ("maxHeartbeats", toJson budget),
+  ("mathlib", toJson mathlibRevision), ("maxHeartbeats", toJson localBudget),
   ("target", toJson r.target.toString), ("verdict", toJson (if r.verdict == .nonBindOnly then s!"non-bind-only[G,R_loc,k; {r.scope}]" else verdictName r.verdict)),
   ("baseline", runJson r.base), ("paired", runJson r.paired),
   ("presentation", runJson r.presentation),
@@ -127,8 +131,8 @@ private def runExpr : Run → Expr
         | .cancelled => ``LeanInformationAudit.SearchReduction.Failure.cancelled
         | .undecided => ``LeanInformationAudit.SearchReduction.Failure.undecided)
 
-/-- Only dependencies of checked witness terms are exported, after searching.
-Candidate initializers and environment extensions are never executed. -/
+/-- Only dependencies of checked witness terms are exported. No source
+extension entries are copied into the proof environment. -/
 private partial def exportConstant (source : Environment) (target n : Name) : MetaM Unit := do
   if n == target then throwError "search.target_in_exported_proof"
   if (← getEnv).contains n then return
@@ -262,7 +266,7 @@ private def writeRequest (path : System.FilePath) (request : Request)
 
 unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) : CommandElabM Unit := do
   let imports := owners.map fun n => {module := n : Import}
-  let (source, shared, sourceState) ← importSource imports
+  let (source, shared, _) ← importSource imports
   -- Exported proof expressions retain source module storage; transient
   -- environment maps and extension states need not be made persistent.
   probeRegions.modify (· ++ source.header.regions)
@@ -284,15 +288,10 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
       finally
         activeProbe.set none
     else pure none
-  -- Publish in a fully initialized fork of the same immutable module storage.
-  -- The baseline has already returned, and no author extension enters it.
-  -- This also gives the module writer the complete extension array without
-  -- importing a second copy of all Mathlib bytes into the compiler prelude.
+  -- Source metadata belongs to its own environment. R has already used a
+  -- separately imported baseline, without source attributes or instances.
   let mainModule := (← getEnv).header.mainModule
-  enableInitializersExecution
-  let serialization ← withImporting <|
-    finalizeImport sourceState imports options 0 (leakEnv := false) (loadExts := true)
-  modifyEnv fun _ => serialization.setMainModule mainModule
+  modifyEnv fun _ => source.setMainModule mainModule
   liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
     if let some guardProof := guardProof? then
       discard <| checkProof (name ++ `baselineFailureGuard) [] (mkConst ``True) guardProof

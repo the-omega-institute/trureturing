@@ -67,6 +67,17 @@ theorem addition (n m : Nat) : stair (n + m) = stair n + stair m := by
 
 theorem doubledContent (n : Nat) : stair (n + n) = stair n + stair n := addition n n
 
+theorem additionWithoutOmega (n m : Nat) : stair (n + m) = stair n + stair m := by
+  induction m with
+  | zero => simp [stair]
+  | succ m ih =>
+    change 3 + stair (n + m) = stair n + (3 + stair m)
+    rw [ih]
+    ac_rfl
+
+theorem doubledContentWithoutOmega (n : Nat) : stair (n + n) = stair n + stair n :=
+  additionWithoutOmega n n
+
 theorem doubledPair (n : Nat) : stair (n + n) = stair n + stair n ∧ 0 ≤ n :=
   ⟨addition n n, Nat.zero_le n⟩
 

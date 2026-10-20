@@ -15,8 +15,6 @@ abbrev transportVersion : String := "prefix-reconstruction-checked-certificate-c
 abbrev reconstructionBudget : Nat := 200000
 
 private initialize referenceEnvironmentCache : IO.Ref (Option Environment) ← IO.mkRef none
-private initialize referenceHintCache :
-    IO.Ref (Option (Array (Nat × TSyntax `tactic))) ← IO.mkRef none
 
 /-- An immutable pinned Mathlib import can be shared without merging any
 candidate extension state or repeating its resident module graph. -/
@@ -26,14 +24,6 @@ def referenceEnvironment : IO Environment := do
     (leakEnv := true) (loadExts := true)
   referenceEnvironmentCache.set (some env)
   return env
-
-/-- The immutable strategy list always comes from the pinned Mathlib import,
-including when a clean vocabulary prefix is already available. -/
-def referenceHints : IO (Array (Nat × TSyntax `tactic)) := do
-  if let some hints := ← referenceHintCache.get then return hints
-  let hints ← strategies (← referenceEnvironment)
-  referenceHintCache.set (some hints)
-  return hints
 
 structure TransportContext where
   source : Environment

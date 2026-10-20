@@ -1,6 +1,7 @@
 import LeanInformationAuditRegTests.SearchReduction.FiniteModel
 
-/-! Statement-level prefix and scope model. This does not verify the metaprogram. -/
+/-! Conditional derivation-prefix and scope model. This does not verify
+the checked-copy metaprogram or establish its closed-prefix premises. -/
 namespace LeanInformationAudit.Tests.SearchReduction.VocabularyModel
 open FiniteModel
 open LeanInformationAudit.SearchReduction (Failure Run)
@@ -38,7 +39,8 @@ theorem derives_cut {base certificates : List Atom}
   | bridge _ ih => exact .bridge ih
   | target _ ih => exact .target ih
 
-/-- Each obligation sees B and only the already completed prefix. -/
+/-- A closed derivation prefix; copying author side proofs alone does not
+establish this stronger reconstruction hypothesis. -/
 inductive Prefix (base : List Atom) : List Atom → Prop where
   | nil : Prefix base []
   | step {earlier : List Atom} {c : Atom} : Prefix base earlier →
@@ -56,8 +58,8 @@ theorem prefix_certificates_close {base certificates : List Atom}
       subst x
       exact derives_cut ih proof
 
-/-- The output derives the same target in the original environment. All
-certificate assumptions disappear; there are no extra axiom constructors. -/
+/-- Under the closed-prefix hypothesis, certificate assumptions disappear
+from the derivation without adding axiom constructors. -/
 theorem prefix_reconstruction_preserves_target {base certificates : List Atom}
     (chain : Prefix base certificates) {t : Atom}
     (typed : Derives (base ++ certificates) t) : Derives base t :=

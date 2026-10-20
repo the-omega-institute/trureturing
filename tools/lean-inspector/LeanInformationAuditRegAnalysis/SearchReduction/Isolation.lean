@@ -100,7 +100,7 @@ private partial def structureTypes (source : Environment) (n : Name)
   return result
 
 /-- Rebuild proof dependencies' computational vocabulary before installing any
-S certificate. Thus obligation searches never see an earlier author theorem. -/
+S certificate. Side proofs remain checked payloads in the common prefix. -/
 private partial def structureVocabulary (ctx : TransportContext) (n : Name)
     (seen : NameSet := {}) : MetaM Unit := do
   if seen.contains n || (← getEnv).contains n then return
@@ -296,9 +296,13 @@ private unsafe def runCore (source base : Environment) (request : Request) : IO 
       let graphEnv ← getEnv
       let reading ← withEnv graphEnv <| evaluateGraph graph
       let baselineProof? ← if upperIsZero reading.baseline then
-        withEnv clean <| assembleZero reading.graph else pure none
+        withEnv graphEnv <| assembleZero reading.graph else pure none
       let pairedProof? ← if upperIsZero reading.paired then
-        withEnv pairedEnv <| assembleZero reading.graph true else pure none
+        withEnv pairedEnv do
+          for v in graph.vertices do
+            for dep in v.type.getUsedConstants do copyVocabulary source dep
+          assembleZero reading.graph true
+        else pure none
       let reading := {reading with
         baseline := if upperIsZero reading.baseline && baselineProof?.isNone then
           {reading.baseline with upper := .top} else reading.baseline

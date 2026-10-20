@@ -59,30 +59,52 @@ private structure ExtractionState where
 
 private abbrev ExtractM := StateRefT ExtractionState MetaM
 
+/-- Ownership is transitive: an equation of a matcher or a nested proof
+auxiliary belongs to the same author declaration as its generated parent. -/
+private partial def declarationOwner (name : Name) : MetaM Name := do
+  if !(generated (← getEnv) name || (← isEqnThm name)) then return name
+  let mut parent := (← isEqnThm? name).getD name.getPrefix
+  while !parent.isAnonymous && !((← getEnv).contains parent) do parent := parent.getPrefix
+  if parent.isAnonymous || parent == name then
+    throwError "graph.generated_owner_unknown:{name}"
+  declarationOwner parent
+
+private def vocabularyKind : ConstantInfo → Bool
+  | .inductInfo _ | .ctorInfo _ | .recInfo _ => true
+  | _ => false
+
 /-- Generated constants are folded into their nearest existing owner. The
 compiler predicates identify auxiliaries; an unowned auxiliary fails closed. -/
 private partial def dependencyNames (base : Environment) (owner : Name)
-    (info : ConstantInfo) (seen : NameSet := {}) : MetaM (Array Name) := do
+    (info : ConstantInfo) (cache : IO.Ref (NameMap (Array Name)))
+    (seen : NameSet := {}) : MetaM (Array Name) := do
+  if let some found := (← cache.get).find? info.name then return found
   let (types, _) := CompiledAxioms.declarationDependencyParts info
   let values ← match info.value? (allowOpaque := true) with
-    | some value => return (← liveValue value).getUsedConstants
+    | some value => pure (← liveValue value).getUsedConstants
     | none => pure #[]
   let mut result := #[]
   for dep in types ++ values do
     if dep == owner || seen.contains dep then continue
-    if !base.contains dep && (generated (← getEnv) dep || (← isEqnThm dep)) then
+    let depInfo := ((← getEnv).setExporting false).find? dep
+    if !base.contains dep && depInfo.any vocabularyKind then
+      result := result ++ (← dependencyNames base owner depInfo.get! cache (seen.insert dep))
+    else if !base.contains dep && (generated (← getEnv) dep || (← isEqnThm dep)) then
       let some aux := ((← getEnv).setExporting false).find? dep
         | throwError "graph.generated_missing:{dep}"
-      let mut parent := (← isEqnThm? dep).getD dep.getPrefix
-      while !parent.isAnonymous && !((← getEnv).contains parent) do parent := parent.getPrefix
-      if parent.isAnonymous then throwError "graph.generated_owner_unknown:{dep}"
-      if parent != owner then result := result.push parent
-      else result := result ++ (← dependencyNames base owner aux (seen.insert dep))
+      let parent ← declarationOwner dep
+      let parentInfo := ((← getEnv).setExporting false).find? parent
+      if parentInfo.any vocabularyKind then
+        result := result ++ (← dependencyNames base owner parentInfo.get! cache
+          (seen.insert dep |>.insert parent))
+      else if parent != owner then result := result.push parent
+      else result := result ++ (← dependencyNames base owner aux cache (seen.insert dep))
     else if !result.contains dep then result := result.push dep
+  cache.modify (·.insert info.name result)
   return result
 
 private partial def extractDeclaration (base : Environment) (additions : Array Name)
-    (name : Name) : ExtractM Nat := do
+    (cache : IO.Ref (NameMap (Array Name))) (name : Name) : ExtractM Nat := do
   if (← get).visiting.contains name then throwError "graph.declaration_cycle:{name}"
   if let some id := (← get).ids.find? name then return id
   let info ← getConstInfo name
@@ -99,9 +121,9 @@ private partial def extractDeclaration (base : Environment) (additions : Array N
   unless seed do
     unless (info.value? (allowOpaque := true)).isSome do
       throwError "graph.missing_declaration_body:{name}"
-    let deps ← dependencyNames base name info
+    let deps ← dependencyNames base name info cache
     let mut premises := []
-    for dep in deps do premises := premises ++ [← extractDeclaration base additions dep]
+    for dep in deps do premises := premises ++ [← extractDeclaration base additions cache dep]
     modify fun s => {s with edges := s.edges.push {
       conclusion := id, premises := premises.eraseDups, source := some name}}
   modify fun s => {s with visiting := s.visiting.erase name}
@@ -112,47 +134,59 @@ is retained in the graph or supplied to the local reconstructor. -/
 def extractGraph (base : Environment) (target : Name)
     (additions : Array Name := #[]) : MetaM ProofGraph := do
   try
-    let (root, state) ← (extractDeclaration base additions target).run {}
+    let cache ← IO.mkRef ({} : NameMap (Array Name))
+    let (root, state) ← (extractDeclaration base additions cache target).run {}
     return {root, vertices := state.vertices.toList, edges := state.edges.toList}
   catch ex =>
     return {complete := false, issues := [s!"graph.extraction:{← ex.toMessageData.toString}"]}
 
-/-- A premise is analytic only if unification instantiates its full telescope
-by distinct variables of the consumer telescope. No terms or diagonals qualify. -/
+private partial def injectiveVariables (args telescope : Array Expr) (position : Nat := 0)
+    (used : Array Expr := #[]) : MetaM Bool := do
+  if position >= args.size then return true
+  let value ← instantiateMVars args[position]!
+  if value.isMVar then
+    for x in telescope do
+      if used.contains x then continue
+      let saved ← saveState
+      if ← withReducible <| isDefEq (← inferType value) (← inferType x) then
+        value.mvarId!.assign x
+        if ← injectiveVariables args telescope (position + 1) (used.push x) then return true
+      saved.restore
+    return false
+  if value.isFVar && telescope.contains value && !used.contains value then
+    return ← injectiveVariables args telescope (position + 1) (used.push value)
+  return false
+
+/-- Complete bounded injection matching of statement telescopes. A term or a
+repeated variable never qualifies as a binder renaming. -/
 def analyticPremise (premise consumer : Expr) : MetaM Bool := do
   let saved ← saveState
-  let answer ← forallTelescopeReducing consumer fun xs body => do
-    let found ← IO.mkRef false
-    discard <| Meta.transform body (pre := fun part => do
-      if ← found.get then return .done part
-      if !(← isProp part) then return .continue
-      let before ← saveState
-      let (args, _, candidate) ← forallMetaTelescopeReducing premise
-      if ← withReducible <| isDefEq candidate part then
-        let mut used := #[]
-        let mut valid := true
-        for arg in args do
-          let mut value ← instantiateMVars arg
-          if value.isMVar then
-            let mut assigned := false
-            for x in xs do
-              if used.contains x then continue
-              let attempt ← saveState
-              if ← withReducible <| isDefEq (← inferType value) (← inferType x) then
-                value.mvarId!.assign x
-                value := x
-                assigned := true
-                break
-              attempt.restore
-            unless assigned do valid := false
-          unless value.isFVar && xs.contains value && !used.contains value do valid := false
-          used := used.push value
-        if valid then found.set true
-      before.restore
-      return .continue)
-    return ← found.get
-  saved.restore
-  return answer
+  let started ← IO.getNumHeartbeats
+  try
+    let answer ← withTheReader Core.Context (fun ctx =>
+        {ctx with initHeartbeats := started, maxHeartbeats := localBudget * 1000}) do
+      let levels := (collectLevelParams {} premise).params.toList
+      let premise := premise.instantiateLevelParams levels (← levels.mapM fun _ => mkFreshLevelMVar)
+      forallTelescopeReducing consumer fun xs body => do
+        let found ← IO.mkRef false
+        let mut parts := #[body]
+        for x in xs do parts := parts.push (← inferType x)
+        for input in parts do
+          discard <| Meta.transform input (pre := fun part => do
+            if ← found.get then return .done part
+            if !(← isProp part) then return .continue
+            let before ← saveState
+            let (args, _, candidate) ← forallMetaTelescopeReducing premise
+            if ← withReducible <| isDefEq candidate part then
+              if ← injectiveVariables args xs then found.set true
+            before.restore
+            return .continue)
+        return ← found.get
+    saved.restore
+    return answer
+  catch ex =>
+    saved.restore
+    throw ex
 
 private def exactLocal (goal : MVarId) (facts : Array Expr) : MetaM Bool := goal.withContext do
   for fact in facts do
@@ -299,7 +333,13 @@ def localRebuild (target : Expr) (types : List Expr := []) : MetaM LocalResult :
         {ctx with initHeartbeats := started, maxHeartbeats := localBudget * 1000}) do
       withFacts types fun facts => do
         let root ← mkFreshExprMVar target
-        unless ← solveLocalGoal root.mvarId! facts do
+        let mut goal := root.mvarId!
+        let mut available := facts
+        while (← goal.withContext <| withReducible <| whnf (← goal.getType)).isForall do
+          let (fvar, next) ← goal.intro1
+          available := available.push (mkFVar fvar)
+          goal := next
+        unless ← goal.withContext (solveLocalGoal goal available) do
           return {cost := .one, detail := "normal-exhaustion"}
         let proof ← instantiateMVars root
         unless !proof.hasMVar do return {cost := .unknown, detail := "unclosed-reconstruction"}
@@ -321,6 +361,26 @@ def localRebuild (target : Expr) (types : List Expr := []) : MetaM LocalResult :
 private def vertex (graph : ProofGraph) (id : Nat) : GraphVertex :=
   (graph.vertices.find? (·.id == id)).getD default
 
+/-- Type classification is shared by both arms and the given-premise ablation. -/
+private def annotateGraph (graph : ProofGraph) : MetaM ProofGraph := do
+  let mut edges := []
+  let mut graph := graph
+  for edge in graph.edges do
+    let started ← IO.getNumHeartbeats
+    let mut edge := edge
+    try
+      let analytic ← withTheReader Core.Context (fun ctx =>
+          {ctx with initHeartbeats := started, maxHeartbeats := localBudget * 1000}) do
+        edge.premises.filterM fun p =>
+          analyticPremise (vertex graph p).type (vertex graph edge.conclusion).type
+      edge := {edge with analytic}
+    catch ex =>
+      graph := {graph with
+        complete := false,
+        issues := s!"graph.analytic:{edge.source}:{← ex.toMessageData.toString}" :: graph.issues}
+    edges := edges ++ [edge]
+  return {graph with edges}
+
 /-- Same price function in each arm; only the seed flag changes. -/
 def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false) : MetaM ProofGraph := do
   let mut edges := []
@@ -329,15 +389,15 @@ def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false) : Meta
     let mut analytic := []
     for id in edge.premises do
       let v := vertex graph id
-      let isAnalytic ← analyticPremise v.type (vertex graph edge.conclusion).type
+      let isAnalytic := edge.analytic.contains id
       if isAnalytic then analytic := analytic ++ [id]
       if allGiven || v.seed || (paired && v.structureSeed && !v.targetPart) || isAnalytic then
         available := available ++ [id]
     let result ← localRebuild (vertex graph edge.conclusion).type (available.map (vertex graph · |>.type))
     let used := result.used.map (available[·]!)
     let edge := if allGiven then
-        if paired then {edge with pairedVisibleCost := result.cost}
-        else {edge with visibleCost := result.cost}
+        if paired then {edge with pairedVisibleCost := result.cost, pairedGivenUsedPremises := used}
+        else {edge with visibleCost := result.cost, givenUsedPremises := used}
       else if paired then {edge with pairedCost := result.cost, pairedZeroProof := result.proof?, pairedUsedPremises := used}
       else {edge with
         cost := result.cost, zeroProof := result.proof?, usedPremises := used,
@@ -352,8 +412,10 @@ private def armGraph (graph : ProofGraph) (paired allGiven : Bool) : ProofGraph 
   {graph with edges := graph.edges.map fun edge =>
     let cost := if allGiven then (if paired then edge.pairedVisibleCost else edge.visibleCost)
       else if paired then edge.pairedCost else edge.cost
-    {edge with cost, premises := if !allGiven && cost == .zero then
-      (if paired then edge.pairedUsedPremises else edge.usedPremises) else edge.premises}}
+    {edge with cost, premises := if cost == .zero then
+      (if allGiven then
+        (if paired then edge.pairedGivenUsedPremises else edge.givenUsedPremises)
+       else if paired then edge.pairedUsedPremises else edge.usedPremises) else edge.premises}}
 
 def rootProbe (graph : ProofGraph) (paired := false) : MetaM ProbeResult := do
   let seeds := armSeeds graph paired
@@ -411,7 +473,7 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
       v := {v with targetPart := part || inverse || reverse.cost == .zero}
     vertices := vertices ++ [v]
   raw := {raw with vertices}
-  let graph := {raw with edges := raw.edges ++ k2Frontier raw}
+  let graph ← annotateGraph {raw with edges := raw.edges ++ k2Frontier raw}
   let graph ← priceGraph graph
   let graph ← priceGraph graph true
   let graph ← priceGraph graph false true
@@ -421,13 +483,14 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
   let mut graph := graph
   for paired in [false, true] do
     let probe := if paired then pairedProbe else baseProbe
-    if probe.checked then
+    if probe.checked && (!paired || !baseProbe.checked) then
       let actual := probe.premises
       graph := {graph with edges := graph.edges ++ [{
         conclusion := graph.root, premises := actual, window := 0,
         cost := if paired then (if baseProbe.outcome == .exhausted then .one else .unknown) else .zero, pairedCost := .zero,
-        visibleCost := if paired then .one else .zero, pairedVisibleCost := .zero,
+        visibleCost := .zero, pairedVisibleCost := .zero,
         usedPremises := if paired then [] else actual, pairedUsedPremises := actual,
+        givenUsedPremises := if paired then [] else actual, pairedGivenUsedPremises := actual,
         zeroProof := if paired then none else probe.proof?, pairedZeroProof := probe.proof?,
         detail := if paired then "paired-root-probe" else "baseline-root-probe"}]}
   let baselineGraph := armGraph graph false false
@@ -437,11 +500,7 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
   let k1 := {graph with edges := graph.edges.filter (·.window != 2)}
   let selectedSeeds := optimalSeeds pairedGraph costUpper pairSeeds
   let witnessEdges := graph.edges.zipIdx.filterMap fun (edge, i) =>
-    if edge.cost == .one && edge.pairedCost == .zero &&
-      edge.pairedUsedPremises.any (fun p =>
-        let v := vertex graph p
-        v.structureSeed && !v.targetPart && !edge.analytic.contains p && selectedSeeds.contains p)
-    then some i else none
+    if isWitnessEdge graph selectedSeeds edge then some i else none
   return {
     graph, baseline := graphInterval baselineGraph baseSeeds,
     paired := graphInterval pairedGraph pairSeeds,
