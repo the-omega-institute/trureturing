@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:75c5d01875471aedfd2825ae597b4753040a19c69c837f79fa17c0fd6f5f14cb
+  normalized_sha256: sha256:75c5d01875471aedfd2825ae597b4753040a19c69c837f79fa17c0fd6f5f14cb
+cas_ref: sha256:75c5d01875471aedfd2825ae597b4753040a19c69c837f79fa17c0fd6f5f14cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Definition-only atom: E_v, the variables z_(l+1)..z_r, and P_v are introduced by the empty, target-leaf, and internal-node recursive clauses (RST.20). The description of exponents and coefficients specifies the intended generating-polynomial semantics; it does not prove that the recursion counts cuts. That correctness claim, capacity truncation, and the algorithm are in the separate following proposition 7.5 atom e7467656507e0531b2d5bd487bd2080dc954430026158b417bdfab21c28fc899, which remains open. No assertion of correctness, computability, complexity or existence of a feasible cut is settled here.'
+    previous_atom_id: cf36ce9f5a8f86e9ffdee05bcd77d21670f7fb6ae40110c2a372e54a1c6c7625
+    next_atom_id: e7467656507e0531b2d5bd487bd2080dc954430026158b417bdfab21c28fc899
