@@ -2353,3 +2353,788 @@ angle exception.
 [STA]: https://arxiv.org/pdf/0804.1395v1
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Full-input flagged simulation and the five-level primitive menu
+
+**Definition 17.1 (Four distinct simulation tasks).** Retain exactly
+$H,B,R,K_j,A_j(\theta)$ of Definitions 1.3 and 2.1 and Theorem 2.2,
+for every real $\theta$. Write $\mathsf C=\mathbb C^2$ for a terminal
+classical flag with distinguished basis $|0\rangle,|1\rangle$. The
+full-input fine instrument is the channel
+
+$$
+\mathcal J_\theta:M_5\longrightarrow\mathcal B(\mathsf C\otimes H),
+\qquad
+\mathcal J_\theta(X)=\sum_{j=0}^1|j\rangle\langle j|
+                         \otimes A_j(\theta)XA_j(\theta)^\dagger.
+\tag{17.1}
+$$
+
+Its flag algebra is diagonal. Exact simulation requires equality on
+all of $M_5$, retaining both this flag and the quantum output, also
+jointly with every arbitrary untouched finite reference $Z$. Its
+outcome-statistics task instead retains only the probabilities
+$\operatorname{Tr}(E_j(\theta)\rho)$, where
+$E_j(\theta)=A_j(\theta)^\dagger A_j(\theta)$. Its averaged-channel
+task retains only $\Phi_\circ=\sum_j\operatorname{Ad}_{A_j(\theta)}$.
+Its encoded-instrument task is (17.1) restricted through
+$\iota(X)=BXB^\dagger$ from $M_3$, with the flag still retained.
+The latter restriction includes all qutrit-reference inputs. It does
+not replace the full-$M_5$ task. These simulation tasks do not alter
+the repeated acquired-label recovery permissions of Assumption 1.4.
+
+**Definition 17.2 (Same-register simulators).** A five-level protocol
+uses just the original quantum register $H$, arbitrary unitaries on
+$H$, and complete Lüders PVMs on $H$. A PVM is a finite family of
+orthogonal projections $P_a$ with $\sum_aP_a=I_5$; outcome $a$ has
+operation $X\mapsto P_aXP_a$. Zero projections can be omitted.
+Classical memory, measurable input-independent classical randomness,
+classical feedback selecting later operations, and terminal classical
+coarsening to the two flags are permitted. The quantum output is the
+remaining register. All outcomes are retained in the normalized
+channel; there is no success conditioning. No extra quantum register,
+reset, nonprojective Lüders operation, general nonunitary primitive,
+or access to $Z$ is permitted. A primitive menu of arbitrary CPTP
+postprocessors would be a different menu.
+
+Let $\mathfrak S_{\rm fin}$ be these protocols with a finite uniform
+depth bound. Let $\mathfrak S_{\rm as}$ permit unbounded depth with
+almost-sure finite termination on every input. Random choices and
+controls are measurable; standard Borel random kernels suffice. They
+can be sampled from a probability space of independent classical
+tapes before interaction with the input. Sampling at each possible
+finite outcome history represents feedback-dependent random choices
+without making the tape law depend on the input. Conditional on a
+tape, the protocol is a deterministic finitely branching quantum
+outcome tree. Finally set
+$\mathfrak S_{\rm cl}=\overline{\mathfrak S_{\rm fin}}^{\diamond}$.
+Only normalized channels and their diamond limits are meant here;
+no meaning for an actually nonhalting infinite product is stipulated.
+
+The norm convention throughout this supplement is unhalved:
+
+$$
+\|\Lambda\|_\diamond
+=\sup_{k\ge1}\ \sup_{X\ne0}
+  \frac{\|(\Lambda\otimes\operatorname{id}_{\mathbb C^k})(X)\|_1}
+       {\|X\|_1},\qquad
+\|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X}.
+\tag{17.2}
+$$
+
+**Proposition 17.3 (Actual full-input geometry at every angle).** Define
+the reflection and three mutually orthogonal projections by
+
+$$
+\begin{gathered}
+F=|e_0\rangle\langle e_1|+|e_1\rangle\langle e_0|
+ +|e_3\rangle\langle e_4|+|e_4\rangle\langle e_3|
+ +|e_2\rangle\langle e_2|,\qquad D_\theta=\cos\theta I_5+i\sin\theta F,\\
+P=\operatorname{diag}(1,0,0,0,1),\qquad
+Q=\operatorname{diag}(0,1,0,1,0),\qquad
+S=|e_2\rangle\langle e_2|.
+\end{gathered}
+\tag{17.3}
+$$
+
+Then $F^\dagger=F$, $F^2=I_5$, $D_\theta$ is unitary, and
+
+$$
+\begin{gathered}
+K_0F=K_1,\quad K_1F=K_0,\quad A_j(\theta)=K_jD_\theta,\qquad
+\mathcal J_\theta=\mathcal J_0\circ\operatorname{Ad}_{D_\theta},\\
+K_0^\dagger K_0=P+S/2,\qquad K_1^\dagger K_1=Q+S/2,\\
+\operatorname{rank}A_j=3,\qquad
+\operatorname{spec}(A_j^\dagger A_j)=(1,1,1/2,0,0),\qquad
+\|A_j\|_F^2=5/2.
+\end{gathered}
+\tag{17.4}
+$$
+
+Proof. $F$ interchanges $e_0,e_1$ and $e_3,e_4$, and fixes $e_2$.
+The dyadic operators displayed in Theorem 2.2 therefore give both
+$K_jF$ identities. The product $D_\theta^\dagger D_\theta$ is
+$(\cos^2\theta+\sin^2\theta)I_5$ because the cross terms cancel.
+Multiplying $K_jD_\theta$ gives precisely that theorem's rotated
+operators, including all complex phases. The effects at zero angle
+are the displayed diagonal matrices. Unitary precomposition preserves
+their eigenvalues and Frobenius norms. This proves all assertions;
+in particular no exceptional angle is removed. $\square$
+
+## 18. A uniform obstruction to the full flagged instrument
+
+**Theorem 18.1 (Retained-mass bound for every finite protocol).** For
+every real $\theta$ and every $\mathcal T\in\mathfrak S_{\rm fin}$,
+
+$$
+\|\mathcal J_\theta-\mathcal T\|_\diamond\ge\frac4{25}.
+\tag{18.1}
+$$
+
+The same normalized full-input witness works for arbitrary independent
+measurable coins, adaptive quantum-outcome feedback and terminal
+coarsening in Definition 17.2.
+
+Proof. Fix $\theta$, and vectorize output first:
+$|L\rangle\!\rangle=\sum_{k=0}^4Le_k\otimes e_k$.
+Use the normalized reference input
+$|\Omega_5\rangle=5^{-1/2}\sum_ke_k\otimes e_k$ and put
+
+$$
+\begin{gathered}
+a_j=|A_j\rangle\!\rangle/\sqrt{5/2},\qquad
+\Pi_\theta=\sum_{j=0}^1|j\rangle\langle j|\otimes|a_j\rangle\langle a_j|,\\
+\omega_\theta=(\mathcal J_\theta\otimes\operatorname{id}_H)
+                    (|\Omega_5\rangle\langle\Omega_5|)
+=\frac12\sum_j|j\rangle\langle j|\otimes|a_j\rangle\langle a_j|.
+\end{gathered}
+\tag{18.2}
+$$
+
+Thus $\operatorname{Tr}\omega_\theta=1$ and
+$\operatorname{Tr}(\Pi_\theta\omega_\theta)=1$.
+The Schmidt weights of either unit vector $a_j$ are
+$(2/5,2/5,1/5)$, by (17.4).
+
+A terminal Kraus matrix $L$ assigned flag $j$ contributes Choi mass
+$t(L)$ and witness overlap $f_j(L)$ given by
+
+$$
+t(L)=\frac{\|L\|_F^2}{5},\qquad
+f_j(L)=\frac{|\operatorname{Tr}(A_j^\dagger L)|^2}{5(5/2)}.
+\tag{18.3}
+$$
+
+In particular $0\le f_j(L)\le t(L)$ by Cauchy–Schwarz.
+For the needed weighted Schmidt truncation, let $G$ be the range
+projection of a nonzero $L$ of rank at most $r$. Then $GL=L$ and
+
+$$
+|\operatorname{Tr}(A_j^\dagger L)|^2
+=|\operatorname{Tr}((GA_j)^\dagger L)|^2
+\le\operatorname{Tr}(GA_jA_j^\dagger)\|L\|_F^2.
+\tag{18.4}
+$$
+
+To bound the trace, diagonalize $A_jA_j^\dagger$ with decreasing
+eigenvalues $\lambda_k$. In this basis the diagonal entries $g_k$
+of $G$ satisfy $0\le g_k\le1$ and $\sum_kg_k\le r$.
+The weighted sum $\sum_k\lambda_kg_k$ is at most the sum of the
+largest $r$ eigenvalues: transferring weight from a smaller
+$\lambda_k$ to an unfilled larger one cannot decrease it, and
+nonnegative eigenvalues permit filling up to $r$ entries. Substituting
+$(1,1,1/2,0,0)$ in (18.4) gives
+
+$$
+f_j(L)\le\eta_r t(L),\qquad
+\eta_1=\frac25,\quad \eta_2=\frac45,\quad
+\eta_r=1\ (3\le r\le5).
+\tag{18.5}
+$$
+
+This is the usual singular-value/Schmidt truncation argument, used
+here with the actual nonuniform weights, rather than a maximally
+entangled-state overlap formula.
+
+Condition now on an independent classical tape. Remove identity PVMs
+and zero outcomes. Before the first nontrivial PVM the single nonzero
+path has only a unitary product $U$. Suppose that first PVM has an
+outcome $P_a$ of rank $r_a$. All its terminal descendants have matrices
+$L_t=M_tP_aU$, where $M_t$ includes all subsequent unitaries and
+projections along the descendant path. Every such matrix has rank at
+most $r_a$. Completeness of the entire adaptive subtree gives
+
+$$
+\sum_{t\succ a}L_t^\dagger L_t=U^\dagger P_aU,\qquad
+\sum_{t\succ a}t(L_t)=\frac{r_a}{5}.
+\tag{18.6}
+$$
+
+For finite trees this identity follows by backward induction: the
+sum of terminal effects at a halted node is $I_5$; a unitary node
+conjugates it to $I_5$; a complete PVM node sums $P_bI_5P_b$ to
+$I_5$. Applying this to the subtree after outcome $a$ proves (18.6).
+The choices after different outcomes can be entirely different.
+There is no assumption that one common later channel is used.
+
+The positive ranks of a nontrivial PVM sum to five and have at least
+two parts. At least one part is one or two, since otherwise their sum
+would be at least six. If $r_a=1$, (18.5)–(18.6) force deficit
+$\sum_{t\succ a}(t(L_t)-f_{j_t}(L_t))\ge3/25$; if $r_a=2$,
+they force deficit at least $2/25$. All other descendants have
+nonnegative deficits even when assigned different terminal flags.
+Consequently the whole tape has total witness overlap at most
+$1-2/25=23/25$. Branch mass cannot be discarded to evade this step.
+
+There is one further case: a tape with no nontrivial PVM ends with
+a unitary $U$ and a definite flag $j$. A singular value decomposition
+$A_j=V\operatorname{diag}(1,1,1/\sqrt2,0,0)W^\dagger$ gives
+
+$$
+|\operatorname{Tr}(A_j^\dagger U)|
+\le 2+1/\sqrt2,
+\qquad
+f_j(U)\le\frac{(2+1/\sqrt2)^2}{5(5/2)}
+=\frac{9+4\sqrt2}{25}<\frac{23}{25}.
+\tag{18.7}
+$$
+
+Indeed the diagonal entries of the unitary $V^\dagger UW$ have
+modulus at most one. This also includes protocols that use only
+coins and unitaries; their final flag becomes definite after the
+tape is fixed.
+
+Integrate over the tapes. Terminal coarsening sums positive Choi
+terms and coin integration is linear. Tonelli's theorem applies to
+the nonnegative masses and deficits, also for nonatomic coin laws.
+No individual tape is required to simulate the target. If
+$\sigma=(\mathcal T\otimes\operatorname{id}_H)
+(|\Omega_5\rangle\langle\Omega_5|)$, the conclusion is
+$\operatorname{Tr}(\Pi_\theta\sigma)\le23/25$.
+Both $\sigma$ and $\omega_\theta$ have trace one. Measuring
+$\{\Pi_\theta,I-\Pi_\theta\}$ gives unhalved classical distance
+
+$$
+2\bigl(1-\operatorname{Tr}(\Pi_\theta\sigma)\bigr)\ge4/25.
+\tag{18.8}
+$$
+
+For completeness, trace-norm contraction under this measurement on
+a Hermitian $Y=Y_+-Y_-$ follows by bounding the absolute value of
+each outcome trace by its value on $Y_++Y_-$ and summing. Therefore
+$\|\omega_\theta-\sigma\|_1\ge4/25$. This input is an admissible
+test in (17.2), which proves (18.1). The factor five is already in
+the normalized Choi input, the two target branch traces are $1/2$,
+and the factor two in (18.8) is retained. $\square$
+
+**Theorem 18.2 (Almost-sure stopping and diamond closure).** The bound
+(18.1) holds for every $\mathcal T\in\mathfrak S_{\rm as}$ and
+every $\mathcal T\in\mathfrak S_{\rm cl}$. Moreover
+
+$$
+\mathfrak S_{\rm fin}\subseteq\mathfrak S_{\rm as}
+\subseteq\mathfrak S_{\rm cl},\qquad
+\overline{\mathfrak S_{\rm as}}^{\diamond}=\mathfrak S_{\rm cl}.
+\tag{18.9}
+$$
+
+The infimum distance to a fixed target is the same over all three
+classes. No uniform bound on the halting time or its expectation
+is required.
+
+Proof. On a fixed tape the increasing sum of terminal effects is
+at most $I_5$: every finite stopped tree plus its unfinished paths
+has total effect $I_5$. Its residual $R_\infty$ is positive.
+Almost-sure termination on the maximally mixed input implies
+$\int\operatorname{Tr}(R_\infty)/5=0$. Hence
+$R_\infty=0$ for almost every tape. This conclusion follows from
+nonnegativity and finite-dimensional faithfulness of the trace;
+it is not an assumption of termination on every conditional
+postmeasurement state. On this common full-measure set the terminal
+effects sum to $I_5$, giving a normalized channel for each tape.
+If a first nontrivial PVM occurs, its branch residuals are positive
+and sum to zero, since the outcome effects $U^\dagger P_aU$ sum
+to $I_5$. Each branch residual must be zero. Thus (18.6) holds
+with its countable sum for each first outcome. If no such PVM
+occurs, normalization forces that deterministic tape to halt, with
+a unitary terminal matrix. The entire proof of Theorem 18.1 now
+applies on almost every tape, with Tonelli for the terminal sums.
+This gives the bound directly for $\mathfrak S_{\rm as}$.
+
+Here is also a diamond-norm finite approximation. At depth $n$ let
+$R_n$ be the averaged effect of all unfinished paths. Then
+$0\le R_n\le I_5$, and almost-sure termination gives
+$\operatorname{Tr}R_n\to0$. Stop those paths immediately, keep
+their current quantum register and assign a fixed terminal flag.
+Together with the already halted paths this is a legal finite-depth
+channel $\mathcal T_n$. The original continuation on the unfinished
+paths and this replacement are two CP maps with the same total
+effect $R_n$. For a finite-dimensional CP map $\Psi$,
+$\|\Psi\|_\diamond=\|\Psi^\dagger(I)\|_\infty$:
+stack its Kraus operators into $V$, use
+$\Psi(X)=\operatorname{Tr}_{E}(VXV^\dagger)$ and
+$V^\dagger V=\Psi^\dagger(I)$ to obtain the upper bound, also
+with every identity reference. Partial trace is trace-norm
+contractive, by duality with $Y\mapsto Y\otimes I_E$.
+A pure eigenstate for the largest eigenvalue of $V^\dagger V$
+gives the reverse bound. This argument applies to the CP maps
+specified by integrated histories too, since their input and output
+spaces are finite-dimensional. The triangle inequality therefore gives
+
+$$
+\|\mathcal T-\mathcal T_n\|_\diamond
+\le2\|R_n\|_\infty\le2\operatorname{Tr}R_n\longrightarrow0.
+\tag{18.10}
+$$
+
+This proves the second inclusion in (18.9); the first is immediate.
+Taking closures proves its equality. Finally
+$\mathcal T\mapsto\|\mathcal J_\theta-\mathcal T\|_\diamond$
+is continuous, as is the Choi functional
+$\mathcal T\mapsto\operatorname{Tr}(\Pi_\theta\sigma)$.
+The inequality passes to the closure, and the infima over a set,
+its intermediate almost-sure class and its closure coincide.
+All approximants keep the original register and all probability
+mass. The argument grants no nonhalting primitive. $\square$
+
+## 19. Angle-independent distance and an explicit attained error
+
+**Theorem 19.1 (A common infimum and a specific simulator).** Define
+
+$$
+d_*(\theta)=\inf_{\mathcal T\in\mathfrak S_{\rm fin}}
+                 \|\mathcal J_\theta-\mathcal T\|_\diamond.
+\tag{19.1}
+$$
+
+The same definition using either class in Theorem 18.2 gives the
+same number. It is independent of $\theta$, denoted $d_*$, and
+
+$$
+\frac4{25}\le d_*\le1-\frac1{\sqrt2}.
+\tag{19.2}
+$$
+
+For every angle there is an explicit legal finite-depth simulator
+$\mathcal T_\theta$ whose distance is exactly the upper value.
+This equality for the displayed simulator does not identify $d_*$.
+
+Proof. Precomposition by $\operatorname{Ad}_{D_\theta}$ is a
+bijection on each simulator class, with inverse precomposition by
+$D_\theta^\dagger$. It is available as one initial legal unitary
+and is an isometry for the diamond norm. Equation (17.4) therefore
+makes the infimum independent of the angle. The lower bound is
+Theorems 18.1–18.2.
+
+To construct the upper simulator, put $P_0=P$, $P_1=Q$ and use
+the following explicit unitary polar extensions. With
+$u_-=q(e_0-e_3)$ and $v_-=q(e_1-e_4)$, specify their ordered
+columns by
+
+$$
+T_0=[u\ \ u_-\ \ v\ \ v_-\ \ z],\qquad
+T_1=[u_-\ \ u\ \ v\ \ z\ \ v_-].
+\tag{19.3}
+$$
+
+Each is an orthonormal basis, so $T_j$ is unitary, and the actual
+matrices satisfy
+
+$$
+K_j=T_j(P_j+qS),\qquad q=1/\sqrt2.
+\tag{19.4}
+$$
+
+At angle zero toss a fair independent coin. One value selects
+PVM $\{P+S,Q\}$; the other selects $\{P,Q+S\}$. In both
+cases assign flag zero to the first outcome and flag one to the
+second, and apply $T_j$ conditional on that flag. The resulting
+fine operations are
+
+$$
+\mathcal T_{0,j}(X)=\frac12T_j
+ \big((P_j+S)X(P_j+S)+P_jXP_j\big)T_j^\dagger.
+\tag{19.5}
+$$
+
+All four outcomes of the two possible PVMs are retained. Its
+flag-$j$ effect is $P_j+S/2$, already exactly the target effect.
+Expansion of (19.4)–(19.5) gives, on every complex input,
+
+$$
+\Delta_j(X):=K_jXK_j^\dagger-\mathcal T_{0,j}(X)
+=\epsilon T_j(P_jXS+SXP_j)T_j^\dagger,\qquad
+\epsilon=\frac1{\sqrt2}-\frac12>0.
+\tag{19.6}
+$$
+
+Consider a unit vector $\psi$ on $H\otimes Z$, and let
+$x_P=(P\otimes I_Z)\psi$, $x_Q=(Q\otimes I_Z)\psi$,
+$x_S=(S\otimes I_Z)\psi$, with squared norms $p,q',s$.
+These are orthogonal and $p+q'+s=1$. Each flag block in
+$(\mathcal J_0-\mathcal T_0)\otimes\operatorname{id}_Z$
+applied to $|\psi\rangle\langle\psi|$ is, up to its unitary,
+$\epsilon(|x_{P_j}\rangle\langle x_S|
++|x_S\rangle\langle x_{P_j}|)$. Its two nonzero eigenvalues
+are $\pm\epsilon\|x_{P_j}\|\|x_S\|$, with zeros allowed
+at a boundary. The direct sum over flags has trace norm
+
+$$
+2\epsilon\sqrt s(\sqrt p+\sqrt{q'})
+\le2\epsilon\sqrt{2s(1-s)}
+\le\sqrt2\epsilon=1-\frac1{\sqrt2}.
+\tag{19.7}
+$$
+
+Convexity gives the same bound for mixed states and arbitrary
+reference dimension. To see that this is a diamond bound on
+all operators, write $\Delta=\mathcal J_0-\mathcal T_0$.
+For any reference operator input $X$, form the Hermitian block
+$Y=\tfrac12\left(\begin{smallmatrix}0&X\\X^\dagger&0\end{smallmatrix}\right)$
+using one more untouched reference factor. Then
+$\|Y\|_1=\|X\|_1$ and
+$\|(\Delta\otimes\operatorname{id})(Y)\|_1
+=\|(\Delta\otimes\operatorname{id})(X)\|_1$ by Hermiticity
+preservation and the singular values of an off-diagonal block.
+The positive and negative parts of $Y$ have total trace
+$\|Y\|_1$. Applying the state bound separately and the triangle
+inequality proves the desired bound times $\|X\|_1$.
+Thus no restriction to unentangled or positive test operators
+has been imposed on (17.2).
+
+Equality is attained already without a reference by
+
+$$
+\psi_*=(e_0+e_1)/2+e_2/\sqrt2.
+\tag{19.8}
+$$
+
+Here $p=q'=1/4$ and $s=1/2$, so both inequalities in (19.7)
+are equalities. Therefore
+$\|\mathcal J_0-\mathcal T_0\|_\diamond=1-1/\sqrt2$.
+For general angle set
+$\mathcal T_\theta=\mathcal T_0\circ\operatorname{Ad}_{D_\theta}$.
+It uses the same coin and PVMs after one initial unitary, has the
+same exact error, and is saturated by $D_\theta^\dagger\psi_*$.
+Equivalently its PVM projections are conjugated by
+$D_\theta^\dagger$, and its conditional unitaries are
+$T_jD_\theta$. This completes the construction and (19.2).
+No matching optimality proof for this simulator is implied.
+$\square$
+
+## 20. Exact realizations of the three smaller tasks
+
+**Theorem 20.1 (Statistics, averaged channel and encoded instrument).**
+For every real $\theta$ all three smaller tasks of Definition 17.1
+have exact finite-depth realizations in the five-level menu.
+Their attainments coexist with the positive full-instrument distance
+in (19.2).
+
+Proof. For statistics, the simulator of Theorem 19.1 has effects
+
+$$
+E_j(\theta)=D_\theta^\dagger(P_j+S/2)D_\theta.
+\tag{20.1}
+$$
+
+Consequently tracing out its quantum output reproduces both outcome
+probabilities for every input. Equality of these quantum-to-classical
+maps also holds with any untouched reference. Their quantum updates
+are different: at zero angle (19.6) has coefficient
+$\epsilon>0$ on the $P_j$–$S$ cross operators. Thus equality of
+probabilities does not imply equality of the fine instrument.
+
+For the averaged channel, use its angle independence from Theorem 2.2
+and mix the unrotated Kraus operators in a different basis:
+
+$$
+G_+=(K_0+K_1)/\sqrt2,\qquad G_-=(K_0-K_1)/\sqrt2,
+\qquad H_\pm=(I_5\pm F)/2.
+\tag{20.2}
+$$
+
+The actual dyadic matrices give
+$K_0^\dagger K_1+K_1^\dagger K_0=F$ and hence
+$G_\pm^\dagger G_\pm=H_\pm$.
+Here $H_+$ and $H_-$ are complementary projections of ranks
+three and two. On the range of $H_\pm$ the map $G_\pm$ is an
+isometry, and it vanishes on its orthogonal complement. Choose
+orthonormal bases in the domain and image complements and map
+one to the other. This extends it to a unitary $U_\pm$ on $H$
+with $G_\pm=U_\pm H_\pm$. Measure the complete PVM
+$\{H_+,H_-\}$, apply $U_\pm$ conditional on the outcome and
+forget that outcome. Its channel is exactly
+
+$$
+\sum_{\pm}U_\pm H_\pm XH_\pm U_\pm^\dagger
+=\sum_{\pm}G_\pm XG_\pm^\dagger
+=K_0XK_0^\dagger+K_1XK_1^\dagger=\Phi_\circ(X).
+\tag{20.3}
+$$
+
+These are complex-linear identities, so also hold with references.
+The new PVM outcome is not the original fine flag. As a separate
+restriction, the actual channel is not a convex mixture of full-$H$
+unitary conjugations: such a mixture is unital, whereas
+
+$$
+\Phi_\circ(I_5)=2|u\rangle\langle u|+|v\rangle\langle v|
+                         +2|z\rangle\langle z|\ne I_5.
+\tag{20.4}
+$$
+
+Nonunitality excludes that narrower menu only, and is consistent
+with the exact PVM-with-feedback realization (20.3).
+
+For the encoded instrument, reuse the already established supplier
+identity $A_jB=BV_j/\sqrt2$ from Theorem 2.2. Toss a fair coin,
+report its value $j$, and apply the five-level unitary
+
+$$
+\widetilde V_j=BV_jB^\dagger+(I_5-P_R).
+\tag{20.5}
+$$
+
+Its orthogonal blocks are unitary and identity respectively, and
+$\widetilde V_jB=BV_j$. Therefore its flagged branch on every
+qutrit-reference density $\rho$ is exactly
+$\tfrac12(BV_j\otimes I_Z)\rho(BV_j\otimes I_Z)^\dagger$,
+the required branch of $\mathcal J_\theta\circ\iota$.
+Repeated uses remain in $R$; independent coins give the already
+supplied fair iid histories and chronological products
+$V_{h_n}\cdots V_{h_1}$ of Definition 3.1. These identities are
+applications of the source's existing encoded coin-unitary model,
+not a new correction principle. Their inputs stay in $R$.
+On arbitrary $H$ inputs the coin has constant probability $1/2$,
+whereas the actual effects in (20.1) have eigenvalues $1,1,1/2,0,0$.
+Thus this encoded realization cannot supply the full-input task.
+$\square$
+
+## 21. Minimal extra capacity in two separately enlarged menus
+
+**Definition 21.1 (Two enlargement classes).** In the tensor class
+adjoin a pure ready ancilla $E_m\cong\mathbb C^m$, admit arbitrary
+joint unitaries and complete PVMs on $H\otimes E_m$, the same
+classical operations as before, and discard the ancilla at the end.
+The reported quantum output is $H$. In the direct-sum class use
+one register $\widehat H_N\cong\mathbb C^N$, an isometric input
+embedding $J:H\hookrightarrow\widehat H_N$, arbitrary unitaries
+and complete PVMs on that enlarged register, and the same classical
+operations. Exactness means a flag-$j$ output
+$JA_jXA_j^\dagger J^\dagger$ for every $X\in M_5$, with support
+in the embedded original register. Arbitrary untouched references
+are retained in both classes. There is no reset or postselection.
+The enlarged-space controls are hypotheses of these two classes;
+controllability on $H$ does not imply them.
+
+**Theorem 21.2 (Tensor minimum two and direct-sum minimum six).** For
+every angle, the full-input flagged instrument has minimum pure
+ancilla dimension $m=2$ in the tensor class, of total dimension ten.
+It has minimum total register dimension $N=6$ in the direct-sum
+class. The six-dimensional construction returns all quantum output
+to the embedded $R$ and leaves the extra level empty.
+
+Proof. For the tensor upper construction reuse exactly the isometry
+and unitary completion of Definition 2.1 and Theorem 2.2. Prepare
+$f_0$ in $E_2$, apply the unitary $\mathsf U$ there, measure
+$\{I_5\otimes|g_j\rangle\langle g_j|:j=0,1\}$, supply its
+classical outcome, and discard $E_2$. The contraction
+$(I_5\otimes\langle g_j|)\mathsf U(x\otimes f_0)=A_jx$
+holds for every $x\in H$. It gives (17.1) on all complex operators
+and with references, with system output in $R$.
+Equivalently the ready-subspace map is
+$x\mapsto\sum_j A_jx\otimes f_j$ with readout in the $f$ basis;
+its isometry follows from $\sum_j A_j^\dagger A_j=I_5$.
+Extending orthonormal bases of two five-dimensional complements
+supplies a joint unitary, as in the cited theorem. This upper
+construction is an existing dilation supplier. The new minimum
+conclusion uses Theorem 18.1: $m=1$ leaves exactly the original
+five-level menu and cannot simulate the target, even in its
+almost-sure or diamond closure. Thus $m=2$ is minimal.
+
+For the direct-sum upper construction use the orthonormal basis
+$h_0,\ldots,h_5$ of $\widehat H_6$, with $Je_k=h_k$ for
+$0\le k\le4$. Let $C_0,C_1:R\to\widehat H_6$ be the
+isometries given by
+
+$$
+\begin{array}{c|ccc}
+ &u&v&z\\\hline
+ C_0&h_0&h_1&h_2\\
+ C_1&h_3&h_4&h_5
+\end{array},\qquad
+\Gamma_j=C_jC_j^\dagger.
+\tag{21.1}
+$$
+
+Their ranges are orthogonal and exhaust $\widehat H_6$.
+Thus $W_\theta x=C_0A_0x+C_1A_1x$ is an isometry on the
+entire five-dimensional input: orthogonality removes the cross
+terms and $W_\theta^\dagger W_\theta=\sum_jA_j^\dagger A_j=I_5$.
+Here $C_j$ is applied only to the known range $R$ of $A_j$.
+An explicit unitary completion is
+
+$$
+\begin{gathered}
+Z_0=[h_0\ \ h_3\ \ (h_1+h_4)/\sqrt2\ \ h_5\ \ h_2
+                          \ \ (h_1-h_4)/\sqrt2],\\
+Z_\theta=Z_0(D_\theta\oplus1),\qquad Z_\theta J=W_\theta.
+\end{gathered}
+\tag{21.2}
+$$
+
+Indeed the first five columns of $Z_0$ are
+$C_0K_0e_k+C_1K_1e_k$ in order. The displayed sixth column is
+orthogonal to them and has unit length. Hence $Z_0$ is unitary;
+(17.4) proves the general-angle identity without any new dimension.
+
+It remains to return the postmeasurement output to the original
+register; just reading $\Gamma_j$ would leave different output
+supports. Put
+
+$$
+\begin{gathered}
+O=[Ju\ \ Jv\ \ Jz\ \ Ju_-\ \ Jv_-\ \ h_5],\qquad
+E^{(0)}=[h_0\ \ h_1\ \ h_2\ \ h_3\ \ h_4\ \ h_5],\\
+E^{(1)}=[h_3\ \ h_4\ \ h_5\ \ h_0\ \ h_1\ \ h_2],\qquad
+R_j=O(E^{(j)})^\dagger.
+\end{gathered}
+\tag{21.3}
+$$
+
+All three displayed column lists are orthonormal bases, so $R_j$
+is unitary and $R_jC_jy=Jy$ for every $y\in R$.
+Apply $Z_\theta$, measure the complete PVM
+$\{\Gamma_0,\Gamma_1\}$, retain flag $j$ and apply $R_j$.
+The complete fine branch identity is
+
+$$
+R_j\Gamma_jZ_\theta J=JA_j.
+\tag{21.4}
+$$
+
+Conjugating any input operator and tensoring with $I_Z$ proves
+exact flagged equality, including all reference correlations.
+Its output support is $JR\subset JH$; in particular its
+$h_5$ component is zero after feedback. No probability is rejected.
+
+For minimality, $N<5$ cannot isometrically embed the specified
+arbitrary five-dimensional input. At $N=5$ such an embedding is
+unitary onto the whole register; conjugating every protocol by
+that unitary gives a protocol in the original menu. Theorem 18.1
+excludes exact simulation there, including the extensions of
+Theorem 18.2. Hence $N\ge6$, attained by (21.1)–(21.4).
+A direct-sum extra level and a tensor qubit are different additions:
+$5+1=6$, whereas $5\cdot2=10$. Neither construction transfers
+the ownership or environment-access permissions of the separate
+full-system model [DIL, Definition 1.1, Theorem 2.2 and Assumption 2.3].
+That supplier's $\mathbb C^5\otimes\mathbb C^2$ system is not
+the present five-dimensional input system. Here both constructions
+are conditional single-use mathematical realizations under Definition
+21.1; they provide no automatic fresh preparation or reset at a
+later use. $\square$
+
+## 22. Primary interfaces and the unresolved resource distance
+
+**Convention 22.1 (Attribution and precise theorem scope).** The
+rank-weight and Schmidt-number obstruction is an existing mechanism,
+not a general principle first asserted by (18.1). Its primary
+supplier is S. Khandelwal and A. Tavakoli, *Simulating quantum
+instruments with projective measurements and quantum post-processing*,
+[arXiv:2503.00956v2][KT17], Theorems 1–2 on PDF p. 2, equation (1) and Appendix A.
+Their simulator permits classical mixtures of PVMs followed by
+outcome-dependent CPTP channels; classical postprocessing is included
+in their framework. With normalized Choi convention, Theorem 1 gives
+positive operators $\sigma_{a|\boldsymbol r}$ satisfying
+
+$$
+\operatorname{Tr}\sigma_{a|\boldsymbol r}
+ =q_{\boldsymbol r}r_a/d,\qquad
+\sum_a\operatorname{Tr}_{\rm out}\sigma_{a|\boldsymbol r}
+ =q_{\boldsymbol r}I_d/d,\qquad
+\operatorname{SN}(\sigma_{a|\boldsymbol r})\le r_a.
+\tag{22.1}
+$$
+
+Its necessity is the relevant rank-weight precedent. Its sufficiency
+is Theorem 2 for qubit input, not for dimension five. General
+quantum postprocessing there is broader than the permitted primitive
+menu here; conversely a multi-step adaptive tree is not itself their
+single-PVM specification. Equations (18.4)–(18.7) and the stopping
+proof supply the needed actual-model bound with those distinctions
+retained.
+
+L. Leppäjärvi and M. Sedlák, *Post-processing of quantum instruments*,
+[arXiv:2010.15816v1][LS17], §IV Definition 4, Proposition 5 (PDF p. 7) and
+Proposition 8 (PDF p. 9), supply the instrument-postprocessing interface.
+A nonzero operation is indecomposable exactly when its Kraus rank
+is one. If $\mathcal I\to\mathcal J$ by conditional quantum
+instrument postprocessing and $\mathcal J$ is indecomposable,
+Proposition 8 gives reverse induced-POVM postprocessing
+$A^{\mathcal J}\to A^{\mathcal I}$. Conditional quantum instruments
+in that statement are not additional legal primitives here.
+The target operations each have Kraus rank one but their unique
+Kraus matrices have matrix rank three. Positivity of the rank-one
+Choi rays and refinement into terminal Kraus terms are familiar
+instances of that distinction, also used earlier in Theorem 3.3.
+They must not be confused with a claim of matrix rank one.
+
+B. M. Terhal and P. Horodecki, *A Schmidt number for density matrices*,
+[quant-ph/9911117v4][TH17], Lemma 1 (PDF p. 2), bounds overlap of Schmidt-number
+$k$ states on $\mathbb C^N\otimes\mathbb C^N$ with a maximally
+entangled vector by $k/N$. The vectors in (18.2) instead have
+weights $(2/5,2/5,1/5)$. The standard weighted singular-value
+truncation in (18.4)–(18.5) gives the needed $2/5,4/5,1$ constants
+directly; substituting $k/5$ would be incorrect. Orthonormal-basis
+completion in Theorem 2.2 supplies the existing tensor dilation,
+and the same elementary finite-dimensional completion is used
+inside (20.3) and (21.2)–(21.3). These generic linear-algebra facts
+are intermediate suppliers, not separate discoveries.
+
+The following primary comparisons delimit other possible simulation
+claims. G. Wang and M. Ying, *Realization of positive-operator-valued
+measures by projective measurements without introducing ancillary
+dimensions*, [quant-ph/0608235v3][WY17], Theorem 1 and Corollary 1 (PDF p. 4),
+concern reproducing POVM statistics by sequential projective
+measurements. Their commuting-projection criterion requires a
+nontrivial projection: its printed exclusion $P\ne I$ must also
+exclude $P=0$, since the necessity proof uses a genuine first split.
+Their one-extra-dimension corollary is a statistics result and does
+not specify the quantum updates in (21.4).
+M. Oszmaniec, L. Guerini, P. Wittek and A. Acín,
+*Simulating positive-operator-valued measures with projective
+measurements*, [arXiv:1609.06139v2][OGWA17], Theorem 1 (PDF p. 3), gives
+universal statistics simulation using a pure tensor ancilla of
+input dimension $d$, with $d$ a worst-case minimum. It does not
+supply the minimum for this particular binary instrument.
+S. Sau and M. Sedlák, *Sequential realization of Quantum Instruments*,
+[arXiv:2512.14588v1][SS17], Theorem 1 (PDF p. 6), decomposes a total instrument
+$\mathcal T$ when $A^{\mathcal T}\to B$, with initial Lüders
+operation $X\mapsto\sqrt{B_j}X\sqrt{B_j}$ and residual conditional
+instruments. The initial operation is generally nonprojective;
+the preceding ancilla-reuse discussion explicitly assumes reset.
+Neither operation is added to Definition 17.2 by that theorem.
+
+Within this manuscript the encoded coin-unitary identities and
+chronological law are supplied by Theorem 2.2 and Definition 3.1;
+the pure two-level dilation and completion are supplied by
+Definition 2.1 and Theorem 2.2. The source-specific additional content
+is the full-input retained-mass separation with its stopping and
+closure quantifiers, the exact error of the displayed simulator,
+the distinction of the smaller tasks, and the resource minima under
+the two stated enlargement classes. The related use of instrument
+postprocessing in [*FIB native complete continuation finite activity
+frontier*, Proposition 85.1 and its primary-interface table][FA17], concerns equality
+of fine composites and access restrictions, not this first-PVM
+bound. These correspondences delimit a bounded comparison; they
+assert no exhaustive semantic nonoverlap or literature priority.
+
+**Definition 22.2 (Remaining mathematical and realization boundaries).**
+The exact optimal common distance $d_*$ in (19.2) is unresolved.
+Neither equality at $4/25$ nor equality at $1-1/\sqrt2$ is
+established. An exact characterization of all simulator channels
+or their closure is also unresolved; (18.9) is an inclusion and
+closure result, not such a characterization. The obstruction
+requires the full input algebra, terminal flag and quantum output.
+Tracing out a component or restricting the input changes the task,
+as the exact attainments in §20 demonstrate.
+
+All conclusions are ordinary finite-dimensional mathematical
+statements within the declared ideal operational menus. Acquisition
+of controls or environment access, finite precision, calibration,
+total implementation cost and physical realization are separate
+questions. The enlarged-space constructions assume the respective
+joint or six-level controls and specified input preparations; no
+such permission follows from arbitrary five-level unitaries alone.
+The repeated recovery resources and retained-record bounds of the
+earlier sections remain separate from single-use simulation capacity.
+
+[FA17]: https://github.com/the-omega-institute/trureturing/blob/19009f6ca8152c87ab937dcd61f6f97d5fc1cf0b/docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_ACTIVITY_FRONTIER.md
+[KT17]: https://arxiv.org/pdf/2503.00956v2
+[LS17]: https://arxiv.org/pdf/2010.15816v1
+[TH17]: https://arxiv.org/pdf/quant-ph/9911117v4
+[WY17]: https://arxiv.org/pdf/quant-ph/0608235v3
+[OGWA17]: https://arxiv.org/pdf/1609.06139v2
+[SS17]: https://arxiv.org/pdf/2512.14588v1
+
+## 追加锚（本行以下为增补区）
