@@ -4054,3 +4054,442 @@ Theorem 29.1 adds no conclusion for $p\ne24$ or for the general
 unequal-$\chi$ correspondence away from this fibre.
 
 ## 追加锚（本行以下为增补区）
+
+## 30. Reconstruction over every off-twenty-four acquired base
+
+**Definition 30.1 (The entire actual child).** Retain the complete
+worlds, strict source domain and literal history of O, Definitions
+1.1–1.3, as recalled in (25.1). Thus
+
+$$
+\begin{gathered}
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\\
+0<r<1,\quad b>0,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R,\\
+H_4=(0,J,24,M,147/5,J,24,M,18).
+\end{gathered}
+\tag{30.1}
+$$
+
+Here O is [the common-parent volume](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md).
+Fix arbitrary real $p\ne24$ and $v$, and write
+
+$$
+C(p,v)=\mathcal F(H_4,M,p,M,v).
+\tag{30.2}
+$$
+
+The products are $Q_0=I$, $Q_i=E_iQ_{i-1}$; at every original clock
+$i$, the reading is $d+g(i)\operatorname{tr}(Q_iP)$. The initial
+read counts and every atom is immediately read. In particular, the
+acquired word through clock six is $J,M,J,M,M,M$, without a reset,
+copy, skipped read, clock shift or additional port. Cardinality in
+(30.2) counts distinct complete triples, including lower-degree gains,
+sampled or repeated roots, zero drift, singular sources and unbounded
+positive offdiagonals.
+
+For a world in this child put
+
+$$
+\begin{gathered}
+j=b+r(1-r)/b,\qquad n=j+r,\qquad
+T=1+b,\qquad U=1+2b,\\
+x=n/U>0,\qquad H(s)=Ug(s),\qquad C_2=147/5.
+\end{gathered}
+\tag{30.3}
+$$
+
+The letters $x,H$ are mathematical coordinates on worlds, not acquired
+observations. For arbitrary $x>0,d\in\mathbb R$ define
+
+$$
+h_3=\frac{24-d}{x},\quad h_4=18-d,\quad
+h_5=\frac{p-d}{x+1},\quad h_6=\frac{v-d}{x+2},
+\tag{30.4}
+$$
+
+and let $H$ be their unique degree-at-most-three interpolant at
+$3,4,5,6$. Explicitly,
+
+$$
+H(s)=\sum_{i=3}^6 h_i
+ \prod_{\substack{3\le j\le6\\j\ne i}}\frac{s-j}{i-j}.
+\tag{30.5}
+$$
+
+Write $H_i=H(i)$ for $i\in\{0,1,2,7\}$. The needed extrapolations are
+
+$$
+\begin{aligned}
+H_0&=20h_3-45h_4+36h_5-10h_6,\\
+H_1&=10h_3-20h_4+15h_5-4h_6,\\
+H_2&=4h_3-6h_4+4h_5-h_6,\\
+H_7&=-h_3+4h_4-6h_5+4h_6.
+\end{aligned}
+\tag{30.6}
+$$
+
+The interpolation theorem here is the classical distinct-node theorem;
+see Berrut–Trefethen, *Barycentric Lagrange Interpolation*, §2,
+[(2.1)–(2.2)](https://people.maths.ox.ac.uk/trefethen/barycentric.pdf).
+It requires neither exact degree three nor nonzero sampled values.
+
+**Lemma 30.2 (Faithful whole-world reconstruction).** The map
+$W\mapsto(x,d)$ from $C(p,v)$ is injective. Its image consists exactly
+of the real pairs $x>0,d\ne24$ for which, with (30.4)–(30.6),
+
+$$
+\begin{gathered}
+B_0=2(C_2-d)-H_2,\qquad H_1\ne0,\qquad d^2+B_0^2>0,\\
+U=\frac{-dH_0+B_0H_2}{d^2+B_0^2}>1,\qquad
+b=\frac{U-1}{2},\qquad
+j=\frac{U(24-d)}{H_1},\qquad r=xU-j,\\
+0<r<1,\qquad j=b+\frac{r(1-r)}b,\qquad
+dU=-H_0,\qquad B_0U=H_2.
+\end{gathered}
+\tag{30.7}
+$$
+
+The corresponding complete world has the entire polynomial $g=H/U$.
+
+Proof. O, Theorems 2.1–2.2, applied to this exact $H_4$, say that
+$d=24$ forces $b=1/8$ and
+$g(s)=\frac85(s-1)(s-3)(s-5)$. Its fifth-$M$ response is $24$.
+Thus $p\ne24$ implies $d\ne24$. On an actual world, the traces at
+clocks zero through six, by O, (1.6)–(1.7), are
+
+$$
+1,\quad j,\quad T,\quad n,\quad U,\quad U+n,\quad 2U+n.
+\tag{30.8}
+$$
+
+Consequently $Ug$ has the four samples (30.4), so is exactly the
+whole polynomial (30.5). Clock one gives
+$H_1=U(24-d)/j\ne0$. Clocks zero and two give, respectively,
+$dU=-H_0$ and $B_0U=H_2$, since $T=(U+1)/2$. The pair
+$(d,B_0)$ cannot be $(0,0)$: those equations would give $H_2=0$,
+whereas the definition of $B_0$ would give $H_2=2C_2\ne0$.
+Taking the scalar product of the two equations with $(d,B_0)$
+therefore gives the displayed formula for $U$. All remaining source
+coordinates and the entire gain are then forced by (30.7), proving
+injectivity.
+
+Conversely suppose all guards in (30.7) hold. They give a strict
+source $P(r,b)$, with $n=j+r=xU$ and $T=(U+1)/2$. The last two
+equations give readings zero and $C_2$ at clocks zero and two;
+the definition of $j$ gives reading $24$ at clock one. Formula
+(30.4) gives readings $24,18,p,v$ at clocks three through six.
+The gain $H/U$ is one whole polynomial of degree at most three.
+It cannot be identically zero, since that would make the first two
+readings equal. This proves the converse with every original row,
+rather than only an equation on projected coordinates. ∎
+
+The two clock-seven alternatives of this reconstructed world remain
+exactly O, (1.7):
+
+$$
+f_{MJ}=d+\frac{T+2j+4r}{U}H_7,\qquad
+f_{MM}=d+(3+2x)H_7.
+\tag{30.9}
+$$
+
+They use the same fixed world and original clock seven. The two final
+actions are counterfactual alternatives, not two acquired ports.
+
+## 31. A fixed determinant and global noncollapse
+
+**Definition 31.1 (Source-specific polynomial equations).** For the
+interpolant above put
+
+$$
+D=x(x+1)(x+2),\qquad Z=xH_1-(24-d),
+\tag{31.1}
+$$
+
+and define
+
+$$
+\begin{aligned}
+f={}&5D^2(dH_2+H_0B_0),\\
+k={}&\frac{D^4}{4}\bigl\{
+4H_0^2Z^2+2H_0(d-H_0)ZH_1\\
+&\hspace{35mm}-(H_0+d)\bigl(d+(1-2x)H_0\bigr)H_1^2\bigr\}.
+\end{aligned}
+\tag{31.2}
+$$
+
+These are integer polynomials in $x,d,p,v$, with $d$-degrees two
+and four. For a denominator-free specification of their coefficients,
+set
+
+$$
+\begin{gathered}
+z_3=(24-d)(x+1)(x+2),\qquad z_4=(18-d)D,\\
+z_5=(p-d)x(x+2),\qquad z_6=(v-d)x(x+1),\\
+a_0=20z_3-45z_4+36z_5-10z_6,\\
+a_1=10z_3-20z_4+15z_5-4z_6,\qquad
+a_2=4z_3-6z_4+4z_5-z_6,\\
+z_*=xa_1-D(24-d).
+\end{gathered}
+\tag{31.3}
+$$
+
+Then $a_i=DH_i$ for $i=0,1,2$, and
+
+$$
+\begin{aligned}
+f={}&5dDa_2+a_0\bigl((294-10d)D-5a_2\bigr),\\
+4k={}&4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1\\
+&\quad-(a_0+dD)\bigl(dD+(1-2x)a_0\bigr)a_1^2.
+\end{aligned}
+\tag{31.4}
+$$
+
+Expansion of the second numerator gives coefficients divisible by four.
+
+Every world of $C(p,v)$ satisfies $f=k=0$. Indeed the two clock
+equations of (30.7) imply $dH_2+H_0B_0=0$. The rank-one source
+identity, using $n=j+r$, is
+
+$$
+r^2-(1+b)r+b(n-b)=0.
+\tag{31.5}
+$$
+
+For $d\ne0$ substitute $U=-H_0/d$ and $r=UZ/H_1$ into
+(31.5). Multiplication by $4d^2H_1^2$ gives exactly the braces in
+(31.2). If $d=0$, the actual clock-zero equation gives $H_0=0$,
+so those same braces vanish directly. Thus zero drift is retained.
+The converse $f=k=0\Rightarrow W\in C(p,v)$ is not asserted;
+actual points must satisfy the full guards (30.7).
+
+**Lemma 31.2 (Exact determinant identities).** Let $\mathsf S(x,p,v)$
+be the fixed six by six coefficient matrix with rows
+
+$$
+d^3f,\ d^2f,\ df,\ f,\ dk,\ k
+\quad\hbox{and columns }d^5,d^4,\ldots,1.
+\tag{31.6}
+$$
+
+This is the degree-$(2,4)$ Sylvester matrix, retained with its
+original size under every specialization. Define
+
+$$
+F_0=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480.
+\tag{31.7}
+$$
+
+There is a uniquely specified $R\in\mathbb Z[x,p,v]$ such that
+
+$$
+\det\mathsf S=16D^8F_0^2R,\qquad
+(\deg_xR,\deg_pR,\deg_vR)=(18,6,6).
+\tag{31.8}
+$$
+
+Writing $c_i(p,v)=[x^i]R$, and
+
+$$
+A=32p-5v-366,\qquad
+B=120p^2-38pv-3360p+3v^2+522v+23112,
+\tag{31.9}
+$$
+
+one has
+
+$$
+c_0=10^6A^2B^2.
+\tag{31.10}
+$$
+
+The leading $d$-coefficients $L_f=[d^2]f$ and $L_k=[d^4]k$
+depend on $x$ alone and have degrees six and fourteen. For the
+following certificates let $\operatorname{pp}$ mean clearing rational
+denominators and taking the primitive integer polynomial with positive
+leading coefficient. Set
+
+$$
+\begin{aligned}
+u_i(p)&=\operatorname{pp}\!\left(c_i\left(p,\frac{32p-366}{5}\right)\right),\\
+w_i(p)&=\operatorname{pp}\!\left(\operatorname{Res}_v(B,c_i)\right),
+\qquad i=2,3.
+\end{aligned}
+\tag{31.11}
+$$
+
+Their exact degrees and their complete descending coefficient arrays
+modulo $101$ are as follows. In each row the final entry is the
+resultant of the two listed reduced polynomials, in the listed order.
+
+| Polynomial pair and variable | Degrees | First coefficient array modulo $101$ | Second coefficient array modulo $101$ | Resultant modulo $101$ |
+| --- | --- | --- | --- | --- |
+| $\operatorname{pp}(L_f),\operatorname{pp}(L_k)$ in $x$ | $6,14$ | $(76,17,37,66,78,95,59)$ | $(81,20,0,22,71,53,30,80,19,54,96,98,75,95,85)$ | $87$ |
+| $u_2,u_3$ in $p$ | $6,6$ | $(45,81,4,6,45,69,87)$ | $(21,68,8,27,37,84,77)$ | $71$ |
+| $w_2,w_3$ in $p$ | $12,12$ | $(48,72,7,55,13,92,8,79,92,51,8,14,66)$ | $(62,22,14,67,84,83,15,61,76,5,83,19,52)$ | $86$ |
+
+Proof. All identities are integer polynomial identities obtained from
+the four linear forms (31.3). More explicitly, form the six rows
+(31.6) using (31.4), expand their determinant, and divide by
+$16x^8(x+1)^8(x+2)^8F_0^2$. The remainder is zero; the quotient has
+512 nonzero monomials and coordinate degrees $(18,6,6)$, and its
+constant $x$-coefficient factors as (31.10). This division fixes every
+coefficient of $R$, including its normalization. Extracting
+$[d^2]f,[d^4]k,[x^2]R,[x^3]R$ then gives the table by the operations
+in (31.11). For example the first leading coefficient is
+
+$$
+L_f=-10\bigl(177x^6+724x^5+542x^4-742x^3-629x^2+196x+160\bigr).
+\tag{31.12}
+$$
+
+The leading entries of all reduced arrays are nonzero, so the stated
+degrees are preserved modulo $101$. Evaluating their Sylvester
+determinants over $\mathbb F_{101}$ gives $87,71,86$, respectively.
+Thus the displayed finite coefficient identities also prove that the
+three integer resultants are nonzero. The Sylvester construction over
+a commutative coefficient ring is the classical one; see Moreno Maza,
+*[The resultant](https://www.csd.uwo.ca/~mmorenom/AM583/Lectures/ResultantGcd.html/node3.html)*,
+Definition 4 and Propositions 5–7. Here it is used for these specified
+polynomials, with no converse to a specialized resultant-zero test. ∎
+
+**Lemma 31.3 (No vertical collapse and no base collapse).** For every
+complex $\alpha$, $L_f(\alpha)$ and $L_k(\alpha)$ do not both vanish.
+For every complex pair $(p,v)$, the specialization $R(x,p,v)$ is a
+nonzero polynomial in $x$.
+
+Proof. The first row of the table proves the first assertion: a common
+complex root would force the nonzero integer resultant to vanish.
+Consequently at every fixed $x=\alpha$ and every base $(p,v)$ at
+least one of $f(\alpha,d,p,v),k(\alpha,d,p,v)$ has its full degree
+two or four. In particular they are never both zero polynomials in $d$.
+
+For the second assertion suppose $R(x,p,v)\equiv0$. Then
+$c_0=c_2=c_3=0$. Equation (31.10) forces $A=0$ or $B=0$.
+If $A=0$, then $v=(32p-366)/5$, so $u_2(p)=u_3(p)=0$,
+contrary to the second nonzero resultant in the table. If $B=0$,
+the common finite $v$-root of $B,c_i$ forces
+$\operatorname{Res}_v(B,c_i)(p)=0$ for $i=2,3$.
+This implication holds even if a leading $v$-coefficient specializes
+to zero: its finite-root evaluation vector is in the kernel of the
+fixed Sylvester matrix. Thus $w_2(p)=w_3(p)=0$, contrary to the
+third nonzero resultant. Both alternatives are impossible. ∎
+
+## 32. The twenty-four-world bound on the entire original child
+
+**Theorem 32.1 (Uniform full-domain off-twenty-four finite fibre).**
+For every real $p\ne24$ and every real $v$,
+
+$$
+\left|C(p,v)\right|
+=\left|\mathcal F(H_4,M,p,M,v)\right|\le24.
+\tag{32.1}
+$$
+
+This counts distinct complete worlds over the entire strict domain
+(30.1), including the singular parent sources.
+
+Proof. Fix the actual base $(p,v)$. Lemma 30.2 injects its complete
+worlds into the real solutions $(x,d)$ of $f=k=0$ with $x>0$.
+Lemma 31.3 implies that over any fixed complex $x=\alpha$ at
+least one of these two polynomials in $d$ is nonzero of degree two
+or four. There are therefore at most four distinct common finite
+$d$-roots above $\alpha$.
+
+Let $n_\alpha$ count these distinct common roots. Each root $t$
+gives the null vector
+
+$$
+(t^5,t^4,t^3,t^2,t,1)^{\mathsf T}
+\tag{32.2}
+$$
+
+of $\mathsf S(\alpha,p,v)$. Since $n_\alpha\le4<6$, the
+Vandermonde determinant shows that these vectors are independent.
+Hence the corank is at least $n_\alpha$. Constant invertible row
+and column operations put $\mathsf S(\alpha,p,v)$ in rank normal
+form. In the transformed polynomial matrix at least $n_\alpha$
+columns have every entry divisible by $x-\alpha$. Multilinearity
+of the determinant gives
+
+$$
+n_\alpha\le\operatorname{ord}_{x=\alpha}\det\mathsf S(x,p,v).
+\tag{32.3}
+$$
+
+This is the same classical determinant-order argument used in the
+proof of Theorem 10.2; its application here uses (31.8) and the
+global noncollapse of Lemma 31.3, rather than that theorem's
+restricted-$p$ hypotheses.
+
+For $D(\alpha)\ne0$, (31.8) turns (32.3) into
+
+$$
+n_\alpha\le
+\operatorname{ord}_{x=\alpha}\bigl(F_0(x,p,v)^2R(x,p,v)\bigr).
+\tag{32.4}
+$$
+
+The polynomial on the right is nonzero: $F_0$ has leading
+coefficient $405$ and $R$ is nonzero by Lemma 31.3. Its degree
+is at most $2\cdot3+18=24$. Every common root with $D\ne0$
+projects to a root of that polynomial, and summing (32.4) over its
+finitely many roots bounds the number of distinct common pairs
+$(x,d)$ with $D\ne0$ by $24$. Legal worlds have $x>0$, hence
+$D>0$, and the injection proves (32.1). ∎
+
+This proof retains every specialization of the acquired base. A drop
+in either $d$-degree is harmless because the matrix (31.6) keeps
+its fixed size and Lemma 31.3 prevents a whole vertical line of
+solutions. Multiple projected roots and several distinct drifts over
+one projected root are counted by (32.3). No division by $d$ or
+$\Lambda$ occurs in the reconstruction, and the necessary equation
+$k=0$ at $d=0$ was proved separately. No simplicity of a gain root,
+nonzero gain sample, exact gain degree, bounded source coordinate
+or regular source chart is assumed. The zeros of $F_0R$ are only
+necessary projections; their reality, strictness and whole-world
+lifting still require (30.7). Determinant multiplicity is used to
+bound distinct points, not to manufacture additional worlds.
+
+## 33. The same-base distinct-pair question
+
+**Definition 33.1 (The two actual distinct-pair images).** On the
+original real base domain $\{(p,v):p\ne24\}$ define
+
+$$
+\begin{aligned}
+D_J=\{(p,v):{}&\exists W,W'\in C(p,v),\quad
+ W\ne W',\ f_{MJ}(W)=f_{MJ}(W')\},\\
+D_M=\{(p,v):{}&\exists W,W'\in C(p,v),\quad
+ W\ne W',\ f_{MM}(W)=f_{MM}(W')\}.
+\end{aligned}
+\tag{33.1}
+$$
+
+At each fixed base Theorem 32.1 bounds the number of ordered
+distinct candidate pairs for either terminal action by $24\cdot23=552$.
+The original joint condition is exactly $(p,v)\in D_J\cap D_M$:
+the two pairs may overlap or be disjoint, and need not have the same
+terminal response. Theorem 32.1 neither supplies a point of this
+intersection nor excludes all such points. Its base domain is still
+the whole infinite real set $p\ne24,v\in\mathbb R$.
+
+Theorem 7.1 remains the $49$-world bound on its stated interval
+$\mathcal P$, and Theorem 10.2 remains the $18$-world bound on its
+regular locus. Theorems 24.2–24.3 concern the inherited exact $p_J$;
+Theorem 29.1 concerns $p=24$. Their quantified scopes are unchanged.
+The extension (32.1) uses a whole-world reconstruction and global
+noncollapse specific to (30.1); its interpolation, Sylvester
+determinants and determinant-order counting are the classical tools
+cited in Sections 30–32.
+
+In the notation of O, Definitions 1.2–1.3 and Theorem 17.1, the
+bound alone gives no $L_1$ child. Even a point of $D_J\cap D_M$
+would supply only the sixth-$M$ $L_1$ child at that one acquired
+base. A sixth-$J$ $L_1$ child at the same fifth response $p$, the
+remaining fifth-$J$ conditions and the ancestor conditions would
+still be required for the corresponding $H_4$ $L_3$, root $L_7$
+or eight-versus-nine conclusion.
+
+## 追加锚（本行以下为增补区）

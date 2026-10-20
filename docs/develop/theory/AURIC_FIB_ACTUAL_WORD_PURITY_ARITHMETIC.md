@@ -3944,3 +3944,119 @@ compatibility and optimal peak memory, remains open. The critical-energy
 goal remains open as well.
 
 ## 追加锚（本行以下为增补区）
+
+## 86. Task readout on the actual ambiguous records
+
+**Definition 86.1 (A prescribed binary task).** Retain the qutrit source,
+actual chronological words and terminal partition of Definition 63.1.
+For a prescribed nontrivial projection $E$ on the input qutrit and one
+conditional record channel $\mathcal N_j$, define
+
+$$
+\eta_j(E)=\min_{D\ \mathrm{CPTP}}\sup_{\rho\in\mathsf D(\mathbb C^3)}
+\left|\operatorname{tr}(E D\mathcal N_j(\rho))
+                   -\operatorname{tr}(E\rho)\right|.
+\tag{86.1}
+$$
+
+The record is known to the decoder. This loss asks only for the probability
+of one binary task on each input; it is not a channel diamond distance.
+The effect $E$ is prescribed before the unknown input arrives. The
+Heisenberg observable-correction interface is Bény–Kempf–Kribs,
+Definition 8, equation (7), as recorded in
+[the observable-correction note](../../../Library/Quantum/benykempfkribs2007observables.md#task-readout-statistical-sufficiency-and-physical-correction).
+
+Let $R_j=Q_{a_j}^\dagger Q_{b_j}$ be the two actual relatives in
+(63.3), and choose orthonormal eigenvectors $u_j,v_j$ for the two
+nontrivial eigenvalues of $R_j$. Put
+
+$$
+E_j=|+_j\rangle\langle+_j|,
+\qquad |\pm_j\rangle=(u_j\pm v_j)/\sqrt2,
+\qquad P=|\xi\rangle\langle\xi|.
+\tag{86.2}
+$$
+
+**Theorem 86.2 (Exact actual-record task errors and a history-free task).**
+For the conditional pair records $\{001,111\}$ and $\{000,101\}$,
+respectively,
+
+$$
+\eta_1(E_1)=\frac14,
+\qquad \eta_2(E_2)=\frac3{16},
+\qquad \eta_j(P)=0\quad\text{for every record }j.
+\tag{86.3}
+$$
+
+The $P$ task remains exact after erasing the entire terminal history,
+and indeed for every finite chronological horizon and every
+input-independent distribution of its actual words. In contrast,
+the two conditional full-state diamond recovery errors are $1$ and
+$3/8$ by Proposition 63.2. The first two numbers in (86.3) concern
+different prescribed tasks $E_1,E_2$; they are not additive contributions
+to a common-task optimum.
+
+**Proof.** The standard Heisenberg calculation identifies (86.1) with
+
+$$
+\min_{0\preceq F\preceq I}
+\|\mathcal N_j^\dagger(F)-E\|_{\mathrm{op}}.
+\tag{86.4}
+$$
+
+Every decoder supplies the effect $F=D^\dagger(E)$. Conversely, a given
+effect $F$ is realized by measuring $F$ and preparing a state in the range
+or kernel of $E$ according to the outcome. Supremizing the absolute
+expectation of a Hermitian difference over density matrices gives its
+operator norm. This step uses the general task interface from the cited
+note; the actual-word computation follows.
+
+The known first unitary of a pair can be removed at the output, reducing
+its conditional channel to
+$\mathcal M=(\operatorname{id}+\operatorname{Ad}_{R_j})/2$.
+For eigenvalues $z_u,z_v$ on $u_j,v_j$, its Heisenberg action multiplies
+the $(u_j,v_j)$ matrix entry of an effect by
+$\mu=(1+\overline z_u z_v)/2$.
+Choose a rank-one effect $F$ in this plane with diagonal entries $1/2$
+and off-diagonal entry $\overline\mu/(2|\mu|)$, and zero on its
+orthogonal complement. If $\mu=0$, any phase is admissible. The pulled
+effect differs from $E_j$ only by an off-diagonal entry of modulus
+$(1-|\mu|)/2$. Hence (86.4) is at most that number. The known first
+unitary merely conjugates this output effect and changes neither bound.
+
+For the matching lower bound, the two actual input states
+$\rho_\pm=|\pm_j\rangle\langle\pm_j|$ have ideal task probabilities
+one and zero. Their channel-output difference has eigenvalues
+$|\mu|,-|\mu|,0$, so its trace norm is $2|\mu|$. Any output effect
+can separate their probabilities by at most $|\mu|$. If both task
+errors were at most $\eta$, this separation would be at least
+$1-2\eta$, proving $\eta\ge(1-|\mu|)/2$.
+
+For $R_1$, (63.3) gives $z_u=e^{2\pi i/3}$ and
+$z_v=e^{-2\pi i/3}$, so $|\mu|=1/2$. For $R_2$, write its two
+eigenvalues as $e^{\pm i\alpha}$ with $\cos\alpha=5/8$;
+then $|\mu|=|\cos\alpha|=5/8$. This proves the first two values.
+The selected rank-one effects can also be obtained by a unitary
+change of the fixed rank-one measurement, so the upper bounds do not
+require a nonunitary decoder.
+
+Finally (63.4) gives $V_0\xi=V_1\xi=\lambda\xi$ with
+$|\lambda|=1$. Thus every length-$n$ actual word satisfies
+$Q_h\xi=\lambda^n\xi$ and $Q_h^\dagger P Q_h=P$.
+Every conditional mixture, and every input-independent mixture after
+erasing its record, consequently has Heisenberg image $P$. The identity
+decoder gives zero task error. This argument holds at every finite
+horizon. $\square$
+
+**Definition 86.3 (Simultaneity and resource boundary).** The task effects
+and allowed terminal operations in Definition 86.1 are supplied as part
+of the finite task contract. Theorem 86.2 is a repository-derived
+application of observable correction and binary-state distinguishability
+to the actual matrices (63.3); it supplies no general synthesis cost
+for eigenvector measurements or online controller. Retaining the
+probability of $P$ needs no history label, whereas preserving arbitrary
+input coherences is the stronger task of §§59–78. For several prescribed
+effects, one common decoder must realize them simultaneously; minimizing
+each expression (86.1) separately does not establish that requirement.
+
+## 追加锚（本行以下为增补区）
