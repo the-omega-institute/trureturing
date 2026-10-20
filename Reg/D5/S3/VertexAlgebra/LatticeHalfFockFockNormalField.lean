@@ -1,15 +1,4 @@
-/- SOURCE-stage history: initially uncompiled; the D5 mathematical proofs and these
-Reg typed proof terms have since compiled successfully. The completed scoped native report
-leaves all seven source registrations declared_unresolved, with zero declared_validated
-and no accepted source-binding/certificate evidence. Each meets the same
-source.dictionary_or_proof_coordinate boundary: hu is lexical proof coordinate 1.
-Existing issue https://github.com/the-omega-institute/trureturing/issues/17623 covers this
-owner/boundary in an older three-target snapshot; this disclosure covers all seven targets.
-These checks precede this documentation edit. Current-source rechecks, Scribe compilation/
-emission, freezing, required gates/CI, PR and dev synchronization remain separate.
-The finite-role template is the existing Reg.Support.DependentFamily enrollment.
-Original-source quantifiers and actual dependent target modules are retained.
--/
+/- Dependent-family audit attempts preserve the original determinant witness and actual carrier. -/
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
@@ -690,6 +679,97 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[{ name := `autoImplicit, value := .bool false }]
 
 end SourceTruncation
+
+namespace PolynomialInsertion
+
+private def probeIndex : Index hyperbolic :=
+  (⟨0, by change 0 < 2; decide⟩, 0)
+
+abbrev Parameter := Σ data : BoundData, Charge data.val × Index data.val
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Parameter (fun p => Oscillator p.1.val)
+  (fun p => NativeField p.1.val p.1.property)
+
+def actual : Realization signature := realize signature
+  (fun _ p polynomial => polynomialField p.1.val p.1.property p.2.1 polynomial)
+  (fun empty => nomatch empty)
+
+def rejected : Realization signature := realize signature
+  (fun _ p _ => chargedField p.1.val p.1.property p.2.1)
+  (fun empty => nomatch empty)
+
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
+    (q : Charge D) (i : Index D) (p : Oscillator D),
+    readout.readout () ⟨⟨D, hu⟩, q, i⟩ (MvPolynomial.X i * p) =
+      singletonLinear D hu i (polynomialField D hu q p)
+
+theorem source_bridge : (type_of% (@polynomialField_X_mul)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have bad := law hyperbolic hyperbolic_unit 0 probeIndex 0
+  have badCoefficient := congrArg
+    (fun F : NativeField hyperbolic hyperbolic_unit => F.coeff 0 probeState) bad
+  exact probe_leading (by simpa [rejected, realize, probeSeed] using badCoefficient)
+
+private theorem polynomial_one :
+    polynomialField hyperbolic hyperbolic_unit 0 1 = probeSeed := by
+  simpa only [sourceField, probeSource, Finsupp.lsum_single] using probe_source_field
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨⟨⟨hyperbolic, hyperbolic_unit⟩, 0, probeIndex⟩, 0, 1, ?_⟩
+  intro equality
+  change polynomialField hyperbolic hyperbolic_unit 0 0 =
+    polynomialField hyperbolic hyperbolic_unit 0 1 at equality
+  rw [map_zero, polynomial_one] at equality
+  exact probe_leading (by rw [← equality]; simp)
+
+def familyRegistration : Registration arena (type_of% (@polynomialField_X_mul)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp polynomialField_X_mul, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@polynomialField_X_mul)
+    (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str
+    `D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.polynomialField_X_mul "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.PolynomialInsertion.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
+    definition := none
+    coordinates := #[0, 1, 2, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end PolynomialInsertion
 
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField

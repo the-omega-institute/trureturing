@@ -73,6 +73,59 @@ internal sealed class LengthGramBodyDocument : IScribeDocumentDefinition
                         + "-B(X,w)/(s*d)-s*delta/d^2). This is an actual derivative of the "
                         + "coordinate function. Its restriction supplies a derivative within D "
                         + "even where a cut equality is active; boundary smoothness is unnecessary.")),
+                    Paragraph(Text("The same coordinate differential has an exact Lorentz interpretation. "
+                        + "For an ambient four-vector w set T_X(w)=w/s+B(X,w)*X/s^3, with "
+                        + "s^2=-B(X,X). Differentiating the existing native lift L at the actual "
+                        + "point F gives DL_F(DF[h])=T_X(w), where w=v times M as above. "
+                        + "This identity is computed from the displayed coordinate functions; it "
+                        + "does not assume an intertwining relation between two unknown derivatives. "
+                        + "The same lift differential satisfies B(DL_F(a),DL_F(b))=(a dot b)/F2^2. "
+                        + "Consequently, for w=v times M and z=v' times M, the original coordinate "
+                        + "differential obeys (DF[h] dot DF[k])/F2^2=B(w,z)/s^2+"
+                        + "B(X,w)*B(X,z)/s^4. Here v and v' are the original sum-zero coefficient "
+                        + "directions determined by h and k.")),
+                    Paragraph(Text("The actual sum-one section gives injectivity of the coordinate differential "
+                        + "DN_X for N(X)=(X0/d,X1/d,s/d). Define "
+                        + "S_M(Y)=sum_i((Y times inverse(M))_i). Frame invertibility gives "
+                        + "S_M(X)=1 and S_M(w)=0 for every sum-zero coefficient direction. "
+                        + "If DN_X(w)=0, the lift identity gives s^-1*w+a*X=0, where "
+                        + "a=B(X,w)/s^3. Applying S_M forces a=0, then w=0; invertibility of M "
+                        + "forces the coefficient direction to be zero. Thus every nonzero "
+                        + "sum-zero direction has strictly positive displayed self-pairing. "
+                        + "This proves positivity on the original three-dimensional section.")),
+                    Paragraph(Text("The coordinate pairing also describes the first-order behavior of the "
+                        + "unchanged native distance. Let gamma(t) be any curve in the actual upper "
+                        + "half-space whose ambient Complex-times-Real coordinates have derivative V "
+                        + "at zero, and write p=gamma(0). The ambient space here is WithLp 2, with "
+                        + "its genuine L2 norm. The native distance formula is "
+                        + "2*arsinh(D(t)/(2*sqrt(height(p)*height(gamma(t))))), where D(t) is the "
+                        + "ambient distance. The derivative supplies D(t)/abs(t) tending to norm(V). "
+                        + "Extend arsinh(x)/x continuously at zero by the value one, using its "
+                        + "derivative there. Multiplying this continuous ratio by the preceding "
+                        + "difference-quotient norm and the reciprocal height factor proves that "
+                        + "dist_H(p,gamma(t))/abs(t) tends to norm(V)/height(p). This includes "
+                        + "zero velocity and repeated curve points; no nonzero-image assumption is used.")),
+                    Paragraph(Text("Packing a real triple a into (Complex.mk(a0,a1),a2) in WithLp 2 "
+                        + "gives norm(pack(a))^2=a0^2+a1^2+a2^2=a dot a. This explicit identity "
+                        + "supplies the Euclidean meaning of the coordinate pairing; the default "
+                        + "sup norm on Fin 3 to Real is not identified with this L2 norm. "
+                        + "For the same original xi in C and any coefficient direction eta, "
+                        + "use N((xi+t*eta) times M) as the local coordinate extension. Its "
+                        + "height stays positive near zero by continuity and the already derived "
+                        + "s,d>0. Packing these coordinates gives a curve based at exactly f(xi). "
+                        + "For all sufficiently small t for which xi+t*eta belongs to C, this same "
+                        + "curve is exactly f(xi+t*eta), by the original radial-coordinate contract. "
+                        + "The squared native distance quotient along it tends to "
+                        + "B(w,w)/s^2+B(X,w)^2/s^4, with X=xi times M and w=eta times M. "
+                        + "For nonzero eta with sum eta_i=0 this limit is strictly positive by "
+                        + "the section argument. At a cut boundary this is an ambient differentiable "
+                        + "coordinate extension; a two-sided curve contained in C is not required or asserted.")),
+                    Paragraph(Text("These differential and metric-speed identities retain the same original "
+                        + "frame, body, native distance and radial map, including their boundary-point "
+                        + "coordinate identification. They do not yet identify an outward unit normal "
+                        + "or transport a varying vector field against native surface measure. "
+                        + "The weighted face-flux identity, moving measured-volume derivative and "
+                        + "Schlaefli variation remain separate obligations.")),
                     Paragraph(Text("The signed determinant follows by homogeneous coordinates. "
                         + "Let H(X)=(X0,X1,s,X3-X2). Its four-dimensional derivative has determinant d/s "
                         + "and sends X to H(X). The matrix with rows A and the three coordinate derivatives "
@@ -216,6 +269,9 @@ internal sealed class LengthGramBodyDocument : IScribeDocumentDefinition
                 Text(" put its original lift on B(Y,n_k)=0. Spatial Cauchy-Schwarz for the future unit timelike Y makes B(n_k,n_k)>0. Apply "),
                 Ref("D5/S3/Geometry/HyperbolicPlaneRealization.supporting_plane_isometry"),
                 Text(" to these eight spacelike normals. For every i there are actual isometries eSide_i,eCap_i from the full native H2 upper half-plane into H3 with ranges exactly {p:B(lift(p),n_i)=0} and {p:B(lift(p),c_i)=0}, respectively. Positivity of s(v) proves the exact same-f traces f({v in C(l):v_i=0})=range(f) intersect range(eSide_i) and f({v in C(l):a_i(v)=0})=range(f) intersect range(eCap_i). The full planes and the bounded original face traces are distinguished.")),
+            Paragraph(Text("The eight original outward normals also have explicit native coordinate vectors. Keep the same six positive lengths, nonsingular frame M and original radial realization f. For each support take R=n_i on a coordinate-zero side and R=c_i on a cap, and put N=R/sqrt(B(R,R)). The preceding spacelikeness makes this normalization positive, and B(N,N)=1. The support evaluation is B(lift(f(v)),N)=readout(v)/(s(v)*sqrt(B(R,R))), where readout(v) is -v_i for a side and a_i(v) for a cap. It is nonpositive on the entire original C(l), with its original outward sign.")),
+            Paragraph(Text("At every point of the full closed zero-support face, write p=(x,y,h) for the coordinates of the same f(v), so h>0. For N=(N0,N1,N2,N3), define a=(h*(N0+x*(N2-N3)),h*(N1+y*(N2-N3)),h^2*(N2-N3)). The differential of the native Lorentz lift at p sends a exactly to N. Consequently a dot a/h^2=1, and t dot a/h^2=0 for every native coordinate tangent t whose lift differential is B-orthogonal to N. Thus a is the outward unit normal for this particular supporting face, including at its edges and vertices; incident supports retain their separate normals.")),
+            Paragraph(Text("For the normalized defining function F_N(p)=B(lift(p),N), the coordinate line p+u*a satisfies d/du F_N(p+u*a) at u=0 equal to 1. For every sufficiently small positive u its height remains positive and F_N(p+u*a)>0, so it leaves the original nonpositive support halfspace. This is a local outward crossing and unit normalization at u=0. The construction does not require the coordinate line to be a global geodesic or to have constant speed, and supplies no moving-boundary flux identity.")),
             Paragraph(Text("The truncation incidences are precisely the twelve ordered choices (i,k) with i!=k: cap 0 with sides 1,2,3; cap 1 with sides 0,2,3; cap 2 with sides 0,1,3; cap 3 with sides 0,1,2. For any such pair choose the remaining distinct labels j,h, and let E(i,j) denote the original endpoint of cut_body_polytope. Convexity and those endpoint supports put x=(E(i,j)+E(i,h))/2 in the same C(l). At x exactly a_i(x)=0 and x_k=0 are active; every other cap row is strictly negative and every other coordinate is strictly positive. There is no cap-i/side-i incidence in this claim.")),
             Paragraph(Text("Let Y=lift(f(x)), n=n_k, r=sqrt(B(n,n))>0, U=-n/r and V=-c_i. Exact duality at i!=k gives B(U,U)=B(V,V)=1, B(Y,U)=B(Y,V)=0 and B(U,V)=0. Apply "),
                 Ref("D5/S3/Geometry/Hyperideal/ActualRaysJointAngle.actual_rays_joint_angle"),
