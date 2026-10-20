@@ -1,5 +1,7 @@
 # AURIC FIB ATOM 逃逸审计与分层编码规范
 
+搜索约化审计可将既有 `Application` 的 `Evidence.law` 作为可选信息面，绑定规则见 [搜索约化契约 §7.1](search_reduction_escape_audit_spec.md#71-可选信息面)。`strict-bound` 须绑定确切原目标、`Source.ofRegistration` 及同报告 DTR-Declared 四槽登记、相同 selection 与读出角色，并排除目标结果依赖、`S` 词汇污染和自由单纯形。该限制只作用于搜索约化的信息面，不改变独立 AURIC 分析合同的资格。信息面与计算判词并列，不定边价、不补足距离下降；`both`、`information-only` 和 `conflict:strict-vs-bind-only` 仅描述两项读数的组合。`S` 切开原问题纤维的绑定版保持 open 后继。
+
 **文档状态：** 规范性草案（Normative Draft）
 **版本：** 0.1 — Typed-FIB / Two-Level-Arena / Kernel-Residual / Layered-Code / No-Scalar-Score
 **适用范围：** 任意定理 occurrence 的作者所有类型化分析合同，以及满足相应来源证据的有限信息逃逸分析和 AURIC FIB ATOM 原生应用。

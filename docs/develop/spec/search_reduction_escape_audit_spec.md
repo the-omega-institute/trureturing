@@ -117,6 +117,8 @@ d_X(v) = min_e (c_X(e) + max_{u∈prem_X(e)} d_X(u))
 
 `classifyGraph` 的三态互斥且穷尽，按以下顺序计算：
 
+门槛 A 为现行定案：满足下面守卫的严格下降即判非 bind-only，强制报告 `closure=zero|partial`；不要求配对距离降到零。守卫采用声明图最优活路径上的实际种子使用，`cut` 与 `proof_hard` 都计入约化，分别报告。
+
 - **bind-only**：取得合规单源呈现证书、`U_B(T)=0`、基底根探针成功或已有 `R_v1` 成功证书之一。
 - **non-bind-only[G,R_loc-decl,k,B_used,closure]**：图提取完整；隔离、呈现与宽 `S` 排除完成；无必需 unknown/incomplete；两臂区间有限；`L_B(T)>U_{B∪S}(T)`；存在合规 `S` 种子在配对臂最优活路线实际使用；见证分为 `cut`（已播种的合成 `S` 成员使边从一变零）和 `proof_hard`（最优路径使用的 `S` 顶点满足 `d_B(s) ≥ 1`）；见证类型不是额外的判词门槛。`U_{B∪S}(T)=0` 时 `closure=zero`，否则为 `partial`。
 - **insufficient-evidence**：其余情形。`d_B>0` 且两臂距离相等时另报“未见约化”，不判 bind-only；`S=∅` 时另报“无辅助声明”，不能判非 bind-only。
@@ -141,13 +143,32 @@ AURIC 不提供 P 侧边价，也不改变 P 侧判词。实际 `LawFact.separat
 
 FIB 五模式单元刻画两个选择的耦合，不刻画是否存在选择。任意两个布尔特征配任意测度，取 `z≡0`、`r=1` 即可表示五模式律；任意超边二元化本身也不提供难度信息。因此“所有证明可拆成 FIB ATOM”的无约束全称形式不作定价或判词依据，`c=1⇔共享数据元变量(strict)` 也不是契约。
 
-合法角色限于上述单向模型桥、猜测边上的静态 `coupled/independent` 注记，以及预登记的 `shared_data × c` 交叉表。它们不引入新的 LawFamily/Application 适配器或 FIB 来源定理。
+计算面中的合法角色限于上述单向模型桥、猜测边上的静态 `coupled/independent` 注记，以及预登记的 `shared_data × c` 交叉表。它们不引入新的 LawFamily/Application 适配器或 FIB 来源定理。作者另可按 §7.1 提交既有合同表达的信息面证据。
 
 静态注记只读取消费者陈述的逻辑骨架：经可约头正规化后，若一个 `Exists` 的非证明见证变量同时出现在其作用域内某个 `And` 的两侧，则 `shared_data=true`、`coupled`；否则为 `false`、`independent`。递归范围是 `forall`、`Exists`、`And` 和 `Or`；外层已给定参数不作为待选见证。`independent` 只表示该骨架未检出共享，不声称任意隐藏谓词、切式或证明实现语义独立，更不构成 strict/collapsed 证书。读取失败为 unknown；该注记不参与定价、种子排除或判词。
 
 交叉表的总体、注记定义和夹具预测须在运行前登记。表按基底臂候选边的 `shared_data∈{false,true}` 与 `c∈{0,1}` 计数，明确包含作者边、两层前沿和根探针边；unknown 价和缺少注记分别报告，不填入任一布尔单元。`d_cut/d_given`、无辅助声明数与 opaque 声明数随同报告。
 
 更强的 ATOM 完备性命题保持研究开放问题：必须事先固定证明语言、FIB 网络、可执行编码 `E` 和解码语义，证明覆盖、语义保持与反射、作用域保持、证书可译回和资源对应；映射不得按结果事后选择。受限网络须先检验能否表达三元 OR；只有二元化或同名对应不能完成这些义务。
+
+### 7.1 可选信息面
+
+信息面报告原问题 `T` 在已登记粗观测下的不可约性，与计算面并列（parallel-only）。它不说明 `S` 切开了纤维，不补足距离下降，也不单独支持非 bind-only；collapsed、unknown 或不提交均不构成 bind-only 证据。删除信息证据后，计算面判词和计算字段的 JSON 投影逐字节相同。
+
+唯一输入是以确切 `T` occurrence 索引的既有 `Contract.AuricFib.Application` 的 `Evidence.law`。取得 `strict-bound` 须同时满足：
+
+1. client 索引是该原目标的完整、未应用 occurrence，类型与刚性宇宙一致。
+2. `client.source` 经安全数据别名展开后的头是 `Analysis.Source.ofRegistration`；其 `DependentFamily.Registration` 正是同一报告中 `T` 经普通四槽审计取得 DTR-Declared（`declared_validated`）的登记，不接受手写 Source。报告携带本次普通审计记录。
+3. `family.role` 属于该登记 selection 的读出；来源 selection 必须与普通登记一致，复用完整重建和实际读出对应检查。
+4. 有实际 `LawFact.separated`，且事实的 `uses_target_results=false`。正宽度、正关联坐标、数值点均不能替代它；目标依赖检查复用既有编译证明体检查。
+5. `family.law`、`family.domain` 及所选实际读出表达式用到的编译常量与 `S` 不交，包括能到达 `S` 的传递依赖。
+6. domain 不是自由单纯形。自由单纯形覆盖证书不合格；没有该证书也不足以证明非自由。现行机械路线只接受 Boolean 参数族（至多两条律，不能覆盖五模式自由单纯形），其他形态具名 fail-closed。
+
+任何绑定条件不满足、形态不识别或检查不完整，均报 `not-bound(<具名原因>)`。共同绑定检查成立时，沿用 `LawFact` 与 `classifyCapture`：separated 为 `strict-bound`；仅 identifiable 为 `collapsed-bound`；两者均无为 `unknown-bound`。后两者只是缺少第 4 项正证据的并列读数。没有提交则为 `not-submitted`。不改 Interface 合同，不以 Python 或 JSON 作语义判定。
+
+每条搜索报告输出 `information_face`、`information_application`、`information_registration` 与 `information_ordinary_records`。`information_tag` 只在 `strict-bound` 时取值：计算面非 bind-only 为 `both`，证据不足或未下降为 `information-only`，bind-only 为 `conflict:strict-vs-bind-only`。conflict 是 strict 不推出难度的校准读数，计算判词仍为 bind-only；其余标签为 null，不合成分数。请求以可选的 `information <Application名称>` 提交证据。
+
+信息面模型复用 strict/collapsed 互斥、capture 穷尽和 `postprocessing_no_new_separation`；另核验计算投影与可选证据无关、存在零计算距离而 separated 的原目标，以及 separated 对域扩大单调。`S` 绑定版（证明 `S` 切开 `T` 的基底纤维）保持 open 后继，需要实际输入及其对应证明；它不作为本接口的隐藏承诺。
 
 ## 8. 模型核验义务
 
