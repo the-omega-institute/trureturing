@@ -23,7 +23,7 @@ open Complex
 
 namespace D5.S3.Quantum.Tomography.MUB.BCCBOrderNineAffineSuborbits
 
-def omega : ℂ := D5.S3.Observer.WindowRegister.windowRoot 3
+local notation "omega" => D5.S3.Observer.WindowRegister.windowRoot 3
 
 def bccb (x y u w : ℂ) : Matrix (Fin 9) (Fin 9) ℂ :=
   !![1,x,x,y,u,w,y,w,u;
