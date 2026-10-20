@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/AdjacentCapSurgery
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.GroupTheory.Perm.Basic]
    utility: none
    digest: Adjacent cap removal in a noncrossing matching. -/
 import D5.S3.Combinatorics.PerfectMatchings.OrderedMatchingIntervals

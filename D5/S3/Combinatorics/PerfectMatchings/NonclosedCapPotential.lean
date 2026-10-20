@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/NonclosedCapPotential
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.GroupTheory.Perm.Basic]
    utility: none
    digest: Exact nonclosed-cap boundary potential. -/
 import D5.S3.Combinatorics.PerfectMatchings.NonclosedCapLabels
