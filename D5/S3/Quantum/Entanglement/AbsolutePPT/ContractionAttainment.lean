@@ -6,7 +6,14 @@
    utility: none
    digest: A dimension-general positive decomposition gives literal APPT contraction rays and a five-row attaining density. -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
+import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
+import Mathlib.LinearAlgebra.Matrix.Kronecker
+import Mathlib.LinearAlgebra.Matrix.Rank
+import Mathlib.LinearAlgebra.Matrix.ToLin
+import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.LinearAlgebra.Projection
+import Mathlib.LinearAlgebra.Trace
+import Mathlib.Tactic
 
 /-!
 The ordered-pair Kraus identity has a half-weight on both orientations and
@@ -27,8 +34,7 @@ open Matrix
 open scoped ComplexOrder
 
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
-open QutritPerturbationAttainment (APPT)
-open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
+open D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite (APPT partialTranspose)
 
 noncomputable section
 section Generic

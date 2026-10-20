@@ -11,8 +11,7 @@ set_option Elab.async false
 open Matrix LeanInformationAudit
 open scoped ComplexOrder
 open D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
-open D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment (APPT)
-open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
+open D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite (APPT partialTranspose)
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.ContractionAttainment
