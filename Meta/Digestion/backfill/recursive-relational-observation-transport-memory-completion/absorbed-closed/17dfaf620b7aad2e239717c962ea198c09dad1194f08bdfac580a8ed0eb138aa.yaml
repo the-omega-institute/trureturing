@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:17dfaf620b7aad2e239717c962ea198c09dad1194f08bdfac580a8ed0eb138aa
   normalized_sha256: sha256:17dfaf620b7aad2e239717c962ea198c09dad1194f08bdfac580a8ed0eb138aa
 cas_ref: sha256:17dfaf620b7aad2e239717c962ea198c09dad1194f08bdfac580a8ed0eb138aa
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion.completion_map_equiv_iff
+    target_statement_id: sha256:091956630b34334b5a72852cbd27b7e45156f8977c7a790b2454fa7ae288e75f
 receipts:
   unresolved_subitems: []
