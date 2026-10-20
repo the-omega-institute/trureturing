@@ -120,7 +120,10 @@ internal sealed class QutritCollectiveDephasingInvariantNegativityRefutationDocu
                             + "without changing the negative part of the partial transpose. "
                             + "It supplies time-invariant positive negativity for the dynamics "
                             + "specified by Ali."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ali-2018-qutrit-collective-dephasing-invariant-negativity-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
         string declaration) => Describe.Lean(
