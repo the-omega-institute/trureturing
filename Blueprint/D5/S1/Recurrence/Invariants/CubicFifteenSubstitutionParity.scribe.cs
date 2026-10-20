@@ -45,6 +45,8 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
                 + "u and v with zero constant coefficients satisfy "
                 + "(u-v)(1+u+v)=0. The second factor has constant coefficient one, "
                 + "so absence of zero divisors forces u=v. Here C denotes powerTwoSeries."),
+            Node("power_two_zero", "The power-of-two series has zero constant coefficient", PowerTwoZeroFormula(),
+                "Zero is not a power of two, so the constant coefficient of powerTwoSeries vanishes."),
             Node("generatingSeries", "The normalized integer solution", GeneratingFormula(),
                 "Starting from X, correct coefficient n by the negative of the "
                 + "degree-(n+2) residual coefficient divided by three using integer "
@@ -154,4 +156,7 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
         Implication(Seq(D(1), Sp, Le, Sp, F.Id("n")),
             Parenthesized(Seq(Call("Odd", Call("a", F.Id("n"))), Sp, Iff, Sp,
                 Parenthesized(IsPowerTwo(F.Id("n"))))))));
+    private static Formula PowerTwoZeroFormula() =>
+        Disp(Equal(Call("constantCoeff", PowerTwo()), D(0)));
+
 }
