@@ -72,6 +72,10 @@ $$\forall (n: \mathbb{N}), (2 \le n) \implies (\operatorname{collatzLength}\left
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gallardo-rahavandrainy-2023-binary-collatz-3-11` (proved) by `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gallardo-rahavandrainy-2023-binary-collatz-3-11","declaration_gid":"D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Luis H. Gallardo and Olivier Rahavandrainy (2023). *On Collatz Conjecture for binary polynomials*. DOI: [10.48550/arXiv.2308.01181](https://doi.org/10.48550/arXiv.2308.01181). URL: <https://arxiv.org/abs/2308.01181v2>.
