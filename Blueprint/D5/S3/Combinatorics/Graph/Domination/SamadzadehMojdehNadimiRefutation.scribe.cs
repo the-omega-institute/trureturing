@@ -34,14 +34,17 @@ internal sealed class SamadzadehMojdehNadimiRefutationDocument : IScribeDocument
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The conjecture is false", Disp(NotFormula(ClaimBody())),
                 "Use heap labels 1 through 63, and R = {1,8,9,10,11,12,13,14,15}. Put A = ⋃ over r in R of {r,2r,2r+1}, and Bⱼ = {4r+j : r in R} for j = 0,1,2,3. These five disjoint sets cover all vertices and have sizes 27,9,9,9,9. A perfect matching has even vertex cardinality, so no individual part is paired dominating. A dominates the tree. For j = 0,1, match r to 2r+1 and 2r to 4r+j in each seven-vertex block; for j = 2,3, match r to 2r and 2r+1 to 4r+j. These matchings cover each A ∪ Bⱼ exactly. Hence each Bⱼ has partner A, and A has partner B₀. The resulting partition has order five. Its order belongs to the bounded set defining pcNumber, so 5 ≤ pcNumber (perfectBinaryTree 5), contradicting the conjectured value three. Only this height-five lower bound and the displayed negation are established here; the exact value and a uniform family remain separate questions. The same lower bound contradicts Lemma 4.10, p. 9, which states PC(T(h)) ≤ 4 for h ≥ 3. The authors' final remark on p. 12 seeks to exclude order four, which does not exclude order five. No conclusion is drawn here about the independent path, cycle or other tree results.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("samadzadeh-mojdeh-nadimi-2024-paired-coalition-binary-tree"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("smn-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

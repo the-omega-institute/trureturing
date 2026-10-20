@@ -82,6 +82,10 @@ $$\neg (\forall (h : \mathbb{N}), (1 \le h) \Rightarrow (\operatorname{pcNumber}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/SamadzadehMojdehNadimiRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/samadzadeh-mojdeh-nadimi-2024-paired-coalition-binary-tree` (refuted) by `D5/S3/Combinatorics/Graph/Domination/SamadzadehMojdehNadimiRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"samadzadeh-mojdeh-nadimi-2024-paired-coalition-binary-tree","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/SamadzadehMojdehNadimiRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mohammad Reza Samadzadeh; Doost Ali Mojdeh; Reza Nadimi (2024). *Paired coalition in graphs*. DOI: [10.1080/09728600.2024.2389070](https://doi.org/10.1080/09728600.2024.2389070). URL: <https://arxiv.org/abs/2402.10842v4>.
