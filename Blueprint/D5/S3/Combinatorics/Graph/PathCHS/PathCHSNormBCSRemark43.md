@@ -46,6 +46,10 @@ $$\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; (1 \le n) \to (2 \le d
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormBCSRemark43.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bouthat-chavez-sheng-2026-path-chs-remark43` (proved) by `D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormBCSRemark43.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bouthat-chavez-sheng-2026-path-chs-remark43","declaration_gid":"D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormBCSRemark43.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ludovick Bouthat, Ángel Chávez and Sam Sheng (2026). *A general framework for inequalities on simple graphs*. DOI: [10.48550/arXiv.2606.17356](https://doi.org/10.48550/arXiv.2606.17356). URL: <https://arxiv.org/abs/2606.17356v1>.

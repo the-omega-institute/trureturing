@@ -13,7 +13,7 @@ internal sealed class PathCHSNormBCSRemark43ClosedRefutationDocument : IScribeDo
         H("PathCHSNormBCSRemark43ClosedRefutation"),
         Blocks(
             Node("claim", "The proposed one-term formula", ClaimFormula(), "claim", "Page 18, Remark 4.3: “In particular, if n+1 ≥ d/2, the sum becomes ‖P_n‖_{X,d}^d = ((n² + n − d)/((n + d)(n + d + 1))) binom(n+d+1, d/2).” The hypotheses also require n ≥ 1 and even d ≥ 2. Nat.div is natural-number quotient, exact here because d is even.", DescribeRole.Definition, true),
-            Node("result", "A boundary counterexample", Disp(Seq(Neg, Sp, Parenthesized(ClaimBody()))), "result", "For n=2 and d=6 the complete homogeneous symmetric value is one, while the proposed expression is zero.", DescribeRole.Theorem, false)),
+            Node("result", "A boundary counterexample", Disp(Seq(Neg, Sp, Parenthesized(ClaimBody()))), "result", "For n=2 and d=6 the complete homogeneous symmetric value is one, while the proposed expression is zero.", DescribeRole.Theorem, false, new OpenProblemResolutionClaim(ProblemSlugRef.Create("bouthat-chavez-sheng-2026-path-chs-remark43-closed-refutation"), ResolutionKind.Refuted))),
         []));
     private static DocumentBlock Node(string id, string title, Formula formula, string name, string prose, DescribeRole role, bool literature, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("pathchsnormbcsremark43closedrefutation-" + id), DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
