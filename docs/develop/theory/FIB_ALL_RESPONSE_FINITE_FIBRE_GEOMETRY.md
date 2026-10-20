@@ -1295,3 +1295,406 @@ pairs of (13.1), with overlap between the pairs permitted, retain
 their full original obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Two positive source branches on the full strict domain
+
+**Definition 18.1 (Uniform parameter interval and separator).** Retain
+exactly $\mathsf A=\mathsf S_p/2$ of (14.2), with
+$D_\Lambda,X,N,H,T,U$ as in Section 2. Set
+
+$$
+L=\frac{686}{25},\qquad H_I=\frac{549}{20},\qquad
+I=[L,H_I],\qquad \sigma(r)=\frac{\sqrt{r(1-r)}}2.
+\tag{18.1}
+$$
+
+The interval $K$ of (14.1) is contained in the interior of $I$,
+by comparison of its rational endpoints. Thus the original
+algebraic $p_J\in K$, supplied in Definition 14.1, belongs to $I$.
+Neither interval changes the definition of $p_J$.
+
+**Lemma 18.2 (Full-domain coefficient certificate).** Define
+$q_k(r,p)$ by
+
+$$
+(1+b)^2\mathsf A(r,b,p)=\sum_{k=0}^9q_k(r,p)b^k.
+\tag{18.2}
+$$
+
+Their exact expressions are
+
+$$
+\begin{aligned}
+q_0={}&96r^3(1-r)^3,\\
+q_1={}&4r^2(1-r)^2\{144(r-1/3)^2+5p-136\},\\
+q_2={}&r(1-r)R_2,\qquad q_3=rR_3,\\
+R_2={}&-2\{p(40r^2-50r+10)
+ +720r^4-2016r^3+468r^2+1035r-195\},\\
+R_3={}&p(105r^3-290r^2+245r-70)
+ +768r^5-5184r^4+3960r^3\\
+ &\quad+6435r^2-7704r+1905,\\
+q_4={}&p(50r^4-205r^3+175r^2-50r-20)
+ -1536r^5-2088r^4\\
+ &\quad+14940r^3-14817r^2+4557r+390,\\
+q_5={}&p(5r^4-60r^3-15r^2+60r-80)
+ -2232r^4+12807r^3\\
+ &\quad-12594r^2+3522r+2175,\\
+q_6={}&p(-5r^3-55r^2+95r-100)
+ +3648r^3-2133r^2-2829r+5418,\\
+q_7={}&p(-10r^2+40r-35)+1368r^2-5181r+6087,\\
+q_8={}&p(5r+10)-1872r+2670,\qquad q_9=5p+216.
+\end{aligned}
+\tag{18.3}
+$$
+
+For each row $(F,\alpha,\beta,n)$ below, take the degree-$n$
+Bernstein coefficients in $x$ of $F(\alpha+(\beta-\alpha)x,e)$
+for both $e=L,H_I$. The last columns are the minimum and maximum
+of all those coefficients, including both parameter endpoints.
+
+| $F$ | $[\alpha,\beta]$ | $n$ | Minimum | Maximum |
+| --- | --- | --- | --- | --- |
+| $R_2$ | $[0,1/2]$ | $4$ | $-953/5$ | $-1491/20$ |
+| $R_2$ | $[1/2,1]$ | $4$ | $-839/4$ | $-24$ |
+| $R_3$ | $[0,1]$ | $5$ | $-11211/20$ | $-366/25$ |
+| $q_4$ | $[0,1/100]$ | $5$ | $-159$ | $-79963870321/625000000$ |
+| $q_5$ | $[1/100,1]$ | $4$ | $11760225621/400000000$ | $24916449207/20000000$ |
+| $q_6$ | $[0,1]$ | $3$ | $5245/4$ | $2674$ |
+| $q_7$ | $[0,1]$ | $2$ | $8547/4$ | $25633/5$ |
+| $q_8$ | $[0,1]$ | $1$ | $6048/5$ | $5889/2$ |
+| $q_9$ | $[0,1]$ | $0$ | $1766/5$ | $1413/4$ |
+
+Consequently, for every $p\in I$ and $0<r<1$,
+
+$$
+q_0,q_1>0,\qquad q_2,q_3<0,\qquad q_6,q_7,q_8,q_9>0,
+\tag{18.4}
+$$
+
+and $q_4<0$ when $r\le1/100$, while $q_5>0$ when $r\ge1/100$.
+
+**Proof.** Multiplying the literal expression
+$5b(p-24)D_\Lambda+3(8b-1)H$ by $(1+b)^2$ and collecting
+powers of $b$ gives (18.3). Here is the finite rational form of
+every comparison in the table. For each row and $e\in\{L,H_I\}$,
+put
+
+$$
+f_{k,e}=[x^k]F(\alpha+(\beta-\alpha)x,e),\qquad
+\gamma_{j,e}=\sum_{k=0}^j f_{k,e}
+ \frac{\binom jk}{\binom nk}\quad(0\le j\le n).
+\tag{18.5}
+$$
+
+The extrema in the table are exactly
+$\min_{j,e}\gamma_{j,e}$ and $\max_{j,e}\gamma_{j,e}$.
+Equations (18.3) and (18.5) specify all 74 rational numbers;
+expansion and integer cross multiplication give the displayed
+extrema. For example the two $n=0$ values are $1766/5$ and
+$1413/4$. No other subdivision or unspecified parameter is used.
+The Bernstein identity (14.5) puts each polynomial between its
+coefficient extrema. All expressions are affine in $p$, so
+interpolation between $L$ and $H_I$ gives the same bounds on the
+entire closed $I$. This proves the asserted signs except those
+of $q_0,q_1$, which follow from (18.3), $0<r<1$ and
+$5p-136\ge6/5>0$.
+
+The Bernstein method is the standard one of (14.4)–(14.5);
+see Mourrain–Rouillier–Roy,
+[*Bernstein's basis and real root isolation*](https://inria.hal.science/inria-00071434/document),
+Section 2, Proposition 2.8. The particular polynomials and
+coefficient bounds here are repo-derived. ∎
+
+**Lemma 18.3 (Negativity on the separating curve).** For every
+$p\in I$ and $0<r<1$,
+
+$$
+\mathsf A(r,\sigma(r),p)<0.
+\tag{18.6}
+$$
+
+**Proof.** Set $r=t^2/(1+t^2)$ and $b=t/(2(1+t^2))$, where
+$t>0$. This parametrizes the entire separating curve, with
+$0<r<1$. Substitution into the original $\mathsf A$ gives
+
+$$
+128d_e(1+t^2)^7\mathsf A
+ \left(\frac{t^2}{1+t^2},\frac{t}{2(1+t^2)},e\right)
+ =t^4P_e(t),\qquad d_L=5,\quad d_{H_I}=4,
+\tag{18.7}
+$$
+
+where the coefficient vectors in increasing powers of $t$ are
+
+$$
+\begin{aligned}
+P_L:\;&(-31760,52108,183972,-261702,-181136,112088,6672,-7552),\\
+P_{H_I}:\;&(-25440,41712,147168,-209283,-144894,89712,5328,-6048).
+\end{aligned}
+\tag{18.8}
+$$
+
+For signs on the entire positive half-line put
+
+$$
+G_e(x)=(1-x)^7P_e\left(\frac{x}{1-x}\right).
+\tag{18.9}
+$$
+
+These are polynomials, with increasing coefficient vectors
+
+$$
+\begin{aligned}
+G_L:\;&(-31760,274428,-795636,711658,551632,-1305856,670788,-82806),\\
+G_{H_I}:\;&(-25440,219792,-637344,570957,439278,-1043064,535842,-66069).
+\end{aligned}
+\tag{18.10}
+$$
+
+For each closed cell $[\alpha,\beta]$ below, the entries are the
+exact maximum of the eight degree-seven Bernstein coefficients
+of $G_e(\alpha+(\beta-\alpha)y)$.
+
+| $[\alpha,\beta]$ | Maximum for $G_L$ | Maximum for $G_{H_I}$ |
+| --- | --- | --- |
+| $[0,1/4]$ | $-5917235/8192$ | $-9514125/16384$ |
+| $[1/4,5/16]$ | $-1659020735/134217728$ | $-2920175505/268435456$ |
+| $[5/16,21/64]$ | $-147469619705/240518168576$ | $-620433751095/481036337152$ |
+| $[21/64,11/32]$ | $-8967359819695/2199023255552$ | $-17285328487905/4398046511104$ |
+| $[11/32,3/8]$ | $-684445779505/17179869184$ | $-1108515042495/34359738368$ |
+| $[3/8,1/2]$ | $-212980217/1048576$ | $-340658391/2097152$ |
+| $[1/2,3/4]$ | $-6416993/28672$ | $-10268199/57344$ |
+| $[3/4,1]$ | $-2186305/8192$ | $-3505695/16384$ |
+
+The coefficient whose maximum is taken is explicitly
+
+$$
+\sum_{k=0}^j[y^k]G_e(\alpha+(\beta-\alpha)y)
+ \frac{\binom jk}{\binom7k},\qquad j=0,\ldots,7.
+\tag{18.11}
+$$
+
+Substitution of (18.10) gives the listed maxima by rational
+arithmetic. Thus (18.10)–(18.11) specify all 128 coefficients.
+The cells cover the whole closed $[0,1]$, and all maxima are
+strictly negative. The convex-hull identity (14.5) gives
+$G_e(x)<0$ throughout $[0,1]$. For $t>0$ use $x=t/(1+t)$:
+then $x\in(0,1)$ and $(1-x)^7>0$, so $P_e(t)<0$.
+Equation (18.7) proves (18.6) at both parameter endpoints.
+Since $\mathsf A$ is affine in $p$, it proves the strict
+inequality on the whole $I$. This source-specific certificate
+uses the Bernstein identity cited in Lemma 18.2. ∎
+
+**Theorem 18.4 (Global root count, separation and labelling).**
+For every real $p\in I$ and every $0<r<1$, the original
+$\mathsf A(r,b,p)$ has exactly two positive real roots, both simple.
+There are unique global labels satisfying
+
+$$
+0<b_-(r,p)<\sigma(r)<b_+(r,p).
+\tag{18.12}
+$$
+
+They are smooth on $(0,1)\times\operatorname{int}I$ and continuous
+on $(0,1)\times I$. At each point with $p$ an endpoint of $I$,
+each is locally the restriction of a smooth root function on an
+open neighbourhood in $(r,p)$. In the original coordinate
+$c=r(1-r)/b$, the lower branch has $c>4b$ and the upper branch
+has $c<4b$.
+
+**Proof.** Lemma 18.2 gives exactly two variations in the nonzero
+coefficient word of $(1+b)^2\mathsf A$. If $r\le1/100$ the
+ascending word is $(+,+,-,-,-,q_5,+,+,+,+)$, with $q_5$ arbitrary;
+if $r\ge1/100$ it is $(+,+,-,-,q_4,+,+,+,+,+)$, with $q_4$
+arbitrary. Deleting a zero coefficient leaves two variations
+in either case. Descartes' rule of signs, counting multiplicity,
+therefore bounds the number of positive roots by two; see
+Mourrain–Rouillier–Roy, cited in Lemma 18.2, Theorem 1.1.
+The factor $(1+b)^2$ introduces no positive root.
+
+On the other hand $\mathsf A(r,0,p)=96r^3(1-r)^3>0$,
+and its leading coefficient in $b$ is $5p+216>0$.
+Together with Lemma 18.3, the intermediate value theorem gives
+one root between zero and $\sigma(r)$ and one root larger than
+$\sigma(r)$. They exhaust the multiplicity bound, so each is
+simple and no other positive root exists.
+
+At either root $\partial_b\mathsf A\ne0$. The smooth implicit
+function theorem supplies a root function near that $(r,p)$.
+After shrinking its neighbourhood it stays positive and on the
+same side of the continuous separator. Uniqueness on that side
+makes it equal to its global label where $p\in I$. These local
+functions agree on overlaps, proving continuity and smoothness,
+including the endpoint restriction statement. The smooth implicit
+function theorem is used in its usual local form; see Krantz–Parks,
+[*The Implicit Function Theorem*](https://doi.org/10.1007/978-1-4612-0059-8),
+Chapter 1. Finally, for $b>0$,
+$b<\sigma(r)$ is equivalent to $4b^2<r(1-r)$ and hence to
+$c>4b$; the upper inequality is handled in the same way. ∎
+
+## 19. Zero-safe whole-world branches and the unchanged acquired child
+
+**Definition 19.1 (Whole-world lift along the global branches).**
+For $i\in\{-,+\}$, $0<r<1$ and $p\in I$, put $b=b_i(r,p)$,
+$c=r(1-r)/b$, $j=b+c$, $n=j+r$, $T=1+b$, $U=1+2b$ and $V=U+n$.
+Use the zero-safe expressions of $O$, (12.1), (12.4)–(12.6):
+
+$$
+\begin{gathered}
+a=24/5,\qquad \Delta=b-1/8,\qquad
+B_{\rm coef}=6/T-2/U,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\\
+A_5=1+V(4-15/j+20/T-10/n),\qquad K_5=20a\Delta V/T,\\
+Z=\Lambda^2+A_5^2,\qquad
+\epsilon=\frac{-a\Delta B_{\rm coef}\Lambda+A_5(p-24-K_5)}{Z},\\
+(\eta_0,\eta_1,\eta_2,\eta_3)=
+ \left(-24-\epsilon,-\epsilon/j,(27/5-\epsilon)/T,-\epsilon/n\right),\\
+g_i(s;r,p)=\sum_{k=0}^3\eta_k
+ \prod_{\substack{0\le \ell\le3\\\ell\ne k}}
+ \frac{s-\ell}{k-\ell},\qquad
+W_i(r,p)=\left(\begin{pmatrix}r&b\\c&1-r\end{pmatrix},
+ g_i,24+\epsilon\right).
+\end{gathered}
+\tag{19.1}
+$$
+
+**Theorem 19.2 (Exhaustive smooth complete-world correspondence).**
+Under the original complete-world definitions and zero-safe
+equivalence of $O$, Theorem 12.3, for every $p\in I$ the map
+
+$$
+\{-,+\}\times(0,1)\longrightarrow\mathcal F(H_4,M,p),
+\qquad (i,r)\longmapsto W_i(r,p)
+\tag{19.2}
+$$
+
+is a bijection. Exactly two complete worlds lie over each $r$.
+Their matrix entries, gain coefficients and drift depend smoothly
+on $(r,p)$ in the interior, continuously on the full domain, with
+local smooth extensions at the endpoints of $I$.
+The correspondence includes $\Lambda=0$, lower gain degrees,
+sampled zeros, repeated gain roots and zero drift, within the
+original unbounded positive-source domain. It imposes no equality
+of gains or drifts between different worlds.
+
+**Proof.** Each source in (18.12) is strict and satisfies
+$\mathsf S_p=2\mathsf A=0$. The stated supplier gives its unique
+complete lift (19.1), with $Z>0$ by $O$, Lemma 12.2. Conversely,
+every complete world in $\mathcal F(H_4,M,p)$ has a strict source
+satisfying $\mathsf S_p=0$. Theorem 18.4 puts its positive $b$
+at exactly one labelled root; fixed-source uniqueness identifies
+the world with (19.1). Different $r$ give different matrix entries,
+and the two labels at a common $r$ have different $b$. This proves
+bijectivity.
+
+All denominators $b,j,n,T,U$ are positive on the strict source
+domain, and $Z>0$ there. Every expression in (19.1) is therefore
+smooth in $(r,b,p)$ locally at every branch point, including
+$\Lambda=0$. Composition with Theorem 18.4 gives the claimed
+regularity in the finite coefficient coordinates of the entire
+gain polynomial. At a parameter endpoint these denominators
+remain positive in a sufficiently small open neighbourhood,
+which also proves the local smooth extension assertion.
+
+Explicitly, if $\Lambda=0$, the parent equation in $O$ (12.7)
+gives $a\Delta B_{\rm coef}=0$. Since $a>0$ and
+$B_{\rm coef}=2(2+5b)/(TU)>0$, it follows that $b=1/8$.
+Then $K_5=0$, while $A_5\ne0$ by $Z>0$, and (19.1) becomes
+$\epsilon=(p-24)/A_5$. No division by $\Lambda$ has been used.
+Nor has there been division by a gain sample, gain leading
+coefficient, difference of gain roots or drift. The interpolant
+is one entire polynomial of degree at most three. It cannot
+vanish identically: the clock-zero and clock-one responses would
+then both equal the fixed drift, whereas the original $H_4$
+requires $0$ and $24$. This retains the original complete gain
+and drift convention. Exhaustion used every $b>0$, without an
+imposed source box. ∎
+
+**Definition 19.3 (Actual images at the original algebraic parameter).**
+Fix exactly the original $p=p_J$ of Definition 14.1. Put
+$\mathcal D=\{-,+\}\times(0,1)$ and $W(i,r)=W_i(r,p_J)$.
+On each branch evaluate the actual responses of $O$ (1.7),
+using the same gain and drift from (19.1):
+
+$$
+\begin{aligned}
+\mathcal U(i,r)&=d+(2U+n)g_i(6;r,p_J),\\
+\mathcal J(i,r)&=d+(T+2j+4r)g_i(7;r,p_J),\\
+\mathcal M(i,r)&=d+(3U+2n)g_i(7;r,p_J).
+\end{aligned}
+\tag{19.3}
+$$
+
+These are respectively $u_M(W)$, $f_{MJ}(W)$ and $f_{MM}(W)$.
+They are smooth on each full $r$ branch, including any
+$\Lambda=0$ point, by Theorem 19.2. For every real acquired
+response $v$, define the entire parameter fibre
+
+$$
+\mathcal D_v=\{x\in\mathcal D:\mathcal U(x)=v\}.
+\tag{19.4}
+$$
+
+**Theorem 19.4 (Entire-child transport of the original joint predicate).**
+For every real $v$, the bijection $W$ restricts to a bijection
+
+$$
+\mathcal D_v\longrightarrow
+\mathcal C_v=\mathcal F(H_4,M,p_J,M,v).
+\tag{19.5}
+$$
+
+Consequently (13.1) holds if and only if there are a real $v$ and
+$x_{J0},x_{J1},x_{M0},x_{M1}\in\mathcal D_v$ satisfying
+
+$$
+\begin{gathered}
+x_{J0}\ne x_{J1},\qquad x_{M0}\ne x_{M1},\\
+\mathcal J(x_{J0})=\mathcal J(x_{J1}),\qquad
+\mathcal M(x_{M0})=\mathcal M(x_{M1}).
+\end{gathered}
+\tag{19.6}
+$$
+
+Labels may coincide across the two pairs. Both within-branch
+unequal-$r$ pairs and between-branch pairs are retained; at equal
+$r$, distinctness is precisely use of the two different branch
+labels. On $R_{\rm loc}\times K$, the global labels agree with
+$b_0,b_1$ of Theorem 15.1 in lower-to-upper order.
+
+**Proof.** Theorem 19.2 applies because $p_J\in I$. By the
+literal response definitions, a parent world belongs to
+$\mathcal C_v$ exactly when its actual $u_M$ is $v$.
+Equation (19.3) expresses that value at every world in the
+exhaustive parent parametrization. Restricting the parent
+bijection therefore imposes exactly (19.4), proving (19.5)
+with all child members included. Injectivity transports
+both distinctness requirements, and (19.3) transports both
+terminal equalities. This proves (19.6) without requiring
+the two pairs to be disjoint.
+
+Two parameter labels represent the same world exactly when
+both their branch label and their $r$ agree, by Theorem 19.2.
+This proves the equal- and unequal-$r$ assertions. On the local
+rectangle, Theorem 15.1 exhausts the same two positive roots
+of the same polynomial, so order identifies $b_-=b_0$
+and $b_+=b_1$. ∎
+
+**Definition 19.5 (Residual original equations).** The unresolved
+joint question is the existence statement (19.6), with all four
+parameters in the full fibre (19.4). A terminal-M pair still
+requires both $\mathcal U(x)=\mathcal U(y)$ and
+$\mathcal M(x)=\mathcal M(y)$ with $x\ne y$. Equality of
+terminal-M images alone is an equality in the parent and does
+not place the worlds in one acquired child.
+
+Corollary 17.1 removes only equal-$r$ terminal-M pairs in
+$R_{\rm loc}$. All unequal-$r$ pairs, and all equal-$r$ pairs
+outside that interval, retain their original equations. The
+entire singular-child and strip exclusions remain those supplied
+in Definition 17.2 by $S$ and $E$; $Q(p_J,v)=0$ remains the
+necessary condition of Theorem 11.2 for a regular terminal-M pair.
+The global representation (19.5) supplies neither an enumeration
+of terminal-M pairs nor an additional excluded root of $Q$,
+and does not decide compatibility of the two distinct pairs
+inside one entire $\mathcal C_v$.
