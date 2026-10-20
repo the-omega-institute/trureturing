@@ -59,16 +59,20 @@ public sealed class SourcePrerequisiteCliTests
     [Theory]
     [InlineData("Library/notes/Note.md", 3000, RawChangeKind.Added, 0)]
     [InlineData("Library/notes/Note.md", 3001, RawChangeKind.Added, 1)]
-    [InlineData("Library/notes/Note.md", 3001, RawChangeKind.Modified, 0)]
+    [InlineData("Library/notes/Note.md", 3000, RawChangeKind.Modified, 0)]
+    [InlineData("Library/notes/Note.md", 3001, RawChangeKind.Modified, 1)]
+    [InlineData("Library/notes/Note.md", 3001, RawChangeKind.Deleted, 0)]
     [InlineData("docs/develop/theory/Note.md", 5000, RawChangeKind.Modified, 0)]
     [InlineData("docs/develop/theory/Note.md", 5001, RawChangeKind.Modified, 1)]
     [InlineData("docs/develop/theory/Note.md", 5001, RawChangeKind.Deleted, 0)]
-    public void LibraryAndTheoryKeepTheirOriginalEdges(string path, int lines, RawChangeKind kind, int expected)
+    public void LibraryAndTheoryRespectChangeScopeAndLineLimits(string path, int lines, RawChangeKind kind, int expected)
     {
         var fixture = new RuleFixture();
         fixture.Baseline[path] = new string('\n', lines);
         if (kind != RawChangeKind.Deleted) fixture.Files[path] = new string('\n', lines);
-        Assert.Equal(expected, Source(fixture, RawChangeSet.CreateWithKinds([(path, kind)]), delta: true).ExitCode);
+        var changes = RawChangeSet.CreateWithKinds([(path, kind)]);
+        Assert.Equal(expected, Source(fixture, changes, delta: true).ExitCode);
+        Assert.Equal(0, Source(fixture, changes, delta: false).ExitCode);
     }
 
     [Fact]

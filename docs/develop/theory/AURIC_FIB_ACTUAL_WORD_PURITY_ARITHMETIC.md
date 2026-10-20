@@ -4060,3 +4060,843 @@ effects, one common decoder must realize them simultaneously; minimizing
 each expression (86.1) separately does not establish that requirement.
 
 ## 追加锚（本行以下为增补区）
+
+## 87. Exact Choi spectra of the actual erased-history qutrit
+
+**Definition 87.1 (Actual channel and normalized tensor convention).**
+Use the actual chronological qutrit letters of §63, with the all-angle
+extension of [Environment record memory, Definitions 26.1 and 27.1][ENV87].
+In the original three coordinates and then the ordered real orthonormal
+basis $(\xi,e,f)$, the matrices are
+
+$$
+\begin{gathered}
+U_0=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\quad
+W=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\quad U_1=U_0W,\\
+V_0(\theta)=U_0e^{i\theta W},\qquad V_1(\theta)=V_0(\theta)W,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+e=(1,1,-2)^{\mathsf T}/\sqrt6,\quad f=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+W\big|_{(\xi,e,f)}=\operatorname{diag}(1,1,-1),\qquad
+U_0\big|_{(\xi,e,f)}=
+1\oplus\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix}.
+\end{gathered}
+\tag{87.1}
+$$
+
+The angle $\theta=\pi/6$ gives exactly (63.4). For the actual fair,
+independent history law, put
+
+$$
+\begin{gathered}
+\Delta_W(X)=\tfrac12(X+WXW),\qquad
+F=\operatorname{Ad}_{U_0}\circ\Delta_W
+ =\tfrac12(\operatorname{Ad}_{U_0}+\operatorname{Ad}_{U_1}),\\
+\mathcal N_n=F^n,\qquad
+|\Omega_3\rangle=\frac{|00\rangle+|11\rangle+|22\rangle}{\sqrt3},\qquad
+\omega_n=(F^n\otimes\operatorname{id})(|\Omega_3\rangle\langle\Omega_3|).
+\end{gathered}
+\tag{87.2}
+$$
+
+Here $|0\rangle=\xi$, $|1\rangle=e$, $|2\rangle=f$; the first
+tensor factor is output and the second is the reference/input copy.
+Thus $\omega_n=J(F^n)/3$ in Definition 73.1's convention. Write
+$E_{ab}=|a\rangle\langle b|$ in this basis. Reference partial transpose
+means $(|a,i\rangle\langle b,j|)^\Gamma=|a,j\rangle\langle b,i|$.
+For finite $n\ge1$, set
+
+$$
+s=(-1/2)^{n-1},\qquad \tau=|s|=2^{1-n},\qquad
+\alpha=(1+s)/2,\qquad\beta=(1-s)/2.
+\tag{87.3}
+$$
+
+The equality with the actual chronological channel is the one in
+[Environment record memory, (27.3)][ENV87]: $\Delta_W(X)$ commutes
+with $W$, so $e^{i\theta W}\Delta_W(X)e^{-i\theta W}=\Delta_W(X)$.
+Consequently the average of the two actual unitary conjugations is
+$F$, at every angle. Conditional fairness gives each length-$n$ word
+$V_{h_n}\cdots V_{h_1}$ weight $2^{-n}$, and summing these words gives
+$F^n$. In particular these formulas do not replace the actual channel
+by a record-conditioned channel from §86.
+
+The identification with the previously studied qutrit restriction is
+explicit: the isometry $B$ sending the original qutrit coordinate basis
+to $(u,v,z)$ of [Five-window quantum memory, (18.4)][QM87] intertwines
+$U_0,U_1$ with those restricted matrices. It sends $\xi$ to
+$(u+v+z)/\sqrt3$. The witness in that volume's Theorem 20.2 is entirely
+inside this invariant three-dimensional space. Its all-finite NPT
+consequence, the restricted polynomial (19.4), and the EB limit (19.7)
+therefore already apply here, as [Environment record memory, §27.8][ENV87]
+states. The following calculation determines the full normalized Choi
+data rather than claiming those structural conclusions again.
+
+**Theorem 87.2 (Actual Choi matrix and both spectra).** At $n=0$,
+$\omega_0=|\Omega_3\rangle\langle\Omega_3|$, with spectrum
+$\{1,0^{\times8}\}$. For every finite $n\ge1$, put
+$\widetilde\omega_n=(U_0^\dagger\otimes I)\omega_n(U_0\otimes I)$.
+Then
+
+$$
+\begin{aligned}
+3\widetilde\omega_n={}&|00\rangle\langle00|
+ +\alpha(|11\rangle\langle11|+|22\rangle\langle22|)\\
+&+\beta(|12\rangle\langle12|+|21\rangle\langle21|)
+ +s(|00\rangle\langle11|+|11\rangle\langle00|),\\
+3\widetilde\omega_n^\Gamma={}&|00\rangle\langle00|
+ +\alpha(|11\rangle\langle11|+|22\rangle\langle22|)\\
+&+\beta(|12\rangle\langle12|+|21\rangle\langle21|)
+ +s(|01\rangle\langle10|+|10\rangle\langle01|).
+\end{aligned}
+\tag{87.4}
+$$
+
+Their spectra, with algebraic multiplicity, are
+
+$$
+\begin{aligned}
+\operatorname{spec}(\omega_n)
+ &=\left\{
+ \frac{1+\alpha+\sqrt{(1-\alpha)^2+4s^2}}6,
+ \frac{1+\alpha-\sqrt{(1-\alpha)^2+4s^2}}6,
+ \frac\alpha3,\left(\frac\beta3\right)^{\times2},0^{\times4}
+ \right\},\\
+\operatorname{spec}(\omega_n^\Gamma)
+ &=\left\{\frac13,\left(\frac\alpha3\right)^{\times2},
+ \left(\frac\beta3\right)^{\times2},\frac s3,-\frac s3,0^{\times2}
+ \right\},\\
+\operatorname{spec}(\omega_0^\Gamma)
+ &=\left\{(1/3)^{\times6},(-1/3)^{\times3}\right\}.
+\end{aligned}
+\tag{87.5}
+$$
+
+Repeated displayed values are combined; at $n=1$ the partial-transpose
+zero eigenspace has dimension four. At the limit $s=0$ the spectrum of
+both $\omega_\infty$ and $\omega_\infty^\Gamma$ is
+$\{1/3,(1/6)^{\times4},0^{\times4}\}$.
+
+Proof. For clarity, the actual iteration (Environment (27.7)) can be
+read directly from (87.1). Write $\mathscr P=\Delta_W$,
+$\mathscr O=\operatorname{Ad}_{U_0}$, and
+$A=(\mathscr P\mathscr O\mathscr P)|_{\operatorname{ran}\mathscr P}$.
+The range consists of the complex matrices
+$K=\left(\begin{smallmatrix}x&z&0\\w&y&0\\0&0&d\end{smallmatrix}\right)$;
+the entries $w,z$ are independent here. Matrix multiplication gives
+
+$$
+A(K)=\begin{pmatrix}
+x&-z/2&0\\-w/2&(y+3d)/4&0\\0&0&(3y+d)/4
+\end{pmatrix},\qquad
+F^n=\mathscr O A^{n-1}\mathscr P\quad(n\ge1).
+\tag{87.6}
+$$
+
+The second identity follows by inserting $\mathscr P^2=\mathscr P$
+between successive factors of $(\mathscr O\mathscr P)^n$; at $n=1$
+$A^0$ is the identity on its range. The two population eigenvectors
+$(1,1),(1,-1)$ have multipliers $1,-1/2$, respectively. Therefore,
+for every complex matrix $X=(x_{ab})$,
+
+$$
+\operatorname{Ad}_{U_0^\dagger}F^n(X)=\Psi_s(X)
+ =\begin{pmatrix}
+x_{00}&s x_{01}&0\\
+s x_{10}&\alpha x_{11}+\beta x_{22}&0\\
+0&0&\beta x_{11}+\alpha x_{22}
+\end{pmatrix}.
+\tag{87.7}
+$$
+
+The normalized Choi expansion, in the output-first convention of
+Choi's completely positive map representation, is
+$3\widetilde\omega_n=\sum_{a,b}\Psi_s(E_{ab})\otimes E_{ab}$.
+For example $E_{11}$ contributes
+$\alpha|11\rangle\langle11|+\beta|21\rangle\langle21|$,
+$E_{22}$ contributes
+$\beta|12\rangle\langle12|+\alpha|22\rangle\langle22|$,
+and $E_{01}$ contributes $s|00\rangle\langle11|$.
+These and their displayed companions give the first line of (87.4);
+transposing only the second factor gives its second line. The trace is
+$(1+2\alpha+2\beta)/3=1$. Both marginals are $I_3/3$, also following
+from trace preservation and unitality of $F^n$.
+
+For the ordinary spectrum, the only nondiagonal block is
+$\frac13\left(\begin{smallmatrix}1&s\\s&\alpha\end{smallmatrix}\right)$
+on $(|00\rangle,|11\rangle)$. Its quadratic equation gives the first
+two eigenvalues in (87.5); $|22\rangle,|12\rangle,|21\rangle$ give the
+next three and the four unused basis vectors give zero. Positivity is
+also visible without an appeal to the channel construction:
+$\alpha-s^2=(1-s)(1+2s)/2\ge0$ for the actual range
+$-1/2\le s\le1$, and $\alpha,\beta\ge0$.
+
+For reference partial transpose, the five diagonal coordinates in
+(87.4) have eigenvalues $1/3,\alpha/3,\alpha/3,\beta/3,\beta/3$.
+The orthogonal pair $(|01\rangle,|10\rangle)$ has block
+$\frac13\left(\begin{smallmatrix}0&s\\s&0\end{smallmatrix}\right)$,
+with eigenvectors $(|01\rangle\pm|10\rangle)/\sqrt2$ and eigenvalues
+$\pm s/3$. The remaining $|02\rangle,|20\rangle$ give two zeros.
+The output conjugation commutes with reference transposition and
+preserves this spectrum. At $n=0$,
+$\omega_0^\Gamma=\mathsf S/3$, where the swap $\mathsf S$ has
+eigenvalues $+1$ on the six-dimensional symmetric subspace and $-1$
+on the three-dimensional antisymmetric subspace. Finally (87.7)
+converges entry by entry at $s=0$, giving the asserted limit spectrum.
+These are full spectra, including the signed value of $s$ at even
+horizons. $\square$
+
+**Corollary 87.3 (Exact negativity and logarithmic negativity).** With
+the negativity convention of Vidal–Werner, namely
+$N(\rho)=(\|\rho^\Gamma\|_1-1)/2$ and
+$LN(\rho)=\log_2\|\rho^\Gamma\|_1$, one has
+
+$$
+\begin{array}{c|c|c|c}
+\text{horizon}&\|\omega_n^\Gamma\|_1&N(\omega_n)&LN(\omega_n)\\\hline
+0&3&1&\log_2 3\\
+1\le n<\infty&1+2\tau/3&\tau/3=2^{1-n}/3&
+ \log_2(1+2^{2-n}/3)\\
+\infty&1&0&0
+\end{array}
+\tag{87.8}
+$$
+
+Proof. The five nonnegative diagonal eigenvalues of
+$\widetilde\omega_n^\Gamma$ sum to one. The signed block contributes
+$2|s|/3$ to the trace norm and has exactly one negative eigenvalue
+$-\tau/3$ at every positive finite horizon. At $n=0$ all nine
+absolute eigenvalues equal $1/3$. Substitution into the two definitions
+proves every entry, and the limiting spectrum gives the last row.
+The all-finite NPT fact is reused from the qutrit restriction specified
+in Definition 87.1; the exact nine-dimensional spectrum and its
+negativity value are the quantities computed here. $\square$
+
+## 88. Exact Schmidt numbers of the actual Choi states
+
+**Theorem 88.1 (A finite rank-two ensemble at every positive horizon).**
+For the states of (87.2), the Schmidt numbers are exactly
+
+$$
+\operatorname{SN}(\omega_0)=3,\qquad
+\operatorname{SN}(\omega_n)=2\ (1\le n<\infty),\qquad
+\operatorname{SN}(\omega_\infty)=1.
+\tag{88.1}
+$$
+
+Here Schmidt number is the least maximum pure-state Schmidt rank in
+a convex decomposition, as in Terhal–Horodecki and
+[Tavakoli–Morelli, §II.1, (2)][TM89]. An explicit finite ensemble for
+every positive horizon is obtained by putting
+
+$$
+\begin{gathered}
+\Pi_+=E_{00}+E_{11},\quad \Pi_-=E_{22},\quad
+A_+=U_0\Pi_+,\quad A_-=U_0\Pi_-,\\
+K_{\varepsilon}=A_{\varepsilon_n}\cdots A_{\varepsilon_1}
+ \quad(\varepsilon\in\{+,-\}^n),\qquad
+t_{\varepsilon}=\operatorname{Tr}(K_{\varepsilon}^\dagger
+                                      K_{\varepsilon}),\\
+p_{\varepsilon}=t_{\varepsilon}/3,\qquad
+|\psi_{\varepsilon}\rangle=
+ |K_{\varepsilon}\rangle\!\rangle/\sqrt{t_{\varepsilon}}
+ \quad(t_{\varepsilon}>0),\\
+\omega_n=\sum_{\varepsilon:t_{\varepsilon}>0}
+ p_{\varepsilon}|\psi_{\varepsilon}\rangle
+                         \langle\psi_{\varepsilon}|.
+\end{gathered}
+\tag{88.2}
+$$
+
+The products use the explicit matrices (87.1), and each vector in this
+ensemble has Schmidt rank at most two. The separable limiting ensemble is
+
+$$
+\omega_\infty=\tfrac13 E_{00}\otimes E_{00}^{\mathsf T}
+ +\tfrac16\sum_{a,b\in\{1,2\}}E_{aa}\otimes E_{bb}^{\mathsf T}.
+\tag{88.3}
+$$
+
+Proof. The spectral projectors of $W$ give
+$\Delta_W(X)=\Pi_+X\Pi_++\Pi_-X\Pi_-$, so $A_+,A_-$ are Kraus
+matrices for exactly $F$, with
+$A_+^\dagger A_++A_-^\dagger A_-=I_3$.
+Induction under channel composition gives the Kraus products in
+(88.2) and $\sum_{\varepsilon}K_{\varepsilon}^\dagger
+K_{\varepsilon}=I_3$. Hence $\sum p_{\varepsilon}=1$ and zero
+products may be discarded. The standard Choi–Kraus vectorization
+identity, with the normalization fixed in Definition 73.1, gives
+$\omega_n=\frac13\sum_{\varepsilon}|K_{\varepsilon}\rangle\!\rangle
+\langle\!\langle K_{\varepsilon}|$, proving the ensemble equality.
+Every product has rank at most the rank of its rightmost factor;
+$\operatorname{rank}A_+=2$ and $\operatorname{rank}A_-=1$.
+
+To check explicitly the Schmidt-rank correspondence, write a singular
+value decomposition $K=\sum_{j=1}^{r}\sigma_j|u_j\rangle\langle v_j|$.
+Then $|K\rangle\!\rangle=\sum_{j=1}^{r}\sigma_j
+|u_j\rangle|\overline v_j\rangle$ is a Schmidt decomposition,
+because both listed families are orthonormal. Thus every nonzero
+component of (88.2) has rank at most two. This proves
+$\operatorname{SN}(\omega_n)\le2$ without presuming that its
+unitary-word ensemble has low rank. The signs $\varepsilon$ are
+mathematical ensemble labels, not history data supplied to a decoder.
+
+For the lower bound, reference partial transpose sends a product
+density $R\otimes S$ to $R\otimes S^{\mathsf T}\succeq0$ and
+preserves positivity of their convex mixtures. This is the necessary
+PPT condition of Peres. The eigenvalue $-\tau/3$ in (87.5), or its
+explicit $|01\rangle,|10\rangle$ block, therefore excludes Schmidt
+number one for every finite positive horizon. Together with (88.2)
+it proves the middle equality in (88.1).
+
+At $n=0$, the coefficient matrix of $|\Omega_3\rangle$ is
+$I_3/\sqrt3$, of rank three. Any pure-state ensemble of a rank-one
+density has all its nonzero components in that same one-dimensional
+support: its expectation on each orthogonal vector is a sum of
+nonnegative squared overlaps and is zero. Thus such an ensemble
+cannot lower its Schmidt rank, proving the first equality.
+
+At the limit, (87.7) and invariance of the two sectors under $U_0$
+give precisely the previously known measure-and-prepare restriction
+
+$$
+L(X)=P\operatorname{Tr}(PX)
+       +\frac{P_T}{2}\operatorname{Tr}(P_TX),\qquad
+P=E_{00},\quad P_T=I_3-P.
+\tag{88.4}
+$$
+
+For comparison with [Five-window (19.7)][QM87], compress its effect
+$E$ to $R$ to get $P$, and identify its $M$ with $P_T/2$ via $B$.
+The normalized output-first Choi state of (88.4) is
+$\frac13 P\otimes P^{\mathsf T}+\frac16P_T\otimes P_T^{\mathsf T}$,
+which expands to (88.3). Its five pure product terms have weights
+$1/3,1/6,1/6,1/6,1/6$, summing to one. This proves Schmidt number
+one and supplies the explicit separable ensemble; the EB property
+of this limit itself is already in the cited source. $\square$
+
+## 89. Exact SIC and complete-MUB detection of the actual Choi resource
+
+**Definition 89.1 (Independent local families and literal normalization).**
+On each qutrit choose independently nine unit SIC vectors $s_i^A,s_j^B$,
+with squared overlap $1/4$ for distinct vectors within either family.
+Their effects are exactly $E_i^A=|s_i^A\rangle\langle s_i^A|/3$,
+$E_j^B=|s_j^B\rangle\langle s_j^B|/3$. Independently choose four
+orthonormal bases on each side, mutually unbiased within that side,
+with projectors $G_{\ell a}^A,G_{kb}^B$ and cross-basis squared overlaps
+$1/3$. In the notation of [Tavakoli–Morelli, (6)–(8), (18)][TM89], set
+
+$$
+\begin{aligned}
+(\mathbf P_n)_{ij}
+ &=\operatorname{Tr}(\omega_n(E_i^A\otimes E_j^B)),\\
+(\mathbf Q_n)_{\ell a,kb}
+ &=\operatorname{Tr}(\omega_n(G_{\ell a}^A\otimes G_{kb}^B)).
+\end{aligned}
+\tag{89.1}
+$$
+
+Thus $\mathbf P_n$ is $9\times9$ and $\mathbf Q_n$ is $12\times12$.
+There is no factor $1/4$, $1/3$, or basis-sampling probability attached
+to a MUB projector in $\mathbf Q_n$. Each fixed basis pair gives a
+normalized outcome table, while the sum of all entries of
+$\mathbf Q_n$ is $16$. Throughout this chapter the norm of such a
+matrix is its rectangular trace norm, the sum of its singular values,
+rather than the sum of absolute entries. No unitary equivalence between
+the two SIC families or between the two MUB families is assumed.
+
+**Theorem 89.2 (All-family exact correlation norms).** For every choice
+of the four local families in Definition 89.1,
+
+$$
+\begin{array}{c|c|c}
+\text{horizon}&\|\mathbf P_n\|_1&\|\mathbf Q_n\|_1\\\hline
+0&1/3&4\\
+1\le n<\infty&(5+3\tau)/36&5/3+\tau\\
+\infty&5/36&5/3
+\end{array}
+\qquad \|\mathbf Q_n\|_1=12\|\mathbf P_n\|_1.
+\tag{89.2}
+$$
+
+Proof. The general tools here are the SIC and complete-MUB frame
+reconstructions underlying Tavakoli–Morelli's criteria and the
+repository's SIC–MUB correlation trace-norm equality. The parameter
+correspondence is $d_A=d_B=3$, their state $\rho_{AB}=\omega_n$,
+their SIC effects $E_i=\Pi_i/3$, and their complete-MUB effects the
+literal $G_{\ell a}$. The dimension factor in their notation is
+$K=\sqrt{3(3+1)}\sqrt{3(3+1)}=12$. The following frame calculation
+includes the normalization and the actual-channel singular values.
+
+First fix either local SIC family and write $\Pi_i=3E_i$. Its
+Hilbert–Schmidt Gram matrix is
+$\frac34 I_9+\frac14\mathbf1\mathbf1^{\mathsf T}$, since
+$\operatorname{Tr}(\Pi_i\Pi_j)$ is one on the diagonal and $1/4$
+elsewhere. Its eigenvalues are $3$ in the $\mathbf1$ direction and
+$3/4$ in its orthogonal complement. Thus the nine $\Pi_i$ form a
+basis of Hermitian matrices, and their complex span is $M_3$.
+Moreover $\operatorname{Tr}(\Pi_j\sum_i\Pi_i)=1+8/4=3$
+for each $j$. Comparing with $3I_3$ against this basis proves
+$\sum_i\Pi_i=3I_3$. On $X=\Pi_j$ it follows that
+
+$$
+\sum_i\operatorname{Tr}(E_iX)E_i
+ =\frac19\left(\Pi_j+\frac{3I_3-\Pi_j}{4}\right)
+ =\frac{X+\operatorname{Tr}(X)I_3}{12}.
+\tag{89.3}
+$$
+
+Linearity extends the last identity to every complex $X$. In particular
+the frame operator has eigenvalue $1/3$ on $I_3/\sqrt3$ and $1/12$
+on the eight-dimensional traceless subspace.
+
+For either local complete MUB family, the traceless diagonal subspace
+of each basis is spanned by $G_{\ell a}-I_3/3$ and has dimension two.
+For different bases these subspaces are orthogonal, because
+$\operatorname{Tr}((G_{\ell a}-I_3/3)(G_{kb}-I_3/3))=1/3-1/3=0$.
+The four subspaces therefore exhaust all eight traceless dimensions.
+If $X$ is in the subspace of basis $\ell$, its diagonal expansion in
+that basis is $\sum_a\operatorname{Tr}(G_{\ell a}X)G_{\ell a}=X$;
+all terms from other bases vanish by the same orthogonality and
+$\operatorname{Tr}X=0$. On $I_3$ the corresponding sum is $4I_3$.
+Consequently the complete-MUB reconstruction is
+
+$$
+\sum_{\ell,a}\operatorname{Tr}(G_{\ell a}X)G_{\ell a}
+       =X+\operatorname{Tr}(X)I_3\qquad(X\in M_3).
+\tag{89.4}
+$$
+
+Choose a fixed Hilbert–Schmidt orthonormal Hermitian basis
+$\gamma_0=I_3/\sqrt3,\gamma_1,\ldots,\gamma_8$, the last eight
+traceless, and let $C_{\mu\nu}=\operatorname{Tr}
+(\omega_n(\gamma_\mu\otimes\gamma_\nu))$. These coefficients are
+real. For a local frame let its analysis matrix have entries
+$R_{i\mu}=\operatorname{Tr}(E_i\gamma_\mu)$ in the SIC case and
+$R_{\ell a,\mu}=\operatorname{Tr}(G_{\ell a}\gamma_\mu)$ in the
+MUB case. Equations (89.3)–(89.4) give, respectively,
+
+$$
+R_S^{\mathsf T}R_S=D^2,\qquad
+R_M^{\mathsf T}R_M=12D^2,\qquad
+D=\operatorname{diag}(1/\sqrt3,1/\sqrt{12},\ldots,1/\sqrt{12}).
+\tag{89.5}
+$$
+
+Thus $R_S=O_SD$ for a real orthogonal $9\times9$ matrix $O_S$,
+whereas $R_M=\sqrt{12}\,V_MD$ with
+$V_M^{\mathsf T}V_M=I_9$. Expanding $\omega_n$ in the product
+operator basis gives
+
+$$
+\mathbf P_n=O_A DCD O_B^{\mathsf T},\qquad
+\mathbf Q_n=12V_A DCD V_B^{\mathsf T}.
+\tag{89.6}
+$$
+
+Multiplication by either displayed isometry preserves all nonzero
+singular values: apply a singular value decomposition of $DCD$ and
+observe that the isometries send its orthonormal left and right
+singular vectors to orthonormal vectors. Extra rows add only zero
+singular values. This proves the factor $12$ and shows why the
+families may be unrelated. It remains to compute $DCD$ for this state.
+
+The output-first Choi identity
+$\langle\Omega_3|X\otimes Y|\Omega_3\rangle
+=\operatorname{Tr}(XY^{\mathsf T})/3$ gives explicitly
+
+$$
+C_{\mu\nu}=\tfrac13\operatorname{Tr}
+   ((F^n)^\dagger(\gamma_\mu)\gamma_\nu^{\mathsf T}).
+\tag{89.7}
+$$
+
+Trace preservation and unitality give $C_{00}=1/3$ and
+$C_{0\nu}=C_{\mu0}=0$ for $\mu,\nu>0$. Transposition is a real
+orthogonal transformation of the traceless Hermitian space:
+$\operatorname{Tr}(X^{\mathsf T}Y^{\mathsf T})=\operatorname{Tr}(XY)$.
+Writing $\mathfrak t$ for that space and $M_n$ for the matrix of
+$F^n|_{\mathfrak t}$, the traceless block of (89.7) is $M_nT/3$,
+where $T$ is that orthogonal transposition matrix. Hence
+
+$$
+\|C_{\mathfrak t}\|_*=\tfrac13\|F^n|_{\mathfrak t}\|_*,\qquad
+\|DCD\|_1=\frac19+\frac1{36}\|F^n|_{\mathfrak t}\|_*.
+\tag{89.8}
+$$
+
+Here $\|\cdot\|_*$ denotes the nuclear norm of a linear map between
+Hilbert–Schmidt spaces; it is again a sum of singular values. The
+identity contribution is $(1/\sqrt3)(1/3)(1/\sqrt3)=1/9$, and the
+traceless contribution is $\|C_{\mathfrak t}\|_*/12$, explaining
+both constants in (89.8). Complexifying $\mathfrak t$ gives the
+traceless complex matrices with the same singular values.
+
+Finally evaluate the actual map using (87.6). The projection
+$\mathscr P$ is orthogonal for the Hilbert–Schmidt inner product,
+and $\mathscr O$ is unitary for it. An orthonormal basis of
+$\operatorname{ran}\mathscr P$ on Hermitian matrices is
+
+$$
+\begin{gathered}
+I_3/\sqrt3,\quad H=(2E_{00}-E_{11}-E_{22})/\sqrt6,\quad
+Z=(E_{11}-E_{22})/\sqrt2,\\
+X_{01}=(E_{01}+E_{10})/\sqrt2,\qquad
+Y_{01}=(-iE_{01}+iE_{10})/\sqrt2.
+\end{gathered}
+\tag{89.9}
+$$
+
+The first two are fixed by $A$, and (87.6) multiplies the last three
+by $-1/2$. The four-dimensional kernel of $\mathscr P$ consists of
+the real and imaginary Hermitian coherences for $02$ and $12$.
+After removing $I_3/\sqrt3$, equation (87.6) therefore has singular
+values $1,\tau,\tau,\tau,0,0,0,0$ for every finite $n\ge1$:
+the images of (89.9) are still orthogonal after applying $\mathscr O$.
+At $n=0$ all eight traceless singular values are one; at the limit
+only the one in the $H$ direction survives. Thus
+
+$$
+\|F^0|_{\mathfrak t}\|_*=8,\qquad
+\|F^n|_{\mathfrak t}\|_*=1+3\tau\ (1\le n<\infty),\qquad
+\|L|_{\mathfrak t}\|_*=1.
+\tag{89.10}
+$$
+
+Substituting into (89.8), then using (89.6), proves every entry
+of (89.2), including $n=0$ and the limit. No choice of local families
+can change these norms under Definition 89.1's hypotheses. $\square$
+
+**Corollary 89.3 (Exact SIC/MUB thresholds and the detection gap).**
+The SIC and complete-MUB Schmidt-number criteria detect entanglement
+of $\omega_n$ exactly at $n=0,1,2$. They certify Schmidt number
+greater than two exactly at $n=0$. For every finite $n\ge3$ they
+fail to detect the entangled Schmidt-number-two state.
+
+Proof. [Tavakoli–Morelli, Results 1 and 2][TM89] state, for Schmidt
+number at most $r$, respectively
+
+$$
+\|\mathbf P\|_1\le(1+r)/12,\qquad
+\|\mathbf Q\|_1\le1+r.
+\tag{89.11}
+$$
+
+These are necessary inequalities, so detection requires strict
+violation. The dimension and projector normalization match (89.1),
+and (89.2) makes the two violations equivalent. At positive finite
+horizons the entanglement threshold $r=1$ is crossed if and only if
+$5/3+\tau>2$, or $\tau>1/3$. Since $\tau=2^{1-n}$, precisely
+$n=1,2$ satisfy it. The threshold $r=2$ would require
+$\tau>4/3$, which no positive horizon satisfies. At $n=0$ the value
+$4$ exceeds both $2$ and $3$; at the limit $5/3$ exceeds neither.
+The complete values and classifications are
+
+| Horizon | $\|\mathbf P_n\|_1$ | $\|\mathbf Q_n\|_1$ | Exact SN | Detected entanglement | Detected SN $>2$ |
+| --- | --- | --- | --- | --- | --- |
+| $0$ | $1/3$ | $4$ | $3$ | yes | yes |
+| $1$ | $2/9$ | $8/3$ | $2$ | yes | no |
+| $2$ | $13/72$ | $13/6$ | $2$ | yes | no |
+| finite $n\ge3$ | $(5+3\tau)/36$ | $5/3+\tau\le23/12$ | $2$ | no | no |
+| $\infty$ | $5/36$ | $5/3$ | $1$ | no | no |
+
+At $n=3$, $\|\mathbf P_3\|_1=23/144<1/6$ and
+$\|\mathbf Q_3\|_1=23/12<2$, whereas $N(\omega_3)=1/12>0$.
+The positive finite negativity thereafter follows from (87.8).
+Thus failure to violate (89.11) is failure of these criteria,
+not a separability conclusion. Conversely, the limit is separable
+by the explicit ensemble (88.3), not merely by non-detection.
+The correlation trace norms here are detection statistics; no general
+entanglement-monotone property is needed or asserted. $\square$
+
+## 90. Source correspondence and the remaining recovery problems
+
+The inputs to §§87–89 are the actual matrices and chronology in §63
+and [Environment record memory, §§26–27][ENV87]. The restricted
+polynomial, invariant sectors, finite NPT consequence and EB limit
+are supplied by [Five-window quantum memory, §§18–20][QM87] under
+the explicit isometry in Definition 87.1. The additional actual-model
+calculations are the normalized Choi formula and spectra, exact
+negativities, finite rank-two ensembles and exact Schmidt numbers,
+and the arbitrary-family SIC/MUB norms and detection thresholds.
+The Choi–Kraus representation is M.-D. Choi, *Completely positive
+linear maps on complex matrices*, Linear Algebra Appl. 10 (1975),
+285–290, DOI: [10.1016/0024-3795(75)90075-0](https://doi.org/10.1016/0024-3795(75)90075-0).
+The PPT necessity used in Theorem 88.1 is A. Peres, Phys. Rev. Lett.
+77 (1996), 1413, DOI: [10.1103/PhysRevLett.77.1413](https://doi.org/10.1103/PhysRevLett.77.1413).
+Schmidt number is B. M. Terhal and P. Horodecki, Phys. Rev. A 61
+(2000), 040301(R), DOI: [10.1103/PhysRevA.61.040301](https://doi.org/10.1103/PhysRevA.61.040301).
+The negativity convention is G. Vidal and R. F. Werner, Phys. Rev. A
+65 (2002), 032314, DOI: [10.1103/PhysRevA.65.032314](https://doi.org/10.1103/PhysRevA.65.032314).
+The SIC/MUB definitions and Schmidt-number inequalities are
+A. Tavakoli and S. Morelli, *Enhanced Schmidt number criteria based
+on correlation trace norms*, [arXiv:2402.09972v2][TM89], Results 1–2,
+Phys. Rev. A 110 (2024), 062417. The general frame equality is reused;
+(89.3)–(89.10) give its complete specialization and parameter
+correspondence to this actual channel. These are ordinary mathematical
+derivations, with no literature-priority, physical-realization or
+formal-kernel certification claim.
+
+The Choi reference is an analytical witness only. The recovery problem
+still allows one input-independent terminal qutrit CPTP decoder chosen
+for its task and horizon, on all input density matrices, without history
+or reference access, a smaller input code, intermediate correction or
+postselection. None of (87.8), (88.1), or (89.2) supplies its all-task
+optimum. The full all-$v$, all-finite-$n$ sharp-task value remains
+unresolved: for $n\ge2$ the remaining domains include $r=0,pq>0$
+and the interior $p,q,r>0$ outside Environment (27.24), with the
+populations defined in Environment (27.1). The boundary optima of
+Environment §§27.3–27.4 retain their stated scope. Separate task
+decoders do not solve common recovery. The separate amplitude-ensemble question is
+not decided here. Critical-spin estimates, causal recovery and the
+unbounded-horizon memory/recovery targets also remain unresolved.
+
+[ENV87]: AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md
+[QM87]: AURIC_FIB_FIVE_WINDOW_QUANTUM_MEMORY.md
+[TM89]: https://arxiv.org/abs/2402.09972v2
+
+## 追加锚（本行以下为增补区）
+
+## 91. Common-local-frame PSD amplitudes of the actual Choi states
+
+The isolated amplitude-ensemble question left open in §90 is answered
+by Theorem 91.2: among finite horizons, precisely $n=0,1$ qualify.
+All other recovery permissions and unresolved targets of that section
+retain their scope. Throughout, the channel, ordered basis $(\xi,e,f)$,
+output-first convention and reference partial transpose are those of §87.
+
+**Definition 91.1 (One common local frame and normalized PSD amplitudes).**
+For $C\in M_3(\mathbb C)$ put
+$|C\rangle\!\rangle=\sum_{a,b=0}^2C_{ab}|a,b\rangle$.
+A density $\rho$ has a finite normalized PSD-Hermitian amplitude ensemble
+in a common local frame if there exist $m\ge1$, $L,R\in U(3)$ and
+
+$$
+\begin{gathered}
+p_k\ge0,\quad \sum_{k=1}^m p_k=1,\qquad
+C_k=C_k^\dagger\succeq0,\quad
+\operatorname{Tr}(C_kC_k^\dagger)=1,\\
+(L\otimes R)\rho(L\otimes R)^\dagger
+ =\sum_{k=1}^m p_k|C_k\rangle\!\rangle\langle\!\langle C_k|.
+\end{gathered}
+\tag{91.1}
+$$
+
+The same arbitrary pair $(L,R)$ serves every ensemble term. When
+$\rho=\omega_n$, that pair and the ensemble may depend on $n$.
+Singular complex Hermitian amplitudes and zero weights are permitted;
+commutation between different $C_k$ is not assumed.
+
+**Theorem 91.2 (Exact finite-horizon applicability).**
+For every finite integer $n\ge0$, $\omega_n$ satisfies (91.1) if and
+only if $n=0$ or $n=1$. Explicit qualifying ensembles are
+
+$$
+\begin{array}{c|c|c|c}
+n&(L,R)&(p_k)&(C_k)\\\hline
+0&(I,I)&1&I_3/\sqrt3\\
+1&(U_0^\dagger,I)&2/3,\ 1/3&
+ \operatorname{diag}(1,1,0)/\sqrt2,\ \operatorname{diag}(0,0,1).
+\end{array}
+\tag{91.2}
+$$
+
+Every finite $n\ge2$, of either parity, is excluded for all common
+local unitary pairs and all finite normalized PSD-amplitude ensembles.
+
+Proof. First record the identities needed for arbitrary complex
+amplitudes, rather than only real symmetric matrices. With the swap
+$\mathsf S|a,b\rangle=|b,a\rangle$, direct comparison of entries gives
+
+$$
+\begin{aligned}
+(L\otimes R)|C\rangle\!\rangle
+ &=|LCR^{\mathsf T}\rangle\!\rangle,\\
+\bigl(|C\rangle\!\rangle\langle\!\langle C|\bigr)^\Gamma
+ &=(C\otimes C^\dagger)\mathsf S.
+\end{aligned}
+\tag{91.3}
+$$
+
+Indeed the first vector has coefficient
+$\sum_{i,j}L_{ai}C_{ij}R_{bj}$, and both sides of the second identity
+have $((a,b),(c,d))$ entry $C_{ad}\overline{C_{cb}}$.
+For a qualifying $\sigma=(L\otimes R)\rho(L\otimes R)^\dagger$,
+Hermiticity of the amplitudes therefore yields
+
+$$
+\sigma^\Gamma=Q\mathsf S,\qquad
+Q=\sum_k p_k(C_k\otimes C_k)\succeq0,\qquad
+Q\mathsf S=\mathsf S Q.
+\tag{91.4}
+$$
+
+Tensor positivity follows by writing $C_k=H_kH_k^\dagger$; its tensor
+square is $(H_k\otimes H_k)(H_k\otimes H_k)^\dagger$.
+Each $C_k\otimes C_k$ commutes with swap, independently of the other
+amplitudes. Let $H_+(X)$ denote the span of eigenvectors of a Hermitian
+$X$ with strictly positive eigenvalues. For
+$P_-=(I-\mathsf S)/2$, (91.4) implies that the antisymmetric
+subspace reduces $\sigma^\Gamma$ and its restriction is $-Q$.
+If $\sigma^\Gamma v=\lambda v$ with $\lambda>0$, then
+
+$$
+\lambda\|P_-v\|^2
+ =-\langle P_-v,Q P_-v\rangle\le0.
+\tag{91.5}
+$$
+
+Thus $P_-v=0$, and
+$H_+(\sigma^\Gamma)\subseteq\operatorname{Sym}^2(\mathbb C^3)$.
+Only strictly positive spectral subspaces are asserted here;
+zero eigenvectors need not be symmetric.
+
+The symmetric subspace contains no plane $a\otimes B$ with $a\ne0$
+and $\dim B\ge2$. In fact $a\otimes b=b\otimes a$ implies
+$b=\ell(b)a$ after applying $\ell\otimes I$, for any linear functional
+$\ell$ with $\ell(a)=1$. Consequently every $b\in B$ would belong to
+the same one-dimensional span of $a$, a contradiction.
+
+This obstruction survives arbitrary local frames. Reference
+transposition gives, for any density $\rho$,
+
+$$
+\bigl((L\otimes R)\rho(L\otimes R)^\dagger\bigr)^\Gamma
+ =(L\otimes\overline R)\rho^\Gamma
+                  (L\otimes\overline R)^\dagger.
+\tag{91.6}
+$$
+
+For example its $((a,b),(c,d))$ entry on either side is
+$\sum_{i,j,k,l}L_{ai}\overline{R_{bj}}\rho_{(i,l),(k,j)}
+ \overline{L_{ck}}R_{dl}$.
+Hence $H_+$ transforms by $L\otimes\overline R$, which sends
+$a\otimes B$ to $La\otimes\overline R B$ and preserves $\dim B$.
+Existence of such a product plane therefore excludes every common
+frame, not merely a particular decomposition.
+
+Apply this to $\widetilde\omega_n$ of (87.4). For $n\ge2$,
+$-1/2\le s\le1/4$, so both $\alpha$ and $\beta$ are strictly positive.
+The vectors $|11\rangle,|12\rangle$ are PT eigenvectors with
+eigenvalues $\alpha/3,\beta/3$, respectively. Their span is
+
+$$
+|1\rangle\otimes\operatorname{span}\{|1\rangle,|2\rangle\}
+ \ \subseteq H_+(\widetilde\omega_n^\Gamma).
+\tag{91.7}
+$$
+
+Equation (91.6) transports this plane to the physical output frame
+and to every further local frame. It contradicts the necessary
+symmetric-subspace condition in any qualifying frame. This covers
+both signs of $s$ and also the ordinary Choi rank degeneration at $n=2$.
+
+For $n=0$, the first amplitude in (91.2) vectorizes to $|\Omega_3\rangle$.
+For $n=1$, the two amplitudes in (91.2) are PSD with squared
+Hilbert–Schmidt norm one, their weights sum to one, and their mixture is
+
+$$
+\frac{(|00\rangle+|11\rangle)(\langle00|+\langle11|)}3
+ +\frac{|22\rangle\langle22|}3=\widetilde\omega_1.
+\tag{91.8}
+$$
+
+This is exactly (87.4) at $s=1$. Removing $U_0$ is an allowed local
+unitary, using the single pair shown in (91.2). These constructions
+and the all-frame obstruction prove the equivalence. $\square$
+
+The Choi–Kraus correspondence also identifies precisely the channel
+premise: (91.1) for $\omega_n$ is equivalent to a finite PSD-Hermitian
+Kraus family for
+$\operatorname{Ad}_L\circ F^n\circ\operatorname{Ad}_{R^{\mathsf T}}$.
+Indeed (91.3) and the normalized Choi expansion give
+$K_k=\sqrt{3p_k}\,C_k$. Conversely, discard zero PSD Kraus matrices
+and set $p_k=\operatorname{Tr}(K_k^2)/3$ and
+$C_k=K_k/\sqrt{\operatorname{Tr}(K_k^2)}$.
+Trace preservation gives $\sum_kK_k^2=I_3$, hence $\sum_kp_k=1$.
+The input-side unitary here specifies a mathematical class equivalence;
+it supplies no additional decoder access.
+
+**Proposition 91.3 (Entry equality without ensemble membership).**
+In the fixed product basis define the entry expression
+
+$$
+N_a(\rho)=\frac12\sum_{\substack{a,b=0\\a\ne b}}^2
+ \left|\rho_{(a,a),(b,b)}-\rho_{(a,b),(b,a)}\right|,
+ \qquad LN_a(\rho)=\log_2(1+2N_a(\rho)).
+\tag{91.9}
+$$
+
+For every finite $n\ge1$,
+
+$$
+N_a(\widetilde\omega_n)=|s|/3=N(\omega_n),\qquad
+N_a(\omega_n)=|s|/6.
+\tag{91.10}
+$$
+
+Proof. For a Hermitian density, the two ordered differences for $(a,b)$
+and $(b,a)$ are complex conjugates, so (91.9) sums their absolute
+values once per unordered pair. In (87.4), the three differences for
+$(0,1),(0,2),(1,2)$ are respectively $s/3,0,0$.
+In the physical output frame,
+$\omega_n=(U_0\otimes I)\widetilde\omega_n(U_0^\dagger\otimes I)$.
+Since $U_0|0\rangle=|0\rangle$ and
+$U_0|1\rangle=-|1\rangle/2+\sqrt3|2\rangle/2$, the corresponding
+three differences are $-s/6,0,0$. This proves both values; equality
+with the exact negativity uses (87.8). $\square$
+
+In particular $LN_a(\widetilde\omega_n)=LN(\omega_n)$ also holds at
+every excluded $n\ge2$. This equality does not certify (91.1).
+Exact negativity is invariant under local unitaries, whereas (91.9)
+depends on the chosen product basis.
+
+The expressions (91.9) are Alsing–Birrittella,
+[*Numerical evidence for a bipartite pure state entanglement witness
+from approximate analytical diagonalization*, arXiv:2404.13725v1](https://arxiv.org/abs/2404.13725v1),
+§IV, (17b)–(17c). Their §IV, (22) reports numerical evidence for
+ensembles of normalized PSD-Hermitian amplitudes and upper equality
+for real amplitudes. The universal PSD-amplitude sandwich is a distinct
+[repository mathematical input](../../../Blueprint/D5/S3/Quantum/Information/AlsingBirrittellaLogNegativitySandwich.md).
+The additional result here is its applicability and exclusion for the
+actual Choi family; the PT/swap argument inside Theorem 91.2 is a
+tool in this application, without a generic theorem priority claim.
+
+For completeness, write its pure-amplitude logarithmic expression as
+
+$$
+\ell_a(C)=\log_2\left(1+2\sum_{a<b}
+ |C_{aa}C_{bb}-C_{ab}C_{ba}|\right).
+\tag{91.11}
+$$
+
+The comparison in each qualifying ensemble frame is
+$\sum_kp_k\ell_a(C_k)\le LN(\sigma)\le LN_a(\sigma)$.
+At $n=0$ all three quantities equal $\log_2 3$.
+At $n=1$ the two real amplitudes have $\ell_a$ values $1,0$, so the
+comparison is $2/3\le\log_2(5/3)=LN_a(\widetilde\omega_1)$.
+The real-amplitude upper equality is used in these displayed frames.
+At every finite $n\ge2$ the ensemble premise fails in all common
+frames; the numerical equality in (91.10) gives no further instance
+of that theorem. These are ordinary mathematical deductions, with
+no current formal-kernel, physical-realization or literature-priority
+certification.
+
+The detection gap in Corollary 89.3 concerns its scalar trace-norm
+criteria. The full SIC and complete-MUB correlation tables are
+informationally complete: (89.5) gives each local analysis matrix
+column rank nine, so left inverses in (89.6) recover the complete
+coefficient matrix $C$, and hence the state. The scalar criterion gap
+therefore leaves the informational completeness of the full tables intact.
+
+All input densities remain in the recovery problem, with one
+input-independent terminal qutrit CPTP decoder chosen for the task
+and horizon, without history or reference access, a smaller input code,
+intermediate correction or postselection. The fixed output rotation
+can be absorbed into that decoder; the Choi reference remains only
+an analytical witness. The all-task optima, including $r=0,pq>0$
+and the interior outside Environment (27.24), common-decoder recovery,
+critical-spin and critical-norm estimates, causal recovery and uniform
+unbounded-memory targets remain unresolved. The separate $r=0$
+root-rule candidate is not adopted here.
+
+## 追加锚（本行以下为增补区）

@@ -9,17 +9,22 @@ public sealed class LibraryDocumentCapacityTests
     private static readonly RuleId CapacityRule = RuleId.CreateKnown(3);
 
     [Theory]
-    [InlineData(0, false)]
-    [InlineData(3000, false)]
-    [InlineData(3001, true)]
-    public void AddedNoteUsesItsOwnHardLimit(int lines, bool rejected)
+    [InlineData(RawChangeKind.Added, 0, false)]
+    [InlineData(RawChangeKind.Added, 3000, false)]
+    [InlineData(RawChangeKind.Added, 3001, true)]
+    [InlineData(RawChangeKind.Modified, 0, false)]
+    [InlineData(RawChangeKind.Modified, 3000, false)]
+    [InlineData(RawChangeKind.Modified, 3001, true)]
+    public void ChangedNoteUsesItsOwnHardLimit(RawChangeKind kind, int lines, bool rejected)
     {
         var fixture = new RuleFixture();
+        if (kind == RawChangeKind.Modified)
+            fixture.Baseline[Document] = Lines(1);
         fixture.Files[Document] = Lines(lines);
         fixture.Changes.Add(Document);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(CapacityRule, fixture.Build(
-            RawChangeSet.CreateWithKinds([(Document, RawChangeKind.Added)]))).Diagnostics;
+            RawChangeSet.CreateWithKinds([(Document, kind)]))).Diagnostics;
 
         if (!rejected)
         {
@@ -75,28 +80,47 @@ public sealed class LibraryDocumentCapacityTests
     }
 
     [Theory]
-    [InlineData(3000, 3001)]
-    [InlineData(6000, 6001)]
-    public void ModifyingExistingNoteDoesNotSelectIt(int baselineLines, int candidateLines)
+    [InlineData(2999, 3000, false)]
+    [InlineData(3000, 3001, true)]
+    [InlineData(6000, 6001, true)]
+    [InlineData(6000, 6000, true)]
+    [InlineData(6000, 5000, true)]
+    [InlineData(6000, 3000, false)]
+    public void ModifiedNoteChecksFullCandidateRegardlessOfBaseline(int baselineLines, int candidateLines, bool rejected)
     {
         var fixture = new RuleFixture();
         fixture.Baseline[Document] = Lines(baselineLines);
-        fixture.Files[Document] = Lines(candidateLines);
+        fixture.Files[Document] = Lines(candidateLines).Replace("line", "changed", StringComparison.Ordinal);
         fixture.Changes.Add(Document);
 
-        Assert.Empty(RuleCatalog.Default.EvaluateSingle(CapacityRule, fixture.Build()).Diagnostics);
+        var diagnostics = RuleCatalog.Default.EvaluateDeltaSingle(CapacityRule, fixture.Build()).Diagnostics;
+
+        if (!rejected)
+        {
+            Assert.Empty(diagnostics);
+            return;
+        }
+
+        var finding = Assert.Single(diagnostics);
+        Assert.Equal(Document, finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
+        Assert.Contains($"{candidateLines} lines (hard limit 3000)", finding.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void LibraryOnlyChangeActivatesDeltaPredicate()
+    [Theory]
+    [InlineData(RawChangeKind.Added)]
+    [InlineData(RawChangeKind.Modified)]
+    public void LibraryOnlyChangeActivatesDeltaPredicate(RawChangeKind kind)
     {
         var fixture = new RuleFixture();
+        if (kind == RawChangeKind.Modified)
+            fixture.Baseline[Document] = Lines(3000);
         fixture.Files[Document] = Lines(3001);
         fixture.Changes.Clear();
         fixture.Changes.Add(Document);
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(RuleCatalog.Default.ExecuteDelta(fixture.Build(
-            RawChangeSet.CreateWithKinds([(Document, RawChangeKind.Added)]))));
+            RawChangeSet.CreateWithKinds([(Document, kind)]))));
 
         Assert.Contains(CapacityRule, completed.Capability.ExecutedRules);
         Assert.Contains(completed.Capability.Diagnostics,
