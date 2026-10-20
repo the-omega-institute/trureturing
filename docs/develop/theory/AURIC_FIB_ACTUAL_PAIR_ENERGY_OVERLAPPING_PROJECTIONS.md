@@ -2278,3 +2278,783 @@ $3/4$ 的缺陷系数和 (24.4) 的速率来自原实际压缩。
 或 (24.4) 的实际供应。范数属于平均律的分析空间，各实际历史仍为幺正门乘积。
 
 ## 追加锚（本行以下为增补区）
+
+## 25. 实际有限自旋的奇异结构与酉因子恢复
+
+本节及以下各节仍取 (1.1)、(20.1) 的同一个 $A,J,C,D$，
+并取 (19.2) 的中心平凡自旋表示 $\rho_\ell$，作用空间记为
+$V_\ell$，维数 $d_\ell=2\ell+1$。所有伴随均指相应 Hilbert
+空间内积的伴随。置
+
+$$
+Q_\ell=\frac{I+\rho_\ell(J)}2,\qquad
+H_\ell=\operatorname{ran}Q_\ell,\qquad
+h_\ell=\dim H_\ell,\qquad
+B_\ell=(Q_\ell\rho_\ell(A)Q_\ell)|_{H_\ell}.
+\tag{25.1}
+$$
+
+$M_\ell=\rho_\ell(A)Q_\ell$ 仍是 (19.9) 的实际单步矩阵。
+为说明后面群代数的确切来源，在 $K/Z(K)$ 中记
+$c=[C]$、$d=[D]=[iD]$、$j=[J]$。母文 Proposition 45.3
+的坐标与此处的对应为
+
+$$
+iA=\rho(a),\qquad iD=\rho(D_0),\qquad
+C=\rho(D_0^{-1}R_0^{-1}D_0),\qquad
+c=d^{-1}[R_0]^{-1}d,\qquad [R_0]=dc^{-1}d^{-1}.
+\tag{25.2}
+$$
+
+这里无下标的 $\rho$ 仅指母文的四元数矩阵映射。
+尤其 $c$ 不是 $[R_0]$。该母文已经证明自由积注入性及 $j$
+在其外、固定 $[D_0]$ 并反演 $[R_0]$ 的性质。因此直接复用
+
+$$
+\Lambda=\langle c,d\rangle\simeq C_3*C_3,\qquad
+\Gamma=\langle c,d,j\rangle=\Lambda\rtimes\langle j\rangle,
+\qquad jdj=d,\quad jcj=c^{-1},\quad j\notin\Lambda.
+\tag{25.3}
+$$
+
+更明确地，自由积的一个因子取逆并用另一个因子的元素共轭它，
+仍给出自由积生成元；(25.2) 给出正反两向替换。
+这也说明母文的 $j$ 作用在本坐标中正是 (25.3)。每个
+$\Gamma$ 元素唯一写成 $gj^\epsilon$，$g\in\Lambda$、
+$\epsilon\in\{0,1\}$。这些是已给出的群结构供应，不是新的群表示定理。
+环境记忆卷 Theorems 10.1、12.2 的 $G(6,3)=C_6*_{C_2}S_3$
+给出同一旋转群的另一组坐标：在本坐标中取 $x=dj$，则
+$x^3=j$、$x^4=d$，与 $c$ 的轴垂直。
+
+群代数的伴随约定为 $(\sum_ga_gg)^*=\sum_g\overline{a_g}g^{-1}$，
+与每个酉表示的 Hilbert 空间伴随相容。约化音节长度是交替出现的
+非恒等 $C_3$ 因子元素的个数；$c,c^{-1},d,d^{-1}$ 各算一个音节。
+在 $\mathbb C[\Lambda]$ 中置
+
+$$
+s=\frac{c+c^{-1}}2,\qquad b=ds,\qquad
+\mathcal W_k=\{dc^{\epsilon_1}\cdots dc^{\epsilon_k}:
+\epsilon_i\in\{1,-1\}\},\qquad \mathcal W_0=\{e\}.
+\tag{25.4}
+$$
+
+自由积的约化音节正规形给出 $|\mathcal W_k|=2^k$，每个非空字
+的音节长度为 $2k$；显示的乘积顺序固定。$b$ 在 $j$ 共轭下不变。
+在 $\mathbb C[\Gamma]$ 中令 $q=(1+j)/2$、$a=dc^{-1}$，则
+$qaq=bq$，故 $(aq)^n=ab^{n-1}q$，$n\ge1$。
+这只是中心平凡表示中的字典；原历史仍由 (1.2) 定义。
+
+**定理 25.1（实际压缩的重数、行列式与时间迹）。** 对整数 $\ell\ge0$，
+令 $\varepsilon_\ell=(-1)^\ell$，并令
+$\eta_\ell=1,0,-1$ 按 $\ell\bmod3=0,1,2$ 周期取值。
+$H_\ell$ 内的公共 $\langle c,j\rangle\simeq S_3$ 不变空间投影
+记为 $E_\ell$，其秩记为 $e_\ell$。则
+
+$$
+h_\ell=\frac{d_\ell+\varepsilon_\ell}2,\qquad
+e_\ell=\frac{d_\ell+2\eta_\ell+3\varepsilon_\ell}6,
+\qquad h_\ell-e_\ell=\frac{d_\ell-\eta_\ell}3.
+\tag{25.5}
+$$
+
+在 $H_\ell$ 上有
+
+$$
+\begin{aligned}
+S_\ell&=\left.\frac{\rho_\ell(C)+\rho_\ell(C)^*}{2}\right|_{H_\ell}
+       =\frac{3E_\ell-I_{H_\ell}}2,\\
+U_\ell&=\rho_\ell(D)|_{H_\ell},\qquad B_\ell=U_\ell S_\ell,\\
+B_\ell^*B_\ell&=S_\ell^2,\qquad
+U_\ell=B_\ell(4B_\ell^*B_\ell-3I_{H_\ell}).
+\end{aligned}
+\tag{25.6}
+$$
+
+$U_\ell$ 酉。$B_\ell$ 可逆，奇异值为一（重数 $e_\ell$）及
+$1/2$（重数 $h_\ell-e_\ell$），从而
+
+$$
+|\det B_\ell|=2^{-(d_\ell-\eta_\ell)/3}.
+\tag{25.7}
+$$
+
+对每个整数 $n\ge1$，实际幂的精确等式为
+
+$$
+M_\ell^n=\rho_\ell(A)B_\ell^{n-1}Q_\ell,\qquad
+\|M_\ell^n\|_{\rm HS}^2
+=\operatorname{Tr}_{H_\ell}\bigl((B_\ell^*)^{n-1}B_\ell^{n-1}\bigr).
+\tag{25.8}
+$$
+
+证明。由 (19.3)，半转 $j$ 的特征标为 $\varepsilon_\ell$，
+三阶旋转 $c,c^{-1}$ 的特征标均为
+$\sin((2\ell+1)\pi/3)/\sin(\pi/3)=\eta_\ell$。
+$Q_\ell$ 的迹给出 $h_\ell$。在 $V_\ell$ 上令
+$E_{C,\ell}=(I+\rho_\ell(C)+\rho_\ell(C)^2)/3$。
+由 $C^3=I$，这是到 $C$ 不变空间的正交投影；
+$JCJ=C^{-1}$ 使它与 $Q_\ell$ 交换。
+所以它在 $H_\ell$ 上的限制就是 $E_\ell$。
+$\langle c,j\rangle$ 的六个元素为 $e,c,c^{-1},j,cj,c^{-1}j$。
+后三个均为非平凡半转，故群平均投影的迹为
+$(d_\ell+2\eta_\ell+3\varepsilon_\ell)/6$。
+相减给出 (25.5) 最后一式。
+
+对称平均保持 $H_\ell$，并等于 $(3E_\ell-I)/2$；单独的 $C$
+无需保持 $H_\ell$。由 (20.4) 的实际压缩，
+$B_\ell=U_\ell S_\ell$。$D$ 与 $J$ 交换，故其在 $H_\ell$
+上的限制酉，因而 $B_\ell^*B_\ell=S_\ell^2$。
+$S_\ell$ 在 $E_\ell$ 的像和核上分别为 $1,-1/2$，所以
+
+$$
+S_\ell^{-1}=2S_\ell-I=4S_\ell^2-3I.
+\tag{25.9}
+$$
+
+右乘此逆矩阵得到 (25.6) 的酉因子恢复公式；因子的左右次序不能交换。
+同一正交分解给出奇异值及其重数，奇异值之积给出 (25.7)。
+
+(25.8) 第一式是定理 20.1 在这个有限表示中的应用；亦可从
+$M_\ell=\rho_\ell(A)Q_\ell$ 按原顺序归纳。
+$\rho_\ell(A)$ 酉，$Q_\ell$ 是到 $H_\ell$ 的正交投影，
+所以在 $V_\ell=H_\ell\oplus\ker Q_\ell$ 的正交基中取平方范数和，
+恰得第二式，没有额外 $d_\ell$ 或 $h_\ell$ 因子。
+$n=1$ 时其值是 $h_\ell$。$\square$
+
+例如 $\ell=0,\ldots,6$ 时 $(h_\ell,e_\ell)$ 依次为
+$(1,1),(1,0),(3,1),(3,1),(5,2),(5,1),(7,3)$。
+常数自旋满足 $B_0=M_0=1$。
+奇异值表描述一次作用，不给出非正规矩阵 $B_\ell$ 的幂衰减。
+这里可用 $iD$ 代表 $D$，仅因 $\rho_\ell$ 对完整中心平凡。
+在完整复空间中仍须使用 (20.10)–(20.13)：若 $T_z=\xi I$，则
+$W=T_{iD}$、$\mathsf B=\xi^{-1}W\mathsf S$，并且
+$P^n=\xi^{-(n-1)}T_A(W\mathsf S)^{n-1}Q$。
+四个 $\xi\in\{1,i,-1,-i\}$ 扇区均保留；$D^3=iI$ 没有改成 $I$，
+任何一条实际历史也没有重新选相位。
+
+## 26. 原有序历史的有限加权迹与短时间窗
+
+沿用 $\vartheta_\ell$ 的记号，把中心平凡表示的特征标作用于
+$\Gamma$ 的射影元素。定义
+
+$$
+\begin{aligned}
+T(n,L)&=\sum_{\ell=0}^L d_\ell\|M_\ell^n\|_{\rm HS}^2,
+\qquad n\ge1,\ L\ge0,\\
+\mathcal D_L(g)&=\sum_{\ell=0}^L(2\ell+1)\vartheta_\ell(g),\\
+N_L&=\sum_{\ell=0}^L(2\ell+1)^2
+=\frac{(L+1)(2L+1)(2L+3)}3.
+\end{aligned}
+\tag{26.1}
+$$
+
+这里 $\mathcal D_L$ 是有限特征标核，不是第 8 节的尾对计数 $D_m$。
+$T(n,L_n)=\mathcal S_n$ 恰是 (19.12) 的原加权和。
+
+**定理 26.1（实际短时间加权迹）。** 对所有整数 $n\ge1,L\ge0$，
+
+$$
+\left|T(n,L)-2^{-n}\bigl[N_L+(-1)^L(L+1)\bigr]\right|
+\le(4L+1)256^{n-1}\bigl(1-2^{-(n-1)}\bigr).
+\tag{26.2}
+$$
+
+更精确地，若 $k=n-1$，则
+
+$$
+\begin{aligned}
+T(n,L)
+&=\frac1{2\,4^k}\sum_{w,v\in\mathcal W_k}
+ \bigl[\mathcal D_L(w^{-1}v)+\mathcal D_L(w^{-1}vj)\bigr]\\
+&=4^{-n}\sum_{h,g\in\{0,1\}^n}\mathcal D_L(G_h^{-1}G_g).
+\end{aligned}
+\tag{26.3}
+$$
+
+特别地，对每个固定 $0<\epsilon<2/9$，当 $L\to\infty$ 时一致地有
+
+$$
+\frac{T(n,L)}{2^{-n}N_L}
+=1+O\!\left(L^{-2}+\frac{512^n}{L^2}\right)
+=1+O\!\left(L^{-2}+L^{-9\epsilon}\right),
+\qquad 1\le n\le(2/9-\epsilon)\log_2L.
+\tag{26.4}
+$$
+
+证明。先给出本模型所需的整数高度界。(20.1) 给出
+$C=-I/2+i(\sqrt3/2)[(\sqrt3/2)\sigma_x+(1/2)\sigma_y]$。
+取固定的 $R=\operatorname{diag}(e^{i\pi/12},e^{-i\pi/12})$，
+用 $RCR^*$ 将这个水平轴移到 $x$ 轴；$D,J$ 不变。
+取 $c,d$ 的 $SU(2)$ 提升及 $j$ 的提升为
+
+$$
+\widetilde c=\frac{-I+i\sqrt3\sigma_x}{2},\qquad
+\widetilde d=iD=\frac{-I-i\sqrt3\sigma_z}{2},\qquad
+\widetilde j=iJ=-i\sigma_z.
+\tag{26.5}
+$$
+
+以 $X=i\sqrt3\sigma_x,Y=i\sigma_y,Z=i\sqrt3\sigma_z$ 为基，
+$\mathscr O=\mathbb ZI+\mathbb ZX+\mathbb ZY+\mathbb ZZ$ 在乘法下封闭：
+$X^2=Z^2=-3I,Y^2=-I$，$XY=-Z,YZ=-X,ZX=-3Y$，
+反向乘积各改符号。四个字母 $\widetilde c^{\pm1},\widetilde d^{\pm1}$
+均在 $\tfrac12\mathscr O$ 内。因此，音节长度至多 $m$ 的 $g\in\Lambda$
+有提升
+
+$$
+\widetilde g=2^{-m}(a_0I+a_1X+a_2Y+a_3Z),\qquad
+ a_i\in\mathbb Z,\qquad
+ a_0^2+3a_1^2+a_2^2+3a_3^2=4^m.
+\tag{26.6}
+$$
+
+长度小于 $m$ 时只将整数分子乘相应的二次幂，故仍用这个分母。
+若提升的特征值为 $e^{\pm i\theta_g}$，则对非恒等的射影元素 $g$，
+
+$$
+\sin^2\theta_g=\frac{4^m-a_0^2}{4^m}\ge4^{-m}.
+\tag{26.7}
+$$
+
+分子是严格正整数：若为零，提升为标量，射影元素即恒等。
+$\widetilde g\widetilde j$ 的标量坐标为 $2^{-m}\sqrt3a_3$，所以
+
+$$
+\sin^2\theta_{gj}=\frac{4^m-3a_3^2}{4^m}\ge4^{-m}.
+\tag{26.8}
+$$
+
+这里 $gj$ 对每个 $g\in\Lambda$ 都非恒等，理由是 (25.3) 中的
+$j\notin\Lambda$；分子同样是严格正整数。
+由 (19.3)，对 $g\ne e$ 立即有
+$|\vartheta_\ell(g)|,|\vartheta_\ell(gj)|\le2^m$。
+选择提升的正负号不改变整数自旋的特征标或上述正弦平方。
+
+下面同时记录稍后将用于有限自旋多项式的归一化迹估计。
+若 $f=\sum_ga_gg\in\mathbb C[\Lambda]$ 在 $j$ 共轭下不变，
+且支撑音节长度至多 $m$，则 $\rho_\ell(f)$ 保持 $H_\ell$。
+由 $Q_\ell=(I+\rho_\ell(j))/2$，
+
+$$
+\operatorname{Tr}_{H_\ell}\rho_\ell(f)|_{H_\ell}
+=\frac12\sum_ga_g[\vartheta_\ell(g)+\vartheta_\ell(gj)].
+\tag{26.9}
+$$
+
+$g=e$ 的括号为 $d_\ell+\varepsilon_\ell=2h_\ell$，
+其余每个括号的绝对值至多 $2^{m+1}$。因此
+
+$$
+\left|\frac1{h_\ell}\operatorname{Tr}_{H_\ell}
+ \rho_\ell(f)|_{H_\ell}-a_e\right|
+\le\frac{2^m}{h_\ell}\sum_{g\ne e}|a_g|.
+\tag{26.10}
+$$
+
+这是对本模型整数高度的应用，不需要 $f$ 的系数为实数或非负。
+
+为处理维数权重，设 $g$ 非恒等，取其非标量提升角度 $\theta$。
+几何级数给出
+$|\sum_{\ell=0}^q e^{2i\ell\theta}|\le1/|\sin\theta|$。
+对权重 $2\ell+1$ 作 Abel 求和：末端权重为 $2L+1$，
+权重差的总和为 $2L$。乘上 $e^{i\theta}$ 并取虚部，再用
+(19.3) 除以 $\sin\theta$，得到
+
+$$
+|\mathcal D_L(g)|\le\frac{4L+1}{\sin^2\theta_g}.
+\tag{26.11}
+$$
+
+同样适用于 $gj$。另一方面，直接求和给出
+$\mathcal D_L(e)=N_L$ 及
+$\mathcal D_L(j)=\sum_{\ell=0}^L(2\ell+1)(-1)^\ell=(-1)^L(L+1)$；
+后一式也可对 $L$ 归纳。
+
+现在取 $k=n-1$。群代数中
+
+$$
+b^k=2^{-k}\sum_{w\in\mathcal W_k}w,\qquad
+f_k=(b^*)^kb^k=4^{-k}\sum_{w,v\in\mathcal W_k}w^{-1}v.
+\tag{26.12}
+$$
+
+$f_k$ 在 $j$ 共轭下不变，所有合并后的系数非负，总质量一，
+恒等系数为 $2^{-k}$，支撑长度至多 $4k$。
+恒等系数的值使用了 $|\mathcal W_k|=2^k$，而非整壳字数。
+在 $H_\ell$ 上 $\rho_\ell(b)=B_\ell$。
+故 (25.8)、(26.9) 以及有限求和交换给出 (26.3) 第一行。
+第二行直接由 (19.10)、(19.25) 得到：
+原来的每个有序历史对均以质量 $4^{-n}$ 进入；
+$G_h=(AJ^{h_n})\cdots(AJ^{h_1})$ 的时间次序保持 (1.2) 不变。
+两个式子是同一矩阵幂范数的精确展开，不是对原历史选择子族后重加权。
+
+$w=v$ 的 $2^k$ 项贡献恰为
+$2^{-n}[N_L+(-1)^L(L+1)]$。
+其余有序对占 (26.12) 的质量 $1-2^{-k}$。
+对每个这样的 $w^{-1}v\ne e$，使用 $m=4k$ 的
+(26.7)–(26.8)、(26.11)，两项核各至多 $(4L+1)4^{4k}$。
+外面的 $1/2$ 正好抵消两项之和的因子二。
+这给出 (26.2)，包括 $k=0$ 时空的余和。
+
+最后 $N_L\asymp L^3$，而 $(L+1)/N_L=O(L^{-2})$。
+将 (26.2) 除以 $2^{-n}N_L$，即得 (26.4) 的第一个误差界。
+所述时间范围内 $512^n=2^{9n}\le L^{2-9\epsilon}$，给出第二个界。
+各常数可独立于这个范围内的 $n,L$ 选择。$\square$
+
+$n=1$ 时 (26.2) 的误差严格为零，且
+$T(1,L)=\sum_{\ell\le L}d_\ell h_\ell=[N_L+(-1)^L(L+1)]/2$。
+$L=0$ 时 $T(n,0)=1$，对角项为 $2^{1-n}$；
+$n=1$ 二者相等，$n\ge2$ 的差也满足 (26.2)。
+作为 (26.10) 的另一直接读数，(26.12) 还给出
+
+$$
+\left|h_\ell^{-1}\|M_\ell^n\|_{\rm HS}^2-2^{-k}\right|
+\le\frac{16^k}{h_\ell}(1-2^{-k}),\qquad k=n-1.
+\tag{26.13}
+$$
+
+这些有限时间估计保留了全部自旋维数权重；它们没有估计临界时间窗。
+
+## 27. 实际字支持上的系数普适正则转移成本
+
+本节的 $\lambda_\Lambda$ 专指离散群 $\Lambda$ 在
+$\ell^2(\Lambda)$ 上的左正则表示，与 (1.1) 的共同标量 $\lambda$
+不同。对有限群代数元 $f=\sum_ga_gg$，记
+$\|f\|_2=(\sum_g|a_g|^2)^{1/2}$，
+$\tau(f)=a_e$，$\|f\|_1=\sum_g|a_g|$。
+下面的系数可以是任意复数；实际字律仍是 (26.12) 中指定的等正系数。
+
+**定理 27.1（实际支持的系数普适转移下界）。** 设 $\pi$ 是
+$\Lambda$ 的任意非零 $d$ 维酉表示。对每个整数 $k\ge1$，
+
+$$
+\sup_{\substack{0\ne f\in\mathbb C[\Lambda]\\
+\operatorname{supp}f\subseteq\mathcal W_k}}
+\frac{\|\pi(f)\|}{\|\lambda_\Lambda(f)\|}
+\ge\frac{2^{k/2}}{\sqrt{2d}\,(4k+1)}.
+\tag{27.1}
+$$
+
+对原有限自旋 $\pi=\rho_\ell|_\Lambda$，在完整的 $V_\ell$ 上，
+若 $n\ge3$、$k=n-1$、$0\le\ell\le L_n$，则右侧还至少为
+
+$$
+\frac{2^{n/3}}{8n}.
+\tag{27.2}
+$$
+
+证明。先在同一个实际字支持上建立所需的正则模型比较。
+取两个 $C^*$ 代数 $C^*(C_3)$，分别由 $d,c$ 生成，配以
+规范迹 $\tau_i(u^a)=\mathbf1_{\{a=0\bmod3\}}$。
+这些迹在有限维代数上忠实，故其 GNS 表示忠实。
+其约化自由积作用正是 $C^*_r(\Lambda)$ 的左正则作用。
+每个中心化因子的 $L^2$ 空间都有正交基 $u,u^2$；
+约化音节字由这些基的交替张量构成正交基。
+
+应用 Ricard–Xu, *Khintchine type inequalities for reduced free products
+and applications*, [math/0505302v2](https://arxiv.org/pdf/math/0505302v2)，
+Theorem 2.5 的 $(K_d)$。将该文的齐次次数改记为 $m$，
+以免与表示维数 $d$ 混淆。它给出
+$\|\lambda_\Lambda(f)\|\le(2m+1)\|\iota(f)\|$，
+其中 $\iota$ 是该文 pp. 5–6 的辅助嵌入，不是直接的 $L^2$ 范数。
+在这里还须检验其辅助范数。以下把这个检验在实际的两个三阶因子上写出。
+
+固定音节次数 $m$ 的复标量系数元写成
+$f=\sum_{|w|=m}a_ww$。
+$\iota$ 的第一类分量把字在第 $p$ 个音节后切开，
+以首段为行、倒序取逆的尾段为列，$0\le p\le m$。
+对应矩阵的非零条目恰为 $a_w$；首段与尾段唯一恢复 $w$。
+故该矩阵的 Hilbert–Schmidt 范数为 $\|f\|_2$，
+算子范数至多这个值。行列的转置、逆序和共轭只改变正交基，
+不改变此结论。
+
+第二类分量保留第 $p+1$ 个音节在其因子代数内，
+将前后两段分别变成行列，$0\le p<m$。
+固定这个中间因子 $i$，把中间字母 $u,u^2$ 的系数矩阵分别记为
+$F_{i,1},F_{i,2}$。唯一拼接性给出
+
+$$
+\|F_{i,1}\|_{\rm HS}^2+\|F_{i,2}\|_{\rm HS}^2
+=\sum_{\substack{|w|=m\\w_{p+1}\text{ 属于因子 }i}}|a_w|^2
+\le\|f\|_2^2.
+\tag{27.3}
+$$
+
+该分量是 $F_{i,1}\otimes u+F_{i,2}\otimes u^2$。
+$C^*(C_3)\simeq\mathbb C^3$，所以其空间张量范数由三个特征
+$u\mapsto\zeta$、$\zeta^3=1$ 的算子范数的最大值给出。
+逐个特征计算，
+
+$$
+\|\zeta F_{i,1}+\zeta^2F_{i,2}\|
+\le\|F_{i,1}\|_{\rm HS}+\|F_{i,2}\|_{\rm HS}
+\le\sqrt2\,\|f\|_2.
+\tag{27.4}
+$$
+
+Ricard–Xu 嵌入的外层因子指标和各个切口都是 $\ell^\infty$ 直和，
+取上确界，不再累加一个因子数。该文 p. 8 的保留中间因子实现
+正是上述矩阵在 $C^*(C_3)$ 中的实现。
+第一、第二类分量合并便有
+
+$$
+\|\iota(f)\|\le\sqrt2\,\|f\|_2,\qquad
+\|\lambda_\Lambda(f)\|\le\sqrt2(2m+1)\|f\|_2.
+\tag{27.5}
+$$
+
+此检验适用于任意复齐次标量系数，并非只适用于非负系数。
+对 $\mathcal W_k$，音节次数是 $m=2k$，不是二元选择次数 $k$。
+特别地，(26.12) 与正则表示作用于 $\delta_e$ 给出
+
+$$
+2^{-k/2}\le\|\lambda_\Lambda(b)^k\|
+\le\sqrt2(4k+1)2^{-k/2},\qquad
+r(\lambda_\Lambda(b))=2^{-1/2}.
+\tag{27.6}
+$$
+
+下界使用 $\|b^k\|_2^2=2^k4^{-k}=2^{-k}$；
+上下界取 $k$ 次根，并用有界算子的谱半径公式，给出最后一式。
+(27.5)–(27.6) 是用于本定理的既有不等式之应用，
+没有把正则范数结论转移给紧自旋。
+
+现设 $N=2^k$，在 $\pi$ 的空间取正交基。
+每个 $\pi(w)$ 酉，故
+
+$$
+\sum_{i,j=1}^d\sum_{w\in\mathcal W_k}|\pi(w)_{ij}|^2=Nd.
+\tag{27.7}
+$$
+
+于是某个矩阵元满足
+$A_{ij}:=\sum_{w\in\mathcal W_k}|\pi(w)_{ij}|^2\ge N/d>0$。
+选择 $f=\sum_{w\in\mathcal W_k}\overline{\pi(w)_{ij}}\,w$。
+此时 $\|f\|_2=\sqrt{A_{ij}}$，而
+$\pi(f)_{ij}=A_{ij}$，所以 $\|\pi(f)\|\ge A_{ij}$。
+由次数 $2k$ 的 (27.5)，
+
+$$
+\frac{\|\pi(f)\|}{\|\lambda_\Lambda(f)\|}
+\ge\frac{\sqrt{A_{ij}}}{\sqrt2(4k+1)}
+\ge\frac{2^{k/2}}{\sqrt{2d}(4k+1)}.
+\tag{27.8}
+$$
+
+$f\ne0$；正则表示在有限群代数上忠实，因为其作用于 $\delta_e$
+恢复全部系数，所以分母非零。这证明 (27.1)。
+
+对原自旋，$n\ge3$ 时 $2^{n/3}\ge2$，因而
+$d_\ell=2\ell+1\le2L_n+1\le2^{n/3}/2+1\le2^{n/3}$。
+把 $k=n-1$ 代入 (27.1)，得到
+
+$$
+\frac{2^{(n-1)/2}}{\sqrt{2d_\ell}(4n-3)}
+\ge\frac{2^{n/3-1}}{4n-3}
+\ge\frac{2^{n/3}}{8n}.
+\tag{27.9}
+$$
+
+这里必须使用整个 $V_\ell$：$H_\ell$ 不必受 $c$ 保持，
+故不能把它当作 $\Lambda$ 的表示空间。$\square$
+
+**推论 27.2（系数普适支配与精确等距压缩的边界）。** 任意非零有限维
+$\pi$ 都不存在有限常数 $C_\pi$，使所有有限群代数元满足
+$\|\pi(f)\|\le C_\pi\|\lambda_\Lambda(f)\|$。
+因此 $\pi$ 不弱包含于 $\lambda_\Lambda$。
+从紧正则表示移除有限个完整等型分量之后，其中心平凡部分仍不存在
+这种对全部系数的正则范数支配，也不能通过到一个弱包含于
+$\lambda_\Lambda$ 的表示的精确等距压缩来同时重现所有群酉算子。
+
+证明。固定 $d$，(27.1) 的右侧随 $k$ 趋于无穷，给出第一项。
+酉表示的弱包含范数判据要求对所有 $f\in\mathbb C[\Lambda]$
+有 $\|\pi(f)\|\le\|\lambda_\Lambda(f)\|$，故亦被排除。
+有限个完整紧等型分量的删除仍留下任意充分大的中心平凡自旋，
+其中每个 $V_\ell$ 都作为有限维不变子表示出现。
+若剩余直和有上述统一支配，每个子表示亦有，矛盾。
+
+最后设 $V$ 是等距嵌入，$\sigma$ 是弱包含于正则表示的酉表示，
+且对每个 $g\in\Lambda$ 都有 $V^*\sigma(g)V=\pi(g)$。
+对任意向量 $v$，令 $P_V=VV^*$，则
+
+$$
+\|P_V\sigma(g)Vv\|=\|V\pi(g)v\|=\|v\|
+=\|\sigma(g)Vv\|.
+\tag{27.10}
+$$
+
+正交分解迫使 $(I-P_V)\sigma(g)Vv=0$，所以
+$\sigma(g)V=V\pi(g)$；对 $g^{-1}$ 同样成立。
+因此 $V$ 是交织算子，$\pi$ 是 $\sigma$ 的子表示，
+便应弱包含于正则表示，与前面的结论矛盾。
+剩余直和若有这样的等距压缩，限制到其中一个自旋子表示即得同一矛盾。
+$\square$
+
+(27.1) 的见证依赖 $\pi$，其系数未被要求非负、相等或在 $j$ 共轭下不变。
+所以本节不反驳 $b^k$ 这一指定正等系数元的紧表示范数比较，
+也不反驳加权平均迹的上界。
+对压缩空间或仅对 $j$ 不变系数的比较另须论证，不能直接套用这个见证。
+此外，令 $u=dc,v=dc^{-1}$，则
+$u^{-1}v=c$、$(u^{-1}v)^3=e$。
+它们的正半群单词虽互异，却不是自由群的一组自由生成元。
+Kemp–Speicher [math/0512481v2](https://arxiv.org/pdf/math/0512481v2)
+Theorem 1.3 要求 $*$-自由、同分布的 $R$-diagonal 族；
+本模型没有建立这个条件。该文 Corollary 1.4 的自由群正生成元结果
+也不能由正半群注入性移入这里。因此 (27.6) 没有使用更强的平方根型因子。
+
+## 28. 实际压缩所必需的正交约化块增长
+
+这里的正交约化分解指 Hilbert 空间的正交直和，每个块同时受算子及其
+Hilbert 空间伴随保持。以下结论针对这种分解；不涉及非正交相似变换。
+
+**定理 28.1（有限自旋的约化块下界）。** 设整数 $r\ge1$，置
+
+$$
+t=r^2+1,\qquad K=\frac{t(t+5)}2.
+\tag{28.1}
+$$
+
+如果
+
+$$
+h_\ell\ge2\,t!\,2^{5K},
+\tag{28.2}
+$$
+
+则 $B_\ell$ 和 $M_\ell$ 均不存在全部块维数至多 $r$ 的正交约化分解。
+存在绝对常数 $c_*>0$，使充分大的 $\ell$ 的每种这种分解中，
+最大块维数至少为 $c_*(\log(\ell+2))^{1/4}$。
+从完整紧正则表示删除有限个完整等型分量之后，原 $P$ 及其
+$J$ 不变空间上的压缩 $\mathsf B$ 也不存在维数一致有界的正交约化分解。
+
+证明。在本模型的群代数中取
+
+$$
+x=b=ds,\qquad y=db=d^2s,\qquad s=(c+c^{-1})/2.
+\tag{28.3}
+$$
+
+$x,y$ 在 $j$ 共轭下均不变。任意次数 $K$ 的 $x,y$ 单项式展开成
+$2^K$ 个约化字，每字音节长度 $2K$，系数 $2^{-K}$。
+确实，每个位置的 $d$ 音节是 $d$ 或 $d^2$，恢复该位置的 $x$ 或 $y$；
+随后的 $c$ 音节是 $c$ 或 $c^{-1}$，恢复展开的符号选择。
+相邻因子之间是 $c$ 音节接 $d$ 音节，没有约化抵消。
+因此不同单项式的这些支持也互不相交。
+这是实际 $c,d$ 的自由积正规形在此多项式上的应用。
+
+令 $w_i=xy^ix$，$i=1,\ldots,t$，并取交替表达式
+
+$$
+F(x,y)=\sum_{\sigma\in S_t}\operatorname{sgn}(\sigma)
+ w_{\sigma(1)}\cdots w_{\sigma(t)}.
+\tag{28.4}
+$$
+
+每个单项式的次数都是 $\sum_{i=1}^t(i+2)=K$。
+从 $xy^{\sigma(1)}xx y^{\sigma(2)}x\cdots x y^{\sigma(t)}x$
+的 $y$ 连续段长度可以逐个恢复 $\sigma(1),\ldots,\sigma(t)$；
+每个长度都至少一，故中间的两个 $x$ 是确定的分隔。
+所以 (28.4) 有 $t!$ 个不同单项式。
+再用上一段的互斥支持，展开后共有 $t!2^K$ 个不同群元素，
+各系数为 $\pm2^{-K}$。由此精确得到
+
+$$
+\tau(F^*F)=\|F\|_2^2=t!2^{-K},\qquad
+\|F\|_1=t!,\qquad \|F^*F\|_1\le(t!)^2.
+\tag{28.5}
+$$
+
+最后一项使用群代数 $\ell^1$ 范数的次乘性，允许差字之间的重合。
+$F^*F$ 在 $j$ 共轭下不变，支撑音节长度至多 $4K$。
+因此 (26.10) 应用于这个实际群代数元，给出
+
+$$
+\left|\frac1{h_\ell}\operatorname{Tr}_{H_\ell}
+ \rho_\ell(F^*F)|_{H_\ell}-t!2^{-K}\right|
+\le\frac{2^{4K}(t!)^2}{h_\ell}.
+\tag{28.6}
+$$
+
+$\rho_\ell(x)|_{H_\ell}=B_\ell$，
+$\rho_\ell(y)|_{H_\ell}=U_\ell B_\ell$。
+由于这些算子和伴随都保持 $H_\ell$，(28.6) 的迹正是
+$\|F(B_\ell,U_\ell B_\ell)\|_{\rm HS}^2$。
+(28.2) 使右侧至多 $\tfrac12t!2^{-K}$，所以
+
+$$
+\frac1{h_\ell}\|F(B_\ell,U_\ell B_\ell)\|_{\rm HS}^2
+\ge\frac12t!2^{-K}>0.
+\tag{28.7}
+$$
+
+若 $B_\ell$ 有全部维数至多 $r$ 的正交约化块，
+每个块既受 $B_\ell$ 也受 $B_\ell^*$ 保持。
+由 (25.6) 的有序多项式，$U_\ell$ 也保持每个块，
+故 $B_\ell,U_\ell B_\ell$ 及全部 $w_i$ 均保持它。
+在维数 $s_0\le r$ 的一个块上，$t=r^2+1>s_0^2$ 个矩阵 $w_i$
+在 $s_0^2$ 维的复矩阵空间内线性相关。
+
+为明确交替步骤，映射
+$(Z_1,\ldots,Z_t)\mapsto\sum_{\sigma}\operatorname{sgn}(\sigma)
+Z_{\sigma(1)}\cdots Z_{\sigma(t)}$
+对每个输入线性；两个输入相等时，把排列按交换这两个输入配对，
+两项符号相反而乘积相同，故为零。
+线性相关时，将一个非零系数对应的输入表示为其余输入的线性组合，
+再按该输入展开，每项都有重复输入，因而仍为零。
+于是 (28.4) 在每个小块上为零，在整个正交直和上亦为零，
+与 (28.7) 矛盾。这证明 $B_\ell$ 的结论。
+
+若 $M_\ell$ 有这样的约化分解，则
+$M_\ell^*M_\ell=Q_\ell$ 也保持每个块。
+每个块因此按 $Q_\ell$ 的像和核正交分开；其与 $H_\ell$ 的交
+组成 $H_\ell$ 的正交分解，每个交的维数至多 $r$。
+压缩 $Q_\ell M_\ell Q_\ell|_{H_\ell}=B_\ell$ 及其伴随
+保持这些交，给出已被排除的分解。
+
+还须将阈值转成增长率。$h_\ell\ge\ell$，而 $r\ge1$ 时
+$t\le2r^2$、$t+5\le7r^2$，从而 $K\le7r^4$。
+又 $\log_2(t!)\le t\log_2t\le t^2\le4r^4$，故
+
+$$
+\log_2(2t!2^{5K})=1+\log_2(t!)+5K\le40r^4\le42r^4.
+\tag{28.8}
+$$
+
+对充分大的 $\ell$ 取
+$r=\lfloor(\log_2\ell/42)^{1/4}\rfloor\ge1$，
+则 $h_\ell\ge\ell\ge2^{42r^4}$，满足 (28.2)。
+所以每个分解的最大块维数大于 $r$。
+利用 $\lfloor u\rfloor\ge u/2$（$u\ge2$）和
+$\log\ell\ge\tfrac12\log(\ell+2)$（充分大的 $\ell$），
+例如可取 $c_*=[2(84\log2)^{1/4}]^{-1}$。
+这是充分下界，不宣称阈值尖锐。
+
+最后处理完整等型直和，不能预设未知约化块与自旋对齐。
+在 $\mathcal H_J$ 上，原完整压缩仍满足
+
+$$
+\mathsf B=T_D\mathsf S,\qquad
+\mathsf B^*\mathsf B=\mathsf S^2,\qquad
+T_D|_{\mathcal H_J}
+=\mathsf B(4\mathsf B^*\mathsf B-3I).
+\tag{28.9}
+$$
+
+这是 (20.3)–(20.5) 中两谱值及酉性的同一代数计算，
+并未把 $T_D$ 换成 $T_{iD}$。
+这些等式也限制到任意固定完整等型截断后的
+$\mathcal H_{J,\Pi}$。如果该空间的 $\mathsf B$ 有维数至多 $r$
+的正交约化块，(28.9) 以及刚才的矩阵空间维数和交替论证迫使
+$F(\mathsf B,T_D\mathsf B)=0$。
+但有限个完整等型分量的删除留下所有充分大的中心平凡自旋。
+其任意一个 $H_\ell$ 副本上，这个表达式恰为
+$F(B_\ell,U_\ell B_\ell)$，由 (28.7) 非零，矛盾。
+这一限制只用于检出多项式非零，不要求原来的小块与自旋副本对齐。
+若 $P|_{\ker\Pi}$ 有一致有界约化块，用 $P^*P=Q$ 和相同的
+像核分解便得到 $\mathsf B$ 的一致有界块，亦矛盾。
+$\square$
+
+例如 $r=1$ 时 $t=2,K=7$，充分条件是 $h_\ell\ge2^{37}$；
+$r=2$ 时 $t=5,K=25$，充分条件是 $h_\ell\ge240\,2^{125}$。
+本证明使用实际字的互斥正规形和正交约化块的多项式恒等式，
+没有从最小多项式次数推断块维数。
+它允许随 $\ell$ 增长的约化块，也不排除任何非正交相似分块，
+更不单独给出幂范数的增长或衰减界。
+
+## 29. 临界实际有符号余和与文献对应
+
+由 (26.3) 可把原目标所缺的量精确隔离，而不改变字律。
+对 $n\ge1$、$k=n-1$、$L\ge0$ 定义
+
+$$
+\mathcal R(n,L)=\frac1{2\,4^k}
+\sum_{\substack{w,v\in\mathcal W_k\\w\ne v}}
+\bigl[\mathcal D_L(w^{-1}v)+\mathcal D_L(w^{-1}vj)\bigr].
+\tag{29.1}
+$$
+
+这个实数和保留每个有序对；不同差字的相同值仍以原重数计入。
+字的系数相等且为正，核的值则可以有正有负。
+在原临界截断 $L_n=\lfloor2^{n/3}/4\rfloor$ 上，精确地
+
+$$
+\mathcal S_n=T(n,L_n)
+=2^{-n}\bigl[N_{L_n}+(-1)^{L_n}(L_n+1)\bigr]
+ +\mathcal R(n,L_n).
+\tag{29.2}
+$$
+
+由于 $L_n/2^{n/3}\to1/4$，$N_L=(4/3)L^3+O(L^2)$，
+
+$$
+2^{-n}\bigl[N_{L_n}+(-1)^{L_n}(L_n+1)\bigr]\longrightarrow\frac1{48}.
+\tag{29.3}
+$$
+
+而常数自旋给出 $\mathcal S_n\ge1$，因此
+
+$$
+\mathcal R(n,L_n)\ge\frac{47}{48}+o(1).
+\tag{29.4}
+$$
+
+所以不能把目标换成“非对角余项趋于零”。
+所需的是 (29.1) 这个实际等系数有符号和的次指数单侧上界：
+存在 $u_n\ge1$、$\log u_n=o(n)$ 使
+$\mathcal R(n,L_n)\le u_n$。
+由于 (29.3) 有界且 $\mathcal S_n\ge1$，这个要求等价于
+$\log\mathcal S_n=o(n)$：一个方向把有界对角项加回去，
+另一个方向用对角项非负，故 $\mathcal R(n,L_n)\le\mathcal S_n$。
+此上界仍未证明。
+
+短时间结论 (26.4) 只适用于
+$n\le(2/9-\epsilon)\log_2L$；原临界关系却是
+$n=3\log_2L_n+6+o(1)$。
+若把其中的主项渐近式直接延伸到临界关系，就会与
+(29.3) 和 $\mathcal S_n\ge1$ 矛盾。
+逐项绝对估计 (26.2) 在临界处亦不能供应所需的次指数上界：
+其右侧含 $256^{n-1}(4L_n+1)$。
+需要控制的是共同实现下整个有符号和的上方，而不是先把所有核值取绝对值。
+
+与原配对问题的回接直接采用 (19.14)，不更换任何常数：
+对 $n\ge18$，$a_0=1/(12\sqrt2\pi)$，
+
+$$
+\frac{Q_n}{128\pi^2}\le\mathcal S_n
+\le\frac{18522\pi^2}{32a_0}Q_n.
+\tag{29.5}
+$$
+
+因此 (19.28) 的必要充分接口、(15.3) 的全固定尺度族接口及
+(15.7) 的原球向量接口原样适用。
+这里不重复证明这些已给出的供应结果；
+$128\pi^2$、$18522$、原球半径和每条历史的质量均保持原义。
+第 21 节对每个紧开子群的直接正双陪集障碍仍成立，
+(25.3) 的群结构复用没有消除它。
+
+本增补的来源对应如下。
+
+| 供应与精确位置 | 在实际模型中的用途和条件 |
+| --- | --- |
+| 母文 Proposition 45.3；环境记忆卷 Theorems 10.1、12.2 | 复用自由积、$j$ 的作用与外部性，以及旋转群识别；实际生成元的正反替换是 (25.2)，并非 $c=[R_0]$ |
+| Radin–Sadun, *Subgroups of SO(3) Associated with Tilings*, [math/9601202v1](https://arxiv.org/pdf/math/9601202v1), Theorem 1(i),(ii), Corollary 2，PDF p. 3；Journal of Algebra **202**, 611–633，DOI [10.1006/jabr.1997.7320](https://doi.org/10.1006/jabr.1997.7320) | 垂直轴旋转：奇数阶 $(3,3)$ 的自由积，以及偶数阶/奇数阶 $(6,3)$ 的合并积。它们是已用群供应的文献依据，不给紧表示范数转移 |
+| Radin–Sadun, *On 2-generator subgroups of SO(3)*, [math/9706203v2](https://arxiv.org/pdf/math/9706203v2), Theorem 2 cases 1,2，式 (15),(16)，PDF p. 6 | 相同垂直轴条件下的两种表示式。以 $x=dj,c$ 为六阶/三阶旋转，一次共同空间旋转对应文中的两条轴；其结论不供应配对能量界 |
+| Ricard–Xu, [math/0505302v2](https://arxiv.org/pdf/math/0505302v2), §1 的忠实 GNS 条件，Lemmas 2.1–2.3、Corollary 2.4、pp. 5–6 的 $\iota$ 与 Theorem 2.5 $(K_d)$，p. 8 的中间因子实现 | 两个带规范忠实迹的 $C^*(C_3)$、齐次约化音节次数 $m=2k$；(27.3)–(27.5) 另行检验标量辅助范数，才得到 (27.6) 及系数任意的 (27.8) |
+| Kemp–Speicher, *Strong Haagerup inequalities for free R-diagonal elements*, [math/0512481v2](https://arxiv.org/pdf/math/0512481v2), Definition 1.2、Theorem 1.3、Corollary 1.4，PDF pp. 2–4 | $*$-自由同分布 $R$-diagonal 族或自由群正生成元的条件没有在这里建立；该不等式不作为本增补的供应 |
+| 本卷 (19.2)–(19.3)、(19.9)–(19.14)、(19.25)–(19.28)、(20.1)–(20.13) | 复用中心平凡自旋、维数权重、原时间幂、临界等价与完整相位压缩；本增补在这些对象内推导重数、整数高度加权迹及两种具体路线的障碍 |
+
+(25.5)–(25.9) 是实际 $S_3$ 压缩的有限表示计算；
+(26.2)–(26.13) 是实际生成元整数高度、维数加权核和原历史恒等式的推导；
+(27.1)–(27.10) 把既有正则不等式用于实际支持上的系数普适比较；
+(28.2)–(28.9) 用实际 $d,d^2$ 音节和有限自旋迹排除一致小约化块。
+一般自由积不等式与一般交替多项式事实仅是这些应用中的中间工具。
+这些普通数学推导不声称全局原创性、优先权或形式内核认证。
+
+原临界估计 $\log\mathcal S_n=o(n)$ 仍未解决。
+第 16 节及 (20.9) 对固定有限完整等型截断的完整复空间统一幂条件，
+也没有被上述有限自旋结构、任意复系数见证或约化块增长证明或反驳。
+所有四个中心扇区仍属于这个较强条件的量词。
+任意时域的匹配记忆律、完整有限联合恢复律以及物理实现均仍需原有的
+独立数学与实现条件；短时间窗不将这些目标结算。
+
+## 追加锚（本行以下为增补区）
