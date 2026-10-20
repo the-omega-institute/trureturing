@@ -55,7 +55,7 @@ The proof would not settle the conjecture if the module's vertex set differed fr
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Contextuality/StabilizerCHSHGraphRegularity.lean` (667 lines).
+The canonical source is `D5/S3/Quantum/Contextuality/StabilizerCHSHGraphRegularity.lean` (742 lines).
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Registration.** The §3.9 registration is `Reg/D5/S3/Quantum/Contextuality/StabilizerCHSHGraphRegularity.lean`.
