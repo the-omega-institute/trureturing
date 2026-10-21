@@ -6,6 +6,8 @@
    utility: none
    digest: Actual supported relative-modular coordinates reconstruct the Petz matrix. -/
 
+/- Escape audit unfinished for newly public cfc_spectral_sum: https://github.com/the-omega-institute/trureturing/issues/19210. -/
+
 import D5.S3.Quantum.Divergence.CanonicalChannelDPI
 import D5.S3.Quantum.Recovery.ReferencePetzChannel
 
@@ -21,7 +23,7 @@ open D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 
 namespace D5.S3.Quantum.Recovery.PetzSpectralCoordinates
 
-private theorem cfc_spectral_sum {n : Type*} [Fintype n] [DecidableEq n]
+theorem cfc_spectral_sum {n : Type*} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : H.IsHermitian) (f : ℝ → ℝ) :
     cfc f H = ∑ i : n, (f (hH.eigenvalues i) : ℂ) •
       Matrix.vecMulVec (fun x => hH.eigenvectorBasis i x)
