@@ -95,6 +95,7 @@ proof_shape: symmetrizer_partialTranspose_floor: content; consumer: LouvetSymmet
 
 import Mathlib.Algebra.Pointwise.Stabilizer
 import Mathlib.LinearAlgebra.Matrix.Permutation
+import Mathlib.RepresentationTheory.Invariants
 import Mathlib.GroupTheory.Perm.DomMulAct
 import Mathlib.Data.Fin.Tuple.Basic
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPureBound
@@ -234,11 +235,25 @@ private lemma avg_right (R : G →* Matrix I I ℂ) (g : G) : Finset.expect Fins
   rw [Finset.expect_mul]
   exact Fintype.expect_equiv (Equiv.mulRight g) _ _ (fun h => (R.map_mul h g).symm)
 private lemma avg_idempotent (R : G →* Matrix I I ℂ) : Finset.expect Finset.univ R * Finset.expect Finset.univ R = Finset.expect Finset.univ R := by
-  have hc : (Fintype.card G : ℂ) ≠ 0 := by exact_mod_cast Fintype.card_ne_zero
-  conv_lhs => rhs; rw [expect_formula]
-  rw [Matrix.mul_smul, Matrix.mul_sum]
-  simp only [avg_right, Finset.sum_const, Finset.card_univ]
-  rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hc, one_smul]
+  classical
+  let E : Matrix I I ℂ ≃ₐ[ℂ] Module.End ℂ (I → ℂ) := Matrix.toLinAlgEquiv'
+  let ρ : Representation ℂ G (I → ℂ) := E.toRingEquiv.toMonoidHom.comp R
+  letI : Invertible (Fintype.card G : ℂ) :=
+    invertibleOfNonzero (by exact_mod_cast Fintype.card_ne_zero)
+  have hnorm : ρ.averageMap = E (Finset.expect Finset.univ R) := by
+    rw [show Finset.expect Finset.univ R =
+        (Fintype.card G : ℂ)⁻¹ • ∑ g, R g by
+      simpa only [← NNRat.cast_smul_eq_nnqsmul ℂ,
+        NNRat.cast_inv, NNRat.cast_natCast] using (Finset.expect_univ (f := R))]
+    simp only [Representation.averageMap, GroupAlgebra.average,
+      map_smul, map_sum, MonoidAlgebra.of_apply,
+      Representation.asAlgebraHom_single_one, invOf_eq_inv]
+    all_goals rfl
+  apply E.injective
+  rw [map_mul]
+  have hid := (Representation.isProj_averageMap ρ).isIdempotentElem.eq
+  rw [hnorm] at hid
+  exact hid
 private lemma avg_hermitian (R : G →* Matrix I I ℂ) (hR : ∀ g, (R g)ᴴ = R g⁻¹) :
     (Finset.expect Finset.univ R).IsHermitian := by
   change (Finset.expect Finset.univ R)ᴴ = Finset.expect Finset.univ R
