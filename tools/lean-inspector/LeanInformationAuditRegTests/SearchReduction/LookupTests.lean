@@ -21,7 +21,8 @@ run_cmd do
   let eta := .lam `x (mkConst ``Nat) (mkApp (mkBVar 1) (mkBVar 0)) .default
   unless DiskLookup.path (fun _ => true) eta == DiskLookup.path (fun _ => true) parameter do
     throwError "candidate key is not eta invariant"
-  logInfo s!"LOOKUP_KEY_SHAPE nested=true binders=true parameters=true eta=true depth={DiskLookup.keyDepth}"
+  logInfo s!"LOOKUP_KEY_SHAPE nested=true binders=true parameters=true \
+    eta=true depth={DiskLookup.keyDepth}"
 
 run_cmd do
   let directory : System.FilePath := "build/lean-inspector/lookup-index/ordered-key-fixture"
@@ -45,9 +46,18 @@ run_cmd do
   let node : DiskLookup.Node := {children := #[("c:0:A", "a", a), ("c:0:Z", "z", z)]}
   let text := (toJson node).compress
   IO.FS.writeFile (directory / "root.node.json") text
-  let header : DiskLookup.Header := {basis := "order-fixture", mathlib := "fixture", inputs := 0,
-    storage := "", root := "root", digest := hash text, complete := true, modules := 1,
-    declarations := 2, indexed := 2, missing := #[]}
+  let header : DiskLookup.Header := {
+    basis := "order-fixture"
+    mathlib := "fixture"
+    inputs := 0
+    storage := ""
+    root := "root"
+    digest := hash text
+    complete := true
+    modules := 1
+    declarations := 2
+    indexed := 2
+    missing := #[]}
   let result ← DiskLookup.query {directory, header} ["*"]
   unless result.complete && result.entries.map (·.name) == #["candidate1", "candidate2"] do
     throwError "nested key traversal changed the frozen candidate order"
