@@ -1207,3 +1207,894 @@ existence assertions now follow from Theorems 121.2 and 123.1 and
 Proposition 123.2. $\square$
 
 ## 123.99 追加锚（本行以下为增补区）
+
+## 124. Finite coherent residual transport on every accepted prefix
+
+The source-indexed occurrence objects, old/new incidence maps and unit-edge
+forms are those of IV §§112--113 and VI §§114--115. In particular, an
+occurrence address is never quotient-identified, and the parent-copy map is
+fixed by the actual birth incidence. The comparison clock and spatial
+boundary remain the separately typed objects of III §81. The following
+construction uses V Lemma 117.2 only for the already established ancestry
+fibres; it does not replace those fibres by a limiting source.
+
+**Definition 124.1 (accepted prefix and residual chart).** Fix an arbitrary
+finite source $u\in D$ and a finite accepted history through epochs
+$0,1,\ldots,m$. Write
+
+$$
+V_e=V_e(u),\quad B_e=B_e(u),\quad P_e=C_e^*,\quad L_e=L_e(u),
+\qquad 0\le e<m,
+$$
+
+with the old coordinates first at every step. Let
+$T_e:\mathbb R^{V_e}\to\mathbb R^{V_{e+1}}$ be
+$T_ef=(f,P_ef)$. Define residual coordinates of a final field
+$z\in\mathbb R^{V_m}$ recursively by
+
+$$
+ x_0=z|_{V_0},\qquad
+ y_e=z|_{B_e}-P_ex_e,qquad
+ x_{e+1}=(x_e,P_ex_e+y_e),
+\tag{124.1}
+$$
+
+where the last equality uses the actual old/new ordering of $V_{e+1}$.
+The map
+
+$$
+\mathcal W_m:\mathbb R^{V_0}\oplus
+ \bigoplus_{e=0}^{m-1}\mathbb R^{B_e}\longrightarrow\mathbb R^{V_m},
+\qquad
+(x_0,y_0,\ldots,y_{m-1})\longmapsto z,
+\tag{124.2}
+$$
+
+is the inverse of this residualization. Empty birth blocks are zero
+summands. Put $T_{0,m}=T_{m-1}\cdots T_0$.
+
+**Lemma 124.2 (simultaneous form diagonalization).** In the coordinates
+(124.2),
+
+$$
+\mathcal W_m^{\mathsf T}L_m\mathcal W_m
+ =\operatorname{diag}\left(L_0,I_{B_0},I_{B_1},\ldots,I_{B_{m-1}}\right),
+\qquad
+\mathcal W_m^{-1}T_{0,m}x=(x,0,\ldots,0).
+\tag{124.3}
+$$
+
+For every $e<m$, the prefix chart $\mathcal W_e$ is the restriction of
+$\mathcal W_m$ to the first $e$ residual blocks, and the one-step chart from
+$V_e$ to $V_{e+1}$ is
+
+$$
+\mathsf W_e(f,y)=(f,P_ef+y).
+\tag{124.4}
+$$
+
+**Proof.** For one step, VI (120.5) gives
+
+$$
+\mathsf W_e^{\mathsf T}L_{e+1}\mathsf W_e
+ =\operatorname{diag}(L_e,I_{B_e}).
+$$
+
+Apply this identity successively to the actual old/new decomposition. The
+birth residual at stage $e$ is independent of all earlier residuals, so the
+successive congruences give the first identity in (124.3). A parent-copy has
+zero residual at its own stage; induction gives the second identity. The
+empty-block case is the identity congruence. The same induction proves the
+prefix assertion. $\square$
+
+**Theorem 124.3 (finite-stage coherent SPD realization).** Choose an
+arbitrary SPD matrix $M_0$ on $\mathbb R^{V_0}$ and, for each nonempty
+$B_e$, an arbitrary SPD matrix $K_e$ on $\mathbb R^{B_e}$. Define
+
+$$
+\widehat M_m
+ =\operatorname{diag}\left(M_0,K_0^{-1},\ldots,K_{m-1}^{-1}\right),
+\qquad
+M_m=\mathcal W_m^{-\mathsf T}\widehat M_m\mathcal W_m^{-1},
+\tag{124.5}
+$$
+
+and define $M_e$ by the corresponding prefix of (124.5). Set
+
+$$
+A_e=M_e^{-1}L_e.
+\tag{124.6}
+$$
+
+Then, for every $e<m$,
+
+$$
+T_e^{\mathsf T}L_{e+1}T_e=L_e,
+\qquad
+T_e^{\mathsf T}M_{e+1}T_e=M_e,
+\qquad
+A_{e+1}T_e=T_eA_e.
+\tag{124.7}
+$$
+
+Consequently $e^{-tA_{e+1}}T_e=T_ee^{-tA_e}$ for every $t\ge0$, and the
+same comparison clock works at every accepted epoch. Every $M_e$ is SPD.
+If $B_e\ne\varnothing$, the actual-coordinate matrix $M_{e+1}$ is generally
+non-diagonal even when $M_e$ and $K_e$ are diagonal.
+
+**Proof.** The first identity is (124.3) at one stage. In residual
+coordinates the metric and generator are
+
+$$
+\widehat M_{e+1}=\operatorname{diag}(\widehat M_e,K_e^{-1}),
+\qquad
+\widehat A_{e+1}=\operatorname{diag}(A_e,K_e).
+\tag{124.8}
+$$
+
+Thus the inclusion of the old coordinates preserves both the metric and the
+generator. Conjugating (124.8) by the invertible map (124.4) gives (124.7).
+Positive definiteness is preserved by congruence. The exponential identity is
+the finite matrix power-series consequence of the last equation in (124.7).
+When $B_e\ne\varnothing$, the off-diagonal actual block is
+$-P_e^{\mathsf T}K_e^{-1}$ in the choice with zero residual cross block;
+it is nonzero because every newborn has a parent. $\square$
+
+The construction is prefix-wise and does not assert a single infinite
+operator or an infinite-dimensional SPD metric. It includes a stopped or
+capped history by taking its last finite prefix. At an empty-birth step,
+$B_e=\varnothing$, $T_e=I$, $M_{e+1}=M_e$ and $A_{e+1}=A_e$. For the
+singleton $α$, the first step is of this form. For the singleton $β$,
+$V_0$ has one coordinate and the first nonempty block has two coordinates;
+no connectedness or positive old edge form is needed in (124.3). For an
+arbitrary initial branch, the same construction starts from its actual
+occurrence set and leaves all original coordinates fixed.
+
+## 125. Conservative Markov choices inside the coherent class
+
+**Definition 125.1 (coherent conservative family and occurrence range).** A
+coherent family on an uncapped accepted history is a sequence
+$(M_e,A_e)_{e\ge0}$ satisfying (124.7) at every accepted step, with each
+$M_e$ SPD. It is Markov-compatible when
+
+$$
+Q_e=-A_e,\qquad Q_e\mathbf 1=0,qquad Q_e(x,y)\ge0\quad(x\ne y).
+\tag{125.1}
+$$
+
+Its occurrence-distance jump range is
+
+$$
+\operatorname{jr}(Q_e)=\max\{d_e(x,y):x\ne y, Q_e(x,y)>0\},
+\tag{125.2}
+$$
+
+with value $0$ when there is no positive off-diagonal rate.
+
+**Proposition 125.2 (a Markov extension at every finite stage).** Suppose
+$(M_e,Q_e)$ is a coherent Markov prefix and $B_e\ne\varnothing$. For
+$p\in M_e$ put
+
+$$
+ s_e(p)=-Q_e(p,p)=\sum_{y\ne p}Q_e(p,y),
+$$
+
+and choose numbers $\kappa_c>0$ for $c\in B_e$. In Theorem 124.3 take
+$q_e=0$ in the residual block and
+
+$$
+K_e=\operatorname{diag}(s_e(\operatorname{par}_e(c))+\kappa_c:c\in B_e).
+\tag{125.3}
+$$
+
+The resulting $Q_{e+1}$ is conservative Markov. Its nonzero off-diagonal
+rates are exactly
+
+$$
+\begin{aligned}
+Q_{e+1}(x,y)&=Q_e(x,y)&& (x,y\in V_e, x\ne y),\\
+Q_{e+1}(x,c)&=0&& (x\in V_e, c\in B_e),\\
+Q_{e+1}(c,y)&=Q_e(p,y)&& (y\in V_e\setminus\{p\}),\\
+Q_{e+1}(c,p)&=\kappa_c,\\
+Q_{e+1}(c,d)&=0&& (c\ne d),
+\end{aligned}
+\tag{125.4}
+$$
+
+where $p=\operatorname{par}_e(c)$. Therefore every finite actual history,
+including all singleton and empty-birth endpoints, admits a coherent Markov
+family; its intermediate state metrics may be non-diagonal.
+
+**Proof.** With zero residual cross block, the one-step version of (124.8)
+gives
+
+$$
+Q_{e+1}
+ =-\begin{pmatrix}Q_e&0\\P_eQ_e-K_eP_e&K_e\end{pmatrix}
+\quad\text{in residual coordinates conjugated by }\mathsf W_e.
+$$
+
+For a newborn $c$ over $p$, (125.3) gives rate $\kappa_c$ to $p$, rate
+$Q_e(p,y)$ to every other old destination $y$, and no sibling rate. All
+these rates are nonnegative. The row sum is
+$\kappa_c+s_e(p)-[s_e(p)+\kappa_c]=0$; old rows are unchanged. Thus
+(125.4) holds and the matrix is conservative Markov. Starting with
+$M_0=I$ gives $Q_0=-L_0$, which is Markov on every original tree (and is the
+zero generator on either singleton), so induction gives the existence claim.
+The endpoint statements follow from the empty-block convention in §124.
+$\square$
+
+**Proposition 125.3 (fixed-source long-range witness).** Let
+$u=\langle\alpha,\beta\rangle$, take $M_0=I_3$ in the old order
+$(\varepsilon,L,R)$, and use (125.3) with every $\kappa_c=1$. Then the
+coherent Markov family satisfies, for every $m\ge0$,
+
+$$
+Q_m(RL^m,\varepsilon)=1,
+\qquad
+ d_m(RL^m,\varepsilon)=m+1,
+\qquad
+\operatorname{jr}(Q_m)\ge m+1.
+\tag{125.5}
+$$
+
+Here $RL^m$ is an actual occurrence, not a subtree quotient. The transition
+at $m=0$ is the old edge $R\to\varepsilon$; for $m\ge1$ it is inherited
+through the beta-left lineage and is a non-edge of the current occurrence
+tree.
+
+**Proof.** At epoch zero, $Q_0=-L_0$ gives
+$Q_0(R,\varepsilon)=1$. The address $R$ is beta, and the left child $RL$ is
+beta at epoch one. Formula (125.4) transfers the positive rate from $R$ to
+$\varepsilon$ to $RL$ because $\varepsilon$ is not a newborn parent. Inductively,
+$RL^m$ is beta at epoch $m$, its left child is $RL^{m+1}$, and the same
+rate is transferred. The address length is $m+1$, proving (125.5). $\square$
+
+## 126. The uncapped range boundary
+
+The next statement concerns the universal question, rather than only the
+choice (125.3). The finite occurrence geometry used here is the ancestry
+geometry of V Lemma 117.2: each original terminal supplies a separate finite
+Fibonacci fibre, and the only beta child of a born beta fibre is its left
+child.
+
+**Lemma 126.1 (range-bounded residual forcing).** Let a coherent Markov
+family have $\operatorname{jr}(Q_e)\le R$ for two successive epochs, and
+suppose every beta leaf $p\in M_e$ has some old occurrence at distance $>R$.
+Then the residual cross vector in the general one-step chart is zero:
+$q_e=0$ (equivalently $a_e=K_eq_e=0$).
+
+**Proof.** In the general residual chart, write $a_e=K_eq_e$ and
+$b_e=P_e^{\mathsf T}a_e$. The old-to-new rates are
+$Q_{e+1}(x,c)=a_e(c)\ge0$, and the old-old off-diagonal rates are
+$Q_e(x,y)-b_e(y)$. For a beta leaf $y$, choose $x$ with
+$d_e(x,y)>R$. The range assumption gives $Q_e(x,y)=0$ and
+$Q_{e+1}(x,y)\ge0$, hence $b_e(y)\le0$. But
+$b_e(y)=\sum_{c\in B_y}a_e(c)\ge0$, so it is zero, and all the two terms in
+that sum are zero. This holds for every beta leaf, hence $a_e=0$; $K_e$ is
+invertible, so $q_e=0$. $\square$
+
+**Lemma 126.2 (FIB frontier escape).** Consider an uncapped accepted
+iteration from any epoch whose current source has at least two terminal leaf
+cones. Let
+$(Q_e)$ be coherent and conservative Markov. If its ranges were bounded by a
+single $R$, then, after a finite initial prefix, the beta-leaf rows would
+have to be closed inside the beta-leaf set at every epoch. This is impossible.
+
+**Proof.** By the separate terminal fibres and their ancestry distances, for
+all sufficiently large $e$ every beta leaf has a vertex at distance $>R$;
+Lemma 126.1 therefore gives $q_e=0$. In that case the $q_e=0$ block gives the deterministic-fibre identity
+
+$$
+\sum_{z:\,\pi_e(z)=y}Q_{e+1}(x,z)=Q_e(\pi_e(x),y),
+\tag{126.1}
+$$
+
+where $\pi_e$ fixes old vertices and sends a newborn to its beta parent.
+The rank identity
+$\operatorname{rank}Q_e=|V_e|-1$ follows from
+$\operatorname{rank}L_e=|V_e|-1$ and invertibility of $M_e$. A finite
+conservative Markov matrix of this rank has exactly one closed communicating
+class.
+
+Suppose a beta leaf $p\in M_e$ has a positive rate to
+$y\notin M_e$. Let $p_j=pL^j$, which is a beta leaf at epoch $e+j$. Iterating
+(126.1) gives
+
+$$
+\sum_{z:\,\pi_{e,e+j}(z)=y}Q_{e+j}(p_j,z)=Q_e(p,y)>0.
+\tag{126.2}
+$$
+
+The target fibre on the left lies below the old occurrence $y$, while $p_j$
+lies $j$ edges below $p$. Since $p$ and $y$ are distinct occurrences, every
+term with a positive rate has
+
+$$
+d_{e+j}(p_j,z)\ge d_e(p,y)+j.
+\tag{126.3}
+$$
+
+This covers both possibilities for $y\notin M_e$: a branch occurrence is
+permanent, and an alpha occurrence is promoted before it can acquire its own
+children; in either case all points of its later parent fibre remain below
+$y$. Equations (126.2)--(126.3) contradict a uniform range bound as
+$j\to\infty$.
+
+It remains to consider the alternative that every beta row stays inside the
+beta set. The beta set is then a nonempty closed set. Its old vertices become
+branch vertices at the next accepted step, while their beta left children
+are new beta leaves. If all those new beta rows also stayed inside their new
+beta set, that set would be a closed set disjoint from the old beta closed
+class. This contradicts the one-closed-class consequence of the rank
+identity. Hence a beta row leaves at some later epoch, reducing to the first
+case. The contradiction proves the lemma. $\square$
+
+**Theorem 126.3 (no single finite range on uncapped coherent Markov transport).**
+For every coherent compatible conservative Markov family on an uncapped FIB
+iteration that reaches a branch epoch,
+
+$$
+\sup_{e\ge0}\operatorname{jr}(Q_e)=+\infty.
+\tag{126.2}
+$$
+
+The conclusion is universal over the family; it does not depend on the
+particular Markov choice (125.3). A finite stopped or capped history has a
+finite maximum range because it has finitely many epochs. The singleton
+sources are included after their first nonempty branch epoch: $\alpha$ first
+has the empty-birth step, $\beta$ first has the two-child step. Thus the
+statement does not assert a bound for a history that stops before that
+branch is accepted.
+
+**Proof.** If (126.2) failed, a finite $R$ would bound all epochs. At the first branch
+epoch the current source has two terminal leaf cones, and each singleton
+reaches such an epoch after finitely many accepted steps. Lemma 126.2
+contradicts that bound.
+Empty births and refused or stopped suffixes contribute no additional epoch
+and are covered by the finite-prefix statement. $\square$
+
+The first repaired successor can therefore leave the narrower old diagonal
+class while retaining exact finite coherence. Theorem 121.2 remains a
+conditional statement for a diagonal old norm at one branch step; it is not a
+classification of the matrices $M_e$ in (124.5). Markov positivity in
+(125.1), irreducibility, original-edge support, occurrence-distance range,
+fixed-form realization, finite-stage coherence, and an infinite-process
+realization are distinct properties. The construction above supplies the
+first, fixed-form finite coherence, and the explicit range witness; it does
+not supply irreducibility or original-edge support at all branch epochs, and
+it does not install a physical spatial geometry or an infinite-dimensional
+operator.
+
+No new literature theorem is used in §§124--126. The only external matrix
+fact already cited in VI §120 is the SPD Schur-complement identity; the
+remaining steps are finite congruence, Markov sign, rank, and the accepted
+FIB ancestry relations. The all-state physical locality added in DEV
+753b783b035 concerns finite-difference annihilation of corrected-field
+commutators and has no occurrence-distance generator-range assertion.
+
+## 126.99 追加锚（本行以下为增补区）
+
+## 127. Full-source residual metrics with an arbitrary inherited norm
+
+**Definition 127.1 (source, metric and reference conventions).** Throughout
+§§127--130 the source quantifier is the full finite algebra
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle v,w\rangle=\langle\rho v,\rho w\rangle.
+\tag{127.1}
+$$
+
+For every $u\in\mathcal T$, an actual history with $m$ accepted updates has
+current source $s_e=\rho^e u$ at each accepted epoch $0\le e\le m$.
+Reads and refused attempts do not advance $e$. An accepted update with no
+new occurrences does advance $e$, because it changes the terminal labels.
+Stopping or a cap selects a finite accepted prefix; it does not remove an
+accepted empty-birth step from that prefix. For an uncapped iteration all
+accepted epochs $e\in\mathbb N$ are available. The semigroup parameter
+$t\ge0$ is separate from $e$ and is the same parameter on both sides of
+each intertwining identity.
+
+Use the actual occurrence vertices $V_e$, their original unit edges $E_e$,
+and $L_e$ of IV Definition 92.1. Set
+$\mathcal P_e=\{p\in V_e:s_e|_p=\beta\}$ and
+$B_e=\{pL,pR:p\in\mathcal P_e\}$.
+Write $G_e\succ0$ for the state metric and $A_e=G_e^{-1}L_e$,
+$Q_e=-A_e$. Thus $G_e$ is the metric denoted $M_e$ in §124, whereas
+$\mathcal P_e$ is the beta-parent set denoted $M_e$ in IV (112.6).
+These two objects have different types. For the entire $\mathcal T$,
+including both singleton sources, define $P_e$ and $T_e$ by
+$(P_ef)(c)=f(\operatorname{par}_e(c))$ and $T_ef=(f,P_ef)$.
+The old coordinates and edges retain their literal addresses. No port
+triple is required at a singleton.
+
+These conventions replace the branch-only source quantifier of Definition
+124.1 for the statements below. Proposition 127.2 supplies the previously
+unspecified residual cross vector used in Lemma 126.1, and Proposition
+128.2 replaces the signed block display in the proof of Proposition 125.2.
+Theorem 129.3 replaces the proof and source scope of Theorem 126.3, using
+Proposition 128.3 for the accepted empty steps and first usable branch
+epochs. The two distinct displays bearing the old tag
+(126.2) are distinguished as the fibre-sum display in Lemma 126.2 and the
+range display in Theorem 126.3; their unambiguous replacements are (129.5)
+and (129.3), respectively. The finite residual construction of §124 and
+the fixed-source witness of Proposition 125.3 retain their conclusions.
+
+**Proposition 127.2 (one-step cross block for a general old SPD metric).**
+Fix any $u\in\mathcal T$ and any actual accepted step $e\to e+1$.
+Abbreviate $n=|V_e|$, $k=|B_e|$, $G=G_e\succ0$, $L=L_e$,
+$A=G^{-1}L$, $Q=-A$, and $P=P_e$. The old metric $G$ is an arbitrary
+real symmetric positive-definite matrix, with no diagonal or entrywise-sign
+restriction. In actual and residual coordinates, respectively, put
+
+$$
+\begin{aligned}
+L_+&=\begin{pmatrix}L+P^{\mathsf T}P&-P^{\mathsf T}\\-P&I_k\end{pmatrix},
+&T&=\begin{pmatrix}I_n\\P\end{pmatrix},\\
+W&=\begin{pmatrix}I_n&0\\P&I_k\end{pmatrix},
+&W^{-1}&=\begin{pmatrix}I_n&0\\-P&I_k\end{pmatrix},\\
+W^{\mathsf T}L_+W&=\operatorname{diag}(L,I_k),
+&W^{-1}T&=\begin{pmatrix}I_n\\0\end{pmatrix}.
+\end{aligned}
+\tag{127.2}
+$$
+
+If $k>0$, the compatible successor metrics are exactly the following,
+parameterized uniquely by $q$ and $K$:
+
+$$
+\begin{aligned}
+g&=G\mathbf1_n,\qquad h=\mathbf1_n^{\mathsf T}G\mathbf1_n>0,\\
+H&=W^{\mathsf T}G_+W
+ =\begin{pmatrix}
+ G&gq^{\mathsf T}\\qg^{\mathsf T}&K^{-1}+hqq^{\mathsf T}
+ \end{pmatrix},
+\qquad G_+=W^{-\mathsf T}HW^{-1},
+\qquad q\in\mathbb R^k,\quad K=K^{\mathsf T}\succ0.
+\end{aligned}
+\tag{127.3}
+$$
+
+Here compatible means $T^{\mathsf T}G_+T=G$ and
+$G_+^{-1}L_+T=TA$. In particular the one-step parameters $q_e$ and
+$K_e$ are defined by (127.3), using the actual inherited $G_e$, not a
+diagonal replacement. This parameterization does not impose Markov signs.
+For $k=0$ the unique compatible successor is $G_+=G$ and $Q_+=Q$;
+there is no cross vector to choose.
+
+**Proof.** The unit-edge birth relation gives (127.2) directly. Norm
+preservation fixes the upper-left block of $H$ to be $G$. Write
+$H=\left(\begin{smallmatrix}G&X\\X^{\mathsf T}&Z\end{smallmatrix}\right)$.
+Multiplying generator intertwining in residual coordinates by $H$ gives
+
+$$
+H\begin{pmatrix}G^{-1}L\\0\end{pmatrix}
+ =\begin{pmatrix}L\\0\end{pmatrix},
+\qquad X^{\mathsf T}G^{-1}L=0.
+\tag{127.4}
+$$
+
+The occurrence tree is connected, including the one-vertex tree. Its
+edge-energy identity implies $\ker L=\mathbb R\mathbf1_n$.
+Each row of $X^{\mathsf T}G^{-1}$ is therefore a unique scalar multiple
+of $\mathbf1_n^{\mathsf T}$. Collect those scalars in $q$, obtaining
+$X^{\mathsf T}G^{-1}=q\mathbf1_n^{\mathsf T}$, or
+$X=gq^{\mathsf T}$. For $n=1$, $L=0$ and this conclusion still describes
+every possible one-column $X^{\mathsf T}$, since $G>0$.
+
+As $G^{-1}g=\mathbf1_n$, the Schur complement of $G$ is
+$Z-hqq^{\mathsf T}$. Positive definiteness of $H$ is equivalent to
+this complement being positive definite; write it uniquely as $K^{-1}$.
+This is the same Schur-complement identity cited in §120, applied now
+without a diagonal hypothesis on $G$. It proves necessity, sufficiency
+and uniqueness of (127.3). The inverse is explicitly
+
+$$
+H^{-1}=\begin{pmatrix}
+G^{-1}+\mathbf1_n(q^{\mathsf T}Kq)\mathbf1_n^{\mathsf T}
+ &-\mathbf1_n q^{\mathsf T}K\\
+-Kq\mathbf1_n^{\mathsf T}&K
+\end{pmatrix}.
+\tag{127.5}
+$$
+
+Multiplication by $\operatorname{diag}(L,I_k)$ verifies (127.4) and the
+generator identities below. If $k=0$, $T=I_n$ and norm preservation
+already forces $G_+=G$. $\square$
+
+**Corollary 127.3 (signed residual-to-actual generator identity).** In the
+nonempty-birth case of Proposition 127.2, define $a=Kq$, $b=P^{\mathsf T}a$ and
+$D_K=K-\mathbf1_k a^{\mathsf T}$. Then the residual generators are
+
+$$
+\begin{aligned}
+\widetilde A_+&=W^{-1}(G_+^{-1}L_+)W
+ =H^{-1}\operatorname{diag}(L,I_k)
+ =\begin{pmatrix}A&-\mathbf1_n a^{\mathsf T}\\0&K\end{pmatrix},\\
+\widetilde Q_+&=-\widetilde A_+
+ =\begin{pmatrix}Q&\mathbf1_n a^{\mathsf T}\\0&-K\end{pmatrix}.
+\end{aligned}
+\tag{127.6}
+$$
+
+Their actual-coordinate relation is the conjugation identity
+
+$$
+\begin{aligned}
+Q_+&=W\widetilde Q_+W^{-1}
+ =\begin{pmatrix}
+ Q-\mathbf1_n b^{\mathsf T}&\mathbf1_n a^{\mathsf T}\\
+ PQ+D_KP&-D_K
+ \end{pmatrix},\\
+A_+&=W\widetilde A_+W^{-1}=-Q_+,
+\qquad Q_+\mathbf1_{n+k}=0.
+\end{aligned}
+\tag{127.7}
+$$
+
+**Proof.** In (127.5), $\mathbf1_n^{\mathsf T}L=0$ removes both the
+rank-one correction in the upper-left block and the lower-left block of
+the product with the residual form. This gives (127.6). Multiplying its
+second matrix first on the right by $W^{-1}$ gives upper blocks
+$Q-\mathbf1_n a^{\mathsf T}P$, $\mathbf1_n a^{\mathsf T}$ and lower
+blocks $KP$, $-K$. Multiplication on the left by $W$, using
+$P\mathbf1_n=\mathbf1_k$, gives exactly (127.7). Moreover
+$Q\mathbf1_n=0$ and
+$b^{\mathsf T}\mathbf1_n=a^{\mathsf T}\mathbf1_k$, so its upper row
+sums vanish; the lower row sums are
+$PQ\mathbf1_n+D_KP\mathbf1_n-D_K\mathbf1_k=0$.
+Thus conservation holds even before Markov positivity is imposed.
+No entrywise property of $G$ was used. $\square$
+
+## 128. Finite coherence, consistent Markov rates and the initial epochs
+
+**Theorem 128.1 (full-source finite realization).** For every
+$u\in\mathcal T$, every finite actual history with $m\ge0$ accepted
+updates, every SPD initial metric $G_0$ on $\mathbb R^{V_0(u)}$, and every
+choice of SPD $K_e$ on each nonempty $B_e$, the native parent-copy maps
+admit SPD metrics through all epochs $0,\ldots,m$ satisfying exact form
+and norm preservation and full same-clock generator intertwining.
+This includes arbitrary initial branches, $u=\alpha$, $u=\beta$,
+empty births, and prefixes stopped or capped at any finite epoch.
+
+**Proof.** Let $\mathcal W_m$ be the reconstruction map of (124.2), now
+with the source quantifier of Definition 127.1. Its residual at stage $e$
+is the actual child value minus its parent's value. It is invertible by
+successive reconstruction at each finite step, and (127.2) inductively
+gives (124.3) for every $u\in\mathcal T$. Define
+
+$$
+G_m=\mathcal W_m^{-\mathsf T}
+ \operatorname{diag}(G_0,K_0^{-1},\ldots,K_{m-1}^{-1})
+ \mathcal W_m^{-1},
+\tag{128.1}
+$$
+
+with each empty block omitted, and use the corresponding prefixes for
+$G_e$. Equivalently at each single step,
+$W_e^{\mathsf T}G_{e+1}W_e=\operatorname{diag}(G_e,K_e^{-1})$.
+This is the $q_e=0$ case of (127.3), with the inherited actual-coordinate
+$G_e$; it is not a claim that $G_e$ is diagonal. Hence, for every $e<m$,
+
+$$
+\begin{aligned}
+T_e^{\mathsf T}L_{e+1}T_e&=L_e,&
+T_e^{\mathsf T}G_{e+1}T_e&=G_e,\\
+A_{e+1}T_e&=T_eA_e,&
+e^{-tA_{e+1}}T_e&=T_ee^{-tA_e}\quad(t\ge0).
+\end{aligned}
+\tag{128.2}
+$$
+
+The last equality follows term by term from the finite matrix exponential
+series. Each metric is SPD by congruence. For $m=0$ there is no extension
+condition. For $B_e=\varnothing$ the chart is the identity and
+$G_{e+1}=G_e$, $A_{e+1}=A_e$. These observations also cover a final
+accepted empty step. No future epoch is required for a finite prefix.
+$\square$
+
+**Proposition 128.2 (correct Markov extension with inherited metrics).**
+For every $u\in\mathcal T$ and every coherent finite prefix for which
+$Q_e=-G_e^{-1}L_e$ is conservative Markov, a further accepted step has a
+coherent conservative Markov extension. The inherited $G_e$ may be
+non-diagonal. For a nonempty birth block set
+$s_e(p)=-Q_e(p,p)=\sum_{y\ne p}Q_e(p,y)$, choose
+$\kappa_c>0$ for each child, and take
+$q_e=0$ and $K_e=\operatorname{diag}(s_e(\operatorname{par}_e(c))+
+\kappa_c:c\in B_e)$ in (127.3).
+
+**Proof.** Each diagonal entry of $K_e$ is positive. Writing $P=P_e$,
+$K=K_e$, $W=W_e$ for this step, the signed residual and actual matrices
+are
+
+$$
+\widetilde Q_{e+1}=\begin{pmatrix}Q_e&0\\0&-K\end{pmatrix},
+\qquad
+Q_{e+1}=W\widetilde Q_{e+1}W^{-1}
+ =\begin{pmatrix}Q_e&0\\PQ_e+KP&-K\end{pmatrix}.
+\tag{128.3}
+$$
+
+Thus there is no overall minus sign outside a block whose old block is
+already $Q_e$. In particular, in the original occurrence coordinates,
+for $c\in B_e$ over $p=\operatorname{par}_e(c)$,
+
+$$
+\begin{aligned}
+Q_{e+1}(x,y)&=Q_e(x,y)&& (x,y\in V_e),\\
+Q_{e+1}(x,c)&=0&& (x\in V_e),\\
+Q_{e+1}(c,y)&=Q_e(p,y)&& (y\in V_e\setminus\{p\}),\\
+Q_{e+1}(c,p)&=-s_e(p)+[s_e(p)+\kappa_c]=\kappa_c,\\
+Q_{e+1}(c,d)&=0&& (d\in B_e\setminus\{c\}),\\
+Q_{e+1}(c,c)&=-s_e(p)-\kappa_c.
+\end{aligned}
+\tag{128.4}
+$$
+
+All off-diagonal entries are nonnegative. An old row has its old zero
+sum, and a child row has sum
+$s_e(p)+\kappa_c-[s_e(p)+\kappa_c]=0$. Equation (128.3) is the actual
+conjugation proving these signs and rates, replacing the inconsistent
+display in the proof of Proposition 125.2. At an empty step use the unique
+extension $G_{e+1}=G_e$, $Q_{e+1}=Q_e$. Starting at $G_0=I$ gives
+$Q_0=-L_0$, which is conservative Markov on every source tree, including
+the zero generator on either singleton. Induction proves full-source
+Markov existence through every finite accepted prefix. More generally
+any initial SPD metric whose $-G_0^{-1}L_0$ is Markov admits this extension;
+an arbitrary SPD initial metric is guaranteed exact coherence by Theorem
+128.1 but is not thereby guaranteed Markov positivity. $\square$
+
+**Proposition 128.3 (empty initial steps and the first usable branch epoch).**
+For every $u\in\mathcal T$ the empty-birth steps have exactly
+$\mathcal P_e=B_e=\varnothing$, $V_{e+1}=V_e$, $L_{e+1}=L_e$,
+$T_e=I$ and $G_{e+1}=G_e$ for every compatible metric. Every terminal
+at such a step is alpha and becomes beta. In an uncapped iteration put
+
+$$
+h(u)=\min\{e\ge0:s_e\text{ is a branch and }\mathcal P_e\ne\varnothing\}.
+\tag{128.5}
+$$
+
+This epoch always exists. It is $0$ for a branch with a beta leaf, $1$
+for an all-alpha branch, $1$ for $u=\beta$, and $2$ for $u=\alpha$.
+At epoch $h(u)$ there are at least two distinct terminal leaf cones and
+a nonempty birth set. Every later epoch also has beta leaves.
+
+**Proof.** No beta leaf means no born children. The actual substitution
+in (127.1) then preserves all occurrences and changes every terminal
+label from alpha to beta, so the step is accepted and advances the epoch
+despite its identity matrices. For an all-alpha branch this is the step
+$0\to1$, after which the unchanged branch has beta leaves and its first
+nonempty births occur at $1\to2$. For the alpha singleton, the step
+$0\to1$ gives the beta singleton with its one old coordinate, zero form
+and unchanged positive scalar metric. Its first nonempty birth is
+$1\to2$, producing $\langle\beta,\alpha\rangle$ at epoch $2$.
+For the beta singleton the first nonempty birth is already $0\to1$,
+and the same branch is present at epoch $1$. Both singleton birth
+incidences are $P=(1,1)^{\mathsf T}$ with $T=\mathbf1_3$; Proposition
+127.2 includes any compatible parameters at this step, not only $q=0$.
+An arbitrary branch with a beta leaf has the required two leaf cones at
+epoch $0$. Finally a beta leaf always produces a beta left child, so
+nonemptiness persists after $h(u)$. A stopped history need not reach
+$h(u)$ and needs only the finite theorem. $\square$
+
+## 129. Universal range forcing and frontier escape
+
+**Lemma 129.1 (range forcing without a diagonal-old hypothesis).** Fix any
+$u\in\mathcal T$ and a compatible conservative Markov step with
+$B_e\ne\varnothing$. Its old and successor metrics may be arbitrary
+SPD matrices satisfying (128.2), including any inherited non-diagonal
+ones. Suppose $\operatorname{jr}(Q_e)\le R$ and every
+$p\in\mathcal P_e$ has an $x\in V_e$ with $d_e(x,p)>R$.
+Then the uniquely defined cross vector of (127.3) is $q_e=0$.
+In particular this holds under the two-epoch range bound in Lemma 126.1;
+no successor range bound beyond its Markov signs is needed here.
+
+**Proof.** From (127.7), with $a_e=K_eq_e$ and
+$b_e=P_e^{\mathsf T}a_e$,
+
+$$
+Q_{e+1}(x,c)=a_e(c)\ge0,\qquad
+Q_{e+1}(x,p)=Q_e(x,p)-b_e(p)\quad(x\ne p),\qquad
+b_e(p)=\sum_{c:\operatorname{par}_e(c)=p}a_e(c).
+\tag{129.1}
+$$
+
+The old-to-child entry is off-diagonal for every old $x$, hence every
+$a_e(c)$ is nonnegative. For the specified distant $x$, the old range
+bound gives $Q_e(x,p)=0$ and the successor Markov sign gives
+$b_e(p)\le0$. Its two summands in (129.1) are nonnegative, so both
+vanish. This applies to every actual beta parent, accounting for every
+child, and therefore $a_e=0$. Since $K_e$ is invertible, $q_e=0$.
+No rate formula for a diagonal old metric enters this argument. $\square$
+
+**Lemma 129.2 (deterministic-fibre identity and its source indices).**
+For every $u\in\mathcal T$ and every compatible step, let
+$\pi_e:V_{e+1}\to V_e$ fix old vertices and send each child to its actual
+parent. Then, for all $x\in V_{e+1}$ and $y\in V_e$,
+
+$$
+\sum_{z:\pi_e(z)=y}Q_{e+1}(x,z)=Q_e(\pi_e(x),y).
+\tag{129.2}
+$$
+
+This identity holds also for nonzero $q_e$ and for empty births. For
+$j\ge0$ write
+$\pi_{e,e+j}=\pi_e\circ\cdots\circ\pi_{e+j-1}$, with the identity for
+$j=0$. Iterating (129.2) gives the corresponding identity over each
+composite fibre.
+
+**Proof.** The matrix of $T_e$ has entry
+$T_e(z,y)=\mathbf1_{\{\pi_e(z)=y\}}$. Therefore the $(x,y)$ entry of
+$Q_{e+1}T_e=T_eQ_e$, which is exactly signed generator intertwining,
+is (129.2). Applying this to the product of the successive $T_e$ gives
+the composite identity; the product is the pullback along
+$\pi_{e,e+j}$. This derives the fibre formula directly, rather than
+assuming a probabilistic interpretation of the chart. $\square$
+
+**Theorem 129.3 (full-source universal uncapped obstruction).** For every
+initial source $u\in\mathcal T$, including every initial branch and
+both $\alpha$ and $\beta$, let $(G_e)_{e\ge0}$ be any sequence of
+finite SPD metrics on the uncapped actual iteration $s_e=\rho^e u$.
+Suppose that at every accepted step the unchanged native unit-edge forms
+and parent-copy maps satisfy (128.2), with $A_e=G_e^{-1}L_e$, and that
+every $Q_e=-A_e$ is conservative Markov. No diagonality is imposed on
+any metric, and the residual parameters may vary arbitrarily subject to
+these hypotheses. Then
+
+$$
+\sup_{e\ge0}\operatorname{jr}(Q_e)=+\infty.
+\tag{129.3}
+$$
+
+For every finite stopped or capped history on any $u\in\mathcal T$,
+the coherent realizations of Theorem 128.1 and Proposition 128.2 apply
+through its last accepted epoch, and the maximum of its finitely many
+finite ranges is finite. The uncapped conclusion quantifies over all
+coherent Markov families, not only the construction $q_e=0$ or the source
+of Proposition 125.3.
+
+**Proof.** Suppose an integer $R\ge0$ bounds all the ranges; an arbitrary
+finite real bound can be replaced by its ceiling. Begin the nonempty-birth
+argument at $h=h(u)$ of Proposition 128.3. At that epoch fix its entire
+terminal antichain $\mathcal L_h$, which has at least two leaves. Each
+later leaf is below exactly one $\ell\in\mathcal L_h$. Over two
+accepted updates a beta terminal is replaced by descendants at least one
+edge deeper, and an alpha terminal first becomes beta and then acquires
+two children. Consequently every terminal $p$ at epoch $e\ge h$ has
+
+$$
+d_e(p,\ell)\ge\left\lfloor\frac{e-h}{2}\right\rfloor
+\quad\text{for its unique ancestor }\ell\in\mathcal L_h.
+\tag{129.4}
+$$
+
+Indeed the assertion holds at offsets $0$ and $1$, and applying the
+two-update observation to every terminal proves it by induction in pairs
+of updates. Distinct original terminal cones remain separate, by the
+actual address substitution. Choose another $\ell'\in\mathcal L_h$.
+It remains an old occurrence, and the unique tree path from $p$ to
+$\ell'$ passes through $\ell$, so
+$d_e(p,\ell')=d_e(p,\ell)+d_h(\ell,\ell')>R$ whenever
+$e\ge h+2(R+1)$. This holds simultaneously for every beta leaf.
+Lemma 129.1 therefore forces $q_e=0$ for every step starting at
+$e\ge E:=h+2(R+1)$. Formula (127.7) now says that all old rates are
+unchanged and no old state has a rate to a newborn. This is a consequence
+of the supposed range bound on a tail, not a restriction on the original
+family or its finite initial steps.
+
+At every finite epoch, connectedness and the unit-edge energy identity
+give $\ker L_e=\mathbb R\mathbf1$. Invertibility of $G_e$ then gives
+$\operatorname{rank}Q_e=|V_e|-1$, so its left nullity is one. Here is
+the finite Markov consequence needed below. The directed graph of
+positive off-diagonal rates has a terminal strongly connected component,
+hence at least one closed communicating class. On each such class $C$,
+choose $r>\max_{x\in C}(-Q_e(x,x))$. The matrix
+$S_C=I+Q_e|_C/r$ is stochastic. The Cesaro averages
+$m^{-1}\sum_{i=0}^{m-1}\delta_x S_C^i$ have an accumulation point
+$\mu_C$ in the finite probability simplex. Their difference after
+right multiplication by $S_C$ is
+$(\delta_xS_C^m-\delta_x)/m$, which tends to zero. Thus
+$\mu_CQ_e|_C=0$. Extended by zero, it is a nonzero left null vector
+of $Q_e$, since $C$ is closed. Different closed classes give linearly
+independent such vectors by their disjoint supports. Left nullity one
+therefore gives exactly one closed class. In particular two disjoint
+nonempty closed sets are impossible, because each contains a terminal
+communicating class of its finite induced graph.
+
+Fix an epoch $e\ge E$. Suppose a beta leaf $p\in\mathcal P_e$ has a
+positive rate to $y\notin\mathcal P_e$. The actual beta-left lineage
+$p_j=pL^j$ is a beta leaf at epoch $e+j$ and has composite image $p$.
+Lemma 129.2 gives, for every integer $j\ge0$,
+
+$$
+\sum_{z:\pi_{e,e+j}(z)=y}Q_{e+j}(p_j,z)=Q_e(p,y)>0.
+\tag{129.5}
+$$
+
+Every summand is off-diagonal: the composite image of $p_j$ is $p\ne y$.
+Thus some such $z$ has a positive rate. If $y$ is an old branch occurrence,
+its composite fibre is the singleton $\{y\}$, since it can never again
+be a beta leaf. If $y$ is an alpha leaf, it is distinct from the leaf $p$,
+and its entire later fibre lies in its own descendant cone, separated from
+the descendant cone of $p$. These exhaust $y\notin\mathcal P_e$.
+In the first case appending $L^j$ to $p$ adds $j$ edges to the path to
+$y$; in the second the path also includes the descent below $y$. Hence
+every target in (129.5) satisfies
+
+$$
+d_{e+j}(p_j,z)\ge d_e(p,y)+j.
+\tag{129.6}
+$$
+
+For sufficiently large $j$ a positive summand contradicts the range bound.
+Thus at every $e\ge E$ all beta rows must stay inside
+$\mathcal P_e$, which is nonempty by Proposition 128.3. The set
+$\mathcal P_e$ is therefore closed. Since $q_e=0$, its old rows are
+unchanged at epoch $e+1$ and have no exits to newborns, so this same set
+of old occurrences remains a nonempty closed set for $Q_{e+1}$.
+All its elements become branch occurrences at that step. Accordingly it
+is disjoint from $\mathcal P_{e+1}$, which consists of the new beta left
+children and the old alpha leaves promoted to beta. The latter set is
+also nonempty and closed, by the same conclusion at epoch $e+1$.
+This gives two disjoint nonempty closed sets for $Q_{e+1}$, contradicting
+the rank/nullity consequence just proved. The uniform bound cannot exist.
+
+The finite-prefix assertion uses no such arbitrarily long lineage: each
+$V_e$ is finite and there are only finitely many accepted epochs. In
+particular a history stopping before $h(u)$ still includes every accepted
+empty step it actually took, and is covered by Theorem 128.1. $\square$
+
+## 130. Source correspondence and applicability of the corrected statements
+
+**Definition 130.1 (mathematical correspondence and boundaries).** The
+source algebra and accepted substitution in (127.1) are exactly IV
+Definitions 92.1 and 112.1. The branch access fibre $D=\mathcal B$ in
+IV (112.1) remains a branch fibre; the full-source quantifier here does
+not reinterpret a singleton as producing that branch entry record.
+The occurrence sets, old-address inclusions, beta parents and child
+incidence are the objects of IV (112.5)--(112.9), extended directly by
+the same algebraic definitions to singleton sources. In particular
+$P_e=C_e^*$, $P_e^{\mathsf T}P_e=2\operatorname{diag}
+(\mathbf1_{\mathcal P_e})$, and the $L_+$ of (127.2) is the unchanged
+native unit-edge form. The ancestry fibres in Lemma 129.2 are the actual
+fibres described in V Lemma 117.2: an old internal occurrence has a
+singleton fibre, and an old leaf has its own substituted finite tree.
+They are not quotients by equal subtree values.
+
+Theorems 128.1 and 129.3 compare all signed old fields, every successor
+coordinate, exact forms and SPD norms, and the same finite semigroup
+parameter $t$. Proposition 128.2 proves conservative Markov existence
+on these finite stages; Proposition 125.3 retains its exact rate-one
+fixed-source witness because (128.4) is its claimed rate recurrence.
+Theorem 129.3 additionally rules out a uniform finite occurrence-distance
+jump range for every uncapped compatible conservative Markov family,
+including ones that use nonzero cross vectors before range forcing
+applies. Theorems 121.2 and Corollary 121.3 retain their diagonal-old
+hypothesis from Definition 120.1; they supply a conditional one-step
+boundary and are not used to classify arbitrary inherited metrics.
+
+The Schur-complement and inverse identities used in Proposition 127.2
+are the standard ingredients cited in VI §120, Boyd--Vandenberghe,
+*Convex Optimization*, Appendix A.5.5. The remaining native conclusions
+are derived above from the specified incidence, congruence, intertwining
+and ancestry relations; no claim of literature novelty is attached to
+the finite matrix or Markov facts used inside those derivations.
+
+These statements concern finite occurrence-state spaces and their
+specified algebraic comparisons. They do not select a physical spatial
+dimension, turn occurrence distance into physical locality, or identify
+either the accepted epoch $e$ or semigroup parameter $t$ with a physical
+clock. In particular a three-port root compression is not a derivation
+of three physical dimensions. They assert neither an infinite-dimensional
+operator realization nor all-epoch irreducibility or original-edge
+support of the coherent generators. The finite SPD construction and
+the universal range obstruction leave those additional realization
+questions separate. The arguments here are mathematical prose and carry
+no Lean kernel-verification assertion.
+
+## 130.99 追加锚（本行以下为增补区）
