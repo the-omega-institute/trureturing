@@ -98,6 +98,11 @@ private def stateR : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
 
 private def marginalA : Matrix (Fin 2) (Fin 2) ℂ := diagonal ![9 / 10, 1 / 10]
 
+private theorem state_marginal : partialTraceRight stateR = marginalA := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [partialTraceRight, stateR, marginalA, diagonal, Fin.sum_univ_two]
+
 private def measurements : Fin 2 → Bool → Matrix (Fin 2) (Fin 2) ℂ :=
   fun x b => (1 / 2 : ℂ) •
     (1 + (if b then (-1 : ℂ) else 1) • pauliMatrix (if x = 0 then .X else .Z))
@@ -168,7 +173,8 @@ private theorem state_density : TwoQubitDensity stateR := by
         intro i
         fin_cases i <;> norm_num [Complex.le_def]
       · exact Matrix.PosSemidef.one.smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
-  · norm_num [Matrix.trace, Matrix.diag, stateR, Fintype.sum_prod_type, Fin.sum_univ_two]
+  · rw [← trace_partialTraceRight, state_marginal]
+    norm_num [marginalA, Matrix.trace, Matrix.diag, diagonal, Fin.sum_univ_two]
 
 private def channelWeights : Fin 4 → ℝ :=
   ![4183 / 10000, 3787 / 10000, 223 / 10000, 1807 / 10000]
@@ -209,11 +215,6 @@ private theorem pauli_kraus_action (M : Matrix (Fin 2) (Fin 2) ℂ) :
   simp only [pauliKraus, Matrix.conjTranspose_smul, star_trivial,
     Matrix.smul_mul, Matrix.mul_smul, smul_smul,
     Real.mul_self_sqrt (channel_weights_nonnegative j)]
-
-private theorem state_marginal : partialTraceRight stateR = marginalA := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    norm_num [partialTraceRight, stateR, marginalA, diagonal, Fin.sum_univ_two]
 
 private theorem pauli_action_entries (M : Matrix (Fin 2) (Fin 2) ℂ) : pauliAction M =
     !![(599 / 1000 : ℂ) * M 0 0 + (401 / 1000) * M 1 1,
