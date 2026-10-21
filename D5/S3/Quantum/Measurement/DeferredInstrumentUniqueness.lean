@@ -281,7 +281,38 @@ private lemma choi_of_boundary_formula {d : ℕ}
       (Matrix.vecMulVec (choiVector aa bb x) (star (choiVector aa bb x)) +
         Matrix.diagonal (fun p : Fin d × Fin d =>
           if p.2 = x ∧ p.1 ≠ x then ((bb : ℂ) ^ 2) else 0)) := by
-  sorry
+  ext ⟨j₁, i₁⟩ ⟨j₂, i₂⟩
+  have hr : Matrix.single i₁ i₂ (1 : ℂ) * Matrix.single x x 1 =
+      if i₂ = x then Matrix.single i₁ x 1 else 0 := by
+    by_cases h : i₂ = x
+    · subst i₂; simp
+    · simpa only [if_neg h] using
+        Matrix.single_mul_single_of_ne (1 : ℂ) i₁ i₂ x h (1 : ℂ)
+  have hl : Matrix.single x x (1 : ℂ) * Matrix.single i₁ i₂ 1 =
+      if x = i₁ then Matrix.single x i₂ 1 else 0 := by
+    by_cases h : x = i₁
+    · subst i₁; simp
+    · simpa only [if_neg h] using
+        Matrix.single_mul_single_of_ne (1 : ℂ) x x i₁ h (1 : ℂ)
+  rw [MatrixMap.choi_matrix, hΦ]
+  simp only [Q, OneMemClass.coe_one, Matrix.one_mul, Matrix.conjTranspose_one,
+    Matrix.mul_one]
+  rw [Matrix.trace_mul_single, hr, hl]
+  simp only [Matrix.smul_apply, Matrix.add_apply, Complex.real_smul, smul_eq_mul,
+    Complex.ofReal_div, Complex.ofReal_one, Complex.ofReal_natCast,
+    Matrix.vecMulVec_apply, Pi.star_apply, choiVector,
+    Matrix.diagonal_apply, Matrix.single_apply, Matrix.one_apply,
+    Complex.ofReal_pow, Complex.ofReal_mul, MulOpposite.op_one, one_smul, star_add, star_mul,
+    star_one, star_zero, Complex.star_def, Complex.conj_ofReal, ite_apply]
+  clear hr hl hΦ Φ
+  apply congrArg (fun z : ℂ => (1 / (d : ℂ)) * z)
+  by_cases h₁ : i₁ = x <;> by_cases h₂ : i₂ = x <;>
+    by_cases h₃ : j₁ = x <;> by_cases h₄ : j₂ = x
+  all_goals
+    simp [h₁, h₂, h₃, h₄, Matrix.single_apply, Prod.mk.injEq, eq_comm]
+  all_goals try split_ifs
+  all_goals try simp_all
+  all_goals ring
 
 lemma choi_Itilde_standard (d : ℕ) (t : ℝ) (x : Fin d) :
     MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) =
