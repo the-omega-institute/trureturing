@@ -101,6 +101,10 @@ private def request (original info : ConstantInfo) (occurrence evidence : Expr) 
   if head == base ++ `typed then
     let fs ← FibSource.fields head evidence
     FibFinite.request (← FibSource.bind original info occurrence fs[0]!)
+  else if head == base ++ `law then
+    let fs ← FibSource.fields head evidence
+    let bound ← FibSource.bind original info occurrence fs[0]!
+    FibLaw.request bound original.name fs[1]! fs[2]! fs[3]! fs[4]!
   else if head == base ++ `native then
     let fs ← FibSource.fields head evidence
     let value ← nativeRequest occurrence info fs
