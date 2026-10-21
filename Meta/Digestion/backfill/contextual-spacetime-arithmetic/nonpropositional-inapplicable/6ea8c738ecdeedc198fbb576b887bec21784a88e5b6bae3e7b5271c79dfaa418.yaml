@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ea8c738ecdeedc198fbb576b887bec21784a88e5b6bae3e7b5271c79dfaa418
+  normalized_sha256: sha256:6ea8c738ecdeedc198fbb576b887bec21784a88e5b6bae3e7b5271c79dfaa418
+cas_ref: sha256:6ea8c738ecdeedc198fbb576b887bec21784a88e5b6bae3e7b5271c79dfaa418
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Historical implementation/git/ingest or whitespace measurement record: records particular source bytes, commands, path counts and check outputs; no mathematical theorem or general inference is asserted. This receipt classifies the record and does not certify historical measurements.'
+    previous_atom_id: ca86b42ca88fad359196eb2dcc0cacb0edc70c81af9488dfb112474a3a221277
+    next_atom_id: 43d15ab1df553d1bc96d8b873522e5783c3bfd2fe3ae9108027794465971ab0a

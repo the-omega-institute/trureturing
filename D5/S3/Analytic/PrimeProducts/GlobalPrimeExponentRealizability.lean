@@ -129,7 +129,7 @@ private lemma mapped_prime_exponent_marginal (s : Real) (hs : 0 < s)
   congr 1
   ring
 
-private lemma realization_joint_law_eq_product (s : Real) (hs : 0 < s)
+lemma realization_joint_law_eq_product (s : Real) (hs : 0 < s)
     (q : PMF Nat) (hq : RealizesPrimeExponentLaw s q) :
     q.toMeasure.map primeExponentCode = exponentProduct s hs := by
   calc

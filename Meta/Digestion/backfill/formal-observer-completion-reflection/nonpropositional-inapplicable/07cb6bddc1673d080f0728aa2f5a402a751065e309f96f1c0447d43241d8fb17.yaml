@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:07cb6bddc1673d080f0728aa2f5a402a751065e309f96f1c0447d43241d8fb17
+  normalized_sha256: sha256:07cb6bddc1673d080f0728aa2f5a402a751065e309f96f1c0447d43241d8fb17
+cas_ref: sha256:07cb6bddc1673d080f0728aa2f5a402a751065e309f96f1c0447d43241d8fb17
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Conceptual description of retrospective responsibility and records.
+    previous_atom_id: 465301e243825bee9087d14925aa10eb71251087c3a63cb170a52fa809fd395b
+    next_atom_id: 030351c7ccd7f10f810d15cf20408deff90d6f2fe77a205aa773d3f134c91ddd

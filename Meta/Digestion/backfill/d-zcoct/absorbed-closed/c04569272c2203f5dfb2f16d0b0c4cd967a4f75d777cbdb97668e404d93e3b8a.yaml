@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c04569272c2203f5dfb2f16d0b0c4cd967a4f75d777cbdb97668e404d93e3b8a
+  normalized_sha256: sha256:c04569272c2203f5dfb2f16d0b0c4cd967a4f75d777cbdb97668e404d93e3b8a
+cas_ref: sha256:c04569272c2203f5dfb2f16d0b0c4cd967a4f75d777cbdb97668e404d93e3b8a
+coverage_gids:
+  - gid: D5/S3/Zeros/Symmetry/CriticalDampingFlatness.critical_damping_flatness_criterion
+    target_statement_id: sha256:b7e8c3b3e0bd172fbbb6a9813069d062ea19dcee5ba726124c48ec348465292b
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,31 @@
+**Definition 11.1 (two words in the same first store).** Keep Assumption
+1.2, the actual preparation, activation entrance, fixed first-bootstrap
+slot sequence, capture frame and second-bootstrap word of Definition 2.3.
+Here [CSA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md)
+means the callable storage atlas, and
+[OPEN_ROW](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OPEN_ROW_COMPLETION_AND_AUTHORITY.md)
+means open-row completion and authority. Their fresh-bit convention and
+Load predicate are used only for ARC's selected RCA bootstrap.
+
+In the first capture-ingress Base(69) of $L$, let $t$ be the testing row
+of its inlined Tail(66), and $u$ the testing row of its following Home(69).
+ARC Definitions 2.1–2.2 give, respectively, RD(66,4) testing R and
+RD(69,4) testing L, with their own move/back edges. They have distinct
+state numbers $q_t<q_u$ and empty extra-effect lists. Put $w_0=E(L)$.
+Form $w_1$ by exchanging these two complete seven-field row records,
+keeping their state and successor numbers, all other records, the two
+empty positional effect annotations, and all remaining effect, initial
+and entry fields. This is a change of supplied bits, not of initialization,
+slot capacity, native graph numbering or captured metadata.
+
+Let $e=|w_0|$ and let $c_0,\ldots,c_{e-1}$ be the actual raw first-version
+bit locations in bootstrap cursor order. If $b_t$ is the bit offset of
+the first field $U(q_t)$ in $w_0$, define the particular location
+
+$$
+p=b_t+q_t,\qquad c_p.
+$$
+
+Offsets are zero based. These are finite syntactic parameters of the
+fixed expansion and serializer, not new stored addresses or actor queries.
+

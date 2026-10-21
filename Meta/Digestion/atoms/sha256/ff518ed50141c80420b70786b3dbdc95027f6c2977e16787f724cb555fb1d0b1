@@ -1,0 +1,26 @@
+**Corollary 8.3 (One compact strict anchor per selected pair).** There
+are $\varepsilon_J>0$ and a compact set $\mathcal A$ in the strict
+off-$24$ full parent such that every selected joint configuration
+(1.6) can be relabelled within its two pairs to satisfy
+
+$$
+W_0,W_2\in\mathcal A,\qquad
+\delta(W_0),\delta(W_2)\ge\varepsilon_J,\qquad
+\delta(W)=\min\{r,1-r,b,c\}.
+\tag{8.4}
+$$
+
+The anchors may coincide. This gives no lower bound for the other
+endpoint of either pair or for any unused companion.
+
+Proof. SII, Theorem 14.3, at $P_*=P_J$ gives
+$\max\{\delta(W_0),\delta(W_1)\}\ge\varepsilon(P_J)$ and
+independently
+$\max\{\delta(W_2),\delta(W_3)\}\ge\varepsilon(P_J)$.
+Select one endpoint of each pair and take
+$\varepsilon_J=\varepsilon(P_J)$. SII, Theorem 15.1, gives a
+single compact strict-parent set containing both anchors. Its refinement
+above the compact off-$24$ base set $K$ in (8.3) puts $\mathcal A$
+inside the off-$24$ parent. These are selections among existing complete
+worlds, not changes to the child or its observations. ∎
+

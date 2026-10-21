@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:6df5267225f60116f6c8fdbdacdb6b194b65f9b2ca60822625b68a6f0e2cdc1c
+  normalized_sha256: sha256:6df5267225f60116f6c8fdbdacdb6b194b65f9b2ca60822625b68a6f0e2cdc1c
+cas_ref: sha256:6df5267225f60116f6c8fdbdacdb6b194b65f9b2ca60822625b68a6f0e2cdc1c
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Fibers/TensorAlgebraBehaviorSeparation.joint_residue_admission_product_iff_coprime
+    target_statement_id: sha256:49b61e6eff1f8fc1faad0e281a03642692548369283bbf35412425408f2359fe
+  - gid: D5/S3/ConceptDynamics/Fibers/TensorAlgebraBehaviorSeparation.tensor_algebra_decomposition_does_not_force_behavior_product
+    target_statement_id: sha256:c6384486721ade9e589c8541fa5add241d11c5cf9bbeb041530f33865550c5ff
+  - gid: D5/S3/Factorization/Galois/GaloisCompatibleFiberProduct.galois_compatible_fiber_product
+    target_statement_id: sha256:236a735821975f39638e7e19d5cf25e5fc61abe4f282c00317c13097891b0e80
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - faff516a7d3174521230f1938479ebaffe6298798c6140dc1dc523714f76e410
+    - 0cc895528a47838f02d16131e208e28ecb10d46a03f98c4ddd150430a09bb9b7
+    - c2cc3f124e22737ba514b6c3aa743aa4d6bea046e6e324f6741d79aa5265b925

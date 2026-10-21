@@ -41,7 +41,7 @@ def claim : Prop :=
   (∀ t : ℝ, 0 ≤ t → t ≤ 1 → ∀ ε : ℝ, 0 < ε → ∃ ρ : TwoQubit,
      ρ.PosSemidef ∧ Matrix.trace ρ = 1 ∧ vlen (centre ρ) = t ∧ bound t - ε < chsh ρ)
 
-private lemma sigma_succ (i : Fin 3) : sigma i.succ = pauli i := by
+lemma sigma_succ (i : Fin 3) : sigma i.succ = pauli i := by
   fin_cases i <;> rfl
 
 private lemma unit_coord (u : Fin 3 → ℝ) (hu : vlen u = 1) (i : Fin 3) : |u i| ≤ 1 := by
@@ -293,7 +293,7 @@ private lemma flip_purity_identity (ρ : TwoQubit) (hρ : ρ.IsHermitian)
   have he := flip_purity_homogeneous ρ hρ n
   rw [hs, htr, Complex.one_re, one_pow, one_mul] at he
   linarith
-private lemma vlen_sq (u : Fin 3 → ℝ) : vlen u ^ 2 = u ⬝ᵥ u := by
+lemma vlen_sq (u : Fin 3 → ℝ) : vlen u ^ 2 = u ⬝ᵥ u := by
   simpa only [← vlen_eq_norm, EuclideanSpace.inner_toLp_toLp, star_trivial] using
     (real_inner_self_eq_norm_sq (WithLp.toLp 2 u)).symm
 
@@ -354,7 +354,7 @@ private lemma planeSum_le_purity (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : tr
   have hid := flip_purity_identity ρ hρ.isHermitian htr (crossProduct u v) hn
   rw [planeSum.eq_def]
   linarith [sq_nonneg (blochB ρ ⬝ᵥ crossProduct u v)]
-private lemma normalized_unit (u : Fin 3 → ℝ) (hu : u ≠ 0) :
+lemma normalized_unit (u : Fin 3 → ℝ) (hu : u ≠ 0) :
     vlen ((vlen u)⁻¹ • u) = 1 ∧ vlen u • ((vlen u)⁻¹ • u) = u := by
   have hU : WithLp.toLp 2 u ≠ 0 := by simpa only [ne_eq, WithLp.toLp_eq_zero] using hu
   refine ⟨?_, ?_⟩

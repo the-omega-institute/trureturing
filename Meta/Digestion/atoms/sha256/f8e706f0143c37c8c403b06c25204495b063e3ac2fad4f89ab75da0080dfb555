@@ -1,0 +1,135 @@
+## 161. An explicit full-unitary NPT placement
+
+Choose an orthonormal basis $b_0,b_1,b_2,b_3$ of the four-dimensional
+fermionic Fock factor $\mathcal F_-(B)\cong\mathbb C^4_B$.  On
+$\mathcal S=\mathbb C^2\otimes\operatorname{span}\{b_0,b_1\}$ use the
+ordered product basis
+
+$$
+|0b_0\rangle,\ |0b_1\rangle,\ |1b_0\rangle,\ |1b_1\rangle.
+\tag{161.1}
+$$
+
+Define
+
+$$
+R_t=\frac1Z
+\begin{pmatrix}
+t&0&0&0\\
+0&(1+t^2)/2&(1-t^2)/2&0\\
+0&(1-t^2)/2&(1+t^2)/2&0\\
+0&0&0&t^2
+\end{pmatrix},
+\tag{161.2}
+$$
+
+and on the orthogonal product complement, in the ordered basis
+$|0b_2\rangle,|0b_3\rangle,|1b_2\rangle,|1b_3\rangle$, put
+
+$$
+D_t=\frac1Z\operatorname{diag}(1,t,t,t),\qquad
+\rho_*(t)=R_t\oplus D_t.
+\tag{161.3}
+$$
+
+The middle block in (161.2) has eigenvectors
+
+$$
+\frac{|0b_1\rangle+|1b_0\rangle}{\sqrt2},\qquad
+\frac{|0b_1\rangle-|1b_0\rangle}{\sqrt2}
+$$
+
+with eigenvalues $1/Z$ and $t^2/Z$.  The other two eigenvalues of
+$R_t$ are $t/Z$ and $t^2/Z$, so
+
+$$
+\operatorname{spec}\rho_*(t)
+=\frac1Z(1,1,t,t,t,t,t^2,t^2).
+\tag{161.4}
+$$
+
+If $\rho_V(\beta)=\sum_{i=1}^8\lambda_i|\phi_i\rangle\langle\phi_i|$ is
+any orthonormal eigenbasis realization of (158.2), choose an orthonormal
+eigenbasis $w_i$ of (161.3) carrying the same eigenvalues, including the
+degenerate eigenspaces.  Then
+
+$$
+W=\sum_{i=1}^8|w_i\rangle\langle\phi_i|
+\tag{161.5}
+$$
+
+is a global unitary with $W\rho_V(\beta)W^*=\rho_*(t)$.  Thus (161.3) is
+an actual point of the full $U(8)$ orbit, retaining all multiplicities.
+
+Partial transpose on $A$ moves the middle coherence to the corner
+spanned by $|0b_0\rangle,|1b_1\rangle$.  That principal block is
+
+$$
+C_t=\frac1Z
+\begin{pmatrix}
+t&(1-t^2)/2\\
+(1-t^2)/2&t^2
+\end{pmatrix},
+\qquad
+\det C_t=\frac{t^3-(1-t^2)^2/4}{Z^2}.
+\tag{161.6}
+$$
+
+For $0<t\le1$,
+
+$$
+\det C_t<0
+\Longleftrightarrow
+1-t^2>2t^{3/2}
+\Longleftrightarrow
+F(t)<1.
+\tag{161.7}
+$$
+
+A negative principal determinant makes the full partial transpose
+nonpositive.  Hence this explicit placement is NPT for every
+$\beta>\beta_*$.
+
+At $t=1/2$, so $\beta=\log2$ and $Z=9/2$, the density matrix is
+
+$$
+\boxed{
+\rho_*(1/2)=\frac1{36}
+\left[
+\begin{pmatrix}
+4&0&0&0\\
+0&5&3&0\\
+0&3&5&0\\
+0&0&0&2
+\end{pmatrix}
+\oplus
+\operatorname{diag}(8,4,4,4)
+\right].
+}
+\tag{161.8}
+$$
+
+Its spectrum is $(8,8,4,4,4,4,2,2)/36$.  The corresponding partial
+transpose corner is
+
+$$
+\frac1{36}\begin{pmatrix}4&3\\3&2\end{pmatrix},
+\qquad
+\det=-\frac1{1296},
+\qquad
+\lambda_{\min}(\rho_*(1/2)^{T_A})
+=\frac{3-\sqrt{10}}{36}.
+\tag{161.9}
+$$
+
+This is a matrix-level proof of NPT at the fixed cut.
+
+The witness uses the full global unitary class.  If $b_0$ is chosen as the
+vacuum vector of $\mathcal F_-(B)$, then $|0b_0\rangle$ is the total
+vacuum and has weight $t/Z$ in (161.2), while the original Gibbs vacuum
+has weight $1/Z$.  For
+$t<1$, the one-dimensional vacuum sector cannot change weight under any
+unitary commuting with total number.  Therefore this witness is not
+number-preserving.  No physical implementation or SSR legality is
+asserted for (161.5).
+

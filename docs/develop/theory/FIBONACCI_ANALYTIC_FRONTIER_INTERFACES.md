@@ -1731,3 +1731,1444 @@ $$
 把 $\mathcal C$ 一次扩大到也控制定理 457.1 的共同包络，在同一实际向量、该定理的有界共同成本及充分小 $\varepsilon$ 合同下，其投影是 $o(K^2)$，但（458.12）仍比 $K^2$ 高 $1/12+(5/36-5\delta/6)\ell$。该差额是本上界的预算缺口，不是实际补空间的下界；（458.10）在 $U\asymp K$ 也只有 $K^{2+\varepsilon}$，没有严格节省。其他原长度、高度、growing-height allowance、F4 的不同列二次型及 signed Robin restoration 仍需对应估计。本条不证明 RH 或全部 $n>5040$ 的严格 Robin 不等式。
 
 ## 追加锚（本行以下为增补区）
+
+## 459. 缓冲零点分箱下的完整原卷积联合估计
+
+**定理 459.1（保留原逆因子的分箱联合预算）。** 沿用定理 458.1 的原 $b(h)$、行算子 $A$、$Q(b)=\|Ab\|_2^2$、固定有限 Fourier 表示、共同零掩码及 good sixth-power-free 非单位行。以下为 `repo-derived` 的完整原系数联合应用；承重解析输入是原稿 `lem:logarithmic-control`、`lem:deleted-euler-factors`、无槽 `lem:plain`，以及原 buffered-bin／detector-count 合同。后两份合同在 [Xu–Sang v2，Theorem 2.2、Lemma 6.2 及 Proposition 6.3](https://arxiv.org/html/2610.17675v2)有明确陈述。原逆矩、分箱计数、复分析和 Cauchy 均直接复用，不分别作为新增结果。本条不把只有 $\mu$ 系数的逆二矩套到 $\mu*\mu$ 上，也不使用该文 prime-only 的 Proposition 7.2。
+
+固定 $U\asymp K$、$D=N=\sqrt K$。Profiles 支撑于原固定 annuli，并有下文所需有限阶有界 seminorms；norm-twist 高度固定。也允许实际 seminorm 和高度成本为 $U^{o(1)}$ 的 polylog 参数，但不据此认证原来更大的 growing-height allowance。原有限实参数或 smooth 选择只在同一固定 profile/height 合同下恢复。共同有限字符族 $\mathcal X_z$ 包含原 H1 的每一个 Fourier presentation；它不随 $U$ 扩张。
+
+对每个 Fourier 分量，记 $C_{M,\xi}$ 为下文原逆多项式逐行界的 profile 成本，$C_{S,\xi}$ 为原 plain 四矩成本的第四根，选择一次共同乘积包络
+
+$$
+\mathcal C\ge\max\left\{1,
+\sum_\xi|c_\xi|C_{M,\xi}C_{S,\xi}\right\}.
+\tag{459.1}
+$$
+
+原有限行分区、行权及所需的有限分离／Sobolev 费用都包含在其中，不按行、分箱或标签重新分配。令
+
+$$
+\kappa_{\mathrm{joint}}=\frac{49-10\sqrt6}{12}.
+\tag{459.2}
+$$
+
+则对任意最终 $\varepsilon>0$，在所列解析输入下，完整原行能量及任意实际正交投影 $P$ 的补空间满足
+
+$$
+\begin{aligned}
+Q(b)&\ll_\varepsilon\mathcal C^2
+ K^{\kappa_{\mathrm{joint}}+\varepsilon},\\
+\|(I-P)Ab\|_2^2&\le Q(b).
+\end{aligned}
+\tag{459.3}
+$$
+
+在同一有界或相应次幂成本口径下，这把定理 458.1 在该平衡点的上界幂次再降低
+
+$$
+\frac{25}{12}-\kappa_{\mathrm{joint}}
+=\frac{5\sqrt6-12}{6}>0.
+\tag{459.4}
+$$
+
+若改取定理 457.1 的同一扇区 $L=K^\ell$、$\sqrt K\le D\le\sqrt K L^{1/6-\delta_{457}}$、$N=K/D$，仍在本条明确的 profile/height 范围，则完整原能量和补空间满足
+
+$$
+Q(b),\ \|(I-P)Ab\|_2^2
+\ll_\varepsilon\mathcal C^2
+K^{\kappa_{\mathrm{joint}}+(1/6-\delta_{457})\ell+\varepsilon}.
+\tag{459.5}
+$$
+
+证明。先固定一个原 Fourier 分量，使用（458.5）的同一个 $\psi_z$、$M_\xi$、$S_\xi$。乘法性包含零值，所以 $Ab_\xi=\sqrt\Omega K^{1/2}M_\xi S_\xi$，原 $h=dn$ 不限重数，也没有增加 $(d,n)=1$。下述各项属于同一实际行和同一个原向量。
+
+取原 floor $a_0=51/100$，选小的固定分箱宽度 $e>0$，再使用原有的高度顺序选 $H_1=U^\tau$。令 $M_j(z)$ 是 $\mathcal X_z$ 中所有 primitive inducing $L$-函数在 $|\Im\rho|\le3jH_1$、$\Re\rho\ge a_0$ 的最大零点实部，并与 $a_0$ 取最大值。原共同分箱给出有限个 $\mathcal B_{i,a}$，满足
+
+$$
+a\le M_i(z)<a+e,\qquad M_{i+1}(z)<a+2e.
+\tag{459.6}
+$$
+
+每个 $\xi$ 都包含在这份共同最大值中。Floor 行有 $O(U)$ 个；其余行由原计数合同满足
+
+$$
+\#\mathcal B_{i,a}\ll_\varepsilon U^{\mathcal R(a)+\varepsilon},
+\qquad
+\mathcal R(a)=
+\begin{cases}
+(31-32a)/(21-12a),&a_0<a\le11/12,\\
+2(1-a),&11/12\le a\le1.
+\end{cases}
+\tag{459.7}
+$$
+
+此计数保留全部 good sixth-power-free 行，含字符阶数严格整除六的行；不是素行或仅平方自由行的计数。固定有限 ray 与原 masks 按同一算术数据合同处理，不将移动 ray 群并入固定常数。
+
+关键是逐行控制原逆因子。固定 $z\in\mathcal B_{i,a}$，在绝对收敛线使用其原完整逆级数：
+
+$$
+M_\xi(z)=\frac{D^{-1/2}}{2\pi i}
+\int_{(2)}\frac{D^s\widehat V(s)}
+ {L_{\mathrm{orig}}(s,\psi_z)}\,ds.
+\tag{459.8}
+$$
+
+$L_{\mathrm{orig}}$ 包含原删因子，故这里的系数正是原 $\mu(d)\psi_z(d)$。不在移线前去掉原零掩码。原 fixed-$S$ 字符不能消去 good 非单位行在 $S$ 外 valuation $1,\ldots,5$ 的非平凡局部字符，因而这些行非主；principal 来源不在当前行族中，既有例外处理中的贡献仍按其原合同保留。
+
+截断在 $H=H_1/4$，只把该有限线段移至 $\Re s=a+8e$。先运输原固定 norm twist，再应用（459.6）的缓冲：以 $2+it$ 为中心、半径 $2-a-2e$ 的所需圆盘无零。原 logarithmic-control 在较小圆盘上给出的正是 $|L|+|1/L|\ll U^\varepsilon$，不只是 $L'/L$ 的对数界。Conductor 与完整删除 radical 的 norm 均为 $O(U)$，原 deleted-euler-factors 同时控制这些因子及其倒数，所以原完整 $1/L_{\mathrm{orig}}$ 在实际有限矩形中也是次幂有界。固定／polylog 高度在足够大 $U$ 时处于这份缓冲内部。
+
+高度与导数的次序保留原合同：先固定分箱损失、内部 moment 及参数 Sobolev 的有限阶，再选足够小的 $\tau$ 支付其固定多项式高度费用；最后选外部 Mellin-tail 阶数 $J$。对原限定的 $D\le U^{O(1)}$，令 $J$ 足够大，使绝对线上的尾部和有限水平 joins 均为 $O(U^{-10})$。提高这份外部阶数只提高 $V$ 所需的有限 seminorm，不重新提高已经支付的内部高度指数。固定 norm twists 先平移到 $L$ 的高度参数，不能对其导数反复收取新的 growing-height 费用。移线后不把新纵线延伸到无缓冲的无限高度。
+
+因此，对同一个原分量和实际行，
+
+$$
+|M_\xi(z)|^2
+\ll_\varepsilon U^\varepsilon C_{M,\xi}^2
+ D^{2a-1+16e}+O(U^{-10}).
+\tag{459.9}
+$$
+
+有限单位或有界大小的原例外使用既有分解；annular 大 $U$ 的当前 good 非单位行不包含它们。这里没有先证一个新逆四矩，也没有把 witness 下界当成逐行上界。
+
+在同一个分箱中，只对 plain 因子使用带原 $\Omega$ 的 Cauchy。原无槽四矩对当前真实 $N$ 与固定 $\xi$ 给出
+
+$$
+\begin{aligned}
+\sum_{z\in\mathcal B_{i,a}}\Omega|M_\xi S_\xi|^2
+&\ll U^\varepsilon C_{M,\xi}^2D^{2a-1+16e}
+ \left(\#\mathcal B_{i,a}\sum_{z\in\mathcal B_{i,a}}
+ \Omega|S_\xi|^4\right)^{1/2}\\
+&\ll U^\varepsilon(C_{M,\xi}C_{S,\xi})^2
+ D^{2a-1+16e}U^{(1+\mathcal R(a))/2}.
+\end{aligned}
+\tag{459.10}
+$$
+
+$\Omega$ 的固定有界质量已纳入成本。Tail 的正贡献由原多项式大小及 $O(U^{-10})$ 支付。Floor 使用相同论证和 $\#\mathcal B_{i,a_0}=O(U)$。然后在同一个行范数中恢复全部有限 Fourier 分量、分箱及原行分区，使用（459.1）；没有把分别可达的系数或不同来源的最优值合并。
+
+在精确平衡点，先令 $e$ 和内部小幂适配最终 $\varepsilon$，再乘回原 $K$。写 $\delta=2a-1$，上方分箱的 raw 能量幂次为
+
+$$
+\frac32+\frac12\{R(\delta)+\delta\},
+\qquad
+R(\delta)=
+\begin{cases}
+(15-16\delta)/(15-6\delta),&1/50<\delta\le5/6,\\
+1-\delta,&5/6\le\delta\le1.
+\end{cases}
+\tag{459.11}
+$$
+
+第一段 $R(\delta)=8/3-25/(15-6\delta)$，故 $R(\delta)+\delta$ 的导数是 $1-150/(15-6\delta)^2$。它在
+
+$$
+\delta_*=(15-5\sqrt6)/6,
+\qquad R(\delta_*)+\delta_*=(31-10\sqrt6)/6
+\tag{459.12}
+$$
+
+取得最大值；$\delta_*\in(1/50,5/6)$。第二段之和恒为 $1$；floor 的 raw 幂次为 $201/100<\kappa_{\mathrm{joint}}$。有限分箱总数不随 $U$ 增加，因此（459.11）—（459.12）给出（459.3）的完整能量界。实际正交投影是收缩，遂同时控制其补空间。
+
+在（459.5）的扇区，写 $D=\sqrt K K^\theta$，$0\le\theta\le(1/6-\delta_{457})\ell$，仍取实际 $N=K/D$。原 plain 四矩在该真实长度范围内统一成立。因为 $0\le2a-1\le1$，（459.10）相对于平衡点额外至多支付 $K^\theta$；floor 额外只有 $K^{\theta/50}$，同样被所列幂次覆盖。由此得到（459.5），没有重新优化一个独立系数向量。证毕。
+
+当前上界的平衡点差额仍是
+
+$$
+\kappa_{\mathrm{joint}}-2
+=\frac{25-10\sqrt6}{12}>0.
+\tag{459.13}
+$$
+
+它是本估计距离目标 $K^2$ 的幂次差额，不是实际补空间的下界。只有在定理 457.1 的有界共同成本、充分小损失、同一实际向量及共同 profile/height 合同都满足时，才可同时保留其指定素标记投影的 $o(K^2)$ 结论；（459.3）并未将补空间降到 $K^2$ 以下。其他原长度和高度、原 growing-height allowance、F4 的不同列二次型以及 signed Robin restoration 仍需对应估计。本条没有新增零密度、RH 或全部 $n>5040$ 的严格 Robin 结论，也没有本仓解析 Lean 认证或文献优先权断言。
+
+相近的既有 mollified second-moment 方法仍按其范围复用。[David–de Faveri–Dunn–Stucky v3，§1.2 的（1.8）、（1.26）—（1.27）](https://arxiv.org/html/2410.03048v3)处理平方自由三次字符的 central $L$-值及其 mollifier；其 power-saving asymptotic 使用 $M\ll X^{1/6-\delta}$。它不直接给出本条六次字符原 annular $\mu$／plain 向量在 $D=N\asymp\sqrt U$ 时的完整联合界，不能把不同阶数、central-value 来源及长度条件删去。这里新增的是上述原向量的完整组合消费，所用分箱、次幂逆界及 plain 四矩本身都是既有输入。
+
+## 追加锚（本行以下为增补区）
+
+## 460. 全部六次幂自由标记的原卷积投影预算
+
+**定理 460.1（保留六次幂重叠的共同投影）。** 沿用 [G7、H1—H5](../../../Library/Analytic/faveri2026fixedorder.md#actual-gauss-compression-on-all-original-column-packets) 的实际 Gauss 行族、固定坏素集合 $S$、乘法 primary 约定、全部有限 ray sections、相位及零掩码。取原不拆分列向量
+
+$$
+b(h)=\omega_j(h)\sum_{dn=h}\mu(d)V(q_d/D)W(q_n/N),
+\qquad K=DN,
+\tag{460.1}
+$$
+
+其中 $h$ 不限重数，也不要求 $(d,n)=1$。负 orientation 同时共轭整个族。令 $D,N\ge1$、$L\ge1$、$2L\le D$，并固定 $0<\bar\varkappa<1/3$ 使 $L\le U^{1/3-\bar\varkappa}$。精确定义 $\mathcal L_L=\{R:R\text{ good、sixth-power-free},\ q_R\le L\}$；$V_L$ 的列为 G7 的实际 $v_R$，$G_L=V_L^*V_L$，$P_L=V_LG_L^{-1}V_L^*$。行算子 $A$ 保留原 good sixth-power-free 行和全部列；$v_R$ 在非平方自由行上为零。
+
+定义实际极点矩阵和二次型
+
+$$
+\begin{aligned}
+\mathsf W_L(h,R)&=U^{1/6}\widehat\Omega(2/3)
+ \rho_{\mathrm{prim},\nu_{[h]};S}(hR),\\
+Q_{\rho,L}(b)&=(\mathsf W_L^*b)^*G_L^{-1}(\mathsf W_L^*b).
+\end{aligned}
+\tag{460.2}
+$$
+
+假设 H5 的固定形式输入、H6 的同一 $B_0=7/8$ 固定字符 inverse-$L$ 输入以及 [primitive-mean 原稿 v2，§7、Corollary 5](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) 的输入成立。共同包络 $\mathcal N\ge1$ 包含这些固定有限族的常数、所需有限阶 profile seminorms、原固定 twists、共同 Mellin 分离变换及 reciprocal-strip 成本，并覆盖实际推导中这些费用的有限乘积和，不按标签或除数重新选择。则对充分大的原尺度和任意最终 $\varepsilon>0$，
+
+$$
+\begin{aligned}
+Q_{\rho,L}(b)\ll_\varepsilon{}&
+\mathcal N^2(UKL)^\varepsilon U^{1/3}
+\left(K^{5/3}D^{-1/4}L^{2/3}
+      +K^{2/3}D^2L^{5/3}\right),\\
+\|P_LAb\|_2^2\ll_\varepsilon{}&
+\mathcal N^2(UKL)^\varepsilon
+\left\{U^{1/3}
+\left(K^{5/3}D^{-1/4}L^{2/3}
+      +K^{2/3}D^2L^{5/3}\right)+K^2L^{3/2}\right\}.
+\end{aligned}
+\tag{460.3}
+$$
+
+这是一条 `repo-derived` 的原系数组合估计。H5、极点留数的六次幂周期律、primitive density、共同 Gram 条件与原 unrestricted adjoint 直接复用；不将它们另立为新结果。新增消费覆盖全部 $\mathcal L_L$，包括 $v_p(R)=5$ 且 $p\mid d$ 的分支。
+
+证明。对每个 $R$ 定义原 coherent 配对
+
+$$
+T_R=\sum_h b(h)
+ \overline{\rho_{\mathrm{prim},\nu_{[h]};S}(Rh)}.
+\tag{460.4}
+$$
+
+在 H2 中把 $p^{-1}\bmod B$ 换成 $R^{-1}\bmod B$，所有 original masks 仍包含于固定函数 $\phi_{R,j,\tau}$。$R$ 与固定 $B$ 互素，故这仍只置换同一个固定有限函数族，没有 growing conductor。对 $m=Rdn$ 使用 H3 的完全相同原配对及共同 Mellin 分离。其总 norm 尺度为 $Y=q_RK$；分离后外变量只有原 $d$ 的 smooth profile，内部是 $R d\mid m$ 的 H5 型和。原有限因子若需要 character 分解，仍属于 H6 的同一固定族。
+
+先处理 H5 不能直接覆盖的六次幂指数。以下只在极点留数上使用 [averaged Type-I 原稿 v1，（2.6）、（3.3）](https://rstation.ai/api/v1/papers/riemann_hypothesis_8/versions/1/download) 及 H4 的固定额外排除版本：
+
+$$
+\rho_{\mathrm{full},\tau;S}(c^6m)
+=\rho_{\mathrm{full},\tau;S}(m),\qquad
+\rho_{\mathrm{prim},\tau;S}(m)=w_S(m)
+ \rho_{\mathrm{full},\tau;S}(m),\qquad
+w_S(m)=\prod_{p\mid m}\frac{q_p}{q_p+1}.
+\tag{460.5}
+$$
+
+对 good squarefree $c$，两式直接给出精确有限密度展开
+
+$$
+\rho_{\mathrm{prim},\tau;S}(c^6m)
+=w_S(c)\sum_{k\mid c}\frac{\mathbf1_{k\mid m}}{q_k}
+ \rho_{\mathrm{prim},\tau;S}(m).
+\tag{460.6}
+$$
+
+确实，每个 $p\mid c$ 的乘子在 $p\nmid m$ 时为 $q_p/(q_p+1)$，在 $p\mid m$ 时为 $1$。这里没有对离开极点的 primitive 或 full series 使用周期律，也没有删去 principal sixth-power 项。
+
+若 $a=a_0c^6$，其中 $a_0$ sixth-power-free、$c$ squarefree 且 $(a_0,c)=1$，置 $Y'=Y/q_c^6$、$\phi_c(m)=\phi(c^6m)$。由（460.6），原 progression 和恰为
+
+$$
+w_S(c)\sum_{k\mid c}\frac1{q_k}
+\sum_{a_0k\mid m}\phi_c(m)\rho_{\mathrm{prim},\tau;S}(m)
+ \mathcal W(q_m/Y').
+\tag{460.7}
+$$
+
+每一个 $a_0k$ 仍 sixth-power-free，可直接应用 H5；$\phi_c$ 仍只属于固定模 $B$ 上的有限函数族。记 H5 的主项常数为 $C_{\tau,Q,\phi_c}$，保留它对 $c\bmod B$ 的依赖。因 $v$ 在平方自由理想上乘法，且
+
+$$
+\frac{q_p}{q_p+1}\left(1+\frac{v(p)}{q_p^2}\right)=v(p),
+\qquad
+w_S(c)\sum_{k\mid c}\frac1{q_k}=1,
+\tag{460.8}
+$$
+
+（460.7）的主项与误差分别是
+
+$$
+\begin{aligned}
+&C_{\tau,Q,\phi_c}Z_S Y^{5/6}\widehat{\mathcal W}(5/6)
+ \frac{q_c\,v(\operatorname{rad}a)}{q_a},\\
+&O_\varepsilon\left((Yq_a)^\varepsilon
+ Y^{1/3}q_c^{-2}\right).
+\end{aligned}
+\tag{460.9}
+$$
+
+此处 $Y'\ge1$ 的条件在下述应用中成立。与把 $a$ 当成 sixth-power-free 的错误代入相比，主项保留了必要的 $q_c$ 增益。
+
+现在按同一个原 Möbius 变量分解
+
+$$
+\begin{aligned}
+g&=(d,\operatorname{rad}R),&d&=ge,&(e,R)&=1,\\
+R_5&=\prod_{v_p(R)=5}p,&c&=(g,R_5),&
+a_0&=(Rg/c^6)e.
+\end{aligned}
+\tag{460.10}
+$$
+
+Möbius support 保证 $g,e$ 平方自由且互素。$Rd=a_0c^6$，$a_0$ 的每个指数至多为5，且 $(a_0,c)=1$，所以（460.9）包含每一个重叠。由 $q_c^5\le q_R\le L$ 及 $K\ge D\ge2L$，有 $Y'=q_RK/q_c^6\ge K/L^{1/5}\ge1$。不约化原 $h$ 的估值，也不改变其列掩码。
+
+固定 $R,g$ 后，主项常数及 $c$ 都与 $e$ 无关。只对实际 $e\asymp D/q_g$ 的 Möbius 和使用 H6 原固定字符输入：
+
+$$
+\sum_{(e,RS)=1}\frac{\mu(e)v(e)\xi(e)}{q_e}
+ V_*(q_e/(D/q_g))
+\ll\mathcal N(D/q_g)^{-1/8+\varepsilon}q_R^\varepsilon.
+\tag{460.11}
+$$
+
+新增的算术删除只是原固定字符 Euler product 中 $p\mid R$ 的因子，其正向及倒数在 $B_0+\varepsilon$ 线上均为 $q_R^\varepsilon$ 成本；不把它当作 changing ray level。所需 $v(p)=1+O(q_p^{-1})$ 的 Euler 修正与 H6 相同。共同 Mellin 分离后仍使用这份同一包络。
+
+（460.9）的误差在每个 $g$ 分支至多有 $O(D/q_g)$ 个 $e$。因此完整 coherent 和满足
+
+$$
+\begin{aligned}
+|T_R|\ll{}&\mathcal N(Kq_R)^\varepsilon\left\{
+K^{5/6}D^{-1/8}q_R^{-1/6}
+ \sum_{g\mid\operatorname{rad}R}\frac{q_{(g,R_5)}}{q_g^{7/8}}
+ +K^{1/3}Dq_R^{1/3}
+ \sum_{g\mid\operatorname{rad}R}
+  \frac1{q_gq_{(g,R_5)}^2}\right\}\\
+\ll{}&\mathcal N(Kq_R)^\varepsilon
+\left(K^{5/6}D^{-1/8}q_R^{-1/6}q_{R_5}^{1/8}
+      +K^{1/3}Dq_R^{1/3}\right).
+\end{aligned}
+\tag{460.12}
+$$
+
+最后一步逐素使用 $1+q_p^{-7/8}$，而 $p\mid R_5$ 时使用 $1+q_p^{1/8}$；剩余有限除数乘积由次幂界支付。六次幂主项的增益没有在除数和中被丢弃。
+
+在平方之前已对原 $h$ 作 coherent 求和。随后只需正标签和。写 $R=R_0s^5$，$s=R_5$，放宽互素及 fifth-power-free 限制以取得上界。固定域的理想计数给出
+
+$$
+\begin{aligned}
+\sum_{R\in\mathcal L_L}q_R^{-1/3}q_{R_5}^{1/4}
+&\le\sum_{q_s^5\le L}q_s^{-5/3+1/4}
+       \sum_{q_{R_0}\le L/q_s^5}q_{R_0}^{-1/3}\\
+&\ll L^{2/3}\sum_s q_s^{-19/4}\ll L^{2/3},\\
+\sum_{R\in\mathcal L_L}q_R^{2/3}&\ll L^{5/3}.
+\end{aligned}
+\tag{460.13}
+$$
+
+G7 供给同一个实际 $G_L^{-1}$ 的范数界；将（460.12）平方，使用（460.13）及 $\mathsf W_L$ 的 $U^{1/6}$ 因子，得到（460.3）的第一式。没有将不同标签视为正交，也没有用 upper sieve bound 代替 Gram 下界。
+
+对于第二式，直接用 primitive-mean v2 的 unrestricted-column Corollary 5：
+
+$$
+A^*V_L=\mathsf W_L+E_L,\qquad
+\|E_L\|_{\mathrm{HS}}^2
+\ll(UKL)^\varepsilon K\sum_{q_R\le L}q_R^{1/2}
+\ll(UKL)^\varepsilon KL^{3/2}.
+\tag{460.14}
+$$
+
+非平方自由行上的 $v_R$ 为零，故原较大行空间的 adjoint 与该原稿 §7 完全相同；这里不从 G9 的平方自由列范围外推。原列向量的除数界给出 $\|b\|_2^2\ll\mathcal N^2K^{1+\varepsilon}$。因此
+
+$$
+\begin{aligned}
+\|P_LAb\|_2^2
+&=\|G_L^{-1/2}(\mathsf W_L+E_L)^*b\|_2^2\\
+&\le2Q_{\rho,L}(b)
+ +2\|G_L^{-1}\|\,\|E_L\|_{\mathrm{HS}}^2\|b\|_2^2,
+\end{aligned}
+\tag{460.15}
+$$
+
+从而得到第二式。全部原列和标签均在同一实际向量上，既没有先取逐列绝对值的 residue majorant，也没有把独立可达的向量最优值拼接。证毕。
+
+**推论 460.2（平衡点与完整能量的严格比较）。** 在定理 460.1 的同一条件和有界共同成本下，取 $U\asymp K$、$D=N=\sqrt K$、$L=K^\ell$。若固定 $\ell>0$ 满足共同 Gram 范围，则
+
+$$
+\begin{aligned}
+Q_{\rho,L}(b)&\ll_\varepsilon\mathcal N^2K^\varepsilon
+ (K^{15/8}L^{2/3}+K^2L^{5/3}),\\
+\|P_LAb\|_2^2&\ll_\varepsilon
+ \mathcal N^2K^{2+5\ell/3+\varepsilon}.
+\end{aligned}
+\tag{460.16}
+$$
+
+若同时满足定理 459.1，使用一次共同包络 $\mathcal H\ge\max\{\mathcal N,\mathcal C\}$。当
+
+$$
+0<\ell<\frac{25-10\sqrt6}{20},
+\tag{460.17}
+$$
+
+当前全部标记投影的幂次上界严格小于从（459.3）直接得到的 $\kappa_{\mathrm{joint}}$；差额为
+
+$$
+\kappa_{\mathrm{joint}}-(2+5\ell/3)
+=\frac{25-10\sqrt6}{12}-\frac{5\ell}3>0.
+\tag{460.18}
+$$
+
+最终 $\varepsilon$ 取小于这个正差额；所有组合成本由上述同一个 $\mathcal H$ 支付。改进的对象是由（459.3）整体能量直接继承的该投影界。
+
+证明。把平衡尺度代入（460.3）；第一项的 $K$ 幂为 $1/3+5/3-1/8=15/8$，第二项为 $2$，余项为 $K^2L^{3/2}$。因 $K,L\ge1$，前者和余项都被 $K^2L^{5/3}$ 吸收，得到（460.16）。再直接比较（459.2）的幂次即得（460.18）。证毕。
+
+在相同固定或 polylog 次幂成本合同下，（460.3）保留全部六次幂自由标签，但其 $2+5\ell/3$ 仍高于 $2$。既有定理 457.1 对指定素标签的更强结论不被替换。原恒等式
+
+$$
+\|Ab\|_2^2=\|P_LAb\|_2^2+\|(I-P_L)Ab\|_2^2
+\tag{460.19}
+$$
+
+仍需对同一完整补空间给出更强上界；（459.3）对它的 $K^{\kappa_{\mathrm{joint}}+\varepsilon}$ 预算没有因本条而降低。其他原长度、高度、growing-height allowance、F4 的不同列二次型及 signed Robin restoration 也不由（460.3）推出。
+
+## 追加锚（本行以下为增补区）
+
+## 461. 算子尾部与短核心的更细标记切面
+
+**定理 461.1（全部小标记的平方自由行 Gram）。** 使用 [G1–G7 的同一行空间、标记、零值、固定有限 ray 约定及对角矩阵](../../../Library/Analytic/faveri2026fixedorder.md#the-actual-gram-including-all-original-zeros)。标记恰好为所有 good sixth-power-free 理想 $q_R\le L$，不把同一理想的单位代表重复计入。假设 de Faveri [Theorem 1.1、Lemma 3.1、Lemma 6.1](https://arxiv.org/abs/2610.04045v1) 的解析输入成立。固定 $0<\kappa<1/2$。对任意 $\varepsilon>0$，在
+
+$$
+1\le L\le U^{1/2-\kappa}
+$$
+
+及充分大 $U$ 上，同一个实际 $G=V^*V$ 满足
+
+$$
+\|G-D_L\|
+\ll_{\kappa,\varepsilon,\Omega,S}(UL)^\varepsilon U^{-1/2}L.
+\tag{461.1}
+$$
+
+进而
+
+$$
+G>0,\qquad \|G\|+\|G^{-1}\|
+\ll_{\kappa,\varepsilon,\Omega,S}(UL)^\varepsilon.
+\tag{461.2}
+$$
+
+这里 $\Omega$ 是固定非零、非负、光滑 annular 行权；常数只使用其有限阶 seminorms 及 $C_\Omega^{-1}$。本条是所引大筛、完整字符 Poisson 与同一个实际 Gram 的联合应用，标为 `repo-derived`；不把通用 Poisson、理想计数或既有 G1–G7 另立为新结果。
+
+证明。令 $q_a=Na$。原 Gauss 因子在 $G$ 中抵消。对任意标记系数向量 $c$，逐项展开平方自由行，得到精确有限式
+
+$$
+\langle Gc,c\rangle
+=\frac1U\sum_a\mu(a)\sum_b
+\Omega(q_a^2q_b/U)
+\left|\sum_{R\in\mathcal R_L}c_R\overline{\chi_{a^2b}(R)}\right|^2.
+\tag{461.3}
+$$
+
+$a,b$ 仍为 good 理想；$q_a\ll\sqrt U$。乘法性包括零值，故内层标记系数恰为 $c_R\overline{\chi_{a^2}(R)}$，其平方范数不超过 $\|c\|_2^2$。不增加 $(a,b)=1$ 或 $(a,R)=1$；原来为零的项继续为零。
+
+先复用完整有限 Hecke 字符的光滑 Poisson 估计。设 $\xi$ 非主、primitive conductor 为 $\mathfrak f$，完整零延拓模数为 $\mathfrak q$，无限型平凡。对任意固定 $B>0$，de Faveri Lemma 3.1 及其变换的快速衰减给出
+
+$$
+\left|\sum_b\xi(b)\Omega(q_b/Y)\right|
+\ll_{B,\epsilon_1,\Omega,S}
+q_{\mathfrak f}^{1/2}q_{\mathfrak q}^{\epsilon_1}
+\left(\frac{q_{\mathfrak q}}Y\right)^B.
+\tag{461.4}
+$$
+
+这里只在 $Y/q_{\mathfrak q}$ 有固定正幂裕度时使用。具体地，primitive Poisson 的外因子为 $Y/\sqrt{q_{\mathfrak f}}$，dual scale 为 $q_{\mathfrak f}/Y$；取变换衰减阶数 $B+1>1$ 并用收敛的理想和，得到 $q_{\mathfrak f}^{1/2}(q_{\mathfrak f}/Y)^B$。对额外 zero-only primes 作有限 Möbius 展开，$b=dm$ 将尺度改为 $Y/q_d$，且 $q_{\mathfrak f}q_d\le q_{\mathfrak q}$；除数损失由 $q_{\mathfrak q}^{\epsilon_1}$ 支付。所有固定有限 primary/ray 分量均按 G6 的原约定处理。Lemma 3.1 对其允许的 profile 线性适配到 $\Omega$；不引入新的移动 ray 导子。
+
+选小的固定 $\delta>0$，令
+
+$$
+A=U^{1/2-\delta}/L,\qquad 0<\delta<\kappa/2.
+\tag{461.5}
+$$
+
+先在（461.3）中只取 $q_a\le A$。若 $R\ne T$，G6 已核对该比值是非主有限 Hecke 字符，并且其 primitive conductor 与保留 zero-only primes 的完整模数都为 $O_S(L^2)$。此时 $Y=U/q_a^2\ge L^2U^{2\delta}$。由（461.4），取足够大的固定 $B$，短 $a$ 段的全部非对角项在算子范数中为 $O(U^{-10})$：标记对用 $\|c\|_1^2\ll L\|c\|_2^2$，再支付 $O(A)$ 个 $a$。$B$ 只依赖固定损失和参数范围。
+
+对角项直接复用 G5 的 principal 陈述。其截断主项为
+
+$$
+ d_R^{(A)}=
+ \operatorname{Res}_{s=1}\zeta_F(s)
+ \frac{\varphi_F(\mathfrak q_R)}{q_{\mathfrak q_R}}
+ \left(\int_0^\infty\Omega(y)\,dy\right)
+ \sum_{\substack{q_a\le A\\(a,SR)=1}}\frac{\mu(a)}{q_a^2},
+\tag{461.6}
+$$
+
+其中 $\mathfrak q_R$ 的素支撑为 $SR$，使用 G3 相同的完整零掩码。Euler 乘积给出完整主项 $d_R$，且 $|d_R^{(A)}-d_R|\ll A^{-1}$ 一致成立。G5 的对角误差求和为 $O((UL)^{\epsilon_1}U^{-1/2})$。这一段保留全部对角密度，不由大筛上界推断下界。
+
+现在估计 $q_a>A$ 的完整算子尾部。直接在正平方范数中使用 de Faveri Lemma 6.1 与 Theorem 1.1：对任意 good 标记向量 $u$ 及真实行尺度 $T$，
+
+$$
+\sum_b\Omega(q_b/T)
+\left|\sum_{R\in\mathcal R_L}u_R\overline{\chi_b(R)}\right|^2
+\ll(TL)^{\epsilon_1}\|u\|_2^2
+\left(T+T^{1/6}L+T^{5/6}L^{1/3}+T^{1/3}L^{5/6}\right).
+\tag{461.7}
+$$
+
+这里 $b$ 不限平方自由或 sixth-power-free。整体共轭及系数共轭将这一范数送到原筛族。Lemma 6.1 提供的量为 $\max_{1\le r\ll T^{1/6}}r\mathscr F_6(T/r^6,L)$，逐项取最大值正好给出（461.7）。分解 $b=b_0v^6$ 时 $\chi_{v^6}(R)$ 只是原系数中的 zero-only mask；每个 $v$ 的系数平方范数不增加。有限 reciprocity 分区沿用原筛族。非空有界 subunit 行尺度用固定 annular 扩大，不造成新的幂损失。
+
+尾部的 $\mu(a)$ 可以取绝对值，因为此处只求同一个 Hermitian 尾算子的范数上界。对（461.7）代入 $T=U/q_a^2$，利用固定域理想计数，得到
+
+$$
+\begin{aligned}
+\|G_{>A}\|\ll(UL)^{\epsilon_2}
+\bigl(&A^{-1}+U^{-1/2}L\\
+ &+U^{-1/6}L^{1/3}A^{-2/3}
+ +U^{-1/2}L^{5/6}\bigr).
+\end{aligned}
+\tag{461.8}
+$$
+
+例如四项分别来自 $U\sum_{q_a>A}q_a^{-2}$、$U^{1/6}L\sum_{q_a\ll\sqrt U}q_a^{-1/3}$、$U^{5/6}L^{1/3}\sum_{q_a>A}q_a^{-5/3}$ 及 $U^{1/3}L^{5/6}\sum_{q_a\ll\sqrt U}q_a^{-2/3}$，最后共同除以 $U$。此处以整体正平方和控制尾部，不对每个标记对再作绝对行和。
+
+将（461.5）代入，右边由 $(UL)^{\epsilon_2}U^{-1/2+\delta}L$ 控制。先选 $\delta$ 与全部内部损失以适配最终 $\varepsilon$，再选（461.4）的有限衰减阶数，短段、对角尾及（461.8）共同给出（461.1）。最后使用 G3 既有的 $d_R\gg_{\epsilon_3}L^{-\epsilon_3}$，在 $L\le U^{1/2-\kappa}$ 的固定裕度内分配内部小幂，使扰动严格小于最小对角的一半，即得（461.2）。证毕。
+
+**推论 461.2（原始短核心包的较大标记投影）。** 沿用定理 461.1、原 F4 包 $b_{j;c,a,\vartheta}$、G8–G11 的同一原算子与 [primitive-mean v2，Corollary 5、§§7–8](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) 的解析输入。固定
+
+$$
+\frac13<\ell<\frac12,\qquad
+0<\nu<1-\frac32\ell,\qquad
+L=U^\ell,\qquad \alpha=1-\frac32\ell-\nu>0.
+\tag{461.9}
+$$
+
+令 $P_L=VG^{-1}V^*$ 为同一个实际投影，$W_{U,X,L}$ 是原 adjoint 的完整 primitive residue 矩阵。对全部 $1\ll X\le U^\alpha$，有
+
+$$
+\|A_{U,X}^*P_LA_{U,X}
+ -W_{U,X,L}G^{-1}W_{U,X,L}^*\|
+\ll U^{1-\nu/2+\varepsilon}\mathcal N^2.
+\tag{461.10}
+$$
+
+共同包络 $\mathcal N\ge1$ 一次包含原 profiles、固定有限 ray、实际 Mellin/Sobolev 及解析输入费用，不按核心或标记重选。它包含（461.4）为当前 $\kappa,\varepsilon$ 所需有限阶行权 seminorms 及 $C_\Omega^{-1}$；不据此扩张原有增长高度范围。具体地，若 $C_A,C_E,C_G,C_{G^{-1}}$ 分别为 G8、G9、（461.2）两项剥去所示小幂后的常数，取 $\mathcal N^2\ge C_A+C_E+C_{G^{-1}}(2\sqrt{C_AC_GC_E}+C_E)$；这些乘积也在同一包络内。原 F4 的正权 $w_{c,a,\vartheta}=q_c^{1/2+\eta}\tau(\operatorname{rad}c)$ 与完整实际系数均保留。仅对满足 $K_c=K/q_c\le U^\alpha$ 的实际包求和，得到
+
+$$
+\begin{aligned}
+&\sum_{K_c\le U^\alpha}w_{c,a,\vartheta}
+ \left|Q_{P_L}(b_{j;c,a,\vartheta})
+       -Q_{\rho,L}(b_{j;c,a,\vartheta})\right|\\
+&\hspace{15mm}\ll(UK)^\varepsilon\mathcal N^2
+  UK\,U^{-\nu/2}\mathcal P^2.
+\end{aligned}
+\tag{461.11}
+$$
+
+和式包含原 $a\mid\operatorname{rad}c$ 与全部有限 $\vartheta$。在 $U\asymp K$、$\mathcal N^2\mathcal P^2$ 有界或至多 polylog 增长及 $0<\varepsilon<\nu/4$ 下，（461.11）除以 $K^2$ 为 $O(K^{2\varepsilon-\nu/2}\mathcal N^2\mathcal P^2)=o(1)$。其中 $L>U^{1/3}$ 的整个标记范围由（461.2）提供。本结论只估计这些短包中的投影与 residue 二次型之差；它没有分别给出 residue 二次型、长包或完整正交补的上界，也没有推出 signed Robin restoration。
+
+证明。取固定 $\kappa<1/2-\ell$，应用（461.2）于原实际全部标记 Gram。Corollary 5 对所有 good $R$、$U,X\ge1$ 一致成立，不带 $L\le U^{1/3}$ 的前提。其误差列在同一标记集上给出
+
+$$
+\|E\|_{\rm HS}^2\ll(UXL)^\varepsilon\mathcal N^2XL^{3/2}
+\ll U^{1-\nu+\varepsilon}\mathcal N^2.
+\tag{461.12}
+$$
+
+因为 $\alpha<1/2$，原 G8 直接给出 $\|A_{U,X}\|^2\ll U^{1+\varepsilon}\mathcal N^2$。G10 的有限矩阵比较保留实际 $T=A^*V=W+E$、全部交叉标记及同一个 $G^{-1}$；其两项分别为 $U^{1-\nu/2+\varepsilon}\mathcal N^2$ 和 $U^{1-\nu+\varepsilon}\mathcal N^2$，给出（461.10）。
+
+对每个原包乘 $\|b_{j;c,a,\vartheta}\|_2^2$。原零掩码 $(x,c)=1$ 与全部相位仍在这个实际向量中。复用 G11 的已付系数质量
+
+$$
+\sum_{c,a,\vartheta}w_{c,a,\vartheta}
+ \|b_{j;c,a,\vartheta}\|_2^2
+\ll K^{1+\varepsilon}\mathcal P^2.
+$$
+
+只在此正和内限制到短包，得到（461.11）。原 F4 的 $\eta$ 及全部内部除数损失依同一最终 $\varepsilon$ 分配，共同累计高度没有重新分配。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 462. 原卷积的大重复部分与完整交叉项
+
+**定理 462.1（保留原列相位的完整尾部）。** 沿用（458.1）的原卷积 $b$、同一个行算子 $A$、good sixth-power-free 物理行及其固定有限 ray 表示。令
+
+$$
+\mathfrak x(h)=\prod_{v_{\mathfrak p}(h)=1}\mathfrak p,
+\qquad
+\mathfrak c(h)=\prod_{v_{\mathfrak p}(h)\ge2}
+ \mathfrak p^{v_{\mathfrak p}(h)},
+\qquad h=\mathfrak c(h)\mathfrak x(h).
+$$
+
+两因子互素，$\mathfrak c(h)$ 为 powerful 理想。对 $1\le X\le K$，在取行范数之前限制原列向量：
+
+$$
+b_{\le X}(h)=b(h)\mathbf1_{q_{\mathfrak x(h)}\le X}.
+\tag{462.1}
+$$
+
+假设 de Faveri [Theorem 1.1](https://arxiv.org/abs/2610.04045v1) 的解析输入成立，沿用其到原有限物理表示的既有修正。令 $\mathcal P_b\ge1$ 控制原卷积及所需 profile 导数的除数型系数包络，$\mathcal P_A\ge1$ 控制加权筛的范数成本，$\mathcal P_F\ge1$ 控制固定有限修正及本条所需分离费用。一次取组合包络 $\mathcal P\ge\mathcal P_b\mathcal P_A\mathcal P_F$，不以三个成本的最大值代替乘积。则
+
+$$
+\|A b_{\le X}\|_2^2
+\ll_\varepsilon (UK)^\varepsilon\mathcal P^2
+ \Psi_6(U,K)\sqrt{KX}.
+\tag{462.2}
+$$
+
+这里 $\Psi_6$ 为（458.1）的同一个四项筛界。负 orientation 整体共轭，原零值保持。$\mathcal P$ 不按重复部分或行重新选择；不扩张原有高度合同。本条是 `repo-derived` 的原系数消费，直接复用原稿 `prop:sextic-row-count` 证明中的 powerful 理想计数、原列的除数界及既有有限字符修正，不将这些结果另立为新定理。
+
+**证明。** 按唯一分解 $h=a r^6$ 分组，其中 $a$ 为 sixth-power-free 理想，且不要求 $(a,r)=1$。固定 $r$ 后，提取 $a$ 在 $r$ 的素支撑上的完整部分：
+
+$$
+e=\prod_{\mathfrak p\mid r}\mathfrak p^{v_{\mathfrak p}(a)},
+\quad e\mid\operatorname{rad}(r)^5,
+\quad a=e c_0x,\quad(c_0x,r)=1.
+\tag{462.3}
+$$
+
+其中 $c_0$ 为 powerful，$x$ 为平方自由且 $(c_0,x)=1$。由于 $r$ 的每个素因子在 $h$ 中的重数至少为六，恰有 $x=\mathfrak x(h)$；即使某素因子在 $a$ 中的重数为一，也不能把它从 $e$ 移入 $x$。这保留了全部 sixth-power 重合情况。
+
+记 $Y\asymp K/q_r^6$ 为原 annulus 对 $q_a$ 的上界尺度。直接复用原稿的 $O(V^{1/2})$ powerful 理想计数及固定域理想计数，固定 $r$ 并按全部允许的 $e$ 求和，有
+
+$$
+\begin{aligned}
+\#\{a\ {\rm sixth\ power\ free}:q_a\ll Y,\ q_{\mathfrak x(ar^6)}\le X\}
+&\ll \sum_{e\mid\operatorname{rad}(r)^5}
+ \sum_{q_x\le X}\left(\frac{Y}{q_eq_x}\right)^{1/2}\\
+&\ll_\delta q_r^\delta\sqrt{YX}.
+\end{aligned}
+\tag{462.4}
+$$
+
+内和只含 $Y/(q_eq_x)\gg1$ 的非空范围；扩大为所示正和不会缩小上界。除数界支付 $e$ 的选择，部分求和给出 $\sum_{q_x\le X}q_x^{-1/2}\ll\sqrt X$。不在有符号和里移除互素条件。
+
+原 $b(h)$ 及本条使用的每个有限阶 profile 导数均为 $\mathcal P_b K^\delta$ 的除数型上界，故固定 $r$ 的真实列向量满足
+
+$$
+\sum_{a\ {\rm sixth\ power\ free}}|b_{\le X}(ar^6)|^2
+\ll_\delta \mathcal P_b^2 K^{2\delta}
+ q_r^{-3+\delta}\sqrt{KX}.
+\tag{462.5}
+$$
+
+原符号的精确零延拓给出
+
+$$
+\chi_{ar^6}^{\rm raw}(z)
+=\chi_a^{\rm raw}(z)\mathbf1_{(r,z)=1}.
+\tag{462.6}
+$$
+
+固定 $r$ 后先保留这个行限制；只在正行范数中扩大行集。既有固定有限 Kummer/ray 修正使 Theorem 1.1 可以用于同一个列向量，其实际列长为 $O(K/q_r^6)$。当该长度为有界 subunit 时作固定 annular 扩大。筛界的四项单调，因此由 $\Psi_6(U,K)$ 统一控制。Minkowski 在原行 Hilbert 空间中求和，得到
+
+$$
+\|A b_{\le X}\|_2
+\ll (UK)^{\delta'}\mathcal P\,
+ \Psi_6(U,K)^{1/2}(KX)^{1/4}
+ \sum_r q_r^{-3/2+\delta/2}.
+\tag{462.7}
+$$
+
+最后的理想级数在足够小 $\delta>0$ 下收敛。按最终 $\varepsilon$ 分配所有内部损失，并在有限物理表示之间使用原合同的有限范数不等式，得（462.2）。每次筛调用的系数均与行无关；原有 smooth/Sobolev 恢复仅在同一有限阶费用可支付的范围使用。证毕。
+
+**定理 462.2（实际完整能量与补空间的剩余来源）。** 再采用定理 459.1 的全部解析输入、平衡长度 $U\asymp K$、$D=N=\sqrt K$ 及其同一固定或 polylog profile/height 合同。取
+
+$$
+b_{\rm tail}=b_{\le\sqrt K},\qquad
+b_{\rm rem}=b-b_{\rm tail},\qquad
+\zeta=\frac{5\sqrt6-12}{12}>0.
+\tag{462.8}
+$$
+
+一次选择 $\mathcal H\ge\max\{\mathcal C,\mathcal P,1\}$，其中 $\mathcal C$ 为（459.1）的完整原卷积成本。对同一个行空间中的任意正交投影 $\Pi$，一致有
+
+$$
+\begin{aligned}
+\|A b_{\rm tail}\|_2^2
+ &\ll_\varepsilon\mathcal H^2 K^{23/12+\varepsilon},\\
+\left|\|\Pi Ab\|_2^2
+       -\|\Pi A b_{\rm rem}\|_2^2\right|
+ &\ll_\varepsilon\mathcal H^2 K^{2-\zeta+\varepsilon}.
+\end{aligned}
+\tag{462.9}
+$$
+
+这同时适用于 $\Pi=I$、任意实际 $P$ 及 $I-P$。当 $\mathcal H=K^{o(1)}$ 时，完整原能量或同一补空间的 $o(K^2)$ 目标，分别等价于同一个 $b_{\rm rem}$ 的目标。余向量的每列满足 $q_{\mathfrak x(h)}>\sqrt K$，从而 $q_{\mathfrak c(h)}\ll\sqrt K$；在充分大 $K$ 时，原 annular 支撑使全部平方自由列仍保留。
+
+**证明。** 在平衡点 $\Psi_6(U,K)\ll K^{7/6}$。将 $X=\sqrt K$ 代入（462.2），得第一式。记 $v=\Pi Ab$、$t=\Pi A b_{\rm tail}$，直接复用 Hilbert 范数恒等式及 Cauchy：
+
+$$
+\bigl|\|v\|^2-\|v-t\|^2\bigr|
+\le2\|v\|\,\|t\|+\|t\|^2.
+\tag{462.10}
+$$
+
+定理 459.1 仅用于完整原 $b$，不将其因子估计套在已失去卷积分解的 $b_{\rm rem}$ 上。由投影收缩性和（459.3），$\|v\|^2\le Q(b)\ll\mathcal C^2K^{\kappa_{\rm joint}+\varepsilon}$。因此完整交叉项的幂次为
+
+$$
+\frac12\left(\kappa_{\rm joint}+\frac{23}{12}\right)
+=3-\frac{5\sqrt6}{12}=2-\zeta.
+\tag{462.11}
+$$
+
+尾部平方项的幂次更小，故得第二式及所述等价。证毕。
+
+（462.9）控制的是 F4 之前、保持全部原列相位的真实尾部及其与余向量的交叉项。它不提供 F4 中逐核心加权正和的同样节省，也不改变（461.11）各项的含义。$b_{\rm rem}$ 的完整估计、其他原长度和高度以及 signed Robin restoration 仍未支付；它不是完整 Robin 不等式或 RH 的证明。
+
+## 追加锚（本行以下为增补区）
+
+## 463. 三重以上重复部分与剩余原列
+
+原列的乘法分解与 Minkowski 方法已有文献先例：[Blomer–Goldmakher–Louvel, *L-functions with n-th order twists*, §5, Corollary 1.6 的证明，（5.3）—（5.5）](https://arxiv.org/pdf/1112.1650v1)对原内变量使用 squarefree／squarefull 分解。本节复用这种范数方法与既有六次幂自由筛，保留完整三满部分截断和全部六次幂碰撞，再消费到原向量的完整交叉项；不将通常的满数计数或这些筛与范数方法认作本项目发明。
+
+**定理 463.1（大三满部分的原列能量）。** 沿用定理 462.1 的原卷积、行算子、解析输入、固定有限表示及组合成本 $\mathcal P$。定义
+
+$$
+\mathfrak c_3(h)=\prod_{v_{\mathfrak p}(h)\ge3}
+ \mathfrak p^{v_{\mathfrak p}(h)},\qquad
+b_{3,\ge Y}(h)=b(h)\mathbf1_{q_{\mathfrak c_3(h)}\ge Y},
+\qquad 1\le Y\le K.
+\tag{463.1}
+$$
+
+$\mathfrak c_3(h)$ 收集原重数至少为三的完整素因子幂，允许重数四、五及更高的部分；它是三满理想，不限于整立方。则
+
+$$
+\|Ab_{3,\ge Y}\|_2^2
+\ll_\varepsilon (UK)^\varepsilon\mathcal P^2
+ \Psi_6(U,K)K Y^{-2/3}.
+\tag{463.2}
+$$
+
+同一上界允许再乘一个与行无关、绝对值至多为一的列乘子。所有原字符零值及相位保持，组合成本仍按定理 462.1 的乘积合同承担。
+
+**证明。** 直接复用既有六次幂移除 $h=ar^6$，其中 $a$ 为 sixth-power-free，允许 $a,r$ 相交。固定 $r$，仍提取
+
+$$
+e=\prod_{\mathfrak p\mid r}\mathfrak p^{v_{\mathfrak p}(a)},
+\quad e\mid\operatorname{rad}(r)^5,
+\quad a=ea_0,\quad(a_0,r)=1.
+\tag{463.3}
+$$
+
+这时有精确恒等式
+
+$$
+\mathfrak c_3(ar^6)=r^6e\,\mathfrak c_3(a_0).
+\tag{463.4}
+$$
+
+特别地，$e$ 在 $a$ 中重数一、二的素因子，在 $h$ 中也已属于三满部分。
+
+所需计数只用通常的正 Euler 乘积与 Rankin 界。对 $0<\eta<1/6$，三满理想的级数
+
+$$
+\sum_{c\ {\rm three\ full}}q_c^{-1/3-\eta}
+=\prod_{\mathfrak p\notin S}
+ \left(1+\frac{q_{\mathfrak p}^{-1-3\eta}}
+ {1-q_{\mathfrak p}^{-1/3-\eta}}\right)<\infty
+\tag{463.5}
+$$
+
+绝对收敛。将 $a_0$ 分成其三满部分 $c$ 与剩余部分，只在正计数中扩大剩余理想及互素条件，得到对 $M,Z>0$ 的统一界
+
+$$
+\#\{a_0:q_{a_0}\le M,\ q_{\mathfrak c_3(a_0)}\ge Z\}
+\ll_\eta M Z^{-2/3+\eta}.
+\tag{463.6}
+$$
+
+这里 $Z<1$ 时同样成立：在 $q_c\ge Z$ 上使用
+$q_c^{-1}\le Z^{-2/3+\eta}q_c^{-1/3-\eta}$，再复用固定域理想计数。空的短范围保留为零。
+
+固定 $r,e$ 后，原 annulus 给出 $M\ll K/(q_r^6q_e)$，（463.4）给出 $Z=Y/(q_r^6q_e)$。故固定 $r$ 的实际列支撑数至多为
+
+$$
+\begin{aligned}
+&\sum_{e\mid\operatorname{rad}(r)^5}
+ \frac{K}{q_r^6q_e}
+ \left(\frac{Y}{q_r^6q_e}\right)^{-2/3+\eta}\\
+&\qquad\ll_{\eta,\delta}
+ K Y^{-2/3+\eta}q_r^{-2-6\eta+\delta}.
+\end{aligned}
+\tag{463.7}
+$$
+
+最后一步用除数界处理全部 $e$，不遗漏 $a,r$ 的相交素因子。原卷积及所需有限阶 profile 导数的除数型包络于是给出
+
+$$
+\sum_a|b_{3,\ge Y}(ar^6)|^2
+\ll_{\eta,\delta,\delta'}
+ \mathcal P_b^2K^{1+2\delta'}
+ Y^{-2/3+\eta}q_r^{-2-6\eta+\delta}.
+\tag{463.8}
+$$
+
+保留（462.6）的精确行零值，固定 $r$ 后应用同一个六次幂自由筛，再在原行 Hilbert 空间使用 Minkowski。其求和因子为
+
+$$
+\sum_r q_r^{-1-3\eta+\delta/2}<\infty
+\qquad(0<\delta<6\eta).
+\tag{463.9}
+$$
+
+因此不需要把六次幂碰撞当作互不相干的列。先相对于最终 $\varepsilon$ 选择 $\eta,\delta'$ 及筛损失，再取 $0<\delta<6\eta$；由 $Y\le K$ 吸收 $Y^\eta$，得（463.2）。额外的有界列乘子不增加支撑计数或系数包络；同一证明适用。负 orientation、有限物理表示及 smooth/Sobolev 恢复沿用定理 462.1 的同一费用和累计高度合同。证毕。
+
+**定理 463.2（合并尾部及完整交叉项）。** 再采用定理 459.1 的全部输入及定理 462.2 的平衡、固定或 polylog 成本合同。定义
+
+$$
+\begin{aligned}
+b_{\rm tail}^{+}(h)
+ &=b(h)\mathbf1_{\{q_{\mathfrak x(h)}\le\sqrt K\}
+                 \,\cup\,\{q_{\mathfrak c_3(h)}\ge K^{1/3}\}},\\
+b_{\rm rem}^{+}&=b-b_{\rm tail}^{+},\qquad
+\zeta_3=\frac{30\sqrt6-73}{72}>0.
+\end{aligned}
+\tag{463.10}
+$$
+
+一次选择 $\mathcal H$ 同时控制原完整卷积及两条尾部估计的组合成本。对同一行空间中的任意正交投影 $\Pi$，有
+
+$$
+\begin{aligned}
+\|Ab_{\rm tail}^{+}\|_2^2
+ &\ll_\varepsilon\mathcal H^2K^{35/18+\varepsilon},\\
+\left|\|\Pi Ab\|_2^2
+       -\|\Pi Ab_{\rm rem}^{+}\|_2^2\right|
+ &\ll_\varepsilon\mathcal H^2K^{2-\zeta_3+\varepsilon}.
+\end{aligned}
+\tag{463.11}
+$$
+
+**证明。** 平衡点的 $\Psi_6(U,K)\ll K^{7/6}$ 与 $Y=K^{1/3}$ 给出
+$7/6+1-2/9=35/18$。将合并尾部写成（462.8）的旧尾部，加上
+$b_{3,\ge K^{1/3}}\mathbf1_{q_{\mathfrak x(h)}>\sqrt K}$；两项在列支撑上不重叠。在行空间中使用三角不等式及两条实际尾部界，得第一式。这里没有从两个范数上界相减推断子向量的范数。
+
+对第二式复用（462.10）。定理 459.1 只用于完整原 $b$，不用于已加列截断的余向量。交叉项幂次为
+
+$$
+\frac12\left(\frac{49-10\sqrt6}{12}+\frac{35}{18}\right)
+=\frac{217-30\sqrt6}{72}=2-\zeta_3.
+\tag{463.12}
+$$
+
+它大于尾部平方项的幂次，且 $30\sqrt6>73$。投影收缩性使估计对全部上述 $\Pi$ 一致。证毕。
+
+当 $\mathcal H=K^{o(1)}$ 时，（463.11）把完整能量及同一投影、补空间的 $O_\varepsilon(K^{2+\varepsilon})$ 目标转移到同一个 $b_{\rm rem}^{+}$；更强的 $o(K^2)$ 目标也同样转移。新余向量的每个非零列同时满足
+
+$$
+q_{\mathfrak x(h)}>\sqrt K,\qquad
+q_{\mathfrak c_3(h)}<K^{1/3}.
+\tag{463.13}
+$$
+
+这是对 F4 之前真实原列及其完整干涉的附加源限制；三满部分较大的列不必满足旧的一重部分小截断。所有充分大规模的平方自由列仍保留。这里复用六次幂自由筛、通常的满数计数与 Hilbert 范数估计，所得为 `repo-derived` 的原系数应用，不声明新筛或文献优先权。完整余向量、F4 加权正和、其他原长度及高度、原固定指数的 signed Robin restoration 仍未支付；本条不证明 Robin 不等式或 RH。
+
+## 追加锚（本行以下为增补区）
+
+## 464. 短逆因子的平方自由投影与原长包预算
+
+**定理 464.1（原 F4 长包中的三分之一次幂扇区）。** 在下列所引解析输入下，沿用 [F1–F4](../../../Library/Analytic/faveri2026fixedorder.md#a-weighted-powerful-part-majorant-for-all-original-columns) 的同一原系数、非负行权、good 非单位 sixth-power-free 物理行、固定有限 ray 数据及零延拓。令 $U\ge2$、$K=DN$、$a\mid\operatorname{rad}c$、$b=c/a$，并保留原有约定
+
+$$
+D_a=D/q_a,\qquad N_b=N/q_b,\qquad X=K_c=D_aN_b=K/q_c.
+\tag{464.1}
+$$
+
+长度属于原输入允许的固定幂范围，包含其中更短的非空 annuli。Profiles 与 norm-twist 高度固定，或满足下述共同费用为次幂的 polylog 合同；不扩张原 growing-height allowance。把有限 Fourier 重构、原行分区、所需有限 profile 导数以及原 Möbius/plain 成本的乘积纳入一次共同包络 $\mathcal C\ge1$。此包络不按 $c,a$、投影展开的除子或物理行重选。对每个固定 $C_0>0$，当
+
+$$
+D_a\le C_0 U^{1/3}
+\tag{464.2}
+$$
+
+时，原 F4 包的完整正能量满足
+
+$$
+\widetilde T^{\rm sf}_{j;c,a,\kappa}
+\ll_{\varepsilon,C_0}\mathcal C^2(UK)^\varepsilon UX.
+\tag{464.3}
+$$
+
+这里既不删除 $\mathbf1_{x\ {\rm sf}}$，也不删除 $(x,c)=1$；结论估计的是同一系数包的完整行范数，不是单个 pure-power 对偶项。对每个最终 $\varepsilon>0$，先按 F4 选择 $s=1/2+\eta$，再分配全部内部损失，得到原正 majorant 中的实际子和
+
+$$
+\begin{aligned}
+M_{\le1/3}
+&=Z_s|\mathcal T|\sum_{c\ {\rm powerful}}q_c^s\tau(\operatorname{rad}c)
+\sum_{\substack{a\mid\operatorname{rad}c\\D_a\le C_0U^{1/3}}}
+\sum_{\kappa\in\mathcal T}\widetilde T^{\rm sf}_{j;c,a,\kappa}\\
+&\ll_{\varepsilon,C_0}\mathcal C^2(UK)^\varepsilon UK.
+\end{aligned}
+\tag{464.4}
+$$
+
+这是一项 `repo-derived` 的原系数联合应用。解析供应为原稿 [pinned source](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex) 的 `lem:logarithmic-control`、`lem:deleted-euler-factors`、无槽 `lem:plain`、`lem:buffered-bins` 至 `prop:detector-witness` 及实际行计数证明；逆矩、plain 四矩与计数优化亦见 [Xu–Sang v2，Lemma 6.1、Theorem 2.2、Proposition 6.3](https://arxiv.org/html/2610.17675v2)。平方自由 Möbius 展开、Euler 卷积、Minkowski 和 F4 临界 powerful-core 求和仅作为既有工具使用，不单列为新增结果。DDDS 的 C1 是另一 Gauss Dirichlet-series 恒等式，不作为这里的 plain moment 供应。
+
+证明。先在一个原有限 Fourier 分量上记 $\psi_z(h)=\xi(h)\chi_h(z)$，包括其全部固定零值。定义未作平方自由投影的原乘积
+
+$$
+B(D_0,N_0;z)=\sum_{dn}\mu(d)V(q_d/D_0)W(q_n/N_0)\psi_z(dn).
+\tag{464.5}
+$$
+
+第一步是在原逐行逆界和共同分箱计数中使用任意固定地板 $a_\eta=1/2+\eta$，其中 $\eta>0$ 随最终误差预先固定。此步骤复用定理 459.1 的证明，并在本条实际包中消费其短长度范围。原缓冲分箱只要求最大零点实部属于一个固定有界区间且随高度非减。原有限移线与删除因子控制在 $\Re s>1/2+\eta$ 仍适用，记 $M(D_0;z)=\sum_d\mu(d)V(q_d/D_0)\psi_z(d)$，给出归一化逆因子
+
+$$
+|D_0^{-1/2}M(D_0;z)|^2
+\ll U^{\epsilon_1}C_M^2D_0^{\delta+16e}+O(U^{-10}),
+\qquad \delta=2a-1.
+\tag{464.6}
+$$
+
+非地板分箱的计数仍由原检测证明给出：先固定见证 dyadic 长度 $r,m$ 及 presentation，再计数，然后对它们求和。地板变化所需的唯一长度修正是
+$2\delta(m-1/2)_+\ll\epsilon_0$；因 $\delta\ge2\eta$，先固定 $\eta$ 再令初步损失足够小，保留 $m\le1/2+O_\eta(\epsilon_0)$ 和 $r\ge t-1/2-O_\eta(\epsilon_0)$。原 Gamma 移线的余项至多为
+$U^{-3+t(5/4-\Re\rho)+o(1)}H_1^2\le U^{-15/8+o(1)}H_1^2=o(1)$，仍取 $1\le t\le3/2$、$H_1\le U^{1/100}$。因此原优化不变，计数指数为
+
+$$
+R(\delta)=
+\begin{cases}
+(15-16\delta)/(15-6\delta),&2\eta<\delta\le5/6,\\
+1-\delta,&5/6\le\delta\le1.
+\end{cases}
+\tag{464.7}
+$$
+
+没有断言计数所返回的检测见证本身满足短逆长度；本条需要短的是规定目标 (464.5) 中的 $D_0$。共同分箱控制同一有限字符族中的每一个目标分量，不将辅助见证替换成目标卷积。
+
+复用无槽 plain 四矩及定理 459.1 的同一行 Cauchy，非地板包的 (464.5) 能量至多为
+$\mathcal C^2(UK)^\epsilon D_0N_0D_0^\delta U^{(1+R(\delta))/2}$。
+若 $D_0\le C_0U^{1/3}$，第一段的余幂为
+$\delta\{1/3-5/(15-6\delta)\}\le0$，第二段为 $-\delta/6\le0$。地板仅多出 $D_0^{2\eta}\ll U^{2\eta/3}$，先选 $\eta$ 再分配误差便可吸收。高度顺序仍是先固定内部 moment、分箱和有限 Sobolev 阶，再选足够小的缓冲高度指数，最后选外部 Mellin-tail 阶；未增加任何新的高度预算。于是对原允许范围内的全部更短非空长度，统一有
+
+$$
+\|\sqrt\Omega B(D_0,N_0)\|_2
+\ll_{\epsilon,C_0}\mathcal C(UK)^\epsilon\sqrt{UD_0N_0},
+\qquad D_0\le C_0U^{1/3}.
+\tag{464.8}
+$$
+
+第二步把实际包精确接回这些未投影乘积，不假设对列投影后的向量仍有 (464.8)。记
+
+$$
+B_{A,B}(D_0,N_0;z)=\sum_{dn}\mu(d)\mathbf1_{(d,A)=1}\mathbf1_{(n,B)=1}
+ V(q_d/D_0)W(q_n/N_0)\psi_z(dn),
+\tag{464.9}
+$$
+
+其中 $A,B$ 只用于零掩码。若 $\mathcal P(A)$ 表示素因子均在 $A$ 中的所有理想，则逐素因子的既有 Euler 卷积恒等式给出
+
+$$
+\mu(\cdot)\mathbf1_{(\cdot,A)=1}
+=\mu*\mathbf1_{\mathcal P(A)},\qquad
+\mathbf1_{(\cdot,B)=1}=\mathbf1*\bigl(\mu\mathbf1_{\cdot\mid\operatorname{rad}B}\bigr).
+$$
+
+因此精确地有
+
+$$
+B_{A,B}(D_0,N_0;z)=
+\sum_{m\in\mathcal P(A)}\sum_{e\mid\operatorname{rad}B}
+\mu(e)\psi_z(me)\,
+ B(D_0/q_m,N_0/q_e;z).
+\tag{464.10}
+$$
+
+由 profiles 的紧支撑，实际非空项有限。只在正行范数中使用 $|\psi_z(me)|\le1$，再用 (464.8) 及 Minkowski，得到
+
+$$
+\begin{aligned}
+\|\sqrt\Omega B_{A,B}(D_0,N_0)\|_2
+&\ll\mathcal C(UK)^\epsilon\sqrt{UD_0N_0}\,
+\prod_{p\mid A}(1-q_p^{-1/2})^{-1}
+\prod_{p\mid B}(1+q_p^{-1/2})\\
+&\ll_{\theta}\mathcal C(UK)^\epsilon(q_Aq_B)^\theta\sqrt{UD_0N_0}
+\end{aligned}
+\tag{464.11}
+$$
+
+对每个固定 $\theta>0$ 均成立。最后一步是有限素因子乘积的通常次幂界；它不把移动模数常数当作固定常数。若某个缩短长度低于一，非空性仍把它从下方限制在原固定 annular 常数；按固定 annular enlargement 归入长度一并运输 profile，所需有限 seminorms 一致有界。更短空项为零。没有更换字符族或增加真正 conductor。
+
+第三步保留实际 squarefree 投影。令 $P_c(z)$ 是固定 Fourier 分量的原 F3 包响应。使用
+$\mathbf1_{dn\ {\rm sf}}=\sum_{r^2\mid dn}\mu(r)$。
+每个非零 $\mu(r)$ 的 $r$ 平方自由；因 $d$ 也平方自由，令 $g=(d,r)$，则唯一地写成
+
+$$
+g\mid r,\qquad d=gd',\qquad n=(r^2/g)n',\qquad(d',r)=1.
+$$
+
+原 $(dn,c)=1$ 强迫 $(r,c)=1$、$(d'n',c)=1$，而 $\mu(d)=\mu(g)\mu(d')$。所以包含所有 collision zeros 的逐行恒等式是
+
+$$
+P_c(z)=
+\sum_{\substack{r\ {\rm sf}\\(r,c)=1}}
+\mu(r)\psi_z(r^2)
+\sum_{g\mid r}\mu(g)
+B_{cr,c}\left(D_a/q_g,\ N_bq_g/q_r^2;z\right).
+\tag{464.12}
+$$
+
+每个乘积的总长度为 $X/q_r^2$，逆长度至多 $D_a$，并且非空性给出 $q_r\ll\sqrt X$。这保持原相同物理行和字符；$\psi_z(r^2)$ 仍仅在正行范数中由模长一上界放大。原有限类条件在 $h=r^2d'n'$ 下由同一有限 Fourier 分量精确运输，不加入新的 ray 群。
+
+将 (464.11) 用于 $A=cr,B=c$，再在 (464.12) 的同一行空间使用 Minkowski，得到
+
+$$
+\begin{aligned}
+\|\sqrt\Omega P_c\|_2
+&\ll\mathcal C(UK)^\epsilon\sqrt{UX}\,
+q_c^{2\theta}\sum_{q_r\ll\sqrt X}\frac{\tau(r)q_r^\theta}{q_r}\\
+&\ll_{\theta}\mathcal C(UK)^\epsilon
+q_c^{2\theta}X^\theta\sqrt{UX}.
+\end{aligned}
+\tag{464.13}
+$$
+
+这里直接以 Rankin 正上界
+$\sum_{q_r\le C\sqrt X}\tau(r)q_r^{-1+\theta}
+\le(C\sqrt X)^{2\theta}\zeta_F(1+\theta)^2$
+支付全部 $r,g$，不假设投影正性或不同项正交。因 $q_c\le CK$、$X\ll K$，先分配 $\epsilon,\theta$ 再平方，恢复有限分量和同一 smooth 参数，便得 (464.3)。对原参数所需的有限次导数，乘法相位的运输至多再给出固定阶 $\log(2K)$ 因子，纳入同一最终小幂，不重新支付高度。此界包含包内全部交叉项。
+
+最后按 F4 的同一正权求和。其数值部分由已拥有的临界 powerful-core 估计支付：
+
+$$
+K\sum_{\substack{c\ {\rm powerful}\\q_c\le CK}}
+\tau(c)^2q_c^{-1/2+\eta}
+\ll_{\eta,\delta}K^{1+\eta+\delta}.
+\tag{464.14}
+$$
+
+选择 $\eta,\delta$ 以及前述全部内部损失适配一个最终 $\varepsilon$，得到 (464.4)。$Z_s$ 可依赖最终 $\varepsilon$，但不依赖 $U,K$。未删除一个独立固定的正 $\eta$，也没有更新 profiles 的共同成本。证毕。
+
+**命题 464.2（与原未付长包的交集）。** 在 $U=K$、$D=N=\sqrt K$ 时，(464.2) 选择的是实际 $a$-分量 $q_a\ge C_0^{-1}K^{1/6}$，而非自由缩短原见证。因 $a^2\mid c$，这使 $X=K/q_c\le C_0^2K^{2/3}$。固定 $C_0=1$ 时，其中存在满足 $X>\sqrt U$ 的合法非零 F3 包；但此条件不覆盖该长度带内的所有包。
+
+证明。此例固定 $C_0=1$。取足够大的 good 素理想 $p$，令 $P=q_p$，并取 $U=K=P^6$、$D=N=P^3$、$c=p^2$、$a=b=p$。则原分解给出的恰是
+
+$$
+D_a=N_b=P^2=U^{1/3},\qquad
+X=P^4=U^{2/3}>\sqrt U.
+\tag{464.15}
+$$
+
+先选原物理过滤后仍允许且权重非零的有限列类 $\kappa$。把 $c=p^2$ 的类运输到 $x$ 后，选择两个固定 ray 类，使它们的乘积是该允许的 $x$-类；由固定 ray 类中的素理想定理，可取避开 $pS$ 的不同素理想 $d',n'$，范数均处于 $P^2$ 的固定小相对区间。取原允许的非负 annular profiles 在两处为正。对 $x=d'n'$，只有两个单素因子 $d'$、$n'$ 落在这份逆 annulus；它们的 Möbius 值均为 $-1$。物理类过滤在 $x$ 处保留这项，乘法相位非零，故实际 F3 包的系数不为零；这一判断不只针对一个 Fourier 分量。这仅说明原允许系数族存在这样的非零包，不断言实际零点检测必定返回这份见证或这些 profiles。原列 $h=p^2d'n'$ 的一重部分为 $x$，满足 $q_x\asymp P^4$，因而对充分大 $P$ 有 $q_x>\sqrt K$；三满部分为一，故也不被定理 462–463 的旧尾部条件排除。证毕。
+
+在该平衡点，使用相同投影展开但只消费已有 $D_a\le U^{1/4}$ 估计时，必有 $q_c\ge q_a^2\ge K^{1/2}$，因而只落在已经由 G8 与完整系数质量界支付的 $X\le\sqrt U$ 块。三分之一次幂范围的作用是加入 (464.15) 所在的原长包分量。它不保证检测实际选中这块，也不推断其余包很小。
+
+F4 可以按同一个 $\eta$ 把上述子和与其补集相加。结合已付的 $X\le\sqrt U$ 子和后，沿此正 majorant 路线仍需估计
+
+$$
+X>\sqrt U,\qquad D_a>C_0U^{1/3}
+\tag{464.16}
+$$
+
+的实际包和。这是充分的剩余估计要求，没有从原矩反推正 majorant 的逆向界。在平衡点，对固定 $C_0$ 及充分大 $K$，$c=a=1$ 的平方自由原列仍在补集中。所有更大的原高度费用及 signed Robin restoration 仍须分别处理；本条没有给出完整原矩上界、严格幂次节省、$o(UK)$、RH 或逐整数 Robin 结论。
+
+## 追加锚（本行以下为增补区）
+
+## 465. 短 plain 因子的高阶矩与原 F4 联合长度扇区
+
+**定理 465.1（保留实际包的联合长度预算）。** 沿用定理 464.1 与 [F1–F4](../../../Library/Analytic/faveri2026fixedorder.md#a-weighted-powerful-part-majorant-for-all-original-columns) 的同一物理行、原系数、有限类、非负权、零延拓与解析输入。另复用 de Faveri [Theorem 1.1](https://arxiv.org/abs/2610.04045v1) 及既有固定有限 ray-family 接口。固定整数 $k\ge3$ 和常数 $C_D,C_N>0$，令
+
+$$
+d_k=\frac23\left(1-\frac1k\right),\qquad
+D_a\le C_DU^{d_k},\qquad N_b\le C_NU^{1/(2k)}.
+\tag{465.1}
+$$
+
+长度仍在原允许固定幂范围及其中更短的非空 annuli。Profiles 与 norm-twist 高度固定，或符合下面共同费用为次幂的 polylog 合同；不扩张原 growing-height allowance。令 $\mathcal A$ 是既有筛界的算子范数成本，$C_{M,\xi}$ 是（464.6）的原逆因子逐行成本，$P_{k,\xi}$ 控制 plain profile 及本证明所需有限阶导数。一次选择共同乘积包络
+
+$$
+\mathcal C_k\ge
+\max\left\{1,\sum_\xi|c_\xi|
+ C_{M,\xi}\mathcal A^{1/k}P_{k,\xi}\right\},
+\tag{465.2}
+$$
+
+并纳入原有限行分区、有限 Fourier 重构及 smooth/Sobolev 费用。它不随物理行、$c,a$ 或掩码展开项重选。则在所列解析输入下，实际完整包满足
+
+$$
+\widetilde T^{\rm sf}_{j;c,a,\kappa}
+\ll_{\varepsilon,k,C_D,C_N}
+\mathcal C_k^2(UK)^\varepsilon UX,
+\qquad X=D_aN_b=K/q_c.
+\tag{465.3}
+$$
+
+沿 F4 的同一正权、同一 $s=1/2+\eta$ 求和，限制在（465.1）的实际 $a$-分量，得到
+
+$$
+\begin{aligned}
+M_k={}&Z_s|\mathcal T|
+ \sum_{c\ {\rm powerful}}q_c^s\tau(\operatorname{rad}c)
+ \sum_{\substack{a\mid\operatorname{rad}c\\
+ D_a\le C_DU^{d_k},\ N_b\le C_NU^{1/(2k)}}}
+ \sum_{\kappa\in\mathcal T}\widetilde T^{\rm sf}_{j;c,a,\kappa}\\
+&\ll_{\varepsilon,k,C_D,C_N}
+ \mathcal C_k^2(UK)^\varepsilon UK.
+\end{aligned}
+\tag{465.4}
+$$
+
+每个最终 $\varepsilon>0$ 先固定 $k,C_D,C_N$，再选择 $\eta$、零点地板及全部内部损失。证明复用短 Dirichlet 多项式取幂、除数界、六次幂提取、Hölder 与第 464 节的精确投影运输，将其用于（465.1）的实际包及同权聚合。
+
+证明。先固定原有限 Fourier 分量，记 $\psi_z(h)=\xi(h)\chi_h(z)$，包含原固定零值。对实际 plain 因子定义
+
+$$
+S_\xi(N_0;z)=N_0^{-1/2}
+ \sum_n W(q_n/N_0)\psi_z(n).
+$$
+
+将 $S_\xi(N_0;z)^k$ 展开为
+
+$$
+S_\xi(N_0;z)^k
+=N_0^{-k/2}\sum_h A_{N_0,k}(h)\psi_z(h),\qquad
+A_{N_0,k}(h)=\sum_{n_1\cdots n_k=h}
+ \prod_{i=1}^k W(q_{n_i}/N_0).
+\tag{465.5}
+$$
+
+系数的支撑为 $q_h\asymp_k N_0^k$；除数界给出
+$|A_{N_0,k}(h)|\ll_{k,\epsilon}P_{k,\xi}^kq_h^\epsilon$。
+唯一写 $h=\ell^6h_0$，$h_0$ sixth-power-free，允许 $\ell,h_0$ 相交。固定 $\ell$ 后，理想计数及同一除数界给出
+
+$$
+\sum_{h_0\ {\rm sixth\ power\ free}}
+ \left|N_0^{-k/2}A_{N_0,k}(\ell^6h_0)\right|^2
+\ll_{k,\epsilon}P_{k,\xi}^{2k}N_0^\epsilon q_\ell^{-6}.
+\tag{465.6}
+$$
+
+只对实际非空项使用该式。若 $Y_\ell=N_0^k/q_\ell^6$ 为 subunit，非空性给出固定正下界，按原固定 annular enlargement 归入长度一；更短项为零。$N_0$ 本身为有界 subunit 的非空情形亦作同样处理。
+
+当 $N_0\le C_NU^{1/(2k)}$ 时，$Y_\ell\ll_{k,C_N}\sqrt U$。既有四项筛界满足 $\Psi_6(U,Y_\ell)\ll_{k,C_N}U$。原乘法性给出精确行因子 $\psi_z(\ell^6)$；只在正行范数中使用 $|\psi_z(\ell^6)|\le1$。对各 $\ell$ 应用同一个筛及固定有限族接口，再用 Minkowski 和 $\sum_\ell q_\ell^{-3}<\infty$，得到作为本条中间步骤的短矩界
+
+$$
+\sum_z\Omega(q_z/U)|S_\xi(N_0;z)|^{2k}
+\ll_{k,\epsilon,C_N}
+ \mathcal A^2P_{k,\xi}^{2k}(UN_0)^\epsilon U.
+\tag{465.7}
+$$
+
+这不是在 $N_0\asymp\sqrt U$ 假定任意高矩；此处的长度限制是 $N_0\ll U^{1/(2k)}$。六次幂重叠由（465.6）的质量和 Minkowski 支付，不把相同行字符的列视为正交。
+
+令 $M_\xi(D_0;z)$ 为归一化原 Möbius 因子。直接复用（464.6）—（464.7）的同一共同缓冲分箱，选固定地板 $1/2+\eta_0$。在非地板箱上记 $\delta=2a-1$，则逐行逆界与（465.7）、带原权的 Hölder 给出
+
+$$
+\begin{aligned}
+\sum_{z\in\mathcal B_{i,a}}\Omega|M_\xi S_\xi|^2
+&\ll (UK)^\epsilon
+ (C_{M,\xi}\mathcal A^{1/k}P_{k,\xi})^2
+ D_0^{\delta+16e}
+ U^{1/k+(1-1/k)R(\delta)},\\
+R(\delta)&=
+\begin{cases}
+(15-16\delta)/(15-6\delta),&2\eta_0<\delta\le5/6,\\
+1-\delta,&5/6\le\delta\le1.
+\end{cases}
+\end{aligned}
+\tag{465.8}
+$$
+
+原 $\Omega$ 有界，箱的加权质量由同一个实际行计数控制。若 $D_0\le C_DU^{d_k}$，忽略已预留的小损失后，相对 $U$ 的余幂精确为
+
+$$
+d_k\delta+\frac1k+
+ \left(1-\frac1k\right)R(\delta)-1
+=\begin{cases}
+-\dfrac{4(1-1/k)\delta^2}{15-6\delta},&\delta\le5/6,\\
+-\dfrac13(1-1/k)\delta,&\delta\ge5/6.
+\end{cases}
+\tag{465.9}
+$$
+
+两段均非正。地板箱用原 $O(U)$ 行计数，额外费用仅为
+$D_0^{2\eta_0}\ll U^{2d_k\eta_0}$，先随最终 $\varepsilon$ 选择固定 $\eta_0>0$ 即可吸收。再令分箱宽度 $e$ 和内部损失足够小。高度顺序完全沿用第 464 节：先固定内部 moment、有限分箱与 Sobolev 阶，再选足够小的缓冲高度指数，最后选外部 Mellin-tail 阶。$k$ 固定，不取得随尺度增长的高度或矩阶。原逆尾部与多项式大小仍由既有合同支付。乘回 $D_0N_0$ 并恢复有限分量，便得未投影乘积的完整行范数
+
+$$
+\|\sqrt\Omega B(D_0,N_0)\|_2
+\ll\mathcal C_k(UK)^\epsilon\sqrt{UD_0N_0}
+\tag{465.10}
+$$
+
+在（465.1）的两个相应长度条件下同时成立。
+
+现在直接复用（464.10）与（464.12），不另证零掩码或 squarefree projector 恒等式。在后者的实际展开中
+
+$$
+D_0=D_a/q_g\le D_a,\qquad
+N_0=N_bq_g/q_r^2\le N_b,\qquad g\mid r.
+\tag{465.11}
+$$
+
+故两个联合长度条件同时保留；再经（464.10）的 Euler 掩码卷积除以 $q_m,q_e$，长度只会进一步缩短。逐行标量、原 collision zeros、有限类运输、同一物理行与字符族均保持第 464 节的合同。使用（465.10）替代（464.8），原（464.11）—（464.13）的 Euler 次幂界、Minkowski 及 $r$ 的 norm-harmonic 正求和原样支付全部项，得到（465.3），含实际包内完整交叉项。对有限 profile 导数的取幂展开仍具相同除数包络；固定阶对数费用纳入最终小幂，不增加算术系数类或更新高度预算。最后按同一个 F4 的 $\eta$ 消费（464.14），给出（465.4）。证毕。
+
+**命题 465.2（确实新增的原长包）。** 以下两份实例固定 $C_D=C_N=1$。在原平衡 $U=K$、$D=N=\sqrt U$ 中，（465.1）含有不满足 $D_a\ll U^{1/3}$ 且满足 $X>\sqrt U$ 的合法非零物理 F3 包。$k=3$ 与 $k=4$ 都提供这样的包；下列实例的三满部分均为一，故其原列也未被第 462–463 节的两个尾部条件删除。
+
+证明。先取 $k=4$。令 $p$ 为范数 $P\to\infty$ 的 good 素理想，取
+
+$$
+U=K=P^5,\quad D=N=P^{5/2},\quad
+c=p^2,\quad a=1,\quad b=p^2.
+$$
+
+则
+
+$$
+D_a=P^{5/2}=U^{1/2},\qquad
+N_b=P^{1/2}=U^{1/10}\le U^{1/8},\qquad
+X=P^3=U^{3/5}>\sqrt U.
+\tag{465.12}
+$$
+
+因此它属于 $k=4$ 的新矩形，且对每个固定 $C_0$，充分大 $P$ 时不属于（464.2）。
+
+再取 $k=3$。仍取 $q_p=P\to\infty$，并在一个固定 ray 类中选择不同 good 素理想 $v$，使 $Q=q_v\in[P^{5/2},(1+\vartheta)P^{5/2}]$，其中 $\vartheta>0$ 固定且小。取
+
+$$
+U=K=P^{18},\quad D=N=P^9,\quad
+c=p^2v^2,\quad a=p,\quad b=pv^2.
+$$
+
+于是
+
+$$
+D_a=P^8=U^{4/9},\qquad
+N_b=P^8/Q^2\asymp P^3\le U^{1/6},\qquad
+X=P^{16}/Q^2\asymp P^{11}>\sqrt U.
+\tag{465.13}
+$$
+
+这里同样越出（464.2），并且 $N_b/U^{1/8}\to\infty$，所以它还不在固定常数的 $k=4$ 矩形内。
+
+两例的实际系数非零性按同一物理过滤检验。先取允许且原乘法权非零的有限列类，运输 $c$ 后，把所得 $x$-类分成两个固定 ray 素类。固定 ray 类中的素理想定理给出避开 $cS$ 的不同素理想 $d',n'$，范数分别位于 $D_a,N_b$ 的固定小相对区间。取原允许的非负 profiles 在两处为正。由于两例均有 $D_a/N_b\to\infty$，$x=d'n'$ 的约数中只有 $d'$ 落入逆 annulus，故内层 Möbius 卷积为负，乘以非零原权后完整 F3 系数非零；实际有限过滤保留 $x$，并非只在一个 Fourier summand 上非零。原列 $h=cx$ 的一重部分为 $x$，其范数分别为 $\asymp P^3$、$\asymp P^{11}$，对充分大 $P$ 都大于 $\sqrt K$；$c$ 只含平方且 $(x,c)=1$，故三满部分为一。这个存在性结论只使用原允许系数族，不给出包能量的正下界，也不断言原零点检测实际返回这些 profiles 或包。证毕。
+
+因此，在同一个 F4 正 majorant 中，可以把第 464 节及已付 $X\le\sqrt U$ 子和之外、满足任一固定（465.1）的实际包加入已付部分。有限多个 $k$ 的并集可沿同一 $\eta$ 用相同正权求和，交集只计一次；共同费用取这些实际乘积费用的包络。新增范围是联合长度条件，不能仅凭 $D_a\le U^{d_k}$ 删除对 $N_b$ 的限制。
+
+在平衡点 $c=a=1$ 时，$D_a=N_b=\sqrt U$，对每个固定 $k\ge3,C_N$ 和充分大 $U$ 仍不满足（465.1）。完整单位核心、其余原包、原更大高度费用与 signed Robin restoration 均未支付；（465.3）—（465.4）没有证明完整原矩、严格幂次节省、$o(UK)$、RH 或逐整数 Robin 不等式。
+
+## 追加锚（本行以下为增补区）
+
+## 466. 物理行的低阶切面与完整原能量
+
+**定理 466.1（平方与立方物理行的完整预算）。** 沿用定理 458.1 的原行算子、原列系数、全部固定物理表示与零延拓。另使用 [de Faveri Theorem 1.1 的三阶情形及 Goldmakher–Louvel 的二阶筛界](../../../Library/Analytic/faveri2026fixedorder.md#separating-the-lower-order-character-blocks)，包括所引原稿 `eq:quadratic-large-sieve` 已核对的 primary、ramified conductor 与有限 ray 接口。它们分别为
+
+$$
+\Theta_3(A,B)\ll_\epsilon(AB)^\epsilon
+ \{A+B+(AB)^{2/3}\},\qquad
+\Xi_2(A,B)\ll_\epsilon(AB)^\epsilon(A+B).
+\tag{466.1}
+$$
+
+三阶筛的两个索引均为 cubefree；二阶筛的两个索引均为 squarefree。本节直接使用这两份既有结果。
+
+固定有限物理标签 $j$，把原行的 good 理想部分记为 $v$，其中每个素估值均在 $0,\ldots,5$。其单位与 $S$-部分已经按原约定记入 $j$，且 $q_v\asymp U$，只差固定标签导致的常数因子。定义两个原物理行子集
+
+$$
+\mathcal R_{3,j}=\{v=r^2:r\text{ good、cubefree、非单位}\},
+\qquad
+\mathcal R_{2,j}=\{v=r^3:r\text{ good、squarefree、非单位}\}.
+\tag{466.2}
+$$
+
+子集仍保留原行选择及非负有界 norm 权。这里的下标指 $S$ 外的实际字符阶数；固定 $S$-twist 仍保留，不把它的导子删除。两子集在 good 非单位 sixth-power-free 行中不相交。
+
+令 $K=DN$，$b(h)$ 是定理 458.1 的同一个完整原系数，也允许再乘与行无关、绝对值至多为一的列乘子；该乘子须对所用 smooth 参数固定，或乘后系数的全部所需参数导数仍满足同一共同包络。原有限 Fourier 表示及必要的有限 profile 导数满足同一个除数型包络，组合成本写作 $\mathcal C$；它包含实际 profile 包络与（466.1）算子成本的乘积、有限标签及 smooth/Sobolev 恢复。Profiles 与 norm-twist 高度固定，或满足该共同费用为次幂的 polylog 合同，不扩大原高度许可。
+
+把完整行能量限制到（466.2），分别记为 $Q_{3,j}(b),Q_{2,j}(b)$。则在所列解析输入下
+
+$$
+\begin{aligned}
+Q_{3,j}(b)&\ll_\varepsilon
+ \mathcal C^2(UK)^\varepsilon K
+ \{U^{1/2}+K+U^{1/3}K^{2/3}\},\\
+Q_{2,j}(b)&\ll_\varepsilon
+ \mathcal C^2(UK)^\varepsilon K\{U^{1/3}+K\}.
+\end{aligned}
+\tag{466.3}
+$$
+
+特别地，对每个固定 $C_0>0$，当 $K\le C_0U$ 时，两类完整原行能量的和为
+
+$$
+\sum_j\{Q_{3,j}(b)+Q_{2,j}(b)\}
+\ll_{\varepsilon,C_0}\mathcal C^2(UK)^\varepsilon UK.
+\tag{466.4}
+$$
+
+该式保留完整原 $h=dn$，不要求 $h$ 平方自由或 $d,n$ 互素，也不要求 $D$ 或 $N$ 单独变短。
+
+证明。固定一个原 Fourier 分量和物理标签。若 $v=r^2$，原乘法性连同零值给出
+$\chi_h^{(6),\rm raw}(r^2)=\chi_h^{(3),\rm raw}(r)$；若 $v=r^3$，得到相同意义的二阶字符。单位与 $S$-部分以及源字符族的修正只产生原固定有限 ray 数据中的列 twist。按同一有限分区把它们吸收入系数；负 orientation 先整体共轭。三阶的行尺度为 $R_3\asymp U^{1/2}$，二阶为 $R_2\asymp U^{1/3}$。物理元素与其 good 理想、单位及 $S$-标签之间的有限重数已纳入共同成本。没有把素估值减模，也没有删掉原非单位处的零值。
+
+在三阶行上唯一提取原列的全部立方：$h=\ell^3h_0$，其中 $h_0$ cubefree，允许 $h_0,\ell$ 相交。精确字符因子为
+
+$$
+\chi_{\ell^3h_0}^{(3),\rm raw}(r)
+=\chi_{h_0}^{(3),\rm raw}(r)\mathbf1_{(\ell,r)=1}.
+\tag{466.5}
+$$
+
+原系数的除数界和理想计数给出，对每个实际非空 $\ell$，
+
+$$
+\sum_{h_0\ {\rm cubefree}}
+ |b(\ell^3h_0)|^2
+\ll_\epsilon\mathcal P^2 K^{1+\epsilon}q_\ell^{-3}.
+\tag{466.6}
+$$
+
+固定 $\ell$ 时，保留（466.5）的行限制后，只在正行范数中扩大该行集。用（466.1），列长为 $O(K/q_\ell^3)$；其筛界由单调性统一控制为 $\Theta_3(R_3,CK)$。再在同一个原行 Hilbert 空间使用 Minkowski。理想级数 $\sum_\ell q_\ell^{-3/2}$ 收敛，于是得到（466.3）的第一式。
+
+二阶行上同样唯一写 $h=\ell^2h_0$，$h_0$ squarefree，并保留精确零值
+
+$$
+\chi_{\ell^2h_0}^{(2),\rm raw}(r)
+=\chi_{h_0}^{(2),\rm raw}(r)\mathbf1_{(\ell,r)=1},\qquad
+\sum_{h_0\ {\rm sf}}|b(\ell^2h_0)|^2
+\ll_\epsilon\mathcal P^2K^{1+\epsilon}q_\ell^{-2}.
+\tag{466.7}
+$$
+
+在固定 $\ell$ 的正行范数上用二阶筛，再用 Minkowski。原 annulus 给出 $q_\ell\ll\sqrt K$，而固定域理想和满足
+$\sum_{q_\ell\ll\sqrt K}q_\ell^{-1}\ll\log(2K)$。这份对数及其平方由最终小幂支付，得（466.3）的第二式。两种提取都只对实际非空项求和；有界 subunit annuli 归入原固定 annular enlargement，更短项为零。列乘子不改变支持计数或除数包络，因此同样适用。
+
+最后，当 $K\le C_0U$ 时，$K\ll U$ 且 $U^{1/3}K^{2/3}\ll_{C_0}U$，其余括号项也为 $O_{C_0}(U)$。有限物理分区、Fourier 分量及原允许的有限 smooth 参数都按共同成本恢复，不给每类行追加独立高度预算。由此得到（466.4）。证毕。
+
+**命题 466.2（同权 F4 子和与剩余物理行）。** 沿用 [F1–F4](../../../Library/Analytic/faveri2026fixedorder.md#a-weighted-powerful-part-majorant-for-all-original-columns) 的全部原系数及 $s=1/2+\eta$。当 $K\le C_0U$ 时，实际 F4 包在（466.2）两类物理行上的完整能量，沿同一个 F4 正权的总和满足
+
+$$
+Z_s|\mathcal T|\sum_{c\ {\rm powerful}}
+ q_c^s\tau(\operatorname{rad}c)
+ \sum_{a\mid\operatorname{rad}c}\sum_{\kappa\in\mathcal T}
+ \widetilde T^{{\rm sf},\,{\rm proper}}_{j;c,a,\kappa}
+\ll_{\varepsilon,C_0}\mathcal C^2(UK)^\varepsilon UK.
+\tag{466.8}
+$$
+
+证明。每个实际包的原系数具有同一除数型包络，支撑长度为 $X=K/q_c\ll K$，其列 mask 与有限过滤仍与物理行无关。把（466.4）的 $K$ 换成 $X$，得到完整包的 $UX$ 上界；这里只在包实际非空时应用固定 annular 合同。然后直接使用（464.14）的同一个临界 powerful-core 求和，并按一个最终 $\varepsilon$ 选择同一个 $\eta$ 与全部内部损失，得到（466.8）。没有估计独立 signed pole，也没有把正范数界相减。证毕。
+
+在原平衡 $U\asymp K$、$D=N=\sqrt K$ 中，该行切面包含全部 $c=a=1$ 的平方自由列系数在这些物理行上的完整能量。这不要求这些列属于第 464–465 节的短因子范围。该切面也不是列对 $h,k$ 的比值阶数选择：已知的 $H_{2,j},H_{3,j},H_{6,j}$ 是列对的分块，不能将其有符号拼接直接认作（466.2）的正行能量。
+
+把其余 good 非单位 sixth-power-free 行记为 $\mathcal R_{6,j}$。它们在 $S$ 外的字符阶数恰为六，因为其素估值不全被二整除，也不全被三整除。这给出同一个原正能量的精确行分拆
+
+$$
+Q(b)=Q_{\rm exc}(b)+
+ \sum_j\{Q_{3,j}(b)+Q_{2,j}(b)+Q_{6,j}(b)\}.
+\tag{466.9}
+$$
+
+有限 $S$-例外保持原处理。在 $K\le C_0U$ 范围内，完整 $UK$ 正预算仍需估计 $Q_{6,j}$；（466.3）在 $K/U$ 无界时也不自动给出 $UK$ 预算。原更大高度费用、完整六阶行及 signed Robin restoration 仍是独立义务；这些结论不证明 RH 或逐整数 Robin 不等式。
+
+## 追加锚（本行以下为增补区）
+
+## 467. 导子敏感的 plain 因子与六阶物理行的重复幂切面
+
+**定理 467.1（同一完整原卷积的物理余数核截断）。** 沿用定理 458.1 的原始卷积、完整零延拓、固定有限 Fourier 表示和物理行，取原平衡尺度 $K=U$、$D=N=\sqrt U$，$U\ge2$。复用[三次与二次大筛的既有族接口](../../../Library/Analytic/faveri2026fixedorder.md#separating-the-lower-order-character-blocks)，以及[原稿](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex) lem:hecke-strip-growth 证明中的 primitive Hecke 函数方程与 lem:plain 的 ordinary reflection。共同费用 $\mathcal C$ 一次控制这些输入、原 profiles 及所需有限阶导数、固定有限 ray/物理分区和 smooth/Sobolev 恢复的实际乘积。Profiles 与 norm-twist 高度固定，或使该共同费用满足原 polylog 合同；不扩大原高度范围。
+
+固定物理标签 $j$，令 $v$ 为行的 good 非单位 sixth-power-free 理想部分。用其原始素估值唯一分解
+
+$$
+v=a_2r_2^2=a_3r_3^3,\qquad
+ a_2\text{ squarefree},\quad r_2\text{ cubefree},\qquad
+ a_3\text{ cubefree},\quad r_3\text{ squarefree}.
+\tag{467.1}
+$$
+
+不要求 $a_m,r_m$ 互素；$a_2,a_3$ 分别保留原素估值模二、模三的余数。这里分解的是物理行，不是列 $h=dn$ 或列对的比值。对 $1\le A_2,A_3\le U$，把原完整正行能量限制到 $q_{a_2}\le A_2$ 或 $q_{a_3}\le A_3$，分别记为 $Q^{[2]}_{\le A_2}(b),Q^{[3]}_{\le A_3}(b)$，包括全部原有限标签。则在所列解析输入及共同费用条件下，对每个 $\varepsilon>0$，
+
+$$
+\begin{aligned}
+Q^{[2]}_{\le A_2}(b)
+&\ll_\varepsilon \mathcal C^2U^\varepsilon
+ \left\{U^{3/2}A_2+U^{3/2}A_2^{3/2}
+              +U^{5/3}A_2^{7/6}\right\},\\
+Q^{[3]}_{\le A_3}(b)
+&\ll_\varepsilon \mathcal C^2U^\varepsilon
+ \left\{U^{7/6}A_3^{4/3}+U^{4/3}A_3^{5/3}\right\}.
+\end{aligned}
+\tag{467.2}
+$$
+
+因此，$A_2\le U^{2/7}$ 与 $A_3\le U^{2/5}$ 时，两份能量及其行并集的能量均为 $O_\varepsilon(\mathcal C^2U^{2+\varepsilon})$。更精确地，若 $0\le\nu_2\le2/7$、$0\le\nu_3\le2/5$，则
+
+$$
+\begin{aligned}
+Q^{[2]}_{\le U^{2/7-\nu_2}}(b)
+ &\ll_\varepsilon\mathcal C^2U^{2-7\nu_2/6+\varepsilon},\\
+Q^{[3]}_{\le U^{2/5-\nu_3}}(b)
+ &\ll_\varepsilon\mathcal C^2U^{2-5\nu_3/3+\varepsilon}.
+\end{aligned}
+\tag{467.3}
+$$
+
+对固定正的 $\nu_m$，若共同费用为次幂且最终 $\varepsilon$ 足够小，（467.3）给出严格低于 $U^2$ 的幂次预算；$\nu_m=0$ 仅给出体积预算。这是同一个完整原卷积在指定行上的上界，含其全部列和列间干涉；不允许用任意列乘子替换原系数后仍直接使用结论。
+
+证明。固定一个原有限 Fourier 分量 $\xi$。记未归一化的原因子为
+
+$$
+\mathsf M_\xi(v)=\sum_d\mu(d)V(q_d/D)\xi(d)\chi_d^{\rm raw}(v),\qquad
+\mathsf S_\xi(v)=\sum_nW(q_n/N)\xi(n)\chi_n^{\rm raw}(v).
+\tag{467.4}
+$$
+
+原乘法性给出该完整原列多项式恰为 $\mathsf M_\xi(v)\mathsf S_\xi(v)$。两因子使用同一个字符、所有原零值和固定过滤；负 orientation 整体共轭。
+
+首先按实际导子估计 plain 因子。设 $\mathfrak f_v$ 是 $\xi\chi^{\rm raw}_{(\cdot)}(v)$ 的 primitive inducing conductor，$F_v=q_{\mathfrak f_v}$。Good 素数处的行估值为 $1,\ldots,5$，故每个这样的素数均保留非平凡局部 Kummer 分歧；固定 $\xi$ 不能消去 $S$ 外的分歧。该字符非主。所有额外固定 $S$ 零值按原有限 Euler 因子保留，且
+
+$$
+F_v\ll_S q_{\operatorname{rad}v}\le q_{a_m}q_{r_m},\qquad m=2,3.
+\tag{467.5}
+$$
+
+已有 primitive Hecke 函数方程及 entireness 给出所用普通平滑字符和界
+
+$$
+|\mathsf S_\xi(v)|\ll_\delta
+ C_{\xi,\mathrm{ref}}F_v^{1/2+\delta},\qquad \delta>0.
+\tag{467.6}
+$$
+
+具体地，在原 Mellin 公式中移到 $\Re s=-\delta$，不穿过极点；函数方程把 $L(-\delta+it)$ 控制为 $O_\delta(F_v^{1/2+\delta}(3+|t|)^{1+2\delta})$，而对偶 $L(1+\delta-it)$ 由绝对 Euler 收敛控制。$N^{-\delta}\le1$，原紧支撑 profile 的 Mellin 衰减支付积分。固定坏素的删除因子只改变固定常数。纯 norm twist 及所需有限 profile 导数按照同一函数方程与 gamma 商的多项式高度费用纳入 $C_{\xi,\mathrm{ref}}$；该费用不按行或 $a_m$ 重选。此处复用普通函数方程与平滑和方法，不将其另列为新定理。
+
+在一个 $q_{a_2}\asymp A$ 的 dyadic 块上，$q_{r_2}\asymp R=(U/A)^{1/2}$。固定实际 $a_2$ 后，零延拓下的精确恒等式为
+
+$$
+\chi_d^{\rm raw}(a_2r_2^2)
+ =\chi_d^{\rm raw}(a_2)\chi_d^{(3),\rm raw}(r_2).
+\tag{467.7}
+$$
+
+把 $\xi(d)\chi_d^{\rm raw}(a_2)$ 留在原 Möbius 列系数中。它与行 $r_2$ 无关，模长至多一；移动 $a_2$ 的导子没有被当作筛常数。非零 $\mu(d)$ 已使列 $d$ squarefree，从而 cubefree。行 $r_2$ cubefree，原 row selector、$a_2,r_2$ 重叠及其零值保留；只在正行范数中扩大允许的 $r_2$。按第 466 节复用的固定有限族接口和三阶筛，
+
+$$
+\sum_{r_2}\Omega\left|\mathsf M_\xi(a_2r_2^2)\right|^2
+ \ll_\delta C_{\xi,M}^2(UD)^\delta
+ D\{R+D+(RD)^{2/3}\}.
+\tag{467.8}
+$$
+
+（467.5）—（467.6）在同一块上给出 $|\mathsf S_\xi|^2\ll C_{\xi,\mathrm{ref}}^2(AR)^{1+\delta}$，重新命名内部 $\delta$。该块至多有 $O(A)$ 个 $a_2$，所以其完整原乘积能量为
+
+$$
+\ll_\delta\mathcal C^2U^\delta
+ A^2RD\{R+D+(RD)^{2/3}\}
+=\mathcal C^2U^\delta
+ \{AUD+U^{1/2}A^{3/2}D^2+U^{5/6}A^{7/6}D^{5/3}\}.
+\tag{467.9}
+$$
+
+这里利用 $A,R,D$ 都在固定多项式范围，将所有内部小幂统一纳入最终损失。再代入 $D=\sqrt U$，沿 $A\le A_2$ 的 dyadic 块正求和，得到（467.2）第一式。$a_2=1$ 单独作为长度一块处理。
+
+同样，在 $q_{a_3}\asymp A$ 的块上，$R=(U/A)^{1/3}$，$r_3$ squarefree，且
+$\chi_d^{\rm raw}(a_3r_3^3)=\chi_d^{\rm raw}(a_3)\chi_d^{(2),\rm raw}(r_3)$。保留原 Möbius 列的 squarefree 支撑，使用既有二阶筛与（467.6），得到同一原乘积块的能量
+
+$$
+\ll_\delta\mathcal C^2U^\delta A^2RD(R+D)
+=\mathcal C^2U^\delta
+ \{U^{2/3}A^{4/3}D+U^{1/3}A^{5/3}D^2\}.
+\tag{467.10}
+$$
+
+代入 $D=\sqrt U$ 并正求和，给出第二式。所有原有限 Fourier 分量、物理标签及有限 smooth 参数用同一个实际乘积成本包络恢复。取内部损失小于所给最终 $\varepsilon$，便得（467.2）。代入两个阈值，并逐项比较幂次，得到（467.3）。行并集的能量不超过两份正能量之和，交集只计一次。证毕。
+
+**命题 467.2（实际六阶行及精确剩余域）。** 第 467.1 节的物理行切面可包含 $S$ 外实际字符阶数为六的行。它与仅取 $a_2=1$ 或 $a_3=1$ 的平方、立方物理行不同；对平方自由的充分大物理行，两种截断均不成立。
+
+证明。保留原有非零行权 $\Omega$ 及一个允许的固定物理标签 $j$。记其范数因子为 $s_j>0$，即物理行 $u$ 满足 $q_u=s_jq_v$。在原 $\Omega$ 的正支撑内固定 $t_0>0$，并取固定常数 $0<c_1<c_2<(s_j/t_0)^{2/3}$。取不同 good 素理想 $p,\ell$，令 $q_p=P\to\infty$，并在所需固定 ray 类中选取 $c_1P^2\le q_\ell\le c_2P^2$。固定 ray 类中的素理想定理提供这样的 $\ell$，且可避开 $pS$。令 $v=\ell p^3$、$U=s_jq_\ell P^3/t_0$，则原行权仍在同一点读取 $\Omega(q_u/U)=\Omega(t_0)>0$，没有更换原 annulus。其模三余数核为 $a_3=\ell$、$r_3=p$，且 $q_\ell\le(s_j/t_0)^{2/3}P^2$ 恰好推出 $q_{a_3}\le U^{2/5}$。该行有原素估值 $1,3$，因而 good 部分既非平方也非立方，其诱导字符在 $S$ 外的阶数为六。有限物理类、单位与 $S$-标签仍按原允许分区选择。此处只给出原允许行族中的实例，不断言检测器实际选中该行，也不给出其完整原系数响应的正下界。
+
+若 $v$ squarefree，则 $a_2=a_3=v$，$q_v\asymp U$ 大于两个严格次线性阈值，故原平方自由物理行仍在余域。证毕。
+
+令 $\mathcal V_{\rm cut}$ 为同一原行族中满足 $q_{a_2}\le U^{2/7}$ 或 $q_{a_3}\le U^{2/5}$ 的行并集，$\mathcal V_{\rm rem}$ 为其补集。完整原正能量具有精确分拆
+
+$$
+Q(b)=Q_{\rm exc}(b)+Q_{\mathcal V_{\rm cut}}(b)
+                         +Q_{\mathcal V_{\rm rem}}(b).
+\tag{467.11}
+$$
+
+本条支付 $\mathcal V_{\rm cut}$ 上的原始整向量能量；所有列内与列间干涉均留在该范数中。它不从整向量的界反推孤立 F4 包的界，因为 squarefree projector 后的系数不再直接具有（467.4）的原乘积。$\mathcal V_{\rm rem}$、其他原长度与更大高度费用、F4 的相应新运输及 signed Robin restoration 仍需独立估计；本节不证明 RH 或逐整数严格 Robin 不等式。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,46 @@
+**Definition 1.2 (Zero-safe parent interface).** Put
+
+$$
+\begin{gathered}
+j=b+c,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\quad e=d-24,\\
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\qquad
+\kappa=\frac6T-\frac2U=\frac{2(2+5b)}{TU},\\
+\eta=-\frac{24}{5}(b-1/8)\kappa.
+\end{gathered}
+\tag{1.7}
+$$
+
+O, Theorem 2.1, identifies the full parent with precisely the strict
+source/drift triples satisfying
+
+$$
+e\Lambda=\eta.
+\tag{1.8}
+$$
+
+The same entire gain is the unique degree-at-most-three interpolant
+with samples at $0,1,2,3$
+
+$$
+\left(-24-e,-\frac e j,\frac{27/5-e}{T},-\frac e n\right).
+\tag{1.9}
+$$
+
+This is the public full-parent converse, including its singular branch;
+it is used without division by $e$, $\Lambda$, $b-1/8$, a gain sample,
+a leading gain coefficient or a root difference. In particular at
+$b=1/8,\Lambda=0$ the drift remains arbitrary before the later readings
+are imposed. The original traces at clocks $0,\ldots,6$ and the two
+terminal traces are, respectively,
+
+$$
+(1,j,T,n,U,U+n,2U+n),\qquad T+2j+4r,\quad 3U+2n.
+\tag{1.10}
+$$
+
+Thus $p=d+(U+n)g(5)$, $v=d+(2U+n)g(6)$,
+$a=d+(T+2j+4r)g(7)$ and $m=d+(3U+2n)g(7)$.
+Fixed-node interpolation is used at distinct nodes, regardless of sampled
+zeros; its classical formula is Berrut–Trefethen, §2,
+[Barycentric Lagrange Interpolation](https://doi.org/10.1137/S0036144502417715).
+

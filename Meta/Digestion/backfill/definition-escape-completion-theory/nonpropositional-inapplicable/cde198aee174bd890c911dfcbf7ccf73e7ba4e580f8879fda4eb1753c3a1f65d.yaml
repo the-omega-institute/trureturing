@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cde198aee174bd890c911dfcbf7ccf73e7ba4e580f8879fda4eb1753c3a1f65d
+  normalized_sha256: sha256:cde198aee174bd890c911dfcbf7ccf73e7ba4e580f8879fda4eb1753c3a1f65d
+cas_ref: sha256:cde198aee174bd890c911dfcbf7ccf73e7ba4e580f8879fda4eb1753c3a1f65d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 记录接口及冻结步骤的流程说明。'
+    previous_atom_id: 640a886e52e6b4783709f0a74ddf35ebd885e1d9d68bb9531a57f650bbf9130c
+    next_atom_id: afb4d90c91ba22a601b45928b40076988f64f7047709a01b24eeb685baab7728

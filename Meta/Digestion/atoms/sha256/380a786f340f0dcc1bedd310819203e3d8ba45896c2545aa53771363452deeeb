@@ -1,0 +1,39 @@
+**Lemma 4.2 (affinity and total variation bound).** With the probability total
+variation convention $\operatorname{TV}(P,Q)=\sup_A|P(A)-Q(A)|$,
+
+$$
+\det P_{\mathsf E}=\frac{81}{32},\qquad
+\det P_{\mathsf S}=\frac92,\qquad
+\det\!\left(\frac{P_{\mathsf E}+P_{\mathsf S}}2\right)=\frac{225}{64},
+$$
+
+and the centered Gaussian affinity $A$ satisfies
+
+$$
+A^2=
+\frac{\sqrt{\det P_{\mathsf E}\det P_{\mathsf S}}}
+ {\det((P_{\mathsf E}+P_{\mathsf S})/2)}=\frac{24}{25}.
+\tag{4.3}
+$$
+
+Consequently
+
+$$
+\operatorname{TV}(B_{W,\boldsymbol\eta_{\mathsf E}}^2,
+                  B_{W,\boldsymbol\eta_{\mathsf S}}^2)\le\frac15,
+\qquad
+\operatorname{TV}(\mathsf{Law}_{\mathsf E}^{\pi,\infty},
+                  \mathsf{Law}_{\mathsf S}^{\pi,\infty})\le\frac15.
+\tag{4.4}
+$$
+
+**Proof.** Direct determinants give (4.3). Cauchy--Schwarz applied to the
+square-root densities gives
+$\operatorname{TV}\le\sqrt{1-A^2}=1/5$ for the two centered Gaussian
+momentum laws. Tensoring with the common old-record and seed laws preserves
+this total variation. For any measurable transcript event $A$, the function
+$u\mapsto K_{\pi,\infty}(u,A)$ is measurable and takes values in $[0,1]$.
+Integrating its level sets bounds the difference of its expectations by the
+input probability total variation. This contraction and (3.2) give the second
+bound. $\square$
+

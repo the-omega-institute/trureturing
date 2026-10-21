@@ -1,0 +1,107 @@
+**Theorem 3.1 (complete thermal charge-to-memory relation).** Assume
+Definition 2.1, the actual joint contract of Definition 2.4 and the
+resources of Assumption 2.2. For either $q$, every finite $\theta\ge0$
+and every supplied $\mu$, local controlled counting and transfer into blank
+memory attain the trace-one state
+
+$$
+F_{q,\theta,\mu}
+=\sum_{n,m=0}^2 |n\rangle\langle n|_{F_A}
+ \otimes |m\rangle\langle m|_{F_B}\otimes J B_{nm}J^*,
+\qquad B_{nm}=\Pi_{nm}\Omega\Pi_{nm},
+\tag{QSSR.10}
+$$
+
+where $J$ is the calibrated occupation transfer in §5. Flags are local:
+the memory bipartition groups $F_A$ with A modes and $F_B$ with B modes.
+The eight noncentral unnormalized blocks are
+
+$$
+\begin{array}{lll}
+B_{00}=a^2P^A_0\otimes P^B_0,&
+B_{01}=abP^A_0\otimes I_{B,1},&
+B_{02}=b^2P^A_0\otimes P^B_2,\\
+B_{10}=acI_{A,1}\otimes P^B_0,& &
+B_{12}=bdI_{A,1}\otimes P^B_2,\\
+B_{20}=c^2P^A_2\otimes P^B_0,&
+B_{21}=cdP^A_2\otimes I_{B,1},&
+B_{22}=d^2P^A_2\otimes P^B_2.
+\end{array}
+\tag{QSSR.11}
+$$
+
+In local charge-one bases $|0_L\rangle=|10\rangle$,
+$|1_L\rangle=|01\rangle$, the remaining block is
+
+$$
+B_{11}=\begin{pmatrix}
+ad&0&0&0\\
+0&bc&-\kappa z^2&0\\
+0&-\overline\kappa z^2&bc&0\\
+0&0&0&ad
+\end{pmatrix}.
+\tag{QSSR.12}
+$$
+
+The initial outcome-probability table, with row $n$ and column $m$, is
+
+$$
+(w_{nm})=\begin{pmatrix}
+a^2&2ab&b^2\\
+2ac&2(ad+bc)&2bd\\
+c^2&2cd&d^2
+\end{pmatrix}.
+\tag{QSSR.13}
+$$
+
+Every entry is positive for these two settings at every finite temperature
+in the stated domain. Every outcome is reported and retained, with
+conditional memory $JB_{nm}J^*/w_{nm}$. No success conditioning is part of
+the trace-preserving conversion. The legal continuation on all these states
+is specified and proved in Theorem 5.2.
+
+Proof. At party $j$ take a neutral qutrit with blank $|0\rangle$, shift
+$X_3|r\rangle=|r+1\bmod3\rangle$ and available interaction
+
+$$
+U_{\mathrm{count},j}=\sum_{n=0}^2\Pi^j_n\otimes X_3^n.
+\tag{QSSR.14}
+$$
+
+Orthogonality and completeness of the $\Pi^j_n$ give both products with
+the adjoint equal to identity. This gate commutes with local number and
+with the storage Hamiltonian of §5. Applying it to a blank pointer and
+reading the pointer basis gives exactly the Kraus operator $\Pi^j_n$ for
+outcome $n$. Reading both pointers therefore produces $B_{nm}$, with the
+displayed flag. The sum of branch traces is $\operatorname{Tr}\Omega=1$.
+Pointer readout includes dephasing and stable writing of the classical
+result; an unread coherent pointer is not silently used as a classical flag.
+
+For the block computation, the diagonals of the copy state are $(a,b,c,d)$.
+A single off-diagonal term interchanges $01$ and $10$ and changes A charge
+by one. Pinching by total A and B charges removes such a term unless a
+second copy makes the opposite interchange. The surviving pair lies only
+in $\mathcal H_{A,1}\otimes\mathcal H_{B,1}$. Its upper central entry,
+in the local bases of the statement, comes from row copy occupations
+$(10,01)$ and column occupations $(01,10)$. Their copy-product matrix
+element is $z^2 e^{i(\phi_1-\phi_2)}$. The row has reordering sign $+1$
+and the column has sign $-1$ in (QSSR.9). Integrating gives
+$-\kappa z^2$; the reverse entry is its conjugate. The outer central
+diagonals arise from one double occupation and one vacuum, giving $ad$;
+the middle ones give $bc$. This proves (QSSR.12). Multiplying the diagonal
+weights for the other occupation possibilities gives (QSSR.11).
+
+Taking traces gives (QSSR.13). Its sum is
+$(a+b+c+d)^2=1$. Since $t>0$ and $0<p<1$, each of $a,b,c,d$ is strictly
+positive, proving the all-outcome assertion even when $z=0$. The transfers
+proved in §5 carry these complete branch states into blank memory and
+commute with the charge instrument under the occupation identification.
+Thus (QSSR.10) is an attained instrument output, not just a prescribed
+family of normalized conditional matrices. ∎
+
+Measuring both rail occupations and then forgetting which rail was occupied
+would give the same charge probabilities but erase the central coherence.
+It is a different instrument. The available controlled count (QSSR.14)
+measures only the degenerate total charge; this distinction is essential to
+the actual attained state.
+

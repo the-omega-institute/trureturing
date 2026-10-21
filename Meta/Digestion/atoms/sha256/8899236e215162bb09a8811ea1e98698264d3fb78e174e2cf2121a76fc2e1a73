@@ -1,0 +1,99 @@
+**Lemma 19.1 (No strict companion at zero terminal slope).** No element
+of $\mathcal L_M$ has $\lambda(x)=0$.
+
+Proof. Work in $\mathbb Q[x]/(\lambda)$, always using the unique
+remainder of $x$ degree less than four. Set
+
+$$
+n_\ell=504x^3+1260x^2+1044x,\qquad
+n_r=-480x^3-1149x^2-921x+18.
+$$
+
+Direct reduction of $qN$ gives
+
+$$
+qN\equiv(t-x)(n_\ell t+n_r)\pmod\lambda.
+\tag{19.1}
+$$
+
+For $x>0$, $n_\ell>0$. Since $q\ne0$, every actual pole-sector
+solution has either $t=x$ or $t=-n_r/n_\ell$. Neither branch is dropped.
+Reduce the $d$ coefficients of
+$f_q=q^2f(x,d,P/q,V/q)$ and $K_q=q^4K_{\rm s}(x,d,P/q,V/q)$
+modulo $\lambda$, and write
+
+$$
+f_q=A_2d^2+B_2d+C_2,\qquad K_q=\sum_{i=0}^4G_id^i.
+$$
+
+Define in this quotient ring
+
+$$
+\begin{aligned}
+\alpha_p={}&G_4(-B_2^3+2A_2B_2C_2)
+ +G_3A_2(B_2^2-A_2C_2)-G_2A_2^2B_2+G_1A_2^3,\\
+\beta_p={}&G_4(-B_2^2C_2+A_2C_2^2)
+ +G_3A_2B_2C_2-G_2A_2^2C_2+G_0A_2^3,\\
+Z={}&\operatorname{rem}_x
+ (A_2\beta_p^2-B_2\alpha_p\beta_p+C_2\alpha_p^2,\lambda).
+\end{aligned}
+\tag{19.2}
+$$
+
+Pseudo-division gives $f_q\mid A_2^3K_q-(\alpha_pd+\beta_p)$.
+At any simultaneous root, $\alpha_pd+\beta_p=0$, and substitution
+into the quadratic shows $Z=0$, even if $A_2$ or $\alpha_p$ vanishes.
+Thus no division by a leading drift coefficient was assumed.
+
+The coordinate degrees of $Z$ in $(x,t)$ are $(3,30)$. Evaluate $Z$
+at $t=-n_r/n_\ell$ by Horner operations in the quotient ring. The
+result $Z_{\rm alt}$ has all four coefficients strictly negative.
+The descending coefficients of $\operatorname{pp}(Z_{\rm alt})$ are
+as follows; the sign of the actual remainder is negative.
+
+$$
+\operatorname{coeff}_{\downarrow}(Z_+)=\bigl(
+12319622927537099033683278525987522082353266819117556188238166550172030929962425483194981590815124163983913495612385242678707326000232559597495825068731965435367028774927271910879852175121444127038093015722671202336034300994106461823163296265952533,
+52362367952813978015563261902939797407783261786947023167226044422692477234608634367950576708039111768522733685378789532710269653568560398301814533947334763799091113748303405466037268373392175282209634559450817783804804995474213158591064647689657978,
+60483181752943077656912163158603419015953282014783518562933588693348999912225420380466601163560342573217164409017080574891226488106137653739607036098779757213968741234182150569206573600686853463346755153118905329597066934086964787688059905247958409,
+14759658962767195646132587368953316943947758245568431411080782911574414107310271502133095176019138983651144960406379151268238178306165398186139788174685980446368758295150242825952944694126104520430398236175622549582194584921534166047400439471906314
+\bigr).
+$$
+
+Thus $Z_{\rm alt}=-\kappa Z_+$ for one positive rational $\kappa$,
+so it is strictly negative for every positive $x$. This excludes the
+alternative branch.
+
+For $t=x$, $\alpha_p$ is a unit modulo $\lambda$, and the exact
+identity is
+
+$$
+\beta_p+\alpha_p\left(24+\frac{3x}{10(x-1)}\right)
+\equiv0\pmod\lambda.
+\tag{19.3}
+$$
+
+The monic common drift factor on this branch is equivalently
+
+$$
+d+\frac{6x^3}{85}+\frac{111x^2}{340}
+  +\frac{33x}{68}-\frac{4071}{170}.
+\tag{19.4}
+$$
+
+The unit certificates below have the degree and residue convention of
+Lemma 18.2, now in the variable $x$. They also justify the inverses
+in the quotient-ring evaluation.
+
+| First polynomial | Second polynomial | Degrees over $\mathbb Q$ and $\mathbb F_{101}$ | Resultant modulo $101$ |
+| --- | --- | --- | --- |
+| $\lambda$ | $n_\ell$ | $(4,3)$ | $23$ |
+| $\lambda$ | $x-1$ | $(4,1)$ | $34$ |
+| $\lambda$ | $\alpha_p(x,x)$ | $(4,3)$ | $86$ |
+
+All these entries follow from (19.1)–(19.2) by rational remainders,
+primitive parts and the same Sylvester determinant rule. In particular
+(19.3) forces the boundary drift on the self branch. Substitution in
+(5.5) gives $U=1$, contradicting (17.6). This excludes that branch
+and exhausts the pole sector. ∎
+

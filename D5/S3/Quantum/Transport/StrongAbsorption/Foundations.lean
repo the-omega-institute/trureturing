@@ -81,6 +81,7 @@ law_isProbability: proof_shape: bind-only; escape_witness: none; consumers: D5.S
 rescaledObservable_integrable_exp: proof_shape: bind-only; escape_witness: none; consumers: D5.S3.Quantum.Transport.StrongAbsorption.Foundations.kappa_rescaled, D5.S3.Quantum.Transport.StrongAbsorption.Foundations.rescaled_moment_cumulant, D5.S3.Quantum.Transport.StrongAbsorptionCumulants.rescaled_pow_integrable
 kappa_rescaled: proof_shape: bind-only; escape_witness: none; consumers: D5.S3.Quantum.Transport.StrongAbsorptionCumulants.signed_kappa_rescaled
 rescaled_moment_cumulant: proof_shape: bind-only; escape_witness: none; consumers: D5.S3.Quantum.Transport.StrongAbsorptionCumulants.rescaledExpansion_of_moments
+Escape audit for public helper statements unfinished: https://github.com/the-omega-institute/trureturing/issues/19485
 -/
 
 import Mathlib.Probability.Moments.MGFAnalytic
@@ -587,7 +588,7 @@ theorem FirstOrder.mul {f g : ℝ → ℝ} {a b c d : ℝ}
   have h := Asymptotics.IsBigO.add (Asymptotics.IsBigO.add h1 h2) h3
   exact h.congr_left (fun γ => by ring)
 
-private theorem inverseSlope_deriv (d : ℝ) : deriv (inverseSlope d) = fun t => d⁻¹*(inverseSlope d t)^2 := by
+theorem inverseSlope_deriv (d : ℝ) : deriv (inverseSlope d) = fun t => d⁻¹*(inverseSlope d t)^2 := by
   funext t
   rw [inverseSlope_affine]
   have h := congrFun (iter_deriv_inv_linear (𝕜 := ℝ) 1 (-d⁻¹) 1) t

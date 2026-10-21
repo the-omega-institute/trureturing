@@ -1,0 +1,57 @@
+**Theorem 21.1 (M1: the entire positive-face classification).**
+Let $t_*$ be the sixth positive root of the explicitly defined $Q_{41}$,
+namely its unique root in $I_6$. In particular
+
+$$
+\frac{1004287613878}{10^{12}}<t_*<\frac{1004287613879}{10^{12}}.
+$$
+
+Put $x_*=-B(t_*)/A(t_*)$, $d_*=d_n(x_*,t_*)/[q(t_*)\ell(x_*)]$,
+$p_*=p_R(t_*)$, $v_*=v_R(t_*)$. Reconstruct $U_*,b_*,j_*,r_*,H_*$
+by Lemma 19.2 and set
+
+$$
+W_*=(P(r_*,b_*),H_*/U_*,d_*).
+$$
+
+For every finite $t>0$ with $q(t)\ne0$, $p_R(t)\ne24$, and every
+strict complete $W\in C(p_R(t),v_R(t))$,
+
+$$
+f_{MM}(W)=m_R(t)\quad\Longleftrightarrow\quad t=t_*\ \hbox{and}\ W=W_*.
+$$
+
+This is a classification on the entire open upper face, including
+arbitrarily large finite positive parameters. The boundary label itself
+remains inadmissible.
+
+**Proof.** Lemma 20.3 proves necessity and uniqueness of $(t,x,d)$;
+F, Lemma 30.2, then forces uniqueness of the entire world.
+For existence use exactly Theorems 15.2 and 15.4 at $\varepsilon=0$.
+Their $u_0$ is in the displayed $10^{-12}$ interval, their $B(0)$ is
+strict with $r\in(707,708)/1000$, $b\in(308,309)/1000$, and their
+common acquired base has $3<p<4$, $56<v<57$. Their boundary
+$A(u_0,0)$ is exactly $R(u_0)$, with its one whole gain and fixed
+drift, and $f_{MM}(B(0))=m_R(u_0)$. Thus all present hypotheses
+hold: $u_0>0$, $q(u_0)\ne0$, $p_R(u_0)\ne24$.
+Necessity forces $u_0=t_*$ and then $B(0)=W_*$, proving sufficiency.
+In particular the tables describe an actual world, not just a retained
+algebraic branch. The whole gain is determined, explicitly,
+
+$$
+H_*(s)=\sum_{i=3}^6h_i\prod_{\substack{3\le k\le6\\k\ne i}}
+\frac{s-k}{i-k},\quad
+(h_3,h_4,h_5,h_6)=
+\left(\frac{24-d_*}{x_*},18-d_*,\frac{p_*-d_*}{x_*+1},
+\frac{v_*-d_*}{x_*+2}\right).
+$$
+
+There is also a direct guarded algebraic existence argument.
+At $t_*$ the leading $F,G$ coefficients are nonzero, and the resultant
+vanishes, so there is a finite common complex root.
+The nonzero linear subresultant forces it to be the real $x_*$.
+Row six supplies every strict reconstruction guard and $x_*\ne t_*+1$.
+Reversing the exact quotient identities gives $f=K_{\rm safe}=0$,
+and Lemma 19.2 constructs the same actual world. Thus neither
+existence argument uses resultant vanishing alone. ∎
+
