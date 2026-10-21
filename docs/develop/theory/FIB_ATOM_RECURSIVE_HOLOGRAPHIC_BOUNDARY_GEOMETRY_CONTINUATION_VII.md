@@ -2112,10 +2112,16 @@ exactly when $q_0q_3\leq1$.
 For $k=3$,
 
 $$
- M_{1,3}^{T_A}\simeq dD\oplus dD\oplus(dD-gg^*)\oplus(dD+gg^*), \tag{206.7}
+ M_{1,3}^{T_A}\simeq bE\oplus bE\oplus(dD-gg^*)\oplus(dD+gg^*), \tag{206.7}
 $$
 
-which is positive exactly when $q_3\leq1$. Equations (206.1)--(206.7),
+Alice transposition leaves $p\otimes R(H)$ and $q\otimes L(H)$
+uncoupled, each with the strictly positive block $bE$. It couples
+$p\otimes L(H)$ to $q\otimes R(H)$ by $gg^*$; symmetric and
+antisymmetric combinations of these components give $dD+gg^*$ and
+$dD-gg^*$, respectively. Since $dD>0$, the latter is positive
+semidefinite exactly when $g^*(dD)^{-1}g=q_3\leq1$. Thus (206.7)
+is positive exactly when $q_3\leq1$. Equations (206.1)--(206.7),
 together with the one-dimensional-Alice blocks (203.5), classify all 15
 charge blocks. Therefore
 
