@@ -1,0 +1,9 @@
+**Lemma 4.2 (Base points and simple base factors).** For arbitrary
+$p,v$, the equations $\mathsf A=\mathsf B=D=0$ have the following
+fixed points over the roots of the indicated factors:
+
+| Factor | Fixed $b$ | $D$ at that $b$ |
+| --- | --- | --- |
+| $\Psi_2$ | $-1/2$ | $(4r^2-4r-1)\Psi_2/64$ |
+| $\Psi_4$ | $-2/5$ | $24\Psi_4/15625$ |
+| $\Phi$ | $1/8$ | $3\Phi/262144$ |

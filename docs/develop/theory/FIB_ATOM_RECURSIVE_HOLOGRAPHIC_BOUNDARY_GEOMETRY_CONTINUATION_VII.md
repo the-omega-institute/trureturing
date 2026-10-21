@@ -4209,3 +4209,660 @@ assertion is included.
 
 
 ## 230.99 追加锚（本行以下为增补区）
+
+
+## 231. Prepared-state optimization over the actual native sources
+
+**Definition 231.1 (fixed-temperature, fixed-conditional-success objective).**
+Retain the native domain $D$, positive principal root, normalized cut and
+$p(q)$ of (226.1), with $p(D)=(m,M)$ from Theorem 229.1. Fix
+$0<t\le1$ and $0<s\le1$. For scalar $0<p<1$ write
+
+$$
+\begin{gathered}
+b_t=1-t,\qquad U_t(p)=b_t^2p(1-p),\qquad h_t(p)=t+b_tp,\\
+Z_t(p)=2t+U_t(p),\qquad E_t(p)=Z_t(p)+2th_t(p),\\
+\lambda_t(p)=\frac{U_t(p)}{Z_t(p)},\qquad
+w_t(p)=\frac{Z_t(p)}{E_t(p)},\\
+A_t(p)=\frac{(U_t(p)-t)_+}{2Z_t(p)},\qquad
+B_t(p)=A_t(p)w_t(p)=\frac{(U_t(p)-t)_+}{2E_t(p)},\\
+F_{t,s}(p)=A_t(p)\min\{1,w_t(p)/s\}
+=\min\{A_t(p),B_t(p)/s\}.
+\end{gathered}
+\tag{231.1}
+$$
+
+The denominators $Z_t,E_t$ are positive scalar functions; neither denotes
+the native domain $D$ or the root-reduction quantity $H$ of §227.
+These are precisely the scalar identities of §§216,220, with $U_t$
+replacing their interaction scalar, not the native coordinate $u$.
+In particular $A_t=N(W_{\lambda_t})$ and $0<w_t<1$.
+
+For the ideal known-$q$ operation menu of §214, define
+
+$$
+\mathcal V_t(s)=\sup_{q\in D}\;
+\sup_{\substack{\text{allowed one-copy instruments}\\
+\Pr(\mathrm{success}\mid\mathrm{prepared})=s}}
+N(\sigma_{\mathrm{success}})
+=\sup_{q\in D}F_{t,s}(p(q)).
+\tag{231.2}
+$$
+
+The inner equality is Theorem 214.1, with its finite common-output attainer
+in §219. Choosing $q$ here is a source-informed choice of which state to
+prepare and subsequently process. The input to the optimized processing is
+one already prepared $\rho_{w_t(p(q)),\lambda_t(p(q))}$, not an unknown
+state to which one common source-independent decoder must apply.
+
+**Theorem 231.2 (exact native maximum and every maximizing source).** Put
+
+$$
+t_c=3-2\sqrt2,\qquad K_t=1+6t+t^2,\qquad
+\delta_t=1-6t+t^2.
+\tag{231.3}
+$$
+
+For $0<t<t_c$, define
+
+$$
+\begin{gathered}
+p_c(t)=\frac{\sqrt{15+14t}-3-2t}{2(1-t)},\qquad
+\frac25<p_c(t)<\frac12,\\
+s_0(t)=w_t(1/2)=\frac{K_t}{1+10t+5t^2},\qquad
+s_1(t)=w_t(p_c(t)),\qquad 0<s_0(t)<s_1(t)<1.
+\end{gathered}
+\tag{231.4}
+$$
+
+There is a unique maximizing scalar $p_*(t,s)$ on all $p\in(0,1)$:
+
+$$
+\begin{array}{c|c|c}
+\text{success interval}&p_*(t,s)&\mathcal V_t(s)\\ \hline
+0<s\le s_0&1/2&\delta_t/(2K_t)\\
+s_0<s<s_1&p_s&A_t(p_s)\\
+s_1\le s\le1&p_c&B_t(p_c)/s
+\end{array}
+\tag{231.5}
+$$
+
+Here $p_s$ is the unique solution of $w_t(p_s)=s$ in $(p_c,1/2)$.
+An exact inverse, used only on this middle interval, is
+
+$$
+c_{t,s}=1+t-\frac{2st}{1-s},\qquad
+h_s=\frac{c_{t,s}+\sqrt{c_{t,s}^2+4t}}2,\qquad
+p_s=\frac{h_s-t}{1-t}.
+\tag{231.6}
+$$
+
+The radical selects the sole positive root of
+$h_s^2-c_{t,s}h_s-t=0$; the other root is negative. The stated success
+interval ensures $h_s\in(h_t(p_c),h_t(1/2))$, so this is the admissible
+scalar branch. There is no inversion at $s=1$.
+At $s=s_0$ the unique scalar maximizer is $1/2$; at $s=s_1$ it is $p_c$.
+The middle formula extends continuously to these endpoints with the same
+points and values. Neither equality produces another scalar maximizer.
+
+All three scalar optimizers are actual native interior values, and
+
+$$
+\operatorname*{Argmax}_{q\in D}F_{t,s}(p(q))
+=\{q\in D:p(q)=p_*(t,s)\}.
+\tag{231.7}
+$$
+
+Thus the supremum in (231.2) is a maximum. Its maximizing sources form the
+entire inverse fibre; uniqueness of $p_*$ does not assert uniqueness of $q$.
+The same scalar maximum is obtained if $(m,M)$ is replaced by $(0,1)$.
+
+For $t_c\le t\le1$, the maximum is zero and every $p\in(0,1)$,
+hence every $q\in D$, is a maximizer. At $t=t_c$, $U_t(p)=t$ only
+at $p=1/2$, where $\lambda_t=1/3$ and negativity is still zero.
+At $t=1$ one has $U_t=\lambda_t=A_t=B_t=0$ and $w_t=1/2$ for every
+source. These cases do not have the positive-branch uniqueness property.
+
+For $0<t<t_c$, the exact positivity interval is
+
+$$
+p_-(t)=\frac{1-\sqrt{1-4t/(1-t)^2}}2,\qquad
+p_+(t)=1-p_-(t),\qquad
+F_{t,s}(p)>0\ \Longleftrightarrow\ p_-<p<p_+.
+\tag{231.8}
+$$
+
+At both endpoints and outside this interval $F_{t,s}=0$ for every $s>0$.
+Moreover $p_-<p_c<1/2<p_+$. For the native family intersect this
+positivity interval with $(m,M)$; it always contains the maximizer.
+
+## 232. All-domain calculus proof and native interior attainment
+
+**Proof of Theorem 231.2.** First $U_t(p)\le(1-t)^2/4$, with equality
+only at $p=1/2$ when $t<1$. Positive negativity is possible exactly when
+$(1-t)^2>4t$, equivalently $0<t<t_c$ in the specified temperature domain.
+This proves the entire zero regime, including the critical equality and
+$t=1$, without dividing by $1-t$ or $U_t-t$. Solving the strict quadratic
+inequality $U_t>t$ gives (231.8); its boundary denominators remain positive.
+
+Now suppose $0<t<t_c$. On the positive interval, differentiation gives
+
+$$
+\begin{aligned}
+A_t'(p)&=\frac{3t b_t^2(1-2p)}{2Z_t(p)^2},\\
+w_t'(p)&=-\frac{2tb_t(t+h_t(p)^2)}{E_t(p)^2}<0,\\
+B_t'(p)&=\frac{tb_t Q_t(p)}{2E_t(p)^2},\\
+Q_t(p)&=b_t(3+2t)(1-2p)-2b_t^2p^2+2t,\\
+Q_t'(p)&=-2b_t(3+2t)-4b_t^2p<0\qquad(0\le p\le1).
+\end{aligned}
+\tag{232.1}
+$$
+
+The derivative of $w_t$ holds on the whole scalar interval and is the
+$p$ form of (216.8). Exact sign evaluations are
+
+$$
+Q_t(2/5)=\frac{7+61t-18t^2}{25}>0,\qquad
+Q_t(1/2)=-\frac{\delta_t}{2}<0.
+\tag{232.2}
+$$
+
+The first numerator is positive for $0<t<1$, since $61t-18t^2>43t$.
+Strict decrease gives precisely one root between $2/5$ and $1/2$; solving
+its quadratic gives $p_c$ in (231.4). At the lower positivity endpoint,
+using $U_t(p_-)=t$ gives
+
+$$
+Q_t(p_-)=b_t(1-2p_-)(3+2h_t(p_-))>0.
+\tag{232.3}
+$$
+
+Consequently $p_-<p_c<1/2<p_+$. The truncated functions vanish outside
+$(p_-,p_+)$, while inside it $A_t$ strictly increases up to $1/2$ and
+strictly decreases thereafter, and $B_t$ strictly increases up to $p_c$
+and strictly decreases thereafter. Thus their unique positive global
+maxima on all of $(0,1)$ occur at $1/2$ and $p_c$, respectively.
+Strict decrease of $w_t$ gives $s_0<s_1$; positivity and $w_t<1$ give
+the other bounds in (231.4).
+
+If $s\le s_0$, then $F_{t,s}\le A_t\le A_t(1/2)$, with equality
+at $1/2$ because $w_t(1/2)\ge s$. Strict scalar uniqueness follows
+from that of $A_t$. Direct substitution gives $A_t(1/2)=\delta_t/(2K_t)$.
+If $s\ge s_1$, then $F_{t,s}\le B_t/s\le B_t(p_c)/s$, with equality
+at $p_c$ because $w_t(p_c)\le s$. Strict uniqueness follows from that
+of $B_t$. These arguments include both threshold equalities.
+
+If $s_0<s<s_1$, continuity and strict decrease of $w_t$ give one
+$p_s\in(p_c,1/2)$ with
+$A_t(p_s)=B_t(p_s)/s>0$. For every $p<p_s$, either the truncated
+$A_t(p)$ is zero or its strict increase below $1/2$ gives
+$F_{t,s}(p)\le A_t(p)<A_t(p_s)$. For every $p>p_s$, either $B_t(p)=0$
+or its strict decrease above $p_c$ gives
+$F_{t,s}(p)\le B_t(p)/s<B_t(p_s)/s$. This proves global strict
+optimality even outside $[p_c,1/2]$. Rewriting $Z_t=sE_t$ with
+$U_t=(h-t)(1-h)$ gives
+
+$$
+(1-s)\left[-h^2+
+\left(1+t-\frac{2st}{1-s}\right)h+t\right]=0.
+\tag{232.4}
+$$
+
+Since $s<1$ and the two quadratic roots have product $-t<0$, the positive
+root is exactly (231.6); the monotone crossing fixes its admissible domain.
+Continuity of this inverse gives the asserted boundary matches.
+
+It remains to restrict this scalar proof to actual sources. The established
+bound (228.12) gives
+
+$$
+m<(56/153)^2<2/5<p_c<1/2<(76/97)^2<M.
+\tag{232.5}
+$$
+
+Therefore every $y=p_*(t,s)$ lies in $(m,M)$. Use the interior inverse
+of §229: choose any integer $n\ge2$ satisfying (229.3) for this $y$,
+put $\varepsilon=1/n$, and take the unique $\xi\in(0,1)$ solving
+
+$$
+p\big((1-\varepsilon)\xi,(1-\varepsilon)(1-\xi)\big)=y.
+\tag{232.6}
+$$
+
+Then $q=((1-\varepsilon)\xi,(1-\varepsilon)(1-\xi))$ has both
+coordinates positive and sum $1-\varepsilon<1$. This is an actual native
+interior source with the fixed principal square root, not a free scalar or
+a boundary substitute. Theorem 229.1 supplies existence and uniqueness on
+each chosen segment; its image and inverse proof need not be repeated.
+The scalar upper bound and this attaining source prove equality of scalar
+and native optimal values, and scalar uniqueness proves precisely (231.7).
+In fact all sufficiently large integers $n$ satisfy (229.3); their distinct
+coordinate sums exhibit multiple sources in each optimal fibre. In the zero
+regime any interior source attains zero, as already proved. This completes
+the proof.
+
+## 233. The same-source attaining instrument and its preparation law
+
+**Proposition 233.1 (simultaneous source, success and common output).** For
+any maximizing native $q$ above, evaluate $p,\lambda,w,A_t$ at that same
+$q$. Apply the finite instrument (219.1)–(219.3) with
+
+$$
+\alpha=\min\{1,s/w\},\qquad
+\gamma=\frac{(s-w)_+}{1-w},\qquad x=\min\{1,w/s\}.
+\tag{233.1}
+$$
+
+Its active-success, active-failure, spectator-success and spectator-failure
+probabilities, conditional on preparation, are respectively
+
+$$
+\min\{w,s\},\qquad (w-s)_+,\qquad
+(s-w)_+,\qquad 1-w-(s-w)_+.
+\tag{233.2}
+$$
+
+They sum to one, with total success $w\alpha+(1-w)\gamma=s$.
+On active success the encoded active state is kept; on spectator success
+the communicated local reset prepares $|01\rangle$. After erasing every
+record except success the one common normalized output is simultaneously
+
+$$
+\sigma_s=xW_\lambda+(1-x)|01\rangle\langle01|,\qquad
+N(\sigma_s)=xA_t(p)=F_{t,s}(p)=\mathcal V_t(s).
+\tag{233.3}
+$$
+
+Proof. These are the joint law and actual output of §219 at the selected
+source. Its partial-transpose spectrum (219.6), rather than a general
+assumption of affine negativity, gives (233.3). All its local maps preserve
+each party's number separately, and its neutral-memory construction and
+finite rejected complement apply unchanged. In the low-success regime
+$\gamma=0$ and the active branch is thinned. In the strict middle regime
+$w=s$, $\alpha=1$, $\gamma=0$, $x=1$. In the high-success regime
+$\alpha=1$ and spectator padding supplies any $s-w\ge0$. The same
+construction attains zero throughout the zero regime.
+
+**Definition 233.2 (unconditional accounting).** The source convention is
+the full two-preparation filter of (215.9)–(215.12), not the effective
+spectator-discarding preparation. From (220.5), at the same chosen source,
+
+$$
+P_a=\frac{Z_t(p)}{2(1+t)^4},\qquad
+P_{\mathrm{sp}}=\frac{th_t(p)}{(1+t)^4},\qquad
+P_{\mathrm{full}}=\frac{E_t(p)}{2(1+t)^4},\qquad
+R=P_{\mathrm{full}}s.
+\tag{233.4}
+$$
+
+The complete unconditional law is preparation rejection with probability
+$1-P_{\mathrm{full}}$, followed by the four events (233.2) multiplied by
+$P_{\mathrm{full}}$. In particular the two successful contributions are
+$P_a\alpha$ and $P_{\mathrm{sp}}\gamma$, with sum $R$; each spectator
+reset pair has probability $P_{\mathrm{sp}}\gamma/4$. Thus state,
+preparation probability and prescribed conditional success are realized
+jointly by one source and one instrument. No independent extrema of
+$\lambda$ and $w$, or of $A_t$ and $B_t$, have been combined.
+
+At fixed $s$, maximizing $sF_{t,s}$ is equivalent to maximizing $F_{t,s}$;
+for $s\ge s_1$ the optimum $s\mathcal V_t(s)=B_t(p_c)$ is constant.
+The unconditional success-weighted quantity is instead
+$R\mathcal V_t(s)=P_{\mathrm{full}}s\mathcal V_t(s)$ at an attaining
+source. Both $P_{\mathrm{full}}$ and $R$ vary with source choice; (231.5)
+does not optimize this latter quantity or impose fixed overall success $R$.
+
+**Example 233.3 (three exact branches at one temperature).** At $t=1/14$,
+
+$$
+p_c=6/13,\qquad s_0=281/341,\qquad s_1=5/6,\qquad
+\mathcal V_t(s)=
+\begin{cases}
+113/562,&0<s\le281/341,\\
+A_t(p_s),&281/341<s<5/6,\\
+1/(6s),&5/6\le s\le1.
+\end{cases}
+\tag{233.5}
+$$
+
+For a strict middle point, $s=1123/1355$ gives $p_s=25/52$ and
+$\mathcal V_t(s)=451/2246$. Indeed $w_t(25/52)=1123/1355$ and
+$A_t(25/52)=451/2246$, with $281/341<1123/1355<5/6$.
+At the upper threshold the value is $1/5$; at $s=1$ it is $1/6$.
+Every displayed optimizer has an interior inverse (232.6), and (233.1)–(233.4)
+provide its simultaneous preparation and success law.
+
+## 234. Source and operation boundaries of the optimization
+
+This is a source-specific derived application of the exact frontier in
+§§214,217–219, the scalar relations in §216 and the native image/inverse
+in §§226–230. Its additional proof is one-variable calculus on that fixed
+source family. The mature supplier and literature scopes remain those of
+§224; no new general filtering principle or literature-priority conclusion
+is attached to this optimization.
+
+The ideal preparation assumptions remain the full finite fermionic Gibbs
+states, with the zero mode and all number sectors retained, no chemical
+potential or preliminary sector conditioning, and two independent instances
+of the same known $q,t$ with compatible labelled modes, CAR ordering and
+coupling phase. The original common coherent number filter counts all of
+Bob's modes. The positive principal square root and normalized coordinate
+cut remain fixed, with no additional postrotation of that cut. The subsequent
+known-$q$ Bob-local alignment is the allowed operation of §215, not a choice
+of a different cut. The normalized axes are not identified with raw spatial
+subsystems by this argument.
+
+The optimized stage uses one copy of the prepared state, finite adaptive
+LOCC preserving each party's local total number, separable auxiliaries,
+neutral memories, communication and exact biased coins. It requires one
+common encoded output and erasure of every record except success. The
+multi-leaf instrument remains essential when $s>w$: §222 gives the literal
+single-product success-map ceiling $w$ in this native family. Discarding
+records does not turn its several Kraus leaves into one product Kraus.
+
+The success parameter $s$ is conditional on preparation. This result is not
+an optimization of the original unfiltered resource, a fixed-overall-$R$
+source optimization, an unknown-$q$ extraction protocol, an additional-copy
+or collective rate result, or a noisy-control or finite-gate synthesis
+result. Exact coins, neutral-memory discard and preparation availability
+remain ideal assumptions; their physical availability and costs are not
+established. There is no physical-realization, resource-advantage or kernel
+certificate claim.
+
+The endpoint $t=0$ is excluded: it would mean infinite inverse temperature.
+The formal scalar extension at $t=0$ has $A_t=1/2$, $w_t=1$ and
+$F_{t,s}=1/2$ for every interior $p$ and $0<s\le1$, so positive-$t$
+uniqueness must not be extended to it. Nor does that uniqueness survive the
+zero regime $t\ge t_c$. The fixed-overall-success original-source question
+would require keeping $P_{\mathrm{full}}(t,p)s=R$ while varying $q$;
+it is not settled here. These finite conditional results advance only this
+application; the broader ongoing AURIC FIB ATOM quantum-theory objective
+remains open.
+
+
+## 234.99 追加锚（本行以下为增补区）
+## 235. A fixed raw-coordinate copy-rail decoder
+
+Retain the native family $q\in D$ of §226, the positive principal root,
+and the fixed normalized cut $A=\mathbb Ce_\ell$,
+$B=\operatorname{span}\{e_r,e_R\}$ of VI §§139–142 and §215.
+Here “raw-coordinate” means these normalized labelled modes before Bob
+alignment; it does not mean raw weighted occurrence coordinates.
+For every $0<t\le1$, use two independent preparations of the same
+$\rho_{q,\beta}$, $t=e^{-\beta}$, with all Fock sectors and the zero mode
+retained. Their labelled CAR modes and coupling-phase convention must be
+compatible as in VI §147 and §188. The value of $q$ may be unknown to
+the decoder; this assumes availability of the two specified preparations,
+not preparation or cloning of arbitrary unknown carriers.
+
+Apply the actual common coherent filter
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}
+  \Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+\tag{235.1}
+$$
+
+On its Bob output space define the fixed register identification
+
+$$
+\begin{gathered}
+B_1=\operatorname{span}\{|r_1\rangle,|R_1\rangle,
+ |r_2\rangle,|R_2\rangle\},\\
+J:B_1\longrightarrow\mathbb C^2_{\mathrm{copy}}\otimes
+ \mathbb C^2_{\mathrm{space}},\qquad
+J|x_i\rangle=|i\rangle_{\mathrm{copy}}|x\rangle_{\mathrm{space}},
+\quad x\in\{r,R\},\quad i\in\{1,2\}.
+\tag{235.2}
+\end{gathered}
+$$
+
+This is a register factorization of the selected one-particle space,
+not a tensor identification of the full Fock space or a change of cut.
+Let the output copy code have fixed physical one-particle rails $r_1,r_2$,
+with $|i\rangle_{\mathrm{out}}$ denoting $|r_i\rangle$. Define
+
+$$
+\begin{gathered}
+K_r=|1\rangle_{\mathrm{out}}\langle r_1|
+     +|2\rangle_{\mathrm{out}}\langle r_2|,\qquad
+K_R=|1\rangle_{\mathrm{out}}\langle R_1|
+     +|2\rangle_{\mathrm{out}}\langle R_2|,\\
+\mathcal D(X)=K_rXK_r^*+K_RXK_R^*
+ =\operatorname{Tr}_{\mathrm{space}}(JXJ^*),\\
+K_r^*K_r+K_R^*K_R
+ =\sum_{i=1}^2\bigl(|r_i\rangle\langle r_i|
+                    +|R_i\rangle\langle R_i|\bigr)=I_{B_1}.
+\tag{235.3}
+\end{gathered}
+$$
+
+The Kraus representation proves complete positivity and its effect sum
+proves trace preservation on $B_1$. Every coefficient is fixed independently
+of $q,t$. Alice is untouched. The following argument supplies the actual
+source bridge for this map to §223's sector-merging calculation.
+
+
+## 236. Actual native CAR and spectator bridge
+
+Write the actual source vector of §215 in A-first order as
+$V_q=(\alpha,V_B)$, where $p=|\alpha|^2$, and put
+
+$$
+u=\frac{V_B}{\sqrt{1-p}},\qquad
+\|d\|=1,\quad u^*d=0,\qquad U(q)=[u,d].
+\tag{236.1}
+$$
+
+The native image in §§227–229 has $0<p<1$, so the denominator is
+nonzero throughout $D$. No endpoint extrapolation is required.
+The two compatible preparations have the same $u,d$. In each copy,
+$|b_i\rangle=\sum_xu_x|x_i\rangle$ and
+$|s_i\rangle=\sum_xd_x|x_i\rangle$ are the active and spectator
+basis vectors. This is the basis-matrix convention of §187:
+coordinates transform by $U(q)^*$, while the displayed columns embed
+aligned vectors in the original normalized coordinates.
+
+By VI §142, Bob rotations are generated by even bilinears:
+$`a_x^\dagger a_y=I_A\otimes b_x^\dagger b_y`$ for Bob indices.
+Their lifts are ordinary Bob-local number-preserving unitaries.
+Regrouping copy-first order $(A_1,r_1,R_1,A_2,r_2,R_2)$ into
+party-first order $(A_1,A_2,r_1,R_1,r_2,R_2)$ gives the passive CAR sign
+
+$$
+(-1)^{N_{B_1}n_{A_2}},\qquad N_{B_1}=n_{r_1}+n_{R_1}.
+\tag{236.2}
+$$
+
+Each rotation preserves $N_{B_1}$ and $n_{A_2}$, and hence commutes
+with this regrouping sign. It also commutes with $F$. Thus on the selected
+Bob one-particle space its actual action is exactly
+
+$$
+\mathcal R_q=U(q)\oplus U(q),\qquad
+J\mathcal R_qJ^*=I_{\mathrm{copy}}\otimes U(q).
+\tag{236.3}
+$$
+
+The vacuum lift is identity. A determinant phase belongs to a doubly
+occupied copy, whereas $B_1$ contains exactly one Bob particle in total;
+there is no determinant factor or extra relative copy phase in (236.3).
+The arbitrary phase choice of the common spectator vector $d$ cancels
+in its projector. Odd Bob fields have not been treated as ordinary
+local tensor operators, and (236.2) is not a physical cross-party gate.
+
+For the active block, the compatible coupling phases give
+$`z_1\overline{z_2}=|z|^2=\mu`$. The ket with $A_2,b_1$
+occupied has the negative regrouping sign; the ket with $A_1,b_2$
+occupied has the positive sign. The actual middle exchange coherence is
+therefore $-\mu$, with the same singlet orientation for every $q$.
+Define in Alice-copy rail order
+
+$$
+|\psi^-\rangle=\frac{|A_1\rangle|2\rangle_{
+\mathrm{copy}}-|A_2\rangle|1\rangle_{\mathrm{copy}}}{\sqrt2},
+\qquad P_-=|\psi^-\rangle\langle\psi^-|,\qquad
+ g=(1-t)^2p(1-p),\quad h=t+(1-t)p.
+\tag{236.4}
+$$
+
+Here $h$ is the scalar denoted $v$ in §§187–190. The source weights of
+§215, with $D_t=2(1+t)$, obey
+
+$$
+\begin{gathered}
+a=1/D_t,\quad c=h/D_t,\quad d_{\mathrm{wt}}=t/D_t,
+\quad r_0=1/(1+t),\quad r_1=t/(1+t),\\
+ad_{\mathrm{wt}}=\frac{t}{4(1+t)^2},\quad
+\mu=\frac{g}{4(1+t)^2},\quad bc=ad_{\mathrm{wt}}+\mu,\\
+r_0^2C_-=\frac{tI_4+2gP_-}{4(1+t)^4},\qquad
+ac\,r_0r_1=\frac{th}{4(1+t)^4}.
+\tag{236.5}
+\end{gathered}
+$$
+
+The subscript distinguishes the scalar weight $d_{\mathrm{wt}}$ from
+the spectator vector $d$. These are the actual active and spectator
+populations of VI §151 and §§189,215. With a spectator occupied, the
+selected Bob number excludes both active Bob occupations; the four
+$(A_i,s_j)$ configurations each have weight $ac\,r_0r_1$ and no
+mutual or active-spectator coherence. Both spectators are empty in the
+active block. Embedding those two blocks by (236.3) proves, for the
+actual unnormalized output $\Omega_F=F\rho^{(2)}_{q,\beta}F$ in
+party-first coordinates, where $\rho^{(2)}_{q,\beta}$ denotes the
+compatible even CAR product of the two full preparations,
+
+$$
+\begin{aligned}
+(I_A\otimes J)\Omega_F(I_A\otimes J)^*
+ =\frac{(tI_4+2gP_-)\otimes|u\rangle\langle u|
+          +thI_4\otimes|d\rangle\langle d|}
+        {4(1+t)^4}.
+\end{aligned}
+\tag{236.6}
+$$
+
+The order is Alice, copy, space. This derives the raw-coordinate law
+from the full native active/spectator state, including its CAR sign and
+all selected spectator populations; it does not posit freely rotated
+input states. The $q$-dependent basis is used only to prove (236.6).
+No alignment needs to be applied physically.
+
+
+## 237. Covariance, neutral memory and the joint output-success law
+
+For any spatial unitary $U$, let $\mathcal R=U\oplus U$ on $B_1$.
+Partial-trace invariance and (235.2) give
+
+$$
+\mathcal D(\mathcal RX\mathcal R^*)=\mathcal D(X).
+\tag{237.1}
+$$
+
+This holds also with an untouched Alice register. More explicitly, for
+the active embedding $E_u|i\rangle=\sum_xu_x|x_i\rangle$,
+$K_xE_u=u_xI_{\mathrm{copy}}$, so
+$\sum_xK_xE_uYE_u^*K_x^*=Y$; the same identity holds for $d$.
+Consequently (236.6) yields
+
+$$
+(\operatorname{id}_A\otimes\mathcal D)(\Omega_F)
+ =\frac{t(1+h)I_4+2gP_-}{4(1+t)^4}.
+\tag{237.2}
+$$
+
+There is a number-preserving local dilation of this fixed map within the
+ideal control menu of §§188,215. Attach a two-state zero-charge memory
+$M$, initially $|r\rangle_M$, whose basis is labelled $r,R$.
+On $B_1\otimes M$ define the spatial-register SWAP by its full basis action
+
+$$
+W\bigl(|x_i\rangle_B|m\rangle_M\bigr)
+   =|m_i\rangle_B|x\rangle_M,
+\qquad x,m\in\{r,R\},\quad i\in\{1,2\}.
+\tag{237.3}
+$$
+
+It permutes an orthonormal basis and squares to identity, hence is unitary.
+Extend it by identity on every other Bob number sector tensored with $M$.
+Each sector is invariant, so $[W,N_B\otimes I_M]=0$ and Bob parity
+is preserved. In particular
+$W(|x_i\rangle|r\rangle_M)=|r_i\rangle|x\rangle_M$.
+Discarding $M$ realizes exactly (235.3), leaving the output particle in
+the fixed rails $r_1,r_2$ and preserving copy-rail coherence.
+No individual occupation measurement occurs. The memory is neutral,
+Alice is untouched, and no thermodynamic reset is included. This assumes
+coherent local control of the selected space and a same-dimensional
+neutral memory, not just passive linear optics; physical availability,
+finite gate synthesis, reset work and gate costs are not established.
+
+The original filter selects $N_A=N_B=1$. Total local-number phases
+are scalar there, so $F\mathcal G_N(X)F=FXF$ as in §188.
+The dilation preserves that number and parity. Its deterministic action
+conditional on $F$ retains the original success probability. In particular,
+tracing (237.2), using $\operatorname{Tr}I_4=4$ and
+$\operatorname{Tr}P_-=1$, gives the simultaneous law
+
+$$
+\begin{gathered}
+Q_F=2t+g+2th,\qquad
+P_{\mathrm{full}}=\frac{4t(1+h)+2g}{4(1+t)^4}
+                 =\frac{Q_F}{2(1+t)^4},\\
+\eta=\frac{g}{Q_F}=w\lambda,\qquad
+\lambda=\frac{g}{2t+g},\quad w=\frac{2t+g}{Q_F},\\
+\rho_{\mathrm{out}}=W_\eta
+ =\frac{1-\eta}{4}I_4+\eta P_-.
+\tag{237.4}
+\end{gathered}
+$$
+
+Indeed $1-\eta=2t(1+h)/Q_F$, which checks normalization directly.
+An independent extra acceptance coin of probability $0<s\le1$ changes
+success to $sP_{\mathrm{full}}$ and leaves this state unchanged.
+Common decoding means the same fixed map and output code for every
+$q,t$; it does not require the scalar $\eta$ to be the same for all sources.
+Equation (237.4) instantiates §223's output calculation and adds its
+actual raw-coordinate implementation, without a new optimization claim.
+
+
+## 238. Entanglement threshold and the limits of common decoding
+
+By §223, the output negativity is $(3\eta-1)_+/4$. Equivalently,
+the two-qubit partial-transpose eigenvalues are $(1+\eta)/4$ three
+times and $(1-3\eta)/4$ once. As $Q_F>0$, the exact criterion is
+
+$$
+W_\eta\text{ is entangled}
+\quad\Longleftrightarrow\quad 3g>2t+g+2th
+\quad\Longleftrightarrow\quad g>t(1+h).
+\tag{238.1}
+$$
+
+Equality is separable. The original full filtered state instead has
+criterion $g>t$ by VI §151 and §215; since $h>0$, common decoding
+imposes a strictly stronger threshold. At $q_b,t=1/7$, §223's benchmark
+has $\eta=2/7$ and hence separable decoded output, while the original
+full filtered state has negativity $1/56$; its success is still
+$343/2048$. Known-$q$ spectator-conditioned reset retains that
+negativity in the encoded output. This comparison does not change any
+of the established optimization statements.
+
+The construction gives common degraded-output decoding $W_{w\lambda}$.
+Exact unknown-$q$ extraction of the active $W_\lambda$ and the best
+$q$-independent decoder remain separate unresolved questions. The common
+map here supplies neither a source-independent preparation procedure for
+unknown carriers nor a decoder for arbitrary unrelated encoders.
+Compatible same-$q,t$ preparations, the common phase convention and one
+SSR on each party's total charge are essential. Separate preliminary
+per-copy twirls or independent unrecorded phase randomization change the
+input and remove the exchange coherence used in (236.6).
+
+All statements concern the declared normalized axes and finite ideal local
+control model. They establish no optimization on the full unfiltered
+resource, additional-copy rate, noise tolerance, physical availability,
+thermodynamic or gate-cost result. This is a source-specific bridge using
+finite-dimensional partial trace and the existing §223 calculation; no
+novelty or priority claim, new external literature assertion, or kernel
+verification is attached to it.
+
+
+## 238.99 追加锚（本行以下为增补区）

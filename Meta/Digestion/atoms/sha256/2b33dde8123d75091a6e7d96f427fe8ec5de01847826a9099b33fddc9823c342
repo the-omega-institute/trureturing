@@ -1,0 +1,11 @@
+After a subsequence and relabelling within each pair, $W_n$ converges
+to a strict world $W\in C(q_*)$, and exactly one of the following
+holds for the companion limit:
+
+1. $W'_n\to W'\in C(q_*)$ with $W'\ne W$ and
+   $\tau_E(W')=\tau_E(W)$, an actual strict pair.
+2. $W'_n\to W$ and
+   $\operatorname{rank}(d\Psi_E)_W<2$ on the full analytic parent.
+3. $W'_n\to B\in\partial_f\mathcal H$ with
+   $\Psi_E(B)=\Psi_E(W)$, a mixed boundary/interior incidence.
+

@@ -1,0 +1,90 @@
+**Theorem 18.1 (Direction-tagged actual JJ injectivity).** Suppose
+
+$$
+A>0,\qquad C>Y>0,\qquad z\ne A,\qquad F_1\ne0.
+\tag{18.1}
+$$
+
+For every real $p$, the map on the entire compatible fifth-J fiber
+
+$$
+W\longmapsto\bigl([g_W],u_J(W),a_{JJ}(W)\bigr),\qquad
+a_{JJ}(W)=d+g(7)(j+2r),
+\tag{18.2}
+$$
+
+is injective. In particular any distinct pair with the same acquired sixth-J response and the same final-J response has nonproportional entire gains. This is a statement about a tagged map: $[g_W]$ is not supplied by the experiment.
+
+Proof. Suppose two worlds share the history, the direction and $u_J$. Write $g_2=\mu g_1$, $\mu\ne0$. Initial response gives $d_2=\mu d_1$. First suppose $\mu\ne1$. With $T_i=1+b_i>1$, subtraction of the two clock-two rows and the two clock-four rows gives
+
+$$
+\mu g_1(2)(T_2-T_1)=C(1-\mu),\qquad
+2\mu g_1(4)(T_2-T_1)=Y(1-\mu).
+\tag{18.3}
+$$
+
+Their nonzero right sides justify the divisions below. These identities yield $2C g_i(4)=Y g_i(2)$. Substitution into each world's even rows gives
+
+$$
+d_i\bigl[2(C-Y)T_i+Y\bigr]=CY.
+\tag{18.4}
+$$
+
+The bracket exceeds $C>0$, hence $0<d_i<Y$. In particular $\mu>0$, the two drifts are distinct, and $\varphi=g_i/d_i$ is the same entire polynomial for both worlds. Put
+
+$$
+q=Y/C\in(0,1),\qquad \alpha=\frac{2(1-q)}q,\qquad \eta=1-q.
+$$
+
+The even rows give $\varphi(0)=-1$, $\varphi(2)=\alpha$, $\varphi(4)=\eta$. Since
+$T_i=(C/d_i-1)/\alpha$, the acquired sixth-J response is
+
+$$
+u_J=\frac{2C\varphi(6)}\alpha
++d_i\left[1-\varphi(6)\left(1+\frac2\alpha\right)\right].
+\tag{18.5}
+$$
+
+Its equality for distinct $d_i$ forces $\varphi(6)=\eta$ and $u_J=Y$. Interpolation at the even nodes, with the same weights as (16.2), now fixes all samples:
+
+$$
+\begin{array}{c|c}
+i&\varphi(i)\\ \hline
+0&-1\\
+1&(4q^2-39q+30)/(16q)\\
+2&2(1-q)/q\\
+3&(18-9q-8q^2)/(16q)\\
+4&1-q\\
+5&(-20q^2+29q-10)/(16q)\\
+6&1-q\\
+7&(42-37q)/(16q).
+\end{array}
+\tag{18.6}
+$$
+
+In particular
+
+$$
+\varphi(7)-\varphi(5)=\frac{(2-q)(13-10q)}{8q}>0.
+\tag{18.7}
+$$
+
+If $\varphi(5)=0$, the common fifth response would equal both distinct drifts, which is impossible. The actual fifth-J and final-J matrices are equal, so
+
+$$
+a_{JJ}(W_i)=\frac{\varphi(7)}{\varphi(5)}p
++\left(1-\frac{\varphi(7)}{\varphi(5)}\right)d_i.
+\tag{18.8}
+$$
+
+The coefficient of $d_i$ is nonzero by (18.7). Thus scale-changing proportional worlds have different actual final-J responses.
+
+Now suppose $\mu=1$. The entire gain and drift are common. At least one of $g(2),g(4)$ is nonzero since $C\ne Y$, so $b$ is fixed. If at least two of $g(1),g(3),g(5)$ are nonzero, their independent traces $j,j+r,j+2r$ fix $j,r$, giving the same world. Otherwise exactly one of these samples is nonzero, because $z\ne A$ excludes $g(1)=g(3)=0$.
+
+If only $g(1)$ is active, common $j,b$ and different sources have different $r$. A final-J collision forces $g(7)=0$. Hence
+$g(s)=a(s-3)(s-5)(s-7)$, $d=105a$,
+$C=a(90-15b)$ and $Y=a(108+6b)$. The condition $Y>0$ forces $a>0$, so $Y-C=a(18+21b)>0$, contradicting $C>Y$.
+If only $g(3)$ is active, the same argument gives
+$g(s)=a(s-1)(s-5)(s-7)$ and $d=A=35a$.
+Its even rows give $F_1=0$ by (17.5), again a contradiction. These cases exhaust equal gains. Thus equal values of all three coordinates in (18.2) force the same complete world. ∎
+

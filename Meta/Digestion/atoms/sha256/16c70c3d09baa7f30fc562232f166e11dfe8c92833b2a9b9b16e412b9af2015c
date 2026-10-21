@@ -1,0 +1,31 @@
+**Lemma 4.3 (Corank counts finite sources).** Fix arbitrary real
+$p,v$. Every finite source with $0<r<1$, $\mathsf A=\mathsf B=0$,
+$D\ne0$ projects to $R(r,p,v)=0$. If this root of $R$ is simple,
+there is at most one such source above it. No sign restriction on
+$b$ is needed for this assertion.
+
+Proof. A finite common root $b=t$ gives the null vector
+$(t^{13},\ldots,t,1)^{\mathsf T}$ of $S$.
+For $k$ distinct roots the corresponding vectors are independent by
+the Vandermonde identity, for the values $k\le3$ needed here.
+Thus the corank is at least $k$.
+
+A polynomial matrix of corank at least $k$ at $r_0$ has determinant
+vanishing to order at least $k$. Constant invertible row and column
+operations put its value at $r_0$ in rank normal form; at least $k$
+columns then vanish at $r_0$, contributing $k$ factors $r-r_0$.
+The argument concerns the fixed matrix, whatever the specialized
+source degrees.
+
+Off $E$, (4.2) directly forces $R=0$. On $E$, Lemma 4.2 supplies a
+common root with $D=0$. A proposed $D\ne0$ root is distinct from it,
+so the determinant has order at least two. The $E$ factor has order
+exactly one and $r_0(r_0-1)\ne0$, forcing $R(r_0,p,v)=0$ again.
+
+If $R$ is simple, the determinant has order one off $E$ and order
+two on $E$. Two different $D\ne0$ sources would force order at
+least two off $E$, or at least three on $E$ including its base
+point. Both contradict (4.2). This proves uniqueness without
+assuming $\mathcal L_1\ne0$. Padded source-degree drops, including
+$v=-225$, do not alter the proof. ∎
+

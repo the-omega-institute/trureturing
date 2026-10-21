@@ -1,0 +1,57 @@
+**Theorem 16.1 (T5: selected-pair finite-base trichotomy).** Let
+$E\in\{J,M\}$ and let $(W_n,W'_n)$ be distinct equal-terminal
+pairs in $C(p_n,v_n)$, where
+
+$$
+(p_n,v_n)\longrightarrow q_*=(p_*,v_*),\qquad p_n\ne24,
+\qquad p_*\ne24.
+\tag{16.1}
+$$
+
+After a subsequence and relabelling within each pair, $W_n$ converges
+to a strict world $W\in C(q_*)$, and exactly one of the following
+holds for the companion limit:
+
+1. $W'_n\to W'\in C(q_*)$ with $W'\ne W$ and
+   $\tau_E(W')=\tau_E(W)$, an actual strict pair.
+2. $W'_n\to W$ and
+   $\operatorname{rank}(d\Psi_E)_W<2$ on the full analytic parent.
+3. $W'_n\to B\in\partial_f\mathcal H$ with
+   $\Psi_E(B)=\Psi_E(W)$, a mixed boundary/interior incidence.
+
+No subsequence of such pairs can have both endpoint limits in
+$\partial_f\mathcal H$. For a joint sequence apply this statement
+to both selected pairs at the same base and on a common subsequence;
+no cross-pair distinctness is added.
+
+Proof. The fifth responses are bounded. By Theorem 14.3 choose an
+anchor in each pair with $\delta\ge\varepsilon(P)$ for one fixed
+$P$ containing the sequence. The cap and coercivity give simultaneous
+convergent subsequences of all source, drift and gain coordinates.
+The anchor limit is strict by its positive $\delta$ bound. The
+original readings pass to the limit, its gain stays nonzero by the
+unequal readings $0,24$, and its acquired base is $q_*$. Thus it is
+an actual world of $C(q_*)$.
+
+If the companion limit is strict, continuity gives another actual
+world of $C(q_*)$ with the same terminal response. If distinct from
+the anchor this is case 1. If equal to it, use the analytic
+complete-parent surface of S, Theorem 14.2. This surface statement
+includes the singular sources: at $\Lambda=0$ one has $b=1/8$,
+$\Lambda_r\ne0$ at the two simple roots of O, Theorem 4.2, and
+$e\ne0$ for $p_*\ne24$ by F, Lemma 30.2. Hence the defining
+parent equation has nonzero $r$ derivative there; elsewhere it solves
+for $e$. If $d\Psi_E$ had rank two at $W$, two of its three
+coordinates would give a locally injective submap by the
+inverse-function theorem. The two convergent endpoints would eventually
+be equal, a contradiction. This proves case 2.
+
+If the companion limit is nonstrict, Lemma 14.2 identifies it with
+one of the finite boundary tuples. Equality of augmented responses
+passes to the limit, giving case 3. The anchor is strict, so these
+three alternatives are exhaustive and disjoint. Theorem 14.3 also
+excludes a limit with both endpoints boundary. There are only four
+selected labels in a joint sequence, so all subsequence extractions
+can be made simultaneously after independently relabelling the two
+pairs. ∎
+

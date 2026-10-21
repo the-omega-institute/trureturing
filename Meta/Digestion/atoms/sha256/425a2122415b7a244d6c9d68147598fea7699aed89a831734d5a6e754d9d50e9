@@ -1,0 +1,11 @@
+**Theorem 21.1 (L2: empty lower-boundary-M/actual-J stratum).** There is
+no tuple $(t,W,J_0,J_1)$ such that $(t,W)\in\mathcal L_M$ and
+$J_0\ne J_1$ are actual complete worlds in the same entire
+$C(p_L(t),v_L(t))$ with $a(J_0)=a(J_1)$.
+
+Proof. Theorem 19.4 forces $t=t_6$ or $t=t_{10}$. Definition 20.1
+puts the corresponding exact base strictly inside its open rectangle,
+and Theorem 20.5 excludes every actual $J$ pair there. No assumption
+has connected either $J$ endpoint to the strict mixed-$M$ companion.
+Unused worlds and arbitrary pair overlap remain in scope. ∎
+

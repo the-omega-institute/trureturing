@@ -1,0 +1,21 @@
+**Definition 9.1 (Original joint-pair predicate).** At the original
+exact $p_J$, let $\mathcal J(v)$ mean that there are
+$A,B,C,D\in\mathcal C(p_J,v)$ with
+
+$$
+A\ne B,\quad C\ne D,\qquad
+f_{MJ}(A)=f_{MJ}(B),\quad f_{MM}(C)=f_{MM}(D).
+\tag{9.1}
+$$
+
+Labels from different pairs may coincide: the original question
+does not require four distinct worlds. Set
+
+$$
+\mathcal U=\{v\in\mathbb R:Q(p_J,v)=0\}
+\ \cup\ \{s_-(p_J),s_+(p_J)\},\qquad s_\pm(p)=s(r_\pm,p),
+\tag{9.2}
+$$
+
+using exactly the singular sources and actual responses (6.2)–(6.3).
+

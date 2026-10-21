@@ -1,0 +1,13 @@
+## 4. Domain and response enclosures
+
+The same rational interval evaluation over the whole box $X$ gives the following strict guards. All intervals are closed and all endpoints in this table are the listed integers divided by $10^7$, unless a separate denominator is shown.
+
+| quantity | first source $(1/8,\xi)$ | second source $(\tau,\zeta)$ |
+| --- | ---: | ---: |
+| source coordinates | $0<\xi<1/10$ | $89/100<\tau<9/10$, $0<\zeta<1/10$ |
+| $\Lambda$ | $[60915297,60915298]/10^7$ | $[59095514,59095515]/10^7$ |
+| drift $d$ | $[243144843,243144844]/10^7$ | $[243206696,243206697]/10^7$ |
+| $\chi=n/U$ | $[44931655,44931656]/10^7$ | $[44878272,44878273]/10^7$ |
+| fifth response $p$ | $[26301764,26301765]/10^7$ | $[26301764,26301765]/10^7$ |
+| sixth response $u$ | $[1321806875,1321806876]/10^7$ | $[1321806875,1321806876]/10^7$ |
+| seventh response $m$ | $[8027807170,8027807172]/10^7$ | $[8027807170,8027807172]/10^7$ |

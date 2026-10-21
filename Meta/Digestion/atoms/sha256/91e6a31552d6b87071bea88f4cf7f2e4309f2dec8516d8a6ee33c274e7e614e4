@@ -1,0 +1,39 @@
+**Theorem 25.3 (Exhaustion of collisions touching a sampled odd root).**
+Let $p,v\in\mathbb R$, and let distinct complete worlds
+$W,W'\in\mathcal F(H_4,M,p,M,v)$ have the same terminal-M
+response. If either endpoint satisfies $d=24$ or
+$g(1)g(3)=0$, then, for some $r\ne t$,
+
+$$
+ W=A_r,\qquad W'=A_t,\qquad
+ r+t=9/8,\qquad 1/8<r,t<1,\qquad p=24.
+\tag{25.12}
+$$
+
+Conversely all these legal reflected pairs are collisions.
+
+Proof. Either odd gain sample being zero forces $d=24$ from
+its original response 24; its trace is $j>0$ or $n>0$.
+O, Theorem 2.2, then places that endpoint in $\mathcal K$.
+A $\mathcal K$ world has $p=24$ and $k=-1128/5$ by O (16.13).
+Its partner has the same $u,m$, hence the same $k$. Theorem 25.2
+excludes every partner outside $\mathcal K$.
+
+On $\mathcal K$, the inherited response formulas are
+
+$$
+\begin{gathered}
+n(r)=1/8+9r-8r^2,\qquad p=24,\\
+u=84+24n(r),\qquad m=312+\frac{768}{5}n(r),\\
+n(r)-n(t)=(r-t)\{9-8(r+t)\}.
+\end{gathered}
+\tag{25.13}
+$$
+
+Equality of $u$ and distinctness force $r+t=9/8$; strict source
+legality gives $1/8<r,t<1$. Conversely these equations give equal
+$p,u,m$. The complete triples are different because $r\ne t$.
+Thus this is exhaustion of endpoints in the stated stratum, for
+all real $p,v$, rather than a global classification of the
+remaining collision correspondence. ∎
+

@@ -1,0 +1,9 @@
+**定义 4.2（任务比较的范围）。** A comparison contract specifies the finite deployment law, targets, loss, allowed continuations, and cost function. Its coordinates may include
+
+$$
+\bigl((\kappa_A(F_d))_d,(e_d(A))_d,(I_d(A))_d,
+\text{continuation closure},\text{cost}\bigr).
+$$
+
+Pareto comparison uses the declared direction of each coordinate. Exact response sufficiency means constancy of all required responses on readout fibres and descent of the required updates to the quotient, as in the cited task-partition and observation-boundary definitions. No identification of a neural-network state with this finite source, and no physical or training law, is an assumption of this ledger.
+

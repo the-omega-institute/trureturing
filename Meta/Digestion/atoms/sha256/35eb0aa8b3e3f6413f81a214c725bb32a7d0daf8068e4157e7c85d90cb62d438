@@ -1,0 +1,24 @@
+**Theorem 21.2 (L3: no finite off-24 joint end on the open lower face).**
+Let original joint configurations have acquired bases converging to a
+finite $(p_*,v_*)$ with $p_*\ne24$. Neither selected $M$ endpoint
+can converge in complete source, whole-gain and drift coordinates to
+$L(t)$ with $t>0,t\ne1$.
+
+Proof. If one did, its $\delta$ would tend to zero. Choose one finite
+$P$ bounding the fifth responses. Theorem 14.3 forces the other
+selected $M$ endpoint to have $\delta\ge\varepsilon(P)$ eventually.
+The cap and coercivity in Assumption 14.1 give a convergent subsequence
+of its complete coordinates, with a strict limit $W\in C(p_*,v_*)$.
+This is precisely the mixed alternative of Theorem 16.1; it uses the
+compact strict-anchor construction of Theorem 15.1, or the same closed
+bounded set for this selected pair.
+
+Continuity of all original readings and terminal $M$ responses gives
+$(p_*,v_*)=(p_L(t),v_L(t))$ and $m(W)=m_L(t)$. Theorem 19.4
+makes this one of the two survivor bases. Each has an open neighbourhood
+from Definition 20.1 on which the entire actual child is $J$ injective.
+All sufficiently late bases lie there, contradicting their original
+selected distinct $J$ pairs. This argument makes no compactness or
+convergence assumption on those $J$ endpoints. It also adds no
+cross-pair distinctness requirement. ∎
+

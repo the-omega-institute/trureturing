@@ -1,0 +1,116 @@
+**Theorem 9.3 (A transverse unused-companion birth with entire-child counts).**
+There is a $\delta>0$ and an actual analytic $M$-pair curve
+
+$$
+A(t)=(P(t,b_A(t)),g_A(t),d_A(t)),\quad
+B(t)=(P(r_B(t),b_B(t)),g_B(t),d_B(t)),\quad |t-t^*|<\delta,
+$$
+
+whose worlds are given by the original lift (2.1). Their exact common
+acquired base $q(t)=(p(t),v(t))$ lies in $\operatorname{int}Q_{70}$ and
+satisfies $m(A(t))=m(B(t))$, with $A(t)\ne B(t)$ throughout. Their entire
+actual child is
+
+$$
+C(q(t))=
+\begin{cases}
+\{A(t),B(t),C_+(t),C_-(t)\},&t^*-\delta<t<t^*,\\
+\{W_A^*,W_B^*,W_C^*\},&t=t^*,\\
+\{A(t),B(t)\},&t^*<t<t^*+\delta.
+\end{cases}
+\tag{9.4}
+$$
+
+All worlds in the first line are distinct strict original worlds.
+Throughout the interval, $J$ is injective on the entire child and the
+unique unordered $M$ pair is $\{A(t),B(t)\}$. The quantities
+$\delta$ and the curve neighbourhood are asserted to exist sufficiently
+small; no numerical $t$ interval is specified.
+
+Proof. The first bound in Proposition 9.2 and the analytic
+implicit-function theorem solve $\mathcal M=0$ uniquely near the exact
+zero for $(b_A,r_B,b_B)$ as functions of $t=r_A$. The resulting sources
+remain in the disjoint strict $A,B$ patches. Evaluating their original
+lifts gives analytic complete worlds, with exact equality of their
+$p,v,m$ functions. Shrinking the interval keeps $q(t)$ inside
+$\operatorname{int}Q_{70}$.
+
+Since $p_b(C^*)\ne0$, the analytic implicit-function theorem gives a
+source coordinate $b=b(p,r)$ near $C^*$. This is a mathematical chart,
+not an additional observed quantity. Put
+
+$$
+\widehat v(p,r)=v(r,b(p,r)).
+$$
+
+Equation (2.7), the exact equality $F_v(C^*)=0$ and $p_b\ne0$ imply
+$\widehat v_r(p^*,r_C^*)=0$. Differentiating $p(r,b(p,r))=p$ shows
+$b_r=k$ and gives
+
+$$
+\widehat v_{rr}(p^*,r_C^*)
+=w^{\mathsf T}\left(D^2v-\frac{v_b}{p_b}D^2p\right)w=\beta<0.
+\tag{9.5}
+$$
+
+There is consequently an analytic critical source $r=\sigma(p)$ with
+$\sigma(p^*)=r_C^*$ and a strict nondegenerate maximum in the $r$
+coordinate. Define its critical-value curve and the transverse displacement
+by
+
+$$
+h(p)=\widehat v(p,\sigma(p)),\qquad
+\Delta(t)=v(t)-h(p(t)).
+$$
+
+At the critical source, $h'(p^*)=(v_b/p_b)_{C^*}$. Hence
+
+$$
+\Delta(t^*)=0,\qquad\Delta'(t^*)=\eta>0.
+\tag{9.6}
+$$
+
+The equation $\widehat v(p(t),r)=v(t)$ therefore has two nearby real
+sources for $t<t^*$, one for $t=t^*$ and none for $t>t^*$, after
+shrinking the interval. For completeness, Taylor's theorem writes
+$h(p)-\widehat v(p,r)=(r-\sigma(p))^2u(p,r)$ with $u>0$ near the
+critical source. The coordinate $(r-\sigma(p))\sqrt{u(p,r)}$ has
+nonzero $r$ derivative at the centre. In this coordinate the equation
+is $y^2=-\Delta(t)$, giving precisely these local real counts.
+
+It remains to show that these are counts for the whole actual child.
+First the carrier at $q^*$ has a double root at the source $C^*$.
+Indeed the owning necessity gives the identity
+
+$$
+R(x(r,b),p(r,b),v(r,b))=0
+$$
+
+on the regular source neighbourhood. Differentiate at $C^*$ in direction
+$w$. Both $p_w$ and $v_w$ vanish there, so $R_xx_s=0$.
+Proposition 9.2 gives $x_s\ne0$, hence $R_x=0$. The actual $C^*$ root
+lies in $\mathcal D_C$, whose total root multiplicity is two. Its
+multiplicity is therefore exactly two, and it exhausts that cluster at
+$q^*$. The unit $\alpha$ fixes one drift there, and faithful
+reconstruction fixes one complete world. The other retained simple roots
+are the actual worlds $A^*,B^*$ from Proposition 4.1. Thus the entire
+child at $q^*$ consists of exactly three worlds.
+
+As $q\to q^*$ in $Q_{70}$, both roots of the cluster tend to this unique
+double root: any convergent subsequence in the closed cluster disk must
+limit to a root at $q^*$, and the uniform Rouché inequality excludes its
+boundary. The continuous rational drift and reconstruction functions are
+defined on the full real cluster interval by (7.1). Consequently every
+possible actual $C$-patch companion tends to $C^*$ and eventually lies in
+the local fold neighbourhood. No other $C$-patch worlds can remain
+outside that neighbourhood on arbitrarily small parts of the curve.
+
+Proposition 7.1 already excludes every other patch and permits at most one
+world in each $A,B$ patch. The analytic selected worlds provide those two
+worlds throughout. The two local real fold sources for $t<t^*$ are strict
+and regular, so their original lifts are actual worlds at exactly $q(t)$.
+They exhaust all possible $C$ companions. This proves (9.4), including
+its entire-child quantifier. Finally Proposition 8.1 proves whole-child
+$J$ injectivity and uniqueness of the unordered selected $M$ pair on
+both sides and at the fold. ∎
+
