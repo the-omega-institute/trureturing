@@ -105,16 +105,26 @@ def qCertificate (d : ℕ) (aa bb cc : ℝ) (x : Fin d)
         (aa / cc) * Complex.normSq (∑ i : Fin d, w i i)) -
     Complex.normSq (w x x)
 
-lemma b_sq (t : ℝ) : (b t) ^ 2 = 1 - t := by
-  sorry
+lemma b_sq {t : ℝ} (ht : t ≤ 1) : (b t) ^ 2 = 1 - t := by
+  rw [b, sq_sqrt]
+  linarith
 
-lemma c_sq (d : ℕ) (t : ℝ) : (c d t) ^ 2 = t * ((d : ℝ) ^ 2 - 1) + 1 := by
-  sorry
+lemma c_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (ht : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) :
+    (c d t) ^ 2 = t * ((d : ℝ) ^ 2 - 1) + 1 := by
+  rw [c, sq_sqrt]
+  have hd' : 0 < (d : ℝ) ^ 2 - 1 := by
+    have : (2 : ℝ) ≤ d := by exact_mod_cast hd
+    nlinarith
+  have hden : 0 < (d : ℝ) ^ 2 - 1 := hd'
+  nlinarith [ht]
 
-lemma bc_sq (d : ℕ) (t : ℝ) :
+lemma bc_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     (b t * c d t) ^ 2 = (1 - (d : ℝ) ^ 2) * t ^ 2 +
       ((d : ℝ) ^ 2 - 2) * t + 1 := by
-  sorry
+  rw [mul_pow, b_sq htu, c_sq hd htl]
+  ring
 
 lemma sMax_eq (d : ℕ) (t : ℝ) :
     sMax d t = b t ^ 2 + 2 * a2 d t * b t / d := by
@@ -125,10 +135,25 @@ lemma one_sub_sMax_eq_a2_sq (d : ℕ) (t : ℝ) :
   sorry
 
 lemma k_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ} (ht : t < 1) : 0 < k d t := by
-  sorry
+  dsimp [k, a, a2, c, b]
+  have hd0 : (0 : ℝ) < d := by exact_mod_cast (Nat.zero_lt_of_lt hd)
+  have hb : 0 < Real.sqrt (1 - t) := Real.sqrt_pos.2 (by linarith)
+  have hc : 0 ≤ Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1) := Real.sqrt_nonneg _
+  have hfrac : 0 < (1 : ℝ) / d := by positivity
+  nlinarith
 
-lemma c_pos {d : ℕ} {t : ℝ} (ht : -1 / ((d : ℝ) ^ 2 - 1) < t) : 0 < c d t := by
-  sorry
+lemma c_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (ht : -1 / ((d : ℝ) ^ 2 - 1) < t) : 0 < c d t := by
+  unfold c
+  apply Real.sqrt_pos.2
+  have hd' : 0 < (d : ℝ) ^ 2 - 1 := by
+    have : (2 : ℝ) ≤ d := by exact_mod_cast hd
+    nlinarith
+  have : -1 < t * ((d : ℝ) ^ 2 - 1) := by
+    calc
+      -1 = (-1 / ((d : ℝ) ^ 2 - 1)) * ((d : ℝ) ^ 2 - 1) := by field_simp
+      _ < t * ((d : ℝ) ^ 2 - 1) := by gcongr
+  nlinarith
 
 lemma choi_Itilde_standard (d : ℕ) (t : ℝ) (x : Fin d) :
     MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) =
