@@ -11,28 +11,29 @@ admission_basis: open-problem-resolution (#18581; Refuted)
 The public result is the designated refutation result (`basis=refutes`) and is exempt from
 four-slot escape registration (CLAUDE.md §3.9).
 
-Public theorem result: proof_shape: content; escape_witness: none.
+Public theorem result: proof_shape: content; escape_witness: check_rows_sound.
 The mathematical route combines a binary Lyndon word with sixteen distinct Lyndon factors
 and seventeen-factor witnesses for every eligible length-506 Christoffel word.
 
 Private theorem classifications (same-delivery consumers):
 lyndon_test_iff: bind-only; consumers: w_lyndon, distinct_ge_of_witness.
-take_order_mono: content; consumer: rejection_take.
-rejection_take: content; consumer: check_row_sound.
+take_order_mono: content; escape_witness: take_order_mono; consumer: rejection_take.
+rejection_take: content; escape_witness: rejection_take; consumer: check_row_sound.
 not_lyndon_of_bad_suffix: bind-only; consumer: check_row_sound.
-check_row_sound: content; consumer: check_rows_sound.
-check_rows_sound: content; consumer: w_count_upper.
+check_row_sound: content; escape_witness: check_row_sound; consumer: check_rows_sound.
+check_rows_sound: content; escape_witness: check_rows_sound; consumer: w_count_upper.
 distinct_le_of_cover: bind-only; consumer: w_count_upper.
 distinct_ge_of_witness: bind-only; consumers: w_count, christoffel_lower.
 w_ofFn: bind-only; consumers: w_lyndon, w_count_upper.
 w_lyndon: bind-only; consumer: result.
 upper_checked: bind-only; consumer: w_count_upper.
-w_count_upper: content; consumer: w_count.
-w_count: content; consumer: result.
+w_count_upper: content; escape_witness: check_rows_sound; consumer: w_count.
+w_count: content; escape_witness: check_rows_sound; consumer: result.
 lower_checked: bind-only; consumer: christoffel_lower.
 lower_complete: bind-only; consumer: christoffel_lower.
 christoffel_lower: bind-only; consumer: result.
-No declaration supplies an escape witness for this admission basis.
+The compressed suffix-rejection soundness lemma check_rows_sound is the escape witness.
+The admission basis remains open-problem-resolution (#18581; Refuted).
 
 Direct frozen dependencies (declaration identities):
 D5/S1/Words/Complexity/LyndonBrackets/LyndonOrder.IsLyndon

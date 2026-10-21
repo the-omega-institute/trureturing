@@ -70,6 +70,10 @@ $$\neg (\forall n: \mathbb{N}, (2 \le n) \Rightarrow (\exists p: \mathbb{N}, (0 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonFactorChristoffelMinimumRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/glen-simpson-smyth-2017-lyndon-factors-open-problem-1` (refuted) by `D5/S1/Words/Complexity/LyndonFactorChristoffelMinimumRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"glen-simpson-smyth-2017-lyndon-factors-open-problem-1","declaration_gid":"D5/S1/Words/Complexity/LyndonFactorChristoffelMinimumRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Amy Glen, Jamie Simpson, and W. F. Smyth (2017). *Counting Lyndon factors*. DOI: [10.37236/6915](https://doi.org/10.37236/6915). URL: <https://arxiv.org/abs/1701.00928v1>.

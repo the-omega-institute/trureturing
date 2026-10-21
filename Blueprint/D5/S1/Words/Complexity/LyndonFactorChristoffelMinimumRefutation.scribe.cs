@@ -31,13 +31,17 @@ internal sealed class LyndonFactorChristoffelMinimumRefutationDocument : IScribe
                 AssessedProvenance.FromLiterature(Source)),
             Node("result", "A negative answer at length 506", Disp(Seq(Neg, Sp, Parenthesized(ClaimBody()))),
                 "Let U = aabaabab, V = aabab, v = ababbababbabbababbabb, and replace each a in v by UUV and each b by UUVV. The resulting word has length 506 and sixteen distinct Lyndon factors. A suffix comparison certifies that it is Lyndon. Compressed intervals of rejected suffixes certify the upper count, and sixteen distinct occurrences certify the lower count. For each positive numerator less than 506 and coprime to 506, seventeen distinct Lyndon-factor occurrences certify the Christoffel lower bound. Thus every Christoffel competitor has at least seventeen distinct factors. The argument does not determine the global minimum or the first counterexample length. Glen's 2018 41ACCMCC talk, slide 19, announces an affirmative answer; that announcement conflicts with this counterexample, and its proof is unavailable in the supplied material. The source's Theorem 8 concerns the Christoffel family alone and does not require the assertion refuted here.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("glen-simpson-smyth-2017-lyndon-factors-open-problem-1"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("gss-minimum-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname,
         Grp(Seq([.. name.Split('.').SelectMany((part, index) =>
