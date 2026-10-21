@@ -126,13 +126,37 @@ lemma bc_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   rw [mul_pow, b_sq htu, c_sq hd htl]
   ring
 
-lemma sMax_eq (d : ℕ) (t : ℝ) :
+lemma sMax_eq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     sMax d t = b t ^ 2 + 2 * a2 d t * b t / d := by
-  sorry
+  have hd0 : (0 : ℝ) < d := by exact_mod_cast (Nat.zero_lt_of_lt hd)
+  have hb : 0 ≤ b t := Real.sqrt_nonneg _
+  have hc : 0 ≤ c d t := Real.sqrt_nonneg _
+  have hbc : 0 ≤ b t * c d t := mul_nonneg hb hc
+  have hD : 0 ≤ (1 - (d : ℝ) ^ 2) * t ^ 2 + ((d : ℝ) ^ 2 - 2) * t + 1 := by
+    rw [← bc_sq hd htl htu]
+    positivity
+  have hroot : Real.sqrt ((1 - (d : ℝ) ^ 2) * t ^ 2 +
+      ((d : ℝ) ^ 2 - 2) * t + 1) = b t * c d t := by
+    have hs := Real.sq_sqrt hD
+    have hbcs := bc_sq hd htl htu
+    have hr := Real.sqrt_nonneg ((1 - (d : ℝ) ^ 2) * t ^ 2 +
+      ((d : ℝ) ^ 2 - 2) * t + 1)
+    nlinarith
+  rw [sMax, hroot]
+  dsimp [a2, c, b]
+  field_simp
+  ring
 
-lemma one_sub_sMax_eq_a2_sq (d : ℕ) (t : ℝ) :
+lemma one_sub_sMax_eq_a2_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     1 - sMax d t = (a2 d t) ^ 2 := by
-  sorry
+  rw [sMax_eq hd htl htu]
+  have hb := b_sq htu
+  have hc := c_sq hd htl
+  dsimp [a2, c, b]
+  field_simp
+  nlinarith
 
 lemma k_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ} (ht : t < 1) : 0 < k d t := by
   dsimp [k, a, a2, c, b]
