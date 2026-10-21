@@ -20,26 +20,23 @@ namespace D5.S3.StatisticalMechanics.RandomWalks.SquareClusterExitTimeRefutation
 open Finset
 open scoped Topology
 
-/-- The four equally likely directions of the square lattice. -/
-abbrev Dir := Fin 4
-
 /-- Unit coordinate steps. -/
-def step : Dir → ℤ × ℤ := ![(1, 0), (-1, 0), (0, 1), (0, -1)]
+def step : Fin 4 → ℤ × ℤ := ![(1, 0), (-1, 0), (0, 1), (0, -1)]
 
 /-- The starting point plus the first `j` steps, stopping at the end of the word. -/
-def position (p : ℤ × ℤ) : {n : ℕ} → (Fin n → Dir) → ℕ → ℤ × ℤ
+def position (p : ℤ × ℤ) : {n : ℕ} → (Fin n → Fin 4) → ℕ → ℤ × ℤ
   | 0, _, _ => p
   | _ + 1, _, 0 => p
   | _ + 1, w, j + 1 => position (p + step (w 0)) (Fin.tail w) j
 
 /-- A word exits for the first time at its final position. -/
-def exits (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) {n : ℕ} (w : Fin n → Dir) : Prop :=
+def exits (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) {n : ℕ} (w : Fin n → Fin 4) : Prop :=
   (∀ j : Fin n, position p w j ∈ S) ∧ position p w n ∉ S
 
 /-- The fraction of all length-`n` words whose first exit occurs at time `n`. -/
 noncomputable def exitProb (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) (n : ℕ) : ℝ := by
   classical
-  exact ((univ.filter (exits S p : (Fin n → Dir) → Prop)).card : ℝ) / 4 ^ n
+  exact ((univ.filter (exits S p : (Fin n → Fin 4) → Prop)).card : ℝ) / 4 ^ n
 
 /-- Expected first exit time, defined from its exit distribution. -/
 noncomputable def expectedExit (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) : ℝ :=
@@ -51,7 +48,7 @@ noncomputable def meanExit (S : Finset (ℤ × ℤ)) : ℝ :=
 
 /-- Nearest-neighbour steps with both endpoints in the cluster. -/
 def adjacent (S : Finset (ℤ × ℤ)) (p q : ℤ × ℤ) : Prop :=
-  p ∈ S ∧ q ∈ S ∧ ∃ d : Dir, q = p + step d
+  p ∈ S ∧ q ∈ S ∧ ∃ d : Fin 4, q = p + step d
 
 /-- Any two cluster vertices can be joined by steps inside the cluster. -/
 def connected (S : Finset (ℤ × ℤ)) : Prop :=
@@ -68,7 +65,7 @@ def claim : Prop :=
 
 private noncomputable def killed (S : Finset (ℤ × ℤ)) :
     (ℤ × ℤ → ℝ) →ₗ[ℝ] (ℤ × ℤ → ℝ) where
-  toFun f p := if p ∈ S then (∑ d : Dir, f (p + step d)) / 4 else 0
+  toFun f p := if p ∈ S then (∑ d : Fin 4, f (p + step d)) / 4 else 0
   map_add' f g := by
     funext p
     dsimp
@@ -81,7 +78,7 @@ private noncomputable def killed (S : Finset (ℤ × ℤ)) :
 private def inside (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) : ℝ := if p ∈ S then 1 else 0
 
 private theorem exits_cons (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) (n : ℕ)
-    (d : Dir) (w : Fin n → Dir) :
+    (d : Fin 4) (w : Fin n → Fin 4) :
     exits S p (Fin.cons d w) ↔ p ∈ S ∧ exits S (p + step d) w := by
   unfold exits
   rw [Fin.forall_fin_succ]
@@ -94,7 +91,7 @@ private theorem exit_prob_zero (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) :
   classical
   rw [exitProb, natCast_card_filter]
   simp only [Finset.univ_unique, Finset.sum_singleton, pow_zero, div_one]
-  have he : ∀ w : Fin 0 → Dir, exits S p w ↔ p ∉ S := by
+  have he : ∀ w : Fin 0 → Fin 4, exits S p w ↔ p ∉ S := by
     intro w
     simp only [exits, position, IsEmpty.forall_iff, true_and]
   rw [he]
@@ -105,11 +102,11 @@ private theorem exit_prob_succ (S : Finset (ℤ × ℤ)) (n : ℕ) :
   classical
   funext p
   simp only [exitProb, natCast_card_filter]
-  rw [← (Fin.consEquiv fun _ : Fin (n + 1) => Dir).sum_comp, Fintype.sum_prod_type]
-  change (∑ d : Dir, ∑ w : Fin n → Dir,
+  rw [← (Fin.consEquiv fun _ : Fin (n + 1) => Fin 4).sum_comp, Fintype.sum_prod_type]
+  change (∑ d : Fin 4, ∑ w : Fin n → Fin 4,
     if exits S p (Fin.cons d w) then (1 : ℝ) else 0) / 4 ^ (n + 1) =
     if p ∈ S then
-      (∑ d : Dir, (∑ w : Fin n → Dir,
+      (∑ d : Fin 4, (∑ w : Fin n → Fin 4,
         if exits S (p + step d) w then (1 : ℝ) else 0) / 4 ^ n) / 4 else 0
   simp_rw [exits_cons]
   by_cases hp : p ∈ S
@@ -131,7 +128,7 @@ private theorem killed_one (S : Finset (ℤ × ℤ)) : killed S (fun _ => 1) = i
 private theorem expected_of_certificate (S : Finset (ℤ × ℤ)) (t : ℤ × ℤ → ℝ)
     (hz : ∀ p, p ∉ S → t p = 0)
     (hb : ∀ p ∈ S, 1 ≤ t p ∧ t p ≤ 43)
-    (ht : ∀ p ∈ S, t p = 1 + (∑ d : Dir, t (p + step d)) / 4)
+    (ht : ∀ p ∈ S, t p = 1 + (∑ d : Fin 4, t (p + step d)) / 4)
     (p : ℤ × ℤ) : expectedExit S p = t p := by
   classical
   let P := killed S
@@ -313,14 +310,14 @@ private theorem mem_square_eleven (p : ℤ × ℤ) :
 set_option maxRecDepth 10000 in
 private theorem disk_data : disk.card = 121 ∧
     (∀ p ∈ disk, 68912213 ≤ diskA p ∧ diskA p ≤ 43 * 68912213 ∧
-      4 * diskA p = 4 * 68912213 + ∑ d : Dir, diskA (p + step d)) ∧
+      4 * diskA p = 4 * 68912213 + ∑ d : Fin 4, diskA (p + step d)) ∧
     (∑ p ∈ disk, diskA p) = 198008236169 := by
   decide
 
 set_option maxRecDepth 10000 in
 private theorem square_data : (square 11).card = 121 ∧
     (∀ p ∈ square 11, 1972460 ≤ squareA p ∧ squareA p ≤ 43 * 1972460 ∧
-      4 * squareA p = 4 * 1972460 + ∑ d : Dir, squareA (p + step d)) ∧
+      4 * squareA p = 4 * 1972460 + ∑ d : Fin 4, squareA (p + step d)) ∧
     (∑ p ∈ square 11, squareA p) = 5622237966 := by
   decide
 
@@ -354,7 +351,7 @@ private theorem disk_connected : connected disk := by
 private theorem integer_certificate (S : Finset (ℤ × ℤ)) (A : ℤ × ℤ → ℤ) (D : ℤ)
     (hD : 0 < D) (hz : ∀ p, p ∉ S → A p = 0)
     (hc : ∀ p ∈ S, D ≤ A p ∧ A p ≤ 43 * D ∧
-      4 * A p = 4 * D + ∑ d : Dir, A (p + step d))
+      4 * A p = 4 * D + ∑ d : Fin 4, A (p + step d))
     (p : ℤ × ℤ) : expectedExit S p = (A p : ℝ) / D := by
   have hDr : (0 : ℝ) < D := by exact_mod_cast hD
   apply expected_of_certificate S (fun q => (A q : ℝ) / D) ?_ ?_ ?_ p
@@ -368,7 +365,7 @@ private theorem integer_certificate (S : Finset (ℤ × ℤ)) (A : ℤ × ℤ �
     · apply (div_le_iff₀ hDr).2
       exact_mod_cast hu
   · intro q hq
-    have h : (4 : ℝ) * (A q : ℝ) = 4 * (D : ℝ) + ∑ d : Dir, (A (q + step d) : ℝ) := by
+    have h : (4 : ℝ) * (A q : ℝ) = 4 * (D : ℝ) + ∑ d : Fin 4, (A (q + step d) : ℝ) := by
       exact_mod_cast (hc q hq).2.2
     rw [← sum_div]
     field_simp [ne_of_gt hDr]
