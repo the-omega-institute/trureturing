@@ -161,7 +161,8 @@ private def compatibleRight (D : LatticeData) (hu : IsUnit D.G.det)
   smul_mem' := fun c _ hb => compatible_smul_right D hu a _ gamma delta c hb
 
 /- proof_shape: sector_ground_right_word: content;
-   physicalSlice_sectorProject: content; mu_sectorProject: content;
+   physicalSlice_sectorProject: bind-only (consumer: projectedGround_arbitrary_second.fields);
+   mu_sectorProject: bind-only (consumer: projectedGround_arbitrary_second.iterates);
    projectedGround_arbitrary_second: content
    admission_basis: escape-witness
    escape_witness: The restricted induction transports opposite first signs
