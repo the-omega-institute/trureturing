@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/EtaOddOccupation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.NumberTheory.ModularForms.DedekindEta, mathlib/module/Mathlib.NumberTheory.ModularForms.Discriminant]
+   anchors: [mathlib/module/Mathlib.NumberTheory.ModularForms.Discriminant]
    utility: none
    digest: Eta normalization and even-rank S transformation of independent odd-occupation coefficients. -/
 
