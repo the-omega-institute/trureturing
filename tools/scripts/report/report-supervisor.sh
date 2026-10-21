@@ -424,7 +424,7 @@ collect_process_tree() {
 }
 
 marker_processes() {
-  local process_dir fd target pid candidates elapsed_window current_ms
+  local process_dir fd target pid candidates elapsed_window="" current_ms
   if [[ -d /proc ]]; then
     for process_dir in /proc/[1-9]*; do
       [[ -d "$process_dir/fd" ]] || continue
@@ -442,8 +442,12 @@ marker_processes() {
       done
     done
   else
-    current_ms="$(now_ms)" || return "$?"
-    elapsed_window=$(( (current_ms - STARTED_MS) / 1000 + 5 ))
+    # Cleanup needs exact marker ownership even without a working clock. The
+    # elapsed-time filter only narrows observation candidates, not ownership.
+    if [[ "${1:-}" != cleanup ]]; then
+      current_ms="$(now_ms)" || return "$?"
+      elapsed_window=$(( (current_ms - STARTED_MS) / 1000 + 5 ))
+    fi
     if candidates="$(ps -axo pid=,ppid=,etime= 2>/dev/null \
       | awk -v window="$elapsed_window" '
           function elapsed(value, fields, count, hour) {
@@ -461,7 +465,7 @@ marker_processes() {
             }
             return seconds
           }
-          $2 == 1 && elapsed($3) <= window {print $1}
+          $2 == 1 && (window == "" || elapsed($3) <= window) {print $1}
         ' | paste -sd, -)"; then
       :
     else
@@ -483,7 +487,7 @@ signal_marker_processes() {
   local pid
   {
     if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
-    marker_processes
+    marker_processes cleanup
   } | sort -run | while IFS= read -r pid; do
     [[ "$pid" =~ ^[1-9][0-9]*$ \
       && "$pid" != "$$" \
@@ -513,7 +517,7 @@ record_process_candidates() {
 record_supervised_processes() {
   {
     if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
-    marker_processes
+    marker_processes cleanup
   } | sort -un | record_process_candidates
 }
 

@@ -187,6 +187,105 @@ public sealed class ReportSupervisorClockFailureTests
         AssertRunReleased(fixture);
     }
 
+    [Fact]
+    public void PersistentClockFailureReapsAMarkerOnlyDoubleForkedSession()
+    {
+        if (Directory.Exists("/proc")) return;
+        using var fixture = new ReportSupervisorFixture();
+        // The fixture's synthetic pgrep reports scratch.txt regardless of its
+        // actual parent. This case needs native ancestry and marker discovery.
+        File.Delete(Path.Combine(fixture.Root, "ps"));
+        File.Delete(Path.Combine(fixture.Root, "pgrep"));
+        _ = fixture.WriteExecutable("cat", """
+            #!/usr/bin/env bash
+            printf '%s\n' "$$" >> "$PWD/relay.pids"
+            exec /bin/cat "$@"
+            """);
+        var clock = fixture.WriteExecutable("persistent-clock.sh", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            current=0
+            [[ ! -f "$PWD/persistent-clock.count" ]] || read -r current < "$PWD/persistent-clock.count"
+            current=$((current + 1))
+            printf '%s\n' "$current" > "$PWD/persistent-clock.count"
+            if (( current >= 5 )); then
+              if (( current == 5 )); then
+                while [[ ! -s "$PWD/scratch.txt" ]]; do :; done
+                read -r orphan < "$PWD/scratch.txt"
+                while [[ "$(ps -o ppid= -p "$orphan" | tr -d ' ')" != 1 ]]; do :; done
+                ps -o pid=,ppid=,pgid= -p "$orphan" > "$PWD/orphan-topology"
+                lsof -a -p "$orphan" -d 1,2,9 > "$PWD/orphan-fds"
+                for run in "$STRATALINT_SUPERVISOR_ROOT"/runs/run.*; do
+                  cp "$run/process-candidates" "$PWD/candidates-before-fault"
+                  printf '%s/process.marker\n' "$(cd "$run" && pwd -P)" > "$PWD/orphan-marker"
+                done
+              fi
+              printf '%s\n' "$current" >> "$PWD/failed-clock-reads"
+              printf '2000000000\n'
+              exit 7
+            fi
+            printf '2000000000\n'
+            """);
+        var worker = fixture.WriteExecutable("persistent-clock-worker.sh", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            printf '%s\n' "$$" > "$PWD/clock-worker.pid"
+            "__DOUBLE_FORK__" "$1"
+            mkfifo "$PWD/worker-hold.fifo"
+            IFS= read -r _ < "$PWD/worker-hold.fifo"
+            """.Replace("__DOUBLE_FORK__", fixture.DoubleForkWorker, StringComparison.Ordinal));
+        using var unrelated = fixture.StartSentinelBlockedProcess();
+        try
+        {
+            var result = fixture.RunWithEnvironment("lean-producer", true, worker,
+                "STRATALINT_SUPERVISOR_CLOCK=" + clock);
+
+            Assert.Equal(2, result.ExitCode);
+            AssertClockDiagnostic(result.StandardError, 7);
+            var stderr = Encoding.UTF8.GetString(result.StandardError);
+            Assert.Contains("RESOURCE_OBSERVATION_UNAVAILABLE", stderr, StringComparison.Ordinal);
+            Assert.Contains("fd_peak=unknown rss_peak_kb=unknown", stderr, StringComparison.Ordinal);
+            var topology = File.ReadAllText(Path.Combine(fixture.Root, "orphan-topology"))
+                .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
+            Assert.Equal("1", topology[1]);
+            Assert.NotEqual(File.ReadAllText(Path.Combine(fixture.Root, "clock-worker.pid")).Trim(), topology[2]);
+            Assert.Equal(File.ReadAllText(fixture.ScratchRecord).Trim(), topology[0]);
+            Assert.Empty(File.ReadAllText(Path.Combine(fixture.Root, "candidates-before-fault")));
+            var marker = File.ReadAllText(Path.Combine(fixture.Root, "orphan-marker")).Trim();
+            var fds = File.ReadAllLines(Path.Combine(fixture.Root, "orphan-fds"))
+                .Skip(1).Select(line => line.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries)).ToArray();
+            Assert.Contains(fds, fields => fields[3] == "9r" && fields[^1] == marker);
+            Assert.All(fds.Where(fields => fields[3] is "1w" or "2w"),
+                fields => Assert.Equal("/dev/null", fields[^1]));
+            var failedReads = File.ReadAllLines(Path.Combine(fixture.Root, "failed-clock-reads"))
+                .Select(value => int.Parse(value, CultureInfo.InvariantCulture)).ToArray();
+            Assert.Equal(Enumerable.Range(5, int.Parse(
+                File.ReadAllText(Path.Combine(fixture.Root, "persistent-clock.count")).Trim(),
+                CultureInfo.InvariantCulture) - 4), failedReads);
+            AssertWorkerExited(fixture, fixture.ScratchRecord);
+            AssertWorkerExited(fixture, Path.Combine(fixture.Root, "clock-worker.pid"));
+            var relays = File.ReadAllLines(Path.Combine(fixture.Root, "relay.pids"))
+                .Select(value => int.Parse(value, CultureInfo.InvariantCulture)).ToArray();
+            Assert.Equal(2, relays.Length);
+            Assert.All(relays, pid => Assert.False(ProcessExists(pid), "owned relay was not reaped"));
+            AssertRunReleased(fixture);
+            Assert.False(unrelated.HasExited);
+        }
+        finally
+        {
+            // A failing regression must not leave its marker-only orphan behind.
+            foreach (var pidFile in new[] { fixture.ScratchRecord, Path.Combine(fixture.Root, "clock-worker.pid") })
+            {
+                if (!File.Exists(pidFile)) continue;
+                var pid = int.Parse(File.ReadAllText(pidFile).Trim(), CultureInfo.InvariantCulture);
+                if (ProcessExists(pid))
+                    _ = fixture.RunExternalProcess("/bin/kill", ["-KILL", pid.ToString(CultureInfo.InvariantCulture)]);
+            }
+            if (!unrelated.HasExited) unrelated.Kill();
+            unrelated.WaitForExit();
+        }
+    }
+
     private static string InstallClock(
         ReportSupervisorFixture fixture, int failedRead, string output, int clockExit,
         bool waitForWorker = false, string name = "fault-clock.sh") =>
