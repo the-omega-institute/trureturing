@@ -8,7 +8,6 @@
 
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.NumberTheory.Zsqrtd.GaussianInt
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.IntervalCases
