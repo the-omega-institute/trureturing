@@ -146,8 +146,178 @@ def registration :
   familyRecord := none
   options := #[] }
 
-#print axioms source_registration
-#print axioms registration
+
+namespace RotatedSpin
+
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction (vlen)
+
+abbrev signature :=
+  _root_.Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.signature
+
+def actual : Realization signature :=
+  realize signature (fun _ _ ρ => maximalMutualCorrelation ρ) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (ρ : TwoQubit), ρ.PosSemidef → trace ρ = 1 →
+    ∀ (U : Matrix.unitaryGroup (Fin 2) ℂ) (c d : Fin 3 → ℝ),
+      vlen c = 1 → vlen d = 1 →
+        |c ⬝ᵥ (connectedCorrelation (rotateState U ρ) *ᵥ d)| ≤ R.readout () () ρ
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he : vlen ![1, 0, 0] = 1 := by norm_num [vlen, Fin.sum_univ_three]
+  have hb := h mixedState mixedState_positive mixedState_trace 1 ![1, 0, 0] ![1, 0, 0] he he
+  let q : ℝ := (![1, 0, 0] : Fin 3 → ℝ) ⬝ᵥ
+    (connectedCorrelation (rotateState 1 mixedState) *ᵥ ![1, 0, 0])
+  have hb' : |q| ≤ -1 := hb
+  linarith [abs_nonneg q]
+
+def source_registration : Registration arena (type_of% @rotated_spin_witness) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨rotated_spin_witness, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence :=
+    _root_.Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@rotated_spin_witness) (Realization signature) Unit Unit := {
+  unitName :=
+    `Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.RotatedSpin.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.RotatedSpin
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ ρ => maximalMutualCorrelation ρ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end RotatedSpin
+
+namespace MarginalBasis
+
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+  (blochA pauli pauli_zero)
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := TwoQubit
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Fin 3 → ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ ρ => blochA ρ) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => fun _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (ρ : TwoQubit), ρ.PosSemidef →
+    ∃ U : Matrix.unitaryGroup (Fin 2) ℂ,
+      R.readout () () (rotateState U ρ) 0 = 0 ∧
+        blochA (rotateState U ρ) 1 = 0
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨U, hU, _⟩ := h 0 Matrix.PosSemidef.zero
+  norm_num [rejected, realize] at hU
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, (pauli 0 ⊗ₖ (1 : Qubit)), ?_⟩
+  change blochA (0 : TwoQubit) ≠ blochA (pauli 0 ⊗ₖ (1 : Qubit))
+  intro he
+  have h0 := congrFun he 0
+  norm_num [blochA, pauli_zero, Matrix.trace, Matrix.diag, Matrix.mul_apply,
+    Fintype.sum_prod_type, Fin.sum_univ_two] at h0
+
+def source_registration : Registration arena (type_of% @marginal_basis) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨marginal_basis, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@marginal_basis) (Realization signature) Unit Unit := {
+  unitName :=
+    `Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.MarginalBasis.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound.MarginalBasis
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ ρ => blochA ρ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "fn", "arg", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end MarginalBasis
 
 end
 end Reg.D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound

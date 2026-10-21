@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:c54d51b951c818e53431f36a2e64bebf0fa8027a718d439e977f8aa4a4e9a222
+  normalized_sha256: sha256:c54d51b951c818e53431f36a2e64bebf0fa8027a718d439e977f8aa4a4e9a222
+cas_ref: sha256:c54d51b951c818e53431f36a2e64bebf0fa8027a718d439e977f8aa4a4e9a222
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces and names the four random variables, without an entropy assertion.
+    previous_atom_id: 262875aef8265d2f8fa35cac0f9e606ee0b03c4b9cc9f63897be60faed4ad348
+    next_atom_id: 4706f5e636d641507a2b201b308dcb3a922f10de4fdb8f6ae18323088076ce0f
+  chain_atoms:
+    - a2d18516a38491fbc611e2674740896dd2039e3bc4e3e5f6ab34f18f35dd2b44
+    - 33b8921a9e5551b0fa369cec978d8cb4412f32acd5fb3366101e150b08783663
+    - f4fc2d420187867e6dd0e7be0b72f00b99eead046a645424c8058d1a16293796
+    - dba3249627bfeef003fb63bdc0bb4d477cdaaac23aecbfe77360626eb7538384

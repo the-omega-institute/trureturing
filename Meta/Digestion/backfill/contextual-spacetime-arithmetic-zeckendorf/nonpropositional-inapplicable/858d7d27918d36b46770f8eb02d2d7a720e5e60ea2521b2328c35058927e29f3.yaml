@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:858d7d27918d36b46770f8eb02d2d7a720e5e60ea2521b2328c35058927e29f3
+  normalized_sha256: sha256:858d7d27918d36b46770f8eb02d2d7a720e5e60ea2521b2328c35058927e29f3
+cas_ref: sha256:858d7d27918d36b46770f8eb02d2d7a720e5e60ea2521b2328c35058927e29f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 133 规定指数表逐行加法、规范化后的行加法、无界逐行编码及有限容量加法的域；唯一化指既定 Norm 算子的使用，未提出新的唯一性断言。
+    previous_atom_id: ee521149367bf9dc3b3ccb70e0761bdbb31df10b4d0e7e2b1cb052dc08f62a11
+    next_atom_id: 080c33c9faa4c9d5b273427cb2476d220fd901fb41e638a6fbc08f454ec20f3c

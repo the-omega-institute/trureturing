@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:792ea06acfe2f3b4a1cb7818651232e69fb62f6bec0eced14714f7835d76a067
+  normalized_sha256: sha256:792ea06acfe2f3b4a1cb7818651232e69fb62f6bec0eced14714f7835d76a067
+cas_ref: sha256:792ea06acfe2f3b4a1cb7818651232e69fb62f6bec0eced14714f7835d76a067
+coverage_gids:
+  - gid: D5/S3/Observer/MeasureSeparation/FactorizedTranscriptKernelBarrier.factorized_repeated_kernel_cannot_identify_fiber_varying_target
+    target_statement_id: sha256:c789cc7f0d16e0ffe17d489ebed35b909a9755b9cc5b30adc5c64807471db248
+  - gid: D5/S3/Observer/MeasureSeparation/FactorizedTranscriptKernelBarrier.factorized_repeated_kernel_eq_on_fiber
+    target_statement_id: sha256:06e6527d1f29d89b85194f2e629fae0f31de44da26864cf7d5a12ff729d0deb9
+  - gid: D5/S3/Observer/MeasureSeparation/FactorizedTranscriptKernelBarrier.factorized_transcript_kernel_eq_on_fiber
+    target_statement_id: sha256:252a682c9bff0877b661dd1acc1a8a350196be6e13decdf9acf793e8949808e9
+receipts:
+  unresolved_subitems: []

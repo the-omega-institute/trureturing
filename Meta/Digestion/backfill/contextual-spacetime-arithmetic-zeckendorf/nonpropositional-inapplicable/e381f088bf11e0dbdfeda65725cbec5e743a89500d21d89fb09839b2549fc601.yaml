@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e381f088bf11e0dbdfeda65725cbec5e743a89500d21d89fb09839b2549fc601
+  normalized_sha256: sha256:e381f088bf11e0dbdfeda65725cbec5e743a89500d21d89fb09839b2549fc601
+cas_ref: sha256:e381f088bf11e0dbdfeda65725cbec5e743a89500d21d89fb09839b2549fc601
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅给出秩、替代和集合递归的参考文献与后文指引，没有独立数学断言。
+    previous_atom_id: fc91b8b104ce692cced4fa66722a1bf28004831b1e59725f84254411e2006856
+    next_atom_id: d114541e4181389ab7bb0f62b86f8fcb230bf0ffaff71820bf87fc8b75a2bc72

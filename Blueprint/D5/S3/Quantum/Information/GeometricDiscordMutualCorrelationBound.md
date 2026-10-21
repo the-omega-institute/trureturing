@@ -80,7 +80,47 @@ $$\operatorname{claim} \Leftrightarrow (\forall (\rho: \operatorname{Matrix}\lef
 
 The proposition is the first inequality in Eq. (II.23): √D_G(ρ) ≤ C_M(ρ) for every positive semidefinite two-qubit matrix of trace one. It includes pure and mixed states. The source establishes the Bell-diagonal case and proposes the general mixed-state inequality on numerical evidence.
 
-**Theorem 1.7 (Maximal mutual correlation bounds geometric discord).**
+**Definition 1.7 (Local change of basis).**
+
+$$\forall (U: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), (\operatorname{rotateState}\left(U, \rho\right) = \operatorname{kronecker}\left(U, (1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))\right)^{*} \cdot \rho \cdot \operatorname{kronecker}\left(U, (1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))\right)))$$
+
+*Formalization.* `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.rotateState` (`✓ std3`).
+
+*Citation.* Marek Gwóźdź; Lech Jakóbczyk (2014). *Spontaneous emission can locally create quantum discord out of classical correlations*. DOI: [10.1007/s11128-013-0639-0](https://doi.org/10.1007/s11128-013-0639-0). URL: <https://arxiv.org/abs/1306.0130v2>.
+
+*Commentary.*
+
+Conjugation by U* on the first qubit expresses the state in the basis U.
+
+**Theorem 1.8 (Rotated spin correlations).**
+
+$$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), ((\operatorname{PosSemidef}\left(\rho\right)) \Rightarrow ((\operatorname{trace}\left(\rho\right) = 1) \Rightarrow (\forall (U: \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\forall (c: \operatorname{Fin}\left(3\right)\to \mathbb{R}), (\forall (d: \operatorname{Fin}\left(3\right)\to \mathbb{R}), ((\operatorname{vlen}\left(c\right) = 1) \Rightarrow ((\operatorname{vlen}\left(d\right) = 1) \Rightarrow (\lvert \operatorname{dotProduct}\left(c, \operatorname{mulVec}\left(\operatorname{connectedCorrelation}\left(\operatorname{rotateState}\left(U, \rho\right)\right), d\right)\right)\rvert \le \operatorname{maximalMutualCorrelation}\left(\rho\right)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.rotated_spin_witness` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Marek Gwóźdź; Lech Jakóbczyk (2014). *Spontaneous emission can locally create quantum discord out of classical correlations*. DOI: [10.1007/s11128-013-0639-0](https://doi.org/10.1007/s11128-013-0639-0). URL: <https://arxiv.org/abs/1306.0130v2>.
+
+*Commentary.*
+
+Unit spin observables in any local basis provide admissible covariance values, so the absolute connected correlation is bounded by maximal mutual correlation.
+
+**Theorem 1.9 (A basis for the first marginal).**
+
+$$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), ((\operatorname{PosSemidef}\left(\rho\right)) \Rightarrow (\exists (U: \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)), ((\operatorname{blochA}\left(\operatorname{rotateState}\left(U, \rho\right), 0\right) = 0) \land (\operatorname{blochA}\left(\operatorname{rotateState}\left(U, \rho\right), 1\right) = 0))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.marginal_basis` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Marek Gwóźdź; Lech Jakóbczyk (2014). *Spontaneous emission can locally create quantum discord out of classical correlations*. DOI: [10.1007/s11128-013-0639-0](https://doi.org/10.1007/s11128-013-0639-0). URL: <https://arxiv.org/abs/1306.0130v2>.
+
+*Commentary.*
+
+The spectral basis of the first marginal makes its first two Bloch coordinates zero. The construction includes a marginal proportional to the identity.
+
+**Theorem 1.10 (Maximal mutual correlation bounds geometric discord).**
 
 $$\operatorname{claim}$$
 
@@ -110,9 +150,12 @@ Both quantities are nonnegative. The density-matrix estimate |tr(ρX)| ≤ ‖X�
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.connectedCorrelation`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.geometricDiscord`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.localCovariance`
+- Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.marginal_basis`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.maximalMutualCorrelation`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.measuredState`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.result`
+- Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.rotateState`
+- Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.rotated_spin_witness`
 - Truth anchor: `D5/S3/Quantum/Tomography/RankOneContextCommutator.hilbertSchmidtSquare`
 - Dependency: [D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH](../Entanglement/SteeringEllipsoidCHSH.md)
 - Dependency: [D5/S3/Quantum/Tomography/RankOneContextCommutator](../Tomography/RankOneContextCommutator.md)

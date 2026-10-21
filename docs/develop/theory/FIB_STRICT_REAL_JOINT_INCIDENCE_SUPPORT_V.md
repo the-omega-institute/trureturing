@@ -592,3 +592,596 @@ identity, coefficient minimum, and contraction bound needed for this regional re
 is stated in this volume.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Enlarged whole-child rectangle
+
+**Definition 9.1 (Enlarged base and inherited worlds).** Retain exactly the
+complete worlds, literal history, entire children, and independently selected
+pairs of Section 1. Put
+
+$$
+K_+=[56,58]\times[304,306],\qquad
+R=[3/10,1]\times[13/20,1].
+\tag{9.1}
+$$
+
+Thus each world still has one strict rank-one trace-one source, one fixed real
+drift, and one whole nonzero real gain of degree at most three. All original
+clocks, lower degrees, sampled gain zeros, repeated roots, zero drift, and
+companions unused by a selected pair remain in the domain. In particular no
+regularity condition is added to $C(p,v)$.
+
+**Theorem 9.2 (Enlarged entire-child terminal-J exclusion).** For every
+$(p,v)\in K_+$ and all complete worlds $W,W'\in C(p,v)$,
+
+$$
+a(W)=a(W')\quad\Longrightarrow\quad W=W'.
+\tag{9.2}
+$$
+
+Consequently
+
+$$
+D_J\cap K_+=\varnothing,\qquad
+(D_J\cap D_M)\cap K_+=\varnothing.
+\tag{9.3}
+$$
+
+There is no hypothesis about terminal $M$, the locations of selected $J$
+endpoints, or overlap between the two pairs. The source edge $r=1$ in $R$ is
+used only for analytic extension; actual worlds still satisfy $r<1$.
+
+*Proof.* Lemma 10.2 places every actual companion over $K_+$ in $R$, using the
+undivided parent. Section 11 then applies the unchanged integer-response and
+Bernstein certificates of Sections 4–5 to all these companions and proves
+(9.2). The new input is the enlarged all-companion localization of Section 10;
+Theorem 1.1, whose upper $v$ bound is $305$, is not an exclusion theorem for
+$K_+$. ∎
+
+## 10. Exact finite cover for the enlarged rectangle
+
+**Definition 10.1 (Closed rational cover).** Set
+
+$$
+S=2^{80}=1208925819614629174706176,\qquad
+\mathcal B_0=[0,1]_r\times[0,30]_b\times[1/16,40]_z,
+\qquad E_0=[-655000,655000].
+\tag{10.1}
+$$
+
+Here $z=j$, rather than a further free physical parameter. A rational constant
+$q$ is enclosed by
+
+$$
+\langle q\rangle_S=
+\left[\frac{\lfloor Sq\rfloor}{S},
+      \frac{\lceil Sq\rceil}{S}\right].
+\tag{10.2}
+$$
+
+Every interval endpoint in this definition belongs to $S^{-1}\mathbb Z$.
+For $I=[l,u]$, $J=[v,w]$, addition is $[l+v,u+w]$, negation is
+$[-u,-l]$, and subtraction is addition of the negative. For multiplication
+let $H=\{lv,lw,uv,uw\}$ and use
+
+$$
+I\odot J=
+\left[\frac{\lfloor S\min H\rfloor}{S},
+      \frac{\lceil S\max H\rceil}{S}\right].
+\tag{10.3}
+$$
+
+If $0\notin J$, division uses the same formula with
+$H=\{l/v,l/w,u/v,u/w\}$. It is one outward rounding of these four
+quotients, not multiplication by a separately rounded reciprocal. No quotient
+is defined when its divisor interval contains zero. Intersection is the exact
+endpoint intersection, empty when its lower endpoint exceeds its upper
+endpoint. All comparisons with rational thresholds are exact rational
+comparisons. These conventions also specify the enclosure of every rational
+constant occurring inside a composite expression.
+
+Use the six existing coefficient circuits $(\Lambda,D,p_0,A,v_0,B)$ of
+(3.1), with the same meaning as in that equation. To fix their interval
+evaluation completely, first form $T=1+b$, $U=1+2b$, $n=z+r$, and then
+$U+n$ and $2U+n$. The additive grouping in $\Lambda,A,B$ is respectively
+
+$$
+\begin{aligned}
+&(((1+6/T)+1/U)-4/z)-4/n,\\
+&1+(U+n)(((4-15/z)+20/T)-10/n),\\
+&1+(2U+n)(((10-36/z)+45/T)-20/n).
+\end{aligned}
+\tag{10.4}
+$$
+
+In $D$, first multiply $\langle24/5\rangle_S$ by
+$b-\langle1/8\rangle_S$, then multiply by $6/T-2/U$.
+The circuits for $p_0,v_0$ are grouped exactly as in (3.1). Every displayed
+binary operation uses (10.2)–(10.3), in the specified order.
+
+The visit of an original source box
+$I=I_r\times I_b\times I_z$ is the following ordered mathematical recursion.
+
+1. If $\inf I_r\ge3/10$, $\inf I_b\ge13/20$, and $\sup I_b\le1$,
+   terminate with a retained box. This test precedes all other tests.
+
+2. Otherwise set
+   $J_z=I_z\cap[\inf I_b,\sup I_b+10]$.
+   If this is empty, terminate with a $z$ rejection. Form
+   $H=I_r\odot(1-I_r)$. If $\inf I_b>0$, further replace
+   $J_z$ by $J_z\cap(I_b+H/I_b)$, again terminating with a $z$
+   rejection if empty. If $\inf I_b=0$, skip this quotient.
+
+3. Evaluate $I_b\odot(J_z-I_b)-H$. If it excludes zero, terminate
+   with a rank rejection. For the rest of this visit only, evaluate the six
+   circuits (3.1) at $(I_r,I_b,J_z)$. The original splitting box is still
+   $(I_r,I_b,I_z)$.
+
+4. Start afresh with $E=E_0$. In the stated order form
+
+   $$
+   (a_0,h_0)=(\Lambda,-D),\qquad
+   (a_1,h_1)=(A,[56,58]-p_0),\qquad
+   (a_2,h_2)=(B,[304,306]-v_0).
+   \tag{10.5}
+   $$
+
+   For $i=0,1,2$, if $0\notin a_i$, replace $E$ by
+   $E\cap(h_i/a_i)$; an empty intersection terminates with an $e$
+   rejection. If $0\in a_i$, skip only that quotient, keeping the
+   equation for the next step. The three coefficient and right-hand-side
+   intervals are not recomputed during these intersections.
+
+5. Using the final common $E$, test the three intervals
+   $a_i\odot E-h_i$ in the order $i=0,1,2$. If any excludes zero,
+   terminate with a residual rejection.
+
+6. Otherwise split the original box. Choose the coordinate with largest
+   normalized width
+
+   $$
+   \left(\operatorname{width}(I_r),
+          \frac{\operatorname{width}(I_b)}3,
+          \frac{\operatorname{width}(I_z)}4\right),
+   \tag{10.6}
+   $$
+
+   resolving ties in the order $r,b,z$. If its interval is $[l,u]$, set
+   $m=S^{-1}\lfloor S(l+u)/2\rfloor$ and visit the two closed
+   intervals $[l,m]$ and $[m,u]$, lower half first. If $m$ is not
+   strictly between $l$ and $u$, the box is unresolved and cannot be
+   retained or rejected by this step. Tightened $J_z$ and $E$ are not
+   inherited by the children; each child begins again at step 1.
+
+There is no other stopping or acceptance rule. Depth starts at zero for
+$\mathcal B_0$. For a level-by-level definition, let $\mathcal F_0$ contain
+only $\mathcal B_0$; classify every member of $\mathcal F_d$ by the six
+steps and let $\mathcal F_{d+1}$ consist of the two children of every split
+box. Thus a zero split count at a level ends this finite recursion if that
+level contains no unresolved box.
+
+**Lemma 10.2 (All companions and the complete enlarged cover).** Every actual
+complete world over $K_+$ starts in $\mathcal B_0$ with $e=d-24\in E_0$.
+The recursion of Definition 10.1 has $206439$ nodes, $640$ retained leaves,
+$102580$ rejected leaves, maximum depth $49$, and no unresolved leaves.
+Every actual source is in a retained box, and in particular lies in $R$.
+
+*Proof.* The source estimates in [support IV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IV.md),
+Theorem 8.3, have the following precise dependence on the acquired response:
+its proof excludes $b\ge30$ and $c\ge10$ whenever $p\ge0$, and excludes
+$j\le1/16$ whenever $p\ge33$. Those arguments do not use $v$. Since
+$p\ge56$ on $K_+$, they give
+
+$$
+b<30,\qquad c<10,\qquad 1/16<j=b+c<40,
+\qquad U<61,\quad n=j+r<41.
+\tag{10.7}
+$$
+
+For the drift estimate, use IV, (8.2), (9.1)–(9.3), on their stated global
+domain $b\ge0,n>0$. To distinguish their two drift coefficients from the
+ambient coefficients $A,B$ in (3.1), write them as
+$A_{\rm IV},B_{\rm IV}$. The parameter correspondence is the same
+$b,T,U,n,e=d-24$, and the identities on the undivided original parent are
+
+$$
+\begin{gathered}
+C_5=\frac{3(8b-1)(b+2)}{2TU},\qquad
+C_6=\frac{3(80b^2+192b+31)}{5TU},\\
+P_0=(U+n)C_5,\qquad V_0=(2U+n)C_6,\\
+p-24=P_0+eA_{\rm IV},\qquad
+v-24=V_0+eB_{\rm IV},\qquad
+\max\{|A_{\rm IV}|,|B_{\rm IV}|\}>1/100.
+\end{gathered}
+\tag{10.8}
+$$
+
+Here the last inequality is the global coefficient-separation part of IV,
+Theorem 9.1, not its conclusion restricted to $v\le305$. Its proof also
+gives $|C_5|\le12$ and $0<C_6\le192/5$ for all $b\ge0$. Consequently
+
+$$
+|P_0|<102\cdot12=1224,\qquad
+|V_0|<163\cdot\frac{192}{5}=\frac{31296}{5}.
+\tag{10.9}
+$$
+
+On the enlarged rectangle $|p-24|\le34$ and $|v-24|\le282$. Selecting
+whichever coefficient in (10.8) has magnitude greater than $1/100$ proves
+
+$$
+|e|<100\max\left\{34+1224,\ 282+\frac{31296}{5}\right\}
+=654120<655000.
+\tag{10.10}
+$$
+
+This derives the initial enclosure for $v\le306$ directly. No division by
+$e$, $d$, $\Lambda$, a gain sample, or a leading coefficient occurs in
+(10.7)–(10.10). The values $e=0$ and $d=0$ are included.
+
+The necessary equations for every actual point of the initial box are exactly
+(3.2), with $p\in[56,58]$ and $v\in[304,306]$. In particular the same
+single scalar $e$ satisfies all three equations (10.5). On the initial box,
+$T,U\ge1$, $z\ge1/16$, and $n=z+r\ge1/16$; tightening $z$ preserves
+these inequalities. Thus every denominator in (3.1) is positive throughout
+each visit. The only additional quotients in the recursion are explicitly
+guarded by exclusion of zero from the whole divisor interval.
+
+The finite rational evaluation of Definition 10.1 is given below. At depth
+$d$, the columns count split boxes, retained boxes, and the four mutually
+exclusive first rejection types, respectively. In every row the unresolved
+count is zero. The row sum is $|\mathcal F_d|$; the next row sum is twice
+the current split count. These rows specify the complete evaluation from the
+single initial box through the empty next frontier.
+
+| $d$ | split | retain | $z$ | rank | $e$ | residual |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 2 | 0 | 0 | 0 | 0 | 0 |
+| 2 | 4 | 0 | 0 | 0 | 0 | 0 |
+| 3 | 5 | 0 | 3 | 0 | 0 | 0 |
+| 4 | 8 | 0 | 2 | 0 | 0 | 0 |
+| 5 | 12 | 0 | 4 | 0 | 0 | 0 |
+| 6 | 17 | 0 | 7 | 0 | 0 | 0 |
+| 7 | 25 | 0 | 9 | 0 | 0 | 0 |
+| 8 | 35 | 0 | 15 | 0 | 0 | 0 |
+| 9 | 66 | 0 | 4 | 0 | 0 | 0 |
+| 10 | 98 | 0 | 34 | 0 | 0 | 0 |
+| 11 | 134 | 0 | 62 | 0 | 0 | 0 |
+| 12 | 258 | 0 | 10 | 0 | 0 | 0 |
+| 13 | 390 | 0 | 126 | 0 | 0 | 0 |
+| 14 | 524 | 0 | 256 | 0 | 0 | 0 |
+| 15 | 1036 | 0 | 12 | 0 | 0 | 0 |
+| 16 | 1518 | 14 | 504 | 2 | 32 | 2 |
+| 17 | 2016 | 0 | 983 | 4 | 26 | 7 |
+| 18 | 3860 | 3 | 34 | 4 | 119 | 12 |
+| 19 | 863 | 0 | 1719 | 30 | 5044 | 64 |
+| 20 | 1278 | 0 | 239 | 4 | 175 | 30 |
+| 21 | 2321 | 0 | 78 | 7 | 111 | 39 |
+| 22 | 795 | 50 | 1584 | 51 | 2079 | 83 |
+| 23 | 1001 | 0 | 320 | 2 | 254 | 13 |
+| 24 | 1620 | 0 | 190 | 4 | 182 | 6 |
+| 25 | 1276 | 109 | 498 | 11 | 1312 | 34 |
+| 26 | 1429 | 0 | 435 | 0 | 653 | 35 |
+| 27 | 2269 | 19 | 185 | 4 | 346 | 35 |
+| 28 | 1630 | 179 | 670 | 8 | 1970 | 81 |
+| 29 | 1832 | 0 | 542 | 0 | 812 | 74 |
+| 30 | 2892 | 25 | 249 | 3 | 444 | 51 |
+| 31 | 2299 | 197 | 893 | 7 | 2207 | 181 |
+| 32 | 2433 | 0 | 811 | 0 | 1149 | 205 |
+| 33 | 3903 | 0 | 402 | 0 | 496 | 65 |
+| 34 | 3563 | 0 | 1304 | 4 | 2707 | 228 |
+| 35 | 4241 | 0 | 1594 | 0 | 1246 | 45 |
+| 36 | 6886 | 0 | 626 | 0 | 970 | 0 |
+| 37 | 6104 | 0 | 2065 | 0 | 5603 | 0 |
+| 38 | 7188 | 0 | 2659 | 0 | 2361 | 0 |
+| 39 | 11182 | 29 | 912 | 0 | 2253 | 0 |
+| 40 | 6944 | 0 | 2833 | 0 | 12587 | 0 |
+| 41 | 5892 | 0 | 1844 | 0 | 6152 | 0 |
+| 42 | 7468 | 15 | 279 | 0 | 4022 | 0 |
+| 43 | 1877 | 0 | 772 | 0 | 12287 | 0 |
+| 44 | 1574 | 0 | 570 | 0 | 1610 | 0 |
+| 45 | 1929 | 0 | 84 | 0 | 1135 | 0 |
+| 46 | 329 | 0 | 189 | 0 | 3340 | 0 |
+| 47 | 115 | 0 | 28 | 0 | 515 | 0 |
+| 48 | 77 | 0 | 0 | 0 | 153 | 0 |
+| 49 | 0 | 0 | 0 | 0 | 154 | 0 |
+| total | 103219 | 640 | 26639 | 145 | 74506 | 1290 |
+
+For the original boxes retained by step 1, the coordinate extrema of this
+recursion are
+
+$$
+\begin{aligned}
+\min\inf I_r&=1229/4096,&\quad \max\sup I_r&=1,\\
+\min\inf I_b&=1335/2048,& \max\sup I_b&=255/256,\\
+\min\inf I_z&=1/16,& \max\sup I_z&=1981/1024.
+\end{aligned}
+\tag{10.11}
+$$
+
+The four rejected-leaf totals sum to $102580$, and
+$206439=2(102580+640)-1$. At depth $49$ all $154$ boxes terminate by
+the common-$e$ intersection test; the split count is zero, so
+$\mathcal F_{50}$ is empty. In particular the table ends by the actual
+branch rules, not by imposing a depth cutoff. The grid-stall alternative in
+step 6 never occurs in this finite evaluation.
+
+For completeness, interval inclusion supplies the logical connection between
+this finite evaluation and the original quantified assertion. Each elementary
+operation (10.2)–(10.3) contains every real result of that operation on its
+argument intervals: addition and subtraction are monotone in their indicated
+endpoints; multiplication has its extrema among the four corner products;
+division has its extrema among the four corner quotients when the divisor
+has constant sign. Floor and ceiling only enlarge those extrema. Structural
+induction therefore gives inclusion for every displayed composite circuit.
+These are the ordinary interval rules of Moore–Kearfott–Cloud,
+*Introduction to Interval Analysis*, applied here with an explicitly fixed
+outward rational grid.
+
+An actual point survives the $z$ intersections because $c<10$ and
+$z=b+r(1-r)/b$. It survives the rank test because its rank residual is
+zero. If its scalar $e$ lies in $E$ before an intersection in step 4, the
+equation $a_i e=h_i$ puts that same scalar in the quotient enclosure and
+hence in the intersection. When $0\in a_i$, skipping division removes
+nothing. It survives every final residual test because its three residuals
+vanish using this same $e$. Finally each split covers its original box by
+two closed halves. Induction down the resulting finite tree puts every
+actual point in a retained box. Step 1 and (10.11) place all such sources
+in $R$.
+
+In particular no $\Lambda=0$ point was removed by an unguarded quotient.
+Coefficient-zero cases, zero gain samples, lower degrees and every unused
+companion have been retained until excluded by these necessary equations or
+placed in $R$. This is the new finite cover with upper $v$ bound $306$;
+the cover table of Section 3 has upper bound $305$ and does not replace
+this calculation. ∎
+
+## 11. Whole-child consumer of the inherited regional signs
+
+*Proof of Theorem 9.2.* Use exactly $X,N,L,\ell,E,d_N,Q,P,V,Z,W,B_p,C_J$
+from (4.1)–(4.4), with the same variables $r,b$. In particular
+$X=bj$, $N=bn$, $\ell=2L$, $e=E/(5\ell)$, and the response
+correspondence is precisely (4.3). These are the original interpolating
+gain and fixed drift of Section 2, identified with complete worlds by the
+zero-safe converse of [the common-parent volume](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorem 2.1. There is no second gain circuit or new terminal observation.
+
+The five polynomial certificates (5.1)–(5.2) are on the same closed $R$
+as in (9.1). Neither their polynomials nor their affine Bernstein
+substitution involves $v$. Their positive coefficient minima therefore
+still give, on all of $R$,
+
+$$
+L<0,\quad Q<0,\quad B_p>0,\quad C_J<0,
+\qquad p_b>0,\quad a_rp_b-a_bp_r>0,
+\tag{11.1}
+$$
+
+and the same boundary inequalities (5.4). The sign argument uses the
+nonnegative tensor Bernstein basis and its partition of unity, namely the
+classical convex-hull property; see Patrikalakis–Maekawa–Cho,
+*Shape Interrogation*, [Section 1.3.4](https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node12.html).
+Only the companions to which these existing signs apply have changed:
+Lemma 10.2 now places the entire child over every point of $K_+$ in $R$.
+
+Fix $p\in[56,58]$. The boundary inequalities and $p_b>0$ give one
+and only one $b_p(r)\in(13/20,1)$ for each $r\in[3/10,1]$.
+The implicit-function theorem, applied to this rational map where its
+denominators are nonzero, gives the derivative (5.5), strictly positive
+by (11.1). The graph need not keep $v$ in $[304,306]$ between its
+points: the derivative signs hold on the whole source rectangle $R$.
+Thus the usual one-variable monotonicity argument compares any two
+points on this graph.
+
+Now take any $W,W'\in C(p,v)$ with $(p,v)\in K_+$ and
+$a(W)=a(W')$. Lemma 10.2 applies separately to these two worlds and
+to every other companion, so both sources belong to $R$. Strict
+monotonicity on $b=b_p(r)$ gives $r=r'$, and uniqueness of $b_p(r)$
+then gives $b=b'$. Since $X,N,T,U>0$ on $R$, (4.5) and $L<0$
+give $\Lambda\ne0$. The undivided parent (2.1) now fixes $e$, hence
+the one drift $d=24+e$. Its first four gain samples in Section 2 fix
+the entire degree-at-most-three polynomial uniquely by fixed-node
+interpolation. The latter is the classical Lagrange interpolation
+principle; see Berrut–Trefethen, *Barycentric Lagrange Interpolation*,
+Section 2. Thus the complete triples coincide, proving (9.2)–(9.3).
+
+This use of the regional signs occurs only after the zero-safe
+localization. It introduces no preliminary deletion of the singular
+parent, the $e=0$ stratum, the $d=0$ stratum, lower degrees, or sampled
+gain zeros. ∎
+
+## 12. Fourth critical source patch and the original joint-accumulation test
+
+**Definition 12.1 (Exact fourth world and source patch).** Let $W_4$
+be the algebraic complete world of [support VI](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VI.md),
+Definition 13.1, with its strict lift and rational enclosures from VI,
+Lemma 13.2. Write its source and drift as $(r_4,b_4,d_4)$; these
+symbols denote that exact algebraic world, not a rounded substitute.
+Define
+
+$$
+\begin{gathered}
+B_4=
+\left[\frac{9648629}{10^7},\frac{964863}{10^6}\right]_r
+\times
+\left[\frac{2216907}{2500000},\frac{8867629}{10^7}\right]_b,\\
+U_4=(57,571/10)\times(305,3051/10),\qquad
+\epsilon_*=\frac3{10^8}.
+\end{gathered}
+\tag{12.1}
+$$
+
+Use $\mathscr W,\mathscr I,z(w)=(r,b,d),z_4=(r_4,b_4,d_4)$ and
+$\mathsf Q_4$ exactly as in VI, Definition 16.3, (16.5)–(16.8).
+In particular the neighbourhood condition defining $\mathsf Q_4$ is
+the sum of the squared Euclidean distances of the two selected $M$
+triples to $z_4$, not a norm on gain coefficients. VI, Theorem 16.4,
+identifies these polynomial relations with the entire original children
+and independent-pair quantifiers.
+
+**Theorem 12.2 (Explicit fourth neighbourhood and actual-germ exclusion).**
+Every source in $B_4$ has a unique original complete-parent lift, and
+its acquired base is in $U_4\subset K_+$. More precisely the entire
+closed patch has the rational enclosures
+
+$$
+\begin{array}{c|c}
+\text{quantity}&\text{closed enclosure}\\ \hline
+\Lambda&[-1900311/10^6,-1900309/10^6]\\
+e&[4731353/10^6,4731359/10^6]\\
+p&[28535187/500000,1426783/25000]\\
+v&[38130779/125000,305049717/10^6].
+\end{array}
+\tag{12.2}
+$$
+
+There is no original joint configuration with even one selected $M$
+endpoint whose source satisfies
+
+$$
+\max\{|r-r_4|,|b-b_4|\}<\epsilon_*.
+\tag{12.3}
+$$
+
+In the exact terminology of VI, Definition 16.3, both $\mathsf J_4$
+and $\mathsf Q_4$ are false. Moreover, for the actual analytic
+double-point maps $W_4^+(h),W_4^-(h)$ of VI, Theorem 15.1, there is
+$\delta>0$ such that for every $0<|h|<\delta$, both sources are in
+$\operatorname{int}B_4$, the pair is an actual distinct equal-$M$
+pair, and its entire common child has injective terminal $J$.
+
+*Proof.* First evaluate the original parent and gain on $B_4$.
+The rational interval rules (10.2)–(10.3) make the following finite
+calculation explicit. Enclose each patch endpoint outward on the
+$S^{-1}$ grid; form, in order,
+
+$$
+c=r(1-r)/b,\quad j=b+c,\quad n=j+r,\quad T=1+b,\quad U=1+2b.
+\tag{12.4}
+$$
+
+Use (2.1) for $\Lambda,D$ with the grouping of (10.4). Its
+$\Lambda$ interval is contained in the first enclosure of (12.2), hence strictly
+negative. Only after this sign test form $e=-D/\Lambda$ and
+$d=24+e$. Use the four original gain samples in Section 2 in the
+order $0,1,2,3$, computing $g(0)=-d$. Apply the rows at clocks
+$5,6$ from that section, accumulating each row product from zero
+in sample order. Finally form
+
+$$
+p=d+(U+n)g(5),\qquad v=d+(2U+n)g(6).
+\tag{12.5}
+$$
+
+All rational constants are enclosed by (10.2), each product and
+quotient is rounded outward once as in (10.3), and additions use
+their endpoint sums. Enlarging the four resulting intervals outward
+to the $10^{-6}$ grid gives exactly (12.2). Thus the displayed
+table is a finite interval evaluation of the original whole-gain
+circuit, with all operations and their order fixed. The denominators
+$b,T,U,j,n$ are positive on the entire patch, and $\Lambda<0$
+is certified before the additional division. Equation (2.1) and the
+common-parent Theorem 2.1 give the unique complete lift. It is strict
+because $B_4\subset(0,1)\times(0,\infty)$, and its interpolating
+gain is nonzero because the original readings $0$ and $24$ differ.
+No exact-degree or nonzero-sample assumption is involved.
+
+The endpoints in (12.2) give, by strict rational comparisons,
+
+$$
+57<\frac{28535187}{500000}
+\le p\le\frac{1426783}{25000}<\frac{571}{10},
+\qquad
+305<\frac{38130779}{125000}
+\le v\le\frac{305049717}{10^6}<\frac{3051}{10}.
+\tag{12.6}
+$$
+
+This proves the full patch-image inclusion. In particular an actual
+world whose source lies anywhere in $B_4$ fixes a base in $K_+$;
+Theorem 9.2 applies to every companion in that child, not just to
+worlds with sources in $B_4$.
+
+VI, Lemma 13.2, gives the strict enclosures
+
+$$
+\frac{9648629529}{10^{10}}<r_4<\frac{9648629530}{10^{10}},
+\qquad
+\frac{8867628398}{10^{10}}<b_4<\frac{8867628399}{10^{10}}.
+\tag{12.7}
+$$
+
+Subtracting the four edges of $B_4$ shows that the distances from
+$(r_4,b_4)$ to its left, right, lower and upper edges are strictly
+greater than, respectively,
+
+$$
+\frac{529}{10^{10}},\qquad
+\frac{47}{10^9},\qquad
+\frac{199}{5\cdot10^9},\qquad
+\frac{601}{10^{10}}.
+\tag{12.8}
+$$
+
+Each exceeds $\epsilon_*$; the smallest displayed margin minus
+$\epsilon_*$ is $49/(5\cdot10^9)>0$. Thus (12.3) puts the
+source strictly inside $B_4$.
+
+Suppose an original joint configuration had such a selected $M$
+endpoint. That endpoint's base belongs to $U_4$, so the entire common
+child has injective terminal $J$ by Theorem 9.2. The independently
+selected distinct equal-$J$ pair required by $\mathscr I$ is
+therefore impossible. No restriction on the other selected $M$
+endpoint, either $J$ endpoint, cross-pair overlap, or the two
+terminal values was used. This proves (12.3)'s exclusion. Applying
+the same reasoning to $W_4$ itself also gives
+$(p_4,v_4)\notin D_J$, equivalently $\neg\mathsf J_4$ by VI,
+Theorem 16.4.
+
+For the neighbourhood sentence use precisely
+$\epsilon=\epsilon_*=3/10^8$ in VI, (16.8). If its witnesses
+existed, their original condition would be
+
+$$
+\|z(w_2)-z_4\|_2^2+
+\|z(w_3)-z_4\|_2^2<\left(\frac3{10^8}\right)^2.
+\tag{12.9}
+$$
+
+Every summand and every coordinate square in this expression is
+nonnegative. In particular each of $|r(w_2)-r_4|$ and
+$|b(w_2)-b_4|$ is strictly less than $3/10^8$; the same holds for
+$w_3$. Already $w_2$ contradicts the preceding endpoint exclusion.
+Thus this one explicit positive $\epsilon$ has no witnesses, proving
+$\neg\mathsf Q_4$. The deduction uses the exact sum in (12.9);
+it does not replace the original topology by a stronger norm.
+
+Finally VI, Theorem 15.1, supplies actual analytic complete-world
+maps $W_4^\pm(h)$, both tending to the exact $W_4$, with distinct
+endpoints and equal $(p,v,m)$ for every sufficiently small nonzero
+$h$. Since (12.7)–(12.8) place the limit source in
+$\operatorname{int}B_4$, continuity gives $\delta>0$ for which
+both sources lie in that interior whenever $|h|<\delta$.
+Reduce $\delta$ if necessary to the germ's original strict and
+off-$24$ domain. For $0<|h|<\delta$, (12.6) places its common
+base in $U_4$, and Theorem 9.2 makes its whole common child
+$J$-injective. These are actual original $M$ collisions entering
+the patch; they cannot acquire an independent $J$ pair from any
+other part of their children. In particular distant $J$ endpoints,
+boundary escape of such endpoints, or their merging in a limit
+cannot evade this pointwise entire-child exclusion. ∎
+
+The first three exact critical bases of VI, Definition 13.1, their
+independent-$J$ compatibility, and their sentences $\mathsf Q_1$,
+$\mathsf Q_2$, $\mathsf Q_3$ remain unresolved by these theorems.
+So do separated actual equal-$M$ pairs outside $K_+$ and all other
+possible original joint configurations outside this rectangle.
+The global sentence $\mathsf I$ of VI, Definition 16.3, still asks
+for independently chosen distinct equal-$J$ and equal-$M$ pairs in
+one entire off-$24$ child, permitting cross-pair overlap and unrelated
+terminal values. Its witness-or-exclusion problem is unchanged.
+Neither classification of critical worlds nor existence of their
+double-point germs reduces that problem to the critical bases.
+
+## 追加锚（本行以下为增补区）
