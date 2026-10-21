@@ -5,7 +5,7 @@ the baseline environment or constructs an environment-wide tree. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v3-independent"
+abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v4-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
@@ -34,6 +34,10 @@ private def tableIndex (table : LookupTable) : IO (Option DiskLookup.Index) := d
     return some (← DiskLookup.openIndex directory "fixture"
       "56a005855ea17e0b0958f73ec801ae140b0a1679")
   catch _ => return none
+
+def resolveLookupTable (table : LookupTable) : IO LookupTable := do
+  let disk? ← tableIndex table
+  return {table with disk?, complete := table.complete && disk?.any (·.header.complete)}
 
 /-- The membership page is only a prefilter. Alpha-invariant hashes never
 substitute for definitional equality or the caller's closed kernel check. -/

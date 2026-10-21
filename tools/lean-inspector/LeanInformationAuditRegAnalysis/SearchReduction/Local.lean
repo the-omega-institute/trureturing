@@ -591,7 +591,7 @@ def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none) : Me
   if raw.vertices.isEmpty then return {graph := raw}
   let mut raw := raw
   let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
-  let table := lookup?.getD {environment := ← getEnv, enabled}
+  let table ← resolveLookupTable (lookup?.getD {environment := ← getEnv, enabled})
   let lookup? := some table
   let mut targetPartComplete := true
   let rootType := (vertex raw raw.root).type

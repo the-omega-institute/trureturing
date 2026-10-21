@@ -5,7 +5,7 @@ application and kernel checking remain the authority for successful queries. -/
 namespace LeanInformationAudit.SearchReduction.DiskLookup
 open Lean Meta
 
-abbrev version : String := "disk-beta-zeta-alpha-v3"
+abbrev version : String := "disk-beta-zeta-alpha-v4"
 abbrev pageSize : Nat := 256
 
 structure Entry where
@@ -125,6 +125,7 @@ private partial def conclusions (e : Expr) (fuel : Nat := 32) : Array Expr :=
 private structure BuildNode where
   children : Std.HashMap String String := {}
   entries : Array Entry := #[]
+  pages : Array Page := #[]
 
 private abbrev Nodes := Std.HashMap String BuildNode
 
@@ -133,7 +134,7 @@ private def insert (nodes : Nodes) (keys : List String) (entry : Entry) : Nodes 
   let mut here := "root"
   for key in keys do
     let mut node := nodes[here]?.getD {}
-    let next := s!"{here}/{key}"
+    let next := s!"{hash (here, key)}"
     node := {node with children := node.children.insert key next}
     nodes := nodes.insert here node
     here := next
@@ -142,29 +143,34 @@ private def insert (nodes : Nodes) (keys : List String) (entry : Entry) : Nodes 
 
 private def fileId (key : String) : String := toString (hash key)
 
+/-- Statement-name payloads are spilled one module at a time. The producer
+retains only trie routing and page descriptors across module boundaries. -/
+private def spill (directory : System.FilePath) (localNodes : Nodes) (all : Nodes) : IO Nodes := do
+  let mut all := all
+  for (key, node) in localNodes.toArray do
+    let mut previous := all[key]?.getD {}
+    for (token, next) in node.children.toArray do
+      previous := {previous with children := previous.children.insert token next}
+    let mut groups : Std.HashMap String (Array Entry) := {}
+    for entry in node.entries do
+      groups := groups.insert entry.module ((groups[entry.module]?.getD #[]).push entry)
+    let mut pages := previous.pages
+    for (owner, entries) in groups.toArray.qsort (fun a b => a.1 < b.1) do
+      for offset in [: (entries.size + pageSize - 1) / pageSize] do
+        let chunk := entries.extract (offset * pageSize) ((offset + 1) * pageSize)
+        let file := s!"{fileId key}-{fileId owner}-{offset}.page.json"
+        let digest ← writeJson (directory / file) chunk
+        pages := pages.push {file, digest, count := chunk.size}
+    all := all.insert key {previous with pages}
+  return all
+
 private partial def flush (directory : System.FilePath) (nodes : Nodes) (key : String) : IO UInt64 := do
   let node := nodes[key]?.getD {}
-  let output := directory / s!"{fileId key}.node.json"
-  let previous : Node ← if ← output.pathExists then readJson output else pure {}
-  let mut branches : Std.HashMap String (String × UInt64) := {}
-  for (token, file, digest) in previous.children do
-    branches := branches.insert token (file, digest)
+  let mut children := #[]
   for (token, next) in node.children.toArray.qsort (fun a b => a.1 < b.1) do
     let digest ← flush directory nodes next
-    branches := branches.insert token (fileId next, digest)
-  let mut groups : Std.HashMap String (Array Entry) := {}
-  for entry in node.entries do
-    groups := groups.insert entry.module ((groups[entry.module]?.getD #[]).push entry)
-  let mut pages := previous.pages
-  for (owner, entries) in groups.toArray.qsort (fun a b => a.1 < b.1) do
-    for offset in [: (entries.size + pageSize - 1) / pageSize] do
-      let chunk := entries.extract (offset * pageSize) ((offset + 1) * pageSize)
-      let file := s!"{fileId key}-{fileId owner}-{offset}.page.json"
-      let digest ← writeJson (directory / file) chunk
-      pages := (pages.filter (·.file != file)).push {file, digest, count := chunk.size}
-  let children := branches.toArray.qsort (fun a b => a.1 < b.1) |>.map
-    (fun (token, file, digest) => (token, file, digest))
-  writeJson output ({children, pages} : Node)
+    children := children.push (token, fileId next, digest)
+  writeJson (directory / s!"{fileId key}.node.json") ({children, pages := node.pages} : Node)
 
 private def runGit (args : Array String) : IO String := do
   let result ← IO.Process.output {cmd := "git", args}
@@ -282,7 +288,7 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
   let storage := s!"{version}-{inputs}"
   let pagesDirectory := directory / storage
   IO.FS.createDirAll pagesDirectory
-  let mut digest : UInt64 := 0
+  let mut allNodes : Nodes := {}
   let mut coverage : Array Json := #[]
   let mut declarations := 0
   let mut indexed := 0
@@ -291,13 +297,14 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
       let (entries, count) ← moduleEntries name rigidNames
       let mut nodes : Nodes := {}
       for (keys, entry) in entries do nodes := insert nodes keys entry
-      digest ← flush pagesDirectory nodes "root"
+      allNodes ← spill pagesDirectory nodes allNodes
       declarations := declarations + count
       indexed := indexed + count
       coverage := coverage.push <| Json.mkObj [("module", toJson name.toString),
         ("declarations", toJson count), ("indexed", toJson count)]
       if coverage.size % 1000 == 0 then IO.eprintln s!"lookup.index_written={coverage.size}"
     catch ex => missing := missing.push s!"{name}: {ex}"
+  let digest ← flush pagesDirectory allNodes "root"
   let header : Header := {
     basis, mathlib, inputs, storage, root := fileId "root", digest,
     complete := missing.isEmpty && modules.size == seen.size,
