@@ -46,6 +46,26 @@ private lemma a_nonneg (k : ℕ) : 0 ≤ a k := by
   unfold a
   positivity
 
+private def signs3Equiv : (Fin 3 → Sign) ≃ Sign × (Sign × Sign) where
+  toFun := fun f => (f 0, (f 1, f 2))
+  invFun := fun x => ![x.1, x.2.1, x.2.2]
+  left_inv := by
+    intro f
+    funext i
+    fin_cases i <;> rfl
+  right_inv := by
+    rintro ⟨a, b, c⟩
+    rfl
+
+private lemma a_three : a 3 = (3 / 2 : ℝ) := by
+  unfold a
+  rw [Fintype.sum_equiv signs3Equiv
+    (fun ε => |∑ i, signValue (ε i)|)
+    (fun x => |signValue x.1 + signValue x.2.1 + signValue x.2.2|)
+    (by intro ε; simp [signs3Equiv, Fin.sum_univ_succ] <;> ring)]
+  simp_rw [Fintype.sum_prod_type]
+  norm_num [signValue]
+
 def claim : Prop :=
   ∀ k : ℕ, 3 ≤ k → ∃ c : ℝ, c < k ∧
     ∀ n m (M : Matrix (Fin n) (Fin m) ℝ), Lk k M ≤ c * L M
