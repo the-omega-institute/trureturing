@@ -1970,3 +1970,187 @@ Every fixed fraction $0<\theta<1-d$ is therefore eventually retained. The limiti
 **Proof.** Reuse (13.17)--(13.18): $B_{Q_{q_n,b_n}}=B(q_n,b_n)>0$ and $|B_n'-B(q_n,b_n)|\le e_n$. Divide by $B(q_n,b_n)$ and apply (14.2). The first error budget gives a vanishing relative discrepancy; the second gives the limsup bound in (14.19), which implies its liminf bound and every strictly smaller eventual fraction. This is the existing same-prior joint-TV algebra applied to the scale $S_n$ for unrestricted offsets. The comparison laws and their error bounds are supplied hypotheses; no approximation-law construction or achieved rate is established. In particular the conclusion concerns the common actual sign readout, not an arbitrary quantizer, and entails no native-FIB realization, training, empirical, physical-cost or formal-certification claim. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Exact rational factor representations of the positive-noise decision law
+
+**定义 15.1（有限有理五模式因子语言）。** In the coordinate order of [the foundational volume, Definition 2.1](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md), put
+
+$$
+ A=\{(x,y,z)\in\{0,1\}^3:xz=yz=0\}
+   =\{000,100,010,110,001\}.
+\tag{15.1}
+$$
+
+For each integer $n\ge1$, a network consists of labelled visible Boolean variables $v_1,\ldots,v_n$, any finite number $m\ge0$ of hidden Boolean variables, and finitely many factors $f_j:\{0,1\}^3\to\mathbb Q_{\ge0}$. Every factor sums to one over its complete three-bit table and vanishes outside $A$. Its scope is an ordered triple of actual visible or hidden variables; repetition and identification are permitted. If $a$ and $h$ are the visible and hidden assignments, its law is
+
+$$
+ P(a)=Z^{-1}\sum_{h\in\{0,1\}^m}\prod_j f_j((a,h)|_{\mathrm{scope}(j)}),
+ \qquad
+ Z=\sum_{a,h}\prod_j f_j((a,h)|_{\mathrm{scope}(j)})>0.
+\tag{15.2}
+$$
+
+An empty product is one. In regime $W_+$ every factor is strictly positive on all five tuples of $A$; in regime $W_0$ additional zeros within $A$ are permitted. The only operations are the ordered scopes, factor multiplication, finite hidden summation and final normalization in (15.2). Constants, complemented literals, extra equality or disequality primitives, externally supplied unary or multivariate factors, and limits are absent. Network size may depend on the entire target law and is unbounded finite. Locally normalized tables are potentials in a globally normalized product; they have no supplied conditional-kernel or causal sampling interpretation.
+
+For a labelled undirected graph $K$ with loops, write
+
+$$
+ \operatorname{Ind}(K)=\{a\in\{0,1\}^n:
+ a_i a_j=0\text{ for every edge }\{i,j\}\text{ of }K\}.
+\tag{15.3}
+$$
+
+A loop at $i$ thus forces $a_i=0$. Vertices here are Boolean coordinates, not the five labels that are vertices of the legal-toggle graph $G$ in (1.2).
+
+**定理 15.2（严格正局部表的支撑与全部有理权重）。** For every $n\ge1$, a rational probability law on $\{0,1\}^n$ is representable in $W_+$ if and only if its support is $\operatorname{Ind}(K)$ for some labelled undirected graph $K$ with loops allowed. Every choice of positive rational masses on that support is included.
+
+**Proof.** First record how the constructions use only the permitted tables. An unnormalized rational table $F$ with support contained in $A$ and positive table sum $N_F$ denotes the actual factor $F/N_F$. Normalizing all such tables multiplies the full assignment weight by the positive rational constant $\prod_F N_F^{-1}$, independent of the assignments; this constant cancels in (15.2).
+
+Let $H=\mathbf1_A$, of table sum five. A fresh hidden variable $o$ with $H/5$ on scope $(o,o,o)$ is forced to zero, since $000\in A$ and $111\notin A$. This generates a zero internally. Scope $(u,u,w)$ for $H/5$ enforces $uw=0$ and has constant value $1/5$ on allowed pairs. Taking $u=w$ implements a loop.
+
+For any positive rational binary table $B$, use the full ternary table
+
+$$
+ F_B(x,y,0)=B(x,y),\qquad F_B(0,0,1)=1,
+ \qquad F_B=0\text{ outside }A.
+\tag{15.4}
+$$
+
+Its five entries on $A$ are positive, and its table sum is positive rational. On scope $(u,w,o)$ it gives $B(u,w)$ before the constant normalization. Thus binary weights below are abbreviations for legal ternary factors. Likewise define
+
+$$
+ U_t(000)=U_t(100)=U_t(010)=U_t(001)=1,
+ \qquad U_t(110)=t,
+ \qquad U_t=0\text{ outside }A.
+\tag{15.5}
+$$
+
+Its sum is $4+t$. Scope $(u,u,o)$ gives weight $1$ at $u=0$ and $t$ at $u=1$, before normalization. It is legal in $W_+$ for rational $t>0$, and in $W_0$ for rational $t\ge0$. These definitions specify even the table entries a repeated scope never visits.
+
+For necessity, a factor on $(u,w,t)$ contributes edges $\{u,t\}$ and $\{w,t\}$ to a graph on all variables, retaining loops from repetitions. A complete assignment has positive weight exactly when its occupied variables form an independent set: these are precisely the two exclusions defining $A$. Let $K$ be the visible induced graph. A visible assignment violating an edge or loop of $K$ has no positive extension. Conversely, any assignment in $\operatorname{Ind}(K)$ extends positively by setting every hidden variable to zero. All edges with a hidden endpoint, including hidden loops, are then satisfied. A finite nonnegative hidden sum is positive exactly when some summand is positive, proving the support assertion. The complete all-zero assignment also proves $Z>0$. All masses are rational. This includes an empty factor set and duplicated scopes.
+
+For sufficiency, first realize an arbitrary positive rational table $w$ on the full visible cube, up to a constant multiplier. We need the following finite identity, with $d$ the Hamming distance:
+
+$$
+ Lw(a)=1+\sum_{s\in\{0,1\}^n}c_s\varepsilon^{d(a,s)},
+ \qquad L,c_s\in\mathbb Q_{>0},\quad
+ \varepsilon\in\mathbb Q,\quad 0<\varepsilon<1.
+\tag{15.6}
+$$
+
+Here is an explicit proof. Set $L=2/\min_a w(a)$, $r(a)=Lw(a)-1$, $\alpha=\min_a r(a)>0$, $\beta=\max_a r(a)$ and $\varepsilon=\alpha/(4n\beta)$. Then $0<\varepsilon\le1/(4n)$. The matrix $M_{a,s}=\varepsilon^{d(a,s)}$ is the $n$-fold tensor product of $\left(\begin{smallmatrix}1&\varepsilon\\\varepsilon&1\end{smallmatrix}\right)$, so its rational inverse is
+
+$$
+ (M^{-1})_{a,s}=\frac{(-\varepsilon)^{d(a,s)}}{(1-\varepsilon^2)^n}.
+\tag{15.7}
+$$
+
+This follows by multiplying the two-by-two inverses coordinate by coordinate. Its absolute row sum is $(1-\varepsilon)^{-n}$ and its diagonal entry is $(1-\varepsilon^2)^{-n}\ge1$. Hence, for the maximum absolute row-sum norm,
+
+$$
+ \|M^{-1}-I\|_\infty=(1-\varepsilon)^{-n}-1
+ \le\frac{n\varepsilon}{1-n\varepsilon}.
+\tag{15.8}
+$$
+
+The inequality uses $(1-\varepsilon)^n\ge1-n\varepsilon>0$, the Bernoulli inequality obtained by induction. Put $c=M^{-1}r$. Since $n\varepsilon=\alpha/(4\beta)\le1/4$,
+
+$$
+ \|c-r\|_\infty
+ \le\frac{n\varepsilon}{1-n\varepsilon}\beta
+ \le\alpha/3,
+ \qquad c_s\ge2\alpha/3>0.
+\tag{15.9}
+$$
+
+Thus $c$ is rational and positive, and $Mc=r$ gives (15.6) exactly. No limiting operation is used.
+
+Take the internally pinned $o=0$ and one fresh hidden selector $h_s$ for each word $s$. For every distinct selector pair impose the NAND constraint $H/5$ on $(h_s,h_s,h_t)$, taking each unordered pair once. Allowed selector assignments are precisely the all-zero assignment and assignments with one selector equal to one. Give selector $h_s$ the unary weight $c_s$ through (15.5) on $(h_s,h_s,o)$. For each coordinate $i$ use the positive binary table
+
+$$
+ B_{s,i}(h,a_i)=
+ \begin{cases}
+ 1,&h=0,\\
+ 1,&h=1\text{ and }a_i=s_i,\\
+ \varepsilon,&h=1\text{ and }a_i\ne s_i,
+ \end{cases}
+\tag{15.10}
+$$
+
+implemented by (15.4) on $(h_s,v_i,o)$. Selecting entries of a table using the fixed index $s_i$ does not complement a scope variable. Apart from the common positive scalar from the pin, NAND factors and local normalizations, the all-zero selector contributes $1$, and the assignment with only $h_s=1$ contributes $c_s\varepsilon^{d(a,s)}$. The hidden sum is therefore a positive rational constant times $Lw(a)$. All factors are positive on every tuple of $A$, and there are finitely many variables and factors.
+
+Finally let $P$ have support $S=\operatorname{Ind}(K)$, and extend it to a positive rational full-cube table by $w(a)=P(a)$ on $S$ and $w(a)=1$ outside $S$. Construct the preceding network. Append $H/5$ on $(v_i,v_i,v_j)$ for every ordinary edge $\{i,j\}$, and on $(v_i,v_i,v_i)$ for every loop. Their product is a positive constant times $\mathbf1_S$. The visible marginal becomes $CLw(a)\mathbf1_S(a)=CLP(a)$ for a fixed positive rational $C$, with total mass $CL>0$. Global normalization gives $P$. This also covers $n=1$ and the singleton support consisting only of the all-zero word. $\square$
+
+**定理 15.3（允许内部零点时的有限精确表示）。** For every $n\ge1$, every rational probability law on $\{0,1\}^n$, including laws with arbitrary zero entries, is representable in $W_0$ with the same operations as Definition 15.1.
+
+**Proof.** Reuse the null-deleted Boolean relation from [the Boolean null-boundary source](../../../D5/S3/Combinatorics/ConstraintRelations/BooleanNullBoundary.lean):
+
+$$
+ \mathbf1_{A\setminus\{000\}}(x,y,z)>0
+ \quad\Longleftrightarrow\quad z=\neg(x\lor y).
+\tag{15.11}
+$$
+
+Indeed its four tuples are $100,010,110,001$, precisely the truth table of NOR. Dividing this indicator by four gives a legal rational $W_0$ factor. The support identity is reused; the weight construction below supplies the probability masses and normalizations.
+
+For every word $s$, compute the indicator $e_s(a)=\mathbf1_{\{a=s\}}$ by an acyclic NOR circuit. Explicitly,
+
+$$
+ \operatorname{NOT}(x)=\operatorname{NOR}(x,x),\qquad
+ \operatorname{AND}(x,y)=
+ \operatorname{NOR}(\operatorname{NOR}(x,x),\operatorname{NOR}(y,y)).
+\tag{15.12}
+$$
+
+Use literal $a_i$ for $s_i=1$ and the computed NOT of $a_i$ for $s_i=0$; join the $n\ge1$ literals by successive AND gates. Each gate has a fresh hidden output and uses (15.11) on its two actual input wires and output wire. Repeated inputs implement NOT; fanout is reuse of an actual variable. Thus no complemented literal or equality primitive is supplied. For $n=1$ the final indicator may already be a visible wire. For every visible assignment there is exactly one assignment of all gate-output variables satisfying all NOR factors, by evaluation in acyclic order.
+
+Introduce the internally pinned $o=0$ from the proof of Theorem 15.2. For each $s$ append the normalized table $U_{P(s)}/(4+P(s))$ of (15.5) on $(e_s,e_s,o)$. On the unique gate-consistent hidden assignment the product, before the common local-normalization scalar, is
+
+$$
+ \prod_s\begin{cases}
+ 1,&e_s(a)=0,\\
+ P(s),&e_s(a)=1
+ \end{cases}=P(a),
+\tag{15.13}
+$$
+
+because exactly one indicator is one. This includes $P(a)=0$, when the corresponding factor vanishes. Every other hidden assignment violates the pin or some NOR factor and contributes zero. All local sums are positive rational, including $4+P(s)$ when $P(s)=0$. Hence the visible marginal is $CP(a)$ with fixed rational $C>0$, its total is $C$, and normalization proves the claim. $\square$
+
+**推论 15.4（正噪声平台律的同一联合分布表示）。** For each rational $0<\eta\le1$, the law $J_{H,\eta}$ of Proposition 7.4 and (7.8) has an exact finite rational $W_+$ representation, and also a $W_0$ representation, on five visible Boolean coordinates. These representations preserve its joint distribution and consequently its already established posteriors and decision risks.
+
+**Proof.** The printed words in Definition 1.1 are ordered low--middle--high. Swapping the final two positions gives the foundational low--high--middle coordinates $(x,y,z)$, while a two-bit record encodes the four outputs:
+
+$$
+ \begin{aligned}
+ (a,b,c,d,e)&\longmapsto(000,100,001,110,010),\\
+ (ac,bd,de,be)&\longmapsto(00,01,10,11).
+ \end{aligned}
+\tag{15.14}
+$$
+
+These are bijections onto $A$ and $\{0,1\}^2$. In (6.3) each posterior is uniform on its displayed pair, and the output masses are $(2/5,1/5,1/5,1/5)$. Thus
+
+$$
+ J_{H,\eta}(i,q)=(1-\eta)J_H(i,q)+\eta\lambda_q/5>0
+\tag{15.15}
+$$
+
+at all twenty label--record pairs, with rational entries. Transport the law by (15.14) to $(x,y,z,r_1,r_2)$ and set its mass to zero at every remaining five-bit word. Its support is exactly
+
+$$
+ A\times\{0,1\}^2=\operatorname{Ind}(K_*),\qquad
+ E(K_*)=\{\{x,z\},\{y,z\}\},
+\tag{15.16}
+$$
+
+where the two record vertices are isolated. Positivity is relative to these twenty points, not all thirty-two ambient words. Theorem 15.2 supplies the same normalized joint law in $W_+$, and Theorem 15.3 supplies it in $W_0$. The coordinate exclusion graph $K_*$ has coordinate vertices; it is not the five-label legal-toggle graph $G$. In particular the two-bit name of output $be$ neither adds a coordinate exclusion nor makes $be$ a legal edge of $G$.
+
+The finite splitting construction of Definition 1.1, common-source coupling (4.7), and the Bayes and plateau calculations in Proposition 7.4 are reused. Exact equality of the joint laws preserves those conclusions without a new risk or approximation argument. Each rational $\eta$ may use its own finite network. Irrational $\eta$ and a single finite network for the parameter continuum are outside the rational assertion.
+
+The construction is an abstract weighted-factor representation. It supplies no native recursive-FIB preparation, acquisition or learnability result, training mechanism, efficient inference or sampling, parameter compression, physical-cost bound, or achieved approximation. Local normalization does not turn the factors into directed conditional distributions.
+
+The unweighted support operations are those of [the existing primitive-positive preservation framework](../../../D5/S3/Combinatorics/ConstraintRelations/PrimitivePositive.lean); the null-deleted NOR relation is the supplier in (15.11). Neither support result alone specifies arbitrary rational masses. The finite common-source sum-product eliminations of [the hidden-relations volume, C-59.2--C-59.5](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) and [its continuation, C-60.1--C-60.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md) likewise distinguish support from chosen product activities; a restricted positive-activity family does not supply the unrestricted weight statement of Theorem 15.2.
+
+As a primary exact-representation comparison, Gleb Smirnov, *Deep belief networks are exact*, [arXiv:2609.05572v1, Theorem 1.1 and Section 1](https://arxiv.org/html/2609.05572v1), represents strictly positive Boolean laws by finite sigmoid belief networks with real parameters. That directed conditional interface, its real weights and biases, and its strictly positive visible laws differ from (15.2), rational local tables and the structural zeros in (15.16); it supplies no step of these proofs. Likewise an exact finite pps construction must be distinguished from an omega closure or a language granted extra equality and unary factors: none of those extra operations is implicit in Definition 15.1. Theorems 15.2--15.3 and this correspondence are elementary repository-derived constructions, without a claim of global priority or exhaustive literature absence. Their proofs are ordinary mathematics and make no formal proof-shape or kernel-verification assertion. $\square$
+
+## 追加锚（本行以下为增补区）
