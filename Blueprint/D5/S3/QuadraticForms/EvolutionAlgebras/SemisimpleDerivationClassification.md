@@ -22,6 +22,10 @@ $$\forall (k : \operatorname{Type}), ([\operatorname{Field}\left(k\right)] [\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/SemisimpleDerivationClassification.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kaygorodov-martin-gonzalez-viruel-2026-evolution-algebra-derivations-conjecture-5` (proved) by `D5/S3/QuadraticForms/EvolutionAlgebras/SemisimpleDerivationClassification.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kaygorodov-martin-gonzalez-viruel-2026-evolution-algebra-derivations-conjecture-5","declaration_gid":"D5/S3/QuadraticForms/EvolutionAlgebras/SemisimpleDerivationClassification.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ivan Kaygorodov; Cándido Martín González; Antonio Viruel (2026). *Evolution algebras: a survey of results and a list of open problems*. DOI: [10.48550/arXiv.2610.22248](https://doi.org/10.48550/arXiv.2610.22248). URL: <https://arxiv.org/abs/2610.22248v1>.

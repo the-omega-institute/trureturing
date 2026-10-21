@@ -28,7 +28,10 @@ internal sealed class SemisimpleDerivationClassificationDocument : IScribeDocume
                 StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The annihilator obstruction removes zero natural squares. The block decomposition identifies all derivations with independent orthogonal pointwise stabilizers. Their radical quotients give standard orthogonal algebras. Dimensions zero and one contribute zero, and dimension two is excluded by its nonzero abelian algebra. The remaining factors have dimension at least three."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kaygorodov-martin-gonzalez-viruel-2026-evolution-algebra-derivations-conjecture-5"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Parenthesized(Formula content) =>Seq(Open, content, Close);
     private static Formula X(string name) =>F.Id(name);
