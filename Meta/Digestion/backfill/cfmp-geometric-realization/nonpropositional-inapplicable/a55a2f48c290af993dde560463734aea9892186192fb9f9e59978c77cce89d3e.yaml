@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a55a2f48c290af993dde560463734aea9892186192fb9f9e59978c77cce89d3e
+  normalized_sha256: sha256:a55a2f48c290af993dde560463734aea9892186192fb9f9e59978c77cce89d3e
+cas_ref: sha256:a55a2f48c290af993dde560463734aea9892186192fb9f9e59978c77cce89d3e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Research question and declared scope of the CFMP discussion; no realization theorem is asserted here.'
+    previous_atom_id: ac495847a7569792ded9b67fc6fe6856ae3c0cf106d2d92c2d7526084e9c269e
+    next_atom_id: b8edd5e74257673317d57b171e2f5c0897f542ec281588cc137ae6b89b1be6ca

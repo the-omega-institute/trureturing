@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:6844b1ef2bb010137f047e3589e9e050bdc831124f4066c778012f4bccaafafb
+  normalized_sha256: sha256:6844b1ef2bb010137f047e3589e9e050bdc831124f4066c778012f4bccaafafb
+cas_ref: sha256:6844b1ef2bb010137f047e3589e9e050bdc831124f4066c778012f4bccaafafb
+coverage_gids:
+  - gid: D5/S1/Scale/Fibonacci.golden_phi_pow_eq_fib_pair
+    target_statement_id: sha256:d216732e11d7a2e479d9c2c4667ce688b4f5a7eb54e80c6bce46e6858e22e2be
+  - gid: D5/S3/Arith/FibonacciRank.fibonacci_entry_point
+    target_statement_id: sha256:cb723385a81b5685d65e8dea810894ef7ad83d2ee8a1855a9b34e573a090e19d
+  - gid: D5/S3/Arith/FibonacciRank.fibonacci_rank_dvd_prime_bound
+    target_statement_id: sha256:3b3f6fd70742a99dee370aea0221e64bc1c3c84e8c242d8707542778f181893c
+  - gid: D5/S3/Arith/Powerful/PowerfulNumber.Powerful
+    target_statement_id: sha256:dba64bfdd5f80d27757ec49e7428404fa5ebcf2dda9d2cad084599c4afb7ecd4
+  - gid: D5/S3/Arith/Primes/FibonacciFiveAdicDepth.fibonacci_five_adic_depth
+    target_statement_id: sha256:8991ee39c841b80438fe71589499ba55e5ee0c001c9c97d4cc8af0a5846bea27
+  - gid: D5/S3/Arith/Primes/FibonacciPrimeToIndexValuation.fibonacci_original_rank_valuation
+    target_statement_id: sha256:1d3a385b1bb4bb2a559be05f8c32be1471d0aa93ce3a93039b932be7b44f21b7
+  - gid: D5/S3/Arith/Primes/FibonacciPrimeToIndexValuation.fibonacci_valuation_stable
+    target_statement_id: sha256:ed3931c88c3009497de423d1c4e1258459d220f3c826071fb4470d10ceb6c99c
+  - gid: D5/S3/Arith/Primes/FiniteFibonacciRankClosure.rankWitness
+    target_statement_id: sha256:4e4e3597204dcb06fc1c432c90004bf31ac483a26b16ef78a6f0f8f74c4bc08e
+receipts:
+  unresolved_subitems: []

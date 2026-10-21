@@ -21,6 +21,7 @@ internal sealed class QubitWassersteinCouplingsDocument : IScribeDocumentDefinit
             Node("couplings_nonempty", Disp(All("d", Nat(), All("rho", Mat(V("d")), All("omega", Mat(V("d")), Imp(State(V("rho")), Imp(State(V("omega")), QC("Set", "Nonempty", C("couplings", V("rho"), V("omega"))))))))), "Every pair of density states has a coupling.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Node("D2_le_cost", Disp(All("d", Nat(), All("k", Nat(), All("A", Arrow(FinF(V("k")), Mat(V("d"))), All("rho", Mat(V("d")), All("omega", Mat(V("d")), All("pi", ProductMat(V("d")), Imp(All("j", FinF(V("k")), QC("Matrix", "IsHermitian", Apply(V("A"), V("j")))), Imp(Mem(V("pi"), C("couplings", V("rho"), V("omega"))), LeqF(C("D2", V("A"), V("rho"), V("omega")), C("cost", V("A"), V("pi")))))))))))), "Every admissible coupling bounds the infimum from above.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Node("pauli_hermitian", Disp(All("j", FinF(D(3)), QC("Matrix", "IsHermitian", Apply(QC("SteeringEllipsoidFullyEntangledFraction", "pauli"), V("j"))))), "Every observable in the Pauli triple is Hermitian.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
+            Node("ptrace2_left", Disp(Ptrace2LeftFormula()), "Conjugating a two-qubit operator by a local matrix on the first factor conjugates its second-factor partial trace by that matrix.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Node("overlap", Disp(All("P", ProductMat(D(2)), Eqn(C("overlap", V("P")), ReF(C("dotProduct", C("star", IdentityVector()), QC("Matrix", "mulVec", V("P"), IdentityVector())))))), "The unnormalized Bell overlap is the quadratic form of P on Function.uncurry of the identity matrix.", AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
             Node("pauli_cost", Disp(All("P", ProductMat(D(2)), Eqn(C("cost", QC("SteeringEllipsoidFullyEntangledFraction", "pauli"), V("P")), Sub(Mul(D(8), ReF(Trace(V("P")))), Mul(D(4), C("overlap", V("P"))))))), "The Pauli cost operator is 8 times the identity minus 4 times the unnormalized Bell rank-one operator, equivalently 8 times the difference of the identity and the normalized Bell projector.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Node("CW_bddAbove", Disp(All("d", Nat(), All("k", Nat(), All("A", Arrow(FinF(V("k")), Mat(V("d"))), All("Phi", Maps(V("d")), Imp(All("j", FinF(V("k")), QC("Matrix", "IsHermitian", Apply(V("A"), V("j")))), C("BddAbove", SetOf("x", Real(), Ex("rho", Mat(V("d")), AndF(State(V("rho")), Eqn(V("x"), C("dA", V("A"), V("rho"), Apply(V("Phi"), V("rho")))))))))))))), "The complexity value set is bounded above, including the empty zero-dimensional domain.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
@@ -41,6 +42,16 @@ internal sealed class QubitWassersteinCouplingsDocument : IScribeDocumentDefinit
         DescribeId.Create("qwc-" + name.Replace("_", "").ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(name), StatementSource.FromAuthor(formula),
         provenance, Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Ptrace2LeftFormula()
+    {
+        Formula u = V("U"), p = V("P");
+        Formula local = Kron(u, D(1));
+        Formula conjugated = Mul(Mul(local, p), Adj(local));
+        return All("U", Mat(D(2)), All("P", ProductMat(D(2)),
+            Eqn(QC("PartialTraceMutualInformation", "partialTraceRight", conjugated),
+                Mul(Mul(u, QC("PartialTraceMutualInformation", "partialTraceRight", p)), Adj(u)))));
+    }
 
     private static Formula IdentityVector() => QC("Function", "uncurry", Parenthesized(Seq(D(1), Sp, Colon, Sp, Mat(D(2)))));
     private static Formula V(string name) => FormulaDsl.Id(name);

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bd56d540d38bbe6409839325b1dec1023155ec58da42f2a23a1a53ac386896de
+  normalized_sha256: sha256:bd56d540d38bbe6409839325b1dec1023155ec58da42f2a23a1a53ac386896de
+cas_ref: sha256:bd56d540d38bbe6409839325b1dec1023155ec58da42f2a23a1a53ac386896de
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines a conditional-mutual-information diagnostic; no positive causal influence is asserted.
+    previous_atom_id: e4f306f2976d844f2f067a4ae9cfba32a0b2900a1dd86291d91436f27673118c
+    next_atom_id: 7f7ad7030d3118874f8fc5be2064f486f0a78e661418fa6e87c4c547401ea212

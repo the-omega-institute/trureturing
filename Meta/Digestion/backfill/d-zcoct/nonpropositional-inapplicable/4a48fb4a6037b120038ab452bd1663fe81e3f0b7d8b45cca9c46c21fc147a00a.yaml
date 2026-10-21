@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a48fb4a6037b120038ab452bd1663fe81e3f0b7d8b45cca9c46c21fc147a00a
+  normalized_sha256: sha256:4a48fb4a6037b120038ab452bd1663fe81e3f0b7d8b45cca9c46c21fc147a00a
+cas_ref: sha256:4a48fb4a6037b120038ab452bd1663fe81e3f0b7d8b45cca9c46c21fc147a00a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces A_H, Z_H and B_H by definition; generalized Brun total is the name for B_H at s=1, with no convergence assertion.
+    previous_atom_id: 449ba69e439ab76703f1da31154a154adbdfcfd70f82c2c49395fc444a41083c
+    next_atom_id: 8d269d5bd6b27c312c76cbf61d1eb9c2f6dd71c86edecafd91693a5ee5c88ee7

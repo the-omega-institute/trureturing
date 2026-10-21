@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a2dea0af1703bcf3c62c85956e3ccccb74b763b881f16de586cffd8a3fffff46
+  normalized_sha256: sha256:a2dea0af1703bcf3c62c85956e3ccccb74b763b881f16de586cffd8a3fffff46
+cas_ref: sha256:a2dea0af1703bcf3c62c85956e3ccccb74b763b881f16de586cffd8a3fffff46
+coverage_gids:
+  - gid: D5/S1/Recurrence/CrossingMatrixDeterminant.crossing_det_pow_sub_one
+    target_statement_id: sha256:7943c6b0c9687c0534adfee5800cb92edf5bee6d3b5d3e775fe80ec4c4b12d21
+receipts:
+  unresolved_subitems: []

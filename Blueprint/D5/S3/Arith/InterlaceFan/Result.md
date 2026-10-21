@@ -1,0 +1,35 @@
+# Rational faces of the interlace fan
+
+## Abstract
+
+Minimal interlace fan faces containing nonzero rational points.
+
+**Theorem 1.1 (The rational-face classification).**
+
+Lean statement: `D5/S3/Arith/InterlaceFan/Result.result`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/InterlaceFan/Result.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/mandel-robins-2019-minimal-rational-foic-faces` (proved) by `D5/S3/Arith/InterlaceFan/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mandel-robins-2019-minimal-rational-foic-faces","declaration_gid":"D5/S3/Arith/InterlaceFan/Result.result","resolution_kind":"proved"} -->
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* A. Mandel; S. Robins (2019). *Dragging the roots of a polynomial to the unit circle*. URL: <https://arxiv.org/abs/1908.03208>.
+
+*Commentary.*
+
+For every darga n at least two, a nonempty subset S of the certificate indices admits a nonzero rational point in its closed face if and only if S misses the entire root-order class of some divisor d of n. The maximal certificate sets with this property are exactly the complements of individual order classes. For every such complement, every nonzero rational point has strictly smaller functional values on all omitted indices and has rational interlace number. This proves the pinned classification answering section 10, Problem 3 of the cited article, with zero excluded because it belongs to every closed face.
+
+The order-one class consists only of index zero. At rational coordinates that functional is rational. If the maximizing set meets every order class, cyclotomic conjugacy propagates this same rational value to every certificate, and Fourier injectivity forces the point to vanish. Conversely the rational Ramanujan coordinates give the two values totient(d)/2 and (totient(d)-n)/2, so missing an order class suffices. Exact real certificate-set realization identifies reversal of face inclusion with inclusion of certificate sets.
+
+Rationality of the maximum follows at index zero unless the omitted class has order one. In that case the weighted zero-sum identity expresses the common maximum at all positive indices as minus the rational zero-index value divided by a positive rational sum of weights. A tie at any omitted index then propagates through that entire order class and would force all values equal, contradicting the nonzero condition.
+
+The formal conclusion classifies maximal certificate sets and gives strict inequalities and rational maxima. Face dimensions and counts of geometric faces are consequences of the orthant interpretation; they are not additional formal assertions of this theorem. The polynomial corresponding to the sigma coordinates has twice the middle coordinate as its middle coefficient when n is even.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/InterlaceFan/Result.result`
+- Dependency: [D5/S3/Arith/InterlaceFan/Cyclotomic](Cyclotomic.md)
+- Dependency: [D5/S3/Arith/InterlaceFan/Fourier](Fourier.md)

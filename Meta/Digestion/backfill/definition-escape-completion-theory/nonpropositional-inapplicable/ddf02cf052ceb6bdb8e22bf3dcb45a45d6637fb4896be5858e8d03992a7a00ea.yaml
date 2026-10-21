@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ddf02cf052ceb6bdb8e22bf3dcb45a45d6637fb4896be5858e8d03992a7a00ea
+  normalized_sha256: sha256:ddf02cf052ceb6bdb8e22bf3dcb45a45d6637fb4896be5858e8d03992a7a00ea
+cas_ref: sha256:ddf02cf052ceb6bdb8e22bf3dcb45a45d6637fb4896be5858e8d03992a7a00ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 实验计划字段的接口归属与禁止混用模型纤维的纪律。'
+    previous_atom_id: 6fd77a829d95c5279be3ca01187c079ebb1b3ee9a8e80723b42c9dfb8559a7d6
+    next_atom_id: c12712da1828a5eef269427203e7a6995ed06d5b8f4b9b1474a96a342972d6ea
