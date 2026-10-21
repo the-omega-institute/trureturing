@@ -93,7 +93,7 @@ internal sealed class OriginalIocFourierTailDocument : IScribeDocumentDefinition
                         Call("exteriorFourierDensity", L, N,
                             Call("positiveTail", N, Call("signedCoeff", L, f)),
                             Call("negativeTail", N, Call("signedCoeff", L, f)), s)))),
-                    AssessedProvenance.FromRepo(), Blocks(), DescribeRole.Theorem),
+                    AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Taking the squared complex norm of the exact signed transform identity gives the public density with the actual positive and negative tails."))), DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("original-physical-leakage"),
                     DeclarationHandle.Create(TailOwner + "original_low_frequency_mass"),

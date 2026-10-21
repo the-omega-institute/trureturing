@@ -21,8 +21,6 @@ internal sealed class OriginalIocFourierMassDocument : IScribeDocumentDefinition
         return Seq(result.ToArray());
     }
 
-    private static Formula Sq(Formula x) => Seq(Grp(x), Caret, Grp(D(2)));
-
 
     public DocumentDefinition Create()
     {
@@ -50,7 +48,7 @@ internal sealed class OriginalIocFourierMassDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(Disp(Seq(
                         Call("iocZeroExtend", L, f), Eq,
                         Call("indicator", Call("Ioc", Seq(Minus, L, D(2)), Seq(L, D(2))), f)))),
-                    AssessedProvenance.FromRepo(), Blocks(), DescribeRole.Definition),
+                    AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The interval indicator retains the original Lebesgue dx measure and specifies the endpoint convention explicitly."))), DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("signed-parseval-mass"),
                     DeclarationHandle.Create(MassOwner + "tsum_signedCoeff_sq_eq_mass"),

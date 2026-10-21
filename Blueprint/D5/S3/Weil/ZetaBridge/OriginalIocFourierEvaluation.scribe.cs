@@ -21,8 +21,6 @@ internal sealed class OriginalIocFourierEvaluationDocument : IScribeDocumentDefi
         return Seq(result.ToArray());
     }
 
-    private static Formula Sq(Formula x) => Seq(Grp(x), Caret, Grp(D(2)));
-
 
     public DocumentDefinition Create()
     {
@@ -70,6 +68,6 @@ internal sealed class OriginalIocFourierEvaluationDocument : IScribeDocumentDefi
                         Call("Positive", L), Rightarrow, Sp,
                         Call("signedCoeff", L, f, n), Eq,
                         Call("OriginalBasisInnerProduct", L, f, n)))),
-                    AssessedProvenance.FromRepo(), Blocks(), DescribeRole.Theorem))));
+                    AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The integral coefficient formula follows from the normalized Haar coefficient after restoring the square-root length and signed phase."))), DescribeRole.Theorem))));
     }
 }
