@@ -1,0 +1,34 @@
+fingerprints:
+  raw_sha256: sha256:ca5240e43910d051554fcd43e5d11adb1a4142247303c9fcb06d921af68f3d20
+  normalized_sha256: sha256:ca5240e43910d051554fcd43e5d11adb1a4142247303c9fcb06d921af68f3d20
+cas_ref: sha256:ca5240e43910d051554fcd43e5d11adb1a4142247303c9fcb06d921af68f3d20
+coverage_gids:
+  - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
+    target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr
+    target_statement_id: sha256:7740d0d639e691784931b94a9f39a1e729a89943b3d162fba0338723c2634562
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.bounds
+    target_statement_id: sha256:80b990090589e41d7b17dd2c077f625c7948ccee7ea79be2582db82bd0911139
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.check
+    target_statement_id: sha256:c8ae7c793983ac85ff158ba276ee97b9df81d50768609863072c6b2d348ddbc1
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.checked_expression_encloses
+    target_statement_id: sha256:55fd549ad21c17edd29bfbda30075f70836c1b8c2023a9cc913348680e05632f
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.const
+    target_statement_id: sha256:883830ed15e01b32856f92ae231290e494d5fd04397feef656ceb5c5a7c99beb
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.input
+    target_statement_id: sha256:7c1ff706fd917d42fd8bac14c6f0823e57eb66d7d31e76616f7baea58a3ea428
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.mul
+    target_statement_id: sha256:b961a54e1cd3f732396a35f036a1063ecddf913e56610486ab178f76030fbd77
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.value
+    target_statement_id: sha256:563dbc7e0fc0596db696c2b1a71aa49ec288d39d8cf201638560baef6cca7f55
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 84c31103a7a0efae62d0f124328f3a6a56ef65f4f7d37273e11293ab8e6ea0e2
+    - 9f1f5270493767d0b3a0e2e24520655c519620f723ab95f3a12824860bce94ea
+    - 227a8b29e0b0984fce53d62c73ae06e7c329ac9e14a7cc1526c2e0d39099b8ec
+    - d69df8fefab30964e84d0500a7fcf9d851e590110f7470850e19c57b65d222d8
+    - 6bfcbe5343b5f6e2ecbccfcf31e8ff85b714d9839d9353208e679859c096a686
+    - 9f48917c7f1d2723714d4f679673214319546a9fdfc3db9612a6d632d65d7e11
+    - 36ca9c2c715d5dad4bcfffc79993929e9060265082a2a9fb14b3a8c1c9262a57
+    - a6fe16289e5cf92733983ec2963d05c4887fbf7a5276ad01f0adc7614a3ec3f8

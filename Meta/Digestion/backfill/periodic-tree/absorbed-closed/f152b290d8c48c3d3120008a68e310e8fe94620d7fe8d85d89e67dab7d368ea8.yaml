@@ -1,0 +1,33 @@
+fingerprints:
+  raw_sha256: sha256:f152b290d8c48c3d3120008a68e310e8fe94620d7fe8d85d89e67dab7d368ea8
+  normalized_sha256: sha256:f152b290d8c48c3d3120008a68e310e8fe94620d7fe8d85d89e67dab7d368ea8
+cas_ref: sha256:f152b290d8c48c3d3120008a68e310e8fe94620d7fe8d85d89e67dab7d368ea8
+coverage_gids:
+  - gid: D5/S0/Carrier/Ring.GoldenInt
+    target_statement_id: sha256:8bf6f1de4fbb92f8fd52becdb104129e8c8e08d3a6b16425b2767277b2ccaf4b
+  - gid: D5/S0/Carrier/Ring.b
+    target_statement_id: sha256:30a979c47d05fa62c1eda3ed713ed96202a74f7a56426928eb1a73e1d674ebc6
+  - gid: D5/S0/Carrier/Ring.commRing
+    target_statement_id: sha256:922fa941bc6396a42fcdce845352e764f1a7cc59569c43799792de6e9704457a
+  - gid: D5/S0/Carrier/Ring.instZeroGoldenInt
+    target_statement_id: sha256:b80ff23c10068b0299f642bfaecf599f149899eb1dfd7857a0aa71d7a067563c
+  - gid: D5/S0/Carrier/Ring.mk
+    target_statement_id: sha256:84672879540d518b9c60ff31609672517b2f5368d599d416eba79d5e5cea563a
+  - gid: D5/S1/Scale/Embedding.embedding
+    target_statement_id: sha256:cb9006a9e40ec45ded5903d39b04f68ebca81215b6a65525236cd2d76412143c
+  - gid: D5/S1/Scale/Embedding.embedding_eq_zero_iff
+    target_statement_id: sha256:2938fb3cfbaa24c22f6b543c0e0992d4a1813991f2ec42d174b87114d3d3c6de
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.Adm
+    target_statement_id: sha256:bb445754dd65a8a958b93be45ef942927e1513ea2bd332fe1841673525a3b4c9
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.admissibleWord_card_eq_fib
+    target_statement_id: sha256:705c7bcc0099280c8ed68bf461eca8cd390b7cba0709b2017097cd718d7e6bba
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.decAdm
+    target_statement_id: sha256:7fe980437cfe1067f57556a086bd3c27cc05e446128c55012b65b726d864914b
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 4224ea6eb00db6d9fd85ef858221ba5fe4f5d000175b0ed3a6bd5e1597a6a90c
+    - 43a6f8ab5b872476ac39dfc276f941d1c21d15206899fad4d82c8bf528e5b5ff
+    - b27ad292d98e42af28c7c3952049111f2a9289e0f28e77b8b3fed7f802cce70b
+    - 7f50b34edee9a57579ec16c99434fdce340ae786ec9cd2367ced0f980e86ebba
+    - c7f1616fafb69b496dcc1e1c97a580a6bf0172add2e9d6f5a1fdffc8a53aa114

@@ -1,0 +1,39 @@
+fingerprints:
+  raw_sha256: sha256:b45d6138f7bfa703cc4835a69dad44942d3dead00f0dedc0ec307f9e441f7464
+  normalized_sha256: sha256:b45d6138f7bfa703cc4835a69dad44942d3dead00f0dedc0ec307f9e441f7464
+cas_ref: sha256:b45d6138f7bfa703cc4835a69dad44942d3dead00f0dedc0ec307f9e441f7464
+coverage_gids:
+  - gid: D5/S0/Carrier/Conj.conj
+    target_statement_id: sha256:9ac3149001d62a60513aea2ea286510d8318a6320f2c0b4fb185aeb1c165d872
+  - gid: D5/S0/Carrier/Conj.conjEquiv
+    target_statement_id: sha256:ba1cb329c95648bc84b828b550114ce4d8174484c57d70283de31866f1e4dee4
+  - gid: D5/S0/Carrier/Ring.GoldenInt
+    target_statement_id: sha256:8bf6f1de4fbb92f8fd52becdb104129e8c8e08d3a6b16425b2767277b2ccaf4b
+  - gid: D5/S0/Carrier/Ring.a
+    target_statement_id: sha256:9a55d3914a2c2abc9cb7f35a377e5cdff87dc3d9947c4cc7b46586ccffa6bc3b
+  - gid: D5/S0/Carrier/Ring.addGroupWithOne
+    target_statement_id: sha256:27f9bb264236becffe3088f436177793d707ea143fb10885b6fdcd189a433191
+  - gid: D5/S0/Carrier/Ring.b
+    target_statement_id: sha256:30a979c47d05fa62c1eda3ed713ed96202a74f7a56426928eb1a73e1d674ebc6
+  - gid: D5/S0/Carrier/Ring.commRing
+    target_statement_id: sha256:922fa941bc6396a42fcdce845352e764f1a7cc59569c43799792de6e9704457a
+  - gid: D5/S0/Carrier/Ring.ext
+    target_statement_id: sha256:dc82a763c0f15f61fb0d3fee5e811707257b1ee43823edcbc7048adde886213d
+  - gid: D5/S0/Carrier/Ring.instAddGoldenInt
+    target_statement_id: sha256:b5b569d00965d6f5caf15e9239e143527c9ab804321a3d04df853cd8bd9b1d64
+  - gid: D5/S0/Carrier/Ring.instMulGoldenInt
+    target_statement_id: sha256:2783cdf72d0e59e2e14134a75df52a22077460a5aef0df616b44d57648de7c8d
+  - gid: D5/S0/Carrier/Ring.instOneGoldenInt
+    target_statement_id: sha256:14a12c55b1a4021380426f0d8193555b40a0d1fa5a09688fb7ba675fe7248e40
+  - gid: D5/S0/Carrier/Ring.instZeroGoldenInt
+    target_statement_id: sha256:b80ff23c10068b0299f642bfaecf599f149899eb1dfd7857a0aa71d7a067563c
+  - gid: D5/S0/Carrier/Ring.mk
+    target_statement_id: sha256:84672879540d518b9c60ff31609672517b2f5368d599d416eba79d5e5cea563a
+  - gid: D5/S1/Scale/Embedding.embedding
+    target_statement_id: sha256:cb9006a9e40ec45ded5903d39b04f68ebca81215b6a65525236cd2d76412143c
+  - gid: D5/S1/Scale/Embedding.embedding_eq_zero_iff
+    target_statement_id: sha256:2938fb3cfbaa24c22f6b543c0e0992d4a1813991f2ec42d174b87114d3d3c6de
+  - gid: D5/S1/Words/Mechanical/FloorFractShift.floor_add_sub_floor
+    target_statement_id: sha256:7a4f8559ae3b5ca28625632937d3e0502fb7b528c492ed6eb8a6e0c0706ef317
+receipts:
+  unresolved_subitems: []
