@@ -22,7 +22,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p x => kummer p.1 p.2 x) (fun e => nomatch e)
+  realize signature (fun _ p x => kummer p.2 p.1 x) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
@@ -30,7 +30,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {c : ℝ} (s : ℝ), 0 < c → ∀ x : ℝ,
-    R.readout () ⟨s, c⟩ x = Real.exp x * kummer (c-s) c (-x)
+    R.readout () ⟨c, s⟩ x = Real.exp x * kummer (c-s) c (-x)
 
 private lemma rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -80,7 +80,7 @@ def audit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p x => kummer p.1 p.2 x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p x => kummer p.2 p.1 x) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -88,7 +88,7 @@ def audit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 
   sourceSelection := some {
     owner := `D5.S3.Analytic.KummerRatio.Transform
     definition := none
-    coordinates := #[1, 0]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg"]
       stateBinder := 3
