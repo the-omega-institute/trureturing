@@ -1,0 +1,15 @@
+For every $E$, compactness gives
+$m_E(s)=\min_{\mathcal R\in\mathcal C}e_E(\mathcal R;s)$.
+For every $\Lambda\subseteq\mathcal E$, one decoder attains all individual
+minima exactly when
+$\alpha(\{(E,m_E(s)):E\in\Lambda\})\ne\varnothing$.
+The minima need not be zero. The established individual optima and common
+attainer obstruction in [FC-TR, §§103–104] remain separate results.
+
+This is a polarity between budgeted tasks and legal decoders. It does not
+identify deterministic state partitions with the convex decoder set.
+The arbitrary-set static extension in [FC-TP, §10] removes a finite-state
+restriction from its own deterministic setting; it does not supply this
+quantitative channel geometry. Distinct decoders may have the same $T$,
+and all present losses identify those invisible decoder directions.
+
