@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ed7a6d4cb15000880dd93a6b92676cce3488915337b26de8b24f6a9598297032
+  normalized_sha256: sha256:ed7a6d4cb15000880dd93a6b92676cce3488915337b26de8b24f6a9598297032
+cas_ref: sha256:ed7a6d4cb15000880dd93a6b92676cce3488915337b26de8b24f6a9598297032
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以正性和单位和作为 POVM 的定义条件；不从较弱前提推导这些条件。
+    previous_atom_id: 3ef565014654cefb69ba9ea06ca996de301ecfd3c187406ad4849f77b1e6bcfd
+    next_atom_id: f3a26252054bbd94f048b7b4d12a3e4191312ba21c89d92b64ed0980c0817e33
