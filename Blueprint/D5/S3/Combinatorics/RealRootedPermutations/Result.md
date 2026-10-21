@@ -10,10 +10,6 @@ Lean statement: `D5/S3/Combinatorics/RealRootedPermutations/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/RealRootedPermutations/Result.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/ball-galvin-hyry-weingartner-2022-unimodal-coefficient-permutations` (proved) by `D5/S3/Combinatorics/RealRootedPermutations/Result.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ball-galvin-hyry-weingartner-2022-unimodal-coefficient-permutations","declaration_gid":"D5/S3/Combinatorics/RealRootedPermutations/Result.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* T. Ball, D. Galvin, C. Hyry, and K. Weingartner (2022). *Independent set and matching permutations*. DOI: [10.1002/jgt.22724](https://doi.org/10.1002/jgt.22724). URL: <https://doi.org/10.1002/jgt.22724>.
