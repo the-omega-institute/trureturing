@@ -3157,685 +3157,637 @@ displayed calculations specify.
   (145.1)--(145.2) carries the SSR conclusion used here.
 
 ## 146.99 追加锚（本行以下为增补区）
-## 147. Quantitative robustness of the normalized bound state
+## 147. Two preparations and the local SSR resource boundary
 
-The strict gap in Theorem 55.4 also has a perturbative meaning. This
-section keeps the common rooted carrier, counting measure, inherited seams
-and normalization of §§55.1--55.5 fixed; §138 supplies the later native-lift
-ledger. A perturbation below is only a
-bounded real multiplication operator on that carrier; it is not a new
-physical field, a change of source history, or a claim about a spatial
-dimension.
+Consider the full eight-dimensional fermionic Gibbs state of §§139--146,
+with finite inverse temperature $\beta\ge0$, on the normalized cut
+$A=\mathbb C e_\ell$, $B=\operatorname{span}\{e_r,e_R\}$.
+The native choices are $q_a=(1/6,1/6)$ and $q_b=(1/3,1/3)$.
+Each choice specifies its own state $\rho_{q,\beta}$; a two-preparation
+resource below always uses the same $q$ and $\beta$ in both preparations.
+No product between different native models is substituted for that resource.
 
-For a bounded real sequence $w=(w(p))_{p\in\mathcal P}$, write
+The one-particle and full Fock definitions remain
 
 $$
-W_w f(p)=w(p)f(p),
-\qquad
-\delta_w=\|W_w\|=\sup_{p\in\mathcal P}|w(p)|,
-\qquad
-\mathsf H_w=\mathsf H+W_w.
+G_q=L_\star+\pi_q\pi_q^{\mathsf T},\quad S_q=G_q^{1/2},\quad
+V_q=S_q\mathbf1_3,\quad H_q=I_3-V_qV_q^*,\quad
+\rho_{q,\beta}=\frac{e^{-\beta d\Gamma_-(H_q)}}{2(1+e^{-\beta})^2}.
 \tag{147.1}
 $$
 
-Let
+The principal root and the normalized coordinate cut are part of the
+specified finite quantum model. The cut is not identified with orthogonal
+raw weighted occurrence spans or with established physical subsystems.
+The Fock space includes the zero mode, the vacuum, and every particle-number
+sector. There is no chemical potential or preliminary sector conditioning.
+
+Take two disjoint, independently prepared instances of this specified state.
+Their density operator is the even CAR product, written initially in
+copy-first creation order. The preparations have compatible labelled modes
+and the same coupling-phase convention. This is a preparation assumption,
+not a cloning operation or an encoder for an unknown carrier.
+The required joint local handling and coherent measurements are mathematical
+resources; their physical availability is ASSUMED-UNVERIFIED.
+The input is the untwirled product of the specified states, followed by
+one common local SSR across the preparations. Neither input factor is
+first replaced by its separate single-copy local twirl.
+
+Let $N_A^{\mathrm{tot}}$ and $N_B^{\mathrm{tot}}$ count all modes held by
+each party across both preparations. The local total-number twirl is
 
 $$
-m_w=\inf_{\|f\|=1}\langle f,\mathsf H_wf\rangle.
+\mathcal G_N(X)=\int_0^{2\pi}\!\int_0^{2\pi}
+U_{\theta,\phi}XU_{\theta,\phi}^*\,
+\frac{d\theta\,d\phi}{(2\pi)^2},\qquad
+U_{\theta,\phi}=e^{i\theta N_A^{\mathrm{tot}}}
+ e^{i\phi N_B^{\mathrm{tot}}}.
 \tag{147.2}
 $$
 
-The finite restriction on an actual domain $D_j(t)$ is obtained by
-compressing both $\mathsf H$ and the same multiplication operator $W_w$;
-write its quadratic form as
+There is one local SSR per party on its total charge, rather than a
+separate superselection charge for each preparation. A common unknown local
+phase offset is absorbed by (147.2). Independent unrecorded local phase
+randomization of the two preparations is a different resource: it removes
+the coherence before the preparations are combined. That loss is not repaired
+by the filtering protocol below.
+
+The allowed operations comprise joint number-preserving handling of a
+party's own modes, coherent projectors onto degenerate local total-number
+spaces, local phase operations, local discard when specified, classical
+communication and heralding. For a success projector $F$, the success map is
+$X\mapsto FXF$. Measuring the individual occupations and then forgetting the
+outcomes instead dephases the selected rails; it is a different instrument.
+
+These operations and the second preparation enlarge the single-specimen,
+no-postselection experiment. Section 145 still gives its single-copy limit:
+$\overline\rho=\mathcal D_A(\rho)$ is separable and has the same allowed
+single-copy local product-observable statistics as $\rho$.
+This appendix evaluates the enlarged, explicitly declared resource model.
+It does not supply an SSR operational advantage within the original menu.
+
+## 148. The source-dependent mixed state and its mature supplier
+
+Use the B-local alignment of §142 as a proof basis. Denote its active mode
+by $b$ and its spectator by $s$; the letter $s$ here replaces the spectator
+mode label $d$ of §142, while $d$ below denotes a matrix entry.
+For each preparation the aligned state, in creation order $(A,b,s)$, is
+$\sigma_\beta(p)\otimes\tau_\beta$, where
 
 $$
-\mathcal E_{D_j,w}(f)=\mathcal E_{D_j}(f)+\langle I_{D_j}f,W_wI_{D_j}f\rangle
-$$
-
-and denote its normalized minimum by $m_{j,w}(t)$. No stage-dependent
-renormalization of $w$ is made.
-
-**Theorem 147.1 (uniform bounded-potential robustness).** Let
-
-$$
-\Delta=\epsilon_*-m>0,
-\qquad
-0\le\delta_w<\frac{\Delta}{2},
-\tag{147.3}
-$$
-
-where $m$ and $\epsilon_*=a(3-2\sqrt2)$ are the common infimum and escape
-edge of §§55.3--55.4. Then
-
-1. $m_w<\epsilon_*-\delta_w$ and the normalized infimum $m_w$ is attained;
-2. every normalized $\mathsf H_w$-minimizing sequence has a strongly
-   convergent subsequence in $\ell^2(\mathcal P)$, and every cluster point is
-   a normalized ground state;
-3. for every fixed original source $t$, $m_{j,w}(t)\downarrow m_w$ as the
-   actual whole-$\rho$ domains exhaust the common carrier; if $f_j$ is any
-   normalized finite state satisfying
-   $\mathcal E_{D_j,w}(f_j)-m_{j,w}(t)\to0$, their zero extensions are
-   strongly precompact and their cluster points are common normalized ground
-   states.
-
-For any sequence of original sources and accepted indices $(t_n,j_n)$ whose
-contained ball radii tend to infinity, the corresponding minimum values
-converge to $m_w$ and normalized near-minimizers have the same strong
-precompactness conclusion, with the same fixed $w$ and common embedding; no
-monotonicity is asserted for this varying sequence.
-
-**Proof.** The bounded perturbation gives the two elementary Rayleigh
-inequalities
-
-$$
-m-\delta_w\le m_w\le m+\delta_w.
-\tag{147.4}
-$$
-
-The second inequality follows by evaluating $\mathsf H_w$ on a normalized
-near-minimizer of $\mathsf H$; the first is the analogous lower estimate.
-For a normalized sequence $f_n\rightharpoonup f$, put
-$r_n=f_n-f$ and $\alpha=\|f\|^2$. The compactness of $M_\phi$ and the
-boundedness of $W_w$ make all mixed terms tend to zero. The kinetic gap in
-(55.10), together with $W_w\ge-\delta_wI$, therefore gives
-
-$$
-\liminf_n\langle f_n,\mathsf H_wf_n\rangle
-\ge
-\langle f,\mathsf H_wf\rangle
-+(\epsilon_*-\delta_w)(1-\alpha).
-\tag{147.5}
-$$
-
-Since $\langle f,\mathsf H_wf\rangle\ge m_w\alpha$, a minimizing sequence
-and (147.4) imply
-
-$$
-m_w
-\ge m_w\alpha+(\epsilon_*-\delta_w)(1-\alpha),
-\qquad
-\epsilon_*-\delta_w-m_w
-\ge\Delta-2\delta_w>0.
-\tag{147.6}
-$$
-
-Consequently $\alpha=1$. Weak convergence is then strong convergence, and
-the limit attains $m_w$. The same calculation applies to every normalized
-near-minimizer, proving the second assertion.
-
-For the finite restrictions, zero extension identifies each finite Rayleigh
-quotient with the common quadratic form on its support. Nested exhaustion
-gives $m_{j,w}(t)\ge m_w$ and monotonicity. A finite-support approximation to
-any common unit trial gives the reverse limiting inequality, so
-$m_{j,w}(t)\downarrow m_w$. Finite near-minimizers are consequently common
-near-minimizers, and (147.5)--(147.6) gives strong precompactness. The varying
-source statement uses exactly the same contained-ball argument as (55.13),
-with no change to the common embedding. $\square$
-
-The radius in (147.3) is a certified worst-case margin, not an optimal
-radius for each particular $w$. It is nevertheless a new distinction from
-finite negativity: the quantity that protects normalization is the distance
-from the infinite minimum to the escape edge, and a perturbation consumes at
-most two copies of its operator-norm budget, one in the trial value and one
-in the escaping lower bound.
-
-The zero-margin boundary is already realized inside the same carrier. In the
-weak-coupling range of (55.18b), $m=\epsilon_*$ and the radial strings there
-are weakly null normalized near-minimizers. Thus no positive uniform radius
-depending only on $\epsilon_*-m$ can be asserted at equality; at $w=0$ itself
-there need not be a normalized ground state. This is a sharp boundary for
-the *gap-based certificate*. It does not claim that every individual
-perturbation at equality destroys every possible threshold state, nor that
-the sufficient radius is necessary for a fixed perturbation.
-
-The result is a stability statement for the declared occurrence operator.
-It does not turn bounded multiplication into a native FIB action, does not
-identify $\epsilon_*-m$ with a physical noise budget, and does not establish
-an operation-, metric-, field- or clock-preserving bridge to Euclidean space.
-In particular it supplies no dimension-selection theorem; it records how a
-strict escape gap can be spent while retaining a normalized boundary state.
-
-## 147.99 追加锚（本行以下为增补区）
-## 148. Native coherent Markov lifts do not select a global heat-trace dimension
-
-**Definition 148.1 (first births and the common birth Hilbert space).**
-Fix one finite source $u\in\mathcal T$ of Definition 127.1 and its uncapped
-accepted history. Put
-
-$$
-b_e=|\mathcal P_e|,\qquad |B_e|=2b_e,\qquad
-\eta(u)=\min\{e\ge0:b_e>0\}.
+t=e^{-\beta}>0,\quad D=2(1+t),\quad p=|(V_q)_\ell|^2,\qquad
+\sigma=\begin{pmatrix}
+a&0&0&0\\0&b&z&0\\0&\overline z&c&0\\0&0&0&d
+\end{pmatrix},\qquad \tau=\operatorname{diag}(r_0,r_1).
 \tag{148.1}
 $$
 
-Here $B_e$ is born in the step $e\to e+1$, rather than already being present
-at epoch $e$. Every finite source has at least one terminal leaf, so
-$\eta(u)=0$ if it has a beta leaf and $\eta(u)=1$ otherwise. The latter
-initial step is an accepted empty birth. A beta always has a beta left
-child, so $b_e>0$ at every $e\ge\eta(u)$; in particular there are infinitely
-many nonempty birth blocks. This also follows from Proposition 128.3.
-Its $h(u)$ additionally requires an existing branch: $\eta(\beta)=0$ and
-$h(\beta)=1$, whereas $\eta(\alpha)=1$ and $h(\alpha)=2$. Thus the
-first-birth offset below is $e-\eta(u)$, without dropping either singleton's
-first birth or any accepted empty epoch.
-
-Start with $G_0=I$ and $Q_0=-L_0$. Fix
+The order for $\sigma$ is $(|00\rangle,|01\rangle,|10\rangle,|11\rangle)$.
+The coefficients inherited from (142.6) are
 
 $$
-r>1,\qquad C>\max_{p\in V_0}s_0(p),\qquad
-s_0(p)=-Q_0(p,p),\qquad C>0.
+a=\frac1D,\quad b=\frac{1-(1-t)p}{D},\quad
+c=\frac{t+(1-t)p}{D},\quad d=\frac tD,\quad
+z=\frac{(1-t)\sqrt{p(1-p)}}D,\quad
+r_0=\frac1{1+t},\quad r_1=\frac t{1+t}.
 \tag{148.2}
 $$
 
-At every nonempty birth choose the parameters of Proposition 127.2 to be
+Here $a+b+c+d=1$ and $z$ is real in the chosen source convention.
+Write $\mu=|z|^2$ throughout; it is not an AURIC joint-occupancy $\kappa$.
+The useful source-specific identities are
 
 $$
-q_e=0,\qquad \lambda_e=C r^{e-\eta(u)},\qquad
-K_e=\lambda_e I_{2b_e},\qquad
-G_{e+1}=W_e^{-\mathsf T}
- \operatorname{diag}(G_e,\lambda_e^{-1}I_{2b_e})W_e^{-1}.
+ad=\frac{t}{4(1+t)^2},\qquad
+\mu=\frac{(1-t)^2p(1-p)}{4(1+t)^2},\qquad bc=ad+\mu.
 \tag{148.3}
 $$
 
-At an empty birth retain $G_{e+1}=G_e$, $Q_{e+1}=Q_e$ and the identity
-embedding. The original $V_e,E_e,L_e,T_e$ and the initial norm are fixed;
-the compatible successor norms are allowed to depend on $r$. The same
-comparison parameter $t$ is used at every step, without an epoch-dependent
-change of clock.
-
-For each such lift write $S_e=G_e^{1/2}$,
-$H_e=S_e^{-1}L_eS_e^{-1}$ and $V_e^{\rm iso}=S_{e+1}T_eS_e^{-1}$.
-These $V_e^{\rm iso}$ are the normalized isometric embeddings called $V$
-in Definition 135.1; they are not the occurrence sets $V_e$.
-The common abstract birth space is
+Schuch--Verstraete--Cirac [M], PDF p. 9, §IV.D.1, Eqs. (17)--(18),
+supply the mature mixed-state number-SSR setting and local-filter standard
+form. Their parameters map as
 
 $$
-\mathscr H_u=\mathbb C^{V_0}\mathbin{\oplus}
- \bigoplus_{e\ge\eta(u)}\mathbb C^{B_e}.
+(w_{00},w_{01},w_{10},w_{11},\gamma)=(a,b,c,d,z),\qquad
+w=\sqrt{\frac{ad}{bc}},\qquad v=\frac{|z|}{\sqrt{bc}}.
 \tag{148.4}
 $$
 
-The finite initial summand includes all accepted empty steps before the
-first birth. Identifications with the normalized finite spaces use the
-orthogonal birth charts of Proposition 135.3. The dimensions and labels of
-(148.4) are independent of $r$, although those identifications depend on
-the chosen norms.
+For finite $\beta$ all diagonal entries and $bc$ are positive.
+Their §IV.D.2, PDF p. 10, projects two copies onto the local one-particle
+spaces, squares the coherence parameter and retains the original
+entanglement threshold: $v^2>w^2$ is exactly $\mu>ad$.
+The mixed-state two-copy mechanism and threshold preservation are established
+results. The calculations below apply that method to the specified native
+parameters, including CAR ordering and the full B spectator.
 
-**Theorem 148.2 (a fixed beta source realizes every positive logarithmic heat dimension).**
-For $u=\beta$, every $r>1$ and every $C>0$, (148.3) gives a conservative
-Markov generator at every finite epoch, with exact form preservation, norm
-preservation and same-clock intertwining as in (128.2). On
-$\mathscr H_\beta$ their normalized inductive limit is the nonnegative
-self-adjoint operator
+The actual probabilities are computed directly from (148.1).
+No preliminary standard-form filter from [M] is performed, and no omitted
+success factor from such a filter is absorbed into these probabilities.
+The pure-state fixed-number formula of Wiseman--Vaccaro [W] is resource
+context; it is not used as a mixed grand-canonical Gibbs formula.
 
-$$
-\begin{aligned}
-H_r&=0_{\mathbb C}\mathbin{\oplus}
-       \bigoplus_{e\ge0}C r^e I_{2F_{e+1}},\\
-\operatorname{Dom}(H_r)
- &=\left\{(z_{\rm init},(z_e)_{e\ge0})\in\mathscr H_\beta:
-       \sum_{e\ge0}(C r^e)^2\|z_e\|^2<\infty\right\},
-\end{aligned}
-\tag{148.5}
-$$
+## 149. CAR regrouping and the effective dual-rail block
 
-where $z_{\rm init}$ is the initial scalar. This operator has compact
-resolvent and a single zero
-mode. With positive eigenvalues counted with multiplicity, put
-$N_r^+(\Lambda)=\operatorname{Tr}\mathbf1_{(0,\Lambda]}(H_r)$. Then
+First consider the effective active states $\sigma$ after an allowed
+B alignment and discard of each B-local spectator. This is a useful
+source-dependent protocol, distinct from the full common filter of §151.
+Use copy-first creation order $(A_1,b_1,A_2,b_2)$.
+Passing to party order $(A_1,A_2,b_1,b_2)$ multiplies an occupation ket by
 
 $$
-N_r^+(\Lambda)=
-\begin{cases}
-0,&0\le\Lambda<C,\\
-2(F_{m+3}-1),&\Lambda\ge C,\quad
- m=\lfloor\log_r(\Lambda/C)\rfloor,
-\end{cases}
-\tag{148.6}
-$$
-
-and, writing $\varphi=(1+\sqrt5)/2$ and
-$\gamma_r=\log\varphi/\log r$,
-
-$$
-\begin{aligned}
-\operatorname{Tr}(e^{-tH_r})
- &=1+2\sum_{e\ge0}F_{e+1}e^{-tCr^e}<\infty\qquad(t>0),\\
-\lim_{\Lambda\to\infty}
- \frac{\log N_r^+(\Lambda)}{\log\Lambda}
- &=\lim_{t\downarrow0}
- \frac{\log\operatorname{Tr}(e^{-tH_r})}{\log(1/t)}
- =\gamma_r.
-\end{aligned}
-\tag{148.7}
-$$
-
-Define $d_{\rm heat}=2\gamma_r$ for this global logarithmic Hilbert
-heat-trace convention. For each prescribed real $d>0$, the choice
-$r=\varphi^{2/d}$ gives $d_{\rm heat}=d$. In particular $d=3$ is attained
-at $r=\varphi^{2/3}$, and is not selected by finite coherence and Markov
-positivity.
-
-**Proof.** First consider the finite construction for any source in
-Definition 148.1. The initial generator is Markov. Formula (128.3) leaves
-every old row, hence every old exit rate, unchanged. A child born at step
-$j\to j+1$ has exit rate $\lambda_j$. Consequently, at a nonempty step
-$e\to e+1$, an old parent's exit is either an initial exit rate or a
-$\lambda_j$ with $j<e$. The strict growth in (148.3) and (148.2) imply
-
-$$
-\kappa_c:=\lambda_e-s_e(\operatorname{par}_e(c))>0,
-\qquad
-s_e(\operatorname{par}_e(c))+\kappa_c=\lambda_e.
-\tag{148.8}
-$$
-
-Thus $K_e$ is exactly an allowed diagonal choice in Proposition 128.2,
-not an arbitrary SPD block whose Markov signs were left unchecked.
-Corollary 127.3 gives its actual generator, and Proposition 128.2 proves
-nonnegative off-diagonal entries and zero row sums. Proposition 127.2 and
-Theorem 128.1 give the inherited SPD metric and all four identities in
-(128.2). Empty births have their identity extensions. This induction
-constructs compatible prefixes of every finite length, without a future
-choice changing any earlier metric or rate.
-
-Proposition 135.3 now identifies the successor operator, unitarily and with
-its old isometric copy, with $H_e\oplus\lambda_e I_{2b_e}$. Iterating these
-identifications yields (148.4) and the diagonal direct-sum operator
-$H_{\rm initial}\oplus\bigoplus_e\lambda_e I_{2b_e}$, where
-$H_{\rm initial}=L_0$. The algebraic sum of the finite spaces is a core:
-truncation converges both in norm and in the graph norm specified by
-$\sum_e\lambda_e^2\|z_e\|^2$. Coordinatewise adjoints give exactly this
-domain, so the operator is self-adjoint. Each block is finite-dimensional
-and $\lambda_e\to\infty$. The resolvent $(H_r+I)^{-1}$ is therefore a norm
-limit of finite-rank truncations, since its tail norm is at most
-$\sup_{e\ge E}(1+\lambda_e)^{-1}\to0$. This proves compact resolvent.
-
-For beta, the initial space has one vertex and zero form. The terminal
-counts obey $a_{e+1}=b_e$, $b_{e+1}=a_e+b_e$, with $(a_0,b_0)=(0,1)$.
-Hence $b_e=F_{e+1}$ for $F_0=0,F_1=1$, and (148.5) follows. Births at
-$e=0,\ldots,m$ are precisely the blocks with eigenvalue at most $\Lambda$
-when $m$ is as in (148.6). The finite identity
-$\sum_{e=0}^mF_{e+1}=F_{m+3}-1$ proves the exact count, including equality
-at $\Lambda=Cr^m$. There are no positive initial eigenvalues.
-
-The Fibonacci formula gives $F_{m+3}-1\asymp\varphi^m$ for $m\ge0$.
-Since $r^m\le\Lambda/C<r^{m+1}$ and
-$\varphi^m=(r^m)^{\gamma_r}$, there are constants $a_-,a_+>0$, independent
-of $\Lambda$, such that
-
-$$
-a_-(\Lambda/C)^{\gamma_r}
- \le N_r^+(\Lambda)
- \le a_+(\Lambda/C)^{\gamma_r}\qquad(\Lambda\ge C).
-\tag{148.9}
-$$
-
-Taking logarithms proves the counting limit. Put
-$Z_r^+(t)=\operatorname{Tr}(e^{-tH_r})-1$. The elementary identity
-$e^{-t\lambda}=t\int_\lambda^\infty e^{-tx}\,dx$, summed over positive
-eigenvalues with nonnegative integrands, gives
-
-$$
-Z_r^+(t)=t\int_0^\infty e^{-tx}N_r^+(x)\,dx.
-\tag{148.10}
-$$
-
-This same intermediate identity is used for the different fixed operator
-in [*FIB atomic biased boundary spectral counting*, Theorem 3.1](FIB_ATOM_BIASED_BOUNDARY_SPECTRAL_COUNTING.md).
-Here (148.9) gives, for $0<t\le C^{-1}$,
-
-$$
-\frac{a_-}{\mathrm e}(Ct)^{-\gamma_r}
- \le \mathrm e^{-1}N_r^+(1/t)
- \le Z_r^+(t)
- \le a_+(Ct)^{-\gamma_r}
-        \int_0^\infty e^{-x}x^{\gamma_r}\,dx.
-\tag{148.11}
-$$
-
-The lower estimate counts the eigenvalues at most $1/t$; the upper
-estimate substitutes (148.9) in (148.10), with the count zero below $C$.
-The last integral is finite because $\gamma_r>0$. The same upper bound
-also proves finiteness for every $t>0$. Taking logarithms in (148.11), and
-then including the single zero mode, proves (148.7). Substitution of
-$r=\varphi^{2/d}$ proves the claimed range. These bounds assert a
-logarithmic exponent, without an exact Weyl coefficient or a limit of a
-logarithmic derivative of the trace. $\square$
-
-**Proposition 148.3 (separate full-source birth-count variant).**
-For every fixed finite $u\in\mathcal T$, let $a(u),b(u)$ be its original
-alpha- and beta-leaf counts. In the construction (148.2)--(148.4),
-
-$$
-b_e=a(u)F_e+b(u)F_{e+1},\qquad
-H_{u,r}=L_0\mathbin{\oplus}
- \bigoplus_{e\ge\eta(u)}Cr^{e-\eta(u)}I_{2b_e}.
-\tag{148.12}
-$$
-
-Its domain is $\sum_{e\ge\eta(u)}(Cr^{e-\eta(u)})^2\|z_e\|^2<\infty$
-inside $\mathscr H_u$, with no additional restriction on the finite initial
-component. It is self-adjoint with compact resolvent. For $\Lambda\ge C$,
-
-$$
-\begin{aligned}
-N_{u,r}^+(\Lambda)
- &=N_{\rm initial}^+(\Lambda)
-   +2\sum_{e=\eta(u)}^{\eta(u)+m}b_e,
- &m&=\lfloor\log_r(\Lambda/C)\rfloor,\\
-\operatorname{Tr}(e^{-tH_{u,r}})
- &=\operatorname{Tr}(e^{-tL_0})
-   +2\sum_{e\ge\eta(u)}b_e e^{-tCr^{e-\eta(u)}}.
-\end{aligned}
-\tag{148.13}
-$$
-
-Here $N_{\rm initial}^+(\Lambda)$ counts the positive eigenvalues of $L_0$
-up to and including $\Lambda$, and the heat identity is for $t>0$.
-Below $C$ only the initial positive count remains. The two logarithmic limits
-displayed in (148.7) equal $\log\varphi/\log r$ for this fixed $u$ as well.
-
-**Proof.** The terminal recurrence in the preceding proof gives the first
-formula of (148.12), including $e=0$. It is also the birth-count identity
-of IV, Theorem 112.4, now with the full source convention of Definition
-127.1. The construction and direct-sum argument in Theorem 148.2 already
-apply to these sources, proving the operator, domain and compactness
-claims. Since $a(u)+b(u)>0$, the leading Fibonacci coefficient is positive:
-$b_{\eta(u)+j}\asymp_u\varphi^j$ as $j\to\infty$. The cumulative sum
-therefore has this same order. Counting blocks proves (148.13), and the
-two-sided power and integral bounds of (148.9)--(148.11) apply with
-source-dependent constants. The finite initial count and finite initial
-heat trace do not change either logarithmic limit. All constants refer to
-one fixed source; no uniformity over unbounded initial source sizes is
-needed. $\square$
-
-**Proposition 148.4 (constant-rate and uniformly bounded-exit boundaries).**
-For the same sources, replacing $r>1$ by $r=1$ in (148.3), with $C$ as in
-(148.2), still gives coherent conservative finite Markov generators, but
-
-$$
-H_{u,1}=L_0\mathbin{\oplus}\bigoplus_{e\ge\eta(u)}C I_{2b_e},
-\qquad
-\operatorname{Tr}\!\left(e^{-tH_{u,1}}
-              \mathbf1_{(0,\infty)}(H_{u,1})\right)=\infty
-\quad(t>0).
-\tag{148.14}
-$$
-
-More generally, suppose a coherent family of finite lifts with the
-normalized isometric embeddings of §135 has conservative Markov $Q_e$ and
-a uniform exit bound $-Q_e(p,p)\le M<\infty$ over all its epochs and
-vertices. If its Hilbert inductive limit is infinite-dimensional, the
-compatible normalized operator extends to a bounded nonnegative
-self-adjoint operator with spectrum in $[0,2M]$. Its full heat trace is
-infinite at every positive time.
-
-**Proof.** For $r=1$ every inherited exit is at most $C$, and
-$K_e=C I_{2b_e}\succ0$. The actual-coordinate formula (128.3) has child
-exit $C$ and child-to-parent rate $C-s_e(p)\ge0$, with the other entries
-as in (128.4). Some of these parent rates are zero: this boundary uses
-the displayed sign calculation, rather than asserting the strict
-$\kappa_c>0$ hypothesis of Proposition 128.2. Coherence still follows
-from Proposition 127.2 and Theorem 128.1. Proposition 135.3 gives
-(148.14). Infinitely many positive modes contribute the same positive
-number $e^{-tC}$ to that trace.
-
-For the general comparison, each row of $-Q_e$ has diagonal $s_e(p)$ and
-sum of absolute off-diagonal entries $s_e(p)\le M$. Gershgorin's bound
-puts every real eigenvalue in $[0,2M]$. The eigenvalues are real and
-nonnegative because $-Q_e$ is similar to the symmetric nonnegative $H_e$.
-Thus $0\le H_e\le2MI$ in each normalized Hilbert space. Exact intertwining
-makes these operators consistent on their dense isometric union, where
-they have the same norm bound. Their extension is bounded self-adjoint
-and satisfies $0\le H\le2MI$. Functional calculus gives
-$e^{-tH}\ge e^{-2Mt}I$, whose trace is infinite in infinite dimension.
-This comparison needs the uniform bound and compatible Hilbert structure;
-finite Markov conservation alone does not impose either a heat-trace
-exponent or trace finiteness. $\square$
-
-**Definition 148.5 (scope of nonselection and the missing realization bridge).**
-Here $d_{\rm heat}$ is twice a global logarithmic Hilbert heat-trace
-exponent for the declared comparison operator. It is not a volume-growth
-dimension, walk dimension, pointwise return exponent, spatial or manifold
-dimension, or an identification of $t$ with physical time. The finite
-Markov property refers to $Q_e$ in actual occurrence coordinates; an SPD
-state metric need not be a diagonal measure, and its principal-root
-normalization is not by itself a spatial heat-kernel realization.
-
-The nonselection quantifier is already one fixed source $u=\beta$, the
-same accepted substitutions, original unit-edge forms, parent-copy maps,
-initial norm and comparison clock, with different allowed successor norms.
-It does not hold a complete prescribed norm family fixed while varying its
-spectrum. The parameter $r$ chooses external compatible metrics; it is not
-a native executable control. In particular the theorem supplies no rule
-making a native history choose $r=\varphi^{2/3}$. The freedom established
-here concerns spectral realization, not removal of the information-escape
-conditions of §129 or a physical consequence of the stability result in
-§147. Deriving physical $d=3$ would additionally require a specified
-metric, measure and locality/transport correspondence, a relation between
-its heat law and physical observations, and a criterion selecting the
-allowed norm or rate law. Such correspondences are extra hypotheses to be
-proved for a proposed realization; they are not consequences of the birth
-count.
-
-The fixed biased boundary form in
-[*FIB atomic biased boundary spectral counting*, Definitions 1.1 and 4.1,
-Theorem 3.1](FIB_ATOM_BIASED_BOUNDARY_SPECTRAL_COUNTING.md) has its own
-logarithmic exponent one, with its declared boundary measure and clock.
-That conclusion is retained: no unitary, form, measure or clock
-identification between that boundary operator and this family is assumed.
-Hierarchical pure-point spectra have classical precedents, for example
-Bendikov--Grigor'yan--Pittet--Woess,
-[*Isotropic Markov semigroups on ultra-metric spaces*, §3.2,
-Theorem 3.8](https://arxiv.org/html/1304.6271v3). That theorem supplies
-context for hierarchical eigenfunction decompositions, not a native FIB
-realization bridge. The repo-derived content here is the explicit
-simultaneous Markov/coherence construction on these actual source births
-and its range of global exponents; no originality or priority claim about
-hierarchical spectral freedom is included.
-
-## 148.99 追加锚（本行以下为增补区）
-
-## 149. Native boundary dimension, scale bridges, and task-level escape
-
-The spectral freedom in §148 does not by itself select a geometric
-dimension. The original infinite source boundary gives a sharper negative
-test: its native cylinder scale has dimension one. A three-dimensional
-carrier therefore requires a changed metric, extra coordinates, or a
-transport bridge; replacing \(M\) by an equivalent measure alone does not
-change this Hausdorff dimension.
-
-### 149.1 The native cylinder ultrametric
-
-Let
-
-$$
-\Omega=\{L,R\}^{\mathbb N}
-$$
-
-be the complete binary boundary. For a finite word \(p\), put
-
-$$
-s(p)=\#_L(p)+2\#_R(p),
-\qquad
-\delta(p)=\varphi^{-s(p)},
-$$
-
-where \(\varphi^2=\varphi+1\). If \(\omega\ne\eta\), let
-
-$$
-\omega\wedge\eta
-$$
-
-be their longest common prefix and define
-
-$$
-\boxed{
-d_\varphi(\omega,\eta)=\delta(\omega\wedge\eta),
-\qquad d_\varphi(\omega,\omega)=0.
-}
+(-1)^{n_{b_1}n_{A_2}}.
 \tag{149.1}
 $$
 
-Let \(M\) be the cylinder measure determined by
+This sign is passive CAR-coordinate bookkeeping. It is not a physical
+cross-party unitary, and the regrouping is not an unsigned tensor swap.
+For the full aligned order $(A_1,b_1,s_1,A_2,b_2,s_2)$, the corresponding
+party order $(A_1,A_2,b_1,s_1,b_2,s_2)$ has sign
 
 $$
-\boxed{M([p])=\delta(p).}
+(-1)^{(n_{b_1}+n_{s_1})n_{A_2}}.
 \tag{149.2}
 $$
 
-This is consistent because
+Project the effective system coherently onto $N_A^{\mathrm{tot}}=1$ and
+$N_b^{\mathrm{tot}}=1$. Use the ordinary dual-rail product basis
 
 $$
-\delta(pL)+\delta(pR)
-=\delta(p)(\varphi^{-1}+\varphi^{-2})
-=\delta(p).
-$$
-
-**Proposition 149.1 (native one-dimensional regularity).** The function
-\(d_\varphi\) is an ultrametric. Every cylinder is a closed ball whose
-diameter and \(M\)-mass are both \(\delta(p)\). Moreover, for every
-\(\omega\in\Omega\) and \(0<r\le1\),
-
-$$
-\boxed{
-\varphi^{-2}r\le M(B_{d_\varphi}(\omega,r))\le r.
-}
+(|A_1b_1\rangle,|A_1b_2\rangle,
+ |A_2b_1\rangle,|A_2b_2\rangle),
 \tag{149.3}
 $$
 
-Consequently \(M\) is \(1\)-Ahlfors regular and
+where each ket denotes the indicated Alice rail and Bob rail occupied,
+with all other active occupations zero, in party-first creation order.
+The unnormalized success block in this literal convention is
 
 $$
-\boxed{\dim_H(\Omega,d_\varphi)=1.}
+C_-=
+\begin{pmatrix}
+ad&0&0&0\\
+0&bc&-\mu&0\\
+0&-\mu&bc&0\\
+0&0&0&ad
+\end{pmatrix}.
 \tag{149.4}
 $$
 
-**Proof.** Two longest common prefixes are nested, so among three points
-the two smaller common-prefix scales are bounded by the largest one. This
-is the ultrametric inequality. A ball is the cylinder at the first prefix
-whose scale is at most its radius. Passing from a prefix to either child
-multiplies its scale by \(\varphi^{-1}\) or \(\varphi^{-2}\), which gives
-(149.3) from (149.2). The standard cylinder cover and the ball lower bound
-give the upper and lower Hausdorff estimates at exponent one. \(\square\)
+The diagonal $ad$ comes from an occupied pair in one preparation and
+vacuum in the other. Each middle diagonal is $bc$. Before CAR regrouping,
+the product coherence between the middle kets is $z\overline z=\mu$.
+The ket with $b_1,A_2$ occupied has the minus sign in (149.1), while the
+ket with $A_1,b_2$ occupied has plus sign. This gives the displayed $-\mu$.
 
-For every finite source \(u\), the measure \(\nu_u\) of Definition 113.3
-has a positive finite density on finitely many terminal cylinders. Hence
-there are constants \(0<c_u\le C_u<\infty\) such that
+An explicitly allowed Alice-local phase can change that convention:
 
 $$
-c_uM(A)\le \nu_u(A)\le C_uM(A)
-$$
-
-for every Borel set \(A\subseteq\Omega\). Thus each \(\nu_u\) has the
-same Hausdorff dimension one in the native metric, although its constants
-depend on the finite source.
-
-### 149.2 Native scale cannot supply a three-dimensional carrier
-
-**Proposition 149.2 (Lipschitz dimension obstruction).** Let \(Y\) contain
-a compact set \(K\) of Hausdorff dimension three; in particular this holds
-for a compact ball in a \(3\)-Ahlfors regular local carrier. There is no
-Lipschitz map
-
-$$
-F:(\Omega,d_\varphi)\longrightarrow Y
-$$
-
-whose image contains \(K\). In particular, no uniformly bi-Lipschitz
-identification of the native boundary with a three-dimensional carrier
-exists.
-
-**Proof.** Lipschitz maps do not increase Hausdorff dimension, so
-
-$$
-\dim_H F(\Omega)\le\dim_H\Omega=1.
-$$
-
-The compactness of \(\Omega\) makes \(F(\Omega)\) compact and therefore
-closed. It cannot contain \(K\) of dimension three. A bi-Lipschitz map is
-Lipschitz, so the stronger assertion follows. \(\square\)
-
-This is a statement about retaining the native cylinder scale. It does not
-exclude a non-Lipschitz coding, a hidden transverse coordinate, or a new
-transport metric.
-
-### 149.3 Snowflaking is a formal dimension change, not a native selection
-
-For \(0<\alpha<1\), set
-
-$$
-d_{\varphi,\alpha}=d_\varphi^\alpha.
-$$
-
-The topology and cylinder \(\sigma\)-algebra are unchanged, while (149.3)
-becomes
-
-$$
-\varphi^{-2}r^{1/\alpha}\le
-M(B_{d_{\varphi,\alpha}}(\omega,r))
-\le r^{1/\alpha}.
-$$
-
-Therefore
-
-$$
-\boxed{\dim_H(\Omega,d_{\varphi,\alpha})=\alpha^{-1}.}
+U_A=e^{i\pi n_{A_2}},\qquad
+C_+=(U_A\otimes I_B)C_-(U_A^*\otimes I_B)
+=\begin{pmatrix}
+ad&0&0&0\\0&bc&\mu&0\\0&\mu&bc&0\\0&0&0&ad
+\end{pmatrix}.
 \tag{149.5}
 $$
 
-Taking \(\alpha=1/3\) gives a formally three-dimensional Ahlfors scale on
-the same set. It is an extra choice of metric; neither the source grammar,
-the substitution \(\rho\), nor the native cylinder measure selects it.
-Thus this is an independent scale bridge, not a native dimension theorem
-and not a change to the heat-trace statement of §148.
-
-### 149.4 Applying the source phase loss to future tasks
-
-Applying Theorem 113.5 to a scale-sensitive task gives
+It commutes with local number and parity and is independent of $q$.
+Either matrix has the same success probability and partial-transpose
+spectrum. No such phase is implicit in the literal matrix (149.4).
+In particular, (148.3) also gives
 
 $$
-\nu_\alpha=\nu_\beta=M,
-\qquad
-W(\alpha)=1,
-\qquad
-W(\beta)=\varphi.
-$$
-
-Consequently the target \(F(u)=W(u)\), or the full future scale response
-
-$$
-F_n(u)=W(\rho^n u)=\varphi^nW(u),
-$$
-
-does not factor through the \(\nu\)-only observation. The pair
-\((\alpha,\beta)\) is an explicit escape pair:
-
-$$
-\nu_\alpha=\nu_\beta,
-\qquad
-F_n(\alpha)\ne F_n(\beta)
-\quad(n\ge0).
+C_-=ad\,I_4+2\mu|\psi^-\rangle\langle\psi^-|,\qquad
+|\psi^-\rangle=(|A_1b_2\rangle-|A_2b_1\rangle)/\sqrt2.
 \tag{149.6}
 $$
 
-The quotient still supports the restricted action \(\nu\mapsto\nu\), since
-\(\nu_{\rho u}=\nu_u\). What fails is action closure for tasks that retain
-the acquired scale, INITIAL identity, or any legality condition depending
-on that scale. The pair \((\nu,W)\) is the boundary datum supplied by
-Theorem 113.5 that restores this phase on the attained finite-source image.
+The standard-form projection matrix of [M] is proportional to
+$C_+/(bc)$, with diagonal $(w^2,1,1,w^2)$ and middle coherence $v^2$.
+The local phase in (149.5) explains this correspondence without discarding
+the fermionic sign.
 
-### 149.5 Scope
+## 150. Effective success probability, PPT criterion and number twirl
 
-Sections 149.1--149.4 are exact statements for the full binary boundary,
-the native Fibonacci cylinder weights, and the finite-source measures of
-Definition 113.3. They do not prove a physical three-dimensional
-realization, do not solve the strict four-source \(J\)-\(M\) joint-lift
-problem, and do not establish the open quantitative gap in §11.11 of the
-strict-real incidence continuation. They also do not contradict §148:
-§148 varies compatible successor metrics for a fixed comparison operator,
-whereas this section identifies the native metric and the task information
-that a scale-free quotient omits. The Lipschitz dimension obstruction and
-the snowflake calculation have not been formalized in Lean.
+The direct effective success probability is
+
+$$
+P_{\mathrm{eff}}=\operatorname{Tr}C_-=2(ad+bc)=4ad+2\mu
+=\frac{2t+(1-t)^2p(1-p)}{2(1+t)^2}>0.
+\tag{150.1}
+$$
+
+Partial transpose on the actual Alice dual-rail factor moves the middle
+coherence to a corner. Its unnormalized spectrum is
+
+$$
+\operatorname{spec}C_-^{T_A}
+=\{bc,bc,ad+\mu,ad-\mu\}.
+\tag{150.2}
+$$
+
+The selected factors each have dimension two. The two-qubit PPT theorem
+[P] therefore gives the exact criterion
+
+$$
+C_-/P_{\mathrm{eff}}\text{ is entangled}
+\quad\Longleftrightarrow\quad \mu>ad.
+\tag{150.3}
+$$
+
+At equality the state is PPT and separable. Positivity of the other
+three eigenvalues follows directly from (148.3).
+Define ordinary negativity for a normalized fixed occupation-tensor state by
+$\mathcal N(X)=(\|X^{T_A}\|_1-1)/2$ and $(x)_+=\max\{0,x\}$.
+Then
+
+$$
+\mathcal N(C_-/P_{\mathrm{eff}})
+=\frac{(\mu-ad)_+}{P_{\mathrm{eff}}}.
+\tag{150.4}
+$$
+
+For the entire effective two-copy state, local total-number twirling is
+a direct sum over $(N_A^{\mathrm{tot}},N_b^{\mathrm{tot}})$.
+Each local two-mode space has number-sector dimensions $(1,2,1)$.
+Every sector other than $(1,1)$ has a one-dimensional local factor and
+is separable. Partial transpose preserves the resulting local direct sums,
+so the success-weighted negative eigenvalue is also the total negativity:
+
+$$
+\mathcal N\bigl(\mathcal G_N(\sigma^{\otimes2})\bigr)
+=(\mu-ad)_+.
+\tag{150.5}
+$$
+
+Here $\sigma^{\otimes2}$ abbreviates the specified even copy product with
+the CAR identification of §149. Equation (150.5) concerns the effective
+four-mode total-number twirl. It is neither a total-parity formula nor a
+formula for an unfiltered six-mode full state.
+A success-weighted negativity is a finite state quantity, not a
+distillation yield, asymptotic rate or deterministic success assertion.
+
+## 151. The full common filter in native normalized coordinates
+
+Define the actual common filter before any source-dependent alignment:
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}\,
+  \Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+\tag{151.1}
+$$
+
+The factors act on different parties and commute. The second factor counts
+all four Bob modes, not only a selected active direction.
+Thus $F$ is the same operator for $q_a$ and $q_b$ on the common normalized
+axes. A number-preserving rotation of either pair $(r_i,R_i)$ commutes
+with Bob's total number and hence with $F$. No $q$-dependent operation is
+needed to apply this filter.
+
+Let $\Omega_F$ denote its unnormalized output on the full two-preparation
+resource, in party coordinates. Alice's selected space has dimension two;
+Bob's selected one-particle space has dimension four.
+In the aligned proof basis, Bob has the orthogonal local decomposition
+
+$$
+\mathcal H_B^{(1)}=B_{\mathrm{act}}\oplus B_{\mathrm{sp}},\qquad
+B_{\mathrm{act}}=\operatorname{span}\{|b_1\rangle,|b_2\rangle\},\quad
+B_{\mathrm{sp}}=\operatorname{span}\{|s_1\rangle,|s_2\rangle\}.
+\tag{151.2}
+$$
+
+Using (149.2), the exact output in this proof basis is the B-local direct sum
+
+$$
+\Omega_F\simeq_{B\text{-local}}
+ r_0^2 C_-
+ \ \oplus_B\
+ ac\,r_0r_1\bigl(I_A^{(2)}\otimes I_{B_{\mathrm{sp}}}^{(2)}\bigr).
+\tag{151.3}
+$$
+
+The active block has both spectators empty and therefore weight $r_0^2$.
+If a spectator is occupied, Bob's selected total number excludes both
+active Bob occupations. The four surviving spectator configurations have
+weights
+
+| Alice rail | Bob spectator flag | Weight |
+| --- | --- | --- |
+| $A_1$ | $s_1$ | $ac\,r_0r_1$ |
+| $A_1$ | $s_2$ | $ac\,r_0r_1$ |
+| $A_2$ | $s_1$ | $ac\,r_0r_1$ |
+| $A_2$ | $s_2$ | $ac\,r_0r_1$ |
+
+Each configuration has one active Alice-only occupation of weight $c$
+and one active vacuum of weight $a$. The diagonal spectator state has no
+coherence between spectator flags. An active coherence would introduce
+an active Bob particle, violating this selected sector, so there is also
+no coherence connecting a spectator flag to the active block.
+Two occupied spectators are excluded outright.
+
+Consequently the full success probability, including every selected mode, is
+
+$$
+\begin{aligned}
+P_{\mathrm{full}}
+&=2\bigl[(bc+ad)r_0^2+2ac\,r_0r_1\bigr]\\
+&=\frac{t+\tfrac12(1-t)^2p(1-p)+t[t+(1-t)p]}{(1+t)^4}>0.
+\end{aligned}
+\tag{151.4}
+$$
+
+The unnormalized partial-transpose spectrum consists of
+$r_0^2bc$ twice, $r_0^2(ad+\mu)$, $r_0^2(ad-\mu)$,
+and $ac\,r_0r_1$ four times. In the entangled regime the unique negative
+eigenvalue of the normalized output is
+
+$$
+\lambda_-\bigl((\Omega_F/P_{\mathrm{full}})^{T_A}\bigr)
+=\frac{r_0^2(ad-\mu)}{P_{\mathrm{full}}},\qquad
+P_{\mathrm{full}}\mathcal N(\Omega_F/P_{\mathrm{full}})
+=r_0^2(\mu-ad)_+.
+\tag{151.5}
+$$
+
+For $\mu\le ad$, the active $2\times2$ block is separable by [P];
+each spectator flag is a product block. Their positive sum is separable.
+For $\mu>ad$, (151.5) is NPT. Thus the full output is entangled exactly
+when $\mu>ad$. This uses the actual direct sum (151.3), never PPT
+sufficiency for arbitrary $2\times4$ states.
+The aligned subspaces in (151.2) depend on $q$. A common raw filter has
+been specified; a common $q$-independent active-state extraction has not.
+
+## 152. Finite temperature and the two irreducible native models
+
+Substituting (148.3) into the shared activation condition gives
+
+$$
+\mu>ad
+\quad\Longleftrightarrow\quad
+(1-t)^2p(1-p)>t
+\quad\Longleftrightarrow\quad
+4\sinh^2(\beta/2)p(1-p)>1.
+\tag{152.1}
+$$
+
+For $0<p<1$ the critical inverse temperature is exactly that of §144:
+
+$$
+\beta_c(p)=2\operatorname{arsinh}\frac1{2\sqrt{p(1-p)}},\qquad
+\beta_{c,a}=2\operatorname{arsinh}\frac{99}{\sqrt{7301}},\quad
+\beta_{c,b}=2\operatorname{arsinh}\frac3{2\sqrt2}.
+\tag{152.2}
+$$
+
+Here $p_a=49/198$, $p_b=1/3$, and $\beta_{c,b}<\beta_{c,a}$.
+Either filtered output is entangled precisely for $\beta>\beta_c(p)$;
+equality is separable. The full finite-temperature classification is
+
+| Inverse temperature | Common-filter output for $q_a$ | Common-filter output for $q_b$ |
+| --- | --- | --- |
+| $0\le\beta\le\beta_{c,b}$ | separable | separable |
+| $\beta_{c,b}<\beta\le\beta_{c,a}$ | separable | NPT |
+| $\beta>\beta_{c,a}$, finite | NPT | NPT |
+
+At $\beta=\log7$ for $q_b$, the exact entries are
+
+$$
+(a,b,c,d,z)=\left(\frac7{16},\frac5{16},\frac3{16},\frac1{16},
+\frac{\sqrt2}{8}\right),\quad
+ad=\frac7{256},\quad \mu=\frac8{256},\quad bc=\frac{15}{256},\quad
+(r_0,r_1)=\left(\frac78,\frac18\right).
+\tag{152.3}
+$$
+
+The effective and full procedures therefore give distinct exact probabilities:
+
+| Procedure at $q_b,\beta=\log7$ | Success probability | Conditional PT minimum | Success-weighted negativity |
+| --- | --- | --- | --- |
+| Effective filter after alignment and spectator discard | $11/64$ | $-1/44$ | $1/256$ |
+| Full common filter (151.1) | $343/2048$ | $-1/56$ | $49/16384$ |
+
+For example the full unnormalized PT spectrum is $735/16384$ three times,
+$-49/16384$ once, and $147/16384$ four times. Its trace is $343/2048$.
+The number-twirled effective total negativity is $1/256$.
+For $q_a$ at the same temperature,
+
+$$
+\mu_a-a_ad_a=-\frac{161}{139392}<0,\qquad
+36p_a(1-p_a)=\frac{7301}{1089}<7<8=36p_b(1-p_b),
+\tag{152.4}
+$$
+
+where $a_a,d_a$ denote the entries for model $a$. Its common-filter output
+is separable. This does not assert nonactivation at all temperatures.
+At $\beta=0$, $\rho=I_8/8$, $z=0$, $P_{\mathrm{eff}}=1/4$ and
+$P_{\mathrm{full}}=1/8$. At $p=0$ or $1$, $z=0$ at every finite
+$\beta$ and neither procedure activates entanglement.
+No zero-temperature limit is required for these statements.
+
+Both native row generators remain $Q_q=\mathbf1_3\pi_q^{\mathsf T}-I_3$,
+with $\pi_a=(2/3,1/6,1/6)$ and $\pi_b=(1/3,1/3,1/3)$.
+Every off-diagonal rate is strictly positive, independently of $\beta$.
+Postselecting a quantum state changes neither native generator nor its
+irreducibility. The native comparison concerns the stopped singleton step,
+not a claim of irreducibility at subsequent epochs.
+
+## 153. Parity-legal filtering and the different parity-twirled total
+
+The filter (151.1), the effective number filter, the B rotations and the
+Alice rail phase all commute with local parity. They are therefore also
+allowed under a local total-parity SSR. Each selected local number-one
+space has fixed odd parity, so the same conditional states, probabilities
+and thresholds apply to this heralded protocol.
+
+The complete effective parity twirl is nevertheless different from the
+number twirl. Put $P_A=(-1)^{N_A^{\mathrm{tot}}}$ and
+$P_B=(-1)^{N_b^{\mathrm{tot}}}$ on the effective system and define
+
+$$
+\mathcal G_P(X)=\frac14\sum_{j,k=0}^1P_A^jP_B^kX P_B^kP_A^j.
+\tag{153.1}
+$$
+
+The odd--odd block is $C_-$. There is also an even--even block on
+Alice and Bob bases $(|00\rangle,|11\rangle)$, respectively, with form
+
+$$
+E=\begin{pmatrix}
+a^2&0&0&0\\
+0&b^2&\eta&0\\
+0&\overline\eta&c^2&0\\
+0&0&0&d^2
+\end{pmatrix},\qquad |\eta|=\mu.
+\tag{153.2}
+$$
+
+In the unphased party-first convention $\eta=z^2$; a declared local rail
+phase can change its sign. The remaining two parity blocks are diagonal.
+The corner of $E^{T_A}$ has diagonal $(a^2,d^2)$ and off-diagonal
+magnitude $\mu$. It is NPT precisely when $\mu^2>a^2d^2$, equivalently
+$\mu>ad$. If $\mu\le ad$, both actual $2\times2$ blocks are PPT and
+separable, as are the diagonal blocks. Thus the effective parity-twirled
+state has the same threshold, with an additional contributing block above it.
+
+In particular its total ordinary negativity is
+
+$$
+\mathcal N\bigl(\mathcal G_P(\sigma^{\otimes2})\bigr)
+=(\mu-ad)_+
++\frac12\left(\sqrt{(a^2-d^2)^2+4\mu^2}-(a^2+d^2)\right)_+.
+\tag{153.3}
+$$
+
+At $q_b,\beta=\log7$, this is $(\sqrt{10}-3)/32$, rather than
+$1/256$. Formula (150.5) is specifically the effective total-number value.
+For each fixed diagonal B spectator occupation pattern, its contribution
+to B parity is a fixed sign, which leaves parity conjugation unchanged.
+The additional sign in (149.2) gives at most an Alice-local phase on that
+flag. Thus the spectator flags do not change the parity activation
+threshold for the full copies. They do enter the probability and the
+success-weighted negativity of the full number-filter outcome as in §151.
+None of these total-state quantities is a rate.
+
+## 154. A fixed-source relation distinguished by joint local access
+
+For a fixed $q,\beta$, compare $\rho$ with
+$\overline\rho=\mathcal D_A(\rho)$ from §145, not with the other native
+model. In the aligned proof basis their effective factors are $\sigma$
+and $\overline\sigma=\operatorname{diag}(a,b,c,d)$, and they have the
+same B spectator. Their single-copy SSR product-observable statistics agree:
+
+$$
+\operatorname{Tr}[\rho(X_A\otimes Y_B)]
+=\operatorname{Tr}[\overline\rho(X_A\otimes Y_B)]
+\tag{154.1}
+$$
+
+for the allowed single-copy local observables. Applying the full common
+filter to $\overline\rho\otimes\overline\rho$ retains precisely the same
+diagonal weights and success probability as for $\rho\otimes\rho$.
+Its active block, however, is $r_0^2\operatorname{diag}(ad,bc,bc,ad)$;
+there is no surviving middle coherence. The spectator blocks are unchanged.
+
+In the selected sector define the Hermitian observable
+
+$$
+W=|A_1b_2\rangle\langle A_2b_1|
+ +|A_2b_1\rangle\langle A_1b_2|,
+\tag{154.2}
+$$
+
+extended by zero on Bob's spectator flags. For this fixed source it can be
+measured through local dual-rail correlations:
+$W=(X_A\otimes X_b+Y_A\otimes Y_b)/2$ on the active space.
+Here $X$ and $Y$ are the rail Pauli operators inside a number-one space;
+Bob's versions vanish on the spectator flags. These observables preserve
+local total number and require joint local access to the preparations.
+
+In the literal CAR convention (149.4), the two normalized conditional
+expectations are exactly
+
+$$
+\langle W\rangle_{\rho\text{ product},F}
+=-\frac{2r_0^2\mu}{P_{\mathrm{full}}},\qquad
+\langle W\rangle_{\overline\rho\text{ product},F}=0.
+\tag{154.3}
+$$
+
+For $\mu>0$ they differ; entanglement is not needed merely to distinguish
+them. An explicit application of (149.5) reverses the first sign.
+The observable is fixed for the chosen aligned source; this is not an
+assertion of a common raw $q$-independent extractor or analyzer.
+
+This finite pair shows why the stated single-copy operational equivalence
+cannot simply be composed when the operation menu is enlarged to joint
+local access. It does not assert that a tensor-compatible quotient of
+whole processes was already defined by the single-copy observation rule.
+Nor is $\overline\rho$ identified with $\rho_{q_a,\beta}$: at $\log7$,
+the allowed Alice occupations $115/528$ and $1/4$ already distinguish the
+two native models, as (145.3) records.
+
+## 155. Native correspondence and scope of the application
+
+The source and model interfaces used here are explicit:
+
+| Object or operation | Correspondence and condition |
+| --- | --- |
+| Native accepted history | The singleton source of §139, with two actual children and unchanged $L_\star$, from Definition 127.1 and Proposition 128.3 |
+| Metric variation | Proposition 127.2 specialized to $G_0=[1]$, $K=I_2$, residual vector $q$; (139.2) gives $G_q=L_\star+\pi_q\pi_q^{\mathsf T}$ |
+| Native generator | Corollary 127.3 gives (139.3), with the interior probabilities in (139.4) |
+| Quantum coordinate space | The explicitly added principal-root normalization, complexification and common normalized cut of §140 |
+| Full Gibbs preparation | All eight fermionic occupations of §141, finite $\beta$, zero mode retained |
+| Effective state | The even B-local alignment and spectator factorization (142.3)--(142.6), reused in (148.1)--(148.2) |
+| Two-preparation input | Two independent instances of that same specified full state, with compatible CAR and coupling phase |
+| Joint local SSR | One total number or parity per party across both preparations, with coherent degenerate filtering |
+| Common success event | Equation (151.1) on the native normalized modes, counting all of Bob's modes |
+| Proof block coordinates | Source-dependent B alignments commuting with that common success projector |
+
+The native definitions at [N] and the Fock extension at [F] are reference
+inputs to this finite application. Sections 139--146 supply the intervening
+Gibbs correspondence. The additional relation evaluated here is the
+specified two-preparation local projection, not a new generic activation
+principle. The original accepted history, inherited norm, edge form and
+comparison clock remain those of §139. Only the native metric parameter
+and hence the quantum state vary in the native comparison.
+
+The ordinary tensor partial transpose is used after the CAR convention has
+been fixed. Its sufficiency for separability is invoked only on actual
+$2\times2$ blocks; the full output uses the proved B-local direct sum.
+The negativity values are finite diagnostics of those states. No Bell
+advantage, physical implementation, deterministic extraction or asymptotic
+distillation rate follows from them. The normalized coordinate model does
+not establish a physical clock, raw-site tensor split, or the realization
+and uniform comparison hypotheses of §§131--134.
+
+The established mixed-state method is reused from [M], with [P] supplying
+the two-qubit separability criterion. The source-specific content consists
+of the native substitution, explicit CAR phase, spectator-inclusive common
+filter and exact finite probabilities. No generic-theorem novelty or
+literature-priority claim is attached to that application. It is ordinary
+mathematical exposition without a Lean kernel certificate.
+The availability of the preparation and instrument remains an explicit
+physical premise, separate from the conditional finite matrix conclusions.
+
+## 156. Primary references and exact reuse scopes
+
+- **[M] Mixed-state number-SSR projection.** N. Schuch, F. Verstraete and
+  J. I. Cirac, *Quantum entanglement theory in the presence of superselection
+  rules*, [quant-ph/0404079v1](https://arxiv.org/pdf/quant-ph/0404079v1),
+  Phys. Rev. A **70**, 042310;
+  DOI [10.1103/PhysRevA.70.042310](https://doi.org/10.1103/PhysRevA.70.042310).
+  PDF p. 9, §IV.D.1, Eqs. (17)--(18): mixed X state and standard form.
+  PDF p. 10, §IV.D.2: two-copy local one-particle projection, squared
+  coherence and preservation of the original threshold. The mapping is
+  (148.4); the direct unfiltered-input probabilities are (150.1), (151.4).
+- **[P] Two-qubit PPT sufficiency.** M. Horodecki, P. Horodecki and
+  R. Horodecki, *Separability of Mixed States: Necessary and Sufficient
+  Conditions*, [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
+  Theorem 3, PDF p. 8. Its $2\times2$ case applies to the active and
+  even--even blocks. No general $2\times4$ sufficiency is imported.
+- **[W] Fixed-number pure-state resource context.** H. M. Wiseman and
+  J. A. Vaccaro, *The entanglement of indistinguishable particles shared
+  between two parties*,
+  [quant-ph/0210002v2](https://arxiv.org/pdf/quant-ph/0210002v2),
+  Phys. Rev. Lett. **91**, 097902;
+  DOI [10.1103/PhysRevLett.91.097902](https://doi.org/10.1103/PhysRevLett.91.097902).
+  PDF pp. 2--3, Eqs. (12)--(14), concern fixed-local-number projection
+  and pure-state entanglement. They do not supply a mixed Gibbs formula.
+- **[R] Two-copy SSR review context.** S. D. Bartlett, T. Rudolph and
+  R. W. Spekkens, *Reference frames, superselection rules, and quantum
+  information*, [quant-ph/0610030v3](https://arxiv.org/pdf/quant-ph/0610030v3),
+  Rev. Mod. Phys. **79**, 555;
+  DOI [10.1103/RevModPhys.79.555](https://doi.org/10.1103/RevModPhys.79.555).
+  PDF §III.C.2, Eq. (3.32), and §III.C.4 give mature two-copy and
+  superselection context. The optical context is not transferred as a
+  physical realization of these native fermionic modes.
+- **[N] Native metric and history source.** This volume, §§127--130,
+  at [28e2ace3ee3cb91ebd90e1c7da0bec381b109e52](https://github.com/the-omega-institute/trureturing/blob/28e2ace3ee3cb91ebd90e1c7da0bec381b109e52/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+  The source correspondence is specialized in §§139--140 and §155.
+- **[F] Fermionic extension and ordering source.** This volume, §§135--138,
+  at [485055803a4de7e47866c28fb75de1443e3eae89](https://github.com/the-omega-institute/trureturing/blob/485055803a4de7e47866c28fb75de1443e3eae89/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md),
+  supplies the finite Fock/exterior and second-quantization interface.
+  Sections 141--142 fix its full Gibbs state and even B-local factorization;
+  §§149--151 specify the two-preparation CAR coordinates and common filter.
+
+## 156.99 追加锚（本行以下为增补区）
