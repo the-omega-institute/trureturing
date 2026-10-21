@@ -3637,3 +3637,205 @@ and its range of global exponents; no originality or priority claim about
 hierarchical spectral freedom is included.
 
 ## 148.99 追加锚（本行以下为增补区）
+
+## 149. Native boundary dimension, scale bridges, and task-level escape
+
+The spectral freedom in §148 does not by itself select a geometric
+dimension. The original infinite source boundary gives a sharper negative
+test: its native cylinder scale has dimension one. A three-dimensional
+carrier therefore requires a changed metric, extra coordinates, or a
+transport bridge; replacing \(M\) by an equivalent measure alone does not
+change this Hausdorff dimension.
+
+### 149.1 The native cylinder ultrametric
+
+Let
+
+$$
+\Omega=\{L,R\}^{\mathbb N}
+$$
+
+be the complete binary boundary. For a finite word \(p\), put
+
+$$
+s(p)=\#_L(p)+2\#_R(p),
+\qquad
+\delta(p)=\varphi^{-s(p)},
+$$
+
+where \(\varphi^2=\varphi+1\). If \(\omega\ne\eta\), let
+
+$$
+\omega\wedge\eta
+$$
+
+be their longest common prefix and define
+
+$$
+\boxed{
+d_\varphi(\omega,\eta)=\delta(\omega\wedge\eta),
+\qquad d_\varphi(\omega,\omega)=0.
+}
+\tag{149.1}
+$$
+
+Let \(M\) be the cylinder measure determined by
+
+$$
+\boxed{M([p])=\delta(p).}
+\tag{149.2}
+$$
+
+This is consistent because
+
+$$
+\delta(pL)+\delta(pR)
+=\delta(p)(\varphi^{-1}+\varphi^{-2})
+=\delta(p).
+$$
+
+**Proposition 149.1 (native one-dimensional regularity).** The function
+\(d_\varphi\) is an ultrametric. Every cylinder is a closed ball whose
+diameter and \(M\)-mass are both \(\delta(p)\). Moreover, for every
+\(\omega\in\Omega\) and \(0<r\le1\),
+
+$$
+\boxed{
+\varphi^{-2}r\le M(B_{d_\varphi}(\omega,r))\le r.
+}
+\tag{149.3}
+$$
+
+Consequently \(M\) is \(1\)-Ahlfors regular and
+
+$$
+\boxed{\dim_H(\Omega,d_\varphi)=1.}
+\tag{149.4}
+$$
+
+**Proof.** Two longest common prefixes are nested, so among three points
+the two smaller common-prefix scales are bounded by the largest one. This
+is the ultrametric inequality. A ball is the cylinder at the first prefix
+whose scale is at most its radius. Passing from a prefix to either child
+multiplies its scale by \(\varphi^{-1}\) or \(\varphi^{-2}\), which gives
+(149.3) from (149.2). The standard cylinder cover and the ball lower bound
+give the upper and lower Hausdorff estimates at exponent one. \(\square\)
+
+For every finite source \(u\), the measure \(\nu_u\) of Definition 113.3
+has a positive finite density on finitely many terminal cylinders. Hence
+there are constants \(0<c_u\le C_u<\infty\) such that
+
+$$
+c_uM(A)\le \nu_u(A)\le C_uM(A)
+$$
+
+for every Borel set \(A\subseteq\Omega\). Thus each \(\nu_u\) has the
+same Hausdorff dimension one in the native metric, although its constants
+depend on the finite source.
+
+### 149.2 Native scale cannot supply a three-dimensional carrier
+
+**Proposition 149.2 (Lipschitz dimension obstruction).** Let \(Y\) contain
+a compact set \(K\) of Hausdorff dimension three; in particular this holds
+for a compact ball in a \(3\)-Ahlfors regular local carrier. There is no
+Lipschitz map
+
+$$
+F:(\Omega,d_\varphi)\longrightarrow Y
+$$
+
+whose image contains \(K\). In particular, no uniformly bi-Lipschitz
+identification of the native boundary with a three-dimensional carrier
+exists.
+
+**Proof.** Lipschitz maps do not increase Hausdorff dimension, so
+
+$$
+\dim_H F(\Omega)\le\dim_H\Omega=1.
+$$
+
+The compactness of \(\Omega\) makes \(F(\Omega)\) compact and therefore
+closed. It cannot contain \(K\) of dimension three. A bi-Lipschitz map is
+Lipschitz, so the stronger assertion follows. \(\square\)
+
+This is a statement about retaining the native cylinder scale. It does not
+exclude a non-Lipschitz coding, a hidden transverse coordinate, or a new
+transport metric.
+
+### 149.3 Snowflaking is a formal dimension change, not a native selection
+
+For \(0<\alpha<1\), set
+
+$$
+d_{\varphi,\alpha}=d_\varphi^\alpha.
+$$
+
+The topology and cylinder \(\sigma\)-algebra are unchanged, while (149.3)
+becomes
+
+$$
+\varphi^{-2}r^{1/\alpha}\le
+M(B_{d_{\varphi,\alpha}}(\omega,r))
+\le r^{1/\alpha}.
+$$
+
+Therefore
+
+$$
+\boxed{\dim_H(\Omega,d_{\varphi,\alpha})=\alpha^{-1}.}
+\tag{149.5}
+$$
+
+Taking \(\alpha=1/3\) gives a formally three-dimensional Ahlfors scale on
+the same set. It is an extra choice of metric; neither the source grammar,
+the substitution \(\rho\), nor the native cylinder measure selects it.
+Thus this is an independent scale bridge, not a native dimension theorem
+and not a change to the heat-trace statement of §148.
+
+### 149.4 Applying the source phase loss to future tasks
+
+Applying Theorem 113.5 to a scale-sensitive task gives
+
+$$
+\nu_\alpha=\nu_\beta=M,
+\qquad
+W(\alpha)=1,
+\qquad
+W(\beta)=\varphi.
+$$
+
+Consequently the target \(F(u)=W(u)\), or the full future scale response
+
+$$
+F_n(u)=W(\rho^n u)=\varphi^nW(u),
+$$
+
+does not factor through the \(\nu\)-only observation. The pair
+\((\alpha,\beta)\) is an explicit escape pair:
+
+$$
+\nu_\alpha=\nu_\beta,
+\qquad
+F_n(\alpha)\ne F_n(\beta)
+\quad(n\ge0).
+\tag{149.6}
+$$
+
+The quotient still supports the restricted action \(\nu\mapsto\nu\), since
+\(\nu_{\rho u}=\nu_u\). What fails is action closure for tasks that retain
+the acquired scale, INITIAL identity, or any legality condition depending
+on that scale. The pair \((\nu,W)\) is the boundary datum supplied by
+Theorem 113.5 that restores this phase on the attained finite-source image.
+
+### 149.5 Scope
+
+Sections 149.1--149.4 are exact statements for the full binary boundary,
+the native Fibonacci cylinder weights, and the finite-source measures of
+Definition 113.3. They do not prove a physical three-dimensional
+realization, do not solve the strict four-source \(J\)-\(M\) joint-lift
+problem, and do not establish the open quantitative gap in §11.11 of the
+strict-real incidence continuation. They also do not contradict §148:
+§148 varies compatible successor metrics for a fixed comparison operator,
+whereas this section identifies the native metric and the task information
+that a scale-free quotient omits. The Lipschitz dimension obstruction and
+the snowflake calculation have not been formalized in Lean.
