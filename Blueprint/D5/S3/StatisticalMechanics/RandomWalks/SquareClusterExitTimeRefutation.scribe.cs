@@ -73,7 +73,10 @@ internal sealed class SquareClusterExitTimeRefutationDocument : IScribeDocumentD
                 H("A disk with larger mean exit time"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
-                ResultProse(), DescribeRole.Theorem)),
+                ResultProse(), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rognone-nicosia-2023-square-cluster-exit-time-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
