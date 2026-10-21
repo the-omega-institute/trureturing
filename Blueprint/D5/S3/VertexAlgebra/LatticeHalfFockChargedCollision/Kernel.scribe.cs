@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision;
 
 internal sealed class LatticeHalfFockChargedCollisionKernelDocument : IScribeDocumentDefinition
 {
@@ -121,7 +121,7 @@ internal sealed class LatticeHalfFockChargedCollisionKernelDocument : IScribeDoc
             Describe.Lean(
                 DescribeId.Create("charged-collisionr"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision/Kernel.collisionR"),
-                H("The inverse square-root coefficient"), StatementSource.WithoutFormula(),
+                H("The reciprocal normalized square-root unit coefficient"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The coefficient halfBinomial(j)/(j+1) is shared by the scalar Taylor recurrence, source insertion identity, and all-order comparison."))), DescribeRole.Definition),
             Describe.Lean(

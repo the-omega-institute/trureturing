@@ -184,7 +184,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision/Kernel.norm
 
 The current is the charge-weighted sum of singletonLinear insertions. It acts on whole fields, including coefficients evaluated on current-transformed inputs.
 
-**Definition 1.16 (The inverse square-root coefficient).**
+**Definition 1.16 (The reciprocal normalized square-root unit coefficient).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision/Kernel.collisionR`
 

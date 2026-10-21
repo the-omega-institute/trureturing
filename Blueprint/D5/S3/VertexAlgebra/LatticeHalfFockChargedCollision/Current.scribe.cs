@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision;
 
 internal sealed class LatticeHalfFockChargedCollisionCurrentDocument : IScribeDocumentDefinition
 {
@@ -19,7 +19,7 @@ internal sealed class LatticeHalfFockChargedCollisionCurrentDocument : IScribeDo
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision/Current.collisionMoment"),
                 H("The finite normal-current moment"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The moment weights each finite creator diagonal by one half of the second creator degree minus the second translation degree, on the actual translated polynomial support."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The moment weights each finite creator diagonal by one half of the difference between the second creator degree and the second translation degree, on the actual translated polynomial support."))), DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("charged-collision-normal-moment"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision/Current.collision_normal_moment"),

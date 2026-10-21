@@ -26,7 +26,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision/Current.col
 
 *Commentary.*
 
-The moment weights each finite creator diagonal by one half of the second creator degree minus the second translation degree, on the actual translated polynomial support.
+The moment weights each finite creator diagonal by one half of the difference between the second creator degree and the second translation degree, on the actual translated polynomial support.
 
 **Theorem 1.3 (The arbitrary-input normal-current calculation).**
 
