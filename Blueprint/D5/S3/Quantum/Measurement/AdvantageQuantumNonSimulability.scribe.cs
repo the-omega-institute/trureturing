@@ -88,7 +88,10 @@ internal sealed class AdvantageQuantumNonSimulabilityDocument : IScribeDocumentD
                         + "The argument uses the negative least eigenvalue and the greatest eigenvalue "
                         + "being below one; it does not need the additional AQ inequality "
                         + "1 + lambda_1 < lambda_d."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("arai-2023-advantage-quantum-non-simulability"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         string prose) => Describe.Lean(
