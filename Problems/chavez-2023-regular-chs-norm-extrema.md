@@ -22,7 +22,7 @@ where $\lambda_1,\ldots,\lambda_n$ are the real adjacency eigenvalues. Among con
 
 $$\|C_n\|_{2m}\le\|G\|_{2m}\le\|K_n\|_{2m}.$$
 
-Here connected means that every two vertices are joined by a walk. In fact the lower coefficient bound $h_{2m}(C_n)\le h_{2m}(G)$ holds for every $r$-regular simple graph of order $n\ge3$ with $r\ge2$, without connectedness. This dossier concerns the regular family. The unicyclic branch is not addressed; the complete multipartite branch is settled separately.
+Here connected means that every two vertices are joined by a walk. Section 2 of the source uses the word connected for graphs without isolated vertices; under that reading the minimum changes for even orders, since a perfect matching is regular without isolated vertices and has smaller coefficients, for example $h_2(2K_2)=2<4=h_2(C_4)$. The formal statement uses ordinary connectedness. In fact the lower coefficient bound $h_{2m}(C_n)\le h_{2m}(G)$ holds for every $r$-regular simple graph of order $n\ge3$ with $r\ge2$, without connectedness. This dossier concerns the regular family. The unicyclic branch is not addressed; the complete multipartite branch is settled separately.
 
 ### Statement echo
 
@@ -42,7 +42,7 @@ The settling declaration is `D5/S3/Combinatorics/Graph/RegularCHS/Result.result`
 
 ## Gap
 
-The regular branch is settled for every order at least three and every positive even degree. The unicyclic branch and extremizers within a fixed degree class $r\ge3$ remain open here. No uniqueness classification is asserted.
+For ordinary connectedness, the regular branch is settled for every order at least three and every positive even degree; the no-isolated-vertex reading is not settled here. The unicyclic branch and extremizers within a fixed degree class $r\ge3$ remain open here. No uniqueness classification is asserted.
 
 ## Route
 
@@ -87,7 +87,8 @@ Searches covered the arXiv query “CHS norm”, the repository's D5 and Problem
 
 ### What the settlement shows
 
-- **PROVED (formalized).** The regular family has the cycle and complete graph as attained extrema in every positive even CHS degree.
+- **PROVED (formalized).** The connected regular family has the cycle and complete graph as attained extrema in every positive even CHS degree.
+- **OPEN.** Under the no-isolated-vertex reading of connectedness, the minimum for even order is expected to be the perfect matching; this is not formalized here.
 - **PROVED (formalized mechanism).** CHS coefficients are monotone in closed-walk counts by the Newton recurrence with nonnegative terms. The cycle comparisons needed for regular degree at least two follow from degree-dependent walk lower bounds, cubic walk domination, two-regular component factorization, and the cycle spectral bound.
 - **COMPUTED.** The 864 finite exact comparisons agree with these bounds; they are independent of the kernel proof.
 - **OPEN.** The unicyclic family and the classification of extrema when the regular degree is fixed at least three.
