@@ -6,6 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Dynamics/StabilizerBatteryDegreeDifferenceRefutation.claim; result=D5/S3/Quantum/Dynamics/StabilizerBatteryDegreeDifferenceRefutation.result; claim=D5/S3/Quantum/Dynamics/StabilizerBatteryDegreeDifferenceRefutation.claim
    digest: Equal degree gaps give different stored work for fourteen-qubit stabilizer batteries. -/
 
+import Mathlib.Algebra.Group.AddChar
+
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 
@@ -80,18 +82,12 @@ private def graphExponent (N K : ℕ) (b : Fin N → ZMod 2) : ℕ :=
 def graphVec (N K : ℕ) : State N :=
   fun b => ((Real.sqrt (2 ^ N : ℝ))⁻¹ : ℂ) * (-1 : ℂ) ^ graphExponent N K b
 
-private def xMask {N : ℕ} (w : Fin N → Pauli) : Fin N → ZMod 2 :=
-  fun i => match w i with | .X | .Y => 1 | _ => 0
-
-private def zMask {N : ℕ} (w : Fin N → Pauli) : Fin N → ZMod 2 :=
-  fun i => match w i with | .Z | .Y => 1 | _ => 0
-
 private def residualMask (N K : ℕ) (w : Fin N → Pauli) : Fin N → ZMod 2 :=
-  fun j => zMask w j + ∑ i, if adjacent N K i j then xMask w i else 0
+  fun j => (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) j + ∑ i, if adjacent N K i j then (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i else 0
 
 private def wordPhase (N K : ℕ) (w : Fin N → Pauli) : GaussianInt :=
   (⟨0, 1⟩ : GaussianInt) ^ (Finset.univ.filter (fun i => w i = .Y)).card *
-    (-1) ^ (graphExponent N K (xMask w) + ∑ i, (xMask w i).val * (zMask w i).val)
+    (-1) ^ (graphExponent N K ((id (α := Fin N → ZMod 2) (flipBit ∘ w))) + ∑ i, ((id (α := Fin N → ZMod 2) (flipBit ∘ w)) i).val * ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i).val)
 
 private def phaseCode : Pauli → Pauli → GaussianInt
   | .X, .Y | .Y, .Z | .Z, .X => ⟨0, 1⟩
@@ -233,32 +229,33 @@ private lemma word_action {N : ℕ} (w : Fin N → Pauli) (ψ : State N)
     (b : Fin N → ZMod 2) :
     (wordOp w *ᵥ ψ) b =
       Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
-        complexSign (∑ i, (zMask w i : ZMod 2) * (b + xMask w) i) * ψ (b + xMask w) := by
+        complexSign (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) i) * ψ (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) := by
   have hm (i : Fin N) : pauliMatrix (w i) =
       (if w i = .Y then Complex.I else 1) •
         (Matrix.of fun r c : Fin 2 =>
-          if id (α := ZMod 2) c = id (α := ZMod 2) r + xMask w i then
-            complexSign (zMask w i * id (α := ZMod 2) c) else 0) := by
+          if id (α := ZMod 2) c = id (α := ZMod 2) r + (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i then
+            complexSign ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i * id (α := ZMod 2) c) else 0) := by
     have hzero : id (α := ZMod 2) (0 : Fin 2) = 0 := rfl
     have hone : id (α := ZMod 2) (1 : Fin 2) = 1 := rfl
     cases hi : w i <;> ext r c <;> fin_cases r <;> fin_cases c <;>
-      norm_num [xMask, zMask, hi, pauliMatrix, complexSign, Matrix.of_apply,
-        Matrix.smul_apply, smul_eq_mul, hzero, hone,
-        D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ]
-  have hw := congrFun (tensor_weyl (xMask w, zMask w) ψ) b
+      norm_num [flipBit, id, Function.comp_def, bellInput, hi, pauliMatrix, complexSign, Matrix.of_apply,
+        Matrix.smul_apply, smul_eq_mul, hzero, hone, F₂,
+        show (2 : ZMod 2) = 0 by decide,
+        D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ] <;> decide
+  have hw := congrFun (tensor_weyl ((id (α := Fin N → ZMod 2) (flipBit ∘ w)), (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w))) ψ) b
   change (tensorOp (fun i => Matrix.of fun r c : Fin 2 =>
-      if id (α := ZMod 2) c = id (α := ZMod 2) r + xMask w i then
-        complexSign (zMask w i * id (α := ZMod 2) c) else 0) *ᵥ ψ) b =
-    complexSign (∑ i, zMask w i * (b i + xMask w i)) * ψ (b + xMask w) at hw
+      if id (α := ZMod 2) c = id (α := ZMod 2) r + (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i then
+        complexSign ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i * id (α := ZMod 2) c) else 0) *ᵥ ψ) b =
+    complexSign (∑ i, (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i * (b i + (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i)) * ψ (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) at hw
   have he : (fun i => pauliMatrix (w i)) = fun i =>
       (if w i = .Y then Complex.I else 1) •
         (Matrix.of fun r c : Fin 2 =>
-          if id (α := ZMod 2) c = id (α := ZMod 2) r + xMask w i then
-            complexSign (zMask w i * id (α := ZMod 2) c) else 0) := funext hm
+          if id (α := ZMod 2) c = id (α := ZMod 2) r + (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i then
+            complexSign ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i * id (α := ZMod 2) c) else 0) := funext hm
   rw [wordOp, he, tensor_smul, smul_mulVec]
   change (∏ i, if w i = .Y then Complex.I else 1) * _ = _
   rw [← Finset.prod_filter, Finset.prod_const, hw]
-  rfl
+  exact (mul_assoc _ _ _).symm
 
 private lemma graph_word_action (N K : ℕ) (w : Fin N → Pauli) (b : Fin N → ZMod 2) :
     (wordOp w *ᵥ graphVec N K) b =
@@ -267,16 +264,16 @@ private lemma graph_word_action (N K : ℕ) (w : Fin N → Pauli) (b : Fin N →
   rw [word_action]
   have hphase : (wordPhase N K w : ℂ) =
       Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
-        complexSign ((graphExponent N K (xMask w) : ZMod 2) +
-          ∑ i, (xMask w i : ZMod 2) * zMask w i) := by
+        complexSign ((graphExponent N K ((id (α := Fin N → ZMod 2) (flipBit ∘ w))) : ZMod 2) +
+          ∑ i, ((id (α := Fin N → ZMod 2) (flipBit ∘ w)) i : ZMod 2) * (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i) := by
     simp only [wordPhase, map_mul, map_pow, map_neg, map_one, sign_nat,
       Nat.cast_add, Nat.cast_sum, Nat.cast_mul, ZMod.natCast_zmod_val]
     norm_num [GaussianInt.toComplex_def]
-  have hp := graph_polarization N K b (xMask w)
-  have hexp : (∑ i, (zMask w i : ZMod 2) * (b + xMask w) i) +
-        (graphExponent N K (b + xMask w) : ZMod 2) =
-      ((graphExponent N K (xMask w) : ZMod 2) +
-        ∑ i, (xMask w i : ZMod 2) * zMask w i) +
+  have hp := graph_polarization N K b ((id (α := Fin N → ZMod 2) (flipBit ∘ w)))
+  have hexp : (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) i) +
+        (graphExponent N K (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) : ZMod 2) =
+      ((graphExponent N K ((id (α := Fin N → ZMod 2) (flipBit ∘ w))) : ZMod 2) +
+        ∑ i, ((id (α := Fin N → ZMod 2) (flipBit ∘ w)) i : ZMod 2) * (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i) +
         (∑ j, (residualMask N K w j : ZMod 2) * b j) +
         (graphExponent N K b : ZMod 2) := by
     simp only [residualMask, Pi.add_apply, mul_add, add_mul, Finset.sum_add_distrib]
@@ -285,31 +282,31 @@ private lemma graph_word_action (N K : ℕ) (w : Fin N → Pauli) (b : Fin N →
   rw [hphase]
   simp only [graphVec, sign_nat]
   rw [show Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
-        complexSign (∑ i, (zMask w i : ZMod 2) * (b + xMask w) i) *
+        complexSign (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) i) *
         (((Real.sqrt (2 ^ N : ℝ))⁻¹ : ℂ) *
-          complexSign (graphExponent N K (b + xMask w))) =
+          complexSign (graphExponent N K (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))))) =
       Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
         ((Real.sqrt (2 ^ N : ℝ))⁻¹ : ℂ) *
-          (complexSign (∑ i, (zMask w i : ZMod 2) * (b + xMask w) i) *
-            complexSign (graphExponent N K (b + xMask w))) by ring]
+          (complexSign (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) i) *
+            complexSign (graphExponent N K (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))))) by ring]
   rw [← complexSign_add, hexp, complexSign_add, complexSign_add]
   ring
 
 private lemma graph_generator_eigen (N K : ℕ) (i : Fin N) :
     wordOp (gen N K i) *ᵥ graphVec N K = -graphVec N K := by
-  have hx : xMask (gen N K i) = Pi.single i 1 := by
+  have hx : (id (α := Fin N → ZMod 2) (flipBit ∘ gen N K i)) = Pi.single i 1 := by
     funext j
     by_cases hji : j = i
     · subst j
-      simp [xMask, gen]
-    · simp only [xMask, gen, if_neg hji, Pi.single_eq_of_ne hji]
+      simp [flipBit, id, Function.comp_def, gen]
+    · simp only [flipBit, id, Function.comp_def, gen, if_neg hji, Pi.single_eq_of_ne hji]
       split_ifs <;> rfl
-  have hz (j : Fin N) : zMask (gen N K i) j =
+  have hz (j : Fin N) : (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ gen N K i)) j =
       if adjacent N K i j then 1 else 0 := by
     by_cases hji : j = i
     · subst j
-      simp [zMask, gen, adjacent]
-    · simp only [zMask, gen, if_neg hji]
+      simp [bellInput, id, Function.comp_def, gen, adjacent]
+    · simp only [bellInput, id, Function.comp_def, gen, if_neg hji]
       split_ifs <;> rfl
   have hr : residualMask N K (gen N K i) = 0 := by
     funext j
@@ -338,7 +335,7 @@ private lemma graph_generator_eigen (N K : ℕ) (i : Fin N) :
         simp [Pi.single_eq_of_ne (ne_of_gt hab)]
       · simp [Pi.single_eq_of_ne hai]
     rw [graphExponent, hq, add_zero, Finset.sum_eq_single i]
-    · simp
+    · simp [ZMod.val_one]
     · intro j _ hji
       simp [Pi.single_eq_of_ne hji]
     · simp
@@ -348,7 +345,7 @@ private lemma graph_generator_eigen (N K : ℕ) (i : Fin N) :
     simp only [gen]
     split_ifs <;> decide
   have hp : wordPhase N K (gen N K i) = -1 := by
-    have hsum : (∑ j, (xMask (gen N K i) j).val * (zMask (gen N K i) j).val) = 0 := by
+    have hsum : (∑ j, ((id (α := Fin N → ZMod 2) (flipBit ∘ gen N K i)) j).val * ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ gen N K i)) j).val) = 0 := by
       rw [hx, Finset.sum_eq_single i]
       · simp [hz, adjacent]
       · intro j _ hji
@@ -683,37 +680,35 @@ private lemma character_vanishes (N : ℕ) (a : Fin N → ZMod 2) (ha : a ≠ 0)
     push Not at h
     exact ha (funext h)
   have hk1 : a k = 1 := Fin.eq_one_of_ne_zero _ hk
-  let f : (Fin N → ZMod 2) → ℂ := fun b =>
-    (-1 : ℂ) ^ (∑ j, (a j).val * (b j).val)
-  let e := Equiv.addRight (Pi.single k (1 : ZMod 2) : Fin N → ZMod 2)
-  have hsum (b : Fin N → ZMod 2) : (∑ j, (a j).val * (b j).val) =
-      (b k).val + ∑ j ∈ Finset.univ.erase k, (a j).val * (b j).val := by
-    rw [← Finset.add_sum_erase _ _ (Finset.mem_univ k), hk1]
-    simp only [ZMod.val_one, one_mul]
-  have hsign (b : Fin N → ZMod 2) : f (e b) = -f b := by
-    have hrest : (∑ j ∈ Finset.univ.erase k, (a j).val * ((e b) j).val) =
-        ∑ j ∈ Finset.univ.erase k, (a j).val * (b j).val := by
-      apply Finset.sum_congr rfl
-      intro j hj
-      have hjk := (Finset.mem_erase.mp hj).1
-      simp only [e, Equiv.coe_addRight, Pi.add_apply, Pi.single_eq_of_ne hjk,
-        add_zero]
-    dsimp only [f]
-    rw [hsum, hsum, hrest, pow_add, pow_add]
-    have hstep : (-1 : ℂ) ^ ((e b) k).val = -((-1 : ℂ) ^ (b k).val) := by
-      simp only [e, Equiv.coe_addRight, Pi.add_apply, Pi.single_eq_same]
-      by_cases hb : b k = 0
-      · rw [hb]
-        norm_num [ZMod.val_one]
-      · rw [Fin.eq_one_of_ne_zero _ hb]
-        norm_num [show (1 + 1 : ZMod 2) = 0 by decide, ZMod.val_one]
-    rw [hstep, neg_mul]
-  have hperm : (∑ b, f (e b)) = ∑ b, f b := Equiv.sum_comp e f
-  have hneg : (∑ b, f (e b)) = -(∑ b, f b) := by
-    simp_rw [hsign]
-    exact Finset.sum_neg_distrib _
-  change (∑ b, f b) = 0
-  linear_combination (1 / 2 : ℂ) * (hperm.symm.trans hneg)
+  let ψ : AddChar (Fin N → ZMod 2) ℂ := {
+    toFun := fun b => complexSign (∑ j, a j * b j)
+    map_zero_eq_one' := by
+      simp only [Pi.zero_apply, mul_zero, Finset.sum_const_zero, sign_zero]
+    map_add_eq_mul' := by
+      intro b c
+      simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, complexSign_add] }
+  have hψ : ψ ≠ 0 := by
+    intro h
+    have he := congrArg (fun χ : AddChar (Fin N → ZMod 2) ℂ =>
+      χ (Pi.single k 1)) h
+    change complexSign (∑ j, a j * (Pi.single k (1 : ZMod 2) : Fin N → ZMod 2) j) = 1 at he
+    have hs : (∑ j, a j * (Pi.single k (1 : ZMod 2) : Fin N → ZMod 2) j) = 1 := by
+      rw [Finset.sum_eq_single k]
+      · simp only [Pi.single_eq_same, mul_one, hk1]
+      · intro j _ hj
+        simp only [Pi.single_eq_of_ne hj, mul_zero]
+      · simp
+    rw [hs, sign_one] at he
+    norm_num at he
+  have hsum : (∑ b : Fin N → ZMod 2,
+      (-1 : ℂ) ^ (∑ j, (a j).val * (b j).val)) = ∑ b, ψ b := by
+    apply Finset.sum_congr rfl
+    intro b _
+    rw [sign_nat]
+    simp only [Nat.cast_sum, Nat.cast_mul, ZMod.natCast_zmod_val]
+    rfl
+  rw [hsum]
+  exact AddChar.sum_eq_zero_iff_ne_zero.mpr hψ
 
 private lemma graph_word_character (N K : ℕ) (w : Fin N → Pauli) :
     star (graphVec N K) ⬝ᵥ (wordOp w *ᵥ graphVec N K) =
