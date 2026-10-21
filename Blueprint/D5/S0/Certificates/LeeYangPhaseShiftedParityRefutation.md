@@ -60,6 +60,10 @@ $$\neg (\forall n: \mathbb{N}, (2 \le n) \Rightarrow (\forall G: \operatorname{S
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/LeeYangPhaseShiftedParityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wong-bravyi-gosset-liu-2026-conjecture-2-phase-shifted-extension` (refuted) by `D5/S0/Certificates/LeeYangPhaseShiftedParityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wong-bravyi-gosset-liu-2026-conjecture-2-phase-shifted-extension","declaration_gid":"D5/S0/Certificates/LeeYangPhaseShiftedParityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Benjamin Wong; Sergey Bravyi; David Gosset; Yinchen Liu (2026). *Lee-Yang tensors and Hamiltonian complexity*. DOI: [10.48550/arXiv.2602.03605](https://doi.org/10.48550/arXiv.2602.03605). URL: <https://arxiv.org/abs/2602.03605v1>.

@@ -28,14 +28,18 @@ internal sealed class LeeYangPhaseShiftedParityRefutationDocument : IScribeDocum
                 AssessedProvenance.FromLiterature(Source)),
             Node("result", "A four-cycle refutes the extension", Disp(Seq(F.Neg, Sp, Parenthesized(ClaimBody()))),
                 "Take s = 3/5 and the cycle with edges {0,1}, {0,3}, {1,2}, {2,3}. The phase on {0,3} is π and the other phases are zero. Two distinct full-space eigenvalues are below −5/2, while every odd-sector eigenvalue is above −5/2. The odd matrix satisfies 25M² + 68M + 18I = 0; two explicit full-space eigenvectors give eigenvalues −(67 + √1989)/25 and −(35 + √901)/25. Sorting with multiplicity therefore puts the second full-space eigenvalue strictly below the odd-sector minimum. This conclusion concerns the phase-shifted extension; it leaves Conjecture 2 for zero phases unresolved.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem)),
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wong-bravyi-gosset-liu-2026-conjecture-2-phase-shifted-extension"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("lee-yang-phase-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname,
         Grp(Seq([.. name.Split('.').SelectMany((part, index) =>
