@@ -138,4 +138,54 @@ theorem hasDerivAt_kummer (s : ℝ) {c : ℝ} (hc : 0 < c) (x : ℝ) :
 theorem continuous_kummer (s : ℝ) {c : ℝ} (hc : 0 < c) : Continuous (kummer s c) :=
   continuous_iff_continuousAt.mpr (fun x => (hasDerivAt_kummer s hc x).continuousAt)
 
+private lemma pochhammer_shift (c : ℝ) (n : ℕ) :
+    c * (ascPochhammer ℝ n).eval (c + 1) =
+      (c + n) * (ascPochhammer ℝ n).eval c := by
+  calc
+    _ = (ascPochhammer ℝ (n + 1)).eval c := by
+      simp [ascPochhammer_succ_left, Polynomial.eval_comp]
+    _ = _ := by rw [ascPochhammer_succ_eval]; ring
+
+private lemma coeff_lower_shift (s : ℝ) {c : ℝ} (hc : 0 < c) (n : ℕ) :
+    kummerCoeff s c (n + 1) = kummerCoeff s (c + 1) (n + 1) +
+      s / (c * (c + 1)) * kummerCoeff (s + 1) (c + 2) n := by
+  have hc0 := hc.ne'
+  have hc1 : c + 1 ≠ 0 := by positivity
+  have hp := (ascPochhammer_pos n c hc).ne'
+  have hp1 := (ascPochhammer_pos n (c + 1) (by linarith)).ne'
+  have hp2 := (ascPochhammer_pos n (c + 2) (by linarith)).ne'
+  have hfac : (n.factorial : ℝ) ≠ 0 := by positivity
+  have hn : (n : ℝ) + 1 ≠ 0 := by positivity
+  have hcN : c + (n : ℝ) ≠ 0 := by positivity
+  have hcN1 : c + 1 + (n : ℝ) ≠ 0 := by positivity
+  have hrel1 := pochhammer_shift (c + 1) n
+  have hrepl : (ascPochhammer ℝ n).eval (c + 2) =
+      ((c + 1 + n) * (ascPochhammer ℝ n).eval (c + 1)) / (c + 1) := by
+    apply (eq_div_iff hc1).mpr
+    convert hrel1 using 1 <;> ring
+  simp only [kummerCoeff, ascPochhammer_succ_left, Polynomial.eval_mul,
+    Polynomial.eval_comp, Polynomial.eval_X, Polynomial.eval_add, Polynomial.eval_one,
+    Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
+  rw [show c + 1 + 1 = c + 2 by ring, hrepl]
+  field_simp
+  <;> ring
+
+/-- A contiguous relation shifting the lower parameter. -/
+theorem kummer_contiguous (s : ℝ) {c : ℝ} (hc : 0 < c) (x : ℝ) :
+    kummer s c x = kummer s (c + 1) x +
+      s * x / (c * (c + 1)) * kummer (s + 1) (c + 2) x := by
+  rw [kummer_tail s hc, kummer_tail s (by linarith : 0 < c + 1)]
+  have he : (fun n : ℕ => kummerCoeff s c (n + 1) * x ^ (n + 1)) =
+      (fun n => kummerCoeff s (c + 1) (n + 1) * x ^ (n + 1) +
+        (s * x / (c * (c + 1))) * (kummerCoeff (s + 1) (c + 2) n * x ^ n)) := by
+    ext n
+    rw [coeff_lower_shift s hc, pow_succ]
+    ring
+  have hsum1 := (summable_nat_add_iff 1).mpr (summable_kummer s (c + 1) x (by linarith))
+  have hsum2 := (summable_kummer (s + 1) (c + 2) x (by linarith)).mul_left
+    (s * x / (c * (c + 1)))
+  rw [he, hsum1.tsum_add hsum2, tsum_mul_left]
+  dsimp only [kummer]
+  ring
+
 end D5.S3.Analytic.KummerRatio.Series
