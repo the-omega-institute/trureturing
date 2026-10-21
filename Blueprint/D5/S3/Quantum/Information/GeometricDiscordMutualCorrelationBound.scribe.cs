@@ -27,16 +27,16 @@ internal sealed class GeometricDiscordMutualCorrelationBoundDocument : IScribeDo
                     + "column k of U, and the displayed sum is Σ_k (P_k ⊗ I) ρ (P_k ⊗ I). "
                     + "It is the nonselective rank-one projective measurement on A. "
                     + "The matrix expression itself is defined for every U and every ρ."),
-            Node("hsNormSq", "Squared Hilbert–Schmidt norm", HsNormSqFormula(),
-                "For every complex two-qubit matrix m, hsNormSq(m) is Re tr(m m*). "
-                    + "The trace is real and nonnegative, so this is the squared "
-                    + "Hilbert–Schmidt norm used in the source."),
             Node("geometricDiscord", "Normalized geometric discord", GeometricDiscordFormula(),
                 "The infimum ranges over all unitary 2 by 2 matrices U, hence all "
                     + "orthonormal measurement bases on A. The factor two is the source's "
                     + "normalization d/(d − 1) for d = 2. For a density matrix this is "
                     + "the normalized one-sided geometric discord D_G; the definition "
                     + "also applies to arbitrary complex two-qubit matrices."),
+            Paragraph(Text("The Hilbert–Schmidt square in this definition is "),
+                Ref("D5/S3/Quantum/Tomography/RankOneContextCommutator.hilbertSchmidtSquare"),
+                Text(", given by Re tr(m* m) for every finite complex square matrix m. "
+                    + "Cyclicity of trace gives Re tr(m* m) = Re tr(m m*).")),
             Node("localCovariance", "Covariance between the local algebras", LocalCovarianceFormula(),
                 "The local matrices a and b act as a ⊗ I and I ⊗ b. Their covariance "
                     + "is the expectation of a ⊗ b minus the product of their separate "
@@ -147,17 +147,12 @@ internal sealed class GeometricDiscordMutualCorrelationBoundDocument : IScribeDo
         return All(u, Qubit(), All(Rho, TwoQubit(), Equal(Call("measuredState", u, Rho), sum)));
     }
 
-    private static Formula HsNormSqFormula()
-    {
-        Formula m = F.Id("m");
-        return All(m, TwoQubit(), Equal(Call("hsNormSq", m), Call("Re", Call("tr", Mul(m, Adjoint(m))))));
-    }
-
     private static Formula GeometricDiscordFormula()
     {
         Formula u = F.Id("U");
+        Formula disturbance = Parenthesized(Subtract(Rho, Call("measuredState", u, Rho)));
         Formula values = new Formula.SetBuilder(
-            Call("hsNormSq", Subtract(Rho, Call("measuredState", u, Rho))),
+            Call("Re", Call("tr", Mul(Adjoint(disturbance), disturbance))),
             u, Call("unitaryGroup", Index(2), Complexes()));
         return All(Rho, TwoQubit(), Equal(Call("geometricDiscord", Rho), Mul(D(2), Call("inf", values))));
     }

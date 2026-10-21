@@ -7,7 +7,7 @@
    digest: Maximal mutual correlation bounds the square root of normalized geometric discord. -/
 
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
-import D5.S3.Quantum.GNSMatrix
+import D5.S3.Quantum.Tomography.RankOneContextCommutator
 
 /-! The normalized Hilbert–Schmidt discord is bounded by connected local correlations. -/
 
@@ -24,6 +24,9 @@ open D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (pauliMatrix)
+open D5.S3.Quantum.Tomography.RankOneContextCommutator (hilbertSchmidtSquare)
+open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics (unitaryEvolution)
+open D5.S3.Observer.Conditioning (unreadState)
 
 namespace D5.S3.Quantum.Information.GeometricDiscordMutualCorrelationBound
 
@@ -32,16 +35,11 @@ local notation "TwoQubit" => Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ
 
 /-- The nonselective rank-one projective measurement of the first qubit in the columns of U. -/
 def measuredState (U : Qubit) (ρ : TwoQubit) : TwoQubit :=
-  ∑ k : Fin 2,
-    ((U * Matrix.single k k 1 * Uᴴ) ⊗ₖ (1 : Qubit)) * ρ *
-      ((U * Matrix.single k k 1 * Uᴴ) ⊗ₖ (1 : Qubit))
-
-/-- The squared Hilbert–Schmidt norm, tr(m m*). -/
-def hsNormSq (m : TwoQubit) : ℝ := (trace (m * mᴴ)).re
+  unreadState (fun k : Fin 2 => (U * Matrix.single k k 1 * Uᴴ) ⊗ₖ (1 : Qubit)) ρ
 
 /-- Normalized geometric discord, with projective measurements on A and normalization two. -/
 def geometricDiscord (ρ : TwoQubit) : ℝ :=
-  2 * sInf ((fun U => hsNormSq (ρ - measuredState U ρ)) ''
+  2 * sInf ((fun U => hilbertSchmidtSquare (ρ - measuredState U ρ)) ''
     (Matrix.unitaryGroup (Fin 2) ℂ : Set Qubit))
 
 /-- The covariance of elements from the two commuting local algebras. -/
@@ -62,17 +60,6 @@ def connectedCorrelation (ρ : TwoQubit) (i j : Fin 3) : ℝ :=
 def claim : Prop :=
   ∀ ρ : TwoQubit, ρ.PosSemidef → trace ρ = 1 →
     Real.sqrt (geometricDiscord ρ) ≤ maximalMutualCorrelation ρ
-
-private lemma op_entry_le {n : Type*} [Fintype n] [DecidableEq n]
-    (A : Matrix n n ℂ) (i j : n) : ‖A i j‖ ≤ ‖A‖ := by
-  let e : EuclideanSpace ℂ n := WithLp.toLp 2 (Pi.single j 1)
-  have he : ‖e‖ = 1 := by
-    change ‖(EuclideanSpace.single j (1 : ℂ) : EuclideanSpace ℂ n)‖ = 1
-    simp only [PiLp.norm_single, norm_one]
-  have h := A.l2_opNorm_mulVec e
-  have hi := PiLp.norm_apply_le (WithLp.toLp 2 (A *ᵥ e) : EuclideanSpace ℂ n) i
-  simpa only [e, WithLp.ofLp_toLp, Matrix.mulVec_single_one, Matrix.col_apply,
-    PiLp.toLp_apply, he, mul_one] using hi.trans h
 
 private lemma density_expectation_bound {n : Type*} [Fintype n] [DecidableEq n]
     (ρ X : Matrix n n ℂ) (hρ : ρ.PosSemidef) (ht : trace ρ = 1) :
@@ -102,8 +89,11 @@ private lemma density_expectation_bound {n : Type*} [Fintype n] [DecidableEq n]
       apply Finset.sum_le_sum; intro i _
       rw [norm_mul, Complex.norm_real, Real.norm_eq_abs,
         abs_of_nonneg (hρ.eigenvalues_nonneg i)]
-      exact mul_le_mul_of_nonneg_left ((op_entry_le Y i i).trans_eq hy)
-        (hρ.eigenvalues_nonneg i)
+      have hi := CStarMatrix.norm_entry_le_norm
+        (M := CStarMatrix.ofMatrixStarAlgEquiv Y) (i := i) (j := i)
+      change ‖Y i i‖ ≤ ‖CStarMatrix.ofMatrixStarAlgEquiv Y‖ at hi
+      rw [StarAlgEquiv.norm_map] at hi
+      exact mul_le_mul_of_nonneg_left (hi.trans_eq hy) (hρ.eigenvalues_nonneg i)
     _ = ‖X‖ := by rw [← Finset.sum_mul, hs, one_mul]
 
 private lemma spin_unit_norm (c : Fin 3 → ℝ) (hc : vlen c = 1) : ‖spin c‖ = 1 := by
@@ -149,28 +139,24 @@ private lemma spin_covariance (ρ : TwoQubit) (hρ : ρ.IsHermitian)
     Complex.ofReal_mul, Complex.ofReal_sub]
   ring
 
-private lemma hs_nonneg (m : TwoQubit) : 0 ≤ hsNormSq m := by
-  have h := congrArg Complex.re (D5.S3.Quantum.GNSMatrix.frobenius_norm_sq_eq_trace m)
-  rw [trace_mul_comm] at h
-  simp only [Complex.ofReal_re] at h
-  change 0 ≤ (trace (m * mᴴ)).re
-  rw [← h]
-  exact sq_nonneg _
-
 private lemma discord_nonneg (ρ : TwoQubit) : 0 ≤ geometricDiscord ρ := by
   unfold geometricDiscord
   apply mul_nonneg (by norm_num)
   apply le_csInf
   · exact ⟨_, 1, (1 : Matrix.unitaryGroup (Fin 2) ℂ).property, rfl⟩
   · rintro _ ⟨U, hU, rfl⟩
-    exact hs_nonneg _
+    exact (RCLike.nonneg_iff.mp
+      (Matrix.posSemidef_conjTranspose_mul_self (ρ - measuredState U ρ)).trace_nonneg).1
 
 private lemma discord_le_measurement (ρ : TwoQubit) (U : Matrix.unitaryGroup (Fin 2) ℂ) :
-    geometricDiscord ρ ≤ 2 * hsNormSq (ρ - measuredState U ρ) := by
+    geometricDiscord ρ ≤ 2 * hilbertSchmidtSquare (ρ - measuredState U ρ) := by
   unfold geometricDiscord
   apply mul_le_mul_of_nonneg_left _ (by norm_num)
   apply csInf_le
-  · exact ⟨0, by rintro _ ⟨V, hV, rfl⟩; exact hs_nonneg _⟩
+  · refine ⟨0, ?_⟩
+    rintro _ ⟨V, hV, rfl⟩
+    exact (RCLike.nonneg_iff.mp
+      (Matrix.posSemidef_conjTranspose_mul_self (ρ - measuredState V ρ)).trace_nonneg).1
   · exact ⟨U, U.property, rfl⟩
 
 private lemma correlation_bdd (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : trace ρ = 1) :
@@ -212,7 +198,7 @@ private lemma correlation_nonneg (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : tra
   (norm_nonneg _).trans (witness_le ρ hρ ht 1 1 (norm_one) (norm_one))
 
 private def rotateState (U : Qubit) (ρ : TwoQubit) : TwoQubit :=
-  (U ⊗ₖ (1 : Qubit))ᴴ * ρ * (U ⊗ₖ (1 : Qubit))
+  unitaryEvolution (U ⊗ₖ (1 : Qubit))ᴴ ρ
 
 private lemma rotation_covariance (ρ : TwoQubit) (U : Matrix.unitaryGroup (Fin 2) ℂ)
     (a b : Qubit) :
@@ -221,6 +207,8 @@ private lemma rotation_covariance (ρ : TwoQubit) (U : Matrix.unitaryGroup (Fin 
   let V := (U : Qubit) ⊗ₖ (1 : Qubit)
   have hcyc (Z : TwoQubit) : trace (rotateState U ρ * Z) =
       trace (ρ * (V * Z * Vᴴ)) := by
+    rw [rotateState, unitaryEvolution, Matrix.star_eq_conjTranspose,
+      conjTranspose_conjTranspose]
     change trace (Vᴴ * ρ * V * Z) = _
     calc
       _ = trace (Vᴴ * (ρ * V * Z)) := by congr 1; noncomm_ring
@@ -244,6 +232,8 @@ private lemma rotated_spin_witness (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : t
     |c ⬝ᵥ (connectedCorrelation (rotateState U ρ) *ᵥ d)| ≤
       maximalMutualCorrelation ρ := by
   have hr : (rotateState U ρ).PosSemidef := by
+    rw [rotateState, unitaryEvolution, Matrix.star_eq_conjTranspose,
+      conjTranspose_conjTranspose]
     exact hρ.conjTranspose_mul_mul_same _
   have h := witness_le ρ hρ ht ((U : Qubit) * spin c * (U : Qubit)ᴴ) (spin d)
     (by
@@ -284,7 +274,7 @@ private lemma row_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : trace ρ = 1
 
 private lemma disturbance_coordinates (R : TwoQubit) (hR : R.IsHermitian)
     (h0 : blochA R 0 = 0) (h1 : blochA R 1 = 0) :
-    hsNormSq (R - measuredState 1 R) =
+    hilbertSchmidtSquare (R - measuredState 1 R) =
       (vlen (connectedCorrelation R 0) ^ 2 + vlen (connectedCorrelation R 1) ^ 2) / 4 := by
   have hp0 : pauli 0 = !![0, 1; 1, 0] := by
     simp [pauli.eq_def, pauliMatrix, qubitX]
@@ -298,14 +288,14 @@ private lemma disturbance_coordinates (R : TwoQubit) (hR : R.IsHermitian)
       trace (R * (pauli 1 ⊗ₖ (1 : Qubit))) ^ 2 +
       ∑ j : Fin 3, (trace (R * (pauli 0 ⊗ₖ pauli j)) ^ 2 +
         trace (R * (pauli 1 ⊗ₖ pauli j)) ^ 2) := by
-    simp [measuredState, Matrix.trace, Matrix.diag, Matrix.mul_apply,
+    simp [measuredState, unreadState, Matrix.trace, Matrix.diag, Matrix.mul_apply,
       Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three,
       Matrix.single_apply, Matrix.one_apply, hp0, hp1, hp2]
     ring_nf
     simp only [Complex.I_sq]
     ring
   have hm : (measuredState 1 R)ᴴ = measuredState 1 R := by
-    simp only [measuredState, conjTranspose_sum, conjTranspose_mul,
+    simp only [measuredState, unreadState, conjTranspose_sum, conjTranspose_mul,
       conjTranspose_kronecker, conjTranspose_one, conjTranspose_single, star_one, hR.eq]
     simp only [Matrix.mul_assoc]
   have hδ : (R - measuredState 1 R)ᴴ = R - measuredState 1 R := by
@@ -320,15 +310,15 @@ private lemma disturbance_coordinates (R : TwoQubit) (hR : R.IsHermitian)
     zero_add, trace_pauli_kronecker_eq_corr R hR] at hid
   have hh := congrArg Complex.re hid
   norm_num [← Complex.ofReal_pow, Complex.mul_re] at hh
-  rw [hsNormSq, hδ]
+  rw [hilbertSchmidtSquare, hδ]
   rw [vlen_sq, vlen_sq]
   simp only [dotProduct, connectedCorrelation, h0, h1, zero_mul, sub_zero]
   simp only [Fin.sum_univ_three] at hh ⊢
   nlinarith
 
 private lemma disturbance_rotation (ρ : TwoQubit) (U : Matrix.unitaryGroup (Fin 2) ℂ) :
-    hsNormSq (ρ - measuredState U ρ) =
-      hsNormSq (rotateState U ρ - measuredState 1 (rotateState U ρ)) := by
+    hilbertSchmidtSquare (ρ - measuredState U ρ) =
+      hilbertSchmidtSquare (rotateState U ρ - measuredState 1 (rotateState U ρ)) := by
   let V := (U : Qubit) ⊗ₖ (1 : Qubit)
   have hv : Vᴴ * V = 1 := by
     dsimp only [V]
@@ -347,12 +337,15 @@ private lemma disturbance_rotation (ρ : TwoQubit) (U : Matrix.unitaryGroup (Fin
       ← mul_kronecker_mul, Matrix.one_mul, Matrix.one_mul]
   have hmeas : measuredState U ρ =
       V * measuredState 1 (rotateState U ρ) * Vᴴ := by
-    simp only [measuredState, Fin.sum_univ_two, conjTranspose_one,
-      Matrix.one_mul, Matrix.mul_one]
+    simp only [measuredState, unreadState, Fin.sum_univ_two, conjTranspose_one,
+      Matrix.one_mul, Matrix.mul_one, rotateState, unitaryEvolution,
+      Matrix.star_eq_conjTranspose, conjTranspose_conjTranspose]
     rw [hk 0, hk 1]
     change _ = V * (_ * (Vᴴ * ρ * V) * _ + _ * (Vᴴ * ρ * V) * _) * Vᴴ
     noncomm_ring
   have hback : V * rotateState U ρ * Vᴴ = ρ := by
+    rw [rotateState, unitaryEvolution, Matrix.star_eq_conjTranspose,
+      conjTranspose_conjTranspose]
     change V * (Vᴴ * ρ * V) * Vᴴ = ρ
     calc
       _ = (V * Vᴴ) * ρ * (V * Vᴴ) := by noncomm_ring
@@ -362,12 +355,12 @@ private lemma disturbance_rotation (ρ : TwoQubit) (U : Matrix.unitaryGroup (Fin
     rw [Matrix.mul_sub, Matrix.sub_mul, hback, hmeas]
   rw [hd]
   set D := rotateState U ρ - measuredState 1 (rotateState U ρ)
-  unfold hsNormSq
+  unfold hilbertSchmidtSquare
   congr 1
-  have hp : (V * D * Vᴴ) * (V * D * Vᴴ)ᴴ = V * (D * Dᴴ) * Vᴴ := by
+  have hp : (V * D * Vᴴ)ᴴ * (V * D * Vᴴ) = V * (Dᴴ * D) * Vᴴ := by
     rw [conjTranspose_mul, conjTranspose_mul, conjTranspose_conjTranspose]
     calc
-      _ = V * (D * (Vᴴ * V) * Dᴴ) * Vᴴ := by noncomm_ring
+      _ = V * (Dᴴ * (Vᴴ * V) * D) * Vᴴ := by noncomm_ring
       _ = _ := by rw [hv, Matrix.mul_one]
   rw [hp, trace_mul_cycle, hv, Matrix.one_mul]
 
@@ -384,8 +377,8 @@ private lemma marginal_basis (ρ : TwoQubit) (hρ : ρ.PosSemidef) :
   refine ⟨U, ?_⟩
   have hp : partialTraceRight (rotateState U ρ) =
       (U : Qubit)ᴴ * partialTraceRight ρ * (U : Qubit) := by
-    simpa only [rotateState, conjTranspose_kronecker, conjTranspose_one,
-      conjTranspose_conjTranspose] using
+    simpa only [rotateState, unitaryEvolution, Matrix.star_eq_conjTranspose,
+      conjTranspose_kronecker, conjTranspose_one, conjTranspose_conjTranspose] using
       D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.ptrace2_left
         ((U : Qubit)ᴴ) ρ
   have hh : (U : Qubit)ᴴ * partialTraceRight ρ * (U : Qubit) =
@@ -401,7 +394,10 @@ private lemma marginal_basis (ρ : TwoQubit) (hρ : ρ.PosSemidef) :
 private lemma discord_sq_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : trace ρ = 1) :
     geometricDiscord ρ ≤ maximalMutualCorrelation ρ ^ 2 := by
   obtain ⟨U, h0, h1⟩ := marginal_basis ρ hρ
-  have hr : (rotateState U ρ).PosSemidef := hρ.conjTranspose_mul_mul_same _
+  have hr : (rotateState U ρ).PosSemidef := by
+    rw [rotateState, unitaryEvolution, Matrix.star_eq_conjTranspose,
+      conjTranspose_conjTranspose]
+    exact hρ.conjTranspose_mul_mul_same _
   have hd := discord_le_measurement ρ U
   rw [disturbance_rotation, disturbance_coordinates _ hr.isHermitian h0 h1] at hd
   have hC := correlation_nonneg ρ hρ ht
