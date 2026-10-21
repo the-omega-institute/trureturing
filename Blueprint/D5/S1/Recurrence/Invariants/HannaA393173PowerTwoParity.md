@@ -36,6 +36,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaA393173PowerTwoParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a393173-hanna-power-of-two-parity` (proved) by `D5/S1/Recurrence/Invariants/HannaA393173PowerTwoParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a393173-hanna-power-of-two-parity","declaration_gid":"D5/S1/Recurrence/Invariants/HannaA393173PowerTwoParity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2026). *OEIS A393173, squared-index inverse-diagonal parity*. URL: <https://oeis.org/A393173>.
