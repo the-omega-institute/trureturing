@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Actual spectral smoothness used in the original reversible-channel application. The cited channel literature supplies context. The analytic proof identifies the actual CFC square root with a local inverse of the Hermitian square map; its existing six-target audit issue #18787 remains unfinished, with zero validated registrations.
+Actual spectral smoothness used in the original reversible-channel application. The cited channel literature supplies context. The analytic proof identifies the actual CFC square root with a local inverse of the Hermitian square map.
 
 **Theorem 1.1 (positive hermitian sqrt contDiffAt).**
 
@@ -18,7 +18,7 @@ Lean statement: `D5/S3/SpectralTopology/ActualSpectralWhitening.positive_hermiti
 
 *Commentary.*
 
-At every positive definite Hermitian matrix, the actual CFC square root is smooth as a map from the real Hermitian subspace to the original complex matrix space. The derivative of the square map at its positive square root is the invertible Jordan operator V ↦ YV + VY. The local inverse theorem gives a smooth local inverse; uniqueness identifies that inverse with the CFC square root. This identification is the retained escape witness, with audit issue #18787 unfinished and zero validated registrations.
+At every positive definite Hermitian matrix, the actual CFC square root is smooth as a map from the real Hermitian subspace to the original complex matrix space. The derivative of the square map at its positive square root is the invertible Jordan operator V ↦ YV + VY. The local inverse theorem gives a smooth local inverse; uniqueness identifies that inverse with the CFC square root.
 
 **Theorem 1.2 (support range).**
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/SpectralTopology/ActualSpectralWhitening.support_range`
 
 *Commentary.*
 
-For every positive semidefinite complex matrix, the actual spectral support has the same complex linear range as the matrix, is Hermitian and is idempotent. The proof uses CFC multiplication and the zero-on-kernel support function. This consumed algebraic helper carries no separate mathematical novelty claim.
+For every positive semidefinite complex matrix, the actual spectral support has the same complex linear range as the matrix, is Hermitian and is idempotent. The proof uses CFC multiplication and the zero-on-kernel support function.
 
 **Theorem 1.3 (actual constant rank support smooth).**
 
