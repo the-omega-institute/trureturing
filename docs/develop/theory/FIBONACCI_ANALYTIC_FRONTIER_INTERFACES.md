@@ -1731,3 +1731,157 @@ $$
 把 $\mathcal C$ 一次扩大到也控制定理 457.1 的共同包络，在同一实际向量、该定理的有界共同成本及充分小 $\varepsilon$ 合同下，其投影是 $o(K^2)$，但（458.12）仍比 $K^2$ 高 $1/12+(5/36-5\delta/6)\ell$。该差额是本上界的预算缺口，不是实际补空间的下界；（458.10）在 $U\asymp K$ 也只有 $K^{2+\varepsilon}$，没有严格节省。其他原长度、高度、growing-height allowance、F4 的不同列二次型及 signed Robin restoration 仍需对应估计。本条不证明 RH 或全部 $n>5040$ 的严格 Robin 不等式。
 
 ## 追加锚（本行以下为增补区）
+
+## 459. 缓冲零点分箱下的完整原卷积联合估计
+
+**定理 459.1（保留原逆因子的分箱联合预算）。** 沿用定理 458.1 的原 $b(h)$、行算子 $A$、$Q(b)=\|Ab\|_2^2$、固定有限 Fourier 表示、共同零掩码及 good sixth-power-free 非单位行。以下为 `repo-derived` 的完整原系数联合应用；承重解析输入是原稿 `lem:logarithmic-control`、`lem:deleted-euler-factors`、无槽 `lem:plain`，以及原 buffered-bin／detector-count 合同。后两份合同在 [Xu–Sang v2，Theorem 2.2、Lemma 6.2 及 Proposition 6.3](https://arxiv.org/html/2610.17675v2)有明确陈述。原逆矩、分箱计数、复分析和 Cauchy 均直接复用，不分别作为新增结果。本条不把只有 $\mu$ 系数的逆二矩套到 $\mu*\mu$ 上，也不使用该文 prime-only 的 Proposition 7.2。
+
+固定 $U\asymp K$、$D=N=\sqrt K$。Profiles 支撑于原固定 annuli，并有下文所需有限阶有界 seminorms；norm-twist 高度固定。也允许实际 seminorm 和高度成本为 $U^{o(1)}$ 的 polylog 参数，但不据此认证原来更大的 growing-height allowance。原有限实参数或 smooth 选择只在同一固定 profile/height 合同下恢复。共同有限字符族 $\mathcal X_z$ 包含原 H1 的每一个 Fourier presentation；它不随 $U$ 扩张。
+
+对每个 Fourier 分量，记 $C_{M,\xi}$ 为下文原逆多项式逐行界的 profile 成本，$C_{S,\xi}$ 为原 plain 四矩成本的第四根，选择一次共同乘积包络
+
+$$
+\mathcal C\ge\max\left\{1,
+\sum_\xi|c_\xi|C_{M,\xi}C_{S,\xi}\right\}.
+\tag{459.1}
+$$
+
+原有限行分区、行权及所需的有限分离／Sobolev 费用都包含在其中，不按行、分箱或标签重新分配。令
+
+$$
+\kappa_{\mathrm{joint}}=\frac{49-10\sqrt6}{12}.
+\tag{459.2}
+$$
+
+则对任意最终 $\varepsilon>0$，在所列解析输入下，完整原行能量及任意实际正交投影 $P$ 的补空间满足
+
+$$
+\begin{aligned}
+Q(b)&\ll_\varepsilon\mathcal C^2
+ K^{\kappa_{\mathrm{joint}}+\varepsilon},\\
+\|(I-P)Ab\|_2^2&\le Q(b).
+\end{aligned}
+\tag{459.3}
+$$
+
+在同一有界或相应次幂成本口径下，这把定理 458.1 在该平衡点的上界幂次再降低
+
+$$
+\frac{25}{12}-\kappa_{\mathrm{joint}}
+=\frac{5\sqrt6-12}{6}>0.
+\tag{459.4}
+$$
+
+若改取定理 457.1 的同一扇区 $L=K^\ell$、$\sqrt K\le D\le\sqrt K L^{1/6-\delta_{457}}$、$N=K/D$，仍在本条明确的 profile/height 范围，则完整原能量和补空间满足
+
+$$
+Q(b),\ \|(I-P)Ab\|_2^2
+\ll_\varepsilon\mathcal C^2
+K^{\kappa_{\mathrm{joint}}+(1/6-\delta_{457})\ell+\varepsilon}.
+\tag{459.5}
+$$
+
+证明。先固定一个原 Fourier 分量，使用（458.5）的同一个 $\psi_z$、$M_\xi$、$S_\xi$。乘法性包含零值，所以 $Ab_\xi=\sqrt\Omega K^{1/2}M_\xi S_\xi$，原 $h=dn$ 不限重数，也没有增加 $(d,n)=1$。下述各项属于同一实际行和同一个原向量。
+
+取原 floor $a_0=51/100$，选小的固定分箱宽度 $e>0$，再使用原有的高度顺序选 $H_1=U^\tau$。令 $M_j(z)$ 是 $\mathcal X_z$ 中所有 primitive inducing $L$-函数在 $|\Im\rho|\le3jH_1$、$\Re\rho\ge a_0$ 的最大零点实部，并与 $a_0$ 取最大值。原共同分箱给出有限个 $\mathcal B_{i,a}$，满足
+
+$$
+a\le M_i(z)<a+e,\qquad M_{i+1}(z)<a+2e.
+\tag{459.6}
+$$
+
+每个 $\xi$ 都包含在这份共同最大值中。Floor 行有 $O(U)$ 个；其余行由原计数合同满足
+
+$$
+\#\mathcal B_{i,a}\ll_\varepsilon U^{\mathcal R(a)+\varepsilon},
+\qquad
+\mathcal R(a)=
+\begin{cases}
+(31-32a)/(21-12a),&a_0<a\le11/12,\\
+2(1-a),&11/12\le a\le1.
+\end{cases}
+\tag{459.7}
+$$
+
+此计数保留全部 good sixth-power-free 行，含字符阶数严格整除六的行；不是素行或仅平方自由行的计数。固定有限 ray 与原 masks 按同一算术数据合同处理，不将移动 ray 群并入固定常数。
+
+关键是逐行控制原逆因子。固定 $z\in\mathcal B_{i,a}$，在绝对收敛线使用其原完整逆级数：
+
+$$
+M_\xi(z)=\frac{D^{-1/2}}{2\pi i}
+\int_{(2)}\frac{D^s\widehat V(s)}
+ {L_{\mathrm{orig}}(s,\psi_z)}\,ds.
+\tag{459.8}
+$$
+
+$L_{\mathrm{orig}}$ 包含原删因子，故这里的系数正是原 $\mu(d)\psi_z(d)$。不在移线前去掉原零掩码。原 fixed-$S$ 字符不能消去 good 非单位行在 $S$ 外 valuation $1,\ldots,5$ 的非平凡局部字符，因而这些行非主；principal 来源不在当前行族中，既有例外处理中的贡献仍按其原合同保留。
+
+截断在 $H=H_1/4$，只把该有限线段移至 $\Re s=a+8e$。先运输原固定 norm twist，再应用（459.6）的缓冲：以 $2+it$ 为中心、半径 $2-a-2e$ 的所需圆盘无零。原 logarithmic-control 在较小圆盘上给出的正是 $|L|+|1/L|\ll U^\varepsilon$，不只是 $L'/L$ 的对数界。Conductor 与完整删除 radical 的 norm 均为 $O(U)$，原 deleted-euler-factors 同时控制这些因子及其倒数，所以原完整 $1/L_{\mathrm{orig}}$ 在实际有限矩形中也是次幂有界。固定／polylog 高度在足够大 $U$ 时处于这份缓冲内部。
+
+高度与导数的次序保留原合同：先固定分箱损失、内部 moment 及参数 Sobolev 的有限阶，再选足够小的 $\tau$ 支付其固定多项式高度费用；最后选外部 Mellin-tail 阶数 $J$。对原限定的 $D\le U^{O(1)}$，令 $J$ 足够大，使绝对线上的尾部和有限水平 joins 均为 $O(U^{-10})$。提高这份外部阶数只提高 $V$ 所需的有限 seminorm，不重新提高已经支付的内部高度指数。固定 norm twists 先平移到 $L$ 的高度参数，不能对其导数反复收取新的 growing-height 费用。移线后不把新纵线延伸到无缓冲的无限高度。
+
+因此，对同一个原分量和实际行，
+
+$$
+|M_\xi(z)|^2
+\ll_\varepsilon U^\varepsilon C_{M,\xi}^2
+ D^{2a-1+16e}+O(U^{-10}).
+\tag{459.9}
+$$
+
+有限单位或有界大小的原例外使用既有分解；annular 大 $U$ 的当前 good 非单位行不包含它们。这里没有先证一个新逆四矩，也没有把 witness 下界当成逐行上界。
+
+在同一个分箱中，只对 plain 因子使用带原 $\Omega$ 的 Cauchy。原无槽四矩对当前真实 $N$ 与固定 $\xi$ 给出
+
+$$
+\begin{aligned}
+\sum_{z\in\mathcal B_{i,a}}\Omega|M_\xi S_\xi|^2
+&\ll U^\varepsilon C_{M,\xi}^2D^{2a-1+16e}
+ \left(\#\mathcal B_{i,a}\sum_{z\in\mathcal B_{i,a}}
+ \Omega|S_\xi|^4\right)^{1/2}\\
+&\ll U^\varepsilon(C_{M,\xi}C_{S,\xi})^2
+ D^{2a-1+16e}U^{(1+\mathcal R(a))/2}.
+\end{aligned}
+\tag{459.10}
+$$
+
+$\Omega$ 的固定有界质量已纳入成本。Tail 的正贡献由原多项式大小及 $O(U^{-10})$ 支付。Floor 使用相同论证和 $\#\mathcal B_{i,a_0}=O(U)$。然后在同一个行范数中恢复全部有限 Fourier 分量、分箱及原行分区，使用（459.1）；没有把分别可达的系数或不同来源的最优值合并。
+
+在精确平衡点，先令 $e$ 和内部小幂适配最终 $\varepsilon$，再乘回原 $K$。写 $\delta=2a-1$，上方分箱的 raw 能量幂次为
+
+$$
+\frac32+\frac12\{R(\delta)+\delta\},
+\qquad
+R(\delta)=
+\begin{cases}
+(15-16\delta)/(15-6\delta),&1/50<\delta\le5/6,\\
+1-\delta,&5/6\le\delta\le1.
+\end{cases}
+\tag{459.11}
+$$
+
+第一段 $R(\delta)=8/3-25/(15-6\delta)$，故 $R(\delta)+\delta$ 的导数是 $1-150/(15-6\delta)^2$。它在
+
+$$
+\delta_*=(15-5\sqrt6)/6,
+\qquad R(\delta_*)+\delta_*=(31-10\sqrt6)/6
+\tag{459.12}
+$$
+
+取得最大值；$\delta_*\in(1/50,5/6)$。第二段之和恒为 $1$；floor 的 raw 幂次为 $201/100<\kappa_{\mathrm{joint}}$。有限分箱总数不随 $U$ 增加，因此（459.11）—（459.12）给出（459.3）的完整能量界。实际正交投影是收缩，遂同时控制其补空间。
+
+在（459.5）的扇区，写 $D=\sqrt K K^\theta$，$0\le\theta\le(1/6-\delta_{457})\ell$，仍取实际 $N=K/D$。原 plain 四矩在该真实长度范围内统一成立。因为 $0\le2a-1\le1$，（459.10）相对于平衡点额外至多支付 $K^\theta$；floor 额外只有 $K^{\theta/50}$，同样被所列幂次覆盖。由此得到（459.5），没有重新优化一个独立系数向量。证毕。
+
+当前上界的平衡点差额仍是
+
+$$
+\kappa_{\mathrm{joint}}-2
+=\frac{25-10\sqrt6}{12}>0.
+\tag{459.13}
+$$
+
+它是本估计距离目标 $K^2$ 的幂次差额，不是实际补空间的下界。只有在定理 457.1 的有界共同成本、充分小损失、同一实际向量及共同 profile/height 合同都满足时，才可同时保留其指定素标记投影的 $o(K^2)$ 结论；（459.3）并未将补空间降到 $K^2$ 以下。其他原长度和高度、原 growing-height allowance、F4 的不同列二次型以及 signed Robin restoration 仍需对应估计。本条没有新增零密度、RH 或全部 $n>5040$ 的严格 Robin 结论，也没有本仓解析 Lean 认证或文献优先权断言。
+
+相近的既有 mollified second-moment 方法仍按其范围复用。[David–de Faveri–Dunn–Stucky v3，§1.2 的（1.8）、（1.26）—（1.27）](https://arxiv.org/html/2410.03048v3)处理平方自由三次字符的 central $L$-值及其 mollifier；其 power-saving asymptotic 使用 $M\ll X^{1/6-\delta}$。它不直接给出本条六次字符原 annular $\mu$／plain 向量在 $D=N\asymp\sqrt U$ 时的完整联合界，不能把不同阶数、central-value 来源及长度条件删去。这里新增的是上述原向量的完整组合消费，所用分箱、次幂逆界及 plain 四矩本身都是既有输入。
+
+## 追加锚（本行以下为增补区）
