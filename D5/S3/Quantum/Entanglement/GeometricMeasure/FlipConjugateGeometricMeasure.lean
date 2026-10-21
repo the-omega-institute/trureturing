@@ -10,6 +10,8 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.Tactic
 
+/-! The sharp product overlap of the flip-conjugate symmetric subspaces. -/
+
 noncomputable section
 
 open scoped BigOperators ComplexConjugate
@@ -75,7 +77,32 @@ private lemma scalar_identities (d : ℕ) (hd : 2 ≤ d) :
 
 private lemma basis_orthogonality (d : ℕ) (hd : 2 ≤ d) (m n : Fin d) :
     (∑ p, conj (φ d m p) * φ d n p) = if m = n then 1 else 0 := by
-  sorry
+  classical
+  have hs : Real.sqrt ((d : ℝ) + 1) ≠ 0 := by positivity
+  have hq := (scalar_identities d hd).1
+  have hr := (scalar_identities d hd).2
+  simp only [Fintype.sum_prod_type]
+  by_cases hmn : m = n
+  · subst n
+    simp [φ, div_eq_mul_inv, apply_ite conj, ite_and, mul_add, add_mul,
+      mul_ite, ite_mul, Finset.sum_add_distrib]
+    have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+    have hden : (d : ℝ) - 1 ≠ 0 := by linarith
+    have he : 2 * (d : ℝ) * ‖z d‖ ^ 2 + 2 * ((z d) ^ 2).re = (d : ℝ) + 1 := by
+      rw [hq, hr]
+      field_simp [hden]
+      <;> ring
+    have heC : 2 * (d : ℂ) * ((‖z d‖ ^ 2 : ℝ) : ℂ) +
+        ((2 * ((z d) ^ 2).re : ℝ) : ℂ) = (d : ℂ) + 1 := by
+      exact_mod_cast he
+    rw [← Complex.normSq_eq_norm_sq, Complex.normSq_eq_conj_mul_self,
+      ← Complex.add_conj, map_pow] at heC
+    have hsC : (Real.sqrt ((d : ℝ) + 1) : ℂ) ^ 2 = (d : ℂ) + 1 := by
+      exact_mod_cast Real.sq_sqrt (show 0 ≤ (d : ℝ) + 1 by positivity)
+    field_simp [hs]
+    linear_combination heC - hsC
+  · simp [φ, div_eq_mul_inv, apply_ite conj, ite_and, mul_add, add_mul,
+      mul_ite, ite_mul, Finset.sum_add_distrib, hmn, Ne.symm hmn]
 
 private lemma coefficient_normalization (d : ℕ) (hd : 2 ≤ d) (ψ : State d)
     (hψ : UnitVector ψ) (hmem : ψ ∈ H_I d) :
