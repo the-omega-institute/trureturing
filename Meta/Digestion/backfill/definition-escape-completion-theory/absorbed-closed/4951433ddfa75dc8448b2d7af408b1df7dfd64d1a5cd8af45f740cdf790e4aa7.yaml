@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4951433ddfa75dc8448b2d7af408b1df7dfd64d1a5cd8af45f740cdf790e4aa7
+  normalized_sha256: sha256:4951433ddfa75dc8448b2d7af408b1df7dfd64d1a5cd8af45f740cdf790e4aa7
+cas_ref: sha256:4951433ddfa75dc8448b2d7af408b1df7dfd64d1a5cd8af45f740cdf790e4aa7
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
+    target_statement_id: sha256:57f54dd66f8944b9f51c64a24eccba18d2cd7118ed38d48962098a346143f367
+receipts:
+  unresolved_subitems: []
