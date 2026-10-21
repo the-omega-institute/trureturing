@@ -1498,9 +1498,10 @@ For $\beta>4$, the budget ratio tends to zero; for $\beta=4$, it tends to $d/C$,
 
 These are consequences for the explicit known-law readout and supplied comparison laws. They neither identify a projected-input law with a Gaussian law nor assert a native preparation realizing these means. There is no endpoint or $q$-uniform estimate, physical-cost model, unknown-law training guarantee, empirical gain or out-of-distribution conclusion. $\square$
 
+## 追加锚（本行以下为增补区）
 ## 13. Critical crossover for the five-label Gaussian singleton experiment
 
-**定义 13.1（全参数已知律与临界量）。** Let $C$ be uniform on the five original labels $\{1,2,3,4,5\}$. For every $q>0$ and $b>0$, conditional on $C$, take one complete observation $X=(U,V)\in\mathbb R^2$ with covariance $I_2$ and means
+**定义 13.1（全参数已知律与临界量）。** Let $C$ be uniform on the five original labels $\{1,2,3,4,5\}$. For every $q>0$ and $b>0$, and each label $i$, the full class-conditional law is $X\mid(C=i)\sim\mathcal N_2(\mu_i,I_2)$, where the complete observation $X=(U,V)\in\mathbb R^2$ has means
 
 $$
  \mu_1=\mu_2=(-q,0),\qquad \mu_3=(0,b),\qquad
