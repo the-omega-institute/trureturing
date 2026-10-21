@@ -25,6 +25,8 @@ internal sealed class PrecessionSpinOneSeparableBoundDocument : IScribeDocumentD
                 "Jy is the Hermitian y component obtained from the raising matrix and its conjugate transpose.", DescribeRole.Definition),
             Node("Jz", "Spin z matrix", JzFormula(),
                 "Jz is diagonal in the standard basis with entries n/2 minus the descending index.", DescribeRole.Definition),
+            Node("spinRad", "Binomial spin radius", SpinRadFormula(),
+                "spinRad is the square root of the binomial coefficient indexed by the standard spin basis coordinate.", DescribeRole.Definition),
             Node("rotation", "Spin z rotation", RotationFormula(),
                 "The diagonal spin rotation has phase exp(-I angle (n/2-i.val)) in the descending spin basis.", DescribeRole.Definition),
             Node("total", "Total angular momentum", TotalFormula(),
@@ -149,6 +151,14 @@ internal sealed class PrecessionSpinOneSeparableBoundDocument : IScribeDocumentD
         var n = F.Id("n"); var i = F.Id("i");
         var value = OfReal(Sub(Div(NatCast(n), D(2)), NatCast(Val(i))));
         return Disp(All("n", Nat(), Eq(Call("Jz", n), Call("diagonal", Lambda("i", SpinIndex(n), value)))));
+    }
+
+    private static Formula SpinRadFormula()
+    {
+        var n = F.Id("n"); var i = F.Id("i");
+        var choose = QualifiedCall("Nat", "choose", n, Val(i));
+        return Disp(All("n", Nat(), All("i", SpinIndex(n), Eq(
+            Call("spinRad", n, i), QualifiedCall("Real", "sqrt", NatCast(choose))))));
     }
 
     private static Formula RotationFormula()

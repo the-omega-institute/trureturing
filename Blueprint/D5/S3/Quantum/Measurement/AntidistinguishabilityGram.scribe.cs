@@ -56,6 +56,10 @@ internal sealed class AntidistinguishabilityGramDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Owner + ".matrix_penrose_exists"), H("Matrix Penrose inverse"),
                 StatementSource.FromAuthor(Disp(MatrixPenrose())), AssessedProvenance.FromRepo(Paper),
                 Blocks(Paragraph(Text("Every rectangular complex matrix admits a Penrose inverse: both absorption identities hold and both products are Hermitian. The construction transports the finite-dimensional Moore–Penrose inverse through Matrix.toEuclideanLin."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("psd-summand-kills-kernel"),
+                DeclarationHandle.Create(Owner + ".psd_summand_kills_kernel"), H("Kernels of positive summands"),
+                StatementSource.FromAuthor(Disp(SummandKernel())), AssessedProvenance.FromRepo(Paper),
+                Blocks(Paragraph(Text("If a vector belongs to the kernel of a finite sum of positive semidefinite matrices, it belongs to the kernel of every summand."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("psd-summand-projection"),
                 DeclarationHandle.Create(Owner + ".psd_summand_projection"), H("Projection of positive summands"),
                 StatementSource.FromAuthor(Disp(SummandProjection())), AssessedProvenance.FromRepo(Paper),
@@ -151,6 +155,13 @@ internal sealed class AntidistinguishabilityGramDocument : IScribeDocumentDefini
             And(Eqn(Multiply(Multiply(X("A"), X("B")), X("A")), X("A")),
                 And(Eqn(Multiply(Multiply(X("B"), X("A")), X("B")), X("B")),
                     And(Property(Multiply(X("A"), X("B")), "IsHermitian"), Property(Multiply(X("B"), X("A")), "IsHermitian"))))))));
+    private static Formula SummandKernel() => All("n", Naturals,
+        All("F", new Formula.TypeArrow(FinOf("n"), Mat("n", "n")),
+            Imp(All("j", FinOf("n"), Property(App(X("F"), X("j")), "PosSemidef")),
+                All("x", new Formula.TypeArrow(FinOf("n"), C),
+                    Imp(Eqn(MulVector(Parenthesized(SumF), X("x")), D(0)),
+                        All("i", FinOf("n"), Eqn(MulVector(App(X("F"), X("i")), X("x")), D(0))))))));
+    private static Formula MulVector(Formula a, Formula b) => Seq(a, Sp, new Formula.Subscript(Times, X("v")), Sp, b);
     private static Formula SummandProjection() => All("n", Naturals,
         All("F", new Formula.TypeArrow(FinOf("n"), Mat("n", "n")),
             Imp(All("i", FinOf("n"), Property(App(X("F"), X("i")), "PosSemidef")),
