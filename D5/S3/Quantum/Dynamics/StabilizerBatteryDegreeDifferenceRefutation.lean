@@ -225,6 +225,7 @@ private lemma graph_polarization (N K : ℕ) (b x : Fin N → ZMod 2) :
 private lemma sign_nat (m : ℕ) : (-1 : ℂ) ^ m = complexSign (m : ZMod 2) := by
   rw [complex_sign_val, ZMod.val_natCast, neg_one_pow_eq_pow_mod_two]
 
+set_option pp.all true in
 private lemma word_action {N : ℕ} (w : Fin N → Pauli) (ψ : State N)
     (b : Fin N → ZMod 2) :
     (wordOp w *ᵥ ψ) b =
@@ -239,9 +240,9 @@ private lemma word_action {N : ℕ} (w : Fin N → Pauli) (ψ : State N)
     have hone : id (α := ZMod 2) (1 : Fin 2) = 1 := rfl
     cases hi : w i <;> ext r c <;> fin_cases r <;> fin_cases c <;>
       norm_num [flipBit, id, Function.comp_def, bellInput, hi, pauliMatrix, complexSign, Matrix.of_apply,
-        Matrix.smul_apply, smul_eq_mul, hzero, hone, F₂,
+        Matrix.smul_apply, smul_eq_mul, hzero, hone, CharTwo.add_self_eq_zero, F₂,
         show (2 : ZMod 2) = 0 by decide,
-        D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ] <;> decide
+        D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ]
   have hw := congrFun (tensor_weyl ((id (α := Fin N → ZMod 2) (flipBit ∘ w)), (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w))) ψ) b
   change (tensorOp (fun i => Matrix.of fun r c : Fin 2 =>
       if id (α := ZMod 2) c = id (α := ZMod 2) r + (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i then
