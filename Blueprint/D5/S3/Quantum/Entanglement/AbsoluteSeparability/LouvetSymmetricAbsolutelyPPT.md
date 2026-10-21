@@ -94,6 +94,10 @@ $$\forall N \in \mathbb{N},\; \forall d \in \mathbb{N},\; (2 \le N) \Rightarrow 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/louvet-2025-symmetric-absolutely-ppt` (proved) by `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"louvet-2025-symmetric-absolutely-ppt","declaration_gid":"D5/S3/Quantum/Entanglement/AbsoluteSeparability/LouvetSymmetricAbsolutelyPPT.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Louvet, E. Serrano-Ensástiga, T. Bastin, J. Martin (2025). *Nonequivalence between absolute separability and positive partial transposition in the symmetric subspace*. DOI: [10.1103/PhysRevA.111.042418](https://doi.org/10.1103/PhysRevA.111.042418). URL: <https://arxiv.org/abs/2411.16461v2>.
