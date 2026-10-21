@@ -6,9 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/RandomWalks/SquareClusterExitTimeRefutation.claim; result=D5/S3/StatisticalMechanics/RandomWalks/SquareClusterExitTimeRefutation.result; claim=D5/S3/StatisticalMechanics/RandomWalks/SquareClusterExitTimeRefutation.claim
    digest: A lattice disk with 121 vertices has larger mean first exit time than the square. -/
 
-import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.Module.LinearMap.End
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Fin.VecNotation
@@ -84,31 +82,22 @@ private noncomputable def killed (S : Finset (ℤ × ℤ)) :
   map_add' f g := by
     funext p
     dsimp
-    split_ifs <;> simp only [Pi.add_apply, sum_add_distrib, add_div, add_zero]
+    split_ifs <;> simp only [sum_add_distrib, add_div, add_zero]
   map_smul' c f := by
     funext p
     dsimp
-    split_ifs <;> simp only [Pi.smul_apply, smul_eq_mul, ← mul_sum, mul_div_assoc, mul_zero]
+    split_ifs <;> simp only [← mul_sum, mul_div_assoc, mul_zero]
 
 private def inside (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) : ℝ := if p ∈ S then 1 else 0
 
 private theorem exits_cons (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) (n : ℕ)
     (d : Dir) (w : Fin n → Dir) :
     exits S p (Fin.cons d w) ↔ p ∈ S ∧ exits S (p + step d) w := by
-  simp only [exits]
-  constructor
-  · rintro ⟨h, he⟩
-    refine ⟨?_, ⟨?_, ?_⟩⟩
-    · exact h 0
-    · intro j
-      simpa only [Fin.val_succ, position, Fin.cons_zero, Fin.tail_cons] using h j.succ
-    · simpa only [position, Fin.cons_zero, Fin.tail_cons] using he
-  · rintro ⟨hp, hw, he⟩
-    refine ⟨?_, ?_⟩
-    · intro j
-      refine Fin.cases hp (fun i => ?_) j
-      simpa only [Fin.val_succ, position, Fin.cons_zero, Fin.tail_cons] using hw i
-    · simpa only [position, Fin.cons_zero, Fin.tail_cons] using he
+  unfold exits
+  rw [Fin.forall_fin_succ]
+  change ((p ∈ S ∧ ∀ j : Fin n, position (p + step d) w j ∈ S) ∧
+    position (p + step d) w n ∉ S) ↔ _
+  exact and_assoc
 
 private theorem exit_prob_zero (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) :
     exitProb S p 0 = 1 - inside S p := by
@@ -119,7 +108,7 @@ private theorem exit_prob_zero (S : Finset (ℤ × ℤ)) (p : ℤ × ℤ) :
     intro w
     simp only [exits, position, IsEmpty.forall_iff, true_and]
   rw [he]
-  by_cases hp : p ∈ S <;> simp only [inside, hp, not_true_eq_false, if_false, if_true] <;> norm_num
+  by_cases hp : p ∈ S <;> simp only [inside, hp, not_true_eq_false, ite_false, ite_true] <;> norm_num
 
 private theorem exit_prob_succ (S : Finset (ℤ × ℤ)) (n : ℕ) :
     (fun p => exitProb S p (n + 1)) = killed S (fun p => exitProb S p n) := by
@@ -134,8 +123,8 @@ private theorem exit_prob_succ (S : Finset (ℤ × ℤ)) (n : ℕ) :
         if exits S (p + step d) w then (1 : ℝ) else 0) / 4 ^ n) / 4 else 0
   simp_rw [exits_cons]
   by_cases hp : p ∈ S
-  · simp only [hp, true_and, if_true, ← sum_div, pow_succ, div_div]
-  · simp only [hp, false_and, if_false, sum_const_zero, zero_div]
+  · simp only [hp, true_and, ite_true, ← sum_div, pow_succ, div_div]
+  · simp only [hp, false_and, ite_false, sum_const_zero, zero_div]
 
 private theorem killed_mono (S : Finset (ℤ × ℤ)) : Monotone (killed S) := by
   intro f g h p
@@ -167,26 +156,26 @@ private theorem expected_of_certificate (S : Finset (ℤ × ℤ)) (t : ℤ × �
     intro q
     change (if q ∈ S then 1 else 0) ≤ t q
     by_cases hq : q ∈ S
-    · rw [if_pos hq]
+    · rw [ite_eq_left hq]
       exact (hb q hq).1
-    · simp only [inside, if_neg hq, hz q hq, le_refl]
+    · simp only [ite_eq_right hq, hz q hq, le_refl]
   have hcert : t = inside S + P t := by
     funext q
     change t q = (if q ∈ S then 1 else 0) + (if q ∈ S then _ else 0)
     by_cases hq : q ∈ S
-    · rw [if_pos hq, if_pos hq]
+    · rw [ite_eq_left hq, ite_eq_left hq]
       exact ht q hq
-    · rw [if_neg hq, if_neg hq, hz q hq, add_zero]
+    · rw [ite_eq_right hq, ite_eq_right hq, hz q hq, add_zero]
   have hcontract : P t ≤ r • t := by
     intro q
     change (if q ∈ S then _ else 0) ≤ r * t q
     by_cases hq : q ∈ S
-    · rw [if_pos hq]
+    · rw [ite_eq_left hq]
       have h := ht q hq
       have h43 := (hb q hq).2
       dsimp [r]
       linarith
-    · rw [if_neg hq, hz q hq, mul_zero]
+    · rw [ite_eq_right hq, hz q hq, mul_zero]
   have hm : ∀ n : ℕ, Monotone (P ^ n) := by
     intro n
     rw [Module.End.coe_pow]
@@ -400,12 +389,12 @@ theorem result : ¬ claim := by
     intro p _
     apply integer_certificate disk diskA 68912213 (by norm_num) ?_ disk_data.2.1 p
     intro p hp
-    exact if_neg (fun h => hp ((mem_disk p).2 h))
+    exact ite_eq_right (fun h => hp ((mem_disk p).2 h))
   have hq : ∀ p ∈ square 11, expectedExit (square 11) p = (squareA p : ℝ) / 1972460 := by
     intro p _
     apply integer_certificate (square 11) squareA 1972460 (by norm_num) ?_ square_data.2.1 p
     intro p hp
-    exact if_neg (fun h => hp ((mem_square_eleven p).2 h))
+    exact ite_eq_right (fun h => hp ((mem_square_eleven p).2 h))
   have hdm : meanExit disk = (198008236169 : ℝ) / 8338377773 := by
     unfold meanExit
     rw [disk_data.1]
