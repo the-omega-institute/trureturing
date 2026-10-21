@@ -1,0 +1,55 @@
+**Definition 25.1 (Complete tuples and the closed fibre).** Retain
+Definitions 1.1–1.2 and 12.1, including the entire actual child $C(p,v)$,
+all original clocks and the one whole gain of each world. Write a complete
+tuple as $(r,b,c,d,g_0,g_1,g_2,g_3)$, where $g_i=[s^i]g$ and
+$bc=r(1-r)$. The topology is the Euclidean topology of these coordinates;
+lower-degree gains are padded by zero. Let
+
+$$
+\mathcal L_{24}=\overline{\mathcal H}\cap\{p=24\},\qquad
+\mathcal H=\mathcal F(H_4),\qquad
+\Psi_M=(p,v,m),\quad
+k=m-\frac{32}{5}v,\quad \ell=m-\frac{24}{5}v.
+\tag{25.1}
+$$
+
+The closure here consists of finite tuples. At a boundary tuple, responses
+are evaluated by their original polynomial matrix formulas. Boundary tuples
+are auxiliary limits, not additional actual worlds. In particular no
+compact source restriction is part of this definition.
+
+Set $e=d-24$, $\Delta=b-1/8$ and, wherever $j,n>0$,
+
+$$
+\begin{gathered}
+j=b+c,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\quad V=U+n,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad
+B_{\rm coef}=6/T-2/U=\frac{2(2+5b)}{TU},\\
+R_0(b,r,e)=e\Lambda+\frac{24}{5}\Delta B_{\rm coef}.
+\end{gathered}
+\tag{25.2}
+$$
+
+The complete parent equation is $R_0=0$. Its gain is the single polynomial
+of degree at most three with values
+
+$$
+(g(0),g(1),g(2),g(3))=
+\left(-24-e,-e/j,\frac{27/5-e}{T},-e/n\right).
+\tag{25.3}
+$$
+
+These are the zero-safe parent equations of O, Theorem 2.1. In particular
+they do not require $e\ne0$ or $\Lambda\ne0$. The original left products give
+
+$$
+Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix},\qquad
+(\operatorname{tr}(Q_iP))_{i=0}^6=(1,j,T,n,U,U+n,2U+n),
+\tag{25.4}
+$$
+
+and terminal traces $T+2j+4r$ and $3U+2n$ for $J$ and $M$.
+The extrapolation rows from (25.3) to clocks $5,6,7$ are exactly (2.3).
+Thus $\Psi_M$ always uses the same interpolated whole gain and fixed drift.
+Neither $k$ nor $\ell$ is an additional acquired observation.
+

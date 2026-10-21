@@ -1,0 +1,11 @@
+## 156. Primary references and exact reuse scopes
+
+- **[M] Mixed-state number-SSR projection.** N. Schuch, F. Verstraete and
+  J. I. Cirac, *Quantum entanglement theory in the presence of superselection
+  rules*, [quant-ph/0404079v1](https://arxiv.org/pdf/quant-ph/0404079v1),
+  Phys. Rev. A **70**, 042310;
+  DOI [10.1103/PhysRevA.70.042310](https://doi.org/10.1103/PhysRevA.70.042310).
+  PDF p. 9, §IV.D.1, Eqs. (17)--(18): mixed X state and standard form.
+  PDF p. 10, §IV.D.2: two-copy local one-particle projection, squared
+  coherence and preservation of the original threshold. The mapping is
+  (148.4); the direct unfiltered-input probabilities are (150.1), (151.4).

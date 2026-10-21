@@ -1,0 +1,80 @@
+**Lemma 9.8 (The CRT chart has a regular nonidentity point).** The
+polynomials $e_{24},n_{24,J},n_{24,M}$ are nonzero modulo $Q_{24}$.
+Every norm, denominator and subresultant condition used in their
+construction has a nonzero specialization at the following certificate.
+
+**Proof.** Work modulo $101$ at $(p,v)=(19,44)$. The original-source
+substitution has
+
+$$
+(r,b,e,x,\Lambda)=(87,28,46,1,81),\qquad d=70.
+$$
+
+The fixed normalization gives
+
+$$
+Q_{24}=0,\quad Q_{10}=24,\quad\rho=46,\quad
+\operatorname{Disc}(\bar R)=38,\quad\operatorname{Disc}(R)=69.
+$$
+
+The complete ascending array for $\bar R$ is
+
+$$
+(60,18,67,65,40,73,7,42,2,37,26,53,90,84,87,9,61,87,1).
+$$
+
+Both $\gcd(\bar R,F_0)$ and $\gcd(\bar R,\alpha)$ are $x-1$.
+The nonzero subresultant degrees for the former are $18,3,2,1$,
+and $s_1=75$. Furthermore
+
+$$
+\operatorname{Norm}_T(\alpha)=54,\quad
+\operatorname{Norm}_G(a_f)=63,\quad
+\operatorname{Norm}_G(d_F)=70,\quad\operatorname{Res}(G,T)=15.
+$$
+
+The CRT drift and the faithful terminal functions have ascending arrays
+
+$$
+\widehat\delta=(72,13,49,0,13,90,34,32,50,35,59,10,97,48,96,88,100,93),
+$$
+
+$$
+\widehat\tau_J=(86,20,61,53,51,73,83,5,48,52,81,55,36,59,39,70,17,84),
+$$
+
+$$
+\widehat\tau_M=(62,82,86,67,74,55,48,3,32,36,55,40,89,22,75,34,99,71).
+$$
+
+They give
+
+$$
+\begin{gathered}
+(\operatorname{Norm}D,\operatorname{Norm}\widehat H_1,
+ \operatorname{Norm}\widehat C_0,\operatorname{Norm}\widehat N_0)
+=(46,72,37,74),\\
+\det\widehat K_J=82,\qquad\det\widehat K_M=18.
+\end{gathered}
+$$
+
+The remainders of $f,K$, $\widehat\delta U+\widehat H_0$,
+$\widehat B_0U-\widehat H_2$, and
+$r^2-(1+b)r+b(xU-b)$ are zero, where $U,r,b$ in these reductions
+are reconstructed by the robust formulas. Also $\widehat\delta(1)=70$,
+agreeing with the original-source drift.
+
+Every listed norm and the final subresultant coefficient is a unit.
+The other retained factors are $Q_{10}=24$, $p-24=96$, $\rho=46$
+and raw discriminant $69$. Hence the prescribed adjugate and monic
+operations, with constants $2,5$ invertible, have unit denominators.
+The coefficient-normal-form rule divides only by the constant leading
+coefficient of $Q_{24}$ in addition; that coefficient is a unit modulo
+$101$. Reduction and ordinary gcd cancellation cannot introduce a
+vanishing denominator at this regular point. Thus all the coefficient
+denominators and reduced norm numerators or denominators included in
+$e_{24}$ are units here. Both determinant numerators are units as well.
+This proves nonidentity in the function field and nondivisibility by
+$Q_{24}$ for the chosen polynomial representatives. The certificate
+makes no ordered-real or legal-world assertion. ∎
+

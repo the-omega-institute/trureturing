@@ -1,0 +1,80 @@
+## 149. CAR regrouping and the effective dual-rail block
+
+First consider the effective active states $\sigma$ after an allowed
+B alignment and discard of each B-local spectator. This is a useful
+source-dependent protocol, distinct from the full common filter of §151.
+Use copy-first creation order $(A_1,b_1,A_2,b_2)$.
+Passing to party order $(A_1,A_2,b_1,b_2)$ multiplies an occupation ket by
+
+$$
+(-1)^{n_{b_1}n_{A_2}}.
+\tag{149.1}
+$$
+
+This sign is passive CAR-coordinate bookkeeping. It is not a physical
+cross-party unitary, and the regrouping is not an unsigned tensor swap.
+For the full aligned order $(A_1,b_1,s_1,A_2,b_2,s_2)$, the corresponding
+party order $(A_1,A_2,b_1,s_1,b_2,s_2)$ has sign
+
+$$
+(-1)^{(n_{b_1}+n_{s_1})n_{A_2}}.
+\tag{149.2}
+$$
+
+Project the effective system coherently onto $N_A^{\mathrm{tot}}=1$ and
+$N_b^{\mathrm{tot}}=1$. Use the ordinary dual-rail product basis
+
+$$
+(|A_1b_1\rangle,|A_1b_2\rangle,
+ |A_2b_1\rangle,|A_2b_2\rangle),
+\tag{149.3}
+$$
+
+where each ket denotes the indicated Alice rail and Bob rail occupied,
+with all other active occupations zero, in party-first creation order.
+The unnormalized success block in this literal convention is
+
+$$
+C_-=
+\begin{pmatrix}
+ad&0&0&0\\
+0&bc&-\mu&0\\
+0&-\mu&bc&0\\
+0&0&0&ad
+\end{pmatrix}.
+\tag{149.4}
+$$
+
+The diagonal $ad$ comes from an occupied pair in one preparation and
+vacuum in the other. Each middle diagonal is $bc$. Before CAR regrouping,
+the product coherence between the middle kets is $z\overline z=\mu$.
+The ket with $b_1,A_2$ occupied has the minus sign in (149.1), while the
+ket with $A_1,b_2$ occupied has plus sign. This gives the displayed $-\mu$.
+
+An explicitly allowed Alice-local phase can change that convention:
+
+$$
+U_A=e^{i\pi n_{A_2}},\qquad
+C_+=(U_A\otimes I_B)C_-(U_A^*\otimes I_B)
+=\begin{pmatrix}
+ad&0&0&0\\0&bc&\mu&0\\0&\mu&bc&0\\0&0&0&ad
+\end{pmatrix}.
+\tag{149.5}
+$$
+
+It commutes with local number and parity and is independent of $q$.
+Either matrix has the same success probability and partial-transpose
+spectrum. No such phase is implicit in the literal matrix (149.4).
+In particular, (148.3) also gives
+
+$$
+C_-=ad\,I_4+2\mu|\psi^-\rangle\langle\psi^-|,\qquad
+|\psi^-\rangle=(|A_1b_2\rangle-|A_2b_1\rangle)/\sqrt2.
+\tag{149.6}
+$$
+
+The standard-form projection matrix of [M] is proportional to
+$C_+/(bc)$, with diagonal $(w^2,1,1,w^2)$ and middle coherence $v^2$.
+The local phase in (149.5) explains this correspondence without discarding
+the fermionic sign.
+

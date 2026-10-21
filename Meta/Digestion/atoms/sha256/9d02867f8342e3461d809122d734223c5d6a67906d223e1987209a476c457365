@@ -1,0 +1,9 @@
+# FIB strict-real joint-incidence support
+
+This volume records three source-specific results for the unchanged strict-real
+same-child problem. The complete parent parametrisation, fixed history and
+off-twenty-four reconstruction are those of [O](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), Definitions 1.1–1.3, and [F](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md),
+Sections 30–33. All references below use the acquired word $J,M,J,M,M,M$,
+the original clocks $0,\ldots,7$, and the two actions at clock seven as
+counterfactual alternatives.
+

@@ -1,0 +1,9 @@
+## 165. Operation classes and the exact scope of each conclusion
+
+| Operation class | Additional structure | Conclusion supplied here |
+| --- | --- | --- |
+| All global $U(8)$ | Arbitrary eight-dimensional conjugation; sectors and particle number may mix. | Johnston--Hildebrand give the exact $\beta_*$ boundary for all-orbit separability/PPT; (161.3) gives an explicit NPT placement above it. |
+| Global number-preserving | $[U,N]=0$; each particle-number sector is preserved. | The specific witness (161.8) is excluded for $t<1$; no sharp intermediate-orbit classification is supplied here. |
+| Passive $\Gamma(U(3))$ | One single-particle $U$ acts by all exterior powers. | The orbit is (162.3), with exact all-separable boundary $\beta_{\rm pass}$ and criterion (162.7). |
+| Native $G_q$ | $V=V(q)$ must arise from the allowed native parameter construction. | (164.7) holds for the supplied $q_a,q_b$; no equality of the native image with the full unit sphere is asserted. |
+| Local SSR--LOCC | Local charge restrictions, instruments, communication and resource availability. | These orbit calculations supply no finite protocol, accessible entanglement, or operational advantage. |
