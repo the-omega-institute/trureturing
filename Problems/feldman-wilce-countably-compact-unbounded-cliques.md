@@ -5,7 +5,7 @@ doi: 10.48550/arXiv.2608.13320
 url: https://arxiv.org/abs/2608.13320v1
 triage: theorem
 motivation_gids:
-  - D5/S3/Topology/StoneCech/FeldmanWilceQuestion1.result
+  - D5/S3/Topology/StoneCech/SectionClosedGraph.exists_countablyCompact_closed_fibreGraph
 ---
 
 # Feldman–Wilce Question 1: finite, unbounded cliques
@@ -25,9 +25,10 @@ natural number bounding all clique sizes.
 
 ## Motivation
 
-The paper proves that compact spaces have bounded cliques and that countable
-compactness is equivalent to having finite cliques for T1 spaces. Q1 asks
-whether countable compactness can fail the bounded clique property. Section 4
+The paper proves that compact spaces have the bounded clique property and
+that, for T1 spaces, countable compactness is equivalent to every closed
+orthogonality relation having only finite cliques. Q1 asks whether countable
+compactness can fail the bounded clique property. Section 4
 proposes a finite-block Stone–Čech construction but assumes the missing
 countably compact selector.
 
@@ -38,20 +39,14 @@ countable source. The finite-block application has source
 
 ## Gap
 
-The application source constructs an actual `Q1Witness`, with countable
-compactness, Hausdorffness, T1 separation, full-product closedness, finite
-cliques of every natural size, and an explicit negation of a uniform finite
-bound. The earlier endpoint name passed an early canonical targeted Lean
-build (exit 0). The sole public endpoint was then renamed to `result` to
-match the external-resolution delivery form; the proof body is unchanged.
-The renamed source still awaits its exact build and scoped statement/axiom
-report. Registration evidence, canonical first Freeze, required CI and merge
-remain to be checked. The four-slot source audit is unfinished;
-[issue #19859](https://github.com/the-omega-institute/trureturing/issues/19859)
-records the missing faithful source reconstruction and actual observational
-dependence proof. This post-source audit issue is not a preregistration or
-an exemption from mathematical admission. The typed Scribe claim binds the
-intended endpoint to this question; source text alone is not acceptance.
+The existing generic theorem supplies the actual selector, space and graph.
+Its finite-block parameter discharge, inherited T2/T1 instances and explicit
+negation of a uniform finite bound passed a canonical targeted Lean check.
+The application retains all clauses of the original question; it assumes no
+selector or extra countable compactness supplier. The source-owner scoped
+statement/axiom report, canonical first Freeze, required CI and merge remain
+to be completed. The owning Scribe retains the complete application; no new
+named bind-only D5 theorem or separate Describe is delivered.
 
 ## Route
 
@@ -85,11 +80,14 @@ not a claim that all subsequent or unindexed work has been excluded.
 
 ## Triage
 
-Tier 1 external named Question 1. The final application is bind-only and
-proposes the external open-problem resolution basis; its helper statements are
-consumed by that endpoint. The mathematical mechanism lies in the existing
-arbitrary-map fresh-cluster and closing-off chain. No CH or MA premise is
-present in the supplier theorem signatures: the ordinal construction uses
+Tier 1 external named Question 1. The parameter application is bind-only and
+reuses the existing generic theorem. Its definitions, hypotheses, parameter
+correspondence and complete derivation are retained in that theorem's owning
+Scribe; the exact Lean application is transient evidence. There is no new
+D5 theorem requiring the external-resolution exception or a new Reg wrapper.
+The mathematical mechanism lies in the existing arbitrary-map fresh-cluster
+and closing-off chain. No CH or MA premise is present in the supplier theorem
+signatures: the ordinal construction uses
 omega1 and `aleph_one_le_continuum`, and the abundance argument uses Cantor's
 theorem and free ultrafilters.
 
@@ -99,12 +97,10 @@ The paper's remaining chromatic Questions 2 and 3 remain outside this target.
 The broader arbitrary-map graph endpoint is already in the repository; this
 application does not reissue it as a new general theorem.
 
-The module reports `utility: none`: it establishes an infinite topological
-existence statement. The private fibre proofs quantify over every natural
-block index; they perform no bounded search, finite-input certification,
-checker implementation or numerical reduction. The `generality: I` parameter
-instance is therefore not a positive finite certified instance under the
-computational-content rule.
+The reused generic module reports `utility: none`: its statements concern
+arbitrary topological and fibre data. The finite-block parameter discharge
+quantifies over every natural block index and performs no bounded search,
+finite-input certification, checker implementation or numerical reduction.
 
 ## ASSUMED-UNVERIFIED
 
@@ -112,5 +108,6 @@ The bounded literature check establishes the status of the inspected primary
 sources. Worldwide absence, publication priority and official acceptance are
 unverified. Lean source fidelity has a separate human/model review boundary;
 the kernel can certify only the formal statement and proof.
-Pre-probe registration for this exact question has not been located. The
-post-source audit issue above does not satisfy that separate timing requirement.
+The application exposition does not claim a new mathematical declaration or
+retroactive preregistration. Formal source fidelity remains separate from
+compiled theorem identity and the machine resolution marker.

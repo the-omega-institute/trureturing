@@ -10,7 +10,6 @@ strata_touched:
   - D5/S3/Topology/StoneCech/SectionGoodFreshClusters
   - D5/S3/Topology/StoneCech/SectionDenseSelector
   - D5/S3/Topology/StoneCech/SectionClosedGraph
-  - D5/S3/Topology/StoneCech/FeldmanWilceQuestion1
 license: citation-only
 triage: anchor
 ---
@@ -107,13 +106,15 @@ $A=\sum_{n:\mathbb N}\operatorname{Fin}(n+1)$, $B=\mathbb N$, and
 $q(n,i)=n$. Its fibre over $n$ is the injective image of
 $\operatorname{Fin}(n+1)$ and has ncard $n+1$. This reindexes the
 nonempty cells of the paper's partition. The owning graph Scribe gives
-the detailed parameter and cardinal calculation. The application module
-`FeldmanWilceQuestion1` supplies this parameter instance and defines the
-complete original witness predicate, including full-product closedness,
-T2/T1 separation, finiteness of every clique and explicit failure of any
-uniform finite bound. The source exposition does not replace compilation,
-source-fidelity review or the required repository checks, and it asserts no
-sequential compactness conclusion.
+the detailed parameter and cardinal calculation. Its complete application
+uses the supplied actual space and graph, including full-product closedness,
+T2/T1 separation and finiteness of every clique. A clique of size N+1 rules
+out any proposed uniform bound N. A transient exact Lean application checks
+the parameter discharge and this final inference through the canonical
+targeted build; no separate named specialization is retained. This is an
+application of the existing generic theorem, and it asserts no sequential
+compactness conclusion. The exact statement/axiom report, canonical Freeze
+and required repository checks remain distinct from source exposition.
 
 ## Current primary-source status
 
