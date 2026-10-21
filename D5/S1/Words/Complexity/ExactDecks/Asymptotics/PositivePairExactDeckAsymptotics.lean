@@ -48,8 +48,7 @@ open D5.S1.Words.Complexity.ExactDecks.UpperBound.FullLyndonRecovery
 
 open private scatteredCount_singleton_eq_count letterActualLyndonEquiv from
   D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall
-open private scatteredCount_eq_count_sublistsLen from
-  D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
+open D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore (scatteredCount_eq_count_sublistsLen)
 
 variable {A : Type*}
 
@@ -324,6 +323,5 @@ theorem actual_exactKDeckImage_weightedLyndon_isTheta
       Real.norm_eq_abs, abs_of_nonneg hcardNonneg]
     exact_mod_cast hlower n hn
 
-#print axioms actual_exactKDeckImage_weightedLyndon_isTheta
 
 end D5.S1.Words.Complexity.ExactDecks.Asymptotics.PositivePairExactDeckAsymptotics

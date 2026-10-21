@@ -6,6 +6,8 @@
    utility: none
    digest: Marked circular words correspond to ordered positive run and slack tuples. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19498 -/
+
 /-
 admission_basis: escape-witness
 Module content theorem: marked_admissible_tuple
@@ -234,7 +236,7 @@ private theorem wordOfTuple_of_encoding {n : Nat} (w : Fin n → Bool) (i : Fin 
   dsimp only
   rw [linearize_wordOfTuple, he]
 
-private def splitData (w : List Bool) : List (Bool × Nat) :=
+def splitData (w : List Bool) : List (Bool × Nat) :=
   (w.splitBy (· == ·)).map (fun b => (b.headD false, b.length))
 
 private lemma split_block_constant {w b : List Bool} (hb : b ∈ w.splitBy (· == ·)) :
@@ -254,12 +256,12 @@ private lemma split_block_last {w b : List Bool} (hb : b ∈ w.splitBy (· == ·
     rw [← hconst]; exact hmem
   exact (List.mem_replicate.mp hmem').2
 
-private lemma splitData_positive (w : List Bool) : ∀ b ∈ splitData w, 0 < b.2 := by
+lemma splitData_positive (w : List Bool) : ∀ b ∈ splitData w, 0 < b.2 := by
   intro b hb
   obtain ⟨r, hr, rfl⟩ := List.mem_map.mp hb
   exact List.length_pos_iff_ne_nil.mpr (List.ne_nil_of_mem_splitBy hr)
 
-private theorem splitData_reconstruct (w : List Bool) :
+theorem splitData_reconstruct (w : List Bool) :
     ((splitData w).map (fun b => List.replicate b.2 b.1)).flatten = w := by
   unfold splitData
   rw [List.map_map]
@@ -272,7 +274,7 @@ private theorem splitData_reconstruct (w : List Bool) :
           (w.splitBy (· == ·)).map id)
   rw [he, List.flatten_splitBy]
 
-private lemma splitData_alternating (w : List Bool) :
+lemma splitData_alternating (w : List Bool) :
     ((splitData w).map Prod.fst).IsChain (· ≠ ·) := by
   unfold splitData
   rw [List.map_map, List.isChain_map]

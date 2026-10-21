@@ -6,6 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Entropy/DeletionChannelEntropyOrdering.claim; result=D5/S3/Entropy/DeletionChannelEntropyOrdering.result; claim=D5/S3/Entropy/DeletionChannelEntropyOrdering.claim
    digest: Positional autocorrelation does not order finite deletion-channel entropy. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19498 -/
+
 /-
 proof_shape: embeddings=not-applicable (definition).
 result: proof_shape: bind-only; escape_witness: none.
@@ -36,6 +38,7 @@ import Batteries.Tactic.OpenPrivate
 import D5.S0.Certificates.Hypergraphs.OrientationEntropyBalance
 import D5.S3.Entropy.MaxEntropy
 import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
+import D5.S1.Words.Complexity.VivionBinomialConverseFails
 import D5.S0.Tower.DBonacci.TerminalSampling
 import D5.S3.Arith.FibonacciAtomic.Observer.CommonPredictionWordCounts
 
@@ -44,8 +47,7 @@ set_option Elab.async false
 namespace D5.S3.Entropy.DeletionChannelEntropyOrdering
 
 open D5.S1.Words.Complexity.VivionBinomialConverseFails
-open private scatteredCount_eq_count_sublistsLen from
-  D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
+open D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore (scatteredCount_eq_count_sublistsLen)
 
 def embeddings {m n : ℕ} (x : Fin m → Bool) (y : Fin n → Bool) : ℕ := ((List.ofFn y).sublists.filter (fun s => s = List.ofFn x)).length
 
@@ -60,7 +62,7 @@ def kappa2 {m : ℕ} (x : Fin m → Bool) : ℕ :=
 def claim : Prop := ∀ m n : ℕ, 1 ≤ m → m < n → ∀ u v : Fin m → Bool,
   kappa2 v < kappa2 u → entropyBits n u ≤ entropyBits n v
 
-private theorem embeddings_eq_count {m n : ℕ} (x : Fin m → Bool) (y : Fin n → Bool) :
+theorem embeddings_eq_count {m n : ℕ} (x : Fin m → Bool) (y : Fin n → Bool) :
     embeddings x y =
       scatteredCount (List.ofFn x) (List.ofFn y) := by
   unfold embeddings
