@@ -198,7 +198,7 @@ $$
 Substitute $X=a_kP$ into the row $L_i$ to obtain
 $L_im_W=d+\sum_{k=0}^3i^ka_k\operatorname{tr}(Q_iP)=y_i(W)$. The same initial coefficient blocks are used at every clock, including clocks where $g(i)=0$. $\square$
 
-**Proposition 3.3 (The complete original product table).** The products needed for the acquired prefix and its original sixth- and seventh-action alternatives are the following. All traces are against the original $P$ of Definition 1.1.
+**Recalled source data (Common Parent, Definition 1.3).** For use in the action/readout and joint-law derivations, recall the following complete chronological product and trace table from [Common Parent, Definition 1.3](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), writing its $V=U+n$ explicitly. All traces are against the original $P$ of Definition 1.1.
 
 | Clock | Chronological word | $Q_i$ | $\operatorname{tr}(Q_iP)$ |
 | --- | --- | --- | --- |
@@ -215,7 +215,7 @@ $L_im_W=d+\sum_{k=0}^3i^ka_k\operatorname{tr}(Q_iP)=y_i(W)$. The same initial co
 | $7$ | $JMJMMMJ$ | $\begin{pmatrix}5&2\\3&1\end{pmatrix}$ | $T+2j+4r$ |
 | $7$ | $JMJMMMM$ | $\begin{pmatrix}5&2\\8&3\end{pmatrix}$ | $3U+2n$ |
 
-Proof. Start from $Q_0=I_2$ and multiply each successive row on the left by its last action. For $Q=\begin{pmatrix}\alpha&\beta\\\gamma&\delta\end{pmatrix}$, its trace against $P$ is $\delta+(\alpha-\delta)r+\beta c+\gamma b$. Substitution gives the displayed traces, agreeing with [Common Parent, Definition 1.3](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md). The two sixth-action rows and four seventh-action rows name alternatives; they do not request multiple reads at one original clock. $\square$
+The two sixth-action rows and four seventh-action rows name alternatives; they do not request multiple reads at one original clock.
 
 **Proposition 3.4 (Shared squeezing, with no success normalization).** The FIB $M$ control changes position covariance even though $\det A_M=1$. For a state with finite position covariance $\Sigma$, the control sends it to $A_M\Sigma A_M^T$. In particular the image of the initial covariance $I_{17}/2$ is $A_MA_M^T/2\ne I_{17}/2$.
 
@@ -381,7 +381,7 @@ $$
 -\frac{\sigma^2}{2}s^Ts\right).
 $$
 
-This proves the Gaussian law, covariance and mean. The last mean identity is Theorem 3.2, including the original trace products of Proposition 3.3. $\square$
+This proves the Gaussian law, covariance and mean. The last mean identity is Theorem 3.2, using the original trace products recalled above from [Common Parent, Definition 1.3](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md). $\square$
 
 **Definition 5.2 (Mature Gaussian and word-response correspondences).** The Gaussian observation objects of [GaussianObservationLaw](../../../D5/S3/Observer/Linear/GaussianObservationLaw.lean), namely its action, ambient covariance, observation, input law and posterior kernel, correspond here to the centered latent $X-m_W$, observation matrix $L_w$, prior precision $\beta=2$ and noise precision $\tau=\sigma^{-2}$, followed by the translation $L_wm_W$. The Gaussian integration and conditioning used here belong to that mature observation setting. The concrete passage from the original FIB program, controls and all-acquisition Kraus factors to this matrix $L_w$ is the source-dependent derivation in Theorem 5.1.
 
