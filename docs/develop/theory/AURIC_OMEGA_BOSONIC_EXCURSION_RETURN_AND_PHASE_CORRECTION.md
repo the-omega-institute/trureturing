@@ -1121,9 +1121,10 @@ of the oscillator terminology, not a derivation of the particular Hamiltonian
 in Assumption 1.2. A standard free-field construction is given, for example,
 in Tong, [*Quantum Field Theory*, §2](https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S2.html).
 
-**Proposition 7.1 (Retained-space defect identity).** Let $P$ be an
-orthogonal projection, $Q=I-P$, and $U$ a unitary on a reducing finite
-subspace. On $P\mathcal H$ put
+The following classical projection identity supplies the supporting
+algebra for the model-specific bridge. Let $P$ be an orthogonal projection,
+$Q=I-P$, and $U$ a unitary on a reducing finite subspace. On $P\mathcal H$
+put
 
 $$
 K=PUP\big|_{P\mathcal H},
@@ -1131,7 +1132,9 @@ K=PUP\big|_{P\mathcal H},
 L=QUP\big|_{P\mathcal H}.
 $$
 
-Then
+The standard defect/dilation identity (see Robinson,
+[arXiv:1803.09329](https://arxiv.org/abs/1803.09329), for this classical
+framework) is
 
 $$
 I_{P\mathcal H}-K^\dagger K=L^\dagger L\succeq0.
@@ -1139,8 +1142,8 @@ I_{P\mathcal H}-K^\dagger K=L^\dagger L\succeq0.
 $$
 
 Thus the norm loss of the retained compression is exactly the squared
-amplitude sent into the complementary channel. For the seven-state model,
-Theorem 2.2 gives
+amplitude sent into the complementary channel. Applying this supporting
+identity to the seven-state model, Theorem 2.2 gives
 
 $$
 L=C(t)|b\rangle\langle e_4|,
@@ -1158,7 +1161,7 @@ $$
 \tag{7.3}
 $$
 
-**Proof.** Insert $P+Q=I$ between the two copies of $U$ and use
+Indeed, insert $P+Q=I$ between the two copies of $U$ and use
 $U^\dagger U=I$:
 
 $$
@@ -1168,7 +1171,9 @@ K^\dagger K+L^\dagger L
 $$
 
 The displayed seven-state formulas then give (7.2), and taking the trace
-pairing with $\rho$ gives (7.3). $\square$
+pairing with $\rho$ gives (7.3). This attribution is only supporting
+material; the substantive conclusion here is the resulting identity for
+the fixed bosonic model.
 
 Because the present $W$ is finite dimensional, the short-time statement can
 also be made in operator norm. For $U(t)=e^{-itH/\hbar}$,
