@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A binary effective-image map is surjective iff it has a surjective row or column.
- -/
+   digest: A binary effective-image map is surjective iff it has a surjective row or column. -/
 
 set_option autoImplicit false
 

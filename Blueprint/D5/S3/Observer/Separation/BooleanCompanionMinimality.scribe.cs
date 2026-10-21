@@ -24,16 +24,14 @@ internal sealed class BooleanCompanionMinimalityDocument : IScribeDocumentDefini
                             + "binary companion. Its uncurry map is surjective exactly when at "
                             + "least one fixed row or one fixed column is surjective onto Bool.")),
                     Paragraph(Text(
-                        "The forward implication is the Boolean dichotomy used in the one-companion "
-                            + "part of the source theorem: if no row is surjective then every row is "
+                        "For the forward implication, if no row is surjective then every row is "
                             + "constant, and two global output witnesses force every column to be "
-                            + "surjective. The reverse implication only uses nonemptiness of the "
-                            + "other alphabet to lift a row or column witness to the product.")),
+                            + "surjective. In the reverse implication, each slice witness directly "
+                            + "supplies a preimage in the product.")),
                     Paragraph(Text(
-                        "This closes the structural effective-image slice clause. The response-width "
-                            + "comparison for arbitrary four-endpoint orders and the full two-companion "
-                            + "minimality theorem remain open because the available width theorem has "
-                            + "a fixed order pattern and a surjective-slice hypothesis."))),
+                        "This equivalence concerns the effective image. Response-width comparisons "
+                            + "for arbitrary endpoint orders and minimality of the number of companion "
+                            + "maps require additional results about those orders and widths."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
@@ -94,9 +92,9 @@ internal sealed class BooleanCompanionMinimalityDocument : IScribeDocumentDefini
             Lambda(columnVariable, bType, Apply(psi, fixedColumn, columnVariable)));
         Formula slices = Seq(
             Open,
-            Exists, Sp, fixedRow, Colon, Sp, bType, Comma, Sp, rowSurjective,
+            Open, Exists, Sp, fixedRow, Colon, Sp, bType, Comma, Sp, rowSurjective, Close,
             Sp, Lor, Sp,
-            Exists, Sp, fixedColumn, Colon, Sp, aType, Comma, Sp, columnSurjective,
+            Open, Exists, Sp, fixedColumn, Colon, Sp, aType, Comma, Sp, columnSurjective, Close,
             Close);
 
         return Disp(Seq(
