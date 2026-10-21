@@ -2613,3 +2613,547 @@ mathematical claims are the native finite-dimensional unitary normal form, its
 standard full-Fock lift, and the stated finite trace boundaries.
 
 ## 138.99 追加锚（本行以下为增补区）
+## 139. A native two-child application with two interior Markov metrics
+
+The following application fixes one finite accepted history and compares two
+metrics on its unchanged occurrence form. It uses the native parameter class
+of Proposition 127.2, rather than selecting an abstract two-mode birth.
+Start with the singleton source $\beta$ at epoch $0$, with $G_0=[1]$ and
+$L_0=[0]$. Its accepted substitution is
+$\beta\mapsto\langle\beta,\alpha\rangle$; the distinct born occurrences
+are $L$ and $R$. Stop at epoch $1$. In actual-coordinate order
+$(r,\ell,R)=(\varepsilon,L,R)$, the source data are
+
+$$
+n=1,\quad k=2,\quad
+P=\begin{pmatrix}1\\1\end{pmatrix},\quad
+T=\mathbf1_3,\quad K=I_2,\quad
+W=\begin{pmatrix}1&0&0\\1&1&0\\1&0&1\end{pmatrix},\quad
+L_\star=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix}.
+\tag{139.1}
+$$
+
+Thus $P^{\mathsf T}P=2$, as required by the actual beta birth in
+Definition 130.1. A singleton has no branch-port entry record, and none is
+introduced here. Proposition 128.3 permits this stopped history directly.
+Write $q=(u,v)^{\mathsf T}$ and
+$\pi_q=(1-u-v,u,v)^{\mathsf T}$. With the inherited scalar norm fixed,
+(127.3) becomes
+
+$$
+W^{\mathsf T}G_qW=
+\begin{pmatrix}1&q^{\mathsf T}\\q&I_2+qq^{\mathsf T}\end{pmatrix},
+\qquad
+x^{\mathsf T}G_qx=(\pi_q^{\mathsf T}x)^2
+ +(x_\ell-x_r)^2+(x_R-x_r)^2,
+\qquad G_q=L_\star+\pi_q\pi_q^{\mathsf T}.
+\tag{139.2}
+$$
+
+Indeed $W^{-1}x=(x_r,x_\ell-x_r,x_R-x_r)$, so the residual quadratic
+form is $(a+q^{\mathsf T}y)^2+\|y\|^2$. Its vanishing forces $x=cT$
+and then $c=\pi_q^{\mathsf T}x=0$. Hence $G_q\succ0$; its determinant
+is $1$ by the residual Schur complement. The useful native identities are
+
+$$
+L_\star T=0,\quad \pi_q^{\mathsf T}T=1,\quad G_qT=\pi_q,
+\quad T^{\mathsf T}G_qT=1,\quad
+Q_q=-G_q^{-1}L_\star=T\pi_q^{\mathsf T}-I_3.
+\tag{139.3}
+$$
+
+The last equality follows by multiplying $I_3-T\pi_q^{\mathsf T}$ by
+$G_q$. It gives the exact old norm, form and generator comparison:
+$T^{\mathsf T}L_\star T=0$ and $G_q^{-1}L_\star T=0$.
+The generator acts on functions as a row-generator matrix, with
+$Q_qT=0$ and stationary row probability $\pi_q^{\mathsf T}Q_q=0$.
+For $u,v\ge0$ and $u+v\le1$ its off-diagonal rates are $(Q_q)_{ij}=
+(\pi_q)_j\ge0$. The two choices used below lie strictly inside this simplex:
+
+$$
+q_a=(1/6,1/6)^{\mathsf T},\quad \pi_a=(2/3,1/6,1/6)^{\mathsf T},
+\qquad q_b=(1/3,1/3)^{\mathsf T},\quad \pi_b=T/3,
+\tag{139.4}
+$$
+
+$$
+G_a=\frac1{36}\begin{pmatrix}88&-32&-32\\-32&37&1\\-32&1&37\end{pmatrix},
+\qquad G_b=\frac1{9}\begin{pmatrix}19&-8&-8\\-8&10&1\\-8&1&10\end{pmatrix},
+\tag{139.5}
+$$
+
+$$
+Q_a=\frac1{6}\begin{pmatrix}-2&1&1\\4&-5&1\\4&1&-5\end{pmatrix},
+\qquad Q_b=\frac1{3}\begin{pmatrix}-2&1&1\\1&-2&1\\1&1&-2\end{pmatrix}.
+\tag{139.6}
+$$
+
+Every off-diagonal rate is positive in both matrices; both finite Markov
+models are conservative and irreducible. They have sibling transitions,
+so neither is asserted to have original-star-edge support. This first-step
+statement asserts no irreducibility at subsequent accepted epochs.
+
+## 140. Principal-root normalization and the declared common cut
+
+For each metric use its positive principal square root $S_q=G_q^{1/2}$,
+normalize by $z=S_qx$, and then complexify the normalized real space to
+$\mathfrak h=\mathbb C^3$ with its standard Hermitian product. Define
+
+$$
+V_q=S_qT,\qquad \|V_q\|^2=1,\qquad
+H_q=S_q^{-1}L_\star S_q^{-1}=I_3-V_qV_q^*,
+\qquad \operatorname{spec}H_q=\{0,1,1\}.
+\tag{140.1}
+$$
+
+Here $*$ is complex adjoint; the displayed vectors are real. To obtain the
+rank-one formula, use $\pi_q^{\mathsf T}S_q^{-1}=T^{\mathsf T}S_q$ in
+$H_q=S_q(G_q^{-1}L_\star)S_q^{-1}$. This fixes the normalization:
+an arbitrary metric factor followed by an unspecified unitary would not
+fix the coordinate cut used below.
+
+For $q_a$, the antisymmetric direction $(0,1,-1)/\sqrt2$ has $G_a$
+eigenvalue $1$. In the orthonormal symmetric basis
+$(e_r,(e_\ell+e_R)/\sqrt2)$ the other block is
+
+$$
+M_a=\begin{pmatrix}22/9&-8\sqrt2/9\\-8\sqrt2/9&19/18\end{pmatrix},
+\qquad \det M_a=1,\quad \operatorname{tr}M_a=7/2,
+\qquad M_a^{1/2}=\frac{M_a+I_2}{\sqrt{11/2}}.
+\tag{140.2}
+$$
+
+Cayley--Hamilton gives $(M_a+I_2)^2=(\operatorname{tr}M_a+2)M_a$;
+$M_a+I_2$ is positive, so this is the principal root. Since $T$ is
+symmetric under exchange of the children, it follows that
+
+$$
+V_a=\frac{\pi_a+T}{\sqrt{11/2}}
+ =\frac{(10,7,7)^{\mathsf T}}{\sqrt{198}},\qquad
+G_bT=T/3,\qquad V_b=T/\sqrt3.
+\tag{140.3}
+$$
+
+Use the same normalized coordinate labels in both models and declare
+
+$$
+A=\mathbb C e_\ell,\qquad
+B=\operatorname{span}_{\mathbb C}\{e_r,e_R\},\qquad
+\mathfrak h=A\oplus B,\qquad
+p_q=|(V_q)_\ell|^2,\quad p_a=49/198,\quad p_b=1/3.
+\tag{140.4}
+$$
+
+This is a common cut of the declared normalized axes. The principal-root
+map can mix actual coordinates, so it does not identify this cut with
+orthogonal raw weighted occurrence spans or physical spatial subsystems.
+Its use is part of the finite quantum model being specified.
+
+The boundary comparison $q_0=(0,0)$ retains
+$\pi_0=(1,0,0)^{\mathsf T}$ and
+$V_0=(2,1,1)^{\mathsf T}/\sqrt6$, hence $p_0=1/6$.
+Its root is absorbing and its Markov generator is reducible. Its ordinary
+separability comparison with $q_b$ at inverse temperature $\log7$ remains
+valid; it is not relabeled as an interior or irreducible example.
+The pair (139.4) supplies the comparison with both rate graphs irreducible.
+
+## 141. Full finite fermionic Gibbs states and their common scalars
+
+Take the entire fermionic Fock space and retain the zero-energy mode:
+
+$$
+\mathcal F_-(\mathfrak h)=\bigoplus_{j=0}^3\Lambda^j\mathfrak h,
+\quad \dim\mathcal F_-(\mathfrak h)=1+3+3+1=8,\quad
+\widehat H_q=d\Gamma_-(H_q),\quad
+\rho_{q,\beta}=\frac{e^{-\beta\widehat H_q}}{Z_\beta}.
+\tag{141.1}
+$$
+
+There is no chemical-potential term or sector conditioning. Here $\beta$
+denotes inverse temperature, distinct from the source symbol $\beta$.
+Set $t=e^{-\beta}$ for finite $\beta\ge0$. In eigenmode occupations
+$(m_0,m_1,m_2)\in\{0,1\}^3$, the energy is $m_1+m_2$, giving
+
+$$
+e^{-\beta d\Gamma(H_q)}=\Gamma(e^{-\beta H_q}),\qquad
+Z_\beta=\sum_{m_0,m_1,m_2=0}^1t^{m_1+m_2}=2(1+t)^2.
+\tag{141.2}
+$$
+
+This is the finite occupation application of the fermionic Fock exponential
+and direct-sum laws in Dereziński, §§5.7 and 5.9, Theorem 5.3 [F].
+The contributions to the trace by total particle number are
+
+$$
+Z^{(0)}=1,\qquad Z^{(1)}=1+2t,\qquad
+Z^{(2)}=2t+t^2,\qquad Z^{(3)}=t^2.
+\tag{141.3}
+$$
+
+They sum to (141.2). The zero eigenmode has occupation $1/2$; each unit
+mode has occupation $f_\beta=t/(1+t)$. For covariance convention
+$(C_q)_{ij}=\operatorname{Tr}(\rho_{q,\beta}a_j^\dagger a_i)$,
+
+$$
+C_{q,\beta}=(I_3+e^{\beta H_q})^{-1}
+ =f_\beta I_3+(1/2-f_\beta)V_qV_q^*.
+\tag{141.4}
+$$
+
+Consequently the following four scalars agree between the two models at
+every such inverse temperature:
+
+$$
+Z_\beta=2(1+t)^2,\qquad
+E_\beta=\operatorname{Tr}(\rho\widehat H_q)=\frac{2t}{1+t},\qquad
+N_\beta=\operatorname{Tr}(\rho d\Gamma(I_3))=\frac12+\frac{2t}{1+t},
+\qquad P_{111,\beta}=\frac{t^2}{2(1+t)^2}.
+\tag{141.5}
+$$
+
+Here $P_{111,\beta}=\operatorname{Tr}(\rho n_rn_\ell n_R)$ is the
+probability of the unique three-particle line. That line has energy
+$\operatorname{tr}H_q=2$ in any orthonormal coordinate basis. It is not
+an assertion that each coordinate occupation has the same distribution.
+At the concrete inverse temperature $\beta=\log7$ these formulas give
+
+$$
+Z=128/49,\qquad E=1/4,\qquad N=3/4,\qquad P_{111}=1/128,
+\tag{141.6}
+$$
+
+$$
+C_a=\frac1{528}\begin{pmatrix}166&70&70\\70&115&49\\70&49&115\end{pmatrix},
+\qquad
+C_b=\frac1{8}\begin{pmatrix}2&1&1\\1&2&1\\1&1&2\end{pmatrix}.
+\tag{141.7}
+$$
+
+The order in (141.7) is $(r,\ell,R)$ on the normalized axes. The unequal
+covariances are compatible with the equal spectral scalars (141.6).
+Restricting to one particle or another fixed-number sector would change
+the state and its normalization; none of those conditioned states replaces
+(141.1). For the full bosonic Fock space with this zero mode retained,
+$\sum_{m_0=0}^\infty1$ already diverges. Thus no full bosonic Gibbs state
+is obtained here. Removing the kernel or adding a chemical potential would
+specify a different model.
+
+## 142. CAR ordering and the B-local spectator factorization
+
+Fix the A-first creation order $(\ell,r,R)$ once for both models:
+
+$$
+|n_A,n_r,n_R\rangle
+ =(a_\ell^\dagger)^{n_A}(a_r^\dagger)^{n_r}
+  (a_R^\dagger)^{n_R}|\mathrm{vac}\rangle,
+\qquad \mathcal F_-(\mathfrak h)\cong\mathbb C^2_A\otimes\mathbb C^4_B.
+\tag{142.1}
+$$
+
+This declares an ordinary occupation tensor identification. Odd CAR fields
+remain graded. Put $c=|0\rangle\langle1|$ and $Z=\operatorname{diag}(1,-1)$.
+The actual annihilators in this identification are
+
+$$
+a_\ell=c\otimes I_B,\qquad
+ a_r=Z_A\otimes b_r,\quad a_R=Z_A\otimes b_R,
+\qquad b_r=c\otimes I_2,\quad b_R=Z\otimes c.
+\tag{142.2}
+$$
+
+In particular $a_i^\dagger a_j=I_A\otimes b_i^\dagger b_j$ for
+$i,j\in\{r,R\}$. A number-preserving B rotation is generated by these
+even bilinears and lifts to the ordinary local $I_A\otimes\Gamma(U_B)$.
+The A string cancels; treating a B odd annihilator itself as $I_A\otimes b_i$
+would not give this argument.
+
+In B coordinate order $(r,R)$ choose the rotations
+
+$$
+U_{B,a}=\frac1{\sqrt{149}}\begin{pmatrix}10&-7\\7&10\end{pmatrix},
+\qquad U_{B,b}=\frac1{\sqrt2}\begin{pmatrix}1&-1\\1&1\end{pmatrix}.
+\tag{142.3}
+$$
+
+Their first columns are $V_B/\|V_B\|$, and their second columns are
+orthogonal spectator directions. Write the new B modes as $(b,d)$ and
+$\mathcal U_q=I_A\otimes\Gamma(U_{B,q})$. With
+$v_p=(\sqrt p,\sqrt{1-p})^{\mathsf T}$, the one-particle transformation gives
+
+$$
+(1\oplus U_{B,q})^*V_q=(\sqrt p,\sqrt{1-p},0)^{\mathsf T},\qquad
+H_{\mathrm{eff}}(p)=I_2-v_pv_p^*
+ =\begin{pmatrix}1-p&-\sqrt{p(1-p)}\\-\sqrt{p(1-p)}&p\end{pmatrix},
+\qquad H_q\longmapsto H_{\mathrm{eff}}(p)\oplus[1].
+\tag{142.4}
+$$
+
+To pass from this block display to an ordinary Gibbs tensor product, keep
+the creation order $(A,b,d)$. Every A--b bilinear acts on the first two
+occupation factors, with identity on $d$. The spectator number operator is
+$I_{Ab}\otimes n_d$. There is no coupling to $d$, and therefore
+
+$$
+\mathcal U_q^*\widehat H_q\mathcal U_q
+ =d\Gamma(H_{\mathrm{eff}}(p))\otimes I_d+I_{Ab}\otimes n_d,
+\qquad
+\mathcal U_q^*\rho_{q,\beta}\mathcal U_q
+ =\sigma_\beta(p)\otimes\tau_\beta,
+\quad \tau_\beta=\frac{\operatorname{diag}(1,t)}{1+t}.
+\tag{142.5}
+$$
+
+Both Hamiltonian summands commute. Their partition functions are
+$2(1+t)$ and $1+t$, respectively. The spectator lies entirely in B.
+In the effective occupation basis $(|00\rangle,|01\rangle,|10\rangle,|11\rangle)$,
+
+$$
+\sigma_\beta(p)=\frac1{2(1+t)}
+\begin{pmatrix}
+1&0&0&0\\
+0&1-(1-t)p&(1-t)\sqrt{p(1-p)}&0\\
+0&(1-t)\sqrt{p(1-p)}&t+(1-t)p&0\\
+0&0&0&t
+\end{pmatrix}.
+\tag{142.6}
+$$
+
+The vacuum and double-occupation Boltzmann weights before normalization
+are $1$ and $t$. On the one-particle sector in order $(|10\rangle,|01\rangle)$,
+$e^{-\beta H_{\mathrm{eff}}}=tI_2+(1-t)v_pv_p^*$.
+This gives every entry and the positive coherence sign in (142.6) with the
+creation convention (142.1). No unrestricted physical local qubit control
+is inferred from the occupation tensor notation.
+
+## 143. Exact ordinary separability contrast at inverse temperature log 7
+
+At $t=1/7$, (142.6) reads
+
+$$
+\sigma(p)=\frac1{16}\begin{pmatrix}
+7&0&0&0\\0&7-6p&6\sqrt{p(1-p)}&0\\
+0&6\sqrt{p(1-p)}&1+6p&0\\0&0&0&1
+\end{pmatrix},\qquad \tau=\operatorname{diag}(7/8,1/8).
+\tag{143.1}
+$$
+
+Partial transpose on the ordinary A factor moves the coherence to the
+$|00\rangle,|11\rangle$ corner. The other two eigenvalues are the positive
+numbers $(7-6p)/16$ and $(1+6p)/16$; the corner is
+
+$$
+\frac1{16}\begin{pmatrix}7&6\sqrt{p(1-p)}\\6\sqrt{p(1-p)}&1\end{pmatrix},
+\qquad \det=\frac{7-36p(1-p)}{256}.
+\tag{143.2}
+$$
+
+The ordinary two-qubit PPT criterion, Horodecki--Horodecki--Horodecki,
+Theorem 3, PDF p. 8 [P], applies to $\sigma(p)$. Thus it is separable
+exactly when $36p(1-p)\le7$. For the interior model $a$,
+
+$$
+p_a(1-p_a)=\frac{7301}{39204},\quad
+36p_a(1-p_a)=\frac{7301}{1089}<7,\qquad
+\sigma_a=\frac1{528}\begin{pmatrix}
+231&0&0&0\\0&182&\sqrt{7301}&0\\
+0&\sqrt{7301}&82&0\\0&0&0&33
+\end{pmatrix}.
+\tag{143.3}
+$$
+
+The PT corner determinant is $322/528^2>0$. Its full PT spectrum is
+
+$$
+\left\{\frac{182}{528},\frac{82}{528},
+\frac{132+\sqrt{17102}}{528},\frac{132-\sqrt{17102}}{528}\right\},
+\qquad 132^2-17102=322>0.
+\tag{143.4}
+$$
+
+Hence $\sigma_a$ is separable. Tensor its product-state decomposition with
+the B-local $\tau$, then undo $\mathcal U_a$: the full $2\times4$ state
+$\rho_{a,\log7}$ is ordinary-tensor separable at the declared cut.
+For model $b$, $36p_b(1-p_b)=8>7$, and
+
+$$
+\sigma_b=\frac1{16}\begin{pmatrix}
+7&0&0&0\\0&5&2\sqrt2&0\\0&2\sqrt2&3&0\\0&0&0&1
+\end{pmatrix},\qquad
+\lambda_{\min}(\sigma_b^{T_A})=\frac{4-\sqrt{17}}{16}<0.
+\tag{143.5}
+$$
+
+The full partial transpose has negative eigenvalues
+$7(4-\sqrt{17})/128$ and $(4-\sqrt{17})/128$ after multiplication by
+the spectator weights. Undoing a B-local unitary preserves NPT. Therefore
+$\rho_{b,\log7}$ is ordinary-tensor entangled, despite (141.6).
+This uses two-qubit PPT sufficiency only after the proved B-local
+factorization. It invokes no PPT sufficiency for arbitrary $2\times4$ states.
+For the retained boundary model $p_0=1/6$, the same scalar test gives
+$36p_0(1-p_0)=5<7$, consistently with its separability and reducibility.
+
+## 144. Finite-temperature boundaries for this same native family
+
+For finite $\beta\ge0$, the PT of (142.6) has positive singleton entries
+and the corner block
+
+$$
+\frac1{2(1+t)}\begin{pmatrix}
+1&(1-t)\sqrt{p(1-p)}\\(1-t)\sqrt{p(1-p)}&t
+\end{pmatrix}.
+\tag{144.1}
+$$
+
+Its determinant has the sign of $t-(1-t)^2p(1-p)$. Applying the same
+two-qubit criterion and the B-local spectator factorization gives, for the
+states specified in (142.5), the exact alternatives
+
+$$
+\rho_{q,\beta}\text{ separable}
+\ \Longleftrightarrow\ (1-t)^2p(1-p)\le t
+\ \Longleftrightarrow\ 4\sinh^2(\beta/2)p(1-p)\le1;
+\quad \rho_{q,\beta}\text{ NPT otherwise}.
+\tag{144.2}
+$$
+
+Here $(1-t)^2/t=e^\beta+e^{-\beta}-2=4\sinh^2(\beta/2)$.
+For $p=0$ or $p=1$ the effective state is a product for every finite
+$\beta$: it is respectively
+$\operatorname{diag}(1,t)/(1+t)\otimes I_2/2$ or
+$I_2/2\otimes\operatorname{diag}(1,t)/(1+t)$.
+These endpoint statements concern the effective rank-one family; they do
+not assert that either endpoint occurs in the interior pair (139.4).
+For $0<p<1$ define
+
+$$
+\beta_c(p)=2\operatorname{arsinh}\frac1{2\sqrt{p(1-p)}},\qquad
+\beta_{c,a}=2\operatorname{arsinh}\frac{99}{\sqrt{7301}},\qquad
+\beta_{c,b}=2\operatorname{arsinh}\frac3{2\sqrt2}.
+\tag{144.3}
+$$
+
+Since $p_a(1-p_a)<p_b(1-p_b)$, one has $\beta_{c,b}<\beta_{c,a}$.
+Monotonicity of $\sinh(\beta/2)$ gives the complete finite-temperature
+classification of this pair:
+
+| Inverse-temperature interval | Model $a$ | Model $b$ |
+| --- | --- | --- |
+| $0\le\beta\le\beta_{c,b}$ | separable | separable |
+| $\beta_{c,b}<\beta\le\beta_{c,a}$ | separable | NPT |
+| $\beta>\beta_{c,a}$, finite | NPT | NPT |
+
+Equality at either threshold is PPT and separable for that effective
+state. The exact tests (143.3) and (143.5) place $\log7$ strictly between
+the thresholds. At $\beta=0$, $\rho=I_8/8$ in both models.
+At every inverse temperature in the table, the thermodynamic expressions
+(141.5) remain common. The table is an application to this finite native
+family and its declared cut, rather than a classification of general
+fermionic Gibbs states or of all source histories.
+
+## 145. The single-copy local number and parity SSR limit
+
+Ordinary tensor entanglement and local SSR-accessible entanglement are
+different questions for (142.1). On the single A mode, both number- and
+parity-preserving observables form $\operatorname{span}\{I,n_A\}$.
+Put $P_a=|a\rangle\langle a|$ for $a=0,1$.
+The number twirl and parity twirl on A consequently coincide:
+
+$$
+\mathcal D_A(\rho)=\sum_{a=0}^1(P_a\otimes I_B)\rho(P_a\otimes I_B)
+ =\sum_{a=0}^1|a\rangle\langle a|\otimes R_a,
+\quad R_a=\langle a|\rho|a\rangle\ge0,\quad
+\sum_a\operatorname{Tr}R_a=1.
+\tag{145.1}
+$$
+
+This is explicitly separable: whenever $w_a=\operatorname{Tr}R_a>0$,
+its term is $w_a|a\rangle\langle a|\otimes(R_a/w_a)$.
+In the aligned B basis of (142.5), the unnormalized conditional blocks are
+
+$$
+R_0=\frac{\operatorname{diag}(1,1-(1-t)p)}{2(1+t)}\otimes\tau_\beta,
+\qquad
+R_1=\frac{\operatorname{diag}(t+(1-t)p,t)}{2(1+t)}\otimes\tau_\beta.
+\tag{145.2}
+$$
+
+Both commute with B number. Undoing the number-preserving B rotation
+preserves this fact, so an additional local B number or parity twirl leaves
+(145.1) unchanged. In particular at $t=1/7$ these blocks are
+$\operatorname{diag}(7,7-6p)\otimes\tau/16$ and
+$\operatorname{diag}(1+6p,1)\otimes\tau/16$.
+
+For allowed local product observables $X_A,Y_B$ one has
+$\operatorname{Tr}[\rho(X_A\otimes Y_B)]
+=\operatorname{Tr}[\mathcal D_A(\rho)(X_A\otimes Y_B)]$.
+The effective coherence $|10\rangle\langle01|$ changes A occupation and
+is removed. Thus single-copy protocols restricted to these local SSR
+resources have the separable representative (145.1). In this resource
+model the ordinary NPT of $\rho_b$ supplies no locally accessible
+single-copy entanglement. Local forbidden coherences are not assumed
+available as operations or measurements.
+
+SSR restriction does not make the two models statistically identical.
+The allowed occupation measurement already gives, at $\beta=\log7$,
+
+$$
+\langle n_A\rangle_a=\frac18+\frac38\frac{49}{198}
+ =\frac{115}{528},\qquad
+\langle n_A\rangle_b=\frac18+\frac38\frac13=\frac14.
+\tag{145.3}
+$$
+
+Accordingly equal $Z,E,N,P_{111}$ do not imply equality of all statistics,
+even within the allowed local observable algebra. Shared coherence
+references, multiple copies, and unrestricted spin-qubit realizations
+specify additional resource models. Their availability or benefit is not
+derived here. Wiseman--Vaccaro [S], Eqs. (12)--(14) and Table I, supply
+resource context; the mixed-state statement here follows from the explicit
+twirl, without importing a pure-state formula as a mixed-state criterion.
+
+## 146. Source correspondence, references and applicability
+
+The native input is exactly the singleton beta step of Definition 127.1
+and Proposition 128.3, with the two actual children and unchanged edge form
+in (139.1). Formula (139.2) substitutes $G_0=[1]$, $K=I_2$ and the stated
+$q$ into (127.3); (139.3) specializes Corollary 127.3. The inherited norm,
+accepted history, edge weights, comparison clock and $K$ are common.
+Only the residual cross vector and the resulting state metric vary.
+The complexification, principal-root coordinate normalization, occupation
+tensor convention and normalized A|B cut are explicitly added finite
+quantum-model data. They are not inferred physical encodings.
+
+The resulting contrast concerns full finite fermionic Gibbs states and
+ordinary tensor separability at that cut, with the SSR limit (145.1).
+Neither the accepted epoch nor inverse temperature is thereby identified
+with a physical clock. The locality interface of §§131--134 still requires
+its own physical realization and uniform comparison hypotheses; this finite
+stopped example supplies no such bridge. No continuum or infinite-Fock
+limit, Bell violation, SSR operational advantage, literature priority,
+Lean kernel certificate or completion of a broader quantum programme is
+asserted. The external Fock and two-qubit criteria below are reused
+established results; their finite source-parameter application is what the
+displayed calculations specify.
+
+- **[N] Native source.** This volume, Definition 127.1, Proposition 127.2,
+  Corollary 127.3, Proposition 128.3 and Definition 130.1:
+  [immutable native metric source](https://github.com/the-omega-institute/trureturing/blob/28e2ace3ee3cb91ebd90e1c7da0bec381b109e52/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+  The realization limits are §§131--134 in the
+  [immutable locality source](https://github.com/the-omega-institute/trureturing/blob/30b32d5e17e23590839090a0b244c019c4796817/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+- **[F] Fermionic Fock ingredients.** Jan Dereziński,
+  [qft-lectures](https://www.fuw.edu.pl/~derezins/qft-lectures.pdf),
+  §§5.7 and 5.9, Theorem 5.3. Used for fermionic Fock, second quantization
+  and the exponential/direct-sum laws, with the finite occupations and CAR
+  locality displayed in §§141--142.
+- **[P] Ordinary two-qubit separability.** M. Horodecki, P. Horodecki and
+  R. Horodecki, *Separability of Mixed States: Necessary and Sufficient
+  Conditions*, [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
+  Theorem 3, PDF p. 8; DOI
+  [10.1016/S0375-9601(96)00706-2](https://doi.org/10.1016/S0375-9601(96)00706-2).
+  PPT sufficiency is used only on the effective $2\times2$ state.
+- **[S] SSR resource context.** H. M. Wiseman and J. A. Vaccaro,
+  [quant-ph/0210002v2](https://arxiv.org/pdf/quant-ph/0210002v2),
+  Eqs. (12)--(14) and Table I. The explicit single-copy mixed-state twirl
+  (145.1)--(145.2) carries the SSR conclusion used here.
+
+## 146.99 追加锚（本行以下为增补区）
