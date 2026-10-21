@@ -92,7 +92,7 @@ internal sealed class LinDTIMajorizationRefutationDocument : IScribeDocumentDefi
         var a = F.Id("A");
         var b = F.Id("B");
         Formula Spectrum(Formula product) => Call("eigDesc", Add(new Formula.Power(a, D(2)), Call("cfc", Fn("x", Real, new Formula.Power(F.Id("x"), P)),
-            Apply(Qualified("CFC", "sqrt"), Multiply(Call("conjTranspose", product), product)))));
+            Apply(Qualified("CFC", "sqrt"), Multiply(Call("conjTranspose", product), Parenthesized(product))))));
         return All("n", Nat, All("A", Mat, All("B", Mat,
             Imp(Method(a, "PosSemidef"), Imp(Method(b, "PosSemidef"), All("p", Real,
                 Imp(Lt(D(0), P), Call("Majorizes", Spectrum(Multiply(b, a)), Spectrum(Multiply(a, b))))))))));
