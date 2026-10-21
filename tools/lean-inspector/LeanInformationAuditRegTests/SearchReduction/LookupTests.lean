@@ -27,8 +27,12 @@ run_cmd do
   let directory : System.FilePath := "build/lean-inspector/lookup-index/ordered-key-fixture"
   IO.FS.createDirAll directory
   let leaf := fun (label : String) (ordinal : Nat) => do
-    let entry : DiskLookup.Entry := {module := "fixture", name := s!"candidate{ordinal}",
-      parts := #[(s!"candidate{ordinal}", 0)], ordinal, route := "c:1:Target"}
+    let entry : DiskLookup.Entry := {
+      module := "fixture"
+      name := s!"candidate{ordinal}"
+      parts := #[(s!"candidate{ordinal}", 0)]
+      ordinal := ordinal
+      route := "c:1:Target"}
     let payload := (toJson #[entry]).compress
     IO.FS.writeFile (directory / s!"{label}.entries.json") payload
     let node : DiskLookup.Node := {pages := #[{
