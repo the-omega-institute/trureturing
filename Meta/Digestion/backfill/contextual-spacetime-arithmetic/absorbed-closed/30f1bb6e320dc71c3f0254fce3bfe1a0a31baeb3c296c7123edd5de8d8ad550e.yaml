@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:30f1bb6e320dc71c3f0254fce3bfe1a0a31baeb3c296c7123edd5de8d8ad550e
+  normalized_sha256: sha256:30f1bb6e320dc71c3f0254fce3bfe1a0a31baeb3c296c7123edd5de8d8ad550e
+cas_ref: sha256:30f1bb6e320dc71c3f0254fce3bfe1a0a31baeb3c296c7123edd5de8d8ad550e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.contribution_sign
+    target_statement_id: sha256:6ee674c773da8c30583f045894a2948bee5c15c9e69b854b90977824d0fe909c
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.charge_generated
+    target_statement_id: sha256:1eb02f1162d7c9bc13b7102a450e78a7ce763e0c9c4a2a16b31d3c96920a02a7
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.q_product
+    target_statement_id: sha256:0317eecfaee3d90e91417539d454d8b3952e72ce7609a0490a3fc76bd1605f29
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.selected_double_sum
+    target_statement_id: sha256:e4ff568b31afca6e4426e8ef86ebf3644ea0e394586c96882912be5435c11c9e
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 95c4ebb8307e9a79b7d485b65d2186114eedaf8f5054d8c13e4532f42e0fb7e1
+    - 60a78f4b4b3eae05373bfeb786eef5bd2b1f4e6a1cdc79383da9491ac08d6c67
