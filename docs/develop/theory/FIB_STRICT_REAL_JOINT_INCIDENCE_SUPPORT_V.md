@@ -1185,3 +1185,479 @@ Neither classification of critical worlds nor existence of their
 double-point germs reduces that problem to the critical bases.
 
 ## 追加锚（本行以下为增补区）
+## 13. Second critical rectangle and source interfaces
+
+**Definition 13.1 (Second rectangle).** Retain the complete worlds, the original
+left products, the clocks $0,\ldots,7$, and the entire-child quantifiers of
+Section 1.  Put
+
+$$
+\begin{aligned}
+K_2&=\left[\frac{22881}{12500},\frac{183049}{100000}\right]
+      \times\left[\frac{4397801}{25000},\frac{8795603}{50000}\right],\\
+R_2&=\left[\frac{517}{1000},\frac{261}{500}\right]
+      \times\left[\frac{4227}{100000},\frac{423}{10000}\right],\\
+B_2&=\left[\frac{259767971}{500000000},\frac{64941993}{125000000}\right]
+      \times\left[\frac{84567661}{2000000000},\frac{5285479}{125000000}\right].
+\end{aligned}
+\tag{13.1}
+$$
+
+Thus $K_2=[1.83048,1.83049]\times[175.91204,175.91206]$,
+$R_2=[.517,.522]\times[.04227,.04230]$, and
+$B_2=[.519535942,.519535944]\times[.0422838305,.0422838320]$.
+Write $D_J,D_M$ for the entire-child sets in Section 1.  Put $p_{\rm lo}=22881/12500$, $p_{\rm hi}=183049/100000$, $v_{\rm lo}=4397801/25000$, and $v_{\rm hi}=8795603/50000$.  Retain
+independent $J$- and $M$-pairs with arbitrary cross-pair sharing.
+
+**Theorem 13.2 (Second-region whole-child exclusion).** Every complete world
+in an entire child over $K_2$ has source in $R_2$.  On $R_2$,
+
+$$
+\Lambda>6,\qquad p_b>600,\qquad
+ a_r-a_b\frac{p_r}{p_b}>100.
+\tag{13.2}
+$$
+
+For every $r\in[.517,.522]$,
+$p(r,.04227)<1.83048$ and $p(r,.04230)>1.83049$.  Hence terminal $J$
+is injective on every entire $C(p,v)$ with $(p,v)\in K_2$, and
+
+$$
+D_J\cap K_2=\varnothing,
+\qquad (D_J\cap D_M)\cap K_2=\varnothing.
+\tag{13.3}
+$$
+
+Every actual source in $B_2$ has its acquired $(p,v)$ image in
+$\operatorname{int}K_2$.  Therefore
+no original joint configuration has a selected $M$-endpoint in $B_2$.  For the
+second critical world $W_2$ of VI, Definition 13.1, the exact sentences
+$\mathsf J_2$ and $\mathsf Q_2$ of VI, (16.7)–(16.8), are false when
+$\epsilon=10^{-10}$.  The already constructed actual $M$-collision germ at
+$W_2$ has sufficiently small nonzero endpoints in $B_2$, while their
+entire common child is $J$-injective.
+
+The proof is divided into the zero-safe source equations, the finite closed cover,
+and the quantitative response order.
+
+## 14. Zero-safe source equations and the eliminant
+
+Put
+
+$$
+X=b^2+r-r^2,\qquad N=X+br,\qquad \Delta=b-\frac18,
+$$
+
+and define
+
+$$
+\begin{aligned}
+D_\Lambda&=(b^2+8b+4)XN-2bTU(X+N),\\
+\Lambda&=1+\frac6T+\frac1U-\frac4j-\frac4n,
+\qquad \kappa=\frac6T-\frac2U,\\
+A_5&=1+(U+n)\left(4-\frac{15}{j}+\frac{20}{T}-\frac{10}{n}\right),\\
+A_6&=1+(2U+n)\left(10-\frac{36}{j}+\frac{45}{T}-\frac{20}{n}\right),\\
+K_5&=\frac{96\Delta(U+n)}T,\\
+K_6&=24(2U+n)+\frac{216\Delta(2U+n)}T.
+\end{aligned}
+\tag{14.1}
+$$
+
+Here $j=b+r(1-r)/b$, $n=j+r$, $T=1+b$, and $U=1+2b$.  Let
+$H(r,b)$ be the sextic of O, (12.2), and let $R_{18}(r,p,v)$ be the
+integer polynomial of O, Definition 24.1.  The two source polynomials are
+
+$$
+\begin{aligned}
+\mathcal A(r,b,p)&=5b(p-24)D_\Lambda+3(8b-1)H(r,b),\\
+\mathcal C(r,b,p,v)&=b^2TXN\{A_5(v-24-K_6)-A_6(p-24-K_5)\}.
+\end{aligned}
+\tag{14.2}
+$$
+
+After expansion their coordinate degrees in $(r,b,p,v)$ are respectively
+$(6,7,1,0)$ and $(8,8,1,1)$, and $\mathcal C$ has $89$ terms.
+Every complete world satisfies $\mathcal A=\mathcal C=0$.  Indeed, the first
+identity is O, Theorem 12.3.  The whole gain gives
+
+$$
+ p=24+K_5+eA_5,\qquad v=24+K_6+eA_6,\qquad e=d-24,
+\tag{14.3}
+$$
+
+so the second identity is obtained after multiplying by the positive denominator
+$b^2TXN$.  No gain sample, coefficient, drift, or $\Lambda$ is divided out.
+
+Define
+
+$$
+\Phi=438272r^4-931328r^3+540800r^2-50728r-853,
+\quad \Psi_2=4r^2-2r-1,
+\quad \Psi_4=625r^4-1000r^3+50r^2+260r+36,
+\tag{14.4}
+$$
+
+and $Q(r,p,v)=\Phi(r)\Psi_2(r)\Psi_4(r)R_{18}(r,p,v)$.  The exact
+eliminant identity, as a polynomial identity after eliminating the source
+coordinate $b$, is
+
+$$
+\operatorname {Res}_b(\mathcal A,\mathcal B)
+ =52488000\,r^{11}(r-1)^9\Phi(r)\Psi_2(r)\Psi_4(r)R_{18}(r,p,v),
+\tag{14.5}
+$$
+
+Here $\mathcal B=Ev-V_\star$ is the response polynomial of Section 16.
+Thus $b$ occurs only in the two input polynomials to the resultant; no
+$b$ coordinate remains in $Q$.  The published $R_{18}$ is the exact
+668-term polynomial of O, Definition 24.1, with monomial order
+$(r,p,v)$ and coordinate degrees $(18,7,7)$.  Both sides of (14.5) have
+$p$- and $v$-degree at most $7$.  At every point of the $8\times8$ grid
+$p,v\in\{0,1,\ldots,7\}$ the two sides agree as polynomials in $r$;
+coefficient comparison in $r$, followed by interpolation in $p$ and $v$,
+gives the full identity.  Every factor in (14.5), every coefficient in the
+published table, and every degree-drop specialization is retained.  Only
+the strict-domain factors $r^{11}(r-1)^9$ are removed when projecting to the
+open source domain.
+
+At $\Lambda=0$, the undivided parent equation of Section 2 gives
+$b=1/8$, and O, Theorem 29.2, gives $\Phi(r)=0$.  Consequently every
+actual source, including $\Lambda=0$, satisfies $Q=0$; no singular source is
+removed before the cover is applied.
+
+## 15. Finite closed cover of the second rectangle
+
+For a polynomial of degree $n$ on $[l,h]$, use the exact power-to-Bernstein
+conversion
+
+$$
+T_{ik}(l,h;n)=\sum_{j=0}^{\min(i,k)}
+ {k\choose j}l^{\,k-j}(h-l)^j
+ \frac{{i\choose j}}{{n\choose j}},
+\qquad 0\le i,k\le n.
+\tag{15.1}
+$$
+
+Apply (15.1) in each variable, padding with zero coefficients to the actual
+coordinate degree.  A tensor Bernstein polynomial with coefficients of one
+strict sign has that sign on its closed box, by the nonnegative tensor basis and
+partition of unity.  Every subdivision below is the exact midpoint de Casteljau
+subdivision, with rational arithmetic; a retained cell is closed, and adjacent
+cells share their endpoints.
+
+### 15.1 Reciprocal $b$-cap
+
+The polynomial $z^7\mathcal A(r,1/z,p)$ has $112$ positive Bernstein
+coefficients on
+
+$$
+[0,1]_r\times[0,1/3]_z\times
+\left[\frac{22881}{12500},\frac{183049}{100000}\right]_p.
+\tag{15.2}
+$$
+
+Their coefficient interval is
+
+$$
+\left[\frac{562881}{2500},\frac{8483291}{7500}\right]
+=\left[\frac{6893716183200}{30618000000},
+        \frac{8483291}{7500}\right].
+\tag{15.3}
+$$
+
+If an actual source had $b\ge3$, then $z=1/b\in[0,1/3]$ and (15.2)
+would contradict $\mathcal A=0$.  Thus every actual source over $K_2$ has
+$b<3$.  This argument includes the endpoint $z=0$ in the closed certificate
+and uses no reciprocal at an actual zero.
+
+### 15.2 The $Q$-cover in $r$
+
+The resultant polynomial has no source coordinate.  The product $Q$ has
+coordinate degrees $(28,7,7)$ in $(r,p,v)$: the published $R_{18}$ has
+$(18,7,7)$ and the three retained factors contribute ten degrees in $r$.
+Apply (15.1) to $Q(r,p,v)$ on the actual target
+rectangle $[0,1]_r\times K_2$, subdividing undecided tensor cells to depth
+$12$.  The strict-sign leaves number $65$.  Projecting the remaining closed
+cells to $r$ gives the following eight-strip cover:
+
+$$
+\begin{array}{c|c}
+\text{strip}&\text{interval}\\ \hline
+1 &[69/512,553/4096]\\
+2 &[1063/2048,1065/2048]\\
+3 &[347/512,2777/4096]\\
+4 &[3313/4096,1657/2048]\\
+5 &[221/256,3537/4096]\\
+6 &[3557/4096,1779/2048]\\
+7 &[231/256,3697/4096]\\
+8 &[3725/4096,1863/2048]
+\end{array}
+\tag{15.4}
+$$
+
+The discarded cells and the retained closed cells form a complete partition of
+$[0,1]_r\times K_2$.  The displayed endpoints are exact dyadic rationals;
+for example $69/512=552/4096$ and
+$1063/2048=2126/4096$.  Therefore every zero of $Q$ in the target rectangle,
+including every singular, degree-drop, sampled-zero, and unused companion,
+projects to one of the intervals in (15.4).
+
+### 15.3 The $\mathcal A,\mathcal C$-cover
+
+For each strip in (15.4), apply the tensor conversion to $\mathcal A$ and
+$\mathcal C$ on its product with $[0,3]_b\times K_2$.  A cell is discarded
+when either tensor has a strict sign; it is retained when its source rectangle is
+contained in $R_2$.  Otherwise bisect $r$ when
+
+$$
+\frac{\operatorname{width}(I_r)}{1/1000}
+  >\frac{\operatorname{width}(I_b)}{1/10000},
+\tag{15.5}
+$$
+
+and bisect $b$ otherwise.  All bisections are closed and exact.  The finite
+partition has $214$ visited cells, $107$ discarded leaves, and the four
+retained leaves
+
+$$
+\begin{array}{c|c}
+I_r&I_b\\ \hline
+[2129/4096,1065/2048]&[5541/131072,693/16384]\\
+[133/256,2129/4096]&[5541/131072,693/16384]\\
+[2127/4096,133/256]&[5541/131072,693/16384]\\
+[1063/2048,2127/4096]&[5541/131072,693/16384]
+\end{array}
+\tag{15.6}
+$$
+
+Their union is exactly
+
+$$
+\left[\frac{2126}{4096},\frac{2130}{4096}\right]
+\times
+\left[\frac{5541}{131072},\frac{5544}{131072}\right]
+\subset R_2.
+\tag{15.7}
+$$
+
+The closed partition argument is inductive: an actual zero of both source
+polynomials survives every strict-sign rejection, and each split is the union
+of its two closed children.  Hence (15.6) localizes every complete companion,
+without a regularity, degree, gain-zero, or selected-pair hypothesis.
+
+## 16. Quantitative fixed-$p$ order
+
+Set
+
+$$
+\begin{aligned}
+L&=(8b-1)(2+5b),&D_0&=5D_\Lambda,&E&=bD_0,\\
+c_0&=-24D_0+3LXN,&c_1&=3LbN,\\
+c_2&=3(49b+34)XN-54Ub(X+N),&c_3&=3LbX,\\
+G_5&=-4c_0+15c_1-20c_2+10c_3,\\
+G_6&=-10c_0+36c_1-45c_2+20c_3,\\
+G_7&=-20c_0+70c_1-84c_2+35c_3,\\
+P_\star&=-bc_0+(bU+N)G_5,\\
+V_\star&=-bc_0+(2bU+N)G_6,\\
+J_\star&=-bc_0+(bT+2X+4rb)G_7.
+\end{aligned}
+\tag{16.1}
+$$
+
+The four values $c_i/D_0$ are the gain samples at (0,1,2,3), and
+$d=-c_0/D_0$.  The original response is
+
+$$
+(p,v,a)=\frac{(P_\star,V_\star,J_\star)}E.
+\tag{16.2}
+$$
+
+Write $\mathcal B(r,b,v)=Ev-V_\star$.  With
+$K_\Lambda=(8b-1)(2+5b)$,
+$Z_6=N+2bU$, and
+$G_{6,\Lambda}=(10T+45)XN-bT(36N+20X)$, direct expansion gives
+
+$$
+E=5bD_\Lambda,
+\qquad
+V_\star=\frac{120bTD_\Lambda+15Z_6D_\Lambda(80b-1)
+ -3K_\Lambda\bigl(bTXN+Z_6G_{6,\Lambda}\bigr)}{T}.
+$$
+
+Consequently $\mathcal B$ is exactly the polynomial $\mathsf B$ of O,
+(20.1), rather than a new response equation.  The identities at clocks
+$0,\ldots,4$ are the literal left-product identities of III,
+(16.1)–(16.5); fixed-node interpolation then reconstructs the one whole
+cubic-or-lower gain.  Define, for $i=r,b$,
+
+$$
+P_i=(\partial_iP_\star)E-P_\star\partial_iE,
+\qquad
+J_i=(\partial_iJ_\star)E-J_\star\partial_iE,
+\qquad F=J_rP_b-J_bP_r.
+\tag{16.3}
+$$
+
+The following coefficient intervals are the exact tensor-Bernstein bounds on
+$R_2$.  The entry $N_c$ is the number of coefficients in the indicated
+common-sign tensor.
+
+$$
+\begin{array}{c|c|c}
+\text{polynomial}&\text{coefficient interval}&N_c\\ \hline
+TUXN&[38827573436562470052416792289/500000000000000000000000000000,\\
+\quad38861603468245048936599/500000000000000000000000]&35\\
+2D_\Lambda-6TUXN&[3000369608678090161251/100000000000000000000000,\\
+\quad3014235008209676080466051211/100000000000000000000000000000]&35\\
+E&[1048325640422948994096665597655603/20000000000000000000000000000000000,\\
+\quad104989039317544620086596377/2000000000000000000000000000]&40\\
+E^2&[1098986648368186150026372220663966299696876332396878920209797293609/400000000000000000000000000000000000000000000000000000000000000000000,\\
+\quad11022698376820930105858286550164233263182412509526129/4000000000000000000000000000000000000000000000000000000]&135\\
+E^4&[1207771653291539229850576877846859588964794958475786599166338571256747817337040685725478385600929460356428571032940548965660952244881/160000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,\\
+\quad121499879506370767265981212723980370607961397283201975288661327432118680360866163822489474103172133724641/16000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000]&493\\
+P_b&[12146411187517987110463702478527555289925408333624395355010017/6250000000000000000000000000000000000000000000000000000000000,\\
+\quad48687322621122364763399116219882576434198168388173/25000000000000000000000000000000000000000000000000]&143\\
+F&[4079636333881816266739549891697389822153963209622482423674491450654042193042205949897098430225710089754289420214147475579/6250000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,\\
+\quad463084163990943898842623200926692144780989068514012603165788626651130046305033948828279458100801/625000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000]&520\\
+P_b-600E^2&[5855039069247112898533398134949684355377064484906613/20000000000000000000000000000000000000000000000000000,\\
+\quad592573173031149165631721472589424422304483154248059666580481010173/2000000000000000000000000000000000000000000000000000000000000000000]&165\\
+F-100P_bE^2&[2969801614855032600952985888179520693784169471194503600170946832436610164462239137212711249603227162771508845294817576630918647/25000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,\\
+\quad204268990357907795860083526593690811392053872385925755315743159218149949061494254371108761969323527683/1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000]&540
+\end{array}
+\tag{16.4}
+$$
+
+Every interval in (16.4) is strictly positive.  The lower and upper $b$-edge
+certificates for $P_\star-pE$ are respectively strictly negative and strictly
+positive; their coefficient intervals and counts are
+
+$$
+\begin{array}{c|c|c}
+\text{edge}&\text{coefficient interval}&N_c\\ \hline
+p=22881/12500&[-134695671420015040215560837207472243/250000000000000000000000000000000000000,\\
+\quad-110034801047392073108157960215167743/250000000000000000000000000000000000000]&7\\
+p=183049/100000&[114530288272338851021793366477/200000000000000000000000000000000,\\
+\quad134548701329506110573459946527/200000000000000000000000000000000]&7
+\end{array}
+\tag{16.5}
+$$
+
+Since $\Lambda=2D_\Lambda/(TUXN)$, (16.4) gives
+$\Lambda>6$, $E>0$, $p_b=P_b/E^2>600$, and
+
+$$
+ a_r-a_b\frac{p_r}{p_b}=\frac{F}{P_bE^2}>100.
+\tag{16.6}
+$$
+
+For fixed $p\in[p_{\rm lo},p_{\rm hi}]$, the edge signs in (16.5) and
+$p_b>0$ give one and only one $b=b_p(r)$ on the full $r$-interval of
+$R_2$.  Implicit differentiation gives $b_p'=-p_r/p_b$, and (16.6) makes
+$a(r,b_p(r))$ strictly increasing.  If two complete worlds in the same
+$C(p,v)$ have equal $a$, their sources therefore have equal $r$, then equal
+$b$.  The nonzero $\Lambda$ fixes $e$ through the undivided parent equation,
+and the four fixed-node samples fix the entire gain.  The complete worlds are equal.
+Together with the cover in Section 15 this proves (13.2)–(13.3) for every
+companion, including singular, lower-degree, sampled-zero, and unused companions.
+
+## 17. Endpoint collar and the second critical consumer
+
+On $B_2$, the four tensor signs for
+$P_\star-p_{\rm lo}E$, $P_\star-p_{\rm hi}E$,
+$V_\star-v_{\rm lo}E$, and $V_\star-v_{\rm hi}E$ are respectively
+$+,-,+,-$, with $E>0$.  Their coefficient intervals are
+
+$$
+\begin{array}{c|c}
+\text{polynomial}&\text{coefficient interval}\\ \hline
+P_\star-p_{\rm lo}E&[15632871249295034892899101863589135503503564225604976260708207/64000000000000000000000000000000000000000000000000000000000000000000,\\
+\quad18306868805882728350506043194571853383464463262006135713/61035156250000000000000000000000000000000000000000000000000000]\\
+P_\star-p_{\rm hi}E&[-143513940503677688145026587497654979597799806166268865419025497/512000000000000000000000000000000000000000000000000000000000000000000,\\
+\quad-109679960121835866240682337107470049878838089735172940823/488281250000000000000000000000000000000000000000000000000000000]\\
+V_\star-v_{\rm lo}E&[116437808364870343161240787916944000232973076332998112621/244140625000000000000000000000000000000000000000000000000000000,\\
+\quad77191997698005018186359560886774831716883491109761887968220447/128000000000000000000000000000000000000000000000000000000000000000000]\\
+V_\star-v_{\rm hi}E&[-69848551102013674941744947373550438356790359749111956953/122070312500000000000000000000000000000000000000000000000000000,\\
+\quad-114192915102027930915500280632818400192061337751584899568250259/256000000000000000000000000000000000000000000000000000000000000000000]
+\end{array}
+\tag{17.1}
+$$
+
+Thus every source in $B_2$ has acquired base in
+$\operatorname{int}K_2$.  VI, Lemma 13.2, gives the strict enclosures
+
+$$
+\begin{gathered}
+0.5195359430<r_2<0.5195359431,\qquad
+0.0422838313<b_2<0.0422838314,\\
+1.830485<p_2<1.830486,\qquad
+175.912050<v_2<175.912051.
+\end{gathered}
+\tag{17.2}
+$$
+
+Hence $W_2$ lies over $K_2$, and Theorem 13.2 gives
+$\neg\mathsf J_2$.  In VI, Definition 16.3, $\mathsf Q_2$ uses
+$z=(r,b,d)$ and the sum of the two squared Euclidean distances to $z_2$.
+In exact form, VI, (16.7), defines
+
+$$
+\mathsf J_2\;\Longleftrightarrow\;
+\exists w_0,w_1:\mathscr W(p_2,v_2;w_0)\land
+\mathscr W(p_2,v_2;w_1)\land
+\mathfrak a(w_0)=\mathfrak a(w_1)\land
+\lVert w_0-w_1\rVert^2>0,
+$$
+
+where the norm is on the full eight-coordinate world tuple.  VI, (16.8),
+defines
+
+$$
+\mathsf Q_2\;\Longleftrightarrow\;
+\forall\epsilon>0\;\exists p,v,w_0,w_1,w_2,w_3:
+\mathscr I(p,v;w_0,w_1,w_2,w_3)\land
+\lVert z(w_2)-z_2\rVert^2+\lVert z(w_3)-z_2\rVert^2<\epsilon^2.
+$$
+
+Here $\mathscr I$ retains $p\ne24$, all four entire-child witnesses,
+the independent equal-$\mathfrak a$ pair with positive full-world squared
+norm, and the independent equal-$\mathfrak m$ pair with positive full-world
+squared norm; it imposes no cross-pair sharing restriction and no equality of
+the two common terminal values.  If the displayed sum is less than
+$\epsilon^2$, every $r$- and $b$-coordinate deviation is less than
+$\epsilon$.  With
+
+$$
+\epsilon=\frac1{10^{10}},
+\tag{17.3}
+$$
+
+(17.2) places both such coordinate intervals strictly inside $B_2$, since
+
+$$
+[0.5195359429,0.5195359432]
+ \subset(0.519535942,0.519535944),
+\quad
+[0.0422838312,0.0422838315]
+ \subset(0.0422838305,0.0422838320).
+\tag{17.4}
+$$
+
+A selected $M$-endpoint satisfying the $Q_2$ neighbourhood condition would
+therefore lie in $B_2$, contradicting the endpoint exclusion in Theorem 13.2.
+Thus $\neg\mathsf Q_2$, with no condition on the other endpoint, on cross-pair
+sharing, or on the common terminal values.  VI, Theorem 15.1, supplies actual
+strict off-(24) equal-$M$ germs converging to $W_2$; continuity and the
+interior of $B_2$ put their sufficiently small nonzero endpoints in $B_2$.
+Their entire children are $J$-injective by Theorem 13.2.
+
+## 18. Scope of the exclusion
+
+The preceding assertions concern the closed base $K_2$ and the source collar
+$B_2$ only.  The original global sentence remains the existence of independent
+distinct equal-$J$ and equal-$M$ pairs in one entire off-(24) child, with
+arbitrary cross-pair sharing and unrelated terminal common values.  The first and
+third critical sectors, separated $M$-pairs outside these collars, boundary and
+nonproper limits, other $J$-arcs, and nontransverse incidences are not covered by
+(13.3) or (17.4).  No finite cover here changes that global quantifier.
+
+## 追加锚（本行以下为增补区）
