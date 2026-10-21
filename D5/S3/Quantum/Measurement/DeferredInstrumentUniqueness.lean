@@ -226,6 +226,22 @@ lemma Itilde_sum {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
   ring_nf
   nlinarith [ha, hb]
 
+lemma Itilde_trace {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
+    {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1)
+    (x : Fin d) (ρ : Matrix (Fin d) (Fin d) ℂ) :
+    Matrix.trace (Itilde U t x ρ) =
+      Matrix.trace (ρ * Qs U (sMax d t) x) := by
+  have ha := a2_channel_coeff hd htl htu
+  have hb := b_sq htu
+  have hs := sMax_eq hd htl htu
+  have h1 := one_sub_sMax_eq_a2_sq hd htl htu
+  simp only [Itilde, Qs, LinearMap.coe_mk, AddHom.coe_mk, Matrix.trace,
+    Matrix.smul_apply, Matrix.add_apply, Matrix.mul_apply, Matrix.one_apply]
+  rw [Matrix.trace_mul_cycle]
+  rw [hs, h1]
+  ring_nf
+  nlinarith [ha, hb]
+
 lemma choi_Itilde_standard (d : ℕ) (t : ℝ) (x : Fin d) :
     MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) =
       MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) := by
