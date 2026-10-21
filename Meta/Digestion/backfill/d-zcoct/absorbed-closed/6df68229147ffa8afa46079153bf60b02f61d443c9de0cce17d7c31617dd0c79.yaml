@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6df68229147ffa8afa46079153bf60b02f61d443c9de0cce17d7c31617dd0c79
+  normalized_sha256: sha256:6df68229147ffa8afa46079153bf60b02f61d443c9de0cce17d7c31617dd0c79
+cas_ref: sha256:6df68229147ffa8afa46079153bf60b02f61d443c9de0cce17d7c31617dd0c79
+coverage_gids:
+  - gid: D5/S3/Midline/Cayley/CayleyCriticalLineZetaCriterion.cayley_critical_line_zeta_criterion
+    target_statement_id: sha256:5f9545369c0d90054138c7a85af22538cacd45cd35bc71489f80af45e0ca9307
+  - gid: D5/S3/Midline/Cayley/CayleyMirrorCoordinates.cayley_mirror_coordinates
+    target_statement_id: sha256:36a2e32e7c8ada604ec9a0c0ba1da5e9655b2e32674cc7b32b2d90130225366f
+receipts:
+  unresolved_subitems: []

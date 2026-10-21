@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:690f2ba75cda47856723d47f300e2cdc9da0b783d0053731026c28c3f7c0eba9
+  normalized_sha256: sha256:690f2ba75cda47856723d47f300e2cdc9da0b783d0053731026c28c3f7c0eba9
+cas_ref: sha256:690f2ba75cda47856723d47f300e2cdc9da0b783d0053731026c28c3f7c0eba9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 117 给出容量受限的数位状态集及逐行编码 dig 的公式，末段解释寄存器和行内数位的索引位置；双射和计数断言属于定理 118。
+    previous_atom_id: 3668646385bc41d0dde62665c88cf2ccbb2ca5387123433f740cd57468ec76a4
+    next_atom_id: 09cae3cd0695156dc42f37252fc124d761c4b9fd41016d743b9d386c14aeccc6

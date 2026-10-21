@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0ac18f9c02335270463fd2a8e03cea11b4fb11c9bba79f02f79fdfc90e6ce886
+  normalized_sha256: sha256:0ac18f9c02335270463fd2a8e03cea11b4fb11c9bba79f02f79fdfc90e6ce886
+cas_ref: sha256:0ac18f9c02335270463fd2a8e03cea11b4fb11c9bba79f02f79fdfc90e6ce886
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimePowers/NoiselessPrimeSeparation.distinctness_hypothesis_is_necessary
+    target_statement_id: sha256:64acab43a61ba3d945c0e8d87776a86de27fa758ab8b20f35a067ef508107086
+receipts:
+  unresolved_subitems: []
