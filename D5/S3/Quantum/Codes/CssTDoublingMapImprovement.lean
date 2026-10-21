@@ -37,9 +37,9 @@ noncomputable def cssDistance {ι : Type*} [Fintype ι]
 def extension {n : ℕ} {C C₁ : Submodule (ZMod 2) (Fin n → ZMod 2)}
     (h : C ≤ C₁) (φ : C₁ →ₗ[ZMod 2] (Fin n → ZMod 2)) :
     Submodule (ZMod 2) (Fin n ⊕ Fin n → ZMod 2) :=
-  LinearMap.range
+  (φ ∘ₗ Submodule.inclusion h).graph.map
     ((LinearEquiv.sumArrowLequivProdArrow (Fin n) (Fin n) (ZMod 2) (ZMod 2)).symm.toLinearMap
-      ∘ₗ (C.subtype.prod (φ ∘ₗ Submodule.inclusion h)))
+      ∘ₗ C.subtype.prodMap (LinearMap.id : (Fin n → ZMod 2) →ₗ[ZMod 2] (Fin n → ZMod 2)))
 
 /-- The triple-product parity condition characterizing an admissible CSS-T extension. -/
 def admissible {n : ℕ} (C₂ C₁ : Submodule (ZMod 2) (Fin n → ZMod 2))
@@ -94,162 +94,6 @@ private lemma rank_strict : finrank (ZMod 2) (LinearMap.range ((LinearMap.funLef
         LinearMap.id))).subtype)) = finrank (ZMod 2) (LinearMap.ker (LinearMap.lsum (ZMod 2) (fun
         _ : Fin 13 => ZMod 2) (ZMod 2) (fun _ => LinearMap.id))) at h₂
   omega
-
-private lemma mem_extension_upper (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2))
-    (v : Fin 26 ⊕ Fin 26 → ZMod 2) :
-    v ∈ extension (le_refl (LinearMap.range (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)))) ((((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)).comp (f)).comp
-    (LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
-        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
-          13)).symm.surjective))).symm.toLinearMap)) ↔ ∃ x, (Sum.elim ((LinearMap.funLeft (ZMod 2)
-          (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (x)) ((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) ((f) (x)))) = v := by
-  constructor
-  · rintro ⟨⟨v, x, rfl⟩, rfl⟩
-    refine ⟨x, ?_⟩
-    change (Sum.elim ((LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (x)) ((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) ((f) (x)))) =
-      (LinearEquiv.sumArrowLequivProdArrow _ _ (ZMod 2) (ZMod 2)).symm
-        ((LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, (((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)).comp (f)).comp
-    (LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
-        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
-          13)).symm.surjective))).symm.toLinearMap) ⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, ⟨x, rfl⟩⟩)
-    funext i
-    cases i with
-    | inl j => rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inl]; rfl
-    | inr j =>
-      rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inr]
-      exact (congrFun (congrArg (fun y => (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (f y))
-        ((LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
-        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
-          13)).symm.surjective))).symm_apply_apply x)) j).symm
-  · rintro ⟨x, rfl⟩
-    refine ⟨⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, ⟨x, rfl⟩⟩, ?_⟩
-    change (LinearEquiv.sumArrowLequivProdArrow _ _ (ZMod 2) (ZMod 2)).symm
-      ((LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, (((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)).comp (f)).comp
-    (LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
-        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
-          13)).symm.surjective))).symm.toLinearMap) ⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, ⟨x, rfl⟩⟩) = (Sum.elim
-        ((LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (x)) ((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) ((f) (x))))
-    funext i
-    cases i with
-    | inl j => rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inl]; rfl
-    | inr j =>
-      rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inr]
-      exact congrFun (congrArg (fun y => (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (f y))
-        ((LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
-        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
-          13)).symm.surjective))).symm_apply_apply x)) j
-
-private lemma mem_extension_lower (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2))
-    (v : Fin 26 ⊕ Fin 26 → ZMod 2) :
-    v ∈ extension (LinearMap.range_comp_le_range (LinearMap.ker (LinearMap.lsum (ZMod 2) (fun _ :
-        Fin 13 => ZMod 2) (ZMod 2) (fun _ => LinearMap.id))).subtype (LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))) ((((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)).comp (f)).comp
-    (LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
-        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
-          13)).symm.surjective))).symm.toLinearMap)) ↔
-      ∃ x, (LinearMap.lsum (ZMod 2) (fun _ : Fin 13 => ZMod 2) (ZMod 2) (fun _ => LinearMap.id)) x
-          = 0 ∧ (Sum.elim ((LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (x)) ((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) ((f) (x)))) = v := by
-  constructor
-  · rintro ⟨⟨v, ⟨x, hx⟩, rfl⟩, rfl⟩
-    refine ⟨x, hx, ?_⟩
-    change (Sum.elim ((LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (x)) ((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) ((f) (x)))) =
-      (LinearEquiv.sumArrowLequivProdArrow _ _ (ZMod 2) (ZMod 2)).symm
-        ((LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, (((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)).comp (f)).comp
-    (LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
-        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
-          13)).symm.surjective))).symm.toLinearMap) ⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, _⟩)
-    funext i
-    cases i with
-    | inl j => rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inl]; rfl
-    | inr j =>
-      rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inr]
-      exact (congrFun (congrArg (fun y => (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (f y))
-        ((LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
-        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
-          13)).symm.surjective))).symm_apply_apply x)) j).symm
-  · rintro ⟨x, hx, rfl⟩
-    refine ⟨⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, ⟨⟨x, hx⟩, rfl⟩⟩, ?_⟩
-    change (LinearEquiv.sumArrowLequivProdArrow _ _ (ZMod 2) (ZMod 2)).symm
-      ((LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, (((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)).comp (f)).comp
-    (LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
-        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
-          13)).symm.surjective))).symm.toLinearMap) ⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, _⟩) = (Sum.elim
-        ((LinearMap.funLeft
-        (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (x)) ((LinearMap.funLeft (ZMod 2)
-        (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) ((f) (x))))
-    funext i
-    cases i with
-    | inl j => rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inl]; rfl
-    | inr j =>
-      rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inr]
-      exact congrFun (congrArg (fun y => (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (f y))
-        ((LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
-    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
-        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
-          13)).symm.surjective))).symm_apply_apply x)) j
 
 private lemma admissible_witness : admissible (LinearMap.range ((LinearMap.funLeft (ZMod 2) (ZMod 2)
     (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)).comp (LinearMap.ker
@@ -678,7 +522,47 @@ private lemma syndrome_one (z : Fin 26 ⊕ Fin 26 → ZMod 2)
           (Sum.inr ((finProdFinEquiv (m := 2) (n := 13)) ((1),
       i))))))) (i - 2)))) = 0 := by
     rw [← cyclic_graph_dot]
-    exact h₂ _ ((mem_extension_lower _ _).mpr ⟨x, hx, rfl⟩)
+    apply h₂
+    unfold extension
+    rw [LinearMap.graph_eq_range_prod, ← LinearMap.range_comp]
+    refine ⟨⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, ⟨⟨x, hx⟩, rfl⟩⟩, ?_⟩
+    change (LinearEquiv.sumArrowLequivProdArrow _ _ (ZMod 2) (ZMod 2)).symm
+      ((LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, (((LinearMap.funLeft (ZMod 2)
+        (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)).comp ((LinearMap.id +
+        LinearMap.funLeft (ZMod 2) (ZMod 2) (fun i : Fin 13 => i + 1) + LinearMap.funLeft (ZMod 2)
+        (ZMod 2) (fun i : Fin 13 => i + 2) : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod
+        2)))).comp
+    (LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
+        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
+      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
+          13)).symm.surjective))).symm.toLinearMap) ⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, _⟩) = (Sum.elim
+        ((LinearMap.funLeft
+        (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (x)) ((LinearMap.funLeft (ZMod 2)
+        (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (((LinearMap.id +
+        LinearMap.funLeft (ZMod 2) (ZMod 2) (fun i : Fin 13 => i + 1) + LinearMap.funLeft (ZMod 2)
+        (ZMod 2) (fun i : Fin 13 => i + 2) : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2)))
+        (x))))
+    funext i
+    cases i with
+    | inl j => rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inl]; rfl
+    | inr j =>
+      rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inr]
+      exact congrFun (congrArg (fun y => (LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) ((LinearMap.id + LinearMap.funLeft
+        (ZMod 2) (ZMod 2) (fun i : Fin 13 => i + 1) + LinearMap.funLeft (ZMod 2) (ZMod 2) (fun i :
+        Fin 13 => i + 2) : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2)) y))
+        ((LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
+        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
+      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
+          13)).symm.surjective))).symm_apply_apply x)) j
   have hc (i : Fin 13) : (((fun i => (((z))) (Sum.inl
       ((finProdFinEquiv (m := 2) (n := 13)) ((0), i)))) + (fun i => (((z))) (Sum.inl
           ((finProdFinEquiv (m := 2) (n := 13)) ((1), i))))) +
@@ -724,7 +608,18 @@ private lemma syndrome_one (z : Fin 26 ⊕ Fin 26 → ZMod 2)
     intro hz
     apply h₁
     intro v hv
-    obtain ⟨x, rfl⟩ := (mem_extension_upper _ _).mp hv
+    unfold extension at hv
+    rw [LinearMap.graph_eq_range_prod, ← LinearMap.range_comp] at hv
+    obtain ⟨⟨_, x, rfl⟩, rfl⟩ := hv
+    simp only [LinearMap.comp_apply, LinearMap.prod_apply, LinearMap.prodMap_apply,
+      Function.prod_apply, LinearMap.id_apply, LinearEquiv.coe_toLinearMap,
+      Submodule.subtype_apply, Submodule.inclusion_apply]
+    erw [(LinearEquiv.ofInjective
+      (LinearMap.funLeft (ZMod 2) (ZMod 2)
+        (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
+      (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
+        (Prod.snd_surjective.comp
+          (finProdFinEquiv (m := 2) (n := 13)).symm.surjective))).symm_apply_apply x]
     change dotProduct ((Sum.elim ((LinearMap.funLeft (ZMod 2) (ZMod 2)
     (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (x)) ((LinearMap.funLeft (ZMod 2)
         (ZMod 2)
@@ -939,16 +834,52 @@ private lemma graph_nontrivial (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 �
         (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
       (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
           13)).symm.surjective))).symm.toLinearMap)) := by
-  refine ⟨(mem_extension_upper _ _).mpr ⟨_, rfl⟩, ?_⟩
-  intro h
-  obtain ⟨x, hx, he⟩ := (mem_extension_lower _ _).mp h
-  have hu := (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
-      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n := 13)).symm.surjective))
-          (Sum.elim_eq_iff.mp he).1
-  subst x
-  rw [LinearMap.lsum_piSingle] at hx
-  exact one_ne_zero hx
-
+  constructor
+  · unfold extension
+    rw [LinearMap.graph_eq_range_prod, ← LinearMap.range_comp]
+    refine ⟨⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (Pi.single 0 1), ⟨(Pi.single 0 1),
+        rfl⟩⟩, ?_⟩
+    change (LinearEquiv.sumArrowLequivProdArrow _ _ (ZMod 2) (ZMod 2)).symm
+      ((LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (Pi.single 0 1),
+        (((LinearMap.funLeft (ZMod 2)
+        (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)).comp (f)).comp
+    (LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
+        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
+      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
+          13)).symm.surjective))).symm.toLinearMap) ⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (Pi.single 0 1), ⟨(Pi.single 0 1),
+        rfl⟩⟩) = (Sum.elim
+        ((LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) ((Pi.single 0 1)))
+        ((LinearMap.funLeft (ZMod 2)
+        (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) ((f) ((Pi.single 0 1)))))
+    funext i
+    cases i with
+    | inl j => rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inl]; rfl
+    | inr j =>
+      rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inr]
+      exact congrFun (congrArg (fun y => (LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) (f y))
+        ((LinearEquiv.ofInjective (LinearMap.funLeft (ZMod 2) (ZMod 2)
+    (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
+        (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
+      (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n :=
+          13)).symm.surjective))).symm_apply_apply (Pi.single 0 1))) j
+  · intro h
+    unfold extension at h
+    rw [LinearMap.graph_eq_range_prod, ← LinearMap.range_comp] at h
+    obtain ⟨⟨_, ⟨x, hx⟩, rfl⟩, he⟩ := h
+    have hu := (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
+        (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n := 13)).symm.surjective))
+            (Sum.elim_eq_iff.mp he).1
+    subst x
+    rw [LinearMap.mem_ker, LinearMap.lsum_piSingle] at hx
+    exact one_ne_zero hx
 private lemma improved_distance :
     5 ≤ cssDistance (extension (LinearMap.range_comp_le_range (LinearMap.ker (LinearMap.lsum (ZMod
         2) (fun _ : Fin 13 => ZMod 2) (ZMod 2) (fun _ => LinearMap.id))).subtype
@@ -1043,11 +974,27 @@ private lemma improved_distance :
           (dotProductBilin (ZMod 2) (ZMod 2)) ∧ hammingNorm z = d}).Nonempty
       from ⟨_, Or.inl ⟨_, hn.1, hn.2, rfl⟩⟩)
   rintro d (⟨v, hv, hn, rfl⟩ | ⟨z, hz, hn, rfl⟩)
-  · obtain ⟨x, rfl⟩ := (mem_extension_upper _ _).mp hv
+  · unfold extension at hv
+    rw [LinearMap.graph_eq_range_prod, ← LinearMap.range_comp] at hv
+    obtain ⟨⟨_, x, rfl⟩, rfl⟩ := hv
+    simp only [LinearMap.comp_apply, LinearMap.prod_apply, LinearMap.prodMap_apply,
+      Function.prod_apply, LinearMap.id_apply, LinearEquiv.coe_toLinearMap,
+      Submodule.subtype_apply, Submodule.inclusion_apply]
+    erw [(LinearEquiv.ofInjective
+      (LinearMap.funLeft (ZMod 2) (ZMod 2)
+        (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2))
+      (LinearMap.funLeft_injective_of_surjective (ZMod 2) (ZMod 2) _
+        (Prod.snd_surjective.comp
+          (finProdFinEquiv (m := 2) (n := 13)).symm.surjective))).symm_apply_apply x]
     have hp : (LinearMap.lsum (ZMod 2) (fun _ : Fin 13 => ZMod 2) (ZMod 2) (fun _ =>
         LinearMap.id)) x ≠ 0 := by
       intro hx
-      exact hn ((mem_extension_lower _ _).mpr ⟨x, hx, rfl⟩)
+      apply hn
+      unfold extension
+      rw [LinearMap.graph_eq_range_prod, ← LinearMap.range_comp]
+      refine ⟨⟨(LinearMap.funLeft (ZMod 2) (ZMod 2)
+      (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)) x, ⟨⟨x, hx⟩, rfl⟩⟩, ?_⟩
+      rfl
     exact le_trans (by decide : 5 ≤ 8) (x_weight_bound x hp)
   · exact z_weight_bound z hz hn
 
