@@ -8,9 +8,6 @@
 
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Data.Int.Interval
-import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 
